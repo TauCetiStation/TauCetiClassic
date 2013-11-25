@@ -22,6 +22,6 @@
 	return color_hash
 
 /proc/sanitize_hudalpha(var/alpha)
-	if(alpha < 256 && alpha >=0)
+	if(alpha < 256 && alpha >49)
 		return alpha
 	return
