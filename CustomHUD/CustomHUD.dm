@@ -1,6 +1,6 @@
 
 //TODO: make this better
-/proc/sanitize_hudcolor(var/color_hash)
+/*/proc/sanitize_hudcolor(var/color_hash)
 	if(length(color_hash) !=7)
 		return
 
@@ -19,7 +19,7 @@
 			else
 				return
 
-	return color_hash
+	return color_hash*/
 
 /proc/sanitize_hudalpha(var/alpha)
 	if(alpha < 256 && alpha >49)
