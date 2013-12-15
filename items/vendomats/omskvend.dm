@@ -1,3 +1,5 @@
+//from old nanotrasen
+//i deleted all drugs here, now it's just a joke
 /obj/machinery/vending/omskvend
 	name = "Omsk-o-mat"
 	desc = "Drug dispenser."

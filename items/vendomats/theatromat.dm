@@ -1,3 +1,4 @@
+//from old nanotrasen
 /obj/machinery/vending/theater
 	name = "Theater-o-mat"
 	desc = "Special costume pack to add randomness in boring life"

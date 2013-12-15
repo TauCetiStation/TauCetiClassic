@@ -1,3 +1,4 @@
+//from old nanotrasen
 /obj/machinery/vending/holy
 	name = "HolyVend"
 	desc = "Special items to prayers, sacrifices, rites and other methods to tell your God: I remember you"

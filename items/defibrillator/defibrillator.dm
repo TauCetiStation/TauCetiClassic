@@ -1,4 +1,4 @@
-//
+//from old nanotrasen
 /obj/item/weapon/defibrillator
 	name = "defibrillator"
 	desc = "Device to treat ventricular fibrillation or pulseless ventricular tachycardia."

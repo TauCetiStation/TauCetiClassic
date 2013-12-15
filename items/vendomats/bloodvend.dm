@@ -1,3 +1,4 @@
+//from old nanotrasen
 /obj/machinery/vending/blood
 	name = "Blood'O'Matic"
 	desc = "Human blood dispenser. With internal freezer. Brought to you by EmpireV corp."
