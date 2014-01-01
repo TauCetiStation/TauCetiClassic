@@ -2,8 +2,8 @@
 /obj/item/weapon/defibrillator
 	name = "defibrillator"
 	desc = "Device to treat ventricular fibrillation or pulseless ventricular tachycardia."
-	icon = 'tauceti/defibrillator/defibrillator.dmi'
-	var/item_icon = 'tauceti/defibrillator/defibrillator.dmi'
+	icon = 'tauceti/items/defibrillator/defibrillator.dmi'
+	var/item_icon = 'tauceti/items/defibrillator/defibrillator.dmi'
 	//icon_state = "Defibunit"
 	item_state = "defibunit"
 	icon_state = "defibunit"

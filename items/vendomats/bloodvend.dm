@@ -2,7 +2,7 @@
 /obj/machinery/vending/blood
 	name = "Blood'O'Matic"
 	desc = "Human blood dispenser. With internal freezer. Brought to you by EmpireV corp."
-	icon = 'tauceti/vendomats/vendings.dmi'
+	icon = 'tauceti/items/vendomats/vendings.dmi'
 	icon_state = "blood2"
 	icon_deny = "blood2deny"
 	product_ads = "Go and grab some blood!;I'm hope you are not bloody vampire.;Only from nice virgins!;Natural liquids!;This stuff saves lives."

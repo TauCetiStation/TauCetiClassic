@@ -2,7 +2,7 @@
 /obj/machinery/vending/holy
 	name = "HolyVend"
 	desc = "Special items to prayers, sacrifices, rites and other methods to tell your God: I remember you"
-	icon = 'tauceti/vendomats/vendings.dmi'
+	icon = 'tauceti/items/vendomats/vendings.dmi'
 	icon_state = "holy"
 	product_slogans = "HolyVend: Select your Religion today"
 	product_ads = "Pray now!;Atheists are heretic;Everything 100% Holy;Thirsty? Wanna pray? Why without candles?"

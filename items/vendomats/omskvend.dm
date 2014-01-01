@@ -3,7 +3,7 @@
 /obj/machinery/vending/omskvend
 	name = "Omsk-o-mat"
 	desc = "Drug dispenser."
-	icon = 'tauceti/vendomats/vendings.dmi'
+	icon = 'tauceti/items/vendomats/vendings.dmi'
 	icon_state = "omskvend"
 	product_ads = "NORKOMAN SUKA SHTOLE?;STOP NARTCOTICS!; so i heard u liek mudkipz; METRO ZATOPEELO"
 	products = list(/obj/item/device/healthanalyzer = 5)
