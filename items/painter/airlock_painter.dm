@@ -1,9 +1,10 @@
 /obj/item/weapon/airlock_painter
 	name = "painter"
 	desc = "An advanced autopainter preprogrammed with several paintjobs for airlocks and windows. Use it on an airlock during or after construction to change the paintjob, or on window"
-	icon = 'icons/obj/items.dmi'
+	icon = 'tauceti/items/painter/painter.dmi'
 	icon_state = "paint sprayer"
 	item_state = "paint sprayer"
+	tc_custom = 'tauceti/items/painter/painter.dmi'
 
 	w_class = 2.0
 
