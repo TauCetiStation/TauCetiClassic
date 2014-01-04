@@ -2,7 +2,8 @@
 	name = "Resupply canister"
 	var/machine_name = "Generic"
 
-	icon = 'icons/obj/vending_restock.dmi'
+	icon = 'tauceti/items/vending items(renameitpls)/vending_restock.dmi'
+	tc_custom = 'tauceti/items/vending items(renameitpls)/vending_restock.dmi'
 	icon_state = "refill_snack"
 	item_state = "restock_unit"
 	flags = FPRINT | TABLEPASS| CONDUCT
