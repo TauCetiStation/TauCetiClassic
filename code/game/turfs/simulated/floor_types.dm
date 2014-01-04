@@ -221,7 +221,7 @@
 /turf/simulated/floor/plating/snow/ex_act(severity)
 	return
 
-/turf/unsimulated/floor/plating/airless/catwalk
+/turf/simulated/floor/plating/airless/catwalk
 	icon = 'icons/turf/catwalks.dmi'
 	icon_state = "catwalk0"
 	name = "catwalk"
