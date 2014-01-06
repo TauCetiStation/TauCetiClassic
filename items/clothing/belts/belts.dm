@@ -4,7 +4,6 @@
 	icon = 'tauceti/items/clothing/belts/nuke.dmi'
 	tc_custom = 'tauceti/items/clothing/belts/nuke.dmi'
 	icon_state = "militarybelt"
-	item_state = "military_mob"
 	can_hold = list(
 	"/obj/item/weapon/gun/projectile/revolver/syndie",
 	"/obj/item/weapon/gun/projectile/automatic/c20r",
