@@ -19,7 +19,7 @@
 		color = "#" + pick(rand) + pick(rand) + pick(rand) + pick(rand) + pick(rand) + pick(rand)
 		O.color = color
 
-	message_admins("[key_name_admin(src)] called color anomaly in [A]", 1)
+//	message_admins("[key_name_admin(src)] called color anomaly in [A]", 1)
 	log_admin("[key_name(src)] called color anomaly in [A]")
 
 /client/proc/epileptic_anomaly_cancel()
@@ -41,5 +41,36 @@
 	for(var/atom/O in A)
 		O.color = color
 
-	message_admins("[key_name_admin(src)] trying cancel color anomaly in [A]", 1)
+//	message_admins("[key_name_admin(src)] trying cancel color anomaly in [A]", 1)
 	log_admin("[key_name(src)] trying cancel color anomaly in [A]")
+
+//antidisco, NOIR
+/client/proc/Noir_anomaly()
+	set category = "Fun"
+	set name = "Noir anomaly(in dev!)"
+	if(!check_rights(R_FUN))	return
+
+	//var/change = input("Enter:", "Write", null, null) as num
+
+	//var/area/A
+
+	//A = get_area(usr.loc)
+	//if(!A)
+	//	return
+
+	//if(A.type == /area)
+	//	usr << "<span class='warning'>You can't do it with space!</span>"
+	//	return
+
+	for(var/atom/O in world)
+		if(O.icon)
+			if(O.color)
+				O.color = null
+
+			var/icon/newIcon = icon(O.icon)
+			newIcon.GrayScale()
+			O.icon = newIcon
+
+
+	//message_admins("[key_name_admin(src)] called color anomaly in [A]", 1)
+	log_admin("[key_name(src)] called noir anomaly")
