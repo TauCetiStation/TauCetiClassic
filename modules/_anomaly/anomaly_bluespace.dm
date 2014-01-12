@@ -1,7 +1,7 @@
 /datum/event/anomaly_bluespace
 	startWhen = 3
 	announceWhen = 10
-	endWhen = 55
+	endWhen = 150
 	var/area/impact_area
 	var/obj/effect/anomaly/newAnomaly
 

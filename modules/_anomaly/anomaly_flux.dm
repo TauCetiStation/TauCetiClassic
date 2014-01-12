@@ -1,7 +1,7 @@
 /datum/event/anomaly_flux
 	startWhen = 3
 	announceWhen = 20
-	endWhen = 60
+	endWhen = 120
 	var/area/impact_area
 	var/obj/effect/anomaly/newAnomaly
 

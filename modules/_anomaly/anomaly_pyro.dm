@@ -1,7 +1,7 @@
 /datum/event/anomaly_pyro
 	startWhen = 10
 	announceWhen = 3
-	endWhen = 70
+	endWhen = 110
 	var/area/impact_area
 	var/obj/effect/anomaly/newAnomaly
 
