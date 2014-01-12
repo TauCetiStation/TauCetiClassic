@@ -146,6 +146,7 @@ var/list/uplink_items = list()
 	desc = "The Minibomb is a grenade with a five-second fuse."
 	item = /obj/item/weapon/grenade/syndieminibomb
 	cost = 3
+	gamemodes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/dangerous/viscerators
 	name = "Viscerator Delivery Grenade"
