@@ -15,10 +15,11 @@
 	var/content
 
 /obj/structure/chalkboard/verb/honk(user as mob)
+	set src in oview(1)
 	set name = "HONK"
 	set desc = "Make HONK"
 	set category = "Object"
-	set src in oview(1)
+//	set src in usr
 
 	if(!ishuman(user))
 		user << "\red You want, but you don't. You try, but you can't."
@@ -33,10 +34,11 @@
 	update()
 
 /obj/structure/chalkboard/verb/wrtite(user as mob)
+	set src in oview(1)
 	set name = "Write"
 	set desc = "Don't stare, just write."
 	set category = "Object"
-	set src in oview(1)
+//	set src in usr
 
 	if(!ishuman(user))
 		user << "\red You want, but you don't. You try, but you can't."
@@ -85,10 +87,11 @@
 
 
 /obj/structure/chalkboard/verb/cleanup(user as mob)
+	set src in oview(1)
 	set name = "Cleanup"
 	set desc = "Make board clean"
 	set category = "Object"
-	set src in oview(1)
+//	set src in usr
 
 	if(!ishuman(user))
 		user << "\red You want, but you don't. You try, but you can't."
