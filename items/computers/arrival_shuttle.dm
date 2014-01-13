@@ -1,5 +1,5 @@
 #define ARRIVAL_SHUTTLE_MOVE_TIME 200
-#define ARRIVAL_SHUTTLE_COOLDOWN 300
+#define ARRIVAL_SHUTTLE_COOLDOWN 400
 
 var/location = 0 // 0 - Start 2 - NSS Exodus 1 - transit
 var/moving = 0
