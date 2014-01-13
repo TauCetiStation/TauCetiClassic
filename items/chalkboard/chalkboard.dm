@@ -11,48 +11,53 @@
 	flags = FPRINT
 	density = 0
 	anchored = 1
-	var/state = CB_CLEAN
+	var/status = CB_CLEAN
 	var/content
 
-/obj/structure/chalkboard/verb/honk(user as mob)
+/obj/structure/chalkboard/verb/honk()
 	set src in oview(1)
 	set name = "HONK"
 	set desc = "Make HONK"
 	set category = "Object"
-//	set src in usr
 
-	if(!ishuman(user))
-		user << "\red You want, but you don't. You try, but you can't."
+	if (usr.stat != 0)
+		return
+
+	if(!ishuman(usr))
+		usr << "\red You want, but you don't. You try, but you can't."
 		return
 
 	if(content)
 		usr << "\blue The board is full! Clean it to write again."
 		return
 
-	add_fingerprint(user)
-	state = CB_HONK
+	add_fingerprint(usr)
+	status = CB_HONK
 	update()
 
-/obj/structure/chalkboard/verb/wrtite(user as mob)
+/obj/structure/chalkboard/verb/wrtite()
 	set src in oview(1)
 	set name = "Write"
 	set desc = "Don't stare, just write."
 	set category = "Object"
-//	set src in usr
 
-	if(!ishuman(user))
-		user << "\red You want, but you don't. You try, but you can't."
+	if (usr.stat != 0)
+		return
+
+
+	if(!ishuman(usr))
+		usr << "\red You want, but you don't. You try, but you can't."
 		return
 
 	if(content)
-		user << "\blue The board is full! Clean it to write again."
+		usr << "\blue The board is full! Clean it to write again."
 		return
 
 	//part wrom paper/write
 	var/t =  input("What do you want to write here? 20 lines or 2000 symbols max.", "Write", null, null) as message
 
 	if(length(t) > 2048)
-		user << "\blue You can't post it all on board!"
+		usr << "\blue You can't post it all on board!"
 		return
 
 	t = checkhtml(t)
@@ -65,9 +70,9 @@
 	// check for exploits
 	for(var/bad in paper_blacklist)
 		if(findtext(t,bad))
-			user << "\blue You think to yourself, \"Hm.. this is only chalkboard...\""
-			log_admin("Chalkboard: [user] tried to use forbidden word in [src]: [bad].")
-			message_admins("Chalkboard: [user] tried to use forbidden word in [src]: [bad].")
+			usr << "\blue You think to yourself, \"Hm.. this is only chalkboard...\""
+			log_admin("Chalkboard: [usr] tried to use forbidden word in [src]: [bad].")
+			message_admins("Chalkboard: [usr] tried to use forbidden word in [src]: [bad].")
 			return
 
 	t = replacetext(t, "\n", "<BR>")
@@ -80,35 +85,38 @@
 		return
 
 	content = t
-	add_fingerprint(user)
-	state = CB_CONTENT
+	add_fingerprint(usr)
+	status = CB_CONTENT
 	update()
 
 
 
-/obj/structure/chalkboard/verb/cleanup(user as mob)
+/obj/structure/chalkboard/verb/cleanup()
 	set src in oview(1)
 	set name = "Cleanup"
 	set desc = "Make board clean"
 	set category = "Object"
 //	set src in usr
 
-	if(!ishuman(user))
-		user << "\red You want, but you don't. You try, but you can't."
+	if (usr.stat != 0)
 		return
 
-	if(state != CB_WET)
-		state = CB_WET
+	if(!ishuman(usr))
+		usr << "\red You want, but you don't. You try, but you can't."
+		return
+
+	if(status != CB_WET)
+		status = CB_WET
 
 	else
-		state = CB_CLEAN
+		status = CB_CLEAN
 
-	add_fingerprint(user)
+	add_fingerprint(usr)
 	update()
 
 /obj/structure/chalkboard/proc/update()
 
-	switch (state)
+	switch (status)
 		if(CB_CLEAN)
 			desc = "Don't eat the chalk. Just write something on it."
 			icon_state = "board_clean"

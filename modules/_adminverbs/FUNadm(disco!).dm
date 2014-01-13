@@ -44,6 +44,7 @@
 //	message_admins("[key_name_admin(src)] trying cancel color anomaly in [A]", 1)
 	log_admin("[key_name(src)] trying cancel color anomaly in [A]")
 
+/*
 //antidisco, NOIR
 /client/proc/Noir_anomaly()
 	set category = "Fun"
@@ -73,4 +74,4 @@
 
 
 	//message_admins("[key_name_admin(src)] called color anomaly in [A]", 1)
-	log_admin("[key_name(src)] called noir anomaly")
+	log_admin("[key_name(src)] called noir anomaly")*/
