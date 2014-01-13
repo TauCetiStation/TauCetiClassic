@@ -30,7 +30,8 @@ var/global/wcDw
 		/area/security/lobby,
 		/area/security/main,
 		/area/security/prison,
-		/area/security/warden
+		/area/security/warden,
+		/area/security/range
 		)
 
 	for(var/A in wsBrigList)
