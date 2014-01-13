@@ -15,7 +15,7 @@
 		new /obj/item/clothing/suit/storage/labcoat(src)
 		new /obj/item/clothing/suit/storage/forensics/blue(src)
 		new /obj/item/clothing/suit/storage/forensics/red(src)
-		new /obj/item/clothing/gloves/latex(src)
+		new /obj/item/clothing/gloves/black(src)
 		new /obj/item/clothing/shoes/red(src)
 		new /obj/item/weapon/storage/box/evidence(src)
 		new /obj/item/device/radio/headset/headset_sec(src)
