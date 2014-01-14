@@ -258,7 +258,6 @@
 		return 1
 
 	/** ACT UNSIMULATED! **/
-/*
 	assume_air(datum/gas_mixture/giver) //use this for machines to adjust air
 		del(giver)
 		return 0
@@ -300,4 +299,3 @@
 		GM.update_values()
 
 		return GM
-*/
