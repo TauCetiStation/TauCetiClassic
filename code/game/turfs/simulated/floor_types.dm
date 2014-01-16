@@ -267,5 +267,9 @@
 			playsound(src, 'sound/items/Screwdriver.ogg', 80, 1)
 			return
 
+		if(istype(C, /obj/item/weapon/cable_coil))
+			var/obj/item/weapon/cable_coil/coil = C
+			coil.turf_place(src, user)
+
 	is_catwalk()
 		return 1
