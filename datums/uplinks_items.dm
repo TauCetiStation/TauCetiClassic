@@ -378,7 +378,7 @@ var/list/uplink_items = list()
 	name = "Syndicate Bomb"
 	desc = "The Syndicate Bomb has an adjustable timer with a minimum setting of 60 seconds. Ordering the bomb sends you a small beacon, which will teleport the explosive to your location when you activate it. \
 	You can wrench the bomb down to prevent removal. The crew may attempt to defuse the bomb."
-	item = /obj/machinery/syndicatebomb
+	item = /obj/item/device/radio/beacon/syndicate_bomb
 	cost = 6
 	gamemodes = list(/datum/game_mode/nuclear)
 
