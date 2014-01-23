@@ -1,6 +1,6 @@
 /obj/item/weapon/airlock_painter
-	name = "painter"
-	desc = "An advanced autopainter preprogrammed with several paintjobs for airlocks and windows. Use it on an airlock during or after construction to change the paintjob, or on window"
+	name = "universal painter"
+	desc = "An advanced autopainter preprogrammed with several paintjobs for airlocks, windows and pipes. Use it on an airlock during or after construction to change the paintjob, or on window or pipe."
 	icon = 'tauceti/items/painter/painter.dmi'
 	icon_state = "paint sprayer"
 	item_state = "paint sprayer"
@@ -11,6 +11,8 @@
 	m_amt = 50
 	g_amt = 50
 	origin_tech = "engineering=1"
+	var/list/modes = list("grey","red","blue","cyan","green","yellow","purple")
+	var/mode = "grey"
 
 	flags = FPRINT | TABLEPASS| CONDUCT
 	slot_flags = SLOT_BELT
@@ -79,3 +81,15 @@
 			user.put_in_hands(ink)
 			user << "<span class='notice'>You remove \the [ink] from \the [name].</span>"
 			ink = null
+
+	afterattack(atom/A as obj, mob/user as mob)
+		if(user && user.client)
+			if(!istype(A,/obj/machinery/atmospherics/pipe) || istype(A,/obj/machinery/atmospherics/pipe/tank) || istype(A,/obj/machinery/atmospherics/pipe/vent) || istype(A,/obj/machinery/atmospherics/pipe/simple/heat_exchanging) || istype(A,/obj/machinery/atmospherics/pipe/simple/insulated))
+				return
+			else
+				mode = input("Which colour do you want to use?","Universal painter") in modes
+				var/obj/machinery/atmospherics/pipe/P = A
+				P.pipe_color = mode
+				user.visible_message("<span class='notice'>[user] paints \the [P] [mode].</span>","<span class='notice'>You paint \the [P] [mode].</span>")
+				P.update_icon()
+		return
