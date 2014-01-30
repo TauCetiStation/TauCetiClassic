@@ -44,16 +44,20 @@
 		if(charged == 2 && istype(M,/mob/living/carbon))
 			var/mob/living/carbon/C = M
 			user.visible_message("[user] shocks [M] with [src].", "You shock [M] with [src].</span>", "You hear electricity zaps flesh.")
-			if(C.health<=config.health_threshold_crit || prob(10))
-				var/suff = min(C.getOxyLoss(), 20)
-				C.adjustOxyLoss(-suff)
-				C.updatehealth()
-				if(C.stat == DEAD && C.health>config.health_threshold_dead)
-					C.stat = UNCONSCIOUS
-			else
-				C.adjustFireLoss(5)
-				if(C.stat == DEAD && C.health>config.health_threshold_dead)
-					C.stat = CONSCIOUS
+
+			if((world.time - C.timeofdeath) < 3600)	//if he is dead no more than 6 minutes
+				if(!(NOCLONE in C.mutations))
+					if(C.health<=config.health_threshold_crit || prob(10))
+						var/suff = min(C.getOxyLoss(), 20)
+						C.adjustOxyLoss(-suff)
+						C.updatehealth()
+						if(C.stat == DEAD && C.health>config.health_threshold_dead)
+							C.stat = UNCONSCIOUS
+					else
+						C.adjustFireLoss(5)
+						if(C.stat == DEAD && C.health>config.health_threshold_dead)
+							C.stat = CONSCIOUS
+
 			discharge()
 			C.apply_effect(4, STUN, 0)
 			C.apply_effect(4, WEAKEN, 0)
