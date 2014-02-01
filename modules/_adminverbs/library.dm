@@ -52,7 +52,7 @@
 	if(input != "Confirm")
 		return
 
-	query = dbcon.NewQuery("DELETE FROM library WHERE id=[id]")
+	query = dbcon_old.NewQuery("DELETE FROM library WHERE id=[id]")
 	if(!query.Execute())
 		usr << query.ErrorMsg()
 
