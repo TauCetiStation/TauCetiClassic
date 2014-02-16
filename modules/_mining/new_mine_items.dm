@@ -3,11 +3,11 @@
 	desc = "Yours is the drill that will pierce through the rock walls."
 	icon = 'tauceti/modules/_mining/hand_tools.dmi'
 	tc_custom = 'tauceti/modules/_mining/hand_tools.dmi'
-	icon_state = "drill_ready"
+	icon_state = "basic_drill_ready"
 	item_state = "drill"
 	origin_tech = "materials=2;powerstorage=3;engineering=2"
 	flags = FPRINT | TABLEPASS| CONDUCT
-	slot_flags = SLOT_BELT
+//	slot_flags = SLOT_BELT
 	force = 15.0
 	throwforce = 4.0
 	w_class = 4.0
@@ -37,11 +37,11 @@
 
 /obj/item/weapon/pickaxe/drill/update_icon()
 	if(!state)
-		icon_state = "drill_ready"
+		icon_state = "basic_drill_ready"
 	else if(state == 1)
-		icon_state = "drill_open"
+		icon_state = "basic_drill_open"
 	else if(state == 2)
-		icon_state = "drill_broken"
+		icon_state = "basic_drill_broken"
 	return
 
 /obj/item/weapon/pickaxe/drill/attackby(obj/item/weapon/W as obj, mob/user as mob)
@@ -123,6 +123,25 @@
 	else
 		digspeed = 30
 		user << "[src] is now safe mode."
+/*
+/obj/item/weapon/pickaxe/drill/diamond //When people ask about the badass leader of the mining tools, they are talking about ME!
+	name = "diamond mining drill"
+	icon_state = "diamonddrill"
+	item_state = "jackhammer"
+	digspeed = 10 //Digs through walls, girders, and can dig up sand
+	hardness = 6
+	origin_tech = "materials=6;powerstorage=4;engineering=5"
+	desc = "Yours is the drill that will pierce the heavens!"
+	type = diamond
+
+/obj/item/weapon/pickaxe/drill/diamond/attack_self(mob/user as mob)
+	mode = !mode
+	if(mode)
+		digspeed = 10
+		user << "[src] is now standard mode."
+	else
+		digspeed = 20
+		user << "[src] is now safe mode."	*/
 
 /obj/item/weapon/repairkit
 	name = "mining equipment repair kit"
