@@ -2,7 +2,7 @@
 	var/RLumin = 1
 	var/GLumin = 1
 	var/BLumin = 1
-	icon = 'tauceti/modules/_coloredLight/syreney.dmi'
+	icon = 'tauceti/items/coloredLight/syreney.dmi'
 	icon_state = "off"
 
 /obj/machinery/light/small/emergency/red

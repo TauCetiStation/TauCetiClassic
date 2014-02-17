@@ -1,6 +1,6 @@
 /obj/item/weapon/twohanded/spear
-		icon = 'tauceti/modules/_makeshift_items_TG/makeshift_tg.dmi'
-		tc_custom = 'tauceti/modules/_makeshift_items_TG/makeshift_tg.dmi'
+		icon = 'tauceti/items/makeshift_items_TG/makeshift_tg.dmi'
+		tc_custom = 'tauceti/items/makeshift_items_TG/makeshift_tg.dmi'
 		icon_state = "spearglass0"
 		name = "spear"
 		desc = "A haphazardly-constructed yet still deadly weapon of ancient design."
@@ -31,8 +31,8 @@
 
 
 /obj/item/weapon/unfinished_prod
-		icon = 'tauceti/modules/_makeshift_items_TG/makeshift_tg.dmi'
-		tc_custom = 'tauceti/modules/_makeshift_items_TG/makeshift_tg.dmi'
+		icon = 'tauceti/items/makeshift_items_TG/makeshift_tg.dmi'
+		tc_custom = 'tauceti/items/makeshift_items_TG/makeshift_tg.dmi'
 		name = "unfinished prod"
 		desc = "A rod with wirecutters on top."
 		icon_state = "stunprod_nocell"
@@ -55,8 +55,8 @@
 		del(src)
 
 /obj/item/weapon/melee/baton/cattleprod
-		icon = 'tauceti/modules/_makeshift_items_TG/makeshift_tg.dmi'
-		tc_custom = 'tauceti/modules/_makeshift_items_TG/makeshift_tg.dmi'
+		icon = 'tauceti/items/makeshift_items_TG/makeshift_tg.dmi'
+		tc_custom = 'tauceti/items/makeshift_items_TG/makeshift_tg.dmi'
 		name = "stunprod"
 		desc = "An improvised stun baton."
 		icon_state = "stunprod"
@@ -70,8 +70,8 @@
 		icon_state = "stunprod"
 
 /obj/item/weapon/wirerod
-		icon = 'tauceti/modules/_makeshift_items_TG/makeshift_tg.dmi'
-		tc_custom = 'tauceti/modules/_makeshift_items_TG/makeshift_tg.dmi'
+		icon = 'tauceti/items/makeshift_items_TG/makeshift_tg.dmi'
+		tc_custom = 'tauceti/items/makeshift_items_TG/makeshift_tg.dmi'
 		icon_state = "wirerod"
 		name = "wired rod"
 		desc = "A rod with some wire wrapped around the top. It'd be easy to attach something to the top bit."
