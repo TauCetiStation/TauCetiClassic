@@ -14,6 +14,14 @@
 		hitsound = 'sound/weapons/bladeslice.ogg'
 		attack_verb = list("attacked", "poked", "jabbed", "torn", "gored")
 
+/obj/item/clothing/head/helmet/battlebucket
+	icon = 'tauceti/items/makeshift_items_TG/makeshift_tg.dmi'
+	tc_custom = 'tauceti/items/makeshift_items_TG/makeshift_tg.dmi'
+	name = "Battle Bucket"
+	desc = "This one protects your head and makes your enemies tremble."
+	icon_state = "battle_bucket"
+	item_state = "bucket"
+	armor = list(melee = 20, bullet = 5, laser = 5,energy = 3, bomb = 5, bio = 0, rad = 0)
 
 /obj/item/weapon/handcuffs/cable/attackby(var/obj/item/I, mob/user as mob)
 	..()
