@@ -85,6 +85,9 @@
 	if(user != owner)
 		return
 
+	if(stat)
+		return
+
 //	owner = user//временно
 //	owner.dog_owner = src
 
@@ -196,6 +199,9 @@
 	if(!.)
 		return
 
+	if(stat)
+		return
+
 //	world << loyalty
 
 	switch(dog_state)
@@ -243,13 +249,13 @@
 	if(prob(5))
 		for (var/atom/A in view(1,src))
 			if(istype(A, /obj/machinery/bot/secbot))
-				custom_emote(1, "sniffs [A]")
+				custom_emote(1, "growls at [A]")
 				bark()
 				turn_to(A)
 			else if(istype(A, /obj/item))
 				if(prob(20))
 					turn_to(A)
-					custom_emote(1, "growls [A]")
+					custom_emote(1, "sniffs [A]")
 
 	if(prob(20))
 		if(owner && dog_state != DOG_STAT_FIGHT)
@@ -294,7 +300,7 @@
 	if(owner != user || owner == possible_target)
 		return
 
-	if(get_dist(src, owner) >= 5 || get_dist(src, possible_target) > 14)
+	if(get_dist(src, owner) >= 14 || get_dist(src, possible_target) > 14)
 		return
 
 	if(ismob(possible_target))
@@ -419,12 +425,21 @@
 			attempt++
 			var/dist = get_dist(src, H)
 			if(dist <= 1)
-				if(clown || prob(5))
+				if(clown || prob(100))//5!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 					custom_emote(1, "nibbles the groin of")
 					var/dam_zone = "groin"
 					var/datum/organ/external/affecting = H.get_organ(ran_zone(dam_zone))
 					H.apply_damage(50, BRUTE, affecting, H.run_armor_check(affecting, "melee"))
 					H.gender = "female"
+					var/turf/simulated/T = H.loc
+					if(istype(T))
+						T.add_blood_floor(H)
+					T = get_step(H,pick(NORTH, SOUTH))	//все в спешке, да еще и достало. охх.
+					if(istype(T))
+						T.add_blood_floor(H)
+					T = get_step(H,pick(EAST, WEST))
+					if(istype(T))
+						T.add_blood_floor(H)
 					break
 
 	enemy_list += H
@@ -449,13 +464,14 @@
 
 	if(user == owner)
 		custom_emote(1, "whines")
-		if(loyalty < 50)
-			if(prob(60-loyalty))
+		if(loyalty < 60)
+			if(prob(100-loyalty))
 				owner = null
 				owner.dog_owner = null
 		else
 			if(loyalty >= 10) loyalty -= 10
 	else
+		enemy_list += user
 		state_update(DOG_STAT_FIGHT, user)
 
 	..()
@@ -470,15 +486,18 @@
 		else
 			if(loyalty > 0)
 				loyalty--
-				if(prob(60 - loyalty))
-					change_owner(M)
+			if(loyalty < 30 && prob(60 - loyalty))
+				change_owner(M)
 
 //в процессе работы, пока такой вариант с лояльностью сойдет
 /mob/living/simple_animal/dog/proc/change_owner(mob/living/carbon/human/M as mob)
 
+	if(owner)
+		owner.dog_owner = null
+
 	owner = M
 	bark()
-	loyalty = 50
+	loyalty = 30
 	owner.dog_owner = src
 
 	return 1
