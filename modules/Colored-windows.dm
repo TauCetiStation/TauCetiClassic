@@ -52,4 +52,15 @@ var/global/wcDw
 	for(var/obj/machinery/door/window/D in locate(/area/mine/dwarf))
 		D.color = wcDw
 
+	//IGNORE COLORED
+	var/wsIgnoreList = list(
+		/area/shuttle
+		)
+
+	for(var/A in wsIgnoreList)
+		for(var/obj/structure/window/W in locate(A))
+			W.color = null
+		for(var/obj/machinery/door/window/D in locate(A))
+			D.color = null
+
 	return 1
