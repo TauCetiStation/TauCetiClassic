@@ -13,7 +13,11 @@
 		flags = NOSHIELD
 		hitsound = 'sound/weapons/bladeslice.ogg'
 		attack_verb = list("attacked", "poked", "jabbed", "torn", "gored")
-
+		
+/obj/item/weapon/twohanded/spear/update_icon()
+	icon_state = "spearglass[wielded]"
+		
+		
 /obj/item/clothing/head/helmet/battlebucket
 	icon = 'tauceti/items/makeshift_items_TG/makeshift_tg.dmi'
 	tc_custom = 'tauceti/items/makeshift_items_TG/makeshift_tg.dmi'
