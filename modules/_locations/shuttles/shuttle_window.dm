@@ -1,5 +1,6 @@
 /obj/structure/window/reinforced/shuttle
 	icon = 'tauceti/modules/_locations/shuttles/shuttle.dmi'
+	dir = SOUTHWEST
 
 /obj/structure/window/reinforced/shuttle/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(!istype(W)) return//I really wish I did not need this
@@ -45,11 +46,19 @@
 
 /obj/structure/window/reinforced/shuttle/mining
 	icon = 'tauceti/modules/_locations/shuttles/shuttle_mining.dmi'
+	dir = SOUTHWEST
+	icon_state = "1"
 
 /obj/structure/window/reinforced/shuttle/default
 	name = "shuttle window"
 	icon = 'icons/obj/podwindows.dmi'
-	icon_state = "1"
+	//icon_state = "1"
+	basestate = ""
+	dir = SOUTHWEST
+
+/obj/structure/window/reinforced/shuttle/update_icon()
+
+	return
 
 /obj/structure/shuttle/window/new_shuttle
 	icon = 'tauceti/modules/_locations/shuttles/shuttle.dmi'

@@ -59,8 +59,8 @@ var/global/wcDw
 
 	for(var/A in wsIgnoreList)
 		for(var/obj/structure/window/W in locate(A))
-			W.color = null
+			W.color = "ffffff"
 		for(var/obj/machinery/door/window/D in locate(A))
-			D.color = null
+			D.color = "ffffff"
 
 	return 1
