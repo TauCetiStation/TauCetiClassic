@@ -18,7 +18,7 @@
 	name = "improvised explosive assembly"
 	desc = "An igniter stuffed into an aluminium shell."
 	w_class = 2.0
-	icon = 'icons/obj/grenade.dmi'
+	icon = 'tauceti/items/makeshift_items_TG/makeshift_tg.dmi'
 	icon_state = "improvised_grenade"
 	item_state = "flashbang"
 	throw_speed = 4
@@ -44,7 +44,7 @@
 			user << "<span  class='notice'>You've filled the makeshift explosive with welding fuel.</span>"
 			playsound(src.loc, 'sound/effects/refill.ogg', 50, 1, -6)
 			desc = "An improvised explosive assembly. Filled to the brim with 'Explosive flavor'"
-			overlays += image('icons/obj/grenade.dmi', icon_state = "improvised_grenade_filled")
+			overlays += image('tauceti/items/makeshift_items_TG/makeshift_tg.dmi', icon_state = "improvised_grenade_filled")
 			return
 
 
@@ -56,7 +56,7 @@
 			assembled = 2
 			user << "<span  class='notice'>You wire the igniter to detonate the fuel.</span>"
 			desc = "A weak, improvised explosive."
-			overlays += image('icons/obj/grenade.dmi', icon_state = "improvised_grenade_wired")
+			overlays += image('tauceti/items/makeshift_items_TG/makeshift_tg.dmi', icon_state = "improvised_grenade_wired")
 			name = "improvised explosive"
 			active = 0
 			det_time = rand(30,80)
@@ -66,7 +66,7 @@
 		if(clown_check(user))
 			user << "<span class='warning'>You light the [name]!</span>"
 			active = 1
-			overlays -= image('icons/obj/grenade.dmi', icon_state = "improvised_grenade_filled")
+			overlays -= image('tauceti/items/makeshift_items_TG/makeshift_tg.dmi', icon_state = "improvised_grenade_filled")
 			icon_state = initial(icon_state) + "_active"
 			assembled = 3
 			add_fingerprint(user)
