@@ -280,7 +280,7 @@ atom/proc/AddLuminosityRGB(R, G, B)
 	RLum += R
 	GLum += G
 	BLum += B
-	luminosity = max(max(R,G),B)
+	luminosity = max(max(RLum,GLum),BLum)
 	NormaliseLuminosity()
 	light.changed = 1
 
@@ -289,7 +289,7 @@ atom/proc/RemLuminosityRGB(R, G, B)
 	RLum -= R
 	GLum -= G
 	BLum -= B
-	luminosity = max(max(R,G),B)
+	luminosity = max(max(RLum,GLum),BLum)
 	NormaliseLuminosity()
 	light.changed = 1
 
@@ -319,14 +319,10 @@ atom/proc/NormaliseLuminosity()
 	RLum_t = min(RLum, CAP)
 	GLum_t = min(GLum, CAP)
 	BLum_t = min(BLum, CAP)
-	RLum_t = max(RLum_t, 0)
-	GLum_t = max(GLum_t, 0)
-	BLum_t = max(BLum_t, 0)
 	RLum_t = round(RLum_t)
 	GLum_t = round(GLum_t)
 	BLum_t = round(BLum_t)
 	luminosity_t = min(luminosity, CAP)
-	luminosity_t = max(luminosity_t, 0)
 	luminosity_t = round(luminosity_t)
 	if(!light) light = new(src)
 
