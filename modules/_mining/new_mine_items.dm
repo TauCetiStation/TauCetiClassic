@@ -17,10 +17,10 @@
 	drill_verb = "drill"
 	digspeed = 30
 	hardness = 3
-	reliability = 100
-	crit_fail = 5
-	var/max_reliability = 100
-	var/drill_cost = 50
+	reliability = 200
+	crit_fail = 3
+	var/max_reliability = 200
+	var/drill_cost = 15
 	var/mode = 0
 	var/state = 0
 	var/obj/item/weapon/cell/power_supply
@@ -198,10 +198,10 @@
 					M.ex_act(1)
 			if(target)
 				if(target.toughness && target.toughness > power)
-					explosion(location, -1, -1, 2, 3)
+					explosion(location, -1, 1, 2)
 					target.toughness -= impact
 				else
-					explosion(location, -1, -1, 2, 3)
+					explosion(location, -1, 2, 2)
 					target.ex_act(1)
 				if (src)
 					del(src)

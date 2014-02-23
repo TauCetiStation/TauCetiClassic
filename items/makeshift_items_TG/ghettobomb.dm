@@ -83,7 +83,7 @@
 
 /obj/item/weapon/grenade/iedcasing/prime() //Blowing that can up
 	//update_mob()
-	explosion(src.loc,-1,0,2)
+	explosion(src.loc,-1,0,6)
 	del(src)
 
 /obj/item/weapon/grenade/iedcasing/examine()
