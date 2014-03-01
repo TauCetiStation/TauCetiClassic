@@ -7,6 +7,7 @@
 	anchored = 1
 	var/obj/item/device/pda/storedpda = null
 	var/list/colorlist = list()
+	var/list/tc_pda_list = list(/obj/item/device/pda/forensic)
 
 
 /obj/machinery/pdapainter/update_icon()
@@ -72,6 +73,10 @@
 			return
 		if(!in_range(src, user))
 			return
+		if(istype(P, /obj/item/device/pda/forensic))
+			storedpda.icon = 'tauceti/icons/obj/devices.dmi'
+		else
+			storedpda.icon = 'icons/obj/pda.dmi'
 
 		storedpda.icon_state = P.icon_state
 		storedpda.desc = P.desc
