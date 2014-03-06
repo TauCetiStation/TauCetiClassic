@@ -38,7 +38,7 @@ var/lastMove = 0
 		toArea = locate(/area/shuttle/arrival/transit)
 		curr_location = fromArea
 
-		fromArea.move_contents_to(toArea)
+		fromArea.move_contents_to(toArea, null, WEST)
 		for(var/mob/M in toArea)
 			if(M.client)
 				spawn(0)
@@ -54,7 +54,7 @@ var/lastMove = 0
 		fromArea = locate(/area/shuttle/arrival/transit)
 		toArea = locate(/area/shuttle/arrival/station)
 
-		fromArea.move_contents_to(toArea)
+		fromArea.move_contents_to(toArea, null, WEST)
 		radio.autosay(arrival_note, "Arrivals Alert System")
 		for(var/mob/M in toArea)
 			if(M.client)
@@ -81,7 +81,7 @@ var/lastMove = 0
 		radio.autosay(department_note, "Arrivals Alert System")
 		curr_location = fromArea
 
-		fromArea.move_contents_to(toArea)
+		fromArea.move_contents_to(toArea, null, WEST)
 		for(var/mob/M in toArea)
 			if(M.client)
 				spawn(0)
@@ -97,7 +97,7 @@ var/lastMove = 0
 		fromArea = locate(/area/shuttle/arrival/transit)
 		toArea = locate(/area/shuttle/arrival/pre_game)
 
-		fromArea.move_contents_to(toArea)
+		fromArea.move_contents_to(toArea, null, WEST)
 		for(var/mob/M in toArea)
 			if(M.client)
 				spawn(0)
