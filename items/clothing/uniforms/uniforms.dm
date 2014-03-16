@@ -123,3 +123,30 @@
 	icon_state = "rosa_mob"
 	item_state = "rosa"
 	item_color = "rosa"
+
+/obj/item/clothing/under/blacktango
+	name = "black tango dress"
+	desc = "Filled with latin fire."
+	icon = 'tauceti/items/clothing/uniforms/misc.dmi'
+	tc_custom = 'tauceti/items/clothing/uniforms/misc.dmi'
+	icon_state = "tango"
+	item_state = "wcoat"
+	item_color = "tango"
+
+/obj/item/clothing/under/rank/centcom_officer_old
+	desc = "It's a jumpsuit worn by Centcom Officers."
+	name = "\improper Centcom officer's jumpsuit"
+	icon = 'tauceti/items/clothing/uniforms/misc.dmi'
+	tc_custom = 'tauceti/items/clothing/uniforms/misc.dmi'
+	icon_state = "officer_old"
+	item_state = "g_suit"
+	item_color = "officer_old"
+
+/obj/item/clothing/under/rank/centcom_commander_old
+	desc = "It's a jumpsuit worn by Centcom's highest-tier Commanders."
+	name = "\improper Centcom officer's jumpsuit"
+	icon = 'tauceti/items/clothing/uniforms/misc.dmi'
+	tc_custom = 'tauceti/items/clothing/uniforms/misc.dmi'
+	icon_state = "centcom_old"
+	item_state = "dg_suit"
+	item_color = "centcom_old"

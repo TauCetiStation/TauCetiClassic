@@ -12,3 +12,53 @@
 	on = !on
 	icon_state = "shitcuritron_[on]"
 	user.update_inv_head()
+
+/obj/item/clothing/head/beret/rosa
+	name = "white beret"
+	icon = 'tauceti/items/clothing/hats/hats.dmi'
+	tc_custom = 'tauceti/items/clothing/hats/hats.dmi'
+	icon_state = "rosas_hat"
+	item_state = "helmet"
+	flags = FPRINT | TABLEPASS
+
+/obj/item/clothing/head/helmet/warden/blue
+	name = "warden's hat"
+	desc = "It's a special helmet issued to the Warden of a securiy force. Protects the head from impacts."
+	icon = 'tauceti/items/clothing/hats/hats.dmi'
+	tc_custom = 'tauceti/items/clothing/hats/hats.dmi'
+	icon_state = "oldwardenhelm"
+	item_state = "helmet"
+
+/obj/item/clothing/head/fedora
+	name = "\improper fedora"
+	icon = 'tauceti/items/clothing/hats/hats.dmi'
+	tc_custom = 'tauceti/items/clothing/hats/hats.dmi'
+	icon_state = "fedora"
+	item_state = "fedora"
+	desc = "A really cool hat if you're a mobster. A really lame hat if you're not."
+	flags = FPRINT|TABLEPASS
+
+/obj/item/clothing/head/sombrero
+	name = "sombrero"
+	icon = 'tauceti/items/clothing/hats/hats.dmi'
+	tc_custom = 'tauceti/items/clothing/hats/hats.dmi'
+	icon_state = "sombrero"
+	item_state = "helmet"
+	desc = "You feel mexican just wearing this."
+
+/obj/item/clothing/head/sombrero/green
+	name = "green sombrero"
+	icon = 'tauceti/items/clothing/hats/hats.dmi'
+	tc_custom = 'tauceti/items/clothing/hats/hats.dmi'
+	icon_state = "greensombrero"
+	item_state = "greensombrero"
+	desc = "As elegant as a dancing cactus."
+
+/obj/item/clothing/head/sombrero/shamebrero
+	name = "shamebrero"
+	icon = 'tauceti/items/clothing/hats/hats.dmi'
+	tc_custom = 'tauceti/items/clothing/hats/hats.dmi'
+	icon_state = "shamebrero"
+	item_state = "shamebrero"
+	desc = "You never asked for this."
+
