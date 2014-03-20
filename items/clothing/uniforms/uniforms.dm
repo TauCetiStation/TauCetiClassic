@@ -150,3 +150,48 @@
 	icon_state = "centcom_old"
 	item_state = "dg_suit"
 	item_color = "centcom_old"
+
+//Mafia
+/obj/item/clothing/under/mafia
+	name = "mafia outfit"
+	desc = "The business of the mafia is business."
+	icon = 'tauceti/items/clothing/uniforms/mafia.dmi'
+	tc_custom = 'tauceti/items/clothing/uniforms/mafia.dmi'
+	icon_state = "mafia"
+	item_state = "mafia"
+	item_color = "mafia"
+
+/obj/item/clothing/under/mafia/vest
+	name = "mafia vest"
+	desc = "Extreme problems often require extreme solutions."
+	icon_state = "mafia_vest"
+	item_state = "mafia_vest"
+	item_color = "mafia_vest"
+
+/obj/item/clothing/under/mafia/white
+	name = "white mafia outfit"
+	desc = "The best defense against the treacherous is treachery."
+	icon_state = "mafia_white"
+	item_state = "mafia_white"
+	item_color = "mafia_white"
+
+/obj/item/clothing/under/mafia/sue
+	name = "mafia vest"
+	desc = "The business is born into."
+	icon_state = "sue_vest"
+	item_state = "sue_vest"
+	item_color = "sue_vest"
+
+/obj/item/clothing/under/mafia/tan
+	name = "leather mafia outfit"
+	desc = "The big drum sounds good only from a distance."
+	icon_state = "mafia_tan"
+	item_state = "mafia_tan"
+	item_color = "mafia_tan"
+
+/obj/item/clothing/under/mafia/flappers
+	name = "flappers"
+	desc = "Nothing like the roaring 20s, flapping the night away on the dance floor."
+	icon_state = "flapper"
+	item_state = "flapper"
+	item_color = "flapper"

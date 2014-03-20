@@ -38,3 +38,20 @@
 	tc_custom = 'tauceti/items/clothing/suits/suits.dmi'
 	icon_state = "ponchoshame"
 	item_state = "ponchoshame"
+
+//Mafia
+/obj/item/clothing/suit/browntrenchcoat
+	name = "brown trench coat"
+	desc = "It makes you stand out. Just the opposite of why it's typically worn. Nice try trying to blend in while wearing it."
+	icon = 'tauceti/items/clothing/suits/mafia.dmi'
+	tc_custom = 'tauceti/items/clothing/suits/mafia.dmi'
+	icon_state = "trenchcoat_brown"
+	item_state = "trenchcoat_brown"
+
+/obj/item/clothing/suit/blacktrenchcoat
+	name = "black trench coat"
+	desc = "That shade of black just makes you look a bit more evil. Good for those mafia types."
+	icon = 'tauceti/items/clothing/suits/mafia.dmi'
+	tc_custom = 'tauceti/items/clothing/suits/mafia.dmi'
+	icon_state = "trenchcoat_black"
+	item_state = "trenchcoat_black"

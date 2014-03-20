@@ -62,3 +62,20 @@
 	item_state = "shamebrero"
 	desc = "You never asked for this."
 
+//Mafia
+/obj/item/clothing/head/fedora_mafia
+	name = "fedora"
+	desc = "Someone wearing this definitely makes them cool"
+	icon = 'tauceti/items/clothing/hats/mafia.dmi'
+	tc_custom = 'tauceti/items/clothing/hats/mafia.dmi'
+	icon_state = "hat_black"
+
+/obj/item/clothing/head/fedora_mafia/white
+	name = "white fedora"
+	desc = "Someone wearing this definitely makes them cool"
+	icon_state = "hat_white"
+
+/obj/item/clothing/head/fedora_mafia/brown
+ 	name = "brown fedora"
+ 	desc = "Someone wearing this definitely makes them cool"
+ 	icon_state = "hat_brown"
