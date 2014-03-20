@@ -130,7 +130,7 @@ datum/pipeline
 		var/datum/gas_mixture/air_sample = air.remove_ratio(mingle_volume/air.volume)
 		air_sample.volume = mingle_volume
 
-		if(istype(target) && target.zone)
+		if(istype(target) && target.zone && !iscatwalk(target))
 			//Have to consider preservation of group statuses
 			var/datum/gas_mixture/turf_copy = new
 
@@ -213,7 +213,7 @@ datum/pipeline
 				air.temperature -= heat/total_heat_capacity
 		if(network)
 			network.update = 1
-			
+
 	proc/radiate_heat(surface, thermal_conductivity)
 		var/total_heat_capacity = air.heat_capacity()
 		var/heat = STEFAN_BOLTZMANN_CONSTANT * surface * air.temperature ** 4 * thermal_conductivity

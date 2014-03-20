@@ -44,7 +44,7 @@ obj/machinery/atmospherics/pipe/simple/heat_exchanging
 			..()
 		else
 			var/environment_temperature = 0
-			if(istype(loc, /turf/simulated/))
+			if(istype(loc, /turf/simulated/) && !iscatwalk(loc))
 				if(loc:blocks_air)
 					environment_temperature = loc:temperature
 				else

@@ -1387,3 +1387,8 @@ var/list/WALLITEMS = list(
 
 /proc/format_text(text)
 	return replacetext(replacetext(text,"\proper ",""),"\improper ","")
+
+/proc/iscatwalk(atom/A)
+	if(istype(A, /turf/simulated/floor/plating/airless/catwalk))
+		return 1
+	return 0
