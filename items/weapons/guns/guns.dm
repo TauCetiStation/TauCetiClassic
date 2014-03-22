@@ -52,7 +52,15 @@ obj/item/ammo_box/magazine/tommygunm45
 
 /obj/item/weapon/gun/projectile/shotgun/repeater/pump(mob/M)
 	playsound(M, 'tauceti/sounds/weapon/repeater_reload.wav', 60, 0)
-	..()
+	pumped = 0
+	if(chambered)
+		chambered.loc = get_turf(src)
+		chambered = null
+	if(!magazine.ammo_count())	return 0
+	var/obj/item/ammo_casing/AC = magazine.get_round()
+	chambered = AC
+	update_icon()
+	return 1  //полностью копипастить ради одного звука?
 
 /obj/item/ammo_box/magazine/internal/repeater
 	name = "repeater internal magazine"
