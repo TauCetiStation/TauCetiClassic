@@ -79,3 +79,19 @@
  	name = "brown fedora"
  	desc = "Someone wearing this definitely makes them cool"
  	icon_state = "hat_brown"
+
+/obj/item/clothing/head/western
+	name = "western hat"
+	icon = 'tauceti/items/clothing/hats/hats.dmi'
+	tc_custom = 'tauceti/items/clothing/hats/hats.dmi'
+	icon_state = "western_hat"
+	item_state = "western_hat"
+	flags = FPRINT|TABLEPASS
+
+/obj/item/clothing/head/indiana
+	name = "leather hat"
+	icon = 'tauceti/items/clothing/hats/hats.dmi'
+	tc_custom = 'tauceti/items/clothing/hats/hats.dmi'
+	icon_state = "indiana_hat"
+	item_state = "indiana_hat"
+	flags = FPRINT|TABLEPASS
