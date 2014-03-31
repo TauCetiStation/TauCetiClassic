@@ -8,7 +8,7 @@ var/lastMove = 0
 
 /obj/machinery/computer/arrival_shuttle
 	name = "Arrival Shuttle Console"
-	icon = 'computer.dmi'
+	icon = 'icons/obj/computer.dmi'
 	icon_state = "shuttle"
 	var/arrival_note = "Arrival shuttle docked with the NSS Exodus."
 	var/department_note = "Arrival shuttle left the NSS Exodus."
@@ -165,7 +165,7 @@ var/lastMove = 0
 
 /obj/machinery/computer/arrival_shuttle/dock
 	name = "Arrival Shuttle Communication Console"
-	icon = 'computer.dmi'
+	icon = 'icons/obj/computer.dmi'
 	icon_state = "shuttle"
 
 /obj/machinery/computer/arrival_shuttle/dock/attack_hand(user as mob)

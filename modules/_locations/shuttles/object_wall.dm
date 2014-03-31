@@ -1,3 +1,4 @@
+//костыль, в будущем что-то сделать с этим
 /obj/structure/object_wall
 	name = "shuttle wall"
 	desc = "A huge chunk of metal and electronics used to construct shuttle."
@@ -23,7 +24,10 @@
 	proc/update_nearby_tiles(need_rebuild) //Copypasta from airlock code
 		if(!air_master)
 			return 0
-		air_master.AddTurfToUpdate(get_turf(src))
+
+		for(var/turf/simulated/turf in locs)
+			air_master.mark_for_update(turf)
+
 		return 1
 
 /obj/structure/object_wall/mining
