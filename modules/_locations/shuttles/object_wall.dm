@@ -24,10 +24,7 @@
 	proc/update_nearby_tiles(need_rebuild) //Copypasta from airlock code
 		if(!air_master)
 			return 0
-
-		for(var/turf/simulated/turf in locs)
-			air_master.mark_for_update(turf)
-
+		air_master.AddTurfToUpdate(get_turf(src))
 		return 1
 
 /obj/structure/object_wall/mining

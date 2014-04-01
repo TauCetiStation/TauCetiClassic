@@ -9,9 +9,9 @@
 	siemens_coefficient = 0.5
 	permeability_coefficient = 0.04
 	cold_protection = HANDS
-	min_cold_protection_temperature = GLOVES_MIN_COLD_PROTECTION_TEMPERATURE
+	min_cold_protection_temperature = GLOVES_MIN_COLD_PROTECITON_TEMPERATURE
 	heat_protection = HANDS
-	max_heat_protection_temperature = GLOVES_MAX_HEAT_PROTECTION_TEMPERATURE
+	max_heat_protection_temperature = GLOVES_MAX_HEAT_PROTECITON_TEMPERATURE
 
 /obj/item/clothing/gloves/fingerless
 	desc = "A pair of gloves. They don't seem to have fingers."
