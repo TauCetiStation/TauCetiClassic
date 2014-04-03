@@ -15,7 +15,7 @@
 	icon_state = "C"
 
 /obj/structure/sign/morgue_disposal
-	name = "\improper TO THE MORGUE"
+	name = "\improper sign TO THE MORGUE"
 	desc = "Current disposal unit leads straight to the morgue. Bring out your dead!"
 	icon = 'tauceti/items/signs/signs.dmi'
 	icon_state = "morgue_disposal"
