@@ -22,13 +22,6 @@
 	/*BYOND loads resource files at compile time if they are ''. This means you can't really manipulate them dynamically.
 	Tried doing it dynamically at first but its more trouble than its worth. Would have saved many lines tho.*/
 	switch(note)
-		if("B#2")	soundfile = 'tauceti/items/musical_instruments/sound/guitar/woody.ogg'//Real guitar doesn't support this notes
-		if("Cn3")	soundfile = 'tauceti/items/musical_instruments/sound/guitar/gotwood.ogg'
-		if("C#3")	soundfile = 'tauceti/items/musical_instruments/sound/guitar/woody.ogg'
-		if("Db3")	soundfile = 'tauceti/items/musical_instruments/sound/guitar/gotwood.ogg'//This one doesn't either
-		if("Dn3")	soundfile = 'tauceti/items/musical_instruments/sound/guitar/woody.ogg'
-		if("D#3")	soundfile = 'tauceti/items/musical_instruments/sound/guitar/gotwood.ogg'
-		if("Eb3")	soundfile = 'tauceti/items/musical_instruments/sound/guitar/woody.ogg'//That's just sound of hitting wood to make beats
 		if("En3")	soundfile = 'tauceti/items/musical_instruments/sound/guitar/En3.ogg'
 		if("E#3")	soundfile = 'tauceti/items/musical_instruments/sound/guitar/E#3.ogg'
 		if("Fb3")	soundfile = 'tauceti/items/musical_instruments/sound/guitar/Fb3.ogg'
@@ -106,6 +99,7 @@
 		if("Bb6")	soundfile = 'tauceti/items/musical_instruments/sound/guitar/Bb6.ogg'
 		if("Bn6")	soundfile = 'tauceti/items/musical_instruments/sound/guitar/Bn6.ogg'
 		if("Cb7")	soundfile = 'tauceti/items/musical_instruments/sound/guitar/Cb7.ogg'
+		else soundfile = pick('tauceti/items/musical_instruments/sound/guitar/woody.ogg','tauceti/items/musical_instruments/sound/guitar/gotwood.ogg')
 	hearers(15, get_turf(src)) << sound(soundfile)
 
 /obj/item/device/guitar/proc/playsong()
