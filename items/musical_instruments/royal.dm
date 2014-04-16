@@ -1,6 +1,6 @@
 /obj/structure/device/piano/royal
 	name = "space grand piano"
-	desc = "This is a grand space piano. Like a regular space piano, but way more grand!"
+	desc = "Like a regular space piano, but way more grand!"
 	icon_state = "piano"
 
 /obj/structure/device/piano/royal/New()
