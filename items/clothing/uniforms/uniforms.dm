@@ -16,6 +16,7 @@
 	desc = "It has a Forensics rank stripe on it."
 	name = "Forensics Jumpsuit"
 	icon = 'tauceti/items/clothing/uniforms/misc.dmi'
+	tc_custom = 'tauceti/items/clothing/uniforms/misc.dmi'
 	icon_state = "forensicsred"
 	item_state = "r_suit"
 	item_color = "forensicsred"
