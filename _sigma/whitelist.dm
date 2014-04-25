@@ -60,12 +60,12 @@ client/verb/global_whitelist_info()
 		return
 
 	var/first = 1	//ради отсутствия лишних запятых
-	while(query.NextRow())
+	while(stat_query.NextRow())
 		if(!first)
 			output += ", "
-		else
-			first = 0
-			output += query.item[1]
+
+		first = 0
+		output += stat_query.item[1]
 
 	output += "</table>"
 
@@ -86,7 +86,7 @@ client/verb/global_whitelist_invite()
 		return
 
 	if(global_whitelist_check(key))
-		usr << "\red [key] already in the whitelist"
+		usr << "\red [key] is already in the whitelist"
 		return
 
 	var/DBQuery/query = dbcon.NewQuery("SELECT rank, invites FROM global_whitelist WHERE ckey = '[inviter]'")
@@ -136,6 +136,8 @@ client/verb/global_whitelist_invite()
 		log_game("SQL ERROR, WHITELIST. Error : \[[err]\]\n")
 		return
 
+	world << "<font size='3' color='purple'>OOC-Info: <b>[key]</b> was invited by <b>[inviter]</b></font>"
+
 client/verb/global_whitelist_status()
 	set name = "Status"
 	set category = "Whitelist"
@@ -154,4 +156,4 @@ client/verb/global_whitelist_status()
 	while(query.NextRow())
 		invites = query.item[1]
 
-	alert("You have [invites] invitations")
+	alert("You have <b>[invites]</b> invitations")
