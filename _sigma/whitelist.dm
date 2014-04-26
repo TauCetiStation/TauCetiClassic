@@ -69,7 +69,7 @@ client/verb/global_whitelist_info()
 
 	output += "</table>"
 
-	usr << browse(output, "window=globalwhitelistinfo")
+	usr << browse(output, "window=globalwhitelistinfo;size=300x150")
 
 client/verb/global_whitelist_invite()
 	set name = "Invite"
@@ -157,3 +157,4 @@ client/verb/global_whitelist_status()
 		invites = query.item[1]
 
 	alert("You have <b>[invites]</b> invitations")
+	//usr << browse("You have <b>[invites]</b> invitations","window=globalwhiteliststat")
