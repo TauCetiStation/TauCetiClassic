@@ -156,5 +156,5 @@ client/verb/global_whitelist_status()
 	while(query.NextRow())
 		invites = query.item[1]
 
-	alert("You have <b>[invites]</b> invitations")
+	alert("You have [invites] invitations")
 	//usr << browse("You have <b>[invites]</b> invitations","window=globalwhiteliststat")
