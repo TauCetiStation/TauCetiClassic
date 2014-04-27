@@ -9,7 +9,7 @@ proc/credits()
 			continue
 
 		if(user.mind.key && user.mind.name && user.mind.assigned_role)
-			output += "[user.mind.key] as [user.mind.name] the [user.mind.assigned_role] [(user.mind.special_role)?"antagonist ":""]\n"
+			output += "[user.mind.key] as [user.mind.name] the [user.mind.assigned_role] [(user.mind.special_role)?"antagonist ":""]<br>"
 
 	output += "</div></table>"
 

@@ -113,7 +113,7 @@ client/verb/global_whitelist_invite()
 	if(usr_rank == 0)
 		inv_rank = input("Select rank:", , 1) in list(1,2,3,4,5)
 	else
-		inv_rank = usr_rank - 1
+		inv_rank = usr_rank + 1
 
 	switch(inv_rank)
 		if(1) inv_invites = 4
@@ -136,7 +136,7 @@ client/verb/global_whitelist_invite()
 		log_game("SQL ERROR, WHITELIST. Error : \[[err]\]\n")
 		return
 
-	world << "<font size='3' color='purple'>OOC-Info: <b>[key]</b> was invited by <b>[inviter]</b></font>"
+	world << "<font color='purple'><span class='ooc'><span class='prefix'>OOC-Info:</span> <i>[key]</i> was invited by <i>[inviter]</i></span></font>"
 
 client/verb/global_whitelist_status()
 	set name = "Status"
