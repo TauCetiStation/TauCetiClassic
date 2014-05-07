@@ -666,6 +666,7 @@ var/list/liftable_structures = list(\
 #define BE_RAIDER		2048
 #define BE_PLANT		4096
 #define BE_MEME			8192
+#define BE_MUTINEER   	16384
 
 var/list/be_special_flags = list(
 	"Traitor" = BE_TRAITOR,
@@ -681,7 +682,8 @@ var/list/be_special_flags = list(
 	"Ninja" = BE_NINJA,
 	"Raider" = BE_RAIDER,
 	"Diona" = BE_PLANT,
-	"Meme" = BE_MEME
+	"Meme" = BE_MEME,
+	"Mutineer" = BE_MUTINEER
 	)
 
 #define AGE_MIN 17			//youngest a character can be
