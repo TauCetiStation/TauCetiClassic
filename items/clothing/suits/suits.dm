@@ -55,3 +55,49 @@
 	tc_custom = 'tauceti/items/clothing/suits/mafia.dmi'
 	icon_state = "trenchcoat_black"
 	item_state = "trenchcoat_black"
+
+/obj/item/clothing/suit/storage/det_suit/max_payne
+	desc = "An 20th-century multi-purpose trenchcoat. Someone who wears this means serious business."
+	icon = 'tauceti/items/clothing/suits/suits.dmi'
+	tc_custom = 'tauceti/items/clothing/suits/suits.dmi'
+	icon_state = "maxcoat"
+
+/obj/item/clothing/suit/necromancer_hoodie
+	name = "necromancer hoodie"
+	desc = "This suit says to you 'hush'!"
+	icon = 'tauceti/items/clothing/suits/suits.dmi'
+	tc_custom = 'tauceti/items/clothing/suits/suits.dmi'
+	icon_state = "necromancer"
+	item_state = "necromancer"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
+
+/obj/item/clothing/suit/chaplain_hoodie/brown
+	name = "brown robe"
+	icon = 'tauceti/items/clothing/suits/suits.dmi'
+	tc_custom = 'tauceti/items/clothing/suits/suits.dmi'
+	icon_state = "brown_robe"
+	item_state = "brown_robe"
+
+/obj/item/clothing/suit/chaplain_hoodie/green
+	name = "green robe"
+	icon = 'tauceti/items/clothing/suits/suits.dmi'
+	tc_custom = 'tauceti/items/clothing/suits/suits.dmi'
+	icon_state = "green_robe"
+	item_state = "green_robe"
+
+/obj/item/clothing/suit/chaplain_hoodie/black
+	name = "black robe"
+	icon = 'tauceti/items/clothing/suits/suits.dmi'
+	tc_custom = 'tauceti/items/clothing/suits/suits.dmi'
+	icon_state = "black_robe"
+
+/obj/item/clothing/suit/armor/vest/cuirass
+	name = "cuirass"
+	desc = "A metal armor, which cover torso"
+	icon = 'tauceti/items/clothing/suits/suits.dmi'
+	tc_custom = 'tauceti/items/clothing/suits/suits.dmi'
+	icon_state = "cuirass"
+	item_state = "cuirass"
+	blood_overlay_type = "armor"
+	flags = FPRINT | TABLEPASS | THICKMATERIAL
+	armor = list(melee = 50, bullet = 30, laser = 10, energy = 10, bomb = 25, bio = 0, rad = 0)

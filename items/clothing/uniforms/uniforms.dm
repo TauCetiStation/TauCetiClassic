@@ -197,6 +197,13 @@
 	item_state = "flapper"
 	item_color = "flapper"
 
+/obj/item/clothing/under/det/max_payne
+	icon = 'tauceti/items/clothing/uniforms/misc.dmi'
+	tc_custom = 'tauceti/items/clothing/uniforms/misc.dmi'
+	icon_state = "max"
+	item_color = "max"
+	flags = FPRINT | TABLEPASS
+
 /obj/item/clothing/under/fluff/cowboy
 	name = "western suit"
 	desc = "Revolver is your best friend."
@@ -206,6 +213,16 @@
 	item_state = "cowboy"
 	item_color = "cowboy"
 	flags = FPRINT | TABLEPASS
+
+/obj/item/clothing/under/fluff/cowboy/brown
+	icon_state = "cowboy_brown"
+	item_state = "cowboy_brown"
+	item_color = "cowboy_brown"
+
+/obj/item/clothing/under/fluff/cowboy/grey
+	icon_state = "cowboy_grey"
+	item_state = "cowboy_grey"
+	item_color = "cowboy_grey"
 
 /obj/item/clothing/under/fluff/indiana
 	name = "leather suit"

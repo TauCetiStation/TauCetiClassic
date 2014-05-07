@@ -88,6 +88,11 @@
 	item_state = "western_hat"
 	flags = FPRINT|TABLEPASS
 
+/obj/item/clothing/head/western/cowboy
+	name = "cowboy hat"
+	icon_state = "cowboy_hat"
+	item_state = "cowboy_hat"
+
 /obj/item/clothing/head/indiana
 	name = "leather hat"
 	icon = 'tauceti/items/clothing/hats/hats.dmi'
@@ -95,3 +100,25 @@
 	icon_state = "indiana_hat"
 	item_state = "indiana_hat"
 	flags = FPRINT|TABLEPASS
+
+/obj/item/clothing/head/necromancer_hood
+	name = "necromancer's hood"
+	desc = "It's hood that covers the head."
+	icon = 'tauceti/items/clothing/hats/hats.dmi'
+	tc_custom = 'tauceti/items/clothing/hats/hats.dmi'
+	icon_state = "necromancer"
+	item_state = "necromancer"
+	flags = FPRINT|TABLEPASS|HEADCOVERSEYES|BLOCKHAIR
+	siemens_coefficient = 0.9
+
+/obj/item/clothing/head/chaplain_hood/brown
+	name = "brown hood"
+	icon = 'tauceti/items/clothing/hats/hats.dmi'
+	tc_custom = 'tauceti/items/clothing/hats/hats.dmi'
+	icon_state = "brown_hood"
+
+/obj/item/clothing/head/chaplain_hood/green
+	name = "green hood"
+	icon = 'tauceti/items/clothing/hats/hats.dmi'
+	tc_custom = 'tauceti/items/clothing/hats/hats.dmi'
+	icon_state = "green_hood"
