@@ -60,26 +60,24 @@
 		return
 
 	var/verb = say_quote(message)
-	var/message_mode = null
 
+	//parse radio key and consume it
+	var/message_mode = parse_message_mode(message, "general")
+	if (message_mode)
+		if (message_mode == "general")
+			message = trim(copytext(message,2))
+		else
+			message = trim(copytext(message,3))
 
-	if(copytext(message,1,2) == ";")
-		message_mode = "general"  			// I don't know why but regular radio = fuck you we ain't broadcasting, pAI mode was what was in old say code.
-		message = trim(copytext(message,2))
+	if(message_mode && bot_type == IS_ROBOT && message_mode != "binary" && !R.is_component_functioning("radio"))
+		src << "\red Your radio isn't functional at this time."
+		return
 
-	else if(length(message) >= 2)
-		var/channel_prefix = copytext(message, 1 ,3)
-		if(!message_mode)
-			message_mode = department_radio_keys[channel_prefix]
-
-	if(message_mode && bot_type == IS_ROBOT)
-		if(message_mode != "binary" && !R.is_component_functioning("radio"))
-			src << "\red Your radio isn't functional at this time."
-			return
-
-
-	if(message_mode && message_mode != "general")
-		message = trim(copytext(message,3))
+	//parse language key and consume it
+	var/datum/language/speaking = parse_language(message)
+	if (speaking)
+		verb = speaking.speech_verb
+		message = copytext(message,3)
 
 	switch(message_mode)
 		if("department")
@@ -132,8 +130,7 @@
 						P.radio.talk_into(src,message,message_mode,verb)
 				return
 
-
-	return ..(html_decode(message),null,verb) // TODO:CYRILLIC
+	return ..(html_decode(message),speaking,verb)
 
 //For holopads only. Usable by AI.
 /mob/living/silicon/ai/proc/holopad_talk(var/message)
