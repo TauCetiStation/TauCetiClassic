@@ -262,6 +262,10 @@
 	else
 		icon = 'icons/mob/robots.dmi'
 
+	//languages
+	for (var/language_name in module.language_names)
+		add_language(language_name)
+
 	//Custom_sprite check and entry
 	if (custom_sprite == 1)
 		module_sprites["Custom"] = "[src.ckey]-[modtype]"
@@ -1103,10 +1107,10 @@
 
 /mob/living/silicon/robot/Topic(href, href_list)
 	..()
-	
+
 	if(usr != src)
 		return
-	
+
 	if (href_list["showalerts"])
 		robot_alerts()
 		return
@@ -1120,7 +1124,7 @@
 		var/obj/item/O = locate(href_list["act"])
 		if (!istype(O) || !(O.loc == src || O.loc == src.module))
 			return
-		
+
 		if(activated(O))
 			src << "Already activated"
 			return
