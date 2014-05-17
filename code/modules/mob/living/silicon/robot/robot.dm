@@ -263,8 +263,7 @@
 		icon = 'icons/mob/robots.dmi'
 
 	//languages
-	for (var/language_name in module.language_names)
-		add_language(language_name)
+	module.add_languages(src)
 
 	//Custom_sprite check and entry
 	if (custom_sprite == 1)
