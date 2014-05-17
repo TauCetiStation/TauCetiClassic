@@ -1,13 +1,14 @@
 //Lallander was here
 /mob/living/carbon/human/whisper(message as text)
+	var/verb = "whispers"
+	var/alt_name = ""
+	var/message_range = 1
+	var/eavesdropping_range = 2
+	var/watching_range = 5
+	var/italics = 1
 
 	if(say_disabled)	//This is here to try to identify lag problems
 		usr << "\red Speech is currently admin-disabled."
-		return
-
-	message = trim(sanitize_plus(copytext(message,1,MAX_MESSAGE_LEN)))
-
-	if (!message || silent || miming)
 		return
 
 	log_whisper("[src.name]/[src.key] : [message]")
@@ -30,20 +31,33 @@
 	if (src.stat)
 		return
 
-	var/alt_name = ""
-	if (istype(src, /mob/living/carbon/human) && src.name != GetVoice())
-		var/mob/living/carbon/human/H = src
-		alt_name = " (as [H.get_id_name("Unknown")])"
+	message = trim(sanitize_plus(copytext(message,1,MAX_MESSAGE_LEN)))	//made consistent with say
+
+	//parse the language code and consume it
+	var/datum/language/speaking = parse_language(message)
+	if (speaking)
+		verb = speaking.speech_verb
+		message = copytext(message,3)
+
+	message = capitalize(trim(message))
+
+	//TODO: handle_speech_problems for silent
+	if (!message || silent || miming)
+		return
+
+	if(name != GetVoice())
+		alt_name = "(as [get_id_name("Unknown")])"
+
 	// Mute disability
+	//TODO: handle_speech_problems
 	if (src.sdisabilities & MUTE)
 		return
 
+	//TODO: handle_speech_problems
 	if (istype(src.wear_mask, /obj/item/clothing/mask/muzzle))
 		return
 
-	var/italics = 1
-	var/message_range = 1
-
+	//looks like this only appears in whisper. Should it be elsewhere as well? Maybe handle_speech_problems?
 	if(istype(src.wear_mask, /obj/item/clothing/mask/gas/voice/space_ninja)&&src.wear_mask:voice=="Unknown")
 		if(copytext(message, 1, 2) != "*")
 			var/list/temp_message = text2list(message, " ")
@@ -64,16 +78,19 @@
 			message = replacetext(message, "u", "µ")
 			message = replacetext(message, "b", "ß")
 
+	//TODO: handle_speech_problems
 	if (src.stuttering)
 		message = stutter(message)
 
-	for (var/obj/O in view(message_range, src))
-		spawn (0)
-			if (O)
-				O.hear_talk(src, message)
-
 	var/list/listening = hearers(message_range, src)
 	listening |= src
+
+	//ghosts
+	for (var/mob/M in dead_mob_list)	//does this include players who joined as observers as well?
+		if (!(M.client))
+			continue
+		if(M.stat == DEAD && M.client && (M.client.prefs.toggles & CHAT_GHOSTEARS))
+			listening |= M
 
 	//Pass whispers on to anything inside the immediate listeners.
 	for(var/mob/L in listening)
@@ -85,75 +102,37 @@
 			if(istype(C,/mob/living))
 				listening += C
 
-	var/list/eavesdropping = hearers(2, src)
+	//pass on the message to objects that can hear us.
+	for (var/obj/O in view(message_range, src))
+		spawn (0)
+			if (O)
+				O.hear_talk(src, message)	//O.hear_talk(src, message, verb, speaking)
+
+	var/list/eavesdropping = hearers(eavesdropping_range, src)
 	eavesdropping -= src
 	eavesdropping -= listening
 
-	var/list/watching  = hearers(5, src)
+	var/list/watching  = hearers(watching_range, src)
 	watching  -= src
 	watching  -= listening
 	watching  -= eavesdropping
 
-	var/list/heard_a = list() // understood us
-	var/list/heard_b = list() // didn't understand us
+	//now mobs
+	var/speech_bubble_test = say_test(message)
+	var/image/speech_bubble = image('icons/mob/talk.dmi',src,"h[speech_bubble_test]")
+	spawn(30) del(speech_bubble)
 
-	for (var/mob/M in listening)
-		if (M.say_understands(src))
-			heard_a += M
-		else
-			heard_b += M
+	for(var/mob/M in listening)
+		M << speech_bubble
+		M.hear_say(message, verb, speaking, alt_name, italics, src)
 
-	var/rendered = null
+	if (eavesdropping.len)
+		var/new_message = stars(message)	//hopefully passing the message twice through stars() won't hurt... I guess if you already don't understand the language, when they speak it too quietly to hear normally you would be able to catch even less.
+		for(var/mob/M in eavesdropping)
+			M << speech_bubble
+			M.hear_say(new_message, verb, speaking, alt_name, italics, src)
 
-	for (var/mob/M in watching)
-		if (M.say_understands(src))
-			rendered = "<span class='game say'><span class='name'>[src.name]</span> whispers something.</span>"
-		else
-			rendered = "<span class='game say'><span class='name'>[src.voice_name]</span> whispers something.</span>"
-		M.show_message(rendered, 2)
-
-	if (length(heard_a))
-		var/message_a = sanitize_plus_chat(message)
-
-		if (italics)
-			message_a = "<i>[message_a]</i>"
-		//This appears copied from carbon/living say.dm so the istype check for mob is probably not needed. Appending for src is also not needed as the game will check that automatically.
-		rendered = "<span class='game say'><span class='name'>[GetVoice()]</span>[alt_name] whispers, <span class='message'>\"[message_a]\"</span></span>"
-
-		for (var/mob/M in heard_a)
+	if (watching.len)
+		var/rendered = "<span class='game say'><span class='name'>[src.name]</span> whispers something.</span>"
+		for (var/mob/M in watching)
 			M.show_message(rendered, 2)
-
-	if (length(heard_b))
-		var/message_b
-
-		message_b = sanitize_plus_chat(stars(message))
-
-		if (italics)
-			message_b = "<i>[message_b]</i>"
-
-		rendered = "<span class='game say'><span class='name'>[src.voice_name]</span> whispers, <span class='message'>\"[message_b]\"</span></span>"
-
-		for (var/mob/M in heard_b)
-			M.show_message(rendered, 2)
-
-	for (var/mob/M in eavesdropping)
-		if (M.say_understands(src))
-			var/message_c
-			message_c = sanitize_plus_chat(stars(message))
-			rendered = "<span class='game say'><span class='name'>[GetVoice()]</span>[alt_name] whispers, <span class='message'>\"[message_c]\"</span></span>"
-			M.show_message(rendered, 2)
-		else
-			rendered = "<span class='game say'><span class='name'>[src.voice_name]</span> whispers something.</span>"
-			M.show_message(rendered, 2)
-
-	if (italics)
-		message = "<i>[message]</i>"
-	rendered = "<span class='game say'><span class='name'>[GetVoice()]</span>[alt_name] whispers, <span class='message'>\"[sanitize_plus_chat(message)]\"</span></span>"
-
-	for (var/mob/M in dead_mob_list)
-		if (!(M.client))
-			continue
-		if (M.stat > 1 && !(M in heard_a) && (M.client.prefs.toggles & CHAT_GHOSTEARS))
-			M.show_message(rendered, 2)
-
-
