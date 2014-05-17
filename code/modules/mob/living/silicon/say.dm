@@ -86,10 +86,10 @@
 					AI.holopad_talk(message)
 				if(IS_ROBOT)
 					log_say("[key_name(src)] : [message]")
-					R.radio.talk_into(src,message,message_mode,verb)
+					R.radio.talk_into(src,message,message_mode,verb,speaking)
 				if(IS_PAI)
 					log_say("[key_name(src)] : [message]")
-					P.radio.talk_into(src,message,message_mode,verb)
+					P.radio.talk_into(src,message,message_mode,verb,speaking)
 			return
 
 		if("binary")
@@ -110,10 +110,10 @@
 					src << "Yeah, not yet, sorry"
 				if(IS_ROBOT)
 					log_say("[key_name(src)] : [message]")
-					R.radio.talk_into(src,message,null,verb)
+					R.radio.talk_into(src,message,null,verb,speaking)
 				if(IS_PAI)
 					log_say("[key_name(src)] : [message]")
-					P.radio.talk_into(src,message,null,verb)
+					P.radio.talk_into(src,message,null,verb,speaking)
 			return
 
 		else
@@ -124,10 +124,10 @@
 						return
 					if(IS_ROBOT)
 						log_say("[key_name(src)] : [message]")
-						R.radio.talk_into(src,message,message_mode,verb)
+						R.radio.talk_into(src,message,message_mode,verb,speaking)
 					if(IS_PAI)
 						log_say("[key_name(src)] : [message]")
-						P.radio.talk_into(src,message,message_mode,verb)
+						P.radio.talk_into(src,message,message_mode,verb,speaking)
 				return
 
 	return ..(html_decode(message),speaking,verb)
