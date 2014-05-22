@@ -999,12 +999,13 @@ datum/preferences
 					if("language")
 						//var/languages_available
 						var/list/new_languages = list("None")
+						var/datum/species/S = all_species[species]
 
 						//I don't understant, how it works(and does not), so..
 						/*if(config.usealienwhitelist)
 							for(var/L in all_languages)
 								var/datum/language/lang = all_languages[L]
-								if((!(lang.flags & RESTRICTED)) && (is_alien_whitelisted(user, L)||(!( lang.flags & WHITELISTED ))))
+								if((!(lang.flags & RESTRICTED)) && (is_alien_whitelisted(user, L)||(!( lang.flags & WHITELISTED ))||(S && (L in S.secondary_langs))))
 									new_languages += lang
 									languages_available = 1
 
