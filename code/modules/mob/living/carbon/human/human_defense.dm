@@ -53,6 +53,7 @@ emp_act
 
 	if(check_shields(P.damage, "the [P.name]"))
 		P.on_hit(src, 2, def_zone)
+		handle_suit_punctures(P.damage_type, P.damage)
 		return 2
 
 //BEGIN BOOK'S TASER NERF.
@@ -342,3 +343,14 @@ emp_act
 				if(C.flags & THICKMATERIAL)
 					thickmaterial = 1
 	return thickmaterial
+
+/mob/living/carbon/human/proc/handle_suit_punctures(var/damtype, var/damage)
+
+	if(!wear_suit) return
+	if(!istype(wear_suit,/obj/item/clothing/suit/space)) return
+	if(damtype != BURN && damtype != BRUTE) return
+
+	var/obj/item/clothing/suit/space/SS = wear_suit
+	var/penetrated_dam = max(0,(damage - max(0,(SS.breach_threshold - SS.damage))))
+
+	if(penetrated_dam) SS.create_breaches(damtype, penetrated_dam)
