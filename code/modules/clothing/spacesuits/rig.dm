@@ -12,7 +12,14 @@
 	icon_action_button = "action_hardhat"
 	heat_protection = HEAD
 	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECTION_TEMPERATURE
+
+	//Species-specific stuff.
 	species_restricted = list("exclude","Unathi","Tajaran","Skrell","Diona","Vox")
+	sprite_sheets = list(
+		"Unathi" = 'icons/mob/species/unathi/helmet.dmi',
+		"Tajaran" = 'icons/mob/species/tajaran/helmet.dmi',
+		"Skrell" = 'icons/mob/species/skrell/helmet.dmi'
+		)
 
 	attack_self(mob/user)
 		if(!isturf(user.loc))
@@ -52,10 +59,17 @@
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/device/suit_cooling_unit,/obj/item/weapon/storage/bag/ore,/obj/item/device/t_scanner,/obj/item/weapon/pickaxe, /obj/item/weapon/rcd)
 	heat_protection = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
 	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECTION_TEMPERATURE
+
 	species_restricted = list("exclude","Unathi","Tajaran","Diona","Vox")
+	sprite_sheets = list(
+		"Unathi" = 'icons/mob/species/unathi/suit.dmi',
+		"Tajaran" = 'icons/mob/species/tajaran/suit.dmi',
+		"Skrell" = 'icons/mob/species/skrell/suit.dmi'
+		)
 	var/has_magboots = 0
 	var/magpulse = 0
 	var/mag_slowdown = 3
+
 	//Breach thresholds, should ideally be inherited by most (if not all) hardsuits.
 	breach_threshold = 18
 	can_breach = 1
@@ -107,20 +121,23 @@
 
 	var/mob/living/carbon/human/H
 
-	H = helmet.loc
-	if(istype(H))
-		if(helmet && H.head == helmet)
-			helmet.canremove = 1
-			H.drop_from_inventory(helmet)
-			helmet.loc = src
+	if(helmet)
+		H = helmet.loc
+		if(istype(H))
+			if(helmet && H.head == helmet)
+				helmet.canremove = 1
+				H.drop_from_inventory(helmet)
+				helmet.loc = src
 
-	H = boots.loc
-	if(istype(H))
-		if(boots && H.shoes == boots)
-			boots.canremove = 1
-			H.drop_from_inventory(boots)
-			boots.loc = src
+	if(boots)
+		H = boots.loc
+		if(istype(H))
+			if(boots && H.shoes == boots)
+				boots.canremove = 1
+				H.drop_from_inventory(boots)
+				boots.loc = src
 
+/*
 /obj/item/clothing/suit/space/rig/verb/get_mounted_device()
 
 	set name = "Deploy Mounted Device"
@@ -161,6 +178,7 @@
 	if(!active_device)
 		usr << "You have no device currently deployed."
 		return
+*/
 
 /obj/item/clothing/suit/space/rig/verb/toggle_helmet()
 
@@ -260,6 +278,7 @@
 			else
 				return ..()
 
+		/*
 		else if(target_zone == "l_arm" || target_zone == "r_arm" || target_zone == "l_hand" || target_zone == "r_hand")
 
 			//Installing a component into or modifying the contents of the hands.
@@ -270,6 +289,7 @@
 
 			if(!mounted_devices)
 				return
+		*/
 
 		else //wat
 			return ..()
@@ -310,6 +330,7 @@
 	item_state = "ce_helm"
 	item_color = "white"
 	max_heat_protection_temperature = FIRE_HELMET_MAX_HEAT_PROTECTION_TEMPERATURE
+	sprite_sheets = null
 
 /obj/item/clothing/suit/space/rig/elite
 	icon_state = "rig-white"
@@ -317,7 +338,7 @@
 	desc = "An advanced suit that protects against hazardous, low pressure environments. Shines with a high polish."
 	item_state = "ce_hardsuit"
 	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECTION_TEMPERATURE
-
+	sprite_sheets = null
 
 //Mining rig
 /obj/item/clothing/head/helmet/space/rig/mining
@@ -340,9 +361,9 @@
 /obj/item/clothing/head/helmet/space/rig/syndi
 	name = "blood-red hardsuit helmet"
 	desc = "An advanced helmet designed for work in special operations. Property of Gorlex Marauders."
-	icon_state = "rig0-syndi"
+	icon_state = "rig0-syndie"
 	item_state = "syndie_helm"
-	item_color = "syndi"
+	item_color = "syndie"
 	armor = list(melee = 60, bullet = 35, laser = 30,energy = 15, bomb = 35, bio = 100, rad = 60)
 	siemens_coefficient = 0.6
 	var/obj/machinery/camera/camera
@@ -364,7 +385,7 @@
 		usr << "This helmet has a built-in camera. It's [camera ? "" : "in"]active."
 
 /obj/item/clothing/suit/space/rig/syndi
-	icon_state = "rig-syndi"
+	icon_state = "rig-syndie"
 	name = "blood-red hardsuit"
 	desc = "An advanced suit that protects against injuries during special operations. Property of Gorlex Marauders."
 	item_state = "syndie_hardsuit"
@@ -387,6 +408,7 @@
 	unacidable = 1 //No longer shall our kind be foiled by lone chemists with spray bottles!
 	armor = list(melee = 40, bullet = 20, laser = 20,energy = 20, bomb = 35, bio = 100, rad = 60)
 	siemens_coefficient = 0.7
+	sprite_sheets = null
 
 /obj/item/clothing/suit/space/rig/wizard
 	icon_state = "rig-wiz"
@@ -398,7 +420,7 @@
 	unacidable = 1
 	armor = list(melee = 40, bullet = 20, laser = 20,energy = 20, bomb = 35, bio = 100, rad = 60)
 	siemens_coefficient = 0.7
-
+	sprite_sheets = null
 
 //Medical Rig
 /obj/item/clothing/head/helmet/space/rig/medical
