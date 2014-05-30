@@ -1,6 +1,6 @@
 /obj/item/device/harmonica
 	name = "harmonica"
-	desc = "Much blues. Wow"
+	desc = "Much blues. so amaze. wow."
 	icon = 'tauceti/items/musical_instruments/harmonica.dmi'
 	icon_state = "harmonica"
 	item_state = "harmonica"
@@ -32,9 +32,11 @@
 	melody.volume = 50
 	melody.frequency = rand(32000, 55000)
 
-	hearers(15, get_turf(src)) << melody
-	hearers(15, get_turf(src)) << pick("[user] plays a bluesy tune with his harmonica!", "[user] plays a cool melody with his harmonica!", \
-		"[user] plays a delightful tune with his harmonica!", "[user]  plays a chilling tune with his harmonica!", "[user] plays a upbeat tune with his harmonica!")//Thanks Goonstation.
+	var/turf/source = get_turf(src)
+	for(var/mob/M in hearers(15, source))
+		M.playsound_local(source, file(soundfile), 100, falloff = 5)
+		M << pick("[user] plays a bluesy tune with his harmonica!", "[user] plays a warm tune with his harmonica!", \
+		"[user] plays a delightful tune with his harmonica!", "[user] plays a chilling tune with his harmonica!", "[user] plays a upbeat tune with his harmonica!")//Thanks Goonstation.
 
 	spawn(cooldown)
 		spam_flag = 0

@@ -100,7 +100,10 @@
 		if("Bn6")	soundfile = 'tauceti/items/musical_instruments/sound/guitar/Bn6.ogg'
 		if("Cb7")	soundfile = 'tauceti/items/musical_instruments/sound/guitar/Cb7.ogg'
 		else soundfile = pick('tauceti/items/musical_instruments/sound/guitar/woody.ogg','tauceti/items/musical_instruments/sound/guitar/gotwood.ogg')
-	hearers(15, get_turf(src)) << sound(soundfile)
+	//hearers(15, get_turf(src)) << sound(soundfile)
+	var/turf/source = get_turf(src)
+	for(var/mob/M in hearers(15, source))
+		M.playsound_local(source, file(soundfile), 100, falloff = 5)
 
 /obj/item/device/guitar/proc/playsong()
 	do
