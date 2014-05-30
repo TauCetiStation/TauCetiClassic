@@ -37,7 +37,7 @@
 
 	var/id = input("Book ID:") as num
 
-	var/DBQuery/query = dbcon_old.NewQuery("SELECT author, title FROM library WHERE id=[id]")
+	var/DBQuery/query = dbcon_old.NewQuery("SELECT author, title FROM library WHERE id='[id]'")
 	if(!query.Execute())
 		usr << query.ErrorMsg()
 
@@ -52,7 +52,7 @@
 	if(input != "Confirm")
 		return
 
-	query = dbcon_old.NewQuery("DELETE FROM library WHERE id=[id]")
+	query = dbcon_old.NewQuery("DELETE FROM library WHERE id='[id]'")
 	if(!query.Execute())
 		usr << query.ErrorMsg()
 
@@ -68,7 +68,7 @@
 
 	var/id = input("Book ID:") as num
 
-	var/DBQuery/query = dbcon_old.NewQuery("SELECT * FROM library WHERE id=[id]")
+	var/DBQuery/query = dbcon_old.NewQuery("SELECT * FROM library WHERE id='[id]'")
 	query.Execute()
 
 	//копипаст из машины в библиотеке, зачем тут while - понятия не имею

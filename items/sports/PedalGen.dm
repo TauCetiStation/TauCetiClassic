@@ -19,7 +19,7 @@
 
 /obj/structure/stool/bed/chair/pedalgen
 	name = "Pedal Generator"
-	icon = 'tauceti/items/pedal_generator/pedalgen.dmi'
+	icon = 'tauceti/items/sports/pedalgen.dmi'
 	icon_state = "pedalgen"
 	anchored = 0
 	density = 0
