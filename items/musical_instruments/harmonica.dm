@@ -5,7 +5,7 @@
 	icon_state = "harmonica"
 	item_state = "harmonica"
 	force = 5
-	var/channel
+	var/harmonica_channel
 	var/spam_flag = 0
 	var/cooldown = 70
 
@@ -18,23 +18,18 @@
 
 
 /obj/item/device/harmonica/New()
-	channel = rand(1000, 1024)
+	harmonica_channel = rand(1000, 1024)
 
 /obj/item/device/harmonica/proc/play(mob/living/carbon/user as mob)
 	if(spam_flag) return
 
 	spam_flag = 1
 
-	var/sound/melody = sound(file("tauceti/items/musical_instruments/sound/harmonica/fharp[rand(1,8)].ogg"))
-
-	melody.wait = 0 //No queue
-	melody.channel = channel
-	melody.volume = 50
-	melody.frequency = rand(32000, 55000)
+	var/melody = file("tauceti/items/musical_instruments/sound/harmonica/fharp[rand(1,8)].ogg")
 
 	var/turf/source = get_turf(src)
 	for(var/mob/M in hearers(15, source))
-		M.playsound_local(source, file(soundfile), 100, falloff = 5)
+		M.playsound_local(source, melody, 50, 1, falloff = 5, channel = harmonica_channel)
 		M << pick("[user] plays a bluesy tune with his harmonica!", "[user] plays a warm tune with his harmonica!", \
 		"[user] plays a delightful tune with his harmonica!", "[user] plays a chilling tune with his harmonica!", "[user] plays a upbeat tune with his harmonica!")//Thanks Goonstation.
 
@@ -45,10 +40,10 @@
 
 /obj/item/device/harmonica/dropped(mob/user)
 
-	var/sound/melody = null
-	melody.channel = channel
+	var/sound/melody = sound()
+	melody.channel = harmonica_channel
 	hearers(20, get_turf(src)) << melody
 
 	spam_flag = 0
 
-	return
+	return ..()
