@@ -70,11 +70,11 @@ mineral/silver
 	ore_type = "metal"
 	ore_loss = 4
 
-mineral/plasma
-	name = "Plasma"
+mineral/phoron
+	name = "Phoron"
 	result_amount = 5
 	spread_chance = 25
-	ore = /obj/item/weapon/ore/plasma
+	ore = /obj/item/weapon/ore/phoron
 	ore_type = "crystal"
 	ore_loss = 3
 

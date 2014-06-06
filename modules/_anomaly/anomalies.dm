@@ -118,7 +118,7 @@
 	var/turf/simulated/T = get_turf(src)
 	if(istype(T))
 		var/datum/gas_mixture/payload = new
-		payload.toxins = 30
+		payload.phoron = 30
 		T.zone.air.merge(payload)
 		T.hotspot_expose(1000, CELL_VOLUME)
 
