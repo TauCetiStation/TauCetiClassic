@@ -77,7 +77,7 @@
 
 /mob/living/simple_animal/dog/proc/listen_command(var/message, var/mob/user as mob)
 
-	message = lowertext_tc(message)
+	message = lowertext_plus(message)
 
 	if(!message)
 		return

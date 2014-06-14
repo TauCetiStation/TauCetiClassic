@@ -60,12 +60,8 @@
 		usr << "\blue You can't post it all on board!"
 		return
 
-	t = checkhtml(t)
-
-	var/index = findtext(t, "____255_")
-	while(index)
-		t = copytext(t, 1, index) + "&#255;" + copytext(t, index+8)
-		index = findtext(t, "____255_")
+	//t = checkhtml(t)
+	t = sanitize_simple(html_encode(t), list("\n"="<BR>","ÿ"="&#255;"))
 
 	// check for exploits
 	for(var/bad in paper_blacklist)
@@ -75,7 +71,7 @@
 			message_admins("Chalkboard: [usr] tried to use forbidden word in [src]: [bad].")
 			return
 
-	t = replacetext(t, "\n", "<BR>")
+	//t = replacetext(t, "\n", "<BR>")
 	t = parsepencode(t) // Encode everything from pencode to html
 
 	if(!t)
