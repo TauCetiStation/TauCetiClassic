@@ -250,12 +250,12 @@ var/list/uplink_items = list()
 /datum/uplink_item/stealthy_tools
 	category = "Stealth and Camouflage Items"
 
-/datum/uplink_item/stealthy_tools/chameleon_jumpsuit
-	name = "Chameleon Jumpsuit"
-	desc = "A jumpsuit used to imitate the uniforms of Nanotrasen crewmembers."
-	item = /obj/item/clothing/under/chameleon
-	cost = 3
-	excludefrom = list(/datum/game_mode/nuclear)
+/datum/uplink_item/stealthy_tools/chameleon_kit
+	name = "Chameleon Kit"
+	desc = "A set of clothes used to imitate the uniforms of Nanotrasen crewmembers."
+	item = /obj/item/weapon/storage/box/syndie_kit/chameleon
+	cost = 4
+//	excludefrom = list(/datum/game_mode/nuclear)
 /*
 /datum/uplink_item/stealthy_tools/chameleon_stamp
 	name = "Chameleon Stamp"
