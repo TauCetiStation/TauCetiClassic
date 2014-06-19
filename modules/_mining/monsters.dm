@@ -158,7 +158,7 @@
 	visible_message("<span class='danger'>The [P.name] was repelled by [src.name]'s girth!</span>")
 	return
 
-/mob/living/simple_animal/hostile/asteroid/goldgrub/Die()
+/mob/living/simple_animal/hostile/asteroid/goldgrub/death()
 	alerted = 0
 	..()
 
@@ -230,7 +230,7 @@
 	spawn(100)
 		del(src)
 
-/mob/living/simple_animal/hostile/asteroid/hivelordbrood/Die()
+/mob/living/simple_animal/hostile/asteroid/hivelordbrood/death()
 	del(src)
 
 /mob/living/simple_animal/hostile/asteroid/goliath
