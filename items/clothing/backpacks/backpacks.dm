@@ -8,3 +8,55 @@
 	volume = 40
 	throw_range = 7
 	w_class = 3
+
+/obj/item/weapon/storage/backpack/kitbag
+	name = "kitbag"
+	icon = 'tauceti/items/clothing/backpacks/backpacks.dmi'
+	tc_custom = 'tauceti/items/clothing/backpacks/backpacks.dmi'
+	icon_state = "kitbag"
+
+/obj/item/weapon/storage/backpack/medbag
+	name = "medbag"
+	icon = 'tauceti/items/clothing/backpacks/backpacks.dmi'
+	tc_custom = 'tauceti/items/clothing/backpacks/backpacks.dmi'
+	icon_state = "medbag"
+
+/obj/item/weapon/storage/backpack/alt
+	icon = 'tauceti/items/clothing/backpacks/backpacks.dmi'
+	tc_custom = 'tauceti/items/clothing/backpacks/backpacks.dmi'
+	icon_state = "backpack_alt"
+
+/obj/item/weapon/storage/backpack/backpack_vir
+	name = "virologist backpack"
+	desc = "A sterile backpack with virologist colours."
+	icon = 'tauceti/items/clothing/backpacks/backpacks.dmi'
+	tc_custom = 'tauceti/items/clothing/backpacks/backpacks.dmi'
+	icon_state = "backpack-vir"
+
+/obj/item/weapon/storage/backpack/backpack_chem
+	name = "chemist backpack"
+	desc = "A sterile backpack with chemist colours."
+	icon = 'tauceti/items/clothing/backpacks/backpacks.dmi'
+	tc_custom = 'tauceti/items/clothing/backpacks/backpacks.dmi'
+	icon_state = "backpack-chem"
+
+/obj/item/weapon/storage/backpack/backpack_gen
+	name = "geneticist backpack"
+	desc = "A sterile backpack with geneticist colours."
+	icon = 'tauceti/items/clothing/backpacks/backpacks.dmi'
+	tc_custom = 'tauceti/items/clothing/backpacks/backpacks.dmi'
+	icon_state = "backpack-gen"
+
+/obj/item/weapon/storage/backpack/backpack_tox
+	name = "scientist backpack"
+	desc = "Useful for holding research materials."
+	icon = 'tauceti/items/clothing/backpacks/backpacks.dmi'
+	tc_custom = 'tauceti/items/clothing/backpacks/backpacks.dmi'
+	icon_state = "backpack-tox"
+
+/obj/item/weapon/storage/backpack/backpack_hyd
+	name = "hydroponics backpack"
+	desc = "A green backpack for plant related work."
+	icon = 'tauceti/items/clothing/backpacks/backpacks.dmi'
+	tc_custom = 'tauceti/items/clothing/backpacks/backpacks.dmi'
+	icon_state = "backpack-hyd"
