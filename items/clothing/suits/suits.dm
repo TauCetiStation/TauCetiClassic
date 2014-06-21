@@ -101,3 +101,32 @@
 	blood_overlay_type = "armor"
 	flags = FPRINT | TABLEPASS | THICKMATERIAL
 	armor = list(melee = 50, bullet = 30, laser = 10, energy = 10, bomb = 25, bio = 0, rad = 0)
+
+/obj/item/clothing/suit/goodman_jacket
+	name = "Brown jacket"
+	desc = "A good jacket for good men."
+	icon = 'tauceti/items/clothing/suits/suits.dmi'
+	tc_custom = 'tauceti/items/clothing/suits/suits.dmi'
+	icon_state = "gmjacket"
+
+/obj/item/clothing/suit/goodman_jacket/verb/toggle()
+	set name = "Toggle Jacket Buttons"
+	set category = "Object"
+	set src in usr
+
+	if(!usr.canmove || usr.stat || usr.restrained())
+		return 0
+
+	if(src.icon_state == "gmjacket_open")
+		src.icon_state = "gmjacket"
+		src.item_state = "gmjacket"
+		usr << "You button up the suit jacket."
+	else if(src.icon_state == "gmjacket")
+		src.icon_state = "gmjacket_open"
+		src.item_state = "gmjacket_open"
+		usr << "You unbutton the suit jacket."
+	else
+		usr << "You button-up some imaginary buttons on your [src]."
+		return
+	usr.update_inv_wear_suit()
+

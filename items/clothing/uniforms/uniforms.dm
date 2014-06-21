@@ -4,6 +4,7 @@
 	icon_state = "robotics2"
 	item_state = "robotics"
 	item_color = "robotics2"
+	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
 
 /obj/item/clothing/under/rank/cadet
 	desc = ""
@@ -11,6 +12,7 @@
 	icon_state = "officertanclothes"
 	item_state = "r_suit"
 	item_color = "officertanclothes"
+	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
 
 /obj/item/clothing/under/rank/forensic_technician
 	desc = "It has a Forensics rank stripe on it."
@@ -21,7 +23,7 @@
 	item_state = "r_suit"
 	item_color = "forensicsred"
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
 	siemens_coefficient = 0.9
 
 /obj/item/clothing/under/fluff/terezi_suit
@@ -232,3 +234,21 @@
 	item_state = "indiana"
 	item_color = "indiana"
 	flags = FPRINT | TABLEPASS
+
+/obj/item/clothing/under/rank/capcamsole
+	desc = "It's a blue feminine camisole with some gold markings denoting the rank of \"Captain\" and gold aquila on it."
+	name = "captain's camisole"
+	icon = 'tauceti/items/clothing/uniforms/misc.dmi'
+	tc_custom = 'tauceti/items/clothing/uniforms/misc.dmi'
+	icon_state = "capcamisole"
+	item_state = "capcamisole"
+	item_color = "capcamisole"
+
+/obj/item/clothing/under/rank/goodman_shirt
+	name = "head of personnel's suit"
+	desc = "A good suit for good men."
+	icon = 'tauceti/items/clothing/uniforms/misc.dmi'
+	tc_custom = 'tauceti/items/clothing/uniforms/misc.dmi'
+	icon_state = "gmshirt"
+	item_state = "gmshirt"
+	item_color = "gmshirt"
