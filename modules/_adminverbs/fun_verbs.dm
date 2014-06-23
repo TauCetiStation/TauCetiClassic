@@ -44,20 +44,26 @@
 //	message_admins("[key_name_admin(src)] trying cancel color anomaly in [A]", 1)
 	log_admin("[key_name(src)] trying cancel color anomaly in [A]")
 
-
-//antidisco, NOIR
-/client/proc/Noir_anomaly()
-//	set category = "Fun"
-//	set name = "Noir anomaly(in dev!)"
+/client/proc/roll_dices()
+	set category = "Fun"
+	set name = "Roll Dice"
 	if(!check_rights(R_FUN))	return
 
-	for(var/atom/O in world)
-		if(O.icon)
-			if(O.color)
-				O.color = null
+	var/sum = input("How many times we throw?") as num
+	var/side = input("Select the number of sides.") as num
+	if(!side)
+		side = 6
+	if(!sum)
+		sum = 2
 
-			var/icon/newIcon = icon(O.icon)
-			newIcon.GrayScale()
-			O.icon = newIcon
+	var/dice = num2text(sum) + "d" + num2text(side)
 
-	log_admin("[key_name(src)] called noir anomaly")
+	if(alert("Do you want to inform the world about your game?",,"Yes", "No") == "Yes")
+		world << "<h2 style='text-color:#A50400'>The dice have been rolled by Gods!</h2>"
+
+	var/result = roll(dice)
+
+	if(alert("Do you want to inform the world about the result?",,"Yes", "No") == "Yes")
+		world << "<h2 style='text-color:#A50400\'>Gods rolled [dice], result is [result]</h2>"
+
+	message_admins("[key_name_admin(src)] rolled dice [dice], result is [result]", 1)
