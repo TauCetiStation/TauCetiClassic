@@ -61,7 +61,7 @@
 		return
 
 	//t = checkhtml(t)
-	t = sanitize_simple(html_encode(t), list("\n"="<BR>","ÿ"="&#255;"))
+	t = sanitize(t, list("\n"="\[br\]","ÿ"=LETTER_255))
 
 	// check for exploits
 	for(var/bad in paper_blacklist)
