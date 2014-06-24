@@ -312,14 +312,6 @@ This function restores all organs.
 	if(istype(used_weapon,/obj/item/weapon))
 		var/obj/item/weapon/W = used_weapon  //Sharp objects will always embed if they do enough damage.
 		if( (damage > (10*W.w_class)) && ( (sharp && !ismob(W.loc)) || prob(damage/W.w_class) ) )
-			organ.implants += W
-			visible_message("<span class='danger'>\The [W] sticks in the wound!</span>")
-			embedded_flag = 1
-			src.verbs += /mob/proc/yank_out_object
-			W.add_blood(src)
-			if(ismob(W.loc))
-				var/mob/living/H = W.loc
-				H.drop_item()
-			W.loc = src
+			organ.embed(W)
 
 	return 1
