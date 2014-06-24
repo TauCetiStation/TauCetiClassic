@@ -5,6 +5,7 @@
 	icon_state = "harmonica"
 	item_state = "harmonica"
 	force = 5
+	m_amt = 500
 	var/harmonica_channel
 	var/spam_flag = 0
 	var/cooldown = 70
