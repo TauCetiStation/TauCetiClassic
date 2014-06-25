@@ -98,8 +98,17 @@
 			user << "<span class='warning'>[src] does not have a power source!</span>"
 		else
 			user << "<span class='warning'>[src] is out of charge.</span>"
+	if(bcell && bcell.rigged)
+		bcell.explode()
+		if(user.hand)
+			user.update_inv_l_hand()
+		else
+			user.update_inv_r_hand()
+		del(src)
+		return
 	update_icon()
 	add_fingerprint(user)
+
 
 /obj/item/weapon/melee/cattleprod/proc/deductcharge(var/chrgdeductamt)
 	if(bcell)
@@ -201,7 +210,6 @@
 		if(bcell.reliability != 100 && prob(50/severity))
 			bcell.reliability -= 10 / severity
 	..()
-
 
 /obj/item/weapon/wirerod
 		icon = 'tauceti/items/makeshift_items_TG/makeshift_tg.dmi'
