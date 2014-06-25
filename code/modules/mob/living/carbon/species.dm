@@ -223,7 +223,7 @@
 	breath_type = "nitrogen"
 	poison_type = "oxygen"
 
-	flags = NO_SCAN | NO_BLOOD
+	flags = NO_SCAN | NO_BLOOD | IS_WHITELISTED
 
 	blood_color = "#2299FC"
 	flesh_color = "#808D11"
@@ -287,29 +287,6 @@
 		"head" = 'icons/mob/species/armalis/head.dmi',
 		"held" = 'icons/mob/species/armalis/held.dmi'
 		)
-
-/datum/species/vox/create_organs(var/mob/living/carbon/human/H)
-
-	..() //create organs first.
-
-	//Now apply cortical stack.
-	var/datum/organ/external/affected = H.get_organ("head")
-
-	//To avoid duplicates.
-	for(var/obj/item/weapon/implant/cortical/imp in H.contents)
-		affected.implants -= imp
-		del(imp)
-
-	var/obj/item/weapon/implant/cortical/I = new(H)
-	I.imp_in = H
-	I.implanted = 1
-	affected.implants += I
-	I.part = affected
-
-	if(ticker.mode && ( istype( ticker.mode,/datum/game_mode/heist ) ) )
-		var/datum/game_mode/heist/M = ticker.mode
-		M.cortical_stacks += I
-		M.raiders[H.mind] = I
 
 /datum/species/diona
 	name = "Diona"
