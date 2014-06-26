@@ -25,6 +25,7 @@
 	icon = 'tauceti/items/clothing/backpacks/backpacks.dmi'
 	tc_custom = 'tauceti/items/clothing/backpacks/backpacks.dmi'
 	icon_state = "backpack_alt"
+	item_state = "backpack"
 
 /obj/item/weapon/storage/backpack/backpack_vir
 	name = "virologist backpack"
@@ -32,6 +33,7 @@
 	icon = 'tauceti/items/clothing/backpacks/backpacks.dmi'
 	tc_custom = 'tauceti/items/clothing/backpacks/backpacks.dmi'
 	icon_state = "backpack-vir"
+	item_state = "backpack"
 
 /obj/item/weapon/storage/backpack/backpack_chem
 	name = "chemist backpack"
@@ -39,6 +41,7 @@
 	icon = 'tauceti/items/clothing/backpacks/backpacks.dmi'
 	tc_custom = 'tauceti/items/clothing/backpacks/backpacks.dmi'
 	icon_state = "backpack-chem"
+	item_state = "backpack"
 
 /obj/item/weapon/storage/backpack/backpack_gen
 	name = "geneticist backpack"
@@ -46,6 +49,7 @@
 	icon = 'tauceti/items/clothing/backpacks/backpacks.dmi'
 	tc_custom = 'tauceti/items/clothing/backpacks/backpacks.dmi'
 	icon_state = "backpack-gen"
+	item_state = "backpack"
 
 /obj/item/weapon/storage/backpack/backpack_tox
 	name = "scientist backpack"
@@ -53,6 +57,7 @@
 	icon = 'tauceti/items/clothing/backpacks/backpacks.dmi'
 	tc_custom = 'tauceti/items/clothing/backpacks/backpacks.dmi'
 	icon_state = "backpack-tox"
+	item_state = "backpack"
 
 /obj/item/weapon/storage/backpack/backpack_hyd
 	name = "hydroponics backpack"
@@ -60,3 +65,4 @@
 	icon = 'tauceti/items/clothing/backpacks/backpacks.dmi'
 	tc_custom = 'tauceti/items/clothing/backpacks/backpacks.dmi'
 	icon_state = "backpack-hyd"
+	item_state = "backpack"
