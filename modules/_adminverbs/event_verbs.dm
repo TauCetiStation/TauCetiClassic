@@ -1,8 +1,13 @@
 var/list/admin_verbs_event = list(
 	/client/proc/event_map_loader,
 	/client/proc/gateway_fix,
-	/client/proc/Noir_anomaly
+	/client/proc/Noir_anomaly,
+	/client/proc/centcom_barriers_toggle
 	)
+
+//////////////////////////////
+// Map loader
+//////////////////////////////
 
 /client/proc/event_map_loader()
 	set category = "Event"
@@ -51,6 +56,10 @@ var/list/admin_verbs_event = list(
 	message_admins("[key_name_admin(src)] loaded event-map [choice], zlevel [world.maxz]", 1)
 	log_admin("[key_name_admin(src)] loaded event-map [choice], zlevel [world.maxz]", 1)
 
+//////////////////////////////
+// Noir event
+//////////////////////////////
+
 /client/proc/Noir_anomaly()
 	set category = "Event"
 	set name = "Noir event(in dev!)"
@@ -71,6 +80,10 @@ var/list/admin_verbs_event = list(
 	log_admin("[key_name(src)] started noir event!", 1)
 	message_admins("\blue [key_name_admin(src)] started noir event!", 1)
 
+//////////////////////////////
+// Gateway
+//////////////////////////////
+
 /client/proc/gateway_fix()
 	set category = "Event"
 	set name = "Connect Gateways"
@@ -82,3 +95,44 @@ var/list/admin_verbs_event = list(
 
 	log_admin("[key_name(src)] connected gates", 1)
 	message_admins("\blue [key_name_admin(src)] connected gates", 1)
+
+//////////////////////////////
+// Velocity\Centcomm barriers
+//////////////////////////////
+var/centcom_barriers_stat = 1
+
+/client/proc/centcom_barriers_toggle()
+	set category = "Event"
+	set name = "Centcom Barriers Toggle"
+
+	centcom_barriers_stat = !centcom_barriers_stat
+
+	if(!check_rights(R_FUN))	return
+
+	for(var/obj/effect/landmark/trololo/L in world)
+		L.active = centcom_barriers_stat
+	for(var/obj/structure/centcom_barrier/B in world)
+		B.density = centcom_barriers_stat
+
+	log_admin("[key_name(src)] switched [centcom_barriers_stat? "on" : "off"] centcomm barriers", 1)
+	message_admins("\blue [key_name_admin(src)] switched [centcom_barriers_stat? "on" : "off"] centcomm barriers", 1)
+
+/obj/effect/landmark/trololo
+	name = "Rickroll"
+	var/melody = 'tauceti/sounds/Never_Gonna_Give_You_Up.ogg'
+	var/message = "<i>\blue It's not the door you're looking for...</i>"
+	var/active = 1
+	var/lchannel = 999
+
+	HasEntered(M as mob)
+		if(!active) return
+		if(istype(M, /mob/living/carbon))
+			M << sound(melody,0,1,lchannel,20)
+
+/obj/structure/centcom_barrier
+	name = "Invisible wall"
+	anchored = 1
+	density = 1
+	invisibility = 101
+	icon = 'icons/mob/screen1.dmi'
+	icon_state = "x3"

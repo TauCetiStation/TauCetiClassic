@@ -33,3 +33,6 @@
 
 /obj/structure/object_wall/standart
 	icon = 'tauceti/modules/_locations/shuttles/shuttle.dmi'
+
+/obj/structure/object_wall/pod
+	icon = 'tauceti/modules/_locations/shuttles/pod.dmi'
