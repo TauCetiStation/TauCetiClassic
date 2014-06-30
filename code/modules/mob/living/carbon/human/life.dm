@@ -564,7 +564,6 @@
 		// this will hurt you, but only once per 4 ticks, instead of once per tick.
 
 		if(exhaled_pp > safe_exhaled_max)
-
 			// If it's the first breath with too much CO2 in it, lets start a counter,
 			// then have them pass out after 12s or so.
 			if(!co2overloadtime)
@@ -583,7 +582,6 @@
 			// Lets give them some chance to know somethings not right though I guess.
 			if(prob(20))
 				spawn(0) emote("cough")
-
 		else
 			co2overloadtime = 0
 
@@ -1016,19 +1014,18 @@
 	proc/handle_chemicals_in_body()
 
 		if(reagents && !(species.flags & IS_SYNTHETIC)) //Synths don't process reagents.
-			var/alien = 0 //Not the best way to handle it, but neater than checking this for every single reagent proc.
-			if(species && species.name == "Diona")
-				alien = 1
-			else if(species && species.name == "Vox")
-				alien = 2
+			var/alien = 0
+			if(species && species.reagent_tag)
+				alien = species.reagent_tag
 			reagents.metabolize(src,alien)
 
-		var/total_phoronloss = 0
-		for(var/obj/item/I in src)
-			if(I.contaminated)
-				total_phoronloss += vsc.plc.CONTAMINATION_LOSS
+			var/total_phoronloss = 0
+			for(var/obj/item/I in src)
+				if(I.contaminated)
+					total_phoronloss += vsc.plc.CONTAMINATION_LOSS
+			if(!(status_flags & GODMODE)) adjustToxLoss(total_phoronloss)
+
 		if(status_flags & GODMODE)	return 0	//godmode
-		adjustToxLoss(total_phoronloss)
 
 		if(species.flags & REQUIRE_LIGHT)
 			var/light_amount = 0 //how much light there is in the place, affects receiving nutrition and healing
