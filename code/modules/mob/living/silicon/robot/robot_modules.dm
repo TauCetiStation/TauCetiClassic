@@ -233,7 +233,7 @@
 		R.add_reagent("beer2", 50)
 		src.emag.name = "Mickey Finn's Special Brew"
 		return
-	
+
 	add_languages(var/mob/living/silicon/robot/R)
 		//full set of languages
 		R.add_language("Sol Common", 1)
@@ -370,7 +370,7 @@
 			src.modules += W
 
 		return
-	
+
 	add_languages(var/mob/living/silicon/robot/R)
 		return	//not much ROM to spare in that tiny microprocessor!
 
@@ -395,3 +395,12 @@
 	LR.Charge(R)
 
 	return
+
+//checks whether this item is a module of the robot it is located in.
+/obj/item/proc/is_robot_module()
+	if (!istype(src.loc, /mob/living/silicon/robot))
+		return 0
+
+	var/mob/living/silicon/robot/R = src.loc
+
+	return (src in R.module.modules)
