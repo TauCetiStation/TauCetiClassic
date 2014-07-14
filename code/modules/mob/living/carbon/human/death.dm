@@ -59,7 +59,6 @@
 	jitteriness = 0
 	dog_owner = null
 
-
 	hud_updateflag |= 1 << HEALTH_HUD
 	hud_updateflag |= 1 << STATUS_HUD
 
@@ -117,8 +116,6 @@
 		sql_report_death(src)
 		ticker.mode.check_win()		//Calls the rounds wincheck, mainly for wizard, malf, and changeling now
 	return ..(gibbed)
-
-
 
 /mob/living/carbon/human/proc/makeSkeleton()
 	if(SKELETON in src.mutations)	return
