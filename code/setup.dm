@@ -30,7 +30,7 @@
 	//Amount of air to take a from a tile
 #define HUMAN_NEEDED_OXYGEN	MOLES_CELLSTANDARD*BREATH_PERCENTAGE*0.16
 	//Amount of air needed before pass out/suffocation commences
-
+#define SOUND_MINIMUM_PRESSURE 10
 // Pressure limits.
 #define HAZARD_HIGH_PRESSURE 550	//This determins at what pressure the ultra-high pressure red icon is displayed. (This one is set as a constant)
 #define WARNING_HIGH_PRESSURE 325 	//This determins when the orange pressure icon is displayed (it is 0.7 * HAZARD_HIGH_PRESSURE)
@@ -760,7 +760,7 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 //Language flags.
 #define WHITELISTED 1  // Language is available if the speaker is whitelisted.
 #define RESTRICTED 2   // Language can only be accquired by spawning or an admin.
-#define NONVERBAL 4    // Language has a significant non-verbal component. Speech is garbled without line-of-sight 
+#define NONVERBAL 4    // Language has a significant non-verbal component. Speech is garbled without line-of-sight
 #define SIGNLANG 8     // Language is completely non-verbal. Speech is displayed through emotes for those who can understand.
 
 //Flags for zone sleeping
