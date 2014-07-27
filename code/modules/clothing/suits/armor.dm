@@ -31,6 +31,7 @@
 	desc = "An armoured jacket with silver rank pips and livery."
 	icon_state = "warden_jacket"
 	item_state = "armor"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
 
 
 /obj/item/clothing/suit/armor/riot
@@ -40,7 +41,7 @@
 	icon_state = "riot"
 	item_state = "riot_suit"
 	tc_custom = 'tauceti/items/clothing/suits/riotTG.dmi'
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	slowdown = 1
 	armor = list(melee = 80, bullet = 10, laser = 5, energy = 10, bomb = 0, bio = 0, rad = 0)
 	flags_inv = HIDEJUMPSUIT
@@ -73,8 +74,8 @@
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
 	flags = FPRINT | TABLEPASS | THICKMATERIAL
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
 	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box/magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/tank/emergency_oxygen)
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS
 	slowdown = 1
 	armor = list(melee = 80, bullet = 40, laser = 50,energy = 25, bomb = 50, bio = 0, rad = 0)
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
@@ -90,6 +91,7 @@
 	item_state = "det_suit"
 	blood_overlay_type = "coat"
 	flags_inv = 0
+	body_parts_covered = UPPER_TORSO|ARMS
 
 
 /obj/item/clothing/suit/armor/det_suit

@@ -5,7 +5,7 @@
 	desc = "A traditional Unathi garment."
 	icon_state = "robe-unathi"
 	item_state = "robe-unathi"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS
 
 /obj/item/clothing/suit/unathi/mantle
 	name = "hide mantle"

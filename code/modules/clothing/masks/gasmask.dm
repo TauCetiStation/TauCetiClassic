@@ -6,6 +6,7 @@
 	icon_state = "gas_mask_tc"
 	flags = FPRINT | TABLEPASS | MASKCOVERSMOUTH | MASKCOVERSEYES | BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE
+	body_parts_covered = FACE|EYES
 	w_class = 3.0
 	item_state = "gas_mask_tc"
 	gas_transfer_coefficient = 0.01
@@ -22,6 +23,7 @@
 	icon_state = "plaguedoctor"
 	item_state = "gas_mask"
 	armor = list(melee = 0, bullet = 0, laser = 2,energy = 2, bomb = 0, bio = 75, rad = 0)
+	body_parts_covered = HEAD|FACE
 
 /obj/item/clothing/mask/gas/swat
 	name = "\improper SWAT mask"
@@ -30,6 +32,7 @@
 	tc_custom = null
 	icon_state = "swat"
 	siemens_coefficient = 0.7
+	body_parts_covered = FACE|EYES
 
 /obj/item/clothing/mask/gas/syndicate
 	name = "syndicate mask"
@@ -88,6 +91,7 @@
 	tc_custom = null
 	icon_state = "monkeymask"
 	item_state = "monkeymask"
+	body_parts_covered = HEAD|FACE|EYES
 
 /obj/item/clothing/mask/gas/sexymime
 	name = "sexy mime mask"

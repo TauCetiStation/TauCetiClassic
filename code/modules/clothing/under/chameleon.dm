@@ -55,6 +55,7 @@
 		icon_state = A.icon_state
 		item_state = A.item_state
 		item_color = A.item_color
+		body_parts_covered = A.body_parts_covered
 		if(usr)
 			usr.update_inv_w_uniform()	//so our overlays update.
 
@@ -69,6 +70,7 @@
 	item_color = "grey"
 	desc = "It looks like a plain hat, but upon closer inspection, there's an advanced holographic array installed inside. It seems to have a small dial inside."
 	origin_tech = "syndicate=3"
+	body_parts_covered = 0
 	var/list/clothing_choices = list()
 
 	New()
@@ -114,6 +116,7 @@
 		item_state = A.item_state
 		item_color = A.item_color
 		flags_inv = A.flags_inv
+		body_parts_covered = A.body_parts_covered
 		if(usr)
 			usr.update_inv_head()	//so our overlays update.
 
@@ -173,6 +176,7 @@
 		item_state = A.item_state
 		item_color = A.item_color
 		flags_inv = A.flags_inv
+		body_parts_covered = A.body_parts_covered
 		if(usr)
 			usr.update_inv_wear_suit()	//so our overlays update.
 
@@ -404,6 +408,7 @@
 		icon_state = A.icon_state
 		item_state = A.item_state
 		flags_inv = A.flags_inv
+		body_parts_covered = A.body_parts_covered
 		if(usr)
 			usr.update_inv_wear_mask()	//so our overlays update.
 

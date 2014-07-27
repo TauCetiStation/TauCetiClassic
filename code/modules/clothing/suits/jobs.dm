@@ -9,7 +9,7 @@
 	icon_state = "apron"
 	item_state = "apron"
 	blood_overlay_type = "armor"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO
+	body_parts_covered = 0
 	allowed = list (/obj/item/weapon/reagent_containers/spray/plantbgone,/obj/item/device/analyzer/plant_analyzer,/obj/item/seeds,/obj/item/nutrient,/obj/item/weapon/minihoe)
 
 //Captain
@@ -18,7 +18,7 @@
 	desc = "Worn by a Captain to show their class."
 	icon_state = "captunic"
 	item_state = "bio_suit"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
+	body_parts_covered = UPPER_TORSO|ARMS
 	flags_inv = HIDEJUMPSUIT
 
 /obj/item/clothing/suit/captunic/capjacket
@@ -35,7 +35,8 @@
 	desc = "This suit says to you 'hush'!"
 	icon_state = "chaplain_hoodie"
 	item_state = "chaplain_hoodie"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
+	body_parts_covered = UPPER_TORSO|ARMS
+	sprite_sheets = list("Vox" = 'icons/mob/species/vox/suit.dmi')
 
 //Chaplain
 /obj/item/clothing/suit/nun
@@ -43,7 +44,7 @@
 	desc = "Maximum piety in this star system."
 	icon_state = "nun"
 	item_state = "nun"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS|HANDS
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	flags_inv = HIDESHOES|HIDEJUMPSUIT
 
 //Chef
@@ -64,7 +65,7 @@
 	icon_state = "apronchef"
 	item_state = "apronchef"
 	blood_overlay_type = "armor"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO
+	body_parts_covered = 0
 
 //Detective
 /obj/item/clothing/suit/storage/det_suit
@@ -73,8 +74,8 @@
 	icon_state = "detective"
 	item_state = "det_suit"
 	blood_overlay_type = "coat"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	allowed = list(/obj/item/weapon/tank/emergency_oxygen, /obj/item/device/flashlight,/obj/item/weapon/gun/energy,/obj/item/weapon/gun/projectile,/obj/item/ammo_box/magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/storage/fancy/cigarettes,/obj/item/weapon/lighter,/obj/item/device/detective_scanner,/obj/item/device/taperecorder)
+	body_parts_covered = UPPER_TORSO|ARMS
 	armor = list(melee = 50, bullet = 10, laser = 25, energy = 10, bomb = 0, bio = 0, rad = 0)
 
 /obj/item/clothing/suit/storage/det_suit/black
@@ -85,8 +86,8 @@
 	name = "jacket"
 	desc = "A forensics technician jacket."
 	item_state = "det_suit"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
 	allowed = list(/obj/item/weapon/tank/emergency_oxygen, /obj/item/device/flashlight,/obj/item/weapon/gun/energy,/obj/item/weapon/gun/projectile,/obj/item/ammo_box/magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs,/obj/item/device/detective_scanner,/obj/item/device/taperecorder)
+	body_parts_covered = UPPER_TORSO|ARMS
 	armor = list(melee = 10, bullet = 10, laser = 15, energy = 10, bomb = 0, bio = 0, rad = 0)
 
 /obj/item/clothing/suit/storage/forensics/red
@@ -109,6 +110,7 @@
 	allowed = list (/obj/item/device/analyzer, /obj/item/device/flashlight, /obj/item/device/multitool, /obj/item/device/pipe_painter, /obj/item/device/radio, /obj/item/device/t_scanner, \
 	/obj/item/weapon/crowbar, /obj/item/weapon/screwdriver, /obj/item/weapon/weldingtool, /obj/item/weapon/wirecutters, /obj/item/weapon/wrench, /obj/item/weapon/tank/emergency_oxygen, \
 	/obj/item/clothing/mask/gas, /obj/item/taperoll/engineering)
+	body_parts_covered = UPPER_TORSO
 
 //Lawyer
 /obj/item/clothing/suit/storage/lawyer/bluejacket
@@ -165,6 +167,7 @@
 	blood_overlay_type = "armor"
 	allowed = list(/obj/item/stack/medical, /obj/item/weapon/reagent_containers/dropper, /obj/item/weapon/reagent_containers/hypospray, /obj/item/weapon/reagent_containers/syringe, \
 	/obj/item/device/healthanalyzer, /obj/item/device/flashlight, /obj/item/device/radio, /obj/item/weapon/tank/emergency_oxygen)
+	body_parts_covered = UPPER_TORSO|ARMS
 
 	verb/toggle()
 		set name = "Toggle Jacket Buttons"
@@ -190,3 +193,4 @@
 	icon = 'icons/obj/clothing/belts.dmi'
 	icon_state = "suspenders"
 	blood_overlay_type = "armor" //it's the less thing that I can put here
+	body_parts_covered = 0

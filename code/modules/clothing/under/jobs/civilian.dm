@@ -34,7 +34,7 @@
 	item_state = "lb_suit"
 	item_color = "cargo"
 	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
-
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
 
 /obj/item/clothing/under/rank/chaplain
 	desc = "It's a black jumpsuit, often worn by religious folk."

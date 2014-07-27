@@ -523,19 +523,13 @@
 
 //////////// Hats ////////////
 
-
-/obj/item/clothing/head/fluff/kaine_kalim_1
-    name = "Formal Medical Cap"
-    desc = "An unusually sterile and folded cap. It seems to bare the Nanotrasen logo."
-    icon = 'icons/obj/custom_items.dmi'
-    icon_state = "kainecap"
-
 /obj/item/clothing/head/secsoft/fluff/swatcap //deusdactyl: James Girard
 	name = "\improper SWAT hat"
 	desc = "A black hat.  The inside has the words, \"Lieutenant James Girard, LPD SWAT Team Four.\""
 	icon = 'tauceti/items/clothing/hats/hats.dmi'
 	tc_custom = 'tauceti/items/clothing/hats/hats.dmi'
 	icon_state = "swatcap"
+	body_parts_covered = 0
 
 /obj/item/clothing/head/welding/fluff/alice_mccrea_1 //madmalicemccrea: Alice McCrea
 	name = "flame decal welding helmet"
@@ -560,6 +554,10 @@
 	desc = "Hey, I think we're missing a hazard vest..."
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "taryn_kifer_1"
+	body_parts_covered = 0
+
+/obj/item/clothing/head/fluff
+	body_parts_covered = 0
 
 /obj/item/clothing/head/fluff/edvin_telephosphor_1 //foolamancer: Edvin Telephosphor
 	name = "Edvin's Hat"
@@ -579,6 +577,13 @@
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "brucehachert"
 
+/obj/item/clothing/head/fluff/kaine_kalim_1
+    name = "Formal Medical Cap"
+    desc = "An unusually sterile and folded cap. It seems to bare the Nanotrasen logo."
+    icon = 'icons/obj/custom_items.dmi'
+    icon_state = "kainecap"
+
+
 /obj/item/clothing/head/beret/fluff/marine_beret	//Von2531: Jack Washington
 	name = "colonial marine beret"
 	desc = "A well-worn navy blue beret. The insignia of the Martian Colonial Marine Corps is affixed to the front."
@@ -592,6 +597,7 @@
 	desc = "A labcoat with a few markings denoting it as the labcoat of roboticist."
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "aeneasrinil_open"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 
 /obj/item/clothing/suit/storage/labcoat/fluff/pink //spaceman96: Trenna Seber
 	name = "pink labcoat"
@@ -620,7 +626,7 @@
 	icon = 'icons/obj/clothing/suits.dmi'
 	icon_state = "mantle-unathi"
 	item_state = "mantle-unathi"
-	body_parts_covered = UPPER_TORSO
+	body_parts_covered = 0
 
 //////////// Uniforms ////////////
 
@@ -656,6 +662,7 @@
 	icon_state = "lilith_uniform"
 	item_state = "lilith_uniform"
 	item_color = "lilith_uniform"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS
 
 /obj/item/clothing/under/fluff/ana_issek_1 //suethecake: Ana Issek
 	name = "retired uniform"
@@ -664,6 +671,7 @@
 	icon_state = "ana_uniform"
 	item_state = "ana_uniform"
 	item_color = "ana_uniform"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS
 
 /obj/item/clothing/under/fluff/olddressuniform //desiderium: Momiji Inubashiri
 	name = "retired dress uniform"
@@ -687,6 +695,7 @@
 	icon_state = "tian_dress"
 	item_state = "tian_dress"
 	item_color = "tian_dress"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 
 /obj/item/clothing/under/rank/bartender/fluff/classy	//searif: Ara Al-Jazari
 	name = "classy bartender uniform"
@@ -764,6 +773,7 @@
 	icon_state = "lillian_dress"
 	item_state = "lillian_dress"
 	item_color = "lillian_dress"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 
 //////////// Masks ////////////
 
@@ -864,6 +874,8 @@
 	flags = FPRINT|TABLEPASS
 	w_class = 2
 	slot_flags = SLOT_MASK
+	body_parts_covered = 0
+
 //////////// Shoes ////////////
 
 /obj/item/clothing/shoes/magboots/fluff/susan_harris_1 //sniperyeti: Susan Harris
@@ -890,6 +902,7 @@
 	icon_state = "medical_short"
 	item_state = "medical_short"
 	item_color = "medical_short"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS
 
 /obj/item/clothing/suit/storage/labcoat/fluff/red
 	name = "red labcoat"
@@ -992,6 +1005,7 @@
 	icon_state = "mai_yang"
 	item_state = "mai_yang"
 	item_color = "mai_yang"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 
 /obj/item/clothing/under/fluff/sakura_hokkaido_kimono
 	name = "Sakura Kimono"
