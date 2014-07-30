@@ -11,7 +11,7 @@ proc/credits()
 		if(user.mind.key && user.mind.name && user.mind.assigned_role)
 			output += "[user.mind.key] as [user.mind.name] the [user.mind.assigned_role] [(user.mind.special_role)?"antagonist ":""]<br>"
 
-	output += "</div></table>"
+	output += "</div></BODY>"
 
 	for(var/client in clients)
 		client << browse(output, "window=endcredits;size=400x800")
