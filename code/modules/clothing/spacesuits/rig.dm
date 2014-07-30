@@ -21,6 +21,9 @@
 		"Tajaran" = 'icons/mob/species/tajaran/helmet.dmi',
 		"Skrell" = 'icons/mob/species/skrell/helmet.dmi'
 		)
+	sprite_sheets_obj = list(
+		"Tajaran" = 'icons/obj/clothing/species/tajaran/suits.dmi',
+		)
 
 	attack_self(mob/user)
 		if(!isturf(user.loc))
@@ -67,9 +70,13 @@
 		"Tajaran" = 'icons/mob/species/tajaran/suit.dmi',
 		"Skrell" = 'icons/mob/species/skrell/suit.dmi'
 		)
+	sprite_sheets_obj = list(
+		"Tajaran" = 'icons/obj/clothing/species/tajaran/suits.dmi',
+		)
 	var/has_magboots = 0
 	var/magpulse = 0
 	var/mag_slowdown = 3
+
 
 	//Breach thresholds, should ideally be inherited by most (if not all) hardsuits.
 	breach_threshold = 18
@@ -346,6 +353,7 @@
 	sprite_sheets_obj = list(
 		"Tajaran" = 'icons/obj/clothing/species/tajaran/suits.dmi',
 		)
+
 //Chief Engineer's rig
 /obj/item/clothing/head/helmet/space/rig/engineering/chief
 	name = "advanced hardsuit helmet"
@@ -355,7 +363,6 @@
 	item_color = "white"
 	max_heat_protection_temperature = FIRE_HELMET_MAX_HEAT_PROTECTION_TEMPERATURE
 	sprite_sheets = null
-	sprite_sheets_obj = null
 
 /obj/item/clothing/suit/space/rig/engineering/chief
 	icon_state = "rig-white"
@@ -364,7 +371,6 @@
 	item_state = "ce_hardsuit"
 	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 	sprite_sheets = null
-	sprite_sheets_obj = null
 
 //Mining rig
 /obj/item/clothing/head/helmet/space/rig/mining
@@ -444,6 +450,7 @@
 	armor = list(melee = 40, bullet = 20, laser = 20,energy = 20, bomb = 35, bio = 100, rad = 60)
 	siemens_coefficient = 0.7
 	sprite_sheets = null
+	sprite_sheets_obj = null
 
 /obj/item/clothing/suit/space/rig/wizard
 	icon_state = "rig-wiz"
@@ -456,6 +463,7 @@
 	armor = list(melee = 40, bullet = 20, laser = 20,energy = 20, bomb = 35, bio = 100, rad = 60)
 	siemens_coefficient = 0.7
 	sprite_sheets = null
+	sprite_sheets_obj = null
 
 //Medical Rig
 /obj/item/clothing/head/helmet/space/rig/medical
