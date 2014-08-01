@@ -52,7 +52,7 @@
 	output += "<div style='position: absolute; left: 0px; background-color: #FF0D1E; width: [di_width]%; height: 20px; margin: 0px; padding: 0px; border: 1px solid white;'></div>"
 	output += "<div style='color: 000000; position: absolute; left: 0; width: 400px; height: 22px; margin: 0px; padding: 0px; vertical-align: middle'>[percent]%</div>"
 	output += "</div>"
-	output += "<small>*состо&#1103;ние обновл&#1103;етс&#1103; раз в несколько дней</small>"
+	output += "<small>*состо&#1103;ние обновл&#1103;етс&#1103; раз в несколько дней,<br>собираема&#1103; сумма: [cost] рублей.</small>"
 	//output += "<A href='?src=[ref];'>Принять к сведенью и закрыть</A>"
 	output += "</div></BODY>"
 
