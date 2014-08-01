@@ -1656,6 +1656,7 @@
 #include "tauceti\modules\_anomaly\anomaly_pyro.dm"
 #include "tauceti\modules\_anomaly\anomaly_vortex.dm"
 #include "tauceti\modules\_areas\areas.dm"
+#include "tauceti\modules\_donatpanel\donatpanel.dm"
 #include "tauceti\modules\_floor\floor.dm"
 #include "tauceti\modules\_locations\centcomm\airlock.dm"
 #include "tauceti\modules\_locations\centcomm\displays.dm"

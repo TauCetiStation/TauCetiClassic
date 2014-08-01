@@ -27,6 +27,7 @@
 		loc = pick(watch_locations)
 */
 	new_player_panel()
+	donatinfo()
 	spawn(40)
 		if(client)
 			nanomanager.send_resources(client)
