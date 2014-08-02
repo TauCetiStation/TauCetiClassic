@@ -192,6 +192,9 @@
 					if(B && istype(target,/mob/living/carbon))
 						var/mob/living/carbon/C = target
 						C.inject_blood(src,5)
+						if(B.data && B.data["virus2"])
+							message_admins("<font color='red'>Injected blood with virus to [target] by [key_name(user, user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>Jump</a>)</font>",0,1)
+							log_game("Injected blood with virus to [target] by [user.ckey]([user]) in ([user.x],[user.y],[user.z])")
 					else
 						trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
 					user << "\blue You inject [trans] units of the solution. The syringe now contains [src.reagents.total_volume] units."

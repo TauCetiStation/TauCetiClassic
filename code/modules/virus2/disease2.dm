@@ -26,10 +26,10 @@
 			holder.getrandomeffect()
 		effects += holder
 	uniqueID = rand(0,10000)
-	infectionchance = rand(60,90)
+	infectionchance = rand(30,60)
 	antigen |= text2num(pick(ANTIGENS))
 	antigen |= text2num(pick(ANTIGENS))
-	spreadtype = prob(70) ? "Airborne" : "Contact"
+	spreadtype = prob(60) ? "Airborne" : "Contact"
 
 	if(all_species.len)
 		affected_species = get_infectable_species()

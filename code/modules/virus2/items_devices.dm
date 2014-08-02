@@ -59,12 +59,14 @@
 	..()
 	if(prob(50))
 		user << "\The [src] shatters!"
+		message_admins("Virus dish shattered by [key_name(user, user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[src.x];Y=[src.y];Z=[src.z]'>[src.x],[src.y],[src.z]</a>)",0,1)
+		log_game("Virus dish shattered by [user.ckey]([user]) in ([src.x],[src.y],[src.z])")
 		if(virus2.infectionchance > 0)
 			for(var/mob/living/carbon/target in view(1, get_turf(src)))
 				if(airborne_can_reach(get_turf(src), get_turf(target)))
 					if(get_infection_chance(target))
 						infect_virus2(target,src.virus2)
-		del src
+		qdel(src)
 
 /obj/item/weapon/virusdish/examine()
 	usr << "This is a virus containment dish."
@@ -84,7 +86,7 @@
 
 	if(prob(50))
 		user << "\The [src] shatters!"
-		del src
+		qdel(src)
 
 ///////////////GNA DISK///////////////
 
