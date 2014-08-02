@@ -27,7 +27,7 @@
 /obj/machinery/atmospherics/omni/New()
 	..()
 	icon_state = "base"
-	
+
 	ports = new()
 	for(var/d in cardinal)
 		var/datum/omni_port/new_port = new(src, d)
@@ -43,7 +43,7 @@
 		if(new_port.mode > 0)
 			initialize_directions |= d
 		ports += new_port
-	
+
 	build_icons()
 
 /obj/machinery/atmospherics/omni/update_icon()
@@ -125,7 +125,6 @@
 		overlays_error[1] = omni_icons[core_icon]
 		overlays_error[2] = omni_icons["error"]
 
-	update_icon()
 
 /obj/machinery/atmospherics/omni/proc/update_port_icons()
 	for(var/datum/omni_port/P in ports)
@@ -182,7 +181,7 @@
 		if(P.node)
 			if(P.node.color)
 				pipe_state += "_[P.node.color]"
-		
+
 		return list("on_icon" = ic_on, "off_icon" = ic_off, "pipe_icon" = pipe_state)
 
 /obj/machinery/atmospherics/omni/proc/update_ports()
@@ -274,7 +273,7 @@
 			P.node = null
 			P.update = 1
 			break
-	
+
 	update_ports()
 
 	return null
