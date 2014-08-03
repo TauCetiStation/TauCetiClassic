@@ -753,7 +753,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 //Updates canmove, lying and icons. Could perhaps do with a rename but I can't think of anything to describe it.
 /mob/proc/update_canmove()
-	if(buckled)
+	if(buckled && (!buckled.movable))
 		anchored = 1
 		canmove = 0
 		if( istype(buckled,/obj/structure/stool/bed/chair) )
@@ -773,7 +773,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 	else if (crawling)
 		lying = 1
 		canmove = 1
-	else
+	else if(!buckled)
 		lying = !can_stand
 		canmove = has_limbs
 

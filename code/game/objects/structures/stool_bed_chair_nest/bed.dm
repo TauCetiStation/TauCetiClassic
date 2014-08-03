@@ -13,6 +13,7 @@
 	icon = 'tauceti/icons/obj/objects.dmi'
 	icon_state = "bed"
 	var/mob/living/buckled_mob
+	var/movable = 0 // For mobility checks
 
 /obj/structure/stool/bed/psych
 	name = "psychiatrists couch"
@@ -36,6 +37,9 @@
 
 /obj/structure/stool/bed/attack_hand(mob/user as mob)
 	manual_unbuckle(user)
+	return
+
+/obj/structure/stool/bed/proc/handle_rotation()
 	return
 
 /obj/structure/stool/bed/MouseDrop(atom/over_object)
