@@ -71,9 +71,11 @@ turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh, atom/fir
 
 	if(!istype(S))
 		del src
+		return
 
 	if(!S.zone)
 		del src
+		return
 
 	var/datum/gas_mixture/air_contents = S.return_air()
 	//get liquid fuels on the ground.
@@ -95,6 +97,7 @@ turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh, atom/fir
 	if(!air_contents.check_combustability(liquid))
 		//del src
 		RemoveFire()
+		return
 
 	//get a firelevel and set the icon
 	firelevel = air_contents.calculate_firelevel(liquid)
@@ -117,15 +120,15 @@ turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh, atom/fir
 		A.fire_act()
 	for(var/mob/living/carbon/alien/humanoid/X in loc)
 		X.fire_act()
+	loc.fire_act(air_contents, air_contents.temperature, air_contents.return_volume())
 	for(var/atom/A in loc)
 		A.fire_act(air_contents, air_contents.temperature, air_contents.return_volume())
 	//spread
 	for(var/direction in cardinal)
-		if(S.open_directions & direction) //Grab all valid bordering tiles
+		var/turf/simulated/enemy_tile = get_step(S, direction)
 
-			var/turf/simulated/enemy_tile = get_step(S, direction)
-
-			if(istype(enemy_tile))
+		if(istype(enemy_tile))
+			if(S.open_directions & direction) //Grab all valid bordering tiles
 				var/datum/gas_mixture/acs = enemy_tile.return_air()
 				var/obj/effect/decal/cleanable/liquid_fuel/liq = locate() in enemy_tile
 				if(!acs) continue
@@ -140,6 +143,9 @@ turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh, atom/fir
 				if(!(locate(/obj/fire) in enemy_tile))
 					if( prob( 50 + 50 * (firelevel/vsc.fire_firelevel_multiplier) ) && S.CanPass(null, enemy_tile, 0,0) && enemy_tile.CanPass(null, S, 0,0))
 						new/obj/fire(enemy_tile,firelevel)
+
+			else
+				enemy_tile.adjacent_fire_act(loc, air_contents, air_contents.temperature, air_contents.return_volume())
 
 	//seperate part of the present gas
 	//this is done to prevent the fire burning all gases in a single pass
