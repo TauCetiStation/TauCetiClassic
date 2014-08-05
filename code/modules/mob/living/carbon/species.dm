@@ -190,6 +190,7 @@
 	unarmed_type = /datum/unarmed_attack/punch
 
 	flags = IS_WHITELISTED | HAS_LIPS | HAS_UNDERWEAR | HAS_SKIN_COLOR
+	eyes = "skrell_eyes_s"
 
 	flesh_color = "#8CD7A3"
 
