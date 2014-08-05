@@ -473,7 +473,7 @@
 		name = "Shaved"
 		icon_state = "bald"
 		gender = NEUTER
-		species_allowed = list("Human","Unathi","Tajaran","Skrell","Vox","Machine")
+		species_allowed = list("Human","Unathi","Tajaran","Vox","Machine")
 
 	watson
 		name = "Watson Mustache"
@@ -540,6 +540,7 @@
 		name = "Dwarf Beard"
 		icon_state = "facial_dwarf"
 
+
 /*
 ///////////////////////////////////
 /  =---------------------------=  /
@@ -574,38 +575,44 @@
 		icon_state = "soghun_horns"
 		species_allowed = list("Unathi")
 
-	skr_tentacle_m
+/*	skr_tentacle_m
 		name = "Skrell Male Tentacles"
+		icon = 'tauceti/icons/mob/human_face.dmi'
 		icon_state = "skrell_hair_m"
 		species_allowed = list("Skrell")
 		gender = MALE
 
 	skr_tentacle_f
 		name = "Skrell Female Tentacles"
+		icon = 'tauceti/icons/mob/human_face.dmi'
 		icon_state = "skrell_hair_f"
 		species_allowed = list("Skrell")
-		gender = FEMALE
+		gender = FEMALE */
 
 	skr_gold_m
 		name = "Gold plated Skrell Male Tentacles"
+		icon = 'tauceti/icons/mob/human_face.dmi'
 		icon_state = "skrell_goldhair_m"
 		species_allowed = list("Skrell")
 		gender = MALE
 
 	skr_gold_f
 		name = "Gold chained Skrell Female Tentacles"
+		icon = 'tauceti/icons/mob/human_face.dmi'
 		icon_state = "skrell_goldhair_f"
 		species_allowed = list("Skrell")
 		gender = FEMALE
 
 	skr_clothtentacle_m
 		name = "Cloth draped Skrell Male Tentacles"
+		icon = 'tauceti/icons/mob/human_face.dmi'
 		icon_state = "skrell_clothhair_m"
 		species_allowed = list("Skrell")
 		gender = MALE
 
 	skr_clothtentacle_f
 		name = "Cloth draped Skrell Female Tentacles"
+		icon = 'tauceti/icons/mob/human_face.dmi'
 		icon_state = "skrell_clothhair_f"
 		species_allowed = list("Skrell")
 		gender = FEMALE
@@ -706,6 +713,20 @@
 		name = "Tajara Smallsatche"
 		icon_state = "facial_smallstache"
 		species_allowed = list("Tajaran")
+
+	skr_tentacle_m
+		name = "Skrell Male Tentacles"
+		icon = 'tauceti/icons/mob/human_face.dmi'
+		icon_state = "skrell_hair_m"
+		species_allowed = list("Skrell")
+		gender = MALE
+
+	skr_tentacle_f
+		name = "Skrell Female Tentacles"
+		icon = 'tauceti/icons/mob/human_face.dmi'
+		icon_state = "skrell_hair_f"
+		species_allowed = list("Skrell")
+		gender = FEMALE
 
 //skin styles - WIP
 //going to have to re-integrate this with surgery
