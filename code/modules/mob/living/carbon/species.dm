@@ -154,7 +154,7 @@
 
 	flesh_color = "#34AF10"
 
-	reagent_tag = IS_UNATHI
+//	reagent_tag = IS_UNATHI
 	base_color = "#066000"
 
 /datum/species/tajaran
