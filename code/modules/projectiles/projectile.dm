@@ -51,10 +51,6 @@
 	var/agony = 0
 	var/embed = 0 // whether or not the projectile can embed itself in the mob
 
-	proc/delete()
-		// Garbage collect the projectiles
-		loc = null
-
 	proc/on_hit(var/atom/target, var/blocked = 0)
 		if(blocked >= 2)		return 0//Full block
 		if(!isliving(target))	return 0
@@ -138,7 +134,7 @@
 						M.bullet_act(src, def_zone)
 				density = 0
 				invisibility = 101
-				delete()
+				del(src)
 			return 1
 
 		else
@@ -160,7 +156,7 @@
 
 					density = 0
 					invisibility = 101
-					delete()
+					del(src)
 					return 0
 			return 1	//с ТГ, работает лучше
 
@@ -177,13 +173,13 @@
 
 	process()
 		if(kill_count < 1)
-			delete()
+			del(src)
 		kill_count--
 		spawn while(src)
 			if((!( current ) || loc == current))
 				current = locate(min(max(x + xo, 1), world.maxx), min(max(y + yo, 1), world.maxy), z)
 			if((x == 1 || x == world.maxx || y == 1 || y == world.maxy))
-				delete()
+				del(src)
 				return
 			step_towards(src, current)
 			sleep(1)
