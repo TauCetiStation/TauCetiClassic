@@ -386,9 +386,9 @@ proc/get_damage_icon_part(damage_state, body_part)
 		if(!fat && !skeleton)
 			stand_icon.Blend(new /icon('icons/mob/human.dmi', "underwear[underwear]_[g]_s"), ICON_OVERLAY)
 
-	if(undershirt>0 && undershirt < 5 && species.flags & HAS_UNDERWEAR)
+	if(undershirt>0 && undershirt < undershirt_t.len && species.flags & HAS_UNDERWEAR)
 		if(!fat && !skeleton)
-			stand_icon.Blend(new /icon('icons/mob/human.dmi', "undershirt[undershirt]_s"), ICON_OVERLAY)
+			stand_icon.Blend(new /icon('icons/mob/human_undershirt.dmi', "undershirt[undershirt]_s"), ICON_OVERLAY)
 
 	if(update_icons)
 		update_icons()
