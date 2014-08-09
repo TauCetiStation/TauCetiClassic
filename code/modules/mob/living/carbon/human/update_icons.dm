@@ -386,9 +386,9 @@ proc/get_damage_icon_part(damage_state, body_part)
 		if(!fat && !skeleton)
 			stand_icon.Blend(new /icon('icons/mob/human.dmi', "underwear[underwear]_[g]_s"), ICON_OVERLAY)
 
-	if(undershirt>0 && undershirt < 5 && species.flags & HAS_UNDERWEAR)
+	if(undershirt>0 && undershirt < undershirt_t.len && species.flags & HAS_UNDERWEAR)
 		if(!fat && !skeleton)
-			stand_icon.Blend(new /icon('icons/mob/human.dmi', "undershirt[undershirt]_s"), ICON_OVERLAY)
+			stand_icon.Blend(new /icon('icons/mob/human_undershirt.dmi', "undershirt[undershirt]_s"), ICON_OVERLAY)
 
 	if(update_icons)
 		update_icons()
@@ -671,17 +671,21 @@ proc/get_damage_icon_part(damage_state, body_part)
 /mob/living/carbon/human/update_inv_ears(var/update_icons=1)
 	if(l_ear || r_ear)
 		if(l_ear)
-			var/t_type = l_ear.icon_state
-			if(l_ear.icon_override || species.sprite_sheets["ears"]) t_type = "[t_type]_l"
-			overlays_standing[EARS_LAYER] = image("icon" = ((l_ear.icon_override) ? l_ear.icon_override : (species.sprite_sheets["ears"] ? species.sprite_sheets["ears"] : 'icons/mob/ears.dmi')), "icon_state" = "[t_type]")
+			if(!l_ear:tc_custom || l_ear.icon_override || species.sprite_sheets["ears"])
+				overlays_standing[EARS_LAYER] = image("icon" = ((l_ear.icon_override) ? l_ear.icon_override : (species.sprite_sheets["ears"] ? species.sprite_sheets["ears"] : 'icons/mob/ears.dmi')), "icon_state" = "[l_ear.icon_state]")
+			else
+				overlays_standing[EARS_LAYER] = image("icon" = l_ear:tc_custom, "icon_state" = "[l_ear.icon_state]_mob")
+
 		if(r_ear)
-			var/t_type = r_ear.icon_state
-			if(r_ear.icon_override || species.sprite_sheets["ears"]) t_type = "[t_type]_r"
-			overlays_standing[EARS_LAYER] = image("icon" = ((r_ear.icon_override) ? r_ear.icon_override : (species.sprite_sheets["ears"] ? species.sprite_sheets["ears"] : 'icons/mob/ears.dmi')), "icon_state" = "t_type]")
+			if(!r_ear:tc_custom || r_ear.icon_override || species.sprite_sheets["ears"]) 
+				overlays_standing[EARS_LAYER] = image("icon" = ((r_ear.icon_override) ? r_ear.icon_override : (species.sprite_sheets["ears"] ? species.sprite_sheets["ears"] : 'icons/mob/ears.dmi')), "icon_state" = "[r_ear.icon_state]")
+			else 
+				overlays_standing[EARS_LAYER] = image("icon" = r_ear:tc_custom, "icon_state" = "[r_ear.icon_state]_mob")
+
 	else
 		overlays_standing[EARS_LAYER]	= null
 	if(update_icons)   update_icons()
-
+	
 /mob/living/carbon/human/update_inv_shoes(var/update_icons=1)
 	if(shoes)
 
