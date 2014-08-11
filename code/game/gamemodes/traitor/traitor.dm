@@ -6,7 +6,7 @@
 	name = "traitor"
 	config_tag = "traitor"
 	restricted_jobs = list("Cyborg")//They are part of the AI if he is traitor so are they, they use to get double chances
-	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain")//AI", Currently out of the list as malf does not work for shit
+	protected_jobs = list("Internal Affairs Agent", "Security Officer", "Warden", "Detective", "Head of Security", "Captain")//AI", Currently out of the list as malf does not work for shit
 	required_players = 0
 	required_enemies = 1
 	recommended_enemies = 4
@@ -19,7 +19,7 @@
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
 
 	var/traitors_possible = 4 //hard limit on traitors if scaling is turned off
-	var/const/traitor_scaling_coeff = 5.0 //how much does the amount of players get divided by to determine traitors
+	var/const/traitor_scaling_coeff = 7.0 //how much does the amount of players get divided by to determine traitors
 
 
 /datum/game_mode/traitor/announce()
@@ -82,10 +82,15 @@
 		return
 
 	if(istype(traitor.current, /mob/living/silicon))
-		var/datum/objective/assassinate/kill_objective = new
-		kill_objective.owner = traitor
-		kill_objective.find_target()
-		traitor.objectives += kill_objective
+		var/datum/objective/assassinate/kill_objective1 = new
+		kill_objective1.owner = traitor
+		kill_objective1.find_target()
+		traitor.objectives += kill_objective1
+
+		var/datum/objective/assassinate/kill_objective2 = new
+		kill_objective2.owner = traitor
+		kill_objective2.find_target()
+		traitor.objectives += kill_objective2
 
 		var/datum/objective/survive/survive_objective = new
 		survive_objective.owner = traitor
@@ -97,29 +102,14 @@
 			traitor.objectives += block_objective
 
 	else
-		switch(rand(1,100))
-			if(1 to 33)
-				var/datum/objective/assassinate/kill_objective = new
-				kill_objective.owner = traitor
-				kill_objective.find_target()
-				traitor.objectives += kill_objective
-			if(34 to 50)
-				var/datum/objective/brig/brig_objective = new
-				brig_objective.owner = traitor
-				brig_objective.find_target()
-				traitor.objectives += brig_objective
-			if(51 to 66)
-				var/datum/objective/harm/harm_objective = new
-				harm_objective.owner = traitor
-				harm_objective.find_target()
-				traitor.objectives += harm_objective
-			else
-				var/datum/objective/steal/steal_objective = new
-				steal_objective.owner = traitor
-				steal_objective.find_target()
-				traitor.objectives += steal_objective
-		switch(rand(1,100))
-			if(1 to 100)
+		var/objectives_count = pick(1,2,2,3)
+
+		while(objectives_count > 0)
+			add_one_objective(traitor)
+			objectives_count--
+
+		switch(rand(1,120))
+			if(1 to 119)
 				if (!(locate(/datum/objective/escape) in traitor.objectives))
 					var/datum/objective/escape/escape_objective = new
 					escape_objective.owner = traitor
@@ -131,6 +121,24 @@
 					hijack_objective.owner = traitor
 					traitor.objectives += hijack_objective
 	return
+
+/datum/game_mode/proc/add_one_objective(var/datum/mind/traitor)
+	switch(rand(1,120))
+		if(1 to 20)
+			var/datum/objective/assassinate/kill_objective = new
+			kill_objective.owner = traitor
+			kill_objective.find_target()
+			traitor.objectives += kill_objective
+		if(21 to 50)
+			var/datum/objective/harm/harm_objective = new
+			harm_objective.owner = traitor
+			harm_objective.find_target()
+			traitor.objectives += harm_objective
+		else
+			var/datum/objective/steal/steal_objective = new
+			steal_objective.owner = traitor
+			steal_objective.find_target()
+			traitor.objectives += steal_objective
 
 
 /datum/game_mode/proc/greet_traitor(var/datum/mind/traitor)
