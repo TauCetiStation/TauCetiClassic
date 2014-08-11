@@ -20,6 +20,10 @@
 #define ui_action_slot4 "4:12,14:26"
 #define ui_action_slot5 "5:14,14:26"
 
+//Middle left indicators с ТГ, для чейнджей
+#define ui_lingchemdisplay "WEST:6,CENTER-1:15"
+#define ui_lingstingdisplay "WEST:6,CENTER-3:11"
+
 //Lower left, persistant menu
 #define ui_inventory "1:6,1:5"
 

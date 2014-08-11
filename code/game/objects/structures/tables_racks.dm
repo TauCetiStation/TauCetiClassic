@@ -408,7 +408,9 @@
 			O.show_message("\blue The [src] was sliced apart by [user]!", 1, "\red You hear [src] coming apart.", 2)
 		destroy()
 
-	user.drop_item(src)
+	if(!(W.flags & ABSTRACT)) //Чтобы не класли на столы всякие тентакли и прочие абстрактные объекты
+		if(user.drop_item())
+			W.Move(loc)
 	return
 
 /obj/structure/table/proc/straight_table_check(var/direction)

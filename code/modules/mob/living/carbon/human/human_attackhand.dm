@@ -209,8 +209,11 @@
 				//End BubbleWrap
 
 				if(!talked)	//BubbleWrap
-					drop_item()
-					visible_message("\red <B>[M] has disarmed [src]!</B>")
+					if(istype(l_hand, /obj/item/weapon/melee/arm_blade) || istype(r_hand, /obj/item/weapon/melee/arm_blade) || istype(l_hand, /obj/item/weapon/shield/changeling) || istype(r_hand, /obj/item/weapon/shield/changeling))
+						return
+					else
+						drop_item()
+						visible_message("\red <B>[M] has disarmed [src]!</B>")
 				playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 				return
 

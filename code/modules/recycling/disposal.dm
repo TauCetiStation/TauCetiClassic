@@ -44,7 +44,7 @@
 
 	// attack by item places it in to disposal
 	attackby(var/obj/item/I, var/mob/user)
-		if(stat & BROKEN || !I || !user)
+		if(stat & BROKEN || !I || !user || !I.canremove)
 			return
 
 		if(isrobot(user) && !istype(I, /obj/item/weapon/storage/bag/trash))

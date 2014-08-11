@@ -224,6 +224,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	var/chem_charges = 20
 	var/chem_recharge_rate = 0.5
 	var/chem_storage = 50
+	var/chem_recharge_slowdown = 0
 	var/sting_range = 1
 	var/changelingID = "Changeling"
 	var/geneticdamage = 0
@@ -231,6 +232,9 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	var/geneticpoints = 5
 	var/purchasedpowers = list()
 	var/mimicing = ""
+	var/datum/dna/chosen_dna
+	var/obj/effect/proc_holder/changeling/sting/chosen_sting
+	var/space_suit_active = 0
 
 /datum/changeling/New(var/gender=FEMALE)
 	..()
@@ -245,7 +249,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 		changelingID = "[honorific] [rand(1,999)]"
 
 /datum/changeling/proc/regenerate()
-	chem_charges = min(max(0, chem_charges+chem_recharge_rate), chem_storage)
+	chem_charges = min(max(0, chem_charges + chem_recharge_rate - chem_recharge_slowdown), chem_storage)
 	geneticdamage = max(0, geneticdamage-1)
 
 
@@ -256,7 +260,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 			chosen_dna = DNA
 			break
 	return chosen_dna
-
+/*
 //Checks if the target DNA is valid and absorbable.
 /datum/changeling/proc/can_absorb_dna(mob/living/carbon/T, mob/living/carbon/U)
 	if(T)
@@ -268,6 +272,10 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 			U << "<span class='warning'>[T] is not compatible with our biology.</span>"
 			return 0
 
+		if(T:species.flags & NO_SCAN)
+			src << "<span class='warning'>We do not know how to parse this creature's DNA!</span>"
+			return 0
+
 		for(var/datum/dna/D in absorbed_dna)
 			if(T.dna.uni_identity == D.uni_identity)
 				if(T.dna.struc_enzymes == D.struc_enzymes)
@@ -275,4 +283,4 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 						if(T.dna.mutantrace == D.mutantrace)
 							U << "<span class='warning'>We already have that DNA in storage.</span>"
 							return 0
-	return 1
+	return 1 */

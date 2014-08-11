@@ -196,6 +196,7 @@ var/MAX_EXPLOSION_RANGE = 14
 #define ON_BORDER	512		// item has priority to check when entering or leaving
 #define NOBLUDGEON  4  // when an item has this it produces no "X has been hit by Y with Z" message with the default handler
 #define NOBLOODY	2048	// used to items if they don't want to get a blood overlay
+#define ABSTRACT    128		// for all things that are technically items but used for various different stuff, made it 128 because it could conflict with other flags other way
 
 #define GLASSESCOVERSEYES	1024
 #define MASKCOVERSEYES		1024		// get rid of some of the other retardation in these flags
@@ -205,7 +206,6 @@ var/MAX_EXPLOSION_RANGE = 14
 
 #define THICKMATERIAL 1024		//From /tg: prevents syringes, parapens and hypos if the external suit or helmet (if targeting head) has this flag. Example: space suits, biosuit, bombsuits, thick suits that cover your body. (NOTE: flag shared with NOSLIP for shoes)
 #define NOSLIP		1024 		//prevents from slipping on wet floors, in space etc
-#define THICKMATERIAL 1024
 
 #define OPENCONTAINER	4096	// is an open container for chemistry purposes
 

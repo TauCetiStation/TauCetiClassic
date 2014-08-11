@@ -12,11 +12,11 @@ var/datum/global_hud/global_hud = new()
 /datum/global_hud
 	var/obj/screen/druggy
 	var/obj/screen/blurry
-	
+
 	var/obj/screen/meson
 	var/obj/screen/thermal
 	var/obj/screen/science
-	
+
 	var/list/vimpaired
 	var/list/darkMask
 //	var/obj/screen/nvg
@@ -53,7 +53,7 @@ var/datum/global_hud/global_hud = new()
 	thermal.screen_loc = "WEST,SOUTH to EAST,NORTH"
 	thermal.layer = 17
 	thermal.mouse_opacity = 0
-	
+
 	//violet vision for science googles
 	science = new /obj/screen()
 	science.icon = 'icons/effects/alert.dmi'
@@ -63,8 +63,8 @@ var/datum/global_hud/global_hud = new()
 	science.screen_loc = "WEST,SOUTH to EAST,NORTH"
 	science.layer = 17
 	science.mouse_opacity = 0
-	
-/*	
+
+/*
 	nvg = new /obj/screen()
 	nvg.screen_loc = "1,1"
 	nvg.icon = 'icons/obj/nvg_hud_full.dmi'
@@ -137,6 +137,7 @@ var/datum/global_hud/global_hud = new()
 	var/hotkey_ui_hidden = 0	//This is to hide the buttons that can be used via hotkeys. (hotkeybuttons list of buttons)
 
 	var/obj/screen/lingchemdisplay
+	var/obj/screen/lingstingdisplay
 	var/obj/screen/blobpwrdisplay
 	var/obj/screen/blobhealthdisplay
 	var/obj/screen/r_hand_hud_object
@@ -228,6 +229,8 @@ datum/hud/New(mob/owner)
 		robot_hud()
 	else if(isobserver(mymob))
 		ghost_hud()
+	else if(isovermind(mymob))
+		blob_hud()
 
 
 //Triggered when F12 is pressed (Unless someone changed something in the DMF)

@@ -375,6 +375,9 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 	if((src.l_hand && !( src.l_hand.abstract )) || (src.r_hand && !( src.r_hand.abstract )))
 		return 1
 
+	if(l_hand && !l_hand.flags&ABSTRACT || r_hand && !r_hand.flags&ABSTRACT)
+		return 1
+
 	return 0
 
 //converts intent-strings into numbers and back

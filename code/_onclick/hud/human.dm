@@ -405,7 +405,22 @@
 	mymob.pullin.name = "pull"
 	mymob.pullin.screen_loc = ui_pull_resist
 	src.hotkeybuttons += mymob.pullin
+//для чейнджей
+	lingchemdisplay = new /obj/screen()
+	lingchemdisplay.icon = 'tauceti/icons/mob/screen_gen.dmi'
+	lingchemdisplay.name = "chemical storage"
+	lingchemdisplay.icon_state = "power_display"
+	lingchemdisplay.screen_loc = ui_lingchemdisplay
+	lingchemdisplay.layer = 20
+	lingchemdisplay.invisibility = 101
 
+	lingstingdisplay = new /obj/screen()
+	lingstingdisplay.icon = 'tauceti/icons/mob/screen_gen.dmi'
+	lingstingdisplay.name = "current sting"
+	lingstingdisplay.screen_loc = ui_lingstingdisplay
+	lingstingdisplay.layer = 20
+	lingstingdisplay.invisibility = 101
+//
 	mymob.blind = new /obj/screen()
 	mymob.blind.icon = 'icons/mob/screen1_full.dmi'
 	mymob.blind.icon_state = "blackimageoverlay"
@@ -461,7 +476,7 @@
 
 	mymob.client.screen = null
 
-	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.oxygen, mymob.pressure, mymob.toxin, mymob.bodytemp, mymob.internals, mymob.fire, mymob.healths, mymob.nutrition_icon, mymob.pullin, mymob.blind, mymob.flash, mymob.damageoverlay, mymob.gun_setting_icon) //, mymob.hands, mymob.rest, mymob.sleep) //, mymob.mach )
+	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.oxygen, mymob.pressure, mymob.toxin, mymob.bodytemp, mymob.internals, mymob.fire, mymob.healths, mymob.nutrition_icon, mymob.pullin, mymob.blind, mymob.flash, mymob.damageoverlay, mymob.gun_setting_icon, lingchemdisplay, lingstingdisplay) //, mymob.hands, mymob.rest, mymob.sleep) //, mymob.mach )
 	mymob.client.screen += src.adding + src.hotkeybuttons
 	inventory_shown = 0;
 
@@ -495,7 +510,7 @@
 	for(var/obj/item/I in src)
 		if(I.icon_action_button)
 			var/obj/screen/item_action/A = new(hud_used)
-			
+
 			//A.icon = 'icons/mob/screen1_action.dmi'
 			//A.icon_state = I.icon_action_button
 			A.icon = ui_style2icon(client.prefs.UI_style)

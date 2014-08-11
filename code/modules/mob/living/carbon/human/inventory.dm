@@ -423,11 +423,19 @@
 			if("l_hand")
 				target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has had their left hand item ([target.l_hand]) removed by [source.name] ([source.ckey])</font>")
 				source.attack_log += text("\[[time_stamp()]\] <font color='red'>Attempted to remove [target.name]'s ([target.ckey]) left hand item ([target.l_hand])</font>")
-				message = "\red <B>[source] is trying to take off \a [target.l_hand] from [target]'s left hand!</B>"
+				if(target.l_hand && !target.l_hand.canremove)
+					message = "\red <B>[source] fails to take off \a [target.l_hand] from [target]'s left hand!</B>"
+					return
+				else
+					message = "\red <B>[source] is trying to take off \a [target.l_hand] from [target]'s left hand!</B>"
 			if("r_hand")
 				target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has had their right hand item ([target.r_hand]) removed by [source.name] ([source.ckey])</font>")
 				source.attack_log += text("\[[time_stamp()]\] <font color='red'>Attempted to remove [target.name]'s ([target.ckey]) right hand item ([target.r_hand])</font>")
-				message = "\red <B>[source] is trying to take off \a [target.r_hand] from [target]'s right hand!</B>"
+				if(target.r_hand && !target.r_hand.canremove)
+					message = "\red <B>[source] fails to take off \a [target.r_hand] from [target]'s right hand!</B>"
+					return
+				else
+					message = "\red <B>[source] is trying to take off \a [target.r_hand] from [target]'s right hand!</B>"
 			if("gloves")
 				target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has had their gloves ([target.gloves]) removed by [source.name] ([source.ckey])</font>")
 				source.attack_log += text("\[[time_stamp()]\] <font color='red'>Attempted to remove [target.name]'s ([target.ckey]) gloves ([target.gloves])</font>")

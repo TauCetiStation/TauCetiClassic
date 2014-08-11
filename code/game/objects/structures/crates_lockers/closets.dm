@@ -195,6 +195,8 @@
 			return
 		if(isrobot(user))
 			return
+		if(!W.canremove)
+			return
 		usr.drop_item()
 		if(W)
 			W.loc = src.loc

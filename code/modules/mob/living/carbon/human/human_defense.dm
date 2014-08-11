@@ -329,3 +329,16 @@ emp_act
 	if(w_uniform)
 		w_uniform.add_blood(source)
 		update_inv_w_uniform(0)
+
+/mob/living/carbon/human/proc/check_thickmaterial(var/datum/organ/external/def_zone, var/type)
+//	if(!type)	return 0
+	var/thickmaterial = 0
+	var/list/body_parts = list(head, wear_mask, wear_suit, w_uniform, gloves, shoes, glasses, l_ear, r_ear)
+	for(var/bp in body_parts)
+		if(!bp)	continue
+		if(bp && istype(bp ,/obj/item/clothing))
+			var/obj/item/clothing/C = bp
+			if(C.body_parts_covered & def_zone.body_part)
+				if(C.flags & THICKMATERIAL)
+					thickmaterial = 1
+	return thickmaterial

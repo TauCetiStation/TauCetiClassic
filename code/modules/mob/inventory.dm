@@ -18,7 +18,7 @@
 
 //Puts the item into your l_hand if possible and calls all necessary triggers/updates. returns 1 on success.
 /mob/proc/put_in_l_hand(var/obj/item/W)
-	if(lying)			return 0
+	if(lying && !(W.flags&ABSTRACT))	return 0
 	if(!istype(W))		return 0
 	if(!l_hand)
 		W.loc = src		//TODO: move to equipped?
@@ -34,7 +34,7 @@
 
 //Puts the item into your r_hand if possible and calls all necessary triggers/updates. returns 1 on success.
 /mob/proc/put_in_r_hand(var/obj/item/W)
-	if(lying)			return 0
+	if(lying && !(W.flags&ABSTRACT))	return 0
 	if(!istype(W))		return 0
 	if(!r_hand)
 		W.loc = src
@@ -316,4 +316,33 @@
 		if (del_on_fail)
 			del(W)
 	return equipped
+//Ñ tg
+/mob/proc/canUnEquip(obj/item/I, force)
+	if(!I)
+		return 1
+	if((!I.canremove) && !force)
+		return 0
+	return 1
 
+/mob/proc/unEquip(obj/item/I, force) //Force overrides NODROP for things like wizarditis and admin undress.
+	if(!I) //If there's nothing to drop, the drop is automatically succesfull. If(unEquip) should generally be used to check for NODROP.
+		return 1
+
+	if((!I.canremove) && !force)
+		return 0
+
+	if(I == r_hand)
+		r_hand = null
+		update_inv_r_hand()
+	else if(I == l_hand)
+		l_hand = null
+		update_inv_l_hand()
+
+	if(I)
+		if(client)
+			client.screen -= I
+		I.loc = loc
+		I.dropped(src)
+		if(I)
+			I.layer = initial(I.layer)
+	return 1

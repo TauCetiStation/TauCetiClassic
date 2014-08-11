@@ -240,6 +240,9 @@
 				else
 					dat += text("[]\tHealth %: [] ([])</FONT><BR>", (occupant.health > 50 ? "<font color='blue'>" : "<font color='red'>"), occupant.health, t1)
 
+					if(occupant.mind && occupant.mind.changeling && occupant.status_flags & FAKEDEATH)
+						dat += text("<font color='red'>Abnormal bio-chemical activity detected!</font><BR>")
+
 					if(occupant.virus2.len)
 						dat += text("<font color='red'>Viral pathogen detected in blood stream.</font><BR>")
 
