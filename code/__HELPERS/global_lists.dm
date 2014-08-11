@@ -40,7 +40,7 @@ var/global/list/skin_styles_female_list = list()		//unused
 var/global/list/underwear_m = list("White", "Grey", "Green", "Blue", "Black", "Mankini", "None") //Curse whoever made male/female underwear diffrent colours
 var/global/list/underwear_f = list("Red", "White", "Yellow", "Blue", "Black", "Thong", "None")
 	//undershirt
-var/global/list/undershirt_t = list("Black Tank top", "White Tank top", "Black shirt", "White shirt", "None")
+var/global/list/undershirt_t = list("Black Tank top", "White Tank top", "Black shirt", "White shirt", "Love shirt", "Corgy shirt", "Brit shirt", "I love NT shirt", "Peace shirt", "Mond shirt", "Pacman shirt", "Sailor shirt", "Short sleeves white shirt", "Short sleeves purple shirt", "Short sleeves blue shirt", "Short sleeves green shirt", "Short sleeves black shirt", "None")
 	//Backpacks
 var/global/list/backbaglist = list("Nothing", "Backpack", "Satchel", "Satchel Alt")
 
@@ -124,6 +124,7 @@ var/global/list/backbaglist = list("Nothing", "Backpack", "Satchel", "Satchel Al
 				. += "    has: [t]\n"
 	world << .
 */
+
 //returns a list of paths to every subtype of prototype (excluding prototype)
 //if no list/L is provided, one is created.
 /proc/init_paths(prototype, list/L)

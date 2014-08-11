@@ -599,7 +599,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		"miner",
 		"librarian",
 		"agent",
-		"assistant"
+		"assistant",
+		"mime",
+		"clown"
 		)
 	var/dresscode = input("Select dress for [M]", "Robust quick dress shop") as null|anything in dresspacks
 	if (isnull(dresscode))
@@ -1526,6 +1528,58 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			W.assignment = "Assistant"
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
+		if("mime")
+			M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(M), slot_back)
+			M.equip_to_slot_or_del(new /obj/item/clothing/under/mime(M), slot_w_uniform)
+			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(M), slot_shoes)
+			M.equip_to_slot_or_del(new /obj/item/device/pda/mime(M), slot_belt)
+			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/white(M), slot_gloves)
+			M.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/mime(M), slot_wear_mask)
+			M.equip_to_slot_or_del(new /obj/item/clothing/head/beret(M), slot_head)
+			M.equip_to_slot_or_del(new /obj/item/clothing/suit/suspenders(M), slot_wear_suit)
+			M.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(M.back), slot_in_backpack)
+			M.equip_to_slot_or_del(new /obj/item/toy/crayon/mime(M), slot_in_backpack)
+			M.equip_to_slot_or_del(new /obj/item/weapon/reagent_containers/food/drinks/bottle/bottleofnothing(M), slot_in_backpack)
+
+			var/obj/item/device/pda/pda = new(M)
+			pda.owner = M.real_name
+			pda.ownjob = "Mime"
+			pda.name = "PDA-[M.real_name] ([pda.ownjob])"
+			M.equip_to_slot_or_del(pda, slot_belt)
+
+			var/obj/item/weapon/card/id/W = new(M)
+			W.name = "[M.real_name]'s ID Card"
+			W.access = list(access_library, access_clown, access_theatre)
+			W.assignment = "Mime"
+			W.registered_name = M.real_name
+			M.equip_to_slot_or_del(W, slot_wear_id)
+
+		if("clown")
+			M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/clown(M), slot_back)
+			M.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(M.back), slot_in_backpack)
+			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/clown(M), slot_w_uniform)
+			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/clown_shoes(M), slot_shoes)
+			M.equip_to_slot_or_del(new /obj/item/device/pda/clown(M), slot_belt)
+			M.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/clown_hat(M), slot_wear_mask)
+			M.equip_to_slot_or_del(new /obj/item/weapon/reagent_containers/food/snacks/grown/banana(M), slot_in_backpack)
+			M.equip_to_slot_or_del(new /obj/item/weapon/bikehorn(M), slot_in_backpack)
+			M.equip_to_slot_or_del(new /obj/item/weapon/stamp/clown(M), slot_in_backpack)
+			M.equip_to_slot_or_del(new /obj/item/toy/crayon/rainbow(M), slot_in_backpack)
+			M.equip_to_slot_or_del(new /obj/item/weapon/storage/fancy/crayons(M), slot_in_backpack)
+			M.equip_to_slot_or_del(new /obj/item/toy/waterflower(M), slot_in_backpack)
+
+			var/obj/item/device/pda/pda = new(M)
+			pda.owner = M.real_name
+			pda.ownjob = "Clown"
+			pda.name = "PDA-[M.real_name] ([pda.ownjob])"
+			M.equip_to_slot_or_del(pda, slot_belt)
+
+			var/obj/item/weapon/card/id/W = new(M)
+			W.name = "[M.real_name]'s ID Card"
+			W.access = list(access_library, access_clown, access_theatre)
+			W.assignment = "Clown"
+			W.registered_name = M.real_name
+			M.equip_to_slot_or_del(W, slot_wear_id)	
 
 
 	M.regenerate_icons()
