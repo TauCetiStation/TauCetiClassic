@@ -27,7 +27,7 @@
 				for(var/obj/machinery/firealarm/FA in machines)
 					if(FA.z == 1 || FA.z == 5)
 						FA.overlays = list()
-						FA.overlays += image('icons/obj/monitors.dmi', "overlay_green")
+						FA.overlays += image('tauceti/icons/obj/wall_monitors.dmi', "overlay_green")
 			if(SEC_LEVEL_BLUE)
 				if(security_level < SEC_LEVEL_BLUE)
 					world << "<font size=4 color='red'>Attention! Security level elevated to blue</font>"
@@ -39,7 +39,7 @@
 				for(var/obj/machinery/firealarm/FA in machines)
 					if(FA.z == 1 || FA.z == 5)
 						FA.overlays = list()
-						FA.overlays += image('icons/obj/monitors.dmi', "overlay_blue")
+						FA.overlays += image('tauceti/icons/obj/wall_monitors.dmi', "overlay_blue")
 			if(SEC_LEVEL_RED)
 				if(security_level < SEC_LEVEL_RED)
 					world << "<font size=4 color='red'>Attention! Code red!</font>"
@@ -57,7 +57,7 @@
 				for(var/obj/machinery/firealarm/FA in machines)
 					if(FA.z == 1 || FA.z == 5)
 						FA.overlays = list()
-						FA.overlays += image('icons/obj/monitors.dmi', "overlay_red")
+						FA.overlays += image('tauceti/icons/obj/wall_monitors.dmi', "overlay_red")
 
 			if(SEC_LEVEL_DELTA)
 				world << "<font size=4 color='red'>Attention! Delta security level reached!</font>"
@@ -66,7 +66,7 @@
 				for(var/obj/machinery/firealarm/FA in machines)
 					if(FA.z == 1 || FA.z == 5)
 						FA.overlays = list()
-						FA.overlays += image('icons/obj/monitors.dmi', "overlay_delta")
+						FA.overlays += image('tauceti/icons/obj/wall_monitors.dmi', "overlay_delta")
 	else
 		return
 
