@@ -15,5 +15,5 @@
 /obj/structure/sign/monorail_map
 	name = "\improper Velocity monorail map"
 	desc = "A monorail plan. You are in there somewhere."
-	icon = 'tauceti/modules/_locations/centcomm/monorail_map.dmi'
+	icon = 'tauceti/modules/_locations/centcomm/velocity_signs.dmi'
 	icon_state = "map"
