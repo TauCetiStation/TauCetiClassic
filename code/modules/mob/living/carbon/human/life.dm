@@ -557,7 +557,7 @@
 					breath.nitrogen += inhaled_gas_used
 				if("phoron")
 					breath.phoron += inhaled_gas_used
-				if("C02")
+				if("carbon_dioxide")
 					breath.carbon_dioxide += inhaled_gas_used
 
 		// CO2 does not affect failed_last_breath. So if there was enough oxygen in the air but too much co2,
