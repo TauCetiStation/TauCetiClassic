@@ -177,17 +177,17 @@
 		if (src.stat != 2)
 			if(istype(src,/mob/living/silicon/robot/drone))
 				switch(health)
-					if(35 to INFINITY)
+					if(15 to INFINITY)
 						src.healths.icon_state = "health0"
-					if(25 to 34)
+					if(10 to 14)
 						src.healths.icon_state = "health1"
-					if(15 to 24)
+					if(8 to 10)
 						src.healths.icon_state = "health2"
-					if(5 to 14)
+					if(5 to 8)
 						src.healths.icon_state = "health3"
-					if(0 to 4)
+					if(0 to 5)
 						src.healths.icon_state = "health4"
-					if(-35 to 0)
+					if(-15 to 0)
 						src.healths.icon_state = "health5"
 					else
 						src.healths.icon_state = "health6"
