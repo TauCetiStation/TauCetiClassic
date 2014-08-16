@@ -32,6 +32,8 @@
 	New()
 		..()
 		sleep(2)
+		new /obj/item/clothing/under/rank/postal_dude_shirt(src)
+		new /obj/item/clothing/suit/storage/postal_dude_coat(src)
 		new /obj/item/clothing/under/rank/cargo(src)
 		new /obj/item/clothing/under/rank/cargo_fem(src)
 		new /obj/item/clothing/shoes/brown(src)

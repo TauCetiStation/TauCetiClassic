@@ -540,6 +540,11 @@
 		name = "Dwarf Beard"
 		icon_state = "facial_dwarf"
 
+	postal
+		name = "Goat beard"
+		icon = 'tauceti/icons/mob/human_face.dmi'
+		icon_state = "facial_goatbeard"
+
 
 /*
 ///////////////////////////////////
