@@ -257,6 +257,7 @@
 		qdel(src)
 
 /obj/structure/mineral_door/resin
+	icon = 'tauceti/icons/mob/alien.dmi'
 	mineralType = "resin"
 	hardness = 1.5
 	var/close_delay = 100
