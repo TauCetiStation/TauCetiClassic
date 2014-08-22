@@ -181,8 +181,8 @@
 	return 1 // update UIs attached to this object
 
 /obj/machinery/chem_dispenser/attackby(var/obj/item/weapon/reagent_containers/B as obj, var/mob/user as mob)
-	if(isrobot(user))
-		return
+//	if(isrobot(user))
+//		return
 
 	if(broken_requirements.len && B.type == broken_requirements[1])
 		broken_requirements -= broken_requirements[1]
