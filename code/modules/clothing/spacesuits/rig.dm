@@ -19,9 +19,9 @@
 	sprite_sheets = list(
 		"Unathi" = 'icons/mob/species/unathi/helmet.dmi',
 		"Tajaran" = 'icons/mob/species/tajaran/helmet.dmi',
-		"Skrell" = 'icons/mob/species/skrell/helmet.dmi'
 		)
 	sprite_sheets_obj = list(
+		"Unathi" = 'icons/obj/clothing/species/unathi/hats.dmi',
 		"Tajaran" = 'icons/obj/clothing/species/tajaran/hats.dmi',
 		)
 
@@ -68,9 +68,9 @@
 	sprite_sheets = list(
 		"Unathi" = 'icons/mob/species/unathi/suit.dmi',
 		"Tajaran" = 'icons/mob/species/tajaran/suit.dmi',
-		"Skrell" = 'icons/mob/species/skrell/suit.dmi'
 		)
 	sprite_sheets_obj = list(
+		"Unathi" = 'icons/obj/clothing/species/unathi/suits.dmi',
 		"Tajaran" = 'icons/obj/clothing/species/tajaran/suits.dmi',
 		)
 	var/has_magboots = 0
@@ -400,6 +400,11 @@
 	siemens_coefficient = 0.6
 	var/obj/machinery/camera/camera
 	species_restricted = list("exclude","Unathi","Tajaran","Skrell","Vox")
+	sprite_sheets = list(
+		"Tajaran" = 'icons/mob/species/tajaran/helmet.dmi',
+		"Unathi" = 'icons/mob/species/unathi/helmet.dmi',
+		"Skrell" = 'icons/mob/species/skrell/helmet.dmi',
+		)
 	sprite_sheets_obj = list(
 		"Tajaran" = 'icons/obj/clothing/species/tajaran/hats.dmi',
 		"Unathi" = 'icons/obj/clothing/species/unathi/hats.dmi',
@@ -433,6 +438,11 @@
 	siemens_coefficient = 0.6
 	species_restricted = list("exclude","Unathi","Tajaran","Skrell","Vox")
 	has_magboots = 1
+	sprite_sheets = list(
+		"Unathi" = 'icons/mob/species/unathi/suit.dmi',
+		"Tajaran" = 'icons/mob/species/tajaran/suit.dmi',
+		"Skrell" = 'icons/mob/species/skrell/suit.dmi'
+		)
 	sprite_sheets_obj = list(
 		"Tajaran" = 'icons/obj/clothing/species/tajaran/suits.dmi',
 		"Unathi" = 'icons/obj/clothing/species/unathi/suits.dmi',
