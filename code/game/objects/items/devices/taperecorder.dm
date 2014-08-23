@@ -140,9 +140,6 @@
 
 	if(usr.stat)
 		return
-	if(emagged == 1)
-		usr << "\red The tape recorder makes a scratchy noise."
-		return
 	if(recording == 1)
 		usr << "<span class='notice'>You can't playback when recording!</span>"
 		return
@@ -174,7 +171,7 @@
 		i++
 	icon_state = "taperecorderidle"
 	playing = 0
-	if(emagged == 1.0)
+	if(emagged == 1)
 		var/turf/T = get_turf(src)
 		T.visible_message("<font color=Maroon><B>Tape Recorder</B>: This tape recorder will self-destruct in... Five.</font>")
 		sleep(10)
