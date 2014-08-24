@@ -83,6 +83,8 @@ var/list/department_radio_keys = list(
 
 /mob/living/say(var/message, var/datum/language/speaking = null, var/verb="says", var/alt_name="", var/italics=0, var/message_range = world.view, var/list/used_radios = list())
 
+	message = sanitize_plus(copytext(message, 1, MAX_MESSAGE_LEN))
+
 	var/turf/T = get_turf(src)
 
 	var/list/listening = list()

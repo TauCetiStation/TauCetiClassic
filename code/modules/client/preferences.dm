@@ -834,7 +834,7 @@ datum/preferences
 			else
 				user << browse(null, "window=records")
 			if(href_list["task"] == "med_record")
-				var/medmsg = sanitize(copytext(input(usr,"Set your medical notes here.","Medical Records",html_decode(revert_ja(med_record))) as message, 1, MAX_PAPER_MESSAGE_LEN))
+				var/medmsg = sanitize(copytext(input(usr,"Set your medical notes here.","Medical Records",html_decode(revert_ja(med_record))) as message, 1, MAX_PAPER_MESSAGE_LEN), list("ÿ"=LETTER_255))
 
 				if(medmsg != null)
 					//medmsg = sanitize_simple(copytext(medmsg, 1, MAX_PAPER_MESSAGE_LEN))
@@ -844,7 +844,7 @@ datum/preferences
 					SetRecords(user)
 
 			if(href_list["task"] == "sec_record")
-				var/secmsg = sanitize(copytext(input(usr,"Set your security notes here.","Security Records",html_decode(revert_ja(sec_record))) as message, 1, MAX_PAPER_MESSAGE_LEN))
+				var/secmsg = sanitize(copytext(input(usr,"Set your security notes here.","Security Records",html_decode(revert_ja(sec_record))) as message, 1, MAX_PAPER_MESSAGE_LEN), list("ÿ"=LETTER_255))
 
 				if(secmsg != null)
 					//secmsg = sanitize_simple(copytext(secmsg, 1, MAX_PAPER_MESSAGE_LEN))
@@ -853,7 +853,7 @@ datum/preferences
 					sec_record = secmsg
 					SetRecords(user)
 			if(href_list["task"] == "gen_record")
-				var/genmsg = sanitize(copytext(input(usr,"Set your employment notes here.","Employment Records",html_decode(revert_ja(gen_record))) as message, 1, MAX_PAPER_MESSAGE_LEN))
+				var/genmsg = sanitize(copytext(input(usr,"Set your employment notes here.","Employment Records",html_decode(revert_ja(gen_record))) as message, 1, MAX_PAPER_MESSAGE_LEN), list("ÿ"=LETTER_255))
 
 				if(genmsg != null)
 					//genmsg = sanitize_simple(copytext(genmsg, 1, MAX_PAPER_MESSAGE_LEN))

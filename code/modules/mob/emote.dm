@@ -88,7 +88,7 @@
 		input = sanitize_plus_chat(message)
 
 	if(input)
-		message = "<span class='game deadsay'><span class='prefix'>DEAD:</span> <span class='name'>[src]</span> <span class='message'>[message]</span></span>"
+		message = "<span class='game deadsay'><span class='prefix'>DEAD:</span> <span class='name'>[src]</span> <span class='message'>[input]</span></span>"
 	else
 		return
 

@@ -38,7 +38,7 @@
 			storedinfo += "\[[time2text(timerecorded*10,"mm:ss")]\] [M.name] exclaims, \"[msg]\""
 			return
 	*/
-		storedinfo += "\[[time2text(timerecorded*10,"mm:ss")]\] [M.name] [verb], \"[msg]\""
+		storedinfo += "\[[time2text(timerecorded*10,"mm:ss")]\] [M.name] [verb], \"[sanitize_plus_popup(msg)]\""//фиксим "я" сразу для принта, да. Записи могут быть большими.
 		return
 
 /obj/item/device/taperecorder/attackby(obj/item/weapon/W as obj, mob/user as mob)
@@ -155,7 +155,7 @@
 		if(storedinfo.len < i)
 			break
 		var/turf/T = get_turf(src)
-		T.visible_message("<font color=Maroon><B>Tape Recorder</B>: [storedinfo[i]]</font>")
+		T.visible_message("<font color=Maroon><B>Tape Recorder</B>: [sanitize_chat(storedinfo[i])]</font>")
 		if(storedinfo.len < i+1)
 			playsleepseconds = 1
 			sleep(10)
