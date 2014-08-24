@@ -30,12 +30,15 @@
 			continue
 
 		switch(name)
+			if("show")
+				if(!value) return	//как нибудь сделать это красивее, вынести в основной конфиг может
 			if("cost")
 				cost = text2num(value)
 			if("donate")
 				donate = text2num(value)
 			if("month")
 				month = value
+
 
 	percent = round((100 * donate)/cost)
 	var/di_width = min(percent, 100)
