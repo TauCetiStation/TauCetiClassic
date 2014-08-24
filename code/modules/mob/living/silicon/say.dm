@@ -122,7 +122,7 @@
 				return
 
 
-	return ..(message,null,verb)
+	return ..(html_decode(message),null,verb) // TODO:CYRILLIC
 
 //For holopads only. Usable by AI.
 /mob/living/silicon/ai/proc/holopad_talk(var/message)
