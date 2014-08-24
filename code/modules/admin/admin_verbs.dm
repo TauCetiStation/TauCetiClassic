@@ -98,7 +98,6 @@ var/list/admin_verbs_fun = list(
 	/client/proc/cmd_admin_gib_self,
 	/client/proc/drop_bomb,
         /client/proc/everyone_random,
-	/client/proc/cinematic,
 	/client/proc/one_click_antag,
 	/datum/admins/proc/toggle_aliens,
 	/datum/admins/proc/toggle_space_ninja,
@@ -206,7 +205,6 @@ var/list/admin_verbs_hideable = list(
 	/client/proc/cmd_admin_dress,
 	/client/proc/cmd_admin_gib_self,
 	/client/proc/drop_bomb,
-	/client/proc/cinematic,
 	/client/proc/get_whitelist, 			//Whitelist
 	/client/proc/get_alienwhitelist,
 	/client/proc/add_to_whitelist,
