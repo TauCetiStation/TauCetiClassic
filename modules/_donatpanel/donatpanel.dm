@@ -30,7 +30,7 @@
 			continue
 
 		switch(name)
-			if("show")
+			if("hide")
 				return	//как нибудь сделать это красивее, вынести в основной конфиг может
 			if("cost")
 				cost = text2num(value)
