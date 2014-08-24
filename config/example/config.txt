@@ -232,6 +232,9 @@ USEALIENWHITELIST
 ##Remove the # to let ghosts spin chairs
 #GHOST_INTERACTION
 
+## Required time to respawn after death
+#DEATHTIME_REQUIRED 18000
+
 ## Password used for authorizing ircbot and other external tools.
 #COMMS_PASSWORD
 

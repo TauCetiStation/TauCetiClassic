@@ -79,6 +79,8 @@
 
 	var/rus_language = 0
 
+	var/deathtime_required = 18000	//30 minutes
+
 	var/usealienwhitelist = 0
 	var/limitalienplayers = 0
 	var/alien_to_human_ratio = 0.5
@@ -492,6 +494,9 @@
 
 				if("req_cult_ghostwriter")
 					config.cult_ghostwriter_req_cultists = text2num(value)
+
+				if("deathtime_required")
+					config.deathtime_required = text2num(value)
 
 				if("rus_language")
 					config.rus_language = 1
