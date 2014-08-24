@@ -381,6 +381,270 @@
 		icon = 'tauceti/icons/mob/human_face.dmi'
 		icon_state = "hair_rosa"
 
+	big_tails //Как вульгарно
+		name = "Big tails"
+		icon = 'tauceti/icons/mob/human_face.dmi'
+		icon_state = "hair_long_d_tails"
+		gender = FEMALE
+
+	long_bedhead
+		name = "Long bedhead"
+		icon = 'tauceti/icons/mob/human_face.dmi'
+		icon_state = "hair_long_bedhead"
+		gender = FEMALE
+
+	fluttershy // Бля, кони
+		name = "Fluttershy"
+		icon = 'tauceti/icons/mob/human_face.dmi'
+		icon_state = "hair_fluttershy"
+		gender = FEMALE
+
+	judge
+		name = "Judge"
+		icon = 'tauceti/icons/mob/human_face.dmi'
+		icon_state = "hair_judge"
+		gender = FEMALE
+
+	long_braid
+		name = "Long braid"
+		icon = 'tauceti/icons/mob/human_face.dmi'
+		icon_state = "hair_long_braid"
+		gender = FEMALE
+
+	elize
+		name = "Elize"
+		icon = 'tauceti/icons/mob/human_face.dmi'
+		icon_state = "hair_elize"
+		gender = FEMALE
+
+	elize2
+		name = "Elize2"
+		icon = 'tauceti/icons/mob/human_face.dmi'
+		icon_state = "hair_elize_2"
+		gender = FEMALE
+
+	undercut_fem
+		name = "Female undercut"
+		icon = 'tauceti/icons/mob/human_face.dmi'
+		icon_state = "hair_undercut_fem"
+		gender = FEMALE
+
+	emo_right
+		name = "Emo right"
+		icon = 'tauceti/icons/mob/human_face.dmi'
+		icon_state = "hair_emo_r"
+
+	applejack // Бля, опять кони
+		name = "Applejack"
+		icon = 'tauceti/icons/mob/human_face.dmi'
+		icon_state = "hair_applejack"
+		gender = FEMALE
+
+	shorthair2
+		name = "Short hair 2"
+		icon = 'tauceti/icons/mob/human_face.dmi'
+		icon_state = "hair_shorthair2"
+
+	long_over_eye
+		name = "Over eye"
+		icon = 'tauceti/icons/mob/human_face.dmi'
+		icon_state = "hair_longovereye"
+
+	oneshoulder
+		name = "One Shoulder"
+		icon = 'tauceti/icons/mob/human_face.dmi'
+		icon_state = "hair_oneshoulder"
+
+	tressshoulder
+		name = "Tress Shoulder"
+		icon = 'tauceti/icons/mob/human_face.dmi'
+		icon_state = "hair_tressshoulder"
+
+	messy
+		name = "Messy"
+		icon = 'tauceti/icons/mob/human_face.dmi'
+		icon_state = "hair_messy"
+
+	protagonist
+		name = "Slightly long"
+		icon = 'tauceti/icons/mob/human_face.dmi'
+		icon_state = "hair_protagonist"
+
+	antenna
+		name = "Ahoge"
+		icon = 'tauceti/icons/mob/human_face.dmi'
+		icon_state = "hair_antenna"
+
+	pigtail
+		name = "Pig tails2"
+		icon = 'tauceti/icons/mob/human_face.dmi'
+		icon_state = "hair_pigtails"
+
+	front_braid
+		name = "Braided front"
+		icon = 'tauceti/icons/mob/human_face.dmi'
+		icon_state = "hair_braidfront"
+
+	lowbraid
+		name = "Low Braid"
+		icon = 'tauceti/icons/mob/human_face.dmi'
+		icon_state = "hair_hbraid"
+
+	not_floorlength_braid
+		name = "High Braid"
+		icon = 'tauceti/icons/mob/human_face.dmi'
+		icon_state = "hair_braid2"
+
+	side_tail
+		name = "Side Pony"
+		icon = 'tauceti/icons/mob/human_face.dmi'
+		icon_state = "hair_sidetail"
+
+	side_tail2
+		name = "Side Pony 2"
+		icon = 'tauceti/icons/mob/human_face.dmi'
+		icon_state = "hair_sidetail2"
+
+	side_tail3
+		name = "Side Pony 3"
+		icon = 'tauceti/icons/mob/human_face.dmi'
+		icon_state = "hair_stail"
+
+	bun
+		name = "Bun Head"
+		icon = 'tauceti/icons/mob/human_face.dmi'
+		icon_state = "hair_bun"
+
+	braidtail
+		name = "Braided Tail"
+		icon = 'tauceti/icons/mob/human_face.dmi'
+		icon_state = "hair_braidtail"
+
+	familyman
+		name = "Big Flat Top"
+		icon = 'tauceti/icons/mob/human_face.dmi'
+		icon_state = "hair_thefamilyman"
+
+	drillruru
+		name = "Drill Hair"
+		icon = 'tauceti/icons/mob/human_face.dmi'
+		icon_state = "hair_drillruru"
+
+	dandypomp
+		name = "Big Pompadour"
+		icon = 'tauceti/icons/mob/human_face.dmi'
+		icon_state = "hair_dandypompadour"
+
+	poofy
+		name = "Side Ponytail"
+		icon = 'tauceti/icons/mob/human_face.dmi'
+		icon_state = "hair_poofy"
+
+	crono
+		name = "Big Spiky Hair"
+		icon = 'tauceti/icons/mob/human_face.dmi'
+		icon_state = "hair_toriyama"
+
+	vegeta
+		name = "Big Spiky Hair 2"
+		icon = 'tauceti/icons/mob/human_face.dmi'
+		icon_state = "hair_toriyama2"
+
+	cia
+		name = "Business Hair 3"
+		icon = 'tauceti/icons/mob/human_face.dmi'
+		icon_state = "hair_cia"
+
+	mulder
+		name = "Business Hair 4"
+		icon = 'tauceti/icons/mob/human_face.dmi'
+		icon_state = "hair_mulder"
+
+	scully
+		name = "Bob Hair 2"
+		icon = 'tauceti/icons/mob/human_face.dmi'
+		icon_state = "hair_scully"
+
+	nitori
+		name = "Pigtail Hair"
+		icon = 'tauceti/icons/mob/human_face.dmi'
+		icon_state = "hair_nitori"
+
+	joestar
+		name = "Swept Back Hair 2"
+		icon = 'tauceti/icons/mob/human_face.dmi'
+		icon_state = "hair_joestar"
+
+	edgeworth
+		name = "Keanu Hair"
+		icon = 'tauceti/icons/mob/human_face.dmi'
+		icon_state = "hair_edgeworth"
+
+	objection
+		name = "Swept Back Hair"
+		icon = 'tauceti/icons/mob/human_face.dmi'
+		icon_state = "hair_objection"
+
+	dubsman
+		name = "Business Hair 2"
+		icon = 'tauceti/icons/mob/human_face.dmi'
+		icon_state = "hair_dubs"
+
+	blackswordsman
+		name = "Hedgehog Hair"
+		icon = 'tauceti/icons/mob/human_face.dmi'
+		icon_state = "hair_blackswordsman"
+
+	mentalist
+		name = "Business Hair 1"
+		icon = 'tauceti/icons/mob/human_face.dmi'
+		icon_state = "hair_mentalist"
+
+	fujisaki
+		name = "Short Hair 3"
+		icon = 'tauceti/icons/mob/human_face.dmi'
+		icon_state = "hair_fujisaki"
+
+	schierke
+		name = "Bob Hair"
+		icon = 'tauceti/icons/mob/human_face.dmi'
+		icon_state = "hair_schierke"
+
+	akari
+		name = "Twin Buns"
+		icon = 'tauceti/icons/mob/human_face.dmi'
+		icon_state = "hair_akari"
+
+	fujiyabashi
+		name = "Ponytail 4"
+		icon = 'tauceti/icons/mob/human_face.dmi'
+		icon_state = "hair_fujiyabashi"
+
+	nia
+		name = "Long Hair 1"
+		icon = 'tauceti/icons/mob/human_face.dmi'
+		icon_state = "hair_nia"
+
+	shinobu
+		name = "Long Hair 2"
+		icon = 'tauceti/icons/mob/human_face.dmi'
+		icon_state = "hair_shinobu"
+
+	ramona
+		name = "Ramona"
+		icon = 'tauceti/icons/mob/human_face.dmi'
+		icon_state = "hair_ramona"
+
+	megaeyebrows
+		name = "Mega Eyebrows"
+		icon = 'tauceti/icons/mob/human_face.dmi'
+		icon_state = "hair_megaeyebrow"
+
+	metal
+		name = "Metal"
+		icon = 'tauceti/icons/mob/human_face.dmi'
+		icon_state = "hair_80s"
+
 	icp_screen_pink
 		name = "pink IPC screen"
 		icon_state = "ipc_pink"
