@@ -1243,7 +1243,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 /obj/item/device/pda/clown/HasEntered(AM as mob|obj) //Clown PDA is slippery.
 	if (istype(AM, /mob/living/carbon))
 		var/mob/M =	AM
-		if ((istype(M, /mob/living/carbon/human) && (istype(M:shoes, /obj/item/clothing/shoes) && M:shoes.flags&NOSLIP)) || M.m_intent == "walk")
+		if ((istype(M, /mob/living/carbon/human) && ( (istype(M:shoes, /obj/item/clothing/shoes) && M:shoes.flags&NOSLIP)) || (istype(M:wear_suit, /obj/item/clothing/suit/space/rig) && M:wear_suit.flags&NOSLIP)  ) || M.m_intent == "walk")
 			return
 
 		if ((istype(M, /mob/living/carbon/human) && (M.real_name != src.owner) && (istype(src.cartridge, /obj/item/weapon/cartridge/clown))))

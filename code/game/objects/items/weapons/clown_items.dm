@@ -26,7 +26,7 @@
 /obj/item/weapon/soap/HasEntered(AM as mob|obj) //EXACTLY the same as bananapeel for now, so it makes sense to put it in the same dm -- Urist
 	if (istype(AM, /mob/living/carbon))
 		var/mob/M =	AM
-		if (istype(M, /mob/living/carbon/human) && (isobj(M:shoes) && M:shoes.flags&NOSLIP))
+		if (istype(M, /mob/living/carbon/human) && ( (isobj(M:shoes) && M:shoes.flags&NOSLIP)) || ((istype(M:wear_suit, /obj/item/clothing/suit/space/rig) && M:wear_suit.flags&NOSLIP)) )
 			return
 
 		M.stop_pulling()

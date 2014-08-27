@@ -26,6 +26,8 @@ mob/living/carbon/human/airflow_stun()
 	if(buckled) return 0
 	if(shoes)
 		if(shoes.flags & NOSLIP) return 0
+	if(wear_suit)
+		if(wear_suit.flags & NOSLIP) return 0
 	if(!(status_flags & CANSTUN) && !(status_flags & CANWEAKEN))
 		src << "\blue You stay upright as the air rushes past you."
 		return 0
@@ -87,6 +89,10 @@ obj/item/check_airflow_movable(n)
 			if(src:shoes)
 				if(istype(src:shoes, /obj/item/clothing/shoes/magboots))
 					if(src:shoes:magpulse)
+						return
+			if(src:wear_suit)
+				if(istype(src:wear_suit, /obj/item/clothing/suit/space/rig))
+					if(src:wear_suit:magpulse)
 						return
 		src << "\red You are sucked away by airflow!"
 	var/airflow_falloff = 9 - ul_FalloffAmount(airflow_dest) //It's a fast falloff calc.  Very useful.
@@ -151,6 +157,10 @@ obj/item/check_airflow_movable(n)
 			if(src:shoes)
 				if(istype(src:shoes, /obj/item/clothing/shoes/magboots))
 					if(src:shoes.flags & NOSLIP)
+						return
+			if(src:wear_suit)
+				if(istype(src:wear_suit, /obj/item/clothing/suit/space/rig))
+					if(src:wear_suit.flags & NOSLIP)
 						return
 		src << "\red You are pushed away by airflow!"
 		last_airflow = world.time

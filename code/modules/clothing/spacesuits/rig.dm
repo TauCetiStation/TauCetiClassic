@@ -53,6 +53,36 @@
 	heat_protection = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
 	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 	species_restricted = list("exclude","Unathi","Tajaran","Diona","Vox")
+	var/has_magboots = 0
+	var/magpulse = 0
+	var/mag_slowdown = 3
+
+/obj/item/clothing/suit/space/rig/New()
+	..()
+	if(has_magboots)
+		action_button_name = "Toggle magboots."
+		icon_action_button = "action_blank"
+
+/obj/item/clothing/suit/space/rig/attack_self(mob/user)
+	if(!has_magboots)
+		user << "\the [src] doesn't have built-in mag-pusle traction system."
+		return
+	if(magpulse)
+		flags &= ~NOSLIP
+		slowdown = initial(slowdown)
+		magpulse = 0
+		user << "You disable \the [src] the mag-pulse traction system."
+	else
+		flags |= NOSLIP
+		slowdown = mag_slowdown
+		magpulse = 1
+		user << "You enable the mag-pulse traction system."
+
+
+/obj/item/clothing/suit/space/rig/examine()
+	set src in view()
+	..()
+	usr << "Its mag-pulse traction system appears to be [!src.flags&NOSLIP ? "disabled" : "enabled"]."
 
 //Chief Engineer's rig
 /obj/item/clothing/head/helmet/space/rig/elite
@@ -99,6 +129,7 @@
 	siemens_coefficient = 0.6
 	var/obj/machinery/camera/camera
 	species_restricted = list("exclude","Unathi","Tajaran","Skrell","Vox")
+
 /obj/item/clothing/head/helmet/space/rig/syndi/attack_self(mob/user)
 	if(camera)
 		..(user)
@@ -125,6 +156,7 @@
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/weapon/gun,/obj/item/ammo_box/magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/melee/energy/sword,/obj/item/weapon/handcuffs)
 	siemens_coefficient = 0.6
 	species_restricted = list("exclude","Unathi","Tajaran","Skrell","Vox")
+	has_magboots = 1
 
 
 //Wizard Rig

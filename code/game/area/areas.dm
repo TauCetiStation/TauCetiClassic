@@ -71,18 +71,18 @@
 /area/proc/atmosalert(danger_level)
 //	if(type==/area) //No atmos alarms in space
 //		return 0 //redudant
-	
+
 	//Check all the alarms before lowering atmosalm. Raising is perfectly fine.
 	for (var/area/RA in related)
 		for (var/obj/machinery/alarm/AA in RA)
 			if ( !(AA.stat & (NOPOWER|BROKEN)) && !AA.shorted)
 				danger_level = max(danger_level, AA.danger_level)
-	
+
 	if(danger_level != atmosalm)
 		if (danger_level < 1 && atmosalm >= 1)
 			//closing the doors on red and opening on green provides a bit of hysteresis that will hopefully prevent fire doors from opening and closing repeatedly due to noise
 			air_doors_open()
-		
+
 		if (danger_level < 2 && atmosalm >= 2)
 			for(var/area/RA in related)
 				for(var/obj/machinery/camera/C in RA)
@@ -91,7 +91,7 @@
 				aiPlayer.cancelAlarm("Atmosphere", src, src)
 			for(var/obj/machinery/computer/station_alert/a in machines)
 				a.cancelAlarm("Atmosphere", src, src)
-		
+
 		if (danger_level >= 2 && atmosalm < 2)
 			var/list/cameras = list()
 			for(var/area/RA in related)
@@ -104,12 +104,12 @@
 			for(var/obj/machinery/computer/station_alert/a in machines)
 				a.triggerAlarm("Atmosphere", src, cameras, src)
 			air_doors_close()
-		
+
 		atmosalm = danger_level
 		for(var/area/RA in related)
 			for (var/obj/machinery/alarm/AA in RA)
 				AA.update_icon()
-		
+
 		return 1
 	return 0
 
@@ -364,6 +364,8 @@
 /area/proc/thunk(mob)
 	if(istype(mob,/mob/living/carbon/human/))  // Only humans can wear magboots, so we give them a chance to.
 		if((istype(mob:shoes, /obj/item/clothing/shoes/magboots) && (mob:shoes.flags & NOSLIP)))
+			return
+		if((istype(mob:wear_suit, /obj/item/clothing/suit/space/rig) && (mob:wear_suit.flags & NOSLIP))) //Люди в скафандре с включенными магбутами
 			return
 
 	if(istype(get_turf(mob), /turf/space)) // Can't fall onto nothing.

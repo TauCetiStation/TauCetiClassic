@@ -417,7 +417,7 @@
 			continue
 
 		if(istype(src,/mob/living/carbon/human/))  // Only humans can wear magboots, so we give them a chance to.
-			if((istype(turf,/turf/simulated/floor)) && (src.lastarea.has_gravity == 0) && !(istype(src:shoes, /obj/item/clothing/shoes/magboots) && (src:shoes:flags & NOSLIP)))
+			if( ( istype(turf,/turf/simulated/floor) ) && ( src.lastarea.has_gravity == 0 ) && !( istype(src:shoes, /obj/item/clothing/shoes/magboots) && (src:shoes:flags & NOSLIP) ) ||  !(istype(src:wear_suit, /obj/item/clothing/suit/space/rig) && (src:wear_suit.flags&NOSLIP))  )
 				continue
 
 
