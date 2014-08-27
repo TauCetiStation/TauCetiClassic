@@ -139,7 +139,7 @@
 		else
 			user << "[msg2]"
 
-	else if(istype(W, /obj/item/stack/sheet/mineral/plasma) && panel_open)
+	else if(istype(W, /obj/item/stack/sheet/mineral/phoron) && panel_open)
 		if(!isEmpProof())
 			upgradeEmpProof()
 			user << "[msg]"
