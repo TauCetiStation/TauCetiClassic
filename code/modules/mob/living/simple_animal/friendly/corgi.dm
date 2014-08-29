@@ -22,7 +22,6 @@
 	var/obj/item/inventory_back
 	var/facehugger
 
-/*
 /mob/living/simple_animal/corgi/Life()
 	..()
 	regenerate_icons()
@@ -31,6 +30,8 @@
 	user.set_machine(src)
 	if(user.stat) return
 
+	//Text version of inventory
+/*
 	var/dat = 	"<div align='center'><b>Inventory of [name]</b></div><p>"
 	if(inventory_head)
 		dat +=	"<br><b>Head:</b> [inventory_head] (<a href='?src=\ref[src];remove_inv=head'>Remove</a>)"
@@ -40,9 +41,28 @@
 		dat +=	"<br><b>Back:</b> [inventory_back] (<a href='?src=\ref[src];remove_inv=back'>Remove</a>)"
 	else
 		dat +=	"<br><b>Back:</b> <a href='?src=\ref[src];add_inv=back'>Nothing</a>"
+*/
 
-	user << browse(dat, text("window=mob[];size=325x500", name))
-	onclose(user, "mob[real_name]")
+	//Icon version of Inventory
+	var/icon/sprite
+
+	var/dat = 	"<div align='center'><b><hr>Inventory of [name]</b></div><hr>"
+	if(inventory_head)
+		sprite = new /icon(inventory_head.icon, inventory_head.icon_state)
+		user << browse_rsc(sprite, "ian_hat.png")
+		dat += "<br><b>Head:</b> <img src='ian_hat.png'>(<a href='?src=\ref[src];remove_inv=head'>Remove</a>)"
+	else
+		dat +=	"<br><b>Head:</b> <a href='?src=\ref[src];add_inv=head'>Nothing</a>"
+	if(inventory_back)
+		sprite = new /icon(inventory_back.icon, inventory_back.icon_state)
+		user << browse_rsc(sprite, "ian_back.png")
+		dat += "<br><b>Back:</b> <img src='ian_back.png'>(<a href='?src=\ref[src];remove_inv=back'>Remove</a>)"
+	else
+		dat +=	"<br><b>Back:</b> <a href='?src=\ref[src];add_inv=back'>Nothing</a>"
+	dat += "<br><a href='?src=\ref[user];mach_close=mob[type]'>Close</a>"
+
+	user << browse(dat, text("window=mob[];size=325x500", type))
+	onclose(user, "mob[type]")
 	return
 
 /mob/living/simple_animal/corgi/attackby(var/obj/item/O as obj, var/mob/user as mob)
@@ -58,7 +78,7 @@
 				for (var/mob/M in viewers(src, null))
 					M.show_message("\red [user] gently taps [src] with the [O]. ")
 			if(prob(15))
-				emote("looks at [user] with [pick("an amused","an annoyed","a confused","a resentful", "a happy", "an excited")] expression on \his face")
+				emote("me",1,"looks at [user] with [pick("an amused","an annoyed","a confused","a resentful","a happy","an excited")] expression on his face")
 			return
 	..()
 
@@ -83,6 +103,7 @@
 					SetLuminosity(0)
 					inventory_head.loc = src.loc
 					inventory_head = null
+					regenerate_icons()
 				else
 					usr << "\red There is nothing to remove from its [remove_from]."
 					return
@@ -90,11 +111,12 @@
 				if(inventory_back)
 					inventory_back.loc = src.loc
 					inventory_back = null
+					regenerate_icons()
 				else
 					usr << "\red There is nothing to remove from its [remove_from]."
 					return
 
-		//show_inv(usr) //Commented out because changing Ian's  name and then calling up his inventory opens a new inventory...which is annoying.
+		show_inv(usr) //Commented out because changing Ian's  name and then calling up his inventory opens a new inventory...which is annoying.
 
 	//Adding things to inventory
 	else if(href_list["add_inv"])
@@ -110,12 +132,6 @@
 					usr << "\red It's is already wearing something."
 					return
 				else
-					place_on_head(usr.get_active_hand())
-
-					var/obj/item/item_to_add = usr.get_active_hand()
-					if(!item_to_add)
-						return
-
 					//Corgis are supposed to be simpler, so only a select few objects can actually be put
 					//to be compatible with them. The objects are below.
 					//Many  hats added, Some will probably be removed, just want to see which ones are popular.
@@ -125,7 +141,6 @@
 						/obj/item/clothing/glasses/sunglasses,
 						/obj/item/clothing/head/caphat,
 						/obj/item/clothing/head/collectable/captain,
-						/obj/item/clothing/head/that,
 						/obj/item/clothing/head/that,
 						/obj/item/clothing/head/kitty,
 						/obj/item/clothing/head/collectable/kitty,
@@ -152,13 +167,15 @@
 						/obj/item/clothing/head/collectable/paper,
 						/obj/item/clothing/head/soft
 					)
-
+					
+					var/obj/item/item_to_add = usr.get_active_hand()
+					if(!item_to_add)
+						return
 					if( ! ( item_to_add.type in allowed_types ) )
 						usr << "\red It doesn't seem too keen on wearing that item."
 						return
-
+					//place_on_head(usr.get_active_hand())
 					usr.drop_item()
-
 					place_on_head(item_to_add)
 
 			if("back")
@@ -187,7 +204,7 @@
 					src.inventory_back = item_to_add
 					regenerate_icons()
 
-		//show_inv(usr) //Commented out because changing Ian's  name and then calling up his inventory opens a new inventory...which is annoying.
+		show_inv(usr) //Commented out because changing Ian's  name and then calling up his inventory opens a new inventory...which is annoying.
 	else
 		..()
 
@@ -254,7 +271,6 @@
 		if(/obj/item/clothing/head/soft)
 			name = "Corgi Tech [real_name]"
 			desc = "The reason your yellow gloves have chew-marks."
-*/
 
 
 //IAN! SQUEEEEEEEEE~
@@ -285,6 +301,11 @@
 				stop_automated_movement = 0
 				for(var/obj/item/weapon/reagent_containers/food/snacks/S in oview(src,3))
 					if(isturf(S.loc) || ishuman(S.loc))
+						if(istype(S, /obj/item/weapon/reagent_containers/food/snacks/meat/corgi))
+							emote("me",1,"sniffs [S] with a confused expression on his face")
+							spawn(50)
+								emote("me",1,"cryes for a second, seizes up and falls limp, his eyes dead and lifeless...")
+								health = 0
 						movement_target = S
 						break
 			if(movement_target)
@@ -311,10 +332,10 @@
 						movement_target.attack_animal(src)
 					else if(ishuman(movement_target.loc) )
 						if(prob(20))
-							emote("stares at the [movement_target] that [movement_target.loc] has with a sad puppy-face")
+							emote("me",1,"stares at the [movement_target] that [movement_target.loc] has with a sad puppy-face")
 
 		if(prob(1))
-			emote(pick("dances around","chases its tail"))
+			emote("me",1,pick("dances around","chases its tail"))
 			spawn(0)
 				for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2,1,2,4,8,4,2))
 					dir = i
@@ -451,7 +472,8 @@
 			turns_since_scan = 0
 			var/alone = 1
 			var/ian = 0
-			for(var/mob/M in oviewers(7, src))
+			//for(var/mob/M in oviewers(7, src))
+			for(var/mob/M in oview(src,7))
 				if(istype(M, /mob/living/simple_animal/corgi/Ian))
 					if(M.client)
 						alone = 0
@@ -465,10 +487,11 @@
 				if(near_camera(src) || near_camera(ian))
 					return
 				new /mob/living/simple_animal/corgi/puppy(loc)
+				puppies++
 
 
 		if(prob(1))
-			emote(pick("dances around","chases her tail"))
+			emote("me",1,pick("dances around","chases her tail"))
 			spawn(0)
 				for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2,1,2,4,8,4,2))
 					dir = i
