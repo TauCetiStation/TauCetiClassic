@@ -113,7 +113,7 @@
 		user.visible_message("<span class='danger'>[user] smashes through [src]!</span>")
 		new /obj/item/weapon/shard(loc)
 		if(reinf) new /obj/item/stack/rods(loc)
-		del(src)
+		qdel(src)
 	else if (usr.a_intent == "hurt")
 		playsound(src.loc, 'sound/effects/glassknock.ogg', 80, 1)
 		usr.visible_message("\red [usr.name] bangs against the [src.name]!", \
@@ -137,7 +137,7 @@
 		user.visible_message("<span class='danger'>[user] smashes through [src]!</span>")
 		new /obj/item/weapon/shard(loc)
 		if(reinf) new /obj/item/stack/rods(loc)
-		del(src)
+		qdel(src)
 	else	//for nicer text~
 		user.visible_message("<span class='danger'>[user] smashes into [src]!</span>")
 		playsound(loc, 'sound/effects/Glasshit.ogg', 100, 1)
