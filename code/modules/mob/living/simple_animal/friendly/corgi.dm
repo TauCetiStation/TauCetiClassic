@@ -21,6 +21,7 @@
 	var/obj/item/inventory_head
 	var/obj/item/inventory_back
 	var/facehugger
+	var/dodged
 
 /mob/living/simple_animal/corgi/Life()
 	..()
@@ -78,7 +79,53 @@
 				for (var/mob/M in viewers(src, null))
 					M.show_message("\red [user] gently taps [src] with the [O]. ")
 			if(prob(15))
-				emote("me",1,"looks at [user] with [pick("an amused","an annoyed","a confused","a resentful","a happy","an excited")] expression on his face")
+				if(health > 0)
+					emote("me",1,"looks at [user] with [pick("an amused","an annoyed","a confused","a resentful","a happy","an excited")] expression on his face")
+			return
+	..()
+
+/mob/living/simple_animal/corgi/attack_hand(mob/living/carbon/human/M as mob)
+	if(inventory_head && inventory_back)
+		if(health > 0)
+			if( istype(inventory_head,/obj/item/clothing/head/helmet) && istype(inventory_back,/obj/item/clothing/suit/armor) )
+				switch(M.a_intent)
+					if("hurt", "disarm")
+						for(var/mob/O in viewers(src, null))
+							if ((O.client && !( O.blinded )))
+								//M.show_message("\red [M] gently [response_harm] [src].")
+								M.show_message("\red [src] dodges [M]'s kick.")
+						if(prob(15))
+							emote("me",1,"looks at [M] with [pick("an amused","an annoyed","a confused","a resentful","a happy","an excited")] expression on his face")
+						return
+	..()
+
+/mob/living/simple_animal/corgi/bullet_act(var/obj/item/projectile/Proj)
+	if(!Proj)	return
+	if(inventory_head && inventory_back)
+		if(health > 0)
+			if( istype(inventory_head,/obj/item/clothing/head/helmet) && istype(inventory_back,/obj/item/clothing/suit/armor) )
+				if(!dodged)
+					dodged++
+					spawn(50)
+						dodged = 0
+					for (var/mob/M in viewers(src, null))
+						if(Proj.flag == "bullet")
+							M.show_message("\red \b [src] catches [Proj] with his jaws.")
+						else
+							M.show_message("\red \b [src] dodges [Proj].")
+					if(prob(15))
+						emote("me",1,"looks with [pick("a resentful","a happy","an excited")] expression on his face and wants to play more!")
+					return
+	..()
+	
+/mob/living/simple_animal/corgi/hitby(atom/movable/AM as mob|obj)
+	if(inventory_head && inventory_back)
+		if( istype(inventory_head,/obj/item/clothing/head/helmet) && istype(inventory_back,/obj/item/clothing/suit/armor) )
+			for (var/mob/M in viewers(src, null))
+				M.show_message("\red [src] has been hit by [AM], however [src] is too armored.")
+			if(prob(15))
+				if(health > 0)
+					emote("me",1,"looks at [AM] with [pick("an amused","an annoyed","a confused")] expression on his face")
 			return
 	..()
 
