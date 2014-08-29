@@ -234,6 +234,10 @@
 		message = slur(message)
 		verb = pick("stammers","stutters")
 		handled = 1
+	if (stuttering)
+		message = stutter(message)
+		verb = pick("stammers","stutters")
+		handled = 1
 
 	var/braindam = getBrainLoss()
 	if(braindam >= 60)
