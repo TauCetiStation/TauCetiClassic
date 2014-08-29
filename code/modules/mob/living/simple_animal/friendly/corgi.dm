@@ -106,7 +106,7 @@
 			if( istype(inventory_head,/obj/item/clothing/head/helmet) && istype(inventory_back,/obj/item/clothing/suit/armor) )
 				if(!dodged)
 					dodged++
-					spawn(50)
+					spawn(100)
 						dodged = 0
 					for (var/mob/M in viewers(src, null))
 						if(Proj.flag == "bullet")
