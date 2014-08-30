@@ -262,9 +262,14 @@
 	New()
 		src.modules += new /obj/item/device/flashlight(src)
 		src.modules += new /obj/item/device/flash(src)
-		src.modules += new /obj/item/weapon/melee/energy/sword(src)
-		src.modules += new /obj/item/weapon/gun/energy/pulse_rifle/destroyer(src)
+		src.modules += new /obj/item/weapon/melee/energy/sword/cyborg(src)
+		src.modules += new /obj/item/weapon/gun/energy/crossbow/cyborg(src)
 		src.modules += new /obj/item/weapon/card/emag(src)
+		src.modules += new /obj/item/weapon/gun/projectile/automatic/borg(src)
+		src.modules += new /obj/item/weapon/tank/jetpack/carbondioxide(src)
+		src.modules += new /obj/item/weapon/wrench(src)
+		src.modules += new /obj/item/weapon/crowbar(src)
+		src.modules += new /obj/item/weapon/pickaxe/plasmacutter(src)
 		return
 
 /obj/item/weapon/robot_module/combat

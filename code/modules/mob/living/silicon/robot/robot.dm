@@ -270,7 +270,7 @@
 	feedback_inc("cyborg_[lowertext(modtype)]",1)
 	updatename()
 
-	if(modtype == "Medical" || modtype == "Security" || modtype == "Combat")
+	if(modtype == "Medical" || modtype == "Security" || modtype == "Combat" || modtype == "Syndicate")
 		status_flags &= ~CANPUSH
 
 	choose_icon(6,module_sprites)
@@ -623,6 +623,8 @@
 				updateicon()
 			else if(wiresexposed && isWireCut(1) && isWireCut(2) && isWireCut(3) && isWireCut(4) && isWireCut(5))
 				//Cell is out, wires are exposed, remove MMI, produce damaged chassis, baleet original mob.
+				if(istype(src, /mob/living/silicon/robot/syndicate))
+					return
 				if(!mmi)
 					user << "\The [src] has no brain to remove."
 					return
