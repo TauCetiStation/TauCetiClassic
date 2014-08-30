@@ -13,6 +13,8 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 	var/list/purchase_log = list()
 	var/show_description = null
 	var/active = 0
+	var/uplink_type = "traitor" //0 - триторский аплинк, 1 - нюкерский
+	var/list/uplink_items = list()
 
 /obj/item/device/uplink/New()
 	..()
@@ -21,14 +23,15 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 
 //Let's build a menu!
 /obj/item/device/uplink/proc/generate_menu()
-
 	var/dat = "<B>[src.welcome]</B><BR>"
 	dat += "Tele-Crystals left: [src.uses]<BR>"
 	dat += "<HR>"
 	dat += "<B>Request item:</B><BR>"
 	dat += "<I>Each item costs a number of tele-crystals as indicated by the number following their name.</I><br><BR>"
 
-	var/list/buyable_items = get_uplink_items()
+	if(uplink_items.len)
+		uplink_items.Cut()
+	var/list/buyable_items = get_uplink_items(src)
 
 	// Loop through categories
 	var/index = 0
@@ -66,7 +69,6 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 
 // Interaction code. Gathers a list of items purchasable from the paren't uplink and displays it. It also adds a lock button.
 /obj/item/device/uplink/interact(mob/user as mob)
-
 	var/dat = "<body link='yellow' alink='white' bgcolor='#601414'><font color='white'>"
 	dat += src.generate_menu()
 	dat += "<A href='byond://?src=\ref[src];lock=1'>Lock</a>"
@@ -92,8 +94,7 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 			var/category = split[1]
 			var/number = text2num(split[2])
 
-			var/list/buyable_items = get_uplink_items()
-
+			var/list/buyable_items = get_uplink_items(src)
 			var/list/uplink = buyable_items[category]
 			if(uplink && uplink.len >= number)
 				var/datum/uplink_item/I = uplink[number]
@@ -162,6 +163,16 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 			return 1
 	return 0
 
+//Refund proc for the borg teleporter (later I'll make a general refund proc if there is demand for it)
+/obj/item/device/radio/uplink/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if(istype(W, /obj/item/weapon/antag_spawner/borg_tele))
+		var/obj/item/weapon/antag_spawner/borg_tele/S = W
+		if(!S.used)
+			hidden_uplink.uses += S.TC_cost
+			qdel(S)
+			user << "<span class='notice'>Teleporter refunded.</span>"
+		else
+			user << "<span class='notice'>This teleporter is already used.</span>"
 // PRESET UPLINKS
 // A collection of preset uplinks.
 //
@@ -171,6 +182,7 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 /obj/item/device/radio/uplink/New()
 	hidden_uplink = new(src)
 	icon_state = "radio"
+	hidden_uplink.uplink_type = "nuclear"
 
 /obj/item/device/radio/uplink/attack_self(mob/user as mob)
 	if(hidden_uplink)

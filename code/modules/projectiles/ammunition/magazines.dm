@@ -91,12 +91,12 @@
 	multiple_sprites = 2 */
 
 /obj/item/ammo_box/magazine/m12mm
-	name = "magazine (12mm)"
-	icon = 'tauceti/icons/obj/ammo.dmi'
+	name = "magazine (.45)"
+	icon = 'tauceti/items/weapons/syndicate/syndicate_guns.dmi'
 	icon_state = "12mm"
 	origin_tech = "combat=2"
-	ammo_type = /obj/item/ammo_casing/a12mm
-	caliber = "12mm"
+	ammo_type = /obj/item/ammo_casing/c45
+	caliber = ".45"
 	max_ammo = 20
 
 /obj/item/ammo_box/magazine/m12mm/update_icon()
