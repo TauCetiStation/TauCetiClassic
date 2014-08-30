@@ -29,8 +29,9 @@
 	mag_type = /obj/item/ammo_box/magazine/uzim45
 
 /obj/item/weapon/gun/projectile/automatic/c20r
-	name = "\improper C-20r SMG"
-	desc = "A lightweight, fast firing gun, for when you REALLY need someone dead. Uses 12mm rounds. Has a 'Scarborough Arms - Per falcis, per pravitas' buttstamp"
+	name = "C-20r SMG"
+	desc = "A lightweight, compact bullpup SMG. Uses .45 ACP rounds in medium-capacity magazines and has a threaded barrel for silencers. Has a 'Scarborough Arms - Per falcis, per pravitas' buttstamp."
+	icon = 'tauceti/items/weapons/syndicate/syndicate_guns.dmi'
 	icon_state = "c20r"
 	item_state = "c20r"
 	w_class = 3.0
@@ -44,7 +45,6 @@
 	update_icon()
 	return
 
-
 /obj/item/weapon/gun/projectile/automatic/c20r/afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, flag)
 	..()
 	if(!chambered && !get_ammo() && !alarmed)
@@ -53,10 +53,20 @@
 		alarmed = 1
 	return
 
+/obj/item/weapon/gun/projectile/automatic/c20r/attack_hand(mob/user as mob)
+	if(loc == user)
+		if(silenced)
+			silencer_attack_hand(user)
+	..()
+
+/obj/item/weapon/gun/projectile/automatic/c20r/attackby(obj/item/I as obj, mob/user as mob)
+	if(istype(I, /obj/item/weapon/silencer))
+		return silencer_attackby(I,user)
+	return ..()
 
 /obj/item/weapon/gun/projectile/automatic/c20r/update_icon()
 	..()
-	icon_state = "c20r[magazine ? "-[Ceiling(get_ammo(0)/4)*4]" : ""][chambered ? "" : "-e"]"
+	icon_state = "c20r[silenced ? "-silencer" : ""][magazine ? "-[Ceiling(get_ammo(0)/4)*4]" : ""][chambered ? "" : "-e"]"
 	return
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw
