@@ -1,8 +1,8 @@
-var/list/uplink_items = list()
+//var/list/uplink_items = list()
 
-/proc/get_uplink_items()
+/proc/get_uplink_items(var/obj/item/device/uplink/uplink)
 	// If not already initialized..
-	if(!uplink_items.len)
+	if(!uplink.uplink_items.len)
 
 		// Fill in the list	and order it like this:
 		// A keyed list, acting as categories, which are lists to the datum.
@@ -13,27 +13,31 @@ var/list/uplink_items = list()
 			var/datum/uplink_item/I = new item()
 			if(!I.item)
 				continue
-			if(I.gamemodes.len && ticker && !(ticker.mode.type in I.gamemodes))
+			if(I.uplink_types.len && !(uplink.uplink_type in I.uplink_types))
+				continue
+			if(I.excludefrom_uplinks.len && (uplink.uplink_type in I.excludefrom_uplinks))
+				continue
+		/*	if(I.gamemodes.len && ticker && !(ticker.mode.type in I.gamemodes))
 				continue
 			if(I.excludefrom.len && ticker && (ticker.mode.type in I.excludefrom))
-				continue
+				continue */
 			if(I.last)
 				last += I
 				continue
 
-			if(!uplink_items[I.category])
-				uplink_items[I.category] = list()
+			if(!uplink.uplink_items[I.category])
+				uplink.uplink_items[I.category] = list()
 
-			uplink_items[I.category] += I
+			uplink.uplink_items[I.category] += I
 
 		for(var/datum/uplink_item/I in last)
 
-			if(!uplink_items[I.category])
-				uplink_items[I.category] = list()
+			if(!uplink.uplink_items[I.category])
+				uplink.uplink_items[I.category] = list()
 
-			uplink_items[I.category] += I
+			uplink.uplink_items[I.category] += I
 
-	return uplink_items
+	return uplink.uplink_items
 
 // You can change the order of the list by putting datums before/after one another OR
 // you can use the last variable to make sure it appears last, well have the category appear last.
@@ -47,6 +51,9 @@ var/list/uplink_items = list()
 	var/last = 0 // Appear last
 	var/list/gamemodes = list() // Empty list means it is in all the gamemodes. Otherwise place the gamemode name here.
 	var/list/excludefrom = list()//Empty list does nothing. Place the name of gamemode you don't want this item to be available in here. This is so you dont have to list EVERY mode to exclude something.
+	var/list/uplink_types = list() //Пустой список значит, что предмет будет доступен во всех типах аплинков. Иначе нужно будет указать тип аплинка
+	var/list/excludefrom_uplinks = list() //пустой список ничего не делает. Иначе нужно будет указать тип аплинка, в котором предмет будет недоступен
+
 
 /datum/uplink_item/proc/spawn_item(var/turf/loc, var/obj/item/device/uplink/U)
 	if(item)
@@ -113,6 +120,8 @@ var/list/uplink_items = list()
 	item = /obj/item/weapon/gun/projectile/automatic/l6_saw
 	cost = 20
 	gamemodes = list(/datum/game_mode/nuclear)
+	uplink_types = list("nuclear")
+	excludefrom_uplinks = list("traitor")
 
 /datum/uplink_item/dangerous/crossbow
 	name = "Miniature Energy Crossbow"
@@ -121,6 +130,7 @@ var/list/uplink_items = list()
 	item = /obj/item/weapon/gun/energy/crossbow
 	cost = 5
 	excludefrom = list(/datum/game_mode/nuclear)
+	excludefrom_uplinks = list("nuclear")
 /*
 /datum/uplink_item/dangerous/flamethrower
 	name = "Flamethrower"
@@ -147,6 +157,8 @@ var/list/uplink_items = list()
 	item = /obj/item/weapon/grenade/syndieminibomb
 	cost = 3
 	gamemodes = list(/datum/game_mode/nuclear)
+	uplink_types = list("nuclear")
+	excludefrom_uplinks = list("traitor")
 
 /datum/uplink_item/dangerous/viscerators
 	name = "Viscerator Delivery Grenade"
@@ -154,6 +166,8 @@ var/list/uplink_items = list()
 	item = /obj/item/weapon/grenade/spawnergrenade/manhacks
 	cost = 4
 	gamemodes = list(/datum/game_mode/nuclear)
+	uplink_types = list("nuclear")
+	excludefrom_uplinks = list("traitor")
 /*
 /datum/uplink_item/dangerous/bioterror
 	name = "Biohazardous Chemical Sprayer"
@@ -170,6 +184,8 @@ var/list/uplink_items = list()
 	item = /obj/mecha/combat/gygax/dark
 	cost = 45
 	gamemodes = list(/datum/game_mode/nuclear)
+	uplink_types = list("nuclear")
+	excludefrom_uplinks = list("traitor")
 
 /datum/uplink_item/dangerous/mauler
 	name = "Mauler Exosuit"
@@ -177,7 +193,21 @@ var/list/uplink_items = list()
 	item = /obj/mecha/combat/marauder/mauler
 	cost = 70
 	gamemodes = list(/datum/game_mode/nuclear)
+	uplink_types = list("nuclear")
+	excludefrom_uplinks = list("traitor")
 
+/datum/uplink_item/dangerous/syndieborg
+	name = "Syndicate Robot"
+	desc = "A robot designed for extermination and slaved to syndicate agents. Delivered through a single-use bluespace hand teleporter and comes pre-equipped with various weapons and equipment."
+	item = /obj/item/weapon/antag_spawner/borg_tele
+	cost = 25
+	gamemodes = list(/datum/game_mode/nuclear)
+
+//for refunding the syndieborg teleporter
+/datum/uplink_item/dangerous/syndieborg/spawn_item()
+	var/obj/item/weapon/antag_spawner/borg_tele/T = ..()
+	if(istype(T))
+		T.TC_cost = cost
 
 
 // AMMUNITION
@@ -197,6 +227,8 @@ var/list/uplink_items = list()
 	item = /obj/item/ammo_box/magazine/m12mm
 	cost = 1
 	gamemodes = list(/datum/game_mode/nuclear)
+	uplink_types = list("nuclear")
+	excludefrom_uplinks = list("traitor")
 /*
 /datum/uplink_item/ammo/pistol
 	name = "Ammo-10mm"
@@ -211,6 +243,7 @@ var/list/uplink_items = list()
 	item = /obj/item/ammo_box/magazine/m762
 	cost = 6
 	gamemodes = list(/datum/game_mode/nuclear)
+	uplink_types = list("nuclear")
 
 // STEALTHY WEAPONS
 
@@ -224,6 +257,7 @@ var/list/uplink_items = list()
 	item = /obj/item/weapon/pen/paralysis
 	cost = 3
 	excludefrom = list(/datum/game_mode/nuclear)
+	excludefrom_uplinks = list("nuclear")
 
 /datum/uplink_item/stealthy_weapons/soap
 	name = "Syndicate Soap"
@@ -270,6 +304,7 @@ var/list/uplink_items = list()
 	item = /obj/item/clothing/shoes/syndigaloshes
 	cost = 2
 	excludefrom = list(/datum/game_mode/nuclear)
+	excludefrom_uplinks = list("nuclear")
 
 /datum/uplink_item/stealthy_tools/agent_card
 	name = "Agent Identification card"
@@ -319,6 +354,7 @@ var/list/uplink_items = list()
 	item = /obj/item/weapon/storage/firstaid/tactical
 	cost = 5
 	gamemodes = list(/datum/game_mode/nuclear)
+	uplink_types = list("nuclear")
 
 /datum/uplink_item/device_tools/space_suit
 	name = "Syndicate Space Suit"
@@ -381,6 +417,7 @@ var/list/uplink_items = list()
 	item = /obj/item/device/radio/beacon/syndicate_bomb
 	cost = 6
 	gamemodes = list(/datum/game_mode/nuclear)
+	uplink_types = list("nuclear")
 
 /datum/uplink_item/device_tools/syndicate_detonator
 	name = "Syndicate Detonator"
@@ -389,6 +426,7 @@ var/list/uplink_items = list()
 	item = /obj/item/device/syndicatedetonator
 	cost = 1
 	gamemodes = list(/datum/game_mode/nuclear)
+	uplink_types = list("nuclear")
 
 /datum/uplink_item/device_tools/teleporter
 	name = "Teleporter Circuit Board"
@@ -396,6 +434,7 @@ var/list/uplink_items = list()
 	item = /obj/item/weapon/circuitboard/teleporter
 	cost = 20
 	gamemodes = list(/datum/game_mode/nuclear)
+	uplink_types = list("nuclear")
 
 /datum/uplink_item/device_tools/shield
 	name = "Energy Shield"
@@ -403,6 +442,7 @@ var/list/uplink_items = list()
 	item = /obj/item/weapon/shield/energy
 	cost = 8
 	gamemodes = list(/datum/game_mode/nuclear)
+	uplink_types = list("nuclear")
 
 
 // IMPLANTS

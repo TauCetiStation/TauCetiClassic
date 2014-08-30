@@ -1,11 +1,3 @@
-/obj/item/weapon/gun/projectile/revolver/syndie
-	name = "revolver"
-	desc = "A powerful revolver, very popular among mercenaries and pirates. Uses .357 ammo"
-	icon = 'tauceti/items/weapons/guns/syndie_revolver.dmi'
-	icon_state = "synd_revolver"
-	item_state = "gun"
-	mag_type = /obj/item/ammo_box/magazine/internal/cylinder
-
 /obj/item/weapon/gun/projectile/automatic/tommygun
 	name = "tommy gun"
 	desc = "A genuine Chicago Typewriter."
@@ -213,3 +205,99 @@ obj/item/ammo_box/magazine/tommygunm45
 	caliber = ".45"
 	max_ammo = 6
 	multiload = 0
+
+/obj/item/weapon/gun/projectile/revolver/flare
+	name = "flare gun"
+	desc = "Fires flares"
+	icon = 'tauceti/items/weapons/guns/antique_guns.dmi'
+	icon_state = "flaregun"
+	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/flaregun
+
+/obj/item/ammo_box/magazine/internal/cylinder/flaregun
+	name = "Flare gun cylinder"
+	desc = "Oh god, this shouldn't be here"
+	ammo_type = /obj/item/ammo_casing/flare
+	caliber = "flare"
+	max_ammo = 1
+	multiload = 0
+
+/obj/item/ammo_casing/flare
+	desc = "A flare for flare gun."
+	caliber = "flare"
+	icon = 'tauceti/items/weapons/guns/antique_guns.dmi'
+	icon_state = "flare"
+	projectile_type = "/obj/item/projectile/bullet/flare"
+
+/obj/item/projectile/bullet/flare
+	name = "flare"
+	icon_state= "bolter"
+	damage = 5
+	luminosity = 8
+
+/obj/item/projectile/bullet/flare/on_hit(var/atom/target, var/blocked = 0)
+	if(istype(target, /mob/living/carbon))
+		var/mob/living/carbon/M = target
+		M.adjust_fire_stacks(1)
+		M.IgniteMob()
+
+/obj/item/ammo_casing/c38m
+	desc = "A .38 bullet casing."
+	caliber = "38"
+	projectile_type = /obj/item/projectile/bullet/midbullet2
+
+/obj/item/ammo_box/c38m
+	name = "speed loader (.38)"
+	icon_state = "38"
+	ammo_type = /obj/item/ammo_casing/c38m
+	max_ammo = 6
+	multiple_sprites = 1
+
+/obj/item/ammo_box/shotgun
+	name = "shotgun shells box"
+	icon = 'tauceti/icons/obj/ammo.dmi'
+	icon_state = "shotgun_shells"
+	origin_tech = "combat=2"
+	ammo_type = /obj/item/ammo_casing/shotgun/buckshot
+	max_ammo = 20
+
+/obj/item/weapon/gun/projectile/automatic/colt1911/dungeon
+	desc = "A single-action, semi-automatic, magazine-fed, recoil-operated pistol chambered for the .45 ACP cartridge."
+	name = "\improper Colt M1911"
+	mag_type = /obj/item/ammo_box/magazine/c45m
+	mag_type2 = /obj/item/ammo_box/magazine/c45r
+
+/obj/item/weapon/gun/projectile/revolver/detective/dungeon
+	desc = "A a six-shot double-action revolver."
+	name = "Smith & Wesson Model 10"
+	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rev38/dungeon
+
+/obj/item/ammo_box/magazine/internal/cylinder/rev38/dungeon
+	name = "d-tiv revolver cylinder"
+	desc = "Oh god, this shouldn't be here"
+	ammo_type = /obj/item/ammo_casing/c38m
+	caliber = "38"
+	max_ammo = 6
+
+/obj/item/weapon/gun/projectile/revolver/doublebarrel/dungeon
+	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/dualshot/dungeon
+
+/obj/item/weapon/gun/projectile/revolver/doublebarrel/dungeon/sawn_off
+	icon_state = "sawnshotgun"
+	w_class = 3.0
+	item_state = "gun"
+	slot_flags = SLOT_BELT
+	name = "sawn-off shotgun"
+	desc = "Omar's coming!"
+
+/obj/item/ammo_box/magazine/internal/cylinder/dualshot/dungeon
+	name = "double-barrel shotgun internal magazine"
+	desc = "This doesn't even exist"
+	ammo_type = /obj/item/ammo_casing/shotgun/buckshot
+
+/obj/item/weapon/gun/projectile/shotgun/dungeon
+	mag_type = /obj/item/ammo_box/magazine/internal/shot/dungeon
+
+/obj/item/ammo_box/magazine/internal/shot/dungeon
+	ammo_type = /obj/item/ammo_casing/shotgun/buckshot
+	caliber = "shotgun"
+	max_ammo = 5
