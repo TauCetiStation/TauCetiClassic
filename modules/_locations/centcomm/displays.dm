@@ -4,6 +4,26 @@
 	icon = 'tauceti/modules/_locations/centcomm/tablo.dmi'
 	icon_state = "tablo01"
 
+/obj/structure/sign/directions/dock_tablo
+	name = "LED Display"
+	icon = 'tauceti/modules/_locations/centcomm/tablo.dmi'
+	icon_state = "dock1"
+
+/obj/structure/sign/directions/dock_tablo/tablo2
+	icon_state = "dock2"
+
+/obj/structure/sign/directions/dock_tablo/tablo3
+	icon_state = "dock3"
+
+/obj/structure/sign/directions/dock_tablo/tablo4
+	icon_state = "dock4"
+
+/obj/structure/sign/directions/dock_tablo/tablo5
+	icon_state = "dock5"
+
+/obj/structure/sign/directions/dock_tablo/arrival
+	icon_state = "arrival"
+
 /obj/structure/sign/velocity_tablo
 	name = "Velocity LED Display"
 	desc = "A display, sometimes shows you useful information."

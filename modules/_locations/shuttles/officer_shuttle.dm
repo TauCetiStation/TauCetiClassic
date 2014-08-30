@@ -6,7 +6,7 @@
 	name = "Shuttle Console"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "shuttle"
-	var/arrival_note = "Velocity transport shuttle docked with - dock 2." //сообщение по прибытию на станцию
+	var/arrival_note = "Velocity transport shuttle docked with - dock 1." //сообщение по прибытию на станцию
 	var/department_note = "Velocity transport shuttle departed from station." //сообщение по отлёту от станции
 	var/obj/item/device/radio/intercom/radio
 //	var/location = 0 // 0 - Велосити (исходная позиция) 1 - транзитная зона 2 - Исход 3 - ЦК
