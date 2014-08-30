@@ -7,7 +7,6 @@
 	faction = "syndicate"
 //	designation = "Syndicate"
 	braintype = "Robot"
-	mmi = /obj/item/device/mmi/posibrain
 	req_access = list(access_syndicate)
 
 /mob/living/silicon/robot/syndicate/New(loc)
