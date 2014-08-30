@@ -261,7 +261,7 @@ datum/preferences
 		dat += "<b>Ghost radio:</b> <a href='?_src_=prefs;preference=ghost_radio'><b>[(toggles & CHAT_GHOSTRADIO) ? "All Chatter" : "Nearest Speakers"]</b></a><br>"
 
 		if(config.allow_Metadata)
-			dat += "<b>OOC Notes:</b> <a href='?_src_=prefs;preference=metadata;task=input'> Edit </a><br>"
+			dat += "<b>OOC Notes:</b><br>[sanitize_popup(copytext(metadata, 1, 37))]...<a href='?_src_=prefs;preference=metadata;task=input'> Edit</a><br>"
 
 		dat += "<br><b>Occupation Choices</b><br>"
 		dat += "\t<a href='?_src_=prefs;preference=job;task=menu'><b>Set Preferences</b></a><br>"
@@ -1023,7 +1023,7 @@ datum/preferences
 						language = input("Please select a secondary language", "Character Generation", null) in new_languages
 
 					if("metadata")
-						var/new_metadata = input(user, "Enter any information you'd like others to see, such as Roleplay-preferences:", "Game Preference" , metadata)  as message|null
+						var/new_metadata = input(user, "Enter any OOC information you'd like others to see:", "Game Preference" , html_decode(revert_ja(metadata)))  as message|null
 						if(new_metadata)
 							metadata = sanitize(copytext(new_metadata,1,MAX_MESSAGE_LEN))
 
@@ -1136,7 +1136,7 @@ datum/preferences
 							nanotrasen_relation = new_relation
 
 					if("flavor_text")
-						var/msg = sanitize(copytext(input(usr,"Set the flavor text in your 'examine' verb. This can also be used for OOC notes and preferences!","Flavor Text",html_decode(revert_ja(flavor_text))) as message, 1, MAX_MESSAGE_LEN))
+						var/msg = sanitize(copytext(input(usr,"Set the flavor text in your 'examine' verb.","Flavor Text",html_decode(revert_ja(flavor_text))) as message, 1, MAX_MESSAGE_LEN))
 
 						if(msg != null)
 							//msg = sanitize_simple(copytext(msg, 1, MAX_MESSAGE_LEN))
@@ -1343,6 +1343,7 @@ datum/preferences
 			character.dna.real_name = character.real_name
 
 		character.flavor_text = flavor_text
+		character.metadata = metadata
 		character.med_record = med_record
 		character.sec_record = sec_record
 		character.gen_record = gen_record
