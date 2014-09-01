@@ -278,7 +278,7 @@ datum/shuttle_controller/emergency_shuttle/process()
 							return
 						*/
 
-					if(istype(T, /turf/simulated))
+					if(istype(T, /turf/simulated) || T.is_catwalk())
 						del(T)
 
 				for(var/mob/living/carbon/bug in end_location) // If someone somehow is still in the shuttle's docking area...
