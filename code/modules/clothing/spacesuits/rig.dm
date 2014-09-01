@@ -56,34 +56,6 @@
 	var/has_magboots = 0
 	var/magpulse = 0
 	var/mag_slowdown = 3
-
-/obj/item/clothing/suit/space/rig/New()
-	..()
-	if(has_magboots)
-		action_button_name = "Toggle magboots."
-		icon_action_button = "action_blank"
-
-/obj/item/clothing/suit/space/rig/attack_self(mob/user)
-	if(!has_magboots)
-		user << "\the [src] doesn't have built-in mag-pusle traction system."
-		return
-	if(magpulse)
-		flags &= ~NOSLIP
-		slowdown = initial(slowdown)
-		magpulse = 0
-		user << "You disable \the [src] the mag-pulse traction system."
-	else
-		flags |= NOSLIP
-		slowdown = mag_slowdown
-		magpulse = 1
-		user << "You enable the mag-pulse traction system."
-
-
-/obj/item/clothing/suit/space/rig/examine()
-	set src in view()
-	..()
-	usr << "Its mag-pulse traction system appears to be [!src.flags&NOSLIP ? "disabled" : "enabled"]."
-
 	//Breach thresholds, should ideally be inherited by most (if not all) hardsuits.
 	breach_threshold = 18
 	can_breach = 1
@@ -196,17 +168,14 @@
 	set category = "Object"
 	set src in usr
 
-	if(!istype(src.loc,/mob/living)) return
-
 	if(!helmet)
 		usr << "There is no helmet installed."
 		return
 
 	var/mob/living/carbon/human/H = usr
-
 	if(!istype(H)) return
+
 	if(H.stat) return
-	if(H.wear_suit != src) return
 
 	if(H.head == helmet)
 		helmet.canremove = 1
@@ -304,6 +273,32 @@
 
 	..()
 
+/obj/item/clothing/suit/space/rig/New()
+	..()
+	if(has_magboots)
+		action_button_name = "Toggle magboots."
+		icon_action_button = "action_blank"
+
+/obj/item/clothing/suit/space/rig/attack_self(mob/user)
+	if(!has_magboots)
+		user << "\the [src] doesn't have built-in mag-pusle traction system."
+		return
+	if(magpulse)
+		flags &= ~NOSLIP
+		slowdown = initial(slowdown)
+		magpulse = 0
+		user << "You disable \the [src] the mag-pulse traction system."
+	else
+		flags |= NOSLIP
+		slowdown = mag_slowdown
+		magpulse = 1
+		user << "You enable the mag-pulse traction system."
+
+
+/obj/item/clothing/suit/space/rig/examine()
+	set src in view()
+	..()
+	usr << "Its mag-pulse traction system appears to be [!src.flags&NOSLIP ? "disabled" : "enabled"]."
 //Chief Engineer's rig
 /obj/item/clothing/head/helmet/space/rig/elite
 	name = "advanced hardsuit helmet"
