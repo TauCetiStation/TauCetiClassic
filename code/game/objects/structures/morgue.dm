@@ -67,7 +67,7 @@
 				A.loc = src
 		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 		//src.connected = null
-		qdel(src.connected)
+		del(src.connected)
 	else
 		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 		src.connected = new /obj/structure/m_tray( src.loc )
@@ -83,7 +83,7 @@
 			src.connected.dir = src.dir
 		else
 			//src.connected = null
-			qdel(src.connected)
+			del(src.connected)
 	src.add_fingerprint(user)
 	update()
 	return
@@ -119,7 +119,7 @@
 		src.connected.icon_state = "morguet"
 	else
 		//src.connected = null
-		qdel(src.connected)
+		del(src.connected)
 	return
 
 
@@ -150,7 +150,7 @@
 		src.connected.update()
 		add_fingerprint(user)
 		//SN src = null
-		qdel(src)
+		del(src)
 		return
 	return
 
@@ -256,7 +256,7 @@
 			src.connected.icon_state = "cremat"
 		else
 			//src.connected = null
-			qdel(src.connected)
+			del(src.connected)
 	src.add_fingerprint(user)
 	update()
 
@@ -291,7 +291,7 @@
 		src.connected.icon_state = "cremat"
 	else
 		//src.connected = null
-		qdel(src.connected)
+		del(src.connected)
 	return
 
 /obj/structure/crematorium/proc/cremate(atom/A, mob/user as mob)
@@ -366,7 +366,7 @@
 		src.connected.update()
 		add_fingerprint(user)
 		//SN src = null
-		qdel(src)
+		del(src)
 		return
 	return
 
