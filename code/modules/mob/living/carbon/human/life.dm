@@ -446,7 +446,6 @@
 				internals.icon_state = "internal0"
 		return null
 
-
 	proc/handle_breath(datum/gas_mixture/breath)
 		if(status_flags & GODMODE)
 			return
@@ -1575,14 +1574,14 @@
 				if(!isRemoteObserve && client && !client.adminobs)
 					remoteview_target = null
 					reset_view(null)
-
+/*
 
 			if(mind && mind.changeling)
 				hud_used.lingchemdisplay.invisibility = 0
 				hud_used.lingchemdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'> <font color='#dd66dd'>[mind.changeling.chem_charges]</font></div>"
 			else
 				hud_used.lingchemdisplay.invisibility = 101
-
+*/
 		return 1
 
 	proc/handle_random_events()
