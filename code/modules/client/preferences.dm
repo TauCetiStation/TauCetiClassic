@@ -997,12 +997,12 @@ datum/preferences
 							s_tone = 0
 
 					if("language")
-						//var/languages_available
+						var/languages_available
 						var/list/new_languages = list("None")
 						var/datum/species/S = all_species[species]
 
 						//I don't understant, how it works(and does not), so..
-						/*if(config.usealienwhitelist)
+						if(config.usealienwhitelist)
 							for(var/L in all_languages)
 								var/datum/language/lang = all_languages[L]
 								if((!(lang.flags & RESTRICTED)) && (is_alien_whitelisted(user, L)||(!( lang.flags & WHITELISTED ))||(S && (L in S.secondary_langs))))
@@ -1015,7 +1015,7 @@ datum/preferences
 							for(var/L in all_languages)
 								var/datum/language/lang = all_languages[L]
 								if(!(lang.flags & RESTRICTED))
-									new_languages += lang.name*/
+									new_languages += lang.name
 						for(var/L in all_languages)
 							var/datum/language/lang = all_languages[L]
 							if(!(lang.flags & RESTRICTED))
