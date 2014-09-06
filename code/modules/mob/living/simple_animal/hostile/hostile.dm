@@ -268,13 +268,22 @@
 	if(environment_smash)
 		EscapeConfinement()
 		for(var/dir in cardinal) // North, South, East, West
-			for(var/obj/structure/window/obstacle in get_step(src, dir))
-				if(obstacle.dir == reverse_dir[dir]) // So that windows get smashed in the right order
-					obstacle.attack_animal(src)
+			var/turf/T = get_step(src, dir)
+			if(istype(T, /turf/simulated/wall) || istype(T, /turf/simulated/mineral))
+				if(T.Adjacent(src))
+					T.attack_animal(src)
+			for(var/obj/structure/window/W in get_step(src, dir))
+				if(W.dir == reverse_dir[dir]) // So that windows get smashed in the right order
+					W.attack_animal(src)
 					return
-			var/obj/structure/obstacle = locate(/obj/structure, get_step(src, dir))
-			if(istype(obstacle, /obj/structure/window) || istype(obstacle, /obj/structure/closet) || istype(obstacle, /obj/structure/table) || istype(obstacle, /obj/structure/grille) || istype(obstacle, /obj/structure/rack))
-				obstacle.attack_animal(src)
+			for(var/atom/A in T)
+				if(!A.Adjacent(src))
+					continue
+				if(istype(A, /obj/structure/window) || istype(A, /obj/structure/closet) || istype(A, /obj/structure/table) || istype(A, /obj/structure/grille) || istype(A, /obj/structure/rack) || istype(A, /obj/machinery/door/window))
+					A.attack_animal(src)
+				if(istype(A, /obj/item/tape))
+					var/obj/item/tape/Tp = A
+					Tp.breaktape(null, src)
 	return
 
 

@@ -297,7 +297,16 @@
 
 	return
 
+/obj/machinery/door/window/attack_animal(mob/user as mob)
+	if(!isanimal(user)) return
+	var/mob/living/simple_animal/M = user
+	if(M.melee_damage_upper <= 0) return
+	attack_generic(M, M.melee_damage_upper)
 
+/obj/machinery/door/window/proc/attack_generic(mob/user as mob, damage = 0)	//used by attack_alien, attack_animal, and attack_slime
+	take_damage(damage)
+	user.visible_message("<span class='danger'>[user] smashes into [src]!</span>")
+	playsound(loc, 'sound/effects/Glasshit.ogg', 100, 1)
 
 /obj/machinery/door/window/brigdoor
 	name = "Secure Door"
