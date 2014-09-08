@@ -17,7 +17,7 @@ var/datum/controller/garbage_collector/garbage = new()
 /datum/controller/garbage_collector/proc/AddTrash(var/datum/A)
 	if(!istype(A) || !isnull(A.gc_destroyed))
 		return
-	testing("GC: AddTrash([A.type])")
+//	testing("GC: AddTrash([A.type])")
 	A.gc_destroyed = world.time
 	destroyed -= "\ref[A]" // Removing any previous references that were GC'd so that the current object will be at the end of the list.
 	destroyed["\ref[A]"] = world.time
@@ -36,15 +36,15 @@ var/datum/controller/garbage_collector/garbage = new()
 //			testing("GC: [refID] not old enough, breaking at [world.time] for [GCd_at_time - time_to_kill] deciseconds until [GCd_at_time + GC_COLLECTION_TIMEOUT]")
 			break // Everything else is newer, skip them
 		var/atom/A = locate(refID)
-		testing("GC: [refID] old enough to test: GCd_at_time: [GCd_at_time] time_to_kill: [time_to_kill] current: [world.time]")
+//		testing("GC: [refID] old enough to test: GCd_at_time: [GCd_at_time] time_to_kill: [time_to_kill] current: [world.time]")
 		if(A && A.gc_destroyed == GCd_at_time) // So if something else coincidently gets the same ref, it's not deleted by mistake
 			// Something's still referring to the qdel'd object.  Kill it.
-			testing("GC: -- \ref[A] | [A.type] was unable to be GC'd and was deleted --")
+//			testing("GC: -- \ref[A] | [A.type] was unable to be GC'd and was deleted --")
 			logging["[A.type]"]++
 			del(A)
 			dels++
-		else
-			testing("GC: [refID] properly GC'd at [world.time] with timeout [GCd_at_time]")
+//		else
+//			testing("GC: [refID] properly GC'd at [world.time] with timeout [GCd_at_time]")
 		destroyed.Cut(1, 2)
 
 // Should be treated as a replacement for the 'del' keyword.
