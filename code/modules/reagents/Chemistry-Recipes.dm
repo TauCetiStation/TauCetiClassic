@@ -1131,6 +1131,34 @@ datum
 							for(var/j = 1, j <= rand(1, 3), j++)
 								step(B, pick(NORTH,SOUTH,EAST,WEST))
 
+		slimebork2
+			name = "Slime Bork 2"
+			id = "m_tele4"
+			result = null
+			required_reagents = list("water" = 5)
+			result_amount = 1
+			required_container = /obj/item/slime_extract/silver
+			required_other = 1
+			on_reaction(var/datum/reagents/holder)
+
+				var/list/borks2 = typesof(/obj/item/weapon/reagent_containers/food/drinks) - /obj/item/weapon/reagent_containers/food/drinks
+				// BORK BORK BORK
+
+				playsound(get_turf(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
+
+				for(var/mob/living/carbon/human/M in viewers(get_turf(holder.my_atom), null))
+					if(M:eyecheck() <= 0)
+						flick("e_flash", M.flash)
+
+				for(var/i = 1, i <= 4 + rand(1,2), i++)
+					var/chosen = pick(borks2)
+					var/obj/B = new chosen
+					if(B)
+						B.loc = get_turf(holder.my_atom)
+						if(prob(50))
+							for(var/j = 1, j <= rand(1, 3), j++)
+								step(B, pick(NORTH,SOUTH,EAST,WEST))
+
 
 //Blue
 		slimefrost
@@ -1233,7 +1261,7 @@ datum
 					O.show_message(text("\red The contents of the slime core harden and begin to emit a warm, bright light."), 1)
 				var/obj/item/device/flashlight/slime/F = new /obj/item/device/flashlight/slime
 				F.loc = get_turf(holder.my_atom)
-			
+
 //Purple
 
 		slimepsteroid
@@ -1365,6 +1393,75 @@ datum
 				var/obj/effect/golemrune/Z = new /obj/effect/golemrune
 				Z.loc = get_turf_loc(holder.my_atom)
 				Z.announce_to_ghosts()
+
+//Bluespace
+		slimecrystal
+			name = "Slime Crystal"
+			id = "m_crystal"
+			result = null
+			required_reagents = list("blood" = 5)
+			result_amount = 1
+			required_container = /obj/item/slime_extract/bluespace
+			required_other = 1
+			on_reaction(var/datum/reagents/holder)
+				for(var/mob/O in viewers(get_turf(holder.my_atom), null))
+					O.show_message(text("\red The bluespace crystal appears out of thin air!"), 1)
+				var/obj/item/bluespace_crystal/I = new /obj/item/bluespace_crystal
+				I.loc = get_turf(holder.my_atom)
+
+//Cerulean
+		slimepsteroid2
+			name = "Slime Steroid 2"
+			id = "m_steroid2"
+			result = null
+			required_reagents = list("phoron" = 5)
+			result_amount = 1
+			required_container = /obj/item/slime_extract/cerulean
+			required_other = 1
+			on_reaction(var/datum/reagents/holder)
+				var/obj/item/weapon/slimesteroid2/P = new /obj/item/weapon/slimesteroid2
+				P.loc = get_turf(holder.my_atom)
+
+//Sepia
+		slimecamera
+			name = "Slime Camera"
+			id = "m_camera"
+			result = null
+			required_reagents = list("phoron" = 5)
+			result_amount = 1
+			required_container = /obj/item/slime_extract/sepia
+			required_other = 1
+			on_reaction(var/datum/reagents/holder)
+				var/obj/item/device/camera/P = new /obj/item/device/camera
+				P.loc = get_turf(holder.my_atom)
+
+		slimefilm
+			name = "Slime Film"
+			id = "m_film"
+			result = null
+			required_reagents = list("blood" = 5)
+			result_amount = 1
+			required_container = /obj/item/slime_extract/sepia
+			required_other = 1
+			on_reaction(var/datum/reagents/holder)
+				var/obj/item/device/camera_film/P = new /obj/item/device/camera_film
+				P.loc = get_turf(holder.my_atom)
+
+//Pyrite
+		slimepaint
+			name = "Slime Paint"
+			id = "s_paint"
+			result = null
+			required_reagents = list("phoron" = 5)
+			result_amount = 1
+			required_container = /obj/item/slime_extract/pyrite
+			required_other = 1
+			on_reaction(var/datum/reagents/holder)
+				var/list/paints = typesof(/obj/item/weapon/reagent_containers/glass/paint) - /obj/item/weapon/reagent_containers/glass/paint
+				var/chosen = pick(paints)
+				var/obj/B = new chosen
+				if(B)
+					B.loc = get_turf(holder.my_atom)
 //////////////////////////////////////////FOOD MIXTURES////////////////////////////////////
 
 		tofu
