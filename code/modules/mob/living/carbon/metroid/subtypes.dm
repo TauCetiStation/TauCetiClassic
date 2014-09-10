@@ -99,7 +99,7 @@
 	icon_state = "dark blue baby slime"
 	primarytype = /mob/living/carbon/slime/darkblue
 	mutationone = /mob/living/carbon/slime/purple
-	mutationtwo = /mob/living/carbon/slime/purple
+	mutationtwo = /mob/living/carbon/slime/cerulean
 	mutationthree = /mob/living/carbon/slime/blue
 	mutationfour = /mob/living/carbon/slime/blue
 	adulttype = /mob/living/carbon/slime/adult/darkblue
@@ -110,7 +110,7 @@
 	colour = "dark blue"
 	primarytype = /mob/living/carbon/slime/darkblue
 	mutationone = /mob/living/carbon/slime/purple
-	mutationtwo = /mob/living/carbon/slime/purple
+	mutationtwo = /mob/living/carbon/slime/cerulean
 	mutationthree = /mob/living/carbon/slime/blue
 	mutationfour = /mob/living/carbon/slime/blue
 	adulttype = /mob/living/carbon/slime/adult/darkblue
@@ -121,7 +121,7 @@
 	icon_state = "dark purple baby slime"
 	primarytype = /mob/living/carbon/slime/darkpurple
 	mutationone = /mob/living/carbon/slime/purple
-	mutationtwo = /mob/living/carbon/slime/purple
+	mutationtwo = /mob/living/carbon/slime/sepia
 	mutationthree = /mob/living/carbon/slime/orange
 	mutationfour = /mob/living/carbon/slime/orange
 	adulttype = /mob/living/carbon/slime/adult/darkpurple
@@ -132,7 +132,7 @@
 	colour = "dark purple"
 	primarytype = /mob/living/carbon/slime/darkpurple
 	mutationone = /mob/living/carbon/slime/purple
-	mutationtwo = /mob/living/carbon/slime/purple
+	mutationtwo = /mob/living/carbon/slime/sepia
 	mutationthree = /mob/living/carbon/slime/orange
 	mutationfour = /mob/living/carbon/slime/orange
 	adulttype = /mob/living/carbon/slime/adult/darkpurple
@@ -144,7 +144,7 @@
 	colour = "yellow"
 	primarytype = /mob/living/carbon/slime/yellow
 	mutationone = /mob/living/carbon/slime/metal
-	mutationtwo = /mob/living/carbon/slime/metal
+	mutationtwo = /mob/living/carbon/slime/bluespace
 	mutationthree = /mob/living/carbon/slime/orange
 	mutationfour = /mob/living/carbon/slime/orange
 	adulttype = /mob/living/carbon/slime/adult/yellow
@@ -155,7 +155,7 @@
 	colour = "yellow"
 	primarytype = /mob/living/carbon/slime/yellow
 	mutationone = /mob/living/carbon/slime/metal
-	mutationtwo = /mob/living/carbon/slime/metal
+	mutationtwo = /mob/living/carbon/slime/bluespace
 	mutationthree = /mob/living/carbon/slime/orange
 	mutationfour = /mob/living/carbon/slime/orange
 	adulttype = /mob/living/carbon/slime/adult/yellow
@@ -167,7 +167,7 @@
 	icon_state = "silver baby slime"
 	primarytype = /mob/living/carbon/slime/silver
 	mutationone = /mob/living/carbon/slime/metal
-	mutationtwo = /mob/living/carbon/slime/metal
+	mutationtwo = /mob/living/carbon/slime/pyrite
 	mutationthree = /mob/living/carbon/slime/blue
 	mutationfour = /mob/living/carbon/slime/blue
 	adulttype = /mob/living/carbon/slime/adult/silver
@@ -178,7 +178,7 @@
 	colour = "silver"
 	primarytype = /mob/living/carbon/slime/silver
 	mutationone = /mob/living/carbon/slime/metal
-	mutationtwo = /mob/living/carbon/slime/metal
+	mutationtwo = /mob/living/carbon/slime/pyrite
 	mutationthree = /mob/living/carbon/slime/blue
 	mutationfour = /mob/living/carbon/slime/blue
 	adulttype = /mob/living/carbon/slime/adult/silver
@@ -370,3 +370,113 @@
 	mutationfour = /mob/living/carbon/slime/adamantine
 	adulttype = /mob/living/carbon/slime/adult/adamantine
 	coretype = /obj/item/slime_extract/adamantine
+
+/mob/living/carbon/slime/bluespace
+	icon_state = "bluespace baby slime"
+	colour = "bluespace"
+	primarytype = /mob/living/carbon/slime/bluespace
+	mutationone = /mob/living/carbon/slime/bluespace
+	mutationtwo = /mob/living/carbon/slime/bluespace
+	mutationthree = /mob/living/carbon/slime/bluespace
+	mutationfour = /mob/living/carbon/slime/bluespace
+	adulttype = /mob/living/carbon/slime/adult/bluespace
+	coretype = /obj/item/slime_extract/bluespace
+
+/mob/living/carbon/slime/adult/bluespace
+	icon_state = "bluespace adult slime"
+	colour = "bluespace"
+	primarytype = /mob/living/carbon/slime/bluespace
+	mutationone = /mob/living/carbon/slime/bluespace
+	mutationtwo = /mob/living/carbon/slime/bluespace
+	mutationthree = /mob/living/carbon/slime/bluespace
+	mutationfour = /mob/living/carbon/slime/bluespace
+	adulttype = /mob/living/carbon/slime/adult/bluespace
+	coretype = /obj/item/slime_extract/bluespace
+
+/mob/living/carbon/slime/cerulean
+	icon_state = "cerulean baby slime"
+	colour = "cerulean"
+	primarytype = /mob/living/carbon/slime/cerulean
+	mutationone = /mob/living/carbon/slime/cerulean
+	mutationtwo = /mob/living/carbon/slime/cerulean
+	mutationthree = /mob/living/carbon/slime/cerulean
+	mutationfour = /mob/living/carbon/slime/cerulean
+	adulttype = /mob/living/carbon/slime/adult/cerulean
+	coretype = /obj/item/slime_extract/cerulean
+
+/mob/living/carbon/slime/adult/cerulean
+	icon_state = "cerulean adult slime"
+	colour = "cerulean"
+	primarytype = /mob/living/carbon/slime/cerulean
+	mutationone = /mob/living/carbon/slime/cerulean
+	mutationtwo = /mob/living/carbon/slime/cerulean
+	mutationthree = /mob/living/carbon/slime/cerulean
+	mutationfour = /mob/living/carbon/slime/cerulean
+	adulttype = /mob/living/carbon/slime/adult/cerulean
+	coretype = /obj/item/slime_extract/cerulean
+
+/mob/living/carbon/slime/sepia
+	icon_state = "sepia baby slime"
+	colour = "sepia"
+	primarytype = /mob/living/carbon/slime/sepia
+	mutationone = /mob/living/carbon/slime/sepia
+	mutationtwo = /mob/living/carbon/slime/sepia
+	mutationthree = /mob/living/carbon/slime/sepia
+	mutationfour = /mob/living/carbon/slime/rainbow
+	adulttype = /mob/living/carbon/slime/adult/sepia
+	coretype = /obj/item/slime_extract/sepia
+
+/mob/living/carbon/slime/adult/sepia
+	icon_state = "sepia adult slime"
+	colour = "sepia"
+	primarytype = /mob/living/carbon/slime/sepia
+	mutationone = /mob/living/carbon/slime/sepia
+	mutationtwo = /mob/living/carbon/slime/sepia
+	mutationthree = /mob/living/carbon/slime/sepia
+	mutationfour = /mob/living/carbon/slime/rainbow
+	adulttype = /mob/living/carbon/slime/adult/sepia
+	coretype = /obj/item/slime_extract/sepia
+
+/mob/living/carbon/slime/pyrite
+	icon_state = "pyrite baby slime"
+	colour = "pyrite"
+	primarytype = /mob/living/carbon/slime/pyrite
+	mutationone = /mob/living/carbon/slime/pyrite
+	mutationtwo = /mob/living/carbon/slime/pyrite
+	mutationthree = /mob/living/carbon/slime/pyrite
+	mutationfour = /mob/living/carbon/slime/pyrite
+	adulttype = /mob/living/carbon/slime/adult/pyrite
+	coretype = /obj/item/slime_extract/pyrite
+
+/mob/living/carbon/slime/adult/pyrite
+	icon_state = "pyrite adult slime"
+	colour = "pyrite"
+	primarytype = /mob/living/carbon/slime/pyrite
+	mutationone = /mob/living/carbon/slime/pyrite
+	mutationtwo = /mob/living/carbon/slime/pyrite
+	mutationthree = /mob/living/carbon/slime/pyrite
+	mutationfour = /mob/living/carbon/slime/pyrite
+	adulttype = /mob/living/carbon/slime/adult/pyrite
+	coretype = /obj/item/slime_extract/pyrite
+
+/mob/living/carbon/slime/rainbow
+	icon_state = "rainbow baby slime"
+	colour = "rainbow"
+	primarytype = /mob/living/carbon/slime/rainbow
+	mutationone = /mob/living/carbon/slime/sepia
+	mutationtwo = /mob/living/carbon/slime/sepia
+	mutationthree = /mob/living/carbon/slime/sepia
+	mutationfour = /mob/living/carbon/slime/rainbow
+	adulttype = /mob/living/carbon/slime/adult/rainbow
+	coretype = /obj/item/slime_extract/rainbow
+
+/mob/living/carbon/slime/adult/rainbow
+	icon_state = "rainbow adult slime"
+	colour = "rainbow"
+	primarytype = /mob/living/carbon/slime/rainbow
+	mutationone = /mob/living/carbon/slime/sepia
+	mutationtwo = /mob/living/carbon/slime/sepia
+	mutationthree = /mob/living/carbon/slime/sepia
+	mutationfour = /mob/living/carbon/slime/rainbow
+	adulttype = /mob/living/carbon/slime/adult/rainbow
+	coretype = /obj/item/slime_extract/rainbow
