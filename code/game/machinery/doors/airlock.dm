@@ -12,6 +12,14 @@
 #define AIRLOCK_WIRE_LIGHT 12
 
 /*
+#Z1
+AI wire control revamp.
+Now you need to mend "AI control" wire back. You can't anymore hack the door software to regain control permamently, while "AI control" wire is cut.
+So, call engi_borg or engineer to fix this wire.
+Also, pulse now disables "AI control" until AI or Borg hacks the door software.
+*/
+
+/*
 	New methods:
 	pulse - sends a pulse into a wire for hacking purposes
 	cut - cuts a wire and makes any necessary state changes
@@ -93,6 +101,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	normalspeed = 1
 	var/obj/item/weapon/airlock_electronics/electronics = null
 	var/hasShocked = 0 //Prevents multiple shocks from happening
+	var/pulseProof = 0 //#Z1 AI hacked this door after previous pulse?
 
 /obj/machinery/door/airlock/command
 	name = "Airlock"
@@ -389,6 +398,15 @@ About the new airlock wires panel:
 			//two wires for backup power. Sending a pulse through either one causes a breaker to trip, but this does not disable it unless main power is down too (in which case it is disabled for 1 minute or however long it takes main power to come back, whichever is shorter).
 			src.loseBackupPower()
 		if(AIRLOCK_WIRE_AI_CONTROL)
+//#Z1
+			if(src.pulseProof == 0)
+				if(src.aiControlDisabled == 0)
+					src.aiControlDisabled = 1
+				else if(src.aiControlDisabled == 1)
+					src.aiControlDisabled = 0
+				src.updateUsrDialog()
+				//src.updateDialog()
+/*
 			if(src.aiControlDisabled == 0)
 				src.aiControlDisabled = 1
 			else if(src.aiControlDisabled == -1)
@@ -400,6 +418,8 @@ About the new airlock wires panel:
 				else if(src.aiControlDisabled == 2)
 					src.aiControlDisabled = -1
 				src.updateDialog()
+*/
+//##Z1
 		if(AIRLOCK_WIRE_ELECTRIFY)
 			//one wire for electrifying the door. Sending a pulse through this electrifies the door for 30 seconds.
 			if(src.secondsElectrified==0)
@@ -459,11 +479,18 @@ About the new airlock wires panel:
 		if(AIRLOCK_WIRE_AI_CONTROL)
 			//one wire for AI control. Cutting this prevents the AI from controlling the door unless it has hacked the door through the power connection (which takes about a minute). If both main and backup power are cut, as well as this wire, then the AI cannot operate or hack the door at all.
 			//aiControlDisabled: If 1, AI control is disabled until the AI hacks back in and disables the lock. If 2, the AI has bypassed the lock. If -1, the control is enabled but the AI had bypassed it earlier, so if it is disabled again the AI would have no trouble getting back in.
+//#Z1
+			if(src.aiControlDisabled == 0)
+				src.aiControlDisabled = 1
+			src.updateUsrDialog()
+/*
 			if(src.aiControlDisabled == 0)
 				src.aiControlDisabled = 1
 			else if(src.aiControlDisabled == -1)
 				src.aiControlDisabled = 2
 			src.updateUsrDialog()
+*/
+//##Z1
 		if(AIRLOCK_WIRE_ELECTRIFY)
 			//Cutting this wire electrifies the door, so that the next person to touch the door without insulated gloves gets electrocuted.
 			if(src.secondsElectrified != -1)
@@ -500,11 +527,16 @@ About the new airlock wires panel:
 		if(AIRLOCK_WIRE_AI_CONTROL)
 			//one wire for AI control. Cutting this prevents the AI from controlling the door unless it has hacked the door through the power connection (which takes about a minute). If both main and backup power are cut, as well as this wire, then the AI cannot operate or hack the door at all.
 			//aiControlDisabled: If 1, AI control is disabled until the AI hacks back in and disables the lock. If 2, the AI has bypassed the lock. If -1, the control is enabled but the AI had bypassed it earlier, so if it is disabled again the AI would have no trouble getting back in.
+//#Z1
+			if(src.aiControlDisabled == 1)
+				src.aiControlDisabled = 0
+/*
 			if(src.aiControlDisabled == 1)
 				src.aiControlDisabled = 0
 			else if(src.aiControlDisabled == 2)
 				src.aiControlDisabled = -1
 			src.updateUsrDialog()
+*/
 		if(AIRLOCK_WIRE_ELECTRIFY)
 			if(src.secondsElectrified == -1)
 				src.secondsElectrified = 0
@@ -656,6 +688,11 @@ About the new airlock wires panel:
 	return
 
 /obj/machinery/door/airlock/attack_ai(mob/user as mob)
+//#Z1
+	if(src.isWireCut(AIRLOCK_WIRE_AI_CONTROL))
+		user << "Airlock AI control wire is cut. Please call the engineer or engiborg to fix this problem."
+		return
+//##Z1
 	if(!src.canAIControl())
 		if(src.canAIHack())
 			src.hack(user)
@@ -781,7 +818,7 @@ About the new airlock wires panel:
 				user << "We've lost our connection! Unable to hack airlock."
 				src.aiHacking=0
 				return
-			user << "Fault confirmed: airlock control wire disabled or cut."
+			user << "Fault confirmed: airlock control wire disabled." //#Z1
 			sleep(20)
 			user << "Attempting to hack into airlock. This may take some time."
 			sleep(200)
@@ -806,7 +843,11 @@ About the new airlock wires panel:
 			user << "Transfer complete. Forcing airlock to execute program."
 			sleep(50)
 			//disable blocked control
-			src.aiControlDisabled = 2
+//#Z1
+			//src.aiControlDisabled = 2
+			src.aiControlDisabled = 0
+			src.pulseProof = 1
+//##Z1
 			user << "Receiving control information from airlock."
 			sleep(10)
 			//bring up airlock dialog
