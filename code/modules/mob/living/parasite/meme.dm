@@ -37,12 +37,13 @@ mob/living/parasite/proc/enter_host(mob/living/carbon/human/host)
 	src.host = host
 	src.loc = host
 	host.parasites.Add(src)
-
+	host.status_flags |= PASSEMOTES
 	if(client) client.eye = host
 
 	return 1
 
 mob/living/parasite/proc/exit_host()
+	src.host.status_flags &= ~PASSEMOTES
 	src.host.parasites.Remove(src)
 	src.host = null
 	src.loc = null
@@ -141,7 +142,7 @@ mob/living/parasite/meme/me_verb(message as text)
 		usr << "\red You can't emote without host!"
 		return
 
-	return host.emote(message)
+	return host.custom_emote(1, message)
 
 // A meme understands everything their host understands
 mob/living/parasite/meme/say_understands(mob/other)
@@ -451,6 +452,10 @@ mob/living/parasite/meme/verb/AttunedJump(mob/living/carbon/human/target as mob 
 		return
 	if(!(target in indoctrinated))
 		src << "<b>You need to attune the target first.</b>"
+		return
+
+	if(target.parasites.len > 0)
+		src << "<b>Your target already is possessed by something..</b>"
 		return
 
 	src.exit_host()

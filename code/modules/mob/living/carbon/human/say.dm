@@ -9,6 +9,11 @@
 			src << "\red You cannot speak in IC (Muted)."
 			return
 
+	//Meme stuff
+	if(!speech_allowed && usr == src)
+		usr << "\red You can't speak."
+		return
+
 	message =  trim(sanitize_plus(copytext(message, 1, MAX_MESSAGE_LEN)))
 
 	if(stat == 2)

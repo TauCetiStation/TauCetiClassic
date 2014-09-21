@@ -8,13 +8,14 @@
 	required_players = 6
 	required_players_secret = 10
 	restricted_jobs = list("AI", "Cyborg")
-	recommended_enemies = 2 // need at least a meme and a host
+	recommended_enemies = 3 // need at least a meme and a host
 	votable = 1 // temporarily disable this mode for voting
 
 
 
 	var/var/list/datum/mind/first_hosts = list()
 	var/var/list/assigned_hosts = list()
+	var/list/possible_hosts = list()
 
 	var/const/prob_int_murder_target = 50 // intercept names the assassination target half the time
 	var/const/prob_right_murder_target_l = 25 // lower bound on probability of naming right assassination target
@@ -49,26 +50,33 @@
 //	recommended_enemies = max(src.num_players() / 20 * 2, 2)
 
 	var/list/datum/mind/possible_memes = get_players_for_role(BE_MEME)
+	var/meme_number = 0
 
-	if(possible_memes.len < 2)
+	if(possible_memes.len > recommended_enemies)
+		meme_number = recommended_enemies
+	else
+		meme_number = possible_memes.len
+
+	if(possible_memes.len < 1)
 		log_admin("MODE FAILURE: MEME. NOT ENOUGH MEME CANDIDATES.")
 		return 0 // not enough candidates for meme
 
 	// for each 2 possible memes, add one meme and one host
-	while(possible_memes.len >= 2)
+	while(meme_number > 0)
 		var/datum/mind/meme = pick(possible_memes)
 		possible_memes.Remove(meme)
+		meme_number--
 
-		var/datum/mind/first_host = pick(possible_memes)
-		possible_memes.Remove(first_host)
+	//	var/datum/mind/first_host = pick(possible_memes)
+	//	possible_memes.Remove(first_host)
 
 		modePlayer += meme
-		modePlayer += first_host
+	//	modePlayer += first_host
 		memes += meme
-		first_hosts += first_host
+	//	first_hosts += first_host
 
 		// so that we can later know which host belongs to which meme
-		assigned_hosts[meme.key] = first_host
+	//	assigned_hosts[meme.key] = first_host
 
 		meme.assigned_role = "MODE" //So they aren't chosen for other jobs.
 		meme.special_role = "Meme"
@@ -80,6 +88,12 @@
 
 
 /datum/game_mode/meme/post_setup()
+	//Набиваем список возможных носителей
+	for(var/mob/living/carbon/human/H in world)
+		if(H.client)
+			if(H.mind.assigned_role in restricted_jobs) continue
+			possible_hosts += H
+
 	// create a meme and enter it
 	for(var/datum/mind/meme in memes)
 		var/mob/living/parasite/meme/M = new
@@ -87,7 +101,14 @@
 		meme.transfer_to(M)
 		M.clearHUD()
 
-		// get the host for this meme
+		var/mob/living/carbon/human/H = pick(possible_hosts)
+		M.enter_host(H)
+		forge_meme_objectives(meme, H.mind)
+		possible_hosts.Remove(H)
+
+		del original
+
+/*		// get the host for this meme
 		var/datum/mind/first_host = assigned_hosts[meme.key]
 		// this is a redundant check, but I don't think the above works..
 		// if picking hosts works with this method, remove the method above
@@ -97,7 +118,7 @@
 		M.enter_host(first_host.current)
 		forge_meme_objectives(meme, first_host)
 
-		del original
+		del original */
 
 	log_admin("Created [memes.len] memes.")
 
