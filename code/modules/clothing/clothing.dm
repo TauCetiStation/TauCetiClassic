@@ -204,6 +204,24 @@ BLIND     // can't see anything
 /obj/item/clothing/gloves/proc/Touch(var/atom/A, var/proximity)
 	return 0 // return 1 to cancel attack_hand()
 
+/obj/item/clothing/gloves/attackby(obj/item/weapon/W, mob/user)
+	if(istype(W, /obj/item/weapon/wirecutters) || istype(W, /obj/item/weapon/scalpel))
+		if (clipped)
+			user << "<span class='notice'>The [src] have already been clipped!</span>"
+			update_icon()
+			return
+
+		playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
+		user.visible_message("\red [user] cuts the fingertips off of the [src].","\red You cut the fingertips off of the [src].")
+
+		clipped = 1
+		name = "mangled [name]"
+		desc = "[desc]<br>They have had the fingertips cut off of them."
+		if("exclude" in species_restricted)
+			species_restricted -= "Unathi"
+			species_restricted -= "Tajaran"
+		return
+
 //Head
 /obj/item/clothing/head
 	name = "head"
@@ -293,6 +311,37 @@ BLIND     // can't see anything
 	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
 	siemens_coefficient = 0.9
 	species_restricted = list("exclude","Diona","Vox")
+
+	var/list/supporting_limbs //If not-null, automatically splints breaks. Checked when removing the suit.
+
+/obj/item/clothing/suit/space/equipped(mob/M)
+	check_limb_support()
+	..()
+
+/obj/item/clothing/suit/space/dropped()
+	check_limb_support()
+	..()
+
+// Some space suits are equipped with reactive membranes that support
+// broken limbs - at the time of writing, only the ninja suit, but
+// I can see it being useful for other suits as we expand them. ~ Z
+// The actual splinting occurs in /datum/organ/external/proc/fracture()
+/obj/item/clothing/suit/space/proc/check_limb_support()
+
+	// If this isn't set, then we don't need to care.
+	if(!supporting_limbs || !supporting_limbs.len)
+		return
+
+	var/mob/living/carbon/human/H = src.loc
+
+	// If the holder isn't human, or the holder IS and is wearing the suit, it keeps supporting the limbs.
+	if(!istype(H) || H.wear_suit == src)
+		return
+
+	// Otherwise, remove the splints.
+	for(var/datum/organ/external/E in supporting_limbs)
+		E.status &= ~ ORGAN_SPLINTED
+	supporting_limbs = list()
 
 //Under clothing
 /obj/item/clothing/under
