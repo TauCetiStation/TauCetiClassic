@@ -1565,14 +1565,14 @@ datum/design/ammo_9mm
 	materials = list("$metal" = 3750, "$silver" = 100)
 	build_path = "/obj/item/ammo_box/magazine/msmg9mm"
 
-datum/design/stunshell
-	name = "Stun Shell"
-	desc = "A stunning shell for a shotgun."
+datum/design/stunslug
+	name = "Stun Slug"
+	desc = "A stunning, electrified slug for a shotgun."
 	id = "stunshell"
 	req_tech = list("combat" = 3, "materials" = 3)
 	build_type = PROTOLATHE
 	materials = list("$metal" = 4000)
-	build_path = "/obj/item/ammo_casing/shotgun/stunshell"
+	build_path = "/obj/item/ammo_casing/shotgun/stunslug"
 
 datum/design/phoronpistol
 	name = "phoron pistol"

@@ -1,4 +1,5 @@
 /obj/item/projectile/bullet
+	icon = 'tauceti/icons/obj/projectiles.dmi'
 	name = "bullet"
 	icon_state = "bullet"
 	damage = 60
@@ -7,6 +8,7 @@
 	flag = "bullet"
 	embed = 1
 	sharp = 1
+	var/stoping_power = 0
 
 	on_hit(var/atom/target, var/blocked = 0)
 		if (..(target, blocked))
@@ -22,7 +24,7 @@
 
 /obj/item/projectile/bullet/pellet
 	name = "pellet"
-	damage = 15
+	damage = 20
 
 /obj/item/projectile/bullet/weakbullet/beanbag		//because beanbags are not bullets
 	name = "beanbag"
@@ -30,13 +32,16 @@
 /obj/item/projectile/bullet/weakbullet/rubber
 	name = "rubber bullet"
 
-/obj/item/projectile/bullet/midbullet
+/obj/item/projectile/bullet/midbullet //.45 ACP
 	damage = 20
-	stun = 5
-	weaken = 5
+	stoping_power = 5
 
-/obj/item/projectile/bullet/midbullet2
+/obj/item/projectile/bullet/midbullet2 // 9x19
 	damage = 25
+
+/obj/item/projectile/bullet/revbullet //.357
+	damage = 35
+	stoping_power = 8
 
 /obj/item/projectile/bullet/suffocationbullet//How does this even work?
 	name = "co bullet"
@@ -56,9 +61,8 @@
 	embed = 0
 	edge = 1
 
-
-/obj/item/projectile/bullet/stunshot
-	name = "stunshot"
+/obj/item/projectile/bullet/stunslug
+	name = "stunslug"
 	damage = 5
 	stun = 10
 	weaken = 10

@@ -52,29 +52,38 @@ emp_act
 				return -1 // complete projectile permutation
 
 //BEGIN BOOK'S TASER NERF.
-	if(istype(P, /obj/item/projectile/energy/electrode))
+	if(istype(P, /obj/item/projectile/energy/electrode) || istype(P, /obj/item/projectile/bullet/stunslug) )
 		var/datum/organ/external/select_area = get_organ(def_zone) // We're checking the outside, buddy!
-		P.agony *= get_siemens_coefficient_organ(select_area)
-		apply_effect(P.agony,AGONY,0)
-		apply_effect(P.stun,STUN,0)
-		apply_effect(P.weaken, WEAKEN, 0)
-		apply_effect(P.stutter, STUTTER, 0)
-		flash_pain()
-		src <<"\red You have been shot!"
-		del P
+		if(check_thickmaterial(select_area))
+			visible_message("\red <B>The [P.name] gets deflected by [src]'s armor!</B>")
+			del P
+			return
+		else
+			P.agony *= get_siemens_coefficient_organ(select_area)
+			P.stun *= get_siemens_coefficient_organ(select_area)
+			P.weaken *= get_siemens_coefficient_organ(select_area)
+			P.stutter *= get_siemens_coefficient_organ(select_area)
 
-		var/obj/item/weapon/cloaking_device/C = locate((/obj/item/weapon/cloaking_device) in src)
-		if(C && C.active)
-			C.attack_self(src)//Should shut it off
-			update_icons()
-			src << "\blue Your [C.name] was disrupted!"
-			Stun(2)
+			apply_effect(P.agony,AGONY,0)
+			apply_effect(P.stun,STUN,0)
+			apply_effect(P.weaken, WEAKEN, 0)
+			apply_effect(P.stutter, STUTTER, 0)
+			flash_pain()
+			src <<"\red You have been shot!"
+			del P
 
-		if(istype(equipped(),/obj/item/device/assembly/signaler))
-			var/obj/item/device/assembly/signaler/signaler = equipped()
-			if(signaler.deadman && prob(80))
-				src.visible_message("\red [src] triggers their deadman's switch!")
-				signaler.signal()
+			var/obj/item/weapon/cloaking_device/C = locate((/obj/item/weapon/cloaking_device) in src)
+			if(C && C.active)
+				C.attack_self(src)//Should shut it off
+				update_icons()
+				src << "\blue Your [C.name] was disrupted!"
+				Stun(2)
+
+			if(istype(equipped(),/obj/item/device/assembly/signaler))
+				var/obj/item/device/assembly/signaler/signaler = equipped()
+				if(signaler.deadman && prob(80))
+					src.visible_message("\red [src] triggers their deadman's switch!")
+					signaler.signal()
 
 		return
 //END TASER NERF
@@ -103,13 +112,30 @@ emp_act
 //Конец ребаланса арбалета синди
 
 	if(check_shields(P.damage, "the [P.name]"))
-		P.on_hit(src, 2, def_zone)
+		P.on_hit(src, 100, def_zone)
 		return 2
 
 	var/datum/organ/external/organ = get_organ(check_zone(def_zone))
 
 	var/armor = getarmor_organ(organ, "bullet")
+//Shit start here
+	var/delta = P.damage - armor
+	if (delta < 0) delta = 0
+	if(delta <= (P.damage/4) )
+		apply_effect(delta*2,AGONY,armor)
+		P.on_hit(src, armor, def_zone)
+		return
+	if(delta < 10)
+		P.sharp = 0
+		P.embed = 0
+	if(P:stoping_power)
+		var/force =  (armor/P.damage)*100
+		if (force <= 60 && force > 40)
+			apply_effects(P:stoping_power/2,P:stoping_power/2,0,0,P:stoping_power/2,0,0,armor)
+		else if(force <= 40)
+			apply_effects(P:stoping_power,P:stoping_power,0,0,P:stoping_power,0,0,armor)
 
+//Shit end here
 	if((P.embed && prob(20 + max(P.damage - armor, -10))) && P.damage_type == BRUTE)
 		var/obj/item/weapon/shard/shrapnel/SP = new()
 		(SP.name) = "[P.name] shrapnel"
@@ -266,7 +292,7 @@ emp_act
 		weapon_sharp = 0
 		weapon_edge = 0
 
-	if(armor >= 2)	return 0
+	if(armor >= 100)	return 0
 	if(!I.force)	return 0
 
 	apply_damage(I.force, I.damtype, affecting, armor, sharp=weapon_sharp, edge=weapon_edge, used_weapon=I)
@@ -354,7 +380,7 @@ emp_act
 		src.visible_message("\red [src] has been hit in the [hit_area] by [O].")
 		var/armor = run_armor_check(affecting, "melee", "Your armor has protected your [hit_area].", "Your armor has softened hit to your [hit_area].") //I guess "melee" is the best fit here
 
-		if(armor < 2)
+		if(armor < 100)
 			apply_damage(throw_damage, dtype, zone, armor, is_sharp(O), has_edge(O), O)
 
 		if(ismob(O.thrower))

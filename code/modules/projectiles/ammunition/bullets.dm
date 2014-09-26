@@ -1,7 +1,7 @@
 /obj/item/ammo_casing/a357
 	desc = "A .357 bullet casing."
 	caliber = "357"
-	projectile_type = "/obj/item/projectile/bullet"
+	projectile_type = "/obj/item/projectile/bullet/revbullet"
 
 /obj/item/ammo_casing/a50
 	desc = "A .50AE bullet casing."
@@ -66,11 +66,18 @@
 	projectile_type = "/obj/item/projectile/bullet/weakbullet/beanbag"
 	m_amt = 500
 
-/obj/item/ammo_casing/shotgun/stunshell
+/obj/item/ammo_casing/shotgun/stunslug
 	name = "stun shell"
-	desc = "A stunning shell."
+	desc = "An electrified, stunning taser slug for shotguns."
 	icon_state = "stunshell"
-	projectile_type = "/obj/item/projectile/bullet/stunshot"
+	projectile_type = "/obj/item/projectile/bullet/stunslug"
+	m_amt = 2500
+
+/obj/item/ammo_casing/shotgun/incendiary
+	name = "incendiary shell"
+	desc = "An incendiary slug."
+	icon_state = "ishell"
+	projectile_type = /obj/item/projectile/bullet/incendiary
 	m_amt = 2500
 
 /obj/item/ammo_casing/shotgun/dart

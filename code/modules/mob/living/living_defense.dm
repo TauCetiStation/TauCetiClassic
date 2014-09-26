@@ -1,36 +1,16 @@
-
-/*
-	run_armor_check(a,b)
-	args
-	a:def_zone - What part is getting hit, if null will check entire body
-	b:attack_flag - What type of attack, bullet, laser, energy, melee
-
-	Returns
-	0 - no block
-	1 - halfblock
-	2 - fullblock
-*/
 /mob/living/proc/run_armor_check(var/def_zone = null, var/attack_flag = "melee", var/absorb_text = null, var/soften_text = null)
 	var/armor = getarmor(def_zone, attack_flag)
-	var/absorb = 0
-	if(prob(armor))
-		absorb += 1
-	if(prob(armor))
-		absorb += 1
-	if(absorb >= 2)
+	if(armor >= 100)
 		if(absorb_text)
-			show_message("[absorb_text]")
+			src << "<span class='userdanger'>[absorb_text]</span>"
 		else
-			show_message("\red Your armor absorbs the blow!")
-		return 2
-	if(absorb == 1)
-		if(absorb_text)
-			show_message("[soften_text]",4)
+			src << "<span class='userdanger'>Your armor absorbs the blow!</span>"
+	else if(armor > 0)
+		if(soften_text)
+			src << "<span class='userdanger'>[soften_text]</span>"
 		else
-			show_message("\red Your armor softens the blow!")
-		return 1
-	return 0
-
+			src << "<span class='userdanger'>Your armor softens the blow!</span>"
+	return armor
 
 //if null is passed for def_zone, then this should return something appropriate for all zones (e.g. area effect damage)
 /mob/living/proc/getarmor(var/def_zone, var/type)
@@ -74,24 +54,23 @@
 			var/obj/item/weapon/W = O
 			dtype = W.damtype
 		var/throw_damage = O.throwforce*(speed/5)
-		
+
 		var/miss_chance = 15
 		if (O.throw_source)
 			var/distance = get_dist(O.throw_source, loc)
 			miss_chance = min(15*(distance-2), 0)
-		
+
 		if (prob(miss_chance))
 			visible_message("\blue \The [O] misses [src] narrowly!")
 			return
-		
+
 		src.visible_message("\red [src] has been hit by [O].")
 		var/armor = run_armor_check(null, "melee")
 
-		if(armor < 2)
-			apply_damage(throw_damage, dtype, null, armor, is_sharp(O), has_edge(O), O)
+		apply_damage(throw_damage, dtype, null, armor, is_sharp(O), has_edge(O), O)
 
 		O.throwing = 0		//it hit, so stop moving
-		
+
 		if(ismob(O.thrower))
 			var/mob/M = O.thrower
 			var/client/assailant = M.client
@@ -111,7 +90,7 @@
 			src.throw_at(get_edge_target_turf(src,dir),1,momentum)
 
 			if(!W || !src) return
-			
+
 			if(W.sharp) //Projectile is suitable for pinning.
 				//Handles embedding for non-humans and simple_animals.
 				O.loc = src
