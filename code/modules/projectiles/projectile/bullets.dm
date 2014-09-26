@@ -43,6 +43,14 @@
 	damage = 35
 	stoping_power = 8
 
+/obj/item/projectile/bullet/rifle1
+	damage = 40
+	embed = 0
+
+/obj/item/projectile/bullet/rifle2
+	damage = 45
+	embed = 0
+
 /obj/item/projectile/bullet/suffocationbullet//How does this even work?
 	name = "co bullet"
 	damage = 20
@@ -71,7 +79,8 @@
 	sharp = 0
 
 /obj/item/projectile/bullet/a762
-	damage = 25
+	damage = 50
+	embed = 0
 
 /obj/item/projectile/bullet/incendiary
 	name = "incendiary bullet"

@@ -18,7 +18,7 @@
 	item_state = "armor"
 	blood_overlay_type = "armor"
 	flags = FPRINT | TABLEPASS | THICKMATERIAL
-	armor = list(melee = 50, bullet = 15, laser = 50, energy = 10, bomb = 25, bio = 0, rad = 0)
+	armor = list(melee = 50, bullet = 15, laser = 15, energy = 10, bomb = 25, bio = 0, rad = 0)
 
 /obj/item/clothing/suit/armor/vest/security
 	name = "security armor"
@@ -42,7 +42,7 @@
 	tc_custom = 'tauceti/items/clothing/suits/riotTG.dmi'
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
 	slowdown = 1
-	armor = list(melee = 80, bullet = 10, laser = 10, energy = 10, bomb = 0, bio = 0, rad = 0)
+	armor = list(melee = 80, bullet = 10, laser = 5, energy = 10, bomb = 0, bio = 0, rad = 0)
 	flags_inv = HIDEJUMPSUIT
 	siemens_coefficient = 0.5
 
@@ -53,7 +53,7 @@
 	icon_state = "bulletproof"
 	item_state = "armor"
 	blood_overlay_type = "armor"
-	armor = list(melee = 10, bullet = 80, laser = 10, energy = 10, bomb = 0, bio = 0, rad = 0)
+	armor = list(melee = 10, bullet = 45, laser = 5, energy = 10, bomb = 0, bio = 0, rad = 0)
 	siemens_coefficient = 0.7
 
 /obj/item/clothing/suit/armor/laserproof
@@ -62,7 +62,7 @@
 	icon_state = "armor_reflec"
 	item_state = "armor_reflec"
 	blood_overlay_type = "armor"
-	armor = list(melee = 10, bullet = 10, laser = 80, energy = 50, bomb = 0, bio = 0, rad = 0)
+	armor = list(melee = 10, bullet = 10, laser = 45, energy = 50, bomb = 0, bio = 0, rad = 0)
 	siemens_coefficient = 0
 
 /obj/item/clothing/suit/armor/swat
@@ -76,7 +76,7 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
 	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box/magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/tank/emergency_oxygen)
 	slowdown = 1
-	armor = list(melee = 80, bullet = 60, laser = 50,energy = 25, bomb = 50, bio = 0, rad = 0)
+	armor = list(melee = 80, bullet = 40, laser = 50,energy = 25, bomb = 50, bio = 0, rad = 0)
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	cold_protection = UPPER_TORSO | LOWER_TORSO | LEGS | FEET | ARMS | HANDS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
@@ -100,7 +100,7 @@
 	blood_overlay_type = "armor"
 	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
-	armor = list(melee = 50, bullet = 15, laser = 50, energy = 10, bomb = 25, bio = 0, rad = 0)
+	armor = list(melee = 50, bullet = 15, laser = 15, energy = 10, bomb = 25, bio = 0, rad = 0)
 
 
 //Reactive armor
@@ -195,7 +195,7 @@
 	var/obj/item/weapon/gun/holstered = null
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	slowdown = 1
-	armor = list(melee = 60, bullet = 60, laser = 60, energy = 40, bomb = 20, bio = 0, rad = 0)
+	armor = list(melee = 60, bullet = 30, laser = 30, energy = 40, bomb = 20, bio = 0, rad = 0)
 	siemens_coefficient = 0.7
 
 	/obj/item/clothing/suit/armor/tactical/verb/holster()
