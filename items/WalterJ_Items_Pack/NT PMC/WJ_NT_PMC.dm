@@ -10,7 +10,7 @@
 
 	blood_overlay_type = "armor"
 
-	armor = list(melee = 12, bullet = 70, laser = 12, energy = 12, bomb = 0, bio = 0, rad = 0)
+	armor = list(melee = 12, bullet = 40, laser = 12, energy = 12, bomb = 0, bio = 0, rad = 0)
 	siemens_coefficient = 0.7
 
 /obj/item/clothing/under/nt_pmc_uniform
