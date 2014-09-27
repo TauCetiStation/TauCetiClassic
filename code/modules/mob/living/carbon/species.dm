@@ -223,7 +223,7 @@
 	breath_type = "nitrogen"
 	poison_type = "oxygen"
 
-	flags = NO_SCAN | NO_BLOOD | IS_WHITELISTED
+	flags = NO_SCAN | NO_BLOOD
 
 	blood_color = "#2299FC"
 	flesh_color = "#808D11"
@@ -232,8 +232,8 @@
 	sprite_sheets = list(
 		"suit" = 'icons/mob/species/vox/suit.dmi',
 		"head" = 'icons/mob/species/vox/head.dmi',
-		"mask" = 'icons/mob/species/vox/mask.dmi',
-		"feet" = 'icons/mob/species/vox/feet.dmi',
+		"mask" = 'icons/mob/species/vox/masks.dmi',
+		"feet" = 'icons/mob/species/vox/shoes.dmi',
 		"gloves" = 'icons/mob/species/vox/gloves.dmi'
 		)
 
