@@ -15,6 +15,8 @@
 		)
 
 /obj/item/device/modkit/afterattack(obj/O, mob/user as mob)
+	if(get_dist(src,O)>1)
+		return
 	if (!target_species)
 		return	//it shouldn't be null, okay?
 
@@ -28,12 +30,12 @@
 	for (var/permitted_type in permitted_types)
 		if(istype(O, permitted_type))
 			allowed = 1
-	
+
 	var/obj/item/clothing/I = O
 	if (!istype(I) || !allowed)
 		user << "<span class='notice'>[src] is unable to modify that.</span>"
 		return
-	
+
 	var/excluding = ("exclude" in I.species_restricted)
 	var/in_list = (target_species in I.species_restricted)
 	if (excluding ^ in_list)
@@ -53,7 +55,7 @@
 		parts &= ~MODKIT_HELMET
 	if (istype(I, /obj/item/clothing/suit))
 		parts &= ~MODKIT_SUIT
-	
+
 	if(!parts)
 		user.drop_from_inventory(src)
 		del(src)
@@ -66,3 +68,13 @@
 	name = "tajaran hardsuit modification kit"
 	desc = "A kit containing all the needed tools and parts to modify a hardsuit for another user. This one looks like it's meant for Tajaran."
 	target_species = "Tajaran"
+
+/obj/item/device/modkit/unathi
+	name = "unathi hardsuit modification kit"
+	desc = "A kit containing all the needed tools and parts to modify a hardsuit for another user. This one looks like it's meant for Unathi."
+	target_species = "Unathi"
+
+/obj/item/device/modkit/skrell
+	name = "skrellian hardsuit modification kit"
+	desc = "A kit containing all the needed tools and parts to modify a hardsuit for another user. This one looks like it's meant for Skrell."
+	target_species = "Skrell"

@@ -342,9 +342,6 @@
 	icon_state = "rig0-engineering"
 	item_state = "eng_helm"
 	armor = list(melee = 40, bullet = 5, laser = 10,energy = 5, bomb = 35, bio = 100, rad = 80)
-	sprite_sheets_obj = list(
-		"Tajaran" = 'icons/obj/clothing/species/tajaran/hats.dmi',
-		)
 
 /obj/item/clothing/suit/space/rig/engineering
 	name = "engineering hardsuit"
@@ -354,9 +351,6 @@
 	slowdown = 1
 	armor = list(melee = 40, bullet = 5, laser = 10,energy = 5, bomb = 35, bio = 100, rad = 80)
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/device/suit_cooling_unit,/obj/item/weapon/storage/bag/ore,/obj/item/device/t_scanner,/obj/item/weapon/pickaxe, /obj/item/weapon/rcd)
-	sprite_sheets_obj = list(
-		"Tajaran" = 'icons/obj/clothing/species/tajaran/suits.dmi',
-		)
 
 //Chief Engineer's rig
 /obj/item/clothing/head/helmet/space/rig/engineering/chief
@@ -425,7 +419,7 @@
 		usr << "This helmet has a built-in camera. It's [camera ? "" : "in"]active."
 
 /obj/item/clothing/suit/space/rig/syndi
-	icon_state = "rig-syndie"
+	icon_state = "rig-syndie-human"
 	name = "blood-red hardsuit"
 	desc = "An advanced suit that protects against injuries during special operations. Property of Gorlex Marauders."
 	item_state = "syndie_hardsuit"
@@ -435,7 +429,6 @@
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/device/suit_cooling_unit,/obj/item/weapon/gun,/obj/item/ammo_box/magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/melee/energy/sword,/obj/item/weapon/handcuffs)
 	siemens_coefficient = 0.6
 	species_restricted = list("exclude","Unathi","Tajaran","Skrell","Vox")
-	has_magboots = 1
 
 //Wizard Rig
 /obj/item/clothing/head/helmet/space/rig/wizard
