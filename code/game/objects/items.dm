@@ -53,7 +53,7 @@
 	Works similarly to worn sprite_sheets, except the alternate sprites are used when the clothing/refit_for_species() proc is called.
 	*/
 	var/list/sprite_sheets_obj = null
-	
+
 /obj/item/device
 	icon = 'icons/obj/device.dmi'
 
@@ -147,8 +147,15 @@
 		//canremove==0 means that object may not be removed. You can still wear it. This only applies to clothing. /N
 		if(!src.canremove)
 			return
+		if(istype(user,/mob/living/carbon/human))
+			if(istype(src, /obj/item/clothing/suit/space)) // If the item to be unequipped is a rigid suit
+				if(user.delay_clothing_u_equip(src) == 0)
+					return 0
+			else
+				user.u_equip(src)
 		else
 			user.u_equip(src)
+
 	else
 		if(isliving(src.loc))
 			return

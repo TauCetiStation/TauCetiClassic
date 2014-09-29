@@ -8,6 +8,17 @@
 		if(!I)
 			H << "<span class='notice'>You are not holding anything to equip.</span>"
 			return
+
+	//	if(istype(I, /obj/item/clothing/head/helmet/space/rig)) // If the item to be equipped is a rigid suit helmet
+	//		src << "\red You must fasten the helmet to a hardsuit first. (Target the head)" // Stop eva helms equipping.
+	//		return 0
+
+		if(istype(I, /obj/item/clothing/suit/space)) // If the item to be equipped is a space suit
+			var/obj/item/clothing/suit/space/rig/J = I
+			if(J.equip_time > 0)
+				delay_clothing_equip_to_slot_if_possible(J, 13)  // 13 = suit slot
+				return 0
+
 		if(H.equip_to_appropriate_slot(I))
 			if(hand)
 				update_inv_l_hand(0)
@@ -15,6 +26,8 @@
 				update_inv_r_hand(0)
 		else
 			H << "\red You are unable to equip that."
+
+
 
 /mob/living/carbon/human/proc/equip_in_one_of_slots(obj/item/W, list/slots, del_on_fail = 1)
 	for (var/slot in slots)

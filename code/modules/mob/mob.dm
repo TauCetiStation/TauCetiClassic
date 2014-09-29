@@ -113,8 +113,20 @@
 //This proc is called whenever someone clicks an inventory ui slot.
 /mob/proc/attack_ui(slot)
 	var/obj/item/W = get_active_hand()
+//	if(istype(W))
+//		equip_to_slot_if_possible(W, slot)
 	if(istype(W))
-		equip_to_slot_if_possible(W, slot)
+		if (istype(W, /obj/item/clothing))
+			var/obj/item/clothing/C = W
+			if(C.rig_restrict_helmet)
+				src << "\red You must fasten the helmet to a hardsuit first. (Target the head)" // Stop eva helms equipping.
+			else
+				if(C.equip_time > 0)
+					delay_clothing_equip_to_slot_if_possible(C, slot)
+				else
+					equip_to_slot_if_possible(C, slot)
+		else
+			equip_to_slot_if_possible(W, slot)
 
 /mob/proc/put_in_any_hand_if_possible(obj/item/W as obj, del_on_fail = 0, disable_warning = 1, redraw_mob = 1)
 	if(equip_to_slot_if_possible(W, slot_l_hand, del_on_fail, disable_warning, redraw_mob))
@@ -122,6 +134,27 @@
 	else if(equip_to_slot_if_possible(W, slot_r_hand, del_on_fail, disable_warning, redraw_mob))
 		return 1
 	return 0
+
+/mob/proc/delay_clothing_equip_to_slot_if_possible(obj/item/clothing/X as obj, slot, del_on_fail = 0, disable_warning = 0, redraw_mob = 1, delay_time = 0)
+	if(!istype(X)) return 0
+
+	if(X.equipping == 1) return 0 // Item is already being equipped
+
+	var/tempX = usr.x
+	var/tempY = usr.y
+	usr << "\blue You start equipping the [X]."
+	X.equipping = 1
+	var/equip_time = round(X.equip_time/10)
+	var/i
+	for(i=1; i<=equip_time; i++)
+		sleep (10) // Check if they've moved every 10 time units
+		if ((tempX != usr.x) || (tempY != usr.y))
+			src << "\red \The [X] is too fiddly to fasten whilst moving."
+			X.equipping = 0
+			return 0
+	equip_to_slot_if_possible(X, slot)
+	usr << "\blue You have finished equipping the [X]."
+	X.equipping = 0
 
 //This is a SAFE proc. Use this instead of equip_to_splot()!
 //set del_on_fail to have it delete W if it fails to equip
@@ -762,6 +795,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 		if(S.chemical_cost >=0 && S.can_be_used_by(src))
 			statpanel("[S.panel]",((S.chemical_cost > 0) ? "[S.chemical_cost]" : ""),S)
 
+	statpanel("Changeling","[mind.changeling.chem_charges]")
 
 
 // facing verbs
