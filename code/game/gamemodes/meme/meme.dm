@@ -47,36 +47,61 @@
 
 	// for every 10 players, get 1 meme, and for each meme, get a host
 	// also make sure that there's at least one meme and one host
-//	recommended_enemies = max(src.num_players() / 20 * 2, 2)
+	//recommended_enemies = max(src.num_players() / 20 * 2, 2)
 
 	var/list/datum/mind/possible_memes = get_players_for_role(BE_MEME)
-	var/meme_number = 0
-
-	if(possible_memes.len > recommended_enemies)
-		meme_number = recommended_enemies
-	else
-		meme_number = possible_memes.len
 
 	if(possible_memes.len < 1)
 		log_admin("MODE FAILURE: MEME. NOT ENOUGH MEME CANDIDATES.")
 		return 0 // not enough candidates for meme
 
-	// for each 2 possible memes, add one meme and one host
-	while(meme_number > 0)
+	/*if(possible_memes.len < 2)
+		log_admin("MODE FAILURE: MEME. NOT ENOUGH MEME CANDIDATES.")
+		return 0 not enough candidates for meme*/
+
+	testing("[player_list.len] cur players")
+
+	//var/meme_limit = Clamp((num_players()/20), 1, 3)
+	var/meme_limit = Clamp((player_list.len/13), 1, 3)
+	testing("Current meme limit is [meme_limit]")
+	var/i = 0
+
+	while(possible_memes.len > meme_limit)
+		i++
 		var/datum/mind/meme = pick(possible_memes)
 		possible_memes.Remove(meme)
-		meme_number--
+	if(i)
+		testing("Deleted [i] possible memes from list")
+	else
+		testing("Everything was O.K. No meme candidates over limit. Limit was [meme_limit] and possible meme candidates is [possible_memes.len]")
 
-	//	var/datum/mind/first_host = pick(possible_memes)
-	//	possible_memes.Remove(first_host)
+	// for each 2 possible memes, add one meme and one host
+	/*for(var/mob/new_player/player in player_list)
+	var/list/possible_targets = list()
+		for(var/datum/mind/possible_target in ticker.minds)
+			if(possible_target != owner && ishuman(possible_target.current) && (possible_target.current.stat != 2))
+				possible_targets += possible_target*/
+
+	if(possible_memes.len < 1)
+		log_admin("Something went wrong after calculations for possible memes.")
+		testing("Something went wrong after calculations for possible memes.")
+		return 0 // not enough candidates for meme
+
+	while(possible_memes.len >= 1)
+		//for(var/mob/new_player/player in player_list)
+		var/datum/mind/meme = pick(possible_memes)
+		possible_memes.Remove(meme)
+
+		//var/datum/mind/first_host = pick(possible_memes)
+		//possible_memes.Remove(first_host)
 
 		modePlayer += meme
-	//	modePlayer += first_host
+		//modePlayer += first_host
 		memes += meme
-	//	first_hosts += first_host
+		//first_hosts += first_host
 
 		// so that we can later know which host belongs to which meme
-	//	assigned_hosts[meme.key] = first_host
+		//assigned_hosts[meme.key] = first_host
 
 		meme.assigned_role = "MODE" //So they aren't chosen for other jobs.
 		meme.special_role = "Meme"
@@ -88,11 +113,19 @@
 
 
 /datum/game_mode/meme/post_setup()
-	//Набиваем список возможных носителей
-	for(var/mob/living/carbon/human/H in world)
-		if(H.client)
-			if(H.mind.assigned_role in restricted_jobs) continue
-			possible_hosts += H
+	var/list/possible_hosts = list()
+	var/datum/mind/target = null
+	for(var/datum/mind/possible_host in ticker.minds)
+		if(possible_host.assigned_role != "MODE" && ishuman(possible_host.current) && (possible_host.current.stat != 2))
+			possible_hosts += possible_host
+	/**for(var/mob/living/carbon/possible_host in world)
+		//if(possible_host.assigned_role != "MODE")
+		if(!(possible_host in memes))
+			possible_hosts += possible_host*/
+	if(!(possible_hosts.len))
+		log_admin("Something went wrong, no possible hosts!")
+		testing("Something went wrong, no possible hosts!")
+		return
 
 	// create a meme and enter it
 	for(var/datum/mind/meme in memes)
@@ -101,24 +134,22 @@
 		meme.transfer_to(M)
 		M.clearHUD()
 
-		var/mob/living/carbon/human/H = pick(possible_hosts)
-		M.enter_host(H)
-		forge_meme_objectives(meme, H.mind)
-		possible_hosts.Remove(H)
+		if(possible_hosts.len > 0)
+			target = pick(possible_hosts)
 
-		del original
+		M.enter_host(target.current)
+		possible_hosts -= target
 
-/*		// get the host for this meme
-		var/datum/mind/first_host = assigned_hosts[meme.key]
+		/**
 		// this is a redundant check, but I don't think the above works..
 		// if picking hosts works with this method, remove the method above
 		if(!first_host)
 			first_host = pick(first_hosts)
-			first_hosts.Remove(first_host)
-		M.enter_host(first_host.current)
-		forge_meme_objectives(meme, first_host)
+			first_hosts.Remove(first_host)*/
 
-		del original */
+		forge_meme_objectives(meme)
+
+		del original
 
 	log_admin("Created [memes.len] memes.")
 
