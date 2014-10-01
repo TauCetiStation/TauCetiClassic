@@ -4,21 +4,29 @@
 	desc = "Space barf from another dimension. It just keeps spreading!"
 	icon = 'tauceti/icons/mob/alien.dmi'
 	icon_state = "resin"
+	
 	anchored = 1
 	density = 1
 	opacity = 1
-
-	layer = 5
-	pass_flags = PASSTABLE | PASSGRILLE
+	
 	var/grip = 0
 	var/health = 100
 	var/energy = 0
+	
 	var/obj/effect/cellular_biomass_controller/master = null
 
 	New()
-		return
+		..()
+		var/turf/T = get_turf(src)
+		T.thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
+		
 
 	Del()
+		density = 0
+		if(opacity)
+			UpdateAffectingLights()
+		var/turf/T = get_turf(src)
+		T.thermal_conductivity = initial(T.thermal_conductivity)
 		if(master)
 			master.biomass_cells -= src
 			master.growth_queue -= src
@@ -27,7 +35,7 @@
 /obj/effect/cellular_biomass/proc/healthcheck()
 	if(health <=0)
 		density = 0
-		del(src)
+		Del(src)
 	return
 
 /obj/effect/cellular_biomass/bullet_act(var/obj/item/projectile/Proj)
@@ -117,15 +125,16 @@
 	return
 
 
-
-
-
-
-
-
-
-
-
+/obj/effect/cellular_biomass/grass
+	density = 0
+	opacity = 0
+	health = 20
+	layer = 2
+	energy = 4
+	
+/obj/effect/cellular_biomass/grass/light
+	luminosity = 3
+	icon_state = "weednode"
 
 /obj/effect/cellular_biomass_controller
 	var/list/obj/effect/cellular_biomass/biomass_cells = list()
@@ -137,7 +146,7 @@
 
 	New()
 		if(!istype(src.loc,/turf/simulated/floor))
-			del(src)
+			Del(src)
 
 		spawn_cellular_biomass_piece(src.loc)
 		processing_objects.Add(src)
@@ -154,23 +163,25 @@
 			else
 				newgrip = parent.grip - 1
 		if(!parent || newgrip > 0)
-			var/obj/effect/cellular_biomass/BM = new(location)
-			BM.grip = newgrip
-			location:ChangeTurf(/turf/simulated/floor/plating/)
+			if (istype(location,/turf/space))
+				location:ChangeTurf(/turf/simulated/floor/plating/airless)
 			var/random = rand(1,15)
 			location.icon_state = "ironsand[random]"
 			location.color = "gray"
+			
+			var/obj/effect/cellular_biomass/BM = new(location)
+			
+			BM.grip = newgrip
 			growth_queue += BM
 			biomass_cells += BM
 			BM.master = src
-			location.lighting_changed = 1
 
 	process()
 		if(!biomass_cells)
-			del(src) //space  biomass_cells exterminated. Remove the controller
+			Del(src) //space  biomass_cells exterminated. Remove the controller
 			return
 		if(!growth_queue)
-			del(src) //Sanity check
+			Del(src) //Sanity check
 			return
 
 		var/length = min(5, max(50, biomass_cells.len / 5))
@@ -182,10 +193,10 @@
 			i++
 			growth_queue -= BM
 			BM.grow()
-			if(BM.energy < 4)
-				queue_end += BM
-
-			BM.spread()
+			if(BM) 
+				if(BM.energy < 4)
+					queue_end += BM
+				BM.spread()
 			if(i >= length)
 				break
 
@@ -194,27 +205,21 @@
 /obj/effect/cellular_biomass/proc/grow()
 	energy = calcEnergy(src.loc)
 	if(energy >= 4)
-		if(prob(5))
-			src.icon_state = "weednode"
-			energy = 4
-			SetLuminosity(3)
-			//luminosity = 3
-			src.opacity = 0
-			src.density = 0
-			health = 20
-			layer = 2
+		if(prob(6))
+			new /obj/effect/cellular_biomass/grass/light(src.loc)
 		else
-			if(prob(3))
+			if(prob(4))
 				var/list/critters = typesof(/mob/living/simple_animal/hostile/asteroid)
 				var/chosen = pick(critters)
 				var/mob/living/simple_animal/hostile/C = new chosen
 				C.loc = src.loc
-			src.icon_state = pick("weeds","weeds1","weeds2")
-			energy = 4
-			src.opacity = 0
-			src.density = 0
-			health = 20
-			layer = 2
+				
+			var/obj/effect/cellular_biomass/grass/BM = new(src.loc)
+			BM.icon_state = pick("weeds","weeds1","weeds2")
+
+		//if(air_master)
+		//		air_master.mark_for_update(get_turf(src))	
+		Del(src)
 
 
 /obj/effect/cellular_biomass/proc/spread()
@@ -265,22 +270,23 @@
 /obj/effect/cellular_biomass/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			del(src)
+			Del(src)
 			return
 		if(2.0)
 			if (prob(90))
-				del(src)
+				Del(src)
 				return
 		if(3.0)
 			if (prob(50))
-				del(src)
+				Del(src)
 				return
 	return
 
 /obj/effect/cellular_biomass/temperature_expose(null, temp, volume) //hotspots kill cellular_biomass
-	del src
+	Del(src)
 
 
+	
 /proc/cellular_biomass_infestation()
 
 	spawn() //to stop the secrets panel hanging
