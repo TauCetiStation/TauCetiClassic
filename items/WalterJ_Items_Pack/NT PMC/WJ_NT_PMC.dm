@@ -2,7 +2,7 @@
 	icon = 'tauceti/items/WalterJ_Items_Pack/NT PMC/WJ_NT_PMC.dmi'
 	tc_custom = 'tauceti/items/WalterJ_Items_Pack/NT PMC/WJ_NT_PMC.dmi'
 	name = "M66 Tactical Vest"
-	desc = "Black tactical vest, so tactics."
+	desc = "Black tactical kevlar vest, used by private security coropation. So tactics."
 
 	icon_state = "M66_KevlarVest"
 	item_state = "M66_KevlarVest"
@@ -17,7 +17,7 @@
 	icon = 'tauceti/items/WalterJ_Items_Pack/NT PMC/WJ_NT_PMC.dmi'
 	tc_custom = 'tauceti/items/WalterJ_Items_Pack/NT PMC/WJ_NT_PMC.dmi'
 	name = "NT PCM Uniform"
-	desc = "Bla bla bla"
+	desc = "Uniform used by the private security corporation."
 
 	icon_state = "nt_pmc_uniform"
 	item_state = "nt_pmc_uniform"
@@ -29,7 +29,7 @@
 	icon = 'tauceti/items/WalterJ_Items_Pack/NT PMC/WJ_NT_PMC.dmi'
 	tc_custom = 'tauceti/items/WalterJ_Items_Pack/NT PMC/WJ_NT_PMC.dmi'
 	name = "NT PCM Light Uniform"
-	desc = "Bla bla bla"
+	desc = "Uniform used by the private security corporation. This one without sleeves."
 
 	icon_state = "nt_pmc_uniform"
 	item_state = "nt_pmc_uniform_light"
@@ -41,37 +41,41 @@
 	icon = 'tauceti/items/WalterJ_Items_Pack/NT PMC/WJ_NT_PMC.dmi'
 	tc_custom = 'tauceti/items/WalterJ_Items_Pack/NT PMC/WJ_NT_PMC.dmi'
 	name = "M89 Helmet"
-	desc = "Combat helmet used by the Nanotrasen operators"
+	desc = "Combat helmet used by the private security corporation."
 
 	icon_state = "m89_helmet"
 	item_state = "m89_helmet"
 	item_color = "m89_helmet"
 
-/obj/item/clothing/shoes/boots/lizard_boots
+/obj/item/clothing/shoes/boots/nt_pmc_boots
 	icon = 'tauceti/items/WalterJ_Items_Pack/NT PMC/WJ_NT_PMC.dmi'
 	tc_custom = 'tauceti/items/WalterJ_Items_Pack/NT PMC/WJ_NT_PMC.dmi'
-	name = "Lizard Boots"
-	desc = "Bla bla bla"
+	name = "NT PMC Boots"
+	desc = "Private security boots. Now with extra grip"
+
 
 	icon_state = "boots"
 	item_state = "boots"
 	item_color = "boots"
 
-/obj/item/clothing/shoes/boots/nt_pmc_boots
+/obj/item/clothing/shoes/boots/lizard_boots
 	icon = 'tauceti/items/WalterJ_Items_Pack/NT PMC/WJ_NT_PMC.dmi'
 	tc_custom = 'tauceti/items/WalterJ_Items_Pack/NT PMC/WJ_NT_PMC.dmi'
-	name = "NT PMC Boots"
-	desc = "Bla bla bla"
+
+	name = "Lizard Boots"
+	desc = "Private security boots for Unathi"
 
 	icon_state = "Lizard_Boots"
 	item_state = "Lizard_Boots"
 	item_color = "Lizard_Boots"
 
+	species_restricted = list("Unathi")
+
 /obj/item/clothing/head/soft/nt_pmc_cap
 	icon = 'tauceti/items/WalterJ_Items_Pack/NT PMC/WJ_NT_PMC.dmi'
 	tc_custom = 'tauceti/items/WalterJ_Items_Pack/NT PMC/WJ_NT_PMC.dmi'
 	name = "NT PMC Cap"
-	desc = "Bla bla bla"
+	desc = "Dark cap used by the private security corporation. This one looks good."
 
 	icon_state = "nt_pmc_capsoft"
 	item_state = "nt_pmc_capsoft"
@@ -80,7 +84,7 @@
 /obj/item/device/radio/headset/headset_sec/nt_pmc
 	icon = 'tauceti/items/WalterJ_Items_Pack/NT PMC/WJ_NT_PMC.dmi'
 	tc_custom = 'tauceti/items/WalterJ_Items_Pack/NT PMC/WJ_NT_PMC.dmi'
-	name = "NT PMC Radio Headset"
+	name = "NT PMC Radio Headset. Works with default security frequency."
 
 	icon_state = "earset"
 	item_state = "earset"
