@@ -99,6 +99,10 @@
 	name = "Dark Gygax wreckage"
 	icon_state = "darkgygax-broken"
 
+/obj/effect/decal/mecha_wreckage/gygax/ultra
+	name = "Gygax Ultra wreckage"
+	icon_state = "ultra-broken"
+
 /obj/effect/decal/mecha_wreckage/marauder
 	name = "Marauder wreckage"
 	icon_state = "marauder-broken"
@@ -193,6 +197,10 @@
 				welder_salvage += part
 				parts -= part
 		return
+
+/obj/effect/decal/mecha_wreckage/durand/vindicator
+	name = "Vindicator wreckage"
+	icon_state = "vindicator-broken"
 
 /obj/effect/decal/mecha_wreckage/phazon
 	name = "Phazon wreckage"

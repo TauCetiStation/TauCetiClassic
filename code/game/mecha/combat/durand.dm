@@ -43,10 +43,15 @@
 		return
 	defence = !defence
 	if(defence)
+		if(animated)
+			flick("vindicator-lockdown-a",src)
+			icon_state = "vindicator-lockdown"
 		deflect_chance = defence_deflect
 		src.occupant_message("<font color='blue'>You enable [src] defence mode.</font>")
 	else
 		deflect_chance = initial(deflect_chance)
+		if(animated)
+			icon_state = reset_icon()
 		src.occupant_message("<font color='red'>You disable [src] defence mode.</font>")
 	src.log_message("Toggled defence mode.")
 	return
@@ -73,3 +78,20 @@
 	if (href_list["toggle_defence_mode"])
 		src.defence_mode()
 	return
+
+/obj/mecha/combat/durand/vindicator
+	desc = "A highly improved version of old Durand exosuit, with improved shock absorption and refined internal electronics."
+	name = "Vindicator"
+	icon_state = "vindicator"
+	initial_icon = "vindicator"
+	step_in = 4
+	dir_in = 1 //Facing North.
+	health = 440
+	deflect_chance = 25
+	damage_absorption = list("brute"=0.5,"fire"=1.0,"bullet"=0.55,"laser"=0.75,"energy"=0.8,"bomb"=0.7)
+	max_temperature = 30000
+	infra_luminosity = 8
+	internal_damage_threshold = 40
+	force = 40
+	wreckage = /obj/effect/decal/mecha_wreckage/durand/vindicator
+	animated = 1

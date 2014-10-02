@@ -691,6 +691,33 @@ datum/design/durand_targ
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/mecha/durand/targeting"
 
+datum/design/vindicator_main
+	name = "Circuit Design (\"Vindicator\" Central Control module)"
+	desc = "Allows for the construction of a \"Vindicator\" Central Control module."
+	id = "vindicator_main"
+	req_tech = list("programming" = 4, "combat" =4)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = "/obj/item/weapon/circuitboard/mecha/vindicator/main"
+
+datum/design/vindicator_peri
+	name = "Circuit Design (\"Vindicator\" Peripherals Control module)"
+	desc = "Allows for the construction of a \"Vindicator\" Peripheral Control module."
+	id = "vindicator_peri"
+	req_tech = list("programming" = 4, "combat" = 4)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = "/obj/item/weapon/circuitboard/mecha/vindicator/peripherals"
+
+datum/design/durand_targ
+	name = "Circuit Design (\"Vindicator\" Weapons & Targeting Control module)"
+	desc = "Allows for the construction of a \"Vindicator\" Weapons & Targeting Control module."
+	id = "vindicator_targ"
+	req_tech = list("programming" = 4, "combat" = 4)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = "/obj/item/weapon/circuitboard/mecha/vindicator/targeting"
+
 datum/design/honker_main
 	name = "Circuit Design (\"H.O.N.K\" Central Control module)"
 	desc = "Allows for the construction of a \"H.O.N.K\" Central Control module."
@@ -717,6 +744,33 @@ datum/design/honker_targ
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/mecha/honker/targeting"
+
+datum/design/ultra_main
+	name = "Circuit Design (\"Gygax Ultra\" Central Control module)"
+	desc = "Allows for the construction of a \"Gygax Ultra\" Central Control module."
+	id = "ultra_main"
+	req_tech = list("programming" = 4, "combat" = 4)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = "/obj/item/weapon/circuitboard/mecha/ultra/main"
+
+datum/design/ultra_peri
+	name = "Circuit Design (\"Gygax Ultra\" Peripherals Control module)"
+	desc = "Allows for the construction of a \"Gygax Ultra\" Peripheral Control module."
+	id = "ultra_peri"
+	req_tech = list("programming" = 4, "combat" = 4)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = "/obj/item/weapon/circuitboard/mecha/ultra/peripherals"
+
+datum/design/ultra_targ
+	name = "Circuit Design (\"Gygax Ultra\" Weapons & Targeting Control module)"
+	desc = "Allows for the construction of a \"Gygax Ultra\" Weapons & Targeting Control module."
+	id = "ultra_targ"
+	req_tech = list("programming" = 4, "combat" = 4)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = "/obj/item/weapon/circuitboard/mecha/ultra/targeting"
 
 ////////////////////////////////////////
 /////////// Mecha Equpment /////////////
@@ -865,17 +919,79 @@ datum/design/mech_diamond_drill
 	req_tech = list("materials" = 4, "engineering" = 3)
 	build_path = "/obj/item/mecha_parts/mecha_equipment/tool/drill/diamonddrill"
 	category = "Exosuit Equipment"
-
-datum/design/mech_generator_nuclear
-	name = "Exosuit Module Design (ExoNuclear Reactor)"
-	desc = "Compact nuclear reactor module"
-	id = "mech_generator_nuclear"
+/*
+datum/design/mech_vindicator_chassis
+	name = "Exosuit Design (Vindicator Chassis)"
+	desc = "Improved durand's endoskeleton"
+	id = "mech_vindicator_chassis"
 	build_type = MECHFAB
-	req_tech = list("powerstorage"= 3, "engineering" = 3, "materials" = 3)
-	build_path = "/obj/item/mecha_parts/mecha_equipment/generator/nuclear"
+	req_tech = list("powerstorage"= 4, "engineering" = 4, "materials" = 4)
+	build_path = "/obj/item/mecha_parts/chassis/vindicator"
 	category = "Exosuit Equipment"
 
+datum/design/mech_vindicator_torso
+	name = "Exosuit Design (Vindicator Torso)"
+	desc = "Improved durand's torso"
+	id = "mech_vindicator_torso"
+	build_type = MECHFAB
+	req_tech = list("powerstorage"= 4, "engineering" = 4, "materials" = 4, "biotech" = 3, "programming" = 2)
+	build_path = "/obj/item/mecha_parts/part/vindicator_torso"
+	category = "Durand"
 
+datum/design/mech_vindicator_head
+	name = "Exosuit Design (Vindicator Head)"
+	desc = "Improved durand's head"
+	id = "mech_vindicator_head"
+	build_type = MECHFAB
+	req_tech = list("powerstorage"= 4, "engineering" = 4, "materials" = 4, "magnets" = 3, "programming" = 2)
+	build_path = "/obj/item/mecha_parts/part/vindicator_head"
+	category = "Durand"
+
+datum/design/mech_vindicator_left_arm
+	name = "Exosuit Design (Vindicator Left Arm)"
+	desc = "Improved durand's arm"
+	id = "mech_vindicator_left_arm"
+	build_type = MECHFAB
+	req_tech = list("engineering" = 4, "materials" = 4, "programming" = 2)
+	build_path = "/obj/item/mecha_parts/part/vindicator_left_arm"
+	category = "Durand"
+
+datum/design/mech_vindicator_right_arm
+	name = "Exosuit Design (Vindicator Right Arm)"
+	desc = "Improved durand's arm"
+	id = "mech_vindicator_tight_arm"
+	build_type = MECHFAB
+	req_tech = list("engineering" = 4, "materials" = 4, "programming" = 2)
+	build_path = "/obj/item/mecha_parts/part/vindicator_right_arm"
+	category = "Durand"
+
+datum/design/mech_vindicator_left_leg
+	name = "Exosuit Design (Vindicator Left Leg)"
+	desc = "Improved durand's leg"
+	id = "mech_vindicator_left_leg"
+	build_type = MECHFAB
+	req_tech = list("engineering" = 4, "materials" = 4, "programming" = 2)
+	build_path = "/obj/item/mecha_parts/part/vindicator_left_leg"
+	category = "Durand"
+
+datum/design/mech_vindicator_right_leg
+	name = "Exosuit Design (Vindicator Right Leg)"
+	desc = "Improved durand's leg"
+	id = "mech_vindicator_right_leg"
+	build_type = MECHFAB
+	req_tech = list("engineering" = 4, "materials" = 4, "programming" = 2)
+	build_path = "/obj/item/mecha_parts/part/vindicator_right_leg"
+	category = "Durand"
+
+datum/design/mech_vindicator_armour
+	name = "Exosuit Design (Vindicator Armour)"
+	desc = "Improved Durand's armor plates"
+	id = "mech_vindicator_armour"
+	build_type = MECHFAB
+	req_tech = list("engineering" = 5, "materials" = 5, "combat" = 4)
+	build_path = "/obj/item/mecha_parts/part/vindicator_armour"
+	category = "Durand"
+*/
 ////////////////////////////////////////
 //////////Disk Construction Disks///////
 ////////////////////////////////////////

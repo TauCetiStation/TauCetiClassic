@@ -81,6 +81,17 @@
 						/obj/item/mecha_parts/part/gygax_right_leg,
 						/obj/item/mecha_parts/part/gygax_armour
 					),
+
+	"Gygax Ultra"=list(
+						/obj/item/mecha_parts/chassis/ultra,
+						/obj/item/mecha_parts/part/ultra_torso,
+						/obj/item/mecha_parts/part/ultra_head,
+						/obj/item/mecha_parts/part/ultra_left_arm,
+						/obj/item/mecha_parts/part/ultra_right_arm,
+						/obj/item/mecha_parts/part/ultra_left_leg,
+						/obj/item/mecha_parts/part/ultra_right_leg,
+						/obj/item/mecha_parts/part/ultra_armour
+					),
 	"Durand"=list(
 						/obj/item/mecha_parts/chassis/durand,
 						/obj/item/mecha_parts/part/durand_torso,
@@ -89,7 +100,17 @@
 						/obj/item/mecha_parts/part/durand_right_arm,
 						/obj/item/mecha_parts/part/durand_left_leg,
 						/obj/item/mecha_parts/part/durand_right_leg,
-						/obj/item/mecha_parts/part/durand_armour
+						/obj/item/mecha_parts/part/durand_armour,
+					),
+	"Vindicator"=list(
+						/obj/item/mecha_parts/chassis/vindicator,
+						/obj/item/mecha_parts/part/vindicator_torso,
+						/obj/item/mecha_parts/part/vindicator_head,
+						/obj/item/mecha_parts/part/vindicator_left_arm,
+						/obj/item/mecha_parts/part/vindicator_right_arm,
+						/obj/item/mecha_parts/part/vindicator_left_leg,
+						/obj/item/mecha_parts/part/vindicator_right_leg,
+						/obj/item/mecha_parts/part/vindicator_armour
 					),
 	/*"H.O.N.K"=list(
 						/obj/item/mecha_parts/chassis/honker,

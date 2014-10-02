@@ -437,6 +437,21 @@
 		name = "Circuit board (Gygax Central Control module)"
 		icon_state = "mainboard"
 
+	ultra
+		origin_tech = "programming=4;combat=4"
+
+	ultra/peripherals
+		name = "Circuit board (Gygax Ultra Peripherals Control module)"
+		icon_state = "mcontroller"
+
+	ultra/targeting
+		name = "Circuit board (Gygax Ultra Weapon Control and Targeting module)"
+		icon_state = "mcontroller"
+
+	ultra/main
+		name = "Circuit board (Gygax Ultra Central Control module)"
+		icon_state = "mainboard"
+
 	durand
 		origin_tech = "programming=4"
 
@@ -451,6 +466,21 @@
 
 	durand/main
 		name = "Circuit board (Durand Central Control module)"
+		icon_state = "mainboard"
+
+	vindicator
+		origin_tech = "programming=4;combat=4"
+
+	vindicator/peripherals
+		name = "Circuit board (Vindicator Peripherals Control module)"
+		icon_state = "mcontroller"
+
+	vindicator/targeting
+		name = "Circuit board (Vindicator Weapon Control and Targeting module)"
+		icon_state = "mcontroller"
+
+	vindicator/main
+		name = "Circuit board (Vindicator Central Control module)"
 		icon_state = "mainboard"
 
 	honker
@@ -479,4 +509,124 @@
 		name = "Circuit board (Odysseus Central Control module)"
 		icon_state = "mainboard"
 
+////////////Vindicator
 
+/obj/item/mecha_parts/chassis/vindicator
+	name = "Vindicator Chassis"
+	construction_cost = list("metal"=28000)
+
+	New()
+		..()
+		construct = new /datum/construction/mecha/vindicator_chassis(src)
+
+/obj/item/mecha_parts/part/vindicator_torso
+	name="Vindicator Torso"
+	icon_state = "vindicator_harness"
+	origin_tech = "programming=2;materials=4;biotech=3;engineering=4;powerstorage=4"
+	construction_time = 330
+	construction_cost = list("metal"=60000,"glass"=23000,"silver"=10000)
+
+/obj/item/mecha_parts/part/vindicator_head
+	name="Vindicator Head"
+	icon_state = "vindicator_head"
+	origin_tech = "programming=2;materials=4;magnets=3;engineering=4"
+	construction_time = 220
+	construction_cost = list("metal"=30000,"glass"=13000,"silver"=3000)
+
+/obj/item/mecha_parts/part/vindicator_left_arm
+	name="Vindicator Left Arm"
+	icon_state = "vindicator_l_arm"
+	origin_tech = "programming=2;materials=4;engineering=4"
+	construction_time = 220
+	construction_cost = list("metal"=40000,"silver"=3000)
+
+/obj/item/mecha_parts/part/vindicator_right_arm
+	name="Vindicator Right Arm"
+	icon_state = "vindicator_r_arm"
+	origin_tech = "programming=2;materials=4;engineering=4"
+	construction_time = 220
+	construction_cost = list("metal"=40000,"silver"=3000)
+
+/obj/item/mecha_parts/part/vindicator_left_leg
+	name="Vindicator Left Leg"
+	icon_state = "vindicator_l_leg"
+	origin_tech = "programming=2;materials=4;engineering=4"
+	construction_time = 220
+	construction_cost = list("metal"=50000,"silver"=3000)
+
+/obj/item/mecha_parts/part/vindicator_right_leg
+	name="Vindicator Right Leg"
+	icon_state = "vindicator_r_leg"
+	origin_tech = "programming=2;materials=4;engineering=4"
+	construction_time = 220
+	construction_cost = list("metal"=50000,"silver"=3000)
+
+/obj/item/mecha_parts/part/vindicator_armour
+	name="Vindicator Armour Plates"
+	icon_state = "vindicator_armour"
+	origin_tech = "materials=5;combat=4;engineering=5"
+	construction_time = 660
+	construction_cost = list("metal"=60000,"uranium"=15000)
+
+///////// Gygax Ultra
+
+/obj/item/mecha_parts/chassis/ultra
+	name = "Gygax Ultra Chassis"
+	construction_cost = list("metal"=30000)
+
+	New()
+		..()
+		construct = new /datum/construction/mecha/ultra_chassis(src)
+
+/obj/item/mecha_parts/part/ultra_torso
+	name="Gygax Ultra Torso"
+	desc="A torso part of Gygax Ultra. Contains power unit, processing core and life support systems. Has an additional equipment slot."
+	icon_state = "ultra_harness"
+	origin_tech = "programming=3;materials=3;biotech=3;engineering=4"
+	construction_time = 330
+	construction_cost = list("metal"=55000,"glass"=20000)
+
+/obj/item/mecha_parts/part/ultra_head
+	name="Gygax Ultra Head"
+	desc="A Gygax Ultra head. Houses advanced surveilance and targeting sensors."
+	icon_state = "ultra_head"
+	origin_tech = "programming=2;materials=4;magnets=3;engineering=4"
+	construction_time = 220
+	construction_cost = list("metal"=25000,"glass"=10000)
+
+/obj/item/mecha_parts/part/ultra_left_arm
+	name="Gygax Ultra Left Arm"
+	desc="A Gygax Ultra left arm. Data and power sockets are compatible with most exosuit tools and weapons."
+	icon_state = "ultra_l_arm"
+	origin_tech = "programming=2;materials=3;engineering=4"
+	construction_time = 220
+	construction_cost = list("metal"=35000)
+
+/obj/item/mecha_parts/part/ultra_right_arm
+	name="Gygax Ultra Right Arm"
+	desc="A Gygax Ultra right arm. Data and power sockets are compatible with most exosuit tools and weapons."
+	icon_state = "ultra_r_arm"
+	origin_tech = "programming=2;materials=3;engineering=4"
+	construction_time = 220
+	construction_cost = list("metal"=35000)
+
+/obj/item/mecha_parts/part/ultra_left_leg
+	name="Gygax Ultra Left Leg"
+	icon_state = "ultra_l_leg"
+	origin_tech = "programming=2;materials=3;engineering=4"
+	construction_time = 220
+	construction_cost = list("metal"=40000)
+
+/obj/item/mecha_parts/part/ultra_right_leg
+	name="Gygax Ultra Right Leg"
+	icon_state = "ultra_r_leg"
+	origin_tech = "programming=2;materials=3;engineering=4"
+	construction_time = 220
+	construction_cost = list("metal"=40000)
+
+/obj/item/mecha_parts/part/ultra_armour
+	name="Gygax Ultra Armour Plates"
+	icon_state = "ultra_armour"
+	origin_tech = "materials=6;combat=5;engineering=5"
+	construction_time = 660
+	construction_cost = list("metal"=60000,"diamond"=20000)

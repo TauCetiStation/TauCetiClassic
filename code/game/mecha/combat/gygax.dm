@@ -16,6 +16,18 @@
 	internal_damage_threshold = 35
 	max_equip = 3
 
+/obj/mecha/combat/gygax/ultra
+	desc = "A highly improved version of Gygax exosuit."
+	name = "Gygax Ultra"
+	icon_state = "ultra"
+	initial_icon = "ultra"
+	health = 350
+	deflect_chance = 20
+	damage_absorption = list("brute"=0.65,"fire"=0.9,"bullet"=0.7,"laser"=0.6,"energy"=0.75,"bomb"=0.9)
+	max_temperature = 30000
+	wreckage = /obj/effect/decal/mecha_wreckage/gygax/ultra
+	animated = 1
+
 /obj/mecha/combat/gygax/dark
 	desc = "A lightweight exosuit used by Nanotrasen Death Squads. A significantly upgraded Gygax security mech."
 	name = "Dark Gygax"
@@ -64,11 +76,17 @@
 		step_in = initial(step_in)
 		step_energy_drain = initial(step_energy_drain)
 		src.occupant_message("<font color='blue'>You disable leg actuators overload.</font>")
+		if(animated)
+			flick("ultra-gofasta-off",src)
+			reset_icon()
 	else
 		overload = 1
 		step_in = min(1, round(step_in/2))
 		step_energy_drain = step_energy_drain*overload_coeff
 		src.occupant_message("<font color='red'>You enable leg actuators overload.</font>")
+		if(animated)
+			flick("ultra-gofasta-on",src)
+			icon_state = "ultra-gofasta"
 	src.log_message("Toggled leg actuators overload.")
 	return
 
@@ -81,6 +99,9 @@
 			step_in = initial(step_in)
 			step_energy_drain = initial(step_energy_drain)
 			src.occupant_message("<font color='red'>Leg actuators damage threshold exceded. Disabling overload.</font>")
+			if(animated)
+				flick("ultra-gofasta-off",src)
+				reset_icon()
 	return
 
 
