@@ -12,9 +12,9 @@
 
 // Define block bounds (off-low,off-high,on-low,on-high)
 // Used in setupgame.dm
-#define DNA_DEFAULT_BOUNDS list(1,2049,2050,4095)
-#define DNA_HARDER_BOUNDS  list(1,3049,3050,4095)
-#define DNA_HARD_BOUNDS    list(1,3490,3500,4095)
+#define DNA_DEFAULT_BOUNDS list(1,2049,2050,4095) //2050 = 8 0 2 #Z2(Added some comments)
+#define DNA_HARDER_BOUNDS  list(1,3049,3050,4095) //3050 = B E A
+#define DNA_HARD_BOUNDS    list(1,3490,3500,4095) //3500 = D A C ##Z2
 
 // UI Indices (can change to mutblock style, if desired)
 #define DNA_UI_HAIR_R      1
@@ -45,6 +45,7 @@
 //  and to tell our new DNA datum which values to set in order to turn something
 //  on or off.
 var/global/list/dna_activity_bounds[DNA_SE_LENGTH]
+var/global/list/assigned_gene_blocks[DNA_SE_LENGTH]//#Z2
 
 // Used to determine what each block means (admin hax and species stuff on /vg/, mostly)
 var/global/list/assigned_blocks[DNA_SE_LENGTH]
@@ -57,10 +58,11 @@ var/global/list/datum/dna/gene/dna_genes[0]
 // Skip checking if it's already active.
 // Used for genes that check for value rather than a binary on/off.
 #define GENE_ALWAYS_ACTIVATE 1
-
+/*#Z2 Why double??
 // Skip checking if it's already active.
 // Used for genes that check for value rather than a binary on/off.
 #define GENE_ALWAYS_ACTIVATE 1
+*/
 
 /datum/dna
 	// READ-ONLY, GETS OVERWRITTEN

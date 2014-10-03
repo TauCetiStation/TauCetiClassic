@@ -130,6 +130,31 @@
 
 /obj/item/attack_hand(mob/user as mob)
 	if (!user) return
+
+	if(HULK in user.mutations)//#Z2 Hulk nerfz!
+		if(istype(src, /obj/item/weapon/melee/))
+			if(src.w_class < 4)
+				user << "\red \The [src] is far too small for you to pick up."
+				return
+		else if(istype(src, /obj/item/weapon/gun/))
+			if(prob(20)) user.say(pick(";RAAAAAAAARGH! WEAPON!", ";HNNNNNNNNNGGGGGGH! I HATE WEAPONS!!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGUUUUUNNNNHH!", ";AAAAAAARRRGH!" ))
+			user.visible_message("\blue [user] crushes \a [src] with hands.", "\blue You crush the [src].")
+			del(src)
+			//user << "\red \The [src] is far too small for you to pick up."
+			return
+		else if(istype(src, /obj/item/clothing/))
+			if(prob(20)) user << "\red [pick("You are not interested in [src].", "This is nothing.", "Humans stuff...", "A cat? A scary cat...",
+			"A Captain? Let's smash his skull! I don't like Captains!",
+			"Awww! Such lovely doggy! BUT I HATE DOGGIES!!", "A woman... A lying woman! I love womans! Fuck womans...")]"
+			return
+		else if(istype(src, /obj/item/weapon/book/))
+			user << "\red A book! I LOVE BOOKS!!"
+		else if(istype(src, /obj/item/weapon/reagent_containers/food))
+			if(prob(20)) user << "\red I LOVE FOOD!!"
+		else if(src.w_class < 4)
+			user << "\red \The [src] is far too small for you to pick up."
+			return
+
 	if (hasorgans(user))
 		var/datum/organ/external/temp = user:organs_by_name["r_hand"]
 		if (user.hand)

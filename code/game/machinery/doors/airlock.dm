@@ -872,6 +872,9 @@ About the new airlock wires panel:
 		if(src.isElectrified())
 			if(src.shock(user, 100))
 				return
+	if(HULK in user.mutations) //#Z2
+		..(user)
+		return //##Z2
 
 	// No. -- cib
 	/**

@@ -324,6 +324,18 @@
 	return
 */
 /obj/machinery/computer/scan_consolenew/attack_paw(user as mob)
+	if(istype(user, /mob/living/carbon/human/)) //#Z2 Hulk </3 computers
+		var/mob/living/carbon/human/H = user
+		if(HULK in H.mutations)
+			if(stat & (BROKEN))
+				return
+			if(H.a_intent == "hurt")
+				H.visible_message("\red [H.name] smashes [src] with \his mighty arms!")
+				set_broken()
+				return
+			else
+				H.visible_message("\red [H.name] stares cluelessly at [src] and drools.")
+				return//##Z2
 	ui_interact(user)
 
 /obj/machinery/computer/scan_consolenew/attack_ai(user as mob)
@@ -332,6 +344,18 @@
 
 /obj/machinery/computer/scan_consolenew/attack_hand(user as mob)
 	if(!..())
+		if(istype(user, /mob/living/carbon/human/)) //#Z2 Hulk </3 computers
+			var/mob/living/carbon/human/H = user
+			if(HULK in H.mutations)
+				if(stat & (BROKEN))
+					return
+				if(H.a_intent == "hurt")
+					H.visible_message("\red [H.name] smashes [src] with \his mighty arms!")
+					set_broken()
+					return
+				else
+					H.visible_message("\red [H.name] stares cluelessly at [src] and drools.")
+					return//##Z2
 		ui_interact(user)
 
  /**
@@ -643,13 +667,13 @@
 				//testing("Irradiated SE block [real_SE_block]:[src.selected_se_subblock] ([original_block] now [block]) [(real_SE_block!=selected_se_block) ? "(SHIFTED)":""]!")
 				connected.occupant.dna.SetSESubBlock(real_SE_block,selected_se_subblock,block)
 				src.connected.occupant.radiation += (src.radiation_intensity+src.radiation_duration)
-				domutcheck(src.connected.occupant,src.connected)
+				domutcheck(src.connected.occupant,src.connected, block!=null, 1)//#Z2
 			else
 				src.connected.occupant.radiation += ((src.radiation_intensity*2)+src.radiation_duration)
 				if	(prob(80-src.radiation_duration))
 					//testing("Random bad mut!")
 					randmutb(src.connected.occupant)
-					domutcheck(src.connected.occupant,src.connected)
+					domutcheck(src.connected.occupant,src.connected, block!=null, 1)//#Z2
 				else
 					randmuti(src.connected.occupant)
 					//testing("Random identity mut!")

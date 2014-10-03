@@ -259,10 +259,11 @@
 
 		if(species.flags & IS_SYNTHETIC) //Robots don't suffer from mutations or radloss.
 			return
-
-		if(getFireLoss())
+//#Z2 healing organs with cold_resist? No, for now!
+		/*if(getFireLoss())
 			if((COLD_RESISTANCE in mutations) || (prob(1)))
-				heal_organ_damage(0,1)
+				heal_organ_damage(0,1)*/
+//##Z2
 
 		// DNA2 - Gene processing.
 		// The HULK stuff that was here is now in the hulk gene.
@@ -334,6 +335,7 @@
 					if(istype(O)) O.add_autopsy_data("Radiation Poisoning", damage)
 
 	proc/breathe()
+		if(mNobreath in src.mutations)	return //#Z2 We need no breath with this mutation
 		if(reagents.has_reagent("lexorin")) return
 		if(istype(loc, /obj/machinery/atmospherics/unary/cryo_cell)) return
 		if(species && (species.flags & NO_BREATHE || species.flags & IS_SYNTHETIC)) return
@@ -616,7 +618,8 @@
 				SA.moles = 0
 
 		// Hot air hurts :(
-		if( (breath.temperature < species.cold_level_1 || breath.temperature > species.heat_level_1) && !(COLD_RESISTANCE in mutations))
+		if( (breath.temperature < species.cold_level_1 || breath.temperature > species.heat_level_1))
+		 // #Z2 Cold_resistance wont save us anymore, we have no_breath genetics power now @ZVe
 
 			if(status_flags & GODMODE)
 				return 1
@@ -767,12 +770,17 @@
 		else if(adjusted_pressure >= species.hazard_low_pressure)
 			pressure_alert = -1
 		else
-			if( !(COLD_RESISTANCE in mutations))
+			take_overall_damage(brute=LOW_PRESSURE_DAMAGE, used_weapon = "Low Pressure")
+			pressure_alert = -2
+
+
+//#Z2 - No more low pressure resistance with Cold Resistance genetic power, for now
+			/*if( !(COLD_RESISTANCE in mutations))
 				take_overall_damage(brute=LOW_PRESSURE_DAMAGE, used_weapon = "Low Pressure")
 				pressure_alert = -2
 			else
-				pressure_alert = -1
-
+				pressure_alert = -1*/
+//##Z2
 		if(environment.phoron > MOLES_PHORON_VISIBLE)
 			pl_effects()
 		return
@@ -862,6 +870,9 @@
 		return thermal_protection_flags
 
 	proc/get_heat_protection(temperature) //Temperature is the temperature you're being exposed to.
+		if(mHeatres in mutations) //#Z2
+			return 1 //Fully protected from the fire. //##Z2
+
 		var/thermal_protection_flags = get_heat_protection_flags(temperature)
 
 		var/thermal_protection = 0.0
@@ -1566,8 +1577,17 @@
 			else
 				var/isRemoteObserve = 0
 				if((mRemote in mutations) && remoteview_target)
-					if(remoteview_target.stat==CONSCIOUS)
-						isRemoteObserve = 1
+					if(getBrainLoss() <= 100)//#Z2 We burn our brain with active remote_view mutation
+						if(remoteview_target.stat==CONSCIOUS)
+							isRemoteObserve = 1
+							if(getBrainLoss() > 50)
+								adjustBrainLoss(2)
+							else
+								adjustBrainLoss(1)
+					else
+						src << "Too hard to concentrate..."
+						remoteview_target = null
+						reset_view(null)//##Z2
 				if(!isRemoteObserve && client && !client.adminobs)
 					remoteview_target = null
 					reset_view(null)

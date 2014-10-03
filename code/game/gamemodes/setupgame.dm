@@ -68,36 +68,36 @@
 
 //	testing("Assigning DNA blocks:")
 
+	//#Z2 A bit of sorting.
 	// Standard muts, imported from older code above.
-	BLINDBLOCK         = getAssignedBlock("BLIND",         numsToAssign)
-	DEAFBLOCK          = getAssignedBlock("DEAF",          numsToAssign)
+	//Major Powers (DAC)
 	HULKBLOCK          = getAssignedBlock("HULK",          numsToAssign, DNA_HARD_BOUNDS)
 	TELEBLOCK          = getAssignedBlock("TELE",          numsToAssign, DNA_HARD_BOUNDS)
-	FIREBLOCK          = getAssignedBlock("FIRE",          numsToAssign, DNA_HARDER_BOUNDS)
-	XRAYBLOCK          = getAssignedBlock("XRAY",          numsToAssign, DNA_HARDER_BOUNDS)
+	FIREBLOCK          = getAssignedBlock("FIRE",          numsToAssign, DNA_HARD_BOUNDS)
+	XRAYBLOCK          = getAssignedBlock("XRAY",          numsToAssign, DNA_HARD_BOUNDS)
+	COLDBLOCK          = getAssignedBlock("COLD",          numsToAssign, DNA_HARD_BOUNDS)
+	SHOCKIMMUNITYBLOCK = getAssignedBlock("SHOCKIMMUNITY", numsToAssign, DNA_HARD_BOUNDS)
+	//Minor Powers (BEA)
+	NOBREATHBLOCK      = getAssignedBlock("NOBREATH",      numsToAssign, DNA_HARDER_BOUNDS)
+	REMOTEVIEWBLOCK    = getAssignedBlock("REMOTEVIEW",    numsToAssign, DNA_HARDER_BOUNDS)
+	REGENERATEBLOCK    = getAssignedBlock("REGENERATE",    numsToAssign, DNA_HARDER_BOUNDS)
+	INCREASERUNBLOCK   = getAssignedBlock("INCREASERUN",   numsToAssign, DNA_HARDER_BOUNDS)
+	REMOTETALKBLOCK    = getAssignedBlock("REMOTETALK",    numsToAssign, DNA_HARDER_BOUNDS)
+	MORPHBLOCK         = getAssignedBlock("MORPH",         numsToAssign, DNA_HARDER_BOUNDS)
+	NOPRINTSBLOCK      = getAssignedBlock("NOPRINTS",      numsToAssign, DNA_HARDER_BOUNDS)
+	SMALLSIZEBLOCK     = getAssignedBlock("SMALLSIZE",     numsToAssign, DNA_HARDER_BOUNDS)
+	//Disabilities (802)
+	BLINDBLOCK         = getAssignedBlock("BLIND",         numsToAssign)
+	DEAFBLOCK          = getAssignedBlock("DEAF",          numsToAssign)
 	CLUMSYBLOCK        = getAssignedBlock("CLUMSY",        numsToAssign)
-	FAKEBLOCK          = getAssignedBlock("FAKE",          numsToAssign)
-
-	// UNUSED!
 	COUGHBLOCK         = getAssignedBlock("COUGH",         numsToAssign)
 	GLASSESBLOCK       = getAssignedBlock("GLASSES",       numsToAssign)
 	EPILEPSYBLOCK      = getAssignedBlock("EPILEPSY",      numsToAssign)
 	TWITCHBLOCK        = getAssignedBlock("TWITCH",        numsToAssign)
 	NERVOUSBLOCK       = getAssignedBlock("NERVOUS",       numsToAssign)
-
-	// Bay muts (UNUSED)
-	//HEADACHEBLOCK      = getAssignedBlock("HEADACHE",      numsToAssign)
-	//NOBREATHBLOCK      = getAssignedBlock("NOBREATH",      numsToAssign, DNA_HARD_BOUNDS)
-	//REMOTEVIEWBLOCK    = getAssignedBlock("REMOTEVIEW",    numsToAssign, DNA_HARDER_BOUNDS)
-	//REGENERATEBLOCK    = getAssignedBlock("REGENERATE",    numsToAssign, DNA_HARDER_BOUNDS)
-	//INCREASERUNBLOCK   = getAssignedBlock("INCREASERUN",   numsToAssign, DNA_HARDER_BOUNDS)
-	//REMOTETALKBLOCK    = getAssignedBlock("REMOTETALK",    numsToAssign, DNA_HARDER_BOUNDS)
-	//MORPHBLOCK         = getAssignedBlock("MORPH",         numsToAssign, DNA_HARDER_BOUNDS)
-	//COLDBLOCK          = getAssignedBlock("COLD",          numsToAssign)
-	//HALLUCINATIONBLOCK = getAssignedBlock("HALLUCINATION", numsToAssign)
-	//NOPRINTSBLOCK      = getAssignedBlock("NOPRINTS",      numsToAssign, DNA_HARD_BOUNDS)
-	//SHOCKIMMUNITYBLOCK = getAssignedBlock("SHOCKIMMUNITY", numsToAssign)
-	//SMALLSIZEBLOCK     = getAssignedBlock("SMALLSIZE",     numsToAssign, DNA_HARD_BOUNDS)
+	HEADACHEBLOCK      = getAssignedBlock("HEADACHE",      numsToAssign)
+	HALLUCINATIONBLOCK = getAssignedBlock("HALLUCINATION", numsToAssign)
+	FAKEBLOCK          = getAssignedBlock("FAKE",          numsToAssign) //##Z2
 
 	//
 	// Static Blocks
@@ -120,8 +120,14 @@
 			assignedToBlock.Add(G.name)
 			blocks_assigned[G.block]=assignedToBlock
 			//testing("DNA2: Gene [G.name] assigned to block [G.block].")
-
-	testing("DNA2: [numsToAssign.len] blocks are unused: [english_list(numsToAssign)]")
+	for(var/block=1;block<=DNA_SE_LENGTH;block++) //#Z2
+		var/name = assigned_blocks[block]
+		for(var/datum/dna/gene/gene in dna_genes)
+			if(gene.name == name || gene.block == block)
+				if(gene.block in assigned_gene_blocks)
+					warning("DNA2: Gene [gene.name] trying to add to already assigned gene block list (used by [english_list(assigned_gene_blocks[block])])")
+				assigned_gene_blocks[block] = gene
+	//testing("DNA2: [numsToAssign.len] blocks are unused: [english_list(numsToAssign)]") //##Z2
 
 	// HIDDEN MUTATIONS / SUPERPOWERS INITIALIZTION
 

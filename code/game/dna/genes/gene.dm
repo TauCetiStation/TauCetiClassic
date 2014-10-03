@@ -16,6 +16,8 @@
 	// Probably won't get used but why the fuck not
 	var/desc="Oh god who knows what this does."
 
+	var/activation_prob=100 //#Z2
+
 	// Set in initialize()!
 	//  What gene activates this?
 	var/block=0
@@ -95,7 +97,7 @@
 	var/mutation=0
 
 	// Activation probability
-	var/activation_prob=45
+	//var/activation_prob=45 //#Z2 not used here anymore, now in /datum/dna/gene
 
 	// Possible activation messages
 	var/list/activation_messages=list()

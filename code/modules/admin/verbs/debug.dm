@@ -1748,7 +1748,8 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		return
 	if(istype(M, /mob/living/carbon))
 		M.dna.SetSEState(block,!M.dna.GetSEState(block))
-		domutcheck(M,null,MUTCHK_FORCED)
+		//domutcheck(M,null,MUTCHK_FORCED)  //#Z2
+		genemutcheck(M,block,null,MUTCHK_FORCED) //#Z2
 		M.update_mutations()
 		var/state="[M.dna.GetSEState(block)?"on":"off"]"
 		var/blockname=assigned_blocks[block]

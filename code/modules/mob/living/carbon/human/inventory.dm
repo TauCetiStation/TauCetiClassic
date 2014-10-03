@@ -410,10 +410,22 @@
 
 	var/list/L = list( "syringe", "pill", "drink", "dnainjector", "fuel", "sensor", "internal", "tie")
 	if ((item && !( L.Find(place) )))
-		if(isrobot(source) && place != "handcuff")
-			del(src)
-		for(var/mob/O in viewers(target, null))
-			O.show_message("\red <B>[source] is trying to put \a [item] on [target]</B>", 1)
+		if(isrobot(source)) //#Z2
+			if(place != "handcuff")
+				del(src)
+			for(var/mob/O in viewers(target, null))
+				O.show_message("\red <B>[source] is trying to put \a [item] on [target]</B>", 1)
+		else
+			if((place == "handcuff") | (istype(item, /obj/item/weapon/handcuffs)))
+				for(var/mob/O in viewers(target, null))
+					O.show_message("\red <B>[source] is trying to put \a [item] on [target]</B>", 1)
+			else
+				if((HULK in target.mutations) && !(HULK in source.mutations))//#Z2 - Hulk is too faking~ scary, so we cant put anything on him using inventory.
+					source.show_message("\red <B>[target]</B> is too scary! You dont want to risk your health.", 1)
+					return
+				else
+					for(var/mob/O in viewers(target, null))
+						O.show_message("\red <B>[source] is trying to put \a [item] on [target]</B>", 1) //##Z2
 	else
 		var/message=null
 		switch(place)

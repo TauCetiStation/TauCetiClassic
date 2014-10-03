@@ -87,7 +87,7 @@
 				M.dna.UpdateSE()
 			else
 				M.dna.SetSEValue(block,src.GetValue())
-			domutcheck(M, null, block!=null)
+			domutcheck(M, null, block!=null, 0) //#Z2 We go thru chance check
 			uses--
 			if(prob(5))
 				trigger_side_effect(M)
@@ -101,7 +101,13 @@
 /obj/item/weapon/dnainjector/attack(mob/M as mob, mob/user as mob)
 	if (!istype(M, /mob))
 		return
-	if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
+	if (!(istype(user, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey") //#Z2
+		user << "\red You don't have the dexterity to do this!"
+		return
+	if (!(istype(user, /mob/living/carbon/human/))) //#Z2 If our monkey/whatever not with name monkey.
+		user << "\red You don't have the dexterity to do this!"
+		return
+	if (HULK in user.mutations) //#Z2
 		user << "\red You don't have the dexterity to do this!"
 		return
 

@@ -60,6 +60,14 @@
 	New()
 		block=HALLUCINATIONBLOCK
 
+	OnMobLife(var/mob/living/carbon/human/M) //#Z2
+		if(!istype(M)) return
+		M.hallucination = 200
+
+	deactivate(var/mob/living/carbon/human/M, var/connected, var/flags)
+		..(M,connected,flags)
+		M.hallucination = 0 //##Z2
+
 /datum/dna/gene/disability/epilepsy
 	name="Epilepsy"
 	activation_message="You get a headache."
@@ -108,6 +116,16 @@
 	New()
 		block=BLINDBLOCK
 
+	OnMobLife(var/mob/living/carbon/human/M) //#Z2
+		if(!istype(M)) return
+		M.eye_blurry = 200
+		M.eye_blind = 200
+
+	deactivate(var/mob/living/carbon/human/M, var/connected, var/flags)
+		..(M,connected,flags)
+		M.eye_blurry = 0
+		M.eye_blind = 0 //##Z2
+
 /datum/dna/gene/disability/deaf
 	name="Deafness"
 	activation_message="It's kinda quiet."
@@ -116,9 +134,13 @@
 	New()
 		block=DEAFBLOCK
 
-	activate(var/mob/M, var/connected, var/flags)
+	OnMobLife(var/mob/living/carbon/human/M) //#Z2
+		if(!istype(M)) return
+		M.ear_deaf = 200
+
+	deactivate(var/mob/living/carbon/human/M, var/connected, var/flags)
 		..(M,connected,flags)
-		M.ear_deaf = 1
+		M.ear_deaf = 0 //##Z2
 
 /datum/dna/gene/disability/nearsighted
 	name="Nearsightedness"

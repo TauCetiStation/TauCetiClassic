@@ -27,7 +27,10 @@
 		if(!H.reagents.has_reagent("dexalin"))
 			for(var/organ_name in list("chest","l_arm","r_arm","r_leg","l_leg","head","groin"))
 				var/datum/organ/external/E = H.get_organ(organ_name)
-				E.take_damage(0, 5, 0)
+				if(prob(85))//#Z2 - now 15% chance even for more burn
+					E.take_damage(0, 5, 0)
+				else
+					E.take_damage(0, 20, 0)
 
 /datum/genetics/side_effect/bone_snap
 	name = "Bone Snap"
@@ -41,24 +44,30 @@
 
 	finish(mob/living/carbon/human/H)
 		if(!H.reagents.has_reagent("bicaridine"))
-			var/organ_name = pick("chest","l_arm","r_arm","r_leg","l_leg","head","groin")
-			var/datum/organ/external/E = H.get_organ(organ_name)
-			E.take_damage(20, 0, 0)
-			E.fracture()
+			if(prob(85))//#Z2 - now 15% chance for heavy brute damage
+				var/organ_name = pick("chest","l_arm","r_arm","r_leg","l_leg","head","groin")
+				var/datum/organ/external/E = H.get_organ(organ_name)
+				E.take_damage(20, 0, 0)
+				E.fracture()
+			else
+				var/organ_name = pick("chest","l_arm","r_arm","r_leg","l_leg","head","groin")
+				var/datum/organ/external/E = H.get_organ(organ_name)
+				E.take_damage(70, 0, 0)
+				//E.fracture()
 
-/*/datum/genetics/side_effect/monkey
+/datum/genetics/side_effect/monkey //#Z2 Random monkey transform is back
 	name = "Monkey"
 	symptom = "Subject starts drooling uncontrollably."
-	treatment = "Inject small dose of dylovene."
+	treatment = "Inject small dose of ryetalyn."
 	effect = "Subject turns into monkey."
-	duration = 10*90
+	duration = 10*120
 
 	start(mob/living/carbon/human/H)
-		H.emote("me", 1, "has drool running down from his mouth.")
+		H.emote("me", 1, "has drool running down from his mouth and hair starts to cover whole body.")
 
 	finish(mob/living/carbon/human/H)
-		if(!H.reagents.has_reagent("anti_toxin"))
-			H.monkeyize()**/
+		if(!H.reagents.has_reagent("ryetalyn"))
+			H.monkeyize()
 
 /datum/genetics/side_effect/confuse
 	name = "Confuse"

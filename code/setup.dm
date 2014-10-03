@@ -370,6 +370,7 @@ var/MAX_EXPLOSION_RANGE = 14
 #define mFingerprints	108 	// no fingerprints
 #define mShock			109 	// insulated hands
 #define mSmallsize		110 	// table climbing
+#define mHeatres		111 	// Heat-resistance #Z2
 
 //disabilities
 #define NEARSIGHTED		1

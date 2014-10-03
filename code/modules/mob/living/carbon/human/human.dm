@@ -524,15 +524,15 @@
 //Now checks siemens_coefficient of the affected area by default
 /mob/living/carbon/human/electrocute_act(var/shock_damage, var/obj/source, var/base_siemens_coeff = 1.0, var/def_zone = null)
 	if(status_flags & GODMODE)	return 0	//godmode
-	
+	if(mShock in src.mutations)	return 0 //#Z2 no shock with that mutation.
+
 	if (!def_zone)
 		def_zone = pick("l_hand", "r_hand")
-	
+
 	var/datum/organ/external/affected_organ = get_organ(check_zone(def_zone))
 	var/siemens_coeff = base_siemens_coeff * get_siemens_coefficient_organ(affected_organ)
-	
-	return ..(shock_damage, source, siemens_coeff, def_zone)
 
+	return ..(shock_damage, source, siemens_coeff, def_zone)
 
 /mob/living/carbon/human/Topic(href, href_list)
 	if (href_list["refresh"])
@@ -987,7 +987,7 @@
 
 	visible_message("\blue \The [src] morphs and changes [get_visible_gender() == MALE ? "his" : get_visible_gender() == FEMALE ? "her" : "their"] appearance!", "\blue You change your appearance!", "\red Oh, god!  What the hell was that?  It sounded like flesh getting squished and bone ground into a different shape!")
 
-/mob/living/carbon/human/proc/remotesay()
+/mob/living/carbon/human/proc/remotesay() //#Z2
 	set name = "Project mind"
 	set category = "Superpower"
 
@@ -999,21 +999,37 @@
 	if(!(mRemotetalk in src.mutations))
 		src.verbs -= /mob/living/carbon/human/proc/remotesay
 		return
+
+	var/list/names = list()
 	var/list/creatures = list()
-	for(var/mob/living/carbon/h in world)
-		creatures += h
+	var/list/namecounts = list()
+
+	for(var/mob/living/carbon/M in world)
+		var/name = M.real_name
+		if(name in names)
+			namecounts[name]++
+			name = "[name] ([namecounts[name]])"
+		else
+			names.Add(name)
+			namecounts[name] = 1
+		var/turf/temp_turf = get_turf(M)
+		if(temp_turf.z != src.z)
+			continue
+		creatures[name] += M
+
 	var/mob/target = input ("Who do you want to project your mind to ?") as null|anything in creatures
 	if (isnull(target))
 		return
 
-	var/say = sanitize(copytext(input ("What do you wish to say"), 1, MAX_MESSAGE_LEN))
-	if(mRemotetalk in target.mutations)
-		target.show_message("\blue You hear [src.real_name]'s voice: [say]")
+	var/say = input ("What do you wish to say")
+	var/mob/T = creatures[target]
+	if(mRemotetalk in T.mutations)
+		T.show_message("\blue You hear [src.real_name]'s voice: [say]")
 	else
-		target.show_message("\blue You hear a voice that seems to echo around the room: [say]")
-	usr.show_message("\blue You project your mind into [target.real_name]: [say]")
+		T.show_message("\blue You hear a voice that seems to echo around the room: [say]")
+	usr.show_message("\blue You project your mind into [T.real_name]: [say]")
 	for(var/mob/dead/observer/G in world)
-		G.show_message("<i>Telepathic message from <b>[src]</b> to <b>[target]</b>: [say]</i>")
+		G.show_message("<i>Telepathic message from <b>[src]</b> to <b>[T]</b>: [say]</i>")
 
 /mob/living/carbon/human/proc/remoteobserve()
 	set name = "Remote View"
@@ -1035,22 +1051,47 @@
 		reset_view(0)
 		return
 
-	var/list/mob/creatures = list()
+	if(src.getBrainLoss() >= 100) //#Z2
+		src << "Too hard to concentrate... Better stop trying!"
+		src.adjustBrainLoss(7)
+		if(src.getBrainLoss() >= 125) return
 
-	for(var/mob/living/carbon/h in world)
-		var/turf/temp_turf = get_turf(h)
-		if((temp_turf.z != 1 && temp_turf.z != 5) || h.stat!=CONSCIOUS) //Not on mining or the station. Or dead
+	var/list/names = list()
+	var/list/creatures = list()
+	var/list/namecounts = list()
+	var/target = null	   //Chosen target.
+
+	for(var/mob/living/carbon/human/M in world) //#Z2 only carbon/human for now
+		var/name = M.real_name
+		if(!(mRemotetalk in src.mutations))
+			namecounts++
+			name = "([namecounts])"
+		else
+			if(name in names)
+				namecounts[name]++
+				name = "[name] ([namecounts[name]])"
+			else
+				names.Add(name)
+				namecounts[name] = 1
+		var/turf/temp_turf = get_turf(M)
+		if((temp_turf.z != 1 && temp_turf.z != 5 || temp_turf.z != src.z) || M.stat!=CONSCIOUS) //Not on mining or the station. Or dead #Z2 + target on the same Z level as player
 			continue
-		creatures += h
+		creatures[name] += M
 
-	var/mob/target = input ("Who do you want to project your mind to ?") as mob in creatures
+	target = input ("Who do you want to project your mind to ?") as null|anything in creatures
 
-	if (target)
-		remoteview_target = target
-		reset_view(target)
+	if (!target)//Make sure we actually have a target
+		return
+	if(src.getBrainLoss() >= 100)
+		src << "Too hard to concentrate..."
+		return
+	if (target && (creatures[target] != src))
+		src.adjustBrainLoss(4)
+		remoteview_target = creatures[target]
+		reset_view(creatures[target])
 	else
 		remoteview_target = null
-		reset_view(0)
+		reset_view(0) //##Z2
 
 /mob/living/carbon/human/proc/get_visible_gender()
 	if(wear_suit && wear_suit.flags_inv & HIDEJUMPSUIT && ((head && head.flags_inv & HIDEMASK) || wear_mask))

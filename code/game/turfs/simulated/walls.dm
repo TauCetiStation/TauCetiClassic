@@ -228,18 +228,7 @@
 //Interactions
 
 /turf/simulated/wall/attack_paw(mob/user as mob)
-	if ((HULK in user.mutations))
-		if (prob(40))
-			usr << text("\blue You smash through the wall.")
-			usr.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
-			dismantle_wall(1)
-			return
-		else
-			usr << text("\blue You punch the wall.")
-			take_damage(rand(25, 75))
-			return
-
-	return src.attack_hand(user)
+	return src.attack_hand(user) //#Z2
 
 /*
 /turf/simulated/wall/attack_animal(mob/living/simple_animal/M as mob)
@@ -278,16 +267,14 @@
 			return
 
 /turf/simulated/wall/attack_hand(mob/user as mob)
-	if (HULK in user.mutations)
-		if (prob(40) || rotting)
-			usr << text("\blue You smash through the wall.")
-			usr.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
-			dismantle_wall(1)
-			return
-		else
-			usr << text("\blue You punch the wall.")
-			take_damage(rand(25, 75))
-			return
+	if(HULK in user.mutations) //#Z2 No more chances, just randomized damage and hurt intent
+		if(user.a_intent == "hurt")
+			playsound(user.loc, 'sound/effects/grillehit.ogg', 50, 1)
+			user << text("\blue You punch the wall.")
+			take_damage(rand(15, 50))
+			if(prob(25))
+				user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
+			return //##Z2
 
 	if(rotting)
 		user << "\blue The wall crumbles under your touch."

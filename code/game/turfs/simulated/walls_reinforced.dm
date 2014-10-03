@@ -13,15 +13,26 @@
 	var/d_state = 0
 
 /turf/simulated/wall/r_wall/attack_hand(mob/user as mob)
-	if (HULK in user.mutations)
-		if (prob(10) || rotting)
-			usr << text("\blue You smash through the wall.")
-			usr.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
-			dismantle_wall(1)
-			return
-		else
-			usr << text("\blue You punch the wall.")
-			return
+	if(HULK in user.mutations) //#Z2
+		if(user.a_intent == "hurt")
+			user << text("\blue You punch the wall.")
+			take_damage(rand(5, 25))
+			if(prob(25))
+				user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
+			if(prob(5))
+				playsound(user.loc, 'sound/weapons/tablehit1.ogg', 50, 1)
+				var/organ_name = pick("l_arm","r_arm")
+				if(user.hand)
+					organ_name = "l_arm"
+				else
+					organ_name = "r_arm"
+				var/mob/living/carbon/human/H = user
+				var/datum/organ/external/E = H.get_organ(organ_name)
+				E.take_damage(rand(5, 15), 0, 0, 0, "Reinforced wall")
+				user << text("\red Ouch!!")
+			else
+				playsound(user.loc, 'sound/effects/grillehit.ogg', 50, 1)
+			return //##Z2
 
 	if(rotting)
 		user << "\blue This wall feels rather unstable."
