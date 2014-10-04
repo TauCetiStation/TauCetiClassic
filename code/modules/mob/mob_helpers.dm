@@ -352,17 +352,19 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 
 
 /proc/shake_camera(mob/M, duration, strength=1)
-	if(!M || !M.client || M.shakecamera)
+	if(!M | !M.client | M.shakecamera)
 		return
 	spawn(1)
+		if(!M | !M.client | M.shakecamera)
+			return
+		M.shakecamera = 1
 		var/oldeye=M.client.eye
 		var/x
-		M.shakecamera = 1
 		for(x=0; x<duration, x++)
 			M.client.eye = locate(dd_range(1,M.loc.x+rand(-strength,strength),world.maxx),dd_range(1,M.loc.y+rand(-strength,strength),world.maxy),M.loc.z)
 			sleep(1)
-		M.shakecamera = 0
 		M.client.eye=oldeye
+		M.shakecamera = 0
 
 
 /proc/findname(msg)
