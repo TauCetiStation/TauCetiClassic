@@ -88,7 +88,7 @@ var/world_topic_spam_protect_time = world.timeofday
 	else if (T == "status")
 		var/list/s = list()
 		s["version"] = game_version
-		s["mode"] = master_mode
+		s["mode"] = custom_event_msg ? "event" : master_mode
 		s["respawn"] = config ? abandon_allowed : 0
 		s["enter"] = enter_allowed
 		s["vote"] = config.allow_vote_mode
