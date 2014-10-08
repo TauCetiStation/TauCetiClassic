@@ -1,19 +1,24 @@
 /var/const/OPEN = 1
 /var/const/CLOSED = 2
+
+#define FIREDOOR_MAX_PRESSURE_DIFF 25 // kPa
 /obj/machinery/door/firedoor
 	name = "\improper Emergency Shutter"
 	desc = "Emergency air-tight shutter, capable of sealing off breached areas."
-	icon = 'icons/obj/doors/DoorHazard.dmi'
+	icon = 'tauceti/icons/obj/DoorHazard.dmi'
 	icon_state = "door_open"
 	req_one_access = list(access_atmospherics, access_engine_equip)
 	opacity = 0
 	density = 0
 	layer = 2.6
+	visible = 0
 	var/blocked = 0
 	var/nextstate = null
 	var/net_id
 	var/list/areas_added
 	var/list/users_to_open
+	var/pdiff_alert = 0
+	var/pdiff = 0
 
 /obj/machinery/door/firedoor/New()
 	. = ..()
@@ -44,6 +49,8 @@
 /obj/machinery/door/firedoor/examine()
 	set src in view()
 	. = ..()
+	if(pdiff >= FIREDOOR_MAX_PRESSURE_DIFF)
+		usr << "<span class='warning'>WARNING: Current pressure differential is [pdiff]kPa! Opening door may result in injury!</span>"
 	if( islist(users_to_open) && users_to_open.len)
 		var/users_to_open_string = users_to_open[1]
 		if(users_to_open.len >= 2)
@@ -210,12 +217,28 @@
 		icon_state = "door_closed"
 		if(blocked)
 			overlays += "welded"
+		if(pdiff_alert)
+			overlays += "palert"
 	else
 		icon_state = "door_open"
 		if(blocked)
 			overlays += "welded_open"
 	return
 
+	// CHECK PRESSURE
+/obj/machinery/door/firedoor/process()
+	..()
+
+	if(density)
+		pdiff = getOPressureDifferential(get_turf(src))
+		if(pdiff >= FIREDOOR_MAX_PRESSURE_DIFF)
+			if(!pdiff_alert)
+				pdiff_alert = 1
+				update_icon()
+		else
+			if(pdiff_alert)
+				pdiff_alert = 0
+				update_icon()
 
 
 /obj/machinery/door/firedoor/border_only

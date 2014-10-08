@@ -1392,3 +1392,19 @@ var/list/WALLITEMS = list(
 	if(istype(A, /turf/simulated/floor/plating/airless/catwalk))
 		return 1
 	return 0
+
+/proc/getOPressureDifferential(var/turf/loc)
+	var/minp=16777216;
+	var/maxp=0;
+	for(var/dir in cardinal)
+		var/turf/simulated/T=get_turf(get_step(loc,dir))
+		var/cp=0
+		if(T && istype(T) && T.zone)
+			var/datum/gas_mixture/environment = T.return_air()
+			cp = environment.return_pressure()
+		else
+			if(istype(T,/turf/simulated))
+				continue
+		if(cp<minp)minp=cp
+		if(cp>maxp)maxp=cp
+	return abs(minp-maxp)
