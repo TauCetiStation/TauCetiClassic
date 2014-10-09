@@ -11,7 +11,7 @@
 	opacity = 0
 	density = 0
 	layer = 2.6
-	visible = 0
+	glass = 1
 	var/blocked = 0
 	var/nextstate = null
 	var/net_id
