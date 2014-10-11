@@ -243,12 +243,12 @@
 
 	if(magpulse)
 		flags &= ~NOSLIP
-		slowdown = initial(slowdown)
+		src.slowdown = initial(slowdown)
 		magpulse = 0
 		H << "You disable \the [src] the mag-pulse traction system."
 	else
 		flags |= NOSLIP
-		slowdown += boots.slowdown
+		src.slowdown += 2
 		magpulse = 1
 		H << "You enable the mag-pulse traction system."
 
