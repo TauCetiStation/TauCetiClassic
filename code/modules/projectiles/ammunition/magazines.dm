@@ -59,6 +59,14 @@
 	max_ammo = 2
 	multiload = 0
 
+/obj/item/ammo_box/magazine/internal/cylinder/rocket
+	name = "bazooka internal magazine"
+	desc = "This doesn't even exist"
+	ammo_type = /obj/item/ammo_casing/rocket
+	caliber = "rocket"
+	max_ammo = 1
+	multiload = 0
+
 ///////////EXTERNAL MAGAZINES////////////////
 /obj/item/ammo_box/magazine/m9mm
 	name = "magazine (9mm)"
