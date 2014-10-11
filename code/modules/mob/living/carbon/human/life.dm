@@ -715,7 +715,7 @@
 				protected = 1
 			if(!protected && radiation < 100)
 				apply_effect(5, IRRADIATE)
-				apply_damage(10, BURN, used_weapon = "Space Radiation")
+				take_overall_damage(burn=10, used_weapon = "Space Radiation")
 
 		// +/- 50 degrees from 310.15K is the 'safe' zone, where no damage is dealt.
 		if(bodytemperature > species.heat_level_1)

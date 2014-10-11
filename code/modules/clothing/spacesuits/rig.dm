@@ -79,8 +79,6 @@
 		)
 	var/has_magboots = 0
 	var/magpulse = 0
-	var/mag_slowdown = 3
-
 
 	//Breach thresholds, should ideally be inherited by most (if not all) hardsuits.
 	breach_threshold = 18
@@ -108,7 +106,7 @@
 
 	if(H.wear_suit != src)
 		return
-
+/*
 	if(attached_helmet && helmet)
 		if(H.head)
 			M << "You are unable to deploy your suit's helmet as \the [H.head] is in the way."
@@ -127,7 +125,7 @@
 			boots.loc = H
 			H.equip_to_slot(boots, slot_shoes)
 			boots.canremove = 0
-
+*/
 /obj/item/clothing/suit/space/rig/dropped()
 	..()
 
@@ -225,6 +223,35 @@
 		helmet.canremove = 0
 		H << "\blue You deploy your hardsuit helmet, sealing you off from the world."
 
+/obj/item/clothing/suit/space/rig/verb/toggle_magboots()
+
+	set name = "Toggle Space Suit Magboots"
+	set category = "Object"
+	set src in usr
+
+	if(!istype(src.loc,/mob/living)) return
+
+	if(!boots)
+		usr << "\The [src] does not have any boots installed."
+		return
+
+	var/mob/living/carbon/human/H = usr
+
+	if(!istype(H)) return
+	if(H.stat) return
+	if(H.wear_suit != src) return
+
+	if(magpulse)
+		flags &= ~NOSLIP
+		slowdown = initial(slowdown)
+		magpulse = 0
+		H << "You disable \the [src] the mag-pulse traction system."
+	else
+		flags |= NOSLIP
+		slowdown += boots.slowdown
+		magpulse = 1
+		H << "You enable the mag-pulse traction system."
+
 /obj/item/clothing/suit/space/rig/attackby(obj/item/W as obj, mob/user as mob)
 
 	if(!istype(user,/mob/living)) return
@@ -308,32 +335,10 @@
 
 	..()
 
-/obj/item/clothing/suit/space/rig/New()
-	..()
-	if(has_magboots)
-		action_button_name = "Toggle magboots."
-		icon_action_button = "action_blank"
-
-/obj/item/clothing/suit/space/rig/attack_self(mob/user)
-	if(!has_magboots)
-		user << "\the [src] doesn't have built-in mag-pusle traction system."
-		return
-	if(magpulse)
-		flags &= ~NOSLIP
-		slowdown = initial(slowdown)
-		magpulse = 0
-		user << "You disable \the [src] the mag-pulse traction system."
-	else
-		flags |= NOSLIP
-		slowdown = mag_slowdown
-		magpulse = 1
-		user << "You enable the mag-pulse traction system."
-
-
 /obj/item/clothing/suit/space/rig/examine()
 	set src in view()
 	..()
-	usr << "Its mag-pulse traction system appears to be [!src.flags&NOSLIP ? "disabled" : "enabled"]."
+	usr << "Its mag-pulse traction system appears to be [!magpulse ? "disabled" : "enabled"]."
 
 //Engineering rig
 /obj/item/clothing/head/helmet/space/rig/engineering
@@ -429,6 +434,7 @@
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/device/suit_cooling_unit,/obj/item/weapon/gun,/obj/item/ammo_box/magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/melee/energy/sword,/obj/item/weapon/handcuffs)
 	siemens_coefficient = 0.6
 	species_restricted = list("exclude","Unathi","Tajaran","Skrell","Vox")
+	breach_threshold = 25
 
 //Wizard Rig
 /obj/item/clothing/head/helmet/space/rig/wizard
@@ -491,7 +497,7 @@
 	armor = list(melee = 60, bullet = 30, laser = 30, energy = 5, bomb = 45, bio = 100, rad = 10)
 	allowed = list(/obj/item/weapon/gun,/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/device/suit_cooling_unit,/obj/item/weapon/melee/baton)
 	siemens_coefficient = 0.7
-
+	breach_threshold = 20
 
 //Atmospherics Rig (BS12)
 /obj/item/clothing/head/helmet/space/rig/atmos
