@@ -114,6 +114,15 @@
 	cost = 7
 	gamemodes = list(/datum/game_mode/nuclear) */
 
+/datum/uplink_item/dangerous/bulldog
+	name = "V15 Bulldog shotgun"
+	desc = "A compact, mag-fed semi-automatic shotgun for combat in narrow corridors. Uses various 12g magazines."
+	item = /obj/item/weapon/gun/projectile/automatic/bulldog
+	cost = 8
+	gamemodes = list(/datum/game_mode/nuclear)
+	uplink_types = list("nuclear")
+	excludefrom_uplinks = list("traitor")
+
 /datum/uplink_item/dangerous/machinegun
 	name = "L6 Squad Automatic Weapon"
 	desc = "A traditionally constructed machine gun made by AA-2531. This deadly weapon has a massive 50-round magazine of 7.62×51mm ammunition."
@@ -222,10 +231,37 @@
 	cost = 2
 
 /datum/uplink_item/ammo/smg
-	name = "Ammo-12mm"
-	desc = "A 20-round 12mm magazine for use in the C-20r submachine gun."
+	name = "Ammo-.45 ACP"
+	desc = "A 20-round .45 ACP magazine for use in the C-20r submachine gun. These rounds have a short stunning effect and medium impact damage."
 	item = /obj/item/ammo_box/magazine/m12mm
 	cost = 1
+	gamemodes = list(/datum/game_mode/nuclear)
+	uplink_types = list("nuclear")
+	excludefrom_uplinks = list("traitor")
+
+/datum/uplink_item/ammo/bullbuck
+	name = "Ammo-12g Buckshot"
+	desc = "An additional  8-round buckshot magazine for use in the Bulldog shotgun."
+	item = /obj/item/ammo_box/magazine/m12g
+	cost = 2
+	gamemodes = list(/datum/game_mode/nuclear)
+	uplink_types = list("nuclear")
+	excludefrom_uplinks = list("traitor")
+
+/datum/uplink_item/ammo/bullstun
+	name = "Ammo-12g Stun Slug"
+	desc = "An alternative 8-round stun slug magazine for use in the Bulldog shotgun. Accurate, reliable, powerful."
+	item = /obj/item/ammo_box/magazine/m12g/stun
+	cost = 2
+	gamemodes = list(/datum/game_mode/nuclear)
+	uplink_types = list("nuclear")
+	excludefrom_uplinks = list("traitor")
+
+/datum/uplink_item/ammo/bullincendiary
+	name = "Ammo-12g Incendiary"
+	desc = "An alternative 8-round incendiary magazine for use in the Bulldog shotgun."
+	item = /obj/item/ammo_box/magazine/m12g/incendiary
+	cost = 3
 	gamemodes = list(/datum/game_mode/nuclear)
 	uplink_types = list("nuclear")
 	excludefrom_uplinks = list("traitor")
@@ -238,8 +274,8 @@
 	gamemodes = list(/datum/game_mode/nuclear) */
 
 /datum/uplink_item/ammo/machinegun
-	name = "Ammo-7.62×51mm"
-	desc = "A 50-round magazine of 7.62×51mm ammunition for use in the L6 SAW machinegun. By the time you need to use this, you'll already be on a pile of corpses."
+	name = "Ammo-7.62x51mm"
+	desc = "A 50-round magazine of 7.62x51mm ammunition for use in the L6 SAW machinegun. By the time you need to use this, you'll already be on a pile of corpses."
 	item = /obj/item/ammo_box/magazine/m762
 	cost = 6
 	gamemodes = list(/datum/game_mode/nuclear)
