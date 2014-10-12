@@ -64,6 +64,7 @@
 	slot_flags = 0
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rocket
 	var/wielded = 0
+	fire_sound = 'sound/effects/bang.ogg'
 
 /obj/item/weapon/gun/projectile/revolver/rocketlauncher/isHandgun()
 	return 0
@@ -83,6 +84,9 @@
 		return 0
 
 	return ..()
+
+/obj/item/weapon/gun/projectile/revolver/rocketlauncher/process_chamber()
+	return ..(1, 1)
 
 /obj/item/weapon/gun/projectile/revolver/rocketlauncher/dropped(mob/user as mob)
 	//handles unwielding a twohanded weapon when dropped as well as clearing up the offhand
@@ -151,3 +155,6 @@
 		return
 	else
 		..()
+		if(chambered)
+			del(chambered)
+			chambered = null

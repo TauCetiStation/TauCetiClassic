@@ -62,7 +62,7 @@
 /obj/item/ammo_box/magazine/internal/cylinder/rocket
 	name = "bazooka internal magazine"
 	desc = "This doesn't even exist"
-	ammo_type = /obj/item/ammo_casing/rocket
+	ammo_type = /obj/item/ammo_casing/caseless/rocket
 	caliber = "rocket"
 	max_ammo = 1
 	multiload = 0

@@ -143,3 +143,23 @@
 			var/mob/living/carbon/human/M = target
 			M.adjustBrainLoss(20)
 			M.hallucination += 20
+
+/obj/item/projectile/missile
+	name ="rocket"
+	icon = 'tauceti/icons/obj/projectiles.dmi'
+	icon_state= "rocket"
+	damage = 20
+	flag = "bullet"
+	sharp = 0
+	edge = 0
+
+	on_hit(var/atom/target, var/blocked = 0)
+		explosion(target, 1,2,4,5)
+		return 1
+
+/obj/item/projectile/missile/emp
+	damage = 10
+
+	on_hit(var/atom/target, var/blocked = 0)
+		empulse(target, 4, 10)
+		return 1

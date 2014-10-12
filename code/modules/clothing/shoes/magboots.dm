@@ -4,6 +4,8 @@
 	icon_state = "magboots0"
 	species_restricted = null
 	var/magpulse = 0
+	var/magboot_state = "magboots"
+	var/slowdown_off = 2
 	icon_action_button = "action_blank"
 	action_button_name = "Toggle the magboots"
 //	flags = NOSLIP //disabled by default
@@ -13,16 +15,16 @@
 			flags &= ~NOSLIP
 			slowdown = SHOES_SLOWDOWN
 			magpulse = 0
-			icon_state = "magboots0"
+			icon_state = "[magboot_state]0"
 			user << "You disable the mag-pulse traction system."
 		else
 			flags |= NOSLIP
-			slowdown = 2
+			slowdown = slowdown_off
 			magpulse = 1
-			icon_state = "magboots1"
+			icon_state = "[magboot_state]1"
 			user << "You enable the mag-pulse traction system."
 		user.update_inv_shoes()	//so our mob-overlays update
-	
+
 	examine()
 		set src in view()
 		..()

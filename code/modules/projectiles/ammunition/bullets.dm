@@ -107,11 +107,20 @@
 	caliber = "75"
 	projectile_type = /obj/item/projectile/bullet/gyro
 
-/obj/item/ammo_casing/rocket
-	name = "rocket shell"
+/obj/item/ammo_casing/caseless/rocket
+	name = "HE rocket shell"
 	desc = "A high explosive designed to be fired from a launcher."
-	icon_state = "rocketshell"
-	projectile_type = "/obj/item/missile"
+	icon = 'tauceti/items/weapons/syndicate/syndicate_guns.dmi'
+	icon_state = "rocket-he"
+	projectile_type = "/obj/item/projectile/missile"
+	caliber = "rocket"
+
+/obj/item/ammo_casing/caseless/rocket/emp
+	name = "EMP rocket shell"
+	desc = "A EMP rocket designed to be fired from a launcher."
+	icon_state = "rocket-emp"
+	icon = 'tauceti/items/weapons/syndicate/syndicate_guns.dmi'
+	projectile_type = "/obj/item/projectile/missile/emp"
 	caliber = "rocket"
 
 /obj/item/ammo_casing/chameleon

@@ -77,7 +77,6 @@
 		"Tajaran" = 'icons/obj/clothing/species/tajaran/suits.dmi',
 		"Skrell" = 'icons/obj/clothing/species/skrell/suits.dmi',
 		)
-	var/has_magboots = 0
 	var/magpulse = 0
 
 	//Breach thresholds, should ideally be inherited by most (if not all) hardsuits.
@@ -248,7 +247,7 @@
 		H << "You disable \the [src] the mag-pulse traction system."
 	else
 		flags |= NOSLIP
-		src.slowdown += 2
+		src.slowdown += boots.slowdown_off
 		magpulse = 1
 		H << "You enable the mag-pulse traction system."
 
