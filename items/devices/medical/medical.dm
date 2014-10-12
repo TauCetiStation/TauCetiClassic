@@ -8,7 +8,9 @@
 
 /obj/item/weapon/reagent_containers/hypospray/combat/New()
 	..()
-	reagents.add_reagent("synaptizine", 30)
+	reagents.add_reagent("doctorsdelight", 20)
+	reagents.add_reagent("synaptizine", 20)
+	reagents.add_reagent("hyperzine", 20)
 
 /obj/item/weapon/reagent_containers/pill/dermaline
 	name = "Dermaline pill"
@@ -18,13 +20,33 @@
 		..()
 		reagents.add_reagent("dermaline", 15)
 
-/obj/item/weapon/reagent_containers/pill/tramadol
-	name = "Tramadol pill"
-	desc = "Painkiller"
-	icon_state = "pill11"
+/obj/item/weapon/storage/pill_bottle/dermaline
+	name = "bottle of dermaline pills"
+	desc = "Contains pills used to treat burns."
+
 	New()
 		..()
-		reagents.add_reagent("tramadol", 15)
+		new /obj/item/weapon/reagent_containers/pill/dermaline( src )
+		new /obj/item/weapon/reagent_containers/pill/dermaline( src )
+		new /obj/item/weapon/reagent_containers/pill/dermaline( src )
+		new /obj/item/weapon/reagent_containers/pill/dermaline( src )
+		new /obj/item/weapon/reagent_containers/pill/dermaline( src )
+		new /obj/item/weapon/reagent_containers/pill/dermaline( src )
+		new /obj/item/weapon/reagent_containers/pill/dermaline( src )
+
+/obj/item/weapon/storage/pill_bottle/bicaridine
+	name = "bottle of bicaridine pills"
+	desc = "Contains pills used to treat physical injures."
+
+	New()
+		..()
+		new /obj/item/weapon/reagent_containers/pill/bicaridine( src )
+		new /obj/item/weapon/reagent_containers/pill/bicaridine( src )
+		new /obj/item/weapon/reagent_containers/pill/bicaridine( src )
+		new /obj/item/weapon/reagent_containers/pill/bicaridine( src )
+		new /obj/item/weapon/reagent_containers/pill/bicaridine( src )
+		new /obj/item/weapon/reagent_containers/pill/bicaridine( src )
+		new /obj/item/weapon/reagent_containers/pill/bicaridine( src )
 
 /obj/item/weapon/storage/firstaid/tactical
 	name = "first-aid kit"
@@ -36,10 +58,12 @@
 		..()
 		if (empty) return
 		new /obj/item/weapon/reagent_containers/hypospray/combat( src )
-		new /obj/item/weapon/reagent_containers/pill/bicaridine( src )
-		new /obj/item/weapon/reagent_containers/pill/dermaline( src )
-		new /obj/item/weapon/reagent_containers/pill/antitox( src )
-		new /obj/item/weapon/reagent_containers/pill/tramadol(src)
+		new /obj/item/weapon/storage/pill_bottle/bicaridine( src )
+		new /obj/item/weapon/storage/pill_bottle/dermaline( src )
+		new /obj/item/weapon/storage/pill_bottle/antitox( src )
+		new /obj/item/weapon/storage/pill_bottle/tramadol(src)
 		new /obj/item/weapon/reagent_containers/hypospray/autoinjector( src )
 		new /obj/item/device/healthanalyzer(src)
 		return
+
+

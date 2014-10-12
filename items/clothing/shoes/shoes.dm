@@ -12,3 +12,12 @@
 	tc_custom = 'tauceti/items/clothing/shoes/shoes.dmi'
 	icon_state = "western_boots"
 	item_color = "western_boots"
+
+/obj/item/clothing/shoes/magboots/syndie
+	desc = "Light-weighted magnetic boots that have a custom syndicate paintjob for use in combat."
+	name = "gorlex magboots"
+	icon = 'tauceti/items/clothing/shoes/shoes.dmi'
+	tc_custom = 'tauceti/items/clothing/shoes/shoes.dmi'
+	icon_state = "syndiemag0"
+	magboot_state = "syndiemag"
+	slowdown_off = 1

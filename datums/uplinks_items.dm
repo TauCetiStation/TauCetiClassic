@@ -127,7 +127,25 @@
 	name = "L6 Squad Automatic Weapon"
 	desc = "A traditionally constructed machine gun made by AA-2531. This deadly weapon has a massive 50-round magazine of 7.62×51mm ammunition."
 	item = /obj/item/weapon/gun/projectile/automatic/l6_saw
+	cost = 25
+	gamemodes = list(/datum/game_mode/nuclear)
+	uplink_types = list("nuclear")
+	excludefrom_uplinks = list("traitor")
+
+/datum/uplink_item/dangerous/bazooka
+	name = "Goliath missile launcher"
+	desc = "The Goliath is a single-shot shoulder-fired multipurpose missile launcher."
+	item = /obj/item/weapon/gun/projectile/revolver/rocketlauncher
 	cost = 20
+	gamemodes = list(/datum/game_mode/nuclear)
+	uplink_types = list("nuclear")
+	excludefrom_uplinks = list("traitor")
+
+/datum/uplink_item/dangerous/a28
+	name = "A28 Assault Rifle"
+	desc = "A bullpup automatic assault rifle. Great for range combat and fire suppresion. Uses 30-round magazine of 5.56mm ammunition."
+	item = /obj/item/weapon/gun/projectile/automatic/a28
+	cost = 12
 	gamemodes = list(/datum/game_mode/nuclear)
 	uplink_types = list("nuclear")
 	excludefrom_uplinks = list("traitor")
@@ -239,6 +257,24 @@
 	uplink_types = list("nuclear")
 	excludefrom_uplinks = list("traitor")
 
+/datum/uplink_item/ammo/a28standard
+	name = "Ammo-5.56mm"
+	desc = "A 30-round 5.56 magazine for use in the A28 assault rifle."
+	item = /obj/item/ammo_box/magazine/m556
+	cost = 5
+	gamemodes = list(/datum/game_mode/nuclear)
+	uplink_types = list("nuclear")
+	excludefrom_uplinks = list("traitor")
+
+/datum/uplink_item/ammo/a28fire
+	name = "Ammo-5.56mm Incendiary"
+	desc = "A 30-round 5.56 Incendiary magazine for use in the A28 assault rifle."
+	item = /obj/item/ammo_box/magazine/m556/incendiary
+	cost = 6
+	gamemodes = list(/datum/game_mode/nuclear)
+	uplink_types = list("nuclear")
+	excludefrom_uplinks = list("traitor")
+
 /datum/uplink_item/ammo/bullbuck
 	name = "Ammo-12g Buckshot"
 	desc = "An additional  8-round buckshot magazine for use in the Bulldog shotgun."
@@ -277,6 +313,22 @@
 	name = "Ammo-7.62x51mm"
 	desc = "A 50-round magazine of 7.62x51mm ammunition for use in the L6 SAW machinegun. By the time you need to use this, you'll already be on a pile of corpses."
 	item = /obj/item/ammo_box/magazine/m762
+	cost = 7
+	gamemodes = list(/datum/game_mode/nuclear)
+	uplink_types = list("nuclear")
+
+/datum/uplink_item/ammo/rocket
+	name = "HE missile"
+	desc = "A high explosive missile for Goliath launcher"
+	item = /obj/item/ammo_casing/caseless/rocket
+	cost = 5
+	gamemodes = list(/datum/game_mode/nuclear)
+	uplink_types = list("nuclear")
+
+/datum/uplink_item/ammo/rocket_emp
+	name = "EMP missile"
+	desc = "A EMP missile for Goliath launcher"
+	item = /obj/item/ammo_casing/caseless/rocket/emp
 	cost = 6
 	gamemodes = list(/datum/game_mode/nuclear)
 	uplink_types = list("nuclear")
@@ -365,6 +417,12 @@
 	desc = "Enables you to bug cameras to view them remotely. Adding particular items to it alters its functions."
 	item = /obj/item/device/camera_bug
 	cost = 2 */
+
+/datum/uplink_item/stealthy_weapons/silencer
+	name = "Syndicate Silencer"
+	desc = "A universal small-arms silencer favored by stealth operatives, this will make shots quieter when equipped onto any low-caliber weapon."
+	item = /obj/item/weapon/silencer
+	cost = 2
 
 // DEVICE AND TOOLS
 

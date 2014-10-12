@@ -122,7 +122,7 @@
 //ÂÈÍÒÎÂÊÀ ÍŞÊÅĞÎÂ
 /obj/item/weapon/gun/projectile/automatic/a28
 	name = "A28 assault rifle"
-	desc = "ATATA."
+	desc = ""
 	icon = 'tauceti/items/weapons/syndicate/syndicate_guns.dmi'
 	tc_custom = 'tauceti/items/weapons/syndicate/syndicate_guns.dmi'
 	icon_state = "a28"
