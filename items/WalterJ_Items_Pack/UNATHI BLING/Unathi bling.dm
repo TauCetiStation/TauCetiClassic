@@ -24,7 +24,7 @@
 
 	species_restricted = null
 
-/obj/item/clothing/shoes/sandals/brown
+/obj/item/clothing/shoes/sandal/brown
 	icon = 'tauceti/items/WalterJ_Items_Pack/UNATHI BLING/Unathi bling.dmi'
 	tc_custom = 'tauceti/items/WalterJ_Items_Pack/UNATHI BLING/Unathi bling.dmi'
 
@@ -37,7 +37,7 @@
 
 	species_restricted = null
 
-/obj/item/clothing/shoes/sandals/pink
+/obj/item/clothing/shoes/sandal/pink
 	icon = 'tauceti/items/WalterJ_Items_Pack/UNATHI BLING/Unathi bling.dmi'
 	tc_custom = 'tauceti/items/WalterJ_Items_Pack/UNATHI BLING/Unathi bling.dmi'
 
@@ -87,8 +87,6 @@
 /obj/item/clothing/suit/space/rig/engineering/unathi_wj
 	icon = 'tauceti/items/WalterJ_Items_Pack/UNATHI BLING/Unathi bling.dmi'
 	tc_custom = 'tauceti/items/WalterJ_Items_Pack/UNATHI BLING/Unathi bling.dmi'
-	name = "Red mining hardsuit"
-	desc = "A special suit that protects against hazardous, has reinforced plating."
 
 	icon_state = "rig-unathi-engineering"
 	item_state = "rig-unathi-engineering"
