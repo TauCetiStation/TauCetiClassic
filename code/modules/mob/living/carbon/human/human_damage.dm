@@ -275,8 +275,7 @@ This function restores all organs.
 		..(damage, damagetype, def_zone, blocked)
 		return 1
 
-//	blocked = (100-blocked)/100
-//	if(blocked <= 0)	return 0
+
 
 	var/datum/organ/external/organ = null
 	if(isorgan(def_zone))
@@ -286,7 +285,12 @@ This function restores all organs.
 		organ = get_organ(check_zone(def_zone))
 	if(!organ)	return 0
 
-	damage = (damage - blocked)
+	if(istype(used_weapon, /obj/item/projectile))
+		damage = (damage - blocked)
+	else
+		blocked = (100-blocked)/100
+		if(blocked <= 0)	return 0
+		damage = (damage * blocked)
 	switch(damagetype)
 		if(BRUTE)
 			damageoverlaytemp = 20

@@ -98,6 +98,7 @@
 	name = "phoron tank"
 	desc = "Contains dangerous phoron. Do not inhale. Warning: extremely flammable."
 	icon_state = "phoron"
+	item_state = "plasma"
 	flags = FPRINT | TABLEPASS | CONDUCT
 	slot_flags = null	//they have no straps!
 

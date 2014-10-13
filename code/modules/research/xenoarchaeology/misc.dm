@@ -100,7 +100,6 @@
 		new /obj/item/device/beacon_locator(src)
 		new /obj/item/device/radio/beacon(src)
 		new /obj/item/clothing/glasses/hud/mining(src)
-		new /obj/item/weapon/pickaxe(src)
 		new /obj/item/device/measuring_tape(src)
 		new /obj/item/weapon/pickaxe/hand(src)
 		new /obj/item/weapon/storage/bag/fossils(src)
