@@ -795,7 +795,6 @@ note dizziness decrements automatically in the mob's Life() proc.
 		if(S.chemical_cost >=0 && S.can_be_used_by(src))
 			statpanel("[S.panel]",((S.chemical_cost > 0) ? "[S.chemical_cost]" : ""),S)
 
-	statpanel("Changeling","[mind.changeling.chem_charges]")
 
 
 // facing verbs
