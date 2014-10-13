@@ -7,7 +7,7 @@
 	item_state = "drill"
 	origin_tech = "materials=2;powerstorage=3;engineering=2"
 	flags = FPRINT | TABLEPASS| CONDUCT
-//	slot_flags = SLOT_BELT
+	slot_flags = null
 	force = 15.0
 	throwforce = 4.0
 	w_class = 4.0
@@ -17,9 +17,9 @@
 	drill_verb = "drill"
 	digspeed = 30
 	hardness = 3
-	reliability = 200
-	crit_fail = 3
-	var/max_reliability = 200
+	reliability = 600
+	crit_fail = 1
+	var/max_reliability = 600
 	var/drill_cost = 15
 	var/mode = 0
 	var/state = 0
