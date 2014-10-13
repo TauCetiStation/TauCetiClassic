@@ -11,3 +11,11 @@
 	icon = 'tauceti/items/clothing/glasses/glasses.dmi'
 	tc_custom = 'tauceti/items/clothing/glasses/glasses.dmi'
 	icon_state = "rosas_eye"
+
+/obj/item/clothing/glasses/hud/health/night
+	name = "Night Vision Health Scanner HUD"
+	desc = "An advanced medical head-up display that allows doctors to find patients in complete darkness."
+	icon = 'tauceti/items/clothing/glasses/glasses.dmi'
+	tc_custom = 'tauceti/items/clothing/glasses/glasses.dmi'
+	icon_state = "healthhudnight"
+	darkness_view = 7

@@ -7,10 +7,16 @@
 	volume = 60
 
 /obj/item/weapon/reagent_containers/hypospray/combat/New()
-	..()
-	reagents.add_reagent("doctorsdelight", 20)
-	reagents.add_reagent("synaptizine", 20)
-	reagents.add_reagent("hyperzine", 20)
+	if (!possible_transfer_amounts)
+		src.verbs -= /obj/item/weapon/reagent_containers/verb/set_APTFT
+	var/datum/reagents/R = new/datum/reagents(volume)
+	reagents = R
+	R.my_atom = src
+	reagents.add_reagent("synaptizine", 5)
+	reagents.add_reagent("hyperzine", 15)
+	reagents.add_reagent("oxycodone", 15)
+	reagents.add_reagent("anti_toxin", 25)
+
 
 /obj/item/weapon/reagent_containers/pill/dermaline
 	name = "Dermaline pill"
