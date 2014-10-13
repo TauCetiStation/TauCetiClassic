@@ -792,6 +792,7 @@ datum
 			reagent_state = LIQUID
 			color = "#C8A5DC"
 			overdose = 30
+			custom_metabolism = 0.025
 
 			on_mob_life(var/mob/living/M as mob)
 				if (volume > overdose)
@@ -806,6 +807,8 @@ datum
 			reagent_state = LIQUID
 			color = "#C805DC"
 			overdose = 20
+			custom_metabolism = 0.025
+
 
 			on_mob_life(var/mob/living/M as mob)
 				if (volume > overdose)
@@ -835,18 +838,18 @@ datum
 			description = "Sterilizes wounds in preparation for surgery."
 			reagent_state = LIQUID
 			color = "#C8A5DC" // rgb: 200, 165, 220
-			
+
 			//makes you squeaky clean
 			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
 				if (method == TOUCH)
 					M.germ_level -= min(volume*20, M.germ_level)
-			
+
 			reaction_obj(var/obj/O, var/volume)
 				O.germ_level -= min(volume*20, O.germ_level)
-			
+
 			reaction_turf(var/turf/T, var/volume)
 				T.germ_level -= min(volume*20, T.germ_level)
-			
+
 	/*		reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
 				src = null
 				if (method==TOUCH)
@@ -1319,7 +1322,7 @@ datum
 				if(!M) M = holder.my_atom
 				if(ishuman(M))
 					var/mob/living/carbon/human/H = M
-					
+
 					//Peridaxon is hard enough to get, it's probably fair to make this all internal organs
 					for(var/datum/organ/internal/I in H.internal_organs)
 						if(I.damage > 0)
@@ -3009,6 +3012,9 @@ datum
 
 				if(alien && alien == IS_SKRELL) //Skrell get very drunk very quickly.
 					d*=5
+				else if(alien && alien == IS_KIDAN) //Alcohol is like water to Kida according to lore
+					d*=0
+
 
 				M.dizziness += dizzy_adj.
 				if(d >= slur_start && d < pass_out)

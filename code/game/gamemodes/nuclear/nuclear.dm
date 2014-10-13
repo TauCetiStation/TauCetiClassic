@@ -258,7 +258,7 @@
 	if(boss)
 		synd_mob.equip_to_slot_or_del(new /obj/item/weapon/card/id/syndicate/commander(synd_mob), slot_wear_id)
 	else
-		synd_mob.equip_to_slot_or_del(new /obj/item/weapon/card/id/syndicate(synd_mob), slot_wear_id)
+		synd_mob.equip_to_slot_or_del(new /obj/item/weapon/card/id/syndicate/nuker(synd_mob), slot_wear_id)
 
 	if(synd_mob.species)
 		var/race = synd_mob.species.name
@@ -415,5 +415,10 @@
 /obj/item/weapon/card/id/syndicate/commander
 	name = "syndicate commander ID card"
 	assignment = "Syndicate Commander"
-	icon_state = "centcom_old"
+	icon = 'tauceti/icons/obj/objects.dmi'
+	icon_state = "syndicate-command"
 	access = list(access_maint_tunnels, access_syndicate, access_syndicate_commander, access_external_airlocks)
+
+/obj/item/weapon/card/id/syndicate/nuker
+	icon = 'tauceti/icons/obj/objects.dmi'
+	icon_state = "syndicate"
