@@ -66,3 +66,11 @@
 	tc_custom = 'tauceti/items/clothing/backpacks/backpacks.dmi'
 	icon_state = "backpack-hyd"
 	item_state = "backpack-hyd"
+
+/obj/item/weapon/storage/backpack/mime
+	name = "Parcel Parceaux"
+	desc = "A silent backpack made for those silent workers. Silence Co."
+	icon = 'tauceti/items/clothing/backpacks/backpacks.dmi'
+	tc_custom = 'tauceti/items/clothing/backpacks/backpacks.dmi'
+	icon_state = "mimepack"
+	item_state = "mimepack"
