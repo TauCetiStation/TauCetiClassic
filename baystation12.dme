@@ -124,8 +124,6 @@
 #define FILE_DIR "tauceti/items/weapons/guns"
 #define FILE_DIR "tauceti/items/weapons/melee"
 #define FILE_DIR "tauceti/items/weapons/syndicate"
-#define FILE_DIR "tauceti/machine"
-#define FILE_DIR "tauceti/machine/detector"
 #define FILE_DIR "tauceti/mobs"
 #define FILE_DIR "tauceti/mobs/smart_animal"
 #define FILE_DIR "tauceti/mobs/smart_animal/dogs"
