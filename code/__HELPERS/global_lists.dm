@@ -41,7 +41,7 @@ var/global/list/skin_styles_female_list = list()		//unused
 var/global/list/underwear_m = list("White", "Grey", "Green", "Blue", "Black", "Mankini", "None") //Curse whoever made male/female underwear diffrent colours
 var/global/list/underwear_f = list("Red", "White", "Yellow", "Blue", "Black", "Thong", "None")
 	//undershirt
-var/global/list/undershirt_t = list("Black Tank top", "White Tank top", "Black shirt", "White shirt", "Love shirt", "Corgy shirt", "Brit shirt", "I love NT shirt", "Peace shirt", "Mond shirt", "Pacman shirt", "Sailor shirt", "Short sleeves white shirt", "Short sleeves purple shirt", "Short sleeves blue shirt", "Short sleeves green shirt", "Short sleeves black shirt", "None")
+var/global/list/undershirt_t = list("Black Tank top", "White Tank top", "Black shirt", "White shirt", "Love shirt", "Corgy shirt", "Brit shirt", "I love NT shirt", "Peace shirt", "Mond shirt", "Pacman shirt", "Sailor shirt", "Short sleeves white shirt", "Short sleeves purple shirt", "Short sleeves blue shirt", "Short sleeves green shirt", "Short sleeves black shirt", "Blue shirt","Red shirt","Yellow shirt","Green shirt","Blue polo","Red polo","White polo","Gray-yellow polo","Green sport shirt","Red sport shirt","Blue sport shirt","Red top","White top", "None")
 	//Backpacks
 var/global/list/backbaglist = list("Nothing", "Backpack", "Satchel", "Satchel Alt")
 
@@ -100,7 +100,7 @@ var/global/list/backbaglist = list("Nothing", "Backpack", "Satchel", "Satchel Al
 	for(var/T in paths)
 		var/datum/language/L = new T
 		all_languages[L.name] = L
-	
+
 	for (var/language_name in all_languages)
 		var/datum/language/L = all_languages[language_name]
 		language_keys[":[lowertext(L.key)]"] = L
