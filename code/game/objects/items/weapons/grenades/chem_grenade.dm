@@ -173,7 +173,7 @@
 	HasEntered(atom/movable/AM as mob|obj)
 		if (detonator)
 			detonator.HasEntered(AM)
-			
+
 	on_found(mob/finder as mob)
 		if(detonator)
 			detonator.on_found(finder)
@@ -266,6 +266,28 @@
 		B1.reagents.add_reagent("fluorosurfactant", 40)
 		B2.reagents.add_reagent("water", 40)
 		B2.reagents.add_reagent("cleaner", 10)
+
+		detonator = new/obj/item/device/assembly_holder/timer_igniter(src)
+
+		beakers += B1
+		beakers += B2
+		icon_state = initial(icon_state) +"_locked"
+
+/obj/item/weapon/grenade/chem_grenade/teargas
+	name = "teargas grenade"
+	desc = "Used for nonlethal riot control. Contents under pressure. Do not directly inhale contents."
+	stage = 2
+	path = 1
+
+	New()
+		..()
+		var/obj/item/weapon/reagent_containers/glass/beaker/B1 = new(src)
+		var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
+
+		B1.reagents.add_reagent("condensedcapsaicin", 25)
+		B1.reagents.add_reagent("potassium", 25)
+		B2.reagents.add_reagent("phosphorus", 25)
+		B2.reagents.add_reagent("sugar", 25)
 
 		detonator = new/obj/item/device/assembly_holder/timer_igniter(src)
 
