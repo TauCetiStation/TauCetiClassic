@@ -82,9 +82,10 @@ var/list/department_radio_keys = list(
 		if(!istype(dongle)) return
 		if(dongle.translate_binary) return 1
 
-/mob/living/say(var/message, var/datum/language/speaking = null, var/verb="says", var/alt_name="", var/italics=0, var/message_range = world.view, var/list/used_radios = list(), var/sound/speech_sound, var/sound_vol)
+/mob/living/say(var/message, var/datum/language/speaking = null, var/verb="says", var/alt_name="", var/italics=0, var/message_range = world.view, var/list/used_radios = list(), var/sound/speech_sound, var/sound_vol, var/sanitize = 1)
 
-	message = sanitize_plus(copytext(message, 1, MAX_MESSAGE_LEN))
+	if(sanitize)
+		message = sanitize_plus(copytext(message, 1, MAX_MESSAGE_LEN))
 
 	var/turf/T = get_turf(src)
 

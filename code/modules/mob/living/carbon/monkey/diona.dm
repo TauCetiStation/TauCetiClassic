@@ -269,4 +269,4 @@
 	if(!message || stat)
 		return
 
-	..(message, speaking, verb, null, null, message_range, null)
+	..(message, speaking, verb, null, null, message_range, null, sanitize = 0)

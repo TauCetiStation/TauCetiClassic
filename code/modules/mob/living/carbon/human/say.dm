@@ -134,7 +134,7 @@
 		speech_sound = sound('sound/voice/shriek1.ogg')
 		sound_vol = 50
 
-	..(message, speaking, verb, alt_name, italics, message_range, used_radios, speech_sound, sound_vol)	//ohgod we should really be passing a datum here.
+	..(message, speaking, verb, alt_name, italics, message_range, used_radios, speech_sound, sound_vol, sanitize = 0)	//ohgod we should really be passing a datum here.
 
 /mob/living/carbon/human/say_understands(var/mob/other,var/datum/language/speaking = null)
 

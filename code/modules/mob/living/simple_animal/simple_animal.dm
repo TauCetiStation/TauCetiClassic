@@ -492,4 +492,4 @@
 
 	message = capitalize(trim_left(message))
 
-	..(message, null, verb)
+	..(message, null, verb, sanitize = 0)
