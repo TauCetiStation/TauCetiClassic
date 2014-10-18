@@ -5,7 +5,7 @@
 	icon_state = "robot"
 	maxHealth = 200
 	health = 200
-	
+
 	var/sight_mode = 0
 	var/custom_name = ""
 	var/custom_sprite = 0 //Due to all the sprites involved, a var for our custom borgs may be best
@@ -182,6 +182,7 @@
 			module_sprites["Basic"] = "robot_old"
 			module_sprites["Android"] = "droid"
 			module_sprites["Default"] = "robot"
+			module_sprites["Acheron"] = "mechoid-Standard"
 
 		if("Service")
 			tc_borg = 0
@@ -191,6 +192,7 @@
 			module_sprites["Bro"] = "Brobot"
 			module_sprites["Rich"] = "maximillion"
 			module_sprites["Default"] = "Service2"
+			module_sprites["Acheron"] = "mechoid-Service"
 
 		if("Science")
 			tc_borg = 1
@@ -200,6 +202,7 @@
 				camera.network.Add("Science")
 			module_sprites["Toxin"] = "toxbot"
 			module_sprites["Xenobio"] = "xenobot"
+			module_sprites["Acheron"] = "mechoid-Science"
 
 		if("Miner")
 			tc_borg = 0
@@ -210,6 +213,7 @@
 			module_sprites["Basic"] = "Miner_old"
 			module_sprites["Advanced Droid"] = "droid-miner"
 			module_sprites["Treadhead"] = "Miner"
+			module_sprites["Acheron"] = "mechoid-Miner"
 
 		if("Medical")
 			tc_borg = 0
@@ -221,6 +225,7 @@
 			module_sprites["Advanced Droid"] = "droid-medical"
 			module_sprites["Needles"] = "medicalrobot"
 			module_sprites["Standard"] = "surgeon"
+			module_sprites["Acheron"] = "mechoid-Medical"
 
 		if("Security")
 			tc_borg = 0
@@ -230,6 +235,7 @@
 			module_sprites["Red Knight"] = "Security"
 			module_sprites["Black Knight"] = "securityrobot"
 			module_sprites["Bloodhound"] = "bloodhound"
+			module_sprites["Acheron"] = "mechoid-Security"
 
 		if("Engineering")
 			tc_borg = 0
@@ -241,6 +247,7 @@
 			module_sprites["Antique"] = "engineerrobot"
 			module_sprites["Landmate"] = "landmate"
 			module_sprites["Custom"] = "custom_astra_t3"
+			module_sprites["Acheron"] = "mechoid-Engineering"
 
 		if("Janitor")
 			tc_borg = 0
@@ -248,12 +255,15 @@
 			module_sprites["Basic"] = "JanBot2"
 			module_sprites["Mopbot"]  = "janitorrobot"
 			module_sprites["Mop Gear Rex"] = "mopgearrex"
+			module_sprites["Acheron"] = "mechoid-Janitor"
 
 		if("Combat")
 			tc_borg = 0
 			module = new /obj/item/weapon/robot_module/combat(src)
 			module_sprites["Combat Android"] = "droid-combat"
+			module_sprites["Acheron"] = "mechoid-Combat"
 			module.channels = list("Security" = 1)
+
 
 
 	if(tc_borg)
@@ -1033,6 +1043,14 @@
 			overlays += "ov-[icon_state] +c"
 		else
 			overlays += "ov-[icon_state] -c"
+
+	else if (opened && (icon_state == "mechoid-Standard" || icon_state == "mechoid-Service" || icon_state == "mechoid-Science" || icon_state == "mechoid-Miner" || icon_state == "mechoid-Medical" || icon_state == "mechoid-Engineering" || icon_state == "mechoid-Security" || icon_state == "mechoid-Janitor"  || icon_state == "mechoid-Combat" ) )
+		if(wiresexposed)
+			overlays += "mechoid-open+w"
+		else if(cell)
+			overlays += "mechoid-open+c"
+		else
+			overlays += "mechoid-open-c"
 	else if(opened)
 		if(wiresexposed)
 			overlays += "ov-openpanel +w"
