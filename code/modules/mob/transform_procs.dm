@@ -380,7 +380,7 @@
 		return 1 //Parrots are no longer unfinished! -Nodrak
 
 	//Not in here? Must be untested!
-	return 0
+	return 1
 
 
 
