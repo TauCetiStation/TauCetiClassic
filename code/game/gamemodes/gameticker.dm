@@ -271,6 +271,7 @@ var/global/datum/controller/gameticker/ticker
 
 	proc/create_characters()
 		for(var/mob/new_player/player in player_list)
+			sleep(1)
 			if(player.ready && player.mind)
 				if(player.mind.assigned_role=="AI")
 					player.close_spawn_windows()

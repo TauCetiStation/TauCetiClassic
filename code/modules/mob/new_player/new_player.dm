@@ -423,8 +423,8 @@
 
 		// And uncomment this, too.
 		new_character.dna.UpdateSE()
-
-		new_character.key = key		//Manually transfer the key to log them in
+		if(key)
+			new_character.key = key		//Manually transfer the key to log them in
 
 		return new_character
 
