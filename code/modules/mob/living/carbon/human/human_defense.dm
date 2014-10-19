@@ -128,12 +128,13 @@ emp_act
 	if(delta < 10)
 		P.sharp = 0
 		P.embed = 0
-	if(P:stoping_power)
-		var/force =  (armor/P.damage)*100
-		if (force <= 60 && force > 40)
-			apply_effects(P:stoping_power/2,P:stoping_power/2,0,0,P:stoping_power/2,0,0,armor)
-		else if(force <= 40)
-			apply_effects(P:stoping_power,P:stoping_power,0,0,P:stoping_power,0,0,armor)
+	if(istype(P, /obj/item/projectile/bullet))
+		if(P:stoping_power)
+			var/force =  (armor/P.damage)*100
+			if (force <= 60 && force > 40)
+				apply_effects(P:stoping_power/2,P:stoping_power/2,0,0,P:stoping_power/2,0,0,armor)
+			else if(force <= 40)
+				apply_effects(P:stoping_power,P:stoping_power,0,0,P:stoping_power,0,0,armor)
 
 //Shit end here
 	if((P.embed && prob(20 + max(P.damage - armor, -10))) && P.damage_type == BRUTE)
