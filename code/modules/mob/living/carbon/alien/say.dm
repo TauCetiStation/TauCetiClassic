@@ -27,7 +27,10 @@
 	if (!message)
 		return
 
-	var/message_a = sanitize_plus_chat(say_quote(message))
+	//var/message_a = sanitize_plus_chat(say_quote(message))
+	//на бэй опять рефакторят, нужно обновить эту часть кода. А пока, так
+	var/message_a = "<span class='say_quote'>hisses,</span> \"<span class='body'>[sanitize_plus_chat(message)]</span>\""
+
 	var/rendered = "<i><span class='game say'>Hivemind, <span class='name'>[name]</span> <span class='message'>[message_a]</span></span></i>"
 	for (var/mob/living/S in player_list)
 		if(!S.stat)
@@ -50,16 +53,18 @@
 	if (length(heard))
 		var/message_b
 
-		message_b = "hsssss"
-		message_b = say_quote(message_b)
-		message_b = "<i>[message_b]</i>"
+		//message_b = "hsssss"
+		//message_b = say_quote(message_b)
+		message_b = "<span class='say_quote'>hisses,</span> \"<span class='body'>hsssss</span>\""
 
+		message_b = "<i>[message_b]</i>"
 		rendered = "<i><span class='game say'><span class='name'>[voice_name]</span> <span class='message'>[message_b]</span></span></i>"
 
 		for (var/mob/M in heard)
 			M.show_message(rendered, 2)
 
-	message = say_quote(message)
+	//message = say_quote(message)
+	message = "<span class='say_quote'>hisses,</span> \"<span class='body'>[message]</span>\""
 
 	rendered = "<i><span class='game say'>Hivemind, <span class='name'>[name]</span> <span class='message'>[message_a]</span></span></i>"
 

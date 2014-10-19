@@ -60,7 +60,9 @@
 	if (!message)
 		return
 
-	var/message_a = say_quote(message)
+	//var/message_a = say_quote(message)
+	//проблемка как и у алиенов, мержить/обновлять
+	var/message_a = "<span class='say_quote'>says,</span> \"<span class='body'>[message]</span>\""
 	var/rendered = "<font color=\"#EE4000\"><i><span class='game say'>Blob Telepathy, <span class='name'>[name]</span> <span class='message'>[message_a]</span></span></i></font>"
 
 	for (var/mob/M in mob_list)
