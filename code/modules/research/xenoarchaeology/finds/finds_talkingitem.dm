@@ -92,6 +92,7 @@
 		text=cap
 	var/q = 0
 	msg+=text
+	//TODO:CYRILLIC
 	if(msg=="What" | msg == "Who" | msg == "How" | msg == "Why" | msg == "Are")
 		q=1
 
@@ -121,6 +122,7 @@
 		if(M.stat == 2 &&  M.client.prefs.toggles & CHAT_GHOSTEARS)
 			listening|=M
 
+	msg = sanitize_plus_chat(msg)
 	for(var/mob/M in listening)
 		M << "\icon[holder_atom] <b>[holder_atom]</b> reverberates, \blue\"[msg]\""
 	last_talk_time = world.time
