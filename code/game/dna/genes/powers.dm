@@ -206,6 +206,8 @@
 
 	activate(var/mob/M, var/connected, var/flags)
 		..(M,connected,flags)
+		if(M.client)
+			message_admins("[M.name] ([M.ckey]) is now <span class='warning'>Hulk</span>")
 		M.verbs += /mob/living/carbon/human/proc/hulk_jump
 		M.verbs += /mob/living/carbon/human/proc/hulk_dash
 		M.verbs += /mob/living/carbon/human/proc/hulk_smash
