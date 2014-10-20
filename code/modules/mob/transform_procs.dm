@@ -39,8 +39,8 @@
 	for(var/datum/disease/D in O.viruses)
 		D.affected_mob = O
 
-	if (client)
-		client.mob = O
+	//if (client) //#Z2.1 fix Players can't get back in the body,
+	//	client.mob = O//when we transform them back to human using genetics. So they forever ghosts, if someone un_monkeyize them.
 	if(mind)
 		mind.transfer_to(O)
 

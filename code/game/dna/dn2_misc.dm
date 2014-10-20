@@ -71,6 +71,9 @@
 				tile.break_tile()
 		for(var/mob/living/M in usr.loc.contents)
 			if(M != usr)
+				usr.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [M.name] ([M.ckey]) with hulk_jump</font>"
+				M.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [usr.name] ([usr.ckey]) with hulk_jump</font>"
+				msg_admin_attack("[key_name(usr)] attacked [key_name(M)] with hulk_jump")
 				var/mob/living/carbon/human/H = M
 				if(istype(H,/mob/living/carbon/human/))
 					playsound(H.loc, 'sound/weapons/tablehit1.ogg', 50, 1)
@@ -233,6 +236,9 @@
 				usr.density = 0
 				for(var/mob/living/M in T.contents)
 					if(!M.lying)
+						usr.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [M.name] ([M.ckey]) with hulk_dash</font>"
+						M.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [usr.name] ([usr.ckey]) with hulk_dash</font>"
+						msg_admin_attack("[key_name(usr)] attacked [key_name(M)] with hulk_dash")
 						var/turf/target = get_turf(get_step(usr,cur_dir))
 						hit = 1
 						playsound(M.loc, 'sound/weapons/tablehit1.ogg', 50, 1)
@@ -354,6 +360,9 @@
 			W.take_damage(50)
 		for(var/mob/living/M in T.contents)
 			if(M != usr)
+				usr.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [M.name] ([M.ckey]) with hulk_smash</font>"
+				M.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [usr.name] ([usr.ckey]) with hulk_smash</font>"
+				msg_admin_attack("[key_name(usr)] attacked [key_name(M)] with hulk_smash")
 				var/mob/living/carbon/human/H = M
 				if(istype(H,/mob/living/carbon/human/))
 					playsound(H.loc, 'sound/weapons/tablehit1.ogg', 50, 1)
