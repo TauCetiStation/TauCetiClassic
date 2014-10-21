@@ -25,15 +25,16 @@
 		src.last_move = get_dir(A, src.loc)
 	return
 
+/*
 /atom/movable/Del()
 	if(isnull(gc_destroyed) && loc)
 		testing("GC: -- [type] was deleted via del() rather than qdel() --")
-//	else if(isnull(gc_destroyed))
-//		testing("GC: [type] was deleted via GC without qdel()") //Not really a huge issue but from now on, please qdel()
-//	else
-//		testing("GC: [type] was deleted via GC with qdel()")
+	else if(isnull(gc_destroyed))
+		testing("GC: [type] was deleted via GC without qdel()") //Not really a huge issue but from now on, please qdel()
+	else
+		testing("GC: [type] was deleted via GC with qdel()")
 	..()
-
+*/
 /atom/movable/Destroy()
 	if(reagents)
 		qdel(reagents)
