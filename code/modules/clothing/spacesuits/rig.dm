@@ -423,7 +423,7 @@
 		usr << "This helmet has a built-in camera. It's [camera ? "" : "in"]active."
 
 /obj/item/clothing/suit/space/rig/syndi
-	icon_state = "rig-syndie-human"
+	icon_state = "rig-syndie"
 	name = "blood-red hardsuit"
 	desc = "An advanced suit that protects against injuries during special operations. Property of Gorlex Marauders."
 	item_state = "syndie_hardsuit"
