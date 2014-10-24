@@ -24,7 +24,7 @@
 /obj/item/weapon/storage/backpack/alt
 	icon = 'tauceti/items/clothing/backpacks/backpacks.dmi'
 	tc_custom = 'tauceti/items/clothing/backpacks/backpacks.dmi'
-	icon_state = "backpack_alt"
+	icon_state = "backpack-alt"
 	item_state = "backpack"
 
 /obj/item/weapon/storage/backpack/backpack_vir
