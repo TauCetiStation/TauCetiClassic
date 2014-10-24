@@ -313,17 +313,33 @@ proc/trigger_armed_response_team(var/force = 0)
 	equip_to_slot_or_del(new /obj/item/weapon/storage/box/engineer(src), slot_in_backpack)
 	equip_to_slot_or_del(new /obj/item/weapon/storage/firstaid/regular(src), slot_in_backpack)
 */
-	var/obj/item/weapon/card/id/W = new(src)
-	W.assignment = "Emergency Response Team[leader_selected ? " Leader" : ""]"
-	W.registered_name = real_name
-	W.name = "[real_name]'s ID Card ([W.assignment])"
-	W.icon = "tauceti/icons/obj/objects.dmi"
-	W.icon_state = "ert"
-	W.access = get_all_accesses()
-	W.access += get_all_centcom_access()
-	equip_to_slot_or_del(W, slot_wear_id)
+	if(leader_selected)
+		var/obj/item/weapon/card/id/ert/W = new(src)
+		W.assignment = "Emergency Response Team Leader"
+		W.registered_name = real_name
+		W.name = "[real_name]'s ID Card ([W.assignment])"
+		W.icon_state = "ert-leader"
+		equip_to_slot_or_del(W, slot_wear_id)
+	else
+		var/obj/item/weapon/card/id/ert/W = new(src)
+		W.assignment = "Emergency Response Team"
+		W.registered_name = real_name
+		W.name = "[real_name]'s ID Card ([W.assignment])"
+		W.icon_state = "ert"
+		equip_to_slot_or_del(W, slot_wear_id)
 
 	return 1
+
+/obj/item/weapon/card/id/ert
+	name = "\improper CentCom. ID"
+	icon = 'tauceti/icons/obj/objects.dmi'
+	icon_state = "ert"
+	registered_name = "Central Command"
+	assignment = "Emergency Response Team"
+	New()
+		access = get_all_accesses()
+		access += get_all_centcom_access()
+		..()
 
 //debug verb (That is horribly coded, LEAVE THIS OFF UNLESS PRIVATELY TESTING. Seriously.
 /*client/verb/ResponseTeam()
