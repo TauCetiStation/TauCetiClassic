@@ -33,7 +33,7 @@
 	var/datum/effect/effect/system/spark_spread/S = new /datum/effect/effect/system/spark_spread
 	S.set_up(4, 1, src)
 	S.start()
-	var/mob/living/silicon/robot/R = new /mob/living/silicon/robot(T,1)
+	var/mob/living/silicon/robot/R = new /mob/living/silicon/mob/living/silicon/robot/syndicate(T)
 	R.key = C.key
 	ticker.mode.syndicates += R.mind
 	ticker.mode.update_synd_icons_added(R.mind)
