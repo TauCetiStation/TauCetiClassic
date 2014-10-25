@@ -54,7 +54,7 @@
 	icon_state = "bulletproof"
 	item_state = "armor"
 	blood_overlay_type = "armor"
-	armor = list(melee = 10, bullet = 45, laser = 5, energy = 10, bomb = 0, bio = 0, rad = 0)
+	armor = list(melee = 10, bullet = 40, laser = 5, energy = 10, bomb = 0, bio = 0, rad = 0)
 	siemens_coefficient = 0.7
 
 /obj/item/clothing/suit/armor/laserproof
