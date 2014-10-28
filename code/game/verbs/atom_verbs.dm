@@ -25,7 +25,11 @@
 	if (!tile)
 		return
 
-	var/P = new /obj/effect/decal/point(tile)
+	var/obj/P = new /obj/effect/decal/point(tile)
+	if(this.pixel_x)
+		P.pixel_x = this.pixel_x
+	if(this.pixel_y)
+		P.pixel_y = this.pixel_y
 	spawn (20)
 		if(P)	del(P)
 
