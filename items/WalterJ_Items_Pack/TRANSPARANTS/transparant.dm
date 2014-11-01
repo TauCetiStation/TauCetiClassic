@@ -9,7 +9,7 @@
 	force = 8
 	w_class = 4.0
 	throwforce = 5
-	flags = NOSHIELD
+//	flags = NOSHIELD
 		//var/protest_text
  		//	var/protest_text_lenght = 100
  	//var/image/inhand_blood_overlay
