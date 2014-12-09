@@ -8,6 +8,9 @@
 
 	var/list/Params = file2list("config/donatinfo.txt")
 
+	if(!Params)
+		return
+
 	for(var/t in Params)
 		if(!t)	continue
 
