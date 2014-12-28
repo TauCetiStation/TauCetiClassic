@@ -4,6 +4,12 @@
 ## Unhash this if you want see the russian text in some places, like disease and other
 #RUS_LANGUAGE
 
+## Whitelist for new players
+#SERVERWHITELIST
+
+## Whitelist for new players, message
+#SERVERWHITELIST_MESSAGE Sorry, you can't play on this server, because we use a whitelist.<br/>Please, visit another our server.<br/>For more information visit www.tauceti.ru
+
 ## Alert levels
 ALERT_GREEN All threats to the station have passed. Security may not have weapons visible, privacy laws are once again fully enforced.
 ALERT_BLUE_UPTO The station has received reliable information about possible hostile activity on the station. Security staff may have weapons visible, random searches are permitted.

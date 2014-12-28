@@ -1,0 +1,51 @@
+//see also config.serverwhitelist
+
+//return 1, if player in server db, or 0
+proc/check_if_a_new_player(var/key)
+	if(!establish_db_connection())
+		world.log << "Ban database connection failure. Key [key] not checked"
+		diary << "Ban database connection failure. Key [key] not checked"
+		return 1
+
+	key = ckey(key)
+	if(!key)
+		return 0
+
+	var/DBQuery/query = dbcon.NewQuery("SELECT * FROM erro_player WHERE ckey = '[key]'")
+	if(!query.Execute())
+		var/err = query.ErrorMsg()
+		log_game("SQL ERROR, WHITELIST. Error : \[[err]\]\n")
+		return 0
+
+	if(query.RowCount())
+		return 1
+
+	return 0
+
+/client/proc/gsw_add()
+	set category = "Server"
+	set name = "Server whitelist"
+	if(!check_rights(R_PERMISSIONS))	return
+
+	if(!config.serverwhitelist)
+		return
+
+	establish_db_connection()
+	if(!dbcon.IsConnected())
+		usr << "\red Failed to establish database connection"
+		return
+
+	var/ckey = ckey(copytext(input(usr, "", "Player ckey") as text, 1, MAX_MESSAGE_LEN))
+
+	if(check_if_a_new_player(ckey))
+		src << "\red Player already in whitelist"
+		return
+
+	var/DBQuery/query_insert = dbcon.NewQuery("INSERT INTO erro_player (ckey) VALUES ('[ckey]')")
+	if(!query_insert.Execute())
+		var/err = query_insert.ErrorMsg()
+		log_game("SQL ERROR, WHITELIST. Error : \[[err]\]\n")
+		return
+
+	message_admins("[key_name_admin(src)] add [ckey] to server whitelist", 1)
+	log_admin("[key_name_admin(src)] add [ckey] to server whitelist", 1)
