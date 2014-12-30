@@ -1510,6 +1510,7 @@
 #include "tauceti\modules\_anomaly\anomalies.dm"
 #include "tauceti\modules\_anomaly\anomaly_bluespace.dm"
 #include "tauceti\modules\_anomaly\anomaly_flux.dm"
+#include "tauceti\modules\_anomaly\anomaly_frost.dm"
 #include "tauceti\modules\_anomaly\anomaly_grav.dm"
 #include "tauceti\modules\_anomaly\anomaly_pyro.dm"
 #include "tauceti\modules\_anomaly\anomaly_vortex.dm"
