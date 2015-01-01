@@ -31,7 +31,7 @@
 "E" = (/obj/machinery/optable,/turf/unsimulated/floor{icon_state = "floor"},/area/centcom)
 "F" = (/obj/machinery/computer/operating,/turf/unsimulated/floor{icon_state = "floor"},/area/centcom)
 "G" = (/mob/living/carbon/monkey/tajara,/turf/unsimulated/floor{icon_state = "floor"},/area/centcom)
-"H" = (/obj/effect/landmark/start,/turf/unsimulated/floor,/area/start)
+"H" = (/turf/unsimulated/floor,/area/start)
 "I" = (/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 8},/obj/structure/grille,/turf/unsimulated/floor,/area/centcom)
 "J" = (/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced,/obj/structure/grille,/turf/unsimulated/floor,/area/centcom)
 "K" = (/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 4},/obj/structure/grille,/turf/unsimulated/floor,/area/centcom)
