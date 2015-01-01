@@ -41,7 +41,7 @@ proc/check_if_a_new_player(var/key)
 		src << "\red Player already in whitelist"
 		return
 
-	var/DBQuery/query_insert = dbcon.NewQuery("INSERT INTO erro_player (ckey) VALUES ('[ckey]')")
+	var/DBQuery/query_insert = dbcon.NewQuery("INSERT INTO erro_player (ckey, firstseen) VALUES ('[ckey], Now()')")
 	if(!query_insert.Execute())
 		var/err = query_insert.ErrorMsg()
 		log_game("SQL ERROR, WHITELIST. Error : \[[err]\]\n")
