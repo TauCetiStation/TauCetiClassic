@@ -157,7 +157,7 @@ var/list/admin_verbs_debug = list(
 	/client/proc/reload_mentors,
 	/client/proc/restart_controller,
 	/client/proc/enable_debug_verbs,
-	/client/proc/callproc,
+	/*/client/proc/callproc,*/
 	/client/proc/toggledebuglogs,
 	/client/proc/SDQL_query,
 	/client/proc/SDQL2_query
@@ -168,6 +168,7 @@ var/list/admin_verbs_possess = list(
 	)
 var/list/admin_verbs_permissions = list(
 	/client/proc/edit_admin_permissions,
+	/client/proc/gsw_add,
 	/client/proc/library_debug_cat,
 	/client/proc/library_debug_remove,
 	/client/proc/library_debug_read
@@ -210,6 +211,7 @@ var/list/admin_verbs_hideable = list(
 	/client/proc/get_alienwhitelist,
 	/client/proc/add_to_whitelist,
 	/client/proc/add_to_alienwhitelist,
+	/client/proc/gsw_add,
 	/datum/admins/proc/toggle_aliens,
 	/datum/admins/proc/toggle_space_ninja,
 	/client/proc/send_space_ninja,
@@ -234,7 +236,7 @@ var/list/admin_verbs_hideable = list(
 	/datum/admins/proc/adjump,
 	/client/proc/restart_controller,
 	/client/proc/cmd_admin_list_open_jobs,
-	/client/proc/callproc,
+	/*/client/proc/callproc,*/
 	/client/proc/Debug2,
 	/client/proc/reload_admins,
 	/client/proc/kill_air,

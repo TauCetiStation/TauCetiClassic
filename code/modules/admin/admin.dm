@@ -605,6 +605,7 @@ var/global/floorIsLava = 0
 			<B>'Random' Events</B><BR>
 			<BR>
 			<A href='?src=\ref[src];secretsfun=gravity'>Toggle station artificial gravity</A><BR>
+			<A href='?src=\ref[src];secretsfun=frost'>!Freeze the station!</A><BR>
 			<A href='?src=\ref[src];secretsfun=wave'>Spawn a wave of meteors (aka lagocolyptic shower)</A><BR>
 			<A href='?src=\ref[src];secretsfun=bluespaceanomaly'>Spawn a bluespace anomaly</A><BR>
 			<A href='?src=\ref[src];secretsfun=energeticflux'>Spawn a energetic flux anomaly</A><BR>

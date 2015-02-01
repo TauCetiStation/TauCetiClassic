@@ -2142,6 +2142,13 @@
 				message_admins("[key_name_admin(usr)] has triggered an energetic flux")
 				new /datum/event/anomaly_flux()
 
+			if("frost")
+				feedback_inc("admin_secrets_fun_used",1)
+				feedback_add_details("admin_secrets_fun_used","FROST")
+				message_admins("[key_name_admin(usr)] freezed the station")
+				var/datum/anomaly_frost/FROST = new /datum/anomaly_frost()
+				FROST.set_params(usr)
+
 			if("pyroanomalies")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","PYRO")

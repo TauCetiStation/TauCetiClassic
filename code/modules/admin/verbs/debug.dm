@@ -31,6 +31,8 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 	if(!check_rights(R_PERMISSIONS)) return
 
+	if(1) return	//TODO: config option
+
 	spawn(0)
 		var/target = null
 		var/targetselected = 0

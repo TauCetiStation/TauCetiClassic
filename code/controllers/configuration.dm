@@ -60,6 +60,8 @@
 	var/respawn = 1
 	var/guest_jobban = 1
 	var/usewhitelist = 0
+	var/serverwhitelist = 0
+	var/serverwhitelist_message = "Sorry, you can't play on this server, because we use a whitelist.<br/>Please, visit another our server."
 	var/mods_are_mentors = 0
 	var/kick_inactive = 0				//force disconnect for inactive players
 	var/load_jobs_from_txt = 0
@@ -347,6 +349,12 @@
 
 				if ("usewhitelist")
 					config.usewhitelist = 1
+
+				if ("serverwhitelist")
+					config.serverwhitelist = 1
+
+				if("serverwhitelist_message")
+					config.serverwhitelist_message = value
 
 				if ("feature_object_spell_system")
 					config.feature_object_spell_system = 1
