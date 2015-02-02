@@ -46,7 +46,7 @@
 		qdel(T)
 
 	O.loc = user.loc
-	O.name = "monkey ([copytext(md5(user.real_name), 2, 6)])"
+	O.name = "monkey ([copytext(md5(user.real_name), 2, 5)])"
 	O.setToxLoss(user.getToxLoss())
 	O.adjustBruteLoss(user.getBruteLoss())
 	O.setOxyLoss(user.getOxyLoss())
