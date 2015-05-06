@@ -59,6 +59,10 @@
 				M.updatehealth()
 				occupant_message("\red You squeeze [target] with [src.name]. Something cracks.")
 				chassis.visible_message("\red [chassis] squeezes [target].")
+
+				chassis.occupant.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [M.name] ([M.ckey]) with [name]</font>"
+				M.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [chassis.occupant.name] ([chassis.occupant.ckey]) with [name]</font>"
+				msg_admin_attack("[key_name(chassis.occupant)] attacked [key_name(M)] with [name]")
 			else
 				step_away(M,chassis)
 				occupant_message("You push [target] out of the way.")
@@ -118,6 +122,12 @@
 								if(get_dir(chassis,ore)&chassis.dir)
 									ore.Move(ore_box)
 				else if(target.loc == C)
+					if(istype(target,/mob/living))
+						var/mob/living/M = target
+						chassis.occupant.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [M.name] ([M.ckey]) with [name]</font>"
+						M.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [chassis.occupant.name] ([chassis.occupant.ckey]) with [name]</font>"
+						msg_admin_attack("[key_name(chassis.occupant)] attacked [key_name(M)] with [name]")
+					
 					log_message("Drilled through [target]")
 					target.ex_act(2)
 		return 1
@@ -175,6 +185,12 @@
 							for(var/obj/item/weapon/ore/ore in range(target,1))
 								ore.Move(ore_box)
 				else if(target.loc == C)
+					if(istype(target,/mob/living))
+						var/mob/living/M = target
+						chassis.occupant.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [M.name] ([M.ckey]) with [name]</font>"
+						M.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [chassis.occupant.name] ([chassis.occupant.ckey]) with [name]</font>"
+						msg_admin_attack("[key_name(chassis.occupant)] attacked [key_name(M)] with [name]")
+					
 					log_message("Drilled through [target]")
 					target.ex_act(2)
 		return 1
