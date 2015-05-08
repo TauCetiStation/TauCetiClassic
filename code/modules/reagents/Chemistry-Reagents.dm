@@ -1895,6 +1895,20 @@ datum
 				..()
 				return
 
+		toxin/mutetoxin //the new zombie powder. @ TG Port
+			name = "Mute Toxin"
+			id = "mutetoxin"
+			description = "A toxin that temporarily paralyzes the vocal cords."
+			color = "#F0F8FF" // rgb: 240, 248, 255
+			custom_metabolism = 0.4
+			toxpwr = 0
+
+			on_mob_life(var/mob/living/M as mob)
+				if(!M) M = holder.my_atom
+				M.silent = max(M.silent, 3)
+				..()
+				return
+
 		toxin/acid
 			name = "Sulphuric acid"
 			id = "sacid"

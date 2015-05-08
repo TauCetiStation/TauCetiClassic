@@ -1,4 +1,6 @@
 /mob/living/carbon/human/proc/monkeyize()
+	if (notransform)
+		return
 	if (monkeyizing)
 		return
 	for(var/obj/item/W in src)

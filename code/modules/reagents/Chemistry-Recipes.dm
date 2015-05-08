@@ -472,6 +472,13 @@ datum
 			required_reagents = list("ethanol" = 1, "chlorine" = 3, "water" = 1)
 			result_amount = 1
 
+		mutetoxin //i'll just fit this in here snugly between other unfun chemicals :v @ TG Port
+			name = "Mute toxin"
+			id = "mutetoxin"
+			result = "mutetoxin"
+			required_reagents = list("uranium" = 2, "water" = 1, "carbon" = 1)
+			result_amount = 2
+
 		potassium_chloride
 			name = "Potassium Chloride"
 			id = "potassium_chloride"

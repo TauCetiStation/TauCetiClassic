@@ -58,6 +58,7 @@
 	var/next_move = null
 	var/monkeyizing = null	//Carbon
 	var/other = 0.0
+	var/notransform = null	//Carbon
 	var/hand = null
 	var/eye_blind = null	//Carbon
 	var/eye_blurry = null	//Carbon
