@@ -82,7 +82,7 @@
 	origin_tech = null
 	vision_flags = SEE_MOBS
 	darkness_view = 3
-	var/vision = 0
+	var/vision = 1
 	//invis_view = 2
 	//invisa_view = 2
 	//flash_protect = 2
@@ -98,7 +98,7 @@
 	set name = "Toggle Vision"
 	set src in usr
 
-	if(usr.canmove && !usr.stat && !usr.restrained())
+	if(!usr.stat)
 		if(src.vision)
 			src.vision = !src.vision
 			//usr << ""
