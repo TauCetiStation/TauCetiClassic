@@ -1033,6 +1033,7 @@
 		src.add_fingerprint(H)
 		src.forceMove(src.loc)
 		src.log_append_to_last("[H] moved in as pilot.")
+		log_admin("[key_name(H)] has moved in [src.type] with name [src.name]")
 		src.icon_state = src.reset_icon()
 		dir = dir_in
 		playsound(src, 'sound/machines/windowdoor.ogg', 50, 1)
@@ -1095,6 +1096,7 @@
 		src.icon_state = src.reset_icon()
 		dir = dir_in
 		src.log_message("[mmi_as_oc] moved in as pilot.")
+		log_admin("[key_name(mmi_as_oc)] has moved in [src.type] with name [src.name] as MMI brain by [key_name(user)]")
 		if(!hasInternalDamage())
 			src.occupant << sound('sound/mecha/nominal.ogg',volume=50)
 		return 1
@@ -1166,6 +1168,7 @@
 			occupant << "You were blown out of the mech!"
 	*/
 		src.log_message("[mob_container] moved out.")
+		log_admin("[key_name(mob_container)] has moved out of [src.type] with name [src.name]")
 		occupant.reset_view()
 		/*
 		if(src.occupant.client)
