@@ -43,6 +43,11 @@
 		opacity = 0
 		health = 120
 
+/obj/effect/alien/resin/wall/shadowling
+	name = "chrysalis wall"
+	desc = "Some sort of purple substance in an egglike shape. It pulses and throbs from within and seems impenetrable."
+	health = INFINITY
+
 /obj/effect/alien/resin/New()
 	..()
 	var/turf/T = get_turf(src)

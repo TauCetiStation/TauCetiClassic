@@ -21,4 +21,7 @@
 				var/datum/game_mode/mutiny/mode = get_mutiny_mode()
 				if(mode)
 					mode.update_all_icons()
+			if("shadowlings")
+				if((mind in ticker.mode.thralls) || (src.mind in ticker.mode:shadows))
+					ticker.mode.update_shadows_icons_added(src.mind)
 	return .

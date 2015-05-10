@@ -842,6 +842,8 @@
 		var/obj/item/clothing/glasses/welding/W = src.glasses
 		if(!W.up)
 			number += 2
+	if(istype(src.glasses, /obj/item/clothing/glasses/night/shadowling))
+		number -= 1
 	return number
 
 

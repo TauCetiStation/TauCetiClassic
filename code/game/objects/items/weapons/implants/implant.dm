@@ -334,7 +334,7 @@ the implant may become unstable and either pre-maturely inject the subject or si
 	implanted(mob/M)
 		if(!istype(M, /mob/living/carbon/human))	return 0
 		var/mob/living/carbon/human/H = M
-		if(H.mind in ticker.mode.head_revolutionaries)
+		if((H.mind in ticker.mode.head_revolutionaries) || is_shadow_or_thrall(H))
 			H.visible_message("[H] seems to resist the implant!", "You feel the corporate tendrils of Nanotrasen try to invade your mind!")
 			return 0
 		else if(H.mind in ticker.mode:revolutionaries)

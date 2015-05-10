@@ -670,6 +670,7 @@ var/list/liftable_structures = list(\
 #define BE_PLANT		4096
 #define BE_MEME			8192
 #define BE_MUTINEER   	16384
+#define BE_SHADOWLING	32768
 
 var/list/be_special_flags = list(
 	"Traitor" = BE_TRAITOR,
@@ -686,7 +687,8 @@ var/list/be_special_flags = list(
 	"Raider" = BE_RAIDER,
 	"Diona" = BE_PLANT,
 	"Meme" = BE_MEME,
-	"Mutineer" = BE_MUTINEER
+	"Mutineer" = BE_MUTINEER,
+	"Shadowling" = BE_SHADOWLING
 	)
 
 #define AGE_MIN 17			//youngest a character can be
@@ -759,6 +761,8 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define REQUIRE_LIGHT 8192
 
 #define IS_SYNTHETIC 16384
+
+#define RAD_IMMUNE 32768
 
 //Language flags.
 #define WHITELISTED 1  		// Language is available if the speaker is whitelisted.

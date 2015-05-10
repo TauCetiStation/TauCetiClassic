@@ -275,6 +275,9 @@
 				gene.OnMobLife(src)
 
 		if (radiation)
+			if(species.flags & RAD_IMMUNE)
+				return
+
 			if (radiation > 100)
 				radiation = 100
 				if(!(species.flags & RAD_ABSORB))
@@ -1071,6 +1074,27 @@
 			else if (light_amount < 2) //heal in the dark
 				heal_overall_damage(1,1)
 
+		if(dna && dna.mutantrace == "shadowling")
+			var/light_amount = 0
+			nutrition = 450 //i aint never get hongry
+			if(isturf(loc))
+				var/turf/T = loc
+				var/area/A = T.loc
+				if(A)
+					if(A.lighting_use_dynamic)	light_amount = T.lighting_lumcount
+					else						light_amount =  10
+			if(light_amount > LIGHT_DAM_THRESHOLD) //Not complete blackness - they can live in very small light levels plus starlight
+				take_overall_damage(0,LIGHT_DAMAGE_TAKEN)
+				src << "<span class='userdanger'>The light burns you!</span>"
+				src << 'tauceti/sounds/weapon/sear.ogg'
+			else if (light_amount < LIGHT_HEAL_THRESHOLD) //heal in the dark
+				heal_overall_damage(5,5)
+				adjustToxLoss(-3)
+				adjustBrainLoss(-25) //gibbering shadowlings are hilarious but also bad to have
+				adjustCloneLoss(-1)
+				SetWeakened(0)
+				SetStunned(0)
+
 		//The fucking FAT mutation is the dumbest shit ever. It makes the code so difficult to work with
 		if(FAT in mutations)
 			if(overeatduration < 100)
@@ -1428,7 +1452,14 @@
 						if(!druggy)
 							see_invisible = SEE_INVISIBLE_MINIMUM
 				if(istype(G,/obj/item/clothing/glasses/night))
-					see_invisible = SEE_INVISIBLE_MINIMUM
+					if(istype(G,/obj/item/clothing/glasses/night/shadowling))
+						var/obj/item/clothing/glasses/night/shadowling/S = G
+						if(S.vision)
+							see_invisible = SEE_INVISIBLE_LIVING
+						else
+							see_invisible = SEE_INVISIBLE_MINIMUM
+					else
+						see_invisible = SEE_INVISIBLE_MINIMUM
 //					client.screen += global_hud.nvg
 
 	/* HUD shit goes here, as long as it doesn't modify sight flags */
@@ -1564,7 +1595,8 @@
 					client.screen += global_hud.darkMask
 
 			if(istype(glasses, /obj/item/clothing/glasses/meson) || istype(glasses, /obj/item/clothing/glasses/night) || istype(glasses, /obj/item/clothing/glasses/gglasses))
-				client.screen += global_hud.meson
+				if(!(istype(glasses, /obj/item/clothing/glasses/night/shadowling)))
+					client.screen += global_hud.meson
 
 			if(istype(glasses, /obj/item/clothing/glasses/thermal) )
 				client.screen += global_hud.thermal
