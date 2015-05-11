@@ -7,7 +7,7 @@
 	else
 		message = sanitize_plus(copytext(message, 1, MAX_MESSAGE_LEN))
 		if ((department_radio_keys[copytext(message, 1, 3)] == "binary") && (container && istype(container, /obj/item/device/mmi/posibrain)))
-			message = copytext(message, 3)
+			message = sanitize_plus_chat(copytext(message, 3))
 			message = trim(message)
 			robot_talk(message)
 			return
