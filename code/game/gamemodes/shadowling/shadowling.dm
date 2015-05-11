@@ -102,7 +102,7 @@ Made by Xhuis
 		shadows += shadow
 		antag_candidates -= shadow
 		modePlayer += shadow
-		shadow.special_role = "Shadowling"
+		shadow.special_role = "shadowling"
 		shadowlings--
 	return 1
 
@@ -125,7 +125,7 @@ Made by Xhuis
 	shadow.current << "<b>Currently, you are disguised as an employee aboard [world.name].</b>"
 	shadow.current << "<b>In your limited state, you have three abilities: Enthrall, Hatch, and Hivemind Commune.</b>"
 	shadow.current << "<b>Any other shadowlings are you allies. You must assist them as they shall assist you.</b>"
-	shadow.current << "<b>If you are new to shadowling, or want to read about abilities, check the wiki page at https://tgstation13.org/wiki/Shadowling</b><br>"
+	shadow.current << "<b>If you are new to shadowling, or want to read about abilities, check the wiki page at http://tauceti.ru/wiki/Shadowling</b><br>"
 
 
 /datum/game_mode/proc/process_shadow_objectives(var/datum/mind/shadow_mind)
@@ -154,7 +154,7 @@ Made by Xhuis
 	if (!istype(new_thrall_mind))
 		return 0
 	if(!(new_thrall_mind in thralls))
-		update_shadows_icons_added(new_thrall_mind)
+		update_all_shadows_icons()
 		thralls += new_thrall_mind
 		new_thrall_mind.current.attack_log += "\[[time_stamp()]\] <span class='danger'>Became a thrall</span>"
 		new_thrall_mind.memory += "<b>The Shadowlings' Objectives:</b> Ascend to your true form by use of the Ascendance ability. \
