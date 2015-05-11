@@ -1024,6 +1024,10 @@
 		return
 
 	var/say = input ("What do you wish to say")
+	if(!say)
+		return
+	else
+		say = sanitize(say)
 	var/mob/T = creatures[target]
 	if(mRemotetalk in T.mutations)
 		T.show_message("\blue You hear [src.real_name]'s voice: [say]")

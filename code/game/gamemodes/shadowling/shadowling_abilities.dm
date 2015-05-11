@@ -234,7 +234,7 @@
 			return
 		for(var/mob/M in mob_list)
 			if(is_shadow_or_thrall(M) || (M in dead_mob_list))
-				M << "<span class='shadowling'><b>\[Hive Chat\]</b><i> [usr.real_name]</i>: [text]</span>"
+				M << "<span class='shadowling'><b>\[Hive Chat\]</b><i> [usr.real_name]</i>: [sanitize(text)]</span>"
 
 
 
