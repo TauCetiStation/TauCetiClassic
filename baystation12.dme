@@ -72,6 +72,7 @@
 #define FILE_DIR "tauceti/icons/misc"
 #define FILE_DIR "tauceti/icons/mob"
 #define FILE_DIR "tauceti/icons/obj"
+#define FILE_DIR "tauceti/icons/obj/clothing"
 #define FILE_DIR "tauceti/icons/turf"
 #define FILE_DIR "tauceti/items"
 #define FILE_DIR "tauceti/items/cards"
