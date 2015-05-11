@@ -870,6 +870,7 @@ datum/mind
 						usr << "\blue The objectives for traitor [key] have been generated. You can edit them and anounce manually."
 
 		else if(href_list["shadowling"])
+			current.hud_updateflag |= (1 << SPECIALROLE_HUD)
 			switch(href_list["shadowling"])
 				if("clear")
 					current.spellremove(current)
@@ -894,7 +895,7 @@ datum/mind
 						usr << "<span class='warning'>This only works on humans!</span>"
 						return
 					ticker.mode.shadows += src
-					ticker.mode.update_shadows_icons_added(src)
+					ticker.mode.update_all_shadows_icons()
 					special_role = "shadowling"
 					current << "<span class='deadsay'><b>You notice a brightening around you. No, it isn't that. The shadows grow, darken, swirl. The darkness has a new welcome for you, and you realize with a \
 					start that you can't be human. No, you are a shadowling, a harbringer of the shadows! Your alien abilities have been unlocked from within, and you may both commune with your allies and use \
@@ -907,7 +908,7 @@ datum/mind
 						usr << "<span class='warning'>This only works on humans!</span>"
 						return
 					ticker.mode.add_thrall(src)
-					ticker.mode.update_shadows_icons_added(src)
+					ticker.mode.update_all_shadows_icons()
 					special_role = "thrall"
 					current << "<span class='deadsay'>All at once it becomes clear to you. Where others see darkness, you see an ally. You realize that the shadows are not dead and dark as one would think, but \
 					living, and breathing, and <b>eating</b>. Their children, the Shadowlings, are to be obeyed and protected at all costs.</span>"

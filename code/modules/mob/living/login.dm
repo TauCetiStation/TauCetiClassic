@@ -23,5 +23,5 @@
 					mode.update_all_icons()
 			if("shadowlings")
 				if((mind in ticker.mode.thralls) || (src.mind in ticker.mode:shadows))
-					ticker.mode.update_shadows_icons_added(src.mind)
+					ticker.mode.update_all_shadows_icons()
 	return .

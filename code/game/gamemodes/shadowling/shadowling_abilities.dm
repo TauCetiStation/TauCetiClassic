@@ -212,7 +212,7 @@
 		target << "<span class='deadsay'>You can communicate with the other enlightened ones by using the Hivemind Commune ability.</span>"
 		target.adjustOxyLoss(-200) //In case the shadowling was choking them out
 		ticker.mode.add_thrall(target.mind)
-		target.mind.special_role = "Thrall"
+		target.mind.special_role = "thrall"
 		//var/datum/mind/thrall_mind = target.mind
 		//thrall_mind.spell_list += new /obj/effect/proc_holder/spell/targeted/shadowling_hivemind //Lets thralls hive-chat
 
@@ -565,7 +565,7 @@ datum/reagent/shadowling_blindness_smoke/on_mob_life(var/mob/living/M as mob)
 		target << "<span class='deadsay'>You may not harm other thralls or the shadowlings. However, you do not need to obey other thralls.</span>"
 		target << "<span class='deadsay'>You can communicate with the other enlightened ones by using the Hivemind Commune ability.</span>"
 		ticker.mode.add_thrall(target.mind)
-		target.mind.special_role = "Thrall"
+		target.mind.special_role = "thrall"
 		target.spell_list += new /obj/effect/proc_holder/spell/targeted/shadowling_hivemind
 
 
