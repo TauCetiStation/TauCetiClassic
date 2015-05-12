@@ -39,6 +39,7 @@
 						spawn(10) update_icon()
 					return
 				else
+					user.do_attack_animation(src)
 					playsound(user, 'sound/effects/Glasshit.ogg', 100, 1) //We don't want this playing every time
 				if(W.force < 15)
 					user << "\blue The cabinet's protective glass glances off the hit."
