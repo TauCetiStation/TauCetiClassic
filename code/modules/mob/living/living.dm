@@ -811,3 +811,10 @@
 		var/area/new_area = get_area(loc)
 		if(new_area)
 			new_area.Entered(src)
+
+//-TG Port for smooth standing/lying animations
+/mob/living/proc/get_standard_pixel_x_offset(lying_current = 0)
+	return initial(pixel_x)
+
+/mob/living/proc/get_standard_pixel_y_offset(lying_current = 0)
+	return initial(pixel_y)

@@ -509,3 +509,13 @@
 	else
 		src << "You do not have enough chemicals stored to reproduce."
 		return
+
+//-TG- port for smooth lying/standing animations
+/mob/living/carbon/get_standard_pixel_y_offset(lying_current = 0)
+	if(lying)
+		if(buckled && istype(buckled, /obj/structure/stool/bed/roller))
+			return 0
+		else
+			return -6
+	else
+		return initial(pixel_y)
