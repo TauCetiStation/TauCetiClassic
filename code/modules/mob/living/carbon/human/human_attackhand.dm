@@ -21,6 +21,7 @@
 			SA.fight(M, src)
 
 	if(M.gloves && istype(M.gloves,/obj/item/clothing/gloves))
+		M.do_attack_animation(src)
 		var/obj/item/clothing/gloves/G = M.gloves
 		if(G.cell)
 			if(M.a_intent == "hurt")//Stungloves. Any contact will stun the alien.
@@ -114,6 +115,7 @@
 			return 1
 
 		if("hurt")
+			M.do_attack_animation(src)
 			var/datum/unarmed_attack/attack = M.species.unarmed
 
 			M.attack_log += text("\[[time_stamp()]\] <font color='red'>[pick(attack.attack_verb)]ed [src.name] ([src.ckey])</font>")
@@ -146,6 +148,7 @@
 
 
 		if("disarm")
+			M.do_attack_animation(src)
 			M.attack_log += text("\[[time_stamp()]\] <font color='red'>Disarmed [src.name] ([src.ckey])</font>")
 			src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been disarmed by [M.name] ([M.ckey])</font>")
 
