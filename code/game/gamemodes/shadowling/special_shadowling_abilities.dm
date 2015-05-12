@@ -13,6 +13,10 @@
 			usr.verbs += /mob/living/carbon/human/proc/shadowling_hatch
 			return
 		if("Yes")
+			if(!istype(usr.loc, /turf))
+				usr << "<span class='warning'>You can't hatch here."
+				usr.verbs += /mob/living/carbon/human/proc/shadowling_hatch
+				return
 			usr.notransform = 1
 			usr.visible_message("<span class='warning'>[usr]'s things suddenly slip off. They hunch over and vomit up a copious amount of purple goo which begins to shape around them!</span>", \
 								"<span class='shadowling'>You remove any equipment which would hinder your hatching and begin regurgitating the resin which will protect you.</span>")
@@ -121,6 +125,10 @@
 			usr.verbs += /mob/living/carbon/human/proc/shadowling_ascendance
 			return
 		if("Yes")
+			if(!istype(usr.loc, /turf))
+				usr << "<span class='warning'>You can't evolve here."
+				usr.verbs += /mob/living/carbon/human/proc/shadowling_ascendance
+				return
 			usr.notransform = 1
 			usr.visible_message("<span class='warning'>[usr] rapidly bends and contorts, their eyes flaring a deep crimson!</span>", \
 								"<span class='shadowling'>You begin unlocking the genetic vault within you and prepare yourself for the power to come.</span>")
