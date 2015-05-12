@@ -1547,6 +1547,7 @@
 // hostile mob escape from disposals
 /obj/machinery/disposal/attack_animal(var/mob/living/simple_animal/M)
 	if(M.environment_smash)
+		M.do_attack_animation(src)
 		visible_message("<span class='danger'>[M.name] smashes [src] apart!</span>")
 		del(src)
 	return

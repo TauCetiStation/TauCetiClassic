@@ -76,6 +76,7 @@
 		return
 
 	if(status)
+		user.do_attack_animation(M)
 		H.apply_effect(10, STUN, 0)
 		H.apply_effect(10, WEAKEN, 0)
 		H.apply_effect(10, STUTTER, 0)

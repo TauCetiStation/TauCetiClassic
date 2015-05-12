@@ -718,6 +718,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			O.show_message("<EM>[user.name]</EM> further abuses the shattered [src.name].")
 	else
 		if(istype(I, /obj/item/weapon) )
+			user.do_attack_animation(src)
 			var/obj/item/weapon/W = I
 			if(W.force <15)
 				for (var/mob/O in hearers(5, src.loc))

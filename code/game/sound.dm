@@ -111,6 +111,7 @@ var/const/FALLOFF_SOUNDS = 0.5
 			if ("explosion") soundin = pick(explosion_sound)
 			if ("sparks") soundin = pick(spark_sound)
 			if ("rustle") soundin = pick(rustle_sound)
+			if ("bodyfall") soundin = pick('sound/effects/bodyfall1.ogg','sound/effects/bodyfall2.ogg','sound/effects/bodyfall3.ogg','sound/effects/bodyfall4.ogg')
 			if ("punch") soundin = pick(punch_sound)
 			if ("clownstep") soundin = pick(clown_sound)
 			if ("swing_hit") soundin = pick(swing_hit_sound)

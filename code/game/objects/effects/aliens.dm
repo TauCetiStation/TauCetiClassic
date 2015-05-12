@@ -110,6 +110,7 @@
 	return
 
 /obj/effect/alien/resin/attack_hand()
+	usr.do_attack_animation(src)
 	if (HULK in usr.mutations)
 		usr << "\blue You easily destroy the [name]."
 		for(var/mob/O in oviewers(src))
@@ -127,6 +128,7 @@
 	return attack_hand()
 
 /obj/effect/alien/resin/attack_alien()
+	usr.do_attack_animation(src)
 	if (islarva(usr))//Safety check for larva. /N
 		return
 	usr << "\green You claw at the [name]."

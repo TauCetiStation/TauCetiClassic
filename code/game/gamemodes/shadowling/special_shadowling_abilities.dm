@@ -13,10 +13,15 @@
 			usr.verbs += /mob/living/carbon/human/proc/shadowling_hatch
 			return
 		if("Yes")
+			if(!istype(usr.loc, /turf))
+				usr << "<span class='warning'>You can't hatch here."
+				usr.verbs += /mob/living/carbon/human/proc/shadowling_hatch
+				return
 			usr.notransform = 1
 			usr.visible_message("<span class='warning'>[usr]'s things suddenly slip off. They hunch over and vomit up a copious amount of purple goo which begins to shape around them!</span>", \
 								"<span class='shadowling'>You remove any equipment which would hinder your hatching and begin regurgitating the resin which will protect you.</span>")
 
+			usr.Stun(34)
 			for(var/obj/item/I in usr) //drops all items
 				usr.drop_from_inventory(I)
 			usr.regenerate_icons()
@@ -56,9 +61,9 @@
 
 			sleep(10)
 			playsound(usr.loc, 'sound/effects/ghost.ogg', 100, 1)
-			usr.real_name = "Shadowling ([rand(1,1000)])"
-			usr.name = usr.real_name
+			
 			usr.notransform = 0
+
 			usr << "<i><b><font size=3>YOU LIVE!!!</i></b></font>"
 
 			for(var/obj/effect/alien/resin/wall/shadowling/W in orange(usr, 1))
@@ -67,34 +72,43 @@
 			for(var/obj/effect/alien/weeds/node/N in shadowturf)
 				del(N)
 			usr.visible_message("<span class='warning'>The chrysalis explodes in a shower of purple flesh and fluid!</span>")
-			var/mob/living/carbon/human/M = usr
-			M.underwear = 0
-			M.undershirt = 0
+			
+			var/mob/living/carbon/human/H = new /mob/living/carbon/human(usr.loc)
+			
+			H.real_name = "Shadowling ([rand(1,1000)])"
+			H.name = usr.real_name
+			
+			H.underwear = 0
+			H.undershirt = 0
 			//M.faction |= "faithless"
-			M.faction = "faithless"
+			H.faction = "faithless"
 
-			usr.equip_to_slot_or_del(new /obj/item/clothing/under/shadowling(usr), slot_w_uniform)
-			usr.equip_to_slot_or_del(new /obj/item/clothing/shoes/shadowling(usr), slot_shoes)
-			usr.equip_to_slot_or_del(new /obj/item/clothing/suit/space/shadowling(usr), slot_wear_suit)
-			usr.equip_to_slot_or_del(new /obj/item/clothing/head/shadowling(usr), slot_head)
-			usr.equip_to_slot_or_del(new /obj/item/clothing/gloves/shadowling(usr), slot_gloves)
-			usr.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/shadowling(usr), slot_wear_mask)
-			usr.equip_to_slot_or_del(new /obj/item/clothing/glasses/night/shadowling(usr), slot_glasses)
+			H.equip_to_slot_or_del(new /obj/item/clothing/under/shadowling(usr), slot_w_uniform)
+			H.equip_to_slot_or_del(new /obj/item/clothing/shoes/shadowling(usr), slot_shoes)
+			H.equip_to_slot_or_del(new /obj/item/clothing/suit/space/shadowling(usr), slot_wear_suit)
+			H.equip_to_slot_or_del(new /obj/item/clothing/head/shadowling(usr), slot_head)
+			H.equip_to_slot_or_del(new /obj/item/clothing/gloves/shadowling(usr), slot_gloves)
+			H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/shadowling(usr), slot_wear_mask)
+			H.equip_to_slot_or_del(new /obj/item/clothing/glasses/night/shadowling(usr), slot_glasses)
 			//hardset_dna(usr, null, null, null, null, /datum/species/shadow/ling) //can't be a shadowling without being a shadowling
-			var/mob/living/carbon/human/H = usr
 			H.set_species("Shadowling")
 			H.dna.mutantrace = "shadowling"
 			H.update_mutantrace()
 			H.regenerate_icons()
+			usr.mind.transfer_to(H)
+			ticker.mode.update_all_shadows_icons()
+			qdel(usr)
 
 			sleep(10)
-			usr << "<span class='shadowling'><b><i>Your powers are awoken. You may now live to your fullest extent. Remember your goal. Cooperate with your thralls and allies.</b></i></span>"
-			usr.spell_list += new /obj/effect/proc_holder/spell/targeted/glare
-			usr.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/veil
-			usr.spell_list += new /obj/effect/proc_holder/spell/targeted/shadow_walk
-			usr.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/flashfreeze
-			usr.spell_list += new /obj/effect/proc_holder/spell/targeted/collective_mind
-			usr.spell_list += new /obj/effect/proc_holder/spell/targeted/shadowling_regenarmor
+			H << "<span class='shadowling'><b><i>Your powers are awoken. You may now live to your fullest extent. Remember your goal. Cooperate with your thralls and allies.</b></i></span>"
+			H.spell_list += new /obj/effect/proc_holder/spell/targeted/shadowling_hivemind
+			H.spell_list += new /obj/effect/proc_holder/spell/targeted/enthrall
+			H.spell_list += new /obj/effect/proc_holder/spell/targeted/glare
+			H.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/veil
+			H.spell_list += new /obj/effect/proc_holder/spell/targeted/shadow_walk
+			H.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/flashfreeze
+			H.spell_list += new /obj/effect/proc_holder/spell/targeted/collective_mind
+			H.spell_list += new /obj/effect/proc_holder/spell/targeted/shadowling_regenarmor
 
 
 
@@ -111,6 +125,10 @@
 			usr.verbs += /mob/living/carbon/human/proc/shadowling_ascendance
 			return
 		if("Yes")
+			if(!istype(usr.loc, /turf))
+				usr << "<span class='warning'>You can't evolve here."
+				usr.verbs += /mob/living/carbon/human/proc/shadowling_ascendance
+				return
 			usr.notransform = 1
 			usr.visible_message("<span class='warning'>[usr] rapidly bends and contorts, their eyes flaring a deep crimson!</span>", \
 								"<span class='shadowling'>You begin unlocking the genetic vault within you and prepare yourself for the power to come.</span>")

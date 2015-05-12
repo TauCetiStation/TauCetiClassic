@@ -24,6 +24,8 @@
 
 	var/icon_action_button //If this is set, The item will make an action button on the player's HUD when picked up. The button will have the icon_action_button sprite from the screen1_action.dmi file.
 	var/action_button_name //This is the text which gets displayed on the action button. If not set it defaults to 'Use [name]'. Note that icon_action_button needs to be set in order for the action button to appear.
+	var/action_button_icon //For custom HUD icon instead of using item's icon
+	var/action_button_state //For custom HUD icon state.
 
 	//Since any item can now be a piece of clothing, this has to be put here so all items share it.
 	var/flags_inv //This flag is used to determine when items in someone's inventory cover others. IE helmets making it so you can't see glasses, etc.

@@ -470,8 +470,17 @@
 			for(var/datum/mind/N in ticker.mode.shadows)
 				var/mob/M = N.current
 				if(M)
-					dat += "<tr><td><a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(logged out)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
-					dat += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td></tr>"
+					dat += "<tr><td><a href='?src=\ref[src];adminplayeropts=\ref[M]'>[M.real_name] ([M.ckey])</a>[M.client ? "" : " <i>(logged out)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
+					dat += "<td><A href='?src=\ref[usr];priv_msg=\ref[M]'>PM</A></td></tr>"
+			dat += "<br><tr><td><B>Enthrall Progress(Must be alive):</B></td><td></td></tr>"
+			var/thrall = 0
+			var/mob/Count
+			for(Count in living_mob_list)
+				if(is_thrall(Count))
+					thrall++
+			dat += "<tr><td>[thrall] of 15</td></tr>"
+			dat += "<br><tr><td><B>Ascended:</B></td><td></td></tr>"
+			dat += "<tr><td>[ticker.mode.shadowling_ascended ? "Yes" : "No"]</td></tr>"
 			dat += "</table>"
 
 		if(ticker.mode.thralls.len)
@@ -479,8 +488,8 @@
 			for(var/datum/mind/N in ticker.mode.thralls)
 				var/mob/M = N.current
 				if(M)
-					dat += "<tr><td><a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(logged out)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
-					dat += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td></tr>"
+					dat += "<tr><td><a href='?src=\ref[src];adminplayeropts=\ref[M]'>[M.real_name] ([M.ckey])</a>[M.client ? "" : " <i>(logged out)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
+					dat += "<td><A href='?src=\ref[usr];priv_msg=\ref[M]'>PM</A></td></tr>"
 			dat += "</table>"
 
 		if(istype(ticker.mode, /datum/game_mode/blob)) //Блоб

@@ -1938,6 +1938,10 @@
 					holder.icon_state = "hudmutineer"
 				if("mutineer")
 					holder.icon_state = "hudmutineer"
+				if("shadowling")
+					holder.icon_state = "hudshadowling"
+				if("thrall")
+					holder.icon_state = "hudthrall"
 
 			hud_list[SPECIALROLE_HUD] = holder
 	hud_updateflag = 0

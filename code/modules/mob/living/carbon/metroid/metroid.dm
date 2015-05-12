@@ -401,6 +401,7 @@
 			return
 
 		else
+			M.do_attack_animation(src)
 			if(prob(30))
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
