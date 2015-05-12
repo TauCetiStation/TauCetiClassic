@@ -1449,6 +1449,7 @@ It is possible to destroy the net by the occupant or someone else.
 		return attack_hand()
 
 	attack_alien()
+		usr.do_attack_animation(src)
 		if (islarva(usr))
 			return
 		usr << text("\green You claw at the net.")

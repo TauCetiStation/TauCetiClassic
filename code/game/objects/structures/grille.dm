@@ -31,6 +31,7 @@
 	attack_hand(user)
 
 /obj/structure/grille/attack_hand(mob/user as mob)
+	user.do_attack_animation(src)
 	playsound(loc, 'sound/effects/grillehit.ogg', 80, 1)
 	user.visible_message("<span class='warning'>[user] kicks [src].</span>", \
 						 "<span class='warning'>You kick [src].</span>", \
@@ -45,6 +46,7 @@
 	healthcheck()
 
 /obj/structure/grille/attack_alien(mob/user as mob)
+	user.do_attack_animation(src)
 	if(istype(user, /mob/living/carbon/alien/larva))	return
 
 	playsound(loc, 'sound/effects/grillehit.ogg', 80, 1)
@@ -59,6 +61,7 @@
 
 /obj/structure/grille/attack_slime(mob/user as mob)
 	if(!istype(user, /mob/living/carbon/slime/adult))	return
+	user.do_attack_animation(src)
 
 	playsound(loc, 'sound/effects/grillehit.ogg', 80, 1)
 	user.visible_message("<span class='warning'>[user] smashes against [src].</span>", \
@@ -71,6 +74,7 @@
 
 /obj/structure/grille/attack_animal(var/mob/living/simple_animal/M as mob)
 	if(M.melee_damage_upper == 0)	return
+	M.do_attack_animation(src)
 
 	playsound(loc, 'sound/effects/grillehit.ogg', 80, 1)
 	M.visible_message("<span class='warning'>[M] smashes against [src].</span>", \

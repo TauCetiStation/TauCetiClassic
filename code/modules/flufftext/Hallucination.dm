@@ -242,6 +242,7 @@ proc/check_panel(mob/M)
 	var/health = 100
 
 	attackby(var/obj/item/weapon/P as obj, mob/user as mob)
+		user.do_attack_animation(src)
 		step_away(src,my_target,2)
 		for(var/mob/M in oviewers(world.view,my_target))
 			M << "\red <B>[my_target] flails around wildly.</B>"
@@ -300,6 +301,7 @@ proc/check_panel(mob/M)
 				updateimage()
 			else
 				if(prob(15))
+					src.do_attack_animation(my_target)
 					if(weapon_name)
 						my_target << sound(pick('sound/weapons/genhit1.ogg', 'sound/weapons/genhit2.ogg', 'sound/weapons/genhit3.ogg'))
 						my_target.show_message("\red <B>[my_target] has been attacked with [weapon_name] by [src.name] </B>", 1)
