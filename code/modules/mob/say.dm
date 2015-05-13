@@ -59,6 +59,8 @@
 		if(istype(M, /mob/new_player))
 			continue
 		if(M.client && M.stat == DEAD && (M.client.prefs.toggles & CHAT_DEAD))
+			if(M.fake_death) //Our changeling with fake_death status must not hear dead chat!!
+				continue
 			M << rendered
 			continue
 
