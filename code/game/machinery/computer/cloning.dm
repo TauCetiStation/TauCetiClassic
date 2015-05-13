@@ -346,9 +346,9 @@
 	if ((!subject.ckey) || (!subject.client))
 		scantemp = "Error: Mental interface failure."
 		return
-	/*if (NOCLONE in subject.mutations)
-		scantemp = "Error: Mental interface failure."
-		return*/
+	if (NOCLONE in subject.mutations)
+		scantemp = "Error: Unable to locate valid genetic data."
+		return
 	if (!isnull(find_record(subject.ckey)))
 		scantemp = "Subject already in database."
 		return

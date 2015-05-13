@@ -17,6 +17,8 @@
 	message =  trim(sanitize_plus(copytext(message, 1, MAX_MESSAGE_LEN)))
 
 	if(stat == 2)
+		if(fake_death) //Our changeling with fake_death status must not speak in dead chat!!
+			return
 		return say_dead(message)
 
 	var/message_mode = parse_message_mode(message, "headset")

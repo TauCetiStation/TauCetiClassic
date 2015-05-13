@@ -92,6 +92,9 @@
 
 	changeling.isabsorbing = 0
 	changeling.geneticpoints +=2
+	for(var/datum/reagent/blood/B in target.vessel.reagent_list) //We are vamplings, so we drink blood!
+		if(B.id == "blood")
+			B.volume = 0
 	target.death(0)
 	target.Drain()
 	return 1
