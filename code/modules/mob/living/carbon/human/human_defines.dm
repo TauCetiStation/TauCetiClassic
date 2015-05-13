@@ -70,3 +70,7 @@
 
 	var/mob/remoteview_target = null
 	var/hand_blood_color
+
+	//Golem stuff
+	var/my_master = 0
+	var/my_golems = list()

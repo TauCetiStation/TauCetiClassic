@@ -21,6 +21,8 @@
 		return
 
 	if (src.stat == 2)
+		if(fake_death) //Our changeling with fake_death status must not speak in dead chat!!
+			return
 		return src.say_dead(message)
 
 	if (src.stat)

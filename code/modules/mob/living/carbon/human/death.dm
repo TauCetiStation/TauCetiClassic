@@ -148,6 +148,8 @@
 	return
 
 /mob/living/carbon/human/proc/Drain()
+	if(fake_death)
+		fake_death = 0
 	ChangeToHusk()
 	mutations |= NOCLONE
 	return

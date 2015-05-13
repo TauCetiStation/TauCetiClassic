@@ -1,4 +1,6 @@
 /mob/living/carbon/update_icons()
+	if(istype(src, /mob/living/carbon/slime))
+		return
 	var/matrix/ntransform = matrix(transform)
 	var/final_pixel_y = pixel_y
 	var/final_dir = dir
