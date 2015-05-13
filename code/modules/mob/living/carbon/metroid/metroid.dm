@@ -979,6 +979,13 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 		//G.equip_to_slot_or_del(new /obj/item/clothing/head/space/golem(G), slot_head)
 		G.loc = src.loc
 		G.key = ghost.key
+
+		G.my_master = user
+		G.update_golem_hud_icons()
+		if(istype(user, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = user
+			H.my_golems += G
+			H.update_golem_hud_icons()
 		G << "You are an adamantine golem. You move slowly, but are highly resistant to heat and cold as well as blunt trauma. You are unable to wear clothes, but can still use most tools. Serve [user], and assist them in completing their goals at any cost."
 		del (src)
 
@@ -989,6 +996,19 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 				var/area/A = get_area(src)
 				if(A)
 					G << "\red <FONT size = 3><B>Golem rune created in [A.name].</B></FONT>"
+
+/mob/living/carbon/human/proc/update_golem_hud_icons()
+	if(client)
+		if(dna && (dna.mutantrace == "adamantine"))
+			if(my_master)
+				var/I = image('tauceti/icons/mob/hud_mob.dmi', loc = my_master, icon_state = "agolem_master")
+				client.images += I
+		else
+			if(my_golems)
+				for(var/mob/living/carbon/human/G in my_golems)
+					var/I = image('tauceti/icons/mob/hud_mob.dmi', loc = G, icon_state = "agolem_master")
+					client.images += I
+
 //////////////////////////////Old shit from metroids/RoRos, and the old cores, would not take much work to re-add them////////////////////////
 
 /*
