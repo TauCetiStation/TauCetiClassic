@@ -235,6 +235,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	var/datum/dna/chosen_dna
 	var/obj/effect/proc_holder/changeling/sting/chosen_sting
 	var/space_suit_active = 0
+	var/instatis = 0
 
 /datum/changeling/New(var/gender=FEMALE)
 	..()

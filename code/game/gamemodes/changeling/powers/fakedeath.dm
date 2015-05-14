@@ -36,14 +36,18 @@
 
 	if(NOCLONE in user.mutations)
 		user << "<span class='notice'>We could not begin our stasis, something damaged all our DNA.</span>"
+		user.fake_death = 0
 		return
 	else
 		user << "<span class='notice'>We begin our stasis, preparing energy to arise once more.</span>"
 
+	user.mind.changeling.instatis = 1
 	spawn(rand(800,2000))
 		if(user && user.mind && user.mind.changeling && user.mind.changeling.purchasedpowers)
+			user.mind.changeling.instatis = 0
+			user.fake_death = 0
 			if(user.stat != DEAD) //Player was resurrected before stasis completion
-				user.fake_death = 0
+				user << "<span class='notice'>Our stasis were interupted.</span>"
 				return
 			else
 				if(NOCLONE in user.mutations)
@@ -57,6 +61,9 @@
 
 /obj/effect/proc_holder/changeling/fakedeath/can_sting(var/mob/user)
 	//if(user.status_flags & FAKEDEATH)
+	if(user && user.mind && user.mind.changeling)
+		if(user.mind.changeling.instatis) //We already regenerating, no need to start second time in a row.
+			return
 	if(user.fake_death == 1)
 		return
 	//if(!user.stat && alert("Are we sure we wish to fake our death?",,"Yes","No") == "No")//Confirmation for living changeling if they want to fake their death
