@@ -36,18 +36,18 @@
 
 	if(NOCLONE in user.mutations)
 		user << "<span class='notice'>We could not begin our stasis, something damaged all our DNA.</span>"
+		user.mind.changeling.instatis = 0
 		user.fake_death = 0
 		return
 	else
 		user << "<span class='notice'>We begin our stasis, preparing energy to arise once more.</span>"
 
-	user.mind.changeling.instatis = 1
 	spawn(rand(800,2000))
 		if(user && user.mind && user.mind.changeling && user.mind.changeling.purchasedpowers)
 			user.mind.changeling.instatis = 0
 			user.fake_death = 0
 			if(user.stat != DEAD) //Player was resurrected before stasis completion
-				user << "<span class='notice'>Our stasis was interupted.</span>"
+				user << "<span class='notice'>Our stasis was interrupted.</span>"
 				return
 			else
 				if(NOCLONE in user.mutations)
@@ -61,9 +61,14 @@
 
 /obj/effect/proc_holder/changeling/fakedeath/can_sting(var/mob/user)
 	//if(user.status_flags & FAKEDEATH)
-	if(user && user.mind && user.mind.changeling)
-		if(user.mind.changeling.instatis) //We already regenerating, no need to start second time in a row.
+	if(user.mind.changeling.instatis) //We already regenerating, no need to start second time in a row.
+		return
+
+	for(var/obj/effect/proc_holder/changeling/revive/ability_to_check in user.mind.changeling.purchasedpowers)
+		if(istype(ability_to_check, /obj/effect/proc_holder/changeling/revive))
+			user << "<span class='notice'>We already prepared our ability.</span>"
 			return
+
 	if(user.fake_death == 1)
 		return
 	//if(!user.stat && alert("Are we sure we wish to fake our death?",,"Yes","No") == "No")//Confirmation for living changeling if they want to fake their death
@@ -73,8 +78,12 @@
 			if("No")
 				return
 			if("Yes")
-				if(user.stat == DEAD)//In case player gave answer too late
-					user.fake_death = 0
+				if(user.mind.changeling.instatis) //In case if user clicked ability several times without making a choice.
+					return
 				else
-					user.fake_death = 1
+					user.mind.changeling.instatis = 1
+					if(user.stat == DEAD)//In case player gave answer too late
+						user.fake_death = 0
+					else
+						user.fake_death = 1
 	return ..()
