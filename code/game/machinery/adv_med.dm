@@ -172,6 +172,8 @@
 	icon_state = "body_scannerconsole"
 	density = 1
 	anchored = 1
+	var/printing = 0
+	var/storedinfo = null
 
 
 /obj/machinery/body_scanconsole/New()
@@ -205,13 +207,13 @@
 */
 
 
-/obj/machinery/body_scanconsole/attack_paw(user as mob)
+/obj/machinery/body_scanconsole/attack_paw(mob/user as mob)
 	return src.attack_hand(user)
 
-/obj/machinery/body_scanconsole/attack_ai(user as mob)
+/obj/machinery/body_scanconsole/attack_ai(mob/user as mob)
 	return src.attack_hand(user)
 
-/obj/machinery/body_scanconsole/attack_hand(user as mob)
+/obj/machinery/body_scanconsole/attack_hand(mob/user as mob)
 	if(..())
 		return
 	if(!ishuman(connected.occupant))
@@ -240,7 +242,8 @@
 				else
 					dat += text("[]\tHealth %: [] ([])</FONT><BR>", (occupant.health > 50 ? "<font color='blue'>" : "<font color='red'>"), occupant.health, t1)
 
-					if(occupant.mind && occupant.mind.changeling && occupant.status_flags & FAKEDEATH)
+					//if(occupant.mind && occupant.mind.changeling && occupant.status_flags & FAKEDEATH)
+					if(occupant.mind && occupant.mind.changeling && occupant.fake_death)
 						dat += text("<font color='red'>Abnormal bio-chemical activity detected!</font><BR>")
 
 					if(occupant.virus2.len)
@@ -276,6 +279,8 @@
 						if(!D.hidden[SCANNER])
 							dat += text("<font color='red'><B>Warning: [D.form] Detected</B>\nName: [D.name].\nType: [D.spread].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure]</FONT><BR>")
 
+					dat += "<HR><A href='?src=\ref[src];print=1'>Print organs report</A><BR>"
+					storedinfo = null
 					dat += "<HR><table border='1'>"
 					dat += "<tr>"
 					dat += "<th>Organ</th>"
@@ -283,10 +288,18 @@
 					dat += "<th>Brute Damage</th>"
 					dat += "<th>Other Wounds</th>"
 					dat += "</tr>"
+					storedinfo += "<HR><table border='1'>"
+					storedinfo += "<tr>"
+					storedinfo += "<th>Organ</th>"
+					storedinfo += "<th>Burn Damage</th>"
+					storedinfo += "<th>Brute Damage</th>"
+					storedinfo += "<th>Other Wounds</th>"
+					storedinfo += "</tr>"
 
 					for(var/datum/organ/external/e in occupant.organs)
 
 						dat += "<tr>"
+						storedinfo += "<tr>"
 						var/AN = ""
 						var/open = ""
 						var/infected = ""
@@ -340,9 +353,12 @@
 							AN = "None:"
 						if(!(e.status & ORGAN_DESTROYED))
 							dat += "<td>[e.display_name]</td><td>[e.burn_dam]</td><td>[e.brute_dam]</td><td>[robot][bled][AN][splint][open][infected][imp][internal_bleeding][lung_ruptured]</td>"
+							storedinfo += "<td>[e.display_name]</td><td>[e.burn_dam]</td><td>[e.brute_dam]</td><td>[robot][bled][AN][splint][open][infected][imp][internal_bleeding][lung_ruptured]</td>"
 						else
 							dat += "<td>[e.display_name]</td><td>-</td><td>-</td><td>Not Found</td>"
+							storedinfo += "<td>[e.display_name]</td><td>-</td><td>-</td><td>Not Found</td>"
 						dat += "</tr>"
+						storedinfo += "</tr>"
 					for(var/datum/organ/internal/i in occupant.internal_organs)
 						var/mech = ""
 						if(i.robotic == 1)
@@ -360,11 +376,17 @@
 						dat += "<tr>"
 						dat += "<td>[i.name]</td><td>N/A</td><td>[i.damage]</td><td>[infection]:[mech]</td><td></td>"
 						dat += "</tr>"
+						storedinfo += "<tr>"
+						storedinfo += "<td>[i.name]</td><td>N/A</td><td>[i.damage]</td><td>[infection]:[mech]</td><td></td>"
+						storedinfo += "</tr>"
 					dat += "</table>"
+					storedinfo += "</table>"
 					if(occupant.sdisabilities & BLIND)
 						dat += text("<font color='red'>Cataracts detected.</font><BR>")
+						storedinfo += text("<font color='red'>Cataracts detected.</font><BR>")
 					if(occupant.sdisabilities & NEARSIGHTED)
 						dat += text("<font color='red'>Retinal misalignment detected.</font><BR>")
+						storedinfo += text("<font color='red'>Retinal misalignment detected.</font><BR>")
 			else
 				dat += "\The [src] is empty."
 		else
@@ -372,3 +394,29 @@
 	dat += text("<BR><BR><A href='?src=\ref[];mach_close=scanconsole'>Close</A>", user)
 	user << browse(dat, "window=scanconsole;size=430x600")
 	return
+
+/obj/machinery/body_scanconsole/Topic(href, href_list)
+	if(..())
+		return
+	if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon/ai)))
+		usr.set_machine(src)
+		if (href_list["print"])
+			if (!src.printing)
+				src.printing = 1
+				usr << "\red Printing... Please wait."
+				spawn(50)
+					src.printing = 0
+					var/obj/item/weapon/paper/P = new(loc)
+					var/mob/living/carbon/human/occupant = src.connected.occupant
+					var/t1 = "<B>[occupant.name]'s</B> advanced scanner report.<BR>"
+					t1 += "Station Time: <B>[worldtime2text()]</B><BR>"
+					switch(occupant.stat) // obvious, see what their status is
+						if(0)
+							t1 += "Status: <B>Conscious</B>"
+						if(1)
+							t1 += "Status: <B>Unconscious</B>"
+						else
+							t1 += "Status: <B>\red*dead*</B>"
+					t1 += storedinfo
+					P.info = t1
+					P.name = "[occupant.name]'s scanner report"
