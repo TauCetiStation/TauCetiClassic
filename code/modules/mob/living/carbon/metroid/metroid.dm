@@ -40,6 +40,13 @@
 
 	// slimes pass on genetic data, so all their offspring have the same "Friends",
 
+	var/mood = "" // To show its face
+	var/list/speech_buffer = list() // Last phrase said near it and person who said it
+	var/number = 0 // Used to understand when someone is talking to it
+	var/mob/living/Leader = null // AI variable - tells the slime to follow this person
+	var/holding_still = 0 // AI variable, cooloff-ish for how long it's going to stay in one place
+	var/target_patience = 0 // AI variable, cooloff-ish for how long it's going to follow its target
+
 	///////////TIME FOR SUBSPECIES
 
 	var/colour = "grey"
@@ -80,6 +87,19 @@
 
 /mob/living/carbon/slime/adult/New()
 	//verbs.Remove(/mob/living/carbon/slime/verb/ventcrawl)
+	..()
+
+/mob/living/carbon/slime/regenerate_icons()
+	overlays.len = 0
+	//var/icon_text = "[colour] [is_adult ? "adult" : "baby"] slime"
+	//icon_dead = "[icon_text] dead"
+	//if(stat != DEAD)
+		//icon_state = icon_text
+	if(stat != DEAD)
+		if(mood)
+			overlays += image('icons/mob/slimes.dmi', icon_state = "aslime-[mood]")
+	//else
+		//icon_state = icon_dead
 	..()
 
 /mob/living/carbon/slime/movement_delay()
@@ -1037,7 +1057,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 		POWERFLAG = rand(1,10)
 		Uses = rand(7, 25)
 		//flags |= NOREACT
-/*
+
 		spawn()
 			Life()
 
@@ -1095,4 +1115,3 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 		return
 	else
 		..()
-*/

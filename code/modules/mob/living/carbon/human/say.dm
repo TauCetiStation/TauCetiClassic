@@ -48,7 +48,8 @@
 	message = capitalize(trim(message))
 
 	if(speech_problem_flag)
-		var/list/handle_r = handle_speech_problems(message)
+		var/list/handle_r = handle_speech_problems(message, message_mode)
+		//var/list/handle_r = handle_speech_problems(message)
 		message = handle_r[1]
 		verb = handle_r[2]
 		speech_problem_flag = handle_r[3]
@@ -211,7 +212,8 @@
 
 
 
-/mob/living/carbon/human/proc/handle_speech_problems(var/message)
+//mob/living/carbon/human/proc/handle_speech_problems(var/message)
+/mob/living/carbon/human/proc/handle_speech_problems(var/message, var/message_mode)
 	var/list/returns[3]
 	var/verb = "says"
 	var/handled = 0
@@ -225,10 +227,12 @@
 		if(istype(wear_mask, /obj/item/clothing/mask/horsehead))
 			var/obj/item/clothing/mask/horsehead/hoers = wear_mask
 			if(hoers.voicechange)
-				if(mind && mind.changeling && department_radio_keys[copytext(message, 1, 3)] != "changeling")
+				//if(mind && mind.changeling && department_radio_keys[copytext(message, 1, 3)] != "changeling")
+				if(message_mode != "changeling")
 					message = pick("NEEIIGGGHHHH!", "NEEEIIIIGHH!", "NEIIIGGHH!", "HAAWWWWW!", "HAAAWWW!")
 					verb = pick("whinnies","neighs", "says")
-					handled = 1
+					//handled = 1
+				handled = 1
 
 	if((HULK in mutations) && health >= 25 && length(message))
 		message = "[uppertext_plus(message)]!!!"

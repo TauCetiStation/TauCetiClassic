@@ -9,6 +9,8 @@
 	if(findtext(act,"s",-1) && !findtext(act,"_",-2))//Removes ending s's unless they are prefixed with a '_'
 		act = copytext(act,1,length(act))
 
+	var/regenerate_icons
+
 	switch(act)
 		if ("me")
 			if(silent)
@@ -27,32 +29,66 @@
 
 		if ("custom")
 			return custom_emote(m_type, message)
-		if("moan")
-			message = "<B>The [src.name]</B> moans."
-			m_type = 2
-		if("shiver")
-			message = "<B>The [src.name]</B> shivers."
-			m_type = 2
-		if("sway")
-			message = "<B>The [src.name]</B> sways around dizzily."
-			m_type = 1
-		if("twitch")
-			message = "<B>The [src.name]</B> twitches."
-			m_type = 1
-		if("vibrate")
-			message = "<B>The [src.name]</B> vibrates!"
-			m_type = 1
-		if("light")
-			message = "<B>The [src.name]</B> lights up for a bit, then stops."
-			m_type = 1
-		if("jiggle")
-			message = "<B>The [src.name]</B> jiggles!"
-			m_type = 1
 		if("bounce")
 			message = "<B>The [src.name]</B> bounces in place."
 			m_type = 1
+
+		if("jiggle")
+			message = "<B>The [src.name]</B> jiggles!"
+			m_type = 1
+
+		if("light")
+			message = "<B>The [src.name]</B> lights up for a bit, then stops."
+			m_type = 1
+
+		if("moan")
+			message = "<B>The [src.name]</B> moans."
+			m_type = 2
+
+		if("shiver")
+			message = "<B>The [src.name]</B> shivers."
+			m_type = 2
+
+		if("sway")
+			message = "<B>The [src.name]</B> sways around dizzily."
+			m_type = 1
+
+		if("twitch")
+			message = "<B>The [src.name]</B> twitches."
+			m_type = 1
+
+		if("vibrate")
+			message = "<B>The [src.name]</B> vibrates!"
+			m_type = 1
+
+		if("noface") //mfw I have no face
+			mood = null
+			regenerate_icons = 1
+
+		if("smile")
+			mood = "mischevous"
+			regenerate_icons = 1
+
+		if(":3")
+			mood = ":33"
+			regenerate_icons = 1
+
+		if("pout")
+			mood = "pout"
+			regenerate_icons = 1
+
+		if("frown")
+			mood = "sad"
+			regenerate_icons = 1
+
+		if("scowl")
+			mood = "angry"
+			regenerate_icons = 1
+
+		if ("help") //This is an exception
+			src << "Help for slime emotes. You can use these emotes with say \"*emote\":\n\nbounce, jiggle, light, moan, shiver, sway, twitch, vibrate. \n\nYou may also change your face with: \n\nsmile, :3, pout, frown, scowl, noface"
 		else
-			src << text("Invalid Emote: []", act)
+			src << "<span class='notice'>Unusable emote '[act]'. Say *help for a list.</span>"
 	if ((message && src.stat == 0))
 		if (m_type & 1)
 			for(var/mob/O in viewers(src, null))
@@ -62,4 +98,8 @@
 			for(var/mob/O in hearers(src, null))
 				O.show_message(message, m_type)
 				//Foreach goto(746)
+
+	if (regenerate_icons)
+		regenerate_icons()
+
 	return
