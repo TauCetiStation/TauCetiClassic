@@ -47,7 +47,7 @@
 			user.mind.changeling.instatis = 0
 			user.fake_death = 0
 			if(user.stat != DEAD) //Player was resurrected before stasis completion
-				user << "<span class='notice'>Our stasis were interupted.</span>"
+				user << "<span class='notice'>Our stasis was interupted.</span>"
 				return
 			else
 				if(NOCLONE in user.mutations)
