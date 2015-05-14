@@ -32,9 +32,9 @@
 		user << "Bomb has been planted. Timer counting down from [timer]."
 		spawn(timer*10)
 			if(target)
-				explosion(location, 0, 0, 3, 3)
 				if (istype(target, /turf/simulated/wall)) target:dismantle_wall(1)
 				else target.ex_act(1)
+				explosion(location, 0, 0, 3, 3)
 				if (isobj(target))
 					if (target)
 						del(target)
