@@ -74,6 +74,22 @@ obj/machinery/door/airlock/close(surpress_send)
 
 
 obj/machinery/door/airlock/Bumped(atom/AM)
+	if(ishuman(AM) && prob(40) && src.density)
+		var/mob/living/carbon/human/H = AM
+		if(H.getBrainLoss() >= 60)
+			playsound(src.loc, 'sound/effects/bang.ogg', 25, 1)
+			if(!istype(H.head, /obj/item/clothing/head/helmet))
+				visible_message("\red [H] headbutts the airlock.")
+				var/datum/organ/external/affecting = H.get_organ("head")
+				H.Stun(8)
+				H.Weaken(5)
+				if(affecting.take_damage(10, 0))
+					H.UpdateDamageIcon()
+			else
+				visible_message("\red [H] headbutts the airlock. Good thing they're wearing a helmet.")
+				H.Stun(8)
+				H.Weaken(5)
+			return
 	..(AM)
 	if(istype(AM, /obj/mecha))
 		var/obj/mecha/mecha = AM
