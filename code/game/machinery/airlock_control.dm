@@ -87,6 +87,8 @@ obj/machinery/door/airlock/Bumped(atom/AM)
 					H.UpdateDamageIcon()
 			else
 				visible_message("\red [H] headbutts the airlock. Good thing they're wearing a helmet.")
+				H.Stun(8)
+				H.Weaken(5)
 			return
 	..(AM)
 	if(istype(AM, /obj/mecha))
