@@ -52,6 +52,12 @@ var/global/vox_tick = 1
 	equip_to_slot_or_del(new /obj/item/weapon/tank/nitrogen(src), slot_back)
 	equip_to_slot_or_del(new /obj/item/device/flashlight(src), slot_r_store)
 
+	for(var/obj/item/weapon/tank/nitrogen/N in contents)
+		if(N)
+			src.internal = N
+			if(src.internals)
+				src.internals.icon_state = "internal1"
+
 	var/obj/item/weapon/card/id/syndicate/C = new(src)
 	C.name = "[real_name]'s Legitimate Human ID Card"
 	C.icon_state = "id"
