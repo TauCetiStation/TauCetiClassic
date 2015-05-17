@@ -10,6 +10,8 @@
 	required_enemies = 1
 	recommended_enemies = 5
 
+	votable = 0
+
 	uplink_welcome = "Corporate Backed Uplink Console:"
 	uplink_uses = 10
 
