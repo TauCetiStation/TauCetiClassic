@@ -19,6 +19,7 @@
 	var/normalspeed = 1
 	var/heat_proof = 0 // For glass airlocks/opacity firedoors
 	var/air_properties_vary_with_direction = 0
+	var/block_air_zones = 1 //If set, air zones cannot merge across the door even when it is opened.
 
 	//Multi-tile doors
 	dir = EAST
@@ -93,7 +94,7 @@
 
 
 /obj/machinery/door/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if(air_group) return 0
+	if(air_group) return !block_air_zones
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return !opacity
 	return !density
@@ -342,6 +343,7 @@
 	sleep(10)
 	src.layer = 2.7
 	src.density = 0
+	src.block_air_zones = 0
 	explosion_resistance = 0
 	update_icon()
 	SetOpacity(0)
@@ -366,6 +368,7 @@
 
 	do_animate("closing")
 	src.density = 1
+	src.block_air_zones = 1
 	explosion_resistance = initial(explosion_resistance)
 	src.layer = 3.1
 	sleep(10)
@@ -387,6 +390,13 @@
 /obj/machinery/door/proc/update_nearby_tiles(need_rebuild)
 	if(!air_master)
 		return 0
+
+	if(istype(src.loc,/turf/simulated))
+		//Yeah, we're just going to rebuild the whole thing.
+		//Despite this being called a bunch during explosions,
+		//the zone will only really do heavy lifting once.
+		var/turf/simulated/S = src.loc
+		if(S.zone) S.zone.rebuild()
 
 	for(var/turf/simulated/turf in locs)
 		update_heat_protection(turf)

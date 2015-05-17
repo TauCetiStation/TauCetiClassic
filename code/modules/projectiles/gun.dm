@@ -91,10 +91,11 @@
 		if (HULK in M.mutations)
 			M << "\red Your meaty finger is much too large for the trigger guard!"
 			return
-		var/mob/living/carbon/human/H = user
-		if(H.species.name == "Shadowling")
-			H << "<span class='notice'>Your fingers don't fit in the trigger guard!</span>"
-			return
+		if(istype(user, /mob/living/carbon/human/))
+			var/mob/living/carbon/human/H = user
+			if(H.species.name == "Shadowling")
+				H << "<span class='notice'>Your fingers don't fit in the trigger guard!</span>"
+				return
 	if(ishuman(user))
 		if(user.dna && user.dna.mutantrace == "adamantine")
 			user << "\red Your metal fingers don't fit in the trigger guard!"
