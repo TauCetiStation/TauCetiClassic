@@ -10,6 +10,8 @@
 	required_enemies = 1
 	recommended_enemies = 1
 
+	votable = 0
+
 	uplink_welcome = "Wizardly Uplink Console:"
 	uplink_uses = 10
 

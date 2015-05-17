@@ -14,6 +14,8 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	required_enemies = 1
 	recommended_enemies = 4
 
+	votable = 0
+
 	uplink_welcome = "Syndicate Uplink Console:"
 	uplink_uses = 10
 

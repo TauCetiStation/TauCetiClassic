@@ -9,9 +9,11 @@ VOX HEIST ROUNDTYPE
 	name = "heist"
 	config_tag = "heist"
 	required_players = 15
-	required_players_secret = 25
+	required_players_secret = 12
 	required_enemies = 4
 	recommended_enemies = 6
+
+	votable = 0
 
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)

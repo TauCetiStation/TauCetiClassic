@@ -7,9 +7,12 @@
 	config_tag = "traitor"
 	restricted_jobs = list("Cyborg")//They are part of the AI if he is traitor so are they, they use to get double chances
 	protected_jobs = list("Internal Affairs Agent", "Security Officer", "Warden", "Detective", "Head of Security", "Captain")//AI", Currently out of the list as malf does not work for shit
-	required_players = 0
+	required_players = 1
 	required_enemies = 1
+	required_players_secret = 1
 	recommended_enemies = 4
+
+	votable = 0
 
 
 	uplink_welcome = "AntagCorp Portable Teleportation Relay:"
