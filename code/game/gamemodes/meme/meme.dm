@@ -9,7 +9,7 @@
 	required_players_secret = 10
 	restricted_jobs = list("AI", "Cyborg")
 	recommended_enemies = 3 // need at least a meme and a host
-	votable = 1 // temporarily disable this mode for voting
+	votable = 0 // temporarily disable this mode for voting
 
 
 
@@ -52,7 +52,7 @@
 	var/list/datum/mind/possible_memes = get_players_for_role(BE_MEME)
 
 	if(possible_memes.len < 1)
-		log_admin("MODE FAILURE: MEME. NOT ENOUGH MEME CANDIDATES.")
+		//log_admin("MODE FAILURE: MEME. NOT ENOUGH MEME CANDIDATES.") // We need no spam anymore, it works for a long time.
 		return 0 // not enough candidates for meme
 
 	/*if(possible_memes.len < 2)

@@ -4,9 +4,12 @@
 	name = "ninja"
 	config_tag = "ninja"
 	required_players = 10 //Can be adjusted later, should suffice for now.
-	required_players_secret = 10
+	required_players_secret = 6
 	required_enemies = 1
 	recommended_enemies = 1
+
+	votable = 0
+
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
 	var/finished = 0
