@@ -1422,27 +1422,6 @@
 					see_invisible = SEE_INVISIBLE_LIVING
 					seer = 0
 
-			if(istype(wear_mask, /obj/item/clothing/mask/gas/voice/space_ninja))
-				var/obj/item/clothing/mask/gas/voice/space_ninja/O = wear_mask
-				switch(O.mode)
-					if(0)
-						var/target_list[] = list()
-						for(var/mob/living/target in oview(src))
-							if( target.mind&&(target.mind.special_role||issilicon(target)) )//They need to have a mind.
-								target_list += target
-						if(target_list.len)//Everything else is handled by the ninja mask proc.
-							O.assess_targets(target_list, src)
-						if(!druggy)		see_invisible = SEE_INVISIBLE_LIVING
-					if(1)
-						see_in_dark = 5
-						if(!druggy)		see_invisible = SEE_INVISIBLE_LIVING
-					if(2)
-						sight |= SEE_MOBS
-						if(!druggy)		see_invisible = SEE_INVISIBLE_LEVEL_TWO
-					if(3)
-						sight |= SEE_TURFS
-						if(!druggy)		see_invisible = SEE_INVISIBLE_LIVING
-
 			if(glasses)
 				var/obj/item/clothing/glasses/G = glasses
 				if(istype(G))
@@ -1478,7 +1457,29 @@
 			else if(!seer)
 				see_invisible = SEE_INVISIBLE_LIVING
 
-
+			if(istype(wear_mask, /obj/item/clothing/mask/gas/voice/space_ninja))
+				var/obj/item/clothing/mask/gas/voice/space_ninja/O = wear_mask
+				switch(O.mode)
+					if(0)
+						var/target_list[] = list()
+						for(var/mob/living/target in oview(src))
+							if( target.mind&&(target.mind.special_role||issilicon(target)) )//They need to have a mind.
+								target_list += target
+						if(target_list.len)//Everything else is handled by the ninja mask proc.
+							O.assess_targets(target_list, src)
+						if(!druggy)		see_invisible = SEE_INVISIBLE_LIVING
+					if(1)
+						see_in_dark = 5
+						//client.screen += global_hud.meson
+						if(!druggy)		see_invisible = SEE_INVISIBLE_MINIMUM
+					if(2)
+						sight |= SEE_MOBS
+						//client.screen += global_hud.thermal
+						if(!druggy)		see_invisible = SEE_INVISIBLE_LEVEL_TWO
+					if(3)
+						sight |= SEE_TURFS
+						//client.screen += global_hud.meson
+						if(!druggy)		see_invisible = SEE_INVISIBLE_MINIMUM
 
 			if(healths)
 				if (analgesic)

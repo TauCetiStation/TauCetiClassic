@@ -5,7 +5,7 @@
 	config_tag = "ninja"
 	restricted_jobs = list("Cyborg", "AI")
 	required_players = 10 //Can be adjusted later, should suffice for now.
-	required_players_secret = 12
+	required_players_secret = 20
 	required_enemies = 2
 	recommended_enemies = 2
 

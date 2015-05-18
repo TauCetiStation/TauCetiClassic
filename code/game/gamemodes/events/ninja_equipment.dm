@@ -103,7 +103,8 @@ ________________________________________________________________________________
 /obj/item/clothing/suit/space/space_ninja/proc/stealth()
 	set name = "Toggle Stealth"
 	set desc = "Utilize the internal CLOAK-tech device to activate or deactivate stealth-camo."
-	set category = "Ninja Equip"
+	//set category = "Ninja Equip"
+	set category = "Ninja Ability"
 
 	if(s_control&&!s_busy)
 		toggle_stealth()
@@ -538,13 +539,41 @@ ________________________________________________________________________________
 				display_to << "\red Error: unable to deliver message."
 				display_spideros()
 				return
-			P.tnote += "<i><b>&larr; From [!s_control?(A):"an unknown source"]:</b></i><br>[t]<br>"
-			if (!P.silent)
-				playsound(P.loc, 'sound/machines/twobeep.ogg', 50, 1)
-				for (var/mob/O in hearers(3, P.loc))
-					O.show_message(text("\icon[P] *[P.ttone]*"))
-			P.overlays.Cut()
-			P.overlays += image('icons/obj/pda.dmi', "pda-r")
+			var/obj/machinery/message_server/useMS = null
+			if(!useMS || !useMS.active)
+				useMS = null
+				if(message_servers)
+					for (var/obj/machinery/message_server/MS in message_servers)
+						if(MS.active)
+							useMS = MS
+							break
+			if(useMS)
+				var/sender = "an unknown source"
+				useMS.send_pda_message("[P.owner]",sender,"[t]")
+
+				for(var/mob/M in player_list)
+					if(M.stat == DEAD && M.client && (M.client.prefs.toggles & CHAT_GHOSTEARS)) // src.client is so that ghosts don't have to listen to mice
+						if(istype(M, /mob/new_player))
+							continue
+						M.show_message("<span class='game say'>PDA Message - <span class='name'>[U]</span> -> <span class='name'>[P.owner]</span>: <span class='message'>[sanitize_chat(t)]</span></span>")
+
+				if (!P.silent)
+					playsound(P.loc, 'sound/machines/twobeep.ogg', 50, 1)
+					for (var/mob/O in hearers(3, P.loc))
+						O.show_message(text("\icon[P] *[P.ttone]*"))
+				P.overlays.Cut()
+				P.overlays += image('icons/obj/pda.dmi', "pda-r")
+				var/mob/living/L = null
+				if(P.loc && isliving(P.loc))
+					L = P.loc
+				//Maybe they are a pAI!
+				else
+					L = get(P, /mob/living/silicon)
+
+				if(L)
+					L << "\icon[P] <b>Message from [sender], </b>\"[t]\" (Unable to Reply)"
+			else
+				U << "<span class='notice'>ERROR: Messaging server is not responding.</span>"
 
 		if("Inject")
 			if( (href_list["tag"]=="radium"? (reagents.get_reagent_amount("radium"))<=(a_boost*a_transfer) : !reagents.get_reagent_amount(href_list["tag"])) )//Special case for radium. If there are only a_boost*a_transfer radium units left.
@@ -879,7 +908,7 @@ ________________________________________________________________________________
 		U << "\blue You are now invisible to normal detection."
 		for(var/mob/O in oviewers(U))
 			O.show_message("[U.name] vanishes into thin air!",1)
-		U.invisibility = INVISIBILITY_OBSERVER
+		U.invisibility = INVISIBILITY_LEVEL_TWO
 	return
 
 /obj/item/clothing/suit/space/space_ninja/proc/cancel_stealth()
@@ -1319,7 +1348,7 @@ It is possible to destroy the net by the occupant or someone else.
 	mouse_opacity = 1//So you can hit it with stuff.
 	anchored = 1//Can't drag/grab the trapped mob.
 
-	var/health = 25//How much health it has.
+	var/health = 100//How much health it has.
 	var/mob/living/affecting = null//Who it is currently affecting, if anyone.
 	var/mob/living/master = null//Who shot web. Will let this person know if the net was successful or failed.
 
@@ -1329,29 +1358,42 @@ It is possible to destroy the net by the occupant or someone else.
 				density = 0
 				if(affecting)
 					var/mob/living/carbon/M = affecting
-					M.anchored = 0
+					M.captured = 0 //Important.
+					M.anchored = initial(M.anchored) //Changes the mob's anchored status to the original one; this is not handled by the can_move proc.
 					for(var/mob/O in viewers(src, 3))
 						O.show_message(text("[] was recovered from the energy net!", M.name), 1, text("You hear a grunt."), 2)
-					if(!isnull(master))//As long as they still exist.
-						master << "\red <b>ERROR</b>: \black unable to initiate transport protocol. Procedure terminated."
+					//if(!isnull(master))//As long as they still exist.
+					//	master << "\red <b>ERROR</b>: \black unable to initiate transport protocol. Procedure terminated."
 				del(src)
 			return
 
 	process(var/mob/living/carbon/M as mob)
 		var/check = 60//30 seconds before teleportation. Could be extended I guess. - Extended to one minute
-		var/mob_name = affecting.name//Since they will report as null if terminated before teleport.
+		//var/mob_name = affecting.name//Since they will report as null if terminated before teleport.
 		//The person can still try and attack the net when inside.
 		while(!isnull(M)&&!isnull(src)&&check>0)//While M and net exist, and 60 seconds have not passed.
-			check--
-			sleep(10)
+			var/turf/T = get_turf(src)
+			if(M in T.contents)
+				check--
+				sleep(10)
+			else
+				check = 0
+				M.captured = 0 //Important.
+				M.anchored = initial(M.anchored) //Changes the mob's anchored status to the original one; this is not handled by the can_move proc.
 
 		if(isnull(M)||M.loc!=loc)//If mob is gone or not at the location.
-			if(!isnull(master))//As long as they still exist.
-				master << "\red <b>ERROR</b>: \black unable to locate \the [mob_name]. Procedure terminated."
+			//if(!isnull(master))//As long as they still exist.
+			//	master << "\red <b>ERROR</b>: \black unable to locate \the [mob_name]. Procedure terminated."
 			del(src)//Get rid of the net.
 			return
 
-		if(!isnull(src))//As long as both net and person exist.
+		if(!isnull(src))
+			M.captured = 0
+			M.anchored = initial(M.anchored)
+			del(src)
+		return
+
+		/*if(!isnull(src))//As long as both net and person exist.
 			//No need to check for countdown here since while() broke, it's implicit that it finished.
 
 			density = 0//Make the net pass-through.
@@ -1393,7 +1435,7 @@ It is possible to destroy the net by the occupant or someone else.
 
 		else//And they are free.
 			M << "\blue You are free of the net!"
-		return
+		return*/
 
 	bullet_act(var/obj/item/projectile/Proj)
 		health -= Proj.damage
