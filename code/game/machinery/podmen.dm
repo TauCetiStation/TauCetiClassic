@@ -96,6 +96,8 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 			continue
 		if(O.client)
 			if(O.client.prefs.be_special & BE_PLANT)
+				if(O.has_enabled_antagHUD == 1 && config.antag_hud_restricted) //No love for ghost with antaghud enabled
+					continue
 				question(O.client)
 
 /obj/item/seeds/replicapod/proc/question(var/client/C)

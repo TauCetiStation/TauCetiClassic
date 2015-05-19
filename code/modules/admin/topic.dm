@@ -677,6 +677,16 @@
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Vox Raider;jobban4=\ref[M]'><font color=red>Vox Raider</font></a></td>"
 		else
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Vox Raider;jobban4=\ref[M]'>Vox Raider</a></td>"
+		//Mutineer
+		if(jobban_isbanned(M, "Mutineer") || isbanned_dept)
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Mutineer;jobban4=\ref[M]'><font color=red>Mutineer</font></a></td>"
+		else
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Mutineer;jobban4=\ref[M]'>Mutineer</a></td>"
+		//Shadowling
+		if(jobban_isbanned(M, "Shadowling") || isbanned_dept)
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Shadowling;jobban4=\ref[M]'><font color=red>Shadowling</font></a></td>"
+		else
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Shadowling;jobban4=\ref[M]'>Shadowling</a></td>"
 
 /*		//Malfunctioning AI	//Removed Malf-bans because they're a pain to impliment
 		if(jobban_isbanned(M, "malf AI") || isbanned_dept)
