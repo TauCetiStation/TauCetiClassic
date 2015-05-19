@@ -138,6 +138,12 @@
 /mob/proc/delay_clothing_equip_to_slot_if_possible(obj/item/clothing/X as obj, slot, del_on_fail = 0, disable_warning = 0, redraw_mob = 1, delay_time = 0)
 	if(!istype(X)) return 0
 
+	if(ishuman(usr))
+		var/mob/living/carbon/human/H = usr
+		if(H.wear_suit)
+			H << "\red You need to take off [H.wear_suit.name] first."
+			return
+
 	if(X.equipping == 1) return 0 // Item is already being equipped
 
 	var/tempX = usr.x

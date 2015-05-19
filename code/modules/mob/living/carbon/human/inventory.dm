@@ -14,10 +14,14 @@
 	//		return 0
 
 		if(istype(I, /obj/item/clothing/suit/space)) // If the item to be equipped is a space suit
-			var/obj/item/clothing/suit/space/rig/J = I
-			if(J.equip_time > 0)
-				delay_clothing_equip_to_slot_if_possible(J, 13)  // 13 = suit slot
-				return 0
+			if(H.wear_suit)
+				H << "\red You need to take off [H.wear_suit.name] first."
+				return
+			else
+				var/obj/item/clothing/suit/space/rig/J = I
+				if(J.equip_time > 0)
+					delay_clothing_equip_to_slot_if_possible(J, 13)  // 13 = suit slot
+					return 0
 
 		if(H.equip_to_appropriate_slot(I))
 			if(hand)
