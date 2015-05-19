@@ -587,6 +587,13 @@ Note that amputating the affected organ does in fact remove the infection from t
 				owner.u_equip(owner.l_ear)
 				owner.u_equip(owner.r_ear)
 				owner.u_equip(owner.wear_mask)
+				if(istype(owner.wear_suit, /obj/item/clothing/suit/space/space_ninja)) //When ninja looses head, it does not go thru death() proc.
+					var/obj/item/clothing/suit/space/space_ninja/my_suit = owner.wear_suit
+					if(my_suit.s_initialized)
+						spawn(30)
+							var/location = owner.loc
+							explosion(location, 0, 0, 3, 4)
+							owner.gib()
 			if(ARM_RIGHT)
 				if(status & ORGAN_ROBOT)
 					organ = new /obj/item/robot_parts/r_arm(owner.loc)
