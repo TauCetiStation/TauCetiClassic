@@ -41,6 +41,8 @@ datum/mind
 	var/assigned_role
 	var/special_role
 
+	var/protector_role = 0 //If we want force player to protect the station
+
 	var/role_alt_title
 
 	var/datum/job/assigned_job
