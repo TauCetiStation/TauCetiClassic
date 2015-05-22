@@ -131,7 +131,7 @@ Infestation:
 			count++
 	return count
 
-/datum/game_mode/infestation/auto_declare_completion_shadowling()
+/datum/game_mode/infestation/proc/auto_declare_completion_infestation()
 	if(xenomorphs.len)
 		if(check_xeno_queen())
 			if(check_xeno_queen() == 1)
