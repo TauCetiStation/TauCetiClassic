@@ -19,6 +19,7 @@
 	friendly = "pinches"
 	var/obj/item/inventory_head
 	var/obj/item/inventory_mask
+	ventcrawler = 2
 
 /mob/living/simple_animal/crab/Life()
 	..()

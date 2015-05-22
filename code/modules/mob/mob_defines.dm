@@ -39,6 +39,10 @@
 	Changing this around would probably require a good look-over the pre-existing code.
 	*/
 	var/obj/screen/zone_sel/zone_sel = null
+	var/obj/screen/leap_icon = null
+
+	var/obj/screen/alien_plasma_display = null
+	var/obj/screen/nightvisionicon = null
 
 	var/use_me = 1 //Allows all mobs to use the me verb by default, will have to manually specify they cannot
 	var/speech_allowed = 1 //Meme Stuff

@@ -24,6 +24,11 @@
 		return 1
 	return 0
 
+/proc/isfacehugger(A)
+	if(istype(A, /mob/living/carbon/alien/facehugger))
+		return 1
+	return 0
+
 /proc/islarva(A)
 	if(istype(A, /mob/living/carbon/alien/larva))
 		return 1
@@ -418,7 +423,7 @@ var/list/intents = list("help","disarm","grab","hurt")
 		if(hud_used && hud_used.action_intent)
 			hud_used.action_intent.icon_state = "intent_[a_intent]"
 
-	else if(isrobot(src) || ismonkey(src) || islarva(src))
+	else if(isrobot(src) || ismonkey(src) || islarva(src)|| isfacehugger(src))
 		switch(input)
 			if("help")
 				a_intent = "help"

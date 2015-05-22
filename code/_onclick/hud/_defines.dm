@@ -80,14 +80,24 @@
 #define ui_alien_fire "14:28,12:25"
 #define ui_alien_oxygen "14:28,11:25"
 
+//Upper-middle right (alerts)
+#define ui_alert1 "EAST-1:28,CENTER+5:27"
+#define ui_alert2 "EAST-1:28,CENTER+4:25"
+#define ui_alert3 "EAST-1:28,CENTER+3:23"
+#define ui_alert4 "EAST-1:28,CENTER+2:21"
+#define ui_alert5 "EAST-1:28,CENTER+1:19"
+
 //Middle right (status indicators)
 #define ui_nutrition "14:28,5:11"
 #define ui_temp "14:28,6:13"
 #define ui_health "14:28,7:15"
 #define ui_internal "14:28,8:17"
-									//borgs
+
+//borgs and aliens
+#define ui_alien_nightvision "EAST-1:28,CENTER:17"
 #define ui_borg_health "14:28,6:13" //borgs have the health display where humans have the pressure damage indicator.
-#define ui_alien_health "14:28,6:13" //aliens have the health display where humans have the pressure damage indicator.
+#define ui_alien_health "EAST-1:28,CENTER-1:15" //aliens have the health display where humans have the pressure damage indicator.
+#define ui_alienplasmadisplay "EAST-1:28,CENTER-2:15"
 
 //Pop-up inventory
 #define ui_shoes "2:8,1:5"

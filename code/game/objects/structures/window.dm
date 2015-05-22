@@ -145,7 +145,7 @@
 
 /obj/structure/window/attack_alien(mob/user as mob)
 	user.do_attack_animation(src)
-	if(islarva(user)) return
+	if(islarva(user) || isfacehugger(user)) return
 	attack_generic(user, 15)
 
 /obj/structure/window/attack_animal(mob/user as mob)
