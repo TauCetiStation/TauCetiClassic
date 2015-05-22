@@ -1,0 +1,149 @@
+/*
+
+Infestation:
+
+*/
+
+
+
+/*
+	GAMEMODE
+*/
+/datum/game_mode/var/list/datum/mind/xenomorphs = list()
+
+/datum/game_mode/infestation
+	name = "infestation"
+	config_tag = "infestation"
+	//antag_flag = BE_ALIEN
+	required_players = 20
+	required_players_secret = 20
+	required_enemies = 2
+	recommended_enemies = 4
+
+	votable = 0
+
+/datum/game_mode/infestation/announce()
+	world << "<b>The current game mode is - Infestation!</b>"
+	world << "<b>There are <span class='userdanger'>xenomorphs</span> on the station. Crew: Kill the xenomorphs before they infest the station. Xenomorphs: Go catch some living hamburgers.</b>"
+
+/datum/game_mode/infestation/can_start()
+	if(!..())
+		return 0
+
+	var/list/candidates = get_players_for_role(BE_ALIEN)
+	var/xenomorphs_num = 0
+
+	//Check that we have enough vox.
+	if(candidates.len < required_enemies)
+		return 0
+	else if(candidates.len < recommended_enemies)
+		xenomorphs_num = candidates.len
+	else
+		xenomorphs_num = recommended_enemies
+
+	while(xenomorphs_num > 0)
+		var/datum/mind/new_xeno = pick(candidates)
+		xenomorphs += new_xeno
+		candidates -= new_xeno
+		xenomorphs_num--
+
+	for(var/datum/mind/xeno in xenomorphs)
+		xeno.assigned_role = "MODE"
+		xeno.special_role = "Xenomorph"
+
+	//Build a list of spawn points.
+
+	for(var/obj/effect/landmark/L in landmarks_list)
+		if(L.name == "xeno_spawn")
+			xeno_spawn.Add(L)
+
+	if(xeno_spawn.len == 0)
+		return 0
+
+	return 1
+
+/datum/game_mode/infestation/pre_setup()
+	return 1
+
+/datum/game_mode/infestation/post_setup()
+	for(var/check_spawn in xeno_spawn)
+		var/turf/T = get_turf(check_spawn)
+		if(T.loc.name == "Construction Area")
+			xeno_spawn -= check_spawn
+		if(T.loc.name == "Technical Storage")
+			xeno_spawn -= check_spawn
+
+	for(var/datum/mind/xeno in xenomorphs)
+		var/start_point = pick(xeno_spawn)
+		xeno_spawn -= start_point
+		var/area/A = get_area(start_point)
+
+		for(var/obj/machinery/power/apc/apc in A.apc)
+			apc.overload_lighting()
+
+		var/mob/living/carbon/alien/facehugger/FH = new /mob/living/carbon/alien/facehugger(get_turf(start_point))
+		var/mob/original = xeno.current
+
+		xeno.transfer_to(FH)
+
+		greet_xeno(xeno)
+		del(original)
+
+/datum/game_mode/infestation/proc/greet_xeno(var/datum/mind/xeno)
+	xeno.current << "\green <B>You are a Xenomorph.</b>"
+	xeno.current << "\green <B>Your current alien form is a facehugger.</b>"
+	xeno.current << "\green <B>Go find some monkeys, corgi or a sleeping human.</b>"
+	xeno.current << "\green <B>To leap at someones face, you simply start with left mouse button click.</b>"
+	xeno.current << "\green <B>Then check your tail action button, there will be leap available.</b>"
+	xeno.current << "\green <B>Leap isnt instant, keep that in mind. There is 1-2 seconds delay, before you can actually leap.</b>"
+	xeno.current << "\green <B>You target also must be near, after you prepares to leap.</b>"
+	xeno.current << "\blue Use :A to hivetalk."
+	xeno.current << "\green ------------------"
+	//xeno.current << "\red IF YOU HAVE NOT PLAYED A XENOMORPH, REVIEW THIS THREAD: http://tauceti.ru"
+
+
+/*
+	GAME FINISH CHECKS
+*/
+
+/datum/game_mode/infestation/proc/check_xeno_queen()
+	var/state = 0 // 0 = no queen
+	for(var/mob/living/carbon/alien/humanoid/queen/alive in living_mob_list)
+		if(alive)
+			state = 1
+	if(!state)
+		for(var/mob/living/carbon/alien/humanoid/queen/dead in dead_mob_list)
+			if(dead)
+				state = 2
+	return state
+
+/datum/game_mode/infestation/proc/count_hive_power()
+	var/count = 0
+	for(var/mob/living/carbon/alien/alive in living_mob_list)
+		if(alive)
+			count++
+	return count
+
+/datum/game_mode/infestation/proc/count_hive_looses()
+	var/count = 0
+	for(var/mob/living/carbon/alien/dead in dead_mob_list)
+		if(dead)
+			count++
+	return count
+
+/datum/game_mode/infestation/auto_declare_completion_shadowling()
+	if(xenomorphs.len)
+		if(check_xeno_queen())
+			if(check_xeno_queen() == 1)
+				world << "<font size=3 color=green><b>The Queen is alive!</FONT></b></span>"
+			if(check_xeno_queen() == 2)
+				world << "<span class='danger'><font size=3><b>The Queen has been killed!</b></FONT></span>"
+		else
+			world << "<font size=3 color=blue><b>The Queen was never born.</FONT></b></span>"
+		if(count_hive_power())
+			world << "<font size=3 color=green><b>There is [count_hive_power()] xenomorphs alive!</FONT></b></span>"
+		else
+			world << "<span class='danger'><font size=3><b>All xenomorphs were eradicated.</b></FONT></span>"
+		if(count_hive_looses())
+			world << "<span class='danger'><font size=3><b>[count_hive_looses()] xenomorphs are dead.</b></FONT></span>"
+	return 1

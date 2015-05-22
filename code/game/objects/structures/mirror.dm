@@ -87,7 +87,7 @@
 
 /obj/structure/mirror/attack_alien(mob/user as mob)
 	user.do_attack_animation(src)
-	if(islarva(user)) return
+	if(islarva(user) || isfacehugger(user)) return
 	if(shattered)
 		playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
 		return
