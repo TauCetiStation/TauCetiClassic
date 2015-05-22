@@ -92,7 +92,7 @@
 			user.visible_message("<span class='danger'>[user] tears at [src]!</span>")
 
 	attack_alien(mob/user as mob)
-		if(islarva(user)) return
+		if(islarva(user) || isfacehugger(user)) return
 		attack_generic(user, 15)
 
 	attack_animal(mob/user as mob)

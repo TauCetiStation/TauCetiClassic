@@ -465,7 +465,7 @@
 									Target = C
 									break
 
-							if(islarva(C) || ismonkey(C))
+							if(islarva(C) || isfacehugger(C) || ismonkey(C))
 								Target = C
 								break
 
