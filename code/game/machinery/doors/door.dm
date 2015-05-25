@@ -392,6 +392,8 @@
 		return 0
 
 	if(istype(src.loc,/turf/simulated))
+		if(src.z > 6) // Gateway locations are too buggy for that, so we dont need to rebuild there.
+			return
 		//Yeah, we're just going to rebuild the whole thing.
 		//Despite this being called a bunch during explosions,
 		//the zone will only really do heavy lifting once.
