@@ -800,6 +800,12 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define IS_UNATHI 4
 #define IS_KIDAN 5
 
+// Suit sensor levels
+#define SUIT_SENSOR_OFF      0
+#define SUIT_SENSOR_BINARY   1
+#define SUIT_SENSOR_VITAL    2
+#define SUIT_SENSOR_TRACKING 3
+
 // NanoUI flags
 #define STATUS_INTERACTIVE 2 // GREEN Visability
 #define STATUS_UPDATE 1 // ORANGE Visability
