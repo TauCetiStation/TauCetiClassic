@@ -19,6 +19,8 @@
 		return 0
 
 	if(istype(src.loc,/turf/simulated))
+		if(src.z > 6) // No more errors from gateway maps!
+			return
 		//Yeah, we're just going to rebuild the whole thing.
 		//Despite this being called a bunch during explosions,
 		//the zone will only really do heavy lifting once.
