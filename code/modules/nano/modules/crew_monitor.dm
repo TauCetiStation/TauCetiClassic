@@ -54,7 +54,7 @@
 
 				if(C.sensor_mode >= SUIT_SENSOR_TRACKING)
 					var/area/A = get_area(H)
-					crewmemberData["area"] = sanitize(A.name)
+					crewmemberData["area"] = html_encode(A.name)
 					crewmemberData["x"] = pos.x
 					crewmemberData["y"] = pos.y
 
