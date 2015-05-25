@@ -219,7 +219,9 @@
 ///mob/living/silicon/pai/attack_hand(mob/living/carbon/M as mob)
 
 /mob/living/silicon/pai/proc/switchCamera(var/obj/machinery/camera/C)
-	usr:cameraFollow = null
+	if(istype(usr, /mob/living))
+		var/mob/living/U = usr
+		U.cameraFollow = null
 	if (!C)
 		src.unset_machine()
 		src.reset_view(null)
@@ -239,7 +241,7 @@
 	set name = "Cancel Camera View"
 	src.reset_view(null)
 	src.unset_machine()
-	src:cameraFollow = null
+	src.cameraFollow = null
 
 //Addition by Mord_Sith to define AI's network change ability
 /*
@@ -248,7 +250,7 @@
 	set name = "Change Camera Network"
 	src.reset_view(null)
 	src.unset_machine()
-	src:cameraFollow = null
+	src.cameraFollow = null
 	var/cameralist[0]
 
 	if(usr.stat == 2)

@@ -115,15 +115,21 @@
 	src.track = null
 	ai_actual_track(target)
 
+/mob/living/silicon/ai/proc/ai_cancel_tracking(var/forced = 0)
+	if(!cameraFollow)
+		return
+
+	src << "Follow camera mode [forced ? "terminated" : "ended"]."
+	cameraFollow.tracking_cancelled()
+	cameraFollow = null
+
 /mob/living/silicon/ai/proc/ai_actual_track(mob/living/target as mob)
 	if(!istype(target))	return
 	var/mob/living/silicon/ai/U = usr
 
 	U.cameraFollow = target
-	//U << text("Now tracking [] on camera.", target.name)
-	//if (U.machine == null)
-	//	U.machine = U
 	U << "Now tracking [target.name] on camera."
+	target.tracking_initiated()
 
 	spawn (0)
 		while (U.cameraFollow == target)
@@ -198,3 +204,17 @@
 				if (sorttext(a.c_tag, b.c_tag) < 0)
 					L.Swap(j, j + 1)
 	return L
+
+mob/living/proc/tracking_initiated()
+
+mob/living/silicon/robot/tracking_initiated()
+	tracking_entities++
+	if(tracking_entities == 1 && has_zeroth_law())
+		src << "<span class='warning'>Internal camera is currently being accessed.</span>"
+
+mob/living/proc/tracking_cancelled()
+
+mob/living/silicon/robot/tracking_initiated()
+	tracking_entities--
+	if(!tracking_entities && has_zeroth_law())
+		src << "<span class='notice'>Internal camera is no longer being accessed.</span>"
