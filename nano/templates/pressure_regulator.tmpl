@@ -1,0 +1,65 @@
+<div class="item">
+	<div class="itemLabel">
+		Input Pressure:
+	</div>
+	<div class="itemContent">
+		{{:(data.input_pressure/100)}} kPa
+	</div>
+</div>
+
+<div class="item">
+	<div class="itemLabel">
+		Output Pressure:
+	</div>
+	<div class="itemContent">
+		{{:(data.output_pressure/100)}} kPa
+	</div>
+</div>
+
+<hr>
+
+<div class="item">
+	<div class="itemLabel">
+		Valve:
+	</div>
+	<div class="itemContent">
+		{{:helper.link(data.on? 'Unlocked' : 'Closed', null, {'toggle_valve' : 1})}}
+	</div>
+</div>
+
+<div class="item">
+	<div class="itemLabel">
+		Pressure Regulation:
+	</div>
+	<div class="itemContent">
+		{{:helper.link('Off', null, {'regulate_mode' : 'off'}, data.regulate_mode == 0? 'selected' : null)}}
+		{{:helper.link('Input', null, {'regulate_mode' : 'input'}, data.regulate_mode == 1? 'selected' : null)}}
+		{{:helper.link('Output', null, {'regulate_mode' : 'output'}, data.regulate_mode == 2? 'selected' : null)}}
+	</div>
+</div>
+
+<div class="item">
+	<div class="itemLabel">
+		Target Pressure:
+	</div>
+	<div class="itemContent">
+		<div style="clear: both; padding-top: 4px;">
+			{{:helper.link('MAX', null, {'set_press' : 'max'}, null)}}
+			{{:helper.link('SET', null, {'set_press' : 'set'}, null)}}
+			<div style="float: left; width: 80px; text-align: center;">&nbsp;{{:(data.pressure_set/100)}} kPa&nbsp;</div>
+		</div>
+	</div>
+</div>
+
+<div class="item">
+	<div class="itemLabel">
+		Flow Rate Limit:
+	</div>
+	<div class="itemContent">
+		<div style="clear: both; padding-top: 4px;">
+			{{:helper.link('MAX', null, {'set_pressure' : 'max'}, null)}}
+			{{:helper.link('SET', null, {'set_pressure' : 'set'}, null)}}
+			<div style="float: left; width: 80px; text-align: center;">&nbsp;{{:(data.set_pressure/10)}} L/s&nbsp;</div>
+		</div>
+	</div>
+</div>
