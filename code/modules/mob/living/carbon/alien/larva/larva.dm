@@ -37,10 +37,11 @@
 	..()
 	stat(null, "Progress: [amount_grown]/[max_grown]")
 
-/mob/living/carbon/alien/larva/adjustToxLoss(amount)
+/mob/living/carbon/alien/larva/proc/update_progression()
 	if(stat != DEAD)
-		amount_grown = min(amount_grown + 1, max_grown)
-	..(amount)
+		if(amount_grown < max_grown)
+			amount_grown++
+	return
 
 /mob/living/carbon/alien/larva/start_pulling(var/atom/movable/AM)//Prevents mouse from pulling things
 	src << "<span class='warning'>You are too small to pull anything.</span>"
