@@ -565,9 +565,14 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 //This proc prevents the suit from being taken off.
 /obj/item/clothing/suit/space/space_ninja/proc/lock_suit(mob/living/carbon/U, X = 0)
 	if(X)//If you want to check for icons.
-		icon_state = U.gender==FEMALE ? "s-ninjanf" : "s-ninjan"
-		U:gloves.icon_state = "s-ninjan"
-		U:gloves.item_state = "s-ninjan"
+		if(U.mind.protector_role == 1)
+			icon_state = U.gender==FEMALE ? "s-ninjakf" : "s-ninjak"
+			U:gloves.icon_state = "s-ninjak"
+			U:gloves.item_state = "s-ninjak"
+		else
+			icon_state = U.gender==FEMALE ? "s-ninjanf" : "s-ninjan"
+			U:gloves.icon_state = "s-ninjan"
+			U:gloves.item_state = "s-ninjan"
 	else
 		if(U.mind.special_role!="Ninja")
 			U << "\red <B>fÄTaL ÈÈRRoR</B>: 382200-*#00CÖDE <B>RED</B>\nUNAU†HORIZED USÈ DETÈC†††eD\nCoMMÈNCING SUB-R0U†IN3 13...\nTÈRMInATING U-U-USÈR..."
