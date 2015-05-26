@@ -69,7 +69,7 @@ Made by Xhuis
 	config_tag = "shadowling"
 	//antag_flag = BE_SHADOWLING
 	required_players = 30
-	required_players_secret = 25
+	required_players_secret = 15
 	required_enemies = 2
 	recommended_enemies = 2
 
