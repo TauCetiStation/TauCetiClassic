@@ -451,6 +451,7 @@ This is facehugger Attach procs
 	else if(ismonkey(M))
 		var/mob/living/carbon/monkey/target = L
 		target.equip_to_slot(src, slot_wear_mask)
+		target.contents += src // Monkey sanity check - Snapshot
 	else if(iscorgi(M))
 		var/mob/living/simple_animal/corgi/C = M
 		src.loc = C
