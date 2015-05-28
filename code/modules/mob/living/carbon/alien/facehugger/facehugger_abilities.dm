@@ -12,7 +12,7 @@
 #define GRAB_IMPREGNATE	7
 #define GRAB_DONE		8
 
-#define BITE_COOLDOWN 30
+#define BITE_COOLDOWN 20
 
 /*----------------------------------------
 This is modified grab mechanic for facehugger
@@ -202,6 +202,9 @@ This is chestburster mechanic for damaging
 			last_bite = world.time
 			playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
 			H.apply_damage(rand(7,14), BRUTE, "chest")
+			H.shock_stage = 20
+			H.Weaken(1)
+			H.emote("scream")
 	else if(ismonkey(affecting))
 		var/mob/living/carbon/monkey/M = affecting
 		if(M.stat == DEAD)
@@ -213,6 +216,7 @@ This is chestburster mechanic for damaging
 			last_bite = world.time
 			M.adjustBruteLoss(rand(35,65))
 			playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
+			M.Weaken(8)
 	else if(iscorgi(affecting))
 		var/mob/living/simple_animal/corgi/C = affecting
 		if(C.stat == DEAD)
