@@ -39,8 +39,9 @@
 
 /mob/living/carbon/alien/larva/proc/update_progression()
 	if(stat != DEAD)
-		if(amount_grown < max_grown)
-			amount_grown++
+		if(!iscarbon(loc) && !(istype(loc, /obj/item/alien_embryo)))
+			if(amount_grown < max_grown)
+				amount_grown++
 	return
 
 /mob/living/carbon/alien/larva/start_pulling(var/atom/movable/AM)//Prevents mouse from pulling things
