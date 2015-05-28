@@ -106,7 +106,7 @@ Infestation:
 	GAME FINISH CHECKS
 */
 
-/datum/game_mode/infestation/proc/check_xeno_queen()
+/datum/game_mode/proc/check_xeno_queen()
 	var/state = 0 // 0 = no queen
 	for(var/mob/living/carbon/alien/humanoid/queen/alive in living_mob_list)
 		if(alive)
@@ -117,21 +117,21 @@ Infestation:
 				state = 2
 	return state
 
-/datum/game_mode/infestation/proc/count_hive_power()
+/datum/game_mode/proc/count_hive_power()
 	var/count = 0
 	for(var/mob/living/carbon/alien/alive in living_mob_list)
 		if(alive)
 			count++
 	return count
 
-/datum/game_mode/infestation/proc/count_hive_looses()
+/datum/game_mode/proc/count_hive_looses()
 	var/count = 0
 	for(var/mob/living/carbon/alien/dead in dead_mob_list)
 		if(dead)
 			count++
 	return count
 
-/datum/game_mode/infestation/proc/auto_declare_completion_infestation()
+/datum/game_mode/proc/auto_declare_completion_infestation()
 	if(xenomorphs.len)
 		if(check_xeno_queen())
 			if(check_xeno_queen() == 1)
