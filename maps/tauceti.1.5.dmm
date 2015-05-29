@@ -11267,7 +11267,7 @@
 "eiI" = (/obj/item/weapon/shard{icon_state = "medium"},/turf/simulated/floor/airless{icon_state = "asteroidwarning"; dir = 2},/area/mine/abandoned)
 "eiJ" = (/obj/structure/disposalpipe/segment,/turf/simulated/floor/plating/airless{icon_state = "asteroidplating"},/area/mine/explored)
 "eiK" = (/turf/simulated/floor/plating/airless/asteroid,/area/mine/abandoned)
-"eiL" = (/obj/effect/alien/resin/wall{icon_state = "egg"; name = "egg"; desc = "It looks like a weird egg"},/turf/simulated/floor/plating/airless/asteroid,/area/mine/abandoned)
+"eiL" = (/obj/effect/alien{icon_state = "egg"; name = "egg"; desc = "It looks like a weird egg"},/turf/simulated/floor/plating/airless/asteroid,/area/mine/abandoned)
 "eiM" = (/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 4},/obj/structure/grille{density = 0; icon_state = "brokengrille"},/obj/item/stack/rods,/obj/item/weapon/shard,/turf/simulated/floor/plating/airless{icon_state = "asteroidplating"},/area/mine/abandoned)
 "eiN" = (/obj/machinery/light_construct/small,/turf/simulated/floor/plating/airless/asteroid,/area/mine/explored)
 "eiO" = (/turf/simulated/mineral/random/high_chance,/area/mine/unexplored)
