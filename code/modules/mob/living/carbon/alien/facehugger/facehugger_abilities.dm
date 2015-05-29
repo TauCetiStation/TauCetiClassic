@@ -694,8 +694,7 @@ When we finish, facehugger's player will be transfered inside embryo.
 		hud.icon_state = "grab/do_impreg"
 		hud.name = "impregnating"
 		assailant.visible_message("<span class='danger'>[assailant] extends its proboscis deep inside [affecting]'s mouth!</span>")
-		//spawn(rand(MIN_IMPREGNATION_TIME,MAX_IMPREGNATION_TIME))
-		spawn(40)
+		spawn(rand(MIN_IMPREGNATION_TIME,MAX_IMPREGNATION_TIME))
 			if(istype(assailant.loc, /obj/item/clothing/mask/facehugger))
 				assailant.visible_message("\red \b [assailant] falls limp after violating [affecting]'s face!")
 				var/obj/item/clothing/mask/facehugger/FH_mask = assailant.loc
