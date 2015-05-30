@@ -695,6 +695,12 @@
 		if (!(M.config_tag in modes))
 			del(M)
 			continue
+		if(secret_force_mode == "secret")
+			if(master_mode=="secret")
+				if(M.name != "AutoTraitor")
+					if(M.name == master_last_mode)
+						del(M)
+						continue
 		if (probabilities[M.config_tag]<=0)
 			del(M)
 			continue
