@@ -315,7 +315,7 @@ datum/shuttle_controller/emergency_shuttle/process()
 			else
 				if(alert == 1)
 					captain_announce("Departing...")
-				sleep(50)
+					sleep(100)
 				// Turn on the star effects
 
 				/* // kinda buggy atm, i'll fix this later
