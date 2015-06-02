@@ -731,15 +731,23 @@ datum
 			reagent_state = SOLID
 			color = "#C8A5DC" // rgb: 200, 165, 220
 			overdose = REAGENTS_OVERDOSE
+			custom_metabolism = 100
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 
 				var/needs_update = M.mutations.len > 0
 
-				M.mutations = list()
-				M.disabilities = 0
-				M.sdisabilities = 0
+				//M.mutations = list()
+				//M.disabilities = 0
+				//M.sdisabilities = 0
+				M.dna.ResetSE()
+				for(var/datum/dna/gene/gene in dna_genes)
+					if(!M || !M.dna)
+						return
+					if(!gene.block)
+						continue
+					genemutcheck(M,gene.block,null,MUTCHK_FORCED)
 
 				// Might need to update appearance for hulk etc.
 				if(needs_update && ishuman(M))
