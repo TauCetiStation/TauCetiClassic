@@ -47,6 +47,7 @@
 	friendly = "prods"
 	wander = 0
 	pass_flags = PASSTABLE
+	ventcrawler = 2
 
 	var/used_dominate
 	var/chemicals = 10                      // Chemicals used for reproduction and spitting neurotoxin.
