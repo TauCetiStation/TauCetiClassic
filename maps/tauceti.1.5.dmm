@@ -8843,7 +8843,7 @@
 "doc" = (/obj/structure/table,/obj/machinery/processor{pixel_x = 0; pixel_y = 10},/turf/unsimulated/floor{icon_state = "cafeteria"; dir = 2},/area/centcom/living)
 "dod" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced{dir = 5; health = 60},/turf/unsimulated/floor,/area/centcom/living)
 "doe" = (/turf/unsimulated/floor{tag = "icon-warnplate"; icon_state = "warnplate"},/area/centcom/control)
-"dof" = (/mob/living/simple_animal/hostile/carp{aggro_vision_range = 9; alpha = 255; health = 500; maxHealth = 500; melee_damage_lower = 5; melee_damage_upper = 30; name = "POLKAN"},/turf/unsimulated/floor,/area/centcom/control)
+"dof" = (/mob/living/simple_animal/hostile/carp/polkan,/turf/unsimulated/floor,/area/centcom/control)
 "dog" = (/obj/machinery/door/poddoor{density = 0; icon_state = "pdoor0"; id = "CentComPort02"; name = "Security Doors"; opacity = 0},/obj/structure/sign/mark{tag = "icon-x3"; icon_state = "x3"},/turf/unsimulated/floor{icon_state = "floor"},/area/centcom/control)
 "doh" = (/obj/structure/window/reinforced{dir = 4},/obj/machinery/door/window/southleft{dir = 1; name = "Security"; req_access_txt = "101"},/turf/unsimulated/floor{tag = "icon-warnwhite (NORTH)"; icon_state = "warnwhite"; dir = 1},/area/centcom/control)
 "doi" = (/obj/structure/window/reinforced{dir = 8},/obj/machinery/door/window/southright{dir = 1; name = "Security"; req_access_txt = "101"},/turf/unsimulated/floor{tag = "icon-warnwhite (NORTH)"; icon_state = "warnwhite"; dir = 1},/area/centcom/control)
