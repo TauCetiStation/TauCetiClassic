@@ -18,7 +18,17 @@
 	if(!air_master)
 		return 0
 
-	air_master.mark_for_update(get_turf(src))
+	if(istype(src.loc,/turf/simulated))
+		//Yeah, we're just going to rebuild the whole thing.
+		//Despite this being called a bunch during explosions,
+		//the zone will only really do heavy lifting once.
+		var/turf/simulated/S = src.loc
+		if(S.zone) S.zone.rebuild()
+
+	for(var/turf/simulated/turf in locs) //Door copy_pasta.
+		//update_heat_protection(turf)
+		air_master.mark_for_update(turf)
+	//air_master.mark_for_update(get_turf(src))
 
 	return 1
 
@@ -116,6 +126,7 @@
 
 	explosion_resistance = 0
 	src.density = 0
+	src.block_air_zones = 0 // We merge zones if door is open.
 //	src.sd_SetOpacity(0)	//TODO: why is this here? Opaque windoors? ~Carn
 	update_nearby_tiles()
 
@@ -132,6 +143,7 @@
 	src.icon_state = src.base_state
 
 	src.density = 1
+	src.block_air_zones = 1
 	explosion_resistance = initial(explosion_resistance)
 //	if(src.visible)
 //		SetOpacity(1)	//TODO: why is this here? Opaque windoors? ~Carn
