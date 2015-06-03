@@ -12,11 +12,6 @@
 	density = 0
 	layer = 2.6
 	glass = 1
-
-	//These are frequenly used with windows, so make sure zones can pass.
-	//Generally if a firedoor is at a place where there should be a zone boundery then there will be a regular door underneath it.
-	block_air_zones = 0
-
 	var/blocked = 0
 	var/nextstate = null
 	var/net_id
@@ -24,6 +19,7 @@
 	var/list/users_to_open
 	var/pdiff_alert = 0
 	var/pdiff = 0
+	block_air_zones = 0 //If set, air zones cannot merge across the door even when it is opened.
 
 /obj/machinery/door/firedoor/New()
 	. = ..()

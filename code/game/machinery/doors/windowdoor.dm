@@ -18,7 +18,19 @@
 	if(!air_master)
 		return 0
 
-	air_master.mark_for_update(get_turf(src))
+	if(istype(src.loc,/turf/simulated))
+		if(src.z > 6) // No more errors from gateway maps!
+			return
+		//Yeah, we're just going to rebuild the whole thing.
+		//Despite this being called a bunch during explosions,
+		//the zone will only really do heavy lifting once.
+		var/turf/simulated/S = src.loc
+		if(S.zone) S.zone.rebuild()
+
+	for(var/turf/simulated/turf in locs) //Door copy_pasta.
+		//update_heat_protection(turf)
+		air_master.mark_for_update(turf)
+	//air_master.mark_for_update(get_turf(src))
 
 	return 1
 
