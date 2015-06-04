@@ -147,6 +147,7 @@
 #define FILE_DIR "tauceti/sounds/lobby"
 #define FILE_DIR "tauceti/sounds/voice"
 #define FILE_DIR "tauceti/sounds/voice/complionator"
+#define FILE_DIR "tauceti/sounds/voice/polkan"
 #define FILE_DIR "tauceti/sounds/weapon"
 #define FILE_DIR "tools"
 #define FILE_DIR "tools/AddToChangelog"

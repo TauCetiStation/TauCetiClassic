@@ -290,8 +290,11 @@ datum/shuttle_controller/emergency_shuttle/process()
 				start_location.move_contents_to(end_location)
 				settimeleft(SHUTTLELEAVETIME)
 				//send2irc("Server", "The Emergency Shuttle has docked with the station.")
-				captain_announce("The Emergency Shuttle has docked with the station. You have [round(timeleft()/60,1)] minutes to board the Emergency Shuttle.")
-				world << sound('sound/AI/shuttledock.ogg')
+				if(alert == 0)
+					captain_announce("The Emergency Shuttle has docked with the station. You have [round(timeleft()/60,1)] minutes to board the Emergency Shuttle.")
+					world << sound('sound/AI/shuttledock.ogg')
+				else
+					captain_announce("The scheduled Crew Transfer Shuttle has docked with the station. It will depart in approximately [round(timeleft()/60,1)] minutes.")
 
 				return 1
 
@@ -310,7 +313,9 @@ datum/shuttle_controller/emergency_shuttle/process()
 
 			/* --- Shuttle leaves the station, enters transit --- */
 			else
-
+				if(alert == 1)
+					captain_announce("Departing...")
+					sleep(100)
 				// Turn on the star effects
 
 				/* // kinda buggy atm, i'll fix this later
@@ -421,7 +426,10 @@ datum/shuttle_controller/emergency_shuttle/process()
 						if(!M.buckled)
 							M.Weaken(5)
 
-				captain_announce("The Emergency Shuttle has left the station. Estimate [round(timeleft()/60,1)] minutes until the shuttle docks at Central Command.")
+				if(alert == 0)
+					captain_announce("The Emergency Shuttle has left the station. Estimate [round(timeleft()/60,1)] minutes until the shuttle docks at Central Command.")
+				else
+					captain_announce("The Crew Transfer Shuttle has left the station. Estimate [round(timeleft()/60,1)] minutes until the shuttle docks at Central Command.")
 
 				return 1
 

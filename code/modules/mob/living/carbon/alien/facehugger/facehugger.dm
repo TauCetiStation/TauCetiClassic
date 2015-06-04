@@ -2,7 +2,7 @@ var/const/MIN_IMPREGNATION_TIME = 100 //time it takes to impregnate someone
 var/const/MAX_IMPREGNATION_TIME = 150
 
 /mob/living/carbon/alien/facehugger
-	name = "alien"
+	name = "alien facehugger"
 	desc = "It has some sort of a tube at the end of its tail."
 	real_name = "alien facehugger"
 

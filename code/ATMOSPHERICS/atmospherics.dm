@@ -116,6 +116,11 @@ obj/machinery/atmospherics/update_icon()
 	..()
 
 /obj/machinery/atmospherics/proc/can_crawl_through()
+	if(istype(src, /obj/machinery/atmospherics/unary/vent_pump)) //We can't move in if its welded, right?
+		var/obj/machinery/atmospherics/unary/vent_pump/VP = src
+		if(VP.welded)
+			return 0
+
 	return 1
 
 obj/machinery/atmospherics/var/initialize_directions = 0

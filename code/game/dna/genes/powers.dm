@@ -212,6 +212,11 @@
 		M.verbs += /mob/living/carbon/human/proc/hulk_dash
 		M.verbs += /mob/living/carbon/human/proc/hulk_smash
 
+		var/matrix/Mx = matrix()
+		Mx.Scale(1.5) //Makes our hulk to be bigger than any normal human.
+		Mx.Translate(0,8)
+		M.transform = Mx
+
 		M.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 
 		var/list/preserve = list()
@@ -236,6 +241,11 @@
 		M.verbs -= /mob/living/carbon/human/proc/hulk_dash
 		M.verbs -= /mob/living/carbon/human/proc/hulk_smash
 		M.opacity = 0 // just in case
+
+		var/matrix/Mx = matrix()
+		Mx.Scale(1) ////Reset size of our hulk
+		Mx.Translate(0,0)
+		M.transform = Mx
 
 	OnDrawUnderlays(var/mob/M,var/g,var/fat)
 		if(fat)

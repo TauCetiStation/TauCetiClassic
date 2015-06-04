@@ -216,6 +216,7 @@ var/world_topic_spam_protect_time = world.timeofday
 
 /hook/startup/proc/loadMode()
 	world.load_mode()
+	world.load_last_mode()
 	return 1
 
 /world/proc/load_mode()
@@ -229,6 +230,18 @@ var/world_topic_spam_protect_time = world.timeofday
 	var/F = file("data/mode.txt")
 	fdel(F)
 	F << the_mode
+
+/world/proc/load_last_mode()
+	var/list/Lines = file2list("data/last_mode.txt")
+	if(Lines.len)
+		if(Lines[1])
+			master_last_mode = Lines[1]
+			log_misc("Previous round played mode was '[master_last_mode]'")
+
+/world/proc/save_last_mode(var/the_last_mode)
+	var/F = file("data/last_mode.txt")
+	fdel(F)
+	F << the_last_mode
 
 
 /hook/startup/proc/loadMOTD()

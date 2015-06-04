@@ -44,6 +44,10 @@
 	set desc = "Produce an interal egg sac capable of spawning children. Only one queen can exist at a time."
 	set category = "Alien"
 
+	if(!isturf(src.loc))
+		src << "\red You cannot evolve when you are inside something." //Silly aliens!
+		return
+
 	if(powerc(500))
 		// Queen check
 		var/no_queen = 1

@@ -920,7 +920,10 @@ ________________________________________________________________________________
 		U.invisibility = 0
 		for(var/mob/O in oviewers(U))
 			O.show_message("[U.name] appears from thin air!",1)
-		icon_state = U.gender==FEMALE ? "s-ninjanf" : "s-ninjan"
+		if(U.mind.protector_role == 1)
+			icon_state = U.gender==FEMALE ? "s-ninjakf" : "s-ninjak"
+		else
+			icon_state = U.gender==FEMALE ? "s-ninjanf" : "s-ninjan"
 		U.regenerate_icons()	//update their icons
 		return 1
 	return 0

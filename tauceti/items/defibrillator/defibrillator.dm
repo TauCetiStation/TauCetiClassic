@@ -57,6 +57,8 @@
 						C.adjustFireLoss(5)
 						if(C.stat == DEAD && C.health>config.health_threshold_dead)
 							C.stat = CONSCIOUS
+					C.tod = null
+					C.timeofdeath = 0
 
 			discharge()
 			C.apply_effect(4, STUN, 0)

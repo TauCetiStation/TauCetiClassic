@@ -162,6 +162,7 @@
 	icon_state = "dermal"
 	item_state = "dermal"
 	siemens_coefficient = 0.6
+	body_parts_covered = 1
 
 //Jensen cosplay gear
 /obj/item/clothing/under/rank/head_of_security/jensen
@@ -179,4 +180,4 @@
 	item_state = "jensencoat"
 	flags_inv = 0
 	siemens_coefficient = 0.6
-	body_parts_covered = UPPER_TORSO|ARMS
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
