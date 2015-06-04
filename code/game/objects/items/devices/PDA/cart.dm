@@ -20,6 +20,7 @@
 	var/remote_door_id = ""
 	var/access_status_display = 0
 	var/access_quartermaster = 0
+	var/access_detonate_pda = 0
 	var/access_hydroponics = 0
 	var/charges = 0
 	var/mode = null
@@ -200,6 +201,7 @@
 	name = "Detomatix Cartridge"
 	icon_state = "cart"
 	access_remote_door = 1
+	access_detonate_pda = 1
 	remote_door_id = "smindicate" //Make sure this matches the syndicate shuttle's shield/door id!!	//don't ask about the name, testing.
 	charges = 4
 

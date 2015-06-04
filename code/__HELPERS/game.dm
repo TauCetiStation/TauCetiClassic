@@ -9,6 +9,13 @@
 	src:Topic(href, href_list)
 	return null
 
+/proc/is_on_same_plane_or_station(var/z1, var/z2)
+	if(z1 == z2)
+		return 1
+	if((z1 in config.station_levels) &&	(z2 in config.station_levels))
+		return 1
+	return 0
+
 /proc/get_area(O)
 	var/atom/location = O
 	var/i
@@ -45,8 +52,20 @@
 
 	return heard
 
+/proc/isStationLevel(var/level)
+	return level in config.station_levels
 
+/proc/isNotStationLevel(var/level)
+	return !isStationLevel(level)
 
+/proc/isPlayerLevel(var/level)
+	return level in config.player_levels
+
+/proc/isAdminLevel(var/level)
+	return level in config.admin_levels
+
+/proc/isNotAdminLevel(var/level)
+	return !isAdminLevel(level)
 
 //Magic constants obtained by using linear regression on right-angled triangles of sides 0<x<1, 0<y<1
 //They should approximate pythagoras theorem well enough for our needs.

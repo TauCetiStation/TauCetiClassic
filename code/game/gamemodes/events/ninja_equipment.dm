@@ -557,7 +557,7 @@ ________________________________________________________________________________
 							continue
 						M.show_message("<span class='game say'>PDA Message - <span class='name'>[U]</span> -> <span class='name'>[P.owner]</span>: <span class='message'>[sanitize_chat(t)]</span></span>")
 
-				if (!P.silent)
+				if (!P.message_silent)
 					playsound(P.loc, 'sound/machines/twobeep.ogg', 50, 1)
 					for (var/mob/O in hearers(3, P.loc))
 						O.show_message(text("\icon[P] *[P.ttone]*"))
