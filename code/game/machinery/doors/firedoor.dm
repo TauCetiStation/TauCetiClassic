@@ -24,7 +24,6 @@
 	var/list/users_to_open
 	var/pdiff_alert = 0
 	var/pdiff = 0
-	block_air_zones = 0 //If set, air zones cannot merge across the door even when it is opened.
 
 /obj/machinery/door/firedoor/New()
 	. = ..()
