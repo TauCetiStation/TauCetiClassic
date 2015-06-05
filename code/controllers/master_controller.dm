@@ -20,6 +20,7 @@ datum/controller/game_controller
 	var/sun_cost		= 0
 	var/mobs_cost		= 0
 	var/diseases_cost	= 0
+	var/light_cost		= 0
 	var/machines_cost	= 0
 	var/objects_cost	= 0
 	var/networks_cost	= 0
@@ -67,6 +68,7 @@ datum/controller/game_controller/proc/setup()
 	if(!ticker)
 		ticker = new /datum/controller/gameticker()
 
+	create_lighting_overlays()
 	setup_objects()
 	setupgenetics()
 	setupfactions()
@@ -170,6 +172,13 @@ datum/controller/game_controller/proc/process()
 
 				sleep(breather_ticks)
 
+				//LIGHTING
+				timer = world.timeofday
+				process_lighting()
+				light_cost = (world.timeofday - timer) / 10
+
+				sleep(breather_ticks)
+
 				//MACHINES
 				timer = world.timeofday
 				process_machines()
@@ -224,7 +233,7 @@ datum/controller/game_controller/proc/process()
 				gc_cost = (world.timeofday - timer) / 10
 
 				//TIMING
-				total_cost = air_cost + sun_cost + mobs_cost + diseases_cost + machines_cost + objects_cost + networks_cost + powernets_cost + nano_cost + events_cost + ticker_cost + gc_cost
+				total_cost = air_cost + sun_cost + mobs_cost + diseases_cost + light_cost + machines_cost + objects_cost + networks_cost + powernets_cost + nano_cost + events_cost + ticker_cost + gc_cost
 
 				var/end_time = world.timeofday
 				if(end_time < start_time)
@@ -258,6 +267,34 @@ datum/controller/game_controller/proc/process_diseases()
 			i++
 			continue
 		active_diseases.Cut(i,i+1)
+
+datum/controller/game_controller/proc/process_lighting()
+	process_light_update()
+	process_light_overlay()
+	
+datum/controller/game_controller/proc/process_light_update()
+	var/i = 1
+	while(i<=lighting_update_lights.len)
+		for(var/datum/light_source/L in lighting_update_lights)
+			if(L.needs_update)
+				if(L.destroyed || L.check() || L.force_update)
+					L.remove_lum()
+					if(!L.destroyed) L.apply_lum()
+					L.force_update = 0
+				L.needs_update = 0
+
+		lighting_update_lights.Cut()
+
+datum/controller/game_controller/proc/process_light_overlay()
+	var/i = 1
+	while(i<=lighting_update_overlays.len)
+		for(var/atom/movable/lighting_overlay/O in lighting_update_overlays)
+			if(O.needs_update)
+				O.update_overlay()
+				O.needs_update = 0
+
+		lighting_update_overlays.Cut()
+
 
 datum/controller/game_controller/proc/process_machines()
 	process_machines_process()

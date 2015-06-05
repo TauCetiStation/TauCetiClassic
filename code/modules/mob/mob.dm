@@ -765,6 +765,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 				stat(null,"Air-[master_controller.air_cost]\tSun-[master_controller.sun_cost]")
 				stat(null,"Mob-[master_controller.mobs_cost]\t#[mob_list.len]")
 				stat(null,"Dis-[master_controller.diseases_cost]\t#[active_diseases.len]")
+				stat(null,"Light-[master_controller.light_cost]\t#[lighting_update_lights.len]+[lighting_update_overlays.len]")
 				stat(null,"Mch-[master_controller.machines_cost]\t#[machines.len]")
 				stat(null,"Obj-[master_controller.objects_cost]\t#[processing_objects.len]")
 				stat(null,"Net-[master_controller.networks_cost]\tPnet-[master_controller.powernets_cost]")
@@ -774,11 +775,11 @@ note dizziness decrements automatically in the mob's Life() proc.
 			else
 				stat(null,"MasterController-ERROR")
 
-			if(statpanel("Status") && processScheduler && processScheduler.getIsRunning())
-				for(var/datum/controller/process/P in processScheduler.processes)
-					statpanel("Status",P.getStatName(), P.getTickTime())
-			else
-				stat(null, "processScheduler is not running.")
+			//if(statpanel("Status") && processScheduler && processScheduler.getIsRunning())
+			//	for(var/datum/controller/process/P in processScheduler.processes)
+			//		statpanel("Status",P.getStatName(), P.getTickTime())
+			//else
+			//	stat(null, "processScheduler is not running.")
 
 
 	if(listed_turf && client)
