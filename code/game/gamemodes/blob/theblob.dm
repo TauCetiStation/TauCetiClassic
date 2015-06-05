@@ -2,7 +2,7 @@
 /obj/effect/blob
 	name = "blob"
 	icon = 'tauceti/icons/mob/blob.dmi'
-	luminosity = 3
+	light_range = 3
 	desc = "Some blob creature thingy"
 	density = 0
 	opacity = 0

@@ -204,7 +204,7 @@
 	name = "glowing resin"
 	desc = "Blue bioluminescence shines from beneath the surface."
 	layer = 3
-	luminosity = 0
+	light_range = 0
 	var/node_range = NODERANGE
 
 /obj/effect/alien/weeds/node/New()

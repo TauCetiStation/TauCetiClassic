@@ -814,3 +814,5 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 //General-purpose life speed define for plants.
 #define HYDRO_SPEED_MULTIPLIER 1
 #define NANO_IGNORE_DISTANCE 1
+
+#define CLAMP01(x) max(0, min(1, x))

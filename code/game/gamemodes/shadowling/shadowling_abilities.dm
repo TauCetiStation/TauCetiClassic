@@ -55,7 +55,7 @@
 			L.update(0)
 		for(var/obj/item/device/pda/P in T.contents)
 			P.fon = 0
-			P.SetLuminosity(0)
+			P.set_light(0)
 		for(var/obj/effect/glowshroom/G in orange(2, usr)) //Very small radius
 			G.visible_message("<span class='warning'>\The [G] withers away!</span>")
 			qdel(G)
@@ -69,10 +69,18 @@
 				F.update_brightness()
 			for(var/obj/item/device/pda/P in H)
 				P.fon = 0
-				P.SetLuminosity(0) //failsafe
+				P.set_light(0) //failsafe
+			for(var/obj/item/clothing/head/helmet/space/rig/R in H)
+				if(R.on)
+					R.on = 0
+					R.icon_state = "rig[R.on]-[R.item_color]"
+					H.update_inv_head()
+					R.visible_message("<span class='danger'>[R]'s light fades and turns off.</span>")
+					H.set_light(H.luminosity - R.brightness_on)
+					R.set_light(0)
 			if(H != usr)
 				H << "<span class='boldannounce'>You feel a chill and are plunged into darkness.</span>"
-			H.SetLuminosity(0) //This is required with the object-based lighting
+			H.set_light(0) //This is required with the object-based lighting
 
 
 

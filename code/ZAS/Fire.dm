@@ -58,7 +58,7 @@ turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh, atom/fir
 
 	icon = 'icons/effects/fire.dmi'
 	icon_state = "1"
-
+	light_color = "#ED9200"
 	layer = TURF_LAYER
 
 	var/firelevel = 10000 //Calculated by gas_mixture.calculate_firelevel()
@@ -104,13 +104,13 @@ turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh, atom/fir
 
 	if(firelevel > 6)
 		icon_state = "3"
-		SetLuminosity(7)
+		set_light(7)
 	else if(firelevel > 2.5)
 		icon_state = "2"
-		SetLuminosity(5)
+		set_light(5)
 	else
 		icon_state = "1"
-		SetLuminosity(3)
+		set_light(3)
 
 	//im not sure how to implement a version that works for every creature so for now monkeys are firesafe
 	for(var/mob/living/carbon/human/M in loc)
@@ -168,13 +168,13 @@ turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh, atom/fir
 		del src
 
 	dir = pick(cardinal)
-	SetLuminosity(3)
+	set_light(3)
 	firelevel = fl
 	air_master.active_hotspots.Add(src)
 
 /obj/fire/Del()
 	if (istype(loc, /turf/simulated))
-		SetLuminosity(0)
+		set_light(0)
 
 		loc = null
 	air_master.active_hotspots.Remove(src)
@@ -183,7 +183,7 @@ turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh, atom/fir
 
 /obj/fire/proc/RemoveFire()
 	if (istype(loc, /turf/simulated))
-		SetLuminosity(0)
+		set_light(0)
 		loc = null
 	air_master.active_hotspots.Remove(src)
 

@@ -773,6 +773,63 @@ note dizziness decrements automatically in the mob's Life() proc.
 			else
 				stat(null,"MasterController-ERROR")
 
+			if(processScheduler.getIsRunning())
+				var/datum/controller/process/process
+
+				//process = processScheduler.getProcess("vote")
+				//stat(null, "VOT\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
+
+				//process = processScheduler.getProcess("air")
+				//stat(null, "AIR\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
+
+				//process = processScheduler.getProcess("sun")
+				//stat(null, "SUN\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
+
+				//process = processScheduler.getProcess("ticker")
+				//stat(null, "TIC\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
+
+				//process = processScheduler.getProcess("garbage")
+				//stat(null, "GAR\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
+
+				process = processScheduler.getProcess("lighting")
+				stat(null, "LIG\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
+
+				//process = processScheduler.getProcess("shuttle controller")
+				//stat(null, "SHT\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
+
+				//process = processScheduler.getProcess("emergency shuttle")
+				//stat(null, "EME\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
+
+				//process = processScheduler.getProcess("inactivity")
+				//stat(null, "IAC\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
+
+				//process = processScheduler.getProcess("mob")
+				//stat(null, "MOB([mob_list.len])\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
+
+				//process = processScheduler.getProcess("disease")
+				//stat(null, "DIS([active_diseases.len])\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
+
+				//process = processScheduler.getProcess("machinery")
+				//stat(null, "MAC([machines.len])\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
+
+				//process = processScheduler.getProcess("obj")
+				//stat(null, "OBJ([processing_objects.len])\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
+
+				//process = processScheduler.getProcess("pipenet")
+				//stat(null, "PIP([pipe_networks.len])\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
+
+				//process = processScheduler.getProcess("powernet")
+				//stat(null, "POW([powernets.len])\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
+
+				//process = processScheduler.getProcess("nanoui")
+				//stat(null, "NAN([nanomanager.processing_uis.len])\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
+
+				//process = processScheduler.getProcess("event")
+				//stat(null, "EVE([events.len])\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
+			else
+				stat(null, "processScheduler is not running.")
+
+
 	if(listed_turf && client)
 		if(get_dist(listed_turf,src) > 1)
 			listed_turf = null

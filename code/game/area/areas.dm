@@ -26,20 +26,15 @@
 //		lighting_state = 4
 		//has_gravity = 0    // Space has gravity.  Because.. because.
 
-	if(requires_power)
-		luminosity = 0
-	else
+	if(!requires_power)
 		power_light = 0			//rastaf0
 		power_equip = 0			//rastaf0
 		power_environ = 0		//rastaf0
-		luminosity = 1
-		lighting_use_dynamic = 0
 
 	..()
 
 //	spawn(15)
 	power_change()		// all machines set to current power level, also updates lighting icon
-	InitializeLighting()
 
 
 /area/proc/poweralert(var/state, var/obj/source as obj)
@@ -220,7 +215,8 @@
 	return
 
 /area/proc/updateicon()
-	if ((fire || eject || party) && ((!requires_power)?(!requires_power):power_environ))//If it doesn't require power, can still activate this proc.
+	//if ((fire || eject || party) && ((!requires_power)?(!requires_power):power_environ))//If it doesn't require power, can still activate this proc.
+	if ((fire || eject || party) && (!requires_power||power_environ) && !istype(src, /area/space))//If it doesn't require power, can still activate this proc.
 		if(fire && !eject && !party)
 			icon_state = "blue"
 		/*else if(atmosalm && !fire && !eject && !party)
