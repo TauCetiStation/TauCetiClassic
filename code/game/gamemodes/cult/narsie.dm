@@ -148,6 +148,8 @@
 	// Pixel stuff centers Narsie.
 	pixel_x = -236
 	pixel_y = -256
+	light_range = 1
+	light_color = "#3e0000"
 	current_size = 12
 	move_self = 1 //Do we move on our own?
 	grav_pull = 10

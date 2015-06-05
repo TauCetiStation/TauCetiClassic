@@ -117,7 +117,7 @@
 						emote("me",1,"looks with [pick("a resentful","a happy","an excited")] expression on his face and wants to play more!")
 					return
 	..()
-	
+
 /mob/living/simple_animal/corgi/hitby(atom/movable/AM as mob|obj)
 	if(inventory_head && inventory_back)
 		if( istype(inventory_head,/obj/item/clothing/head/helmet) && istype(inventory_back,/obj/item/clothing/suit/armor) )
@@ -147,7 +147,7 @@
 					emote_hear = list("barks", "woofs", "yaps","pants")
 					emote_see = list("shakes its head", "shivers")
 					desc = "It's a corgi."
-					SetLuminosity(0)
+					set_light(0)
 					inventory_head.loc = src.loc
 					inventory_head = null
 					regenerate_icons()
@@ -214,7 +214,7 @@
 						/obj/item/clothing/head/collectable/paper,
 						/obj/item/clothing/head/soft
 					)
-					
+
 					var/obj/item/item_to_add = usr.get_active_hand()
 					if(!item_to_add)
 						return
@@ -315,7 +315,7 @@
 			name = "Rudolph the Red-Nosed Corgi"
 			emote_hear = list("barks christmas songs", "yaps")
 			desc = "He has a very shiny nose."
-			SetLuminosity(6)
+			set_light(6)
 		if(/obj/item/clothing/head/soft)
 			name = "Corgi Tech [real_name]"
 			desc = "The reason your yellow gloves have chew-marks."

@@ -217,7 +217,7 @@ atom/proc/ul_FalloffAmount(var/atom/ref)
 
 	return 0
 
-atom/proc/ul_SetOpacity(var/NewOpacity)
+atom/proc/ul_set_opacity(var/NewOpacity)
 	if(opacity != NewOpacity)
 
 		var/list/Blanked = ul_BlankLocal()
