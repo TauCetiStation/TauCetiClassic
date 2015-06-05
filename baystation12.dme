@@ -239,6 +239,7 @@
 #include "code\controllers\shuttle_controller.dm"
 #include "code\controllers\verbs.dm"
 #include "code\controllers\voting.dm"
+#include "code\controllers\Processes\machinery.dm"
 #include "code\controllers\ProcessScheduler\core\_define.dm"
 #include "code\controllers\ProcessScheduler\core\_stubs.dm"
 #include "code\controllers\ProcessScheduler\core\process.dm"
