@@ -275,7 +275,15 @@ var/list/mechtoys = list(
 		var/list/clear_turfs = list()
 
 		for(var/turf/T in shuttle)
-			if(T.density || T.contents.len)	continue
+			if(T.density)	continue
+			var/contcount
+			for(var/atom/A in T.contents)
+				if(istype(A,/atom/movable/lighting_overlay))
+					continue
+				if(istype(A,/obj/machinery/light))
+					continue
+				contcount++
+			if(contcount)	continue
 			clear_turfs += T
 
 		for(var/S in shoppinglist)
