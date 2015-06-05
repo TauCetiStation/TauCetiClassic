@@ -619,10 +619,10 @@
 
 #define LIGHTING_POWER_FACTOR 20		//20W per unit luminosity
 
-
+/*
 /obj/machinery/light/process()
 	if(on)
-		use_power(light_range * LIGHTING_POWER_FACTOR, LIGHT)
+		use_power(light_range * LIGHTING_POWER_FACTOR, LIGHT)*/
 
 
 // called when area power state changes
