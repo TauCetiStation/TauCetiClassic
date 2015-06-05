@@ -119,6 +119,8 @@ var/list/ghostteleportlocs = list()
 /area/admin
 	name = "\improper Admin room"
 	icon_state = "start"
+	requires_power = 0
+	lighting_use_dynamic = 0
 
 
 
@@ -323,6 +325,7 @@ var/list/ghostteleportlocs = list()
 	name = "start area"
 	icon_state = "start"
 	requires_power = 0
+	luminosity = 1
 	lighting_use_dynamic = 0
 	has_gravity = 1
 
@@ -339,7 +342,6 @@ var/list/ghostteleportlocs = list()
 	name = "\improper Centcom"
 	icon_state = "centcom"
 	requires_power = 0
-	//unlimited_power = 1
 	lighting_use_dynamic = 0
 
 /area/centcom/control
@@ -382,8 +384,6 @@ var/list/ghostteleportlocs = list()
 	name = "\improper Syndicate Mothership"
 	icon_state = "syndie-ship"
 	requires_power = 0
-	//unlimited_power = 1
-	lighting_use_dynamic = 0
 
 /area/syndicate_mothership/control
 	name = "\improper Syndicate Control Room"
@@ -408,20 +408,6 @@ var/list/ghostteleportlocs = list()
 /area/asteroid/artifactroom
 	name = "\improper Asteroid - Artifact"
 	icon_state = "cave"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /area/planet/clown
 	name = "\improper Clown Planet"
