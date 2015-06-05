@@ -117,7 +117,7 @@
 	explosion_resistance = 0
 	src.density = 0
 	src.block_air_zones = 0 // We merge zones if door is open.
-//	src.sd_SetOpacity(0)	//TODO: why is this here? Opaque windoors? ~Carn
+//	src.sd_set_opacity(0)	//TODO: why is this here? Opaque windoors? ~Carn
 	update_nearby_tiles()
 
 	if(operating == 1) //emag again
@@ -136,7 +136,7 @@
 	src.block_air_zones = 1
 	explosion_resistance = initial(explosion_resistance)
 //	if(src.visible)
-//		SetOpacity(1)	//TODO: why is this here? Opaque windoors? ~Carn
+//		set_opacity(1)	//TODO: why is this here? Opaque windoors? ~Carn
 	update_nearby_tiles()
 
 	sleep(10)

@@ -545,8 +545,8 @@
 
 	if (!explode)
 		W.opacity = 1
-		W.sd_SetOpacity(0)
-		//This is probably gonna make lighting go a bit wonky in bombed areas, but sd_SetOpacity was the primary reason bombs have been so laggy. --NEO
+		W.sd_set_opacity(0)
+		//This is probably gonna make lighting go a bit wonky in bombed areas, but sd_set_opacity was the primary reason bombs have been so laggy. --NEO
 	W.levelupdate()
 	return W
 
@@ -561,7 +561,7 @@
 	if(prior_icon) W.icon_state = prior_icon
 	else W.icon_state = "plating"
 	W.opacity = 1
-	W.sd_SetOpacity(0)
+	W.sd_set_opacity(0)
 	W.levelupdate()
 	return W
 
