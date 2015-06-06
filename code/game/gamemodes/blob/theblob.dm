@@ -2,7 +2,7 @@
 /obj/effect/blob
 	name = "blob"
 	icon = 'tauceti/icons/mob/blob.dmi'
-	luminosity = 3
+	light_range = 3
 	desc = "Some blob creature thingy"
 	density = 0
 	opacity = 0
@@ -150,6 +150,7 @@
 
 
 /obj/effect/blob/attackby(var/obj/item/weapon/W, var/mob/user)
+	user.do_attack_animation(src)
 	playsound(src.loc, 'sound/effects/attackblob.ogg', 50, 1)
 	src.visible_message("\red <B>The [src.name] has been attacked with \the [W][(user ? " by [user]." : ".")]")
 	var/damage = 0
@@ -166,6 +167,7 @@
 	return
 
 /obj/effect/blob/attack_animal(mob/living/simple_animal/M as mob)
+	M.do_attack_animation(src)
 	playsound(src.loc, 'sound/effects/attackblob.ogg', 50, 1)
 	src.visible_message("\red <B>The [src.name] has been attacked by \the [M].")
 	var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)

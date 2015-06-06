@@ -14,6 +14,8 @@
 	var/obj/item/weapon/disk/data/diskette = null //Mostly so the geneticist can steal everything.
 	var/loading = 0 // Nice loading text
 
+	light_color = "#0000FF"
+
 /obj/machinery/computer/cloning/New()
 	..()
 	spawn(5)
@@ -346,9 +348,9 @@
 	if ((!subject.ckey) || (!subject.client))
 		scantemp = "Error: Mental interface failure."
 		return
-	/*if (NOCLONE in subject.mutations)
-		scantemp = "Error: Mental interface failure."
-		return*/
+	if (NOCLONE in subject.mutations)
+		scantemp = "Error: Unable to locate valid genetic data."
+		return
 	if (!isnull(find_record(subject.ckey)))
 		scantemp = "Subject already in database."
 		return

@@ -72,9 +72,17 @@
 	if (!laws)
 		laws = new base_law_type
 
+/mob/living/silicon/proc/has_zeroth_law()
+	return laws.zeroth
+
 /mob/living/silicon/robot/proc/set_zeroth_law(var/law)
 	laws_sanity_check()
 	laws.set_zeroth_law(law)
+
+/mob/living/silicon/robot/set_zeroth_law(var/law, var/law_borg)
+	..()
+	if(tracking_entities)
+		src << "<span class='warning'>Internal camera is currently being accessed.</span>"
 
 /mob/living/silicon/robot/proc/add_inherent_law(var/law)
 	laws_sanity_check()

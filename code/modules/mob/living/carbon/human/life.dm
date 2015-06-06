@@ -275,6 +275,9 @@
 				gene.OnMobLife(src)
 
 		if (radiation)
+			if(species.flags & RAD_IMMUNE)
+				return
+
 			if (radiation > 100)
 				radiation = 100
 				if(!(species.flags & RAD_ABSORB))
@@ -1042,10 +1045,11 @@
 			var/light_amount = 0 //how much light there is in the place, affects receiving nutrition and healing
 			if(isturf(loc)) //else, there's considered to be no light
 				var/turf/T = loc
-				var/area/A = T.loc
-				if(A)
-					if(A.lighting_use_dynamic)	light_amount = min(10,T.lighting_lumcount) - 5 //hardcapped so it's not abused by having a ton of flashlights
-					else						light_amount =  5
+				var/atom/movable/lighting_overlay/L = locate(/atom/movable/lighting_overlay) in T
+				if(L)
+					light_amount = min(10,L.lum_r + L.lum_g + L.lum_b) - 5 //hardcapped so it's not abused by having a ton of flashlights
+				else
+					light_amount =  5
 			nutrition += light_amount
 			traumatic_shock -= light_amount
 
@@ -1062,14 +1066,37 @@
 			var/light_amount = 0
 			if(isturf(loc))
 				var/turf/T = loc
-				var/area/A = T.loc
-				if(A)
-					if(A.lighting_use_dynamic)	light_amount = T.lighting_lumcount
-					else						light_amount =  10
+				var/atom/movable/lighting_overlay/L = locate(/atom/movable/lighting_overlay) in T
+				if(L)
+					light_amount = L.lum_r + L.lum_g + L.lum_b //hardcapped so it's not abused by having a ton of flashlights
+				else
+					light_amount =  10
 			if(light_amount > 2) //if there's enough light, start dying
 				take_overall_damage(1,1)
 			else if (light_amount < 2) //heal in the dark
 				heal_overall_damage(1,1)
+
+		if(dna && dna.mutantrace == "shadowling")
+			var/light_amount = 0
+			nutrition = 450 //i aint never get hongry
+			if(isturf(loc))
+				var/turf/T = loc
+				var/atom/movable/lighting_overlay/L = locate(/atom/movable/lighting_overlay) in T
+				if(L)
+					light_amount = L.lum_r + L.lum_g + L.lum_b //hardcapped so it's not abused by having a ton of flashlights
+				else
+					light_amount =  10
+			if(light_amount > LIGHT_DAM_THRESHOLD) //Not complete blackness - they can live in very small light levels plus starlight
+				take_overall_damage(0,LIGHT_DAMAGE_TAKEN)
+				src << "<span class='userdanger'>The light burns you!</span>"
+				src << 'tauceti/sounds/weapon/sear.ogg'
+			else if (light_amount < LIGHT_HEAL_THRESHOLD) //heal in the dark
+				heal_overall_damage(5,5)
+				adjustToxLoss(-3)
+				adjustBrainLoss(-25) //gibbering shadowlings are hilarious but also bad to have
+				adjustCloneLoss(-1)
+				SetWeakened(0)
+				SetStunned(0)
 
 		//The fucking FAT mutation is the dumbest shit ever. It makes the code so difficult to work with
 		if(FAT in mutations)
@@ -1398,27 +1425,6 @@
 					see_invisible = SEE_INVISIBLE_LIVING
 					seer = 0
 
-			if(istype(wear_mask, /obj/item/clothing/mask/gas/voice/space_ninja))
-				var/obj/item/clothing/mask/gas/voice/space_ninja/O = wear_mask
-				switch(O.mode)
-					if(0)
-						var/target_list[] = list()
-						for(var/mob/living/target in oview(src))
-							if( target.mind&&(target.mind.special_role||issilicon(target)) )//They need to have a mind.
-								target_list += target
-						if(target_list.len)//Everything else is handled by the ninja mask proc.
-							O.assess_targets(target_list, src)
-						if(!druggy)		see_invisible = SEE_INVISIBLE_LIVING
-					if(1)
-						see_in_dark = 5
-						if(!druggy)		see_invisible = SEE_INVISIBLE_LIVING
-					if(2)
-						sight |= SEE_MOBS
-						if(!druggy)		see_invisible = SEE_INVISIBLE_LEVEL_TWO
-					if(3)
-						sight |= SEE_TURFS
-						if(!druggy)		see_invisible = SEE_INVISIBLE_LIVING
-
 			if(glasses)
 				var/obj/item/clothing/glasses/G = glasses
 				if(istype(G))
@@ -1428,7 +1434,14 @@
 						if(!druggy)
 							see_invisible = SEE_INVISIBLE_MINIMUM
 				if(istype(G,/obj/item/clothing/glasses/night))
-					see_invisible = SEE_INVISIBLE_MINIMUM
+					if(istype(G,/obj/item/clothing/glasses/night/shadowling))
+						var/obj/item/clothing/glasses/night/shadowling/S = G
+						if(S.vision)
+							see_invisible = SEE_INVISIBLE_LIVING
+						else
+							see_invisible = SEE_INVISIBLE_MINIMUM
+					else
+						see_invisible = SEE_INVISIBLE_MINIMUM
 //					client.screen += global_hud.nvg
 
 	/* HUD shit goes here, as long as it doesn't modify sight flags */
@@ -1447,7 +1460,29 @@
 			else if(!seer)
 				see_invisible = SEE_INVISIBLE_LIVING
 
-
+			if(istype(wear_mask, /obj/item/clothing/mask/gas/voice/space_ninja))
+				var/obj/item/clothing/mask/gas/voice/space_ninja/O = wear_mask
+				switch(O.mode)
+					if(0)
+						var/target_list[] = list()
+						for(var/mob/living/target in oview(src))
+							if( target.mind&&(target.mind.special_role||issilicon(target)) )//They need to have a mind.
+								target_list += target
+						if(target_list.len)//Everything else is handled by the ninja mask proc.
+							O.assess_targets(target_list, src)
+						if(!druggy)		see_invisible = SEE_INVISIBLE_LIVING
+					if(1)
+						see_in_dark = 5
+						//client.screen += global_hud.meson
+						if(!druggy)		see_invisible = SEE_INVISIBLE_MINIMUM
+					if(2)
+						sight |= SEE_MOBS
+						//client.screen += global_hud.thermal
+						if(!druggy)		see_invisible = SEE_INVISIBLE_LEVEL_TWO
+					if(3)
+						sight |= SEE_TURFS
+						//client.screen += global_hud.meson
+						if(!druggy)		see_invisible = SEE_INVISIBLE_MINIMUM
 
 			if(healths)
 				if (analgesic)
@@ -1564,7 +1599,8 @@
 					client.screen += global_hud.darkMask
 
 			if(istype(glasses, /obj/item/clothing/glasses/meson) || istype(glasses, /obj/item/clothing/glasses/night) || istype(glasses, /obj/item/clothing/glasses/gglasses))
-				client.screen += global_hud.meson
+				if(!(istype(glasses, /obj/item/clothing/glasses/night/shadowling)))
+					client.screen += global_hud.meson
 
 			if(istype(glasses, /obj/item/clothing/glasses/thermal) )
 				client.screen += global_hud.thermal
@@ -1609,8 +1645,9 @@
 
 		//0.1% chance of playing a scary sound to someone who's in complete darkness
 		if(isturf(loc) && rand(1,1000) == 1)
-			var/turf/currentTurf = loc
-			if(!currentTurf.lighting_lumcount)
+			var/turf/T = loc
+			var/atom/movable/lighting_overlay/L = locate(/atom/movable/lighting_overlay) in T
+			if(L && L.lum_r + L.lum_g + L.lum_b == 0)
 				playsound_local(src,pick(scarySounds),50, 1, -1)
 
 	proc/handle_virus_updates()
@@ -1906,6 +1943,10 @@
 					holder.icon_state = "hudmutineer"
 				if("mutineer")
 					holder.icon_state = "hudmutineer"
+				if("shadowling")
+					holder.icon_state = "hudshadowling"
+				if("thrall")
+					holder.icon_state = "hudthrall"
 
 			hud_list[SPECIALROLE_HUD] = holder
 	hud_updateflag = 0

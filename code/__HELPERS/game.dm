@@ -9,6 +9,13 @@
 	src:Topic(href, href_list)
 	return null
 
+/proc/is_on_same_plane_or_station(var/z1, var/z2)
+	if(z1 == z2)
+		return 1
+	if((z1 in config.station_levels) &&	(z2 in config.station_levels))
+		return 1
+	return 0
+
 /proc/get_area(O)
 	var/atom/location = O
 	var/i
@@ -45,20 +52,20 @@
 
 	return heard
 
+/proc/isStationLevel(var/level)
+	return level in config.station_levels
 
+/proc/isNotStationLevel(var/level)
+	return !isStationLevel(level)
 
+/proc/isPlayerLevel(var/level)
+	return level in config.player_levels
 
-//Magic constants obtained by using linear regression on right-angled triangles of sides 0<x<1, 0<y<1
-//They should approximate pythagoras theorem well enough for our needs.
-#define k1 0.934
-#define k2 0.427
-/proc/cheap_hypotenuse(Ax,Ay,Bx,By) // T is just the second atom to check distance to center with
-	var/dx = abs(Ax - Bx)	//sides of right-angled triangle
-	var/dy = abs(Ay - By)
-	if(dx>=dy)	return (k1*dx) + (k2*dy)	//No sqrt or powers :)
-	else		return (k1*dx) + (k2*dy)
-#undef k1
-#undef k2
+/proc/isAdminLevel(var/level)
+	return level in config.admin_levels
+
+/proc/isNotAdminLevel(var/level)
+	return !isAdminLevel(level)
 
 /proc/circlerange(center=usr,radius=3)
 
@@ -377,3 +384,36 @@ datum/projectile_data
 	var/dest_y = src_y + distance*cos(rotation);
 
 	return new /datum/projectile_data(src_x, src_y, time, distance, power_x, power_y, dest_x, dest_y)
+
+/proc/GetRedPart(const/hexa)
+	return hex2num(copytext(hexa,2,4))
+
+/proc/GetGreenPart(const/hexa)
+	return hex2num(copytext(hexa,4,6))
+
+/proc/GetBluePart(const/hexa)
+	return hex2num(copytext(hexa,6,8))
+
+/proc/GetHexColors(const/hexa)
+	return list(
+			GetRedPart(hexa),
+			GetGreenPart(hexa),
+			GetBluePart(hexa)
+		)
+
+/proc/MixColors(const/list/colors)
+	var/list/reds = list()
+	var/list/blues = list()
+	var/list/greens = list()
+	var/list/weights = list()
+
+	for (var/i = 0, ++i <= colors.len)
+		reds.Add(GetRedPart(colors[i]))
+		blues.Add(GetBluePart(colors[i]))
+		greens.Add(GetGreenPart(colors[i]))
+		weights.Add(1)
+
+	var/r = mixOneColor(weights, reds)
+	var/g = mixOneColor(weights, greens)
+	var/b = mixOneColor(weights, blues)
+	return rgb(r,g,b)

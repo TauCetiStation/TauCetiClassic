@@ -24,6 +24,12 @@
 			icon_state = "alien[caste]_dead"
 		for(var/image/I in overlays_lying)
 			overlays += I
+
+	else if((stat == UNCONSCIOUS && !sleeping) || weakened)
+		icon_state = "alien[caste]_unconscious"
+	else if(leap_on_click)
+		icon_state = "alien[caste]_pounce"
+
 	else if(lying)
 		if(resting)
 			icon_state = "alien[caste]_sleep"
@@ -38,6 +44,22 @@
 		else						icon_state = "alien[caste]_s"
 		for(var/image/I in overlays_standing)
 			overlays += I
+
+	if(leaping)
+		if(alt_icon == initial(alt_icon))
+			var/old_icon = icon
+			icon = alt_icon
+			alt_icon = old_icon
+		icon_state = "alien[caste]_leap"
+		pixel_x = -32
+		pixel_y = -32
+	else
+		if(alt_icon != initial(alt_icon))
+			var/old_icon = icon
+			icon = alt_icon
+			alt_icon = old_icon
+		pixel_x = get_standard_pixel_x_offset(lying)
+		pixel_y = get_standard_pixel_y_offset(lying)
 
 /mob/living/carbon/alien/humanoid/regenerate_icons()
 	..()

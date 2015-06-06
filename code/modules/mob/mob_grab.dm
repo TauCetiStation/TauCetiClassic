@@ -203,8 +203,24 @@
 			else
 				if(!do_mob(user, affecting)||!do_after(user, 100)) return
 			user.visible_message("<span class='danger'>[user] devours [affecting]!</span>")
-			affecting.loc = user
-			attacker.stomach_contents.Add(affecting)
+			if(isalien(user))
+				if(affecting.stat == DEAD)
+					affecting.gib()
+					if(attacker.health >= attacker.maxHealth - attacker.getCloneLoss())
+						attacker.adjustToxLoss(100)
+						attacker << "<span class='notice'>You gain some plasma.</span>"
+					else
+						attacker.adjustBruteLoss(-100)
+						attacker.adjustFireLoss(-100)
+						attacker.adjustOxyLoss(-100)
+						attacker.adjustCloneLoss(-100)
+						attacker << "<span class='notice'>You feel better.</span>"
+				else
+					affecting.loc = user
+					attacker.stomach_contents.Add(affecting)
+			else
+				affecting.loc = user
+				attacker.stomach_contents.Add(affecting)
 			del(src)
 
 

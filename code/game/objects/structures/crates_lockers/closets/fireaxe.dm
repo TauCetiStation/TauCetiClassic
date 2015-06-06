@@ -39,6 +39,7 @@
 						spawn(10) update_icon()
 					return
 				else
+					user.do_attack_animation(src)
 					playsound(user, 'sound/effects/Glasshit.ogg', 100, 1) //We don't want this playing every time
 				if(W.force < 15)
 					user << "\blue The cabinet's protective glass glances off the hit."
@@ -57,7 +58,7 @@
 					user << "\red Unwield the axe first."
 					return
 				fireaxe = O
-				user.drop_item(O)
+				user.drop_item()
 				src.contents += O
 				user << "\blue You place the fire axe back in the [src.name]."
 				update_icon()

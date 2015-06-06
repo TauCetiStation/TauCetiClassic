@@ -20,6 +20,8 @@
 	required_enemies = 3
 	recommended_enemies = 3
 
+	votable = 0
+
 
 	uplink_welcome = "AntagCorp Uplink Console:"
 	uplink_uses = 10

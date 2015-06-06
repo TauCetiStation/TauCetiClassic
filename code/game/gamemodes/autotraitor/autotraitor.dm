@@ -7,6 +7,8 @@
 	//config_tag = "extend-a-traitormongous"
 	config_tag = "autotraitor"
 
+	votable = 0
+
 	var/list/possible_traitors
 	var/num_players = 0
 

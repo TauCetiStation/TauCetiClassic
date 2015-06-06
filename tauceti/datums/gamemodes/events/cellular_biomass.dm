@@ -4,27 +4,25 @@
 	desc = "Space barf from another dimension. It just keeps spreading!"
 	icon = 'tauceti/icons/mob/alien.dmi'
 	icon_state = "resin"
-	
+
 	anchored = 1
 	density = 1
 	opacity = 1
-	
+
 	var/grip = 0
 	var/health = 100
 	var/energy = 0
-	
+
 	var/obj/effect/cellular_biomass_controller/master = null
 
 	New()
 		..()
 		var/turf/T = get_turf(src)
 		T.thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
-		
+
 
 	Del()
 		density = 0
-		if(opacity)
-			UpdateAffectingLights()
 		var/turf/T = get_turf(src)
 		T.thermal_conductivity = initial(T.thermal_conductivity)
 		if(master)
@@ -131,7 +129,7 @@
 	health = 20
 	layer = 2
 	energy = 4
-	
+
 /obj/effect/cellular_biomass/grass/light
 	luminosity = 3
 	icon_state = "weednode"
@@ -168,9 +166,9 @@
 			var/random = rand(1,15)
 			location.icon_state = "ironsand[random]"
 			location.color = "gray"
-			
+
 			var/obj/effect/cellular_biomass/BM = new(location)
-			
+
 			BM.grip = newgrip
 			growth_queue += BM
 			biomass_cells += BM
@@ -193,7 +191,7 @@
 			i++
 			growth_queue -= BM
 			BM.grow()
-			if(BM) 
+			if(BM)
 				if(BM.energy < 4)
 					queue_end += BM
 				BM.spread()
@@ -213,12 +211,12 @@
 				var/chosen = pick(critters)
 				var/mob/living/simple_animal/hostile/C = new chosen
 				C.loc = src.loc
-				
+
 			var/obj/effect/cellular_biomass/grass/BM = new(src.loc)
 			BM.icon_state = pick("weeds","weeds1","weeds2")
 
 		//if(air_master)
-		//		air_master.mark_for_update(get_turf(src))	
+		//		air_master.mark_for_update(get_turf(src))
 		Del(src)
 
 
@@ -286,7 +284,7 @@
 	Del(src)
 
 
-	
+
 /proc/cellular_biomass_infestation()
 
 	spawn() //to stop the secrets panel hanging

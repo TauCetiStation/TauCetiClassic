@@ -13,6 +13,8 @@
 
 	var/current_heat_capacity = 50
 
+	light_color = "#FFFFFF"
+
 /obj/machinery/atmospherics/unary/cryo_cell/New()
 	..()
 	initialize_directions = dir

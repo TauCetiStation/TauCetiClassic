@@ -88,10 +88,12 @@ var/datum/air_tunnel/air_tunnel1/SS13_airtunnel = null
 var/going = 1.0
 var/master_mode = "extended"//"extended"
 var/secret_force_mode = "secret" // if this is anything but "secret", the secret rotation will forceably choose this mode
+var/master_last_mode = null // this variable contain the last played mode from previous round
 
 var/datum/engine_eject/engine_eject_control = null
 var/host = null
 var/aliens_allowed = 0
+var/visual_counter = 1
 var/ooc_allowed = 1
 var/looc_allowed = 1
 var/dsay_allowed = 1

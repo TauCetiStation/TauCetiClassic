@@ -28,39 +28,39 @@
 	if(health <= 0)
 		new /obj/item/weapon/shard(loc)
 		new /obj/item/stack/rods(loc)
-		del(src)
+		Destroy(src)
 	return
 
 
 /obj/structure/window/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			qdel(src)
+			Destroy(src)
 			return
 		if(2.0)
 			new /obj/item/weapon/shard(loc)
 			if(reinf) new /obj/item/stack/rods(loc)
-			qdel(src)
+			Destroy(src)
 			return
 		if(3.0)
 			if(prob(50))
 				new /obj/item/weapon/shard(loc)
 				if(reinf) new /obj/item/stack/rods(loc)
-				qdel(src)
+				Destroy(src)
 				return
 
 
 /obj/structure/window/blob_act()
 	new /obj/item/weapon/shard(loc)
 	if(reinf) new /obj/item/stack/rods(loc)
-	qdel(src)
+	Destroy(src)
 
 
 /obj/structure/window/meteorhit()
 	//world << "glass at [x],[y],[z] Mhit"
 	new /obj/item/weapon/shard( loc )
 	if(reinf) new /obj/item/stack/rods( loc)
-	qdel(src)
+	Destroy(src)
 
 
 /obj/structure/window/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
@@ -101,7 +101,7 @@
 	if(health <= 0)
 		new /obj/item/weapon/shard(loc)
 		if(reinf) new /obj/item/stack/rods(loc)
-		del(src)
+		Destroy(src)
 
 /obj/structure/window/attack_tk(mob/user as mob)
 	user.visible_message("<span class='notice'>Something knocks on [src].</span>")
@@ -113,7 +113,7 @@
 		user.visible_message("<span class='danger'>[user] smashes through [src]!</span>")
 		new /obj/item/weapon/shard(loc)
 		if(reinf) new /obj/item/stack/rods(loc)
-		qdel(src)
+		Destroy(src)
 	else if (usr.a_intent == "hurt")
 		playsound(src.loc, 'sound/effects/glassknock.ogg', 80, 1)
 		usr.visible_message("\red [usr.name] bangs against the [src.name]!", \
@@ -137,24 +137,27 @@
 		user.visible_message("<span class='danger'>[user] smashes through [src]!</span>")
 		new /obj/item/weapon/shard(loc)
 		if(reinf) new /obj/item/stack/rods(loc)
-		qdel(src)
+		Destroy(src)
 	else	//for nicer text~
 		user.visible_message("<span class='danger'>[user] smashes into [src]!</span>")
 		playsound(loc, 'sound/effects/Glasshit.ogg', 100, 1)
 
 
 /obj/structure/window/attack_alien(mob/user as mob)
-	if(islarva(user)) return
+	user.do_attack_animation(src)
+	if(islarva(user) || isfacehugger(user)) return
 	attack_generic(user, 15)
 
 /obj/structure/window/attack_animal(mob/user as mob)
 	if(!isanimal(user)) return
 	var/mob/living/simple_animal/M = user
+	M.do_attack_animation(src)
 	if(M.melee_damage_upper <= 0) return
 	attack_generic(M, M.melee_damage_upper)
 
 
 /obj/structure/window/attack_slime(mob/user as mob)
+	user.do_attack_animation(src)
 	if(!isslimeadult(user)) return
 	attack_generic(user, rand(10, 15))
 

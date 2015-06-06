@@ -1,7 +1,7 @@
 //TODO: rewrite and standardise all controller datums to the datum/controller type
 //TODO: allow all controllers to be deleted for clean restarts (see WIP master controller stuff) - MC done - lighting done
 
-/client/proc/restart_controller(controller in list("Master","Failsafe","Lighting","Supply Shuttle"))
+/client/proc/restart_controller(controller in list("Supply Shuttle"))
 	set category = "Debug"
 	set name = "Restart Controller"
 	set desc = "Restart one of the various periodic loop controllers for the game (be careful!)"
@@ -10,17 +10,6 @@
 	usr = null
 	src = null
 	switch(controller)
-		if("Master")
-			new /datum/controller/game_controller()
-			master_controller.process()
-			feedback_add_details("admin_verb","RMC")
-		if("Failsafe")
-			new /datum/controller/failsafe()
-			feedback_add_details("admin_verb","RFailsafe")
-		if("Lighting")
-			new /datum/controller/lighting()
-			lighting_controller.process()
-			feedback_add_details("admin_verb","RLighting")
 		if("Supply Shuttle")
 			supply_shuttle.process()
 			feedback_add_details("admin_verb","RSupply")
@@ -28,7 +17,7 @@
 	return
 
 
-/client/proc/debug_controller(controller in list("Master","Failsafe","Ticker","Lighting","Garbage","Air","Jobs","Sun","Radio","Supply Shuttle","Emergency Shuttle","Configuration","pAI", "Cameras", "Transfer Controller"))
+/client/proc/debug_controller(controller in list("Master","Ticker","Garbage","Air","Jobs","Sun","Radio","Supply Shuttle","Emergency Shuttle","Configuration","pAI", "Cameras", "Transfer Controller"))
 	set category = "Debug"
 	set name = "Debug Controller"
 	set desc = "Debug the various periodic loop controllers for the game (be careful!)"
@@ -38,15 +27,9 @@
 		if("Master")
 			debug_variables(master_controller)
 			feedback_add_details("admin_verb","DMC")
-		if("Failsafe")
-			debug_variables(Failsafe)
-			feedback_add_details("admin_verb","DFailsafe")
 		if("Ticker")
 			debug_variables(ticker)
 			feedback_add_details("admin_verb","DTicker")
-		if("Lighting")
-			debug_variables(lighting_controller)
-			feedback_add_details("admin_verb","DLighting")
 		if("Garbage")
 			debug_variables(garbage)
 			feedback_add_details("admin_verb","DGarbage")

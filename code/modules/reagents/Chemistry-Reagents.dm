@@ -731,15 +731,23 @@ datum
 			reagent_state = SOLID
 			color = "#C8A5DC" // rgb: 200, 165, 220
 			overdose = REAGENTS_OVERDOSE
+			custom_metabolism = 100
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 
 				var/needs_update = M.mutations.len > 0
 
-				M.mutations = list()
-				M.disabilities = 0
-				M.sdisabilities = 0
+				//M.mutations = list()
+				//M.disabilities = 0
+				//M.sdisabilities = 0
+				M.dna.ResetSE()
+				for(var/datum/dna/gene/gene in dna_genes)
+					if(!M || !M.dna)
+						return
+					if(!gene.block)
+						continue
+					genemutcheck(M,gene.block,null,MUTCHK_FORCED)
 
 				// Might need to update appearance for hulk etc.
 				if(needs_update && ishuman(M))
@@ -1892,6 +1900,20 @@ datum
 						M.sleeping += 1
 						M.adjustToxLoss((data - 50)*REM)
 				data++
+				..()
+				return
+
+		toxin/mutetoxin //the new zombie powder. @ TG Port
+			name = "Mute Toxin"
+			id = "mutetoxin"
+			description = "A toxin that temporarily paralyzes the vocal cords."
+			color = "#F0F8FF" // rgb: 240, 248, 255
+			custom_metabolism = 0.4
+			toxpwr = 0
+
+			on_mob_life(var/mob/living/M as mob)
+				if(!M) M = holder.my_atom
+				M.silent = max(M.silent, 3)
 				..()
 				return
 

@@ -8,6 +8,8 @@
 	var/mob/living/silicon/ai/current = null
 	var/opened = 0
 
+	light_color = "#FFFFFF"
+
 
 	verb/AccessInternals()
 		set category = "Object"

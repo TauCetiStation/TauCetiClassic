@@ -16,11 +16,8 @@ obj/machinery/atmospherics
 	active_power_usage = 0
 	power_channel = ENVIRON
 	var/nodealert = 0
-
-
-
-obj/machinery/atmospherics/var/initialize_directions = 0
-obj/machinery/atmospherics/var/pipe_color
+	var/global/list/iconsetids = list()
+	var/global/list/pipeimages = list()
 
 obj/machinery/atmospherics/process()
 	if(gc_destroyed) //comments on /vg/ imply that GC'd pipes still process
@@ -57,3 +54,80 @@ obj/machinery/atmospherics/proc/disconnect(obj/machinery/atmospherics/reference)
 
 obj/machinery/atmospherics/update_icon()
 	return null
+
+/obj/machinery/atmospherics/Del()
+	for(var/mob/living/L in src)
+		L.remove_ventcrawl()
+		L.forceMove(get_turf(src))
+	..()
+
+/obj/machinery/atmospherics/proc/getpipeimage(var/iconset, var/iconstate, var/direction, var/col=rgb(255,255,255))
+
+	//Add identifiers for the iconset
+	if(iconsetids[iconset] == null)
+		iconsetids[iconset] = num2text(iconsetids.len + 1)
+
+	//Generate a unique identifier for this image combination
+	var/identifier = iconsetids[iconset] + "_[iconstate]_[direction]_[col]"
+
+	var/image/img
+	if(pipeimages[identifier] == null)
+		img = image(iconset, icon_state=iconstate, dir=direction)
+		img.color = col
+
+		pipeimages[identifier] = img
+
+	else
+		img = pipeimages[identifier]
+
+	return img
+
+#define VENT_SOUND_DELAY 30
+
+/obj/machinery/atmospherics/relaymove(var/mob/living/user, var/direction)
+	if(!(direction & initialize_directions)) //cant go this way.
+		return
+
+	var/obj/machinery/atmospherics/target_move = findConnecting(direction)
+	if(target_move)
+		if(is_type_in_list(target_move, ventcrawl_machinery) && target_move.can_crawl_through())
+			user.remove_ventcrawl()
+			user.forceMove(target_move.loc) //handle entering and so on.
+			user.visible_message("<span class='notice'>You hear something squeezing through the ducts...</span>","<span class='notice'>You climb out the ventilation system.")
+		else if(target_move.can_crawl_through())
+			user.loc = target_move
+			user.client.eye = target_move  //Byond only updates the eye every tick, This smooths out the movement
+			if(world.time - user.last_played_vent > VENT_SOUND_DELAY)
+				user.last_played_vent = world.time
+				playsound(src, 'sound/machines/ventcrawl.ogg', 50, 1, -3)
+	else
+		if((direction & initialize_directions) || is_type_in_list(src, ventcrawl_machinery) && can_crawl_through()) //if we move in a way the pipe can connect, but doesn't - or we're in a vent
+			user.remove_ventcrawl()
+			user.forceMove(src.loc)
+			user.visible_message("<span class='notice'>You hear something squeezing through the ducts...</span>","<span class='notice'>You climb out the ventilation system.")
+	user.canmove = 0
+	spawn(1)
+		user.canmove = 1
+
+/obj/machinery/atmospherics/AltClick(var/mob/living/L)
+	if(is_type_in_list(src, ventcrawl_machinery))
+		L.handle_ventcrawl(src)
+		return
+	..()
+
+/obj/machinery/atmospherics/proc/can_crawl_through()
+	if(istype(src, /obj/machinery/atmospherics/unary/vent_pump)) //We can't move in if its welded, right?
+		var/obj/machinery/atmospherics/unary/vent_pump/VP = src
+		if(VP.welded)
+			return 0
+
+	return 1
+
+obj/machinery/atmospherics/var/initialize_directions = 0
+obj/machinery/atmospherics/var/pipe_color
+
+//Find a connecting /obj/machinery/atmospherics in specified direction
+/obj/machinery/atmospherics/proc/findConnecting(var/direction)
+	for(var/obj/machinery/atmospherics/target in get_step(src, direction))
+		if(target.initialize_directions & get_dir(target,src))
+			return target

@@ -20,6 +20,9 @@
 		user << "<span class='notice'>You find putting an evidence bag in another evidence bag to be slightly absurd.</span>"
 		return
 
+	if(istype(I, /obj/item/weapon/storage/box/evidence))
+		return
+
 	if(I.w_class > 3)
 		user << "<span class='notice'>[I] won't fit in [src].</span>"
 		return

@@ -224,6 +224,7 @@ var/MAX_EXPLOSION_RANGE = 14
 #define PASSGRILLE	4
 #define PASSBLOB	8
 #define PASSCRAWL	16  //ползанье
+#define PASSMOB		32
 
 //turf-only flags
 #define NOJAUNT		1
@@ -670,6 +671,7 @@ var/list/liftable_structures = list(\
 #define BE_PLANT		4096
 #define BE_MEME			8192
 #define BE_MUTINEER   	16384
+#define BE_SHADOWLING	32768
 
 var/list/be_special_flags = list(
 	"Traitor" = BE_TRAITOR,
@@ -686,7 +688,8 @@ var/list/be_special_flags = list(
 	"Raider" = BE_RAIDER,
 	"Diona" = BE_PLANT,
 	"Meme" = BE_MEME,
-	"Mutineer" = BE_MUTINEER
+	"Mutineer" = BE_MUTINEER,
+	"Shadowling" = BE_SHADOWLING
 	)
 
 #define AGE_MIN 17			//youngest a character can be
@@ -760,6 +763,8 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 
 #define IS_SYNTHETIC 16384
 
+#define RAD_IMMUNE 32768
+
 //Language flags.
 #define WHITELISTED 1  		// Language is available if the speaker is whitelisted.
 #define RESTRICTED 2   		// Language can only be accquired by spawning or an admin.
@@ -794,3 +799,20 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define IS_SKRELL 3
 #define IS_UNATHI 4
 #define IS_KIDAN 5
+
+// Suit sensor levels
+#define SUIT_SENSOR_OFF      0
+#define SUIT_SENSOR_BINARY   1
+#define SUIT_SENSOR_VITAL    2
+#define SUIT_SENSOR_TRACKING 3
+
+// NanoUI flags
+#define STATUS_INTERACTIVE 2 // GREEN Visability
+#define STATUS_UPDATE 1 // ORANGE Visability
+#define STATUS_DISABLED 0 // RED Visability
+#define STATUS_CLOSE -1 // Close the interface
+//General-purpose life speed define for plants.
+#define HYDRO_SPEED_MULTIPLIER 1
+#define NANO_IGNORE_DISTANCE 1
+
+#define CLAMP01(x) max(0, min(1, x))

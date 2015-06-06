@@ -156,7 +156,7 @@ atom
 
 			return 0
 
-		ul_SetOpacity(var/NewOpacity)
+		ul_set_opacity(var/NewOpacity)
 			if(opacity != NewOpacity)
 
 				var/list/Blanked = ul_BlankLocal()

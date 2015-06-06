@@ -7,6 +7,7 @@
 	gender = NEUTER
 	pass_flags = PASSTABLE
 	update_icon = 0		///no need to call regenerate_icon
+	ventcrawler = 1
 
 	var/obj/item/weapon/card/id/wear_id = null // Fix for station bounced radios -- Skie
 	var/greaterform = "Human"                  // Used when humanizing a monkey.
@@ -199,6 +200,7 @@
 		help_shake_act(M)
 	else
 		if ((M.a_intent == "hurt" && !( istype(wear_mask, /obj/item/clothing/mask/muzzle) )))
+			M.do_attack_animation(src)
 			if ((prob(75) && health > 0))
 				playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
 				for(var/mob/O in viewers(src, null))
@@ -234,6 +236,7 @@
 						stuttering = 5
 					Stun(5)
 
+					M.do_attack_animation(src)
 					for(var/mob/O in viewers(src, null))
 						if (O.client)
 							O.show_message("\red <B>[src] has been touched with the stun gloves by [M]!</B>", 1, "\red You hear someone fall", 2)
@@ -246,6 +249,7 @@
 		help_shake_act(M)
 	else
 		if (M.a_intent == "hurt")
+			M.do_attack_animation(src)
 			if ((prob(75) && health > 0))
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))

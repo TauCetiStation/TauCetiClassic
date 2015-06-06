@@ -57,8 +57,8 @@ datum/controller/game_controller/New()
 datum/controller/game_controller/proc/setup()
 	world.tick_lag = config.Ticklag
 
-	spawn(20)
-		createRandomZlevel()
+	//spawn(20) Gateway lighting broken after new object lighting update 
+	//	createRandomZlevel()
 
 	if(!air_master)
 		air_master = new /datum/controller/air_system()
@@ -82,7 +82,6 @@ datum/controller/game_controller/proc/setup()
 		if(ticker)
 			ticker.pregame()
 
-	lighting_controller.Initialize()
 
 
 datum/controller/game_controller/proc/setup_objects()
@@ -115,7 +114,6 @@ datum/controller/game_controller/proc/process()
 	spawn(0)
 		//set background = 1
 		while(1)	//far more efficient than recursively calling ourself
-			if(!Failsafe)	new /datum/controller/failsafe()
 
 			var/currenttime = world.timeofday
 			last_tick_duration = (currenttime - last_tick_timeofday) / 10
@@ -303,7 +301,6 @@ datum/controller/game_controller/proc/process_machines_rebuild()
 				A.powerupdate += 1
 				active_areas |= A
 		rebuild_active_areas = 0
-
 
 datum/controller/game_controller/proc/process_objects()
 	var/i = 1

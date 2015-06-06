@@ -6,6 +6,18 @@
 	if(dx>=dy)	return dx + (0.5*dy)	//The longest side add half the shortest side approximates the hypotenuse
 	else		return dy + (0.5*dx)
 
+proc/trange(var/Dist=0,var/turf/Center=null)//alternative to range (ONLY processes turfs and thus less intensive)
+	if(Center==null) return
+
+	//var/x1=((Center.x-Dist)<1 ? 1 : Center.x-Dist)
+	//var/y1=((Center.y-Dist)<1 ? 1 : Center.y-Dist)
+	//var/x2=((Center.x+Dist)>world.maxx ? world.maxx : Center.x+Dist)
+	//var/y2=((Center.y+Dist)>world.maxy ? world.maxy : Center.y+Dist)
+
+	var/turf/x1y1 = locate(((Center.x-Dist)<1 ? 1 : Center.x-Dist),((Center.y-Dist)<1 ? 1 : Center.y-Dist),Center.z)
+	var/turf/x2y2 = locate(((Center.x+Dist)>world.maxx ? world.maxx : Center.x+Dist),((Center.y+Dist)>world.maxy ? world.maxy : Center.y+Dist),Center.z)
+	return block(x1y1,x2y2)
+
 ///// Z-Level Stuff
 proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog = 1, z_transfer = 1)
 ///// Z-Level Stuff
@@ -68,8 +80,8 @@ proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impa
 			message_admins("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range]) in area [epicenter.loc.name] ([epicenter.x],[epicenter.y],[epicenter.z]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[epicenter.x];Y=[epicenter.y];Z=[epicenter.z]'>JMP</a>)")
 			log_game("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range]) in area [epicenter.loc.name] ")
 
-		var/lighting_controller_was_processing = lighting_controller.processing	//Pause the lighting updates for a bit
-		lighting_controller.processing = 0
+//		var/lighting_controller_was_processing = lighting_controller.processing	//Pause the lighting updates for a bit
+//		lighting_controller.processing = 0
 		var/powernet_rebuild_was_deferred_already = defer_powernet_rebuild
 		if(defer_powernet_rebuild != 2)
 			defer_powernet_rebuild = 1
@@ -83,8 +95,10 @@ proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impa
 		var/y0 = epicenter.y
 		var/z0 = epicenter.z
 
-		for(var/turf/T in range(epicenter, max_range))
-			var/dist = cheap_pythag(T.x - x0,T.y - y0)
+		//for(var/turf/T in range(epicenter, max_range))OLD before new lighting system
+		//	var/dist = cheap_pythag(T.x - x0,T.y - y0)
+		for(var/turf/T in trange(max_range, epicenter))
+			var/dist = sqrt((T.x - x0)**2 + (T.y - y0)**2)
 
 			if(dist < devastation_range)		dist = 1
 			else if(dist < heavy_impact_range)	dist = 2
@@ -95,7 +109,8 @@ proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impa
 			if(T)
 				for(var/atom_movable in T.contents)	//bypass type checking since only atom/movable can be contained by turfs anyway
 					var/atom/movable/AM = atom_movable
-					if(AM)	AM.ex_act(dist)
+					//if(AM)	AM.ex_act(dist)OLD
+					if(AM && AM.simulated)	AM.ex_act(dist)
 
 		var/took = (world.timeofday-start)/10
 		//You need to press the DebugGame verb to see these now....they were getting annoying and we've collected a fair bit of data. Just -test- changes  to explosion code using this please so we can compare
@@ -109,7 +124,7 @@ proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impa
 
 		sleep(8)
 
-		if(!lighting_controller.processing)	lighting_controller.processing = lighting_controller_was_processing
+//		if(!lighting_controller.processing)	lighting_controller.processing = lighting_controller_was_processing
 		if(!powernet_rebuild_was_deferred_already)
 			if(defer_powernet_rebuild != 2)
 				defer_powernet_rebuild = 0
@@ -119,7 +134,7 @@ proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impa
 
 
 proc/secondaryexplosion(turf/epicenter, range)
-	for(var/turf/tile in range(range, epicenter))
+	for(var/turf/tile in trange(range, epicenter))
 		tile.ex_act(2)
 
 ///// Z-Level Stuff

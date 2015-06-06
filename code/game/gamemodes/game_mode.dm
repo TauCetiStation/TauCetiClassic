@@ -269,16 +269,19 @@ Implants;
 	//var/datum/mind/applicant = null
 
 	var/roletext
-	switch(role)
-		if(BE_CHANGELING)	roletext="changeling"
+	switch(role) //Sorting as in preferences
 		if(BE_TRAITOR)		roletext="traitor"
 		if(BE_OPERATIVE)	roletext="operative"
+		if(BE_CHANGELING)	roletext="changeling"
 		if(BE_WIZARD)		roletext="wizard"
 		if(BE_REV)			roletext="revolutionary"
 		if(BE_CULTIST)		roletext="cultist"
 		if(BE_NINJA)		roletext="ninja"
 		if(BE_RAIDER)		roletext="raider"
 		if(BE_MEME)			roletext="meme"
+		if(BE_MEME)			roletext="meme"
+		if(BE_MUTINEER)		roletext="mutineer"
+		if(BE_SHADOWLING)	roletext="shadowling"
 
 	// Assemble a list of active players without jobbans.
 	for(var/mob/new_player/player in player_list)
@@ -480,3 +483,23 @@ proc/get_nt_opposed()
 				dudes += man
 	if(dudes.len == 0) return null
 	return pick(dudes)
+
+///////////////////////////
+//Misc stuff and TG ports//
+///////////////////////////
+
+/datum/game_mode/proc/printplayer(var/datum/mind/ply)
+	var/role = "\improper[ply.assigned_role]"
+	var/text = "<br><b>[ply.name]</b>(<b>[ply.key]</b>) as \a <b>[role]</b> ("
+	if(ply.current)
+		if(ply.current.stat == DEAD)
+			text += "died"
+		else
+			text += "survived"
+		if(ply.current.real_name != ply.name)
+			text += " as <b>[ply.current.real_name]</b>"
+	else
+		text += "body destroyed"
+	text += ")"
+
+	return text

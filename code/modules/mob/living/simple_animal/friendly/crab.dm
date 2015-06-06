@@ -19,6 +19,7 @@
 	friendly = "pinches"
 	var/obj/item/inventory_head
 	var/obj/item/inventory_mask
+	ventcrawler = 2
 
 /mob/living/simple_animal/crab/Life()
 	..()
@@ -93,7 +94,7 @@
 					emote_hear = list("clicks")
 					emote_see = list("clacks")
 					desc = "Free crabs!"
-					src.sd_SetLuminosity(0)
+					src.sd_set_light(0)
 					inventory_head.loc = src.loc
 					inventory_head = null
 				else

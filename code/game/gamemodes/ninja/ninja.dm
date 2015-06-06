@@ -3,10 +3,14 @@
 /datum/game_mode/ninja
 	name = "ninja"
 	config_tag = "ninja"
+	restricted_jobs = list("Cyborg", "AI")
 	required_players = 10 //Can be adjusted later, should suffice for now.
-	required_players_secret = 10
-	required_enemies = 1
-	recommended_enemies = 1
+	required_players_secret = 15
+	required_enemies = 2
+	recommended_enemies = 2
+
+	votable = 0
+
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
 	var/finished = 0
@@ -18,14 +22,34 @@
 	if(!..())
 		return 0
 	var/list/datum/mind/possible_ninjas = get_players_for_role(BE_NINJA)
-	if(possible_ninjas.len==0)
+	var/ninja_number = 2
+
+	for(var/datum/mind/player in possible_ninjas)
+		for(var/job in restricted_jobs)
+			if(player.assigned_role == job)
+				possible_ninjas -= player
+
+	if(possible_ninjas.len < ninja_number)
 		return 0
-	var/datum/mind/ninja = pick(possible_ninjas)
+
+	while(ninja_number > 0)
+		var/datum/mind/ninja = pick(possible_ninjas)
+		if(ninja_number == 1)
+			ninja.protector_role = 1
+		ninjas += ninja
+		modePlayer += ninja
+		ninja.assigned_role = "MODE" //So they aren't chosen for other jobs.
+		ninja.special_role = "Ninja"
+		ninja.original = ninja.current
+		possible_ninjas -= ninja //So it doesn't pick the same guy each time.
+		ninja_number--
+
+	/*var/datum/mind/ninja = pick(possible_ninjas)
 	ninjas += ninja
 	modePlayer += ninja
 	ninja.assigned_role = "MODE" //So they aren't chosen for other jobs.
 	ninja.special_role = "Ninja"
-	ninja.original = ninja.current
+	ninja.original = ninja.current*/
 
 	/*if(ninjastart.len == 0)
 		ninja.current << "<B>\red A proper starting location for you could not be found, please report this bug!</B>"
@@ -35,19 +59,26 @@
 	for(var/obj/effect/landmark/L in landmarks_list)
 		if(L.name == "carpspawn")
 			ninjastart.Add(L)
-	if(ninjastart.len == 0 && latejoin.len > 0)
-		ninja.current << "<B>\red No spawneable locations could be found. Defaulting to latejoin.</B>"
+
+	if (ninjastart.len == 0)
+		//ninja.current << "<B>\red No spawneable locations could be found. Aborting.</B>"
+		return 0
+	/*if(ninjastart.len == 0 && latejoin.len > 0)
+		//ninja.current << "<B>\red No spawneable locations could be found. Defaulting to latejoin.</B>"
 		return 1
 	else if (ninjastart.len == 0)
-		ninja.current << "<B>\red No spawneable locations could be found. Aborting.</B>"
-		return 0
+		//ninja.current << "<B>\red No spawneable locations could be found. Aborting.</B>"
+		return 0*/
 
 	return 1
 
 /datum/game_mode/ninja/pre_setup()
 	for(var/datum/mind/ninja in ninjas)
 		ninja.current << browse(null, "window=playersetup")
-		ninja.current = create_space_ninja(pick(ninjastart.len ? ninjastart : latejoin))
+		var/start_point = pick(ninjastart)
+		ninjastart -= start_point
+		//ninja.current = create_space_ninja(pick(ninjastart.len ? ninjastart : latejoin))
+		ninja.current = create_space_ninja(start_point)
 		ninja.current.ckey = ninja.key
 	return 1
 
@@ -88,47 +119,103 @@
 	if (config.objectives_disabled)
 		return
 
-	var/objective_list = list(1,2,3,4,5)
-	for(var/i=rand(2,4),i>0,i--)
-		switch(pick(objective_list))
-			if(1)//Kill
+	if(!ninja.protector_role)
+		//var/objective_list = list(1,2,3,4,5)
+		var/objective_list = list(1,2,3,4)
+		for(var/i=rand(2,4),i>0,i--)
+			switch(pick(objective_list))
+				if(1)//Kill
+					var/datum/objective/assassinate/ninja_objective = new
+					ninja_objective.owner = ninja
+					ninja_objective.target = ninja_objective.find_target()
+					if(ninja_objective.target != "Free Objective")
+						ninja.objectives += ninja_objective
+					else
+						i++
+					objective_list -= 1 // No more than one kill objective
+				if(2)//Steal
+					var/datum/objective/steal/ninja_objective = new
+					ninja_objective.owner = ninja
+					ninja_objective.target = ninja_objective.find_target()
+					ninja.objectives += ninja_objective
+				/*if(3)//Protect
+					var/datum/objective/protect/ninja_objective = new
+					ninja_objective.owner = ninja
+					ninja_objective.target = ninja_objective.find_target()
+					if(ninja_objective.target != "Free Objective")
+						ninja.objectives += ninja_objective
+					else
+						i++
+						objective_list -= 3*/
+				//if(4)//Download
+				if(3)//Download
+					var/datum/objective/download/ninja_objective = new
+					ninja_objective.owner = ninja
+					ninja_objective.gen_amount_goal()
+					ninja.objectives += ninja_objective
+					//objective_list -= 4
+					objective_list -= 3
+				//if(5)//Harm
+				if(4)//Harm
+					var/datum/objective/harm/ninja_objective = new
+					ninja_objective.owner = ninja
+					ninja_objective.target = ninja_objective.find_target()
+					if(ninja_objective.target != "Free Objective")
+						ninja.objectives += ninja_objective
+					else
+						i++
+						//objective_list -= 5
+						objective_list -= 4
+	else
+		for(var/datum/mind/ninja_p in ninjas)
+			if(!ninja_p.protector_role)
+				for(var/datum/objective/objective_p in ninja_p.objectives)
+					if(istype(objective_p, /datum/objective/assassinate))
+						if(objective_p.target.current == ninja_p.current)
+							continue
+						if(objective_p.target.current == ninja.current)
+							continue
+						var/datum/objective/protect/ninja_objective = new
+						ninja_objective.owner = ninja
+						
+						ninja_objective.target = objective_p.target
+						ninja_objective.explanation_text = "Protect [objective_p.target.current.real_name], the [objective_p.target.assigned_role]."
+
+						ninja.objectives += ninja_objective
+
+					if(istype(objective_p, /datum/objective/steal))
+						var/datum/objective/steal/ninja_objective = new
+						ninja_objective.owner = ninja
+						
+						ninja_objective.target = objective_p.target
+						ninja_objective.steal_target = objective_p.target
+						ninja_objective.explanation_text = objective_p.explanation_text
+
+						ninja.objectives += ninja_objective
+
+					if(istype(objective_p, /datum/objective/download))
+						var/datum/objective/download/ninja_objective = new
+						ninja_objective.owner = ninja
+						ninja_objective.target_amount = objective_p.target_amount
+						ninja_objective.explanation_text = objective_p.explanation_text
+						ninja.objectives += ninja_objective
+
+					if(istype(objective_p, /datum/objective/harm))
+						if(objective_p.target.current == ninja_p.current)
+							continue
+						if(objective_p.target.current == ninja.current)
+							continue
+						var/datum/objective/protect/ninja_objective = new
+						ninja_objective.owner = ninja
+						ninja_objective.target = objective_p.target
+						ninja_objective.explanation_text = objective_p.explanation_text
+						ninja.objectives += ninja_objective
+
 				var/datum/objective/assassinate/ninja_objective = new
 				ninja_objective.owner = ninja
-				ninja_objective.target = ninja_objective.find_target()
-				if(ninja_objective.target != "Free Objective")
-					ninja.objectives += ninja_objective
-				else
-					i++
-				objective_list -= 1 // No more than one kill objective
-			if(2)//Steal
-				var/datum/objective/steal/ninja_objective = new
-				ninja_objective.owner = ninja
-				ninja_objective.target = ninja_objective.find_target()
+				ninja_objective.target = ninja_p
+				ninja_objective.explanation_text = "Assassinate [ninja_p.current.real_name], the [ninja_p.special_role]."
 				ninja.objectives += ninja_objective
-			if(3)//Protect
-				var/datum/objective/protect/ninja_objective = new
-				ninja_objective.owner = ninja
-				ninja_objective.target = ninja_objective.find_target()
-				if(ninja_objective.target != "Free Objective")
-					ninja.objectives += ninja_objective
-				else
-					i++
-					objective_list -= 3
-			if(4)//Download
-				var/datum/objective/download/ninja_objective = new
-				ninja_objective.owner = ninja
-				ninja_objective.gen_amount_goal()
-				ninja.objectives += ninja_objective
-				objective_list -= 4
-			if(5)//Harm
-				var/datum/objective/harm/ninja_objective = new
-				ninja_objective.owner = ninja
-				ninja_objective.target = ninja_objective.find_target()
-				if(ninja_objective.target != "Free Objective")
-					ninja.objectives += ninja_objective
-				else
-					i++
-					objective_list -= 5
 
 	var/datum/objective/survive/ninja_objective = new
 	ninja_objective.owner = ninja

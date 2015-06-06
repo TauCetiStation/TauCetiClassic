@@ -17,6 +17,11 @@ datum/game_mode/mutiny
 	name = "mutiny"
 	config_tag = "mutiny"
 	required_players = 7
+	recommended_enemies = 2
+	required_players_secret = 10
+
+	votable = 0
+
 	ert_disabled = 1
 
 	uplink_welcome = "Mutineers Uplink Console:"
@@ -103,7 +108,7 @@ datum/game_mode/mutiny
 		if (!pda)
 			return 0
 
-		if (!pda.silent)
+		if (!pda.message_silent)
 			playsound(pda.loc, 'sound/machines/twobeep.ogg', 50, 1)
 			for (var/mob/O in hearers(3, pda.loc))
 				O.show_message(text("\icon[pda] *[pda.ttone]*"))

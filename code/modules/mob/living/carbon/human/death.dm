@@ -103,8 +103,11 @@
 		//For ninjas exploding when they die.
 		if( istype(wear_suit, /obj/item/clothing/suit/space/space_ninja) && wear_suit:s_initialized )
 			src << browse(null, "window=spideros")//Just in case.
-			var/location = loc
-			explosion(location, 0, 0, 3, 4)
+			spawn(30)
+				var/location = loc
+				explosion(location, 0, 0, 3, 4)
+				src.gib()
+				gibbed = 1
 
 		update_canmove()
 		if(client)	blind.layer = 0
@@ -148,6 +151,8 @@
 	return
 
 /mob/living/carbon/human/proc/Drain()
+	if(fake_death)
+		fake_death = 0
 	ChangeToHusk()
 	mutations |= NOCLONE
 	return

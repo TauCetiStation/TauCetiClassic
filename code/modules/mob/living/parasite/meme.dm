@@ -224,9 +224,10 @@ mob/living/parasite/meme/verb/Thought()
 	// Use the points at the end rather than the beginning, because the user might cancel
 	if(!use_points(50)) return
 
-	message = say_quote(message)
-	var/rendered = "<span class='game say'><span class='name'>[speaker]</span> <span class='message'>[message]</span></span>"
-	target.show_message(rendered)
+	//message = say_quote(message)
+	var/rendered = "<span class='game say'><span class='name'>[speaker]</span> <span class='message'><i>[sanitize_plus_chat(message)]</i></span></span>"
+	//target.show_message(rendered)
+	target << rendered
 
 	usr << "<i>You make [target] hear:</i> [rendered]"
 

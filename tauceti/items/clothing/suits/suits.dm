@@ -23,6 +23,14 @@
 	icon_state = "greenponcho"
 	item_state = "greenponcho"
 
+/obj/item/clothing/suit/poncho/rainbow
+	name = "green poncho"
+	desc = "Your classic, non-racist poncho. This one is rainbow."
+	icon = 'tauceti/items/clothing/suits/suits.dmi'
+	tc_custom = 'tauceti/items/clothing/suits/suits.dmi'
+	icon_state = "rainbowponcho"
+	item_state = "rainbowponcho"
+
 /obj/item/clothing/suit/poncho/red
 	name = "red poncho"
 	desc = "Your classic, non-racist poncho. This one is red."

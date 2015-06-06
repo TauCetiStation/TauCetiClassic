@@ -53,3 +53,45 @@
 		if(prob(15))
 			L.Weaken(3)
 			L.visible_message("<span class='danger'>\the [src] knocks down \the [L]!</span>")
+
+/mob/living/simple_animal/hostile/carp/megacarp
+	icon = 'tauceti/icons/mob/megacarp.dmi'
+	name = "Mega Space Carp"
+	desc = "A ferocious, fang bearing creature that resembles a shark. This one seems especially ticked off."
+	icon_state = "megacarp"
+	icon_living = "megacarp"
+	icon_dead = "megacarp_dead"
+	icon_gib = "megacarp_gib"
+	maxHealth = 65
+	health = 65
+	pixel_x = -16
+
+	melee_damage_lower = 20
+	melee_damage_upper = 20
+
+/mob/living/simple_animal/hostile/carp/polkan
+	name = "POLKAN"
+	desc = "That's a cute little doge... WAIT, WHAT???!!"
+	maxHealth = 9001
+	health = 9001
+
+	turns_per_move = 5
+	speed = -15
+	move_to_delay = -15
+
+	melee_damage_lower = 400
+	melee_damage_upper = 400
+
+	attacktext = "licks"
+
+	var/idle_snd_chance = 5
+
+	attack_sound = 'tauceti/sounds/weapon/polkan_atk.ogg'
+
+/mob/living/simple_animal/hostile/carp/polkan/Life()
+	..()
+
+	if(!client)
+		if(rand(0,100) < idle_snd_chance)
+			var/list/idle_snd = list('tauceti/sounds/voice/polkan/idle1.ogg','tauceti/sounds/voice/polkan/idle2.ogg')
+			playsound(src, pick(idle_snd), 50, 1, -3)

@@ -155,7 +155,8 @@ var/global/datum/controller/gameticker/ticker
 
 	supply_shuttle.process() 		//Start the supply shuttle regenerating points -- TLE
 	master_controller.process()		//Start master_controller.process()
-	lighting_controller.process()	//Start processing DynamicAreaLighting updates
+
+	processScheduler.start()
 
 	for(var/obj/multiz/ladder/L in world) L.connect() //Lazy hackfix for ladders. TODO: move this to an actual controller. ~ Z
 
@@ -331,6 +332,7 @@ var/global/datum/controller/gameticker/ticker
 					if(!delay_end)
 						world << "\blue <B>Restarting in [restart_timeout/10] seconds</B>"
 
+				world.save_last_mode(ticker.mode.name)
 
 				if(blackbox)
 					blackbox.save_all_data_to_sql()

@@ -138,6 +138,12 @@
 /mob/proc/delay_clothing_equip_to_slot_if_possible(obj/item/clothing/X as obj, slot, del_on_fail = 0, disable_warning = 0, redraw_mob = 1, delay_time = 0)
 	if(!istype(X)) return 0
 
+	if(ishuman(usr))
+		var/mob/living/carbon/human/H = usr
+		if(H.wear_suit)
+			H << "\red You need to take off [H.wear_suit.name] first."
+			return
+
 	if(X.equipping == 1) return 0 // Item is already being equipped
 
 	var/tempX = usr.x
@@ -556,8 +562,9 @@ var/list/slot_equipment_priority = list( \
 	reset_view(null)
 	unset_machine()
 	if(istype(src, /mob/living))
-		if(src:cameraFollow)
-			src:cameraFollow = null
+		var/mob/living/M = src
+		if(M.cameraFollow)
+			M.cameraFollow = null
 
 /mob/Topic(href, href_list)
 	if(href_list["mach_close"])
@@ -748,9 +755,10 @@ note dizziness decrements automatically in the mob's Life() proc.
 	if(statpanel("Status"))	//not looking at that panel
 
 		if(client && client.holder)
-			stat(null,"Location:\t([x], [y], [z])")
-			stat(null,"CPU:\t[world.cpu]")
-			stat(null,"Instances:\t[world.contents.len]")
+			if(statpanel("Status"))
+				statpanel("Status","Location:","([x], [y], [z])")
+				statpanel("Status","CPU:","[world.cpu]")
+				statpanel("Status","Instances:","[world.contents.len]")
 
 			if(master_controller)
 				stat(null,"MasterController-[last_tick_duration] ([master_controller.processing?"On":"Off"]-[controller_iteration])")
@@ -765,6 +773,13 @@ note dizziness decrements automatically in the mob's Life() proc.
 				stat(null,"Tick-[master_controller.ticker_cost]\tALL-[master_controller.total_cost]")
 			else
 				stat(null,"MasterController-ERROR")
+
+			if(statpanel("Status") && processScheduler && processScheduler.getIsRunning())
+				for(var/datum/controller/process/P in processScheduler.processes)
+					statpanel("Status",P.getStatName(), P.getTickTime())
+			else
+				stat(null, "processScheduler is not running.")
+
 
 	if(listed_turf && client)
 		if(get_dist(listed_turf,src) > 1)
@@ -782,13 +797,22 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 	if(spell_list && spell_list.len)
 		for(var/obj/effect/proc_holder/spell/S in spell_list)
-			switch(S.charge_type)
-				if("recharge")
-					statpanel("Spells","[S.charge_counter/10.0]/[S.charge_max/10]",S)
-				if("charges")
-					statpanel("Spells","[S.charge_counter]/[S.charge_max]",S)
-				if("holdervar")
-					statpanel("Spells","[S.holder_var_type] [S.holder_var_amount]",S)
+			if(S.panel != "Debug")
+				switch(S.charge_type)
+					if("recharge")
+						statpanel(S.panel,"[S.charge_counter/10.0]/[S.charge_max/10]",S)
+					if("charges")
+						statpanel(S.panel,"[S.charge_counter]/[S.charge_max]",S)
+					if("holdervar")
+						statpanel(S.panel,"[S.holder_var_type] [S.holder_var_amount]",S)
+			else
+				switch(S.charge_type)// Whyyyy spells dont use panel variable?? :( @Zve
+					if("recharge")
+						statpanel("Spells","[S.charge_counter/10.0]/[S.charge_max/10]",S)
+					if("charges")
+						statpanel("Spells","[S.charge_counter]/[S.charge_max]",S)
+					if("holdervar")
+						statpanel("Spells","[S.holder_var_type] [S.holder_var_amount]",S)
 
 /mob/proc/add_stings_to_statpanel(var/list/stings)
 	for(var/obj/effect/proc_holder/changeling/S in stings)
@@ -841,8 +865,9 @@ note dizziness decrements automatically in the mob's Life() proc.
 	if(lying)
 		density = 0
 		if((l_hand && l_hand.canremove) || (r_hand && r_hand.canremove) )
-			drop_l_hand()
-			drop_r_hand()
+			if(!isalien(src))
+				drop_l_hand()
+				drop_r_hand()
 	else
 		density = 1
 

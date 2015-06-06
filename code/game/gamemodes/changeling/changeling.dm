@@ -14,6 +14,8 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	required_enemies = 1
 	recommended_enemies = 4
 
+	votable = 0
+
 	uplink_welcome = "Syndicate Uplink Console:"
 	uplink_uses = 10
 
@@ -235,6 +237,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	var/datum/dna/chosen_dna
 	var/obj/effect/proc_holder/changeling/sting/chosen_sting
 	var/space_suit_active = 0
+	var/instatis = 0
 
 /datum/changeling/New(var/gender=FEMALE)
 	..()
