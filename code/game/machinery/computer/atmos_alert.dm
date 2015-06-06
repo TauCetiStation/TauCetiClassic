@@ -6,13 +6,11 @@
 	desc = "Used to access the station's atmospheric sensors."
 	circuit = "/obj/item/weapon/circuitboard/atmos_alert"
 	icon_state = "alert:0"
+	light_color = "#e6ffff"
 	var/list/priority_alarms = list()
 	var/list/minor_alarms = list()
 	var/receive_frequency = 1437
 	var/datum/radio_frequency/radio_connection
-
-	light_color = "#7BF9FF"
-
 
 /obj/machinery/computer/atmos_alert/initialize()
 	..()

@@ -10,10 +10,10 @@
 	name = "security camera monitor"
 	desc = "Used to access the various cameras on the station."
 	icon_state = "cameras"
+	light_color = "#a91515"
 	var/obj/machinery/camera/current = null
 	var/last_pic = 1.0
 	var/list/network = list("SS13")
-	light_color = "#B40000"
 	var/mapping = 0//For the overview file, interesting bit of code.
 
 	var/camera_cache = null

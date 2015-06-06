@@ -85,9 +85,10 @@ var/list/mechtoys = list(
 		..()
 
 /obj/machinery/computer/supplycomp
-	name = "Supply shuttle console"
+	name = "supply control console"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "supply"
+	light_color = "#b88b2e"
 	req_access = list(access_cargo)
 	circuit = "/obj/item/weapon/circuitboard/supplycomp"
 	var/temp = null

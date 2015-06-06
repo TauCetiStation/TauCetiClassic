@@ -4,14 +4,13 @@
 	name = "Identification Computer"
 	desc = "Terminal for programming NanoTrasen employee ID cards to access parts of the station."
 	icon_state = "id"
+	light_color = "#0099ff"
 	req_access = list(access_change_ids)
 	circuit = "/obj/item/weapon/circuitboard/card"
 	var/obj/item/weapon/card/id/scan = null
 	var/obj/item/weapon/card/id/modify = null
 	var/mode = 0.0
 	var/printing = null
-
-	light_color = "#0000FF"
 
 	proc/is_centcom()
 		return istype(src, /obj/machinery/computer/card/centcom)

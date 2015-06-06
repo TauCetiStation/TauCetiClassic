@@ -2,21 +2,13 @@
 	name = "Area Air Control"
 	desc = "A computer used to control the stationary scrubbers and pumps in the area."
 	icon_state = "area_atmos"
+	light_color = "#e6ffff"
 	circuit = "/obj/item/weapon/circuitboard/area_atmos"
 
 	var/list/connectedscrubbers = new()
 	var/status = ""
 
 	var/range = 25
-
-	light_color = "#7BF9FF"
-
-	power_change()
-		..()
-		if(!(stat & (BROKEN|NOPOWER)))
-			set_light(2)
-		else
-			set_light(0)
 
 	//Simple variable to prevent me from doing attack_hand in both this and the child computer
 	var/zone = "This computer is working on a wireless range, the range is currently limited to 25 meters."
