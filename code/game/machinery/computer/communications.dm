@@ -33,6 +33,8 @@
 	var/stat_msg1
 	var/stat_msg2
 
+	light_color = "#0000FF"
+
 
 
 /obj/machinery/computer/communications/process()

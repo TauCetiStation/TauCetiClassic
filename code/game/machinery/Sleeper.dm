@@ -11,6 +11,8 @@
 	density = 1
 	var/orient = "LEFT" // "RIGHT" changes the dir suffix to "-r"
 
+	light_color = "#7BF9FF"
+
 
 /obj/machinery/sleep_console/process()
 	if(stat & (NOPOWER|BROKEN))
@@ -165,6 +167,15 @@
 	var/amounts = list(5, 10)
 	var/obj/item/weapon/reagent_containers/glass/beaker = null
 	var/filtering = 0
+
+	light_color = "#7BF9FF"
+
+	power_change()
+		..()
+		if(!(stat & (BROKEN|NOPOWER)))
+			set_light(2)
+		else
+			set_light(0)
 
 	New()
 		..()

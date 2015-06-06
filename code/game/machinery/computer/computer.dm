@@ -89,6 +89,10 @@
 /obj/machinery/computer/power_change()
 	..()
 	update_icon()
+	if(!(stat & (BROKEN|NOPOWER)))
+		set_light(2)
+	else
+		set_light(0)
 
 
 /obj/machinery/computer/proc/set_broken()

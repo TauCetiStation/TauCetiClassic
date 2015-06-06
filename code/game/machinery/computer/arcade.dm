@@ -35,6 +35,8 @@
 							/obj/item/toy/waterflower						= 1
 							)
 
+	light_color = "#00FF00"
+
 /obj/machinery/computer/arcade
 	var/turtle = 0
 

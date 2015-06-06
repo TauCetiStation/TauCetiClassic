@@ -20,6 +20,8 @@
 
 	var/storedcode = ""			// code stored
 
+	light_color = "#50AB00"
+
 
 	proc/update_ide()
 
