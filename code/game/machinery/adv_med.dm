@@ -10,6 +10,15 @@
 	density = 1
 	anchored = 1
 
+	light_color = "#00FF00"
+
+	power_change()
+		..()
+		if(!(stat & (BROKEN|NOPOWER)))
+			set_light(2)
+		else
+			set_light(0)
+
 /*/obj/machinery/bodyscanner/allow_drop()
 	return 0*/
 

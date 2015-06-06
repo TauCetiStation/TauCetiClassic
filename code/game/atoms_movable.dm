@@ -13,9 +13,10 @@
 	var/throw_range = 7
 	var/moved_recently = 0
 	var/mob/pulledby = null
+	var/simulated = 1 //filter for actions - used by lighting overlays
 
 /atom/movable/New()
-	..()
+	. = ..()
 
 /atom/movable/Move()
 	var/atom/A = src.loc

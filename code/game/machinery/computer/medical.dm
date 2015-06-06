@@ -16,6 +16,8 @@
 	var/temp = null
 	var/printing = null
 
+	light_color = "#0000FF"
+
 /obj/machinery/computer/med_data/attackby(obj/item/O as obj, user as mob)
 	if(istype(O, /obj/item/weapon/card/id) && !scan)
 		usr.drop_item()
