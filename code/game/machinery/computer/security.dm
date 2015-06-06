@@ -4,6 +4,7 @@
 	name = "Security Records"
 	desc = "Used to view and edit personnel's security records"
 	icon_state = "security"
+	light_color = "#00ffff"
 	req_one_access = list(access_security, access_forensics_lockers)
 	circuit = "/obj/item/weapon/circuitboard/secure_data"
 	var/obj/item/weapon/card/id/scan = null
@@ -21,8 +22,6 @@
 	//Sorting Variables
 	var/sortBy = "name"
 	var/order = 1 // -1 = Descending - 1 = Ascending
-
-	light_color = "#B40000"
 
 
 /obj/machinery/computer/secure_data/attackby(obj/item/O as obj, user as mob)

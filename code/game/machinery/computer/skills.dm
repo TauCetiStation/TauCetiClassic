@@ -4,6 +4,7 @@
 	name = "Employment Records"
 	desc = "Used to view personnel's employment records"
 	icon_state = "medlaptop"
+	light_color = "#00b000"
 	req_one_access = list(access_heads)
 	circuit = "/obj/item/weapon/circuitboard/skills"
 	var/obj/item/weapon/card/id/scan = null
