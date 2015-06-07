@@ -1343,7 +1343,7 @@ About the new airlock wires panel:
 				S.loc = M.loc
 				spawn(20)
 					qdel(S)
-				M.emote("scream")
+				M.emote("scream",,, 1)
 			var/turf/location = src.loc
 			if(istype(location, /turf/simulated))
 				location.add_blood(M)
