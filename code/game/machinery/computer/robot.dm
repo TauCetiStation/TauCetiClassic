@@ -6,6 +6,7 @@
 	desc = "Used to remotely lockdown or detonate linked Cyborgs."
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "robot"
+	light_color = "#a97faa"
 	req_access = list(access_robotics)
 	circuit = "/obj/item/weapon/circuitboard/robotics"
 
@@ -15,8 +16,6 @@
 	var/timeleft = 60
 	var/stop = 0.0
 	var/screen = 0 // 0 - Main Menu, 1 - Cyborg Status, 2 - Kill 'em All! -- In text
-
-	light_color = "#CD00CD"
 
 
 /obj/machinery/computer/robotics/attack_ai(var/mob/user as mob)

@@ -5,6 +5,7 @@
 	name = "Communications Console"
 	desc = "This can be used for various important functions. Still under developement."
 	icon_state = "comm"
+	light_color = "#0099ff"
 	req_access = list(access_heads)
 	circuit = "/obj/item/weapon/circuitboard/communications"
 	var/prints_intercept = 1
@@ -32,10 +33,6 @@
 	var/status_display_freq = "1435"
 	var/stat_msg1
 	var/stat_msg2
-
-	light_color = "#0000FF"
-
-
 
 /obj/machinery/computer/communications/process()
 	if(..())

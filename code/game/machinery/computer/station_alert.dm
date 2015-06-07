@@ -1,12 +1,11 @@
 
 /obj/machinery/computer/station_alert
-	name = "Station Alert Computer"
+	name = "Station Alert Console"
 	desc = "Used to access the station's automated alert system."
 	icon_state = "alert:0"
+	light_color = "#e6ffff"
 	circuit = "/obj/item/weapon/circuitboard/stationalert"
 	var/alarms = list("Fire"=list(), "Atmosphere"=list(), "Power"=list())
-
-	light_color = "#7BF9FF"
 
 
 	attack_ai(mob/user)
