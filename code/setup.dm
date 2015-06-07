@@ -552,6 +552,9 @@ var/list/liftable_structures = list(\
 #define INVISIBILITY_OBSERVER 60
 #define SEE_INVISIBLE_OBSERVER 60
 
+#define INVISIBILITY_AI_EYE 61
+#define SEE_INVISIBLE_OBSERVER_AI_EYE 61
+
 #define INVISIBILITY_MAXIMUM 100
 
 //Object specific defines
