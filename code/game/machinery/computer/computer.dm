@@ -9,6 +9,9 @@
 	var/obj/item/weapon/circuitboard/circuit = null //if circuit==null, computer can't disassembly
 	var/processing = 0
 
+	var/light_range_on = 3
+	var/light_power_on = 1
+
 /obj/machinery/computer/New()
 	..()
 	if(ticker)
@@ -89,6 +92,10 @@
 /obj/machinery/computer/power_change()
 	..()
 	update_icon()
+	if(stat & NOPOWER)
+		set_light(0)
+	else
+		set_light(light_range_on, light_power_on)
 
 
 /obj/machinery/computer/proc/set_broken()

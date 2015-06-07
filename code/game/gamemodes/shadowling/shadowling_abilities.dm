@@ -525,7 +525,7 @@ datum/reagent/shadowling_blindness_smoke/on_mob_life(var/mob/living/M as mob)
 		boom << "<span class='userdanger'><font size=3>You feel an immense pressure building all across your body!</span></font>"
 		boom.Stun(10)
 		//boom.audible_message("<b>[boom]</b> screams!")
-		boom.emote("screams!")
+		boom.emote("scream",,, 1)
 		sleep(20)
 		playsound(boom, 'sound/effects/splat.ogg', 100, 1)
 		boom.visible_message("<span class='userdanger'>[boom] explodes!</span>")

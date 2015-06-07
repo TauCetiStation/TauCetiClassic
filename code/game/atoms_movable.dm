@@ -15,7 +15,7 @@
 	var/mob/pulledby = null
 
 /atom/movable/New()
-	..()
+	. = ..()
 
 /atom/movable/Move()
 	var/atom/A = src.loc

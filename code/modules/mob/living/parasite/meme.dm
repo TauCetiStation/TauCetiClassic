@@ -307,7 +307,7 @@ mob/living/parasite/meme/verb/Agony()
 
 		usr << "<b>You send a jolt of agonizing pain through [host], they should be unable to concentrate on anything else for half a minute.</b>"
 
-		host.emote("scream")
+		host.emote("scream",,, 1)
 
 		for(var/i=0, i<10, i++)
 			host.stuttering = 2
@@ -315,7 +315,7 @@ mob/living/parasite/meme/verb/Agony()
 			if(prob(80)) host.flash_weak_pain()
 			if(prob(10)) host.paralysis = max(host.paralysis, 2)
 			if(prob(15)) host.emote("twitch")
-			else if(prob(15)) host.emote("scream")
+			else if(prob(15)) host.emote("scream",,, 1)
 			else if(prob(10)) host.emote("collapse")
 
 			if(i == 10)

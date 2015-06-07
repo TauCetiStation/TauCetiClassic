@@ -54,7 +54,7 @@ turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh, atom/fir
 	anchored = 1
 	mouse_opacity = 0
 
-	//luminosity = 3
+	blend_mode = BLEND_ADD
 
 	icon = 'icons/effects/fire.dmi'
 	icon_state = "1"
@@ -104,13 +104,13 @@ turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh, atom/fir
 
 	if(firelevel > 6)
 		icon_state = "3"
-		set_light(7)
+		set_light(7, 3)
 	else if(firelevel > 2.5)
 		icon_state = "2"
-		set_light(5)
+		set_light(5, 2)
 	else
 		icon_state = "1"
-		set_light(3)
+		set_light(3, 1)
 
 	//im not sure how to implement a version that works for every creature so for now monkeys are firesafe
 	for(var/mob/living/carbon/human/M in loc)
@@ -147,6 +147,9 @@ turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh, atom/fir
 			else
 				enemy_tile.adjacent_fire_act(loc, air_contents, air_contents.temperature, air_contents.return_volume())
 
+	animate(src, color = heat2color(air_contents.temperature), 5)
+	set_light(l_color = color)
+
 	//seperate part of the present gas
 	//this is done to prevent the fire burning all gases in a single pass
 	var/datum/gas_mixture/flow = air_contents.remove_ratio(vsc.fire_consuption_rate)
@@ -168,7 +171,11 @@ turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh, atom/fir
 		del src
 
 	dir = pick(cardinal)
-	set_light(3)
+
+	var/datum/gas_mixture/air_contents = loc.return_air()
+	color = heat2color(air_contents.temperature)
+	set_light(3, 1, color)
+
 	firelevel = fl
 	air_master.active_hotspots.Add(src)
 
