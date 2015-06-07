@@ -120,7 +120,7 @@
         return verb
 
 
-/mob/proc/emote(var/act, var/type, var/message)
+/mob/proc/emote(var/act, var/type, var/message, var/auto)
 	if(act == "me")
 		return custom_emote(type, message)
 
