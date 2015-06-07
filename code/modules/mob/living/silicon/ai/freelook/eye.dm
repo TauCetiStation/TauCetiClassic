@@ -1,6 +1,6 @@
 // AI EYE
 //
-+// A mob that the AI controls to look around the station with.
+// A mob that the AI controls to look around the station with.
 // It streams chunks as it moves around, which will show it what the AI can and cannot see.
 
 /mob/aiEye
