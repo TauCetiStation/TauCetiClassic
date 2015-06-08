@@ -84,7 +84,7 @@
 			rev_mind.objectives += rev_obj
 		equip_revolutionary(rev_mind.current)
 		rev_mind.current.verbs += /mob/living/carbon/human/proc/RevConvert
-		update_rev_icons_added(rev_mind)
+		update_all_rev_icons()
 
 	for(var/datum/mind/rev_mind in head_revolutionaries)
 		var/obj_count = 1

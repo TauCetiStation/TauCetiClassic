@@ -546,10 +546,12 @@ datum/mind
 					if(src in ticker.mode.revolutionaries)
 						special_role = null
 						ticker.mode.revolutionaries -= src
+						ticker.mode.update_rev_icons_removed(src)
 						src << "\red <Font size = 3><B>The nanobots in the loyalty implant remove all thoughts about being a revolutionary.  Get back to work!</B></Font>"
 					if(src in ticker.mode.head_revolutionaries)
 						special_role = null
 						ticker.mode.head_revolutionaries -=src
+						ticker.mode.update_rev_icons_removed(src)
 						src << "\red <Font size = 3><B>The nanobots in the loyalty implant remove all thoughts about being a revolutionary.  Get back to work!</B></Font>"
 					if(src in ticker.mode.cult)
 						ticker.mode.cult -= src
@@ -595,7 +597,7 @@ datum/mind
 					else
 						return
 					ticker.mode.revolutionaries += src
-					ticker.mode.update_rev_icons_added(src)
+					ticker.mode.update_all_rev_icons()
 					special_role = "Revolutionary"
 					log_admin("[key_name(usr)] has rev'ed [current].")
 
@@ -622,7 +624,7 @@ datum/mind
 							ticker.mode.greet_revolutionary(src,0)
 					current.verbs += /mob/living/carbon/human/proc/RevConvert
 					ticker.mode.head_revolutionaries += src
-					ticker.mode.update_rev_icons_added(src)
+					ticker.mode.update_all_rev_icons()
 					special_role = "Head Revolutionary"
 					log_admin("[key_name_admin(usr)] has head-rev'ed [current].")
 
@@ -679,7 +681,7 @@ datum/mind
 				if("cultist")
 					if(!(src in ticker.mode.cult))
 						ticker.mode.cult += src
-						ticker.mode.update_cult_icons_added(src)
+						ticker.mode.update_all_cult_icons()
 						special_role = "Cultist"
 						current << "<font color=\"purple\"><b><i>You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy the world is, you see that it should be open to the knowledge of Nar-Sie.</b></i></font>"
 						current << "<font color=\"purple\"><b><i>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</b></i></font>"
@@ -1197,7 +1199,7 @@ datum/mind
 	proc/make_Cultist()
 		if(!(src in ticker.mode.cult))
 			ticker.mode.cult += src
-			ticker.mode.update_cult_icons_added(src)
+			ticker.mode.update_all_cult_icons()
 			special_role = "Cultist"
 			current << "<font color=\"purple\"><b><i>You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy the world is, you see that it should be open to the knowledge of Nar-Sie.</b></i></font>"
 			current << "<font color=\"purple\"><b><i>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</b></i></font>"
@@ -1243,7 +1245,7 @@ datum/mind
 					objectives += rev_obj
 				ticker.mode.greet_revolutionary(src,0)
 		ticker.mode.head_revolutionaries += src
-		ticker.mode.update_rev_icons_added(src)
+		ticker.mode.update_all_rev_icons()
 		special_role = "Head Revolutionary"
 
 		ticker.mode.forge_revolutionary_objectives(src)
