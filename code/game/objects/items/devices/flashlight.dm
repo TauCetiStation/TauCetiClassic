@@ -208,3 +208,98 @@
 	
 /obj/item/device/flashlight/slime/attack_self(mob/user)
 	return //Bio-luminescence does not toggle.
+
+// Glowsticks
+
+/obj/item/device/flashlight/glowstick
+	name = "glowstick"
+	desc = ""
+	w_class = 2.0
+	brightness_on = 7
+	light_power = 3
+	icon = 'icons/obj/glowsticks.dmi'
+	icon_state = null
+	item_state = null
+	icon_action_button = null	//just pull it manually, neckbeard.
+	var/colourName = null
+	var/fuel = 0
+
+/obj/item/device/flashlight/glowstick/initialize()
+	..()
+	if(on)
+		icon_state = "glowstick_[colourName]-on"
+		set_light(brightness_on)
+	else
+		icon_state = "glowstick_[colourName]"
+		set_light(0)
+
+/obj/item/device/flashlight/glowstick/update_brightness(var/mob/user = null)
+	if(on)
+		icon_state = "glowstick_[colourName]-on"
+		set_light(brightness_on)
+	else
+		icon_state = "glowstick_[colourName]"
+		set_light(0)
+
+/obj/item/device/flashlight/glowstick/green
+	colourName = "green"
+	light_color = "#88EBC3"
+
+/obj/item/device/flashlight/glowstick/red
+	colourName = "red"
+	light_color = "#EA0052"
+
+/obj/item/device/flashlight/glowstick/blue
+	colourName = "blue"
+	light_color = "#24C1FF"
+
+/obj/item/device/flashlight/glowstick/yellow
+	colourName = "yellow"
+	light_color = "#FFFA18"
+
+/obj/item/device/flashlight/glowstick/orange
+	colourName = "orange"
+	light_color = "#FF9318"
+
+/obj/item/device/flashlight/glowstick/New()
+	name = "[colourName] glowstick"
+	desc = "A Nanotrasen issued [colourName] glowstick. There are instructions on the side, it reads 'bend it, make light'."
+	icon_state = "glowstick_[colourName]"
+	item_state = "glowstick_[colourName]"
+	if(prob(99))
+		fuel = rand(180, 360)
+	else
+		fuel = rand(5, 15)
+	..()
+
+/obj/item/device/flashlight/glowstick/process()
+	fuel = max(fuel - 1, 0)
+	if(!fuel || !on)
+		turn_off()
+		if(!fuel)
+			src.icon_state = "glowstick_[colourName]-over"
+		processing_objects -= src
+
+/obj/item/device/flashlight/glowstick/proc/turn_off()
+	on = 0
+	if(ismob(loc))
+		var/mob/U = loc
+		update_brightness(U)
+	else
+		update_brightness(null)
+
+/obj/item/device/flashlight/glowstick/attack_self(mob/user)
+
+	// Usual checks
+	if(!fuel)
+		user << "<span class='notice'>It's out of chemicals.</span>"
+		return
+	if(on)
+		return
+
+	. = ..()
+	// All good, turn it on.
+	if(.)
+		playsound(src, 'sound/weapons/glowstick_bend.ogg', 35, 0)
+		user.visible_message("<span class='notice'>[user] bends the [name].</span>", "<span class='notice'>You bend the [name]!</span>")
+		processing_objects += src
