@@ -154,7 +154,7 @@
 	icon_state = "sticksbox"
 	w_class = 2.0
 	storage_slots = 5
-	icon_type = "crayon"
+	icon_type = "glowstick"
 	can_hold = list(
 		"/obj/item/device/flashlight/glowstick"
 	)
