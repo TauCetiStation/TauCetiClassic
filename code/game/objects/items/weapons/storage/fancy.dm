@@ -10,6 +10,7 @@
  *		Egg Box
  *		Candle Box
  *		Crayon Box
+ *		Glowsticks Box
  *		Cigarette Box
  */
 
@@ -141,6 +142,37 @@
 				usr << "This crayon is too powerful to be contained in this box."
 				return
 	..()
+
+/*
+ * Glowsticks Box
+ */
+
+/obj/item/weapon/storage/fancy/glowsticks
+	name = "box of glowsticks"
+	desc = "A box of glowsticks (Do not eat)."
+	icon = 'icons/obj/glowsticks.dmi'
+	icon_state = "sticksbox"
+	w_class = 2.0
+	storage_slots = 5
+	icon_type = "crayon"
+	can_hold = list(
+		"/obj/item/device/flashlight/glowstick"
+	)
+
+/obj/item/weapon/storage/fancy/glowsticks/New()
+	..()
+	new /obj/item/device/flashlight/glowstick/green(src)
+	new /obj/item/device/flashlight/glowstick/red(src)
+	new /obj/item/device/flashlight/glowstick/blue(src)
+	new /obj/item/device/flashlight/glowstick/yellow(src)
+	new /obj/item/device/flashlight/glowstick/orange(src)
+	update_icon()
+
+/obj/item/weapon/storage/fancy/glowsticks/update_icon()
+	overlays = list() //resets list
+	overlays += image('icons/obj/glowsticks.dmi',"crayonbox")
+	for(var/obj/item/device/flashlight/glowstick/glowstick in contents)
+		overlays += image('icons/obj/glowsticks.dmi',glowstick.colourName)
 
 ////////////
 //CIG PACK//
