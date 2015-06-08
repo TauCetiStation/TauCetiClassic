@@ -99,7 +99,7 @@
 	for(var/datum/mind/cult_mind in cult)
 		equip_cultist(cult_mind.current)
 		grant_runeword(cult_mind.current)
-		update_cult_icons_added(cult_mind)
+		update_all_cult_icons()
 		cult_mind.current << "\blue You are a member of the cult!"
 		if(!config.objectives_disabled)
 			memoize_cult_objectives(cult_mind)
@@ -181,7 +181,7 @@
 		return 0
 	if(!(cult_mind in cult) && is_convertable_to_cult(cult_mind))
 		cult += cult_mind
-		update_cult_icons_added(cult_mind)
+		update_all_cult_icons()
 		return 1
 
 
