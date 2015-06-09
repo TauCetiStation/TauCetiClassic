@@ -107,6 +107,15 @@
 			D.cure(0)
 		..()
 
+	Del()
+		set_light(0)
+		..()
+
+	proc/stop_light()
+		sleep(rand(150,300))
+		if(!src) return
+		set_light(0)
+
 /obj/effect/decal/cleanable/tomato_smudge
 	name = "tomato smudge"
 	desc = "It's red."

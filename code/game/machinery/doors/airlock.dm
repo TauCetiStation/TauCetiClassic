@@ -864,8 +864,24 @@ About the new airlock wires panel:
 				s.set_up(5, 1, src)
 				s.start()
 	return ..()
+
 /obj/machinery/door/airlock/attack_paw(mob/user as mob)
 	return src.attack_hand(user)
+
+/obj/machinery/door/airlock/attack_paw(mob/user as mob)
+	if(istype(user, /mob/living/carbon/alien/humanoid))
+		if(welded || locked)
+			user << "\red The door is sealed, it cannot be pried open."
+			return
+		else if(!density)
+			return
+		else
+			user << "\red You force your claws between the doors and begin to pry them open..."
+			playsound(src.loc, 'sound/effects/metal_creaking.ogg', 30, 1, -4)
+			if (do_after(user,40))
+				if(!src) return
+				open(1)
+	return
 
 /obj/machinery/door/airlock/attack_hand(mob/user as mob)
 	if(!istype(usr, /mob/living/silicon))
@@ -877,7 +893,7 @@ About the new airlock wires panel:
 		return //##Z2
 
 	// No. -- cib , Yes. -- zve , No. -- cib -- YES! -- zve
-	
+
 	if(ishuman(user) && prob(40) && src.density)
 		var/mob/living/carbon/human/H = user
 		if(H.getBrainLoss() >= 60)

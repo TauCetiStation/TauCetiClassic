@@ -2,6 +2,9 @@
 
 var/global/list/uneatable = list(
 	/turf/space,
+	/mob/dead,
+	/mob/camera,
+	/mob/new_player,
 	/obj/effect/overlay,
 	/atom/movable/lighting_overlay
 	)
@@ -211,11 +214,11 @@ var/global/list/uneatable = list(
 		defer_powernet_rebuild = 1
 	// Let's just make this one loop.
 	for(var/atom/X in orange(grav_pull,src))
+		if(is_type_in_list(X, uneatable))	continue
+		if(!X.simulated)	continue
 		var/dist = get_dist(X, src)
 		// Movable atoms only
 		if(dist > consume_range && istype(X, /atom/movable))
-			if(is_type_in_list(X, uneatable))	continue
-			if(!X.simulated)	continue
 			if(((X) &&(!X:anchored) && (!istype(X,/mob/living/carbon/human)))|| (src.current_size >= 9))
 				step_towards(X,src)
 			else if(istype(X,/mob/living/carbon/human))

@@ -38,6 +38,11 @@
 	update_brightness(user)
 	return 1
 
+/obj/item/device/flashlight/Destroy()
+	if(on)
+		set_light(0)
+	..()
+
 
 /obj/item/device/flashlight/attack(mob/living/M as mob, mob/living/user as mob)
 	add_fingerprint(user)
@@ -223,6 +228,7 @@
 	icon_action_button = null	//just pull it manually, neckbeard.
 	var/colourName = null
 	var/fuel = 0
+	var/eaten = 0
 
 /obj/item/device/flashlight/glowstick/initialize()
 	..()
@@ -303,3 +309,20 @@
 		playsound(src, 'sound/weapons/glowstick_bend.ogg', 35, 0)
 		user.visible_message("<span class='notice'>[user] bends the [name].</span>", "<span class='notice'>You bend the [name]!</span>")
 		processing_objects += src
+
+/obj/item/device/flashlight/glowstick/attack(mob/living/M as mob, mob/living/user as mob)
+	if(M == user)								//If you're eating it yourself
+		if(istype(M,/mob/living/carbon/human))
+			var/mob/living/carbon/human/H = M
+			if(H.species.flags & IS_SYNTHETIC)
+				H << "\red You have a monitor for a head, where do you think you're going to put that?"
+				return
+			H.adjustToxLoss(rand(7,20))
+			H.vomit()
+			playsound(H.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
+			H.attack_log += "\[[time_stamp()]\]<font color='red'> Ate [src.name]</font>"
+			H.remove_from_mob(src)
+			eaten = 1
+			loc = H
+	else
+		return ..()
