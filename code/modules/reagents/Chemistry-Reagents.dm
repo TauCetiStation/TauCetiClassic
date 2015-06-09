@@ -1984,7 +1984,7 @@ datum
 								if(affecting.take_damage(4*toxpwr, 2*toxpwr))
 									H.UpdateDamageIcon()
 								if(prob(meltprob)) //Applies disfigurement
-									H.emote("scream")
+									H.emote("scream",,, 1)
 									H.status_flags |= DISFIGURED
 						else
 							M.take_organ_damage(min(6*toxpwr, volume * toxpwr)) // uses min() and volume to make sure they aren't being sprayed in trace amounts (1 unit != insta rape) -- Doohl
@@ -2153,11 +2153,11 @@ datum
 							return
 						else if ( eyes_covered ) // Eye cover is better than mouth cover
 							victim << "\red Your [safe_thing] protects your eyes from the pepperspray!"
-							victim.emote("scream")
+							victim.emote("scream",,, 1)
 							victim.eye_blurry = max(M.eye_blurry, 5)
 							return
 						else // Oh dear :D
-							victim.emote("scream")
+							victim.emote("scream",,, 1)
 							victim << "\red You're sprayed directly in the eyes with pepperspray!"
 							victim.eye_blurry = max(M.eye_blurry, 25)
 							victim.eye_blind = max(M.eye_blind, 10)

@@ -190,10 +190,16 @@
 		if( user.loc == T && user.get_active_hand() == W )
 			anchored = !anchored
 			user << "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>"
+			if (!(src.anchored &  powered()))
+				src.icon_state = "[initial(icon_state)]-off"
+				stat |= NOPOWER
+			else
+				icon_state = initial(icon_state)
+				stat &= ~NOPOWER
 	else if(istype(W, /obj/item/weapon/card) && currently_vending)
 		var/obj/item/weapon/card/I = W
 		scan_card(I)
-	
+
 	else if(istype(W, refill_canister) && refill_canister != null)
 		if(stat & (BROKEN|NOPOWER))
 			user << "<span class='notice'>It does nothing.</span>"
@@ -551,7 +557,7 @@
 	if(stat & BROKEN)
 		icon_state = "[initial(icon_state)]-broken"
 	else
-		if( powered() )
+		if( powered() & src.anchored )
 			icon_state = initial(icon_state)
 			stat &= ~NOPOWER
 		else

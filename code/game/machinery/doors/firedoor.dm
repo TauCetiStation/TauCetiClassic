@@ -86,6 +86,20 @@
 		stat |= NOPOWER
 	return
 
+/obj/machinery/door/firedoor/attack_paw(mob/user as mob)
+	if(istype(user, /mob/living/carbon/alien/humanoid))
+		if(blocked)
+			user << "\red The door is sealed, it cannot be pried open."
+			return
+		else if(!density)
+			return
+		else
+			user << "\red You force your claws between the doors and begin to pry them open..."
+			playsound(src.loc, 'sound/effects/metal_creaking.ogg', 50, 0)
+			if (do_after(user,40))
+				if(!src) return
+				open(1)
+	return
 
 /obj/machinery/door/firedoor/attack_hand(mob/user as mob)
 	add_fingerprint(user)

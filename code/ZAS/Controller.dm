@@ -273,6 +273,7 @@ Total Unsimulated Turfs: [world.maxx*world.maxy*world.maxz - simulated_turf_coun
 	if(direct) c.mark_direct()
 
 /datum/controller/air_system/proc/mark_for_update(turf/T)
+	if(!T) return // Mostly singularity, dunno what else to check. ~Zve
 	#ifdef ZASDBG
 	ASSERT(isturf(T))
 	#endif

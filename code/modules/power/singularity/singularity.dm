@@ -2,7 +2,11 @@
 
 var/global/list/uneatable = list(
 	/turf/space,
-	/obj/effect/overlay
+	/mob/dead,
+	/mob/camera,
+	/mob/new_player,
+	/obj/effect/overlay,
+	/atom/movable/lighting_overlay
 	)
 
 /obj/machinery/singularity/
@@ -210,10 +214,11 @@ var/global/list/uneatable = list(
 		defer_powernet_rebuild = 1
 	// Let's just make this one loop.
 	for(var/atom/X in orange(grav_pull,src))
+		if(is_type_in_list(X, uneatable))	continue
+		if(!X.simulated)	continue
 		var/dist = get_dist(X, src)
 		// Movable atoms only
 		if(dist > consume_range && istype(X, /atom/movable))
-			if(is_type_in_list(X, uneatable))	continue
 			if(((X) &&(!X:anchored) && (!istype(X,/mob/living/carbon/human)))|| (src.current_size >= 9))
 				step_towards(X,src)
 			else if(istype(X,/mob/living/carbon/human))
@@ -235,6 +240,8 @@ var/global/list/uneatable = list(
 /obj/machinery/singularity/proc/consume(var/atom/A)
 	var/gain = 0
 	if(is_type_in_list(A, uneatable))
+		return 0
+	if(!A.simulated)
 		return 0
 	if (istype(A,/mob/living))//Mobs get gibbed
 		gain = 20
@@ -488,6 +495,8 @@ var/global/list/uneatable = list(
 
 /obj/machinery/singularity/narsie/consume(var/atom/A) //Has its own consume proc because it doesn't need energy and I don't want BoHs to explode it. --NEO
 	if(is_type_in_list(A, uneatable))
+		return 0
+	if(!A.simulated)
 		return 0
 	if (istype(A,/mob/living))//Mobs get gibbed
 		A:gib()

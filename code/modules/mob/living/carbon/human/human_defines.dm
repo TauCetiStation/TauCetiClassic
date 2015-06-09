@@ -74,3 +74,6 @@
 	//Golem stuff
 	var/my_master = 0
 	var/my_golems = list()
+
+	//VG stuff
+	var/lastScream = 0 // Prevent scream spam in some situations

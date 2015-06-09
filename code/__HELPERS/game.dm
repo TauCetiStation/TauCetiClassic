@@ -201,9 +201,18 @@
 	. = list()
 	// Returns a list of mobs who can hear any of the radios given in @radios
 	var/list/speaker_coverage = list()
-	for(var/i = 1; i <= radios.len; i++)
-		var/obj/item/device/radio/R = radios[i]
+	for(var/obj/item/device/radio/R in radios)
 		if(R)
+			//Cyborg checks. Receiving message uses a bit of cyborg's charge.
+			var/obj/item/device/radio/borg/BR = R
+			if(istype(BR) && BR.myborg)
+				var/mob/living/silicon/robot/borg = BR.myborg
+				var/datum/robot_component/CO = borg.get_component("radio")
+				if(!CO)
+					continue //No radio component (Shouldn't happen)
+				if(!borg.is_component_functioning("radio") || !borg.cell_use_power(CO.active_usage))
+					continue //No power.
+
 			var/turf/speaker = get_turf(R)
 			if(speaker)
 				for(var/turf/T in hear(R.canhear_range,speaker))
@@ -417,3 +426,23 @@ datum/projectile_data
 	var/g = mixOneColor(weights, greens)
 	var/b = mixOneColor(weights, blues)
 	return rgb(r,g,b)
+
+/proc/MixColors2(const/list/colors)
+	var/list/reds = list()
+	var/list/blues = list()
+	var/list/greens = list()
+	var/list/weights = list()
+
+	if(colors.len == 1)
+		return "#[colors[1]]"
+	else
+		for (var/i = 0, ++i <= colors.len)
+			reds.Add(GetRedPart(colors[i]))
+			blues.Add(GetBluePart(colors[i]))
+			greens.Add(GetGreenPart(colors[i]))
+			weights.Add(1)
+
+		var/r = mixOneColor(weights, reds)
+		var/g = mixOneColor(weights, greens)
+		var/b = mixOneColor(weights, blues)
+		return "#[r][g][b]"
