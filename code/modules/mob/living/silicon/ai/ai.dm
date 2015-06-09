@@ -11,7 +11,6 @@ var/list/ai_list = list()
 				subject.attack_ai(M)
 	return is_in_use
 
-
 /mob/living/silicon/ai
 	name = "AI"
 	icon = 'icons/mob/AI.dmi'//
@@ -31,7 +30,7 @@ var/list/ai_list = list()
 	var/icon/holo_icon//Default is assigned when AI is created.
 	var/obj/item/device/pda/ai/aiPDA = null
 	var/obj/item/device/multitool/aiMulti = null
-
+	var/obj/item/device/radio/headset/heads/ai_integrated/aiRadio = null
 	var/custom_sprite = 0 //For our custom sprites
 //Hud stuff
 
@@ -54,6 +53,21 @@ var/list/ai_list = list()
 	var/camera_light_on = 0	//Defines if the AI toggled the light on the camera it's looking through.
 	var/datum/trackable/track = null
 	var/last_announcement = ""
+
+proc/add_ai_verbs(var/mob/M)
+	M.verbs += /mob/living/silicon/ai/proc/ai_call_shuttle
+	M.verbs += /mob/living/silicon/ai/proc/ai_camera_track
+	M.verbs += /mob/living/silicon/ai/proc/ai_camera_list
+	M.verbs += /mob/living/silicon/ai/proc/ai_goto_location
+	M.verbs += /mob/living/silicon/ai/proc/ai_remove_location
+	M.verbs += /mob/living/silicon/ai/proc/ai_hologram_change
+	M.verbs += /mob/living/silicon/ai/proc/ai_network_change
+	M.verbs += /mob/living/silicon/ai/proc/ai_roster
+	M.verbs += /mob/living/silicon/ai/proc/ai_statuschange
+	M.verbs += /mob/living/silicon/ai/proc/ai_store_location
+	M.verbs += /mob/living/silicon/ai/proc/control_integrated_radio
+	M.verbs += /mob/living/silicon/ai/proc/toggle_camera_light
+	M.verbs += /mob/living/silicon/ai/proc/change_floor
 
 /mob/living/silicon/ai/New(loc, var/datum/ai_laws/L, var/obj/item/device/mmi/B, var/safety = 0)
 	var/list/possibleNames = ai_names
@@ -91,14 +105,13 @@ var/list/ai_list = list()
 	aiPDA.name = name + " (" + aiPDA.ownjob + ")"
 
 	aiMulti = new(src)
+	aiRadio = new(src)
+	aiRadio.myAi = src
 
 	aiCamera = new/obj/item/device/camera/siliconcam/ai_camera(src)
 
 	if (istype(loc, /turf))
-		verbs.Add(/mob/living/silicon/ai/proc/ai_call_shuttle,/mob/living/silicon/ai/proc/ai_camera_track, \
-		/mob/living/silicon/ai/proc/ai_camera_list, /mob/living/silicon/ai/proc/ai_network_change, \
-		/mob/living/silicon/ai/proc/ai_statuschange, /mob/living/silicon/ai/proc/ai_hologram_change, \
-		/mob/living/silicon/ai/proc/toggle_camera_light, /mob/living/silicon/ai/proc/change_floor)
+		add_ai_verbs(src)
 
 	//Languages
 	add_language("Sol Common", 0)
@@ -756,6 +769,15 @@ var/list/ai_list = list()
 			return
 	else
 		return ..()
+
+/mob/living/silicon/ai/proc/control_integrated_radio()
+	set name = "Radio Settings"
+	set desc = "Allows you to change settings of your radio."
+	set category = "AI Commands"
+
+	src << "Accessing Subspace Transceiver control..."
+	if (src.aiRadio)
+		src.aiRadio.interact(src) 
 
 /mob/living/silicon/ai/proc/is_in_chassis()
 	return istype(loc, /turf)
