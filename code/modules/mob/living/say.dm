@@ -115,7 +115,7 @@ var/list/department_radio_keys = list(
 
 		if (speaking.flags & SIGNLANG)
 			say_signlang(message, pick(speaking.signlang_verb), speaking)
-			return
+			return 1
 
 	//speaking into radios
 	if(used_radios.len)
@@ -182,6 +182,7 @@ var/list/department_radio_keys = list(
 				O.hear_talk(src, message, verb, speaking)
 
 	log_say("[name]/[key] : [message]")
+	return 1
 
 /mob/living/proc/say_signlang(var/message, var/verb="gestures", var/datum/language/language)
 	for (var/mob/O in viewers(src, null))
