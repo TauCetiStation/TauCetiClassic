@@ -190,6 +190,7 @@ var/list/robot_verbs_default = list(
 			module_sprites["Basic"] = "robot_old"
 			module_sprites["Android"] = "droid"
 			module_sprites["Default"] = "robot"
+			module_sprites["Drone"] = "drone-standard"
 			module_sprites["Acheron"] = "mechoid-Standard"
 
 		if("Service")
@@ -200,6 +201,7 @@ var/list/robot_verbs_default = list(
 			module_sprites["Bro"] = "Brobot"
 			module_sprites["Rich"] = "maximillion"
 			module_sprites["Default"] = "Service2"
+			module_sprites["Drone"] = "drone-service" // How does this even work...? Oh well.
 			module_sprites["Acheron"] = "mechoid-Service"
 
 		if("Clerical")
@@ -209,6 +211,7 @@ var/list/robot_verbs_default = list(
 			module_sprites["Bro"] = "Brobot"
 			module_sprites["Rich"] = "maximillion"
 			module_sprites["Default"] = "Service2"
+			module_sprites["Drone"] = "drone-service"
 			module_sprites["Acheron"] = "mechoid-Service"
 
 		if("Science")
@@ -242,6 +245,7 @@ var/list/robot_verbs_default = list(
 			module_sprites["Standard"] = "surgeon"
 			module_sprites["Advanced Droid"] = "droid-medical"
 			module_sprites["Needles"] = "medicalrobot"
+			module_sprites["Drone"] = "drone-medical"
 			module_sprites["Acheron"] = "mechoid-Medical"
 
 		if("Surgeon")
@@ -253,6 +257,7 @@ var/list/robot_verbs_default = list(
 			module_sprites["Standard"] = "surgeon"
 			module_sprites["Advanced Droid"] = "droid-medical"
 			module_sprites["Needles"] = "medicalrobot"
+			module_sprites["Drone"] = "drone-medical"
 			module_sprites["Acheron"] = "mechoid-Medical"
 
 		if("Security")
@@ -263,6 +268,8 @@ var/list/robot_verbs_default = list(
 			module_sprites["Red Knight"] = "Security"
 			module_sprites["Black Knight"] = "securityrobot"
 			module_sprites["Bloodhound"] = "bloodhound"
+			module_sprites["Bloodhound - Treaded"] = "secborg+tread"
+			module_sprites["Drone"] = "drone-sec"
 			module_sprites["Acheron"] = "mechoid-Security"
 
 		if("Engineering")
@@ -273,8 +280,10 @@ var/list/robot_verbs_default = list(
 				camera.network.Add("Engineering")
 			module_sprites["Basic"] = "Engineering"
 			module_sprites["Antique"] = "engineerrobot"
-			module_sprites["Landmate"] = "landmate"
 			module_sprites["Custom"] = "custom_astra_t3"
+			module_sprites["Landmate"] = "landmate"
+			module_sprites["Landmate - Treaded"] = "engiborg+tread"
+			module_sprites["Drone"] = "drone-engineer"
 			module_sprites["Acheron"] = "mechoid-Engineering"
 
 		if("Construction")
@@ -284,7 +293,11 @@ var/list/robot_verbs_default = list(
 				camera.network.Add("Engineering")
 			module_sprites["Basic"] = "Engineering"
 			module_sprites["Antique"] = "engineerrobot"
+			module_sprites["Custom"] = "custom_astra_t3"
 			module_sprites["Landmate"] = "landmate"
+			module_sprites["Landmate - Treaded"] = "engiborg+tread"
+			module_sprites["Drone"] = "drone-engineer"
+			module_sprites["Acheron"] = "mechoid-Engineering"
 
 		if("Janitor")
 			tc_borg = 0
@@ -292,6 +305,7 @@ var/list/robot_verbs_default = list(
 			module_sprites["Basic"] = "JanBot2"
 			module_sprites["Mopbot"]  = "janitorrobot"
 			module_sprites["Mop Gear Rex"] = "mopgearrex"
+			module_sprites["Drone"] = "drone-janitor"
 			module_sprites["Acheron"] = "mechoid-Janitor"
 
 		if("Combat")
@@ -1110,6 +1124,13 @@ var/list/robot_verbs_default = list(
 			overlays += "mechoid-open+c"
 		else
 			overlays += "mechoid-open-c"
+	else if (opened && (icon_state == "drone-standard" || icon_state == "drone-service" || icon_state == "droid-miner" || icon_state == "drone-medical" || icon_state == "drone-engineer" || icon_state == "drone-sec") )
+		if(wiresexposed)
+			overlays += "drone-openpanel +w"
+		else if(cell)
+			overlays += "drone-openpanel +c"
+		else
+			overlays += "drone-openpanel -c"
 	else if(opened)
 		if(wiresexposed)
 			overlays += "ov-openpanel +w"
