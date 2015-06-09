@@ -90,19 +90,7 @@
 		hands.icon_state = "standard"
 		icon_state = "secborg"
 		modtype = "Security"
-	else if(istype(src,/mob/living/silicon/robot/drone))
-		laws = new /datum/ai_laws/drone()
-		connected_ai = null
-	else
-		laws = new /datum/ai_laws/nanotrasen()
-		connected_ai = select_active_ai_with_fewest_borgs()
-		if(connected_ai)
-			connected_ai.connected_robots += src
-			lawsync()
-			photosync()
-			lawupdate = 1
-		else
-			lawupdate = 0
+	init()
 
 	radio = new /obj/item/device/radio/borg(src)
 	if(!scrambledcodes && !camera)
@@ -140,10 +128,19 @@
 	hud_list[IMPCHEM_HUD]     = image('icons/mob/hud.dmi', src, "hudblank")
 	hud_list[IMPTRACK_HUD]    = image('icons/mob/hud.dmi', src, "hudblank")
 	hud_list[SPECIALROLE_HUD] = image('icons/mob/hud.dmi', src, "hudblank")
-	init()
 
 /mob/living/silicon/robot/proc/init()
-	new/obj/item/device/camera/siliconcam/robot_camera(src)
+	aiCamera = new/obj/item/device/camera/siliconcam/robot_camera(src)
+	laws = new /datum/ai_laws/nanotrasen()
+	connected_ai = select_active_ai_with_fewest_borgs()
+	if(connected_ai)
+		connected_ai.connected_robots += src
+		lawsync()
+		photosync()
+		lawupdate = 1
+	else
+		lawupdate = 0
+
 	playsound(loc, 'sound/voice/liveagain.ogg', 75, 1)
 
 // setup the PDA and its name
@@ -1170,7 +1167,7 @@
 
 	if (href_list["act"])
 		var/obj/item/O = locate(href_list["act"])
-		if (!istype(O))
+		if (!istype(O) || !(O.loc == src || O.loc == src.module))
 			return
 
 		if(!((O in src.module.modules) || (O == src.module.emag)))
