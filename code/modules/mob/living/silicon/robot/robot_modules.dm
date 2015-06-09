@@ -22,7 +22,7 @@
 
 
 	New()
-		src.modules += new /obj/item/device/flashlight(src)
+//		src.modules += new /obj/item/device/flashlight(src) // Replaced by verb and integrated light which uses power.
 		src.modules += new /obj/item/device/flash(src)
 		src.emag = new /obj/item/toy/sword(src)
 		src.emag.name = "Placeholder Emag Item"
@@ -63,7 +63,7 @@
 	name = "standard robot module"
 
 	New()
-		src.modules += new /obj/item/device/flashlight(src)
+		//src.modules += new /obj/item/device/flashlight(src)
 		src.modules += new /obj/item/device/flash(src)
 		src.modules += new /obj/item/weapon/melee/baton(src)
 		src.modules += new /obj/item/weapon/extinguisher(src)
@@ -86,7 +86,7 @@
 		)
 
 	New()
-		src.modules += new /obj/item/device/flashlight(src)
+		//src.modules += new /obj/item/device/flashlight(src)
 		src.modules += new /obj/item/device/flash(src)
 		src.modules += new /obj/item/device/healthanalyzer(src)
 		src.modules += new /obj/item/weapon/reagent_containers/borghypo/surgeon(src)
@@ -123,7 +123,7 @@
 		)
 
 	New()
-		src.modules += new /obj/item/device/flashlight(src)
+		//src.modules += new /obj/item/device/flashlight(src)
 		src.modules += new /obj/item/device/flash(src)
 		src.modules += new /obj/item/borg/sight/hud/med(src)
 		src.modules += new /obj/item/device/healthanalyzer(src)
@@ -169,7 +169,7 @@
 		)
 
 	New()
-		src.modules += new /obj/item/device/flashlight(src)
+		//src.modules += new /obj/item/device/flashlight(src)
 		src.modules += new /obj/item/device/flash(src)
 		src.modules += new /obj/item/borg/sight/meson(src)
 		src.modules += new /obj/item/weapon/extinguisher(src)
@@ -191,7 +191,7 @@
 		)
 
 	New()
-		src.modules += new /obj/item/device/flashlight(src)
+		//src.modules += new /obj/item/device/flashlight(src)
 		src.modules += new /obj/item/device/flash(src)
 		src.modules += new /obj/item/borg/sight/meson(src)
 		src.modules += new /obj/item/weapon/extinguisher(src)
@@ -227,7 +227,7 @@
 	name = "security robot module"
 
 	New()
-		src.modules += new /obj/item/device/flashlight(src)
+		//src.modules += new /obj/item/device/flashlight(src)
 		src.modules += new /obj/item/device/flash(src)
 		src.modules += new /obj/item/borg/sight/hud/sec(src)
 		src.modules += new /obj/item/weapon/handcuffs/cyborg(src)
@@ -260,7 +260,7 @@
 	name = "janitorial robot module"
 
 	New()
-		src.modules += new /obj/item/device/flashlight(src)
+		//src.modules += new /obj/item/device/flashlight(src)
 		src.modules += new /obj/item/device/flash(src)
 		src.modules += new /obj/item/weapon/soap/nanotrasen(src)
 		src.modules += new /obj/item/weapon/storage/bag/trash(src)
@@ -283,7 +283,7 @@
 	name = "service robot module"
 
 	New()
-		src.modules += new /obj/item/device/flashlight(src)
+		//src.modules += new /obj/item/device/flashlight(src)
 		src.modules += new /obj/item/device/flash(src)
 		src.modules += new /obj/item/weapon/reagent_containers/food/drinks/cans/beer(src)
 		src.modules += new /obj/item/weapon/reagent_containers/food/condiment/enzyme(src)
@@ -324,7 +324,7 @@
 	name = "clerical robot module"
 
 	New()
-		src.modules += new /obj/item/device/flashlight(src)
+		//src.modules += new /obj/item/device/flashlight(src)
 		src.modules += new /obj/item/device/flash(src)
 		src.modules += new /obj/item/weapon/pen/robopen(src)
 		src.modules += new /obj/item/weapon/form_printer(src)
@@ -355,7 +355,7 @@
 	New()
 		..()
 		src.modules += new /obj/item/borg/sight/hud/miner(src)
-		src.modules += new /obj/item/device/flashlight(src)
+		//src.modules += new /obj/item/device/flashlight(src)
 		src.modules += new /obj/item/device/flash(src)
 		src.modules += new /obj/item/borg/sight/meson(src)
 		src.modules += new /obj/item/weapon/wrench(src)
@@ -372,7 +372,7 @@
 	name = "syndicate robot module"
 
 	New()
-		src.modules += new /obj/item/device/flashlight(src)
+		//src.modules += new /obj/item/device/flashlight(src)
 		src.modules += new /obj/item/device/flash(src)
 		src.modules += new /obj/item/weapon/melee/energy/sword/cyborg(src)
 		src.modules += new /obj/item/weapon/gun/energy/crossbow/cyborg(src)
@@ -388,7 +388,7 @@
 	name = "combat robot module"
 
 	New()
-		src.modules += new /obj/item/device/flashlight(src)
+		//src.modules += new /obj/item/device/flashlight(src)
 		src.modules += new /obj/item/device/flash(src)
 		src.modules += new /obj/item/borg/sight/thermal(src)
 		src.modules += new /obj/item/weapon/gun/energy/laser/cyborg(src)
@@ -448,7 +448,7 @@
 		)
 
 	New()
-		src.modules += new /obj/item/device/flashlight/drone(src)
+		//src.modules += new /obj/item/device/flashlight/drone(src)
 		src.modules += new /obj/item/weapon/weldingtool(src)
 		src.modules += new /obj/item/weapon/screwdriver(src)
 		src.modules += new /obj/item/weapon/wrench(src)
