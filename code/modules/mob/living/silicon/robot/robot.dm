@@ -1,3 +1,7 @@
+var/list/robot_verbs_default = list(
+	/mob/living/silicon/robot/proc/sensor_mode
+)
+
 /mob/living/silicon/robot
 	name = "Cyborg"
 	real_name = "Cyborg"
@@ -119,6 +123,8 @@
 		var/datum/robot_component/cell_component = components["power cell"]
 		cell_component.wrapped = cell
 		cell_component.installed = 1
+
+	add_robot_verbs()
 
 	hud_list[HEALTH_HUD]      = image('icons/mob/hud.dmi', src, "hudblank")
 	hud_list[STATUS_HUD]      = image('icons/mob/hud.dmi', src, "hudhealth100")
@@ -1375,3 +1381,15 @@
 			return
 	else
 		src << "Your icon has been set. You now require a module reset to change it."
+
+/mob/living/silicon/robot/proc/sensor_mode() //Medical/Security HUD controller for borgs
+	set name = "Set Sensor Augmentation"
+	set category = "Robot Commands"
+	set desc = "Augment visual feed with internal sensor overlays."
+	toggle_sensor_mode()
+
+/mob/living/silicon/robot/proc/add_robot_verbs()
+	src.verbs |= robot_verbs_default
+
+/mob/living/silicon/robot/proc/remove_robot_verbs()
+	src.verbs -= robot_verbs_default

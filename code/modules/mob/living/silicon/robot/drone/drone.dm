@@ -350,3 +350,7 @@
 	else
 		src << "<span class='warning'>You are too small to pull that.</span>"
 		return
+
+/mob/living/silicon/robot/drone/add_robot_verbs()
+
+/mob/living/silicon/robot/drone/remove_robot_verbs()
