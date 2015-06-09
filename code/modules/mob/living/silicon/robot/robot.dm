@@ -67,6 +67,7 @@
 	var/tracking_entities = 0 //The number of known entities currently accessing the internal camera
 	var/braintype = "Cyborg"
 	var/pose
+	var/obj/item/device/camera/siliconcam/aiCamera = null //photography
 
 /mob/living/silicon/robot/New(loc,var/syndie = 0,var/unfinished = 0)
 	spark_system = new /datum/effect/effect/system/spark_spread()
@@ -99,6 +100,7 @@
 		if(connected_ai)
 			connected_ai.connected_robots += src
 			lawsync()
+			photosync()
 			lawupdate = 1
 		else
 			lawupdate = 0
