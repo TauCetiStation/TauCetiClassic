@@ -39,7 +39,6 @@
 // It will also stream the chunk that the new loc is in.
 
 /mob/aiEye/proc/setLoc(var/T)
-
 	if(ai)
 		if(!isturf(ai.loc))
 			return
@@ -52,6 +51,12 @@
 		if(ai.holo)
 			ai.holo.move_hologram()
 
+/mob/aiEye/proc/getLoc()
+
+	if(ai)
+		if(!isturf(ai.loc) || !ai.client)
+			return
+		return ai.eyeobj.loc
 
 // AI MOVEMENT
 
