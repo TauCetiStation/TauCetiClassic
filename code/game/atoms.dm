@@ -401,7 +401,7 @@ its easier to just keep the beam vertical.
 			var/list/colors = list()
 			var/glow = 0
 			for(var/obj/item/device/flashlight/glowstick/GS in M.contents)
-				if(GS)
+				if(GS.eaten)
 					glow = 1
 					if(istype(GS, /obj/item/device/flashlight/glowstick/green))
 						//this.color = "#88EBC3"

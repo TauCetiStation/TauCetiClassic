@@ -228,6 +228,7 @@
 	icon_action_button = null	//just pull it manually, neckbeard.
 	var/colourName = null
 	var/fuel = 0
+	var/eaten = 0
 
 /obj/item/device/flashlight/glowstick/initialize()
 	..()
@@ -321,6 +322,7 @@
 			playsound(H.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
 			H.attack_log += "\[[time_stamp()]\]<font color='red'> Ate [src.name]</font>"
 			H.remove_from_mob(src)
+			eaten = 1
 			loc = H
 	else
 		return ..()
