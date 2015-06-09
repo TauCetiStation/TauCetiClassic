@@ -782,12 +782,16 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 
 	if(listed_turf && client)
-		if(get_dist(listed_turf,src) > 1)
+		if(!TurfAdjacent(listed_turf))
 			listed_turf = null
 		else
 			statpanel(listed_turf.name, null, listed_turf)
 			for(var/atom/A in listed_turf)
+				if(!A.mouse_opacity)
+					continue
 				if(A.invisibility > see_invisible)
+					continue
+				if(is_type_in_list(A, shouldnt_see))
 					continue
 				statpanel(listed_turf.name, null, A)
 
