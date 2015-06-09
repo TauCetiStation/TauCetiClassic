@@ -242,6 +242,7 @@ var/list/robot_verbs_default = list(
 			module_sprites["Basic"] = "Miner_old"
 			module_sprites["Advanced Droid"] = "droid-miner"
 			module_sprites["Treadhead"] = "Miner"
+			module_sprites["Drone"] = "drone-miner"
 			module_sprites["Acheron"] = "mechoid-Miner"
 
 		if("Crisis")
@@ -266,7 +267,7 @@ var/list/robot_verbs_default = list(
 			module_sprites["Standard"] = "surgeon"
 			module_sprites["Advanced Droid"] = "droid-medical"
 			module_sprites["Needles"] = "medicalrobot"
-			module_sprites["Drone"] = "drone-medical"
+			module_sprites["Drone"] = "drone-surgery"
 			module_sprites["Acheron"] = "mechoid-Medical"
 
 		if("Security")
