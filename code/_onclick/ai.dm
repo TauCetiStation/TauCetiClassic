@@ -53,6 +53,11 @@
 		return
 	next_move = world.time + 9
 
+	if(aiCamera.in_camera_mode)
+		aiCamera.camera_mode_off()
+		aiCamera.captureimage(A, usr)
+		return
+
 	/*
 		AI restrained() currently does nothing
 	if(restrained())
@@ -128,3 +133,10 @@
 		// disable/6 is not in Topic; disable/5 disables both temporary and permenant shock
 		Topic("aiDisable=5", list("aiDisable"="5"), 1)
 	return
+
+//
+// Override AdjacentQuick for AltClicking
+//
+
+/mob/living/silicon/ai/TurfAdjacent(var/turf/T)
+	return (cameranet && cameranet.checkTurfVis(T))
