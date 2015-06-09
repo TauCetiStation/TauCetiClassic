@@ -8,6 +8,8 @@
 	var/list/hud_list[9]
 	var/list/speech_synthesizer_langs = list()	//which languages can be vocalized by the speech synthesizer
 
+	var/obj/item/device/camera/siliconcam/aiCamera = null //photography
+
 /mob/living/silicon/proc/show_laws()
 	return
 
