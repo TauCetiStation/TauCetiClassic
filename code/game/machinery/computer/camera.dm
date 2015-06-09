@@ -201,6 +201,7 @@
 	desc = "Used for watching an empty arena."
 	icon = 'tauceti/icons/obj/objects.dmi'
 	icon_state = "telescreen"
+	light_color = "#ffffbb"
 	network = list("thunder")
 	density = 0
 
@@ -215,12 +216,13 @@
 	desc = "Damn, why do they never have anything interesting on these things?"
 	icon = 'icons/obj/status_display.dmi'
 	icon_state = "entertainment"
+	light_color = "#ea4444"
 
 /obj/machinery/computer/security/wooden_tv
 	name = "security camera monitor"
 	desc = "An old TV hooked into the stations camera network."
 	icon_state = "security_det"
-
+	light_color = "#3550b6"
 
 /obj/machinery/computer/security/mining
 	name = "outpost camera monitor"
@@ -233,9 +235,11 @@
 	desc = "Used to monitor fires and breaches."
 	icon_state = "engineeringcameras"
 	network = list("Engineering","Power Alarms","Atmosphere Alarms","Fire Alarms")
+	light_color = "#b88b2e"
 
 /obj/machinery/computer/security/nuclear
 	name = "head mounted camera monitor"
 	desc = "Used to access the built-in cameras in helmets."
 	icon_state = "syndicam"
 	network = list("NUKE")
+	light_color = "#a91515"

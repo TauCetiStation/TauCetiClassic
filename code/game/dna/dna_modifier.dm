@@ -220,6 +220,7 @@
 	desc = "Scand DNA."
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "scanner"
+	light_color = "#315ab4"
 	density = 1
 	circuit = /obj/item/weapon/circuitboard/scan_consolenew
 	var/selected_ui_block = 1.0
@@ -278,13 +279,16 @@
 /obj/machinery/computer/scan_consolenew/power_change()
 	if(stat & BROKEN)
 		icon_state = "broken"
+		set_light(0)
 	else if(powered())
 		icon_state = initial(icon_state)
 		stat &= ~NOPOWER
+		set_light(light_range_on, light_power_on)
 	else
 		spawn(rand(0, 15))
 			src.icon_state = "c_unpowered"
 			stat |= NOPOWER
+			set_light(0)
 
 /obj/machinery/computer/scan_consolenew/New()
 	..()
