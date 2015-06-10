@@ -210,6 +210,7 @@
 								// this is used to calc the probability the light burns out
 
 	var/rigged = 0				// true if rigged to explode
+	var/red_alert = 0
 
 // the smaller bulb light fixture
 
@@ -293,6 +294,10 @@
 
 	update_icon()
 	if(on)
+		if(red_alert)
+			brightness_color = "#FF0000"
+		else
+			brightness_color = "#FFFFFF"
 		if(light_range != brightness_range || light_power != brightness_power || light_color != brightness_color)
 			switchcount++
 			if(rigged)
