@@ -205,10 +205,11 @@
 				S.show_message(renderedAI, 2)
 			else
 				var/mob/living/silicon/robot/borg = S
-				if(istype(borg) && borg.is_component_functioning("comms"))
-					var/datum/robot_component/RC = borg.get_component("comms")
-					if(!borg.use_power(RC.active_usage))
-						continue // No power.
+				//if(istype(borg) && borg.is_component_functioning("comms"))
+				//	var/datum/robot_component/RC = borg.get_component("comms")
+				//	if(!borg.use_power(RC.active_usage))
+				if(!istype(borg) || !borg.is_component_functioning("comms"))
+					continue // No power.
 				S.show_message(rendered, 2)
 
 
