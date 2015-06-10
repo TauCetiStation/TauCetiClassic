@@ -988,12 +988,10 @@ table tr:first-child th:first-child { border: none;}
 					send_signal(device_id, list(href_list["command"] = text2num(href_list["val"]) ) )
 					if(href_list["command"] == "adjust_external_pressure")
 						var/new_val = text2num(href_list["val"])
-						msg_admin_attack("[key_name(usr)] messing with sensors adjust_external_pressure. \red adjust pressure > add [new_val]")
-						usr.attack_log += "\[[time_stamp()]\]<font color='red'> [key_name(usr)] messing with sensors atmosphere pressure. adjust_external_pressure > add [new_val]</font>"
+						investigate_log("[usr.key] has changed adjust_external_pressure > added [new_val], id_tag = [device_id]","atmos")
 					if(href_list["command"] == "checks")
 						var/new_val = text2num(href_list["val"])
-						msg_admin_attack("[key_name(usr)] messing with sensors pressure_checks. \red  > checks > = now [new_val](1 = ext, 2 = int, 3 = both)")
-						usr.attack_log += "\[[time_stamp()]\]<font color='red'> [key_name(usr)] messing with sensors pressure checks > = now [new_val]</font>"
+						investigate_log("[usr.key] has changed pressure_checks > now [new_val](1 = ext, 2 = int, 3 = both), id_tag = [device_id]","atmos")
 				if("set_threshold")
 					var/env = href_list["env"]
 					var/threshold = text2num(href_list["var"])
