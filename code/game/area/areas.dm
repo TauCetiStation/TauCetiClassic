@@ -180,15 +180,17 @@
 /area/proc/readyalert()
 	if(name == "Space")
 		return
-	if(!eject)
-		eject = 1
-		updateicon()
+	for(var/obj/machinery/light/L in contents)
+		L.red_alert = 1
+		L.update()
 	return
 
 /area/proc/readyreset()
-	if(eject)
-		eject = 0
-		updateicon()
+	if(red_alert_code) return
+	if(red_alert_evac) return
+	for(var/obj/machinery/light/L in contents)
+		L.red_alert = 0
+		L.update()
 	return
 
 /area/proc/partyalert()

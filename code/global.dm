@@ -264,3 +264,6 @@ var/DBConnection/dbcon_old = new()	//Tgstation database (Old database) - See the
 
 //added for Xenoarchaeology, might be useful for other stuff
 var/global/list/alphabet_uppercase = list("A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z")
+
+var/red_alert_code = 0 //Used in new code red and emergency shuttle call lighting
+var/red_alert_evac = 0

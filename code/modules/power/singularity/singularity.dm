@@ -216,9 +216,14 @@ var/global/list/uneatable = list(
 	for(var/atom/X in orange(grav_pull,src))
 		if(is_type_in_list(X, uneatable))	continue
 		if(!X.simulated)	continue
+
 		var/dist = get_dist(X, src)
+
 		// Movable atoms only
 		if(dist > consume_range && istype(X, /atom/movable))
+			if(canPull(X))
+				step_towards(X,src)
+			/*
 			if(((X) &&(!X:anchored) && (!istype(X,/mob/living/carbon/human)))|| (src.current_size >= 9))
 				step_towards(X,src)
 			else if(istype(X,/mob/living/carbon/human))
@@ -228,6 +233,7 @@ var/global/list/uneatable = list(
 					if(M.magpulse)
 						continue
 				step_towards(H,src)
+			*/
 		// Turf and movable atoms
 		else if(dist <= consume_range && (isturf(X) || istype(X, /atom/movable)))
 			consume(X)
@@ -236,6 +242,17 @@ var/global/list/uneatable = list(
 		defer_powernet_rebuild = 0
 	return
 
+// Singulo optimization:
+// Jump out whenever we've made a decision.
+/obj/machinery/singularity/proc/canPull(var/atom/movable/A)
+	// If we're big enough, stop checking for this and that and JUST EAT.
+	if(current_size >= 9)
+		return 1
+	else
+		if(A && !A:anchored)
+			if(A.canSingulothPull(src))
+				return 1
+	return 0
 
 /obj/machinery/singularity/proc/consume(var/atom/A)
 	var/gain = 0
@@ -248,15 +265,14 @@ var/global/list/uneatable = list(
 		if(istype(A,/mob/living/carbon/human))
 			var/mob/living/carbon/human/H = A
 			if(H.mind)
-
-				if((H.mind.assigned_role == "Station Engineer") || (H.mind.assigned_role == "Chief Engineer") )
-					gain = 100
-
-				if(H.mind.assigned_role == "Clown")
-					gain = rand(-300, 300) // HONK
-
+				switch(H.mind.assigned_role)
+					if("Station Engineer","Chief Engineer")
+						gain = 100
+					if("Clown")
+						gain = rand(-300, 300) // HONK
 		spawn()
 			A:gib()
+		// Why
 		sleep(1)
 	else if(istype(A,/obj/))
 
@@ -274,10 +290,7 @@ var/global/list/uneatable = list(
 			return//Quits here, the obj should be gone, hell we might be
 
 		if((teleport_del) && (!istype(A, /obj/machinery)))//Going to see if it does not lag less to tele items over to Z 2
-			var/obj/O = A
-			O.x = 2
-			O.y = 2
-			O.z = 2
+			qdel(A)
 		else
 			A.ex_act(1.0)
 			if(A && isnull(A.gc_destroyed)) qdel(A)

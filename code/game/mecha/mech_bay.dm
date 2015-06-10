@@ -158,15 +158,18 @@
 	power_change()
 		if(stat & BROKEN)
 			icon_state = initial(icon_state)+"_broken"
+			set_light(0)
 			if(recharge_port)
 				recharge_port.stop_charge()
 		else if(powered())
 			icon_state = initial(icon_state)
 			stat &= ~NOPOWER
+			set_light(light_range_on, light_power_on)
 		else
 			spawn(rand(0, 15))
 				icon_state = initial(icon_state)+"_nopower"
 				stat |= NOPOWER
+				set_light(0)
 				if(recharge_port)
 					recharge_port.stop_charge()
 

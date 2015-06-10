@@ -82,6 +82,7 @@ obj/machinery/air_sensor
 obj/machinery/computer/general_air_control
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "tank"
+	light_color = "#78eeea"
 
 	name = "Computer"
 

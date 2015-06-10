@@ -1391,6 +1391,16 @@
 		W.message = message
 		W.add_fingerprint(src)
 
+/mob/living/carbon/human/canSingulothPull(var/obj/machinery/singularity/singulo)
+	if(!..())
+		return 0
+
+	if(istype(shoes,/obj/item/clothing/shoes/magboots))
+		var/obj/item/clothing/shoes/magboots/M = shoes
+		if(M.magpulse)
+			return 0
+	return 1
+
 /mob/living/carbon/human/verb/crawl()
 	set name = "Crawl"
 	set category = "IC"
