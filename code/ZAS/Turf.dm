@@ -106,7 +106,6 @@
 			if((previously_open & d) && istype(unsim, /turf/simulated))
 				var/turf/simulated/sim = unsim
 				if(sim.zone == zone)
-					if(!zone) return //Singularity related
 					zone.rebuild()
 					return
 
