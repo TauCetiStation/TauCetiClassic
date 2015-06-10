@@ -14,6 +14,7 @@
 	desc = "A forge used in crafting the unholy weapons used by the armies of Nar-Sie"
 	icon_state = "forge"
 	light_color = "#cc9338"
+	light_power = 2
 	light_range = 3
 
 /obj/structure/cult/pylon
@@ -21,7 +22,8 @@
 	desc = "A floating crystal that hums with an unearthly energy"
 	icon_state = "pylon"
 	light_color = "#ff0000"
-	light_range = 5
+	light_power = 2
+	light_range = 6
 //	luminosity = 5
 
 /obj/structure/cult/tome
