@@ -267,12 +267,15 @@ var/list/solars_list = list()
 	desc = "A controller for solar panel arrays."
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "solar"
+	light_color = "#b88b2e"
 	anchored = 1
 	density = 1
 	directwired = 1
 	use_power = 1
 	idle_power_usage = 5
 	active_power_usage = 20
+	var/light_range_on = 3
+	var/light_power_on = 1
 	var/id = 0
 	var/cdir = 0
 	var/gen = 0
@@ -306,13 +309,16 @@ var/list/solars_list = list()
 /obj/machinery/power/solar_control/update_icon()
 	if(stat & BROKEN)
 		icon_state = "broken"
+		set_light(0)
 		overlays.Cut()
 		return
 	if(stat & NOPOWER)
 		icon_state = "c_unpowered"
+		set_light(0)
 		overlays.Cut()
 		return
 	icon_state = "solar"
+	set_light(light_range_on, light_power_on)
 	overlays.Cut()
 	if(cdir > 0)
 		overlays += image('icons/obj/computer.dmi', "solcon-o", FLY_LAYER, angle2dir(cdir))
