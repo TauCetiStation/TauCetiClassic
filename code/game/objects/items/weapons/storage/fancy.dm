@@ -156,22 +156,22 @@
 	storage_slots = 5
 	icon_type = "glowstick"
 	can_hold = list(
-		"/obj/item/device/flashlight/glowstick"
+		"/obj/item/weapon/reagent_containers/food/snacks/glowstick"
 	)
 
 /obj/item/weapon/storage/fancy/glowsticks/New()
 	..()
-	new /obj/item/device/flashlight/glowstick/green(src)
-	new /obj/item/device/flashlight/glowstick/red(src)
-	new /obj/item/device/flashlight/glowstick/blue(src)
-	new /obj/item/device/flashlight/glowstick/yellow(src)
-	new /obj/item/device/flashlight/glowstick/orange(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/glowstick/green(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/glowstick/red(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/glowstick/blue(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/glowstick/yellow(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/glowstick/orange(src)
 	update_icon()
 
 /obj/item/weapon/storage/fancy/glowsticks/update_icon()
 	overlays = list() //resets list
-	overlays += image('icons/obj/glowsticks.dmi',"crayonbox")
-	for(var/obj/item/device/flashlight/glowstick/glowstick in contents)
+	overlays += image('icons/obj/glowsticks.dmi',"sticksbox")
+	for(var/obj/item/weapon/reagent_containers/food/snacks/glowstick/glowstick in contents)
 		overlays += image('icons/obj/glowsticks.dmi',glowstick.colourName)
 
 ////////////

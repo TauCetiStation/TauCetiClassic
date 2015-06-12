@@ -3778,5 +3778,35 @@ datum
 				..()
 				return
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////// Chemlights ///////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+		luminophore_temp //Temporary holder of vars used in mixing colors
+			name = "Luminophore"
+			id = "luminophore"
+			description = "Uh, some kind of drink."
+			reagent_state = LIQUID
+			nutriment_factor = 0.2
+			color = "#ffffff"
+			custom_metabolism = 0.2
+
+		luminophore
+			name = "Luminophore"
+			id = "luminophore"
+			description = "Uh, some kind of drink."
+			reagent_state = LIQUID
+			color = "#ffffff"
+			custom_metabolism = 0.2
+
+			on_mob_life(var/mob/living/M as mob)
+				if(!M) M = holder.my_atom
+				if(ishuman(M))
+					var/mob/living/carbon/human/H = M
+					H.vomit()
+					H.apply_effect(1,IRRADIATE,0)
+				..()
+				return
+
 // Undefine the alias for REAGENTS_EFFECT_MULTIPLER
 #undef REM
