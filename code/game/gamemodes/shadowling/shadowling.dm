@@ -361,8 +361,8 @@ Made by Xhuis
 /datum/species/shadow/ling
 	//Normal shadowpeople but with enhanced effects
 	name = "Shadowling"
-	//icobase = 'icons/mob/human_races/r_human.dmi'
-	//deform = 'icons/mob/human_races/r_def_human.dmi'
+	icobase = 'icons/mob/human_races/r_shadowling.dmi'
+	deform = 'icons/mob/human_races/r_def_shadowling.dmi'
 	language = "Sol Common"
 	unarmed_type = /datum/unarmed_attack/claws
 	
