@@ -54,6 +54,8 @@
 	S["be_special"]			>> be_special
 	S["default_slot"]		>> default_slot
 	S["toggles"]			>> toggles
+	S["warns"]				>> warns
+	S["warnbans"]			>> warnbans
 	S["randomslot"]			>> randomslot
 	S["UI_style_color"]		>> UI_style_color
 	S["UI_style_alpha"]		>> UI_style_alpha
@@ -85,6 +87,8 @@
 	S["be_special"]			<< be_special
 	S["default_slot"]		<< default_slot
 	S["toggles"]			<< toggles
+	S["warns"]				<< warns
+	S["warnbans"]			<< warnbans
 	S["randomslot"]			<< randomslot
 	return 1
 
