@@ -136,7 +136,6 @@
 				if(luminnew.color == "#ffffff")
 					luminnew.color = luminold.color
 				list_regs.reagent_list += luminnew
-				world << list_regs.reagent_list.len
 				var/mixedcolor = mix_color_from_reagents(list_regs.reagent_list)
 				del(list_regs)
 				del(luminold)
@@ -162,6 +161,30 @@
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/attack_animal(var/mob/M)
 	return
 
+/obj/item/weapon/reagent_containers/food/snacks/glowstick/proc/add_fuel()
+	if(prob(95))
+		src.reagents.add_reagent("luminophore", rand(18,36))
+	else
+		src.reagents.add_reagent("luminophore", rand(0.5,2))
+	var/datum/reagents/R = reagents
+	for(var/datum/reagent/luminophore/luminophore in R.reagent_list)
+		if(luminophore)
+			reagents.maximum_volume = luminophore.volume
+			liquid_fuel = luminophore
+
+	var/datum/reagent/lum = locate(/datum/reagent/luminophore) in R.reagent_list
+	if(lum)
+		if(istype(src, /obj/item/weapon/reagent_containers/food/snacks/glowstick/green))
+			lum.color = "#88EBC3"
+		if(istype(src, /obj/item/weapon/reagent_containers/food/snacks/glowstick/red))
+			lum.color = "#EA0052"
+		if(istype(src, /obj/item/weapon/reagent_containers/food/snacks/glowstick/blue))
+			lum.color = "#24C1FF"
+		if(istype(src, /obj/item/weapon/reagent_containers/food/snacks/glowstick/yellow))
+			lum.color = "#FFFA18"
+		if(istype(src, /obj/item/weapon/reagent_containers/food/snacks/glowstick/orange))
+			lum.color = "#FF9318"
+
 ////////////////G L O W S T I C K - C O L O R S////////////////
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/green
 	colourName = "green"
@@ -170,16 +193,7 @@
 
 	New()
 		..()
-		if(prob(95))
-			reagents.add_reagent("luminophore", rand(18,36))
-		else
-			reagents.add_reagent("luminophore", rand(0.5,2))
-		var/datum/reagents/R = reagents
-		for(var/datum/reagent/luminophore/luminophore in R.reagent_list)
-			if(luminophore)
-				reagents.maximum_volume = luminophore.volume
-				liquid_fuel = luminophore
-				luminophore.color = "#88EBC3"
+		add_fuel()
 
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/red
 	colourName = "red"
@@ -188,16 +202,7 @@
 
 	New()
 		..()
-		if(prob(95))
-			reagents.add_reagent("luminophore", rand(18,36))
-		else
-			reagents.add_reagent("luminophore", rand(0.5,2))
-		var/datum/reagents/R = reagents
-		for(var/datum/reagent/luminophore/luminophore in R.reagent_list)
-			if(luminophore)
-				reagents.maximum_volume = luminophore.volume
-				liquid_fuel = luminophore
-				luminophore.color = "#EA0052"
+		add_fuel()
 
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/blue
 	colourName = "blue"
@@ -206,16 +211,7 @@
 
 	New()
 		..()
-		if(prob(95))
-			reagents.add_reagent("luminophore", rand(18,36))
-		else
-			reagents.add_reagent("luminophore", rand(0.5,2))
-		var/datum/reagents/R = reagents
-		for(var/datum/reagent/luminophore/luminophore in R.reagent_list)
-			if(luminophore)
-				reagents.maximum_volume = luminophore.volume
-				liquid_fuel = luminophore
-				luminophore.color = "#24C1FF"
+		add_fuel()
 
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/yellow
 	colourName = "yellow"
@@ -224,16 +220,7 @@
 
 	New()
 		..()
-		if(prob(95))
-			reagents.add_reagent("luminophore", rand(18,36))
-		else
-			reagents.add_reagent("luminophore", rand(0.5,2))
-		var/datum/reagents/R = reagents
-		for(var/datum/reagent/luminophore/luminophore in R.reagent_list)
-			if(luminophore)
-				reagents.maximum_volume = luminophore.volume
-				liquid_fuel = luminophore
-				luminophore.color = "#FFFA18"
+		add_fuel()
 
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/orange
 	colourName = "orange"
@@ -242,13 +229,4 @@
 
 	New()
 		..()
-		if(prob(95))
-			reagents.add_reagent("luminophore", rand(18,36))
-		else
-			reagents.add_reagent("luminophore", rand(0.5,2))
-		var/datum/reagents/R = reagents
-		for(var/datum/reagent/luminophore/luminophore in R.reagent_list)
-			if(luminophore)
-				reagents.maximum_volume = luminophore.volume
-				liquid_fuel = luminophore
-				luminophore.color = "#FF9318"
+		add_fuel()
