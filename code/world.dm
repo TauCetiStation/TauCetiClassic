@@ -42,6 +42,7 @@
 	sleep_offline = 1
 
 	processScheduler = new
+	processSchedulerView = new
 	master_controller = new /datum/controller/game_controller()
 	spawn(1)
 		//processScheduler.deferSetupFor(/datum/controller/process/ticker)
