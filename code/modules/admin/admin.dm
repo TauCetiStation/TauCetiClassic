@@ -926,6 +926,13 @@ var/global/floorIsLava = 0
 
 	world.Reboot()
 
+/datum/admins/proc/getProcessSchedulerContext()
+	set category = "Debug"
+	set name = "Process Scheduler Status Panel"
+
+	feedback_add_details("admin_verb","GPSSP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	processSchedulerView.getContext()
+
 /datum/admins/proc/unprison(var/mob/M in mob_list)
 	set category = "Admin"
 	set name = "Unprison"

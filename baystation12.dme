@@ -6,6 +6,12 @@
 // BEGIN_FILE_DIR
 #define FILE_DIR .
 #define FILE_DIR "code"
+#define FILE_DIR "code/controllers"
+#define FILE_DIR "code/controllers/ProcessScheduler"
+#define FILE_DIR "code/controllers/ProcessScheduler/bower_components"
+#define FILE_DIR "code/controllers/ProcessScheduler/bower_components/bootstrap2.3.2"
+#define FILE_DIR "code/controllers/ProcessScheduler/bower_components/bootstrap2.3.2/bootstrap"
+#define FILE_DIR "code/controllers/ProcessScheduler/bower_components/bootstrap2.3.2/bootstrap/img"
 #define FILE_DIR "code/WorkInProgress"
 #define FILE_DIR "code/WorkInProgress/Cael_Aislinn"
 #define FILE_DIR "code/WorkInProgress/Cael_Aislinn/Jungle"
@@ -244,6 +250,7 @@
 #include "code\controllers\ProcessScheduler\core\_stubs.dm"
 #include "code\controllers\ProcessScheduler\core\process.dm"
 #include "code\controllers\ProcessScheduler\core\processScheduler.dm"
+#include "code\controllers\ProcessScheduler\core\processSchedulerView.dm"
 #include "code\controllers\ProcessScheduler\core\updateQueue.dm"
 #include "code\controllers\ProcessScheduler\core\updateQueueWorker.dm"
 #include "code\datums\ai_laws.dm"
