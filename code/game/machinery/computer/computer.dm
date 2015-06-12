@@ -125,15 +125,10 @@
 				A.icon_state = "3"
 			else
 				user << "\blue You disconnect the monitor."
+				set_light(0)
 				A.state = 4
 				A.icon_state = "4"
 			qdel(src)
 	else
 		src.attack_hand(user)
 	return
-
-
-
-
-
-

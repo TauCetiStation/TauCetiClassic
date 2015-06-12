@@ -507,6 +507,7 @@ proc/get_damage_icon_part(damage_state, body_part)
 				overlays_standing[MUTANTRACE_LAYER]	= image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "[dna.mutantrace][fat]_[gender]_s")
 			if("shadowling")
 				overlays_standing[MUTANTRACE_LAYER]	= image("icon" = 'tauceti/icons/mob/shadow_ling.dmi', "icon_state" = "[dna.mutantrace]_s")
+				overlays_standing[MUTATIONS_LAYER]	= image("icon" = 'tauceti/icons/mob/shadow_ling.dmi', "icon_state" = "[dna.mutantrace]_ms_s", "layer" = 11)
 			else
 				overlays_standing[MUTANTRACE_LAYER]	= null
 
