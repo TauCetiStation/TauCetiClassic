@@ -920,7 +920,6 @@ datum/mind
 					current << "<span class='danger'>You may use the Hivemind Commune ability to communicate with your fellow enlightened ones.</span>"
 					message_admins("[key_name_admin(usr)] has thrall'ed [current].")
 					log_admin("[key_name(usr)] has thrall'ed [current].")
-					current.spell_list += new /obj/effect/proc_holder/spell/targeted/shadowling_hivemind
 
 		else if (href_list["monkey"])
 			var/mob/living/L = current
