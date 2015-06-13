@@ -26,7 +26,7 @@
 			if(temp_vent.network.normal_members.len > 50)
 				vents += temp_vent
 
-	var/list/candidates = get_alien_candidates()
+	var/list/candidates = get_active_candidates(ROLE_BORER,buffer=ALIEN_SELECT_AFK_BUFFER, poll=1)
 	while(spawncount > 0 && vents.len && candidates.len)
 		var/obj/vent = pick_n_take(vents)
 		var/client/C = pick_n_take(candidates)

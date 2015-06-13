@@ -364,6 +364,9 @@
 	src.add_fingerprint(user)
 	return
 
+/obj/item/weapon/storage/attack_paw(mob/user as mob)
+	return attack_hand(user)
+
 /obj/item/weapon/storage/verb/toggle_gathering_mode()
 	set name = "Switch Gathering Method"
 	set category = "Object"
