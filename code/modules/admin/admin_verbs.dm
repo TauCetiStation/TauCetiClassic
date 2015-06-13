@@ -854,6 +854,7 @@ var/list/admin_verbs_mentor = list(
 	set category = "Preferences"
 
 	prefs.toggles ^= CHAT_ATTACKLOGS
+	prefs.save_preferences_sqlite(src, ckey)
 	if (prefs.toggles & CHAT_ATTACKLOGS)
 		usr << "You now will get attack log messages"
 	else
@@ -893,6 +894,7 @@ var/list/admin_verbs_mentor = list(
 	set category = "Preferences"
 
 	prefs.toggles ^= CHAT_DEBUGLOGS
+	prefs.save_preferences_sqlite(src, ckey)
 	if (prefs.toggles & CHAT_DEBUGLOGS)
 		usr << "You now will get debug log messages"
 	else

@@ -30,7 +30,7 @@ Infestation:
 	if(!..())
 		return 0
 
-	var/list/candidates = get_players_for_role(BE_ALIEN)
+	var/list/candidates = get_players_for_role(ROLE_ALIEN)
 	var/xenomorphs_num = 0
 
 	//Check that we have enough vox.
