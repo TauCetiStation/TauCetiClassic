@@ -95,12 +95,20 @@
 				if(prob(host.brainloss/20))
 					host.say("*[pick(list("blink","blink_r","choke","aflap","drool","twitch","twitch_s","gasp"))]")
 
-/mob/living/simple_animal/borer/New()
-	..()
+/mob/living/simple_animal/borer/New(var/loc,var/by_gamemode=0)
+	..(loc)
 	truename = "[pick("Primary","Secondary","Tertiary","Quaternary")] [rand(1000,9999)]"
 	host_brain = new/mob/living/captive_brain(src)
 
-	request_player()
+	if(name == initial(name)) // Easier reporting of griff.
+		name = "[name] ([rand(1, 1000)])"
+		real_name = name
+
+	var/mob/dead/observer/O = request_player()
+	if(!O)
+		message_admins("[src.name] self-deleting due to lack of appropriate ghosts.")
+		del(src)
+	transfer_personality(O.client)
 
 
 /mob/living/simple_animal/borer/say(var/message)
@@ -309,9 +317,9 @@
 		if(!host.stat)
 			host << "Something slimy wiggles out of your ear and plops to the ground!"
 
-		detatch()
+		detach()
 
-mob/living/simple_animal/borer/proc/detatch()
+mob/living/simple_animal/borer/proc/detach()
 
 	if(!host) return
 
@@ -436,12 +444,33 @@ mob/living/simple_animal/borer/proc/detatch()
 
 //Procs for grabbing players.
 mob/living/simple_animal/borer/proc/request_player()
-	for(var/mob/dead/observer/O in player_list)
-		if(jobban_isbanned(O, "Syndicate"))
+	var/list/candidates=list()
+	//testing("Polling for borers.")
+	for(var/mob/dead/observer/G in get_active_candidates(ROLE_BORER, poll="HEY KID, YOU WANNA BE A BORER?"))
+		if(!G.client)
+			//testing("Client of [G] inexistent")
 			continue
-		if(O.client)
-			if(O.client.prefs.be_special & BE_ALIEN)
-				question(O.client)
+
+		if(G.client.holder)
+			//testing("Client of [G] is admin.")
+			continue
+
+		if(jobban_isbanned(G, "Syndicate"))
+			//testing("[G] is jobbanned.")
+			continue
+
+		candidates += G
+
+	if(!candidates.len)
+		message_admins("Unable to find a mind for [src.name]")
+		return 0
+
+	shuffle(candidates)
+	for(var/mob/i in candidates)
+		if(!i || !i.client) continue //Dont bother removing them from the list since we only grab one wizard
+		return i
+
+	return 0
 
 mob/living/simple_animal/borer/proc/question(var/client/C)
 	spawn(0)
@@ -451,8 +480,6 @@ mob/living/simple_animal/borer/proc/question(var/client/C)
 			return
 		if(response == "Yes")
 			transfer_personality(C)
-		else if (response == "Never for this round")
-			C.prefs.be_special ^= BE_ALIEN
 
 mob/living/simple_animal/borer/proc/transfer_personality(var/client/candidate)
 

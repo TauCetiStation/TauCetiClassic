@@ -492,7 +492,7 @@ var/list/admin_verbs_mentor = list(
 	var/new_ooccolor = input(src, "Please select your OOC colour.", "OOC colour") as color|null
 	if(new_ooccolor)
 		prefs.ooccolor = new_ooccolor
-		prefs.save_preferences()
+		prefs.save_preferences_sqlite(src, ckey)
 	feedback_add_details("admin_verb","OC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
@@ -513,15 +513,16 @@ var/list/admin_verbs_mentor = list(
 	feedback_add_details("admin_verb","SM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 #define MAX_WARNS 3
-#define AUTOBANTIME 10
+#define AUTOBANTIME 15
 
 /client/proc/warn(warned_ckey)
+	var/reason = "Autobanning due to too many formal warnings"
 	if(!check_rights(R_ADMIN))	return
 
 	if(!warned_ckey || !istext(warned_ckey))	return
-	if(warned_ckey in admin_datums)
+	/*if(warned_ckey in admin_datums)
 		usr << "<font color='red'>Error: warn(): You can't warn admins.</font>"
-		return
+		return*/
 
 	var/datum/preferences/D
 	var/client/C = directory[warned_ckey]
@@ -533,23 +534,58 @@ var/list/admin_verbs_mentor = list(
 		return
 
 	if(++D.warns >= MAX_WARNS)					//uh ohhhh...you'reee iiiiin trouuuubble O:)
-		ban_unban_log_save("[ckey] warned [warned_ckey], resulting in a [AUTOBANTIME] minute autoban.")
+		var/bantime = (++D.warnbans * AUTOBANTIME)
+		D.warns = 1
+		ban_unban_log_save("[ckey] warned [warned_ckey], resulting in a [bantime] minute autoban.")
 		if(C)
-			message_admins("[key_name_admin(src)] has warned [key_name_admin(C)] resulting in a [AUTOBANTIME] minute ban.")
-			C << "<font color='red'><BIG><B>You have been autobanned due to a warning by [ckey].</B></BIG><br>This is a temporary ban, it will be removed in [AUTOBANTIME] minutes."
-			del(C)
+			message_admins("[key_name_admin(src)] has warned [key_name_admin(C)] resulting in a [bantime] minute ban.")
+			C << "<font color='red'><BIG><B>You have been autobanned due to a warning by [ckey].</B></BIG><br>This is a temporary ban, it will be removed in [bantime] minutes."
 		else
-			message_admins("[key_name_admin(src)] has warned [warned_ckey] resulting in a [AUTOBANTIME] minute ban.")
-		AddBan(warned_ckey, D.last_id, "Autobanning due to too many formal warnings", ckey, 1, AUTOBANTIME)
+			message_admins("[key_name_admin(src)] has warned [warned_ckey] resulting in a [bantime] minute ban.")
+		AddBan(warned_ckey, D.last_id, "Autobanning due to too many formal warnings", ckey, 1, bantime)
+		holder.DB_ban_record(BANTYPE_TEMP, null, bantime, reason, , ,warned_ckey)
 		feedback_inc("ban_warn",1)
+		D.save_preferences_sqlite(C, C.ckey)
+		del(C)
 	else
 		if(C)
 			C << "<font color='red'><BIG><B>You have been formally warned by an administrator.</B></BIG><br>Further warnings will result in an autoban.</font>"
-			message_admins("[key_name_admin(src)] has warned [key_name_admin(C)]. They have [MAX_WARNS-D.warns] strikes remaining.")
+			message_admins("[key_name_admin(src)] has warned [key_name_admin(C)]. They have [MAX_WARNS-D.warns] strikes remaining. And have been warn banned [D.warnbans] [D.warnbans == 1 ? "time" : "times"]")
 		else
-			message_admins("[key_name_admin(src)] has warned [warned_ckey] (DC). They have [MAX_WARNS-D.warns] strikes remaining.")
-
+			message_admins("[key_name_admin(src)] has warned [warned_ckey] (DC). They have [MAX_WARNS-D.warns] strikes remaining. And have been warn banned [D.warnbans] [D.warnbans == 1 ? "time" : "times"]")
+		D.save_preferences_sqlite(C, C.ckey)
 	feedback_add_details("admin_verb","WARN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/proc/unwarn(warned_ckey)
+	if(!check_rights(R_ADMIN))	return
+
+	if(!warned_ckey || !istext(warned_ckey))	return
+	/*if(warned_ckey in admin_datums)
+		usr << "<font color='red'>Error: warn(): You can't warn admins.</font>"
+		return*/
+
+	var/datum/preferences/D
+	var/client/C = directory[warned_ckey]
+	if(C)	D = C.prefs
+	else	D = preferences_datums[warned_ckey]
+
+	if(!D)
+		src << "<font color='red'>Error: unwarn(): No such ckey found.</font>"
+		return
+
+	if(D.warns == 0)
+		src << "<font color='red'>Error: unwarn(): You can't unwarn someone with 0 warnings, you big dummy.</font>"
+		return
+
+	D.warns-=1
+	var/strikesleft = MAX_WARNS-D.warns
+	if(C)
+		C << "<font color='red'><BIG><B>One of your warnings has been removed.</B></BIG><br>You currently have [strikesleft] strike\s left</font>"
+		message_admins("[key_name_admin(src)] has unwarned [key_name_admin(C)]. They have [strikesleft] strike(s) remaining, and have been warn banned [D.warnbans] [D.warnbans == 1 ? "time" : "times"]")
+	else
+		message_admins("[key_name_admin(src)] has unwarned [warned_ckey] (DC). They have [strikesleft] strike(s) remaining, and have been warn banned [D.warnbans] [D.warnbans == 1 ? "time" : "times"]")
+	D.save_preferences_sqlite(C, C.ckey)
+	feedback_add_details("admin_verb","UNWARN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 #undef MAX_WARNS
 #undef AUTOBANTIME
@@ -818,6 +854,7 @@ var/list/admin_verbs_mentor = list(
 	set category = "Preferences"
 
 	prefs.toggles ^= CHAT_ATTACKLOGS
+	prefs.save_preferences_sqlite(src, ckey)
 	if (prefs.toggles & CHAT_ATTACKLOGS)
 		usr << "You now will get attack log messages"
 	else
@@ -857,6 +894,7 @@ var/list/admin_verbs_mentor = list(
 	set category = "Preferences"
 
 	prefs.toggles ^= CHAT_DEBUGLOGS
+	prefs.save_preferences_sqlite(src, ckey)
 	if (prefs.toggles & CHAT_DEBUGLOGS)
 		usr << "You now will get debug log messages"
 	else
