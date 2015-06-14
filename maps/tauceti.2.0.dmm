@@ -6783,6 +6783,7 @@
 "cAw" = (/obj/structure/reagent_dispensers/watertank,/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/turf/simulated/floor,/area/janitor)
 "cAx" = (/turf/simulated/floor/holofloor{icon_state = "engine"; name = "Holodeck Projector Floor"},/area/holodeck/source_wildlife)
 "cAy" = (/turf/simulated/floor/holofloor{icon_state = "engine"; name = "Holodeck Projector Floor"},/area/holodeck/source_plating)
+"cAz" = (/obj/structure/table,/obj/item/device/assembly/prox_sensor{pixel_x = -8; pixel_y = 4},/obj/item/device/assembly/signaler,/obj/item/device/assembly/infra,/obj/item/device/suit_cooling_unit,/obj/item/device/suit_cooling_unit,/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/syndicate_station/start)
 "cAA" = (/turf/simulated/floor/holofloor{dir = 9; icon_state = "red"},/area/holodeck/source_emptycourt)
 "cAB" = (/turf/simulated/floor/holofloor{dir = 1; icon_state = "red"},/area/holodeck/source_emptycourt)
 "cAC" = (/turf/simulated/floor/holofloor{dir = 5; icon_state = "red"},/area/holodeck/source_emptycourt)
