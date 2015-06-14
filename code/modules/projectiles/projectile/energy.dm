@@ -11,10 +11,10 @@
 	icon_state = "spark"
 	nodamage = 1
 
-	stun = 10
-	weaken = 10
+	stun = 0
+	weaken = 0
 	stutter = 10
-	agony = 40
+	agony = 60
 	damage_type = HALLOSS
 	//Damage will be handled on the MOB side, to prevent window shattering.
 

@@ -52,10 +52,15 @@ emp_act
 				return -1 // complete projectile permutation
 
 //BEGIN BOOK'S TASER NERF.
-	if(istype(P, /obj/item/projectile/energy/electrode) || istype(P, /obj/item/projectile/bullet/stunslug) )
+	if(istype(P, /obj/item/projectile/energy/electrode) || istype(P, /obj/item/projectile/bullet/stunslug) || istype(P, /obj/item/projectile/bullet/weakbullet))
 		var/datum/organ/external/select_area = get_organ(def_zone) // We're checking the outside, buddy!
 		if(check_thickmaterial(select_area))
-			visible_message("\red <B>The [P.name] gets deflected by [src]'s armor!</B>")
+			
+			if(istype(P, /obj/item/projectile/bullet/weakbullet))
+				visible_message("\red <B>The [P.name] hits [src]'s armor!</B>")
+				apply_effect(25,AGONY,0)
+			else
+				visible_message("\red <B>The [P.name] gets deflected by [src]'s armor!</B>")
 			del P
 			return
 		else
