@@ -124,7 +124,7 @@ emp_act
 	if(delta <= (P.damage/4) )
 		apply_effect(delta*2,AGONY,armor)
 		P.on_hit(src, armor, def_zone)
-		return
+		//return Nope! ~Zve
 	if(delta < 10)
 		P.sharp = 0
 		P.embed = 0
@@ -144,6 +144,8 @@ emp_act
 		(SP.loc) = organ
 		organ.embed(SP)
 
+	if(armor > 0)
+		P.damage = P.damage - (P.damage * (armor/100))
 	return (..(P , def_zone))
 
 
