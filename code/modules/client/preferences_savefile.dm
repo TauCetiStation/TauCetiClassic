@@ -162,7 +162,7 @@
 		message_admins("Error #: [check.Error()] - [check.ErrorMsg()]")
 		warning("Error #:[q.Error()] - [q.ErrorMsg()]")
 		return 0
-	user << "Preferences Updated."
+	//user << "Preferences Updated."
 	return 1
 
 /datum/preferences/proc/save_preferences()

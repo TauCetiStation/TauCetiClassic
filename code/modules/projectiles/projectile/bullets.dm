@@ -17,8 +17,9 @@
 
 /obj/item/projectile/bullet/weakbullet // "rubber" bullets
 	damage = 10
-	stun = 5
-	weaken = 5
+	stun = 0
+	weaken = 0
+	agony = 80
 	embed = 0
 	sharp = 0
 
@@ -71,10 +72,12 @@
 
 /obj/item/projectile/bullet/stunslug
 	name = "stunslug"
+	icon_state = "spark"
 	damage = 5
-	stun = 10
-	weaken = 10
+	stun = 0
+	weaken = 0
 	stutter = 10
+	agony = 60
 	embed = 0
 	sharp = 0
 
@@ -89,7 +92,7 @@
 /obj/item/projectile/bullet/incendiary/on_hit(var/atom/target, var/blocked = 0)
 	if(istype(target, /mob/living/carbon))
 		var/mob/living/carbon/M = target
-		M.adjust_fire_stacks(1)
+		M.adjust_fire_stacks(10)
 		M.IgniteMob()
 
 /obj/item/projectile/bullet/chameleon
