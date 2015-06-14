@@ -53,10 +53,12 @@
 /obj/structure/stool/bed/proc/unbuckle()
 	if(buckled_mob)
 		if(buckled_mob.buckled == src)	//this is probably unneccesary, but it doesn't hurt
+			. = buckled_mob
 			buckled_mob.buckled = null
 			buckled_mob.anchored = initial(buckled_mob.anchored)
 			buckled_mob.update_canmove()
 			buckled_mob = null
+			post_buckle_mob(.)
 	return
 
 /obj/structure/stool/bed/proc/manual_unbuckle(mob/user as mob)
@@ -106,6 +108,10 @@
 	M.update_canmove()
 	src.buckled_mob = M
 	src.add_fingerprint(user)
+	post_buckle_mob(M)
+	return
+
+/obj/proc/post_buckle_mob(mob/living/M)
 	return
 
 /obj/structure/stool/bed/CanPass(atom/movable/mover)
