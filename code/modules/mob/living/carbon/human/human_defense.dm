@@ -52,10 +52,15 @@ emp_act
 				return -1 // complete projectile permutation
 
 //BEGIN BOOK'S TASER NERF.
-	if(istype(P, /obj/item/projectile/energy/electrode) || istype(P, /obj/item/projectile/bullet/stunslug) )
+	if(istype(P, /obj/item/projectile/energy/electrode) || istype(P, /obj/item/projectile/bullet/stunslug) || istype(P, /obj/item/projectile/bullet/weakbullet))
 		var/datum/organ/external/select_area = get_organ(def_zone) // We're checking the outside, buddy!
 		if(check_thickmaterial(select_area))
-			visible_message("\red <B>The [P.name] gets deflected by [src]'s armor!</B>")
+			
+			if(istype(P, /obj/item/projectile/bullet/weakbullet))
+				visible_message("\red <B>The [P.name] hits [src]'s armor!</B>")
+				apply_effect(25,AGONY,0)
+			else
+				visible_message("\red <B>The [P.name] gets deflected by [src]'s armor!</B>")
 			del P
 			return
 		else
@@ -124,7 +129,7 @@ emp_act
 	if(delta <= (P.damage/4) )
 		apply_effect(delta*2,AGONY,armor)
 		P.on_hit(src, armor, def_zone)
-		return
+		//return Nope! ~Zve
 	if(delta < 10)
 		P.sharp = 0
 		P.embed = 0
@@ -144,6 +149,8 @@ emp_act
 		(SP.loc) = organ
 		organ.embed(SP)
 
+	if(armor > 0)
+		P.damage = P.damage - (P.damage * (armor/100))
 	return (..(P , def_zone))
 
 
@@ -454,6 +461,7 @@ emp_act
 	if(damtype != BURN && damtype != BRUTE) return
 
 	var/obj/item/clothing/suit/space/SS = wear_suit
-	var/penetrated_dam = max(0,(damage - SS.breach_threshold)) // - SS.damage)) - Consider uncommenting this if suits seem too hardy on dev.
+	damage *= 2
+	var/penetrated_dam = max(0, min(50, (damage - SS.breach_threshold))) // - SS.damage)) - Consider uncommenting this if suits seem too hardy on dev.
 
 	if(penetrated_dam) SS.create_breaches(damtype, penetrated_dam)

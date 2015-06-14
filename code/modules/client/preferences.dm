@@ -36,7 +36,7 @@ var/const/MAX_SAVE_SLOTS = 10
 
 /datum/preferences
 	//doohickeys for savefiles
-	var/database/db = ("players2.sqlite")
+	var/database/db = ("data/players2.sqlite")
 	var/path
 	var/default_slot = 1				//Holder so it doesn't default to slot 1, rather the last one used
 	var/slot = 1

@@ -2422,6 +2422,15 @@
 		switch(href_list["secretsadmin"])
 			if("clear_bombs")
 				//I do nothing
+			if("clear_virus")
+				var/choice1 = input("Are you sure you want to cure all disease?") in list("Yes", "Cancel")
+				if(choice1 == "Yes")
+					message_admins("[key_name_admin(usr)] has cured all diseases.")
+					for(var/mob/living/carbon/M in world)
+						if(M.virus2.len)
+							for(var/ID in M.virus2)
+								var/datum/disease2/disease/V = M.virus2[ID]
+								V.cure(M)
 			if("list_bombers")
 				var/dat = "<B>Bombing List<HR>"
 				for(var/l in bombers)
