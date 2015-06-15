@@ -22,7 +22,7 @@ var/global/list/special_roles = list(
 	ROLE_SHADOWLING    = IS_MODE_COMPILED("shadowling"),
 	ROLE_TRAITOR       = IS_MODE_COMPILED("traitor"),
 //	ROLE_VAMPIRE       = IS_MODE_COMPILED("vampire"),
-	ROLE_VOXRAIDER     = IS_MODE_COMPILED("heist"),
+	ROLE_RAIDER        = IS_MODE_COMPILED("heist"),
 	ROLE_WIZARD        = 1,
  )
 
