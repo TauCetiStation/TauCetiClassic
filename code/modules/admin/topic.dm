@@ -2431,6 +2431,18 @@
 							for(var/ID in M.virus2)
 								var/datum/disease2/disease/V = M.virus2[ID]
 								V.cure(M)
+
+					for(var/obj/effect/decal/cleanable/O in world)
+						if(istype(O,/obj/effect/decal/cleanable/blood))
+							var/obj/effect/decal/cleanable/blood/B = O
+							if(B.virus2.len)
+								B.virus2.Cut()
+
+						else if(istype(O,/obj/effect/decal/cleanable/mucus))
+							var/obj/effect/decal/cleanable/mucus/N = O
+							if(N.virus2.len)
+								N.virus2.Cut()
+
 			if("list_bombers")
 				var/dat = "<B>Bombing List<HR>"
 				for(var/l in bombers)
