@@ -184,10 +184,27 @@
 	activate(var/mob/M, var/connected, var/flags)
 		..(M,connected,flags)
 		M.pass_flags |= 1
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			H.ventcrawler = 1
+			H << "\blue \b Ventcrawling allowed"
+
+		var/matrix/Mx = matrix()
+		Mx.Scale(0.8) //Makes our hulk to be bigger than any normal human.
+		Mx.Translate(0,-2)
+		M.transform = Mx
 
 	deactivate(var/mob/M, var/connected, var/flags)
 		..(M,connected,flags)
-		M.pass_flags &= ~1 //This may cause issues down the track, but offhand I can't think of any other way for humans to get passtable short of varediting so it should be fine. ~Z
+		M.pass_flags &= ~1
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			H.ventcrawler = 0
+
+		var/matrix/Mx = matrix()
+		Mx.Scale(1) ////Reset size of our halfling
+		Mx.Translate(0,0)
+		M.transform = Mx
 
 /datum/dna/gene/basic/hulk
 	name="Hulk"
