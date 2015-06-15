@@ -694,6 +694,7 @@ var/list/liftable_structures = list(\
 #define ROLE_PAI        "pAI"
 #define ROLE_PLANT      "Dionaea"
 #define ROLE_POSIBRAIN  "posibrain"
+#define ROLE_RAIDER     "raider"
 #define ROLE_REV        "revolutionary"
 #define ROLE_SHADOWLING "shadowling"
 #define ROLE_TRAITOR    "traitor"

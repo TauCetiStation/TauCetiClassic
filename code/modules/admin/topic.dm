@@ -680,6 +680,11 @@
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Vox Raider;jobban4=\ref[M]'><font color=red>Vox Raider</font></a></td>"
 		else
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Vox Raider;jobban4=\ref[M]'>Vox Raider</a></td>"
+		//Raider (New heist)
+		if(jobban_isbanned(M, "Raider") || isbanned_dept)
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Raider;jobban4=\ref[M]'><font color=red>Raider</font></a></td>"
+		else
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Raider;jobban4=\ref[M]'>Raider</a></td>"
 		//Mutineer
 		if(jobban_isbanned(M, "Mutineer") || isbanned_dept)
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Mutineer;jobban4=\ref[M]'><font color=red>Mutineer</font></a></td>"
