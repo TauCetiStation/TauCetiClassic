@@ -1404,31 +1404,31 @@ datum/design/nanopaste
 	build_path = "/obj/item/stack/nanopaste"
 
 datum/design/implant_loyal
-	name = "loyalty implant"
-	desc = "Makes you loyal or such."
+	name = "Glass Case- 'Loyalty'"
+	desc = "A case containing a loyalty implant."
 	id = "implant_loyal"
 	req_tech = list("materials" = 2, "biotech" = 3)
 	build_type = PROTOLATHE
 	materials = list("$metal" = 7000, "$glass" = 7000)
-	build_path = "/obj/item/weapon/implant/loyalty"
+	build_path = "/obj/item/weapon/implantcase/loyalty"
 
 datum/design/implant_chem
-	name = "chemical implant"
-	desc = "Injects things."
+	name = "Glass Case- 'Chem'"
+	desc = "A case containing a chemical implant."
 	id = "implant_chem"
 	req_tech = list("materials" = 2, "biotech" = 3)
 	build_type = PROTOLATHE
 	materials = list("$metal" = 50, "$glass" = 50)
-	build_path = "/obj/item/weapon/implant/chem"
+	build_path = "/obj/item/weapon/implantcase/chem"
 
 datum/design/implant_free
-	name = "freedom implant"
-	desc = "Use this to escape from those evil Red Shirts."
+	name = "boxed freedom implant (with injector)"
+	desc = "A sleek, sturdy box"
 	id = "implant_free"
 	req_tech = list("syndicate" = 2, "biotech" = 3)
 	build_type = PROTOLATHE
 	materials = list("$metal" = 50, "$glass" = 50)
-	build_path = "/obj/item/weapon/implant/freedom"
+	build_path = "/obj/item/weapon/storage/box/syndie_kit/imp_freedom"
 
 datum/design/chameleon
 	name = "Chameleon Kit"
@@ -1536,9 +1536,9 @@ datum/design/decloner
 	name = "Decloner"
 	desc = "Your opponent will bubble into a messy pile of goop."
 	id = "decloner"
-	req_tech = list("combat" = 8, "materials" = 7, "biotech" = 5, "powerstorage" = 6)
+	req_tech = list("combat" = 7, "materials" = 7, "biotech" = 5, "powerstorage" = 6)
 	build_type = PROTOLATHE
-	materials = list("$gold" = 5000,"$uranium" = 10000, "mutagen" = 40)
+	materials = list("$gold" = 5000,"$uranium" = 10000)
 	build_path = "/obj/item/weapon/gun/energy/decloner"
 	locked = 1
 
