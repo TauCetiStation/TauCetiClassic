@@ -1409,7 +1409,7 @@ datum/design/implant_loyal
 	id = "implant_loyal"
 	req_tech = list("materials" = 2, "biotech" = 3)
 	build_type = PROTOLATHE
-	materials = list("$metal" = 7000, "$glass" = 7000)
+	materials = list("$metal" = 1000, "$glass" = 1000, "$silver" = 100, "$gold" = 100)
 	build_path = "/obj/item/weapon/implantcase/loyalty"
 
 datum/design/implant_chem
@@ -1418,7 +1418,7 @@ datum/design/implant_chem
 	id = "implant_chem"
 	req_tech = list("materials" = 2, "biotech" = 3)
 	build_type = PROTOLATHE
-	materials = list("$metal" = 50, "$glass" = 50)
+	materials = list("$metal" = 1000, "$glass" = 1000, "$silver" = 100, "$gold" = 100)
 	build_path = "/obj/item/weapon/implantcase/chem"
 
 datum/design/implant_free
@@ -1427,7 +1427,7 @@ datum/design/implant_free
 	id = "implant_free"
 	req_tech = list("syndicate" = 2, "biotech" = 3)
 	build_type = PROTOLATHE
-	materials = list("$metal" = 50, "$glass" = 50)
+	materials = list("$metal" = 1000, "$glass" = 1000, "$silver" = 100, "$gold" = 100, "$diamond" = 100)
 	build_path = "/obj/item/weapon/storage/box/syndie_kit/imp_freedom"
 
 datum/design/chameleon
@@ -1436,7 +1436,7 @@ datum/design/chameleon
 	id = "chameleon"
 	req_tech = list("syndicate" = 2)
 	build_type = PROTOLATHE
-	materials = list("$metal" = 500)
+	materials = list("$metal" = 5000)
 	build_path = "/obj/item/weapon/storage/box/syndie_kit/chameleon"
 
 
