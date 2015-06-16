@@ -117,7 +117,6 @@
 /obj/item/stack/sheet/glass/throw_at(atom/target, range, speed, mob/user as mob)
 	..()
 	playsound(src, "shatter", 70, 1)
-	var/index = null
 	new /obj/item/weapon/shard(loc)
 	var/new_amount = amount - rand(5,35)
 	if(new_amount > 0)

@@ -656,6 +656,7 @@ var/list/liftable_structures = list(\
 #define CHAT_DEBUGLOGS	2048
 #define CHAT_LOOC		4096
 #define CHAT_GHOSTRADIO 8192
+#define SHOW_TYPING 	16384
 
 
 #define TOGGLES_DEFAULT (SOUND_ADMINHELP|SOUND_MIDI|SOUND_AMBIENCE|SOUND_LOBBY|CHAT_OOC|CHAT_DEAD|CHAT_GHOSTEARS|CHAT_GHOSTSIGHT|CHAT_PRAYER|CHAT_RADIO|CHAT_ATTACKLOGS|CHAT_LOOC)
@@ -694,6 +695,7 @@ var/list/liftable_structures = list(\
 #define ROLE_PAI        "pAI"
 #define ROLE_PLANT      "Dionaea"
 #define ROLE_POSIBRAIN  "posibrain"
+#define ROLE_RAIDER     "raider"
 #define ROLE_REV        "revolutionary"
 #define ROLE_SHADOWLING "shadowling"
 #define ROLE_TRAITOR    "traitor"

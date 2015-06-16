@@ -164,6 +164,14 @@ var/global/datum/controller/gameticker/ticker
 		spawn(3000)
 		statistic_cycle() // Polls population totals regularly and stores them in an SQL DB -- TLE
 
+	config.allow_vote_restart = 0
+	config.allow_vote_mode = 0
+	spawn(36000)
+		if(!( config.allow_vote_restart && config.allow_vote_mode))
+			world << "\b Voting allowed"
+			config.allow_vote_restart = 1
+			config.allow_vote_mode = 1
+
 	return 1
 
 /datum/controller/gameticker
