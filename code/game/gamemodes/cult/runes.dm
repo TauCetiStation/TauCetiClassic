@@ -131,9 +131,38 @@ var/list/sacrificed = list()
 					M.say("Tok-lyr rqa'nap g[pick("'","`")]lt-ulotf!")
 					cultist_count += 1
 			if(cultist_count >= 9)
-				new /obj/machinery/singularity/narsie/large(src.loc)
 				if(ticker.mode.name == "cult")
-					ticker.mode:eldergod = 0
+					var/summon_allowed = 0
+					for(var/objective in ticker.mode:objectives)
+						if(objective == "eldergod")
+							summon_allowed = 1
+					if(summon_allowed)
+						ticker.mode:eldergod = 0
+					else
+						ticker.mode:eldertry += 1
+					if(ticker.mode:eldertry)
+						switch(ticker.mode:eldertry)
+							if(1)
+								for(var/mob/M in range(1,src))
+									if(iscultist(M) && !M.stat)
+										M << "<font size='3' color='red'><b>I have no interest in coming to your world.</b></font>"
+							if(2)
+								for(var/mob/M in range(1,src))
+									if(iscultist(M) && !M.stat)
+										M << "<font size='4' color='red'><b>I SAYED NO!!</b></font>"
+							if(3)
+								for(var/mob/M in range(1,src))
+									if(iscultist(M) && !M.stat)
+										M << "<font size='5' color='red'><b>LAST WARNING.</b></font>"
+							if(4 to 100)
+								for(var/mob/M in range(1,src))
+									if(iscultist(M) && !M.stat)
+										M.gib()
+								world << "<font size='15' color='red'><b>FUCK YOU</b></font>"
+								ticker.mode:eldertry = 0
+					if(!summon_allowed)
+						return
+				new /obj/machinery/singularity/narsie/large(src.loc)
 				return
 			else
 				return fizzle()
