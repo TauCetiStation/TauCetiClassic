@@ -146,15 +146,21 @@ var/list/sacrificed = list()
 								for(var/mob/M in range(1,src))
 									if(iscultist(M) && !M.stat)
 										M << "<font size='3' color='red'><b>I have no interest in coming to your world.</b></font>"
-							if(2)
+							if(5)
 								for(var/mob/M in range(1,src))
 									if(iscultist(M) && !M.stat)
-										M << "<font size='4' color='red'><b>I SAYED NO!!</b></font>"
-							if(3)
+										if(ishuman(M))
+											var/mob/living/carbon/human/H = M
+											H.apply_effect(80,AGONY,0)
+										M << "<font size='4' color='red'><b>I SAID NO!!</b></font>"
+							if(10)
 								for(var/mob/M in range(1,src))
 									if(iscultist(M) && !M.stat)
+										if(ishuman(M))
+											var/mob/living/carbon/human/H = M
+											H.apply_effect(80,AGONY,0)
 										M << "<font size='5' color='red'><b>LAST WARNING.</b></font>"
-							if(4 to 100)
+							if(15 to 100)
 								for(var/mob/M in range(1,src))
 									if(iscultist(M) && !M.stat)
 										M.gib()
