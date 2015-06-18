@@ -26,7 +26,7 @@ var/global/list/special_roles = list(
 	ROLE_WIZARD        = 1,
  )
 
-var/const/MAX_SAVE_SLOTS = 10
+var/const/MAX_SAVE_SLOTS = 8
 
 //used for alternate_option
 #define GET_RANDOM_JOB 0
@@ -144,7 +144,6 @@ var/const/MAX_SAVE_SLOTS = 10
 	client=C
 	if(istype(C))
 		if(!IsGuestKey(C.key))
-			load_path(C.ckey)
 			var/load_pref = load_preferences_sqlite(C.ckey)
 			if(load_pref)
 				if(load_save_sqlite(C.ckey, src, default_slot))
@@ -165,7 +164,6 @@ var/const/MAX_SAVE_SLOTS = 10
 		if(!IsGuestKey(user.key))
 			dat += "<center>"
 			dat += "Slot <b>[slot_name]</b> - "
-			dat += "<a href=\"byond://?src=\ref[user];preference=open_old_load_dialog\">Load old slot</a> - "
 			dat += "<a href=\"byond://?src=\ref[user];preference=open_load_dialog\">Load slot</a> - "
 			dat += "<a href=\"byond://?src=\ref[user];preference=save\">Save slot</a> - "
 			dat += "<a href=\"byond://?src=\ref[user];preference=reload\">Reload slot</a>"
@@ -1291,15 +1289,7 @@ NOTE:  The change will take effect AFTER any current recruiting periods."}
 						if(!IsGuestKey(user.key))
 							open_load_dialog(user)
 
-					if("open_old_load_dialog")
-						if(!IsGuestKey(user.key))
-							open_old_load_dialog(user)
-
 					if("close_load_dialog")
-						close_load_dialog(user)
-
-					if("changeslot_old")
-						load_character(text2num(href_list["num"]))
 						close_load_dialog(user)
 
 					if("changeslot")
@@ -1423,27 +1413,6 @@ NOTE:  The change will take effect AFTER any current recruiting periods."}
 			if(isliving(src)) //Ghosts get neuter by default
 				message_admins("[character] ([character.ckey]) has spawned with their gender as plural or neuter. Please notify coders.")
 				character.gender = MALE
-
-	proc/open_old_load_dialog(mob/user)
-		var/dat = "<body>"
-		dat += "<tt><center>"
-
-		var/savefile/S = new /savefile(path)
-		if(S)
-			dat += "<b>Select a character slot to load</b><hr>"
-			var/name
-			for(var/i=1, i<=MAX_SAVE_SLOTS, i++)
-				S.cd = "/character[i]"
-				S["real_name"] >> name
-				if(!name)	name = "Character[i]"
-				if(i==default_slot)
-					name = "<b>[name]</b>"
-				dat += "<a href='?_src_=prefs;preference=changeslot_old;num=[i];'>[name]</a><br>"
-
-		dat += "<hr>"
-		dat += "<a href='byond://?src=\ref[user];preference=close_load_dialog'>Close</a><br>"
-		dat += "</center></tt>"
-		user << browse(dat, "window=saves;size=300x390")
 
 	proc/open_load_dialog(mob/user)
 
