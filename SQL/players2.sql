@@ -110,10 +110,10 @@ CREATE TABLE client (
 
 -- Table: client_roles
 CREATE TABLE client_roles ( 
-    ckey       TEXT    NOT NULL,
-    slot       INTEGER NOT NULL,
+    ckey       TEXT    UNIQUE,
+    slot       INTEGER,
     role       TEXT    NOT NULL,
     preference INTEGER NOT NULL,
-    PRIMARY KEY ( ckey, slot, role ),
-    FOREIGN KEY ( ckey, slot ) REFERENCES players ( player_ckey, player_slot ) ON DELETE CASCADE 
+    PRIMARY KEY ( ckey, slot ),
+    FOREIGN KEY ( ckey, slot ) REFERENCES players ( player_ckey, player_slot ) ON DELETE CASCADE
 );
