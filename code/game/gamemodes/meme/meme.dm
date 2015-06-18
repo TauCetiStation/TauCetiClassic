@@ -49,7 +49,7 @@
 	// also make sure that there's at least one meme and one host
 	//recommended_enemies = max(src.num_players() / 20 * 2, 2)
 
-	var/list/datum/mind/possible_memes = get_players_for_role(ROLE_MEME)
+	var/list/datum/mind/possible_memes = get_players_for_role(BE_MEME)
 
 	if(possible_memes.len < 1)
 		//log_admin("MODE FAILURE: MEME. NOT ENOUGH MEME CANDIDATES.") // We need no spam anymore, it works for a long time.

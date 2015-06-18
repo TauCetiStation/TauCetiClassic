@@ -34,7 +34,7 @@ var/list/blob_nodes = list()
 	var/list/infected_crew = list()
 
 /datum/game_mode/blob/pre_setup()
-	var/list/datum/mind/antag_candidates = get_players_for_role(ROLE_BLOB)
+	var/list/datum/mind/antag_candidates = get_players_for_role(BE_ALIEN)
 
 	cores_to_spawn = max(round(num_players()/players_per_core, 1), 1)
 
