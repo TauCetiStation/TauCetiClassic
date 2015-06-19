@@ -252,7 +252,7 @@ datum/mind
 			else
 				text += "<a href='?src=\ref[src];shadowling=shadowling'>shadowling</a>|<a href='?src=\ref[src];shadowling=thrall'>thrall</a>|<b>HUMAN</b>"
 
-			if(current && current.client && current.client.desires_role(ROLE_SHADOWLING))
+			if(current && current.client && current.client.prefs.be_special & BE_SHADOWLING)
 				text += "|Enabled in Prefs"
 			else
 				text += "|Disabled in Prefs"

@@ -2,29 +2,25 @@
 
 var/list/preferences_datums = list()
 
-var/global/list/special_roles = list(
-	ROLE_ALIEN         = 1, //always show
-	ROLE_BLOB          = 1,
-	ROLE_BORER         = 1,
-	ROLE_CHANGELING    = IS_MODE_COMPILED("changeling"),
-	ROLE_COMMANDO      = 1,
-	ROLE_CULTIST       = IS_MODE_COMPILED("cult"),
-//	"infested monkey"  = IS_MODE_COMPILED("monkey"),
-	ROLE_MALF          = IS_MODE_COMPILED("malfunction"),
-	ROLE_MEME          = IS_MODE_COMPILED("meme"),
-	ROLE_MUTINEER      = IS_MODE_COMPILED("mutiny"),
-	ROLE_NINJA         = 1,
-	ROLE_OPERATIVE     = IS_MODE_COMPILED("nuclear"),
-	ROLE_PAI           = 1, // -- TLE
-	ROLE_PLANT         = 1,
-	ROLE_POSIBRAIN     = 1,
-	ROLE_REV           = IS_MODE_COMPILED("revolution"),
-	ROLE_SHADOWLING    = IS_MODE_COMPILED("shadowling"),
-	ROLE_TRAITOR       = IS_MODE_COMPILED("traitor"),
-//	ROLE_VAMPIRE       = IS_MODE_COMPILED("vampire"),
-	ROLE_RAIDER        = IS_MODE_COMPILED("heist"),
-	ROLE_WIZARD        = 1,
- )
+var/global/list/special_roles = list( //keep synced with the defines BE_* in setup.dm --rastaf
+//some autodetection here.
+	"traitor" = IS_MODE_COMPILED("traitor"),             // 0
+	"operative" = IS_MODE_COMPILED("nuclear"),           // 1
+	"changeling" = IS_MODE_COMPILED("changeling"),       // 2
+	"wizard" = IS_MODE_COMPILED("wizard"),               // 3
+	"malf AI" = IS_MODE_COMPILED("malfunction"),         // 4
+	"revolutionary" = IS_MODE_COMPILED("revolution"),    // 5
+	"alien candidate" = 1, //always show                 // 6
+	"pAI candidate" = 1, // -- TLE                       // 7
+	"cultist" = IS_MODE_COMPILED("cult"),                // 8
+	"infested monkey" = IS_MODE_COMPILED("monkey"),      // 9
+	"ninja" = "true",									 // 10
+	"vox raider" = IS_MODE_COMPILED("heist"),			 // 11
+	"diona" = 1,                                         // 12
+	"meme" = IS_MODE_COMPILED("meme"),				 	 // 13
+	"mutineer" = IS_MODE_COMPILED("mutiny"),			 // 14
+	"shadowling" = IS_MODE_COMPILED("shadowling"),		 // 15
+)
 
 var/const/MAX_SAVE_SLOTS = 10
 
@@ -32,17 +28,11 @@ var/const/MAX_SAVE_SLOTS = 10
 #define GET_RANDOM_JOB 0
 #define BE_ASSISTANT 1
 #define RETURN_TO_LOBBY 2
-#define POLLED_LIMIT	150
 
-/datum/preferences
+datum/preferences
 	//doohickeys for savefiles
-	var/database/db = ("data/players2.sqlite")
 	var/path
 	var/default_slot = 1				//Holder so it doesn't default to slot 1, rather the last one used
-	var/slot = 1
-	var/list/slot_names = new
-	var/lastPolled = 0
-
 	var/savefile_version = 0
 
 	//non-preference stuff
@@ -55,6 +45,7 @@ var/const/MAX_SAVE_SLOTS = 10
 	//game-preferences
 	var/lastchangelog = ""				//Saved changlog filesize to detect if there was a change
 	var/ooccolor = "#b82e00"
+	var/be_special = 0					//Special role selection
 	var/UI_style = "White"
 	var/toggles = TOGGLES_DEFAULT
 	var/UI_style_color = "#ffffff"
@@ -135,25 +126,104 @@ var/const/MAX_SAVE_SLOTS = 10
 	// Whether or not to use randomized character slots
 	var/randomslot = 0
 
-	var/list/roles=list() // "role" => ROLEPREF_*
-
-	var/client/client
-
 /datum/preferences/New(client/C)
 	b_type = pick(4;"O-", 36;"O+", 3;"A-", 28;"A+", 1;"B-", 20;"B+", 1;"AB-", 5;"AB+")
-	client=C
 	if(istype(C))
 		if(!IsGuestKey(C.key))
 			load_path(C.ckey)
-			var/load_pref = load_preferences_sqlite(C.ckey)
-			if(load_pref)
-				if(load_save_sqlite(C.ckey, src, default_slot))
+			if(load_preferences())
+				if(load_character())
 					return
-	randomize_appearance_for()
+	gender = pick(MALE, FEMALE)
 	real_name = random_name(gender)
-	save_character_sqlite(src, C.ckey, default_slot)
 
 /datum/preferences
+	proc/ZeroSkills(var/forced = 0)
+		for(var/V in SKILLS) for(var/datum/skill/S in SKILLS[V])
+			if(!skills.Find(S.ID) || forced)
+				skills[S.ID] = SKILL_NONE
+	proc/CalculateSkillPoints()
+		used_skillpoints = 0
+		for(var/V in SKILLS) for(var/datum/skill/S in SKILLS[V])
+			var/multiplier = 1
+			switch(skills[S.ID])
+				if(SKILL_NONE)
+					used_skillpoints += 0 * multiplier
+				if(SKILL_BASIC)
+					used_skillpoints += 1 * multiplier
+				if(SKILL_ADEPT)
+					// secondary skills cost less
+					if(S.secondary)
+						used_skillpoints += 1 * multiplier
+					else
+						used_skillpoints += 3 * multiplier
+				if(SKILL_EXPERT)
+					// secondary skills cost less
+					if(S.secondary)
+						used_skillpoints += 3 * multiplier
+					else
+						used_skillpoints += 6 * multiplier
+
+	proc/GetSkillClass(points)
+		// skill classes describe how your character compares in total points
+		var/original_points = points
+		points -= min(round((age - 20) / 2.5), 4) // every 2.5 years after 20, one extra skillpoint
+		if(age > 30)
+			points -= round((age - 30) / 5) // every 5 years after 30, one extra skillpoint
+		if(original_points > 0 && points <= 0) points = 1
+		switch(points)
+			if(0)
+				return "Unconfigured"
+			if(1 to 3)
+				return "Terrifying"
+			if(4 to 6)
+				return "Below Average"
+			if(7 to 10)
+				return "Average"
+			if(11 to 14)
+				return "Above Average"
+			if(15 to 18)
+				return "Exceptional"
+			if(19 to 24)
+				return "Genius"
+			if(24 to 1000)
+				return "God"
+
+	proc/SetSkills(mob/user)
+		if(SKILLS == null)
+			setup_skills()
+
+		if(skills.len == 0)
+			ZeroSkills()
+
+
+		var/HTML = "<body>"
+		HTML += "<b>Select your Skills</b><br>"
+		HTML += "Current skill level: <b>[GetSkillClass(used_skillpoints)]</b> ([used_skillpoints])<br>"
+		HTML += "<a href=\"byond://?src=\ref[user];preference=skills;preconfigured=1;\">Use preconfigured skillset</a><br>"
+		HTML += "<table>"
+		for(var/V in SKILLS)
+			HTML += "<tr><th colspan = 5><b>[V]</b>"
+			HTML += "</th></tr>"
+			for(var/datum/skill/S in SKILLS[V])
+				var/level = skills[S.ID]
+				HTML += "<tr style='text-align:left;'>"
+				HTML += "<th><a href='byond://?src=\ref[user];preference=skills;skillinfo=\ref[S]'>[S.name]</a></th>"
+				HTML += "<th><a href='byond://?src=\ref[user];preference=skills;setskill=\ref[S];newvalue=[SKILL_NONE]'><font color=[(level == SKILL_NONE) ? "red" : "black"]>\[Untrained\]</font></a></th>"
+				// secondary skills don't have an amateur level
+				if(S.secondary)
+					HTML += "<th></th>"
+				else
+					HTML += "<th><a href='byond://?src=\ref[user];preference=skills;setskill=\ref[S];newvalue=[SKILL_BASIC]'><font color=[(level == SKILL_BASIC) ? "red" : "black"]>\[Amateur\]</font></a></th>"
+				HTML += "<th><a href='byond://?src=\ref[user];preference=skills;setskill=\ref[S];newvalue=[SKILL_ADEPT]'><font color=[(level == SKILL_ADEPT) ? "red" : "black"]>\[Trained\]</font></a></th>"
+				HTML += "<th><a href='byond://?src=\ref[user];preference=skills;setskill=\ref[S];newvalue=[SKILL_EXPERT]'><font color=[(level == SKILL_EXPERT) ? "red" : "black"]>\[Professional\]</font></a></th>"
+				HTML += "</tr>"
+		HTML += "</table>"
+		HTML += "<a href=\"byond://?src=\ref[user];preference=skills;cancel=1;\">\[Done\]</a>"
+
+		user << browse(null, "window=preferences")
+		user << browse(HTML, "window=show_skills;size=600x800")
+		return
 
 	proc/ShowChoices(mob/user)
 		if(!user || !user.client)	return
@@ -162,10 +232,9 @@ var/const/MAX_SAVE_SLOTS = 10
 		user << browse_rsc(preview_icon_side, "previewicon2.png")
 		var/dat = "<html><body><center>"
 
-		if(!IsGuestKey(user.key))
+		if(path)
 			dat += "<center>"
 			dat += "Slot <b>[slot_name]</b> - "
-			dat += "<a href=\"byond://?src=\ref[user];preference=open_old_load_dialog\">Load old slot</a> - "
 			dat += "<a href=\"byond://?src=\ref[user];preference=open_load_dialog\">Load slot</a> - "
 			dat += "<a href=\"byond://?src=\ref[user];preference=save\">Save slot</a> - "
 			dat += "<a href=\"byond://?src=\ref[user];preference=reload\">Reload slot</a>"
@@ -299,6 +368,8 @@ var/const/MAX_SAVE_SLOTS = 10
 
 		dat += "<b><a href=\"byond://?src=\ref[user];preference=antagoptions;active=0\">Set Antag Options</b></a><br>"
 
+	//	dat += "\t<a href=\"byond://?src=\ref[user];preference=skills\"><b>Set Skills</b> (<i>[GetSkillClass(used_skillpoints)][used_skillpoints > 0 ? " [used_skillpoints]" : "0"])</i></a><br>"
+
 		dat += "<a href='byond://?src=\ref[user];preference=flavor_text;task=input'><b>Set Flavor Text</b></a><br>"
 		if(lentext(flavor_text) <= 40)
 			if(!lentext(flavor_text))
@@ -326,7 +397,9 @@ var/const/MAX_SAVE_SLOTS = 10
 		dat += "<br><br>"
 		if(jobban_isbanned(user, "Syndicate"))
 			dat += "<b>You are banned from antagonist roles.</b>"
+			src.be_special = 0
 		else
+			var/n = 0
 			for (var/i in special_roles)
 				if(special_roles[i]) //if mode is available on the server
 					if(jobban_isbanned(user, i))
@@ -335,7 +408,8 @@ var/const/MAX_SAVE_SLOTS = 10
 						if(jobban_isbanned(user, "pAI"))
 							dat += "<b>Be [i]:</b> <font color=red><b> \[BANNED]</b></font><br>"
 					else
-						dat += "<b>Be [i]:</b> <a href='?_src_=prefs;preference=toggle_role;role_id=[i]'><b>[roles[i] & ROLEPREF_ENABLE ? "Yes" : "No"]</b></a><br>"
+						dat += "<b>Be [i]:</b> <a href='?_src_=prefs;preference=be_special;num=[n]'><b>[src.be_special&(1<<n) ? "Yes" : "No"]</b></a><br>"
+				n++
 		dat += "</td></tr></table><hr><center>"
 
 		if(!IsGuestKey(user.key))
@@ -672,77 +746,10 @@ var/const/MAX_SAVE_SLOTS = 10
 						job_engsec_low |= job.flag
 		return 1
 
-	proc/SetRoles(var/mob/user, var/list/href_list)
-		// We just grab the role from the POST(?) data.
-		for(var/role_id in special_roles)
-			if(!(role_id in href_list))
-				user << "<span class='danger'>BUG: Unable to find role [role_id].</span>"
-				continue
-			var/oldval=text2num(roles[role_id])
-			roles[role_id] = text2num(href_list[role_id])
-			if(oldval!=roles[role_id])
-				user << "<span class='info'>Set role [role_id] to [get_role_desire_str(user.client.prefs.roles[role_id])]!</span>"
-
-		save_preferences_sqlite(user, user.ckey)
-		save_character_sqlite(user.ckey, user, default_slot)
-		return 1
-
-	proc/ToggleRole(var/mob/user, var/list/href_list)
-		var/role_id = href_list["role_id"]
-		//user << "<span class='info'>Toggling role [role_id] (currently at [roles[role_id]])...</span>"
-		if(!(role_id in special_roles))
-			user << "<span class='danger'>BUG: Unable to find role [role_id].</span>"
-			return 0
-
-		if(roles[role_id] == null || roles[role_id] == "")
-			roles[role_id] = 0
-		// Always set persist.
-		roles[role_id] |= ROLEPREF_PERSIST
-		// Toggle role enable
-		roles[role_id] ^= ROLEPREF_ENABLE
-		return 1
-
-	proc/SetRole(var/mob/user, var/list/href_list)
-		var/role_id = href_list["role_id"]
-		//user << "<span class='info'>Toggling role [role_id] (currently at [roles[role_id]])...</span>"
-		if(!(role_id in special_roles))
-			user << "<span class='danger'>BUG: Unable to find role [role_id].</span>"
-			return 0
-
-		if(roles[role_id] == null || roles[role_id] == "")
-			roles[role_id] = 0
-
-		var/question={"Would you like to be \a [role_id] this round?
-
-No/Yes:  Only affects this round.
-Never/Always: Saved for later rounds.
-
-NOTE:  The change will take effect AFTER any current recruiting periods."}
-		var/answer = alert(question,"Role Preference", "Never", "No", "Yes", "Always")
-		var/newval=0
-		switch(answer)
-			if("Never")
-				newval = ROLEPREF_NEVER
-			if("No")
-				newval = ROLEPREF_NO
-			if("Yes")
-				newval = ROLEPREF_YES
-			if("Always")
-				newval = ROLEPREF_ALWAYS
-		roles[role_id] = (roles[role_id] & ~ROLEPREF_VALMASK) | newval // We only set the lower 2 bits, leaving polled and friends untouched.
-
-		save_preferences_sqlite(user, user.ckey)
-		save_character_sqlite(user.ckey, user, default_slot)
-
-		return 1
-
 	proc/process_link(mob/user, list/href_list)
-		if(!user)
-			return
+		if(!user)	return
 
-		if(!istype(user, /mob/new_player))
-			return
-
+		if(!istype(user, /mob/new_player))	return
 		if(href_list["preference"] == "job")
 			switch(href_list["task"])
 				if("close")
@@ -771,6 +778,40 @@ NOTE:  The change will take effect AFTER any current recruiting periods."}
 					SetJob(user, href_list["text"])
 				else
 					SetChoices(user)
+			return 1
+		else if(href_list["preference"] == "skills")
+			if(href_list["cancel"])
+				user << browse(null, "window=show_skills")
+				ShowChoices(user)
+			else if(href_list["skillinfo"])
+				var/datum/skill/S = locate(href_list["skillinfo"])
+				var/HTML = "<b>[S.name]</b><br>[S.desc]"
+				user << browse(HTML, "window=\ref[user]skillinfo")
+			else if(href_list["setskill"])
+				var/datum/skill/S = locate(href_list["setskill"])
+				var/value = text2num(href_list["newvalue"])
+				skills[S.ID] = value
+				CalculateSkillPoints()
+				SetSkills(user)
+			else if(href_list["preconfigured"])
+				var/selected = input(user, "Select a skillset", "Skillset") as null|anything in SKILL_PRE
+				if(!selected) return
+
+				ZeroSkills(1)
+				for(var/V in SKILL_PRE[selected])
+					if(V == "field")
+						skill_specialization = SKILL_PRE[selected]["field"]
+						continue
+					skills[V] = SKILL_PRE[selected][V]
+				CalculateSkillPoints()
+
+				SetSkills(user)
+			else if(href_list["setspecialization"])
+				skill_specialization = href_list["setspecialization"]
+				CalculateSkillPoints()
+				SetSkills(user)
+			else
+				SetSkills(user)
 			return 1
 
 		//disabilities
@@ -826,12 +867,6 @@ NOTE:  The change will take effect AFTER any current recruiting periods."}
 
 					gen_record = genmsg
 					SetRecords(user)
-
-		else if(href_list["preference"] == "set_roles")
-			return SetRoles(user,href_list)
-
-		else if(href_list["preference"] == "toggle_role")
-			ToggleRole(user,href_list)
 
 		else if (href_list["preference"] == "antagoptions")
 			if(text2num(href_list["active"]) == 0)
@@ -1249,6 +1284,10 @@ NOTE:  The change will take effect AFTER any current recruiting periods."}
 						if(!UI_style_alpha_new | !(UI_style_alpha_new <= 255 && UI_style_alpha_new >= 50)) return
 						UI_style_alpha = UI_style_alpha_new
 
+					if("be_special")
+						var/num = text2num(href_list["num"])
+						be_special ^= (1<<num)
+
 					if("name")
 						be_random_name = !be_random_name
 
@@ -1275,37 +1314,22 @@ NOTE:  The change will take effect AFTER any current recruiting periods."}
 						toggles ^= CHAT_GHOSTRADIO
 
 					if("save")
-						if(world.timeofday >= (lastPolled + POLLED_LIMIT))
-							save_preferences_sqlite(user, user.ckey)
-							save_character_sqlite(user.ckey, user, default_slot)
-							lastPolled = world.timeofday
-						else
-							user << "You need to wait [round((((lastPolled + POLLED_LIMIT) - world.timeofday) / 10))] seconds before you can save again."
-						//random_character_sqlite(user, user.ckey)
+						save_preferences()
+						save_character()
 
 					if("reload")
-						load_preferences_sqlite(user, user.ckey)
-						load_save_sqlite(user.ckey, user, default_slot)
+						load_preferences()
+						load_character()
 
 					if("open_load_dialog")
 						if(!IsGuestKey(user.key))
 							open_load_dialog(user)
 
-					if("open_old_load_dialog")
-						if(!IsGuestKey(user.key))
-							open_old_load_dialog(user)
-
 					if("close_load_dialog")
 						close_load_dialog(user)
 
-					if("changeslot_old")
-						load_character(text2num(href_list["num"]))
-						close_load_dialog(user)
-
 					if("changeslot")
-						var/num = text2num(href_list["num"])
-						load_save_sqlite(user.ckey, user, num)
-						default_slot = num
+						load_character(text2num(href_list["num"]))
 						close_load_dialog(user)
 
 		ShowChoices(user)
@@ -1424,7 +1448,7 @@ NOTE:  The change will take effect AFTER any current recruiting periods."}
 				message_admins("[character] ([character.ckey]) has spawned with their gender as plural or neuter. Please notify coders.")
 				character.gender = MALE
 
-	proc/open_old_load_dialog(mob/user)
+	proc/open_load_dialog(mob/user)
 		var/dat = "<body>"
 		dat += "<tt><center>"
 
@@ -1438,40 +1462,7 @@ NOTE:  The change will take effect AFTER any current recruiting periods."}
 				if(!name)	name = "Character[i]"
 				if(i==default_slot)
 					name = "<b>[name]</b>"
-				dat += "<a href='?_src_=prefs;preference=changeslot_old;num=[i];'>[name]</a><br>"
-
-		dat += "<hr>"
-		dat += "<a href='byond://?src=\ref[user];preference=close_load_dialog'>Close</a><br>"
-		dat += "</center></tt>"
-		user << browse(dat, "window=saves;size=300x390")
-
-	proc/open_load_dialog(mob/user)
-
-		var/database/query/q = new
-		var/list/name_list[MAX_SAVE_SLOTS]
-
-		q.Add("select real_name, player_slot from players where player_ckey=?", user.ckey)
-		if(q.Execute(db))
-			while(q.NextRow())
-				name_list[q.GetColumn(2)] = q.GetColumn(1)
-		else
-			message_admins("Error #: [q.Error()] - [q.ErrorMsg()]")
-			warning("Error #:[q.Error()] - [q.ErrorMsg()]")
-			return 0
-
-		var/dat = {"<body><tt><center>"}
-
-		dat += "<b>Select a character slot to load</b><hr>"
-		var/counter = 1
-		while(counter <= MAX_SAVE_SLOTS)
-			if(counter==default_slot)
-				dat += "<a href='?_src_=prefs;preference=changeslot;num=[counter];'><b>[name_list[counter]]</b></a><br>"
-			else
-				if(!name_list[counter])
-					dat += "<a href='?_src_=prefs;preference=changeslot;num=[counter];'>Character[counter]</a><br>"
-				else
-					dat += "<a href='?_src_=prefs;preference=changeslot;num=[counter];'>[name_list[counter]]</a><br>"
-			counter++
+				dat += "<a href='?_src_=prefs;preference=changeslot;num=[i];'>[name]</a><br>"
 
 		dat += "<hr>"
 		dat += "<a href='byond://?src=\ref[user];preference=close_load_dialog'>Close</a><br>"
@@ -1480,68 +1471,3 @@ NOTE:  The change will take effect AFTER any current recruiting periods."}
 
 	proc/close_load_dialog(mob/user)
 		user << browse(null, "window=saves")
-
-	proc/configure_special_roles(var/mob/user)
-		var/html={"
-<form method="get">
-	<input type="hidden" name="src" value="\ref[src]" />
-	<input type="hidden" name="preference" value="set_roles" />
-	<h1>Special Role Preferences</h1>
-	<p>Please note that this also handles in-round polling for things like Raging Mages and Borers.</p>
-	<fieldset>
-		<legend>Legend</legend>
-		<dl>
-			<dt>Never:</dt>
-			<dd>Always answer no to this role.</dd>
-			<dt>No:</dt>
-			<dd>Answer no for this round. (Default)</dd>
-			<dt>Yes:</dt>
-			<dd>Answer yes for this round.</dd>
-			<dt>Always:</dt>
-			<dd>Always answer yes to this role.</dd>
-		</dl>
-	</fieldset>
-	<table border=\"0\">
-		<thead>
-			<tr>
-				<th>Role</th>
-				<th class="clmNever">Never</th>
-				<th class="clmNo">No</th>
-				<th class="clmYes">Yes</th>
-				<th class="clmAlways">Always</th>
-			</tr>
-		</thead>
-		<tbody>"}
-		for(var/role_id in special_roles)
-			var/desire = get_role_desire_str(roles[role_id])
-			html += {"
-			<tr>
-				<th>[role_id]</th>
-				<td class='column clmNever'><input type="radio" name="[role_id]" value="[ROLEPREF_PERSIST]" title="Never"[desire=="Never"?" checked='checked'":""]/></td>
-				<td class='column clmNo'><input type="radio" name="[role_id]" value="0" title="No"[desire=="No"?" checked='checked'":""] /></td>
-				<td class='column clmYes'><input type="radio" name="[role_id]" value="[ROLEPREF_ENABLE]" title="Yes"[desire=="Yes"?" checked='checked'":""] /></td>
-				<td class='column clmAlways'><input type="radio" name="[role_id]" value="[ROLEPREF_ENABLE|ROLEPREF_PERSIST]" title="Always"[desire=="Always"?" checked='checked'":""] /></td>
-			</tr>
-			"}
-		html += {"
-		</tbody>
-	</table>
-	<input type="submit" value="Submit" />
-	<input type="reset" value="Reset" />
-</form>"}
-		var/datum/browser/B = new /datum/browser/clean(user, "roles", "Role Selections", 300, 390)
-		B.set_content(html)
-		B.add_stylesheet("specialroles", 'html/browser/config_roles.css')
-		B.open()
-
-	Topic(href, href_list)
-		if(!usr)
-			return
-		if(client.mob!=usr)
-			usr << "YOU AREN'T ME GO AWAY"
-			return
-		switch(href_list["preference"])
-			if("set_roles")
-				return SetRoles(usr, href_list)
-			if("set_role")
-				return SetRole(usr, href_list)

@@ -89,7 +89,7 @@ Made by Xhuis
 	//if(config.protect_assistant_from_antagonist)//TG feature?
 		//restricted_jobs += "Assistant"
 
-	var/list/datum/mind/antag_candidates = get_players_for_role(ROLE_SHADOWLING)
+	var/list/datum/mind/antag_candidates = get_players_for_role(BE_SHADOWLING)
 
 	for(var/datum/mind/player in antag_candidates)
 		for(var/job in restricted_jobs)

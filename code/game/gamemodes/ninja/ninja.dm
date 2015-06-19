@@ -21,7 +21,7 @@
 /datum/game_mode/ninja/can_start()
 	if(!..())
 		return 0
-	var/list/datum/mind/possible_ninjas = get_players_for_role(ROLE_NINJA)
+	var/list/datum/mind/possible_ninjas = get_players_for_role(BE_NINJA)
 	var/ninja_number = 2
 
 	for(var/datum/mind/player in possible_ninjas)
