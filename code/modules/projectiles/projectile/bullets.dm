@@ -10,6 +10,8 @@
 	sharp = 1
 	var/stoping_power = 0
 
+	muzzle_type = /obj/effect/projectile/bullet/muzzle
+
 	on_hit(var/atom/target, var/blocked = 0)
 		if (..(target, blocked))
 			var/mob/living/L = target
