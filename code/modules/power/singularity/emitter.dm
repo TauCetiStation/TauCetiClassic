@@ -128,20 +128,17 @@
 			s.set_up(5, 1, src)
 			s.start()
 		A.dir = src.dir
+		A.starting = get_turf(src)
 		switch(dir)
 			if(NORTH)
-				A.yo = 20
-				A.xo = 0
+				A.original = locate(x, y+1, z)
 			if(EAST)
-				A.yo = 0
-				A.xo = 20
+				A.original = locate(x+1, y, z)
 			if(WEST)
-				A.yo = 0
-				A.xo = -20
+				A.original = locate(x-1, y, z)
 			else // Any other
-				A.yo = -20
-				A.xo = 0
-		A.process()	//TODO: Carn: check this out
+				A.original = locate(x, y-1, z)
+		A.process()
 
 
 /obj/machinery/power/emitter/attackby(obj/item/W, mob/user)
