@@ -137,10 +137,11 @@
 	name = "stun beam"
 	icon_state = "stun"
 	nodamage = 1
+	damage = 0
 	agony = 40
 	damage_type = HALLOSS
 	stutter = 5
-	
+
 	muzzle_type = /obj/effect/projectile/stun/muzzle
 	tracer_type = /obj/effect/projectile/stun/tracer
 	impact_type = /obj/effect/projectile/stun/impact

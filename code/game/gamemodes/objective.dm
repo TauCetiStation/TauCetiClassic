@@ -788,7 +788,7 @@ datum/objective/heist/kidnap
 			target = pick(possible_targets)
 
 		if(target && target.current)
-			explanation_text = "The Shoal has a need for [target.current.real_name], the [target.assigned_role]. Take them alive."
+			explanation_text = "You need a new recruit: [target.current.real_name], the [target.assigned_role]. Grab them and bring into the ship. They must be alive!"
 		else
 			explanation_text = "Free Objective"
 		return target
