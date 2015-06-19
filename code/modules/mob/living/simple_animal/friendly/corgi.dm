@@ -551,6 +551,8 @@
 	desc = "It's a borgi."
 	icon_state = "borgi"
 	icon_living = "borgi"
+	icon_dead = "borgi_dead"
+	meat_type = null
 	var/emagged = 0
 
 /mob/living/simple_animal/corgi/Ian/borgi/attackby(obj/item/weapon/W as obj, mob/user as mob)
@@ -583,7 +585,9 @@
 	A.icon = 'icons/effects/genetics.dmi'
 	A.icon_state = "eyelasers"
 	playsound(src.loc, 'sound/weapons/taser2.ogg', 75, 1)
+	A.original = target
 	A.current = T
+	A.starting = T
 	A.yo = U.y - T.y
 	A.xo = U.x - T.x
 	spawn( 0 )
@@ -592,6 +596,7 @@
 
 /mob/living/simple_animal/corgi/Ian/borgi/Life()
 	..()
+	if(health <= 0) return
 	if(emagged && prob(25))
 		var/mob/living/carbon/target = locate() in view(10,src)
 		if (target)
