@@ -216,20 +216,20 @@
 
 /area/proc/updateicon()
 	//if ((fire || eject || party) && ((!requires_power)?(!requires_power):power_environ))//If it doesn't require power, can still activate this proc.
-	if ((fire || eject || party) && (!requires_power||power_environ) && !istype(src, /area/space))//If it doesn't require power, can still activate this proc.
-		if(fire && !eject && !party)
-			icon_state = "blue"
-		/*else if(atmosalm && !fire && !eject && !party)
-			icon_state = "bluenew"*/
-		else if(!fire && eject && !party)
-			icon_state = "red"
-		else if(party && !fire && !eject)
-			icon_state = "party"
-		else
-			icon_state = "blue-red"
-	else
+	//if ((fire || eject || party) && (!requires_power||power_environ) && !istype(src, /area/space))//If it doesn't require power, can still activate this proc.
+	//	if(fire && !eject && !party)
+	//		icon_state = "blue"
+	//	/*else if(atmosalm && !fire && !eject && !party)
+	//		icon_state = "bluenew"*/
+	//	else if(!fire && eject && !party)
+	//		icon_state = "red"
+	//	else if(party && !fire && !eject)
+	//		icon_state = "party"
+	//	else
+	//		icon_state = "blue-red"
+	//else
 	//	new lighting behaviour with obj lights
-		icon_state = null
+	icon_state = null
 
 
 /*
