@@ -1528,7 +1528,7 @@ datum/design/lasercannon
 	id = "lasercannon"
 	req_tech = list("combat" = 4, "materials" = 3, "powerstorage" = 3)
 	build_type = PROTOLATHE
-	materials = list("$metal" = 10000, "$glass" = 1000, "$diamond" = 2000)
+	materials = list("$metal" = 10000, "$glass" = 1000, "$uranium" = 100, "$diamond" = 2000)
 	build_path = "/obj/item/weapon/gun/energy/lasercannon"
 	locked = 1
 

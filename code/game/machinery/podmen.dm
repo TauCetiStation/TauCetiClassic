@@ -91,13 +91,25 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 			return
 
 /obj/item/seeds/replicapod/proc/request_player()
-	for(var/mob/dead/observer/O in get_active_candidates(ROLE_PLANT,poll="Someone is harvesting Dionaea Pod. Would you like to play as one?"))
-		if(jobban_isbanned(O, "Dionaea"))// || (!is_alien_whitelisted(src, "Diona") && config.usealienwhitelist))
+	for(var/mob/dead/observer/O in player_list)
+		if(jobban_isbanned(O, "Dionaea") || (!is_alien_whitelisted(src, "Diona") && config.usealienwhitelist))
 			continue
 		if(O.client)
-			if(O.client.desires_role(ROLE_PLANT))
-				transfer_personality(O.client,host)
-				break
+			if(O.client.prefs.be_special & BE_PLANT)
+				if(O.has_enabled_antagHUD == 1 && config.antag_hud_restricted) //No love for ghost with antaghud enabled
+					continue
+				question(O.client)
+
+/obj/item/seeds/replicapod/proc/question(var/client/C)
+	spawn(0)
+		if(!C)	return
+		var/response = alert(C, "Someone is harvesting a diona pod. Would you like to play as a diona?", "Dionaea harvest", "Yes", "No", "Never for this round.")
+		if(!C || ckey)
+			return
+		if(response == "Yes")
+			transfer_personality(C)
+		else if (response == "Never for this round")
+			C.prefs.be_special ^= BE_PLANT
 
 /obj/item/seeds/replicapod/proc/transfer_personality(var/client/player)
 

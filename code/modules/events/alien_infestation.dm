@@ -26,14 +26,14 @@
 			if(temp_vent.network.normal_members.len > 50)	//Stops Aliens getting stuck in small networks. See: Security, Virology
 				vents += temp_vent
 
-	var/list/candidates = get_active_candidates(ROLE_ALIEN, buffer=ALIEN_SELECT_AFK_BUFFER, poll=1)
+	var/list/candidates = get_alien_candidates()
 
 	while(spawncount > 0 && vents.len && candidates.len)
 		var/obj/vent = pick(vents)
-		var/mob/candidate = pick(candidates)
+		var/candidate = pick(candidates)
 
 		var/mob/living/carbon/alien/larva/new_xeno = new(vent.loc)
-		new_xeno.key = candidate.key
+		new_xeno.key = candidate
 
 		candidates -= candidate
 		vents -= vent

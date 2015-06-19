@@ -230,12 +230,13 @@
 				A = new /obj/item/projectile/beam/lastertag/blue( loc )
 			if(6)
 				A = new /obj/item/projectile/beam/lastertag/red( loc )
-		A.original = target
 		use_power(500)
 	else
 		A = new /obj/item/projectile/energy/electrode( loc )
 		use_power(200)
+	A.original = target
 	A.current = T
+	A.starting = T
 	A.yo = U.y - T.y
 	A.xo = U.x - T.x
 	spawn( 0 )

@@ -335,6 +335,9 @@
 				W.dropped(user)
 				user << "\red God damnit!"
 
+	if(istype(W, /obj/item/weapon/packageWrap) && !(src in user)) //prevents package wrap being put inside the backpack when the backpack is not being worn/held (hence being wrappable)
+		return
+
 	W.add_fingerprint(user)
 	handle_item_insertion(W)
 	return
@@ -363,9 +366,6 @@
 				src.close(M)
 	src.add_fingerprint(user)
 	return
-
-/obj/item/weapon/storage/attack_paw(mob/user as mob)
-	return attack_hand(user)
 
 /obj/item/weapon/storage/verb/toggle_gathering_mode()
 	set name = "Switch Gathering Method"
