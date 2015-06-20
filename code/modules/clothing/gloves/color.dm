@@ -34,11 +34,16 @@
 
 
 	hos
-		item_color = "hosred"		//Exists for washing machines. Is not different from black gloves in any way.
+		name = "head of security's gloves"
+		item_color = "hosred"		//Exists for washing machines. 
+		siemens_coefficient = 0.3
+		
 
 	ce
-		item_color = "chief"			//Exists for washing machines. Is not different from black gloves in any way.
-
+		name = "chief engineer's gloves"
+		item_color = "chief"			//Exists for washing machines. 
+		siemens_coefficient = 0.3
+		
 /obj/item/clothing/gloves/orange
 	name = "orange gloves"
 	desc = "A pair of gloves, they don't look special in any way."
