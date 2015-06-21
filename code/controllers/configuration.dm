@@ -160,6 +160,10 @@
 	var/list/contact_levels = list(1, 5)			// Defines which Z-levels which, for example, a Code Red announcement may affect
 	var/list/player_levels = list(1, 3, 4, 5, 6)	// Defines all Z-levels a character can typically reach
 
+	var/use_slack_bot = 0
+	var/slack_team = 0
+	var/slack_bot_token = 0
+
 /datum/configuration/New()
 	var/list/L = typesof(/datum/game_mode) - /datum/game_mode
 	for (var/T in L)
@@ -540,6 +544,15 @@
 
 				if("player_levels")
 					config.player_levels = text2numlist(value, ";")
+
+				if("use_slack_bot")
+					config.use_slack_bot = 1
+
+				if("slack_team")
+					config.slack_team = value
+
+				if("slack_bot_token")
+					config.slack_bot_token = value
 
 				else
 					log_misc("Unknown setting in configuration: '[name]'")
