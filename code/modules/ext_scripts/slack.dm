@@ -5,7 +5,7 @@
 	//more info here: https://api.slack.com/docs/formatting
 	msg = html_decode(msg)
 
-	var/formatted_command = "curl --data \"[msg]\" $'https://[config.slack_team].slack.com/services/hooks/slackbot?token=[config.slack_bot_token]&channel=%23[channel]'"
+	var/formatted_command = "curl --data \"[msg]\" 'https://[config.slack_team].slack.com/services/hooks/slackbot?token=[config.slack_bot_token]&channel=%23[channel]'"
 
 	//world.log << formatted_command
 	shell(formatted_command)
