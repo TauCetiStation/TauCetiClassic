@@ -87,7 +87,7 @@
 	//	equip_traitor(rev_mind.current, 1) //changing how revs get assigned their uplink so they can get PDA uplinks. --NEO
 	//	Removing revolutionary uplinks.	-Pete
 		equip_revolutionary(rev_mind.current)
-		update_rev_icons_added(rev_mind)
+		update_all_rev_icons()
 
 	for(var/datum/mind/rev_mind in head_revolutionaries)
 		greet_revolutionary(rev_mind)
@@ -201,7 +201,7 @@
 	rev_mind.special_role = "Revolutionary"
 	if(config.objectives_disabled)
 		rev_mind.current << "<font color=blue>Within the rules,</font> try to act as an opposing force to the crew. Further RP and try to make sure other players have </i>fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>"
-	update_rev_icons_added(rev_mind)
+	update_all_rev_icons()
 	return 1
 //////////////////////////////////////////////////////////////////////////////
 //Deals with players being converted from the revolution (Not a rev anymore)//  // Modified to handle borged MMIs.  Accepts another var if the target is being borged at the time  -- Polymorph.

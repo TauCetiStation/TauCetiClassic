@@ -65,4 +65,14 @@
 	name = "Runtime"
 	desc = "Its fur has the look and feel of velvet, and its tail quivers occasionally."
 
-
+/mob/living/simple_animal/cat/Syndi
+	name = "SyndiCat"
+	desc = "It's a SyndiCat droid."
+	icon_state = "Syndicat"
+	icon_living = "Syndicat"
+	icon_dead = "Syndicat_dead"
+	//gender = FEMALE
+	flags = IS_SYNTHETIC|NO_BREATHE
+	faction = list("syndicate")
+	//var/turns_since_scan = 0
+	//var/mob/living/simple_animal/mouse/movement_target

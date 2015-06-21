@@ -41,6 +41,7 @@ datum/shuttle_controller
 			if(always_fake_recall)
 				fake_recall = rand(300,500)		//turning on the red lights in hallways
 		if(alert == 0)
+			red_alert_evac = 1
 			for(var/area/A in world)
 				if(istype(A, /area/hallway))
 					A.readyalert()
@@ -65,6 +66,7 @@ datum/shuttle_controller/proc/recall()
 			world << sound('sound/AI/shuttlerecalled.ogg')
 			setdirection(-1)
 			online = 1
+			red_alert_evac = 0
 			for(var/area/A in world)
 				if(istype(A, /area/hallway))
 					A.readyreset()
@@ -290,9 +292,13 @@ datum/shuttle_controller/emergency_shuttle/process()
 				start_location.move_contents_to(end_location)
 				settimeleft(SHUTTLELEAVETIME)
 				//send2irc("Server", "The Emergency Shuttle has docked with the station.")
+				if(alert == 0)
+					captain_announce("The Emergency Shuttle has docked with the station. You have [round(timeleft()/60,1)] minutes to board the Emergency Shuttle.")
+					world << sound('sound/AI/shuttledock.ogg')
+				else
+					captain_announce("The scheduled Crew Transfer Shuttle has docked with the station. It will depart in approximately [round(timeleft()/60,1)] minutes.")
+				
 				send2slack_service("the shuttle has docked with the station")
-				captain_announce("The Emergency Shuttle has docked with the station. You have [round(timeleft()/60,1)] minutes to board the Emergency Shuttle.")
-				world << sound('sound/AI/shuttledock.ogg')
 
 				return 1
 
@@ -311,7 +317,9 @@ datum/shuttle_controller/emergency_shuttle/process()
 
 			/* --- Shuttle leaves the station, enters transit --- */
 			else
-
+				if(alert == 1)
+					captain_announce("Departing...")
+					sleep(100)
 				// Turn on the star effects
 
 				/* // kinda buggy atm, i'll fix this later
@@ -422,7 +430,10 @@ datum/shuttle_controller/emergency_shuttle/process()
 						if(!M.buckled)
 							M.Weaken(5)
 
-				captain_announce("The Emergency Shuttle has left the station. Estimate [round(timeleft()/60,1)] minutes until the shuttle docks at Central Command.")
+				if(alert == 0)
+					captain_announce("The Emergency Shuttle has left the station. Estimate [round(timeleft()/60,1)] minutes until the shuttle docks at Central Command.")
+				else
+					captain_announce("The Crew Transfer Shuttle has left the station. Estimate [round(timeleft()/60,1)] minutes until the shuttle docks at Central Command.")
 
 				return 1
 

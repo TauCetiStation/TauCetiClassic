@@ -339,14 +339,13 @@
 
 	do_animate("opening")
 	icon_state = "door0"
-	src.SetOpacity(0)
+	src.set_opacity(0)
 	sleep(10)
 	src.layer = 2.7
 	src.density = 0
-	src.block_air_zones = 0
 	explosion_resistance = 0
 	update_icon()
-	SetOpacity(0)
+	set_opacity(0)
 	update_nearby_tiles()
 
 	if(operating)	operating = 0
@@ -368,13 +367,12 @@
 
 	do_animate("closing")
 	src.density = 1
-	src.block_air_zones = 1
 	explosion_resistance = initial(explosion_resistance)
 	src.layer = 3.1
 	sleep(10)
 	update_icon()
 	if(visible && !glass)
-		SetOpacity(1)	//caaaaarn!
+		set_opacity(1)	//caaaaarn!
 	operating = 0
 	update_nearby_tiles()
 
@@ -390,15 +388,6 @@
 /obj/machinery/door/proc/update_nearby_tiles(need_rebuild)
 	if(!air_master)
 		return 0
-
-	if(istype(src.loc,/turf/simulated))
-		if(src.z > 6) // Gateway locations are too buggy for that, so we dont need to rebuild there.
-			return
-		//Yeah, we're just going to rebuild the whole thing.
-		//Despite this being called a bunch during explosions,
-		//the zone will only really do heavy lifting once.
-		var/turf/simulated/S = src.loc
-		if(S.zone) S.zone.rebuild()
 
 	for(var/turf/simulated/turf in locs)
 		update_heat_protection(turf)

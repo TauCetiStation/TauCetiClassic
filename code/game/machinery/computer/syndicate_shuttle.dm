@@ -5,6 +5,7 @@
 	name = "syndicate shuttle terminal"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "syndishuttle"
+	light_color = "#a91515"
 	req_access = list(access_syndicate)
 	var/area/curr_location
 	var/moving = 0

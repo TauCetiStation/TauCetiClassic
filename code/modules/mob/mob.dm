@@ -104,6 +104,7 @@
 /mob/proc/Life()
 //	if(organStructure)
 //		organStructure.ProcessOrgans()
+	//handle_typing_indicator()
 	return
 
 
@@ -562,8 +563,9 @@ var/list/slot_equipment_priority = list( \
 	reset_view(null)
 	unset_machine()
 	if(istype(src, /mob/living))
-		if(src:cameraFollow)
-			src:cameraFollow = null
+		var/mob/living/M = src
+		if(M.cameraFollow)
+			M.cameraFollow = null
 
 /mob/Topic(href, href_list)
 	if(href_list["mach_close"])
@@ -754,9 +756,10 @@ note dizziness decrements automatically in the mob's Life() proc.
 	if(statpanel("Status"))	//not looking at that panel
 
 		if(client && client.holder)
-			stat(null,"Location:\t([x], [y], [z])")
-			stat(null,"CPU:\t[world.cpu]")
-			stat(null,"Instances:\t[world.contents.len]")
+			if(statpanel("Status"))
+				statpanel("Status","Location:","([x], [y], [z])")
+				statpanel("Status","CPU:","[world.cpu]")
+				statpanel("Status","Instances:","[world.contents.len]")
 
 			if(master_controller)
 				stat(null,"MasterController-[last_tick_duration] ([master_controller.processing?"On":"Off"]-[controller_iteration])")
@@ -772,13 +775,24 @@ note dizziness decrements automatically in the mob's Life() proc.
 			else
 				stat(null,"MasterController-ERROR")
 
+			if(statpanel("Status") && processScheduler && processScheduler.getIsRunning())
+				for(var/datum/controller/process/P in processScheduler.processes)
+					statpanel("Status",P.getStatName(), P.getTickTime())
+			else
+				stat(null, "processScheduler is not running.")
+
+
 	if(listed_turf && client)
-		if(get_dist(listed_turf,src) > 1)
+		if(!TurfAdjacent(listed_turf))
 			listed_turf = null
 		else
 			statpanel(listed_turf.name, null, listed_turf)
 			for(var/atom/A in listed_turf)
+				if(!A.mouse_opacity)
+					continue
 				if(A.invisibility > see_invisible)
+					continue
+				if(is_type_in_list(A, shouldnt_see))
 					continue
 				statpanel(listed_turf.name, null, A)
 
@@ -1074,3 +1088,11 @@ mob/proc/yank_out_object()
 		if(!pinned.len)
 			anchored = 0
 	return 1
+
+/mob/proc/get_ghost(even_if_they_cant_reenter = 0)
+	if(mind)
+		for(var/mob/dead/observer/G in dead_mob_list)
+			if(G.mind == mind)
+				if(G.can_reenter_corpse || even_if_they_cant_reenter)
+					return G
+				break

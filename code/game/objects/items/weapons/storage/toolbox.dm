@@ -33,6 +33,7 @@
 		else
 			new /obj/item/device/flashlight/flare(src)
 		new /obj/item/device/radio(src)
+		new /obj/item/weapon/storage/fancy/glowsticks(src) //Gloooouuuwstiicks :3
 
 /obj/item/weapon/storage/toolbox/mechanical
 	name = "mechanical toolbox"

@@ -234,7 +234,7 @@ var/global/datum/controller/occupations/job_master
 		for(var/mob/new_player/player in player_list)
 			if(player.ready && player.mind && !player.mind.assigned_role)
 				unassigned += player
-
+				if(player.client.prefs.randomslot) player.client.prefs.random_character()
 		Debug("DO, Len: [unassigned.len]")
 		if(unassigned.len == 0)	return 0
 
@@ -499,6 +499,7 @@ var/global/datum/controller/occupations/job_master
 			var/obj/item/device/pda/pda = locate(/obj/item/device/pda,H)
 			pda.owner = H.real_name
 			pda.ownjob = C.assignment
+			pda.ownrank = C.rank
 			pda.name = "PDA-[H.real_name] ([pda.ownjob])"
 
 		return 1

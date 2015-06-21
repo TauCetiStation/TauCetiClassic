@@ -1,17 +1,19 @@
 // AI EYE
 //
-// An invisible (no icon) mob that the AI controls to look around the station with.
+// A mob that the AI controls to look around the station with.
 // It streams chunks as it moves around, which will show it what the AI can and cannot see.
 
 /mob/aiEye
 	name = "Inactive AI Eye"
-	icon = 'icons/obj/status_display.dmi' // For AI friend secret shh :o
+	icon = 'icons/mob/AI.dmi'
+	icon_state = "eye"
+	alpha = 127
 	var/list/visibleCameraChunks = list()
 	var/mob/living/silicon/ai/ai = null
 	density = 0
 	status_flags = GODMODE  // You can't damage it.
-	mouse_opacity = 0
 	see_in_dark = 7
+	invisibility = INVISIBILITY_AI_EYE
 
 // Movement code. Returns 0 to stop air movement from moving it.
 /mob/aiEye/Move()
@@ -37,7 +39,6 @@
 // It will also stream the chunk that the new loc is in.
 
 /mob/aiEye/proc/setLoc(var/T)
-
 	if(ai)
 		if(!isturf(ai.loc))
 			return
@@ -50,6 +51,12 @@
 		if(ai.holo)
 			ai.holo.move_hologram()
 
+/mob/aiEye/proc/getLoc()
+
+	if(ai)
+		if(!isturf(ai.loc) || !ai.client)
+			return
+		return ai.eyeobj.loc
 
 // AI MOVEMENT
 
@@ -112,7 +119,7 @@
 
 // Return to the Core.
 
-/mob/living/silicon/ai/verb/core()
+/mob/living/silicon/ai/proc/core()
 	set category = "AI Commands"
 	set name = "AI Core"
 
@@ -137,7 +144,7 @@
 	for(var/datum/camerachunk/c in eyeobj.visibleCameraChunks)
 		c.remove(eyeobj)
 
-/mob/living/silicon/ai/verb/toggle_acceleration()
+/mob/living/silicon/ai/proc/toggle_acceleration()
 	set category = "AI Commands"
 	set name = "Toggle Camera Acceleration"
 

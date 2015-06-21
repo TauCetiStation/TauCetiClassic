@@ -14,6 +14,8 @@
 	var/tag_east_con
 	var/tag_west_con
 
+	var/max_flow_rate = 200
+	var/set_flow_rate = 200
 /obj/machinery/atmospherics/omni/mixer/New()
 	..()
 	if(mapper_set())
@@ -137,14 +139,14 @@
 
 	return 1
 
-/obj/machinery/atmospherics/omni/mixer/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
+/obj/machinery/atmospherics/omni/mixer/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null, var/force_open = 1)
 	usr.set_machine(src)
 
 	var/list/data = new()
 
 	data = build_uidata()
 
-	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)
+	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data, force_open)
 
 	if (!ui)
 		ui = new(user, src, ui_key, "omni_mixer.tmpl", "Omni Mixer Control", 360, 330)
@@ -180,12 +182,12 @@
 	if(portData.len)
 		data["ports"] = portData
 	if(output)
-		data["pressure"] = target_pressure
+		data["set_pressure"] = round(target_pressure*10)		//because nanoui can't handle rounded decimals.
 
 	return data
 
 /obj/machinery/atmospherics/omni/mixer/Topic(href, href_list)
-	if(..()) return
+	if(..()) return 1
 
 	switch(href_list["command"])
 		if("power")

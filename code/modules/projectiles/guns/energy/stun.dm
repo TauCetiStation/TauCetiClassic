@@ -4,7 +4,7 @@
 	icon_state = "taser"
 	item_state = null	//so the human update icon uses the icon_state instead.
 	ammo_type = list(/obj/item/ammo_casing/energy/electrode)
-	cell_type = "/obj/item/weapon/cell/crap"
+	cell_type = "/obj/item/weapon/cell"
 
 /obj/item/weapon/gun/energy/taser/cyborg
 	name = "taser gun"

@@ -17,7 +17,38 @@
 			if (copytext(message, 1, 2) != "*" && !stat)
 				playsound(loc, "hiss", 25, 1, 1)//So aliens can hiss while they hiss yo/N
 			return ..(message, sanitize = 0)
-	else
+
+/mob/living/carbon/alien/facehugger/say(var/message)
+
+	if (silent)
+		return
+
+	message = sanitize_plus(copytext(message, 1, MAX_MESSAGE_LEN))
+
+	if (length(message) >= 2)
+		if (department_radio_keys[copytext(message, 1, 3)] == "alientalk")
+			message = copytext(message, 3)
+			message = trim(message)
+			if (stat == 2)
+				return say_dead(message)
+			else
+				alien_talk(message)
+
+/mob/living/carbon/alien/larva/say(var/message)
+
+	if (silent)
+		return
+
+	message = sanitize_plus(copytext(message, 1, MAX_MESSAGE_LEN))
+
+	if (length(message) >= 2)
+		if (department_radio_keys[copytext(message, 1, 3)] == "alientalk")
+			message = copytext(message, 3)
+			message = trim(message)
+			if (stat == 2)
+				return say_dead(message)
+			else
+				alien_talk(message)
 
 /mob/living/proc/alien_talk(var/message)
 

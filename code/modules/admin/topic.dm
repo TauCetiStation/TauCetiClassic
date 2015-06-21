@@ -354,6 +354,9 @@
 	else if(href_list["warn"])
 		usr.client.warn(href_list["warn"])
 
+	else if(href_list["unwarn"])
+		usr.client.unwarn(href_list["unwarn"])
+
 	else if(href_list["unbane"])
 		if(!check_rights(R_BAN))	return
 
@@ -677,6 +680,11 @@
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Vox Raider;jobban4=\ref[M]'><font color=red>Vox Raider</font></a></td>"
 		else
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Vox Raider;jobban4=\ref[M]'>Vox Raider</a></td>"
+		//Raider (New heist)
+		if(jobban_isbanned(M, "Raider") || isbanned_dept)
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Raider;jobban4=\ref[M]'><font color=red>Raider</font></a></td>"
+		else
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Raider;jobban4=\ref[M]'>Raider</a></td>"
 		//Mutineer
 		if(jobban_isbanned(M, "Mutineer") || isbanned_dept)
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Mutineer;jobban4=\ref[M]'><font color=red>Mutineer</font></a></td>"
@@ -2419,6 +2427,27 @@
 		switch(href_list["secretsadmin"])
 			if("clear_bombs")
 				//I do nothing
+			if("clear_virus")
+				var/choice1 = input("Are you sure you want to cure all disease?") in list("Yes", "Cancel")
+				if(choice1 == "Yes")
+					message_admins("[key_name_admin(usr)] has cured all diseases.")
+					for(var/mob/living/carbon/M in world)
+						if(M.virus2.len)
+							for(var/ID in M.virus2)
+								var/datum/disease2/disease/V = M.virus2[ID]
+								V.cure(M)
+
+					for(var/obj/effect/decal/cleanable/O in world)
+						if(istype(O,/obj/effect/decal/cleanable/blood))
+							var/obj/effect/decal/cleanable/blood/B = O
+							if(B.virus2.len)
+								B.virus2.Cut()
+
+						else if(istype(O,/obj/effect/decal/cleanable/mucus))
+							var/obj/effect/decal/cleanable/mucus/N = O
+							if(N.virus2.len)
+								N.virus2.Cut()
+
 			if("list_bombers")
 				var/dat = "<B>Bombing List<HR>"
 				for(var/l in bombers)

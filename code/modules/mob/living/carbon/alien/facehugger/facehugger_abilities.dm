@@ -12,7 +12,7 @@
 #define GRAB_IMPREGNATE	7
 #define GRAB_DONE		8
 
-#define BITE_COOLDOWN 30
+#define BITE_COOLDOWN 20
 
 /*----------------------------------------
 This is modified grab mechanic for facehugger
@@ -154,7 +154,7 @@ This is chestburster mechanic for damaging
 	hud.name = "Burst thru chest"
 	hud.master = src
 
-/obj/item/weapon/larva_bite/proc/throw()
+/obj/item/weapon/larva_bite/proc/throw_held()
 	return null
 
 /obj/item/weapon/larva_bite/proc/synch()
@@ -202,6 +202,9 @@ This is chestburster mechanic for damaging
 			last_bite = world.time
 			playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
 			H.apply_damage(rand(7,14), BRUTE, "chest")
+			H.shock_stage = 20
+			H.Weaken(1)
+			H.emote("scream",,, 1)
 	else if(ismonkey(affecting))
 		var/mob/living/carbon/monkey/M = affecting
 		if(M.stat == DEAD)
@@ -213,6 +216,7 @@ This is chestburster mechanic for damaging
 			last_bite = world.time
 			M.adjustBruteLoss(rand(35,65))
 			playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
+			M.Weaken(8)
 	else if(iscorgi(affecting))
 		var/mob/living/simple_animal/corgi/C = affecting
 		if(C.stat == DEAD)
@@ -451,6 +455,7 @@ This is facehugger Attach procs
 	else if(ismonkey(M))
 		var/mob/living/carbon/monkey/target = L
 		target.equip_to_slot(src, slot_wear_mask)
+		target.contents += src // Monkey sanity check - Snapshot
 	else if(iscorgi(M))
 		var/mob/living/simple_animal/corgi/C = M
 		src.loc = C
@@ -558,7 +563,7 @@ When we finish, facehugger's player will be transfered inside embryo.
 	hud.master = src
 
 
-/obj/item/weapon/fh_grab/proc/throw()
+/obj/item/weapon/fh_grab/proc/throw_held()
 	return null
 
 /obj/item/weapon/fh_grab/proc/synch()

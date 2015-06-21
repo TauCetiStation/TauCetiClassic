@@ -1,8 +1,8 @@
 //Config stuff
 #define SUPPLY_DOCKZ 2          //Z-level of the Dock.
 #define SUPPLY_STATIONZ 1       //Z-level of the Station.
-#define SUPPLY_STATION_AREATYPE "/area/supply/station" //Type of the supply shuttle area for station
-#define SUPPLY_DOCK_AREATYPE "/area/supply/dock"	//Type of the supply shuttle area for dock
+#define SUPPLY_STATION_AREATYPE /area/supply/station //Type of the supply shuttle area for station
+#define SUPPLY_DOCK_AREATYPE /area/supply/dock	//Type of the supply shuttle area for dock
 
 var/datum/controller/supply_shuttle/supply_shuttle = new()
 
@@ -20,18 +20,14 @@ var/list/mechtoys = list(
 	/obj/item/toy/prize/phazon
 )
 
-/area/supply/station //DO NOT TURN THE lighting_use_dynamic STUFF ON FOR SHUTTLES. IT BREAKS THINGS.
+/area/supply/station
 	name = "supply shuttle"
 	icon_state = "shuttle3"
-	luminosity = 1
-	lighting_use_dynamic = 0
 	requires_power = 0
 
-/area/supply/dock //DO NOT TURN THE lighting_use_dynamic STUFF ON FOR SHUTTLES. IT BREAKS THINGS.
+/area/supply/dock
 	name = "supply shuttle"
 	icon_state = "shuttle3"
-	luminosity = 1
-	lighting_use_dynamic = 0
 	requires_power = 0
 
 //SUPPLY PACKS MOVED TO /code/defines/obj/supplypacks.dm
@@ -89,9 +85,10 @@ var/list/mechtoys = list(
 		..()
 
 /obj/machinery/computer/supplycomp
-	name = "Supply shuttle console"
+	name = "supply control console"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "supply"
+	light_color = "#b88b2e"
 	req_access = list(access_cargo)
 	circuit = "/obj/item/weapon/circuitboard/supplycomp"
 	var/temp = null
@@ -104,6 +101,7 @@ var/list/mechtoys = list(
 	name = "Supply ordering console"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "request"
+	light_color = "#b88b2e"
 	circuit = "/obj/item/weapon/circuitboard/ordercomp"
 	var/temp = null
 	var/reqtime = 0 //Cooldown for requisitions - Quarxink
@@ -279,7 +277,15 @@ var/list/mechtoys = list(
 		var/list/clear_turfs = list()
 
 		for(var/turf/T in shuttle)
-			if(T.density || T.contents.len)	continue
+			if(T.density)	continue
+			var/contcount
+			for(var/atom/A in T.contents)
+				if(istype(A,/atom/movable/lighting_overlay))
+					continue
+				if(istype(A,/obj/machinery/light))
+					continue
+				contcount++
+			if(contcount)	continue
 			clear_turfs += T
 
 		for(var/S in shoppinglist)

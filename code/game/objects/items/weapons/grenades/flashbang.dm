@@ -20,7 +20,7 @@
 			var/damage = round(30/(get_dist(B,get_turf(src))+1))
 			B.health -= damage
 			B.update_icon()
-		
+
 		new/obj/effect/effect/smoke/flashbang(src.loc)
 		del(src)
 		return
@@ -89,6 +89,8 @@
 				if(!banglet && !(istype(src , /obj/item/weapon/grenade/flashbang/clusterbang)))
 					if (E.damage >= E.min_broken_damage)
 						M << "\red You can't see anything!"
+			if(H.species.name == "Shadowling") // BBQ from shadowling ~Zve
+				H.adjustFireLoss(rand(15,25))
 		if (M.ear_damage >= 15)
 			M << "\red Your ears start to ring badly!"
 			if(!banglet && !(istype(src , /obj/item/weapon/grenade/flashbang/clusterbang)))
@@ -105,10 +107,6 @@
 	time_to_live = 10
 	opacity = 0
 	icon_state = "sparks"
-
-/obj/effect/effect/smoke/flashbang/New()
-	..()
-	SetLuminosity(15)
 
 /obj/item/weapon/grenade/flashbang/clusterbang//Created by Polymorph, fixed by Sieve
 	desc = "Use of this weapon may constiute a war crime in your area, consult your local captain."

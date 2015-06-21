@@ -68,7 +68,7 @@
 
 /obj/item/weapon/storage/lockbox/loyalty
 	name = "lockbox of loyalty implants"
-	req_access = list(access_security)
+	req_access = list(access_brig)
 
 	New()
 		..()

@@ -204,7 +204,7 @@
 	name = "glowing resin"
 	desc = "Blue bioluminescence shines from beneath the surface."
 	layer = 3
-	luminosity = 0
+	light_range = 0
 	var/node_range = NODERANGE
 
 /obj/effect/alien/weeds/node/New()
@@ -343,6 +343,8 @@ Alien plants should do something if theres a lot of poison
 
 	if(isturf(target)) // Turf take twice as long to take down.
 		target_strength = 8
+	else if(istype(target, /obj/machinery/atmospherics/unary/vent_pump))
+		target_strength = 2 //Its just welded, what??
 	else
 		target_strength = 4
 	tick()
@@ -361,6 +363,10 @@ Alien plants should do something if theres a lot of poison
 		if(istype(target, /turf/simulated/wall)) // I hate turf code.
 			var/turf/simulated/wall/W = target
 			W.dismantle_wall(1)
+		else if(istype(target, /obj/machinery/atmospherics/unary/vent_pump))
+			var/obj/machinery/atmospherics/unary/vent_pump/VP = target
+			VP.welded = 0
+			VP.update_icon()
 		else
 			del(target)
 		del(src)

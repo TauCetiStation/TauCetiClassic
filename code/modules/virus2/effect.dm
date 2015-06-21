@@ -251,7 +251,7 @@
 	name = "Loudness Syndrome"
 	stage = 2
 	activate(var/mob/living/carbon/mob,var/multiplier)
-		mob.say("*scream")
+		mob.emote("scream",,, 1)
 
 /datum/disease2/effect/drowsness
 	name = "Automated Sleeping Syndrome"

@@ -1,3 +1,9 @@
+var/list/robot_verbs_default = list(
+	/mob/living/silicon/robot/proc/sensor_mode
+)
+
+#define CYBORG_POWER_USAGE_MULTIPLIER 2.5 // Multiplier for amount of power cyborgs use.
+
 /mob/living/silicon/robot
 	name = "Cyborg"
 	real_name = "Cyborg"
@@ -6,6 +12,8 @@
 	maxHealth = 200
 	health = 200
 
+	var/lights_on = 0 // Is our integrated light on?
+	var/used_power_this_tick = 0
 	var/sight_mode = 0
 	var/custom_name = ""
 	var/custom_sprite = 0 //Due to all the sprites involved, a var for our custom borgs may be best
@@ -18,6 +26,9 @@
 	var/obj/screen/inv1 = null
 	var/obj/screen/inv2 = null
 	var/obj/screen/inv3 = null
+
+	var/shown_robot_modules = 0 //Used to determine whether they have the module menu shown or not
+	var/obj/screen/robot_modules_background
 
 //3 Modules can be activated at any one time.
 	var/obj/item/weapon/robot_module/module = null
@@ -64,6 +75,7 @@
 	var/lockcharge //Used when locking down a borg to preserve cell charge
 	var/speed = 0 //Cause sec borgs gotta go fast //No they dont!
 	var/scrambledcodes = 0 // Used to determine if a borg shows up on the robotics console.  Setting to one hides them.
+	var/tracking_entities = 0 //The number of known entities currently accessing the internal camera
 	var/braintype = "Cyborg"
 	var/pose
 
@@ -72,6 +84,12 @@
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 
+
+
+
+	robot_modules_background = new()
+	robot_modules_background.icon_state = "block"
+	robot_modules_background.layer = 19 //Objects that appear on screen are on layer 20, UI should be just below it.
 	ident = rand(1, 999)
 	updatename("Default")
 	updateicon()
@@ -89,18 +107,7 @@
 		hands.icon_state = "standard"
 		icon_state = "secborg"
 		modtype = "Security"
-	else if(istype(src,/mob/living/silicon/robot/drone))
-		laws = new /datum/ai_laws/drone()
-		connected_ai = null
-	else
-		laws = new /datum/ai_laws/nanotrasen()
-		connected_ai = select_active_ai_with_fewest_borgs()
-		if(connected_ai)
-			connected_ai.connected_robots += src
-			lawsync()
-			lawupdate = 1
-		else
-			lawupdate = 0
+	init()
 
 	radio = new /obj/item/device/radio/borg(src)
 	if(!scrambledcodes && !camera)
@@ -130,6 +137,8 @@
 		cell_component.wrapped = cell
 		cell_component.installed = 1
 
+	add_robot_verbs()
+
 	hud_list[HEALTH_HUD]      = image('icons/mob/hud.dmi', src, "hudblank")
 	hud_list[STATUS_HUD]      = image('icons/mob/hud.dmi', src, "hudhealth100")
 	hud_list[ID_HUD]          = image('icons/mob/hud.dmi', src, "hudblank")
@@ -139,11 +148,19 @@
 	hud_list[IMPTRACK_HUD]    = image('icons/mob/hud.dmi', src, "hudblank")
 	hud_list[SPECIALROLE_HUD] = image('icons/mob/hud.dmi', src, "hudblank")
 
-
-	if(istype(src,/mob/living/silicon/robot/drone))
-		playsound(src.loc, 'sound/machines/twobeep.ogg', 50, 0)
+/mob/living/silicon/robot/proc/init()
+	aiCamera = new/obj/item/device/camera/siliconcam/robot_camera(src)
+	laws = new /datum/ai_laws/nanotrasen()
+	connected_ai = select_active_ai_with_fewest_borgs()
+	if(connected_ai)
+		connected_ai.connected_robots += src
+		lawsync()
+		photosync()
+		lawupdate = 1
 	else
-		playsound(loc, 'sound/voice/liveagain.ogg', 75, 1)
+		lawupdate = 0
+
+	playsound(loc, 'sound/voice/liveagain.ogg', 75, 1)
 
 // setup the PDA and its name
 /mob/living/silicon/robot/proc/setup_PDA()
@@ -164,7 +181,7 @@
 /mob/living/silicon/robot/proc/pick_module()
 	if(module)
 		return
-	var/list/modules = list("Standard", "Engineering", "Medical", "Miner", "Janitor", "Service", "Security", "Science")
+	var/list/modules = list("Standard", "Engineering", "Construction", "Surgeon", "Crisis", "Miner", "Janitor", "Service", "Clerical", "Security", "Science")
 	if(crisis && security_level == SEC_LEVEL_RED) //Leaving this in until it's balanced appropriately.
 		src << "\red Crisis mode active. Combat module available."
 		modules+="Combat"
@@ -182,6 +199,7 @@
 			module_sprites["Basic"] = "robot_old"
 			module_sprites["Android"] = "droid"
 			module_sprites["Default"] = "robot"
+			module_sprites["Drone"] = "drone-standard"
 			module_sprites["Acheron"] = "mechoid-Standard"
 
 		if("Service")
@@ -192,6 +210,17 @@
 			module_sprites["Bro"] = "Brobot"
 			module_sprites["Rich"] = "maximillion"
 			module_sprites["Default"] = "Service2"
+			module_sprites["Drone"] = "drone-service" // How does this even work...? Oh well.
+			module_sprites["Acheron"] = "mechoid-Service"
+
+		if("Clerical")
+			module = new /obj/item/weapon/robot_module/clerical(src)
+			module_sprites["Waitress"] = "Service"
+			module_sprites["Kent"] = "toiletbot"
+			module_sprites["Bro"] = "Brobot"
+			module_sprites["Rich"] = "maximillion"
+			module_sprites["Default"] = "Service2"
+			module_sprites["Drone"] = "drone-service"
 			module_sprites["Acheron"] = "mechoid-Service"
 
 		if("Science")
@@ -213,18 +242,32 @@
 			module_sprites["Basic"] = "Miner_old"
 			module_sprites["Advanced Droid"] = "droid-miner"
 			module_sprites["Treadhead"] = "Miner"
+			module_sprites["Drone"] = "drone-miner"
 			module_sprites["Acheron"] = "mechoid-Miner"
 
-		if("Medical")
+		if("Crisis")
 			tc_borg = 0
-			module = new /obj/item/weapon/robot_module/medical(src)
+			module = new /obj/item/weapon/robot_module/crisis(src)
 			module.channels = list("Medical" = 1)
 			if(camera && "Robots" in camera.network)
 				camera.network.Add("Medical")
 			module_sprites["Basic"] = "Medbot"
+			module_sprites["Standard"] = "surgeon"
 			module_sprites["Advanced Droid"] = "droid-medical"
 			module_sprites["Needles"] = "medicalrobot"
+			module_sprites["Drone"] = "drone-medical"
+			module_sprites["Acheron"] = "mechoid-Medical"
+
+		if("Surgeon")
+			module = new /obj/item/weapon/robot_module/surgeon(src)
+			module.channels = list("Medical" = 1)
+			if(camera && "Robots" in camera.network)
+				camera.network.Add("Medical")
+			module_sprites["Basic"] = "Medbot"
 			module_sprites["Standard"] = "surgeon"
+			module_sprites["Advanced Droid"] = "droid-medical"
+			module_sprites["Needles"] = "medicalrobot"
+			module_sprites["Drone"] = "drone-surgery"
 			module_sprites["Acheron"] = "mechoid-Medical"
 
 		if("Security")
@@ -235,6 +278,8 @@
 			module_sprites["Red Knight"] = "Security"
 			module_sprites["Black Knight"] = "securityrobot"
 			module_sprites["Bloodhound"] = "bloodhound"
+			module_sprites["Bloodhound - Treaded"] = "secborg+tread"
+			module_sprites["Drone"] = "drone-sec"
 			module_sprites["Acheron"] = "mechoid-Security"
 
 		if("Engineering")
@@ -245,8 +290,23 @@
 				camera.network.Add("Engineering")
 			module_sprites["Basic"] = "Engineering"
 			module_sprites["Antique"] = "engineerrobot"
-			module_sprites["Landmate"] = "landmate"
 			module_sprites["Custom"] = "custom_astra_t3"
+			module_sprites["Landmate"] = "landmate"
+			module_sprites["Landmate - Treaded"] = "engiborg+tread"
+			module_sprites["Drone"] = "drone-engineer"
+			module_sprites["Acheron"] = "mechoid-Engineering"
+
+		if("Construction")
+			module = new /obj/item/weapon/robot_module/construction(src)
+			module.channels = list("Engineering" = 1)
+			if(camera && "Robots" in camera.network)
+				camera.network.Add("Engineering")
+			module_sprites["Basic"] = "Engineering"
+			module_sprites["Antique"] = "engineerrobot"
+			module_sprites["Custom"] = "custom_astra_t3"
+			module_sprites["Landmate"] = "landmate"
+			module_sprites["Landmate - Treaded"] = "engiborg+tread"
+			module_sprites["Drone"] = "drone-engineer"
 			module_sprites["Acheron"] = "mechoid-Engineering"
 
 		if("Janitor")
@@ -255,6 +315,7 @@
 			module_sprites["Basic"] = "JanBot2"
 			module_sprites["Mopbot"]  = "janitorrobot"
 			module_sprites["Mop Gear Rex"] = "mopgearrex"
+			module_sprites["Drone"] = "drone-janitor"
 			module_sprites["Acheron"] = "mechoid-Janitor"
 
 		if("Combat")
@@ -355,7 +416,7 @@
 // this verb lets cyborgs see the stations manifest
 /mob/living/silicon/robot/verb/cmd_station_manifest()
 	set category = "Robot Commands"
-	set name = "Show Station Manifest"
+	set name = "Show Crew Manifest"
 	show_station_manifest()
 
 
@@ -387,10 +448,20 @@
 	var/dat = "<HEAD><TITLE>[src.name] Self-Diagnosis Report</TITLE></HEAD><BODY>\n"
 	for (var/V in components)
 		var/datum/robot_component/C = components[V]
-		dat += "<b>[C.name]</b><br><table><tr><td>Power consumption</td><td>[C.energy_consumption]</td></tr><tr><td>Brute Damage:</td><td>[C.brute_damage]</td></tr><tr><td>Electronics Damage:</td><td>[C.electronics_damage]</td></tr><tr><td>Powered:</td><td>[(!C.energy_consumption || C.is_powered()) ? "Yes" : "No"]</td></tr><tr><td>Toggled:</td><td>[ C.toggled ? "Yes" : "No"]</td></table><br>"
+		dat += "<b>[C.name]</b><br><table><tr><td>Brute Damage:</td><td>[C.brute_damage]</td></tr><tr><td>Electronics Damage:</td><td>[C.electronics_damage]</td></tr><tr><td>Powered:</td><td>[(!C.idle_usage || C.is_powered()) ? "Yes" : "No"]</td></tr><tr><td>Toggled:</td><td>[ C.toggled ? "Yes" : "No"]</td></table><br>"
 
 	return dat
 
+/mob/living/silicon/robot/verb/toggle_lights()
+	set category = "Robot Commands"
+	set name = "Toggle Lights"
+
+	lights_on = !lights_on
+	usr << "You [lights_on ? "enable" : "disable"] your integrated light."
+	if(lights_on)
+		set_light(12,2) // 1.5x luminosity of flashlight
+	else
+		set_light(0)
 
 /mob/living/silicon/robot/verb/self_diagnosis_verb()
 	set category = "Robot Commands"
@@ -399,6 +470,9 @@
 	if(!is_component_functioning("diagnosis unit"))
 		src << "\red Your self-diagnosis component isn't functioning."
 
+	var/datum/robot_component/CO = get_component("diagnosis unit")
+	if (!cell_use_power(CO.active_usage))
+		src << "\red Low Power."
 	var/dat = self_diagnosis()
 	src << browse(dat, "window=robotdiagnosis")
 
@@ -468,7 +542,9 @@
 // this function displays the cyborgs current cell charge in the stat panel
 /mob/living/silicon/robot/proc/show_cell_power()
 	if(cell)
-		stat(null, text("Charge Left: [cell.charge]/[cell.maxcharge]"))
+		stat(null, text("Charge Left: [round(cell.percent())]%"))
+		stat(null, text("Cell Rating: [round(cell.maxcharge)]")) // Round just in case we somehow get crazy values
+		stat(null, text("Power Cell Load: [round(used_power_this_tick)]W"))
 	else
 		stat(null, text("No Cell Inserted!"))
 
@@ -480,6 +556,7 @@
 	if (client.statpanel == "Status")
 		show_cell_power()
 		show_jetpack_pressure()
+		stat(null, text("Lights: [lights_on ? "ON" : "OFF"]"))
 
 /mob/living/silicon/robot/restrained()
 	return 0
@@ -605,6 +682,10 @@
 				return
 
 	if (istype(W, /obj/item/weapon/weldingtool))
+		if (src == user)
+			user << "<span class='warning'>You lack the reach to be able to repair yourself.</span>"
+			return
+
 		if (!getBruteLoss())
 			user << "Nothing to fix here!"
 			return
@@ -1053,6 +1134,13 @@
 			overlays += "mechoid-open+c"
 		else
 			overlays += "mechoid-open-c"
+	else if (opened && (icon_state == "drone-standard" || icon_state == "drone-service" || icon_state == "droid-miner" || icon_state == "drone-medical" || icon_state == "drone-engineer" || icon_state == "drone-sec") )
+		if(wiresexposed)
+			overlays += "drone-openpanel +w"
+		else if(cell)
+			overlays += "drone-openpanel +c"
+		else
+			overlays += "drone-openpanel -c"
 	else if(opened)
 		if(wiresexposed)
 			overlays += "ov-openpanel +w"
@@ -1140,7 +1228,7 @@
 
 	if (href_list["act"])
 		var/obj/item/O = locate(href_list["act"])
-		if (!istype(O))
+		if (!istype(O) || !(O in src.module.modules))
 			return
 
 		if(!((O in src.module.modules) || (O == src.module.emag)))
@@ -1344,3 +1432,32 @@
 			return
 	else
 		src << "Your icon has been set. You now require a module reset to change it."
+
+/mob/living/silicon/robot/proc/sensor_mode() //Medical/Security HUD controller for borgs
+	set name = "Set Sensor Augmentation"
+	set category = "Robot Commands"
+	set desc = "Augment visual feed with internal sensor overlays."
+	toggle_sensor_mode()
+
+/mob/living/silicon/robot/proc/add_robot_verbs()
+	src.verbs |= robot_verbs_default
+
+/mob/living/silicon/robot/proc/remove_robot_verbs()
+	src.verbs -= robot_verbs_default
+
+
+// Uses power from cyborg's cell. Returns 1 on success or 0 on failure.
+// Properly converts using CELLRATE now! Amount is in Joules.
+/mob/living/silicon/robot/proc/cell_use_power(var/amount = 0)
+	// No cell inserted
+	if(!cell)
+		return 0
+
+	// Power cell is empty.
+	if(cell.charge == 0)
+		return 0
+
+	if(cell.use(amount * CELLRATE * CYBORG_POWER_USAGE_MULTIPLIER))
+		used_power_this_tick += amount * CYBORG_POWER_USAGE_MULTIPLIER
+		return 1
+	return 0 

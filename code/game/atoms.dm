@@ -11,6 +11,7 @@
 	var/pass_flags = 0
 	var/throwpass = 0
 	var/germ_level = GERM_LEVEL_AMBIENT // The higher the germ level, the more germ on the atom.
+	var/simulated = 1 //filter for actions - used by lighting overlays
 
 	///Chemistry.
 	var/datum/reagents/reagents = null
@@ -396,7 +397,17 @@ its easier to just keep the beam vertical.
 
 		// Make toxins vomit look different
 		if(toxvomit)
-			this.icon_state = "vomittox_[pick(1,4)]"
+			var/datum/reagents/R = M.reagents
+			if(!locate(/datum/reagent/luminophore) in R.reagent_list)
+				this.icon_state = "vomittox_[pick(1,4)]"
+			else
+				this.icon_state = "vomittox_nc_[pick(1,4)]"
+				this.alpha = 127
+				var/datum/reagent/new_color = locate(/datum/reagent/luminophore) in R.reagent_list
+				this.color = new_color.color
+				this.light_color = this.color
+				this.set_light(3)
+				this.stop_light()
 
 
 /atom/proc/clean_blood()

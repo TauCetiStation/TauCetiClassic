@@ -92,7 +92,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 	var/c_locked=0;        //Will our new channel be locked to public submissions?
 	var/hitstaken = 0      //Death at 3 hits from an item with force>=15
 	var/datum/feed_channel/viewing_channel = null
-	luminosity = 0
+	light_range = 0
 	anchored = 1
 
 
@@ -749,14 +749,27 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 
 /obj/machinery/newscaster/proc/AttachPhoto(mob/user as mob)
 	if(photo)
-		photo.loc = src.loc
-		user.put_in_inactive_hand(photo)
+		if(!issilicon(user))
+			photo.loc = src.loc
+			user.put_in_inactive_hand(photo)
 		photo = null
 	if(istype(user.get_active_hand(), /obj/item/weapon/photo))
 		photo = user.get_active_hand()
 		user.drop_item()
 		photo.loc = src
+	else if(istype(user,/mob/living/silicon))
+		var/mob/living/silicon/tempAI = user
+		var/obj/item/device/camera/siliconcam/camera = tempAI.aiCamera
+ 
+		if(!camera)
+			return
+		var/datum/picture/selection = camera.selectpicture()
+		if (!selection)
+			return
 
+		var/obj/item/weapon/photo/P = new/obj/item/weapon/photo()
+		P.construct(selection)
+		photo = P
 
 
 

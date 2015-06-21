@@ -681,7 +681,7 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	cost = 30
 	containertype = /obj/structure/closet/crate/secure/weapon
 	containername = "Weapons crate"
-	access = access_security
+	access = access_brig
 	group = "Security"
 
 /datum/supply_packs/eweapons
@@ -708,7 +708,7 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	cost = 15
 	containertype = /obj/structure/closet/crate/secure
 	containername = "Armor crate"
-	access = access_security
+	access = access_brig
 	group = "Security"
 
 /datum/supply_packs/riot

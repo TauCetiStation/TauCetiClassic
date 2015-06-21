@@ -2,7 +2,11 @@
 
 var/global/list/uneatable = list(
 	/turf/space,
-	/obj/effect/overlay
+	/mob/dead,
+	/mob/camera,
+	/mob/new_player,
+	/obj/effect/overlay,
+	/atom/movable/lighting_overlay
 	)
 
 /obj/machinery/singularity/
@@ -13,7 +17,7 @@ var/global/list/uneatable = list(
 	anchored = 1
 	density = 1
 	layer = 6
-	luminosity = 6
+	light_range = 6
 	unacidable = 1 //Don't comment this out.
 	use_power = 0
 	var/current_size = 1
@@ -210,10 +214,16 @@ var/global/list/uneatable = list(
 		defer_powernet_rebuild = 1
 	// Let's just make this one loop.
 	for(var/atom/X in orange(grav_pull,src))
+		if(is_type_in_list(X, uneatable))	continue
+		if(!X.simulated)	continue
+
 		var/dist = get_dist(X, src)
+
 		// Movable atoms only
 		if(dist > consume_range && istype(X, /atom/movable))
-			if(is_type_in_list(X, uneatable))	continue
+			if(canPull(X))
+				step_towards(X,src)
+			/*
 			if(((X) &&(!X:anchored) && (!istype(X,/mob/living/carbon/human)))|| (src.current_size >= 9))
 				step_towards(X,src)
 			else if(istype(X,/mob/living/carbon/human))
@@ -223,6 +233,7 @@ var/global/list/uneatable = list(
 					if(M.magpulse)
 						continue
 				step_towards(H,src)
+			*/
 		// Turf and movable atoms
 		else if(dist <= consume_range && (isturf(X) || istype(X, /atom/movable)))
 			consume(X)
@@ -231,25 +242,37 @@ var/global/list/uneatable = list(
 		defer_powernet_rebuild = 0
 	return
 
+// Singulo optimization:
+// Jump out whenever we've made a decision.
+/obj/machinery/singularity/proc/canPull(var/atom/movable/A)
+	// If we're big enough, stop checking for this and that and JUST EAT.
+	if(current_size >= 9)
+		return 1
+	else
+		if(A && !A:anchored)
+			if(A.canSingulothPull(src))
+				return 1
+	return 0
 
 /obj/machinery/singularity/proc/consume(var/atom/A)
 	var/gain = 0
 	if(is_type_in_list(A, uneatable))
+		return 0
+	if(!A.simulated)
 		return 0
 	if (istype(A,/mob/living))//Mobs get gibbed
 		gain = 20
 		if(istype(A,/mob/living/carbon/human))
 			var/mob/living/carbon/human/H = A
 			if(H.mind)
-
-				if((H.mind.assigned_role == "Station Engineer") || (H.mind.assigned_role == "Chief Engineer") )
-					gain = 100
-
-				if(H.mind.assigned_role == "Clown")
-					gain = rand(-300, 300) // HONK
-
+				switch(H.mind.assigned_role)
+					if("Station Engineer","Chief Engineer")
+						gain = 100
+					if("Clown")
+						gain = rand(-300, 300) // HONK
 		spawn()
 			A:gib()
+		// Why
 		sleep(1)
 	else if(istype(A,/obj/))
 
@@ -267,10 +290,7 @@ var/global/list/uneatable = list(
 			return//Quits here, the obj should be gone, hell we might be
 
 		if((teleport_del) && (!istype(A, /obj/machinery)))//Going to see if it does not lag less to tele items over to Z 2
-			var/obj/O = A
-			O.x = 2
-			O.y = 2
-			O.z = 2
+			qdel(A)
 		else
 			A.ex_act(1.0)
 			if(A && isnull(A.gc_destroyed)) qdel(A)
@@ -488,6 +508,8 @@ var/global/list/uneatable = list(
 
 /obj/machinery/singularity/narsie/consume(var/atom/A) //Has its own consume proc because it doesn't need energy and I don't want BoHs to explode it. --NEO
 	if(is_type_in_list(A, uneatable))
+		return 0
+	if(!A.simulated)
 		return 0
 	if (istype(A,/mob/living))//Mobs get gibbed
 		A:gib()

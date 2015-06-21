@@ -12,6 +12,8 @@
 	if(say_disabled)	//This is here to try to identify lag problems
 		usr << "\red Speech is currently admin-disabled."
 		return
+
+	set_typing_indicator(0)
 	usr.say(message)
 
 /mob/verb/me_verb(message as text)
@@ -24,6 +26,7 @@
 
 	message = trim(sanitize_plus(copytext(message, 1, MAX_MESSAGE_LEN)))
 
+	set_typing_indicator(0)
 	if(use_me)
 		usr.emote("me",usr.emote_type,message)
 	else
@@ -120,7 +123,7 @@
         return verb
 
 
-/mob/proc/emote(var/act, var/type, var/message)
+/mob/proc/emote(var/act, var/type, var/message, var/auto)
 	if(act == "me")
 		return custom_emote(type, message)
 

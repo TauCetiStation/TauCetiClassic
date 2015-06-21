@@ -8,6 +8,7 @@
 	name = "Message Monitor Console"
 	desc = "Used to Monitor the crew's messages, that are sent via PDA. Can also be used to view Request Console messages."
 	icon_state = "comm_logs"
+	light_color = "#00b000"
 	var/hack_icon = "comm_logsc"
 	var/normal_icon = "comm_logs"
 	circuit = "/obj/item/weapon/circuitboard/message_monitor"
@@ -443,7 +444,7 @@
 						//Sender isn't faking as someone who exists
 						if(isnull(PDARec))
 							src.linkedServer.send_pda_message("[customrecepient.owner]", "[customsender]","[custommessage]")
-							if (!customrecepient.silent)
+							if (!customrecepient.message_silent)
 								playsound(customrecepient.loc, 'sound/machines/twobeep.ogg', 50, 1)
 								for (var/mob/O in hearers(3, customrecepient.loc))
 									O.show_message(text("\icon[customrecepient] *[customrecepient.ttone]*"))
@@ -462,7 +463,7 @@
 							if(!customrecepient.conversations.Find("\ref[PDARec]"))
 								customrecepient.conversations.Add("\ref[PDARec]")
 
-							if (!customrecepient.silent)
+							if (!customrecepient.message_silent)
 								playsound(customrecepient.loc, 'sound/machines/twobeep.ogg', 50, 1)
 								for (var/mob/O in hearers(3, customrecepient.loc))
 									O.show_message(text("\icon[customrecepient] *[customrecepient.ttone]*"))

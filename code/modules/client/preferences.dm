@@ -15,7 +15,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	"cultist" = IS_MODE_COMPILED("cult"),                // 8
 	"infested monkey" = IS_MODE_COMPILED("monkey"),      // 9
 	"ninja" = "true",									 // 10
-	"vox raider" = IS_MODE_COMPILED("heist"),			 // 11
+	"raider" = IS_MODE_COMPILED("heist"),			 	 // 11
 	"diona" = 1,                                         // 12
 	"meme" = IS_MODE_COMPILED("meme"),				 	 // 13
 	"mutineer" = IS_MODE_COMPILED("mutiny"),			 // 14
@@ -37,6 +37,7 @@ datum/preferences
 
 	//non-preference stuff
 	var/warns = 0
+	var/warnbans = 0
 	var/muted = 0
 	var/last_ip
 	var/last_id
@@ -121,6 +122,9 @@ datum/preferences
 		// OOC Metadata:
 	var/metadata = ""
 	var/slot_name = ""
+
+	// Whether or not to use randomized character slots
+	var/randomslot = 0
 
 /datum/preferences/New(client/C)
 	b_type = pick(4;"O-", 36;"O+", 3;"A-", 28;"A+", 1;"B-", 20;"B+", 1;"AB-", 5;"AB+")
@@ -257,6 +261,7 @@ datum/preferences
 		dat += "-Alpha(transparency): <a href='?_src_=prefs;preference=UIalpha'><b>[UI_style_alpha]</b></a><br>"
 		dat += "<b>Play admin midis:</b> <a href='?_src_=prefs;preference=hear_midis'><b>[(toggles & SOUND_MIDI) ? "Yes" : "No"]</b></a><br>"
 		dat += "<b>Play lobby music:</b> <a href='?_src_=prefs;preference=lobby_music'><b>[(toggles & SOUND_LOBBY) ? "Yes" : "No"]</b></a><br>"
+		dat += "<b>Randomized Character Slot:</b> <a href='?_src_=prefs;preference=randomslot'><b>[randomslot ? "Yes" : "No"]</b></a><br>"
 		dat += "<b>Ghost ears:</b> <a href='?_src_=prefs;preference=ghost_ears'><b>[(toggles & CHAT_GHOSTEARS) ? "All Speech" : "Nearest Creatures"]</b></a><br>"
 		dat += "<b>Ghost sight:</b> <a href='?_src_=prefs;preference=ghost_sight'><b>[(toggles & CHAT_GHOSTSIGHT) ? "All Emotes" : "Nearest Creatures"]</b></a><br>"
 		dat += "<b>Ghost radio:</b> <a href='?_src_=prefs;preference=ghost_radio'><b>[(toggles & CHAT_GHOSTRADIO) ? "All Chatter" : "Nearest Speakers"]</b></a><br>"
@@ -1285,6 +1290,9 @@ datum/preferences
 
 					if("name")
 						be_random_name = !be_random_name
+
+					if("randomslot")
+						randomslot = !randomslot
 
 					if("hear_midis")
 						toggles ^= SOUND_MIDI

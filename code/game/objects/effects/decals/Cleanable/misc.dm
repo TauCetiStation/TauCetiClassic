@@ -58,7 +58,7 @@
 	density = 0
 	anchored = 1
 	layer = 2
-	luminosity = 1
+	light_range = 1
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "greenglow"
 
@@ -106,6 +106,15 @@
 		for(var/datum/disease/D in viruses)
 			D.cure(0)
 		..()
+
+	Del()
+		set_light(0)
+		..()
+
+	proc/stop_light()
+		sleep(rand(150,300))
+		if(!src) return
+		set_light(0)
 
 /obj/effect/decal/cleanable/tomato_smudge
 	name = "tomato smudge"

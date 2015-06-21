@@ -216,6 +216,7 @@
 				src.damtype = "brute"
 				src.icon_state = "welder"
 				src.welding = 0
+			set_light(0)
 			processing_objects.Remove(src)
 			return
 		//Welders left on now use up fuel, but lets not have them run out quite that fast
@@ -226,6 +227,8 @@
 				src.icon_state = "welder1"
 			if(prob(5))
 				remove_fuel(1)
+			light_color = "#dbe2ff"
+			set_light(2)
 
 		//If you're actually actively welding, use fuel faster.
 		//Is this actually used or set anywhere? - Nodrak

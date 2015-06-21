@@ -4,6 +4,7 @@
 	name = "Medical Records"
 	desc = "This can be used to check medical records."
 	icon_state = "medcomp"
+	light_color = "#315ab4"
 	req_one_access = list(access_medical, access_forensics_lockers)
 	circuit = "/obj/item/weapon/circuitboard/med_data"
 	var/obj/item/weapon/card/id/scan = null
@@ -534,3 +535,4 @@
 	name = "Medical Laptop"
 	desc = "Cheap Nanotrasen Laptop."
 	icon_state = "medlaptop"
+	light_color = "#00b000"

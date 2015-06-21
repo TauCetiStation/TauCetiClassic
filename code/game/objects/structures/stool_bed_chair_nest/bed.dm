@@ -53,10 +53,12 @@
 /obj/structure/stool/bed/proc/unbuckle()
 	if(buckled_mob)
 		if(buckled_mob.buckled == src)	//this is probably unneccesary, but it doesn't hurt
+			. = buckled_mob
 			buckled_mob.buckled = null
 			buckled_mob.anchored = initial(buckled_mob.anchored)
 			buckled_mob.update_canmove()
 			buckled_mob = null
+			post_buckle_mob(.)
 	return
 
 /obj/structure/stool/bed/proc/manual_unbuckle(mob/user as mob)
@@ -74,7 +76,9 @@
 					"You hear metal clanking")
 			unbuckle()
 			src.add_fingerprint(user)
-	return
+			return 1
+
+	return 0
 
 /obj/structure/stool/bed/proc/buckle_mob(mob/M as mob, mob/user as mob)
 	if (!ticker)
@@ -104,6 +108,10 @@
 	M.update_canmove()
 	src.buckled_mob = M
 	src.add_fingerprint(user)
+	post_buckle_mob(M)
+	return
+
+/obj/proc/post_buckle_mob(mob/living/M)
 	return
 
 /obj/structure/stool/bed/CanPass(atom/movable/mover)
@@ -134,6 +142,18 @@
 	icon_state = "down"
 	anchored = 0
 
+/obj/structure/stool/bed/roller/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if(istype(W,/obj/item/roller_holder))
+		if(buckled_mob)
+			manual_unbuckle()
+		else
+			visible_message("[user] collapses \the [src.name].")
+			new/obj/item/roller(get_turf(src))
+			spawn(0)
+				del(src)
+		return
+	..()
+
 /obj/structure/stool/bed/roller/CanPass(atom/movable/mover)
 	if(ishuman(mover) && mover.checkpass(PASSCRAWL))
 		return 0
@@ -146,10 +166,46 @@
 	icon_state = "folded"
 	w_class = 4.0 // Can't be put in backpacks. Oh well.
 
-	attack_self(mob/user)
-		var/obj/structure/stool/bed/roller/R = new /obj/structure/stool/bed/roller(user.loc)
-		R.add_fingerprint(user)
-		qdel(src)
+/obj/item/roller/attack_self(mob/user)
+	var/obj/structure/stool/bed/roller/R = new /obj/structure/stool/bed/roller(user.loc)
+	R.add_fingerprint(user)
+	qdel(src)
+
+/obj/item/roller/attackby(obj/item/weapon/W as obj, mob/user as mob)
+
+	if(istype(W,/obj/item/roller_holder))
+		var/obj/item/roller_holder/RH = W
+		if(!RH.held)
+			user << "\blue You collect the roller bed."
+			src.loc = RH
+			RH.held = src
+			return
+
+	..()
+
+/obj/item/roller_holder
+	name = "roller bed rack"
+	desc = "A rack for carrying a collapsed roller bed."
+	icon = 'icons/obj/rollerbed.dmi'
+	icon_state = "folded"
+	var/obj/item/roller/held
+
+/obj/item/roller_holder/New()
+	..()
+	held = new /obj/item/roller(src)
+
+/obj/item/roller_holder/attack_self(mob/user as mob)
+
+	if(!held)
+		user << "\blue The rack is empty."
+		return
+
+	user << "\blue You deploy the roller bed."
+	var/obj/structure/stool/bed/roller/R = new /obj/structure/stool/bed/roller(user.loc)
+	R.add_fingerprint(user)
+	del(held)
+	held = null
+
 
 /obj/structure/stool/bed/roller/Move()
 	..()

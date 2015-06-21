@@ -557,7 +557,7 @@ ________________________________________________________________________________
 							continue
 						M.show_message("<span class='game say'>PDA Message - <span class='name'>[U]</span> -> <span class='name'>[P.owner]</span>: <span class='message'>[sanitize_chat(t)]</span></span>")
 
-				if (!P.silent)
+				if (!P.message_silent)
 					playsound(P.loc, 'sound/machines/twobeep.ogg', 50, 1)
 					for (var/mob/O in hearers(3, P.loc))
 						O.show_message(text("\icon[P] *[P.ttone]*"))
@@ -920,7 +920,10 @@ ________________________________________________________________________________
 		U.invisibility = 0
 		for(var/mob/O in oviewers(U))
 			O.show_message("[U.name] appears from thin air!",1)
-		icon_state = U.gender==FEMALE ? "s-ninjanf" : "s-ninjan"
+		if(U.mind.protector_role == 1)
+			icon_state = U.gender==FEMALE ? "s-ninjakf" : "s-ninjak"
+		else
+			icon_state = U.gender==FEMALE ? "s-ninjanf" : "s-ninjan"
 		U.regenerate_icons()	//update their icons
 		return 1
 	return 0

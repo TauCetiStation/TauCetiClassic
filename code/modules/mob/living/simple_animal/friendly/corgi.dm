@@ -117,7 +117,7 @@
 						emote("me",1,"looks with [pick("a resentful","a happy","an excited")] expression on his face and wants to play more!")
 					return
 	..()
-	
+
 /mob/living/simple_animal/corgi/hitby(atom/movable/AM as mob|obj)
 	if(inventory_head && inventory_back)
 		if( istype(inventory_head,/obj/item/clothing/head/helmet) && istype(inventory_back,/obj/item/clothing/suit/armor) )
@@ -147,7 +147,7 @@
 					emote_hear = list("barks", "woofs", "yaps","pants")
 					emote_see = list("shakes its head", "shivers")
 					desc = "It's a corgi."
-					SetLuminosity(0)
+					set_light(0)
 					inventory_head.loc = src.loc
 					inventory_head = null
 					regenerate_icons()
@@ -214,7 +214,7 @@
 						/obj/item/clothing/head/collectable/paper,
 						/obj/item/clothing/head/soft
 					)
-					
+
 					var/obj/item/item_to_add = usr.get_active_hand()
 					if(!item_to_add)
 						return
@@ -315,7 +315,7 @@
 			name = "Rudolph the Red-Nosed Corgi"
 			emote_hear = list("barks christmas songs", "yaps")
 			desc = "He has a very shiny nose."
-			SetLuminosity(6)
+			set_light(6)
 		if(/obj/item/clothing/head/soft)
 			name = "Corgi Tech [real_name]"
 			desc = "The reason your yellow gloves have chew-marks."
@@ -544,3 +544,77 @@
 				for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2,1,2,4,8,4,2))
 					dir = i
 					sleep(1)
+
+/mob/living/simple_animal/corgi/Ian/borgi
+	name = "E-N"
+	real_name = "E-N"	//Intended to hold the name without altering it.
+	desc = "It's a borgi."
+	icon_state = "borgi"
+	icon_living = "borgi"
+	icon_dead = "borgi_dead"
+	meat_type = null
+	var/emagged = 0
+
+/mob/living/simple_animal/corgi/Ian/borgi/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if (istype(W, /obj/item/weapon/card/emag) && emagged < 2)
+		Emag(user)
+	else
+		..()
+
+/mob/living/simple_animal/corgi/Ian/borgi/proc/Emag(user as mob)
+	if(!emagged)
+		emagged = 1
+		visible_message("<span class='warning'>[user] swipes a card through [src].</span>", "<span class='notice'>You overload [src]s internal reactor.</span>")
+		spawn (1000)
+			src.explode()
+
+/mob/living/simple_animal/corgi/Ian/borgi/proc/explode()
+	for(var/mob/M in viewers(src, null))
+		if (M.client)
+			M.show_message("\red [src] makes an odd whining noise.")
+	sleep(10)
+	explosion(get_turf(src), 0, 1, 4, 7)
+	Die()
+
+/mob/living/simple_animal/corgi/Ian/borgi/proc/shootAt(var/atom/movable/target)
+	var/turf/T = get_turf(src)
+	var/turf/U = get_turf(target)
+	if (!T || !U)
+		return
+	var/obj/item/projectile/beam/A = new /obj/item/projectile/beam(loc)
+	A.icon = 'icons/effects/genetics.dmi'
+	A.icon_state = "eyelasers"
+	playsound(src.loc, 'sound/weapons/taser2.ogg', 75, 1)
+	A.original = target
+	A.current = T
+	A.starting = T
+	A.yo = U.y - T.y
+	A.xo = U.x - T.x
+	spawn( 0 )
+		A.process()
+	return
+
+/mob/living/simple_animal/corgi/Ian/borgi/Life()
+	..()
+	if(health <= 0) return
+	if(emagged && prob(25))
+		var/mob/living/carbon/target = locate() in view(10,src)
+		if (target)
+			shootAt(target)
+
+	//spark for no reason
+	if(prob(5))
+		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+		s.set_up(3, 1, src)
+		s.start()
+
+/mob/living/simple_animal/corgi/Ian/borgi/proc/Die()
+	..()
+	visible_message("<b>[src]</b> blows apart!")
+	new /obj/effect/decal/cleanable/blood/gibs/robot(src.loc)
+	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+	s.set_up(3, 1, src)
+	s.start()
+	//respawnable_list += src
+	del src
+	return

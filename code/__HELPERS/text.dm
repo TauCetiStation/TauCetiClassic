@@ -34,6 +34,15 @@
 			index = findtext(t, char)
 	return t
 
+/proc/readd_quotes(var/t)
+	var/list/repl_chars = list("&#34;" = "\"")
+	for(var/char in repl_chars)
+		var/index = findtext(t, char)
+		while(index)
+			t = copytext(t, 1, index) + repl_chars[char] + copytext(t, index+5)
+			index = findtext(t, char)
+	return t
+
 //Runs sanitize and strip_html_simple
 //I believe strip_html_simple() is required to run first to prevent '<' from displaying as '&lt;' after sanitize() calls byond's html_encode()
 /proc/strip_html(var/t,var/limit=MAX_MESSAGE_LEN)

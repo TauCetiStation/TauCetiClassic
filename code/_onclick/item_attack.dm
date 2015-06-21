@@ -25,11 +25,11 @@
 /obj/item/proc/attack(mob/living/M as mob, mob/living/user as mob, def_zone)
 
 	if (!istype(M)) // not sure if this is the right thing...
-		return
+		return 0
 	var/messagesource = M
 	if (can_operate(M))        //Checks if mob is lying down on table for surgery
 		if (do_surgery(M,user,src))
-			return
+			return 0
 	if (istype(M,/mob/living/carbon/brain))
 		messagesource = M:container
 	if (hitsound)
@@ -41,7 +41,7 @@
 
 	user.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [M.name] ([M.ckey]) with [name] (INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(damtype)])</font>"
 	M.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [user.name] ([user.ckey]) with [name] (INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(damtype)])</font>"
-	msg_admin_attack("[key_name(user)] attacked [key_name(M)] with [name] (INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(damtype)])" )
+	msg_admin_attack("[key_name(user)] attacked [key_name(M)] with [name] (INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(damtype)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)" )
 
 	for(var/mob/living/simple_animal/smart_animal/SA in view(7))
 		SA.fight(user, M)
@@ -145,7 +145,7 @@
 
 
 	if(istype(M, /mob/living/carbon/human))
-		return M:attacked_by(src, user, def_zone)
+		return M:attacked_by(src, user, def_zone)	//make sure to return whether we have hit or miss
 	else
 		switch(damtype)
 			if("brute")

@@ -449,6 +449,21 @@
 	if(istype(MB))
 		MB.RunOver(src)
 
+// Get rank from ID, ID inside PDA, PDA, ID in wallet, etc.
+/mob/living/carbon/human/proc/get_authentification_rank(var/if_no_id = "No id", var/if_no_job = "No job")
+	var/obj/item/device/pda/pda = wear_id
+	if (istype(pda))
+		if (pda.id)
+			return pda.id.rank
+		else
+			return pda.ownrank
+	else
+		var/obj/item/weapon/card/id/id = get_idcard()
+		if(id)
+			return id.rank ? id.rank : if_no_job
+		else
+			return if_no_id
+
 //gets assignment from ID or ID inside PDA or PDA itself
 //Useful when player do something with computers
 /mob/living/carbon/human/proc/get_assignment(var/if_no_id = "No id", var/if_no_job = "No job")
@@ -1375,6 +1390,16 @@
 		W.update_icon()
 		W.message = message
 		W.add_fingerprint(src)
+
+/mob/living/carbon/human/canSingulothPull(var/obj/machinery/singularity/singulo)
+	if(!..())
+		return 0
+
+	if(istype(shoes,/obj/item/clothing/shoes/magboots))
+		var/obj/item/clothing/shoes/magboots/M = shoes
+		if(M.magpulse)
+			return 0
+	return 1
 
 /mob/living/carbon/human/verb/crawl()
 	set name = "Crawl"

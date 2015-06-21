@@ -331,6 +331,7 @@ obj/machinery/nuclearbomb/proc/nukehack_win(mob/user as mob)
 						if(!src.lighthack)
 							src.icon_state = "nuclearbomb2"
 						if(!src.safety)
+							set_security_level("delta")
 							bomb_set = 1//There can still be issues with this reseting when there are multiple bombs. Not a big deal tho for Nuke/N
 						else
 							bomb_set = 0

@@ -7,6 +7,8 @@
 	if(istype(src.loc, /obj/item/alien_embryo))
 		sleeping = 5
 
+	update_progression()
+
 	..()
 
 /mob/living/carbon/alien/larva

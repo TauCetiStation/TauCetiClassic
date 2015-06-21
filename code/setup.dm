@@ -552,6 +552,9 @@ var/list/liftable_structures = list(\
 #define INVISIBILITY_OBSERVER 60
 #define SEE_INVISIBLE_OBSERVER 60
 
+#define INVISIBILITY_AI_EYE 61
+#define SEE_INVISIBLE_OBSERVER_AI_EYE 61
+
 #define INVISIBILITY_MAXIMUM 100
 
 //Object specific defines
@@ -652,6 +655,7 @@ var/list/liftable_structures = list(\
 #define CHAT_DEBUGLOGS	2048
 #define CHAT_LOOC		4096
 #define CHAT_GHOSTRADIO 8192
+#define SHOW_TYPING 	16384
 
 
 #define TOGGLES_DEFAULT (SOUND_ADMINHELP|SOUND_MIDI|SOUND_AMBIENCE|SOUND_LOBBY|CHAT_OOC|CHAT_DEAD|CHAT_GHOSTEARS|CHAT_GHOSTSIGHT|CHAT_PRAYER|CHAT_RADIO|CHAT_ATTACKLOGS|CHAT_LOOC)
@@ -799,3 +803,20 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define IS_SKRELL 3
 #define IS_UNATHI 4
 #define IS_KIDAN 5
+
+// Suit sensor levels
+#define SUIT_SENSOR_OFF      0
+#define SUIT_SENSOR_BINARY   1
+#define SUIT_SENSOR_VITAL    2
+#define SUIT_SENSOR_TRACKING 3
+
+// NanoUI flags
+#define STATUS_INTERACTIVE 2 // GREEN Visability
+#define STATUS_UPDATE 1 // ORANGE Visability
+#define STATUS_DISABLED 0 // RED Visability
+#define STATUS_CLOSE -1 // Close the interface
+//General-purpose life speed define for plants.
+#define HYDRO_SPEED_MULTIPLIER 1
+#define NANO_IGNORE_DISTANCE 1
+
+#define CLAMP01(x) max(0, min(1, x))

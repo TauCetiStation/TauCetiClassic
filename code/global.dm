@@ -12,6 +12,8 @@ var/global/list/machines = list()
 var/global/list/processing_objects = list()
 var/global/list/active_diseases = list()
 var/global/list/events = list()
+var/global/list/med_hud_users = list() //list of all entities using a medical HUD.
+var/global/list/sec_hud_users = list() //list of all entities using a security HUD.
 		//items that ask to be called every cycle
 
 var/global/defer_powernet_rebuild = 0		// true if net rebuild will be called manually after an event
@@ -88,6 +90,7 @@ var/datum/air_tunnel/air_tunnel1/SS13_airtunnel = null
 var/going = 1.0
 var/master_mode = "extended"//"extended"
 var/secret_force_mode = "secret" // if this is anything but "secret", the secret rotation will forceably choose this mode
+var/master_last_mode = null // this variable contain the last played mode from previous round
 
 var/datum/engine_eject/engine_eject_control = null
 var/host = null
@@ -261,3 +264,6 @@ var/DBConnection/dbcon_old = new()	//Tgstation database (Old database) - See the
 
 //added for Xenoarchaeology, might be useful for other stuff
 var/global/list/alphabet_uppercase = list("A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z")
+
+var/red_alert_code = 0 //Used in new code red and emergency shuttle call lighting
+var/red_alert_evac = 0

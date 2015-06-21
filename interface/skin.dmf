@@ -149,11 +149,11 @@ macro "macro"
 		is-disabled = false
 	elem 
 		name = "F3"
-		command = "say"
+		command = ".say"
 		is-disabled = false
 	elem 
 		name = "F4"
-		command = "me"
+		command = ".me"
 		is-disabled = false
 	elem 
 		name = "F5"
@@ -347,7 +347,7 @@ macro "hotkeymode"
 		is-disabled = false
 	elem 
 		name = "T"
-		command = "say"
+		command = ".say"
 		is-disabled = false
 	elem "w_key"
 		name = "W+REP"
@@ -403,11 +403,11 @@ macro "hotkeymode"
 		is-disabled = false
 	elem 
 		name = "F3"
-		command = "say"
+		command = ".say"
 		is-disabled = false
 	elem 
 		name = "F4"
-		command = "me"
+		command = ".me"
 		is-disabled = false
 	elem 
 		name = "F5"
@@ -1338,7 +1338,7 @@ window "mapwindow"
 		size = 640x480
 		anchor1 = 0,0
 		anchor2 = 100,100
-		font-family = "Arial Rounded MT Bold,Arial Black,Arial,sans-serif"
+		font-family = "Arial"
 		font-size = 7
 		font-style = ""
 		text-color = none
@@ -1424,7 +1424,7 @@ window "outputwindow"
 		visited-color = #ff00ff
 		style = ".system {color:#ff0000;}"
 		enable-http-images = false
-		max-lines = 1000
+		max-lines = 0
 		image = ""
 
 window "rpane"

@@ -2,6 +2,7 @@
 	name = "AI System Integrity Restorer"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "ai-fixer"
+	light_color = "#a97faa"
 	circuit = /obj/item/weapon/circuitboard/aifixer
 	req_access = list(access_captain, access_robotics, access_heads)
 	var/mob/living/silicon/ai/occupant = null
@@ -17,7 +18,7 @@
 			user << "This terminal isn't functioning right now, get it working!"
 			return
 		I:transfer_ai("AIFIXER","AICARD",src,user)
-	
+
 	..()
 	return
 
@@ -87,13 +88,14 @@
 			src.occupant.adjustToxLoss(-1)
 			src.occupant.adjustBruteLoss(-1)
 			src.occupant.updatehealth()
-			if (src.occupant.health >= 0 && src.occupant.stat == 2)
-				src.occupant.stat = 0
+			if (src.occupant.health >= 0 && src.occupant.stat == DEAD)
+				src.occupant.stat = CONSCIOUS
 				src.occupant.lying = 0
 				dead_mob_list -= src.occupant
 				living_mob_list += src.occupant
 				src.overlays -= image('icons/obj/computer.dmi', "ai-fixer-404")
 				src.overlays += image('icons/obj/computer.dmi', "ai-fixer-full")
+				src.occupant.add_ai_verbs()
 			src.updateUsrDialog()
 			sleep(10)
 		src.active = 0
