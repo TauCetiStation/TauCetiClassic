@@ -152,6 +152,10 @@
 	var/python_path = "" //Path to the python executable.  Defaults to "python" on windows and "/usr/bin/env python2" on unix
 	var/use_lib_nudge = 0 //Use the C library nudge instead of the python nudge.
 
+	var/use_slack_bot = 0
+	var/slack_team = 0
+	var/slack_bot_token = 0
+
 /datum/configuration/New()
 	var/list/L = typesof(/datum/game_mode) - /datum/game_mode
 	for (var/T in L)
@@ -517,6 +521,15 @@
 
 				if("max_maint_drones")
 					config.max_maint_drones = text2num(value)
+
+				if("use_slack_bot")
+					config.use_slack_bot = 1
+
+				if("slack_team")
+					config.slack_team = value
+
+				if("slack_bot_token")
+					config.slack_bot_token = value
 
 				else
 					log_misc("Unknown setting in configuration: '[name]'")
