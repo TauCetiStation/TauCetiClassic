@@ -68,11 +68,7 @@ emp_act
 			P.stun *= get_siemens_coefficient_organ(select_area)
 			P.weaken *= get_siemens_coefficient_organ(select_area)
 			P.stutter *= get_siemens_coefficient_organ(select_area)
-
-			apply_effect(P.agony,AGONY,0)
-			apply_effect(P.stun,STUN,0)
-			apply_effect(P.weaken, WEAKEN, 0)
-			apply_effect(P.stutter, STUTTER, 0)
+			P.on_hit(src)
 			flash_pain()
 			src <<"\red You have been shot!"
 			del P
@@ -120,20 +116,21 @@ emp_act
 		P.on_hit(src, 100, def_zone)
 		return 2
 
-	var/datum/organ/external/organ = get_organ(check_zone(def_zone))
-
-	var/armor = getarmor_organ(organ, "bullet")
-//Shit start here
-	var/delta = P.damage - armor
-	if (delta < 0) delta = 0
-	if(delta <= (P.damage/4) )
-		apply_effect(delta*2,AGONY,armor)
-		P.on_hit(src, armor, def_zone)
-		//return Nope! ~Zve
-	if(delta < 10)
-		P.sharp = 0
-		P.embed = 0
 	if(istype(P, /obj/item/projectile/bullet))
+		var/datum/organ/external/organ = get_organ(check_zone(def_zone))
+
+		var/armor = getarmor_organ(organ, "bullet")
+
+		var/delta = max(0, P.damage - (P.damage * (armor/100)))
+
+		if(delta)
+			apply_effect(delta,AGONY,armor)
+			P.on_hit(src, armor, def_zone)
+			//return Nope! ~Zve
+		if(delta < 10)
+			P.sharp = 0
+			P.embed = 0
+
 		if(P:stoping_power)
 			var/force =  (armor/P.damage)*100
 			if (force <= 60 && force > 40)
@@ -141,16 +138,13 @@ emp_act
 			else if(force <= 40)
 				apply_effects(P:stoping_power,P:stoping_power,0,0,P:stoping_power,0,0,armor)
 
-//Shit end here
-	if((P.embed && prob(20 + max(P.damage - armor, -10))) && P.damage_type == BRUTE)
-		var/obj/item/weapon/shard/shrapnel/SP = new()
-		(SP.name) = "[P.name] shrapnel"
-		(SP.desc) = "[SP.desc] It looks like it was fired from [P.shot_from]."
-		(SP.loc) = organ
-		organ.embed(SP)
+		if((P.embed && prob(20 + max(P.damage - armor, -10))) && P.damage_type == BRUTE)
+			var/obj/item/weapon/shard/shrapnel/SP = new()
+			(SP.name) = "[P.name] shrapnel"
+			(SP.desc) = "[SP.desc] It looks like it was fired from [P.shot_from]."
+			(SP.loc) = organ
+			organ.embed(SP)
 
-	if(armor > 0)
-		P.damage = P.damage - (P.damage * (armor/100))
 	return (..(P , def_zone))
 
 
