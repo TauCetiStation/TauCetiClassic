@@ -56,11 +56,19 @@
 	fire_sound = 'sound/weapons/laser3.ogg'
 
 /obj/item/ammo_casing/energy/electrode
+	projectile_type = /obj/item/projectile/energy/electrode
+	select_name = "stun - electrode"
+	fire_sound = 'sound/weapons/taser.ogg'
+
+/obj/item/ammo_casing/energy/stun
 	projectile_type = /obj/item/projectile/beam/stun
 	select_name = "stun"
 	fire_sound = 'sound/weapons/taser.ogg'
 
 /obj/item/ammo_casing/energy/electrode/gun
+	fire_sound = 'sound/weapons/gunshot.ogg'
+
+/obj/item/ammo_casing/energy/stun/gun
 	fire_sound = 'sound/weapons/gunshot.ogg'
 
 /obj/item/ammo_casing/energy/ion
