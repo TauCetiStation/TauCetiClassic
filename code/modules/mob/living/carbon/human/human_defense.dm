@@ -54,15 +54,17 @@ emp_act
 //BEGIN BOOK'S TASER NERF.
 	if(istype(P, /obj/item/projectile/energy/electrode) || istype(P, /obj/item/projectile/beam/stun) || istype(P, /obj/item/projectile/bullet/stunslug) || istype(P, /obj/item/projectile/bullet/weakbullet))
 		var/datum/organ/external/select_area = get_organ(def_zone) // We're checking the outside, buddy!
-		if(check_thickmaterial(select_area))
+		//if(check_thickmaterial(select_area))
 			
-			if(istype(P, /obj/item/projectile/bullet/weakbullet))
-				visible_message("\red <B>The [P.name] hits [src]'s armor!</B>")
-				apply_effect(25,AGONY,0)
-			else
-				visible_message("\red <B>The [P.name] gets deflected by [src]'s armor!</B>")
+		if(istype(P, /obj/item/projectile/bullet/weakbullet))
+			visible_message("\red <B>The [P.name] hits [src]'s armor!</B>")
+			apply_effect((P.agony / 2),AGONY,0)
 			del P
 			return
+		//else
+		//	visible_message("\red <B>The [P.name] gets deflected by [src]'s armor!</B>")
+		//del P
+		//return
 		else
 			P.agony *= get_siemens_coefficient_organ(select_area)
 			P.stun *= get_siemens_coefficient_organ(select_area)
