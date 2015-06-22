@@ -179,9 +179,9 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 			icon = get_uristrune_cult(word1, word2, word3)
 
 /obj/item/weapon/book/tome
-	name = "arcane tome"
-	icon = 'icons/obj/weapons.dmi'
-	icon_state ="tome"
+	name = "book"
+	icon = 'icons/obj/library.dmi'
+	icon_state ="book"
 	throw_speed = 1
 	throw_range = 5
 	w_class = 2.0
@@ -287,6 +287,9 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 				</html>
 				"}
 
+	New()
+		..()
+		icon_state = "book[pick(2,3,4,5,6)]"
 
 	Topic(href,href_list[])
 		if (src.loc == usr)
@@ -459,7 +462,8 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 				R.blood_DNA[H.dna.unique_enzymes] = H.dna.b_type
 			return
 		else
-			user << "The book seems full of illegible scribbles. Is this a joke?"
+			//user << "The book seems full of illegible scribbles. Is this a joke?"
+			user << "This book is completely blank!"
 			return
 
 	attackby(obj/item/weapon/book/tome/T as obj, mob/living/user as mob)
@@ -480,7 +484,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 	examine()
 		set src in usr
 		if(!iscultist(usr))
-			usr << "An old, dusty tome with frayed edges and a sinister looking cover."
+			..()
 		else
 			usr << "The scriptures of Nar-Sie, The One Who Sees, The Geometer of Blood. Contains the details of every ritual his followers could think of. Most of these are useless, though."
 
