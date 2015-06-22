@@ -49,6 +49,8 @@
 	armor = list(melee = 30, bullet = 10, laser = 10,energy = 20, bomb = 20, bio = 20, rad = 20)
 	allowed = list(/obj/item/weapon/teleportation_scroll)
 	flags_inv = HIDEJUMPSUIT
+	siemens_coefficient = 0.4
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
 
 /obj/item/clothing/suit/wizrobe/red
 	name = "red wizard robe"
