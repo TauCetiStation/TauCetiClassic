@@ -198,6 +198,7 @@ var/list/mechtoys = list(
 	//Check whether the shuttle is allowed to move
 	proc/can_move()
 		if(moving) return 0
+		if(!at_station) return 1
 
 		var/area/shuttle = locate(/area/supply/station)
 		if(!shuttle) return 0
