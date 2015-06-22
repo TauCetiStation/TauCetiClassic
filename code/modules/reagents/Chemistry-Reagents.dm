@@ -3066,6 +3066,9 @@ datum
 					paperaffected.clearpaper()
 					usr << "The solution dissolves the ink on the paper."
 				if(istype(O,/obj/item/weapon/book))
+					if(istype(O,/obj/item/weapon/book/tome))
+						usr << "The solution does nothing. Whatever this is, it isn't normal ink."
+						return
 					if(volume >= 5)
 						var/obj/item/weapon/book/affectedbook = O
 						affectedbook.dat = null
