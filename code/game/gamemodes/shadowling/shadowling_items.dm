@@ -27,6 +27,7 @@
 	heat_protection = null //You didn't expect a light-sensitive creature to have heat resistance, did you?
 	max_heat_protection_temperature = null
 	canremove = 0
+	siemens_coefficient = 0.2
 
 
 /obj/item/clothing/shoes/shadowling
