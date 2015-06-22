@@ -36,13 +36,11 @@
 	hos
 		name = "head of security's gloves"
 		item_color = "hosred"		//Exists for washing machines. 
-		siemens_coefficient = 0.3
 		
 
 	ce
 		name = "chief engineer's gloves"
 		item_color = "chief"			//Exists for washing machines. 
-		siemens_coefficient = 0.3
 		
 /obj/item/clothing/gloves/orange
 	name = "orange gloves"
