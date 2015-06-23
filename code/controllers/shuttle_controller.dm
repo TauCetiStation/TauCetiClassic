@@ -297,6 +297,8 @@ datum/shuttle_controller/emergency_shuttle/process()
 					world << sound('sound/AI/shuttledock.ogg')
 				else
 					captain_announce("The scheduled Crew Transfer Shuttle has docked with the station. It will depart in approximately [round(timeleft()/60,1)] minutes.")
+				
+				send2slack_service("the shuttle has docked with the station")
 
 				return 1
 

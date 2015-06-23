@@ -8,7 +8,7 @@
 	min_cold_protection_temperature = ARMOR_MIN_COLD_PROTECTION_TEMPERATURE
 	heat_protection = UPPER_TORSO|LOWER_TORSO
 	max_heat_protection_temperature = ARMOR_MAX_HEAT_PROTECTION_TEMPERATURE
-	siemens_coefficient = 0.6
+	siemens_coefficient = 0.4
 
 
 /obj/item/clothing/suit/armor/vest
@@ -45,8 +45,6 @@
 	slowdown = 1
 	armor = list(melee = 80, bullet = 10, laser = 5, energy = 10, bomb = 0, bio = 0, rad = 0)
 	flags_inv = HIDEJUMPSUIT
-	siemens_coefficient = 0.5
-
 
 /obj/item/clothing/suit/armor/bulletproof
 	name = "Bulletproof Vest"
@@ -55,7 +53,6 @@
 	item_state = "armor"
 	blood_overlay_type = "armor"
 	armor = list(melee = 10, bullet = 40, laser = 5, energy = 10, bomb = 0, bio = 0, rad = 0)
-	siemens_coefficient = 0.7
 
 /obj/item/clothing/suit/armor/laserproof
 	name = "Ablative Armor Vest"
@@ -81,8 +78,6 @@
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	cold_protection = UPPER_TORSO | LOWER_TORSO | LEGS | FEET | ARMS | HANDS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
-	siemens_coefficient = 0.5
-
 
 /obj/item/clothing/suit/armor/swat/officer
 	name = "officer jacket"
@@ -198,7 +193,6 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	slowdown = 1
 	armor = list(melee = 60, bullet = 30, laser = 30, energy = 40, bomb = 20, bio = 0, rad = 0)
-	siemens_coefficient = 0.7
 
 	/obj/item/clothing/suit/armor/tactical/verb/holster()
 		set name = "Holster"

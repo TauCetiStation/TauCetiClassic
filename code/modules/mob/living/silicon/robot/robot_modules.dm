@@ -98,6 +98,7 @@
 		src.modules += new /obj/item/weapon/bonesetter(src)
 		src.modules += new /obj/item/weapon/circular_saw(src)
 		src.modules += new /obj/item/weapon/surgicaldrill(src)
+		src.modules += new /obj/item/weapon/razor(src)
 		src.modules += new /obj/item/weapon/extinguisher/mini(src)
 		src.modules += new /obj/item/stack/medical/advanced/bruise_pack(src)
 		src.modules += new /obj/item/stack/nanopaste(src)
@@ -285,6 +286,7 @@
 	New()
 		//src.modules += new /obj/item/device/flashlight(src)
 		src.modules += new /obj/item/device/flash(src)
+		src.modules += new /obj/item/weapon/razor(src)
 		src.modules += new /obj/item/weapon/reagent_containers/food/drinks/cans/beer(src)
 		src.modules += new /obj/item/weapon/reagent_containers/food/condiment/enzyme(src)
 
