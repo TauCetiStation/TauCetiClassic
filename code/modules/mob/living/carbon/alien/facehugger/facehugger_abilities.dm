@@ -154,7 +154,7 @@ This is chestburster mechanic for damaging
 	hud.name = "Burst thru chest"
 	hud.master = src
 
-/obj/item/weapon/larva_bite/proc/throw()
+/obj/item/weapon/larva_bite/proc/throw_held()
 	return null
 
 /obj/item/weapon/larva_bite/proc/synch()
@@ -563,7 +563,7 @@ When we finish, facehugger's player will be transfered inside embryo.
 	hud.master = src
 
 
-/obj/item/weapon/fh_grab/proc/throw()
+/obj/item/weapon/fh_grab/proc/throw_held()
 	return null
 
 /obj/item/weapon/fh_grab/proc/synch()

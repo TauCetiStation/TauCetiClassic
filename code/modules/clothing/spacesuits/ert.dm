@@ -5,7 +5,6 @@
 	item_state = "helm-command"
 	armor = list(melee = 50, bullet = 35, laser = 30,energy = 15, bomb = 30, bio = 100, rad = 60)
 	max_heat_protection_temperature = FIRE_HELMET_MAX_HEAT_PROTECTION_TEMPERATURE
-	siemens_coefficient = 0.6
 	var/obj/machinery/camera/camera
 
 /obj/item/clothing/head/helmet/space/rig/ert/attack_self(mob/user)
@@ -37,7 +36,6 @@
 	/obj/item/device/radio, /obj/item/device/analyzer, /obj/item/weapon/gun/energy/laser, /obj/item/weapon/gun/energy/pulse_rifle, \
 	/obj/item/weapon/gun/energy/taser, /obj/item/weapon/melee/baton, /obj/item/weapon/gun/energy/gun)
 	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECTION_TEMPERATURE
-	siemens_coefficient = 0.6
 
 //Commander
 /obj/item/clothing/head/helmet/space/rig/ert/commander
@@ -73,11 +71,13 @@
 	desc = "A helmet worn by engineering members of a NanoTrasen Emergency Response Team. Has orange highlights. Armoured and space ready."
 	icon_state = "rig0-ert_engineer"
 	item_color = "ert_engineer"
+	siemens_coefficient = 0
 
 /obj/item/clothing/suit/space/rig/ert/engineer
 	name = "emergency response team engineer suit"
 	desc = "A suit worn by the engineering of a NanoTrasen Emergency Response Team. Has orange highlights. Armoured, space ready, and fire resistant."
 	icon_state = "ert_engineer"
+	siemens_coefficient = 0
 
 //Medical
 /obj/item/clothing/head/helmet/space/rig/ert/medical

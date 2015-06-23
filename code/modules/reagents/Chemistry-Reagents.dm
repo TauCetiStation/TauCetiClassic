@@ -3066,6 +3066,9 @@ datum
 					paperaffected.clearpaper()
 					usr << "The solution dissolves the ink on the paper."
 				if(istype(O,/obj/item/weapon/book))
+					if(istype(O,/obj/item/weapon/book/tome))
+						usr << "The solution does nothing. Whatever this is, it isn't normal ink."
+						return
 					if(volume >= 5)
 						var/obj/item/weapon/book/affectedbook = O
 						affectedbook.dat = null
@@ -3775,6 +3778,36 @@ datum
 					M.stuttering += 10
 				else if(data >= 115 && prob(33))
 					M.confused = max(M.confused+15,15)
+				..()
+				return
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////// Chemlights ///////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+		luminophore_temp //Temporary holder of vars used in mixing colors
+			name = "Luminophore"
+			id = "luminophore"
+			description = "Uh, some kind of drink."
+			reagent_state = LIQUID
+			nutriment_factor = 0.2
+			color = "#ffffff"
+			custom_metabolism = 0.2
+
+		luminophore
+			name = "Luminophore"
+			id = "luminophore"
+			description = "Uh, some kind of drink."
+			reagent_state = LIQUID
+			color = "#ffffff"
+			custom_metabolism = 0.2
+
+			on_mob_life(var/mob/living/M as mob)
+				if(!M) M = holder.my_atom
+				if(ishuman(M))
+					var/mob/living/carbon/human/H = M
+					H.vomit()
+					H.apply_effect(1,IRRADIATE,0)
 				..()
 				return
 

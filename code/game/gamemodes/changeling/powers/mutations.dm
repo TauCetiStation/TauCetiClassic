@@ -287,6 +287,7 @@
 	flags_inv = HIDEJUMPSUIT
 	cold_protection = 0
 	heat_protection = 0
+	siemens_coefficient = 0.4
 
 /obj/item/clothing/suit/armor/changeling/New()
 	..()
@@ -306,6 +307,7 @@
 	canremove = 0
 	armor = list(melee = 70, bullet = 10, laser = 10,energy = 10, bomb = 5, bio = 2, rad = 0)
 	flags_inv = HIDEEARS
+	siemens_coefficient = 0.4
 
 /obj/item/clothing/head/helmet/changeling/dropped()
 	qdel(src)

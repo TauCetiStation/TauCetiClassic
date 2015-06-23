@@ -788,7 +788,7 @@ datum/objective/heist/kidnap
 			target = pick(possible_targets)
 
 		if(target && target.current)
-			explanation_text = "The Shoal has a need for [target.current.real_name], the [target.assigned_role]. Take them alive."
+			explanation_text = "You need a new recruit: [target.current.real_name], the [target.assigned_role]. Grab them and bring into the ship. They must be alive!"
 		else
 			explanation_text = "Free Objective"
 		return target
@@ -869,7 +869,7 @@ datum/objective/heist/loot
 datum/objective/heist/salvage
 
 	choose_target()
-		switch(rand(1,8))
+		switch(rand(1,4))
 			if(1)
 				target = "metal"
 				target_amount = 300
@@ -882,18 +882,18 @@ datum/objective/heist/salvage
 			if(4)
 				target = "phoron"
 				target_amount = 100
-			if(5)
-				target = "silver"
-				target_amount = 50
-			if(6)
-				target = "gold"
-				target_amount = 20
-			if(7)
-				target = "uranium"
-				target_amount = 20
-			if(8)
-				target = "diamond"
-				target_amount = 20
+			//if(5)
+			//	target = "silver"
+			//	target_amount = 50
+			//if(6)
+			//	target = "gold"
+			//	target_amount = 20
+			//if(7)
+			//	target = "uranium"
+			//	target_amount = 20
+			//if(8)
+			//	target = "diamond"
+			//	target_amount = 20
 
 		explanation_text = "Ransack the station and escape with [target_amount] [target]."
 

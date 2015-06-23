@@ -1,5 +1,5 @@
 //In here: Hatch and Ascendance
-
+var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "Noaey'gief", "Mii`mahza", "Amerziox", "Gyrg-mylin", "Kanet'pruunance", "Vigistaezian")
 /mob/living/carbon/human/proc/shadowling_hatch()
 	set category = "Shadowling Evolution"
 	set name = "Hatch"
@@ -46,7 +46,7 @@
 								"<span class='shadowling'>Spines pierce your back. Your claws break apart your fingers. You feel excruciating pain as your true form begins its exit.</span>")
 
 			sleep(90)
-			usr.visible_message("<span class='warning'><b>[usr], now no longer recognizable as human, begins clawing at the resin walls around them.</b></span>", \
+			usr.visible_message("<span class='warning'><b>[usr], skin shifting, begins tearing at the walls around them.</b></span>", \
 							"<span class='shadowling'>Your false skin slips away. You begin tearing at the fragile membrane protecting you.</span>")
 
 			sleep(80)
@@ -72,12 +72,14 @@
 			for(var/obj/effect/alien/weeds/node/N in shadowturf)
 				del(N)
 			usr.visible_message("<span class='warning'>The chrysalis explodes in a shower of purple flesh and fluid!</span>")
-			
+
 			var/mob/living/carbon/human/H = new /mob/living/carbon/human(usr.loc)
-			
-			H.real_name = "Shadowling ([rand(1,1000)])"
+
+			var/newNameId = pick(possibleShadowlingNames)
+			possibleShadowlingNames.Remove(newNameId)
+			H.real_name = newNameId
 			H.name = usr.real_name
-			
+
 			H.underwear = 0
 			H.undershirt = 0
 			//M.faction |= "faithless"
@@ -130,6 +132,7 @@
 				usr.verbs += /mob/living/carbon/human/proc/shadowling_ascendance
 				return
 			usr.notransform = 1
+			usr.Stun(34)
 			usr.visible_message("<span class='warning'>[usr] rapidly bends and contorts, their eyes flaring a deep crimson!</span>", \
 								"<span class='shadowling'>You begin unlocking the genetic vault within you and prepare yourself for the power to come.</span>")
 
@@ -150,21 +153,25 @@
 			sleep(50)
 			for(var/mob/M in mob_list)
 				if(is_thrall(M) && !ticker.mode.shadowling_ascended)
-					M.visible_message("<span class='userdanger'>[M] trembles minutely as their form turns to ash, black smoke pouring from their disintegrating face.</span>", \
-									  "<span class='userdanger'><font size=3>It's time! Your masters are ascending! Your last thoughts are happy as your body is drained of life.</span>")
+					M.visible_message("<span class='userdanger'>[M] trembles minutely as they collapse, black smoke pouring from their disintegrating face.</span>", \
+									  "<span class='userdanger'>It's time! Your masters are ascending! Your last thoughts are happy as your body is drained of life.</span>")
 
 					ticker.mode.thralls -= M.mind //To prevent message spam
 					M.death(0)
-					M.dust()
 
 			usr << "<span class='userdanger'>Drawing upon your thralls, you find the strength needed to finish and rend apart the final barriers to godhood.</b></span>"
 
-			sleep(40)
+			sleep(20)
+			usr << "<span class='big'><b>Yes!</b></span>"
+			sleep(10)
+			usr << "<span class='reallybig'><b>YES!</b></span>"
+			sleep(10)
+			usr << "<font size=5><b><i>YE--</b></I></font>"
+			sleep(1)
 			for(var/mob/living/M in orange(7, src))
 				M.Weaken(10)
 				M << "<span class='userdanger'>An immense pressure slams you onto the ground!</span>"
-			usr << "<font size=3.5><span class='shadowling'>YOU LIVE!!!</font></span>"
-			world << "<br><br><font size=4><span class='shadowling'><b>A horrible wail echoes in your mind as the world plunges into blackness.</font></span><br><br>"
+			world << "<font size=5><span class='shadowling'><b>\"VYSHA NERADA YEKHEZET U'RUU!!\"</font></span>"
 			world << 'sound/hallucinations/veryfar_noise.ogg'
 			for(var/obj/machinery/power/apc/A in world)
 				A.overload_lighting()
@@ -174,13 +181,13 @@
 			A.spell_list += new /obj/effect/proc_holder/spell/targeted/hypnosis
 			A.spell_list += new /obj/effect/proc_holder/spell/targeted/shadowling_phase_shift
 			A.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/glacial_blast
-			A.spell_list += new /obj/effect/proc_holder/spell/targeted/vortex
 			A.spell_list += new /obj/effect/proc_holder/spell/targeted/shadowling_hivemind_ascendant
+			A.spell_list += new /obj/effect/proc_holder/spell/targeted/shadowlingAscendantTransmit
 			usr.mind.transfer_to(A)
 			A.name = usr.real_name
 			if(A.real_name)
 				A.real_name = usr.real_name
-			usr.alpha = 0 //This is pretty bad, but is also necessary for the shuttle call to function properly
+			usr.invisibility = 60 //This is pretty bad, but is also necessary for the shuttle call to function properly
 			usr.flags |= GODMODE
 			usr.notransform = 1
 			sleep(50)

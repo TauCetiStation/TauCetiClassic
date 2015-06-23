@@ -31,6 +31,8 @@ mob/living/carbon/human/airflow_stun()
 	if(!(status_flags & CANSTUN) && !(status_flags & CANWEAKEN))
 		src << "\blue You stay upright as the air rushes past you."
 		return 0
+	if(FAT in mutations)
+		return 0
 	if(weakened <= 0) src << "\red The sudden rush of air knocks you over!"
 	weakened = max(weakened,rand(1,5))
 	last_airflow_stun = world.time
@@ -44,7 +46,12 @@ atom/movable/proc/check_airflow_movable(n)
 	return 1
 
 mob/check_airflow_movable(n)
-	if(n < vsc.airflow_heavy_pressure)
+	//if(n < vsc.airflow_heavy_pressure)
+	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		if(n < max(35, min(65, round(H.nutrition/8))))
+			return 0
+	else if(n < vsc.airflow_heavy_pressure)
 		return 0
 	return 1
 
@@ -248,11 +255,12 @@ mob/living/carbon/human/airflow_hit(atom/A)
 	blocked = run_armor_check("groin","melee")
 	apply_damage(b_loss/3, BRUTE, "groin", blocked, 0, "Airflow")
 
-	if(airflow_speed > 10)
-		paralysis += round(airflow_speed * vsc.airflow_stun)
-		stunned = max(stunned,paralysis + 3)
-	else
-		stunned += round(airflow_speed * vsc.airflow_stun/2)
+	if(!(FAT in mutations))
+		if(airflow_speed > 10)
+			paralysis += round(airflow_speed * vsc.airflow_stun)
+			stunned = max(stunned,paralysis + 3)
+		else
+			stunned += round(airflow_speed * vsc.airflow_stun/2)
 	. = ..()
 
 zone/proc/movables()

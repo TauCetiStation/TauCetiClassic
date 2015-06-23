@@ -58,6 +58,7 @@ var/global/floorIsLava = 0
 		<b>Mob type</b> = [M.type]<br><br>
 		<A href='?src=\ref[src];boot2=\ref[M]'>Kick</A> |
 		<A href='?_src_=holder;warn=[M.ckey]'>Warn</A> |
+		<A href='?_src_=holder;unwarn=[M.ckey]'>UNWarn</A> |
 		<A href='?src=\ref[src];newban=\ref[M]'>Ban</A> |
 		<A href='?src=\ref[src];jobban2=\ref[M]'>Jobban</A> |
 		<A href='?src=\ref[src];notes=show;mob=\ref[M]'>Notes</A>
@@ -588,6 +589,7 @@ var/global/floorIsLava = 0
 		dat += {"
 			<B>Admin Secrets</B><BR>
 			<BR>
+			<A href='?src=\ref[src];secretsadmin=clear_virus'>Cure all diseases currently in existence</A><BR>
 			<A href='?src=\ref[src];secretsadmin=list_bombers'>Bombing List</A><BR>
 			<A href='?src=\ref[src];secretsadmin=check_antagonist'>Show current traitors and objectives</A><BR>
 			<A href='?src=\ref[src];secretsadmin=list_signalers'>Show last [length(lastsignalers)] signalers</A><BR>
@@ -925,6 +927,13 @@ var/global/floorIsLava = 0
 		blackbox.save_all_data_to_sql()
 
 	world.Reboot()
+
+/datum/admins/proc/getProcessSchedulerContext()
+	set category = "Debug"
+	set name = "Process Scheduler Status Panel"
+
+	feedback_add_details("admin_verb","GPSSP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	processSchedulerView.getContext()
 
 /datum/admins/proc/unprison(var/mob/M in mob_list)
 	set category = "Admin"

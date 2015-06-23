@@ -426,23 +426,3 @@ datum/projectile_data
 	var/g = mixOneColor(weights, greens)
 	var/b = mixOneColor(weights, blues)
 	return rgb(r,g,b)
-
-/proc/MixColors2(const/list/colors)
-	var/list/reds = list()
-	var/list/blues = list()
-	var/list/greens = list()
-	var/list/weights = list()
-
-	if(colors.len == 1)
-		return "#[colors[1]]"
-	else
-		for (var/i = 0, ++i <= colors.len)
-			reds.Add(GetRedPart(colors[i]))
-			blues.Add(GetBluePart(colors[i]))
-			greens.Add(GetGreenPart(colors[i]))
-			weights.Add(1)
-
-		var/r = mixOneColor(weights, reds)
-		var/g = mixOneColor(weights, greens)
-		var/b = mixOneColor(weights, blues)
-		return "#[r][g][b]"
