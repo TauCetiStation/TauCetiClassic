@@ -288,8 +288,9 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 				"}
 
 	New()
-		..()
-		icon_state = "book[pick(2,3,4,5,6)]"
+		if (icon_state == "book")
+			..()
+			icon_state = "book[pick(1,2,3,4,5,6)]"
 
 	Topic(href,href_list[])
 		if (src.loc == usr)
@@ -483,10 +484,16 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 
 	examine()
 		set src in usr
-		if(!iscultist(usr))
-			..()
+		if (icon_state == "tome")
+			if(!iscultist(usr))
+				usr << "An old, dusty tome with frayed edges and a sinister looking cover."
+			else
+				usr << "The scriptures of Nar-Sie, The One Who Sees, The Geometer of Blood. Contains the details of every ritual his followers could think of. Most of these are useless, though."
 		else
-			usr << "The scriptures of Nar-Sie, The One Who Sees, The Geometer of Blood. Contains the details of every ritual his followers could think of. Most of these are useless, though."
+			if(!iscultist(usr))
+				..()
+			else
+				usr << "The scriptures of Nar-Sie, The One Who Sees, The Geometer of Blood. Contains the details of every ritual his followers could think of. Most of these are useless, though."
 
 /obj/item/weapon/book/tome/imbued //admin tome, spawns working runes without waiting
 	w_class = 2.0
@@ -660,3 +667,8 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 					R.word3=cultwords["technology"]
 					R.loc = user.loc
 					R.check_icon()
+
+/obj/item/weapon/tome/old
+	name = "arcane tome"
+	icon = 'icons/obj/weapons.dmi'
+	icon_state ="tome"
