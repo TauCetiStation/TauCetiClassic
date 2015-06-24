@@ -162,6 +162,8 @@
 
 
 /client/Move(n, direct)
+	if(!mob)
+		return // Moved here to avoid nullrefs below
 
 	if(mob.control_object)	Move_object(direct)
 
@@ -170,8 +172,6 @@
 	if(moving)	return 0
 
 	if(world.time < move_delay)	return
-
-	if(!mob)	return
 
 	if(locate(/obj/effect/stop/, mob.loc))
 		for(var/obj/effect/stop/S in mob.loc)
