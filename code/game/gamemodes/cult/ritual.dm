@@ -668,7 +668,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 					R.loc = user.loc
 					R.check_icon()
 
-/obj/item/weapon/tome/old
+/obj/item/weapon/book/tome/old
 	name = "arcane tome"
 	icon = 'icons/obj/weapons.dmi'
 	icon_state ="tome"
