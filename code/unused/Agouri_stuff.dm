@@ -487,7 +487,7 @@
 		objects++
 		spawn( 0 )
 			if ((A && M))
-				A.HasEntered(M, 1)
+				A.Crossed(M, 1)
 			return
 	objects = 0
 	for(var/atom/A as mob|obj|turf|area in range(1))

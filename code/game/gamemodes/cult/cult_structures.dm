@@ -56,7 +56,7 @@
 		return
 	return
 
-/obj/effect/gateway/HasEntered(AM as mob|obj)
+/obj/effect/gateway/Crossed(AM as mob|obj)
 	spawn(0)
 		return
 	return
