@@ -435,7 +435,7 @@
 
 // called when something steps onto an amorph
 // this could be made more general, but for now just handle mulebot
-/mob/living/carbon/amorph/HasEntered(var/atom/movable/AM)
+/mob/living/carbon/amorph/Crossed(var/atom/movable/AM)
 	var/obj/machinery/bot/mulebot/MB = AM
 	if(istype(MB))
 		MB.RunOver(src)

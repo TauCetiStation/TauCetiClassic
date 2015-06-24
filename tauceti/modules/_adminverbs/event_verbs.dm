@@ -124,7 +124,7 @@ var/centcom_barriers_stat = 1
 	var/active = 1
 	var/lchannel = 999
 
-	HasEntered(M as mob)
+	Crossed(M as mob)
 		if(!active) return
 		if(istype(M, /mob/living/carbon))
 			M << sound(melody,0,1,lchannel,20)

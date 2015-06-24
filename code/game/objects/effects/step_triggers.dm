@@ -9,7 +9,7 @@
 /obj/effect/step_trigger/proc/Trigger(var/atom/movable/A)
 	return 0
 
-/obj/effect/step_trigger/HasEntered(H as mob|obj)
+/obj/effect/step_trigger/Crossed(H as mob|obj)
 	..()
 	if(!H)
 		return
@@ -114,4 +114,3 @@
 				A.x = rand(teleport_x, teleport_x_offset)
 				A.y = rand(teleport_y, teleport_y_offset)
 				A.z = rand(teleport_z, teleport_z_offset)
-

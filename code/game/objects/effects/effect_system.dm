@@ -215,7 +215,7 @@ steam.start() -- spawns the effect
 		delete()
 	return
 
-/obj/effect/effect/smoke/HasEntered(mob/living/carbon/M as mob )
+/obj/effect/effect/smoke/Crossed(mob/living/carbon/M as mob )
 	..()
 	if(istype(M))
 		affect(M)
@@ -548,7 +548,7 @@ steam.start() -- spawns the effect
 			delete()
 
 
-/obj/effect/effect/foam/HasEntered(var/atom/movable/AM)
+/obj/effect/effect/foam/Crossed(var/atom/movable/AM)
 	if(metal)
 		return
 
