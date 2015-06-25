@@ -179,9 +179,10 @@
 		return
 
 	if(status)
-		H.Stun(stunforce)
-		H.Weaken(stunforce)
-		H.apply_effect(STUTTER, stunforce)
+		//H.Stun(stunforce)
+		//H.Weaken(stunforce)
+		//H.apply_effect(STUTTER, stunforce)
+		H.apply_effect(60,AGONY,0)
 		user.lastattacked = M
 		H.lastattacker = user
 		if(isrobot(src.loc))
