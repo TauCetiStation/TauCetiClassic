@@ -270,7 +270,7 @@ BLIND     // can't see anything
 	body_parts_covered = HEAD|FACE|EYES
 	cold_protection = HEAD
 	min_cold_protection_temperature = SPACE_HELMET_MIN_COLD_PROTECTION_TEMPERATURE
-	siemens_coefficient = 0.9
+	siemens_coefficient = 0.2
 	species_restricted = list("exclude","Diona","Vox")
 	sprite_sheets = list("Vox" = 'icons/mob/species/vox/head.dmi')
 
@@ -291,7 +291,7 @@ BLIND     // can't see anything
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT|HIDETAIL
 	cold_protection = UPPER_TORSO | LOWER_TORSO | LEGS | FEET | ARMS | HANDS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
-	siemens_coefficient = 0.9
+	siemens_coefficient = 0.2
 	species_restricted = list("exclude","Diona","Vox")
 
 	var/list/supporting_limbs //If not-null, automatically splints breaks. Checked when removing the suit.

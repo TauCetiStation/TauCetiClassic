@@ -144,6 +144,10 @@ datum/controller/vote
 
 		else
 			text += "<b>Vote Result: Inconclusive - No Votes!</b>"
+		if (ticker && ticker.current_state >= 3)
+			config.allow_vote_restart = 0
+			spawn(18000)
+				config.allow_vote_restart = 1
 		log_vote(text)
 		world << "<font color='purple'>[sanitize_chat(text)]</font>"
 		return .
