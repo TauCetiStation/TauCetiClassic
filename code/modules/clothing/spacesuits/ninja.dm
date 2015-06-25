@@ -5,7 +5,6 @@
 	item_state = "s-ninja_mask"
 	allowed = list(/obj/item/weapon/cell)
 	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 25)
-	siemens_coefficient = 0.2
 	species_restricted = null
 	body_parts_covered = HEAD|FACE
 
@@ -17,7 +16,6 @@
 	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box/magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/tank,/obj/item/device/suit_cooling_unit,/obj/item/weapon/cell)
 	slowdown = 0
 	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30)
-	siemens_coefficient = 0.2
 	species_restricted = null //Workaround for spawning alien ninja without internals.
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	supporting_limbs = list()

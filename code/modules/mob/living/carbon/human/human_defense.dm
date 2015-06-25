@@ -54,13 +54,11 @@ emp_act
 //BEGIN BOOK'S TASER NERF.
 	if(istype(P, /obj/item/projectile/energy/electrode) || istype(P, /obj/item/projectile/beam/stun) || istype(P, /obj/item/projectile/bullet/stunslug) || istype(P, /obj/item/projectile/bullet/weakbullet))
 		var/datum/organ/external/select_area = get_organ(def_zone) // We're checking the outside, buddy!
-		if(check_thickmaterial(select_area))
+		//if(check_thickmaterial(select_area))
 			
-			if(istype(P, /obj/item/projectile/bullet/weakbullet))
-				visible_message("\red <B>The [P.name] hits [src]'s armor!</B>")
-				apply_effect(25,AGONY,0)
-			else
-				visible_message("\red <B>The [P.name] gets deflected by [src]'s armor!</B>")
+		if(istype(P, /obj/item/projectile/bullet/weakbullet))
+			visible_message("\red <B>The [P.name] hits [src]'s armor!</B>")
+			apply_effect((P.agony / 2),AGONY,0)
 			del P
 			return
 		else
@@ -72,21 +70,8 @@ emp_act
 			flash_pain()
 			src <<"\red You have been shot!"
 			del P
-
-			var/obj/item/weapon/cloaking_device/C = locate((/obj/item/weapon/cloaking_device) in src)
-			if(C && C.active)
-				C.attack_self(src)//Should shut it off
-				update_icons()
-				src << "\blue Your [C.name] was disrupted!"
-				Stun(2)
-
-			if(istype(equipped(),/obj/item/device/assembly/signaler))
-				var/obj/item/device/assembly/signaler/signaler = equipped()
-				if(signaler.deadman && prob(80))
-					src.visible_message("\red [src] triggers their deadman's switch!")
-					signaler.signal()
-
 		return
+
 //END TASER NERF
 	if(istype(P, /obj/item/projectile/energy/bolt))
 		var/datum/organ/external/select_area = get_organ(def_zone) // We're checking the outside, buddy!

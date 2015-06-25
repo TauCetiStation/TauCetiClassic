@@ -18,6 +18,9 @@
 
 
 /mob/living/bullet_act(var/obj/item/projectile/P, var/def_zone)
+	flash_weak_pain()
+
+	//Being hit while using a cloaking device
 	var/obj/item/weapon/cloaking_device/C = locate((/obj/item/weapon/cloaking_device) in src)
 	if(C && C.active)
 		C.attack_self(src)//Should shut it off
@@ -25,8 +28,7 @@
 		src << "\blue Your [C.name] was disrupted!"
 		Stun(2)
 
-	flash_weak_pain()
-
+	//Being hit while using a deadman switch
 	if(istype(equipped(),/obj/item/device/assembly/signaler))
 		var/obj/item/device/assembly/signaler/signaler = equipped()
 		if(signaler.deadman && prob(80))
