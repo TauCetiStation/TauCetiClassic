@@ -135,16 +135,12 @@ proc/listclearnulls(list/list)
 	return null
 
 //Returns the top(last) element from the list and removes it from the list (typical stack function)
-/proc/pop(list/L)
-	if(L.len)
-		. = L[L.len]
-		L.len--
-
-/proc/sorted_insert(list/L, thing, comparator)
-	var/pos = L.len
-	while(pos > 0 && call(comparator)(thing, L[pos]) > 0)
-		pos--
-	L.Insert(pos+1, thing)
+/proc/pop(list/listfrom)
+	if (listfrom.len > 0)
+		var/picked = listfrom[listfrom.len]
+		listfrom.len--
+		return picked
+	return null
 
 //Returns the next element in parameter list after first appearance of parameter element. If it is the last element of the list or not present in list, returns first element.
 /proc/next_in_list(element, list/L)
