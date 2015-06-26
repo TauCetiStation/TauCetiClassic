@@ -1,12 +1,14 @@
-#define GC_COLLECTION_TIMEOUT 300 // deciseconds to wait to let running procs finish before we just say fuck it and force del() the object
-#define GC_DEL_CHECK_PER_TICK 100 // number of tests per master controller tick to make sure our GC'd objects are actually GC'd
-#define GC_FORCE_DEL_PER_TICK 20  // max force del() calls per master controller tick
+var/datum/controller/process/garbage_collector/garbage_collector
+var/list/delayed_garbage = list()
 
-var/datum/controller/garbage_collector/garbage = new()
+/datum/controller/process/garbage_collector
+	var/garbage_collect = 1			// Whether or not to actually do work
+	var/collection_timeout = 300	//deciseconds to wait to let running procs finish before we just say fuck it and force del() the object
+	var/max_checks_multiplier = 5	//multiplier (per-decisecond) for calculating max number of tests per tick. These tests check if our GC'd objects are actually GC'd
+	var/max_forcedel_multiplier = 1	//multiplier (per-decisecond) for calculating max number of force del() calls per tick.
 
-
-/datum/controller/garbage_collector
-	var/dels = 0				// number of del()'s we've done this tick
+	var/dels 		= 0			// number of del()'s we've done this tick
+	var/hard_dels 	= 0			// number of hard dels in total
 	var/list/destroyed = list() // list of refID's of things that should be garbage collected
 								// refID's are associated with the time at which they time out and need to be manually del()
 								// we do this so we aren't constantly locating them and preventing them from being gc'd
@@ -14,38 +16,69 @@ var/datum/controller/garbage_collector/garbage = new()
 	var/list/logging = list()	// list of all types that have failed to GC associated with the number of times that's happened.
 								// the types are stored as strings
 
-/datum/controller/garbage_collector/proc/AddTrash(var/datum/A)
-	if(!istype(A) || !isnull(A.gc_destroyed))
-		return
-//	testing("GC: AddTrash([A.type])")
-	A.gc_destroyed = world.time
-	destroyed -= "\ref[A]" // Removing any previous references that were GC'd so that the current object will be at the end of the list.
-	destroyed["\ref[A]"] = world.time
+/datum/controller/process/garbage_collector/setup()
+	name = "garbage"
+	schedule_interval = 2 SECONDS
 
-/datum/controller/garbage_collector/proc/process()
+	if(!garbage_collector)
+		garbage_collector = src
+
+	for(var/garbage in delayed_garbage)
+		qdel(garbage)
+	delayed_garbage.Cut()
+	delayed_garbage = null
+
+/datum/controller/process/garbage_collector/doWork()
+	if(!garbage_collect)
+		return
+
 	dels = 0
-	var/time_to_kill = world.time - GC_COLLECTION_TIMEOUT // Anything qdel() but not GC'd BEFORE this time needs to be manually del()
-	var/checkRemain = GC_DEL_CHECK_PER_TICK
+	var/time_to_kill = world.time - collection_timeout // Anything qdel() but not GC'd BEFORE this time needs to be manually del()
+	var/checkRemain = max_checks_multiplier * schedule_interval
+	var/maxDels = max_forcedel_multiplier * schedule_interval
+
 	while(destroyed.len && --checkRemain >= 0)
-		if(dels > GC_FORCE_DEL_PER_TICK)
-//			testing("GC: Reached max force dels per tick [dels] vs [GC_FORCE_DEL_PER_TICK]")
+		if(dels >= maxDels)
+			#ifdef GC_DEBUG
+			testing("GC: Reached max force dels per tick [dels] vs [maxDels]")
+			#endif
 			break // Server's already pretty pounded, everything else can wait 2 seconds
 		var/refID = destroyed[1]
 		var/GCd_at_time = destroyed[refID]
 		if(GCd_at_time > time_to_kill)
-//			testing("GC: [refID] not old enough, breaking at [world.time] for [GCd_at_time - time_to_kill] deciseconds until [GCd_at_time + GC_COLLECTION_TIMEOUT]")
+			#ifdef GC_DEBUG
+			testing("GC: [refID] not old enough, breaking at [world.time] for [GCd_at_time - time_to_kill] deciseconds until [GCd_at_time + collection_timeout]")
+			#endif
 			break // Everything else is newer, skip them
 		var/atom/A = locate(refID)
-//		testing("GC: [refID] old enough to test: GCd_at_time: [GCd_at_time] time_to_kill: [time_to_kill] current: [world.time]")
-		if(A && A.gc_destroyed == GCd_at_time) // So if something else coincidently gets the same ref, it's not deleted by mistake
+		#ifdef GC_DEBUG
+		testing("GC: [refID] old enough to test: GCd_at_time: [GCd_at_time] time_to_kill: [time_to_kill] current: [world.time]")
+		#endif
+		if(A && A.gcDestroyed == GCd_at_time) // So if something else coincidently gets the same ref, it's not deleted by mistake
 			// Something's still referring to the qdel'd object.  Kill it.
-//			testing("GC: -- \ref[A] | [A.type] was unable to be GC'd and was deleted --")
+			testing("GC: -- \ref[A] | [A.type] was unable to be GC'd and was deleted --")
 			logging["[A.type]"]++
 			del(A)
-			dels++
-//		else
-//			testing("GC: [refID] properly GC'd at [world.time] with timeout [GCd_at_time]")
+			++dels
+			++hard_dels
+		#ifdef GC_DEBUG
+		else
+			testing("GC: [refID] properly GC'd at [world.time] with timeout [GCd_at_time]")
+		#endif
 		destroyed.Cut(1, 2)
+
+/datum/controller/process/garbage_collector/proc/AddTrash(datum/A)
+	if(!istype(A) || !isnull(A.gcDestroyed))
+		return
+	#ifdef GC_DEBUG
+	testing("GC: AddTrash(\ref[A] - [A.type])")
+	#endif
+	A.gcDestroyed = world.time
+	destroyed -= "\ref[A]" // Removing any previous references that were GC'd so that the current object will be at the end of the list.
+	destroyed["\ref[A]"] = world.time
+
+/datum/controller/process/garbage_collector/getStatName()
+	return ..()+"([garbage_collector.destroyed.len]/[garbage_collector.dels]/[garbage_collector.hard_dels])"
 
 // Should be treated as a replacement for the 'del' keyword.
 // Datums passed to this will be given a chance to clean up references to allow the GC to collect them.
@@ -53,29 +86,61 @@ var/datum/controller/garbage_collector/garbage = new()
 	if(!A)
 		return
 	if(!istype(A))
-		//warning("qdel() passed object of type [A.type]. qdel() can only handle /datum types.")
+		warning("qdel() passed object of type [A.type]. qdel() can only handle /datum types.")
 		del(A)
-		if(garbage)
-			garbage.dels++
-	else if(isnull(A.gc_destroyed))
-		// Let our friend know they're about to get fucked up.
+		if(garbage_collector)
+			garbage_collector.dels++
+			garbage_collector.hard_dels++
+	else if(isnull(A.gcDestroyed))
+		// Let our friend know they're about to get collected
 		. = !A.Destroy()
 		if(. && A)
-			if(garbage && !isturf(A))
-				garbage.AddTrash(A)
-			else
-				del(A)
+			A.finalize_qdel()
+
+/datum/proc/finalize_qdel()
+	if(IsPooled(src))
+		PlaceInPool(src)
+	else
+		del(src)
+
+/atom/finalize_qdel()
+	if(IsPooled(src))
+		PlaceInPool(src)
+	else
+		if(garbage_collector)
+			garbage_collector.AddTrash(src)
+		else
+			delayed_garbage |= src
+
+/icon/finalize_qdel()
+	del(src)
+
+/image/finalize_qdel()
+	del(src)
+
+/mob/finalize_qdel()
+	del(src)
+
+/turf/finalize_qdel()
+	del(src)
 
 // Default implementation of clean-up code.
 // This should be overridden to remove all references pointing to the object being destroyed.
 // Return true if the the GC controller should allow the object to continue existing. (Useful if pooling objects.)
 /datum/proc/Destroy()
-	del(src)
-
-/datum/var/gc_destroyed //Time when this object was destroyed.
+	tag = null
+	return
 
 #ifdef TESTING
 /client/var/running_find_references
+
+/mob/verb/create_thing()
+	set category = "Debug"
+	set name = "Create Thing"
+
+	var/path = input("Enter path")
+	var/atom/thing = new path(loc)
+	thing.find_references()
 
 /atom/verb/find_references()
 	set category = "Debug"
@@ -95,8 +160,8 @@ var/datum/controller/garbage_collector/garbage = new()
 		return
 
 	// Remove this object from the list of things to be auto-deleted.
-	if(garbage)
-		garbage.destroyed -= "\ref[src]"
+	if(garbage_collector)
+		garbage_collector.destroyed -= "\ref[src]"
 
 	usr.client.running_find_references = type
 	testing("Beginning search for references to a [type].")
@@ -122,11 +187,15 @@ var/datum/controller/garbage_collector/garbage = new()
 
 /client/verb/purge_all_destroyed_objects()
 	set category = "Debug"
-	if(garbage)
-		while(garbage.destroyed.len)
-			var/datum/o = locate(garbage.destroyed[1])
-			if(istype(o) && o.gc_destroyed)
+	if(garbage_collector)
+		while(garbage_collector.destroyed.len)
+			var/datum/o = locate(garbage_collector.destroyed[1])
+			if(istype(o) && o.gcDestroyed)
 				del(o)
-				garbage.dels++
-			garbage.destroyed.Cut(1, 2)
+				garbage_collector.dels++
+			garbage_collector.destroyed.Cut(1, 2)
+#endif
+
+#ifdef GC_DEBUG
+#undef GC_DEBUG
 #endif

@@ -52,7 +52,7 @@ the blender or the processor: Processor items are solid objects and Blender resu
 		user << "Too many items are already in the blending chamber."
 	else if(istype(O, /obj/item/weapon/reagent_containers/glass/blender_jug) && src.container == 0) //Load jug.
 		O.reagents.trans_to(src, O.reagents.total_volume)
-		del(O)
+		qdel(O)
 		src.contents += new /obj/item/weapon/reagent_containers/glass/blender_jug(src)
 		//user.drop_item()
 		//O.loc = src
@@ -110,7 +110,7 @@ the blender or the processor: Processor items are solid objects and Blender resu
 			O.reagents.del_reagent("nutriment")
 		if(istype(O, /obj/item/weapon/reagent_containers/food/snacks))	//This is intentionally not an "else if"
 			O.reagents.trans_to(src, O.reagents.total_volume)			//Think of it as the "pulp" leftover.
-			del(O)
+			qdel(O)
 	src.processing = 0
 	usr << "The contents of the blender have been blended."
 	return

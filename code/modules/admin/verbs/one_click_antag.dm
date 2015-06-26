@@ -287,7 +287,7 @@ client/proc/one_click_antag()
 				if(synd_mind.current.client)
 					for(var/image/I in synd_mind.current.client.images)
 						if(I.icon_state == "synd")
-							del(I)
+							qdel(I)
 
 		for(var/datum/mind/synd_mind in ticker.mode.syndicates)
 			if(synd_mind.current)
@@ -523,7 +523,7 @@ client/proc/one_click_antag()
 	//To avoid duplicates.
 	for(var/obj/item/weapon/implant/cortical/imp in new_vox.contents)
 		affected.implants -= imp
-		del(imp)
+		qdel(imp)
 
 	var/obj/item/weapon/implant/cortical/I = new(new_vox)
 	I.imp_in = new_vox

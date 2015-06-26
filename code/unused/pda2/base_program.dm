@@ -100,7 +100,7 @@
 			if(master)
 				master.post_signal(signal, newfreq)
 			else
-				del(signal)
+				qdel(signal)
 
 		transfer_holder(obj/item/weapon/disk/data/newholder,datum/computer/folder/newfolder)
 

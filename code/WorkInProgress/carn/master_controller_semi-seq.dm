@@ -32,7 +32,7 @@ datum/controller/game_controller/New()
 	//There can be only one master_controller. Out with the old and in with the new.
 	if(master_controller)
 		if(master_controller != src)
-			del(master_controller)
+			qdel(master_controller)
 	master_controller = src
 
 	if(!air_master)
@@ -217,7 +217,7 @@ datum/controller/game_controller/proc/process()
 /datum/failsafe/New()
 	//There can be only one failsafe. Out with the old in with the new (that way we can restart the Failsafe by spawning a new one)
 	if(Failsafe && (Failsafe != src))
-		del(Failsafe)
+		qdel(Failsafe)
 	Failsafe = src
 
 	current_iteration = controller_iteration

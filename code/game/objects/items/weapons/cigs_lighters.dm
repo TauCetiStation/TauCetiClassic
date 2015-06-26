@@ -79,7 +79,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	create_reagents(chem_volume) // making the cigarrete a chemical holder with a maximum volume of 15
 
 /obj/item/clothing/mask/cigarette/Destroy()
-	del(reagents)
+	qdel(reagents)
 	..()
 
 /obj/item/clothing/mask/cigarette/attackby(obj/item/weapon/W as obj, mob/user as mob)

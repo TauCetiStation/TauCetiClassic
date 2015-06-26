@@ -268,7 +268,7 @@
 			smoke.attach(src)
 			smoke.start()
 			explosion(src.loc, -1, 0, 1, 3, 0)
-			del(src)
+			qdel(src)
 			return
 		if(prob(15)) //Power drain
 			world << "\red SMES power drain in [src.loc.loc]"

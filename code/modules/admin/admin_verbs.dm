@@ -546,7 +546,7 @@ var/list/admin_verbs_mentor = list(
 		holder.DB_ban_record(BANTYPE_TEMP, null, bantime, reason, , ,warned_ckey)
 		feedback_inc("ban_warn",1)
 		D.save_preferences()
-		del(C)
+		qdel(C)
 	else
 		if(C)
 			C << "<font color='red'><BIG><B>You have been formally warned by an administrator.</B></BIG><br>Further warnings will result in an autoban.</font>"

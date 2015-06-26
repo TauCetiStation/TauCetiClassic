@@ -246,7 +246,7 @@
 			preserve += W
 		for(var/obj/item/W in (H.contents-preserve))
 			if (W==H.w_uniform) // will be teared
-				del(W)
+				qdel(W)
 				continue
 			H.drop_from_inventory(W)
 			if(istype(W.loc,/obj/machinery/))

@@ -31,7 +31,7 @@
 			return
 		else if(!src.check_if_equipped() && L)
 			new /obj/item/weapon/ctf_flag/green(L.loc)
-			del(src)
+			qdel(src)
 	if(istype(src, /obj/item/weapon/ctf_flag/red))
 		var/obj/L = locate("landmark*Red-Flag")
 		if(locate("landmark*Red-Flag", src))
@@ -40,7 +40,7 @@
 			return
 		else if(!src.check_if_equipped() && L)
 			new /obj/item/weapon/ctf_flag/red(L.loc)
-			del(src)
+			qdel(src)
 	return
 
 /obj/item/weapon/ctf_flag/proc/check_if_equipped()
@@ -79,7 +79,7 @@
 				ticker.red_score++
 				var/obj/L = locate("landmark*Green-Flag")
 				if (L)
-					del(C)
+					qdel(C)
 					new /obj/item/weapon/ctf_flag/green(L.loc)
 				else
 					world << "No green flag spawn point detected"
@@ -121,7 +121,7 @@
 				ticker.green_score++
 				var/obj/L = locate("landmark*Red-Flag")
 				if (L)
-					del(C)
+					qdel(C)
 					new /obj/item/weapon/ctf_flag/red(L.loc)
 				else
 					world << "No red flag spawn point detected"

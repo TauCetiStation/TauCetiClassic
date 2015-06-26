@@ -190,7 +190,7 @@ var/global/list/uneatable = list(
 
 /obj/machinery/singularity/proc/check_energy()
 	if(energy <= 0)
-		del(src)
+		qdel(src)
 		return 0
 	switch(energy)//Some of these numbers might need to be changed up later -Mport
 		if(1 to 199)
@@ -293,7 +293,7 @@ var/global/list/uneatable = list(
 			qdel(A)
 		else
 			A.ex_act(1.0)
-			if(A && isnull(A.gc_destroyed)) qdel(A)
+			if(A && isnull(A.gcDestroyed)) qdel(A)
 		gain = 2
 	else if(isturf(A))
 		var/turf/T = A

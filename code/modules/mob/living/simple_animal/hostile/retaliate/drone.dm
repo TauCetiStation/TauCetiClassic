@@ -160,9 +160,9 @@
 /mob/living/simple_animal/hostile/retaliate/malf_drone/death()
 	src.visible_message("\blue \icon[src] [src] suddenly breaks apart.")
 	..()
-	del(src)
+	qdel(src)
 
-/mob/living/simple_animal/hostile/retaliate/malf_drone/Del()
+/mob/living/simple_animal/hostile/retaliate/malf_drone/Destroy()
 	//some random debris left behind
 	if(has_loot)
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread

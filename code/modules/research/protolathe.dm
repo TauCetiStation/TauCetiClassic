@@ -108,7 +108,7 @@ Note: Must be placed west/left of and R&D console to function.
 			if(adamantine_amount >= 2000)
 				var/obj/item/stack/sheet/mineral/adamantine/G = new /obj/item/stack/sheet/mineral/adamantine(src.loc)
 				G.amount = round(adamantine_amount / G.perunit)
-			del(src)
+			qdel(src)
 			return 1
 		else
 			user << "\red You can't load the [src.name] while it's opened."

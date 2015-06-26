@@ -112,7 +112,7 @@
 		var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
 		if(L)
 			var/obj/item/stack/tile/plasteel/S = C
-			del(L)
+			qdel(L)
 			playsound(src.loc, 'sound/weapons/Genhit.ogg', 50, 1)
 			S.build(src)
 			S.use(1)
