@@ -260,7 +260,7 @@ Alien plants should do something if theres a lot of poison
 				if(O.density)
 					continue direction_loop
 
-			new /obj/effect/alien/weeds(T, linked_node)
+			PoolOrNew(/obj/effect/alien/weeds, T, linked_node)
 
 
 /obj/effect/alien/weeds/ex_act(severity)

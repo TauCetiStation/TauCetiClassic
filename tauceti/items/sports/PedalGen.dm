@@ -162,6 +162,6 @@
 			return buckled_mob.bullet_act(Proj)
 	visible_message("<span class='warning'>[Proj] ricochets off the [callme]!</span>")
 
-/obj/structure/stool/bed/chair/pedalgen/Del()
-	del(MyGenerator)
+/obj/structure/stool/bed/chair/pedalgen/Destroy()
+	qdel(MyGenerator)
 	..()

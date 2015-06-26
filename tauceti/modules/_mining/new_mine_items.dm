@@ -80,7 +80,7 @@
 					reliability = max_reliability
 					user << "You repaired [src]"
 					if(R.uses == 0)
-						del(R)
+						qdel(R)
 			else user << "[src] is in well condition."
 		else if(state == 2)
 			if(R.uses == 0)
@@ -92,7 +92,7 @@
 				update_icon()
 				user << "You repaired [src]"
 				if(R.uses == 0)
-					del(R)
+					qdel(R)
 		return
 
 /obj/item/weapon/pickaxe/drill/proc/update_reliability()
@@ -204,7 +204,7 @@
 					explosion(location, -1, 2, 2)
 					target.ex_act(1)
 				if (src)
-					del(src)
+					qdel(src)
 
 /obj/item/weapon/mining_charge/attack(mob/M as mob, mob/user as mob, def_zone)
 	return
@@ -268,7 +268,7 @@ obj/item/projectile/kinetic/New()
 	range--
 	if(range <= 0)
 		new /obj/item/effect/kinetic_blast(src.loc)
-		del(src)
+		qdel(src)
 
 /obj/item/projectile/kinetic/on_hit(var/atom/target)
 	var/turf/target_turf = get_turf(target)
@@ -288,4 +288,4 @@ obj/item/projectile/kinetic/New()
 
 /obj/item/effect/kinetic_blast/New()
 	spawn(4)
-		del(src)		*/
+		qdel(src)		*/

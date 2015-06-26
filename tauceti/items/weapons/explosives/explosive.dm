@@ -8,4 +8,4 @@
 
 /obj/item/weapon/grenade/syndieminibomb/prime()
 	explosion(src.loc,1,2,4,5)
-	del(src)
+	qdel(src)
