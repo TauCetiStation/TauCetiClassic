@@ -30,11 +30,15 @@
 					visible_message("\red <B>[src] has been touched with the stun gloves by [M]!</B>")
 					M.attack_log += text("\[[time_stamp()]\] <font color='red'>Stungloved [src.name] ([src.ckey])</font>")
 					src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been stungloved by [M.name] ([M.ckey])</font>")
-
 					msg_admin_attack("[M.name] ([M.ckey]) stungloved [src.name] ([src.ckey]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[M.x];Y=[M.y];Z=[M.z]'>JMP</a>)")
 
-					var/armorblock = run_armor_check(M.zone_sel.selecting, "energy")
-					apply_effects(5,5,0,0,5,0,0,armorblock)
+					var/datum/organ/external/select_area = get_organ(M.zone_sel.selecting) // We're checking the outside, buddy!
+					var/calc_power = 150 * get_siemens_coefficient_organ(select_area)
+					apply_effects(0,0,0,0,5,0,0,calc_power)
+
+					var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+					s.set_up(3, 1, src)
+					s.start()
 					return 1
 				else
 					M << "\red Not enough charge! "
