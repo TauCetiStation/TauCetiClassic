@@ -444,7 +444,7 @@
 
 // called when something steps onto a human
 // this could be made more general, but for now just handle mulebot
-/mob/living/carbon/human/HasEntered(var/atom/movable/AM)
+/mob/living/carbon/human/Crossed(var/atom/movable/AM)
 	var/obj/machinery/bot/mulebot/MB = AM
 	if(istype(MB))
 		MB.RunOver(src)
@@ -1401,17 +1401,23 @@
 			return 0
 	return 1
 
+/mob/living/carbon/human/var/crawl_getup = 0
 /mob/living/carbon/human/verb/crawl()
 	set name = "Crawl"
 	set category = "IC"
 
 	if( stat || weakened || paralysis || resting || sleeping || (status_flags & FAKEDEATH) || buckled) return
 
+	if(crawl_getup)
+		return
 	var/T = get_turf(src)
 	if( (locate(/obj/structure/table) in T) || (locate(/obj/structure/stool/bed) in T) )
 		return
 	else
 		if(crawling)
+			crawl_getup = 1
+			sleep(20)
+			crawl_getup = 0
 			pass_flags += PASSCRAWL
 		else
 			pass_flags -= PASSCRAWL

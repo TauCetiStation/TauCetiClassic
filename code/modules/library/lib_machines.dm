@@ -147,7 +147,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 			if(src.emagged)
 				dat += "<A href='?src=\ref[src];switchscreen=7'>7. Access the Forbidden Lore Vault</A><BR>"
 			if(src.arcanecheckout)
-				new /obj/item/weapon/book/tome(src.loc)
+				new /obj/item/weapon/book/tome/old(src.loc)
 				user << "<span class='warning'>Your sanity barely endures the seconds spent in the vault's browsing window. The only thing to remind you of this when you stop browsing is a dusty old tome sitting on the desk. You don't really remember printing it.</span>"
 				user.visible_message("[user] stares at the blank screen for a few moments, his expression frozen in fear. When he finally awakens from it, he looks a lot older.", 2)
 				src.arcanecheckout = 0
@@ -305,7 +305,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 		buffer_mob = sanitize_alt(copytext(input("Enter the recipient's name:") as text|null,1,MAX_NAME_LEN))
 	if(href_list["checkout"])
 		var/datum/borrowbook/b = new /datum/borrowbook
-		b.bookname = sanitize_alt(buffer_book)//нужно ли, TODO:CYRILLIC
+		b.bookname = sanitize_alt(buffer_book)//пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ, TODO:CYRILLIC
 		b.mobname = sanitize_alt(buffer_mob)
 		b.getdate = world.time
 		b.duedate = world.time + (checkoutperiod * 600)

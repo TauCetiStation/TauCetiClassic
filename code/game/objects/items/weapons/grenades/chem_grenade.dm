@@ -170,9 +170,9 @@
 		spawn(50)		   //To make sure all reagents can work
 			del(src)	   //correctly before deleting the grenade.
 
-	HasEntered(atom/movable/AM as mob|obj)
+	Crossed(atom/movable/AM as mob|obj)
 		if (detonator)
-			detonator.HasEntered(AM)
+			detonator.Crossed(AM)
 
 	on_found(mob/finder as mob)
 		if(detonator)

@@ -21,7 +21,7 @@
 			if(the_trap.name == trap_name)
 				connected_traps += the_trap //adding the trap with the matching name
 
-/obj/effect/pressure_plate/HasEntered(atom/victim as mob|obj)
+/obj/effect/pressure_plate/Crossed(atom/victim as mob|obj)
 	if(victim.density && (trigger_type == "mob and obj" || (trigger_type == "mob" && istype(victim,/mob)) || (trigger_type == "obj" && istype(victim,/obj))))
 		for(var/obj/effect/trap/T in connected_traps)
 			T.trigger(victim)
@@ -44,7 +44,7 @@
 	..()
 	src:visibility = 0 //seriously, it keeps saying "undefined var" when I try to do it in the define
 
-/obj/effect/trap/HasEntered(victim as mob|obj)
+/obj/effect/trap/Crossed(victim as mob|obj)
 	if(trigger_type == "mob and obj" || (trigger_type == "mob" && istype(victim,/mob)) || (trigger_type == "obj" && istype(victim,/obj)))
 		trigger(victim)
 
