@@ -8,7 +8,7 @@
 		user << "\blue Locked In"
 		new /obj/machinery/syndicatebomb( user.loc )
 		playsound(src, 'sound/effects/pop.ogg', 100, 1, 1)
-		del(src)
+		qdel(src)
 	return
 
 /obj/machinery/syndicatebomb
@@ -38,7 +38,7 @@
 		timer = 60
 		processing_objects.Remove(src)
 		explosion(src.loc,2,5,11)
-		del(src)
+		qdel(src)
 		return
 	if(!active || defused)					//Counter terrorists win
 		processing_objects.Remove(src)
@@ -101,7 +101,7 @@
 			user << "<span class='notice'>You place the payload into the shell.</span>"
 			degutted = 0
 			user.drop_item()
-			del(I)
+			qdel(I)
 		else
 			user << "<span class='notice'>While a double strength bomb would surely be a thing of terrible beauty, there's just no room for it.</span>"
 	else
@@ -163,7 +163,7 @@
 
 /obj/item/weapon/syndicatebombcore/ex_act(severity) //Little boom can chain a big boom
 	explosion(src.loc,2,5,11)
-	del(src)
+	qdel(src)
 
 /obj/item/device/syndicatedetonator
 	name = "big red button"

@@ -167,7 +167,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 
 	else
 		for(var/obj/effect/decal/cleanable/blood/drip/G in nums)
-			del G
+			qdel(G)
 		T.add_blood(src)
 
 /****************************************************

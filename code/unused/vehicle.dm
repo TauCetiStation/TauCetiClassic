@@ -55,7 +55,7 @@
 		if (M.client)
 			M.client.eye = M.client.mob
 			M.client.perspective = MOB_PERSPECTIVE
-	del(src)
+	qdel(src)
 
 /obj/machinery/vehicle/ex_act(severity)
 	switch (severity)
@@ -64,19 +64,19 @@
 				A.loc = src.loc
 				ex_act(severity)
 			//SN src = null
-			del(src)
+			qdel(src)
 		if(2.0)
 			if (prob(50))
 				for(var/atom/movable/A as mob|obj in src)
 					A.loc = src.loc
 					ex_act(severity)
 				//SN src = null
-				del(src)
+				qdel(src)
 
 /obj/machinery/vehicle/blob_act()
 	for(var/atom/movable/A as mob|obj in src)
 		A.loc = src.loc
-	del(src)
+	qdel(src)
 
 /obj/machinery/vehicle/Bump(var/atom/A)
 	//world << "[src] bumped into [A]"

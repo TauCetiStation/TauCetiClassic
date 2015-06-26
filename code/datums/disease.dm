@@ -158,7 +158,7 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 			if(D != src)
 				if(IsSame(D))
 					//error("Deleting [D.name] because it's the same as [src.name].")
-					del(D) // if there are somehow two viruses of the same kind in the system, delete the other one
+					qdel(D) // if there are somehow two viruses of the same kind in the system, delete the other one
 
 	if(holder == affected_mob)
 		if(affected_mob.stat != DEAD) //he's alive
@@ -183,7 +183,7 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 		/*if(istype(src, /datum/disease/alien_embryo))	//Get rid of the infection flag if it's a xeno embryo.
 			affected_mob.status_flags &= ~(XENO_HOST)*/
 		affected_mob.viruses -= src		//remove the datum from the list
-	del(src)	//delete the datum to stop it processing
+	qdel(src)	//delete the datum to stop it processing
 	return
 
 
@@ -202,6 +202,6 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 	return new type(process, src)
 
 /*
-/datum/disease/Del()
+/datum/disease/Destroy()
 	active_diseases.Remove(src)
 */

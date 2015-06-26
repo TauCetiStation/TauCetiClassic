@@ -27,6 +27,11 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "abed"
 
+/obj/structure/stool/bed/Del()
+	unbuckle()
+	..()
+	return
+
 /obj/structure/stool/bed/Destroy()
 	unbuckle()
 	..()
@@ -150,7 +155,7 @@
 			visible_message("[user] collapses \the [src.name].")
 			new/obj/item/roller(get_turf(src))
 			spawn(0)
-				del(src)
+				qdel(src)
 		return
 	..()
 
@@ -203,7 +208,7 @@
 	user << "\blue You deploy the roller bed."
 	var/obj/structure/stool/bed/roller/R = new /obj/structure/stool/bed/roller(user.loc)
 	R.add_fingerprint(user)
-	del(held)
+	qdel(held)
 	held = null
 
 

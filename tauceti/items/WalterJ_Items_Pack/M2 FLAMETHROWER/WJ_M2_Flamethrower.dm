@@ -25,7 +25,7 @@
 		spawn(5)
 		src.reagents.clear_reagents()
 		if(src)
-			del(src)
+			qdel(src)
 		return
 
 	if(istype(W, /obj/item/weapon/flamethrower_M2))

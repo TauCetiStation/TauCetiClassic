@@ -25,9 +25,9 @@
 		var/location = get_turf(user)
 		for(var/obj/item/weapon/ore/glass/sandToConvert in location)
 			new /obj/item/stack/sheet/mineral/sandstone(location)
-			del(sandToConvert)
+			qdel(sandToConvert)
 		new /obj/item/stack/sheet/mineral/sandstone(location)
-		del(src)
+		qdel(src)
 
 /obj/item/weapon/ore/phoron
 	name = "Phoron ore"
@@ -132,7 +132,7 @@
 
 		if(CC.amount <= 0)
 			user << "\blue This cable coil appears to be empty."
-			del(CC)
+			qdel(CC)
 			return
 
 		overlays += image('icons/obj/items.dmi',"coin_string_overlay")

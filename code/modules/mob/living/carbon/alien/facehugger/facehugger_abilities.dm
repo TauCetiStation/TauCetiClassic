@@ -181,7 +181,7 @@ This is chestburster mechanic for damaging
 	if(world.time < (last_bite + BITE_COOLDOWN))
 		return
 	if(istype(chestburster.loc, /turf))
-		del(src)
+		qdel(src)
 		return
 
 	if(ishuman(affecting))
@@ -197,7 +197,7 @@ This is chestburster mechanic for damaging
 				C.open = 1
 			else
 				H.gib()
-			del(src)
+			qdel(src)
 		else
 			last_bite = world.time
 			playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
@@ -211,7 +211,7 @@ This is chestburster mechanic for damaging
 			chestburster.loc = get_turf(M)
 			chestburster.visible_message("<span class='danger'>[chestburster] bursts thru [M]'s butt!</span>")
 			chestburster << sound('sound/voice/hiss5.ogg',0,0,0,100)
-			del(src)
+			qdel(src)
 		else
 			last_bite = world.time
 			M.adjustBruteLoss(rand(35,65))
@@ -223,7 +223,7 @@ This is chestburster mechanic for damaging
 			chestburster.loc = get_turf(C)
 			chestburster.visible_message("<span class='danger'>[chestburster] bursts thru [C]'s butt!</span>")
 			chestburster << sound('sound/voice/hiss5.ogg',0,0,0,100)
-			del(src)
+			qdel(src)
 		else
 			last_bite = world.time
 			C.health -= rand(5,10)
@@ -231,14 +231,14 @@ This is chestburster mechanic for damaging
 
 /obj/item/weapon/larva_bite/proc/confirm()
 	if(!chestburster || !affecting)
-		del(src)
+		qdel(src)
 		return 0
 
 	if(affecting)
 		if(istype(chestburster.loc, /mob/living))
 			return 1
 		else
-			del(src)
+			qdel(src)
 			return 0
 
 	return 1
@@ -253,10 +253,10 @@ This is chestburster mechanic for damaging
 		return
 
 /obj/item/weapon/larva_bite/dropped()
-	del(src)
+	qdel(src)
 
-/obj/item/weapon/larva_bite/Del()
-	del(hud)
+/obj/item/weapon/larva_bite/Destroy()
+	qdel(hud)
 	..()
 
 /*----------------------------------------
@@ -279,9 +279,9 @@ This is emryo growth procs
 		spawn(0)
 			AddInfectionImages(affected_mob)
 	else
-		del(src)
+		qdel(src)
 
-/obj/item/alien_embryo/Del()
+/obj/item/alien_embryo/Destroy()
 	if(affected_mob)
 		affected_mob.status_flags &= ~(XENO_HOST)
 		processing_objects.Remove(src)
@@ -300,7 +300,7 @@ This is emryo growth procs
 			mob_container = baby
 			mob_container.forceMove(get_turf(affected_mob))
 			baby.reset_view()
-		del(src)
+		qdel(src)
 
 	if(!affected_mob)	return
 	if(loc != affected_mob)
@@ -316,7 +316,7 @@ This is emryo growth procs
 			baby.death()
 			if(baby.key)
 				baby.ghostize(0)
-			del(src)
+			qdel(src)
 		else if(prob(4))
 			stage++
 			spawn(0)
@@ -363,7 +363,7 @@ This is emryo growth procs
 		baby.put_in_active_hand(G)
 		G.last_bite = world.time - 20
 		G.synch()
-		del(src)
+		qdel(src)
 
 /*----------------------------------------
 This is facehugger Attach procs
@@ -387,7 +387,7 @@ This is facehugger Attach procs
 	processing_objects.Add(src)
 	..()
 
-/obj/item/clothing/mask/facehugger/Del()
+/obj/item/clothing/mask/facehugger/Destroy()
 	processing_objects.Remove(src)
 	..()
 
@@ -399,7 +399,7 @@ This is facehugger Attach procs
 			mob_container = FH
 			mob_container.forceMove(get_turf(src))
 			FH.reset_view()
-		del(src)
+		qdel(src)
 
 /obj/item/clothing/mask/facehugger/proc/host_is_dead()
 	if(current_hugger)
@@ -408,7 +408,7 @@ This is facehugger Attach procs
 		mob_container = FH
 		mob_container.forceMove(get_turf(src))
 		FH.reset_view()
-		del(src)
+		qdel(src)
 
 /obj/item/clothing/mask/facehugger/proc/show_message(var/message, var/m_type)
 	if(current_hugger)
@@ -478,7 +478,7 @@ This is facehugger Attach procs
 		new_xeno.loc = new_embryo
 		new_xeno.key = FH.key
 		new_embryo.baby = new_xeno
-		del(FH)
+		qdel(FH)
 		target.u_equip(target.wear_mask)
 		if(ismonkey(target))
 			for(var/obj/item/clothing/mask/facehugger/FH_mask in target.contents)
@@ -600,7 +600,7 @@ When we finish, facehugger's player will be transfered inside embryo.
 		var/obj/item/clothing/mask/facehugger/hugger = affecting.wear_mask
 		if(hugger)
 			hugger.host_is_dead()
-		del(src)
+		qdel(src)
 		return
 	if(state == GRAB_UPGRADING)
 		return
@@ -615,7 +615,7 @@ When we finish, facehugger's player will be transfered inside embryo.
 
 	if(get_dist(assailant, affecting) > 1)
 		assailant << "Too far."
-		del(src)
+		qdel(src)
 		return
 
 	if(iscarbon(affecting))
@@ -623,7 +623,7 @@ When we finish, facehugger's player will be transfered inside embryo.
 		if(hugger)
 			if(hugger.current_hugger != assailant)
 				assailant << "There is already facehugger on the face"
-				del(src)
+				qdel(src)
 				return
 	else if(iscorgi(affecting))
 		var/mob/living/simple_animal/corgi/C = affecting
@@ -632,17 +632,17 @@ When we finish, facehugger's player will be transfered inside embryo.
 		if(hugger)
 			if(hugger.current_hugger != assailant)
 				assailant << "There is already facehugger on the face"
-				del(src)
+				qdel(src)
 				return
 
 	for(var/obj/item/alien_embryo/AE in affecting.contents)
 		assailant << "\red [affecting] already impregnated."
-		del(src)
+		qdel(src)
 		return
 
 	for(var/mob/living/carbon/alien/larva/baby in affecting.contents)
 		assailant << "\red [affecting] already impregnated."
-		del(src)
+		qdel(src)
 		return
 
 	last_upgrade = world.time
@@ -653,7 +653,7 @@ When we finish, facehugger's player will be transfered inside embryo.
 			if(!istype(affecting.wear_mask, /obj/item/clothing/mask/facehugger))
 				var/obj/item/clothing/mask/victim_mask = affecting.wear_mask
 				affecting.u_equip(victim_mask)
-				del(victim_mask)
+				qdel(victim_mask)
 		FH.leap_at_face(affecting)
 		state = GRAB_AGGRESSIVE
 		hud.icon_state = "grab/neck"
@@ -671,10 +671,10 @@ When we finish, facehugger's player will be transfered inside embryo.
 			if(state == GRAB_EMBRYO)
 				return
 			if(!affecting)
-				del(src)
+				qdel(src)
 				return
 			if(!assailant.canmove || assailant.lying)
-				del(src)
+				qdel(src)
 				return
 			state = GRAB_EMBRYO
 			hud.icon_state = "grab/neck+++"
@@ -709,7 +709,7 @@ When we finish, facehugger's player will be transfered inside embryo.
 //This is used to make sure the victim hasn't managed to yackety sax away before using the grab.
 /obj/item/weapon/fh_grab/proc/confirm()
 	if(!assailant || !affecting)
-		del(src)
+		qdel(src)
 		return 0
 
 	if(affecting.stat == DEAD)
@@ -718,7 +718,7 @@ When we finish, facehugger's player will be transfered inside embryo.
 			hugger.host_is_dead()
 		if(iscarbon(affecting))
 			affecting.update_inv_wear_mask(1)
-		del(src)
+		qdel(src)
 		return 0
 
 	if(affecting)
@@ -727,7 +727,7 @@ When we finish, facehugger's player will be transfered inside embryo.
 		if(iscorgi(assailant.loc.loc))
 			return 1
 		if(!isturf(assailant.loc) || ( !isturf(affecting.loc) || assailant.loc != affecting.loc && get_dist(assailant, affecting) > 1) )
-			del(src)
+			qdel(src)
 			return 0
 
 	return 1
@@ -742,8 +742,8 @@ When we finish, facehugger's player will be transfered inside embryo.
 		return
 
 /obj/item/weapon/fh_grab/dropped()
-	del(src)
+	qdel(src)
 
-/obj/item/weapon/fh_grab/Del()
-	del(hud)
+/obj/item/weapon/fh_grab/Destroy()
+	qdel(hud)
 	..()

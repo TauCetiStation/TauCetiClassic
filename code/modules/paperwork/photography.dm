@@ -146,7 +146,7 @@
 			return
 		user << "<span class='notice'>You insert [I] into [src].</span>"
 		user.drop_item()
-		del(I)
+		qdel(I)
 		pictures_left = pictures_max
 		return
 	..()

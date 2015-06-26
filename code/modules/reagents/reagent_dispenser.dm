@@ -46,17 +46,17 @@
 	ex_act(severity)
 		switch(severity)
 			if(1.0)
-				del(src)
+				qdel(src)
 				return
 			if(2.0)
 				if (prob(50))
 					new /obj/effect/effect/water(src.loc)
-					del(src)
+					qdel(src)
 					return
 			if(3.0)
 				if (prob(5))
 					new /obj/effect/effect/water(src.loc)
-					del(src)
+					qdel(src)
 					return
 			else
 		return
@@ -64,7 +64,7 @@
 	blob_act()
 		if(prob(50))
 			new /obj/effect/effect/water(src.loc)
-			del(src)
+			qdel(src)
 
 
 
@@ -169,7 +169,7 @@
 	else
 		explosion(src.loc,-1,1,2)
 	if(src)
-		del(src)
+		qdel(src)
 
 /obj/structure/reagent_dispensers/fueltank/fire_act(datum/gas_mixture/air, temperature, volume)
 	if(temperature > T0C+500)
@@ -226,7 +226,7 @@
 
 /obj/structure/reagent_dispensers/beerkeg/blob_act()
 	explosion(src.loc,0,3,5,7,10)
-	del(src)
+	qdel(src)
 
 /obj/structure/reagent_dispensers/virusfood
 	name = "Virus Food Dispenser"

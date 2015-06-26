@@ -526,12 +526,12 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 
 /mob/living/carbon/human/proc/equip_space_ninja(safety=0)//Safety in case you need to unequip stuff for existing characters.
 	if(safety)
-		del(w_uniform)
-		del(wear_suit)
-		del(wear_mask)
-		del(head)
-		del(shoes)
-		del(gloves)
+		qdel(w_uniform)
+		qdel(wear_suit)
+		qdel(wear_mask)
+		qdel(head)
+		qdel(shoes)
+		qdel(gloves)
 
 	var/obj/item/device/radio/R = new /obj/item/device/radio/headset(src)
 	equip_to_slot_or_del(R, slot_l_ear)
@@ -818,10 +818,10 @@ BYOND fixed the verb bugs so this is no longer necessary. I prefer verb panels.
 	var/obj/effect/proc_holder/ai_hack_ninja/B_C = locate() in AI
 	var/obj/effect/proc_holder/ai_instruction/C_C = locate() in AI
 	var/obj/effect/proc_holder/ai_holo_clear/D_C = locate() in AI
-	del(A_C)
-	del(B_C)
-	del(C_C)
-	del(D_C)
+	qdel(A_C)
+	qdel(B_C)
+	qdel(C_C)
+	qdel(D_C)
 	AI.proc_holder_list = list()
 	verbs += /obj/item/clothing/suit/space/space_ninja/proc/deinit
 	verbs += /obj/item/clothing/suit/space/space_ninja/proc/spideros
@@ -840,8 +840,8 @@ BYOND fixed the verb bugs so this is no longer necessary. I prefer verb panels.
 
 /obj/effect/proc_holder/ai_holo_clear/Click()
 	var/obj/item/clothing/suit/space/space_ninja/S = loc.loc//This is so stupid but makes sure certain things work. AI.SUIT
-	del(S.hologram.i_attached)
-	del(S.hologram)
+	qdel(S.hologram.i_attached)
+	qdel(S.hologram)
 	var/obj/effect/proc_holder/ai_holo_clear/D_C = locate() in S.AI
 	S.AI.proc_holder_list -= D_C
 	return
@@ -913,8 +913,8 @@ mob/verb/remove_object_panel()
 	var/obj/effect/proc_holder/ai_hack_ninja/B = locate() in src
 	usr:proc_holder_list -= A
 	usr:proc_holder_list -= B
-	del(A)//First.
-	del(B)//Second, to keep the proc going.
+	qdel(A)//First.
+	qdel(B)//Second, to keep the proc going.
 	return
 
 /client/verb/grant_verb_ninja_debug1(var/mob/M in view())
@@ -1031,7 +1031,7 @@ That is why you attached them to objects.
 				spawn(0)
 					src << current_clone
 					spawn(300)
-						del(current_clone)
+						qdel(current_clone)
 					spawn while(!isnull(current_clone))
 						step_to(current_clone,src,1)
 						sleep(5)

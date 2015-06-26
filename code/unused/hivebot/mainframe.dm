@@ -144,7 +144,7 @@
 	..()
 	update_clothing()
 	for(var/S in src.client.screen)
-		del(S)
+		qdel(S)
 	src.flash = new /obj/screen( null )
 	src.flash.icon_state = "blank"
 	src.flash.name = "flash"

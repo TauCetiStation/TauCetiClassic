@@ -170,7 +170,7 @@
 
 			density = 0
 			invisibility = 101
-			del(src)
+			qdel(src)
 		return 1
 
 	else
@@ -195,7 +195,7 @@
 
 				density = 0
 				invisibility = 101
-				del(src)
+				qdel(src)
 				return 0
 		return 1	//с ТГ, работает лучше
 
@@ -216,7 +216,7 @@
 	//plot the initial trajectory
 	setup_trajectory()
 
-	spawn while(src)
+	spawn while(src && src.loc)
 		if(kill_count-- < 1)
 			on_impact(src.loc) //for any final impact behaviours
 			qdel(src)

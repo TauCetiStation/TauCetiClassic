@@ -112,7 +112,7 @@
 	if(iswirecutter(W))
 		if(!shock(user, 100))
 			playsound(loc, 'sound/items/Wirecutter.ogg', 100, 1)
-			new /obj/item/stack/rods(loc, 2)
+			PoolOrNew(/obj/item/stack/rods, list(get_turf(src), 2))
 			qdel(src)
 	else if((isscrewdriver(W)) && (istype(loc, /turf/simulated) || anchored))
 		if(!shock(user, 90))
@@ -189,11 +189,11 @@
 			icon_state = "brokengrille"
 			density = 0
 			destroyed = 1
-			new /obj/item/stack/rods(loc)
+			PoolOrNew(/obj/item/stack/rods, get_turf(src))
 
 		else
 			if(health <= -6)
-				new /obj/item/stack/rods(loc)
+				PoolOrNew(/obj/item/stack/rods, get_turf(src))
 				qdel(src)
 				return
 	return

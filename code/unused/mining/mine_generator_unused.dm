@@ -38,7 +38,7 @@
 		gererateTargetLoc()
 		//target_loc = locate(last_loc.x + rand(5), last_loc.y + rand(5), src.z)
 		fillWithAsteroids()
-	del(src)
+	qdel(src)
 	return
 
 

@@ -25,4 +25,4 @@
 		if(!C.stat)
 			var/turf/T = get_turf(C)
 			if(istype(T, /turf/space))
-				del(C)
+				qdel(C)

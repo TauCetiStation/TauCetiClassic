@@ -16,13 +16,13 @@ emp_act
 						if(prob(deflectchance))
 							visible_message("\red <B>The [P.name] gets deflected by [src]'s [C.name]!</B>") //DEFLECT!
 							visible_message("\red <B> Taser hit for [P.damage] damage!</B>")
-							del P
+							qdel(P)
 */
 /* Commenting out old Taser nerf
 	if(wear_suit && istype(wear_suit, /obj/item/clothing/suit/armor))
 		if(istype(P, /obj/item/projectile/energy/electrode))
 			visible_message("\red <B>The [P.name] gets deflected by [src]'s [wear_suit.name]!</B>")
-			del P
+			qdel(P)
 		return -1
 */
 // END TASER NERF
@@ -59,7 +59,7 @@ emp_act
 		if(istype(P, /obj/item/projectile/bullet/weakbullet))
 			visible_message("\red <B>The [P.name] hits [src]'s armor!</B>")
 			apply_effect((P.agony / 2),AGONY,0)
-			del P
+			qdel(P)
 			return
 		else
 			P.agony *= get_siemens_coefficient_organ(select_area)
@@ -69,7 +69,7 @@ emp_act
 			P.on_hit(src)
 			flash_pain()
 			src <<"\red You have been shot!"
-			del P
+			qdel(P)
 		return
 
 //END TASER NERF
@@ -84,7 +84,7 @@ emp_act
 				if(C.body_parts_covered & select_area.body_part) // Is that body part being targeted covered?
 					if(C.flags & THICKMATERIAL )
 						visible_message("\red <B>The [P.name] gets absorbed by [src]'s [C.name]!</B>")
-						del P
+						qdel(P)
 						return
 
 		var/datum/organ/external/organ = get_organ(check_zone(def_zone))
@@ -93,7 +93,7 @@ emp_act
 		apply_effects(P.stun,P.weaken,0,0,P.stutter,0,0,armorblock)
 		flash_pain()
 		src <<"\red You have been shot!"
-		del P
+		qdel(P)
 		return
 //Конец ребаланса арбалета синди
 

@@ -13,10 +13,10 @@
 ///// Z-Level Stuff
 	if(!(istype(src.loc, /turf/space) || istype(src.loc, /turf/simulated/floor/open)))
 ///// Z-Level Stuff
-		del(src)
+		qdel(src)
 	for(var/obj/structure/lattice/LAT in src.loc)
 		if(LAT != src)
-			del(LAT)
+			qdel(LAT)
 	icon = 'icons/obj/smoothlattice.dmi'
 	icon_state = "latticeblank"
 	updateOverlays()
@@ -61,14 +61,14 @@
 		var/obj/item/weapon/weldingtool/WT = C
 		if(WT.remove_fuel(0, user))
 			user << "\blue Slicing lattice joints ..."
-		new /obj/item/stack/rods(src.loc)
-		del(src)
+		PoolOrNew(/obj/item/stack/rods, src.loc)
+		qdel(src)
 
 	return
 
 /obj/structure/lattice/proc/updateOverlays()
 	//if(!(istype(src.loc, /turf/space)))
-	//	del(src)
+	//	qdel(src)
 	spawn(1)
 		overlays = list()
 

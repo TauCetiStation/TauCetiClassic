@@ -569,6 +569,7 @@ Auto Patrol: []"},
 
 // signals bot status etc. to controller
 /obj/machinery/bot/secbot/proc/send_status()
+	if(!(src && src.loc && src.loc.loc)) return
 	var/list/kv = list(
 	"type" = "secbot",
 	"name" = name,

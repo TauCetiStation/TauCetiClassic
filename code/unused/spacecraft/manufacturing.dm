@@ -23,7 +23,7 @@
 		// blah blah
 	for (var/mob/V in hearers(src))
 		V.show_message("[src] lets out a pneumatic hiss, its panels rapdily unfolding and expanding to produce its payload.", 2)
-	del(src)
+	qdel(src)
 
 
 /obj/machinery/nanosprayer

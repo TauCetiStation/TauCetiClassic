@@ -53,7 +53,7 @@ var/global/datum/processSchedulerView/processSchedulerView
 /datum/controller/processScheduler/proc/setup()
 	// There can be only one
 	if(processScheduler && (processScheduler != src))
-		del(src)
+		qdel(src)
 		return 0
 
 	var/process

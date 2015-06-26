@@ -69,7 +69,7 @@
 				for(var/mob/M in range(10, src))
 					if(!M.stat && !istype(M, /mob/living/silicon/ai))\
 						shake_camera(M, 3, 1)
-				del(src)
+				qdel(src)
 				return 1
 		else
 			return 0

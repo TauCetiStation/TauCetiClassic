@@ -29,7 +29,7 @@
 		B.layer = 4
 		M.canmove = 0
 		spawn(5)
-			del(B)
+			qdel(B)
 			M.canmove = 1
 		M << text("\blue Your eyes cry out in pain!")
 		M.disabilities |= NEARSIGHTED
@@ -73,15 +73,15 @@
 				B.density = 0
 				B.layer = 3
 				spawn(5)
-					del(B)
+					qdel(B)
 				step_to(A,M,0)
 				if (get_dist(A,M) == 0)
 					M.Weaken(5)
 					M.take_overall_damage(0,10)
-					del(A)
+					qdel(A)
 					return
 				sleep(5)
-			del(A)
+			qdel(A)
 
 	usr.verbs -= /client/proc/magicmissile
 	spawn(100)
@@ -165,7 +165,7 @@
 
 	forcefield =  new /obj/effect/forcefield(locate(usr.x,usr.y,usr.z))
 	spawn (300)
-		del (forcefield)
+		qdel(forcefield)
 	return
 
 //FIREBALLAN
@@ -227,16 +227,16 @@
 			target.take_overall_damage(20,25)
 		if(hit)
 			explosion(A.loc, -1, -1, 2, 2)
-			del(A)
+			qdel(A)
 			return
 		if(!moving)
 			explosion(A.loc, -1, -1, 2, 2)
-			del(A)
+			qdel(A)
 			return
 		sleep(2)
 	if(A)
 		explosion(A.loc, -1, -1, 2, 2)
-		del(A)
+		qdel(A)
 	return
 
 //KNOCK
@@ -441,8 +441,8 @@
 						break
 		H.canmove = 1
 		H.client.eye = H
-		del(animation)
-		del(holder)
+		qdel(animation)
+		qdel(holder)
 /*
 /obj/effect/dummy/spell_jaunt
 	name = "water"

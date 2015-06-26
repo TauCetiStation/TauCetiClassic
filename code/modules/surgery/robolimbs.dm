@@ -164,7 +164,7 @@
 		target.update_body()
 		target.updatehealth()
 		target.UpdateDamageIcon()
-		del(tool)
+		qdel(tool)
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/affected = target.get_organ(target_zone)

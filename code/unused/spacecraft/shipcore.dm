@@ -66,7 +66,7 @@
 
 		while(src.builders.len)
 			sleep(50)
-		del(src.builders)
+		qdel(src.builders)
 		for(var/turf/T in turfs)
 			for(var/obj/O in T.contents)
 				if(istype(O, /obj/machinery/ship_component))
@@ -321,7 +321,7 @@ obj/machinery/ship_component/control_panel
 		cleanup_self()
 	proc/cleanup_self()
 		core.builders.Remove(src)
-		del(src)
+		qdel(src)
 
 
 

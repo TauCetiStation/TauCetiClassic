@@ -105,7 +105,7 @@ mob/living/parasite/meme/death()
 	if(host) src.loc = host.loc
 	src.stat = 2
 	..()
-	del src
+	qdel(src)
 
 // When a meme speaks, it speaks through its host
 mob/living/parasite/meme/say(message as text)
@@ -555,7 +555,7 @@ mob/living/parasite/meme/verb/Possession()
 		host.update_body()
 		src << "\red You lose control.."
 
-		del dummy
+		qdel(dummy)
 
 // Enter dormant mode, increases meme point gain
 mob/living/parasite/meme/verb/Dormant()
