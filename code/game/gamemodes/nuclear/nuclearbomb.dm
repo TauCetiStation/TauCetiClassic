@@ -10,7 +10,7 @@ var/bomb_set
 	var/extended = 0.0
 	var/lighthack = 0
 	var/opened = 0.0
-	var/timeleft = 60.0
+	var/timeleft = 300.0
 	var/timing = 0.0
 	var/r_code = "ADMIN"
 	var/code = ""
@@ -319,7 +319,7 @@ obj/machinery/nuclearbomb/proc/nukehack_win(mob/user as mob)
 				if (href_list["time"])
 					var/time = text2num(href_list["time"])
 					src.timeleft += time
-					src.timeleft = min(max(round(src.timeleft), 60), 600)
+					src.timeleft = min(max(round(src.timeleft), 300), 600)
 				if (href_list["timer"])
 					if (src.timing == -1.0)
 						return
