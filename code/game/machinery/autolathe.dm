@@ -193,7 +193,7 @@ var/global/list/autolathe_recipes_hidden = list( \
 				if(g_amount >= 3750)
 					var/obj/item/stack/sheet/glass/G = new /obj/item/stack/sheet/glass(src.loc)
 					G.amount = round(g_amount / 3750)
-				del(src)
+				qdel(src)
 				return 1
 			else
 				user.set_machine(src)

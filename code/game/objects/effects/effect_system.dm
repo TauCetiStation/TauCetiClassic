@@ -100,7 +100,7 @@ steam.start() -- spawns the effect
 			spawn(0)
 				if(holder)
 					src.location = get_turf(holder)
-				var/obj/effect/effect/steam/steam = new /obj/effect/effect/steam(src.location)
+				var/obj/effect/effect/steam/steam = PoolOrNew(/obj/effect/effect/steam, src.location)
 				var/direction
 				if(src.cardinals)
 					direction = pick(cardinal)
@@ -136,7 +136,7 @@ steam.start() -- spawns the effect
 		delete()
 	return
 
-/obj/effect/effect/sparks/Del()
+/obj/effect/effect/sparks/Destroy()
 	var/turf/T = src.loc
 	if (istype(T, /turf))
 		T.hotspot_expose(1000,100)
@@ -171,7 +171,7 @@ steam.start() -- spawns the effect
 			spawn(0)
 				if(holder)
 					src.location = get_turf(holder)
-				var/obj/effect/effect/sparks/sparks = new /obj/effect/effect/sparks(src.location)
+				var/obj/effect/effect/sparks/sparks = PoolOrNew(/obj/effect/effect/sparks, src.location)
 				src.total_sparks++
 				var/direction
 				if(src.cardinals)
@@ -336,7 +336,7 @@ steam.start() -- spawns the effect
 		spawn(0)
 			if(holder)
 				src.location = get_turf(holder)
-			var/obj/effect/effect/smoke/smoke = new smoke_type(src.location)
+			var/obj/effect/effect/smoke/smoke = PoolOrNew(smoke_type, src.location)
 			src.total_smoke++
 			var/direction = src.direction
 			if(!direction)
@@ -394,7 +394,7 @@ steam.start() -- spawns the effect
 				var/turf/T = get_turf(src.holder)
 				if(T != src.oldposition)
 					if(istype(T, /turf/space))
-						var/obj/effect/effect/ion_trails/I = new /obj/effect/effect/ion_trails(src.oldposition)
+						var/obj/effect/effect/ion_trails/I = PoolOrNew(/obj/effect/effect/ion_trails, src.oldposition)
 						src.oldposition = T
 						I.dir = src.holder.dir
 						flick("ion_fade", I)
@@ -440,7 +440,7 @@ steam.start() -- spawns the effect
 			src.processing = 0
 			spawn(0)
 				if(src.number < 3)
-					var/obj/effect/effect/steam/I = new /obj/effect/effect/steam(src.oldposition)
+					var/obj/effect/effect/steam/I = PoolOrNew(/obj/effect/effect/steam, src.oldposition)
 					src.number++
 					src.oldposition = get_turf(holder)
 					I.dir = src.holder.dir
@@ -632,7 +632,7 @@ steam.start() -- spawns the effect
 
 
 
-	Del()
+	Destroy()
 
 		density = 0
 		update_nearby_tiles(1)
@@ -646,14 +646,14 @@ steam.start() -- spawns the effect
 
 
 	ex_act(severity)
-		del(src)
+		qdel(src)
 
 	blob_act()
-		del(src)
+		qdel(src)
 
 	bullet_act()
 		if(metal==1 || prob(50))
-			del(src)
+			qdel(src)
 
 	attack_paw(var/mob/user)
 		attack_hand(user)
@@ -666,7 +666,7 @@ steam.start() -- spawns the effect
 				if ((O.client && !( O.blinded )))
 					O << "\red [user] smashes through the foamed metal."
 
-			del(src)
+			qdel(src)
 		else
 			user << "\blue You hit the metal foam but bounce off it."
 		return
@@ -680,8 +680,8 @@ steam.start() -- spawns the effect
 			for(var/mob/O in viewers(src))
 				if (O.client)
 					O << "\red [G.assailant] smashes [G.affecting] through the foamed metal wall."
-			del(I)
-			del(src)
+			qdel(I)
+			qdel(src)
 			return
 
 		if(prob(I.force*20 - metal*25))
@@ -689,7 +689,7 @@ steam.start() -- spawns the effect
 			for(var/mob/O in oviewers(user))
 				if ((O.client && !( O.blinded )))
 					O << "\red [user] smashes through the foamed metal."
-			del(src)
+			qdel(src)
 		else
 			user << "\blue You hit the metal foam to no effect."
 
@@ -725,7 +725,7 @@ steam.start() -- spawns the effect
 
 	start()
 		if (amount <= 2)
-			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+			var/datum/effect/effect/system/spark_spread/s = PoolOrNew(/datum/effect/effect/system/spark_spread)
 			s.set_up(2, 1, location)
 			s.start()
 

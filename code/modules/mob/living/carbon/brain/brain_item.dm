@@ -93,7 +93,7 @@
 
 		M:brain_op_stage = 3.0
 
-		del(src)
+		qdel(src)
 	else
 		..()
 	return

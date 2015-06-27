@@ -171,7 +171,7 @@
 	if(istype(loc,/obj/item/weapon/holder/diona))
 		var/obj/item/weapon/holder/diona/L = loc
 		src.loc = L.loc
-		del(L)
+		qdel(L)
 
 	for(var/datum/language/L in languages)
 		adult.add_language(L.name)
@@ -183,7 +183,7 @@
 
 	for (var/obj/item/W in src.contents)
 		src.drop_from_inventory(W)
-	del(src)
+	qdel(src)
 
 /mob/living/carbon/monkey/diona/verb/steal_blood()
 	set category = "Diona"

@@ -95,7 +95,7 @@ var/global/datum/controller/gameticker/ticker
 		src.mode = config.pick_mode(master_mode)
 	if (!src.mode.can_start())
 		world << "<B>Unable to start [mode.name].</B> Not enough players, [mode.required_players] players needed. Reverting to pre-game lobby."
-		del(mode)
+		qdel(mode)
 		current_state = GAME_STATE_PREGAME
 		job_master.ResetOccupations()
 		return 0
@@ -104,7 +104,7 @@ var/global/datum/controller/gameticker/ticker
 	job_master.DivideOccupations() //Distribute jobs
 	var/can_continue = src.mode.pre_setup()//Setup special modes
 	if(!can_continue)
-		del(mode)
+		qdel(mode)
 		current_state = GAME_STATE_PREGAME
 		world << "<B>Error setting up [master_mode].</B> Reverting to pre-game lobby."
 		job_master.ResetOccupations()
@@ -289,7 +289,7 @@ var/global/datum/controller/gameticker/ticker
 					continue
 				else
 					player.create_character()
-					del(player)
+					qdel(player)
 
 
 	proc/collect_minds()

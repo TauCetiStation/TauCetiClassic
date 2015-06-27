@@ -176,9 +176,9 @@
 					egun = 1
 					reqpower = 200
 
-	Del()
+	Destroy()
 		// deletes its own cover with it
-		del(cover)
+		qdel(cover)
 		..()
 
 
@@ -304,7 +304,7 @@ Status: []<BR>"},
 				if(prob(50)) new /obj/item/device/assembly/prox_sensor(locate(x,y,z))
 			else
 				user << "You remove the turret but did not manage to salvage anything."
-			del(src)
+			qdel(src)
 
 
 	if ((istype(W, /obj/item/weapon/card/emag)) && (!src.emagged))
@@ -336,7 +336,7 @@ Status: []<BR>"},
 			user << "You unsecure the exterior bolts on the turret."
 			icon_state = "turretCover"
 			invisibility = 0
-			del(cover) // deletes the cover, and the turret instance itself becomes its own cover.
+			qdel(cover) // deletes the cover, and the turret instance itself becomes its own cover.
 
 	else if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		// Behavior lock/unlock mangement
@@ -377,13 +377,13 @@ Status: []<BR>"},
 	if((src.lasercolor == "b") && (src.disabled == 0))
 		if(istype(Proj, /obj/item/projectile/beam/lastertag/red))
 			src.disabled = 1
-			del (Proj)
+			qdel(Proj)
 			sleep(100)
 			src.disabled = 0
 	if((src.lasercolor == "r") && (src.disabled == 0))
 		if(istype(Proj, /obj/item/projectile/beam/lastertag/blue))
 			src.disabled = 1
-			del (Proj)
+			qdel(Proj)
 			sleep(100)
 			src.disabled = 0
 	return
@@ -406,7 +406,7 @@ Status: []<BR>"},
 
 /obj/machinery/porta_turret/ex_act(severity)
 	if(severity >= 3) // turret dies if an explosion touches it!
-		del(src)
+		qdel(src)
 	else
 		src.die()
 
@@ -418,7 +418,7 @@ Status: []<BR>"},
 	invisibility=0
 	src.spark_system.start() // creates some sparks because they look cool
 	src.density=1
-	del(cover) // deletes the cover - no need on keeping it there!
+	qdel(cover) // deletes the cover - no need on keeping it there!
 
 
 
@@ -429,7 +429,7 @@ Status: []<BR>"},
 
 	if(src.cover==null && anchored) // if it has no cover and is anchored
 		if (stat & BROKEN) // if the turret is borked
-			del(cover) // delete its cover, assuming it has one. Workaround for a pesky little bug
+			qdel(cover) // delete its cover, assuming it has one. Workaround for a pesky little bug
 		else
 
 			src.cover = new /obj/machinery/porta_turret_cover(src.loc) // if the turret has no cover and is anchored, give it a cover
@@ -703,7 +703,7 @@ Status: []<BR>"},
 				playsound(src.loc, 'sound/items/Crowbar.ogg', 75, 1)
 				user << "You dismantle the turret construction."
 				new /obj/item/stack/sheet/metal( loc, 5)
-				del(src)
+				qdel(src)
 				return
 
 		if(1)
@@ -714,7 +714,7 @@ Status: []<BR>"},
 					W:amount -= 2
 					icon_state = "turret_frame2"
 					if(W:amount <= 0)
-						del(W)
+						qdel(W)
 					return
 
 			else if(istype(W, /obj/item/weapon/wrench))
@@ -756,7 +756,7 @@ Status: []<BR>"},
 				gun_charge = E.power_supply.charge // the gun's charge is stored in src.gun_charge
 				user << "\blue You add \the [W] to the turret."
 				build_step = 4
-				del(W) // delete the gun :(
+				qdel(W) // delete the gun :(
 				return
 
 			else if(istype(W, /obj/item/weapon/wrench))
@@ -769,7 +769,7 @@ Status: []<BR>"},
 			if(isprox(W))
 				build_step = 5
 				user << "\blue You add the prox sensor to the turret."
-				del(W)
+				qdel(W)
 				return
 
 			// attack_hand() removes the gun
@@ -790,7 +790,7 @@ Status: []<BR>"},
 					build_step = 7
 					W:amount -= 2
 					if(W:amount <= 0)
-						del(W)
+						qdel(W)
 					return
 
 			else if(istype(W, /obj/item/weapon/screwdriver))
@@ -822,7 +822,7 @@ Status: []<BR>"},
 //					Turret.cover.Parent_Turret=Turret
 //					Turret.cover.name = finish_name
 					Turret.New()
-					del(src)
+					qdel(src)
 
 			else if(istype(W, /obj/item/weapon/crowbar))
 				playsound(src.loc, 'sound/items/Crowbar.ogg', 75, 1)
@@ -1028,7 +1028,7 @@ Status: []<BR>"},
 			user << "You unsecure the exterior bolts on the turret."
 			Parent_Turret.icon_state = "turretCover"
 			Parent_Turret.invisibility = 0
-			del(src)
+			qdel(src)
 
 	else if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if (Parent_Turret.allowed(user))

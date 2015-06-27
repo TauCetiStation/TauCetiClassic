@@ -87,7 +87,7 @@ Infestation:
 		xeno.transfer_to(FH)
 
 		greet_xeno(xeno)
-		del(original)
+		qdel(original)
 
 /datum/game_mode/infestation/proc/greet_xeno(var/datum/mind/xeno)
 	xeno.current << "\green <B>You are a Xenomorph.</b>"

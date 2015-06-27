@@ -57,7 +57,7 @@
 	playsound(src, "shatter", 70, 1)
 	if(display_message)
 		visible_message("[src] shatters!")
-	del(src)
+	qdel(src)
 
 /obj/machinery/door/window/Destroy()
 	density = 0

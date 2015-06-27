@@ -19,14 +19,14 @@
 /obj/item/projectile/missile/Bump(atom/A)
 	spawn(0)
 		if(istype(A,/obj/effect/meteor))
-			del(A)
+			qdel(A)
 		explode()
 	return
 
 /obj/item/projectile/missile/proc/explode()
 	explosion(src.loc, 1, 1, 2, 7, 0)
 	playsound(src.loc, "explosion", 50, 1)
-	del(src)
+	qdel(src)
 
 /obj/item/projectile/missile/attack_hand(mob/user)
 	..()
@@ -241,11 +241,11 @@
 	src.stat |= BROKEN
 	src.icon_state = "broke"
 	if (cover!=null)
-		del(cover)
+		qdel(cover)
 	sleep(3)
 	flick("explosion", src)
 	spawn(13)
-		del(src)
+		qdel(src)
 
 /obj/machinery/meteor_battery/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
 	if(!(stat & BROKEN))

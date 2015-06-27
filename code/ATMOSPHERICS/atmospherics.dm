@@ -20,7 +20,7 @@ obj/machinery/atmospherics
 	var/global/list/pipeimages = list()
 
 obj/machinery/atmospherics/process()
-	if(gc_destroyed) //comments on /vg/ imply that GC'd pipes still process
+	if(gcDestroyed) //comments on /vg/ imply that GC'd pipes still process
 		return PROCESS_KILL
 	build_network()
 
@@ -55,7 +55,7 @@ obj/machinery/atmospherics/proc/disconnect(obj/machinery/atmospherics/reference)
 obj/machinery/atmospherics/update_icon()
 	return null
 
-/obj/machinery/atmospherics/Del()
+/obj/machinery/atmospherics/Destroy()
 	for(var/mob/living/L in src)
 		L.remove_ventcrawl()
 		L.forceMove(get_turf(src))

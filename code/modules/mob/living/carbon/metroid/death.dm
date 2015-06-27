@@ -13,7 +13,7 @@
 			M2.rabid = 1
 			M1.regenerate_icons()
 			M2.regenerate_icons()
-			if(src)	del(src)
+			if(src)	qdel(src)
 		else
 			for(var/mob/O in viewers(src, null))
 				O.show_message("<b>The [name]</b> seizes up and falls limp...", 1) //ded -- Urist

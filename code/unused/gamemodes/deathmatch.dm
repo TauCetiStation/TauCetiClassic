@@ -26,7 +26,7 @@
 					                              M.gloves, M.glasses, M.head, M.ears, M.shoes, M.wear_mask, M.back,
 					                              M.handcuffed, M.r_hand, M.l_hand))
 						M.u_equip(W)
-						del(W)
+						qdel(W)
 
 					var/randomname = "Killiam Shakespeare"
 					if(commando_names.len)

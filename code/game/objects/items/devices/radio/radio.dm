@@ -215,7 +215,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 						0, "*garbled automated announcement*", src,
 						message, from, "Automated Announcement", from, "synthesized voice",
 						4, 0, list(1), 1459)
-	del(A)
+	qdel(A)
 	return
 
 /obj/item/device/radio/talk_into(mob/living/M as mob, message, channel, var/verb = "says", var/datum/language/speaking = null)

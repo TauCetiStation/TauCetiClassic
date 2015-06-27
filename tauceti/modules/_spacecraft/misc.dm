@@ -104,7 +104,7 @@ proc/spacecraft_boom(atom/location)
 					if(directions.len)
 						debris.streak(directions)
 
-		del(src)
+		qdel(src)
 /*
 /obj/effect/debrisspawner
 	gibtypes = list(/obj/effect/decal/cleanable/robot_debris/up,/obj/effect/decal/cleanable/robot_debris/down,/obj/effect/decal/cleanable/robot_debris,/obj/effect/decal/cleanable/robot_debris,/obj/effect/decal/cleanable/robot_debris,/obj/effect/decal/cleanable/robot_debris/limb)

@@ -60,7 +60,7 @@
 	src.icon_state = "body_scanner_1"
 	for(var/obj/O in src)
 		//O = null
-		del(O)
+		qdel(O)
 		//Foreach goto(124)
 	src.add_fingerprint(usr)
 	return
@@ -100,7 +100,7 @@
 		//Foreach goto(154)
 	src.add_fingerprint(user)
 	//G = null
-	del(G)
+	qdel(G)
 	return
 
 /obj/machinery/bodyscanner/ex_act(severity)

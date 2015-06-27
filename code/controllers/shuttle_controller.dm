@@ -281,7 +281,7 @@ datum/shuttle_controller/emergency_shuttle/process()
 						*/
 
 					if(istype(T, /turf/simulated) || T.is_catwalk())
-						del(T)
+						qdel(T)
 
 				for(var/mob/living/carbon/bug in end_location) // If someone somehow is still in the shuttle's docking area...
 					bug.gib()
@@ -469,7 +469,7 @@ datum/shuttle_controller/emergency_shuttle/process()
 		sleep(speed)
 		step(src, direction)
 		for(var/obj/effect/starender/E in loc)
-			del(src)
+			qdel(src)
 
 
 /obj/effect/starender

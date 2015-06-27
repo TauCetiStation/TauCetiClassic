@@ -37,7 +37,7 @@
 	for (var/obj/effect/landmark/A in world)
 		if (A.name == "Teleport-Scroll")
 			new /obj/item/weapon/teleportation_scroll(A.loc)
-			del(A)
+			qdel(A)
 			continue
 	*/
 	..()

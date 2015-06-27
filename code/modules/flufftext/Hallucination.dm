@@ -271,20 +271,20 @@ proc/check_panel(mob/M)
 
 
 	proc/updateimage()
-	//	del src.currentimage
+	//	qdel(src.currentimage)
 
 
 		if(src.dir == NORTH)
-			qdel (src.currentimage)
+			qdel(src.currentimage)
 			src.currentimage = new /image(up,src)
 		else if(src.dir == SOUTH)
-			qdel (src.currentimage)
+			qdel(src.currentimage)
 			src.currentimage = new /image(down,src)
 		else if(src.dir == EAST)
-			qdel (src.currentimage)
+			qdel(src.currentimage)
 			src.currentimage = new /image(right,src)
 		else if(src.dir == WEST)
-			qdel (src.currentimage)
+			qdel(src.currentimage)
 			src.currentimage = new /image(left,src)
 		my_target << currentimage
 

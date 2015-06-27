@@ -36,9 +36,9 @@
 		spawn(1) //DEBUG
 			starting.icon_state = "[newicon]"
 
-/obj/effect/rift/Del()
+/obj/effect/rift/Destroy()
 	for(var/obj/effect/biomass/biomass in linkedBiomass)
-		del(biomass)
+		qdel(biomass)
 	..()
 
 /obj/effect/biomass/New()
@@ -46,7 +46,7 @@
 
 	..()
 	if(!IsValidBiomassLoc(loc,src))
-		del(src)
+		qdel(src)
 		return
 	spawn(1) //so that the dir and stuff can be set by the source first
 		if(curDistance >= maxDistance)

@@ -107,7 +107,7 @@ The "dust" will damage the hull of the station causin minor hull breaches.
 				if(life <= 0)
 					walk(src,0)
 					spawn(1)
-						del(src)
+						qdel(src)
 					return 0
 		return
 
@@ -118,5 +118,5 @@ The "dust" will damage the hull of the station causin minor hull breaches.
 
 
 	ex_act(severity)
-		del(src)
+		qdel(src)
 		return

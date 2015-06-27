@@ -252,7 +252,7 @@ What are the archived variables for?
 		else
 			burned_fuel = fuel_store.moles
 			oxygen -= fuel_store.moles
-			del(fuel_store)
+			qdel(fuel_store)
 
 		energy_released += FIRE_CARBON_ENERGY_RELEASED * burned_fuel
 		carbon_dioxide += burned_fuel

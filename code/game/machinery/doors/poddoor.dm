@@ -300,7 +300,7 @@
 		f1.sd_set_opacity(opacity)
 		f2.sd_set_opacity(opacity)
 
-	Del()
+	Destroy()
 		del f1
 		del f2
 		..()
@@ -319,7 +319,7 @@
 		f1.sd_set_opacity(opacity)
 		f2.sd_set_opacity(opacity)
 
-	Del()
+	Destroy()
 		del f1
 		del f2
 		..()
@@ -346,7 +346,7 @@
 		f4.sd_set_opacity(opacity)
 		f3.sd_set_opacity(opacity)
 
-	Del()
+	Destroy()
 		del f1
 		del f2
 		del f3
@@ -375,7 +375,7 @@
 		f4.sd_set_opacity(opacity)
 		f3.sd_set_opacity(opacity)
 
-	Del()
+	Destroy()
 		del f1
 		del f2
 		del f3

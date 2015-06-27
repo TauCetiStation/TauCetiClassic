@@ -63,13 +63,13 @@ var/list/mechtoys = list(
 /obj/structure/plasticflaps/ex_act(severity)
 	switch(severity)
 		if (1)
-			del(src)
+			qdel(src)
 		if (2)
 			if (prob(50))
-				del(src)
+				qdel(src)
 		if (3)
 			if (prob(5))
-				del(src)
+				qdel(src)
 
 /obj/structure/plasticflaps/mining //A specific type for mining that doesn't allow airflow because of them damn crates
 	name = "\improper Airtight plastic flaps"
@@ -81,7 +81,7 @@ var/list/mechtoys = list(
 			T.blocks_air = 1
 		..()
 
-	Del() //lazy hack to set the turf to allow air to pass if it's a simulated floor
+	Destroy() //lazy hack to set the turf to allow air to pass if it's a simulated floor
 		var/turf/T = get_turf(loc)
 		if(T)
 			if(istype(T, /turf/simulated/floor))
@@ -268,7 +268,7 @@ var/list/mechtoys = list(
 								if(M.name == R)
 									T.resources[R] += M.amount
 
-			del(MA)
+			qdel(MA)
 
 		if(plasma_count)
 			points += Floor(plasma_count / plasma_per_point)
@@ -521,7 +521,7 @@ var/list/mechtoys = list(
 				A.state = 3
 				A.icon_state = "3"
 				A.anchored = 1
-				del(src)
+				qdel(src)
 			else
 				user << "\blue You disconnect the monitor."
 				var/obj/structure/computerframe/A = new /obj/structure/computerframe( loc )
@@ -534,7 +534,7 @@ var/list/mechtoys = list(
 				A.state = 4
 				A.icon_state = "4"
 				A.anchored = 1
-				del(src)
+				qdel(src)
 	else
 		attack_hand(user)
 	return

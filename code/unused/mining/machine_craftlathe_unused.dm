@@ -161,9 +161,9 @@ proc/check_craftlathe_recipe(var/list/param_recipe)
 		var/obj/item/stack/S = W
 		S.amount--
 		if (S.amount <= 0)
-			del(S)
+			qdel(S)
 	else
-		del(W)
+		qdel(W)
 
 /obj/machinery/autolathe2/proc/build_recipes()
 	//Parameters: ID, Name, Amount, Amount_added_per_attackby, Recipe, Object type

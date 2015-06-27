@@ -531,7 +531,7 @@ datum/mind
 					for(var/obj/item/weapon/implant/loyalty/I in H.contents)
 						for(var/datum/organ/external/organs in H.organs)
 							if(I in organs.implants)
-								I.Del()
+								I.Destroy()
 								break
 					H << "\blue <Font size =3><B>Your loyalty implant has been deactivated.</B></FONT>"
 				if("add")
@@ -655,7 +655,7 @@ datum/mind
 				if("reequip")
 					var/list/L = current.get_contents()
 					var/obj/item/device/flash/flash = locate() in L
-					del(flash)
+					qdel(flash)
 					take_uplink()
 					var/fail = 0
 					fail |= !ticker.mode.equip_traitor(current, 1)
@@ -753,7 +753,7 @@ datum/mind
 						current.remove_changeling_powers()
 					//	current.verbs -= /datum/changeling/proc/EvolutionMenu
 						if(changeling)
-							del(changeling)
+							qdel(changeling)
 						current << "<FONT color='red' size = 3><B>You grow weak and lose your powers! You are no longer a changeling and are stuck in your current form!</B></FONT>"
 						log_admin("[key_name_admin(usr)] has de-changeling'ed [current].")
 				if("changeling")
@@ -968,7 +968,7 @@ datum/mind
 						src = null
 						m2h.inject(M)
 						src = mobfinder.loc:mind
-						del(mobfinder)
+						qdel(mobfinder)
 						current.radiation -= 50
 
 		else if (href_list["silicon"])
@@ -1076,10 +1076,10 @@ datum/mind
 		var/list/L = current.get_contents()
 		for (var/t in L)
 			if (istype(t, /obj/item/device/pda))
-				if (t:uplink) del(t:uplink)
+				if (t:uplink) qdel(t:uplink)
 				t:uplink = null
 			else if (istype(t, /obj/item/device/radio))
-				if (t:traitorradio) del(t:traitorradio)
+				if (t:traitorradio) qdel(t:traitorradio)
 				t:traitorradio = null
 				t:traitor_frequency = 0.0
 			else if (istype(t, /obj/item/weapon/SWF_uplink) || istype(t, /obj/item/weapon/syndicate_uplink))
@@ -1088,7 +1088,7 @@ datum/mind
 					R.loc = current.loc
 					R.traitorradio = null
 					R.traitor_frequency = 0.0
-				del(t)
+				qdel(t)
 
 		// remove wizards spells
 		//If there are more special powers that need removal, they can be procced into here./N
