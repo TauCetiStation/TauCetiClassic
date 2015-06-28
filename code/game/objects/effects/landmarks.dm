@@ -101,7 +101,7 @@
 	var/list/options = typesof(/obj/effect/landmark/costume)
 	var/PICK= options[rand(1,options.len)]
 	new PICK(src.loc)
-	del(src)
+	qdel(src)
 
 //SUBCLASSES.  Spawn a bunch of items and disappear likewise
 /obj/effect/landmark/costume/chicken/New()

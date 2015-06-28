@@ -206,9 +206,9 @@
 	if(time_coeff!=diff)
 		time_coeff = diff
 
-/obj/machinery/mecha_part_fabricator/Del()
+/obj/machinery/mecha_part_fabricator/Destroy()
 	for(var/atom/A in src)
-		del A
+		qdel(A)
 	..()
 	return
 
@@ -291,7 +291,7 @@
 	if(!istype(apart)) return 0
 	for(var/obj/O in part_set)
 		if(O.type == apart.type)
-			del apart
+			qdel(apart)
 			return 0
 	part_set[++part_set.len] = apart
 	return 1
@@ -762,7 +762,7 @@
 		res.Move(src.loc)
 		result = res.amount
 	else
-		del res
+		qdel(res)
 	return result
 
 
@@ -811,7 +811,7 @@
 			/*if(src.resources["bananium"] >= 2000)
 				var/obj/item/stack/sheet/mineral/clown/G = new /obj/item/stack/sheet/mineral/clown(src.loc)
 				G.amount = round(src.resources["bananium"] / G.perunit) Sorry, but no bananium allowed*/
-			del(src)
+			qdel(src)
 			return 1
 		else
 			user << "\red You can't load the [src.name] while it's opened."

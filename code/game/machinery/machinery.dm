@@ -49,7 +49,7 @@ Class Variables:
 Class Procs:
    New()                     'game/machinery/machine.dm'
 
-   Del()                     'game/machinery/machine.dm'
+   Destroy()                     'game/machinery/machine.dm'
 
    auto_use_power()            'game/machinery/machine.dm'
       This proc determines how power mode power is deducted by the machine.
@@ -126,7 +126,7 @@ Class Procs:
 	if(use_power && stat == 0)
 		use_power(7500/severity)
 
-		var/obj/effect/overlay/pulse2 = new/obj/effect/overlay ( src.loc )
+		var/obj/effect/overlay/pulse2 = PoolOrNew(/obj/effect/overlay, src.loc)
 		pulse2.icon = 'icons/effects/effects.dmi'
 		pulse2.icon_state = "empdisable"
 		pulse2.name = "emp sparks"

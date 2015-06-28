@@ -248,14 +248,14 @@ Made by Xhuis
 				if(shadowling_mind.current.client)
 					for(var/image/I in shadowling_mind.current.client.images)
 						if(I.icon_state == "thrall" || I.icon_state == "shadowling")
-							del(I)
+							qdel(I)
 
 		for(var/datum/mind/thrall_mind in thralls)
 			if(thrall_mind.current)
 				if(thrall_mind.current.client)
 					for(var/image/I in thrall_mind.current.client.images)
 						if(I.icon_state == "thrall" || I.icon_state == "shadowling")
-							del(I)
+							qdel(I)
 
 		for(var/datum/mind/shadowling in shadows)
 			if(shadowling.current)
@@ -314,20 +314,20 @@ Made by Xhuis
 				if(shadowling_mind.current.client)
 					for(var/image/I in shadowling_mind.current.client.images)
 						if((I.icon_state == "thrall" || I.icon_state == "shadowling") && I.loc == thrall.current)
-							del(I)
+							qdel(I)
 
 		for(var/datum/mind/thrall_1 in thralls)
 			if(thrall_1.current)
 				if(thrall_1.current.client)
 					for(var/image/I in thrall_1.current.client.images)
 						if((I.icon_state == "thrall" || I.icon_state == "shadowling") && I.loc == thrall.current)
-							del(I)
+							qdel(I)
 
 		if(thrall.current)
 			if(thrall.current.client)
 				for(var/image/I in thrall.current.client.images)
 					if(I.icon_state == "thrall" || I.icon_state == "shadowling")
-						del(I)
+						qdel(I)
 
 /*
 /datum/species/shadow

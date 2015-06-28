@@ -38,7 +38,7 @@
 	processing_objects.Add(src)
 	last_regen = world.time
 
-/obj/item/weapon/spikethrower/Del()
+/obj/item/weapon/spikethrower/Destroy()
 	processing_objects.Remove(src)
 	..()
 

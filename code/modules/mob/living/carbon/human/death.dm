@@ -26,8 +26,8 @@
 		hgibs(loc, viruses, dna)
 
 	spawn(15)
-		if(animation)	del(animation)
-		if(src)			del(src)
+		if(animation)	qdel(animation)
+		if(src)			qdel(src)
 
 /mob/living/carbon/human/dust()
 	death(1)
@@ -46,8 +46,8 @@
 	new /obj/effect/decal/remains/human(loc)
 
 	spawn(15)
-		if(animation)	del(animation)
-		if(src)			del(src)
+		if(animation)	qdel(animation)
+		if(src)			qdel(src)
 
 
 /mob/living/carbon/human/death(gibbed)

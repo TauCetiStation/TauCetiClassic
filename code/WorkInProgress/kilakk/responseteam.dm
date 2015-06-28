@@ -115,7 +115,7 @@ var/global/admin_emergency_team = 0 // Used for admin-spawned response teams
 				members -= new_member.key
 
 			if(!new_member.key) // It works ok? sort of
-				del(new_member)
+				qdel(new_member)
 				break
 
 			spawn(0)

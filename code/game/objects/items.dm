@@ -141,7 +141,7 @@
 		else if(istype(src, /obj/item/weapon/gun/))
 			if(prob(20)) user.say(pick(";RAAAAAAAARGH! WEAPON!", ";HNNNNNNNNNGGGGGGH! I HATE WEAPONS!!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGUUUUUNNNNHH!", ";AAAAAAARRRGH!" ))
 			user.visible_message("\blue [user] crushes \a [src] with hands.", "\blue You crush the [src].")
-			del(src)
+			qdel(src)
 			//user << "\red \The [src] is far too small for you to pick up."
 			return
 		else if(istype(src, /obj/item/clothing/))

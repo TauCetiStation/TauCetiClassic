@@ -178,13 +178,13 @@
 			spawn(50)
 				if(src && on)
 					ismist = 1
-					mymist = new /obj/effect/mist(loc)
+					mymist = PoolOrNew(/obj/effect/mist,loc)
 		else
 			ismist = 1
-			mymist = new /obj/effect/mist(loc)
+			mymist = PoolOrNew(/obj/effect/mist,loc)
 	else if(ismist)
 		ismist = 1
-		mymist = new /obj/effect/mist(loc)
+		mymist = PoolOrNew(/obj/effect/mist,loc)
 		spawn(250)
 			if(src && !on)
 				qdel(mymist)

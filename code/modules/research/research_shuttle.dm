@@ -44,7 +44,7 @@ proc/move_research_shuttle()
 				*/
 
 			if(istype(T, /turf/simulated))
-				del(T)
+				qdel(T)
 
 		for(var/mob/living/carbon/bug in toArea) // If someone somehow is still in the shuttle's docking area...
 			bug.gib()

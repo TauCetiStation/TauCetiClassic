@@ -30,7 +30,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 	decon_mod = T
 
 /obj/machinery/r_n_d/destructive_analyzer/meteorhit()
-	del(src)
+	qdel(src)
 	return
 
 /obj/machinery/r_n_d/destructive_analyzer/proc/ConvertReqString2List(var/list/source_list)
@@ -64,7 +64,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 			M.icon_state = "box_1"
 			for(var/obj/I in component_parts)
 				I.loc = src.loc
-			del(src)
+			qdel(src)
 			return 1
 		else
 			user << "\red You can't load the [src.name] while it's opened."

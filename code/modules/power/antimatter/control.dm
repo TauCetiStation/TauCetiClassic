@@ -35,9 +35,9 @@
 	linked_cores = list()
 
 
-/obj/machinery/power/am_control_unit/Del()//Perhaps damage and run stability checks rather than just del on the others
+/obj/machinery/power/am_control_unit/Destroy()//Perhaps damage and run stability checks rather than just del on the others
 	for(var/obj/machinery/am_shielding/AMS in linked_shielding)
-		del(AMS)
+		qdel(AMS)
 	..()
 
 
@@ -108,7 +108,7 @@
 			AMS.blob_act()
 		spawn(0)
 			//Likely explode
-			del(src)
+			qdel(src)
 		return
 	check_stability()
 	return
@@ -213,7 +213,7 @@
 
 /obj/machinery/power/am_control_unit/proc/check_stability()//TODO: make it break when low also might want to add a way to fix it like a part or such that can be replaced
 	if(stability <= 0)
-		del(src)
+		qdel(src)
 	return
 
 

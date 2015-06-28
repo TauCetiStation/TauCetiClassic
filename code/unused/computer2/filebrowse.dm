@@ -73,12 +73,12 @@
 						F = new /datum/computer/folder
 						if(!current_folder.add_file(F))
 							//world << "Couldn't add folder :("
-							del(F)
+							qdel(F)
 					if("file")
 						F = new /datum/computer/file
 						if(!current_folder.add_file(F))
 							//world << "Couldn't add file :("
-							del(F)
+							qdel(F)
 
 		if(href_list["file"] && href_list["function"])
 			var/datum/computer/F = locate(href_list["file"])

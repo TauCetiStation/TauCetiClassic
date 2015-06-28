@@ -25,7 +25,7 @@
 		if (machine)
 			machine.CONSOLE = src
 		else
-			del(src)
+			qdel(src)
 
 /obj/machinery/mineral/processing_unit_console/process()
 	updateDialog()

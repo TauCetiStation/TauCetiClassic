@@ -40,23 +40,23 @@ ________________________________________________________________________________
 	cell = new/obj/item/weapon/cell/high//The suit should *always* have a battery because so many things rely on it.
 	cell.charge = 9000//Starting charge should not be higher than maximum charge. It leads to problems with recharging.
 
-/obj/item/clothing/suit/space/space_ninja/Del()
+/obj/item/clothing/suit/space/space_ninja/Destroy()
 	if(affecting)//To make sure the window is closed.
 		affecting << browse(null, "window=hack spideros")
 	if(AI)//If there are AIs present when the ninja kicks the bucket.
 		killai()
 	if(hologram)//If there is a hologram
-		del(hologram.i_attached)//Delete it and the attached image.
-		del(hologram)
+		qdel(hologram.i_attached)//Delete it and the attached image.
+		qdel(hologram)
 	..()
 	return
 
 //Simply deletes all the attachments and self, killing all related procs.
 /obj/item/clothing/suit/space/space_ninja/proc/terminate()
-	del(n_hood)
-	del(n_gloves)
-	del(n_shoes)
-	del(src)
+	qdel(n_hood)
+	qdel(n_gloves)
+	qdel(n_shoes)
+	qdel(src)
 
 /obj/item/clothing/suit/space/space_ninja/proc/killai(mob/living/silicon/ai/A = AI)
 	if(A.client)
@@ -64,7 +64,7 @@ ________________________________________________________________________________
 		A << browse(null, "window=hack spideros")
 	AI = null
 	A.death(1)//Kill, deleting mob.
-	del(A)
+	qdel(A)
 	return
 
 //=======//SUIT VERBS//=======//
@@ -776,8 +776,8 @@ ________________________________________________________________________________
 
 	spawn while(hologram&&s_initialized&&AI)//Suit on and there is an AI present.
 		if(!s_initialized||get_dist(affecting,hologram.loc)>3)//Once suit is de-initialized or hologram reaches out of bounds.
-			del(hologram.i_attached)
-			del(hologram)
+			qdel(hologram.i_attached)
+			qdel(hologram)
 
 			verbs -= /obj/item/clothing/suit/space/space_ninja/proc/ai_holo_clear
 			return
@@ -797,8 +797,8 @@ ________________________________________________________________________________
 	set category = "AI Ninja Equip"
 	set src = usr.loc
 
-	del(hologram.i_attached)
-	del(hologram)
+	qdel(hologram.i_attached)
+	qdel(hologram)
 
 	verbs -= /obj/item/clothing/suit/space/space_ninja/proc/ai_holo_clear
 	return
@@ -1367,7 +1367,7 @@ It is possible to destroy the net by the occupant or someone else.
 						O.show_message(text("[] was recovered from the energy net!", M.name), 1, text("You hear a grunt."), 2)
 					//if(!isnull(master))//As long as they still exist.
 					//	master << "\red <b>ERROR</b>: \black unable to initiate transport protocol. Procedure terminated."
-				del(src)
+				qdel(src)
 			return
 
 	process(var/mob/living/carbon/M as mob)
@@ -1387,13 +1387,13 @@ It is possible to destroy the net by the occupant or someone else.
 		if(isnull(M)||M.loc!=loc)//If mob is gone or not at the location.
 			//if(!isnull(master))//As long as they still exist.
 			//	master << "\red <b>ERROR</b>: \black unable to locate \the [mob_name]. Procedure terminated."
-			del(src)//Get rid of the net.
+			qdel(src)//Get rid of the net.
 			return
 
 		if(!isnull(src))
 			M.captured = 0
 			M.anchored = initial(M.anchored)
-			del(src)
+			qdel(src)
 		return
 
 		/*if(!isnull(src))//As long as both net and person exist.
@@ -1421,7 +1421,7 @@ It is possible to destroy the net by the occupant or someone else.
 					playsound(M.loc, 'sound/effects/phasein.ogg', 25, 1)
 					playsound(M.loc, 'sound/effects/sparks2.ogg', 50, 1)
 					anim(M.loc,M,'icons/mob/mob.dmi',,"phasein",,M.dir)
-					del(src)//Wait for everything to finish, delete the net. Else it will stop everything once net is deleted, including the spawn(0).
+					qdel(src)//Wait for everything to finish, delete the net. Else it will stop everything once net is deleted, including the spawn(0).
 			else
 				M.loc = null
 

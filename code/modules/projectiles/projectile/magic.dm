@@ -28,11 +28,11 @@
 
 		if(istype(M, /mob/living/silicon/robot))
 			var/mob/living/silicon/robot/Robot = M
-			if(Robot.mmi)	del(Robot.mmi)
+			if(Robot.mmi)	qdel(Robot.mmi)
 		else
 			for(var/obj/item/W in M)
 				if(istype(W, /obj/item/weapon/implant))	//TODO: Carn. give implants a dropped() or something
-					del(W)
+					qdel(W)
 					continue
 				W.layer = initial(W.layer)
 				W.loc = M.loc
@@ -117,7 +117,7 @@
 
 		new_mob << "<B>Your form morphs into that of a [randomize].</B>"
 
-		del(M)
+		qdel(M)
 		return new_mob
 
 /obj/item/projectile/magic/animate

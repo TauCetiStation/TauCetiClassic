@@ -91,7 +91,7 @@ Doing this because FindTurfs() isn't even used
 	//set hidden = 1
 	if(Debug)
 		for(var/obj/effect/mark/O in world)
-			del(O)
+			qdel(O)
 	else
 		alert("Debugging off")
 		return
@@ -223,7 +223,7 @@ Doing this because FindTurfs() isn't even used
 					marked -= 8
 
 			if(!marked)
-				del(O)
+				qdel(O)
 	else
 		alert("Debugging off")
 		return
@@ -255,7 +255,7 @@ Doing this because FindTurfs() isn't even used
 				O.overlays += numbericon("[round(S.sunfrac*100,0.1)]  " ,  -12)
 
 			else
-				del(O)
+				qdel(O)
 	else
 		alert("Debugging off")
 		return
@@ -300,7 +300,7 @@ Doing this because FindTurfs() isn't even used
 	set category = "Debug"
 	set src in view()
 	if(Debug)
-		del(src)
+		qdel(src)
 	else
 		alert("Debugging off")
 		return

@@ -82,7 +82,7 @@
 					D.reagents.reaction(A_turf)
 				sleep(2)
 			sleep(3)
-		del(D)
+		qdel(D)
 
 	return
 
@@ -220,7 +220,7 @@
 				for(var/atom/t in get_turf(D))
 					D.reagents.reaction(t)
 				sleep(2)
-			del(D)
+			qdel(D)
 
 	return
 

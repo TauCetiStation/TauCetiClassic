@@ -455,7 +455,7 @@
 	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks))
 		turn_to(user)
 		custom_emote(1, "eats away [O]")
-		del(O)
+		qdel(O)
 		if(user == owner)
 			if(loyalty < 100)
 				loyalty += 10

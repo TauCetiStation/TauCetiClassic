@@ -143,7 +143,7 @@
 /obj/item/weapon/ore/attack_animal(var/mob/living/L)
 	if(istype(L, /mob/living/simple_animal/hostile/asteroid/goldgrub))
 		L.visible_message("<span class='notice'>The [src.name] was swallowed whole!</span>")
-		del(src)
+		qdel(src)
 	..()
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/proc/Burrow()//Begin the chase to kill the goldgrub in time
@@ -152,7 +152,7 @@
 		spawn(100)
 			if(alerted)
 				visible_message("<span class='danger'>The [src.name] buries into the ground, vanishing from sight!</span>")
-				del(src)
+				qdel(src)
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/bullet_act(var/obj/item/projectile/P)
 	visible_message("<span class='danger'>The [P.name] was repelled by [src.name]'s girth!</span>")
@@ -228,10 +228,10 @@
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/New()
 	..()
 	spawn(100)
-		del(src)
+		qdel(src)
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/death()
-	del(src)
+	qdel(src)
 
 /mob/living/simple_animal/hostile/asteroid/goliath
 	name = "goliath"
@@ -300,7 +300,7 @@
 	for(var/mob/living/M in src.loc)
 		M.Weaken(5)
 		visible_message("<span class='warning'>The [src.name] knocks [M.name] down!</span>")
-	del(src)
+	qdel(src)
 
 /obj/effect/goliath_tentacle/Crossed(AM as mob|obj)
 	if(isliving(AM))

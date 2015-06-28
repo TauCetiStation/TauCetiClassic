@@ -9,7 +9,7 @@
 	..()
 	processing_objects.Add(src)
 
-/obj/item/weapon/holder/Del()
+/obj/item/weapon/holder/Destroy()
 	processing_objects.Remove(src)
 	..()
 
@@ -24,7 +24,7 @@
 			mob_container.forceMove(get_turf(src))
 			M.reset_view()
 
-		del(src)
+		qdel(src)
 
 /obj/item/weapon/holder/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	for(var/mob/M in src.contents)

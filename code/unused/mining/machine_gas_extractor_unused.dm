@@ -68,7 +68,7 @@
 						C = locate(/obj/machinery/portable_atmospherics/canister,output.loc)
 						C.air_contents.toxins += 100
 						newtoxins += 100
-						del(O)
+						qdel(O)
 					sleep(5);
 				processing = 0;
 				message = "Canister filled with [newtoxins] units of toxins"

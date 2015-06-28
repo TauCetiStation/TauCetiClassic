@@ -174,7 +174,7 @@
 						power:fuel += 25
 						W:amount--
 						if (W:amount <= 0)
-							del(W)
+							qdel(W)
 						return
 					else
 						user << "\red The generator already has plenty of plasma."
@@ -184,7 +184,7 @@
 					if(fuel < 50)
 						user << "\blue You feed some plasma into the armor's generator."
 						power:fuel += 15
-						del(W)
+						qdel(W)
 						return
 					else
 						user << "\red The generator already has plenty of plasma."

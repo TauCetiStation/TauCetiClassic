@@ -24,7 +24,7 @@
 
 /obj/effect/portal/New()
 	spawn(300)
-		del(src)
+		qdel(src)
 		return
 	return
 
@@ -36,7 +36,7 @@
 	if (icon_state == "portal1")
 		return
 	if (!( target ))
-		del(src)
+		qdel(src)
 		return
 	if (istype(M, /atom/movable))
 		if(prob(failchance)) //oh dear a problem, put em in deep space

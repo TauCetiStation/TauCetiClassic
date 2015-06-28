@@ -207,17 +207,17 @@ obj/machinery/computer/cryopod/Topic(href, href_list)
 						break
 
 				if(!preserve)
-					del(W)
+					qdel(W)
 				else
 					if(storage)
 						frozen_items += W
 					else
-						del(W)
+						qdel(W)
 
 			//Update any existing objectives involving this mob.
 			for(var/datum/objective/O in all_objectives)
 				if(istype(O,/datum/objective/mutiny) && O.target == occupant.mind) //We don't want revs to get objectives that aren't for heads of staff. Letting them win or lose based on cryo is silly so we remove the objective.
-					del(O) //TODO: Update rev objectives on login by head (may happen already?) ~ Z
+					qdel(O) //TODO: Update rev objectives on login by head (may happen already?) ~ Z
 				else if(O.target && istype(O.target,/datum/mind))
 					if(O.target == occupant.mind)
 						if(O.owner && O.owner.current)
@@ -229,7 +229,7 @@ obj/machinery/computer/cryopod/Topic(href, href_list)
 							if(!(O.target))
 								all_objectives -= O
 								O.owner.objectives -= O
-								del(O)
+								qdel(O)
 
 			//Handle job slot/tater cleanup.
 			var/job = occupant.mind.assigned_role
@@ -237,7 +237,7 @@ obj/machinery/computer/cryopod/Topic(href, href_list)
 			job_master.FreeRole(job)
 
 			/*if(occupant.mind.objectives.len)
-				del(occupant.mind.objectives)
+				qdel(occupant.mind.objectives)
 				occupant.mind.special_role = null
 			else
 				if(ticker.mode.name == "AutoTraitor")
@@ -253,13 +253,13 @@ obj/machinery/computer/cryopod/Topic(href, href_list)
 				PDA_Manifest.Cut()
 			for(var/datum/data/record/R in data_core.medical)
 				if ((R.fields["name"] == occupant.real_name))
-					del(R)
+					qdel(R)
 			for(var/datum/data/record/T in data_core.security)
 				if ((T.fields["name"] == occupant.real_name))
-					del(T)
+					qdel(T)
 			for(var/datum/data/record/G in data_core.general)
 				if ((G.fields["name"] == occupant.real_name))
-					del(G)
+					qdel(G)
 
 			if(orient_right)
 				icon_state = "cryosleeper_right"
@@ -279,7 +279,7 @@ obj/machinery/computer/cryopod/Topic(href, href_list)
 			visible_message("\blue The crypod hums and hisses as it moves [occupant.real_name] into storage.", 3)
 
 			// Delete the mob.
-			del(occupant)
+			qdel(occupant)
 			occupant = null
 
 
