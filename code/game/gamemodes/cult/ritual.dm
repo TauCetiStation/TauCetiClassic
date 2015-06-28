@@ -80,7 +80,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 				sleep(30)
 				explosion(src.loc, 0, 2, 5, 5)
 				if(src)
-					del(src)
+					qdel(src)
 			*/
 		if(!desc)
 			usr << "A spell circle drawn in blood. It reads: <i>[word1] [word2] [word3]</i>."

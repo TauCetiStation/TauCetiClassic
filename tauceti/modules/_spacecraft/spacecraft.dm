@@ -111,7 +111,7 @@
 
 		return
 
-	Del()
+	Destroy()
 		src.go_out()
 		..()
 		return
@@ -727,7 +727,7 @@
 						E.forceMove(T)
 						E.destroy()
 		spawn(0)
-			del(src)
+			qdel(src)
 	return
 
 /obj/spacecraft/attack_alien(mob/user as mob)
@@ -970,7 +970,7 @@
 		src.reset_icon()
 
 		user.drop_item()
-		del(P)
+		qdel(P)
 
 	else
 		call((proc_res["dynattackby"]||src), "dynattackby")(W,user)
@@ -1547,7 +1547,7 @@
 					if(t_air)
 						t_air.merge(removed)
 					else //just delete the cabin gas, we're in space or some shit
-						del(removed)
+						qdel(removed)
 			SC.use_power(0.1)
 		else
 			return stop()
@@ -1592,7 +1592,7 @@
 				if(SC.loc && hascall(SC.loc,"assume_air"))
 					SC.loc.assume_air(leaked_gas)
 				else
-					del(leaked_gas)
+					qdel(leaked_gas)
 		if(SC.hasInternalDamage(POD_INT_SHORT_CIRCUIT))
 			if(SC.get_charge())
 				SC.spark_system.start()

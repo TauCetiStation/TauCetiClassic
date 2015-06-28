@@ -11,7 +11,7 @@
 
 	var/max_flow_rate = 200
 	var/set_flow_rate = 200
-/obj/machinery/atmospherics/omni/filter/Del()
+/obj/machinery/atmospherics/omni/filter/Destroy()
 	input = null
 	output = null
 	filters.Cut()

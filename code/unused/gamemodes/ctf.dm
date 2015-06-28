@@ -30,10 +30,10 @@
 			spawn()
 				if(M.client)
 					M << "You are in the Red Team!"
-					del(M.wear_suit)
+					qdel(M.wear_suit)
 					M.w_uniform = new /obj/item/clothing/under/color/red(M)
 					M.w_uniform.layer = 20
-					del(M.shoes)
+					qdel(M.shoes)
 					M.wear_suit = new /obj/item/clothing/suit/armor/tdome/red(M)
 					M.wear_suit.layer = 20
 					M.shoes = new /obj/item/clothing/shoes/black(M)
@@ -53,7 +53,7 @@
 					M.back.layer = 20
 					M.internal = O
 
-					del(M.wear_id)
+					qdel(M.wear_id)
 					var/obj/item/weapon/card/id/W = new(M)
 					W.name = "[M.real_name]'s ID card (Red Team)"
 					W.access = access_red
@@ -70,10 +70,10 @@
 			spawn()
 				if(M.client)
 					M << "You are in the Green Team!"
-					del(M.wear_suit)
+					qdel(M.wear_suit)
 					M.w_uniform = new /obj/item/clothing/under/color/green(M)
 					M.w_uniform.layer = 20
-					del(M.shoes)
+					qdel(M.shoes)
 					M.wear_suit = new /obj/item/clothing/suit/armor/tdome/green(M)
 					M.wear_suit.layer = 20
 					M.shoes = new /obj/item/clothing/shoes/black(M)
@@ -93,7 +93,7 @@
 					M.back.layer = 20
 					M.internal = O
 
-					del(M.wear_id)
+					qdel(M.wear_id)
 					var/obj/item/weapon/card/id/W = new(M)
 					W.name = "[M.real_name]'s ID card (Green Team)"
 					W.access = access_green

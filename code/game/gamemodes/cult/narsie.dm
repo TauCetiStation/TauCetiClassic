@@ -193,23 +193,10 @@
 
 
 /obj/machinery/singularity/narsie/Bump(atom/A)//you dare stand before a god?!
-	godsmack(A)
 	return
 
 /obj/machinery/singularity/narsie/Bumped(atom/A)
-	godsmack(A)
 	return
-
-/obj/machinery/singularity/narsie/proc/godsmack(var/atom/A)
-	if(istype(A,/obj/))
-		var/obj/O = A
-		O.ex_act(1.0)
-		if(O) del(O)
-
-	else if(isturf(A))
-		var/turf/T = A
-		T.ChangeTurf(/turf/simulated/floor/engine/cult)
-
 
 /obj/machinery/singularity/narsie/mezzer()
 	for(var/mob/living/carbon/M in oviewers(8, src))
@@ -251,6 +238,20 @@
 				T.ChangeTurf(/turf/simulated/wall/cult)
 	return
 
+/obj/machinery/singularity/narsie/move()
+	if(!move_self)
+		return 0
+
+	var/movement_dir = pick(alldirs - last_failed_movement)
+
+	if(target)
+		movement_dir = get_dir(src,target) //moves to a singulo beacon, if there is one
+
+	spawn(0)
+		loc = get_step(src, movement_dir)
+	spawn(1)
+		loc = get_step(src, movement_dir)
+	return 1
 
 /obj/machinery/singularity/narsie/ex_act() //No throwing bombs at it either. --NEO
 	return
@@ -263,6 +264,7 @@
 		var/turf/pos = get_turf(food)
 		if(pos.z != src.z)
 			continue
+		if(istype(food, /mob/living/carbon/brain)) continue
 
 		if(iscultist(food))
 			cultists += food

@@ -46,7 +46,7 @@ atom/proc/add_fibers(mob/living/carbon/human/M)
 		if(prob(20*item_multiplier) && !(fibertext in suit_fibers))
 			//world.log << "Added fibertext: [fibertext]"
 			suit_fibers += "Material from a pair of [M.gloves.name]."
-	if(!suit_fibers.len) del suit_fibers
+	if(!suit_fibers.len) qdel(suit_fibers)
 
 var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(print) proc, and means about 80% of
 								//the print must be there for it to be complete.  (Prints are 32 digits)
@@ -606,7 +606,7 @@ obj/machinery/computer/forensic_scanning
 				usr << "The machinery finds it can complete a match."
 			else
 				usr << "No match found."
-			del(card)
+			qdel(card)
 		else
 			usr << "\red ERROR: No prints/too many cards."
 			if(card.loc == src)

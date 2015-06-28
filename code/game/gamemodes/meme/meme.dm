@@ -149,7 +149,7 @@
 
 		forge_meme_objectives(meme)
 
-		del original
+		qdel(original)
 
 	log_admin("Created [memes.len] memes.")
 

@@ -45,28 +45,28 @@
 		if(O)
 			if (istype(O,/obj/item/stack/sheet/mineral/gold))
 				amt_gold += 100 * O.amount
-				del(O)
+				qdel(O)
 			if (istype(O,/obj/item/stack/sheet/mineral/silver))
 				amt_silver += 100 * O.amount
-				del(O)
+				qdel(O)
 			if (istype(O,/obj/item/stack/sheet/mineral/diamond))
 				amt_diamond += 100 * O.amount
-				del(O)
+				qdel(O)
 			if (istype(O,/obj/item/stack/sheet/mineral/phoron))
 				amt_phoron += 100 * O.amount
-				del(O)
+				qdel(O)
 			if (istype(O,/obj/item/stack/sheet/mineral/uranium))
 				amt_uranium += 100 * O.amount
-				del(O)
+				qdel(O)
 			if (istype(O,/obj/item/stack/sheet/metal))
 				amt_iron += 100 * O.amount
-				del(O)
+				qdel(O)
 			if (istype(O,/obj/item/stack/sheet/mineral/clown))
 				amt_clown += 100 * O.amount
-				del(O)
+				qdel(O)
 			if (istype(O,/obj/item/stack/sheet/mineral/adamantine))
 				amt_adamantine += 100 * O.amount
-				del(O) //Commented out for now. -Durandan
+				qdel(O) //Commented out for now. -Durandan
 
 
 /obj/machinery/mineral/mint/attack_hand(user as mob) //TODO: Adamantine coins! -Durandan

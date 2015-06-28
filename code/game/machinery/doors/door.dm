@@ -168,7 +168,7 @@
 					"\red <B>You feel some weird vibration!</B>")
 					playsound(user.loc, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), 50, 1)
 					if(istype(A,/obj/machinery/door/airlock/multi_tile/)) //Some kind runtime with multi_tile airlock... So delete for now... #Z2
-						del(A)
+						qdel(A)
 					else
 						var/obj/structure/door_assembly/da = new A.assembly_type(A.loc)
 						da.anchored = 0
@@ -200,7 +200,7 @@
 						ae.loc = da
 						da.electronics = ae
 
-						del(A)
+						qdel(A)
 					return
 			else if(A.locked && user.a_intent != "hurt")
 				user << "\red The door is bolted and you need more aggressive force to get thru!"

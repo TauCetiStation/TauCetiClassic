@@ -226,7 +226,7 @@
 			if(5,6)
 				dat += "Calculating navigation path"
 			if(7)
-				dat += "Unable to reach destination"
+				dat += "Unable to locate destination"
 
 
 		dat += "<BR>Current Load: [load ? load.name : "<i>none</i>"]<BR>"
@@ -649,7 +649,7 @@
 						blockcount++
 						mode = 4
 						if(blockcount == 3)
-							src.visible_message("[src] makes an annoyed buzzing sound.", "You hear an electronic buzzing sound.")
+							src.visible_message("[src] makes an annoyed buzzing sound", "You hear an electronic buzzing sound.")
 							playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 0)
 
 						if(blockcount > 5)	// attempt 5 times before recomputing
@@ -667,7 +667,7 @@
 							return
 						return
 				else
-					src.visible_message("[src] makes an annoyed buzzing sound.", "You hear an electronic buzzing sound.")
+					src.visible_message("[src] makes an annoyed buzzing sound", "You hear an electronic buzzing sound.")
 					playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 0)
 					//world << "Bad turf."
 					mode = 5
@@ -952,8 +952,8 @@
 	var/turf/Tsec = get_turf(src)
 
 	new /obj/item/device/assembly/prox_sensor(Tsec)
-	new /obj/item/stack/rods(Tsec)
-	new /obj/item/stack/rods(Tsec)
+	PoolOrNew(/obj/item/stack/rods, Tsec)
+	PoolOrNew(/obj/item/stack/rods, Tsec)
 	new /obj/item/weapon/cable_coil/cut(Tsec)
 	if (cell)
 		cell.loc = Tsec

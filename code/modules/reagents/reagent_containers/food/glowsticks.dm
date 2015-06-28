@@ -59,7 +59,7 @@
 			usr << "<span class='notice'>You finish eating \the [src].</span>"
 		M.visible_message("<span class='notice'>[M] finishes eating \the [src].</span>")
 		usr.drop_from_inventory(src)	//so icons update :[
-		del(src)
+		qdel(src)
 	return
 
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/attack_self(mob/user as mob)
@@ -137,8 +137,8 @@
 					luminnew.color = luminold.color
 				list_regs.reagent_list += luminnew
 				var/mixedcolor = mix_color_from_reagents(list_regs.reagent_list)
-				del(list_regs)
-				del(luminold)
+				qdel(list_regs)
+				qdel(luminold)
 				luminnew.color = mixedcolor
 				On_Consume(M)
 			return 1
@@ -151,7 +151,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	return
 
-/obj/item/weapon/reagent_containers/food/snacks/glowstick/Del()
+/obj/item/weapon/reagent_containers/food/snacks/glowstick/Destroy()
 	if(contents)
 		for(var/atom/movable/something in contents)
 			something.loc = get_turf(src)

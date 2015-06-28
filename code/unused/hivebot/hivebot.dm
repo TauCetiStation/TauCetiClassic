@@ -66,7 +66,7 @@
 		return
 
 	else if (src.stat == 2 && !src.client)
-		del(src)
+		qdel(src)
 		return
 
 	switch(severity)
@@ -469,7 +469,7 @@ Frequency:
 							if (istype(G, /obj/item/weapon/grab))
 								for(var/mob/O in viewers(M, null))
 									O.show_message(text("\red [G.affecting] has been pulled from [G.assailant]'s grip by [src]"), 1)
-								del(G)
+								qdel(G)
 						else
 							ok = 0
 						if (locate(/obj/item/weapon/grab, M.grabbed_by.len))

@@ -31,7 +31,7 @@
 	if(this.pixel_y)
 		P.pixel_y = this.pixel_y
 	spawn (20)
-		if(P)	del(P)
+		if(P)	qdel(P)
 
 	usr.visible_message("<b>[usr]</b> points to [this]")
 

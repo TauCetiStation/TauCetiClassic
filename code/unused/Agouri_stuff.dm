@@ -80,7 +80,7 @@
 					if(t_air)
 						t_air.merge(removed)
 					else //just delete the cabin gas, we're in space or some shit
-						del(removed)
+						qdel(removed)
 		else
 			return stop()
 		return
@@ -357,7 +357,7 @@
 				if(mecha.loc && hascall(mecha.loc,"assume_air"))
 					mecha.loc.assume_air(leaked_gas)
 				else
-					del(leaked_gas)
+					qdel(leaked_gas)
 		if(mecha.hasInternalDamage(MECHA_INT_SHORT_CIRCUIT))
 			if(mecha.get_charge())
 				mecha.spark_system.start()
@@ -530,7 +530,7 @@
 /turf/proc/RemoveLattice()
 	var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
 	if(L)
-		del L
+		qdel(L)
 
 /turf/proc/ReplaceWithFloor(explode=0)
 	var/prior_icon = icon_old
@@ -703,7 +703,7 @@
 		if(1.0)
 			//SN src = null
 			src.ReplaceWithSpace()
-			del(src)
+			qdel(src)
 			return
 		if(2.0)
 			if (prob(50))
@@ -794,7 +794,7 @@
 			F.burn_tile()
 			F.icon_state = "wall_thermite"
 			user << "\red The thermite melts the wall."
-			spawn(100) del(O)
+			spawn(100) qdel(O)
 			F.sd_LumReset()
 			return
 
@@ -830,7 +830,7 @@
 			F.burn_tile()
 			F.icon_state = "wall_thermite"
 			user << "\red The thermite melts the wall."
-			spawn(100) del(O)
+			spawn(100) qdel(O)
 			F.sd_LumReset()
 			return
 
@@ -907,7 +907,7 @@
 				user << "<FONT COLOR='blue'>You place the poster!</FONT>"
 				P.resulting_poster.icon_state = temp
 				src.contents += P.resulting_poster
-				del(P)
+				qdel(P)
 			else
 				user << "<FONT COLOR='BLUE'>You stop placing the poster.</FONT>"
 				P.resulting_poster.loc = P
@@ -946,7 +946,7 @@
 			F.burn_tile()
 			F.icon_state = "wall_thermite"
 			user << "\red The thermite melts the wall."
-			spawn(100) del(O)
+			spawn(100) qdel(O)
 			F.sd_LumReset()
 			return
 
@@ -989,7 +989,7 @@
 			F.burn_tile()
 			F.icon_state = "wall_thermite"
 			user << "\red The thermite melts the wall."
-			spawn(100) del(O)
+			spawn(100) qdel(O)
 			F.sd_LumReset()
 			return
 
@@ -1083,7 +1083,7 @@
 			if (W:amount > 1)
 				W:amount--
 			else
-				del(W)
+				qdel(W)
 
 	else if(istype(W,/obj/item/weapon/contraband/poster))
 		var/obj/item/weapon/contraband/poster/P = W
@@ -1116,7 +1116,7 @@
 				user << "<FONT COLOR='blue'>You place the poster!</FONT>"
 				P.resulting_poster.icon_state = temp
 				src.contents += P.resulting_poster
-				del(P)
+				qdel(P)
 			else
 				user << "<FONT COLOR='BLUE'>You stop placing the poster.</FONT>"
 				P.resulting_poster.loc = P
@@ -1486,7 +1486,7 @@ turf/simulated/floor/return_siding_icon_state()
 				FF.update_icon() //so siding get updated properly
 
 	if(!floor_tile) return
-	del(floor_tile)
+	qdel(floor_tile)
 	icon_plating = "plating"
 	sd_SetLuminosity(0)
 	floor_tile = null
@@ -1571,7 +1571,7 @@ turf/simulated/floor/return_siding_icon_state()
 			var/obj/item/stack/tile/light/T = floor_tile
 			if(T.state)
 				user.u_equip(C)
-				del(C)
+				qdel(C)
 				T.state = C //fixing it by bashing it with a light bulb, fun eh?
 				update_icon()
 				user << "\blue You replace the light bulb."
@@ -1718,7 +1718,7 @@ turf/simulated/floor/return_siding_icon_state()
 		var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
 		if(L)
 			var/obj/item/stack/tile/plasteel/S = C
-			del(L)
+			qdel(L)
 			playsound(src.loc, 'sound/weapons/Genhit.ogg', 50, 1)
 			S.build(src)
 			S.use(1)
@@ -1747,7 +1747,7 @@ turf/simulated/floor/return_siding_icon_state()
 		else
 			if (src.x <= 2 || A.x >= (world.maxx - 1) || src.y <= 2 || A.y >= (world.maxy - 1))
 				if(istype(A, /obj/effect/meteor)||istype(A, /obj/effect/space_dust))
-					del(A)
+					qdel(A)
 					return
 
 				if(istype(A, /obj/item/weapon/disk/nuclear)) // Don't let nuke disks travel Z levels  ... And moving this shit down here so it only fires when they're actually trying to change z-level.
@@ -1803,7 +1803,7 @@ turf/simulated/floor/return_siding_icon_state()
 
 	if(src.x <= 1)
 		if(istype(A, /obj/effect/meteor)||istype(A, /obj/effect/space_dust))
-			del(A)
+			qdel(A)
 			return
 
 		var/list/cur_pos = src.get_global_map_pos()
@@ -1828,7 +1828,7 @@ turf/simulated/floor/return_siding_icon_state()
 					A.loc.Entered(A)
 	else if (src.x >= world.maxx)
 		if(istype(A, /obj/effect/meteor))
-			del(A)
+			qdel(A)
 			return
 
 		var/list/cur_pos = src.get_global_map_pos()
@@ -1853,7 +1853,7 @@ turf/simulated/floor/return_siding_icon_state()
 					A.loc.Entered(A)
 	else if (src.y <= 1)
 		if(istype(A, /obj/effect/meteor))
-			del(A)
+			qdel(A)
 			return
 		var/list/cur_pos = src.get_global_map_pos()
 		if(!cur_pos) return
@@ -1878,7 +1878,7 @@ turf/simulated/floor/return_siding_icon_state()
 
 	else if (src.y >= world.maxy)
 		if(istype(A, /obj/effect/meteor)||istype(A, /obj/effect/space_dust))
-			del(A)
+			qdel(A)
 			return
 		var/list/cur_pos = src.get_global_map_pos()
 		if(!cur_pos) return
@@ -1927,7 +1927,7 @@ turf/simulated/floor/return_siding_icon_state()
 			else
 				new /turf/simulated/floor/vault(locate(i,j,z),type)
 
-	del(src)
+	qdel(src)
 
 /turf/proc/kill_creatures(mob/U = null)//Will kill people/creatures and damage mechs./N
 //Useful to batch-add creatures to the list.

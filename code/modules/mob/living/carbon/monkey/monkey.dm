@@ -231,10 +231,11 @@
 			if(M.a_intent == "hurt")//Stungloves. Any contact will stun the alien.
 				if(G.cell.charge >= 2500)
 					G.cell.use(2500)
-					Weaken(5)
-					if (stuttering < 5)
-						stuttering = 5
-					Stun(5)
+					apply_effects(0,0,0,0,5,0,0,150)
+
+					var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+					s.set_up(3, 1, src)
+					s.start()
 
 					M.do_attack_animation(src)
 					for(var/mob/O in viewers(src, null))
@@ -513,7 +514,7 @@
 		return
 	if (stat == DEAD && !client)
 		gibs(loc, viruses)
-		del(src)
+		qdel(src)
 		return
 
 

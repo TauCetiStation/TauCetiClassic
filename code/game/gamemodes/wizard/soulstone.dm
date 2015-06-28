@@ -176,7 +176,7 @@
 							else
 								ticker.mode.cult+=Z.mind
 							ticker.mode.update_all_cult_icons()
-						del(T)
+						qdel(T)
 						Z << "<B>You are playing a Juggernaut. Though slow, you can withstand extreme punishment, and rip apart enemies and walls alike.</B>"
 						Z << "<B>You are still bound to serve your creator, follow their orders and help them complete their goals at all costs.</B>"
 						Z.cancel_camera()
@@ -195,7 +195,7 @@
 						Z << "<B>You are playing a Wraith. Though relatively fragile, you are fast, deadly, and even able to phase through walls.</B>"
 						Z << "<B>You are still bound to serve your creator, follow their orders and help them complete their goals at all costs.</B>"
 						Z.cancel_camera()
-						del(C)
+						qdel(C)
 
 					if("Artificer")
 						var/mob/living/simple_animal/construct/builder/Z = new /mob/living/simple_animal/construct/builder (get_turf(T.loc))

@@ -24,4 +24,4 @@
 
 /datum/event/anomaly_grav/end()
 	if(newAnomaly)//Kill the anomaly if it still exists at the end.
-		del(newAnomaly)
+		qdel(newAnomaly)

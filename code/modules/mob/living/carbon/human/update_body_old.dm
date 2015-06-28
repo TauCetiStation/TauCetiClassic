@@ -18,7 +18,7 @@
 
 	//Create a new, blank icon for our mob to use.
 	if(stand_icon)
-		del(stand_icon)
+		qdel(stand_icon)
 
 	stand_icon = new(species.icon_template ? species.icon_template : 'icons/mob/human.dmi',"blank")
 

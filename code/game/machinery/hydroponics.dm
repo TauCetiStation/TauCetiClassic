@@ -374,7 +374,7 @@ obj/machinery/hydroponics/proc/mutatespecie() // Mutagent produced a new plant!
 		myseed = new /obj/item/seeds/greengrapeseed
 /*
 	else if ( istype(myseed, /obj/item/seeds/tomatoseed ))
-		del(myseed)
+		qdel(myseed)
 		myseed = new /obj/item/seeds/gibtomatoseed
 */
 	else if ( istype(myseed, /obj/item/seeds/eggplantseed ))

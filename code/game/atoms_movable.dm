@@ -28,15 +28,26 @@
 	return
 
 /*
-/atom/movable/Del()
-	if(isnull(gc_destroyed) && loc)
+/atom/movable/Destroy()
+	if(isnull(gcDestroyed) && loc)
 		testing("GC: -- [type] was deleted via del() rather than qdel() --")
-	else if(isnull(gc_destroyed))
+	else if(isnull(gcDestroyed))
 		testing("GC: [type] was deleted via GC without qdel()") //Not really a huge issue but from now on, please qdel()
 	else
 		testing("GC: [type] was deleted via GC with qdel()")
 	..()
 */
+
+/atom/movable/Del()
+	if(isnull(gcDestroyed) && loc)
+		testing("GC: -- [type] was deleted via del() rather than qdel() --")
+		CRASH()	// Debug until I can get a clean server start.
+//	else if(isnull(gcDestroyed))
+//		testing("GC: [type] was deleted via GC without qdel()") //Not really a huge issue but from now on, please qdel()
+//	else
+//		testing("GC: [type] was deleted via GC with qdel()")
+	..()
+
 /atom/movable/Destroy()
 	if(reagents)
 		qdel(reagents)

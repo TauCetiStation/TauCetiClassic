@@ -300,7 +300,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	for(var/obj/machinery/door/airlock/phoron/D in range(3,src))
 		D.ignite(temperature/4)
 	new/obj/structure/door_assembly( src.loc )
-	qdel (src)
+	qdel(src)
 
 /obj/machinery/door/airlock/clown
 	name = "Bananium Airlock"

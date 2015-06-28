@@ -157,7 +157,7 @@
 		w_amt += other.w_amt
 
 		blood = (total*blood + other_total*other.blood) / (total + other_total)
-		del(other)
+		qdel(other)
 
 	else
 		var/space = limit - total

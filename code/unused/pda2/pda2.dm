@@ -214,7 +214,7 @@
 		if(frequency)
 			return frequency.post_signal(src, signal)
 		else
-			del(signal)
+			qdel(signal)
 
 	eject_cartridge()
 		if(src.cartridge)
@@ -294,5 +294,5 @@
 			src.active_program = null
 
 		//world << "Now calling del on [file]..."
-		del(file)
+		qdel(file)
 		return 1

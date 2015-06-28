@@ -214,7 +214,7 @@
 	if(master)
 		master.post_signal(signal, comm_line)
 	else
-		del(signal)
+		qdel(signal)
 
 
 /datum/computer/file/embedded_program/proc/signalDoor(var/tag, var/command)

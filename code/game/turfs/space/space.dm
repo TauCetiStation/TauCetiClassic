@@ -57,7 +57,7 @@
 				user << "\blue You build a catwalk!"
 				R.use(2)
 				ChangeTurf(/turf/simulated/floor/plating/airless/catwalk)
-				del(L)
+				qdel(L)
 				return
 
 		user << "\blue Constructing support lattice ..."
@@ -102,7 +102,7 @@
 				return
 
 			if(istype(A, /obj/item/weapon/disk/nuclear)) // Don't let nuke disks travel Z levels  ... And moving this shit down here so it only fires when they're actually trying to change z-level.
-				qdel(A) //The disk's Del() proc ensures a new one is created
+				qdel(A) //The disk's Destroy() proc ensures a new one is created
 				return
 
 			var/list/disk_search = A.search_contents_for(/obj/item/weapon/disk/nuclear)
