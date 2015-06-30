@@ -24,6 +24,7 @@
 	icon_state = "deagle"
 	force = 14.0
 	mag_type = /obj/item/ammo_box/magazine/m50
+	fire_sound = 'sound/weapons/guns/deagle_shot.ogg'
 
 /obj/item/weapon/gun/projectile/automatic/deagle/isHandgun()
 	return 1
@@ -112,6 +113,7 @@
 	w_class = 2
 	mag_type = /obj/item/ammo_box/magazine/c45r
 	var/mag_type2 = /obj/item/ammo_box/magazine/c45m
+	fire_sound = 'sound/weapons/guns/colt1911_shot.ogg'
 
 /obj/item/weapon/gun/projectile/automatic/colt1911/isHandgun()
 	return 1
