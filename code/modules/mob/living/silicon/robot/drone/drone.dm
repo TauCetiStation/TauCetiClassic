@@ -26,8 +26,7 @@
 	//Used for self-mailing.
 	var/mail_destination = ""
 
-	//Used for pulling.
-
+	holder_type = /obj/item/weapon/holder/drone
 /mob/living/silicon/robot/drone/New()
 
 	..()
