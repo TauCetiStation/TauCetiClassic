@@ -1416,8 +1416,15 @@
 	else
 		if(crawling)
 			crawl_getup = 1
-			sleep(20)
+			sleep(10)
 			crawl_getup = 0
+			T = get_turf(src)
+			if( (locate(/obj/structure/table) in T) || (locate(/obj/structure/stool/bed) in T) )
+				playsound(loc, 'sound/weapons/tablehit1.ogg', 50, 1)
+				var/datum/organ/external/E = get_organ("head")
+				E.take_damage(5, 0, 0, 0, "Table")
+				src << "\red \b Ouch!"
+				return
 			pass_flags += PASSCRAWL
 		else
 			pass_flags -= PASSCRAWL

@@ -8,6 +8,13 @@
 		tally += 7
 	else if(reagents.has_reagent("hyperzine")) return -1
 
+	if(istype(l_hand, /obj/item/weapon/gun))
+		if(l_hand.w_class > 3)
+			tally += 0.5
+	if(istype(r_hand, /obj/item/weapon/gun))
+		if(r_hand.w_class > 3)
+			tally += 0.5
+
 	if (istype(loc, /turf/space)) return -1 // It's hard to be slowed down in space by... anything
 
 	if(embedded_flag)
