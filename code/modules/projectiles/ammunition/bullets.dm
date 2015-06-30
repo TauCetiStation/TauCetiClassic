@@ -92,6 +92,12 @@
 	caliber = "a762"
 	projectile_type = "/obj/item/projectile/bullet/a762"
 
+/obj/item/ammo_casing/a145
+	desc = "A 14.5mm shell."
+	icon_state = "lcasing"
+	caliber = "14.5mm"
+	projectile_type = /obj/item/projectile/bullet/heavy/a145
+
 /obj/item/ammo_casing/caseless
 	desc = "A caseless bullet casing."
 
