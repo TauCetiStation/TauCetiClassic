@@ -414,7 +414,7 @@
 	basestate = "phoronwindow"
 	icon_state = "phoronwindow"
 	shardtype = /obj/item/weapon/shard/phoron
-	health = 120
+	maxhealth = 120.0
 
 /obj/structure/window/phoronbasic/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > T0C + 32000)
@@ -428,7 +428,7 @@
 	icon_state = "phoronrwindow"
 	shardtype = /obj/item/weapon/shard/phoron
 	reinf = 1
-	health = 160
+	maxhealth = 160.0
 
 /obj/structure/window/phoronreinforced/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	return
@@ -438,7 +438,7 @@
 	desc = "It looks rather strong. Might take a few good hits to shatter it."
 	icon_state = "rwindow"
 	basestate = "rwindow"
-	health = 40
+	maxhealth = 80.0
 	reinf = 1
 
 /obj/structure/window/reinforced/tinted
@@ -453,7 +453,7 @@
 	desc = "It looks rather strong and frosted over. Looks like it might take a few less hits then a normal reinforced window."
 	icon_state = "fwindow"
 	basestate = "fwindow"
-	health = 30
+	maxhealth = 30.0
 
 /obj/structure/window/shuttle
 	name = "shuttle window"
@@ -461,7 +461,7 @@
 	icon = 'icons/obj/podwindows.dmi'
 	icon_state = "window"
 	basestate = "window"
-	health = 40
+	maxhealth = 150.0
 	reinf = 1
 	dir = 5
 
