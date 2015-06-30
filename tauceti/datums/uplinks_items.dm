@@ -132,6 +132,15 @@
 	uplink_types = list("nuclear")
 	excludefrom_uplinks = list("traitor")
 
+/datum/uplink_item/dangerous/heavyrifle
+	name = "PTR-7 heavy rifle"
+	desc = "A portable anti-armour bolt-action rifle. Originally designed to used against armoured exosuits. Fires armor piercing 14.5mm shells."
+	item = /obj/item/weapon/gun/projectile/heavyrifle
+	cost = 15
+	gamemodes = list(/datum/game_mode/nuclear)
+	uplink_types = list("nuclear")
+	excludefrom_uplinks = list("traitor")
+
 /datum/uplink_item/dangerous/bazooka
 	name = "Goliath missile launcher"
 	desc = "The Goliath is a single-shot shoulder-fired multipurpose missile launcher."
@@ -314,6 +323,14 @@
 	desc = "A 50-round magazine of 7.62x51mm ammunition for use in the L6 SAW machinegun. By the time you need to use this, you'll already be on a pile of corpses."
 	item = /obj/item/ammo_box/magazine/m762
 	cost = 7
+	gamemodes = list(/datum/game_mode/nuclear)
+	uplink_types = list("nuclear")
+
+/datum/uplink_item/ammo/heavyrifle
+	name = "A 14.5mm shell."
+	desc = "A 14.5mm shell for use with PTR-7 heavy rifle. One shot, one kill, no luck, just skill."
+	item = /obj/item/ammo_casing/a145
+	cost = 1
 	gamemodes = list(/datum/game_mode/nuclear)
 	uplink_types = list("nuclear")
 

@@ -9,23 +9,11 @@ emp_act
 */
 
 /mob/living/carbon/human/bullet_act(var/obj/item/projectile/P, var/def_zone)
-
-// BEGIN TASER NERF
-					/* Commenting out new-old taser nerf.
-					if(C.siemens_coefficient == 0) //If so, is that clothing shock proof?
-						if(prob(deflectchance))
-							visible_message("\red <B>The [P.name] gets deflected by [src]'s [C.name]!</B>") //DEFLECT!
-							visible_message("\red <B> Taser hit for [P.damage] damage!</B>")
-							qdel(P)
-*/
-/* Commenting out old Taser nerf
-	if(wear_suit && istype(wear_suit, /obj/item/clothing/suit/armor))
-		if(istype(P, /obj/item/projectile/energy/electrode))
-			visible_message("\red <B>The [P.name] gets deflected by [src]'s [wear_suit.name]!</B>")
-			qdel(P)
-		return -1
-*/
-// END TASER NERF
+	if(P.impact_force)
+		for(var/i=1, i<=P.impact_force, i++)
+			step_to(src, get_step(loc, P.dir))
+			if(istype(src.loc, /turf/simulated))
+				src.loc.add_blood(src)
 
 	if(wear_suit && istype(wear_suit, /obj/item/clothing/suit/armor/laserproof))
 		if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam))
@@ -123,7 +111,7 @@ emp_act
 			else if(force <= 40)
 				apply_effects(P:stoping_power,P:stoping_power,0,0,P:stoping_power,0,0,armor)
 
-		if((P.embed && prob(20 + max(P.damage - armor, -10))) && P.damage_type == BRUTE)
+		if((P.embed && prob(20 + max(P.damage - armor, -20))) && P.damage_type == BRUTE)
 			var/obj/item/weapon/shard/shrapnel/SP = new()
 			(SP.name) = "[P.name] shrapnel"
 			(SP.desc) = "[SP.desc] It looks like it was fired from [P.shot_from]."

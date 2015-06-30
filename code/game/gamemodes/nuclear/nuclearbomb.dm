@@ -10,7 +10,7 @@ var/bomb_set
 	var/extended = 0.0
 	var/lighthack = 0
 	var/opened = 0.0
-	var/timeleft = 60.0
+	var/timeleft = 600.0
 	var/timing = 0.0
 	var/r_code = "ADMIN"
 	var/code = ""
@@ -62,7 +62,17 @@ var/bomb_set
 
 	if (istype(O, /obj/item/weapon/screwdriver))
 		src.add_fingerprint(user)
-		if (src.auth)
+		if (removal_stage == 5)
+			if (src.opened == 0)
+				src.opened = 1
+				overlays += image(icon, "npanel_open")
+				user << "You unscrew the control panel of [src]."
+
+			else
+				src.opened = 0
+				overlays -= image(icon, "npanel_open")
+				user << "You screw the control panel of [src] back on."
+		else if (src.auth)
 			if (src.opened == 0)
 				src.opened = 1
 				overlays += image(icon, "npanel_open")
@@ -98,6 +108,72 @@ var/bomb_set
 	if (src.anchored)
 		switch(removal_stage)
 			if(0)
+				if(istype(O,/obj/item/weapon/weldingtool))
+
+					var/obj/item/weapon/weldingtool/WT = O
+					if(!WT.isOn()) return
+					if (WT.get_fuel() < 5) // uses up 5 fuel.
+						user << "\red You need more fuel to complete this task."
+						return
+
+					user.visible_message("[user] starts cutting thru something on [src] like \he knows what to do.", "With [O] you start cutting thru first layer...")
+
+					if(do_after(user,80))
+						if(!src || !user || !WT.remove_fuel(5, user)) return
+						user.visible_message("[user] finishes cutting something on [src].", "You cut thru first layer.")
+						removal_stage = 1
+				return
+
+			if(1)
+				if(istype(O,/obj/item/weapon/crowbar))
+					user.visible_message("[user] starts smashing [src].", "You start forcing open the covers with [O]...")
+
+					if(do_after(user,20))
+						if(!src || !user) return
+						user.visible_message("[user] finishes smashing [src].", "You force open covers.")
+						removal_stage = 2
+				return
+
+			if(2)
+				if(istype(O,/obj/item/weapon/weldingtool))
+
+					var/obj/item/weapon/weldingtool/WT = O
+					if(!WT.isOn()) return
+					if (WT.get_fuel() < 5) // uses up 5 fuel.
+						user << "\red You need more fuel to complete this task."
+						return
+
+					user.visible_message("[user] starts cutting something on [src].. Again.", "You start cutting apart the safety plate with [O]...")
+
+					if(do_after(user,30))
+						if(!src || !user || !WT.remove_fuel(5, user)) return
+						user.visible_message("[user] finishes cutting something on [src].", "You cut apart the safety plate.")
+						removal_stage = 3
+				return
+
+			if(3)
+				if(istype(O,/obj/item/weapon/wrench))
+
+					user.visible_message("[user] begins poking inside [src].", "You begin unwrenching bolts...")
+
+					if(do_after(user,50))
+						if(!src || !user) return
+						user.visible_message("[user] begins poking inside [src].", "You unwrench bolts.")
+						removal_stage = 4
+				return
+
+			if(4)
+				if(istype(O,/obj/item/weapon/crowbar))
+
+					user.visible_message("[user] begings hitting [src].", "You begin forcing open last safety layer...")
+
+					if(do_after(user,80))
+						if(!src || !user) return
+						user.visible_message("[user] finishes hitting [src].", "You can now get inside the [src]. Use screwdriver to open control panel")
+						//anchored = 0
+						removal_stage = 5
+				return
+			/*if(0)
 				if(istype(O,/obj/item/weapon/weldingtool))
 
 					var/obj/item/weapon/weldingtool/WT = O
@@ -162,7 +238,7 @@ var/bomb_set
 						user.visible_message("[user] crowbars [src] off of the anchors. It can now be moved.", "You jam the crowbar under the nuclear device and lift it off its anchors. You can now move it!")
 						anchored = 0
 						removal_stage = 5
-				return
+				return*/
 	..()
 
 /obj/machinery/nuclearbomb/attack_paw(mob/user as mob)
@@ -319,7 +395,7 @@ obj/machinery/nuclearbomb/proc/nukehack_win(mob/user as mob)
 				if (href_list["time"])
 					var/time = text2num(href_list["time"])
 					src.timeleft += time
-					src.timeleft = min(max(round(src.timeleft), 60), 600)
+					src.timeleft = min(max(round(src.timeleft), 180), 600)
 				if (href_list["timer"])
 					if (src.timing == -1.0)
 						return
