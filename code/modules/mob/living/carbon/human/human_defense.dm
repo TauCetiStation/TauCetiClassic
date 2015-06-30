@@ -111,7 +111,7 @@ emp_act
 			else if(force <= 40)
 				apply_effects(P:stoping_power,P:stoping_power,0,0,P:stoping_power,0,0,armor)
 
-		if((P.embed && prob(20 + max(P.damage - (armor*2), -20))) && P.damage_type == BRUTE)
+		if((P.embed && prob(20 + max(P.damage - armor, -20))) && P.damage_type == BRUTE)
 			var/obj/item/weapon/shard/shrapnel/SP = new()
 			(SP.name) = "[P.name] shrapnel"
 			(SP.desc) = "[SP.desc] It looks like it was fired from [P.shot_from]."

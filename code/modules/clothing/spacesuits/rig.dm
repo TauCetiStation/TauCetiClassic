@@ -393,7 +393,7 @@
 	icon_state = "rig0-syndie"
 	item_state = "syndie_helm"
 	item_color = "syndie"
-	armor = list(melee = 60, bullet = 35, laser = 30,energy = 15, bomb = 35, bio = 100, rad = 60)
+	armor = list(melee = 60, bullet = 65, laser = 55,energy = 45, bomb = 50, bio = 100, rad = 60)
 	var/obj/machinery/camera/camera
 	species_restricted = list("exclude","Unathi","Tajaran","Skrell","Vox")
 
@@ -419,7 +419,7 @@
 	item_state = "syndie_hardsuit"
 	slowdown = 1.4
 	w_class = 3
-	armor = list(melee = 60, bullet = 35, laser = 30, energy = 15, bomb = 35, bio = 100, rad = 60)
+	armor = list(melee = 60, bullet = 65, laser = 55, energy = 45, bomb = 50, bio = 100, rad = 60)
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/device/suit_cooling_unit,/obj/item/weapon/gun,/obj/item/ammo_box/magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/melee/energy/sword,/obj/item/weapon/handcuffs)
 	species_restricted = list("exclude","Unathi","Tajaran","Skrell","Vox")
 	breach_threshold = 25
@@ -432,7 +432,7 @@
 	item_state = "wiz_helm"
 	item_color = "wiz"
 	unacidable = 1 //No longer shall our kind be foiled by lone chemists with spray bottles!
-	armor = list(melee = 40, bullet = 20, laser = 20,energy = 20, bomb = 35, bio = 100, rad = 60)
+	armor = list(melee = 66, bullet = 66, laser = 66,energy = 66, bomb = 66, bio = 100, rad = 60)
 	sprite_sheets_refit = null
 	sprite_sheets_obj = null
 
@@ -444,7 +444,7 @@
 	slowdown = 1
 	w_class = 3
 	unacidable = 1
-	armor = list(melee = 40, bullet = 20, laser = 20,energy = 20, bomb = 35, bio = 100, rad = 60)
+	armor = list(melee = 40, bullet = 66, laser = 66,energy = 66, bomb = 66, bio = 100, rad = 60)
 	sprite_sheets_refit = null
 	sprite_sheets_obj = null
 
@@ -472,14 +472,14 @@
 	icon_state = "rig0-sec"
 	item_state = "sec_helm"
 	item_color = "sec"
-	armor = list(melee = 60, bullet = 30, laser = 30, energy = 5, bomb = 45, bio = 100, rad = 10)
+	armor = list(melee = 60, bullet = 60, laser = 60, energy = 30, bomb = 65, bio = 100, rad = 10)
 
 /obj/item/clothing/suit/space/rig/security
 	icon_state = "rig-sec"
 	name = "security hardsuit"
 	desc = "A special suit that protects against hazardous, low pressure environments. Has an additional layer of armor."
 	item_state = "sec_hardsuit"
-	armor = list(melee = 60, bullet = 30, laser = 30, energy = 5, bomb = 45, bio = 100, rad = 10)
+	armor = list(melee = 60, bullet = 60, laser = 60, energy = 30, bomb = 65, bio = 100, rad = 10)
 	allowed = list(/obj/item/weapon/gun,/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/device/suit_cooling_unit,/obj/item/weapon/melee/baton)
 	breach_threshold = 20
 
