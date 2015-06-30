@@ -188,7 +188,7 @@ proc/hasorgans(A)
 		var/miss_chance = 10
 		switch(zone)
 			if("head")
-				miss_chance = 40
+				miss_chance = 30
 			if("l_leg")
 				miss_chance = 20
 			if("r_leg")
@@ -198,16 +198,16 @@ proc/hasorgans(A)
 			if("r_arm")
 				miss_chance = 20
 			if("l_hand")
-				miss_chance = 50
+				miss_chance = 40
 			if("r_hand")
-				miss_chance = 50
+				miss_chance = 40
 			if("l_foot")
-				miss_chance = 50
+				miss_chance = 40
 			if("r_foot")
-				miss_chance = 50
+				miss_chance = 40
 		miss_chance = max(miss_chance + miss_chance_mod, 0)
 		if(prob(miss_chance))
-			if(prob(70))
+			if(prob(80))
 				return null
 			else
 				var/t = rand(1, 10)
