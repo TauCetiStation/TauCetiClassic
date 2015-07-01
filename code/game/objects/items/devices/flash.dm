@@ -71,7 +71,7 @@
 
 			if(ishuman(M) && ishuman(user) && M.stat!=DEAD)
 
-				if(user.mind && ((user.mind in ticker.mode.head_revolutionaries) || (user.mind in ticker.mode.A_bosses) || (user.mind in ticker.mode.B_bosses)))
+				if(user.mind && (user.mind in ticker.mode.head_revolutionaries))
 					if(M.client)
 						if(M.stat == CONSCIOUS)
 							M.mind_initialize()		//give them a mind datum if they don't have one.
@@ -80,12 +80,6 @@
 								if(user.mind in ticker.mode.head_revolutionaries)
 									M.mind.has_been_rev = 1
 									if(!ticker.mode.add_revolutionary(M.mind))
-										resisted = 1
-								if(user.mind in ticker.mode.A_bosses)
-									if(!ticker.mode.add_gangster(M.mind,"A"))
-										resisted = 1
-								if(user.mind in ticker.mode.B_bosses)
-									if(!ticker.mode.add_gangster(M.mind,"B"))
 										resisted = 1
 							else
 								resisted = 1

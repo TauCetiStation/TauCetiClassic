@@ -309,6 +309,9 @@
 
 		else
 			character.Robotize()
+
+		joined_player_list += character.ckey
+
 		qdel(src)
 
 	proc/AnnounceArrival(var/mob/living/carbon/human/character, var/rank)

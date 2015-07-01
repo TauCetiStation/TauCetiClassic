@@ -376,6 +376,8 @@
 	var/instant = 0
 	var/colourName = "red" //for updateIcon purposes
 	var/list/validSurfaces = list(/turf/simulated/floor)
+	var/gang = 0 //For marking territory
+	var/edible = 1
 
 	suicide_act(mob/user)
 		viewers(user) << "\red <b>[user] is jamming the [src.name] up \his nose and into \his brain. It looks like \he's trying to commit suicide.</b>"

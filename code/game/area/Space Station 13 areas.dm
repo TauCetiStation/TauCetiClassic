@@ -29,6 +29,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	luminosity = 1
 	mouse_opacity = 0
 	var/lightswitch = 1
+	var/valid_territory = 1 //If it's a valid territory for gangs to claim
 
 	var/eject = null
 
@@ -103,6 +104,7 @@ var/list/ghostteleportlocs = list()
 	power_light = 0
 	power_equip = 0
 	power_environ = 0
+	valid_territory = 0
 //	ambience = list('sound/ambience/ambispace.ogg','sound/music/title2.ogg','sound/music/space.ogg','sound/music/main.ogg','sound/music/traitor.ogg')
 
 /area/engine/
@@ -608,6 +610,8 @@ var/list/ghostteleportlocs = list()
  	icon_state = "atmos"
 
 //Maintenance
+/area/maintenance
+	valid_territory = 0
 
 /area/maintenance/atmos_control
 	name = "Atmospherics Maintenance"

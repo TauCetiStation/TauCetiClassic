@@ -269,4 +269,3 @@ var/red_alert_code = 0 //Used in new code red and emergency shuttle call lightin
 var/red_alert_evac = 0
 
 var/TAB = "&nbsp;&nbsp;&nbsp;&nbsp;"
-

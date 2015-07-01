@@ -113,6 +113,8 @@ Implants;
 	if(ticker && ticker.mode)
 		feedback_set_details("game_mode","[ticker.mode]")
 	feedback_set_details("server_ip","[world.internet_address]:[world.port]")
+	start_state = new /datum/station_state()
+	start_state.count(1)
 	return 1
 
 
