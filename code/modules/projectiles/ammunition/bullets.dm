@@ -98,6 +98,13 @@
 	caliber = "14.5mm"
 	projectile_type = /obj/item/projectile/bullet/heavy/a145
 
+/obj/item/ammo_casing/r4046
+	name = "A 40x46mm grenade"
+	desc = "A 40x46mm grenade (rubber)."
+	icon_state = "40x46"
+	caliber = "40x46"
+	projectile_type = /obj/item/projectile/bullet/grenade/r4046
+
 /obj/item/ammo_casing/caseless
 	desc = "A caseless bullet casing."
 
