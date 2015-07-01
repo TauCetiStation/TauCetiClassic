@@ -1963,3 +1963,24 @@ datum/design/cart_captain
 	materials = list("$metal" = 50, "$glass" = 50)
 	build_path = "/obj/item/weapon/cartridge/captain"
 	locked = 1
+
+///////////////////////////////
+/////////////New stuff/////////
+///////////////////////////////
+datum/design/beacon_warp
+	name = "Medical Tracking Beacon"
+	desc = "A beacon used by a body teleporter."
+	id = "beacon_warp"
+	req_tech = list("materials" = 2)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 10000)
+	build_path = "/obj/item/device/beacon/medical"
+
+datum/design/body_warp
+	name = "Medical Body Teleporter Device"
+	desc = "A device used for teleporting injured or dead people."
+	id = "body_warp"
+	req_tech = list("materials" = 2)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 3500, "$glass" = 3500)
+	build_path = "/obj/item/weapon/medical/teleporter"
