@@ -267,3 +267,6 @@ var/global/list/alphabet_uppercase = list("A","B","C","D","E","F","G","H","I","J
 
 var/red_alert_code = 0 //Used in new code red and emergency shuttle call lighting
 var/red_alert_evac = 0
+
+var/TAB = "&nbsp;&nbsp;&nbsp;&nbsp;"
+

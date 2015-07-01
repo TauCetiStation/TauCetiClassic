@@ -71,23 +71,24 @@
 
 			if(ishuman(M) && ishuman(user) && M.stat!=DEAD)
 
-				if(user.mind && user.mind in ticker.mode.head_revolutionaries && ticker.mode.name == "revolution")
+				if(user.mind && ((user.mind in ticker.mode.head_revolutionaries) || (user.mind in ticker.mode.A_bosses) || (user.mind in ticker.mode.B_bosses)))
+					if(M.client)
+						if(M.stat == CONSCIOUS)
 
-					var/revsafe = 0
-					for(var/obj/item/weapon/implant/loyalty/L in M)
-						if(L && L.implanted)
-							revsafe = 1
-							break
-					M.mind_initialize()		//give them a mind datum if they don't have one.
-					if(M.mind.has_been_rev)
-						revsafe = 2
-					if(!revsafe)
-						M.mind.has_been_rev = 1
-						ticker.mode.add_revolutionary(M.mind)
-					else if(revsafe == 1)
-						user << "<span class='warning'>Something seems to be blocking the flash!</span>"
-					else
-						user << "<span class='warning'>This mind seems resistant to the flash!</span>"
+							M.mind_initialize()		//give them a mind datum if they don't have one.
+							M.mind.has_been_rev = 1
+							var/resisted
+							if(user.mind in ticker.mode.head_revolutionaries)
+								if(!ticker.mode.add_revolutionary(M.mind))
+									resisted = 1
+							if(user.mind in ticker.mode.A_bosses)
+								if(!ticker.mode.add_gangster(M.mind,"A"))
+									resisted = 1
+							if(user.mind in ticker.mode.B_bosses)
+								if(!ticker.mode.add_gangster(M.mind,"B"))
+									resisted = 1
+							if(resisted)
+								user << "<span class='warning'>This mind seems resistant to the flash!</span>"
 		else
 			flashfail = 1
 
