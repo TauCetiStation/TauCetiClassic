@@ -297,7 +297,7 @@ emp_act
 					visible_message("\red <B>[src] has been knocked unconscious!</B>")
 					if(src != user && I.damtype == BRUTE)
 						ticker.mode.remove_revolutionary(mind)
-						ticker.mode.remove_gangster(mind)
+						ticker.mode.remove_gangster(mind, exclude_bosses=1)
 
 				if(bloody)//Apply blood
 					if(wear_mask)

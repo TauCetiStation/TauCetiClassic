@@ -67,7 +67,7 @@
 
 /obj/item/toy/crayon/afterattack(atom/target, mob/user as mob, proximity)
 	if(!proximity) return
-	if(istype(target,/turf/simulated/floor))
+	if(is_type_in_list(target,validSurfaces))
 		var/drawtype = input("Choose what you'd like to draw.", "Crayon scribbles") in list("graffiti","rune","letter")
 		switch(drawtype)
 			if("letter")
@@ -84,18 +84,71 @@
 			if(uses)
 				uses--
 				if(!uses)
-					user << "\red You used up your crayon!"
+					user << "<span class='danger'>You used up your [src.name]!</span>"
 					qdel(src)
 	return
 
 /obj/item/toy/crayon/attack(mob/M as mob, mob/user as mob)
+	var/huffable = istype(src,/obj/item/toy/crayon/spraycan)
 	if(M == user)
-		user << "You take a bite of the crayon and swallow it."
+		user << "You take a [huffable ? "huff" : "bite"] of the [src.name]. Delicious!"
 //		user.nutrition += 5
 		if(uses)
 			uses -= 5
 			if(uses <= 0)
-				user << "\red You ate your crayon!"
+				user << "<span class='danger'>There is no more of [src.name] left!</span>"
 				qdel(src)
 	else
 		..()
+
+
+//Spraycan stuff
+
+/obj/item/toy/crayon/spraycan
+	icon_state = "spraycan_cap"
+	desc = "A metallic container containing tasty paint."
+	var/capped = 1
+	instant = 1
+	validSurfaces = list(/turf/simulated/floor,/turf/simulated/wall)
+
+/obj/item/toy/crayon/spraycan/New()
+	..()
+	name = "NanoTrasen-brand Rapid Paint Applicator"
+	update_icon()
+
+/obj/item/toy/crayon/spraycan/attack_self(mob/living/user as mob)
+	var/choice = input(user,"Spraycan options") in list("Toggle Cap","Change Drawing","Change Color")
+	switch(choice)
+		if("Toggle Cap")
+			user << "<span class='notice'>You [capped ? "Remove" : "Replace"] the cap of the [src]</span>"
+			capped = capped ? 0 : 1
+			icon_state = "spraycan[capped ? "_cap" : ""]"
+			update_icon()
+		if("Change Drawing")
+			..()
+		if("Change Color")
+			colour = input(user,"Choose Color") as color
+			update_icon()
+
+/obj/item/toy/crayon/spraycan/afterattack(atom/target, mob/user as mob, proximity)
+	if(capped)
+		return
+	else
+		if(iscarbon(target))
+			var/mob/living/carbon/human/C = target
+			user.visible_message("<span class='danger'> [user] sprays [src] into the face of [target]!</span>")
+			if(C.client)
+				C.eye_blurry = max(C.eye_blurry, 3)
+				C.eye_blind = max(C.eye_blind, 1)
+				C.confused = max(C.confused, 3)
+				C.Weaken(3)
+			C.lip_style = "spray_face"
+			C.update_body()
+		playsound(user.loc, 'sound/effects/spray.ogg', 5, 1, 5)
+		..()
+
+/obj/item/toy/crayon/spraycan/update_icon()
+	overlays.Cut()
+	var/image/I = image('icons/obj/crayons.dmi',icon_state = "[capped ? "spraycan_cap_colors" : "spraycan_colors"]")
+	I.color = colour
+	overlays += I

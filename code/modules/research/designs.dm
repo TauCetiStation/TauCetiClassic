@@ -1984,3 +1984,10 @@ datum/design/body_warp
 	build_type = PROTOLATHE
 	materials = list("$metal" = 3500, "$glass" = 3500)
 	build_path = "/obj/item/weapon/medical/teleporter"
+
+datum/design/spraycan
+	name = "Spraycan"
+	id = "spraycan"
+	build_type = AUTOLATHE
+	materials = list("$metal" = 100, "$glass" = 100)
+	build_path = "/obj/item/toy/crayon/spraycan"
