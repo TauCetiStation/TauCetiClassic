@@ -54,6 +54,21 @@
 	damage = 45
 	embed = 0
 
+/obj/item/projectile/bullet/heavy/a145
+	damage = 110
+	stun = 3
+	weaken = 3
+	impact_force = 5
+	hitscan = 1
+
+/obj/item/projectile/bullet/grenade/r4046
+	damage = 10
+	stun = 10
+	weaken = 10
+	//impact_force = 5
+	embed = 0
+	sharp = 0
+
 /obj/item/projectile/bullet/suffocationbullet//How does this even work?
 	name = "co bullet"
 	damage = 20

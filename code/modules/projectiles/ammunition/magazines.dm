@@ -43,6 +43,22 @@
 	max_ammo = 4
 	multiload = 0
 
+/obj/item/ammo_box/magazine/internal/heavyrifle
+	name = "heavysniper internal magazine"
+	desc = "Oh god, this shouldn't be here"
+	ammo_type = /obj/item/ammo_casing/a145
+	caliber = "14.5mm"
+	max_ammo = 1
+	multiload = 0
+
+/obj/item/ammo_box/magazine/internal/m79
+	name = "m79 grenade launcher internal magazine"
+	desc = "Oh god, this shouldn't be here"
+	ammo_type = /obj/item/ammo_casing/r4046
+	caliber = "40x46"
+	max_ammo = 1
+	multiload = 0
+
 /obj/item/ammo_box/magazine/internal/shotcom
 	name = "combat shotgun internal magazine"
 	desc = "Oh god, this shouldn't be here"
