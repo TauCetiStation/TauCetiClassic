@@ -173,14 +173,6 @@
 
 	. = 0
 
-	var/spray = mob.equip_in_one_of_slots(SC,slots)
-
-	if (!spray)
-		mob << "Your Syndicate benefactors were unfortunately unable to get you some spraypaint."
-	else
-		mob << "The Spraypaint in your [spray] will help you spread your message of unrest."
-		mob.update_icons()
-
 	var/where2 = mob.equip_in_one_of_slots(recaller, slots)
 	if (!where2)
 		mob << "Your Syndicate benefactors were unfortunately unable to get you a Recaller."
@@ -195,6 +187,7 @@
 		mob << "The <b>flash</b> in your [where] will help you to persuade the crew to work for you."
 		. += 1
 
+	mob.equip_in_one_of_slots(SC,slots)
 	mob.update_icons()
 
 	return .
@@ -236,7 +229,10 @@
 	else
 		B_gangsters += gangster_mind
 	if(check)
-		gangster_mind.current.Paralyse(5)
+		if(iscarbon(gangster_mind.current))
+			var/mob/living/carbon/carbon_mob = gangster_mind.current
+			carbon_mob.silent = max(carbon_mob.silent, 5)
+		gangster_mind.current.Stun(5)
 	gangster_mind.current << "<FONT size=3 color=red><B>You are now a member of the [gang=="A" ? gang_name("A") : gang_name("B")] Gang!</B></FONT>"
 	gangster_mind.current << "<font color='red'>Help your Boss take over the station by defeating the rival gang. You can identify your Boss by their brown \"B\" icon.</font>"
 	gangster_mind.current.attack_log += "\[[time_stamp()]\] <font color='red'>Has been converted to the [gang=="A" ? "[gang_name("A")] Gang (A)" : "[gang_name("B")] Gang (B)"]!</font>"
@@ -461,18 +457,18 @@
 	if(A_bosses.len || A_gangsters.len)
 		if(winner)
 			world << "<br><b>The [gang_name("A")] Gang was [winner=="A" ? "<font color=green>victorious</font>" : "<font color=red>defeated</font>"] with [num_ganga] members!</b>"
-		world << "<br><font size=2><b>The [gang_name("A")] Gang Boss was:</b></font>"
+		world << "<br>The [gang_name("A")] Gang Boss was:"
 		gang_membership_report(A_bosses)
-		world << "<br><font size=2><b>The [gang_name("A")] Gangsters were:</b></font>"
+		world << "<br>The [gang_name("A")] Gangsters were:"
 		gang_membership_report(A_gangsters)
 		world << "<br>"
 
 	if(B_bosses.len || B_gangsters.len)
 		if(winner)
 			world << "<br><b>The [gang_name("B")] Gang was [winner=="B" ? "<font color=green>victorious</font>" : "<font color=red>defeated</font>"] with [num_gangb] members!</b>"
-		world << "<br><font size=2><b>The [gang_name("B")] Gang Boss was:</b></font>"
+		world << "<br>The [gang_name("B")] Gang Boss was:"
 		gang_membership_report(B_bosses)
-		world << "<br><font size=2><b>The [gang_name("B")] Gangsters were:</b></font>"
+		world << "<br>The [gang_name("B")] Gangsters were:"
 		gang_membership_report(B_gangsters)
 		world << "<br>"
 

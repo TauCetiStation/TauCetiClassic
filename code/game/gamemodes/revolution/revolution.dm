@@ -154,18 +154,15 @@
 		"left hand" = slot_l_hand,
 		"right hand" = slot_r_hand,
 	)
-	var/spray = mob.equip_in_one_of_slots(R,slots)
 	var/where = mob.equip_in_one_of_slots(T, slots)
-	if (!spray)
-		mob << "The Syndicate were unfortunately unable to get you some spraypaint."
-	else
-		mob << "The Spraypaint in your [spray] will help you spread your message of unrest and revolution."
-		mob.update_icons()
+	mob.equip_in_one_of_slots(R,slots)
+
+	mob.update_icons()
+
 	if (!where)
 		mob << "The Syndicate were unfortunately unable to get you a flash."
 	else
 		mob << "The flash in your [where] will help you to persuade the crew to join your cause."
-		mob.update_icons()
 		return 1
 
 //////////////////////////////////////
@@ -205,6 +202,10 @@
 	if((rev_mind in revolutionaries) || (rev_mind in head_revolutionaries))
 		return 0
 	revolutionaries += rev_mind
+	if(iscarbon(rev_mind.current))
+		var/mob/living/carbon/carbon_mob = rev_mind.current
+		carbon_mob.silent = max(carbon_mob.silent, 5)
+	rev_mind.current.Stun(5)
 	rev_mind.current << "\red <FONT size = 3> You are now a revolutionary! Help your cause. Do not harm your fellow freedom fighters. You can identify your comrades by the red \"R\" icons, and your leaders by the blue \"R\" icons. Help them kill the heads to win the revolution!</FONT>"
 	rev_mind.special_role = "Revolutionary"
 	if(config.objectives_disabled)
@@ -457,4 +458,4 @@
 			if(target)
 				text += "</font>"
 
-		world << text 
+		world << text
