@@ -6,6 +6,7 @@
 
 	if(crawling)
 		tally += 7
+	else if(reagents.has_reagent("hyperzine")) return -1
 
 	if(istype(l_hand, /obj/item/weapon/gun))
 		if(l_hand.w_class > 3)
@@ -18,8 +19,6 @@
 
 	if(embedded_flag)
 		handle_embedded_objects() //Moving with objects stuck in you can cause bad times.
-
-	if(reagents.has_reagent("hyperzine")) return -1
 
 	if(reagents.has_reagent("nuka_cola")) return -1
 

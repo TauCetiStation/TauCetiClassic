@@ -97,12 +97,14 @@
 	w_class = 1
 
 
-/obj/item/weapon/razor/proc/shave(mob/living/carbon/human/H, location = "mouth")
+/obj/item/weapon/razor/proc/shave(mob/living/carbon/human/H, location = "mouth", var/mob/living/carbon/human/AH = null)
 	if(location == "mouth")
 		H.f_style = "Shaved"
 	else
 		H.h_style = "Skinhead"
-
+	if(AH)
+		H.attack_log += text("\[[time_stamp()]\] <font color='blue'>Has been shaved with [src.name] by [AH.name] ([AH.ckey])</font>")
+		AH.attack_log += text("\[[time_stamp()]\] <font color='blue'>Used the [src.name] to shave [H.name] ([H.ckey])</font>")
 	H.update_hair()
 	playsound(loc, 'sound/items/Welder2.ogg', 20, 1)
 
@@ -135,7 +137,7 @@
 					if(H_loc == H.loc)
 						user.visible_message("<span class='warning'>[user] shaves off [H]'s facial hair with [src].</span>", \
 											 "<span class='notice'>You shave [H]'s facial hair clean off.</span>")
-						shave(H, location)
+						shave(H, location, user)
 
 		else if(location == "head")
 			if((H.head && (H.head.flags & BLOCKHAIR)) || (H.head && (H.head.flags & HIDEEARS)))
@@ -160,7 +162,7 @@
 					if(H_loc == H.loc)
 						user.visible_message("<span class='warning'>[user] shaves [H]'s head bald with [src]!</span>", \
 											 "<span class='notice'>You shave [H]'s head bald.</span>")
-						shave(H, location)
+						shave(H, location, user)
 		else
 			..()
 	else

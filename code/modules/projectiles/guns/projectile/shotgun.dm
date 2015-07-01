@@ -11,6 +11,7 @@
 	mag_type = /obj/item/ammo_box/magazine/internal/shot
 	var/recentpump = 0 // to prevent spammage
 	var/pumped = 0
+	fire_sound = 'sound/weapons/guns/shotgun_shot.ogg'
 
 /obj/item/weapon/gun/projectile/shotgun/isHandgun()
 	return 0
