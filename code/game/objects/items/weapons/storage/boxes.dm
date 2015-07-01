@@ -178,6 +178,21 @@
 	new /obj/item/weapon/grenade/chem_grenade/teargas(src)
 	new /obj/item/weapon/grenade/chem_grenade/teargas(src)
 
+/obj/item/weapon/storage/box/r4046
+	name = "box of 40x46mm rubber grenades (WARNING)"
+	desc = "<B>WARNING: These devices are extremely dangerous and can cause injury.</B>"
+	icon_state = "box_4046"
+
+/obj/item/weapon/storage/box/r4046/New()
+	..()
+	new /obj/item/ammo_casing/r4046(src)
+	new /obj/item/ammo_casing/r4046(src)
+	new /obj/item/ammo_casing/r4046(src)
+	new /obj/item/ammo_casing/r4046(src)
+	new /obj/item/ammo_casing/r4046(src)
+	new /obj/item/ammo_casing/r4046(src)
+	new /obj/item/ammo_casing/r4046(src)
+
 /obj/item/weapon/storage/box/emps
 	name = "box of emp grenades"
 	desc = "A box with 5 emp grenades."
