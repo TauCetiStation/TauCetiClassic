@@ -85,21 +85,23 @@
 		var/area/territory
 		var/gangID
 		if(gang)
+			//Determine gang affiliation
+			if((user.mind in ticker.mode.A_bosses) || (user.mind in ticker.mode.A_gang))
+				temp = "[gang_name("A")] gang tag"
+				gangID = "A"
+			else if((user.mind in ticker.mode.B_bosses) || (user.mind in ticker.mode.B_gang))
+				temp = "[gang_name("B")] gang tag"
+				gangID = "B"
+
 			//Check area validity. Reject space, player-created areas, and non-station z-levels.
 			territory = get_area(target)
-			if (territory && (territory.z == 1) && territory.valid_territory)
-				//Determine gang affiliation
-				if((user.mind in ticker.mode.A_bosses) || (user.mind in ticker.mode.A_gang))
-					temp = "[gang_name("A")] gang tag"
-					gangID = "A"
-				else if((user.mind in ticker.mode.B_bosses) || (user.mind in ticker.mode.B_gang))
-					temp = "[gang_name("B")] gang tag"
-					gangID = "B"
-
+			if (gangID && territory && (territory.z == 1) && territory.valid_territory)
 				//Check if this area is already tagged by a gang
 				if(!(locate(/obj/effect/decal/cleanable/crayon/gang) in target)) //Ignore the check if the tile being sprayed has a gang tag
 					if(territory_claimed(territory, user))
 						return
+			else
+				user << "<span class='warning'>This area is unsuitable for territory tagging.</span>"
 		/////////////////////////////////////////
 
 
@@ -117,6 +119,7 @@
 				for(var/obj/effect/decal/cleanable/crayon/old_marking in target)
 					qdel(old_marking)
 				new /obj/effect/decal/cleanable/crayon/gang(target,gangID,temp)
+				user << "<span class='notice'>You tagged [territory] for your gang!</span>"
 
 			else
 				new /obj/effect/decal/cleanable/crayon(target,colour,shadeColour,drawtype)
@@ -222,6 +225,5 @@
 /obj/item/toy/crayon/spraycan/gang
 	desc = "A suspicious-looking spraycan modified to use special paint used by gangsters to mark territory."
 	icon_state = "spraycan_gang_cap"
-	uses = 20
 	gang = 1
 	instant = -1 
