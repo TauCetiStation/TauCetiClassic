@@ -132,6 +132,7 @@ var/list/ghostteleportlocs = list()
 
 /area/shuttle
 	requires_power = 0
+	valid_territory = 0
 
 /area/shuttle/arrival
 	name = "\improper Arrival Shuttle"
@@ -1025,6 +1026,7 @@ var/list/ghostteleportlocs = list()
 /area/solar
 	requires_power = 0
 	lighting_use_dynamic = 0
+	valid_territory = 0
 
 	auxport
 		name = "\improper Fore Port Solar Array"
@@ -1400,6 +1402,7 @@ var/list/ghostteleportlocs = list()
 	icon_state = "toxstorage"
 
 /area/rnd/test_area
+	valid_territory = 0
 	name = "\improper Toxins Test Area"
 	icon_state = "toxtest"
 

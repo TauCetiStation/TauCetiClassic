@@ -18,13 +18,16 @@
 		//name = type
 		name = e_name
 		desc = "A [type] drawn in crayon."
+		if(type == "poseur tag")
+			gang_name() //Generate gang names so they get removed from the pool
+			type = pick(gang_name_pool)
 		icon_state = type
 
 		switch(type)
 			if("rune")
 				type = "rune[rand(1,6)]"
 			if("graffiti")
-				type = pick("amyjon","face","matt","revolution","engie","guy","end","dwarf","uboa")
+				type = pick("amyjon","face","matt","revolution","engie","guy","end","dwarf","uboa","poseur tag")
 
 		var/icon/mainOverlay = new/icon('icons/effects/crayondecal.dmi',"[type]",2.1)
 		var/icon/shadeOverlay = new/icon('icons/effects/crayondecal.dmi',"[type]s",2.1)
@@ -49,38 +52,32 @@
 		qdel(src)
 
 	var/area/territory = get_area(location)
-	var/list/recipients = list()
 	var/color
 
 	if(type == "A")
 		gang = type
 		color = "#00b4ff"
 		icon_state = gang_name("A")
-		recipients = ticker.mode.A_tools
-		ticker.mode.A_territory |= territory.type
+		ticker.mode.A_territory_new |= list(territory.type = territory.name)
+		ticker.mode.A_territory_lost -= territory.type
 	else if(type == "B")
 		gang = type
 		color = "#ff3232"
 		icon_state = gang_name("B")
-		recipients = ticker.mode.B_tools
-		ticker.mode.B_territory |= territory.type
-
-	if(recipients.len)
-		ticker.mode.message_gangtools(recipients,"New territory claimed: [territory]",0)
+		ticker.mode.B_territory_new |= list(territory.type = territory.name)
+		ticker.mode.B_territory_lost -= territory.type
 
 	..(location, color, color, icon_state, gang, e_name, 1)
 
 /obj/effect/decal/cleanable/crayon/gang/Destroy()
 	var/area/territory = get_area(src)
-	var/list/recipients = list()
 
 	if(gang == "A")
-		recipients += ticker.mode.A_tools
-		ticker.mode.A_territory -= territory.type
+		ticker.mode.A_territory_new -= territory.type
+		ticker.mode.A_territory_lost |= list(territory.type = territory.name)
 	if(gang == "B")
-		recipients += ticker.mode.B_tools
-		ticker.mode.B_territory -= territory.type
-	if(recipients.len)
-		ticker.mode.message_gangtools(recipients,"Territory lost: [territory]",1)
+		ticker.mode.B_territory_new -= territory.type
+		ticker.mode.B_territory_lost |= list(territory.type = territory.name)
 
-	..() 
+	..()
+

@@ -334,10 +334,10 @@ the implant may become unstable and either pre-maturely inject the subject or si
 	implanted(mob/M)
 		if(!istype(M, /mob/living/carbon/human))	return 0
 		var/mob/living/carbon/human/H = M
-		if((H.mind in ticker.mode.head_revolutionaries) || is_shadow_or_thrall(H) || (H.mind in ticker.mode.A_bosses) || (H.mind in ticker.mode.B_bosses))
+		if((H.mind in (ticker.mode.head_revolutionaries | ticker.mode.A_bosses | ticker.mode.B_bosses)) || is_shadow_or_thrall(H))
 			H.visible_message("[H] seems to resist the implant!", "You feel the corporate tendrils of Nanotrasen try to invade your mind!")
 			return 0
-		if((H.mind in ticker.mode.revolutionaries) || (H.mind in ticker.mode.A_gang) || (H.mind in ticker.mode.B_gang))
+		if(H.mind in (ticker.mode.revolutionaries | ticker.mode.A_gang | ticker.mode.B_gang))
 			ticker.mode:remove_revolutionary(H.mind)
 			ticker.mode.remove_gangster(H.mind, exclude_bosses=0)
 
