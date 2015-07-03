@@ -153,6 +153,7 @@ var/gang_B_name = null
 		gang_A_name = pick(gang_name_pool)
 		gang_name_pool -= gang_A_name
 		gang_B_name = pick(gang_name_pool)
+		gang_name_pool -= gang_B_name
 
 	if(gang == "A")
 		if(gang_A_name)

@@ -337,9 +337,12 @@ the implant may become unstable and either pre-maturely inject the subject or si
 		if((H.mind in (ticker.mode.head_revolutionaries | ticker.mode.A_bosses | ticker.mode.B_bosses)) || is_shadow_or_thrall(H))
 			H.visible_message("[H] seems to resist the implant!", "You feel the corporate tendrils of Nanotrasen try to invade your mind!")
 			return 0
-		if(H.mind in (ticker.mode.revolutionaries | ticker.mode.A_gang | ticker.mode.B_gang))
-			ticker.mode:remove_revolutionary(H.mind)
+		if(H.mind in (ticker.mode.A_gang | ticker.mode.B_gang))
+			//ticker.mode:remove_revolutionary(H.mind)
 			ticker.mode.remove_gangster(H.mind, exclude_bosses=0)
+			return 0
+		if(H.mind in ticker.mode.revolutionaries)
+			ticker.mode:remove_revolutionary(H.mind)
 
 		if(prob(50))
 			H.visible_message("[H] suddenly goes very red and starts writhing. There is a strange smell in the air...", \

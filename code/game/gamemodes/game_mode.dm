@@ -216,6 +216,11 @@ Implants;
 		var/special_role = man.mind.special_role
 		if (special_role == "Wizard" || special_role == "Ninja" || special_role == "Syndicate" || special_role == "Vox Raider" || special_role == "Raider")
 			continue	//NT intelligence ruled out possiblity that those are too classy to pretend to be a crew.
+		for(var/spec_role in gang_name_pool)
+			if (special_role == "[spec_role] Gang (A) Boss")
+				continue
+			if (special_role == "[spec_role] Gang (B) Boss")
+				continue
 		if(man.client.prefs.nanotrasen_relation == "Opposed" && prob(50) || \
 		   man.client.prefs.nanotrasen_relation == "Skeptical" && prob(20))
 			suspects += man
