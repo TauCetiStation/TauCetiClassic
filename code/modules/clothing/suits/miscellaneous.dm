@@ -218,6 +218,14 @@
 	name = "leather jacket"
 	desc = "Pompadour not included."
 	icon_state = "leatherjacket"
+	item_state = "hostrench"
+
+/obj/item/clothing/suit/jacket/leather/overcoat
+	name = "leather overcoat"
+	desc = "That's a damn fine coat."
+	icon_state = "leathercoat"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
+	cold_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 
 //Blue suit jacket toggle
 /obj/item/clothing/suit/suit/verb/toggle()
