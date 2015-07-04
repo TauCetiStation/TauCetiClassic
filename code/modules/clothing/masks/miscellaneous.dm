@@ -106,3 +106,65 @@
 	w_class = 2
 	var/voicechange = 0
 	siemens_coefficient = 0.9
+
+/obj/item/clothing/mask/bandana
+	name = "botany bandana"
+	desc = "A fine bandana with nanotech lining and a hydroponics pattern."
+	w_class = 1
+	flags = FPRINT|TABLEPASS|MASKCOVERSMOUTH
+	action_button_name = "Adjust Bandana"
+	icon_state = "bandbotany"
+	body_parts_covered = 0
+	var/hanging = 0
+
+	verb/adjustmask()
+		set category = "Object"
+		set name = "Adjust bandana"
+		set src in usr
+
+		if(usr.canmove && !usr.stat && !usr.restrained())
+			if(!src.hanging)
+				src.hanging = !src.hanging
+				flags &= ~(MASKCOVERSMOUTH)
+				src.icon_state = initial(icon_state)
+				usr << "Your mask is now hanging on your neck."
+
+			else
+				src.hanging = !src.hanging
+				flags |= MASKCOVERSMOUTH
+				src.icon_state += "_up"
+				usr << "You pull the mask up to cover your face."
+			usr.update_inv_wear_mask()
+
+/obj/item/clothing/mask/bandana/attack_self(var/mob/user)
+	adjustmask(user)
+
+/obj/item/clothing/mask/bandana/red
+	name = "red bandana"
+	desc = "A fine red bandana with nanotech lining."
+	icon_state = "bandred"
+
+/obj/item/clothing/mask/bandana/blue
+	name = "blue bandana"
+	desc = "A fine blue bandana with nanotech lining."
+	icon_state = "bandblue"
+
+/obj/item/clothing/mask/bandana/green
+	name = "green bandana"
+	desc = "A fine green bandana with nanotech lining."
+	icon_state = "bandgreen"
+
+/obj/item/clothing/mask/bandana/gold
+	name = "gold bandana"
+	desc = "A fine gold bandana with nanotech lining."
+	icon_state = "bandgold"
+
+/obj/item/clothing/mask/bandana/black
+	name = "black bandana"
+	desc = "A fine black bandana with nanotech lining."
+	icon_state = "bandblack"
+
+/obj/item/clothing/mask/bandana/skull
+	name = "skull bandana"
+	desc = "A fine black bandana with nanotech lining and a skull emblem."
+	icon_state = "bandskull" 

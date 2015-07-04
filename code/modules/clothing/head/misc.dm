@@ -89,15 +89,6 @@
 	flags_inv = 0
 	body_parts_covered = HEAD|FACE|EYES
 
-/obj/item/clothing/head/greenbandana
-	name = "green bandana"
-	desc = "It's a green bandana with some fine nanotech lining."
-	icon_state = "greenbandana"
-	item_state = "greenbandana"
-	flags = FPRINT|TABLEPASS
-	flags_inv = 0
-	body_parts_covered = 0
-
 /obj/item/clothing/head/cardborg
 	name = "cardborg helmet"
 	desc = "A helmet made out of a box."
@@ -255,3 +246,25 @@
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 	siemens_coefficient = 2.0
 	body_parts_covered = HEAD|FACE|EYES
+
+/obj/item/clothing/head/fedora
+	name = "fedora"
+	icon_state = "fedora"
+	item_state = "fedora"
+	desc = "A really cool hat if you're a mobster. A really lame hat if you're not."
+	action_button_name = "Tip Fedora"
+
+/obj/item/clothing/head/fedora/attack_self(mob/user)
+	fedoraproc(user)
+
+/obj/item/clothing/head/fedora/proc/fedoraproc(mob/user)
+	if(user.canmove && !user.stat && !user.restrained())
+		for(var/mob/living/carbon/M in range(7,src))
+			M.show_message("[user] tips their fedora.")
+
+/obj/item/clothing/head/fedora/verb/fedoratip()
+	set category = "Object"
+	set name = "Tip Fedora"
+	set src in usr
+
+	fedoraproc(usr)
