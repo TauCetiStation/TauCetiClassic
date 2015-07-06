@@ -32,6 +32,9 @@
 	// Victory timers
 	var/A_timer = "OFFLINE"
 	var/B_timer = "OFFLINE"
+	//How many attempts at domination each team is allowed
+	var/A_dominations = 3
+	var/B_dominations = 3
 
 ///////////////////////////
 //Announces the game type//
@@ -680,9 +683,8 @@
 		return
 	for(var/obj/item/device/gangtool/tool in gangtools)
 		var/mob/living/mob = get(tool.loc,/mob/living)
-		if(mob && mob.mind)
+		if(mob && mob.mind && mob.stat == CONSCIOUS)
 			if(((tool.gang == "A") && ((mob.mind in A_gang) || (mob.mind in A_bosses))) || ((tool.gang == "B") && ((mob.mind in B_gang) || (mob.mind in B_bosses))))
 				mob << "<span class='[warning ? "warning" : "notice"]'>\icon[tool] [message]</span>"
 				if(beep)
 					playsound(mob.loc, 'sound/machines/twobeep.ogg', 50, 1)
-
