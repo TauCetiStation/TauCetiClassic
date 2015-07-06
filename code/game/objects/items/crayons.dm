@@ -211,23 +211,27 @@
 			update_icon()
 
 /obj/item/toy/crayon/spraycan/afterattack(atom/target, mob/user as mob, proximity)
+	if(!proximity)
+		return
 	if(capped)
+		user << "<span class='warning'>Take the cap off first!</span>"
 		return
 	else
 		if(iscarbon(target))
-			if(uses)
-				playsound(user.loc, 'sound/effects/spray.ogg', 5, 1, 5)
+			if(uses-10 > 0)
+				uses = uses - 10
 				var/mob/living/carbon/human/C = target
 				user.visible_message("<span class='danger'> [user] sprays [src] into the face of [target]!</span>")
 				if(C.client)
 					C.eye_blurry = max(C.eye_blurry, 3)
 					C.eye_blind = max(C.eye_blind, 1)
-					C.confused = max(C.confused, 3)
-					C.Weaken(3)
+					//if(C.check_eye_prot() <= 0) // no eye protection? ARGH IT BURNS. Need fix
+					//	C.confused = max(C.confused, 3)
+					//	C.Weaken(3)
 				//C.lip_style = "spray_face"
 				//C.lip_color = colour
 				C.update_body()
-				uses = max(0,uses-10)
+		playsound(user.loc, 'sound/effects/spray.ogg', 5, 1, 5)
 		..()
 
 /obj/item/toy/crayon/spraycan/update_icon()
