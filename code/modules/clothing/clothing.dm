@@ -4,6 +4,7 @@
 	var/equip_time = 0
 	var/equipping = 0
 	var/rig_restrict_helmet = 0 // Stops the user from equipping a rig helmet without attaching it to the suit first.
+	var/gang //Is this a gang outfit?
 
 	/*
 		Sprites used when the clothing item is refit. This is done by setting icon_override.

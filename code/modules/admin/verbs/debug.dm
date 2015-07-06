@@ -1735,7 +1735,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	set name = "Debug Mob Lists"
 	set desc = "For when you just gotta know"
 
-	switch(input("Which list?") in list("Players","Admins","Mobs","Living Mobs","Dead Mobs", "Clients"))
+	switch(input("Which list?") in list("Players","Admins","Mobs","Living Mobs","Dead Mobs", "Clients", "Joined Clients"))
 		if("Players")
 			usr << list2text(player_list,",")
 		if("Admins")
@@ -1748,6 +1748,8 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			usr << list2text(dead_mob_list,",")
 		if("Clients")
 			usr << list2text(clients,",")
+		if("Joined Clients")
+			usr << list2text(joined_player_list,",")
 
 // DNA2 - Admin Hax
 /client/proc/cmd_admin_toggle_block(var/mob/M,var/block)

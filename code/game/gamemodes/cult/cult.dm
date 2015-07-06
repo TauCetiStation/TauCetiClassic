@@ -181,6 +181,7 @@
 	if (!istype(cult_mind))
 		return 0
 	if(!(cult_mind in cult) && is_convertable_to_cult(cult_mind))
+		cult_mind.current.Paralyse(5)
 		cult += cult_mind
 		update_all_cult_icons()
 		return 1
@@ -196,6 +197,7 @@
 /datum/game_mode/proc/remove_cultist(datum/mind/cult_mind, show_message = 1)
 	if(cult_mind in cult)
 		cult -= cult_mind
+		cult_mind.current.Paralyse(5)
 		cult_mind.current << "\red <FONT size = 3><B>An unfamiliar white light flashes through your mind, cleansing the taint of the dark-one and the memories of your time as his servant with it.</B></FONT>"
 		cult_mind.memory = ""
 		update_cult_icons_removed(cult_mind)

@@ -84,10 +84,11 @@
 				rev_obj.explanation_text = "Assassinate [head_mind.name], the [head_mind.assigned_role]."
 				rev_mind.objectives += rev_obj
 
-	//	equip_traitor(rev_mind.current, 1) //changing how revs get assigned their uplink so they can get PDA uplinks. --NEO
-	//	Removing revolutionary uplinks.	-Pete
-		equip_revolutionary(rev_mind.current)
-		update_all_rev_icons()
+		spawn(rand(10,100))
+		//	equip_traitor(rev_mind.current, 1) //changing how revs get assigned their uplink so they can get PDA uplinks. --NEO
+		//	Removing revolutionary uplinks.	-Pete
+			equip_revolutionary(rev_mind.current)
+			update_all_rev_icons()
 
 	for(var/datum/mind/rev_mind in head_revolutionaries)
 		greet_revolutionary(rev_mind)
@@ -115,7 +116,7 @@
 			var/datum/objective/mutiny/rev_obj = new
 			rev_obj.owner = rev_mind
 			rev_obj.target = head_mind
-			rev_obj.explanation_text = "Assassinate [head_mind.name], the [head_mind.assigned_role]."
+			rev_obj.explanation_text = "Assassinate or exile [head_mind.name], the [head_mind.assigned_role]."
 			rev_mind.objectives += rev_obj
 
 /datum/game_mode/proc/greet_revolutionary(var/datum/mind/rev_mind, var/you_are=1)
@@ -144,6 +145,7 @@
 
 
 	var/obj/item/device/flash/T = new(mob)
+	var/obj/item/toy/crayon/spraycan/R = new(mob)
 
 	var/list/slots = list (
 		"backpack" = slot_in_backpack,
@@ -153,11 +155,14 @@
 		"right hand" = slot_r_hand,
 	)
 	var/where = mob.equip_in_one_of_slots(T, slots)
+	mob.equip_in_one_of_slots(R,slots)
+
+	mob.update_icons()
+
 	if (!where)
 		mob << "The Syndicate were unfortunately unable to get you a flash."
 	else
 		mob << "The flash in your [where] will help you to persuade the crew to join your cause."
-		mob.update_icons()
 		return 1
 
 //////////////////////////////////////
@@ -197,6 +202,10 @@
 	if((rev_mind in revolutionaries) || (rev_mind in head_revolutionaries))
 		return 0
 	revolutionaries += rev_mind
+	if(iscarbon(rev_mind.current))
+		var/mob/living/carbon/carbon_mob = rev_mind.current
+		carbon_mob.silent = max(carbon_mob.silent, 5)
+	rev_mind.current.Stun(5)
 	rev_mind.current << "\red <FONT size = 3> You are now a revolutionary! Help your cause. Do not harm your fellow freedom fighters. You can identify your comrades by the red \"R\" icons, and your leaders by the blue \"R\" icons. Help them kill the heads to win the revolution!</FONT>"
 	rev_mind.special_role = "Revolutionary"
 	if(config.objectives_disabled)
@@ -221,7 +230,8 @@
 		update_rev_icons_removed(rev_mind)
 		for(var/mob/living/M in view(rev_mind.current))
 			if(beingborged)
-				M << "The frame beeps contentedly, purging the hostile memory engram from the MMI before initalizing it."
+				rev_mind.current << "\red <FONT size = 3><B>The frame's firmware detects and deletes your neural reprogramming!  You remember nothing but the name of the one who flashed you.</B></FONT>"
+				message_admins("[key_name_admin(rev_mind.current)] <A HREF='?_src_=holder;adminmoreinfo=\ref[rev_mind.current]'>?</A> has been borged while being a member of the revolution.")
 
 			else
 				M << "[rev_mind.current] looks like they just remembered their real allegiance!"
@@ -281,20 +291,36 @@
 /datum/game_mode/proc/update_rev_icons_added(datum/mind/rev_mind)
 	spawn(0)
 		for(var/datum/mind/head_rev_mind in head_revolutionaries)
+
+			//Tagging the new rev for revheads to see
 			if(head_rev_mind.current)
 				if(head_rev_mind.current.client)
-					var/I = image('icons/mob/mob.dmi', loc = rev_mind.current, icon_state = "rev")
+					var/I
+					if(rev_mind in head_revolutionaries) //If the new rev is a head rev
+						I = image('icons/mob/mob.dmi', loc = rev_mind.current, icon_state = "rev_head")
+					else
+						I = image('icons/mob/mob.dmi', loc = rev_mind.current, icon_state = "rev")
 					head_rev_mind.current.client.images += I
+
+			//Tagging the revheads for new rev to see
 			if(rev_mind.current)
 				if(rev_mind.current.client)
 					var/image/J = image('icons/mob/mob.dmi', loc = head_rev_mind.current, icon_state = "rev_head")
 					rev_mind.current.client.images += J
 
 		for(var/datum/mind/rev_mind_1 in revolutionaries)
+
+			//Tagging the new rev for fellow revs to see
 			if(rev_mind_1.current)
 				if(rev_mind_1.current.client)
-					var/I = image('icons/mob/mob.dmi', loc = rev_mind.current, icon_state = "rev")
+					var/I
+					if(rev_mind in head_revolutionaries) //If the new rev is a head rev
+						I = image('icons/mob/mob.dmi', loc = rev_mind.current, icon_state = "rev_head")
+					else
+						I = image('icons/mob/mob.dmi', loc = rev_mind.current, icon_state = "rev")
 					rev_mind_1.current.client.images += I
+
+			//Tagging fellow revs for the new rev to see
 			if(rev_mind.current)
 				if(rev_mind.current.client)
 					var/image/J = image('icons/mob/mob.dmi', loc = rev_mind_1.current, icon_state = "rev")
@@ -354,11 +380,17 @@
 	if(!config.objectives_disabled)
 		if(finished == 1)
 			feedback_set_details("round_end_result","win - heads killed")
-			world << "\red <FONT size = 3><B> The heads of staff were killed or abandoned the station! The revolutionaries win!</B></FONT>"
+			world << "\red <FONT size = 3><B> The heads of staff were killed or exiled! The revolutionaries win!</B></FONT>"
 		else if(finished == 2)
 			feedback_set_details("round_end_result","loss - rev heads killed")
 			world << "\red <FONT size = 3><B> The heads of staff managed to stop the revolution!</B></FONT>"
-		..()
+	var/num_revs = 0
+	for(var/mob/living/carbon/mob in living_mob_list)
+		if(mob.mind)
+			if(mob.mind in head_revolutionaries || mob.mind in revolutionaries)
+				num_revs++
+	world << "<BR>[TAB]Command's Approval Rating: <B>[100 - round((num_revs/living_mob_list.len)*100, 0.1)]%</B>" // % of loyal crew
+	..()
 	return 1
 
 /datum/game_mode/proc/auto_declare_completion_revolution()
@@ -393,7 +425,7 @@
 		for(var/datum/mind/rev in revolutionaries)
 			text += "<br>[rev.key] was [rev.name] ("
 			if(rev.current)
-				if(rev.current.stat == DEAD)
+				if(rev.current.stat == DEAD || isbrain(rev.current))
 					text += "died"
 				else if(rev.current.z != 1)
 					text += "fled the station"
@@ -418,7 +450,7 @@
 				text += "<font color='red'>"
 			text += "<br>[head.key] was [head.name] ("
 			if(head.current)
-				if(head.current.stat == DEAD)
+				if(head.current.stat == DEAD || isbrain(head.current))
 					text += "died"
 				else if(head.current.z != 1)
 					text += "fled the station"
@@ -433,9 +465,3 @@
 				text += "</font>"
 
 		world << text
-
-/proc/is_convertable_to_rev(datum/mind/mind)
-	return istype(mind) && \
-		istype(mind.current, /mob/living/carbon/human) && \
-		!(mind.assigned_role in command_positions) && \
-		!(mind.assigned_role in list("Security Officer", "Detective", "Warden"))

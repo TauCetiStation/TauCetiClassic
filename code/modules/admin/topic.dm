@@ -52,6 +52,12 @@
 				log_admin("[key_name(usr)] has spawned vox raiders.")
 				if(!src.makeVoxRaiders())
 					usr << "\red Unfortunately there weren't enough candidates available."
+			if("12")
+				message_admins("[key_name(usr)] started a gang war.")
+				log_admin("[key_name(usr)] started a gang war.")
+				if(!src.makeGangsters())
+					usr << "<span class='danger'>Unfortunatly there were not enough candidates available.</span>"
+
 	else if(href_list["dbsearchckey"] || href_list["dbsearchadmin"] || href_list["dbsearchip"] || href_list["dbsearchcid"] || href_list["dbsearchbantype"])
 		var/adminckey = href_list["dbsearchadmin"]
 		var/playerckey = href_list["dbsearchckey"]

@@ -337,7 +337,7 @@ the implant may become unstable and either pre-maturely inject the subject or si
 		if((H.mind in ticker.mode.head_revolutionaries) || is_shadow_or_thrall(H))
 			H.visible_message("[H] seems to resist the implant!", "You feel the corporate tendrils of Nanotrasen try to invade your mind!")
 			return 0
-		else if(H.mind in ticker.mode:revolutionaries)
+		if(H.mind in ticker.mode.revolutionaries)
 			ticker.mode:remove_revolutionary(H.mind)
 
 		if(prob(50))
@@ -345,7 +345,10 @@ the implant may become unstable and either pre-maturely inject the subject or si
 				"\red Suddenly the horrible pain strikes your body! Your mind is in complete disorder! Blood pulses and starts burning! The pain is impossible!!!")
 			H.adjustBrainLoss(80)
 
-		H << "\blue You feel a surge of loyalty towards Nanotrasen."
+		if(H.mind in (ticker.mode.cult| ticker.mode.A_bosses | ticker.mode.B_bosses | ticker.mode.A_gang | ticker.mode.B_gang))
+			H << "<span class='warning'>You feel the corporate tendrils of Nanotrasen try to invade your mind!</span>"
+		else
+			H << "<span class='notice'>You feel a surge of loyalty towards Nanotrasen.</span>"
 		processing_objects.Add(src)
 		return 1
 
