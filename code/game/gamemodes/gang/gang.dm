@@ -23,11 +23,9 @@
 	config_tag = "gang"
 	//antag_flag = BE_GANG
 	restricted_jobs = list("Security Officer", "Warden", "Detective", "AI", "Cyborg","Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer")
-	//required_players = 15
-	required_players = 2
+	required_players = 15
 	required_enemies = 2
-	//recommended_enemies = 4
-	recommended_enemies = 2
+	recommended_enemies = 4
 	var/finished = 0
 	// Victory timers
 	var/A_timer = "OFFLINE"
@@ -35,6 +33,7 @@
 	//How many attempts at domination each team is allowed
 	var/A_dominations = 2
 	var/B_dominations = 2
+	votable = 0
 
 ///////////////////////////
 //Announces the game type//
