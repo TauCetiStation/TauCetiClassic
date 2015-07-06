@@ -215,6 +215,7 @@
 			if("gangtool")
 				var/tool_cost = (boss ? 10 : 30)
 				if(points >= tool_cost)
+					item_type = /obj/item/device/gangtool/lt
 					points = tool_cost
 			if("dominator")
 				if(istype(ticker.mode, /datum/game_mode/gang))

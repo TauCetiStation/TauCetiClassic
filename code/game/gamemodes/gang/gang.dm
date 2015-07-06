@@ -86,12 +86,12 @@
 	modePlayer += B_bosses
 	..()
 
-/datum/game_mode/gang/process(seconds)
+/datum/game_mode/gang/process()
 	if(!finished)
 		if(isnum(A_timer))
-			A_timer -= seconds
+			A_timer -= 2
 		if(isnum(B_timer))
-			B_timer -= seconds
+			B_timer -= 2
 
 		check_win()
 
