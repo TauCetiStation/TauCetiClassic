@@ -271,6 +271,14 @@
 			if(isliving(O))				//Welding can ignite mobs, splashed with fuel
 				var/mob/living/L = O
 				L.IgniteMob()
+		if(isturf(O))
+			var/datum/effect/effect/system/spark_spread/s = PoolOrNew(/datum/effect/effect/system/spark_spread)
+			s.set_up(3, 1, O)
+			s.start()
+		else if(isobj(O))
+			var/datum/effect/effect/system/spark_spread/s = PoolOrNew(/datum/effect/effect/system/spark_spread)
+			s.set_up(3, 1, O)
+			s.start()
 	return
 
 

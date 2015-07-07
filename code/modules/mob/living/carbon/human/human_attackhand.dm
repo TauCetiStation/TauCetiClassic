@@ -36,7 +36,7 @@
 					var/calc_power = 150 * get_siemens_coefficient_organ(select_area)
 					apply_effects(0,0,0,0,5,0,0,calc_power)
 
-					var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+					var/datum/effect/effect/system/spark_spread/s = PoolOrNew(/datum/effect/effect/system/spark_spread)
 					s.set_up(3, 1, src)
 					s.start()
 					return 1
