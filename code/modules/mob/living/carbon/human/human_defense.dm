@@ -54,6 +54,8 @@ emp_act
 			P.stun *= get_siemens_coefficient_organ(select_area)
 			P.weaken *= get_siemens_coefficient_organ(select_area)
 			P.stutter *= get_siemens_coefficient_organ(select_area)
+			if(prob(max(P.agony, 20)))
+				drop_item()
 			P.on_hit(src)
 			flash_pain()
 			src <<"\red You have been shot!"
