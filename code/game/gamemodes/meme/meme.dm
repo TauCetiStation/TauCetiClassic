@@ -70,10 +70,10 @@
 		i++
 		var/datum/mind/meme = pick(possible_memes)
 		possible_memes.Remove(meme)
-	//if(i)
-	//	testing("Deleted [i] possible memes from list")
-	//else
-	//	testing("Everything was O.K. No meme candidates over limit. Limit was [meme_limit] and possible meme candidates is [possible_memes.len]")
+	if(i)
+		log_misc("Deleted [i] possible memes from list")
+	else
+		log_misc("Everything was O.K. No meme candidates over limit. Limit was [meme_limit] and possible meme candidates is [possible_memes.len]")
 
 	// for each 2 possible memes, add one meme and one host
 	/*for(var/mob/new_player/player in player_list)
