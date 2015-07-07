@@ -160,6 +160,17 @@
 	..()
 	icon_state = "[initial(icon_state)]-[ammo_count() ? "7" : "0"]"
 
+/obj/item/ammo_box/magazine/uzim9mm
+	name = "uzi magazine (9mm)"
+	icon_state = "uzi9mm-32"
+	ammo_type = /obj/item/ammo_casing/c9mm
+	caliber = "9mm"
+	max_ammo = 32
+
+/obj/item/ammo_box/magazine/uzim9mm/update_icon()
+	..()
+	icon_state = "uzi9mm-[round(ammo_count(),4)]"
+
 /obj/item/ammo_box/magazine/uzim45
 	name = "Uzi magazine (.45)"
 	icon = 'tauceti/icons/obj/ammo.dmi'
@@ -171,6 +182,13 @@
 /obj/item/ammo_box/magazine/uzim45/update_icon()
 	..()
 	icon_state = "[initial(icon_state)]-[round(ammo_count(),2)]"
+
+/obj/item/ammo_box/magazine/tommygunm45
+	name = "drum magazine (.45)"
+	icon_state = "drum45"
+	ammo_type = /obj/item/ammo_casing/c45
+	caliber = ".45"
+	max_ammo = 50
 
 /obj/item/ammo_box/magazine/m50
 	name = "magazine (.50ae)"

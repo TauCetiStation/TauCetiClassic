@@ -58,3 +58,8 @@
 	icon_state = "refill_costume"
 	charges = 28// of 58
 */
+
+/obj/item/weapon/vending_refill/clothing
+	machine_name = "ClothesMate"
+	icon_state = "refill_clothes"
+	charges = 16// of 48

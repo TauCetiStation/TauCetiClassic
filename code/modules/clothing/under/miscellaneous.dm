@@ -204,6 +204,48 @@
 	item_color = "red_suit"
 	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
 
+/obj/item/clothing/under/suit_jacket/charcoal
+	name = "charcoal suit"
+	desc = "A charcoal suit and red tie. Very professional."
+	icon_state = "charcoal_suit"
+	item_state = "charcoal_suit"
+	item_color = "charcoal_suit"
+
+/obj/item/clothing/under/suit_jacket/navy
+	name = "navy suit"
+	desc = "A navy suit and red tie, intended for the station's finest."
+	icon_state = "navy_suit"
+	item_state = "navy_suit"
+	item_color = "navy_suit"
+
+/obj/item/clothing/under/suit_jacket/burgundy
+	name = "burgundy suit"
+	desc = "A burgundy suit and black tie. Somewhat formal."
+	icon_state = "burgundy_suit"
+	item_state = "burgundy_suit"
+	item_color = "burgundy_suit"
+
+/obj/item/clothing/under/suit_jacket/checkered
+	name = "checkered suit"
+	desc = "That's a very nice suit you have there. Shame if something were to happen to it, eh?"
+	icon_state = "checkered_suit"
+	item_state = "checkered_suit"
+	item_color = "checkered_suit"
+
+/obj/item/clothing/under/suit_jacket/tan
+	name = "tan suit"
+	desc = "A tan suit with a yellow tie. Smart, but casual."
+	icon_state = "tan_suit"
+	item_state = "tan_suit"
+	item_color = "tan_suit"
+
+/obj/item/clothing/under/suit_jacket/white
+	name = "white suit"
+	desc = "A white suit and jacket with a blue shirt. You wanna play rough? OKAY!."
+	icon_state = "white_suit"
+	item_state = "white_suit"
+	item_color = "white_suit"
+
 /obj/item/clothing/under/blackskirt
 	name = "black skirt"
 	desc = "A black skirt, very fancy!"
