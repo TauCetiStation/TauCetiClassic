@@ -136,7 +136,7 @@
 	name = "PTR-7 heavy rifle"
 	desc = "A portable anti-armour bolt-action rifle. Originally designed to used against armoured exosuits. Fires armor piercing 14.5mm shells."
 	item = /obj/item/weapon/gun/projectile/heavyrifle
-	cost = 15
+	cost = 10
 	gamemodes = list(/datum/game_mode/nuclear)
 	uplink_types = list("nuclear")
 	excludefrom_uplinks = list("traitor")
