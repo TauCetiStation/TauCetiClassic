@@ -157,6 +157,7 @@
 
 /obj/structure/closet/attack_animal(mob/living/simple_animal/user as mob)
 	if(user.environment_smash)
+		playsound(user.loc, 'sound/effects/grillehit.ogg', 50, 1)
 		user.do_attack_animation(src)
 		visible_message("\red [user] destroys the [src]. ")
 		for(var/atom/movable/A as mob|obj in src)
