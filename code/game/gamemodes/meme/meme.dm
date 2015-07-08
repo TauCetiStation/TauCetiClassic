@@ -59,11 +59,11 @@
 		log_admin("MODE FAILURE: MEME. NOT ENOUGH MEME CANDIDATES.")
 		return 0 not enough candidates for meme*/
 
-	testing("[player_list.len] cur players")
+	//testing("[player_list.len] cur players")
 
 	//var/meme_limit = Clamp((num_players()/20), 1, 3)
 	var/meme_limit = Clamp((player_list.len/13), 1, 3)
-	testing("Current meme limit is [meme_limit]")
+	//testing("Current meme limit is [meme_limit]")
 	var/i = 0
 
 	while(possible_memes.len > meme_limit)
@@ -71,9 +71,9 @@
 		var/datum/mind/meme = pick(possible_memes)
 		possible_memes.Remove(meme)
 	if(i)
-		testing("Deleted [i] possible memes from list")
+		log_misc("Deleted [i] possible memes from list")
 	else
-		testing("Everything was O.K. No meme candidates over limit. Limit was [meme_limit] and possible meme candidates is [possible_memes.len]")
+		log_misc("Everything was O.K. No meme candidates over limit. Limit was [meme_limit] and possible meme candidates is [possible_memes.len]")
 
 	// for each 2 possible memes, add one meme and one host
 	/*for(var/mob/new_player/player in player_list)

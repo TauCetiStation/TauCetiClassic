@@ -26,7 +26,7 @@
 	icon_state = "mini-uzi"
 	w_class = 3.0
 	origin_tech = "combat=5;materials=2;syndicate=8"
-	mag_type = /obj/item/ammo_box/magazine/uzim45
+	mag_type = /obj/item/ammo_box/magazine/uzim9mm
 
 /obj/item/weapon/gun/projectile/automatic/c20r
 	name = "C-20r SMG"
@@ -195,6 +195,20 @@
 		user << "<span class='notice'>[src]'s cover is closed! You can't insert a new mag!</span>"
 		return
 	..()
+
+/obj/item/weapon/gun/projectile/automatic/tommygun
+	name = "thompson SMG"
+	desc = "Based on the classic 'Chicago Typewriter'."
+	icon_state = "tommygun"
+	item_state = "shotgun"
+	w_class = 5
+	slot_flags = 0
+	origin_tech = "combat=5;materials=1;syndicate=2"
+	mag_type = /obj/item/ammo_box/magazine/tommygunm45
+	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
+	//can_suppress = 0
+ 	//burst_size = 4
+ 	//fire_delay = 1
 
 /* The thing I found with guns in ss13 is that they don't seem to simulate the rounds in the magazine in the gun.
    Afaik, since projectile.dm features a revolver, this would make sense since the magazine is part of the gun.
