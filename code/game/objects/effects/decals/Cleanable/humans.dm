@@ -78,6 +78,9 @@ var/global/list/image/splatter_cache=list()
 		W.bloodiness = 4
 
 	perp.update_inv_shoes(1)
+	if(perp.lying)
+		perp.bloody_body(perp)
+		perp.bloody_hands(perp)
 	amount--
 
 /obj/effect/decal/cleanable/blood/proc/dry()
