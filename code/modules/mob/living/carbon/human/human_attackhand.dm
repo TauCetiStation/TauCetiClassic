@@ -56,6 +56,8 @@
 			var/armor_block = run_armor_check(affecting, "melee")
 
 			if(HULK in M.mutations)			damage += 5
+			if(dna && dna.mutantrace == "adamantine")
+				damage += 5
 
 			playsound(loc, "punch", 25, 1, -1)
 
