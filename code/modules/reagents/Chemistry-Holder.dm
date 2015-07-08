@@ -163,11 +163,12 @@ datum
 
 				src.trans_to(B, amount)
 
-				spawn(95)
-					BR.reaction(target, INGEST)
-					spawn(5)
-						BR.trans_to(target, BR.total_volume)
-						qdel(B)
+				digest_delay(BR, target, B)
+				//spawn(95)
+				//	BR.reaction(target, INGEST)
+				//	spawn(5)
+				//		BR.trans_to(target, BR.total_volume)
+				//		qdel(B)
 
 				return amount
 
@@ -627,3 +628,13 @@ datum
 atom/proc/create_reagents(var/max_vol)
 	reagents = new/datum/reagents(max_vol)
 	reagents.my_atom = src
+
+// Временное (а может и постоянное) решение бага с проком, который симулирует поедание еды/таблеток и передает с задержкой реагенты из временного контейнера...
+//... по какой-то причине, кудел прерывает spawn который был вызван объектом(еда/таблетка)...
+//... быстрое решение нашел только такое - отвязать проблемный блок в проке от регов. ~Zve
+proc/digest_delay(var/datum/reagents/BR, var/obj/target, var/obj/item/weapon/reagent_containers/glass/beaker/noreact/B)
+	spawn(95)
+		BR.reaction(target, INGEST)
+		spawn(5)
+			BR.trans_to(target, BR.total_volume)
+			qdel(B)

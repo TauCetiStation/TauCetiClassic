@@ -36,7 +36,7 @@
 					var/calc_power = 150 * get_siemens_coefficient_organ(select_area)
 					apply_effects(0,0,0,0,5,0,0,calc_power)
 
-					var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+					var/datum/effect/effect/system/spark_spread/s = PoolOrNew(/datum/effect/effect/system/spark_spread)
 					s.set_up(3, 1, src)
 					s.start()
 					return 1
@@ -56,6 +56,8 @@
 			var/armor_block = run_armor_check(affecting, "melee")
 
 			if(HULK in M.mutations)			damage += 5
+			if(dna && dna.mutantrace == "adamantine")
+				damage += 5
 
 			playsound(loc, "punch", 25, 1, -1)
 

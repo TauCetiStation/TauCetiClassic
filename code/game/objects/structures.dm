@@ -117,4 +117,7 @@
 	if (issilicon(user))
 		user << "<span class='notice'>You need hands for this.</span>"
 		return 0
-	return 1 
+	for(var/obj/O in src.loc)
+		if (O.density > 0 && istype(O, /obj/machinery/door/firedoor) || (O.density && O.opacity) > 0)
+			return 0
+	return 1

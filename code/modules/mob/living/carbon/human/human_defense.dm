@@ -54,6 +54,8 @@ emp_act
 			P.stun *= get_siemens_coefficient_organ(select_area)
 			P.weaken *= get_siemens_coefficient_organ(select_area)
 			P.stutter *= get_siemens_coefficient_organ(select_area)
+			if(prob(max(P.agony, 20)))
+				drop_item()
 			P.on_hit(src)
 			flash_pain()
 			src <<"\red You have been shot!"
@@ -297,6 +299,7 @@ emp_act
 					visible_message("\red <B>[src] has been knocked unconscious!</B>")
 					if(src != user && I.damtype == BRUTE)
 						ticker.mode.remove_revolutionary(mind)
+						ticker.mode.remove_gangster(mind, exclude_bosses=1)
 
 				if(bloody)//Apply blood
 					if(wear_mask)

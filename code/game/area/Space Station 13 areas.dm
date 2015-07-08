@@ -26,9 +26,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon = 'icons/turf/areas.dmi'
 	icon_state = "unknown"
 	layer = 10
-	luminosity = 1
+	luminosity = 0
 	mouse_opacity = 0
 	var/lightswitch = 1
+	var/valid_territory = 1 //If it's a valid territory for gangs to claim
 
 	var/eject = null
 
@@ -103,6 +104,7 @@ var/list/ghostteleportlocs = list()
 	power_light = 0
 	power_equip = 0
 	power_environ = 0
+	valid_territory = 0
 //	ambience = list('sound/ambience/ambispace.ogg','sound/music/title2.ogg','sound/music/space.ogg','sound/music/main.ogg','sound/music/traitor.ogg')
 
 /area/engine/
@@ -130,6 +132,7 @@ var/list/ghostteleportlocs = list()
 
 /area/shuttle
 	requires_power = 0
+	valid_territory = 0
 
 /area/shuttle/arrival
 	name = "\improper Arrival Shuttle"
@@ -608,6 +611,8 @@ var/list/ghostteleportlocs = list()
  	icon_state = "atmos"
 
 //Maintenance
+/area/maintenance
+	valid_territory = 0
 
 /area/maintenance/atmos_control
 	name = "Atmospherics Maintenance"
@@ -1021,6 +1026,7 @@ var/list/ghostteleportlocs = list()
 /area/solar
 	requires_power = 0
 	lighting_use_dynamic = 0
+	valid_territory = 0
 
 	auxport
 		name = "\improper Fore Port Solar Array"
@@ -1200,6 +1206,10 @@ var/list/ghostteleportlocs = list()
 /area/medical/surgery2
 	name = "\improper Operating Theatre 2"
 	icon_state = "surgery"
+
+/area/medical/surgerystorage
+	name = "\improper Operating Storage"
+	icon_state = "surgery2"
 
 /area/medical/surgeryobs
 	name = "\improper Operation Observation Room"
@@ -1396,6 +1406,7 @@ var/list/ghostteleportlocs = list()
 	icon_state = "toxstorage"
 
 /area/rnd/test_area
+	valid_territory = 0
 	name = "\improper Toxins Test Area"
 	icon_state = "toxtest"
 

@@ -716,6 +716,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 /datum/organ/external/proc/fracture()
 
+	if(owner.dna && owner.dna.mutantrace == "adamantine")
+		return
+
 	if(status & ORGAN_BROKEN)
 		return
 

@@ -282,6 +282,7 @@ var/global/datum/controller/gameticker/ticker
 		for(var/mob/new_player/player in player_list)
 			sleep(1)
 			if(player.ready && player.mind)
+				joined_player_list += player.ckey
 				if(player.mind.assigned_role=="AI")
 					player.close_spawn_windows()
 					player.AIize()
@@ -363,10 +364,48 @@ var/global/datum/controller/gameticker/ticker
 
 
 /datum/controller/gameticker/proc/declare_completion()
+	var/station_evacuated
+	if(emergency_shuttle.location > 0)
+		station_evacuated = 1
+	var/num_survivors = 0
+	var/num_escapees = 0
 
+	world << "<BR><BR><BR><FONT size=3><B>The round has ended.</B></FONT>"
+
+	//Player status report
+	for(var/mob/Player in mob_list)
+		if(Player.mind)
+			if(Player.stat != DEAD && !isbrain(Player))
+				num_survivors++
+				if(station_evacuated) //If the shuttle has already left the station
+					var/turf/playerTurf = get_turf(Player)
+					if(playerTurf.z != 2)
+						Player << "<font color='red'><b>You managed to survive, but were marooned on [station_name()]...</b>"
+					else
+						num_escapees++
+						Player << "<font color='green'><b>You managed to survive the events on [station_name()] as [Player.real_name].</b>"
+				else
+					Player << "<font color='green'><b>You managed to survive the events on [station_name()] as [Player.real_name].</b>"
+			else
+				Player << "<font color='red'><b>You did not survive the events on [station_name()]...</b>"
+
+	//Round statistics report
+	var/datum/station_state/end_state = new /datum/station_state()
+	end_state.count()
+	var/station_integrity = round( 100.0 *  start_state.score(end_state), 0.1)
+
+	world << "<BR>[TAB]Shift Duration: <B>[round(world.time / 36000)]:[add_zero(world.time / 600 % 60, 2)]:[world.time / 100 % 6][world.time / 100 % 10]</B>"
+	world << "<BR>[TAB]Station Integrity: <B>[mode.station_was_nuked ? "<font color='red'>Destroyed</font>" : "[station_integrity]%"]</B>"
+	world << "<BR>[TAB]Total Population: <B>[joined_player_list.len]</B>"
+	world << "<BR>[TAB]Survival Rate: <B>[num_survivors] ([round((num_survivors/joined_player_list.len)*100, 0.1)]%)</B>"
+	if(station_evacuated)
+		world << "<BR>[TAB]Evacuation Rate: <B>[num_escapees] ([round((num_escapees/joined_player_list.len)*100, 0.1)]%)</B>"
+	world << "<BR>"
+
+	//Silicon laws report
 	for (var/mob/living/silicon/ai/aiPlayer in mob_list)
 		if (aiPlayer.stat != 2)
-			world << "<b>[aiPlayer.name] (Played by: [aiPlayer.key])'s laws at the end of the game were:</b>"
+			world << "<b>[aiPlayer.name] (Played by: [aiPlayer.mind.key])'s laws at the end of the round were:</b>"
 		else
 			world << "<b>[aiPlayer.name] (Played by: [aiPlayer.key])'s laws when it was deactivated were:</b>"
 		aiPlayer.show_laws(1)

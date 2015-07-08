@@ -118,6 +118,7 @@
 		new /obj/item/clothing/head/helmet/HoS/dermal(src)
 		new /obj/item/weapon/cartridge/hos(src)
 		new /obj/item/device/radio/headset/heads/hos(src)
+		new /obj/item/clothing/suit/armor/vest/leather(src)
 //		new /obj/item/clothing/glasses/sunglasses/sechud(src)
 		new /obj/item/clothing/glasses/thermal/hos_thermals(src)
 		new /obj/item/taperoll/police(src)
