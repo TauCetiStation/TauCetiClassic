@@ -251,6 +251,7 @@
 /turf/simulated/wall/attack_animal(var/mob/living/simple_animal/M)
 	M.do_attack_animation(src)
 	if(M.environment_smash >= 2)
+		playsound(M.loc, 'sound/effects/grillehit.ogg', 50, 1)
 		if(istype(src, /turf/simulated/wall/r_wall))
 			if(M.environment_smash == 3)
 				take_damage(rand(25, 75))
