@@ -111,8 +111,9 @@
 		return
 
 	if(!allowed(user))
-		user << "<span class='warning'>Access denied.</span>"
-		return
+		if(pdiff >= 35)
+			user << "<span class='warning'>Access denied.</span>"
+			return
 
 	var/alarmed = 0
 

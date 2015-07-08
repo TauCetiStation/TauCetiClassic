@@ -125,6 +125,10 @@
 		src.druggy--
 		src.druggy = max(0, src.druggy)
 
+	if (src.confused > 0)
+		src.confused--
+		src.confused = max(0, src.confused)
+
 	//update the state of modules and components here
 	if (src.stat != 0)
 		uneq_all()
@@ -135,7 +139,8 @@
 		radio.on = 1
 
 	if(is_component_functioning("camera"))
-		src.blinded = 0
+		if(!src.eye_blind)
+			src.blinded = 0
 	else
 		src.blinded = 1
 
