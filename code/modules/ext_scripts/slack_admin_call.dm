@@ -22,6 +22,7 @@ proc/admin_call_cooldown(var/value1)
 	//	world << test
 
 	if(key_name(src) in ac_nameholder)
+		src << "<font color='blue'>ћожно использовать не чаще 1-го раза в 5 минут.</font>"
 		return
 
 	admin_call_cooldown(key_name(src))
