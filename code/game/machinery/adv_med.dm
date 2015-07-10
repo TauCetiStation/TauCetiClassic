@@ -179,7 +179,6 @@
 	name = "Body Scanner Console"
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "body_scannerconsole"
-	density = 1
 	anchored = 1
 	var/printing = 0
 	var/storedinfo = null

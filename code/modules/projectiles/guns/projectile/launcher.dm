@@ -1,10 +1,10 @@
 /obj/item/weapon/gun/projectile/m79
 	name = "\improper m79 grenade launcher"
-	desc = "m79 grenade launcher.."
+	desc = "Uses 40x46 ammunition."
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "m79"
-	item_state = "riotgun"
-	w_class = 5
+	item_state = "m79"
+	w_class = 4
 	force = 10
 	slot_flags = SLOT_BACK
 	origin_tech = "combat=5;materials=3"
