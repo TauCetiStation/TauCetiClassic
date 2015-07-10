@@ -288,6 +288,7 @@ obj/item/ammo_box/magazine/tommygunm45
 	slot_flags = SLOT_BELT
 	name = "sawn-off shotgun"
 	desc = "Omar's coming!"
+	short = 1
 
 /obj/item/ammo_box/magazine/internal/cylinder/dualshot/dungeon
 	name = "double-barrel shotgun internal magazine"

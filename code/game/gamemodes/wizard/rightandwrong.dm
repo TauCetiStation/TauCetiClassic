@@ -34,7 +34,7 @@
 			if("nuclear")
 				new /obj/item/weapon/gun/energy/gun/nuclear(get_turf(H))
 			if("deagle")
-				new /obj/item/weapon/gun/projectile/automatic/deagle/camo(get_turf(H))
+				new /obj/item/weapon/gun/projectile/automatic/deagle/gold(get_turf(H))
 			if("gyrojet")
 				new /obj/item/weapon/gun/projectile/automatic/gyropistol(get_turf(H))
 			if("pulse")

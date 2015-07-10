@@ -20,8 +20,9 @@
 /obj/item/weapon/gun/projectile/automatic/deagle
 	name = "desert eagle"
 	desc = "A robust handgun that uses .50 AE ammo"
-	icon = 'tauceti/icons/obj/guns.dmi'
+	icon = 'icons/obj/gun.dmi'
 	icon_state = "deagle"
+	item_state = "deagle"
 	force = 14.0
 	mag_type = /obj/item/ammo_box/magazine/m50
 	fire_sound = 'sound/weapons/guns/deagle_shot.ogg'
@@ -31,24 +32,36 @@
 
 /obj/item/weapon/gun/projectile/automatic/deagle/afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, flag)
 	..()
-	if(!chambered && !get_ammo() && !alarmed)
-		playsound(user, 'sound/weapons/smg_empty_alarm.ogg', 40, 1)
-		update_icon()
-		alarmed = 1
+	update_icon()
 	return
 
-/obj/item/weapon/gun/projectile/automatic/deagle/update_icon()
+/obj/item/weapon/gun/projectile/automatic/deagle/update_icon(var/load = 0)
 	..()
-	icon_state = "[initial(icon_state)][magazine ? "" : "-e"]"
+	if(load)
+		icon_state = "[initial(icon_state)]"
+		return
+	icon_state = "[initial(icon_state)][(!chambered && !get_ammo()) ? "-e" : ""]"
+	return
+
+/obj/item/weapon/gun/projectile/automatic/deagle/attackby(var/obj/item/A as obj, mob/user as mob)
+	if (istype(A, /obj/item/ammo_box/magazine))
+		var/obj/item/ammo_box/magazine/AM = A
+		if (!magazine && istype(AM, mag_type))
+			user.remove_from_mob(AM)
+			magazine = AM
+			magazine.loc = src
+			user << "<span class='notice'>You load a new magazine into \the [src].</span>"
+			chamber_round()
+			A.update_icon()
+			update_icon(1)
+			return 1
+		else if (magazine)
+			user << "<span class='notice'>There's already a magazine in \the [src].</span>"
+	return 0
 
 /obj/item/weapon/gun/projectile/automatic/deagle/gold
 	desc = "A gold plated gun folded over a million times by superior martian gunsmiths. Uses .50 AE ammo."
 	icon_state = "deagleg"
-	item_state = "deagleg"
-
-/obj/item/weapon/gun/projectile/automatic/deagle/camo
-	desc = "A Deagle brand Deagle for operators operating operationally. Uses .50 AE ammo."
-	icon_state = "deaglecamo"
 	item_state = "deagleg"
 
 /obj/item/weapon/gun/projectile/automatic/gyropistol
@@ -86,6 +99,16 @@
 	origin_tech = "combat=2;materials=2;syndicate=2"
 	mag_type = /obj/item/ammo_box/magazine/m9mm
 
+/obj/item/weapon/gun/projectile/automatic/pistol/pistol_9mm
+	name = "\improper Pistol"
+	desc = "A small, easily concealable gun. Uses 9mm rounds."
+	icon = 'tauceti/icons/obj/guns.dmi'
+	icon_state = "pistol9mm"
+	w_class = 2
+	silenced = 0
+	origin_tech = "combat=2;materials=2;syndicate=2"
+	mag_type = /obj/item/ammo_box/magazine/m9mm_2
+
 /obj/item/weapon/gun/projectile/automatic/pistol/isHandgun()
 	return 1
 
@@ -110,6 +133,7 @@
 	name = "\improper Colt M1911"
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "colt"
+	item_state = "colt"
 	w_class = 2
 	mag_type = /obj/item/ammo_box/magazine/c45r
 	var/mag_type2 = /obj/item/ammo_box/magazine/c45m
@@ -118,9 +142,17 @@
 /obj/item/weapon/gun/projectile/automatic/colt1911/isHandgun()
 	return 1
 
-/obj/item/weapon/gun/projectile/automatic/colt1911/update_icon()
+/obj/item/weapon/gun/projectile/automatic/colt1911/afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, flag)
 	..()
-	icon_state = "[initial(icon_state)]"
+	update_icon()
+	return
+
+/obj/item/weapon/gun/projectile/automatic/colt1911/update_icon(var/load = 0)
+	..()
+	if(load)
+		icon_state = "[initial(icon_state)]"
+		return
+	icon_state = "[initial(icon_state)][(!chambered && !get_ammo()) ? "-e" : ""]"
 	return
 
 /obj/item/weapon/gun/projectile/automatic/colt1911/attackby(var/obj/item/A as obj, mob/user as mob)
@@ -133,7 +165,7 @@
 			user << "<span class='notice'>You load a new magazine into \the [src].</span>"
 			chamber_round()
 			A.update_icon()
-			update_icon()
+			update_icon(1)
 			return 1
 		else if (magazine)
 			user << "<span class='notice'>There's already a magazine in \the [src].</span>"
