@@ -251,6 +251,10 @@
 /turf/simulated/wall/attack_animal(var/mob/living/simple_animal/M)
 	M.do_attack_animation(src)
 	if(M.environment_smash >= 2)
+		if(istype(M, /mob/living/simple_animal/hulk))
+			var/mob/living/simple_animal/hulk/Hulk = M
+			playsound(Hulk, 'sound/weapons/tablehit1.ogg', 50, 1)
+			Hulk.health -= rand(4,10)
 		playsound(M.loc, 'sound/effects/grillehit.ogg', 50, 1)
 		if(istype(src, /turf/simulated/wall/r_wall))
 			if(M.environment_smash == 3)
