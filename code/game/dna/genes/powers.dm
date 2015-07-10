@@ -210,7 +210,7 @@
 	name="Hulk"
 	activation_messages=list("Your muscles hurt.")
 	mutation=HULK
-	activation_prob=75
+	activation_prob=15
 
 	New()
 		block=HULKBLOCK
@@ -222,13 +222,19 @@
 		return ..(M,flags)
 
 	activate(var/mob/M, var/connected, var/flags)
+		if(M.mind)
+			if(M.mind.hulkizing) return
+			M.mind.hulkizing = 1
+		else
+			return
 		..(M,connected,flags)
 		if(M.client)
 			message_admins("[M.name] ([M.ckey]) is now <span class='warning'>Hulk</span>")
 		M.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
-		var/mob/living/simple_animal/hulk/hulk = new /mob/living/simple_animal/hulk(get_turf(M))
+		var/mob/living/simple_animal/hulk/Hulk = new /mob/living/simple_animal/hulk(get_turf(M))
+		Hulk.previous_body = M.type
 		if(M.mind)
-			M.mind.transfer_to(hulk)
+			M.mind.transfer_to(Hulk)
 
 		var/mob/living/carbon/human/H = M
 		for(var/obj/item/W in (H.contents))

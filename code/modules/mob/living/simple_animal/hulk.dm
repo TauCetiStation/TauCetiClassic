@@ -5,8 +5,8 @@
 	icon = 'icons/mob/hulk.dmi'
 	icon_state = "hulk"
 	icon_living = "hulk"
-	maxHealth = 250
-	health = 250
+	maxHealth = 200
+	health = 200
 	immune_to_ssd = 1
 
 	speak_emote = list("roars")
@@ -19,7 +19,7 @@
 	melee_damage_lower = 5
 	melee_damage_upper = 20
 	attacktext = "brutally crushes"
-	environment_smash = 3
+	environment_smash = 2
 
 	speed = 1
 	a_intent = "harm"
@@ -41,6 +41,8 @@
 							/obj/effect/proc_holder/spell/aoe_turf/hulk_smash
 							)
 
+	var/previous_body = null
+
 /mob/living/simple_animal/hulk/New()
 	..()
 	name = text("[initial(name)] ([rand(1, 1000)])")
@@ -48,11 +50,68 @@
 	for(var/spell in hulk_powers)
 		spell_list += new spell(src)
 
-/mob/living/simple_animal/hulk/death()
+/mob/living/simple_animal/hulk/Life()
+	if(health < 1)
+		death()
+		return
+
+	var/matrix/Mx = matrix()
+	if(health <= 35)
+		Mx.Scale(0.75)
+		Mx.Translate(0,-5)
+	else if(health <= 75)
+		Mx.Scale(0.8)
+		Mx.Translate(0,-4)
+	else if(health <= 135)
+		Mx.Scale(0.85)
+		Mx.Translate(0,-3)
+	else if(health <= 175)
+		Mx.Scale(0.9)
+		Mx.Translate(0,-2)
+	else
+		Mx.Scale(1)
+		Mx.Translate(0,0)
+	transform = Mx
+
+	var/datum/gas_mixture/environment = loc.return_air()
+	if(environment)
+		var/pressure = environment.return_pressure()
+		if(pressure > 110)
+			health -= 7
+		else if(pressure <= 5)
+			health -= 25
+		else if(pressure <= 25)
+			health -= 11
+		else if(pressure <= 45)
+			health -= 9
+		else if(pressure <= 55)
+			health -= 7
+		else if(pressure <= 65)
+			health -= 5
+		else if(pressure <= 75)
+			health -= 3
+
+		if(pressure <= 75)
+			if(prob(15))
+				emote("me",1,"gasps!")
+
+	weakened = 0
+	if(health > 0)
+		health = min(health + 1, maxHealth)
 	..()
-	ghostize(0)
-	icon = 'icons/mob/hulk_dead.dmi'
-	icon_state = "hulk_dead"
+
+/mob/living/simple_animal/hulk/death()
+	if(previous_body)
+		var/mob/living/carbon/C =  new previous_body(get_turf(src))
+		C.Paralyse(15)
+		if(mind)
+			mind.transfer_to(C)
+	else
+		var/mob/living/carbon/human/H = new /mob/living/carbon/human (get_turf(src))
+		H.Paralyse(15)
+		if(mind)
+			mind.transfer_to(H)
+	qdel(src)
 	return
 
 /mob/living/simple_animal/hulk/examine()
@@ -99,10 +158,6 @@
 		now_pushing = null
 
 /mob/living/simple_animal/hulk/attack_animal(mob/living/simple_animal/M as mob)
-	//if(istype(M, /mob/living/simple_animal/hulk/builder))
-	//	health += 5
-	//	M.emote("mends some of \the <EM>[src]'s</EM> wounds.")
-	//else
 	if(M.melee_damage_upper <= 0)
 		M.emote("[M.friendly] \the <EM>[src]</EM>")
 	else
@@ -145,35 +200,7 @@
 			if ((M.client && !( M.blinded )))
 				M.show_message("\red [user] gently taps [src] with [O]. ")
 
-
-/mob/living/simple_animal/hulk/Life()
-	weakened = 0
-	if(health > 0)
-		health = min(health + 1, maxHealth)
+/mob/living/simple_animal/hulk/bullet_act(var/obj/item/projectile/P)
 	..()
-
-//mob/living/simple_animal/hulk/bullet_act(var/obj/item/projectile/P)
-	//if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam))
-	//	var/reflectchance = 80 - round(P.damage/3)
-	//	if(prob(reflectchance))
-	//		adjustBruteLoss(P.damage * 0.5)
-	//		visible_message("<span class='danger'>The [P.name] gets reflected by [src]'s shell!</span>", \
-	//						"<span class='userdanger'>The [P.name] gets reflected by [src]'s shell!</span>")
-
-			// Find a turf near or on the original location to bounce to
-	//		if(P.starting)
-	//			var/new_x = P.starting.x + pick(0, 0, -1, 1, -2, 2, -2, 2, -2, 2, -3, 3, -3, 3)
-	//			var/new_y = P.starting.y + pick(0, 0, -1, 1, -2, 2, -2, 2, -2, 2, -3, 3, -3, 3)
-	//			var/turf/curloc = get_turf(src)
-
-				// redirect the projectile
-	//			P.original = locate(new_x, new_y, P.z)
-	//			P.starting = curloc
-	//			P.current = curloc
-	//			P.firer = src
-	//			P.yo = new_y - curloc.y
-	//			P.xo = new_x - curloc.x
-
-	//		return -1 // complete projectile permutation
-
-//	return (..(P))
+	if(istype(P, /obj/item/projectile/energy/electrode) || istype(P, /obj/item/projectile/beam/stun) || istype(P, /obj/item/projectile/bullet/stunslug) || istype(P, /obj/item/projectile/bullet/weakbullet))
+		health -= P.agony / 3
