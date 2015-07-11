@@ -269,3 +269,5 @@ var/red_alert_code = 0 //Used in new code red and emergency shuttle call lightin
 var/red_alert_evac = 0
 
 var/TAB = "&nbsp;&nbsp;&nbsp;&nbsp;"
+
+var/list/ac_nameholder = list() //Список ckey которые использовали кнопку AdminCall. Используется для блокировки использования этой кнопки.
