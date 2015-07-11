@@ -45,6 +45,7 @@
 
 	proc/shoot_with_empty_chamber(mob/living/user as mob|obj)
 		user << "<span class='warning'>*click*</span>"
+		playsound(user, 'sound/weapons/empty.ogg', 100, 1)
 		return
 
 	proc/shoot_live_shot(mob/living/user as mob|obj)

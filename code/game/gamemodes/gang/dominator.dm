@@ -86,16 +86,16 @@
 		//emergency_shuttle.location!=0
 		if(!isnum(mode.A_timer) && !isnum(mode.B_timer))
 
-			if(emergency_shuttle.direction == 1)
-				emergency_shuttle.settimeleft(0)
+			//if(emergency_shuttle.direction == 1)
+			//	emergency_shuttle.settimeleft(0)
 				//SSshuttle.emergency.mode = SHUTTLE_DOCKED
 				//SSshuttle.emergency.timer = world.time
 				//priority_announce("Hostile enviroment resolved. You have 3 minutes to board the Emergency Shuttle.", null, 'sound/AI/shuttledock.ogg', "Priority")
 				//captain_announce("Hostile enviroment resolved. You have 3 minutes to board the Emergency Shuttle.")
 				//world << sound('sound/AI/shuttledock.ogg')
-			else
+			//else
 				//priority_announce("All hostile activity within station systems have ceased.","Network Alert")
-				captain_announce("All hostile activity within station systems have ceased.")
+				//captain_announce("All hostile activity within station systems have ceased.")
 			if(get_security_level() == "delta")
 				set_security_level("red")
 

@@ -164,6 +164,7 @@
 	if(A)
 		notify_ghosts("Nar-Sie has risen in \the [A.name]. Reach out to the Geometer to be given a new shell for your soul.")
 	narsie_spawn_animation()
+	invisibility = 60
 
 	sleep(70)
 	if(emergency_shuttle)
@@ -210,8 +211,11 @@
 	//if(is_type_in_list(A, uneatable))
 	//	return 0
 
-	if(istype(A,/mob/living/))
-		var/mob/living/C = A
+	var/mob/living/C = locate(/mob/living) in A
+	if(istype(C))
+		if(!isturf(C.loc))
+			C.loc = get_turf(C)
+
 		if(istype(C, /mob/living/simple_animal/construct))
 			return
 		if(C.client)
