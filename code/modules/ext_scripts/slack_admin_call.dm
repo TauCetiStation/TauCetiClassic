@@ -23,10 +23,11 @@ proc/admin_call_cooldown(var/value1)
 	admin_call_cooldown(key_name(src))
 
 	var/output_text = {"<font color='red'>============ADMINCALL============</font><BR>
-<font color='red'>[sanitize_popup("1) Сообщение длинной не более 140 символов.")]</font><BR>
-<font color='red'>[sanitize_popup("2) Описать коротко и внятно причину по которой нужен админ.")]</font><BR>
-<font color='red'>[sanitize_popup("3) Ожидать.</font>")]<BR>
-<font color='red'>[sanitize_popup("4) Если и таким образом не выйдет вызвать админа, то в крайнем случае сообщение будет сохранено и не потеряется.")]</font><BR>
+<font color='red' size='6'>[sanitize_alt("0) Сообщение писать на !!!translite!!!, поддержки кириллицы пока нет.")]</font><BR>
+<font color='red'>[sanitize_alt("1) Сообщение длинной не более 140 символов.")]</font><BR>
+<font color='red'>[sanitize_alt("2) Описать коротко и внятно причину по которой нужен админ.")]</font><BR>
+<font color='red'>[sanitize_alt("3) Ожидать.")]</font><BR>
+<font color='red'>[sanitize_alt("4) Если и таким образом не выйдет вызвать админа, то в крайнем случае сообщение будет сохранено и не потеряется.")]</font><BR>
 <font color='red'>=================================</font><BR>
 "}
 
@@ -55,8 +56,11 @@ proc/admin_call_cooldown(var/value1)
 
 	//send this msg to all admins
 	var/admin_number_afk = 0
+	var/admin_number = 0
 	for(var/client/X in admins)
-		if((R_ADMIN|R_MOD|R_MENTOR) & X.holder.rights)
+		//if((R_ADMIN|R_MOD|R_MENTOR) & X.holder.rights)
+		if((R_ADMIN) & X.holder.rights)
+			admin_number++
 			if(X.is_afk())
 				admin_number_afk++
 			if(X.prefs.toggles & SOUND_ADMINHELP)
@@ -66,7 +70,8 @@ proc/admin_call_cooldown(var/value1)
 	//show it to the person admincalling too
 	src << "<font color='blue'><b>AdminCall message</b>: [original_msg]</font>"
 
-	var/admin_number_present = admins.len - admin_number_afk
+	//var/admin_number_present = admins.len - admin_number_afk
+	var/admin_number_present = admin_number - admin_number_afk
 	log_admin("ADMINCALL: [key_name(src)]: [original_msg] - heard by [admin_number_present] non-AFK admins.")
 	if(admin_number_present <= 0)
 		if(!admin_number_afk)
