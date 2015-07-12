@@ -133,6 +133,10 @@
 		user.visible_message("<span class='danger'>[user] smashes through [src]!</span>")
 		user.do_attack_animation(src)
 		shatter()
+	else if(user.dna && user.dna.mutantrace == "adamantine")
+		user.visible_message("<span class='danger'>[user] smashes through [src]!</span>")
+		user.do_attack_animation(src)
+		shatter()
 	else if (usr.a_intent == "hurt")
 		playsound(src.loc, 'sound/effects/glassknock.ogg', 80, 1)
 		usr.visible_message("\red [usr.name] bangs against the [src.name]!", \

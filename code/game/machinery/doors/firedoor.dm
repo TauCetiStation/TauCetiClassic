@@ -111,8 +111,9 @@
 		return
 
 	if(!allowed(user))
-		user << "<span class='warning'>Access denied.</span>"
-		return
+		if(pdiff >= FIREDOOR_MAX_PRESSURE_DIFF)
+			user << "<span class='warning'>Access denied.</span>"
+			return
 
 	var/alarmed = 0
 

@@ -288,6 +288,7 @@
 
 /obj/structure/table/attack_animal(mob/living/simple_animal/user)
 	if(user.environment_smash)
+		playsound(user.loc, 'sound/effects/grillehit.ogg', 50, 1)
 		user.do_attack_animation(src)
 		visible_message("<span class='danger'>[user] smashes [src] apart!</span>")
 		destroy()
@@ -689,6 +690,7 @@
 
 /obj/structure/rack/attack_animal(mob/living/simple_animal/user)
 	if(user.environment_smash)
+		playsound(user.loc, 'sound/effects/grillehit.ogg', 50, 1)
 		user.do_attack_animation(src)
 		visible_message("<span class='danger'>[user] smashes [src] apart!</span>")
 		destroy()

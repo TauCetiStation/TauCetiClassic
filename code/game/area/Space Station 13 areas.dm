@@ -26,7 +26,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon = 'icons/turf/areas.dmi'
 	icon_state = "unknown"
 	layer = 10
-	luminosity = 1
+	luminosity = 0
 	mouse_opacity = 0
 	var/lightswitch = 1
 	var/valid_territory = 1 //If it's a valid territory for gangs to claim
@@ -1206,6 +1206,10 @@ var/list/ghostteleportlocs = list()
 /area/medical/surgery2
 	name = "\improper Operating Theatre 2"
 	icon_state = "surgery"
+
+/area/medical/surgerystorage
+	name = "\improper Operating Storage"
+	icon_state = "surgery2"
 
 /area/medical/surgeryobs
 	name = "\improper Operation Observation Room"

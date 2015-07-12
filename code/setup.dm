@@ -819,4 +819,6 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define HYDRO_SPEED_MULTIPLIER 1
 #define NANO_IGNORE_DISTANCE 1
 
-#define CLAMP01(x) max(0, min(1, x))
+#define Clamp(x, y, z) 	(x <= y ? y : (x >= z ? z : x))
+
+#define CLAMP01(x) 		(Clamp(x, 0, 1))

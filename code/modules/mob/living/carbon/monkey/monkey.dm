@@ -237,7 +237,7 @@
 					G.cell.use(2500)
 					apply_effects(0,0,0,0,5,0,0,150)
 
-					var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+					var/datum/effect/effect/system/spark_spread/s = PoolOrNew(/datum/effect/effect/system/spark_spread)
 					s.set_up(3, 1, src)
 					s.start()
 

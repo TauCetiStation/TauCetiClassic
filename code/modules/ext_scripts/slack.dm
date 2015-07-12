@@ -3,7 +3,8 @@
 		return 0
 
 	//more info here: https://api.slack.com/docs/formatting
-	msg = html_decode(msg)
+	//msg = html_decode(msg)
+	msg = sanitize_plus_popup(html_decode(revert_ja(msg)))
 
 	var/formatted_command = "curl --data \"[msg]\" 'https://[config.slack_team].slack.com/services/hooks/slackbot?token=[config.slack_bot_token]&channel=%23[channel]'"
 
@@ -17,6 +18,14 @@
 	msg = server_name + " reports: " + msg
 
 	send2slack("service", msg)
+
+/proc/send2slack_admincall(var/msg)
+	if(!msg)
+		return
+	var/server_name = config.server_name ? config.server_name : "Noname server"
+	msg = server_name + " reports: " + msg
+
+	send2slack("everything-talks", msg)
 
 /* some hooks */
 /hook/startup/proc/slack_startup()

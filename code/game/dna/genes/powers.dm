@@ -210,7 +210,7 @@
 	name="Hulk"
 	activation_messages=list("Your muscles hurt.")
 	mutation=HULK
-	activation_prob=5
+	activation_prob=15
 
 	New()
 		block=HULKBLOCK
@@ -222,69 +222,27 @@
 		return ..(M,flags)
 
 	activate(var/mob/M, var/connected, var/flags)
+		if(M.mind)
+			if(M.mind.hulkizing) return
+			M.mind.hulkizing = 1
+		else
+			return
 		..(M,connected,flags)
 		if(M.client)
 			message_admins("[M.name] ([M.ckey]) is now <span class='warning'>Hulk</span>")
-		M.verbs += /mob/living/carbon/human/proc/hulk_jump
-		M.verbs += /mob/living/carbon/human/proc/hulk_dash
-		M.verbs += /mob/living/carbon/human/proc/hulk_smash
-
-		var/matrix/Mx = matrix()
-		Mx.Scale(1.5) //Makes our hulk to be bigger than any normal human.
-		Mx.Translate(0,8)
-		M.transform = Mx
-
 		M.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
+		var/mob/living/simple_animal/hulk/Hulk = new /mob/living/simple_animal/hulk(get_turf(M))
+		Hulk.previous_body = M.type
+		if(M.mind)
+			M.mind.transfer_to(Hulk)
 
-		var/list/preserve = list()
 		var/mob/living/carbon/human/H = M
-		for(var/obj/item/weapon/storage/backpack/W in H)
-			preserve += W
-		for(var/obj/item/weapon/implant/W in H)
-			preserve += W
-		for(var/obj/item/weapon/shard/shrapnel/W in H)
-			preserve += W
-		for(var/obj/item/W in (H.contents-preserve))
-			if (W==H.w_uniform) // will be teared
-				qdel(W)
-				continue
+		for(var/obj/item/W in (H.contents))
 			H.drop_from_inventory(W)
 			if(istype(W.loc,/obj/machinery/))
 				W.loc = get_turf(H) // If we transformed in some container like dna_scanner and we can't get our items back anymore, here is solution.
-
-	deactivate(var/mob/M, var/connected, var/flags)
-		..(M,connected,flags)
-		M.verbs -= /mob/living/carbon/human/proc/hulk_jump
-		M.verbs -= /mob/living/carbon/human/proc/hulk_dash
-		M.verbs -= /mob/living/carbon/human/proc/hulk_smash
-		M.opacity = 0 // just in case
-
-		var/matrix/Mx = matrix()
-		Mx.Scale(1) ////Reset size of our hulk
-		Mx.Translate(0,0)
-		M.transform = Mx
-
-	OnDrawUnderlays(var/mob/M,var/g,var/fat)
-		if(fat)
-			return "hulk_[fat]_s"
-		else
-			return "hulk_[g]_s"
-		return 0
-
-	OnMobLife(var/mob/living/carbon/human/M)
-		if(!istype(M)) return
-		if(!M.lying) // Our Hulk now blocks LoS as mech. He is really big, isnt he?
-			M.opacity = 1
-		else
-			M.opacity = 0
-		if(M.health <= 25) // Hulk gene is still with us, so we will get WEAKEN status while health <= 25, until we remove that gene manually
-			if(HULK in M.mutations)
-				M.mutations.Remove(HULK)
-				M.update_mutations()		//update our mutation overlays
-			if(prob(25)) M << "\red You suddenly feel very weak." // Less spam to user
-			if(!M.lying) //Facken spam fix for collapse
-				M.emote("collapse")
-			M.Weaken(10)
+		qdel(M)
+		return
 
 /datum/dna/gene/basic/xray
 	name="X-Ray Vision"
