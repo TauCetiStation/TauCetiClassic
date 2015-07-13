@@ -115,3 +115,18 @@
 /obj/item/projectile/bullet/chameleon
 	damage = 1 // stop trying to murderbone with a fake gun dumbass!!!
 	embed = 0 // nope
+
+//=================NEW PROJECTILES=================\\
+/obj/item/projectile/l10
+	name ="projectile"
+	icon = 'icons/obj/projectiles.dmi'
+	icon_state = "l10"
+	layer = 11
+	damage = 15
+	damage_type = BURN
+	flag = "energy"
+	eyeblur = 4
+	sharp = 0
+	edge = 0
+
+	muzzle_type = /obj/effect/projectile/energy/muzzle
