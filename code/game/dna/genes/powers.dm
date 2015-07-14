@@ -230,13 +230,17 @@
 		..(M,connected,flags)
 		if(M.client)
 			message_admins("[M.name] ([M.ckey]) is now <span class='warning'>Hulk</span>")
-		M.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 		var/mob/living/simple_animal/hulk/Hulk = new /mob/living/simple_animal/hulk(get_turf(M))
 		Hulk.previous_body = M.type
 		if(M.mind)
 			M.mind.transfer_to(Hulk)
-
+		Hulk.attack_log = M.attack_log
+		Hulk.attack_log += "\[[time_stamp()]\]<font color='blue'> ======HULK LIFE======</font>"
+		Hulk.say(pick("RAAAAAAAARGH!", "HNNNNNNNNNGGGGGGH!", "GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", "AAAAAAARRRGH!" ))
 		var/mob/living/carbon/human/H = M
+		for(var/obj/item/weapon/implant/W in H)
+			W.loc = get_turf(H)
+			qdel(W)
 		for(var/obj/item/W in (H.contents))
 			H.drop_from_inventory(W)
 			if(istype(W.loc,/obj/machinery/))
