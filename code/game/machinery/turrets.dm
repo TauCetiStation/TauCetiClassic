@@ -56,7 +56,7 @@
 		// 4 = change (HONK)
 		// 5 = bluetag
 		// 6 = redtag
-	var/health = 160
+	var/health = 120
 	var/obj/machinery/turretcover/cover = null
 	var/popping = 0
 	var/wasvalid = 0
