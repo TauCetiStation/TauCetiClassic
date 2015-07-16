@@ -311,3 +311,5 @@ var/list/score=list(
 	"dmgestdamage"  = 0,
 	"dmgestkey"     = null
 )
+
+var/global/list/achievements = list()

@@ -221,12 +221,14 @@
 
 /datum/game_mode/proc/auto_declare_completion_wizard()
 	if(wizards.len)
-		var/text = "<FONT size = 2><B>The wizards/witches were:</B></FONT>"
+		var/icon/logo = icon('icons/mob/mob.dmi', "wizard-logo")
+		var/text = "<br>\icon[logo] <font size=3><b>the wizards/witches were:</b></font> \icon[logo]"
 
 		for(var/datum/mind/wizard in wizards)
 
-			text += "<br>[wizard.key] was [wizard.name] ("
 			if(wizard.current)
+				var/icon/flat = getFlatIcon(wizard.current)
+				text += "<br>\icon[flat] <b>[wizard.key]</b> was <b>[wizard.name]</b> ("
 				if(wizard.current.stat == DEAD)
 					text += "died"
 				else
@@ -234,6 +236,8 @@
 				if(wizard.current.real_name != wizard.name)
 					text += " as [wizard.current.real_name]"
 			else
+				var/icon/sprotch = icon('icons/effects/blood.dmi', "floor1-old")
+				text += "<br>\icon[sprotch] <b>[wizard.key]</b> was <b>[wizard.name]</b> ("
 				text += "body destroyed"
 			text += ")"
 
@@ -256,6 +260,17 @@
 				else
 					text += "<br><font color='red'><B>The wizard has failed!</B></font>"
 					feedback_add_details("wizard_success","FAIL")
+				if(wizard.current && wizard.current.spell_list)
+					text += "<br><B>[wizard.name] used the following spells: </B>"
+					var/i = 1
+					for(var/obj/effect/proc_holder/spell/S in wizard.current.spell_list)
+					//var/icon/spellicon = icon('icons/mob/screen_spells.dmi', S.hud_state)
+					//text += "<br>\icon[spellicon] [S.name]"
+						text += "<br>[S.name]"
+						if(wizard.current.spell_list.len > i)
+							text += ", "
+						i++
+				text += "<br>"
 
 		world << text
 	return 1

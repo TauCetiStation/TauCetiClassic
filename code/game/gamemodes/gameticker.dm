@@ -440,4 +440,15 @@ var/global/datum/controller/gameticker/ticker
 
 	scoreboard()
 
+	if(achievements.len)
+		achievement_declare_completion()
+
 	return 1
+
+/datum/controller/gameticker/proc/achievement_declare_completion()
+	var/text = "<br><FONT size = 2><B>Additionally, the following players earned achievements:</B></FONT>"
+	var/icon/cup = icon('icons/obj/drinks.dmi', "golden_cup")
+	for(var/winner in achievements)
+		text += "<br>\icon[cup] [winner]"
+
+	world << text
