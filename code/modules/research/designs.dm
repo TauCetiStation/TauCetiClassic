@@ -709,7 +709,7 @@ datum/design/vindicator_peri
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/mecha/vindicator/peripherals"
 
-datum/design/durand_targ
+datum/design/vindicator_targ
 	name = "Circuit Design (\"Vindicator\" Weapons & Targeting Control module)"
 	desc = "Allows for the construction of a \"Vindicator\" Weapons & Targeting Control module."
 	id = "vindicator_targ"
@@ -717,7 +717,7 @@ datum/design/durand_targ
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/mecha/vindicator/targeting"
-
+/*
 datum/design/honker_main
 	name = "Circuit Design (\"H.O.N.K\" Central Control module)"
 	desc = "Allows for the construction of a \"H.O.N.K\" Central Control module."
@@ -743,7 +743,7 @@ datum/design/honker_targ
 	req_tech = list("programming" = 3)
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
-	build_path = "/obj/item/weapon/circuitboard/mecha/honker/targeting"
+	build_path = "/obj/item/weapon/circuitboard/mecha/honker/targeting"*/
 
 datum/design/ultra_main
 	name = "Circuit Design (\"Gygax Ultra\" Central Control module)"

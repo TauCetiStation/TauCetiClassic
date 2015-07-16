@@ -112,7 +112,8 @@ var/list/admin_verbs_fun = list(
 	/client/proc/roll_dices,
 	/client/proc/epileptic_anomaly,
 //	/client/proc/Noir_anomaly,
-	/client/proc/epileptic_anomaly_cancel
+	/client/proc/epileptic_anomaly_cancel,
+	/client/proc/achievement
 	)
 var/list/admin_verbs_spawn = list(
 	/datum/admins/proc/spawn_atom,		/*allows us to spawn instances*/
@@ -922,3 +923,45 @@ var/list/admin_verbs_mentor = list(
 
 	log_admin("[key_name(usr)] told everyone to man up and deal with it.")
 	message_admins("\blue [key_name_admin(usr)] told everyone to man up and deal with it.", 1)
+
+/client/proc/achievement()
+	set name = "Give Achievement"
+	set category = "Fun"
+
+	if(!check_rights(R_FUN))	return
+
+	var/achoice = "Cancel"
+
+	if(!player_list.len)
+		usr << "player list is empty!"
+		return
+
+	var/mob/winner = input("Who's a winner?", "Achievement Winner") in player_list
+	var/name = input("What will you call your achievement?", "Achievement Winner", "New Achievement")
+	var/desc = input("What description will you give it?", "Achievement Description", "You Win")
+
+	if(istype(winner, /mob/living))
+		achoice = alert("Give our winner his own trophy?","Achievement Trophy", "Confirm","Cancel")
+
+	var/glob = alert("Announce the achievement globally? (Beware! Ruins immersion!)","Last Question", "No!","Yes!")
+
+	if(achoice == "Confirm")
+		var/obj/item/weapon/reagent_containers/food/drinks/golden_cup/C = new(get_turf(winner))
+		C.name = name
+		C.desc = desc
+		winner.put_in_hands(C)
+		winner.update_icons()
+	else
+		winner << "<span class='danger'>You win [name]! [desc]</span>"
+
+	var/icon/cup = icon('icons/obj/drinks.dmi', "golden_cup")
+
+	if(glob == "No!")
+		winner.client << sound('sound/misc/achievement.ogg')
+	else
+		world  << sound('sound/misc/achievement.ogg')
+		world << "<span class='danger'>\icon[cup] [winner.name] wins \"[name]\"!</span>"
+
+	winner << "<span class='danger'>Congratulations!</span>"
+
+	achievements += "[winner.key] as [winner.name] won \"[name]\"! \"[desc]\""
