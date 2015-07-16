@@ -426,3 +426,30 @@ datum/projectile_data
 	var/g = mixOneColor(weights, greens)
 	var/b = mixOneColor(weights, blues)
 	return rgb(r,g,b)
+
+//============VG PORTS============
+/proc/recursive_type_check(atom/O, type = /atom)
+	var/list/processing_list = list(O)
+	var/list/processed_list = new/list()
+	var/found_atoms = new/list()
+
+	while (processing_list.len)
+		var/atom/A = processing_list[1]
+
+		if (istype(A, type))
+			found_atoms |= A
+
+		for (var/atom/B in A)
+			if (!processed_list[B])
+				processing_list |= B
+
+		processing_list.Cut(1, 2)
+		processed_list[A] = A
+
+	return found_atoms
+
+/proc/get_contents_in_object(atom/O, type_path = /atom/movable)
+	if (O)
+		return recursive_type_check(O, type_path) - O
+	else
+		return new/list()

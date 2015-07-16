@@ -138,3 +138,28 @@ var/global/const/base_law_type = /datum/ai_laws/nanotrasen
 		if (length(law) > 0)
 			who << "[number]. [law]"
 			number++
+
+/datum/ai_laws/proc/write_laws()
+	var/text = ""
+	if (src.zeroth)
+		text += "0. [src.zeroth]"
+
+	for (var/index = 1, index <= src.ion.len, index++)
+		var/law = src.ion[index]
+		var/num = ionnum()
+		text += "<br>[num]. [law]"
+
+	var/number = 1
+	for (var/index = 1, index <= src.inherent.len, index++)
+		var/law = src.inherent[index]
+
+		if (length(law) > 0)
+			text += "<br>[number]. [law]"
+			number++
+
+	for (var/index = 1, index <= src.supplied.len, index++)
+		var/law = src.supplied[index]
+		if (length(law) > 0)
+			text += "<br>[number]. [law]"
+			number++
+	return text
