@@ -184,7 +184,7 @@
 			if(isDown())
 				popUp()
 				use_power = 2
-			else
+			//else
 				spawn()
 					if(!targeting_active)
 						targeting_active = 1
@@ -255,7 +255,7 @@
 		if (src.cover!=null)
 			flick("popup", src.cover)
 			src.cover.icon_state = "openTurretCover"
-		spawn(10)
+		spawn(0)
 			if (popping==1) popping = 0
 
 /obj/machinery/turret/proc/popDown()
@@ -265,13 +265,14 @@
 		if (src.cover!=null)
 			flick("popdown", src.cover)
 			src.cover.icon_state = "turretCover"
-		spawn(10)
+		spawn(0)
 			if (popping==-1)
 				invisibility = INVISIBILITY_LEVEL_TWO
 				popping = 0
 
 /obj/machinery/turret/bullet_act(var/obj/item/projectile/Proj)
-	src.health -= Proj.damage
+	if(!isDown())
+		src.health -= Proj.damage
 	..()
 	if(prob(45) && Proj.damage > 0) src.spark_system.start()
 	qdel(Proj)
