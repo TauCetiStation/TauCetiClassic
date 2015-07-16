@@ -406,6 +406,9 @@
 		for (var/obj/structure/crematorium/C in world)
 			if (C.id == id)
 				if (!C.cremating)
+					for(var/mob/living/M in C.contents)
+						user.attack_log += "\[[time_stamp()]\]<font color='red'> Cremated [M.name] ([M.ckey])</font>"
+						message_admins("[user.name] ([user.ckey]) <font color='red'>Cremating</font> [M.name] ([M.ckey]).")
 					C.cremate(user)
 	else
 		usr << "\red Access denied."
