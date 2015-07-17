@@ -1485,6 +1485,11 @@
 						//client.screen += global_hud.meson
 						if(!druggy)		see_invisible = SEE_INVISIBLE_MINIMUM
 
+			if(changeling_aug)
+				sight |= SEE_MOBS
+				see_in_dark = 8
+				see_invisible = SEE_INVISIBLE_MINIMUM
+
 			if(healths)
 				if (analgesic)
 					healths.icon_state = "health_health_numb"

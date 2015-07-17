@@ -247,6 +247,7 @@ obj/effect/proc_holder/changeling/sting/blind
 	feedback_add_details("changeling_powers","PS")
 	return 1
 
+/*
 /obj/effect/proc_holder/changeling/sting/death
 	name = "Death Sting"
 	helptext = "Causes spasms onto death."
@@ -264,7 +265,7 @@ obj/effect/proc_holder/changeling/sting/blind
 	target.make_jittery(1000)
 	if(target.reagents)	target.reagents.add_reagent("lexorin", 40)
 	feedback_add_details("changeling_powers","DTHS")
-	return 1
+	return 1*/
 
 obj/effect/proc_holder/changeling/sting/unfat
 	name = "Fat Sting"
