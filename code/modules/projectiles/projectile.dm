@@ -130,8 +130,9 @@
 		//	var/obj/item/weapon/gun/daddy = shot_from //Kinda balanced by fact you need like 2 seconds to aim
 		//	if (daddy.target && original in daddy.target) //As opposed to no-delay pew pew
 		//		miss_modifier += -30
-		if(distance > 1)
-			def_zone = get_zone_with_miss_chance(def_zone, M)
+		//if(distance > 1)
+		//	def_zone = get_zone_with_miss_chance(def_zone, M)
+		def_zone = get_zone_with_probabilty(def_zone)
 
 		if(!def_zone)
 			visible_message("\blue \The [src] misses [M] narrowly!")
