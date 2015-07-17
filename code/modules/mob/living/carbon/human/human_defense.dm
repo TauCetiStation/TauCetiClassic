@@ -294,8 +294,6 @@ emp_act
 
 		switch(hit_area)
 			if("head")//Harder to score a stun but if you do it lasts a bit longer
-				var/temp1 = (I.force + min(100,100 - src.health))
-				world << temp1
 				if(prob(I.force))
 					apply_effect(20, PARALYZE, armor)
 					visible_message("\red <B>[src] has been knocked unconscious!</B>")
