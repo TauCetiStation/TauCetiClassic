@@ -285,13 +285,13 @@
 	else if(gang == "B")
 		members += ticker.mode.B_bosses | ticker.mode.B_gang
 	if(members.len)
-		var/ping = "<span class='danger'><B><i>[gang_name(gang)] [boss ? "Gang Boss" : "Gang Lieutenant"]</i>: [message]</B></span>"
+		var/ping = "<span class='danger'><B><i>[gang_name(gang)] [boss ? "Gang Boss" : "Gang Lieutenant"]</i>: [sanitize(message)]</B></span>"
 		for(var/datum/mind/ganger in members)
 			if((ganger.current.z <= 2) && (ganger.current.stat == CONSCIOUS))
 				ganger.current << ping
 		for(var/mob/M in dead_mob_list)
 			M << ping
-		log_game("[key_name(user)] Messaged [gang_name(gang)] Gang ([gang]): [message].")
+		log_game("[key_name(user)] Messaged [gang_name(gang)] Gang ([gang]): [sanitize(message)].")
 
 
 /obj/item/device/gangtool/proc/register_device(var/mob/user)

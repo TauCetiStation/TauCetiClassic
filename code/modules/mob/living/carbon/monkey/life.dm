@@ -600,11 +600,18 @@
 			see_in_dark = 8
 			see_invisible = SEE_INVISIBLE_LEVEL_TWO
 		else if (stat != 2)
-			sight &= ~SEE_TURFS
-			sight &= ~SEE_MOBS
-			sight &= ~SEE_OBJS
-			see_in_dark = 2
-			see_invisible = SEE_INVISIBLE_LIVING
+			if(changeling_aug)
+				sight &= ~SEE_TURFS
+				sight |= SEE_MOBS
+				sight &= ~SEE_OBJS
+				see_in_dark = 8
+				see_invisible = SEE_INVISIBLE_MINIMUM
+			else
+				sight &= ~SEE_TURFS
+				sight &= ~SEE_MOBS
+				sight &= ~SEE_OBJS
+				see_in_dark = 2
+				see_invisible = SEE_INVISIBLE_LIVING
 
 		if (healths)
 			if (stat != 2)

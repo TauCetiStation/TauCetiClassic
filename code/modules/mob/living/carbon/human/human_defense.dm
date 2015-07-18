@@ -297,6 +297,7 @@ emp_act
 				if(prob(I.force))
 					apply_effect(20, PARALYZE, armor)
 					visible_message("\red <B>[src] has been knocked unconscious!</B>")
+				if(prob(I.force + min(100,100 - src.health)) && src != user && I.damtype == BRUTE)
 					if(src != user && I.damtype == BRUTE)
 						ticker.mode.remove_revolutionary(mind)
 						ticker.mode.remove_gangster(mind, exclude_bosses=1)

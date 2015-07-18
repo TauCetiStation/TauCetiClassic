@@ -17,6 +17,7 @@
 		if(M == usr)
 			usr << "<span class='notice'>You finish eating \the [src].</span>"
 		M.visible_message("<span class='notice'>[M] finishes eating \the [src].</span>")
+		score["foodeaten"]++
 		usr.drop_from_inventory(src)	//so icons update :[
 
 		if(trash)
@@ -30,6 +31,10 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/attack_self(mob/user as mob)
 	return
+
+/obj/item/weapon/reagent_containers/food/snacks/New()
+	..()
+	score["meals"]++
 
 /obj/item/weapon/reagent_containers/food/snacks/attack(mob/M as mob, mob/user as mob, def_zone)
 	if(!reagents.total_volume)						//Shouldn't be needed but it checks to see if it has anything left in it.

@@ -106,11 +106,15 @@
 		C.Paralyse(15)
 		if(mind)
 			mind.transfer_to(C)
+		C.attack_log = attack_log
+		C.attack_log += "\[[time_stamp()]\]<font color='blue'> ======HUMAN LIFE======</font>"
 	else
 		var/mob/living/carbon/human/H = new /mob/living/carbon/human (get_turf(src))
 		H.Paralyse(15)
 		if(mind)
 			mind.transfer_to(H)
+		H.attack_log = attack_log
+		H.attack_log += "\[[time_stamp()]\]<font color='blue'> ======HUMAN LIFE======</font>"
 	qdel(src)
 	return
 

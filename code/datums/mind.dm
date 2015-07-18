@@ -68,6 +68,9 @@ datum/mind
 
 	//put this here for easier tracking ingame
 	var/datum/money_account/initial_account
+	var/list/uplink_items_bought = list()
+	var/total_TC = 0
+	var/spent_TC = 0
 
 	proc/transfer_to(mob/living/new_character)
 		if(!istype(new_character))
@@ -725,6 +728,8 @@ datum/mind
 						usr << "\red Reequipping revolutionary goes wrong!"
 
 		else if (href_list["gang"])
+			current.hud_updateflag |= (1 << SPECIALROLE_HUD)
+
 			switch(href_list["gang"])
 				if("clear")
 					remove_gang()
@@ -1183,7 +1188,9 @@ datum/mind
 						crystals = input("Amount of telecrystals for [key]","Syndicate uplink", crystals) as null|num
 						if (!isnull(crystals))
 							if (suplink)
+								var/diff = crystals - suplink.uses
 								suplink.uses = crystals
+								total_TC += diff
 				if("uplink")
 					if (!ticker.mode.equip_traitor(current, !(src in ticker.mode.traitors)))
 						usr << "\red Equipping a syndicate failed!"

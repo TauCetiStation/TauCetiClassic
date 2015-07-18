@@ -259,10 +259,16 @@ obj/effect/proc_holder/changeling/sting/blind
 	if(sting_fail(user,target))
 		return 0
 	target << "<span class='danger'>You feel a small prick and your chest becomes tight.</span>"
-	target.silent = 10
-	target.Paralyse(10)
-	target.make_jittery(1000)
-	if(target.reagents)	target.reagents.add_reagent("lexorin", 40)
+	target.silent = 15
+	if(target.reagents)
+		target.reagents.add_reagent("cryptobiolin", 20)
+	spawn(50)
+		if(target && target.reagents)
+			target.reagents.add_reagent("lexorin", 20)
+			target.reagents.add_reagent("toxin", 20)
+			target.reagents.add_reagent("radium", 20)
+			target.reagents.add_reagent("phoron", 20)
+			target.reagents.add_reagent("pacid", 20)
 	feedback_add_details("changeling_powers","DTHS")
 	return 1
 

@@ -230,6 +230,23 @@ proc/hasorgans(A)
 
 	return zone
 
+/proc/get_zone_with_probabilty(zone, probability = 80)
+
+	zone = check_zone(zone)
+
+	if(prob(probability))
+		return zone
+
+	var/t = rand(1, 18) // randomly pick a different zone, or maybe the same one
+	switch(t)
+		if(1)		 return "head"
+		if(2)		 return "chest"
+		if(3 to 6)	 return "l_arm"
+		if(7 to 10)	 return "r_arm"
+		if(11 to 14) return "l_leg"
+		if(15 to 18) return "r_leg"
+
+	return zone
 
 /proc/stars(n, pr)
 	if (pr == null)

@@ -56,7 +56,7 @@
 		// 4 = change (HONK)
 		// 5 = bluetag
 		// 6 = redtag
-	var/health = 80
+	var/health = 120
 	var/obj/machinery/turretcover/cover = null
 	var/popping = 0
 	var/wasvalid = 0
@@ -184,7 +184,7 @@
 			if(isDown())
 				popUp()
 				use_power = 2
-			else
+			//else
 				spawn()
 					if(!targeting_active)
 						targeting_active = 1
@@ -255,7 +255,7 @@
 		if (src.cover!=null)
 			flick("popup", src.cover)
 			src.cover.icon_state = "openTurretCover"
-		spawn(10)
+		spawn(0)
 			if (popping==1) popping = 0
 
 /obj/machinery/turret/proc/popDown()
@@ -265,7 +265,7 @@
 		if (src.cover!=null)
 			flick("popdown", src.cover)
 			src.cover.icon_state = "turretCover"
-		spawn(10)
+		spawn(0)
 			if (popping==-1)
 				invisibility = INVISIBILITY_LEVEL_TWO
 				popping = 0

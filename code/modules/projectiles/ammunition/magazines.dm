@@ -235,3 +235,25 @@
 	ammo_type = "/obj/item/ammo_casing/chameleon"
 	max_ammo = 7
 	multiple_sprites = 1
+
+//=================NEW MAGS=================\\
+/obj/item/ammo_box/magazine/l10mag
+	name = "L10-c battery"
+	desc = "A special battery with protection from EM pulse."
+	icon = 'icons/obj/ammo.dmi'
+	icon_state = "l10_clip"
+	origin_tech = "combat=2"
+	ammo_type = /obj/item/ammo_casing/l10
+	caliber = "energy"
+	max_ammo = 25
+
+/obj/item/ammo_box/magazine/l10mag/examine()
+	set src in view()
+	..()
+	usr << "\blue You see a charge meter, it reads: [round(ammo_count() * 100 / max_ammo)]%."
+
+/obj/item/ammo_box/magazine/l10mag/attack_self(mob/user as mob)
+	return
+
+/obj/item/ammo_box/magazine/l10mag/update_icon()
+	icon_state = "[initial(icon_state)][ammo_count() ? "" : "-0"]"

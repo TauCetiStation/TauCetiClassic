@@ -210,14 +210,23 @@
 /obj/machinery/singularity/narsie/consume(var/atom/A)
 	//if(is_type_in_list(A, uneatable))
 	//	return 0
+	if(istype(A, /mob/living))
+		var/mob/living/L = A
+		if(istype(L, /mob/living/simple_animal/construct))
+			return
+		if(L.client)
+			var/mob/living/simple_animal/construct/harvester/Z = new /mob/living/simple_animal/construct/harvester (get_turf(L.loc))
+			Z.key = L.key
+			Z << "\red You are a Harvester. You are not strong, but your powers of domination will assist you in your role: \
+		Bring those who still cling to this world of illusion back to the Geometer so they may know Truth"
+		L.gib()
+		return
 
 	var/mob/living/C = locate(/mob/living) in A
 	if(istype(C))
-		if(!isturf(C.loc))
-			C.loc = get_turf(C)
-
 		if(istype(C, /mob/living/simple_animal/construct))
 			return
+		C.loc = get_turf(C)
 		if(C.client)
 			var/mob/living/simple_animal/construct/harvester/Z = new /mob/living/simple_animal/construct/harvester (get_turf(C.loc))
 			Z.key = C.key

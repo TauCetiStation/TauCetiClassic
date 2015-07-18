@@ -1485,6 +1485,11 @@
 						//client.screen += global_hud.meson
 						if(!druggy)		see_invisible = SEE_INVISIBLE_MINIMUM
 
+			if(changeling_aug)
+				sight |= SEE_MOBS
+				see_in_dark = 8
+				see_invisible = SEE_INVISIBLE_MINIMUM
+
 			if(healths)
 				if (analgesic)
 					healths.icon_state = "health_health_numb"
@@ -1948,6 +1953,14 @@
 					holder.icon_state = "hudshadowling"
 				if("thrall")
 					holder.icon_state = "hudthrall"
+				if("Clandestine Gang (A) Boss","Prima Gang (A) Boss","Zero-G Gang (A) Boss","Max Gang (A) Boss","Blasto Gang (A) Boss","Waffle Gang (A) Boss","North Gang (A) Boss","Omni Gang (A) Boss","Newton Gang (A) Boss","Cyber Gang (A) Boss","Donk Gang (A) Boss","Gene Gang (A) Boss","Gib Gang (A) Boss","Tunnel Gang (A) Boss","Diablo Gang (A) Boss","Psyke Gang (A) Boss","Osiron Gang (A) Boss")
+					holder.icon_state = "gang_boss_a"
+				if("Clandestine Gang (B) Boss","Prima Gang (B) Boss","Zero-G Gang (B) Boss","Max Gang (B) Boss","Blasto Gang (B) Boss","Waffle Gang (B) Boss","North Gang (B) Boss","Omni Gang (B) Boss","Newton Gang (B) Boss","Cyber Gang (B) Boss","Donk Gang (B) Boss","Gene Gang (B) Boss","Gib Gang (B) Boss","Tunnel Gang (B) Boss","Diablo Gang (B) Boss","Psyke Gang (B) Boss","Osiron Gang (B) Boss")
+					holder.icon_state = "gang_boss_b"
+				if("Clandestine Gang (A)","Prima Gang (A)","Zero-G Gang (A)","Max Gang (A)","Blasto Gang (A)","Waffle Gang (A)","North Gang (A)","Omni Gang (A)","Newton Gang (A)","Cyber Gang (A)","Donk Gang (A)","Gene Gang (A)","Gib Gang (A)","Tunnel Gang (A)","Diablo Gang (A)","Psyke Gang (A)","Osiron Gang (A)")
+					holder.icon_state = "gangster_a"
+				if("Clandestine Gang (B)","Prima Gang (B)","Zero-G Gang (B)","Max Gang (B)","Blasto Gang (B)","Waffle Gang (B)","North Gang (B)","Omni Gang (B)","Newton Gang (B)","Cyber Gang (B)","Donk Gang (B)","Gene Gang (B)","Gib Gang (B)","Tunnel Gang (B)","Diablo Gang (B)","Psyke Gang (B)","Osiron Gang (B)")
+					holder.icon_state = "gangster_b"
 
 			hud_list[SPECIALROLE_HUD] = holder
 	hud_updateflag = 0
