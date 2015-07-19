@@ -6,6 +6,7 @@
 	var/id = 1.0
 	dir = 1
 	explosion_resistance = 25
+	block_air_zones = 0
 
 /obj/machinery/door/poddoor/New()
 	. = ..()
