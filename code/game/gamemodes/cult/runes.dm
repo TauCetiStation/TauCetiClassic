@@ -244,12 +244,12 @@ var/list/sacrificed = list()
 					usr.seer = 0
 				else if(usr.see_invisible!=SEE_INVISIBLE_LIVING)
 					usr << "\red The world beyond flashes your eyes but disappears quickly, as if something is disrupting your vision."
-					usr.see_invisible = SEE_INVISIBLE_OBSERVER
+					usr.see_invisible = SEE_INVISIBLE_CULT
 					usr.seer = 0
 				else
 					usr.say("Rash'tla sektath mal[pick("'","`")]zua. Zasan therium vivira. Itonis al'ra matum!")
 					usr << "\red The world beyond opens to your eyes."
-					usr.see_invisible = SEE_INVISIBLE_OBSERVER
+					usr.see_invisible = SEE_INVISIBLE_CULT
 					usr.seer = 1
 				return
 			return fizzle()
