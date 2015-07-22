@@ -25,6 +25,7 @@ var/bomb_set
 	                      // 3 is sealant open, 4 is unwrenched, 5 is removed from bolts.
 	flags = FPRINT
 	use_power = 0
+	var/detonated = 0 //used for scoreboard.
 
 
 
@@ -466,6 +467,7 @@ obj/machinery/nuclearbomb/proc/nukehack_win(mob/user as mob)
 	if (src.safety)
 		src.timing = 0
 		return
+	src.detonated = 1
 	src.timing = -1.0
 	src.yes_code = 0
 	src.safety = 1
@@ -483,6 +485,8 @@ obj/machinery/nuclearbomb/proc/nukehack_win(mob/user as mob)
 	if( bomb_location && (bomb_location.z == 1) )
 		if( (bomb_location.x < (128-NUKERANGE)) || (bomb_location.x > (128+NUKERANGE)) || (bomb_location.y < (128-NUKERANGE)) || (bomb_location.y > (128+NUKERANGE)) )
 			off_station = 1
+		else
+			score["nuked"]++
 	else
 		off_station = 2
 

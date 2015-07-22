@@ -424,7 +424,7 @@
 						text += "<br>[entry]"
 					text += "</span>"
 				else
-					text += "<span class='sinister'>The Head Revolutionary was a smooth operator this round (did not purchase any uplink items)</span>"
+					text += "<br><span class='sinister'>The Head Revolutionary was a smooth operator this round (did not purchase any uplink items)</span>"
 
 			for(var/datum/objective/mutiny/objective in headrev.objectives)
 				targets |= objective.target
