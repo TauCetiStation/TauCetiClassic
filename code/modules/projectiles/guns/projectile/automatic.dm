@@ -21,9 +21,10 @@
 		alarmed = 0
 
 /obj/item/weapon/gun/projectile/automatic/mini_uzi
-	name = "Uzi"
-	desc = "A lightweight, fast firing gun, for when you want someone dead. Uses .45 rounds."
-	icon_state = "mini-uzi"
+	name = "Mac-10"
+	desc = "A lightweight, fast firing gun, for when you want someone dead. Uses 9mm rounds."
+	icon_state = "mac"
+	item_state = "mac"
 	w_class = 3.0
 	origin_tech = "combat=5;materials=2;syndicate=8"
 	mag_type = /obj/item/ammo_box/magazine/uzim9mm
