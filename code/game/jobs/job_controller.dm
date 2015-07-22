@@ -411,7 +411,9 @@ var/global/datum/controller/occupations/job_master
 				if("Cyborg")
 					H.Robotize()
 					return 1
-				if("AI","Clown")	//don't need bag preference stuff!
+				if("AI")
+					return H
+				if("Clown")	//don't need bag preference stuff!
 				else
 					switch(H.backbag) //BS12 EDIT
 						if(1)

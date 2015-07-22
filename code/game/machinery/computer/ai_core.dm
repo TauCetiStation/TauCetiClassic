@@ -162,9 +162,15 @@
 			if(istype(P, /obj/item/weapon/screwdriver))
 				playsound(loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				user << "\blue You connect the monitor."
-				var/mob/living/silicon/ai/A = new /mob/living/silicon/ai ( loc, laws, brain )
-				if(A) //if there's no brain, the mob is deleted and a structure/AIcore is created
-					A.rename_self("ai", 1)
+				if(!brain)
+					var/open_for_latejoin = alert(user, "Would you like this core to be open for latejoining AIs?", "Latejoin", "Yes", "Yes", "No") == "Yes"
+					var/obj/structure/AIcore/deactivated/D = new(loc)
+					if(open_for_latejoin)
+						empty_playable_ai_cores += D
+				else
+					var/mob/living/silicon/ai/A = new /mob/living/silicon/ai ( loc, laws, brain )
+					if(A) //if there's no brain, the mob is deleted and a structure/AIcore is created
+						A.rename_self("ai", 1)
 				feedback_inc("cyborg_ais_created",1)
 				qdel(src)
 
@@ -384,3 +390,24 @@ That prevents a few funky behaviors.
 	else
 		U << "\red <b>ERROR</b>: \black AI flush is in progress, cannot execute transfer protocol."
 	return
+
+/client/proc/empty_ai_core_toggle_latejoin()
+	set name = "Toggle AI Core Latejoin"
+	set category = "Admin"
+
+	var/list/cores = list()
+	for(var/obj/structure/AIcore/deactivated/D in world)
+		cores["[D] ([D.loc.loc])"] = D
+
+	var/id = input("Which core?", "Toggle AI Core Latejoin", null) as null|anything in cores
+	if(!id) return
+
+	var/obj/structure/AIcore/deactivated/D = cores[id]
+	if(!D) return
+
+	if(D in empty_playable_ai_cores)
+		empty_playable_ai_cores -= D
+		src << "\The [id] is now <font color=\"#ff0000\">not available</font> for latejoining AIs."
+	else
+		empty_playable_ai_cores += D
+		src << "\The [id] is now <font color=\"#008000\">available</font> for latejoining AIs."

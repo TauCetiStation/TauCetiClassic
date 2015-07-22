@@ -82,7 +82,8 @@ var/list/admin_verbs_admin = list(
 	/client/proc/toggle_antagHUD_use,
 	/client/proc/toggle_antagHUD_restrictions,
 	/client/proc/allow_character_respawn,    /* Allows a ghost to respawn */
-	/client/proc/aooc
+	/client/proc/aooc,
+	/client/proc/empty_ai_core_toggle_latejoin
 )
 var/list/admin_verbs_ban = list(
 	/client/proc/unban_panel,

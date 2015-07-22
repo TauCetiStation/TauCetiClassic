@@ -313,3 +313,6 @@ var/list/score=list(
 )
 
 var/global/list/achievements = list()
+
+// Announcer intercom, because too much stuff creates an intercom for one message then hard del()s it.
+var/global/obj/item/device/radio/intercom/global_announcer = new(null)
