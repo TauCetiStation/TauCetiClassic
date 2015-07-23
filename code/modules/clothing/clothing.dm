@@ -176,7 +176,7 @@ BLIND     // can't see anything
 	gender = PLURAL //Carn: for grammarically correct text-parsing
 	w_class = 2.0
 	icon = 'icons/obj/clothing/gloves.dmi'
-	siemens_coefficient = 0.50
+	siemens_coefficient = 0.9
 	var/wired = 0
 	var/obj/item/weapon/cell/cell = 0
 	var/clipped = 0
