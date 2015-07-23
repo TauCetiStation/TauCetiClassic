@@ -245,6 +245,12 @@
 				dispensable_reagents -= list("thirteenloko")
 				hackedcheck = 0
 				return
+
+		else if(istype(B, /obj/item/weapon/wrench))
+			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
+			anchored = !anchored
+			user << "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>"
+		return
 /obj/machinery/chem_dispenser/beer
 	icon_state = "booze_dispenser"
 	name = "booze dispenser"
@@ -270,6 +276,12 @@
 				dispensable_reagents -= list("goldschlager","patron","watermelonjuice","berryjuice")
 				hackedcheck = 0
 				return
+
+		else if(istype(B, /obj/item/weapon/wrench))
+			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
+			anchored = !anchored
+			user << "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>"
+		return
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -926,6 +938,11 @@
 
 /obj/machinery/reagentgrinder/attackby(var/obj/item/O as obj, var/mob/user as mob)
 
+	if(istype(O, /obj/item/weapon/wrench))
+		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
+		anchored = !anchored
+		user << "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>"
+		return
 
 	if (istype(O,/obj/item/weapon/reagent_containers/glass) || \
 		istype(O,/obj/item/weapon/reagent_containers/food/drinks/drinkingglass) || \

@@ -582,6 +582,8 @@ client
 			return
 
 		H.makeSkeleton()
+		H.s_tone = 25
+		H.regenerate_icons()
 		href_list["datumrefresh"] = href_list["make_skeleton"]
 
 	else if(href_list["delall"])
