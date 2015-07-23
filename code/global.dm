@@ -291,6 +291,7 @@ var/list/score=list(
 	"deadcommand"    = 0, // used during rev, how many command staff perished
 	"arrested"       = 0, // how many traitors/revs/whatever are alive in the brig
 	"traitorswon"    = 0, // how many traitors were successful?
+	"roleswon"        = 0, // how many roles were successful?
 	"allarrested"    = 0, // did the crew catch all the enemies alive?
 	"opkilled"       = 0, // used during nuke mode, how many operatives died?
 	"disc"           = 0, // is the disc safe and secure?

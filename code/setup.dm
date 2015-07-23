@@ -816,3 +816,8 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define Clamp(x, y, z) 	(x <= y ? y : (x >= z ? z : x))
 
 #define CLAMP01(x) 		(Clamp(x, 0, 1))
+
+#define FOR_DVIEW(type, range, center, invis_flags) \
+	dview_mob.loc = center; \
+	dview_mob.see_invisible = invis_flags; \
+	for(type in view(range, dview_mob))

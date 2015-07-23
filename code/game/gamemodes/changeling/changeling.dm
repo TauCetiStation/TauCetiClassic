@@ -209,6 +209,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 					if(changelingwin)
 						text += "<br><font color='green'><B>The changeling was successful!</B></font>"
 						feedback_add_details("changeling_success","SUCCESS")
+						score["roleswon"]++
 					else
 						text += "<br><font color='red'><B>The changeling has failed.</B></font>"
 						feedback_add_details("changeling_success","FAIL")
