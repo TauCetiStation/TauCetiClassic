@@ -40,29 +40,29 @@ emp_act
 				return -1 // complete projectile permutation
 
 //BEGIN BOOK'S TASER NERF.
-	if(istype(P, /obj/item/projectile/energy/electrode) || istype(P, /obj/item/projectile/beam/stun) || istype(P, /obj/item/projectile/bullet/stunslug) || istype(P, /obj/item/projectile/bullet/weakbullet))
+	if(istype(P, /obj/item/projectile/bullet/weakbullet))
 		var/datum/organ/external/select_area = get_organ(def_zone) // We're checking the outside, buddy!
-		//if(check_thickmaterial(select_area))
-		if(istype(P, /obj/item/projectile/bullet/weakbullet))
-			if(check_thickmaterial(select_area))
-				visible_message("\red <B>The [P.name] hits [src]'s armor!</B>")
-				apply_effect((P.agony / 2),AGONY,0)
-				qdel(P)
-			else
-				apply_effect((P.agony),AGONY,0)
-				qdel(P)
-			return
-		else
-			P.agony *= get_siemens_coefficient_organ(select_area)
-			P.stun *= get_siemens_coefficient_organ(select_area)
-			P.weaken *= get_siemens_coefficient_organ(select_area)
-			P.stutter *= get_siemens_coefficient_organ(select_area)
+		if(check_thickmaterial(select_area))
+			visible_message("\red <B>The [P.name] hits [src]'s armor!</B>")
+			P.agony /= 2
+		apply_effect(P.agony,AGONY,0)
+		qdel(P)
+		return
+
+	if(istype(P, /obj/item/projectile/energy/electrode) || istype(P, /obj/item/projectile/beam/stun) || istype(P, /obj/item/projectile/bullet/stunslug))
+		var/datum/organ/external/select_area = get_organ(def_zone) // We're checking the outside, buddy!
+		P.agony *= get_siemens_coefficient_organ(select_area)
+		P.stun *= get_siemens_coefficient_organ(select_area)
+		P.weaken *= get_siemens_coefficient_organ(select_area)
+		P.stutter *= get_siemens_coefficient_organ(select_area)
+
+		if(P.agony) // No effect against full protection.
 			if(prob(max(P.agony, 20)))
 				drop_item()
-			P.on_hit(src)
-			flash_pain()
-			src <<"\red You have been shot!"
-			qdel(P)
+		P.on_hit(src)
+		flash_pain()
+		src <<"\red You have been shot!"
+		qdel(P)
 		return
 
 //END TASER NERF
