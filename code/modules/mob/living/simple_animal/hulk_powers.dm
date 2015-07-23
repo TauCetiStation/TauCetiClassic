@@ -546,21 +546,30 @@
 		usr << "\red You can't right now!"
 		return
 
-	var/list/saved_targets = list()
-	for(var/mob/living/M in range(1, usr))
-		if(M != usr)
-			if(ishuman(M) || isanimal(M))
-				if(!istype(M, /mob/living/simple_animal/hulk))
-					saved_targets += M
+	var/list/names = list()
+	var/list/creatures = list()
+	var/list/namecounts = list()
+	var/mob/living/target = null	   //Chosen target.
 
-	if(!saved_targets)
+	for(var/mob/living/L in range(1, usr))
+		if(istype(L, /mob/living/simple_animal/hulk)) continue
+		if(ishuman(L) || isanimal(L))
+			var/name = L.name
+			if(name in names)
+				namecounts[name]++
+				name = "[name] ([namecounts[name]])"
+			else
+				names.Add(name)
+				namecounts[name] = 1
+			creatures[name] += L
+
+	target = input ("Target?") as null|anything in creatures
+
+	if (!target)
 		charge_counter = charge_max
 		return
 
-	var/mob/target = input ("Target?") as null|anything in saved_targets
-	if (isnull(target))
-		charge_counter = charge_max
-		return
+	target = creatures[target]
 
 	var/mob/living/simple_animal/SA = usr
 	if(ishuman(target))
