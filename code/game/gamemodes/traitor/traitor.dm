@@ -242,6 +242,7 @@
 				if(traitorwin)
 					text += "<br><font color='green'><B>The [special_role_text] was successful!</B></font>"
 					feedback_add_details("traitor_success","SUCCESS")
+					score["roleswon"]++
 				else
 					text += "<br><font color='red'><B>The [special_role_text] has failed!</B></font>"
 					feedback_add_details("traitor_success","FAIL")

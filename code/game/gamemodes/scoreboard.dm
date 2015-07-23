@@ -160,6 +160,7 @@
 
 	// Bonus Modifiers
 	//var/traitorwins = score["traitorswon"]
+	var/rolesuccess = score["roleswon"] * 250
 	var/deathpoints = score["deadcrew"] * 250 //done
 	var/researchpoints = score["researchdone"] * 30
 	var/eventpoints = score["eventsendured"] * 50
@@ -167,7 +168,7 @@
 	var/harvests = score["stuffharvested"] * 5 //done
 	var/shipping = score["stuffshipped"] * 5
 	var/mining = score["oremined"] * 2 //done
-	//var/meals = score["meals"] * 5 //done, but this only counts cooked meals, not drinks served
+	var/meals = score["meals"] * 5 //done, but this only counts cooked meals, not drinks served
 	var/power = score["powerloss"] * 20
 	var/messpoints
 	if (score["mess"] != 0) messpoints = score["mess"] //done
@@ -195,6 +196,7 @@
 	score["crewscore"] += shipping
 	score["crewscore"] += harvests
 	score["crewscore"] += mining
+	score["crewscore"] += meals
 	score["crewscore"] += researchpoints
 	score["crewscore"] += eventpoints
 	score["crewscore"] += escapoints
@@ -205,10 +207,10 @@
 	if (score["mess"] == 0)
 		score["crewscore"] += 3000
 		score["messbonus"] = 1
-	//score["crewscore"] += meals
 	if (score["allarrested"]) score["crewscore"] *= 3 // This needs to be here for the bonus to be applied properly
 
 	// Bad Things
+	score["crewscore"] -= rolesuccess
 	score["crewscore"] -= deathpoints
 	if (score["deadaipenalty"]) score["crewscore"] -= 250
 	score["crewscore"] -= power
@@ -316,12 +318,14 @@
 	<B>Useful Crates Shipped:</B> [score["stuffshipped"]] ([score["stuffshipped"] * 5] Points)<BR>
 	<B>Hydroponics Harvests:</B> [score["stuffharvested"]] ([score["stuffharvested"] * 5] Points)<BR>
 	<B>Ore Mined:</B> [score["oremined"]] ([score["oremined"] * 2] Points)<BR>
+	<B>Refreshments Prepared:</B> [score["meals"]] ([score["meals"] * 5] Points)<BR>
 	<B>Research Completed:</B> [score["researchdone"]] ([score["researchdone"] * 30] Points)<BR>"}
 	dat += "<B>Shuttle Escapees:</B> [score["escapees"]] ([score["escapees"] * 25] Points)<BR>"
 	dat += {"<B>Random Events Endured:</B> [score["eventsendured"]] ([score["eventsendured"] * 50] Points)<BR>
 	<B>Whole Station Powered:</B> [score["powerbonus"] ? "Yes" : "No"] ([score["powerbonus"] * 2500] Points)<BR>
 	<B>Ultra-Clean Station:</B> [score["mess"] ? "No" : "Yes"] ([score["messbonus"] * 3000] Points)<BR><BR>
 	<U>THE BAD:</U><BR>
+	<B>Roles successful:</B> [score["roleswon"]] (-[score["roleswon"] * 250] Points)<BR>
 	<B>Dead Bodies on Station:</B> [score["deadcrew"]] (-[score["deadcrew"] * 250] Points)<BR>
 	<B>Uncleaned Messes:</B> [score["mess"]] (-[score["mess"]] Points)<BR>
 	<B>Station Power Issues:</B> [score["powerloss"]] (-[score["powerloss"] * 20] Points)<BR>
@@ -335,6 +339,7 @@
 	dat += {"<B>Food Eaten:</b> [score["foodeaten"]]<BR>
 	<B>Times a Clown was Abused:</B> [score["clownabuse"]]<BR><BR>"}
 	if (score["escapees"])
+		dat += "<B>Most Richest Escapee:</B> [score["richestname"]], [score["richestjob"]]: [score["richestcash"]] credits ([score["richestkey"]])<BR>"
 		dat += "<B>Most Battered Escapee:</B> [score["dmgestname"]], [score["dmgestjob"]]: [score["dmgestdamage"]] damage ([score["dmgestkey"]])<BR>"
 	else
 		dat += "The station wasn't evacuated or no one escaped!<BR>"

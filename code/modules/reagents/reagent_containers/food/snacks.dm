@@ -32,10 +32,6 @@
 /obj/item/weapon/reagent_containers/food/snacks/attack_self(mob/user as mob)
 	return
 
-/obj/item/weapon/reagent_containers/food/snacks/New()
-	..()
-	score["meals"]++
-
 /obj/item/weapon/reagent_containers/food/snacks/attack(mob/M as mob, mob/user as mob, def_zone)
 	if(!reagents.total_volume)						//Shouldn't be needed but it checks to see if it has anything left in it.
 		user << "\red None of [src] left, oh no!"

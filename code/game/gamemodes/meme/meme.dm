@@ -237,6 +237,7 @@
 		if(memewin)
 			world << "<B>The meme was successful!<B>"
 			feedback_add_details("meme_success","SUCCESS")
+			score["roleswon"]++
 		else
 			world << "<B>The meme has failed!<B>"
 			feedback_add_details("meme_success","FAIL")
