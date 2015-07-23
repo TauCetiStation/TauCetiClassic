@@ -4,7 +4,7 @@
 	icon = 'icons/obj/aibots.dmi'
 	icon_state = "ed2090"
 	layer = 5.0
-	density = 1
+	density = 0
 	anchored = 0
 //	weight = 1.0E7
 	req_one_access = list(access_security, access_forensics_lockers)

@@ -23,6 +23,9 @@
 	var/check_records = 1 //Does it check security records?
 	var/arrest_type = 0 //If true, don't handcuff
 	var/next_harm_time = 0
+	var/x_last
+	var/y_last
+	var/same_pos_count
 
 	var/mode = 0
 #define SECBOT_IDLE 		0		// idle
@@ -196,6 +199,15 @@ Auto Patrol: []"},
 
 	if(!src.on)
 		return
+
+	if(x_last == src.x && y_last == src.y) // Бипски очень часто не может пересобрать путь, в результате чего стоит на одной точке,...
+		same_pos_count++ //...флудит astar проком, который поднимает проц. время на 30-50 единиц, из-за чего на сервере появляется постоянный микрофриз каждую секунду...
+		if(same_pos_count > 14) //...пока бипски таки не соорудит новый путь, что обычно не происходит. Посему ввожу авто-выключение бипски, если у него позиция не менялась 15 итераций(?) процесса.
+			turn_off()
+	else
+		same_pos_count = 0
+	x_last = src.x
+	y_last = src.y
 
 	switch(mode)
 
