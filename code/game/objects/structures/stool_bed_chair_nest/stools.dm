@@ -37,6 +37,18 @@
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		new /obj/item/stack/sheet/metal(src.loc)
 		qdel(src)
+	if(istype(W, /obj/item/weapon/melee/energy))
+		if(istype(W, /obj/item/weapon/melee/energy/blade) || W:active)
+			user.do_attack_animation(src)
+			var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
+			spark_system.set_up(5, 0, src.loc)
+			spark_system.start()
+			playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
+			playsound(src.loc, "sparks", 50, 1)
+			for(var/mob/O in viewers(user, 4))
+				O.show_message("\blue [src] was sliced apart by [user]!", 1, "\red You hear [src] coming apart.", 2)
+			new /obj/item/stack/sheet/metal(src.loc)
+			qdel(src)
 	return
 
 /obj/structure/stool/MouseDrop(atom/over_object)
