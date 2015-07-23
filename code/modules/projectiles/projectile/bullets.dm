@@ -31,6 +31,7 @@
 
 /obj/item/projectile/bullet/weakbullet/beanbag		//because beanbags are not bullets
 	name = "beanbag"
+	agony = 95
 
 /obj/item/projectile/bullet/weakbullet/rubber
 	name = "rubber bullet"
