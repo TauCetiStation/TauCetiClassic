@@ -26,6 +26,7 @@
 	stop_automated_movement = 1
 	status_flags = CANPUSH
 	universal_speak = 0
+	universal_understand = 0
 	attack_sound = 'sound/weapons/punch1.ogg'
 	min_oxy = 0
 	max_oxy = 0
@@ -43,12 +44,42 @@
 
 	var/previous_body = null
 
+/mob/living/simple_animal/hulk/zilla
+	name = "Zilla"
+	real_name = "Zilla"
+	desc = ""
+	icon = 'icons/mob/hulk_zilla.dmi'
+	icon_state = "zilla"
+	icon_living = "zilla"
+	maxHealth = 400
+	health = 400
+	immune_to_ssd = 1
+
+	melee_damage_lower = 15
+	melee_damage_upper = 15
+	attacktext = "brutally bites"
+
+	speed = 2
+
+	attack_sound = 'sound/weapons/bite.ogg'
+
+	hulk_powers = list(/obj/effect/proc_holder/spell/aoe_turf/hulk_mill,
+						/obj/effect/proc_holder/spell/aoe_turf/hulk_gas,
+						/obj/effect/proc_holder/spell/aoe_turf/hulk_spit,
+						/obj/effect/proc_holder/spell/aoe_turf/hulk_eat,
+						/obj/effect/proc_holder/spell/aoe_turf/hulk_lazor
+							)
+
 /mob/living/simple_animal/hulk/New()
 	..()
 	name = text("[initial(name)] ([rand(1, 1000)])")
 	real_name = name
 	for(var/spell in hulk_powers)
 		spell_list += new spell(src)
+
+/mob/living/simple_animal/hulk/zilla/New()
+	..()
+	pixel_x = -3
 
 /mob/living/simple_animal/hulk/Life()
 	if(health < 1)
@@ -207,4 +238,4 @@
 /mob/living/simple_animal/hulk/bullet_act(var/obj/item/projectile/P)
 	..()
 	if(istype(P, /obj/item/projectile/energy/electrode) || istype(P, /obj/item/projectile/beam/stun) || istype(P, /obj/item/projectile/bullet/stunslug) || istype(P, /obj/item/projectile/bullet/weakbullet))
-		health -= P.agony / 3
+		health -= P.agony / 10

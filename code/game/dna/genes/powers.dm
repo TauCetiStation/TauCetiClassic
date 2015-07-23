@@ -40,7 +40,7 @@
 		block=REGENERATEBLOCK
 
 	can_activate(var/mob/M,var/flags)
-		if( (HULK in M.mutations) || (mSmallsize in M.mutations))
+		if((mSmallsize in M.mutations))
 			return 0
 		return ..(M,flags)
 
@@ -177,7 +177,7 @@
 
 	can_activate(var/mob/M,var/flags)
 		// Can't be big, small and regenerate.
-		if( (HULK in M.mutations) || (mRegen in M.mutations)) //#Z2
+		if( (mRegen in M.mutations)) //#Z2
 			return 0
 		return ..(M,flags)
 
@@ -215,11 +215,11 @@
 	New()
 		block=HULKBLOCK
 
-	can_activate(var/mob/M,var/flags)
+	/*can_activate(var/mob/M,var/flags)
 		// Can't be big, small and regenerate.
 		if( (mSmallsize in M.mutations) || (mRegen in M.mutations)) //#Z2
 			return 0
-		return ..(M,flags)
+		return ..(M,flags)*/
 
 	activate(var/mob/M, var/connected, var/flags)
 		if(M.mind)
@@ -230,7 +230,14 @@
 		..(M,connected,flags)
 		if(M.client)
 			message_admins("[M.name] ([M.ckey]) is now <span class='warning'>Hulk</span>")
-		var/mob/living/simple_animal/hulk/Hulk = new /mob/living/simple_animal/hulk(get_turf(M))
+		var/mob/living/simple_animal/hulk/Hulk
+		if(M.type == /mob/living/carbon/human/unathi)
+			Hulk = new /mob/living/simple_animal/hulk/zilla(get_turf(M))
+		else
+			if(prob(35))
+				Hulk = new /mob/living/simple_animal/hulk/zilla(get_turf(M))
+			else
+				Hulk = new /mob/living/simple_animal/hulk(get_turf(M))
 		Hulk.previous_body = M.type
 		if(M.mind)
 			M.mind.transfer_to(Hulk)
