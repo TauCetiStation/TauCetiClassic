@@ -1001,7 +1001,9 @@
 	/obj/item/clothing/under/sundress=2,/obj/item/clothing/under/blacktango=1,
 	/obj/item/clothing/suit/jacket=3,/obj/item/clothing/glasses/regular=2,/obj/item/clothing/head/sombrero=1,
 	/obj/item/clothing/suit/poncho=1,/obj/item/clothing/suit/ianshirt=1,/obj/item/clothing/shoes/laceup=2,
-	/obj/item/clothing/shoes/sandal=1)
+	/obj/item/clothing/shoes/sandal=1,
+	/obj/item/clothing/mask/bandana/black=2,/obj/item/clothing/mask/bandana/skull=2,/obj/item/clothing/mask/bandana/green=2,/obj/item/clothing/mask/bandana/gold=2,
+	/obj/item/clothing/mask/bandana/blue=2)
 	contraband = list(/obj/item/clothing/under/syndicate/tacticool=1,/obj/item/clothing/mask/balaclava=1,/obj/item/clothing/head/ushanka=1,/obj/item/clothing/under/soviet=1)
 	premium = list(/obj/item/clothing/under/suit_jacket/checkered=1,/obj/item/clothing/head/mailman=1,/obj/item/clothing/under/rank/mailman=1,/obj/item/clothing/suit/jacket/leather=1,/obj/item/clothing/suit/jacket/leather/overcoat=1,/obj/item/clothing/under/pants/mustangjeans=1)
 	prices = list(/obj/item/clothing/head/that=4199,/obj/item/clothing/head/fedora=4199,/obj/item/clothing/glasses/monocle=1099,
@@ -1015,7 +1017,9 @@
 	/obj/item/clothing/under/sundress=850,/obj/item/clothing/under/blacktango=990,
 	/obj/item/clothing/suit/jacket=1380,/obj/item/clothing/glasses/regular=550,/obj/item/clothing/head/sombrero=2400,
 	/obj/item/clothing/suit/poncho=2950,/obj/item/clothing/suit/ianshirt=4000,/obj/item/clothing/shoes/laceup=990,
-	/obj/item/clothing/shoes/sandal=350)
+	/obj/item/clothing/shoes/sandal=350,
+	/obj/item/clothing/mask/bandana/black=3849,/obj/item/clothing/mask/bandana/skull=3999,/obj/item/clothing/mask/bandana/green=3849,/obj/item/clothing/mask/bandana/gold=3899,
+	/obj/item/clothing/mask/bandana/blue=3849)
 	refill_canister = /obj/item/weapon/vending_refill/clothing
 
 /obj/machinery/vending/clothing/New()
