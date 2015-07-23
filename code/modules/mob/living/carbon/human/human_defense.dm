@@ -43,11 +43,14 @@ emp_act
 	if(istype(P, /obj/item/projectile/energy/electrode) || istype(P, /obj/item/projectile/beam/stun) || istype(P, /obj/item/projectile/bullet/stunslug) || istype(P, /obj/item/projectile/bullet/weakbullet))
 		var/datum/organ/external/select_area = get_organ(def_zone) // We're checking the outside, buddy!
 		//if(check_thickmaterial(select_area))
-			
 		if(istype(P, /obj/item/projectile/bullet/weakbullet))
-			visible_message("\red <B>The [P.name] hits [src]'s armor!</B>")
-			apply_effect((P.agony / 2),AGONY,0)
-			qdel(P)
+			if(check_thickmaterial(select_area))
+				visible_message("\red <B>The [P.name] hits [src]'s armor!</B>")
+				apply_effect((P.agony / 2),AGONY,0)
+				qdel(P)
+			else
+				apply_effect((P.agony),AGONY,0)
+				qdel(P)
 			return
 		else
 			P.agony *= get_siemens_coefficient_organ(select_area)
