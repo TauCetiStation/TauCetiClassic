@@ -159,6 +159,18 @@ obj/machinery/recharger/wallcharger/process()
 				use_power(150)
 			else
 				icon_state = "recharger2"
+		if(istype(charging, /obj/item/ammo_box/magazine/l10mag))
+			var/obj/item/ammo_box/magazine/l10mag/M = charging
+			if (M.stored_ammo.len < M.max_ammo)
+				M.stored_ammo += new M.ammo_type(M)
+				if(prob(80)) //double charging speed
+					if (M.stored_ammo.len < M.max_ammo)
+						M.stored_ammo += new M.ammo_type(M)
+				update_icon()
+				icon_state = "recharger1"
+				use_power(150)
+			else
+				icon_state = "recharger2"
 
 obj/machinery/recharger/wallcharger/update_icon()
 	if(charging)

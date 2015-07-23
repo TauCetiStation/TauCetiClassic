@@ -99,16 +99,6 @@
 	origin_tech = "combat=2;materials=2;syndicate=2"
 	mag_type = /obj/item/ammo_box/magazine/m9mm
 
-/obj/item/weapon/gun/projectile/automatic/pistol/pistol_9mm
-	name = "\improper Pistol"
-	desc = "A small, easily concealable gun. Uses 9mm rounds."
-	icon = 'tauceti/icons/obj/guns.dmi'
-	icon_state = "pistol9mm"
-	w_class = 2
-	silenced = 0
-	origin_tech = "combat=2;materials=2;syndicate=2"
-	mag_type = /obj/item/ammo_box/magazine/m9mm_2
-
 /obj/item/weapon/gun/projectile/automatic/pistol/isHandgun()
 	return 1
 

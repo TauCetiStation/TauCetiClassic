@@ -264,7 +264,7 @@
 	proc/IsJobAvailable(rank)
 		var/datum/job/job = job_master.GetJob(rank)
 		if(!job)	return 0
-		if((job.current_positions >= job.total_positions) && job.total_positions != -1)	return 0
+		if(!job.is_position_available()) return 0
 		if(jobban_isbanned(src,rank))	return 0
 		if(!job.player_old_enough(src.client))	return 0
 		return 1
@@ -291,6 +291,25 @@
 		var/mob/living/carbon/human/character = create_character()	//creates the human and transfers vars and mind
 		job_master.EquipRank(character, rank, 1)					//equips the human
 		EquipCustomItems(character)
+
+		// AIs don't need a spawnpoint, they must spawn at an empty core
+		if(character.mind.assigned_role == "AI")
+
+			character = character.AIize(move=0) // AIize the character, but don't move them yet
+
+			// IsJobAvailable for AI checks that there is an empty core available in this list
+			var/obj/structure/AIcore/deactivated/C = empty_playable_ai_cores[1]
+			empty_playable_ai_cores -= C
+
+			character.loc = C.loc
+
+			//AnnounceCyborg(character, rank, "has been downloaded to the empty core in \the [character.loc.loc]")
+			ticker.mode.latespawn(character)
+
+			qdel(C)
+			qdel(src)
+			return
+
 		character.loc = pick(latejoin)
 		character.lastarea = get_area(loc)
 		// Moving wheelchair if they have one

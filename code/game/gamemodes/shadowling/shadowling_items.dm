@@ -49,6 +49,7 @@
 	unacidable = 1
 	flags = ABSTRACT
 	canremove = 0
+	flags_inv = 0
 
 
 /obj/item/clothing/gloves/shadowling
@@ -72,6 +73,7 @@
 	unacidable = 1
 	flags = ABSTRACT
 	canremove = 0
+	flags_inv = 0
 
 
 /obj/item/clothing/glasses/night/shadowling

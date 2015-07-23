@@ -535,26 +535,20 @@ var/list/liftable_structures = list(\
 #define BANTYPE_JOB_TEMP	4
 #define BANTYPE_ANY_FULLBAN	5 //used to locate stuff to unban.
 
-#define SEE_INVISIBLE_MINIMUM 5
-
-#define SEE_INVISIBLE_OBSERVER_NOLIGHTING 15
-
 #define INVISIBILITY_LIGHTING 20
+#define INVISIBILITY_LEVEL_ONE 35
+#define INVISIBILITY_LEVEL_TWO 45
+#define INVISIBILITY_OBSERVER 60
+#define INVISIBILITY_AI_EYE 61
 
 #define SEE_INVISIBLE_LIVING 25
+#define SEE_INVISIBLE_OBSERVER_NOLIGHTING 15
+#define SEE_INVISIBLE_LEVEL_ONE 35
+#define SEE_INVISIBLE_LEVEL_TWO 45
+#define SEE_INVISIBLE_CULT 60
+#define SEE_INVISIBLE_OBSERVER 61
 
-#define SEE_INVISIBLE_LEVEL_ONE 35	//Used by some stuff in code. It's really poorly organized.
-#define INVISIBILITY_LEVEL_ONE 35	//Used by some stuff in code. It's really poorly organized.
-
-#define SEE_INVISIBLE_LEVEL_TWO 45	//Used by some other stuff in code. It's really poorly organized.
-#define INVISIBILITY_LEVEL_TWO 45	//Used by some other stuff in code. It's really poorly organized.
-
-#define INVISIBILITY_OBSERVER 60
-#define SEE_INVISIBLE_OBSERVER 60
-
-#define INVISIBILITY_AI_EYE 61
-#define SEE_INVISIBLE_OBSERVER_AI_EYE 61
-
+#define SEE_INVISIBLE_MINIMUM 5
 #define INVISIBILITY_MAXIMUM 100
 
 //Object specific defines
@@ -822,3 +816,8 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define Clamp(x, y, z) 	(x <= y ? y : (x >= z ? z : x))
 
 #define CLAMP01(x) 		(Clamp(x, 0, 1))
+
+#define FOR_DVIEW(type, range, center, invis_flags) \
+	dview_mob.loc = center; \
+	dview_mob.see_invisible = invis_flags; \
+	for(type in view(range, dview_mob))
