@@ -109,10 +109,41 @@
 			if(do_after(user,digTool.digspeed*hardness) && src)
 				user << "You finished digging."
 				Dismantle()
-		else if(istype(W,/obj/item/weapon)) //not sure, can't not just weapons get passed to this proc?
+		else if(istype(W, /obj/item/weapon))
+			if (istype(W, /obj/item/weapon/weldingtool))
+				if(istype(src, /obj/structure/mineral_door/resin) || istype(src, /obj/structure/mineral_door/wood))
+					hardness -= W.force/100
+					CheckHardness()
+					return ..()
+				var/obj/item/weapon/weldingtool/WT = W
+				if(!src || !WT.isOn())
+					return ..()
+				if(WT.remove_fuel(0, user))
+					playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
+					user.visible_message("[user] dissassembles [src].", "You start to dissassemble [src].")
+					if(do_after(user, 60))
+						user << "\blue You dissasembled [src]!"
+						Dismantle()
+					else
+						return
+				else
+					user << "\blue You need more welding fuel."
+					return
+			else if (istype(W, /obj/item/weapon/wrench))
+				if(!istype(src, /obj/structure/mineral_door/wood))
+					hardness -= W.force/100
+					CheckHardness()
+					return ..()
+				playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
+				user.visible_message("[user] dissassembles [src].", "You start to dissassemble [src].")
+				if(do_after(user, 40))
+					user << "\blue You dissasembled [src]!"
+					Dismantle()
+				else
+					return
 			hardness -= W.force/100
-			user << "You hit the [name] with your [W.name]!"
 			CheckHardness()
+			return ..()
 		else
 			attack_hand(user)
 		return
