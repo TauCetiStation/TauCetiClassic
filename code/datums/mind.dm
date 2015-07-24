@@ -728,6 +728,8 @@ datum/mind
 						usr << "\red Reequipping revolutionary goes wrong!"
 
 		else if (href_list["gang"])
+			current.hud_updateflag |= (1 << SPECIALROLE_HUD)
+
 			switch(href_list["gang"])
 				if("clear")
 					remove_gang()

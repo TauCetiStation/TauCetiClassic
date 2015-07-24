@@ -99,9 +99,7 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 			H.regenerate_icons()
 			usr.mind.transfer_to(H)
 			ticker.mode.update_all_shadows_icons()
-			qdel(usr)
 
-			sleep(10)
 			H << "<span class='shadowling'><b><i>Your powers are awoken. You may now live to your fullest extent. Remember your goal. Cooperate with your thralls and allies.</b></i></span>"
 			H.spell_list += new /obj/effect/proc_holder/spell/targeted/shadowling_hivemind
 			H.spell_list += new /obj/effect/proc_holder/spell/targeted/enthrall
@@ -111,6 +109,8 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 			H.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/flashfreeze
 			H.spell_list += new /obj/effect/proc_holder/spell/targeted/collective_mind
 			H.spell_list += new /obj/effect/proc_holder/spell/targeted/shadowling_regenarmor
+
+			qdel(usr)
 
 
 

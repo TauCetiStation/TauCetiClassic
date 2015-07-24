@@ -108,14 +108,15 @@
 */
 		if (score["nuked"])
 			for (var/obj/machinery/nuclearbomb/NUKE in machines)
-				if (NUKE.r_code == "Nope") continue
+				//if (NUKE.r_code == "Nope") continue
+				if (NUKE.detonated == 0) continue
 				var/turf/T = NUKE.loc
 				if (istype(T,/area/syndicate_station) || istype(T,/area/wizard_station) || istype(T,/area/solar)) nukedpenalty = 1000
 				else if (istype(T,/area/security/main) || istype(T,/area/security/brig) || istype(T,/area/security/armoury) || istype(T,/area/security/checkpoint2)) nukedpenalty = 50000
 				else if (istype(T,/area/engine)) nukedpenalty = 100000
 				else nukedpenalty = 10000
 
-	if (ticker.mode.config_tag == "revolution")
+	if (ticker.mode.config_tag == "rp-revolution")
 		var/foecount = 0
 		for(var/datum/mind/M in ticker.mode:head_revolutionaries)
 			foecount++
@@ -148,16 +149,26 @@
 //		if (istype(M, /obj/decal/cleanable/urine)) score["mess"] += 1
 		if (istype(M, /obj/effect/decal/cleanable/vomit)) score["mess"] += 1
 
+	//Research Levels
+	var/research_levels = 0
+	for(var/obj/machinery/r_n_d/server/core/C in machines)
+		for(var/datum/tech/T in C.files.known_tech)
+			research_levels += T.level - 1
+
+	if(research_levels)
+		score["researchdone"] += research_levels
+
 	// Bonus Modifiers
 	//var/traitorwins = score["traitorswon"]
-	var/deathpoints = score["deadcrew"] * 25 //done
+	var/rolesuccess = score["roleswon"] * 250
+	var/deathpoints = score["deadcrew"] * 250 //done
 	var/researchpoints = score["researchdone"] * 30
 	var/eventpoints = score["eventsendured"] * 50
 	var/escapoints = score["escapees"] * 25 //done
 	var/harvests = score["stuffharvested"] * 5 //done
 	var/shipping = score["stuffshipped"] * 5
 	var/mining = score["oremined"] * 2 //done
-	//var/meals = score["meals"] * 5 //done, but this only counts cooked meals, not drinks served
+	var/meals = score["meals"] * 5 //done, but this only counts cooked meals, not drinks served
 	var/power = score["powerloss"] * 20
 	var/messpoints
 	if (score["mess"] != 0) messpoints = score["mess"] //done
@@ -172,7 +183,7 @@
 		score["crewscore"] += arrestpoints
 		if (score["nuked"]) score["crewscore"] -= nukedpenalty
 
-	if (ticker.mode.config_tag == "revolution")
+	if (ticker.mode.config_tag == "rp-revolution")
 		var/arrestpoints = score["arrested"] * 1000
 		var/killpoints = score["opkilled"] * 500
 		var/comdeadpts = score["deadcommand"] * 500
@@ -185,6 +196,7 @@
 	score["crewscore"] += shipping
 	score["crewscore"] += harvests
 	score["crewscore"] += mining
+	score["crewscore"] += meals
 	score["crewscore"] += researchpoints
 	score["crewscore"] += eventpoints
 	score["crewscore"] += escapoints
@@ -195,10 +207,10 @@
 	if (score["mess"] == 0)
 		score["crewscore"] += 3000
 		score["messbonus"] = 1
-	//score["crewscore"] += meals
 	if (score["allarrested"]) score["crewscore"] *= 3 // This needs to be here for the bonus to be applied properly
 
 	// Bad Things
+	score["crewscore"] -= rolesuccess
 	score["crewscore"] -= deathpoints
 	if (score["deadaipenalty"]) score["crewscore"] -= 250
 	score["crewscore"] -= power
@@ -248,7 +260,8 @@
 			break // Should only need one go-round, probably
 		var/nukedpenalty = 0
 		for(var/obj/machinery/nuclearbomb/NUKE in world)
-			if (NUKE.r_code == "Nope") continue
+			//if (NUKE.r_code == "Nope") continue
+			if (NUKE.detonated == 0) continue
 			var/turf/T = NUKE.loc
 			bombdat = T.loc
 			if (istype(T,/area/syndicate_station) || istype(T,/area/wizard_station) || istype(T,/area/solar/) || istype(T,/area)) nukedpenalty = 1000
@@ -268,7 +281,7 @@
 		<B>All Operatives Arrested:</B> [score["allarrested"] ? "Yes" : "No"] (Score tripled)<BR>
 		<HR>"}
 //		<B>Nuclear Disk Secure:</B> [score["disc"] ? "Yes" : "No"] ([score["disc"] * 500] Points)<BR>
-	if (ticker.mode.name == "revolution")
+	if (ticker.mode.name == "rp-revolution")
 		var/foecount = 0
 		var/comcount = 0
 		var/revcount = 0
@@ -302,16 +315,18 @@
 //	var/totalfunds = wagesystem.station_budget + wagesystem.research_budget + wagesystem.shipping_budget
 	dat += {"<B><U>GENERAL STATS</U></B><BR>
 	<U>THE GOOD:</U><BR>
-	<B>Useful Items Shipped:</B> [score["stuffshipped"]] ([score["stuffshipped"] * 5] Points)<BR>
+	<B>Useful Crates Shipped:</B> [score["stuffshipped"]] ([score["stuffshipped"] * 5] Points)<BR>
 	<B>Hydroponics Harvests:</B> [score["stuffharvested"]] ([score["stuffharvested"] * 5] Points)<BR>
 	<B>Ore Mined:</B> [score["oremined"]] ([score["oremined"] * 2] Points)<BR>
+	<B>Refreshments Prepared:</B> [score["meals"]] ([score["meals"] * 5] Points)<BR>
 	<B>Research Completed:</B> [score["researchdone"]] ([score["researchdone"] * 30] Points)<BR>"}
 	dat += "<B>Shuttle Escapees:</B> [score["escapees"]] ([score["escapees"] * 25] Points)<BR>"
 	dat += {"<B>Random Events Endured:</B> [score["eventsendured"]] ([score["eventsendured"] * 50] Points)<BR>
 	<B>Whole Station Powered:</B> [score["powerbonus"] ? "Yes" : "No"] ([score["powerbonus"] * 2500] Points)<BR>
 	<B>Ultra-Clean Station:</B> [score["mess"] ? "No" : "Yes"] ([score["messbonus"] * 3000] Points)<BR><BR>
 	<U>THE BAD:</U><BR>
-	<B>Dead Bodies on Station:</B> [score["deadcrew"]] (-[score["deadcrew"] * 25] Points)<BR>
+	<B>Roles successful:</B> [score["roleswon"]] (-[score["roleswon"] * 250] Points)<BR>
+	<B>Dead Bodies on Station:</B> [score["deadcrew"]] (-[score["deadcrew"] * 250] Points)<BR>
 	<B>Uncleaned Messes:</B> [score["mess"]] (-[score["mess"]] Points)<BR>
 	<B>Station Power Issues:</B> [score["powerloss"]] (-[score["powerloss"] * 20] Points)<BR>
 	<B>Rampant Diseases:</B> [score["disease"]] (-[score["disease"] * 30] Points)<BR>
@@ -324,6 +339,7 @@
 	dat += {"<B>Food Eaten:</b> [score["foodeaten"]]<BR>
 	<B>Times a Clown was Abused:</B> [score["clownabuse"]]<BR><BR>"}
 	if (score["escapees"])
+		dat += "<B>Most Richest Escapee:</B> [score["richestname"]], [score["richestjob"]]: [score["richestcash"]] credits ([score["richestkey"]])<BR>"
 		dat += "<B>Most Battered Escapee:</B> [score["dmgestname"]], [score["dmgestjob"]]: [score["dmgestdamage"]] damage ([score["dmgestkey"]])<BR>"
 	else
 		dat += "The station wasn't evacuated or no one escaped!<BR>"

@@ -101,6 +101,33 @@
 				open(1)
 	return
 
+/obj/machinery/door/firedoor/attack_animal(mob/user as mob)
+	if(istype(user, /mob/living/simple_animal/hulk))
+		if(blocked)
+			if(prob(75))
+				user.visible_message("\red <B>[user]</B> has punched \the <B>[src]!</B>",\
+				"You punch \the [src]!",\
+				"\red You feel some weird vibration!")
+				playsound(user.loc, 'sound/effects/grillehit.ogg', 50, 1)
+				return
+			else
+				user.say(pick("RAAAAAAAARGH!", "HNNNNNNNNNGGGGGGH!", "GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", "AAAAAAARRRGH!" ))
+				user.visible_message("\red <B>[user]</B> has destroyed some mechanic in \the <B>[src]!</B>",\
+				"You destroy some mechanic in \the [src] door, which holds it in place!",\
+				"\red <B>You feel some weird vibration!</B>")
+				playsound(user.loc, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), 50, 1)
+				qdel(src)
+			return
+		else if(!density)
+			return
+		else
+			user << "\red You force your fingers between the doors and begin to pry them open..."
+			playsound(src.loc, 'sound/effects/metal_creaking.ogg', 30, 1, -4)
+			if (do_after(user,40))
+				if(!src) return
+				open(1)
+	return
+
 /obj/machinery/door/firedoor/attack_hand(mob/user as mob)
 	add_fingerprint(user)
 	if(operating)

@@ -6,7 +6,7 @@
 	name = "Memetic Anomaly"
 	config_tag = "meme"
 	required_players = 6
-	required_players_secret = 10
+	required_players_secret = 15
 	restricted_jobs = list("AI", "Cyborg")
 	recommended_enemies = 3 // need at least a meme and a host
 	votable = 0 // temporarily disable this mode for voting
@@ -237,6 +237,7 @@
 		if(memewin)
 			world << "<B>The meme was successful!<B>"
 			feedback_add_details("meme_success","SUCCESS")
+			score["roleswon"]++
 		else
 			world << "<B>The meme has failed!<B>"
 			feedback_add_details("meme_success","FAIL")

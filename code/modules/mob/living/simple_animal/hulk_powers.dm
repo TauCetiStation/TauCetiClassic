@@ -422,3 +422,228 @@
 		else
 			user << text("\blue You punch the girder.")
 	return
+
+///////////////////////////////////////////////////////
+////////////////// Z  I  L  L  A /////////////////////
+/////////////////////////////////////////////////////
+/obj/effect/proc_holder/spell/aoe_turf/hulk_mill
+	name = "Windmill"
+	desc = ""
+	panel = "Hulk"
+	charge_max = 200
+	clothes_req = 0
+	range = 2
+
+/obj/effect/proc_holder/spell/aoe_turf/hulk_mill/cast(list/targets)
+	if (usr.lying || usr.stunned || usr.stat)
+		usr << "\red You can't right now!"
+		return
+
+	usr.attack_log += "\[[time_stamp()]\]<font color='red'> Uses hulk_mill</font>"
+	msg_admin_attack("[key_name(usr)] uses hulk_mill")
+
+	for(var/i=0, i<30, i++)
+		if(usr.dir == 1)
+			usr.dir = 2
+		else if(usr.dir == 2)
+			usr.dir = 4
+		else if(usr.dir == 4)
+			usr.dir = 8
+		else if(usr.dir == 8)
+			usr.dir = 1
+
+		for(var/mob/living/M in range(2, usr))
+			if(M != usr)
+				var/mob/living/carbon/human/H = M
+				if(istype(H,/mob/living/carbon/human/))
+					playsound(H.loc, 'sound/weapons/tablehit1.ogg', 50, 1)
+					var/organ_name = pick("chest","l_arm","r_arm","r_leg","l_leg","head","groin")
+					var/datum/organ/external/E = H.get_organ(organ_name)
+					E.take_damage(2, 0, 0, 0, "Tail")
+				else
+					playsound(M.loc, 'sound/weapons/tablehit1.ogg', 50, 1)
+					M.take_overall_damage(2, used_weapon = "Tail")
+				if(prob(3))
+					M.Weaken(2)
+		sleep(1)
+
+/obj/effect/proc_holder/spell/aoe_turf/hulk_gas
+	name = "Gas"
+	desc = ""
+	panel = "Hulk"
+	charge_max = 450
+	clothes_req = 0
+	range = 2
+
+/obj/effect/proc_holder/spell/aoe_turf/hulk_gas/cast(list/targets)
+	if (usr.lying || usr.stunned || usr.stat)
+		usr << "\red You can't right now!"
+		return
+
+	//Some weird magic
+	var/obj/item/weapon/grenade/TG = new /obj/item/weapon/grenade/chem_grenade/teargas(get_turf(usr))
+	TG.prime()
+
+	usr.attack_log += "\[[time_stamp()]\]<font color='red'> Uses hulk_gas</font>"
+	msg_admin_attack("[key_name(usr)] uses hulk_gas")
+
+/obj/item/projectile/energy/hulkspit
+	name = "spit"
+	icon = 'tauceti/icons/obj/projectiles.dmi'
+	icon_state = "neurotoxin"
+	damage = 5
+	damage_type = TOX
+	weaken = 4
+
+/obj/item/projectile/energy/hulkspit/on_hit(var/atom/target, var/blocked = 0)
+	if(istype(target, /mob/living/carbon))
+		var/mob/living/carbon/M = target
+		M.adjust_fire_stacks(10)
+		M.IgniteMob()
+
+/obj/effect/proc_holder/spell/aoe_turf/hulk_spit
+	name = "Fire Spit"
+	desc = ""
+	panel = "Hulk"
+	charge_max = 80
+	clothes_req = 0
+	range = 2
+
+/obj/effect/proc_holder/spell/aoe_turf/hulk_spit/cast(list/targets)
+	if (usr.lying || usr.stunned || usr.stat)
+		usr << "\red You can't right now!"
+		return
+
+	//user.visible_message("<span class='danger'>[user] spits!", "<span class='alertalien'>You spit.</span>")
+
+	var/turf/T = usr.loc
+	var/turf/U = get_step(usr, usr.dir) // Get the tile infront of the move, based on their direction
+	if(!isturf(U) || !isturf(T))
+		return
+
+	var/obj/item/projectile/energy/hulkspit/A = new /obj/item/projectile/energy/hulkspit(usr.loc)
+	A.original = U
+	A.current = U
+	A.starting = T
+	A.yo = U.y - T.y
+	A.xo = U.x - T.x
+	spawn( 0 )
+		A.process()
+
+	usr.attack_log += "\[[time_stamp()]\]<font color='red'> Uses hulk_spit</font>"
+	msg_admin_attack("[key_name(usr)] uses hulk_spit")
+
+/obj/effect/proc_holder/spell/aoe_turf/hulk_eat
+	name = "Tear or Swallow"
+	desc = ""
+	panel = "Hulk"
+	charge_max = 120
+	clothes_req = 0
+	range = 2
+
+/obj/effect/proc_holder/spell/aoe_turf/hulk_eat/cast(list/targets)
+	if (usr.lying || usr.stunned || usr.stat)
+		usr << "\red You can't right now!"
+		return
+
+	var/list/names = list()
+	var/list/creatures = list()
+	var/list/namecounts = list()
+	var/mob/living/target = null	   //Chosen target.
+
+	for(var/mob/living/L in range(1, usr))
+		if(istype(L, /mob/living/simple_animal/hulk)) continue
+		if(ishuman(L) || isanimal(L))
+			var/name = L.name
+			if(name in names)
+				namecounts[name]++
+				name = "[name] ([namecounts[name]])"
+			else
+				names.Add(name)
+				namecounts[name] = 1
+			creatures[name] += L
+
+	target = input ("Target?") as null|anything in creatures
+
+	if (!target)
+		charge_counter = charge_max
+		return
+
+	target = creatures[target]
+
+	var/mob/living/simple_animal/SA = usr
+	if(ishuman(target))
+		var/mob/living/carbon/human/H = target
+		if(H.stat == DEAD)
+			usr.visible_message("\red <b>[usr.name]</b> is trying to swallow <b>[H.name]</b>!")
+			if(do_after(usr,100))
+				SA.health += 30
+				usr.visible_message("\red <b>[usr.name]</b> swallows <b>[H.name]</b>!")
+				usr.attack_log += "\[[time_stamp()]\]<font color='red'> Eats [target.name] ([target.ckey]) with hulk_eat</font>"
+				msg_admin_attack("[key_name(usr)] eats [key_name(target)] body with hulk_eat")
+				H.gib()
+		else
+			usr.visible_message("\red <b>[usr.name]</b> is trying to rend <b>[H.name]</b> flesh to shreds!")
+			if(do_after(usr,30))
+				var/organ_name = pick("l_arm","r_arm","r_leg","l_leg",)
+				var/datum/organ/external/E = H.get_organ(organ_name)
+				E.take_damage(65, 0, 1, 1, "teeth marks")
+				SA.health += 7
+				usr.visible_message("\red <b>[usr.name]</b> rends <b>[H.name]</b> flesh!")
+
+				usr.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [target.name] ([target.ckey]) with hulk_eat</font>"
+				target.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [usr.name] ([usr.ckey]) with hulk_eat</font>"
+				msg_admin_attack("[key_name(usr)] attacked [key_name(target)] with hulk_eat")
+	else if(isanimal(target))
+		var/mob/living/simple_animal/TSA = target
+		usr.visible_message("\red <b>[usr.name]</b> is trying to swallow <b>[TSA.name]</b>!")
+		if(do_after(usr,100))
+			SA.health += 20
+			usr.visible_message("\red <b>[usr.name]</b> swallows <b>[TSA.name]</b>!")
+			usr.attack_log += "\[[time_stamp()]\]<font color='red'> Eats [target.name] ([target.ckey]) with hulk_eat</font>"
+			msg_admin_attack("[key_name(usr)] eats [key_name(target)] body with hulk_eat")
+			TSA.gib()
+	else
+		charge_counter = charge_max
+
+/obj/effect/proc_holder/spell/aoe_turf/hulk_lazor
+	name = "LazorZ"
+	desc = ""
+	panel = "Hulk"
+	charge_max = 350
+	clothes_req = 0
+	range = 2
+
+/obj/effect/proc_holder/spell/aoe_turf/hulk_lazor/cast(list/targets)
+	if (usr.lying || usr.stunned || usr.stat)
+		usr << "\red You can't right now!"
+		return
+
+	var/turf/T = usr.loc
+	var/turf/U = get_step(usr, usr.dir) // Get the tile infront of the move, based on their direction
+	if(!isturf(U) || !isturf(T))
+		return
+
+	var/obj/item/projectile/beam/A = new /obj/item/projectile/beam(usr.loc)
+	playsound(usr.loc, 'sound/weapons/taser2.ogg', 75, 1)
+	A.original = U
+	A.current = U
+	A.starting = T
+	A.yo = U.y - T.y
+	A.xo = U.x - T.x
+	spawn( 0 )
+		A.process()
+
+	usr.attack_log += "\[[time_stamp()]\]<font color='red'> Uses hulk_lazor</font>"
+	msg_admin_attack("[key_name(usr)] uses hulk_lazor")
+
+/obj/item/weapon/organ/attack_animal(mob/user as mob)
+	if(istype(user, /mob/living/simple_animal/hulk))
+		if(istype(src, /obj/item/weapon/organ/head))
+			usr << "\blue Head? Ewww.."
+			return
+		var/mob/living/simple_animal/hulk/Hulk = user
+		playsound(user.loc, 'sound/weapons/zilla_eat.ogg', 50, 2)
+		Hulk.health += 10
+		usr.visible_message("\red <b>[usr.name]</b> eats <b>[src.name]</b>!")
+		qdel(src)

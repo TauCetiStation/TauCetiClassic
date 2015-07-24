@@ -274,6 +274,7 @@
 		stop()
 		if(cooked)
 			cooked.loc = src.loc
+		score["meals"]++
 		return
 
 /obj/machinery/microwave/proc/wzhzhzh(var/seconds as num)

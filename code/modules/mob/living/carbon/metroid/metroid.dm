@@ -892,7 +892,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	item_state = null
 	canremove = 0
 	flags = NOSLIP
-	slowdown = SHOES_SLOWDOWN+1
+	slowdown = SHOES_SLOWDOWN+2
 	unacidable = 1
 
 
@@ -913,6 +913,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	canremove = 0
 	siemens_coefficient = 0
 	unacidable = 1
+	flags_inv = 0
 
 
 /obj/item/clothing/gloves/golem
@@ -946,7 +947,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	canremove = 0
 	siemens_coefficient = 0
 
-	armor = list(melee = 80, bullet = 66, laser = 66, energy = 66, bomb = 80, bio = 100, rad = 80)
+	armor = list(melee = 77, bullet = 66, laser = 44, energy = 44, bomb = 80, bio = 100, rad = 80)
 
 
 /obj/item/clothing/suit/space/golem
@@ -970,7 +971,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	siemens_coefficient = 0
 	can_breach = 0
 
-	armor = list(melee = 80, bullet = 66, laser = 66, energy = 66, bomb = 80, bio = 100, rad = 80)
+	armor = list(melee = 77, bullet = 66, laser = 44, energy = 44, bomb = 80, bio = 100, rad = 80)
 
 /obj/effect/golemrune
 	anchored = 1
@@ -1014,8 +1015,9 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 		G.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/golem(G), slot_head)
 		G.equip_to_slot_or_del(new /obj/item/clothing/suit/space/golem(G), slot_wear_suit)
 		G.equip_to_slot_or_del(new /obj/item/clothing/shoes/golem(G), slot_shoes)
-		//G.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/golem(G), slot_wear_mask)
+		G.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/golem(G), slot_wear_mask)
 		G.equip_to_slot_or_del(new /obj/item/clothing/gloves/golem(G), slot_gloves)
+		G.status_flags &= ~(CANSTUN|CANWEAKEN|CANPARALYSE)
 		G.loc = src.loc
 		G.key = ghost.key
 

@@ -142,7 +142,7 @@ var/list/ai_verbs_default = list(
 
 	if(!safety)//Only used by AIize() to successfully spawn an AI.
 		if (!B)//If there is no player/brain inside.
-			new/obj/structure/AIcore/deactivated(loc)//New empty terminal.
+			empty_playable_ai_cores += new/obj/structure/AIcore/deactivated(loc)//New empty terminal.
 			qdel(src)//Delete AI.
 			return
 		else
@@ -180,6 +180,7 @@ var/list/ai_verbs_default = list(
 
 /mob/living/silicon/ai/Destroy()
 	ai_list -= src
+	qdel(eyeobj)
 	..()
 
 
@@ -198,7 +199,7 @@ var/list/ai_verbs_default = list(
 /obj/machinery/ai_powersupply/New(var/mob/living/silicon/ai/ai=null)
 	powered_ai = ai
 	if(isnull(powered_ai))
-		Destroy()
+		qdel()
 
 	loc = powered_ai.loc
 	use_power(1) // Just incase we need to wake up the power system.
@@ -207,7 +208,8 @@ var/list/ai_verbs_default = list(
 
 /obj/machinery/ai_powersupply/process()
 	if(!powered_ai || powered_ai.stat & DEAD)
-		Destroy()
+		qdel()
+		return
 	if(!powered_ai.anchored)
 		loc = powered_ai.loc
 		use_power = 0
