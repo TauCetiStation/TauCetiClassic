@@ -403,14 +403,16 @@ datum
 
 					var/datum/gas_mixture/napalm = new
 					var/datum/gas/volatile_fuel/fuel = new
-					fuel.moles = created_volume
-					napalm.trace_gases += fuel
+					if(created_volume > 0)
+						if(created_volume < 400)
+							fuel.moles = created_volume
+							napalm.trace_gases += fuel
 
-					napalm.temperature = 400+T0C
-					napalm.update_values()
+							napalm.temperature = 400+T0C
+							napalm.update_values()
 
-					target_tile.assume_air(napalm)
-					spawn (0) target_tile.hotspot_expose(700, 400)
+							target_tile.assume_air(napalm)
+							spawn (0) target_tile.hotspot_expose(700, 400)
 				holder.del_reagent("napalm")
 				return
 
