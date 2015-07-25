@@ -190,6 +190,14 @@ datum/controller/vote
 		if(mode)
 			if(config.vote_no_dead && usr.stat == DEAD && !usr.client.holder)
 				return 0
+			if(vote > choices.len)
+				message_admins("[key_name_admin(usr)] tried to exploit a voting menu by entering [vote] which is more than [choices.len] available choices.")
+				log_admin("EXPLOIT : [key_name(usr)] tried to exploit a voting menu by entering [vote] which is more than [choices.len] available choices.")
+				return choices.len
+			else if(vote < 1)
+				message_admins("[key_name_admin(usr)] tried to exploit a voting menu by entering [vote] which is less than 1.")
+				log_admin("EXPLOIT : [key_name(usr)] tried to exploit a voting menu by entering [vote] which is less than 1.")
+				return 1
 			if(current_votes[ckey])
 				choices[choices[current_votes[ckey]]]--
 			if(vote && 1<=vote && vote<=choices.len)

@@ -407,7 +407,10 @@
 			if(href_list["amount"])
 				var/id = href_list["add"]
 				var/amount = text2num(href_list["amount"])
-				if(amount < 0) return
+				if(amount < 0)
+					message_admins("[key_name_admin(usr)] tried to exploit a chemistry by entering a negative value: [amount]</a> ! (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)", 0)
+					log_admin("EXPLOIT : [key_name(usr)] tried to exploit a chemistry by entering a negative value: [amount] !")
+					return
 				if(amount > 300) return
 				R.trans_id_to(src, id, amount)
 
@@ -416,7 +419,10 @@
 			var/id = href_list["addcustom"]
 			useramount = input("Select the amount to transfer.", 30, useramount) as num
 			useramount = isgoodnumber(useramount)
-			if(useramount < 0) return
+			if(useramount < 0)
+				message_admins("[key_name_admin(usr)] tried to exploit a chemistry by entering a negative value: [useramount]</a> ! (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)", 0)
+				log_admin("EXPLOIT : [key_name(usr)] tried to exploit a chemistry by entering a negative value: [useramount] !")
+				return
 			if(useramount > 300) return
 			src.Topic(null, list("amount" = "[useramount]", "add" = "[id]"))
 
@@ -425,7 +431,10 @@
 			if(href_list["amount"])
 				var/id = href_list["remove"]
 				var/amount = text2num(href_list["amount"])
-				if(amount < 0) return
+				if(amount < 0)
+					message_admins("[key_name_admin(usr)] tried to exploit a chemistry by entering a negative value: [amount]</a> ! (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)", 0)
+					log_admin("EXPLOIT : [key_name(usr)] tried to exploit a chemistry by entering a negative value: [amount] !")
+					return
 				if(amount > 300) return
 				if(mode)
 					reagents.trans_id_to(beaker, id, amount)
@@ -438,7 +447,10 @@
 			var/id = href_list["removecustom"]
 			useramount = input("Select the amount to transfer.", 30, useramount) as num
 			useramount = isgoodnumber(useramount)
-			if(useramount < 0) return
+			if(useramount < 0)
+				message_admins("[key_name_admin(usr)] tried to exploit a chemistry by entering a negative value: [useramount]</a> ! (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)", 0)
+				log_admin("EXPLOIT : [key_name(usr)] tried to exploit a chemistry by entering a negative value: [useramount] !")
+				return
 			if(useramount > 300) return
 			src.Topic(null, list("amount" = "[useramount]", "remove" = "[id]"))
 
