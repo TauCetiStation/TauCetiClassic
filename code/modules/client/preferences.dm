@@ -1012,7 +1012,7 @@ datum/preferences
 							for(var/L in all_languages)
 								var/datum/language/lang = all_languages[L]
 								if((!(lang.flags & RESTRICTED)) && (is_alien_whitelisted(user, L)||(!( lang.flags & WHITELISTED ))||(S && (L in S.secondary_langs))))
-									new_languages += lang
+									new_languages += lang.name
 									languages_available = 1
 
 							if(!(languages_available))

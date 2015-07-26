@@ -1609,6 +1609,8 @@ datum
 					if (egg.grown)
 						egg.Hatch()*/
 				if((!O) || (!volume))	return 0
+				if(volume < 0) return 0
+				if(volume > 300) return 0
 				var/turf/the_turf = get_turf(O)
 				var/datum/gas_mixture/napalm = new
 				var/datum/gas/volatile_fuel/fuel = new
@@ -1616,6 +1618,8 @@ datum
 				napalm.trace_gases += fuel
 				the_turf.assume_air(napalm)
 			reaction_turf(var/turf/T, var/volume)
+				if(volume < 0) return
+				if(volume > 300) return
 				src = null
 				var/datum/gas_mixture/napalm = new
 				var/datum/gas/volatile_fuel/fuel = new

@@ -63,13 +63,13 @@
 	new /obj/item/clothing/shoes/black(src)
 	new /obj/item/clothing/shoes/black(src)
 	new /obj/item/clothing/shoes/black(src)
-	new /obj/item/clothing/head/that(src)
-	new /obj/item/clothing/head/that(src)
-	new /obj/item/clothing/head/that(src)
-	new /obj/item/clothing/mask/bandana/black(src)
-	new /obj/item/clothing/mask/bandana/black(src)
-	if(prob(40))
-		new /obj/item/clothing/mask/bandana/skull(src)
+	//new /obj/item/clothing/head/that(src)
+	//new /obj/item/clothing/head/that(src)
+	//new /obj/item/clothing/head/that(src)
+	//new /obj/item/clothing/mask/bandana/black(src)
+	//new /obj/item/clothing/mask/bandana/black(src)
+	//if(prob(40))
+	//	new /obj/item/clothing/mask/bandana/skull(src)
 	return
 
 
@@ -108,8 +108,8 @@
 	new /obj/item/clothing/shoes/black(src)
 	new /obj/item/clothing/shoes/black(src)
 	new /obj/item/clothing/shoes/black(src)
-	new /obj/item/clothing/mask/bandana/green(src)
-	new /obj/item/clothing/mask/bandana/green(src)
+	//new /obj/item/clothing/mask/bandana/green(src)
+	//new /obj/item/clothing/mask/bandana/green(src)
 	return
 
 /obj/structure/closet/wardrobe/xenos
@@ -157,8 +157,8 @@
 	new /obj/item/clothing/shoes/orange(src)
 	new /obj/item/clothing/shoes/orange(src)
 	new /obj/item/clothing/shoes/orange(src)
-	new /obj/item/clothing/mask/bandana/gold(src)
-	new /obj/item/clothing/mask/bandana/gold(src)
+	//new /obj/item/clothing/mask/bandana/gold(src)
+	//new /obj/item/clothing/mask/bandana/gold(src)
 	return
 
 
@@ -278,10 +278,10 @@
 	new /obj/item/clothing/shoes/black(src)
 	new /obj/item/clothing/gloves/black(src)
 	new /obj/item/clothing/gloves/black(src)
-	if(prob(40))
-		new /obj/item/clothing/mask/bandana/skull(src)
-	if(prob(40))
-		new /obj/item/clothing/mask/bandana/skull(src)
+	//if(prob(40))
+	//	new /obj/item/clothing/mask/bandana/skull(src)
+	//if(prob(40))
+	//	new /obj/item/clothing/mask/bandana/skull(src)
 	return
 
 
@@ -372,9 +372,9 @@
 	new /obj/item/clothing/head/soft/grey(src)
 	new /obj/item/clothing/head/soft/grey(src)
 	new /obj/item/clothing/head/soft/grey(src)
-	if(prob(40))
-		new /obj/item/clothing/mask/bandana/black(src)
-		new /obj/item/clothing/mask/bandana/black(src)
+	//if(prob(40))
+	//	new /obj/item/clothing/mask/bandana/black(src)
+	//	new /obj/item/clothing/mask/bandana/black(src)
 	return
 
 
@@ -403,12 +403,12 @@
 	//new /obj/item/clothing/under/color/darkblue(src)
 	//new /obj/item/clothing/under/color/darkred(src)
 	//new /obj/item/clothing/under/color/lightred(src)
-	new /obj/item/clothing/mask/bandana/red(src)
-	new /obj/item/clothing/mask/bandana/red(src)
-	new /obj/item/clothing/mask/bandana/blue(src)
-	new /obj/item/clothing/mask/bandana/blue(src)
-	new /obj/item/clothing/mask/bandana/gold(src)
-	new /obj/item/clothing/mask/bandana/gold(src)
+	//new /obj/item/clothing/mask/bandana/red(src)
+	//new /obj/item/clothing/mask/bandana/red(src)
+	//new /obj/item/clothing/mask/bandana/blue(src)
+	//new /obj/item/clothing/mask/bandana/blue(src)
+	//new /obj/item/clothing/mask/bandana/gold(src)
+	//new /obj/item/clothing/mask/bandana/gold(src)
 	new /obj/item/clothing/under/dress/plaid_blue(src)
 	new /obj/item/clothing/under/dress/plaid_red(src)
 	new /obj/item/clothing/under/dress/plaid_purple(src)
