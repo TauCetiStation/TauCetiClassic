@@ -18,7 +18,7 @@
 		..()
 		if (!(usr in view(2)) && usr!=src.loc) return
 		usr << "\icon [src] Grenade launcher:"
-		usr << "\blue [grenades] / [max_grenades] Grenades."
+		usr << "\blue [grenades.len] / [max_grenades] Grenades."
 
 	attackby(obj/item/I as obj, mob/user as mob)
 
