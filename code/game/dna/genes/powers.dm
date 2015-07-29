@@ -228,31 +228,35 @@
 		else
 			return
 		..(M,connected,flags)
+
 		if(M.client)
-			message_admins("[M.name] ([M.ckey]) is now <span class='warning'>Hulk</span>")
-		var/mob/living/simple_animal/hulk/Hulk
-		if(M.type == /mob/living/carbon/human/unathi)
-			Hulk = new /mob/living/simple_animal/hulk/zilla(get_turf(M))
+			message_admins("[M.name] ([M.ckey]) is a <span class='warning'>Monster</span>")
+		if(istype(M.loc, /obj/machinery/dna_scannernew))
+			var/obj/machinery/dna_scannernew/DSN = M.loc
+			DSN.occupant = null
+			DSN.icon_state = "scanner_0"
+
+		var/mob/living/simple_animal/hulk/Monster
+		if(istype(M, /mob/living/carbon/human/unathi))
+			Monster = new /mob/living/simple_animal/hulk/unathi(get_turf(M))
 		else
-			if(prob(35))
-				Hulk = new /mob/living/simple_animal/hulk/zilla(get_turf(M))
+			if(prob(19))
+				Monster = new /mob/living/simple_animal/hulk/unathi(get_turf(M))
 			else
-				Hulk = new /mob/living/simple_animal/hulk(get_turf(M))
-		Hulk.previous_body = M.type
-		if(M.mind)
-			M.mind.transfer_to(Hulk)
-		Hulk.attack_log = M.attack_log
-		Hulk.attack_log += "\[[time_stamp()]\]<font color='blue'> ======HULK LIFE======</font>"
-		Hulk.say(pick("RAAAAAAAARGH!", "HNNNNNNNNNGGGGGGH!", "GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", "AAAAAAARRRGH!" ))
-		var/mob/living/carbon/human/H = M
-		for(var/obj/item/weapon/implant/W in H)
-			W.loc = get_turf(H)
-			qdel(W)
-		for(var/obj/item/W in (H.contents))
-			H.drop_from_inventory(W)
-			if(istype(W.loc,/obj/machinery/))
-				W.loc = get_turf(H) // If we transformed in some container like dna_scanner and we can't get our items back anymore, here is solution.
-		qdel(M)
+				Monster = new /mob/living/simple_animal/hulk/human(get_turf(M))
+
+		var/datum/effect/effect/system/smoke_spread/bad/smoke = new /datum/effect/effect/system/smoke_spread/bad()
+		smoke.set_up(10, 0, M.loc)
+		smoke.start()
+		playsound(M.loc, 'sound/effects/bamf.ogg', 50, 2)
+
+		Monster.original_body = M
+		M.loc = Monster
+		M.mind.transfer_to(Monster)
+
+		Monster.attack_log = M.attack_log
+		Monster.attack_log += "\[[time_stamp()]\]<font color='blue'> ======MONSTER LIFE======</font>"
+		Monster.say(pick("RAAAAAAAARGH!", "HNNNNNNNNNGGGGGGH!", "GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", "AAAAAAARRRGH!" ))
 		return
 
 /datum/dna/gene/basic/xray

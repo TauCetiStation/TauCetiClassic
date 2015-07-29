@@ -25,8 +25,8 @@
 	a_intent = "harm"
 	stop_automated_movement = 1
 	status_flags = CANPUSH
-	universal_speak = 0
-	universal_understand = 0
+	universal_speak = 1
+	universal_understand = 1
 	attack_sound = 'sound/weapons/punch1.ogg'
 	min_oxy = 0
 	max_oxy = 0
@@ -37,14 +37,17 @@
 	min_n2 = 0
 	max_n2 = 0
 	minbodytemp = 0
-	var/hulk_powers = list(/obj/effect/proc_holder/spell/aoe_turf/hulk_jump,
-							/obj/effect/proc_holder/spell/aoe_turf/hulk_dash,
-							/obj/effect/proc_holder/spell/aoe_turf/hulk_smash
+	var/hulk_powers = list()
+	var/mob/living/original_body
+	var/health_regen = 1
+
+/mob/living/simple_animal/hulk/human
+	hulk_powers = list(/obj/effect/proc_holder/spell/aoe_turf/hulk_jump,
+						/obj/effect/proc_holder/spell/aoe_turf/hulk_dash,
+						/obj/effect/proc_holder/spell/aoe_turf/hulk_smash
 							)
 
-	var/previous_body = null
-
-/mob/living/simple_animal/hulk/zilla
+/mob/living/simple_animal/hulk/unathi
 	name = "Zilla"
 	real_name = "Zilla"
 	desc = ""
@@ -53,7 +56,6 @@
 	icon_living = "zilla"
 	maxHealth = 400
 	health = 400
-	immune_to_ssd = 1
 
 	melee_damage_lower = 15
 	melee_damage_upper = 15
@@ -69,6 +71,7 @@
 						/obj/effect/proc_holder/spell/aoe_turf/hulk_eat,
 						/obj/effect/proc_holder/spell/aoe_turf/hulk_lazor
 							)
+	health_regen = 3
 
 /mob/living/simple_animal/hulk/New()
 	..()
@@ -77,9 +80,9 @@
 	for(var/spell in hulk_powers)
 		spell_list += new spell(src)
 
-/mob/living/simple_animal/hulk/zilla/New()
+/mob/living/simple_animal/hulk/unathi/Login()
 	..()
-	pixel_x = -3
+	src << "\blue Can eat limbs (left mouse button)."
 
 /mob/living/simple_animal/hulk/Life()
 	if(health < 1)
@@ -110,16 +113,12 @@
 		if(pressure > 110)
 			health -= 7
 		else if(pressure <= 5)
-			health -= 25
+			health -= 12
 		else if(pressure <= 25)
-			health -= 11
+			health -= 8
 		else if(pressure <= 45)
-			health -= 9
-		else if(pressure <= 55)
-			health -= 7
-		else if(pressure <= 65)
 			health -= 5
-		else if(pressure <= 75)
+		else if(pressure <= 55)
 			health -= 3
 
 		if(pressure <= 75)
@@ -128,26 +127,35 @@
 
 	weakened = 0
 	if(health > 0)
-		health = min(health + 1, maxHealth)
+		health = min(health + health_regen, maxHealth)
 	..()
 
 /mob/living/simple_animal/hulk/death()
-	if(previous_body)
-		var/mob/living/carbon/C =  new previous_body(get_turf(src))
-		C.Paralyse(15)
-		if(mind)
-			mind.transfer_to(C)
-		C.attack_log = attack_log
-		C.attack_log += "\[[time_stamp()]\]<font color='blue'> ======HUMAN LIFE======</font>"
-	else
-		var/mob/living/carbon/human/H = new /mob/living/carbon/human (get_turf(src))
-		H.Paralyse(15)
-		if(mind)
-			mind.transfer_to(H)
-		H.attack_log = attack_log
-		H.attack_log += "\[[time_stamp()]\]<font color='blue'> ======HUMAN LIFE======</font>"
+	unmutate()
+
+/mob/living/simple_animal/hulk/proc/unmutate()
+	var/datum/effect/effect/system/smoke_spread/bad/smoke = new /datum/effect/effect/system/smoke_spread/bad()
+	smoke.set_up(10, 0, src.loc)
+	smoke.start()
+	playsound(src.loc, 'sound/effects/bamf.ogg', 50, 2)
+
+	var/obj/effect/decal/remains/human/RH = new /obj/effect/decal/remains/human(src.loc)
+	var/matrix/Mx = matrix()
+	Mx.Scale(1.5)
+	RH.transform = Mx
+
+	for(var/mob/M in contents)
+		M.loc = src.loc
+		if(istype(M, /mob/living))
+			var/mob/living/L = M
+			L.Paralyse(15)
+			L.update_canmove()
+
+	if(mind && original_body)
+		mind.transfer_to(original_body)
+		original_body.attack_log = attack_log
+		original_body.attack_log += "\[[time_stamp()]\]<font color='blue'> ======HUMAN LIFE======</font>"
 	qdel(src)
-	return
 
 /mob/living/simple_animal/hulk/examine()
 	set src in oview()
