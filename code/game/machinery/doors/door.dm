@@ -340,9 +340,10 @@
 	do_animate("opening")
 	icon_state = "door0"
 	src.set_opacity(0)
-	sleep(10)
-	src.layer = 2.7
+	sleep(3)
 	src.density = 0
+	sleep(7)
+	src.layer = 2.7
 	explosion_resistance = 0
 	update_icon()
 	set_opacity(0)
@@ -366,10 +367,11 @@
 	operating = 1
 
 	do_animate("closing")
+	sleep(3)
 	src.density = 1
 	explosion_resistance = initial(explosion_resistance)
 	src.layer = 3.1
-	sleep(10)
+	sleep(7)
 	update_icon()
 	if(visible && !glass)
 		set_opacity(1)	//caaaaarn!
