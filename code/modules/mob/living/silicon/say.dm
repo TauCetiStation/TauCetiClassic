@@ -27,12 +27,12 @@
 	if (!message)
 		return
 
-	if (src.client)
+	/*if (src.client)
 		if(client.prefs.muted & MUTE_IC)
 			src << "You cannot send IC messages (muted)."
 			return
 		if (src.client.handle_spam_prevention(message,MUTE_IC))
-			return
+			return*/
 
 	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 
