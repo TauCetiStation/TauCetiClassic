@@ -542,6 +542,7 @@
 	range = 2
 
 /obj/effect/proc_holder/spell/aoe_turf/hulk_eat/cast_check()
+	usr << "\blue Target someone, then alt+click."
 	return 0
 
 /mob/living/simple_animal/hulk/unathi/AltClickOn(var/atom/A)
