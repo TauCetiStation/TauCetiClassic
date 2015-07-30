@@ -259,7 +259,7 @@ var/list/sting_paths
 					<a id='link[i]'
 					onmouseover='expand("item[i]","[P.name]","[P.desc]","[P.helptext]","[P]",[ownsthis])'
 					>
-					<b id='search[i]'>Evolve [P][ownsthis ? " - Purchased" : ((P.genomecost > 1) ? " - Cost: [P.genomecost]" : "")]</b>
+					<b id='search[i]'>Evolve [P][ownsthis ? " - Purchased" : " - Cost: [P.genomecost]"]</b>
 					</a>
 					<br><span id='item[i]'></span>
 				</td>
