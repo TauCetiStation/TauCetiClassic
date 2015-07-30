@@ -204,6 +204,7 @@
 #include "code\game\dna\genes\gene.dm"
 #include "code\game\dna\genes\monkey.dm"
 #include "code\game\dna\genes\powers.dm"
+#include "code\game\gamemodes\c_vote.dm"
 #include "code\game\gamemodes\events.dm"
 #include "code\game\gamemodes\factions.dm"
 #include "code\game\gamemodes\game_mode.dm"
