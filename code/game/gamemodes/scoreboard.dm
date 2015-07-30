@@ -60,8 +60,8 @@
 		var/turf/location = get_turf(E.loc)
 		var/area/escape_zone = locate(/area/shuttle/escape/centcom)
 		if(E.stat != 2 && location in escape_zone) // Escapee Scores
-			for (var/obj/item/weapon/card/id/C1 in get_contents_in_object(E, /obj/item/weapon/card/id))
-				cashscore += C1.money
+			//for (var/obj/item/weapon/card/id/C1 in get_contents_in_object(E, /obj/item/weapon/card/id))
+			//	cashscore += C1.money
 
 			for (var/obj/item/weapon/spacecash/C2 in get_contents_in_object(E, /obj/item/weapon/spacecash))
 				cashscore += C2.worth
@@ -165,11 +165,11 @@
 	var/researchpoints = score["researchdone"] * 30
 	var/eventpoints = score["eventsendured"] * 50
 	var/escapoints = score["escapees"] * 25 //done
-	var/harvests = score["stuffharvested"] * 5 //done
-	var/shipping = score["stuffshipped"] * 5
-	var/mining = score["oremined"] * 2 //done
+	var/harvests = score["stuffharvested"] //done
+	var/shipping = score["stuffshipped"] * 75
+	var/mining = score["oremined"] //done
 	var/meals = score["meals"] * 5 //done, but this only counts cooked meals, not drinks served
-	var/power = score["powerloss"] * 20
+	var/power = score["powerloss"] * 30
 	var/messpoints
 	if (score["mess"] != 0) messpoints = score["mess"] //done
 	var/plaguepoints = score["disease"] * 30
@@ -312,12 +312,13 @@
 		<B>Revolution Successful:</B> [score["traitorswon"] ? "Yes" : "No"] (-[score["traitorswon"] * revpenalty] Points)<BR>
 		<B>All Revolution Heads Arrested:</B> [score["allarrested"] ? "Yes" : "No"] (Score tripled)<BR>
 		<HR>"}
-//	var/totalfunds = wagesystem.station_budget + wagesystem.research_budget + wagesystem.shipping_budget
+	var/totalfunds = 0
+	var/profit = 0
 	dat += {"<B><U>GENERAL STATS</U></B><BR>
 	<U>THE GOOD:</U><BR>
-	<B>Useful Crates Shipped:</B> [score["stuffshipped"]] ([score["stuffshipped"] * 5] Points)<BR>
-	<B>Hydroponics Harvests:</B> [score["stuffharvested"]] ([score["stuffharvested"] * 5] Points)<BR>
-	<B>Ore Mined:</B> [score["oremined"]] ([score["oremined"] * 2] Points)<BR>
+	<B>Useful Crates Shipped:</B> [score["stuffshipped"]] ([score["stuffshipped"] * 75] Points)<BR>
+	<B>Hydroponics Harvests:</B> [score["stuffharvested"]] ([score["stuffharvested"]] Points)<BR>
+	<B>Ore Mined:</B> [score["oremined"]] ([score["oremined"]] Points)<BR>
 	<B>Refreshments Prepared:</B> [score["meals"]] ([score["meals"] * 5] Points)<BR>
 	<B>Research Completed:</B> [score["researchdone"]] ([score["researchdone"] * 30] Points)<BR>"}
 	dat += "<B>Shuttle Escapees:</B> [score["escapees"]] ([score["escapees"] * 25] Points)<BR>"
@@ -328,14 +329,16 @@
 	<B>Roles successful:</B> [score["roleswon"]] (-[score["roleswon"] * 250] Points)<BR>
 	<B>Dead Bodies on Station:</B> [score["deadcrew"]] (-[score["deadcrew"] * 250] Points)<BR>
 	<B>Uncleaned Messes:</B> [score["mess"]] (-[score["mess"]] Points)<BR>
-	<B>Station Power Issues:</B> [score["powerloss"]] (-[score["powerloss"] * 20] Points)<BR>
+	<B>Station Power Issues:</B> [score["powerloss"]] (-[score["powerloss"] * 30] Points)<BR>
 	<B>Rampant Diseases:</B> [score["disease"]] (-[score["disease"] * 30] Points)<BR>
 	<B>AI Destroyed:</B> [score["deadaipenalty"] ? "Yes" : "No"] (-[score["deadaipenalty"] * 250] Points)<BR><BR>
-	<U>THE WEIRD</U><BR>"}
-/*	<B>Final Station Budget:</B> $[num2text(totalfunds,50)]<BR>"}
-	var/profit = totalfunds - 100000
+	<U>THE WEIRD</U><BR>
+	<B>Final Station Budget:</B> $[num2text(totalfunds,50)]<BR>"}
+	if(station_account)
+		totalfunds = station_account.money
+		profit = totalfunds - 75000
 	if (profit > 0) dat += "<B>Station Profit:</B> +[num2text(profit,50)]<BR>"
-	else if (profit < 0) dat += "<B>Station Deficit:</B> [num2text(profit,50)]<BR>"}*/
+	else if (profit < 0) dat += "<B>Station Deficit:</B> [num2text(profit,50)]<BR>"
 	dat += {"<B>Food Eaten:</b> [score["foodeaten"]]<BR>
 	<B>Times a Clown was Abused:</B> [score["clownabuse"]]<BR><BR>"}
 	if (score["escapees"])
