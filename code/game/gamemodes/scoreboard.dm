@@ -312,8 +312,7 @@
 		<B>Revolution Successful:</B> [score["traitorswon"] ? "Yes" : "No"] (-[score["traitorswon"] * revpenalty] Points)<BR>
 		<B>All Revolution Heads Arrested:</B> [score["allarrested"] ? "Yes" : "No"] (Score tripled)<BR>
 		<HR>"}
-	var/totalfunds = 0
-	var/profit = 0
+	var/totalfunds = station_account.money
 	dat += {"<B><U>GENERAL STATS</U></B><BR>
 	<U>THE GOOD:</U><BR>
 	<B>Useful Crates Shipped:</B> [score["stuffshipped"]] ([score["stuffshipped"] * 75] Points)<BR>
@@ -334,9 +333,7 @@
 	<B>AI Destroyed:</B> [score["deadaipenalty"] ? "Yes" : "No"] (-[score["deadaipenalty"] * 250] Points)<BR><BR>
 	<U>THE WEIRD</U><BR>
 	<B>Final Station Budget:</B> $[num2text(totalfunds,50)]<BR>"}
-	if(station_account)
-		totalfunds = station_account.money
-		profit = totalfunds - 75000
+	var/profit = totalfunds - 75000
 	if (profit > 0) dat += "<B>Station Profit:</B> +[num2text(profit,50)]<BR>"
 	else if (profit < 0) dat += "<B>Station Deficit:</B> [num2text(profit,50)]<BR>"
 	dat += {"<B>Food Eaten:</b> [score["foodeaten"]]<BR>
