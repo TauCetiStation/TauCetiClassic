@@ -74,6 +74,8 @@ var/global/datum/controller/gameticker/ticker
 	//Create and announce mode
 	if(master_mode=="secret")
 		src.hide_mode = 1
+	if(master_mode=="bs12" || master_mode=="tau classic" || master_mode=="ayyy lmao" || master_mode=="WTF?")
+		src.hide_mode = 1
 	var/list/datum/game_mode/runnable_modes
 	if((master_mode=="random") || (master_mode=="secret"))
 		runnable_modes = config.get_runnable_modes()
@@ -88,6 +90,18 @@ var/global/datum/controller/gameticker/ticker
 		job_master.ResetOccupations()
 		if(!src.mode)
 			src.mode = pickweight(runnable_modes)
+		if(src.mode)
+			var/mtype = src.mode.type
+			src.mode = new mtype
+	else if(master_mode=="bs12" || master_mode=="tau classic" || master_mode=="ayyy lmao" || master_mode=="WTF?")
+		runnable_modes = config.get_custom_modes(master_mode)
+		if (runnable_modes.len==0)
+			current_state = GAME_STATE_PREGAME
+			world << "<B>Unable to choose playable game mode.</B> Reverting to pre-game lobby."
+			return 0
+		job_master.ResetOccupations()
+		if(!src.mode)
+			src.mode = pick(runnable_modes)
 		if(src.mode)
 			var/mtype = src.mode.type
 			src.mode = new mtype
