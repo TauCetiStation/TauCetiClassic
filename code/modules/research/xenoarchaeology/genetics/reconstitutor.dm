@@ -31,10 +31,8 @@ datum/genesequence
 	var/list/discovered_genomes = list("! Clear !")
 	var/list/accepted_fossil_types = list(/obj/item/weapon/fossil/plant)
 
-
 /obj/machinery/computer/reconstitutor/initialize()
-	if(!undiscovered_genesequences)
-		undiscovered_genesequences = master_controller.all_plant_genesequences.Copy()
+	undiscovered_genesequences = master_controller.all_plant_genesequences.Copy()
 	..()
 
 /obj/machinery/computer/reconstitutor/animal
@@ -48,6 +46,8 @@ datum/genesequence
 	..()
 
 /obj/machinery/computer/reconstitutor/attackby(obj/item/W, mob/user)
+	if(!undiscovered_genesequences.len)
+		initialize()
 	if(istype(W,/obj/item/weapon/fossil))
 		user.drop_item()
 		W.loc = src.loc

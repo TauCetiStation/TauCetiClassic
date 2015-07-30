@@ -56,7 +56,7 @@
 	var/const/WIRE_SHOOTINV = 4
 	var/obj/item/weapon/vending_refill/refill_canister = null		//The type of refill canisters used by this machine.
 
-	var/check_accounts = 0		// 1 = requires PIN and checks accounts.  0 = You slide an ID, it vends, SPACE COMMUNISM!
+	var/check_accounts = 1		// 1 = requires PIN and checks accounts.  0 = You slide an ID, it vends, SPACE COMMUNISM!
 	var/obj/item/weapon/spacecash/ewallet/ewallet
 
 
@@ -244,8 +244,12 @@
 		visible_message("<span class='info'>[usr] swipes a card through [src].</span>")
 		if(check_accounts)
 			if(vendor_account)
-				var/attempt_pin = input("Enter pin code", "Vendor transaction") as num
-				var/datum/money_account/D = attempt_account_access(C.associated_account_number, attempt_pin, 2)
+				var/datum/money_account/D = get_account(C.associated_account_number)
+				var/attempt_pin = 0
+				if(D.security_level > 0)
+					attempt_pin = input("Enter pin code", "Vendor transaction") as num
+				if(attempt_pin)
+					D = attempt_account_access(C.associated_account_number, attempt_pin, 2)
 				if(D)
 					var/transaction_amount = currently_vending.price
 					if(transaction_amount <= D.money)
@@ -279,6 +283,8 @@
 						// Vend the item
 						src.vend(src.currently_vending, usr)
 						currently_vending = null
+					else
+						usr << "\icon[src]<span class='warning'>You don't have that much money!</span>"
 				else
 					usr << "\icon[src]<span class='warning'>You don't have that much money!</span>"
 			else

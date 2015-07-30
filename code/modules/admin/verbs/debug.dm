@@ -398,6 +398,15 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	message_admins("[key_name_admin(src)] has turned visual counters [visual_counter ? "on" : "off"].", 0)
 	feedback_add_details("admin_verb","TVC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/client/proc/cmd_message_spam_control()
+	set category = "Server"
+	set name = "Global Message Cooldown"
+
+	global_message_cooldown = !global_message_cooldown
+	log_admin("[key_name(src)] has turned global message cooldown [global_message_cooldown ? "on" : "off"].")
+	message_admins("[key_name_admin(src)] has turned global message cooldown [global_message_cooldown ? "on" : "off"].", 0)
+	feedback_add_details("admin_verb","TGMC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
 /client/proc/cmd_admin_grantfullaccess(var/mob/M in mob_list)
 	set category = "Admin"
 	set name = "Grant Full Access"
