@@ -745,12 +745,12 @@
 						continue
 			if("ayyy lmao")
 				switch(M.config_tag)
-					if("autotraitor","traitor","cult","extended","gang","heist","malfuction","meteor","mutiny","ninja","nuclear","rp-revolution","revolution","wizard")
+					if("autotraitor","traitor","cult","extended","gang","heist","infestation","malfunction","meteor","mutiny","ninja","nuclear","rp-revolution","revolution","wizard")
 						qdel(M)
 						continue
 			if("WTF?")
 				switch(M.config_tag)
-					if("revolution")
+					if("infestation","revolution")
 						qdel(M)
 						continue
 		if (M.can_start())
