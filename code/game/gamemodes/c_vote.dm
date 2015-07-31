@@ -13,11 +13,11 @@
 /datum/game_mode/ayyylmao
 	name = "ayyy lmao"
 	config_tag = "ayyy lmao"
-	votable = 1
+	votable = 0
 	playable_mode = 0
 
 /datum/game_mode/wtf
 	name = "WTF?"
 	config_tag = "WTF?"
-	votable = 1
+	votable = 0
 	playable_mode = 0
