@@ -1407,3 +1407,6 @@ var/mob/dview/dview_mob = new
 	simulated = 0
 
 	see_in_dark = 1e6
+
+/mob/dview/New()
+	// do nothing. we don't want to be in any mob lists; we're a dummy not a mob.
