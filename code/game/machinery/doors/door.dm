@@ -1,5 +1,8 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
+#define DOOR_LAYER		2.7
+#define DOOR_CLOSED_MOD	0.4 //how much the layer is increased when the door is closed
+
 /obj/machinery/door
 	name = "Door"
 	desc = "It opens and closes."
@@ -8,7 +11,8 @@
 	anchored = 1
 	opacity = 1
 	density = 1
-	layer = 2.7
+	layer = DOOR_LAYER
+	var/base_layer = DOOR_LAYER
 
 	var/secondsElectrified = 0
 	var/visible = 1
@@ -28,11 +32,11 @@
 /obj/machinery/door/New()
 	. = ..()
 	if(density)
-		layer = 3.1 //Above most items if closed
+		layer = base_layer + DOOR_CLOSED_MOD //Above most items if closed
 		explosion_resistance = initial(explosion_resistance)
 		update_heat_protection(get_turf(src))
 	else
-		layer = 2.7 //Under all objects if opened. 2.7 due to tables being at 2.6
+		layer = base_layer //Under all objects if opened. 2.7 due to tables being at 2.6
 		explosion_resistance = 0
 
 
@@ -343,7 +347,7 @@
 	sleep(3)
 	src.density = 0
 	sleep(7)
-	src.layer = 2.7
+	src.layer = base_layer
 	explosion_resistance = 0
 	update_icon()
 	set_opacity(0)
@@ -370,7 +374,7 @@
 	sleep(3)
 	src.density = 1
 	explosion_resistance = initial(explosion_resistance)
-	src.layer = 3.1
+	layer = base_layer + DOOR_CLOSED_MOD
 	sleep(7)
 	update_icon()
 	if(visible && !glass)
