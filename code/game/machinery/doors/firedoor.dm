@@ -144,6 +144,10 @@
 			user << "<span class='warning'>Access denied.</span>"
 			return
 
+    for(var/obj/O in src.loc)
+        if(istype(O, /obj/machinery/door/airlock) && O.layer == (DOOR_LAYER + DOOR_CLOSED_MOD))
+            return
+
 	var/alarmed = 0
 
 	for(var/area/A in areas_added)		//Checks if there are fire alarms in any areas associated with that firedoor
