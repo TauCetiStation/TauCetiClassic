@@ -374,7 +374,7 @@
 	sleep(3)
 	src.density = 1
 	explosion_resistance = initial(explosion_resistance)
-	layer = base_layer + DOOR_CLOSED_MOD
+	src.layer = base_layer + DOOR_CLOSED_MOD
 	sleep(7)
 	update_icon()
 	if(visible && !glass)
