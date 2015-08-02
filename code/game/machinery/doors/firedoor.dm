@@ -1,6 +1,7 @@
 /var/const/OPEN = 1
 /var/const/CLOSED = 2
 
+#define FIREDOOR_CLOSED_MOD	0.4
 #define FIREDOOR_MAX_PRESSURE_DIFF 25 // kPa
 /obj/machinery/door/firedoor
 	name = "\improper Emergency Shutter"
@@ -10,7 +11,8 @@
 	req_one_access = list(access_atmospherics, access_engine_equip)
 	opacity = 0
 	density = 0
-	layer = 2.6
+	layer = DOOR_LAYER - 0.1
+	base_layer = DOOR_LAYER - 0.1
 	glass = 1
 
 	//These are frequenly used with windows, so make sure zones can pass.
@@ -142,6 +144,10 @@
 			user << "<span class='warning'>Access denied.</span>"
 			return
 
+    for(var/obj/O in src.loc)
+        if(istype(O, /obj/machinery/door/airlock) && O.layer == (DOOR_LAYER + DOOR_CLOSED_MOD))
+            return
+
 	var/alarmed = 0
 
 	for(var/area/A in areas_added)		//Checks if there are fire alarms in any areas associated with that firedoor
@@ -242,10 +248,12 @@
 
 /obj/machinery/door/firedoor/close()
 	latetoggle()
+	layer = base_layer + FIREDOOR_CLOSED_MOD
 	return ..()
 
 /obj/machinery/door/firedoor/open()
 	latetoggle()
+	layer = base_layer
 	return ..()
 
 
