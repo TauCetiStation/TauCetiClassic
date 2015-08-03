@@ -41,8 +41,8 @@ var/global/datum/controller/gameticker/ticker
 	/*
 	'sound/music/space.ogg',\
 	'sound/music/clouds.s3m',\
-	'sound/music/space_oddity.ogg'\
 	*/
+	'sound/music/space_oddity.ogg',\
 	'sound/music/b12_combined_start.ogg',\
 	'sound/music/title1.ogg',\
 	'sound/music/title2.ogg',\
