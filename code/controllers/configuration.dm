@@ -174,9 +174,10 @@
 		if (M.config_tag)
 			if(!(M.config_tag in modes))		// ensure each mode is added only once
 				log_misc("Adding game mode [M.name] ([M.config_tag]) to configuration.")
-				src.modes += M.config_tag
-				src.mode_names[M.config_tag] = M.name
-				src.probabilities[M.config_tag] = M.probability
+				if(M.playable_mode)
+					src.modes += M.config_tag
+					src.mode_names[M.config_tag] = M.name
+					src.probabilities[M.config_tag] = M.probability
 				if (M.votable)
 					src.votable_modes += M.config_tag
 		qdel(M)
@@ -721,4 +722,39 @@
 		if (M.can_start())
 			runnable_modes[M] = probabilities[M.config_tag]
 			//world << "DEBUG: runnable_mode\[[runnable_modes.len]\] = [M.config_tag]"
+	return runnable_modes
+
+/datum/configuration/proc/get_custom_modes(var/type_of_selection)
+	var/list/datum/game_mode/runnable_modes = new
+	for (var/T in (typesof(/datum/game_mode) - /datum/game_mode))
+		var/datum/game_mode/M = new T()
+		//world << "DEBUG: [T], tag=[M.config_tag], prob=[probabilities[M.config_tag]]"
+		if (!(M.config_tag in modes))
+			qdel(M)
+			continue
+		switch(type_of_selection)
+			if("bs12")
+				switch(M.config_tag)
+					if("traitorchan","traitor","blob","gang","heist","infestation","meme","meteor","mutiny","ninja","rp-revolution","revolution","shadowling")
+						qdel(M)
+						continue
+			if("tau classic")
+				switch(M.config_tag)
+					if("traitor","blob","extended","gang","heist","infestation","meme","meteor","mutiny","ninja","rp-revolution","revolution","shadowling")
+						qdel(M)
+						continue
+			if("ayyy lmao")
+				switch(M.config_tag)
+					if("autotraitor","traitor","cult","extended","gang","heist","infestation","malfunction","meteor","mutiny","ninja","nuclear","rp-revolution","revolution","wizard")
+						qdel(M)
+						continue
+			if("WTF?")
+				switch(M.config_tag)
+					if("infestation","revolution")
+						qdel(M)
+						continue
+		if (M.can_start())
+			runnable_modes[M] = probabilities[M.config_tag]
+			//world << "DEBUG: runnable_mode\[[runnable_modes.len]\] = [M.config_tag]"
+
 	return runnable_modes

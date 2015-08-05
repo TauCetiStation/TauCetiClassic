@@ -1097,6 +1097,7 @@
 				adjustToxLoss(-3)
 				adjustBrainLoss(-25) //gibbering shadowlings are hilarious but also bad to have
 				adjustCloneLoss(-1)
+				adjustOxyLoss(-10)
 				SetWeakened(0)
 				SetStunned(0)
 

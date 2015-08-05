@@ -690,7 +690,7 @@ var/list/be_special_flags = list(
 	"Shadowling" = BE_SHADOWLING
 	)
 
-#define AGE_MIN 17			//youngest a character can be
+#define AGE_MIN 25			//youngest a character can be
 #define AGE_MAX 85			//oldest a character can be
 
 //Languages!
@@ -821,3 +821,4 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 	dview_mob.loc = center; \
 	dview_mob.see_invisible = invis_flags; \
 	for(type in view(range, dview_mob))
+#define END_FOR_DVIEW dview_mob.loc = null
