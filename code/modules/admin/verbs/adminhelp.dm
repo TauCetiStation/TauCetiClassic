@@ -91,24 +91,17 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","
 	if(!mob)	return						//this doesn't happen
 
 	var/ref_mob = "\ref[mob]"
-	var/msg_mentor = "\blue <b><font color=red>HELP: </font>[get_options_bar(mob, 0, 1, 1)]:</b> [msg]"
 	msg = "\blue <b><font color=red>HELP: </font>[get_options_bar(mob, 2, 1, 1)][ai_found ? " (<A HREF='?_src_=holder;adminchecklaws=[ref_mob]'>CL</A>)" : ""]:</b> [msg]"
 
 	//send this msg to all admins
 	var/admin_number_afk = 0
 	for(var/client/X in admins)
-		if((R_ADMIN|R_MOD) & X.holder.rights)
+		if((R_ADMIN|R_MOD|R_MENTOR) & X.holder.rights)
 			if(X.is_afk())
 				admin_number_afk++
 			if(X.prefs.toggles & SOUND_ADMINHELP)
 				X << 'sound/effects/adminhelp.ogg'
 			X << msg
-		else if(R_MENTOR & X.holder.rights)
-			if(X.is_afk())
-				admin_number_afk++
-			if(X.prefs.toggles & SOUND_ADMINHELP)
-				X << 'sound/effects/adminhelp.ogg'
-			X << msg_mentor
 
 	//show it to the person adminhelping too
 	src << "<font color='blue'>PM to-<b>Admins</b>: [original_msg]</font>"

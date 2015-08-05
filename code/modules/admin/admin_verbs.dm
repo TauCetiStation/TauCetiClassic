@@ -1,15 +1,15 @@
 //admin verb groups - They can overlap if you so wish. Only one of each verb will exist in the verbs list regardless
 var/list/admin_verbs_default = list(
+	/datum/admins/proc/show_player_panel,	/*shows an interface for individual players, with various links (links require additional flags*/
+	/client/proc/player_panel,
 	/client/proc/toggleadminhelpsound,	/*toggles whether we hear a sound when adminhelps/PMs are used*/
 	/client/proc/deadmin_self,			/*destroys our own admin datum so we can play as a regular player*/
 	/client/proc/hide_verbs,			/*hides all our adminverbs*/
 	/client/proc/hide_most_verbs,		/*hides all our hideable adminverbs*/
+	/client/proc/debug_variables,		/*allows us to -see- the variables of any instance in the game. +VAREDIT needed to modify*/
+//	/client/proc/check_antagonists,		/*shows all antags*/
 	/client/proc/cmd_mentor_check_new_players
-	)
-var/list/admin_verbs_default_high = list(
-	/datum/admins/proc/show_player_panel,	/*shows an interface for individual players, with various links (links require additional flags*/
-	/client/proc/player_panel,
-	/client/proc/debug_variables		/*allows us to -see- the variables of any instance in the game. +VAREDIT needed to modify*/
+//	/client/proc/deadchat				/*toggles deadchat on/off*/
 	)
 var/list/admin_verbs_admin = list(
 	/client/proc/player_panel_new,		/*shows an interface for all players, with links to various panels*/
@@ -99,7 +99,7 @@ var/list/admin_verbs_fun = list(
 	/client/proc/cmd_admin_dress,
 	/client/proc/cmd_admin_gib_self,
 	/client/proc/drop_bomb,
-	/client/proc/everyone_random,
+        /client/proc/everyone_random,
 	/client/proc/one_click_antag,
 	/datum/admins/proc/toggle_aliens,
 	/datum/admins/proc/toggle_space_ninja,
@@ -283,14 +283,16 @@ var/list/admin_verbs_mentor = list(
 	/client/proc/cmd_admin_pm_context,
 	/client/proc/cmd_admin_pm_panel,
 	/datum/admins/proc/PlayerNotes,
+	/client/proc/admin_ghost,
+	/client/proc/cmd_mod_say,
 	/datum/admins/proc/show_player_info,
-	/client/proc/cmd_mod_say
+//	/client/proc/dsay,
+	/client/proc/cmd_admin_subtle_message
 )
 
 /client/proc/add_admin_verbs()
 	if(holder)
 		verbs += admin_verbs_default
-		if(holder.rights &~R_MENTOR)		verbs += admin_verbs_default_high
 		if(holder.rights & R_BUILDMODE)		verbs += /client/proc/togglebuildmodeself
 		if(holder.rights & R_ADMIN)			verbs += admin_verbs_admin
 		if(holder.rights & R_BAN)			verbs += admin_verbs_ban
