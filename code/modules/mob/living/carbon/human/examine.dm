@@ -72,6 +72,8 @@
 
 		if(w_uniform.blood_DNA)
 			msg += "<span class='warning'>[t_He] [t_is] wearing \icon[w_uniform] [w_uniform.gender==PLURAL?"some":"a"] blood-stained [w_uniform.name][tie_msg]!</span>\n"
+		else if(w_uniform.wet)
+			msg += "<span class='wet'>[t_He] [t_is] wearing \icon[w_uniform] [w_uniform.gender==PLURAL?"some":"a"] wet [w_uniform.name][tie_msg]!</span>\n"
 		else
 			msg += "[t_He] [t_is] wearing \icon[w_uniform] \a [w_uniform][tie_msg].\n"
 
@@ -79,6 +81,8 @@
 	if(head)
 		if(head.blood_DNA)
 			msg += "<span class='warning'>[t_He] [t_is] wearing \icon[head] [head.gender==PLURAL?"some":"a"] blood-stained [head.name] on [t_his] head!</span>\n"
+		else if(head.wet)
+			msg += "<span class='wet'>[t_He] [t_is] wearing \icon[head] [head.gender==PLURAL?"some":"a"] wet [head.name] on [t_his] head!</span>\n"
 		else
 			msg += "[t_He] [t_is] wearing \icon[head] \a [head] on [t_his] head.\n"
 
@@ -86,6 +90,8 @@
 	if(wear_suit)
 		if(wear_suit.blood_DNA)
 			msg += "<span class='warning'>[t_He] [t_is] wearing \icon[wear_suit] [wear_suit.gender==PLURAL?"some":"a"] blood-stained [wear_suit.name]!</span>\n"
+		else if(wear_suit.wet)
+			msg += "<span class='wet'>[t_He] [t_is] wearing \icon[wear_suit] [wear_suit.gender==PLURAL?"some":"a"] wet [wear_suit.name]!</span>\n"
 		else
 			msg += "[t_He] [t_is] wearing \icon[wear_suit] \a [wear_suit].\n"
 
@@ -100,6 +106,8 @@
 	if(back)
 		if(back.blood_DNA)
 			msg += "<span class='warning'>[t_He] [t_has] \icon[back] [back.gender==PLURAL?"some":"a"] blood-stained [back] on [t_his] back.</span>\n"
+		else if(back.wet)
+			msg += "<span class='wet'>[t_He] [t_has] \icon[back] [back.gender==PLURAL?"some":"a"] wet [back] on [t_his] back.</span>\n"
 		else
 			msg += "[t_He] [t_has] \icon[back] \a [back] on [t_his] back.\n"
 
@@ -107,6 +115,8 @@
 	if(l_hand && !(l_hand.flags&ABSTRACT))
 		if(l_hand.blood_DNA)
 			msg += "<span class='warning'>[t_He] [t_is] holding \icon[l_hand] [l_hand.gender==PLURAL?"some":"a"] blood-stained [l_hand.name] in [t_his] left hand!</span>\n"
+		else if(l_hand.wet)
+			msg += "<span class='wet'>[t_He] [t_is] holding \icon[l_hand] [l_hand.gender==PLURAL?"some":"a"] wet [l_hand.name] in [t_his] left hand!</span>\n"
 		else
 			msg += "[t_He] [t_is] holding \icon[l_hand] \a [l_hand] in [t_his] left hand.\n"
 
@@ -114,6 +124,8 @@
 	if(r_hand && !(r_hand.flags&ABSTRACT))
 		if(r_hand.blood_DNA)
 			msg += "<span class='warning'>[t_He] [t_is] holding \icon[r_hand] [r_hand.gender==PLURAL?"some":"a"] blood-stained [r_hand.name] in [t_his] right hand!</span>\n"
+		else if(r_hand.wet)
+			msg += "<span class='wet'>[t_He] [t_is] holding \icon[r_hand] [r_hand.gender==PLURAL?"some":"a"] wet [r_hand.name] in [t_his] right hand!</span>\n"
 		else
 			msg += "[t_He] [t_is] holding \icon[r_hand] \a [r_hand] in [t_his] right hand.\n"
 
@@ -121,6 +133,8 @@
 	if(gloves && !skipgloves)
 		if(gloves.blood_DNA)
 			msg += "<span class='warning'>[t_He] [t_has] \icon[gloves] [gloves.gender==PLURAL?"some":"a"] blood-stained [gloves.name] on [t_his] hands!</span>\n"
+		else if(gloves.wet)
+			msg += "<span class='wet'>[t_He] [t_has] \icon[gloves] [gloves.gender==PLURAL?"some":"a"] wet [gloves.name] on [t_his] hands!</span>\n"
 		else
 			msg += "[t_He] [t_has] \icon[gloves] \a [gloves] on [t_his] hands.\n"
 	else if(blood_DNA)
@@ -139,6 +153,8 @@
 	if(belt)
 		if(belt.blood_DNA)
 			msg += "<span class='warning'>[t_He] [t_has] \icon[belt] [belt.gender==PLURAL?"some":"a"] blood-stained [belt.name] about [t_his] waist!</span>\n"
+		else if(belt.wet)
+			msg += "<span class='wet'>[t_He] [t_has] \icon[belt] [belt.gender==PLURAL?"some":"a"] wet [belt.name] about [t_his] waist!</span>\n"
 		else
 			msg += "[t_He] [t_has] \icon[belt] \a [belt] about [t_his] waist.\n"
 
@@ -146,6 +162,8 @@
 	if(shoes && !skipshoes)
 		if(shoes.blood_DNA)
 			msg += "<span class='warning'>[t_He] [t_is] wearing \icon[shoes] [shoes.gender==PLURAL?"some":"a"] blood-stained [shoes.name] on [t_his] feet!</span>\n"
+		else if(shoes.wet)
+			msg += "<span class='wet'>[t_He] [t_is] wearing \icon[shoes] [shoes.gender==PLURAL?"some":"a"] wet [shoes.name] on [t_his] feet!</span>\n"
 		else
 			msg += "[t_He] [t_is] wearing \icon[shoes] \a [shoes] on [t_his] feet.\n"
 	else if(feet_blood_DNA)
@@ -155,6 +173,8 @@
 	if(wear_mask && !skipmask)
 		if(wear_mask.blood_DNA)
 			msg += "<span class='warning'>[t_He] [t_has] \icon[wear_mask] [wear_mask.gender==PLURAL?"some":"a"] blood-stained [wear_mask.name] on [t_his] face!</span>\n"
+		else if(wear_mask.wet)
+			msg += "<span class='wet'>[t_He] [t_has] \icon[wear_mask] [wear_mask.gender==PLURAL?"some":"a"] wet [wear_mask.name] on [t_his] face!</span>\n"
 		else
 			msg += "[t_He] [t_has] \icon[wear_mask] \a [wear_mask] on [t_his] face.\n"
 
@@ -162,6 +182,8 @@
 	if(glasses && !skipeyes)
 		if(glasses.blood_DNA)
 			msg += "<span class='warning'>[t_He] [t_has] \icon[glasses] [glasses.gender==PLURAL?"some":"a"] blood-stained [glasses] covering [t_his] eyes!</span>\n"
+		else if(glasses.wet)
+			msg += "<span class='wet'>[t_He] [t_has] \icon[glasses] [glasses.gender==PLURAL?"some":"a"] wet [glasses] covering [t_his] eyes!</span>\n"
 		else
 			msg += "[t_He] [t_has] \icon[glasses] \a [glasses] covering [t_his] eyes.\n"
 
