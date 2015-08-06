@@ -1407,11 +1407,13 @@
 // Now isn't that much better? IT IS NOW A PROC, i.e. kinda like a big panel like unstable
 
 	else if(href_list["adminplayeropts"])
+		if(!check_rights(R_MOD|R_ADMIN))	return
+
 		var/mob/M = locate(href_list["adminplayeropts"])
 		show_player_panel(M)
 
 	else if(href_list["adminplayerobservejump"])
-		if(!check_rights(R_MENTOR|R_MOD|R_ADMIN))	return
+		if(!check_rights(R_MOD|R_ADMIN))	return
 
 		var/mob/M = locate(href_list["adminplayerobservejump"])
 
@@ -1421,6 +1423,8 @@
 		C.jumptomob(M)
 
 	else if(href_list["check_antagonist"])
+		if(!check_rights(R_MOD|R_ADMIN))	return
+
 		check_antagonists()
 
 	else if(href_list["adminplayerobservecoodjump"])
@@ -1439,6 +1443,8 @@
 		output_ai_laws()
 
 	else if(href_list["adminmoreinfo"])
+		if(!check_rights(R_MOD|R_ADMIN))	return
+
 		var/mob/M = locate(href_list["adminmoreinfo"])
 		if(!ismob(M))
 			usr << "This can only be used on instances of type /mob"

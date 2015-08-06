@@ -453,3 +453,11 @@ datum/projectile_data
 		return recursive_type_check(O, type_path) - O
 	else
 		return new/list()
+
+//============TG PORTS============
+/proc/flick_overlay(image/I, list/show_to, duration)
+	for(var/client/C in show_to)
+		C.images += I
+	spawn(duration)
+		for(var/client/C in show_to)
+			C.images -= I

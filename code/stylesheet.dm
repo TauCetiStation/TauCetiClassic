@@ -55,6 +55,8 @@ h1.alert, h2.alert		{color: #000000;}
 .info					{color: #0000CC;}
 .notice					{color: #000099;}
 
+.wet					{color: #007FBF;	font-weight: bold;}
+
 .shadowling				{color: #3b2769;}
 
 .big					{font-size: 3;}

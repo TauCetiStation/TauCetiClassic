@@ -1151,8 +1151,11 @@
 	if (!beaker || (beaker && beaker.reagents.total_volume >= beaker.reagents.maximum_volume))
 		return
 	playsound(src.loc, 'sound/machines/juicer.ogg', 20, 1)
+	var/offset = prob(50) ? -2 : 2
+	animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = 200) //start shaking
 	inuse = 1
 	spawn(50)
+		pixel_x = initial(pixel_x) //return to its spot after shaking
 		inuse = 0
 		interact(usr)
 	//Snacks
@@ -1184,8 +1187,11 @@
 	if (!beaker || (beaker && beaker.reagents.total_volume >= beaker.reagents.maximum_volume))
 		return
 	playsound(src.loc, 'sound/machines/blender.ogg', 50, 1)
+	var/offset = prob(50) ? -2 : 2
+	animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = 200) //start shaking
 	inuse = 1
 	spawn(60)
+		pixel_x = initial(pixel_x) //return to its spot after shaking
 		inuse = 0
 		interact(usr)
 	//Snacks and Plants
