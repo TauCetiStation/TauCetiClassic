@@ -418,6 +418,7 @@
 	if(user.get_active_hand() != I) return		//Person has switched hands or the item in their hands
 
 	O.clean_blood()
+	O.make_wet()
 	user.visible_message( \
 		"\blue [user] washes \a [I] using \the [src].", \
 		"\blue You wash \a [I] using \the [src].")

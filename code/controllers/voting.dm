@@ -364,6 +364,8 @@ datum/controller/vote
 				return
 			if("cancel")
 				if(usr.client.holder)
+					if(ticker.current_state <= 2 && !(usr.client.holder.rights & R_SERVER)) // Нет смысла давать отмену воута до начала раунда холдерам, у которых нет доступа к старту раунда.
+						return
 					reset()
 			if("toggle_restart")
 				if(usr.client.holder)
@@ -376,6 +378,7 @@ datum/controller/vote
 					initiate_vote("restart",usr.key)
 			if("gamemode")
 				if(config.allow_vote_mode || usr.client.holder)
+					config.allow_vote_mode = 0 // One gamemode vote per round.
 					initiate_vote("gamemode",usr.key)
 			if("crew_transfer")
 				if(config.allow_vote_restart || usr.client.holder)

@@ -126,7 +126,7 @@
 			size = "huge"
 		else
 	//if ((CLUMSY in usr.mutations) && prob(50)) t = "funny-looking"
-	usr << "This is a [src.blood_DNA ? "bloody " : ""]\icon[src][src.name]. It is a [size] item."
+	usr << "[src.blood_DNA ? "<span class='warning'>" : "[src.wet ? "<span class='wet'>" : ""]"]This is a [blood_DNA ? blood_color != "#030303" ? "bloody " : "oil-stained " : ""][src.wet ? "wet " : ""]\icon[src][src.name]. It is a [size] item."
 	if(src.desc)
 		usr << src.desc
 	return
