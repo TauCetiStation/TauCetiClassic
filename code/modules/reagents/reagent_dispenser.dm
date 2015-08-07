@@ -105,13 +105,13 @@
 /obj/structure/reagent_dispensers/watertank/process()
 	if(!src) return
 	if(modded)
-		leak_water(amount_per_transfer_from_this/10.0)
+		leak_water(2)
 	else
 		processing_objects.Remove(src)
 
 /obj/structure/reagent_dispensers/watertank/Move()
 	if (..() && modded)
-		leak_water(amount_per_transfer_from_this/10.0)
+		leak_water(3)
 	
 /obj/structure/reagent_dispensers/watertank/proc/leak_water(amount)
 	if (reagents.total_volume == 0)
@@ -123,7 +123,7 @@
 	var/turf/T = get_turf(src)
 	var/obj/effect/decal/cleanable/water/W = locate(/obj/effect/decal/cleanable/water, T)
 	if(!W)
-		W = new /obj/effect/decal/cleanable/water(T)
+		W = PoolOrNew(/obj/effect/decal/cleanable/water,T)
 	else
 		W.depth = min(2, W.depth + rand(2,5)/10)
 

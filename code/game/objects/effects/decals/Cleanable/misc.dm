@@ -169,6 +169,15 @@
 	..()
 
 /obj/effect/decal/cleanable/water/process()
+
+	var/obj/fire/fire = locate() in loc
+	if(fire)
+		qdel(fire)
+
+	var/obj/effect/decal/cleanable/liquid_fuel/fuel = locate() in loc
+	if(fuel)
+		qdel(fuel)
+
 	if(depth < 0.3)
 		qdel(src)
 		return
@@ -187,7 +196,7 @@
 				continue
 			var/obj/effect/decal/cleanable/water/W = locate(/obj/effect/decal/cleanable/water, T)
 			if(!W)
-				W = new /obj/effect/decal/cleanable/water(T)
+				W = PoolOrNew(/obj/effect/decal/cleanable/water,T)
 			else
 				W.depth += rand(1,3)/10
 			if(blood_DNA)
@@ -218,6 +227,12 @@
 		C.Weaken(2)
 	else
 		playsound(src.loc, 'sound/effects/waterstep.ogg', 50, 1, -3)
+	if(prob(5))
+		if(ishuman(C))
+			var/mob/living/carbon/human/H = C
+			if(istype(H.shoes, /obj/item/clothing/shoes))
+				var/obj/item/clothing/shoes/S = H.shoes
+				S.make_wet()
 
 /obj/effect/decal/cleanable/water/bullet_act(var/obj/item/projectile/Proj)
 	if(istype(Proj, /obj/item/projectile/energy/electrode) || istype(Proj, /obj/item/projectile/beam/stun))
@@ -240,6 +255,7 @@
 /obj/effect/decal/cleanable/water/attackby(obj/item/W as obj, mob/user as mob)
 	..()
 	var/item_to_discharge = 0
+	var/power = 120
 	if(istype(W, /obj/item/weapon/melee/baton))
 		var/obj/item/weapon/melee/baton/B = W
 		if(B.status)
@@ -249,7 +265,7 @@
 					B.status = 0
 					B.update_icon()
 				item_to_discharge = 1
-	if(istype(W, /obj/item/weapon/melee/cattleprod))
+	else if(istype(W, /obj/item/weapon/melee/cattleprod))
 		var/obj/item/weapon/melee/cattleprod/CP = W
 		if(CP.status)
 			if(CP.bcell.charge)
@@ -260,10 +276,17 @@
 				else
 					CP.deductcharge(2500)
 				item_to_discharge = 1
+	else if(istype(W, /obj/item/weapon/defibrillator))
+		var/obj/item/weapon/defibrillator/D = W
+		if(D.charged == 2)
+			D.discharge()
+			power = 150
+			item_to_discharge = 1
 	if(item_to_discharge)
-		electrocute_act(120)
+		electrocute_act(power)
 
-/obj/effect/decal/cleanable/water/proc/electrocute_act(var/power)
+/obj/effect/decal/cleanable/water/proc/electrocute_act(var/power, var/range = 0)
+	if(power < 1) return
 	if(electrocuted) return
 	electrocuted = 1
 	spawn(10)
@@ -289,4 +312,4 @@
 		var/turf/TS = get_turf(get_step(src,direction))
 		var/obj/effect/decal/cleanable/water/W = locate(/obj/effect/decal/cleanable/water, TS)
 		if(W)
-			W.electrocute_act(power)
+			W.electrocute_act(power-3)
