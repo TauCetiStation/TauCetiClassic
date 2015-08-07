@@ -178,6 +178,17 @@
 	if(fuel)
 		qdel(fuel)
 
+	var/obj/effect/decal/cleanable/blood/B = locate() in loc
+	if(B)
+		if(B.basecolor)
+			color = B.basecolor
+		if(B.blood_DNA)
+			if(B.blood_DNA.len)
+				if(!blood_DNA)
+					blood_DNA = list()
+				blood_DNA |= B.blood_DNA.Copy()
+		qdel(B)
+
 	if(depth < 0.3)
 		qdel(src)
 		return
@@ -205,7 +216,8 @@
 						W.blood_DNA = list()
 					W.blood_DNA |= blood_DNA.Copy()
 					W.blood_color = blood_color
-					if(blood_color) W.color = blood_color
+					if(color) W.color = color
+
 	depth -= rand(1,12)/800
 	var/matrix/Mx = matrix()
 	Mx.Scale(min(1, max(0.3, depth)))
@@ -282,6 +294,8 @@
 			D.discharge()
 			power = 150
 			item_to_discharge = 1
+	else
+		W.make_wet()
 	if(item_to_discharge)
 		electrocute_act(power)
 
