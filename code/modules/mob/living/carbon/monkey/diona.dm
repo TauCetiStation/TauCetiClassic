@@ -24,8 +24,6 @@
 			src.verbs += /mob/living/carbon/monkey/diona/proc/split
 			src.verbs -= /mob/living/carbon/monkey/diona/proc/merge
 			src.loc = M
-		else
-			get_scooped(M)
 
 	..()
 
