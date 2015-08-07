@@ -301,7 +301,17 @@
 				qdel(E)
 
 /obj/machinery/shower/process()
-	if(!on || !mobpresent) return
+	if(!on) return
+
+	var/turf/T = get_turf(src)
+	var/obj/effect/decal/cleanable/water/W = locate(/obj/effect/decal/cleanable/water, T)
+	if(!W)
+		W = new /obj/effect/decal/cleanable/water(T)
+	else
+		W.depth = min(2, W.depth + rand(4,8)/10)
+
+	if(!mobpresent) return
+
 	for(var/mob/living/carbon/C in loc)
 		check_heat(C)
 

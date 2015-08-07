@@ -153,12 +153,140 @@
 	layer = 2
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "water"
+	var/depth = 0.5
+	var/electrocuted = 0
 
 /obj/effect/decal/cleanable/water/New()
 	..()
-	spawn(rand(1200,1800))
-		qdel(src)
+	processing_objects.Add(src)
 
-/obj/effect/decal/cleanable/water/Crossed(var/mob/living/carbon/human/H)
-	if(!istype(H)) return
-	playsound(src, 'sound/effects/waterstep.ogg', 50, 1, -3)
+	var/matrix/Mx = matrix()
+	Mx.Scale(depth)
+	transform = Mx
+
+/obj/effect/decal/cleanable/water/Destroy()
+	processing_objects.Remove(src)
+	..()
+
+/obj/effect/decal/cleanable/water/process()
+	if(depth < 0.3)
+		qdel(src)
+		return
+	if(depth > 1.5)
+		depth = 1
+		for(var/direction in cardinal)
+			var/turf/T = get_step(src,direction)
+			if(T.density) continue
+			var/dense_obj = 0
+			for(var/atom/movable/AM in T.contents)
+				if(isturf(AM) || istype(AM, /obj/machinery/door) || istype(AM, /obj/structure/window))
+					if(AM.density)
+						dense_obj = 1
+						break
+			if(dense_obj == 1)
+				continue
+			var/obj/effect/decal/cleanable/water/W = locate(/obj/effect/decal/cleanable/water, T)
+			if(!W)
+				W = new /obj/effect/decal/cleanable/water(T)
+			else
+				W.depth += rand(1,3)/10
+			if(blood_DNA)
+				if(blood_DNA.len)
+					if(!W.blood_DNA)
+						W.blood_DNA = list()
+					W.blood_DNA |= blood_DNA.Copy()
+					W.blood_color = blood_color
+					if(blood_color) W.color = blood_color
+	depth -= rand(1,12)/800
+	var/matrix/Mx = matrix()
+	Mx.Scale(min(1, max(0.3, depth)))
+	transform = Mx
+
+/obj/effect/decal/cleanable/water/Crossed(var/mob/living/carbon/C)
+	if(!istype(C)) return
+	if(prob(2))
+		var/mob/living/carbon/human/H = C
+		if(istype(H) && (istype(H.shoes, /obj/item/clothing/shoes) && H.shoes.flags&NOSLIP))
+			return
+		if(istype(H) && (istype(H.wear_suit, /obj/item/clothing/suit/space/rig) && H.wear_suit.flags&NOSLIP))
+			return
+
+		C.stop_pulling()
+		C << "\blue You slipped on the wet floor!"
+		playsound(src.loc, 'sound/misc/slip.ogg', 50, 1, -3)
+		C.Stun(5)
+		C.Weaken(2)
+	else
+		playsound(src.loc, 'sound/effects/waterstep.ogg', 50, 1, -3)
+
+/obj/effect/decal/cleanable/water/bullet_act(var/obj/item/projectile/Proj)
+	if(istype(Proj, /obj/item/projectile/energy/electrode) || istype(Proj, /obj/item/projectile/beam/stun))
+		var/power = Proj.agony * 5
+		electrocute_act(power)
+
+/obj/effect/decal/cleanable/water/attack_hand(mob/user as mob)
+	..()
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.gloves && istype(H.gloves,/obj/item/clothing/gloves))
+			H.do_attack_animation(src)
+			var/obj/item/clothing/gloves/G = H.gloves
+			if(G.cell)
+				if(G.cell.charge >= 2500)
+					G.cell.use(2500)
+					visible_message("<span class='wet'>[src] has been touched with the stun gloves by [H]!</span>")
+					electrocute_act(150)
+
+/obj/effect/decal/cleanable/water/attackby(obj/item/W as obj, mob/user as mob)
+	..()
+	var/item_to_discharge = 0
+	if(istype(W, /obj/item/weapon/melee/baton))
+		var/obj/item/weapon/melee/baton/B = W
+		if(B.status)
+			if(B.charges)
+				B.charges--
+				if(B.charges < 1)
+					B.status = 0
+					B.update_icon()
+				item_to_discharge = 1
+	if(istype(W, /obj/item/weapon/melee/cattleprod))
+		var/obj/item/weapon/melee/cattleprod/CP = W
+		if(CP.status)
+			if(CP.bcell.charge)
+				if(isrobot(CP.loc))
+					var/mob/living/silicon/robot/R = CP.loc
+					if(R && R.cell)
+						R.cell.use(2500)
+				else
+					CP.deductcharge(2500)
+				item_to_discharge = 1
+	if(item_to_discharge)
+		electrocute_act(120)
+
+/obj/effect/decal/cleanable/water/proc/electrocute_act(var/power)
+	if(electrocuted) return
+	electrocuted = 1
+	spawn(10)
+		electrocuted = 0
+
+	var/turf/T = get_turf(src)
+	if(prob(80))
+		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+		s.set_up(3, 1, T)
+		s.start()
+
+	for(var/mob/living/L in T.contents)
+		var/power_calculated = power
+		if(ishuman(L))
+			var/mob/living/carbon/human/H = L
+			var/rnd_foot = pick("l_foot","r_foot")
+			var/datum/organ/external/select_area = H.get_organ(rnd_foot) // We're checking the outside, buddy!
+			power_calculated *= H.get_siemens_coefficient_organ(select_area)
+
+		L.apply_effect(power_calculated,AGONY,0)
+
+	for(var/direction in list(1,2,4,8,5,6,9,10))
+		var/turf/TS = get_turf(get_step(src,direction))
+		var/obj/effect/decal/cleanable/water/W = locate(/obj/effect/decal/cleanable/water, TS)
+		if(W)
+			W.electrocute_act(power)

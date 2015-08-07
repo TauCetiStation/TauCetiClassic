@@ -79,9 +79,53 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "watertank"
 	amount_per_transfer_from_this = 10
+	var/modded = 0
 	New()
 		..()
 		reagents.add_reagent("water",1000)
+
+/obj/structure/reagent_dispensers/watertank/examine()
+	set src in view()
+	..()
+	if (!(usr in view(2)) && usr!=src.loc) return
+	if (modded)
+		usr << "\red Water faucet is wrenched open, leaking the water!"
+
+/obj/structure/reagent_dispensers/watertank/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if (istype(W,/obj/item/weapon/wrench))
+		user.visible_message("[user] wrenches [src]'s faucet [modded ? "closed" : "open"].", \
+			"You wrench [src]'s faucet [modded ? "closed" : "open"]")
+		modded = modded ? 0 : 1
+		if (modded)
+			processing_objects.Add(src)
+			leak_water(amount_per_transfer_from_this)
+
+	return ..()
+
+/obj/structure/reagent_dispensers/watertank/process()
+	if(!src) return
+	if(modded)
+		leak_water(amount_per_transfer_from_this/10.0)
+	else
+		processing_objects.Remove(src)
+
+/obj/structure/reagent_dispensers/watertank/Move()
+	if (..() && modded)
+		leak_water(amount_per_transfer_from_this/10.0)
+	
+/obj/structure/reagent_dispensers/watertank/proc/leak_water(amount)
+	if (reagents.total_volume == 0)
+		return
+	
+	amount = min(amount, reagents.total_volume)
+	reagents.remove_reagent("water",amount)
+
+	var/turf/T = get_turf(src)
+	var/obj/effect/decal/cleanable/water/W = locate(/obj/effect/decal/cleanable/water, T)
+	if(!W)
+		W = new /obj/effect/decal/cleanable/water(T)
+	else
+		W.depth = min(2, W.depth + rand(2,5)/10)
 
 /obj/structure/reagent_dispensers/fueltank
 	name = "fueltank"
