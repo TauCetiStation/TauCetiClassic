@@ -717,7 +717,8 @@
 						W.blood_DNA = list()
 					W.blood_DNA |= blood_DNA.Copy()
 					W.blood_color = blood_color
-					if(blood_color) W.color = blood_color
+					//if(blood_color) W.color = blood_color
+					animate(W, color = blood_color, time = 10)
 		dry_discharge()
 	spawn(rand(40,80))
 		dry_process()
