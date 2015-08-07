@@ -299,14 +299,26 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 	src.target_types = new/list()
 
 	target_types += /obj/effect/decal/cleanable/blood/oil
+	target_types += /obj/effect/decal/cleanable/blood/gibs/robot
 	target_types += /obj/effect/decal/cleanable/vomit
 	target_types += /obj/effect/decal/cleanable/crayon
 	target_types += /obj/effect/decal/cleanable/liquid_fuel
 	target_types += /obj/effect/decal/cleanable/mucus
 	target_types += /obj/effect/decal/cleanable/dirt
+	target_types += /obj/effect/decal/cleanable/flour
+	target_types += /obj/effect/decal/cleanable/tomato_smudge
+	target_types += /obj/effect/decal/cleanable/egg_smudge
+	target_types += /obj/effect/decal/cleanable/pie_smudge
+	target_types += /obj/effect/decal/cleanable/water
+	target_types += /obj/effect/decal/cleanable/molten_item
+	target_types += /obj/effect/decal/cleanable/ash
+	target_types += /obj/effect/decal/cleanable/greenglow
 
 	if(src.blood)
 		target_types += /obj/effect/decal/cleanable/blood/
+		target_types += /obj/effect/decal/cleanable/blood/gibs/
+		target_types += /obj/effect/decal/cleanable/blood/tracks
+		target_types += /obj/effect/decal/cleanable/blood/tracks/footprints
 
 /obj/machinery/bot/cleanbot/proc/clean(var/obj/effect/decal/cleanable/target)
 	anchored = 1
