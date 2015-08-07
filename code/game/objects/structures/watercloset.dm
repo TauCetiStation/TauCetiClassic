@@ -214,10 +214,13 @@
 	if(iscarbon(O))
 		var/mob/living/carbon/M = O
 		if(M.r_hand)
+			M.r_hand.make_wet() //<= wet
 			M.r_hand.clean_blood()
 		if(M.l_hand)
+			M.l_hand.make_wet() //<= wet
 			M.l_hand.clean_blood()
 		if(M.back)
+			M.back.make_wet() //<= wet
 			if(M.back.clean_blood())
 				M.update_inv_back(0)
 		if(ishuman(M))
@@ -244,24 +247,31 @@
 					washglasses = !(H.wear_mask.flags_inv & HIDEEYES)
 
 			if(H.head)
+				H.head.make_wet() //<= wet
 				if(H.head.clean_blood())
 					H.update_inv_head(0)
 			if(H.wear_suit)
+				H.wear_suit.make_wet() //<= wet
 				if(H.wear_suit.clean_blood())
 					H.update_inv_wear_suit(0)
 			else if(H.w_uniform)
+				H.w_uniform.make_wet() //<= wet
 				if(H.w_uniform.clean_blood())
 					H.update_inv_w_uniform(0)
 			if(H.gloves && washgloves)
+				H.gloves.make_wet() //<= wet
 				if(H.gloves.clean_blood())
 					H.update_inv_gloves(0)
 			if(H.shoes && washshoes)
+				H.shoes.make_wet() //<= wet
 				if(H.shoes.clean_blood())
 					H.update_inv_shoes(0)
 			if(H.wear_mask && washmask)
+				H.wear_mask.make_wet() //<= wet
 				if(H.wear_mask.clean_blood())
 					H.update_inv_wear_mask(0)
 			if(H.glasses && washglasses)
+				H.glasses.make_wet() //<= wet
 				if(H.glasses.clean_blood())
 					H.update_inv_glasses(0)
 			if(H.l_ear && washears)
@@ -271,6 +281,7 @@
 				if(H.r_ear.clean_blood())
 					H.update_inv_ears(0)
 			if(H.belt)
+				H.belt.make_wet() //<= wet
 				if(H.belt.clean_blood())
 					H.update_inv_belt(0)
 			H.clean_blood(washshoes)
@@ -407,6 +418,7 @@
 	if(user.get_active_hand() != I) return		//Person has switched hands or the item in their hands
 
 	O.clean_blood()
+	O.make_wet()
 	user.visible_message( \
 		"\blue [user] washes \a [I] using \the [src].", \
 		"\blue You wash \a [I] using \the [src].")

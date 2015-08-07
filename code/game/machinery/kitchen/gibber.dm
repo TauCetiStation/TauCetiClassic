@@ -177,6 +177,8 @@
 	visible_message("<span class='danger'>You hear a loud squelchy grinding sound.</span>")
 	src.operating = 1
 	update_icon()
+	var/offset = prob(50) ? -2 : 2
+	animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = 200) //start shaking
 
 	var/slab_name = occupant.name
 	var/slab_count = 3
@@ -226,6 +228,7 @@
 			thing.loc = get_turf(thing) // Drop it onto the turf for throwing.
 			thing.throw_at(get_edge_target_turf(src,gib_throw_dir),rand(1,5),15) // Being pelted with bits of meat and bone would hurt.
 
+		pixel_x = initial(pixel_x) //return to it's spot after shaking
 		update_icon()
 
 

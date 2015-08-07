@@ -142,3 +142,23 @@
 	layer = 2
 	icon = 'icons/effects/tomatodecal.dmi'
 	random_icon_states = list("smashed_pie")
+
+/obj/effect/decal/cleanable/water
+	name = "water"
+	desc = ""
+	gender = PLURAL
+	density = 0
+	anchored = 1
+	alpha = 70
+	layer = 2
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "water"
+
+/obj/effect/decal/cleanable/water/New()
+	..()
+	spawn(rand(1200,1800))
+		qdel(src)
+
+/obj/effect/decal/cleanable/water/Crossed(var/mob/living/carbon/human/H)
+	if(!istype(H)) return
+	playsound(src, 'sound/effects/waterstep.ogg', 50, 1, -3)
