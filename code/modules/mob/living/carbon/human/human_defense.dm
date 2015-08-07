@@ -155,6 +155,12 @@ emp_act
 		if(!istype(C))	//is this necessary?
 			continue
 		else if(C.body_parts_covered & def_zone.body_part) // Is that body part being targeted covered?
+			if(C.wet)
+				siemens_coefficient = 3.0
+				var/turf/T = get_turf(src)
+				var/obj/effect/decal/cleanable/water/W = locate(/obj/effect/decal/cleanable/water, T)
+				if(W)
+					W.electrocute_act(60)
 			siemens_coefficient *= C.siemens_coefficient
 
 	return siemens_coefficient

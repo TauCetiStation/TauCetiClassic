@@ -224,6 +224,12 @@ datum
 					T.wet_overlay = image('icons/effects/water.dmi',T,"wet_floor")
 					T.overlays += T.wet_overlay
 
+					var/obj/effect/decal/cleanable/water/W = locate(/obj/effect/decal/cleanable/water, T)
+					if(!W)
+						W = new /obj/effect/decal/cleanable/water(T)
+					else
+						W.depth = min(2, W.depth + rand(2,5)/10)
+
 					spawn(800)
 						if (!istype(T)) return
 						if(T.wet >= 2) return
