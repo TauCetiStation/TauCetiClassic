@@ -24,6 +24,20 @@
 				user.visible_message("[user] charges their [src].", "You charge your [src].</span>", "You hear electrical zap.")
 				charged = 1
 				spawn(25)
+					if(wet)
+						var/turf/T = get_turf(src)
+						T.visible_message("<span class='wet'>Some wet device has been discharged!</span>")
+						var/obj/effect/decal/cleanable/water/W = locate(/obj/effect/decal/cleanable/water, T)
+						if(W)
+							W.electrocute_act(150)
+						else if(istype(loc, /mob/living))
+							var/mob/living/L = loc
+							L.Weaken(6)
+							var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+							s.set_up(3, 1, src)
+							s.start()
+						discharge()
+						return
 					charged = 2
 					//icon_state = "Defibunit_on"
 					icon_state = state_on
@@ -59,6 +73,19 @@
 							C.stat = CONSCIOUS
 					C.tod = null
 					C.timeofdeath = 0
+
+				if(wet)
+					var/turf/T = get_turf(src)
+					T.visible_message("<span class='wet'>Some wet device has been discharged!</span>")
+					var/obj/effect/decal/cleanable/water/W = locate(/obj/effect/decal/cleanable/water, T)
+					if(W)
+						W.electrocute_act(150)
+					else if(istype(loc, /mob/living))
+						var/mob/living/L = loc
+						L.Weaken(6)
+						var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+						s.set_up(3, 1, src)
+						s.start()
 
 			discharge()
 			C.apply_effect(4, STUN, 0)

@@ -226,7 +226,7 @@ datum
 
 					var/obj/effect/decal/cleanable/water/W = locate(/obj/effect/decal/cleanable/water, T)
 					if(!W)
-						W = new /obj/effect/decal/cleanable/water(T)
+						W = PoolOrNew(/obj/effect/decal/cleanable/water,T)
 					else
 						W.depth = min(2, W.depth + rand(2,5)/10)
 

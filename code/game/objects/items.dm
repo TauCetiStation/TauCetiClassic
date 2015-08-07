@@ -708,7 +708,7 @@
 		if(!istype(T, /turf/space))
 			var/obj/effect/decal/cleanable/water/W = locate(/obj/effect/decal/cleanable/water, T)
 			if(!W)
-				W = new /obj/effect/decal/cleanable/water(T)
+				W = PoolOrNew(/obj/effect/decal/cleanable/water,T)
 			else
 				W.depth = min(2, W.depth + rand(2,5)/10)
 			if(blood_DNA)
@@ -754,7 +754,7 @@
 			W.electrocute_act(120)
 		else if(istype(loc, /mob/living))
 			var/mob/living/L = loc
-			L.Weaken(60)
+			L.Weaken(6)
 			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 			s.set_up(3, 1, src)
 			s.start()
