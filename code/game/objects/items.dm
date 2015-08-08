@@ -685,9 +685,24 @@
 		I.showoff(src)
 
 //NextGen mechanic to make items wet
-/obj/item/proc/make_wet()
+/obj/item/proc/make_wet(var/shower = 0)
 	if(!src) return
 	if(src.flags & THICKMATERIAL) return
+
+	if(shower)
+		if(blood_DNA)
+			if(blood_DNA.len)
+				var/turf/T = get_turf(src)
+				if(!istype(T, /turf/space))
+					var/obj/effect/decal/cleanable/water/W = locate(/obj/effect/decal/cleanable/water, T)
+					if(!W)
+						W = PoolOrNew(/obj/effect/decal/cleanable/water,T)
+					if(!W.blood_DNA)
+						W.blood_DNA = list()
+					W.blood_DNA |= blood_DNA.Copy()
+					W.blood_color = blood_color
+					//if(blood_color) W.color = blood_color
+					animate(W, color = blood_color, time = 10)
 
 	var/wet_weight = rand(18,28)
 	if(wet)
@@ -717,7 +732,8 @@
 						W.blood_DNA = list()
 					W.blood_DNA |= blood_DNA.Copy()
 					W.blood_color = blood_color
-					if(blood_color) W.color = blood_color
+					//if(blood_color) W.color = blood_color
+					animate(W, color = blood_color, time = 10)
 		dry_discharge()
 	spawn(rand(40,80))
 		dry_process()

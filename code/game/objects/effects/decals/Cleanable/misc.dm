@@ -150,6 +150,7 @@
 	density = 0
 	anchored = 1
 	alpha = 70
+	color = "#66D1FF"
 	layer = 2
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "water"
@@ -181,7 +182,8 @@
 	var/obj/effect/decal/cleanable/blood/B = locate() in loc
 	if(B)
 		if(B.basecolor)
-			color = B.basecolor
+			animate(src, color = B.basecolor, time = 10)
+			//color = B.basecolor
 		if(B.blood_DNA)
 			if(B.blood_DNA.len)
 				if(!blood_DNA)
@@ -216,7 +218,8 @@
 						W.blood_DNA = list()
 					W.blood_DNA |= blood_DNA.Copy()
 					W.blood_color = blood_color
-					if(color) W.color = color
+					//if(blood_color) W.color = color
+					animate(W, color = src.color, time = 10)
 
 	depth -= rand(1,12)/800
 	var/matrix/Mx = matrix()
