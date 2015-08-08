@@ -111,7 +111,7 @@
 
 /obj/structure/reagent_dispensers/watertank/Move()
 	if (..() && modded)
-		leak_water(3)
+		leak_water(1)
 	
 /obj/structure/reagent_dispensers/watertank/proc/leak_water(amount)
 	if (reagents.total_volume == 0)
