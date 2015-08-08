@@ -1214,7 +1214,10 @@
 					src << "<span class='notice'>You're in too much pain to keep going...</span>"
 					for(var/mob/O in oviewers(src, null))
 						O.show_message("<B>[src]</B> slumps to the ground, too weak to continue fighting.", 1)
-					Paralyse(10)
+					if(prob(3))
+						Paralyse(10)
+					else
+						Weaken(10)
 					setHalLoss(99)
 
 			if(paralysis)
