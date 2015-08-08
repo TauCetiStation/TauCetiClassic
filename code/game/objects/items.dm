@@ -716,7 +716,7 @@
 
 /obj/item/proc/dry_process()
 	if(!src) return
-	if(!wet) return
+	if(wet < 1) return
 	wet--
 	if(prob(15))
 		var/turf/T = get_turf(src)
