@@ -303,12 +303,7 @@
 /obj/machinery/shower/process()
 	if(!on) return
 
-	var/turf/T = get_turf(src)
-	var/obj/effect/decal/cleanable/water/W = locate(/obj/effect/decal/cleanable/water, T)
-	if(!W)
-		W = PoolOrNew(/obj/effect/decal/cleanable/water,T)
-	else
-		W.depth = min(2, W.depth + rand(4,8)/10)
+	create_water(src)
 
 	if(!mobpresent) return
 

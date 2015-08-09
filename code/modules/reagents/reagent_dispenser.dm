@@ -120,12 +120,7 @@
 	amount = min(amount, reagents.total_volume)
 	reagents.remove_reagent("water",amount)
 
-	var/turf/T = get_turf(src)
-	var/obj/effect/decal/cleanable/water/W = locate(/obj/effect/decal/cleanable/water, T)
-	if(!W)
-		W = PoolOrNew(/obj/effect/decal/cleanable/water,T)
-	else
-		W.depth = min(2, W.depth + rand(2,5)/10)
+	create_water(src)
 
 /obj/structure/reagent_dispensers/fueltank
 	name = "fueltank"
