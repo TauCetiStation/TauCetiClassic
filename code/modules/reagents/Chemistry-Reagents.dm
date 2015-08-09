@@ -216,6 +216,7 @@ datum
 				if (!istype(T)) return
 				src = null
 				if(volume >= 3)
+					create_water(T)
 					if(T.wet >= 1) return
 					T.wet = 1
 					if(T.wet_overlay)
@@ -223,12 +224,6 @@ datum
 						T.wet_overlay = null
 					T.wet_overlay = image('icons/effects/water.dmi',T,"wet_floor")
 					T.overlays += T.wet_overlay
-
-					var/obj/effect/decal/cleanable/water/W = locate(/obj/effect/decal/cleanable/water, T)
-					if(!W)
-						W = PoolOrNew(/obj/effect/decal/cleanable/water,T)
-					else
-						W.depth = min(2, W.depth + rand(2,5)/10)
 
 					spawn(800)
 						if (!istype(T)) return
