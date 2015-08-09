@@ -1,5 +1,5 @@
 //NextGen mechanic to make items wet
-/obj/item/var/wet_inprocess = 0
+/obj/item/var/dry_inprocess = 0
 
 /obj/item/proc/make_wet(var/shower = 0)
 	if(!src) return
@@ -36,31 +36,28 @@
 		processing_drying -= src
 		return
 
-	if(wet_inprocess < 1)
-		wet_inprocess = rand(4,8)
-	else
-		wet_inprocess--
-		return
-
+	if(dry_inprocess < 1)
+		dry_inprocess = rand(4,8)
 		wet--
-
-	if(prob(15))
-		var/turf/T = get_turf(src)
-		if(!istype(T, /turf/space))
-			var/obj/effect/decal/cleanable/water/W = locate(/obj/effect/decal/cleanable/water, T)
-			if(!W)
-				W = PoolOrNew(/obj/effect/decal/cleanable/water,T)
-			else
-				W.depth = min(2, W.depth + rand(2,5)/10)
-			if(blood_DNA)
-				if(blood_DNA.len)
-					if(!W.blood_DNA)
-						W.blood_DNA = list()
-					W.blood_DNA |= blood_DNA.Copy()
-					W.blood_color = blood_color
-					animate(W, color = blood_color, time = 10)
-	if(prob(20))
-		dry_discharge()
+		if(prob(15))
+			var/turf/T = get_turf(src)
+			if(!istype(T, /turf/space))
+				var/obj/effect/decal/cleanable/water/W = locate(/obj/effect/decal/cleanable/water, T)
+				if(!W)
+					W = PoolOrNew(/obj/effect/decal/cleanable/water,T)
+				else
+					W.depth = min(2, W.depth + rand(2,5)/10)
+				if(blood_DNA)
+					if(blood_DNA.len)
+						if(!W.blood_DNA)
+							W.blood_DNA = list()
+						W.blood_DNA |= blood_DNA.Copy()
+						W.blood_color = blood_color
+						animate(W, color = blood_color, time = 10)
+		if(prob(20))
+			dry_discharge()
+	else
+		dry_inprocess--
 
 /obj/item/proc/dry_discharge()
 	var/item_to_discharge = 0
