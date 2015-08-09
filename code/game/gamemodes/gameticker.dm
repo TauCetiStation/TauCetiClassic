@@ -366,8 +366,10 @@ var/global/datum/controller/gameticker/ticker
 						world.Reboot()
 					else
 						world << "\blue <B>An admin has delayed the round end</B>"
+						send2slack_service("An admin has delayed the round end")
 				else
 					world << "\blue <B>An admin has delayed the round end</B>"
+					send2slack_service("An admin has delayed the round end")
 
 		return 1
 
