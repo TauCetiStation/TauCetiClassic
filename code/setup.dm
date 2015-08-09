@@ -650,6 +650,7 @@ var/list/liftable_structures = list(\
 #define CHAT_LOOC		4096
 #define CHAT_GHOSTRADIO 8192
 #define SHOW_TYPING 	16384
+#define SHOW_ANIMATIONS	32768
 
 
 #define TOGGLES_DEFAULT (SOUND_ADMINHELP|SOUND_MIDI|SOUND_AMBIENCE|SOUND_LOBBY|CHAT_OOC|CHAT_DEAD|CHAT_GHOSTEARS|CHAT_GHOSTSIGHT|CHAT_PRAYER|CHAT_RADIO|CHAT_ATTACKLOGS|CHAT_LOOC)
@@ -690,7 +691,7 @@ var/list/be_special_flags = list(
 	"Shadowling" = BE_SHADOWLING
 	)
 
-#define AGE_MIN 17			//youngest a character can be
+#define AGE_MIN 25			//youngest a character can be
 #define AGE_MAX 85			//oldest a character can be
 
 //Languages!

@@ -185,3 +185,12 @@
 		prefs.UI_style_color = UI_style_color_new
 		prefs.save_preferences()
 		usr << "UI was saved"
+
+/client/verb/toggle_anim_attacks()
+	set name = "Show/Hide Melee Animations"
+	set category = "Preferences"
+	set desc = "Toggles seeing melee attack animations"
+	prefs.toggles ^= SHOW_ANIMATIONS
+	prefs.save_preferences()
+	src << "You will [(prefs.toggles & SHOW_ANIMATIONS) ? "no longer" : "now"] see melee attack animations"
+	feedback_add_details("admin_verb","MAA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
