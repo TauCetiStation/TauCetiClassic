@@ -506,28 +506,29 @@
 
 	//resisting grabs (as if it helps anyone...)
 	if ((!( L.stat ) && !( L.restrained() )))
-		if(!L.weakened || !L.stunned)
-			var/resisting = 0
-			for(var/obj/O in L.requests)
-				L.requests.Remove(O)
-				qdel(O)
-				resisting++
-			for(var/obj/item/weapon/grab/G in usr.grabbed_by)
-				resisting++
-				switch(G.state)
-					if(GRAB_PASSIVE)
+		if(L.weakened || L.stunned) return
+
+		var/resisting = 0
+		for(var/obj/O in L.requests)
+			L.requests.Remove(O)
+			qdel(O)
+			resisting++
+		for(var/obj/item/weapon/grab/G in usr.grabbed_by)
+			resisting++
+			switch(G.state)
+				if(GRAB_PASSIVE)
+					qdel(G)
+				if(GRAB_AGGRESSIVE)
+					if(prob(60)) //same chance of breaking the grab as disarm
+						L.visible_message("<span class='warning'>[L] has broken free of [G.assailant]'s grip!</span>")
 						qdel(G)
-					if(GRAB_AGGRESSIVE)
-						if(prob(60)) //same chance of breaking the grab as disarm
-							L.visible_message("<span class='warning'>[L] has broken free of [G.assailant]'s grip!</span>")
-							qdel(G)
-					if(GRAB_NECK)
-						//If the you move when grabbing someone then it's easier for them to break free. Same if the affected mob is immune to stun.
-						if (((world.time - G.assailant.l_move_time < 20 || !L.stunned) && prob(15)) || prob(3))
-							L.visible_message("<span class='warning'>[L] has broken free of [G.assailant]'s headlock!</span>")
-							qdel(G)
-			if(resisting)
-				L.visible_message("<span class='danger'>[L] resists!</span>")
+				if(GRAB_NECK)
+					//If the you move when grabbing someone then it's easier for them to break free. Same if the affected mob is immune to stun.
+					if (((world.time - G.assailant.l_move_time < 20 || !L.stunned) && prob(15)) || prob(3))
+						L.visible_message("<span class='warning'>[L] has broken free of [G.assailant]'s headlock!</span>")
+						qdel(G)
+		if(resisting)
+			L.visible_message("<span class='danger'>[L] resists!</span>")
 
 
 	//unbuckling yourself
