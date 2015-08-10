@@ -119,6 +119,8 @@
 	var/turf/T = get_turf(src)
 	var/obj/effect/decal/cleanable/water/W = locate(/obj/effect/decal/cleanable/water, T)
 	if(W)
+		attack_log += "\[[time_stamp()]\]<font color='red'> [src] was shocked by the [source] and started chain-reaction with water!</font>"
+		msg_admin_attack("[key_name(src)] was shocked by the [source] and started chain-reaction with water! (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)")
 		W.electrocute_act(shock_damage)
 
 	shock_damage *= siemens_coeff

@@ -29,6 +29,10 @@
 		wet = wet_weight
 		processing_drying |= src
 
+/obj/item/Destroy()
+	processing_drying -= src
+	..()
+
 /obj/item/proc/dry_process()
 	if(!src) return
 
@@ -91,7 +95,7 @@
 			W.electrocute_act(120)
 		else if(istype(loc, /mob/living))
 			var/mob/living/L = loc
-			L.Weaken(6)
+			L.apply_effect(120,AGONY,0)
 			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 			s.set_up(3, 1, src)
 			s.start()

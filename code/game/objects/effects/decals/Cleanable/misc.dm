@@ -155,7 +155,9 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = ""
 	var/depth = 0.5
+	var/depth_max = 10.0
 	var/electrocuted = 0
+	var/turf/simulated/floor/base_turf
 
 	var/overlay_light = 0
 	var/overlay_medium = 0
@@ -164,6 +166,12 @@
 
 /obj/effect/decal/cleanable/water/New()
 	..()
+
+	base_turf = get_turf(src)
+	if(!istype(base_turf))
+		qdel(src)
+		return
+
 	processing_objects |= src
 	processing_water |= src
 
@@ -175,6 +183,16 @@
 	processing_water -= src
 	..()
 
+/obj/effect/decal/cleanable/water/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+	if(ishuman(mover) && mover.checkpass(PASSCRAWL))
+		mover.layer = 2.7
+	return 1
+
+/obj/effect/decal/cleanable/water/CheckExit(atom/movable/O as mob|obj, target as turf)
+	if(istype(O) && O.checkpass(PASSCRAWL))
+		O.layer = 4.0
+	return 1
+
 /obj/effect/decal/cleanable/water/update_icon()
 	var/matrix/Mx = matrix()
 	Mx.Scale(min(1.0, depth))
@@ -184,7 +202,8 @@
 		return
 
 	var/tmp_alpha = min(180,max(70, 22.5 * depth))
-	animate(src,time = 10, alpha=tmp_alpha)
+	var/tmp_layer = min(3.5, max(2, depth/2))
+	animate(src,time = 10, alpha=tmp_alpha, layer=tmp_layer)
 
 	switch(depth)
 		if(0.0 to 2.0)
@@ -275,36 +294,43 @@
 			var/obj/effect/decal/cleanable/water/W = locate(/obj/effect/decal/cleanable/water, T)
 			if(!W)
 				W = PoolOrNew(/obj/effect/decal/cleanable/water,T)
-				depth -= 0.5
+				W.depth += depth/10
+				depth -= 0.5+depth/10
 				try_trans_DNA(W)
 		else
 			for(var/direction in cardinal)
 				var/turf/T = get_step(src,direction)
-				var/dense_obj = 0
-				for(var/atom/movable/AM in T.contents)
-					if(isturf(AM) || istype(AM, /obj/machinery/door) || istype(AM, /obj/structure/window))
-						if(AM.density)
-							dense_obj = 1
-							break
-				if(!dense_obj)
-					var/obj/effect/decal/cleanable/water/W = locate(/obj/effect/decal/cleanable/water, T)
-					if(W)
-						if(!depth_compared)
-							if(depth > W.depth)
-								depth_compared = W.depth
-								most_dry = W
-						else
-							if(depth_compared > W.depth)
-								depth_compared = W.depth
-								most_dry = W
+				if(istype(T, /turf/simulated/floor))
+					var/dense_obj = 0
+					for(var/atom/movable/AM in T.contents)
+						if(isturf(AM) || istype(AM, /obj/machinery/door) || istype(AM, /obj/structure/window))
+							if(AM.density)
+								dense_obj = 1
+								break
+					if(!dense_obj)
+						var/obj/effect/decal/cleanable/water/W = locate(/obj/effect/decal/cleanable/water, T)
+						if(W)
+							if(!depth_compared)
+								if(depth > W.depth)
+									depth_compared = W.depth
+									most_dry = W
+							else
+								if(depth_compared > W.depth)
+									depth_compared = W.depth
+									most_dry = W
 			if(depth_compared)
-				most_dry.depth += 0.5+depth/10
-				depth -= 0.5+depth/10
-				try_trans_DNA(most_dry)
+				if(most_dry.depth + 0.5 + depth/10 < depth_max)
+					most_dry.depth += 0.5+depth/10
+					depth -= 0.5+depth/10
+					try_trans_DNA(most_dry)
 
 /obj/effect/decal/cleanable/water/process()
-	if(depth > 10)
-		depth = 10
+	if(!base_turf || !istype(base_turf))
+		qdel(src)
+		return
+
+	if(depth > depth_max)
+		depth = depth_max
 
 	depth -= rand(1,12)/800
 
@@ -396,6 +422,8 @@
 	else
 		W.make_wet()
 	if(item_to_discharge)
+		user.attack_log += "\[[time_stamp()]\]<font color='red'> Electrified water with [W.name]</font>"
+		msg_admin_attack("[key_name(user)] <font color='red'>electrified</font> water with [W.name] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)")
 		electrocute_act(power)
 
 /obj/effect/decal/cleanable/water/proc/electrocute_act(var/power, var/range = 0)
@@ -405,24 +433,32 @@
 	spawn(10)
 		electrocuted = 0
 
-	var/turf/T = get_turf(src)
 	if(prob(80))
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-		s.set_up(3, 1, T)
+		s.set_up(3, 1, base_turf)
 		s.start()
 
-	for(var/mob/living/L in T.contents)
+	for(var/mob/living/L in base_turf.contents)
 		var/power_calculated = power
 		if(ishuman(L))
 			var/mob/living/carbon/human/H = L
-			var/rnd_foot = pick("l_foot","r_foot")
-			var/datum/organ/external/select_area = H.get_organ(rnd_foot) // We're checking the outside, buddy!
-			power_calculated *= H.get_siemens_coefficient_organ(select_area)
-
-		L.apply_effect(power_calculated,AGONY,0)
+			//var/rnd_foot = pick("l_foot","r_foot")
+			if(istype(H) && (istype(H.shoes, /obj/item/clothing/shoes) && H.shoes.flags&NOSLIP))
+				power_calculated = 0
+				continue
+			if(istype(H) && (istype(H.wear_suit, /obj/item/clothing/suit/space/rig) && H.wear_suit.flags&NOSLIP))
+				power_calculated = 0
+				continue
+			var/datum/organ/external/select_area = H.get_organ("chest")
+			if(H.check_thickmaterial(select_area))
+				power_calculated = 0
+			else
+				power_calculated *= H.get_siemens_coefficient_organ(select_area)
+		if(power_calculated)
+			L.apply_effect(power_calculated,AGONY,0)
 
 	for(var/direction in list(1,2,4,8,5,6,9,10))
 		var/turf/TS = get_turf(get_step(src,direction))
 		var/obj/effect/decal/cleanable/water/W = locate(/obj/effect/decal/cleanable/water, TS)
 		if(W)
-			W.electrocute_act(power-3)
+			W.electrocute_act(power-15)
