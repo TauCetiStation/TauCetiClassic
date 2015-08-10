@@ -20,6 +20,9 @@
 	if(module_active && istype(module_active,/obj/item/borg/combat/mobility))
 		tally-=3
 
+	if(confused)
+		tally+=8
+
 	return tally+config.robot_delay
 
 // NEW: Use power while moving.

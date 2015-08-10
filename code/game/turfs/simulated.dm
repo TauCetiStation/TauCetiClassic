@@ -53,6 +53,8 @@
 				if(istype(H.shoes, /obj/item/clothing/shoes/clown_shoes))
 					if(prob(25))
 						footstepsound = "clownstep"
+				if(H.shoes.wet)
+					footstepsound = 'sound/effects/waterstep.ogg'
 
 				if(H.m_intent == "run")
 					if(O.footstep >= 2)

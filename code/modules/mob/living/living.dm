@@ -506,6 +506,8 @@
 
 	//resisting grabs (as if it helps anyone...)
 	if ((!( L.stat ) && !( L.restrained() )))
+		if(L.weakened || L.stunned) return
+
 		var/resisting = 0
 		for(var/obj/O in L.requests)
 			L.requests.Remove(O)
@@ -759,6 +761,24 @@
 /mob/living/do_attack_animation(atom/A)
 	var/final_pixel_y = get_standard_pixel_y_offset(lying_current)
 	..(A, final_pixel_y)
+
+	//Show an image of the wielded weapon over the person who got dunked.
+	var/image/I
+	if(hand)
+		if(l_hand)
+			I = image(l_hand.icon,A,l_hand.icon_state,A.layer+1)
+	else
+		if(r_hand)
+			I = image(r_hand.icon,A,r_hand.icon_state,A.layer+1)
+	if(I)
+		var/list/viewing = list()
+		for(var/mob/M in viewers(A))
+			if(M.client)
+				if(!(M.client.prefs.toggles & SHOW_ANIMATIONS))
+					viewing |= M.client
+		flick_overlay(I,viewing,5)
+		I.pixel_z = 16 //lift it up...
+		animate(I, pixel_z = 0, alpha = 125, time = 3) //smash it down into them!
 
 /mob/living/Stat()
 	..()

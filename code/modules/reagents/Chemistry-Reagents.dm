@@ -216,6 +216,7 @@ datum
 				if (!istype(T)) return
 				src = null
 				if(volume >= 3)
+					create_water(T)
 					if(T.wet >= 1) return
 					T.wet = 1
 					if(T.wet_overlay)

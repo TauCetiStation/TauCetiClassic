@@ -45,6 +45,7 @@
 
 	for(var/obj/item/I in contents)
 		I.decontaminate()
+		I.wet = 0
 
 	//Tanning!
 	for(var/obj/item/stack/sheet/hairlesshide/HH in contents)

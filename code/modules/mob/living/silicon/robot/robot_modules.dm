@@ -114,9 +114,9 @@
 /obj/item/weapon/robot_module/crisis
 	name = "crisis robot module"
 	stacktypes = list(
-		/obj/item/stack/medical/ointment = 5,
-		/obj/item/stack/medical/bruise_pack = 5,
-		/obj/item/stack/medical/splint = 5
+		/obj/item/stack/medical/ointment = 25,
+		/obj/item/stack/medical/bruise_pack = 25,
+		/obj/item/stack/medical/splint = 10
 		)
 
 	New()
@@ -344,7 +344,6 @@
 	New()
 		..()
 		src.modules += new /obj/item/borg/sight/hud/miner(src)
-		src.modules += new /obj/item/device/flash(src)
 		src.modules += new /obj/item/borg/sight/meson(src)
 		src.modules += new /obj/item/weapon/wrench(src)
 		src.modules += new /obj/item/weapon/screwdriver(src)
