@@ -1425,9 +1425,10 @@
 				src << "\red \b Ouch!"
 				return
 			pass_flags += PASSCRAWL
+			layer = 4.0
 		else
 			pass_flags -= PASSCRAWL
-			layer = 4.0
+			//layer = 4.0
 		crawling = !crawling
 
 	update_canmove()

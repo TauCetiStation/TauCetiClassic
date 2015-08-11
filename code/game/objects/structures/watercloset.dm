@@ -128,6 +128,7 @@
 	var/ismist = 0				//needs a var so we can make it linger~
 	var/watertemp = "normal"	//freezing, normal, or boiling
 	var/mobpresent = 0		//true if there is a mob on the shower's loc, this is to ease process()
+	var/is_payed = 0
 
 //add heat controls? when emagged, you can freeze to death in it?
 
@@ -140,19 +141,24 @@
 	mouse_opacity = 0
 
 /obj/machinery/shower/attack_hand(mob/M as mob)
-	on = !on
-	update_icon()
-	if(on)
-		if (M.loc == loc)
-			wash(M)
-			check_heat(M)
-		for (var/atom/movable/G in src.loc)
-			G.clean_blood()
+	if(is_payed)
+		on = !on
+		update_icon()
+		if(on)
+			if (M.loc == loc)
+				wash(M)
+				check_heat(M)
+			for (var/atom/movable/G in src.loc)
+				G.clean_blood()
+		else
+			is_payed = 0 // Если игрок выключил раньше времени - принудительное аннулирование платы.
+	else
+		M << "You didn't pay for that. Swipe a card against [src]."
 
 /obj/machinery/shower/attackby(obj/item/I as obj, mob/user as mob)
 	if(I.type == /obj/item/device/analyzer)
 		user << "<span class='notice'>The water temperature seems to be [watertemp].</span>"
-	if(istype(I, /obj/item/weapon/wrench))
+	else if(istype(I, /obj/item/weapon/wrench))
 		user << "<span class='notice'>You begin to adjust the temperature valve with \the [I].</span>"
 		if(do_after(user, 50))
 			switch(watertemp)
@@ -164,6 +170,53 @@
 					watertemp = "normal"
 			user.visible_message("<span class='notice'>[user] adjusts the shower with \the [I].</span>", "<span class='notice'>You adjust the shower with \the [I].</span>")
 			add_fingerprint(user)
+	else if(istype(I, /obj/item/weapon/card))
+		if(!is_payed)
+			if(!on)
+				var/obj/item/weapon/card/C = I
+				visible_message("<span class='info'>[usr] swipes a card through [src].</span>")
+				if(station_account)
+					var/datum/money_account/D = get_account(C.associated_account_number)
+					var/attempt_pin = 0
+					if(D.security_level > 0)
+						attempt_pin = input("Enter pin code", "Transaction") as num
+					if(attempt_pin)
+						D = attempt_account_access(C.associated_account_number, attempt_pin, 2)
+					if(D)
+						var/transaction_amount = 150
+						if(transaction_amount <= D.money)
+							//transfer the money
+							D.money -= transaction_amount
+							station_account.money += transaction_amount
+
+							//create entries in the two account transaction logs
+							var/datum/transaction/T = new()
+							T.target_name = "[station_account.owner_name] (via [src.name])"
+							T.purpose = "Purchase of shower use"
+							if(transaction_amount > 0)
+								T.amount = "([transaction_amount])"
+							else
+								T.amount = "[transaction_amount]"
+							T.source_terminal = src.name
+							T.date = current_date_string
+							T.time = worldtime2text()
+							D.transaction_log.Add(T)
+
+							T = new()
+							T.target_name = D.owner_name
+							T.purpose = "Purchase of shower use"
+							T.amount = "[transaction_amount]"
+							T.source_terminal = src.name
+							T.date = current_date_string
+							T.time = worldtime2text()
+							station_account.transaction_log.Add(T)
+
+							is_payed = 60
+							usr << "\icon[src]Thank you, happy washing time and don't turn me off accidently or i will take your precious credits again! Teehee.</span>"
+						else
+							usr << "\icon[src]<span class='warning'>You don't have that much money!</span>"
+		else
+			usr << "\icon[src]Is payed, you may turn it on now.</span>"
 
 /obj/machinery/shower/update_icon()	//this is terribly unreadable, but basically it makes the shower mist up
 	overlays.Cut()					//once it's been on for a while, in addition to handling the water overlay.
@@ -302,6 +355,12 @@
 
 /obj/machinery/shower/process()
 	if(!on) return
+	if(is_payed < 1)
+		on = 0
+		update_icon()
+		return
+	else
+		is_payed--
 
 	create_water(src)
 
