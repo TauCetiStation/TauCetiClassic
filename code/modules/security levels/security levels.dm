@@ -67,7 +67,7 @@
 					if(FA.z == 1 || FA.z == 5)
 						FA.overlays = list()
 						FA.overlays += image('tauceti/icons/obj/wall_monitors.dmi', "overlay_delta")
-		if(security_level == SEC_LEVEL_RED)
+		/*if(security_level == SEC_LEVEL_RED)
 			red_alert_code = 1
 			for(var/area/A in world)
 				if(istype(A, /area/hallway))
@@ -76,7 +76,7 @@
 			red_alert_code = 0
 			for(var/area/A in world)
 				if(istype(A, /area/hallway))
-					A.readyreset()
+					A.readyreset()*/
 	else
 		return
 
