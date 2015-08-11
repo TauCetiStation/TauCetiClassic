@@ -320,3 +320,4 @@ var/global/obj/item/device/radio/intercom/global_announcer = new(null)
 
 // Unsorted stuff
 var/global_message_cooldown = 1
+var/list/stealth_keys = list()

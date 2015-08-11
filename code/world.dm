@@ -221,6 +221,14 @@ var/world_topic_spam_protect_time = world.timeofday
 						qdel(C)
 #undef INACTIVITY_KICK
 
+/hook/startup/proc/loadStealthKeys()
+	world.load_stealth_keys()
+	return 1
+
+/world/proc/load_stealth_keys()
+	var/list/keys_list = file2list("data/stealth_keys.txt")
+	if(keys_list.len)
+		stealth_keys = keys_list
 
 /hook/startup/proc/loadMode()
 	world.load_mode()
