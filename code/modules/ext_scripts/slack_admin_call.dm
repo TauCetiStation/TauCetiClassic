@@ -60,9 +60,10 @@ proc/admin_call_cooldown(var/value1)
 	for(var/client/X in admins)
 		//if((R_ADMIN|R_MOD|R_MENTOR) & X.holder.rights)
 		if((R_ADMIN) & X.holder.rights)
-			admin_number++
-			if(X.is_afk())
-				admin_number_afk++
+			if(!(X.key in stealth_keys))
+				admin_number++
+				if(X.is_afk())
+					admin_number_afk++
 			if(X.prefs.toggles & SOUND_ADMINHELP)
 				X << 'sound/effects/adminhelp.ogg'
 			X << msg
