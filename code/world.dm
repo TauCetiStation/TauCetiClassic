@@ -226,9 +226,10 @@ var/world_topic_spam_protect_time = world.timeofday
 	return 1
 
 /world/proc/load_stealth_keys()
-	var/list/keys_list = file2list("data/stealth_keys.txt")
+	var/list/keys_list = file2list("config/stealth_keys.txt")
 	if(keys_list.len)
-		stealth_keys = keys_list
+		for(var/X in keys_list)
+			stealth_keys += lowertext(X)
 
 /hook/startup/proc/loadMode()
 	world.load_mode()
