@@ -157,7 +157,8 @@ datum/shuttle_controller/emergency_shuttle/process()
 							//pods
 					start_location = locate(/area/shuttle/escape_pod1/transit)
 					end_location = locate(/area/shuttle/escape_pod1/centcom)
-					start_location.move_contents_to(end_location, null, NORTH)
+					if( prob(5) ) // 5% that they survive
+						start_location.move_contents_to(end_location, null, NORTH)
 
 					for(var/obj/machinery/door/D in machines)
 						if( get_area(D) == end_location )
@@ -177,7 +178,8 @@ datum/shuttle_controller/emergency_shuttle/process()
 
 					start_location = locate(/area/shuttle/escape_pod2/transit)
 					end_location = locate(/area/shuttle/escape_pod2/centcom)
-					start_location.move_contents_to(end_location, null, NORTH)
+					if( prob(5) ) // 5% that they survive
+						start_location.move_contents_to(end_location, null, NORTH)
 
 					for(var/obj/machinery/door/D in machines)
 						if( get_area(D) == end_location )
@@ -197,7 +199,8 @@ datum/shuttle_controller/emergency_shuttle/process()
 
 					start_location = locate(/area/shuttle/escape_pod3/transit)
 					end_location = locate(/area/shuttle/escape_pod3/centcom)
-					start_location.move_contents_to(end_location, null, NORTH)
+					if( prob(5) ) // 5% that they survive
+						start_location.move_contents_to(end_location, null, NORTH)
 
 					for(var/obj/machinery/door/D in machines)
 						if( get_area(D) == end_location )
@@ -217,7 +220,8 @@ datum/shuttle_controller/emergency_shuttle/process()
 
 					start_location = locate(/area/shuttle/escape_pod5/transit)
 					end_location = locate(/area/shuttle/escape_pod5/centcom)
-					start_location.move_contents_to(end_location, null, EAST)
+					if( prob(5) ) // 5% that they survive
+						start_location.move_contents_to(end_location, null, EAST)
 
 					for(var/obj/machinery/door/D in machines)
 						if( get_area(D) == end_location )
@@ -297,7 +301,7 @@ datum/shuttle_controller/emergency_shuttle/process()
 					world << sound('sound/AI/shuttledock.ogg')
 				else
 					captain_announce("The scheduled Crew Transfer Shuttle has docked with the station. It will depart in approximately [round(timeleft()/60,1)] minutes.")
-				
+
 				send2slack_service("the shuttle has docked with the station")
 
 				return 1
@@ -358,6 +362,9 @@ datum/shuttle_controller/emergency_shuttle/process()
 							M.Weaken(5)
 
 				//pods
+				if(alert == 1) // Crew Transfer not for pods
+					return
+
 				start_location = locate(/area/shuttle/escape_pod1/station)
 				end_location = locate(/area/shuttle/escape_pod1/transit)
 				start_location.move_contents_to(end_location, null, NORTH)
