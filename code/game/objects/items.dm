@@ -683,24 +683,3 @@
 	var/obj/item/I = get_active_hand()
 	if(I && !I.abstract)
 		I.showoff(src)
-
-//NextGen mechanic to make items wet
-/obj/item/proc/make_wet()
-	if(!src) return
-	if(wet) return
-	wet = rand(14,28)
-	dry_process()
-
-/obj/item/proc/dry_process()
-	if(!src) return
-	if(!wet) return
-	wet--
-	if(prob(15))
-		var/turf/T = get_turf(src)
-		if(!istype(T, /turf/space))
-			var/obj/effect/decal/cleanable/water/W = new /obj/effect/decal/cleanable/water(T)
-			if(blood_DNA)
-				W.blood_DNA = blood_DNA
-				W.color = "#a10808"
-	spawn(rand(40,80))
-		dry_process()

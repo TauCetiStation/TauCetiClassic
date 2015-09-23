@@ -186,7 +186,7 @@
 		if(A)
 			var/icon/img = getFlatIcon(A, A.dir)//build_composite_icon(A)
 			if(istype(img, /icon))
-				res.Blend(new/icon(img, "", A.dir), ICON_OVERLAY, 33 + A.pixel_x, 33 + A.pixel_y)
+				res.Blend(new/icon(img, "", 2), ICON_OVERLAY, 33 + A.pixel_x, 33 + A.pixel_y)
 	return res
 
 

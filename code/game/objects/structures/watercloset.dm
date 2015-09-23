@@ -128,6 +128,7 @@
 	var/ismist = 0				//needs a var so we can make it linger~
 	var/watertemp = "normal"	//freezing, normal, or boiling
 	var/mobpresent = 0		//true if there is a mob on the shower's loc, this is to ease process()
+	var/is_payed = 0
 
 //add heat controls? when emagged, you can freeze to death in it?
 
@@ -140,19 +141,24 @@
 	mouse_opacity = 0
 
 /obj/machinery/shower/attack_hand(mob/M as mob)
-	on = !on
-	update_icon()
-	if(on)
-		if (M.loc == loc)
-			wash(M)
-			check_heat(M)
-		for (var/atom/movable/G in src.loc)
-			G.clean_blood()
+	if(is_payed)
+		on = !on
+		update_icon()
+		if(on)
+			if (M.loc == loc)
+				wash(M)
+				check_heat(M)
+			for (var/atom/movable/G in src.loc)
+				G.clean_blood()
+		else
+			is_payed = 0 // Если игрок выключил раньше времени - принудительное аннулирование платы.
+	else
+		M << "You didn't pay for that. Swipe a card against [src]."
 
 /obj/machinery/shower/attackby(obj/item/I as obj, mob/user as mob)
 	if(I.type == /obj/item/device/analyzer)
 		user << "<span class='notice'>The water temperature seems to be [watertemp].</span>"
-	if(istype(I, /obj/item/weapon/wrench))
+	else if(istype(I, /obj/item/weapon/wrench))
 		user << "<span class='notice'>You begin to adjust the temperature valve with \the [I].</span>"
 		if(do_after(user, 50))
 			switch(watertemp)
@@ -164,6 +170,53 @@
 					watertemp = "normal"
 			user.visible_message("<span class='notice'>[user] adjusts the shower with \the [I].</span>", "<span class='notice'>You adjust the shower with \the [I].</span>")
 			add_fingerprint(user)
+	else if(istype(I, /obj/item/weapon/card))
+		if(!is_payed)
+			if(!on)
+				var/obj/item/weapon/card/C = I
+				visible_message("<span class='info'>[usr] swipes a card through [src].</span>")
+				if(station_account)
+					var/datum/money_account/D = get_account(C.associated_account_number)
+					var/attempt_pin = 0
+					if(D.security_level > 0)
+						attempt_pin = input("Enter pin code", "Transaction") as num
+					if(attempt_pin)
+						D = attempt_account_access(C.associated_account_number, attempt_pin, 2)
+					if(D)
+						var/transaction_amount = 150
+						if(transaction_amount <= D.money)
+							//transfer the money
+							D.money -= transaction_amount
+							station_account.money += transaction_amount
+
+							//create entries in the two account transaction logs
+							var/datum/transaction/T = new()
+							T.target_name = "[station_account.owner_name] (via [src.name])"
+							T.purpose = "Purchase of shower use"
+							if(transaction_amount > 0)
+								T.amount = "([transaction_amount])"
+							else
+								T.amount = "[transaction_amount]"
+							T.source_terminal = src.name
+							T.date = current_date_string
+							T.time = worldtime2text()
+							D.transaction_log.Add(T)
+
+							T = new()
+							T.target_name = D.owner_name
+							T.purpose = "Purchase of shower use"
+							T.amount = "[transaction_amount]"
+							T.source_terminal = src.name
+							T.date = current_date_string
+							T.time = worldtime2text()
+							station_account.transaction_log.Add(T)
+
+							is_payed = 60
+							usr << "\icon[src]Thank you, happy washing time and don't turn me off accidently or i will take your precious credits again! Teehee.</span>"
+						else
+							usr << "\icon[src]<span class='warning'>You don't have that much money!</span>"
+		else
+			usr << "\icon[src]Is payed, you may turn it on now.</span>"
 
 /obj/machinery/shower/update_icon()	//this is terribly unreadable, but basically it makes the shower mist up
 	overlays.Cut()					//once it's been on for a while, in addition to handling the water overlay.
@@ -214,13 +267,13 @@
 	if(iscarbon(O))
 		var/mob/living/carbon/M = O
 		if(M.r_hand)
-			M.r_hand.make_wet() //<= wet
+			M.r_hand.make_wet(1) //<= wet
 			M.r_hand.clean_blood()
 		if(M.l_hand)
-			M.l_hand.make_wet() //<= wet
+			M.l_hand.make_wet(1) //<= wet
 			M.l_hand.clean_blood()
 		if(M.back)
-			M.back.make_wet() //<= wet
+			M.back.make_wet(1) //<= wet
 			if(M.back.clean_blood())
 				M.update_inv_back(0)
 		if(ishuman(M))
@@ -247,31 +300,31 @@
 					washglasses = !(H.wear_mask.flags_inv & HIDEEYES)
 
 			if(H.head)
-				H.head.make_wet() //<= wet
+				H.head.make_wet(1) //<= wet
 				if(H.head.clean_blood())
 					H.update_inv_head(0)
 			if(H.wear_suit)
-				H.wear_suit.make_wet() //<= wet
+				H.wear_suit.make_wet(1) //<= wet
 				if(H.wear_suit.clean_blood())
 					H.update_inv_wear_suit(0)
 			else if(H.w_uniform)
-				H.w_uniform.make_wet() //<= wet
+				H.w_uniform.make_wet(1) //<= wet
 				if(H.w_uniform.clean_blood())
 					H.update_inv_w_uniform(0)
 			if(H.gloves && washgloves)
-				H.gloves.make_wet() //<= wet
+				H.gloves.make_wet(1) //<= wet
 				if(H.gloves.clean_blood())
 					H.update_inv_gloves(0)
 			if(H.shoes && washshoes)
-				H.shoes.make_wet() //<= wet
+				H.shoes.make_wet(1) //<= wet
 				if(H.shoes.clean_blood())
 					H.update_inv_shoes(0)
 			if(H.wear_mask && washmask)
-				H.wear_mask.make_wet() //<= wet
+				H.wear_mask.make_wet(1) //<= wet
 				if(H.wear_mask.clean_blood())
 					H.update_inv_wear_mask(0)
 			if(H.glasses && washglasses)
-				H.glasses.make_wet() //<= wet
+				H.glasses.make_wet(1) //<= wet
 				if(H.glasses.clean_blood())
 					H.update_inv_glasses(0)
 			if(H.l_ear && washears)
@@ -281,7 +334,7 @@
 				if(H.r_ear.clean_blood())
 					H.update_inv_ears(0)
 			if(H.belt)
-				H.belt.make_wet() //<= wet
+				H.belt.make_wet(1) //<= wet
 				if(H.belt.clean_blood())
 					H.update_inv_belt(0)
 			H.clean_blood(washshoes)
@@ -297,11 +350,22 @@
 		var/turf/tile = loc
 		loc.clean_blood()
 		for(var/obj/effect/E in tile)
-			if(istype(E,/obj/effect/rune) || istype(E,/obj/effect/decal/cleanable) || istype(E,/obj/effect/overlay))
+			if((istype(E,/obj/effect/rune) || istype(E,/obj/effect/decal/cleanable) || istype(E,/obj/effect/overlay)) && !istype(E, /obj/effect/decal/cleanable/water))
 				qdel(E)
 
 /obj/machinery/shower/process()
-	if(!on || !mobpresent) return
+	if(!on) return
+	if(is_payed < 1)
+		on = 0
+		update_icon()
+		return
+	else
+		is_payed--
+
+	create_water(src)
+
+	if(!mobpresent) return
+
 	for(var/mob/living/carbon/C in loc)
 		check_heat(C)
 

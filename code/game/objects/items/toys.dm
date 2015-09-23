@@ -476,6 +476,17 @@
 					D.reagents.reaction(T)
 					if(ismob(T) && T:client)
 						T:client << "\red [user] has sprayed you with water!"
+					if(ishuman(T))
+						var/mob/living/carbon/human/H = T
+						var/list/inv_contents = list()
+						for(var/obj/item/I in H.contents)
+							if(I == src) continue
+							if(istype(I, /obj/item/weapon/implant)) continue
+							inv_contents += I
+						if(inv_contents.len)
+							for(var/n=3,n>0,n--)
+								var/obj/item/I = pick(inv_contents)
+								I.make_wet()
 				sleep(4)
 			qdel(D)
 

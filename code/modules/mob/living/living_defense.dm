@@ -153,6 +153,10 @@
 	if(G.oxygen < 1)
 		ExtinguishMob() //If there's no oxygen in the tile we're on, put out the fire
 		return
+	for(var/obj/item/I in contents)
+		if(I.wet)
+			ExtinguishMob()
+			break
 	if(fire_stacks == 0)
 		ExtinguishMob() //If there's no oxygen in the tile we're on, put out the fire
 		return

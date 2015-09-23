@@ -176,19 +176,19 @@
 			a.cancelAlarm("Fire", src, src)
 
 /area/proc/readyalert()
-	if(name == "Space")
+	/*if(name == "Space")
 		return
 	for(var/obj/machinery/light/L in contents)
 		L.red_alert = 1
-		L.update()
+		L.update()*/
 	return
 
 /area/proc/readyreset()
-	if(red_alert_code) return
+	/*if(red_alert_code) return
 	if(red_alert_evac) return
 	for(var/obj/machinery/light/L in contents)
 		L.red_alert = 0
-		L.update()
+		L.update()*/
 	return
 
 /area/proc/partyalert()
