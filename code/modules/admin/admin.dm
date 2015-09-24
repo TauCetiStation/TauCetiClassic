@@ -261,12 +261,18 @@ var/global/floorIsLava = 0
 	var/dat = "<html><head><title>Info on [key]</title></head>"
 	dat += "<body>"
 
-	//ooh, this is wrong.
+	//Display player age and player warn bans
+	var/datum/preferences/D
+	var/p_warns
 	var/p_age
 	for(var/client/C in clients)
 		if(C.ckey == key)
 			p_age = C.player_age
+
+			D = C.prefs
+			p_warns = D.warnbans
 	dat +="<span style='color:#000000; font-weight: bold'>Player age: [p_age]</span><br>"
+	dat +="<span style='color:#000000'>Player warnbans: [p_warns]</span><hr>"
 
 	var/savefile/info = new("data/player_saves/[copytext(key, 1, 2)]/[key]/info.sav")
 	var/list/infos
