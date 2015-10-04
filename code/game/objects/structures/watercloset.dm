@@ -422,6 +422,8 @@
 		user << "\red Someone's already washing here."
 		return
 
+	playsound(src, 'tauceti/sounds/items/wash.ogg', 50, 1, 1)
+
 	usr << "\blue You start washing your hands."
 
 	busy = 1
