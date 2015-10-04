@@ -1253,6 +1253,10 @@ var/list/ghostteleportlocs = list()
 	name = "\improper Brig"
 	icon_state = "brig"
 
+/area/security/execution
+	name = "\improper Execution"
+	icon_state = "brig"
+
 /area/security/prison
 	name = "\improper Prison Wing"
 	icon_state = "sec_prison"
@@ -1425,6 +1429,7 @@ var/list/ghostteleportlocs = list()
 /area/toxins/server
 	name = "\improper Server Room"
 	icon_state = "server"
+	music = 'tauceti/sounds/ambience/server.ogg'
 
 //Storage
 

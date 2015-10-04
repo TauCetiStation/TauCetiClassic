@@ -112,11 +112,11 @@
 /obj/structure/reagent_dispensers/watertank/Move()
 	if (..() && modded)
 		leak_water(1)
-	
+
 /obj/structure/reagent_dispensers/watertank/proc/leak_water(amount)
 	if (reagents.total_volume == 0)
 		return
-	
+
 	amount = min(amount, reagents.total_volume)
 	reagents.remove_reagent("water",amount)
 
@@ -214,15 +214,15 @@
 	if(temperature > T0C+500)
 		explode()
 	return ..()
-	
+
 /obj/structure/reagent_dispensers/fueltank/Move()
 	if (..() && modded)
 		leak_fuel(amount_per_transfer_from_this/10.0)
-	
+
 /obj/structure/reagent_dispensers/fueltank/proc/leak_fuel(amount)
 	if (reagents.total_volume == 0)
 		return
-	
+
 	amount = min(amount, reagents.total_volume)
 	reagents.remove_reagent("fuel",amount)
 	new /obj/effect/decal/cleanable/liquid_fuel(src.loc, amount)
@@ -278,3 +278,15 @@
 	New()
 		..()
 		reagents.add_reagent("virusfood", 1000)
+
+/obj/structure/reagent_dispensers/acid
+	name = "Sulphuric Acid Dispenser"
+	desc = "A dispenser of acid for industrial processes."
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "acidtank"
+	amount_per_transfer_from_this = 10
+	anchored = 1
+
+	New()
+		..()
+		reagents.add_reagent("sacid", 1000)
