@@ -48,7 +48,9 @@
 
 /obj/machinery/light_switch/attack_hand(mob/user)
 
+	src.add_fingerprint(usr)
 	on = !on
+	playsound(src, 'tauceti/sounds/items/buttonclick.ogg', 20, 1, 1)
 
 	for(var/area/A in area.master.related)
 		A.lightswitch = on

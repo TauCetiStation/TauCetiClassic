@@ -1052,6 +1052,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				if(M.get_active_hand() == null)
 					M.put_in_hands(O)
 					usr << "<span class='notice'>You remove \the [O] from \the [src].</span>"
+					playsound(src, 'tauceti/sounds/items/penclick.ogg', 20, 1, 1)
 					return
 			O.loc = get_turf(src)
 		else

@@ -292,14 +292,13 @@
 	var/turf/U = get_turf(A)
 
 	var/obj/item/projectile/beam/LE = new /obj/item/projectile/beam( loc )
-	LE.icon = 'icons/effects/genetics.dmi'
-	LE.icon_state = "eyelasers"
 	playsound(usr.loc, 'sound/weapons/taser2.ogg', 75, 1)
 
-	LE.firer = src
 	LE.def_zone = get_organ_target()
+	LE.starting = T
 	LE.original = A
 	LE.current = T
+	LE.damage = 20
 	LE.yo = U.y - T.y
 	LE.xo = U.x - T.x
 	spawn( 1 )
@@ -308,7 +307,7 @@
 /mob/living/carbon/human/LaserEyes()
 	if(nutrition>0)
 		..()
-		nutrition = max(nutrition - rand(1,5),0)
+		nutrition = max(nutrition - rand(1,10),0)
 		handle_regular_hud_updates()
 	else
 		src << "\red You're out of energy!  You need food!"

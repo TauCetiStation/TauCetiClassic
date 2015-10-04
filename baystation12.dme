@@ -1534,6 +1534,8 @@
 #include "tauceti\items\painter\airlock_painter.dm"
 #include "tauceti\items\pdapainter\PDApainter.dm"
 #include "tauceti\items\signs\signs.dm"
+#include "tauceti\items\sports\gym.dm"
+#include "tauceti\items\sports\PedalGen.dm"
 #include "tauceti\items\sports\wrestler.dm"
 #include "tauceti\items\telecrystall_stations\tc_station.dm"
 #include "tauceti\items\toys\poly_toy.dm"

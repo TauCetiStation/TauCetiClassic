@@ -100,10 +100,12 @@
 
 /obj/item/clothing/head/justice
 	name = "justice hat"
-	desc = "fight for what's righteous!"
+	desc = "Fight for what's righteous!"
 	icon_state = "justicered"
 	item_state = "justicered"
 	flags = FPRINT|TABLEPASS|HEADCOVERSEYES|HEADCOVERSMOUTH|BLOCKHAIR
+	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE
+	body_parts_covered = HEAD|FACE|EYES
 
 /obj/item/clothing/head/justice/blue
 	icon_state = "justiceblue"
