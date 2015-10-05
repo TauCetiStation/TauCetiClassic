@@ -9,6 +9,20 @@
 	mag_type = /obj/item/ammo_box/magazine/sm45
 	fire_sound = 'tauceti/sounds/weapon/Gunshot_silenced.ogg'
 
+/obj/item/weapon/gun/projectile/sec
+	desc = "A NanoTrasen designed sidearm, found pretty much everywhere humans are. Uses .45 rounds."
+	name = "\improper NT Mk58"
+	icon_state = "secguncomp"
+	origin_tech = "combat=2;materials=2"
+	mag_type = /obj/item/ammo_box/magazine/c45m
+	var/mag_type2 = /obj/item/ammo_box/magazine/c45r
+	fire_sound = 'sound/weapons/Gunshot.ogg'
+
+/obj/item/weapon/gun/projectile/sec/wood
+	desc = "A Nanotrasen designed sidearm, this one has a sweet wooden grip. Uses .45 rounds."
+	name = "\improper Custom NT Mk58"
+	icon_state = "secgundark"
+
 /obj/item/weapon/gun/projectile/automatic/silenced/isHandgun()
 	return 1
 

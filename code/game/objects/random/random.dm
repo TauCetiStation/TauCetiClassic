@@ -24,6 +24,23 @@
 	var/build_path = item_to_spawn()
 	return (new build_path(src.loc))
 
+/obj/random/handgun
+	name = "Random Handgun"
+	desc = "This is a random security sidearm."
+	icon = 'icons/obj/gun.dmi'
+	icon_state = "secgundark"
+	item_to_spawn()
+		return pick(prob(3);/obj/item/weapon/gun/projectile/sec,\
+					prob(1);/obj/item/weapon/gun/projectile/sec/wood)
+
+/obj/random/projectile
+	name = "Random Projectile Weapon"
+	desc = "This is a random security weapon."
+	icon = 'icons/obj/gun.dmi'
+	icon_state = "revolver"
+	item_to_spawn()
+		return pick(prob(3);/obj/item/weapon/gun/projectile/shotgun,\
+					prob(1);/obj/item/weapon/gun/projectile/shotgun/combat)
 
 /obj/random/tool
 	name = "Random Tool"
