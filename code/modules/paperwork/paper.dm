@@ -12,7 +12,7 @@
 	w_class = 1.0
 	throw_range = 1
 	throw_speed = 1
-	layer = 4
+	layer = 3.9
 	pressure_resistance = 1
 	slot_flags = SLOT_HEAD
 	body_parts_covered = HEAD
@@ -28,6 +28,7 @@
 	var/offset_y[0] //usage by the photocopier
 	var/rigged = 0
 	var/spam_flag = 0
+	var/crumpled = 0
 
 	var/const/deffont = "Verdana"
 	var/const/signfont = "Times New Roman"
@@ -60,6 +61,9 @@
 // I didn't like the idea that people can read tiny pieces of paper from across the room.
 // Now you need to be next to the paper in order to read it.
 	if(in_range(usr, src))
+		if(crumpled==1)
+			usr << "<span class='notice'>You can't read anything until it crumpled.</span>"
+			return
 		if(!(istype(usr, /mob/living/carbon/human) || istype(usr, /mob/dead/observer) || istype(usr, /mob/living/silicon)))
 			usr << browse("<HTML><HEAD><TITLE>[sanitize_popup(name)]</TITLE></HEAD><BODY>[sanitize_plus_popup(stars(revert_ja(info)))][stamps]</BODY></HTML>", "window=[name]")
 			onclose(usr, "[name]")
@@ -81,6 +85,28 @@
 	var/n_name = sanitize(copytext(input(usr, "What would you like to label the paper?", "Paper Labelling", null)  as text, 1, MAX_NAME_LEN))
 	if((loc == usr && usr.stat == 0))
 		name = "[(n_name ? text("[n_name]") : "paper")]"
+	add_fingerprint(usr)
+	return
+
+/obj/item/weapon/paper/verb/crumple()
+	set name = "Crump paper"
+	set category = "Object"
+	set src in usr
+
+	if((CLUMSY in usr.mutations) && prob(50))
+		usr << "<span class='warning'>You cut yourself on the paper.</span>"
+		return
+	if(!(crumpled==1))
+		crumpled = 1
+		icon_state = "crumpled"
+		throw_range = 5
+		overlays = null
+	else
+		crumpled = 2
+		icon_state = "scrap"
+		throw_range = 1
+
+	playsound(src, 'tauceti/sounds/items/crumple.ogg', 15, 1, 1)
 	add_fingerprint(usr)
 	return
 
@@ -117,6 +143,8 @@
 		dist = get_dist(src, user.camera)
 	else //cyborg or AI not seeing through a camera
 		dist = get_dist(src, user)
+	if(crumpled==1)
+		return
 	if(dist < 2)
 		usr << browse("<HTML><HEAD><TITLE>[sanitize_popup(name)]</TITLE></HEAD><BODY>[info][stamps]</BODY></HTML>", "window=[name]")
 		onclose(usr, "[name]")
@@ -354,7 +382,15 @@
 	if(user.mind && (user.mind.assigned_role == "Clown"))
 		clown = 1
 
-	if(istype(P, /obj/item/weapon/paper) || istype(P, /obj/item/weapon/photo))
+	if(crumpled)
+		if(!(istype(P, /obj/item/weapon/lighter)))
+			user << "<span class='notice'>Paper too crumpled for anything.</span>"
+			return
+
+	else if(istype(P, /obj/item/weapon/paper) || istype(P, /obj/item/weapon/photo))
+		if(P:crumpled>0 && !(istype(P, /obj/item/weapon/lighter)))
+			user << "<span class='notice'>Paper too crumpled for anything.</span>"
+			return
 		if (istype(P, /obj/item/weapon/paper/carbon))
 			var/obj/item/weapon/paper/carbon/C = P
 			if (!C.iscopy && !C.copied)
@@ -406,6 +442,7 @@
 		else
 			user << browse("<HTML><HEAD><TITLE>[sanitize_popup(name)]</TITLE></HEAD><BODY>[info_links][stamps]</BODY></HTML>", "window=[name]")
 		//openhelp(user)
+		add_fingerprint(user)
 		return
 
 	else if(istype(P, /obj/item/weapon/stamp))

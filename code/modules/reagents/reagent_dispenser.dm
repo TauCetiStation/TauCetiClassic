@@ -100,6 +100,7 @@
 			processing_objects.Add(src)
 			leak_water(amount_per_transfer_from_this)
 
+	add_fingerprint(usr)
 	return ..()
 
 /obj/structure/reagent_dispensers/watertank/process()
@@ -186,6 +187,7 @@
 			test.Shift(EAST,6)
 			overlays += test
 
+	add_fingerprint(usr)
 	return ..()
 
 

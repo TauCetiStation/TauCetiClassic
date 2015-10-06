@@ -19,6 +19,7 @@
 	//Generally if a firedoor is at a place where there should be a zone boundery then there will be a regular door underneath it.
 	block_air_zones = 0
 
+	var/hatch_open = 0
 	var/blocked = 0
 	var/nextstate = null
 	var/net_id
@@ -193,13 +194,42 @@
 			user.visible_message("\red \The [user] [blocked ? "welds" : "unwelds"] \the [src] with \a [W].",\
 			"You [blocked ? "weld" : "unweld"] \the [src] with \the [W].",\
 			"You hear something being welded.")
+			playsound(src, 'sound/items/Welder.ogg', 100, 1)
 			update_icon()
 			return
+
+	if(density && istype(C, /obj/item/weapon/screwdriver))
+		hatch_open = !hatch_open
+		user.visible_message("<span class='danger'>[user] has [hatch_open ? "opened" : "closed"] \the [src] maintenance hatch.</span>",
+									"You have [hatch_open ? "opened" : "closed"] the [src] maintenance hatch.")
+		update_icon()
+		return
+
+	if(blocked && istype(C, /obj/item/weapon/crowbar))
+		if(!hatch_open)
+			user << "<span class='danger'>You must open the maintenance hatch first!</span>"
+		else
+			user.visible_message("<span class='danger'>[user] is removing the electronics from \the [src].</span>",
+									"You start to remove the electronics from [src].")
+			if(do_after(user,30))
+				if(blocked && density && hatch_open)
+					playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
+					user.visible_message("<span class='danger'>[user] has removed the electronics from \the [src].</span>",
+										"You have removed the electronics from [src].")
+
+					new/obj/item/weapon/airalarm_electronics(src.loc)
+
+					var/obj/structure/firedoor_assembly/FA = new/obj/structure/firedoor_assembly(src.loc)
+					FA.anchored = 1
+					FA.density = 1
+					FA.wired = 1
+					FA.update_icon()
+					qdel(src)
+		return
 
 	if(blocked)
 		user << "\red \The [src] is welded solid!"
 		return
-
 
 	if( istype(C, /obj/item/weapon/crowbar) || ( istype(C,/obj/item/weapon/twohanded/fireaxe) && C:wielded == 1 ) )
 		if(operating)
@@ -252,6 +282,11 @@
 	return ..()
 
 /obj/machinery/door/firedoor/open()
+	if(hatch_open)
+		hatch_open = 0
+		visible_message("The maintenance hatch of \the [src] closes.")
+		update_icon()
+
 	latetoggle()
 	layer = base_layer
 	return ..()
@@ -272,6 +307,8 @@
 		icon_state = "door_closed"
 		if(blocked)
 			overlays += "welded"
+		if(hatch_open)
+			overlays += "hatch"
 		if(pdiff_alert)
 			overlays += "palert"
 	else

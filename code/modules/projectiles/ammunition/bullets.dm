@@ -28,6 +28,11 @@
 	caliber = "9mm"
 	projectile_type = "/obj/item/projectile/bullet/midbullet2"
 
+/obj/item/ammo_casing/c9mmr
+	desc = "A 9mm rubber bullet casing."
+	caliber = "9mm"
+	projectile_type = "/obj/item/projectile/bullet/weakbullet/rubber"
+
 /obj/item/ammo_casing/c45
 	desc = "A .45 bullet casing."
 	caliber = ".45"

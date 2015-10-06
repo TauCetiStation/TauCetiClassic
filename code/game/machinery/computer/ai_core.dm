@@ -411,3 +411,5 @@ That prevents a few funky behaviors.
 	else
 		empty_playable_ai_cores += D
 		src << "\The [id] is now <font color=\"#008000\">available</font> for latejoining AIs."
+
+	message_admins("[key_name_admin(usr)] toggled AI Core latejoin.", 1)
