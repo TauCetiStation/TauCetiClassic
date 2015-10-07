@@ -102,6 +102,16 @@
 	max_ammo = 8
 	multiple_sprites = 2
 
+/obj/item/ammo_box/magazine/m9mmr_2
+	name = "magazine (9mm rubber)"
+	icon_state = "9mm_mag"
+	origin_tech = "combat=2"
+	ammo_type = /obj/item/ammo_casing/c9mmr
+	caliber = "9mm"
+	max_ammo = 8
+	multiple_sprites = 2
+
+
 /obj/item/ammo_box/magazine/msmg9mm
 	name = "SMG magazine (9mm)"
 	icon = 'tauceti/icons/obj/ammo.dmi'

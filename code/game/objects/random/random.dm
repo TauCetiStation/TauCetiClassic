@@ -28,10 +28,10 @@
 	name = "Random Handgun"
 	desc = "This is a random security sidearm."
 	icon = 'icons/obj/gun.dmi'
-	icon_state = "secgundark"
+	icon_state = "sigi250"
 	item_to_spawn()
-		return pick(prob(3);/obj/item/weapon/gun/projectile/sec,\
-					prob(1);/obj/item/weapon/gun/projectile/sec/wood)
+		return pick(prob(3);/obj/item/weapon/gun/projectile/sigi,\
+					prob(1);/obj/item/weapon/gun/projectile/sigi/spec)
 
 /obj/random/projectile
 	name = "Random Projectile Weapon"

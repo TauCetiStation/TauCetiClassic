@@ -8,6 +8,7 @@
 	tc_custom = 'tauceti/items/clothing/masks/sec_maskTG.dmi'
 	var/cooldown = 0
 	var/aggressiveness = 2
+	flags = FPRINT|BLOCKHAIR
 
 /obj/item/clothing/mask/gas/sechailer/warden
 	icon_state = "wardenmask"
