@@ -10,9 +10,10 @@
 	fire_sound = 'tauceti/sounds/weapon/Gunshot_silenced.ogg'
 
 /obj/item/weapon/gun/projectile/sigi
-	desc = "A W&J company designed sidearm, found pretty much everywhere humans are. Uses 9mm rounds."
-	name = "\improper SIGI 250"
+	name = "\improper SIGI pistol"
+	desc = "A W&J Company designed SIGI p250, found pretty much everywhere humans are. Uses 9mm rounds."
 	icon_state = "sigi250"
+	item_state = "sigi250"
 	origin_tech = "combat=2;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/m9mmr_2
 	var/mag_type2 = /obj/item/ammo_box/magazine/m9mm_2
@@ -27,9 +28,10 @@
 	return
 
 /obj/item/weapon/gun/projectile/sigi/spec
-	desc = "A W&J company designed sidearm, this one has a sweet coloring. Uses 9mm rounds."
-	name = "\improper Custom SIGI 250"
+	name = "\improper Special SIGI pistol"
+	desc = "A W&J Company designed Special SIGI p250, this one has a military coloring. Uses 9mm rounds."
 	icon_state = "sigi250special"
+	item_state = "sigi250special"
 
 /obj/item/weapon/gun/projectile/sigi/isHandgun()
 	return 1

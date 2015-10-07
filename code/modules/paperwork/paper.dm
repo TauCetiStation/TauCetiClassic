@@ -386,11 +386,10 @@
 		if(!(istype(P, /obj/item/weapon/lighter)))
 			user << "<span class='notice'>Paper too crumpled for anything.</span>"
 			return
+		else
+			burnpaper(P, user)
 
 	else if(istype(P, /obj/item/weapon/paper) || istype(P, /obj/item/weapon/photo))
-		if(P:crumpled>0 && !(istype(P, /obj/item/weapon/lighter)))
-			user << "<span class='notice'>Paper too crumpled for anything.</span>"
-			return
 		if (istype(P, /obj/item/weapon/paper/carbon))
 			var/obj/item/weapon/paper/carbon/C = P
 			if (!C.iscopy && !C.copied)
