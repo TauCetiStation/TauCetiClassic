@@ -114,7 +114,7 @@
 				user << "<span class='notice'>You need a tighter grip.</span>"
 
 /obj/structure/dryer
-	name = "Breath Of Lizads-3000"
+	name = "hand dryer"
 	desc = "The Breath Of Lizads-3000, an experimental dryer."
 	icon = 'tauceti/icons/obj/dryer.dmi'
 	icon_state = "dryer"

@@ -146,8 +146,8 @@ obj/item/weapon/gun/energy/staff/focus
 	ammo_type = list(/obj/item/ammo_casing/energy/toxin)
 
 /obj/item/weapon/gun/energy/sniperrifle
-	name = "W2500-E Sniper Rifle"
-	desc = "Designed by W&J Company, rifle constructed of lightweight materials, fitted with a SMART aiming-system scope."
+	name = "sniper rifle"
+	desc = "Designed by W&J Company, W2500-E sniper rifle constructed of lightweight materials, fitted with a SMART aiming-system scope."
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "w2500e"
 	item_state = "w2500e"
