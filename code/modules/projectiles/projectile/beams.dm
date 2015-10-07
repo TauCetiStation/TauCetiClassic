@@ -123,15 +123,15 @@
 
 /obj/item/projectile/beam/sniper
 	name = "sniper beam"
-	icon_state = "xray"
+	icon_state = "laser"
 	damage = 60
 	stun = 5
 	weaken = 5
 	stutter = 5
 
-	muzzle_type = /obj/effect/projectile/xray/muzzle
-	tracer_type = /obj/effect/projectile/xray/tracer
-	impact_type = /obj/effect/projectile/xray/impact
+	muzzle_type = /obj/effect/projectile/laser/muzzle
+	tracer_type = /obj/effect/projectile/laser/tracer
+	impact_type = /obj/effect/projectile/laser/impact
 
 /obj/item/projectile/beam/stun
 	name = "stun beam"

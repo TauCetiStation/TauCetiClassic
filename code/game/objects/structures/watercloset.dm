@@ -113,7 +113,146 @@
 			else
 				user << "<span class='notice'>You need a tighter grip.</span>"
 
+/obj/structure/dryer
+	name = "Breath Of Lizads-3000"
+	desc = "The Breath Of Lizads-3000, an experimental dryer."
+	icon = 'tauceti/icons/obj/dryer.dmi'
+	icon_state = "dryer"
+	density = 0
+	anchored = 1
+	var/busy = 0
+	var/emagged = 0
 
+/obj/structure/dryer/attack_hand(mob/user as mob)
+
+	if(isrobot(user) || isAI(user))
+		return
+
+	if(!Adjacent(user))
+		return
+
+	if(busy)
+		user << "\red Someone's already drying here."
+		return
+
+	usr << "\blue You start drying your hands."
+	playsound(src, 'tauceti/sounds/items/drying.ogg', 30, 1, 1)
+	add_fingerprint(user)
+	busy = 1
+	sleep(60)
+	if(emagged)
+		var/mob/living/carbon/C = user
+		if(ishuman(C))
+			var/mob/living/carbon/human/H = C
+			if(H.gloves)
+				new /obj/effect/decal/cleanable/ash(H.loc)
+				qdel(H.gloves)
+				H.adjustFireLoss(5)
+			else
+				H.adjustFireLoss(20)
+	busy = 0
+
+	if(!Adjacent(user)) return		//Person has moved away from the dryer
+
+	for(var/mob/V in viewers(src, null))
+		V.show_message("\blue [user] dried their hands using \the [src].")
+
+/obj/structure/dryer/attackby(obj/item/O as obj, mob/user as mob)
+
+	if (istype(O, /obj/item/weapon/card/emag))
+		if (emagged)
+			user << "\red [src] is already cracked."
+			return
+		else
+			add_fingerprint(user)
+			emagged = 1
+			flick("dryer-broken",src)
+			playsound(src, 'sound/effects/sparks3.ogg', 50, 1, 1)
+			icon_state = "dryer-emag"
+			user << "\red You swipe near [O] and crack it to be hot."
+			return
+
+	if((istype(O, /obj/item/weapon/grab)) && !emagged)
+		var/obj/item/weapon/grab/G = O
+		if(isliving(G.affecting))
+			var/mob/living/GM = G.affecting
+			if(G.state>1)
+				if(!GM.loc == get_turf(src))
+					user << "<span class='notice'>[GM.name] needs to be on the urinal.</span>"
+					return
+				user.visible_message("<span class='danger'>[user] slams [GM.name] into the [src]!</span>", "<span class='notice'>You slam [GM.name] into the [src]!</span>")
+				GM.apply_damage(8,BRUTE,"head")
+				playsound(src, 'sound/weapons/smash.ogg', 50, 1, 1)
+				return
+			else
+				user << "<span class='notice'>You need a tighter grip.</span>"
+				return
+
+	if(busy)
+		user << "\red Someone's already drying here."
+		return
+
+	var/turf/location = user.loc
+	if(!isturf(location)) return
+
+	var/obj/item/I = O
+	if(!I || !istype(I,/obj/item)) return
+
+	add_fingerprint(user)
+
+	if(emagged)		//Let's make it a little bit dangerous
+
+		if(istype(O, /obj/item/weapon/grab))	//Holding someone under dryer
+			var/obj/item/weapon/grab/G = O
+			if(isliving(G.affecting))
+				var/mob/living/GM = G.affecting
+				if(G.state>2)
+					if(!GM.loc == get_turf(src))
+						user << "<span class='notice'>[GM.name] needs to be near the dryer.</span>"
+						return
+					busy = 1
+					user.visible_message("<span class='danger'>[user] hold [GM.name] under the [src]!</span>", "<span class='notice'>You hold [GM.name] under the [src]!</span>")
+					playsound(src, 'tauceti/sounds/items/drying.ogg', 30, 1, 1)
+					GM.adjustFireLoss(10)
+					sleep(60)
+					busy = 0
+					if(!Adjacent(user) || !Adjacent(GM)) return		//User or target has moved
+					GM.adjustFireLoss(25)
+					user.visible_message("<span class='danger'>[GM.name] skins are burning under the [src]!</span>")
+					return
+				else
+					user << "<span class='notice'>You need a tighter grip.</span>"
+					return
+
+		busy = 1
+		usr << "\blue You start drying \the [I]."
+		playsound(src, 'tauceti/sounds/items/drying.ogg', 30, 1, 1)
+		sleep(60)
+		var/mob/living/carbon/C = user
+		if(C.r_hand)
+			C.apply_damage(25,BURN,"r_hand")
+		if(C.l_hand)
+			C.apply_damage(25,BURN,"l_hand")
+		C << "<span class='danger'>The dryer is burning!</span>"
+		new /obj/effect/decal/cleanable/ash(C.loc)
+		qdel(O)
+		busy = 0
+		return
+
+	busy = 1
+	usr << "\blue You start drying \the [I]."
+	playsound(src, 'tauceti/sounds/items/drying.ogg', 30, 1, 1)
+	sleep(60)
+	busy = 0
+
+	if(user.loc != location) return				//User has moved
+	if(!I) return 								//Item's been destroyed while drying
+	if(user.get_active_hand() != I) return		//Person has switched hands or the item in their hands
+
+	O.wet = 0
+	user.visible_message( \
+		"\blue [user] drying \a [I] using \the [src].", \
+		"\blue You dry \a [I] using \the [src].")
 
 /obj/machinery/shower
 	name = "shower"
@@ -438,7 +577,6 @@
 	for(var/mob/V in viewers(src, null))
 		V.show_message("\blue [user] washes their hands using \the [src].")
 
-
 /obj/structure/sink/attackby(obj/item/O as obj, mob/user as mob)
 	if(busy)
 		user << "\red Someone's already washing here."
@@ -475,6 +613,7 @@
 
 	usr << "\blue You start washing \the [I]."
 
+	playsound(src, 'tauceti/sounds/items/wash.ogg', 50, 1, 1)
 	busy = 1
 	sleep(40)
 	busy = 0

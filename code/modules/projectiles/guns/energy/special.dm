@@ -146,10 +146,11 @@ obj/item/weapon/gun/energy/staff/focus
 	ammo_type = list(/obj/item/ammo_casing/energy/toxin)
 
 /obj/item/weapon/gun/energy/sniperrifle
-	name = "L.W.A.P. Sniper Rifle"
-	desc = "A rifle constructed of lightweight materials, fitted with a SMART aiming-system scope."
+	name = "W2500-E Sniper Rifle"
+	desc = "Designed by W&J Company, rifle constructed of lightweight materials, fitted with a SMART aiming-system scope."
 	icon = 'icons/obj/gun.dmi'
-	icon_state = "sniper"
+	icon_state = "w2500e"
+	item_state = "w2500e"
 	origin_tech = "combat=6;materials=5;powerstorage=4"
 	ammo_type = list(/obj/item/ammo_casing/energy/sniper)
 	slot_flags = SLOT_BACK
@@ -157,8 +158,27 @@ obj/item/weapon/gun/energy/staff/focus
 	w_class = 4.0
 	var/zoom = 0
 
+/obj/item/weapon/gun/energy/sniperrifle/New()
+	..()
+	update_icon()
+	return
+
+
 /obj/item/weapon/gun/energy/sniperrifle/isHandgun()
 	return 0
+
+/obj/item/weapon/gun/energy/sniperrifle/update_icon()
+	var/ratio = power_supply.charge / power_supply.maxcharge
+	ratio = Ceiling(ratio*4) * 25
+	switch(modifystate)
+		if (0)
+			if(ratio > 100)
+				icon_state = "[initial(icon_state)]100"
+				item_state = "[initial(item_state)]100"
+			else
+				icon_state = "[initial(icon_state)][ratio]"
+				item_state = "[initial(item_state)][ratio]"
+	return
 
 /obj/item/weapon/gun/energy/sniperrifle/dropped(mob/user)
 	user.client.view = world.view
