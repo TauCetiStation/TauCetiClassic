@@ -25,17 +25,12 @@
 	var/obj/item/weapon/last_find
 	var/datum/artifact_find/artifact_find
 
-	var/toughness = 0
 	var/ore_amount = 0
+
+	has_resources = 1
 
 	New()
 		. = ..()
-		if(prob(30))
-			toughness = rand(4,6)
-		else if(prob(45))
-			toughness = rand(2,4)
-		else
-			toughness = rand(1,2)
 
 		MineralSpread()
 
@@ -115,7 +110,8 @@
 				ore_amount = rand(3,5)
 		if(ore_amount >= 8)
 			name = "\improper [mineral.display_name] rich deposit"
-			icon_state = "rock_[mineral.name]"
+			overlays.Cut()
+			overlays += "rock_[mineral.name]"
 		else
 			name = "\improper Rock"
 			icon_state = "rock"
@@ -156,10 +152,6 @@
 			if(last_act + P.digspeed > world.time)//prevents message spam
 				return
 			last_act = world.time
-
-			if(toughness > P.hardness)
-				user << "\red [src] is too tough for [P]!"
-				return
 
 			if(istype(P, /obj/item/weapon/pickaxe/drill))
 				if(P:state)
@@ -399,7 +391,7 @@
 
 /turf/simulated/mineral/random
 	name = "Mineral deposit"
-	var/mineralSpawnChanceList = list("Uranium" = 5, "Iron" = 50, "Diamond" = 1, "Gold" = 5, "Silver" = 5, "Phoron" = 25)//Currently, Adamantine won't spawn as it has no uses. -Durandan
+	var/mineralSpawnChanceList = list("Uranium" = 5, "Platinum" = 5, "Iron" = 35, "Coal" = 35, "Diamond" = 1, "Gold" = 5, "Silver" = 5, "Phoron" = 10)
 	var/mineralChance = 10  //means 10% chance of this plot changing to a mineral deposit
 
 	New()
@@ -418,7 +410,7 @@
 
 /turf/simulated/mineral/random/high_chance
 	mineralChance = 25
-	mineralSpawnChanceList = list("Uranium" = 10, "Iron" = 30, "Diamond" = 2, "Gold" = 10, "Silver" = 10, "Phoron" = 25)
+	mineralSpawnChanceList = list("Uranium" = 10, "Platinum" = 10, "Iron" = 20, "Coal" = 20, "Diamond" = 2, "Gold" = 10, "Silver" = 10, "Phoron" = 20)
 
 
 /**********************Asteroid**************************/
@@ -433,6 +425,7 @@
 	temperature = TCMB
 	icon_plating = "asteroid"
 	var/dug = 0       //0 = has not yet been dug, 1 = has already been dug
+	has_resources = 1
 
 /turf/simulated/floor/plating/airless/asteroid/New()
 	var/proper_name = name

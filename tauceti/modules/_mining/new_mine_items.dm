@@ -192,17 +192,9 @@
 			for(var/turf/simulated/mineral/M in view(get_turf(target), blast_range))
 				if(!M) return
 
-				if(M.toughness && M.toughness > 1)
-					M.toughness -= impact
-				else
-					M.ex_act(1)
 			if(target)
-				if(target.toughness && target.toughness > power)
-					explosion(location, -1, 1, 2)
-					target.toughness -= impact
-				else
-					explosion(location, -1, 2, 2)
-					target.ex_act(1)
+				explosion(location, -1, 2, 2)
+				target.ex_act(1)
 				if (src)
 					qdel(src)
 
