@@ -10,6 +10,9 @@
 		check_antagonists()
 		return
 
+	if(href_list["stickyban"])
+		stickyban(href_list["stickyban"],href_list)
+
 	if(href_list["makeAntag"])
 		switch(href_list["makeAntag"])
 			if("1")
@@ -52,6 +55,12 @@
 				log_admin("[key_name(usr)] has spawned vox raiders.")
 				if(!src.makeVoxRaiders())
 					usr << "\red Unfortunately there weren't enough candidates available."
+			if("12")
+				message_admins("[key_name(usr)] started a gang war.")
+				log_admin("[key_name(usr)] started a gang war.")
+				if(!src.makeGangsters())
+					usr << "<span class='danger'>Unfortunatly there were not enough candidates available.</span>"
+
 	else if(href_list["dbsearchckey"] || href_list["dbsearchadmin"] || href_list["dbsearchip"] || href_list["dbsearchcid"] || href_list["dbsearchbantype"])
 		var/adminckey = href_list["dbsearchadmin"]
 		var/playerckey = href_list["dbsearchckey"]
@@ -270,6 +279,7 @@
 		ticker.delay_end = !ticker.delay_end
 		log_admin("[key_name(usr)] [ticker.delay_end ? "delayed the round end" : "has made the round end normally"].")
 		message_admins("\blue [key_name(usr)] [ticker.delay_end ? "delayed the round end" : "has made the round end normally"].", 1)
+		send2slack_service("[key_name(usr)] [ticker.delay_end ? "delayed the round end" : "has made the round end normally"].")
 		href_list["secretsadmin"] = "check_antagonist"
 
 	else if(href_list["simplemake"])
@@ -334,7 +344,7 @@
 				ticker.mode.memes += newmeme
 
 				if(delmob)
-					del(M)
+					qdel(M)
 
 
 	/////////////////////////////////////new ban stuff
@@ -914,7 +924,7 @@
 			log_admin("[key_name(usr)] booted [key_name(M)].")
 			message_admins("\blue [key_name_admin(usr)] booted [key_name_admin(M)].", 1)
 			//M.client = null
-			del(M.client)
+			qdel(M.client)
 /*
 	//Player Notes
 	else if(href_list["notes"])
@@ -980,7 +990,7 @@
 				log_admin("[usr.client.ckey] has banned [M.ckey].\nReason: [reason]\nThis will be removed in [mins] minutes.")
 				message_admins("\blue[usr.client.ckey] has banned [M.ckey].\nReason: [reason]\nThis will be removed in [mins] minutes.")
 
-				del(M.client)
+				qdel(M.client)
 				//del(M)	// See no reason why to delete mob. Important stuff can be lost. And ban can be lifted before round ends.
 			if("No")
 				if(!check_rights(R_BAN))   return
@@ -1005,7 +1015,7 @@
 				feedback_inc("ban_perma",1)
 				DB_ban_record(BANTYPE_PERMA, M, -1, reason)
 
-				del(M.client)
+				qdel(M.client)
 				//del(M)
 			if("Cancel")
 				return
@@ -1401,11 +1411,13 @@
 // Now isn't that much better? IT IS NOW A PROC, i.e. kinda like a big panel like unstable
 
 	else if(href_list["adminplayeropts"])
+		if(!check_rights(R_MOD|R_ADMIN))	return
+
 		var/mob/M = locate(href_list["adminplayeropts"])
 		show_player_panel(M)
 
 	else if(href_list["adminplayerobservejump"])
-		if(!check_rights(R_MENTOR|R_MOD|R_ADMIN))	return
+		if(!check_rights(R_MOD|R_ADMIN))	return
 
 		var/mob/M = locate(href_list["adminplayerobservejump"])
 
@@ -1415,6 +1427,8 @@
 		C.jumptomob(M)
 
 	else if(href_list["check_antagonist"])
+		if(!check_rights(R_MOD|R_ADMIN))	return
+
 		check_antagonists()
 
 	else if(href_list["adminplayerobservecoodjump"])
@@ -1433,6 +1447,8 @@
 		output_ai_laws()
 
 	else if(href_list["adminmoreinfo"])
+		if(!check_rights(R_MOD|R_ADMIN))	return
+
 		var/mob/M = locate(href_list["adminmoreinfo"])
 		if(!ismob(M))
 			usr << "This can only be used on instances of type /mob"
@@ -1534,7 +1550,7 @@
 		S.victim = M
 		S.loc = M.loc
 		spawn(20)
-			del(S)
+			qdel(S)
 
 		var/turf/simulated/floor/T = get_turf(M)
 		if(istype(T))
@@ -1821,28 +1837,28 @@
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","SC")
 				for(var/obj/item/clothing/under/O in world)
-					del(O)
+					qdel(O)
 				ok = 1
 			if("sec_all_clothes")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","SAC")
 				for(var/obj/item/clothing/O in world)
-					del(O)
+					qdel(O)
 				ok = 1
 			if("sec_classic1")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","SC1")
 				for(var/obj/item/clothing/suit/fire/O in world)
-					del(O)
+					qdel(O)
 				for(var/obj/structure/grille/O in world)
-					del(O)
+					qdel(O)
 /*					for(var/obj/machinery/vehicle/pod/O in world)
 					for(var/mob/M in src)
 						M.loc = src.loc
 						if (M.client)
 							M.client.perspective = MOB_PERSPECTIVE
 							M.client.eye = M
-					del(O)
+					qdel(O)
 				ok = 1*/
 			if("monkey")
 				feedback_inc("admin_secrets_fun_used",1)
@@ -2193,7 +2209,7 @@
 				var/turf/T = pick(blobstart)
 				var/obj/effect/bhole/bh = new /obj/effect/bhole( T.loc, 30 )
 				spawn(rand(100, 600))
-					del(bh)
+					qdel(bh)
 
 			if("timeanomalies")	//dear god this code was awful :P Still needs further optimisation
 				feedback_inc("admin_secrets_fun_used",1)

@@ -109,22 +109,24 @@ obj/var/contaminated = 0
 
 	//Genetic Corruption
 	if(vsc.plc.GENETIC_CORRUPTION)
-		if(rand(1,10000) < vsc.plc.GENETIC_CORRUPTION)
-			if(prob(65))
-				randmutb(src)
-			else
-				randmutg(src)
+		if(!(pl_head_protected() & pl_suit_protected()))
+			if(rand(1,10000) < vsc.plc.GENETIC_CORRUPTION)
+				if(prob(65))
+					randmutb(src)
+				else
+					randmutg(src)
 
-			if(prob(50))
-				randmuti(src)
+				if(prob(50))
+					randmuti(src)
 
-			src << "\red High levels of phoron cause you to spontaneously mutate."
-			domutcheck(src,null)
+				src << "\red High levels of phoron cause you to spontaneously mutate."
+				domutcheck(src,null)
 
 	//Hallucination
 	if(vsc.plc.PHORON_HALLUCINATION)
-		if(hallucination < 25)
-			hallucination += 10
+		if(!(pl_head_protected() & pl_suit_protected()))
+			if(hallucination < 25)
+				hallucination += 10
 
 
 /mob/living/carbon/human/proc/burn_eyes()

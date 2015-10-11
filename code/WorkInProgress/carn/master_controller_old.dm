@@ -28,7 +28,7 @@ datum/controller/game_controller
 
 	proc/setup()
 		if(master_controller && (master_controller != src))
-			del(src)
+			qdel(src)
 			return
 			//There can be only one master.
 

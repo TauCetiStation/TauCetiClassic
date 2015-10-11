@@ -34,7 +34,7 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 			//for(var/obj/structure/alien/resin/wall/shadowling/R in shadowturf) //extremely hacky
 			for(var/obj/effect/alien/resin/wall/shadowling/R in shadowturf)
 				//qdel(R)
-				del(R)
+				qdel(R)
 				//new /obj/structure/alien/weeds/node(shadowturf) //Dim lighting in the chrysalis -- removes itself with the chrysalis
 				new /obj/effect/alien/weeds/node(shadowturf)
 
@@ -68,9 +68,9 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 
 			for(var/obj/effect/alien/resin/wall/shadowling/W in orange(usr, 1))
 				playsound(W, 'sound/effects/splat.ogg', 50, 1)
-				del(W)
+				qdel(W)
 			for(var/obj/effect/alien/weeds/node/N in shadowturf)
-				del(N)
+				qdel(N)
 			usr.visible_message("<span class='warning'>The chrysalis explodes in a shower of purple flesh and fluid!</span>")
 
 			var/mob/living/carbon/human/H = new /mob/living/carbon/human(usr.loc)
@@ -99,9 +99,7 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 			H.regenerate_icons()
 			usr.mind.transfer_to(H)
 			ticker.mode.update_all_shadows_icons()
-			qdel(usr)
 
-			sleep(10)
 			H << "<span class='shadowling'><b><i>Your powers are awoken. You may now live to your fullest extent. Remember your goal. Cooperate with your thralls and allies.</b></i></span>"
 			H.spell_list += new /obj/effect/proc_holder/spell/targeted/shadowling_hivemind
 			H.spell_list += new /obj/effect/proc_holder/spell/targeted/enthrall
@@ -111,6 +109,8 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 			H.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/flashfreeze
 			H.spell_list += new /obj/effect/proc_holder/spell/targeted/collective_mind
 			H.spell_list += new /obj/effect/proc_holder/spell/targeted/shadowling_regenarmor
+
+			qdel(usr)
 
 
 

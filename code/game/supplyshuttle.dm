@@ -335,6 +335,7 @@ var/list/mechtoys = list(
 			slip.info += "</ul><br>"
 			slip.info += "CHECK CONTENTS AND STAMP BELOW THE LINE TO CONFIRM RECEIPT OF GOODS<hr>"
 			if (SP.contraband) slip.loc = null	//we are out of blanks for Form #44-D Ordering Illicit Drugs.
+			score["stuffshipped"]++
 
 		supply_shuttle.shoppinglist.Cut()
 		return

@@ -350,6 +350,7 @@ var/global/datum/controller/occupations/job_master
 		var/datum/job/job = GetJob(rank)
 		if(job)
 			job.equip(H)
+			job.apply_fingerprints(H)
 		else
 			H << "Your job is [rank] and the game just can't handle it! Please report this bug to an administrator."
 
@@ -410,7 +411,9 @@ var/global/datum/controller/occupations/job_master
 				if("Cyborg")
 					H.Robotize()
 					return 1
-				if("AI","Clown")	//don't need bag preference stuff!
+				if("AI")
+					return H
+				if("Clown")	//don't need bag preference stuff!
 				else
 					switch(H.backbag) //BS12 EDIT
 						if(1)

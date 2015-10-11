@@ -11,7 +11,7 @@
 	..()
 	if (!prob(spawn_nothing_percentage))
 		spawn_item()
-	del src
+	qdel(src)
 
 
 // this function should return a specific item to spawn
@@ -24,6 +24,23 @@
 	var/build_path = item_to_spawn()
 	return (new build_path(src.loc))
 
+/obj/random/handgun
+	name = "Random Handgun"
+	desc = "This is a random security sidearm."
+	icon = 'icons/obj/gun.dmi'
+	icon_state = "sigi250"
+	item_to_spawn()
+		return pick(prob(3);/obj/item/weapon/gun/projectile/sigi,\
+					prob(1);/obj/item/weapon/gun/projectile/sigi/spec)
+
+/obj/random/projectile
+	name = "Random Projectile Weapon"
+	desc = "This is a random security weapon."
+	icon = 'icons/obj/gun.dmi'
+	icon_state = "revolver"
+	item_to_spawn()
+		return pick(prob(3);/obj/item/weapon/gun/projectile/shotgun,\
+					prob(1);/obj/item/weapon/gun/projectile/shotgun/combat)
 
 /obj/random/tool
 	name = "Random Tool"

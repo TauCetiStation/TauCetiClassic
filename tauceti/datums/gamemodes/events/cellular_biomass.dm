@@ -21,7 +21,7 @@
 		T.thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
 
 
-	Del()
+	Destroy()
 		density = 0
 		var/turf/T = get_turf(src)
 		T.thermal_conductivity = initial(T.thermal_conductivity)
@@ -33,7 +33,7 @@
 /obj/effect/cellular_biomass/proc/healthcheck()
 	if(health <=0)
 		density = 0
-		Del(src)
+		Destroy(src)
 	return
 
 /obj/effect/cellular_biomass/bullet_act(var/obj/item/projectile/Proj)
@@ -144,12 +144,12 @@
 
 	New()
 		if(!istype(src.loc,/turf/simulated/floor))
-			Del(src)
+			Destroy(src)
 
 		spawn_cellular_biomass_piece(src.loc)
 		processing_objects.Add(src)
 
-	Del()
+	Destroy()
 		processing_objects.Remove(src)
 		..()
 
@@ -176,10 +176,10 @@
 
 	process()
 		if(!biomass_cells)
-			Del(src) //space  biomass_cells exterminated. Remove the controller
+			Destroy(src) //space  biomass_cells exterminated. Remove the controller
 			return
 		if(!growth_queue)
-			Del(src) //Sanity check
+			Destroy(src) //Sanity check
 			return
 
 		var/length = min(5, max(50, biomass_cells.len / 5))
@@ -217,7 +217,7 @@
 
 		//if(air_master)
 		//		air_master.mark_for_update(get_turf(src))
-		Del(src)
+		Destroy(src)
 
 
 /obj/effect/cellular_biomass/proc/spread()
@@ -268,20 +268,20 @@
 /obj/effect/cellular_biomass/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			Del(src)
+			Destroy(src)
 			return
 		if(2.0)
 			if (prob(90))
-				Del(src)
+				Destroy(src)
 				return
 		if(3.0)
 			if (prob(50))
-				Del(src)
+				Destroy(src)
 				return
 	return
 
 /obj/effect/cellular_biomass/temperature_expose(null, temp, volume) //hotspots kill cellular_biomass
-	Del(src)
+	Destroy(src)
 
 
 

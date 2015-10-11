@@ -3,6 +3,9 @@
 		command_alert("Abnormal activity detected in [station_name()]'s powernet. As a precautionary measure, the station's power will be shut off for an indeterminate duration.", "Critical Power Failure")
 		for(var/mob/M in player_list)
 			M << sound('sound/AI/poweroff.ogg')
+			if(prob(25))
+				sleep(600)
+				M << sound('tauceti/sounds/ambience/hullcreak.ogg')
 
 	var/list/skipped_areas = list(/area/turret_protected/ai)
 

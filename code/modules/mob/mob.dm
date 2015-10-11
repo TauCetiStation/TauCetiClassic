@@ -1,4 +1,4 @@
-/mob/Del()//This makes sure that mobs with clients/keys are not just deleted from the game.
+/mob/Destroy()//This makes sure that mobs with clients/keys are not just deleted from the game.
 	mob_list -= src
 	dead_mob_list -= src
 	living_mob_list -= src
@@ -172,7 +172,7 @@
 
 	if(!W.mob_can_equip(src, slot, disable_warning))
 		if(del_on_fail)
-			del(W)
+			qdel(W)
 		else
 			if(!disable_warning)
 				src << "\red You are unable to equip that." //Only print if del_on_fail is false
@@ -281,7 +281,7 @@ var/list/slot_equipment_priority = list( \
 				var/list/temp = list(  )
 				temp += L.container
 				//L = null
-				del(L)
+				qdel(L)
 				return temp
 			else
 				return L.container
@@ -437,7 +437,7 @@ var/list/slot_equipment_priority = list( \
 	var/mob/new_player/M = new /mob/new_player()
 	if(!client)
 		log_game("[usr.key] AM failed due to disconnect.")
-		del(M)
+		qdel(M)
 		return
 
 	M.key = key
@@ -770,7 +770,6 @@ note dizziness decrements automatically in the mob's Life() proc.
 				stat(null,"Obj-[master_controller.objects_cost]\t#[processing_objects.len]")
 				stat(null,"Net-[master_controller.networks_cost]\tPnet-[master_controller.powernets_cost]")
 				stat(null,"NanoUI-[master_controller.nano_cost]\t#[nanomanager.processing_uis.len]")
-				stat(null,"GC-[master_controller.gc_cost]\t#[garbage.destroyed.len]-#dels[garbage.dels]")
 				stat(null,"Tick-[master_controller.ticker_cost]\tALL-[master_controller.total_cost]")
 			else
 				stat(null,"MasterController-ERROR")
@@ -802,22 +801,14 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 	if(spell_list && spell_list.len)
 		for(var/obj/effect/proc_holder/spell/S in spell_list)
-			if(S.panel != "Debug")
-				switch(S.charge_type)
-					if("recharge")
-						statpanel(S.panel,"[S.charge_counter/10.0]/[S.charge_max/10]",S)
-					if("charges")
-						statpanel(S.panel,"[S.charge_counter]/[S.charge_max]",S)
-					if("holdervar")
-						statpanel(S.panel,"[S.holder_var_type] [S.holder_var_amount]",S)
-			else
-				switch(S.charge_type)// Whyyyy spells dont use panel variable?? :( @Zve
-					if("recharge")
-						statpanel("Spells","[S.charge_counter/10.0]/[S.charge_max/10]",S)
-					if("charges")
-						statpanel("Spells","[S.charge_counter]/[S.charge_max]",S)
-					if("holdervar")
-						statpanel("Spells","[S.holder_var_type] [S.holder_var_amount]",S)
+			switch(S.charge_type)
+				if("recharge")
+					statpanel(S.panel,"[S.charge_counter/10.0]/[S.charge_max/10]",S)
+				if("charges")
+					statpanel(S.panel,"[S.charge_counter]/[S.charge_max]",S)
+				if("holdervar")
+					statpanel(S.panel,"[S.holder_var_type] [S.holder_var_amount]",S)
+	sleep(2) //Prevent updating the stat panel for the next .2 seconds, prevents clientside latency from updates
 
 /mob/proc/add_stings_to_statpanel(var/list/stings)
 	for(var/obj/effect/proc_holder/changeling/S in stings)
@@ -853,8 +844,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 	else if( stat || weakened || paralysis || resting || sleeping || (status_flags & FAKEDEATH))
 		lying = 1
 		canmove = 0
-	else if( stunned )
-//		lying = 0
+	else if(stunned)
 		canmove = 0
 	else if(captured)
 		anchored = 1
@@ -875,6 +865,11 @@ note dizziness decrements automatically in the mob's Life() proc.
 				drop_r_hand()
 	else
 		density = 1
+
+	for(var/obj/item/weapon/grab/G in grabbed_by)
+		if(G.state >= GRAB_AGGRESSIVE)
+			canmove = 0
+			break
 
 	//Temporarily moved here from the various life() procs
 	//I'm fixing stuff incrementally so this will likely find a better home.

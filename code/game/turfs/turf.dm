@@ -23,6 +23,7 @@
 	var/pathweight = 1
 
 	var/dynamic_lighting = 1
+	luminosity = 1
 
 /turf/New()
 	..()
@@ -30,7 +31,6 @@
 		spawn( 0 )
 			src.Entered(AM)
 			return
-	return
 
 /turf/ex_act(severity)
 	return 0
@@ -191,6 +191,7 @@
 	var/old_opacity = opacity
 	var/old_dynamic_lighting = dynamic_lighting
 	var/list/old_affecting_lights = affecting_lights
+	var/old_lighting_overlay = lighting_overlay
 
 	//world << "Replacing [src.type] with [N]"
 
@@ -204,12 +205,6 @@
 		if(S.zone) S.zone.rebuild()
 
 	if(ispath(N, /turf/simulated/floor))
-		//if the old turf had a zone, connect the new turf to it as well - Cael
-		//Adjusted by SkyMarshal 5/10/13 - The air master will handle the addition of the new turf.
-		//if(zone)
-		//	zone.RemoveTurf(src)
-		//	if(!zone.CheckStatus())
-		//		zone.SetStatus(ZONE_ACTIVE)
 
 		var/turf/simulated/W = new N( locate(src.x, src.y, src.z) )
 		//W.Assimilate_Air()
@@ -218,7 +213,7 @@
 			W.RemoveLattice()
 
 		if(air_master)
-			air_master.mark_for_update(src)
+			air_master.mark_for_update(src) //handle the addition of the new turf.
 
 		for(var/turf/space/S in range(W,1))
 			S.update_starlight()
@@ -227,10 +222,6 @@
 		. = W
 
 	else
-		//if(zone)
-		//	zone.RemoveTurf(src)
-		//	if(!zone.CheckStatus())
-		//		zone.SetStatus(ZONE_ACTIVE)
 
 		var/turf/W = new N( locate(src.x, src.y, src.z) )
 
@@ -243,6 +234,7 @@
 		W.levelupdate()
 		. =  W
 
+	lighting_overlay = old_lighting_overlay
 	affecting_lights = old_affecting_lights
 	if((old_opacity != opacity) || (dynamic_lighting != old_dynamic_lighting))
 		reconsider_lights()

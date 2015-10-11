@@ -40,10 +40,10 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 
 	blob_act()
 		if (prob(50))
-			del(src)
+			qdel(src)
 
 	meteorhit()
-		del(src)
+		qdel(src)
 		return
 
 	proc/TotalMaterials()
@@ -89,7 +89,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 				if(uranium_amount >= 2000)
 					var/obj/item/stack/sheet/mineral/uranium/G = new /obj/item/stack/sheet/mineral/uranium(src.loc)
 					G.amount = round(uranium_amount / 2000)
-				del(src)
+				qdel(src)
 				return 1
 			else
 				user << "\red You can't load the [src.name] while it's opened."

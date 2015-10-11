@@ -15,6 +15,7 @@
 	var/spray_size = 3
 	var/list/spray_sizes = list(1,3)
 	volume = 250
+	var/safety = 0
 
 
 /obj/item/weapon/reagent_containers/spray/New()
@@ -44,6 +45,10 @@
 
 	if(reagents.total_volume < amount_per_transfer_from_this)
 		user << "<span class='notice'>\The [src] is empty!</span>"
+		return
+
+	if(safety)
+		usr << "<span class = 'warning'>The safety is on!</span>"
 		return
 
 	Spray_at(A)
@@ -82,7 +87,7 @@
 					D.reagents.reaction(A_turf)
 				sleep(2)
 			sleep(3)
-		del(D)
+		qdel(D)
 
 	return
 
@@ -135,7 +140,7 @@
 	item_state = "pepperspray"
 	possible_transfer_amounts = null
 	volume = 40
-	var/safety = 1
+	safety = 1
 
 
 /obj/item/weapon/reagent_containers/spray/pepper/New()
@@ -152,9 +157,6 @@
 	usr << "<span class = 'notice'>You switch the safety [safety ? "on" : "off"].</span>"
 
 /obj/item/weapon/reagent_containers/spray/pepper/Spray_at(atom/A as mob|obj)
-	if(safety)
-		usr << "<span class = 'warning'>The safety is on!</span>"
-		return
 	..()
 
 //water flower
@@ -220,7 +222,7 @@
 				for(var/atom/t in get_turf(D))
 					D.reagents.reaction(t)
 				sleep(2)
-			del(D)
+			qdel(D)
 
 	return
 

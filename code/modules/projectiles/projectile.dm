@@ -50,7 +50,8 @@
 	var/drowsy = 0
 	var/agony = 0
 	var/embed = 0 // whether or not the projectile can embed itself in the mob
-	
+	var/impact_force = 0
+
 	var/hitscan = 0	// whether the projectile should be hitscan
 	var/step_delay = 1	// the delay between iterations if not a hitscan projectile
 
@@ -119,14 +120,19 @@
 			loc = A.loc
 			return 0// nope.avi
 
-		var/distance = get_dist(starting,loc)
-		var/miss_modifier = -30
+		var/distance = get_dist(starting,loc) //More distance = less damage, except for high fire power weapons.
+		if(damage && (distance > 7))
+			if(damage < 55)
+				damage = max(1, damage - round(damage * (((distance-6)*3)/100)))
+		//var/miss_modifier = -30
 
-		if (istype(shot_from,/obj/item/weapon/gun))	//If you aim at someone beforehead, it'll hit more often.
-			var/obj/item/weapon/gun/daddy = shot_from //Kinda balanced by fact you need like 2 seconds to aim
-			if (daddy.target && original in daddy.target) //As opposed to no-delay pew pew
-				miss_modifier += -30
-		def_zone = get_zone_with_miss_chance(def_zone, M, miss_modifier + 15*distance)
+		//if (istype(shot_from,/obj/item/weapon/gun))	//If you aim at someone beforehead, it'll hit more often.
+		//	var/obj/item/weapon/gun/daddy = shot_from //Kinda balanced by fact you need like 2 seconds to aim
+		//	if (daddy.target && original in daddy.target) //As opposed to no-delay pew pew
+		//		miss_modifier += -30
+		//if(distance > 1)
+		//	def_zone = get_zone_with_miss_chance(def_zone, M)
+		def_zone = get_zone_with_probabilty(def_zone)
 
 		if(!def_zone)
 			visible_message("\blue \The [src] misses [M] narrowly!")
@@ -147,57 +153,57 @@
 		for(var/mob/living/simple_animal/smart_animal/SA in view(7))
 			SA.fight(firer , M)
 
-	if(istype(src, /obj/item/projectile/beam))
+//	if(istype(src, /obj/item/projectile/beam))
 
-		if(A)
-			if (!forcedodge)
-				forcedodge = A.bullet_act(src, def_zone) // searches for return value
-			if(forcedodge == -1) // the bullet passes through a dense object!
-				bumped = 0 // reset bumped variable!
-				if(istype(A, /turf))
-					loc = A
-				else
-					loc = A.loc
-				permutated.Add(A)
-				return 0
-			if(istype(A,/turf))
-				for(var/obj/O in A)
-					O.bullet_act(src)
-				for(var/mob/M in A)
-					M.bullet_act(src, def_zone)
-			//stop flying
-			on_impact(A)
+	if(A)
+		if (!forcedodge)
+			forcedodge = A.bullet_act(src, def_zone) // searches for return value
+		if(forcedodge == -1) // the bullet passes through a dense object!
+			bumped = 0 // reset bumped variable!
+			if(istype(A, /turf))
+				loc = A
+			else
+				loc = A.loc
+			permutated.Add(A)
+			return 0
+		if(istype(A,/turf))
+			for(var/obj/O in A)
+				O.bullet_act(src)
+			for(var/mob/M in A)
+				M.bullet_act(src, def_zone)
+		//stop flying
+		on_impact(A)
 
-			density = 0
-			invisibility = 101
-			del(src)
-		return 1
+		density = 0
+		invisibility = 101
+		qdel(src)
+	return 1
 
-	else
-		spawn(0)
-			if(A)
-						// We get the location before running A.bullet_act, incase the proc deletes A and makes it null
-				var/turf/new_loc = null
-				if(istype(A, /turf))
-					new_loc = A
-				else
-					new_loc = A.loc
-
-				if (!forcedodge)
-					forcedodge = A.bullet_act(src, def_zone) // searches for return value
-				if(forcedodge == -1) // the bullet passes through a dense object!
-					bumped = 0 // reset bumped variable!
-					loc = new_loc
-					permutated.Add(A)
-					return 0
-				//stop flying
-				on_impact(A)
-
-				density = 0
-				invisibility = 101
-				del(src)
-				return 0
-		return 1	//с ТГ, работает лучше
+//	else
+//		spawn(0)
+//			if(A)
+//						// We get the location before running A.bullet_act, incase the proc deletes A and makes it null
+//				var/turf/new_loc = null
+//				if(istype(A, /turf))
+//					new_loc = A
+//				else
+//					new_loc = A.loc
+//
+//				if (!forcedodge)
+//					forcedodge = A.bullet_act(src, def_zone) // searches for return value
+//				if(forcedodge == -1) // the bullet passes through a dense object!
+//					bumped = 0 // reset bumped variable!
+//					loc = new_loc
+//					permutated.Add(A)
+//					return 0
+//				//stop flying
+//				on_impact(A)
+//
+//				density = 0
+//				invisibility = 101
+//				qdel(src)
+//				return 0
+//		return 1	//с ТГ, работает лучше
 
 
 
@@ -216,7 +222,7 @@
 	//plot the initial trajectory
 	setup_trajectory()
 
-	spawn while(src)
+	spawn while(src && src.loc)
 		if(kill_count-- < 1)
 			on_impact(src.loc) //for any final impact behaviours
 			qdel(src)

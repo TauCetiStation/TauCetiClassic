@@ -44,7 +44,7 @@
 /mob/living/simple_animal/hostile/mimic/death()
 	..()
 	visible_message("\red <b>[src]</b> stops moving!")
-	del(src)
+	qdel(src)
 
 
 

@@ -17,6 +17,7 @@
 	var/config_tag = null
 	var/intercept_hacked = 0
 	var/votable = 1
+	var/playable_mode = 1
 	var/probability = 0
 	var/station_was_nuked = 0 //see nuclearbomb.dm and malfunction.dm
 	var/explosion_in_progress = 0 //sit back and relax
@@ -113,6 +114,8 @@ Implants;
 	if(ticker && ticker.mode)
 		feedback_set_details("game_mode","[ticker.mode]")
 	feedback_set_details("server_ip","[world.internet_address]:[world.port]")
+	start_state = new /datum/station_state()
+	start_state.count(1)
 	return 1
 
 
@@ -214,6 +217,11 @@ Implants;
 		var/special_role = man.mind.special_role
 		if (special_role == "Wizard" || special_role == "Ninja" || special_role == "Syndicate" || special_role == "Vox Raider" || special_role == "Raider")
 			continue	//NT intelligence ruled out possiblity that those are too classy to pretend to be a crew.
+		for(var/spec_role in gang_name_pool)
+			if (special_role == "[spec_role] Gang (A) Boss")
+				continue
+			if (special_role == "[spec_role] Gang (B) Boss")
+				continue
 		if(man.client.prefs.nanotrasen_relation == "Opposed" && prob(50) || \
 		   man.client.prefs.nanotrasen_relation == "Skeptical" && prob(20))
 			suspects += man
@@ -229,6 +237,7 @@ Implants;
 			if(suplink)
 				var/extra = 4
 				suplink.uses += extra
+				if(man.mind) man.mind.total_TC += extra
 				man << "\red We have received notice that enemy intelligence suspects you to be linked with us. We have thus invested significant resources to increase your uplink's capacity."
 			else
 				// Give them a warning!

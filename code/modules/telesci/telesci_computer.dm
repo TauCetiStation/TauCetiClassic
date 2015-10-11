@@ -32,7 +32,7 @@
 	link_telepad()
 	recalibrate()
 
-/obj/machinery/computer/telescience/Del()
+/obj/machinery/computer/telescience/Destroy()
 	eject()
 	..()
 

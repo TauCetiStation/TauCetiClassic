@@ -39,7 +39,7 @@
 		user.put_in_hands(W)
 		user << "<span class='notice'>You wrap the cable restraint around the top of the rod.</span>"
 
-		del(src)
+		qdel(src)
 
 /*
 /obj/item/weapon/unfinished_prod
@@ -63,8 +63,8 @@
 
 		user.put_in_hands(P)
 		user << "<span class='notice'>You fasten the battery to rod and connect it to the wires.</span>"
-		del(I)
-		del(src) */
+		qdel(I)
+		qdel(src) */
 
 /obj/item/weapon/melee/cattleprod
 		icon = 'tauceti/items/makeshift_items_TG/makeshift_tg.dmi'
@@ -104,7 +104,7 @@
 			user.update_inv_l_hand()
 		else
 			user.update_inv_r_hand()
-		del(src)
+		qdel(src)
 		return
 	update_icon()
 	add_fingerprint(user)
@@ -179,9 +179,10 @@
 		return
 
 	if(status)
-		H.Stun(stunforce)
-		H.Weaken(stunforce)
-		H.apply_effect(STUTTER, stunforce)
+		//H.Stun(stunforce)
+		//H.Weaken(stunforce)
+		//H.apply_effect(STUTTER, stunforce)
+		H.apply_effect(60,AGONY,0)
 		user.lastattacked = M
 		H.lastattacker = user
 		if(isrobot(src.loc))
@@ -236,8 +237,8 @@
 
 		user.put_in_hands(S)
 		user << "<span class='notice'>You fasten the glass shard to the top of the rod with the cable.</span>"
-		del(I)
-		del(src)
+		qdel(I)
+		qdel(src)
 
 	else if(istype(I, /obj/item/weapon/wirecutters))
 
@@ -248,5 +249,5 @@
 
 		user.put_in_hands(P)
 		user << "<span class='notice'>You fasten the wirecutters to the top of the rod with the cable, prongs outward.</span>"
-		del(I)
-		del(src)
+		qdel(I)
+		qdel(src)

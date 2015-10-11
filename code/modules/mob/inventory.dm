@@ -335,7 +335,7 @@
 			W.loc = src
 	else
 		if (del_on_fail)
-			del(W)
+			qdel(W)
 	return equipped
 //Ñ tg
 /mob/proc/canUnEquip(obj/item/I, force)

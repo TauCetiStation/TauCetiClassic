@@ -325,7 +325,7 @@
 						else
 							var/datum/computer/file/text/F = new /datum/computer/file/text
 							if(!src.holding_folder.add_file(F))
-								del(F)
+								qdel(F)
 							else
 								src.note_file = F
 								F.data = src.note

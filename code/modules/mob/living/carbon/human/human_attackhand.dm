@@ -30,11 +30,15 @@
 					visible_message("\red <B>[src] has been touched with the stun gloves by [M]!</B>")
 					M.attack_log += text("\[[time_stamp()]\] <font color='red'>Stungloved [src.name] ([src.ckey])</font>")
 					src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been stungloved by [M.name] ([M.ckey])</font>")
-
 					msg_admin_attack("[M.name] ([M.ckey]) stungloved [src.name] ([src.ckey]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[M.x];Y=[M.y];Z=[M.z]'>JMP</a>)")
 
-					var/armorblock = run_armor_check(M.zone_sel.selecting, "energy")
-					apply_effects(5,5,0,0,5,0,0,armorblock)
+					var/datum/organ/external/select_area = get_organ(M.zone_sel.selecting) // We're checking the outside, buddy!
+					var/calc_power = 150 * get_siemens_coefficient_organ(select_area)
+					apply_effects(0,0,0,0,5,0,0,calc_power)
+
+					var/datum/effect/effect/system/spark_spread/s = PoolOrNew(/datum/effect/effect/system/spark_spread)
+					s.set_up(3, 1, src)
+					s.start()
 					return 1
 				else
 					M << "\red Not enough charge! "
@@ -52,6 +56,8 @@
 			var/armor_block = run_armor_check(affecting, "melee")
 
 			if(HULK in M.mutations)			damage += 5
+			if(dna && dna.mutantrace == "adamantine")
+				damage += 5
 
 			playsound(loc, "punch", 25, 1, -1)
 
@@ -158,7 +164,7 @@
 				w_uniform.add_fingerprint(M)
 			var/datum/organ/external/affecting = get_organ(ran_zone(M.zone_sel.selecting))
 
-			if (istype(r_hand,/obj/item/weapon/gun) || istype(l_hand,/obj/item/weapon/gun))
+			if(istype(r_hand,/obj/item/weapon/gun) || istype(l_hand,/obj/item/weapon/gun))
 				var/obj/item/weapon/gun/W = null
 				var/chance = 0
 
@@ -180,9 +186,13 @@
 
 			var/randn = rand(1, 100)
 			if (randn <= 25)
-				apply_effect(4, WEAKEN, run_armor_check(affecting, "melee"))
+				var/armor_check = run_armor_check(affecting, "melee")
+				apply_effect(3, WEAKEN, armor_check)
 				playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-				visible_message("\red <B>[M] has pushed [src]!</B>")
+				if(armor_check < 2)
+					visible_message("<span class='danger'>[M] has pushed [src]!</span>")
+				else
+					visible_message("<span class='warning'>[M] attempted to push [src]!</span>")
 				return
 
 			var/talked = 0	// BubbleWrap
@@ -201,14 +211,14 @@
 						visible_message("\red <b>[M] has broken [src]'s grip on [lgrab.affecting]!</B>")
 						talked = 1
 					spawn(1)
-						del(lgrab)
+						qdel(lgrab)
 				if(istype(r_hand, /obj/item/weapon/grab))
 					var/obj/item/weapon/grab/rgrab = r_hand
 					if(rgrab.affecting)
 						visible_message("\red <b>[M] has broken [src]'s grip on [rgrab.affecting]!</B>")
 						talked = 1
 					spawn(1)
-						del(rgrab)
+						qdel(rgrab)
 				//End BubbleWrap
 
 				if(!talked)	//BubbleWrap

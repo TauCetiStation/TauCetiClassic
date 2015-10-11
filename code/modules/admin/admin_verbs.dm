@@ -1,15 +1,15 @@
 //admin verb groups - They can overlap if you so wish. Only one of each verb will exist in the verbs list regardless
 var/list/admin_verbs_default = list(
-	/datum/admins/proc/show_player_panel,	/*shows an interface for individual players, with various links (links require additional flags*/
-	/client/proc/player_panel,
 	/client/proc/toggleadminhelpsound,	/*toggles whether we hear a sound when adminhelps/PMs are used*/
 	/client/proc/deadmin_self,			/*destroys our own admin datum so we can play as a regular player*/
 	/client/proc/hide_verbs,			/*hides all our adminverbs*/
 	/client/proc/hide_most_verbs,		/*hides all our hideable adminverbs*/
-	/client/proc/debug_variables,		/*allows us to -see- the variables of any instance in the game. +VAREDIT needed to modify*/
-//	/client/proc/check_antagonists,		/*shows all antags*/
 	/client/proc/cmd_mentor_check_new_players
-//	/client/proc/deadchat				/*toggles deadchat on/off*/
+	)
+var/list/admin_verbs_default_high = list(
+	/datum/admins/proc/show_player_panel,	/*shows an interface for individual players, with various links (links require additional flags*/
+	/client/proc/player_panel,
+	/client/proc/debug_variables		/*allows us to -see- the variables of any instance in the game. +VAREDIT needed to modify*/
 	)
 var/list/admin_verbs_admin = list(
 	/client/proc/player_panel_new,		/*shows an interface for all players, with links to various panels*/
@@ -82,11 +82,14 @@ var/list/admin_verbs_admin = list(
 	/client/proc/toggle_antagHUD_use,
 	/client/proc/toggle_antagHUD_restrictions,
 	/client/proc/allow_character_respawn,    /* Allows a ghost to respawn */
-	/client/proc/aooc
+	/client/proc/aooc,
+	/client/proc/change_security_level,
+	/client/proc/empty_ai_core_toggle_latejoin
 )
 var/list/admin_verbs_ban = list(
 	/client/proc/unban_panel,
-	/client/proc/jobbans
+	/client/proc/jobbans,
+	/client/proc/stickybanpanel
 	)
 var/list/admin_verbs_sounds = list(
 	/client/proc/play_local_sound,
@@ -98,7 +101,7 @@ var/list/admin_verbs_fun = list(
 	/client/proc/cmd_admin_dress,
 	/client/proc/cmd_admin_gib_self,
 	/client/proc/drop_bomb,
-        /client/proc/everyone_random,
+	/client/proc/everyone_random,
 	/client/proc/one_click_antag,
 	/datum/admins/proc/toggle_aliens,
 	/datum/admins/proc/toggle_space_ninja,
@@ -112,7 +115,8 @@ var/list/admin_verbs_fun = list(
 	/client/proc/roll_dices,
 	/client/proc/epileptic_anomaly,
 //	/client/proc/Noir_anomaly,
-	/client/proc/epileptic_anomaly_cancel
+	/client/proc/epileptic_anomaly_cancel,
+	/client/proc/achievement
 	)
 var/list/admin_verbs_spawn = list(
 	/datum/admins/proc/spawn_atom,		/*allows us to spawn instances*/
@@ -155,6 +159,8 @@ var/list/admin_verbs_debug = list(
 	/client/proc/cmd_debug_del_all,
 	/client/proc/cmd_debug_tog_aliens,
 	/client/proc/cmd_debug_tog_vcounter,
+	/client/proc/cmd_message_spam_control,
+	/client/proc/investigate_show,
 	/client/proc/air_report,
 	/client/proc/reload_admins,
 	/client/proc/reload_mentors,
@@ -279,16 +285,14 @@ var/list/admin_verbs_mentor = list(
 	/client/proc/cmd_admin_pm_context,
 	/client/proc/cmd_admin_pm_panel,
 	/datum/admins/proc/PlayerNotes,
-	/client/proc/admin_ghost,
 	/client/proc/cmd_mod_say,
-	/datum/admins/proc/show_player_info,
-//	/client/proc/dsay,
-	/client/proc/cmd_admin_subtle_message
+	/datum/admins/proc/show_player_info
 )
 
 /client/proc/add_admin_verbs()
 	if(holder)
 		verbs += admin_verbs_default
+		if(holder.rights &~R_MENTOR)		verbs += admin_verbs_default_high
 		if(holder.rights & R_BUILDMODE)		verbs += /client/proc/togglebuildmodeself
 		if(holder.rights & R_ADMIN)			verbs += admin_verbs_admin
 		if(holder.rights & R_BAN)			verbs += admin_verbs_ban
@@ -309,6 +313,7 @@ var/list/admin_verbs_mentor = list(
 /client/proc/remove_admin_verbs()
 	verbs.Remove(
 		admin_verbs_default,
+		admin_verbs_default_high,
 		/client/proc/togglebuildmodeself,
 		admin_verbs_admin,
 		admin_verbs_ban,
@@ -546,7 +551,7 @@ var/list/admin_verbs_mentor = list(
 		holder.DB_ban_record(BANTYPE_TEMP, null, bantime, reason, , ,warned_ckey)
 		feedback_inc("ban_warn",1)
 		D.save_preferences()
-		del(C)
+		qdel(C)
 	else
 		if(C)
 			C << "<font color='red'><BIG><B>You have been formally warned by an administrator.</B></BIG><br>Further warnings will result in an autoban.</font>"
@@ -613,6 +618,7 @@ var/list/admin_verbs_mentor = list(
 			var/light_impact_range = input("Light impact range (in tiles):") as num
 			var/flash_range = input("Flash range (in tiles):") as num
 			explosion(epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range)
+	log_admin("[ckey] creating an admin explosion at [epicenter.loc].")
 	message_admins("\blue [ckey] creating an admin explosion at [epicenter.loc].")
 	feedback_add_details("admin_verb","DB") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
@@ -723,17 +729,30 @@ var/list/admin_verbs_mentor = list(
 	log_admin("[key_name(usr)] used 'kill air'.")
 	message_admins("\blue [key_name_admin(usr)] used 'kill air'.", 1)
 
+/client/proc/readmin_self()
+	set name = "Re-admin self"
+	set category = "Admin"
+
+	if(deadmin_holder)
+		deadmin_holder.reassociate()
+		log_admin("[src] re-admined themself.")
+		message_admins("[src] re-admined themself.", 1)
+		src << "<span class='interface'>You now have the keys to control the planet, or at least a small space station.</span>"
+		verbs -= /client/proc/readmin_self
+		feedback_add_details("admin_verb","RAS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
 /client/proc/deadmin_self()
 	set name = "De-admin self"
 	set category = "Admin"
 
 	if(holder)
-		if(alert("Confirm self-deadmin for the round? You can't re-admin yourself without someont promoting you.",,"Yes","No") == "Yes")
+		if(alert("Confirm self-deadmin for the round?",,"Yes","No") == "Yes")
 			log_admin("[src] deadmined themself.")
 			message_admins("[src] deadmined themself.", 1)
 			deadmin()
 			src << "<span class='interface'>You are now a normal player.</span>"
-	feedback_add_details("admin_verb","DAS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+			verbs += /client/proc/readmin_self
+			feedback_add_details("admin_verb","DAS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/toggle_log_hrefs()
 	set name = "Toggle href logging"
@@ -752,6 +771,17 @@ var/list/admin_verbs_mentor = list(
 	set category = "Admin"
 	if(holder)
 		src.holder.output_ai_laws()
+
+/client/proc/change_security_level()
+	set name = "Set security level"
+	set desc = "Sets the station security level"
+	set category = "Admin"
+
+	if(!check_rights(R_ADMIN))	return
+	var sec_level = input(usr, "It's currently code [get_security_level()].", "Select Security Level")  as null|anything in (list("green","blue","red","delta")-get_security_level())
+	if(alert("Switch from code [get_security_level()] to code [sec_level]?","Change security level?","Yes","No") == "Yes")
+		set_security_level(sec_level)
+		log_admin("[key_name(usr)] changed the security level to code [sec_level].")
 
 
 //---- bs12 verbs ----
@@ -921,3 +951,45 @@ var/list/admin_verbs_mentor = list(
 
 	log_admin("[key_name(usr)] told everyone to man up and deal with it.")
 	message_admins("\blue [key_name_admin(usr)] told everyone to man up and deal with it.", 1)
+
+/client/proc/achievement()
+	set name = "Give Achievement"
+	set category = "Fun"
+
+	if(!check_rights(R_FUN))	return
+
+	var/achoice = "Cancel"
+
+	if(!player_list.len)
+		usr << "player list is empty!"
+		return
+
+	var/mob/winner = input("Who's a winner?", "Achievement Winner") in player_list
+	var/name = input("What will you call your achievement?", "Achievement Winner", "New Achievement")
+	var/desc = input("What description will you give it?", "Achievement Description", "You Win")
+
+	if(istype(winner, /mob/living))
+		achoice = alert("Give our winner his own trophy?","Achievement Trophy", "Confirm","Cancel")
+
+	var/glob = alert("Announce the achievement globally? (Beware! Ruins immersion!)","Last Question", "No!","Yes!")
+
+	if(achoice == "Confirm")
+		var/obj/item/weapon/reagent_containers/food/drinks/golden_cup/C = new(get_turf(winner))
+		C.name = name
+		C.desc = desc
+		winner.put_in_hands(C)
+		winner.update_icons()
+	else
+		winner << "<span class='danger'>You win [name]! [desc]</span>"
+
+	var/icon/cup = icon('icons/obj/drinks.dmi', "golden_cup")
+
+	if(glob == "No!")
+		winner.client << sound('sound/misc/achievement.ogg')
+	else
+		world  << sound('sound/misc/achievement.ogg')
+		world << "<span class='danger'>\icon[cup] [winner.name] wins \"[name]\"!</span>"
+
+	winner << "<span class='danger'>Congratulations!</span>"
+
+	achievements += "[winner.key] as [winner.name] won \"[name]\"! \"[desc]\""

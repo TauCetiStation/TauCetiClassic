@@ -20,7 +20,7 @@
 	return
 
 /obj/structure/sign/blob_act()
-	del(src)
+	qdel(src)
 	return
 
 /obj/structure/sign/attackby(obj/item/tool as obj, mob/user as mob)	//deconstruction

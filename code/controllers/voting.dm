@@ -17,7 +17,7 @@ datum/controller/vote
 	New()
 		if(vote != src)
 			if(istype(vote))
-				del(vote)
+				qdel(vote)
 			vote = src
 
 	proc/process()	//called by master_controller
@@ -190,6 +190,14 @@ datum/controller/vote
 		if(mode)
 			if(config.vote_no_dead && usr.stat == DEAD && !usr.client.holder)
 				return 0
+			if(vote > choices.len)
+				message_admins("[key_name_admin(usr)] tried to exploit a voting menu by entering [vote] which is more than [choices.len] available choices.")
+				log_admin("EXPLOIT : [key_name(usr)] tried to exploit a voting menu by entering [vote] which is more than [choices.len] available choices.")
+				return choices.len
+			else if(vote < 1)
+				message_admins("[key_name_admin(usr)] tried to exploit a voting menu by entering [vote] which is less than 1.")
+				log_admin("EXPLOIT : [key_name(usr)] tried to exploit a voting menu by entering [vote] which is less than 1.")
+				return 1
 			if(current_votes[ckey])
 				choices[choices[current_votes[ckey]]]--
 			if(vote && 1<=vote && vote<=choices.len)
@@ -356,6 +364,8 @@ datum/controller/vote
 				return
 			if("cancel")
 				if(usr.client.holder)
+					if(ticker.current_state <= 2 && !(usr.client.holder.rights & R_SERVER)) // Нет смысла давать отмену воута до начала раунда холдерам, у которых нет доступа к старту раунда.
+						return
 					reset()
 			if("toggle_restart")
 				if(usr.client.holder)
@@ -368,6 +378,7 @@ datum/controller/vote
 					initiate_vote("restart",usr.key)
 			if("gamemode")
 				if(config.allow_vote_mode || usr.client.holder)
+					config.allow_vote_mode = 0 // One gamemode vote per round.
 					initiate_vote("gamemode",usr.key)
 			if("crew_transfer")
 				if(config.allow_vote_restart || usr.client.holder)

@@ -23,6 +23,8 @@
 	new /obj/item/clothing/head/soft/sec(src)
 	new /obj/item/clothing/head/soft/sec(src)
 	new /obj/item/clothing/head/soft/sec(src)
+	new /obj/item/clothing/mask/bandana/red(src)
+	new /obj/item/clothing/mask/bandana/red(src)
 	new /obj/item/clothing/head/beret/sec(src)
 	new /obj/item/clothing/head/beret/sec(src)
 	new /obj/item/clothing/head/beret/sec(src)
@@ -54,12 +56,20 @@
 	new /obj/item/clothing/under/color/black(src)
 	new /obj/item/clothing/under/color/black(src)
 	new /obj/item/clothing/under/color/black(src)
+	if(prob(25))
+		new /obj/item/clothing/suit/jacket/leather(src)
+	if(prob(20))
+		new /obj/item/clothing/suit/jacket/leather/overcoat(src)
 	new /obj/item/clothing/shoes/black(src)
 	new /obj/item/clothing/shoes/black(src)
 	new /obj/item/clothing/shoes/black(src)
-	new /obj/item/clothing/head/that(src)
-	new /obj/item/clothing/head/that(src)
-	new /obj/item/clothing/head/that(src)
+	//new /obj/item/clothing/head/that(src)
+	//new /obj/item/clothing/head/that(src)
+	//new /obj/item/clothing/head/that(src)
+	//new /obj/item/clothing/mask/bandana/black(src)
+	//new /obj/item/clothing/mask/bandana/black(src)
+	//if(prob(40))
+	//	new /obj/item/clothing/mask/bandana/skull(src)
 	return
 
 
@@ -98,6 +108,8 @@
 	new /obj/item/clothing/shoes/black(src)
 	new /obj/item/clothing/shoes/black(src)
 	new /obj/item/clothing/shoes/black(src)
+	//new /obj/item/clothing/mask/bandana/green(src)
+	//new /obj/item/clothing/mask/bandana/green(src)
 	return
 
 /obj/structure/closet/wardrobe/xenos
@@ -145,6 +157,8 @@
 	new /obj/item/clothing/shoes/orange(src)
 	new /obj/item/clothing/shoes/orange(src)
 	new /obj/item/clothing/shoes/orange(src)
+	//new /obj/item/clothing/mask/bandana/gold(src)
+	//new /obj/item/clothing/mask/bandana/gold(src)
 	return
 
 
@@ -264,6 +278,10 @@
 	new /obj/item/clothing/shoes/black(src)
 	new /obj/item/clothing/gloves/black(src)
 	new /obj/item/clothing/gloves/black(src)
+	//if(prob(40))
+	//	new /obj/item/clothing/mask/bandana/skull(src)
+	//if(prob(40))
+	//	new /obj/item/clothing/mask/bandana/skull(src)
 	return
 
 
@@ -354,6 +372,9 @@
 	new /obj/item/clothing/head/soft/grey(src)
 	new /obj/item/clothing/head/soft/grey(src)
 	new /obj/item/clothing/head/soft/grey(src)
+	//if(prob(40))
+	//	new /obj/item/clothing/mask/bandana/black(src)
+	//	new /obj/item/clothing/mask/bandana/black(src)
 	return
 
 
@@ -364,11 +385,30 @@
 
 /obj/structure/closet/wardrobe/mixed/New()
 	..()
+	if(prob(25))
+		new /obj/item/clothing/suit/jacket(src)
+	if(prob(25))
+		new /obj/item/clothing/suit/jacket(src)
 	new /obj/item/clothing/under/color/blue(src)
 	new /obj/item/clothing/under/color/yellow(src)
 	new /obj/item/clothing/under/color/green(src)
 	new /obj/item/clothing/under/color/orange(src)
 	new /obj/item/clothing/under/color/pink(src)
+	new /obj/item/clothing/under/color/red(src)
+	//new /obj/item/clothing/under/color/lightblue(src)
+	//new /obj/item/clothing/under/color/aqua(src)
+	//new /obj/item/clothing/under/color/purple(src)
+	//new /obj/item/clothing/under/color/lightpurple(src)
+	//new /obj/item/clothing/under/color/lightgreen(src)
+	//new /obj/item/clothing/under/color/darkblue(src)
+	//new /obj/item/clothing/under/color/darkred(src)
+	//new /obj/item/clothing/under/color/lightred(src)
+	//new /obj/item/clothing/mask/bandana/red(src)
+	//new /obj/item/clothing/mask/bandana/red(src)
+	//new /obj/item/clothing/mask/bandana/blue(src)
+	//new /obj/item/clothing/mask/bandana/blue(src)
+	//new /obj/item/clothing/mask/bandana/gold(src)
+	//new /obj/item/clothing/mask/bandana/gold(src)
 	new /obj/item/clothing/under/dress/plaid_blue(src)
 	new /obj/item/clothing/under/dress/plaid_red(src)
 	new /obj/item/clothing/under/dress/plaid_purple(src)

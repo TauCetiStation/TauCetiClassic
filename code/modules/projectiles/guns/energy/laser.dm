@@ -4,7 +4,7 @@
 	icon = 'tauceti/icons/obj/guns.dmi'
 	tc_custom = 'tauceti/icons/obj/guns.dmi'
 	icon_state = "laser"
-	item_state = "laser"
+	item_state = null	//so the human update icon uses the icon_state instead.
 	w_class = 3.0
 	m_amt = 2000
 	origin_tech = "combat=3;magnets=2"
@@ -40,7 +40,7 @@ obj/item/weapon/gun/energy/laser/retro
 		processing_objects.Add(src)
 
 
-	Del()
+	Destroy()
 		processing_objects.Remove(src)
 		..()
 
@@ -132,7 +132,7 @@ obj/item/weapon/gun/energy/laser/retro
 		processing_objects.Add(src)
 
 
-	Del()
+	Destroy()
 		processing_objects.Remove(src)
 		..()
 
@@ -168,7 +168,7 @@ obj/item/weapon/gun/energy/laser/retro
 		processing_objects.Add(src)
 
 
-	Del()
+	Destroy()
 		processing_objects.Remove(src)
 		..()
 

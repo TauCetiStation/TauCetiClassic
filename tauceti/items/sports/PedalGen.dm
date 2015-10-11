@@ -25,21 +25,25 @@
 	density = 0
 	flags = OPENCONTAINER
 	//copypaste sorry
-	var/obj/machinery/power/dynamo/MyGenerator	= null
+	var/obj/machinery/power/dynamo/Generator = null
 	var/callme = "Pedal Generator"	//how do people refer to it?
 	var/pedaled = 0
 
-
+/obj/structure/stool/bed/chair/pedalgen/initialize()
+	..()
+	if(anchored)
+		Generator.loc = src.loc
+		Generator.connect_to_network()
 
 /obj/structure/stool/bed/chair/pedalgen/New()
 	handle_rotation()
-	MyGenerator = new /obj/machinery/power/dynamo(src)
+	Generator = new /obj/machinery/power/dynamo(src)
 
 /obj/structure/stool/bed/chair/pedalgen/examine()
 	set src in usr
 	usr << "\icon[src] This [callme] generates power from raw human force!"
-	if (MyGenerator.raw_power>0)
-		usr << "It has [MyGenerator.raw_power] raw power stored and it generates [(MyGenerator.raw_power>10)?"20k":"10k"] energy!"
+	if (Generator.raw_power>0)
+		usr << "It has [Generator.raw_power] raw power stored and it generates [(Generator.raw_power>10)?"20k":"10k"] energy!"
 	else
 		usr << "Generator stands still. Someone need to pedal that thing."
 
@@ -51,36 +55,44 @@
 		user.visible_message("[user.name] [anchored? "secures":"unsecures"] the [src.name].", \
 			"You [anchored? "secure":"undo"] the external bolts.", \
 			"You hear a ratchet")
-		MyGenerator.loc = src.loc //this is really needed
+		Generator.loc = src.loc //this is really needed
 		if(anchored)
-			MyGenerator.connect_to_network()
+			Generator.connect_to_network()
 		else
-			MyGenerator.disconnect_from_network()
-			MyGenerator.loc = src
+			Generator.disconnect_from_network()
+			Generator.loc = null
 
 /obj/structure/stool/bed/chair/pedalgen/attack_hand(mob/user)
-	pedal(user)
+	if(buckled_mob)
+		pedal(user)
+	return 0
 
 /obj/structure/stool/bed/chair/pedalgen/proc/pedal(mob/user)
 	pedaled = 1
-	if(buckled_mob == user)
-		if(buckled_mob.nutrition > 10)
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 20, 1)
-			MyGenerator.Rotated()
-			var/mob/living/carbon/human/pedaler = buckled_mob
-			pedaler.nutrition -= 0.5
-			pedaler.apply_effect(1,AGONY,0)
-			if(pedaler.halloss > 80)
-				user << "You pushed yourself too hard."
-				pedaler.apply_effect(24,AGONY,0)
-				unbuckle()
-			sleep(5)
-			pedaled = 0
+	if(buckled_mob.buckled == src)
+		if(buckled_mob != user)
+			buckled_mob.visible_message(\
+				"\blue [buckled_mob.name] was unbuckled by [user.name]!",\
+				"You were unbuckled from [src] by [user.name].",\
+				"You hear metal clanking")
+			unbuckle()
+			src.add_fingerprint(user)
 		else
-			user << "You are too exausted to pedal that thing."
-	else
-		..()
-
+			if(buckled_mob.nutrition > 10)
+				playsound(src.loc, 'sound/items/Ratchet.ogg', 20, 1)
+				Generator.Rotated()
+				var/mob/living/carbon/human/pedaler = buckled_mob
+				pedaler.nutrition -= 0.5
+				pedaler.apply_effect(1,AGONY,0)
+				if(pedaler.halloss > 80)
+					user << "You pushed yourself too hard."
+					pedaler.apply_effect(24,AGONY,0)
+					unbuckle()
+				sleep(5)
+				pedaled = 0
+			else
+				user << "You are too exausted to pedal that thing."
+		return 1
 
 /obj/structure/stool/bed/chair/pedalgen/relaymove(mob/user, direction)
 	if(!ishuman(user)) unbuckle()
@@ -97,6 +109,7 @@
 	if(buckled_mob)
 		if(buckled_mob.buckled == src)
 			buckled_mob.loc = loc
+			update_mob()
 
 
 /obj/structure/stool/bed/chair/pedalgen/buckle_mob(mob/M, mob/user)
@@ -113,9 +126,9 @@
 	M.dir = dir
 	M.update_canmove()
 	buckled_mob = M
+	verbs += /obj/structure/stool/bed/chair/pedalgen/verb/release
 	update_mob()
 	add_fingerprint(user)
-
 
 /obj/structure/stool/bed/chair/pedalgen/unbuckle()
 	if(buckled_mob)
@@ -162,6 +175,18 @@
 			return buckled_mob.bullet_act(Proj)
 	visible_message("<span class='warning'>[Proj] ricochets off the [callme]!</span>")
 
-/obj/structure/stool/bed/chair/pedalgen/Del()
-	del(MyGenerator)
+/obj/structure/stool/bed/chair/pedalgen/Destroy()
+	qdel(Generator)
 	..()
+
+/obj/structure/stool/bed/chair/pedalgen/verb/release()
+	set name = "Release Pedalgen"
+	set category = "Object"
+	set src in view(0)
+
+	if(usr.restrained())
+		usr << "You can't do it until you restrained"
+		return
+
+	unbuckle()
+	verbs -= /obj/structure/stool/bed/chair/pedalgen/verb/release

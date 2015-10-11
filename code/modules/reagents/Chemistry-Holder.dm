@@ -97,6 +97,8 @@ datum
 					return
 				if (!target.reagents || src.total_volume<=0)
 					return
+				if(amount < 0) return
+				if(amount > 2000) return
 				var/datum/reagents/R = target.reagents
 				amount = min(min(amount, src.total_volume), R.maximum_volume-R.total_volume)
 				var/part = amount / src.total_volume
@@ -127,6 +129,8 @@ datum
 				if (!target.reagents || src.total_volume<=0)
 					return
 
+				if(amount < 0) return
+				if(amount > 2000) return
 				/*var/datum/reagents/R = target.reagents
 
 				var/obj/item/weapon/reagent_containers/glass/beaker/noreact/B = new /obj/item/weapon/reagent_containers/glass/beaker/noreact //temporary holder
@@ -163,11 +167,12 @@ datum
 
 				src.trans_to(B, amount)
 
-				spawn(95)
-					BR.reaction(target, INGEST)
-					spawn(5)
-						BR.trans_to(target, BR.total_volume)
-						del(B)
+				digest_delay(BR, target, B)
+				//spawn(95)
+				//	BR.reaction(target, INGEST)
+				//	spawn(5)
+				//		BR.trans_to(target, BR.total_volume)
+				//		qdel(B)
 
 				return amount
 
@@ -176,6 +181,8 @@ datum
 					return
 				if(!target.reagents || src.total_volume<=0)
 					return
+				if(amount < 0) return
+				if(amount > 2000) return
 				var/datum/reagents/R = target.reagents
 				amount = min(min(amount, src.total_volume), R.maximum_volume-R.total_volume)
 				var/part = amount / src.total_volume
@@ -198,6 +205,8 @@ datum
 					return
 				if (!target.reagents || src.total_volume<=0 || !src.get_reagent_amount(reagent))
 					return
+				if(amount < 0) return
+				if(amount > 2000) return
 
 				var/datum/reagents/R = target.reagents
 				if(src.get_reagent_amount(reagent)<amount)
@@ -392,7 +401,7 @@ datum
 					var/datum/reagent/R = A
 					if (R.id == reagent)
 						reagent_list -= A
-						del(A)
+						qdel(A)
 						update_total()
 						my_atom.on_reagent_change()
 						return 0
@@ -450,6 +459,8 @@ datum
 
 			add_reagent(var/reagent, var/amount, var/list/data=null, var/safety = 0)
 				if(!isnum(amount)) return 1
+				if(amount < 0) return 0
+				if(amount > 2000) return
 				update_total()
 				if(total_volume + amount > maximum_volume) amount = (maximum_volume - total_volume) //Doesnt fit in. Make it disappear. Shouldnt happen. Will happen.
 
@@ -519,6 +530,8 @@ datum
 
 			remove_reagent(var/reagent, var/amount, var/safety = 0)//Added a safety check for the trans_id_to
 				if(!isnum(amount)) return 1
+				if(amount < 0) return 0
+				if(amount > 2000) return
 
 				for(var/A in reagent_list)
 					var/datum/reagent/R = A
@@ -562,6 +575,8 @@ datum
 
 			remove_all_type(var/reagent_type, var/amount, var/strict = 0, var/safety = 1) // Removes all reagent of X type. @strict set to 1 determines whether the childs of the type are included.
 				if(!isnum(amount)) return 1
+				if(amount < 0) return 0
+				if(amount > 2000) return
 
 				var/has_removed_reagent = 0
 
@@ -627,3 +642,13 @@ datum
 atom/proc/create_reagents(var/max_vol)
 	reagents = new/datum/reagents(max_vol)
 	reagents.my_atom = src
+
+// Временное (а может и постоянное) решение бага с проком, который симулирует поедание еды/таблеток и передает с задержкой реагенты из временного контейнера...
+//... по какой-то причине, кудел прерывает spawn который был вызван объектом(еда/таблетка)...
+//... быстрое решение нашел только такое - отвязать проблемный блок в проке от регов. ~Zve
+proc/digest_delay(var/datum/reagents/BR, var/obj/target, var/obj/item/weapon/reagent_containers/glass/beaker/noreact/B)
+	spawn(95)
+		BR.reaction(target, INGEST)
+		spawn(5)
+			BR.trans_to(target, BR.total_volume)
+			qdel(B)

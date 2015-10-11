@@ -26,7 +26,7 @@
 					if(!src) return
 					user << "\blue You dissasembled the girder!"
 					new /obj/item/stack/sheet/metal(get_turf(src))
-					del(src)
+					qdel(src)
 			else if(!anchored)
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
 				user << "\blue Now securing the girder"

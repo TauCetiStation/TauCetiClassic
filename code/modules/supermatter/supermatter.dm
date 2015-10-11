@@ -79,13 +79,13 @@
 	radio = new (src)
 
 
-/obj/machinery/power/supermatter/Del()
-	del radio
+/obj/machinery/power/supermatter/Destroy()
+	qdel(radio)
 	. = ..()
 
 /obj/machinery/power/supermatter/proc/explode()
 		explosion(get_turf(src), explosion_power, explosion_power * 2, explosion_power * 3, explosion_power * 4, 1)
-		del src
+		qdel(src)
 		return
 
 /obj/machinery/power/supermatter/process()
@@ -271,7 +271,7 @@
 		user.dust()
 		power += 200
 	else
-		del user
+		qdel(user)
 
 	power += 200
 

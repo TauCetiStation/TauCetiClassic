@@ -182,7 +182,7 @@
 			new_slime.key = key
 			new_slime.universal_speak = universal_speak
 			new_slime << "<B>You are now an adult slime.</B>"
-			del(src)
+			qdel(src)
 		else
 			src << "<i>I am not ready to evolve yet...</i>"
 	else
@@ -247,7 +247,7 @@
 			new_slime.key = key
 
 			new_slime << "<B>You are now a slime!</B>"
-			del(src)
+			qdel(src)
 		else
 			src << "<i>I am not ready to reproduce yet...</i>"
 	else

@@ -71,7 +71,7 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 			path_obj = text2path(path_text)
 			item = new path_obj()
 			name = O[3]
-			del item
+			qdel(item)
 
 			src.menu_message += "<A href='byond://?src=\ref[src];buy_item=[path_text];cost=[cost]'>[name]</A> ([cost])<BR>"
 			category_items++
@@ -145,7 +145,7 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 					randomItems.Add("/obj/item/weapon/storage/toolbox/syndicate") //Syndicate Toolbox
 
 				if(!randomItems)
-					del(randomItems)
+					qdel(randomItems)
 					return 0
 				else
 					href_list["buy_item"] = pick(randomItems)
@@ -172,7 +172,7 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 						if("/obj/item/weapon/soap/syndie" , "/obj/item/weapon/storage/toolbox/syndicate")
 							uses -= 1
 
-					del(randomItems)
+					qdel(randomItems)
 					return 1
 */
 
@@ -275,7 +275,7 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 			usr.update_clothing()
 			usr.client.onBought("[item:name]")
 	/*		if(istype(item, /obj/spawner)) // Spawners need to have del called on them to avoid leaving a marker behind
-				del item*/
+				qdel(item)*/
 	//HEADFINDBACK
 		src.attack_self(usr)
 		src.hostpda.attack_self(usr)
@@ -305,8 +305,8 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 		head.destroyed = 1
 		spawn(2)
 			head.droplimb()
-			del(src.master)
-			del(src)
+			qdel(src.master)
+			qdel(src)
 		return
 
 
@@ -376,7 +376,7 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 					else
 						item:loc = get_turf(A)
 	/*				if(istype(item, /obj/spawner)) // Spawners need to have del called on them to avoid leaving a marker behind
-						del item*/
+						qdel(item)*/
 					usr.client.onBought("[item:name]")
 				src.attack_self(usr)
 				return
@@ -433,8 +433,8 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 			location.hotspot_expose(700,125)
 			explosion(location, 0, 0, 2, 4, 1)
 
-		del(src.master)
-		del(src)
+		qdel(src.master)
+		qdel(src)
 		return
 
 	proc/shutdown_uplink()

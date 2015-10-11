@@ -211,12 +211,12 @@
 	switch(severity)
 		if(1.0)
 			//SN src = null
-			del(src)
+			qdel(src)
 			return
 		if(2.0)
 			if (prob(50))
 				//SN src = null
-				del(src)
+				qdel(src)
 				return
 		else
 	return
@@ -258,7 +258,7 @@
 	src.icon_state = "scanner_1"
 	for(var/obj/O in src)
 		//O = null
-		del(O)
+		qdel(O)
 		//Foreach goto(124)
 	src.add_fingerprint(usr)
 	return
@@ -284,7 +284,7 @@
 		//Foreach goto(154)
 	src.add_fingerprint(user)
 	//G = null
-	del(G)
+	qdel(G)
 	return
 
 /obj/machinery/dna_scanner/proc/go_out()
@@ -309,7 +309,7 @@
 				ex_act(severity)
 				//Foreach goto(35)
 			//SN src = null
-			del(src)
+			qdel(src)
 			return
 		if(2.0)
 			if (prob(50))
@@ -318,7 +318,7 @@
 					ex_act(severity)
 					//Foreach goto(108)
 				//SN src = null
-				del(src)
+				qdel(src)
 				return
 		if(3.0)
 			if (prob(25))
@@ -327,7 +327,7 @@
 					ex_act(severity)
 					//Foreach goto(181)
 				//SN src = null
-				del(src)
+				qdel(src)
 				return
 		else
 	return
@@ -337,19 +337,19 @@
 	if(prob(75))
 		for(var/atom/movable/A as mob|obj in src)
 			A.loc = src.loc
-		del(src)
+		qdel(src)
 
 /obj/machinery/scan_console/ex_act(severity)
 
 	switch(severity)
 		if(1.0)
 			//SN src = null
-			del(src)
+			qdel(src)
 			return
 		if(2.0)
 			if (prob(50))
 				//SN src = null
-				del(src)
+				qdel(src)
 				return
 		else
 	return
@@ -357,7 +357,7 @@
 /obj/machinery/scan_console/blob_act()
 
 	if(prob(75))
-		del(src)
+		qdel(src)
 
 /obj/machinery/scan_console/power_change()
 	if(stat & BROKEN)
@@ -709,7 +709,7 @@
 			if("5BDFE293BA5500F9FFFD500AAFFE")
 				if (!istype(src.occupant, /mob/living/carbon/human))
 					for(var/obj/O in src.occupant)
-						del(O)
+						qdel(O)
 
 					var/mob/living/carbon/human/O = new /mob/living/carbon/human( src )
 					if(ticker.killer == src.occupant)
@@ -732,13 +732,13 @@
 					O.loc = src
 					src.occupant = O
 					//M = null
-					del(M)
+					qdel(M)
 					src.occupant = O
 					src.occupant << "Done!"
 			if("2B6696D2B127E5A4")
 				if (!istype(src.occupant, /mob/living/carbon/monkey))
 					for(var/obj/O in src.occupant)
-						del(O)
+						qdel(O)
 					var/mob/living/carbon/monkey/O = new /mob/living/carbon/monkey(src)
 					if(ticker.killer == src.occupant)
 						O.memory = src.occupant.memory
@@ -755,7 +755,7 @@
 					O.loc = src
 					O << "Genetic Transversal Complete!"
 					src.occupant = O
-					del(M)
+					qdel(M)
 					O.name = text("monkey ([])", copytext(md5(src.occupant.primary.uni_identity), 2, 6))
 					src.occupant << "Done!"
 			else
@@ -879,7 +879,7 @@
 	src.icon_state = "restruct_1"
 	for(var/obj/O in src)
 		//O = null
-		del(O)
+		qdel(O)
 		//Foreach goto(124)
 	src.add_fingerprint(usr)
 	return
@@ -913,7 +913,7 @@
 		//Foreach goto(154)
 	src.add_fingerprint(user)
 	//G = null
-	del(G)
+	qdel(G)
 	return
 
 /obj/machinery/restruct/proc/go_out()
@@ -936,21 +936,21 @@
 			for(var/atom/movable/A as mob|obj in src)
 				A.loc = src.loc
 				ex_act(severity)
-			del(src)
+			qdel(src)
 			return
 		if(2.0)
 			if (prob(50))
 				for(var/atom/movable/A as mob|obj in src)
 					A.loc = src.loc
 					ex_act(severity)
-				del(src)
+				qdel(src)
 				return
 		if(3.0)
 			if (prob(25))
 				for(var/atom/movable/A as mob|obj in src)
 					A.loc = src.loc
 					ex_act(severity)
-				del(src)
+				qdel(src)
 				return
 		else
 	return
@@ -959,4 +959,4 @@
 	if(prob(75))
 		for(var/atom/movable/A as mob|obj in src)
 			A.loc = src.loc
-		del(src)
+		qdel(src)

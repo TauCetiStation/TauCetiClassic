@@ -9,6 +9,7 @@
 	var/burn_point = null
 	var/burning = null
 	var/hitsound = null
+	var/wet = 0
 	var/w_class = 3.0
 	flags = FPRINT | TABLEPASS
 	var/slot_flags = 0		//This is used to determine on which slots an item can fit.
@@ -125,7 +126,7 @@
 			size = "huge"
 		else
 	//if ((CLUMSY in usr.mutations) && prob(50)) t = "funny-looking"
-	usr << "This is a [src.blood_DNA ? "bloody " : ""]\icon[src][src.name]. It is a [size] item."
+	usr << "[src.blood_DNA ? "<span class='warning'>" : "[src.wet ? "<span class='wet'>" : ""]"]This is a [blood_DNA ? blood_color != "#030303" ? "bloody " : "oil-stained " : ""][src.wet ? "wet " : ""]\icon[src][src.name]. It is a [size] item."
 	if(src.desc)
 		usr << src.desc
 	return
@@ -141,7 +142,7 @@
 		else if(istype(src, /obj/item/weapon/gun/))
 			if(prob(20)) user.say(pick(";RAAAAAAAARGH! WEAPON!", ";HNNNNNNNNNGGGGGGH! I HATE WEAPONS!!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGUUUUUNNNNHH!", ";AAAAAAARRRGH!" ))
 			user.visible_message("\blue [user] crushes \a [src] with hands.", "\blue You crush the [src].")
-			del(src)
+			qdel(src)
 			//user << "\red \The [src] is far too small for you to pick up."
 			return
 		else if(istype(src, /obj/item/clothing/))
@@ -315,7 +316,7 @@
 		//fat mutation
 		if(istype(src, /obj/item/clothing/under) || istype(src, /obj/item/clothing/suit))
 			if(FAT in H.mutations)
-				testing("[M] TOO FAT TO WEAR [src]!")
+				//testing("[M] TOO FAT TO WEAR [src]!")
 				if(!(flags & ONESIZEFITSALL))
 					if(!disable_warning)
 						H << "\red You're too fat to wear the [name]."
@@ -682,4 +683,3 @@
 	var/obj/item/I = get_active_hand()
 	if(I && !I.abstract)
 		I.showoff(src)
-

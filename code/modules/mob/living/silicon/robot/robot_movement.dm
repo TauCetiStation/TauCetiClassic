@@ -20,13 +20,16 @@
 	if(module_active && istype(module_active,/obj/item/borg/combat/mobility))
 		tally-=3
 
+	if(confused)
+		tally+=8
+
 	return tally+config.robot_delay
 
 // NEW: Use power while moving.
-/mob/living/silicon/robot/Move()
+/mob/living/silicon/robot/SelfMove(turf/n, direct)
 	if (!is_component_functioning("actuator"))
-		return
+		return 0
 
 	var/datum/robot_component/actuator/A = get_component("actuator")
 	if (cell_use_power(A.active_usage))
-		..() 
+		return ..()

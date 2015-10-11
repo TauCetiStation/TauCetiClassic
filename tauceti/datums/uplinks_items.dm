@@ -80,13 +80,23 @@
 			return 0
 
 		var/obj/I = spawn_item(get_turf(user), U)
-
+		if(!I)
+			return 0
+		var/bundlename = name
+		if(name == "Random Item" || name == "For showing that you are The Boss")
+			bundlename = I.name
+		if(I.tag)
+			bundlename = "[I.tag] bundle"
+			I.tag = null
 		if(istype(I, /obj/item) && ishuman(user))
 			var/mob/living/carbon/human/A = user
 			A.put_in_any_hand_if_possible(I)
-			U.purchase_log += "[user] ([user.ckey]) bought [name]."
-
+			U.purchase_log += "[user] ([user.ckey]) bought \icon[I] [name] for [cost]."
+			if(user.mind)
+				user.mind.uplink_items_bought += "\icon[I] [bundlename]"
+				user.mind.spent_TC += cost
 		U.interact(user)
+
 		return 1
 	return 0
 
@@ -128,6 +138,15 @@
 	desc = "A traditionally constructed machine gun made by AA-2531. This deadly weapon has a massive 50-round magazine of 7.62×51mm ammunition."
 	item = /obj/item/weapon/gun/projectile/automatic/l6_saw
 	cost = 25
+	gamemodes = list(/datum/game_mode/nuclear)
+	uplink_types = list("nuclear")
+	excludefrom_uplinks = list("traitor")
+
+/datum/uplink_item/dangerous/heavyrifle
+	name = "PTR-7 heavy rifle"
+	desc = "A portable anti-armour bolt-action rifle. Originally designed to used against armoured exosuits. Fires armor piercing 14.5mm shells."
+	item = /obj/item/weapon/gun/projectile/heavyrifle
+	cost = 10
 	gamemodes = list(/datum/game_mode/nuclear)
 	uplink_types = list("nuclear")
 	excludefrom_uplinks = list("traitor")
@@ -314,6 +333,14 @@
 	desc = "A 50-round magazine of 7.62x51mm ammunition for use in the L6 SAW machinegun. By the time you need to use this, you'll already be on a pile of corpses."
 	item = /obj/item/ammo_box/magazine/m762
 	cost = 7
+	gamemodes = list(/datum/game_mode/nuclear)
+	uplink_types = list("nuclear")
+
+/datum/uplink_item/ammo/heavyrifle
+	name = "A 14.5mm shell."
+	desc = "A 14.5mm shell for use with PTR-7 heavy rifle. One shot, one kill, no luck, just skill."
+	item = /obj/item/ammo_casing/a145
+	cost = 1
 	gamemodes = list(/datum/game_mode/nuclear)
 	uplink_types = list("nuclear")
 

@@ -101,6 +101,12 @@ var/list/department_radio_keys = list(
 		if(dongle.translate_binary) return 1
 
 /mob/living/say(var/message, var/datum/language/speaking = null, var/verb="says", var/alt_name="", var/italics=0, var/message_range = world.view, var/list/used_radios = list(), var/sound/speech_sound, var/sound_vol, var/sanitize = 1)
+	if (src.client)
+		if(client.prefs.muted & MUTE_IC)
+			src << "You cannot send IC messages (muted)."
+			return
+		if (src.client.handle_spam_prevention(message,MUTE_IC))
+			return
 
 	if(sanitize)
 		message = sanitize_plus(copytext(message, 1, MAX_MESSAGE_LEN))
@@ -170,7 +176,7 @@ var/list/department_radio_keys = list(
 
 	var/speech_bubble_test = say_test(message)
 	var/image/speech_bubble = image('icons/mob/talk.dmi',src,"h[speech_bubble_test]")
-	spawn(30) del(speech_bubble)
+	spawn(30) qdel(speech_bubble)
 
 	for(var/mob/M in listening)
 		M << speech_bubble

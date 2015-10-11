@@ -103,7 +103,7 @@
 		s.set_up(3, 1, src)
 		s.start()
 		new /obj/effect/new_year_tree(T)
-	del(src)
+	qdel(src)
 	return
 
 /obj/item/weapon/firbang/attack_self(mob/user as mob)

@@ -34,7 +34,7 @@
 			processing_objects.Add(src)
 		else
 			on = 0
-			if(first)	del(first)
+			if(first)	qdel(first)
 			processing_objects.Remove(src)
 		update_icon()
 		return secured

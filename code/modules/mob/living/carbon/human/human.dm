@@ -165,23 +165,22 @@
 
 /mob/living/carbon/human/Stat()
 	..()
-	statpanel("Status")
 
-	stat(null, "Intent: [a_intent]")
-	stat(null, "Move Mode: [m_intent]")
-	if(ticker && ticker.mode && ticker.mode.name == "AI malfunction")
-		if(ticker.mode:malf_mode_declared)
-			stat(null, "Time left: [max(ticker.mode:AI_win_timeleft/(ticker.mode:apcs/3), 0)]")
-	if(emergency_shuttle)
-		if(emergency_shuttle.online && emergency_shuttle.location < 2)
-			var/timeleft = emergency_shuttle.timeleft()
-			if (timeleft)
-				stat(null, "ETA-[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
+	if(statpanel("Status"))
+		stat(null, "Intent: [a_intent]")
+		stat(null, "Move Mode: [m_intent]")
+		if(ticker && ticker.mode && ticker.mode.name == "AI malfunction")
+			if(ticker.mode:malf_mode_declared)
+				stat(null, "Time left: [max(ticker.mode:AI_win_timeleft/(ticker.mode:apcs/3), 0)]")
+		if(emergency_shuttle)
+			if(emergency_shuttle.online && emergency_shuttle.location < 2)
+				var/timeleft = emergency_shuttle.timeleft()
+				if (timeleft)
+					stat(null, "ETA-[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
 
-	if (client.statpanel == "Status")
 		if (internal)
 			if (!internal.air_contents)
-				del(internal)
+				qdel(internal)
 			else
 				stat("Internal Atmosphere Info", internal.name)
 				stat("Tank Pressure", internal.air_contents.return_pressure())
@@ -971,7 +970,7 @@
 	for(var/x in all_hairs)
 		var/datum/sprite_accessory/hair/H = new x // create new hair datum based on type x
 		hairs.Add(H.name) // add hair name to hairs
-		del(H) // delete the hair after it's all done
+		qdel(H) // delete the hair after it's all done
 
 	var/new_style = input("Please select hair style", "Character Generation",h_style)  as null|anything in hairs
 
@@ -986,7 +985,7 @@
 	for(var/x in all_fhairs)
 		var/datum/sprite_accessory/facial_hair/H = new x
 		fhairs.Add(H.name)
-		del(H)
+		qdel(H)
 
 	new_style = input("Please select facial style", "Character Generation",f_style)  as null|anything in fhairs
 
@@ -1150,7 +1149,7 @@
 			if(H.brainmob.real_name == src.real_name)
 				if(H.brainmob.mind)
 					H.brainmob.mind.transfer_to(src)
-					del(H)
+					qdel(H)
 
 	for(var/datum/organ/internal/I in internal_organs)
 		I.damage = 0
@@ -1222,7 +1221,7 @@
 	.=..()
 	if(clean_feet && !shoes && istype(feet_blood_DNA, /list) && feet_blood_DNA.len)
 		feet_blood_color = null
-		del(feet_blood_DNA)
+		qdel(feet_blood_DNA)
 		update_inv_shoes(1)
 		return 1
 
@@ -1401,21 +1400,35 @@
 			return 0
 	return 1
 
+/mob/living/carbon/human/var/crawl_getup = 0
 /mob/living/carbon/human/verb/crawl()
 	set name = "Crawl"
 	set category = "IC"
 
 	if( stat || weakened || paralysis || resting || sleeping || (status_flags & FAKEDEATH) || buckled) return
 
+	if(crawl_getup)
+		return
 	var/T = get_turf(src)
 	if( (locate(/obj/structure/table) in T) || (locate(/obj/structure/stool/bed) in T) )
 		return
 	else
 		if(crawling)
+			crawl_getup = 1
+			sleep(10)
+			crawl_getup = 0
+			T = get_turf(src)
+			if( (locate(/obj/structure/table) in T) || (locate(/obj/structure/stool/bed) in T) )
+				playsound(loc, 'sound/weapons/tablehit1.ogg', 50, 1)
+				var/datum/organ/external/E = get_organ("head")
+				E.take_damage(5, 0, 0, 0, "Table")
+				src << "\red \b Ouch!"
+				return
 			pass_flags += PASSCRAWL
+			layer = 4.0
 		else
 			pass_flags -= PASSCRAWL
-			layer = 4.0
+			//layer = 4.0
 		crawling = !crawling
 
 	update_canmove()

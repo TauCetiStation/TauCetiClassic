@@ -45,6 +45,13 @@ var/list/whitelist = list()
 	if(!alien_whitelist)
 		return 0
 	if(M && species)
+		switch(species) //When something passes language name instead race name, we magically change variable.
+			if("Sinta'unathi")
+				species = "Unathi"
+			if("Siik'maas","Siik'tajr")
+				species = "Tajaran"
+			if("Skrellian")
+				species = "Skrell"
 		for (var/s in alien_whitelist)
 			if(findtext(s,"[M.ckey] - [species]"))
 				return 1

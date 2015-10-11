@@ -1,3 +1,6 @@
+var/global/list/image/ghost_darkness_images = list() //this is a list of images for things ghosts should still be able to see when they toggle darkness
+var/global/list/image/ghost_sightless_images = list() //this is a list of images for things ghosts should still be able to see even without ghost sight
+
 /mob/dead/observer
 	name = "ghost"
 	desc = "It's a g-g-g-g-ghooooost!" //jinkies!
@@ -22,13 +25,22 @@
 	universal_speak = 1
 	var/atom/movable/following = null
 
+
+	var/image/ghostimage = null //this mobs ghost image, for deleting and stuff
+	var/ghostvision = 1 //is the ghost able to see things humans can't?
+	var/seedarkness = 1
+
 /mob/dead/observer/New(mob/body)
 	sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
-	see_invisible = SEE_INVISIBLE_OBSERVER_AI_EYE
+	see_invisible = SEE_INVISIBLE_OBSERVER
 	see_in_dark = 100
 	verbs += /mob/dead/observer/proc/dead_tele
 
 	stat = DEAD
+
+	ghostimage = image(src.icon,src,src.icon_state)
+	ghost_darkness_images |= ghostimage
+	updateallghostimages()
 
 	var/turf/T
 	if(ismob(body))
@@ -68,7 +80,13 @@
 	real_name = name
 	..()
 
-
+/mob/dead/observer/Destroy()
+	if (ghostimage)
+		ghost_darkness_images -= ghostimage
+		qdel(ghostimage)
+		ghostimage = null
+		updateallghostimages()
+	..()
 
 /mob/dead/observer/Topic(href, href_list)
 	if (href_list["track"])
@@ -211,8 +229,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 /mob/dead/observer/Stat()
 	..()
-	statpanel("Status")
-	if (client.statpanel == "Status")
+	if(statpanel("Status"))
 		stat(null, "Station Time: [worldtime2text()]")
 		if(ticker)
 			if(ticker.mode)
@@ -221,6 +238,12 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 					//world << "DEBUG: malf mode ticker test"
 					if(ticker.mode:malf_mode_declared)
 						stat(null, "Time left: [max(ticker.mode:AI_win_timeleft/(ticker.mode:apcs/3), 0)]")
+				if(istype(ticker.mode, /datum/game_mode/gang))
+					var/datum/game_mode/gang/mode = ticker.mode
+					if(isnum(mode.A_timer))
+						stat(null, "[gang_name("A")] Gang Takeover: [max(mode.A_timer, 0)]")
+					if(isnum(mode.B_timer))
+						stat(null, "[gang_name("B")] Gang Takeover: [max(mode.B_timer, 0)]")
 		if(emergency_shuttle)
 			if(emergency_shuttle.online && emergency_shuttle.location < 2)
 				var/timeleft = emergency_shuttle.timeleft()
@@ -235,11 +258,15 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		src << "<span class='warning'>You have no body.</span>"
 		return
 	if(mind.current.key && copytext(mind.current.key,1,2)!="@")	//makes sure we don't accidentally kick any clients
-		usr << "<span class='warning'>Another consciousness is in your body...It is resisting you.</span>"
+		usr << "<span class='warning'>Another consciousness is in your body... it is resisting you.</span>"
 		return
-	if(mind.current.ajourn && mind.current.stat != DEAD)	//check if the corpse is astral-journeying (it's client ghosted using a cultist rune).
-		var/obj/effect/rune/R = locate() in mind.current.loc	//whilst corpse is alive, we can only reenter the body if it's on the rune
-		if(!(R && R.word1 == cultwords["hell"] && R.word2 == cultwords["travel"] && R.word3 == cultwords["self"]))	//astral journeying rune
+	if(mind.current.ajourn && mind.current.stat != DEAD) //check if the corpse is astral-journeying (it's client ghosted using a cultist rune).
+		var/found_rune
+		for(var/obj/effect/rune/R in mind.current.loc)   //whilst corpse is alive, we can only reenter the body if it's on the rune
+			if(R && R.word1 == cultwords["hell"] && R.word2 == cultwords["travel"] && R.word3 == cultwords["self"]) // Found an astral journey rune.
+				found_rune = 1
+				break
+		if(!found_rune)
 			usr << "<span class='warning'>The astral cord that ties your body and your spirit has been severed. You are likely to wander the realm beyond until your body is finally dead and thus reunited with you.</span>"
 			return
 	mind.current.ajourn=0
@@ -443,15 +470,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		src << "\blue Heat Capacity: [round(environment.heat_capacity(),0.1)]"
 
 
-/mob/dead/observer/verb/toggle_darkness()
-	set name = "Toggle Darkness"
-	set category = "Ghost"
-
-	if (see_invisible == SEE_INVISIBLE_OBSERVER_NOLIGHTING)
-		see_invisible = SEE_INVISIBLE_OBSERVER_AI_EYE
-	else
-		see_invisible = SEE_INVISIBLE_OBSERVER_NOLIGHTING
-
 /mob/dead/observer/verb/become_mouse()
 	set name = "Become mouse"
 	set category = "Ghost"
@@ -580,3 +598,43 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		W.message = message
 		W.add_hiddenprint(src)
 		W.visible_message("\red Invisible fingers crudely paint something in blood on [T]...")
+
+/mob/dead/observer/verb/toggle_ghostsee()
+	set name = "Toggle Ghost Vision"
+	set desc = "Toggles your ability to see things only ghosts can see, like other ghosts"
+	set category = "Ghost"
+	ghostvision = !(ghostvision)
+	updateghostsight()
+	usr << "You [(ghostvision?"now":"no longer")] have ghost vision."
+
+/mob/dead/observer/verb/toggle_darkness()
+	set name = "Toggle Darkness"
+	set category = "Ghost"
+	seedarkness = !(seedarkness)
+	updateghostsight()
+
+/mob/dead/observer/proc/updateghostsight()
+	if (!seedarkness)
+		see_invisible = SEE_INVISIBLE_OBSERVER_NOLIGHTING
+	else
+		see_invisible = SEE_INVISIBLE_OBSERVER
+		if (!ghostvision)
+			see_invisible = SEE_INVISIBLE_LIVING;
+	updateghostimages()
+
+/proc/updateallghostimages()
+	for (var/mob/dead/observer/O in player_list)
+		O.updateghostimages()
+
+/mob/dead/observer/proc/updateghostimages()
+	if (!client)
+		return
+	if (seedarkness || !ghostvision)
+		client.images -= ghost_darkness_images
+		client.images |= ghost_sightless_images
+	else
+		//add images for the 60inv things ghosts can normally see when darkness is enabled so they can see them now
+		client.images -= ghost_sightless_images
+		client.images |= ghost_darkness_images
+		if (ghostimage)
+			client.images -= ghostimage //remove ourself

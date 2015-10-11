@@ -95,7 +95,7 @@
 	spawn(0)//this prevents the collapse of space-time continuum
 		if (user)
 			user.drop_from_inventory(src)
-		del(src)
+		qdel(src)
 	return uses
 
 /obj/item/weapon/dnainjector/attack(mob/M as mob, mob/user as mob)
@@ -132,7 +132,7 @@
 
 				if (buf.types & DNA2_BUF_SE)
 					if(block)// Isolated injector
-						testing("Isolated block [block] injector with contents: [GetValue()]")
+						//testing("Isolated block [block] injector with contents: [GetValue()]")
 						if (GetState() && block == MONKEYBLOCK && istype(M, /mob/living/carbon/human)  )
 							message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the Isolated [name] \red(MONKEY)")
 							log_attack("[key_name(user)] injected [key_name(M)] with the Isolated [name] (MONKEY)")
@@ -140,7 +140,7 @@
 						else
 							log_attack("[key_name(user)] injected [key_name(M)] with the Isolated [name]")
 					else
-						testing("DNA injector with contents: [english_list(buf.dna.SE)]")
+						//testing("DNA injector with contents: [english_list(buf.dna.SE)]")
 						if (GetState(MONKEYBLOCK) && istype(M, /mob/living/carbon/human) )
 							message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name] \red(MONKEY)")
 							log_attack("[key_name(user)] injected [key_name(M)] with the [name] (MONKEY)")
@@ -167,7 +167,7 @@
 
 				if (buf.types & DNA2_BUF_SE)
 					if(block)// Isolated injector
-						testing("Isolated block [block] injector with contents: [GetValue()]")
+						//testing("Isolated block [block] injector with contents: [GetValue()]")
 						if (GetState() && block == MONKEYBLOCK && istype(M, /mob/living/carbon/human)  )
 							message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the Isolated [name] \red(MONKEY)")
 							log_attack("[key_name(user)] injected [key_name(M)] with the Isolated [name] (MONKEY)")
@@ -175,7 +175,7 @@
 						else
 							log_attack("[key_name(user)] injected [key_name(M)] with the Isolated [name]")
 					else
-						testing("DNA injector with contents: [english_list(buf.dna.SE)]")
+						//testing("DNA injector with contents: [english_list(buf.dna.SE)]")
 						if (GetState(MONKEYBLOCK) && istype(M, /mob/living/carbon/human))
 							message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name] \red(MONKEY)")
 							log_game("[key_name(user)] injected [key_name(M)] with the [name] (MONKEY)")

@@ -8,7 +8,7 @@
 /obj/item/weapon/plastique/afterattack(atom/target as obj|turf, mob/user as mob, flag)
 	if (!flag)
 		return
-	if (istype(target, /turf/unsimulated) || istype(target, /turf/simulated/shuttle) || istype(target, /obj/item/weapon/storage/))
+	if (istype(target, /turf/unsimulated) || istype(target, /turf/simulated/shuttle) || istype(target, /obj/item/weapon/storage/) || istype(target, /obj/machinery/nuclearbomb))
 		return
 	user << "Planting explosives..."
 	if(ismob(target))
@@ -38,9 +38,9 @@
 				else target.ex_act(1)
 				if (isobj(target))
 					if (target)
-						del(target)
+						qdel(target)
 				if (src)
-					del(src)
+					qdel(src)
 
 /obj/item/weapon/plastique/attack(mob/M as mob, mob/user as mob, def_zone)
 	return

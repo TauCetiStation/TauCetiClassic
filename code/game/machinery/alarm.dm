@@ -1120,8 +1120,13 @@ table tr:first-child th:first-child { border: none;}
 				update_icon()
 				return
 
-			if (wiresexposed && ((istype(W, /obj/item/device/multitool) || istype(W, /obj/item/weapon/wirecutters))))
-				return attack_hand(user)
+			if (istype(W, /obj/item/weapon/wirecutters))
+				user.visible_message("<span class='warning'>[user] has cut the wires inside \the [src]!</span>", "You have cut the wires inside \the [src].")
+				playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
+				new/obj/item/weapon/cable_coil(get_turf(src), 5)
+				buildstage = 1
+				update_icon()
+				return
 
 			if (istype(W, /obj/item/weapon/card/id) || istype(W, /obj/item/device/pda))// trying to unlock the interface with an ID card
 				if(stat & (NOPOWER|BROKEN))
@@ -1140,7 +1145,7 @@ table tr:first-child th:first-child { border: none;}
 			if(istype(W, /obj/item/weapon/cable_coil))
 				var/obj/item/weapon/cable_coil/coil = W
 				if(coil.amount < 5)
-					user << "You need more cable for this!"
+					user << "<span class='warning'>You need 5 pieces of cable to do wire \the [src].</span>"
 					return
 
 				user << "You wire \the [src]!"
@@ -1331,11 +1336,17 @@ FIRE ALARM
 						user.visible_message("\red [user] has reconnected [src]'s detecting unit!", "You have reconnected [src]'s detecting unit.")
 					else
 						user.visible_message("\red [user] has disconnected [src]'s detecting unit!", "You have disconnected [src]'s detecting unit.")
+				else if (istype(W, /obj/item/weapon/wirecutters))
+					user.visible_message("\red [user] has cut the wires inside \the [src]!", "You have cut the wires inside \the [src].")
+					new/obj/item/weapon/cable_coil(get_turf(src), 5)
+					playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
+					buildstage = 1
+					update_icon()
 			if(1)
 				if(istype(W, /obj/item/weapon/cable_coil))
 					var/obj/item/weapon/cable_coil/coil = W
 					if(coil.amount < 5)
-						user << "You need more cable for this!"
+						user << "<span class='warning'>You need 5 pieces of cable to do wire \the [src].</span>"
 						return
 
 					coil.amount -= 5

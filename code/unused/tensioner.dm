@@ -568,12 +568,12 @@ var/global/datum/tension/tension_master
 				for (var/obj/effect/landmark/A in /area/syndicate_station/start)//Because that's the only place it can BE -Sieve
 					if (A.name == "Syndicate-Gear-Closet")
 						new /obj/structure/closet/syndicate/personal(A.loc)
-						del(A)
+						qdel(A)
 						continue
 
 					if (A.name == "Syndicate-Bomb")
 						new /obj/effect/spawner/newbomb/timer/syndicate(A.loc)
-						del(A)
+						qdel(A)
 						continue
 
 
@@ -583,7 +583,7 @@ var/global/datum/tension/tension_master
 							if(synd_mind.current.client)
 								for(var/image/I in synd_mind.current.client.images)
 									if(I.icon_state == "synd")
-										del(I)
+										qdel(I)
 
 					for(var/datum/mind/synd_mind in ticker.mode.syndicates)
 						if(synd_mind.current)
@@ -662,7 +662,7 @@ var/global/datum/tension/tension_master
 						candidates.Remove(theghost)
 
 					if(!theghost)
-						del(new_syndicate_commando)
+						qdel(new_syndicate_commando)
 						break
 
 					new_syndicate_commando.key = theghost.key
@@ -687,7 +687,7 @@ var/global/datum/tension/tension_master
 			for (var/obj/effect/landmark/L in /area/shuttle/syndicate_elite)
 				if (L.name == "Syndicate-Commando-Bomb")
 					new /obj/effect/spawner/newbomb/timer/syndicate(L.loc)
-				//	del(L)
+				//	qdel(L)
 
 		return 1 // Has to return one before it knows if there's a wizard to prevent the parent from automatically selecting another game mode.
 
@@ -736,7 +736,7 @@ var/global/datum/tension/tension_master
 						candidates.Remove(theghost)
 
 					if(!theghost)
-						del(new_borg_deathsquad)
+						qdel(new_borg_deathsquad)
 						break
 
 					new_borg_deathsquad.key = theghost.key
@@ -866,7 +866,7 @@ var/global/datum/tension/tension_master
 			for(var/atom/movable/AM as mob|obj in T)
 				AM.Move(D)
 			if(istype(T, /turf/simulated))
-				del(T)
+				qdel(T)
 
 		start_location.move_contents_to(end_location)
 

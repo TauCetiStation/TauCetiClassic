@@ -18,6 +18,9 @@
 
 
 /mob/living/bullet_act(var/obj/item/projectile/P, var/def_zone)
+	flash_weak_pain()
+
+	//Being hit while using a cloaking device
 	var/obj/item/weapon/cloaking_device/C = locate((/obj/item/weapon/cloaking_device) in src)
 	if(C && C.active)
 		C.attack_self(src)//Should shut it off
@@ -25,8 +28,7 @@
 		src << "\blue Your [C.name] was disrupted!"
 		Stun(2)
 
-	flash_weak_pain()
-
+	//Being hit while using a deadman switch
 	if(istype(equipped(),/obj/item/device/assembly/signaler))
 		var/obj/item/device/assembly/signaler/signaler = equipped()
 		if(signaler.deadman && prob(80))
@@ -139,7 +141,7 @@
 		update_fire()
 
 /mob/living/proc/adjust_fire_stacks(add_fire_stacks) //Adjusting the amount of fire_stacks we have on person
-    fire_stacks = Clamp(fire_stacks + add_fire_stacks, min = -20, max = 20)
+    fire_stacks = Clamp(fire_stacks + add_fire_stacks, -20, 20)
 
 /mob/living/proc/handle_fire()
 	if(fire_stacks < 0)
@@ -151,6 +153,10 @@
 	if(G.oxygen < 1)
 		ExtinguishMob() //If there's no oxygen in the tile we're on, put out the fire
 		return
+	for(var/obj/item/I in contents)
+		if(I.wet)
+			ExtinguishMob()
+			break
 	if(fire_stacks == 0)
 		ExtinguishMob() //If there's no oxygen in the tile we're on, put out the fire
 		return

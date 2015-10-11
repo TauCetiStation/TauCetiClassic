@@ -43,6 +43,22 @@
 	max_ammo = 4
 	multiload = 0
 
+/obj/item/ammo_box/magazine/internal/heavyrifle
+	name = "heavysniper internal magazine"
+	desc = "Oh god, this shouldn't be here"
+	ammo_type = /obj/item/ammo_casing/a145
+	caliber = "14.5mm"
+	max_ammo = 1
+	multiload = 0
+
+/obj/item/ammo_box/magazine/internal/m79
+	name = "m79 grenade launcher internal magazine"
+	desc = "Oh god, this shouldn't be here"
+	ammo_type = /obj/item/ammo_casing/r4046
+	caliber = "40x46"
+	max_ammo = 1
+	multiload = 0
+
 /obj/item/ammo_box/magazine/internal/shotcom
 	name = "combat shotgun internal magazine"
 	desc = "Oh god, this shouldn't be here"
@@ -76,6 +92,25 @@
 	caliber = "9mm"
 	max_ammo = 8
 	multiple_sprites = 2
+
+/obj/item/ammo_box/magazine/m9mm_2
+	name = "magazine (9mm)"
+	icon_state = "9mm_mag"
+	origin_tech = "combat=2"
+	ammo_type = /obj/item/ammo_casing/c9mm
+	caliber = "9mm"
+	max_ammo = 8
+	multiple_sprites = 2
+
+/obj/item/ammo_box/magazine/m9mmr_2
+	name = "magazine (9mm rubber)"
+	icon_state = "9mm_mag"
+	origin_tech = "combat=2"
+	ammo_type = /obj/item/ammo_casing/c9mmr
+	caliber = "9mm"
+	max_ammo = 8
+	multiple_sprites = 2
+
 
 /obj/item/ammo_box/magazine/msmg9mm
 	name = "SMG magazine (9mm)"
@@ -144,6 +179,18 @@
 	..()
 	icon_state = "[initial(icon_state)]-[ammo_count() ? "7" : "0"]"
 
+/obj/item/ammo_box/magazine/uzim9mm
+	name = "Mac-10 magazine (9mm)"
+	icon = 'tauceti/icons/obj/ammo.dmi'
+	icon_state = "uzi9mm-32"
+	ammo_type = /obj/item/ammo_casing/c9mm
+	caliber = "9mm"
+	max_ammo = 32
+
+/obj/item/ammo_box/magazine/uzim9mm/update_icon()
+	..()
+	icon_state = "uzi9mm-[round(ammo_count(),4)]"
+
 /obj/item/ammo_box/magazine/uzim45
 	name = "Uzi magazine (.45)"
 	icon = 'tauceti/icons/obj/ammo.dmi'
@@ -155,6 +202,13 @@
 /obj/item/ammo_box/magazine/uzim45/update_icon()
 	..()
 	icon_state = "[initial(icon_state)]-[round(ammo_count(),2)]"
+
+/obj/item/ammo_box/magazine/tommygunm45
+	name = "drum magazine (.45)"
+	icon_state = "drum45"
+	ammo_type = /obj/item/ammo_casing/c45
+	caliber = ".45"
+	max_ammo = 50
 
 /obj/item/ammo_box/magazine/m50
 	name = "magazine (.50ae)"
@@ -192,3 +246,25 @@
 	ammo_type = "/obj/item/ammo_casing/chameleon"
 	max_ammo = 7
 	multiple_sprites = 1
+
+//=================NEW MAGS=================\\
+/obj/item/ammo_box/magazine/l10mag
+	name = "L10-c battery"
+	desc = "A special battery with protection from EM pulse."
+	icon = 'icons/obj/ammo.dmi'
+	icon_state = "l10_clip"
+	origin_tech = "combat=2"
+	ammo_type = /obj/item/ammo_casing/l10
+	caliber = "energy"
+	max_ammo = 25
+
+/obj/item/ammo_box/magazine/l10mag/examine()
+	set src in view()
+	..()
+	usr << "\blue You see a charge meter, it reads: [round(ammo_count() * 100 / max_ammo)]%."
+
+/obj/item/ammo_box/magazine/l10mag/attack_self(mob/user as mob)
+	return
+
+/obj/item/ammo_box/magazine/l10mag/update_icon()
+	icon_state = "[initial(icon_state)][ammo_count() ? "" : "-0"]"

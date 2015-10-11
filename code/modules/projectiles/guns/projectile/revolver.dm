@@ -3,6 +3,7 @@
 	name = "revolver"
 	icon_state = "revolver"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder
+	fire_sound = 'sound/weapons/guns/revolver_shot.ogg'
 
 /obj/item/weapon/gun/projectile/revolver/chamber_round()
 	if (chambered || !magazine)
@@ -64,7 +65,7 @@
 		M << "<span class='danger'>[src] blows up in your face!</span>"
 		M.take_organ_damage(0,20)
 		M.drop_item()
-		del(src)
+		qdel(src)
 		return 0
 	return 1
 
@@ -134,6 +135,7 @@
 	name = "mateba"
 	desc = "When you absolutely, positively need a 10mm hole in the other guy. Uses .357 ammo."	//>10mm hole >.357
 	icon_state = "mateba"
+	item_state = "mateba"
 	origin_tech = "combat=2;materials=2"
 
 // A gun to play Russian Roulette!

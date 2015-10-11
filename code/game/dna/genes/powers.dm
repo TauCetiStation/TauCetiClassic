@@ -40,7 +40,7 @@
 		block=REGENERATEBLOCK
 
 	can_activate(var/mob/M,var/flags)
-		if( (HULK in M.mutations) || (mSmallsize in M.mutations))
+		if((mSmallsize in M.mutations))
 			return 0
 		return ..(M,flags)
 
@@ -177,7 +177,7 @@
 
 	can_activate(var/mob/M,var/flags)
 		// Can't be big, small and regenerate.
-		if( (HULK in M.mutations) || (mRegen in M.mutations)) //#Z2
+		if( (mRegen in M.mutations)) //#Z2
 			return 0
 		return ..(M,flags)
 
@@ -210,81 +210,54 @@
 	name="Hulk"
 	activation_messages=list("Your muscles hurt.")
 	mutation=HULK
-	activation_prob=5
+	activation_prob=15
 
 	New()
 		block=HULKBLOCK
 
-	can_activate(var/mob/M,var/flags)
+	/*can_activate(var/mob/M,var/flags)
 		// Can't be big, small and regenerate.
 		if( (mSmallsize in M.mutations) || (mRegen in M.mutations)) //#Z2
 			return 0
-		return ..(M,flags)
+		return ..(M,flags)*/
 
 	activate(var/mob/M, var/connected, var/flags)
+		if(M.mind)
+			if(M.mind.hulkizing) return
+			M.mind.hulkizing = 1
+		else
+			return
 		..(M,connected,flags)
+
 		if(M.client)
-			message_admins("[M.name] ([M.ckey]) is now <span class='warning'>Hulk</span>")
-		M.verbs += /mob/living/carbon/human/proc/hulk_jump
-		M.verbs += /mob/living/carbon/human/proc/hulk_dash
-		M.verbs += /mob/living/carbon/human/proc/hulk_smash
+			message_admins("[M.name] ([M.ckey]) is a <span class='warning'>Monster</span>")
+		if(istype(M.loc, /obj/machinery/dna_scannernew))
+			var/obj/machinery/dna_scannernew/DSN = M.loc
+			DSN.occupant = null
+			DSN.icon_state = "scanner_0"
 
-		var/matrix/Mx = matrix()
-		Mx.Scale(1.5) //Makes our hulk to be bigger than any normal human.
-		Mx.Translate(0,8)
-		M.transform = Mx
-
-		M.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
-
-		var/list/preserve = list()
-		var/mob/living/carbon/human/H = M
-		for(var/obj/item/weapon/storage/backpack/W in H)
-			preserve += W
-		for(var/obj/item/weapon/implant/W in H)
-			preserve += W
-		for(var/obj/item/weapon/shard/shrapnel/W in H)
-			preserve += W
-		for(var/obj/item/W in (H.contents-preserve))
-			if (W==H.w_uniform) // will be teared
-				del(W)
-				continue
-			H.drop_from_inventory(W)
-			if(istype(W.loc,/obj/machinery/))
-				W.loc = get_turf(H) // If we transformed in some container like dna_scanner and we can't get our items back anymore, here is solution.
-
-	deactivate(var/mob/M, var/connected, var/flags)
-		..(M,connected,flags)
-		M.verbs -= /mob/living/carbon/human/proc/hulk_jump
-		M.verbs -= /mob/living/carbon/human/proc/hulk_dash
-		M.verbs -= /mob/living/carbon/human/proc/hulk_smash
-		M.opacity = 0 // just in case
-
-		var/matrix/Mx = matrix()
-		Mx.Scale(1) ////Reset size of our hulk
-		Mx.Translate(0,0)
-		M.transform = Mx
-
-	OnDrawUnderlays(var/mob/M,var/g,var/fat)
-		if(fat)
-			return "hulk_[fat]_s"
+		var/mob/living/simple_animal/hulk/Monster
+		if(istype(M, /mob/living/carbon/human/unathi))
+			Monster = new /mob/living/simple_animal/hulk/unathi(get_turf(M))
 		else
-			return "hulk_[g]_s"
-		return 0
+			if(prob(19))
+				Monster = new /mob/living/simple_animal/hulk/unathi(get_turf(M))
+			else
+				Monster = new /mob/living/simple_animal/hulk/human(get_turf(M))
 
-	OnMobLife(var/mob/living/carbon/human/M)
-		if(!istype(M)) return
-		if(!M.lying) // Our Hulk now blocks LoS as mech. He is really big, isnt he?
-			M.opacity = 1
-		else
-			M.opacity = 0
-		if(M.health <= 25) // Hulk gene is still with us, so we will get WEAKEN status while health <= 25, until we remove that gene manually
-			if(HULK in M.mutations)
-				M.mutations.Remove(HULK)
-				M.update_mutations()		//update our mutation overlays
-			if(prob(25)) M << "\red You suddenly feel very weak." // Less spam to user
-			if(!M.lying) //Facken spam fix for collapse
-				M.emote("collapse")
-			M.Weaken(10)
+		var/datum/effect/effect/system/smoke_spread/bad/smoke = new /datum/effect/effect/system/smoke_spread/bad()
+		smoke.set_up(10, 0, M.loc)
+		smoke.start()
+		playsound(M.loc, 'sound/effects/bamf.ogg', 50, 2)
+
+		Monster.original_body = M
+		M.loc = Monster
+		M.mind.transfer_to(Monster)
+
+		Monster.attack_log = M.attack_log
+		Monster.attack_log += "\[[time_stamp()]\]<font color='blue'> ======MONSTER LIFE======</font>"
+		Monster.say(pick("RAAAAAAAARGH!", "HNNNNNNNNNGGGGGGH!", "GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", "AAAAAAARRRGH!" ))
+		return
 
 /datum/dna/gene/basic/xray
 	name="X-Ray Vision"

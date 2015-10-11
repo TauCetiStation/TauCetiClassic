@@ -25,9 +25,9 @@
 		var/location = get_turf(user)
 		for(var/obj/item/weapon/ore/glass/sandToConvert in location)
 			new /obj/item/stack/sheet/mineral/sandstone(location)
-			del(sandToConvert)
+			qdel(sandToConvert)
 		new /obj/item/stack/sheet/mineral/sandstone(location)
-		del(src)
+		qdel(src)
 
 /obj/item/weapon/ore/phoron
 	name = "Phoron ore"
@@ -62,6 +62,7 @@
 /obj/item/weapon/ore/New()
 	pixel_x = rand(0,16)-8
 	pixel_y = rand(0,8)-8
+	if(src.z == 5) score["oremined"]++ //When ore spawns, increment score.  Only include ore spawned on mining asteroid.
 
 /obj/item/weapon/ore/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W,/obj/item/device/core_sampler))
@@ -132,7 +133,7 @@
 
 		if(CC.amount <= 0)
 			user << "\blue This cable coil appears to be empty."
-			del(CC)
+			qdel(CC)
 			return
 
 		overlays += image('icons/obj/items.dmi',"coin_string_overlay")

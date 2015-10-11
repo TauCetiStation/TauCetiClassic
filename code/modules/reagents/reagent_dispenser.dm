@@ -46,17 +46,17 @@
 	ex_act(severity)
 		switch(severity)
 			if(1.0)
-				del(src)
+				qdel(src)
 				return
 			if(2.0)
 				if (prob(50))
 					new /obj/effect/effect/water(src.loc)
-					del(src)
+					qdel(src)
 					return
 			if(3.0)
 				if (prob(5))
 					new /obj/effect/effect/water(src.loc)
-					del(src)
+					qdel(src)
 					return
 			else
 		return
@@ -64,7 +64,7 @@
 	blob_act()
 		if(prob(50))
 			new /obj/effect/effect/water(src.loc)
-			del(src)
+			qdel(src)
 
 
 
@@ -79,9 +79,49 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "watertank"
 	amount_per_transfer_from_this = 10
+	var/modded = 0
 	New()
 		..()
 		reagents.add_reagent("water",1000)
+
+/obj/structure/reagent_dispensers/watertank/examine()
+	set src in view()
+	..()
+	if (!(usr in view(2)) && usr!=src.loc) return
+	if (modded)
+		usr << "\red Water faucet is wrenched open, leaking the water!"
+
+/obj/structure/reagent_dispensers/watertank/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if (istype(W,/obj/item/weapon/wrench))
+		user.visible_message("[user] wrenches [src]'s faucet [modded ? "closed" : "open"].", \
+			"You wrench [src]'s faucet [modded ? "closed" : "open"]")
+		modded = modded ? 0 : 1
+		if (modded)
+			processing_objects.Add(src)
+			leak_water(amount_per_transfer_from_this)
+
+	add_fingerprint(usr)
+	return ..()
+
+/obj/structure/reagent_dispensers/watertank/process()
+	if(!src) return
+	if(modded)
+		leak_water(2)
+	else
+		processing_objects.Remove(src)
+
+/obj/structure/reagent_dispensers/watertank/Move()
+	if (..() && modded)
+		leak_water(1)
+
+/obj/structure/reagent_dispensers/watertank/proc/leak_water(amount)
+	if (reagents.total_volume == 0)
+		return
+
+	amount = min(amount, reagents.total_volume)
+	reagents.remove_reagent("water",amount)
+
+	create_water(src)
 
 /obj/structure/reagent_dispensers/fueltank
 	name = "fueltank"
@@ -147,6 +187,7 @@
 			test.Shift(EAST,6)
 			overlays += test
 
+	add_fingerprint(usr)
 	return ..()
 
 
@@ -169,21 +210,21 @@
 	else
 		explosion(src.loc,-1,1,2)
 	if(src)
-		del(src)
+		qdel(src)
 
 /obj/structure/reagent_dispensers/fueltank/fire_act(datum/gas_mixture/air, temperature, volume)
 	if(temperature > T0C+500)
 		explode()
 	return ..()
-	
+
 /obj/structure/reagent_dispensers/fueltank/Move()
 	if (..() && modded)
 		leak_fuel(amount_per_transfer_from_this/10.0)
-	
+
 /obj/structure/reagent_dispensers/fueltank/proc/leak_fuel(amount)
 	if (reagents.total_volume == 0)
 		return
-	
+
 	amount = min(amount, reagents.total_volume)
 	reagents.remove_reagent("fuel",amount)
 	new /obj/effect/decal/cleanable/liquid_fuel(src.loc, amount)
@@ -226,7 +267,7 @@
 
 /obj/structure/reagent_dispensers/beerkeg/blob_act()
 	explosion(src.loc,0,3,5,7,10)
-	del(src)
+	qdel(src)
 
 /obj/structure/reagent_dispensers/virusfood
 	name = "Virus Food Dispenser"
@@ -239,3 +280,15 @@
 	New()
 		..()
 		reagents.add_reagent("virusfood", 1000)
+
+/obj/structure/reagent_dispensers/acid
+	name = "Sulphuric Acid Dispenser"
+	desc = "A dispenser of acid for industrial processes."
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "acidtank"
+	amount_per_transfer_from_this = 10
+	anchored = 1
+
+	New()
+		..()
+		reagents.add_reagent("sacid", 1000)
