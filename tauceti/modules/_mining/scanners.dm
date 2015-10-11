@@ -42,8 +42,8 @@
 	icon = 'tauceti/modules/_mining/geoscanner.dmi'
 	icon_state = "mininghud"
 	item_state = "mininghud"
-	vision_flags = SEE_TURFS
-	invisa_view = 2
+//	vision_flags = SEE_TURFS
+//	invisa_view = 2
 	var/error
 
 /obj/item/clothing/glasses/hud/mining/New()

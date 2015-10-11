@@ -17,9 +17,9 @@
 #define MAX_DEEP_COUNT 300
 #define ITERATE_BEFORE_FAIL 200
 
-#define RESOURCE_HIGH_MAX 4
+#define RESOURCE_HIGH_MAX 3
 #define RESOURCE_HIGH_MIN 2
-#define RESOURCE_MID_MAX 3
+#define RESOURCE_MID_MAX 2
 #define RESOURCE_MID_MIN 1
 #define RESOURCE_LOW_MAX 1
 #define RESOURCE_LOW_MIN 0
@@ -138,9 +138,9 @@ Deep minerals:
 	// ORIGIN IS THE BOTTOM LEFT CORNER OF THE SQUARE CONTAINING ALL ASTEROID
 	// TILES YOU WISH TO APPLY THE DISTRIBUTION MAP TO.
 
-	var/origin_x = 13  //We start here...
+	var/origin_x = 17  //We start here...
 	var/origin_y = 32  //...and here...
-	var/limit_x = 217  //...and iterate until here...
+	var/limit_x = 218  //...and iterate until here...
 	var/limit_y = 223  //...and here...
 	var/asteroid_z = 5 //...on this Z-level.
 
@@ -171,7 +171,7 @@ Deep minerals:
 						switch(map[MAP_CELL])
 							if(0 to 100)
 								target_turf.resources["iron"] =       rand(RESOURCE_HIGH_MIN,RESOURCE_HIGH_MAX)
-								target_turf.resources["gold"] =       rand(RESOURCE_LOW_MIN,RESOURCE_LOW_MAX)
+								target_turf.resources["gold"] =       0
 								target_turf.resources["silver"] =     rand(RESOURCE_LOW_MIN,RESOURCE_LOW_MAX)
 								target_turf.resources["uranium"] =    rand(RESOURCE_LOW_MIN,RESOURCE_LOW_MAX)
 								target_turf.resources["diamond"] =    0
@@ -180,11 +180,11 @@ Deep minerals:
 								target_turf.resources["hydrogen"] =   0
 							if(100 to 124)
 								target_turf.resources["iron"] =       0
-								target_turf.resources["gold"] =       rand(RESOURCE_MID_MIN,RESOURCE_MID_MAX)
+								target_turf.resources["gold"] =       rand(RESOURCE_LOW_MIN,RESOURCE_LOW_MAX)
 								target_turf.resources["silver"] =     rand(RESOURCE_MID_MIN,RESOURCE_MID_MAX)
 								target_turf.resources["uranium"] =    rand(RESOURCE_MID_MIN,RESOURCE_MID_MAX)
 								target_turf.resources["diamond"] =    0
-								target_turf.resources["phoron"] =     rand(RESOURCE_MID_MIN,RESOURCE_MID_MAX)
+								target_turf.resources["phoron"] =     rand(RESOURCE_LOW_MIN,RESOURCE_LOW_MAX)
 								target_turf.resources["osmium"] =     rand(RESOURCE_MID_MIN,RESOURCE_MID_MAX)
 								target_turf.resources["hydrogen"] =   0
 							if(125 to 255)
@@ -193,7 +193,7 @@ Deep minerals:
 								target_turf.resources["silver"] =     0
 								target_turf.resources["uranium"] =    rand(RESOURCE_LOW_MIN,RESOURCE_LOW_MAX)
 								target_turf.resources["diamond"] =    rand(RESOURCE_LOW_MIN,RESOURCE_LOW_MAX)
-								target_turf.resources["phoron"] =     rand(RESOURCE_HIGH_MIN,RESOURCE_HIGH_MAX)
+								target_turf.resources["phoron"] =     rand(RESOURCE_LOW_MIN,RESOURCE_LOW_MAX)
 								target_turf.resources["osmium"] =     rand(RESOURCE_HIGH_MIN,RESOURCE_HIGH_MAX)
 								target_turf.resources["hydrogen"] =   rand(RESOURCE_MID_MIN,RESOURCE_MID_MAX)
 
