@@ -98,6 +98,7 @@
 	return
 
 /obj/structure/ore_box/examine(mob/user)
+	..()
 	user << "That's an [src]."
 	user << desc
 

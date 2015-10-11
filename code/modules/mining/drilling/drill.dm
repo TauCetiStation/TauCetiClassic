@@ -265,7 +265,7 @@
 	update_icon()
 
 /obj/machinery/mining/drill/proc/get_harvest_capacity()
-	return 3*(cutter ? cutter.rating : 0)
+	return (cutter ? cutter.rating : 0)
 
 /obj/machinery/mining/drill/proc/get_storage_capacity()
 	return 200 * (storage ? storage.rating : 0)
