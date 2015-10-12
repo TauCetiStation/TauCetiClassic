@@ -165,6 +165,8 @@ var/list/admin_verbs_debug = list(
 	/client/proc/reload_admins,
 	/client/proc/reload_mentors,
 	/client/proc/restart_controller,
+	/client/proc/remake_distribution_map,
+	/client/proc/show_distribution_map,
 	/client/proc/enable_debug_verbs,
 	/*/client/proc/callproc,*/
 	/client/proc/toggledebuglogs,

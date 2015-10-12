@@ -34,6 +34,8 @@ datum/controller/game_controller
 	var/mob/list/expensive_mobs = list()
 	var/rebuild_active_areas = 0
 
+	var/datum/ore_distribution/asteroid_ore_map // For debugging and VV.
+
 
 datum/controller/game_controller/New()
 	//There can be only one master_controller. Out with the old and in with the new.
@@ -57,7 +59,7 @@ datum/controller/game_controller/New()
 datum/controller/game_controller/proc/setup()
 	world.tick_lag = config.Ticklag
 
-	//spawn(20) Gateway lighting broken after new object lighting update 
+	//spawn(20) Gateway lighting broken after new object lighting update
 	//	createRandomZlevel()
 
 	if(!air_master)
@@ -78,6 +80,9 @@ datum/controller/game_controller/proc/setup()
 	for(var/i=0, i<max_secret_rooms, i++)
 		make_mining_asteroid_secret()
 
+//Create the mining ore distribution map.
+	asteroid_ore_map = new /datum/ore_distribution()
+	asteroid_ore_map.populate_distribution_map()
 	spawn(0)
 		if(ticker)
 			ticker.pregame()
