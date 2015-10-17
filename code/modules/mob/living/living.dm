@@ -281,6 +281,11 @@
 	SetStunned(0)
 	SetWeakened(0)
 
+	//restore all HP
+	if(!(health == maxHealth))
+		health = initial(health)
+		icon_state = initial(icon_state)
+
 	// shut down ongoing problems
 	radiation = 0
 	nutrition = 400

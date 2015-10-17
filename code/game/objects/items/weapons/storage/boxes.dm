@@ -237,7 +237,18 @@
 		new /obj/item/weapon/implanter(src)
 		new /obj/item/weapon/implantpad(src)
 
+/obj/item/weapon/storage/box/autoinjector/utility
+	name = "stimpack value kit"
+	desc = "A box with several stimpack autoinjectors for the economical miner."
+	icon_state = "syringe"
 
+	New()
+		..()
+		new /obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack(src)
+		new /obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack(src)
+		new /obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack(src)
+		new /obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack(src)
+		new /obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack(src)
 
 /obj/item/weapon/storage/box/rxglasses
 	name = "box of prescription glasses"

@@ -380,6 +380,7 @@ This is facehugger Attach procs
 	throw_range = 5
 	var/stat = CONSCIOUS //UNCONSCIOUS is the idle state in this case
 	var/sterile = 0
+	var/real = 1 //0 for the toy, 1 for real
 	var/strength = 5
 	var/current_hugger
 
@@ -417,6 +418,8 @@ This is facehugger Attach procs
 
 /obj/item/clothing/mask/facehugger/examine()
 	..()
+	if(!real)//So that giant red text about probisci doesn't show up.
+		return
 	switch(stat)
 		if(DEAD,UNCONSCIOUS)
 			usr << "\red \b [src] is not moving."

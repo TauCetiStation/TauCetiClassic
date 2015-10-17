@@ -268,10 +268,10 @@
 	return (cutter ? cutter.rating : 0)
 
 /obj/machinery/mining/drill/proc/get_storage_capacity()
-	return 200 * (storage ? storage.rating : 0)
+	return 100 * (storage ? storage.rating : 0)
 
 /obj/machinery/mining/drill/proc/get_charge_use()
-	return 50 - (10 * (cellmount ? cellmount.rating : 0))
+	return 100 - (20 * (cellmount ? cellmount.rating : 0))
 
 /obj/machinery/mining/drill/proc/get_resource_field()
 
