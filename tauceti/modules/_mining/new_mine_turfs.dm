@@ -432,7 +432,7 @@
 /turf/simulated/mineral/random/low_chance
 	icon_state = "rock_lowchance"
 	mineralChance = 5
-	mineralSpawnChanceList = list("Uranium" = 1, "Platinum" = 1, "Iron" = 40, "Coal" = 20, "Diamond" = 1, "Gold" = 1, "Silver" = 1, "Phoron" = 1)
+	mineralSpawnChanceList = list("Uranium" = 1, "Platinum" = 1, "Iron" = 50, "Coal" = 20, "Diamond" = 1, "Gold" = 1, "Silver" = 1, "Phoron" = 1)
 
 /turf/simulated/mineral/random/low_chance/New()
 	icon_state = "rock"
