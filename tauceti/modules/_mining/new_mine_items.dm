@@ -246,10 +246,10 @@
 /obj/item/projectile/kinetic
 	name = "kinetic force"
 	icon_state = null
-	damage = 15
+	damage = 10
 	damage_type = BRUTE
 	flag = "bomb"
-	var/range = 2
+	var/range = 3
 	var/power = 4
 
 obj/item/projectile/kinetic/New()
@@ -260,7 +260,7 @@ obj/item/projectile/kinetic/New()
 	var/pressure = environment.return_pressure()
 	if(pressure < 50)
 		name = "full strength kinetic force"
-		damage = 30
+		damage *= 4
 	..()
 
 /obj/item/projectile/kinetic/Range()

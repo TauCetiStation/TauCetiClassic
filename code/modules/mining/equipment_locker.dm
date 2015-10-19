@@ -16,50 +16,67 @@
 	var/stk_types = list()
 	var/stk_amt   = list()
 	var/stack_list[0] //Key: Type.  Value: Instance of type.
-	var/stack_amt = 50; //amount to stack before releasing
 	var/obj/item/weapon/card/id/inserted_id
+	var/ore_pickup_rate = 15
 	var/points = 0
 	var/list/ore_values = list(
 								"sand" = 	1,
 								"iron" = 	1,
 								"coal" = 	1,
 								"hydrogen"=	10,
-								"phoron" = 	15,
 								"gold" = 	20,
 								"silver" = 	10,
 								"uranium" = 20,
-								"osmium" = 	40,
-								"diamond" = 40)
+								"osmium" = 	40)
 
 /obj/machinery/mineral/ore_redemption/proc/process_sheet(obj/item/weapon/ore/O)
 	var/obj/item/stack/sheet/mineral/processed_sheet = SmeltMineral(O)
 	if(processed_sheet)
-		if(!(processed_sheet.type in stack_list)) //It's the first of this sheet added
-			var/obj/item/stack/sheet/mineral/s = new processed_sheet.type(src,0)
+		if(!(processed_sheet in stack_list)) //It's the first of this sheet added
+			var/obj/item/stack/sheet/mineral/s = new processed_sheet(src,0)
 			s.amount = 0
-			stack_list[processed_sheet.type] = s
-		var/obj/item/stack/sheet/mineral/storage = stack_list[processed_sheet.type]
-		storage.amount += processed_sheet.amount //Stack the sheets
-		O.loc = null //Let the old sheet garbage collect
-		while(storage.amount > stack_amt) //Get rid of excessive stackage
-			var/obj/item/stack/sheet/mineral/out = new processed_sheet.type()
-			out.amount = stack_amt
-			unload_mineral(out)
-			storage.amount -= stack_amt
+			stack_list[processed_sheet] = s
+		var/obj/item/stack/sheet/mineral/storage = stack_list[processed_sheet]
+		storage.amount += 1 //Stack the sheets
+		O.loc = null //Let the old sheet...
+		qdel(O) //... garbage collect
 
 /obj/machinery/mineral/ore_redemption/process()
-	var/turf/T = get_step(src, input_dir)
+	var/turf/T = get_turf(get_step(src, input_dir))
+	var/i
 	if(T)
-		var/obj/item/weapon/ore/O
-		for(O in T)
-			process_sheet(O)
-		for(var/obj/structure/ore_box/B in T)
-			for(O in B.contents)
-				process_sheet(O)
+		if(locate(/obj/item/weapon/ore) in T)
+			for (i = 0; i < ore_pickup_rate; i++)
+				var/obj/item/weapon/ore/O = locate() in T
+				if(O)
+					process_sheet(O)
+				else
+					break
+		else
+			var/obj/structure/ore_box/B = locate() in T
+			if(B)
+				for (i = 0; i < ore_pickup_rate; i++)
+					var/obj/item/weapon/ore/O = locate() in B.contents
+					if(O)
+						process_sheet(O)
+					else
+						break
+
+/obj/machinery/mineral/ore_redemption/attackby(var/obj/item/weapon/W, var/mob/user, params)
+	if(istype(W,/obj/item/weapon/card/id))
+		var/obj/item/weapon/card/id/I = usr.get_active_hand()
+		if(istype(I) && !istype(inserted_id))
+			if(!user.drop_item())
+				return
+			I.loc = src
+			inserted_id = I
+			interact(user)
+	else
+		..()
 
 /obj/machinery/mineral/ore_redemption/proc/SmeltMineral(var/obj/item/weapon/ore/O)
 	if(O.refined_type)
-		var/obj/item/stack/sheet/mineral/M = new O.refined_type(src)
+		var/obj/item/stack/sheet/mineral/M = O.refined_type
 		points += O.points
 		return M
 	qdel(O)//No refined type? Purge it.
@@ -74,7 +91,7 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 	var/obj/item/stack/sheet/mineral/s
 	var/dat
 
-	dat += text("This machine only accepts ore. Slag is not accepted.<br><br>")
+	dat += text("This machine only accepts ore. Diamonds, Phoron and Slag are not accepted.<br><br>")
 	dat += text("Current unclaimed points: [points]<br>")
 
 	if(istype(inserted_id))
@@ -108,6 +125,8 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 /obj/machinery/mineral/ore_redemption/Topic(href, href_list)
 	if(..())
 		return
+	usr.set_machine(src)
+	src.add_fingerprint(usr)
 	if(href_list["choice"])
 		if(istype(inserted_id))
 			if(href_list["choice"] == "eject")
@@ -129,7 +148,7 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 				inserted_id = I
 			else usr << "<span class='warning'>No valid ID.</span>"
 	if(href_list["release"])
-		if(check_access(inserted_id) || istype(usr, /mob/living/silicon))
+		if(check_access(inserted_id) || allowed(usr)) //Check the ID inside, otherwise check the user.
 			if(!(text2path(href_list["release"]) in stack_list)) return
 			var/obj/item/stack/sheet/mineral/inp = stack_list[text2path(href_list["release"])]
 			var/obj/item/stack/sheet/mineral/out = new inp.type()
@@ -142,7 +161,7 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 				stack_list -= text2path(href_list["release"])
 		else
 			usr << "<span class='warning'>Required access not found.</span>"
-	updateUsrDialog()
+	src.updateUsrDialog()
 	return
 
 /obj/machinery/mineral/ore_redemption/ex_act(severity, target)
@@ -237,6 +256,8 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 /obj/machinery/mineral/equipment_locker/Topic(href, href_list)
 	if(..())
 		return
+	usr.set_machine(src)
+	src.add_fingerprint(usr)
 	if(href_list["choice"])
 		if(istype(inserted_id))
 			if(href_list["choice"] == "eject")
@@ -260,12 +281,20 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 			else
 				inserted_id.mining_points -= prize.cost
 				new prize.equipment_path(src.loc)
-	updateUsrDialog()
+	src.updateUsrDialog()
 	return
 
 /obj/machinery/mineral/equipment_locker/attackby(obj/item/I as obj, mob/user as mob)
 	if(istype(I, /obj/item/weapon/mining_voucher))
 		RedeemVoucher(I, user)
+		return
+	if(istype(I,/obj/item/weapon/card/id))
+		var/obj/item/weapon/card/id/C = usr.get_active_hand()
+		if(istype(C) && !istype(inserted_id))
+			usr.drop_item()
+			C.loc = src
+			inserted_id = C
+			interact(user)
 		return
 	..()
 

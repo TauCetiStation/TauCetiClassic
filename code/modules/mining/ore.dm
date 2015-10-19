@@ -45,8 +45,6 @@
 	icon_state = "Phoron ore"
 	origin_tech = "materials=2"
 	oretag = "phoron"
-	points = 15
-	refined_type = /obj/item/stack/sheet/mineral/phoron
 
 /obj/item/weapon/ore/silver
 	name = "native silver ore"
@@ -69,8 +67,6 @@
 	icon_state = "Diamond ore"
 	origin_tech = "materials=6"
 	oretag = "diamond"
-	points = 40
-	refined_type = /obj/item/stack/sheet/mineral/diamond
 
 /obj/item/weapon/ore/osmium
 	name = "raw platinum"
