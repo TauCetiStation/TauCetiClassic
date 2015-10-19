@@ -10,8 +10,8 @@
 	fire_sound = 'tauceti/sounds/weapon/Gunshot_silenced.ogg'
 
 /obj/item/weapon/gun/projectile/sigi
-	name = "\improper SIGI pistol"
-	desc = "A W&J Company designed SIGI p250, found pretty much everywhere humans are. Uses 9mm rounds."
+	name = "\improper pistol"
+	desc = "A W&J Company designed SIGI p250, found pretty much everywhere humans are. Looks like SIG 250, but it's not. Uses 9mm rounds."
 	icon_state = "sigi250"
 	item_state = "sigi250"
 	origin_tech = "combat=2;materials=2"
@@ -28,8 +28,8 @@
 	return
 
 /obj/item/weapon/gun/projectile/sigi/spec
-	name = "\improper Special SIGI pistol"
-	desc = "A W&J Company designed Special SIGI p250, this one has a military coloring. Uses 9mm rounds."
+	name = "\improper pistol"
+	desc = "A W&J Company designed Special SIGI p250, this one has a military coloring. Looks like SIG 250, but it's not. Uses 9mm rounds."
 	icon_state = "sigi250special"
 	item_state = "sigi250special"
 
