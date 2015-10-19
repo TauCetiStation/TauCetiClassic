@@ -91,7 +91,7 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 	var/obj/item/stack/sheet/mineral/s
 	var/dat
 
-	dat += text("This machine only accepts ore. Slag is not accepted.<br><br>")
+	dat += text("This machine only accepts ore. Diamonds, Phoron and Slag are not accepted.<br><br>")
 	dat += text("Current unclaimed points: [points]<br>")
 
 	if(istype(inserted_id))
