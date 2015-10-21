@@ -245,7 +245,7 @@
 
 	if(user.a_intent == "help")
 
-		if(istype(src.loc,/mob/living))
+		if(istype(src.loc,/mob/living) && !istype(W, /obj/item/weapon/patcher))
 			user << "How do you propose to modify a hardsuit while it is being worn?"
 			return
 

@@ -201,23 +201,24 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 	anchored = 1.0
 	var/obj/item/weapon/card/id/inserted_id
 	var/list/prize_list = list(
-		new /datum/data/mining_equipment("Stimpack",			/obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack,50),
-		new /datum/data/mining_equipment("Chili",               /obj/item/weapon/reagent_containers/food/snacks/hotchili,          100),
-		new /datum/data/mining_equipment("Cigar",               /obj/item/clothing/mask/cigarette/cigar/havana,                    100),
-		new /datum/data/mining_equipment("Whiskey",             /obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey,    150),
-		new /datum/data/mining_equipment("Soap",                /obj/item/weapon/soap/nanotrasen, 						           150),
-		new /datum/data/mining_equipment("Stimpack Bundle",		/obj/item/weapon/storage/box/autoinjector/utility, 				   200),
-		new /datum/data/mining_equipment("Alien toy",           /obj/item/clothing/mask/facehugger/toy, 		                   250),
-//		new /datum/data/mining_equipment("Laser pointer",       /obj/item/device/laser_pointer, 				                   250),
-		new /datum/data/mining_equipment("Point card",    		/obj/item/weapon/card/mining_point_card,               			   500),
-		new /datum/data/mining_equipment("Sonic jackhammer",    /obj/item/weapon/pickaxe/jackhammer,                               500),
-		new /datum/data/mining_equipment("Mining drone",        /mob/living/simple_animal/hostile/mining_drone/,                   500),
-		new /datum/data/mining_equipment("Resonator",           /obj/item/weapon/resonator,                                        750),
-		new /datum/data/mining_equipment("Jaunter",             /obj/item/device/wormhole_jaunter,                                 850),
-		new /datum/data/mining_equipment("Lazarus injector",    /obj/item/weapon/lazarus_injector,                                1000),
-		new /datum/data/mining_equipment("Kinetic accelerator", /obj/item/weapon/gun/energy/kinetic_accelerator,                  1000),
-		new /datum/data/mining_equipment("Jetpack",             /obj/item/weapon/tank/jetpack/carbondioxide,                      2000),
-		new /datum/data/mining_equipment("Space cash",    		/obj/item/weapon/spacecash/c1000,                    			  5000)
+		new /datum/data/mining_equipment("Stimpack",			/obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack,100),
+		new /datum/data/mining_equipment("Chili",               /obj/item/weapon/reagent_containers/food/snacks/hotchili,           100),
+		new /datum/data/mining_equipment("Cigar",               /obj/item/clothing/mask/cigarette/cigar/havana,                     100),
+		new /datum/data/mining_equipment("Whiskey",             /obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey,     150),
+		new /datum/data/mining_equipment("Soap",                /obj/item/weapon/soap/nanotrasen, 						            150),
+		new /datum/data/mining_equipment("Alien toy",           /obj/item/clothing/mask/facehugger/toy, 		                    250),
+		new /datum/data/mining_equipment("Stimpack Bundle",		/obj/item/weapon/storage/box/autoinjector/utility, 				    400),
+//		new /datum/data/mining_equipment("Laser pointer",       /obj/item/device/laser_pointer, 				                    250),
+		new /datum/data/mining_equipment("Point card",    		/obj/item/weapon/card/mining_point_card,               			    500),
+		new /datum/data/mining_equipment("Sonic jackhammer",    /obj/item/weapon/pickaxe/jackhammer,                                500),
+		new /datum/data/mining_equipment("Mining drone",        /mob/living/simple_animal/hostile/mining_drone/,                    700),
+		new /datum/data/mining_equipment("Suit patcher",        /obj/item/weapon/patcher,										    800),
+		new /datum/data/mining_equipment("Resonator",           /obj/item/weapon/resonator,                                        1100),
+		new /datum/data/mining_equipment("Jaunter",             /obj/item/device/wormhole_jaunter,                                 1300),
+		new /datum/data/mining_equipment("Lazarus injector",    /obj/item/weapon/lazarus_injector,                                 1500),
+		new /datum/data/mining_equipment("Kinetic accelerator", /obj/item/weapon/gun/energy/kinetic_accelerator,                   1500),
+		new /datum/data/mining_equipment("Jetpack",             /obj/item/weapon/tank/jetpack/carbondioxide,                       2000),
+		new /datum/data/mining_equipment("Space cash",    		/obj/item/weapon/spacecash/c1000,                    			   5000)
 		)
 
 /datum/data/mining_equipment/
@@ -505,12 +506,16 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 	throwforce = 0
 	real = 0
 	sterile = 1
+
 /obj/item/clothing/mask/facehugger/toy/examine()//So that giant red text about probisci doesn't show up.
 	if(desc)
 		usr << desc
+
 /obj/item/clothing/mask/facehugger/toy/Die()
 	return
 
+/obj/item/clothing/mask/facehugger/toy/New()//to prevent deleting it if aliums are disabled
+	return
 
 /**********************Mining drone**********************/
 
@@ -694,6 +699,42 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 	if(!loaded)
 		usr << "<span class='info'>[src] is empty.</span>"
 
+/**********************Patcher**********************/
+
+/obj/item/weapon/patcher
+	name = "suit patcher"
+	desc = "Suit patcher will recover your space rig from breaches. It is for one use only."
+	icon = 'tauceti/icons/obj/patcher.dmi'
+	icon_state = "patcher"
+	item_state = "patcher"
+	tc_custom = 'tauceti/icons/obj/patcher.dmi'
+	throwforce = 0
+	w_class = 2.0
+	throw_speed = 3
+	throw_range = 5
+	var/loaded = 1
+
+/obj/item/weapon/patcher/afterattack(var/obj/O as obj, mob/user)
+	if(!loaded)
+		return
+	if(istype(O, /obj/item/clothing/suit/space))
+		if(O:breaches.len)
+			O:breaches.Cut()
+			loaded = 0
+			user.visible_message("<span class='notice'>[user] fix [O] with [src].</span>")
+			playsound(src,'sound/effects/refill.ogg',50,1)
+			icon_state = "patcher_empty"
+			return
+		else
+			user << "<span class='info'>[O] absolutely intact.</span>"
+			return
+	else
+		..()
+
+/obj/item/weapon/patcher/examine()
+	..()
+	if(!loaded)
+		usr << "<span class='info'>[src] is already used.</span>"
 
 /**********************Xeno Warning Sign**********************/
 
