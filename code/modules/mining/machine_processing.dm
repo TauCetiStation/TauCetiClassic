@@ -90,7 +90,7 @@
 	icon_state = "furnace"
 	density = 1
 	anchored = 1
-	luminosity = 3
+	light_range = 3
 	var/obj/machinery/mineral/input = null
 	var/obj/machinery/mineral/output = null
 	var/obj/machinery/mineral/console = null
@@ -121,8 +121,20 @@
 		return
 	return
 /obj/machinery/mineral/processing_unit/process()
-	if (!active || !src.output || !src.input) return
+	if (!src.output || !src.input) return
+
 	var/list/tick_alloys = list()
+
+	//Grab some more ore to process next tick.
+	for(var/i = 0,i<sheets_per_tick,i++)
+		var/obj/item/weapon/ore/O = locate() in input.loc
+		if(!O) break
+		if(!isnull(ores_stored[O.oretag])) ores_stored[O.oretag]++
+		qdel(O)
+
+	if(!active)
+		return
+
 	//Process our stored ores and spit out sheets.
 	var/sheets = 0
 	for(var/metal in ores_stored)
@@ -177,10 +189,4 @@
 				new /obj/item/weapon/ore/slag(output.loc)
 		else
 			continue
-	//Grab some more ore to process next tick.
-	for(var/i = 0,i<sheets_per_tick,i++)
-		var/obj/item/weapon/ore/O = locate() in input.loc
-		if(!O) break
-		if(!isnull(ores_stored[O.oretag])) ores_stored[O.oretag]++
-		O.loc = null
 	console.updateUsrDialog()
