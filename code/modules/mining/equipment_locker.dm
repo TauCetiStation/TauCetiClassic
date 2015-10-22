@@ -718,8 +718,9 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 	if(!loaded)
 		return
 	if(istype(O, /obj/item/clothing/suit/space))
-		if(O:breaches.len)
-			O:breaches.Cut()
+		var/obj/item/clothing/suit/space/C = O
+		if(C.breaches.len)
+			C.breaches.Cut()
 			loaded = 0
 			user.visible_message("<span class='notice'>[user] fix [O] with [src].</span>")
 			playsound(src,'sound/effects/refill.ogg',50,1)
