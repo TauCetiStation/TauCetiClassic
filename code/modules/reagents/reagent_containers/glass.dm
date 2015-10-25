@@ -13,6 +13,8 @@
 	volume = 50
 	flags = FPRINT | TABLEPASS | OPENCONTAINER
 
+	action_button_name = "Switch Lid"
+
 	var/label_text = ""
 
 	var/list/can_be_placed_into = list(

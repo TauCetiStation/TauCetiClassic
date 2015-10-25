@@ -6,7 +6,7 @@
 	tc_custom = 'tauceti/items/clothing/hats/helmet_justice.dmi'
 	item_state = "helmet"
 	var/on = 0
-	icon_action_button = "action_hardhat"
+	action_button_name = "Toggle Helmet"
 
 /obj/item/clothing/head/helmet/helmet_of_justice/attack_self(mob/user)
 	on = !on

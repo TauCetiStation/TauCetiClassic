@@ -34,6 +34,7 @@
 	var/now_pushing = null
 
 	var/mob/living/cameraFollow = null
+	var/list/datum/action/actions = list()
 
 	var/tod = null // Time of death
 	var/update_slimes = 1

@@ -14,6 +14,7 @@
 	force = 5.0
 	origin_tech = "combat=1"
 	attack_verb = list("struck", "hit", "bashed")
+	action_button_name = "Switch Gun"
 	var/obj/item/ammo_casing/chambered = null
 	var/fire_sound = 'sound/weapons/Gunshot.ogg'
 	var/silenced = 0

@@ -6,8 +6,7 @@
 	var/magpulse = 0
 	var/magboot_state = "magboots"
 	var/slowdown_off = 2
-	icon_action_button = "action_blank"
-	action_button_name = "Toggle the magboots"
+	action_button_name = "Toggle Magboots"
 //	flags = NOSLIP //disabled by default
 
 	attack_self(mob/user)
