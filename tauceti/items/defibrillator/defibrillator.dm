@@ -8,6 +8,7 @@
 	item_state = "defibunit"
 	icon_state = "defibunit"
 	var/state_on = "defibunit_on"
+	action_button_name = "Switch Defibrillator"
 	flags = FPRINT | TABLEPASS
 	w_class = 1.0
 	damtype = "brute"

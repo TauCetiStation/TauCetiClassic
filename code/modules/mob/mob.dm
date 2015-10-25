@@ -1091,3 +1091,17 @@ mob/proc/yank_out_object()
 				if(G.can_reenter_corpse || even_if_they_cant_reenter)
 					return G
 				break
+
+/mob/proc/AddSpell(var/obj/effect/proc_holder/spell/spell)
+	spell_list += spell
+	mind.spell_list += spell	//Connect spell to the mind for transfering action buttons between mobs
+	if(!spell.action)
+		spell.action = new/datum/action/spell_action
+		spell.action.target = spell
+		spell.action.name = spell.name
+		spell.action.button_icon = spell.action_icon
+		spell.action.button_icon_state = spell.action_icon_state
+		spell.action.background_icon_state = spell.action_background_icon_state
+	if(isliving(src))
+		spell.action.Grant(src)
+	return

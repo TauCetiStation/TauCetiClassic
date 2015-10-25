@@ -11,6 +11,8 @@
 	include_user = 1
 	centcomm_cancast = 0 //Prevent people from getting to centcomm
 
+	action_icon_state = "jaunt"
+
 	var phaseshift = 0
 	var/jaunt_duration = 50 //in deciseconds
 

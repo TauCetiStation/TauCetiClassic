@@ -1,3 +1,7 @@
+/mob/living/Life()
+	..()
+	if(stat != DEAD)
+		handle_actions()
 
 /mob/living/verb/succumb()
 	set hidden = 1

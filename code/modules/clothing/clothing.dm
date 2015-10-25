@@ -363,7 +363,6 @@ BLIND     // can't see anything
 			var/mob/living/carbon/human/H = loc
 			H.update_inv_w_uniform()
 		action_button_name = "Use inventory."
-		icon_action_button = "under_use"
 		return
 
 	..()
@@ -493,7 +492,6 @@ BLIND     // can't see anything
 		var/mob/living/carbon/human/H = loc
 		H.update_inv_w_uniform()
 		action_button_name = null
-		icon_action_button = null
 
 /obj/item/clothing/under/verb/removetie()
 	set name = "Remove Accessory"

@@ -212,7 +212,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/kinetic)
 	cell_type = "/obj/item/weapon/cell/crap"
 	var/overheat = 0
-	var/overheat_time = 16
+	var/overheat_time = 20
 	var/recent_reload = 1
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/shoot_live_shot()
@@ -241,7 +241,7 @@
 	projectile_type = /obj/item/projectile/kinetic
 	select_name = "kinetic"
 	e_cost = 500
-	fire_sound = 'tauceti/sounds/weapon/Gunshot4.ogg'
+	fire_sound = 'sound/weapons/Kenetic_accel.ogg'
 
 /obj/item/projectile/kinetic
 	name = "kinetic force"

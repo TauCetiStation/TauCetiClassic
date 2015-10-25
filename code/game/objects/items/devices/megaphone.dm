@@ -6,6 +6,8 @@
 	w_class = 2.0
 	flags = FPRINT | TABLEPASS | CONDUCT
 
+	action_button_name = "Toggle Megaphone"
+
 	var/spamcheck = 0
 	var/emagged = 0
 	var/insults = 0

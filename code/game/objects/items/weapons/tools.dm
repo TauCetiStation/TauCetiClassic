@@ -134,6 +134,7 @@
 	icon_state = "welder"
 	flags = FPRINT | TABLEPASS| CONDUCT
 	slot_flags = SLOT_BELT
+	action_button_name = "Switch Welding tool"
 
 	//Amount of OUCH when it's thrown
 	force = 3.0

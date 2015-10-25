@@ -20,6 +20,8 @@
 	throw_speed = 4
 	throw_range = 20
 
+	action_button_name = "Toggle Recorder"
+
 /obj/item/device/taperecorder/hear_talk(mob/living/M as mob, msg, var/verb="says")
 	if(recording)
 		//var/ending = copytext(msg, length(msg))

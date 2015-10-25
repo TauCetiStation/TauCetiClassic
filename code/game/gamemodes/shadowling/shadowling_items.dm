@@ -84,6 +84,7 @@
 	item_state = null
 	origin_tech = null
 	vision_flags = SEE_MOBS
+	alpha = 0
 	darkness_view = 3
 	var/vision = 1
 	//invis_view = 2
@@ -92,11 +93,10 @@
 	unacidable = 1
 	flags = ABSTRACT
 	canremove = 0
-	icon_action_button = "action_ling_vision"
 	action_button_name = "Toggle Vision"
-	action_button_icon = 'tauceti/icons/obj/clothing/hud_custom.dmi'
-	action_button_state = "ling_vision_off"
-	
+	icon = 'tauceti/icons/obj/clothing/hud_custom.dmi'
+	icon_state = "ling_vision_off"
+
 
 /obj/item/clothing/glasses/night/shadowling/attack_self()
 	toggle()
@@ -109,11 +109,11 @@
 	if(!usr.stat)
 		if(src.vision)
 			src.vision = !src.vision
-			src.action_button_state = "ling_vision_on"
+			src.icon_state = "ling_vision_on"
 			//usr << ""
 		else
 			src.vision = !src.vision
-			src.action_button_state = "ling_vision_off"
+			src.icon_state = "ling_vision_off"
 			//usr << ""
 
 		usr.update_inv_glasses()

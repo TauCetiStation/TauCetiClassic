@@ -96,7 +96,6 @@
 					target_turf.UpdateMineral()
 					target_turf.MineralSpread()
 
-
 /turf/simulated/mineral/proc/UpdateMineral()
 	if(!mineral)
 		name = "\improper Rock"
@@ -109,9 +108,6 @@
 			ore_amount = rand(4,6)
 		else
 			ore_amount = rand(3,5)
-		if(prob(3))	//integration of cave system
-			if(src:caves)
-				new/turf/simulated/floor/plating/airless/asteroid/cave(src)
 	if(ore_amount >= 8)
 		name = "\improper [mineral.display_name] rich deposit"
 		overlays.Cut()
@@ -120,6 +116,13 @@
 		name = "\improper Rock"
 		icon_state = "rock"
 		return
+
+/turf/simulated/mineral/proc/CaveSpread()	//Integration of cave system
+	if(mineral)
+		for(var/trydir in cardinal)
+			var/turf/simulated/mineral/random/target_turf = get_step(src, trydir)
+			if(istype(target_turf, /turf/simulated/mineral/random/caves))
+				if(prob(2))	new/turf/simulated/floor/plating/airless/asteroid/cave(src)
 
 //Not even going to touch this pile of spaghetti
 /turf/simulated/mineral/attackby(obj/item/weapon/W as obj, mob/user as mob)
@@ -398,8 +401,6 @@
 	var/mineralSpawnChanceList = list("Uranium" = 10, "Platinum" = 10, "Iron" = 20, "Coal" = 15, "Diamond" = 5, "Gold" = 15, "Silver" = 15, "Phoron" = 25,)
 	var/mineralChance = 10  //means 10% chance of this plot changing to a mineral deposit
 
-	var/caves = 0
-
 /turf/simulated/mineral/random/New()
 	if (prob(mineralChance) && !mineral)
 		var/mineral_name = pickweight(mineralSpawnChanceList) //temp mineral name
@@ -410,12 +411,12 @@
 		if (mineral_name && mineral_name in name_to_mineral)
 			mineral = name_to_mineral[mineral_name]
 			UpdateMineral()
+			CaveSpread()
 
 	. = ..()
 
 /turf/simulated/mineral/random/caves
 	mineralChance = 25
-	caves = 1
 
 /turf/simulated/mineral/random/caves/New()
 	..()
