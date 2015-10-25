@@ -44,6 +44,15 @@
 	if (speaking)
 		verb = speaking.speech_verb
 		message = copytext(message,3)
+	else
+		switch(species.name)
+			if("Tajaran")
+				message = replacetext(message, "р", pick(list("ррр","рррр","ррррр","рррррр")))
+				message = replacetext(message, "Р", pick(list("Ррр","Рррр","Ррррр","Рррррр")))
+			if("Unathi")
+				message = replacetext(message, "с", pick(list("ссс","сссс","ссссс","сссссс")))
+				//И для заглавной... Фигова копипаста. Кто знает решение без второй обработки для заглавной буквы, обязательно переделайте.
+				message = replacetext(message, "С", pick(list("Ссс","Сссс","Ссссс","Сссссс")))
 
 	message = capitalize(trim(message))
 
