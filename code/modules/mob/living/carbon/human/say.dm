@@ -47,12 +47,12 @@
 	else
 		switch(species.name)
 			if("Tajaran")
-				message = replacetext(message, "р", pick(list("ррр","рррр","ррррр")))
-				message = replacetext(message, "Р", pick(list("Ррр","Рррр","Ррррр")))
+				message = replacetext(message, "р", pick(list("ррр","рррр","ррррр","рррррр")))
+				message = replacetext(message, "Р", pick(list("Ррр","Рррр","Ррррр","Рррррр")))
 			if("Unathi")
-				message = replacetext(message, "с", pick(list("ссс","сссс","ссссс")))
+				message = replacetext(message, "с", pick(list("ссс","сссс","ссссс","сссссс")))
 				//И для заглавной... Фигова копипаста. Кто знает решение без второй обработки для заглавной буквы, обязательно переделайте.
-				message = replacetext(message, "С", pick(list("Ссс","Сссс","Ссссс")))
+				message = replacetext(message, "С", pick(list("Ссс","Сссс","Ссссс","Сссссс")))
 
 	message = capitalize(trim(message))
 
