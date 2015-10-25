@@ -370,6 +370,8 @@ the implant may become unstable and either pre-maturely inject the subject or si
 
 		var/mob/M = imp_in
 
+		if(!M)	return
+
 		if(M.stat == 2 || isnull(M))
 			processing_objects.Remove(src)
 			return
