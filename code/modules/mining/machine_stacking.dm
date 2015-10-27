@@ -98,6 +98,7 @@
 				if(!isnull(stack_storage[O.name]))
 					stack_storage[O.name]++
 					O.loc = null
+					qdel(O)
 				else
 					O.loc = output.loc
 			else
