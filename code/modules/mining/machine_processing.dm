@@ -54,6 +54,8 @@
 					dat += "blue'>compressing"
 				if(3)
 					dat += "gray'>alloying"
+				if(4)
+					dat += "green'>drop"
 		else
 			dat += "red'>not processing"
 		dat += "</font>.</td><td width = 30><a href='?src=\ref[src];toggle_smelting=[ore]'>\[change\]</a></td></tr>"
@@ -69,13 +71,14 @@
 	usr.set_machine(src)
 	src.add_fingerprint(usr)
 	if(href_list["toggle_smelting"])
-		var/choice = input("What setting do you wish to use for processing [href_list["toggle_smelting"]]?") as null|anything in list("Smelting","Compressing","Alloying","Nothing")
+		var/choice = input("What setting do you wish to use for processing [href_list["toggle_smelting"]]?") as null|anything in list("Smelting","Compressing","Alloying","Nothing", "Drop")
 		if(!choice) return
 		switch(choice)
 			if("Nothing") choice = 0
 			if("Smelting") choice = 1
 			if("Compressing") choice = 2
 			if("Alloying") choice = 3
+			if("Drop") choice = 4
 		machine.ores_processing[href_list["toggle_smelting"]] = choice
 	if(href_list["toggle_power"])
 		machine.active = !machine.active
@@ -128,7 +131,9 @@
 	//Grab some more ore to process next tick.
 	for(var/i = 0,i<sheets_per_tick,i++)
 		var/obj/item/weapon/ore/O = locate() in input.loc
-		if(!O) break
+		var/obj/item/stack/sheet/mineral/M = locate() in input.loc
+		if(M)	M.loc = output.loc
+		if(!O)	break
 		if(!isnull(ores_stored[O.oretag])) ores_stored[O.oretag]++
 		qdel(O)
 
@@ -142,7 +147,14 @@
 		if(ores_stored[metal] > 0 && ores_processing[metal] != 0)
 			var/datum/ore/O = ore_data[metal]
 			if(!O) continue
-			if(ores_processing[metal] == 3 && O.alloy) //Alloying.
+			if(ores_processing[metal] == 4) //Drop.
+				var/can_make = Clamp(ores_stored[metal],0,sheets_per_tick-sheets)
+				if(ores_stored[metal] < 1)
+					continue
+				for(var/i=0,i<can_make,i++)
+					ores_stored[metal]--
+					new O.start(output.loc)
+			else if(ores_processing[metal] == 3 && O.alloy) //Alloying.
 				for(var/datum/alloy/A in alloy_data)
 					if(A.metaltag in tick_alloys)
 						continue
