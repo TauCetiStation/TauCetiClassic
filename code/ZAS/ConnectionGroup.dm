@@ -89,7 +89,7 @@ Class Procs:
 	for(var/atom/movable/M in movable)
 
 		//If they're already being tossed, don't do it again.
-		if(M.last_airflow > world.time - vsc.airflow_delay) continue
+		if(M.last_airflow > world.time - (ismob(src) ? vsc.airflow_mob_delay : vsc.airflow_delay)) continue
 		if(M.airflow_speed) continue
 
 		//Check for knocking people over

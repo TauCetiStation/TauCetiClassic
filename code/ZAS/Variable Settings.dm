@@ -29,7 +29,7 @@ var/global/vs_control/vsc = new
 	var/airflow_medium_pressure_NAME = "Airflow - Heavy Movement Threshold %"
 	var/airflow_medium_pressure_DESC = "Percent of 1 Atm. at which items with the largest weight classes will move."
 
-	var/airflow_heavy_pressure = 50
+	var/airflow_heavy_pressure = 40
 	var/airflow_heavy_pressure_NAME = "Airflow - Mob Movement Threshold %"
 	var/airflow_heavy_pressure_DESC = "Percent of 1 Atm. at which mobs will move."
 
@@ -37,7 +37,7 @@ var/global/vs_control/vsc = new
 	var/airflow_dense_pressure_NAME = "Airflow - Dense Movement Threshold %"
 	var/airflow_dense_pressure_DESC = "Percent of 1 Atm. at which items with canisters and closets will move."
 
-	var/airflow_stun_pressure = 55
+	var/airflow_stun_pressure = 35
 	var/airflow_stun_pressure_NAME = "Airflow - Mob Stunning Threshold %"
 	var/airflow_stun_pressure_DESC = "Percent of 1 Atm. at which mobs will be stunned by airflow."
 
@@ -49,17 +49,21 @@ var/global/vs_control/vsc = new
 	var/airflow_stun_NAME = "Airflow Impact - Stunning"
 	var/airflow_stun_DESC = "How much a mob is stunned when hit by an object."
 
-	var/airflow_damage = 5
+	var/airflow_damage = 9
 	var/airflow_damage_NAME = "Airflow Impact - Damage"
 	var/airflow_damage_DESC = "Damage from airflow impacts."
 
-	var/airflow_speed_decay = 1
+	var/airflow_speed_decay = 0.5
 	var/airflow_speed_decay_NAME = "Airflow Speed Decay"
 	var/airflow_speed_decay_DESC = "How rapidly the speed gained from airflow decays."
 
 	var/airflow_delay = 20
 	var/airflow_delay_NAME = "Airflow Retrigger Delay"
 	var/airflow_delay_DESC = "Time in deciseconds before things can be moved by airflow again."
+
+	var/airflow_mob_delay = 10
+	var/airflow_mob_delay_NAME = "Airflow Retrigger Delay (Mob)"
+	var/airflow_mob_delay_DESC = "Time in deciseconds before mob can be moved by airflow again."
 
 	var/airflow_mob_slowdown = 3
 	var/airflow_mob_slowdown_NAME = "Airflow Slowdown"
