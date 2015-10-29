@@ -23,6 +23,8 @@
 	proj_trail_lifespan = 5
 	proj_trail_icon_state = "magicmd"
 
+	action_icon_state = "magicm"
+
 /obj/effect/proc_holder/spell/targeted/inflict_handler/magic_missile
 	amt_weakened = 5
 	amt_dam_fire = 10
@@ -40,6 +42,8 @@
 	range = -1
 	include_user = 1
 
+	action_icon_state = "mutate"
+
 	mutations = list(LASER, HULK)
 	duration = 300
 
@@ -53,6 +57,8 @@
 	invocation = "EI NATH"
 	invocation_type = "shout"
 	range = 1
+
+	action_icon_state = "gib"
 
 	destroys = "gib_brain"
 
@@ -71,6 +77,8 @@
 	range = -1
 	include_user = 1
 
+	action_icon_state = "smoke"
+
 	smoke_spread = 2
 	smoke_amt = 10
 
@@ -83,6 +91,8 @@
 	invocation_type = "shout"
 	range = -1
 	include_user = 1
+
+	action_icon_state = "emp"
 
 	emp_heavy = 6
 	emp_light = 10
@@ -98,6 +108,8 @@
 	invocation_type = "none"
 	range = -1
 	include_user = 1
+
+	action_icon_state = "blink"
 
 	smoke_spread = 1
 	smoke_amt = 10
@@ -119,6 +131,8 @@
 	range = -1
 	include_user = 1
 
+	action_icon_state = "spell_teleport"
+
 	smoke_spread = 1
 	smoke_amt = 5
 
@@ -132,6 +146,8 @@
 	invocation = "TARCOL MINTI ZHERI"
 	invocation_type = "whisper"
 	range = 0
+
+	action_icon_state = "shield"
 
 	summon_type = list("/obj/effect/forcefield")
 	summon_lifespan = 300
@@ -162,6 +178,8 @@
 	invocation_type = "none"
 	range = 0
 
+	action_icon_state = "artificer"
+
 	summon_type = list(/obj/structure/constructshell)
 
 
@@ -190,6 +208,8 @@
 	invocation_type = "whisper"
 	message = "\blue Your eyes cry out in pain!"
 
+	action_icon_state = "blind"
+
 	starting_spells = list("/obj/effect/proc_holder/spell/targeted/inflict_handler/blind","/obj/effect/proc_holder/spell/targeted/genetic/blind")
 
 /obj/effect/proc_holder/spell/targeted/inflict_handler/blind
@@ -210,6 +230,8 @@
 	invocation = "ONI SOMA"
 	invocation_type = "shout"
 	range = 20
+
+	action_icon_state = "fireball"
 
 	proj_icon_state = "fireball"
 	proj_name = "a fireball"

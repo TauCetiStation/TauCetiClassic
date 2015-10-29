@@ -29,9 +29,6 @@
 	else
 		user.show_message("\red No minerals found in [M]", 1)
 
-	if(M.toughness)
-		user.show_message("\blue [M] toughness: [M.toughness]", 1)
-
 	if(M.finds && M.finds.len || M.artifact_find)
 		user.show_message("\red Unidentified signature in [M]. Report to nearby xenoarchaeologist/anomalist.", 1)
 
@@ -45,8 +42,8 @@
 	icon = 'tauceti/modules/_mining/geoscanner.dmi'
 	icon_state = "mininghud"
 	item_state = "mininghud"
-	vision_flags = SEE_TURFS
-	invisa_view = 2
+//	vision_flags = SEE_TURFS
+//	invisa_view = 2
 	var/error
 
 /obj/item/clothing/glasses/hud/mining/New()
@@ -58,7 +55,6 @@
 	if(!M.client)	return
 	var/client/C = M.client
 	var/icon/hudMineral = 'tauceti/modules/_mining/geoscanner.dmi'
-	var/icon/hudTough = 'tauceti/modules/_mining/geoscanner.dmi'
 	for(var/turf/simulated/mineral/rock in view(get_turf(M)))
 		if(!C) return
 
@@ -66,11 +62,3 @@
 			C.images += image(hudMineral,rock,"hudanomaly")
 		else if (rock.mineral)
 			C.images += image(hudMineral,rock,"hud[rock.mineral.ore_type]")
-
-		if(rock.toughness)
-			if(rock.toughness == 1)
-				C.images += image(hudTough,rock,"hud1")
-			else if (rock.toughness == 6)
-				C.images += image(hudTough,rock,"hud6")
-			else
-				C.images += image(hudTough,rock,"hud[rock.toughness+error]")

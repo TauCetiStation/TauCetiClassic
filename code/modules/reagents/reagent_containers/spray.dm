@@ -17,6 +17,8 @@
 	volume = 250
 	var/safety = 0
 
+	action_button_name = "Switch Spray"
+
 
 /obj/item/weapon/reagent_containers/spray/New()
 	..()

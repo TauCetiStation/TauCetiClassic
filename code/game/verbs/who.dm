@@ -9,6 +9,7 @@
 
 	if(holder && (R_ADMIN & holder.rights || R_MOD & holder.rights))
 		for(var/client/C in clients)
+			if(C.ckey in stealth_keys) continue
 			var/entry = "\t[C.key]"
 			if(C.holder && C.holder.fakekey)
 				entry += " <i>(as [C.holder.fakekey])</i>"
@@ -45,6 +46,7 @@
 			Lines += entry
 	else
 		for(var/client/C in clients)
+			if(C.ckey in stealth_keys) continue
 			if(C.holder && C.holder.fakekey)
 				Lines += C.holder.fakekey
 			else
@@ -66,6 +68,7 @@
 	var/num_admins_online = 0
 	if(holder)
 		for(var/client/C in admins)
+			if(C.ckey in stealth_keys) continue
 			if(R_ADMIN & C.holder.rights || (!R_MOD & C.holder.rights && !R_MENTOR & C.holder.rights))	//Used to determine who shows up in admin rows
 
 				if(C.holder.fakekey && (!R_ADMIN & holder.rights && !R_MOD & holder.rights))		//Mentors can't see stealthmins
@@ -105,6 +108,7 @@
 
 	else
 		for(var/client/C in admins)
+			if(C.ckey in stealth_keys) continue
 			if(R_ADMIN & C.holder.rights || (!R_MOD & C.holder.rights && !R_MENTOR & C.holder.rights))
 				if(!C.holder.fakekey)
 					msg += "\t[C] is a [C.holder.rank]\n"

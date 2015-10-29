@@ -34,8 +34,15 @@ var/list/admin_datums = list()
 	if(owner)
 		admins -= owner
 		owner.remove_admin_verbs()
+		owner.deadmin_holder = owner.holder
 		owner.holder = null
-		owner = null
+
+/datum/admins/proc/reassociate()
+	if(owner)
+		admins += owner
+		owner.holder = src
+		owner.deadmin_holder = null
+		owner.add_admin_verbs()
 
 /*
 checks if usr is an admin with at least ONE of the flags in rights_required. (Note, they don't need all the flags)
@@ -79,11 +86,8 @@ you will have to do something like if(client.holder.rights & R_ADMIN) yourself.
 		usr << "<font color='red'>Error: Cannot proceed. They have more or equal rights to us.</font>"
 	return 0
 
-
-
 /client/proc/deadmin()
-	admin_datums -= ckey
 	if(holder)
 		holder.disassociate()
-		qdel(holder)
+		//qdel(holder)
 	return 1

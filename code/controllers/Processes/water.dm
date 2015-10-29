@@ -9,9 +9,10 @@
 		i++
 		var/obj/effect/decal/cleanable/water/W = pick(tmp_processing_water)
 		tmp_processing_water -= W
-		W.check_flamable()
-		W.spread_and_eat()
-		W.update_icon()
+		if(W)
+			W.check_flamable()
+			W.spread_and_eat()
+			W.update_icon()
 		scheck()
 	processing_water |= tmp_processing_water
 
@@ -19,7 +20,8 @@
 	while(tmp_processing_drying.len)
 		var/obj/item/I = pick(tmp_processing_drying)
 		tmp_processing_drying -= I
-		I.dry_process()
+		if(I)
+			I.dry_process()
 		scheck()
 	processing_drying |= tmp_processing_drying
 

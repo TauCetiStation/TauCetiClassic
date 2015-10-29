@@ -604,6 +604,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!holder)
 		src << "Only administrators may use this command."
 		return
+	if(!check_rights(R_REJUVINATE)) return
 	if(!mob)
 		return
 	if(!istype(M))

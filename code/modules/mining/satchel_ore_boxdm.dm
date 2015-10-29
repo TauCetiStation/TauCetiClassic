@@ -7,6 +7,8 @@
 	name = "Ore Box"
 	desc = "A heavy box used for storing ore."
 	density = 1
+	var/last_update = 0
+	var/list/stored_ore = list()
 
 /obj/structure/ore_box/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/ore))
@@ -18,9 +20,23 @@
 		for(var/obj/item/weapon/ore/O in S.contents)
 			S.remove_from_storage(O, src) //This will move the item to this item's contents
 		user << "\blue You empty the satchel into the box."
+
+	update_ore_count()
+
 	return
 
-/obj/structure/ore_box/attack_hand(obj, mob/user as mob)
+/obj/structure/ore_box/proc/update_ore_count()
+
+	stored_ore = list()
+
+	for(var/obj/item/weapon/ore/O in contents)
+
+		if(stored_ore[O.name])
+			stored_ore[O.name]++
+		else
+			stored_ore[O.name] = 1
+
+/obj/structure/ore_box/attack_hand(mob/user as mob)
 	var/amt_gold = 0
 	var/amt_silver = 0
 	var/amt_diamond = 0
@@ -30,6 +46,7 @@
 	var/amt_uranium = 0
 	var/amt_clown = 0
 	var/amt_strange = 0
+	var/amt_osmium = 0
 
 
 	for (var/obj/item/weapon/ore/C in contents)
@@ -49,6 +66,8 @@
 			amt_uranium++;
 		if (istype(C,/obj/item/weapon/ore/clown))
 			amt_clown++;
+		if (istype(C,/obj/item/weapon/ore/osmium))
+			amt_osmium++;
 		if (istype(C,/obj/item/weapon/ore/strangerock))
 			amt_strange++;
 
@@ -69,11 +88,40 @@
 		dat += text("Uranium ore: [amt_uranium]<br>")
 	if (amt_clown)
 		dat += text("Bananium ore: [amt_clown]<br>")
+	if (amt_osmium)
+		dat += text("Osmium ore: [amt_osmium]<br>")
 	if (amt_strange)
 		dat += text("Strange rocks: [amt_strange]<br>")
 
 	dat += text("<br><br><A href='?src=\ref[src];removeall=1'>Empty box</A>")
 	user << browse("[dat]", "window=orebox")
+	return
+
+/obj/structure/ore_box/examine(mob/user)
+	..()
+	user << "That's an [src]."
+	user << desc
+
+	// Borgs can now check contents too.
+	if((!istype(user, /mob/living/carbon/human)) && (!istype(user, /mob/living/silicon/robot)))
+		return
+
+	if(!Adjacent(user)) //Can only check the contents of ore boxes if you can physically reach them.
+		return
+
+	add_fingerprint(user)
+
+	if(!contents.len)
+		user << "It is empty."
+		return
+
+	if(world.time > last_update + 10)
+		update_ore_count()
+		last_update = world.time
+
+	user << "It holds:"
+	for(var/ore in stored_ore)
+		user << "- [stored_ore[ore]] [ore]"
 	return
 
 /obj/structure/ore_box/Topic(href, href_list)
@@ -89,3 +137,31 @@
 	src.updateUsrDialog()
 	return
 
+/obj/structure/ore_box/verb/empty_box()
+	set name = "Empty Ore Box"
+	set category = "Object"
+	set src in view(1)
+
+	if(!istype(usr, /mob/living/carbon/human)) //Only living, intelligent creatures with hands can empty ore boxes.
+		usr << "\red You are physically incapable of emptying the ore box."
+		return
+
+	if( usr.stat || usr.restrained() )
+		return
+
+	if(!Adjacent(usr)) //You can only empty the box if you can physically reach it
+		usr << "You cannot reach the ore box."
+		return
+
+	add_fingerprint(usr)
+
+	if(contents.len < 1)
+		usr << "\red The ore box is empty"
+		return
+
+	for (var/obj/item/weapon/ore/O in contents)
+		contents -= O
+		O.loc = src.loc
+	usr << "\blue You empty the ore box"
+
+	return

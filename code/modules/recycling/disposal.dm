@@ -606,8 +606,10 @@
 			sleep(1)		// was 1
 			var/obj/structure/disposalpipe/curr = loc
 			last = curr
-			if(curr)
-				curr = curr.transfer(src)
+			curr = curr.transfer(src)
+
+			if(!loc) return
+
 			if(!curr)
 				last.expel(src, loc, dir)
 

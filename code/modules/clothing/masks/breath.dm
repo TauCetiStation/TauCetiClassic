@@ -8,12 +8,10 @@
 	w_class = 2
 	gas_transfer_coefficient = 0.10
 	permeability_coefficient = 0.50
+	action_button_name = "Adjust mask"
 	var/hanging = 0
 
-	verb/toggle()
-		set category = "Object"
-		set name = "Adjust mask"
-		set src in usr
+	attack_self()
 
 		if(usr.canmove && !usr.stat && !usr.restrained())
 			if(!src.hanging)
@@ -49,9 +47,7 @@
 		"Vox Armalis" = 'icons/mob/species/armalis/mask.dmi'
 		)
 
-	toggle()
-		set category = "Object"
-		set name = "Adjust mask"
-		set src in usr
+	attack_self()
 
 		usr << "You can't really adjust this mask - it's moulded to your beak!"
+		return

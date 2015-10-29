@@ -47,7 +47,8 @@ var/global/datum/controller/gameticker/ticker
 	'sound/music/title1.ogg',\
 	'sound/music/title2.ogg',\
 	'sound/music/traitor.ogg',\
-	'tauceti/sounds/lobby/sundown.ogg',)
+	'tauceti/sounds/lobby/sundown.ogg',\
+	'tauceti/sounds/lobby/hanging_masses.ogg')
 	do
 		pregame_timeleft = 180
 		world << "<B><FONT color='blue'>Welcome to the pre-game lobby!</FONT></B>"
@@ -366,8 +367,10 @@ var/global/datum/controller/gameticker/ticker
 						world.Reboot()
 					else
 						world << "\blue <B>An admin has delayed the round end</B>"
+						send2slack_service("An admin has delayed the round end")
 				else
 					world << "\blue <B>An admin has delayed the round end</B>"
+					send2slack_service("An admin has delayed the round end")
 
 		return 1
 

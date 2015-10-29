@@ -192,23 +192,15 @@
 			for(var/turf/simulated/mineral/M in view(get_turf(target), blast_range))
 				if(!M) return
 
-				if(M.toughness && M.toughness > 1)
-					M.toughness -= impact
-				else
-					M.ex_act(1)
 			if(target)
-				if(target.toughness && target.toughness > power)
-					explosion(location, -1, 1, 2)
-					target.toughness -= impact
-				else
-					explosion(location, -1, 2, 2)
-					target.ex_act(1)
+				explosion(location, -1, 2, 2)
+				target.ex_act(1)
 				if (src)
 					qdel(src)
 
 /obj/item/weapon/mining_charge/attack(mob/M as mob, mob/user as mob, def_zone)
 	return
-/*
+
 //—»ÀŒ¬€≈ »Õ—“–”Ã≈Õ“€//
 /obj/item/weapon/gun/energy/kinetic_accelerator
 	name = "proto-kinetic accelerator"
@@ -220,20 +212,27 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/kinetic)
 	cell_type = "/obj/item/weapon/cell/crap"
 	var/overheat = 0
+	var/overheat_time = 20
 	var/recent_reload = 1
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/shoot_live_shot()
 	overheat = 1
-	spawn(20)
+	spawn(overheat_time)
 		overheat = 0
 		recent_reload = 0
 	..()
+
+/obj/item/weapon/gun/energy/kinetic_accelerator/emp_act(severity)
+	return
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/attack_self(var/mob/living/user/L)
 	if(overheat || recent_reload)
 		return
 	power_supply.give(500)
-	playsound(src.loc, 'sound/weapons/shotgunpump.ogg', 60, 1)
+	if(!silenced)
+		playsound(src.loc, 'sound/weapons/kenetic_reload.ogg', 60, 1)
+	else
+		usr << "<span class='warning'>You silently charge [src].<span>"
 	recent_reload = 1
 	update_icon()
 	return
@@ -242,15 +241,15 @@
 	projectile_type = /obj/item/projectile/kinetic
 	select_name = "kinetic"
 	e_cost = 500
-	fire_sound = 'tauceti/sounds/weapon/Gunshot4.ogg'
+	fire_sound = 'sound/weapons/Kenetic_accel.ogg'
 
 /obj/item/projectile/kinetic
 	name = "kinetic force"
 	icon_state = null
-	damage = 15
+	damage = 10
 	damage_type = BRUTE
 	flag = "bomb"
-	var/range = 2
+	var/range = 3
 	var/power = 4
 
 obj/item/projectile/kinetic/New()
@@ -261,7 +260,7 @@ obj/item/projectile/kinetic/New()
 	var/pressure = environment.return_pressure()
 	if(pressure < 50)
 		name = "full strength kinetic force"
-		damage = 30
+		damage *= 4
 	..()
 
 /obj/item/projectile/kinetic/Range()
@@ -271,14 +270,12 @@ obj/item/projectile/kinetic/New()
 		qdel(src)
 
 /obj/item/projectile/kinetic/on_hit(var/atom/target)
+	. = ..()
 	var/turf/target_turf = get_turf(target)
 	if(istype(target_turf, /turf/simulated/mineral))
-		world << "Op!"
-/*		var/turf/simulated/mineral/M = target_turf
-		if(M.toughness && M.toughness <= power)
-			M.GetDrilled()
+		var/turf/simulated/mineral/M = target_turf
+		M.GetDrilled(firer)
 	new /obj/item/effect/kinetic_blast(target_turf)
-	..() */
 
 /obj/item/effect/kinetic_blast
 	name = "kinetic explosion"
@@ -288,4 +285,4 @@ obj/item/projectile/kinetic/New()
 
 /obj/item/effect/kinetic_blast/New()
 	spawn(4)
-		qdel(src)		*/
+		qdel(src)

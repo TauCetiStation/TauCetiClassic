@@ -1,3 +1,7 @@
+/mob/living/Life()
+	..()
+	if(stat != DEAD)
+		handle_actions()
 
 /mob/living/verb/succumb()
 	set hidden = 1
@@ -280,6 +284,11 @@
 	SetParalysis(0)
 	SetStunned(0)
 	SetWeakened(0)
+
+	//restore all HP
+	if(!(health == maxHealth))
+		health = initial(health)
+		icon_state = initial(icon_state)
 
 	// shut down ongoing problems
 	radiation = 0

@@ -27,6 +27,8 @@ RCD
 	var/canRwall = 0
 	var/disabled = 0
 
+	action_button_name = "Switch RCD"
+
 
 	New()
 		desc = "A RCD. It currently holds [matter]/30 matter-units."

@@ -9,6 +9,72 @@
 	mag_type = /obj/item/ammo_box/magazine/sm45
 	fire_sound = 'tauceti/sounds/weapon/Gunshot_silenced.ogg'
 
+/obj/item/weapon/gun/projectile/sigi
+	name = "\improper pistol"
+	desc = "A W&J Company designed SIGI p250, found pretty much everywhere humans are. Looks like SIG 250, but it's not. Uses 9mm rounds."
+	icon_state = "sigi250"
+	item_state = "sigi250"
+	origin_tech = "combat=2;materials=2"
+	mag_type = /obj/item/ammo_box/magazine/m9mmr_2
+	var/mag_type2 = /obj/item/ammo_box/magazine/m9mm_2
+	fire_sound = 'sound/weapons/Gunshot.ogg'
+
+	var/mag = null
+
+/obj/item/weapon/gun/projectile/sigi/New()
+	..()
+	mag = image('icons/obj/gun.dmi', "mag")
+	overlays += mag
+	return
+
+/obj/item/weapon/gun/projectile/sigi/spec
+	name = "\improper pistol"
+	desc = "A W&J Company designed Special SIGI p250, this one has a military coloring. Looks like SIG 250, but it's not. Uses 9mm rounds."
+	icon_state = "sigi250special"
+	item_state = "sigi250special"
+
+/obj/item/weapon/gun/projectile/sigi/isHandgun()
+	return 1
+
+/obj/item/weapon/gun/projectile/sigi/update_icon(var/load = 0)
+	..()
+	if(load)
+		icon_state = "[initial(icon_state)]"
+		return
+	icon_state = "[initial(icon_state)][(!chambered && !get_ammo()) ? "-e" : ""]"
+	return
+
+/obj/item/weapon/gun/projectile/sigi/attack_self(mob/user as mob)
+	if (magazine)
+		magazine.loc = get_turf(src.loc)
+		user.put_in_hands(magazine)
+		magazine.update_icon()
+		magazine = null
+		overlays -= mag
+		user << "<span class='notice'>You pull the magazine out of \the [src]!</span>"
+		playsound(src.loc, 'tauceti/sounds/weapon/pistol_reload.ogg', 50, 1, 1)
+	else
+		user << "<span class='notice'>There's no magazine in \the [src].</span>"
+	return
+
+/obj/item/weapon/gun/projectile/sigi/attackby(var/obj/item/A as obj, mob/user as mob)
+	if (istype(A, /obj/item/ammo_box/magazine))
+		var/obj/item/ammo_box/magazine/AM = A
+		if ((!magazine && istype(AM, mag_type) || istype(AM, mag_type2)))
+			user.remove_from_mob(AM)
+			magazine = AM
+			magazine.loc = src
+			overlays += mag
+			user << "<span class='notice'>You load a new magazine into \the [src].</span>"
+			chamber_round()
+			A.update_icon()
+			update_icon()
+			playsound(src.loc, 'tauceti/sounds/weapon/pistol_reload.ogg', 50, 1, 1)
+			return 1
+		else if (magazine)
+			user << "<span class='notice'>There's already a magazine in \the [src].</span>"
+	return 0
+
 /obj/item/weapon/gun/projectile/automatic/silenced/isHandgun()
 	return 1
 
@@ -90,7 +156,7 @@
 	return
 
 /obj/item/weapon/gun/projectile/automatic/pistol
-	name = "\improper Stechtkin pistol"
+	name = "\improper Stechkin pistol"
 	desc = "A small, easily concealable gun. Uses 9mm rounds."
 	icon = 'tauceti/icons/obj/guns.dmi'
 	icon_state = "pistol"

@@ -6,6 +6,8 @@
 	w_class = 2.0
 	flags = FPRINT | TABLEPASS | CONDUCT
 
+	action_button_name = "Toggle Megaphone"
+
 	var/spamcheck = 0
 	var/emagged = 0
 	var/insults = 0
@@ -25,6 +27,7 @@
 		user << "\red \The [src] needs to recharge!"
 		return
 
+	playsound(src, 'tauceti/sounds/items/megaphone.ogg', 100, 1, 1)
 	var/message = sanitize_plus(copytext(input(user, "Shout a message?", "Megaphone", null)  as text,1,MAX_MESSAGE_LEN))
 	if(!message)
 		return

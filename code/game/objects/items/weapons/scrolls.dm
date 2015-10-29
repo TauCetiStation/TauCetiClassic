@@ -11,6 +11,8 @@
 	throw_range = 20
 	origin_tech = "bluespace=4"
 
+	action_button_name = "Use Scroll of Teleportation"
+
 /obj/item/weapon/teleportation_scroll/attack_self(mob/user as mob)
 	user.set_machine(src)
 	var/dat = "<B>Teleportation Scroll:</B><BR>"

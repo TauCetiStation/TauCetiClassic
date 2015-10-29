@@ -8,6 +8,7 @@
 	item_state = "defibunit"
 	icon_state = "defibunit"
 	var/state_on = "defibunit_on"
+	action_button_name = "Switch Defibrillator"
 	flags = FPRINT | TABLEPASS
 	w_class = 1.0
 	damtype = "brute"
@@ -22,6 +23,8 @@
 		if(!charged)
 			if(charges)
 				user.visible_message("[user] charges their [src].", "You charge your [src].</span>", "You hear electrical zap.")
+				sleep(30)
+				playsound(src, 'tauceti/sounds/items/defib_charge.ogg', 50, 1, 1)
 				charged = 1
 				spawn(25)
 					if(wet)
@@ -57,6 +60,7 @@
 	attack(mob/M as mob, mob/user as mob)
 		if(charged == 2 && istype(M,/mob/living/carbon))
 			var/mob/living/carbon/C = M
+			playsound(src, 'tauceti/sounds/items/defib_zap.ogg', 50, 1, 1)
 			user.visible_message("[user] shocks [M] with [src].", "You shock [M] with [src].</span>", "You hear electricity zaps flesh.")
 
 			if((world.time - C.timeofdeath) < 3600 || C.stat != DEAD)	//if he is dead no more than 6 minutes

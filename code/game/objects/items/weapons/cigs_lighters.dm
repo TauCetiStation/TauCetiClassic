@@ -390,6 +390,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	attack_verb = list("burnt", "singed")
 	var/lit = 0
 
+	action_button_name = "Toggle Lighter"
+
 /obj/item/weapon/lighter/zippo
 	name = "\improper Zippo lighter"
 	desc = "The zippo."
@@ -412,8 +414,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			icon_state = icon_on
 			item_state = icon_on
 			if(istype(src, /obj/item/weapon/lighter/zippo) )
+				playsound(src, 'tauceti/sounds/items/zippo.ogg', 20, 1, 1)
 				user.visible_message("<span class='rose'>Without even breaking stride, [user] flips open and lights [src] in one smooth movement.</span>")
 			else
+				playsound(src, 'tauceti/sounds/items/lighter.ogg', 20, 1, 1)
 				if(prob(95))
 					user.visible_message("<span class='notice'>After a few attempts, [user] manages to light the [src].</span>")
 				else
@@ -431,9 +435,11 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			icon_state = icon_off
 			item_state = icon_off
 			if(istype(src, /obj/item/weapon/lighter/zippo) )
+				playsound(src, 'tauceti/sounds/items/zippo.ogg', 20, 1, 1)
 				user.visible_message("<span class='rose'>You hear a quiet click, as [user] shuts off [src] without even looking at what they're doing.")
 			else
 				user.visible_message("<span class='notice'>[user] quietly shuts off the [src].")
+				playsound(src, 'tauceti/sounds/items/lighter.ogg', 20, 1, 1)
 
 			set_light(0)
 			processing_objects.Remove(src)

@@ -29,10 +29,9 @@
 	resources["plasteel"] = 0
 	resources["reinforced glass"] = 0
 	resources["wooden plank"] = 0
-	resources["adamantine"] = 0
+	resources["platinum"] = 0
 	resources["diamond"] = 0
 	resources["gold"] = 0
-	resources["mythril"] = 0
 //	resources["plastic"] = 0
 	resources["sandstone bricks"] = 0
 	resources["silver"] = 0

@@ -83,11 +83,13 @@ var/list/admin_verbs_admin = list(
 	/client/proc/toggle_antagHUD_restrictions,
 	/client/proc/allow_character_respawn,    /* Allows a ghost to respawn */
 	/client/proc/aooc,
+	/client/proc/change_security_level,
 	/client/proc/empty_ai_core_toggle_latejoin
 )
 var/list/admin_verbs_ban = list(
 	/client/proc/unban_panel,
-	/client/proc/jobbans
+	/client/proc/jobbans,
+	/client/proc/stickybanpanel
 	)
 var/list/admin_verbs_sounds = list(
 	/client/proc/play_local_sound,
@@ -163,6 +165,8 @@ var/list/admin_verbs_debug = list(
 	/client/proc/reload_admins,
 	/client/proc/reload_mentors,
 	/client/proc/restart_controller,
+	/client/proc/remake_distribution_map,
+	/client/proc/show_distribution_map,
 	/client/proc/enable_debug_verbs,
 	/*/client/proc/callproc,*/
 	/client/proc/toggledebuglogs,
@@ -631,7 +635,7 @@ var/list/admin_verbs_mentor = list(
 	var/S = input("Choose the spell to give to that guy", "ABRAKADABRA") as null|anything in spell_names
 	if(!S) return
 	var/path = text2path("/obj/effect/proc_holder/spell/[S]")
-	T.spell_list += new path
+	T.AddSpell(new path)
 	feedback_add_details("admin_verb","GS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	log_admin("[key_name(usr)] gave [key_name(T)] the spell [S].")
 	message_admins("\blue [key_name_admin(usr)] gave [key_name(T)] the spell [S].", 1)
@@ -727,17 +731,30 @@ var/list/admin_verbs_mentor = list(
 	log_admin("[key_name(usr)] used 'kill air'.")
 	message_admins("\blue [key_name_admin(usr)] used 'kill air'.", 1)
 
+/client/proc/readmin_self()
+	set name = "Re-admin self"
+	set category = "Admin"
+
+	if(deadmin_holder)
+		deadmin_holder.reassociate()
+		log_admin("[src] re-admined themself.")
+		message_admins("[src] re-admined themself.", 1)
+		src << "<span class='interface'>You now have the keys to control the planet, or at least a small space station.</span>"
+		verbs -= /client/proc/readmin_self
+		feedback_add_details("admin_verb","RAS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
 /client/proc/deadmin_self()
 	set name = "De-admin self"
 	set category = "Admin"
 
 	if(holder)
-		if(alert("Confirm self-deadmin for the round? You can't re-admin yourself without someont promoting you.",,"Yes","No") == "Yes")
+		if(alert("Confirm self-deadmin for the round?",,"Yes","No") == "Yes")
 			log_admin("[src] deadmined themself.")
 			message_admins("[src] deadmined themself.", 1)
 			deadmin()
 			src << "<span class='interface'>You are now a normal player.</span>"
-	feedback_add_details("admin_verb","DAS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+			verbs += /client/proc/readmin_self
+			feedback_add_details("admin_verb","DAS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/toggle_log_hrefs()
 	set name = "Toggle href logging"
@@ -756,6 +773,17 @@ var/list/admin_verbs_mentor = list(
 	set category = "Admin"
 	if(holder)
 		src.holder.output_ai_laws()
+
+/client/proc/change_security_level()
+	set name = "Set security level"
+	set desc = "Sets the station security level"
+	set category = "Admin"
+
+	if(!check_rights(R_ADMIN))	return
+	var sec_level = input(usr, "It's currently code [get_security_level()].", "Select Security Level")  as null|anything in (list("green","blue","red","delta")-get_security_level())
+	if(alert("Switch from code [get_security_level()] to code [sec_level]?","Change security level?","Yes","No") == "Yes")
+		set_security_level(sec_level)
+		log_admin("[key_name(usr)] changed the security level to code [sec_level].")
 
 
 //---- bs12 verbs ----

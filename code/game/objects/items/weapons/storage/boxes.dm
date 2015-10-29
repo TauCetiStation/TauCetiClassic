@@ -237,7 +237,18 @@
 		new /obj/item/weapon/implanter(src)
 		new /obj/item/weapon/implantpad(src)
 
+/obj/item/weapon/storage/box/autoinjector/utility
+	name = "stimpack value kit"
+	desc = "A box with several stimpack autoinjectors for the economical miner."
+	icon_state = "syringe"
 
+	New()
+		..()
+		new /obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack(src)
+		new /obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack(src)
+		new /obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack(src)
+		new /obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack(src)
+		new /obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack(src)
 
 /obj/item/weapon/storage/box/rxglasses
 	name = "box of prescription glasses"
@@ -471,6 +482,10 @@
 
 	attackby(obj/item/weapon/match/W as obj, mob/user as mob)
 		if(istype(W) && !W.lit && !W.burnt)
+			if (prob (20))
+				playsound(src, 'tauceti/sounds/items/matchstick_hit.ogg', 20, 1, 1)
+				return
+			playsound(src, 'tauceti/sounds/items/matchstick_light.ogg', 20, 1, 1)
 			W.lit = 1
 			W.damtype = "burn"
 			W.icon_state = "match_lit"
