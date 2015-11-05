@@ -379,7 +379,7 @@ var/linenums = 0
 	stat |= BROKEN
 	update()
 
-/obj/machinery/pipes/Del()
+/obj/machinery/pipes/Destroy()
 	stat |= BROKEN
 	update()
 	..()
@@ -403,20 +403,20 @@ var/linenums = 0
 /obj/machinery/pipes/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			del(src)
+			qdel(src)
 			return
 		if(2.0)
 			stat |= BROKEN
 			update()
 			if (prob(50))
-				del(src)
+				qdel(src)
 				return
 		if(3.0)
 			if(prob(75))
 				stat |= BROKEN
 				update()
 				if (prob(25))
-					del(src)
+					qdel(src)
 					return
 		else
 	return
@@ -475,7 +475,7 @@ var/linenums = 0
 
 		//src.master = null
 		//SN src = null
-		del(src)
+		qdel(src)
 		return
 
 	var/turf/T = src.loc
@@ -527,7 +527,7 @@ var/linenums = 0
 	makepowernets()
 
 	//SN src = null
-	del(src)
+	qdel(src)
 	return
 */
 /*

@@ -1,3 +1,7 @@
+/mob/living/Life()
+	..()
+	if(stat != DEAD)
+		handle_actions()
 
 /mob/living/verb/succumb()
 	set hidden = 1
@@ -281,6 +285,11 @@
 	SetStunned(0)
 	SetWeakened(0)
 
+	//restore all HP
+	if(!(health == maxHealth))
+		health = initial(health)
+		icon_state = initial(icon_state)
+
 	// shut down ongoing problems
 	radiation = 0
 	nutrition = 400
@@ -389,7 +398,7 @@
 								for(var/mob/O in viewers(M, null))
 									O.show_message(text("\red [] has been pulled from []'s grip by []", G.affecting, G.assailant, src), 1)
 								//G = null
-								del(G)
+								qdel(G)
 						else
 							ok = 0
 						if (locate(/obj/item/weapon/grab, M.grabbed_by.len))
@@ -505,31 +514,30 @@
 			return
 
 	//resisting grabs (as if it helps anyone...)
-	if ((!( L.stat ) && L.canmove && !( L.restrained() )))
+	if ((!( L.stat ) && !( L.restrained() )))
+		if(L.weakened || L.stunned) return
+
 		var/resisting = 0
 		for(var/obj/O in L.requests)
 			L.requests.Remove(O)
-			del(O)
+			qdel(O)
 			resisting++
 		for(var/obj/item/weapon/grab/G in usr.grabbed_by)
 			resisting++
-			if (G.state == 1)
-				del(G)
-			else
-				if (G.state == 2)
-					if (prob(25))
-						for(var/mob/O in viewers(L, null))
-							O.show_message(text("\red [] has broken free of []'s grip!", L, G.assailant), 1)
-						del(G)
-				else
-					if (G.state == 3)
-						if (prob(5))
-							for(var/mob/O in viewers(usr, null))
-								O.show_message(text("\red [] has broken free of []'s headlock!", L, G.assailant), 1)
-							del(G)
+			switch(G.state)
+				if(GRAB_PASSIVE)
+					qdel(G)
+				if(GRAB_AGGRESSIVE)
+					if(prob(60)) //same chance of breaking the grab as disarm
+						L.visible_message("<span class='warning'>[L] has broken free of [G.assailant]'s grip!</span>")
+						qdel(G)
+				if(GRAB_NECK)
+					//If the you move when grabbing someone then it's easier for them to break free. Same if the affected mob is immune to stun.
+					if (((world.time - G.assailant.l_move_time < 20 || !L.stunned) && prob(15)) || prob(3))
+						L.visible_message("<span class='warning'>[L] has broken free of [G.assailant]'s headlock!</span>")
+						qdel(G)
 		if(resisting)
-			for(var/mob/O in viewers(usr, null))
-				O.show_message(text("\red <B>[] resists!</B>", L), 1)
+			L.visible_message("<span class='danger'>[L] resists!</span>")
 
 
 	//unbuckling yourself
@@ -650,7 +658,7 @@
 							O.show_message(text("\red <B>[] manages to break the handcuffs!</B>", CM), 1)
 						CM << "\red You successfully break your handcuffs."
 						CM.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
-						del(CM.handcuffed)
+						qdel(CM.handcuffed)
 						CM.handcuffed = null
 						CM.update_inv_handcuffed()
 			else
@@ -687,7 +695,7 @@
 							O.show_message(text("\red <B>[] manages to break the legcuffs!</B>", CM), 1)
 						CM << "\red You successfully break your legcuffs."
 						CM.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
-						del(CM.legcuffed)
+						qdel(CM.legcuffed)
 						CM.legcuffed = null
 						CM.update_inv_legcuffed()
 			else
@@ -762,3 +770,34 @@
 /mob/living/do_attack_animation(atom/A)
 	var/final_pixel_y = get_standard_pixel_y_offset(lying_current)
 	..(A, final_pixel_y)
+
+	//Show an image of the wielded weapon over the person who got dunked.
+	var/image/I
+	if(hand)
+		if(l_hand)
+			I = image(l_hand.icon,A,l_hand.icon_state,A.layer+1)
+	else
+		if(r_hand)
+			I = image(r_hand.icon,A,r_hand.icon_state,A.layer+1)
+	if(I)
+		var/list/viewing = list()
+		for(var/mob/M in viewers(A))
+			if(M.client)
+				if(!(M.client.prefs.toggles & SHOW_ANIMATIONS))
+					viewing |= M.client
+		flick_overlay(I,viewing,5)
+		I.pixel_z = 16 //lift it up...
+		animate(I, pixel_z = 0, alpha = 125, time = 3) //smash it down into them!
+
+/mob/living/Stat()
+	..()
+	if(statpanel("Status"))
+		if(ticker)
+			if(ticker.mode)
+				if(istype(ticker.mode, /datum/game_mode/gang))
+					var/datum/game_mode/gang/mode = ticker.mode
+					if(isnum(mode.A_timer))
+						stat(null, "[gang_name("A")] Gang Takeover: [max(mode.A_timer, 0)]")
+					if(isnum(mode.B_timer))
+						stat(null, "[gang_name("B")] Gang Takeover: [max(mode.B_timer, 0)]")
+

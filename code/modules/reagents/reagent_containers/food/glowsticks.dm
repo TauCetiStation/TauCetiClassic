@@ -6,7 +6,7 @@
 	icon = 'icons/obj/glowsticks.dmi'
 	icon_state = null
 	item_state = null
-	icon_action_button = null	//just pull it manually, neckbeard.
+	action_button_name = null	//just pull it manually, neckbeard.
 	slot_flags = SLOT_BELT
 	light_power = 3
 	var/brightness_on = 7
@@ -14,6 +14,7 @@
 	var/colourName = null
 	var/eaten = 0
 	var/datum/reagent/liquid_fuel
+	action_button_name = "Break Glowstick"
 
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/New()
 	name = "[colourName] glowstick"
@@ -59,7 +60,7 @@
 			usr << "<span class='notice'>You finish eating \the [src].</span>"
 		M.visible_message("<span class='notice'>[M] finishes eating \the [src].</span>")
 		usr.drop_from_inventory(src)	//so icons update :[
-		del(src)
+		qdel(src)
 	return
 
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/attack_self(mob/user as mob)
@@ -75,7 +76,7 @@
 		return
 	on = !on
 	update_brightness(user)
-
+	action_button_name = null
 	playsound(src, 'sound/weapons/glowstick_bend.ogg', 35, 0)
 	user.visible_message("<span class='notice'>[user] bends the [name].</span>", "<span class='notice'>You bend the [name]!</span>")
 	processing_objects += src
@@ -137,8 +138,8 @@
 					luminnew.color = luminold.color
 				list_regs.reagent_list += luminnew
 				var/mixedcolor = mix_color_from_reagents(list_regs.reagent_list)
-				del(list_regs)
-				del(luminold)
+				qdel(list_regs)
+				qdel(luminold)
 				luminnew.color = mixedcolor
 				On_Consume(M)
 			return 1
@@ -151,7 +152,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	return
 
-/obj/item/weapon/reagent_containers/food/snacks/glowstick/Del()
+/obj/item/weapon/reagent_containers/food/snacks/glowstick/Destroy()
 	if(contents)
 		for(var/atom/movable/something in contents)
 			something.loc = get_turf(src)

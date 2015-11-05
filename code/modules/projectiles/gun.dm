@@ -14,6 +14,7 @@
 	force = 5.0
 	origin_tech = "combat=1"
 	attack_verb = list("struck", "hit", "bashed")
+	action_button_name = "Switch Gun"
 	var/obj/item/ammo_casing/chambered = null
 	var/fire_sound = 'sound/weapons/Gunshot.ogg'
 	var/silenced = 0
@@ -45,6 +46,7 @@
 
 	proc/shoot_with_empty_chamber(mob/living/user as mob|obj)
 		user << "<span class='warning'>*click*</span>"
+		playsound(user, 'sound/weapons/empty.ogg', 100, 1)
 		return
 
 	proc/shoot_live_shot(mob/living/user as mob|obj)
@@ -80,7 +82,7 @@
 				M << "<span class='danger'>[src] blows up in your face.</span>"
 				M.take_organ_damage(0,20)
 				M.drop_item()
-				del(src)
+				qdel(src)
 				return
 
 	if (!user.IsAdvancedToolUser())

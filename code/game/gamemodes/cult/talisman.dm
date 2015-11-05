@@ -1,5 +1,5 @@
 /obj/item/weapon/paper/talisman
-	icon_state = "paper_talisman"
+	icon_state = "scrap_bloodied"
 	var/imbue = null
 	var/uses = 0
 
@@ -44,7 +44,8 @@
 					qdel(src)
 			return
 		else
-			user << "You see strange symbols on the paper. Are they supposed to mean something?"
+			examine()
+			//user << "You see strange symbols on the paper. Are they supposed to mean something?"
 			return
 
 

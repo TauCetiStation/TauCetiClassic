@@ -292,6 +292,12 @@ proc/isInSight(var/atom/A, var/atom/B)
 		else
 			return get_step(start, EAST)
 
+/proc/try_move_adjacent(atom/movable/AM)
+	var/turf/T = get_turf(AM)
+	for(var/direction in cardinal)
+		if(AM.Move(get_step(T, direction)))
+			break
+
 /proc/get_mob_by_key(var/key)
 	for(var/mob/M in mob_list)
 		if(M.ckey == lowertext(key))
@@ -426,3 +432,38 @@ datum/projectile_data
 	var/g = mixOneColor(weights, greens)
 	var/b = mixOneColor(weights, blues)
 	return rgb(r,g,b)
+
+//============VG PORTS============
+/proc/recursive_type_check(atom/O, type = /atom)
+	var/list/processing_list = list(O)
+	var/list/processed_list = new/list()
+	var/found_atoms = new/list()
+
+	while (processing_list.len)
+		var/atom/A = processing_list[1]
+
+		if (istype(A, type))
+			found_atoms |= A
+
+		for (var/atom/B in A)
+			if (!processed_list[B])
+				processing_list |= B
+
+		processing_list.Cut(1, 2)
+		processed_list[A] = A
+
+	return found_atoms
+
+/proc/get_contents_in_object(atom/O, type_path = /atom/movable)
+	if (O)
+		return recursive_type_check(O, type_path) - O
+	else
+		return new/list()
+
+//============TG PORTS============
+/proc/flick_overlay(image/I, list/show_to, duration)
+	for(var/client/C in show_to)
+		C.images += I
+	spawn(duration)
+		for(var/client/C in show_to)
+			C.images -= I

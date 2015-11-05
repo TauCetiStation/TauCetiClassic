@@ -29,17 +29,11 @@ datum
 			required_reagents = list("water" = 1, "potassium" = 1)
 			result_amount = 2
 			on_reaction(var/datum/reagents/holder, var/created_volume)
+				var/location = get_turf(holder.my_atom)
 				var/datum/effect/effect/system/reagents_explosion/e = new()
-				e.set_up(round (created_volume/10, 1), holder.my_atom, 0, 0)
-				e.holder_damage(holder.my_atom)
-				if(isliving(holder.my_atom))
-					e.amount *= 0.5
-					var/mob/living/L = holder.my_atom
-					if(L.stat!=DEAD)
-						e.amount *= 0.5
+				e.set_up(round (created_volume/10, 1), location, 0, 0)
 				e.start()
 				holder.clear_reagents()
-				return
 
 		emp_pulse
 			name = "EMP Pulse"
@@ -409,14 +403,16 @@ datum
 
 					var/datum/gas_mixture/napalm = new
 					var/datum/gas/volatile_fuel/fuel = new
-					fuel.moles = created_volume
-					napalm.trace_gases += fuel
+					if(created_volume > 0)
+						if(created_volume < 400)
+							fuel.moles = created_volume
+							napalm.trace_gases += fuel
 
-					napalm.temperature = 400+T0C
-					napalm.update_values()
+							napalm.temperature = 400+T0C
+							napalm.update_values()
 
-					target_tile.assume_air(napalm)
-					spawn (0) target_tile.hotspot_expose(700, 400)
+							target_tile.assume_air(napalm)
+							spawn (0) target_tile.hotspot_expose(700, 400)
 				holder.del_reagent("napalm")
 				return
 
@@ -883,7 +879,7 @@ datum
 									M.client.screen += blueeffect
 									sleep(20)
 									M.client.screen -= blueeffect
-									del(blueeffect)
+									qdel(blueeffect)
 		slimecrit
 			name = "Slime Crit"
 			id = "m_tele"

@@ -11,6 +11,7 @@
 	mag_type = /obj/item/ammo_box/magazine/internal/shot
 	var/recentpump = 0 // to prevent spammage
 	var/pumped = 0
+	fire_sound = 'sound/weapons/guns/shotgun_shot.ogg'
 
 /obj/item/weapon/gun/projectile/shotgun/isHandgun()
 	return 0
@@ -73,15 +74,28 @@
 	slot_flags = SLOT_BACK
 	origin_tech = "combat=3;materials=1"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/dualshot
+	var/open = 0
+	var/short = 0
+	fire_sound = 'sound/weapons/guns/shotgun_shot.ogg'
 
 /obj/item/weapon/gun/projectile/revolver/doublebarrel/isHandgun()
 	return 0
 
+/obj/item/weapon/gun/projectile/revolver/doublebarrel/update_icon()
+	if(short)
+		icon_state = "sawnshotgun[open ? "-o" : ""]"
+	else
+		icon_state = "dshotgun[open ? "-o" : ""]"
+
 /obj/item/weapon/gun/projectile/revolver/doublebarrel/attackby(var/obj/item/A as obj, mob/user as mob)
 	..()
 	if (istype(A,/obj/item/ammo_box) || istype(A,/obj/item/ammo_casing))
-		chamber_round()
+		if(open)
+			chamber_round()
+		else
+			user << "<span class='notice'>You can't load shell while [src] is closed!</span>"
 	if(istype(A, /obj/item/weapon/circular_saw) || istype(A, /obj/item/weapon/melee/energy) || istype(A, /obj/item/weapon/pickaxe/plasmacutter))
+		if(short) return
 		user << "<span class='notice'>You begin to shorten the barrel of \the [src].</span>"
 		if(get_ammo())
 			afterattack(user, user)	//will this work?
@@ -90,7 +104,7 @@
 			user.visible_message("<span class='danger'>The shotgun goes off!</span>", "<span class='danger'>The shotgun goes off in your face!</span>")
 			return
 		if(do_after(user, 30))	//SHIT IS STEALTHY EYYYYY
-			icon_state = "sawnshotgun"
+			icon_state = "sawnshotgun[open ? "-o" : ""]"
 			w_class = 3.0
 			item_state = "gun"
 			slot_flags &= ~SLOT_BACK	//you can't sling it on your back
@@ -98,17 +112,47 @@
 			user << "<span class='warning'>You shorten the barrel of \the [src]!</span>"
 			name = "sawn-off shotgun"
 			desc = "Omar's coming!"
+			short = 1
 
 /obj/item/weapon/gun/projectile/revolver/doublebarrel/attack_self(mob/living/user as mob)
-	var/num_unloaded = 0
-	while (get_ammo() > 0)
-		var/obj/item/ammo_casing/CB
-		CB = magazine.get_round(0)
-		chambered = null
-		CB.loc = get_turf(src.loc)
-		CB.update_icon()
-		num_unloaded++
-	if (num_unloaded)
-		user << "<span class = 'notice'>You break open \the [src] and unload [num_unloaded] shell\s.</span>"
-	else
-		user << "<span class='notice'>[src] is empty.</span>"
+	add_fingerprint(user)
+	open = !open
+	if(open)
+		//playsound(src.loc, 'sound/weapons/heavybolt_out.ogg', 50, 1)
+		var/num_unloaded = 0
+		while (get_ammo() > 0)
+			spawn(3)
+				playsound(src.loc, 'sound/weapons/shell_drop.ogg', 50, 1)
+			var/obj/item/ammo_casing/CB
+			CB = magazine.get_round(0)
+			chambered = null
+			CB.loc = get_turf(src.loc)
+			CB.update_icon()
+			num_unloaded++
+		if (num_unloaded)
+			user << "<span class = 'notice'>You break open \the [src] and unload [num_unloaded] shell\s.</span>"
+			//chambered.loc = get_turf(src)//Eject casing
+			//chambered.SpinAnimation(5, 1)
+			//chambered = null
+		else
+			user << "<span class = 'notice'>You break open \the [src].</span>"
+
+	update_icon()
+//	var/num_unloaded = 0
+//	while (get_ammo() > 0)
+//		var/obj/item/ammo_casing/CB
+//		CB = magazine.get_round(0)
+//		chambered = null
+//		CB.loc = get_turf(src.loc)
+//		CB.update_icon()
+//		num_unloaded++
+//	if (num_unloaded)
+//		user << "<span class = 'notice'>You unload [num_unloaded] shell\s.</span>"
+//	else
+//		user << "<span class='notice'>[src] is empty.</span>"
+
+/obj/item/weapon/gun/projectile/revolver/doublebarrel/special_check(mob/user)
+	if(open)
+		user << "<span class='warning'>You can't fire [src] while its open!</span>"
+		return 0
+	return ..()

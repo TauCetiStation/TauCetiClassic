@@ -98,11 +98,8 @@
 					occupant_message("<font color='red'>[target] is too durable to drill through.</font>")
 				else if(istype(target, /turf/simulated/mineral))
 					for(var/turf/simulated/mineral/M in range(chassis,1))
-						if(M.toughness && M.toughness > penetration)
-							occupant_message("<font color='red'>[target] is too tough to drill through.</font>")
-						else
-							if(get_dir(chassis,M)&chassis.dir)
-								M.GetDrilled()
+						if(get_dir(chassis,M)&chassis.dir)
+							M.GetDrilled()
 					log_message("Drilled through [target]")
 					if(locate(/obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp) in chassis.equipment)
 						var/obj/structure/ore_box/ore_box = locate(/obj/structure/ore_box) in chassis:cargo
@@ -127,7 +124,7 @@
 						chassis.occupant.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [M.name] ([M.ckey]) with [name]</font>"
 						M.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [chassis.occupant.name] ([chassis.occupant.ckey]) with [name]</font>"
 						msg_admin_attack("[key_name(chassis.occupant)] attacked [key_name(M)] with [name]")
-					
+
 					log_message("Drilled through [target]")
 					target.ex_act(2)
 		return 1
@@ -190,7 +187,7 @@
 						chassis.occupant.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [M.name] ([M.ckey]) with [name]</font>"
 						M.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [chassis.occupant.name] ([chassis.occupant.ckey]) with [name]</font>"
 						msg_admin_attack("[key_name(chassis.occupant)] attacked [key_name(M)] with [name]")
-					
+
 					log_message("Drilled through [target]")
 					target.ex_act(2)
 		return 1
@@ -237,7 +234,7 @@
 					var/list/the_targets = list(T,T1,T2)
 					spawn(0)
 						for(var/a=0, a<5, a++)
-							var/obj/effect/effect/water/W = new /obj/effect/effect/water(get_turf(chassis))
+							var/obj/effect/effect/water/W = PoolOrNew(/obj/effect/effect/water, get_turf(chassis))
 							if(!W)
 								return
 							var/turf/my_target = pick(the_targets)
@@ -322,7 +319,7 @@
 					if(do_after_cooldown(target))
 						if(disabled) return
 						chassis.spark_system.start()
-						del(target)
+						qdel(target)
 						playsound(target, 'sound/items/Deconstruct.ogg', 50, 1)
 						chassis.use_power(energy_drain)
 			if(1)
@@ -445,7 +442,7 @@
 		do_after_cooldown()
 		src = null
 		spawn(rand(150,300))
-			del(P)
+			qdel(P)
 		return
 
 /obj/item/mecha_parts/mecha_equipment/gravcatapult

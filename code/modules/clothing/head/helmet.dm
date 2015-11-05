@@ -4,13 +4,13 @@
 	icon_state = "helmet"
 	flags = FPRINT | TABLEPASS | HEADCOVERSEYES | THICKMATERIAL
 	item_state = "helmet"
-	armor = list(melee = 50, bullet = 15, laser = 50,energy = 10, bomb = 25, bio = 0, rad = 0)
+	armor = list(melee = 50, bullet = 60, laser = 50,energy = 20, bomb = 35, bio = 0, rad = 0)
 	flags_inv = HIDEEARS|HIDEEYES
 	cold_protection = HEAD
 	min_cold_protection_temperature = HELMET_MIN_COLD_PROTECTION_TEMPERATURE
 	heat_protection = HEAD
 	max_heat_protection_temperature = HELMET_MAX_HEAT_PROTECTION_TEMPERATURE
-	siemens_coefficient = 0.7
+	siemens_coefficient = 0.3
 	w_class = 3
 
 /obj/item/clothing/head/helmet/warden
@@ -28,7 +28,7 @@
 	flags = FPRINT|TABLEPASS|HEADCOVERSEYES | THICKMATERIAL
 	armor = list(melee = 82, bullet = 15, laser = 5,energy = 5, bomb = 5, bio = 2, rad = 0)
 	flags_inv = HIDEEARS
-	siemens_coefficient = 0.7
+	siemens_coefficient = 0.3
 
 /obj/item/clothing/head/helmet/swat
 	name = "\improper SWAT helmet"
@@ -36,11 +36,11 @@
 	icon_state = "swat"
 	flags = FPRINT | TABLEPASS | HEADCOVERSEYES | THICKMATERIAL
 	item_state = "swat"
-	armor = list(melee = 80, bullet = 60, laser = 50,energy = 25, bomb = 50, bio = 10, rad = 0)
+	armor = list(melee = 80, bullet = 75, laser = 50,energy = 25, bomb = 50, bio = 10, rad = 0)
 	flags_inv = HIDEEARS|HIDEEYES
 	cold_protection = HEAD
 	min_cold_protection_temperature = SPACE_HELMET_MIN_COLD_PROTECTION_TEMPERATURE
-	siemens_coefficient = 0.5
+	siemens_coefficient = 0.3
 
 /obj/item/clothing/head/helmet/thunderdome
 	name = "\improper Thunderdome helmet"
@@ -69,6 +69,6 @@
 	item_state = "helmet"
 	flags = FPRINT|TABLEPASS|HEADCOVERSEYES
 
-	armor = list(melee = 62, bullet = 50, laser = 50,energy = 35, bomb = 10, bio = 2, rad = 0)
+	armor = list(melee = 62, bullet = 60, laser = 50,energy = 35, bomb = 10, bio = 2, rad = 0)
 	flags_inv = HIDEEARS
 	siemens_coefficient = 0.7

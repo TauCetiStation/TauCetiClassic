@@ -374,7 +374,7 @@ obj/machinery/hydroponics/proc/mutatespecie() // Mutagent produced a new plant!
 		myseed = new /obj/item/seeds/greengrapeseed
 /*
 	else if ( istype(myseed, /obj/item/seeds/tomatoseed ))
-		del(myseed)
+		qdel(myseed)
 		myseed = new /obj/item/seeds/gibtomatoseed
 */
 	else if ( istype(myseed, /obj/item/seeds/eggplantseed ))
@@ -747,6 +747,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			if(!S.can_be_inserted(G))
 				return
 			S.handle_item_insertion(G, 1)
+			score["stuffharvested"]++
 
 	else if ( istype(O, /obj/item/weapon/pestspray) )
 		var/obj/item/pestkiller/myPKiller = O
@@ -839,6 +840,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 		t_prod.potency = potency
 		t_prod.plant_type = plant_type
 		t_amount++
+		score["stuffharvested"]++
 
 	parent.update_tray()
 

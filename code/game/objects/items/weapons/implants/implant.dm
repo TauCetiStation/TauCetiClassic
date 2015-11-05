@@ -44,7 +44,7 @@
 		icon_state = "implant_melted"
 		malfunction = MALFUNCTION_PERMANENT
 
-	Del()
+	Destroy()
 		if(part)
 			part.implants.Remove(src)
 		..()
@@ -153,7 +153,7 @@ Implant Specifics:<BR>"}
 		msg = sanitize_simple(msg, replacechars)
 		if(findtext(msg,phrase))
 			activate()
-			del(src)
+			qdel(src)
 
 	activate()
 		if (malfunction == MALFUNCTION_PERMANENT)
@@ -177,11 +177,11 @@ Implant Specifics:<BR>"}
 							istype(part,/datum/organ/external/head))
 							part.createwound(BRUISE, 60)	//mangle them instead
 							explosion(get_turf(imp_in), -1, -1, 2, 3)
-							del(src)
+							qdel(src)
 						else
 							explosion(get_turf(imp_in), -1, -1, 2, 3)
 							part.droplimb(1)
-							del(src)
+							qdel(src)
 				if (elevel == "Destroy Body")
 					explosion(get_turf(T), -1, 0, 1, 6)
 					T.gib()
@@ -247,7 +247,7 @@ Implant Specifics:<BR>"}
 					else
 						part.droplimb(1)
 				explosion(get_turf(imp_in), -1, -1, 2, 3)
-				del(src)
+				qdel(src)
 
 /obj/item/weapon/implant/chem
 	name = "chemical implant"
@@ -294,7 +294,7 @@ the implant may become unstable and either pre-maturely inject the subject or si
 		if(!src.reagents.total_volume)
 			R << "You hear a faint click from your chest."
 			spawn(0)
-				del(src)
+				qdel(src)
 		return
 
 	emp_act(severity)
@@ -334,18 +334,28 @@ the implant may become unstable and either pre-maturely inject the subject or si
 	implanted(mob/M)
 		if(!istype(M, /mob/living/carbon/human))	return 0
 		var/mob/living/carbon/human/H = M
-		if((H.mind in ticker.mode.head_revolutionaries) || is_shadow_or_thrall(H))
+		if((H.mind in (ticker.mode.head_revolutionaries | ticker.mode.A_bosses | ticker.mode.B_bosses)) || is_shadow_or_thrall(H))
 			H.visible_message("[H] seems to resist the implant!", "You feel the corporate tendrils of Nanotrasen try to invade your mind!")
 			return 0
-		else if(H.mind in ticker.mode:revolutionaries)
-			ticker.mode:remove_revolutionary(H.mind)
+
+		if(H.mind in ticker.mode.revolutionaries)
+			ticker.mode.remove_revolutionary(H.mind)
+
+		if(H.mind in (ticker.mode.A_gang | ticker.mode.B_gang))
+			ticker.mode.remove_gangster(H.mind, exclude_bosses=1)
+			H.visible_message("<span class='warning'>[src] was destroyed in the process!</span>", "<span class='notice'>You feel a surge of loyalty towards Nanotrasen.</span>")
+			return 0
+
+		if(H.mind in ticker.mode.cult)
+			H << "<span class='warning'>You feel the corporate tendrils of Nanotrasen try to invade your mind!</span>"
+		else
+			H << "<span class='notice'>You feel a surge of loyalty towards Nanotrasen.</span>"
 
 		if(prob(50))
 			H.visible_message("[H] suddenly goes very red and starts writhing. There is a strange smell in the air...", \
 				"\red Suddenly the horrible pain strikes your body! Your mind is in complete disorder! Blood pulses and starts burning! The pain is impossible!!!")
 			H.adjustBrainLoss(80)
 
-		H << "\blue You feel a surge of loyalty towards Nanotrasen."
 		processing_objects.Add(src)
 		return 1
 
@@ -359,6 +369,8 @@ the implant may become unstable and either pre-maturely inject the subject or si
 			return
 
 		var/mob/M = imp_in
+
+		if(!M)	return
 
 		if(M.stat == 2 || isnull(M))
 			processing_objects.Remove(src)
@@ -446,17 +458,17 @@ the implant may become unstable and either pre-maturely inject the subject or si
 					a.autosay("[mobname] has died in Space!", "[mobname]'s Death Alarm")
 				else
 					a.autosay("[mobname] has died in [t.name]!", "[mobname]'s Death Alarm")
-				del(a)
+				qdel(a)
 				processing_objects.Remove(src)
 			if ("emp")
 				var/obj/item/device/radio/headset/a = new /obj/item/device/radio/headset(null)
 				var/name = prob(50) ? t.name : pick(teleportlocs)
 				a.autosay("[mobname] has died in [name]!", "[mobname]'s Death Alarm")
-				del(a)
+				qdel(a)
 			else
 				var/obj/item/device/radio/headset/a = new /obj/item/device/radio/headset(null)
 				a.autosay("[mobname] has died-zzzzt in-in-in...", "[mobname]'s Death Alarm")
-				del(a)
+				qdel(a)
 				processing_objects.Remove(src)
 
 	emp_act(severity)			//for some reason alarms stop going off in case they are emp'd, even without this
@@ -514,7 +526,7 @@ the implant may become unstable and either pre-maturely inject the subject or si
 			imp_in.put_in_hands(scanned)
 		else
 			scanned.loc = t
-		del src
+		qdel(src)
 
 	implanted(mob/source as mob)
 		src.activation_emote = input("Choose activation emote:") in list("blink", "blink_r", "eyebrow", "chuckle", "twitch_s", "frown", "nod", "blush", "giggle", "grin", "groan", "shrug", "smile", "pale", "sniff", "whimper", "wink")

@@ -181,7 +181,7 @@ var/list/event_last_fired = list()
 			grid_check()
 		if("Meteor")
 			meteor_shower()*/
-
+	score["eventsendured"]++
 	return 1
 
 // Returns how many characters are currently active(not logged out, not AFK for more than 10 minutes)

@@ -126,6 +126,9 @@
 		usr << "You must wait 10 minutes to respawn as a drone!"
 		return
 
+	var/response = alert(src, "Are you -sure- you want to become a maintenance drone?","Are you sure you want to beep?","Beep!","Nope!")
+	if(response != "Beep!") return  //Hit the wrong key...again.
+
 	for(var/obj/machinery/drone_fabricator/DF in world)
 		if(DF.stat & NOPOWER || !DF.produce_drones)
 			continue

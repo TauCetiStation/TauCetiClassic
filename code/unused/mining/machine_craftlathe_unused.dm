@@ -161,9 +161,9 @@ proc/check_craftlathe_recipe(var/list/param_recipe)
 		var/obj/item/stack/S = W
 		S.amount--
 		if (S.amount <= 0)
-			del(S)
+			qdel(S)
 	else
-		del(W)
+		qdel(W)
 
 /obj/machinery/autolathe2/proc/build_recipes()
 	//Parameters: ID, Name, Amount, Amount_added_per_attackby, Recipe, Object type
@@ -177,7 +177,6 @@ proc/check_craftlathe_recipe(var/list/param_recipe)
 	CRAFT_ITEMS += new/datum/craftlathe_item("PLASMA","Plasma",1,1,list("","","","","","","","",""),/obj/item/stack/sheet/mineral/plasma)
 	CRAFT_ITEMS += new/datum/craftlathe_item("URANIUM","Uranium",1,1,list("","","","","","","","",""),/obj/item/weapon/ore/mineral/uranium)
 	CRAFT_ITEMS += new/datum/craftlathe_item("CLOWN","Bananium",1,1,list("","","","","","","","",""),/obj/item/stack/sheet/mineral/clown)
-	CRAFT_ITEMS += new/datum/craftlathe_item("ADMAMANTINE","Adamantine",1,1,list("","","","","","","","",""),/obj/item/stack/sheet/mineral/adamantine)
 	CRAFT_ITEMS += new/datum/craftlathe_item("SCREWS","Screws",9,9,list("","","","","METAL","","","METAL",""))
 	CRAFT_ITEMS += new/datum/craftlathe_item("COGS","Cogs",9,9,list("","METAL","","METAL","METAL","METAL","","METAL",""))
 	CRAFT_ITEMS += new/datum/craftlathe_item("SWITCH","Switch",12,12,list("METAL","","METAL","METAL","METAL","","METAL","",""))

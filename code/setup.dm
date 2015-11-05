@@ -65,8 +65,8 @@
 
 
 #define PRESSURE_DAMAGE_COEFFICIENT 4 //The amount of pressure damage someone takes is equal to (pressure / HAZARD_HIGH_PRESSURE)*PRESSURE_DAMAGE_COEFFICIENT, with the maximum of MAX_PRESSURE_DAMAGE
-#define MAX_HIGH_PRESSURE_DAMAGE 4	//This used to be 20... I got this much random rage for some retarded decision by polymorph?! Polymorph now lies in a pool of blood with a katana jammed in his spleen. ~Errorage --PS: The katana did less than 20 damage to him :(
-#define LOW_PRESSURE_DAMAGE 2 	//The amounb of damage someone takes when in a low pressure area (The pressure threshold is so low that it doesn't make sense to do any calculations, so it just applies this flat value).
+#define MAX_HIGH_PRESSURE_DAMAGE 8	//This used to be 20... I got this much random rage for some retarded decision by polymorph?! Polymorph now lies in a pool of blood with a katana jammed in his spleen. ~Errorage --PS: The katana did less than 20 damage to him :(
+#define LOW_PRESSURE_DAMAGE 8 	//The amount of damage someone takes when in a low pressure area (The pressure threshold is so low that it doesn't make sense to do any calculations, so it just applies this flat value).
 
 #define PRESSURE_SUIT_REDUCTION_COEFFICIENT 0.8 //This is how much (percentual) a suit with the flag STOPSPRESSUREDMAGE reduces pressure.
 #define PRESSURE_HEAD_REDUCTION_COEFFICIENT 0.4 //This is how much (percentual) a helmet/hat with the flag STOPSPRESSUREDMAGE reduces pressure.
@@ -535,26 +535,20 @@ var/list/liftable_structures = list(\
 #define BANTYPE_JOB_TEMP	4
 #define BANTYPE_ANY_FULLBAN	5 //used to locate stuff to unban.
 
-#define SEE_INVISIBLE_MINIMUM 5
-
-#define SEE_INVISIBLE_OBSERVER_NOLIGHTING 15
-
 #define INVISIBILITY_LIGHTING 20
+#define INVISIBILITY_LEVEL_ONE 35
+#define INVISIBILITY_LEVEL_TWO 45
+#define INVISIBILITY_OBSERVER 60
+#define INVISIBILITY_AI_EYE 61
 
 #define SEE_INVISIBLE_LIVING 25
+#define SEE_INVISIBLE_OBSERVER_NOLIGHTING 15
+#define SEE_INVISIBLE_LEVEL_ONE 35
+#define SEE_INVISIBLE_LEVEL_TWO 45
+#define SEE_INVISIBLE_CULT 60
+#define SEE_INVISIBLE_OBSERVER 61
 
-#define SEE_INVISIBLE_LEVEL_ONE 35	//Used by some stuff in code. It's really poorly organized.
-#define INVISIBILITY_LEVEL_ONE 35	//Used by some stuff in code. It's really poorly organized.
-
-#define SEE_INVISIBLE_LEVEL_TWO 45	//Used by some other stuff in code. It's really poorly organized.
-#define INVISIBILITY_LEVEL_TWO 45	//Used by some other stuff in code. It's really poorly organized.
-
-#define INVISIBILITY_OBSERVER 60
-#define SEE_INVISIBLE_OBSERVER 60
-
-#define INVISIBILITY_AI_EYE 61
-#define SEE_INVISIBLE_OBSERVER_AI_EYE 61
-
+#define SEE_INVISIBLE_MINIMUM 5
 #define INVISIBILITY_MAXIMUM 100
 
 //Object specific defines
@@ -656,6 +650,7 @@ var/list/liftable_structures = list(\
 #define CHAT_LOOC		4096
 #define CHAT_GHOSTRADIO 8192
 #define SHOW_TYPING 	16384
+#define SHOW_ANIMATIONS	32768
 
 
 #define TOGGLES_DEFAULT (SOUND_ADMINHELP|SOUND_MIDI|SOUND_AMBIENCE|SOUND_LOBBY|CHAT_OOC|CHAT_DEAD|CHAT_GHOSTEARS|CHAT_GHOSTSIGHT|CHAT_PRAYER|CHAT_RADIO|CHAT_ATTACKLOGS|CHAT_LOOC)
@@ -696,7 +691,7 @@ var/list/be_special_flags = list(
 	"Shadowling" = BE_SHADOWLING
 	)
 
-#define AGE_MIN 17			//youngest a character can be
+#define AGE_MIN 25			//youngest a character can be
 #define AGE_MAX 85			//oldest a character can be
 
 //Languages!
@@ -819,4 +814,12 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define HYDRO_SPEED_MULTIPLIER 1
 #define NANO_IGNORE_DISTANCE 1
 
-#define CLAMP01(x) max(0, min(1, x))
+#define Clamp(x, y, z) 	(x <= y ? y : (x >= z ? z : x))
+
+#define CLAMP01(x) 		(Clamp(x, 0, 1))
+
+#define FOR_DVIEW(type, range, center, invis_flags) \
+	dview_mob.loc = center; \
+	dview_mob.see_invisible = invis_flags; \
+	for(type in view(range, dview_mob))
+#define END_FOR_DVIEW dview_mob.loc = null

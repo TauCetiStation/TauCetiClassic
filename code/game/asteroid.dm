@@ -22,7 +22,7 @@ proc/spawn_room(var/atom/start_loc,var/x_size,var/y_size,var/wall,var/floor , va
 
 	//world << "Room spawned at [start_loc.x],[start_loc.y],[start_loc.z]"
 	if(!wall)
-		wall = pick(/turf/simulated/wall/r_wall,/turf/simulated/wall,/obj/effect/alien/resin)
+		wall = pick(/turf/simulated/wall/r_wall,/turf/simulated/wall,/obj/effect/alien/resin/wall)
 	if(!floor)
 		floor = pick(/turf/simulated/floor,/turf/simulated/floor/engine)
 
@@ -32,7 +32,7 @@ proc/spawn_room(var/atom/start_loc,var/x_size,var/y_size,var/wall,var/floor , va
 			var/cur_loc = locate(start_loc.x+x,start_loc.y+y,start_loc.z)
 			if(clean)
 				for(var/O in cur_loc)
-					del(O)
+					qdel(O)
 
 			var/area/asteroid/artifactroom/A = new
 			if(name)
@@ -43,9 +43,9 @@ proc/spawn_room(var/atom/start_loc,var/x_size,var/y_size,var/wall,var/floor , va
 
 
 			if(x == 0 || x==x_size-1 || y==0 || y==y_size-1)
-				if(wall == /obj/effect/alien/resin)
+				if(wall == /obj/effect/alien/resin/wall)
 					T = new floor(cur_loc)
-					new /obj/effect/alien/resin(T)
+					new /obj/effect/alien/resin/wall(T)
 				else
 					T = new wall(cur_loc)
 					room_turfs["walls"] += T
@@ -73,7 +73,7 @@ proc/admin_spawn_room_at_pos()
 		if("Regular wall")
 			wall=/turf/simulated/wall
 		if("Resin wall")
-			wall=/obj/effect/alien/resin
+			wall=/obj/effect/alien/resin/wall
 	switch(alert("Floor type",null,"Regular floor","Reinforced floor"))
 		if("Regular floor")
 			floor=/turf/simulated/floor

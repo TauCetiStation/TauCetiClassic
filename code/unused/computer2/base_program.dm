@@ -6,9 +6,9 @@
 		name = "Folder"
 		size = 0.0
 		var/gen = 0
-		Del()
+		Destroy()
 			for(var/datum/computer/F in src.contents)
-				del(F)
+				qdel(F)
 			..()
 		proc
 			add_file(datum/computer/R)
@@ -55,14 +55,14 @@
 							newfile.vars[V] = src.vars[V]
 
 					if(!newfolder.add_file(newfile))
-						del(newfile)
+						qdel(newfile)
 
 					return 1
 
 				return 0
 
 
-	Del()
+	Destroy()
 		if(holder && holding_folder)
 			holding_folder.remove_file(src)
 		..()
@@ -85,7 +85,7 @@
 			if(istype(src.holder.loc,/obj/machinery/computer2))
 				src.master = src.holder.loc
 
-	Del()
+	Destroy()
 		if(master)
 			master.processing_programs.Remove(src)
 		..()
@@ -155,7 +155,7 @@
 			if(master)
 				master.send_command(command, signal)
 			else
-				del(signal)
+				qdel(signal)
 
 		transfer_holder(obj/item/weapon/disk/data/newholder,datum/computer/folder/newfolder)
 

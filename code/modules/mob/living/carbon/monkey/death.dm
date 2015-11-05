@@ -15,8 +15,8 @@
 	gibs(loc, viruses, dna)
 
 	spawn(15)
-		if(animation)	del(animation)
-		if(src)			del(src)
+		if(animation)	qdel(animation)
+		if(src)			qdel(src)
 
 /mob/living/carbon/monkey/dust()
 	death(1)
@@ -35,8 +35,8 @@
 	new /obj/effect/decal/cleanable/ash(loc)
 
 	spawn(15)
-		if(animation)	del(animation)
-		if(src)			del(src)
+		if(animation)	qdel(animation)
+		if(src)			qdel(src)
 
 
 /mob/living/carbon/monkey/death(gibbed)

@@ -17,7 +17,6 @@
 	var/amt_phoron = 0
 	var/amt_uranium = 0
 	var/amt_clown = 0
-	var/amt_adamantine = 0
 
 	for (var/obj/item/weapon/coin/C in contents)
 		if (istype(C,/obj/item/weapon/coin/diamond))
@@ -34,8 +33,8 @@
 			amt_uranium++;
 		if (istype(C,/obj/item/weapon/coin/clown))
 			amt_clown++;
-		if (istype(C,/obj/item/weapon/coin/adamantine))
-			amt_adamantine++;
+		if (istype(C,/obj/item/weapon/coin/platinum))
+			amt_clown++;
 
 	var/dat = text("<b>The contents of the moneybag reveal...</b><br>")
 	if (amt_gold)
@@ -52,8 +51,8 @@
 		dat += text("Uranium coins: [amt_uranium] <A href='?src=\ref[src];remove=uranium'>Remove one</A><br>")
 	if (amt_clown)
 		dat += text("Bananium coins: [amt_clown] <A href='?src=\ref[src];remove=clown'>Remove one</A><br>")
-	if (amt_adamantine)
-		dat += text("Adamantine coins: [amt_adamantine] <A href='?src=\ref[src];remove=adamantine'>Remove one</A><br>")
+	if (amt_clown)
+		dat += text("Platinum coins: [amt_clown] <A href='?src=\ref[src];remove=platinum'>Remove one</A><br>")
 	user << browse("[dat]", "window=moneybag")
 
 /obj/item/weapon/moneybag/attackby(obj/item/weapon/W as obj, mob/user as mob)
@@ -92,8 +91,8 @@
 				COIN = locate(/obj/item/weapon/coin/uranium,src.contents)
 			if("clown")
 				COIN = locate(/obj/item/weapon/coin/clown,src.contents)
-			if("adamantine")
-				COIN = locate(/obj/item/weapon/coin/adamantine,src.contents)
+			if("platinum")
+				COIN = locate(/obj/item/weapon/coin/platinum,src.contents)
 		if(!COIN)
 			return
 		COIN.loc = src.loc
@@ -111,4 +110,4 @@
 	new /obj/item/weapon/coin/silver(src)
 	new /obj/item/weapon/coin/gold(src)
 	new /obj/item/weapon/coin/gold(src)
-	new /obj/item/weapon/coin/adamantine(src)
+	new /obj/item/weapon/coin/platinum(src)

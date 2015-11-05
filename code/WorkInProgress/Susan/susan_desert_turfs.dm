@@ -144,7 +144,7 @@ turf/simulated/wall/impassable_rock
 	..()
 	linked_node = node
 	if(istype(loc, /turf/space))
-		del(src)
+		qdel(src)
 		return
 	if(icon_state == "flesh")icon_state = pick("flesh", "flesh1", "flesh2")
 	spawn(rand(150, 200))
@@ -159,7 +159,7 @@ turf/simulated/wall/impassable_rock
 	if (locate(/obj/movable, U))
 		U = locate(/obj/movable, U)
 		if(U.density == 1)
-			del(src)
+			qdel(src)
 			return
 
 Alien plants should do something if theres a lot of poison
@@ -169,7 +169,7 @@ Alien plants should do something if theres a lot of poison
 		return
 */
 	if (istype(U, /turf/space))
-		del(src)
+		qdel(src)
 		return
 
 	direction_loop:
@@ -195,13 +195,13 @@ Alien plants should do something if theres a lot of poison
 /obj/effect/alien/flesh/weeds/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			del(src)
+			qdel(src)
 		if(2.0)
 			if (prob(50))
-				del(src)
+				qdel(src)
 		if(3.0)
 			if (prob(5))
-				del(src)
+				qdel(src)
 	return
 
 /obj/effect/alien/flesh/weeds/attackby(var/obj/item/weapon/W, var/mob/user)
@@ -224,7 +224,7 @@ Alien plants should do something if theres a lot of poison
 
 /obj/effect/alien/flesh/weeds/proc/healthcheck()
 	if(health <= 0)
-		del(src)
+		qdel(src)
 
 
 /obj/effect/alien/flesh/weeds/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
@@ -235,7 +235,7 @@ Alien plants should do something if theres a lot of poison
 /*/obj/effect/alien/weeds/burn(fi_amount)
 	if (fi_amount > 18000)
 		spawn( 0 )
-			del(src)
+			qdel(src)
 			return
 		return 0
 	return 1
@@ -361,7 +361,7 @@ Alien plants should do something if theres a lot of poison
 		playsound(loc, 'sound/voice/hiss6.ogg', 80, 1, 1)
 		var/turf/Ts = get_turf(src)
 		new /obj/effect/decal/cleanable/blood(Ts)
-		del(src)
+		qdel(src)
 
 	seek_target()
 		src.anchored = 0
@@ -449,7 +449,7 @@ Alien plants should do something if theres a lot of poison
 		if(!A)	return
 
 		if (!istype(target, /turf))
-			del(A)
+			qdel(A)
 			return
 		A.current = target
 		A.yo = target:y - start:y

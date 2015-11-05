@@ -77,8 +77,8 @@
 			icon_state = "screwdriver7"
 			item_state = "screwdriver_yellow"
 
-	//if (prob(75))
-	//	src.pixel_y = rand(0, 16)
+	if (prob(75))
+		src.pixel_y = rand(0, 16)
 	return
 
 /obj/item/weapon/screwdriver/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
@@ -134,6 +134,7 @@
 	icon_state = "welder"
 	flags = FPRINT | TABLEPASS| CONDUCT
 	slot_flags = SLOT_BELT
+	action_button_name = "Switch Welding tool"
 
 	//Amount of OUCH when it's thrown
 	force = 3.0
@@ -271,6 +272,14 @@
 			if(isliving(O))				//Welding can ignite mobs, splashed with fuel
 				var/mob/living/L = O
 				L.IgniteMob()
+		if(isturf(O))
+			var/datum/effect/effect/system/spark_spread/s = PoolOrNew(/datum/effect/effect/system/spark_spread)
+			s.set_up(3, 1, O)
+			s.start()
+		else if(isobj(O))
+			var/datum/effect/effect/system/spark_spread/s = PoolOrNew(/datum/effect/effect/system/spark_spread)
+			s.set_up(3, 1, O)
+			s.start()
 	return
 
 

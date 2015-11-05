@@ -70,11 +70,11 @@ turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh, atom/fir
 	var/turf/simulated/S = loc
 
 	if(!istype(S))
-		del src
+		qdel(src)
 		return
 
 	if(!S.zone)
-		del src
+		qdel(src)
 		return
 
 	var/datum/gas_mixture/air_contents = S.return_air()
@@ -95,7 +95,7 @@ turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh, atom/fir
 
 	//check if there is something to combust
 	if(!air_contents.check_combustability(liquid))
-		//del src
+		//qdel(src)
 		RemoveFire()
 		return
 
@@ -168,7 +168,7 @@ turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh, atom/fir
 	..()
 
 	if(!istype(loc, /turf))
-		del src
+		qdel(src)
 
 	dir = pick(cardinal)
 
@@ -179,7 +179,7 @@ turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh, atom/fir
 	firelevel = fl
 	air_master.active_hotspots.Add(src)
 
-/obj/fire/Del()
+/obj/fire/Destroy()
 	if (istype(loc, /turf/simulated))
 		set_light(0)
 
@@ -218,7 +218,7 @@ datum/gas_mixture/proc/zburn(obj/effect/decal/cleanable/liquid_fuel/liquid, forc
 		if(liquid)
 		//Liquid Fuel
 			if(liquid.amount <= 0.1)
-				del liquid
+				qdel(liquid)
 			else
 				total_fuel += liquid.amount
 
@@ -255,12 +255,12 @@ datum/gas_mixture/proc/zburn(obj/effect/decal/cleanable/liquid_fuel/liquid, forc
 
 		if(fuel)
 			fuel.moles -= (fuel.moles * used_fuel_ratio * used_reactants_ratio) * 5 //Fuel burns 5 times as quick
-			if(fuel.moles <= 0) del fuel
+			if(fuel.moles <= 0) qdel(fuel)
 
 		if(liquid)
 			liquid.amount -= (liquid.amount * used_fuel_ratio * used_reactants_ratio) * 5 // liquid fuel burns 5 times as quick
 
-			if(liquid.amount <= 0) del liquid
+			if(liquid.amount <= 0) qdel(liquid)
 
 		//calculate the energy produced by the reaction and then set the new temperature of the mix
 		temperature = (starting_energy + vsc.fire_fuel_energy_release * total_fuel) / heat_capacity()

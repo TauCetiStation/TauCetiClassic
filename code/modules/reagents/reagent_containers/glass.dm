@@ -13,6 +13,8 @@
 	volume = 50
 	flags = FPRINT | TABLEPASS | OPENCONTAINER
 
+	action_button_name = "Switch Lid"
+
 	var/label_text = ""
 
 	var/list/can_be_placed_into = list(
@@ -281,10 +283,10 @@
 	attackby(var/obj/D, mob/user as mob)
 		if(isprox(D))
 			user << "You add [D] to [src]."
-			del(D)
+			qdel(D)
 			user.put_in_hands(new /obj/item/weapon/bucket_sensor)
 			user.drop_from_inventory(src)
-			del(src)
+			qdel(src)
 		if (istype(D, /obj/item/weapon/weldingtool))
 			var/obj/item/weapon/weldingtool/WT = D
 			if(WT.remove_fuel(0,user))
@@ -292,7 +294,7 @@
 				var/obj/item/clothing/head/helmet/battlebucket/BBucket = new(usr.loc)
 				for (var/mob/M in viewers(src))
 					M.show_message("\red [src] is shaped into [BBucket] by [user.name] with the weldingtool.", 3, "\red You hear welding.", 2)
-				del(src)
+				qdel(src)
 			return
 
 	update_icon()

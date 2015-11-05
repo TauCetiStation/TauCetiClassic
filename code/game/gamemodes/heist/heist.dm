@@ -67,7 +67,7 @@ VOX HEIST ROUNDTYPE
 	for(var/obj/effect/landmark/L in landmarks_list)
 		if(L.name == "voxstart")
 			raider_spawn += get_turf(L)
-			del(L)
+			qdel(L)
 			continue
 
 	//Generate objectives for the group.
@@ -152,7 +152,7 @@ VOX HEIST ROUNDTYPE
 
 	var/i = 1
 	//var/max_objectives = pick(2,2,2,2,3,3,3,4)
-	var/max_objectives = 5
+	var/max_objectives = 3
 	var/cur_obj = 0
 	var/list/objs = list()
 	while(i<= max_objectives)
@@ -163,10 +163,6 @@ VOX HEIST ROUNDTYPE
 		if(cur_obj == 2)
 			O = new /datum/objective/heist/loot()
 		if(cur_obj == 3)
-			O = new /datum/objective/heist/loot()
-		if(cur_obj == 4)
-			O = new /datum/objective/heist/loot()
-		if(cur_obj == 5)
 			O = new /datum/objective/heist/salvage()
 		//var/list/goals = list("kidnap","loot","salvage")
 		//var/goal = pick(goals)

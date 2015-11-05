@@ -21,12 +21,13 @@
 		alarmed = 0
 
 /obj/item/weapon/gun/projectile/automatic/mini_uzi
-	name = "Uzi"
-	desc = "A lightweight, fast firing gun, for when you want someone dead. Uses .45 rounds."
-	icon_state = "mini-uzi"
+	name = "Mac-10"
+	desc = "A lightweight, fast firing gun, for when you want someone dead. Uses 9mm rounds."
+	icon_state = "mac"
+	item_state = "mac"
 	w_class = 3.0
 	origin_tech = "combat=5;materials=2;syndicate=8"
-	mag_type = /obj/item/ammo_box/magazine/uzim45
+	mag_type = /obj/item/ammo_box/magazine/uzim9mm
 
 /obj/item/weapon/gun/projectile/automatic/c20r
 	name = "C-20r SMG"
@@ -196,6 +197,20 @@
 		return
 	..()
 
+/obj/item/weapon/gun/projectile/automatic/tommygun
+	name = "thompson SMG"
+	desc = "Based on the classic 'Chicago Typewriter'."
+	icon_state = "tommygun"
+	item_state = "shotgun"
+	w_class = 5
+	slot_flags = 0
+	origin_tech = "combat=5;materials=1;syndicate=2"
+	mag_type = /obj/item/ammo_box/magazine/tommygunm45
+	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
+	//can_suppress = 0
+ 	//burst_size = 4
+ 	//fire_delay = 1
+
 /* The thing I found with guns in ss13 is that they don't seem to simulate the rounds in the magazine in the gun.
    Afaik, since projectile.dm features a revolver, this would make sense since the magazine is part of the gun.
    However, it looks like subsequent guns that use removable magazines don't take that into account and just get
@@ -204,3 +219,87 @@
    rough and poor attempt at making that happen. -Ausops */
 
 /* Where Ausops failed, I have not. -SirBayer */
+
+//=================NEW GUNS=================\\
+/obj/item/weapon/gun/projectile/automatic/l10c
+	name = "L10-c"
+	desc = "A basic energy-based carbine with fast rate of fire."
+	icon = 'icons/obj/gun.dmi'
+	icon_state = "l10-car"
+	item_state = "l10-car"
+	w_class = 4.0
+	origin_tech = "combat=3;magnets=2"
+	mag_type = /obj/item/ammo_box/magazine/l10mag
+	fire_sound = 'sound/weapons/guns/l10c-shot.ogg'
+	recoil = 0
+	energy_gun = 1
+
+/obj/item/weapon/gun/projectile/automatic/l10c/New()
+	..()
+	update_icon()
+	return
+
+/obj/item/weapon/gun/projectile/automatic/l10c/process_chamber()
+	return ..(0, 1, 1)
+
+/obj/item/weapon/gun/projectile/automatic/l10c/afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, flag)
+	..()
+	update_icon(user)
+	return
+
+/obj/item/weapon/gun/projectile/automatic/l10c/attack_self(mob/user as mob)
+	if(magazine && magazine.ammo_count())
+		playsound(user, 'sound/weapons/guns/l10c-unload.ogg', 70, 1)
+	if(chambered)
+		var/obj/item/ammo_casing/AC = chambered //Find chambered round
+		qdel(AC)
+		chambered = null
+		magazine.stored_ammo += new magazine.ammo_type(magazine)
+	if (magazine)
+		magazine.loc = get_turf(src.loc)
+		user.put_in_hands(magazine)
+		magazine.update_icon()
+		magazine = null
+		user << "<span class='notice'>You pull the magazine out of \the [src]!</span>"
+	else
+		user << "<span class='notice'>There's no magazine in \the [src].</span>"
+	update_icon(user)
+	return
+
+/obj/item/weapon/gun/projectile/automatic/l10c/attackby(var/obj/item/A as obj, mob/user as mob)
+	if (istype(A, /obj/item/ammo_box/magazine))
+		var/obj/item/ammo_box/magazine/AM = A
+		if (!magazine && istype(AM, mag_type))
+			user.remove_from_mob(AM)
+			magazine = AM
+			magazine.loc = src
+			user << "<span class='notice'>You load a new magazine into \the [src].</span>"
+			if(AM.ammo_count())
+				playsound(user, 'sound/weapons/guns/l10c-load.ogg', 70, 1)
+			chamber_round()
+			A.update_icon()
+			update_icon(user)
+			return 1
+		else if (magazine)
+			user << "<span class='notice'>There's already a magazine in \the [src].</span>"
+	return 0
+
+/obj/item/weapon/gun/projectile/automatic/l10c/update_icon(var/mob/M)
+	if(!magazine)
+		icon_state = "[initial(icon_state)]-e"
+		item_state = "[initial(item_state)]-e"
+	else if(chambered)
+		icon_state = "[initial(icon_state)]"
+		item_state = "[initial(item_state)]"
+	else if(magazine && magazine.ammo_count())
+		icon_state = "[initial(icon_state)]"
+		item_state = "[initial(item_state)]"
+	else
+		icon_state = "[initial(icon_state)]-0"
+		item_state = "[initial(item_state)]-0"
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		H.update_inv_l_hand(1)
+		H.update_inv_r_hand(1)
+		H.update_inv_belt(1)
+	return

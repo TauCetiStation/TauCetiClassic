@@ -883,7 +883,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		j = prob(10)
 
 	if(j) //This kills the PDA
-		P.Del()
+		P.Destroy()
 		if(message)
 			message += "It melts in a puddle of plastic."
 		else
@@ -1004,6 +1004,20 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	else
 		U << "<span class='notice'>ERROR: Messaging server is not responding.</span>"
 
+/obj/item/device/pda/verb/verb_reset_pda()
+	set category = "Object"
+	set name = "Reset PDA"
+	set src in usr
+
+	if(issilicon(usr))
+		return
+
+	if(can_use(usr))
+		mode = 0
+		nanomanager.update_uis(src)
+		usr << "<span class='notice'>You press the reset button on \the [src].</span>"
+	else
+		usr << "<span class='notice'>You cannot do this while restrained.</span>"
 
 /obj/item/device/pda/verb/verb_remove_id()
 	set category = "Object"
@@ -1038,6 +1052,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				if(M.get_active_hand() == null)
 					M.put_in_hands(O)
 					usr << "<span class='notice'>You remove \the [O] from \the [src].</span>"
+					playsound(src, 'tauceti/sounds/items/penclick.ogg', 20, 1, 1)
 					return
 			O.loc = get_turf(src)
 		else
@@ -1153,7 +1168,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				if ( !(C:blood_DNA) )
 					user << "\blue No blood found on [C]"
 					if(C:blood_DNA)
-						del(C:blood_DNA)
+						qdel(C:blood_DNA)
 				else
 					user << "\blue Blood found on [C]. Analysing..."
 					spawn(15)
@@ -1259,7 +1274,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		explosion(T, 0, 0, 1, rand(1,2))
 	return
 
-/obj/item/device/pda/Del()
+/obj/item/device/pda/Destroy()
 	PDAs -= src
 	if (src.id && prob(90)) //IDs are kept in 90% of the cases
 		src.id.loc = get_turf(src.loc)

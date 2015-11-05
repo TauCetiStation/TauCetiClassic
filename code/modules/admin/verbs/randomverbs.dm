@@ -604,6 +604,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!holder)
 		src << "Only administrators may use this command."
 		return
+	if(!check_rights(R_REJUVINATE)) return
 	if(!mob)
 		return
 	if(!istype(M))
@@ -799,8 +800,8 @@ Traitors and the like can also be revived with the previous role mostly intact.
 			log_admin("[usr.client.ckey] has banned [M.ckey].\nReason: [reason]\nThis will be removed in [mins] minutes.")
 			message_admins("\blue[usr.client.ckey] has banned [M.ckey].\nReason: [reason]\nThis will be removed in [mins] minutes.")
 			world.Export("http://216.38.134.132/adminlog.php?type=ban&key=[usr.client.key]&key2=[M.key]&msg=[html_decode(reason)]&time=[mins]&server=[replacetext(config.server_name, "#", "")]")
-			del(M.client)
-			del(M)
+			qdel(M.client)
+			qdel(M)
 		else
 
 	if("No")
@@ -814,8 +815,8 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		log_admin("[usr.client.ckey] has banned [M.ckey].\nReason: [reason]\nThis is a permanent ban.")
 		message_admins("\blue[usr.client.ckey] has banned [M.ckey].\nReason: [reason]\nThis is a permanent ban.")
 		world.Export("http://216.38.134.132/adminlog.php?type=ban&key=[usr.client.key]&key2=[M.key]&msg=[html_decode(reason)]&time=perma&server=[replacetext(config.server_name, "#", "")]")
-		del(M.client)
-		del(M)
+		qdel(M.client)
+		qdel(M)
 */
 
 /client/proc/update_world()

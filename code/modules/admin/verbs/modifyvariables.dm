@@ -459,7 +459,7 @@ var/list/forbidden_varedit_object_types = list(
 				if((O.vars[variable] == 2) && (var_new < 2))//Bringing the dead back to life
 					dead_mob_list -= O
 					living_mob_list += O
-				if((O.vars[variable] < 2) && (var_new == 2))//Kill he
+				if((O.vars[variable] < 2) && (var_new == 2))//Kill him
 					living_mob_list -= O
 					dead_mob_list += O
 				O.vars[variable] = var_new

@@ -129,7 +129,7 @@
 		var/obj/item/stack/sheet/metal/M = W
 		user << "\blue You insert all the metal into the machine."
 		metal_amount += M.amount * 100
-		del(M)
+		qdel(M)
 
 	else
 		return attack_hand(user)

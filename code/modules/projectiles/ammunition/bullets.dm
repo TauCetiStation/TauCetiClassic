@@ -28,6 +28,11 @@
 	caliber = "9mm"
 	projectile_type = "/obj/item/projectile/bullet/midbullet2"
 
+/obj/item/ammo_casing/c9mmr
+	desc = "A 9mm rubber bullet casing."
+	caliber = "9mm"
+	projectile_type = "/obj/item/projectile/bullet/weakbullet/rubber"
+
 /obj/item/ammo_casing/c45
 	desc = "A .45 bullet casing."
 	caliber = ".45"
@@ -92,6 +97,19 @@
 	caliber = "a762"
 	projectile_type = "/obj/item/projectile/bullet/a762"
 
+/obj/item/ammo_casing/a145
+	desc = "A 14.5mm shell."
+	icon_state = "lcasing"
+	caliber = "14.5mm"
+	projectile_type = /obj/item/projectile/bullet/heavy/a145
+
+/obj/item/ammo_casing/r4046
+	name = "A 40x46mm grenade"
+	desc = "A 40x46mm grenade (rubber)."
+	icon_state = "40x46"
+	caliber = "40x46"
+	projectile_type = /obj/item/projectile/bullet/grenade/r4046
+
 /obj/item/ammo_casing/caseless
 	desc = "A caseless bullet casing."
 
@@ -128,3 +146,8 @@
 	desc = "A set of bullets for the Chameleon Gun."
 	projectile_type = "/obj/item/projectile/bullet/chameleon"
 	caliber = ".45"
+
+//=================NEW PROJECTILE HOLDERS=================\\
+/obj/item/ammo_casing/l10
+	caliber = "energy"
+	projectile_type = "/obj/item/projectile/l10"

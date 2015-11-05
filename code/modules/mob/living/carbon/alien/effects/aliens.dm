@@ -57,7 +57,7 @@
 	var/turf/T = get_turf(src)
 	T.thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
 
-/obj/effect/alien/resin/Del()
+/obj/effect/alien/resin/Destroy()
 	var/turf/T = get_turf(src)
 	T.thermal_conductivity = initial(T.thermal_conductivity)
 	..()
@@ -65,7 +65,7 @@
 /obj/effect/alien/resin/proc/healthcheck()
 	if(health <=0)
 		density = 0
-		del(src)
+		qdel(src)
 	return
 
 /obj/effect/alien/resin/bullet_act(var/obj/item/projectile/Proj)
@@ -162,7 +162,7 @@
 					if (O.client)
 						O << text("\green [] places [] in the resin wall!", G.assailant, G.affecting)
 				affecting=G.affecting
-				del(W)
+				qdel(W)
 				spawn(0)
 					process()
 			else
@@ -214,7 +214,7 @@
 /obj/effect/alien/weeds/New(pos, node)
 	..()
 	if(istype(loc, /turf/space))
-		del(src)
+		qdel(src)
 		return
 	linked_node = node
 	if(icon_state == "weeds")icon_state = pick("weeds", "weeds1", "weeds2")
@@ -230,7 +230,7 @@
 	if (locate(/obj/movable, U))
 		U = locate(/obj/movable, U)
 		if(U.density == 1)
-			del(src)
+			qdel(src)
 			return
 
 Alien plants should do something if theres a lot of poison
@@ -240,7 +240,7 @@ Alien plants should do something if theres a lot of poison
 		return
 */
 	if (istype(U, /turf/space))
-		del(src)
+		qdel(src)
 		return
 
 	if(!linked_node || (get_dist(linked_node, src) > linked_node.node_range) )
@@ -260,19 +260,19 @@ Alien plants should do something if theres a lot of poison
 				if(O.density)
 					continue direction_loop
 
-			new /obj/effect/alien/weeds(T, linked_node)
+			PoolOrNew(/obj/effect/alien/weeds, T, linked_node)
 
 
 /obj/effect/alien/weeds/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			del(src)
+			qdel(src)
 		if(2.0)
 			if (prob(50))
-				del(src)
+				qdel(src)
 		if(3.0)
 			if (prob(5))
-				del(src)
+				qdel(src)
 	return
 
 /obj/effect/alien/weeds/attackby(var/obj/item/weapon/W, var/mob/user)
@@ -301,7 +301,7 @@ Alien plants should do something if theres a lot of poison
 
 /obj/effect/alien/weeds/proc/healthcheck()
 	if(health <= 0)
-		del(src)
+		qdel(src)
 
 
 /obj/effect/alien/weeds/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
@@ -312,7 +312,7 @@ Alien plants should do something if theres a lot of poison
 /*/obj/effect/alien/weeds/burn(fi_amount)
 	if (fi_amount > 18000)
 		spawn( 0 )
-			del(src)
+			qdel(src)
 			return
 		return 0
 	return 1
@@ -351,7 +351,7 @@ Alien plants should do something if theres a lot of poison
 
 /obj/effect/alien/acid/proc/tick()
 	if(!target)
-		del(src)
+		qdel(src)
 
 	ticks += 1
 
@@ -368,8 +368,8 @@ Alien plants should do something if theres a lot of poison
 			VP.welded = 0
 			VP.update_icon()
 		else
-			del(target)
-		del(src)
+			qdel(target)
+		qdel(src)
 		return
 
 	switch(target_strength - ticks)

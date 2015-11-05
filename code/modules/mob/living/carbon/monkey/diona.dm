@@ -12,6 +12,7 @@
 	var/ready_evolve = 0
 	universal_understand = 0 // Dionaea do not need to speak to people
 	universal_speak = 0      // before becoming an adult. Use *chirp.
+	holder_type = /obj/item/weapon/holder/diona
 
 /mob/living/carbon/monkey/diona/attack_hand(mob/living/carbon/human/M as mob)
 
@@ -23,15 +24,6 @@
 			src.verbs += /mob/living/carbon/monkey/diona/proc/split
 			src.verbs -= /mob/living/carbon/monkey/diona/proc/merge
 			src.loc = M
-		else
-			var/obj/item/weapon/holder/diona/D = new(loc)
-			src.loc = D
-			D.name = loc.name
-			D.attack_hand(M)
-			M << "You scoop up [src]."
-			src << "[M] scoops you up."
-		M.status_flags |= PASSEMOTES
-		return
 
 	..()
 
@@ -171,7 +163,7 @@
 	if(istype(loc,/obj/item/weapon/holder/diona))
 		var/obj/item/weapon/holder/diona/L = loc
 		src.loc = L.loc
-		del(L)
+		qdel(L)
 
 	for(var/datum/language/L in languages)
 		adult.add_language(L.name)
@@ -183,7 +175,7 @@
 
 	for (var/obj/item/W in src.contents)
 		src.drop_from_inventory(W)
-	del(src)
+	qdel(src)
 
 /mob/living/carbon/monkey/diona/verb/steal_blood()
 	set category = "Diona"

@@ -132,7 +132,8 @@ var/list/mechtoys = list(
 	var/points_per_process = 1
 	var/points_per_slip = 2
 	var/points_per_crate = 5
-	var/phoron_per_point = 2 // 2 phoron for 1 point
+	var/points_per_platinum = 5 // 5 points per sheet
+	var/points_per_phoron = 5
 	//control
 	var/ordernum
 	var/list/shoppinglist = list()
@@ -198,6 +199,7 @@ var/list/mechtoys = list(
 	//Check whether the shuttle is allowed to move
 	proc/can_move()
 		if(moving) return 0
+		if(!at_station) return 1
 
 		var/area/shuttle = locate(/area/supply/station)
 		if(!shuttle) return 0
@@ -233,6 +235,7 @@ var/list/mechtoys = list(
 		if(!shuttle)	return
 
 		var/phoron_count = 0
+		var/plat_count = 0
 
 		for(var/atom/movable/MA in shuttle)
 			if(MA.anchored)	continue
@@ -258,10 +261,19 @@ var/list/mechtoys = list(
 					if(istype(A, /obj/item/stack/sheet/mineral/phoron))
 						var/obj/item/stack/sheet/mineral/phoron/P = A
 						phoron_count += P.amount
+
+					// Sell platinum
+					if(istype(A, /obj/item/stack/sheet/mineral/platinum))
+						var/obj/item/stack/sheet/mineral/platinum/P = A
+						plat_count += P.amount
+
 			qdel(MA)
 
 		if(phoron_count)
-			points += Floor(phoron_count / phoron_per_point)
+			points += phoron_count * points_per_phoron
+
+		if(plat_count)
+			points += plat_count * points_per_platinum
 
 	//Buyin
 	proc/buy()
@@ -334,6 +346,7 @@ var/list/mechtoys = list(
 			slip.info += "</ul><br>"
 			slip.info += "CHECK CONTENTS AND STAMP BELOW THE LINE TO CONFIRM RECEIPT OF GOODS<hr>"
 			if (SP.contraband) slip.loc = null	//we are out of blanks for Form #44-D Ordering Illicit Drugs.
+			score["stuffshipped"]++
 
 		supply_shuttle.shoppinglist.Cut()
 		return

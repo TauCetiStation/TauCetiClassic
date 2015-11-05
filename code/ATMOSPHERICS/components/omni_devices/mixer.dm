@@ -46,7 +46,7 @@
 			tag_east_con = null
 			tag_west_con = null
 
-/obj/machinery/atmospherics/omni/mixer/Del()
+/obj/machinery/atmospherics/omni/mixer/Destroy()
 	inputs.Cut()
 	output = null
 	..()

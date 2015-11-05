@@ -25,4 +25,4 @@
 
 /datum/event/anomaly_pyro/end()
 	if(newAnomaly)//Kill the anomaly if it still exists at the end.
-		del(newAnomaly)
+		qdel(newAnomaly)

@@ -156,7 +156,7 @@
 			user << "[msg2]"
 
 	// OTHER
-	else if ((istype(W, /obj/item/weapon/paper) || istype(W, /obj/item/device/pda)) && isliving(user))
+	else if ((istype(W, /obj/item/weapon/paper) && !(W:crumpled==1) || istype(W, /obj/item/device/pda)) && isliving(user))
 		var/mob/living/U = user
 		var/obj/item/weapon/paper/X = null
 		var/obj/item/device/pda/P = null
@@ -193,15 +193,23 @@
 		else
 			user << "\blue Camera bugged."
 			src.bugged = 1
-	else if(istype(W, /obj/item/weapon/melee/energy/blade))//Putting it here last since it's a special case. I wonder if there is a better way to do these than type casting.
-		deactivate(user,2)//Here so that you can disconnect anyone viewing the camera, regardless if it's on or off.
-		var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
-		spark_system.set_up(5, 0, loc)
-		spark_system.start()
-		playsound(loc, 'sound/weapons/blade1.ogg', 50, 1)
-		playsound(loc, "sparks", 50, 1)
-		visible_message("\blue The camera has been sliced apart by [] with an energy blade!")
-		qdel(src)
+	else if(istype(W, /obj/item/weapon/melee/energy))//Putting it here last since it's a special case. I wonder if there is a better way to do these than type casting.
+		if(W:force > 3)
+			user.do_attack_animation(src)
+			deactivate(user,2)//Here so that you can disconnect anyone viewing the camera, regardless if it's on or off.
+			var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
+			spark_system.set_up(5, 0, loc)
+			spark_system.start()
+			playsound(loc, 'sound/weapons/blade1.ogg', 50, 1)
+			playsound(loc, "sparks", 50, 1)
+			visible_message("\blue The camera has been sliced apart by [user] with [W]!")
+			new /obj/item/weapon/camera_assembly(src.loc)
+			pick(new /obj/item/weapon/cable_coil(src.loc),
+				 new /obj/item/weapon/cable_coil/cut(src.loc))
+			qdel(src)
+		else
+			..()
+
 	else
 		..()
 	return

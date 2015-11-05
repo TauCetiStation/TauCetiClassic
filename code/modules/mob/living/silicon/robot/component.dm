@@ -29,7 +29,7 @@
 		var/obj/item/robot_parts/robot_component/comp = wrapped
 		brokenstate = comp.icon_state_broken
 	if(wrapped)
-		del wrapped
+		qdel(wrapped)
 
 
 	wrapped = new/obj/item/broken_device
@@ -75,7 +75,7 @@
 /datum/robot_component/armour
 	name = "armour plating"
 	external_type = /obj/item/robot_parts/robot_component/armour
-	max_damage = 60
+	max_damage = 100
 
 
 // ACTUATOR

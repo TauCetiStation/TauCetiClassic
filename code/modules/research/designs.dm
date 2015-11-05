@@ -709,7 +709,7 @@ datum/design/vindicator_peri
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/mecha/vindicator/peripherals"
 
-datum/design/durand_targ
+datum/design/vindicator_targ
 	name = "Circuit Design (\"Vindicator\" Weapons & Targeting Control module)"
 	desc = "Allows for the construction of a \"Vindicator\" Weapons & Targeting Control module."
 	id = "vindicator_targ"
@@ -717,7 +717,7 @@ datum/design/durand_targ
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/mecha/vindicator/targeting"
-
+/*
 datum/design/honker_main
 	name = "Circuit Design (\"H.O.N.K\" Central Control module)"
 	desc = "Allows for the construction of a \"H.O.N.K\" Central Control module."
@@ -743,7 +743,7 @@ datum/design/honker_targ
 	req_tech = list("programming" = 3)
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
-	build_path = "/obj/item/weapon/circuitboard/mecha/honker/targeting"
+	build_path = "/obj/item/weapon/circuitboard/mecha/honker/targeting"*/
 
 datum/design/ultra_main
 	name = "Circuit Design (\"Gygax Ultra\" Central Control module)"
@@ -1963,3 +1963,31 @@ datum/design/cart_captain
 	materials = list("$metal" = 50, "$glass" = 50)
 	build_path = "/obj/item/weapon/cartridge/captain"
 	locked = 1
+
+///////////////////////////////
+/////////////New stuff/////////
+///////////////////////////////
+datum/design/beacon_warp
+	name = "Medical Tracking Beacon"
+	desc = "A beacon used by a body teleporter."
+	id = "beacon_warp"
+	req_tech = list("materials" = 2)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 10000)
+	build_path = "/obj/item/device/beacon/medical"
+
+datum/design/body_warp
+	name = "Medical Body Teleporter Device"
+	desc = "A device used for teleporting injured or dead people."
+	id = "body_warp"
+	req_tech = list("materials" = 2)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 3500, "$glass" = 3500)
+	build_path = "/obj/item/weapon/medical/teleporter"
+
+datum/design/spraycan
+	name = "Spraycan"
+	id = "spraycan"
+	build_type = AUTOLATHE
+	materials = list("$metal" = 100, "$glass" = 100)
+	build_path = "/obj/item/toy/crayon/spraycan"

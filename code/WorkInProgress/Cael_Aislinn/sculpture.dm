@@ -140,7 +140,7 @@
 				//chance to allow the stranglee to escape
 				allow_escape = 1
 			if(G.affecting.stat == 2)
-				del G
+				qdel(G)
 		else if(!G)
 			//see if we're able to strangle anyone
 			var/turf/myTurf = get_turf(src)

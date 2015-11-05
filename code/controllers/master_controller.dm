@@ -34,6 +34,8 @@ datum/controller/game_controller
 	var/mob/list/expensive_mobs = list()
 	var/rebuild_active_areas = 0
 
+	var/datum/ore_distribution/asteroid_ore_map // For debugging and VV.
+
 
 datum/controller/game_controller/New()
 	//There can be only one master_controller. Out with the old and in with the new.
@@ -41,7 +43,7 @@ datum/controller/game_controller/New()
 		log_debug("Rebuilding Master Controller")
 		if(istype(master_controller))
 			Recover()
-			del(master_controller)
+			qdel(master_controller)
 		master_controller = src
 
 	if(!job_master)
@@ -57,7 +59,7 @@ datum/controller/game_controller/New()
 datum/controller/game_controller/proc/setup()
 	world.tick_lag = config.Ticklag
 
-	//spawn(20) Gateway lighting broken after new object lighting update 
+	//spawn(20) Gateway lighting broken after new object lighting update
 	//	createRandomZlevel()
 
 	if(!air_master)
@@ -78,6 +80,9 @@ datum/controller/game_controller/proc/setup()
 	for(var/i=0, i<max_secret_rooms, i++)
 		make_mining_asteroid_secret()
 
+//Create the mining ore distribution map.
+	asteroid_ore_map = new /datum/ore_distribution()
+	asteroid_ore_map.populate_distribution_map()
 	spawn(0)
 		if(ticker)
 			ticker.pregame()
@@ -217,14 +222,8 @@ datum/controller/game_controller/proc/process()
 				ticker.process()
 				ticker_cost = (world.timeofday - timer) / 10
 
-				//GC
-				timer = world.timeofday
-				last_thing_processed = garbage.type
-				garbage.process()
-				gc_cost = (world.timeofday - timer) / 10
-
 				//TIMING
-				total_cost = air_cost + sun_cost + mobs_cost + diseases_cost + machines_cost + objects_cost + networks_cost + powernets_cost + nano_cost + events_cost + ticker_cost + gc_cost
+				total_cost = air_cost + sun_cost + mobs_cost + diseases_cost + machines_cost + objects_cost + networks_cost + powernets_cost + nano_cost + events_cost + ticker_cost
 
 				var/end_time = world.timeofday
 				if(end_time < start_time)
@@ -238,7 +237,7 @@ datum/controller/game_controller/proc/process_mobs()
 	expensive_mobs.Cut()
 	while(i<=mob_list.len)
 		var/mob/M = mob_list[i]
-		if(M && !M.gc_destroyed)
+		if(M && !M.gcDestroyed)
 			var/clock = world.timeofday
 			last_thing_processed = M.type
 			M.Life()
@@ -267,7 +266,7 @@ datum/controller/game_controller/proc/process_machines_process()
 	var/i = 1
 	while(i<=machines.len)
 		var/obj/machinery/Machine = machines[i]
-		if(Machine && !Machine.gc_destroyed)
+		if(Machine && !Machine.gcDestroyed)
 			last_thing_processed = Machine.type
 			if(Machine.process() != PROCESS_KILL)
 				if(Machine)
@@ -306,7 +305,7 @@ datum/controller/game_controller/proc/process_objects()
 	var/i = 1
 	while(i<=processing_objects.len)
 		var/obj/Object = processing_objects[i]
-		if(Object && !Object.gc_destroyed)
+		if(Object && !Object.gcDestroyed)
 			last_thing_processed = Object.type
 			Object.process()
 			i++

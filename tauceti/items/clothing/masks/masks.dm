@@ -2,12 +2,13 @@
 /obj/item/clothing/mask/gas/sechailer
 	name = "security gas mask"
 	desc = "A standard issue Security gas mask with integrated 'Compli-o-nator 3000' device, plays over a dozen pre-recorded compliance phrases designed to get scumbags to stand still whilst you taze them. Do not tamper with the device."
-	icon_action_button = "action_hardhat"
+	action_button_name = "Toggle Mask"
 	icon = 'tauceti/items/clothing/masks/sec_maskTG.dmi'
 	icon_state = "officermask"
 	tc_custom = 'tauceti/items/clothing/masks/sec_maskTG.dmi'
 	var/cooldown = 0
 	var/aggressiveness = 2
+	flags = FPRINT | TABLEPASS | MASKCOVERSMOUTH | MASKCOVERSEYES | BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS | BLOCKHAIR
 
 /obj/item/clothing/mask/gas/sechailer/warden
 	icon_state = "wardenmask"

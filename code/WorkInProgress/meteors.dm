@@ -110,13 +110,13 @@
 			if(prob(15))// && !istype(A, /obj/structure/grille))
 				explosion(get_turf(src), 4, 5, 6, 7, 0)
 				playsound(get_turf(src), "explosion", 50, 1)
-			del(src)
+			qdel(src)
 	return
 
 
 /obj/effect/meteor/ex_act(severity)
 	spawn(0)
-		del(src)
+		qdel(src)
 	return
 
 /obj/effect/meteor/big
@@ -133,7 +133,7 @@
 					shake_camera(M, 3, 1)
 			if (A)
 				if(isobj(A))
-					del(A)
+					qdel(A)
 				else
 					A.meteorhit(src)
 				src.hits--
@@ -143,11 +143,11 @@
 				if(prob(15) && !istype(A, /obj/structure/grille))
 					explosion(get_turf(src), 1, 2, 3, 4, 0)
 					playsound(get_turf(src), "explosion", 50, 1)
-				del(src)
+				qdel(src)
 		return
 
 /obj/effect/meteor/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/pickaxe))
-		del(src)
+		qdel(src)
 		return
 	..()

@@ -25,7 +25,7 @@
 			else
 				src.amount += W.amount
 				//W = null
-				del(W)
+				qdel(W)
 			add_fingerprint(user)
 			if (W)
 				W.add_fingerprint(user)
@@ -56,7 +56,7 @@
 		if ( !M.blood_DNA || !M.blood_DNA.len )
 			user << "\blue No blood found on [M]"
 			if(M.blood_DNA)
-				del(M.blood_DNA)
+				qdel(M.blood_DNA)
 		else
 			user << "\blue Blood found on [M]. Analysing..."
 			spawn(15)
@@ -103,7 +103,7 @@
 		//PRINTS
 		if(!A.fingerprints || !A.fingerprints.len)
 			if(A.fingerprints)
-				del(A.fingerprints)
+				qdel(A.fingerprints)
 		else
 			user << "\blue Isolated [A.fingerprints.len] fingerprints: Data Stored: Scan with Hi-Res Forensic Scanner to retrieve."
 			var/list/complete_prints = list()

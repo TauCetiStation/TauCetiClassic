@@ -116,7 +116,7 @@
 		user.drop_item()
 		var/obj/item/weapon/card/emag_broken/junk = new(user.loc)
 		junk.add_fingerprint(user)
-		del(src)
+		qdel(src)
 		return
 
 	..()
@@ -126,6 +126,7 @@
 	desc = "A card used to provide ID and determine access across the station."
 	icon_state = "id"
 	item_state = "card-id"
+	var/mining_points = 0 //For redeeming at mining equipment lockers
 	var/access = list()
 	var/registered_name = "Unknown" // The name registered_name on the card
 	slot_flags = SLOT_ID
@@ -154,6 +155,11 @@
 	src.add_fingerprint(user)
 	return
 
+/obj/item/weapon/card/id/examine()
+	..()
+	if(mining_points)
+		usr << "There's [mining_points] mining equipment redemption points loaded onto this card."
+
 /obj/item/weapon/card/id/GetAccess()
 	return access
 
@@ -168,7 +174,7 @@
 		src.desc = W.desc
 		src.icon = W.icon
 		src.icon_state = W.icon_state
-		del(W)
+		qdel(W)
 		return
 
 /obj/item/weapon/card/id/verb/read()

@@ -18,6 +18,9 @@
 
 
 /mob/living/bullet_act(var/obj/item/projectile/P, var/def_zone)
+	flash_weak_pain()
+
+	//Being hit while using a cloaking device
 	var/obj/item/weapon/cloaking_device/C = locate((/obj/item/weapon/cloaking_device) in src)
 	if(C && C.active)
 		C.attack_self(src)//Should shut it off
@@ -25,8 +28,7 @@
 		src << "\blue Your [C.name] was disrupted!"
 		Stun(2)
 
-	flash_weak_pain()
-
+	//Being hit while using a deadman switch
 	if(istype(equipped(),/obj/item/device/assembly/signaler))
 		var/obj/item/device/assembly/signaler/signaler = equipped()
 		if(signaler.deadman && prob(80))
@@ -139,7 +141,7 @@
 		update_fire()
 
 /mob/living/proc/adjust_fire_stacks(add_fire_stacks) //Adjusting the amount of fire_stacks we have on person
-    fire_stacks = Clamp(fire_stacks + add_fire_stacks, min = -20, max = 20)
+    fire_stacks = Clamp(fire_stacks + add_fire_stacks, -20, 20)
 
 /mob/living/proc/handle_fire()
 	if(fire_stacks < 0)
@@ -151,6 +153,10 @@
 	if(G.oxygen < 1)
 		ExtinguishMob() //If there's no oxygen in the tile we're on, put out the fire
 		return
+	for(var/obj/item/I in contents)
+		if(I.wet)
+			ExtinguishMob()
+			break
 	if(fire_stacks == 0)
 		ExtinguishMob() //If there's no oxygen in the tile we're on, put out the fire
 		return
@@ -162,3 +168,77 @@
 	IgniteMob()
 
 //Mobs on Fire end
+
+/mob/living/regular_hud_updates()
+	..()
+	update_action_buttons()
+
+/mob/living/proc/handle_actions()
+	//Pretty bad, i'd use picked/dropped instead but the parent calls in these are nonexistent
+	for(var/datum/action/A in actions)
+		if(A.CheckRemoval(src))
+			A.Remove(src)
+	for(var/obj/item/I in src)
+		if(I.action_button_name)
+			if(!I.action)
+				if(I.action_button_is_hands_free)
+					I.action = new/datum/action/item_action/hands_free
+				else
+					I.action = new/datum/action/item_action
+				I.action.name = I.action_button_name
+				I.action.target = I
+			I.action.Grant(src)
+	return
+
+/mob/living/update_action_buttons()
+	if(!hud_used) return
+	if(!client) return
+
+	if(hud_used.hud_shown != 1)	//Hud toggled to minimal
+		return
+
+	client.screen -= hud_used.hide_actions_toggle
+	for(var/datum/action/A in actions)
+		if(A.button)
+			client.screen -= A.button
+
+	if(hud_used.action_buttons_hidden)
+		if(!hud_used.hide_actions_toggle)
+			hud_used.hide_actions_toggle = new(hud_used)
+			hud_used.hide_actions_toggle.UpdateIcon()
+
+		if(!hud_used.hide_actions_toggle.moved)
+			hud_used.hide_actions_toggle.screen_loc = hud_used.ButtonNumberToScreenCoords(1)
+			//hud_used.SetButtonCoords(hud_used.hide_actions_toggle,1)
+
+		client.screen += hud_used.hide_actions_toggle
+		return
+
+	var/button_number = 0
+	for(var/datum/action/A in actions)
+		button_number++
+		if(A.button == null)
+			var/obj/screen/movable/action_button/N = new(hud_used)
+			N.owner = A
+			A.button = N
+
+		var/obj/screen/movable/action_button/B = A.button
+
+		B.UpdateIcon()
+
+		B.name = A.UpdateName()
+
+		client.screen += B
+
+		if(!B.moved)
+			B.screen_loc = hud_used.ButtonNumberToScreenCoords(button_number)
+			//hud_used.SetButtonCoords(B,button_number)
+
+	if(button_number > 0)
+		if(!hud_used.hide_actions_toggle)
+			hud_used.hide_actions_toggle = new(hud_used)
+			hud_used.hide_actions_toggle.InitialiseIcon(src)
+		if(!hud_used.hide_actions_toggle.moved)
+			hud_used.hide_actions_toggle.screen_loc = hud_used.ButtonNumberToScreenCoords(button_number+1)
+			//hud_used.SetButtonCoords(hud_used.hide_actions_toggle,button_number+1)
+		client.screen += hud_used.hide_actions_toggle

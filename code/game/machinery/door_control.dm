@@ -65,6 +65,7 @@
 
 /obj/machinery/door_control/attack_hand(mob/user as mob)
 	src.add_fingerprint(usr)
+	playsound(src, 'tauceti/sounds/items/buttonswitch.ogg', 20, 1, 1)
 	if(stat & (NOPOWER|BROKEN))
 		return
 

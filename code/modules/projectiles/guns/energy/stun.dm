@@ -3,8 +3,11 @@
 	desc = "A small, low capacity gun used for non-lethal takedowns."
 	icon_state = "taser"
 	item_state = null	//so the human update icon uses the icon_state instead.
-	ammo_type = list(/obj/item/ammo_casing/energy/electrode)
-	cell_type = "/obj/item/weapon/cell"
+	ammo_type = list(/obj/item/ammo_casing/energy/stun, /obj/item/ammo_casing/energy/electrode)
+	cell_type = "/obj/item/weapon/cell/crap"
+
+	attack_self(mob/living/user as mob)
+		select_fire(user)
 
 /obj/item/weapon/gun/energy/taser/cyborg
 	name = "taser gun"
@@ -20,7 +23,7 @@
 		processing_objects.Add(src)
 
 
-	Del()
+	Destroy()
 		processing_objects.Remove(src)
 		..()
 
@@ -45,8 +48,11 @@
 	desc = "A high-tech revolver that fires stun cartridges. The stun cartridges can be recharged using a conventional energy weapon recharger."
 	icon_state = "stunrevolver"
 	origin_tech = "combat=3;materials=3;powerstorage=2"
-	ammo_type = list(/obj/item/ammo_casing/energy/electrode/gun)
+	ammo_type = list(/obj/item/ammo_casing/energy/stun/gun, /obj/item/ammo_casing/energy/electrode/gun)
 	cell_type = "/obj/item/weapon/cell"
+
+	attack_self(mob/living/user as mob)
+		select_fire(user)
 
 /obj/item/weapon/gun/energy/crossbow
 	name = "mini energy-crossbow"
@@ -67,7 +73,7 @@
 		processing_objects.Add(src)
 
 
-	Del()
+	Destroy()
 		processing_objects.Remove(src)
 		..()
 

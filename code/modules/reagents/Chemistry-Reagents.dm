@@ -174,7 +174,7 @@ datum
 
 /* Must check the transfering of reagents and their data first. They all can point to one disease datum.
 
-			Del()
+			Destroy()
 				if(src.data["virus"])
 					var/datum/disease/D = src.data["virus"]
 					D.cure(0)
@@ -216,6 +216,7 @@ datum
 				if (!istype(T)) return
 				src = null
 				if(volume >= 3)
+					create_water(T)
 					if(T.wet >= 1) return
 					T.wet = 1
 					if(T.wet_overlay)
@@ -241,7 +242,7 @@ datum
 					lowertemp.temperature = max( min(lowertemp.temperature-2000,lowertemp.temperature / 2) ,0)
 					lowertemp.react()
 					T.assume_air(lowertemp)
-					del(hotspot)
+					qdel(hotspot)
 				return
 			reaction_obj(var/obj/O, var/volume)
 				src = null
@@ -252,7 +253,7 @@ datum
 					lowertemp.temperature = max( min(lowertemp.temperature-2000,lowertemp.temperature / 2) ,0)
 					lowertemp.react()
 					T.assume_air(lowertemp)
-					del(hotspot)
+					qdel(hotspot)
 				if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/monkeycube))
 					var/obj/item/weapon/reagent_containers/food/snacks/monkeycube/cube = O
 					if(!cube.wrapped)
@@ -351,7 +352,7 @@ datum
 					M.invisibility = 101
 					for(var/obj/item/W in M)
 						if(istype(W, /obj/item/weapon/implant))	//TODO: Carn. give implants a dropped() or something
-							del(W)
+							qdel(W)
 							continue
 						W.layer = initial(W.layer)
 						W.loc = M.loc
@@ -363,7 +364,7 @@ datum
 						M.mind.transfer_to(new_mob)
 					else
 						new_mob.key = M.key
-					del(M)
+					qdel(M)
 				..()
 				return
 
@@ -971,7 +972,7 @@ datum
 
 			reaction_obj(var/obj/O, var/volume)
 				if(istype(O,/obj/effect/decal/cleanable))
-					del(O)
+					qdel(O)
 				else
 					if(O)
 						O.clean_blood()
@@ -984,7 +985,7 @@ datum
 					T.clean_blood()
 					for(var/obj/effect/decal/cleanable/C in T.contents)
 						src.reaction_obj(C, volume)
-						del(C)
+						qdel(C)
 
 					for(var/mob/living/carbon/slime/M in T)
 						M.adjustToxLoss(rand(5,10))
@@ -992,6 +993,11 @@ datum
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				if(iscarbon(M))
 					var/mob/living/carbon/C = M
+					if(istype(M,/mob/living/carbon/human))
+						var/mob/living/carbon/human/H = M
+						if(H.lip_style)
+							H.lip_style = null
+							H.update_body()
 					if(C.r_hand)
 						C.r_hand.clean_blood()
 					if(C.l_hand)
@@ -1604,6 +1610,8 @@ datum
 					if (egg.grown)
 						egg.Hatch()*/
 				if((!O) || (!volume))	return 0
+				if(volume < 0) return 0
+				if(volume > 300) return 0
 				var/turf/the_turf = get_turf(O)
 				var/datum/gas_mixture/napalm = new
 				var/datum/gas/volatile_fuel/fuel = new
@@ -1611,6 +1619,8 @@ datum
 				napalm.trace_gases += fuel
 				the_turf.assume_air(napalm)
 			reaction_turf(var/turf/T, var/volume)
+				if(volume < 0) return
+				if(volume > 300) return
 				src = null
 				var/datum/gas_mixture/napalm = new
 				var/datum/gas/volatile_fuel/fuel = new
@@ -1719,7 +1729,7 @@ datum
 				..()
 				return
 
-			Del()
+			Destroy()
 				if(holder && ismob(holder.my_atom))
 					var/mob/M = holder.my_atom
 					M.status_flags &= ~FAKEDEATH
@@ -1755,7 +1765,7 @@ datum
 					var/turf/simulated/wall/W = T
 					if(W.rotting)
 						W.rotting = 0
-						for(var/obj/effect/E in W) if(E.name == "Wallrot") del E
+						for(var/obj/effect/E in W) if(E.name == "Wallrot") qdel(E)
 
 						for(var/mob/O in viewers(W, null))
 							O.show_message(text("\blue The fungi are completely dissolved by the solution!"), 1)
@@ -1766,7 +1776,7 @@ datum
 					alien_weeds.health -= rand(15,35) // Kills alien weeds pretty fast
 					alien_weeds.healthcheck()
 				else if(istype(O,/obj/effect/glowshroom)) //even a small amount is enough to kill it
-					del(O)
+					qdel(O)
 				else if(istype(O,/obj/effect/spacevine))
 					if(prob(50)) del(O) //Kills kudzu too.
 				// Damage that is done to growing plants is separately at code/game/machinery/hydroponics at obj/item/hydroponics
@@ -1942,7 +1952,7 @@ datum
 						if(H.head)
 							if(prob(meltprob) && !H.head.unacidable)
 								H << "<span class='danger'>Your headgear melts away but protects you from the acid!</span>"
-								del(H.head)
+								qdel(H.head)
 								H.update_inv_head(0)
 								H.update_hair(0)
 							else
@@ -1952,7 +1962,7 @@ datum
 						if(H.wear_mask)
 							if(prob(meltprob) && !H.wear_mask.unacidable)
 								H << "<span class='danger'>Your mask melts away but protects you from the acid!</span>"
-								del (H.wear_mask)
+								qdel(H.wear_mask)
 								H.update_inv_wear_mask(0)
 								H.update_hair(0)
 							else
@@ -1962,7 +1972,7 @@ datum
 						if(H.glasses) //Doesn't protect you from the acid but can melt anyways!
 							if(prob(meltprob) && !H.glasses.unacidable)
 								H << "<span class='danger'>Your glasses melts away!</span>"
-								del (H.glasses)
+								qdel(H.glasses)
 								H.update_inv_glasses(0)
 
 					else if(ismonkey(M))
@@ -1970,7 +1980,7 @@ datum
 						if(MK.wear_mask)
 							if(!MK.wear_mask.unacidable)
 								MK << "<span class='danger'>Your mask melts away but protects you from the acid!</span>"
-								del (MK.wear_mask)
+								qdel(MK.wear_mask)
 								MK.update_inv_wear_mask(0)
 							else
 								MK << "<span class='warning'>Your mask protects you from the acid.</span>"
@@ -1999,7 +2009,7 @@ datum
 						I.desc = "Looks like this was \an [O] some time ago."
 						for(var/mob/M in viewers(5, O))
 							M << "\red \the [O] melts."
-						del(O)
+						qdel(O)
 
 		toxin/acid/polyacid
 			name = "Polytrinic acid"
@@ -2356,7 +2366,7 @@ datum
 					lowertemp.temperature = max( min(lowertemp.temperature-2000,lowertemp.temperature / 2) ,0)
 					lowertemp.react()
 					T.assume_air(lowertemp)
-					del(hotspot)
+					qdel(hotspot)
 
 		enzyme
 			name = "Universal Enzyme"
@@ -3066,6 +3076,9 @@ datum
 					paperaffected.clearpaper()
 					usr << "The solution dissolves the ink on the paper."
 				if(istype(O,/obj/item/weapon/book))
+					if(istype(O,/obj/item/weapon/book/tome))
+						usr << "The solution does nothing. Whatever this is, it isn't normal ink."
+						return
 					if(volume >= 5)
 						var/obj/item/weapon/book/affectedbook = O
 						affectedbook.dat = null

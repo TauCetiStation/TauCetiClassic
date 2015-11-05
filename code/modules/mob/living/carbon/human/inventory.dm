@@ -5,6 +5,7 @@
 	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
 		var/obj/item/I = H.get_active_hand()
+		var/obj/item/weapon/storage/S = H.get_inactive_hand()
 		if(!I)
 			H << "<span class='notice'>You are not holding anything to equip.</span>"
 			return
@@ -28,8 +29,22 @@
 				update_inv_l_hand(0)
 			else
 				update_inv_r_hand(0)
+
+		else if(s_active && s_active.can_be_inserted(I,1))	//if storage active insert there
+			s_active.handle_item_insertion(I)
+		else if(istype(S, /obj/item/weapon/storage) && S.can_be_inserted(I,1))	//see if we have box in other hand
+			S.handle_item_insertion(I)
+
 		else
-			H << "\red You are unable to equip that."
+			S = H.get_item_by_slot(slot_belt)
+			if(istype(S, /obj/item/weapon/storage) && S.can_be_inserted(I,1))		//else we put in belt
+				S.handle_item_insertion(I)
+			else
+				S = H.get_item_by_slot(slot_back)	//else we put in backpack
+				if(istype(S, /obj/item/weapon/storage) && S.can_be_inserted(I,1))
+					S.handle_item_insertion(I)
+				else
+					H << "\red You are unable to equip that."
 
 
 
@@ -38,7 +53,7 @@
 		if (equip_to_slot_if_possible(W, slots[slot], del_on_fail = 0))
 			return slot
 	if (del_on_fail)
-		del(W)
+		qdel(W)
 	return null
 
 
@@ -350,9 +365,9 @@
 
 /obj/effect/equip_e/New()
 	if (!ticker)
-		del(src)
+		qdel(src)
 	spawn(100)
-		del(src)
+		qdel(src)
 	..()
 	return
 
@@ -363,22 +378,22 @@
 		switch(place)
 			if("mask")
 				if (!( target.wear_mask ))
-					del(src)
+					qdel(src)
 			if("l_hand")
 				if (!( target.l_hand ))
-					del(src)
+					qdel(src)
 			if("r_hand")
 				if (!( target.r_hand ))
-					del(src)
+					qdel(src)
 			if("suit")
 				if (!( target.wear_suit ))
-					del(src)
+					qdel(src)
 			if("uniform")
 				if (!( target.w_uniform ))
-					del(src)
+					qdel(src)
 			if("back")
 				if (!( target.back ))
-					del(src)
+					qdel(src)
 			if("syringe")
 				return
 			if("pill")
@@ -391,10 +406,10 @@
 				return
 			if("handcuff")
 				if (!( target.handcuffed ))
-					del(src)
+					qdel(src)
 			if("id")
 				if ((!( target.wear_id ) || !( target.w_uniform )))
-					del(src)
+					qdel(src)
 			if("splints")
 				var/count = 0
 				for(var/organ in list("l_leg","r_leg","l_arm","r_arm"))
@@ -403,20 +418,20 @@
 						count = 1
 						break
 				if(count == 0)
-					del(src)
+					qdel(src)
 					return
 			if("sensor")
 				if (! target.w_uniform )
-					del(src)
+					qdel(src)
 			if("internal")
 				if ((!( (istype(target.wear_mask, /obj/item/clothing/mask) && (istype(target.back, /obj/item/weapon/tank) || istype(target.belt, /obj/item/weapon/tank) || istype(target.s_store, /obj/item/weapon/tank)) && !( target.internal )) ) && !( target.internal )))
-					del(src)
+					qdel(src)
 
 	var/list/L = list( "syringe", "pill", "drink", "dnainjector", "fuel", "sensor", "internal", "tie")
 	if ((item && !( L.Find(place) )))
 		if(isrobot(source)) //#Z2
 			if(place != "handcuff")
-				del(src)
+				qdel(src)
 			for(var/mob/O in viewers(target, null))
 				O.show_message("\red <B>[source] is trying to put \a [item] on [target]</B>", 1)
 		else
@@ -572,7 +587,7 @@
 				message = "\red <B>[source] is trying to empty [target]'s pockets.</B>"
 			if("CPR")
 				if (!target.cpr_time)
-					del(src)
+					qdel(src)
 				target.cpr_time = 0
 				message = "\red <B>[source] is trying perform CPR on [target]!</B>"
 			if("id")
@@ -665,13 +680,13 @@ It can still be worn/put on as normal.
 				strip_item = target.shoes
 		if("l_hand")
 			if (istype(target, /obj/item/clothing/suit/straight_jacket))
-				del(src)
+				qdel(src)
 			slot_to_process = slot_l_hand
 			if (target.l_hand)
 				strip_item = target.l_hand
 		if("r_hand")
 			if (istype(target, /obj/item/clothing/suit/straight_jacket))
-				del(src)
+				qdel(src)
 			slot_to_process = slot_r_hand
 			if (target.r_hand)
 				strip_item = target.r_hand
@@ -708,6 +723,16 @@ It can still be worn/put on as normal.
 			slot_to_process = slot_handcuffed
 			if (target.handcuffed)
 				strip_item = target.handcuffed
+			else if (source != target && ishuman(source))
+				//check that we are still grabbing them
+				var/grabbing = 0
+				for (var/obj/item/weapon/grab/G in target.grabbed_by)
+					if (G.loc == source && G.state >= GRAB_AGGRESSIVE)
+						grabbing = 1
+				if (!grabbing)
+					slot_to_process = null
+					source << "\red Your grasp was broken before you could restrain [target]!"
+
 		if("legcuff")
 			slot_to_process = slot_legcuffed
 			if (target.legcuffed)
@@ -737,11 +762,11 @@ It can still be worn/put on as normal.
 				S.add_fingerprint(source)
 				if (!( istype(S, /obj/item/weapon/dnainjector) ))
 					S.inuse = 0
-					del(src)
+					qdel(src)
 				S.inject(target, source)
 				if (S.s_time >= world.time + 30)
 					S.inuse = 0
-					del(src)
+					qdel(src)
 				S.s_time = world.time
 				for(var/mob/O in viewers(source, null))
 					O.show_message("\red [source] injects [target] with the DNA Injector!", 1)
@@ -809,4 +834,4 @@ It can still be worn/put on as normal.
 	if(source && target)
 		if(source.machine == target)
 			target.show_inv(source)
-	del(src)
+	qdel(src)

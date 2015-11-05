@@ -13,7 +13,7 @@ obj/machinery/recharger
 obj/machinery/recharger/attackby(obj/item/weapon/G as obj, mob/user as mob)
 	if(istype(user,/mob/living/silicon))
 		return
-	if(istype(G, /obj/item/weapon/gun/energy) || istype(G, /obj/item/weapon/melee/baton) || istype(G, /obj/item/weapon/defibrillator))
+	if(istype(G, /obj/item/weapon/gun/energy) || istype(G, /obj/item/weapon/melee/baton) || istype(G, /obj/item/weapon/defibrillator) || istype(G, /obj/item/ammo_box/magazine/l10mag))
 		if(charging)
 			return
 
@@ -88,6 +88,19 @@ obj/machinery/recharger/process()
 				use_power(150)
 			else
 				icon_state = "recharger2"
+			return
+		if(istype(charging, /obj/item/ammo_box/magazine/l10mag))
+			var/obj/item/ammo_box/magazine/l10mag/M = charging
+			if (M.stored_ammo.len < M.max_ammo)
+				M.stored_ammo += new M.ammo_type(M)
+				if(prob(80)) //double charging speed
+					if (M.stored_ammo.len < M.max_ammo)
+						M.stored_ammo += new M.ammo_type(M)
+				update_icon()
+				icon_state = "recharger1"
+				use_power(150)
+			else
+				icon_state = "recharger2"
 
 obj/machinery/recharger/emp_act(severity)
 	if(stat & (NOPOWER|BROKEN) || !anchored)
@@ -142,6 +155,18 @@ obj/machinery/recharger/wallcharger/process()
 			var/obj/item/weapon/defibrillator/D = charging
 			if(D.charges < initial(D.charges))
 				D.charges++
+				icon_state = "recharger1"
+				use_power(150)
+			else
+				icon_state = "recharger2"
+		if(istype(charging, /obj/item/ammo_box/magazine/l10mag))
+			var/obj/item/ammo_box/magazine/l10mag/M = charging
+			if (M.stored_ammo.len < M.max_ammo)
+				M.stored_ammo += new M.ammo_type(M)
+				if(prob(80)) //double charging speed
+					if (M.stored_ammo.len < M.max_ammo)
+						M.stored_ammo += new M.ammo_type(M)
+				update_icon()
 				icon_state = "recharger1"
 				use_power(150)
 			else

@@ -22,7 +22,11 @@
 	var/idcheck = 0 //If false, all station IDs are authorized for weapons.
 	var/check_records = 1 //Does it check security records?
 	var/arrest_type = 0 //If true, don't handcuff
+	var/declare_arrests = 1 //When making an arrest, should it notify everyone wearing sechuds?
 	var/next_harm_time = 0
+	var/x_last
+	var/y_last
+	var/same_pos_count
 
 	var/mode = 0
 #define SECBOT_IDLE 		0		// idle
@@ -84,6 +88,7 @@
 
 /obj/machinery/bot/secbot/turn_on()
 	..()
+	src.same_pos_count = 0
 	src.icon_state = "secbot[src.on]"
 	src.updateUsrDialog()
 
@@ -120,11 +125,13 @@ Maintenance panel panel is [src.open ? "opened" : "closed"]"},
 Check for Weapon Authorization: []<BR>
 Check Security Records: []<BR>
 Operating Mode: []<BR>
+Report Arrests: []<BR>
 Auto Patrol: []"},
 
 "<A href='?src=\ref[src];operation=idcheck'>[src.idcheck ? "Yes" : "No"]</A>",
 "<A href='?src=\ref[src];operation=ignorerec'>[src.check_records ? "Yes" : "No"]</A>",
 "<A href='?src=\ref[src];operation=switchmode'>[src.arrest_type ? "Detain" : "Arrest"]</A>",
+"<A href='?src=\ref[src];operation=declarearrests'>[src.declare_arrests ? "Yes" : "No"]</A>",
 "<A href='?src=\ref[src];operation=patrol'>[auto_patrol ? "On" : "Off"]</A>" )
 
 
@@ -156,6 +163,9 @@ Auto Patrol: []"},
 			auto_patrol = !auto_patrol
 			mode = SECBOT_IDLE
 			updateUsrDialog()
+		if("declarearrests")
+			src.declare_arrests = !src.declare_arrests
+			src.updateUsrDialog()
 
 /obj/machinery/bot/secbot/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
@@ -196,6 +206,16 @@ Auto Patrol: []"},
 
 	if(!src.on)
 		return
+
+	if(x_last == src.x && y_last == src.y) // Бипски очень часто не может пересобрать путь, в результате чего стоит на одной точке,...
+		if(src.mode == SECBOT_START_PATROL)
+			same_pos_count++ //...флудит astar проком, который поднимает проц. время на 30-50 единиц, из-за чего на сервере появляется постоянный микрофриз каждую секунду...
+			if(same_pos_count > 14) //...пока бипски таки не соорудит новый путь, что обычно не происходит. Посему ввожу авто-выключение бипски, если у него позиция не менялась X итераций(?) процесса.
+				turn_off()
+	else
+		same_pos_count = 0
+	x_last = src.x
+	y_last = src.y
 
 	switch(mode)
 
@@ -239,6 +259,10 @@ Auto Patrol: []"},
 						maxstuns--
 						if(maxstuns <= 0)
 							target = null
+
+						if(declare_arrests)
+							var/area/location = get_area(src)
+							broadcast_security_hud_message("[src.name] is [arrest_type ? "detaining" : "arresting"] level [threatlevel] suspect <b>[target]</b> in <b>[location]</b>", src)
 						visible_message("\red <B>[src.target] has been stunned by [src]!</B>")
 
 						mode = SECBOT_PREP_ARREST
@@ -569,6 +593,7 @@ Auto Patrol: []"},
 
 // signals bot status etc. to controller
 /obj/machinery/bot/secbot/proc/send_status()
+	if(!(src && src.loc && src.loc.loc)) return
 	var/list/kv = list(
 	"type" = "secbot",
 	"name" = name,

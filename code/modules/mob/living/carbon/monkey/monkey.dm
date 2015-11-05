@@ -16,6 +16,7 @@
 	var/list/uni_append = list(0x12C,0x4E2)    // Same as above for DNA2.
 	var/update_muts = 1                        // Monkey gene must be set at start.
 	var/alien = 0				   //Used for reagent metabolism.
+	holder_type = /obj/item/weapon/holder/monkey
 
 /mob/living/carbon/monkey/tajara
 	name = "farwa"
@@ -23,6 +24,7 @@
 	speak_emote = list("mews")
 	icon_state = "tajkey1"
 	uni_append = list(0x0A0,0xE00) // 0A0E00
+	holder_type = /obj/item/weapon/holder/monkey/farwa
 
 /mob/living/carbon/monkey/skrell
 	name = "neaera"
@@ -30,6 +32,7 @@
 	speak_emote = list("squicks")
 	icon_state = "skrellkey1"
 	uni_append = list(0x01C,0xC92) // 01CC92
+	holder_type = /obj/item/weapon/holder/monkey/neaera
 
 /mob/living/carbon/monkey/unathi
 	name = "stok"
@@ -37,6 +40,7 @@
 	speak_emote = list("hisses")
 	icon_state = "stokkey1"
 	uni_append = list(0x044,0xC5D) // 044C5D
+	holder_type = /obj/item/weapon/holder/monkey/stok
 
 /mob/living/carbon/monkey/New()
 	var/datum/reagents/R = new/datum/reagents(1000)
@@ -231,10 +235,11 @@
 			if(M.a_intent == "hurt")//Stungloves. Any contact will stun the alien.
 				if(G.cell.charge >= 2500)
 					G.cell.use(2500)
-					Weaken(5)
-					if (stuttering < 5)
-						stuttering = 5
-					Stun(5)
+					apply_effects(0,0,0,0,5,0,0,150)
+
+					var/datum/effect/effect/system/spark_spread/s = PoolOrNew(/datum/effect/effect/system/spark_spread)
+					s.set_up(3, 1, src)
+					s.start()
 
 					M.do_attack_animation(src)
 					for(var/mob/O in viewers(src, null))
@@ -247,6 +252,7 @@
 
 	if (M.a_intent == "help")
 		help_shake_act(M)
+		get_scooped(M)
 	else
 		if (M.a_intent == "hurt")
 			M.do_attack_animation(src)
@@ -454,15 +460,15 @@
 
 /mob/living/carbon/monkey/Stat()
 	..()
-	statpanel("Status")
-	stat(null, text("Intent: []", a_intent))
-	stat(null, text("Move Mode: []", m_intent))
-	if(client && mind)
-		if (client.statpanel == "Status")
-			if(mind.changeling)
-				stat("Chemical Storage", "[mind.changeling.chem_charges]/[mind.changeling.chem_storage]")
-				stat("Genetic Damage Time", mind.changeling.geneticdamage)
-				stat("Absorbed DNA", mind.changeling.absorbedcount)
+	if(statpanel("Status"))
+		stat(null, text("Intent: []", a_intent))
+		stat(null, text("Move Mode: []", m_intent))
+		if(client && mind)
+			if (client.statpanel == "Status")
+				if(mind.changeling)
+					stat("Chemical Storage", "[mind.changeling.chem_charges]/[mind.changeling.chem_storage]")
+					stat("Genetic Damage Time", mind.changeling.geneticdamage)
+					stat("Absorbed DNA", mind.changeling.absorbedcount)
 	return
 
 
@@ -513,7 +519,7 @@
 		return
 	if (stat == DEAD && !client)
 		gibs(loc, viruses)
-		del(src)
+		qdel(src)
 		return
 
 

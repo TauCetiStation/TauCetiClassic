@@ -151,7 +151,7 @@ atom/proc/ul_Extinguish()
 					if(removed_light_source)
 						Affected.MaxRed.Cut(removed_light_source, removed_light_source+1)
 					if(!Affected.MaxRed.len)
-						del Affected.MaxRed
+						qdel(Affected.MaxRed)
 
 			if(DeltaGreen > 0)
 				if(Affected.MaxGreen)
@@ -159,7 +159,7 @@ atom/proc/ul_Extinguish()
 					if(removed_light_source)
 						Affected.MaxGreen.Cut(removed_light_source, removed_light_source+1)
 					if(!Affected.MaxGreen.len)
-						del Affected.MaxGreen
+						qdel(Affected.MaxGreen)
 
 			if(DeltaBlue > 0)
 				if(Affected.MaxBlue)
@@ -167,7 +167,7 @@ atom/proc/ul_Extinguish()
 					if(removed_light_source)
 						Affected.MaxBlue.Cut(removed_light_source, removed_light_source+1)
 					if(!Affected.MaxBlue.len)
-						del Affected.MaxBlue
+						qdel(Affected.MaxBlue)
 
 			Affected.ul_UpdateLight()
 
@@ -249,7 +249,7 @@ atom/New()
 		spawn(5)
 			ul_Illuminate()
 
-atom/Del()
+atom/Destroy()
 	if(ul_IsLuminous(src))
 		ul_Extinguish()
 	. = ..()

@@ -32,9 +32,9 @@
 			M.drop_from_inventory(src) //icon update
 			if(reagents.total_volume)
 				reagents.trans_to_ingest(M, reagents.total_volume)
-				del(src)
+				qdel(src)
 			else
-				del(src)
+				qdel(src)
 			return 1
 
 		else if(istype(M, /mob/living/carbon/human) )
@@ -59,9 +59,9 @@
 
 			if(reagents.total_volume)
 				reagents.trans_to_ingest(M, reagents.total_volume)
-				del(src)
+				qdel(src)
 			else
-				del(src)
+				qdel(src)
 
 			return 1
 
@@ -84,7 +84,7 @@
 				O.show_message("\red [user] puts something in \the [target].", 1)
 
 			spawn(5)
-				del(src)
+				qdel(src)
 
 		return
 

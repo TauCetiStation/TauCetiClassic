@@ -50,10 +50,10 @@ obj/machinery/atmospherics/pipe/return_network(obj/machinery/atmospherics/refere
 	return parent.return_network(reference)
 
 obj/machinery/atmospherics/pipe/Destroy()
-	del(parent)
+	qdel(parent)
 	if(air_temporary)
 		loc.assume_air(air_temporary)
-		del(air_temporary)
+		qdel(air_temporary)
 	..()
 
 obj/machinery/atmospherics/pipe/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
@@ -274,12 +274,12 @@ obj/machinery/atmospherics/pipe/simple/initialize()
 obj/machinery/atmospherics/pipe/simple/disconnect(obj/machinery/atmospherics/reference)
 	if(reference == node1)
 		if(istype(node1, /obj/machinery/atmospherics/pipe))
-			del(parent)
+			qdel(parent)
 		node1 = null
 
 	if(reference == node2)
 		if(istype(node2, /obj/machinery/atmospherics/pipe))
-			del(parent)
+			qdel(parent)
 		node2 = null
 
 	update_icon()
@@ -426,17 +426,17 @@ obj/machinery/atmospherics/pipe/manifold/Destroy()
 obj/machinery/atmospherics/pipe/manifold/disconnect(obj/machinery/atmospherics/reference)
 	if(reference == node1)
 		if(istype(node1, /obj/machinery/atmospherics/pipe))
-			del(parent)
+			qdel(parent)
 		node1 = null
 
 	if(reference == node2)
 		if(istype(node2, /obj/machinery/atmospherics/pipe))
-			del(parent)
+			qdel(parent)
 		node2 = null
 
 	if(reference == node3)
 		if(istype(node3, /obj/machinery/atmospherics/pipe))
-			del(parent)
+			qdel(parent)
 		node3 = null
 
 	update_icon()
@@ -472,7 +472,7 @@ obj/machinery/atmospherics/pipe/manifold/update_icon()
 		icon_state = "manifold_[connected]_[unconnected]"
 
 		if(!connected)
-			del(src)
+			qdel(src)
 
 	return
 
@@ -618,7 +618,7 @@ obj/machinery/atmospherics/pipe/manifold4w/process()
 	else if (nodealert)
 		nodealert = 0
 */
-obj/machinery/atmospherics/pipe/manifold4w/Del()
+obj/machinery/atmospherics/pipe/manifold4w/Destroy()
 	if(node1)
 		node1.disconnect(src)
 	if(node2)
@@ -633,22 +633,22 @@ obj/machinery/atmospherics/pipe/manifold4w/Del()
 obj/machinery/atmospherics/pipe/manifold4w/disconnect(obj/machinery/atmospherics/reference)
 	if(reference == node1)
 		if(istype(node1, /obj/machinery/atmospherics/pipe))
-			del(parent)
+			qdel(parent)
 		node1 = null
 
 	if(reference == node2)
 		if(istype(node2, /obj/machinery/atmospherics/pipe))
-			del(parent)
+			qdel(parent)
 		node2 = null
 
 	if(reference == node3)
 		if(istype(node3, /obj/machinery/atmospherics/pipe))
-			del(parent)
+			qdel(parent)
 		node3 = null
 
 	if(reference == node4)
 		if(istype(node4, /obj/machinery/atmospherics/pipe))
-			del(parent)
+			qdel(parent)
 		node4 = null
 
 	update_icon()
@@ -682,7 +682,7 @@ obj/machinery/atmospherics/pipe/manifold4w/update_icon()
 			overlays += new/image(con,dir=8)
 
 		if(!node1 && !node2 && !node3 && !node4)
-			del(src)
+			qdel(src)
 	return
 
 obj/machinery/atmospherics/pipe/manifold4w/initialize()
@@ -798,7 +798,7 @@ obj/machinery/atmospherics/pipe/cap/process()
 		..()
 	else
 		. = PROCESS_KILL
-obj/machinery/atmospherics/pipe/cap/Del()
+obj/machinery/atmospherics/pipe/cap/Destroy()
 	if(node)
 		node.disconnect(src)
 
@@ -807,7 +807,7 @@ obj/machinery/atmospherics/pipe/cap/Del()
 obj/machinery/atmospherics/pipe/cap/disconnect(obj/machinery/atmospherics/reference)
 	if(reference == node)
 		if(istype(node, /obj/machinery/atmospherics/pipe))
-			del(parent)
+			qdel(parent)
 		node = null
 
 	update_icon()
@@ -953,7 +953,7 @@ obj/machinery/atmospherics/pipe/tank/air
 
 		..()
 
-obj/machinery/atmospherics/pipe/tank/Del()
+obj/machinery/atmospherics/pipe/tank/Destroy()
 	if(node1)
 		node1.disconnect(src)
 
@@ -1064,7 +1064,7 @@ obj/machinery/atmospherics/pipe/vent/process()
 	else if (nodealert)
 		nodealert = 0
 */
-obj/machinery/atmospherics/pipe/vent/Del()
+obj/machinery/atmospherics/pipe/vent/Destroy()
 	if(node1)
 		node1.disconnect(src)
 

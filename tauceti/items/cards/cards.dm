@@ -70,7 +70,7 @@ obj/item/toy/cards/attackby(obj/item/toy/singlecard/C, mob/living/user)
 			src.cards += C.cardname
 			user.u_equip(C)
 			user.visible_message("<span class='notice'>[user] adds a card to the bottom of the deck.</span>","<span class='notice'>You add the card to the bottom of the deck.</span>")
-			del(C)
+			qdel(C)
 		else
 			user << "<span class='notice'>You can't mix cards from other decks.</span>"
 		if(cards.len > 26)
@@ -88,7 +88,7 @@ obj/item/toy/cards/attackby(obj/item/toy/cardhand/C, mob/living/user)
 			src.cards += C.currenthand
 			user.u_equip(C)
 			user.visible_message("<span class='notice'>[user] puts their hand of cards in the deck.</span>", "<span class='notice'>You put the hand of cards in the deck.</span>")
-			del(C)
+			qdel(C)
 		else
 			user << "<span class='notice'>You can't mix cards from other decks.</span>"
 		if(cards.len > 26)
@@ -183,7 +183,7 @@ obj/item/toy/cardhand/Topic(href, href_list)
 				cardUser.put_in_any_hand_if_possible(N)
 				cardUser << "<span class='notice'>You also take [currenthand[1]] and hold it.</span>"
 				cardUser << browse(null, "window=cardhand")
-				del(src)
+				qdel(src)
 		return
 
 obj/item/toy/cardhand/attackby(obj/item/toy/singlecard/C, mob/living/user)
@@ -199,7 +199,7 @@ obj/item/toy/cardhand/attackby(obj/item/toy/singlecard/C, mob/living/user)
 				src.icon_state = "hand4"
 			else if(currenthand.len > 2)
 				src.icon_state = "hand3"
-			del(C)
+			qdel(C)
 		else
 			user << "<span class='notice'>You can't mix cards from other decks.</span>"
 
@@ -261,8 +261,8 @@ obj/item/toy/singlecard/attackby(obj/item/I, mob/living/user)
 			H.pickup(user)
 			user.put_in_active_hand(H)
 			user << "<span class='notice'>You combine the [C.cardname] and the [src.cardname] into a hand.</span>"
-			del(C)
-			del(src)
+			qdel(C)
+			qdel(src)
 		else
 			user << "<span class='notice'>You can't mix cards from other decks.</span>"
 
@@ -279,7 +279,7 @@ obj/item/toy/singlecard/attackby(obj/item/I, mob/living/user)
 				H.icon_state = "hand4"
 			else if(H.currenthand.len > 2)
 				H.icon_state = "hand3"
-			del(src)
+			qdel(src)
 		else
 			user << "<span class='notice'>You can't mix cards from other decks.</span>"
 

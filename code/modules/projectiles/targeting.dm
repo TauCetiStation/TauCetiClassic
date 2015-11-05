@@ -23,6 +23,7 @@
 //Removing the lock and the buttons.
 /obj/item/weapon/gun/dropped(mob/user as mob)
 	stop_aim()
+	if (!user) return
 	if (user.client)
 		user.client.remove_gun_icons()
 	return ..()
@@ -40,7 +41,7 @@
 		for(var/mob/living/M in target)
 			if(M)
 				M.NotTargeted(src) //Untargeting people.
-		del(target)
+		qdel(target)
 
 //Compute how to fire.....
 /obj/item/weapon/gun/proc/PreFire(atom/A as mob|obj|turf|area, mob/living/user as mob|obj, params)
@@ -65,7 +66,7 @@
 			for(var/mob/living/L in target)
 				if(L)
 					L.NotTargeted(src)
-			del(target)
+			qdel(target)
 			usr.visible_message("\red <b>[usr] turns \the [src] on [M]!</b>")
 		else
 			usr.visible_message("\red <b>[usr] aims \a [src] at [M]!</b>")
@@ -220,13 +221,13 @@ mob/living/proc/NotTargeted(var/obj/item/weapon/gun/I)
 	targeted_by -= I
 	I.target.Remove(src) //De-target them
 	if(!I.target.len)
-		del(I.target)
+		qdel(I.target)
 	var/mob/living/T = I.loc //Remove the targeting icons
 	if(T && ismob(T) && !I.target)
 		T.client.remove_gun_icons()
 	if(!targeted_by.len)
-		del target_locked //Remove the overlay
-		del targeted_by
+		qdel(target_locked) //Remove the overlay
+		qdel(targeted_by)
 	spawn(1) update_targeted()
 
 mob/living/Move()
@@ -276,9 +277,9 @@ client/proc/remove_gun_icons()
 	screen -= usr.gun_move_icon
 	if (target_can_move)
 		screen -= usr.gun_run_icon
-	del usr.gun_move_icon
-	del usr.item_use_icon
-	del usr.gun_run_icon
+	qdel(usr.gun_move_icon)
+	qdel(usr.item_use_icon)
+	qdel(usr.gun_run_icon)
 
 client/verb/ToggleGunMode()
 	set hidden = 1
@@ -307,7 +308,7 @@ client/verb/AllowTargetMove()
 	else
 		usr << "Target may no longer move."
 		target_can_run = 0
-		del(usr.gun_run_icon)	//no need for icon for running permission
+		qdel(usr.gun_run_icon)	//no need for icon for running permission
 
 	//Updating walking permission button
 	if(usr.gun_move_icon)

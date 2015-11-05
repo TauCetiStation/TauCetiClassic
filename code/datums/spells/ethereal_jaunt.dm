@@ -11,6 +11,8 @@
 	include_user = 1
 	centcomm_cancast = 0 //Prevent people from getting to centcomm
 
+	action_icon_state = "jaunt"
+
 	var phaseshift = 0
 	var/jaunt_duration = 50 //in deciseconds
 
@@ -105,3 +107,8 @@
 	return
 /obj/effect/dummy/spell_jaunt/bullet_act(blah)
 	return
+
+/obj/effect/dummy/spell_jaunt/Destroy()
+	for(var/atom/movable/AM in src)
+		AM.loc = get_turf(src)
+	..()

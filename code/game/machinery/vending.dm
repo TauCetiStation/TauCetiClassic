@@ -56,7 +56,7 @@
 	var/const/WIRE_SHOOTINV = 4
 	var/obj/item/weapon/vending_refill/refill_canister = null		//The type of refill canisters used by this machine.
 
-	var/check_accounts = 0		// 1 = requires PIN and checks accounts.  0 = You slide an ID, it vends, SPACE COMMUNISM!
+	var/check_accounts = 1		// 1 = requires PIN and checks accounts.  0 = You slide an ID, it vends, SPACE COMMUNISM!
 	var/obj/item/weapon/spacecash/ewallet/ewallet
 
 
@@ -83,11 +83,11 @@
 /obj/machinery/vending/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			del(src)
+			qdel(src)
 			return
 		if(2.0)
 			if (prob(50))
-				del(src)
+				qdel(src)
 				return
 		if(3.0)
 			if (prob(25))
@@ -102,7 +102,7 @@
 	if (prob(50))
 		spawn(0)
 			src.malfunction()
-			del(src)
+			qdel(src)
 		return
 
 	return
@@ -233,7 +233,7 @@
 		for(var/datum/data/vending_product/R in product_records)
 			if(istype(W, R.product_path))
 				stock(R, user)
-				del(W)
+				qdel(W)
 	else
 		..()
 
@@ -244,8 +244,12 @@
 		visible_message("<span class='info'>[usr] swipes a card through [src].</span>")
 		if(check_accounts)
 			if(vendor_account)
-				var/attempt_pin = input("Enter pin code", "Vendor transaction") as num
-				var/datum/money_account/D = attempt_account_access(C.associated_account_number, attempt_pin, 2)
+				var/datum/money_account/D = get_account(C.associated_account_number)
+				var/attempt_pin = 0
+				if(D.security_level > 0)
+					attempt_pin = input("Enter pin code", "Vendor transaction") as num
+				if(attempt_pin)
+					D = attempt_account_access(C.associated_account_number, attempt_pin, 2)
 				if(D)
 					var/transaction_amount = currently_vending.price
 					if(transaction_amount <= D.money)
@@ -279,6 +283,8 @@
 						// Vend the item
 						src.vend(src.currently_vending, usr)
 						currently_vending = null
+					else
+						usr << "\icon[src]<span class='warning'>You don't have that much money!</span>"
 				else
 					usr << "\icon[src]<span class='warning'>You don't have that much money!</span>"
 			else
@@ -497,9 +503,11 @@
 				user << "\blue You successfully pull the coin out before the [src] could swallow it."
 			else
 				user << "\blue You weren't able to pull the coin out fast enough, the machine ate it, string and all."
-				del(coin)
+				qdel(coin)
+				coin = null
 		else
-			del(coin)
+			qdel(coin)
+			coin = null
 
 	R.amount--
 
@@ -513,6 +521,7 @@
 		flick(src.icon_vend,src)
 	spawn(src.vend_delay)
 		new R.product_path(get_turf(src))
+		playsound(src, 'tauceti/sounds/items/vending.ogg', 50, 1, 1)
 		src.vend_ready = 1
 		return
 
@@ -979,3 +988,53 @@
 					/obj/item/weapon/scalpel = 2,/obj/item/weapon/circular_saw = 2,/obj/item/weapon/tank/anesthetic = 2,/obj/item/clothing/mask/breath/medical = 2)
 	//everything after the power cell had no amounts, I improvised.  -Sayu
 
+//This one's from NTstation
+//don't forget to change the refill size if you change the machine's contents!
+/obj/machinery/vending/clothing
+	name = "ClothesMate" //renamed to make the slogan rhyme
+	desc = "A vending machine for clothing."
+	icon_state = "clothes"
+	product_slogans = "Dress for success!;Prepare to look swagalicious!;Look at all this free swag!;Why leave style up to fate? Use the ClothesMate!"
+	vend_delay = 15
+	vend_reply = "Thank you for using the ClothesMate!"
+	products = list(/obj/item/clothing/head/that=2,/obj/item/clothing/head/fedora=1,/obj/item/clothing/glasses/monocle=1,
+	/obj/item/clothing/suit/jacket=2, /obj/item/clothing/suit/jacket/puffer/vest=2, /obj/item/clothing/suit/jacket/puffer=2,
+	/obj/item/clothing/under/suit_jacket/navy=1,/obj/item/clothing/under/suit_jacket/really_black=1,/obj/item/clothing/under/suit_jacket/burgundy=1,
+	/obj/item/clothing/under/suit_jacket/charcoal=1, /obj/item/clothing/under/suit_jacket/white=1,/obj/item/clothing/under/kilt=1,/obj/item/clothing/under/overalls=1,
+	/obj/item/clothing/under/suit_jacket/really_black=2,/obj/item/clothing/under/pants/jeans=3,/obj/item/clothing/under/pants/classicjeans=2,
+	/obj/item/clothing/under/pants/camo = 1,/obj/item/clothing/under/pants/blackjeans=2,/obj/item/clothing/under/pants/khaki=2,
+	/obj/item/clothing/under/pants/white=2,/obj/item/clothing/under/pants/red=1,/obj/item/clothing/under/pants/black=2,
+	/obj/item/clothing/under/pants/tan=2,/obj/item/clothing/under/pants/blue=1,/obj/item/clothing/under/pants/track=1,
+	/obj/item/clothing/under/sundress=2,/obj/item/clothing/under/blacktango=1,
+	/obj/item/clothing/suit/jacket=3,/obj/item/clothing/glasses/regular=2,/obj/item/clothing/head/sombrero=1,
+	/obj/item/clothing/suit/poncho=1,/obj/item/clothing/suit/ianshirt=1,/obj/item/clothing/shoes/laceup=2,
+	/obj/item/clothing/shoes/sandal=1,
+	/obj/item/clothing/mask/bandana/black=2,/obj/item/clothing/mask/bandana/skull=2,/obj/item/clothing/mask/bandana/green=2,/obj/item/clothing/mask/bandana/gold=2,
+	/obj/item/clothing/mask/bandana/blue=2)
+	contraband = list(/obj/item/clothing/under/syndicate/tacticool=1,/obj/item/clothing/mask/balaclava=1,/obj/item/clothing/head/ushanka=1,/obj/item/clothing/under/soviet=1)
+	premium = list(/obj/item/clothing/under/suit_jacket/checkered=1,/obj/item/clothing/head/mailman=1,/obj/item/clothing/under/rank/mailman=1,/obj/item/clothing/suit/jacket/leather=1,/obj/item/clothing/suit/jacket/leather/overcoat=1,/obj/item/clothing/under/pants/mustangjeans=1)
+	prices = list(/obj/item/clothing/head/that=4199,/obj/item/clothing/head/fedora=4199,/obj/item/clothing/glasses/monocle=1099,
+	/obj/item/clothing/suit/jacket=2999, /obj/item/clothing/suit/jacket/puffer/vest=2349, /obj/item/clothing/suit/jacket/puffer=2199,
+	/obj/item/clothing/under/suit_jacket/navy=1199,/obj/item/clothing/under/suit_jacket/really_black=1199,/obj/item/clothing/under/suit_jacket/burgundy=1199,
+	/obj/item/clothing/under/suit_jacket/charcoal=1199, /obj/item/clothing/under/suit_jacket/white=1199,/obj/item/clothing/under/kilt=850,/obj/item/clothing/under/overalls=850,
+	/obj/item/clothing/under/suit_jacket/really_black=1425,/obj/item/clothing/under/pants/jeans=1425,/obj/item/clothing/under/pants/classicjeans=1425,
+	/obj/item/clothing/under/pants/camo = 1425,/obj/item/clothing/under/pants/blackjeans=1425,/obj/item/clothing/under/pants/khaki=1425,
+	/obj/item/clothing/under/pants/white=1425,/obj/item/clothing/under/pants/red=1425,/obj/item/clothing/under/pants/black=1425,
+	/obj/item/clothing/under/pants/tan=1425,/obj/item/clothing/under/pants/blue=1425,/obj/item/clothing/under/pants/track=1425,
+	/obj/item/clothing/under/sundress=850,/obj/item/clothing/under/blacktango=990,
+	/obj/item/clothing/suit/jacket=1380,/obj/item/clothing/glasses/regular=550,/obj/item/clothing/head/sombrero=2400,
+	/obj/item/clothing/suit/poncho=2950,/obj/item/clothing/suit/ianshirt=4000,/obj/item/clothing/shoes/laceup=990,
+	/obj/item/clothing/shoes/sandal=350,
+	/obj/item/clothing/mask/bandana/black=3849,/obj/item/clothing/mask/bandana/skull=3999,/obj/item/clothing/mask/bandana/green=3849,/obj/item/clothing/mask/bandana/gold=3899,
+	/obj/item/clothing/mask/bandana/blue=3849)
+	refill_canister = /obj/item/weapon/vending_refill/clothing
+
+/obj/machinery/vending/clothing/New()
+	..()
+	component_parts = list()
+	//var/obj/item/weapon/circuitboard/vendor/V = new(null)
+	//V.set_type(type)
+	//component_parts += V
+	component_parts += new /obj/item/weapon/vending_refill/clothing(0)
+	component_parts += new /obj/item/weapon/vending_refill/clothing(0)
+	component_parts += new /obj/item/weapon/vending_refill/clothing(0)

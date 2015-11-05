@@ -328,7 +328,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		else
 			if(alert("Spawn that person a tome?",,"Yes","No")=="Yes")
 				M << "\red You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy the world is, you see that it should be open to the knowledge of Nar-Sie. A tome, a message from your new master, appears on the ground."
-				new /obj/item/weapon/tome(M.loc)
+				new /obj/item/weapon/book/tome(M.loc)
 			else
 				M << "\red You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy the world is, you see that it should be open to the knowledge of Nar-Sie."
 			var/glimpse=pick("1","2","3","4","5","6","7","8")
@@ -397,6 +397,15 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	log_admin("[key_name(src)] has turned visual counters [visual_counter ? "on" : "off"].")
 	message_admins("[key_name_admin(src)] has turned visual counters [visual_counter ? "on" : "off"].", 0)
 	feedback_add_details("admin_verb","TVC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/proc/cmd_message_spam_control()
+	set category = "Server"
+	set name = "Global Message Cooldown"
+
+	global_message_cooldown = !global_message_cooldown
+	log_admin("[key_name(src)] has turned global message cooldown [global_message_cooldown ? "on" : "off"].")
+	message_admins("[key_name_admin(src)] has turned global message cooldown [global_message_cooldown ? "on" : "off"].", 0)
+	feedback_add_details("admin_verb","TGMC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_admin_grantfullaccess(var/mob/M in mob_list)
 	set category = "Admin"
@@ -680,7 +689,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(M), slot_shoes)
 			var/obj/item/weapon/storage/backpack/backpack = new(M)
 			for(var/obj/item/I in backpack)
-				del(I)
+				qdel(I)
 			M.equip_to_slot_or_del(backpack, slot_back)
 
 			M.equip_to_slot_or_del(new /obj/item/weapon/mop(M), slot_r_hand)
@@ -772,7 +781,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 			var/obj/item/weapon/storage/secure/briefcase/sec_briefcase = new(M)
 			for(var/obj/item/briefcase_item in sec_briefcase)
-				del(briefcase_item)
+				qdel(briefcase_item)
 			for(var/i=3, i>0, i--)
 				sec_briefcase.contents += new /obj/item/weapon/spacecash/c1000
 			sec_briefcase.contents += new /obj/item/weapon/gun/energy/crossbow
@@ -1617,7 +1626,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			if(G.anchored)
 				var/obj/machinery/singularity/S = new /obj/machinery/singularity(get_turf(G), 50)
 				spawn(0)
-					del(G)
+					qdel(G)
 				S.energy = 1750
 				S.current_size = 7
 				S.icon = 'icons/effects/224x224.dmi'
@@ -1735,7 +1744,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	set name = "Debug Mob Lists"
 	set desc = "For when you just gotta know"
 
-	switch(input("Which list?") in list("Players","Admins","Mobs","Living Mobs","Dead Mobs", "Clients"))
+	switch(input("Which list?") in list("Players","Admins","Mobs","Living Mobs","Dead Mobs", "Clients", "Joined Clients"))
 		if("Players")
 			usr << list2text(player_list,",")
 		if("Admins")
@@ -1748,6 +1757,8 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			usr << list2text(dead_mob_list,",")
 		if("Clients")
 			usr << list2text(clients,",")
+		if("Joined Clients")
+			usr << list2text(joined_player_list,",")
 
 // DNA2 - Admin Hax
 /client/proc/cmd_admin_toggle_block(var/mob/M,var/block)
@@ -1755,13 +1766,18 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		alert("Wait until the game starts")
 		return
 	if(istype(M, /mob/living/carbon))
+		var/saved_key = M.key
 		M.dna.SetSEState(block,!M.dna.GetSEState(block))
 		//domutcheck(M,null,MUTCHK_FORCED)  //#Z2
 		genemutcheck(M,block,null,MUTCHK_FORCED) //#Z2
-		M.update_mutations()
-		var/state="[M.dna.GetSEState(block)?"on":"off"]"
-		var/blockname=assigned_blocks[block]
-		message_admins("[key_name_admin(src)] has toggled [M.key]'s [blockname] block [state]!")
-		log_admin("[key_name(src)] has toggled [M.key]'s [blockname] block [state]!")
+		if(istype(M, /mob/living/carbon))
+			M.update_mutations()
+			var/state="[M.dna.GetSEState(block)?"on":"off"]"
+			var/blockname=assigned_blocks[block]
+			message_admins("[key_name_admin(src)] has toggled [M.key]'s [blockname] block [state]!")
+			log_admin("[key_name(src)] has toggled [M.key]'s [blockname] block [state]!")
+		else
+			message_admins("[key_name_admin(src)] has toggled [saved_key]'s HULK block on!")
+			log_admin("[key_name(src)] has toggled [saved_key]'s HULK block on!")
 	else
 		alert("Invalid mob")

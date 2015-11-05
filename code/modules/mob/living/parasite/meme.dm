@@ -105,7 +105,7 @@ mob/living/parasite/meme/death()
 	if(host) src.loc = host.loc
 	src.stat = 2
 	..()
-	del src
+	qdel(src)
 
 // When a meme speaks, it speaks through its host
 mob/living/parasite/meme/say(message as text)
@@ -218,7 +218,7 @@ mob/living/parasite/meme/verb/Thought()
 	var/speaker = sanitize(copytext(input("Select the voice in which you would like to make yourself heard.", "Voice") as null|text, 1, MAX_NAME_LEN))
 	if(!speaker) return
 
-	var/message = sanitize(copytext(input("What would you like to say?", "Message") as null, 1, MAX_MESSAGE_LEN))
+	var/message = sanitize(copytext(input("What would you like to say?", "Message") as null|text, 1, MAX_MESSAGE_LEN))
 	if(!message) return
 
 	// Use the points at the end rather than the beginning, because the user might cancel
@@ -555,7 +555,7 @@ mob/living/parasite/meme/verb/Possession()
 		host.update_body()
 		src << "\red You lose control.."
 
-		del dummy
+		qdel(dummy)
 
 // Enter dormant mode, increases meme point gain
 mob/living/parasite/meme/verb/Dormant()

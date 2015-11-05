@@ -51,7 +51,7 @@
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 100, bio = 0, rad = 0)
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES
 	body_parts_covered = HEAD|FACE|EYES
-	siemens_coefficient = 0
+	siemens_coefficient = 0.2
 
 
 /obj/item/clothing/suit/bomb_suit
@@ -68,7 +68,7 @@
 	flags_inv = HIDEJUMPSUIT|HIDETAIL
 	heat_protection = UPPER_TORSO|LOWER_TORSO
 	max_heat_protection_temperature = ARMOR_MAX_HEAT_PROTECTION_TEMPERATURE
-	siemens_coefficient = 0
+	siemens_coefficient = 0.2
 
 
 /obj/item/clothing/head/bomb_hood/security

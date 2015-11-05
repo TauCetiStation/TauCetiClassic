@@ -221,6 +221,7 @@
 			if(reagents.has_reagent("lexorin")) return
 
 		if(!loc) return //probably ought to make a proper fix for this, but :effort: --NeoFite
+		if(istype(loc, /obj/item/weapon/holder)) return // типа быстрофикс на обезьянок что берут на руки, хотя бы не будут умирать.. но нужно нормальное решение.
 
 		var/datum/gas_mixture/environment = loc.return_air()
 		var/datum/gas_mixture/breath
@@ -600,11 +601,18 @@
 			see_in_dark = 8
 			see_invisible = SEE_INVISIBLE_LEVEL_TWO
 		else if (stat != 2)
-			sight &= ~SEE_TURFS
-			sight &= ~SEE_MOBS
-			sight &= ~SEE_OBJS
-			see_in_dark = 2
-			see_invisible = SEE_INVISIBLE_LIVING
+			if(changeling_aug)
+				sight &= ~SEE_TURFS
+				sight |= SEE_MOBS
+				sight &= ~SEE_OBJS
+				see_in_dark = 8
+				see_invisible = SEE_INVISIBLE_MINIMUM
+			else
+				sight &= ~SEE_TURFS
+				sight &= ~SEE_MOBS
+				sight &= ~SEE_OBJS
+				see_in_dark = 2
+				see_invisible = SEE_INVISIBLE_LIVING
 
 		if (healths)
 			if (stat != 2)

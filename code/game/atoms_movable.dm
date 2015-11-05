@@ -28,24 +28,37 @@
 	return
 
 /*
-/atom/movable/Del()
-	if(isnull(gc_destroyed) && loc)
+/atom/movable/Destroy()
+	if(isnull(gcDestroyed) && loc)
 		testing("GC: -- [type] was deleted via del() rather than qdel() --")
-	else if(isnull(gc_destroyed))
+	else if(isnull(gcDestroyed))
 		testing("GC: [type] was deleted via GC without qdel()") //Not really a huge issue but from now on, please qdel()
 	else
 		testing("GC: [type] was deleted via GC with qdel()")
 	..()
 */
+
+/atom/movable/Del()
+	if(isnull(gcDestroyed) && loc)
+		testing("GC: -- [type] was deleted via del() rather than qdel() --")
+//	else if(isnull(gcDestroyed))
+//		testing("GC: [type] was deleted via GC without qdel()") //Not really a huge issue but from now on, please qdel()
+//	else
+//		testing("GC: [type] was deleted via GC with qdel()")
+	..()
+
 /atom/movable/Destroy()
+	. = ..()
 	if(reagents)
 		qdel(reagents)
 	for(var/atom/movable/AM in contents)
 		qdel(AM)
-	tag = null
 	loc = null
 	invisibility = 101
-	// Do not call ..()
+	if (pulledby)
+		if (pulledby.pulling == src)
+			pulledby.pulling = null
+		pulledby = null
 
 /atom/movable/Bump(var/atom/A as mob|obj|turf|area, yes)
 	if(src.throwing)

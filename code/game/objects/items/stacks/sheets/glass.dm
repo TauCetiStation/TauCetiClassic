@@ -300,11 +300,11 @@
 				G.attackby(NG, user)
 				usr << "You add the newly-formed glass to the stack. It now contains [NG.amount] sheets."
 			//SN src = null
-			del(src)
+			qdel(src)
 			return
 	return ..()
 
-/obj/item/weapon/shard/HasEntered(AM as mob|obj)
+/obj/item/weapon/shard/Crossed(AM as mob|obj)
 	if(ismob(AM))
 		var/mob/M = AM
 		M << "\red <B>You step in the broken glass!</B>"

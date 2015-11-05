@@ -9,23 +9,11 @@ emp_act
 */
 
 /mob/living/carbon/human/bullet_act(var/obj/item/projectile/P, var/def_zone)
-
-// BEGIN TASER NERF
-					/* Commenting out new-old taser nerf.
-					if(C.siemens_coefficient == 0) //If so, is that clothing shock proof?
-						if(prob(deflectchance))
-							visible_message("\red <B>The [P.name] gets deflected by [src]'s [C.name]!</B>") //DEFLECT!
-							visible_message("\red <B> Taser hit for [P.damage] damage!</B>")
-							del P
-*/
-/* Commenting out old Taser nerf
-	if(wear_suit && istype(wear_suit, /obj/item/clothing/suit/armor))
-		if(istype(P, /obj/item/projectile/energy/electrode))
-			visible_message("\red <B>The [P.name] gets deflected by [src]'s [wear_suit.name]!</B>")
-			del P
-		return -1
-*/
-// END TASER NERF
+	if(P.impact_force)
+		for(var/i=1, i<=P.impact_force, i++)
+			step_to(src, get_step(loc, P.dir))
+			if(istype(src.loc, /turf/simulated))
+				src.loc.add_blood(src)
 
 	if(wear_suit && istype(wear_suit, /obj/item/clothing/suit/armor/laserproof))
 		if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam))
@@ -52,45 +40,31 @@ emp_act
 				return -1 // complete projectile permutation
 
 //BEGIN BOOK'S TASER NERF.
-	if(istype(P, /obj/item/projectile/energy/electrode) || istype(P, /obj/item/projectile/beam/stun) || istype(P, /obj/item/projectile/bullet/stunslug) || istype(P, /obj/item/projectile/bullet/weakbullet))
+	if(istype(P, /obj/item/projectile/bullet/weakbullet))
 		var/datum/organ/external/select_area = get_organ(def_zone) // We're checking the outside, buddy!
 		if(check_thickmaterial(select_area))
-			
-			if(istype(P, /obj/item/projectile/bullet/weakbullet))
-				visible_message("\red <B>The [P.name] hits [src]'s armor!</B>")
-				apply_effect(25,AGONY,0)
-			else
-				visible_message("\red <B>The [P.name] gets deflected by [src]'s armor!</B>")
-			del P
-			return
-		else
-			P.agony *= get_siemens_coefficient_organ(select_area)
-			P.stun *= get_siemens_coefficient_organ(select_area)
-			P.weaken *= get_siemens_coefficient_organ(select_area)
-			P.stutter *= get_siemens_coefficient_organ(select_area)
-
-			apply_effect(P.agony,AGONY,0)
-			apply_effect(P.stun,STUN,0)
-			apply_effect(P.weaken, WEAKEN, 0)
-			apply_effect(P.stutter, STUTTER, 0)
-			flash_pain()
-			src <<"\red You have been shot!"
-			del P
-
-			var/obj/item/weapon/cloaking_device/C = locate((/obj/item/weapon/cloaking_device) in src)
-			if(C && C.active)
-				C.attack_self(src)//Should shut it off
-				update_icons()
-				src << "\blue Your [C.name] was disrupted!"
-				Stun(2)
-
-			if(istype(equipped(),/obj/item/device/assembly/signaler))
-				var/obj/item/device/assembly/signaler/signaler = equipped()
-				if(signaler.deadman && prob(80))
-					src.visible_message("\red [src] triggers their deadman's switch!")
-					signaler.signal()
-
+			visible_message("\red <B>The [P.name] hits [src]'s armor!</B>")
+			P.agony /= 2
+		apply_effect(P.agony,AGONY,0)
+		qdel(P)
 		return
+
+	if(istype(P, /obj/item/projectile/energy/electrode) || istype(P, /obj/item/projectile/beam/stun) || istype(P, /obj/item/projectile/bullet/stunslug))
+		var/datum/organ/external/select_area = get_organ(def_zone) // We're checking the outside, buddy!
+		P.agony *= get_siemens_coefficient_organ(select_area)
+		P.stun *= get_siemens_coefficient_organ(select_area)
+		P.weaken *= get_siemens_coefficient_organ(select_area)
+		P.stutter *= get_siemens_coefficient_organ(select_area)
+
+		if(P.agony) // No effect against full protection.
+			if(prob(max(P.agony, 20)))
+				drop_item()
+		P.on_hit(src)
+		flash_pain()
+		src <<"\red You have been shot!"
+		qdel(P)
+		return
+
 //END TASER NERF
 	if(istype(P, /obj/item/projectile/energy/bolt))
 		var/datum/organ/external/select_area = get_organ(def_zone) // We're checking the outside, buddy!
@@ -103,7 +77,7 @@ emp_act
 				if(C.body_parts_covered & select_area.body_part) // Is that body part being targeted covered?
 					if(C.flags & THICKMATERIAL )
 						visible_message("\red <B>The [P.name] gets absorbed by [src]'s [C.name]!</B>")
-						del P
+						qdel(P)
 						return
 
 		var/datum/organ/external/organ = get_organ(check_zone(def_zone))
@@ -112,7 +86,7 @@ emp_act
 		apply_effects(P.stun,P.weaken,0,0,P.stutter,0,0,armorblock)
 		flash_pain()
 		src <<"\red You have been shot!"
-		del P
+		qdel(P)
 		return
 //Конец ребаланса арбалета синди
 
@@ -120,20 +94,21 @@ emp_act
 		P.on_hit(src, 100, def_zone)
 		return 2
 
-	var/datum/organ/external/organ = get_organ(check_zone(def_zone))
-
-	var/armor = getarmor_organ(organ, "bullet")
-//Shit start here
-	var/delta = P.damage - armor
-	if (delta < 0) delta = 0
-	if(delta <= (P.damage/4) )
-		apply_effect(delta*2,AGONY,armor)
-		P.on_hit(src, armor, def_zone)
-		//return Nope! ~Zve
-	if(delta < 10)
-		P.sharp = 0
-		P.embed = 0
 	if(istype(P, /obj/item/projectile/bullet))
+		var/datum/organ/external/organ = get_organ(check_zone(def_zone))
+
+		var/armor = getarmor_organ(organ, "bullet")
+
+		var/delta = max(0, P.damage - (P.damage * (armor/100)))
+
+		if(delta)
+			apply_effect(delta,AGONY,armor)
+			P.on_hit(src, armor, def_zone)
+			//return Nope! ~Zve
+		if(delta < 10)
+			P.sharp = 0
+			P.embed = 0
+
 		if(P:stoping_power)
 			var/force =  (armor/P.damage)*100
 			if (force <= 60 && force > 40)
@@ -141,16 +116,13 @@ emp_act
 			else if(force <= 40)
 				apply_effects(P:stoping_power,P:stoping_power,0,0,P:stoping_power,0,0,armor)
 
-//Shit end here
-	if((P.embed && prob(20 + max(P.damage - armor, -10))) && P.damage_type == BRUTE)
-		var/obj/item/weapon/shard/shrapnel/SP = new()
-		(SP.name) = "[P.name] shrapnel"
-		(SP.desc) = "[SP.desc] It looks like it was fired from [P.shot_from]."
-		(SP.loc) = organ
-		organ.embed(SP)
+		if((P.embed && prob(20 + max(P.damage - armor, -20))) && P.damage_type == BRUTE)
+			var/obj/item/weapon/shard/shrapnel/SP = new()
+			(SP.name) = "[P.name] shrapnel"
+			(SP.desc) = "[SP.desc] It looks like it was fired from [P.shot_from]."
+			(SP.loc) = organ
+			organ.embed(SP)
 
-	if(armor > 0)
-		P.damage = P.damage - (P.damage * (armor/100))
 	return (..(P , def_zone))
 
 
@@ -183,6 +155,12 @@ emp_act
 		if(!istype(C))	//is this necessary?
 			continue
 		else if(C.body_parts_covered & def_zone.body_part) // Is that body part being targeted covered?
+			if(C.wet)
+				siemens_coefficient = 3.0
+				var/turf/T = get_turf(src)
+				var/obj/effect/decal/cleanable/water/W = locate(/obj/effect/decal/cleanable/water, T)
+				if(W)
+					W.electrocute_act(60)
 			siemens_coefficient *= C.siemens_coefficient
 
 	return siemens_coefficient
@@ -328,8 +306,10 @@ emp_act
 				if(prob(I.force))
 					apply_effect(20, PARALYZE, armor)
 					visible_message("\red <B>[src] has been knocked unconscious!</B>")
+				if(prob(I.force + min(100,100 - src.health)) && src != user && I.damtype == BRUTE)
 					if(src != user && I.damtype == BRUTE)
 						ticker.mode.remove_revolutionary(mind)
+						ticker.mode.remove_gangster(mind, exclude_bosses=1)
 
 				if(bloody)//Apply blood
 					if(wear_mask)

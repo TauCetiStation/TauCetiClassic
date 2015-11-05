@@ -25,7 +25,7 @@
 	affecting = victim
 
 	if(affecting.anchored)
-		del(src)
+		qdel(src)
 		return
 
 	hud = new /obj/screen/grab(src)
@@ -33,6 +33,10 @@
 	hud.name = "reinforce grab"
 	hud.master = src
 
+/obj/item/weapon/grab/Destroy()
+	//make sure the grabbed_by list doesn't fill up with nulls
+	if(affecting) affecting.grabbed_by -= src
+	..()
 
 //Used by throw code to hand over the mob, instead of throwing the grab. The grab is then deleted by the throw code.
 /obj/item/weapon/grab/proc/throw_held()
@@ -65,6 +69,7 @@
 
 	if(state <= GRAB_AGGRESSIVE)
 		allow_upgrade = 1
+		//disallow upgrading if we're grabbing more than one person
 		if((assailant.l_hand && assailant.l_hand != src && istype(assailant.l_hand, /obj/item/weapon/grab)))
 			var/obj/item/weapon/grab/G = assailant.l_hand
 			if(G.affecting != affecting)
@@ -74,31 +79,29 @@
 			if(G.affecting != affecting)
 				allow_upgrade = 0
 		if(state == GRAB_AGGRESSIVE)
-			var/h = affecting.hand
-			affecting.hand = 0
-			affecting.drop_item()
-			affecting.hand = 1
-			affecting.drop_item()
-			affecting.hand = h
+			affecting.drop_l_hand()
+			affecting.drop_r_hand()
+			//disallow upgrading past aggressive if we're being grabbed aggressively
 			for(var/obj/item/weapon/grab/G in affecting.grabbed_by)
 				if(G == src) continue
-				if(G.state == GRAB_AGGRESSIVE)
+				if(G.state >= GRAB_AGGRESSIVE)
 					allow_upgrade = 0
 		if(allow_upgrade)
 			hud.icon_state = "reinforce"
 		else
 			hud.icon_state = "!reinforce"
-	else
-		if(!affecting.buckled)
-			affecting.loc = assailant.loc
+	else if(!affecting.buckled)
+		affecting.loc = assailant.loc
 
 	if(state >= GRAB_NECK)
-		affecting.Stun(5)	//It will hamper your voice, being choked and all.
+		affecting.Stun(1)
 		if(isliving(affecting))
 			var/mob/living/L = affecting
 			L.adjustOxyLoss(1)
 
 	if(state >= GRAB_KILL)
+		//affecting.apply_effect(STUTTER, 5) //would do this, but affecting isn't declared as mob/living for some stupid reason.
+		affecting.stuttering = max(affecting.stuttering, 5) //It will hamper your voice, being choked and all.
 		affecting.Weaken(5)	//Should keep you down unless you get help.
 		affecting.losebreath = min(affecting.losebreath + 2, 3)
 
@@ -113,7 +116,7 @@
 	if(world.time < (last_upgrade + UPGRADE_COOLDOWN))
 		return
 	if(!assailant.canmove || assailant.lying)
-		del(src)
+		qdel(src)
 		return
 
 	last_upgrade = world.time
@@ -124,63 +127,57 @@
 		assailant.visible_message("<span class='warning'>[assailant] has grabbed [affecting] aggressively (now hands)!</span>")
 		state = GRAB_AGGRESSIVE
 		icon_state = "grabbed1"
-	else
-		if(state < GRAB_NECK)
-			if(isslime(affecting))
-				assailant << "<span class='notice'>You squeeze [affecting], but nothing interesting happens.</span>"
+	else if(state < GRAB_NECK)
+		if(isslime(affecting))
+			assailant << "<span class='notice'>You squeeze [affecting], but nothing interesting happens.</span>"
+			return
+
+		assailant.visible_message("<span class='warning'>[assailant] has reinforced \his grip on [affecting] (now neck)!</span>")
+		state = GRAB_NECK
+		icon_state = "grabbed+1"
+		if(!affecting.buckled)
+			affecting.loc = assailant.loc
+		affecting.attack_log += "\[[time_stamp()]\] <font color='orange'>Has had their neck grabbed by [assailant.name] ([assailant.ckey])</font>"
+		assailant.attack_log += "\[[time_stamp()]\] <font color='red'>Grabbed the neck of [affecting.name] ([affecting.ckey])</font>"
+		msg_admin_attack("[key_name(assailant)] grabbed the neck of [key_name(affecting)]")
+		hud.icon_state = "disarm/kill"
+		hud.name = "disarm/kill"
+	else if(state < GRAB_UPGRADING)
+		assailant.visible_message("<span class='danger'>[assailant] starts to tighten \his grip on [affecting]'s neck!</span>")
+		hud.icon_state = "disarm/kill1"
+		state = GRAB_UPGRADING
+		if(do_after(assailant, UPGRADE_KILL_TIMER))
+			if(state == GRAB_KILL)
 				return
+			if(!affecting)
+				qdel(src)
+				return
+			if(!assailant.canmove || assailant.lying)
+				qdel(src)
+				return
+			state = GRAB_KILL
+			assailant.visible_message("<span class='danger'>[assailant] has tightened \his grip on [affecting]'s neck!</span>")
+			affecting.attack_log += "\[[time_stamp()]\] <font color='orange'>Has been strangled (kill intent) by [assailant.name] ([assailant.ckey])</font>"
+			assailant.attack_log += "\[[time_stamp()]\] <font color='red'>Strangled (kill intent) [affecting.name] ([affecting.ckey])</font>"
+			msg_admin_attack("[key_name(assailant)] strangled (kill intent) [key_name(affecting)]")
 
-			assailant.visible_message("<span class='warning'>[assailant] has reinforced \his grip on [affecting] (now neck)!</span>")
-			state = GRAB_NECK
-			icon_state = "grabbed+1"
-			if(!affecting.buckled)
-				affecting.loc = assailant.loc
-			affecting.attack_log += "\[[time_stamp()]\] <font color='orange'>Has had their neck grabbed by [assailant.name] ([assailant.ckey])</font>"
-			assailant.attack_log += "\[[time_stamp()]\] <font color='red'>Grabbed the neck of [affecting.name] ([affecting.ckey])</font>"
-
-			for(var/mob/living/simple_animal/smart_animal/SA in view(7))
-				SA.fight(assailant, affecting)
-
-			msg_admin_attack("[key_name(assailant)] grabbed the neck of [key_name(affecting)]")
-			hud.icon_state = "disarm/kill"
-			hud.name = "disarm/kill"
+			assailant.next_move = world.time + 10
+			affecting.losebreath += 1
 		else
-			if(state < GRAB_UPGRADING)
-				assailant.visible_message("<span class='danger'>[assailant] starts to tighten \his grip on [affecting]'s neck!</span>")
-				hud.icon_state = "disarm/kill1"
-				state = GRAB_UPGRADING
-				if(do_after(assailant, UPGRADE_KILL_TIMER))
-					if(state == GRAB_KILL)
-						return
-					if(!affecting)
-						del(src)
-						return
-					if(!assailant.canmove || assailant.lying)
-						del(src)
-						return
-					state = GRAB_KILL
-					assailant.visible_message("<span class='danger'>[assailant] has tightened \his grip on [affecting]'s neck!</span>")
-					affecting.attack_log += "\[[time_stamp()]\] <font color='orange'>Has been strangled (kill intent) by [assailant.name] ([assailant.ckey])</font>"
-					assailant.attack_log += "\[[time_stamp()]\] <font color='red'>Strangled (kill intent) [affecting.name] ([affecting.ckey])</font>"
-					msg_admin_attack("[key_name(assailant)] strangled (kill intent) [key_name(affecting)]")
-
-					assailant.next_move = world.time + 10
-					affecting.losebreath += 1
-				else
-					assailant.visible_message("<span class='warning'>[assailant] was unable to tighten \his grip on [affecting]'s neck!</span>")
-					hud.icon_state = "disarm/kill"
-					state = GRAB_NECK
+			assailant.visible_message("<span class='warning'>[assailant] was unable to tighten \his grip on [affecting]'s neck!</span>")
+			hud.icon_state = "disarm/kill"
+			state = GRAB_NECK
 
 
 //This is used to make sure the victim hasn't managed to yackety sax away before using the grab.
 /obj/item/weapon/grab/proc/confirm()
 	if(!assailant || !affecting)
-		del(src)
+		qdel(src)
 		return 0
 
 	if(affecting)
 		if(!isturf(assailant.loc) || ( !isturf(affecting.loc) || assailant.loc != affecting.loc && get_dist(assailant, affecting) > 1) )
-			del(src)
+			qdel(src)
 			return 0
 
 	return 1
@@ -221,12 +218,12 @@
 			else
 				affecting.loc = user
 				attacker.stomach_contents.Add(affecting)
-			del(src)
+			qdel(src)
 
 
 /obj/item/weapon/grab/dropped()
-	del(src)
+	qdel(src)
 
-/obj/item/weapon/grab/Del()
-	del(hud)
+/obj/item/weapon/grab/Destroy()
+	qdel(hud)
 	..()

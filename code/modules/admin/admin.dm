@@ -261,12 +261,18 @@ var/global/floorIsLava = 0
 	var/dat = "<html><head><title>Info on [key]</title></head>"
 	dat += "<body>"
 
-	//ooh, this is wrong.
+	//Display player age and player warn bans
+	var/datum/preferences/D
+	var/p_warns
 	var/p_age
 	for(var/client/C in clients)
 		if(C.ckey == key)
 			p_age = C.player_age
+
+			D = C.prefs
+			p_warns = D.warnbans
 	dat +="<span style='color:#000000; font-weight: bold'>Player age: [p_age]</span><br>"
+	dat +="<span style='color:#000000'>Player warnbans: [p_warns]</span><hr>"
 
 	var/savefile/info = new("data/player_saves/[copytext(key, 1, 2)]/[key]/info.sav")
 	var/list/infos
@@ -876,6 +882,7 @@ var/global/floorIsLava = 0
 		ticker.delay_end = !ticker.delay_end
 		log_admin("[key_name(usr)] [ticker.delay_end ? "delayed the round end" : "has made the round end normally"].")
 		message_admins("\blue [key_name(usr)] [ticker.delay_end ? "delayed the round end" : "has made the round end normally"].", 1)
+		send2slack_service("[key_name(usr)] [ticker.delay_end ? "delayed the round end" : "has made the round end normally"].")
 		return //alert("Round end delayed", null, null, null, null, null)
 	going = !( going )
 	if (!( going ))
@@ -1183,7 +1190,37 @@ var/global/floorIsLava = 0
 //TO-DO:
 //
 //
+/datum/admins/proc/cmd_ghost_drag(var/mob/dead/observer/frommob, var/mob/living/tomob)
 
+	//this is the exact two check rights checks required to edit a ckey with vv.
+	if (!check_rights(R_VAREDIT,0) || !check_rights(R_SPAWN|R_DEBUG,0))
+		return 0
+
+	if (!frommob.ckey)
+		return 0
+
+	var/question = ""
+	if (tomob.ckey)
+		question = "This mob already has a user ([tomob.key]) in control of it! "
+	question += "Are you sure you want to place [frommob.name]([frommob.key]) in control of [tomob.name]?"
+
+	var/ask = alert(question, "Place ghost in control of mob?", "Yes", "No")
+	if (ask != "Yes")
+		return 1
+
+	if (!frommob || !tomob) //make sure the mobs don't go away while we waited for a response
+		return 1
+
+	tomob.ghostize(0)
+
+	message_admins("<span class='adminnotice'>[key_name_admin(usr)] has put [frommob.ckey] in control of [tomob.name].</span>")
+	log_admin("[key_name(usr)] stuffed [frommob.ckey] into [tomob.name].")
+	feedback_add_details("admin_verb","CGD")
+
+	tomob.ckey = frommob.ckey
+	qdel(frommob)
+
+	return 1
 
 /**********************Administration Shuttle**************************/
 

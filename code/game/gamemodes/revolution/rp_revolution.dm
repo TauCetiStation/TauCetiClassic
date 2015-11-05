@@ -4,9 +4,9 @@
 	name = "rp-revolution"
 	config_tag = "rp-revolution"
 	required_players = 4
-	required_players_secret = 10
-	required_enemies = 3
-	recommended_enemies = 3
+	required_players_secret = 15
+	required_enemies = 2
+	recommended_enemies = 2
 
 	votable = 0
 
@@ -27,8 +27,7 @@
 	if(config.protect_roles_from_antagonist)
 		restricted_jobs += protected_jobs
 
-	var/num_players = num_players()
-	max_headrevs = max(num_players / 4, 3)
+	max_headrevs = 2
 	recommended_enemies = max_headrevs
 
 	var/list/datum/mind/possible_headrevs = get_players_for_role(BE_REV)
@@ -152,6 +151,7 @@
 		if(finished == 1)
 			feedback_set_details("round_end_result","win - heads overthrown")
 			world << "\red <FONT size = 3><B> The heads of staff were overthrown! The revolutionaries win!</B></FONT>"
+			score["traitorswon"]++
 		else if(finished == 2)
 			feedback_set_details("round_end_result","loss - revolution stopped")
 			world << "\red <FONT size = 3><B> The heads of staff managed to stop the revolution!</B></FONT>"

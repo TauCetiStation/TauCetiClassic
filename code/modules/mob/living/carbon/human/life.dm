@@ -342,6 +342,8 @@
 		if(reagents.has_reagent("lexorin")) return
 		if(istype(loc, /obj/machinery/atmospherics/unary/cryo_cell)) return
 		if(species && (species.flags & NO_BREATHE || species.flags & IS_SYNTHETIC)) return
+		if(dna && dna.mutantrace == "adamantine") return
+		if(ismob(loc)) return
 
 		var/datum/gas_mixture/environment = loc.return_air()
 		var/datum/gas_mixture/breath
@@ -715,6 +717,8 @@
 
 		else if(istype(get_turf(src), /turf/space) && !(species.flags & IS_SYNTHETIC) && !(species.flags & IS_PLANT))
 			if(istype(loc, /obj/mecha))
+				return
+			if(istype(loc, /obj/structure/transit_tube_pod))
 				return
 			var/protected = 0
 			if( (head && istype(head, /obj/item/clothing/head/helmet/space)) && (wear_suit && istype(wear_suit, /obj/item/clothing/suit/space)) )
@@ -1095,6 +1099,7 @@
 				adjustToxLoss(-3)
 				adjustBrainLoss(-25) //gibbering shadowlings are hilarious but also bad to have
 				adjustCloneLoss(-1)
+				adjustOxyLoss(-10)
 				SetWeakened(0)
 				SetStunned(0)
 
@@ -1203,13 +1208,16 @@
 
 			else
 				for(var/atom/a in hallucinations)
-					del a
+					qdel(a)
 
 				if(halloss > 100)
 					src << "<span class='notice'>You're in too much pain to keep going...</span>"
 					for(var/mob/O in oviewers(src, null))
 						O.show_message("<B>[src]</B> slumps to the ground, too weak to continue fighting.", 1)
-					Paralyse(10)
+					if(prob(3))
+						Paralyse(10)
+					else
+						Weaken(10)
 					setHalLoss(99)
 
 			if(paralysis)
@@ -1420,7 +1428,7 @@
 			if(seer==1)
 				var/obj/effect/rune/R = locate() in loc
 				if(R && R.word1 == cultwords["see"] && R.word2 == cultwords["hell"] && R.word3 == cultwords["join"])
-					see_invisible = SEE_INVISIBLE_OBSERVER
+					see_invisible = SEE_INVISIBLE_CULT
 				else
 					see_invisible = SEE_INVISIBLE_LIVING
 					seer = 0
@@ -1483,6 +1491,11 @@
 						sight |= SEE_TURFS
 						//client.screen += global_hud.meson
 						if(!druggy)		see_invisible = SEE_INVISIBLE_MINIMUM
+
+			if(changeling_aug)
+				sight |= SEE_MOBS
+				see_in_dark = 8
+				see_invisible = SEE_INVISIBLE_MINIMUM
 
 			if(healths)
 				if (analgesic)
@@ -1701,7 +1714,7 @@
 					if(M.stat == 2)
 						M.death(1)
 						stomach_contents.Remove(M)
-						del(M)
+						qdel(M)
 						continue
 					if(air_master.current_cycle%3==1)
 						if(!(M.status_flags & GODMODE))
@@ -1947,6 +1960,18 @@
 					holder.icon_state = "hudshadowling"
 				if("thrall")
 					holder.icon_state = "hudthrall"
+				if("Clandestine Gang (A) Boss","Prima Gang (A) Boss","Zero-G Gang (A) Boss","Max Gang (A) Boss","Blasto Gang (A) Boss","Waffle Gang (A) Boss","North Gang (A) Boss","Omni Gang (A) Boss","Newton Gang (A) Boss","Cyber Gang (A) Boss","Donk Gang (A) Boss","Gene Gang (A) Boss","Gib Gang (A) Boss","Tunnel Gang (A) Boss","Diablo Gang (A) Boss","Psyke Gang (A) Boss","Osiron Gang (A) Boss")
+					holder.icon_state = "gang_boss_a"
+				if("Clandestine Gang (B) Boss","Prima Gang (B) Boss","Zero-G Gang (B) Boss","Max Gang (B) Boss","Blasto Gang (B) Boss","Waffle Gang (B) Boss","North Gang (B) Boss","Omni Gang (B) Boss","Newton Gang (B) Boss","Cyber Gang (B) Boss","Donk Gang (B) Boss","Gene Gang (B) Boss","Gib Gang (B) Boss","Tunnel Gang (B) Boss","Diablo Gang (B) Boss","Psyke Gang (B) Boss","Osiron Gang (B) Boss")
+					holder.icon_state = "gang_boss_b"
+				if("Clandestine Gang (A) Lieutenant","Prima Gang (A) Lieutenant","Zero-G Gang (A) Lieutenant","Max Gang (A) Lieutenant","Blasto Gang (A) Lieutenant","Waffle Gang (A) Lieutenant","North Gang (A) Lieutenant","Omni Gang (A) Lieutenant","Newton Gang (A) Lieutenant","Cyber Gang (A) Lieutenant","Donk Gang (A) Lieutenant","Gene Gang (A) Lieutenant","Gib Gang (A) Lieutenant","Tunnel Gang (A) Lieutenant","Diablo Gang (A) Lieutenant","Psyke Gang (A) Lieutenant","Osiron Gang (A) Lieutenant")
+					holder.icon_state = "lieutenant_a"
+				if("Clandestine Gang (B) Lieutenant","Prima Gang (B) Lieutenant","Zero-G Gang (B) Lieutenant","Max Gang (B) Lieutenant","Blasto Gang (B) Lieutenant","Waffle Gang (B) Lieutenant","North Gang (B) Lieutenant","Omni Gang (B) Lieutenant","Newton Gang (B) Lieutenant","Cyber Gang (B) Lieutenant","Donk Gang (B) Lieutenant","Gene Gang (B) Lieutenant","Gib Gang (B) Lieutenant","Tunnel Gang (B) Lieutenant","Diablo Gang (B) Lieutenant","Psyke Gang (B) Lieutenant","Osiron Gang (B) Lieutenant")
+					holder.icon_state = "lieutenant_b"
+				if("Clandestine Gang (A)","Prima Gang (A)","Zero-G Gang (A)","Max Gang (A)","Blasto Gang (A)","Waffle Gang (A)","North Gang (A)","Omni Gang (A)","Newton Gang (A)","Cyber Gang (A)","Donk Gang (A)","Gene Gang (A)","Gib Gang (A)","Tunnel Gang (A)","Diablo Gang (A)","Psyke Gang (A)","Osiron Gang (A)")
+					holder.icon_state = "gangster_a"
+				if("Clandestine Gang (B)","Prima Gang (B)","Zero-G Gang (B)","Max Gang (B)","Blasto Gang (B)","Waffle Gang (B)","North Gang (B)","Omni Gang (B)","Newton Gang (B)","Cyber Gang (B)","Donk Gang (B)","Gene Gang (B)","Gib Gang (B)","Tunnel Gang (B)","Diablo Gang (B)","Psyke Gang (B)","Osiron Gang (B)")
+					holder.icon_state = "gangster_b"
 
 			hud_list[SPECIALROLE_HUD] = holder
 	hud_updateflag = 0

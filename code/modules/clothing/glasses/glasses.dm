@@ -102,7 +102,7 @@
 	desc = "Protects the eyes from welders, approved by the mad scientist association."
 	icon_state = "welding-g"
 	item_state = "welding-g"
-	icon_action_button = "action_welding_g"
+	action_button_name = "Flip Welding Goggles"
 	var/up = 0
 
 /obj/item/clothing/glasses/welding/attack_self()
@@ -137,7 +137,6 @@
 	desc = "Welding goggles made from more expensive materials, strangely smells like potatoes."
 	icon_state = "rwelding-g"
 	item_state = "rwelding-g"
-	icon_action_button = "action_welding_g"
 
 /obj/item/clothing/glasses/sunglasses/blindfold
 	name = "blindfold"

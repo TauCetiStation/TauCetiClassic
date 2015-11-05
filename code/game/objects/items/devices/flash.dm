@@ -10,6 +10,8 @@
 	flags = FPRINT | TABLEPASS| CONDUCT
 	origin_tech = "magnets=2;combat=1"
 
+	action_button_name = "Toggle Flash"
+
 	var/times_used = 0 //Number of times it's been used.
 	var/broken = 0     //Is the flash burnt out?
 	var/last_used = 0 //last world.time it was used.
@@ -71,28 +73,29 @@
 
 			if(ishuman(M) && ishuman(user) && M.stat!=DEAD)
 
-				if(user.mind && user.mind in ticker.mode.head_revolutionaries && ticker.mode.name == "revolution")
+				if(user.mind && (user.mind in ticker.mode.head_revolutionaries))
+					if(M.client)
+						if(M.stat == CONSCIOUS)
+							M.mind_initialize()		//give them a mind datum if they don't have one.
+							var/resisted
+							if(!isloyal(M))
+								if(user.mind in ticker.mode.head_revolutionaries)
+									M.mind.has_been_rev = 1
+									if(!ticker.mode.add_revolutionary(M.mind))
+										resisted = 1
+							else
+								resisted = 1
 
-					var/revsafe = 0
-					for(var/obj/item/weapon/implant/loyalty/L in M)
-						if(L && L.implanted)
-							revsafe = 1
-							break
-					M.mind_initialize()		//give them a mind datum if they don't have one.
-					if(M.mind.has_been_rev)
-						revsafe = 2
-					if(!revsafe)
-						M.mind.has_been_rev = 1
-						ticker.mode.add_revolutionary(M.mind)
-					else if(revsafe == 1)
-						user << "<span class='warning'>Something seems to be blocking the flash!</span>"
-					else
-						user << "<span class='warning'>This mind seems resistant to the flash!</span>"
+							if(resisted)
+								user << "<span class='warning'>This mind seems resistant to the flash!</span>"
 		else
 			flashfail = 1
 
 	else if(issilicon(M))
-		M.Weaken(rand(5,10))
+		//M.Weaken(rand(5,10))
+		var/power = rand(7,13)
+		M.confused = min(M.confused + power, 20)
+		M.eye_blind = min(M.eye_blind + power, 20)
 	else
 		flashfail = 1
 
@@ -105,7 +108,7 @@
 			animation.master = user
 			flick("blspell", animation)
 			sleep(5)
-			del(animation)
+			qdel(animation)
 
 	if(!flashfail)
 		flick("flash2", src)
@@ -156,7 +159,7 @@
 			animation.master = user
 			flick("blspell", animation)
 			sleep(5)
-			del(animation)
+			qdel(animation)
 
 	for(var/mob/living/carbon/M in oviewers(3, null))
 		if(prob(50))

@@ -164,6 +164,7 @@
 	if(A)
 		notify_ghosts("Nar-Sie has risen in \the [A.name]. Reach out to the Geometer to be given a new shell for your soul.")
 	narsie_spawn_animation()
+	invisibility = 60
 
 	sleep(70)
 	if(emergency_shuttle)
@@ -193,23 +194,10 @@
 
 
 /obj/machinery/singularity/narsie/Bump(atom/A)//you dare stand before a god?!
-	godsmack(A)
 	return
 
 /obj/machinery/singularity/narsie/Bumped(atom/A)
-	godsmack(A)
 	return
-
-/obj/machinery/singularity/narsie/proc/godsmack(var/atom/A)
-	if(istype(A,/obj/))
-		var/obj/O = A
-		O.ex_act(1.0)
-		if(O) del(O)
-
-	else if(isturf(A))
-		var/turf/T = A
-		T.ChangeTurf(/turf/simulated/floor/engine/cult)
-
 
 /obj/machinery/singularity/narsie/mezzer()
 	for(var/mob/living/carbon/M in oviewers(8, src))
@@ -222,16 +210,18 @@
 /obj/machinery/singularity/narsie/consume(var/atom/A)
 	//if(is_type_in_list(A, uneatable))
 	//	return 0
+	if(istype(A, /mob/living))
+		var/mob/living/L = A
+		if(istype(L, /mob/living/simple_animal/construct))
+			return
+		L.gib()
+		return
 
-	if(istype(A,/mob/living/))
-		var/mob/living/C = A
+	var/mob/living/C = locate(/mob/living) in A
+	if(istype(C))
 		if(istype(C, /mob/living/simple_animal/construct))
 			return
-		if(C.client)
-			var/mob/living/simple_animal/construct/harvester/Z = new /mob/living/simple_animal/construct/harvester (get_turf(C.loc))
-			Z.key = C.key
-			Z << "\red You are a Harvester. You are not strong, but your powers of domination will assist you in your role: \
-		Bring those who still cling to this world of illusion back to the Geometer so they may know Truth"
+		C.loc = get_turf(C)
 		C.gib()
 		return
 
@@ -251,6 +241,20 @@
 				T.ChangeTurf(/turf/simulated/wall/cult)
 	return
 
+/obj/machinery/singularity/narsie/move()
+	if(!move_self)
+		return 0
+
+	var/movement_dir = pick(alldirs - last_failed_movement)
+
+	if(target)
+		movement_dir = get_dir(src,target) //moves to a singulo beacon, if there is one
+
+	spawn(0)
+		loc = get_step(src, movement_dir)
+	spawn(1)
+		loc = get_step(src, movement_dir)
+	return 1
 
 /obj/machinery/singularity/narsie/ex_act() //No throwing bombs at it either. --NEO
 	return
@@ -263,6 +267,7 @@
 		var/turf/pos = get_turf(food)
 		if(pos.z != src.z)
 			continue
+		if(istype(food, /mob/living/carbon/brain)) continue
 
 		if(iscultist(food))
 			cultists += food

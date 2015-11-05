@@ -181,6 +181,7 @@
 	if (!istype(cult_mind))
 		return 0
 	if(!(cult_mind in cult) && is_convertable_to_cult(cult_mind))
+		cult_mind.current.Paralyse(5)
 		cult += cult_mind
 		update_all_cult_icons()
 		return 1
@@ -196,6 +197,7 @@
 /datum/game_mode/proc/remove_cultist(datum/mind/cult_mind, show_message = 1)
 	if(cult_mind in cult)
 		cult -= cult_mind
+		cult_mind.current.Paralyse(5)
 		cult_mind.current << "\red <FONT size = 3><B>An unfamiliar white light flashes through your mind, cleansing the taint of the dark-one and the memories of your time as his servant with it.</B></FONT>"
 		cult_mind.memory = ""
 		update_cult_icons_removed(cult_mind)
@@ -210,7 +212,7 @@
 				if(cultist.current.client)
 					for(var/image/I in cultist.current.client.images)
 						if(I.icon_state == "cult")
-							del(I)
+							qdel(I)
 
 		for(var/datum/mind/cultist in cult)
 			if(cultist.current)
@@ -241,13 +243,13 @@
 				if(cultist.current.client)
 					for(var/image/I in cultist.current.client.images)
 						if(I.icon_state == "cult" && I.loc == cult_mind.current)
-							del(I)
+							qdel(I)
 
 		if(cult_mind.current)
 			if(cult_mind.current.client)
 				for(var/image/I in cult_mind.current.client.images)
 					if(I.icon_state == "cult")
-						del(I)
+						qdel(I)
 
 
 /datum/game_mode/cult/proc/get_unconvertables()
@@ -337,11 +339,12 @@
 
 /datum/game_mode/proc/auto_declare_completion_cult()
 	if( cult.len || (ticker && istype(ticker.mode,/datum/game_mode/cult)) )
-		var/text = "<FONT size = 2><B>The cultists were:</B></FONT>"
+		var/icon/logo = icon('icons/mob/mob.dmi', "cult-logo")
+		var/text = "<br>\icon[logo] <FONT size = 2><B>The cultists were:</B></FONT> \icon[logo]"
 		for(var/datum/mind/cultist in cult)
-
-			text += "<br>[cultist.key] was [cultist.name] ("
 			if(cultist.current)
+				var/icon/flat = getFlatIcon(cultist.current)
+				text += "<br>\icon[flat] [cultist.key] was [cultist.name] ("
 				if(cultist.current.stat == DEAD)
 					text += "died"
 				else
@@ -349,6 +352,8 @@
 				if(cultist.current.real_name != cultist.name)
 					text += " as [cultist.current.real_name]"
 			else
+				var/icon/sprotch = icon('icons/effects/blood.dmi', "floor1-old")
+				text += "<br>\icon[sprotch] [cultist.key] was [cultist.name] ("
 				text += "body destroyed"
 			text += ")"
 

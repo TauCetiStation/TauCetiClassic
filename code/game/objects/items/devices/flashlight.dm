@@ -9,7 +9,7 @@
 	slot_flags = SLOT_BELT
 	m_amt = 50
 	g_amt = 20
-	icon_action_button = "action_flashlight"
+	action_button_name = "Toggle Flashlight"
 	var/on = 0
 	var/brightness_on = 4 //luminosity when on
 
@@ -36,6 +36,7 @@
 		return 0
 	on = !on
 	update_brightness(user)
+	action_button_name = null
 	return 1
 
 /obj/item/device/flashlight/Destroy()
@@ -144,12 +145,15 @@
 	brightness_on = 9 // Pretty bright.
 	icon_state = "flare"
 	item_state = "flare"
-	icon_action_button = null	//just pull it manually, neckbeard.
+	action_button_name = null //just pull it manually, neckbeard.
 	var/fuel = 0
 	var/on_damage = 7
 	var/produce_heat = 1500
 	light_color = "#ff0000"
 	light_power = 3
+	action_button_name = "Toggle Flare"
+
+
 /obj/item/device/flashlight/flare/New()
 	fuel = rand(800, 1000) // Sorry for changing this so much but I keep under-estimating how long X number of ticks last in seconds.
 	..()
@@ -191,7 +195,7 @@
 		src.force = on_damage
 		src.damtype = "fire"
 		processing_objects += src
-		
+
 /obj/item/device/flashlight/slime
 	gender = PLURAL
 	name = "glowing slime extract"
@@ -204,12 +208,12 @@
 	g_amt = 0
 	brightness_on = 6
 	on = 1 //Bio-luminesence has one setting, on.
-	
+
 /obj/item/device/flashlight/slime/New()
 	set_light(brightness_on)
 	spawn(1) //Might be sloppy, but seems to be necessary to prevent further runtimes and make these work as intended... don't judge me!
 		update_brightness()
 		icon_state = initial(icon_state)
-	
+
 /obj/item/device/flashlight/slime/attack_self(mob/user)
 	return //Bio-luminescence does not toggle.

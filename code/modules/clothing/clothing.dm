@@ -4,6 +4,7 @@
 	var/equip_time = 0
 	var/equipping = 0
 	var/rig_restrict_helmet = 0 // Stops the user from equipping a rig helmet without attaching it to the suit first.
+	var/gang //Is this a gang outfit?
 
 	/*
 		Sprites used when the clothing item is refit. This is done by setting icon_override.
@@ -112,7 +113,7 @@
 		O = (H.l_ear == src ? H.r_ear : H.l_ear)
 		user.u_equip(O)
 		if(!istype(src,/obj/item/clothing/ears/offear))
-			del(O)
+			qdel(O)
 			O = src
 	else
 		O = src
@@ -124,7 +125,7 @@
 		O.add_fingerprint(user)
 
 	if(istype(src,/obj/item/clothing/ears/offear))
-		del(src)
+		qdel(src)
 
 /obj/item/clothing/ears/offear
 	name = "Other ear"
@@ -175,7 +176,7 @@ BLIND     // can't see anything
 	gender = PLURAL //Carn: for grammarically correct text-parsing
 	w_class = 2.0
 	icon = 'icons/obj/clothing/gloves.dmi'
-	siemens_coefficient = 0.50
+	siemens_coefficient = 0.9
 	var/wired = 0
 	var/obj/item/weapon/cell/cell = 0
 	var/clipped = 0
@@ -262,7 +263,7 @@ BLIND     // can't see anything
 	name = "Space helmet"
 	icon_state = "space"
 	desc = "A special helmet designed for work in a hazardous, low-pressure environment."
-	flags = FPRINT | TABLEPASS | HEADCOVERSEYES | BLOCKHAIR | HEADCOVERSMOUTH | STOPSPRESSUREDMAGE | THICKMATERIAL
+	flags = FPRINT | TABLEPASS | HEADCOVERSEYES | BLOCKHAIR | HEADCOVERSMOUTH | STOPSPRESSUREDMAGE | THICKMATERIAL | PHORONGUARD
 	item_state = "space"
 	permeability_coefficient = 0.01
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 50)
@@ -270,7 +271,7 @@ BLIND     // can't see anything
 	body_parts_covered = HEAD|FACE|EYES
 	cold_protection = HEAD
 	min_cold_protection_temperature = SPACE_HELMET_MIN_COLD_PROTECTION_TEMPERATURE
-	siemens_coefficient = 0.9
+	siemens_coefficient = 0.2
 	species_restricted = list("exclude","Diona","Vox")
 	sprite_sheets = list("Vox" = 'icons/mob/species/vox/head.dmi')
 
@@ -282,7 +283,7 @@ BLIND     // can't see anything
 	w_class = 4//bulky item
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.02
-	flags = FPRINT | TABLEPASS | STOPSPRESSUREDMAGE | THICKMATERIAL
+	flags = FPRINT | TABLEPASS | STOPSPRESSUREDMAGE | THICKMATERIAL | PHORONGUARD
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen,/obj/item/device/suit_cooling_unit)
 	slowdown = 3
@@ -291,7 +292,7 @@ BLIND     // can't see anything
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT|HIDETAIL
 	cold_protection = UPPER_TORSO | LOWER_TORSO | LEGS | FEET | ARMS | HANDS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
-	siemens_coefficient = 0.9
+	siemens_coefficient = 0.2
 	species_restricted = list("exclude","Diona","Vox")
 
 	var/list/supporting_limbs //If not-null, automatically splints breaks. Checked when removing the suit.
@@ -362,7 +363,6 @@ BLIND     // can't see anything
 			var/mob/living/carbon/human/H = loc
 			H.update_inv_w_uniform()
 		action_button_name = "Use inventory."
-		icon_action_button = "under_use"
 		return
 
 	..()
@@ -492,7 +492,6 @@ BLIND     // can't see anything
 		var/mob/living/carbon/human/H = loc
 		H.update_inv_w_uniform()
 		action_button_name = null
-		icon_action_button = null
 
 /obj/item/clothing/under/verb/removetie()
 	set name = "Remove Accessory"
