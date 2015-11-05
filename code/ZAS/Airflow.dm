@@ -46,12 +46,7 @@ atom/movable/proc/check_airflow_movable(n)
 	return 1
 
 mob/check_airflow_movable(n)
-	//if(n < vsc.airflow_heavy_pressure)
-	if(ishuman(src))
-		var/mob/living/carbon/human/H = src
-		if(n < max(35, min(65, round(H.nutrition/8))))
-			return 0
-	else if(n < vsc.airflow_heavy_pressure)
+	if(n < vsc.airflow_heavy_pressure)
 		return 0
 	return 1
 
@@ -80,7 +75,7 @@ obj/item/check_airflow_movable(n)
 /atom/movable/proc/GotoAirflowDest(n)
 	if(!airflow_dest) return
 	if(airflow_speed < 0) return
-	if(last_airflow > world.time - vsc.airflow_delay) return
+	if(last_airflow > world.time - (ismob(src) ? vsc.airflow_mob_delay : vsc.airflow_delay)) return
 	if(airflow_speed)
 		airflow_speed = n/max(get_dist(src,airflow_dest),1)
 		return
@@ -149,7 +144,7 @@ obj/item/check_airflow_movable(n)
 /atom/movable/proc/RepelAirflowDest(n)
 	if(!airflow_dest) return
 	if(airflow_speed < 0) return
-	if(last_airflow > world.time - vsc.airflow_delay) return
+	if(last_airflow > world.time - (ismob(src) ? vsc.airflow_mob_delay : vsc.airflow_delay)) return
 	if(airflow_speed)
 		airflow_speed = n/max(get_dist(src,airflow_dest),1)
 		return
@@ -267,6 +262,6 @@ zone/proc/movables()
 	. = list()
 	for(var/turf/T in contents)
 		for(var/atom/movable/A in T)
-			if(A.simulated || A.anchored || istype(A, /obj/effect) || istype(A, /mob/aiEye))
+			if(!A.simulated || A.anchored || istype(A, /obj/effect) || istype(A, /mob/aiEye))
 				continue
 			. += A
