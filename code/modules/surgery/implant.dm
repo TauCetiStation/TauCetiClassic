@@ -132,6 +132,11 @@
 			affected.wounds += I
 			affected.owner.custom_pain("You feel something rip in your [affected.display_name]!", 1)
 		user.drop_item()
+		if(istype(tool, /obj/item/gland))
+			var/obj/item/gland/gland = tool
+			gland.Inject(target)
+			affected.cavity = 0
+			return
 		affected.hidden = tool
 		tool.loc = target
 		affected.cavity = 0

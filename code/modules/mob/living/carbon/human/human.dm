@@ -10,6 +10,10 @@
 	var/heart_beat = 0
 	var/embedded_flag	  //To check if we've need to roll for damage on movement while an item is imbedded in us.
 
+	var/scientist = 0	//Vars used in abductors checks and etc. Should be here because in species datums it changes globaly.
+	var/agent = 0
+	var/team = 1
+
 /mob/living/carbon/human/dummy
 	real_name = "Test Dummy"
 	status_flags = GODMODE|CANPUSH
@@ -40,6 +44,9 @@
 /mob/living/carbon/human/machine/New(var/new_loc)
 	h_style = "blue IPC screen"
 	..(new_loc, "Machine")
+
+/mob/living/carbon/human/abductor/New(var/new_loc)
+	..(new_loc, "Abductor")
 
 /mob/living/carbon/human/New(var/new_loc, var/new_species = null)
 
@@ -503,6 +510,8 @@
 		return get_id_name("Unknown")
 	if( head && (head.flags_inv&HIDEFACE) )
 		return get_id_name("Unknown")		//Likewise for hats
+	if(name_override)
+		return name_override
 	var/face_name = get_face_name()
 	var/id_name = get_id_name("")
 	if(id_name && (id_name != face_name))
@@ -886,6 +895,8 @@
 
 	if(dna && dna.mutantrace == "golem")
 		return "Animated Construct"
+
+
 
 	return species.name
 

@@ -20,6 +20,11 @@
 		for(var/mob/living/simple_animal/smart_animal/SA in view(7))
 			SA.fight(M, src)
 
+	if(M.wear_suit && istype(M.wear_suit, /obj/item/clothing/suit/armor/abductor/vest))	//When abductor will hit someone from stelth he will reveal himself
+		for(var/obj/item/clothing/suit/armor/abductor/vest/V in list(M.wear_suit))
+			if(V.stealth_active)
+				V.DeactivateStealth()
+
 	if(M.gloves && istype(M.gloves,/obj/item/clothing/gloves))
 		M.do_attack_animation(src)
 		var/obj/item/clothing/gloves/G = M.gloves

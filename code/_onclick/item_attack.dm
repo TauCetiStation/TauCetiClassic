@@ -15,6 +15,12 @@
 	if(istype(I) && ismob(user))
 		I.attack(src, user)
 
+		if(ishuman(user))	//When abductor will hit someone from stelth he will reveal himself
+			var/mob/living/carbon/human/H = user
+			if(H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit/armor/abductor/vest))
+				for(var/obj/item/clothing/suit/armor/abductor/vest/V in list(H.wear_suit))
+					if(V.stealth_active)
+						V.DeactivateStealth()
 
 // Proximity_flag is 1 if this afterattack was called on something adjacent, in your square, or on your person.
 // Click parameters is the params string from byond Click() code, see that documentation.
