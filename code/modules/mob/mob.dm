@@ -395,7 +395,7 @@ var/list/slot_equipment_priority = list( \
 	if ((stat != 2 || !( ticker )))
 		usr << "\blue <B>You must be dead to use this!</B>"
 		return
-	if (ticker.mode.name == "meteor" || ticker.mode.name == "epidemic") //BS12 EDIT
+	if(ticker && istype(ticker.mode,/datum/game_mode/meteor))
 		usr << "\blue Respawn is disabled for this roundtype."
 		return
 	else
