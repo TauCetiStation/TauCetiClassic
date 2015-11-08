@@ -97,7 +97,7 @@
 
 				C.auto_turn()
 
-				C.network = uniquelist(tempnetwork)
+				C.replace_networks(uniquelist(tempnetwork))
 				tempnetwork = difflist(C.network,RESTRICTED_CAMERA_NETWORKS)
 				if(!tempnetwork.len)//Camera isn't on any open network - remove its chunk from AI visibility.
 					cameranet.removeCamera(C)

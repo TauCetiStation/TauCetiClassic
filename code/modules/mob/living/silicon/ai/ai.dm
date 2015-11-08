@@ -659,6 +659,9 @@ var/list/ai_verbs_default = list(
 		if(!C.can_use())
 			continue
 
+		if(C.hidden)
+			continue
+
 		var/list/tempnetwork = difflist(C.network,RESTRICTED_CAMERA_NETWORKS,1)
 		if(tempnetwork.len)
 			for(var/i in tempnetwork)
@@ -672,6 +675,7 @@ var/list/ai_verbs_default = list(
 
 	if(isnull(network))
 		network = old_network // If nothing is selected
+		return
 	else
 		for(var/obj/machinery/camera/C in cameranet.cameras)
 			if(!C.can_use())
@@ -842,7 +846,7 @@ var/list/ai_verbs_default = list(
 
 	src << "Accessing Subspace Transceiver control..."
 	if (src.aiRadio)
-		src.aiRadio.interact(src) 
+		src.aiRadio.interact(src)
 
 /mob/living/silicon/ai/proc/sensor_mode()
 	set name = "Set Sensor Augmentation"

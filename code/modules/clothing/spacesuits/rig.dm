@@ -402,7 +402,7 @@
 		..(user)
 	else
 		camera = new /obj/machinery/camera(src)
-		camera.network = list("NUKE")
+		camera.replace_networks(list("NUKE"))
 		cameranet.removeCamera(camera)
 		camera.c_tag = user.name
 		user << "\blue User scanned as [camera.c_tag]. Camera activated."
