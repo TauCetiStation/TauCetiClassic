@@ -62,10 +62,10 @@
 						if(user.team != H.team)
 							continue
 						else
-							H << "<i><font color=#800080><b>[user.real_name]:</b> [message]</font></i>"
+							H << "<i><font color=#800080><b>[user.real_name]:</b> [sanitize(message)]</font></i>"
 							//return - technically you can add more aliens to a team
 				for(var/mob/M in dead_mob_list)
-					M << "<i><font color=#800080><b>[user.real_name]:</b> [message]</font></i>"
+					M << "<i><font color=#800080><b>[user.real_name]:</b> [sanitize(message)]</font></i>"
 				return ""
 
 	message = capitalize(trim(message))

@@ -11,16 +11,17 @@
 	var/mob/living/carbon/human/host
 
 /obj/item/gland/examine()
-	var/mob/living/carbon/human/H = usr
-	if(!H)
-		usr << "You can't understand what is it."
-		return
+	if(!ishuman(usr))
+		..()
 	else
-		if(H.species.name != "Abductor")
-			H << "You can't understand what is it, but EWW, it's disgusting."
-			return
-		else
-			..()
+		var/mob/living/carbon/human/H = usr
+		if(H.species)
+			if(H.species.name == "Abductor")
+				..()
+			else
+				H << "You can't understand what is it, but EWW, it's disgusting."
+				return
+		else	..()
 
 /obj/item/gland/proc/HostCheck()
 	if(ishuman(host) && host == src.loc)
@@ -291,7 +292,7 @@ obj/item/gland/slime/activate()
 	var/hatch_time = 0
 
 /obj/effect/cocoon/abductor/proc/Start()
-	hatch_time = world.time + 60
+	hatch_time = world.time + 600
 	processing_objects.Add(src)
 
 /obj/effect/cocoon/abductor/process()

@@ -320,7 +320,7 @@
 	return 1
 
 /obj/item/weapon/gun/energy/decloner/alien
-	ammo_type = list(/obj/item/ammo_casing/energy/declone)
+	ammo_type = list(/obj/item/ammo_casing/energy/declone/light)
 
 
 //AGENT HELMET
@@ -329,8 +329,7 @@
 	desc = "Abduct with style - spiky style. Prevents digital tracking."
 	icon_state = "alienhelmet"
 	item_state = "alienhelmet"
-	origin_tech = "materials=5;biotech=4"
-	blockTracking = 1
+	origin_tech = "materials=5;biotech=5"
 	action_button_name = "Activate Helmet"
 
 	var/team
@@ -357,6 +356,7 @@
 					C.network = helm_cam.network
 
 		helm_cam.hidden = 1
+		blockTracking = 1
 		user << "\blue Abductor detected. Camera activated."
 		return
 
@@ -501,7 +501,7 @@
 								"<span class='userdanger'>[user] begins shaping an energy field around your hands!</span>")
 		if(do_mob(user, C, 30))
 			if(!C.handcuffed)
-				C.handcuffed = new /obj/item/weapon/handcuffs/alien/used(C)
+				C.handcuffed = new /obj/item/weapon/handcuffs/alien(C)
 				C.update_inv_handcuffed()
 				user << "<span class='notice'>You handcuff [C].</span>"
 				L.attack_log += "\[[time_stamp()]\] <b>[user]/[user.ckey]</b> handcuffed <b>[L]/[L.ckey]</b> with a <b>[src.type]</b>"
@@ -524,31 +524,6 @@
 			species = "<span class='warning'>Changeling lifeform</span>"
 	user << "<span class='notice'>Probing result: </span>[species]"
 
-
-//HANDCUFFS
-/obj/item/weapon/handcuffs/alien
-	name = "hard-light energy field"
-	desc = "A hard-light field restraining the hands."
-	icon_state = "handcuffAlien"
-	breakouttime = 450
-
-/obj/item/weapon/handcuffs/alien/used
-	desc = "Energy discharge."
-	origin_tech = "materials=5;combat=4;powerstorage=5"
-
-/obj/item/weapon/handcuffs/alien/used/attack(mob/living/carbon/C as mob, mob/user as mob)
-	user << "\red It doesn't work!"
-	return
-
-/obj/item/weapon/handcuffs/alien/used/dropped(mob/user)
-	user.visible_message("<span class='danger'>[user]'s [src] break in a discharge of energy!</span>", \
-							"<span class='userdanger'>[user]'s [src] break in a discharge of energy!</span>")
-	var/datum/effect/effect/system/spark_spread/S = new
-	S.set_up(4,0,user.loc)
-	S.start()
-	new /obj/item/weapon/handcuffs/alien/used(user.loc)
-	qdel(src)
-
 /obj/item/weapon/abductor_baton/examine(mob/user)
 	..()
 	switch(mode)
@@ -560,6 +535,15 @@
 			user <<"<span class='warning'>The baton is in restraining mode.</span>"
 		if(BATON_PROBE)
 			user << "<span class='warning'>The baton is in probing mode.</span>"
+
+
+//HANDCUFFS
+/obj/item/weapon/handcuffs/alien
+	name = "hard-light energy field"
+	desc = "A hard-light field restraining the hands."
+	icon_state = "handcuffAlien"
+	origin_tech = "materials=5;combat=4;powerstorage=5"
+	breakouttime = 450
 
 
 // SURGICAL INSTRUMENTS
@@ -590,6 +574,9 @@
 
 
 // OPERATING TABLE / BEDS / LOCKERS	/ OTHER
+/obj/machinery/recharger/wallcharger/alien
+	icon = 'icons/obj/abductor.dmi'
+
 /obj/machinery/optable/abductor
 	name = "alien optable"
 	desc = "Used for experiments on creatures."
@@ -613,6 +600,12 @@
 	icon_opened = "abductoropen"
 	icon_closed = "abductor"
 
+/obj/item/weapon/bonegel/alien
+	name = "alien ectoplasm"
+	desc = "Contains ecotplasm. In the case of ingestion can cause to stomach pains."
+	icon = 'icons/obj/abductor.dmi'
+	icon_state = "ectoplasm"
+
 /obj/item/weapon/paper/abductor
 	name = "Dissection Guide"
 	icon_state = "alienpaper_words"
@@ -626,7 +619,7 @@
  6.Make with a circular saw in the chest of subject hole and secure it with retractor.<br>
  7.Make some space with the drill. Don't worry, it's not so bad for subject as it sounds.<br>
  8.Insert replacement gland (Retrieve one from gland storage).<br>
- 8.<b>OPTIONAL</b> Close hole in chest of subject, lubricate it with bone-gel and cauterize the wound.<br>
+ 8.<b>OPTIONAL</b> Close hole in chest of subject, lubricate it with ectoplasm and cauterize the wound.<br>
  9.Consider dressing the specimen back to not disturb the habitat.<br>
  10.Put the specimen in the experiment machinery.<br>
  11.Choose one of the machine options and follow displayed instructions.<br>

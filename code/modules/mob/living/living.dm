@@ -674,11 +674,19 @@
 				spawn(0)
 					if(do_after(CM, breakouttime))
 						if(!CM.handcuffed || CM.buckled)
-							return // time leniency for lag which also might make this whole thing pointless but the server
-						for(var/mob/O in viewers(CM))//                                         lags so hard that 40s isn't lenient enough - Quarxink
-							O.show_message("\red <B>[CM] manages to remove the handcuffs!</B>", 1)
-						CM << "\blue You successfully remove \the [CM.handcuffed]."
-						CM.drop_from_inventory(CM.handcuffed)
+							return // time leniency for lag which also might make this whole thing pointless but the server lags so hard that 40s isn't lenient enough - Quarxink
+						if(istype(HC, /obj/item/weapon/handcuffs/alien))
+							CM.visible_message("\red <B>[CM] break in a discharge of energy!</B>", \
+							"\blue You successfully break in a discharge of energy!")
+							var/datum/effect/effect/system/spark_spread/S = new
+							S.set_up(4,0,CM.loc)
+							S.start()
+							CM.drop_from_inventory(CM.handcuffed)
+							qdel(HC)
+						else
+							CM.visible_message("\red <B>[CM] manages to remove the handcuffs!</B>", \
+								"\blue You successfully remove \the [CM.handcuffed].")
+							CM.drop_from_inventory(CM.handcuffed)
 
 		else if(CM.legcuffed && CM.canmove && (CM.last_special <= world.time))
 			CM.next_move = world.time + 100
@@ -711,13 +719,23 @@
 				spawn(0)
 					if(do_after(CM, breakouttime))
 						if(!CM.legcuffed || CM.buckled)
-							return // time leniency for lag which also might make this whole thing pointless but the server
-						for(var/mob/O in viewers(CM))//                                         lags so hard that 40s isn't lenient enough - Quarxink
-							O.show_message("\red <B>[CM] manages to remove the legcuffs!</B>", 1)
-						CM << "\blue You successfully remove \the [CM.legcuffed]."
-						CM.drop_from_inventory(CM.legcuffed)
-						CM.legcuffed = null
-						CM.update_inv_legcuffed()
+							return // time leniency for lag which also might make this whole thing pointless but the server lags so hard that 40s isn't lenient enough - Quarxink
+						if(istype(HC, /obj/item/weapon/handcuffs/alien))
+							CM.visible_message("\red <B>[CM] break in a discharge of energy!</B>", \
+							"\blue You successfully break in a discharge of energy!")
+							var/datum/effect/effect/system/spark_spread/S = new
+							S.set_up(4,0,CM.loc)
+							S.start()
+							CM.drop_from_inventory(CM.legcuffed)
+							CM.legcuffed = null
+							CM.update_inv_legcuffed()
+							qdel(HC)
+						else
+							CM.visible_message("\red <B>[CM] manages to remove the legcuffs!</B>", \
+								"\blue You successfully remove \the [CM.legcuffed].")
+							CM.drop_from_inventory(CM.legcuffed)
+							CM.legcuffed = null
+							CM.update_inv_legcuffed()
 
 /mob/living/verb/lay_down()
 	set name = "Rest"

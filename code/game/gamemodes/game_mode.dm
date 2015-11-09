@@ -518,8 +518,8 @@ proc/get_nt_opposed()
 	var/count = 1
 	for(var/datum/objective/objective in ply.objectives)
 		if(objective.check_completion())
-			text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <span class='greenannounce'>Success!</span>"
+			text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <font color='green'>Success!</font>"
 		else
-			text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <span class='boldannounce'>Fail.</span>"
+			text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <font color='red'>Fail.</font>"
 		count++
 	return text
