@@ -131,12 +131,16 @@
 			var/datum/wound/internal_bleeding/I = new (15)
 			affected.wounds += I
 			affected.owner.custom_pain("You feel something rip in your [affected.display_name]!", 1)
+		if(istype(tool, /obj/item/gland))	//Abductor surgery integration
+			if(target_zone != "chest")
+				return
+			else
+				var/obj/item/gland/gland = tool
+				user.drop_item()
+				gland.Inject(target)
+				affected.cavity = 0
+				return
 		user.drop_item()
-		if(istype(tool, /obj/item/gland))
-			var/obj/item/gland/gland = tool
-			gland.Inject(target)
-			affected.cavity = 0
-			return
 		affected.hidden = tool
 		tool.loc = target
 		affected.cavity = 0

@@ -219,7 +219,9 @@
 	else
 		A = teleportlocs[pick(teleportlocs)]
 	TeleportToArea(H,A)
-	H.uncuff()
+	var/obj/item/weapon/handcuffs/alien/handcuffs = H.handcuffed
+	H.drop_from_inventory(handcuffs)
+	qdel(handcuffs)
 	return
 
 /obj/machinery/abductor/experiment/update_icon()

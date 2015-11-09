@@ -81,6 +81,9 @@
 	select_name = "declone"
 	fire_sound = 'sound/weapons/pulse3.ogg'
 
+/obj/item/ammo_casing/energy/declone/light
+	projectile_type = /obj/item/projectile/energy/declone/light
+
 /obj/item/ammo_casing/energy/mindflayer
 	projectile_type = /obj/item/projectile/beam/mindflayer
 	select_name = "MINDFUCK"

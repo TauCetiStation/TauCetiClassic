@@ -62,7 +62,7 @@ var/list/teleportlocs = list()
 
 /hook/startup/proc/setupTeleportLocs()
 	for(var/area/AR in world)
-		if(istype(AR, /area/shuttle) || istype(AR, /area/syndicate_station) || istype(AR, /area/wizard_station)) continue
+		if(istype(AR, /area/shuttle) || istype(AR, /area/syndicate_station) || istype(AR, /area/wizard_station) || istype(AR, /area/engine/singularity)) continue
 		if(teleportlocs.Find(AR.name)) continue
 		var/turf/picked = pick(get_area_turfs(AR.type))
 		if (picked.z == 1)
@@ -989,6 +989,10 @@ var/list/ghostteleportlocs = list()
 	engineering
 		name = "Engineering"
 		icon_state = "engine_smes"
+
+	singularity
+		name = "Singularity Area"
+		icon_state = "engine"
 
 	engineering_foyer
 		name = "\improper Engineering Foyer"

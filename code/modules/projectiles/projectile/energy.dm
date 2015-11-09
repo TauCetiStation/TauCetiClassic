@@ -27,6 +27,8 @@
 	damage_type = CLONE
 	irradiate = 40
 
+/obj/item/projectile/energy/declone/light
+	irradiate = 30
 
 /obj/item/projectile/energy/dart
 	name = "dart"
