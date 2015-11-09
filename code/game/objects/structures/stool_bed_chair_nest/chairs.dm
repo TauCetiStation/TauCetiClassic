@@ -6,6 +6,63 @@
 
 	var/propelled = 0 // Check for fire-extinguisher-driven chairs
 
+/obj/structure/stool/bed/chair/metal
+	icon_state = "chair_g"
+	var/behind = null
+	var/behind_buckled = null
+
+/obj/structure/stool/bed/chair/metal/blue
+	icon_state = "chair_blu"
+
+/obj/structure/stool/bed/chair/metal/yellow
+	icon_state = "chair_y"
+
+/obj/structure/stool/bed/chair/metal/red
+	icon_state = "chair_r"
+
+/obj/structure/stool/bed/chair/metal/green
+	icon_state = "chair_gr"
+
+/obj/structure/stool/bed/chair/metal/white
+	icon_state = "chair_w"
+
+/obj/structure/stool/bed/chair/metal/black
+	icon_state = "chair_bla"
+
+/obj/structure/stool/bed/chair/metal/New()
+	behind = "chair_behind_g"
+	return ..()
+
+/obj/structure/stool/bed/chair/metal/blue/New()
+	behind = "chair_behind_blu"
+	return ..()
+
+/obj/structure/stool/bed/chair/metal/yellow/New()
+	behind = "chair_behind_y"
+	return ..()
+
+/obj/structure/stool/bed/chair/metal/red/New()
+	behind = "chair_behind_r"
+	return ..()
+
+/obj/structure/stool/bed/chair/metal/green/New()
+	behind = "chair_behind_gr"
+	return ..()
+
+/obj/structure/stool/bed/chair/metal/white/New()
+	behind = "chair_behind_w"
+	return ..()
+
+/obj/structure/stool/bed/chair/metal/black/New()
+	behind = "chair_behind_bla"
+	return ..()
+
+/obj/structure/stool/bed/chair/metal/post_buckle_mob(mob/living/M)
+	if(buckled_mob)
+		icon_state = behind
+	else
+		icon_state = initial(icon_state)
+
 /obj/structure/stool/bed/chair/schair
 	name = "shuttle chair"
 	desc = "You sit in this. Either by will or force."

@@ -1,7 +1,7 @@
 /mob/living/carbon/human/movement_delay()
 	var/tally = 0
 
-	if(species && species.flags & IS_SLOW)
+	if(species && species.flags & IS_PLANT)
 		tally = 7
 
 	if(crawling)

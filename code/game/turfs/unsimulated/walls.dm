@@ -18,3 +18,6 @@ turf/unsimulated/wall/splashscreen
 
 /turf/unsimulated/wall/other
 	icon_state = "r_wall"
+
+/turf/unsimulated/wall/abductor
+	icon_state = "alien1"

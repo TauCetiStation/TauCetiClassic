@@ -12,7 +12,15 @@
  */
 var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	new/datum/stack_recipe("stool", /obj/structure/stool, one_per_turf = 1, on_floor = 1), \
-	new/datum/stack_recipe("chair", /obj/structure/stool/bed/chair, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe_list("metal chairs", list( \
+		new/datum/stack_recipe("grey chair", /obj/structure/stool/bed/chair/metal, one_per_turf = 1, on_floor = 1), \
+		new/datum/stack_recipe("blue chair", /obj/structure/stool/bed/chair/metal/blue, one_per_turf = 1, on_floor = 1), \
+		new/datum/stack_recipe("red chair", /obj/structure/stool/bed/chair/metal/red, one_per_turf = 1, on_floor = 1), \
+		new/datum/stack_recipe("green chair", /obj/structure/stool/bed/chair/metal/green, one_per_turf = 1, on_floor = 1), \
+		new/datum/stack_recipe("black chair", /obj/structure/stool/bed/chair/metal/black, one_per_turf = 1, on_floor = 1), \
+		new/datum/stack_recipe("white chair", /obj/structure/stool/bed/chair/metal/white, one_per_turf = 1, on_floor = 1), \
+		new/datum/stack_recipe("yellow chair", /obj/structure/stool/bed/chair/metal/yellow, one_per_turf = 1, on_floor = 1), \
+		), 1), \
 	new/datum/stack_recipe("bed", /obj/structure/stool/bed, 2, one_per_turf = 1, on_floor = 1), \
 	null, \
 	new/datum/stack_recipe_list("office chairs",list( \

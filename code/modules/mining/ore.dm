@@ -97,6 +97,7 @@
 /obj/item/weapon/ore/New()
 	pixel_x = rand(0,16)-8
 	pixel_y = rand(0,8)-8
+	if(src.z == 5) score["oremined"]++ //When ore spawns, increment score.  Only include ore spawned on mining asteroid.
 
 /obj/item/weapon/ore/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W,/obj/item/device/core_sampler))

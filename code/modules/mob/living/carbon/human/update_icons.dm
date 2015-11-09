@@ -145,6 +145,12 @@ Please contact me on #coderbus IRC. ~Carn x
 	..()
 	//lying_prev = lying	//so we don't update overlays for lying/standing unless our stance changes again
 	update_hud()		//TODO: remove the need for this
+
+	//prevent from updating overlays when abductor in stealth
+	if(istype(wear_suit, /obj/item/clothing/suit/armor/abductor/vest))
+		for(var/obj/item/clothing/suit/armor/abductor/vest/V in list(wear_suit))
+			if(V.stealth_active)	return
+
 	overlays.Cut()
 
 	var/stealth = 0
@@ -681,15 +687,15 @@ proc/get_damage_icon_part(damage_state, body_part)
 				overlays_standing[EARS_LAYER] = image("icon" = l_ear:tc_custom, "icon_state" = "[l_ear.icon_state]_mob")
 
 		if(r_ear)
-			if(!r_ear:tc_custom || r_ear.icon_override || species.sprite_sheets["ears"]) 
+			if(!r_ear:tc_custom || r_ear.icon_override || species.sprite_sheets["ears"])
 				overlays_standing[EARS_LAYER] = image("icon" = ((r_ear.icon_override) ? r_ear.icon_override : (species.sprite_sheets["ears"] ? species.sprite_sheets["ears"] : 'icons/mob/ears.dmi')), "icon_state" = "[r_ear.icon_state]")
-			else 
+			else
 				overlays_standing[EARS_LAYER] = image("icon" = r_ear:tc_custom, "icon_state" = "[r_ear.icon_state]_mob")
 
 	else
 		overlays_standing[EARS_LAYER]	= null
 	if(update_icons)   update_icons()
-	
+
 /mob/living/carbon/human/update_inv_shoes(var/update_icons=1)
 	if(shoes)
 
@@ -972,6 +978,11 @@ proc/get_damage_icon_part(damage_state, body_part)
 
 	var/image/face_lying_image = new /image(icon = face_lying)
 	return face_lying_image
+
+/mob/living/carbon/human/proc/get_overlays_copy()
+	var/list/out = new
+	out = overlays_standing.Copy()
+	return out
 
 //Human Overlays Indexes/////////
 #undef MUTANTRACE_LAYER

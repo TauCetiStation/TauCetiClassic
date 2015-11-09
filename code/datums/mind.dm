@@ -149,6 +149,7 @@ datum/mind
 			"changeling",
 			"nuclear",
 			"shadowling",
+			"abductor",
 			"traitor", // "traitorchan",
 			"monkey",
 			"malfunction",
@@ -195,6 +196,10 @@ datum/mind
 				text += "head|loyal|<a href='?src=\ref[src];revolution=clear'>employee</a>|<a href='?src=\ref[src];revolution=headrev'>headrev</a>|<b>REV</b>"
 			else
 				text += "head|loyal|<b>EMPLOYEE</b>|<a href='?src=\ref[src];revolution=headrev'>headrev</a>|<a href='?src=\ref[src];revolution=rev'>rev</a>"
+			if(current && current.client && current.client.prefs.be_special & BE_REV)
+				text += "|Enabled in Prefs"
+			else
+				text += "|Disabled in Prefs"
 			sections["revolution"] = text
 
 			/** GANG ***/
@@ -250,6 +255,10 @@ datum/mind
 */
 			else
 				text += "<b>EMPLOYEE</b>|<a href='?src=\ref[src];cult=cultist'>cultist</a>"
+			if(current && current.client && current.client.prefs.be_special & BE_CULTIST)
+				text += "|Enabled in Prefs"
+			else
+				text += "|Disabled in Prefs"
 			sections["cult"] = text
 
 			/** WIZARD ***/
@@ -264,6 +273,10 @@ datum/mind
 					text += "<br>Objectives are empty! <a href='?src=\ref[src];wizard=autoobjectives'>Randomize!</a>"
 			else
 				text += "<a href='?src=\ref[src];wizard=wizard'>yes</a>|<b>NO</b>"
+			if(current && current.client && current.client.prefs.be_special & BE_WIZARD)
+				text += "|Enabled in Prefs"
+			else
+				text += "|Disabled in Prefs"
 			sections["wizard"] = text
 
 			/** CHANGELING ***/
@@ -282,6 +295,10 @@ datum/mind
 //			var/datum/game_mode/changeling/changeling = ticker.mode
 //			if (istype(changeling) && changeling.changelingdeath)
 //				text += "<br>All the changelings are dead! Restart in [round((changeling.TIME_TO_GET_REVIVED-(world.time-changeling.changelingdeathtime))/10)] seconds."
+			if(current && current.client && current.client.prefs.be_special & BE_CHANGELING)
+				text += "|Enabled in Prefs"
+			else
+				text += "|Disabled in Prefs"
 			sections["changeling"] = text
 
 			/** NUCLEAR ***/
@@ -301,6 +318,10 @@ datum/mind
 					text += " Code is [code]. <a href='?src=\ref[src];nuclear=tellcode'>tell the code.</a>"
 			else
 				text += "<a href='?src=\ref[src];nuclear=nuclear'>operative</a>|<b>NANOTRASEN</b>"
+			if(current && current.client && current.client.prefs.be_special & BE_OPERATIVE)
+				text += "|Enabled in Prefs"
+			else
+				text += "|Disabled in Prefs"
 			sections["nuclear"] = text
 
 			/** SHADOWLING **/
@@ -322,6 +343,22 @@ datum/mind
 
 			sections["shadowling"] = text
 
+			/** ABDUCTORS **/
+			text = "abductor"
+			if(ticker.mode.config_tag == "abductor")
+				text = uppertext(text)
+			text = "<i><b>[text]</b></i>: "
+			if(src in ticker.mode.abductors)
+				text += "<b>ABDUCTOR</b>|<a href='?src=\ref[src];abductor=clear'>human</a>"
+				text += "|<a href='?src=\ref[src];common=undress'>undress</a>|<a href='?src=\ref[src];abductor=equip'>equip</a>"
+			else
+				text += "<a href='?src=\ref[src];abductor=abductor'>abductor</a>|<b>human</b>"
+			if(current && current.client && current.client.prefs.be_special & BE_ABDUCTOR)
+				text += "|Enabled in Prefs"
+			else
+				text += "|Disabled in Prefs"
+			sections["abductor"] = text
+
 		/** TRAITOR ***/
 		text = "traitor"
 		if (ticker.mode.config_tag=="traitor" || ticker.mode.config_tag=="traitorchan")
@@ -337,6 +374,10 @@ datum/mind
 						text += "<br>Objectives are empty! <a href='?src=\ref[src];traitor=autoobjectives'>Randomize</a>!"
 				else
 					text += "<a href='?src=\ref[src];traitor=traitor'>traitor</a>|<b>Employee</b>"
+		if(current && current.client && current.client.prefs.be_special & BE_TRAITOR)
+			text += "|Enabled in Prefs"
+		else
+			text += "|Disabled in Prefs"
 		sections["traitor"] = text
 
 		/** MONKEY ***/
@@ -1055,6 +1096,33 @@ datum/mind
 					message_admins("[key_name_admin(usr)] has thrall'ed [current].")
 					log_admin("[key_name(usr)] has thrall'ed [current].")
 
+		else if(href_list["abductor"])
+			switch(href_list["abductor"])
+				if("clear")
+					usr << "Not implemented yet. Sorry!"
+				if("abductor")
+					if(!ishuman(current))
+						usr << "<span class='warning'>This only works on humans!</span>"
+						return
+					make_Abductor()
+					current.regenerate_icons()
+					log_admin("[key_name(usr)] turned [current] into abductor.")
+				if("equip")
+					var/gear = alert("Agent or Scientist Gear","Gear","Agent","Scientist")
+					if(gear)
+						for (var/obj/item/I in current)
+							if (istype(I, /obj/item/weapon/implant))
+								continue
+							qdel(I)
+						var/datum/game_mode/abduction/temp = new
+						temp.equip_common(current)
+						if(gear=="Agent")
+							temp.equip_agent(current)
+							current.regenerate_icons()
+						else
+							temp.equip_scientist(current)
+							current.regenerate_icons()
+
 		else if (href_list["monkey"])
 			var/mob/living/L = current
 			if (L.monkeyizing)
@@ -1429,6 +1497,50 @@ datum/mind
 			brigged_since = world.time
 
 		return (duration <= world.time - brigged_since)
+
+/datum/mind/proc/make_Abductor()
+	var/role = alert("Abductor Role ?","Role","Agent","Scientist")
+	var/team = input("Abductor Team ?","Team ?") in list(1,2,3,4)
+	var/teleport = alert("Teleport to ship ?","Teleport","Yes","No")
+	if(!role || !team || !teleport)
+		return
+	if(!ishuman(current))
+		return
+	ticker.mode.abductors |= src
+	var/datum/objective/experiment/O = new
+	O.owner = src
+	objectives += O
+	var/mob/living/carbon/human/abductor/H = current
+	var/datum/mind/M = H.mind
+	H.set_species("Abductor")
+	switch(role)
+		if("Agent")
+			H.agent = 1
+			M.assigned_role = "MODE"
+		if("Scientist")
+			H.scientist = 1
+			M.assigned_role = "MODE"
+	H.team = team
+	var/list/obj/effect/landmark/abductor/agent_landmarks = new
+	var/list/obj/effect/landmark/abductor/scientist_landmarks = new
+	agent_landmarks.len = 4
+	scientist_landmarks.len = 4
+	for(var/obj/effect/landmark/abductor/A in landmarks_list)
+		if(istype(A,/obj/effect/landmark/abductor/agent))
+			agent_landmarks[text2num(A.team)] = A
+		else if(istype(A,/obj/effect/landmark/abductor/scientist))
+			scientist_landmarks[text2num(A.team)] = A
+	var/obj/effect/landmark/L
+	if(teleport=="Yes")
+		switch(role)
+			if("Agent")
+				H.agent = 1
+				L = agent_landmarks[team]
+				H.loc = L.loc
+			if("Scientist")
+				H.scientist = 1
+				L = agent_landmarks[team]
+				H.loc = L.loc
 
 /datum/mind/proc/AddSpell(var/obj/effect/proc_holder/spell/spell)
 	spell_list += spell

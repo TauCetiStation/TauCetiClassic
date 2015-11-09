@@ -362,7 +362,7 @@ Made by Xhuis
 	deform = 'icons/mob/human_races/r_def_shadowling.dmi'
 	language = "Sol Common"
 	unarmed_type = /datum/unarmed_attack/claws
-	
+
 	warning_low_pressure = 50
 	hazard_low_pressure = -1
 
@@ -373,7 +373,7 @@ Made by Xhuis
 	heat_level_1 = 2000
 	heat_level_2 = 3000
 	heat_level_3 = 4000
-	
+
 	blood_color = "#000000"
 	//flesh_color = "#000000"
 	darksight = 8
@@ -381,7 +381,7 @@ Made by Xhuis
 	//say_mod = "chitters"
 	//speak_emote = list("chitters")
 	//specflags = list(NOBREATH,NOBLOOD,RADIMMUNE,NOGUNS) //Can't use guns due to muzzle flash
-	flags = NO_BREATHE | NO_BLOOD | RAD_IMMUNE
+	flags = NO_BREATHE | NO_BLOOD | RAD_IMMUNE | VIRUS_IMMUNE
 	burn_mod = 2 //2x burn damage lel
 	//var/heat_mod = 2
 

@@ -486,6 +486,12 @@ var/list/ghostteleportlocs = list()
 	name = "\improper hyperspace"
 	icon_state = "shuttle"
 
+/area/abductor_ship
+	name = "\improper Abductor Ship"
+	icon_state = "yellow"
+	power_equip = 1
+	lighting_use_dynamic = 0
+
 /area/wizard_station
 	name = "\improper Wizard's Den"
 	icon_state = "yellow"

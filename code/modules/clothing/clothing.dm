@@ -213,6 +213,7 @@ BLIND     // can't see anything
 	slot_flags = SLOT_HEAD
 	w_class = 2.0
 	sprite_sheets = list("Vox" = 'icons/mob/species/vox/head.dmi')
+	var/blockTracking = 0
 
 
 //Mask

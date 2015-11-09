@@ -36,6 +36,9 @@
 	keyslot1 = new /obj/item/device/encryptionkey/syndicate
 	syndie = 1
 	recalculateChannels()
+/obj/item/device/radio/headset/syndicate/alt
+	icon_state = "syndie_headset"
+	item_state = "syndie_headset"
 
 /obj/item/device/radio/headset/binary
 	origin_tech = "syndicate=3"

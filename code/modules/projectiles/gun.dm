@@ -102,6 +102,11 @@
 		if(user.dna && user.dna.mutantrace == "adamantine")
 			user << "\red Your metal fingers don't fit in the trigger guard!"
 			return
+		var/mob/living/carbon/human/H = user
+		if(H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit/armor/abductor/vest))
+			for(var/obj/item/clothing/suit/armor/abductor/vest/V in list(H.wear_suit))
+				if(V.stealth_active)
+					V.DeactivateStealth()
 
 	add_fingerprint(user)
 
