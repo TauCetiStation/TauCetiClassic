@@ -249,7 +249,7 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 		dat += "<tr><td>[prize.equipment_name]</td><td>[prize.cost]</td><td><A href='?src=\ref[src];purchase=\ref[prize]'>Purchase</A></td></tr>"
 	dat += "</table>"
 
-	var/datum/browser/popup = new(user, "miningvendor", "Mining Equipment Vendor", 400, 350)
+	var/datum/browser/popup = new(user, "miningvendor", "Mining Equipment Vendor", 400, 620)
 	popup.set_content(dat)
 	popup.open()
 	return
