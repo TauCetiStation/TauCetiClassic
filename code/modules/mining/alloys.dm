@@ -7,6 +7,7 @@
 	var/product_mod = 1
 	var/product
 	var/metaltag
+	var/points
 
 /datum/alloy/plasteel
 	metaltag = "plasteel"
@@ -17,6 +18,7 @@
 		)
 	product_mod = 0.3
 	product = /obj/item/stack/sheet/plasteel
+	points = 50
 
 /datum/alloy/steel
 	metaltag = "steel"
@@ -25,3 +27,4 @@
 		"hematite" = 1
 		)
 	product = /obj/item/stack/sheet/metal
+	points = 5
