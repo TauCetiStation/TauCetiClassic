@@ -18,6 +18,9 @@
 	//How much blood this step can get on surgeon. 1 - hands, 2 - full body.
 	var/blood_level = 0
 
+	//Cloth check
+	var/clothless = 1
+
 	//returns how well tool is suited for this step
 	proc/tool_quality(obj/item/tool)
 		for (var/T in allowed_tools)
@@ -74,20 +77,45 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 
 	E.germ_level = max(germ_level,E.germ_level) //as funny as scrubbing microbes out with clean gloves is - no.
 
-proc/do_surgery(mob/living/M, mob/living/user, obj/item/tool)
-	if(!istype(M,/mob/living/carbon))
+proc/do_surgery(mob/living/carbon/M, mob/living/user, obj/item/tool)
+	if(!istype(M))
 		return 0
 	if (user.a_intent == "harm")	//check for Hippocratic Oath
 		return 0
+	var/target_zone = user.zone_sel.selecting
+	if(target_zone in M.op_stage.in_progress)		//Can't operate on someone repeatedly.
+		user << "\red You can't operate on the patient while surgery is already in progress."
+		return 1
+
 	for(var/datum/surgery_step/S in surgery_steps)
+		//check, if target undressed for clothless operations
+		var/mob/living/carbon/human/T = M
+		if(S.clothless)
+			switch(target_zone)
+				if("chest","groin","l_leg","r_leg","r_arm","l_arm")
+					if(T.wear_suit || T.w_uniform)	return 0
+				if("r_foot","l_foot")
+					if(T.shoes)						return 0
+				if("eyes")
+					if(T.glasses)					return 0
+				if("r_hand","l_hand")
+					if(T.gloves)					return 0
+
 		//check if tool is right or close enough and if this step is possible
 		if( S.tool_quality(tool) && S.can_use(user, M, user.zone_sel.selecting, tool) && S.is_valid_mutantrace(M))
-			S.begin_step(user, M, user.zone_sel.selecting, tool)		//start on it
+			M.op_stage.in_progress += target_zone						//begin step and...
+			S.begin_step(user, M, user.zone_sel.selecting, tool)		//...start on it
 			//We had proper tools! (or RNG smiled.) and User did not move or change hands.
 			if( prob(S.tool_quality(tool)) &&  do_mob(user, M, rand(S.min_duration, S.max_duration)))
 				S.end_step(user, M, user.zone_sel.selecting, tool)		//finish successfully
-			else														//or
+			else if((tool in user.contents) && user.Adjacent(M))		//or (also check for tool in hands and being near the target)
 				S.fail_step(user, M, user.zone_sel.selecting, tool)		//malpractice~
+			else	// this failing silently was a pain.
+				user << "\red You must remain close to your patient to conduct surgery."
+			M.op_stage.in_progress -= target_zone						//end step
+			if (ishuman(M))
+				var/mob/living/carbon/human/H = M
+				H.update_surgery()										//shows surgery results
 			return	1	  												//don't want to do weapony things after surgery
 	return 0
 
@@ -112,3 +140,4 @@ proc/sort_surgeries()
 	var/face	=	0
 	var/appendix =	0
 	var/ribcage =	0
+	var/list/in_progress = list()

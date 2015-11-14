@@ -83,6 +83,7 @@
 					else
 						user.visible_message( 	"\blue [user] places bandaid over [W.desc] on [M]'s [affecting.display_name].", \
 										"\blue You place bandaid over [W.desc] on [M]'s [affecting.display_name]." )
+				H.update_bandage()
 				use(1)
 		else
 			if (can_operate(H))        //Checks if mob is lying down on table for surgery
@@ -159,7 +160,7 @@
 		if(affecting.open == 0)
 			var/bandaged = affecting.bandage()
 			var/disinfected = affecting.disinfect()
-		
+
 			if(!(bandaged || disinfected))
 				user << "\red The wounds on [M]'s [affecting.display_name] have already been treated."
 				return 1
