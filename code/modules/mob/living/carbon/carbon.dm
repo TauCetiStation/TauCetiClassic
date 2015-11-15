@@ -547,7 +547,18 @@
 	if(lying)
 		if(buckled && istype(buckled, /obj/structure/stool/bed/roller))
 			return 0
+		else if(locate(/obj/machinery/optable, src.loc))	//we need special pixel shift for optable to make mob lying centered
+			return -4
 		else
 			return -6
 	else
 		return initial(pixel_y)
+
+/mob/living/carbon/get_standard_pixel_x_offset(lying_current = 0)
+	if(lying)
+		if(locate(/obj/machinery/optable, src.loc))	//we need special pixel shift for optable to make mob lying centered
+			switch(src.lying_current)
+				if(90)	return 2
+				if(270)	return -2
+	else
+		return initial(pixel_x)
