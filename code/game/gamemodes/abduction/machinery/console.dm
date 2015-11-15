@@ -75,6 +75,14 @@
 	var/obj/machinery/abductor/experiment/experiment
 	var/obj/machinery/abductor/pad/pad
 	var/list/datum/icon_snapshot/disguises = list()
+	var/show_price_list = 0
+	var/list/price_list = list(
+							"heal injector" =4,
+							"decloner"		=3,
+							"advanced baton"=2,
+							"science tool" 	=1,
+							"agent helmet" 	=1,
+							"radio silencer"=1)
 
 /obj/machinery/abductor/console/attack_hand(var/mob/user as mob)
 	if(..())
@@ -90,12 +98,17 @@
 
 	if(experiment != null)
 		var/points = experiment.points
-		dat += "Collected Samples : [points] <br>"
+		dat += "<font color = #7E8D9F><b>Collected Samples : </b></font>[points]<br>"
 		dat += "<H4> Transfer data in exchange for supplies</H4>"
+		dat += "<a href='?src=\ref[src];dispense=injector'>Heal Injector</A><br>"
+		dat += "<a href='?src=\ref[src];dispense=pistol'>Decloner</A><br>"
 		dat += "<a href='?src=\ref[src];dispense=baton'>Advanced Baton</A><br>"
 		dat += "<a href='?src=\ref[src];dispense=helmet'>Agent Helmet</A><br>"
 		dat += "<a href='?src=\ref[src];dispense=silencer'>Radio Silencer</A><br>"
 		dat += "<a href='?src=\ref[src];dispense=tool'>Science Tool</A><br>"
+		dat += "<a href='?src=\ref[src];show_prices=1'>[show_price_list ? "Close Price List" : "Open Price List"]</a><br>"
+		if(show_price_list)
+			dat += "<div class='statusDisplay'>[get_price_list()]</div>"
 	else
 		dat += "<span class='bad'>NO EXPERIMENT MACHINE DETECTED</span> <br>"
 
@@ -120,8 +133,9 @@
 			dat += "<span class='linkOff'>Combat</span>"
 			dat += "<a href='?src=\ref[src];flip_vest=1'>Stealth</A>"
 
-		dat+="<br>"
+		dat += "<br>"
 		dat += "<a href='?src=\ref[src];select_disguise=1'>Select Agent Vest Disguise</a><br>"
+		dat += "<font color = #7E8D9F><b>Selected: </b></font>[vest.disguise ? "[vest.disguise.name]" : "Nobody"]"
 	else
 		dat += "<span class='bad'>NO AGENT VEST DETECTED</span>"
 	var/datum/browser/popup = new(user, "computer", "Abductor Console", 400, 500)
@@ -147,6 +161,10 @@
 			SelectDisguise()
 		else if(href_list["dispense"])
 			switch(href_list["dispense"])
+				if("injector")
+					Dispense(/obj/item/weapon/lazarus_injector/alien,cost=4)
+				if("pistol")
+					Dispense(/obj/item/weapon/gun/energy/decloner/alien,cost=3)
 				if("baton")
 					Dispense(/obj/item/weapon/abductor_baton,cost=2)
 				if("helmet")
@@ -155,7 +173,17 @@
 					Dispense(/obj/item/device/abductor/silencer)
 				if("tool")
 					Dispense(/obj/item/device/abductor/gizmo)
+		else if(href_list["show_prices"])
+			show_price_list = !show_price_list
 		src.updateUsrDialog()
+
+/obj/machinery/abductor/console/proc/get_price_list()
+	var/dat = "<table border='0' width='300'>"
+	for(var/item in price_list)
+		var/price = price_list[item]
+		dat += "<tr><td>[capitalize(item)]</td><td>[price]</td></tr>"
+	dat += "</table>"
+	return dat
 
 /obj/machinery/abductor/console/proc/TeleporterSet()
 	var/A = null

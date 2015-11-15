@@ -12,7 +12,7 @@
 
 	var/scientist = 0	//Vars used in abductors checks and etc. Should be here because in species datums it changes globaly.
 	var/agent = 0
-	var/team = 1
+	var/team = 0
 
 /mob/living/carbon/human/dummy
 	real_name = "Test Dummy"

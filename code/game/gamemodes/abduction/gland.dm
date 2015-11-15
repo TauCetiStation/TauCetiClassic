@@ -272,7 +272,7 @@ obj/item/gland/slime/activate()
 
 	var/obj/effect/cocoon/abductor/C = new (get_turf(host))
 
-	host.ghostize(1)
+	host.ghostize()
 	host.revive()
 	host.mutations |= NOCLONE
 	host.adjustBrainLoss(100)
