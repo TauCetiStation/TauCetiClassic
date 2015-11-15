@@ -7,6 +7,7 @@
 	icon_state = "alien-pad-idle"
 	anchored = 1
 	var/area/teleport_target
+	var/target_name
 
 /obj/machinery/abductor/proc/TeleportToArea(var/mob/living/target,var/area/thearea)
 	var/list/L = list()
