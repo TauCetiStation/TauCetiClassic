@@ -68,9 +68,9 @@
 
 obj/item/gland/heals/activate()
 	host << "<span class='notice'>You feel curiously revitalized.</span>"
-	host.adjustBruteLoss(-20)
-	host.adjustOxyLoss(-20)
-	host.adjustFireLoss(-20)
+	host.adjustBruteLoss(-25)
+	host.adjustOxyLoss(-25)
+	host.adjustFireLoss(-25)
 
 
 //SLIME
@@ -115,7 +115,6 @@ obj/item/gland/slime/activate()
 	new /mob/living/carbon/slime(pos)
 	var/mob/living/simple_animal/slime/S = new /mob/living/carbon/slime(pos)
 	S.loc = pos
-	S.name = host.name
 	host.mind.transfer_to(S)
 	host.gib()
 	return
@@ -244,12 +243,13 @@ obj/item/gland/slime/activate()
 	uses = -1
 
 /obj/item/gland/bloody/activate()
-	host.adjustBruteLoss(15)
+	if(prob(25))
+		host.adjustBruteLoss(15)
 
 	host.visible_message("<span class='danger'>[host]'s skin erupts with blood!</span>",\
 	"<span class='userdanger'>Blood pours from your skin!</span>")
 
-	for(var/turf/T in oview(3,host)) //Make this respect walls and such
+	for(var/turf/T in oview(2,host)) //Make this respect walls and such
 		T.add_blood(host)
 	for(var/mob/living/carbon/human/H in oview(3,host)) //Blood decals for simple animals would be neat. aka Carp with blood on it.
 		if(H.wear_suit)
@@ -272,7 +272,7 @@ obj/item/gland/slime/activate()
 
 	var/obj/effect/cocoon/abductor/C = new (get_turf(host))
 
-	host.ghostize(1)
+	host.ghostize()
 	host.revive()
 	host.mutations |= NOCLONE
 	host.adjustBrainLoss(100)

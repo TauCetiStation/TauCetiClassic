@@ -95,8 +95,15 @@
 	user << "<span class='notice'>You can't figure how this works.</span>"
 	return 0
 
+/obj/item/clothing/suit/armor/abductor/vest/proc/AgentCheck(var/user)
+	var/mob/living/carbon/human/H = user
+	return H.agent
+
 /obj/item/clothing/suit/armor/abductor/vest/attack_self(mob/user)
 	if(!AbductorCheck(user))
+		return
+	if(!AgentCheck(user))
+		user << "<span class='notice'>You're not trained to use this</span>"
 		return
 	switch(mode)
 		if(VEST_COMBAT)
@@ -393,6 +400,11 @@
 	action_button_name = "Toggle Mode"
 
 /obj/item/weapon/abductor_baton/proc/toggle(mob/living/user=usr)
+	if(!IsAbductor(user))
+		return
+	if(!AgentCheck(user))
+		user << "<span class='notice'>You're not trained to use this</span>"
+		return
 	mode = (mode+1)%BATON_MODES
 	var/txt
 	switch(mode)
@@ -434,6 +446,10 @@
 	if(H.species.name != "Abductor")
 		return 0
 	return 1
+
+/obj/item/weapon/abductor_baton/proc/AgentCheck(var/user)
+	var/mob/living/carbon/human/H = user
+	return H.agent
 
 /obj/item/weapon/abductor_baton/attack(mob/target as mob, mob/living/user as mob)
 	if(!IsAbductor(user))
@@ -581,6 +597,37 @@
 	name = "alien optable"
 	desc = "Used for experiments on creatures."
 	icon = 'icons/obj/abductor.dmi'
+	var/holding = 0
+	var/belt = null
+
+/obj/machinery/optable/abductor/New()
+	belt = image("icons/obj/abductor.dmi", "belt", layer = FLY_LAYER)
+	return ..()
+
+/obj/machinery/optable/abductor/attack_hand()
+	if(!victim)
+		return
+
+	holding = !holding
+	victim.anchored = !victim.anchored
+
+	var/atom/movable/overlay/animation = new /atom/movable/overlay( src.loc )
+	animation.icon_state = "blank"
+	animation.icon = 'icons/obj/abductor.dmi'
+	animation.layer = FLY_LAYER
+
+	if(holding)
+		flick("belt_anim_on",animation)
+		sleep(7)
+		overlays += belt
+		victim.SetStunned(INFINITY)
+		qdel(animation)
+	else
+		overlays -= belt
+		flick("belt_anim_off",animation)
+		sleep(9)
+		victim.SetStunned(0)
+		qdel(animation)
 
 /obj/structure/stool/bed/abductor
 	name = "resting contraption"
@@ -628,3 +675,18 @@ Congratulations! You are now trained for xenobiology research!"}
 
 /obj/item/weapon/paper/abductor/update_icon()
 	return
+
+/obj/item/weapon/lazarus_injector/alien
+	name = "heal injector"
+	desc = "Everyone has second chance. One use only."
+
+/obj/item/weapon/lazarus_injector/alien/afterattack(atom/target, mob/user)
+	if(!loaded)
+		return
+	if(istype(target, /mob/living))
+		var/mob/living/M = target
+		M.revive()
+		loaded = 0
+		user.visible_message("<span class='notice'>[user] injects [M] with [src], fully heal it.</span>")
+		playsound(src,'sound/effects/refill.ogg',50,1)
+		icon_state = "lazarus_empty"
