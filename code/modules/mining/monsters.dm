@@ -347,7 +347,7 @@
 	ranged_cooldown_cap = 8
 	friendly = "wails at"
 	vision_range = 4
-	speed = 3
+	speed = 2
 	maxHealth = 300
 	health = 300
 	harm_intent_damage = 0
@@ -419,7 +419,7 @@
 
 /obj/effect/goliath_tentacle/proc/Trip()
 	for(var/mob/living/M in src.loc)
-		M.Weaken(5)
+		M.Weaken(3)
 		visible_message("<span class='warning'>The [src.name] knocks [M.name] down!</span>")
 	qdel(src)
 
@@ -445,7 +445,7 @@
 
 /obj/item/asteroid/goliath_hide/afterattack(atom/target, mob/user, proximity_flag)
 	if(proximity_flag)
-		if(istype(target, /obj/item/clothing/suit/space/rig/mining) || istype(target, /obj/item/clothing/head/helmet/space/rig/mining))
+		if(istype(target, /obj/item/clothing/suit/space) || istype(target, /obj/item/clothing/head/helmet/space))
 			var/obj/item/clothing/suit/space/C = target
 			var/list/current_armor = C.armor
 			if(current_armor.["melee"] < 80)

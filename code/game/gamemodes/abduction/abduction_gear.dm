@@ -590,26 +590,38 @@
 
 
 // OPERATING TABLE / BEDS / LOCKERS	/ OTHER
-/obj/machinery/recharger/wallcharger/alien
-	icon = 'icons/obj/abductor.dmi'
-
 /obj/machinery/optable/abductor
 	name = "alien optable"
 	desc = "Used for experiments on creatures."
 	icon = 'icons/obj/abductor.dmi'
 	var/holding = 0
 	var/belt = null
+	var/mob/living/carbon/fastened = null
 
 /obj/machinery/optable/abductor/New()
 	belt = image("icons/obj/abductor.dmi", "belt", layer = FLY_LAYER)
 	return ..()
 
 /obj/machinery/optable/abductor/attack_hand()
-	if(!victim)
+	if(!victim && !fastened)
 		return
 
+	//exclusion any bugs with grab
+	var/mob/living/carbon/C = usr
+	if(istype(C.get_active_hand(),/obj/item/weapon/grab))
+		var/obj/item/weapon/grab/G = C.get_active_hand()
+		if(istype(C.l_hand, G))
+			C.drop_l_hand()
+		else
+			C.drop_r_hand()
+	if(istype(C.get_inactive_hand(),/obj/item/weapon/grab))
+		var/obj/item/weapon/grab/G = C.get_inactive_hand()
+		if(istype(C.l_hand, G))
+			C.drop_l_hand()
+		else
+			C.drop_r_hand()
+
 	holding = !holding
-	victim.anchored = !victim.anchored
 
 	var/atom/movable/overlay/animation = new /atom/movable/overlay( src.loc )
 	animation.icon_state = "blank"
@@ -617,16 +629,40 @@
 	animation.layer = FLY_LAYER
 
 	if(holding)
+		fastened = victim
+		//correction position of victim
+		switch(fastened.lying_current)
+			if(90)
+				if(fastened.pixel_x != 2)
+					fastened.pixel_x = 2
+				animation.dir = 2
+				src.dir = 2
+			else
+				if(fastened.pixel_x != -2)
+					fastened.pixel_x = -2
+				animation.dir = 1
+				src.dir = 1
+		if(fastened.pixel_y != -4)
+			fastened.pixel_y = -4
+		if(fastened.dir & (EAST|WEST|NORTH))
+			fastened.dir = SOUTH
+
 		flick("belt_anim_on",animation)
 		sleep(7)
 		overlays += belt
-		victim.SetStunned(INFINITY)
+		fastened.anchored = 1
+		fastened.SetStunned(INFINITY)
 		qdel(animation)
 	else
 		overlays -= belt
+		switch(fastened.lying_current)
+			if(90)	animation.dir = 2
+			else	animation.dir = 1
 		flick("belt_anim_off",animation)
 		sleep(9)
-		victim.SetStunned(0)
+		fastened.SetStunned(0)
+		fastened.anchored = 0
+		fastened = null
 		qdel(animation)
 
 /obj/structure/stool/bed/abductor
@@ -679,6 +715,8 @@ Congratulations! You are now trained for xenobiology research!"}
 /obj/item/weapon/lazarus_injector/alien
 	name = "heal injector"
 	desc = "Everyone has second chance. One use only."
+	icon = 'icons/obj/abductor.dmi'
+	icon_state = "abductor_hypo"
 
 /obj/item/weapon/lazarus_injector/alien/afterattack(atom/target, mob/user)
 	if(!loaded)
@@ -689,4 +727,7 @@ Congratulations! You are now trained for xenobiology research!"}
 		loaded = 0
 		user.visible_message("<span class='notice'>[user] injects [M] with [src], fully heal it.</span>")
 		playsound(src,'sound/effects/refill.ogg',50,1)
-		icon_state = "lazarus_empty"
+		icon_state = "abductor_empty"
+
+/obj/machinery/recharger/wallcharger/alien
+	icon = 'icons/obj/abductor.dmi'

@@ -208,15 +208,16 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 		new /datum/data/mining_equipment("Soap",                /obj/item/weapon/soap/nanotrasen, 						            150),
 		new /datum/data/mining_equipment("Alien toy",           /obj/item/clothing/mask/facehugger/toy, 		                    250),
 		new /datum/data/mining_equipment("Suit patcher",        /obj/item/weapon/patcher,										    300),
-		new /datum/data/mining_equipment("Stimpack Bundle",		/obj/item/weapon/storage/box/autoinjector/utility, 				    400),
+		new /datum/data/mining_equipment("Stimpack Bundle",		/obj/item/weapon/storage/box/autoinjector/stimpack,				    400),
 //		new /datum/data/mining_equipment("Laser pointer",       /obj/item/device/laser_pointer, 				                    250),
 		new /datum/data/mining_equipment("Point card",    		/obj/item/weapon/card/mining_point_card,               			    500),
 		new /datum/data/mining_equipment("Sonic jackhammer",    /obj/item/weapon/pickaxe/jackhammer,                                500),
 		new /datum/data/mining_equipment("Mining drone",        /mob/living/simple_animal/hostile/mining_drone/,                    700),
-		new /datum/data/mining_equipment("Resonator",           /obj/item/weapon/resonator,                                        1100),
-		new /datum/data/mining_equipment("Jaunter",             /obj/item/device/wormhole_jaunter,                                 1300),
+		new /datum/data/mining_equipment("Resonator",           /obj/item/weapon/resonator,                                         800),
+		new /datum/data/mining_equipment("Kinetic accelerator", /obj/item/weapon/gun/energy/kinetic_accelerator,                   1000),
+		new /datum/data/mining_equipment("Jaunter",             /obj/item/device/wormhole_jaunter,                                 1100),
+		new /datum/data/mining_equipment("Special mining rig",  /obj/item/mining_rig_pack,										   1500),
 		new /datum/data/mining_equipment("Lazarus injector",    /obj/item/weapon/lazarus_injector,                                 1500),
-		new /datum/data/mining_equipment("Kinetic accelerator", /obj/item/weapon/gun/energy/kinetic_accelerator,                   1500),
 		new /datum/data/mining_equipment("Jetpack",             /obj/item/weapon/tank/jetpack/carbondioxide,                       2000),
 		new /datum/data/mining_equipment("Space cash",    		/obj/item/weapon/spacecash/c1000,                    			   5000)
 		)
@@ -249,7 +250,7 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 		dat += "<tr><td>[prize.equipment_name]</td><td>[prize.cost]</td><td><A href='?src=\ref[src];purchase=\ref[prize]'>Purchase</A></td></tr>"
 	dat += "</table>"
 
-	var/datum/browser/popup = new(user, "miningvendor", "Mining Equipment Vendor", 400, 620)
+	var/datum/browser/popup = new(user, "miningvendor", "Mining Equipment Vendor", 400, 680)
 	popup.set_content(dat)
 	popup.open()
 	return
@@ -300,7 +301,7 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 	..()
 
 /obj/machinery/mineral/equipment_locker/proc/RedeemVoucher(voucher, redeemer)
-	var/selection = input(redeemer, "Pick your equipment", "Mining Voucher Redemption") in list("Resonator kit", "Kinetic Accelerator", "Mining Drone", "Cancel")
+	var/selection = input(redeemer, "Pick your equipment", "Mining Voucher Redemption") in list("Resonator kit", "Kinetic Accelerator", "Mining Drone","Special mining rig", "Cancel")
 	if(!selection || !Adjacent(redeemer))
 		return
 	switch(selection)
@@ -310,6 +311,8 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 			new /obj/item/weapon/gun/energy/kinetic_accelerator(src.loc)
 		if("Mining Drone")
 			new /mob/living/simple_animal/hostile/mining_drone(src.loc)
+		if("Special mining rig")
+			new /obj/item/mining_rig_pack(src.loc)
 		if("Cancel")
 			return
 	qdel(voucher)
@@ -319,6 +322,12 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 
 
 /**********************Mining Equipment Locker Items**************************/
+/**********************Mining Rig Pack**********************/
+
+/obj/item/mining_rig_pack/New()
+	new /obj/item/clothing/head/helmet/space/rig/mining(src.loc)
+	new	/obj/item/clothing/suit/space/rig/mining(src.loc)
+	qdel(src)
 
 /**********************Mining Equipment Voucher**********************/
 

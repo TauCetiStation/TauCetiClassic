@@ -264,9 +264,9 @@
 		var/datum/objective/objective = team_objectives[team_number]
 		var/team_name = team_names[team_number]
 		if(console.experiment.points >= objective.target_amount)
-			world << "<span class='greentext'><b>[team_name] team fullfilled its mission!</b></span>"
+			world << "<b>[team_name] team <font color='green'>completed</font> its mission!</b></span>"
 		else
-			world << "<span class='greentext'><b>[team_name] team failed its mission.</b></span>"
+			world << "<b>[team_name] team <font color='red'>failed</font> its mission.</b></span>"
 	..()
 	return 1
 
