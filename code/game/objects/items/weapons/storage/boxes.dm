@@ -239,7 +239,7 @@
 		new /obj/item/weapon/implanter(src)
 		new /obj/item/weapon/implantpad(src)
 
-/obj/item/weapon/storage/box/autoinjector/utility
+/obj/item/weapon/storage/box/autoinjector/stimpack
 	name = "stimpack value kit"
 	desc = "A box with several stimpack autoinjectors for the economical miner."
 	icon_state = "syringe"
