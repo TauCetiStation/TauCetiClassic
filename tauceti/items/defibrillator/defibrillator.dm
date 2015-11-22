@@ -10,7 +10,7 @@
 	var/state_on = "defibunit_on"
 	action_button_name = "Switch Defibrillator"
 	flags = FPRINT | TABLEPASS
-	w_class = 1.0
+	w_class = 3.0
 	damtype = "brute"
 	force = 4
 	var/charged = 0
@@ -77,6 +77,7 @@
 							C.stat = CONSCIOUS
 					C.tod = null
 					C.timeofdeath = 0
+					dead_mob_list -= C
 
 				if(wet)
 					var/turf/T = get_turf(src)

@@ -213,6 +213,7 @@ BLIND     // can't see anything
 	slot_flags = SLOT_HEAD
 	w_class = 2.0
 	sprite_sheets = list("Vox" = 'icons/mob/species/vox/head.dmi')
+	var/blockTracking = 0
 
 
 //Mask
@@ -260,7 +261,7 @@ BLIND     // can't see anything
 //Note: Everything in modules/clothing/spacesuits should have the entire suit grouped together.
 //      Meaning the the suit is defined directly after the corrisponding helmet. Just like below!
 /obj/item/clothing/head/helmet/space
-	name = "Space helmet"
+	name = "space helmet"
 	icon_state = "space"
 	desc = "A special helmet designed for work in a hazardous, low-pressure environment."
 	flags = FPRINT | TABLEPASS | HEADCOVERSEYES | BLOCKHAIR | HEADCOVERSMOUTH | STOPSPRESSUREDMAGE | THICKMATERIAL | PHORONGUARD
@@ -276,7 +277,7 @@ BLIND     // can't see anything
 	sprite_sheets = list("Vox" = 'icons/mob/species/vox/head.dmi')
 
 /obj/item/clothing/suit/space
-	name = "Space suit"
+	name = "space suit"
 	desc = "A suit that protects against low pressure environments. \"NSS EXODUS\" is written in large block letters on the back."
 	icon_state = "space"
 	item_state = "s_suit"

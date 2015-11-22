@@ -108,28 +108,30 @@ Please contact me on #coderbus IRC. ~Carn x
 #define MUTANTRACE_LAYER		1
 #define MUTATIONS_LAYER			2
 #define DAMAGE_LAYER			3
-#define UNIFORM_LAYER			4
-#define TAIL_LAYER				5		//bs12 specific. this hack is probably gonna come back to haunt me
-#define ID_LAYER				6
-#define SHOES_LAYER				7
-#define GLOVES_LAYER			8
-#define EARS_LAYER				9
-#define SUIT_LAYER				10
-#define GLASSES_LAYER			11
-#define BELT_LAYER				12		//Possible make this an overlay of somethign required to wear a belt?
-#define SUIT_STORE_LAYER		13
-#define BACK_LAYER				14
-#define HAIR_LAYER				15		//TODO: make part of head layer?
-#define FACEMASK_LAYER			16
-#define HEAD_LAYER				17
-#define COLLAR_LAYER			18
-#define HANDCUFF_LAYER			19
-#define LEGCUFF_LAYER			20
-#define L_HAND_LAYER			21
-#define R_HAND_LAYER			22
-#define TARGETED_LAYER			23		//BS12: Layer for the target overlay from weapon targeting system
-#define FIRE_LAYER				24
-#define TOTAL_LAYERS			24
+#define SURGERY_LAYER			4		//bs12 specific.
+#define BANDAGE_LAYER			5
+#define UNIFORM_LAYER			6
+#define TAIL_LAYER				7		//bs12 specific. this hack is probably gonna come back to haunt me
+#define ID_LAYER				8
+#define SHOES_LAYER				9
+#define GLOVES_LAYER			10
+#define EARS_LAYER				11
+#define SUIT_LAYER				12
+#define GLASSES_LAYER			13
+#define BELT_LAYER				14		//Possible make this an overlay of somethign required to wear a belt?
+#define SUIT_STORE_LAYER		15
+#define BACK_LAYER				16
+#define HAIR_LAYER				17		//TODO: make part of head layer?
+#define FACEMASK_LAYER			18
+#define HEAD_LAYER				19
+#define COLLAR_LAYER			20
+#define HANDCUFF_LAYER			21
+#define LEGCUFF_LAYER			22
+#define L_HAND_LAYER			23
+#define R_HAND_LAYER			24
+#define TARGETED_LAYER			25		//BS12: Layer for the target overlay from weapon targeting system
+#define FIRE_LAYER				26
+#define TOTAL_LAYERS			26
 //////////////////////////////////
 
 /mob/living/carbon/human
@@ -145,6 +147,12 @@ Please contact me on #coderbus IRC. ~Carn x
 	..()
 	//lying_prev = lying	//so we don't update overlays for lying/standing unless our stance changes again
 	update_hud()		//TODO: remove the need for this
+
+	//prevent from updating overlays when abductor in stealth
+	if(istype(wear_suit, /obj/item/clothing/suit/armor/abductor/vest))
+		for(var/obj/item/clothing/suit/armor/abductor/vest/V in list(wear_suit))
+			if(V.stealth_active)	return
+
 	overlays.Cut()
 
 	var/stealth = 0
@@ -507,7 +515,7 @@ proc/get_damage_icon_part(damage_state, body_part)
 				overlays_standing[MUTANTRACE_LAYER]	= image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "[dna.mutantrace][fat]_[gender]_s")
 			if("shadowling")
 				overlays_standing[MUTANTRACE_LAYER]	= image("icon" = 'tauceti/icons/mob/shadow_ling.dmi', "icon_state" = "[dna.mutantrace]_s")
-				overlays_standing[MUTATIONS_LAYER]	= image("icon" = 'tauceti/icons/mob/shadow_ling.dmi', "icon_state" = "[dna.mutantrace]_ms_s", "layer" = 11)
+				overlays_standing[MUTATIONS_LAYER]	= image("icon" = 'tauceti/icons/mob/shadow_ling.dmi', "icon_state" = "[dna.mutantrace]_ms_s", "layer" = GLASSES_LAYER)
 			else
 				overlays_standing[MUTANTRACE_LAYER]	= null
 
@@ -558,6 +566,8 @@ proc/get_damage_icon_part(damage_state, body_part)
 	update_inv_handcuffed(0)
 	update_inv_legcuffed(0)
 	update_inv_pockets(0)
+	update_surgery(0)
+	update_bandage(0)
 	UpdateDamageIcon()
 	update_icons()
 	//Hud Stuff
@@ -681,15 +691,15 @@ proc/get_damage_icon_part(damage_state, body_part)
 				overlays_standing[EARS_LAYER] = image("icon" = l_ear:tc_custom, "icon_state" = "[l_ear.icon_state]_mob")
 
 		if(r_ear)
-			if(!r_ear:tc_custom || r_ear.icon_override || species.sprite_sheets["ears"]) 
+			if(!r_ear:tc_custom || r_ear.icon_override || species.sprite_sheets["ears"])
 				overlays_standing[EARS_LAYER] = image("icon" = ((r_ear.icon_override) ? r_ear.icon_override : (species.sprite_sheets["ears"] ? species.sprite_sheets["ears"] : 'icons/mob/ears.dmi')), "icon_state" = "[r_ear.icon_state]")
-			else 
+			else
 				overlays_standing[EARS_LAYER] = image("icon" = r_ear:tc_custom, "icon_state" = "[r_ear.icon_state]_mob")
 
 	else
 		overlays_standing[EARS_LAYER]	= null
 	if(update_icons)   update_icons()
-	
+
 /mob/living/carbon/human/update_inv_shoes(var/update_icons=1)
 	if(shoes)
 
@@ -937,6 +947,27 @@ proc/get_damage_icon_part(damage_state, body_part)
 
 	if(update_icons)   update_icons()
 
+/mob/living/carbon/human/proc/update_surgery(var/update_icons=1)
+	overlays_standing[SURGERY_LAYER] = null
+	var/image/total = new
+	for(var/datum/organ/external/E in organs)
+		if(E.open)
+			var/image/I = image("icon"='icons/mob/surgery.dmi', "icon_state"="[E.name][round(E.open)]", "layer"=-SURGERY_LAYER)
+			total.overlays += I
+	overlays_standing[SURGERY_LAYER] = total
+	if(update_icons)   update_icons()
+
+/mob/living/carbon/human/proc/update_bandage(var/update_icons=1)
+	overlays_standing[BANDAGE_LAYER] = null
+	var/image/total = new
+	for(var/datum/organ/external/E in organs)
+		if(E.wounds.len)
+			for(var/datum/wound/W in E.wounds)
+				if(W.bandaged)
+					var/image/I = image("icon"='icons/mob/bandages.dmi', "icon_state"="[E.name]", "layer"=-BANDAGE_LAYER)
+					total.overlays += I
+	overlays_standing[BANDAGE_LAYER] = total
+	if(update_icons)   update_icons()
 
 // Used mostly for creating head items
 /mob/living/carbon/human/proc/generate_head_icon()
@@ -973,10 +1004,17 @@ proc/get_damage_icon_part(damage_state, body_part)
 	var/image/face_lying_image = new /image(icon = face_lying)
 	return face_lying_image
 
+/mob/living/carbon/human/proc/get_overlays_copy()
+	var/list/out = new
+	out = overlays_standing.Copy()
+	return out
+
 //Human Overlays Indexes/////////
 #undef MUTANTRACE_LAYER
 #undef MUTATIONS_LAYER
 #undef DAMAGE_LAYER
+#undef SURGERY_LAYER
+#undef BANDAGE_LAYER
 #undef UNIFORM_LAYER
 #undef TAIL_LAYER
 #undef ID_LAYER

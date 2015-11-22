@@ -68,10 +68,11 @@
 		var/self_msg = "\blue You force open [target]'s ribcage with \the [tool]."
 		user.visible_message(msg, self_msg)
 		target.op_stage.ribcage = 2
+		var/datum/organ/external/affected = target.get_organ(target_zone)
+		affected.open = 3
 
 		// Whoops!
 		if(prob(10))
-			var/datum/organ/external/affected = target.get_organ(target_zone)
 			affected.fracture()
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -109,6 +110,8 @@
 		user.visible_message(msg, self_msg)
 
 		target.op_stage.ribcage = 1
+		var/datum/organ/external/affected = target.get_organ(target_zone)
+		affected.open = 2
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/msg = "\red [user]'s hand slips, bending [target]'s ribs the wrong way!"
@@ -146,6 +149,8 @@
 		user.visible_message(msg, self_msg)
 
 		target.op_stage.ribcage = 0
+		var/datum/organ/external/affected = target.get_organ(target_zone)
+		affected.open = 1
 
 //////////////////////////////////////////////////////////////////
 //					ALIEN EMBRYO SURGERY						//
@@ -202,7 +207,7 @@
 
 		var/is_chest_organ_damaged = 0
 		var/datum/organ/external/chest/chest = target.get_organ("chest")
-		for(var/datum/organ/internal/I in chest.internal_organs) 
+		for(var/datum/organ/internal/I in chest.internal_organs)
 			if(I.damage > 0)
 				is_chest_organ_damaged = 1
 				break

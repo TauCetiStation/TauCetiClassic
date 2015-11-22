@@ -664,13 +664,13 @@ var/list/liftable_structures = list(\
 #define BE_ALIEN		64
 #define BE_PAI			128
 #define BE_CULTIST		256
-#define BE_MONKEY		512
-#define BE_NINJA		1024
-#define BE_RAIDER		2048
-#define BE_PLANT		4096
-#define BE_MEME			8192
-#define BE_MUTINEER   	16384
-#define BE_SHADOWLING	32768
+#define BE_NINJA		512
+#define BE_RAIDER		1024
+#define BE_PLANT		2045
+#define BE_MEME			4096
+#define BE_MUTINEER   	8192
+#define BE_SHADOWLING	16384
+#define BE_ABDUCTOR		32768
 
 var/list/be_special_flags = list(
 	"Traitor" = BE_TRAITOR,
@@ -682,13 +682,13 @@ var/list/be_special_flags = list(
 	"Xenomorph" = BE_ALIEN,
 	"pAI" = BE_PAI,
 	"Cultist" = BE_CULTIST,
-	"Monkey" = BE_MONKEY,
 	"Ninja" = BE_NINJA,
 	"Raider" = BE_RAIDER,
 	"Diona" = BE_PLANT,
 	"Meme" = BE_MEME,
 	"Mutineer" = BE_MUTINEER,
-	"Shadowling" = BE_SHADOWLING
+	"Shadowling" = BE_SHADOWLING,
+	"Abductor" = BE_ABDUCTOR
 	)
 
 #define AGE_MIN 25			//youngest a character can be
@@ -742,27 +742,27 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 	)
 
 //Species flags.
-#define NO_BLOOD 1
-#define NO_BREATHE 2
-#define NO_SCAN 4
-#define NO_PAIN 8
+#define NO_BLOOD		1
+#define NO_BREATHE		2
+#define NO_SCAN			4
+#define NO_PAIN			8
 
-#define HAS_SKIN_TONE 16
-#define HAS_SKIN_COLOR 32
-#define HAS_LIPS 64
-#define HAS_UNDERWEAR 128
-#define HAS_TAIL 256
+#define HAS_SKIN_TONE	16
+#define HAS_SKIN_COLOR	32
+#define HAS_LIPS		64
+#define HAS_UNDERWEAR	128
+#define HAS_TAIL		256
 
-#define IS_SLOW 512
-#define IS_PLANT 1024
-#define IS_WHITELISTED 2048
+#define IS_PLANT		512
+#define IS_WHITELISTED	1024
 
-#define RAD_ABSORB 4096
-#define REQUIRE_LIGHT 8192
+#define RAD_ABSORB		2048
+#define REQUIRE_LIGHT	4096
 
-#define IS_SYNTHETIC 16384
+#define IS_SYNTHETIC	8192
 
-#define RAD_IMMUNE 32768
+#define RAD_IMMUNE		16384
+#define VIRUS_IMMUNE	32768
 
 //Language flags.
 #define WHITELISTED 1  		// Language is available if the speaker is whitelisted.

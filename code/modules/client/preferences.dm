@@ -13,13 +13,13 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	"alien candidate" = 1, //always show                 // 6
 	"pAI candidate" = 1, // -- TLE                       // 7
 	"cultist" = IS_MODE_COMPILED("cult"),                // 8
-	"infested monkey" = IS_MODE_COMPILED("monkey"),      // 9
-	"ninja" = "true",									 // 10
-	"raider" = IS_MODE_COMPILED("heist"),			 	 // 11
-	"diona" = 1,                                         // 12
-	"meme" = IS_MODE_COMPILED("meme"),				 	 // 13
-	"mutineer" = IS_MODE_COMPILED("mutiny"),			 // 14
-	"shadowling" = IS_MODE_COMPILED("shadowling"),		 // 15
+	"ninja" = "true",									 // 9
+	"raider" = IS_MODE_COMPILED("heist"),			 	 // 10
+	"diona" = 1,                                         // 11
+	"meme" = IS_MODE_COMPILED("meme"),				 	 // 12
+	"mutineer" = IS_MODE_COMPILED("mutiny"),			 // 13
+	"shadowling" = IS_MODE_COMPILED("shadowling"),		 // 14
+	"abductor" = IS_MODE_COMPILED("abduction"),			 // 15
 )
 
 var/const/MAX_SAVE_SLOTS = 10

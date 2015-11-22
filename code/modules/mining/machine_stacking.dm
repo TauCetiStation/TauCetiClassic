@@ -29,15 +29,19 @@
 
 	var/dat
 
-	dat += text("<h1>Stacking unit console</h1><hr><table>")
+	dat += text("<table>")
 
 	for(var/stacktype in machine.stack_storage)
 		if(machine.stack_storage[stacktype] > 0)
 			dat += "<tr><td width = 150><b>[capitalize(stacktype)]:</b></td><td width = 30>[machine.stack_storage[stacktype]]</td><td width = 50><A href='?src=\ref[src];release_stack=[stacktype]'>\[release\]</a></td></tr>"
 	dat += "</table><hr>"
 	dat += text("<br>Stacking: [machine.stack_amt] <A href='?src=\ref[src];change_stack=1'>\[change\]</a><br><br>")
-	user << browse("[dat]", "window=console_stacking_machine")
-	onclose(user, "console_stacking_machine")
+
+	var/datum/browser/popup = new(user, "window=processor_console", "Stacking Unit Console", 400, 400)
+	popup.set_content(dat)
+	popup.open()
+	return
+
 /obj/machinery/mineral/stacking_unit_console/Topic(href, href_list)
 	if(..())
 		return
@@ -54,6 +58,8 @@
 	src.add_fingerprint(usr)
 	src.updateUsrDialog()
 	return
+
+
 /**********************Mineral stacking unit**************************/
 /obj/machinery/mineral/stacking_machine
 	name = "stacking machine"

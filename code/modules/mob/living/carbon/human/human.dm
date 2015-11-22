@@ -10,6 +10,10 @@
 	var/heart_beat = 0
 	var/embedded_flag	  //To check if we've need to roll for damage on movement while an item is imbedded in us.
 
+	var/scientist = 0	//Vars used in abductors checks and etc. Should be here because in species datums it changes globaly.
+	var/agent = 0
+	var/team = 0
+
 /mob/living/carbon/human/dummy
 	real_name = "Test Dummy"
 	status_flags = GODMODE|CANPUSH
@@ -40,6 +44,9 @@
 /mob/living/carbon/human/machine/New(var/new_loc)
 	h_style = "blue IPC screen"
 	..(new_loc, "Machine")
+
+/mob/living/carbon/human/abductor/New(var/new_loc)
+	..(new_loc, "Abductor")
 
 /mob/living/carbon/human/New(var/new_loc, var/new_species = null)
 
@@ -159,6 +166,10 @@
 							now_pushing = 0
 							return
 				step(AM, t)
+				if(ishuman(AM) && AM:grabbed_by)
+					for(var/obj/item/weapon/grab/G in AM:grabbed_by)
+						step(G:assailant, get_dir(G:assailant, AM))
+						G.adjust_position()
 			now_pushing = 0
 		return
 	return
@@ -503,6 +514,8 @@
 		return get_id_name("Unknown")
 	if( head && (head.flags_inv&HIDEFACE) )
 		return get_id_name("Unknown")		//Likewise for hats
+	if(name_override)
+		return name_override
 	var/face_name = get_face_name()
 	var/id_name = get_id_name("")
 	if(id_name && (id_name != face_name))
@@ -886,6 +899,8 @@
 
 	if(dna && dna.mutantrace == "golem")
 		return "Animated Construct"
+
+
 
 	return species.name
 
@@ -1425,7 +1440,7 @@
 				src << "\red \b Ouch!"
 				return
 			pass_flags += PASSCRAWL
-			layer = 4.0
+			layer = 3.9
 		else
 			pass_flags -= PASSCRAWL
 			//layer = 4.0
@@ -1554,3 +1569,10 @@
 		M.apply_damage(50,BRUTE)
 		if(M.stat == 2)
 			M.gib()
+
+/mob/living/carbon/human/has_eyes()
+	if(internal_organs_by_name["eyes"])
+		var/datum/organ/internal/eyes = internal_organs_by_name["eyes"]
+		if(eyes && istype(eyes))
+			return 1
+	return 0

@@ -181,10 +181,15 @@
 	anchored = 1
 	state = 20//So it doesn't interact based on the above. Not really necessary.
 
-	attackby(var/obj/item/device/aicard/A as obj, var/mob/user as mob)
-		if(istype(A, /obj/item/device/aicard))//Is it?
-			A.transfer_ai("INACTIVE","AICARD",src,user)
-		return
+/obj/structure/AIcore/deactivated/attackby(var/obj/item/device/aicard/A as obj, var/mob/user as mob)
+	if(istype(A, /obj/item/device/aicard))//Is it?
+		A.transfer_ai("INACTIVE","AICARD",src,user)
+	return
+
+/obj/structure/AIcore/deactivated/Destroy()
+	if(empty_playable_ai_cores.Find(src))
+		empty_playable_ai_cores -= src
+	..()
 
 /*
 This is a good place for AI-related object verbs so I'm sticking it here.

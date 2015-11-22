@@ -10,7 +10,7 @@
 		if(!hasorgans(target))
 			return 0
 		var/datum/organ/external/affected = target.get_organ(target_zone)
-		return affected.open == 2 && !(affected.status & ORGAN_BLEEDING) && (target_zone != "chest" || target.op_stage.ribcage == 2)
+		return affected.open >= 2 && !(affected.status & ORGAN_BLEEDING) && (target_zone != "chest" || target.op_stage.ribcage == 2)
 
 	proc/get_max_wclass(datum/organ/external/affected)
 		switch (affected.name)
@@ -131,6 +131,15 @@
 			var/datum/wound/internal_bleeding/I = new (15)
 			affected.wounds += I
 			affected.owner.custom_pain("You feel something rip in your [affected.display_name]!", 1)
+		if(istype(tool, /obj/item/gland))	//Abductor surgery integration
+			if(target_zone != "chest")
+				return
+			else
+				var/obj/item/gland/gland = tool
+				user.drop_item()
+				gland.Inject(target)
+				affected.cavity = 0
+				return
 		user.drop_item()
 		affected.hidden = tool
 		tool.loc = target
