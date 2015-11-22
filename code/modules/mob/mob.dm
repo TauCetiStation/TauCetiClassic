@@ -732,8 +732,6 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 // Typo from the oriignal coder here, below lies the jitteriness process. So make of his code what you will, the previous comment here was just a copypaste of the above.
 /mob/proc/jittery_process()
-	var/old_x = pixel_x
-	var/old_y = pixel_y
 	is_jittery = 1
 	while(jitteriness > 100)
 //		var/amplitude = jitteriness*(sin(jitteriness * 0.044 * world.time) + 1) / 70
@@ -747,8 +745,8 @@ note dizziness decrements automatically in the mob's Life() proc.
 		sleep(1)
 	//endwhile - reset the pixel offsets to zero
 	is_jittery = 0
-	pixel_x = old_x
-	pixel_y = old_y
+	pixel_x = initial(pixel_x)
+	pixel_y = initial(pixel_y)
 
 /mob/Stat()
 	..()
