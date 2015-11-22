@@ -166,6 +166,10 @@
 							now_pushing = 0
 							return
 				step(AM, t)
+				if(ishuman(AM) && AM:grabbed_by)
+					for(var/obj/item/weapon/grab/G in AM:grabbed_by)
+						step(G:assailant, get_dir(G:assailant, AM))
+						G.adjust_position()
 			now_pushing = 0
 		return
 	return
@@ -1436,7 +1440,7 @@
 				src << "\red \b Ouch!"
 				return
 			pass_flags += PASSCRAWL
-			layer = 4.0
+			layer = 3.9
 		else
 			pass_flags -= PASSCRAWL
 			//layer = 4.0
@@ -1565,3 +1569,10 @@
 		M.apply_damage(50,BRUTE)
 		if(M.stat == 2)
 			M.gib()
+
+/mob/living/carbon/human/has_eyes()
+	if(internal_organs_by_name["eyes"])
+		var/datum/organ/internal/eyes = internal_organs_by_name["eyes"]
+		if(eyes && istype(eyes))
+			return 1
+	return 0

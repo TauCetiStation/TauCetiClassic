@@ -314,6 +314,7 @@
 	if (istype(item, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = item
 		item = G.throw_held() //throw the person instead of the grab
+		qdel(G)
 		if(ismob(item))
 			var/turf/start_T = get_turf(loc) //Get the start and target tile for the descriptors
 			var/turf/end_T = get_turf(target)
@@ -328,19 +329,8 @@
 
 	if(!item) return //Grab processing has a chance of returning null
 
-	item.layer = initial(item.layer)
-	u_equip(item)
-	update_icons()
-
-	if (istype(usr, /mob/living/carbon)) //Check if a carbon mob is throwing. Modify/remove this line as required.
-		item.loc = src.loc
-		if(src.client)
-			src.client.screen -= item
-		if(istype(item, /obj/item) && !ishuman(src))
-			item:dropped(src) // let it know it's been dropped
-	//
-	//	Excesive proc dropped(). This proc is called in u_equip() proc for carbon/human. Double call of this proc causes light anomalies on mob
-	//	Additional ishuman() check
+	src.remove_from_mob(item)
+	item.loc = src.loc
 
 	//actually throw it!
 	if (item)

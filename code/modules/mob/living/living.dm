@@ -744,6 +744,9 @@
 	resting = !resting
 	src << "\blue You are now [resting ? "resting" : "getting up"]"
 
+/mob/living/proc/has_eyes()
+	return 1
+
 //-TG Port for smooth standing/lying animations
 /mob/living/proc/get_standard_pixel_x_offset(lying_current = 0)
 	return initial(pixel_x)

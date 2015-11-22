@@ -207,6 +207,10 @@
 		src.client.screen -= O
 	O.layer = initial(O.layer)
 	O.screen_loc = null
+	if(istype(O, /obj/item))
+		var/obj/item/I = O
+		I.forceMove(src.loc)
+		I.dropped(src)
 	return 1
 
 
