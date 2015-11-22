@@ -119,13 +119,13 @@ obj/machinery/gateway/centerstation/process()
 	if(!active)		return
 	if(!awaygate)	return
 	if(awaygate.calibrated)
-		M.loc = get_step(awaygate.loc, SOUTH)
+		M.forceMove(get_step(awaygate.loc, SOUTH))
 		M.dir = SOUTH
 		return
 	else
 		var/obj/effect/landmark/dest = pick(awaydestinations)
 		if(dest)
-			M.loc = dest.loc
+			M.forceMove(dest.loc)
 			M.dir = SOUTH
 			use_power(5000)
 		return
@@ -221,7 +221,7 @@ obj/machinery/gateway/centerstation/process()
 			if(E.imp_in == M)//Checking that it's actually implanted vs just in their pocket
 				M << "\black The station gate has detected your exile implant and is blocking your entry."
 				return
-	M.loc = get_step(stationgate.loc, SOUTH)
+	M.forceMove(get_step(stationgate.loc, SOUTH))
 	M.dir = SOUTH
 
 

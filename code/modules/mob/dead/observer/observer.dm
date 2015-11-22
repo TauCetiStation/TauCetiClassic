@@ -73,7 +73,7 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 		mind = body.mind	//we don't transfer the mind but we keep a reference to it.
 
 	if(!T)	T = pick(latejoin)			//Safety in case we cannot find the body's position
-	loc = T
+	forceMove(T)
 
 	if(!name)							//To prevent nameless ghosts
 		name = capitalize(pick(first_names_male)) + " " + capitalize(pick(last_names))
@@ -211,12 +211,12 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 /mob/dead/observer/Move(NewLoc, direct)
 	dir = direct
 	if(NewLoc)
-		loc = NewLoc
+		forceMove(NewLoc)
 		for(var/obj/effect/step_trigger/S in NewLoc)
 			S.Crossed(src)
 
 		return
-	loc = get_turf(src) //Get out of closets and such as a ghost
+	forceMove(get_turf(src)) //Get out of closets and such as a ghost
 	if((direct & NORTH) && y < world.maxy)
 		y++
 	else if((direct & SOUTH) && y > 1)
@@ -228,6 +228,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	for(var/obj/effect/step_trigger/S in locate(x, y, z))	//<-- this is dumb
 		S.Crossed(src)
+
+	..()
 
 /mob/dead/observer/examine()
 	if(usr)
@@ -323,7 +325,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		M.antagHUD = 1
 		src << "\blue <B>AntagHUD Enabled</B>"
 
-/mob/dead/observer/proc/dead_tele()
+/mob/dead/observer/proc/dead_tele(A in ghostteleportlocs)
 	set category = "Ghost"
 	set name = "Teleport"
 	set desc= "Teleport to a location"
@@ -333,76 +335,106 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	usr.verbs -= /mob/dead/observer/proc/dead_tele
 	spawn(30)
 		usr.verbs += /mob/dead/observer/proc/dead_tele
-	var/A
-	A = input("Area to jump to", "BOOYEA", A) as null|anything in ghostteleportlocs
 	var/area/thearea = ghostteleportlocs[A]
 	if(!thearea)	return
 
 	var/list/L = list()
 	for(var/turf/T in get_area_turfs(thearea.type))
-		L+=T
+		L += T
 
 	if(!L || !L.len)
-		usr << "No area available."
+		usr << "<span class='warning'>No area available.</span>"
 
 	usr.loc = pick(L)
+	following = null
 
-/mob/dead/observer/verb/follow()
+/mob/dead/observer/verb/follow(input in getmobs())
 	set category = "Ghost"
 	set name = "Follow" // "Haunt"
 	set desc = "Follow and haunt a mob."
 
-	var/list/mobs = getmobs()
-	var/input = input("Please, select a mob!", "Haunt", null, null) as null|anything in mobs
-	var/mob/target = mobs[input]
+	var/target = getmobs()[input]
+	if(!target) return
 	ManualFollow(target)
 
 // This is the ghost's follow verb with an argument
 /mob/dead/observer/proc/ManualFollow(var/atom/movable/target)
-	if(target && target != src)
+	if(!target)
+		return
+
+	if(target != src)
 		if(following && following == target)
 			return
 		following = target
-		src << "\blue Now following [target]"
-		spawn(0)
-			var/turf/pos = get_turf(src)
-			while(loc == pos && target && following == target && client)
-				var/turf/T = get_turf(target)
-				if(!T)
-					break
-				// To stop the ghost flickering.
-				if(loc != T)
-					loc = T
-				pos = loc
-				sleep(15)
-			following = null
+		src << "<span class='notice'>Now following [target]</span>"
+		if(ismob(target))
+			forceMove(get_turf(target))
+			var/mob/M = target
+			M.following_mobs += src
+		else
+			spawn(0)
+				while(target && following == target && client)
+					var/turf/T = get_turf(target)
+					if(!T)
+						break
+					// To stop the ghost flickering.
+					if(loc != T)
+						forceMove(T)
+					sleep(15)
 
+/mob/proc/update_following()
+	. = get_turf(src)
+	for(var/mob/dead/observer/M in following_mobs)
+		if(M.following != src)
+			following_mobs -= M
+		else
+			if(M.loc != .)
+				M.forceMove(.)
 
-/mob/dead/observer/verb/jumptomob() //Moves the ghost instead of just changing the ghosts's eye -Nodrak
+/mob
+	var/list/following_mobs = list()
+
+/mob/Destroy()
+	for(var/mob/dead/observer/M in following_mobs)
+		M.following = null
+	following_mobs = null
+	return ..()
+
+/mob/dead/observer/Destroy()
+	if(ismob(following))
+		var/mob/M = following
+		M.following_mobs -= src
+	following = null
+	return ..()
+
+/mob/Move()
+	. = ..()
+	if(.)
+		update_following()
+
+/mob/Life()
+	// to catch teleports etc which directly set loc
+	update_following()
+	return ..()
+
+/mob/dead/observer/verb/jumptomob(target in getmobs()) //Moves the ghost instead of just changing the ghosts's eye -Nodrak
 	set category = "Ghost"
 	set name = "Jump to Mob"
 	set desc = "Teleport to a mob"
 
 	if(istype(usr, /mob/dead/observer)) //Make sure they're an observer!
 
-
-		var/list/dest = list() //List of possible destinations (mobs)
-		var/target = null	   //Chosen target.
-
-		dest += getmobs() //Fill list, prompt user with list
-		target = input("Please, select a player!", "Jump to Mob", null, null) as null|anything in dest
-
 		if (!target)//Make sure we actually have a target
 			return
 		else
-			var/mob/M = dest[target] //Destination mob
-			var/mob/A = src			 //Source mob
+			var/mob/M = getmobs()[target] //Destination mob
 			var/turf/T = get_turf(M) //Turf of the destination mob
 
 			if(T && isturf(T))	//Make sure the turf exists, then move the source to that destination.
-				A.loc = T
+				forceMove(T)
+				following = null
 			else
-				A << "This mob is not located in the game world."
+				src << "This mob is not located in the game world."
 /*
 /mob/dead/observer/verb/boo()
 	set category = "Ghost"
