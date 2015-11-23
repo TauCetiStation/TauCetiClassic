@@ -4,7 +4,7 @@
 
 /obj/item/clothing/head/helmet/space/globose
 	icon_state = "glob0_white"
-	flags = FPRINT | TABLEPASS | HEADCOVERSEYES | BLOCKHEADHAIR | HEADCOVERSMOUTH | STOPSPRESSUREDMAGE | THICKMATERIAL | PHORONGUARD
+	flags = FPRINT | TABLEPASS | HEADCOVERSEYES | BLOCKHAIR | HEADCOVERSMOUTH | STOPSPRESSUREDMAGE | THICKMATERIAL | PHORONGUARD
 	var/mode = "white"
 	var/visor = 0
 
@@ -50,6 +50,12 @@
 	icon_state = "glob0_black"
 	mode = "black"
 	armor = list(melee = 60, bullet = 35, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30)
+
+/obj/item/clothing/head/helmet/space/globose/black/pirate
+	name = "balck pirate space helmet"
+	desc = "Pirate helmet, which brings horror into people hearts."
+	icon_state = "glob0_pirate"
+	mode = "pirate"
 
 
 /***********-Mining-***********/
