@@ -149,255 +149,252 @@ var/global/list/autolathe_recipes_hidden = list( \
 			else
 				return 0
 
-	interact(mob/user as mob)
-		if(..())
-			return
-		if (src.shocked)
-			src.shock(user,50)
-		if (src.opened)
-			wires_win(user,50)
-			return
-		if (src.disabled)
-			user << "\red You press the button, but nothing happens."
-			return
-		regular_win(user)
+/obj/machinery/autolathe/interact(mob/user as mob)
+	if(..())
 		return
+	if (src.shocked)
+		src.shock(user,50)
+	if (src.opened)
+		wires_win(user,50)
+		return
+	if (src.disabled)
+		user << "\red You press the button, but nothing happens."
+		return
+	regular_win(user)
+	return
 
-	attackby(var/obj/item/O as obj, var/mob/user as mob)
-		if (stat)
-			return 1
-		if (busy)
-			user << "\red The autolathe is busy. Please wait for completion of previous operation."
-			return 1
-		if (istype(O, /obj/item/weapon/screwdriver))
-			if (!opened)
-				src.opened = 1
-				src.icon_state = "autolathe_t"
-				user << "You open the maintenance hatch of [src]."
-			else
-				src.opened = 0
-				src.icon_state = "autolathe"
-				user << "You close the maintenance hatch of [src]."
-			return 1
-		if (opened)
-			if(istype(O, /obj/item/weapon/crowbar))
-				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
-				var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
-				M.state = 2
-				M.icon_state = "box_1"
-				for(var/obj/I in component_parts)
-					if(I.reliability != 100 && crit_fail)
-						I.crit_fail = 1
-					I.loc = src.loc
-				if(m_amount >= 3750)
-					var/obj/item/stack/sheet/metal/G = new /obj/item/stack/sheet/metal(src.loc)
-					G.amount = round(m_amount / 3750)
-				if(g_amount >= 3750)
-					var/obj/item/stack/sheet/glass/G = new /obj/item/stack/sheet/glass(src.loc)
-					G.amount = round(g_amount / 3750)
-				qdel(src)
-				return 1
-			else
-				user.set_machine(src)
-				interact(user)
-				return 1
-
-		if (src.m_amount + O.m_amt > max_m_amount)
-			user << "\red The autolathe is full. Please remove metal from the autolathe in order to insert more."
-			return 1
-		if (src.g_amount + O.g_amt > max_g_amount)
-			user << "\red The autolathe is full. Please remove glass from the autolathe in order to insert more."
-			return 1
-		if (O.m_amt == 0 && O.g_amt == 0)
-			user << "\red This object does not contain significant amounts of metal or glass, or cannot be accepted by the autolathe due to size or hazardous materials."
-			return 1
-	/*
-		if (istype(O, /obj/item/weapon/grab) && src.hacked)
-			var/obj/item/weapon/grab/G = O
-			if (prob(25) && G.affecting)
-				G.affecting.gib()
-				m_amount += 50000
-			return
-	*/
-
-		var/amount = 1
-		var/obj/item/stack/stack
-		var/m_amt = O.m_amt
-		var/g_amt = O.g_amt
-		if (istype(O, /obj/item/stack))
-			stack = O
-			amount = stack.amount
-			if (m_amt)
-				amount = min(amount, round((max_m_amount-src.m_amount)/m_amt))
-				flick("autolathe_o",src)//plays metal insertion animation
-			if (g_amt)
-				amount = min(amount, round((max_g_amount-src.g_amount)/g_amt))
-				flick("autolathe_r",src)//plays glass insertion animation
-			stack.use(amount)
+/obj/machinery/autolathe/attackby(var/obj/item/O as obj, var/mob/user as mob)
+	if (stat)
+		return 1
+	if (busy)
+		user << "\red The autolathe is busy. Please wait for completion of previous operation."
+		return 1
+	if (istype(O, /obj/item/weapon/screwdriver))
+		if (!opened)
+			src.opened = 1
+			src.icon_state = "autolathe_t"
+			user << "You open the maintenance hatch of [src]."
 		else
-			usr.before_take_item(O)
-			O.loc = src
-		icon_state = "autolathe"
-		busy = 1
-		use_power(max(1000, (m_amt+g_amt)*amount/10))
-		src.m_amount += m_amt * amount
-		src.g_amount += g_amt * amount
-		user << "You insert [amount] sheet[amount>1 ? "s" : ""] to the autolathe."
-		if (O && O.loc == src)
-			qdel(O)
-		busy = 0
-		src.updateUsrDialog()
+			src.opened = 0
+			src.icon_state = "autolathe"
+			user << "You close the maintenance hatch of [src]."
+		return 1
+	if (opened)
+		if(istype(O, /obj/item/weapon/crowbar))
+			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
+			var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
+			M.state = 2
+			M.icon_state = "box_1"
+			for(var/obj/I in component_parts)
+				if(I.reliability != 100 && crit_fail)
+					I.crit_fail = 1
+				I.loc = src.loc
+			if(m_amount >= 3750)
+				var/obj/item/stack/sheet/metal/G = new /obj/item/stack/sheet/metal(src.loc)
+				G.amount = round(m_amount / 3750)
+			if(g_amount >= 3750)
+				var/obj/item/stack/sheet/glass/G = new /obj/item/stack/sheet/glass(src.loc)
+				G.amount = round(g_amount / 3750)
+			qdel(src)
+			return 1
+		else
+			user.set_machine(src)
+			interact(user)
+			return 1
 
-	attack_paw(mob/user as mob)
-		return src.attack_hand(user)
+	if (src.m_amount + O.m_amt > max_m_amount)
+		user << "\red The autolathe is full. Please remove metal from the autolathe in order to insert more."
+		return 1
+	if (src.g_amount + O.g_amt > max_g_amount)
+		user << "\red The autolathe is full. Please remove glass from the autolathe in order to insert more."
+		return 1
+	if (O.m_amt == 0 && O.g_amt == 0)
+		user << "\red This object does not contain significant amounts of metal or glass, or cannot be accepted by the autolathe due to size or hazardous materials."
+		return 1
 
-	attack_hand(mob/user as mob)
-		user.set_machine(src)
-		interact(user)
+	var/amount = 1
+	var/obj/item/stack/stack
+	var/m_amt = O.m_amt
+	var/g_amt = O.g_amt
+	if (istype(O, /obj/item/stack))
+		stack = O
+		amount = stack.amount
+		if (m_amt)
+			amount = min(amount, round((max_m_amount-src.m_amount)/m_amt))
+			flick("autolathe_o",src)//plays metal insertion animation
+		if (g_amt)
+			amount = min(amount, round((max_g_amount-src.g_amount)/g_amt))
+			flick("autolathe_r",src)//plays glass insertion animation
+		stack.use(amount)
+	else
+		usr.before_take_item(O)
+		O.loc = src
+	icon_state = "autolathe"
+	busy = 1
+	use_power(max(1000, (m_amt+g_amt)*amount/10))
+	src.m_amount += m_amt * amount
+	src.g_amount += g_amt * amount
+	user << "You insert [amount] sheet[amount>1 ? "s" : ""] to the autolathe."
+	if (O && O.loc == src)
+		qdel(O)
+	busy = 0
+	src.updateUsrDialog()
+
+/obj/machinery/autolathe/attack_paw(mob/user as mob)
+	return src.attack_hand(user)
+
+/obj/machinery/autolathe/attack_hand(mob/user as mob)
+	user.set_machine(src)
+	interact(user)
 
 
-	Topic(href, href_list)
-		if(..())
-			return
-		usr.set_machine(src)
-		src.add_fingerprint(usr)
-		if (!busy)
-			if(href_list["make"])
-				var/turf/T = get_step(src.loc, get_dir(src,usr))
+/obj/machinery/autolathe/Topic(href, href_list)
+	if(..())
+		return
+	usr.set_machine(src)
+	src.add_fingerprint(usr)
+	if (!busy)
+		if(href_list["make"])
+			var/turf/T = get_step(src.loc, get_dir(src,usr))
 
-				// critical exploit fix start -walter0o
-				var/obj/item/template = null
-				var/attempting_to_build = locate(href_list["make"])
+			// critical exploit fix start -walter0o
+			var/obj/item/template = null
+			var/attempting_to_build = locate(href_list["make"])
 
-				if(!attempting_to_build)
-					return
+			if(!attempting_to_build)
+				return
 
-				if(locate(attempting_to_build, src.L) || locate(attempting_to_build, src.LL)) // see if the requested object is in one of the construction lists, if so, it is legit -walter0o
-					template = attempting_to_build
+			if(locate(attempting_to_build, src.L) || locate(attempting_to_build, src.LL)) // see if the requested object is in one of the construction lists, if so, it is legit -walter0o
+				template = attempting_to_build
 
-				else // somebody is trying to exploit, alert admins -walter0o
+			else // somebody is trying to exploit, alert admins -walter0o
 
-					var/turf/LOC = get_turf(usr)
-					message_admins("[key_name_admin(usr)] tried to exploit an autolathe to duplicate <a href='?_src_=vars;Vars=\ref[attempting_to_build]'>[attempting_to_build]</a> ! ([LOC ? "<a href='?_src_=holder;adminplayerobservecoodjump=1;X=[LOC.x];Y=[LOC.y];Z=[LOC.z]'>JMP</a>" : "null"])", 0)
-					log_admin("EXPLOIT : [key_name(usr)] tried to exploit an autolathe to duplicate [attempting_to_build] !")
-					return
+				var/turf/LOC = get_turf(usr)
+				message_admins("[key_name_admin(usr)] tried to exploit an autolathe to duplicate <a href='?_src_=vars;Vars=\ref[attempting_to_build]'>[attempting_to_build]</a> ! ([LOC ? "<a href='?_src_=holder;adminplayerobservecoodjump=1;X=[LOC.x];Y=[LOC.y];Z=[LOC.z]'>JMP</a>" : "null"])", 0)
+				log_admin("EXPLOIT : [key_name(usr)] tried to exploit an autolathe to duplicate [attempting_to_build] !")
+				return
 
-				// now check for legit multiplier, also only stacks should pass with one to prevent raw-materials-manipulation -walter0o
+			// now check for legit multiplier, also only stacks should pass with one to prevent raw-materials-manipulation -walter0o
 
-				var/multiplier = text2num(href_list["multiplier"])
+			var/multiplier = text2num(href_list["multiplier"])
 
-				if (!multiplier) multiplier = 1
-				var/max_multiplier = 1
+			if (!multiplier) multiplier = 1
+			var/max_multiplier = 1
 
-				if(istype(template, /obj/item/stack)) // stacks are the only items which can have a multiplier higher than 1 -walter0o
-					var/obj/item/stack/S = template
-					max_multiplier = min(S.max_amount, S.m_amt?round(m_amount/S.m_amt):INFINITY, S.g_amt?round(g_amount/S.g_amt):INFINITY)  // pasta from regular_win() to make sure the numbers match -walter0o
+			if(istype(template, /obj/item/stack)) // stacks are the only items which can have a multiplier higher than 1 -walter0o
+				var/obj/item/stack/S = template
+				max_multiplier = min(S.max_amount, S.m_amt?round(m_amount/S.m_amt):INFINITY, S.g_amt?round(g_amount/S.g_amt):INFINITY)  // pasta from regular_win() to make sure the numbers match -walter0o
 
-				if( (multiplier > max_multiplier) || (multiplier <= 0) ) // somebody is trying to exploit, alert admins-walter0o
+			if( (multiplier > max_multiplier) || (multiplier <= 0) ) // somebody is trying to exploit, alert admins-walter0o
 
-					var/turf/LOC = get_turf(usr)
-					message_admins("[key_name_admin(usr)] tried to exploit an autolathe with multiplier set to <u>[multiplier]</u> on <u>[template]</u>  ! ([LOC ? "<a href='?_src_=holder;adminplayerobservecoodjump=1;X=[LOC.x];Y=[LOC.y];Z=[LOC.z]'>JMP</a>" : "null"])" , 0)
-					log_admin("EXPLOIT : [key_name(usr)] tried to exploit an autolathe with multiplier set to [multiplier] on [template]  !")
-					return
+				var/turf/LOC = get_turf(usr)
+				message_admins("[key_name_admin(usr)] tried to exploit an autolathe with multiplier set to <u>[multiplier]</u> on <u>[template]</u>  ! ([LOC ? "<a href='?_src_=holder;adminplayerobservecoodjump=1;X=[LOC.x];Y=[LOC.y];Z=[LOC.z]'>JMP</a>" : "null"])" , 0)
+				log_admin("EXPLOIT : [key_name(usr)] tried to exploit an autolathe with multiplier set to [multiplier] on [template]  !")
+				return
 
-				var/power = max(2000, (template.m_amt+template.g_amt)*multiplier/5)
-				if(src.m_amount >= template.m_amt*multiplier && src.g_amount >= template.g_amt*multiplier)
-					busy = 1
+			var/power = max(2000, (template.m_amt+template.g_amt)*multiplier/5)
+			if(src.m_amount >= template.m_amt*multiplier && src.g_amount >= template.g_amt*multiplier)
+				busy = 1
+				use_power(power)
+				icon_state = "autolathe"
+				flick("autolathe_n",src)
+				spawn(16)
 					use_power(power)
-					icon_state = "autolathe"
-					flick("autolathe_n",src)
 					spawn(16)
 						use_power(power)
 						spawn(16)
-							use_power(power)
-							spawn(16)
-								src.m_amount -= template.m_amt*multiplier
-								src.g_amount -= template.g_amt*multiplier
-								if(src.m_amount < 0)
-									src.m_amount = 0
-								if(src.g_amount < 0)
-									src.g_amount = 0
-								var/obj/new_item = new template.type(T)
-								if (multiplier>1)
-									var/obj/item/stack/S = new_item
-									S.amount = multiplier
-								busy = 0
-								src.updateUsrDialog()
-			if(href_list["act"])
-				var/temp_wire = href_list["wire"]
-				if(href_list["act"] == "pulse")
-					if (!istype(usr.get_active_hand(), /obj/item/device/multitool))
-						usr << "You need a multitool!"
+							src.m_amount -= template.m_amt*multiplier
+							src.g_amount -= template.g_amt*multiplier
+							if(src.m_amount < 0)
+								src.m_amount = 0
+							if(src.g_amount < 0)
+								src.g_amount = 0
+							var/obj/new_item = new template.type(T)
+							if (multiplier>1)
+								var/obj/item/stack/S = new_item
+								S.amount = multiplier
+							busy = 0
+							src.updateUsrDialog()
+		if(href_list["act"])
+			var/temp_wire = href_list["wire"]
+			if(href_list["act"] == "pulse")
+				if (!istype(usr.get_active_hand(), /obj/item/device/multitool))
+					usr << "You need a multitool!"
+				else
+					if(src.wires[temp_wire])
+						usr << "You can't pulse a cut wire."
 					else
-						if(src.wires[temp_wire])
-							usr << "You can't pulse a cut wire."
-						else
-							if(src.hack_wire == temp_wire)
-								src.hacked = !src.hacked
-								spawn(100) src.hacked = !src.hacked
-							if(src.disable_wire == temp_wire)
-								src.disabled = !src.disabled
-								src.shock(usr,50)
-								spawn(100) src.disabled = !src.disabled
-							if(src.shock_wire == temp_wire)
-								src.shocked = !src.shocked
-								src.shock(usr,50)
-								spawn(100) src.shocked = !src.shocked
-				if(href_list["act"] == "wire")
-					if (!istype(usr.get_active_hand(), /obj/item/weapon/wirecutters))
-						usr << "You need wirecutters!"
-					else
-						wires[temp_wire] = !wires[temp_wire]
 						if(src.hack_wire == temp_wire)
 							src.hacked = !src.hacked
+							spawn(100) src.hacked = !src.hacked
 						if(src.disable_wire == temp_wire)
 							src.disabled = !src.disabled
 							src.shock(usr,50)
+							spawn(100) src.disabled = !src.disabled
 						if(src.shock_wire == temp_wire)
 							src.shocked = !src.shocked
 							src.shock(usr,50)
-		else
-			usr << "\red The autolathe is busy. Please wait for completion of previous operation."
-		src.updateUsrDialog()
-		return
+							spawn(100) src.shocked = !src.shocked
+			if(href_list["act"] == "wire")
+				if (!istype(usr.get_active_hand(), /obj/item/weapon/wirecutters))
+					usr << "You need wirecutters!"
+				else
+					wires[temp_wire] = !wires[temp_wire]
+					if(src.hack_wire == temp_wire)
+						src.hacked = !src.hacked
+					if(src.disable_wire == temp_wire)
+						src.disabled = !src.disabled
+						src.shock(usr,50)
+					if(src.shock_wire == temp_wire)
+						src.shocked = !src.shocked
+						src.shock(usr,50)
+	else
+		usr << "\red The autolathe is busy. Please wait for completion of previous operation."
+	src.updateUsrDialog()
+	return
 
 
+/obj/machinery/autolathe/RefreshParts()
+	..()
+	var/tot_rating = 0
+	for(var/obj/item/weapon/stock_parts/matter_bin/MB in component_parts)
+		tot_rating += MB.rating
+	tot_rating *= 25000
+	max_m_amount = tot_rating * 2
+	max_g_amount = tot_rating
+
+/obj/machinery/autolathe/New()
+	..()
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/autolathe(src)
+	component_parts += new /obj/item/weapon/stock_parts/matter_bin(src)
+	component_parts += new /obj/item/weapon/stock_parts/matter_bin(src)
+	component_parts += new /obj/item/weapon/stock_parts/matter_bin(src)
+	component_parts += new /obj/item/weapon/stock_parts/manipulator(src)
+	component_parts += new /obj/item/weapon/stock_parts/console_screen(src)
 	RefreshParts()
-		..()
-		var/tot_rating = 0
-		for(var/obj/item/weapon/stock_parts/matter_bin/MB in component_parts)
-			tot_rating += MB.rating
-		tot_rating *= 25000
-		max_m_amount = tot_rating * 2
-		max_g_amount = tot_rating
 
-	New()
-		..()
-		component_parts = list()
-		component_parts += new /obj/item/weapon/circuitboard/autolathe(src)
-		component_parts += new /obj/item/weapon/stock_parts/matter_bin(src)
-		component_parts += new /obj/item/weapon/stock_parts/matter_bin(src)
-		component_parts += new /obj/item/weapon/stock_parts/matter_bin(src)
-		component_parts += new /obj/item/weapon/stock_parts/manipulator(src)
-		component_parts += new /obj/item/weapon/stock_parts/console_screen(src)
-		RefreshParts()
+	src.L = autolathe_recipes
+	src.LL = autolathe_recipes_hidden
+	src.wires["Light Red"] = 0
+	src.wires["Dark Red"] = 0
+	src.wires["Blue"] = 0
+	src.wires["Green"] = 0
+	src.wires["Yellow"] = 0
+	src.wires["Black"] = 0
+	src.wires["White"] = 0
+	src.wires["Gray"] = 0
+	src.wires["Orange"] = 0
+	src.wires["Pink"] = 0
+	var/list/w = list("Light Red","Dark Red","Blue","Green","Yellow","Black","White","Gray","Orange","Pink")
+	src.hack_wire = pick(w)
+	w -= src.hack_wire
+	src.shock_wire = pick(w)
+	w -= src.shock_wire
+	src.disable_wire = pick(w)
+	w -= src.disable_wire
 
-		src.L = autolathe_recipes
-		src.LL = autolathe_recipes_hidden
-		src.wires["Light Red"] = 0
-		src.wires["Dark Red"] = 0
-		src.wires["Blue"] = 0
-		src.wires["Green"] = 0
-		src.wires["Yellow"] = 0
-		src.wires["Black"] = 0
-		src.wires["White"] = 0
-		src.wires["Gray"] = 0
-		src.wires["Orange"] = 0
-		src.wires["Pink"] = 0
-		var/list/w = list("Light Red","Dark Red","Blue","Green","Yellow","Black","White","Gray","Orange","Pink")
-		src.hack_wire = pick(w)
-		w -= src.hack_wire
-		src.shock_wire = pick(w)
-		w -= src.shock_wire
-		src.disable_wire = pick(w)
-		w -= src.disable_wire
+/obj/machinery/autolathe/Destroy()
+	qdel(wires)
+	wires = null
+	return ..()

@@ -51,6 +51,7 @@
 	. = ..()
 	if(reagents)
 		qdel(reagents)
+		reagents = null
 	for(var/atom/movable/AM in contents)
 		qdel(AM)
 	loc = null

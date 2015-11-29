@@ -27,6 +27,10 @@
 	var/const/WIRE_SHOOTINV = 2
 	var/const/WIRE_SCANID = 3 //Only used by the secure smartfridge, but required by the cut, mend and pulse procs.
 
+/obj/machinery/smartfridge/Destroy()
+	qdel(wires)
+	wires = null
+	return ..()
 
 /obj/machinery/smartfridge/proc/accept_check(var/obj/item/O as obj)
 	if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/grown/) || istype(O,/obj/item/seeds/))
