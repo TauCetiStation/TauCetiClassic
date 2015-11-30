@@ -430,7 +430,7 @@
 				user << "\red There is no connector for your power cell."
 				return
 			user.drop_item()
-			W.forceMove(src)
+			W.loc = src
 			cell = W
 			user.visible_message(\
 				"\red [user.name] has inserted the power cell to [src.name]!",\
@@ -1419,19 +1419,13 @@
 		if (ticker.mode.config_tag == "malfunction")
 			if (src.z == 1) //if (is_type_in_list(get_area(src), the_station_areas))
 				ticker.mode:apcs--
-	src.update()
-	area.apc = null
 	area.power_light = 0
 	area.power_equip = 0
 	area.power_environ = 0
 	area.power_change()
-	qdel(terminal)
-	terminal = null
-	if(cell)
-		cell.forceMove(loc)
-		cell = null
-
-	return ..()
+	/*if(occupant)
+		malfvacate(1)*/
+	..()
 
 /obj/machinery/power/apc/proc/shock(mob/user, prb)
 	if(!prob(prb))

@@ -95,14 +95,6 @@
 
 	verbs -= /atom/movable/verb/pull
 
-/obj/machinery/bot/mulebot/Destroy()
-	unload(0)
-	qdel(wires)
-	wires = null
-	if(radio_controller)
-		radio_controller.remove_object(src,beacon_freq)
-		radio_controller.remove_object(src,control_freq)
-	return ..()
 
 // set up the wire colours in random order
 // and the random wire display order
