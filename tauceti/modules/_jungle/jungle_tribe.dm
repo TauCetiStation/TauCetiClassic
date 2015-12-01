@@ -8,7 +8,7 @@
 /obj/effect/jungle_tribe_spawn
 	name = "campfire"
 	desc = "Looks cosy, in an alien sort of way."
-	icon = 'code/WorkInProgress/Cael_Aislinn/Jungle/jungle.dmi'
+	icon = 'tauceti/modules/_jungle/jungle.dmi'
 	icon_state = "campfire"
 	anchored = 1
 	var/list/tribesmen = list()
