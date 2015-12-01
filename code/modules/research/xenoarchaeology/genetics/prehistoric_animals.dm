@@ -5,7 +5,7 @@
 	icon_state = "samak"
 	icon_living = "samak"
 	icon_dead = "samak_dead"
-	icon = 'code/WorkInProgress/Cael_Aislinn/Jungle/jungle.dmi'
+	icon = 'tauceti/modules/_jungle/jungle.dmi'
 	move_to_delay = 2
 	maxHealth = 125
 	health = 125
@@ -26,7 +26,7 @@
 	icon_state = "diyaab"
 	icon_living = "diyaab"
 	icon_dead = "diyaab_dead"
-	icon = 'code/WorkInProgress/Cael_Aislinn/Jungle/jungle.dmi'
+	icon = 'tauceti/modules/_jungle/jungle.dmi'
 	move_to_delay = 1
 	maxHealth = 25
 	health = 25
@@ -47,7 +47,7 @@
 	icon_state = "shantak"
 	icon_living = "shantak"
 	icon_dead = "shantak_dead"
-	icon = 'code/WorkInProgress/Cael_Aislinn/Jungle/jungle.dmi'
+	icon = 'tauceti/modules/_jungle/jungle.dmi'
 	move_to_delay = 1
 	maxHealth = 75
 	health = 75
