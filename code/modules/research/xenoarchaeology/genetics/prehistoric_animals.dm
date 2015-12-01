@@ -66,7 +66,7 @@
 	icon_state = "yithian"
 	icon_living = "yithian"
 	icon_dead = "yithian_dead"
-	icon = 'code/WorkInProgress/Cael_Aislinn/Jungle/jungle.dmi'
+	icon = 'tauceti/modules/_jungle/jungle.dmi'
 
 /mob/living/simple_animal/tindalos
 	name = "tindalos"
@@ -74,4 +74,4 @@
 	icon_state = "tindalos"
 	icon_living = "tindalos"
 	icon_dead = "tindalos_dead"
-	icon = 'code/WorkInProgress/Cael_Aislinn/Jungle/jungle.dmi'
+	icon = 'tauceti/modules/_jungle/jungle.dmi'

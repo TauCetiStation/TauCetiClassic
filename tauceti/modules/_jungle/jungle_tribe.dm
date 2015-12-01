@@ -46,7 +46,7 @@
 /mob/living/simple_animal/hostile/tribesman
 	name = "tribesman"
 	desc = "A noble savage, doesn't seem to know what to make of you."
-	icon = 'code/WorkInProgress/Cael_Aislinn/Jungle/jungle.dmi'
+	icon = 'tauceti/modules/_jungle/jungle.dmi'
 	icon_state = "native1"
 	icon_living = "native1"
 	icon_dead = "native1_dead"

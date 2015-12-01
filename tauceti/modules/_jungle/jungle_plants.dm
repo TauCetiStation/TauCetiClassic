@@ -68,7 +68,7 @@ var/jungle_plants_init = 0
 	seed = ""
 	name = "jungle fruit"
 	desc = "It smells weird and looks off."
-	icon = 'code/WorkInProgress/Cael_Aislinn/Jungle/jungle.dmi'
+	icon = 'tauceti/modules/_jungle/jungle.dmi'
 	icon_state = "orange"
 	potency = 1
 

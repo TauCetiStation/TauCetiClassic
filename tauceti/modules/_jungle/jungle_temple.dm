@@ -280,8 +280,7 @@
 
 /obj/effect/step_trigger/trap
 	name = "trap"
-	icon = 'code/workinprogress/cael_aislinn/jungle/jungle.dmi'
-	icon = 'code/WorkInProgress/Cael_Aislinn/Jungle/jungle.dmi'
+	icon = 'tauceti/modules/_jungle/jungle.dmi'
 	icon_state = "trap"
 	var/trap_type
 
