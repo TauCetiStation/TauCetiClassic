@@ -373,7 +373,7 @@
 	return
 
 
-/obj/structure/table/attackby(obj/item/W as obj, mob/user as mob)
+/obj/structure/table/attackby(obj/item/W, mob/user, params)
 	if (!W) return
 	if (istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
 		var/obj/item/weapon/grab/G = W
@@ -425,6 +425,10 @@
 	if(!(W.flags & ABSTRACT)) //Чтобы не класли на столы всякие тентакли и прочие абстрактные объекты
 		if(user.drop_item())
 			W.Move(loc)
+			var/list/click_params = params2list(params)
+			//Center the icon where the user clicked.
+			W.pixel_x = (text2num(click_params["icon-x"]) - 16)
+			W.pixel_y = (text2num(click_params["icon-y"]) - 16)
 	return
 
 /obj/structure/table/proc/straight_table_check(var/direction)
@@ -578,7 +582,7 @@
 	else
 		return ..()
 
-/obj/structure/table/reinforced/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/structure/table/reinforced/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	if (istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.remove_fuel(0, user))
