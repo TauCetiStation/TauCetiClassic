@@ -224,7 +224,7 @@
 		src.verbs -= x
 	return
 
-/atom/movable/overlay/attackby(a, b)
+/atom/movable/overlay/attackby(a, b, params)
 	if (src.master)
 		return src.master.attackby(a, b)
 	return
