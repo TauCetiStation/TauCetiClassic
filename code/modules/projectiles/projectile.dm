@@ -59,10 +59,10 @@
 	var/muzzle_type
 	var/tracer_type
 	var/impact_type
-	
+
 	var/datum/plot_vector/trajectory	// used to plot the path of the projectile
 	var/datum/vector_loc/location		// current location of the projectile in pixel space
-	var/matrix/effect_transform			// matrix to rotate and scale projectile effects - putting it here so it doesn't 
+	var/matrix/effect_transform			// matrix to rotate and scale projectile effects - putting it here so it doesn't
 										//  have to be recreated multiple times
 
 	proc/on_hit(var/atom/target, var/blocked = 0)
@@ -267,7 +267,7 @@
 	// plot the initial trajectory
 	trajectory = new()
 	trajectory.setup(starting, original, pixel_x, pixel_y, angle_offset=offset)
-	
+
 	// generate this now since all visual effects the projectile makes can use it
 	effect_transform = new()
 	effect_transform.Scale(trajectory.return_hypotenuse(), 1)
@@ -279,7 +279,7 @@
 
 	if(ispath(muzzle_type))
 		var/obj/effect/projectile/M = new muzzle_type(get_turf(src))
-		
+
 		if(istype(M))
 			M.set_transform(T)
 			M.pixel_x = location.pixel_x
@@ -289,7 +289,7 @@
 /obj/item/projectile/proc/tracer_effect(var/matrix/M)
 	if(ispath(tracer_type))
 		var/obj/effect/projectile/P = new tracer_type(location.loc)
-		
+
 		if(istype(P))
 			P.set_transform(M)
 			P.pixel_x = location.pixel_x
@@ -297,9 +297,9 @@
 			P.activate()
 
 /obj/item/projectile/proc/impact_effect(var/matrix/M)
-	if(ispath(tracer_type))
+	if(ispath(tracer_type) && location)
 		var/obj/effect/projectile/P = new impact_type(location.loc)
-		
+
 		if(istype(P))
 			P.set_transform(M)
 			P.pixel_x = location.pixel_x
