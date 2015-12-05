@@ -906,6 +906,23 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	contraband = 1
 	group = "Operations"
 
+/datum/supply_packs/randomised/toys
+	num_contained = 5
+	contains = list(/obj/item/toy/spinningtoy,
+	                /obj/item/toy/sword,
+	                /obj/item/toy/owl,
+	                /obj/item/toy/griffin,
+	                /obj/item/toy/nuke,
+	                /obj/item/toy/minimeteor,
+	                /obj/item/toy/carpplushie,
+	                /obj/item/toy/crossbow,
+	                /obj/item/toy/katana)
+
+	name = "Toy Crate"
+	cost = 50 // or play the arcade machines ya lazy bum
+	containername ="toy crate"
+	group = "Miscellaneous"
+
 /datum/supply_packs/boxes
 	name = "Empty boxes"
 	contains = list(/obj/item/weapon/storage/box,
