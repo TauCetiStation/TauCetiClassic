@@ -120,7 +120,7 @@
 		R.amount = amount
 		R.max_amount = amount
 		R.price = price
-		R.display_color = pick("red","blue","green")
+		R.display_color = pick("red","orange","green")
 
 		if(hidden)
 			hidden_records += R
@@ -187,19 +187,19 @@
 		var/turf/T = user.loc
 		user << "<span class='notice'>You begin [anchored ? "unwrenching" : "wrenching"] the [src].</span>"
 		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-		sleep(40)
-		if( !istype(src, /obj/machinery/vending) || !user || !W || !T )	return
-		if( user.loc == T && user.get_active_hand() == W )
-			anchored = !anchored
-			user << "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>"
-			if (!(src.anchored & powered()))
-				src.icon_state = "[initial(icon_state)]-off"
-				stat |= NOPOWER
-				set_light(0)
-			else
-				icon_state = initial(icon_state)
-				stat &= ~NOPOWER
-				set_light(light_range_on, light_power_on)
+		if(do_after(user, 40, target = src))
+			if( !istype(src, /obj/machinery/vending) || !user || !W || !T )	return
+			if( user.loc == T && user.get_active_hand() == W )
+				anchored = !anchored
+				user << "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>"
+				if (!(src.anchored & powered()))
+					src.icon_state = "[initial(icon_state)]-off"
+					stat |= NOPOWER
+					set_light(0)
+				else
+					icon_state = initial(icon_state)
+					stat &= ~NOPOWER
+					set_light(light_range_on, light_power_on)
 	else if(istype(W, /obj/item/weapon/card) && currently_vending)
 		var/obj/item/weapon/card/I = W
 		scan_card(I)
@@ -314,24 +314,21 @@
 	var/vendorname = (src.name)  //import the machine's name
 
 	if(src.currently_vending)
-		var/dat = "<TT><center><b>[vendorname]</b></center><hr /><br>" //display the name, and added a horizontal rule
+		var/dat
 		dat += "<b>You have selected [currently_vending.product_name].<br>Please swipe your ID to pay for the article.</b><br>"
 		dat += "<a href='byond://?src=\ref[src];cancel_buying=1'>Cancel</a>"
-		user << browse(dat, "window=vending")
-		onclose(user, "")
+		var/datum/browser/popup = new(user, "window=vending", "[vendorname]", 400, 550)
+		popup.set_content(dat)
+		popup.open()
 		return
 
-	var/dat = "<TT><center><b>[vendorname]</b></center><hr /><br>" //display the name, and added a horizontal rule
-	dat += "<b>Select an item: </b><br><br>" //the rest is just general spacing and bolding
-
-	if (premium.len > 0)
-		dat += "<b>Coin slot:</b> [coin ? coin : "No coin inserted"] (<a href='byond://?src=\ref[src];remove_coin=1'>Remove</A>)<br>"
-
-	if (ewallet)
-		dat += "<b>Charge card's credits:</b> [ewallet ? ewallet.worth : "No charge card inserted"] (<a href='byond://?src=\ref[src];remove_ewallet=1'>Remove</A>)<br><br>"
+	var/dat
+	dat += "<h3>Select an item</h3>"
+	dat += "<div class='statusDisplay'>"
 
 	if (src.product_records.len == 0)
 		dat += "<font color = 'red'>No product loaded!</font>"
+
 	else
 		var/list/display_records = src.product_records
 		if(src.extended_inventory)
@@ -341,18 +338,26 @@
 		if(src.coin && src.extended_inventory)
 			display_records = src.product_records + src.hidden_records + src.coin_records
 
+		dat += "<ul>"
 		for (var/datum/data/vending_product/R in display_records)
-			dat += "<FONT color = '[R.display_color]'><B>[R.product_name]</B>:"
+			dat += "<li>"
+			if (R.amount > 0)
+				dat += " <a href='byond://?src=\ref[src];vend=\ref[R]'>Vend</A>"
+			else
+				dat += " <font color = 'red'>SOLD OUT</font>"
+			dat += "<font color = '[R.display_color]'><B>[R.product_name]</B>:"
 			dat += " <b>[R.amount]</b> </font>"
 			if(R.price)
 				dat += " <b>(Price: [R.price])</b>"
-			if (R.amount > 0)
-				dat += " <a href='byond://?src=\ref[src];vend=\ref[R]'>(Vend)</A>"
-			else
-				dat += " <font color = 'red'>SOLD OUT</font>"
-			dat += "<br>"
+			dat += "</li>"
+		dat += "</ul>"
+	dat += "</div>"
 
-		dat += "</TT>"
+	if (premium.len > 0)
+		dat += "<b>Coin slot:</b> [coin ? coin : "No coin inserted"] <a href='byond://?src=\ref[src];remove_coin=1'>Remove</A><br>"
+
+	if (ewallet)
+		dat += "<b>Charge card's credits:</b> [ewallet ? ewallet.worth : "No charge card inserted"] (<a href='byond://?src=\ref[src];remove_ewallet=1'>Remove</A>)<br><br>"
 
 	if(panel_open)
 		var/list/vendwires = list(
@@ -381,8 +386,9 @@
 		if (product_slogans != "")
 			dat += "The speaker switch is [src.shut_up ? "off" : "on"]. <a href='?src=\ref[src];togglevoice=[1]'>Toggle</a>"
 
-	user << browse(dat, "window=vending")
-	onclose(user, "")
+	var/datum/browser/popup = new(user, "window=vending", "[vendorname]", 450, 500)
+	popup.set_content(dat)
+	popup.open()
 	return
 
 /obj/machinery/vending/Topic(href, href_list)
@@ -1010,7 +1016,7 @@
 	/obj/item/clothing/suit/poncho=1,/obj/item/clothing/suit/ianshirt=1,/obj/item/clothing/shoes/laceup=2,
 	/obj/item/clothing/shoes/sandal=1,
 	/obj/item/clothing/mask/bandana/black=2,/obj/item/clothing/mask/bandana/skull=2,/obj/item/clothing/mask/bandana/green=2,/obj/item/clothing/mask/bandana/gold=2,
-	/obj/item/clothing/mask/bandana/blue=2)
+	/obj/item/clothing/mask/bandana/blue=2,/obj/item/clothing/mask/bluescarf=1,/obj/item/clothing/mask/redscarf=1,/obj/item/clothing/mask/greenscarf=1)
 	contraband = list(/obj/item/clothing/under/syndicate/tacticool=1,/obj/item/clothing/mask/balaclava=1,/obj/item/clothing/head/ushanka=1,/obj/item/clothing/under/soviet=1)
 	premium = list(/obj/item/clothing/under/suit_jacket/checkered=1,/obj/item/clothing/head/mailman=1,/obj/item/clothing/under/rank/mailman=1,/obj/item/clothing/suit/jacket/leather=1,/obj/item/clothing/suit/jacket/leather/overcoat=1,/obj/item/clothing/under/pants/mustangjeans=1)
 	prices = list(/obj/item/clothing/head/that=4199,/obj/item/clothing/head/fedora=4199,/obj/item/clothing/glasses/monocle=1099,
@@ -1026,7 +1032,7 @@
 	/obj/item/clothing/suit/poncho=2950,/obj/item/clothing/suit/ianshirt=4000,/obj/item/clothing/shoes/laceup=990,
 	/obj/item/clothing/shoes/sandal=350,
 	/obj/item/clothing/mask/bandana/black=3849,/obj/item/clothing/mask/bandana/skull=3999,/obj/item/clothing/mask/bandana/green=3849,/obj/item/clothing/mask/bandana/gold=3899,
-	/obj/item/clothing/mask/bandana/blue=3849)
+	/obj/item/clothing/mask/bandana/blue=3849,/obj/item/clothing/mask/bluescarf=2500,/obj/item/clothing/mask/redscarf=2500,/obj/item/clothing/mask/greenscarf=2500)
 	refill_canister = /obj/item/weapon/vending_refill/clothing
 
 /obj/machinery/vending/clothing/New()

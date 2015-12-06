@@ -564,7 +564,7 @@
 	var/mob/living/simple_animal/SA = usr
 	if(target.stat == DEAD)
 		usr.visible_message("\red <b>[usr.name]</b> is trying to swallow <b>[target.name]</b>!")
-		if(do_after(usr,50))
+		if(do_after(usr,50,target = target))
 			usr.attack_log += "\[[time_stamp()]\]<font color='red'> Eats [target.name] ([target.ckey]) with hulk_eat</font>"
 			msg_admin_attack("[key_name(usr)] eats [key_name(target)] body with hulk_eat")
 			if(isrobot(target))
@@ -581,7 +581,7 @@
 			target.gib()
 	else
 		usr.visible_message("\red <b>[usr.name]</b> is trying to rend <b>[target.name]</b> into shreds!")
-		if(do_after(usr,20))
+		if(do_after(usr,20,target = target))
 			usr.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [target.name] ([target.ckey]) with hulk_eat</font>"
 			target.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [usr.name] ([usr.ckey]) with hulk_eat</font>"
 			msg_admin_attack("[key_name(usr)] attacked [key_name(target)] with hulk_eat")

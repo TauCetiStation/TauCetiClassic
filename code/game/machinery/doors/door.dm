@@ -212,7 +212,7 @@
 		user.visible_message("\red \The [user] starts to force \the [src] open with a bare hands!",\
 				"You start forcing \the [src] open with a bare hands!",\
 				"You hear metal strain.")
-		if(do_after(user, 30))
+		if(do_after(user, 30, target = src))
 			found = 0
 			for(var/direction in cardinal)
 				var/turf/T = get_step(src,direction)

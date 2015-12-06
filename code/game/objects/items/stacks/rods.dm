@@ -57,7 +57,7 @@
 			user << "\blue You need at least two rods to do this."
 			return
 		usr << "\blue Assembling grille..."
-		if (!do_after(usr, 10))
+		if (!do_after(usr, 10, target = usr))
 			return
 		var/obj/structure/grille/F = new /obj/structure/grille/ ( usr.loc )
 		usr << "\blue You assemble a grille"

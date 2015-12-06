@@ -132,7 +132,7 @@
 			return
 		if (R.time)
 			usr << "\blue Building [R.title] ..."
-			if (!do_after(usr, R.time))
+			if (!do_after(usr, R.time, target = usr))
 				return
 		if (src.amount < R.req_amount*multiplier)
 			return

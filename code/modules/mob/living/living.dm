@@ -551,7 +551,7 @@
 				for(var/mob/O in viewers(L))
 					O.show_message("\red <B>[usr] attempts to unbuckle themself!</B>", 1)
 				spawn(0)
-					if(do_after(usr, 1200))
+					if(do_after(usr, 1200, target = usr))
 						if(!C.buckled)
 							return
 						for(var/mob/O in viewers(C))
@@ -587,7 +587,7 @@
 
 
 		spawn(0)
-			if(do_after(usr,(breakout_time*60*10))) //minutes * 60seconds * 10deciseconds
+			if(do_after(usr,(breakout_time*60*10), target = C)) //minutes * 60seconds * 10deciseconds
 				if(!C || !L || L.stat != CONSCIOUS || L.loc != C || C.opened) //closet/user destroyed OR user dead/unconcious OR user no longer in closet OR closet opened
 					return
 
@@ -651,7 +651,7 @@
 				for(var/mob/O in viewers(CM))
 					O.show_message(text("\red <B>[] is trying to break the handcuffs!</B>", CM), 1)
 				spawn(0)
-					if(do_after(CM, 50))
+					if(do_after(CM, 50, target = usr))
 						if(!CM.handcuffed || CM.buckled)
 							return
 						for(var/mob/O in viewers(CM))
@@ -672,7 +672,7 @@
 				for(var/mob/O in viewers(CM))
 					O.show_message( "\red <B>[usr] attempts to remove \the [HC]!</B>", 1)
 				spawn(0)
-					if(do_after(CM, breakouttime))
+					if(do_after(CM, breakouttime, target = usr))
 						if(!CM.handcuffed || CM.buckled)
 							return // time leniency for lag which also might make this whole thing pointless but the server lags so hard that 40s isn't lenient enough - Quarxink
 						if(istype(HC, /obj/item/weapon/handcuffs/alien))
@@ -696,7 +696,7 @@
 				for(var/mob/O in viewers(CM))
 					O.show_message(text("\red <B>[] is trying to break the legcuffs!</B>", CM), 1)
 				spawn(0)
-					if(do_after(CM, 50))
+					if(do_after(CM, 50, target = usr))
 						if(!CM.legcuffed || CM.buckled)
 							return
 						for(var/mob/O in viewers(CM))
@@ -717,7 +717,7 @@
 				for(var/mob/O in viewers(CM))
 					O.show_message( "\red <B>[usr] attempts to remove \the [HC]!</B>", 1)
 				spawn(0)
-					if(do_after(CM, breakouttime))
+					if(do_after(CM, breakouttime, target = usr))
 						if(!CM.legcuffed || CM.buckled)
 							return // time leniency for lag which also might make this whole thing pointless but the server lags so hard that 40s isn't lenient enough - Quarxink
 						if(istype(HC, /obj/item/weapon/handcuffs/alien))

@@ -740,7 +740,7 @@ Status: []<BR>"},
 					return
 
 				playsound(src.loc, pick('sound/items/Welder.ogg', 'sound/items/Welder2.ogg'), 50, 1)
-				if(do_after(user, 20))
+				if(do_after(user, 20, target = src))
 					if(!src || !WT.remove_fuel(5, user)) return
 					build_step = 1
 					user << "You remove the turret's interior metal armor."
@@ -807,7 +807,7 @@ Status: []<BR>"},
 					user << "\red You need more fuel to complete this task."
 
 				playsound(src.loc, pick('sound/items/Welder.ogg', 'sound/items/Welder2.ogg'), 50, 1)
-				if(do_after(user, 30))
+				if(do_after(user, 30, target = src))
 					if(!src || !WT.remove_fuel(5, user)) return
 					build_step = 8
 					user << "\blue You weld the turret's armor down."

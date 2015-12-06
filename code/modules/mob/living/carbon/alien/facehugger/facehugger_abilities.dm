@@ -670,7 +670,7 @@ When we finish, facehugger's player will be transfered inside embryo.
 		assailant.visible_message("<span class='danger'>[assailant] starts to tighten \his tail on [affecting]'s neck!</span>")
 		hud.icon_state = "grab/neck++"
 		state = GRAB_UPGRADING
-		if(do_after(assailant, UPGRADE_TAIL_TIMER))
+		if(do_after(assailant, UPGRADE_TAIL_TIMER, target = affecting))
 			if(state == GRAB_EMBRYO)
 				return
 			if(!affecting)

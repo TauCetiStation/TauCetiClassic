@@ -106,7 +106,7 @@
 		if(istype(W,/obj/item/weapon/pickaxe))
 			var/obj/item/weapon/pickaxe/digTool = W
 			user << "You start digging the [name]."
-			if(do_after(user,digTool.digspeed*hardness) && src)
+			if(do_after(user,digTool.digspeed*hardness, target = src) && src)
 				user << "You finished digging."
 				Dismantle()
 		else if(istype(W, /obj/item/weapon))
@@ -121,7 +121,7 @@
 				if(WT.remove_fuel(0, user))
 					playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
 					user.visible_message("[user] dissassembles [src].", "You start to dissassemble [src].")
-					if(do_after(user, 60))
+					if(do_after(user, 60, target = src))
 						user << "\blue You dissasembled [src]!"
 						Dismantle()
 					else
@@ -136,7 +136,7 @@
 					return ..()
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
 				user.visible_message("[user] dissassembles [src].", "You start to dissassemble [src].")
-				if(do_after(user, 40))
+				if(do_after(user, 40, target = src))
 					user << "\blue You dissasembled [src]!"
 					Dismantle()
 				else
