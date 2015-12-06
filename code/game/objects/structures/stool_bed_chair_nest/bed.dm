@@ -256,7 +256,7 @@
 	..()
 	if(istype(W, /obj/item/weapon/grab))
 		user.visible_message("<span class='notice'>[user] attempts to buckle [W:affecting] into \the [src]!</span>")
-		if(do_after(user, 20))
+		if(do_after(user, 20, target = src))
 			W:affecting.loc = loc
 			if(buckle_mob(W:affecting))
 				W:affecting.visible_message(\

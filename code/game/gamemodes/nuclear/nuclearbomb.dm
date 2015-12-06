@@ -121,7 +121,7 @@ var/bomb_set
 
 					user.visible_message("[user] starts cutting thru something on [src] like \he knows what to do.", "With [O] you start cutting thru first layer...")
 
-					if(do_after(user,150))
+					if(do_after(user,150,target = src))
 						if(!src || !user || !WT.remove_fuel(5, user)) return
 						user.visible_message("[user] finishes cutting something on [src].", "You cut thru first layer.")
 						removal_stage = 1
@@ -131,7 +131,7 @@ var/bomb_set
 				if(istype(O,/obj/item/weapon/crowbar))
 					user.visible_message("[user] starts smashing [src].", "You start forcing open the covers with [O]...")
 
-					if(do_after(user,50))
+					if(do_after(user,50,target = src))
 						if(!src || !user) return
 						user.visible_message("[user] finishes smashing [src].", "You force open covers.")
 						removal_stage = 2
@@ -148,7 +148,7 @@ var/bomb_set
 
 					user.visible_message("[user] starts cutting something on [src].. Again.", "You start cutting apart the safety plate with [O]...")
 
-					if(do_after(user,100))
+					if(do_after(user,100,target = src))
 						if(!src || !user || !WT.remove_fuel(5, user)) return
 						user.visible_message("[user] finishes cutting something on [src].", "You cut apart the safety plate.")
 						removal_stage = 3
@@ -159,7 +159,7 @@ var/bomb_set
 
 					user.visible_message("[user] begins poking inside [src].", "You begin unwrenching bolts...")
 
-					if(do_after(user,75))
+					if(do_after(user,75,target = src))
 						if(!src || !user) return
 						user.visible_message("[user] begins poking inside [src].", "You unwrench bolts.")
 						removal_stage = 4
@@ -170,7 +170,7 @@ var/bomb_set
 
 					user.visible_message("[user] begings hitting [src].", "You begin forcing open last safety layer...")
 
-					if(do_after(user,75))
+					if(do_after(user,75,target = src))
 						if(!src || !user) return
 						user.visible_message("[user] finishes hitting [src].", "You can now get inside the [src]. Use screwdriver to open control panel")
 						//anchored = 0

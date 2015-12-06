@@ -878,7 +878,7 @@ About the new airlock wires panel:
 		else
 			user << "\red You force your claws between the doors and begin to pry them open..."
 			playsound(src.loc, 'sound/effects/metal_creaking.ogg', 30, 1, -4)
-			if (do_after(user,40))
+			if (do_after(user,40, target = src))
 				if(!src) return
 				open(1)
 	return
@@ -941,7 +941,7 @@ About the new airlock wires panel:
 		else
 			user << "\red You force your fingers between the doors and begin to pry them open..."
 			playsound(src.loc, 'sound/effects/metal_creaking.ogg', 30, 1, -4)
-			if (do_after(user,40))
+			if (do_after(user,40,target = src))
 				if(!src) return
 				open(1)
 	return
@@ -1308,7 +1308,7 @@ About the new airlock wires panel:
 		if( beingcrowbarred && (operating == -1 || density && welded && operating != 1 && src.p_open && (!src.arePowerSystemsOn() || stat & NOPOWER) && !src.locked) )
 			playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
 			user.visible_message("[user] removes the electronics from the airlock assembly.", "You start to remove electronics from the airlock assembly.")
-			if(do_after(user,40))
+			if(do_after(user,40,target = src))
 				user << "\blue You removed the airlock electronics!"
 
 				var/obj/structure/door_assembly/da = new assembly_type(src.loc)
