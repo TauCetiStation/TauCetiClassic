@@ -413,7 +413,7 @@
 		if (anchored)
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 			user << "\blue You begin to loosen \the [src]'s casters..."
-			if (do_after(user, 40))
+			if (do_after(user, 40, target = src))
 				user.visible_message( \
 					"[user] loosens \the [src]'s casters.", \
 					"\blue You have loosened \the [src]. Now it can be pulled somewhere else.", \
@@ -422,7 +422,7 @@
 		else
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 			user << "\blue You begin to tighten \the [src] to the floor..."
-			if (do_after(user, 20))
+			if (do_after(user, 20, target = src))
 				user.visible_message( \
 					"[user] tightens \the [src]'s casters.", \
 					"\blue You have tightened \the [src]'s casters. Now it can be played again.", \

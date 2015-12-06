@@ -42,7 +42,7 @@ var/list/alldepartments = list("Central Command")
 /obj/machinery/faxmachine/attack_hand(mob/user as mob)
 	user.set_machine(src)
 
-	var/dat = "Fax Machine<BR>"
+	var/dat
 
 	var/scan_name
 	if(scan)
@@ -53,9 +53,9 @@ var/list/alldepartments = list("Central Command")
 	dat += "Confirm Identity: <a href='byond://?src=\ref[src];scan=1'>[scan_name]</a><br>"
 
 	if(authenticated)
-		dat += "<a href='byond://?src=\ref[src];logout=1'>{Log Out}</a>"
+		dat += "<a href='byond://?src=\ref[src];logout=1'>Log Out</a>"
 	else
-		dat += "<a href='byond://?src=\ref[src];auth=1'>{Log In}</a>"
+		dat += "<a href='byond://?src=\ref[src];auth=1'>Log In</a>"
 
 	dat += "<hr>"
 
@@ -86,8 +86,9 @@ var/list/alldepartments = list("Central Command")
 		if(tofax)
 			dat += "<a href ='byond://?src=\ref[src];remove=1'>Remove Paper</a><br>"
 
-	user << browse(dat, "window=copier")
-	onclose(user, "copier")
+	var/datum/browser/popup = new(user, "window=copier", "Fax Machine", 450, 300)
+	popup.set_content(dat)
+	popup.open()
 	return
 
 /obj/machinery/faxmachine/Topic(href, href_list)

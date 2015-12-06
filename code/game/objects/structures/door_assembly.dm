@@ -148,7 +148,7 @@ obj/structure/door_assembly
 			playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
 			if(istext(glass))
 				user.visible_message("[user] welds the [glass] plating off the airlock assembly.", "You start to weld the [glass] plating off the airlock assembly.")
-				if(do_after(user, 40))
+				if(do_after(user, 40, target = src))
 					if(!src || !WT.isOn()) return
 					user << "\blue You welded the [glass] plating off!"
 					var/M = text2path("/obj/item/stack/sheet/mineral/[glass]")
@@ -156,14 +156,14 @@ obj/structure/door_assembly
 					glass = 0
 			else if(glass == 1)
 				user.visible_message("[user] welds the glass panel out of the airlock assembly.", "You start to weld the glass panel out of the airlock assembly.")
-				if(do_after(user, 40))
+				if(do_after(user, 40, target = src))
 					if(!src || !WT.isOn()) return
 					user << "\blue You welded the glass panel out!"
 					new /obj/item/stack/sheet/rglass(src.loc)
 					glass = 0
 			else if(!anchored)
 				user.visible_message("[user] dissassembles the airlock assembly.", "You start to dissassemble the airlock assembly.")
-				if(do_after(user, 40))
+				if(do_after(user, 40, target = src))
 					if(!src || !WT.isOn()) return
 					user << "\blue You dissasembled the airlock assembly!"
 					new /obj/item/stack/sheet/metal(src.loc, 4)
@@ -179,7 +179,7 @@ obj/structure/door_assembly
 		else
 			user.visible_message("[user] secures the airlock assembly to the floor.", "You start to secure the airlock assembly to the floor.")
 
-		if(do_after(user, 40))
+		if(do_after(user, 40, target = src))
 			if(!src) return
 			user << "\blue You [anchored? "un" : ""]secured the airlock assembly!"
 			anchored = !anchored
@@ -187,7 +187,7 @@ obj/structure/door_assembly
 	else if(istype(W, /obj/item/weapon/cable_coil) && state == 0 && anchored )
 		var/obj/item/weapon/cable_coil/coil = W
 		user.visible_message("[user] wires the airlock assembly.", "You start to wire the airlock assembly.")
-		if(do_after(user, 40))
+		if(do_after(user, 40, target = src))
 			if(!src) return
 			coil.use(1)
 			src.state = 1
@@ -197,7 +197,7 @@ obj/structure/door_assembly
 		playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
 		user.visible_message("[user] cuts the wires from the airlock assembly.", "You start to cut the wires from airlock assembly.")
 
-		if(do_after(user, 40))
+		if(do_after(user, 40, target = src))
 			if(!src) return
 			user << "\blue You cut the airlock wires.!"
 			new/obj/item/weapon/cable_coil(src.loc, 1)
@@ -207,7 +207,7 @@ obj/structure/door_assembly
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
 		user.visible_message("[user] installs the electronics into the airlock assembly.", "You start to install electronics into the airlock assembly.")
 
-		if(do_after(user, 40))
+		if(do_after(user, 40, target = src))
 			if(!src) return
 			user.drop_item()
 			W.loc = src
@@ -220,7 +220,7 @@ obj/structure/door_assembly
 		playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
 		user.visible_message("[user] removes the electronics from the airlock assembly.", "You start to remove the electronics from the airlock assembly.")
 
-		if(do_after(user, 40))
+		if(do_after(user, 40, target = src))
 			if(!src) return
 			user << "\blue You removed the airlock electronics!"
 			src.state = 1
@@ -240,7 +240,7 @@ obj/structure/door_assembly
 				if(istype(S, /obj/item/stack/sheet/rglass))
 					playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
 					user.visible_message("[user] adds [S.name] to the airlock assembly.", "You start to install [S.name] into the airlock assembly.")
-					if(do_after(user, 40))
+					if(do_after(user, 40, target = src))
 						user << "\blue You installed reinforced glass windows into the airlock assembly!"
 						S.use(1)
 						glass = 1
@@ -249,7 +249,7 @@ obj/structure/door_assembly
 					if(S.amount>=2)
 						playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
 						user.visible_message("[user] adds [S.name] to the airlock assembly.", "You start to install [S.name] into the airlock assembly.")
-						if(do_after(user, 40))
+						if(do_after(user, 40, target = src))
 							user << "\blue You installed [M] plating into the airlock assembly!"
 							S.use(2)
 							glass = "[M]"
@@ -258,7 +258,7 @@ obj/structure/door_assembly
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
 		user << "\blue Now finishing the airlock."
 
-		if(do_after(user, 40))
+		if(do_after(user, 40, target = src))
 			if(!src) return
 			user << "\blue You finish the airlock!"
 			var/path

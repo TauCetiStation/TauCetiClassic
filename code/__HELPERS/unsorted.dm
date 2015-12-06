@@ -712,19 +712,46 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 
 	else return get_step(ref, base_dir)
 
-/proc/do_mob(var/mob/user , var/mob/target, var/time = 30) //This is quite an ugly solution but i refuse to use the old request system.
-	if(!user || !target) return 0
+/proc/do_mob(var/mob/user , var/mob/target, var/time = 30, var/numticks = 5,) //This is quite an ugly solution but i refuse to use the old request system.
+	if(!user || !target)
+		return 0
+	if(numticks == 0)
+		return 0
+
 	var/user_loc = user.loc
 	var/target_loc = target.loc
 	var/holding = user.get_active_hand()
-	sleep(time)
-	if(!user || !target) return 0
-	if ( user.loc == user_loc && target.loc == target_loc && user.get_active_hand() == holding && !( user.stat ) && ( !user.stunned && !user.weakened && !user.paralysis && !user.lying ) )
-		return 1
-	else
-		return 0
+	var/timefraction = round(time/numticks)
+	var/image/progbar
 
-/proc/do_after(var/mob/user as mob, delay as num, var/numticks = 5, var/needhand = 1)
+	for(var/i = 1 to numticks)
+		if(user.client)
+			progbar = make_progress_bar(i, numticks, target)
+			user.client.images |= progbar
+		sleep(timefraction)
+		if(!user || !target)
+			if(user && user.client)
+				user.client.images -= progbar
+			return 0
+		if ( user.loc != user_loc || target.loc != target_loc || user.get_active_hand() != holding || user.paralysis || user.lying || user.stunned || user.weakened)
+			if(user && user.client)
+				user.client.images -= progbar
+			return 0
+		if(user && user.client)
+			user.client.images -= progbar
+	if(user && user.client)
+		user.client.images -= progbar
+	return 1
+
+/proc/make_progress_bar(var/current_number, var/goal_number, var/atom/target)
+	if(current_number && goal_number && target)
+		var/image/progbar
+		progbar = image("icon" = 'icons/effects/doafter_icon.dmi', "loc" = target, "icon_state" = "prog_bar_0")
+		progbar.icon_state = "prog_bar_[round(((current_number / goal_number) * 100), 10)]"
+		progbar.pixel_y = 32
+		return progbar
+
+/proc/do_after(var/mob/user as mob, delay as num, var/numticks = 5, var/needhand = 1, var/atom/target = null)
 	if(!user || isnull(user))
 		return 0
 	if(numticks == 0)
@@ -734,16 +761,25 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 	var/original_loc = user.loc
 	var/original_turf = get_turf(user)
 	var/holding = user.get_active_hand()
+	var/image/progbar
 
-	for(var/i = 0, i<numticks, i++)
+	for (var/i = 1 to numticks)
+		if(user.client)
+			progbar = make_progress_bar(i, numticks, target)
+			user.client.images |= progbar
+
 		sleep(delayfraction)
 
-
 		if(!user || user.stat || user.weakened || user.stunned || user.loc != original_loc || get_turf(user) != original_turf)
+			if(user && user.client)
+				user.client.images -= progbar
 			return 0
 		if(needhand && !(user.get_active_hand() == holding))	//Sometimes you don't want the user to have to keep their active hand
+			if(user && user.client)
+				user.client.images -= progbar
 			return 0
-
+		if(user && user.client)
+			user.client.images -= progbar
 	return 1
 
 //Takes: Anything that could possibly have variables and a varname to check.

@@ -133,7 +133,7 @@
 
 	user.visible_message("\red [user] starts to put [victim] into the gibber!")
 	src.add_fingerprint(user)
-	if(do_after(user, 30) && victim.Adjacent(src) && user.Adjacent(src) && victim.Adjacent(user) && !occupant)
+	if(do_after(user, 30, target = src) && victim.Adjacent(src) && user.Adjacent(src) && victim.Adjacent(user) && !occupant)
 		user.visible_message("\red [user] stuffs [victim] into the gibber!")
 		if(victim.client)
 			victim.client.perspective = EYE_PERSPECTIVE

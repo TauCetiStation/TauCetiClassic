@@ -127,7 +127,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 		use_power(max(1000, (3750*amount/10)))
 		var/stacktype = stack.type
 		stack.use(amount)
-		if(do_after(usr,16))
+		if(do_after(usr,16,target = src))
 			user << "\blue You add [amount] sheets to the [src.name]."
 			switch(stacktype)
 				if(/obj/item/stack/sheet/glass)
