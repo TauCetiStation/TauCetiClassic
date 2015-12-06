@@ -552,7 +552,7 @@ ________________________________________________________________________________
 				useMS.send_pda_message("[P.owner]",sender,"[t]")
 
 				for(var/mob/M in player_list)
-					if(M.stat == DEAD && M.client && (M.client.prefs.toggles & CHAT_GHOSTEARS)) // src.client is so that ghosts don't have to listen to mice
+					if(M.stat == DEAD && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTEARS)) // src.client is so that ghosts don't have to listen to mice
 						if(istype(M, /mob/new_player))
 							continue
 						M.show_message("<span class='game say'>PDA Message - <span class='name'>[U]</span> -> <span class='name'>[P.owner]</span>: <span class='message'>[sanitize_chat(t)]</span></span>")

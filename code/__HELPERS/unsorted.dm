@@ -725,7 +725,7 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 	var/image/progbar
 
 	for(var/i = 1 to numticks)
-		if(user.client)
+		if(user.client && !(user.client.prefs.toggles & SHOW_PROGBAR))
 			progbar = make_progress_bar(i, numticks, target)
 			user.client.images |= progbar
 		sleep(timefraction)
@@ -764,7 +764,7 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 	var/image/progbar
 
 	for (var/i = 1 to numticks)
-		if(user.client)
+		if(user.client && !(user.client.prefs.toggles & SHOW_PROGBAR))
 			progbar = make_progress_bar(i, numticks, target)
 			user.client.images |= progbar
 
