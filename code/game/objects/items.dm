@@ -176,12 +176,12 @@
 			return
 		if(istype(user,/mob/living/carbon/human))
 			if(istype(src, /obj/item/clothing/suit/space)) // If the item to be unequipped is a rigid suit
-				if(user.delay_clothing_u_equip(src) == 0)
+				if(!user.delay_clothing_u_equip(src))
 					return 0
 			else
-				user.u_equip(src)
+				user.remove_from_mob(src)
 		else
-			user.u_equip(src)
+			user.remove_from_mob(src)
 
 	else
 		if(isliving(src.loc))
@@ -215,7 +215,7 @@
 		if(istype(src, /obj/item/clothing) && !src:canremove)
 			return
 		else
-			user.u_equip(src)
+			user.remove_from_mob(src)
 	else
 		if(istype(src.loc, /mob/living))
 			return

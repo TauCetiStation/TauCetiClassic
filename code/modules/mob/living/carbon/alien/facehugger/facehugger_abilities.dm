@@ -482,7 +482,7 @@ This is facehugger Attach procs
 		new_xeno.key = FH.key
 		new_embryo.baby = new_xeno
 		qdel(FH)
-		target.u_equip(target.wear_mask)
+		target.remove_from_mob(target.wear_mask)
 		if(ismonkey(target))
 			for(var/obj/item/clothing/mask/facehugger/FH_mask in target.contents)
 				FH_mask.loc = get_turf(target)
@@ -655,7 +655,7 @@ When we finish, facehugger's player will be transfered inside embryo.
 		if(affecting.wear_mask)
 			if(!istype(affecting.wear_mask, /obj/item/clothing/mask/facehugger))
 				var/obj/item/clothing/mask/victim_mask = affecting.wear_mask
-				affecting.u_equip(victim_mask)
+				affecting.remove_from_mob(victim_mask)
 				qdel(victim_mask)
 		FH.leap_at_face(affecting)
 		state = GRAB_AGGRESSIVE
