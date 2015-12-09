@@ -53,11 +53,39 @@
  */
 /obj/item/weapon/table_parts/wood/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/wrench))
-		new /obj/item/stack/sheet/wood( user.loc )
+		new  /obj/item/stack/sheet/wood( user.loc )
 		qdel(src)
+
+	if (istype(W, /obj/item/stack/tile/grass))
+		var/obj/item/stack/tile/grass/Grass = W
+		if(Grass.amount > 1)
+			Grass.amount -= 1
+		else
+			qdel(Grass)
+		new /obj/item/weapon/table_parts/wood/poker( src.loc )
+		visible_message("<span class='notice'>[user] adds grass to the wooden table parts</span>")
+		qdel(src)
+
 
 /obj/item/weapon/table_parts/wood/attack_self(mob/user as mob)
 	new /obj/structure/table/woodentable( user.loc )
+	user.drop_item()
+	qdel(src)
+	return
+
+
+/*
+ * Poker Table Parts
+ */
+
+/obj/item/weapon/table_parts/wood/poker/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if (istype(W, /obj/item/weapon/wrench))
+		new /obj/item/stack/sheet/wood( user.loc )
+		new /obj/item/stack/tile/grass( user.loc )
+		qdel(src)
+
+/obj/item/weapon/table_parts/wood/poker/attack_self(mob/user as mob)
+	new /obj/structure/table/woodentable/poker( user.loc )
 	user.drop_item()
 	qdel(src)
 	return
