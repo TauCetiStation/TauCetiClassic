@@ -66,7 +66,6 @@
 		visible_message("<span class='notice'>[user] adds grass to the wooden table parts</span>")
 		qdel(src)
 
-
 /obj/item/weapon/table_parts/wood/attack_self(mob/user as mob)
 	new /obj/structure/table/woodentable( user.loc )
 	user.drop_item()
