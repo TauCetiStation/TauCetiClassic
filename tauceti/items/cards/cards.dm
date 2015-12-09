@@ -68,7 +68,7 @@ obj/item/toy/cards/attackby(obj/item/toy/singlecard/C, mob/living/user)
 	if(istype(C))
 		if(C.parentdeck == src)
 			src.cards += C.cardname
-			user.u_equip(C)
+			user.remove_from_mob(C)
 			user.visible_message("<span class='notice'>[user] adds a card to the bottom of the deck.</span>","<span class='notice'>You add the card to the bottom of the deck.</span>")
 			qdel(C)
 		else
@@ -86,7 +86,7 @@ obj/item/toy/cards/attackby(obj/item/toy/cardhand/C, mob/living/user)
 	if(istype(C))
 		if(C.parentdeck == src)
 			src.cards += C.currenthand
-			user.u_equip(C)
+			user.remove_from_mob(C)
 			user.visible_message("<span class='notice'>[user] puts their hand of cards in the deck.</span>", "<span class='notice'>You put the hand of cards in the deck.</span>")
 			qdel(C)
 		else
@@ -178,7 +178,7 @@ obj/item/toy/cardhand/Topic(href, href_list)
 				var/obj/item/toy/singlecard/N = new/obj/item/toy/singlecard(src.loc)
 				N.parentdeck = src.parentdeck
 				N.cardname = src.currenthand[1]
-				cardUser.u_equip(src)
+				cardUser.remove_from_mob(src)
 				N.pickup(cardUser)
 				cardUser.put_in_any_hand_if_possible(N)
 				cardUser << "<span class='notice'>You also take [currenthand[1]] and hold it.</span>"
@@ -190,7 +190,7 @@ obj/item/toy/cardhand/attackby(obj/item/toy/singlecard/C, mob/living/user)
 	if(istype(C))
 		if(C.parentdeck == src.parentdeck)
 			src.currenthand += C.cardname
-			user.u_equip(C)
+			user.remove_from_mob(C)
 			user.visible_message("<span class='notice'>[user] adds a card to their hand.</span>", "<span class='notice'>You add the [C.cardname] to your hand.</span>")
 			interact(user)
 			if(currenthand.len > 4)
@@ -257,7 +257,7 @@ obj/item/toy/singlecard/attackby(obj/item/I, mob/living/user)
 			H.currenthand += C.cardname
 			H.currenthand += src.cardname
 			H.parentdeck = C.parentdeck
-			user.u_equip(C)
+			user.remove_from_mob(C)
 			H.pickup(user)
 			user.put_in_active_hand(H)
 			user << "<span class='notice'>You combine the [C.cardname] and the [src.cardname] into a hand.</span>"
@@ -270,7 +270,7 @@ obj/item/toy/singlecard/attackby(obj/item/I, mob/living/user)
 		var/obj/item/toy/cardhand/H = I
 		if(H.parentdeck == parentdeck)
 			H.currenthand += cardname
-			user.u_equip(src)
+			user.remove_from_mob(src)
 			user.visible_message("<span class='notice'>[user] adds a card to \his hand.</span>", "<span class='notice'>You add the [cardname] to your hand.</span>")
 			H.interact(user)
 			if(H.currenthand.len > 4)

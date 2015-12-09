@@ -77,7 +77,7 @@
 	var/mob/living/M = loc
 	if(M == T) return
 	if(!istype(M)) return
-	if(src != M.equipped())
+	if(src != M.remove_from_mob())
 		stop_aim()
 		return
 	M.last_move_intent = world.time

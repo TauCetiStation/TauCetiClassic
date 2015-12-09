@@ -807,6 +807,7 @@ proc/get_damage_icon_part(damage_state, body_part)
 	else
 		overlays_standing[SUIT_LAYER]	= null
 
+		update_inv_shoes(0)
 		update_tail_showing(0)
 
 	update_collar(0)

@@ -146,7 +146,7 @@
 		if (src.amount<=0)
 			var/oldsrc = src
 			src = null //dont kill proc after del()
-			usr.before_take_item(oldsrc)
+			usr.remove_from_mob(oldsrc)
 			qdel(oldsrc)
 			if (istype(O,/obj/item) && istype(usr,/mob/living/carbon))
 				usr.put_in_hands(O)
@@ -168,7 +168,7 @@
 		var/oldsrc = src
 		src = null //dont kill proc after del()
 		if(usr)
-			usr.before_take_item(oldsrc)
+			usr.remove_from_mob(oldsrc)
 		qdel(oldsrc)
 	return
 
