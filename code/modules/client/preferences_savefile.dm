@@ -87,6 +87,7 @@
 	S["be_special"]			<< be_special
 	S["default_slot"]		<< default_slot
 	S["toggles"]			<< toggles
+	S["chat_toggles"]		<< chat_toggles
 	S["warns"]				<< warns
 	S["warnbans"]			<< warnbans
 	S["randomslot"]			<< randomslot

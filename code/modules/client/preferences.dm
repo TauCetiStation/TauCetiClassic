@@ -48,6 +48,7 @@ datum/preferences
 	var/be_special = 0					//Special role selection
 	var/UI_style = "White"
 	var/toggles = TOGGLES_DEFAULT
+	var/chat_toggles = TOGGLES_DEFAULT_CHAT
 	var/UI_style_color = "#ffffff"
 	var/UI_style_alpha = 255
 

@@ -1009,7 +1009,7 @@
 		user << "Cannot refine into a reagent."
 		return 1
 
-	user.before_take_item(O)
+	user.remove_from_mob(O)
 	O.loc = src
 	holdingitems += O
 	src.updateUsrDialog()

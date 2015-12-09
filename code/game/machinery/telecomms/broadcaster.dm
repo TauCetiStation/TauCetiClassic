@@ -59,7 +59,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 							  signal.data["vmask"], signal.data["vmessage"],
 							  signal.data["radio"], signal.data["message"],
 							  signal.data["name"], signal.data["job"],
-							  signal.data["realname"], signal.data["vname"],, 
+							  signal.data["realname"], signal.data["vname"],,
 							  signal.data["compression"], signal.data["level"], signal.frequency,
 							  signal.data["verb"], signal.data["language"]	)
 
@@ -289,14 +289,14 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 	  /* --- Loop through the receivers and categorize them --- */
 
-		if (R.client && !(R.client.prefs.toggles & CHAT_RADIO)) //Adminning with 80 people on can be fun when you're trying to talk and all you can hear is radios.
+		if (R.client && !(R.client.prefs.chat_toggles & CHAT_RADIO)) //Adminning with 80 people on can be fun when you're trying to talk and all you can hear is radios.
 			continue
 
 		if(istype(R, /mob/new_player)) // we don't want new players to hear messages. rare but generates runtimes.
 			continue
-			
+
 		// Ghosts hearing all radio chat don't want to hear syndicate intercepts, they're duplicates
-		if(data == 3 && istype(R, /mob/dead/observer) && R.client && (R.client.prefs.toggles & CHAT_GHOSTRADIO))
+		if(data == 3 && istype(R, /mob/dead/observer) && R.client && (R.client.prefs.chat_toggles & CHAT_GHOSTRADIO))
 			continue
 
 		// --- Check for compression ---
@@ -555,7 +555,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 	  /* --- Loop through the receivers and categorize them --- */
 
-		if (R.client && !(R.client.prefs.toggles & CHAT_RADIO)) //Adminning with 80 people on can be fun when you're trying to talk and all you can hear is radios.
+		if (R.client && !(R.client.prefs.chat_toggles & CHAT_RADIO)) //Adminning with 80 people on can be fun when you're trying to talk and all you can hear is radios.
 			continue
 
 
