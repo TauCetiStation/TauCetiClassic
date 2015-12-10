@@ -11,7 +11,7 @@
 
 var/global/datum/shuttle_controller/emergency_shuttle/emergency_shuttle
 
-datum/shuttle_controller
+/datum/shuttle_controller
 	var/alert = 0 //0 = emergency, 1 = crew cycle
 
 	var/location = 0 //0 = somewhere far away (in spess), 1 = at SS13, 2 = returned from SS13
@@ -29,34 +29,35 @@ datum/shuttle_controller
 	// call the shuttle
 	// if not called before, set the endtime to T+600 seconds
 	// otherwise if outgoing, switch to incoming
-	proc/incall(coeff = 1)
-		if(deny_shuttle && alert == 1) //crew transfer shuttle does not gets recalled by gamemode
-			return
-		if(endtime)
-			if(direction == -1)
-				setdirection(1)
-		else
-			settimeleft(get_shuttle_arrive_time()*coeff)
-			online = 1
-			if(always_fake_recall)
-				fake_recall = rand(300,500)		//turning on the red lights in hallways
-		/*if(alert == 0)
-			red_alert_evac = 1
-			for(var/area/A in world)
-				if(istype(A, /area/hallway))
-					A.readyalert()*/
 
-	proc/get_shuttle_arrive_time()
-		// During mutiny rounds, the shuttle takes twice as long.
-		if(ticker && istype(ticker.mode,/datum/game_mode/mutiny))
-			return SHUTTLEARRIVETIME * 2
+/datum/shuttle_controller/proc/incall(coeff = 1)
+	if(deny_shuttle && alert == 1) //crew transfer shuttle does not gets recalled by gamemode
+		return
+	if(endtime)
+		if(direction == -1)
+			setdirection(1)
+	else
+		settimeleft(get_shuttle_arrive_time()*coeff)
+		online = 1
+		if(always_fake_recall)
+			fake_recall = rand(300,500)		//turning on the red lights in hallways
+	/*if(alert == 0)
+		red_alert_evac = 1
+		for(var/area/A in world)
+			if(istype(A, /area/hallway))
+				A.readyalert()*/
 
-		return SHUTTLEARRIVETIME
+/datum/shuttle_controller/proc/get_shuttle_arrive_time()
+	// During mutiny rounds, the shuttle takes twice as long.
+	if(ticker && istype(ticker.mode,/datum/game_mode/mutiny))
+		return SHUTTLEARRIVETIME * 2
 
-datum/shuttle_controller/proc/shuttlealert(var/X)
+	return SHUTTLEARRIVETIME
+
+/datum/shuttle_controller/proc/shuttlealert(var/X)
 		alert = X
 
-datum/shuttle_controller/proc/recall()
+/datum/shuttle_controller/proc/recall()
 	if(direction == 1)
 		var/timeleft = timeleft()
 		if(alert == 0)

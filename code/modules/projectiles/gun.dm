@@ -31,38 +31,38 @@
 	var/fire_delay = 6
 	var/last_fired = 0
 
-	proc/ready_to_fire()
-		if(world.time >= last_fired + fire_delay)
-			last_fired = world.time
-			return 1
-		else
-			return 0
-
-	proc/process_chamber()
+/obj/item/weapon/gun/proc/ready_to_fire()
+	if(world.time >= last_fired + fire_delay)
+		last_fired = world.time
+		return 1
+	else
 		return 0
 
-	proc/special_check(var/mob/M) //Placeholder for any special checks, like detective's revolver.
-		return 1
+/obj/item/weapon/gun/proc/process_chamber()
+	return 0
 
-	proc/shoot_with_empty_chamber(mob/living/user as mob|obj)
-		user << "<span class='warning'>*click*</span>"
-		playsound(user, 'sound/weapons/empty.ogg', 100, 1)
-		return
+/obj/item/weapon/gun/proc/special_check(var/mob/M) //Placeholder for any special checks, like detective's revolver.
+	return 1
 
-	proc/shoot_live_shot(mob/living/user as mob|obj)
-		if(recoil)
-			spawn()
-				shake_camera(user, recoil + 1, recoil)
+/obj/item/weapon/gun/proc/shoot_with_empty_chamber(mob/living/user as mob|obj)
+	user << "<span class='warning'>*click*</span>"
+	playsound(user, 'sound/weapons/empty.ogg', 100, 1)
+	return
 
-		if(silenced)
-			playsound(user, fire_sound, 10, 1)
-		else
-			playsound(user, fire_sound, 50, 0)
-			user.visible_message("<span class='danger'>[user] fires [src]!</span>", "<span class='danger'>You fire [src]!</span>", "You hear a [istype(src, /obj/item/weapon/gun/energy) ? "laser blast" : "gunshot"]!")
+/obj/item/weapon/gun/proc/shoot_live_shot(mob/living/user as mob|obj)
+	if(recoil)
+		spawn()
+			shake_camera(user, recoil + 1, recoil)
 
-	emp_act(severity)
-		for(var/obj/O in contents)
-			O.emp_act(severity)
+	if(silenced)
+		playsound(user, fire_sound, 10, 1)
+	else
+		playsound(user, fire_sound, 50, 0)
+		user.visible_message("<span class='danger'>[user] fires [src]!</span>", "<span class='danger'>You fire [src]!</span>", "You hear a [istype(src, /obj/item/weapon/gun/energy) ? "laser blast" : "gunshot"]!")
+
+/obj/item/weapon/gun/emp_act(severity)
+	for(var/obj/O in contents)
+		O.emp_act(severity)
 
 
 /obj/item/weapon/gun/afterattack(atom/A as mob|obj|turf|area, mob/living/user as mob|obj, flag, params)

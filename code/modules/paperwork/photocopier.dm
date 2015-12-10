@@ -15,197 +15,197 @@
 	var/toner = 30 //how much toner is left! woooooo~
 	var/maxcopies = 10	//how many copies can be copied at once- idea shamelessly stolen from bs12's copier!
 
-	attack_ai(mob/user as mob)
-		return attack_hand(user)
+/obj/machinery/photocopier/attack_ai(mob/user as mob)
+	return attack_hand(user)
 
-	attack_paw(mob/user as mob)
-		return attack_hand(user)
+/obj/machinery/photocopier/attack_paw(mob/user as mob)
+	return attack_hand(user)
 
-	attack_hand(mob/user as mob)
-		user.set_machine(src)
+/obj/machinery/photocopier/attack_hand(mob/user as mob)
+	user.set_machine(src)
 
-		var/dat = "Photocopier<BR><BR>"
-		if(copy || photocopy || bundle)
-			dat += "<a href='byond://?src=\ref[src];remove=1'>Remove Paper</a><BR>"
-			if(toner)
-				dat += "<a href='byond://?src=\ref[src];copy=1'>Copy</a><BR>"
-				dat += "Printing: [copies] copies."
-				dat += "<a href='byond://?src=\ref[src];min=1'>-</a> "
-				dat += "<a href='byond://?src=\ref[src];add=1'>+</a><BR><BR>"
-		else if(toner)
-			dat += "Please insert paper to copy.<BR><BR>"
-		if(istype(user,/mob/living/silicon))
-			dat += "<a href='byond://?src=\ref[src];aipic=1'>Print photo from database</a><BR><BR>"
-		dat += "Current toner level: [toner]"
-		if(!toner)
-			dat +="<BR>Please insert a new toner cartridge!"
-		user << browse(dat, "window=copier")
-		onclose(user, "copier")
-		return
+	var/dat = "Photocopier<BR><BR>"
+	if(copy || photocopy || bundle)
+		dat += "<a href='byond://?src=\ref[src];remove=1'>Remove Paper</a><BR>"
+		if(toner)
+			dat += "<a href='byond://?src=\ref[src];copy=1'>Copy</a><BR>"
+			dat += "Printing: [copies] copies."
+			dat += "<a href='byond://?src=\ref[src];min=1'>-</a> "
+			dat += "<a href='byond://?src=\ref[src];add=1'>+</a><BR><BR>"
+	else if(toner)
+		dat += "Please insert paper to copy.<BR><BR>"
+	if(istype(user,/mob/living/silicon))
+		dat += "<a href='byond://?src=\ref[src];aipic=1'>Print photo from database</a><BR><BR>"
+	dat += "Current toner level: [toner]"
+	if(!toner)
+		dat +="<BR>Please insert a new toner cartridge!"
+	user << browse(dat, "window=copier")
+	onclose(user, "copier")
+	return
 
-	Topic(href, href_list)
-		if(href_list["copy"])
-			if(copy)
-				for(var/i = 0, i < copies, i++)
-					if(toner > 0)
-						copy(copy)
-						sleep(15)
-					else
-						break
-				updateUsrDialog()
-			else if(photocopy)
-				for(var/i = 0, i < copies, i++)
-					if(toner > 0)
-						photocopy(photocopy)
-						sleep(15)
-					else
-						break
-				updateUsrDialog()
-			else if(bundle)
-				for(var/i = 0, i < copies, i++)
-					if(toner <= 0)
-						break
-					var/obj/item/weapon/paper_bundle/p = new /obj/item/weapon/paper_bundle (src)
-					var/j = 0
-					for(var/obj/item/weapon/W in bundle)
-						if(toner <= 0)
-							usr << "<span class='notice'>The photocopier couldn't finish the printjob.</span>"
-							break
-						else if(istype(W, /obj/item/weapon/paper))
-							W = copy(W)
-						else if(istype(W, /obj/item/weapon/photo))
-							W = photocopy(W)
-						W.loc = p
-						p.amount++
-						j++
-					p.amount--
-					p.loc = src.loc
-					p.update_icon()
-					p.icon_state = "paper_words"
-					p.name = bundle.name
-					p.pixel_y = rand(-8, 8)
-					p.pixel_x = rand(-9, 9)
-					sleep(15*j)
-				updateUsrDialog()
-		else if(href_list["remove"])
-			if(copy)
-				copy.loc = usr.loc
-				usr.put_in_hands(copy)
-				usr << "<span class='notice'>You take the paper out of \the [src].</span>"
-				copy = null
-				updateUsrDialog()
-			else if(photocopy)
-				photocopy.loc = usr.loc
-				usr.put_in_hands(photocopy)
-				usr << "<span class='notice'>You take the photo out of \the [src].</span>"
-				photocopy = null
-				updateUsrDialog()
-			else if(bundle)
-				bundle.loc = usr.loc
-				usr.put_in_hands(bundle)
-				usr << "<span class='notice'>You take the paper bundle out of \the [src].</span>"
-				bundle = null
-				updateUsrDialog()
-		else if(href_list["min"])
-			if(copies > 1)
-				copies--
-				updateUsrDialog()
-		else if(href_list["add"])
-			if(copies < maxcopies)
-				copies++
-				updateUsrDialog()
-		else if(href_list["aipic"])
-			if(!istype(usr,/mob/living/silicon)) return
-			if(toner >= 5)
-				var/mob/living/silicon/tempAI = usr
-				var/obj/item/device/camera/siliconcam/camera = tempAI.aiCamera
-
-				if(!camera)
-					return
-				var/datum/picture/selection = camera.selectpicture()
-				if (!selection)
-					return
-
-				var/obj/item/weapon/photo/p = new /obj/item/weapon/photo (src.loc)
-				p.construct(selection)
-				if (p.desc == "")
-					p.desc += "Copied by [tempAI.name]"
+/obj/machinery/photocopier/Topic(href, href_list)
+	if(href_list["copy"])
+		if(copy)
+			for(var/i = 0, i < copies, i++)
+				if(toner > 0)
+					copy(copy)
+					sleep(15)
 				else
-					p.desc += " - Copied by [tempAI.name]"
-				toner -= 5
-				sleep(15)
+					break
 			updateUsrDialog()
-
-	attackby(obj/item/O as obj, mob/user as mob)
-		if(istype(O, /obj/item/weapon/paper))
-			if(!copy && !photocopy && !bundle)
-				user.drop_item()
-				copy = O
-				O.loc = src
-				user << "<span class='notice'>You insert the paper into \the [src].</span>"
-				flick("bigscanner1", src)
-				updateUsrDialog()
-			else
-				user << "<span class='notice'>There is already something in \the [src].</span>"
-		else if(istype(O, /obj/item/weapon/photo))
-			if(!copy && !photocopy && !bundle)
-				user.drop_item()
-				photocopy = O
-				O.loc = src
-				user << "<span class='notice'>You insert the photo into \the [src].</span>"
-				flick("bigscanner1", src)
-				updateUsrDialog()
-			else
-				user << "<span class='notice'>There is already something in \the [src].</span>"
-		else if(istype(O, /obj/item/weapon/paper_bundle))
-			if(!copy && !photocopy && !bundle)
-				user.drop_item()
-				bundle = O
-				O.loc = src
-				user << "<span class='notice'>You insert the bundle into \the [src].</span>"
-				flick("bigscanner1", src)
-				updateUsrDialog()
-		else if(istype(O, /obj/item/device/toner))
-			if(toner == 0)
-				user.drop_item()
-				qdel(O)
-				toner = 30
-				user << "<span class='notice'>You insert the toner cartridge into \the [src].</span>"
-				updateUsrDialog()
-			else
-				user << "<span class='notice'>This cartridge is not yet ready for replacement! Use up the rest of the toner.</span>"
-		else if(istype(O, /obj/item/weapon/wrench))
-			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-			anchored = !anchored
-			user << "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>"
-		return
-
-	ex_act(severity)
-		switch(severity)
-			if(1.0)
-				qdel(src)
-			if(2.0)
-				if(prob(50))
-					qdel(src)
+		else if(photocopy)
+			for(var/i = 0, i < copies, i++)
+				if(toner > 0)
+					photocopy(photocopy)
+					sleep(15)
 				else
-					if(toner > 0)
-						new /obj/effect/decal/cleanable/blood/oil(get_turf(src))
-						toner = 0
-			else
-				if(prob(50))
-					if(toner > 0)
-						new /obj/effect/decal/cleanable/blood/oil(get_turf(src))
-						toner = 0
-		return
+					break
+			updateUsrDialog()
+		else if(bundle)
+			for(var/i = 0, i < copies, i++)
+				if(toner <= 0)
+					break
+				var/obj/item/weapon/paper_bundle/p = new /obj/item/weapon/paper_bundle (src)
+				var/j = 0
+				for(var/obj/item/weapon/W in bundle)
+					if(toner <= 0)
+						usr << "<span class='notice'>The photocopier couldn't finish the printjob.</span>"
+						break
+					else if(istype(W, /obj/item/weapon/paper))
+						W = copy(W)
+					else if(istype(W, /obj/item/weapon/photo))
+						W = photocopy(W)
+					W.loc = p
+					p.amount++
+					j++
+				p.amount--
+				p.loc = src.loc
+				p.update_icon()
+				p.icon_state = "paper_words"
+				p.name = bundle.name
+				p.pixel_y = rand(-8, 8)
+				p.pixel_x = rand(-9, 9)
+				sleep(15*j)
+			updateUsrDialog()
+	else if(href_list["remove"])
+		if(copy)
+			copy.loc = usr.loc
+			usr.put_in_hands(copy)
+			usr << "<span class='notice'>You take the paper out of \the [src].</span>"
+			copy = null
+			updateUsrDialog()
+		else if(photocopy)
+			photocopy.loc = usr.loc
+			usr.put_in_hands(photocopy)
+			usr << "<span class='notice'>You take the photo out of \the [src].</span>"
+			photocopy = null
+			updateUsrDialog()
+		else if(bundle)
+			bundle.loc = usr.loc
+			usr.put_in_hands(bundle)
+			usr << "<span class='notice'>You take the paper bundle out of \the [src].</span>"
+			bundle = null
+			updateUsrDialog()
+	else if(href_list["min"])
+		if(copies > 1)
+			copies--
+			updateUsrDialog()
+	else if(href_list["add"])
+		if(copies < maxcopies)
+			copies++
+			updateUsrDialog()
+	else if(href_list["aipic"])
+		if(!istype(usr,/mob/living/silicon)) return
+		if(toner >= 5)
+			var/mob/living/silicon/tempAI = usr
+			var/obj/item/device/camera/siliconcam/camera = tempAI.aiCamera
 
-	blob_act()
-		if(prob(50))
-			qdel(src)
+			if(!camera)
+				return
+			var/datum/picture/selection = camera.selectpicture()
+			if (!selection)
+				return
+
+			var/obj/item/weapon/photo/p = new /obj/item/weapon/photo (src.loc)
+			p.construct(selection)
+			if (p.desc == "")
+				p.desc += "Copied by [tempAI.name]"
+			else
+				p.desc += " - Copied by [tempAI.name]"
+			toner -= 5
+			sleep(15)
+		updateUsrDialog()
+
+/obj/machinery/photocopier/attackby(obj/item/O as obj, mob/user as mob)
+	if(istype(O, /obj/item/weapon/paper))
+		if(!copy && !photocopy && !bundle)
+			user.drop_item()
+			copy = O
+			O.loc = src
+			user << "<span class='notice'>You insert the paper into \the [src].</span>"
+			flick("bigscanner1", src)
+			updateUsrDialog()
 		else
-			if(toner > 0)
-				new /obj/effect/decal/cleanable/blood/oil(get_turf(src))
-				toner = 0
-		return
+			user << "<span class='notice'>There is already something in \the [src].</span>"
+	else if(istype(O, /obj/item/weapon/photo))
+		if(!copy && !photocopy && !bundle)
+			user.drop_item()
+			photocopy = O
+			O.loc = src
+			user << "<span class='notice'>You insert the photo into \the [src].</span>"
+			flick("bigscanner1", src)
+			updateUsrDialog()
+		else
+			user << "<span class='notice'>There is already something in \the [src].</span>"
+	else if(istype(O, /obj/item/weapon/paper_bundle))
+		if(!copy && !photocopy && !bundle)
+			user.drop_item()
+			bundle = O
+			O.loc = src
+			user << "<span class='notice'>You insert the bundle into \the [src].</span>"
+			flick("bigscanner1", src)
+			updateUsrDialog()
+	else if(istype(O, /obj/item/device/toner))
+		if(toner == 0)
+			user.drop_item()
+			qdel(O)
+			toner = 30
+			user << "<span class='notice'>You insert the toner cartridge into \the [src].</span>"
+			updateUsrDialog()
+		else
+			user << "<span class='notice'>This cartridge is not yet ready for replacement! Use up the rest of the toner.</span>"
+	else if(istype(O, /obj/item/weapon/wrench))
+		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
+		anchored = !anchored
+		user << "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>"
+	return
+
+/obj/machinery/photocopier/ex_act(severity)
+	switch(severity)
+		if(1.0)
+			qdel(src)
+		if(2.0)
+			if(prob(50))
+				qdel(src)
+			else
+				if(toner > 0)
+					new /obj/effect/decal/cleanable/blood/oil(get_turf(src))
+					toner = 0
+		else
+			if(prob(50))
+				if(toner > 0)
+					new /obj/effect/decal/cleanable/blood/oil(get_turf(src))
+					toner = 0
+	return
+
+/obj/machinery/photocopier/blob_act()
+	if(prob(50))
+		qdel(src)
+	else
+		if(toner > 0)
+			new /obj/effect/decal/cleanable/blood/oil(get_turf(src))
+			toner = 0
+	return
 
 
 /obj/machinery/photocopier/proc/copy(var/obj/item/weapon/paper/copy)

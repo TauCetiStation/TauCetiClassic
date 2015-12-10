@@ -44,10 +44,10 @@
 
 		//** Handle the effects of infections
 		var/antibiotics = owner.reagents.get_reagent_amount("spaceacillin")
-		
+
 		if (germ_level > 0 && germ_level < INFECTION_LEVEL_ONE/2 && prob(30))
 			germ_level--
-		
+
 		if (germ_level >= INFECTION_LEVEL_ONE/2)
 			//aiming for germ level to go from ambient to INFECTION_LEVEL_TWO in an average of 15 minutes
 			if(antibiotics < 5 && prob(round(germ_level/6)))
@@ -58,7 +58,7 @@
 			//spread germs
 			if (antibiotics < 5 && parent.germ_level < germ_level && ( parent.germ_level < INFECTION_LEVEL_ONE*2 || prob(30) ))
 				parent.germ_level++
-			
+
 			if (prob(3))	//about once every 30 seconds
 				take_damage(1,silent=prob(30))
 
@@ -120,62 +120,62 @@
 	name = "lungs"
 	parent_organ = "chest"
 
-	process()
-		..()
-		if (germ_level > INFECTION_LEVEL_ONE)
-			if(prob(5))
-				owner.emote("cough")		//respitory tract infection
-		
-		if(is_bruised())
-			if(prob(2))
-				spawn owner.emote("me", 1, "coughs up blood!")
-				owner.drip(10)
-			if(prob(4))
-				spawn owner.emote("me", 1, "gasps for air!")
-				owner.losebreath += 15
+/datum/organ/internal/lungs/process()
+	..()
+	if (germ_level > INFECTION_LEVEL_ONE)
+		if(prob(5))
+			owner.emote("cough")		//respitory tract infection
+
+	if(is_bruised())
+		if(prob(2))
+			spawn owner.emote("me", 1, "coughs up blood!")
+			owner.drip(10)
+		if(prob(4))
+			spawn owner.emote("me", 1, "gasps for air!")
+			owner.losebreath += 15
 
 /datum/organ/internal/liver
 	name = "liver"
 	parent_organ = "chest"
 	var/process_accuracy = 10
 
-	process()
-		..()
-		if (germ_level > INFECTION_LEVEL_ONE)
-			if(prob(1))
-				owner << "\red Your skin itches."
-		if (germ_level > INFECTION_LEVEL_TWO)
-			if(prob(1))
-				spawn owner.vomit()
-		
-		if(owner.life_tick % process_accuracy == 0)
-			if(src.damage < 0)
-				src.damage = 0
+/datum/organ/internal/liver/process()
+	..()
+	if (germ_level > INFECTION_LEVEL_ONE)
+		if(prob(1))
+			owner << "\red Your skin itches."
+	if (germ_level > INFECTION_LEVEL_TWO)
+		if(prob(1))
+			spawn owner.vomit()
 
-			//High toxins levels are dangerous
-			if(owner.getToxLoss() >= 60 && !owner.reagents.has_reagent("anti_toxin"))
-				//Healthy liver suffers on its own
-				if (src.damage < min_broken_damage)
-					src.damage += 0.2 * process_accuracy
-				//Damaged one shares the fun
-				else
-					var/datum/organ/internal/O = pick(owner.internal_organs)
-					if(O)
-						O.damage += 0.2  * process_accuracy
+	if(owner.life_tick % process_accuracy == 0)
+		if(src.damage < 0)
+			src.damage = 0
 
-			//Detox can heal small amounts of damage
-			if (src.damage && src.damage < src.min_bruised_damage && owner.reagents.has_reagent("anti_toxin"))
-				src.damage -= 0.2 * process_accuracy
+		//High toxins levels are dangerous
+		if(owner.getToxLoss() >= 60 && !owner.reagents.has_reagent("anti_toxin"))
+			//Healthy liver suffers on its own
+			if (src.damage < min_broken_damage)
+				src.damage += 0.2 * process_accuracy
+			//Damaged one shares the fun
+			else
+				var/datum/organ/internal/O = pick(owner.internal_organs)
+				if(O)
+					O.damage += 0.2  * process_accuracy
 
-			// Damaged liver means some chemicals are very dangerous
-			if(src.damage >= src.min_bruised_damage)
-				for(var/datum/reagent/R in owner.reagents.reagent_list)
-					// Ethanol and all drinks are bad
-					if(istype(R, /datum/reagent/ethanol))
-						owner.adjustToxLoss(0.1 * process_accuracy)
-					// Can't cope with toxins at all
-					if(istype(R, /datum/reagent/toxin))
-						owner.adjustToxLoss(0.3 * process_accuracy)
+		//Detox can heal small amounts of damage
+		if (src.damage && src.damage < src.min_bruised_damage && owner.reagents.has_reagent("anti_toxin"))
+			src.damage -= 0.2 * process_accuracy
+
+		// Damaged liver means some chemicals are very dangerous
+		if(src.damage >= src.min_bruised_damage)
+			for(var/datum/reagent/R in owner.reagents.reagent_list)
+				// Ethanol and all drinks are bad
+				if(istype(R, /datum/reagent/ethanol))
+					owner.adjustToxLoss(0.1 * process_accuracy)
+				// Can't cope with toxins at all
+				if(istype(R, /datum/reagent/toxin))
+					owner.adjustToxLoss(0.3 * process_accuracy)
 
 /datum/organ/internal/kidney
 	name = "kidney"
@@ -189,9 +189,9 @@
 	name = "eyes"
 	parent_organ = "head"
 
-	process() //Eye damage replaces the old eye_stat var.
-		..()
-		if(is_bruised())
-			owner.eye_blurry = 20
-		if(is_broken())
-			owner.eye_blind = 20
+/datum/organ/internal/eyes/process() //Eye damage replaces the old eye_stat var.
+	..()
+	if(is_bruised())
+		owner.eye_blurry = 20
+	if(is_broken())
+		owner.eye_blind = 20
