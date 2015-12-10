@@ -28,14 +28,14 @@
 	var/hits = 0
 	var/time_inflicted = 0
 
-	proc/copy()
-		var/datum/autopsy_data/W = new()
-		W.weapon = weapon
-		W.pretend_weapon = pretend_weapon
-		W.damage = damage
-		W.hits = hits
-		W.time_inflicted = time_inflicted
-		return W
+/datum/autopsy_data/proc/copy()
+	var/datum/autopsy_data/W = new()
+	W.weapon = weapon
+	W.pretend_weapon = pretend_weapon
+	W.damage = damage
+	W.hits = hits
+	W.time_inflicted = time_inflicted
+	return W
 
 /obj/item/weapon/autopsy_scanner/proc/add_data(var/datum/organ/external/O)
 	if(!O.autopsy_data.len && !O.trace_chemicals.len) return

@@ -65,28 +65,28 @@
 	var/matrix/effect_transform			// matrix to rotate and scale projectile effects - putting it here so it doesn't
 										//  have to be recreated multiple times
 
-	proc/on_hit(var/atom/target, var/blocked = 0)
-		if(!isliving(target))	return 0
-		if(isanimal(target))	return 0
-		var/mob/living/L = target
-		return L.apply_effects(stun, weaken, paralyze, irradiate, stutter, eyeblur, drowsy, agony, blocked) // add in AGONY!
+/obj/item/projectile/proc/on_hit(var/atom/target, var/blocked = 0)
+	if(!isliving(target))	return 0
+	if(isanimal(target))	return 0
+	var/mob/living/L = target
+	return L.apply_effects(stun, weaken, paralyze, irradiate, stutter, eyeblur, drowsy, agony, blocked) // add in AGONY!
 
 	//called when the projectile stops flying because it collided with something
-	proc/on_impact(var/atom/A)
-		impact_effect(effect_transform)		// generate impact effect
-		return
+/obj/item/projectile/proc/on_impact(var/atom/A)
+	impact_effect(effect_transform)		// generate impact effect
+	return
 
-	proc/check_fire(var/mob/living/target as mob, var/mob/living/user as mob)  //Checks if you can hit them or not.
-		if(!istype(target) || !istype(user))
-			return 0
-		var/obj/item/projectile/test/in_chamber = new /obj/item/projectile/test(get_step_to(user,target)) //Making the test....
-		in_chamber.target = target
-		in_chamber.flags = flags //Set the flags...
-		in_chamber.pass_flags = pass_flags //And the pass flags to that of the real projectile...
-		in_chamber.firer = user
-		var/output = in_chamber.process() //Test it!
-		qdel(in_chamber) //No need for it anymore
-		return output //Send it back to the gun!
+/obj/item/projectile/proc/check_fire(var/mob/living/target as mob, var/mob/living/user as mob)  //Checks if you can hit them or not.
+	if(!istype(target) || !istype(user))
+		return 0
+	var/obj/item/projectile/test/in_chamber = new /obj/item/projectile/test(get_step_to(user,target)) //Making the test....
+	in_chamber.target = target
+	in_chamber.flags = flags //Set the flags...
+	in_chamber.pass_flags = pass_flags //And the pass flags to that of the real projectile...
+	in_chamber.firer = user
+	var/output = in_chamber.process() //Test it!
+	qdel(in_chamber) //No need for it anymore
+	return output //Send it back to the gun!
 
 //Used to change the direction of the projectile in flight.
 /obj/item/projectile/proc/redirect(var/new_x, var/new_y, var/atom/starting_loc, var/mob/new_firer=null)
@@ -313,50 +313,50 @@
 	var/target = null
 	var/result = 0 //To pass the message back to the gun.
 
-	Bump(atom/A as mob|obj|turf|area)
-		if(A == firer)
-			loc = A.loc
-			return //cannot shoot yourself
-		if(istype(A, /obj/item/projectile))
-			return
-		if(istype(A, /mob/living))
-			result = 2 //We hit someone, return 1!
-			return
-		result = 1
+/obj/item/projectile/test/Bump(atom/A as mob|obj|turf|area)
+	if(A == firer)
+		loc = A.loc
+		return //cannot shoot yourself
+	if(istype(A, /obj/item/projectile))
 		return
+	if(istype(A, /mob/living))
+		result = 2 //We hit someone, return 1!
+		return
+	result = 1
+	return
 
-	process()
-		var/turf/curloc = get_turf(src)
-		var/turf/targloc = get_turf(target)
-		if(!curloc || !targloc)
-			return 0
-		yo = targloc.y - curloc.y
-		xo = targloc.x - curloc.x
-		target = targloc
-		original = target
-		starting = curloc
+/obj/item/projectile/test/process()
+	var/turf/curloc = get_turf(src)
+	var/turf/targloc = get_turf(target)
+	if(!curloc || !targloc)
+		return 0
+	yo = targloc.y - curloc.y
+	xo = targloc.x - curloc.x
+	target = targloc
+	original = target
+	starting = curloc
 
-		//plot the initial trajectory
-		setup_trajectory()
+	//plot the initial trajectory
+	setup_trajectory()
 
-		while(src) //Loop on through!
-			if(result)
-				return (result - 1)
-			if((!( target ) || loc == target))
-				target = locate(min(max(x + xo, 1), world.maxx), min(max(y + yo, 1), world.maxy), z) //Finding the target turf at map edge
+	while(src) //Loop on through!
+		if(result)
+			return (result - 1)
+		if((!( target ) || loc == target))
+			target = locate(min(max(x + xo, 1), world.maxx), min(max(y + yo, 1), world.maxy), z) //Finding the target turf at map edge
 
-			trajectory.increment()	// increment the current location
-			location = trajectory.return_location(location)		// update the locally stored location data
+		trajectory.increment()	// increment the current location
+		location = trajectory.return_location(location)		// update the locally stored location data
 
-			Move(location.return_turf())
+		Move(location.return_turf())
 
-			var/mob/living/M = locate() in get_turf(src)
-			if(istype(M)) //If there is someting living...
-				return 1 //Return 1
-			else
-				M = locate() in get_step(src,target)
-				if(istype(M))
-					return 1
+		var/mob/living/M = locate() in get_turf(src)
+		if(istype(M)) //If there is someting living...
+			return 1 //Return 1
+		else
+			M = locate() in get_step(src,target)
+			if(istype(M))
+				return 1
 
 /obj/item/projectile/proc/Range() ///tg/
 	return

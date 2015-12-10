@@ -10,8 +10,8 @@
 		check_antagonists()
 		return
 
-	if(href_list["stickyban"])
-		stickyban(href_list["stickyban"],href_list)
+//	if(href_list["stickyban"])
+//		stickyban(href_list["stickyban"],href_list)
 
 	if(href_list["makeAntag"])
 		switch(href_list["makeAntag"])

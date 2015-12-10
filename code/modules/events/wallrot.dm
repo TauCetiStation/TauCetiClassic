@@ -1,18 +1,18 @@
 /turf/simulated/wall
 
 
-datum/event/wallrot
+/datum/event/wallrot
 	var/severity = 1
 
-datum/event/wallrot/setup()
+/datum/event/wallrot/setup()
 	announceWhen = rand(0, 300)
 	endWhen = announceWhen + 1
 	severity = rand(5, 10)
 
-datum/event/wallrot/announce()
+/datum/event/wallrot/announce()
 	command_alert("Harmful fungi detected on station. Station structures may be contaminated.", "Biohazard Alert")
 
-datum/event/wallrot/start()
+/datum/event/wallrot/start()
 	spawn()
 		var/turf/center = null
 

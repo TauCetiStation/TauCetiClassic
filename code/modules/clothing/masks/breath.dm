@@ -11,23 +11,23 @@
 	action_button_name = "Adjust mask"
 	var/hanging = 0
 
-	attack_self()
+/obj/item/clothing/mask/breath/attack_self()
 
-		if(usr.canmove && !usr.stat && !usr.restrained())
-			if(!src.hanging)
-				src.hanging = !src.hanging
-				gas_transfer_coefficient = 1 //gas is now escaping to the turf and vice versa
-				flags &= ~(MASKCOVERSMOUTH | MASKINTERNALS)
-				icon_state = "breathdown"
-				usr << "Your mask is now hanging on your neck."
+	if(usr.canmove && !usr.stat && !usr.restrained())
+		if(!src.hanging)
+			src.hanging = !src.hanging
+			gas_transfer_coefficient = 1 //gas is now escaping to the turf and vice versa
+			flags &= ~(MASKCOVERSMOUTH | MASKINTERNALS)
+			icon_state = "breathdown"
+			usr << "Your mask is now hanging on your neck."
 
-			else
-				src.hanging = !src.hanging
-				gas_transfer_coefficient = 0.10
-				flags |= MASKCOVERSMOUTH | MASKINTERNALS
-				icon_state = "breath"
-				usr << "You pull the mask up to cover your face."
-			usr.update_inv_wear_mask()
+		else
+			src.hanging = !src.hanging
+			gas_transfer_coefficient = 0.10
+			flags |= MASKCOVERSMOUTH | MASKINTERNALS
+			icon_state = "breath"
+			usr << "You pull the mask up to cover your face."
+		usr.update_inv_wear_mask()
 
 /obj/item/clothing/mask/breath/medical
 	desc = "A close-fitting sterile mask that can be connected to an air supply."
@@ -47,7 +47,7 @@
 		"Vox Armalis" = 'icons/mob/species/armalis/mask.dmi'
 		)
 
-	attack_self()
+/obj/item/clothing/mask/breath/vox/attack_self()
 
-		usr << "You can't really adjust this mask - it's moulded to your beak!"
-		return
+	usr << "You can't really adjust this mask - it's moulded to your beak!"
+	return

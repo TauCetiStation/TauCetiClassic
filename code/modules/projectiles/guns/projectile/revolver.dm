@@ -81,25 +81,6 @@
 		name = input
 		M << "You name the gun [input]. Say hello to your new friend."
 		return 1
-/*
-/obj/item/weapon/gun/projectile/revolver/detective/verb/reskin_gun()
-	set name = "Reskin gun"
-	set category = "Object"
-	set desc = "Click to reskin your gun."
-
-	var/mob/M = usr
-	var/list/options = list()
-	options["The Original"] = "detective"
-	options["Leopard Spots"] = "detective_leopard"
-	options["Black Panther"] = "detective_panther"
-	options["Gold Trim"] = "detective_gold"
-	options["The Peacemaker"] = "detective_peacemaker"
-	var/choice = input(M,"What do you want to skin the gun to?","Reskin Gun") in options
-
-	if(src && choice && !M.stat && in_range(M,src))
-		icon_state = options[choice]
-		M << "Your gun is now skinned as [choice]. Say hello to your new friend." */
-		return 1
 
 /obj/item/weapon/gun/projectile/revolver/detective/attackby(var/obj/item/A as obj, mob/user as mob)
 	..()

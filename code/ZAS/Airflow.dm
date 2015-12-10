@@ -3,8 +3,8 @@ Contains helper procs for airflow, handled in /connection_group.
 */
 
 
-mob/var/tmp/last_airflow_stun = 0
-mob/proc/airflow_stun()
+/mob/var/tmp/last_airflow_stun = 0
+/mob/proc/airflow_stun()
 	if(stat == 2)
 		return 0
 	if(last_airflow_stun > world.time - vsc.airflow_stun_cooldown)	return 0
@@ -15,13 +15,13 @@ mob/proc/airflow_stun()
 	weakened = max(weakened,5)
 	last_airflow_stun = world.time
 
-mob/living/silicon/airflow_stun()
+/mob/living/silicon/airflow_stun()
 	return
 
-mob/living/carbon/metroid/airflow_stun()
+/mob/living/carbon/metroid/airflow_stun()
 	return
 
-mob/living/carbon/human/airflow_stun()
+/mob/living/carbon/human/airflow_stun()
 	if(last_airflow_stun > world.time - vsc.airflow_stun_cooldown)	return 0
 	if(buckled) return 0
 	if(shoes)
@@ -37,7 +37,7 @@ mob/living/carbon/human/airflow_stun()
 	weakened = max(weakened,rand(1,5))
 	last_airflow_stun = world.time
 
-atom/movable/proc/check_airflow_movable(n)
+/atom/movable/proc/check_airflow_movable(n)
 
 	if(anchored && !ismob(src)) return 0
 
@@ -45,19 +45,19 @@ atom/movable/proc/check_airflow_movable(n)
 
 	return 1
 
-mob/check_airflow_movable(n)
+/mob/check_airflow_movable(n)
 	if(n < vsc.airflow_heavy_pressure)
 		return 0
 	return 1
 
-mob/dead/observer/check_airflow_movable()
+/mob/dead/observer/check_airflow_movable()
 	return 0
 
-mob/living/silicon/check_airflow_movable()
+/mob/living/silicon/check_airflow_movable()
 	return 0
 
 
-obj/item/check_airflow_movable(n)
+/obj/item/check_airflow_movable(n)
 	. = ..()
 	switch(w_class)
 		if(2)
@@ -211,28 +211,28 @@ obj/item/check_airflow_movable(n)
 		airflow_time = 0
 		. = ..()
 
-atom/movable/proc/airflow_hit(atom/A)
+/atom/movable/proc/airflow_hit(atom/A)
 	airflow_speed = 0
 	airflow_dest = null
 
-mob/airflow_hit(atom/A)
+/mob/airflow_hit(atom/A)
 	for(var/mob/M in hearers(src))
 		M.show_message("\red <B>\The [src] slams into \a [A]!</B>",1,"\red You hear a loud slam!",2)
 	playsound(src.loc, "smash.ogg", 25, 1, -1)
 	weakened = max(weakened, (istype(A,/obj/item) ? A:w_class : rand(1,5))) //Heheheh
 	. = ..()
 
-obj/airflow_hit(atom/A)
+/obj/airflow_hit(atom/A)
 	for(var/mob/M in hearers(src))
 		M.show_message("\red <B>\The [src] slams into \a [A]!</B>",1,"\red You hear a loud slam!",2)
 	playsound(src.loc, "smash.ogg", 25, 1, -1)
 	. = ..()
 
-obj/item/airflow_hit(atom/A)
+/obj/item/airflow_hit(atom/A)
 	airflow_speed = 0
 	airflow_dest = null
 
-mob/living/carbon/human/airflow_hit(atom/A)
+/mob/living/carbon/human/airflow_hit(atom/A)
 //	for(var/mob/M in hearers(src))
 //		M.show_message("\red <B>[src] slams into [A]!</B>",1,"\red You hear a loud slam!",2)
 	playsound(src.loc, "punch", 25, 1, -1)
@@ -258,7 +258,7 @@ mob/living/carbon/human/airflow_hit(atom/A)
 			stunned += round(airflow_speed * vsc.airflow_stun/2)
 	. = ..()
 
-zone/proc/movables()
+/zone/proc/movables()
 	. = list()
 	for(var/turf/T in contents)
 		for(var/atom/movable/A in T)
