@@ -209,6 +209,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 
 /mob/dead/observer/Move(NewLoc, direct)
+	if(following)
+		following = null
+		update_following()
 	dir = direct
 	if(NewLoc)
 		forceMove(NewLoc)
