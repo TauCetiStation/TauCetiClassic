@@ -40,12 +40,13 @@
 	// Knifing
 	if(edge)
 		for(var/obj/item/weapon/grab/G in M.grabbed_by)
-			if(G.assailant == user && G.state >= GRAB_NECK && world.time >= (G.last_action + 20))
+			if(G.assailant == user && G.state >= GRAB_NECK && world.time >= (G.last_action + 20) && user.zone_sel.selecting == "head")
 				//TODO: better alternative for applying damage multiple times? Nice knifing sound?
 				M.apply_damage(20, BRUTE, "head", 0, sharp=sharp, edge=edge)
 				M.apply_damage(20, BRUTE, "head", 0, sharp=sharp, edge=edge)
 				M.apply_damage(20, BRUTE, "head", 0, sharp=sharp, edge=edge)
 				M.adjustOxyLoss(60) // Brain lacks oxygen immediately, pass out
+				playsound(loc, 'tauceti/sounds/effects/throat_cutting.ogg', 50, 1, 1)
 				flick(G.hud.icon_state, G.hud)
 				G.last_action = world.time
 				user.visible_message("<span class='danger'>[user] slit [M]'s throat open with \the [name]!</span>")

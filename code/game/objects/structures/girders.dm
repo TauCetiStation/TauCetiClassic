@@ -43,7 +43,7 @@
 				new /obj/item/stack/sheet/metal(get_turf(src))
 				qdel(src)
 
-		else if(istype(W, /obj/item/weapon/pickaxe/diamonddrill))
+		else if(istype(W, /obj/item/weapon/pickaxe/drill/diamond_drill))
 			user << "\blue You drill through the girder!"
 			new /obj/item/stack/sheet/metal(get_turf(src))
 			qdel(src)
@@ -226,7 +226,7 @@
 			new /obj/effect/decal/remains/human(get_turf(src))
 			qdel(src)
 
-		else if(istype(W, /obj/item/weapon/pickaxe/diamonddrill))
+		else if(istype(W, /obj/item/weapon/pickaxe/drill/diamond_drill))
 			user << "\blue You drill through the girder!"
 			new /obj/effect/decal/remains/human(get_turf(src))
 			qdel(src)

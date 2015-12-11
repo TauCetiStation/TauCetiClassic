@@ -161,7 +161,7 @@
 		animate(affecting, pixel_x = 0, pixel_y = 0, 4, 1, LINEAR_EASING)
 		return
 	if(affecting.lying && state != GRAB_KILL)
-		animate(affecting, pixel_x = 0, pixel_y = 0, 5, 1, LINEAR_EASING)
+//		animate(affecting, pixel_x = 0, pixel_y = 0, 5, 1, LINEAR_EASING)
 		if(force_down)
 			affecting.set_dir(SOUTH) //face up
 		return
@@ -365,16 +365,16 @@
 						return
 					assailant << "<span class='warning'>You start forcing [affecting] to the ground.</span>"
 					if(!force_down)
-						if(do_after(assailant, 20, target = assailant) && affecting)
-							assailant.visible_message("<span class='danger'>[assailant] is forcing [affecting] to the ground!</span>")
-							force_down = 1
-							affecting.Weaken(3)
-							affecting.lying = 1
-							step_to(assailant, affecting)
-							assailant.set_dir(EAST) //face the victim
-							affecting.set_dir(SOUTH) //face up
-							affecting.layer = 3.9
-							return
+						sleep(20)
+						assailant.visible_message("<span class='danger'>[assailant] is forcing [affecting] to the ground!</span>")
+						force_down = 1
+						affecting.Weaken(3)
+						affecting.lying = 1
+						step_to(assailant, affecting)
+						assailant.set_dir(EAST) //face the victim
+						affecting.set_dir(SOUTH) //face up
+						affecting.layer = 3.9
+						return
 					else
 						assailant << "<span class='warning'>You are already pinning [affecting] to the ground.</span>"
 						return

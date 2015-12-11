@@ -211,7 +211,7 @@
 	//Grab some more ore to process next tick.
 	for(var/i = 0,i<sheets_per_tick,i++)
 		var/obj/item/weapon/ore/O = locate() in input.loc
-		var/obj/item/stack/sheet/mineral/M = locate() in input.loc
+		var/obj/item/stack/sheet/M = locate() in input.loc
 		if(M)	M.loc = output.loc
 		if(!O)	break
 		if(!isnull(ores_stored[O.oretag])) ores_stored[O.oretag]++
