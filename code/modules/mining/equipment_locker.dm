@@ -211,7 +211,7 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 		new /datum/data/mining_equipment("Stimpack Bundle",		/obj/item/weapon/storage/box/autoinjector/stimpack,				    400),
 //		new /datum/data/mining_equipment("Laser pointer",       /obj/item/device/laser_pointer, 				                    250),
 		new /datum/data/mining_equipment("Point card",    		/obj/item/weapon/card/mining_point_card,               			    500),
-		new /datum/data/mining_equipment("Sonic jackhammer",    /obj/item/weapon/pickaxe/jackhammer,                                500),
+		new /datum/data/mining_equipment("Sonic jackhammer",    /obj/item/weapon/pickaxe/drill/jackhammer,                          500),
 		new /datum/data/mining_equipment("Mining drone",        /mob/living/simple_animal/hostile/mining_drone/,                    700),
 		new /datum/data/mining_equipment("Resonator",           /obj/item/weapon/resonator,                                         800),
 		new /datum/data/mining_equipment("Kinetic accelerator", /obj/item/weapon/gun/energy/kinetic_accelerator,                   1000),
@@ -301,7 +301,7 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 	..()
 
 /obj/machinery/mineral/equipment_locker/proc/RedeemVoucher(voucher, redeemer)
-	var/selection = input(redeemer, "Pick your equipment", "Mining Voucher Redemption") in list("Resonator kit", "Kinetic Accelerator", "Mining Drone","Special mining rig", "Cancel")
+	var/selection = input(redeemer, "Pick your equipment", "Mining Voucher Redemption") in list("Resonator kit", "Kinetic Accelerator", "Mining Drone","Special Mining Rig", "Cancel")
 	if(!selection || !Adjacent(redeemer))
 		return
 	switch(selection)
@@ -311,7 +311,7 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 			new /obj/item/weapon/gun/energy/kinetic_accelerator(src.loc)
 		if("Mining Drone")
 			new /mob/living/simple_animal/hostile/mining_drone(src.loc)
-		if("Special mining rig")
+		if("Special Mining Rig")
 			new /obj/item/mining_rig_pack(src.loc)
 		if("Cancel")
 			return

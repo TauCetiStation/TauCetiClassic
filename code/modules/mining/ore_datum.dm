@@ -71,3 +71,9 @@
 	compresses_to = /obj/item/stack/sheet/mineral/mhydrogen
 	oretag = "hydrogen"
 	points = 10
+
+/datum/ore/bananium
+	start = /obj/item/weapon/ore/clown
+	smelts_to = /obj/item/stack/sheet/mineral/clown
+	oretag = "bananium"
+	points = 7
