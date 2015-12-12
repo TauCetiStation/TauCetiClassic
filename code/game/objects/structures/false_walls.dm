@@ -126,7 +126,7 @@
 		qdel(src)
 
 	//DRILLING
-	else if (istype(W, /obj/item/weapon/pickaxe/diamonddrill))
+	else if (istype(W, /obj/item/weapon/pickaxe/drill/diamond_drill))
 		var/turf/T = get_turf(src)
 		if(!mineral)
 			T.ChangeTurf(/turf/simulated/wall)
@@ -251,7 +251,7 @@
 		qdel(src)
 
 	//DRILLING
-	else if (istype(W, /obj/item/weapon/pickaxe/diamonddrill))
+	else if (istype(W, /obj/item/weapon/pickaxe/drill/diamond_drill))
 		var/turf/T = get_turf(src)
 		T.ChangeTurf(/turf/simulated/wall)
 		T = get_turf(src)

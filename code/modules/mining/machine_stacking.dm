@@ -73,6 +73,7 @@
 	var/list/stack_storage[0]
 	var/list/stack_paths[0]
 	var/stack_amt = 50; // Amount to stack before releassing
+
 /obj/machinery/mineral/stacking_machine/New()
 	..()
 	for(var/stacktype in typesof(/obj/item/stack/sheet/mineral)-/obj/item/stack/sheet/mineral)
@@ -95,18 +96,20 @@
 			if(src.output) break
 		return
 	return
+
 /obj/machinery/mineral/stacking_machine/process()
 	if (src.output && src.input)
 		var/turf/T = get_turf(input)
 		for(var/obj/item/O in T.contents)
 			if(!O) return
 			if(istype(O,/obj/item/stack))
-				if(!isnull(stack_storage[O.name]))
-					stack_storage[O.name]++
-					O.loc = null
-					qdel(O)
+				var/obj/item/stack/S = O
+				if(!isnull(stack_storage[S.name]))
+					stack_storage[S.name] += S.amount
+					S.loc = null
+					qdel(S)
 				else
-					O.loc = output.loc
+					S.loc = output.loc
 			else
 				O.loc = output.loc
 	//Output amounts that are past stack_amt.

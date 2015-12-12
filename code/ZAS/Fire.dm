@@ -12,14 +12,14 @@ Attach to transfer valve and open. BOOM.
 
 
 //Some legacy definitions so fires can be started.
-atom/proc/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+/atom/proc/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	return null
 
 
-turf/proc/hotspot_expose(exposed_temperature, exposed_volume, soh = 0, atom/firestarter = null)
+/turf/proc/hotspot_expose(exposed_temperature, exposed_volume, soh = 0, atom/firestarter = null)
 
 
-turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh, atom/firestarter)
+/turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh, atom/firestarter)
 	if(fire_protection > world.time-300)
 		return 0
 	if(locate(/obj/fire) in src)
@@ -202,7 +202,7 @@ turf/simulated/apply_fire_protection()
 	fire_protection = world.time
 
 
-datum/gas_mixture/proc/zburn(obj/effect/decal/cleanable/liquid_fuel/liquid, force_burn)
+/datum/gas_mixture/proc/zburn(obj/effect/decal/cleanable/liquid_fuel/liquid, force_burn)
 	var/value = 0
 
 	if((temperature > PHORON_MINIMUM_BURN_TEMPERATURE || force_burn) && check_recombustability(liquid))
@@ -269,7 +269,7 @@ datum/gas_mixture/proc/zburn(obj/effect/decal/cleanable/liquid_fuel/liquid, forc
 		value = total_reactants * used_reactants_ratio
 	return value
 
-datum/gas_mixture/proc/check_recombustability(obj/effect/decal/cleanable/liquid_fuel/liquid)
+/datum/gas_mixture/proc/check_recombustability(obj/effect/decal/cleanable/liquid_fuel/liquid)
 	//this is a copy proc to continue a fire after its been started.
 
 	var/datum/gas/volatile_fuel/fuel = locate() in trace_gases
@@ -284,7 +284,7 @@ datum/gas_mixture/proc/check_recombustability(obj/effect/decal/cleanable/liquid_
 
 	return 0
 
-datum/gas_mixture/proc/check_combustability(obj/effect/decal/cleanable/liquid_fuel/liquid)
+/datum/gas_mixture/proc/check_combustability(obj/effect/decal/cleanable/liquid_fuel/liquid)
 	//this check comes up very often and is thus centralized here to ease adding stuff
 
 	var/datum/gas/volatile_fuel/fuel = locate() in trace_gases
@@ -299,7 +299,7 @@ datum/gas_mixture/proc/check_combustability(obj/effect/decal/cleanable/liquid_fu
 
 	return 0
 
-datum/gas_mixture/proc/calculate_firelevel(obj/effect/decal/cleanable/liquid_fuel/liquid)
+/datum/gas_mixture/proc/calculate_firelevel(obj/effect/decal/cleanable/liquid_fuel/liquid)
 	//Calculates the firelevel based on one equation instead of having to do this multiple times in different areas.
 
 	var/datum/gas/volatile_fuel/fuel = locate() in trace_gases

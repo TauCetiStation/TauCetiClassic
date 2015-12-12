@@ -1,5 +1,4 @@
 /**********************Light************************/
-
 //this item is intended to give the effect of entering the mine, so that light gradually fades
 /obj/effect/light_emitter
 	name = "Light-emtter"
@@ -8,7 +7,6 @@
 	light_range = 8
 
 /**********************Miner Lockers**************************/
-
 /obj/structure/closet/secure_closet/miner
 	name = "miner's equipment"
 	icon_state = "miningsec1"
@@ -37,9 +35,7 @@
 //	new /obj/item/weapon/pickaxe(src)
 	new /obj/item/clothing/glasses/hud/mining(src)
 
-
 /**********************Shuttle Computer**************************/
-
 var/mining_shuttle_tickstomove = 10
 var/mining_shuttle_moving = 0
 var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
@@ -165,7 +161,6 @@ proc/move_mining_shuttle()
 		..()
 
 /******************************Lantern*******************************/
-
 /obj/item/device/flashlight/lantern
 	name = "lantern"
 	icon_state = "lantern"
@@ -173,7 +168,6 @@ proc/move_mining_shuttle()
 	brightness_on = 6			// luminosity when on
 
 /*****************************Pickaxe********************************/
-
 /obj/item/weapon/pickaxe
 	name = "pickaxe"
 	icon = 'icons/obj/items.dmi'
@@ -193,92 +187,49 @@ proc/move_mining_shuttle()
 	sharp = 1
 
 	var/excavation_amount = 100
-	var/hardness = 1
 
-	hammer
-		name = "sledgehammer"
-		//icon_state = "sledgehammer" Waiting on sprite
-		desc = "A mining hammer made of reinforced metal. You feel like smashing your boss in the face with this."
+/obj/item/weapon/pickaxe/hammer
+	name = "sledgehammer"
+	//icon_state = "sledgehammer" Waiting on sprite
+	desc = "A mining hammer made of reinforced metal. You feel like smashing your boss in the face with this."
 
-	silver
-		name = "silver pickaxe"
-		icon_state = "spickaxe"
-		item_state = "spickaxe"
-		digspeed = 45
-		origin_tech = "materials=3"
-		desc = "This makes no metallurgic sense."
-/*
-	drill
-		name = "mining drill" // Can dig sand as well!
-		icon_state = "handdrill"
-		item_state = "jackhammer"
-		digspeed = 30
-		origin_tech = "materials=2;powerstorage=3;engineering=2"
-		desc = "Yours is the drill that will pierce through the rock walls."
-		drill_verb = "drilling"
-*/
+/obj/item/weapon/pickaxe/silver
+	name = "silver pickaxe"
+	icon_state = "spickaxe"
+	item_state = "spickaxe"
+	digspeed = 45
+	origin_tech = "materials=3"
+	desc = "This makes no metallurgic sense."
 
-	jackhammer
-		name = "sonic jackhammer"
-		icon_state = "jackhammer"
-		item_state = "jackhammer"
-		digspeed = 25 //faster than drill, but cannot dig
-		hardness = 4
-		origin_tech = "materials=3;powerstorage=2;engineering=2"
-		desc = "Cracks rocks with sonic blasts, perfect for killing cave lizards."
-		drill_verb = "hammering"
+/obj/item/weapon/pickaxe/gold
+	name = "golden pickaxe"
+	icon_state = "gpickaxe"
+	item_state = "gpickaxe"
+	digspeed = 45
+	origin_tech = "materials=4"
+	desc = "This makes no metallurgic sense."
 
-	gold
-		name = "golden pickaxe"
-		icon_state = "gpickaxe"
-		item_state = "gpickaxe"
-		digspeed = 45
-		origin_tech = "materials=4"
-		desc = "This makes no metallurgic sense."
+/obj/item/weapon/pickaxe/plasmacutter
+	name = "plasma cutter"
+	icon_state = "plasmacutter"
+	item_state = "gun"
+	w_class = 3.0 //it is smaller than the pickaxe
+	damtype = "fire"
+	digspeed = 20 //Can slice though normal walls, all girders, or be used in reinforced wall deconstruction/ light thermite on fire
+	origin_tech = "materials=4;phorontech=3;engineering=3"
+	desc = "A rock cutter that uses bursts of hot plasma. You could use it to cut limbs off of xenos! Or, you know, mine stuff."
+	drill_verb = "cutting"
 
-	plasmacutter
-		name = "plasma cutter"
-		icon_state = "plasmacutter"
-		item_state = "gun"
-		w_class = 3.0 //it is smaller than the pickaxe
-		damtype = "fire"
-		digspeed = 20 //Can slice though normal walls, all girders, or be used in reinforced wall deconstruction/ light thermite on fire
-		hardness = 5
-		origin_tech = "materials=4;phorontech=3;engineering=3"
-		desc = "A rock cutter that uses bursts of hot plasma. You could use it to cut limbs off of xenos! Or, you know, mine stuff."
-		drill_verb = "cutting"
+/obj/item/weapon/pickaxe/diamond
+	name = "diamond pickaxe"
+	icon_state = "dpickaxe"
+	item_state = "dpickaxe"
+	digspeed = 10
+	origin_tech = "materials=6;engineering=4"
+	desc = "A pickaxe with a diamond pick head, this is just like minecraft."
 
-	diamond
-		name = "diamond pickaxe"
-		icon_state = "dpickaxe"
-		item_state = "dpickaxe"
-		digspeed = 40
-		origin_tech = "materials=6;engineering=4"
-		desc = "A pickaxe with a diamond pick head, this is just like minecraft."
-		hardness = 2
-
-	diamonddrill //When people ask about the badass leader of the mining tools, they are talking about ME!
-		name = "diamond mining drill"
-		icon_state = "diamonddrill"
-		item_state = "jackhammer"
-		digspeed = 10 //Digs through walls, girders, and can dig up sand
-		hardness = 6
-		origin_tech = "materials=6;powerstorage=4;engineering=5"
-		desc = "Yours is the drill that will pierce the heavens!"
-		drill_sound = 'tauceti/sounds/items/drill.ogg'
-		drill_verb = "drilling"
-
-	borgdrill
-		name = "cyborg mining drill"
-		icon_state = "diamonddrill"
-		item_state = "jackhammer"
-		hardness = 5
-		digspeed = 25
-		desc = ""
-		drill_verb = "drilling"
 
 /*****************************Shovel********************************/
-
 /obj/item/weapon/shovel
 	name = "shovel"
 	desc = "A large tool for digging and moving dirt."
@@ -305,7 +256,6 @@ proc/move_mining_shuttle()
 
 
 /**********************Mining car (Crate like thing, not the rail car)**************************/
-
 /obj/structure/closet/crate/miningcar
 	desc = "A mining car. This one doesn't work on rails, but has to be dragged."
 	name = "Mining car (not for rails)"
@@ -316,15 +266,13 @@ proc/move_mining_shuttle()
 	icon_closed = "miningcar"
 
 
-/**********************Mining drill**************************/
-
-
+/**********************Mining drills**************************/
 /obj/item/weapon/pickaxe/drill
 	name = "mining drill" // Can dig sand as well!
 	desc = "Yours is the drill that will pierce through the rock walls."
 	icon = 'tauceti/modules/_mining/hand_tools.dmi'
 	tc_custom = 'tauceti/modules/_mining/hand_tools.dmi'
-	icon_state = "basic_drill_ready"
+	icon_state = "hand_drill"
 	item_state = "drill"
 	origin_tech = "materials=2;powerstorage=3;engineering=2"
 	flags = FPRINT | TABLEPASS| CONDUCT
@@ -337,15 +285,14 @@ proc/move_mining_shuttle()
 	drill_sound = 'tauceti/sounds/items/drill.ogg'
 	drill_verb = "drill"
 	digspeed = 30
-	hardness = 3
 	reliability = 600
 	crit_fail = 1
 	var/max_reliability = 600
 	var/drill_cost = 15
-	var/mode = 0
 	var/state = 0
 	var/obj/item/weapon/cell/power_supply
 	var/cell_type = /obj/item/weapon/cell
+	var/mode = 0
 
 /obj/item/weapon/pickaxe/drill/New()
 	..()
@@ -358,11 +305,11 @@ proc/move_mining_shuttle()
 
 /obj/item/weapon/pickaxe/drill/update_icon()
 	if(!state)
-		icon_state = "basic_drill_ready"
+		icon_state = "hand_drill"
 	else if(state == 1)
-		icon_state = "basic_drill_open"
+		icon_state = "hand_drill_open"
 	else if(state == 2)
-		icon_state = "basic_drill_broken"
+		icon_state = "hand_drill_broken"
 	return
 
 /obj/item/weapon/pickaxe/drill/attackby(obj/item/weapon/W as obj, mob/user as mob)
@@ -427,7 +374,7 @@ proc/move_mining_shuttle()
 		return	//let them pick it up
 	if(state == 1 || state == 2)
 		if(!power_supply)
-			user << "There's no powercell in the [src]."
+			user << "<span class='notice'>There's no powercell in the [src].</span>"
 		else
 			power_supply.loc = get_turf(src.loc)
 			user.put_in_hands(power_supply)
@@ -438,31 +385,39 @@ proc/move_mining_shuttle()
 
 /obj/item/weapon/pickaxe/drill/attack_self(mob/user as mob)
 	mode = !mode
+
 	if(mode)
-		digspeed = 20
-		user << "[src] is now standard mode."
+		user << "<span class='notice'>[src] is now standard mode.</span>"
 	else
-		digspeed = 30
-		user << "[src] is now safe mode."
-/*
-/obj/item/weapon/pickaxe/drill/diamond //When people ask about the badass leader of the mining tools, they are talking about ME!
+		user << "<span class='notice'>[src] is now safe mode.</span>"
+
+
+/obj/item/weapon/pickaxe/drill/jackhammer
+	name = "sonic jackhammer"
+	icon_state = "jackhammer"
+	digspeed = 40 //Drills 3 tiles in front of user
+	origin_tech = "materials=3;powerstorage=2;engineering=2"
+	desc = "Cracks rocks with sonic blasts, perfect for killing cave lizards."
+	drill_verb = "hammering"
+
+
+/obj/item/weapon/pickaxe/drill/diamond_drill //When people ask about the badass leader of the mining tools, they are talking about ME!
 	name = "diamond mining drill"
-	icon_state = "diamonddrill"
-	item_state = "jackhammer"
-	digspeed = 10 //Digs through walls, girders, and can dig up sand
-	hardness = 6
+	icon_state = "diamond_drill"
+	digspeed = 15 //Digs through walls, girders, and can dig up sand
 	origin_tech = "materials=6;powerstorage=4;engineering=5"
 	desc = "Yours is the drill that will pierce the heavens!"
-	type = diamond
+	drill_verb = "drilling"
 
-/obj/item/weapon/pickaxe/drill/diamond/attack_self(mob/user as mob)
-	mode = !mode
-	if(mode)
-		digspeed = 10
-		user << "[src] is now standard mode."
-	else
-		digspeed = 20
-		user << "[src] is now safe mode."	*/
+
+/obj/item/weapon/pickaxe/drill/borgdrill
+	name = "cyborg mining drill"
+	icon_state = "diamond_drill"
+	item_state = "jackhammer"
+	digspeed = 20
+	desc = ""
+	drill_verb = "drilling"
+
 
 /obj/item/weapon/repairkit
 	name = "mining equipment repair kit"
@@ -471,7 +426,7 @@ proc/move_mining_shuttle()
 	icon_state = "sven_kit"
 	var/uses = 10
 
-////¬«–€¬◊¿“ ¿//////
+/*****************************Explosives********************************/
 /obj/item/weapon/mining_charge
 	name = "mining explosives"
 	desc = "Used for mining."
@@ -492,14 +447,15 @@ proc/move_mining_shuttle()
 	if(newtime < 5)
 		newtime = 5
 	timer = newtime
-	user << "Timer set for [timer] seconds."
+	user << "<span class='notice'>Timer set for </span>[timer]<span class='notice'> seconds.</span>"
 
 /obj/item/weapon/mining_charge/afterattack(turf/simulated/mineral/target as turf, mob/user as mob, flag)
 	if (!flag)
 		return
 	if (!istype(target, /turf/simulated/mineral))
+		user << "<span class='notice'>You can't plant [src] on [target.name].</span>"
 		return
-	user << "Planting explosives..."
+	user << "<span class='notice'>Planting explosives...</span>"
 
 	if(do_after(user, 50, target = target) && in_range(user, target))
 		user.drop_item()
@@ -508,21 +464,21 @@ proc/move_mining_shuttle()
 		var/location
 		location = target
 		target.overlays += image('tauceti/modules/_mining/explosives.dmi', "charge_basic_armed")
-		user << "Charge has been planted. Timer counting down from [timer]."
+		user << "<span class='notice'>Charge has been planted. Timer counting down from </span>[timer]"
 		spawn(timer*10)
 			for(var/turf/simulated/mineral/M in view(get_turf(target), blast_range))
-				if(!M) return
+				if(!M)	return
 
 			if(target)
-				explosion(location, -1, 2, 2)
+				explosion(location, 3, 2, 2)
 				target.ex_act(1)
-				if (src)
+				if(src)
 					qdel(src)
 
 /obj/item/weapon/mining_charge/attack(mob/M as mob, mob/user as mob, def_zone)
 	return
 
-//—»ÀŒ¬€≈ »Õ—“–”Ã≈Õ“€//
+/*****************************Power tools********************************/
 /obj/item/weapon/gun/energy/kinetic_accelerator
 	name = "proto-kinetic accelerator"
 	desc = "According to Nanotrasen accounting, this is mining equipment. It's been modified for extreme power output to crush rocks, but often serves as a miner's first defense against hostile alien life; it's not very powerful unless used in a low pressure environment."

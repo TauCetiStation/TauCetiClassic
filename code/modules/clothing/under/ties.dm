@@ -22,7 +22,7 @@
 	has_suit = S
 	loc = has_suit
 	has_suit.overlays += inv_overlay
-	
+
 	user << "<span class='notice'>You attach [src] to [has_suit].</span>"
 	src.add_fingerprint(user)
 
@@ -208,16 +208,16 @@
 	if(holstered)
 		user << "\red There is already a [holstered] holstered here!"
 		return
-	
+
 	if (!istype(I, /obj/item/weapon/gun))
 		user << "\red Only guns can be holstered!"
 		return
-	
+
 	var/obj/item/weapon/gun/W = I
 	if (!can_holster(W))
 		user << "\red This [W] won't fit in the [src]!"
 		return
-	
+
 	holstered = W
 	user.drop_from_inventory(holstered)
 	holstered.loc = src
@@ -227,7 +227,7 @@
 /obj/item/clothing/tie/holster/proc/unholster(mob/user as mob)
 	if(!holstered)
 		return
-	
+
 	if(istype(user.get_active_hand(),/obj) && istype(user.get_inactive_hand(),/obj))
 		user << "\red You need an empty hand to draw the [holstered]!"
 	else
@@ -246,7 +246,7 @@
 		if (holstered)
 			unholster(user)
 		return
-	
+
 	..(user)
 
 /obj/item/clothing/tie/holster/attackby(obj/item/W as obj, mob/user as mob)
@@ -280,7 +280,7 @@
 	set src in usr
 	if(!istype(usr, /mob/living)) return
 	if(usr.stat) return
-	
+
 	var/obj/item/clothing/tie/holster/H = null
 	if (istype(src, /obj/item/clothing/tie/holster))
 		H = src
@@ -288,7 +288,7 @@
 		var/obj/item/clothing/under/S = src
 		if (S.hastie)
 			H = S.hastie
-	
+
 	if (!H)
 		usr << "/red Something is very wrong."
 
@@ -330,14 +330,14 @@
 	if (has_suit)	//if we are part of a suit
 		hold.open(user)
 		return
-	
+
 	if (hold.handle_attack_hand(user))	//otherwise interact as a regular storage item
 		..(user)
 
 /obj/item/clothing/tie/storage/MouseDrop(obj/over_object as obj)
 	if (has_suit)
 		return
-	
+
 	if (hold.handle_mousedrop(usr, over_object))
 		..(over_object)
 
@@ -446,15 +446,16 @@
 /obj/item/weapon/storage/box/holobadge
 	name = "holobadge box"
 	desc = "A box claiming to contain holobadges."
-	New()
-		new /obj/item/clothing/tie/holobadge(src)
-		new /obj/item/clothing/tie/holobadge(src)
-		new /obj/item/clothing/tie/holobadge(src)
-		new /obj/item/clothing/tie/holobadge(src)
-		new /obj/item/clothing/tie/holobadge/cord(src)
-		new /obj/item/clothing/tie/holobadge/cord(src)
-		..()
-		return
+
+/obj/item/weapon/storage/box/holobadge/New()
+	new /obj/item/clothing/tie/holobadge(src)
+	new /obj/item/clothing/tie/holobadge(src)
+	new /obj/item/clothing/tie/holobadge(src)
+	new /obj/item/clothing/tie/holobadge(src)
+	new /obj/item/clothing/tie/holobadge/cord(src)
+	new /obj/item/clothing/tie/holobadge/cord(src)
+	..()
+	return
 
 /obj/item/clothing/tie/storage/knifeharness
 	name = "decorated harness"
@@ -471,6 +472,6 @@
 	"/obj/item/weapon/kitchen/utensil/pknife",\
 	"/obj/item/weapon/kitchenknife",\
 	"/obj/item/weapon/kitchenknife/ritual")
-	
+
 	new /obj/item/weapon/hatchet/unathiknife(hold)
 	new /obj/item/weapon/hatchet/unathiknife(hold)

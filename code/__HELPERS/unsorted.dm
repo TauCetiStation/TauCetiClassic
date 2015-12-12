@@ -749,6 +749,7 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 		progbar = image("icon" = 'icons/effects/doafter_icon.dmi', "loc" = target, "icon_state" = "prog_bar_0")
 		progbar.icon_state = "prog_bar_[round(((current_number / goal_number) * 100), 10)]"
 		progbar.pixel_y = 32
+		progbar.layer = 11	//Always visible
 		return progbar
 
 /proc/do_after(var/mob/user as mob, delay as num, var/numticks = 5, var/needhand = 1, var/atom/target = null)

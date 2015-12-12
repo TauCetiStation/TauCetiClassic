@@ -27,21 +27,21 @@
 		"Skrell" = 'icons/obj/clothing/species/skrell/hats.dmi',
 		)
 
-	attack_self(mob/user)
-		if(!isturf(user.loc))
-			user << "You cannot turn the light on while in this [user.loc]" //To prevent some lighting anomalities.
-			return
-		on = !on
-		icon_state = "rig[on]-[item_color]"
-//		item_state = "rig[on]-[color]"
-		usr.update_inv_head()
+/obj/item/clothing/head/helmet/space/rig/attack_self(mob/user)
+	if(!isturf(user.loc))
+		user << "You cannot turn the light on while in this [user.loc]" //To prevent some lighting anomalities.
+		return
+	on = !on
+	icon_state = "rig[on]-[item_color]"
+//	item_state = "rig[on]-[color]"
+	usr.update_inv_head()
 
-		if(on)	set_light(brightness_on)
-		else	set_light(0)
+	if(on)	set_light(brightness_on)
+	else	set_light(0)
 
-		if(istype(user,/mob/living/carbon/human))
-			var/mob/living/carbon/human/H = user
-			H.update_inv_head()
+	if(istype(user,/mob/living/carbon/human))
+		var/mob/living/carbon/human/H = user
+		H.update_inv_head()
 
 /obj/item/clothing/suit/space/rig
 	name = "hardsuit"
@@ -93,26 +93,7 @@
 
 	if(H.wear_suit != src)
 		return
-/*
-	if(attached_helmet && helmet)
-		if(H.head)
-			M << "You are unable to deploy your suit's helmet as \the [H.head] is in the way."
-		else
-			M << "Your suit's helmet deploys with a hiss."
-			//TODO: Species check, skull damage for forcing an unfitting helmet on?
-			helmet.loc = H
-			H.equip_to_slot(helmet, slot_head)
-			helmet.canremove = 0
 
-	if(attached_boots && boots)
-		if(H.shoes)
-			M << "You are unable to deploy your suit's magboots as \the [H.shoes] are in the way."
-		else
-			M << "Your suit's boots deploy with a hiss."
-			boots.loc = H
-			H.equip_to_slot(boots, slot_shoes)
-			boots.canremove = 0
-*/
 /obj/item/clothing/suit/space/rig/dropped()
 	..()
 
@@ -133,49 +114,6 @@
 				boots.canremove = 1
 				H.drop_from_inventory(boots)
 				boots.loc = src
-
-/*
-/obj/item/clothing/suit/space/rig/verb/get_mounted_device()
-
-	set name = "Deploy Mounted Device"
-	set category = "Object"
-	set src in usr
-
-	if(!can_mount)
-		verbs -= /obj/item/clothing/suit/space/rig/verb/get_mounted_device
-		verbs -= /obj/item/clothing/suit/space/rig/verb/stow_mounted_device
-		return
-
-	if(!istype(usr, /mob/living)) return
-	if(usr.stat) return
-
-	if(active_device)
-		usr << "You already have \the [active_device] deployed."
-		return
-
-	if(!mounted_devices.len)
-		usr << "You do not have any devices mounted on \the [src]."
-		return
-
-/obj/item/clothing/suit/space/rig/verb/stow_mounted_device()
-
-	set name = "Stow Mounted Device"
-	set category = "Object"
-	set src in usr
-
-	if(!can_mount)
-		verbs -= /obj/item/clothing/suit/space/rig/verb/get_mounted_device
-		verbs -= /obj/item/clothing/suit/space/rig/verb/stow_mounted_device
-		return
-
-	if(!istype(usr, /mob/living)) return
-
-	if(usr.stat) return
-
-	if(!active_device)
-		usr << "You have no device currently deployed."
-		return
-*/
 
 /obj/item/clothing/suit/space/rig/verb/toggle_helmet()
 
@@ -303,19 +241,6 @@
 					boots = W
 			else
 				return ..()
-
-		/*
-		else if(target_zone == "l_arm" || target_zone == "r_arm" || target_zone == "l_hand" || target_zone == "r_hand")
-
-			//Installing a component into or modifying the contents of the hands.
-
-		else if(target_zone == "torso" || target_zone == "groin")
-
-			//Modifying the cell or mounted devices
-
-			if(!mounted_devices)
-				return
-		*/
 
 		else //wat
 			return ..()

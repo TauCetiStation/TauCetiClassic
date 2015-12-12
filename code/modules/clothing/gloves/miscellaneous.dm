@@ -50,8 +50,8 @@
 	permeability_coefficient = 0.01
 	item_color="white"
 
-	cmo
-		item_color = "medical"		//Exists for washing machines. Is not different from latex gloves in any way.
+/obj/item/clothing/gloves/latex/cmo
+	item_color = "medical"		//Exists for washing machines. Is not different from latex gloves in any way.
 
 /obj/item/clothing/gloves/botanic_leather
 	desc = "These leather gloves protect against thorns, barbs, prickles, spikes and other harmful objects of floral origin."

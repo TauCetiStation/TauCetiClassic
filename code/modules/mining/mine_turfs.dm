@@ -71,8 +71,16 @@
 	if(istype(AM,/mob/living/carbon/human))
 		var/mob/living/carbon/human/H = AM
 		if((istype(H.l_hand,/obj/item/weapon/pickaxe)) && (!H.hand))
+			if(istype(H.l_hand,/obj/item/weapon/pickaxe/drill))
+				var/obj/item/weapon/pickaxe/drill/D = H.l_hand
+				if(!D.mode)
+					return
 			attackby(H.l_hand,H)
 		else if((istype(H.r_hand,/obj/item/weapon/pickaxe)) && H.hand)
+			if(istype(H.r_hand,/obj/item/weapon/pickaxe/drill))
+				var/obj/item/weapon/pickaxe/drill/D = H.r_hand
+				if(!D.mode)
+					return
 			attackby(H.r_hand,H)
 
 	else if(istype(AM,/mob/living/silicon/robot))
@@ -160,24 +168,25 @@
 		last_act = world.time
 
 		if(istype(P, /obj/item/weapon/pickaxe/drill))
-			if(P:state)
-				user << "\red [P] is not ready!"
+			var/obj/item/weapon/pickaxe/drill/D = P
+			if(D.state)
+				user << "\red [D] is not ready!"
 				return
-			if(!P:power_supply || !P:power_supply.use(P:drill_cost))
+			if(!D.power_supply || !D.power_supply.use(D.drill_cost))
 				user << "\red No power!"
 				return
-			if(P:mode)
+			if(D.mode)
 				if(mineral)
 					mined_ore = mineral.ore_loss
-			if(prob(P:crit_fail))
-				user << "\red [P] is broken!"
-				P:state = 2
-				P:reliability = 0
-				P:update_icon()
+			if(prob(D.crit_fail))
+				user << "\red [D] is broken!"
+				D.state = 2
+				D.reliability = 0
+				D.update_icon()
 				return
-			P:reliability -= 5
-			P:power_supply.use(P:drill_cost)
-			P:update_reliability()
+			D.reliability -= 5
+			D.power_supply.use(P:drill_cost)
+			D.update_reliability()
 
 		playsound(user, P.drill_sound, 70, 0)
 
@@ -201,6 +210,12 @@
 
 		if(do_after(user,P.digspeed, target = src))
 			user << "\blue You finish [P.drill_verb] the rock."
+
+			if(istype(P,/obj/item/weapon/pickaxe/drill/jackhammer))	//Jackhammer will just dig 3 tiles in dir of user
+				for(var/turf/simulated/mineral/M in range(user,1))
+					if(get_dir(user,M) & user.dir)
+						M.GetDrilled()
+				return
 
 			if(finds && finds.len)
 				var/datum/find/F = finds[1]
@@ -609,40 +624,6 @@
 		if ((user.loc == T && user.get_active_hand() == W))
 			user << "\blue You dug a hole."
 			gets_dug()
-
-/*	if ((istype(W,/obj/item/weapon/pickaxe/drill)))
-		var/turf/T = user.loc
-		if (!( istype(T, /turf) ))
-			return
-
-		if (dug)
-			user << "\red This area has already been dug"
-			return
-
-		user << "\red You start digging."
-		playsound(loc, 'sound/effects/rustle1.ogg', 50, 1) //russle sounds sounded better
-
-		sleep(30)
-		if ((user.loc == T && user.get_active_hand() == W))
-			user << "\blue You dug a hole."
-			gets_dug()
-
-	if ((istype(W,/obj/item/weapon/pickaxe/diamonddrill)) || (istype(W,/obj/item/weapon/pickaxe/borgdrill)))
-		var/turf/T = user.loc
-		if (!( istype(T, /turf) ))
-			return
-
-		if (dug)
-			user << "\red This area has already been dug"
-			return
-
-		user << "\red You start digging."
-		playsound(loc, 'sound/effects/rustle1.ogg', 50, 1) //russle sounds sounded better
-
-		sleep(0)
-		if ((user.loc == T && user.get_active_hand() == W))
-			user << "\blue You dug a hole."
-			gets_dug()*/
 
 	if(istype(W,/obj/item/weapon/storage/bag/ore))
 		var/obj/item/weapon/storage/bag/ore/S = W

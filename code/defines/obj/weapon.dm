@@ -370,6 +370,12 @@
 	icon_state = "wood_tableparts"
 	flags = null
 
+/obj/item/weapon/table_parts/wood/poker
+	name = "poker table parts"
+	desc = "Keep away from fire, and keep near seedy dealers."
+	icon_state = "poker_tableparts"
+	flags = null
+
 /obj/item/weapon/wire
 	desc = "This is just a simple piece of regular insulated wire."
 	name = "wire"

@@ -991,10 +991,10 @@ Note that amputating the affected organ does in fact remove the infection from t
 			   EXTERNAL ORGAN ITEMS
 ****************************************************/
 
-obj/item/weapon/organ
+/obj/item/weapon/organ
 	icon = 'icons/mob/human_races/r_human.dmi'
 
-obj/item/weapon/organ/New(loc, mob/living/carbon/human/H)
+/obj/item/weapon/organ/New(loc, mob/living/carbon/human/H)
 	..(loc)
 	if(!istype(H))
 		return
@@ -1034,31 +1034,31 @@ obj/item/weapon/organ/New(loc, mob/living/carbon/human/H)
 			   EXTERNAL ORGAN ITEMS DEFINES
 ****************************************************/
 
-obj/item/weapon/organ/l_arm
+/obj/item/weapon/organ/l_arm
 	name = "left arm"
 	icon_state = "l_arm"
-obj/item/weapon/organ/l_foot
+/obj/item/weapon/organ/l_foot
 	name = "left foot"
 	icon_state = "l_foot"
-obj/item/weapon/organ/l_hand
+/obj/item/weapon/organ/l_hand
 	name = "left hand"
 	icon_state = "l_hand"
-obj/item/weapon/organ/l_leg
+/obj/item/weapon/organ/l_leg
 	name = "left leg"
 	icon_state = "l_leg"
-obj/item/weapon/organ/r_arm
+/obj/item/weapon/organ/r_arm
 	name = "right arm"
 	icon_state = "r_arm"
-obj/item/weapon/organ/r_foot
+/obj/item/weapon/organ/r_foot
 	name = "right foot"
 	icon_state = "r_foot"
-obj/item/weapon/organ/r_hand
+/obj/item/weapon/organ/r_hand
 	name = "right hand"
 	icon_state = "r_hand"
-obj/item/weapon/organ/r_leg
+/obj/item/weapon/organ/r_leg
 	name = "right leg"
 	icon_state = "r_leg"
-obj/item/weapon/organ/head
+/obj/item/weapon/organ/head
 	name = "head"
 	icon_state = "head_m"
 	var/mob/living/carbon/brain/brainmob
@@ -1067,7 +1067,7 @@ obj/item/weapon/organ/head
 /obj/item/weapon/organ/head/posi
 	name = "robotic head"
 
-obj/item/weapon/organ/head/New(loc, mob/living/carbon/human/H)
+/obj/item/weapon/organ/head/New(loc, mob/living/carbon/human/H)
 	if(istype(H))
 		src.icon_state = H.gender == MALE? "head_m" : "head_f"
 	..()
@@ -1108,7 +1108,7 @@ obj/item/weapon/organ/head/New(loc, mob/living/carbon/human/H)
 	brainmob.stat = 2
 	brainmob.death()
 
-obj/item/weapon/organ/head/proc/transfer_identity(var/mob/living/carbon/human/H)//Same deal as the regular brain proc. Used for human-->head
+/obj/item/weapon/organ/head/proc/transfer_identity(var/mob/living/carbon/human/H)//Same deal as the regular brain proc. Used for human-->head
 	brainmob = new(src)
 	brainmob.name = H.real_name
 	brainmob.real_name = H.real_name
@@ -1117,7 +1117,7 @@ obj/item/weapon/organ/head/proc/transfer_identity(var/mob/living/carbon/human/H)
 		H.mind.transfer_to(brainmob)
 	brainmob.container = src
 
-obj/item/weapon/organ/head/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/weapon/organ/head/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W,/obj/item/weapon/scalpel))
 		switch(brain_op_stage)
 			if(0)
