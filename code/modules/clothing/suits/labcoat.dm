@@ -16,7 +16,7 @@
 
 	if(!usr.canmove || usr.stat || usr.restrained())
 		return 0
-	if(can_toggle == 0)
+	if(!can_toggle)
 		usr << "You attempt to button-up the velcro on your [src], before promptly realising how silly you are."
 		return 0
 
@@ -25,13 +25,9 @@
 		usr << "You button up your labcoat."
 		src.is_toggled = 1
 	else
-		if(src.is_toggled == 1)
-			src.icon_state += "_open"
-			usr << "You unbutton your labcoat."
-			src.is_toggled = 0
-		else
-			usr << "You attempt to button-up the velcro on your [src], before promptly realising how silly you are."
-			return
+		src.icon_state += "_open"
+		usr << "You unbutton your labcoat."
+		src.is_toggled = 0
 	usr.update_inv_wear_suit()	//so our overlays update
 
 /obj/item/clothing/suit/storage/labcoat/red
