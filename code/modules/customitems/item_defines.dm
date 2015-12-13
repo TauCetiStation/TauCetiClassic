@@ -597,7 +597,7 @@
 	desc = "A labcoat with a few markings denoting it as the labcoat of roboticist."
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "aeneasrinil_open"
-	can_toggle = 0
+	can_button_up = 0
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 
 /obj/item/clothing/suit/storage/labcoat/fluff/pink //spaceman96: Trenna Seber
@@ -605,7 +605,7 @@
 	desc = "A suit that protects against minor chemical spills. Has a pink stripe down from the shoulders."
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "labcoat_pink_open"
-	can_toggle = 0
+	can_button_up = 0
 
 /obj/item/clothing/suit/storage/det_suit/fluff/leatherjack //atomicdog92: Seth Sealis
 	name = "leather jacket"

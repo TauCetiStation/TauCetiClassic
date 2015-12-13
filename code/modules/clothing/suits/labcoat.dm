@@ -4,6 +4,8 @@
 	icon_state = "labcoat"
 	item_state = "labcoat"
 	blood_overlay_type = "coat"
+	var/can_button_up = 1
+	var/is_button_up = 1
 	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
 	body_parts_covered = UPPER_TORSO|ARMS
 	allowed = list(/obj/item/device/analyzer,/obj/item/stack/medical,/obj/item/weapon/dnainjector,/obj/item/weapon/reagent_containers/dropper,/obj/item/weapon/reagent_containers/syringe,/obj/item/weapon/reagent_containers/hypospray,/obj/item/device/healthanalyzer,/obj/item/device/flashlight/pen,/obj/item/weapon/reagent_containers/glass/bottle,/obj/item/weapon/reagent_containers/glass/beaker,/obj/item/weapon/reagent_containers/pill,/obj/item/weapon/storage/pill_bottle,/obj/item/weapon/paper)
@@ -16,18 +18,18 @@
 
 	if(!usr.canmove || usr.stat || usr.restrained())
 		return 0
-	if(!can_toggle)
+	if(!can_button_up)
 		usr << "You attempt to button-up the velcro on your [src], before promptly realising how silly you are."
 		return 0
 
-	if(src.is_toggled == 0)
+	if(!src.is_button_up)
 		src.icon_state = initial(icon_state)
 		usr << "You button up your labcoat."
-		src.is_toggled = 1
+		src.is_button_up = 1
 	else
 		src.icon_state += "_open"
 		usr << "You unbutton your labcoat."
-		src.is_toggled = 0
+		src.is_button_up = 0
 	usr.update_inv_wear_suit()	//so our overlays update
 
 /obj/item/clothing/suit/storage/labcoat/red
