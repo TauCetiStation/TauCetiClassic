@@ -75,6 +75,10 @@
 		qdel(src) // Same here, except we're trying to delete ourselves.
 		return PROCESS_KILL
 
+	if(!affecting)
+		qdel(src)
+		return PROCESS_KILL
+
 	if(assailant.client)
 		assailant.client.screen -= hud
 		assailant.client.screen += hud
@@ -157,6 +161,8 @@
 //Updating pixelshift, position and direction
 //Gets called on process, when the grab gets upgraded or the assailant moves
 /obj/item/weapon/grab/proc/adjust_position()
+	if(!affecting)
+		return
 	if(affecting.buckled)
 		animate(affecting, pixel_x = 0, pixel_y = 0, 4, 1, LINEAR_EASING)
 		return
