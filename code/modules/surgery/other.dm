@@ -17,6 +17,8 @@
 	max_duration = 90
 
 	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+		if(!ishuman(target))
+			return 0
 		if(!hasorgans(target))
 			return 0
 
