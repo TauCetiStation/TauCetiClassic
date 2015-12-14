@@ -3,27 +3,16 @@
 
 var/list/ai_list = list()
 var/list/ai_verbs_default = list(
-	/mob/living/silicon/ai/proc/ai_alerts,
-	/mob/living/silicon/ai/proc/ai_announcement,
-	/mob/living/silicon/ai/proc/ai_call_shuttle,
-	// /mob/living/silicon/ai/proc/ai_recall_shuttle,
-	/mob/living/silicon/ai/proc/ai_camera_track,
-	/mob/living/silicon/ai/proc/ai_camera_list,
+//	/mob/living/silicon/ai/proc/ai_recall_shuttle,
 	/mob/living/silicon/ai/proc/ai_goto_location,
 	/mob/living/silicon/ai/proc/ai_remove_location,
 	/mob/living/silicon/ai/proc/ai_hologram_change,
 	/mob/living/silicon/ai/proc/ai_network_change,
-	/mob/living/silicon/ai/proc/ai_roster,
 	/mob/living/silicon/ai/proc/ai_statuschange,
 	/mob/living/silicon/ai/proc/ai_store_location,
-	/mob/living/silicon/ai/proc/checklaws,
-	/mob/living/silicon/ai/proc/control_integrated_radio,
-	/mob/living/silicon/ai/proc/core,
 	/mob/living/silicon/ai/proc/pick_icon,
-	/mob/living/silicon/ai/proc/sensor_mode,
 	/mob/living/silicon/ai/proc/show_laws_verb,
 	/mob/living/silicon/ai/proc/toggle_acceleration,
-	/mob/living/silicon/ai/proc/toggle_camera_light,
 	/mob/living/silicon/ai/proc/change_floor
 )
 
@@ -300,8 +289,6 @@ var/list/ai_verbs_default = list(
 
 
 /mob/living/silicon/ai/proc/ai_alerts()
-	set category = "AI Commands"
-	set name = "Show Alerts"
 
 	var/dat = "<HEAD><TITLE>Current Station Alerts</TITLE><META HTTP-EQUIV='Refresh' CONTENT='10'></HEAD><BODY>\n"
 	dat += "<A HREF='?src=\ref[src];mach_close=aialerts'>Close</A><BR><BR>"
@@ -331,14 +318,10 @@ var/list/ai_verbs_default = list(
 
 // this verb lets the ai see the stations manifest
 /mob/living/silicon/ai/proc/ai_roster()
-	set category = "AI Commands"
-	set name = "Show Crew Manifest"
 	show_station_manifest()
 
 /mob/living/silicon/ai/var/message_cooldown = 0
 /mob/living/silicon/ai/proc/ai_announcement()
-	set category = "AI Commands"
-	set name = "Make Station Announcement"
 
 	if(check_unable(AI_CHECK_WIRELESS | AI_CHECK_RADIO))
 		return
@@ -361,8 +344,7 @@ var/list/ai_verbs_default = list(
 		message_cooldown = 0
 
 /mob/living/silicon/ai/proc/ai_call_shuttle()
-	set category = "AI Commands"
-	set name = "Call Emergency Shuttle"
+
 	if(check_unable(AI_CHECK_WIRELESS))
 		return
 
@@ -794,9 +776,6 @@ var/list/ai_verbs_default = list(
 
 //Toggles the luminosity and applies it by re-entereing the camera.
 /mob/living/silicon/ai/proc/toggle_camera_light()
-	set name = "Toggle Camera Light"
-	set desc = "Toggles the light on the camera the AI is looking through."
-	set category = "AI Commands"
 
 	if(check_unable())
 		return
@@ -859,9 +838,6 @@ var/list/ai_verbs_default = list(
 		return ..()
 
 /mob/living/silicon/ai/proc/control_integrated_radio()
-	set name = "Radio Settings"
-	set desc = "Allows you to change settings of your radio."
-	set category = "AI Commands"
 
 	if(check_unable(AI_CHECK_RADIO))
 		return
@@ -871,9 +847,6 @@ var/list/ai_verbs_default = list(
 		src.aiRadio.interact(src)
 
 /mob/living/silicon/ai/proc/sensor_mode()
-	set name = "Set Sensor Augmentation"
-	set category = "AI Commands"
-	set desc = "Augment visual feed with internal sensor overlays"
 	toggle_sensor_mode()
 
 /mob/living/silicon/ai/proc/check_unable(var/flags = 0)

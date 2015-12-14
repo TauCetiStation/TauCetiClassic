@@ -200,13 +200,7 @@
 	if(resting || buckled)
 		return
 
-	if(isturf(src.loc))
-		if(ismob(AM))
-			var/newamloc = src.loc
-			src.loc = AM:loc
-			AM:loc = newamloc
-		else
-			..()
+	..()
 
 /mob/living/simple_animal/gib()
 	if(icon_gib)

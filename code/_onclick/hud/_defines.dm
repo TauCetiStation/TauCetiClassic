@@ -93,6 +93,25 @@
 #define ui_alien_health "EAST-1:28,CENTER-1:15" //aliens have the health display where humans have the pressure damage indicator.
 #define ui_alienplasmadisplay "EAST-1:28,CENTER-2:15"
 
+
+// AI
+#define ui_ai_core "SOUTH:6,WEST"
+#define ui_ai_camera_list "SOUTH:6,WEST+1"
+#define ui_ai_track_with_camera "SOUTH:6,WEST+2"
+#define ui_ai_camera_light "SOUTH:6,WEST+3"
+#define ui_ai_sensor "SOUTH:6,WEST+4"
+#define ui_ai_crew_manifest "SOUTH:6,WEST+5"
+#define ui_ai_alerts "SOUTH:6,WEST+6"
+#define ui_ai_announcement "SOUTH:6,WEST+7"
+#define ui_ai_state_laws "SOUTH:6,WEST+8"
+#define ui_ai_pda_send "SOUTH:6,WEST+9"
+#define ui_ai_pda_log "SOUTH:6,WEST+10"
+#define ui_ai_control_integrated_radio "SOUTH:6,WEST+11"
+#define ui_ai_take_picture "SOUTH:6,WEST+12"
+#define ui_ai_view_images "SOUTH:6,WEST+13"
+#define ui_ai_shuttle "SOUTH:6,WEST+14"
+
+
 //Pop-up inventory
 #define ui_shoes "2:8,1:5"
 
