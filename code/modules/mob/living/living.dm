@@ -801,6 +801,7 @@
 		if(r_hand)
 			I = image(r_hand.icon,A,r_hand.icon_state,A.layer+1)
 	if(I)
+		I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 		var/list/viewing = list()
 		for(var/mob/M in viewers(A))
 			if(M.client)

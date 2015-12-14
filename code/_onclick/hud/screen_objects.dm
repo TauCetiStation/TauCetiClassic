@@ -13,6 +13,7 @@
 	unacidable = 1
 	var/obj/master = null	//A reference to the object in the slot. Grabs or items, generally.
 	var/gun_click_time = -100 //I'm lazy.
+	appearance_flags = APPEARANCE_UI
 
 /obj/screen/Destroy()
 	master = null
