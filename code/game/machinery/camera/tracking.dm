@@ -34,8 +34,6 @@
 
 
 /mob/living/silicon/ai/proc/ai_camera_list(var/camera in get_camera_list())
-	set category = "AI Commands"
-	set name = "Show Camera List"
 
 	if(src.stat == 2)
 		src << "You can't list the cameras because you are dead!"
@@ -158,22 +156,24 @@
 		else
 			TB.others[name] = M
 
-	var/list/targets = sortList(TB.humans) + sortList(TB.others)
+	var/list/targets = list()
+	targets.Add("Cancel")
+	targets.Add(sortList(TB.humans) + sortList(TB.others))
 	src.track = TB
 	return targets
 
 /mob/living/silicon/ai/proc/ai_camera_track(var/target_name in trackable_mobs())
-	set category = "AI Commands"
-	set name = "Track With Camera"
-	set desc = "Select who you would like to track."
 
 	if(src.stat == 2)
 		src << "You can't track with camera because you are dead!"
 		return
+	if(target_name == "Cancel")
+		return 0
 	if(!target_name)
 		src.cameraFollow = null
 
 	var/mob/target = (isnull(track.humans[target_name]) ? track.others[target_name] : track.humans[target_name])
+
 	src.track = null
 	ai_actual_track(target)
 
