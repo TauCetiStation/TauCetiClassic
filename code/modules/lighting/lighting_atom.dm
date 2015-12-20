@@ -46,6 +46,13 @@
 		T.reconsider_lights()
 	return ..()
 
+/atom/Entered(atom/movable/obj, atom/prev_loc)
+	. = ..()
+
+	if(obj && prev_loc != src)
+		for(var/datum/light_source/L in obj.light_sources)
+			L.source_atom.update_light()
+
 /atom/movable/Move()
 	var/turf/old_loc = loc
 	. = ..()
