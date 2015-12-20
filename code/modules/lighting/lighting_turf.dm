@@ -21,3 +21,12 @@
 	for(var/datum/light_source/L in affecting_lights)
 		L.calc_turf(src)
 
+/turf/Entered(atom/movable/obj)
+	. = ..()
+	if(obj && obj.opacity)
+		reconsider_lights()
+
+/turf/Exited(atom/movable/obj)
+	. = ..()
+	if(obj && obj.opacity)
+		reconsider_lights()

@@ -107,3 +107,5 @@
 	var/turf/T = loc
 	if(istype(T))
 		T.lighting_overlay = null
+
+	..()
