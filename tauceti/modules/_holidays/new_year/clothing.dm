@@ -22,93 +22,48 @@
 ////////////Winter suits//////////////////////
 //////////////////////////////////////////////
 
+/obj/item/clothing/proc/can_use(mob/user) // Checking if mob can use the object eg restrained and other
+	if(user && ismob(user))
+		if(!user.stat && user.canmove && !user.restrained())
+			return 1
+	return 0
+
+/obj/item/clothing/suit/wintercoat/attack_self() //Refactored function for using coat's hood by clicking on it
+
+	if(!can_use(usr))
+		return 0
+
+	src.hooded = !src.hooded
+
+	if(!src.hooded)
+		src.icon_state = "[initial(icon_state)]"
+		usr << "You toggle off [src]'s hood."
+	else
+		src.icon_state = "[initial(icon_state)]_t"
+		usr << "You toggle on [src]'s hood."
+
+	if(ishuman(usr))
+		var/mob/living/carbon/human/H = usr
+		H.update_hair(0)	//only human type has hair
+	usr.update_inv_head(0)
+	usr.update_inv_wear_suit()
+
 /obj/item/clothing/suit/wintercoat
 	name = "winter coat"
 	desc = "A heavy jacket made from 'synthetic' animal furs."
 	icon = 'tauceti/modules/_holidays/new_year/winter_suits.dmi'
 	tc_custom = 'tauceti/modules/_holidays/new_year/winter_suits.dmi'
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT|TABLEPASS
 	icon_state = "coatwinter"
 	item_state = "coatwinter"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
-	cold_protection = UPPER_TORSO | LOWER_TORSO | LEGS | ARMS | HANDS
+	cold_protection = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS|HANDS|HEAD
 	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0)
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen,/obj/item/toy,/obj/item/weapon/storage/fancy/cigarettes,/obj/item/weapon/lighter)
+	action_button_name = "Toggle Winter Hood"
 
-/obj/item/clothing/suit/wintercoat/verb/toggle()
-	set name = "Toggle Winter Hood"
-	set category = "Object"
-	set src in usr
-
-	if(!usr.canmove || usr.stat || usr.restrained())
-		return 0
-
-	switch(icon_state)
-		if("coatwinter")
-			src.icon_state = "coatwinter_t"
-			usr << "You hood up the coat."
-		if("coatwinter_t")
-			src.icon_state = "coatwinter"
-			usr << "You unhood the coat."
-		if("coatcaptain")
-			src.icon_state = "coatcaptain_t"
-			usr << "You hood up the coat."
-		if("coatcaptain_t")
-			src.icon_state = "coatcaptain"
-			usr << "You unhood the coat."
-		if("coatsecurity")
-			src.icon_state = "coatsecurity_t"
-			usr << "You hood up the coat."
-		if("coatsecurity_t")
-			src.icon_state = "coatsecurity"
-			usr << "You unhood the coat."
-		if("coatmedical")
-			src.icon_state = "coatmedical_t"
-			usr << "You hood up the coat."
-		if("coatmedical_t")
-			src.icon_state = "coatmedical"
-			usr << "You unhood the coat."
-		if("coatscience")
-			src.icon_state = "coatscience_t"
-			usr << "You hood up the coat."
-		if("coatscience_t")
-			src.icon_state = "coatscience"
-			usr << "You unhood the coat."
-		if("coatengineer")
-			src.icon_state = "coatengineer_t"
-			usr << "You hood up the coat."
-		if("coatengineer_t")
-			src.icon_state = "coatengineer"
-			usr << "You unhood the coat."
-		if("coatatmos")
-			src.icon_state = "coatatmos_t"
-			usr << "You hood up the coat."
-		if("coatatmos_t")
-			src.icon_state = "coatatmos"
-			usr << "You unhood the coat."
-		if("coathydro")
-			src.icon_state = "coathydro_t"
-			usr << "You hood up the coat."
-		if("coathydro_t")
-			src.icon_state = "coathydro"
-			usr << "You unhood the coat."
-		if("coatminer")
-			src.icon_state = "coatminer_t"
-			usr << "You hood up the coat."
-		if("coatminer_t")
-			src.icon_state = "coatminer"
-			usr << "You unhood the coat."
-		if("coatcargo")
-			src.icon_state = "coatcargo_t"
-			usr << "You hood up the coat."
-		if("coatcargo_t")
-			src.icon_state = "coatcargo"
-			usr << "You unhood the coat."
-		else
-			usr << "You attempt to hood-up the velcro on your [src], before promptly realising how silly you are."
-			return
-	usr.update_inv_wear_suit()	//so our overlays update
+	var/hooded = 0
 
 /obj/item/clothing/suit/wintercoat/captain
 	name = "captain's winter coat"
@@ -170,12 +125,13 @@
 	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
 	heat_protection = FEET|LEGS
 
-/obj/item/clothing/suit/winterlabcoat
+
+/obj/item/clothing/suit/storage/labcoat/winterlabcoat
 	name = "winter labcoat"
 	desc = "A heavy jacket made from 'synthetic' animal furs."
+	flags = FPRINT | TABLEPASS
 	icon = 'tauceti/modules/_holidays/new_year/winter_suits.dmi'
 	tc_custom = 'tauceti/modules/_holidays/new_year/winter_suits.dmi'
-	flags = FPRINT | TABLEPASS
 	icon_state = "labcoat_emt"
 	item_state = "labcoat_emt"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
@@ -183,24 +139,6 @@
 	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0)
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen,/obj/item/toy,/obj/item/weapon/storage/fancy/cigarettes,/obj/item/weapon/lighter)
-
-
-/obj/item/clothing/suit/winterlabcoat/verb/toggle2()
-	set name = "Toggle Button"
-	set category = "Object"
-	set src in usr
-
-	if(!usr.canmove || usr.stat || usr.restrained())
-		return 0
-
-	switch(icon_state)
-		if("labcoat_emt")
-			src.icon_state = "labcoat_emt_t"
-			usr << "You unbutton the coat."
-		if("labcoat_emt_t")
-			src.icon_state = "labcoat_emt"
-			usr << "You button up the coat."
-	usr.update_inv_wear_suit()
 
 /obj/item/clothing/head/ushanka
 	name = "ushanka"

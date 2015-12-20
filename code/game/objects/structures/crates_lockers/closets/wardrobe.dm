@@ -394,8 +394,7 @@
 	new /obj/item/clothing/suit/wintercoat/medical(src)
 	new /obj/item/clothing/shoes/winterboots(src)
 	new /obj/item/clothing/head/santa(src)
-	if(prob(50))
-		new /obj/item/clothing/suit/winterlabcoat(src)
+	new /obj/item/clothing/suit/storage/labcoat/winterlabcoat(src)
 	return
 
 

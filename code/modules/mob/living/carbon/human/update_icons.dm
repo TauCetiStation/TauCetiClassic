@@ -752,6 +752,7 @@ proc/get_damage_icon_part(damage_state, body_part)
 			var/image/bloodsies = image("icon" = 'icons/effects/blood.dmi', "icon_state" = "helmetblood")
 			bloodsies.color = head.blood_color
 			standing.overlays	+= bloodsies
+
 		overlays_standing[HEAD_LAYER]	= standing
 	else
 		overlays_standing[HEAD_LAYER]	= null
@@ -803,6 +804,12 @@ proc/get_damage_icon_part(damage_state, body_part)
 		overlays_standing[SUIT_LAYER]	= standing
 
 		update_tail_showing(0)
+
+		if(istype(wear_suit,/obj/item/clothing/suit/wintercoat))
+			var/obj/item/clothing/suit/wintercoat/W = wear_suit
+			if(W.hooded) //used for coat hood due to hair layer viewed over the suit
+				overlays_standing[HAIR_LAYER]   = null
+				overlays_standing[HEAD_LAYER]	= null
 
 	else
 		overlays_standing[SUIT_LAYER]	= null
