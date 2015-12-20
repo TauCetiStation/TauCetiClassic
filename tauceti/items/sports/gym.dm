@@ -59,12 +59,14 @@
 	spawn(time)
 		icon_state = "pbag"
 
-/obj/structure/pbag/verb/hang(mob/living/user as mob)
+/obj/structure/pbag/verb/hang()
 	set name = "Hang Bag"
 	set category = "Object"
-	set src in oview(1)
+	set src in view(1)
 
-	if(isliving(user))
+	var/mob/living/carbon/user = usr
+
+	if(iscarbon(user))
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 		src.anchored = !src.anchored
 		user.visible_message("[user] [anchored? "secures":"unsecures"] the [src].", \

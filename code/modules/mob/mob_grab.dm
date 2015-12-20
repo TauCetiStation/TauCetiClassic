@@ -424,11 +424,12 @@
 	var/destroying = 0
 
 /obj/item/weapon/grab/Destroy()
-	animate(affecting, pixel_x = 0, pixel_y = 0, 4, 1, LINEAR_EASING)
-	affecting.layer = 4
 	if(affecting)
-		affecting.grabbed_by -= src
-		affecting = null
+		animate(affecting, pixel_x = 0, pixel_y = 0, 4, 1, LINEAR_EASING)
+		affecting.layer = 4
+		if(affecting)
+			affecting.grabbed_by -= src
+			affecting = null
 	if(assailant)
 		if(assailant.client)
 			assailant.client.screen -= hud

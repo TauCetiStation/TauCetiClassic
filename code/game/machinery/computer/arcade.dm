@@ -72,7 +72,19 @@
 							/obj/item/toy/figure/syndie						= 1,
 							/obj/item/toy/figure/secofficer					= 1,
 							/obj/item/toy/figure/virologist					= 1,
-							/obj/item/toy/figure/warden						= 1
+							/obj/item/toy/figure/warden						= 1,
+							/obj/item/toy/prize/poly/polyclassic			= 1,
+							/obj/item/toy/prize/poly/polypink				= 1,
+							/obj/item/toy/prize/poly/polydark				= 1,
+							/obj/item/toy/prize/poly/polywhite				= 1,
+							/obj/item/toy/prize/poly/polyalien				= 1,
+							/obj/item/toy/prize/poly/polyjungle				= 1,
+							/obj/item/toy/prize/poly/polyfury				= 1,
+							/obj/item/toy/prize/poly/polysky				= 1,
+							/obj/item/toy/prize/poly/polysec				= 1,
+							/obj/item/toy/prize/poly/polycompanion			= 1,
+							/obj/item/toy/prize/poly/polygold				= 1,
+							/obj/item/toy/prize/poly/polyspecial			= 1
 							)
 
 	light_color = "#00ff00"
