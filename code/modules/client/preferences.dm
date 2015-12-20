@@ -263,9 +263,9 @@ var/const/MAX_SAVE_SLOTS = 10
 	dat += "<b>Play admin midis:</b> <a href='?_src_=prefs;preference=hear_midis'><b>[(toggles & SOUND_MIDI) ? "Yes" : "No"]</b></a><br>"
 	dat += "<b>Play lobby music:</b> <a href='?_src_=prefs;preference=lobby_music'><b>[(toggles & SOUND_LOBBY) ? "Yes" : "No"]</b></a><br>"
 	dat += "<b>Randomized Character Slot:</b> <a href='?_src_=prefs;preference=randomslot'><b>[randomslot ? "Yes" : "No"]</b></a><br>"
-	dat += "<b>Ghost ears:</b> <a href='?_src_=prefs;preference=ghost_ears'><b>[(toggles & CHAT_GHOSTEARS) ? "All Speech" : "Nearest Creatures"]</b></a><br>"
-	dat += "<b>Ghost sight:</b> <a href='?_src_=prefs;preference=ghost_sight'><b>[(toggles & CHAT_GHOSTSIGHT) ? "All Emotes" : "Nearest Creatures"]</b></a><br>"
-	dat += "<b>Ghost radio:</b> <a href='?_src_=prefs;preference=ghost_radio'><b>[(toggles & CHAT_GHOSTRADIO) ? "All Chatter" : "Nearest Speakers"]</b></a><br>"
+	dat += "<b>Ghost ears:</b> <a href='?_src_=prefs;preference=ghost_ears'><b>[(chat_toggles & CHAT_GHOSTEARS) ? "All Speech" : "Nearest Creatures"]</b></a><br>"
+	dat += "<b>Ghost sight:</b> <a href='?_src_=prefs;preference=ghost_sight'><b>[(chat_toggles & CHAT_GHOSTSIGHT) ? "All Emotes" : "Nearest Creatures"]</b></a><br>"
+	dat += "<b>Ghost radio:</b> <a href='?_src_=prefs;preference=ghost_radio'><b>[(chat_toggles & CHAT_GHOSTRADIO) ? "All Chatter" : "Nearest Speakers"]</b></a><br>"
 
 	if(config.allow_Metadata)
 		dat += "<b>OOC Notes:</b><br>[sanitize_popup(copytext(metadata, 1, 37))]...<a href='?_src_=prefs;preference=metadata;task=input'> Edit</a><br>"
@@ -1304,13 +1304,13 @@ var/const/MAX_SAVE_SLOTS = 10
 						user << sound(null, repeat = 0, wait = 0, volume = 85, channel = 1)
 
 				if("ghost_ears")
-					toggles ^= CHAT_GHOSTEARS
+					chat_toggles ^= CHAT_GHOSTEARS
 
 				if("ghost_sight")
-					toggles ^= CHAT_GHOSTSIGHT
+					chat_toggles ^= CHAT_GHOSTSIGHT
 
 				if("ghost_radio")
-					toggles ^= CHAT_GHOSTRADIO
+					chat_toggles ^= CHAT_GHOSTRADIO
 
 				if("save")
 					save_preferences()
