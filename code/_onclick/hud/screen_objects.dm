@@ -13,6 +13,7 @@
 	unacidable = 1
 	var/obj/master = null	//A reference to the object in the slot. Grabs or items, generally.
 	var/gun_click_time = -100 //I'm lazy.
+	appearance_flags = APPEARANCE_UI
 
 /obj/screen/Destroy()
 	master = null
@@ -416,6 +417,87 @@
 		if("module3")
 			if(istype(usr, /mob/living/silicon/robot))
 				usr:toggle_module(3)
+
+		if("AI Core")
+			if(isAI(usr))
+				var/mob/living/silicon/ai/AI = usr
+				AI.view_core()
+
+		if("Show Camera List")
+			if(isAI(usr))
+				var/mob/living/silicon/ai/AI = usr
+				var/camera = input(AI) in AI.get_camera_list()
+				AI.ai_camera_list(camera)
+
+		if("Track With Camera")
+			if(isAI(usr))
+				var/mob/living/silicon/ai/AI = usr
+				var/target_name = input(AI) in AI.trackable_mobs()
+				AI.ai_camera_track(target_name)
+
+		if("Toggle Camera Light")
+			if(isAI(usr))
+				var/mob/living/silicon/ai/AI = usr
+				AI.toggle_camera_light()
+
+		if("Radio Settings")
+			if(isAI(usr))
+				var/mob/living/silicon/ai/AI = usr
+				AI.control_integrated_radio()
+
+		if("Show Crew Manifest")
+			if(isAI(usr))
+				var/mob/living/silicon/ai/AI = usr
+				AI.ai_roster()
+
+		if("Show Alerts")
+			if(isAI(usr))
+				var/mob/living/silicon/ai/AI = usr
+				AI.ai_alerts()
+
+		if("Announcement")
+			if(isAI(usr))
+				var/mob/living/silicon/ai/AI = usr
+				AI.ai_announcement()
+
+		if("Call Emergency Shuttle")
+			if(isAI(usr))
+				var/mob/living/silicon/ai/AI = usr
+				AI.ai_call_shuttle()
+
+		if("State Laws")
+			if(isAI(usr))
+				var/mob/living/silicon/ai/AI = usr
+				AI.checklaws()
+
+		if("PDA - Send Message")
+			if(isAI(usr))
+				var/mob/living/silicon/ai/AI = usr
+				var/obj/item/device/pda/ai/PDA = AI.aiPDA
+				PDA.cmd_send_pdamesg(usr)
+
+		if("PDA - Show Message Log")
+			if(isAI(usr))
+				var/mob/living/silicon/ai/AI = usr
+				var/obj/item/device/pda/ai/PDA = AI.aiPDA
+				PDA.cmd_show_message_log(usr)
+
+		if("Take Image")
+			if(isAI(usr))
+				var/mob/living/silicon/ai/AI = usr
+				var/obj/item/device/camera/siliconcam/ai_camera/camera = AI.aiCamera
+				camera.take_image()
+
+		if("View Images")
+			if(isAI(usr))
+				var/mob/living/silicon/ai/AI = usr
+				var/obj/item/device/camera/siliconcam/ai_camera/camera = AI.aiCamera
+				camera.view_images()
+
+		if("Sensor Augmentation")
+			if(isAI(usr))
+				var/mob/living/silicon/ai/AI = usr
+				AI.sensor_mode()
 
 		if("Allow Walking")
 			if(gun_click_time > world.time - 30)	//give them 3 seconds between mode changes.

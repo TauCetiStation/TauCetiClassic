@@ -29,6 +29,7 @@
 	max_duration = 150
 
 	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+		if(!ishuman(target))	return 0
 		var/datum/organ/external/affected = target.get_organ(target_zone)
 		return ..() && affected.open == 1
 
@@ -51,7 +52,7 @@
 			user.visible_message("\blue [user] has made a woman of [target] with \the [tool]." , \
 			"\blue You have made a woman of [target].")
 			target.gender = FEMALE
-		
+
 		target.regenerate_icons()
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)

@@ -89,17 +89,18 @@ proc/do_surgery(mob/living/carbon/M, mob/living/user, obj/item/tool)
 
 	for(var/datum/surgery_step/S in surgery_steps)
 		//check, if target undressed for clothless operations
-		var/mob/living/carbon/human/T = M
-		if(S.clothless)
-			switch(target_zone)
-				if("chest","groin","l_leg","r_leg","r_arm","l_arm")
-					if(T.wear_suit || T.w_uniform)	return 0
-				if("r_foot","l_foot")
-					if(T.shoes)						return 0
-				if("eyes")
-					if(T.glasses)					return 0
-				if("r_hand","l_hand")
-					if(T.gloves)					return 0
+		if(ishuman(M))
+			var/mob/living/carbon/human/T = M
+			if(S.clothless)
+				switch(target_zone)
+					if("chest","groin","l_leg","r_leg","r_arm","l_arm")
+						if(T.wear_suit || T.w_uniform)	return 0
+					if("r_foot","l_foot")
+						if(T.shoes)						return 0
+					if("eyes")
+						if(T.glasses)					return 0
+					if("r_hand","l_hand")
+						if(T.gloves)					return 0
 
 		//check if tool is right or close enough and if this step is possible
 		if( S.tool_quality(tool) && S.can_use(user, M, user.zone_sel.selecting, tool) && S.is_valid_mutantrace(M))

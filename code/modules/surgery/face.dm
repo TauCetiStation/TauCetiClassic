@@ -26,6 +26,7 @@
 	max_duration = 110
 
 	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+		if(!ishuman(target))	return 0
 		return ..() && target_zone == "mouth" && target.op_stage.face == 0
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -56,6 +57,7 @@
 	max_duration = 90
 
 	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+		if(!ishuman(target))	return 0
 		return ..() && target.op_stage.face == 1
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -83,6 +85,7 @@
 	max_duration = 100
 
 	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+		if(!ishuman(target))	return 0
 		return ..() && target.op_stage.face == 2
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -113,6 +116,7 @@
 	max_duration = 100
 
 	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+		if(!ishuman(target))	return 0
 		return ..() && target.op_stage.face > 0
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)

@@ -137,8 +137,6 @@
 // Return to the Core.
 
 /mob/living/silicon/ai/proc/core()
-	set category = "AI Commands"
-	set name = "AI Core"
 
 	view_core()
 

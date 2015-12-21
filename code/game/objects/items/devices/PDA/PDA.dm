@@ -230,7 +230,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 
 //AI verb and proc for sending PDA messages.
-/obj/item/device/pda/ai/verb/cmd_send_pdamesg()
+/obj/item/device/pda/ai/proc/cmd_send_pdamesg()
 	set category = "AI IM"
 	set name = "Send Message"
 	set src in usr
@@ -268,7 +268,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	usr << "<span class='notice'>PDA ringer toggled [(message_silent ? "Off" : "On")]!</span>"
 
 
-/obj/item/device/pda/ai/verb/cmd_show_message_log()
+/obj/item/device/pda/ai/proc/cmd_show_message_log()
 	set category = "AI IM"
 	set name = "Show Message Log"
 	set src in usr

@@ -26,6 +26,7 @@
 	max_duration = 110
 
 	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+		if(!ishuman(target))	return 0
 		return ..()
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -57,6 +58,7 @@
 	max_duration = 40
 
 	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+		if(!ishuman(target))	return 0
 		return ..() && target.op_stage.eyes == 1
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -88,6 +90,7 @@
 	max_duration = 100
 
 	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+		if(!ishuman(target))	return 0
 		return ..() && target.op_stage.eyes == 2
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -120,6 +123,7 @@
 	max_duration = 100
 
 	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+		if(!ishuman(target))	return 0
 		return ..()
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)

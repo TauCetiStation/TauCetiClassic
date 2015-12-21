@@ -196,70 +196,21 @@
 		if(dir_sum%16 == 15)
 			table_type = 4 //4-way intersection, the 'middle' table sprites will be used.
 
-		if(istype(src,/obj/structure/table/reinforced))
-			switch(table_type)
-				if(0)
-					icon_state = "reinf_table"
-				if(1)
-					icon_state = "reinf_1tileendtable"
-				if(2)
-					icon_state = "reinf_1tilethick"
-				if(3)
-					icon_state = "reinf_tabledir"
-				if(4)
-					icon_state = "reinf_middle"
-				if(5)
-					icon_state = "reinf_tabledir2"
-				if(6)
-					icon_state = "reinf_tabledir3"
-		else if(istype(src,/obj/structure/table/woodentable/poker))
-			switch(table_type)
-				if(0)
-					icon_state = "pokertable"
-				if(1)
-					icon_state = "pokertable_1tileendtable"
-				if(2)
-					icon_state = "pokertable_1tilethick"
-				if(3)
-					icon_state = "pokertable_dir"
-				if(4)
-					icon_state = "pokertable_middle"
-				if(5)
-					icon_state = "pokertable_dir2"
-				if(6)
-					icon_state = "pokertable_dir3"
-		else if(istype(src,/obj/structure/table/woodentable))
-			switch(table_type)
-				if(0)
-					icon_state = "wood_table"
-				if(1)
-					icon_state = "wood_1tileendtable"
-				if(2)
-					icon_state = "wood_1tilethick"
-				if(3)
-					icon_state = "wood_tabledir"
-				if(4)
-					icon_state = "wood_middle"
-				if(5)
-					icon_state = "wood_tabledir2"
-				if(6)
-					icon_state = "wood_tabledir3"
-		else
-			switch(table_type)
-				if(0)
-					icon_state = "table"
-				if(1)
-					icon_state = "table_1tileendtable"
-				if(2)
-					icon_state = "table_1tilethick"
-				if(3)
-					icon_state = "tabledir"
-				if(4)
-					icon_state = "table_middle"
-				if(5)
-					icon_state = "tabledir2"
-				if(6)
-					icon_state = "tabledir3"
+		switch(table_type)
+			if(0)
+				icon_state = "[initial(icon_state)]"
+			if(1)
+				icon_state = "[initial(icon_state)]_1tileendtable"
+			if(2)
+				icon_state = "[initial(icon_state)]_1tilethick"
+			if(3)
+				icon_state = "[initial(icon_state)]_dir"
+			if(4)
+				icon_state = "[initial(icon_state)]_middle"
+			if(5)
+				icon_state = "[initial(icon_state)]_dir2"
+			if(6)
+				icon_state = "[initial(icon_state)]_dir3"
 		if (dir_sum in list(1,2,4,8,5,6,9,10))
 			dir = dir_sum
 		else
@@ -567,7 +518,7 @@
 /obj/structure/table/woodentable
 	name = "wooden table"
 	desc = "Do not apply fire to this. Rumour says it burns easily."
-	icon_state = "wood_table"
+	icon_state = "woodtable"
 	parts = /obj/item/weapon/table_parts/wood
 	health = 50
 
@@ -583,7 +534,7 @@
 /obj/structure/table/reinforced
 	name = "reinforced table"
 	desc = "A version of the four legged table. It is stronger."
-	icon_state = "reinf_table"
+	icon_state = "reinftable"
 	health = 200
 	var/status = 2
 	parts = /obj/item/weapon/table_parts/reinforced
