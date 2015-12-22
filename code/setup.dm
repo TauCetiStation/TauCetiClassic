@@ -70,7 +70,7 @@
 
 #define PRESSURE_SUIT_REDUCTION_COEFFICIENT 0.15 //This is how much (percentual) a suit with the flag STOPSPRESSUREDMAGE reduces pressure.
 #define PRESSURE_HEAD_REDUCTION_COEFFICIENT 0.1 //This is how much (percentual) a helmet/hat with the flag STOPSPRESSUREDMAGE reduces pressure.
-#define FUL_PRESSURE_PROTECTION_REDUCTION_COEFFICIENT 1	//This is how much (percentual) a full complect of suit and helmet with the flag STOPSPRESSUREDMAGE reduces pressure.
+#define FULL_PRESSURE_PROTECTION_REDUCTION_COEFFICIENT 1	//This is how much (percentual) a full complect of suit and helmet with the flag STOPSPRESSUREDMAGE reduces pressure.
 
 // Doors!
 #define DOOR_CRUSH_DAMAGE 10
