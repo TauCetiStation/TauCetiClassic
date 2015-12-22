@@ -69,7 +69,7 @@
 #define LOW_PRESSURE_DAMAGE 8 	//The amount of damage someone takes when in a low pressure area (The pressure threshold is so low that it doesn't make sense to do any calculations, so it just applies this flat value).
 
 #define PRESSURE_SUIT_REDUCTION_COEFFICIENT 0.8 //This is how much (percentual) a suit with the flag STOPSPRESSUREDMAGE reduces pressure.
-#define PRESSURE_HEAD_REDUCTION_COEFFICIENT 0.4 //This is how much (percentual) a helmet/hat with the flag STOPSPRESSUREDMAGE reduces pressure.
+#define PRESSURE_HEAD_REDUCTION_COEFFICIENT 0.1 //This is how much (percentual) a helmet/hat with the flag STOPSPRESSUREDMAGE reduces pressure.
 
 // Doors!
 #define DOOR_CRUSH_DAMAGE 10

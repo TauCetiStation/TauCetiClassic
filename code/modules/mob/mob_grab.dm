@@ -306,7 +306,7 @@
 					var/datum/organ/external/organ = affecting:get_organ(check_zone(hit_zone))
 					if(!organ)
 						return
-					assailant.visible_message("<span class='danger'>[assailant] [pick("bent", "twisted")] [affecting]'s [organ.name] into a jointlock!</span>")
+					assailant.visible_message("<span class='danger'>[assailant] [pick("bent", "twisted")] [affecting]'s [organ.display_name] into a jointlock!</span>")
 					var/armor = affecting:run_armor_check(affecting, "melee")
 					if(armor < 2)
 						affecting << "<span class='danger'>You feel extreme pain!</span>"

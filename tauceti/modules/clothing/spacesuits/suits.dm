@@ -4,7 +4,6 @@
 
 /obj/item/clothing/head/helmet/space/globose
 	icon_state = "glob0_white"
-	flags = FPRINT | TABLEPASS | HEADCOVERSEYES | BLOCKHAIR | HEADCOVERSMOUTH | STOPSPRESSUREDMAGE | THICKMATERIAL | PHORONGUARD
 	var/mode = "white"
 	var/visor = 0
 
