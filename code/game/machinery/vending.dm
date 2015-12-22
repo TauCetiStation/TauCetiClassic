@@ -1003,36 +1003,38 @@
 	product_slogans = "Dress for success!;Prepare to look swagalicious!;Look at all this free swag!;Why leave style up to fate? Use the ClothesMate!"
 	vend_delay = 15
 	vend_reply = "Thank you for using the ClothesMate!"
-	products = list(/obj/item/clothing/head/that=2,/obj/item/clothing/head/fedora=1,/obj/item/clothing/glasses/monocle=1,
-	/obj/item/clothing/suit/jacket=2, /obj/item/clothing/suit/jacket/puffer/vest=2, /obj/item/clothing/suit/jacket/puffer=2,
-	/obj/item/clothing/under/suit_jacket/navy=1,/obj/item/clothing/under/suit_jacket/really_black=1,/obj/item/clothing/under/suit_jacket/burgundy=1,
-	/obj/item/clothing/under/suit_jacket/charcoal=1, /obj/item/clothing/under/suit_jacket/white=1,/obj/item/clothing/under/kilt=1,/obj/item/clothing/under/overalls=1,
-	/obj/item/clothing/under/suit_jacket/really_black=2,/obj/item/clothing/under/pants/jeans=3,/obj/item/clothing/under/pants/classicjeans=2,
-	/obj/item/clothing/under/pants/camo = 1,/obj/item/clothing/under/pants/blackjeans=2,/obj/item/clothing/under/pants/khaki=2,
-	/obj/item/clothing/under/pants/white=2,/obj/item/clothing/under/pants/red=1,/obj/item/clothing/under/pants/black=2,
-	/obj/item/clothing/under/pants/tan=2,/obj/item/clothing/under/pants/blue=1,/obj/item/clothing/under/pants/track=1,
-	/obj/item/clothing/under/sundress=2,/obj/item/clothing/under/blacktango=1,
-	/obj/item/clothing/suit/jacket=3,/obj/item/clothing/glasses/regular=2,/obj/item/clothing/head/sombrero=1,
-	/obj/item/clothing/suit/poncho=1,/obj/item/clothing/suit/ianshirt=1,/obj/item/clothing/shoes/laceup=2,
-	/obj/item/clothing/shoes/sandal=1,
+	products = list(/obj/item/clothing/head/that=4,/obj/item/clothing/head/fedora=2,/obj/item/clothing/glasses/monocle=2,
+	/obj/item/clothing/suit/jacket=4, /obj/item/clothing/suit/jacket/puffer/vest=4, /obj/item/clothing/suit/jacket/puffer=4,
+	/obj/item/clothing/under/suit_jacket/navy=2,/obj/item/clothing/under/suit_jacket/really_black=2,/obj/item/clothing/under/suit_jacket/burgundy=2,
+	/obj/item/clothing/under/suit_jacket/charcoal=2, /obj/item/clothing/under/suit_jacket/white=2,/obj/item/clothing/under/kilt=2,/obj/item/clothing/under/overalls=2,
+	/obj/item/clothing/under/suit_jacket/really_black=4,/obj/item/clothing/under/pants/jeans=6,/obj/item/clothing/under/pants/classicjeans=4,
+	/obj/item/clothing/under/pants/camo = 2,/obj/item/clothing/under/pants/blackjeans=4,/obj/item/clothing/under/pants/khaki=4,
+	/obj/item/clothing/under/pants/white=4,/obj/item/clothing/under/pants/red=2,/obj/item/clothing/under/pants/black=4,
+	/obj/item/clothing/under/pants/tan=4,/obj/item/clothing/under/pants/blue=2,/obj/item/clothing/under/pants/track=2,
+	/obj/item/clothing/under/sundress=4,/obj/item/clothing/under/blacktango=2,
+	/obj/item/clothing/suit/jacket=6,/obj/item/clothing/glasses/regular=4,/obj/item/clothing/head/sombrero=2,
+	/obj/item/clothing/suit/poncho=2,/obj/item/clothing/suit/ianshirt=1,/obj/item/clothing/shoes/laceup=4,
+	/obj/item/clothing/shoes/sandal=2,
 	/obj/item/clothing/mask/bandana/black=2,/obj/item/clothing/mask/bandana/skull=2,/obj/item/clothing/mask/bandana/green=2,/obj/item/clothing/mask/bandana/gold=2,
-	/obj/item/clothing/mask/bandana/blue=2,/obj/item/clothing/mask/bluescarf=1,/obj/item/clothing/mask/redscarf=1,/obj/item/clothing/mask/greenscarf=1)
-	contraband = list(/obj/item/clothing/under/syndicate/tacticool=1,/obj/item/clothing/mask/balaclava=1,/obj/item/clothing/head/ushanka=1,/obj/item/clothing/under/soviet=1)
-	premium = list(/obj/item/clothing/under/suit_jacket/checkered=1,/obj/item/clothing/head/mailman=1,/obj/item/clothing/under/rank/mailman=1,/obj/item/clothing/suit/jacket/leather=1,/obj/item/clothing/suit/jacket/leather/overcoat=1,/obj/item/clothing/under/pants/mustangjeans=1)
-	prices = list(/obj/item/clothing/head/that=4199,/obj/item/clothing/head/fedora=4199,/obj/item/clothing/glasses/monocle=1099,
-	/obj/item/clothing/suit/jacket=2999, /obj/item/clothing/suit/jacket/puffer/vest=2349, /obj/item/clothing/suit/jacket/puffer=2199,
-	/obj/item/clothing/under/suit_jacket/navy=1199,/obj/item/clothing/under/suit_jacket/really_black=1199,/obj/item/clothing/under/suit_jacket/burgundy=1199,
-	/obj/item/clothing/under/suit_jacket/charcoal=1199, /obj/item/clothing/under/suit_jacket/white=1199,/obj/item/clothing/under/kilt=850,/obj/item/clothing/under/overalls=850,
-	/obj/item/clothing/under/suit_jacket/really_black=1425,/obj/item/clothing/under/pants/jeans=1425,/obj/item/clothing/under/pants/classicjeans=1425,
-	/obj/item/clothing/under/pants/camo = 1425,/obj/item/clothing/under/pants/blackjeans=1425,/obj/item/clothing/under/pants/khaki=1425,
-	/obj/item/clothing/under/pants/white=1425,/obj/item/clothing/under/pants/red=1425,/obj/item/clothing/under/pants/black=1425,
-	/obj/item/clothing/under/pants/tan=1425,/obj/item/clothing/under/pants/blue=1425,/obj/item/clothing/under/pants/track=1425,
-	/obj/item/clothing/under/sundress=850,/obj/item/clothing/under/blacktango=990,
-	/obj/item/clothing/suit/jacket=1380,/obj/item/clothing/glasses/regular=550,/obj/item/clothing/head/sombrero=2400,
-	/obj/item/clothing/suit/poncho=2950,/obj/item/clothing/suit/ianshirt=4000,/obj/item/clothing/shoes/laceup=990,
-	/obj/item/clothing/shoes/sandal=350,
-	/obj/item/clothing/mask/bandana/black=3849,/obj/item/clothing/mask/bandana/skull=3999,/obj/item/clothing/mask/bandana/green=3849,/obj/item/clothing/mask/bandana/gold=3899,
-	/obj/item/clothing/mask/bandana/blue=3849,/obj/item/clothing/mask/bluescarf=2500,/obj/item/clothing/mask/redscarf=2500,/obj/item/clothing/mask/greenscarf=2500)
+	/obj/item/clothing/mask/bandana/blue=2,/obj/item/clothing/mask/bluescarf=2,/obj/item/clothing/mask/redscarf=2,/obj/item/clothing/mask/greenscarf=2,
+	/obj/item/clothing/suit/wintercoat=3,/obj/item/clothing/shoes/winterboots=3,/obj/item/clothing/head/santa=3)
+	contraband = list(/obj/item/clothing/under/syndicate/tacticool=2,/obj/item/clothing/mask/balaclava=2,/obj/item/clothing/head/ushanka=2,/obj/item/clothing/under/soviet=2)
+	premium = list(/obj/item/clothing/under/suit_jacket/checkered=2,/obj/item/clothing/head/mailman=2,/obj/item/clothing/under/rank/mailman=2,/obj/item/clothing/suit/jacket/leather=2,/obj/item/clothing/suit/jacket/leather/overcoat=2,/obj/item/clothing/under/pants/mustangjeans=2)
+	prices = list(/obj/item/clothing/head/that=419,/obj/item/clothing/head/fedora=419,/obj/item/clothing/glasses/monocle=109,
+	/obj/item/clothing/suit/jacket=299, /obj/item/clothing/suit/jacket/puffer/vest=239, /obj/item/clothing/suit/jacket/puffer=219,
+	/obj/item/clothing/under/suit_jacket/navy=119,/obj/item/clothing/under/suit_jacket/really_black=119,/obj/item/clothing/under/suit_jacket/burgundy=119,
+	/obj/item/clothing/under/suit_jacket/charcoal=119, /obj/item/clothing/under/suit_jacket/white=119,/obj/item/clothing/under/kilt=85,/obj/item/clothing/under/overalls=85,
+	/obj/item/clothing/under/suit_jacket/really_black=142,/obj/item/clothing/under/pants/jeans=142,/obj/item/clothing/under/pants/classicjeans=142,
+	/obj/item/clothing/under/pants/camo = 142,/obj/item/clothing/under/pants/blackjeans=142,/obj/item/clothing/under/pants/khaki=142,
+	/obj/item/clothing/under/pants/white=142,/obj/item/clothing/under/pants/red=142,/obj/item/clothing/under/pants/black=142,
+	/obj/item/clothing/under/pants/tan=142,/obj/item/clothing/under/pants/blue=142,/obj/item/clothing/under/pants/track=142,
+	/obj/item/clothing/under/sundress=85,/obj/item/clothing/under/blacktango=99,
+	/obj/item/clothing/suit/jacket=138,/obj/item/clothing/glasses/regular=55,/obj/item/clothing/head/sombrero=240,
+	/obj/item/clothing/suit/poncho=295,/obj/item/clothing/suit/ianshirt=4000,/obj/item/clothing/shoes/laceup=99,
+	/obj/item/clothing/shoes/sandal=35,
+	/obj/item/clothing/mask/bandana/black=384,/obj/item/clothing/mask/bandana/skull=399,/obj/item/clothing/mask/bandana/green=384,/obj/item/clothing/mask/bandana/gold=389,
+	/obj/item/clothing/mask/bandana/blue=384,/obj/item/clothing/mask/bluescarf=250,/obj/item/clothing/mask/redscarf=250,/obj/item/clothing/mask/greenscarf=250,
+	/obj/item/clothing/suit/wintercoat=130,/obj/item/clothing/shoes/winterboots=70,/obj/item/clothing/head/santa=50)
 	refill_canister = /obj/item/weapon/vending_refill/clothing
 
 /obj/machinery/vending/clothing/New()

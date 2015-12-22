@@ -139,13 +139,11 @@
 /mob/living/carbon/human/proc/get_pressure_protection()
 	var/pressure_adjustment_coefficient = 1	//Determins how much the clothing you are wearing protects you in percent.
 
-	if(head && (head.flags & STOPSPRESSUREDMAGE))
-		pressure_adjustment_coefficient -= PRESSURE_HEAD_REDUCTION_COEFFICIENT
+	if((head && (head.flags & STOPSPRESSUREDMAGE))&&(wear_suit && (wear_suit.flags & STOPSPRESSUREDMAGE)))
+		pressure_adjustment_coefficient = 0
 
+	//Handles breaches in your space suit. 10 suit damage equals a 100% loss of pressure reduction.
 	if(wear_suit && (wear_suit.flags & STOPSPRESSUREDMAGE))
-		pressure_adjustment_coefficient -= PRESSURE_SUIT_REDUCTION_COEFFICIENT
-
-		//Handles breaches in your space suit. 10 suit damage equals a 100% loss of pressure reduction.
 		if(istype(wear_suit,/obj/item/clothing/suit/space))
 			var/obj/item/clothing/suit/space/S = wear_suit
 			if(S.can_breach && S.damage)
