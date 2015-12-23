@@ -69,6 +69,11 @@
 /obj/item/decoration/snowflake/New()
 	icon_state = "snowflakes_[rand(1,4)]"
 
+/obj/item/decoration/snowflake/afterattack(var/atom/target, var/mob/living/user, flag, params)
+	if(istype(target,/turf/simulated/wall))
+		usr.remove_from_mob(src)
+		src.forceMove(target)
+
 //Snowman head
 /obj/item/decoration/snowman
 	name = "snowman head"

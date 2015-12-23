@@ -73,9 +73,12 @@
 
 /obj/item/weapon/stool/attack_self(mob/user as mob)
 	..()
-	user.remove_from_mob(src)
+	user.drop_from_inventory(src.origin)
 	user.visible_message("\blue [user] puts [src] down.", "\blue You put [src] down.")
 	qdel(src)
+
+/obj/item/weapon/stool/dropped()
+	attack_self(usr)
 
 /obj/item/weapon/stool/attack(mob/M as mob, mob/user as mob)
 	if (prob(5) && istype(M,/mob/living))
