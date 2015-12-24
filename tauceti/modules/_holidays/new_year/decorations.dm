@@ -87,8 +87,26 @@
 
 	layer = 5
 	var/gifts_dealt = 0
+	var/list/decals = list()
 
-/obj/item/device/flashlight/lamp/fir/special/attackby()
+/obj/item/device/flashlight/lamp/fir/special/attackby(obj/item/W, mob/user, params)
+	if (!W) return
+
+	if(!(W.flags & ABSTRACT))
+		if(user.drop_item())
+			user.visible_message("<span class='notice'>[user] attaches [W] to \the [src] .</span>","<span class='notice'>You attache [W] to \the [src].</span>")
+			W.forceMove(loc)
+			W.layer = 5.1	//Item should be on the tree, not under
+			W.mouse_opacity = 0	//Make item a part of the tree
+			decals += W
+			var/list/click_params = params2list(params)
+			//Center the icon where the user clicked.
+			W.pixel_x = (text2num(click_params["icon-x"]) - 16)
+			W.pixel_y = (text2num(click_params["icon-y"]) - 16)
+			if(istype(W,/obj/item/weapon/organ/head))
+				W.pixel_y -= 10	//Head always has 10 pixels shift
+				W.dir = 2	//Rotate head face to us
+				W.transform = turn(null, null)	//Turn it to initial angle
 	return
 
 /obj/item/device/flashlight/lamp/fir/special/attack_hand(mob/user as mob)
@@ -103,9 +121,9 @@
 	var/mob/living/carbon/C = usr
 
 	if(iscarbon(C))
-		C.visible_message("<span class='notice'>[C] shakes [src].</span>","<span class='notice'>You shake [src].</span>")
-
 		if(!gifts_dealt || ((world.time - gifts_dealt) > 3000))
+
+			C.visible_message("<span class='notice'>[C] shakes [src].</span>","<span class='notice'>You shake [src].</span>")
 
 			if(!C.client.prefs.warnbans)
 				C << "<span class='notice'>You understand that this year you was good boy!</span>"
@@ -120,4 +138,15 @@
 			new /obj/item/weapon/present(src.loc)
 			gifts_dealt = world.time
 		else
-			C << "<span class='notice'>You shake [src] but nothing happens.</span>"
+			C.visible_message("<span class='notice'>[C] shakes [src].</span>","<span class='notice'>You shake [src] but nothing happens.</span>")
+
+	if(decals.len)
+		for(var/obj/item/I in decals)
+			I.forceMove(src.loc)
+			I.layer = initial(layer)
+			I.pixel_x = initial(pixel_x)
+			I.pixel_y = initial(pixel_y)
+			I.mouse_opacity = 1
+			decals.Remove(I)
+
+		src.visible_message("<span class='notice'>Something dropped from \the [src].</span>")
