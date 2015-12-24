@@ -97,7 +97,7 @@
 			user.visible_message("<span class='notice'>[user] attaches [W] to \the [src] .</span>","<span class='notice'>You attache [W] to \the [src].</span>")
 			W.forceMove(loc)
 			W.layer = 5.1	//Item should be on the tree, not under
-			W.mouse_opacity = 0	//Make item a part of the tree
+			W.anchored = 1	//Make item a part of the tree
 			decals += W
 			var/list/click_params = params2list(params)
 			//Center the icon where the user clicked.
@@ -146,7 +146,7 @@
 			I.layer = initial(layer)
 			I.pixel_x = initial(pixel_x)
 			I.pixel_y = initial(pixel_y)
-			I.mouse_opacity = 1
+			I.anchored = 0
 			decals.Remove(I)
 
 		src.visible_message("<span class='notice'>Something dropped from \the [src].</span>")
