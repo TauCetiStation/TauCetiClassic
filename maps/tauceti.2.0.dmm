@@ -2385,7 +2385,7 @@
 "aTS" = (/obj/structure/stool/bar,/obj/structure/disposalpipe/junction{tag = "icon-pipe-j2 (NORTH)"; icon_state = "pipe-j2"; dir = 1},/turf/simulated/floor/exodus{icon_state = "bar_floor"},/area/crew_quarters/bar)
 "aTT" = (/obj/machinery/atmospherics/unary/vent_scrubber{dir = 8; icon_state = "on"; name = "Air Scrubber (Normal)"; on = 1; scrub_N2O = 0; scrub_Toxins = 0},/mob/living/carbon/monkey{name = "Pun Pun"; icon_state = "punpun1"},/turf/simulated/floor/exodus{icon_state = "bar_floor"},/area/crew_quarters/bar)
 "aTU" = (/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 4},/turf/simulated/floor/exodus{icon_state = "bar_floor"},/area/crew_quarters/bar)
-"aTV" = (/obj/machinery/firealarm{dir = 2; pixel_y = 24},/obj/item/decoration/tinsel{pixel_y = 32},/obj/item/decoration/snowflake{pixel_x = 32; pixel_y = 0},/obj/item/weapon/present,/obj/item/weapon/present,/turf/simulated/floor/plating/snow,/area/crew_quarters/bar)
+"aTV" = (/obj/machinery/firealarm{dir = 2; pixel_y = 24},/obj/item/decoration/snowflake{pixel_x = 32; pixel_y = 0},/obj/item/weapon/present,/obj/item/weapon/present,/obj/item/decoration/garland{pixel_y = 32},/turf/simulated/floor/plating/snow,/area/crew_quarters/bar)
 "aTW" = (/obj/structure/reagent_dispensers/beerkeg,/turf/simulated/floor/exodus{icon_state = "bar_floor"},/area/crew_quarters/bar)
 "aTX" = (/turf/simulated/floor{icon_state = "cafeteria"; dir = 5},/area/crew_quarters/kitchen)
 "aTY" = (/obj/machinery/smartfridge,/turf/simulated/wall,/area/crew_quarters/kitchen)

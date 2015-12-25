@@ -98,6 +98,7 @@ var/list/slot_equipment_priority = list( \
 /mob/proc/put_in_l_hand(var/obj/item/W)
 	if(lying && !(W.flags&ABSTRACT))	return 0
 	if(!istype(W))		return 0
+	if(W.anchored)		return 0	//Anchored things shouldn't be picked up because they... anchored?!
 	if(!l_hand)
 		W.loc = src		//TODO: move to equipped?
 		l_hand = W
@@ -116,6 +117,7 @@ var/list/slot_equipment_priority = list( \
 /mob/proc/put_in_r_hand(var/obj/item/W)
 	if(lying && !(W.flags&ABSTRACT))	return 0
 	if(!istype(W))		return 0
+	if(W.anchored)		return 0	//Anchored things shouldn't be picked up because they... anchored?!
 	if(!r_hand)
 		W.loc = src
 		r_hand = W

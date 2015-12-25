@@ -34,8 +34,6 @@
 			if (!R && replace)
 				user.put_in_hands(new_item)
 		return
-	..()
-
 
 /obj/item/stack/rods/attack_self(mob/user as mob)
 	src.add_fingerprint(user)
