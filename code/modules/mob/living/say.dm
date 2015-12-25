@@ -176,7 +176,18 @@ var/list/department_radio_keys = list(
 
 	var/speech_bubble_test = say_test(message)
 	var/image/speech_bubble = image('icons/mob/talk.dmi',src,"h[speech_bubble_test]")
-	spawn(30) qdel(speech_bubble)
+
+	//Speech bubble animation
+	if(!typing_shown && !typing)
+		speech_bubble.alpha = 0
+		speech_bubble.transform = matrix()*0.5
+		animate(speech_bubble, transform = matrix(), alpha = 255, time = 2, easing = CUBIC_EASING)
+	typing_shown = 1
+	spawn(30)
+		animate(speech_bubble, alpha = 0, time = 2, easing = CUBIC_EASING)
+		spawn(2)
+			qdel(speech_bubble)
+			typing_shown = 0
 
 	for(var/mob/M in listening)
 		M << speech_bubble
