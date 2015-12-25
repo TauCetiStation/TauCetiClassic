@@ -47,6 +47,8 @@
 	if(stat == DEAD)	return
 	if(!gibbed)
 		emote("deathgasp")
+		if(typing)	//turn off typing indicator
+			qdel(typing_indicator)
 	stat = DEAD
 	update_canmove()
 	if(camera)

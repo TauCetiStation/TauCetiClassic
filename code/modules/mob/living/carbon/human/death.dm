@@ -99,6 +99,8 @@
 
 	if(!gibbed)
 		emote("deathgasp") //let the world KNOW WE ARE DEAD
+		if(typing)	//turn off typing indicator
+			qdel(typing_indicator)
 
 		//For ninjas exploding when they die.
 		if( istype(wear_suit, /obj/item/clothing/suit/space/space_ninja) && wear_suit:s_initialized )
