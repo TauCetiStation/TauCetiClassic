@@ -5,29 +5,30 @@
 /mob/var/last_typed
 /mob/var/last_typed_time
 
-/mob/var/obj/effect/decal/typing_indicator
+/mob/var/image/typing_indicator
+/mob/var/typing_shown = 0
 
 /mob/proc/set_typing_indicator(var/state)
 
 	if(!typing_indicator)
-		typing_indicator = new
-		typing_indicator.icon = 'icons/mob/talk.dmi'
-		typing_indicator.icon_state = "typing"
+		typing_indicator = image('icons/mob/talk.dmi',src,"typing")
+		typing_indicator.alpha = 0
+		typing_indicator.transform = matrix()*0.5
+		animate(typing_indicator, transform = matrix(), alpha = 255, time = 2, easing = CUBIC_EASING)
 
 	if(client && !stat)
-		typing_indicator.invisibility  = invisibility
-		if(client.prefs.toggles & SHOW_TYPING)
-			overlays -= typing_indicator
+		if(state)
+			if(!typing)
+				typing = 1
+				for(var/mob/M in viewers(src, null))
+					M << typing_indicator
 		else
-			if(state)
-				if(!typing)
-					overlays += typing_indicator
-					typing = 1
-			else
-				if(typing)
-					overlays -= typing_indicator
+			if(typing)
+				animate(typing_indicator, alpha = 0, time = 2, easing = CUBIC_EASING)
+				spawn(2)
+					qdel(typing_indicator)
 					typing = 0
-			return state
+		return state
 
 /mob/verb/say_wrapper()
 	set name = ".Say"
@@ -35,27 +36,25 @@
 
 	set_typing_indicator(1)
 	hud_typing = 1
+	typing_shown = 1
 	var/message = input("","say (text)") as text
 	hud_typing = 0
 	set_typing_indicator(0)
 	if(message)
 		say_verb(message)
+	typing_shown = 0
 
 /mob/verb/me_wrapper()
 	set name = ".Me"
 	set hidden = 1
 
-	set_typing_indicator(1)
-	hud_typing = 1
 	var/message = input("","me (text)") as text
-	hud_typing = 0
-	set_typing_indicator(0)
 	if(message)
 		me_verb(message)
 
 /mob/proc/handle_typing_indicator()
 	if(client)
-		if(!(client.prefs.toggles & SHOW_TYPING) && !hud_typing)
+		if(!hud_typing)
 			var/temp = winget(client, "input", "text")
 
 			if (temp != last_typed)
@@ -67,22 +66,6 @@
 				return
 			if(length(temp) > 5 && findtext(temp, "Say \"", 1, 7))
 				set_typing_indicator(1)
-			else if(length(temp) > 3 && findtext(temp, "Me ", 1, 5))
-				set_typing_indicator(1)
 
 			else
 				set_typing_indicator(0)
-
-/client/verb/typing_indicator()
-	set name = "Show/Hide Typing Indicator"
-	set category = "Preferences"
-	set desc = "Toggles showing an indicator when you are typing emote or say message."
-	prefs.toggles ^= SHOW_TYPING
-	//prefs.save_preferences()
-	src << "You will [(prefs.toggles & SHOW_TYPING) ? "no longer" : "now"] display a typing indicator."
-
-	// Clear out any existing typing indicator.
-	if(prefs.toggles & SHOW_TYPING)
-		if(istype(mob)) mob.set_typing_indicator(0)
-
-	feedback_add_details("admin_verb","TID") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
