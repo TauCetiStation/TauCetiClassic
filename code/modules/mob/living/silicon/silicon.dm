@@ -118,7 +118,7 @@
 /mob/living/silicon/Stat()
 	..()
 	statpanel("Status")
-	if (src.client.statpanel == "Status")
+	if (src.client && src.client.statpanel == "Status")
 		show_station_time()
 		show_emergency_shuttle_eta()
 		show_system_integrity()
@@ -152,7 +152,7 @@
 
 /mob/living/silicon/remove_language(var/rem_language)
 	..(rem_language)
-	
+
 	for (var/datum/language/L in speech_synthesizer_langs)
 		if (L.name == rem_language)
 			speech_synthesizer_langs -= L

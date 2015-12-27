@@ -62,13 +62,16 @@
 /obj/structure/pbag/verb/hang()
 	set name = "Hang Bag"
 	set category = "Object"
-	set src in oview(1)
+	set src in view(1)
 
-	playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
-	src.anchored = !src.anchored
-	usr.visible_message("[usr] [anchored? "secures":"unsecures"] the [src].", \
-		"You [anchored? "secure":"undo"] the external bolts.", \
-		"You hear a ratchet")
+	var/mob/living/carbon/user = usr
+
+	if(iscarbon(user))
+		playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+		src.anchored = !src.anchored
+		user.visible_message("[user] [anchored? "secures":"unsecures"] the [src].", \
+			"You [anchored? "secure":"undo"] the external bolts.", \
+			"You hear a ratchet")
 
 	if(anchored)
 		icon_state = "pbag"

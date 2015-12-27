@@ -65,11 +65,11 @@
 
 
 #define PRESSURE_DAMAGE_COEFFICIENT 4 //The amount of pressure damage someone takes is equal to (pressure / HAZARD_HIGH_PRESSURE)*PRESSURE_DAMAGE_COEFFICIENT, with the maximum of MAX_PRESSURE_DAMAGE
-#define MAX_HIGH_PRESSURE_DAMAGE 5	//This used to be 20... I got this much random rage for some retarded decision by polymorph?! Polymorph now lies in a pool of blood with a katana jammed in his spleen. ~Errorage --PS: The katana did less than 20 damage to him :(
-#define LOW_PRESSURE_DAMAGE 5 	//The amount of damage someone takes when in a low pressure area (The pressure threshold is so low that it doesn't make sense to do any calculations, so it just applies this flat value).
+#define MAX_HIGH_PRESSURE_DAMAGE 8	//This used to be 20... I got this much random rage for some retarded decision by polymorph?! Polymorph now lies in a pool of blood with a katana jammed in his spleen. ~Errorage --PS: The katana did less than 20 damage to him :(
+#define LOW_PRESSURE_DAMAGE 8 	//The amount of damage someone takes when in a low pressure area (The pressure threshold is so low that it doesn't make sense to do any calculations, so it just applies this flat value).
 
-#define PRESSURE_SUIT_REDUCTION_COEFFICIENT 0.8 //This is how much (percentual) a suit with the flag STOPSPRESSUREDMAGE reduces pressure.
-#define PRESSURE_HEAD_REDUCTION_COEFFICIENT 0.4 //This is how much (percentual) a helmet/hat with the flag STOPSPRESSUREDMAGE reduces pressure.
+//#define PRESSURE_SUIT_REDUCTION_COEFFICIENT 0.8 //This is how much (percentual) a suit with the flag STOPSPRESSUREDMAGE reduces pressure.
+//#define PRESSURE_HEAD_REDUCTION_COEFFICIENT 0.4 //This is how much (percentual) a helmet/hat with the flag STOPSPRESSUREDMAGE reduces pressure.
 
 // Doors!
 #define DOOR_CRUSH_DAMAGE 10
@@ -639,22 +639,26 @@ var/list/liftable_structures = list(\
 #define SOUND_MIDI		2
 #define SOUND_AMBIENCE	4
 #define SOUND_LOBBY		8
-#define CHAT_OOC		16
-#define CHAT_DEAD		32
-#define CHAT_GHOSTEARS	64
-#define CHAT_GHOSTSIGHT	128
-#define CHAT_PRAYER		256
-#define CHAT_RADIO		512
-#define CHAT_ATTACKLOGS	1024
-#define CHAT_DEBUGLOGS	2048
-#define CHAT_LOOC		4096
-#define CHAT_GHOSTRADIO 8192
-#define SHOW_TYPING 	16384
-#define SHOW_ANIMATIONS	32768
+#define SHOW_ANIMATIONS	16
+#define SHOW_PROGBAR	32
 
+#define TOGGLES_DEFAULT (SOUND_ADMINHELP|SOUND_MIDI|SOUND_AMBIENCE|SOUND_LOBBY|SHOW_ANIMATIONS|SHOW_PROGBAR)
 
-#define TOGGLES_DEFAULT (SOUND_ADMINHELP|SOUND_MIDI|SOUND_AMBIENCE|SOUND_LOBBY|CHAT_OOC|CHAT_DEAD|CHAT_GHOSTEARS|CHAT_GHOSTSIGHT|CHAT_PRAYER|CHAT_RADIO|CHAT_ATTACKLOGS|CHAT_LOOC)
+//Chat toggles
+#define CHAT_OOC		1
+#define CHAT_DEAD		2
+#define CHAT_GHOSTEARS	4
+#define CHAT_GHOSTSIGHT	8
+#define CHAT_PRAYER		16
+#define CHAT_RADIO		32
+#define CHAT_ATTACKLOGS	64
+#define CHAT_DEBUGLOGS	128
+#define CHAT_LOOC		256
+#define CHAT_GHOSTRADIO 512
 
+#define TOGGLES_DEFAULT_CHAT (CHAT_OOC|CHAT_DEAD|CHAT_GHOSTEARS|CHAT_GHOSTSIGHT|CHAT_PRAYER|CHAT_RADIO|CHAT_GHOSTRADIO|CHAT_ATTACKLOGS|CHAT_LOOC)
+
+//Roles preferences
 #define BE_TRAITOR		1
 #define BE_OPERATIVE	2
 #define BE_CHANGELING	4
@@ -664,13 +668,13 @@ var/list/liftable_structures = list(\
 #define BE_ALIEN		64
 #define BE_PAI			128
 #define BE_CULTIST		256
-#define BE_MONKEY		512
-#define BE_NINJA		1024
-#define BE_RAIDER		2048
-#define BE_PLANT		4096
-#define BE_MEME			8192
-#define BE_MUTINEER   	16384
-#define BE_SHADOWLING	32768
+#define BE_NINJA		512
+#define BE_RAIDER		1024
+#define BE_PLANT		2045
+#define BE_MEME			4096
+#define BE_MUTINEER   	8192
+#define BE_SHADOWLING	16384
+#define BE_ABDUCTOR		32768
 
 var/list/be_special_flags = list(
 	"Traitor" = BE_TRAITOR,
@@ -682,13 +686,13 @@ var/list/be_special_flags = list(
 	"Xenomorph" = BE_ALIEN,
 	"pAI" = BE_PAI,
 	"Cultist" = BE_CULTIST,
-	"Monkey" = BE_MONKEY,
 	"Ninja" = BE_NINJA,
 	"Raider" = BE_RAIDER,
 	"Diona" = BE_PLANT,
 	"Meme" = BE_MEME,
 	"Mutineer" = BE_MUTINEER,
-	"Shadowling" = BE_SHADOWLING
+	"Shadowling" = BE_SHADOWLING,
+	"Abductor" = BE_ABDUCTOR
 	)
 
 #define AGE_MIN 25			//youngest a character can be
@@ -742,27 +746,27 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 	)
 
 //Species flags.
-#define NO_BLOOD 1
-#define NO_BREATHE 2
-#define NO_SCAN 4
-#define NO_PAIN 8
+#define NO_BLOOD		1
+#define NO_BREATHE		2
+#define NO_SCAN			4
+#define NO_PAIN			8
 
-#define HAS_SKIN_TONE 16
-#define HAS_SKIN_COLOR 32
-#define HAS_LIPS 64
-#define HAS_UNDERWEAR 128
-#define HAS_TAIL 256
+#define HAS_SKIN_TONE	16
+#define HAS_SKIN_COLOR	32
+#define HAS_LIPS		64
+#define HAS_UNDERWEAR	128
+#define HAS_TAIL		256
 
-#define IS_SLOW 512
-#define IS_PLANT 1024
-#define IS_WHITELISTED 2048
+#define IS_PLANT		512
+#define IS_WHITELISTED	1024
 
-#define RAD_ABSORB 4096
-#define REQUIRE_LIGHT 8192
+#define RAD_ABSORB		2048
+#define REQUIRE_LIGHT	4096
 
-#define IS_SYNTHETIC 16384
+#define IS_SYNTHETIC	8192
 
-#define RAD_IMMUNE 32768
+#define RAD_IMMUNE		16384
+#define VIRUS_IMMUNE	32768
 
 //Language flags.
 #define WHITELISTED 1  		// Language is available if the speaker is whitelisted.
@@ -823,3 +827,27 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 	dview_mob.see_invisible = invis_flags; \
 	for(type in view(range, dview_mob))
 #define END_FOR_DVIEW dview_mob.loc = null
+
+//Start of atom.appearence_flags
+
+//Disabling certain features
+#define APPEARANCE_IGNORE_TRANSFORM			RESET_TRANSFORM
+#define APPEARANCE_IGNORE_COLOUR			RESET_COLOR
+#define	APPEARANCE_IGNORE_CLIENT_COLOUR		NO_CLIENT_COLOR
+#define APPEARANCE_IGNORE_COLOURING			RESET_COLOR|NO_CLIENT_COLOR
+#define APPEARANCE_IGNORE_ALPHA				RESET_ALPHA
+#define APPEARANCE_NORMAL_GLIDE				~LONG_GLIDE
+
+//Enabling certain features
+#define APPEARANCE_CONSIDER_TRANSFORM		~RESET_TRANSFORM
+#define APPEARANCE_CONSIDER_COLOUR			~RESET_COLOUR
+#define APPEARANCE_CONSIDER_CLIENT_COLOUR	~NO_CLIENT_COLOR
+#define APPEARANCE_CONSIDER_COLOURING		~RESET_COLOR|~NO_CLIENT_COLOR
+#define APPEARANCE_CONSIDER_ALPHA			~RESET_ALPHA
+#define APPEARANCE_LONG_GLIDE				LONG_GLIDE
+
+//Consider these images/atoms as part of the UI/HUD
+#define APPEARANCE_UI_IGNORE_ALPHA			RESET_COLOR|RESET_TRANSFORM|NO_CLIENT_COLOR|RESET_ALPHA
+#define APPEARANCE_UI						RESET_COLOR|RESET_TRANSFORM|NO_CLIENT_COLOR
+
+//End of atom.appearence_flags

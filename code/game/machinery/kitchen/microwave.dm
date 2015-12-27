@@ -59,7 +59,7 @@
 				"\blue [user] starts to fix part of the microwave.", \
 				"\blue You start to fix part of the microwave." \
 			)
-			if (do_after(user,20))
+			if (do_after(user,20,target = src))
 				user.visible_message( \
 					"\blue [user] fixes part of the microwave.", \
 					"\blue You have fixed part of the microwave." \
@@ -70,7 +70,7 @@
 				"\blue [user] starts to fix part of the microwave.", \
 				"\blue You start to fix part of the microwave." \
 			)
-			if (do_after(user,20))
+			if (do_after(user,20,target = src))
 				user.visible_message( \
 					"\blue [user] fixes the microwave.", \
 					"\blue You have fixed the microwave." \
@@ -88,7 +88,7 @@
 				"\blue [user] starts to clean the microwave.", \
 				"\blue You start to clean the microwave." \
 			)
-			if (do_after(user,20))
+			if (do_after(user,20,target = src))
 				user.visible_message( \
 					"\blue [user]  has cleaned  the microwave.", \
 					"\blue You have cleaned the microwave." \
@@ -111,7 +111,7 @@
 				"\blue [user] has added one of [O] to \the [src].", \
 				"\blue You add one of [O] to \the [src].")
 		else
-		//	user.before_take_item(O)	//This just causes problems so far as I can tell. -Pete
+		//	user.remove_from_mob(O)	//This just causes problems so far as I can tell. -Pete
 			user.drop_item()
 			O.loc = src
 			user.visible_message( \

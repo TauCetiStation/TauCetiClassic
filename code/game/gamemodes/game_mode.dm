@@ -288,9 +288,9 @@ Implants;
 		if(BE_NINJA)		roletext="ninja"
 		if(BE_RAIDER)		roletext="raider"
 		if(BE_MEME)			roletext="meme"
-		if(BE_MEME)			roletext="meme"
 		if(BE_MUTINEER)		roletext="mutineer"
 		if(BE_SHADOWLING)	roletext="shadowling"
+		if(BE_ABDUCTOR)		roletext="abductor"
 
 	// Assemble a list of active players without jobbans.
 	for(var/mob/new_player/player in player_list)
@@ -498,7 +498,7 @@ proc/get_nt_opposed()
 ///////////////////////////
 
 /datum/game_mode/proc/printplayer(var/datum/mind/ply)
-	var/role = "\improper[ply.assigned_role]"
+	var/role = "\improper[ply.special_role]"
 	var/text = "<br><b>[ply.name]</b>(<b>[ply.key]</b>) as \a <b>[role]</b> ("
 	if(ply.current)
 		if(ply.current.stat == DEAD)
@@ -511,4 +511,15 @@ proc/get_nt_opposed()
 		text += "body destroyed"
 	text += ")"
 
+	return text
+
+/datum/game_mode/proc/printobjectives(datum/mind/ply)
+	var/text = ""
+	var/count = 1
+	for(var/datum/objective/objective in ply.objectives)
+		if(objective.check_completion())
+			text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <font color='green'>Success!</font>"
+		else
+			text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <font color='red'>Fail.</font>"
+		count++
 	return text

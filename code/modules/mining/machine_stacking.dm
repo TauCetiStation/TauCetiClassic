@@ -29,15 +29,19 @@
 
 	var/dat
 
-	dat += text("<h1>Stacking unit console</h1><hr><table>")
+	dat += text("<table>")
 
 	for(var/stacktype in machine.stack_storage)
 		if(machine.stack_storage[stacktype] > 0)
 			dat += "<tr><td width = 150><b>[capitalize(stacktype)]:</b></td><td width = 30>[machine.stack_storage[stacktype]]</td><td width = 50><A href='?src=\ref[src];release_stack=[stacktype]'>\[release\]</a></td></tr>"
 	dat += "</table><hr>"
 	dat += text("<br>Stacking: [machine.stack_amt] <A href='?src=\ref[src];change_stack=1'>\[change\]</a><br><br>")
-	user << browse("[dat]", "window=console_stacking_machine")
-	onclose(user, "console_stacking_machine")
+
+	var/datum/browser/popup = new(user, "window=processor_console", "Stacking Unit Console", 400, 400)
+	popup.set_content(dat)
+	popup.open()
+	return
+
 /obj/machinery/mineral/stacking_unit_console/Topic(href, href_list)
 	if(..())
 		return
@@ -54,6 +58,8 @@
 	src.add_fingerprint(usr)
 	src.updateUsrDialog()
 	return
+
+
 /**********************Mineral stacking unit**************************/
 /obj/machinery/mineral/stacking_machine
 	name = "stacking machine"
@@ -67,6 +73,7 @@
 	var/list/stack_storage[0]
 	var/list/stack_paths[0]
 	var/stack_amt = 50; // Amount to stack before releassing
+
 /obj/machinery/mineral/stacking_machine/New()
 	..()
 	for(var/stacktype in typesof(/obj/item/stack/sheet/mineral)-/obj/item/stack/sheet/mineral)
@@ -89,18 +96,20 @@
 			if(src.output) break
 		return
 	return
+
 /obj/machinery/mineral/stacking_machine/process()
 	if (src.output && src.input)
 		var/turf/T = get_turf(input)
 		for(var/obj/item/O in T.contents)
 			if(!O) return
 			if(istype(O,/obj/item/stack))
-				if(!isnull(stack_storage[O.name]))
-					stack_storage[O.name]++
-					O.loc = null
-					qdel(O)
+				var/obj/item/stack/S = O
+				if(!isnull(stack_storage[S.name]))
+					stack_storage[S.name] += S.amount
+					S.loc = null
+					qdel(S)
 				else
-					O.loc = output.loc
+					S.loc = output.loc
 			else
 				O.loc = output.loc
 	//Output amounts that are past stack_amt.

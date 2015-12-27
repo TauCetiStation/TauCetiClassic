@@ -24,7 +24,7 @@
 	..(user, target)
 
 /obj/effect/proc_holder/changeling/weapon/sting_action(var/mob/user)
-	if(!user.canUnEquip(user.get_active_hand()))
+	if(!user.unEquip(user.get_active_hand()))
 		user << "The [user.get_active_hand()] is stuck to your hand, you cannot grow a [weapon_name_simple] over it!"
 		return
 	var/obj/item/W = new weapon_type(user)
@@ -73,10 +73,10 @@
 	..(H, target)
 
 /obj/effect/proc_holder/changeling/suit/sting_action(var/mob/living/carbon/human/user)
-	if(!user.canUnEquip(user.wear_suit))
+	if(!user.unEquip(user.wear_suit))
 		user << "\the [user.wear_suit] is stuck to your body, you cannot grow a [suit_name_simple] over it!"
 		return
-	if(!user.canUnEquip(user.head))
+	if(!user.unEquip(user.head))
 		user << "\the [user.head] is stuck on your head, you cannot grow a [helmet_name_simple] over it!"
 		return
 
@@ -240,7 +240,7 @@
 	if(ishuman(loc))
 		var/mob/living/carbon/human/H = loc
 		H.reagents.add_reagent("dexalinp", REAGENTS_METABOLISM)
-		var/datum/organ/internal/lungs/L = H.internal_organs["lungs"]
+		var/datum/organ/internal/lungs/L = H.internal_organs_by_name["lungs"]
 		if(L.damage >= 5)
 			L.damage -= 5
 

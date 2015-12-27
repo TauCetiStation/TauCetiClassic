@@ -47,12 +47,26 @@
 	else
 		switch(species.name)
 			if("Tajaran")
-				message = replacetext(message, "р", pick(list("ррр","рррр","ррррр","рррррр")))
-				message = replacetext(message, "Р", pick(list("Ррр","Рррр","Ррррр","Рррррр")))
+				message = replacetext(message, "р", pick(list("ррр","рррр")))
+				message = replacetext(message, "Р", pick(list("Ррр","Рррр")))
 			if("Unathi")
-				message = replacetext(message, "с", pick(list("ссс","сссс","ссссс","сссссс")))
+				message = replacetext(message, "с", pick(list("ссс","сссс")))
 				//И для заглавной... Фигова копипаста. Кто знает решение без второй обработки для заглавной буквы, обязательно переделайте.
-				message = replacetext(message, "С", pick(list("Ссс","Сссс","Ссссс","Сссссс")))
+				message = replacetext(message, "С", pick(list("Ссс","Сссс")))
+			if("Abductor")
+				var/mob/living/carbon/human/user = usr
+				for(var/mob/living/carbon/human/H in mob_list)
+					if(H.species.name != "Abductor")
+						continue
+					else
+						if(user.team != H.team)
+							continue
+						else
+							H << "<i><font color=#800080><b>[user.real_name]:</b> [sanitize(message)]</font></i>"
+							//return - technically you can add more aliens to a team
+				for(var/mob/M in dead_mob_list)
+					M << "<i><font color=#800080><b>[user.real_name]:</b> [sanitize(message)]</font></i>"
+				return ""
 
 	message = capitalize(trim(message))
 

@@ -120,7 +120,7 @@
 		R.amount = amount
 		R.max_amount = amount
 		R.price = price
-		R.display_color = pick("red","blue","green")
+		R.display_color = pick("red","orange","green")
 
 		if(hidden)
 			hidden_records += R
@@ -187,19 +187,19 @@
 		var/turf/T = user.loc
 		user << "<span class='notice'>You begin [anchored ? "unwrenching" : "wrenching"] the [src].</span>"
 		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-		sleep(40)
-		if( !istype(src, /obj/machinery/vending) || !user || !W || !T )	return
-		if( user.loc == T && user.get_active_hand() == W )
-			anchored = !anchored
-			user << "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>"
-			if (!(src.anchored & powered()))
-				src.icon_state = "[initial(icon_state)]-off"
-				stat |= NOPOWER
-				set_light(0)
-			else
-				icon_state = initial(icon_state)
-				stat &= ~NOPOWER
-				set_light(light_range_on, light_power_on)
+		if(do_after(user, 40, target = src))
+			if( !istype(src, /obj/machinery/vending) || !user || !W || !T )	return
+			if( user.loc == T && user.get_active_hand() == W )
+				anchored = !anchored
+				user << "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>"
+				if (!(src.anchored & powered()))
+					src.icon_state = "[initial(icon_state)]-off"
+					stat |= NOPOWER
+					set_light(0)
+				else
+					icon_state = initial(icon_state)
+					stat &= ~NOPOWER
+					set_light(light_range_on, light_power_on)
 	else if(istype(W, /obj/item/weapon/card) && currently_vending)
 		var/obj/item/weapon/card/I = W
 		scan_card(I)
@@ -314,24 +314,21 @@
 	var/vendorname = (src.name)  //import the machine's name
 
 	if(src.currently_vending)
-		var/dat = "<TT><center><b>[vendorname]</b></center><hr /><br>" //display the name, and added a horizontal rule
+		var/dat
 		dat += "<b>You have selected [currently_vending.product_name].<br>Please swipe your ID to pay for the article.</b><br>"
 		dat += "<a href='byond://?src=\ref[src];cancel_buying=1'>Cancel</a>"
-		user << browse(dat, "window=vending")
-		onclose(user, "")
+		var/datum/browser/popup = new(user, "window=vending", "[vendorname]", 400, 550)
+		popup.set_content(dat)
+		popup.open()
 		return
 
-	var/dat = "<TT><center><b>[vendorname]</b></center><hr /><br>" //display the name, and added a horizontal rule
-	dat += "<b>Select an item: </b><br><br>" //the rest is just general spacing and bolding
-
-	if (premium.len > 0)
-		dat += "<b>Coin slot:</b> [coin ? coin : "No coin inserted"] (<a href='byond://?src=\ref[src];remove_coin=1'>Remove</A>)<br>"
-
-	if (ewallet)
-		dat += "<b>Charge card's credits:</b> [ewallet ? ewallet.worth : "No charge card inserted"] (<a href='byond://?src=\ref[src];remove_ewallet=1'>Remove</A>)<br><br>"
+	var/dat
+	dat += "<h3>Select an item</h3>"
+	dat += "<div class='statusDisplay'>"
 
 	if (src.product_records.len == 0)
 		dat += "<font color = 'red'>No product loaded!</font>"
+
 	else
 		var/list/display_records = src.product_records
 		if(src.extended_inventory)
@@ -341,18 +338,26 @@
 		if(src.coin && src.extended_inventory)
 			display_records = src.product_records + src.hidden_records + src.coin_records
 
+		dat += "<ul>"
 		for (var/datum/data/vending_product/R in display_records)
-			dat += "<FONT color = '[R.display_color]'><B>[R.product_name]</B>:"
+			dat += "<li>"
+			if (R.amount > 0)
+				dat += " <a href='byond://?src=\ref[src];vend=\ref[R]'>Vend</A>"
+			else
+				dat += " <font color = 'red'>SOLD OUT</font>"
+			dat += "<font color = '[R.display_color]'><B>[R.product_name]</B>:"
 			dat += " <b>[R.amount]</b> </font>"
 			if(R.price)
 				dat += " <b>(Price: [R.price])</b>"
-			if (R.amount > 0)
-				dat += " <a href='byond://?src=\ref[src];vend=\ref[R]'>(Vend)</A>"
-			else
-				dat += " <font color = 'red'>SOLD OUT</font>"
-			dat += "<br>"
+			dat += "</li>"
+		dat += "</ul>"
+	dat += "</div>"
 
-		dat += "</TT>"
+	if (premium.len > 0)
+		dat += "<b>Coin slot:</b> [coin ? coin : "No coin inserted"] <a href='byond://?src=\ref[src];remove_coin=1'>Remove</A><br>"
+
+	if (ewallet)
+		dat += "<b>Charge card's credits:</b> [ewallet ? ewallet.worth : "No charge card inserted"] (<a href='byond://?src=\ref[src];remove_ewallet=1'>Remove</A>)<br><br>"
 
 	if(panel_open)
 		var/list/vendwires = list(
@@ -381,8 +386,9 @@
 		if (product_slogans != "")
 			dat += "The speaker switch is [src.shut_up ? "off" : "on"]. <a href='?src=\ref[src];togglevoice=[1]'>Toggle</a>"
 
-	user << browse(dat, "window=vending")
-	onclose(user, "")
+	var/datum/browser/popup = new(user, "window=vending", "[vendorname]", 450, 500)
+	popup.set_content(dat)
+	popup.open()
 	return
 
 /obj/machinery/vending/Topic(href, href_list)
@@ -997,36 +1003,38 @@
 	product_slogans = "Dress for success!;Prepare to look swagalicious!;Look at all this free swag!;Why leave style up to fate? Use the ClothesMate!"
 	vend_delay = 15
 	vend_reply = "Thank you for using the ClothesMate!"
-	products = list(/obj/item/clothing/head/that=2,/obj/item/clothing/head/fedora=1,/obj/item/clothing/glasses/monocle=1,
-	/obj/item/clothing/suit/jacket=2, /obj/item/clothing/suit/jacket/puffer/vest=2, /obj/item/clothing/suit/jacket/puffer=2,
-	/obj/item/clothing/under/suit_jacket/navy=1,/obj/item/clothing/under/suit_jacket/really_black=1,/obj/item/clothing/under/suit_jacket/burgundy=1,
-	/obj/item/clothing/under/suit_jacket/charcoal=1, /obj/item/clothing/under/suit_jacket/white=1,/obj/item/clothing/under/kilt=1,/obj/item/clothing/under/overalls=1,
-	/obj/item/clothing/under/suit_jacket/really_black=2,/obj/item/clothing/under/pants/jeans=3,/obj/item/clothing/under/pants/classicjeans=2,
-	/obj/item/clothing/under/pants/camo = 1,/obj/item/clothing/under/pants/blackjeans=2,/obj/item/clothing/under/pants/khaki=2,
-	/obj/item/clothing/under/pants/white=2,/obj/item/clothing/under/pants/red=1,/obj/item/clothing/under/pants/black=2,
-	/obj/item/clothing/under/pants/tan=2,/obj/item/clothing/under/pants/blue=1,/obj/item/clothing/under/pants/track=1,
-	/obj/item/clothing/under/sundress=2,/obj/item/clothing/under/blacktango=1,
-	/obj/item/clothing/suit/jacket=3,/obj/item/clothing/glasses/regular=2,/obj/item/clothing/head/sombrero=1,
-	/obj/item/clothing/suit/poncho=1,/obj/item/clothing/suit/ianshirt=1,/obj/item/clothing/shoes/laceup=2,
-	/obj/item/clothing/shoes/sandal=1,
+	products = list(/obj/item/clothing/head/that=4,/obj/item/clothing/head/fedora=2,/obj/item/clothing/glasses/monocle=2,
+	/obj/item/clothing/suit/jacket=4, /obj/item/clothing/suit/jacket/puffer/vest=4, /obj/item/clothing/suit/jacket/puffer=4,
+	/obj/item/clothing/under/suit_jacket/navy=2,/obj/item/clothing/under/suit_jacket/really_black=2,/obj/item/clothing/under/suit_jacket/burgundy=2,
+	/obj/item/clothing/under/suit_jacket/charcoal=2, /obj/item/clothing/under/suit_jacket/white=2,/obj/item/clothing/under/kilt=2,/obj/item/clothing/under/overalls=2,
+	/obj/item/clothing/under/suit_jacket/really_black=4,/obj/item/clothing/under/pants/jeans=6,/obj/item/clothing/under/pants/classicjeans=4,
+	/obj/item/clothing/under/pants/camo = 2,/obj/item/clothing/under/pants/blackjeans=4,/obj/item/clothing/under/pants/khaki=4,
+	/obj/item/clothing/under/pants/white=4,/obj/item/clothing/under/pants/red=2,/obj/item/clothing/under/pants/black=4,
+	/obj/item/clothing/under/pants/tan=4,/obj/item/clothing/under/pants/blue=2,/obj/item/clothing/under/pants/track=2,
+	/obj/item/clothing/under/sundress=4,/obj/item/clothing/under/blacktango=2,
+	/obj/item/clothing/suit/jacket=6,/obj/item/clothing/glasses/regular=4,/obj/item/clothing/head/sombrero=2,
+	/obj/item/clothing/suit/poncho=2,/obj/item/clothing/suit/ianshirt=1,/obj/item/clothing/shoes/laceup=4,
+	/obj/item/clothing/shoes/sandal=2,
 	/obj/item/clothing/mask/bandana/black=2,/obj/item/clothing/mask/bandana/skull=2,/obj/item/clothing/mask/bandana/green=2,/obj/item/clothing/mask/bandana/gold=2,
-	/obj/item/clothing/mask/bandana/blue=2)
-	contraband = list(/obj/item/clothing/under/syndicate/tacticool=1,/obj/item/clothing/mask/balaclava=1,/obj/item/clothing/head/ushanka=1,/obj/item/clothing/under/soviet=1)
-	premium = list(/obj/item/clothing/under/suit_jacket/checkered=1,/obj/item/clothing/head/mailman=1,/obj/item/clothing/under/rank/mailman=1,/obj/item/clothing/suit/jacket/leather=1,/obj/item/clothing/suit/jacket/leather/overcoat=1,/obj/item/clothing/under/pants/mustangjeans=1)
-	prices = list(/obj/item/clothing/head/that=4199,/obj/item/clothing/head/fedora=4199,/obj/item/clothing/glasses/monocle=1099,
-	/obj/item/clothing/suit/jacket=2999, /obj/item/clothing/suit/jacket/puffer/vest=2349, /obj/item/clothing/suit/jacket/puffer=2199,
-	/obj/item/clothing/under/suit_jacket/navy=1199,/obj/item/clothing/under/suit_jacket/really_black=1199,/obj/item/clothing/under/suit_jacket/burgundy=1199,
-	/obj/item/clothing/under/suit_jacket/charcoal=1199, /obj/item/clothing/under/suit_jacket/white=1199,/obj/item/clothing/under/kilt=850,/obj/item/clothing/under/overalls=850,
-	/obj/item/clothing/under/suit_jacket/really_black=1425,/obj/item/clothing/under/pants/jeans=1425,/obj/item/clothing/under/pants/classicjeans=1425,
-	/obj/item/clothing/under/pants/camo = 1425,/obj/item/clothing/under/pants/blackjeans=1425,/obj/item/clothing/under/pants/khaki=1425,
-	/obj/item/clothing/under/pants/white=1425,/obj/item/clothing/under/pants/red=1425,/obj/item/clothing/under/pants/black=1425,
-	/obj/item/clothing/under/pants/tan=1425,/obj/item/clothing/under/pants/blue=1425,/obj/item/clothing/under/pants/track=1425,
-	/obj/item/clothing/under/sundress=850,/obj/item/clothing/under/blacktango=990,
-	/obj/item/clothing/suit/jacket=1380,/obj/item/clothing/glasses/regular=550,/obj/item/clothing/head/sombrero=2400,
-	/obj/item/clothing/suit/poncho=2950,/obj/item/clothing/suit/ianshirt=4000,/obj/item/clothing/shoes/laceup=990,
-	/obj/item/clothing/shoes/sandal=350,
-	/obj/item/clothing/mask/bandana/black=3849,/obj/item/clothing/mask/bandana/skull=3999,/obj/item/clothing/mask/bandana/green=3849,/obj/item/clothing/mask/bandana/gold=3899,
-	/obj/item/clothing/mask/bandana/blue=3849)
+	/obj/item/clothing/mask/bandana/blue=2,/obj/item/clothing/mask/bluescarf=2,/obj/item/clothing/mask/redscarf=2,/obj/item/clothing/mask/greenscarf=2,
+	/obj/item/clothing/suit/wintercoat=3,/obj/item/clothing/shoes/winterboots=3,/obj/item/clothing/head/santa=3)
+	contraband = list(/obj/item/clothing/under/syndicate/tacticool=2,/obj/item/clothing/mask/balaclava=2,/obj/item/clothing/head/ushanka=2,/obj/item/clothing/under/soviet=2)
+	premium = list(/obj/item/clothing/under/suit_jacket/checkered=2,/obj/item/clothing/head/mailman=2,/obj/item/clothing/under/rank/mailman=2,/obj/item/clothing/suit/jacket/leather=2,/obj/item/clothing/suit/jacket/leather/overcoat=2,/obj/item/clothing/under/pants/mustangjeans=2)
+	prices = list(/obj/item/clothing/head/that=419,/obj/item/clothing/head/fedora=419,/obj/item/clothing/glasses/monocle=109,
+	/obj/item/clothing/suit/jacket=299, /obj/item/clothing/suit/jacket/puffer/vest=239, /obj/item/clothing/suit/jacket/puffer=219,
+	/obj/item/clothing/under/suit_jacket/navy=119,/obj/item/clothing/under/suit_jacket/really_black=119,/obj/item/clothing/under/suit_jacket/burgundy=119,
+	/obj/item/clothing/under/suit_jacket/charcoal=119, /obj/item/clothing/under/suit_jacket/white=119,/obj/item/clothing/under/kilt=85,/obj/item/clothing/under/overalls=85,
+	/obj/item/clothing/under/suit_jacket/really_black=142,/obj/item/clothing/under/pants/jeans=142,/obj/item/clothing/under/pants/classicjeans=142,
+	/obj/item/clothing/under/pants/camo = 142,/obj/item/clothing/under/pants/blackjeans=142,/obj/item/clothing/under/pants/khaki=142,
+	/obj/item/clothing/under/pants/white=142,/obj/item/clothing/under/pants/red=142,/obj/item/clothing/under/pants/black=142,
+	/obj/item/clothing/under/pants/tan=142,/obj/item/clothing/under/pants/blue=142,/obj/item/clothing/under/pants/track=142,
+	/obj/item/clothing/under/sundress=85,/obj/item/clothing/under/blacktango=99,
+	/obj/item/clothing/suit/jacket=138,/obj/item/clothing/glasses/regular=55,/obj/item/clothing/head/sombrero=240,
+	/obj/item/clothing/suit/poncho=295,/obj/item/clothing/suit/ianshirt=4000,/obj/item/clothing/shoes/laceup=99,
+	/obj/item/clothing/shoes/sandal=35,
+	/obj/item/clothing/mask/bandana/black=384,/obj/item/clothing/mask/bandana/skull=399,/obj/item/clothing/mask/bandana/green=384,/obj/item/clothing/mask/bandana/gold=389,
+	/obj/item/clothing/mask/bandana/blue=384,/obj/item/clothing/mask/bluescarf=250,/obj/item/clothing/mask/redscarf=250,/obj/item/clothing/mask/greenscarf=250,
+	/obj/item/clothing/suit/wintercoat=130,/obj/item/clothing/shoes/winterboots=70,/obj/item/clothing/head/santa=50)
 	refill_canister = /obj/item/weapon/vending_refill/clothing
 
 /obj/machinery/vending/clothing/New()

@@ -30,7 +30,7 @@
 		var/targName = copytext(sanitize(input(usr, "Just write something here", "Transparant text", defaultText)),1,MAX_MESSAGE_LEN)
 		var/obj/item/weapon/transparant/text/W = new /obj/item/weapon/transparant/text
 		W.desc = targName
-		user.before_take_item(src)
+		user.remove_from_mob(src)
 		user.put_in_hands(W)
 		qdel(src)
 		user << "<span class='notice'>You writed: [targName] on your sign.</span>"
@@ -42,7 +42,7 @@
 		if(!targName)
 			return
 		var/obj/item/weapon/transparant/W = new targName
-		user.before_take_item(src)
+		user.remove_from_mob(src)
 		user.put_in_hands(W)
 		qdel(src)
 		user << "<span class='notice'>You painted your blank sign as [W.name].</span>"
@@ -111,7 +111,7 @@
 		R.use(1)
 		src.use(1)
 
-		user.before_take_item(src)
+		user.remove_from_mob(src)
 
 		user.put_in_hands(W)
 

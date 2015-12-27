@@ -139,13 +139,11 @@
 /mob/living/carbon/human/proc/get_pressure_protection()
 	var/pressure_adjustment_coefficient = 1	//Determins how much the clothing you are wearing protects you in percent.
 
-	if(head && (head.flags & STOPSPRESSUREDMAGE))
-		pressure_adjustment_coefficient -= PRESSURE_HEAD_REDUCTION_COEFFICIENT
+	if((head && (head.flags & STOPSPRESSUREDMAGE))&&(wear_suit && (wear_suit.flags & STOPSPRESSUREDMAGE)))
+		pressure_adjustment_coefficient = 0
 
+	//Handles breaches in your space suit. 10 suit damage equals a 100% loss of pressure reduction.
 	if(wear_suit && (wear_suit.flags & STOPSPRESSUREDMAGE))
-		pressure_adjustment_coefficient -= PRESSURE_SUIT_REDUCTION_COEFFICIENT
-
-		//Handles breaches in your space suit. 10 suit damage equals a 100% loss of pressure reduction.
 		if(istype(wear_suit,/obj/item/clothing/suit/space))
 			var/obj/item/clothing/suit/space/S = wear_suit
 			if(S.can_breach && S.damage)
@@ -237,7 +235,7 @@
 					src << "\red It becomes hard to see for some reason."
 					eye_blurry = 10
 			if(getBrainLoss() >= 35)
-				if(7 <= rn && rn <= 9) if(hand && equipped())
+				if(7 <= rn && rn <= 9) if(get_active_hand())
 					src << "\red Your hand won't respond properly, you drop what you're holding."
 					drop_item()
 			if(getBrainLoss() >= 50)
@@ -1675,14 +1673,14 @@
 			for(var/obj/effect/decal/cleanable/O in view(1,src))
 				if(istype(O,/obj/effect/decal/cleanable/blood))
 					var/obj/effect/decal/cleanable/blood/B = O
-					if(B.virus2.len)
+					if(B.virus2 && B.virus2.len)
 						for (var/ID in B.virus2)
 							var/datum/disease2/disease/V = B.virus2[ID]
 							infect_virus2(src,V.getcopy())
 
 				else if(istype(O,/obj/effect/decal/cleanable/mucus))
 					var/obj/effect/decal/cleanable/mucus/M = O
-					if(M.virus2.len)
+					if(M.virus2 && M.virus2.len)
 						for (var/ID in M.virus2)
 							var/datum/disease2/disease/V = M.virus2[ID]
 							infect_virus2(src,V.getcopy())

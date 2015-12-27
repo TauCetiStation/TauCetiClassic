@@ -238,7 +238,7 @@
 
 			visible_message("[user] starts putting [G:affecting:name] into the sleeper.", 3)
 
-			if(do_after(user, 20))
+			if(do_after(user, 20, target = src))
 				if(src.occupant)
 					user << "\blue <B>The sleeper is already occupied!</B>"
 					return
@@ -416,7 +416,7 @@
 				usr << "You're too busy getting your life sucked out of you."
 				return
 		visible_message("[usr] starts climbing into the sleeper.", 3)
-		if(do_after(usr, 20))
+		if(do_after(usr, 20, target = src))
 			if(src.occupant)
 				usr << "\blue <B>The sleeper is already occupied!</B>"
 				return

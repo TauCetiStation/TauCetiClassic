@@ -68,7 +68,7 @@
 	name = "table"
 	desc = "A square piece of wood standing on four wooden legs. It can not move."
 	icon = 'icons/obj/structures.dmi'
-	icon_state = "wood_table"
+	icon_state = "woodtable"
 
 /obj/structure/holostool
 	name = "stool"
@@ -181,6 +181,9 @@
 	if(display_message)
 		visible_message("[src] fades away as it shatters!")
 	qdel(src)
+
+obj/structure/stool/bed/chair/holochair
+	icon_state = "chair_g"
 
 /obj/structure/stool/bed/chair/holochair/Destroy()
 	..()

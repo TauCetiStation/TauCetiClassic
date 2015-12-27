@@ -4,6 +4,7 @@
 //////////////////////////////////////////////////////////////////
 
 /datum/surgery_step/brain/
+	clothless = 0
 	priority = 2
 	blood_level = 1
 	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -19,6 +20,7 @@
 	max_duration = 70
 
 	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+		if(!ishuman(target))	return 0
 		return ..() && target_zone == "head" && target.brain_op_stage == 1
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -47,6 +49,7 @@
 	max_duration = 100
 
 	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+		if(!ishuman(target))	return 0
 		return ..() && target.brain_op_stage == 2
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -74,6 +77,7 @@
 	max_duration = 70
 
 	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+		if(!ishuman(target))	return 0
 		return ..() && target.brain_op_stage == 3
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -136,6 +140,7 @@
 	max_duration = 100
 
 	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+		if(!ishuman(target))	return 0
 		return ..() && target.brain_op_stage == 2
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -164,6 +169,7 @@
 	max_duration = 110
 
 	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+		if(!ishuman(target))	return 0
 		return ..() && target.brain_op_stage == 3
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -203,6 +209,7 @@
 	max_duration = 50
 
 	can_use(mob/living/user, mob/living/carbon/slime/target, target_zone, obj/item/tool)
+		if(!isslime(target))	return 0
 		return ..() && target.brain_op_stage == 0
 
 	begin_step(mob/user, mob/living/carbon/slime/target, target_zone, obj/item/tool)
@@ -229,6 +236,7 @@
 	max_duration = 50
 
 	can_use(mob/living/user, mob/living/carbon/slime/target, target_zone, obj/item/tool)
+		if(!isslime(target))	return 0
 		return ..() && target.brain_op_stage == 1
 
 	begin_step(mob/user, mob/living/carbon/slime/target, target_zone, obj/item/tool)
@@ -254,6 +262,7 @@
 	max_duration = 70
 
 	can_use(mob/living/user, mob/living/carbon/slime/target, target_zone, obj/item/tool)
+		if(!isslime(target))	return 0
 		return ..() && target.brain_op_stage == 2 && target.cores > 0
 
 	begin_step(mob/user, mob/living/carbon/slime/target, target_zone, obj/item/tool)

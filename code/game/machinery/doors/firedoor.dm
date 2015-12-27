@@ -99,7 +99,7 @@
 		else
 			user << "\red You force your claws between the doors and begin to pry them open..."
 			playsound(src.loc, 'sound/effects/metal_creaking.ogg', 50, 0)
-			if (do_after(user,40))
+			if (do_after(user,40,target = src))
 				if(!src) return
 				open(1)
 	return
@@ -126,7 +126,7 @@
 		else
 			user << "\red You force your fingers between the doors and begin to pry them open..."
 			playsound(src.loc, 'sound/effects/metal_creaking.ogg', 30, 1, -4)
-			if (do_after(user,40))
+			if (do_after(user,40,target = src))
 				if(!src) return
 				open(1)
 	return
@@ -211,7 +211,7 @@
 		else
 			user.visible_message("<span class='danger'>[user] is removing the electronics from \the [src].</span>",
 									"You start to remove the electronics from [src].")
-			if(do_after(user,30))
+			if(do_after(user,30,target = src))
 				if(blocked && density && hatch_open)
 					playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
 					user.visible_message("<span class='danger'>[user] has removed the electronics from \the [src].</span>",
@@ -244,7 +244,7 @@
 		user.visible_message("\red \The [user] starts to force \the [src] [density ? "open" : "closed"] with \a [C]!",\
 				"You start forcing \the [src] [density ? "open" : "closed"] with \the [C]!",\
 				"You hear metal strain.")
-		if(do_after(user,30))
+		if(do_after(user,30,target = src))
 			if( istype(C, /obj/item/weapon/crowbar) )
 				if( stat & (BROKEN|NOPOWER) || !density)
 					user.visible_message("\red \The [user] forces \the [src] [density ? "open" : "closed"] with \a [C]!",\

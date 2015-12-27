@@ -33,7 +33,7 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","
 	if(!msg)	return
 	var/original_msg = msg
 
-	
+
 
 	//explode the input msg into a list
 	var/list/msglist = text2list(msg, " ")

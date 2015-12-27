@@ -841,7 +841,7 @@ datum
 					return 2
 
 			diamond_drill
-				steal_target = /obj/item/weapon/pickaxe/diamonddrill
+				steal_target = /obj/item/weapon/pickaxe/drill/diamond_drill
 				explanation_text = "Steal a diamond drill."
 				weight = 20
 

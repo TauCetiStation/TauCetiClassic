@@ -472,7 +472,7 @@
 			src << "You wriggle out of [M]'s grip!"
 		else if(istype(H.loc,/obj/item))
 			src << "You struggle free of [H.loc]."
-			H.loc = get_turf(H)
+			H.forceMove(get_turf(H))
 
 		if(istype(M))
 			for(var/atom/A in M.contents)
@@ -551,7 +551,7 @@
 				for(var/mob/O in viewers(L))
 					O.show_message("\red <B>[usr] attempts to unbuckle themself!</B>", 1)
 				spawn(0)
-					if(do_after(usr, 1200))
+					if(do_after(usr, 1200, target = usr))
 						if(!C.buckled)
 							return
 						for(var/mob/O in viewers(C))
@@ -587,7 +587,7 @@
 
 
 		spawn(0)
-			if(do_after(usr,(breakout_time*60*10))) //minutes * 60seconds * 10deciseconds
+			if(do_after(usr,(breakout_time*60*10), target = C)) //minutes * 60seconds * 10deciseconds
 				if(!C || !L || L.stat != CONSCIOUS || L.loc != C || C.opened) //closet/user destroyed OR user dead/unconcious OR user no longer in closet OR closet opened
 					return
 
@@ -651,7 +651,7 @@
 				for(var/mob/O in viewers(CM))
 					O.show_message(text("\red <B>[] is trying to break the handcuffs!</B>", CM), 1)
 				spawn(0)
-					if(do_after(CM, 50))
+					if(do_after(CM, 50, target = usr))
 						if(!CM.handcuffed || CM.buckled)
 							return
 						for(var/mob/O in viewers(CM))
@@ -672,13 +672,21 @@
 				for(var/mob/O in viewers(CM))
 					O.show_message( "\red <B>[usr] attempts to remove \the [HC]!</B>", 1)
 				spawn(0)
-					if(do_after(CM, breakouttime))
+					if(do_after(CM, breakouttime, target = usr))
 						if(!CM.handcuffed || CM.buckled)
-							return // time leniency for lag which also might make this whole thing pointless but the server
-						for(var/mob/O in viewers(CM))//                                         lags so hard that 40s isn't lenient enough - Quarxink
-							O.show_message("\red <B>[CM] manages to remove the handcuffs!</B>", 1)
-						CM << "\blue You successfully remove \the [CM.handcuffed]."
-						CM.drop_from_inventory(CM.handcuffed)
+							return // time leniency for lag which also might make this whole thing pointless but the server lags so hard that 40s isn't lenient enough - Quarxink
+						if(istype(HC, /obj/item/weapon/handcuffs/alien))
+							CM.visible_message("\red <B>[CM] break in a discharge of energy!</B>", \
+							"\blue You successfully break in a discharge of energy!")
+							var/datum/effect/effect/system/spark_spread/S = new
+							S.set_up(4,0,CM.loc)
+							S.start()
+							CM.drop_from_inventory(CM.handcuffed)
+							qdel(HC)
+						else
+							CM.visible_message("\red <B>[CM] manages to remove the handcuffs!</B>", \
+								"\blue You successfully remove \the [CM.handcuffed].")
+							CM.drop_from_inventory(CM.handcuffed)
 
 		else if(CM.legcuffed && CM.canmove && (CM.last_special <= world.time))
 			CM.next_move = world.time + 100
@@ -688,7 +696,7 @@
 				for(var/mob/O in viewers(CM))
 					O.show_message(text("\red <B>[] is trying to break the legcuffs!</B>", CM), 1)
 				spawn(0)
-					if(do_after(CM, 50))
+					if(do_after(CM, 50, target = usr))
 						if(!CM.legcuffed || CM.buckled)
 							return
 						for(var/mob/O in viewers(CM))
@@ -709,15 +717,25 @@
 				for(var/mob/O in viewers(CM))
 					O.show_message( "\red <B>[usr] attempts to remove \the [HC]!</B>", 1)
 				spawn(0)
-					if(do_after(CM, breakouttime))
+					if(do_after(CM, breakouttime, target = usr))
 						if(!CM.legcuffed || CM.buckled)
-							return // time leniency for lag which also might make this whole thing pointless but the server
-						for(var/mob/O in viewers(CM))//                                         lags so hard that 40s isn't lenient enough - Quarxink
-							O.show_message("\red <B>[CM] manages to remove the legcuffs!</B>", 1)
-						CM << "\blue You successfully remove \the [CM.legcuffed]."
-						CM.drop_from_inventory(CM.legcuffed)
-						CM.legcuffed = null
-						CM.update_inv_legcuffed()
+							return // time leniency for lag which also might make this whole thing pointless but the server lags so hard that 40s isn't lenient enough - Quarxink
+						if(istype(HC, /obj/item/weapon/handcuffs/alien))
+							CM.visible_message("\red <B>[CM] break in a discharge of energy!</B>", \
+							"\blue You successfully break in a discharge of energy!")
+							var/datum/effect/effect/system/spark_spread/S = new
+							S.set_up(4,0,CM.loc)
+							S.start()
+							CM.drop_from_inventory(CM.legcuffed)
+							CM.legcuffed = null
+							CM.update_inv_legcuffed()
+							qdel(HC)
+						else
+							CM.visible_message("\red <B>[CM] manages to remove the legcuffs!</B>", \
+								"\blue You successfully remove \the [CM.legcuffed].")
+							CM.drop_from_inventory(CM.legcuffed)
+							CM.legcuffed = null
+							CM.update_inv_legcuffed()
 
 /mob/living/verb/lay_down()
 	set name = "Rest"
@@ -725,6 +743,9 @@
 
 	resting = !resting
 	src << "\blue You are now [resting ? "resting" : "getting up"]"
+
+/mob/living/proc/has_eyes()
+	return 1
 
 //-TG Port for smooth standing/lying animations
 /mob/living/proc/get_standard_pixel_x_offset(lying_current = 0)
@@ -780,6 +801,7 @@
 		if(r_hand)
 			I = image(r_hand.icon,A,r_hand.icon_state,A.layer+1)
 	if(I)
+		I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 		var/list/viewing = list()
 		for(var/mob/M in viewers(A))
 			if(M.client)

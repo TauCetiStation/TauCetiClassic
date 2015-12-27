@@ -137,3 +137,8 @@
 	flags = NOSLIP
 	slowdown = SHOES_SLOWDOWN+1
 	species_restricted = null
+
+/obj/item/clothing/shoes/centcom
+	name = "dress shoes"
+	desc = "They appear impeccably polished."
+	icon_state = "laceups"

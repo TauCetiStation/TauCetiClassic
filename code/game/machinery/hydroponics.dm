@@ -471,7 +471,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 
 	else if ( istype(O, /obj/item/nutrient) )
 		var/obj/item/nutrient/myNut = O
-		user.u_equip(O)
+		user.remove_from_mob(O)
 		nutrilevel = 10
 		yieldmod = myNut.yieldmod
 		mutmod = myNut.mutmod
@@ -655,7 +655,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 
 	else if ( istype(O, /obj/item/seeds/) )
 		if(!planted)
-			user.u_equip(O)
+			user.remove_from_mob(O)
 			user << "You plant the [O.name]"
 			dead = 0
 			myseed = O
@@ -728,7 +728,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 
 	else if ( istype(O, /obj/item/weapon/weedspray) )
 		var/obj/item/weedkiller/myWKiller = O
-		user.u_equip(O)
+		user.remove_from_mob(O)
 		toxic += myWKiller.toxicity
 		weedlevel -= myWKiller.WeedKillStr
 		if (weedlevel < 0 ) // Make sure it won't go overoboard
@@ -751,7 +751,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 
 	else if ( istype(O, /obj/item/weapon/pestspray) )
 		var/obj/item/pestkiller/myPKiller = O
-		user.u_equip(O)
+		user.remove_from_mob(O)
 		toxic += myPKiller.toxicity
 		pestlevel -= myPKiller.PestKillStr
 		if (pestlevel < 0 ) // Make sure it won't go overoboard
@@ -774,7 +774,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 		if(planted)
 			user << "\red The hydroponics tray is already occupied!"
 		else
-			user.drop_item()
+			user.remove_from_mob()
 			qdel(O)
 
 			var/obj/machinery/apiary/A = new(src.loc)

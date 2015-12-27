@@ -15,7 +15,7 @@
 		if(0)
 			if(istype(P, /obj/item/weapon/wrench))
 				playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-				if(do_after(user, 20))
+				if(do_after(user, 20, target = src))
 					user << "\blue You wrench the frame into place."
 					anchored = 1
 					state = 1
@@ -25,7 +25,7 @@
 					user << "The welder must be on for this task."
 					return
 				playsound(loc, 'sound/items/Welder.ogg', 50, 1)
-				if(do_after(user, 20))
+				if(do_after(user, 20, target = src))
 					if(!src || !WT.remove_fuel(0, user)) return
 					user << "\blue You deconstruct the frame."
 					new /obj/item/stack/sheet/plasteel( loc, 4)
@@ -33,7 +33,7 @@
 		if(1)
 			if(istype(P, /obj/item/weapon/wrench))
 				playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-				if(do_after(user, 20))
+				if(do_after(user, 20, target = src))
 					user << "\blue You unfasten the frame."
 					anchored = 0
 					state = 0
@@ -65,7 +65,7 @@
 			if(istype(P, /obj/item/weapon/cable_coil))
 				if(P:amount >= 5)
 					playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
-					if(do_after(user, 20))
+					if(do_after(user, 20, target = src))
 						P:amount -= 5
 						if(!P:amount) qdel(P)
 						user << "\blue You add cables to the frame."
@@ -86,7 +86,7 @@
 			if(istype(P, /obj/item/stack/sheet/rglass))
 				if(P:amount >= 2)
 					playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
-					if(do_after(user, 20))
+					if(do_after(user, 20, target = src))
 						if (P)
 							P:amount -= 2
 							if(!P:amount) qdel(P)
@@ -181,10 +181,15 @@
 	anchored = 1
 	state = 20//So it doesn't interact based on the above. Not really necessary.
 
-	attackby(var/obj/item/device/aicard/A as obj, var/mob/user as mob)
-		if(istype(A, /obj/item/device/aicard))//Is it?
-			A.transfer_ai("INACTIVE","AICARD",src,user)
-		return
+/obj/structure/AIcore/deactivated/attackby(var/obj/item/device/aicard/A as obj, var/mob/user as mob)
+	if(istype(A, /obj/item/device/aicard))//Is it?
+		A.transfer_ai("INACTIVE","AICARD",src,user)
+	return
+
+/obj/structure/AIcore/deactivated/Destroy()
+	if(empty_playable_ai_cores.Find(src))
+		empty_playable_ai_cores -= src
+	..()
 
 /*
 This is a good place for AI-related object verbs so I'm sticking it here.

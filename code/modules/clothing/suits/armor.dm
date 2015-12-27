@@ -201,34 +201,34 @@
 	slowdown = 1
 	armor = list(melee = 60, bullet = 65, laser = 50, energy = 60, bomb = 40, bio = 0, rad = 0)
 
-	/obj/item/clothing/suit/armor/tactical/verb/holster()
-		set name = "Holster"
-		set category = "Object"
-		set src in usr
-		if(!istype(usr, /mob/living)) return
-		if(usr.stat) return
+/obj/item/clothing/suit/armor/tactical/verb/holster()
+	set name = "Holster"
+	set category = "Object"
+	set src in usr
+	if(!istype(usr, /mob/living)) return
+	if(usr.stat) return
 
-		if(!holstered)
-			if(!istype(usr.get_active_hand(), /obj/item/weapon/gun))
-				usr << "\blue You need your gun equiped to holster it."
-				return
-			var/obj/item/weapon/gun/W = usr.get_active_hand()
-			if (!W.isHandgun())
-				usr << "\red This gun won't fit in \the belt!"
-				return
-			holstered = usr.get_active_hand()
-			usr.drop_item()
-			holstered.loc = src
-			usr.visible_message("\blue \The [usr] holsters \the [holstered].", "You holster \the [holstered].")
+	if(!holstered)
+		if(!istype(usr.get_active_hand(), /obj/item/weapon/gun))
+			usr << "\blue You need your gun equiped to holster it."
+			return
+		var/obj/item/weapon/gun/W = usr.get_active_hand()
+		if (!W.isHandgun())
+			usr << "\red This gun won't fit in \the belt!"
+			return
+		holstered = usr.get_active_hand()
+		usr.drop_item()
+		holstered.loc = src
+		usr.visible_message("\blue \The [usr] holsters \the [holstered].", "You holster \the [holstered].")
+	else
+		if(istype(usr.get_active_hand(),/obj) && istype(usr.get_inactive_hand(),/obj))
+			usr << "\red You need an empty hand to draw the gun!"
 		else
-			if(istype(usr.get_active_hand(),/obj) && istype(usr.get_inactive_hand(),/obj))
-				usr << "\red You need an empty hand to draw the gun!"
+			if(usr.a_intent == "hurt")
+				usr.visible_message("\red \The [usr] draws \the [holstered], ready to shoot!", \
+				"\red You draw \the [holstered], ready to shoot!")
 			else
-				if(usr.a_intent == "hurt")
-					usr.visible_message("\red \The [usr] draws \the [holstered], ready to shoot!", \
-					"\red You draw \the [holstered], ready to shoot!")
-				else
-					usr.visible_message("\blue \The [usr] draws \the [holstered], pointing it at the ground.", \
-					"\blue You draw \the [holstered], pointing it at the ground.")
-				usr.put_in_hands(holstered)
-			holstered = null
+				usr.visible_message("\blue \The [usr] draws \the [holstered], pointing it at the ground.", \
+				"\blue You draw \the [holstered], pointing it at the ground.")
+			usr.put_in_hands(holstered)
+		holstered = null

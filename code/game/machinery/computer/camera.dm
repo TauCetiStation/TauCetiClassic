@@ -243,3 +243,27 @@
 	icon_state = "syndicam"
 	network = list("NUKE")
 	light_color = "#a91515"
+
+/obj/machinery/computer/security/abductor_ag
+	name = "agent observation monitor"
+	desc = "Used to access the cameras in agent helmet."
+	icon = 'icons/obj/abductor.dmi'
+	icon_state = "camera"
+	light_color = "#642850"
+	network = list()
+	var/team
+
+/obj/machinery/computer/security/abductor_ag/attack_hand(mob/user as mob)
+	if(network.len < 1)
+		user << "<span class='notice'>Monitor network doesn't established. Activate helmet at first.</span>"
+		return
+	else
+		..()
+
+/obj/machinery/computer/security/abductor_hu
+	name = "human observation monitor"
+	desc = "Shows how subjects are living."
+	icon = 'icons/obj/abductor.dmi'
+	icon_state = "camera_alt"
+	network = list("SS13")
+	light_color = "#642850"

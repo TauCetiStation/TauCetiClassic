@@ -113,7 +113,7 @@ var/list/robot_verbs_default = list(
 	if(!scrambledcodes && !camera)
 		camera = new /obj/machinery/camera(src)
 		camera.c_tag = real_name
-		camera.network = list("SS13","Robots")
+		camera.replace_networks(list("SS13","Robots"))
 		if(isWireCut(5)) // 5 = BORG CAMERA
 			camera.status = 0
 
@@ -228,7 +228,7 @@ var/list/robot_verbs_default = list(
 			module = new /obj/item/weapon/robot_module/science(src)
 			module.channels = list("Science" = 1)
 			if(camera && "Robots" in camera.network)
-				camera.network.Add("Science")
+				camera.add_network("Science")
 			module_sprites["Toxin"] = "toxbot"
 			module_sprites["Xenobio"] = "xenobot"
 			module_sprites["Acheron"] = "mechoid-Science"
@@ -238,7 +238,7 @@ var/list/robot_verbs_default = list(
 			module = new /obj/item/weapon/robot_module/miner(src)
 			module.channels = list("Supply" = 1)
 			if(camera && "Robots" in camera.network)
-				camera.network.Add("MINE")
+				camera.add_network("MINE")
 			module_sprites["Basic"] = "Miner_old"
 			module_sprites["Advanced Droid"] = "droid-miner"
 			module_sprites["Treadhead"] = "Miner"
@@ -250,7 +250,7 @@ var/list/robot_verbs_default = list(
 			module = new /obj/item/weapon/robot_module/crisis(src)
 			module.channels = list("Medical" = 1)
 			if(camera && "Robots" in camera.network)
-				camera.network.Add("Medical")
+				camera.add_network("Medical")
 			module_sprites["Basic"] = "Medbot"
 			module_sprites["Standard"] = "surgeon"
 			module_sprites["Advanced Droid"] = "droid-medical"
@@ -262,7 +262,7 @@ var/list/robot_verbs_default = list(
 			module = new /obj/item/weapon/robot_module/surgeon(src)
 			module.channels = list("Medical" = 1)
 			if(camera && "Robots" in camera.network)
-				camera.network.Add("Medical")
+				camera.add_network("Medical")
 			module_sprites["Basic"] = "Medbot"
 			module_sprites["Standard"] = "surgeon"
 			module_sprites["Advanced Droid"] = "droid-medical"
@@ -287,7 +287,7 @@ var/list/robot_verbs_default = list(
 			module = new /obj/item/weapon/robot_module/engineering(src)
 			module.channels = list("Engineering" = 1)
 			if(camera && "Robots" in camera.network)
-				camera.network.Add("Engineering")
+				camera.add_network("Engineering")
 			module_sprites["Basic"] = "Engineering"
 			module_sprites["Antique"] = "engineerrobot"
 			module_sprites["Custom"] = "custom_astra_t3"
@@ -300,7 +300,7 @@ var/list/robot_verbs_default = list(
 			module = new /obj/item/weapon/robot_module/construction(src)
 			module.channels = list("Engineering" = 1)
 			if(camera && "Robots" in camera.network)
-				camera.network.Add("Engineering")
+				camera.add_network("Engineering")
 			module_sprites["Basic"] = "Engineering"
 			module_sprites["Antique"] = "engineerrobot"
 			module_sprites["Custom"] = "custom_astra_t3"
@@ -877,9 +877,9 @@ var/list/robot_verbs_default = list(
 					laws.show_laws(src)
 					src << "\red \b ALERT: [user.real_name] is your new master. Obey your new laws and his commands."
 					if(src.module && istype(src.module, /obj/item/weapon/robot_module/miner))
-						for(var/obj/item/weapon/pickaxe/borgdrill/D in src.module.modules)
+						for(var/obj/item/weapon/pickaxe/drill/borgdrill/D in src.module.modules)
 							qdel(D)
-						src.module.modules += new /obj/item/weapon/pickaxe/diamonddrill(src.module)
+						src.module.modules += new /obj/item/weapon/pickaxe/drill/diamond_drill(src.module)
 						src.module.rebuild()
 					updateicon()
 				else
@@ -1352,7 +1352,7 @@ var/list/robot_verbs_default = list(
 	scrambledcodes = 1
 	//Disconnect it's camera so it's not so easily tracked.
 	if(src.camera)
-		src.camera.network = list()
+		src.camera.clear_all_networks()
 		cameranet.removeCamera(src.camera)
 
 
@@ -1460,4 +1460,4 @@ var/list/robot_verbs_default = list(
 	if(cell.use(amount * CELLRATE * CYBORG_POWER_USAGE_MULTIPLIER))
 		used_power_this_tick += amount * CYBORG_POWER_USAGE_MULTIPLIER
 		return 1
-	return 0 
+	return 0

@@ -11,82 +11,82 @@
 	w_class = 1
 	volume = 50
 
-	New()
-		..()
-		if(!icon_state)
-			icon_state = "pill[rand(1,20)]"
+/obj/item/weapon/reagent_containers/pill/New()
+	..()
+	if(!icon_state)
+		icon_state = "pill[rand(1,20)]"
 
-	attack_self(mob/user as mob)
-		return
-	attack(mob/M as mob, mob/user as mob, def_zone)
-		if(!CanEat(user, M, src, "take")) return	
-		if(M == user)
+/obj/item/weapon/reagent_containers/pill/attack_self(mob/user as mob)
+	return
+/obj/item/weapon/reagent_containers/pill/attack(mob/M as mob, mob/user as mob, def_zone)
+	if(!CanEat(user, M, src, "take")) return
+	if(M == user)
 
-			if(istype(M, /mob/living/carbon/human))
-				var/mob/living/carbon/human/H = M
-				if(H.species.flags & IS_SYNTHETIC)
-					H << "\red You have a monitor for a head, where do you think you're going to put that?"
-					return
-
-			M << "\blue You swallow [src]."
-			M.drop_from_inventory(src) //icon update
-			if(reagents.total_volume)
-				reagents.trans_to_ingest(M, reagents.total_volume)
-				qdel(src)
-			else
-				qdel(src)
-			return 1
-
-		else if(istype(M, /mob/living/carbon/human) )
-
+		if(istype(M, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = M
 			if(H.species.flags & IS_SYNTHETIC)
-				H << "\red They have a monitor for a head, where do you think you're going to put that?"
+				H << "\red You have a monitor for a head, where do you think you're going to put that?"
 				return
 
-			for(var/mob/O in viewers(world.view, user))
-				O.show_message("\red [user] attempts to force [M] to swallow [src].", 1)
+		M << "\blue You swallow [src]."
+		M.drop_from_inventory(src) //icon update
+		if(reagents.total_volume)
+			reagents.trans_to_ingest(M, reagents.total_volume)
+			qdel(src)
+		else
+			qdel(src)
+		return 1
 
-			if(!do_mob(user, M)) return
+	else if(istype(M, /mob/living/carbon/human) )
 
-			user.drop_from_inventory(src) //icon update
-			for(var/mob/O in viewers(world.view, user))
-				O.show_message("\red [user] forces [M] to swallow [src].", 1)
+		var/mob/living/carbon/human/H = M
+		if(H.species.flags & IS_SYNTHETIC)
+			H << "\red They have a monitor for a head, where do you think you're going to put that?"
+			return
 
-			M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been fed [src.name] by [user.name] ([user.ckey]) Reagents: [reagentlist(src)]</font>")
-			user.attack_log += text("\[[time_stamp()]\] <font color='red'>Fed [M.name] by [M.name] ([M.ckey]) Reagents: [reagentlist(src)]</font>")
-			msg_admin_attack("[user.name] ([user.ckey]) fed [M.name] ([M.ckey]) with [src.name] Reagents: [reagentlist(src)] (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+		for(var/mob/O in viewers(world.view, user))
+			O.show_message("\red [user] attempts to force [M] to swallow [src].", 1)
 
-			if(reagents.total_volume)
-				reagents.trans_to_ingest(M, reagents.total_volume)
-				qdel(src)
-			else
-				qdel(src)
+		if(!do_mob(user, M)) return
 
-			return 1
+		user.drop_from_inventory(src) //icon update
+		for(var/mob/O in viewers(world.view, user))
+			O.show_message("\red [user] forces [M] to swallow [src].", 1)
 
-		return 0
+		M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been fed [src.name] by [user.name] ([user.ckey]) Reagents: [reagentlist(src)]</font>")
+		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Fed [M.name] by [M.name] ([M.ckey]) Reagents: [reagentlist(src)]</font>")
+		msg_admin_attack("[user.name] ([user.ckey]) fed [M.name] ([M.ckey]) with [src.name] Reagents: [reagentlist(src)] (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 
-	afterattack(obj/target, mob/user, proximity)
-		if(!proximity) return
+		if(reagents.total_volume)
+			reagents.trans_to_ingest(M, reagents.total_volume)
+			qdel(src)
+		else
+			qdel(src)
 
-		if(target.is_open_container() != 0 && target.reagents)
-			if(!target.reagents.total_volume)
-				user << "\red [target] is empty. Cant dissolve pill."
-				return
-			user << "\blue You dissolve the pill in [target]"
+		return 1
 
-			user.attack_log += text("\[[time_stamp()]\] <font color='red'>Spiked \a [target] with a pill. Reagents: [reagentlist(src)]</font>")
-			msg_admin_attack("[user.name] ([user.ckey]) spiked \a [target] with a pill. Reagents: [reagentlist(src)] (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+	return 0
 
-			reagents.trans_to(target, reagents.total_volume)
-			for(var/mob/O in viewers(2, user))
-				O.show_message("\red [user] puts something in \the [target].", 1)
+/obj/item/weapon/reagent_containers/pill/afterattack(obj/target, mob/user, proximity)
+	if(!proximity) return
 
-			spawn(5)
-				qdel(src)
+	if(target.is_open_container() != 0 && target.reagents)
+		if(!target.reagents.total_volume)
+			user << "\red [target] is empty. Cant dissolve pill."
+			return
+		user << "\blue You dissolve the pill in [target]"
 
-		return
+		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Spiked \a [target] with a pill. Reagents: [reagentlist(src)]</font>")
+		msg_admin_attack("[user.name] ([user.ckey]) spiked \a [target] with a pill. Reagents: [reagentlist(src)] (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+
+		reagents.trans_to(target, reagents.total_volume)
+		for(var/mob/O in viewers(2, user))
+			O.show_message("\red [user] puts something in \the [target].", 1)
+
+		spawn(5)
+			qdel(src)
+
+	return
 
 ////////////////////////////////////////////////////////////////////////////////
 /// Pills. END

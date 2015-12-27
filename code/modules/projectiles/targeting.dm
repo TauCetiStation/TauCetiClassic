@@ -77,7 +77,7 @@
 	var/mob/living/M = loc
 	if(M == T) return
 	if(!istype(M)) return
-	if(src != M.equipped())
+	if(src != M.remove_from_mob())
 		stop_aim()
 		return
 	M.last_move_intent = world.time
@@ -103,7 +103,7 @@
 
 #define SIGN(X) ((X<0)?-1:1)
 
-proc/GunTrace(X1,Y1,X2,Y2,Z=1,exc_obj,PX1=16,PY1=16,PX2=16,PY2=16)
+/proc/GunTrace(X1,Y1,X2,Y2,Z=1,exc_obj,PX1=16,PY1=16,PX2=16,PY2=16)
 	//bluh << "Tracin' [X1],[Y1] to [X2],[Y2] on floor [Z]."
 	var/turf/T
 	var/mob/living/M
@@ -141,14 +141,14 @@ proc/GunTrace(X1,Y1,X2,Y2,Z=1,exc_obj,PX1=16,PY1=16,PX2=16,PY2=16)
 
 
 //Targeting management procs
-mob/var
+/mob/var
 	list/targeted_by
 	target_time = -100
 	last_move_intent = -100
 	last_target_click = -5
 	target_locked = null
 
-mob/living/proc/Targeted(var/obj/item/weapon/gun/I) //Self explanitory.
+/mob/living/proc/Targeted(var/obj/item/weapon/gun/I) //Self explanitory.
 	if(!I.target)
 		I.target = list(src)
 	else if(I.automatic && I.target.len < 5) //Automatic weapon, they can hold down a room.
@@ -214,7 +214,7 @@ mob/living/proc/Targeted(var/obj/item/weapon/gun/I) //Self explanitory.
 				I.last_moved_mob = src
 			sleep(1)
 
-mob/living/proc/NotTargeted(var/obj/item/weapon/gun/I)
+/mob/living/proc/NotTargeted(var/obj/item/weapon/gun/I)
 	if(!I.silenced)
 		for(var/mob/living/M in viewers(src))
 			M << 'sound/weapons/TargetOff.ogg'
@@ -230,7 +230,7 @@ mob/living/proc/NotTargeted(var/obj/item/weapon/gun/I)
 		qdel(targeted_by)
 	spawn(1) update_targeted()
 
-mob/living/Move()
+/mob/living/Move()
 	. = ..()
 	for(var/obj/item/weapon/gun/G in targeted_by) //Handle moving out of the gunner's view.
 		var/mob/living/M = G.loc
@@ -243,14 +243,14 @@ mob/living/Move()
 					M.NotTargeted(G)
 
 //If you move out of range, it isn't going to still stay locked on you any more.
-client/var
+/client/var
 	target_can_move = 0
 	target_can_run = 0
 	target_can_click = 0
 	gun_mode = 0
 
 //These are called by the on-screen buttons, adjusting what the victim can and cannot do.
-client/proc/add_gun_icons()
+/client/proc/add_gun_icons()
 	if (!usr.item_use_icon)
 		usr.item_use_icon = new /obj/screen/gun/item(null)
 		usr.item_use_icon.icon_state = "no_item[target_can_click]"
@@ -271,7 +271,7 @@ client/proc/add_gun_icons()
 	if (target_can_move)
 		screen += usr.gun_run_icon
 
-client/proc/remove_gun_icons()
+/client/proc/remove_gun_icons()
 	if(!usr) return 1 // Runtime prevention on N00k agents spawning with SMG
 	screen -= usr.item_use_icon
 	screen -= usr.gun_move_icon
@@ -281,7 +281,7 @@ client/proc/remove_gun_icons()
 	qdel(usr.item_use_icon)
 	qdel(usr.gun_run_icon)
 
-client/verb/ToggleGunMode()
+/client/verb/ToggleGunMode()
 	set hidden = 1
 	gun_mode = !gun_mode
 	if(gun_mode)
@@ -296,7 +296,7 @@ client/verb/ToggleGunMode()
 		usr.gun_setting_icon.icon_state = "gun[gun_mode]"
 
 
-client/verb/AllowTargetMove()
+/client/verb/AllowTargetMove()
 	set hidden=1
 
 	//Changing client's permissions
@@ -328,7 +328,7 @@ client/verb/AllowTargetMove()
 				else
 					M << "\red <b>Your character will now be shot if they move.</b>"
 
-mob/living/proc/set_m_intent(var/intent)
+/mob/living/proc/set_m_intent(var/intent)
 	if (intent != "walk" && intent != "run")
 		return 0
 	m_intent = intent
@@ -336,7 +336,7 @@ mob/living/proc/set_m_intent(var/intent)
 		if (hud_used.move_intent)
 			hud_used.move_intent.icon_state = intent == "walk" ? "walking" : "running"
 
-client/verb/AllowTargetRun()
+/client/verb/AllowTargetRun()
 	set hidden=1
 
 	//Changing client's permissions
@@ -361,7 +361,7 @@ client/verb/AllowTargetRun()
 				else
 					M << "\red <b>Your character will now be shot if they run.</b>"
 
-client/verb/AllowTargetClick()
+/client/verb/AllowTargetClick()
 	set hidden=1
 
 	//Changing client's permissions

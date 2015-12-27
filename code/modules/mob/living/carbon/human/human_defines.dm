@@ -78,3 +78,6 @@
 
 	//VG stuff
 	var/lastScream = 0 // Prevent scream spam in some situations
+
+	//TG stuff
+	var/name_override //For temporary visible name changes

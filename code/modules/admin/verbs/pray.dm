@@ -21,7 +21,7 @@
 
 	for(var/client/C in admins)
 		if(!is_mentor(C))
-			if(C.prefs.toggles & CHAT_PRAYER)
+			if(C.prefs.chat_toggles & CHAT_PRAYER)
 				C << msg
 	usr << "Your prayers have been received by the gods."
 

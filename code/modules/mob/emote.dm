@@ -32,7 +32,7 @@
 				continue
 			if(findtext(message," snores.")) //Because we have so many sleeping people.
 				break
-			if(M.stat == 2 && (M.client.prefs.toggles & CHAT_GHOSTSIGHT) && !(M in viewers(src,null)))
+			if(M.stat == 2 && (M.client.prefs.chat_toggles & CHAT_GHOSTSIGHT) && !(M in viewers(src,null)))
 				M.show_message(message)
 
 
@@ -71,7 +71,7 @@
 		src << "\red You cannot send deadchat emotes (muted)."
 		return
 
-	if(!(client.prefs.toggles & CHAT_DEAD))
+	if(!(client.prefs.chat_toggles & CHAT_DEAD))
 		src << "\red You have deadchat muted."
 		return
 
@@ -100,8 +100,8 @@
 			if(istype(M, /mob/new_player))
 				continue
 
-			if(M.client && M.client.holder && (M.client.holder.rights & R_ADMIN|R_MOD) && (M.client.prefs.toggles & CHAT_DEAD)) // Show the emote to admins/mods
+			if(M.client && M.client.holder && (M.client.holder.rights & R_ADMIN|R_MOD) && (M.client.prefs.chat_toggles & CHAT_DEAD)) // Show the emote to admins/mods
 				M << message
 
-			else if(M.stat == DEAD && (M.client.prefs.toggles & CHAT_DEAD)) // Show the emote to regular ghosts with deadchat toggled on
+			else if(M.stat == DEAD && (M.client.prefs.chat_toggles & CHAT_DEAD)) // Show the emote to regular ghosts with deadchat toggled on
 				M.show_message(message, 2)
