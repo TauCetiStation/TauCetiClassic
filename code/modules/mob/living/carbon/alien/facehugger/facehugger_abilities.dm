@@ -380,6 +380,7 @@ This is facehugger Attach procs
 	throw_range = 5
 	var/stat = CONSCIOUS //UNCONSCIOUS is the idle state in this case
 	var/sterile = 0
+	var/real = 1 //0 for the toy, 1 for real
 	var/strength = 5
 	var/current_hugger
 
@@ -417,6 +418,8 @@ This is facehugger Attach procs
 
 /obj/item/clothing/mask/facehugger/examine()
 	..()
+	if(!real)//So that giant red text about probisci doesn't show up.
+		return
 	switch(stat)
 		if(DEAD,UNCONSCIOUS)
 			usr << "\red \b [src] is not moving."
@@ -479,7 +482,7 @@ This is facehugger Attach procs
 		new_xeno.key = FH.key
 		new_embryo.baby = new_xeno
 		qdel(FH)
-		target.u_equip(target.wear_mask)
+		target.remove_from_mob(target.wear_mask)
 		if(ismonkey(target))
 			for(var/obj/item/clothing/mask/facehugger/FH_mask in target.contents)
 				FH_mask.loc = get_turf(target)
@@ -652,7 +655,7 @@ When we finish, facehugger's player will be transfered inside embryo.
 		if(affecting.wear_mask)
 			if(!istype(affecting.wear_mask, /obj/item/clothing/mask/facehugger))
 				var/obj/item/clothing/mask/victim_mask = affecting.wear_mask
-				affecting.u_equip(victim_mask)
+				affecting.remove_from_mob(victim_mask)
 				qdel(victim_mask)
 		FH.leap_at_face(affecting)
 		state = GRAB_AGGRESSIVE
@@ -667,7 +670,7 @@ When we finish, facehugger's player will be transfered inside embryo.
 		assailant.visible_message("<span class='danger'>[assailant] starts to tighten \his tail on [affecting]'s neck!</span>")
 		hud.icon_state = "grab/neck++"
 		state = GRAB_UPGRADING
-		if(do_after(assailant, UPGRADE_TAIL_TIMER))
+		if(do_after(assailant, UPGRADE_TAIL_TIMER, target = affecting))
 			if(state == GRAB_EMBRYO)
 				return
 			if(!affecting)

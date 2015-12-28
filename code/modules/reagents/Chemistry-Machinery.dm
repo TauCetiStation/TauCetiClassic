@@ -202,6 +202,12 @@
 	if(istype(B, /obj/item/weapon/reagent_containers/glass) || istype(B, /obj/item/weapon/reagent_containers/food))
 		if(!accept_glass && istype(B,/obj/item/weapon/reagent_containers/food))
 			user << "<span class='notice'>This machine only accepts beakers</span>"
+			return
+		if(istype(B, /obj/item/weapon/reagent_containers/food/drinks/cans))
+			var/obj/item/weapon/reagent_containers/food/drinks/cans/C = B
+			if(!C.canopened)
+				user << "<span class='notice'>You need to open the drink!</span>"
+				return
 		src.beaker =  B
 		user.drop_item()
 		B.loc = src
@@ -1003,7 +1009,7 @@
 		user << "Cannot refine into a reagent."
 		return 1
 
-	user.before_take_item(O)
+	user.remove_from_mob(O)
 	O.loc = src
 	holdingitems += O
 	src.updateUsrDialog()

@@ -16,7 +16,7 @@ var/global/floorIsLava = 0
 	var/rendered = "<span class=\"admin\"><span class=\"prefix\">ATTACK:</span> <span class=\"message\">[text]</span></span>"
 	for(var/client/C in admins)
 		if(R_ADMIN & C.holder.rights)
-			if(C.prefs.toggles & CHAT_ATTACKLOGS)
+			if(C.prefs.chat_toggles & CHAT_ATTACKLOGS)
 				var/msg = rendered
 				C << msg
 
@@ -1190,13 +1190,43 @@ var/global/floorIsLava = 0
 //TO-DO:
 //
 //
+/datum/admins/proc/cmd_ghost_drag(var/mob/dead/observer/frommob, var/mob/living/tomob)
 
+	//this is the exact two check rights checks required to edit a ckey with vv.
+	if (!check_rights(R_VAREDIT,0) || !check_rights(R_SPAWN|R_DEBUG,0))
+		return 0
+
+	if (!frommob.ckey)
+		return 0
+
+	var/question = ""
+	if (tomob.ckey)
+		question = "This mob already has a user ([tomob.key]) in control of it! "
+	question += "Are you sure you want to place [frommob.name]([frommob.key]) in control of [tomob.name]?"
+
+	var/ask = alert(question, "Place ghost in control of mob?", "Yes", "No")
+	if (ask != "Yes")
+		return 1
+
+	if (!frommob || !tomob) //make sure the mobs don't go away while we waited for a response
+		return 1
+
+	tomob.ghostize(0)
+
+	message_admins("<span class='adminnotice'>[key_name_admin(usr)] has put [frommob.ckey] in control of [tomob.name].</span>")
+	log_admin("[key_name(usr)] stuffed [frommob.ckey] into [tomob.name].")
+	feedback_add_details("admin_verb","CGD")
+
+	tomob.ckey = frommob.ckey
+	qdel(frommob)
+
+	return 1
 
 /**********************Administration Shuttle**************************/
 
 var/admin_shuttle_location = 0 // 0 = centcom 13, 1 = station
 
-proc/move_admin_shuttle()
+/proc/move_admin_shuttle()
 	var/area/fromArea
 	var/area/toArea
 	if (admin_shuttle_location == 1)
@@ -1216,7 +1246,7 @@ proc/move_admin_shuttle()
 
 var/ferry_location = 0 // 0 = centcom , 1 = station
 
-proc/move_ferry()
+/proc/move_ferry()
 	var/area/fromArea
 	var/area/toArea
 	if (ferry_location == 1)
@@ -1236,7 +1266,7 @@ proc/move_ferry()
 
 var/alien_ship_location = 1 // 0 = base , 1 = mine
 
-proc/move_alien_ship()
+/proc/move_alien_ship()
 	var/area/fromArea
 	var/area/toArea
 	if (alien_ship_location == 1)

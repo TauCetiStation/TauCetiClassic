@@ -39,7 +39,7 @@
 					if(C.amount >= 5)
 						playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 						user << "\blue You start to add cables to the frame."
-						if(do_after(user, 20))
+						if(do_after(user, 20, target = src))
 							if(C)
 								C.amount -= 5
 								if(!C.amount) qdel(C)

@@ -199,7 +199,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(ismob(loc))
 		var/mob/living/M = loc
 		M << "<span class='notice'>Your [name] goes out.</span>"
-		M.u_equip(src)	//un-equip it so the overlays can update
+		M.remove_from_mob(src)	//un-equip it so the overlays can update
 		M.update_inv_wear_mask(0)
 	processing_objects.Remove(src)
 	qdel(src)
@@ -389,6 +389,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	slot_flags = SLOT_BELT
 	attack_verb = list("burnt", "singed")
 	var/lit = 0
+
+	action_button_name = "Toggle Lighter"
 
 /obj/item/weapon/lighter/zippo
 	name = "\improper Zippo lighter"

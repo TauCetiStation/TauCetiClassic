@@ -31,8 +31,8 @@
 //The units themselves/////////////////
 
 /obj/machinery/suit_storage_unit/standard_unit
-	SUIT_TYPE = /obj/item/clothing/suit/space
-	HELMET_TYPE = /obj/item/clothing/head/helmet/space
+	SUIT_TYPE = /obj/item/clothing/suit/space/globose
+	HELMET_TYPE = /obj/item/clothing/head/helmet/space/globose
 	MASK_TYPE = /obj/item/clothing/mask/breath
 
 /obj/machinery/suit_storage_unit/syndicate_unit
@@ -453,7 +453,7 @@
 		usr << "<font color='red'>It's too cluttered inside for you to fit in!</font>"
 		return
 	visible_message("[usr] starts squeezing into the suit storage unit!", 3)
-	if(do_after(usr, 10))
+	if(do_after(usr, 10, target = src))
 		usr.stop_pulling()
 		usr.client.perspective = EYE_PERSPECTIVE
 		usr.client.eye = src
@@ -497,7 +497,7 @@
 			user << "<font color='red'>The unit's storage area is too cluttered.</font>"
 			return
 		visible_message("[user] starts putting [G.affecting.name] into the Suit Storage Unit.", 3)
-		if(do_after(user, 20))
+		if(do_after(user, 20, target = src))
 			if(!G || !G.affecting) return //derpcheck
 			var/mob/M = G.affecting
 			if (M.client)
@@ -664,7 +664,7 @@
 
 		visible_message("[user] starts putting [G.affecting.name] into the suit cycler.", 3)
 
-		if(do_after(user, 20))
+		if(do_after(user, 20, target = src))
 			if(!G || !G.affecting) return
 			var/mob/M = G.affecting
 			if (M.client)

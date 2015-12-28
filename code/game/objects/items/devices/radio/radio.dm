@@ -81,7 +81,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	if(active_uplink_check(user))
 		return
 
-	var/dat = "<html><head><title>[src]</title></head><body><TT>"
+	var/dat
 
 	if(!istype(src, /obj/item/device/radio/headset)) //Headsets dont get a mic button
 		dat += "Microphone: [broadcasting ? "<A href='byond://?src=\ref[src];talk=0'>Engaged</A>" : "<A href='byond://?src=\ref[src];talk=1'>Disengaged</A>"]<BR>"
@@ -99,8 +99,9 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	for (var/ch_name in channels)
 		dat+=text_sec_channel(ch_name, channels[ch_name])
 	dat+={"[text_wires()]</TT></body></html>"}
-	user << browse(dat, "window=radio")
-	onclose(user, "radio")
+	var/datum/browser/popup = new(user, "window=radio", "[src]")
+	popup.set_content(dat)
+	popup.open()
 	return
 
 /obj/item/device/radio/proc/text_wires()
@@ -480,7 +481,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 		var/list/heard_garbled = list() // garbled message
 
 		for (var/mob/R in receive)
-			if (R.client && !(R.client.prefs.toggles & CHAT_RADIO)) //Adminning with 80 people on can be fun when you're trying to talk and all you can hear is radios.
+			if (R.client && !(R.client.prefs.chat_toggles & CHAT_RADIO)) //Adminning with 80 people on can be fun when you're trying to talk and all you can hear is radios.
 				continue
 			if (R.say_understands(M))
 				if (ishuman(M) && M.GetVoice() != M.real_name)
@@ -766,10 +767,10 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 				continue
 			src.channels += ch_name
 			src.channels[ch_name] += keyslot.channels[ch_name]
-			
+
 		if(keyslot.syndie)
 			src.syndie = 1
-	
+
 
 	for (var/ch_name in src.channels)
 		if(!radio_controller)

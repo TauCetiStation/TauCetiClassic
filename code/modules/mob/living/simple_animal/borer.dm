@@ -21,7 +21,7 @@
 		for (var/mob/M in player_list)
 			if (istype(M, /mob/new_player))
 				continue
-			else if(M.stat == 2 &&  M.client.prefs.toggles & CHAT_GHOSTEARS)
+			else if(M.stat == 2 &&  M.client.prefs.chat_toggles & CHAT_GHOSTEARS)
 				M << "The captive mind of [src] whispers, \"[message]\""
 
 /mob/living/captive_brain/emote(var/message)
@@ -140,7 +140,7 @@
 	for (var/mob/M in player_list)
 		if (istype(M, /mob/new_player))
 			continue
-		else if(M.stat == 2 &&  M.client.prefs.toggles & CHAT_GHOSTEARS)
+		else if(M.stat == 2 &&  M.client.prefs.chat_toggles & CHAT_GHOSTEARS)
 			M << "[src.truename] whispers to [host], \"[message]\""
 
 
@@ -385,7 +385,7 @@ mob/living/simple_animal/borer/proc/detatch()
 	M << "Something slimy begins probing at the opening of your ear canal..."
 	src << "You slither up [M] and begin probing at their ear canal..."
 
-	if(!do_after(src,50))
+	if(!do_after(src,50,target = M))
 		src << "As [M] moves away, you are dislodged and fall to the ground."
 		return
 

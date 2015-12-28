@@ -34,11 +34,12 @@
 
 /obj/structure/dispenser/attack_hand(mob/user as mob)
 	user.set_machine(src)
-	var/dat = "[src]<br><br>"
+	var/dat
 	dat += "Oxygen tanks: [oxygentanks] - [oxygentanks ? "<A href='?src=\ref[src];oxygen=1'>Dispense</A>" : "empty"]<br>"
 	dat += "Phoron tanks: [phorontanks] - [phorontanks ? "<A href='?src=\ref[src];phoron=1'>Dispense</A>" : "empty"]"
-	user << browse(dat, "window=dispenser")
-	onclose(user, "dispenser")
+	var/datum/browser/popup = new(user, "window=dispenser", "[src]")
+	popup.set_content(dat)
+	popup.open()
 	return
 
 

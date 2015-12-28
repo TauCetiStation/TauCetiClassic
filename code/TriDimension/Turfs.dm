@@ -8,50 +8,50 @@
 	var/turf/floorbelow
 	var/list/overlay_references
 
-	New()
-		..()
-		getbelow()
-		return
+/turf/simulated/floor/open/New()
+	..()
+	getbelow()
+	return
 
-	Enter(var/atom/movable/AM)
-		if (..()) //TODO make this check if gravity is active (future use) - Sukasa
-			spawn(1)
-				// only fall down in defined areas (read: areas with artificial gravitiy)
-				if(!floorbelow) //make sure that there is actually something below
-					if(!getbelow())
-						return
-				if(AM)
-					var/area/areacheck = get_area(src)
-					var/blocked = 0
-					var/soft = 0
-					for(var/atom/A in floorbelow.contents)
-						if(A.density)
-							blocked = 1
-							break
-						if(istype(A, /obj/machinery/atmospherics/pipe/zpipe/up) && istype(AM,/obj/item/pipe))
-							blocked = 1
-							break
-						if(istype(A, /obj/structure/disposalpipe/up) && istype(AM,/obj/item/pipe))
-							blocked = 1
-							break
-						if(istype(A, /obj/multiz/stairs))
-							soft = 1
-							//dont break here, since we still need to be sure that it isnt blocked
+/turf/simulated/floor/open/Enter(var/atom/movable/AM)
+	if (..()) //TODO make this check if gravity is active (future use) - Sukasa
+		spawn(1)
+			// only fall down in defined areas (read: areas with artificial gravitiy)
+			if(!floorbelow) //make sure that there is actually something below
+				if(!getbelow())
+					return
+			if(AM)
+				var/area/areacheck = get_area(src)
+				var/blocked = 0
+				var/soft = 0
+				for(var/atom/A in floorbelow.contents)
+					if(A.density)
+						blocked = 1
+						break
+					if(istype(A, /obj/machinery/atmospherics/pipe/zpipe/up) && istype(AM,/obj/item/pipe))
+						blocked = 1
+						break
+					if(istype(A, /obj/structure/disposalpipe/up) && istype(AM,/obj/item/pipe))
+						blocked = 1
+						break
+					if(istype(A, /obj/multiz/stairs))
+						soft = 1
+						//dont break here, since we still need to be sure that it isnt blocked
 
-					if (soft || (!blocked && !(areacheck.name == "Space")))
-						AM.Move(floorbelow)
-						if (!soft && istype(AM, /mob/living/carbon/human))
-							var/mob/living/carbon/human/H = AM
-							var/damage = 5
-							H.apply_damage(min(rand(-damage,damage),0), BRUTE, "head")
-							H.apply_damage(min(rand(-damage,damage),0), BRUTE, "chest")
-							H.apply_damage(min(rand(-damage,damage),0), BRUTE, "l_leg")
-							H.apply_damage(min(rand(-damage,damage),0), BRUTE, "r_leg")
-							H.apply_damage(min(rand(-damage,damage),0), BRUTE, "l_arm")
-							H.apply_damage(min(rand(-damage,damage),0), BRUTE, "r_arm")
-							H:weakened = max(H:weakened,2)
-							H:updatehealth()
-		return ..()
+				if (soft || (!blocked && !(areacheck.name == "Space")))
+					AM.Move(floorbelow)
+					if (!soft && istype(AM, /mob/living/carbon/human))
+						var/mob/living/carbon/human/H = AM
+						var/damage = 5
+						H.apply_damage(min(rand(-damage,damage),0), BRUTE, "head")
+						H.apply_damage(min(rand(-damage,damage),0), BRUTE, "chest")
+						H.apply_damage(min(rand(-damage,damage),0), BRUTE, "l_leg")
+						H.apply_damage(min(rand(-damage,damage),0), BRUTE, "r_leg")
+						H.apply_damage(min(rand(-damage,damage),0), BRUTE, "l_arm")
+						H.apply_damage(min(rand(-damage,damage),0), BRUTE, "r_arm")
+						H:weakened = max(H:weakened,2)
+						H:updatehealth()
+	return ..()
 
 /turf/proc/hasbelow()
 	var/turf/controllerlocation = locate(1, 1, z)

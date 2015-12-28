@@ -311,7 +311,7 @@ obj/machinery/computer/cryopod/Topic(href, href_list)
 
 			visible_message("[user] starts putting [G:affecting:name] into the cryo pod.", 3)
 
-			if(do_after(user, 20))
+			if(do_after(user, 20, target = src))
 				if(!M || !G || !G:affecting) return
 
 				M.loc = src
@@ -372,7 +372,7 @@ obj/machinery/computer/cryopod/Topic(href, href_list)
 
 	visible_message("[usr] starts climbing into the cryo pod.", 3)
 
-	if(do_after(usr, 20))
+	if(do_after(usr, 20, target = src))
 
 		if(!usr || !usr.client)
 			return

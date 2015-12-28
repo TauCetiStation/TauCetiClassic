@@ -34,7 +34,7 @@
 		var/obj/item/weapon/wirerod/W = new /obj/item/weapon/wirerod
 		R.use(1)
 
-		user.before_take_item(src)
+		user.remove_from_mob(src)
 
 		user.put_in_hands(W)
 		user << "<span class='notice'>You wrap the cable restraint around the top of the rod.</span>"
@@ -58,8 +58,8 @@
 		var/obj/item/weapon/melee/baton/cattleprod/P = new /obj/item/weapon/melee/baton/cattleprod
 		P.charges = Charges
 
-		user.before_take_item(I)
-		user.before_take_item(src)
+		user.remove_from_mob(I)
+		user.remove_from_mob(src)
 
 		user.put_in_hands(P)
 		user << "<span class='notice'>You fasten the battery to rod and connect it to the wires.</span>"
@@ -232,8 +232,8 @@
 	if(istype(I, /obj/item/weapon/shard))
 		var/obj/item/weapon/twohanded/spear/S = new /obj/item/weapon/twohanded/spear
 
-		user.before_take_item(I)
-		user.before_take_item(src)
+		user.remove_from_mob(I)
+		user.remove_from_mob(src)
 
 		user.put_in_hands(S)
 		user << "<span class='notice'>You fasten the glass shard to the top of the rod with the cable.</span>"
@@ -244,8 +244,8 @@
 
 		var/obj/item/weapon/melee/cattleprod/P = new /obj/item/weapon/melee/cattleprod
 
-		user.before_take_item(I)
-		user.before_take_item(src)
+		user.remove_from_mob(I)
+		user.remove_from_mob(src)
 
 		user.put_in_hands(P)
 		user << "<span class='notice'>You fasten the wirecutters to the top of the rod with the cable, prongs outward.</span>"

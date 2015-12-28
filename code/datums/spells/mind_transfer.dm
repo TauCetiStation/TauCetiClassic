@@ -8,6 +8,7 @@
 	invocation = "GIN'YU CAPAN"
 	invocation_type = "whisper"
 	range = 1
+	action_icon_state = "mindswap"
 	var/list/protected_roles = list("Wizard","Changeling","Cultist") //which roles are immune to the spell
 	var/list/compatible_mobs = list(/mob/living/carbon/human,/mob/living/carbon/monkey) //which types of mobs are affected by the spell. NOTE: change at your own risk
 	var/base_spell_loss_chance = 20 //base probability of the wizard losing a spell in the process
@@ -75,6 +76,7 @@ Also, you never added distance checking after target is selected. I've went ahea
 
 	checked_spells += m_transfer//Add back Mind Transfer.
 	user.spell_list = checked_spells//Set user spell list to whatever the new list is.
+	user.mind.spell_list = checked_spells//Set user mind list to the same spells
 	//SPELL LOSS END
 
 	//MIND TRANSFER BEGIN
@@ -103,6 +105,7 @@ Also, you never added distance checking after target is selected. I've went ahea
 	if(caster.mind.special_verbs.len)//If they had any special verbs, we add them here.
 		for(var/V in caster.mind.special_verbs)
 			caster.verbs += V
+
 	//MIND TRANSFER END
 
 	//Here we paralyze both mobs and knock them out for a time.

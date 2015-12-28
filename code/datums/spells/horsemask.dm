@@ -11,6 +11,7 @@
 	invocation_type = "shout"
 	range = 7
 	selection_type = "range"
+	action_icon_state = "barn"
 	var/list/compatible_mobs = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 
 /obj/effect/proc_holder/spell/targeted/horsemask/cast(list/targets, mob/user = usr)
@@ -44,7 +45,7 @@
 	dropped(mob/user as mob)
 		canremove = 1
 		..()
-	
+
 	equipped(var/mob/user, var/slot)
 		if (slot == slot_wear_mask)
 			canremove = 0		//curses!

@@ -26,6 +26,9 @@
 	item_state = "syringe_kit"
 	foldable = /obj/item/stack/sheet/cardboard	//BubbleWrap
 
+/obj/item/weapon/storage/box/alien
+	icon_state = "alienbox"
+
 /obj/item/weapon/storage/box/survival/
 	New()
 		..()
@@ -206,7 +209,6 @@
 		new /obj/item/weapon/grenade/empgrenade(src)
 		new /obj/item/weapon/grenade/empgrenade(src)
 
-
 /obj/item/weapon/storage/box/trackimp
 	name = "boxed tracking implant kit"
 	desc = "Box full of scum-bag tracking utensils."
@@ -237,7 +239,18 @@
 		new /obj/item/weapon/implanter(src)
 		new /obj/item/weapon/implantpad(src)
 
+/obj/item/weapon/storage/box/autoinjector/stimpack
+	name = "stimpack value kit"
+	desc = "A box with several stimpack autoinjectors for the economical miner."
+	icon_state = "syringe"
 
+	New()
+		..()
+		new /obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack(src)
+		new /obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack(src)
+		new /obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack(src)
+		new /obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack(src)
+		new /obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack(src)
 
 /obj/item/weapon/storage/box/rxglasses
 	name = "box of prescription glasses"
@@ -410,6 +423,20 @@
 		new /obj/item/weapon/handcuffs(src)
 		new /obj/item/weapon/handcuffs(src)
 
+/obj/item/weapon/storage/box/alienhandcuffs
+	name = "box of spare handcuffs"
+	desc = "A box full of handcuffs."
+	icon_state = "alienboxCuffs"
+
+/obj/item/weapon/storage/box/alienhandcuffs/New()
+	..()
+	new	/obj/item/weapon/handcuffs/alien(src)
+	new	/obj/item/weapon/handcuffs/alien(src)
+	new	/obj/item/weapon/handcuffs/alien(src)
+	new	/obj/item/weapon/handcuffs/alien(src)
+	new	/obj/item/weapon/handcuffs/alien(src)
+	new	/obj/item/weapon/handcuffs/alien(src)
+	new	/obj/item/weapon/handcuffs/alien(src)
 
 /obj/item/weapon/storage/box/mousetraps
 	name = "box of Pest-B-Gon mousetraps"

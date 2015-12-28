@@ -6,7 +6,7 @@
 	icon = 'icons/obj/glowsticks.dmi'
 	icon_state = null
 	item_state = null
-	icon_action_button = null	//just pull it manually, neckbeard.
+	action_button_name = null	//just pull it manually, neckbeard.
 	slot_flags = SLOT_BELT
 	light_power = 3
 	var/brightness_on = 7
@@ -14,6 +14,7 @@
 	var/colourName = null
 	var/eaten = 0
 	var/datum/reagent/liquid_fuel
+	action_button_name = "Break Glowstick"
 
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/New()
 	name = "[colourName] glowstick"
@@ -75,7 +76,7 @@
 		return
 	on = !on
 	update_brightness(user)
-
+	action_button_name = null
 	playsound(src, 'sound/weapons/glowstick_bend.ogg', 35, 0)
 	user.visible_message("<span class='notice'>[user] bends the [name].</span>", "<span class='notice'>You bend the [name]!</span>")
 	processing_objects += src

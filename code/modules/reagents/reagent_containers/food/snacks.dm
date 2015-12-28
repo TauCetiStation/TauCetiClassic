@@ -38,9 +38,9 @@
 		M.drop_from_inventory(src)	//so icons update :[
 		qdel(src)
 		return 0
-		
+
 	if(!CanEat(user, M, src, "eat")) return	//tc code
-					
+
 	if(istype(M, /mob/living/carbon))
 		var/fullness = M.nutrition + (M.reagents.get_reagent_amount("nutriment") * 25)
 		if(M == user)								//If you're eating it yourself
@@ -152,10 +152,7 @@
 		if(!iscarbon(user))
 			return 1
 		user << "\red You slip [W] inside [src]."
-		user.u_equip(W)
-		if ((user.client && user.s_active != src))
-			user.client.screen -= W
-		W.dropped(user)
+		user.remove_from_mob(W)
 		add_fingerprint(user)
 		contents += W
 		return

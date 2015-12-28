@@ -32,7 +32,7 @@
 		diary << "\[[time_stamp()]]DEBUG: [text][log_end]"
 
 	for(var/client/C in admins)
-		if(C.prefs.toggles & CHAT_DEBUGLOGS)
+		if(C.prefs.chat_toggles & CHAT_DEBUGLOGS)
 			C << "DEBUG: [text]"
 
 
@@ -92,5 +92,5 @@
 	if(dir & WEST) comps += "WEST"
 	if(dir & UP) comps += "UP"
 	if(dir & DOWN) comps += "DOWN"
-	
+
 	return english_list(comps, nothing_text="0", and_text="|", comma_text="|")

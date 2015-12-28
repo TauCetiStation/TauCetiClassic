@@ -474,6 +474,14 @@
 			pose = addtext(pose,".") //Makes sure all emotes end with a period.
 		msg += "\n[t_He] is [pose]"
 
+	//someone here, but who?
+	if(istype(usr, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = usr
+		if(H.species && H.species.name != "Abductor")
+			for(var/obj/item/clothing/suit/armor/abductor/vest/V in list(wear_suit))
+				if(V.stealth_active)
+					H << "<span class='notice'>You can't focus your eyes on [src].</span>"
+					return
 	usr << msg
 
 //Helper procedure. Called by /mob/living/carbon/human/examine() and /mob/living/carbon/human/Topic() to determine HUD access to security and medical records.

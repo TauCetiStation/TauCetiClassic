@@ -34,8 +34,6 @@
 
 
 /mob/living/silicon/ai/proc/ai_camera_list(var/camera in get_camera_list())
-	set category = "AI Commands"
-	set name = "Show Camera List"
 
 	if(src.stat == 2)
 		src << "You can't list the cameras because you are dead!"
@@ -134,11 +132,13 @@
 		if(istype(M, /mob/living/carbon/human))
 			human = 1
 			var/mob/living/carbon/human/H = M
-			//Cameras can't track people wearing an agent card or a ninja hood.
+			//Cameras can't track people wearing an agent card or hat with blockTracking.
 			if(H.wear_id && istype(H.wear_id.GetID(), /obj/item/weapon/card/id/syndicate))
 				continue
-			if(istype(H.head, /obj/item/clothing/head/helmet/space/space_ninja))
-				continue
+			if(istype(H.head, /obj/item/clothing/head))
+				var/obj/item/clothing/head/hat = H.head
+				if(hat.blockTracking)
+					continue
 
 		 // Now, are they viewable by a camera? (This is last because it's the most intensive check)
 		if(!near_camera(M))
@@ -156,22 +156,24 @@
 		else
 			TB.others[name] = M
 
-	var/list/targets = sortList(TB.humans) + sortList(TB.others)
+	var/list/targets = list()
+	targets.Add("Cancel")
+	targets.Add(sortList(TB.humans) + sortList(TB.others))
 	src.track = TB
 	return targets
 
 /mob/living/silicon/ai/proc/ai_camera_track(var/target_name in trackable_mobs())
-	set category = "AI Commands"
-	set name = "Track With Camera"
-	set desc = "Select who you would like to track."
 
 	if(src.stat == 2)
 		src << "You can't track with camera because you are dead!"
 		return
+	if(target_name == "Cancel")
+		return 0
 	if(!target_name)
 		src.cameraFollow = null
 
 	var/mob/target = (isnull(track.humans[target_name]) ? track.others[target_name] : track.humans[target_name])
+
 	src.track = null
 	ai_actual_track(target)
 
@@ -201,10 +203,12 @@
 					U << "Follow camera mode terminated."
 					U.cameraFollow = null
 					return
-				if(istype(H.head, /obj/item/clothing/head/helmet/space/space_ninja))
-					U << "Follow camera mode terminated."
-					U.cameraFollow = null
-					return
+				if(istype(H.head, /obj/item/clothing/head))
+					var/obj/item/clothing/head/hat = H.head
+					if(hat.blockTracking)
+						U << "Follow camera mode terminated."
+						U.cameraFollow = null
+						return
 				if(H.digitalcamo)
 					U << "Follow camera mode terminated."
 					U.cameraFollow = null

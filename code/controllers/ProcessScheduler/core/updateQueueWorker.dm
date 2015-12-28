@@ -1,4 +1,4 @@
-datum/updateQueueWorker
+/datum/updateQueueWorker
 	var/tmp/list/objects
 	var/tmp/killed
 	var/tmp/finished
@@ -7,13 +7,13 @@ datum/updateQueueWorker
 	var/tmp/lastStart
 	var/tmp/cpuThreshold
 
-datum/updateQueueWorker/New(var/list/objects, var/procName, var/list/arguments, var/cpuThreshold = 90)
+/datum/updateQueueWorker/New(var/list/objects, var/procName, var/list/arguments, var/cpuThreshold = 90)
 	..()
 	uq_dbg("updateQueueWorker created.")
 
 	init(objects, procName, arguments, cpuThreshold)
 
-datum/updateQueueWorker/proc/init(var/list/objects, var/procName, var/list/arguments, var/cpuThreshold = 90)
+/datum/updateQueueWorker/proc/init(var/list/objects, var/procName, var/list/arguments, var/cpuThreshold = 90)
 	src.objects = objects
 	src.procName = procName
 	src.arguments = arguments
@@ -22,7 +22,7 @@ datum/updateQueueWorker/proc/init(var/list/objects, var/procName, var/list/argum
 	killed = 0
 	finished = 0
 
-datum/updateQueueWorker/proc/doWork()
+/datum/updateQueueWorker/proc/doWork()
 	// If there's nothing left to execute or we were killed, mark finished and return.
 	if (!objects || !objects.len) return finished()
 
@@ -50,7 +50,7 @@ datum/updateQueueWorker/proc/doWork()
 		spawn(0) // Execute anonymous function immediately as if we were in a while loop...
 			doWork()
 
-datum/updateQueueWorker/proc/finished()
+/datum/updateQueueWorker/proc/finished()
 	uq_dbg("updateQueueWorker finished.")
 	/**
 	 * If the worker was killed while it was working on something, it
@@ -64,7 +64,7 @@ datum/updateQueueWorker/proc/finished()
 
 	finished = 1
 
-datum/updateQueueWorker/proc/kill()
+/datum/updateQueueWorker/proc/kill()
 	uq_dbg("updateQueueWorker killed.")
 	killed = 1
 	objects = null
@@ -77,7 +77,7 @@ datum/updateQueueWorker/proc/kill()
 	spawn(300)
 		qdel(src)
 
-datum/updateQueueWorker/proc/start()
+/datum/updateQueueWorker/proc/start()
 	uq_dbg("updateQueueWorker started.")
 	spawn(0)
 		doWork()

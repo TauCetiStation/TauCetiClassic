@@ -9,6 +9,7 @@
 	can_infect = 1
 	blood_level = 1
 	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+		if(!ishuman(target))	return 0
 		return target_zone == "chest"
 
 /datum/surgery_step/lipoplasty/cut_fat

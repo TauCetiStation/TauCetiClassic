@@ -1,6 +1,6 @@
 /mob/living/carbon/Life()
 	..()
-	
+
 	// Increase germ_level regularly
 	if(germ_level < GERM_LEVEL_AMBIENT && prob(80))	//if you're just standing there, you shouldn't get more germs beyond an ambient level
 		germ_level++
@@ -14,7 +14,7 @@
 				src.nutrition -= HUNGER_FACTOR/10
 		if((FAT in src.mutations) && src.m_intent == "run" && src.bodytemperature <= 360)
 			src.bodytemperature += 2
-			
+
 		// Moving around increases germ_level faster
 		if(germ_level < GERM_LEVEL_MOVE_CAP && prob(8))
 			germ_level++
@@ -126,9 +126,9 @@
 	shock_damage *= siemens_coeff
 	if (shock_damage<1)
 		return 0
-	
+
 	src.apply_damage(shock_damage, BURN, def_zone, used_weapon="Electrocution")
-	
+
 	playsound(loc, "sparks", 50, 1, -1)
 	if (shock_damage > 10)
 		src.visible_message(
@@ -314,6 +314,7 @@
 	if (istype(item, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = item
 		item = G.throw_held() //throw the person instead of the grab
+		qdel(G)
 		if(ismob(item))
 			var/turf/start_T = get_turf(loc) //Get the start and target tile for the descriptors
 			var/turf/end_T = get_turf(target)
@@ -328,19 +329,8 @@
 
 	if(!item) return //Grab processing has a chance of returning null
 
-	item.layer = initial(item.layer)
-	u_equip(item)
-	update_icons()
-
-	if (istype(usr, /mob/living/carbon)) //Check if a carbon mob is throwing. Modify/remove this line as required.
-		item.loc = src.loc
-		if(src.client)
-			src.client.screen -= item
-		if(istype(item, /obj/item) && !ishuman(src))
-			item:dropped(src) // let it know it's been dropped
-	//
-	//	Excesive proc dropped(). This proc is called in u_equip() proc for carbon/human. Double call of this proc causes light anomalies on mob
-	//	Additional ishuman() check
+	src.remove_from_mob(item)
+	item.loc = src.loc
 
 	//actually throw it!
 	if (item)
@@ -518,12 +508,49 @@
 		src << "You do not have enough chemicals stored to reproduce."
 		return
 
+/mob/living/carbon/proc/uncuff()
+	if (handcuffed)
+		var/obj/item/weapon/W = handcuffed
+		handcuffed = null
+		update_inv_handcuffed()
+		if (client)
+			client.screen -= W
+		if (W)
+			W.loc = loc
+			W.dropped(src)
+			if (W)
+				W.layer = initial(W.layer)
+	if (legcuffed)
+		var/obj/item/weapon/W = legcuffed
+		legcuffed = null
+		update_inv_legcuffed()
+		if (client)
+			client.screen -= W
+		if (W)
+			W.loc = loc
+			W.dropped(src)
+			if (W)
+				W.layer = initial(W.layer)
+
 //-TG- port for smooth lying/standing animations
 /mob/living/carbon/get_standard_pixel_y_offset(lying_current = 0)
 	if(lying)
 		if(buckled && istype(buckled, /obj/structure/stool/bed/roller))
 			return 0
+		else if(locate(/obj/machinery/optable, src.loc)||locate(/obj/structure/stool/bed, src.loc))	//we need special pixel shift for beds & optable to make mob lying centered
+			return -4
 		else
 			return -6
 	else
 		return initial(pixel_y)
+
+/mob/living/carbon/get_standard_pixel_x_offset(lying_current = 0)
+	if(lying)
+		if(buckled && istype(buckled, /obj/structure/stool/bed/roller))
+			return 0
+		else if(locate(/obj/machinery/optable, src.loc)||locate(/obj/structure/stool/bed, src.loc))	//we need special pixel shift for beds & optable to make mob lying centered
+			switch(src.lying_current)
+				if(90)	return 2
+				if(270)	return -2
+	else
+		return initial(pixel_x)

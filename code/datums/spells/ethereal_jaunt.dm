@@ -11,6 +11,8 @@
 	include_user = 1
 	centcomm_cancast = 0 //Prevent people from getting to centcomm
 
+	action_icon_state = "jaunt"
+
 	var phaseshift = 0
 	var/jaunt_duration = 50 //in deciseconds
 
@@ -32,7 +34,8 @@
 			animation.icon_state = "liquify"
 			animation.layer = 5
 			animation.master = holder
-			target.ExtinguishMob()		//This spell can extinguish mob
+			target.ExtinguishMob()			//This spell can extinguish mob
+			target.status_flags ^= GODMODE	//Protection from any kind of damage, caused you in astral world
 			if(phaseshift == 1)
 				animation.dir = target.dir
 				flick("phase_shift",animation)
@@ -54,6 +57,7 @@
 								break
 				target.canmove = 1
 				target.client.eye = target
+				target.status_flags ^= GODMODE	//Turn off this cheat
 				qdel(animation)
 				qdel(holder)
 			else
@@ -80,6 +84,7 @@
 								break
 				target.canmove = 1
 				target.client.eye = target
+				target.status_flags ^= GODMODE	//Turn off this cheat
 				qdel(animation)
 				qdel(holder)
 
@@ -105,3 +110,8 @@
 	return
 /obj/effect/dummy/spell_jaunt/bullet_act(blah)
 	return
+
+/obj/effect/dummy/spell_jaunt/Destroy()
+	for(var/atom/movable/AM in src)
+		AM.loc = get_turf(src)
+	..()

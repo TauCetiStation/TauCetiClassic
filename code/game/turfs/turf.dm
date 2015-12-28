@@ -22,6 +22,10 @@
 	var/icon_old = null
 	var/pathweight = 1
 
+	//Mining resource generation stuff.
+	var/has_resources
+	var/list/resources
+
 	var/dynamic_lighting = 1
 	luminosity = 1
 

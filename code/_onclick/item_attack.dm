@@ -4,17 +4,23 @@
 	return
 
 // No comment
-/atom/proc/attackby(obj/item/W, mob/user)
+/atom/proc/attackby(obj/item/W, mob/user, params)
 	return
-/atom/movable/attackby(obj/item/W, mob/user)
+/atom/movable/attackby(obj/item/W, mob/user, params)
 	user.do_attack_animation(src)
 	if(W && !(W.flags&NOBLUDGEON))
 		visible_message("<span class='danger'>[src] has been hit by [user] with [W].</span>")
 
-/mob/living/attackby(obj/item/I, mob/user)
+/mob/living/attackby(obj/item/I, mob/user, params)
 	if(istype(I) && ismob(user))
 		I.attack(src, user)
 
+		if(ishuman(user))	//When abductor will hit someone from stelth he will reveal himself
+			var/mob/living/carbon/human/H = user
+			if(H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit/armor/abductor/vest))
+				for(var/obj/item/clothing/suit/armor/abductor/vest/V in list(H.wear_suit))
+					if(V.stealth_active)
+						V.DeactivateStealth()
 
 // Proximity_flag is 1 if this afterattack was called on something adjacent, in your square, or on your person.
 // Click parameters is the params string from byond Click() code, see that documentation.
@@ -30,6 +36,25 @@
 	if (can_operate(M))        //Checks if mob is lying down on table for surgery
 		if (do_surgery(M,user,src))
 			return 0
+
+	// Knifing
+	if(edge)
+		for(var/obj/item/weapon/grab/G in M.grabbed_by)
+			if(G.assailant == user && G.state >= GRAB_NECK && world.time >= (G.last_action + 20) && user.zone_sel.selecting == "head")
+				//TODO: better alternative for applying damage multiple times? Nice knifing sound?
+				M.apply_damage(20, BRUTE, "head", 0, sharp=sharp, edge=edge)
+				M.apply_damage(20, BRUTE, "head", 0, sharp=sharp, edge=edge)
+				M.apply_damage(20, BRUTE, "head", 0, sharp=sharp, edge=edge)
+				M.adjustOxyLoss(60) // Brain lacks oxygen immediately, pass out
+				playsound(loc, 'tauceti/sounds/effects/throat_cutting.ogg', 50, 1, 1)
+				flick(G.hud.icon_state, G.hud)
+				G.last_action = world.time
+				user.visible_message("<span class='danger'>[user] slit [M]'s throat open with \the [name]!</span>")
+				user.attack_log += "\[[time_stamp()]\]<font color='red'> Knifed [M.name] ([M.ckey]) with [name] (INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(damtype)])</font>"
+				M.attack_log += "\[[time_stamp()]\]<font color='orange'> Got knifed by [user.name] ([user.ckey]) with [name] (INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(damtype)])</font>"
+				msg_admin_attack("[key_name(user)] knifed [key_name(M)] with [name] (INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(damtype)])" )
+				return
+
 	if (istype(M,/mob/living/carbon/brain))
 		messagesource = M:container
 	if (hitsound)

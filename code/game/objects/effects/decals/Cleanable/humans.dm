@@ -71,7 +71,8 @@ var/global/list/image/splatter_cache=list()
 				S.blood_overlay.color = basecolor
 				S.overlays.Cut()
 				S.overlays += S.blood_overlay
-			S.blood_DNA |= blood_DNA.Copy()
+			if(blood_DNA.len)
+				S.blood_DNA |= blood_DNA.Copy()
 
 	else if (hasfeet)//Or feet
 		perp.feet_blood_color = basecolor

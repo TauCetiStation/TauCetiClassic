@@ -138,25 +138,25 @@
 	blood_overlay_type = "coat"
 	body_parts_covered = UPPER_TORSO|ARMS
 
-	verb/toggle()
-		set name = "Toggle Coat Buttons"
-		set category = "Object"
-		set src in usr
+/obj/item/clothing/suit/storage/internalaffairs/verb/toggle()
+	set name = "Toggle Coat Buttons"
+	set category = "Object"
+	set src in usr
 
-		if(!usr.canmove || usr.stat || usr.restrained())
-			return 0
+	if(!usr.canmove || usr.stat || usr.restrained())
+		return 0
 
-		switch(icon_state)
-			if("ia_jacket_open")
-				src.icon_state = "ia_jacket"
-				usr << "You button up the jacket."
-			if("ia_jacket")
-				src.icon_state = "ia_jacket_open"
-				usr << "You unbutton the jacket."
-			else
-				usr << "You attempt to button-up the velcro on your [src], before promptly realising how retarded you are."
-				return
-		usr.update_inv_wear_suit()	//so our overlays update
+	switch(icon_state)
+		if("ia_jacket_open")
+			src.icon_state = "ia_jacket"
+			usr << "You button up the jacket."
+		if("ia_jacket")
+			src.icon_state = "ia_jacket_open"
+			usr << "You unbutton the jacket."
+		else
+			usr << "You attempt to button-up the velcro on your [src], before promptly realising how retarded you are."
+			return
+	usr.update_inv_wear_suit()	//so our overlays update
 
 //Medical
 /obj/item/clothing/suit/storage/fr_jacket
@@ -169,22 +169,22 @@
 	/obj/item/device/healthanalyzer, /obj/item/device/flashlight, /obj/item/device/radio, /obj/item/weapon/tank/emergency_oxygen)
 	body_parts_covered = UPPER_TORSO|ARMS
 
-	verb/toggle()
-		set name = "Toggle Jacket Buttons"
-		set category = "Object"
-		set src in usr
+/obj/item/clothing/suit/storage/fr_jacket/verb/toggle()
+	set name = "Toggle Jacket Buttons"
+	set category = "Object"
+	set src in usr
 
-		if(!usr.canmove || usr.stat || usr.restrained())
-			return 0
+	if(!usr.canmove || usr.stat || usr.restrained())
+		return 0
 
-		switch(icon_state)
-			if("fr_jacket_open")
-				src.icon_state = "fr_jacket"
-				usr << "You button up the jacket."
-			if("fr_jacket")
-				src.icon_state = "fr_jacket_open"
-				usr << "You unbutton the jacket."
-		usr.update_inv_wear_suit()	//so our overlays update
+	switch(icon_state)
+		if("fr_jacket_open")
+			src.icon_state = "fr_jacket"
+			usr << "You button up the jacket."
+		if("fr_jacket")
+			src.icon_state = "fr_jacket_open"
+			usr << "You unbutton the jacket."
+	usr.update_inv_wear_suit()	//so our overlays update
 
 //Mime
 /obj/item/clothing/suit/suspenders

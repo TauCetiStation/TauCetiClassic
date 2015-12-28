@@ -82,7 +82,7 @@
 		if(W.flags&USEDELAY)
 			next_move += 5
 
-		var/resolved = A.attackby(W,src)
+		var/resolved = A.attackby(W,src,params)
 		if(!resolved && A && W)
 			W.afterattack(A,src,1,params)
 		return
@@ -97,7 +97,7 @@
 			if(W.flags&USEDELAY)
 				next_move += 5
 
-			var/resolved = A.attackby(W, src)
+			var/resolved = A.attackby(W, src, params)
 			if(!resolved && A && W)
 				W.afterattack(A, src, 1, params)
 			return

@@ -188,7 +188,7 @@
 			update_icon()
 	else
 		usr << "<span class='notice'>You need to hold it in hands!</span>"
-	if (istype(src.loc, /mob) ||istype(src.loc.loc, /mob))
+	if (istype(src.loc, /mob))
 		src.attack_self(src.loc)
 		updateUsrDialog()
 
@@ -222,7 +222,7 @@
 
 
 /obj/item/weapon/paper_bundle/update_icon()
-	var/obj/item/weapon/paper/P = src[1]
+	var/obj/item/weapon/paper/P = src.contents
 	icon_state = P.icon_state
 	overlays = P.overlays
 	underlays = 0

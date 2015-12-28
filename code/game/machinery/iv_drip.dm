@@ -1,28 +1,41 @@
 /obj/machinery/iv_drip
 	name = "\improper IV drip"
 	icon = 'icons/obj/iv_drip.dmi'
+	icon_state = "iv_drip"
 	anchored = 0
 	density = 1
+	var/mob/living/carbon/human/attached = null
+	var/mode = 1 // 1 is injecting, 0 is taking blood.
+	var/obj/item/weapon/reagent_containers/beaker = null
 
 
-/obj/machinery/iv_drip/var/mob/living/carbon/human/attached = null
-/obj/machinery/iv_drip/var/mode = 1 // 1 is injecting, 0 is taking blood.
-/obj/machinery/iv_drip/var/obj/item/weapon/reagent_containers/beaker = null
+/obj/machinery/iv_drip/New()
+	..()
+	update_icon()
 
 /obj/machinery/iv_drip/update_icon()
-	if(src.attached)
-		icon_state = "hooked"
+	if(attached)
+		if(mode)
+			icon_state = "injecting"
+		else
+			icon_state = "donating"
 	else
-		icon_state = ""
+		if(mode)
+			icon_state = "injectidle"
+		else
+			icon_state = "donateidle"
 
 	overlays = null
 
 	if(beaker)
-		var/datum/reagents/reagents = beaker.reagents
-		if(reagents.total_volume)
+		if(attached)
+			overlays += "beakeractive"
+		else
+			overlays += "beakeridle"
+		if(beaker.reagents.total_volume)
 			var/image/filling = image('icons/obj/iv_drip.dmi', src, "reagent")
 
-			var/percent = round((reagents.total_volume / beaker.volume) * 100)
+			var/percent = round((beaker.reagents.total_volume / beaker.volume) * 100)
 			switch(percent)
 				if(0 to 9)		filling.icon_state = "reagent0"
 				if(10 to 24) 	filling.icon_state = "reagent10"
@@ -32,7 +45,7 @@
 				if(80 to 90)	filling.icon_state = "reagent80"
 				if(91 to INFINITY)	filling.icon_state = "reagent100"
 
-			filling.icon += mix_color_from_reagents(reagents.reagent_list)
+			filling.icon += mix_color_from_reagents(beaker.reagents.reagent_list)
 			overlays += filling
 
 /obj/machinery/iv_drip/MouseDrop(over_object, src_location, over_location)
@@ -131,20 +144,15 @@
 		return ..()
 
 
-/obj/machinery/iv_drip/verb/toggle_mode()
-	set category = "Object"
+/obj/machinery/iv_drip/verb/toggle_mode(mob/living/user as mob)
 	set name = "Toggle Mode"
-	set src in view(1)
+	set category = "Object"
+	set src in oview(1)
 
-	if(!istype(usr, /mob/living))
-		usr << "\red You can't do that."
-		return
+	if(isliving(user))
 
-	if(usr.stat)
-		return
-
-	mode = !mode
-	usr << "The IV drip is now [mode ? "injecting" : "taking blood"]."
+		mode = !mode
+		user << "The IV drip is now [mode ? "injecting" : "taking blood"]."
 
 /obj/machinery/iv_drip/examine()
 	set src in view()

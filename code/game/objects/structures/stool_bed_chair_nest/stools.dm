@@ -73,15 +73,17 @@
 
 /obj/item/weapon/stool/attack_self(mob/user as mob)
 	..()
-	origin.loc = get_turf(src)
-	user.u_equip(src)
+	user.drop_from_inventory(src.origin)
 	user.visible_message("\blue [user] puts [src] down.", "\blue You put [src] down.")
 	qdel(src)
+
+/obj/item/weapon/stool/dropped()
+	attack_self(usr)
 
 /obj/item/weapon/stool/attack(mob/M as mob, mob/user as mob)
 	if (prob(5) && istype(M,/mob/living))
 		user.visible_message("\red [user] breaks [src] over [M]'s back!.")
-		user.u_equip(src)
+		user.remove_from_mob(src)
 		var/obj/item/stack/sheet/metal/m = new/obj/item/stack/sheet/metal
 		m.loc = get_turf(src)
 		qdel( src)

@@ -72,6 +72,11 @@
 	add_fingerprint(usr)
 	return
 
+/obj/item/weapon/photo/proc/photocreate(inicon, inimg, indesc)
+	icon = inicon
+	img = inimg
+	desc = indesc
+
 
 /**************
 * photo album *

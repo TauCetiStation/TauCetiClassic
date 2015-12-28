@@ -29,8 +29,8 @@
 		Stun(2)
 
 	//Being hit while using a deadman switch
-	if(istype(equipped(),/obj/item/device/assembly/signaler))
-		var/obj/item/device/assembly/signaler/signaler = equipped()
+	if(istype(get_active_hand(),/obj/item/device/assembly/signaler))
+		var/obj/item/device/assembly/signaler/signaler = get_active_hand()
 		if(signaler.deadman && prob(80))
 			src.visible_message("\red [src] triggers their deadman's switch!")
 			signaler.signal()
@@ -168,3 +168,77 @@
 	IgniteMob()
 
 //Mobs on Fire end
+
+/mob/living/regular_hud_updates()
+	..()
+	update_action_buttons()
+
+/mob/living/proc/handle_actions()
+	//Pretty bad, i'd use picked/dropped instead but the parent calls in these are nonexistent
+	for(var/datum/action/A in actions)
+		if(A.CheckRemoval(src))
+			A.Remove(src)
+	for(var/obj/item/I in src)
+		if(I.action_button_name)
+			if(!I.action)
+				if(I.action_button_is_hands_free)
+					I.action = new/datum/action/item_action/hands_free
+				else
+					I.action = new/datum/action/item_action
+				I.action.name = I.action_button_name
+				I.action.target = I
+			I.action.Grant(src)
+	return
+
+/mob/living/update_action_buttons()
+	if(!hud_used) return
+	if(!client) return
+
+	if(hud_used.hud_shown != 1)	//Hud toggled to minimal
+		return
+
+	client.screen -= hud_used.hide_actions_toggle
+	for(var/datum/action/A in actions)
+		if(A.button)
+			client.screen -= A.button
+
+	if(hud_used.action_buttons_hidden)
+		if(!hud_used.hide_actions_toggle)
+			hud_used.hide_actions_toggle = new(hud_used)
+			hud_used.hide_actions_toggle.UpdateIcon()
+
+		if(!hud_used.hide_actions_toggle.moved)
+			hud_used.hide_actions_toggle.screen_loc = hud_used.ButtonNumberToScreenCoords(1)
+			//hud_used.SetButtonCoords(hud_used.hide_actions_toggle,1)
+
+		client.screen += hud_used.hide_actions_toggle
+		return
+
+	var/button_number = 0
+	for(var/datum/action/A in actions)
+		button_number++
+		if(A.button == null)
+			var/obj/screen/movable/action_button/N = new(hud_used)
+			N.owner = A
+			A.button = N
+
+		var/obj/screen/movable/action_button/B = A.button
+
+		B.UpdateIcon()
+
+		B.name = A.UpdateName()
+
+		client.screen += B
+
+		if(!B.moved)
+			B.screen_loc = hud_used.ButtonNumberToScreenCoords(button_number)
+			//hud_used.SetButtonCoords(B,button_number)
+
+	if(button_number > 0)
+		if(!hud_used.hide_actions_toggle)
+			hud_used.hide_actions_toggle = new(hud_used)
+			hud_used.hide_actions_toggle.InitialiseIcon(src)
+		if(!hud_used.hide_actions_toggle.moved)
+			hud_used.hide_actions_toggle.screen_loc = hud_used.ButtonNumberToScreenCoords(button_number+1)
+			//hud_used.SetButtonCoords(hud_used.hide_actions_toggle,button_number+1)
+		client.screen += hud_used.hide_actions_toggle

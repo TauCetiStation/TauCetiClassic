@@ -38,7 +38,7 @@ obj/item/weapon/mop/proc/clean(turf/simulated/A)
 
 		user.visible_message("<span class='warning'>[user] begins to clean \the [get_turf(A)].</span>")
 
-		if(do_after(user, 40))
+		if(do_after(user, 40, target = A))
 			if(A)
 				clean(get_turf(A))
 			user << "<span class='notice'>You have finished mopping!</span>"

@@ -61,6 +61,7 @@
 	desc = "It's Officer Beep O'sky! Powered by a potato and a shot of whiskey."
 	idcheck = 0
 	auto_patrol = 1
+	layer = MOB_LAYER
 
 /obj/item/weapon/secbot_assembly
 	name = "helmet/signaler assembly"

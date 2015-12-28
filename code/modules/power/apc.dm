@@ -398,7 +398,7 @@
 				return
 			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 			user << "You are trying to remove the power control board..." //lpeters - fixed grammar issues
-			if(do_after(user, 50))
+			if(do_after(user, 50, target = src))
 				has_electronics = 0
 				if ((stat & BROKEN) || malfhack)
 					user.visible_message(\
@@ -489,7 +489,7 @@
 			user << "Nothing happens."
 		else
 			flick("apc-spark", src)
-			if (do_after(user,6))
+			if (do_after(user,6,target = src))
 				if(prob(50))
 					emagged = 1
 					locked = 0
@@ -507,7 +507,7 @@
 			return
 		user << "You start adding cables to the APC frame..."
 		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-		if(do_after(user, 20) && C.amount >= 10)
+		if(do_after(user, 20, target = src) && C.amount >= 10)
 			var/turf/T = get_turf_loc(src)
 			var/obj/structure/cable/N = T.get_cable_node()
 			if (prob(50) && electrocute_mob(usr, N, N))
@@ -527,7 +527,7 @@
 			return
 		user << "You begin to cut the cables..."
 		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-		if(do_after(user, 50))
+		if(do_after(user, 50, target = src))
 			if (prob(50) && electrocute_mob(usr, terminal.powernet, terminal))
 				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 				s.set_up(5, 1, src)
@@ -541,7 +541,7 @@
 	else if (istype(W, /obj/item/weapon/module/power_control) && opened && has_electronics==0 && !((stat & BROKEN) || malfhack))
 		user << "You trying to insert the power control board into the frame..."
 		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-		if(do_after(user, 10))
+		if(do_after(user, 10, target = src))
 			has_electronics = 1
 			user << "You place the power control board inside the frame."
 			qdel(W)
@@ -555,7 +555,7 @@
 			return
 		user << "You start welding the APC frame..."
 		playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
-		if(do_after(user, 50))
+		if(do_after(user, 50, target = src))
 			if(!src || !WT.remove_fuel(3, user)) return
 			if (emagged || malfhack || (stat & BROKEN) || opened==2)
 				new /obj/item/stack/sheet/metal(loc)
@@ -585,7 +585,7 @@
 			user << "You cannot repair this APC until you remove the electronics still inside."
 			return
 		user << "You begin to replace the damaged APC frame..."
-		if(do_after(user, 50))
+		if(do_after(user, 50, target = src))
 			user.visible_message(\
 				"\red [user.name] has replaced the damaged APC frame with new one.",\
 				"You replace the damaged APC frame with new one.")

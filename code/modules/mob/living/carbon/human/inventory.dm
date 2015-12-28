@@ -5,6 +5,7 @@
 	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
 		var/obj/item/I = H.get_active_hand()
+		var/obj/item/weapon/storage/S = H.get_inactive_hand()
 		if(!I)
 			H << "<span class='notice'>You are not holding anything to equip.</span>"
 			return
@@ -28,8 +29,22 @@
 				update_inv_l_hand(0)
 			else
 				update_inv_r_hand(0)
+
+		else if(s_active && s_active.can_be_inserted(I,1))	//if storage active insert there
+			s_active.handle_item_insertion(I)
+		else if(istype(S, /obj/item/weapon/storage) && S.can_be_inserted(I,1))	//see if we have box in other hand
+			S.handle_item_insertion(I)
+
 		else
-			H << "\red You are unable to equip that."
+			S = H.get_item_by_slot(slot_belt)
+			if(istype(S, /obj/item/weapon/storage) && S.can_be_inserted(I,1))		//else we put in belt
+				S.handle_item_insertion(I)
+			else
+				S = H.get_item_by_slot(slot_back)	//else we put in backpack
+				if(istype(S, /obj/item/weapon/storage) && S.can_be_inserted(I,1))
+					S.handle_item_insertion(I)
+				else
+					H << "\red You are unable to equip that."
 
 
 
@@ -54,9 +69,9 @@
 		if(slot_wear_mask)
 			return has_organ("head")
 		if(slot_handcuffed)
-			return has_organ("l_hand") && has_organ("r_hand")
+			return has_organ("l_hand") || has_organ("r_hand")
 		if(slot_legcuffed)
-			return has_organ("l_leg") && has_organ("r_leg")
+			return has_organ("l_leg") || has_organ("r_leg")
 		if(slot_l_hand)
 			return has_organ("l_hand")
 		if(slot_r_hand)
@@ -73,11 +88,11 @@
 		if(slot_glasses)
 			return has_organ("head")
 		if(slot_gloves)
-			return has_organ("l_hand") && has_organ("r_hand")
+			return has_organ("l_hand") || has_organ("r_hand")
 		if(slot_head)
 			return has_organ("head")
 		if(slot_shoes)
-			return has_organ("r_foot") && has_organ("l_foot")
+			return has_organ("r_foot") || has_organ("l_foot")
 		if(slot_wear_suit)
 			return has_organ("chest")
 		if(slot_w_uniform)
@@ -91,16 +106,12 @@
 		if(slot_in_backpack)
 			return 1
 
-/mob/living/carbon/human/u_equip(obj/item/W as obj)
+/mob/living/carbon/human/u_equip(obj/W as obj)
 	if(!W)	return 0
-
-	var/success
 
 	if (W == wear_suit)
 		if(s_store)
 			drop_from_inventory(s_store)
-		if(W)
-			success = 1
 		wear_suit = null
 		update_inv_wear_suit()
 	else if (W == w_uniform)
@@ -113,41 +124,43 @@
 		if (belt)
 			drop_from_inventory(belt)
 		w_uniform = null
-		success = 1
 		update_inv_w_uniform()
 	else if (W == gloves)
 		gloves = null
-		success = 1
 		update_inv_gloves()
 	else if (W == glasses)
 		glasses = null
-		success = 1
 		update_inv_glasses()
 	else if (W == head)
 		head = null
+
+		var/update_hair = 0
 		if((W.flags & BLOCKHAIR) || (W.flags & BLOCKHEADHAIR))
+			update_hair = 1
+		else if(istype(W, /obj/item))
+			var/obj/item/I = W
+			if(I.flags_inv & HIDEMASK)
+				update_hair = 1
+		if(update_hair)
 			update_hair(0)	//rebuild hair
-		success = 1
+			update_inv_ears(0)
+			update_inv_wear_mask(0)
+
 		update_inv_head()
 	else if (W == l_ear)
 		l_ear = null
-		success = 1
 		update_inv_ears()
 	else if (W == r_ear)
 		r_ear = null
-		success = 1
 		update_inv_ears()
 	else if (W == shoes)
 		shoes = null
-		success = 1
 		update_inv_shoes()
 	else if (W == belt)
 		belt = null
-		success = 1
 		update_inv_belt()
 	else if (W == wear_mask)
 		wear_mask = null
-		success = 1
 		if((W.flags & BLOCKHAIR) || (W.flags & BLOCKHEADHAIR))
 			update_hair(0)	//rebuild hair
 		if(internal)
@@ -157,51 +170,34 @@
 		update_inv_wear_mask()
 	else if (W == wear_id)
 		wear_id = null
-		success = 1
 		update_inv_wear_id()
 	else if (W == r_store)
 		r_store = null
-		success = 1
 		update_inv_pockets()
 	else if (W == l_store)
 		l_store = null
-		success = 1
 		update_inv_pockets()
 	else if (W == s_store)
 		s_store = null
-		success = 1
 		update_inv_s_store()
 	else if (W == back)
 		back = null
-		success = 1
 		update_inv_back()
 	else if (W == handcuffed)
 		handcuffed = null
-		success = 1
 		update_inv_handcuffed()
 	else if (W == legcuffed)
 		legcuffed = null
-		success = 1
 		update_inv_legcuffed()
 	else if (W == r_hand)
 		r_hand = null
-		success = 1
 		update_inv_r_hand()
 	else if (W == l_hand)
 		l_hand = null
-		success = 1
 		update_inv_l_hand()
 	else
 		return 0
 
-	if(success)
-		if (W)
-			if (client)
-				client.screen -= W
-			W.loc = loc
-			W.dropped(src)
-			//if(W)
-				//W.layer = initial(W.layer)
 	update_action_buttons()
 	return 1
 
@@ -316,7 +312,7 @@
 			update_inv_s_store(redraw_mob)
 		if(slot_in_backpack)
 			if(src.get_active_hand() == W)
-				src.u_equip(W)
+				src.remove_from_mob(W)
 			W.loc = src.back
 		else
 			src << "\red You are trying to eqip this item to an unsupported inventory slot. How the heck did you manage that? Stop it..."
@@ -325,6 +321,10 @@
 	W.layer = 20
 
 	return
+
+/*
+	MouseDrop human inventory menu
+*/
 
 /obj/effect/equip_e
 	name = "equip e"
@@ -796,25 +796,16 @@ It can still be worn/put on as normal.
 	if(slot_to_process)
 		if(strip_item) //Stripping an item from the mob
 			var/obj/item/W = strip_item
-			target.u_equip(W)
-			if (target.client)
-				target.client.screen -= W
-			if (W)
-				W.loc = target.loc
-				W.layer = initial(W.layer)
-				W.dropped(target)
+			target.remove_from_mob(W)
 			W.add_fingerprint(source)
 			if(slot_to_process == slot_l_store) //pockets! Needs to process the other one too. Snowflake code, wooo! It's not like anyone will rewrite this anytime soon. If I'm wrong then... CONGRATULATIONS! ;)
 				if(target.r_store)
-					target.u_equip(target.r_store) //At this stage l_store is already processed by the code above, we only need to process r_store.
+					target.remove_from_mob(target.r_store) //At this stage l_store is already processed by the code above, we only need to process r_store.
 		else
 			if(item && target.has_organ_for_slot(slot_to_process)) //Placing an item on the mob
 				if(item.mob_can_equip(target, slot_to_process, 0))
-					source.u_equip(item)
+					source.remove_from_mob(item)
 					target.equip_to_slot_if_possible(item, slot_to_process, 0, 1, 1)
-					item.dropped(source)
-					source.update_icons()
-					target.update_icons()
 
 	if(source && target)
 		if(source.machine == target)
