@@ -1603,7 +1603,10 @@
 				if(!O.up && tinted_weldhelh)
 					client.screen += global_hud.darkMask
 					masked = 1
-
+			if(istype(wear_mask, /obj/item/clothing/mask/gas/welding) )
+				var/obj/item/clothing/mask/gas/welding/O = wear_mask
+				if(!O.up && tinted_weldhelh)
+					client.screen += global_hud.darkMask
 			if(!masked && istype(glasses, /obj/item/clothing/glasses/welding) )
 				var/obj/item/clothing/glasses/welding/O = glasses
 				if(!O.up && tinted_weldhelh)
