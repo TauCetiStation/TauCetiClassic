@@ -48,7 +48,9 @@ var/global/datum/controller/gameticker/ticker
 	'sound/music/title2.ogg',\
 	'sound/music/traitor.ogg',\
 	'tauceti/sounds/lobby/sundown.ogg',\
-	'tauceti/sounds/lobby/hanging_masses.ogg')
+	'tauceti/sounds/lobby/hanging_masses.ogg',\
+	'tauceti/sounds/lobby/admiral-station-13.ogg',\
+	'tauceti/sounds/lobby/robocop_gb_intro.ogg')
 	*/
 	//New year part
 	'tauceti/modules/_holidays/new_year/music/Carol_of_the_Bells.ogg',\
