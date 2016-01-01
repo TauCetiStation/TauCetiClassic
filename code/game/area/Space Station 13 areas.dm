@@ -47,7 +47,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	var/used_environ = 0
 
 	var/has_gravity = 1
-	var/list/apc = list()
+	var/obj/machinery/power/apc/apc = null
 	var/no_air = null
 	var/area/master				// master area used for power calcluations
 								// (original area before splitting due to sd_DAL)
