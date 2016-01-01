@@ -865,6 +865,10 @@
 		number -= 1
 	if(istype(src.glasses, /obj/item/clothing/glasses/sunglasses))
 		number += 1
+	if(istype(src.wear_mask, /obj/item/clothing/mask/gas/welding))
+		var/obj/item/clothing/mask/gas/welding/W = src.wear_mask
+		if(!W.up)
+			number += 2
 	if(istype(src.glasses, /obj/item/clothing/glasses/welding))
 		var/obj/item/clothing/glasses/welding/W = src.glasses
 		if(!W.up)
