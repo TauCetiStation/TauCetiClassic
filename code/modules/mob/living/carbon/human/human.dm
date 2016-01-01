@@ -1437,7 +1437,7 @@
 				playsound(loc, 'sound/weapons/tablehit1.ogg', 50, 1)
 				var/datum/organ/external/E = get_organ("head")
 				E.take_damage(5, 0, 0, 0, "Table")
-				src << "\red \b Ouch!"
+				src << "<span class='danger'>Ouch!</span>"
 				return
 			pass_flags += PASSCRAWL
 			layer = 3.9
@@ -1447,7 +1447,7 @@
 		crawling = !crawling
 
 	update_canmove()
-	src << "\blue You are now [crawling ? "crawling" : "getting up"]"
+	src << "<span class='notice'>You are now [crawling ? "crawling" : "getting up"].</span>"
 
 /mob/living/carbon/human/can_inject(var/mob/user, var/error_msg, var/target_zone)
 	. = 1
