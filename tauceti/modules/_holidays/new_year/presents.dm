@@ -5,7 +5,6 @@
 	icon_state = "gift1"
 
 	var/bad_chance = 5	//Chance of having bad gift
-	var/whitelist_gift = 0
 	var/list/gifts = list(/obj/item/weapon/reagent_containers/food/snacks/cookie	  = 3,
 						/obj/item/weapon/reagent_containers/food/snacks/chocolatebar  = 3,
 						/obj/item/clothing/head/santahat				= 3,
@@ -127,16 +126,6 @@
 		qdel(src)
 		return
 
-	//Free whitelist adding. It could be OP, but it's fucking New Year, why not?
-	if(!C.prefs.warnbans)
-		if(prob(0.01) || whitelist_gift)
-			whitelist_gift()
-			if(!whitelist_gift)		//Check for success of proc
-				goto gift			//Those who has whitelist for all races will get simple gift
-			qdel(src)
-			return
-
-	gift:	//Lable for goto proc
 	if(prob(bad_chance))
 		present = new /obj/item/weapon/ore/coal/special(src.loc)
 	else
@@ -144,6 +133,17 @@
 
 	user.put_in_active_hand(present)
 	qdel(src)
+
+/obj/item/weapon/present/special
+	desc = "Gift wrapping of this is extraordinarily beautiful."
+
+/obj/item/weapon/present/special/attack_self(mob/user, var/key as text)
+	. = ..()
+	//Free whitelist adding. It could be OP, but it's fucking New Year, why not?
+	var/client/C = user.client
+	if(!C.prefs.warnbans)
+		if(prob(1))
+			whitelist_gift()
 
 /obj/item/weapon/present/proc/whitelist_gift(mob/user = usr)
 	var/rand_species = random_species()
@@ -161,15 +161,14 @@
 		return
 
 	found:	//... we go here
-	var/text = "[user.key] - [rand_species] ,added by New Year 2015 Present\n"	//in case, if we are not in 2015 date should be changed
+	var/text = "[user.key] - [rand_species] ,added by New Year 2016 Present\n"	//in case, if we are not in 2016 date should be changed
 	text2file(text,path)
 	load_alienwhitelist()
 
-	log_admin("Alien whitelist: [user.key] - [rand_species] ,added by New Year 2015 Present")	//in case, if we are not in 2015 date should be changed
-	message_admins("Alien whitelist: [user.key] - [rand_species] ,added by New Year 2015 Present", 1)	//in case, if we are not in 2015 date should be changed
+	log_admin("Alien whitelist: [user.key] - [rand_species] ,added by New Year 2016 Present")	//in case, if we are not in 2016 date should be changed
+	message_admins("Alien whitelist: [user.key] - [rand_species] ,added by New Year 2016 Present", 1)	//in case, if we are not in 2016 date should be changed
 
 	user << "<span class='notice'>You are so lucky bastard. Congratulations!</span>"
-	whitelist_gift = 1
 
 /obj/item/weapon/present/proc/random_species(exclude)
 
@@ -177,6 +176,7 @@
 		species_list.Remove(exclude)
 
 	if(!species_list.len)
+		species_list = null
 		return
 
 	var/rand_species = pick(species_list)
