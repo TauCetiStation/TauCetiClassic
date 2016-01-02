@@ -82,6 +82,7 @@
 
 
 	if(health < 1)
+		health = 0
 		death()
 
 	if(health > maxHealth)

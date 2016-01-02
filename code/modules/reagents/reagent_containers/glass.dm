@@ -17,7 +17,8 @@
 
 	var/label_text = ""
 
-	var/list/can_be_placed_into = list(
+	//var/list/
+	can_be_placed_into = list(
 		/obj/machinery/chem_master/,
 		/obj/machinery/chem_dispenser/,
 		/obj/machinery/reagentgrinder,

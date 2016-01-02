@@ -173,6 +173,19 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	containername = "Toner cartridges"
 	group = "Supply"
 
+/datum/supply_packs/misc/posters
+	name = "Corporate Posters Crate"
+	contains = list(/obj/item/weapon/poster/legit,
+					/obj/item/weapon/poster/legit,
+					/obj/item/weapon/poster/legit,
+					/obj/item/weapon/poster/legit,
+					/obj/item/weapon/poster/legit)
+	cost = 8
+	containertype = /obj/structure/closet/crate
+	containername = "Corporate Posters Crate"
+	group = "Supply"
+
+
 /datum/supply_packs/party
 	name = "Party equipment"
 	contains = list(/obj/item/weapon/storage/box/drinkingglasses,
@@ -242,7 +255,8 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	contains = list(/obj/item/weapon/reagent_containers/glass/bucket,
 					/obj/item/weapon/reagent_containers/glass/bucket,
 					/obj/item/weapon/reagent_containers/glass/bucket,
-					/obj/item/weapon/mop,
+					/obj/item/weapon/mop/advanced,
+					/obj/item/weapon/holosign_creator,
 					/obj/item/weapon/caution,
 					/obj/item/weapon/caution,
 					/obj/item/weapon/caution,
@@ -867,6 +881,7 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	manifest += "Contains any [num_contained] of:"
 	..()
 
+
 /datum/supply_packs/artscrafts
 	name = "Arts and Crafts supplies"
 	contains = list(/obj/item/weapon/storage/fancy/crayons,
@@ -883,7 +898,6 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	/obj/item/weapon/reagent_containers/glass/paint/black,
 	/obj/item/weapon/reagent_containers/glass/paint/white,
 	/obj/item/weapon/reagent_containers/glass/paint/remover,
-	/obj/item/weapon/contraband/poster,
 	/obj/item/weapon/wrapping_paper,
 	/obj/item/weapon/wrapping_paper,
 	/obj/item/weapon/wrapping_paper)
@@ -897,6 +911,7 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	contains = list(/obj/item/seeds/bloodtomatoseed,
 					/obj/item/weapon/storage/pill_bottle/zoom,
 					/obj/item/weapon/storage/pill_bottle/happy,
+					/obj/item/weapon/poster/contraband,
 					/obj/item/weapon/reagent_containers/food/drinks/bottle/pwine)
 
 	name = "Contraband crate"

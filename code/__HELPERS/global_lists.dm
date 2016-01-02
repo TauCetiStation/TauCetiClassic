@@ -27,7 +27,7 @@ var/global/list/language_keys[0]					//table of say codes for all languages
 var/global/list/whitelisted_species = list("Human")
 
 // Posters
-var/global/list/datum/poster/poster_designs = typesof(/datum/poster) - /datum/poster
+//var/global/list/datum/poster/poster_designs = typesof(/datum/poster) - /datum/poster
 
 //Preferences stuff
 	//Hairstyles
