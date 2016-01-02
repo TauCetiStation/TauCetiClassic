@@ -74,7 +74,7 @@
 /obj/item/weapon/stool/attack_self(mob/user as mob)
 	..()
 	user.drop_from_inventory(src.origin)
-	user.visible_message("\blue [user] puts [src] down.", "\blue You put [src] down.")
+	user.visible_message("[user] puts [src] down.", "<span class='notice'>You put [src] down.</span>")
 	qdel(src)
 
 /obj/item/weapon/stool/dropped()

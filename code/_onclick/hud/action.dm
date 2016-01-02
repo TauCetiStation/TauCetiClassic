@@ -98,7 +98,7 @@
 		if(owner.stunned)
 			return 0
 	if(check_flags & AB_CHECK_LYING)
-		if(owner.lying)
+		if(owner.lying && !owner.crawling)
 			return 0
 	if(check_flags & AB_CHECK_ALIVE)
 		if(owner.stat)

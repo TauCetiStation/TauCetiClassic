@@ -94,7 +94,7 @@
 
 	if(!(W.flags & ABSTRACT))
 		if(user.drop_item())
-			user.visible_message("<span class='notice'>[user] attaches [W] to \the [src] .</span>","<span class='notice'>You attache [W] to \the [src].</span>")
+			user.visible_message("[user] attaches [W] to \the [src] .","<span class='notice'>You attache [W] to \the [src].</span>")
 			W.forceMove(loc)
 			W.layer = 5.1	//Item should be on the tree, not under
 			W.anchored = 1	//Make item a part of the tree
@@ -123,7 +123,7 @@
 	if(iscarbon(C))
 		if(!gifts_dealt || ((world.time - gifts_dealt) > 3000))
 
-			C.visible_message("<span class='notice'>[C] shakes [src].</span>","<span class='notice'>You shake [src].</span>")
+			C.visible_message("[C] shakes [src].","<span class='notice'>You shake [src].</span>")
 
 			if(!C.client.prefs.warnbans)
 				C << "<span class='notice'>You understand that this year you was good boy!</span>"
@@ -134,19 +134,26 @@
 			new /obj/item/weapon/present(src.loc)
 			new /obj/item/weapon/present(src.loc)
 			new /obj/item/weapon/present(src.loc)
-			new /obj/item/weapon/present(src.loc)
-			new /obj/item/weapon/present(src.loc)
+			if(prob(10))
+				new	/obj/item/weapon/present/special(src.loc)
+				new	/obj/item/weapon/present/special(src.loc)
+				new	/obj/item/weapon/present/special(src.loc)
+			else
+				new /obj/item/weapon/present(src.loc)
+				new /obj/item/weapon/present(src.loc)
+				new /obj/item/weapon/present(src.loc)
 			gifts_dealt = world.time
 		else
-			C.visible_message("<span class='notice'>[C] shakes [src].</span>","<span class='notice'>You shake [src] but nothing happens.</span>")
+			C.visible_message("[C] shakes [src].","<span class='notice'>You shake [src] but nothing happens.</span>")
 
-	if(decals.len)
-		for(var/obj/item/I in decals)
+	if(decals.len && (C.a_intent != "help"))
+		for(var/item in decals)
+			var/obj/item/I = item
 			I.forceMove(src.loc)
 			I.layer = initial(layer)
 			I.pixel_x = initial(pixel_x)
 			I.pixel_y = initial(pixel_y)
 			I.anchored = 0
-			decals.Remove(I)
+			decals.Cut()
 
-		src.visible_message("<span class='notice'>Something dropped from \the [src].</span>")
+		src.visible_message("Something dropped from \the [src].")
