@@ -23,8 +23,6 @@ var/list/alldepartments = list("Central Command")
 
 	var/dpt = "Central Command" // the department we're sending to
 
-	var/namefax = "admin" //used for picking the fax from the fax's list, if needed
-
 /obj/machinery/faxmachine/New()
 	..()
 	allfaxes += src
