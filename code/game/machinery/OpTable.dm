@@ -76,6 +76,8 @@
 
 
 /obj/machinery/optable/MouseDrop_T(obj/O as obj, mob/user as mob)
+	if(isrobot(user))
+		return
 
 	if ((!( istype(O, /obj/item/weapon) ) || user.get_active_hand() != O))
 		return
@@ -133,6 +135,9 @@
 	take_victim(usr,usr)
 
 /obj/machinery/optable/attackby(obj/item/weapon/W as obj, mob/living/carbon/user as mob)
+	if(isrobot(user))
+		return
+
 	if (istype(W, /obj/item/weapon/grab))
 		if(iscarbon(W:affecting))
 			take_victim(W:affecting,usr)

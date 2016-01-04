@@ -80,7 +80,7 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 proc/do_surgery(mob/living/carbon/M, mob/living/user, obj/item/tool)
 	if(!istype(M))
 		return 0
-	if (user.a_intent == "harm")	//check for Hippocratic Oath
+	if (user.a_intent == "hurt")	//check for Hippocratic Oath
 		return 0
 	var/target_zone = user.zone_sel.selecting
 	if(target_zone in M.op_stage.in_progress)		//Can't operate on someone repeatedly.

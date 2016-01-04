@@ -196,24 +196,34 @@
 		var/obj/item/weapon/grab/G = W
 		if (istype(G.affecting, /mob/living))
 			var/mob/living/M = G.affecting
+			var/mob/living/A = G.assailant
 			var/state = G.state
 			qdel(W)	//gotta delete it here because if window breaks, it won't get deleted
 			switch (state)
 				if(1)
 					M.apply_damage(7)
 					hit(10)
-					visible_message("\red [user] slams [M] against \the [src]!")
+					visible_message("<span class='danger'>[user] slams [M] against \the [src]!</span>")
+					M.attack_log += "\[[time_stamp()]\] <font color='orange'>Slammed by [A.name] against \the [src]([A.ckey])</font>"
+					A.attack_log += "\[[time_stamp()]\] <font color='red'>Slams [M.name] against \the [src]([M.ckey])</font>"
+					msg_admin_attack("[key_name(A)] slams [key_name(M)] into \the [src]")
 				if(2)
 					if (prob(50))
 						M.Weaken(1)
 					M.apply_damage(10)
 					hit(25)
-					visible_message("\red <b>[user] bashes [M] against \the [src]!</b>")
+					visible_message("<span class='danger'>[user] bashes [M] against \the [src]!</span>")
+					M.attack_log += "\[[time_stamp()]\] <font color='orange'>Bashed by [A.name] against \the [src]([A.ckey])</font>"
+					A.attack_log += "\[[time_stamp()]\] <font color='red'>Bashes [M.name] against \the [src]([M.ckey])</font>"
+					msg_admin_attack("[key_name(A)] bushes [key_name(M)] against \the [src]")
 				if(3)
 					M.Weaken(5)
 					M.apply_damage(20)
 					hit(50)
-					visible_message("\red <big><b>[user] crushes [M] against \the [src]!</b></big>")
+					visible_message("<span class='danger'><big>[user] crushes [M] against \the [src]!</big></span>")
+					M.attack_log += "\[[time_stamp()]\] <font color='orange'>Crushed by [A.name] against \the [src]([A.ckey])</font>"
+					A.attack_log += "\[[time_stamp()]\] <font color='red'>Crushes [M.name] against \the [src]([M.ckey])</font>"
+					msg_admin_attack("[key_name(A)] crushes [key_name(M)] against \the [src]")
 			return
 	if(istype(W, /obj/item/weapon/screwdriver))
 		if(reinf && state >= 1)

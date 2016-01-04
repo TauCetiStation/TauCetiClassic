@@ -145,7 +145,7 @@
 		init()
 	else
 		area = src.loc.loc:master
-		area.apc |= src
+		area.apc = src
 		opened = 1
 		operating = 0
 		name = "[area.name] APC"
@@ -181,7 +181,7 @@
 	else
 		src.area = get_area_name(areastring)
 		name = "\improper [area.name] APC"
-	area.apc |= src
+	area.apc = src
 	update_icon()
 
 	make_terminal()
@@ -1419,6 +1419,7 @@
 		if (ticker.mode.config_tag == "malfunction")
 			if (src.z == 1) //if (is_type_in_list(get_area(src), the_station_areas))
 				ticker.mode:apcs--
+	area.apc = null
 	area.power_light = 0
 	area.power_equip = 0
 	area.power_environ = 0
