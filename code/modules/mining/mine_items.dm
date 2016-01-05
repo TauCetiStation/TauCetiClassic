@@ -350,10 +350,10 @@ proc/move_mining_shuttle()
 				else
 					R.uses -= 1
 					reliability = max_reliability
-					user << "You repaired [src]"
+					user << "<span class='notice'>You repaired [src].</span>"
 					if(R.uses == 0)
 						qdel(R)
-			else user << "[src] is in well condition."
+			else user << "<span class='notice'>[src] is in well condition.</span>"
 		else if(state == 2)
 			if(R.uses == 0)
 				return
@@ -362,7 +362,7 @@ proc/move_mining_shuttle()
 				reliability = max_reliability
 				state = 1
 				update_icon()
-				user << "You repaired [src]"
+				user << "<span class='notice'>You repaired [src].</span>"
 				if(R.uses == 0)
 					qdel(R)
 		return
