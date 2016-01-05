@@ -819,7 +819,7 @@ datum/objective/heist/loot
 			if(2)
 				target = /obj/machinery/the_singularitygen
 				target_amount = 1
-				loot = "a gravitational generator"
+				loot = "a Gravitational Singularity Generator"
 			if(3)
 				target = /obj/machinery/power/emitter
 				target_amount = 4
