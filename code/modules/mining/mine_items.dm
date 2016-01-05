@@ -309,11 +309,11 @@ proc/move_mining_shuttle()
 
 /obj/item/weapon/pickaxe/drill/update_icon()
 	if(!state)
-		icon_state = "hand_drill"
+		icon_state = initial(icon_state)
 	else if(state == 1)
-		icon_state = "hand_drill_open"
+		icon_state += "_open"
 	else if(state == 2)
-		icon_state = "hand_drill_broken"
+		icon_state += "_broken"
 	return
 
 /obj/item/weapon/pickaxe/drill/attackby(obj/item/weapon/W as obj, mob/user as mob)
