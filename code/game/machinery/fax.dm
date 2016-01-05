@@ -181,13 +181,15 @@ var/list/alldepartments = list("Central Command")
 /proc/Centcomm_fax(var/sent, var/sentname, var/mob/Sender)
 
 	var/msg = "\blue <b><font color='orange'>CENTCOMM FAX: </font>[key_name(Sender, 1)] (<A HREF='?_src_=holder;adminplayeropts=\ref[Sender]'>PP</A>) (<A HREF='?_src_=vars;Vars=\ref[Sender]'>VV</A>) (<A HREF='?_src_=holder;subtlemessage=\ref[Sender]'>SM</A>) (<A HREF='?_src_=holder;adminplayerobservejump=\ref[Sender]'>JMP</A>) (<A HREF='?_src_=holder;secretsadmin=check_antagonist'>CA</A>) (<a href='?_src_=holder;CentcommFaxReply=\ref[Sender]'>RPLY</a>)</b>: Receiving '[sentname]' via secure connection ... <a href='?_src_=holder;CentcommFaxView=\ref[sent]'>view message</a>"
-	log_fax("[Sender] : [sentname] [sent]")
+	log_fax("[Sender] sending [sentname] : [sent]")
 	for(var/client/C in admins)
 		if(!is_mentor(C))
 			C << msg
 
 proc/SendFax(var/sent, var/sentname, var/mob/Sender, var/dpt)
 
+	log_fax("[Sender] sending [sentname] to [dpt] : [sent]")
+	
 	for(var/obj/machinery/faxmachine/F in allfaxes)
 		if( F.department == dpt )
 			if(! (F.stat & (BROKEN|NOPOWER) ) )
