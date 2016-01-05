@@ -115,7 +115,6 @@ proc/move_mining_shuttle()
 	icon_state = "shuttle"
 	req_access = list(access_mining)
 	circuit = "/obj/item/weapon/circuitboard/mining_shuttle"
-	var/hacked = 0
 	var/location = 0 //0 = station, 1 = mining base
 
 /obj/machinery/computer/mining_shuttle/attack_hand(user as mob)
@@ -148,19 +147,19 @@ proc/move_mining_shuttle()
 		//		return
 
 		if (!mining_shuttle_moving)
-			usr << "\blue Shuttle recieved message and will be sent shortly."
+			usr << "<span class='notice'>Shuttle recieved message and will be sent shortly.</span>"
 			move_mining_shuttle()
 		else
-			usr << "\blue Shuttle is already moving."
+			usr << "<span class='notice'>Shuttle is already moving.</span>"
 
 	updateUsrDialog()
 
 /obj/machinery/computer/mining_shuttle/attackby(obj/item/weapon/W as obj, mob/user as mob)
 
-	if (istype(W, /obj/item/weapon/card/emag))
+	if (istype(W, /obj/item/weapon/card/emag) && !emagged)
 		src.req_access = list()
-		hacked = 1
-		usr << "You fried the consoles ID checking system. It's now available to everyone!"
+		emagged = 1
+		usr << "<span class='notice'>You fried the consoles ID checking system. It's now available to everyone!</span>"
 	else
 		..()
 
@@ -320,14 +319,14 @@ proc/move_mining_shuttle()
 	if(istype(W, /obj/item/weapon/screwdriver))
 		if(state==0)
 			state = 1
-			user << "You open maintenance panel."
+			user << "<span class='notice'>You open maintenance panel.</span>"
 			update_icon()
 		else if(state==1)
 			state = 0
-			user << "You close maintenance panel."
+			user << "<span class='notice'>You close maintenance panel.</span>"
 			update_icon()
 		else if(state == 2)
-			user << "[src] is broken!"
+			user << "<span class='danger'>[src] is broken!</span>"
 		return
 	else if(istype(W, /obj/item/weapon/cell))
 		if(state == 1 || state == 2)
@@ -339,7 +338,7 @@ proc/move_mining_shuttle()
 			else
 				user << "<span class='notice'>There's already a powercell in \the [src].</span>"
 		else
-			user <<"[src] panel is closed."
+			user <<"<span class='notice'>[src] panel is closed.</span>"
 		return
 	else if(istype(W, /obj/item/weapon/repairkit))
 		var/obj/item/weapon/repairkit/R = W
@@ -404,6 +403,8 @@ proc/move_mining_shuttle()
 	desc = "Cracks rocks with sonic blasts, perfect for killing cave lizards."
 	drill_verb = "hammering"
 
+	attackby()
+		return
 
 /obj/item/weapon/pickaxe/drill/diamond_drill //When people ask about the badass leader of the mining tools, they are talking about ME!
 	name = "diamond mining drill"
@@ -421,6 +422,9 @@ proc/move_mining_shuttle()
 	digspeed = 20
 	desc = ""
 	drill_verb = "drilling"
+
+	attackby()
+		return
 
 
 /obj/item/weapon/repairkit
