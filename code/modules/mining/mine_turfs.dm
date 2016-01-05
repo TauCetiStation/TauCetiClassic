@@ -136,7 +136,7 @@
 /turf/simulated/mineral/attackby(obj/item/weapon/W as obj, mob/user as mob)
 
 	if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
-		usr << "\red You don't have the dexterity to do this!"
+		usr << "<span class='danger'>You don't have the dexterity to do this!</span>"
 		return
 
 	if (istype(W, /obj/item/device/core_sampler))
@@ -152,9 +152,9 @@
 
 	if (istype(W, /obj/item/device/measuring_tape))
 		var/obj/item/device/measuring_tape/P = W
-		user.visible_message("\blue[user] extends [P] towards [src].","\blue You extend [P] towards [src].")
+		user.visible_message("<span class='notice'>[user] extends [P] towards [src].</span>","<span class='notice'>You extend [P] towards [src].</span>")
 		if(do_after(user,25, target = src))
-			user << "\blue \icon[P] [src] has been excavated to a depth of [2*excavation_level]cm."
+			user << "<span class='notice'>\icon[P] [src] has been excavated to a depth of [2*excavation_level]cm.</span>"
 		return
 
 	if (istype(W, /obj/item/weapon/pickaxe))
@@ -169,24 +169,25 @@
 
 		if(istype(P, /obj/item/weapon/pickaxe/drill))
 			var/obj/item/weapon/pickaxe/drill/D = P
-			if(D.state)
-				user << "\red [D] is not ready!"
-				return
-			if(!D.power_supply || !D.power_supply.use(D.drill_cost))
-				user << "\red No power!"
-				return
-			if(D.mode)
-				if(mineral)
-					mined_ore = mineral.ore_loss
-			if(prob(D.crit_fail))
-				user << "\red [D] is broken!"
-				D.state = 2
-				D.reliability = 0
-				D.update_icon()
-				return
-			D.reliability -= 5
-			D.power_supply.use(P:drill_cost)
-			D.update_reliability()
+			if(!(istype(D, /obj/item/weapon/pickaxe/drill/borgdrill) || istype(D, /obj/item/weapon/pickaxe/drill/jackhammer)))	//borgdrill & jackhammer can't lose energy and crit fail
+				if(D.state)
+					user << "<span class='danger'>[D] is not ready!</span>"
+					return
+				if(!D.power_supply || !D.power_supply.use(D.drill_cost))
+					user << "<span class='danger'>No power!</span>"
+					return
+				if(D.mode)
+					if(mineral)
+						mined_ore = mineral.ore_loss
+				if(prob(D.crit_fail))
+					user << "<span class='danger'>[D] is broken!</span>"
+					D.state = 2
+					D.reliability = 0
+					D.update_icon()
+					return
+				D.reliability -= 5
+				D.power_supply.use(D.drill_cost)
+				D.update_reliability()
 
 		playsound(user, P.drill_sound, 70, 0)
 
@@ -198,7 +199,7 @@
 				//Chance to destroy / extract any finds here
 				fail_message = ", <b>[pick("there is a crunching noise","[W] collides with some different rock","part of the rock face crumbles away","something breaks under [W]")]</b>"
 
-		user << "\red You start [P.drill_verb][fail_message ? fail_message : ""]."
+		user << "<span class='warning'>You start [P.drill_verb][fail_message ? fail_message : ""].</span>"
 
 		if(fail_message && prob(90))
 			if(prob(25))
@@ -209,7 +210,7 @@
 					artifact_debris()
 
 		if(do_after(user,P.digspeed, target = src))
-			user << "\blue You finish [P.drill_verb] the rock."
+			user << "<span class='notice'>You finish [P.drill_verb] the rock.</span>"
 
 			if(istype(P,/obj/item/weapon/pickaxe/drill/jackhammer))	//Jackhammer will just dig 3 tiles in dir of user
 				for(var/turf/simulated/mineral/M in range(user,1))
@@ -324,7 +325,7 @@
 		if(prob(50))
 			pain = 1
 		for(var/mob/living/M in range(src, 200))
-			M << "<font color='red'><b>[pick("A high pitched [pick("keening","wailing","whistle")]","A rumbling noise like [pick("thunder","heavy machinery")]")] somehow penetrates your mind before fading away!</b></font>"
+			M << "<span class='danger'>[pick("A high pitched [pick("keening","wailing","whistle")]","A rumbling noise like [pick("thunder","heavy machinery")]")] somehow penetrates your mind before fading away!</span>"
 			if(pain)
 				flick("pain",M.pain)
 				if(prob(50))
@@ -345,29 +346,29 @@
 /turf/simulated/mineral/proc/excavate_find(var/prob_clean = 0, var/datum/find/F)
 	//with skill and luck, players can cleanly extract finds
 	//otherwise, they come out inside a chunk of rock
-	var/obj/item/weapon/X
+	var/obj/item/weapon/W
 	if(prob_clean)
-		X = new /obj/item/weapon/archaeological_find(src, new_item_type = F.find_type)
+		W = new /obj/item/weapon/archaeological_find(src, new_item_type = F.find_type)
 	else
-		X = new /obj/item/weapon/ore/strangerock(src, inside_item_type = F.find_type)
+		W = new /obj/item/weapon/ore/strangerock(src, inside_item_type = F.find_type)
 		geologic_data.UpdateNearbyArtifactInfo(src)
-		X:geologic_data = geologic_data
+		W:geologic_data = geologic_data
 
 	//some find types delete the /obj/item/weapon/archaeological_find and replace it with something else, this handles when that happens
 	//yuck
 	var/display_name = "something"
-	if(!X)
-		X = last_find
-	if(X)
-		display_name = X.name
+	if(!W)
+		W = last_find
+	if(W)
+		display_name = W.name
 
 	//many finds are ancient and thus very delicate - luckily there is a specialised energy suspension field which protects them when they're being extracted
 	if(prob(F.prob_delicate))
 		var/obj/effect/suspension_field/S = locate() in src
 		if(!S || S.field_type != get_responsive_reagent(F.find_type))
-			if(X)
-				visible_message("\red<b>[pick("[display_name] crumbles away into dust","[display_name] breaks apart")].</b>")
-				qdel(X)
+			if(W)
+				visible_message("<span class='danger'>[pick("[display_name] crumbles away into dust","[display_name] breaks apart")].</span>")
+				qdel(W)
 
 	finds.Remove(F)
 
@@ -614,16 +615,16 @@
 			return
 
 		if (dug)
-			user << "\red This area has already been dug"
+			user << "<span class='danger'>This area has already been dug.</span>"
 			return
 
-		user << "\red You start digging."
-		playsound(loc, 'sound/effects/rustle1.ogg', 50, 1) //russle sounds sounded better
+		user << "<span class='warning'>You start digging.</span>"
+		playsound(user.loc, 'tauceti/sounds/effects/digging.ogg', 50, 1)
 
-		sleep(40)
-		if ((user.loc == T && user.get_active_hand() == W))
-			user << "\blue You dug a hole."
-			gets_dug()
+		if(do_after(user,40,target = src))
+			if((user.loc == T && user.get_active_hand() == W))
+				user << "<span class='notice'>You dug a hole.</span>"
+				gets_dug()
 
 	if(istype(W,/obj/item/weapon/storage/bag/ore))
 		var/obj/item/weapon/storage/bag/ore/S = W
