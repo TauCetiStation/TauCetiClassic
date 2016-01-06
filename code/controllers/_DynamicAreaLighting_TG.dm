@@ -8,7 +8,7 @@
 	by using the var/tag variable and moving turfs into the contents list of the correct sub-area.
 
 	Unlike sd_DAL however it uses a queueing system. Everytime we  call a change to opacity or luminosity
-	(through SetOpacity() or SetLuminosity()) we are  simply updating variables and scheduling certain lights/turfs for an
+	(through set_opacity() or SetLuminosity()) we are  simply updating variables and scheduling certain lights/turfs for an
 	update. Actual updates are handled periodically by the lighting_controller. This carries additional overheads, however it
 	means that each thing is changed only once per lighting_controller.processing_interval ticks. Allowing for greater control
 	over how much priority we'd like lighting updates to have. It also makes it possible for us to simply delay updates by
@@ -152,7 +152,7 @@ atom/movable/New()
 
 //Turfs with opacity will trigger nearby lights to update at next lighting process.
 //TODO: is this really necessary? Removing it could help reduce lag during singulo-mayhem somewhat
-turf/Del()
+turf/Destroy()
 	if(opacity)
 		UpdateAffectingLights()
 	..()
@@ -192,7 +192,7 @@ mob/SetLuminosity(new_luminosity)
 	..(new_luminosity,LIGHTING_MAX_LUMINOSITY_MOB)
 
 //change our opacity (defaults to toggle), and then update all lights that affect us.
-atom/proc/SetOpacity(var/new_opacity)
+atom/proc/set_opacity(var/new_opacity)
 	if(new_opacity == null)			new_opacity = !opacity
 	else if(opacity == new_opacity)	return
 	opacity = new_opacity

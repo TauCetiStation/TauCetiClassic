@@ -8,6 +8,17 @@
 	var/list/hud_list[9]
 	var/list/speech_synthesizer_langs = list()	//which languages can be vocalized by the speech synthesizer
 
+
+
+
+
+
+	var/obj/item/device/camera/siliconcam/aiCamera = null //photography
+
+	var/sensor_mode = 0 //Determines the current HUD.
+	#define SEC_HUD 1 //Security HUD mode
+	#define MED_HUD 2 //Medical HUD mode
+
 /mob/living/silicon/proc/show_laws()
 	return
 
@@ -107,7 +118,7 @@
 /mob/living/silicon/Stat()
 	..()
 	statpanel("Status")
-	if (src.client.statpanel == "Status")
+	if (src.client && src.client.statpanel == "Status")
 		show_station_time()
 		show_emergency_shuttle_eta()
 		show_system_integrity()
@@ -141,7 +152,7 @@
 
 /mob/living/silicon/remove_language(var/rem_language)
 	..(rem_language)
-	
+
 	for (var/datum/language/L in speech_synthesizer_langs)
 		if (L.name == rem_language)
 			speech_synthesizer_langs -= L
@@ -158,3 +169,18 @@
 
 	src << browse(dat, "window=checklanguage")
 	return
+
+/mob/living/silicon/proc/toggle_sensor_mode()
+	//set name = "Set Sensor Augmentation" // Dunno, but it loops if open. ~Zve
+	//set desc = "Augment visual feed with internal sensor overlays."
+	var/sensor_type = input("Please select sensor type.", "Sensor Integration", null) in list("Security", "Medical","Disable")
+	switch(sensor_type)
+		if ("Security")
+			sensor_mode = SEC_HUD
+			src << "<span class='notice'>Security records overlay enabled.</span>"
+		if ("Medical")
+			sensor_mode = MED_HUD
+			src << "<span class='notice'>Life signs monitor overlay enabled.</span>"
+		if ("Disable")
+			sensor_mode = 0
+			src << "Sensor augmentations disabled."

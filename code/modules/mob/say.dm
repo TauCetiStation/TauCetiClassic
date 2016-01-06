@@ -12,6 +12,8 @@
 	if(say_disabled)	//This is here to try to identify lag problems
 		usr << "\red Speech is currently admin-disabled."
 		return
+
+	set_typing_indicator(0)
 	usr.say(message)
 
 /mob/verb/me_verb(message as text)
@@ -24,6 +26,7 @@
 
 	message = trim(sanitize_plus(copytext(message, 1, MAX_MESSAGE_LEN)))
 
+	set_typing_indicator(0)
 	if(use_me)
 		usr.emote("me",usr.emote_type,message)
 	else
@@ -42,7 +45,7 @@
 			src << "\red Deadchat is globally muted"
 			return
 
-	if(client && !(client.prefs.toggles & CHAT_DEAD))
+	if(client && !(client.prefs.chat_toggles & CHAT_DEAD))
 		usr << "\red You have deadchat muted."
 		return
 
@@ -58,11 +61,13 @@
 	for(var/mob/M in player_list)
 		if(istype(M, /mob/new_player))
 			continue
-		if(M.client && M.stat == DEAD && (M.client.prefs.toggles & CHAT_DEAD))
+		if(M.client && M.stat == DEAD && (M.client.prefs.chat_toggles & CHAT_DEAD))
+			if(M.fake_death) //Our changeling with fake_death status must not hear dead chat!!
+				continue
 			M << rendered
 			continue
 
-		if(M.client && M.client.holder && !is_mentor(M.client) && (M.client.prefs.toggles & CHAT_DEAD) ) // Show the message to admins/mods with deadchat toggled on
+		if(M.client && M.client.holder && !is_mentor(M.client) && (M.client.prefs.chat_toggles & CHAT_DEAD) ) // Show the message to admins/mods with deadchat toggled on
 			M << rendered	//Admins can hear deadchat, if they choose to, no matter if they're blind/deaf or not.
 
 
@@ -118,7 +123,7 @@
         return verb
 
 
-/mob/proc/emote(var/act, var/type, var/message)
+/mob/proc/emote(var/act, var/type, var/message, var/auto)
 	if(act == "me")
 		return custom_emote(type, message)
 

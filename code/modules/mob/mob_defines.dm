@@ -39,6 +39,10 @@
 	Changing this around would probably require a good look-over the pre-existing code.
 	*/
 	var/obj/screen/zone_sel/zone_sel = null
+	var/obj/screen/leap_icon = null
+
+	var/obj/screen/alien_plasma_display = null
+	var/obj/screen/nightvisionicon = null
 
 	var/use_me = 1 //Allows all mobs to use the me verb by default, will have to manually specify they cannot
 	var/speech_allowed = 1 //Meme Stuff
@@ -58,6 +62,7 @@
 	var/next_move = null
 	var/monkeyizing = null	//Carbon
 	var/other = 0.0
+	var/notransform = null	//Carbon
 	var/hand = null
 	var/eye_blind = null	//Carbon
 	var/eye_blurry = null	//Carbon
@@ -81,6 +86,7 @@
 	var/resting = 0			//Carbon
 	var/lying = 0
 	var/lying_prev = 0
+	var/lying_current = 0
 	var/crawling = 0 //Для ползанья
 	var/canmove = 1
 	var/lastpuke = 0
@@ -220,5 +226,8 @@
 	var/immune_to_ssd = 0
 
 	var/turf/listed_turf = null  //the current turf being examined in the stat panel
+	var/list/shouldnt_see = list()	//list of objects that this mob shouldn't see in the stat panel. this silliness is needed because of AI alt+click and cult blood runes
 
 	var/list/active_genes=list()
+
+	var/fake_death = 0 //New changeling statis

@@ -48,12 +48,20 @@ h1.alert, h2.alert		{color: #000000;}
 .moderate				{color: #CC0000;}
 .disarm					{color: #990000;}
 .passive				{color: #660000;}
+.artefact				{color: #ffa500;}
 
 .danger					{color: #ff0000;	font-weight: bold;}
 .warning				{color: #ff0000;	font-style: italic;}
 .rose					{color: #ff5050;}
 .info					{color: #0000CC;}
 .notice					{color: #000099;}
+
+.wet					{color: #007FBF;	font-weight: bold;}
+
+.shadowling				{color: #3b2769;}
+
+.big					{font-size: 3;}
+.reallybig				{font-size: 4;}
 
 .alien					{color: #543354;}
 .newscaster				{color: #800000;}

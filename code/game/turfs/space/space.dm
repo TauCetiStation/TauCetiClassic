@@ -2,14 +2,25 @@
 	icon = 'icons/turf/space.dmi'
 	name = "\proper space"
 	icon_state = "0"
+	dynamic_lighting = 0
 
-	temperature = T0C
+	temperature = T20C
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
 //	heat_capacity = 700000 No.
 
 /turf/space/New()
 	if(!istype(src, /turf/space/transit))
 		icon_state = "[((x + y) ^ ~(x * y) + z) % 25]"
+	update_starlight()
+
+/turf/space/proc/update_starlight()
+	set_light(0) // Too lazy to port starlight configuration and its 0 by default anyway... ~Zve
+	/*if(!config.starlight)
+		return
+	if(locate(/turf/simulated) in orange(src,1))
+		set_light(config.starlight)
+	else
+		set_light(0)*/
 
 /turf/space/attack_paw(mob/user as mob)
 	return src.attack_hand(user)
@@ -41,12 +52,12 @@
 				user << "\red You don't have enough rods to do that."
 				return
 			user << "\blue You begin to build a catwalk."
-			if(do_after(user,30))
+			if(do_after(user,30,target = src))
 				playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
 				user << "\blue You build a catwalk!"
 				R.use(2)
 				ChangeTurf(/turf/simulated/floor/plating/airless/catwalk)
-				del(L)
+				qdel(L)
 				return
 
 		user << "\blue Constructing support lattice ..."
@@ -91,7 +102,7 @@
 				return
 
 			if(istype(A, /obj/item/weapon/disk/nuclear)) // Don't let nuke disks travel Z levels  ... And moving this shit down here so it only fires when they're actually trying to change z-level.
-				qdel(A) //The disk's Del() proc ensures a new one is created
+				qdel(A) //The disk's Destroy() proc ensures a new one is created
 				return
 
 			var/list/disk_search = A.search_contents_for(/obj/item/weapon/disk/nuclear)

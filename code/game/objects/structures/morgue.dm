@@ -20,6 +20,12 @@
 	var/obj/structure/m_tray/connected = null
 	anchored = 1.0
 
+/obj/structure/morgue/Destroy()
+	if(connected)
+		qdel(connected)
+		connected = null
+	return ..()
+
 /obj/structure/morgue/proc/update()
 	if (src.connected)
 		src.icon_state = "morgue0"
@@ -66,8 +72,8 @@
 			if (!( A.anchored ))
 				A.loc = src
 		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-		//src.connected = null
-		del(src.connected)
+		qdel(src.connected)
+		src.connected = null
 	else
 		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 		src.connected = new /obj/structure/m_tray( src.loc )
@@ -82,8 +88,8 @@
 			src.connected.icon_state = "morguet"
 			src.connected.dir = src.dir
 		else
-			//src.connected = null
-			del(src.connected)
+			qdel(src.connected)
+			src.connected = null
 	src.add_fingerprint(user)
 	update()
 	return
@@ -115,11 +121,10 @@
 		src.icon_state = "morgue0"
 		for(var/atom/movable/A as mob|obj in src)
 			A.loc = src.connected.loc
-			//Foreach goto(106)
 		src.connected.icon_state = "morguet"
 	else
-		//src.connected = null
-		del(src.connected)
+		qdel(src.connected)
+		src.connected = null
 	return
 
 
@@ -137,6 +142,12 @@
 	anchored = 1
 	throwpass = 1
 
+/obj/structure/m_tray/Destroy()
+	if(connected && connected.connected == src)
+		connected.connected = null
+	connected = null
+	return ..()
+
 /obj/structure/m_tray/attack_paw(mob/user as mob)
 	return src.attack_hand(user)
 
@@ -150,7 +161,7 @@
 		src.connected.update()
 		add_fingerprint(user)
 		//SN src = null
-		del(src)
+		qdel(src)
 		return
 	return
 
@@ -184,6 +195,12 @@
 	var/cremating = 0
 	var/id = 1
 	var/locked = 0
+
+/obj/structure/crematorium/Destroy()
+	if(connected)
+		qdel(connected)
+		connected = null
+	return ..()
 
 /obj/structure/crematorium/proc/update()
 	if (src.connected)
@@ -256,7 +273,7 @@
 			src.connected.icon_state = "cremat"
 		else
 			//src.connected = null
-			del(src.connected)
+			qdel(src.connected)
 	src.add_fingerprint(user)
 	update()
 
@@ -287,11 +304,10 @@
 		src.icon_state = "crema0"
 		for(var/atom/movable/A as mob|obj in src)
 			A.loc = src.connected.loc
-			//Foreach goto(106)
 		src.connected.icon_state = "cremat"
 	else
-		//src.connected = null
-		del(src.connected)
+		qdel(src.connected)
+		src.connected = null
 	return
 
 /obj/structure/crematorium/proc/cremate(atom/A, mob/user as mob)
@@ -319,7 +335,7 @@
 
 		for(var/mob/living/M in contents)
 			if (M.stat!=2)
-				M.emote("scream")
+				M.emote("scream",,, 1)
 			//Logging for this causes runtimes resulting in the cremator locking up. Commenting it out until that's figured out.
 			//M.attack_log += "\[[time_stamp()]\] Has been cremated by <b>[user]/[user.ckey]</b>" //No point in this when the mob's about to be deleted
 			//user.attack_log +="\[[time_stamp()]\] Cremated <b>[M]/[M.ckey]</b>"
@@ -366,7 +382,7 @@
 		src.connected.update()
 		add_fingerprint(user)
 		//SN src = null
-		del(src)
+		qdel(src)
 		return
 	return
 
@@ -390,6 +406,9 @@
 		for (var/obj/structure/crematorium/C in world)
 			if (C.id == id)
 				if (!C.cremating)
+					for(var/mob/living/M in C.contents)
+						user.attack_log += "\[[time_stamp()]\]<font color='red'> Cremated [M.name] ([M.ckey])</font>"
+						message_admins("[user.name] ([user.ckey]) <font color='red'>Cremating</font> [M.name] ([M.ckey]).")
 					C.cremate(user)
 	else
 		usr << "\red Access denied."

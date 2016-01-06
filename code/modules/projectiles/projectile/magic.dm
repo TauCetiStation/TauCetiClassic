@@ -28,11 +28,11 @@
 
 		if(istype(M, /mob/living/silicon/robot))
 			var/mob/living/silicon/robot/Robot = M
-			if(Robot.mmi)	del(Robot.mmi)
+			if(Robot.mmi)	qdel(Robot.mmi)
 		else
 			for(var/obj/item/W in M)
 				if(istype(W, /obj/item/weapon/implant))	//TODO: Carn. give implants a dropped() or something
-					del(W)
+					qdel(W)
 					continue
 				W.layer = initial(W.layer)
 				W.loc = M.loc
@@ -40,7 +40,8 @@
 
 		var/mob/living/new_mob
 
-		var/randomize = pick("monkey","robot","slime","xeno","human")
+		//var/randomize = pick("monkey","robot","slime","xeno","human") No xeno for now.
+		var/randomize = pick("monkey","robot","slime","human")
 		switch(randomize)
 			if("monkey")
 				new_mob = new /mob/living/carbon/monkey(M.loc)
@@ -57,14 +58,14 @@
 				if(prob(50))		new_mob = new /mob/living/carbon/slime/adult(M.loc)
 				else				new_mob = new /mob/living/carbon/slime(M.loc)
 				new_mob.universal_speak = 1
-			if("xeno")
-				var/alien_caste = pick("Hunter","Sentinel","Drone","Larva")
-				switch(alien_caste)
-					if("Hunter")	new_mob = new /mob/living/carbon/alien/humanoid/hunter(M.loc)
-					if("Sentinel")	new_mob = new /mob/living/carbon/alien/humanoid/sentinel(M.loc)
-					if("Drone")		new_mob = new /mob/living/carbon/alien/humanoid/drone(M.loc)
-					else			new_mob = new /mob/living/carbon/alien/larva(M.loc)
-				new_mob.universal_speak = 1
+			//if("xeno")
+			//	var/alien_caste = pick("Hunter","Sentinel","Drone","Larva")
+			//	switch(alien_caste)
+			//		if("Hunter")	new_mob = new /mob/living/carbon/alien/humanoid/hunter(M.loc)
+			//		if("Sentinel")	new_mob = new /mob/living/carbon/alien/humanoid/sentinel(M.loc)
+			//		if("Drone")		new_mob = new /mob/living/carbon/alien/humanoid/drone(M.loc)
+			//		else			new_mob = new /mob/living/carbon/alien/larva(M.loc)
+			//	new_mob.universal_speak = 1
 			if("human")
 				new_mob = new /mob/living/carbon/human(M.loc, pick(all_species))
 				if(M.gender == MALE)
@@ -116,7 +117,7 @@
 
 		new_mob << "<B>Your form morphs into that of a [randomize].</B>"
 
-		del(M)
+		qdel(M)
 		return new_mob
 
 /obj/item/projectile/magic/animate

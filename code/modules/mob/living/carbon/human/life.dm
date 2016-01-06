@@ -139,13 +139,11 @@
 /mob/living/carbon/human/proc/get_pressure_protection()
 	var/pressure_adjustment_coefficient = 1	//Determins how much the clothing you are wearing protects you in percent.
 
-	if(head && (head.flags & STOPSPRESSUREDMAGE))
-		pressure_adjustment_coefficient -= PRESSURE_HEAD_REDUCTION_COEFFICIENT
+	if((head && (head.flags & STOPSPRESSUREDMAGE))&&(wear_suit && (wear_suit.flags & STOPSPRESSUREDMAGE)))
+		pressure_adjustment_coefficient = 0
 
+	//Handles breaches in your space suit. 10 suit damage equals a 100% loss of pressure reduction.
 	if(wear_suit && (wear_suit.flags & STOPSPRESSUREDMAGE))
-		pressure_adjustment_coefficient -= PRESSURE_SUIT_REDUCTION_COEFFICIENT
-
-		//Handles breaches in your space suit. 10 suit damage equals a 100% loss of pressure reduction.
 		if(istype(wear_suit,/obj/item/clothing/suit/space))
 			var/obj/item/clothing/suit/space/S = wear_suit
 			if(S.can_breach && S.damage)
@@ -237,7 +235,7 @@
 					src << "\red It becomes hard to see for some reason."
 					eye_blurry = 10
 			if(getBrainLoss() >= 35)
-				if(7 <= rn && rn <= 9) if(hand && equipped())
+				if(7 <= rn && rn <= 9) if(get_active_hand())
 					src << "\red Your hand won't respond properly, you drop what you're holding."
 					drop_item()
 			if(getBrainLoss() >= 50)
@@ -275,6 +273,9 @@
 				gene.OnMobLife(src)
 
 		if (radiation)
+			if(species.flags & RAD_IMMUNE)
+				return
+
 			if (radiation > 100)
 				radiation = 100
 				if(!(species.flags & RAD_ABSORB))
@@ -339,6 +340,8 @@
 		if(reagents.has_reagent("lexorin")) return
 		if(istype(loc, /obj/machinery/atmospherics/unary/cryo_cell)) return
 		if(species && (species.flags & NO_BREATHE || species.flags & IS_SYNTHETIC)) return
+		if(dna && dna.mutantrace == "adamantine") return
+		if(ismob(loc)) return
 
 		var/datum/gas_mixture/environment = loc.return_air()
 		var/datum/gas_mixture/breath
@@ -713,6 +716,8 @@
 		else if(istype(get_turf(src), /turf/space) && !(species.flags & IS_SYNTHETIC) && !(species.flags & IS_PLANT))
 			if(istype(loc, /obj/mecha))
 				return
+			if(istype(loc, /obj/structure/transit_tube_pod))
+				return
 			var/protected = 0
 			if( (head && istype(head, /obj/item/clothing/head/helmet/space)) && (wear_suit && istype(wear_suit, /obj/item/clothing/suit/space)) )
 				protected = 1
@@ -1042,10 +1047,11 @@
 			var/light_amount = 0 //how much light there is in the place, affects receiving nutrition and healing
 			if(isturf(loc)) //else, there's considered to be no light
 				var/turf/T = loc
-				var/area/A = T.loc
-				if(A)
-					if(A.lighting_use_dynamic)	light_amount = min(10,T.lighting_lumcount) - 5 //hardcapped so it's not abused by having a ton of flashlights
-					else						light_amount =  5
+				var/atom/movable/lighting_overlay/L = locate(/atom/movable/lighting_overlay) in T
+				if(L)
+					light_amount = (L.get_clamped_lum()*10) - 5 //hardcapped so it's not abused by having a ton of flashlights
+				else
+					light_amount =  5
 			nutrition += light_amount
 			traumatic_shock -= light_amount
 
@@ -1062,14 +1068,38 @@
 			var/light_amount = 0
 			if(isturf(loc))
 				var/turf/T = loc
-				var/area/A = T.loc
-				if(A)
-					if(A.lighting_use_dynamic)	light_amount = T.lighting_lumcount
-					else						light_amount =  10
+				var/atom/movable/lighting_overlay/L = locate(/atom/movable/lighting_overlay) in T
+				if(L)
+					light_amount = L.lum_r + L.lum_g + L.lum_b //hardcapped so it's not abused by having a ton of flashlights
+				else
+					light_amount =  10
 			if(light_amount > 2) //if there's enough light, start dying
 				take_overall_damage(1,1)
 			else if (light_amount < 2) //heal in the dark
 				heal_overall_damage(1,1)
+
+		if(dna && dna.mutantrace == "shadowling")
+			var/light_amount = 0
+			nutrition = 450 //i aint never get hongry
+			if(isturf(loc))
+				var/turf/T = loc
+				var/atom/movable/lighting_overlay/L = locate(/atom/movable/lighting_overlay) in T
+				if(L)
+					light_amount = L.lum_r + L.lum_g + L.lum_b
+				else
+					light_amount =  10
+			if(light_amount > LIGHT_DAM_THRESHOLD)
+				take_overall_damage(0,LIGHT_DAMAGE_TAKEN)
+				src << "<span class='userdanger'>The light burns you!</span>"
+				src << 'tauceti/sounds/weapon/sear.ogg'
+			else if (light_amount < LIGHT_HEAL_THRESHOLD) //heal in the dark
+				heal_overall_damage(5,5)
+				adjustToxLoss(-3)
+				adjustBrainLoss(-25) //gibbering shadowlings are hilarious but also bad to have
+				adjustCloneLoss(-1)
+				adjustOxyLoss(-10)
+				SetWeakened(0)
+				SetStunned(0)
 
 		//The fucking FAT mutation is the dumbest shit ever. It makes the code so difficult to work with
 		if(FAT in mutations)
@@ -1176,13 +1206,16 @@
 
 			else
 				for(var/atom/a in hallucinations)
-					del a
+					qdel(a)
 
 				if(halloss > 100)
 					src << "<span class='notice'>You're in too much pain to keep going...</span>"
 					for(var/mob/O in oviewers(src, null))
 						O.show_message("<B>[src]</B> slumps to the ground, too weak to continue fighting.", 1)
-					Paralyse(10)
+					if(prob(3))
+						Paralyse(10)
+					else
+						Weaken(10)
 					setHalLoss(99)
 
 			if(paralysis)
@@ -1393,31 +1426,10 @@
 			if(seer==1)
 				var/obj/effect/rune/R = locate() in loc
 				if(R && R.word1 == cultwords["see"] && R.word2 == cultwords["hell"] && R.word3 == cultwords["join"])
-					see_invisible = SEE_INVISIBLE_OBSERVER
+					see_invisible = SEE_INVISIBLE_CULT
 				else
 					see_invisible = SEE_INVISIBLE_LIVING
 					seer = 0
-
-			if(istype(wear_mask, /obj/item/clothing/mask/gas/voice/space_ninja))
-				var/obj/item/clothing/mask/gas/voice/space_ninja/O = wear_mask
-				switch(O.mode)
-					if(0)
-						var/target_list[] = list()
-						for(var/mob/living/target in oview(src))
-							if( target.mind&&(target.mind.special_role||issilicon(target)) )//They need to have a mind.
-								target_list += target
-						if(target_list.len)//Everything else is handled by the ninja mask proc.
-							O.assess_targets(target_list, src)
-						if(!druggy)		see_invisible = SEE_INVISIBLE_LIVING
-					if(1)
-						see_in_dark = 5
-						if(!druggy)		see_invisible = SEE_INVISIBLE_LIVING
-					if(2)
-						sight |= SEE_MOBS
-						if(!druggy)		see_invisible = SEE_INVISIBLE_LEVEL_TWO
-					if(3)
-						sight |= SEE_TURFS
-						if(!druggy)		see_invisible = SEE_INVISIBLE_LIVING
 
 			if(glasses)
 				var/obj/item/clothing/glasses/G = glasses
@@ -1428,7 +1440,14 @@
 						if(!druggy)
 							see_invisible = SEE_INVISIBLE_MINIMUM
 				if(istype(G,/obj/item/clothing/glasses/night))
-					see_invisible = SEE_INVISIBLE_MINIMUM
+					if(istype(G,/obj/item/clothing/glasses/night/shadowling))
+						var/obj/item/clothing/glasses/night/shadowling/S = G
+						if(S.vision)
+							see_invisible = SEE_INVISIBLE_LIVING
+						else
+							see_invisible = SEE_INVISIBLE_MINIMUM
+					else
+						see_invisible = SEE_INVISIBLE_MINIMUM
 //					client.screen += global_hud.nvg
 
 	/* HUD shit goes here, as long as it doesn't modify sight flags */
@@ -1447,7 +1466,34 @@
 			else if(!seer)
 				see_invisible = SEE_INVISIBLE_LIVING
 
+			if(istype(wear_mask, /obj/item/clothing/mask/gas/voice/space_ninja))
+				var/obj/item/clothing/mask/gas/voice/space_ninja/O = wear_mask
+				switch(O.mode)
+					if(0)
+						var/target_list[] = list()
+						for(var/mob/living/target in oview(src))
+							if( target.mind&&(target.mind.special_role||issilicon(target)) )//They need to have a mind.
+								target_list += target
+						if(target_list.len)//Everything else is handled by the ninja mask proc.
+							O.assess_targets(target_list, src)
+						if(!druggy)		see_invisible = SEE_INVISIBLE_LIVING
+					if(1)
+						see_in_dark = 5
+						//client.screen += global_hud.meson
+						if(!druggy)		see_invisible = SEE_INVISIBLE_MINIMUM
+					if(2)
+						sight |= SEE_MOBS
+						//client.screen += global_hud.thermal
+						if(!druggy)		see_invisible = SEE_INVISIBLE_LEVEL_TWO
+					if(3)
+						sight |= SEE_TURFS
+						//client.screen += global_hud.meson
+						if(!druggy)		see_invisible = SEE_INVISIBLE_MINIMUM
 
+			if(changeling_aug)
+				sight |= SEE_MOBS
+				see_in_dark = 8
+				see_invisible = SEE_INVISIBLE_MINIMUM
 
 			if(healths)
 				if (analgesic)
@@ -1557,14 +1603,18 @@
 				if(!O.up && tinted_weldhelh)
 					client.screen += global_hud.darkMask
 					masked = 1
-
+			if(istype(wear_mask, /obj/item/clothing/mask/gas/welding) )
+				var/obj/item/clothing/mask/gas/welding/O = wear_mask
+				if(!O.up && tinted_weldhelh)
+					client.screen += global_hud.darkMask
 			if(!masked && istype(glasses, /obj/item/clothing/glasses/welding) )
 				var/obj/item/clothing/glasses/welding/O = glasses
 				if(!O.up && tinted_weldhelh)
 					client.screen += global_hud.darkMask
 
 			if(istype(glasses, /obj/item/clothing/glasses/meson) || istype(glasses, /obj/item/clothing/glasses/night) || istype(glasses, /obj/item/clothing/glasses/gglasses))
-				client.screen += global_hud.meson
+				if(!(istype(glasses, /obj/item/clothing/glasses/night/shadowling)))
+					client.screen += global_hud.meson
 
 			if(istype(glasses, /obj/item/clothing/glasses/thermal) )
 				client.screen += global_hud.thermal
@@ -1609,8 +1659,9 @@
 
 		//0.1% chance of playing a scary sound to someone who's in complete darkness
 		if(isturf(loc) && rand(1,1000) == 1)
-			var/turf/currentTurf = loc
-			if(!currentTurf.lighting_lumcount)
+			var/turf/T = loc
+			var/atom/movable/lighting_overlay/L = locate(/atom/movable/lighting_overlay) in T
+			if(L && L.lum_r + L.lum_g + L.lum_b == 0)
 				playsound_local(src,pick(scarySounds),50, 1, -1)
 
 	proc/handle_virus_updates()
@@ -1625,14 +1676,14 @@
 			for(var/obj/effect/decal/cleanable/O in view(1,src))
 				if(istype(O,/obj/effect/decal/cleanable/blood))
 					var/obj/effect/decal/cleanable/blood/B = O
-					if(B.virus2.len)
+					if(B.virus2 && B.virus2.len)
 						for (var/ID in B.virus2)
 							var/datum/disease2/disease/V = B.virus2[ID]
 							infect_virus2(src,V.getcopy())
 
 				else if(istype(O,/obj/effect/decal/cleanable/mucus))
 					var/obj/effect/decal/cleanable/mucus/M = O
-					if(M.virus2.len)
+					if(M.virus2 && M.virus2.len)
 						for (var/ID in M.virus2)
 							var/datum/disease2/disease/V = M.virus2[ID]
 							infect_virus2(src,V.getcopy())
@@ -1664,7 +1715,7 @@
 					if(M.stat == 2)
 						M.death(1)
 						stomach_contents.Remove(M)
-						del(M)
+						qdel(M)
 						continue
 					if(air_master.current_cycle%3==1)
 						if(!(M.status_flags & GODMODE))
@@ -1906,6 +1957,22 @@
 					holder.icon_state = "hudmutineer"
 				if("mutineer")
 					holder.icon_state = "hudmutineer"
+				if("shadowling")
+					holder.icon_state = "hudshadowling"
+				if("thrall")
+					holder.icon_state = "hudthrall"
+				if("Clandestine Gang (A) Boss","Prima Gang (A) Boss","Zero-G Gang (A) Boss","Max Gang (A) Boss","Blasto Gang (A) Boss","Waffle Gang (A) Boss","North Gang (A) Boss","Omni Gang (A) Boss","Newton Gang (A) Boss","Cyber Gang (A) Boss","Donk Gang (A) Boss","Gene Gang (A) Boss","Gib Gang (A) Boss","Tunnel Gang (A) Boss","Diablo Gang (A) Boss","Psyke Gang (A) Boss","Osiron Gang (A) Boss")
+					holder.icon_state = "gang_boss_a"
+				if("Clandestine Gang (B) Boss","Prima Gang (B) Boss","Zero-G Gang (B) Boss","Max Gang (B) Boss","Blasto Gang (B) Boss","Waffle Gang (B) Boss","North Gang (B) Boss","Omni Gang (B) Boss","Newton Gang (B) Boss","Cyber Gang (B) Boss","Donk Gang (B) Boss","Gene Gang (B) Boss","Gib Gang (B) Boss","Tunnel Gang (B) Boss","Diablo Gang (B) Boss","Psyke Gang (B) Boss","Osiron Gang (B) Boss")
+					holder.icon_state = "gang_boss_b"
+				if("Clandestine Gang (A) Lieutenant","Prima Gang (A) Lieutenant","Zero-G Gang (A) Lieutenant","Max Gang (A) Lieutenant","Blasto Gang (A) Lieutenant","Waffle Gang (A) Lieutenant","North Gang (A) Lieutenant","Omni Gang (A) Lieutenant","Newton Gang (A) Lieutenant","Cyber Gang (A) Lieutenant","Donk Gang (A) Lieutenant","Gene Gang (A) Lieutenant","Gib Gang (A) Lieutenant","Tunnel Gang (A) Lieutenant","Diablo Gang (A) Lieutenant","Psyke Gang (A) Lieutenant","Osiron Gang (A) Lieutenant")
+					holder.icon_state = "lieutenant_a"
+				if("Clandestine Gang (B) Lieutenant","Prima Gang (B) Lieutenant","Zero-G Gang (B) Lieutenant","Max Gang (B) Lieutenant","Blasto Gang (B) Lieutenant","Waffle Gang (B) Lieutenant","North Gang (B) Lieutenant","Omni Gang (B) Lieutenant","Newton Gang (B) Lieutenant","Cyber Gang (B) Lieutenant","Donk Gang (B) Lieutenant","Gene Gang (B) Lieutenant","Gib Gang (B) Lieutenant","Tunnel Gang (B) Lieutenant","Diablo Gang (B) Lieutenant","Psyke Gang (B) Lieutenant","Osiron Gang (B) Lieutenant")
+					holder.icon_state = "lieutenant_b"
+				if("Clandestine Gang (A)","Prima Gang (A)","Zero-G Gang (A)","Max Gang (A)","Blasto Gang (A)","Waffle Gang (A)","North Gang (A)","Omni Gang (A)","Newton Gang (A)","Cyber Gang (A)","Donk Gang (A)","Gene Gang (A)","Gib Gang (A)","Tunnel Gang (A)","Diablo Gang (A)","Psyke Gang (A)","Osiron Gang (A)")
+					holder.icon_state = "gangster_a"
+				if("Clandestine Gang (B)","Prima Gang (B)","Zero-G Gang (B)","Max Gang (B)","Blasto Gang (B)","Waffle Gang (B)","North Gang (B)","Omni Gang (B)","Newton Gang (B)","Cyber Gang (B)","Donk Gang (B)","Gene Gang (B)","Gib Gang (B)","Tunnel Gang (B)","Diablo Gang (B)","Psyke Gang (B)","Osiron Gang (B)")
+					holder.icon_state = "gangster_b"
 
 			hud_list[SPECIALROLE_HUD] = holder
 	hud_updateflag = 0

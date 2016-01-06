@@ -1,4 +1,7 @@
 /mob/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+	if(istype(mover) && mover.checkpass(PASSMOB))
+		return 1
+
 	if(air_group || (height==0)) return 1
 
 	if(ismob(mover))
@@ -96,8 +99,8 @@
 
 /client/verb/drop_item()
 	set hidden = 1
-	if(!isrobot(mob))
-		mob.drop_item_v()
+	if(!isrobot(mob) && mob.stat == CONSCIOUS && isturf(mob.loc))
+		return mob.drop_item()
 	return
 
 
@@ -159,6 +162,8 @@
 
 
 /client/Move(n, direct)
+	if(!mob)
+		return // Moved here to avoid nullrefs below
 
 	if(mob.control_object)	Move_object(direct)
 
@@ -167,8 +172,6 @@
 	if(moving)	return 0
 
 	if(world.time < move_delay)	return
-
-	if(!mob)	return
 
 	if(locate(/obj/effect/stop/, mob.loc))
 		for(var/obj/effect/stop/S in mob.loc)
@@ -305,7 +308,14 @@
 		else if(mob.confused)
 			step(mob, pick(cardinal))
 		else
-			. = ..()
+			. = mob.SelfMove(n, direct)
+
+		for (var/obj/item/weapon/grab/G in mob)
+			if (G.state == GRAB_NECK)
+				mob.set_dir(reverse_dir[direct])
+			G.adjust_position()
+		for (var/obj/item/weapon/grab/G in mob.grabbed_by)
+			G.adjust_position()
 
 		moving = 0
 
@@ -313,33 +323,18 @@
 
 	return
 
+/mob/proc/SelfMove(turf/n, direct)
+	return Move(n, direct)
 
 ///Process_Grab()
 ///Called by client/Move()
-///Checks to see if you are being grabbed and if so attemps to break it
+///Checks to see if you are grabbing anything and if moving will affect your grab.
 /client/proc/Process_Grab()
-	if(locate(/obj/item/weapon/grab, locate(/obj/item/weapon/grab, mob.grabbed_by.len)))
-		var/list/grabbing = list()
-		if(istype(mob.l_hand, /obj/item/weapon/grab))
-			var/obj/item/weapon/grab/G = mob.l_hand
-			grabbing += G.affecting
-		if(istype(mob.r_hand, /obj/item/weapon/grab))
-			var/obj/item/weapon/grab/G = mob.r_hand
-			grabbing += G.affecting
-		for(var/obj/item/weapon/grab/G in mob.grabbed_by)
-			if((G.state == 1)&&(!grabbing.Find(G.assailant)))	del(G)
-			if(G.state == 2)
-				move_delay = world.time + 10
-				if(!prob(25))	return 1
-				mob.visible_message("\red [mob] has broken free of [G.assailant]'s grip!")
-				del(G)
-			if(G.state == 3)
-				move_delay = world.time + 10
-				if(!prob(5))	return 1
-				mob.visible_message("\red [mob] has broken free of [G.assailant]'s headlock!")
-				del(G)
-	return 0
-
+	for(var/obj/item/weapon/grab/G in list(mob.l_hand, mob.r_hand))
+		if(G.state == GRAB_KILL) //no wandering across the station/asteroid while choking someone
+			mob.visible_message("<span class='warning'>[mob] lost \his tight grip on [G.affecting]'s neck!</span>")
+			G.hud.icon_state = "kill"
+			G.state = GRAB_NECK
 
 ///Process_Incorpmove
 ///Called by client/Move()

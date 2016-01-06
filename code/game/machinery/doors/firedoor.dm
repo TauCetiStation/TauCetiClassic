@@ -1,6 +1,7 @@
 /var/const/OPEN = 1
 /var/const/CLOSED = 2
 
+#define FIREDOOR_CLOSED_MOD	0.4
 #define FIREDOOR_MAX_PRESSURE_DIFF 25 // kPa
 /obj/machinery/door/firedoor
 	name = "\improper Emergency Shutter"
@@ -10,8 +11,15 @@
 	req_one_access = list(access_atmospherics, access_engine_equip)
 	opacity = 0
 	density = 0
-	layer = 2.6
+	layer = DOOR_LAYER - 0.1
+	base_layer = DOOR_LAYER - 0.1
 	glass = 1
+
+	//These are frequenly used with windows, so make sure zones can pass.
+	//Generally if a firedoor is at a place where there should be a zone boundery then there will be a regular door underneath it.
+	block_air_zones = 0
+
+	var/hatch_open = 0
 	var/blocked = 0
 	var/nextstate = null
 	var/net_id
@@ -25,7 +33,7 @@
 	for(var/obj/machinery/door/firedoor/F in loc)
 		if(F != src)
 			spawn(1)
-				del src
+				qdel(src)
 			return .
 	var/area/A = get_area(src)
 	ASSERT(istype(A))
@@ -40,7 +48,7 @@
 			areas_added += A
 
 
-/obj/machinery/door/firedoor/Del()
+/obj/machinery/door/firedoor/Destroy()
 	for(var/area/A in areas_added)
 		A.all_doors.Remove(src)
 	. = ..()
@@ -81,6 +89,47 @@
 		stat |= NOPOWER
 	return
 
+/obj/machinery/door/firedoor/attack_paw(mob/user as mob)
+	if(istype(user, /mob/living/carbon/alien/humanoid))
+		if(blocked)
+			user << "\red The door is sealed, it cannot be pried open."
+			return
+		else if(!density)
+			return
+		else
+			user << "\red You force your claws between the doors and begin to pry them open..."
+			playsound(src.loc, 'sound/effects/metal_creaking.ogg', 50, 0)
+			if (do_after(user,40,target = src))
+				if(!src) return
+				open(1)
+	return
+
+/obj/machinery/door/firedoor/attack_animal(mob/user as mob)
+	if(istype(user, /mob/living/simple_animal/hulk))
+		if(blocked)
+			if(prob(75))
+				user.visible_message("\red <B>[user]</B> has punched \the <B>[src]!</B>",\
+				"You punch \the [src]!",\
+				"\red You feel some weird vibration!")
+				playsound(user.loc, 'sound/effects/grillehit.ogg', 50, 1)
+				return
+			else
+				user.say(pick("RAAAAAAAARGH!", "HNNNNNNNNNGGGGGGH!", "GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", "AAAAAAARRRGH!" ))
+				user.visible_message("\red <B>[user]</B> has destroyed some mechanic in \the <B>[src]!</B>",\
+				"You destroy some mechanic in \the [src] door, which holds it in place!",\
+				"\red <B>You feel some weird vibration!</B>")
+				playsound(user.loc, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), 50, 1)
+				qdel(src)
+			return
+		else if(!density)
+			return
+		else
+			user << "\red You force your fingers between the doors and begin to pry them open..."
+			playsound(src.loc, 'sound/effects/metal_creaking.ogg', 30, 1, -4)
+			if (do_after(user,40,target = src))
+				if(!src) return
+				open(1)
+	return
 
 /obj/machinery/door/firedoor/attack_hand(mob/user as mob)
 	add_fingerprint(user)
@@ -92,8 +141,13 @@
 		return
 
 	if(!allowed(user))
-		user << "<span class='warning'>Access denied.</span>"
-		return
+		if(pdiff >= FIREDOOR_MAX_PRESSURE_DIFF)
+			user << "<span class='warning'>Access denied.</span>"
+			return
+
+	for(var/obj/O in src.loc)
+		if(istype(O, /obj/machinery/door/airlock) && O.layer == (DOOR_LAYER + DOOR_CLOSED_MOD))
+			return
 
 	var/alarmed = 0
 
@@ -140,13 +194,42 @@
 			user.visible_message("\red \The [user] [blocked ? "welds" : "unwelds"] \the [src] with \a [W].",\
 			"You [blocked ? "weld" : "unweld"] \the [src] with \the [W].",\
 			"You hear something being welded.")
+			playsound(src, 'sound/items/Welder.ogg', 100, 1)
 			update_icon()
 			return
+
+	if(density && istype(C, /obj/item/weapon/screwdriver))
+		hatch_open = !hatch_open
+		user.visible_message("<span class='danger'>[user] has [hatch_open ? "opened" : "closed"] \the [src] maintenance hatch.</span>",
+									"You have [hatch_open ? "opened" : "closed"] the [src] maintenance hatch.")
+		update_icon()
+		return
+
+	if(blocked && istype(C, /obj/item/weapon/crowbar))
+		if(!hatch_open)
+			user << "<span class='danger'>You must open the maintenance hatch first!</span>"
+		else
+			user.visible_message("<span class='danger'>[user] is removing the electronics from \the [src].</span>",
+									"You start to remove the electronics from [src].")
+			if(do_after(user,30,target = src))
+				if(blocked && density && hatch_open)
+					playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
+					user.visible_message("<span class='danger'>[user] has removed the electronics from \the [src].</span>",
+										"You have removed the electronics from [src].")
+
+					new/obj/item/weapon/airalarm_electronics(src.loc)
+
+					var/obj/structure/firedoor_assembly/FA = new/obj/structure/firedoor_assembly(src.loc)
+					FA.anchored = 1
+					FA.density = 1
+					FA.wired = 1
+					FA.update_icon()
+					qdel(src)
+		return
 
 	if(blocked)
 		user << "\red \The [src] is welded solid!"
 		return
-
 
 	if( istype(C, /obj/item/weapon/crowbar) || ( istype(C,/obj/item/weapon/twohanded/fireaxe) && C:wielded == 1 ) )
 		if(operating)
@@ -161,7 +244,7 @@
 		user.visible_message("\red \The [user] starts to force \the [src] [density ? "open" : "closed"] with \a [C]!",\
 				"You start forcing \the [src] [density ? "open" : "closed"] with \the [C]!",\
 				"You hear metal strain.")
-		if(do_after(user,30))
+		if(do_after(user,30,target = src))
 			if( istype(C, /obj/item/weapon/crowbar) )
 				if( stat & (BROKEN|NOPOWER) || !density)
 					user.visible_message("\red \The [user] forces \the [src] [density ? "open" : "closed"] with \a [C]!",\
@@ -195,10 +278,17 @@
 
 /obj/machinery/door/firedoor/close()
 	latetoggle()
+	layer = base_layer + FIREDOOR_CLOSED_MOD
 	return ..()
 
 /obj/machinery/door/firedoor/open()
+	if(hatch_open)
+		hatch_open = 0
+		visible_message("The maintenance hatch of \the [src] closes.")
+		update_icon()
+
 	latetoggle()
+	layer = base_layer
 	return ..()
 
 
@@ -217,6 +307,8 @@
 		icon_state = "door_closed"
 		if(blocked)
 			overlays += "welded"
+		if(hatch_open)
+			overlays += "hatch"
 		if(pdiff_alert)
 			overlays += "palert"
 	else

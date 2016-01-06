@@ -22,13 +22,19 @@
 	var/icon_old = null
 	var/pathweight = 1
 
+	//Mining resource generation stuff.
+	var/has_resources
+	var/list/resources
+
+	var/dynamic_lighting = 1
+	luminosity = 1
+
 /turf/New()
 	..()
 	for(var/atom/movable/AM as mob|obj in src)
 		spawn( 0 )
 			src.Entered(AM)
 			return
-	return
 
 /turf/ex_act(severity)
 	return 0
@@ -37,11 +43,7 @@
 /turf/bullet_act(var/obj/item/projectile/Proj)
 	if(istype(Proj ,/obj/item/projectile/beam/pulse))
 		src.ex_act(2)
-	..()
-	return 0
-
-/turf/bullet_act(var/obj/item/projectile/Proj)
-	if(istype(Proj ,/obj/item/projectile/bullet/gyro))
+	else if(istype(Proj ,/obj/item/projectile/bullet/gyro))
 		explosion(src, -1, 0, 2)
 	..()
 	return 0
@@ -82,7 +84,7 @@
 
 	//Finally, check objects/mobs to block entry that are not on the border
 	for(var/atom/movable/obstacle in src)
-		if(obstacle.flags & ~ON_BORDER)
+		if(!(obstacle.flags & ON_BORDER))
 			if(!obstacle.CanPass(mover, mover.loc, 1, 0) && (forget != obstacle))
 				mover.Bump(obstacle, 1)
 				return 0
@@ -90,58 +92,29 @@
 
 
 /turf/Entered(atom/atom as mob|obj)
-	if(movement_disabled)
-		usr << "\red Movement is admin-disabled." //This is to identify lag problems
-		return
-	..()
-//vvvvv Infared beam stuff vvvvv
-
-	if ((atom && atom.density && !( istype(atom, /obj/effect/beam) )))
-		for(var/obj/effect/beam/i_beam/I in src)
-			spawn( 0 )
-				if (I)
-					I.hit()
-				break
-
-//^^^^^ Infared beam stuff ^^^^^
-
 	if(!istype(atom, /atom/movable))
 		return
 
-	var/atom/movable/M = atom
+	var/atom/movable/A = atom
 
 	var/loopsanity = 100
-	if(ismob(M))
-		if(!M:lastarea)
-			M:lastarea = get_area(M.loc)
-		if(M:lastarea.has_gravity == 0)
+	if(ismob(A))
+		var/mob/M = A
+		if(!M.lastarea)
+			M.lastarea = get_area(M.loc)
+		if(M.lastarea.has_gravity == 0)
 			inertial_drift(M)
-
-	/*
-		if(M.flags & NOGRAV)
-			inertial_drift(M)
-	*/
-
-
 
 		else if(!istype(src, /turf/space))
-			M:inertia_dir = 0
+			M.inertia_dir = 0
 	..()
 	var/objects = 0
-	for(var/atom/A as mob|obj|turf|area in src)
+	for(var/atom/O as mob|obj|turf|area in range(1))
 		if(objects > loopsanity)	break
 		objects++
 		spawn( 0 )
-			if ((A && M))
-				A.HasEntered(M, 1)
-			return
-	objects = 0
-	for(var/atom/A as mob|obj|turf|area in range(1))
-		if(objects > loopsanity)	break
-		objects++
-		spawn( 0 )
-			if ((A && M))
-				A.HasProximity(M, 1)
+			if ((O && A))
+				O.HasProximity(A, 1)
 			return
 	return
 
@@ -219,7 +192,10 @@
 					return W
 ///// Z-Level Stuff
 
-	var/old_lumcount = lighting_lumcount - initial(lighting_lumcount)
+	var/old_opacity = opacity
+	var/old_dynamic_lighting = dynamic_lighting
+	var/list/old_affecting_lights = affecting_lights
+	var/old_lighting_overlay = lighting_overlay
 
 	//world << "Replacing [src.type] with [N]"
 
@@ -233,47 +209,44 @@
 		if(S.zone) S.zone.rebuild()
 
 	if(ispath(N, /turf/simulated/floor))
-		//if the old turf had a zone, connect the new turf to it as well - Cael
-		//Adjusted by SkyMarshal 5/10/13 - The air master will handle the addition of the new turf.
-		//if(zone)
-		//	zone.RemoveTurf(src)
-		//	if(!zone.CheckStatus())
-		//		zone.SetStatus(ZONE_ACTIVE)
 
 		var/turf/simulated/W = new N( locate(src.x, src.y, src.z) )
 		//W.Assimilate_Air()
-
-		W.lighting_lumcount += old_lumcount
-		if(old_lumcount != W.lighting_lumcount)
-			W.lighting_changed = 1
-			lighting_controller.changed_turfs += W
 
 		if (istype(W,/turf/simulated/floor))
 			W.RemoveLattice()
 
 		if(air_master)
-			air_master.mark_for_update(src)
+			air_master.mark_for_update(src) //handle the addition of the new turf.
+
+		for(var/turf/space/S in range(W,1))
+			S.update_starlight()
 
 		W.levelupdate()
-		return W
+		. = W
 
 	else
-		//if(zone)
-		//	zone.RemoveTurf(src)
-		//	if(!zone.CheckStatus())
-		//		zone.SetStatus(ZONE_ACTIVE)
 
 		var/turf/W = new N( locate(src.x, src.y, src.z) )
-		W.lighting_lumcount += old_lumcount
-		if(old_lumcount != W.lighting_lumcount)
-			W.lighting_changed = 1
-			lighting_controller.changed_turfs += W
+
+		for(var/turf/space/S in range(W,1))
+			S.update_starlight()
 
 		if(air_master)
 			air_master.mark_for_update(src)
 
 		W.levelupdate()
-		return W
+		. =  W
+
+	lighting_overlay = old_lighting_overlay
+	affecting_lights = old_affecting_lights
+	if((old_opacity != opacity) || (dynamic_lighting != old_dynamic_lighting))
+		reconsider_lights()
+	if(dynamic_lighting != old_dynamic_lighting)
+		if(dynamic_lighting)
+			lighting_build_overlays()
+		else
+			lighting_clear_overlays()
 
 
 //Commented out by SkyMarshal 5/10/13 - If you are patching up space, it should be vacuum.
@@ -330,7 +303,8 @@
 
 /turf/proc/ReplaceWithLattice()
 	src.ChangeTurf(/turf/space)
-	new /obj/structure/lattice( locate(src.x, src.y, src.z) )
+	spawn()
+		new /obj/structure/lattice( locate(src.x, src.y, src.z) )
 
 /turf/proc/kill_creatures(mob/U = null)//Will kill people/creatures and damage mechs./N
 //Useful to batch-add creatures to the list.

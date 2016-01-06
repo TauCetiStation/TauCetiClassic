@@ -17,6 +17,7 @@
 	var/invuln = null
 	var/bugged = 0
 	var/obj/item/weapon/camera_assembly/assembly = null
+	var/hidden = 0	//Hidden cameras will be unreachable for AI
 
 	// WIRES
 	var/wires = 63 // 0b111111
@@ -61,7 +62,7 @@
 			network = list()
 			cameranet.removeCamera(src)
 			stat |= EMPED
-			SetLuminosity(0)
+			set_light(0)
 			triggerCameraAlarm()
 			spawn(900)
 				network = previous_network
@@ -102,6 +103,7 @@
 /obj/machinery/camera/attack_paw(mob/living/carbon/alien/humanoid/user as mob)
 	if(!istype(user))
 		return
+	user.do_attack_animation(src)
 	status = 0
 	visible_message("<span class='warning'>\The [user] slashes at [src]!</span>")
 	playsound(src.loc, 'sound/weapons/slash.ogg', 100, 1)
@@ -155,7 +157,7 @@
 			user << "[msg2]"
 
 	// OTHER
-	else if ((istype(W, /obj/item/weapon/paper) || istype(W, /obj/item/device/pda)) && isliving(user))
+	else if ((istype(W, /obj/item/weapon/paper) && !(W:crumpled==1) || istype(W, /obj/item/device/pda)) && isliving(user))
 		var/mob/living/U = user
 		var/obj/item/weapon/paper/X = null
 		var/obj/item/device/pda/P = null
@@ -192,15 +194,23 @@
 		else
 			user << "\blue Camera bugged."
 			src.bugged = 1
-	else if(istype(W, /obj/item/weapon/melee/energy/blade))//Putting it here last since it's a special case. I wonder if there is a better way to do these than type casting.
-		deactivate(user,2)//Here so that you can disconnect anyone viewing the camera, regardless if it's on or off.
-		var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
-		spark_system.set_up(5, 0, loc)
-		spark_system.start()
-		playsound(loc, 'sound/weapons/blade1.ogg', 50, 1)
-		playsound(loc, "sparks", 50, 1)
-		visible_message("\blue The camera has been sliced apart by [] with an energy blade!")
-		qdel(src)
+	else if(istype(W, /obj/item/weapon/melee/energy))//Putting it here last since it's a special case. I wonder if there is a better way to do these than type casting.
+		if(W:force > 3)
+			user.do_attack_animation(src)
+			deactivate(user,2)//Here so that you can disconnect anyone viewing the camera, regardless if it's on or off.
+			var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
+			spark_system.set_up(5, 0, loc)
+			spark_system.start()
+			playsound(loc, 'sound/weapons/blade1.ogg', 50, 1)
+			playsound(loc, "sparks", 50, 1)
+			visible_message("\blue The camera has been sliced apart by [user] with [W]!")
+			new /obj/item/weapon/camera_assembly(src.loc)
+			pick(new /obj/item/weapon/cable_coil(src.loc),
+				 new /obj/item/weapon/cable_coil/cut(src.loc))
+			qdel(src)
+		else
+			..()
+
 	else
 		..()
 	return
@@ -304,10 +314,65 @@
 	playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
 	WT.eyecheck(user)
 	busy = 1
-	if(do_after(user, 100))
+	if(do_after(user, 100, target = src))
 		busy = 0
 		if(!WT.isOn())
 			return 0
 		return 1
 	busy = 0
 	return 0
+
+/obj/machinery/camera/proc/add_network(var/network_name)
+	add_networks(list(network_name))
+
+/obj/machinery/camera/proc/remove_network(var/network_name)
+	remove_networks(list(network_name))
+
+/obj/machinery/camera/proc/add_networks(var/list/networks)
+	var/network_added
+	network_added = 0
+	for(var/network_name in networks)
+		if(!(network_name in src.network))
+			network += network_name
+			network_added = 1
+
+	if(network_added)
+		invalidateCameraCache()
+
+/obj/machinery/camera/proc/remove_networks(var/list/networks)
+	var/network_removed
+	network_removed = 0
+	for(var/network_name in networks)
+		if(network_name in src.network)
+			network -= network_name
+			network_removed = 1
+
+	if(network_removed)
+		invalidateCameraCache()
+
+/obj/machinery/camera/proc/replace_networks(var/list/networks)
+	if(networks.len != network.len)
+		network = networks
+		invalidateCameraCache()
+		return
+
+	for(var/new_network in networks)
+		if(!(new_network in network))
+			network = networks
+			invalidateCameraCache()
+			return
+
+/obj/machinery/camera/proc/clear_all_networks()
+	if(network.len)
+		network.Cut()
+		invalidateCameraCache()
+
+/obj/machinery/camera/proc/nano_structure()
+	var/cam[0]
+	cam["name"] = sanitize(c_tag)
+	cam["deact"] = !can_use()
+	cam["camera"] = "\ref[src]"
+	cam["x"] = x
+	cam["y"] = y
+	cam["z"] = z
+	return cam

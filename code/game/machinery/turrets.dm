@@ -56,7 +56,7 @@
 		// 4 = change (HONK)
 		// 5 = bluetag
 		// 6 = redtag
-	var/health = 80
+	var/health = 120
 	var/obj/machinery/turretcover/cover = null
 	var/popping = 0
 	var/wasvalid = 0
@@ -184,7 +184,7 @@
 			if(isDown())
 				popUp()
 				use_power = 2
-			else
+			//else
 				spawn()
 					if(!targeting_active)
 						targeting_active = 1
@@ -230,12 +230,13 @@
 				A = new /obj/item/projectile/beam/lastertag/blue( loc )
 			if(6)
 				A = new /obj/item/projectile/beam/lastertag/red( loc )
-		A.original = target
 		use_power(500)
 	else
 		A = new /obj/item/projectile/energy/electrode( loc )
 		use_power(200)
+	A.original = target
 	A.current = T
+	A.starting = T
 	A.yo = U.y - T.y
 	A.xo = U.x - T.x
 	spawn( 0 )
@@ -254,7 +255,7 @@
 		if (src.cover!=null)
 			flick("popup", src.cover)
 			src.cover.icon_state = "openTurretCover"
-		spawn(10)
+		spawn(0)
 			if (popping==1) popping = 0
 
 /obj/machinery/turret/proc/popDown()
@@ -264,7 +265,7 @@
 		if (src.cover!=null)
 			flick("popdown", src.cover)
 			src.cover.icon_state = "turretCover"
-		spawn(10)
+		spawn(0)
 			if (popping==-1)
 				invisibility = INVISIBILITY_LEVEL_TWO
 				popping = 0
@@ -273,7 +274,7 @@
 	src.health -= Proj.damage
 	..()
 	if(prob(45) && Proj.damage > 0) src.spark_system.start()
-	del (Proj)
+	qdel(Proj)
 	if (src.health <= 0)
 		src.die()
 	return
@@ -305,11 +306,11 @@
 	src.stat |= BROKEN
 	src.icon_state = "destroyed_target_prism"
 	if (cover!=null)
-		del(cover)
+		qdel(cover)
 	sleep(3)
 	flick("explosion", src)
 	spawn(13)
-		del(src)
+		qdel(src)
 
 /obj/machinery/turretid
 	name = "Turret deactivation control"
@@ -407,6 +408,7 @@
 
 
 /obj/machinery/turret/attack_animal(mob/living/simple_animal/M as mob)
+	M.do_attack_animation(src)
 	if(M.melee_damage_upper == 0)	return
 	if(!(stat & BROKEN))
 		visible_message("\red <B>[M] [M.attacktext] [src]!</B>")
@@ -423,6 +425,7 @@
 
 
 /obj/machinery/turret/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
+	M.do_attack_animation(src)
 	if(!(stat & BROKEN))
 		playsound(src.loc, 'sound/weapons/slash.ogg', 25, 1, -1)
 		visible_message("\red <B>[] has slashed at []!</B>", M, src)
@@ -493,26 +496,26 @@
 
 
 	ex_act()
-		del src
+		qdel(src)
 		return
 
 	emp_act()
-		del src
+		qdel(src)
 		return
 
 	meteorhit()
-		del src
+		qdel(src)
 		return
 
 	proc/update_health()
 		if(src.health<=0)
-			del src
+			qdel(src)
 		return
 
 	proc/take_damage(damage)
 		src.health -= damage
 		if(src.health<=0)
-			del src
+			qdel(src)
 		return
 
 
@@ -545,6 +548,7 @@
 
 
 	attack_alien(mob/user as mob)
+		user.do_attack_animation(src)
 		user.visible_message("[user] slashes at [src]", "You slash at [src]")
 		src.take_damage(15)
 		return

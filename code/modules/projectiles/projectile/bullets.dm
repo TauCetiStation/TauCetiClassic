@@ -10,6 +10,8 @@
 	sharp = 1
 	var/stoping_power = 0
 
+	muzzle_type = /obj/effect/projectile/bullet/muzzle
+
 	on_hit(var/atom/target, var/blocked = 0)
 		if (..(target, blocked))
 			var/mob/living/L = target
@@ -17,8 +19,9 @@
 
 /obj/item/projectile/bullet/weakbullet // "rubber" bullets
 	damage = 10
-	stun = 5
-	weaken = 5
+	stun = 0
+	weaken = 0
+	agony = 80
 	embed = 0
 	sharp = 0
 
@@ -28,6 +31,7 @@
 
 /obj/item/projectile/bullet/weakbullet/beanbag		//because beanbags are not bullets
 	name = "beanbag"
+	agony = 95
 
 /obj/item/projectile/bullet/weakbullet/rubber
 	name = "rubber bullet"
@@ -51,6 +55,21 @@
 	damage = 45
 	embed = 0
 
+/obj/item/projectile/bullet/heavy/a145
+	damage = 110
+	stun = 3
+	weaken = 3
+	impact_force = 5
+	hitscan = 1
+
+/obj/item/projectile/bullet/grenade/r4046
+	damage = 10
+	stun = 10
+	weaken = 10
+	//impact_force = 5
+	embed = 0
+	sharp = 0
+
 /obj/item/projectile/bullet/suffocationbullet//How does this even work?
 	name = "co bullet"
 	damage = 20
@@ -71,10 +90,12 @@
 
 /obj/item/projectile/bullet/stunslug
 	name = "stunslug"
+	icon_state = "spark"
 	damage = 5
-	stun = 10
-	weaken = 10
+	stun = 0
+	weaken = 0
 	stutter = 10
+	agony = 60
 	embed = 0
 	sharp = 0
 
@@ -89,9 +110,24 @@
 /obj/item/projectile/bullet/incendiary/on_hit(var/atom/target, var/blocked = 0)
 	if(istype(target, /mob/living/carbon))
 		var/mob/living/carbon/M = target
-		M.adjust_fire_stacks(1)
+		M.adjust_fire_stacks(10)
 		M.IgniteMob()
 
 /obj/item/projectile/bullet/chameleon
 	damage = 1 // stop trying to murderbone with a fake gun dumbass!!!
 	embed = 0 // nope
+
+//=================NEW PROJECTILES=================\\
+/obj/item/projectile/l10
+	name ="projectile"
+	icon = 'icons/obj/projectiles.dmi'
+	icon_state = "l10"
+	layer = 11
+	damage = 15
+	damage_type = BURN
+	flag = "energy"
+	eyeblur = 4
+	sharp = 0
+	edge = 0
+
+	muzzle_type = /obj/effect/projectile/energy/muzzle

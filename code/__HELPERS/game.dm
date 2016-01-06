@@ -9,6 +9,13 @@
 	src:Topic(href, href_list)
 	return null
 
+/proc/is_on_same_plane_or_station(var/z1, var/z2)
+	if(z1 == z2)
+		return 1
+	if((z1 in config.station_levels) &&	(z2 in config.station_levels))
+		return 1
+	return 0
+
 /proc/get_area(O)
 	var/atom/location = O
 	var/i
@@ -45,20 +52,20 @@
 
 	return heard
 
+/proc/isStationLevel(var/level)
+	return level in config.station_levels
 
+/proc/isNotStationLevel(var/level)
+	return !isStationLevel(level)
 
+/proc/isPlayerLevel(var/level)
+	return level in config.player_levels
 
-//Magic constants obtained by using linear regression on right-angled triangles of sides 0<x<1, 0<y<1
-//They should approximate pythagoras theorem well enough for our needs.
-#define k1 0.934
-#define k2 0.427
-/proc/cheap_hypotenuse(Ax,Ay,Bx,By) // T is just the second atom to check distance to center with
-	var/dx = abs(Ax - Bx)	//sides of right-angled triangle
-	var/dy = abs(Ay - By)
-	if(dx>=dy)	return (k1*dx) + (k2*dy)	//No sqrt or powers :)
-	else		return (k1*dx) + (k2*dy)
-#undef k1
-#undef k2
+/proc/isAdminLevel(var/level)
+	return level in config.admin_levels
+
+/proc/isNotAdminLevel(var/level)
+	return !isAdminLevel(level)
 
 /proc/circlerange(center=usr,radius=3)
 
@@ -194,9 +201,18 @@
 	. = list()
 	// Returns a list of mobs who can hear any of the radios given in @radios
 	var/list/speaker_coverage = list()
-	for(var/i = 1; i <= radios.len; i++)
-		var/obj/item/device/radio/R = radios[i]
+	for(var/obj/item/device/radio/R in radios)
 		if(R)
+			//Cyborg checks. Receiving message uses a bit of cyborg's charge.
+			var/obj/item/device/radio/borg/BR = R
+			if(istype(BR) && BR.myborg)
+				var/mob/living/silicon/robot/borg = BR.myborg
+				var/datum/robot_component/CO = borg.get_component("radio")
+				if(!CO)
+					continue //No radio component (Shouldn't happen)
+				if(!borg.is_component_functioning("radio") || !borg.cell_use_power(CO.active_usage))
+					continue //No power.
+
 			var/turf/speaker = get_turf(R)
 			if(speaker)
 				for(var/turf/T in hear(R.canhear_range,speaker))
@@ -210,7 +226,7 @@
 			var/turf/ear = get_turf(M)
 			if(ear)
 				// Ghostship is magic: Ghosts can hear radio chatter from anywhere
-				if(speaker_coverage[ear] || (istype(M, /mob/dead/observer) && (M.client) && (M.client.prefs.toggles & CHAT_GHOSTRADIO)))
+				if(speaker_coverage[ear] || (istype(M, /mob/dead/observer) && (M.client) && (M.client.prefs.chat_toggles & CHAT_GHOSTRADIO)))
 					. |= M		// Since we're already looping through mobs, why bother using |= ? This only slows things down.
 	return .
 
@@ -275,6 +291,12 @@ proc/isInSight(var/atom/A, var/atom/B)
 			return get_step(start, WEST)
 		else
 			return get_step(start, EAST)
+
+/proc/try_move_adjacent(atom/movable/AM)
+	var/turf/T = get_turf(AM)
+	for(var/direction in cardinal)
+		if(AM.Move(get_step(T, direction)))
+			break
 
 /proc/get_mob_by_key(var/key)
 	for(var/mob/M in mob_list)
@@ -377,3 +399,71 @@ datum/projectile_data
 	var/dest_y = src_y + distance*cos(rotation);
 
 	return new /datum/projectile_data(src_x, src_y, time, distance, power_x, power_y, dest_x, dest_y)
+
+/proc/GetRedPart(const/hexa)
+	return hex2num(copytext(hexa,2,4))
+
+/proc/GetGreenPart(const/hexa)
+	return hex2num(copytext(hexa,4,6))
+
+/proc/GetBluePart(const/hexa)
+	return hex2num(copytext(hexa,6,8))
+
+/proc/GetHexColors(const/hexa)
+	return list(
+			GetRedPart(hexa),
+			GetGreenPart(hexa),
+			GetBluePart(hexa)
+		)
+
+/proc/MixColors(const/list/colors)
+	var/list/reds = list()
+	var/list/blues = list()
+	var/list/greens = list()
+	var/list/weights = list()
+
+	for (var/i = 0, ++i <= colors.len)
+		reds.Add(GetRedPart(colors[i]))
+		blues.Add(GetBluePart(colors[i]))
+		greens.Add(GetGreenPart(colors[i]))
+		weights.Add(1)
+
+	var/r = mixOneColor(weights, reds)
+	var/g = mixOneColor(weights, greens)
+	var/b = mixOneColor(weights, blues)
+	return rgb(r,g,b)
+
+//============VG PORTS============
+/proc/recursive_type_check(atom/O, type = /atom)
+	var/list/processing_list = list(O)
+	var/list/processed_list = new/list()
+	var/found_atoms = new/list()
+
+	while (processing_list.len)
+		var/atom/A = processing_list[1]
+
+		if (istype(A, type))
+			found_atoms |= A
+
+		for (var/atom/B in A)
+			if (!processed_list[B])
+				processing_list |= B
+
+		processing_list.Cut(1, 2)
+		processed_list[A] = A
+
+	return found_atoms
+
+/proc/get_contents_in_object(atom/O, type_path = /atom/movable)
+	if (O)
+		return recursive_type_check(O, type_path) - O
+	else
+		return new/list()
+
+//============TG PORTS============
+/proc/flick_overlay(image/I, list/show_to, duration)
+	for(var/client/C in show_to)
+		C.images += I
+	spawn(duration)
+		for(var/client/C in show_to)
+			C.images -= I

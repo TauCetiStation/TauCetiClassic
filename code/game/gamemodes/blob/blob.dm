@@ -11,8 +11,11 @@ var/list/blob_nodes = list()
 	config_tag = "blob"
 
 	required_players = 30
+	required_players_secret = 25
 	required_enemies = 1
 	recommended_enemies = 1
+
+	votable = 0
 
 	restricted_jobs = list("Cyborg", "AI")
 
@@ -25,7 +28,8 @@ var/list/blob_nodes = list()
 	var/players_per_core = 30
 	var/blob_point_rate = 3
 
-	var/blobwincount = 350
+	//var/blobwincount = 350 //default value
+	var/blobwincount = 500
 
 	var/list/infected_crew = list()
 

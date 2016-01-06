@@ -23,7 +23,7 @@
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	flags_inv = (HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE)
 	body_parts_covered = HEAD|FACE|EYES
-	icon_action_button = "action_welding"
+	action_button_name = "Flip Welding Mask"
 	siemens_coefficient = 0.9
 	w_class = 3
 
@@ -139,20 +139,8 @@
 		icon_state = "hardhat[on]_[item_color]"
 		item_state = "hardhat[on]_[item_color]"
 
-		if(on)	user.SetLuminosity(user.luminosity + brightness_on)
-		else	user.SetLuminosity(user.luminosity - brightness_on)
-
-	pickup(mob/user)
-		if(on)
-			user.SetLuminosity(user.luminosity + brightness_on)
-//			user.UpdateLuminosity()
-			SetLuminosity(0)
-
-	dropped(mob/user)
-		if(on)
-			user.SetLuminosity(user.luminosity - brightness_on)
-//			user.UpdateLuminosity()
-			SetLuminosity(brightness_on)
+		if(on)	set_light(brightness_on)
+		else	set_light(0)
 
 /*
  * Kitty ears

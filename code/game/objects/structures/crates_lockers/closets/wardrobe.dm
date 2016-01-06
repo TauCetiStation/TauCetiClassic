@@ -23,9 +23,21 @@
 	new /obj/item/clothing/head/soft/sec(src)
 	new /obj/item/clothing/head/soft/sec(src)
 	new /obj/item/clothing/head/soft/sec(src)
+	new /obj/item/clothing/mask/bandana/red(src)
+	new /obj/item/clothing/mask/bandana/red(src)
 	new /obj/item/clothing/head/beret/sec(src)
 	new /obj/item/clothing/head/beret/sec(src)
 	new /obj/item/clothing/head/beret/sec(src)
+	//New year part
+	new /obj/item/clothing/head/santa(src)
+	new /obj/item/clothing/head/santa(src)
+	new /obj/item/clothing/head/santa(src)
+	new /obj/item/clothing/suit/wintercoat/security(src)
+	new /obj/item/clothing/suit/wintercoat/security(src)
+	new /obj/item/clothing/suit/wintercoat/security(src)
+	new /obj/item/clothing/shoes/winterboots(src)
+	new /obj/item/clothing/shoes/winterboots(src)
+	new /obj/item/clothing/shoes/winterboots(src)
 	return
 
 
@@ -54,12 +66,21 @@
 	new /obj/item/clothing/under/color/black(src)
 	new /obj/item/clothing/under/color/black(src)
 	new /obj/item/clothing/under/color/black(src)
+	if(prob(25))
+		new /obj/item/clothing/suit/jacket/leather(src)
+	if(prob(20))
+		new /obj/item/clothing/suit/jacket/leather/overcoat(src)
 	new /obj/item/clothing/shoes/black(src)
 	new /obj/item/clothing/shoes/black(src)
 	new /obj/item/clothing/shoes/black(src)
-	new /obj/item/clothing/head/that(src)
-	new /obj/item/clothing/head/that(src)
-	new /obj/item/clothing/head/that(src)
+	//New year part
+	new /obj/item/clothing/suit/wintercoat(src)
+	new /obj/item/clothing/suit/wintercoat(src)
+	new /obj/item/clothing/suit/wintercoat(src)
+	new /obj/item/clothing/shoes/winterboots(src)
+	new /obj/item/clothing/shoes/winterboots(src)
+	new /obj/item/clothing/shoes/winterboots(src)
+	new /obj/item/clothing/head/santa(src)
 	return
 
 
@@ -98,6 +119,8 @@
 	new /obj/item/clothing/shoes/black(src)
 	new /obj/item/clothing/shoes/black(src)
 	new /obj/item/clothing/shoes/black(src)
+	//new /obj/item/clothing/mask/bandana/green(src)
+	//new /obj/item/clothing/mask/bandana/green(src)
 	return
 
 /obj/structure/closet/wardrobe/xenos
@@ -145,6 +168,8 @@
 	new /obj/item/clothing/shoes/orange(src)
 	new /obj/item/clothing/shoes/orange(src)
 	new /obj/item/clothing/shoes/orange(src)
+	//new /obj/item/clothing/mask/bandana/gold(src)
+	//new /obj/item/clothing/mask/bandana/gold(src)
 	return
 
 
@@ -167,6 +192,13 @@
 	new /obj/item/clothing/head/beret/eng(src)
 	new /obj/item/clothing/head/beret/eng(src)
 	new /obj/item/clothing/head/beret/eng(src)
+	//New year part
+	new /obj/item/clothing/suit/wintercoat/engineering/atmos(src)
+	new /obj/item/clothing/suit/wintercoat/engineering/atmos(src)
+	new /obj/item/clothing/suit/wintercoat/engineering/atmos(src)
+	new /obj/item/clothing/shoes/winterboots(src)
+	new /obj/item/clothing/shoes/winterboots(src)
+	new /obj/item/clothing/shoes/winterboots(src)
 	return
 
 
@@ -190,6 +222,13 @@
 	new /obj/item/clothing/head/beret/eng(src)
 	new /obj/item/clothing/head/beret/eng(src)
 	new /obj/item/clothing/head/beret/eng(src)
+	//New year part
+	new /obj/item/clothing/suit/wintercoat/engineering(src)
+	new /obj/item/clothing/suit/wintercoat/engineering(src)
+	new /obj/item/clothing/suit/wintercoat/engineering(src)
+	new /obj/item/clothing/shoes/winterboots(src)
+	new /obj/item/clothing/shoes/winterboots(src)
+	new /obj/item/clothing/shoes/winterboots(src)
 	return
 
 
@@ -264,6 +303,12 @@
 	new /obj/item/clothing/shoes/black(src)
 	new /obj/item/clothing/gloves/black(src)
 	new /obj/item/clothing/gloves/black(src)
+	//New year part
+	new /obj/item/clothing/suit/wintercoat/science(src)
+	new /obj/item/clothing/suit/wintercoat/science(src)
+	new /obj/item/clothing/shoes/winterboots(src)
+	new /obj/item/clothing/shoes/winterboots(src)
+	new /obj/item/clothing/head/santa(src)
 	return
 
 
@@ -296,6 +341,12 @@
 	new /obj/item/clothing/shoes/white(src)
 	new /obj/item/clothing/suit/storage/labcoat/genetics(src)
 	new /obj/item/clothing/suit/storage/labcoat/genetics(src)
+	//New year part
+	new /obj/item/clothing/suit/wintercoat/science(src)
+	new /obj/item/clothing/suit/wintercoat/science(src)
+	new /obj/item/clothing/shoes/winterboots(src)
+	new /obj/item/clothing/shoes/winterboots(src)
+	new /obj/item/clothing/head/santa(src)
 	return
 
 
@@ -314,6 +365,10 @@
 	new /obj/item/clothing/suit/storage/labcoat/virologist(src)
 	new /obj/item/clothing/mask/surgical(src)
 	new /obj/item/clothing/mask/surgical(src)
+	//New year part
+	new /obj/item/clothing/suit/wintercoat/medical(src)
+	new /obj/item/clothing/shoes/winterboots(src)
+	new /obj/item/clothing/head/santa(src)
 	return
 
 
@@ -335,6 +390,11 @@
 	new /obj/item/clothing/suit/storage/labcoat(src)
 	new /obj/item/clothing/mask/surgical(src)
 	new /obj/item/clothing/mask/surgical(src)
+	//New year part
+	new /obj/item/clothing/suit/wintercoat/medical(src)
+	new /obj/item/clothing/shoes/winterboots(src)
+	new /obj/item/clothing/head/santa(src)
+	new /obj/item/clothing/suit/storage/labcoat/winterlabcoat(src)
 	return
 
 
@@ -354,6 +414,12 @@
 	new /obj/item/clothing/head/soft/grey(src)
 	new /obj/item/clothing/head/soft/grey(src)
 	new /obj/item/clothing/head/soft/grey(src)
+	//New year part
+	new /obj/item/clothing/suit/wintercoat(src)
+	new /obj/item/clothing/suit/wintercoat(src)
+	new /obj/item/clothing/shoes/winterboots(src)
+	new /obj/item/clothing/shoes/winterboots(src)
+	new /obj/item/clothing/head/santa(src)
 	return
 
 
@@ -364,11 +430,30 @@
 
 /obj/structure/closet/wardrobe/mixed/New()
 	..()
+	if(prob(25))
+		new /obj/item/clothing/suit/jacket(src)
+	if(prob(25))
+		new /obj/item/clothing/suit/jacket(src)
 	new /obj/item/clothing/under/color/blue(src)
 	new /obj/item/clothing/under/color/yellow(src)
 	new /obj/item/clothing/under/color/green(src)
 	new /obj/item/clothing/under/color/orange(src)
 	new /obj/item/clothing/under/color/pink(src)
+	new /obj/item/clothing/under/color/red(src)
+	//new /obj/item/clothing/under/color/lightblue(src)
+	//new /obj/item/clothing/under/color/aqua(src)
+	//new /obj/item/clothing/under/color/purple(src)
+	//new /obj/item/clothing/under/color/lightpurple(src)
+	//new /obj/item/clothing/under/color/lightgreen(src)
+	//new /obj/item/clothing/under/color/darkblue(src)
+	//new /obj/item/clothing/under/color/darkred(src)
+	//new /obj/item/clothing/under/color/lightred(src)
+	//new /obj/item/clothing/mask/bandana/red(src)
+	//new /obj/item/clothing/mask/bandana/red(src)
+	//new /obj/item/clothing/mask/bandana/blue(src)
+	//new /obj/item/clothing/mask/bandana/blue(src)
+	//new /obj/item/clothing/mask/bandana/gold(src)
+	//new /obj/item/clothing/mask/bandana/gold(src)
 	new /obj/item/clothing/under/dress/plaid_blue(src)
 	new /obj/item/clothing/under/dress/plaid_red(src)
 	new /obj/item/clothing/under/dress/plaid_purple(src)
@@ -379,6 +464,10 @@
 	new /obj/item/clothing/shoes/purple(src)
 	new /obj/item/clothing/shoes/red(src)
 	new /obj/item/clothing/shoes/leather(src)
+	//New year part
+	new /obj/item/clothing/suit/wintercoat(src)
+	new /obj/item/clothing/shoes/winterboots(src)
+	new /obj/item/clothing/head/santa(src)
 	return
 
 /obj/structure/closet/wardrobe/tactical

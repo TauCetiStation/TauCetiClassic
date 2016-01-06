@@ -9,33 +9,20 @@
 	item_color = "yellow" //Determines used sprites: hardhat[on]_[color] and hardhat[on]_[color]2 (lying down sprite)
 	armor = list(melee = 30, bullet = 5, laser = 20,energy = 10, bomb = 20, bio = 10, rad = 20)
 	flags_inv = 0
-	icon_action_button = "action_hardhat"
+	action_button_name = "Toggle Hardhat"
 	siemens_coefficient = 0.9
 
-	attack_self(mob/user)
-		if(!isturf(user.loc))
-			user << "You cannot turn the light on while in this [user.loc]" //To prevent some lighting anomalities.
-			return
-		on = !on
-		icon_state = "hardhat[on]_[item_color]"
-		item_state = "hardhat[on]_[item_color]"
-		usr.update_inv_head()
+/obj/item/clothing/head/hardhat/attack_self(mob/user)
+	if(!isturf(user.loc))
+		user << "You cannot turn the light on while in this [user.loc]" //To prevent some lighting anomalities.
+		return
+	on = !on
+	icon_state = "hardhat[on]_[item_color]"
+	item_state = "hardhat[on]_[item_color]"
+	usr.update_inv_head()
 
-		if(on)	user.SetLuminosity(user.luminosity + brightness_on)
-		else	user.SetLuminosity(user.luminosity - brightness_on)
-
-	pickup(mob/user)
-		if(on)
-			user.SetLuminosity(user.luminosity + brightness_on)
-//			user.UpdateLuminosity()	//TODO: Carn
-			SetLuminosity(0)
-
-	dropped(mob/user)
-		if(on)
-			user.SetLuminosity(user.luminosity - brightness_on)
-//			user.UpdateLuminosity()
-			SetLuminosity(brightness_on)
-
+	if(on)	set_light(brightness_on)
+	else	set_light(0)
 
 /obj/item/clothing/head/hardhat/orange
 	icon_state = "hardhat0_orange"

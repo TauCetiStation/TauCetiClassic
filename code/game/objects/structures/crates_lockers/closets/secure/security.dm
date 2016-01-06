@@ -30,6 +30,10 @@
 		new /obj/item/weapon/melee/telebaton(src)
 		new /obj/item/clothing/under/dress/dress_cap(src)
 		new /obj/item/clothing/under/rank/capcamsole(src)
+		//New year part
+		new /obj/item/clothing/suit/wintercoat/captain(src)
+		new /obj/item/clothing/head/santa(src)
+		new /obj/item/clothing/shoes/winterboots(src)
 		return
 
 
@@ -107,7 +111,7 @@
 			new /obj/item/weapon/storage/backpack/security(src)
 		else
 			new /obj/item/weapon/storage/backpack/satchel_sec(src)
-		new /obj/item/clothing/gloves/black(src)
+		new /obj/item/clothing/gloves/black/hos(src)
 		new /obj/item/clothing/head/helmet/HoS(src)
 		new /obj/item/clothing/suit/armor/vest(src)
 		new /obj/item/clothing/under/rank/head_of_security/jensen(src)
@@ -118,6 +122,7 @@
 		new /obj/item/clothing/head/helmet/HoS/dermal(src)
 		new /obj/item/weapon/cartridge/hos(src)
 		new /obj/item/device/radio/headset/heads/hos(src)
+		new /obj/item/clothing/suit/armor/vest/leather(src)
 //		new /obj/item/clothing/glasses/sunglasses/sechud(src)
 		new /obj/item/clothing/glasses/thermal/hos_thermals(src)
 		new /obj/item/taperoll/police(src)
@@ -132,6 +137,10 @@
 		new /obj/item/clothing/tie/holster/waist(src)
 		new /obj/item/weapon/melee/telebaton(src)
 		new /obj/item/clothing/mask/gas/sechailer/hos(src)
+		//New year part
+		new /obj/item/clothing/suit/wintercoat/security(src)
+		new /obj/item/clothing/shoes/winterboots(src)
+		new /obj/item/clothing/head/santa(src)
 		return
 
 
@@ -167,18 +176,23 @@
 		new /obj/item/taperoll/police(src)
 		new /obj/item/weapon/storage/box/flashbangs(src)
 		new /obj/item/weapon/storage/belt/security(src)
+		new /obj/item/device/flash(src)
 		new /obj/item/weapon/reagent_containers/spray/pepper(src)
 		new /obj/item/weapon/melee/baton(src)
 		new /obj/item/weapon/gun/energy/taser(src)
 		new /obj/item/weapon/storage/box/holobadge(src)
 		new /obj/item/clothing/mask/gas/sechailer/warden(src)
+		//New year part
+		new /obj/item/clothing/suit/wintercoat/security(src)
+		new /obj/item/clothing/shoes/winterboots(src)
+		new /obj/item/clothing/head/santa(src)
 		return
 
 
 
 /obj/structure/closet/secure_closet/security
 	name = "Security Officer's Locker"
-	req_access = list(access_security)
+	req_access = list(access_brig)
 	icon_state = "sec1"
 	icon_closed = "sec"
 	icon_locked = "sec1"
@@ -210,6 +224,10 @@
 		new /obj/item/clothing/head/soft/sec/corp(src)
 		new /obj/item/clothing/under/rank/security/corp(src)
 		new /obj/item/clothing/gloves/security(src)
+		//New year part
+		new /obj/item/clothing/suit/wintercoat/security(src)
+		new /obj/item/clothing/shoes/winterboots(src)
+		new /obj/item/clothing/head/ushanka(src)
 		return
 
 
@@ -340,7 +358,7 @@
 
 /obj/structure/closet/secure_closet/wall
 	name = "wall locker"
-	req_access = list(access_security)
+	req_access = list(access_brig)
 	icon_state = "wall-locker1"
 	density = 1
 	icon_closed = "wall-locker"

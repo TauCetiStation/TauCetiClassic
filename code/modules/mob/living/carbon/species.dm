@@ -309,7 +309,7 @@
 
 	body_temperature = T0C + 15		//make the plant people have a bit lower body temperature, why not
 
-	flags = IS_WHITELISTED | NO_BREATHE | REQUIRE_LIGHT | NO_SCAN | IS_PLANT | RAD_ABSORB | NO_BLOOD | IS_SLOW | NO_PAIN
+	flags = IS_WHITELISTED | NO_BREATHE | REQUIRE_LIGHT | NO_SCAN | IS_PLANT | RAD_ABSORB | NO_BLOOD | NO_PAIN
 
 	blood_color = "#004400"
 	flesh_color = "#907E4A"
@@ -327,13 +327,12 @@
 
 	if(H.mind)
 		H.mind.transfer_to(S)
-		S.key = H
 
 	for(var/mob/living/carbon/monkey/diona/D in H.contents)
 		if(D.client)
 			D.loc = H.loc
 		else
-			del(D)
+			qdel(D)
 
 	H.visible_message("\red[H] splits apart with a wet slithering noise!")
 
@@ -361,10 +360,20 @@
 
 	synth_temp_gain = 10 //this should cause IPCs to stabilize at ~80 C in a 20 C environment.
 
-	flags = IS_WHITELISTED | NO_BREATHE | NO_SCAN | NO_BLOOD | NO_PAIN | IS_SYNTHETIC
+	flags = IS_WHITELISTED | NO_BREATHE | NO_SCAN | NO_BLOOD | NO_PAIN | IS_SYNTHETIC | VIRUS_IMMUNE
 
 	blood_color = "#1F181F"
 	flesh_color = "#575757"
+
+/datum/species/abductor
+	name = "Abductor"
+	darksight = 3
+
+
+	icobase = 'icons/mob/human_races/r_abductor.dmi'
+	deform = 'icons/mob/human_races/r_abductor.dmi'
+
+	flags = NO_BREATHE | NO_BLOOD | NO_SCAN | VIRUS_IMMUNE
 
 //Species unarmed attacks
 

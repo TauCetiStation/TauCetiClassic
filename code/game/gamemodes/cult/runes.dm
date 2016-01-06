@@ -87,9 +87,9 @@ var/list/sacrificed = list()
 			"\red You are blinded by the flash of red light! After you're able to see again, you see that now instead of the rune there's a book.", \
 			"\red You hear a pop and smell ozone.")
 			if(istype(src,/obj/effect/rune))
-				new /obj/item/weapon/tome(src.loc)
+				new /obj/item/weapon/book/tome(src.loc)
 			else
-				new /obj/item/weapon/tome(usr.loc)
+				new /obj/item/weapon/book/tome(usr.loc)
 			qdel(src)
 			return
 
@@ -131,9 +131,44 @@ var/list/sacrificed = list()
 					M.say("Tok-lyr rqa'nap g[pick("'","`")]lt-ulotf!")
 					cultist_count += 1
 			if(cultist_count >= 9)
-				new /obj/machinery/singularity/narsie/large(src.loc)
 				if(ticker.mode.name == "cult")
-					ticker.mode:eldergod = 0
+					var/summon_allowed = 0
+					for(var/objective in ticker.mode:objectives)
+						if(objective == "eldergod")
+							summon_allowed = 1
+					if(summon_allowed)
+						ticker.mode:eldergod = 0
+					else
+						ticker.mode:eldertry += 1
+					if(ticker.mode:eldertry)
+						switch(ticker.mode:eldertry)
+							if(1)
+								for(var/mob/M in range(1,src))
+									if(iscultist(M) && !M.stat)
+										M << "<font size='3' color='red'><b>I have no interest in coming to your world.</b></font>"
+							if(5)
+								for(var/mob/M in range(1,src))
+									if(iscultist(M) && !M.stat)
+										if(ishuman(M))
+											var/mob/living/carbon/human/H = M
+											H.apply_effect(80,AGONY,0)
+										M << "<font size='4' color='red'><b>I SAID NO!!</b></font>"
+							if(10)
+								for(var/mob/M in range(1,src))
+									if(iscultist(M) && !M.stat)
+										if(ishuman(M))
+											var/mob/living/carbon/human/H = M
+											H.apply_effect(80,AGONY,0)
+										M << "<font size='5' color='red'><b>LAST WARNING.</b></font>"
+							if(15 to 100)
+								for(var/mob/M in range(1,src))
+									if(iscultist(M) && !M.stat)
+										M.gib()
+								world << "<font size='15' color='red'><b>FUCK YOU</b></font>"
+								ticker.mode:eldertry = 0
+					if(!summon_allowed)
+						return
+				new /obj/machinery/singularity/narsie/large(src.loc)
 				return
 			else
 				return fizzle()
@@ -209,12 +244,12 @@ var/list/sacrificed = list()
 					usr.seer = 0
 				else if(usr.see_invisible!=SEE_INVISIBLE_LIVING)
 					usr << "\red The world beyond flashes your eyes but disappears quickly, as if something is disrupting your vision."
-					usr.see_invisible = SEE_INVISIBLE_OBSERVER
+					usr.see_invisible = SEE_INVISIBLE_CULT
 					usr.seer = 0
 				else
 					usr.say("Rash'tla sektath mal[pick("'","`")]zua. Zasan therium vivira. Itonis al'ra matum!")
 					usr << "\red The world beyond opens to your eyes."
-					usr.see_invisible = SEE_INVISIBLE_OBSERVER
+					usr.see_invisible = SEE_INVISIBLE_CULT
 					usr.seer = 1
 				return
 			return fizzle()
@@ -780,7 +815,7 @@ var/list/sacrificed = list()
 				if (cultist.legcuffed)
 					cultist.drop_from_inventory(cultist.legcuffed)
 				if (istype(cultist.wear_mask, /obj/item/clothing/mask/muzzle))
-					cultist.u_equip(cultist.wear_mask)
+					cultist.remove_from_mob(cultist.wear_mask)
 				if(istype(cultist.loc, /obj/structure/closet)&&cultist.loc:welded)
 					cultist.loc:welded = 0
 				if(istype(cultist.loc, /obj/structure/closet/secure_closet)&&cultist.loc:locked)

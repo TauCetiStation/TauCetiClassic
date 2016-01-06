@@ -1,7 +1,7 @@
 /obj/machinery/optable
 	name = "Operating Table"
 	desc = "Used for advanced medical procedures."
-	icon = 'icons/obj/surgery.dmi'
+	icon = 'tauceti/icons/obj/surgery.dmi'
 	icon_state = "table2-idle"
 	density = 1
 	anchored = 1.0
@@ -28,12 +28,12 @@
 	switch(severity)
 		if(1.0)
 			//SN src = null
-			del(src)
+			qdel(src)
 			return
 		if(2.0)
 			if (prob(50))
 				//SN src = null
-				del(src)
+				qdel(src)
 				return
 		if(3.0)
 			if (prob(25))
@@ -43,14 +43,14 @@
 
 /obj/machinery/optable/blob_act()
 	if(prob(75))
-		del(src)
+		qdel(src)
 
 /obj/machinery/optable/attack_paw(mob/user as mob)
 	if ((HULK in usr.mutations))
 		usr << text("\blue You destroy the operating table.")
 		visible_message("\red [usr] destroys the operating table!")
 		src.density = 0
-		del(src)
+		qdel(src)
 	if (!( locate(/obj/machinery/optable, user.loc) ))
 		step(user, get_dir(user, src))
 		if (user.loc == src.loc)
@@ -63,7 +63,7 @@
 		usr << text("\blue You destroy the table.")
 		visible_message("\red [usr] destroys the operating table!")
 		src.density = 0
-		del(src)
+		qdel(src)
 	return
 
 /obj/machinery/optable/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
@@ -76,6 +76,8 @@
 
 
 /obj/machinery/optable/MouseDrop_T(obj/O as obj, mob/user as mob)
+	if(isrobot(user))
+		return
 
 	if ((!( istype(O, /obj/item/weapon) ) || user.get_active_hand() != O))
 		return
@@ -133,10 +135,13 @@
 	take_victim(usr,usr)
 
 /obj/machinery/optable/attackby(obj/item/weapon/W as obj, mob/living/carbon/user as mob)
+	if(isrobot(user))
+		return
+
 	if (istype(W, /obj/item/weapon/grab))
 		if(iscarbon(W:affecting))
 			take_victim(W:affecting,usr)
-			del(W)
+			qdel(W)
 			return
 	user.drop_item()
 	if(W && W.loc)

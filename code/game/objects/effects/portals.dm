@@ -16,7 +16,7 @@
 		return
 	return
 
-/obj/effect/portal/HasEntered(AM as mob|obj)
+/obj/effect/portal/Crossed(AM as mob|obj)
 	spawn(0)
 		src.teleport(AM)
 		return
@@ -24,7 +24,7 @@
 
 /obj/effect/portal/New()
 	spawn(300)
-		del(src)
+		qdel(src)
 		return
 	return
 
@@ -36,7 +36,7 @@
 	if (icon_state == "portal1")
 		return
 	if (!( target ))
-		del(src)
+		qdel(src)
 		return
 	if (istype(M, /atom/movable))
 		if(prob(failchance)) //oh dear a problem, put em in deep space

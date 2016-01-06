@@ -70,6 +70,8 @@
 	..()	//redirect to hsrc.Topic()
 
 /client/proc/handle_spam_prevention(var/message, var/mute_type)
+	if(global_message_cooldown && (world.time < last_message_time + 5))
+		return 1
 	if(config.automute_on && !holder && src.last_message == message)
 		src.last_message_count++
 		if(src.last_message_count >= SPAM_TRIGGER_AUTOMUTE)
@@ -80,6 +82,7 @@
 			src << "\red You are nearing the spam filter limit for identical messages."
 			return 0
 	else
+		last_message_time = world.time
 		last_message = message
 		src.last_message_count = 0
 		return 0
@@ -112,7 +115,7 @@
 
 	if(IsGuestKey(key))
 		alert(src,"This server doesn't allow guest accounts to play. Please go to http://www.byond.com/ and register for a key.","Guest","OK")
-		del(src)
+		qdel(src)
 		return
 
 	// Change the way they should download resources.

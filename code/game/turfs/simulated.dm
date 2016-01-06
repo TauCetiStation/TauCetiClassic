@@ -25,6 +25,10 @@
 		usr << "\red Movement is admin-disabled." //This is to identify lag problems
 		return
 
+	if (istype(A, /mob/living/simple_animal/hulk))
+		var/mob/living/simple_animal/hulk/Hulk = A
+		if(!Hulk.lying)
+			playsound(src, 'sound/effects/hulk_step.ogg', 50, 1)
 	if (istype(A,/mob/living/carbon))
 		var/mob/living/carbon/M = A
 		if(M.lying)        return
@@ -49,6 +53,8 @@
 				if(istype(H.shoes, /obj/item/clothing/shoes/clown_shoes))
 					if(prob(25))
 						footstepsound = "clownstep"
+				if(H.shoes.wet)
+					footstepsound = 'sound/effects/waterstep.ogg'
 
 				if(H.m_intent == "run")
 					if(O.footstep >= 2)

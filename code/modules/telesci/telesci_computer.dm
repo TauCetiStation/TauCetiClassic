@@ -3,6 +3,7 @@
 	desc = "Used to teleport objects to and from the telescience telepad."
 	icon = 'tauceti/icons/obj/computer_telescience.dmi'
 	icon_state = "teleport"
+	light_color = "#315ab4"
 	var/sending = 1
 	var/obj/machinery/telepad/telepad = null
 	var/temp_msg = "Telescience control console initialized.<BR>Welcome."
@@ -31,7 +32,7 @@
 	link_telepad()
 	recalibrate()
 
-/obj/machinery/computer/telescience/Del()
+/obj/machinery/computer/telescience/Destroy()
 	eject()
 	..()
 
@@ -52,13 +53,16 @@
 /obj/machinery/computer/telescience/update_icon()
 	if(stat & BROKEN)
 		icon_state = "telescib"
+		set_light(0)
 	else
 		if(stat & NOPOWER)
 			src.icon_state = "teleport0"
 			stat |= NOPOWER
+			set_light(0)
 		else
 			icon_state = initial(icon_state)
 			stat &= ~NOPOWER
+			set_light(light_range_on, light_power_on)
 
 /obj/machinery/computer/telescience/attack_paw(mob/user)
 	user << "You are too primitive to use this computer."

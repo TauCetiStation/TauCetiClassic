@@ -236,6 +236,8 @@
 					else if(isalien(M)) //aliens
 						if(islarva(M))
 							M_job = "Alien larva"
+						else if(isfacehugger(M))
+							M_job = "Alien facehugger"
 						else
 							M_job = "Alien"
 					else
@@ -445,6 +447,38 @@
 					dat += "<tr><td><i>Head not found!</i></td></tr>"
 			dat += "</table>"
 
+		if(ticker.mode.A_bosses.len || ticker.mode.A_gang.len)
+			dat += "<br><table cellspacing=5><tr><td><B>[gang_name("A")] Gang: [(ticker.mode.gang_points ? "[ticker.mode.gang_points.A] Influence, " : "")][round((ticker.mode.A_territory.len/start_state.num_territories)*100, 1)]% Control</B></td><td></td></tr>"
+			for(var/datum/mind/N in ticker.mode.A_bosses)
+				var/mob/M = N.current
+				if(!M)
+					dat += "<tr><td><i>Gang Boss not found!</i></td></tr>"
+				else
+					dat += "<tr><td><a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a> <b>(Boss)</b>[M.client ? "" : " <i>(logged out)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
+					dat += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td></tr>"
+			for(var/datum/mind/N in ticker.mode.A_gang)
+				var/mob/M = N.current
+				if(M)
+					dat += "<tr><td><a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(logged out)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
+					dat += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td></tr>"
+			dat += "</table>"
+
+		if(ticker.mode.B_bosses.len || ticker.mode.B_gang.len)
+			dat += "<br><table cellspacing=5><tr><td><B>[gang_name("B")] Gang: [(ticker.mode.gang_points ? "[ticker.mode.gang_points.B] Influence, " : "")][round((ticker.mode.B_territory.len/start_state.num_territories)*100, 1)]% Control</B></td><td></td></tr>"
+			for(var/datum/mind/N in ticker.mode.B_bosses)
+				var/mob/M = N.current
+				if(!M)
+					dat += "<tr><td><i>Gang Boss not found!</i></td></tr>"
+				else
+					dat += "<tr><td><a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a> <b>(Boss)</b>[M.client ? "" : " <i>(logged out)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
+					dat += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td></tr>"
+			for(var/datum/mind/N in ticker.mode.B_gang)
+				var/mob/M = N.current
+				if(M)
+					dat += "<tr><td><a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(logged out)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
+					dat += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td></tr>"
+			dat += "</table>"
+
 		if(ticker.mode.memes.len) //Меме
 			dat += "<br><table cellspacing=5><tr><td><B>Memes</B></td><td></td><td></td></tr>"
 			for(var/datum/mind/meme in ticker.mode.memes)
@@ -463,6 +497,45 @@
 								dat += "[attuned.real_name] "
 					else
 						dat += "<tr><td><i>Meme not found!</i></td></tr>"
+			dat += "</table>"
+
+		if(ticker.mode.shadows.len)
+			dat += "<br><table cellspacing=5><tr><td><B>Shadowlings</B></td><td></td></tr>"
+			for(var/datum/mind/N in ticker.mode.shadows)
+				var/mob/M = N.current
+				if(M)
+					dat += "<tr><td><a href='?src=\ref[src];adminplayeropts=\ref[M]'>[M.real_name] ([M.ckey])</a>[M.client ? "" : " <i>(logged out)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
+					dat += "<td><A href='?src=\ref[usr];priv_msg=\ref[M]'>PM</A></td></tr>"
+			dat += "<br><tr><td><B>Enthrall Progress(Must be alive):</B></td><td></td></tr>"
+			var/thrall = 0
+			var/mob/Count
+			for(Count in living_mob_list)
+				if(is_thrall(Count))
+					thrall++
+			dat += "<tr><td>[thrall] of 15</td></tr>"
+			dat += "<br><tr><td><B>Ascended:</B></td><td></td></tr>"
+			dat += "<tr><td>[ticker.mode.shadowling_ascended ? "Yes" : "No"]</td></tr>"
+			dat += "</table>"
+
+		if(ticker.mode.thralls.len)
+			dat += "<br><table cellspacing=5><tr><td><B>Shadowling Thralls</B></td><td></td></tr>"
+			for(var/datum/mind/N in ticker.mode.thralls)
+				var/mob/M = N.current
+				if(M)
+					dat += "<tr><td><a href='?src=\ref[src];adminplayeropts=\ref[M]'>[M.real_name] ([M.ckey])</a>[M.client ? "" : " <i>(logged out)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
+					dat += "<td><A href='?src=\ref[usr];priv_msg=\ref[M]'>PM</A></td></tr>"
+			dat += "</table>"
+
+		if(ticker.mode.abductors.len)
+			dat += "<br><table cellspacing=5><tr><td><B>Abductors</B></td><td></td><td></td></tr>"
+			for(var/datum/mind/abductor in ticker.mode.abductors)
+				var/mob/M = abductor.current
+				if(M)
+					dat += "<tr><td><a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(logged out)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
+					dat += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td>"
+					dat += "<td><A HREF='?_src_=holder;traitor=\ref[M]'>Show Objective</A></td></tr>"
+				else
+					dat += "<tr><td><i>Abductor not found!</i></td></tr>"
 			dat += "</table>"
 
 		if(istype(ticker.mode, /datum/game_mode/blob)) //Блоб

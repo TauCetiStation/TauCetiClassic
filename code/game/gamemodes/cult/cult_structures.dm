@@ -13,13 +13,18 @@
 	name = "Daemon forge"
 	desc = "A forge used in crafting the unholy weapons used by the armies of Nar-Sie"
 	icon_state = "forge"
+	light_color = "#cc9338"
+	light_power = 2
+	light_range = 3
 
 /obj/structure/cult/pylon
 	name = "Pylon"
 	desc = "A floating crystal that hums with an unearthly energy"
 	icon_state = "pylon"
-	luminosity = 5
-
+	light_color = "#ff0000"
+	light_power = 2
+	light_range = 6
+//	luminosity = 5
 
 /obj/structure/cult/tome
 	name = "Desk"
@@ -51,7 +56,7 @@
 		return
 	return
 
-/obj/effect/gateway/HasEntered(AM as mob|obj)
+/obj/effect/gateway/Crossed(AM as mob|obj)
 	spawn(0)
 		return
 	return

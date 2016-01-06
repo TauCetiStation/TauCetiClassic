@@ -8,8 +8,9 @@
 	icon_state = "sleeperconsole"
 	var/obj/machinery/sleeper/connected = null
 	anchored = 1 //About time someone fixed this.
-	density = 1
 	var/orient = "LEFT" // "RIGHT" changes the dir suffix to "-r"
+
+	light_color = "#7BF9FF"
 
 
 /obj/machinery/sleep_console/process()
@@ -140,6 +141,7 @@
 
 /obj/machinery/sleeper/attack_animal(var/mob/living/simple_animal/M)//Stop putting hostile mobs in things guise
 	if(M.environment_smash)
+		M.do_attack_animation(src)
 		visible_message("<span class='danger'>[M.name] smashes [src] apart!</span>")
 		qdel(src)
 	return
@@ -164,6 +166,15 @@
 	var/amounts = list(5, 10)
 	var/obj/item/weapon/reagent_containers/glass/beaker = null
 	var/filtering = 0
+
+	light_color = "#7BF9FF"
+
+	power_change()
+		..()
+		if(!(stat & (BROKEN|NOPOWER)))
+			set_light(2)
+		else
+			set_light(0)
 
 	New()
 		..()
@@ -227,7 +238,7 @@
 
 			visible_message("[user] starts putting [G:affecting:name] into the sleeper.", 3)
 
-			if(do_after(user, 20))
+			if(do_after(user, 20, target = src))
 				if(src.occupant)
 					user << "\blue <B>The sleeper is already occupied!</B>"
 					return
@@ -405,7 +416,7 @@
 				usr << "You're too busy getting your life sucked out of you."
 				return
 		visible_message("[usr] starts climbing into the sleeper.", 3)
-		if(do_after(usr, 20))
+		if(do_after(usr, 20, target = src))
 			if(src.occupant)
 				usr << "\blue <B>The sleeper is already occupied!</B>"
 				return

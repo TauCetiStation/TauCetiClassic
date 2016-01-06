@@ -16,7 +16,7 @@ var/global/floorIsLava = 0
 	var/rendered = "<span class=\"admin\"><span class=\"prefix\">ATTACK:</span> <span class=\"message\">[text]</span></span>"
 	for(var/client/C in admins)
 		if(R_ADMIN & C.holder.rights)
-			if(C.prefs.toggles & CHAT_ATTACKLOGS)
+			if(C.prefs.chat_toggles & CHAT_ATTACKLOGS)
 				var/msg = rendered
 				C << msg
 
@@ -58,6 +58,7 @@ var/global/floorIsLava = 0
 		<b>Mob type</b> = [M.type]<br><br>
 		<A href='?src=\ref[src];boot2=\ref[M]'>Kick</A> |
 		<A href='?_src_=holder;warn=[M.ckey]'>Warn</A> |
+		<A href='?_src_=holder;unwarn=[M.ckey]'>UNWarn</A> |
 		<A href='?src=\ref[src];newban=\ref[M]'>Ban</A> |
 		<A href='?src=\ref[src];jobban2=\ref[M]'>Jobban</A> |
 		<A href='?src=\ref[src];notes=show;mob=\ref[M]'>Notes</A>
@@ -260,12 +261,18 @@ var/global/floorIsLava = 0
 	var/dat = "<html><head><title>Info on [key]</title></head>"
 	dat += "<body>"
 
-	//ooh, this is wrong.
+	//Display player age and player warn bans
+	var/datum/preferences/D
+	var/p_warns
 	var/p_age
 	for(var/client/C in clients)
 		if(C.ckey == key)
 			p_age = C.player_age
+
+			D = C.prefs
+			p_warns = D.warnbans
 	dat +="<span style='color:#000000; font-weight: bold'>Player age: [p_age]</span><br>"
+	dat +="<span style='color:#000000'>Player warnbans: [p_warns]</span><hr>"
 
 	var/savefile/info = new("data/player_saves/[copytext(key, 1, 2)]/[key]/info.sav")
 	var/list/infos
@@ -588,6 +595,7 @@ var/global/floorIsLava = 0
 		dat += {"
 			<B>Admin Secrets</B><BR>
 			<BR>
+			<A href='?src=\ref[src];secretsadmin=clear_virus'>Cure all diseases currently in existence</A><BR>
 			<A href='?src=\ref[src];secretsadmin=list_bombers'>Bombing List</A><BR>
 			<A href='?src=\ref[src];secretsadmin=check_antagonist'>Show current traitors and objectives</A><BR>
 			<A href='?src=\ref[src];secretsadmin=list_signalers'>Show last [length(lastsignalers)] signalers</A><BR>
@@ -874,6 +882,7 @@ var/global/floorIsLava = 0
 		ticker.delay_end = !ticker.delay_end
 		log_admin("[key_name(usr)] [ticker.delay_end ? "delayed the round end" : "has made the round end normally"].")
 		message_admins("\blue [key_name(usr)] [ticker.delay_end ? "delayed the round end" : "has made the round end normally"].", 1)
+		send2slack_service("[key_name(usr)] [ticker.delay_end ? "delayed the round end" : "has made the round end normally"].")
 		return //alert("Round end delayed", null, null, null, null, null)
 	going = !( going )
 	if (!( going ))
@@ -925,6 +934,13 @@ var/global/floorIsLava = 0
 		blackbox.save_all_data_to_sql()
 
 	world.Reboot()
+
+/datum/admins/proc/getProcessSchedulerContext()
+	set category = "Debug"
+	set name = "Process Scheduler Status Panel"
+
+	feedback_add_details("admin_verb","GPSSP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	processSchedulerView.getContext()
 
 /datum/admins/proc/unprison(var/mob/M in mob_list)
 	set category = "Admin"
@@ -1174,13 +1190,43 @@ var/global/floorIsLava = 0
 //TO-DO:
 //
 //
+/datum/admins/proc/cmd_ghost_drag(var/mob/dead/observer/frommob, var/mob/living/tomob)
 
+	//this is the exact two check rights checks required to edit a ckey with vv.
+	if (!check_rights(R_VAREDIT,0) || !check_rights(R_SPAWN|R_DEBUG,0))
+		return 0
+
+	if (!frommob.ckey)
+		return 0
+
+	var/question = ""
+	if (tomob.ckey)
+		question = "This mob already has a user ([tomob.key]) in control of it! "
+	question += "Are you sure you want to place [frommob.name]([frommob.key]) in control of [tomob.name]?"
+
+	var/ask = alert(question, "Place ghost in control of mob?", "Yes", "No")
+	if (ask != "Yes")
+		return 1
+
+	if (!frommob || !tomob) //make sure the mobs don't go away while we waited for a response
+		return 1
+
+	tomob.ghostize(0)
+
+	message_admins("<span class='adminnotice'>[key_name_admin(usr)] has put [frommob.ckey] in control of [tomob.name].</span>")
+	log_admin("[key_name(usr)] stuffed [frommob.ckey] into [tomob.name].")
+	feedback_add_details("admin_verb","CGD")
+
+	tomob.ckey = frommob.ckey
+	qdel(frommob)
+
+	return 1
 
 /**********************Administration Shuttle**************************/
 
 var/admin_shuttle_location = 0 // 0 = centcom 13, 1 = station
 
-proc/move_admin_shuttle()
+/proc/move_admin_shuttle()
 	var/area/fromArea
 	var/area/toArea
 	if (admin_shuttle_location == 1)
@@ -1200,7 +1246,7 @@ proc/move_admin_shuttle()
 
 var/ferry_location = 0 // 0 = centcom , 1 = station
 
-proc/move_ferry()
+/proc/move_ferry()
 	var/area/fromArea
 	var/area/toArea
 	if (ferry_location == 1)
@@ -1220,7 +1266,7 @@ proc/move_ferry()
 
 var/alien_ship_location = 1 // 0 = base , 1 = mine
 
-proc/move_alien_ship()
+/proc/move_alien_ship()
 	var/area/fromArea
 	var/area/toArea
 	if (alien_ship_location == 1)

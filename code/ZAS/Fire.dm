@@ -12,14 +12,14 @@ Attach to transfer valve and open. BOOM.
 
 
 //Some legacy definitions so fires can be started.
-atom/proc/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+/atom/proc/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	return null
 
 
-turf/proc/hotspot_expose(exposed_temperature, exposed_volume, soh = 0, atom/firestarter = null)
+/turf/proc/hotspot_expose(exposed_temperature, exposed_volume, soh = 0, atom/firestarter = null)
 
 
-turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh, atom/firestarter)
+/turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh, atom/firestarter)
 	if(fire_protection > world.time-300)
 		return 0
 	if(locate(/obj/fire) in src)
@@ -54,11 +54,11 @@ turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh, atom/fir
 	anchored = 1
 	mouse_opacity = 0
 
-	//luminosity = 3
+	blend_mode = BLEND_ADD
 
 	icon = 'icons/effects/fire.dmi'
 	icon_state = "1"
-
+	light_color = "#ED9200"
 	layer = TURF_LAYER
 
 	var/firelevel = 10000 //Calculated by gas_mixture.calculate_firelevel()
@@ -70,11 +70,11 @@ turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh, atom/fir
 	var/turf/simulated/S = loc
 
 	if(!istype(S))
-		del src
+		qdel(src)
 		return
 
 	if(!S.zone)
-		del src
+		qdel(src)
 		return
 
 	var/datum/gas_mixture/air_contents = S.return_air()
@@ -95,7 +95,7 @@ turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh, atom/fir
 
 	//check if there is something to combust
 	if(!air_contents.check_combustability(liquid))
-		//del src
+		//qdel(src)
 		RemoveFire()
 		return
 
@@ -104,13 +104,13 @@ turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh, atom/fir
 
 	if(firelevel > 6)
 		icon_state = "3"
-		SetLuminosity(7)
+		set_light(7, 3)
 	else if(firelevel > 2.5)
 		icon_state = "2"
-		SetLuminosity(5)
+		set_light(5, 2)
 	else
 		icon_state = "1"
-		SetLuminosity(3)
+		set_light(3, 1)
 
 	//im not sure how to implement a version that works for every creature so for now monkeys are firesafe
 	for(var/mob/living/carbon/human/M in loc)
@@ -147,6 +147,9 @@ turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh, atom/fir
 			else
 				enemy_tile.adjacent_fire_act(loc, air_contents, air_contents.temperature, air_contents.return_volume())
 
+	animate(src, color = heat2color(air_contents.temperature), 5)
+	set_light(l_color = color)
+
 	//seperate part of the present gas
 	//this is done to prevent the fire burning all gases in a single pass
 	var/datum/gas_mixture/flow = air_contents.remove_ratio(vsc.fire_consuption_rate)
@@ -165,16 +168,20 @@ turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh, atom/fir
 	..()
 
 	if(!istype(loc, /turf))
-		del src
+		qdel(src)
 
 	dir = pick(cardinal)
-	SetLuminosity(3)
+
+	var/datum/gas_mixture/air_contents = loc.return_air()
+	color = heat2color(air_contents.temperature)
+	set_light(3, 1, color)
+
 	firelevel = fl
 	air_master.active_hotspots.Add(src)
 
-/obj/fire/Del()
+/obj/fire/Destroy()
 	if (istype(loc, /turf/simulated))
-		SetLuminosity(0)
+		set_light(0)
 
 		loc = null
 	air_master.active_hotspots.Remove(src)
@@ -183,7 +190,7 @@ turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh, atom/fir
 
 /obj/fire/proc/RemoveFire()
 	if (istype(loc, /turf/simulated))
-		SetLuminosity(0)
+		set_light(0)
 		loc = null
 	air_master.active_hotspots.Remove(src)
 
@@ -195,7 +202,7 @@ turf/simulated/apply_fire_protection()
 	fire_protection = world.time
 
 
-datum/gas_mixture/proc/zburn(obj/effect/decal/cleanable/liquid_fuel/liquid, force_burn)
+/datum/gas_mixture/proc/zburn(obj/effect/decal/cleanable/liquid_fuel/liquid, force_burn)
 	var/value = 0
 
 	if((temperature > PHORON_MINIMUM_BURN_TEMPERATURE || force_burn) && check_recombustability(liquid))
@@ -211,7 +218,7 @@ datum/gas_mixture/proc/zburn(obj/effect/decal/cleanable/liquid_fuel/liquid, forc
 		if(liquid)
 		//Liquid Fuel
 			if(liquid.amount <= 0.1)
-				del liquid
+				qdel(liquid)
 			else
 				total_fuel += liquid.amount
 
@@ -248,12 +255,12 @@ datum/gas_mixture/proc/zburn(obj/effect/decal/cleanable/liquid_fuel/liquid, forc
 
 		if(fuel)
 			fuel.moles -= (fuel.moles * used_fuel_ratio * used_reactants_ratio) * 5 //Fuel burns 5 times as quick
-			if(fuel.moles <= 0) del fuel
+			if(fuel.moles <= 0) qdel(fuel)
 
 		if(liquid)
 			liquid.amount -= (liquid.amount * used_fuel_ratio * used_reactants_ratio) * 5 // liquid fuel burns 5 times as quick
 
-			if(liquid.amount <= 0) del liquid
+			if(liquid.amount <= 0) qdel(liquid)
 
 		//calculate the energy produced by the reaction and then set the new temperature of the mix
 		temperature = (starting_energy + vsc.fire_fuel_energy_release * total_fuel) / heat_capacity()
@@ -262,7 +269,7 @@ datum/gas_mixture/proc/zburn(obj/effect/decal/cleanable/liquid_fuel/liquid, forc
 		value = total_reactants * used_reactants_ratio
 	return value
 
-datum/gas_mixture/proc/check_recombustability(obj/effect/decal/cleanable/liquid_fuel/liquid)
+/datum/gas_mixture/proc/check_recombustability(obj/effect/decal/cleanable/liquid_fuel/liquid)
 	//this is a copy proc to continue a fire after its been started.
 
 	var/datum/gas/volatile_fuel/fuel = locate() in trace_gases
@@ -277,7 +284,7 @@ datum/gas_mixture/proc/check_recombustability(obj/effect/decal/cleanable/liquid_
 
 	return 0
 
-datum/gas_mixture/proc/check_combustability(obj/effect/decal/cleanable/liquid_fuel/liquid)
+/datum/gas_mixture/proc/check_combustability(obj/effect/decal/cleanable/liquid_fuel/liquid)
 	//this check comes up very often and is thus centralized here to ease adding stuff
 
 	var/datum/gas/volatile_fuel/fuel = locate() in trace_gases
@@ -292,7 +299,7 @@ datum/gas_mixture/proc/check_combustability(obj/effect/decal/cleanable/liquid_fu
 
 	return 0
 
-datum/gas_mixture/proc/calculate_firelevel(obj/effect/decal/cleanable/liquid_fuel/liquid)
+/datum/gas_mixture/proc/calculate_firelevel(obj/effect/decal/cleanable/liquid_fuel/liquid)
 	//Calculates the firelevel based on one equation instead of having to do this multiple times in different areas.
 
 	var/datum/gas/volatile_fuel/fuel = locate() in trace_gases

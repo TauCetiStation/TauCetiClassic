@@ -80,7 +80,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 				sleep(30)
 				explosion(src.loc, 0, 2, 5, 5)
 				if(src)
-					del(src)
+					qdel(src)
 			*/
 		if(!desc)
 			usr << "A spell circle drawn in blood. It reads: <i>[word1] [word2] [word3]</i>."
@@ -91,7 +91,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 
 
 	attackby(I as obj, user as mob)
-		if(istype(I, /obj/item/weapon/tome) && iscultist(user))
+		if(istype(I, /obj/item/weapon/book/tome) && iscultist(user))
 			user << "You retrace your steps, carefully undoing the lines of the rune."
 			qdel(src)
 			return
@@ -178,13 +178,15 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 		check_icon()
 			icon = get_uristrune_cult(word1, word2, word3)
 
-/obj/item/weapon/tome
-	name = "arcane tome"
-	icon_state ="tome"
+/obj/item/weapon/book/tome
+	name = "book"
+	icon = 'icons/obj/library.dmi'
+	icon_state ="book"
 	throw_speed = 1
 	throw_range = 5
 	w_class = 2.0
 	flags = FPRINT | TABLEPASS
+	unique = 1
 	var/notedat = ""
 	var/tomedat = ""
 	var/list/words = list("ire" = "ire", "ego" = "ego", "nahlizet" = "nahlizet", "certum" = "certum", "veri" = "veri", "jatkaa" = "jatkaa", "balaq" = "balaq", "mgar" = "mgar", "karazet" = "karazet", "geeri" = "geeri")
@@ -285,6 +287,10 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 				</html>
 				"}
 
+	New()
+		if (icon_state == "book")
+			..()
+			icon_state = "book[pick(1,2,3,4,5,6)]"
 
 	Topic(href,href_list[])
 		if (src.loc == usr)
@@ -313,7 +319,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 						[words[10]] is <a href='byond://?src=\ref[src];number=10;action=change'>[words[words[10]]]</A> <A href='byond://?src=\ref[src];number=10;action=clear'>Clear</A><BR>
 						"}
 			usr << browse("[notedat]", "window=notes")
-//		call(/obj/item/weapon/tome/proc/edit_notes)()
+//		call(/obj/item/weapon/book/tome/proc/edit_notes)()
 		else
 			usr << browse(null, "window=notes")
 			return
@@ -408,7 +414,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 					[words[9]] is <a href='byond://?src=\ref[src];number=9;action=change'>[words[words[9]]]</A> <A href='byond://?src=\ref[src];number=9;action=clear'>Clear</A><BR>
 					[words[10]] is <a href='byond://?src=\ref[src];number=10;action=change'>[words[words[10]]]</A> <A href='byond://?src=\ref[src];number=10;action=clear'>Clear</A><BR>
 					"}
-//						call(/obj/item/weapon/tome/proc/edit_notes)()
+//						call(/obj/item/weapon/book/tome/proc/edit_notes)()
 						user << browse("[notedat]", "window=notes")
 						return
 			if(usr.get_active_hand() != src)
@@ -443,7 +449,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 				V.show_message("\red [user] slices open a finger and begins to chant and paint symbols on the floor.", 3, "\red You hear chanting.", 2)
 			user << "\red You slice open one of your fingers and begin drawing a rune on the floor whilst chanting the ritual that binds your life essence with the dark arcane energies flowing through the surrounding world."
 			user.take_overall_damage((rand(9)+1)/10) // 0.1 to 1.0 damage
-			if(do_after(user, 50))
+			if(do_after(user, 50, target = user))
 				if(usr.get_active_hand() != src)
 					return
 				var/mob/living/carbon/human/H = user
@@ -457,11 +463,12 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 				R.blood_DNA[H.dna.unique_enzymes] = H.dna.b_type
 			return
 		else
-			user << "The book seems full of illegible scribbles. Is this a joke?"
+			//user << "The book seems full of illegible scribbles. Is this a joke?"
+			user << "This book is completely blank!"
 			return
 
-	attackby(obj/item/weapon/tome/T as obj, mob/living/user as mob)
-		if(istype(T, /obj/item/weapon/tome)) // sanity check to prevent a runtime error
+	attackby(obj/item/weapon/book/tome/T as obj, mob/living/user as mob)
+		if(istype(T, /obj/item/weapon/book/tome)) // sanity check to prevent a runtime error
 			switch(alert("Copy the runes from your tome?",,"Copy", "Cancel"))
 				if("cancel")
 					return
@@ -477,12 +484,18 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 
 	examine()
 		set src in usr
-		if(!iscultist(usr))
-			usr << "An old, dusty tome with frayed edges and a sinister looking cover."
+		if (icon_state == "tome")
+			if(!iscultist(usr))
+				usr << "An old, dusty tome with frayed edges and a sinister looking cover."
+			else
+				usr << "The scriptures of Nar-Sie, The One Who Sees, The Geometer of Blood. Contains the details of every ritual his followers could think of. Most of these are useless, though."
 		else
-			usr << "The scriptures of Nar-Sie, The One Who Sees, The Geometer of Blood. Contains the details of every ritual his followers could think of. Most of these are useless, though."
+			if(!iscultist(usr))
+				..()
+			else
+				usr << "The scriptures of Nar-Sie, The One Who Sees, The Geometer of Blood. Contains the details of every ritual his followers could think of. Most of these are useless, though."
 
-/obj/item/weapon/tome/imbued //admin tome, spawns working runes without waiting
+/obj/item/weapon/book/tome/imbued //admin tome, spawns working runes without waiting
 	w_class = 2.0
 	var/cultistsonly = 1
 	attack_self(mob/user as mob)
@@ -654,3 +667,8 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 					R.word3=cultwords["technology"]
 					R.loc = user.loc
 					R.check_icon()
+
+/obj/item/weapon/book/tome/old
+	name = "arcane tome"
+	icon = 'icons/obj/weapons.dmi'
+	icon_state ="tome"

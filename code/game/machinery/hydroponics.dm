@@ -193,9 +193,9 @@ obj/machinery/hydroponics/proc/updateicon()
 			overlays += image('icons/obj/hydroponics.dmi', icon_state="over_harvest3")
 
 	if(istype(myseed,/obj/item/seeds/glowshroom))
-		SetLuminosity(round(myseed.potency/10))
+		set_light(round(myseed.potency/10))
 	else
-		SetLuminosity(0)
+		set_light(0)
 
 	return
 
@@ -374,7 +374,7 @@ obj/machinery/hydroponics/proc/mutatespecie() // Mutagent produced a new plant!
 		myseed = new /obj/item/seeds/greengrapeseed
 /*
 	else if ( istype(myseed, /obj/item/seeds/tomatoseed ))
-		del(myseed)
+		qdel(myseed)
 		myseed = new /obj/item/seeds/gibtomatoseed
 */
 	else if ( istype(myseed, /obj/item/seeds/eggplantseed ))
@@ -471,7 +471,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 
 	else if ( istype(O, /obj/item/nutrient) )
 		var/obj/item/nutrient/myNut = O
-		user.u_equip(O)
+		user.remove_from_mob(O)
 		nutrilevel = 10
 		yieldmod = myNut.yieldmod
 		mutmod = myNut.mutmod
@@ -655,7 +655,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 
 	else if ( istype(O, /obj/item/seeds/) )
 		if(!planted)
-			user.u_equip(O)
+			user.remove_from_mob(O)
 			user << "You plant the [O.name]"
 			dead = 0
 			myseed = O
@@ -728,7 +728,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 
 	else if ( istype(O, /obj/item/weapon/weedspray) )
 		var/obj/item/weedkiller/myWKiller = O
-		user.u_equip(O)
+		user.remove_from_mob(O)
 		toxic += myWKiller.toxicity
 		weedlevel -= myWKiller.WeedKillStr
 		if (weedlevel < 0 ) // Make sure it won't go overoboard
@@ -747,10 +747,11 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			if(!S.can_be_inserted(G))
 				return
 			S.handle_item_insertion(G, 1)
+			score["stuffharvested"]++
 
 	else if ( istype(O, /obj/item/weapon/pestspray) )
 		var/obj/item/pestkiller/myPKiller = O
-		user.u_equip(O)
+		user.remove_from_mob(O)
 		toxic += myPKiller.toxicity
 		pestlevel -= myPKiller.PestKillStr
 		if (pestlevel < 0 ) // Make sure it won't go overoboard
@@ -773,7 +774,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 		if(planted)
 			user << "\red The hydroponics tray is already occupied!"
 		else
-			user.drop_item()
+			user.remove_from_mob()
 			qdel(O)
 
 			var/obj/machinery/apiary/A = new(src.loc)
@@ -839,6 +840,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 		t_prod.potency = potency
 		t_prod.plant_type = plant_type
 		t_amount++
+		score["stuffharvested"]++
 
 	parent.update_tray()
 
@@ -964,9 +966,9 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 
 		if(!luminosity)
 			if(istype(myseed,/obj/item/seeds/glowshroom))
-				SetLuminosity(round(myseed.potency/10))
+				set_light(round(myseed.potency/10))
 		else
-			SetLuminosity(0)
+			set_light(0)
 		return
 
 #undef HYDRO_SPEED_MULTIPLIER

@@ -65,12 +65,11 @@
 	Stat()
 		..()
 
-		statpanel("Status")
-		if (client.statpanel == "Status" && ticker)
+		if(statpanel("Status") && ticker)
 			if (ticker.current_state != GAME_STATE_PREGAME)
 				stat(null, "Station Time: [worldtime2text()]")
 		statpanel("Lobby")
-		if(client.statpanel=="Lobby" && ticker)
+		if(statpanel("Lobby") && ticker)
 			if(ticker.hide_mode)
 				stat("Game Mode:", "Secret")
 			else
@@ -88,6 +87,9 @@
 					if(player.ready)totalPlayersReady++
 
 	Topic(href, href_list[])
+		if(src != usr)
+			return 0
+
 		if(!client)	return 0
 
 		if(href_list["show_preferences"])
@@ -129,7 +131,7 @@
 				if(!client.holder && !config.antag_hud_allowed)           // For new ghosts we remove the verb from even showing up if it's not allowed.
 					observer.verbs -= /mob/dead/observer/verb/toggle_antagHUD        // Poor guys, don't know what they are missing!
 				observer.key = key
-				del(src)
+				qdel(src)
 
 				return 1
 
@@ -264,7 +266,7 @@
 	proc/IsJobAvailable(rank)
 		var/datum/job/job = job_master.GetJob(rank)
 		if(!job)	return 0
-		if((job.current_positions >= job.total_positions) && job.total_positions != -1)	return 0
+		if(!job.is_position_available()) return 0
 		if(jobban_isbanned(src,rank))	return 0
 		if(!job.player_old_enough(src.client))	return 0
 		return 1
@@ -291,6 +293,25 @@
 		var/mob/living/carbon/human/character = create_character()	//creates the human and transfers vars and mind
 		job_master.EquipRank(character, rank, 1)					//equips the human
 		EquipCustomItems(character)
+
+		// AIs don't need a spawnpoint, they must spawn at an empty core
+		if(character.mind.assigned_role == "AI")
+
+			character = character.AIize(move=0) // AIize the character, but don't move them yet
+
+			// IsJobAvailable for AI checks that there is an empty core available in this list
+			var/obj/structure/AIcore/deactivated/C = empty_playable_ai_cores[1]
+			empty_playable_ai_cores -= C
+
+			character.loc = C.loc
+
+			//AnnounceCyborg(character, rank, "has been downloaded to the empty core in \the [character.loc.loc]")
+			ticker.mode.latespawn(character)
+
+			qdel(C)
+			qdel(src)
+			return
+
 		character.loc = pick(latejoin)
 		character.lastarea = get_area(loc)
 		// Moving wheelchair if they have one
@@ -309,7 +330,10 @@
 
 		else
 			character.Robotize()
-		del(src)
+
+		joined_player_list += character.ckey
+
+		qdel(src)
 
 	proc/AnnounceArrival(var/mob/living/carbon/human/character, var/rank)
 		if (ticker.current_state == GAME_STATE_PLAYING)
@@ -317,7 +341,7 @@
 			if(character.mind.role_alt_title)
 				rank = character.mind.role_alt_title
 			a.autosay("[character.real_name],[rank ? " [rank]," : " visitor," ] has arrived on the station.", "Arrivals Announcement Computer")
-			del(a)
+			qdel(a)
 
 	proc/LateChoices()
 		var/mills = world.time // 1/10 of a second, not real milliseconds but whatever
@@ -430,7 +454,7 @@
 
 	proc/ViewManifest()
 		var/dat = "<html><body>"
-		dat += "<h4>Crew Manifest</h4>"
+		dat += "<h4>Show Crew Manifest</h4>"
 		dat += data_core.get_manifest(OOC = 1)
 
 		src << browse(dat, "window=manifest;size=370x420;can_close=1")

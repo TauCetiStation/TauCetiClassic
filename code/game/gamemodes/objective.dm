@@ -13,7 +13,7 @@ datum/objective
 		if(text)
 			explanation_text = text
 
-	Del()
+	Destroy()
 		all_objectives -= src
 		..()
 
@@ -505,7 +505,7 @@ datum/objective/steal
 	var/global/possible_items_special[] = list(
 		/*"nuclear authentication disk" = /obj/item/weapon/disk/nuclear,*///Broken with the change to nuke disk making it respawn on z level change.
 		"nuclear gun" = /obj/item/weapon/gun/energy/gun/nuclear,
-		"diamond drill" = /obj/item/weapon/pickaxe/diamonddrill,
+		"diamond drill" = /obj/item/weapon/pickaxe/drill/diamond_drill,
 		"bag of holding" = /obj/item/weapon/storage/backpack/holding,
 		"hyper-capacity cell" = /obj/item/weapon/cell/hyper,
 		"10 diamonds" = /obj/item/stack/sheet/mineral/diamond,
@@ -788,7 +788,7 @@ datum/objective/heist/kidnap
 			target = pick(possible_targets)
 
 		if(target && target.current)
-			explanation_text = "The Shoal has a need for [target.current.real_name], the [target.assigned_role]. Take them alive."
+			explanation_text = "You need a new recruit: [target.current.real_name], the [target.assigned_role]. Grab them and bring into the ship. They must be alive!"
 		else
 			explanation_text = "Free Objective"
 		return target
@@ -819,7 +819,7 @@ datum/objective/heist/loot
 			if(2)
 				target = /obj/machinery/the_singularitygen
 				target_amount = 1
-				loot = "a gravitational generator"
+				loot = "a Gravitational Singularity Generator"
 			if(3)
 				target = /obj/machinery/power/emitter
 				target_amount = 4
@@ -869,7 +869,7 @@ datum/objective/heist/loot
 datum/objective/heist/salvage
 
 	choose_target()
-		switch(rand(1,8))
+		switch(rand(1,4))
 			if(1)
 				target = "metal"
 				target_amount = 300
@@ -882,18 +882,18 @@ datum/objective/heist/salvage
 			if(4)
 				target = "phoron"
 				target_amount = 100
-			if(5)
-				target = "silver"
-				target_amount = 50
-			if(6)
-				target = "gold"
-				target_amount = 20
-			if(7)
-				target = "uranium"
-				target_amount = 20
-			if(8)
-				target = "diamond"
-				target_amount = 20
+			//if(5)
+			//	target = "silver"
+			//	target_amount = 50
+			//if(6)
+			//	target = "gold"
+			//	target_amount = 20
+			//if(7)
+			//	target = "uranium"
+			//	target_amount = 20
+			//if(8)
+			//	target = "diamond"
+			//	target_amount = 20
 
 		explanation_text = "Ransack the station and escape with [target_amount] [target]."
 

@@ -82,6 +82,7 @@
 
 
 	if(health < 1)
+		health = 0
 		death()
 
 	if(health > maxHealth)
@@ -200,13 +201,7 @@
 	if(resting || buckled)
 		return
 
-	if(isturf(src.loc))
-		if(ismob(AM))
-			var/newamloc = src.loc
-			src.loc = AM:loc
-			AM:loc = newamloc
-		else
-			..()
+	..()
 
 /mob/living/simple_animal/gib()
 	if(icon_gib)
@@ -270,6 +265,7 @@
 					O.show_message(text("\red [] has grabbed [] passively!", M, src), 1)
 
 		if("hurt", "disarm")
+			M.do_attack_animation(src)
 			adjustBruteLoss(harm_intent_damage)
 			for(var/mob/O in viewers(src, null))
 				if ((O.client && !( O.blinded )))
@@ -362,7 +358,7 @@
 					adjustBruteLoss(-MED.heal_brute)
 					MED.amount -= 1
 					if(MED.amount <= 0)
-						del(MED)
+						qdel(MED)
 					for(var/mob/M in viewers(src, null))
 						if ((M.client && !( M.blinded )))
 							M.show_message("\blue [user] applies the [MED] on [src]")
@@ -372,7 +368,7 @@
 		if(istype(O, /obj/item/weapon/kitchenknife) || istype(O, /obj/item/weapon/butch))
 			new meat_type (get_turf(src))
 			if(prob(95))
-				del(src)
+				qdel(src)
 				return
 			gib()
 	else
@@ -448,7 +444,7 @@
 //Call when target overlay should be added/removed
 /mob/living/simple_animal/update_targeted()
 	if(!targeted_by && target_locked)
-		del(target_locked)
+		qdel(target_locked)
 	overlays = null
 	if (targeted_by && target_locked)
 		overlays += target_locked

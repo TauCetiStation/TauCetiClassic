@@ -6,11 +6,79 @@
 
 	var/propelled = 0 // Check for fire-extinguisher-driven chairs
 
+/obj/structure/stool/bed/chair/metal
+	icon_state = "chair_g"
+	var/behind = null
+	var/behind_buckled = null
+
+/obj/structure/stool/bed/chair/metal/blue
+	icon_state = "chair_blu"
+
+/obj/structure/stool/bed/chair/metal/yellow
+	icon_state = "chair_y"
+
+/obj/structure/stool/bed/chair/metal/red
+	icon_state = "chair_r"
+
+/obj/structure/stool/bed/chair/metal/green
+	icon_state = "chair_gr"
+
+/obj/structure/stool/bed/chair/metal/white
+	icon_state = "chair_w"
+
+/obj/structure/stool/bed/chair/metal/black
+	icon_state = "chair_bla"
+
+/obj/structure/stool/bed/chair/metal/New()
+	behind = "chair_behind_g"
+	return ..()
+
+/obj/structure/stool/bed/chair/metal/blue/New()
+	behind = "chair_behind_blu"
+	return ..()
+
+/obj/structure/stool/bed/chair/metal/yellow/New()
+	behind = "chair_behind_y"
+	return ..()
+
+/obj/structure/stool/bed/chair/metal/red/New()
+	behind = "chair_behind_r"
+	return ..()
+
+/obj/structure/stool/bed/chair/metal/green/New()
+	behind = "chair_behind_gr"
+	return ..()
+
+/obj/structure/stool/bed/chair/metal/white/New()
+	behind = "chair_behind_w"
+	return ..()
+
+/obj/structure/stool/bed/chair/metal/black/New()
+	behind = "chair_behind_bla"
+	return ..()
+
+/obj/structure/stool/bed/chair/metal/post_buckle_mob(mob/living/M)
+	if(buckled_mob)
+		icon_state = behind
+	else
+		icon_state = initial(icon_state)
+
 /obj/structure/stool/bed/chair/schair
 	name = "shuttle chair"
 	desc = "You sit in this. Either by will or force."
 	icon = 'tauceti/icons/obj/objects.dmi'
 	icon_state = "schair"
+	var/sarmrest = null
+
+/obj/structure/stool/bed/chair/schair/New()
+	sarmrest = image("tauceti/icons/obj/objects.dmi", "schair_armrest", layer = FLY_LAYER)
+	return ..()
+
+/obj/structure/stool/bed/chair/schair/post_buckle_mob(mob/living/M)
+	if(buckled_mob)
+		overlays += sarmrest
+	else
+		overlays -= sarmrest
 
 /obj/structure/stool/MouseDrop(atom/over_object)
 	return
@@ -96,31 +164,56 @@
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		new /obj/item/stack/sheet/wood(src.loc)
 		qdel(src)
+	if(istype(W, /obj/item/weapon/melee/energy))
+		if(istype(W, /obj/item/weapon/melee/energy/blade) || W:active)
+			user.do_attack_animation(src)
+			var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
+			spark_system.set_up(5, 0, src.loc)
+			spark_system.start()
+			playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
+			playsound(src.loc, "sparks", 50, 1)
+			for(var/mob/O in viewers(user, 4))
+				O.show_message("\blue [src] was sliced apart by [user]!", 1, "\red You hear [src] coming apart.", 2)
+			new /obj/item/stack/sheet/wood(src.loc)
+			qdel(src)
 	else
 		..()
 
 /obj/structure/stool/bed/chair/comfy
 	name = "comfy chair"
 	desc = "It looks comfy."
+	icon_state = "comfychair"
+	color = rgb(255,255,255)
+	var/armrest = null
+
+/obj/structure/stool/bed/chair/comfy/New()
+	armrest = image("icons/obj/objects.dmi", "comfychair_armrest", layer = FLY_LAYER)
+	return ..()
+
+/obj/structure/stool/bed/chair/comfy/post_buckle_mob(mob/living/M)
+	if(buckled_mob)
+		overlays += armrest
+	else
+		overlays -= armrest
 
 /obj/structure/stool/bed/chair/comfy/brown
-	icon_state = "comfychair_brown"
+	color = rgb(255,113,0)
 
 /obj/structure/stool/bed/chair/comfy/beige
-	icon_state = "comfychair_beige"
+	color = rgb(255,253,195)
 
 /obj/structure/stool/bed/chair/comfy/teal
-	icon_state = "comfychair_teal"
+	color = rgb(0,255,255)
+
+/obj/structure/stool/bed/chair/comfy/black
+	color = rgb(167,164,153)
+
+/obj/structure/stool/bed/chair/comfy/lime
+	color = rgb(255,251,0)
 
 /obj/structure/stool/bed/chair/office
 	anchored = 0
 	movable = 1
-
-/obj/structure/stool/bed/chair/comfy/black
-	icon_state = "comfychair_black"
-
-/obj/structure/stool/bed/chair/comfy/lime
-	icon_state = "comfychair_lime"
 
 /obj/structure/stool/bed/chair/office/Move()
 	..()

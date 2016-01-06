@@ -6,6 +6,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 /obj/effect/proc_holder/spell
 	name = "Spell"
 	desc = "A wizard spell"
+	panel = "Spells"//What panel the proc holder needs to go on.
 	density = 0
 	opacity = 0
 
@@ -40,9 +41,14 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	var/critfailchance = 0
 	var/centcomm_cancast = 1 //Whether or not the spell should be allowed on z2
 
+	var/datum/action/spell_action/action = null
+	var/action_icon = 'icons/mob/actions.dmi'
+	var/action_icon_state = "spell_default"
+	var/action_background_icon_state = "bg_spell"
+
 /obj/effect/proc_holder/spell/proc/cast_check(skipcharge = 0,mob/user = usr) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell
 
-	if(!(src in usr.spell_list))
+	if(((!user.mind) || !(src in user.mind.spell_list)) && !(src in user.spell_list))
 		usr << "\red You shouldn't have this spell! Something's wrong."
 		return 0
 
@@ -284,3 +290,42 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	perform(targets)
 
 	return
+
+/obj/effect/proc_holder/spell/proc/can_cast(mob/user = usr)
+	if(((!user.mind) || !(src in user.mind.spell_list)) && !(src in user.spell_list))
+		return 0
+
+	if(user.z == 2 && !centcomm_cancast) //Certain spells are not allowed on the centcom zlevel
+		return 0
+
+	switch(charge_type)
+		if("recharge")
+			if(charge_counter < charge_max)
+				return 0
+		if("charges")
+			if(!charge_counter)
+				return 0
+
+	if(user.stat && !stat_allowed)
+		return 0
+
+	if(ishuman(user))
+
+		var/mob/living/carbon/human/H = user
+
+		if((invocation_type == "whisper" || invocation_type == "shout") && istype(H.wear_mask, /obj/item/clothing/mask/muzzle))
+			return 0
+
+		if(clothes_req)	//clothes check
+			if(!istype(H.wear_suit, /obj/item/clothing/suit/wizrobe) && !istype(H.wear_suit, /obj/item/clothing/suit/space/rig/wizard))
+				return 0
+			if(!istype(H.shoes, /obj/item/clothing/shoes/sandal))
+				return 0
+			if(!istype(H.head, /obj/item/clothing/head/wizard) && !istype(H.head, /obj/item/clothing/head/helmet/space/rig/wizard))
+				return 0
+	else
+		if(clothes_req)
+			return 0
+		if(isbrain(user) || ispAI(user))
+			return 0
+	return 1

@@ -131,6 +131,7 @@
 	anchored = 1
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "recharge_comp"
+	light_color = "#a97faa"
 	circuit = "/obj/item/weapon/circuitboard/mech_bay_power_console"
 	var/autostart = 1
 	var/voltage = 45
@@ -157,15 +158,18 @@
 	power_change()
 		if(stat & BROKEN)
 			icon_state = initial(icon_state)+"_broken"
+			set_light(0)
 			if(recharge_port)
 				recharge_port.stop_charge()
 		else if(powered())
 			icon_state = initial(icon_state)
 			stat &= ~NOPOWER
+			set_light(light_range_on, light_power_on)
 		else
 			spawn(rand(0, 15))
 				icon_state = initial(icon_state)+"_nopower"
 				stat |= NOPOWER
+				set_light(0)
 				if(recharge_port)
 					recharge_port.stop_charge()
 

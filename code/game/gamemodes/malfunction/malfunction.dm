@@ -9,6 +9,8 @@
 	required_enemies = 1
 	recommended_enemies = 1
 
+	votable = 0
+
 	uplink_welcome = "Crazy AI Uplink Console:"
 	uplink_uses = 10
 

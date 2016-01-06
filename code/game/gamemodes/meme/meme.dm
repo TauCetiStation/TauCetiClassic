@@ -6,10 +6,10 @@
 	name = "Memetic Anomaly"
 	config_tag = "meme"
 	required_players = 6
-	required_players_secret = 10
+	required_players_secret = 15
 	restricted_jobs = list("AI", "Cyborg")
 	recommended_enemies = 3 // need at least a meme and a host
-	votable = 1 // temporarily disable this mode for voting
+	votable = 0 // temporarily disable this mode for voting
 
 
 
@@ -52,18 +52,18 @@
 	var/list/datum/mind/possible_memes = get_players_for_role(BE_MEME)
 
 	if(possible_memes.len < 1)
-		log_admin("MODE FAILURE: MEME. NOT ENOUGH MEME CANDIDATES.")
+		//log_admin("MODE FAILURE: MEME. NOT ENOUGH MEME CANDIDATES.") // We need no spam anymore, it works for a long time.
 		return 0 // not enough candidates for meme
 
 	/*if(possible_memes.len < 2)
 		log_admin("MODE FAILURE: MEME. NOT ENOUGH MEME CANDIDATES.")
 		return 0 not enough candidates for meme*/
 
-	testing("[player_list.len] cur players")
+	//testing("[player_list.len] cur players")
 
 	//var/meme_limit = Clamp((num_players()/20), 1, 3)
 	var/meme_limit = Clamp((player_list.len/13), 1, 3)
-	testing("Current meme limit is [meme_limit]")
+	//testing("Current meme limit is [meme_limit]")
 	var/i = 0
 
 	while(possible_memes.len > meme_limit)
@@ -71,9 +71,9 @@
 		var/datum/mind/meme = pick(possible_memes)
 		possible_memes.Remove(meme)
 	if(i)
-		testing("Deleted [i] possible memes from list")
+		log_misc("Deleted [i] possible memes from list")
 	else
-		testing("Everything was O.K. No meme candidates over limit. Limit was [meme_limit] and possible meme candidates is [possible_memes.len]")
+		log_misc("Everything was O.K. No meme candidates over limit. Limit was [meme_limit] and possible meme candidates is [possible_memes.len]")
 
 	// for each 2 possible memes, add one meme and one host
 	/*for(var/mob/new_player/player in player_list)
@@ -149,7 +149,7 @@
 
 		forge_meme_objectives(meme)
 
-		del original
+		qdel(original)
 
 	log_admin("Created [memes.len] memes.")
 
@@ -237,6 +237,7 @@
 		if(memewin)
 			world << "<B>The meme was successful!<B>"
 			feedback_add_details("meme_success","SUCCESS")
+			score["roleswon"]++
 		else
 			world << "<B>The meme has failed!<B>"
 			feedback_add_details("meme_success","FAIL")

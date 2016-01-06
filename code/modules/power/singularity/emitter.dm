@@ -39,7 +39,7 @@
 		connect_to_network()
 		src.directwired = 1
 
-/obj/machinery/power/emitter/Del()
+/obj/machinery/power/emitter/Destroy()
 	message_admins("Emitter deleted at ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 	log_game("Emitter deleted at ([x],[y],[z])")
 	investigate_log("<font color='red'>deleted</font> at ([x],[y],[z])","singulo")
@@ -128,20 +128,17 @@
 			s.set_up(5, 1, src)
 			s.start()
 		A.dir = src.dir
+		A.starting = get_turf(src)
 		switch(dir)
 			if(NORTH)
-				A.yo = 20
-				A.xo = 0
+				A.original = locate(x, y+1, z)
 			if(EAST)
-				A.yo = 0
-				A.xo = 20
+				A.original = locate(x+1, y, z)
 			if(WEST)
-				A.yo = 0
-				A.xo = -20
+				A.original = locate(x-1, y, z)
 			else // Any other
-				A.yo = -20
-				A.xo = 0
-		A.process()	//TODO: Carn: check this out
+				A.original = locate(x, y-1, z)
+		A.process()
 
 
 /obj/machinery/power/emitter/attackby(obj/item/W, mob/user)
@@ -183,7 +180,7 @@
 					user.visible_message("[user.name] starts to weld the [src.name] to the floor.", \
 						"You start to weld the [src] to the floor.", \
 						"You hear welding")
-					if (do_after(user,20))
+					if (do_after(user,20,target = src))
 						if(!src || !WT.isOn()) return
 						state = 2
 						user << "You weld the [src] to the floor."
@@ -197,7 +194,7 @@
 					user.visible_message("[user.name] starts to cut the [src.name] free from the floor.", \
 						"You start to cut the [src] free from the floor.", \
 						"You hear welding")
-					if (do_after(user,20))
+					if (do_after(user,20,target = src))
 						if(!src || !WT.isOn()) return
 						state = 1
 						user << "You cut the [src] free from the floor."

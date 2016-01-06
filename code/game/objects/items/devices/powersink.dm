@@ -50,7 +50,7 @@
 				for(var/mob/M in viewers(user))
 					if(M == user) continue
 					M << "[user] detaches the power sink from the cable."
-				SetLuminosity(0)
+				set_light(0)
 				icon_state = "powersink0"
 
 				return
@@ -85,7 +85,7 @@
 					if(M == user) continue
 					M << "[user] deactivates the power sink!"
 				mode = 1
-				SetLuminosity(0)
+				set_light(0)
 				icon_state = "powersink0"
 				processing_objects.Remove(src)
 
@@ -93,7 +93,7 @@
 		if(attached)
 			var/datum/powernet/PN = attached.get_powernet()
 			if(PN)
-				SetLuminosity(12)
+				set_light(12)
 
 				// found a powernet, so drain up to max power from it
 
@@ -117,4 +117,4 @@
 			if(power_drained >= max_power)
 				processing_objects.Remove(src)
 				explosion(src.loc, 3,6,9,12)
-				del(src)
+				qdel(src)

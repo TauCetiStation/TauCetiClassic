@@ -23,7 +23,7 @@
 	icon_state = "darkmatter"
 	density = 1
 	anchored = 0
-	luminosity = 4
+	light_range = 4
 
 	var/gasefficency = 0.25
 
@@ -37,6 +37,8 @@
 	var/emergency_point = 700
 	var/emergency_alert = "CRYSTAL DELAMINATION IMMINENT."
 	var/explosion_point = 1000
+
+	light_color = "#8A8A00"
 
 	var/emergency_issued = 0
 
@@ -77,13 +79,13 @@
 	radio = new (src)
 
 
-/obj/machinery/power/supermatter/Del()
-	del radio
+/obj/machinery/power/supermatter/Destroy()
+	qdel(radio)
 	. = ..()
 
 /obj/machinery/power/supermatter/proc/explode()
 		explosion(get_turf(src), explosion_power, explosion_power * 2, explosion_power * 3, explosion_power * 4, 1)
-		del src
+		qdel(src)
 		return
 
 /obj/machinery/power/supermatter/process()
@@ -269,7 +271,7 @@
 		user.dust()
 		power += 200
 	else
-		del user
+		qdel(user)
 
 	power += 200
 

@@ -208,7 +208,7 @@
 						if(istype(S,/obj/structure/window/))
 							S.ex_act(2)
 						if(istype(S,/obj/structure/grille/))
-							del(S)
+							qdel(S)
 				if(istype(T,/turf/simulated/wall/))
 					var/turf/simulated/wall/W = T
 					var/mob/living/carbon/human/H = usr
@@ -399,7 +399,7 @@
 			if(istype(S,/obj/structure/window/))
 				S.ex_act(2)
 			if(istype(S,/obj/structure/grille/))
-				del(S)
+				qdel(S)
 		sleep(3)
 		for(tile in range(2, T))
 			if(prob(40))
@@ -413,7 +413,7 @@
 				if(istype(S,/obj/structure/window/))
 					S.ex_act(2)
 				if(istype(S,/obj/structure/grille/))
-					del(S)
+					qdel(S)
 		usr.canmove = 1
 
 	if (istype(usr.loc,/obj/))
@@ -436,7 +436,7 @@
 			if( (istype(M, /mob/)) && M.client)
 				M.client.eye = M.client.mob
 				M.client.perspective = MOB_PERSPECTIVE
-		del(container)
+		qdel(container)
 
 	return
 
@@ -452,7 +452,7 @@
 				user << text("\blue You destroy that girder!")
 				user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 				new /obj/item/stack/sheet/metal(get_turf(src))
-				del(src)
+				qdel(src)
 			else
 				user << text("\blue You punch the girder.")
 		else

@@ -14,6 +14,8 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	required_enemies = 1
 	recommended_enemies = 4
 
+	votable = 0
+
 	uplink_welcome = "Syndicate Uplink Console:"
 	uplink_uses = 10
 
@@ -207,9 +209,16 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 					if(changelingwin)
 						text += "<br><font color='green'><B>The changeling was successful!</B></font>"
 						feedback_add_details("changeling_success","SUCCESS")
+						score["roleswon"]++
 					else
 						text += "<br><font color='red'><B>The changeling has failed.</B></font>"
 						feedback_add_details("changeling_success","FAIL")
+
+			if(changeling.total_TC)
+				if(changeling.spent_TC)
+					text += "<br><span class='sinister'>TC: [changeling.spent_TC]/[changeling.total_TC] - The tools used by the Changeling were: [list2text(changeling.uplink_items_bought, ", ")]</span>"
+				else
+					text += "<span class='sinister'>The Changeling was a smooth operator this round (did not purchase any uplink items)</span>"
 
 		world << text
 
@@ -235,6 +244,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	var/datum/dna/chosen_dna
 	var/obj/effect/proc_holder/changeling/sting/chosen_sting
 	var/space_suit_active = 0
+	var/instatis = 0
 
 /datum/changeling/New(var/gender=FEMALE)
 	..()

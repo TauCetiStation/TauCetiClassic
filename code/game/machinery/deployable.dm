@@ -69,7 +69,7 @@ for reference:
 		if (istype(W, /obj/item/stack/sheet/wood))
 			if (src.health < src.maxhealth)
 				visible_message("\red [user] begins to repair \the [src]!")
-				if(do_after(user,20))
+				if(do_after(user,20,target = src))
 					src.health = src.maxhealth
 					W:use(1)
 					visible_message("\red [user] repairs \the [src]!")
@@ -261,7 +261,7 @@ for reference:
 		var/turf/Tsec = get_turf(src)
 
 	/*	var/obj/item/stack/rods/ =*/
-		new /obj/item/stack/rods(Tsec)
+		PoolOrNew(/obj/item/stack/rods, Tsec)
 
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 		s.set_up(3, 1, src)

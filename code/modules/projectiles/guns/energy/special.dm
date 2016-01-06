@@ -2,6 +2,7 @@
 	name = "ion rifle"
 	desc = "A man portable anti-armor weapon designed to disable mechanical threats"
 	icon_state = "ionrifle"
+	item_state = "ionrifle"
 	origin_tech = "combat=2;magnets=4"
 	w_class = 4.0
 	flags =  FPRINT | TABLEPASS | CONDUCT
@@ -10,6 +11,19 @@
 
 /obj/item/weapon/gun/energy/ionrifle/isHandgun()
 	return 0
+
+/obj/item/weapon/gun/energy/ionrifle/update_icon()
+	var/ratio = power_supply.charge / power_supply.maxcharge
+	ratio = Ceiling(ratio*4) * 25
+	switch(modifystate)
+		if (0)
+			if(ratio > 100)
+				icon_state = "[initial(icon_state)]100"
+				item_state = "[initial(item_state)]100"
+			else
+				icon_state = "[initial(icon_state)][ratio]"
+				item_state = "[initial(item_state)][ratio]"
+	return
 
 /obj/item/weapon/gun/energy/ionrifle/emp_act(severity)
 	if(severity <= 2)
@@ -41,7 +55,7 @@
 		processing_objects.Add(src)
 
 
-	Del()
+	Destroy()
 		processing_objects.Remove(src)
 		..()
 
@@ -76,7 +90,7 @@
 		processing_objects.Add(src)
 
 
-	Del()
+	Destroy()
 		processing_objects.Remove(src)
 		..()
 
@@ -132,10 +146,11 @@ obj/item/weapon/gun/energy/staff/focus
 	ammo_type = list(/obj/item/ammo_casing/energy/toxin)
 
 /obj/item/weapon/gun/energy/sniperrifle
-	name = "L.W.A.P. Sniper Rifle"
-	desc = "A rifle constructed of lightweight materials, fitted with a SMART aiming-system scope."
+	name = "sniper rifle"
+	desc = "Designed by W&J Company, W2500-E sniper rifle constructed of lightweight materials, fitted with a SMART aiming-system scope."
 	icon = 'icons/obj/gun.dmi'
-	icon_state = "sniper"
+	icon_state = "w2500e"
+	item_state = "w2500e"
 	origin_tech = "combat=6;materials=5;powerstorage=4"
 	ammo_type = list(/obj/item/ammo_casing/energy/sniper)
 	slot_flags = SLOT_BACK
@@ -143,8 +158,27 @@ obj/item/weapon/gun/energy/staff/focus
 	w_class = 4.0
 	var/zoom = 0
 
+/obj/item/weapon/gun/energy/sniperrifle/New()
+	..()
+	update_icon()
+	return
+
+
 /obj/item/weapon/gun/energy/sniperrifle/isHandgun()
 	return 0
+
+/obj/item/weapon/gun/energy/sniperrifle/update_icon()
+	var/ratio = power_supply.charge / power_supply.maxcharge
+	ratio = Ceiling(ratio*4) * 25
+	switch(modifystate)
+		if (0)
+			if(ratio > 100)
+				icon_state = "[initial(icon_state)]100"
+				item_state = "[initial(item_state)]100"
+			else
+				icon_state = "[initial(icon_state)][ratio]"
+				item_state = "[initial(item_state)][ratio]"
+	return
 
 /obj/item/weapon/gun/energy/sniperrifle/dropped(mob/user)
 	user.client.view = world.view
@@ -154,6 +188,9 @@ This is called from
 modules/mob/mob_movement.dm if you move you will be zoomed out
 modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 */
+
+/obj/item/weapon/gun/energy/sniperrifle/attack_self()
+	zoom()
 
 /obj/item/weapon/gun/energy/sniperrifle/verb/zoom()
 	set category = "Object"

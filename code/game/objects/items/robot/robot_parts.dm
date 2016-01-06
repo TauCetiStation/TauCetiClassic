@@ -109,9 +109,9 @@
 		user << "You armed the robot frame"
 		W:use(1)
 		if (user.get_inactive_hand()==src)
-			user.before_take_item(src)
+			user.remove_from_mob(src)
 			user.put_in_inactive_hand(B)
-		del(src)
+		qdel(src)
 	if(istype(W, /obj/item/robot_parts/l_leg))
 		if(src.l_leg)	return
 		user.drop_item()
@@ -186,7 +186,7 @@
 				user << "\red Sticking a dead [W] into the frame would sort of defeat the purpose."
 				return
 
-			if(M.brainmob.mind in ticker.mode.head_revolutionaries)
+			if((M.brainmob.mind in ticker.mode.head_revolutionaries) || (M.brainmob.mind in ticker.mode.A_bosses) || (M.brainmob.mind in ticker.mode.B_bosses))
 				user << "\red The frame's firmware lets out a shrill sound, and flashes 'Abnormal Memory Engram'. It refuses to accept the [W]."
 				return
 
@@ -225,7 +225,7 @@
 			callHook("borgify", list(O))
 			O.Namepick()
 
-			del(src)
+			qdel(src)
 		else
 			user << "\blue The MMI must go in after everything else!"
 
@@ -285,8 +285,8 @@
 		user << "\blue You install some manipulators and modify the head, creating a functional spider-bot!"
 		new /mob/living/simple_animal/spiderbot(get_turf(loc))
 		user.drop_item()
-		del(W)
-		del(src)
+		qdel(W)
+		qdel(src)
 		return
 	return
 

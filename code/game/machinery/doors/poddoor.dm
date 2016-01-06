@@ -6,6 +6,7 @@
 	var/id = 1.0
 	dir = 1
 	explosion_resistance = 25
+	block_air_zones = 0
 
 /obj/machinery/door/poddoor/New()
 	. = ..()
@@ -30,7 +31,7 @@
 			src.operating = 1
 			flick("pdoorc0", src)
 			src.icon_state = "pdoor0"
-			src.SetOpacity(0)
+			src.set_opacity(0)
 			sleep(15)
 			src.density = 0
 			src.operating = 0
@@ -46,7 +47,7 @@
 		src.operating = 1
 	flick("pdoorc0", src)
 	src.icon_state = "pdoor0"
-	src.SetOpacity(0)
+	src.set_opacity(0)
 	sleep(10)
 	layer = initial(layer)
 	src.density = 0
@@ -67,7 +68,7 @@
 	flick("pdoorc1", src)
 	src.icon_state = "pdoor1"
 	src.density = 1
-	src.SetOpacity(initial(opacity))
+	src.set_opacity(initial(opacity))
 	update_nearby_tiles()
 
 	sleep(10)
@@ -84,9 +85,9 @@
 		src.operating = 1
 	flick("pdoorc0", src)
 	src.icon_state = "pdoor0"
-	src.SetOpacity(0)
-	f1.SetOpacity(0)
-	f2.SetOpacity(0)
+	src.set_opacity(0)
+	f1.set_opacity(0)
+	f2.set_opacity(0)
 
 	sleep(10)
 	src.density = 0
@@ -114,9 +115,9 @@
 	f2.density = 1
 
 	sleep(10)
-	src.SetOpacity(initial(opacity))
-	f1.SetOpacity(initial(opacity))
-	f2.SetOpacity(initial(opacity))
+	src.set_opacity(initial(opacity))
+	f1.set_opacity(initial(opacity))
+	f2.set_opacity(initial(opacity))
 
 	update_nearby_tiles()
 
@@ -134,16 +135,16 @@
 	src.icon_state = "pdoor0"
 	sleep(10)
 	src.density = 0
-	src.sd_SetOpacity(0)
+	src.sd_set_opacity(0)
 
 	f1.density = 0
-	f1.sd_SetOpacity(0)
+	f1.sd_set_opacity(0)
 	f2.density = 0
-	f2.sd_SetOpacity(0)
+	f2.sd_set_opacity(0)
 	f3.density = 0
-	f3.sd_SetOpacity(0)
+	f3.sd_set_opacity(0)
 	f4.density = 0
-	f4.sd_SetOpacity(0)
+	f4.sd_set_opacity(0)
 
 	update_nearby_tiles()
 
@@ -163,16 +164,16 @@
 	src.density = 1
 
 	f1.density = 1
-	f1.sd_SetOpacity(1)
+	f1.sd_set_opacity(1)
 	f2.density = 1
-	f2.sd_SetOpacity(1)
+	f2.sd_set_opacity(1)
 	f3.density = 1
-	f3.sd_SetOpacity(1)
+	f3.sd_set_opacity(1)
 	f4.density = 1
-	f4.sd_SetOpacity(1)
+	f4.sd_set_opacity(1)
 
 	if (src.visible)
-		src.sd_SetOpacity(1)
+		src.sd_set_opacity(1)
 	update_nearby_tiles()
 
 	sleep(10)
@@ -190,12 +191,12 @@
 	src.icon_state = "pdoor0"
 	sleep(10)
 	src.density = 0
-	src.sd_SetOpacity(0)
+	src.sd_set_opacity(0)
 
 	f1.density = 0
-	f1.sd_SetOpacity(0)
+	f1.sd_set_opacity(0)
 	f2.density = 0
-	f2.sd_SetOpacity(0)
+	f2.sd_set_opacity(0)
 
 	update_nearby_tiles()
 
@@ -215,12 +216,12 @@
 	src.density = 1
 
 	f1.density = 1
-	f1.sd_SetOpacity(1)
+	f1.sd_set_opacity(1)
 	f2.density = 1
-	f2.sd_SetOpacity(1)
+	f2.sd_set_opacity(1)
 
 	if (src.visible)
-		src.sd_SetOpacity(1)
+		src.sd_set_opacity(1)
 	update_nearby_tiles()
 
 	sleep(10)
@@ -238,16 +239,16 @@
 	src.icon_state = "pdoor0"
 	sleep(10)
 	src.density = 0
-	src.sd_SetOpacity(0)
+	src.sd_set_opacity(0)
 
 	f1.density = 0
-	f1.sd_SetOpacity(0)
+	f1.sd_set_opacity(0)
 	f2.density = 0
-	f2.sd_SetOpacity(0)
+	f2.sd_set_opacity(0)
 	f3.density = 0
-	f3.sd_SetOpacity(0)
+	f3.sd_set_opacity(0)
 	f4.density = 0
-	f4.sd_SetOpacity(0)
+	f4.sd_set_opacity(0)
 
 	update_nearby_tiles()
 
@@ -267,16 +268,16 @@
 	src.density = 1
 
 	f1.density = 1
-	f1.sd_SetOpacity(1)
+	f1.sd_set_opacity(1)
 	f2.density = 1
-	f2.sd_SetOpacity(1)
+	f2.sd_set_opacity(1)
 	f3.density = 1
-	f3.sd_SetOpacity(1)
+	f3.sd_set_opacity(1)
 	f4.density = 1
-	f4.sd_SetOpacity(1)
+	f4.sd_set_opacity(1)
 
 	if (src.visible)
-		src.sd_SetOpacity(1)
+		src.sd_set_opacity(1)
 	update_nearby_tiles()
 
 	sleep(10)
@@ -297,10 +298,10 @@
 		f2 = new/obj/machinery/door/poddoor/filler_object (get_step(src,EAST))
 		f1.density = density
 		f2.density = density
-		f1.sd_SetOpacity(opacity)
-		f2.sd_SetOpacity(opacity)
+		f1.sd_set_opacity(opacity)
+		f2.sd_set_opacity(opacity)
 
-	Del()
+	Destroy()
 		del f1
 		del f2
 		..()
@@ -316,10 +317,10 @@
 		f2 = new/obj/machinery/door/poddoor/filler_object (get_step(src,NORTH))
 		f1.density = density
 		f2.density = density
-		f1.sd_SetOpacity(opacity)
-		f2.sd_SetOpacity(opacity)
+		f1.sd_set_opacity(opacity)
+		f2.sd_set_opacity(opacity)
 
-	Del()
+	Destroy()
 		del f1
 		del f2
 		..()
@@ -341,12 +342,12 @@
 		f2.density = density
 		f3.density = density
 		f4.density = density
-		f1.sd_SetOpacity(opacity)
-		f2.sd_SetOpacity(opacity)
-		f4.sd_SetOpacity(opacity)
-		f3.sd_SetOpacity(opacity)
+		f1.sd_set_opacity(opacity)
+		f2.sd_set_opacity(opacity)
+		f4.sd_set_opacity(opacity)
+		f3.sd_set_opacity(opacity)
 
-	Del()
+	Destroy()
 		del f1
 		del f2
 		del f3
@@ -370,12 +371,12 @@
 		f2.density = density
 		f3.density = density
 		f4.density = density
-		f1.sd_SetOpacity(opacity)
-		f2.sd_SetOpacity(opacity)
-		f4.sd_SetOpacity(opacity)
-		f3.sd_SetOpacity(opacity)
+		f1.sd_set_opacity(opacity)
+		f2.sd_set_opacity(opacity)
+		f4.sd_set_opacity(opacity)
+		f3.sd_set_opacity(opacity)
 
-	Del()
+	Destroy()
 		del f1
 		del f2
 		del f3

@@ -41,9 +41,6 @@ var/list/event_last_fired = list()
 	// Events have to be manually added to this proc to happen
 	var/list/possibleEvents = list()
 
-	//see:
-	// Code/WorkInProgress/Cael_Aislinn/Economy/Economy_Events.dm
-	// Code/WorkInProgress/Cael_Aislinn/Economy/Economy_Events_Mundane.dm
 	possibleEvents[/datum/event/economic_event] = 300
 	possibleEvents[/datum/event/trivial_news] = 400
 	possibleEvents[/datum/event/mundane_news] = 300
@@ -58,7 +55,9 @@ var/list/event_last_fired = list()
 
 	possibleEvents[/datum/event/rogue_drone] = 5 + 25 * active_with_role["Engineer"] + 25 * active_with_role["Security"]
 	possibleEvents[/datum/event/infestation] = 100 + 100 * active_with_role["Janitor"]
+	possibleEvents[/datum/event/apc_damage] = 50
 
+	possibleEvents[/datum/event/camera_damage] = 40 + 10 * active_with_role["Engineer"]
 	possibleEvents[/datum/event/communications_blackout] = 50 + 25 * active_with_role["AI"] + active_with_role["Scientist"] * 25
 	possibleEvents[/datum/event/ionstorm] = active_with_role["AI"] * 25 + active_with_role["Cyborg"] * 25 + active_with_role["Engineer"] * 10 + active_with_role["Scientist"] * 5
 	possibleEvents[/datum/event/grid_check] = 25 + 10 * active_with_role["Engineer"]
@@ -181,7 +180,7 @@ var/list/event_last_fired = list()
 			grid_check()
 		if("Meteor")
 			meteor_shower()*/
-
+	score["eventsendured"]++
 	return 1
 
 // Returns how many characters are currently active(not logged out, not AFK for more than 10 minutes)

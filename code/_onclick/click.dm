@@ -31,7 +31,7 @@
 	is recieving it.
 	The most common are:
 	* mob/UnarmedAttack(atom,adjacent) - used here only when adjacent, with no item in hand; in the case of humans, checks gloves
-	* atom/attackby(item,user) - used only when adjacent
+	* atom/attackby(item,user,params) - used only when adjacent
 	* item/afterattack(atom,user,adjacent,params) - used both ranged and adjacent
 	* mob/RangedAttack(atom,params) - used only ranged, only used for tk and laser eyes but could be changed
 */
@@ -45,6 +45,9 @@
 		return
 
 	var/list/modifiers = params2list(params)
+	if(modifiers["shift"] && modifiers["ctrl"])
+		CtrlShiftClickOn(A)
+		return
 	if(modifiers["middle"])
 		MiddleClickOn(A)
 		return
@@ -112,7 +115,7 @@
 			if(W.flags&USEDELAY)
 				next_move += 5
 
-			var/resolved = A.attackby(W,src)
+			var/resolved = A.attackby(W,src,params)
 			if(!resolved && A && W)
 				W.afterattack(A,src,1,params) // 1 indicates adjacency
 		else
@@ -133,7 +136,7 @@
 					next_move += 5
 
 				// Return 1 in attackby() to prevent afterattack() effects (when safely moving items for example)
-				var/resolved = A.attackby(W,src)
+				var/resolved = A.attackby(W,src,params)
 				if(!resolved && A && W)
 					W.afterattack(A,src,1,params) // 1: clicking something Adjacent
 			else
@@ -252,12 +255,26 @@
 
 /atom/proc/AltClick(var/mob/user)
 	var/turf/T = get_turf(src)
-	if(T && T.AdjacentQuick(user))
+	if(T && user.TurfAdjacent(T))
 		if(user.listed_turf == T)
 			user.listed_turf = null
 		else
 			user.listed_turf = T
 			user.client.statpanel = T.name
+	return
+
+/mob/proc/TurfAdjacent(var/turf/T)
+	return T.AdjacentQuick(src)
+
+/*
+	Control+Shift click
+	Unused except for AI
+*/
+/mob/proc/CtrlShiftClickOn(var/atom/A)
+	A.CtrlShiftClick(src)
+	return
+
+/atom/proc/CtrlShiftClick(var/mob/user)
 	return
 
 /*
@@ -275,14 +292,13 @@
 	var/turf/U = get_turf(A)
 
 	var/obj/item/projectile/beam/LE = new /obj/item/projectile/beam( loc )
-	LE.icon = 'icons/effects/genetics.dmi'
-	LE.icon_state = "eyelasers"
 	playsound(usr.loc, 'sound/weapons/taser2.ogg', 75, 1)
 
-	LE.firer = src
 	LE.def_zone = get_organ_target()
+	LE.starting = T
 	LE.original = A
 	LE.current = T
+	LE.damage = 20
 	LE.yo = U.y - T.y
 	LE.xo = U.x - T.x
 	spawn( 1 )
@@ -291,7 +307,7 @@
 /mob/living/carbon/human/LaserEyes()
 	if(nutrition>0)
 		..()
-		nutrition = max(nutrition - rand(1,5),0)
+		nutrition = max(nutrition - rand(1,10),0)
 		handle_regular_hud_updates()
 	else
 		src << "\red You're out of energy!  You need food!"

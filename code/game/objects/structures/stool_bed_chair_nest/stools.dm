@@ -37,6 +37,18 @@
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		new /obj/item/stack/sheet/metal(src.loc)
 		qdel(src)
+	if(istype(W, /obj/item/weapon/melee/energy))
+		if(istype(W, /obj/item/weapon/melee/energy/blade) || W:active)
+			user.do_attack_animation(src)
+			var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
+			spark_system.set_up(5, 0, src.loc)
+			spark_system.start()
+			playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
+			playsound(src.loc, "sparks", 50, 1)
+			for(var/mob/O in viewers(user, 4))
+				O.show_message("\blue [src] was sliced apart by [user]!", 1, "\red You hear [src] coming apart.", 2)
+			new /obj/item/stack/sheet/metal(src.loc)
+			qdel(src)
 	return
 
 /obj/structure/stool/MouseDrop(atom/over_object)
@@ -61,15 +73,17 @@
 
 /obj/item/weapon/stool/attack_self(mob/user as mob)
 	..()
-	origin.loc = get_turf(src)
-	user.u_equip(src)
-	user.visible_message("\blue [user] puts [src] down.", "\blue You put [src] down.")
+	user.drop_from_inventory(src.origin)
+	user.visible_message("[user] puts [src] down.", "<span class='notice'>You put [src] down.</span>")
 	qdel(src)
+
+/obj/item/weapon/stool/dropped()
+	attack_self(usr)
 
 /obj/item/weapon/stool/attack(mob/M as mob, mob/user as mob)
 	if (prob(5) && istype(M,/mob/living))
 		user.visible_message("\red [user] breaks [src] over [M]'s back!.")
-		user.u_equip(src)
+		user.remove_from_mob(src)
 		var/obj/item/stack/sheet/metal/m = new/obj/item/stack/sheet/metal
 		m.loc = get_turf(src)
 		qdel( src)

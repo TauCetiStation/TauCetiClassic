@@ -300,7 +300,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	for(var/obj/machinery/door/airlock/phoron/D in range(3,src))
 		D.ignite(temperature/4)
 	new/obj/structure/door_assembly( src.loc )
-	qdel (src)
+	qdel(src)
 
 /obj/machinery/door/airlock/clown
 	name = "Bananium Airlock"
@@ -864,8 +864,87 @@ About the new airlock wires panel:
 				s.set_up(5, 1, src)
 				s.start()
 	return ..()
+
 /obj/machinery/door/airlock/attack_paw(mob/user as mob)
 	return src.attack_hand(user)
+
+/obj/machinery/door/airlock/attack_paw(mob/user as mob)
+	if(istype(user, /mob/living/carbon/alien/humanoid))
+		if(welded || locked)
+			user << "\red The door is sealed, it cannot be pried open."
+			return
+		else if(!density)
+			return
+		else
+			user << "\red You force your claws between the doors and begin to pry them open..."
+			playsound(src.loc, 'sound/effects/metal_creaking.ogg', 30, 1, -4)
+			if (do_after(user,40, target = src))
+				if(!src) return
+				open(1)
+	return
+
+/obj/machinery/door/airlock/attack_animal(mob/user as mob)
+	if(istype(user, /mob/living/simple_animal/hulk))
+		if(welded || locked)
+			var/obj/machinery/door/airlock/A = src
+			if(prob(75))
+				user.visible_message("\red <B>[user]</B> has punched \the <B>[src]!</B>",\
+				"You punch \the [src]!",\
+				"\red You feel some weird vibration!")
+				playsound(user.loc, 'sound/effects/grillehit.ogg', 50, 1)
+				return
+			else
+				user.say(pick("RAAAAAAAARGH!", "HNNNNNNNNNGGGGGGH!", "GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", "AAAAAAARRRGH!" ))
+				user.visible_message("\red <B>[user]</B> has destroyed some mechanic in \the <B>[src]!</B>",\
+				"You destroy some mechanic in \the [src] door, which holds it in place!",\
+				"\red <B>You feel some weird vibration!</B>")
+				playsound(user.loc, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), 50, 1)
+				if(istype(A,/obj/machinery/door/airlock/multi_tile/)) //Some kind runtime with multi_tile airlock... So delete for now... #Z2
+					qdel(A)
+				else
+					var/obj/structure/door_assembly/da = new A.assembly_type(A.loc)
+					da.anchored = 0
+
+					var/target = da.loc
+					var/cur_dir = user.dir
+					for(var/i=0, i<4, i++)
+						target = get_turf(get_step(target,cur_dir))
+					da.throwforce = 50
+					da.throw_at(target, 200, 100)
+					da.throwforce = 1
+
+					if(A.mineral)
+						da.glass = A.mineral
+					else if(A.glass && !da.glass)
+						da.glass = 1
+					da.state = 2
+					da.name = "Near finished Airlock Assembly"
+					da.created_name = src.name
+					da.update_state()
+
+					var/obj/item/weapon/airlock_electronics/ae
+					ae = new/obj/item/weapon/airlock_electronics( A.loc )
+					if(!A.req_access)
+						A.check_access()
+					if(A.req_access.len)
+						ae.conf_access = A.req_access
+					else if (A.req_one_access.len)
+						ae.conf_access = A.req_one_access
+						ae.one_access = 1
+					ae.loc = da
+					da.electronics = ae
+
+					qdel(A)
+			return
+		else if(!density)
+			return
+		else
+			user << "\red You force your fingers between the doors and begin to pry them open..."
+			playsound(src.loc, 'sound/effects/metal_creaking.ogg', 30, 1, -4)
+			if (do_after(user,40,target = src))
+				if(!src) return
+				open(1)
+	return
 
 /obj/machinery/door/airlock/attack_hand(mob/user as mob)
 	if(!istype(usr, /mob/living/silicon))
@@ -876,8 +955,8 @@ About the new airlock wires panel:
 		..(user)
 		return //##Z2
 
-	// No. -- cib
-	/**
+	// No. -- cib , Yes. -- zve , No. -- cib -- YES! -- zve
+
 	if(ishuman(user) && prob(40) && src.density)
 		var/mob/living/carbon/human/H = user
 		if(H.getBrainLoss() >= 60)
@@ -892,7 +971,6 @@ About the new airlock wires panel:
 			else
 				visible_message("\red [user] headbutts the airlock. Good thing they're wearing a helmet.")
 			return
-	**/
 
 	if(src.p_open)
 		user.set_machine(src)
@@ -1230,7 +1308,7 @@ About the new airlock wires panel:
 		if( beingcrowbarred && (operating == -1 || density && welded && operating != 1 && src.p_open && (!src.arePowerSystemsOn() || stat & NOPOWER) && !src.locked) )
 			playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
 			user.visible_message("[user] removes the electronics from the airlock assembly.", "You start to remove electronics from the airlock assembly.")
-			if(do_after(user,40))
+			if(do_after(user,40,target = src))
 				user << "\blue You removed the airlock electronics!"
 
 				var/obj/structure/door_assembly/da = new assembly_type(src.loc)
@@ -1344,7 +1422,7 @@ About the new airlock wires panel:
 				S.loc = M.loc
 				spawn(20)
 					qdel(S)
-				M.emote("scream")
+				M.emote("scream",,, 1)
 			var/turf/location = src.loc
 			if(istype(location, /turf/simulated))
 				location.add_blood(M)

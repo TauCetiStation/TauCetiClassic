@@ -79,19 +79,19 @@
 /obj/machinery/chem_dispenser/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			del(src)
+			qdel(src)
 			return
 		if(2.0)
 			if (prob(50))
-				del(src)
+				qdel(src)
 				return
 
 /obj/machinery/chem_dispenser/blob_act()
 	if (prob(50))
-		del(src)
+		qdel(src)
 
 /obj/machinery/chem_dispenser/meteorhit()
-	del(src)
+	qdel(src)
 	return
 
  /**
@@ -192,7 +192,7 @@
 			S.use(1)
 		else
 			user.drop_item()
-			del(B)
+			qdel(B)
 		if(broken_requirements.len==0)
 			stat ^= BROKEN
 		return
@@ -202,6 +202,12 @@
 	if(istype(B, /obj/item/weapon/reagent_containers/glass) || istype(B, /obj/item/weapon/reagent_containers/food))
 		if(!accept_glass && istype(B,/obj/item/weapon/reagent_containers/food))
 			user << "<span class='notice'>This machine only accepts beakers</span>"
+			return
+		if(istype(B, /obj/item/weapon/reagent_containers/food/drinks/cans))
+			var/obj/item/weapon/reagent_containers/food/drinks/cans/C = B
+			if(!C.canopened)
+				user << "<span class='notice'>You need to open the drink!</span>"
+				return
 		src.beaker =  B
 		user.drop_item()
 		B.loc = src
@@ -245,6 +251,12 @@
 				dispensable_reagents -= list("thirteenloko")
 				hackedcheck = 0
 				return
+
+		else if(istype(B, /obj/item/weapon/wrench))
+			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
+			anchored = !anchored
+			user << "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>"
+		return
 /obj/machinery/chem_dispenser/beer
 	icon_state = "booze_dispenser"
 	name = "booze dispenser"
@@ -270,6 +282,12 @@
 				dispensable_reagents -= list("goldschlager","patron","watermelonjuice","berryjuice")
 				hackedcheck = 0
 				return
+
+		else if(istype(B, /obj/item/weapon/wrench))
+			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
+			anchored = !anchored
+			user << "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>"
+		return
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -301,19 +319,19 @@
 /obj/machinery/chem_master/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			del(src)
+			qdel(src)
 			return
 		if(2.0)
 			if (prob(50))
-				del(src)
+				qdel(src)
 				return
 
 /obj/machinery/chem_master/blob_act()
 	if (prob(50))
-		del(src)
+		qdel(src)
 
 /obj/machinery/chem_master/meteorhit()
-	del(src)
+	qdel(src)
 	return
 
 /obj/machinery/chem_master/power_change()
@@ -395,6 +413,11 @@
 			if(href_list["amount"])
 				var/id = href_list["add"]
 				var/amount = text2num(href_list["amount"])
+				if(amount < 0)
+					message_admins("[key_name_admin(usr)] tried to exploit a chemistry by entering a negative value: [amount]</a> ! (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)", 0)
+					log_admin("EXPLOIT : [key_name(usr)] tried to exploit a chemistry by entering a negative value: [amount] !")
+					return
+				if(amount > 300) return
 				R.trans_id_to(src, id, amount)
 
 		else if (href_list["addcustom"])
@@ -402,6 +425,11 @@
 			var/id = href_list["addcustom"]
 			useramount = input("Select the amount to transfer.", 30, useramount) as num
 			useramount = isgoodnumber(useramount)
+			if(useramount < 0)
+				message_admins("[key_name_admin(usr)] tried to exploit a chemistry by entering a negative value: [useramount]</a> ! (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)", 0)
+				log_admin("EXPLOIT : [key_name(usr)] tried to exploit a chemistry by entering a negative value: [useramount] !")
+				return
+			if(useramount > 300) return
 			src.Topic(null, list("amount" = "[useramount]", "add" = "[id]"))
 
 		else if (href_list["remove"])
@@ -409,6 +437,11 @@
 			if(href_list["amount"])
 				var/id = href_list["remove"]
 				var/amount = text2num(href_list["amount"])
+				if(amount < 0)
+					message_admins("[key_name_admin(usr)] tried to exploit a chemistry by entering a negative value: [amount]</a> ! (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)", 0)
+					log_admin("EXPLOIT : [key_name(usr)] tried to exploit a chemistry by entering a negative value: [amount] !")
+					return
+				if(amount > 300) return
 				if(mode)
 					reagents.trans_id_to(beaker, id, amount)
 				else
@@ -420,6 +453,11 @@
 			var/id = href_list["removecustom"]
 			useramount = input("Select the amount to transfer.", 30, useramount) as num
 			useramount = isgoodnumber(useramount)
+			if(useramount < 0)
+				message_admins("[key_name_admin(usr)] tried to exploit a chemistry by entering a negative value: [useramount]</a> ! (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)", 0)
+				log_admin("EXPLOIT : [key_name(usr)] tried to exploit a chemistry by entering a negative value: [useramount] !")
+				return
+			if(useramount > 300) return
 			src.Topic(null, list("amount" = "[useramount]", "remove" = "[id]"))
 
 		else if (href_list["toggle"])
@@ -926,6 +964,11 @@
 
 /obj/machinery/reagentgrinder/attackby(var/obj/item/O as obj, var/mob/user as mob)
 
+	if(istype(O, /obj/item/weapon/wrench))
+		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
+		anchored = !anchored
+		user << "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>"
+		return
 
 	if (istype(O,/obj/item/weapon/reagent_containers/glass) || \
 		istype(O,/obj/item/weapon/reagent_containers/food/drinks/drinkingglass) || \
@@ -966,7 +1009,7 @@
 		user << "Cannot refine into a reagent."
 		return 1
 
-	user.before_take_item(O)
+	user.remove_from_mob(O)
 	O.loc = src
 	holdingitems += O
 	src.updateUsrDialog()
@@ -1105,7 +1148,7 @@
 
 /obj/machinery/reagentgrinder/proc/remove_object(var/obj/item/O)
 	holdingitems -= O
-	del(O)
+	qdel(O)
 
 /obj/machinery/reagentgrinder/proc/juice()
 	power_change()
@@ -1114,8 +1157,11 @@
 	if (!beaker || (beaker && beaker.reagents.total_volume >= beaker.reagents.maximum_volume))
 		return
 	playsound(src.loc, 'sound/machines/juicer.ogg', 20, 1)
+	var/offset = prob(50) ? -2 : 2
+	animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = 200) //start shaking
 	inuse = 1
 	spawn(50)
+		pixel_x = initial(pixel_x) //return to its spot after shaking
 		inuse = 0
 		interact(usr)
 	//Snacks
@@ -1147,8 +1193,11 @@
 	if (!beaker || (beaker && beaker.reagents.total_volume >= beaker.reagents.maximum_volume))
 		return
 	playsound(src.loc, 'sound/machines/blender.ogg', 50, 1)
+	var/offset = prob(50) ? -2 : 2
+	animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = 200) //start shaking
 	inuse = 1
 	spawn(60)
+		pixel_x = initial(pixel_x) //return to its spot after shaking
 		inuse = 0
 		interact(usr)
 	//Snacks and Plants

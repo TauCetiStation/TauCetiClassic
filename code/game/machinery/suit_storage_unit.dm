@@ -31,8 +31,8 @@
 //The units themselves/////////////////
 
 /obj/machinery/suit_storage_unit/standard_unit
-	SUIT_TYPE = /obj/item/clothing/suit/space
-	HELMET_TYPE = /obj/item/clothing/head/helmet/space
+	SUIT_TYPE = /obj/item/clothing/suit/space/globose
+	HELMET_TYPE = /obj/item/clothing/head/helmet/space/globose
 	MASK_TYPE = /obj/item/clothing/mask/breath
 
 /obj/machinery/suit_storage_unit/syndicate_unit
@@ -82,12 +82,12 @@
 		if(1.0)
 			if(prob(50))
 				src.dump_everything() //So suits dont survive all the time
-			del(src)
+			qdel(src)
 			return
 		if(2.0)
 			if(prob(50))
 				src.dump_everything()
-				del(src)
+				qdel(src)
 			return
 		else
 			return
@@ -337,11 +337,11 @@
 			if(src.issuperUV)
 				var/burndamage = rand(28,35)
 				OCCUPANT.take_organ_damage(0,burndamage)
-				OCCUPANT.emote("scream")
+				OCCUPANT.emote("scream",,, 1)
 			else
 				var/burndamage = rand(6,10)
 				OCCUPANT.take_organ_damage(0,burndamage)
-				OCCUPANT.emote("scream")
+				OCCUPANT.emote("scream",,, 1)
 		if(i==3) //End of the cycle
 			if(!src.issuperUV)
 				if(src.HELMET)
@@ -453,7 +453,7 @@
 		usr << "<font color='red'>It's too cluttered inside for you to fit in!</font>"
 		return
 	visible_message("[usr] starts squeezing into the suit storage unit!", 3)
-	if(do_after(usr, 10))
+	if(do_after(usr, 10, target = src))
 		usr.stop_pulling()
 		usr.client.perspective = EYE_PERSPECTIVE
 		usr.client.eye = src
@@ -464,7 +464,7 @@
 		src.update_icon()
 
 //		for(var/obj/O in src)
-//			del(O)
+//			qdel(O)
 
 		src.add_fingerprint(usr)
 		src.updateUsrDialog()
@@ -497,7 +497,7 @@
 			user << "<font color='red'>The unit's storage area is too cluttered.</font>"
 			return
 		visible_message("[user] starts putting [G.affecting.name] into the Suit Storage Unit.", 3)
-		if(do_after(user, 20))
+		if(do_after(user, 20, target = src))
 			if(!G || !G.affecting) return //derpcheck
 			var/mob/M = G.affecting
 			if (M.client)
@@ -510,7 +510,7 @@
 			//for(var/obj/O in src)
 			//	O.loc = src.loc
 			src.add_fingerprint(user)
-			del(G)
+			qdel(G)
 			src.updateUsrDialog()
 			src.update_icon()
 			return
@@ -664,7 +664,7 @@
 
 		visible_message("[user] starts putting [G.affecting.name] into the suit cycler.", 3)
 
-		if(do_after(user, 20))
+		if(do_after(user, 20, target = src))
 			if(!G || !G.affecting) return
 			var/mob/M = G.affecting
 			if (M.client)
@@ -674,7 +674,7 @@
 			src.occupant = M
 
 			src.add_fingerprint(user)
-			del(G)
+			qdel(G)
 
 			src.updateUsrDialog()
 

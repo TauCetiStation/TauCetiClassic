@@ -1,4 +1,7 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+/obj/machinery/computer/telecomms
+
+	light_color = "#50AB00"
 
 /obj/machinery/computer/telecomms/server
 	name = "Telecommunications Server Monitor"
@@ -94,7 +97,7 @@
 							race = "<i>Unidentifiable</i>"
 							language = race
 
-						del(M)
+						qdel(M)
 
 						// -- If the orator is a human, or universal translate is active, OR mob has universal speech on --
 
@@ -187,7 +190,7 @@
 				temp = "<font color = #336699>- DELETED ENTRY: [D.name] -</font color>"
 
 				SelectedServer.log_entries.Remove(D)
-				del(D)
+				qdel(D)
 
 			else
 				temp = "<font color = #D70B00>- FAILED: NO SELECTED MACHINE -</font color>"
@@ -213,7 +216,7 @@
 	attackby(var/obj/item/weapon/D as obj, var/mob/user as mob)
 		if(istype(D, /obj/item/weapon/screwdriver))
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-			if(do_after(user, 20))
+			if(do_after(user, 20, target = src))
 				if (src.stat & BROKEN)
 					user << "\blue The broken glass falls out."
 					var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
@@ -225,7 +228,7 @@
 					A.state = 3
 					A.icon_state = "3"
 					A.anchored = 1
-					del(src)
+					qdel(src)
 				else
 					user << "\blue You disconnect the monitor."
 					var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
@@ -236,7 +239,7 @@
 					A.state = 4
 					A.icon_state = "4"
 					A.anchored = 1
-					del(src)
+					qdel(src)
 		else if(istype(D, /obj/item/weapon/card/emag) && !emagged)
 			playsound(src.loc, 'sound/effects/sparks4.ogg', 75, 1)
 			emagged = 1

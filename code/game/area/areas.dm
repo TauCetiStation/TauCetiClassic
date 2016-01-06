@@ -26,20 +26,15 @@
 //		lighting_state = 4
 		//has_gravity = 0    // Space has gravity.  Because.. because.
 
-	if(requires_power)
-		luminosity = 0
-	else
+	if(!requires_power)
 		power_light = 0			//rastaf0
 		power_equip = 0			//rastaf0
 		power_environ = 0		//rastaf0
-		luminosity = 1
-		lighting_use_dynamic = 0
 
 	..()
 
 //	spawn(15)
 	power_change()		// all machines set to current power level, also updates lighting icon
-	InitializeLighting()
 
 
 /area/proc/poweralert(var/state, var/obj/source as obj)
@@ -142,7 +137,6 @@
 	if( !fire )
 		fire = 1
 		master.fire = 1		//used for firedoor checks
-		updateicon()
 		mouse_opacity = 0
 		for(var/obj/machinery/door/firedoor/D in all_doors)
 			if(!D.blocked)
@@ -166,7 +160,6 @@
 		fire = 0
 		master.fire = 0		//used for firedoor checks
 		mouse_opacity = 0
-		updateicon()
 		for(var/obj/machinery/door/firedoor/D in all_doors)
 			if(!D.blocked)
 				if(D.operating)
@@ -183,17 +176,19 @@
 			a.cancelAlarm("Fire", src, src)
 
 /area/proc/readyalert()
-	if(name == "Space")
+	/*if(name == "Space")
 		return
-	if(!eject)
-		eject = 1
-		updateicon()
+	for(var/obj/machinery/light/L in contents)
+		L.red_alert = 1
+		L.update()*/
 	return
 
 /area/proc/readyreset()
-	if(eject)
-		eject = 0
-		updateicon()
+	/*if(red_alert_code) return
+	if(red_alert_evac) return
+	for(var/obj/machinery/light/L in contents)
+		L.red_alert = 0
+		L.update()*/
 	return
 
 /area/proc/partyalert()
@@ -220,20 +215,21 @@
 	return
 
 /area/proc/updateicon()
-	if ((fire || eject || party) && ((!requires_power)?(!requires_power):power_environ))//If it doesn't require power, can still activate this proc.
-		if(fire && !eject && !party)
-			icon_state = "blue"
-		/*else if(atmosalm && !fire && !eject && !party)
-			icon_state = "bluenew"*/
-		else if(!fire && eject && !party)
-			icon_state = "red"
-		else if(party && !fire && !eject)
-			icon_state = "party"
-		else
-			icon_state = "blue-red"
-	else
+	//if ((fire || eject || party) && ((!requires_power)?(!requires_power):power_environ))//If it doesn't require power, can still activate this proc.
+	//if ((fire || eject || party) && (!requires_power||power_environ) && !istype(src, /area/space))//If it doesn't require power, can still activate this proc.
+	//	if(fire && !eject && !party)
+	//		icon_state = "blue"
+	//	/*else if(atmosalm && !fire && !eject && !party)
+	//		icon_state = "bluenew"*/
+	//	else if(!fire && eject && !party)
+	//		icon_state = "red"
+	//	else if(party && !fire && !eject)
+	//		icon_state = "party"
+	//	else
+	//		icon_state = "blue-red"
+	//else
 	//	new lighting behaviour with obj lights
-		icon_state = null
+	icon_state = null
 
 
 /*
@@ -330,13 +326,13 @@
 		else if(istype(src, /area/medical/morgue))
 			sound = pick('sound/ambience/ambimo1.ogg','sound/ambience/ambimo2.ogg','sound/music/main.ogg')
 		else if(type == /area)
-			sound = pick('sound/ambience/ambispace.ogg','sound/music/title2.ogg','sound/music/space.ogg','sound/music/main.ogg','sound/music/traitor.ogg')
+			sound = pick('sound/ambience/ambispace.ogg','sound/music/title2.ogg','sound/music/space.ogg','sound/music/main.ogg','sound/music/traitor.ogg','tauceti/sounds/ambience/voidambi.ogg','tauceti/sounds/ambience/timeship_amb1.ogg')
 		else if(istype(src, /area/engine))
 			sound = pick('sound/ambience/ambisin1.ogg','sound/ambience/ambisin2.ogg','sound/ambience/ambisin3.ogg','sound/ambience/ambisin4.ogg')
 		else if(istype(src, /area/AIsattele) || istype(src, /area/turret_protected/ai) || istype(src, /area/turret_protected/ai_upload) || istype(src, /area/turret_protected/ai_upload_foyer))
 			sound = pick('sound/ambience/ambimalf.ogg')
 		else if(istype(src, /area/mine/explored) || istype(src, /area/mine/unexplored))
-			sound = pick('sound/ambience/ambimine.ogg', 'sound/ambience/song_game.ogg')
+			sound = pick('sound/ambience/ambimine.ogg', 'sound/ambience/song_game.ogg','tauceti/sounds/ambience/mars.ogg')
 			musVolume = 25
 		else if(istype(src, /area/tcommsat) || istype(src, /area/turret_protected/tcomwest) || istype(src, /area/turret_protected/tcomeast) || istype(src, /area/turret_protected/tcomfoyer) || istype(src, /area/turret_protected/tcomsat))
 			sound = pick('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg')
@@ -364,22 +360,20 @@
 				thunk(M)
 
 /area/proc/thunk(mob)
-	if(istype(mob,/mob/living/carbon/human/))  // Only humans can wear magboots, so we give them a chance to.
-		if((istype(mob:shoes, /obj/item/clothing/shoes/magboots) && (mob:shoes.flags & NOSLIP)))
-			return
-		if((istype(mob:wear_suit, /obj/item/clothing/suit/space/rig) && (mob:wear_suit.flags & NOSLIP))) //Люди в скафандре с включенными магбутами
-			return
-
 	if(istype(get_turf(mob), /turf/space)) // Can't fall onto nothing.
 		return
 
-	if((istype(mob,/mob/living/carbon/human/)) && (mob:m_intent == "run")) // Only clumbsy humans can fall on their asses.
-		mob:AdjustStunned(5)
-		mob:AdjustWeakened(5)
+	if(istype(mob,/mob/living/carbon/human/))  // Only humans can wear magboots, so we give them a chance to.
+		var/mob/living/carbon/human/H = mob
+		if((istype(H.shoes, /obj/item/clothing/shoes/magboots) && (H.shoes.flags & NOSLIP)))
+			return
+		if((istype(H.wear_suit, /obj/item/clothing/suit/space/rig) && (H.wear_suit.flags & NOSLIP))) //Люди в скафандре с включенными магбутами
+			return
 
-	else if (istype(mob,/mob/living/carbon/human/))
-		mob:AdjustStunned(2)
-		mob:AdjustWeakened(2)
-
-	mob << "Gravity!"
-
+		if(H.m_intent == "run")
+			H.AdjustStunned(2)
+			H.AdjustWeakened(2)
+		else
+			H.AdjustStunned(1)
+			H.AdjustWeakened(1)
+		mob << "<span class='notice'>The sudden appearance of gravity makes you fall to the floor!</span>"

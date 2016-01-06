@@ -114,6 +114,25 @@
 			src.use(2)
 	return 0
 
+/obj/item/stack/sheet/glass/throw_at(atom/target, range, speed, mob/user as mob)
+	..()
+	playsound(src, "shatter", 70, 1)
+	new /obj/item/weapon/shard(loc)
+	var/new_amount = amount - rand(5,35)
+	if(new_amount > 0)
+		amount = new_amount
+	else
+		qdel(src)
+
+/obj/item/stack/sheet/rglass/throw_at(atom/target, range, speed, mob/user as mob)
+	..()
+	playsound(src, "shatter", 70, 1)
+	new /obj/item/weapon/shard(loc)
+	var/new_amount = amount - rand(1,15)
+	if(new_amount > 0)
+		amount = new_amount
+	else
+		qdel(src)
 
 /*
  * Reinforced glass sheets
@@ -281,11 +300,11 @@
 				G.attackby(NG, user)
 				usr << "You add the newly-formed glass to the stack. It now contains [NG.amount] sheets."
 			//SN src = null
-			del(src)
+			qdel(src)
 			return
 	return ..()
 
-/obj/item/weapon/shard/HasEntered(AM as mob|obj)
+/obj/item/weapon/shard/Crossed(AM as mob|obj)
 	if(ismob(AM))
 		var/mob/M = AM
 		M << "\red <B>You step in the broken glass!</B>"

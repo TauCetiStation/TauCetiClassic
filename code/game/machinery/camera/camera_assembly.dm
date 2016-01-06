@@ -97,7 +97,7 @@
 
 				C.auto_turn()
 
-				C.network = uniquelist(tempnetwork)
+				C.replace_networks(uniquelist(tempnetwork))
 				tempnetwork = difflist(C.network,RESTRICTED_CAMERA_NETWORKS)
 				if(!tempnetwork.len)//Camera isn't on any open network - remove its chunk from AI visibility.
 					cameranet.removeCamera(C)
@@ -126,7 +126,7 @@
 	if(is_type_in_list(W, possible_upgrades) && !is_type_in_list(W, upgrades)) // Is a possible upgrade and isn't in the camera already.
 		user << "You attach the [W] into the assembly inner circuits."
 		upgrades += W
-		user.drop_item(W)
+		user.drop_item()
 		W.loc = src
 		return
 
@@ -163,7 +163,7 @@
 	playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
 	WT.eyecheck(user)
 	busy = 1
-	if(do_after(user, 20))
+	if(do_after(user, 20, target = src))
 		busy = 0
 		if(!WT.isOn())
 			return 0

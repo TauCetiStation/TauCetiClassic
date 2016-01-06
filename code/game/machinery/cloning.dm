@@ -22,6 +22,8 @@
 	var/eject_wait = 0 //Don't eject them as soon as they are created fuckkk
 	var/biomass = CLONE_BIOMASS * 3
 
+	light_color = "#00FF00"
+
 //The return of data disks?? Just for transferring between genetics machine/cloning machine.
 //TO-DO: Make the genetics machine accept them.
 /obj/item/weapon/disk/data
@@ -185,17 +187,15 @@
 	// -- Mode/mind specific stuff goes here
 	callHook("clone", list(H))
 
-	switch(ticker.mode.name)
-		if("revolution")
-			if((H.mind in ticker.mode:revolutionaries) || (H.mind in ticker.mode:head_revolutionaries))
-				ticker.mode.update_all_rev_icons() //So the icon actually appears
-		if("nuclear emergency")
-			if(H.mind in ticker.mode.syndicates)
-				ticker.mode.update_all_synd_icons()
-		if("cult")
-			if (H.mind in ticker.mode.cult)
-				ticker.mode.add_cultist(src.occupant.mind)
-				ticker.mode.update_all_cult_icons() //So the icon actually appears
+	if((H.mind in ticker.mode.revolutionaries) || (H.mind in ticker.mode.head_revolutionaries))
+		ticker.mode.update_all_rev_icons() //So the icon actually appears
+	if((H.mind in ticker.mode.A_bosses) || ((H.mind in ticker.mode.A_gang) || (H.mind in ticker.mode.B_bosses)) || (H.mind in ticker.mode.B_gang))
+		ticker.mode.update_all_gang_icons()
+	if(H.mind in ticker.mode.syndicates)
+		ticker.mode.update_all_synd_icons()
+	if (H.mind in ticker.mode.cult)
+		ticker.mode.add_cultist(src.occupant.mind)
+		ticker.mode.update_all_cult_icons() //So the icon actually appears
 
 	// -- End mode specific stuff
 

@@ -17,7 +17,7 @@
 		..()
 		if (src.type == /obj/item/weapon/storage/toolbox)
 			world << "BAD: [src] ([src.type]) spawned at [src.x] [src.y] [src.z]"
-			del(src)
+			qdel(src)
 
 /obj/item/weapon/storage/toolbox/emergency
 	name = "emergency toolbox"
@@ -33,6 +33,7 @@
 		else
 			new /obj/item/device/flashlight/flare(src)
 		new /obj/item/device/radio(src)
+		new /obj/item/weapon/storage/fancy/glowsticks(src) //Gloooouuuwstiicks :3
 
 /obj/item/weapon/storage/toolbox/mechanical
 	name = "mechanical toolbox"

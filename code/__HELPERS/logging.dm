@@ -7,11 +7,13 @@
 
 /var/global/log_end= world.system_type == UNIX ? ascii2text(13) : ""
 
-
+//print an error message to world.log
+#define ERROR(MSG) error("[MSG] in [__FILE__] at line [__LINE__] src: [src] usr: [usr].")
 /proc/error(msg)
 	world.log << "## ERROR: [msg][log_end]"
 
 //print a warning message to world.log
+#define WARNING(MSG) warning("[MSG] in [__FILE__] at line [__LINE__] src: [src] usr: [usr].")
 /proc/warning(msg)
 	world.log << "## WARNING: [msg][log_end]"
 
@@ -30,7 +32,7 @@
 		diary << "\[[time_stamp()]]DEBUG: [text][log_end]"
 
 	for(var/client/C in admins)
-		if(C.prefs.toggles & CHAT_DEBUGLOGS)
+		if(C.prefs.chat_toggles & CHAT_DEBUGLOGS)
 			C << "DEBUG: [text]"
 
 
@@ -80,3 +82,15 @@
 
 /proc/log_misc(text)
 	diary << "\[[time_stamp()]]MISC: [text][log_end]"
+
+//pretty print a direction bitflag, can be useful for debugging.
+/proc/print_dir(var/dir)
+	var/list/comps = list()
+	if(dir & NORTH) comps += "NORTH"
+	if(dir & SOUTH) comps += "SOUTH"
+	if(dir & EAST) comps += "EAST"
+	if(dir & WEST) comps += "WEST"
+	if(dir & UP) comps += "UP"
+	if(dir & DOWN) comps += "DOWN"
+
+	return english_list(comps, nothing_text="0", and_text="|", comma_text="|")

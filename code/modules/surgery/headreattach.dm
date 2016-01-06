@@ -2,9 +2,12 @@
 
 
 /datum/surgery_step/head/
+	clothless = 0
 	can_infect = 0
 	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		if (!hasorgans(target))
+			return 0
+		if(!ishuman(target))
 			return 0
 		var/datum/organ/external/affected = target.get_organ(target_zone)
 		if (!affected)
@@ -187,7 +190,7 @@
 		var/obj/item/weapon/organ/head/B = tool
 		if (B.brainmob.mind)
 			B.brainmob.mind.transfer_to(target)
-		del(B)
+		qdel(B)
 
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)

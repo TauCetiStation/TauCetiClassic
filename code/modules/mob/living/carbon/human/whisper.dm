@@ -21,6 +21,8 @@
 		return
 
 	if (src.stat == 2)
+		if(fake_death) //Our changeling with fake_death status must not speak in dead chat!!
+			return
 		return src.say_dead(message)
 
 	if (src.stat)
@@ -96,7 +98,7 @@
 	for (var/mob/M in dead_mob_list)	//does this include players who joined as observers as well?
 		if (!(M.client))
 			continue
-		if(M.stat == DEAD && M.client && (M.client.prefs.toggles & CHAT_GHOSTEARS))
+		if(M.stat == DEAD && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTEARS))
 			listening |= M
 
 	//Pass whispers on to anything inside the immediate listeners.
@@ -127,7 +129,7 @@
 	//now mobs
 	var/speech_bubble_test = say_test(message)
 	var/image/speech_bubble = image('icons/mob/talk.dmi',src,"h[speech_bubble_test]")
-	spawn(30) del(speech_bubble)
+	spawn(30) qdel(speech_bubble)
 
 	for(var/mob/M in listening)
 		M << speech_bubble

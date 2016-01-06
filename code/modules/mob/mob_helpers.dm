@@ -24,6 +24,11 @@
 		return 1
 	return 0
 
+/proc/isfacehugger(A)
+	if(istype(A, /mob/living/carbon/alien/facehugger))
+		return 1
+	return 0
+
 /proc/islarva(A)
 	if(istype(A, /mob/living/carbon/alien/larva))
 		return 1
@@ -130,6 +135,11 @@ proc/hasorgans(A)
 /proc/hsl2rgb(h, s, l)
 	return
 
+/proc/isloyal(A) //Checks to see if the person contains a loyalty implant, then checks that the implant is actually inside of them
+	for(var/obj/item/weapon/implant/loyalty/L in A)
+		if(L && L.implanted)
+			return 1
+	return 0
 
 /proc/check_zone(zone)
 	if(!zone)	return "chest"
@@ -183,7 +193,7 @@ proc/hasorgans(A)
 		var/miss_chance = 10
 		switch(zone)
 			if("head")
-				miss_chance = 40
+				miss_chance = 30
 			if("l_leg")
 				miss_chance = 20
 			if("r_leg")
@@ -193,16 +203,16 @@ proc/hasorgans(A)
 			if("r_arm")
 				miss_chance = 20
 			if("l_hand")
-				miss_chance = 50
+				miss_chance = 40
 			if("r_hand")
-				miss_chance = 50
+				miss_chance = 40
 			if("l_foot")
-				miss_chance = 50
+				miss_chance = 40
 			if("r_foot")
-				miss_chance = 50
+				miss_chance = 40
 		miss_chance = max(miss_chance + miss_chance_mod, 0)
 		if(prob(miss_chance))
-			if(prob(70))
+			if(prob(80))
 				return null
 			else
 				var/t = rand(1, 10)
@@ -220,6 +230,23 @@ proc/hasorgans(A)
 
 	return zone
 
+/proc/get_zone_with_probabilty(zone, probability = 80)
+
+	zone = check_zone(zone)
+
+	if(prob(probability))
+		return zone
+
+	var/t = rand(1, 18) // randomly pick a different zone, or maybe the same one
+	switch(t)
+		if(1)		 return "head"
+		if(2)		 return "chest"
+		if(3 to 6)	 return "l_arm"
+		if(7 to 10)	 return "r_arm"
+		if(11 to 14) return "l_leg"
+		if(15 to 18) return "r_leg"
+
+	return zone
 
 /proc/stars(n, pr)
 	if (pr == null)
@@ -418,7 +445,7 @@ var/list/intents = list("help","disarm","grab","hurt")
 		if(hud_used && hud_used.action_intent)
 			hud_used.action_intent.icon_state = "intent_[a_intent]"
 
-	else if(isrobot(src) || ismonkey(src) || islarva(src))
+	else if(isrobot(src) || ismonkey(src) || islarva(src)|| isfacehugger(src))
 		switch(input)
 			if("help")
 				a_intent = "help"
@@ -431,3 +458,19 @@ var/list/intents = list("help","disarm","grab","hurt")
 				hud_used.action_intent.icon_state = "harm"
 			else
 				hud_used.action_intent.icon_state = "help"
+
+
+/proc/broadcast_security_hud_message(var/message, var/broadcast_source)
+	broadcast_hud_message(message, broadcast_source, sec_hud_users, /obj/item/clothing/glasses/hud/security)
+
+/proc/broadcast_medical_hud_message(var/message, var/broadcast_source)
+	broadcast_hud_message(message, broadcast_source, med_hud_users, /obj/item/clothing/glasses/hud/health)
+
+/proc/broadcast_hud_message(var/message, var/broadcast_source, var/list/targets, var/icon)
+	var/turf/sourceturf = get_turf(broadcast_source)
+	for(var/mob/M in targets)
+		var/turf/targetturf = get_turf(M)
+		if((targetturf.z == sourceturf.z))
+			M.show_message("<span class='info'>\icon[icon] [message]</span>", 1)
+	for(var/mob/dead/observer/G in player_list) //Ghosts? Why not.
+		G.show_message("<span class='info'>\icon[icon] [message]</span>", 1)

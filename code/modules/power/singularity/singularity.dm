@@ -2,7 +2,11 @@
 
 var/global/list/uneatable = list(
 	/turf/space,
-	/obj/effect/overlay
+	/mob/dead,
+	/mob/camera,
+	/mob/new_player,
+	/obj/effect/overlay,
+	/atom/movable/lighting_overlay
 	)
 
 /obj/machinery/singularity/
@@ -13,7 +17,7 @@ var/global/list/uneatable = list(
 	anchored = 1
 	density = 1
 	layer = 6
-	luminosity = 6
+	light_range = 6
 	unacidable = 1 //Don't comment this out.
 	use_power = 0
 	var/current_size = 1
@@ -186,7 +190,7 @@ var/global/list/uneatable = list(
 
 /obj/machinery/singularity/proc/check_energy()
 	if(energy <= 0)
-		del(src)
+		qdel(src)
 		return 0
 	switch(energy)//Some of these numbers might need to be changed up later -Mport
 		if(1 to 199)
@@ -210,10 +214,16 @@ var/global/list/uneatable = list(
 		defer_powernet_rebuild = 1
 	// Let's just make this one loop.
 	for(var/atom/X in orange(grav_pull,src))
+		if(is_type_in_list(X, uneatable))	continue
+		if(!X.simulated)	continue
+
 		var/dist = get_dist(X, src)
+
 		// Movable atoms only
 		if(dist > consume_range && istype(X, /atom/movable))
-			if(is_type_in_list(X, uneatable))	continue
+			if(canPull(X))
+				step_towards(X,src)
+			/*
 			if(((X) &&(!X:anchored) && (!istype(X,/mob/living/carbon/human)))|| (src.current_size >= 9))
 				step_towards(X,src)
 			else if(istype(X,/mob/living/carbon/human))
@@ -223,6 +233,7 @@ var/global/list/uneatable = list(
 					if(M.magpulse)
 						continue
 				step_towards(H,src)
+			*/
 		// Turf and movable atoms
 		else if(dist <= consume_range && (isturf(X) || istype(X, /atom/movable)))
 			consume(X)
@@ -231,25 +242,37 @@ var/global/list/uneatable = list(
 		defer_powernet_rebuild = 0
 	return
 
+// Singulo optimization:
+// Jump out whenever we've made a decision.
+/obj/machinery/singularity/proc/canPull(var/atom/movable/A)
+	// If we're big enough, stop checking for this and that and JUST EAT.
+	if(current_size >= 9)
+		return 1
+	else
+		if(A && !A:anchored)
+			if(A.canSingulothPull(src))
+				return 1
+	return 0
 
 /obj/machinery/singularity/proc/consume(var/atom/A)
 	var/gain = 0
 	if(is_type_in_list(A, uneatable))
+		return 0
+	if(!A.simulated)
 		return 0
 	if (istype(A,/mob/living))//Mobs get gibbed
 		gain = 20
 		if(istype(A,/mob/living/carbon/human))
 			var/mob/living/carbon/human/H = A
 			if(H.mind)
-
-				if((H.mind.assigned_role == "Station Engineer") || (H.mind.assigned_role == "Chief Engineer") )
-					gain = 100
-
-				if(H.mind.assigned_role == "Clown")
-					gain = rand(-300, 300) // HONK
-
+				switch(H.mind.assigned_role)
+					if("Station Engineer","Chief Engineer")
+						gain = 100
+					if("Clown")
+						gain = rand(-300, 300) // HONK
 		spawn()
 			A:gib()
+		// Why
 		sleep(1)
 	else if(istype(A,/obj/))
 
@@ -267,13 +290,10 @@ var/global/list/uneatable = list(
 			return//Quits here, the obj should be gone, hell we might be
 
 		if((teleport_del) && (!istype(A, /obj/machinery)))//Going to see if it does not lag less to tele items over to Z 2
-			var/obj/O = A
-			O.x = 2
-			O.y = 2
-			O.z = 2
+			qdel(A)
 		else
 			A.ex_act(1.0)
-			if(A && isnull(A.gc_destroyed)) qdel(A)
+			if(A && isnull(A.gcDestroyed)) qdel(A)
 		gain = 2
 	else if(isturf(A))
 		var/turf/T = A
@@ -444,133 +464,4 @@ var/global/list/uneatable = list(
 	for(var/obj/machinery/power/rad_collector/R in rad_collectors)
 		if(get_dist(R, src) <= 15) // Better than using orange() every process
 			R.receive_pulse(energy)
-	return
-
-
-
-/obj/machinery/singularity/narsie //Moving narsie to a child object of the singularity so it can be made to function differently. --NEO
-	name = "Nar-Sie"
-	desc = "Your mind begins to bubble and ooze as it tries to comprehend what it sees."
-	icon = 'icons/obj/magic_terror.dmi'
-	pixel_x = -89
-	pixel_y = -85
-	current_size = 9 //It moves/eats like a max-size singulo, aside from range. --NEO
-	contained = 0 //Are we going to move around?
-	dissipate = 0 //Do we lose energy over time?
-	move_self = 1 //Do we move on our own?
-	grav_pull = 10 //How many tiles out do we pull?
-	consume_range = 3 //How many tiles out do we eat
-	var/last_boom = 0
-
-/obj/machinery/singularity/narsie/large
-	name = "Nar-Sie"
-	icon = 'icons/obj/narsie.dmi'
-	// Pixel stuff centers Narsie.
-	pixel_x = -236
-	pixel_y = -256
-	current_size = 12
-	move_self = 1 //Do we move on our own?
-	consume_range = 12 //How many tiles out do we eat
-
-/obj/machinery/singularity/narsie/large/New()
-	..()
-	world << "<font size='28' color='red'><b>NAR-SIE HAS RISEN</b></font>"
-	if(emergency_shuttle)
-		emergency_shuttle.incall(0.5) // Cannot recall
-
-/obj/machinery/singularity/narsie/process()
-	eat()
-	if(!target || prob(5))
-		pickcultist()
-	move()
-	if(prob(25))
-		mezzer()
-
-/obj/machinery/singularity/narsie/consume(var/atom/A) //Has its own consume proc because it doesn't need energy and I don't want BoHs to explode it. --NEO
-	if(is_type_in_list(A, uneatable))
-		return 0
-	if (istype(A,/mob/living))//Mobs get gibbed
-		A:gib()
-	else if(istype(A,/obj))
-		var/obj/O = A
-		machines -= O
-		processing_objects -= O
-		O.loc = null
-	else if(isturf(A))
-		var/turf/T = A
-		if(T.intact)
-			for(var/obj/O in T.contents)
-				if(O.level != 1)
-					continue
-				if(O.invisibility == 101)
-					src.consume(O)
-		A:ChangeTurf(/turf/space)
-	if(last_boom + 100 < world.time && prob(5))
-		explosion(loc, -1, -1, -1, 1, 0) //Since we're not exploding everything in consume() toss out an explosion effect every now and again
-		last_boom = world.time
-	return
-
-/obj/machinery/singularity/narsie/ex_act() //No throwing bombs at it either. --NEO
-	return
-
-/obj/machinery/singularity/narsie/proc/pickcultist() //Narsie rewards his cultists with being devoured first, then picks a ghost to follow. --NEO
-	var/list/cultists = list()
-	for(var/datum/mind/cult_nh_mind in ticker.mode.cult)
-		if(!cult_nh_mind.current)
-			continue
-		if(cult_nh_mind.current.stat)
-			continue
-		var/turf/pos = get_turf(cult_nh_mind.current)
-		if(pos.z != src.z)
-			continue
-		cultists += cult_nh_mind.current
-	if(cultists.len)
-		acquire(pick(cultists))
-		return
-		//If there was living cultists, it picks one to follow.
-	for(var/mob/living/carbon/human/food in living_mob_list)
-		if(food.stat)
-			continue
-		var/turf/pos = get_turf(food)
-		if(pos.z != src.z)
-			continue
-		cultists += food
-	if(cultists.len)
-		acquire(pick(cultists))
-		return
-		//no living cultists, pick a living human instead.
-	for(var/mob/dead/observer/ghost in player_list)
-		if(!ghost.client)
-			continue
-		var/turf/pos = get_turf(ghost)
-		if(pos.z != src.z)
-			continue
-		cultists += ghost
-	if(cultists.len)
-		acquire(pick(cultists))
-		return
-		//no living humans, follow a ghost instead.
-
-/obj/machinery/singularity/narsie/proc/acquire(var/mob/food)
-	target << "\blue <b>NAR-SIE HAS LOST INTEREST IN YOU</b>"
-	target = food
-	if(ishuman(target))
-		target << "\red <b>NAR-SIE HUNGERS FOR YOUR SOUL</b>"
-	else
-		target << "\red <b>NAR-SIE HAS CHOSEN YOU TO LEAD HIM TO HIS NEXT MEAL</b>"
-
-//Wizard narsie
-
-/obj/machinery/singularity/narsie/wizard
-	grav_pull = 0
-
-/obj/machinery/singularity/narsie/wizard/eat()
-	//set background = 1
-	if(defer_powernet_rebuild != 2)
-		defer_powernet_rebuild = 1
-	for(var/atom/X in orange(consume_range,src))
-		if(isturf(X) || istype(X, /atom/movable))
-			consume(X)
-	if(defer_powernet_rebuild != 2)
-		defer_powernet_rebuild = 0
 	return

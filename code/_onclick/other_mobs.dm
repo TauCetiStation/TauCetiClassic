@@ -23,7 +23,7 @@
 /mob/living/carbon/human/RangedAttack(var/atom/A)
 	if(!gloves && !mutations.len) return
 	var/obj/item/clothing/gloves/G = gloves
-	if((LASER in mutations) && a_intent == "harm")
+	if((LASER in mutations) && a_intent == "hurt")
 		LaserEyes(A) // moved into a proc below
 
 	else if(istype(G) && G.Touch(A,0)) // for magic gloves
@@ -85,25 +85,6 @@
 	else
 		for(var/mob/O in viewers(ML, null))
 			O.show_message("\red <B>[src] has attempted to bite [ML]!</B>", 1)
-
-/*
-	Aliens
-	Defaults to same as monkey in most places
-*/
-/mob/living/carbon/alien/UnarmedAttack(var/atom/A)
-	A.attack_alien(src)
-/atom/proc/attack_alien(mob/user as mob)
-	attack_paw(user)
-	return
-/mob/living/carbon/alien/RestrainedClickOn(var/atom/A)
-	return
-
-// Babby aliens
-/mob/living/carbon/alien/larva/UnarmedAttack(var/atom/A)
-	A.attack_larva(src)
-/atom/proc/attack_larva(mob/user as mob)
-	return
-
 
 /*
 	Slimes

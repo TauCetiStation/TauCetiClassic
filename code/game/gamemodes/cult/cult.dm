@@ -24,8 +24,11 @@
 	protected_jobs = list()
 	required_players = 5
 	required_players_secret = 15
+
 	required_enemies = 3
 	recommended_enemies = 4
+
+	votable = 0
 
 	uplink_welcome = "Nar-Sie Uplink Console:"
 	uplink_uses = 10
@@ -40,6 +43,7 @@
 	var/list/objectives = list()
 
 	var/eldergod = 1 //for the summon god objective
+	var/eldertry = 0
 
 	var/const/acolytes_needed = 5 //for the survive objective
 	var/const/min_cultists_to_start = 3
@@ -96,7 +100,7 @@
 	for(var/datum/mind/cult_mind in cult)
 		equip_cultist(cult_mind.current)
 		grant_runeword(cult_mind.current)
-		update_cult_icons_added(cult_mind)
+		update_all_cult_icons()
 		cult_mind.current << "\blue You are a member of the cult!"
 		if(!config.objectives_disabled)
 			memoize_cult_objectives(cult_mind)
@@ -177,8 +181,9 @@
 	if (!istype(cult_mind))
 		return 0
 	if(!(cult_mind in cult) && is_convertable_to_cult(cult_mind))
+		cult_mind.current.Paralyse(5)
 		cult += cult_mind
-		update_cult_icons_added(cult_mind)
+		update_all_cult_icons()
 		return 1
 
 
@@ -192,6 +197,7 @@
 /datum/game_mode/proc/remove_cultist(datum/mind/cult_mind, show_message = 1)
 	if(cult_mind in cult)
 		cult -= cult_mind
+		cult_mind.current.Paralyse(5)
 		cult_mind.current << "\red <FONT size = 3><B>An unfamiliar white light flashes through your mind, cleansing the taint of the dark-one and the memories of your time as his servant with it.</B></FONT>"
 		cult_mind.memory = ""
 		update_cult_icons_removed(cult_mind)
@@ -206,7 +212,7 @@
 				if(cultist.current.client)
 					for(var/image/I in cultist.current.client.images)
 						if(I.icon_state == "cult")
-							del(I)
+							qdel(I)
 
 		for(var/datum/mind/cultist in cult)
 			if(cultist.current)
@@ -237,13 +243,13 @@
 				if(cultist.current.client)
 					for(var/image/I in cultist.current.client.images)
 						if(I.icon_state == "cult" && I.loc == cult_mind.current)
-							del(I)
+							qdel(I)
 
 		if(cult_mind.current)
 			if(cult_mind.current.client)
 				for(var/image/I in cult_mind.current.client.images)
 					if(I.icon_state == "cult")
-						del(I)
+						qdel(I)
 
 
 /datum/game_mode/cult/proc/get_unconvertables()
@@ -333,11 +339,12 @@
 
 /datum/game_mode/proc/auto_declare_completion_cult()
 	if( cult.len || (ticker && istype(ticker.mode,/datum/game_mode/cult)) )
-		var/text = "<FONT size = 2><B>The cultists were:</B></FONT>"
+		var/icon/logo = icon('icons/mob/mob.dmi', "cult-logo")
+		var/text = "<br>\icon[logo] <FONT size = 2><B>The cultists were:</B></FONT> \icon[logo]"
 		for(var/datum/mind/cultist in cult)
-
-			text += "<br>[cultist.key] was [cultist.name] ("
 			if(cultist.current)
+				var/icon/flat = getFlatIcon(cultist.current)
+				text += "<br>\icon[flat] [cultist.key] was [cultist.name] ("
 				if(cultist.current.stat == DEAD)
 					text += "died"
 				else
@@ -345,6 +352,8 @@
 				if(cultist.current.real_name != cultist.name)
 					text += " as [cultist.current.real_name]"
 			else
+				var/icon/sprotch = icon('icons/effects/blood.dmi', "floor1-old")
+				text += "<br>\icon[sprotch] [cultist.key] was [cultist.name] ("
 				text += "body destroyed"
 			text += ")"
 

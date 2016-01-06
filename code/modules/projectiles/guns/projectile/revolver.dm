@@ -3,6 +3,7 @@
 	name = "revolver"
 	icon_state = "revolver"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder
+	fire_sound = 'sound/weapons/guns/revolver_shot.ogg'
 
 /obj/item/weapon/gun/projectile/revolver/chamber_round()
 	if (chambered || !magazine)
@@ -64,7 +65,7 @@
 		M << "<span class='danger'>[src] blows up in your face!</span>"
 		M.take_organ_damage(0,20)
 		M.drop_item()
-		del(src)
+		qdel(src)
 		return 0
 	return 1
 
@@ -80,25 +81,6 @@
 		name = input
 		M << "You name the gun [input]. Say hello to your new friend."
 		return 1
-/*
-/obj/item/weapon/gun/projectile/revolver/detective/verb/reskin_gun()
-	set name = "Reskin gun"
-	set category = "Object"
-	set desc = "Click to reskin your gun."
-
-	var/mob/M = usr
-	var/list/options = list()
-	options["The Original"] = "detective"
-	options["Leopard Spots"] = "detective_leopard"
-	options["Black Panther"] = "detective_panther"
-	options["Gold Trim"] = "detective_gold"
-	options["The Peacemaker"] = "detective_peacemaker"
-	var/choice = input(M,"What do you want to skin the gun to?","Reskin Gun") in options
-
-	if(src && choice && !M.stat && in_range(M,src))
-		icon_state = options[choice]
-		M << "Your gun is now skinned as [choice]. Say hello to your new friend." */
-		return 1
 
 /obj/item/weapon/gun/projectile/revolver/detective/attackby(var/obj/item/A as obj, mob/user as mob)
 	..()
@@ -109,7 +91,7 @@
 				afterattack(user, user)	//you know the drill
 				user.visible_message("<span class='danger'>[src] goes off!</span>", "<span class='danger'>[src] goes off in your face!</span>")
 				return
-			if(do_after(user, 30))
+			if(do_after(user, 30, target = src))
 				if(magazine.ammo_count())
 					user << "<span class='notice'>You can't modify it!</span>"
 					return
@@ -122,7 +104,7 @@
 				afterattack(user, user)	//and again
 				user.visible_message("<span class='danger'>[src] goes off!</span>", "<span class='danger'>[src] goes off in your face!</span>")
 				return
-			if(do_after(user, 30))
+			if(do_after(user, 30, target = src))
 				if(magazine.ammo_count())
 					user << "<span class='notice'>You can't modify it!</span>"
 					return
@@ -134,6 +116,7 @@
 	name = "mateba"
 	desc = "When you absolutely, positively need a 10mm hole in the other guy. Uses .357 ammo."	//>10mm hole >.357
 	icon_state = "mateba"
+	item_state = "mateba"
 	origin_tech = "combat=2;materials=2"
 
 // A gun to play Russian Roulette!

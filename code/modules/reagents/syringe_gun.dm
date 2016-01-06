@@ -64,7 +64,7 @@
 			return
 		S.reagents.trans_to(D, S.reagents.total_volume)
 		syringes -= S
-		del(S)
+		qdel(S)
 		D.icon_state = "syringeproj"
 		D.name = "syringe"
 		playsound(user.loc, 'sound/items/syringeproj.ogg', 50, 1)
@@ -105,16 +105,16 @@
 					else
 						M.visible_message("<span class='danger'>The syringe bounces off [M]!</span>")
 
-					del(D)
+					qdel(D)
 					break
 			if(D)
 				for(var/atom/A in D.loc)
 					if(A == user) continue
-					if(A.density) del(D)
+					if(A.density) qdel(D)
 
 			sleep(1)
 
-		if (D) spawn(10) del(D)
+		if (D) spawn(10) qdel(D)
 
 		return
 
@@ -133,7 +133,7 @@
 	anchored = 1
 	density = 0
 
-	New()
-		var/datum/reagents/R = new/datum/reagents(15)
-		reagents = R
-		R.my_atom = src
+/obj/effect/syringe_gun_dummy/New()
+	var/datum/reagents/R = new/datum/reagents(15)
+	reagents = R
+	R.my_atom = src

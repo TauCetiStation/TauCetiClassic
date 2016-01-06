@@ -1,10 +1,10 @@
+
 //The advanced pea-green monochrome lcd of tomorrow.
 
 var/global/list/obj/item/device/pda/PDAs = list()
 
-
 /obj/item/device/pda
-	name = "PDA"
+	name = "\improper PDA"
 	desc = "A portable microcomputer by Thinktronic Systems, LTD. Functionality determined by a preprogrammed ROM cartridge."
 	icon = 'icons/obj/pda.dmi'
 	icon_state = "pda"
@@ -21,17 +21,18 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 	var/lastmode = 0
 	var/ui_tick = 0
+	var/nanoUI[0]
 
 	//Secondary variables
 	var/scanmode = 0 //1 is medical scanner, 2 is forensics, 3 is reagent scanner.
 	var/fon = 0 //Is the flashlight function on?
 	var/f_lum = 2 //Luminosity for the flashlight function
-	var/silent = 0 //To beep or not to beep, that is the question
+	var/message_silent = 0 //To beep or not to beep, that is the question
 	var/toff = 0 //If 1, messenger disabled
 	var/tnote[0]  //Current Texts
 	var/last_text //No text spamming
 	var/last_honk //Also no honk spamming that's bad too
-	var/ttone = "beep" //The ringtone!
+	var/ttone = "beep" //The PDA ringtone!
 	var/lock_code = "" // Lockcode to unlock uplink
 	var/honkamt = 0 //How many honks left when infected with honk.exe
 	var/mimeamt = 0 //How many silence left when infected with mime.exe
@@ -50,8 +51,13 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 	var/obj/item/weapon/card/id/id = null //Making it possible to slot an ID card into the PDA so it can function as both.
 	var/ownjob = null //related to above
+	var/ownrank = null // this one is rank, never alt title
 
 	var/obj/item/device/paicard/pai = null	// A slot for a personal AI device
+
+/obj/item/device/pda/examine(mob/user)
+	if(..(user, 1))
+		user << "The time [worldtime2text()] is displayed in the corner of the screen."
 
 /obj/item/device/pda/medical
 	default_cartridge = /obj/item/weapon/cartridge/medical
@@ -96,7 +102,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 /obj/item/device/pda/mime
 	default_cartridge = /obj/item/weapon/cartridge/mime
 	icon_state = "pda-mime"
-	silent = 1
+	message_silent = 1
 	ttone = "silence"
 
 /obj/item/device/pda/heads
@@ -172,7 +178,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	icon_state = "pda-libb"
 	desc = "A portable microcomputer by Thinktronic Systems, LTD. This is model is a WGW-11 series e-reader."
 	note = "Congratulations, your station has chosen the Thinktronic 5290 WGW-11 Series E-reader and Personal Data Assistant!"
-	silent = 1 //Quiet in the library!
+	message_silent = 1 //Quiet in the library!
 
 /obj/item/device/pda/reporter
 	icon_state = "pda-libc"
@@ -213,14 +219,18 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	detonate = 0
 
 
-/obj/item/device/pda/ai/proc/set_name_and_job(newname as text, newjob as text)
+/obj/item/device/pda/ai/proc/set_name_and_job(newname as text, newjob as text, newrank as null|text)
 	owner = newname
 	ownjob = newjob
+	if(newrank)
+		ownrank = newrank
+	else
+		ownrank = ownjob
 	name = newname + " (" + ownjob + ")"
 
 
 //AI verb and proc for sending PDA messages.
-/obj/item/device/pda/ai/verb/cmd_send_pdamesg()
+/obj/item/device/pda/ai/proc/cmd_send_pdamesg()
 	set category = "AI IM"
 	set name = "Send Message"
 	set src in usr
@@ -254,11 +264,11 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	if(usr.stat == 2)
 		usr << "You can't do that because you are dead!"
 		return
-	silent=!silent
-	usr << "<span class='notice'>PDA ringer toggled [(silent ? "Off" : "On")]!</span>"
+	message_silent=!message_silent
+	usr << "<span class='notice'>PDA ringer toggled [(message_silent ? "Off" : "On")]!</span>"
 
 
-/obj/item/device/pda/ai/verb/cmd_show_message_log()
+/obj/item/device/pda/ai/proc/cmd_show_message_log()
 	set category = "AI IM"
 	set name = "Show Message Log"
 	set src in usr
@@ -293,15 +303,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 /*
  *	The Actual PDA
  */
-/obj/item/device/pda/pickup(mob/user)
-	if(fon)
-		SetLuminosity(0)
-		user.SetLuminosity(user.luminosity + f_lum)
-
-/obj/item/device/pda/dropped(mob/user)
-	if(fon)
-		user.SetLuminosity(user.luminosity - f_lum)
-		SetLuminosity(f_lum)
 
 /obj/item/device/pda/New()
 	..()
@@ -340,7 +341,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	return
 
 
-/obj/item/device/pda/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
+/obj/item/device/pda/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null, var/force_open = 1)
 	ui_tick++
 	var/datum/nanoui/old_ui = nanomanager.get_open_ui(user, src, "main")
 	var/auto_update = 1
@@ -355,7 +356,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 	var/data[0]  // This is the data that will be sent to the PDA
 
-
 	data["owner"] = owner					// Who is your daddy...
 	data["ownjob"] = ownjob					// ...and what does he do?
 
@@ -364,7 +364,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	data["fon"] = fon					// Flashlight on?
 	data["pai"] = (isnull(pai) ? 0 : 1)			// pAI inserted?
 	data["note"] = note					// current pda notes
-	data["silent"] = silent					// does the pda make noise when it receives a message?
+	data["message_silent"] = message_silent					// does the pda make noise when it receives a message?
 	data["toff"] = toff					// is the messenger function turned off?
 	data["active_conversation"] = active_conversation	// Which conversation are we following right now?
 
@@ -375,13 +375,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	data["cart_loaded"] = cartridge ? 1:0
 	if(cartridge)
 		var/cartdata[0]
-
-		if(mode in cartmodes)
-			data["records"] = cartridge.create_NanoUI_values()
-
-		if(mode == 0)
-			cartdata["name"] = cartridge.name
-			cartdata["access"] = list(\
+		cartdata["access"] = list(\
 					"access_security" = cartridge.access_security,\
 					"access_engine" = cartridge.access_engine,\
 					"access_atmos" = cartridge.access_atmos,\
@@ -393,8 +387,15 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					"access_hydroponics" = cartridge.access_hydroponics,\
 					"access_reagent_scanner" = cartridge.access_reagent_scanner,\
 					"access_remote_door" = cartridge.access_remote_door,\
-					"access_status_display" = cartridge.access_status_display\
+					"access_status_display" = cartridge.access_status_display,\
+					"access_detonate_pda" = cartridge.access_detonate_pda\
 			)
+
+		if(mode in cartmodes)
+			data["records"] = cartridge.create_NanoUI_values()
+
+		if(mode == 0)
+			cartdata["name"] = cartridge.name
 			if(isnull(cartridge.radio))
 				cartdata["radio"] = 0
 			else
@@ -411,7 +412,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		data["cartridge"] = cartdata
 
 	data["stationTime"] = worldtime2text()
-	data["newMessage"] = newmessage
+	data["new_Message"] = newmessage
 
 	if(mode==2)
 		var/convopdas[0]
@@ -443,7 +444,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				data["convo_job"] = sanitize(c["job"])
 				break
 	if(mode==41)
-		data["manifest"] = data_core.get_manifest_json()
+		data_core.get_manifest_json()
 
 
 	if(mode==3)
@@ -473,13 +474,21 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		if(isnull(data["aircontents"]))
 			data["aircontents"] = list("reading" = 0)
 
+	nanoUI = data
 	// update the ui if it exists, returns null if no ui is passed/found
-	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)
+	if(ui)
+		ui.load_cached_data(ManifestJSON)
+
+	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data, force_open)
+
 	if (!ui)
 		// the ui does not exist, so we'll create a new() one
-        // for a list of parameters and their descriptions see the code docs in \code\modules\nano\nanoui.dm
+	        // for a list of parameters and their descriptions see the code docs in \code\modules\nano\nanoui.dm
 		ui = new(user, src, ui_key, "pda.tmpl", title, 520, 400)
 		// when the ui is first opened this is the data it will use
+
+		ui.load_cached_data(ManifestJSON)
+
 		ui.set_initial_data(data)
 		// open the new ui window
 		ui.open()
@@ -547,6 +556,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			id_check(U, 1)
 		if("UpdateInfo")
 			ownjob = id.assignment
+			ownrank = id.rank
 			name = "PDA-[owner] ([ownjob])"
 		if("Eject")//Ejects the cart, only done from hub.
 			if (!isnull(cartridge))
@@ -585,12 +595,10 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		if("Light")
 			if(fon)
 				fon = 0
-				if(src in U.contents)	U.SetLuminosity(U.luminosity - f_lum)
-				else					SetLuminosity(0)
+				set_light(0)
 			else
 				fon = 1
-				if(src in U.contents)	U.SetLuminosity(U.luminosity + f_lum)
-				else					SetLuminosity(f_lum)
+				set_light(f_lum)
 		if("Medical Scan")
 			if(scanmode == 1)
 				scanmode = 0
@@ -631,7 +639,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		if("Toggle Messenger")
 			toff = !toff
 		if("Toggle Ringer")//If viewing texts then erase them, if not then toggle silent status
-			silent = !silent
+			message_silent = !message_silent
 		if("Clear")//Clears messages
 			if(href_list["option"] == "All")
 				tnote.Cut()
@@ -664,7 +672,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		if("Message")
 
 			var/obj/item/device/pda/P = locate(href_list["target"])
-			src.create_message(U, P)
+			src.create_message(U, P, !href_list["notap"])
 			if(mode == 2)
 				if(href_list["target"] in conversations)            // Need to make sure the message went through, if not welp.
 					active_conversation = href_list["target"]
@@ -696,7 +704,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					if (!P.toff && cartridge.charges > 0)
 						cartridge.charges--
 						U.show_message("\blue Virus sent!", 1)
-						P.silent = 1
+						P.message_silent = 1
 						P.ttone = "silence"
 				else
 					U << "PDA not found."
@@ -757,7 +765,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 							difficulty += P.cartridge.access_engine
 							difficulty += P.cartridge.access_clown
 							difficulty += P.cartridge.access_janitor
-							difficulty += 3 * P.hidden_uplink
+							if(P.hidden_uplink)
+								difficulty += 3
 
 						if(prob(difficulty))
 							U.show_message("\red An error flashes on your [src].", 1)
@@ -783,14 +792,18 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 //pAI FUNCTIONS===================================
 		if("pai")
-			switch(href_list["option"])
-				if("1")		// Configure pAI device
-					pai.attack_self(U)
-				if("2")		// Eject pAI device
-					var/turf/T = get_turf_or_move(src.loc)
-					if(T)
-						pai.loc = T
-						pai = null
+			if(pai)
+				if(pai.loc != src)
+					pai = null
+				else
+					switch(href_list["option"])
+						if("1")		// Configure pAI device
+							pai.attack_self(U)
+						if("2")		// Eject pAI device
+							var/turf/T = get_turf_or_move(src.loc)
+							if(T)
+								pai.loc = T
+								pai = null
 
 		else
 			mode = text2num(href_list["choice"])
@@ -800,14 +813,21 @@ var/global/list/obj/item/device/pda/PDAs = list()
 //EXTRA FUNCTIONS===================================
 
 	if (mode == 2||mode == 21)//To clear message overlays.
-		overlays.Cut()
 		newmessage = 0
+		update_icon()
 
 	if ((honkamt > 0) && (prob(60)))//For clown virus.
 		honkamt--
 		playsound(loc, 'sound/items/bikehorn.ogg', 30, 1)
 
 	return 1 // return 1 tells it to refresh the UI in NanoUI
+
+/obj/item/device/pda/update_icon()
+	..()
+
+	overlays.Cut()
+	if(newmessage)
+		overlays += image('icons/obj/pda.dmi', "pda-r")
 
 /obj/item/device/pda/proc/detonate_act(var/obj/item/device/pda/P)
 	//TODO: sometimes these attacks show up on the message server
@@ -863,7 +883,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		j = prob(10)
 
 	if(j) //This kills the PDA
-		P.Del()
+		P.Destroy()
 		if(message)
 			message += "It melts in a puddle of plastic."
 		else
@@ -883,10 +903,13 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			id.loc = get_turf(src)
 		id = null
 
-/obj/item/device/pda/proc/create_message(var/mob/living/U = usr, var/obj/item/device/pda/P)
-
+/obj/item/device/pda/proc/create_message(var/mob/living/U = usr, var/obj/item/device/pda/P, var/tap = 1)
+	if(tap)
+		U.visible_message("<span class='notice'>[U] taps on \his PDA's screen.</span>")
+	U.last_target_click = world.time
 	var/t = input(U, "Please enter message", name, null) as text
 	t = sanitize_alt(copytext(t, 1, MAX_MESSAGE_LEN))
+	t = readd_quotes(t)
 	if (!t || !istype(P))
 		return
 	if (!in_range(src, U) && loc != U)
@@ -934,7 +957,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		tnote.Add(list(list("sent" = 1, "owner" = "[P.owner]", "job" = "[P.ownjob]", "message" = "[t]", "target" = "\ref[P]")))
 		P.tnote.Add(list(list("sent" = 0, "owner" = "[owner]", "job" = "[ownjob]", "message" = "[t]", "target" = "\ref[src]")))
 		for(var/mob/M in player_list)
-			if(M.stat == DEAD && M.client && (M.client.prefs.toggles & CHAT_GHOSTEARS)) // src.client is so that ghosts don't have to listen to mice
+			if(M.stat == DEAD && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTEARS)) // src.client is so that ghosts don't have to listen to mice
 				if(istype(M, /mob/new_player))
 					continue
 				M.show_message("<span class='game say'>PDA Message - <span class='name'>[owner]</span> -> <span class='name'>[P.owner]</span>: <span class='message'>[sanitize_chat(t)]</span></span>")
@@ -953,11 +976,12 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				if(ai.aiPDA != P && ai.aiPDA != src)
 					ai.show_message("<i>Intercepted message from <b>[who]</b>: [sanitize_chat(t)]</i>")
 
+		nanomanager.update_user_uis(U, src) // Update the sending user's PDA UI so that they can see the new message
 
-		if (!P.silent)
+		if (!P.message_silent)
 			playsound(P.loc, 'sound/machines/twobeep.ogg', 50, 1)
 		for (var/mob/O in hearers(3, P.loc))
-			if(!P.silent) O.show_message(text("\icon[P] *[sanitize_chat(P.ttone)]*"))
+			if(!P.message_silent) O.show_message(text("\icon[P] *[sanitize_chat(P.ttone)]*"))
 		//Search for holder of the PDA.
 		var/mob/living/L = null
 		if(P.loc && isliving(P.loc))
@@ -968,7 +992,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 
 		if(L)
-			L << "\icon[P] <b>Message from [src.owner] ([ownjob]), </b>\"[sanitize_chat(t)]\" (<a href='byond://?src=\ref[P];choice=Message;skiprefresh=1;target=\ref[src]'>Reply</a>)"
+			L << "\icon[P] <b>Message from [src.owner] ([ownjob]), </b>\"[sanitize_chat(t)]\" (<a href='byond://?src=\ref[P];choice=Message;notap=[istype(loc, /mob/living/silicon)];skiprefresh=1;target=\ref[src]'>Reply</a>)"
 			nanomanager.update_user_uis(L, P) // Update the receiving user's PDA UI so that they can see the new message
 
 		nanomanager.update_user_uis(U, P) // Update the sending user's PDA UI so that they can see the new message
@@ -980,6 +1004,20 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	else
 		U << "<span class='notice'>ERROR: Messaging server is not responding.</span>"
 
+/obj/item/device/pda/verb/verb_reset_pda()
+	set category = "Object"
+	set name = "Reset PDA"
+	set src in usr
+
+	if(issilicon(usr))
+		return
+
+	if(can_use(usr))
+		mode = 0
+		nanomanager.update_uis(src)
+		usr << "<span class='notice'>You press the reset button on \the [src].</span>"
+	else
+		usr << "<span class='notice'>You cannot do this while restrained.</span>"
 
 /obj/item/device/pda/verb/verb_remove_id()
 	set category = "Object"
@@ -1014,6 +1052,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				if(M.get_active_hand() == null)
 					M.put_in_hands(O)
 					usr << "<span class='notice'>You remove \the [O] from \the [src].</span>"
+					playsound(src, 'tauceti/sounds/items/penclick.ogg', 20, 1, 1)
 					return
 			O.loc = get_turf(src)
 		else
@@ -1062,6 +1101,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		if(!owner)
 			owner = idcard.registered_name
 			ownjob = idcard.assignment
+			ownrank = idcard.rank
 			name = "PDA-[owner] ([ownjob])"
 			user << "<span class='notice'>Card scanned.</span>"
 		else
@@ -1128,7 +1168,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				if ( !(C:blood_DNA) )
 					user << "\blue No blood found on [C]"
 					if(C:blood_DNA)
-						del(C:blood_DNA)
+						qdel(C:blood_DNA)
 				else
 					user << "\blue Blood found on [C]. Analysing..."
 					spawn(15)
@@ -1234,13 +1274,13 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		explosion(T, 0, 0, 1, rand(1,2))
 	return
 
-/obj/item/device/pda/Del()
+/obj/item/device/pda/Destroy()
 	PDAs -= src
 	if (src.id && prob(90)) //IDs are kept in 90% of the cases
 		src.id.loc = get_turf(src.loc)
 	..()
 
-/obj/item/device/pda/clown/HasEntered(AM as mob|obj) //Clown PDA is slippery.
+/obj/item/device/pda/clown/Crossed(AM as mob|obj) //Clown PDA is slippery.
 	if (istype(AM, /mob/living/carbon))
 		var/mob/M =	AM
 		if ((istype(M, /mob/living/carbon/human) && ( (istype(M:shoes, /obj/item/clothing/shoes) && M:shoes.flags&NOSLIP)) || (istype(M:wear_suit, /obj/item/clothing/suit/space/rig) && M:wear_suit.flags&NOSLIP)  ) || M.m_intent == "walk")
@@ -1289,7 +1329,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 //Some spare PDAs in a box
 /obj/item/weapon/storage/box/PDAs
-	name = "spare PDAs"
+	name = "box of spare PDAs"
 	desc = "A box of spare PDA microcomputers."
 	icon = 'icons/obj/pda.dmi'
 	icon_state = "pdabox"

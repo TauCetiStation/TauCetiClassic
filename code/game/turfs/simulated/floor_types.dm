@@ -14,7 +14,7 @@
 
 /turf/simulated/floor/light
 	name = "Light floor"
-	luminosity = 5
+	light_range = 5
 	icon_state = "light_on"
 	floor_tile = new/obj/item/stack/tile/light
 
@@ -62,8 +62,8 @@
 	if(istype(C, /obj/item/weapon/wrench))
 		user << "\blue Removing rods..."
 		playsound(src, 'sound/items/Ratchet.ogg', 80, 1)
-		if(do_after(user, 30))
-			new /obj/item/stack/rods(src, 2)
+		if(do_after(user, 30, target = src))
+			PoolOrNew(/obj/item/stack/rods, list(src, 2))
 			ChangeTurf(/turf/simulated/floor)
 			var/turf/simulated/floor/F = src
 			F.make_plating()
@@ -233,14 +233,13 @@
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
 	heat_capacity = 700000
 
-	lighting_lumcount = 4		//starlight
 //	accepts_lighting=0 			// Don't apply overlays
 
 	intact = 0
 
 	New()
 		..()
-		// Fucking cockshit dickfuck shitslut
+		set_light(4) //starlight
 		name = "catwalk"
 		update_icon(1)
 

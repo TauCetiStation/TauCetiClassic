@@ -8,7 +8,7 @@
 /obj/item/weapon/plastique/afterattack(atom/target as obj|turf, mob/user as mob, flag)
 	if (!flag)
 		return
-	if (istype(target, /turf/unsimulated) || istype(target, /turf/simulated/shuttle) || istype(target, /obj/item/weapon/storage/))
+	if (istype(target, /turf/unsimulated) || istype(target, /turf/simulated/shuttle) || istype(target, /obj/item/weapon/storage/) || istype(target, /obj/machinery/nuclearbomb))
 		return
 	user << "Planting explosives..."
 	if(ismob(target))
@@ -18,7 +18,7 @@
 
 		user.visible_message("\red [user.name] is trying to plant some kind of explosive on [target.name]!")
 
-	if(do_after(user, 50) && in_range(user, target))
+	if(do_after(user, 50, target = target) && in_range(user, target))
 		user.drop_item()
 		target = target
 		loc = null
@@ -32,14 +32,15 @@
 		user << "Bomb has been planted. Timer counting down from [timer]."
 		spawn(timer*10)
 			if(target)
-				explosion(location, -1, -1, 2, 3)
+				if(ismob(target)) location = target.loc
+				explosion(location, 0, 0, 2, 3)
 				if (istype(target, /turf/simulated/wall)) target:dismantle_wall(1)
 				else target.ex_act(1)
 				if (isobj(target))
 					if (target)
-						del(target)
+						qdel(target)
 				if (src)
-					del(src)
+					qdel(src)
 
 /obj/item/weapon/plastique/attack(mob/M as mob, mob/user as mob, def_zone)
 	return

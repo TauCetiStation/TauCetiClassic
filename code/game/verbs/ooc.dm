@@ -17,7 +17,7 @@ var/global/normal_ooc_colour = "#002eb8"
 	msg = sanitize(copytext(msg, 1, MAX_MESSAGE_LEN))
 	if(!msg)	return
 
-	if(!(prefs.toggles & CHAT_OOC))
+	if(!(prefs.chat_toggles & CHAT_OOC))
 		src << "\red You have OOC muted."
 		return
 
@@ -55,7 +55,7 @@ var/global/normal_ooc_colour = "#002eb8"
 				display_colour = "#b82e00"	//orange
 
 	for(var/client/C in clients)
-		if(C.prefs.toggles & CHAT_OOC)
+		if(C.prefs.chat_toggles & CHAT_OOC)
 			var/display_name = src.key
 			if(holder)
 				if(holder.fakekey)
@@ -105,7 +105,7 @@ var/global/normal_ooc_colour = "#002eb8"
 	msg = sanitize(copytext(msg, 1, MAX_MESSAGE_LEN))
 	if(!msg)	return
 
-	if(!(prefs.toggles & CHAT_LOOC))
+	if(!(prefs.chat_toggles & CHAT_LOOC))
 		src << "\red You have LOOC muted."
 		return
 
@@ -137,7 +137,7 @@ var/global/normal_ooc_colour = "#002eb8"
 		if (C in admins)
 			continue //they are handled after that
 
-		if(C.prefs.toggles & CHAT_LOOC)
+		if(C.prefs.chat_toggles & CHAT_LOOC)
 			var/display_name = src.key
 			if(holder)
 				if(holder.fakekey)
@@ -147,7 +147,7 @@ var/global/normal_ooc_colour = "#002eb8"
 						display_name = holder.fakekey
 			C << "<font color='#6699CC'><span class='ooc'><span class='prefix'>LOOC:</span> <EM>[display_name]:</EM> <span class='message'>[msg]</span></span></font>"
 	for(var/client/C in admins)
-		if(C.prefs.toggles & CHAT_LOOC)
+		if(C.prefs.chat_toggles & CHAT_LOOC)
 			var/prefix = "(R)LOOC"
 			if (C.mob in heard)
 				prefix = "LOOC"

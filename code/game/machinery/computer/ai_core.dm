@@ -15,7 +15,7 @@
 		if(0)
 			if(istype(P, /obj/item/weapon/wrench))
 				playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-				if(do_after(user, 20))
+				if(do_after(user, 20, target = src))
 					user << "\blue You wrench the frame into place."
 					anchored = 1
 					state = 1
@@ -25,7 +25,7 @@
 					user << "The welder must be on for this task."
 					return
 				playsound(loc, 'sound/items/Welder.ogg', 50, 1)
-				if(do_after(user, 20))
+				if(do_after(user, 20, target = src))
 					if(!src || !WT.remove_fuel(0, user)) return
 					user << "\blue You deconstruct the frame."
 					new /obj/item/stack/sheet/plasteel( loc, 4)
@@ -33,7 +33,7 @@
 		if(1)
 			if(istype(P, /obj/item/weapon/wrench))
 				playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-				if(do_after(user, 20))
+				if(do_after(user, 20, target = src))
 					user << "\blue You unfasten the frame."
 					anchored = 0
 					state = 0
@@ -65,7 +65,7 @@
 			if(istype(P, /obj/item/weapon/cable_coil))
 				if(P:amount >= 5)
 					playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
-					if(do_after(user, 20))
+					if(do_after(user, 20, target = src))
 						P:amount -= 5
 						if(!P:amount) qdel(P)
 						user << "\blue You add cables to the frame."
@@ -86,7 +86,7 @@
 			if(istype(P, /obj/item/stack/sheet/rglass))
 				if(P:amount >= 2)
 					playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
-					if(do_after(user, 20))
+					if(do_after(user, 20, target = src))
 						if (P)
 							P:amount -= 2
 							if(!P:amount) qdel(P)
@@ -132,6 +132,7 @@
 				if(P:brainmob.mind)
 					ticker.mode.remove_cultist(P:brainmob.mind, 1)
 					ticker.mode.remove_revolutionary(P:brainmob.mind, 1)
+					ticker.mode.remove_gangster(P:brainmob.mind, 1)
 
 				user.drop_item()
 				P.loc = src
@@ -161,9 +162,15 @@
 			if(istype(P, /obj/item/weapon/screwdriver))
 				playsound(loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				user << "\blue You connect the monitor."
-				var/mob/living/silicon/ai/A = new /mob/living/silicon/ai ( loc, laws, brain )
-				if(A) //if there's no brain, the mob is deleted and a structure/AIcore is created
-					A.rename_self("ai", 1)
+				if(!brain)
+					var/open_for_latejoin = alert(user, "Would you like this core to be open for latejoining AIs?", "Latejoin", "Yes", "Yes", "No") == "Yes"
+					var/obj/structure/AIcore/deactivated/D = new(loc)
+					if(open_for_latejoin)
+						empty_playable_ai_cores += D
+				else
+					var/mob/living/silicon/ai/A = new /mob/living/silicon/ai ( loc, laws, brain )
+					if(A) //if there's no brain, the mob is deleted and a structure/AIcore is created
+						A.rename_self("ai", 1)
 				feedback_inc("cyborg_ais_created",1)
 				qdel(src)
 
@@ -174,10 +181,15 @@
 	anchored = 1
 	state = 20//So it doesn't interact based on the above. Not really necessary.
 
-	attackby(var/obj/item/device/aicard/A as obj, var/mob/user as mob)
-		if(istype(A, /obj/item/device/aicard))//Is it?
-			A.transfer_ai("INACTIVE","AICARD",src,user)
-		return
+/obj/structure/AIcore/deactivated/attackby(var/obj/item/device/aicard/A as obj, var/mob/user as mob)
+	if(istype(A, /obj/item/device/aicard))//Is it?
+		A.transfer_ai("INACTIVE","AICARD",src,user)
+	return
+
+/obj/structure/AIcore/deactivated/Destroy()
+	if(empty_playable_ai_cores.Find(src))
+		empty_playable_ai_cores -= src
+	..()
 
 /*
 This is a good place for AI-related object verbs so I'm sticking it here.
@@ -231,6 +243,7 @@ That prevents a few funky behaviors.
 								new /obj/structure/AIcore/deactivated(T.loc)
 								T.aiRestorePowerRoutine = 0
 								T.control_disabled = 1
+								T.aiRadio.disabledAi = 1
 								T.loc = C
 								C.AI = T
 								T.cancel_camera()
@@ -245,6 +258,7 @@ That prevents a few funky behaviors.
 						var/mob/living/silicon/ai/A = locate() in C//I love locate(). Best proc ever.
 						if(A)//If AI exists on the card. Else nothing since both are empty.
 							A.control_disabled = 0
+							A.aiRadio.disabledAi = 0
 							A.loc = T.loc//To replace the terminal.
 							C.icon_state = "aicard"
 							C.name = "inteliCard"
@@ -381,3 +395,26 @@ That prevents a few funky behaviors.
 	else
 		U << "\red <b>ERROR</b>: \black AI flush is in progress, cannot execute transfer protocol."
 	return
+
+/client/proc/empty_ai_core_toggle_latejoin()
+	set name = "Toggle AI Core Latejoin"
+	set category = "Admin"
+
+	var/list/cores = list()
+	for(var/obj/structure/AIcore/deactivated/D in world)
+		cores["[D] ([D.loc.loc])"] = D
+
+	var/id = input("Which core?", "Toggle AI Core Latejoin", null) as null|anything in cores
+	if(!id) return
+
+	var/obj/structure/AIcore/deactivated/D = cores[id]
+	if(!D) return
+
+	if(D in empty_playable_ai_cores)
+		empty_playable_ai_cores -= D
+		src << "\The [id] is now <font color=\"#ff0000\">not available</font> for latejoining AIs."
+	else
+		empty_playable_ai_cores += D
+		src << "\The [id] is now <font color=\"#008000\">available</font> for latejoining AIs."
+
+	message_admins("[key_name_admin(usr)] toggled AI Core latejoin.", 1)

@@ -79,7 +79,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	create_reagents(chem_volume) // making the cigarrete a chemical holder with a maximum volume of 15
 
 /obj/item/clothing/mask/cigarette/Destroy()
-	del(reagents)
+	qdel(reagents)
 	..()
 
 /obj/item/clothing/mask/cigarette/attackby(obj/item/weapon/W as obj, mob/user as mob)
@@ -199,7 +199,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(ismob(loc))
 		var/mob/living/M = loc
 		M << "<span class='notice'>Your [name] goes out.</span>"
-		M.u_equip(src)	//un-equip it so the overlays can update
+		M.remove_from_mob(src)	//un-equip it so the overlays can update
 		M.update_inv_wear_mask(0)
 	processing_objects.Remove(src)
 	qdel(src)
@@ -390,6 +390,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	attack_verb = list("burnt", "singed")
 	var/lit = 0
 
+	action_button_name = "Toggle Lighter"
+
 /obj/item/weapon/lighter/zippo
 	name = "\improper Zippo lighter"
 	desc = "The zippo."
@@ -412,8 +414,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			icon_state = icon_on
 			item_state = icon_on
 			if(istype(src, /obj/item/weapon/lighter/zippo) )
+				playsound(src, 'tauceti/sounds/items/zippo.ogg', 20, 1, 1)
 				user.visible_message("<span class='rose'>Without even breaking stride, [user] flips open and lights [src] in one smooth movement.</span>")
 			else
+				playsound(src, 'tauceti/sounds/items/lighter.ogg', 20, 1, 1)
 				if(prob(95))
 					user.visible_message("<span class='notice'>After a few attempts, [user] manages to light the [src].</span>")
 				else
@@ -424,18 +428,20 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 						user.apply_damage(2,BURN,"r_hand")
 					user.visible_message("<span class='notice'>After a few attempts, [user] manages to light the [src], they however burn their finger in the process.</span>")
 
-			user.SetLuminosity(user.luminosity + 2)
+			set_light(2)
 			processing_objects.Add(src)
 		else
 			lit = 0
 			icon_state = icon_off
 			item_state = icon_off
 			if(istype(src, /obj/item/weapon/lighter/zippo) )
+				playsound(src, 'tauceti/sounds/items/zippo.ogg', 20, 1, 1)
 				user.visible_message("<span class='rose'>You hear a quiet click, as [user] shuts off [src] without even looking at what they're doing.")
 			else
 				user.visible_message("<span class='notice'>[user] quietly shuts off the [src].")
+				playsound(src, 'tauceti/sounds/items/lighter.ogg', 20, 1, 1)
 
-			user.SetLuminosity(user.luminosity - 2)
+			set_light(0)
 			processing_objects.Remove(src)
 	else
 		return ..()
@@ -462,18 +468,4 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/turf/location = get_turf(src)
 	if(location)
 		location.hotspot_expose(700, 5, 0, src)
-	return
-
-
-/obj/item/weapon/lighter/pickup(mob/user)
-	if(lit)
-		SetLuminosity(0)
-		user.SetLuminosity(user.luminosity+2)
-	return
-
-
-/obj/item/weapon/lighter/dropped(mob/user)
-	if(lit)
-		user.SetLuminosity(user.luminosity-2)
-		SetLuminosity(2)
 	return

@@ -1,4 +1,6 @@
 /mob/living/carbon/human/proc/monkeyize()
+	if (notransform)
+		return
 	if (monkeyizing)
 		return
 	for(var/obj/item/W in src)
@@ -12,7 +14,7 @@
 	icon = null
 	invisibility = 101
 	for(var/t in organs)
-		del(t)
+		qdel(t)
 	var/atom/movable/overlay/animation = new /atom/movable/overlay( loc )
 	animation.icon_state = "blank"
 	animation.icon = 'icons/mob/mob.dmi'
@@ -47,8 +49,8 @@
 	O << "<B>You are now [O]. </B>"
 
 	spawn(0)//To prevent the proc from returning null.
-		del(src)
-	del(animation)
+		qdel(src)
+	qdel(animation)
 
 	return O
 
@@ -56,13 +58,13 @@
 	spawning = 1
 	return ..()
 
-/mob/living/carbon/human/AIize()
+/mob/living/carbon/human/AIize(move=1) // 'move' argument needs defining here too because BYOND is dumb
 	if (monkeyizing)
 		return
 	for(var/t in organs)
-		del(t)
+		qdel(t)
 
-	return ..()
+	return ..(move)
 
 /mob/living/carbon/AIize()
 	if (monkeyizing)
@@ -75,7 +77,7 @@
 	invisibility = 101
 	return ..()
 
-/mob/proc/AIize()
+/mob/proc/AIize(move=1)
 	if(client)
 		src << sound(null, repeat = 0, wait = 0, volume = 85, channel = 1) // stop the jams for AIs
 	var/mob/living/silicon/ai/O = new (loc, base_law_type,,1)//No MMI but safety is in effect.
@@ -88,28 +90,29 @@
 	else
 		O.key = key
 
-	var/obj/loc_landmark
-	for(var/obj/effect/landmark/start/sloc in landmarks_list)
-		if (sloc.name != "AI")
-			continue
-		if (locate(/mob/living) in sloc.loc)
-			continue
-		loc_landmark = sloc
-	if (!loc_landmark)
-		for(var/obj/effect/landmark/tripai in landmarks_list)
-			if (tripai.name == "tripai")
-				if(locate(/mob/living) in tripai.loc)
-					continue
-				loc_landmark = tripai
-	if (!loc_landmark)
-		O << "Oh god sorry we can't find an unoccupied AI spawn location, so we're spawning you on top of someone."
+	if(move)
+		var/obj/loc_landmark
 		for(var/obj/effect/landmark/start/sloc in landmarks_list)
-			if (sloc.name == "AI")
-				loc_landmark = sloc
+			if (sloc.name != "AI")
+				continue
+			if ((locate(/mob/living) in sloc.loc) || (locate(/obj/structure/AIcore) in sloc.loc))
+				continue
+			loc_landmark = sloc
+		if (!loc_landmark)
+			for(var/obj/effect/landmark/tripai in landmarks_list)
+				if (tripai.name == "tripai")
+					if((locate(/mob/living) in tripai.loc) || (locate(/obj/structure/AIcore) in tripai.loc))
+						continue
+					loc_landmark = tripai
+		if (!loc_landmark)
+			O << "Oh god sorry we can't find an unoccupied AI spawn location, so we're spawning you on top of someone."
+			for(var/obj/effect/landmark/start/sloc in landmarks_list)
+				if (sloc.name == "AI")
+					loc_landmark = sloc
 
-	O.loc = loc_landmark.loc
-	for (var/obj/item/device/radio/intercom/comm in O.loc)
-		comm.ai += O
+		O.loc = loc_landmark.loc
+		for (var/obj/item/device/radio/intercom/comm in O.loc)
+			comm.ai += O
 
 	O << "<B>You are playing the station's AI. The AI cannot move, but can interact with many objects while viewing them (through cameras).</B>"
 	O << "<B>To look at other parts of the station, click on yourself to get a camera menu.</B>"
@@ -120,21 +123,13 @@
 		O.show_laws()
 		O << "<b>These laws may be changed by other players, or by you being the traitor.</b>"
 
-	O.verbs += /mob/living/silicon/ai/proc/ai_call_shuttle
-	O.verbs += /mob/living/silicon/ai/proc/show_laws_verb
-	O.verbs += /mob/living/silicon/ai/proc/ai_camera_track
-	O.verbs += /mob/living/silicon/ai/proc/ai_alerts
-	O.verbs += /mob/living/silicon/ai/proc/ai_camera_list
-	O.verbs += /mob/living/silicon/ai/proc/ai_statuschange
-	O.verbs += /mob/living/silicon/ai/proc/ai_roster
-	O.verbs += /mob/living/silicon/ai/proc/change_floor
-
+	O.add_ai_verbs()
 	O.job = "AI"
 
 	O.rename_self("ai",1)
-	. = O
-	del(src)
-
+	spawn(0)
+		qdel(src)
+	return O
 
 //human -> robot
 /mob/living/carbon/human/proc/Robotize()
@@ -148,7 +143,7 @@
 	icon = null
 	invisibility = 101
 	for(var/t in organs)
-		del(t)
+		qdel(t)
 
 	var/mob/living/silicon/robot/O = new /mob/living/silicon/robot( loc )
 
@@ -187,7 +182,7 @@
 	O.Namepick()
 
 	spawn(0)//To prevent the proc from returning null.
-		del(src)
+		qdel(src)
 	return O
 
 //human -> alien
@@ -202,7 +197,7 @@
 	icon = null
 	invisibility = 101
 	for(var/t in organs)
-		del(t)
+		qdel(t)
 
 	var/alien_caste = pick("Hunter","Sentinel","Drone")
 	var/mob/living/carbon/alien/humanoid/new_xeno
@@ -219,7 +214,7 @@
 
 	new_xeno << "<B>You are now an alien.</B>"
 	spawn(0)//To prevent the proc from returning null.
-		del(src)
+		qdel(src)
 	return
 
 /mob/living/carbon/human/proc/slimeize(adult as num, reproduce as num)
@@ -233,7 +228,7 @@
 	icon = null
 	invisibility = 101
 	for(var/t in organs)
-		del(t)
+		qdel(t)
 
 	var/mob/living/carbon/slime/new_slime
 	if(reproduce)
@@ -255,7 +250,7 @@
 
 	new_slime << "<B>You are now a slime. Skreee!</B>"
 	spawn(0)//To prevent the proc from returning null.
-		del(src)
+		qdel(src)
 	return
 
 /mob/living/carbon/human/proc/corgize()
@@ -269,7 +264,7 @@
 	icon = null
 	invisibility = 101
 	for(var/t in organs)	//this really should not be necessary
-		del(t)
+		qdel(t)
 
 	var/mob/living/simple_animal/corgi/new_corgi = new /mob/living/simple_animal/corgi (loc)
 	new_corgi.a_intent = "hurt"
@@ -277,7 +272,7 @@
 
 	new_corgi << "<B>You are now a Corgi. Yap Yap!</B>"
 	spawn(0)//To prevent the proc from returning null.
-		del(src)
+		qdel(src)
 	return
 
 /mob/living/carbon/human/Animalize()
@@ -301,7 +296,7 @@
 	invisibility = 101
 
 	for(var/t in organs)
-		del(t)
+		qdel(t)
 
 	var/mob/new_mob = new mobpath(src.loc)
 
@@ -311,7 +306,7 @@
 
 	new_mob << "You suddenly feel more... animalistic."
 	spawn()
-		del(src)
+		qdel(src)
 	return
 
 /mob/proc/Animalize()
@@ -329,7 +324,7 @@
 	new_mob.a_intent = "hurt"
 	new_mob << "You feel more... animalistic"
 
-	del(src)
+	qdel(src)
 
 /* Certain mob types have problems and should not be allowed to be controlled by players.
  *

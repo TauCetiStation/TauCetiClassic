@@ -1,7 +1,7 @@
 ////////////////////////////
 // parent class for pipes //
 ////////////////////////////
-obj/machinery/atmospherics/pipe/zpipe
+/obj/machinery/atmospherics/pipe/zpipe
 		icon = 'icons/obj/structures.dmi'
 		icon_state = "up"
 
@@ -26,7 +26,7 @@ obj/machinery/atmospherics/pipe/zpipe
 
 		level = 1
 
-obj/machinery/atmospherics/pipe/zpipe/New()
+/obj/machinery/atmospherics/pipe/zpipe/New()
 	..()
 	switch(dir)
 		if(SOUTH)
@@ -48,18 +48,18 @@ obj/machinery/atmospherics/pipe/zpipe/New()
 	initialize()
 
 
-obj/machinery/atmospherics/pipe/zpipe/hide(var/i)
+/obj/machinery/atmospherics/pipe/zpipe/hide(var/i)
 	if(level == 1 && istype(loc, /turf/simulated))
 		invisibility = i ? 101 : 0
 	update_icon()
 
-obj/machinery/atmospherics/pipe/up/process()
+/obj/machinery/atmospherics/pipe/up/process()
 	if(!parent) //This should cut back on the overhead calling build_network thousands of times per cycle
 		..()
 	else
 		. = PROCESS_KILL
 
-obj/machinery/atmospherics/pipe/zpipe/check_pressure(pressure)
+/obj/machinery/atmospherics/pipe/zpipe/check_pressure(pressure)
 	var/datum/gas_mixture/environment = loc.return_air()
 
 	var/pressure_difference = pressure - environment.return_pressure()
@@ -74,56 +74,56 @@ obj/machinery/atmospherics/pipe/zpipe/check_pressure(pressure)
 
 	else return 1
 
-obj/machinery/atmospherics/pipe/zpipe/proc/burst()
+/obj/machinery/atmospherics/pipe/zpipe/proc/burst()
 	src.visible_message("\red \bold [src] bursts!");
 	playsound(src.loc, 'sound/effects/bang.ogg', 25, 1)
 	var/datum/effect/effect/system/smoke_spread/smoke = new
 	smoke.set_up(1,0, src.loc, 0)
 	smoke.start()
-	del(src)
+	qdel(src)
 
-obj/machinery/atmospherics/pipe/zpipe/proc/normalize_dir()
+/obj/machinery/atmospherics/pipe/zpipe/proc/normalize_dir()
 	if(dir==3)
 		dir = 1
 	else if(dir==12)
 		dir = 4
 
-obj/machinery/atmospherics/pipe/zpipe/Del()
+/obj/machinery/atmospherics/pipe/zpipe/Destroy()
 	if(node1)
 		node1.disconnect(src)
 	if(node2)
 		node2.disconnect(src)
 	..()
 
-obj/machinery/atmospherics/pipe/zpipe/pipeline_expansion()
+/obj/machinery/atmospherics/pipe/zpipe/pipeline_expansion()
 	return list(node1, node2)
 
-obj/machinery/atmospherics/pipe/zpipe/update_icon()
+/obj/machinery/atmospherics/pipe/zpipe/update_icon()
 	return
 
-obj/machinery/atmospherics/pipe/zpipe/disconnect(obj/machinery/atmospherics/reference)
+/obj/machinery/atmospherics/pipe/zpipe/disconnect(obj/machinery/atmospherics/reference)
 	if(reference == node1)
 		if(istype(node1, /obj/machinery/atmospherics/pipe))
-			del(parent)
+			qdel(parent)
 		node1 = null
 
 	if(reference == node2)
 		if(istype(node2, /obj/machinery/atmospherics/pipe))
-			del(parent)
+			qdel(parent)
 		node2 = null
 
 	return null
 /////////////////////////
 // the elusive up pipe //
 /////////////////////////
-obj/machinery/atmospherics/pipe/zpipe/up
+/obj/machinery/atmospherics/pipe/zpipe/up
 		icon = 'icons/obj/structures.dmi'
 		icon_state = "up"
 
 		name = "upwards pipe"
 		desc = "A pipe segment to connect upwards."
 
-obj/machinery/atmospherics/pipe/zpipe/up/initialize()
+/obj/machinery/atmospherics/pipe/zpipe/up/initialize()
 	normalize_dir()
 	var/node1_dir
 
@@ -155,14 +155,14 @@ obj/machinery/atmospherics/pipe/zpipe/up/initialize()
 // and the down pipe //
 ///////////////////////
 
-obj/machinery/atmospherics/pipe/zpipe/down
+/obj/machinery/atmospherics/pipe/zpipe/down
 		icon = 'icons/obj/structures.dmi'
 		icon_state = "down"
 
 		name = "downwards pipe"
 		desc = "A pipe segment to connect downwards."
 
-obj/machinery/atmospherics/pipe/zpipe/down/initialize()
+/obj/machinery/atmospherics/pipe/zpipe/down/initialize()
 	normalize_dir()
 	var/node1_dir
 

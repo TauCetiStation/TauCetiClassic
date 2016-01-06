@@ -13,6 +13,7 @@
 	lawupdate = 0
 	density = 1
 	req_access = list(access_engine, access_robotics)
+	ventcrawler = 2
 
 	// We need to keep track of a few module items so we don't need to do list operations
 	// every time we need them. These get set in New() after the module is chosen.
@@ -25,14 +26,13 @@
 	//Used for self-mailing.
 	var/mail_destination = ""
 
-	//Used for pulling.
-
+	holder_type = /obj/item/weapon/holder/drone
 /mob/living/silicon/robot/drone/New()
 
 	..()
 
 	if(camera && "Robots" in camera.network)
-		camera.network.Add("Engineering")
+		camera.add_network("Engineering")
 
 	//They are unable to be upgraded, so let's give them a bit of a better battery.
 	cell.maxcharge = 10000
@@ -61,6 +61,13 @@
 	//Some tidying-up.
 	flavor_text = "It's a tiny little repair drone. The casing is stamped with an NT logo and the subscript: 'NanoTrasen Recursive Repair Systems: Fixing Tomorrow's Problem, Today!'"
 	updateicon()
+
+/mob/living/silicon/robot/drone/init()
+	laws = new /datum/ai_laws/drone()
+	connected_ai = null
+
+	aiCamera = new/obj/item/device/camera/siliconcam/drone_camera(src)
+	playsound(src.loc, 'sound/machines/twobeep.ogg', 50, 0)
 
 //Redefining some robot procs...
 /mob/living/silicon/robot/drone/updatename()
@@ -129,7 +136,7 @@
 			for (var/mob/M in player_list)
 				if (istype(M, /mob/new_player))
 					continue
-				else if(M.stat == 2 &&  M.client.prefs.toggles & CHAT_GHOSTEARS)
+				else if(M.stat == 2 &&  M.client.prefs.chat_toggles & CHAT_GHOSTEARS)
 					if(M.client) M << "<b>[src]</b> transmits, \"[message]\""
 
 //Drones cannot be upgraded with borg modules so we need to catch some items before they get used in ..().
@@ -342,3 +349,7 @@
 	else
 		src << "<span class='warning'>You are too small to pull that.</span>"
 		return
+
+/mob/living/silicon/robot/drone/add_robot_verbs()
+
+/mob/living/silicon/robot/drone/remove_robot_verbs()

@@ -17,7 +17,7 @@
 			return !opacity
 		return !density
 
-	Del()
+	Destroy()
 		update_nearby_tiles()
 		..()
 

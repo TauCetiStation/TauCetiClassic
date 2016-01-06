@@ -986,14 +986,21 @@ table tr:first-child th:first-child { border: none;}
 					"scrubbing")
 
 					send_signal(device_id, list(href_list["command"] = text2num(href_list["val"]) ) )
-
+					if(href_list["command"] == "adjust_external_pressure")
+						var/new_val = text2num(href_list["val"])
+						investigate_log("[usr.key] has changed adjust_external_pressure > added [new_val], id_tag = [device_id]","atmos")
+					if(href_list["command"] == "checks")
+						var/new_val = text2num(href_list["val"])
+						investigate_log("[usr.key] has changed pressure_checks > now [new_val](1 = ext, 2 = int, 3 = both), id_tag = [device_id]","atmos")
 				if("set_threshold")
 					var/env = href_list["env"]
 					var/threshold = text2num(href_list["var"])
 					var/list/selected = TLV[env]
 					var/list/thresholds = list("lower bound", "low warning", "high warning", "upper bound")
 					var/newval = input("Enter [thresholds[threshold]] for [env]", "Alarm triggers", selected[threshold]) as null|num
-					if (isnull(newval) || ..() || (locked && issilicon(usr)))
+					if (isnull(newval) || ..())
+						return
+					if(ishuman(usr) && locked)
 						return
 					if (newval<0)
 						selected[threshold] = -1.0
@@ -1066,7 +1073,7 @@ table tr:first-child th:first-child { border: none;}
 
 		if (href_list["AAlarmwires"])
 			var/t1 = text2num(href_list["AAlarmwires"])
-			if (!( istype(usr.equipped(), /obj/item/weapon/wirecutters) ))
+			if (!( istype(usr.get_active_hand(), /obj/item/weapon/wirecutters) ))
 				usr << "You need wirecutters!"
 				return
 			if (isWireColorCut(t1))
@@ -1081,7 +1088,7 @@ table tr:first-child th:first-child { border: none;}
 
 		else if (href_list["pulse"])
 			var/t1 = text2num(href_list["pulse"])
-			if (!istype(usr.equipped(), /obj/item/device/multitool))
+			if (!istype(usr.get_active_hand(), /obj/item/device/multitool))
 				usr << "You need a multitool!"
 				return
 			if (isWireColorCut(t1))
@@ -1113,8 +1120,13 @@ table tr:first-child th:first-child { border: none;}
 				update_icon()
 				return
 
-			if (wiresexposed && ((istype(W, /obj/item/device/multitool) || istype(W, /obj/item/weapon/wirecutters))))
-				return attack_hand(user)
+			if (istype(W, /obj/item/weapon/wirecutters))
+				user.visible_message("<span class='warning'>[user] has cut the wires inside \the [src]!</span>", "You have cut the wires inside \the [src].")
+				playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
+				new/obj/item/weapon/cable_coil(get_turf(src), 5)
+				buildstage = 1
+				update_icon()
+				return
 
 			if (istype(W, /obj/item/weapon/card/id) || istype(W, /obj/item/device/pda))// trying to unlock the interface with an ID card
 				if(stat & (NOPOWER|BROKEN))
@@ -1133,7 +1145,7 @@ table tr:first-child th:first-child { border: none;}
 			if(istype(W, /obj/item/weapon/cable_coil))
 				var/obj/item/weapon/cable_coil/coil = W
 				if(coil.amount < 5)
-					user << "You need more cable for this!"
+					user << "<span class='warning'>You need 5 pieces of cable to do wire \the [src].</span>"
 					return
 
 				user << "You wire \the [src]!"
@@ -1149,7 +1161,7 @@ table tr:first-child th:first-child { border: none;}
 			else if(istype(W, /obj/item/weapon/crowbar))
 				user << "You start prying out the circuit."
 				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
-				if(do_after(user,20))
+				if(do_after(user,20,target = src))
 					user << "You pry out the circuit!"
 					var/obj/item/weapon/airalarm_electronics/circuit = new /obj/item/weapon/airalarm_electronics()
 					circuit.loc = user.loc
@@ -1324,11 +1336,17 @@ FIRE ALARM
 						user.visible_message("\red [user] has reconnected [src]'s detecting unit!", "You have reconnected [src]'s detecting unit.")
 					else
 						user.visible_message("\red [user] has disconnected [src]'s detecting unit!", "You have disconnected [src]'s detecting unit.")
+				else if (istype(W, /obj/item/weapon/wirecutters))
+					user.visible_message("\red [user] has cut the wires inside \the [src]!", "You have cut the wires inside \the [src].")
+					new/obj/item/weapon/cable_coil(get_turf(src), 5)
+					playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
+					buildstage = 1
+					update_icon()
 			if(1)
 				if(istype(W, /obj/item/weapon/cable_coil))
 					var/obj/item/weapon/cable_coil/coil = W
 					if(coil.amount < 5)
-						user << "You need more cable for this!"
+						user << "<span class='warning'>You need 5 pieces of cable to do wire \the [src].</span>"
 						return
 
 					coil.amount -= 5

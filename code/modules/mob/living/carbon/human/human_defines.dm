@@ -24,6 +24,7 @@
 	var/b_skin = 0
 
 	var/lip_style = null	//no lipstick by default- arguably misleading, as it could be used for general makeup
+	var/lip_color = "white"
 
 	var/age = 30		//Player's age (pure fluff)
 	var/b_type = "A+"	//Player's bloodtype
@@ -70,3 +71,13 @@
 
 	var/mob/remoteview_target = null
 	var/hand_blood_color
+
+	//Golem stuff
+	var/my_master = 0
+	var/my_golems = list()
+
+	//VG stuff
+	var/lastScream = 0 // Prevent scream spam in some situations
+
+	//TG stuff
+	var/name_override //For temporary visible name changes

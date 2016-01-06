@@ -2,6 +2,7 @@
 	name = "Cloning console"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "dna"
+	light_color = "#315ab4"
 	circuit = "/obj/item/weapon/circuitboard/cloning"
 	req_access = list(access_heads) //Only used for record deletion right now.
 	var/obj/machinery/dna_scannernew/scanner = null //Linked scanner. For scanning.
@@ -220,7 +221,7 @@
 		src.active_record = locate(href_list["view_rec"])
 		if(istype(src.active_record,/datum/dna2/record))
 			if ((isnull(src.active_record.ckey)))
-				del(src.active_record)
+				qdel(src.active_record)
 				src.temp = "ERROR: Record Corrupt"
 			else
 				src.menu = 3
@@ -240,7 +241,7 @@
 			if (istype(C)||istype(C, /obj/item/device/pda))
 				if(src.check_access(C))
 					src.records.Remove(src.active_record)
-					del(src.active_record)
+					qdel(src.active_record)
 					src.temp = "Record deleted."
 					src.menu = 2
 				else
@@ -308,7 +309,7 @@
 			else if(pod1.growclone(C))
 				temp = "Initiating cloning cycle..."
 				records.Remove(C)
-				del(C)
+				qdel(C)
 				menu = 1
 			else
 
@@ -318,7 +319,7 @@
 				if(answer != "No" && pod1.growclone(C))
 					temp = "Initiating cloning cycle..."
 					records.Remove(C)
-					del(C)
+					qdel(C)
 					menu = 1
 				else
 					temp = "Initiating cloning cycle...<br>Error: Post-initialisation failed. Cloning cycle aborted."
@@ -346,9 +347,9 @@
 	if ((!subject.ckey) || (!subject.client))
 		scantemp = "Error: Mental interface failure."
 		return
-	/*if (NOCLONE in subject.mutations)
-		scantemp = "Error: Mental interface failure."
-		return*/
+	if (NOCLONE in subject.mutations)
+		scantemp = "Error: Unable to locate valid genetic data."
+		return
 	if (!isnull(find_record(subject.ckey)))
 		scantemp = "Subject already in database."
 		return

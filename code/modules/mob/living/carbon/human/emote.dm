@@ -1,4 +1,4 @@
-/mob/living/carbon/human/emote(var/act,var/m_type=1,var/message = null)
+/mob/living/carbon/human/emote(var/act,var/m_type=1,var/message = null, var/auto)
 	var/param = null
 
 	if (findtext(act, "-", 1, null))
@@ -535,8 +535,19 @@
 				m_type = 1
 			else
 				if (!muzzled)
-					message = "<B>[src]</B> screams!"
-					m_type = 2
+					if (auto == 1)
+						if(world.time-lastScream >= 30)//prevent scream spam with things like poly spray
+							message = "<B>[src]</B> screams in agony!"
+							var/list/screamSound = list('sound/misc/malescream1.ogg', 'sound/misc/malescream2.ogg', 'sound/misc/malescream3.ogg', 'sound/misc/malescream4.ogg', 'sound/misc/malescream5.ogg', 'sound/misc/wilhelm.ogg', 'sound/misc/goofy.ogg')
+							if (src.gender == FEMALE) //Females have their own screams. Trannys be damned.
+								screamSound = list('sound/misc/femalescream1.ogg', 'sound/misc/femalescream2.ogg', 'sound/misc/femalescream3.ogg', 'sound/misc/femalescream4.ogg', 'sound/misc/femalescream5.ogg')
+							var/scream = pick(screamSound)//AUUUUHHHHHHHHOOOHOOHOOHOOOOIIIIEEEEEE
+							playsound(get_turf(src), scream, 50, 0)
+							m_type = 2
+							lastScream = world.time
+					else
+						message = "<B>[src]</B> screams!"
+						m_type = 2
 				else
 					message = "<B>[src]</B> makes a very loud noise."
 					m_type = 2
@@ -560,7 +571,7 @@
 		for(var/mob/M in dead_mob_list)
 			if(!M.client || istype(M, /mob/new_player))
 				continue //skip monkeys, leavers and new players
-			if(M.stat == DEAD && (M.client.prefs.toggles & CHAT_GHOSTSIGHT) && !(M in viewers(src,null)))
+			if(M.stat == DEAD && (M.client.prefs.chat_toggles & CHAT_GHOSTSIGHT) && !(M in viewers(src,null)))
 				M.show_message(message)
 
 

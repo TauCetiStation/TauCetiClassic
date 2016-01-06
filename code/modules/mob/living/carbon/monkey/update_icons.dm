@@ -26,20 +26,21 @@
 	return
 
 /mob/living/carbon/monkey/update_icons()
+	..()
 	update_hud()
-	lying_prev = lying	//so we don't update overlays for lying/standing unless our stance changes again
+	//lying_prev = lying	//so we don't update overlays for lying/standing unless our stance changes again
 	overlays.Cut()
 	for(var/image/I in overlays_standing)
 		overlays += I
 
-	if(lying)
+	/*if(lying)
 		var/matrix/M = matrix()
 		M.Turn(90)
 		M.Translate(1,-6)
 		src.transform = M
 	else
 		var/matrix/M = matrix()
-		src.transform = M
+		src.transform = M*/
 
 
 ////////
@@ -117,7 +118,7 @@
 	if (targeted_by && target_locked)
 		overlays_standing[TARGETED_LAYER]	= target_locked
 	else if (!targeted_by && target_locked)
-		del(target_locked)
+		qdel(target_locked)
 	if (!targeted_by)
 		overlays_standing[TARGETED_LAYER]	= null
 	if(update_icons)		update_icons()

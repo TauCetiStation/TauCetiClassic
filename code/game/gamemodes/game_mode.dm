@@ -17,6 +17,7 @@
 	var/config_tag = null
 	var/intercept_hacked = 0
 	var/votable = 1
+	var/playable_mode = 1
 	var/probability = 0
 	var/station_was_nuked = 0 //see nuclearbomb.dm and malfunction.dm
 	var/explosion_in_progress = 0 //sit back and relax
@@ -113,6 +114,8 @@ Implants;
 	if(ticker && ticker.mode)
 		feedback_set_details("game_mode","[ticker.mode]")
 	feedback_set_details("server_ip","[world.internet_address]:[world.port]")
+	start_state = new /datum/station_state()
+	start_state.count(1)
 	return 1
 
 
@@ -212,8 +215,13 @@ Implants;
 	for(var/mob/living/carbon/human/man in player_list) if(man.client && man.mind)
 		// NT relation option
 		var/special_role = man.mind.special_role
-		if (special_role == "Wizard" || special_role == "Ninja" || special_role == "Syndicate" || special_role == "Vox Raider")
+		if (special_role == "Wizard" || special_role == "Ninja" || special_role == "Syndicate" || special_role == "Vox Raider" || special_role == "Raider")
 			continue	//NT intelligence ruled out possiblity that those are too classy to pretend to be a crew.
+		for(var/spec_role in gang_name_pool)
+			if (special_role == "[spec_role] Gang (A) Boss")
+				continue
+			if (special_role == "[spec_role] Gang (B) Boss")
+				continue
 		if(man.client.prefs.nanotrasen_relation == "Opposed" && prob(50) || \
 		   man.client.prefs.nanotrasen_relation == "Skeptical" && prob(20))
 			suspects += man
@@ -229,6 +237,7 @@ Implants;
 			if(suplink)
 				var/extra = 4
 				suplink.uses += extra
+				if(man.mind) man.mind.total_TC += extra
 				man << "\red We have received notice that enemy intelligence suspects you to be linked with us. We have thus invested significant resources to increase your uplink's capacity."
 			else
 				// Give them a warning!
@@ -269,16 +278,19 @@ Implants;
 	//var/datum/mind/applicant = null
 
 	var/roletext
-	switch(role)
-		if(BE_CHANGELING)	roletext="changeling"
+	switch(role) //Sorting as in preferences
 		if(BE_TRAITOR)		roletext="traitor"
 		if(BE_OPERATIVE)	roletext="operative"
+		if(BE_CHANGELING)	roletext="changeling"
 		if(BE_WIZARD)		roletext="wizard"
 		if(BE_REV)			roletext="revolutionary"
 		if(BE_CULTIST)		roletext="cultist"
 		if(BE_NINJA)		roletext="ninja"
 		if(BE_RAIDER)		roletext="raider"
 		if(BE_MEME)			roletext="meme"
+		if(BE_MUTINEER)		roletext="mutineer"
+		if(BE_SHADOWLING)	roletext="shadowling"
+		if(BE_ABDUCTOR)		roletext="abductor"
 
 	// Assemble a list of active players without jobbans.
 	for(var/mob/new_player/player in player_list)
@@ -480,3 +492,34 @@ proc/get_nt_opposed()
 				dudes += man
 	if(dudes.len == 0) return null
 	return pick(dudes)
+
+///////////////////////////
+//Misc stuff and TG ports//
+///////////////////////////
+
+/datum/game_mode/proc/printplayer(var/datum/mind/ply)
+	var/role = "\improper[ply.special_role]"
+	var/text = "<br><b>[ply.name]</b>(<b>[ply.key]</b>) as \a <b>[role]</b> ("
+	if(ply.current)
+		if(ply.current.stat == DEAD)
+			text += "died"
+		else
+			text += "survived"
+		if(ply.current.real_name != ply.name)
+			text += " as <b>[ply.current.real_name]</b>"
+	else
+		text += "body destroyed"
+	text += ")"
+
+	return text
+
+/datum/game_mode/proc/printobjectives(datum/mind/ply)
+	var/text = ""
+	var/count = 1
+	for(var/datum/objective/objective in ply.objectives)
+		if(objective.check_completion())
+			text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <font color='green'>Success!</font>"
+		else
+			text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <font color='red'>Fail.</font>"
+		count++
+	return text

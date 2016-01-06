@@ -41,8 +41,13 @@
 
 	sleep_offline = 1
 
+	processScheduler = new
+	processSchedulerView = new
 	master_controller = new /datum/controller/game_controller()
 	spawn(1)
+		//processScheduler.deferSetupFor(/datum/controller/process/ticker)
+		processScheduler.setup()
+
 		master_controller.setup()
 
 	spawn(3000)		//so we aren't adding to the round-start lag
@@ -190,6 +195,9 @@ var/world_topic_spam_protect_time = world.timeofday
 	/*spawn(0)
 		world << sound(pick('sound/AI/newroundsexy.ogg','sound/misc/apcdestroyed.ogg','sound/misc/bangindonk.ogg')) // random end sounds!! - LastyBatsy
 		*/
+
+	processScheduler.stop()
+
 	for(var/client/C in clients)
 		if(config.server)	//if you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite
 			C << link("byond://[config.server]")
@@ -210,12 +218,22 @@ var/world_topic_spam_protect_time = world.timeofday
 					if(!istype(C.mob, /mob/dead))
 						log_access("AFK: [key_name(C)]")
 						C << "\red You have been inactive for more than 10 minutes and have been disconnected."
-						del(C)
+						qdel(C)
 #undef INACTIVITY_KICK
 
+/hook/startup/proc/loadStealthKeys()
+	world.load_stealth_keys()
+	return 1
+
+/world/proc/load_stealth_keys()
+	var/list/keys_list = file2list("config/stealth_keys.txt")
+	if(keys_list.len)
+		for(var/X in keys_list)
+			stealth_keys += lowertext(X)
 
 /hook/startup/proc/loadMode()
 	world.load_mode()
+	world.load_last_mode()
 	return 1
 
 /world/proc/load_mode()
@@ -229,6 +247,18 @@ var/world_topic_spam_protect_time = world.timeofday
 	var/F = file("data/mode.txt")
 	fdel(F)
 	F << the_mode
+
+/world/proc/load_last_mode()
+	var/list/Lines = file2list("data/last_mode.txt")
+	if(Lines.len)
+		if(Lines[1])
+			master_last_mode = Lines[1]
+			log_misc("Previous round played mode was '[master_last_mode]'")
+
+/world/proc/save_last_mode(var/the_last_mode)
+	var/F = file("data/last_mode.txt")
+	fdel(F)
+	F << the_last_mode
 
 
 /hook/startup/proc/loadMOTD()

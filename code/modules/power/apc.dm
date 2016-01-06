@@ -145,7 +145,7 @@
 		init()
 	else
 		area = src.loc.loc:master
-		area.apc |= src
+		area.apc = src
 		opened = 1
 		operating = 0
 		name = "[area.name] APC"
@@ -181,7 +181,7 @@
 	else
 		src.area = get_area_name(areastring)
 		name = "\improper [area.name] APC"
-	area.apc |= src
+	area.apc = src
 	update_icon()
 
 	make_terminal()
@@ -398,7 +398,7 @@
 				return
 			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 			user << "You are trying to remove the power control board..." //lpeters - fixed grammar issues
-			if(do_after(user, 50))
+			if(do_after(user, 50, target = src))
 				has_electronics = 0
 				if ((stat & BROKEN) || malfhack)
 					user.visible_message(\
@@ -489,7 +489,7 @@
 			user << "Nothing happens."
 		else
 			flick("apc-spark", src)
-			if (do_after(user,6))
+			if (do_after(user,6,target = src))
 				if(prob(50))
 					emagged = 1
 					locked = 0
@@ -507,7 +507,7 @@
 			return
 		user << "You start adding cables to the APC frame..."
 		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-		if(do_after(user, 20) && C.amount >= 10)
+		if(do_after(user, 20, target = src) && C.amount >= 10)
 			var/turf/T = get_turf_loc(src)
 			var/obj/structure/cable/N = T.get_cable_node()
 			if (prob(50) && electrocute_mob(usr, N, N))
@@ -527,7 +527,7 @@
 			return
 		user << "You begin to cut the cables..."
 		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-		if(do_after(user, 50))
+		if(do_after(user, 50, target = src))
 			if (prob(50) && electrocute_mob(usr, terminal.powernet, terminal))
 				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 				s.set_up(5, 1, src)
@@ -537,14 +537,14 @@
 			user.visible_message(\
 				"\red [user.name] cut the cables and dismantled the power terminal.",\
 				"You cut the cables and dismantle the power terminal.")
-			del(terminal)
+			qdel(terminal)
 	else if (istype(W, /obj/item/weapon/module/power_control) && opened && has_electronics==0 && !((stat & BROKEN) || malfhack))
 		user << "You trying to insert the power control board into the frame..."
 		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-		if(do_after(user, 10))
+		if(do_after(user, 10, target = src))
 			has_electronics = 1
 			user << "You place the power control board inside the frame."
-			del(W)
+			qdel(W)
 	else if (istype(W, /obj/item/weapon/module/power_control) && opened && has_electronics==0 && ((stat & BROKEN) || malfhack))
 		user << "\red You cannot put the board inside, the frame is damaged."
 		return
@@ -555,7 +555,7 @@
 			return
 		user << "You start welding the APC frame..."
 		playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
-		if(do_after(user, 50))
+		if(do_after(user, 50, target = src))
 			if(!src || !WT.remove_fuel(3, user)) return
 			if (emagged || malfhack || (stat & BROKEN) || opened==2)
 				new /obj/item/stack/sheet/metal(loc)
@@ -569,7 +569,7 @@
 					"\red [src] has been cut from the wall by [user.name] with the weldingtool.",\
 					"You cut the APC frame from the wall.",\
 					"\red You hear welding.")
-			del(src)
+			qdel(src)
 			return
 	else if (istype(W, /obj/item/apc_frame) && opened && emagged)
 		emagged = 0
@@ -578,18 +578,18 @@
 		user.visible_message(\
 			"\red [user.name] has replaced the damaged APC frontal panel with a new one.",\
 			"You replace the damaged APC frontal panel with a new one.")
-		del(W)
+		qdel(W)
 		update_icon()
 	else if (istype(W, /obj/item/apc_frame) && opened && ((stat & BROKEN) || malfhack))
 		if (has_electronics)
 			user << "You cannot repair this APC until you remove the electronics still inside."
 			return
 		user << "You begin to replace the damaged APC frame..."
-		if(do_after(user, 50))
+		if(do_after(user, 50, target = src))
 			user.visible_message(\
 				"\red [user.name] has replaced the damaged APC frame with new one.",\
 				"You replace the damaged APC frame with new one.")
-			del(W)
+			qdel(W)
 			stat &= ~BROKEN
 			malfai = null
 			malfhack = 0
@@ -680,6 +680,7 @@
 /obj/machinery/power/apc/attack_alien(mob/living/carbon/alien/humanoid/user)
 	if(!user)
 		return
+	user.do_attack_animation(src)
 	user.visible_message("\red [user.name] slashes at the [src.name]!", "\blue You slash at the [src.name]!")
 	playsound(src.loc, 'sound/weapons/slash.ogg', 100, 1)
 	var/allcut = 1
@@ -1093,7 +1094,7 @@
 	malf.mind.transfer_to(src.occupant)
 	src.occupant.eyeobj.name = "[src.occupant.name] (AI Eye)"
 	if(malf.parent)
-		del(malf)
+		qdel(malf)
 	src.occupant.verbs += /mob/living/silicon/ai/proc/corereturn
 	src.occupant.verbs += /datum/game_mode/malfunction/proc/takeover
 	src.occupant.cancel_camera()
@@ -1105,7 +1106,7 @@
 		src.occupant.mind.transfer_to(src.occupant.parent)
 		src.occupant.parent.adjustOxyLoss(src.occupant.getOxyLoss())
 		src.occupant.parent.cancel_camera()
-		del(src.occupant)
+		qdel(src.occupant)
 
 	else
 		src.occupant << "\red Primary core damaged, unable to return core processes."
@@ -1364,10 +1365,10 @@
 
 	switch(severity)
 		if(1.0)
-			//set_broken() //now Del() do what we need
+			//set_broken() //now Destroy() do what we need
 			if (cell)
 				cell.ex_act(1.0) // more lags woohoo
-			del(src)
+			qdel(src)
 			return
 		if(2.0)
 			if (prob(50))
@@ -1413,11 +1414,12 @@
 					L.broken()
 					sleep(1)
 
-/obj/machinery/power/apc/Del()
+/obj/machinery/power/apc/Destroy()
 	if(malfai && operating)
 		if (ticker.mode.config_tag == "malfunction")
 			if (src.z == 1) //if (is_type_in_list(get_area(src), the_station_areas))
 				ticker.mode:apcs--
+	area.apc = null
 	area.power_light = 0
 	area.power_equip = 0
 	area.power_environ = 0

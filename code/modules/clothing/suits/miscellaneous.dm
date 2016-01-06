@@ -201,6 +201,50 @@
 	item_state = "ianshirt"
 	body_parts_covered = UPPER_TORSO|ARMS
 
+/obj/item/clothing/suit/nerdshirt
+	name = "gamer shirt"
+	desc = "A baggy shirt with a vintage game character on it. Why would someone wear this?"
+	icon_state = "nerdshirt"
+	item_state = "nerdshirt"
+
+/obj/item/clothing/suit/jacket
+	name = "bomber jacket"
+	desc = "Aviators not included."
+	icon_state = "bomberjacket"
+	item_state = "johnny"
+	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen,/obj/item/toy,/obj/item/weapon/storage/fancy/cigarettes,/obj/item/weapon/lighter)
+
+/obj/item/clothing/suit/jacket/leather
+	name = "leather jacket"
+	desc = "Pompadour not included."
+	icon_state = "leatherjacket"
+	item_state = "hostrench"
+
+/obj/item/clothing/suit/jacket/leather/overcoat
+	name = "leather overcoat"
+	desc = "That's a damn fine coat."
+	icon_state = "leathercoat"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
+	cold_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
+
+/obj/item/clothing/suit/jacket/puffer
+	name = "puffer jacket"
+	desc = "A thick jacket with a rubbery, water-resistant shell."
+	icon_state = "pufferjacket"
+	item_state = "hostrench"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO
+	cold_protection = UPPER_TORSO|LOWER_TORSO
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 35, rad = 0)
+
+/obj/item/clothing/suit/jacket/puffer/vest
+	name = "puffer vest"
+	desc = "A thick vest with a rubbery, water-resistant shell."
+	icon_state = "puffervest"
+	item_state = "armor"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO
+	cold_protection = UPPER_TORSO|LOWER_TORSO
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 30, rad = 0)
+
 //Blue suit jacket toggle
 /obj/item/clothing/suit/suit/verb/toggle()
 	set name = "Toggle Jacket Buttons"

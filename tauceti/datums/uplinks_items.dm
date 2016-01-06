@@ -51,8 +51,8 @@
 	var/last = 0 // Appear last
 	var/list/gamemodes = list() // Empty list means it is in all the gamemodes. Otherwise place the gamemode name here.
 	var/list/excludefrom = list()//Empty list does nothing. Place the name of gamemode you don't want this item to be available in here. This is so you dont have to list EVERY mode to exclude something.
-	var/list/uplink_types = list() //Пустой список значит, что предмет будет доступен во всех типах аплинков. Иначе нужно будет указать тип аплинка
-	var/list/excludefrom_uplinks = list() //пустой список ничего не делает. Иначе нужно будет указать тип аплинка, в котором предмет будет недоступен
+	var/list/uplink_types = list() //Empty list means that the object will be available in all types of uplinks. Alias you will need to state its type.
+	var/list/excludefrom_uplinks = list() //Empty list does nothing. Alias you will need to state the type of uplink, where the object won't be available. 
 
 
 /datum/uplink_item/proc/spawn_item(var/turf/loc, var/obj/item/device/uplink/U)
@@ -80,13 +80,23 @@
 			return 0
 
 		var/obj/I = spawn_item(get_turf(user), U)
-
+		if(!I)
+			return 0
+		var/bundlename = name
+		if(name == "Random Item" || name == "For showing that you are The Boss")
+			bundlename = I.name
+		if(I.tag)
+			bundlename = "[I.tag] bundle"
+			I.tag = null
 		if(istype(I, /obj/item) && ishuman(user))
 			var/mob/living/carbon/human/A = user
 			A.put_in_any_hand_if_possible(I)
-			U.purchase_log += "[user] ([user.ckey]) bought [name]."
-
+			U.purchase_log += "[user] ([user.ckey]) bought \icon[I] [name] for [cost]."
+			if(user.mind)
+				user.mind.uplink_items_bought += "\icon[I] [bundlename]"
+				user.mind.spent_TC += cost
 		U.interact(user)
+
 		return 1
 	return 0
 
@@ -125,9 +135,18 @@
 
 /datum/uplink_item/dangerous/machinegun
 	name = "L6 Squad Automatic Weapon"
-	desc = "A traditionally constructed machine gun made by AA-2531. This deadly weapon has a massive 50-round magazine of 7.62Ч51mm ammunition."
+	desc = "A traditionally constructed machine gun made by AA-2531. This deadly weapon has a massive 50-round magazine of 7.62x51mm ammunition."
 	item = /obj/item/weapon/gun/projectile/automatic/l6_saw
 	cost = 25
+	gamemodes = list(/datum/game_mode/nuclear)
+	uplink_types = list("nuclear")
+	excludefrom_uplinks = list("traitor")
+
+/datum/uplink_item/dangerous/heavyrifle
+	name = "PTR-7 heavy rifle"
+	desc = "A portable anti-armour bolt-action rifle. Originally designed to used against armoured exosuits. Fires armor piercing 14.5mm shells."
+	item = /obj/item/weapon/gun/projectile/heavyrifle
+	cost = 10
 	gamemodes = list(/datum/game_mode/nuclear)
 	uplink_types = list("nuclear")
 	excludefrom_uplinks = list("traitor")
@@ -317,6 +336,14 @@
 	gamemodes = list(/datum/game_mode/nuclear)
 	uplink_types = list("nuclear")
 
+/datum/uplink_item/ammo/heavyrifle
+	name = "A 14.5mm shell."
+	desc = "A 14.5mm shell for use with PTR-7 heavy rifle. One shot, one kill, no luck, just skill."
+	item = /obj/item/ammo_casing/a145
+	cost = 1
+	gamemodes = list(/datum/game_mode/nuclear)
+	uplink_types = list("nuclear")
+
 /datum/uplink_item/ammo/rocket
 	name = "HE missile"
 	desc = "A high explosive missile for Goliath launcher"
@@ -381,7 +408,7 @@
 /*
 /datum/uplink_item/stealthy_tools/chameleon_stamp
 	name = "Chameleon Stamp"
-	desc = "A stamp that can be activated to imitate an official Nanotrasen Stamp™. The disguised stamp will work exactly like the real stamp and will allow you to forge false documents to gain access or equipment; \
+	desc = "A stamp that can be activated to imitate an official Nanotrasen Stamp. The disguised stamp will work exactly like the real stamp and will allow you to forge false documents to gain access or equipment; \
 	it can also be used in a washing machine to forge clothing."
 	item = /obj/item/weapon/stamp/chameleon
 	cost = 1 */
@@ -503,6 +530,7 @@
 	leading to an emergency evacuation. Because of its size, it cannot be carried. Ordering this sends you a small beacon that will teleport the larger beacon to your location on activation."
 	item = /obj/item/device/radio/beacon/syndicate
 	cost = 7
+	uplink_types = list("nuclear")
 
 /datum/uplink_item/device_tools/syndicate_bomb
 	name = "Syndicate Bomb"

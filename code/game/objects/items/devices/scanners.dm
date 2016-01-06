@@ -90,7 +90,7 @@ REAGENT SCANNER
 		usr << "\red You don't have the dexterity to do this!"
 		return
 	user.visible_message("<span class='notice'> [user] has analyzed [M]'s vitals.","<span class='notice'> You have analyzed [M]'s vitals.")
-	
+
 	if (!istype(M, /mob/living/carbon) || (ishuman(M) && (M:species.flags & IS_SYNTHETIC)))
 		//these sensors are designed for organic life
 		user.show_message("\blue Analyzing Results for ERROR:\n\t Overall Status: ERROR")
@@ -100,7 +100,7 @@ REAGENT SCANNER
 		user.show_message("\red <b>Warning: Blood Level ERROR: --% --cl.\blue Type: ERROR")
 		user.show_message("\blue Subject's pulse: <font color='red'>-- bpm.</font>")
 		return
-	
+
 	var/fake_oxy = max(rand(1,40), M.getOxyLoss(), (300 - (M.getToxLoss() + M.getFireLoss() + M.getBruteLoss())))
 	var/OX = M.getOxyLoss() > 50 	? 	"<b>[M.getOxyLoss()]</b>" 		: M.getOxyLoss()
 	var/TX = M.getToxLoss() > 50 	? 	"<b>[M.getToxLoss()]</b>" 		: M.getToxLoss()
@@ -223,6 +223,8 @@ REAGENT SCANNER
 	m_amt = 30
 	g_amt = 20
 	origin_tech = "magnets=1;engineering=1"
+
+	action_button_name = "Use Analyzer"
 
 /obj/item/device/analyzer/attack_self(mob/user as mob)
 

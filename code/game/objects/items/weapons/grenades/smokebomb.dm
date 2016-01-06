@@ -11,7 +11,7 @@
 
 	New()
 		..()
-		src.smoke = new /datum/effect/effect/system/smoke_spread/bad
+		src.smoke = PoolOrNew(/datum/effect/effect/system/smoke_spread/bad)
 		src.smoke.attach(src)
 
 	prime()
@@ -31,5 +31,5 @@
 			B.health -= damage
 			B.update_icon()
 		sleep(80)
-		del(src)
+		qdel(src)
 		return

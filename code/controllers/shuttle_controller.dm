@@ -11,7 +11,7 @@
 
 var/global/datum/shuttle_controller/emergency_shuttle/emergency_shuttle
 
-datum/shuttle_controller
+/datum/shuttle_controller
 	var/alert = 0 //0 = emergency, 1 = crew cycle
 
 	var/location = 0 //0 = somewhere far away (in spess), 1 = at SS13, 2 = returned from SS13
@@ -29,33 +29,35 @@ datum/shuttle_controller
 	// call the shuttle
 	// if not called before, set the endtime to T+600 seconds
 	// otherwise if outgoing, switch to incoming
-	proc/incall(coeff = 1)
-		if(deny_shuttle && alert == 1) //crew transfer shuttle does not gets recalled by gamemode
-			return
-		if(endtime)
-			if(direction == -1)
-				setdirection(1)
-		else
-			settimeleft(get_shuttle_arrive_time()*coeff)
-			online = 1
-			if(always_fake_recall)
-				fake_recall = rand(300,500)		//turning on the red lights in hallways
-		if(alert == 0)
-			for(var/area/A in world)
-				if(istype(A, /area/hallway))
-					A.readyalert()
 
-	proc/get_shuttle_arrive_time()
-		// During mutiny rounds, the shuttle takes twice as long.
-		if(ticker && istype(ticker.mode,/datum/game_mode/mutiny))
-			return SHUTTLEARRIVETIME * 2
+/datum/shuttle_controller/proc/incall(coeff = 1)
+	if(deny_shuttle && alert == 1) //crew transfer shuttle does not gets recalled by gamemode
+		return
+	if(endtime)
+		if(direction == -1)
+			setdirection(1)
+	else
+		settimeleft(get_shuttle_arrive_time()*coeff)
+		online = 1
+		if(always_fake_recall)
+			fake_recall = rand(300,500)		//turning on the red lights in hallways
+	/*if(alert == 0)
+		red_alert_evac = 1
+		for(var/area/A in world)
+			if(istype(A, /area/hallway))
+				A.readyalert()*/
 
-		return SHUTTLEARRIVETIME
+/datum/shuttle_controller/proc/get_shuttle_arrive_time()
+	// During mutiny rounds, the shuttle takes twice as long.
+	if(ticker && istype(ticker.mode,/datum/game_mode/mutiny))
+		return SHUTTLEARRIVETIME * 2
 
-datum/shuttle_controller/proc/shuttlealert(var/X)
+	return SHUTTLEARRIVETIME
+
+/datum/shuttle_controller/proc/shuttlealert(var/X)
 		alert = X
 
-datum/shuttle_controller/proc/recall()
+/datum/shuttle_controller/proc/recall()
 	if(direction == 1)
 		var/timeleft = timeleft()
 		if(alert == 0)
@@ -65,9 +67,10 @@ datum/shuttle_controller/proc/recall()
 			world << sound('sound/AI/shuttlerecalled.ogg')
 			setdirection(-1)
 			online = 1
+			/*red_alert_evac = 0
 			for(var/area/A in world)
 				if(istype(A, /area/hallway))
-					A.readyreset()
+					A.readyreset()*/
 			return
 		else //makes it possible to send shuttle back.
 			captain_announce("The shuttle has been recalled.")
@@ -155,7 +158,8 @@ datum/shuttle_controller/emergency_shuttle/process()
 							//pods
 					start_location = locate(/area/shuttle/escape_pod1/transit)
 					end_location = locate(/area/shuttle/escape_pod1/centcom)
-					start_location.move_contents_to(end_location, null, NORTH)
+					if( prob(5) ) // 5% that they survive
+						start_location.move_contents_to(end_location, null, NORTH)
 
 					for(var/obj/machinery/door/D in machines)
 						if( get_area(D) == end_location )
@@ -175,7 +179,8 @@ datum/shuttle_controller/emergency_shuttle/process()
 
 					start_location = locate(/area/shuttle/escape_pod2/transit)
 					end_location = locate(/area/shuttle/escape_pod2/centcom)
-					start_location.move_contents_to(end_location, null, NORTH)
+					if( prob(5) ) // 5% that they survive
+						start_location.move_contents_to(end_location, null, NORTH)
 
 					for(var/obj/machinery/door/D in machines)
 						if( get_area(D) == end_location )
@@ -195,7 +200,8 @@ datum/shuttle_controller/emergency_shuttle/process()
 
 					start_location = locate(/area/shuttle/escape_pod3/transit)
 					end_location = locate(/area/shuttle/escape_pod3/centcom)
-					start_location.move_contents_to(end_location, null, NORTH)
+					if( prob(5) ) // 5% that they survive
+						start_location.move_contents_to(end_location, null, NORTH)
 
 					for(var/obj/machinery/door/D in machines)
 						if( get_area(D) == end_location )
@@ -215,7 +221,8 @@ datum/shuttle_controller/emergency_shuttle/process()
 
 					start_location = locate(/area/shuttle/escape_pod5/transit)
 					end_location = locate(/area/shuttle/escape_pod5/centcom)
-					start_location.move_contents_to(end_location, null, EAST)
+					if( prob(5) ) // 5% that they survive
+						start_location.move_contents_to(end_location, null, EAST)
 
 					for(var/obj/machinery/door/D in machines)
 						if( get_area(D) == end_location )
@@ -279,7 +286,7 @@ datum/shuttle_controller/emergency_shuttle/process()
 						*/
 
 					if(istype(T, /turf/simulated) || T.is_catwalk())
-						del(T)
+						qdel(T)
 
 				for(var/mob/living/carbon/bug in end_location) // If someone somehow is still in the shuttle's docking area...
 					bug.gib()
@@ -290,8 +297,13 @@ datum/shuttle_controller/emergency_shuttle/process()
 				start_location.move_contents_to(end_location)
 				settimeleft(SHUTTLELEAVETIME)
 				//send2irc("Server", "The Emergency Shuttle has docked with the station.")
-				captain_announce("The Emergency Shuttle has docked with the station. You have [round(timeleft()/60,1)] minutes to board the Emergency Shuttle.")
-				world << sound('sound/AI/shuttledock.ogg')
+				if(alert == 0)
+					captain_announce("The Emergency Shuttle has docked with the station. You have [round(timeleft()/60,1)] minutes to board the Emergency Shuttle.")
+					world << sound('sound/AI/shuttledock.ogg')
+				else
+					captain_announce("The scheduled Crew Transfer Shuttle has docked with the station. It will depart in approximately [round(timeleft()/60,1)] minutes.")
+
+				send2slack_service("the shuttle has docked with the station")
 
 				return 1
 
@@ -310,7 +322,9 @@ datum/shuttle_controller/emergency_shuttle/process()
 
 			/* --- Shuttle leaves the station, enters transit --- */
 			else
-
+				if(alert == 1)
+					captain_announce("Departing...")
+					sleep(100)
 				// Turn on the star effects
 
 				/* // kinda buggy atm, i'll fix this later
@@ -349,79 +363,83 @@ datum/shuttle_controller/emergency_shuttle/process()
 							M.Weaken(5)
 
 				//pods
-				start_location = locate(/area/shuttle/escape_pod1/station)
-				end_location = locate(/area/shuttle/escape_pod1/transit)
-				start_location.move_contents_to(end_location, null, NORTH)
-				for(var/obj/machinery/door/D in end_location)
-					spawn(0)
-						D.close()
+				if(alert == 0) // Crew Transfer not for pods
 
-				for(var/mob/M in end_location)
-					if(M.client)
+					start_location = locate(/area/shuttle/escape_pod1/station)
+					end_location = locate(/area/shuttle/escape_pod1/transit)
+					start_location.move_contents_to(end_location, null, NORTH)
+					for(var/obj/machinery/door/D in end_location)
 						spawn(0)
-							if(M.buckled)
-								shake_camera(M, 4, 1) // buckled, not a lot of shaking
-							else
-								shake_camera(M, 10, 2) // unbuckled, HOLY SHIT SHAKE THE ROOM
-					if(istype(M, /mob/living/carbon))
-						if(!M.buckled)
-							M.Weaken(5)
+							D.close()
 
-				start_location = locate(/area/shuttle/escape_pod2/station)
-				end_location = locate(/area/shuttle/escape_pod2/transit)
-				start_location.move_contents_to(end_location, null, NORTH)
-				for(var/obj/machinery/door/D in end_location)
-					spawn(0)
-						D.close()
+					for(var/mob/M in end_location)
+						if(M.client)
+							spawn(0)
+								if(M.buckled)
+									shake_camera(M, 4, 1) // buckled, not a lot of shaking
+								else
+									shake_camera(M, 10, 2) // unbuckled, HOLY SHIT SHAKE THE ROOM
+						if(istype(M, /mob/living/carbon))
+							if(!M.buckled)
+								M.Weaken(5)
 
-				for(var/mob/M in end_location)
-					if(M.client)
+					start_location = locate(/area/shuttle/escape_pod2/station)
+					end_location = locate(/area/shuttle/escape_pod2/transit)
+					start_location.move_contents_to(end_location, null, NORTH)
+					for(var/obj/machinery/door/D in end_location)
 						spawn(0)
-							if(M.buckled)
-								shake_camera(M, 4, 1) // buckled, not a lot of shaking
-							else
-								shake_camera(M, 10, 2) // unbuckled, HOLY SHIT SHAKE THE ROOM
-					if(istype(M, /mob/living/carbon))
-						if(!M.buckled)
-							M.Weaken(5)
+							D.close()
 
-				start_location = locate(/area/shuttle/escape_pod3/station)
-				end_location = locate(/area/shuttle/escape_pod3/transit)
-				start_location.move_contents_to(end_location, null, NORTH)
-				for(var/obj/machinery/door/D in end_location)
-					spawn(0)
-						D.close()
+					for(var/mob/M in end_location)
+						if(M.client)
+							spawn(0)
+								if(M.buckled)
+									shake_camera(M, 4, 1) // buckled, not a lot of shaking
+								else
+									shake_camera(M, 10, 2) // unbuckled, HOLY SHIT SHAKE THE ROOM
+						if(istype(M, /mob/living/carbon))
+							if(!M.buckled)
+								M.Weaken(5)
 
-				for(var/mob/M in end_location)
-					if(M.client)
+					start_location = locate(/area/shuttle/escape_pod3/station)
+					end_location = locate(/area/shuttle/escape_pod3/transit)
+					start_location.move_contents_to(end_location, null, NORTH)
+					for(var/obj/machinery/door/D in end_location)
 						spawn(0)
-							if(M.buckled)
-								shake_camera(M, 4, 1) // buckled, not a lot of shaking
-							else
-								shake_camera(M, 10, 2) // unbuckled, HOLY SHIT SHAKE THE ROOM
-					if(istype(M, /mob/living/carbon))
-						if(!M.buckled)
-							M.Weaken(5)
+							D.close()
 
-				start_location = locate(/area/shuttle/escape_pod5/station)
-				end_location = locate(/area/shuttle/escape_pod5/transit)
-				start_location.move_contents_to(end_location, null, EAST)
-				for(var/obj/machinery/door/D in end_location)
-					spawn(0)
-						D.close()
+					for(var/mob/M in end_location)
+						if(M.client)
+							spawn(0)
+								if(M.buckled)
+									shake_camera(M, 4, 1) // buckled, not a lot of shaking
+								else
+									shake_camera(M, 10, 2) // unbuckled, HOLY SHIT SHAKE THE ROOM
+						if(istype(M, /mob/living/carbon))
+							if(!M.buckled)
+								M.Weaken(5)
 
-				for(var/mob/M in end_location)
-					if(M.client)
+					start_location = locate(/area/shuttle/escape_pod5/station)
+					end_location = locate(/area/shuttle/escape_pod5/transit)
+					start_location.move_contents_to(end_location, null, EAST)
+					for(var/obj/machinery/door/D in end_location)
 						spawn(0)
-							if(M.buckled)
-								shake_camera(M, 4, 1) // buckled, not a lot of shaking
-							else
-								shake_camera(M, 10, 2) // unbuckled, HOLY SHIT SHAKE THE ROOM
-					if(istype(M, /mob/living/carbon))
-						if(!M.buckled)
-							M.Weaken(5)
+							D.close()
 
-				captain_announce("The Emergency Shuttle has left the station. Estimate [round(timeleft()/60,1)] minutes until the shuttle docks at Central Command.")
+					for(var/mob/M in end_location)
+						if(M.client)
+							spawn(0)
+								if(M.buckled)
+									shake_camera(M, 4, 1) // buckled, not a lot of shaking
+								else
+									shake_camera(M, 10, 2) // unbuckled, HOLY SHIT SHAKE THE ROOM
+							if(istype(M, /mob/living/carbon))
+								if(!M.buckled)
+									M.Weaken(5)
+
+					captain_announce("The Emergency Shuttle has left the station. Estimate [round(timeleft()/60,1)] minutes until the shuttle docks at Central Command.")
+				else
+					captain_announce("The Crew Transfer Shuttle has left the station. Estimate [round(timeleft()/60,1)] minutes until the shuttle docks at Central Command.")
 
 				return 1
 
@@ -457,7 +475,7 @@ datum/shuttle_controller/emergency_shuttle/process()
 		sleep(speed)
 		step(src, direction)
 		for(var/obj/effect/starender/E in loc)
-			del(src)
+			qdel(src)
 
 
 /obj/effect/starender

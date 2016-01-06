@@ -1,4 +1,4 @@
-/mob/Del()//This makes sure that mobs with clients/keys are not just deleted from the game.
+/mob/Destroy()//This makes sure that mobs with clients/keys are not just deleted from the game.
 	mob_list -= src
 	dead_mob_list -= src
 	living_mob_list -= src
@@ -104,114 +104,12 @@
 /mob/proc/Life()
 //	if(organStructure)
 //		organStructure.ProcessOrgans()
+	//handle_typing_indicator()
 	return
 
 
 /mob/proc/restrained()
 	return
-
-//This proc is called whenever someone clicks an inventory ui slot.
-/mob/proc/attack_ui(slot)
-	var/obj/item/W = get_active_hand()
-//	if(istype(W))
-//		equip_to_slot_if_possible(W, slot)
-	if(istype(W))
-		if (istype(W, /obj/item/clothing))
-			var/obj/item/clothing/C = W
-			if(C.rig_restrict_helmet)
-				src << "\red You must fasten the helmet to a hardsuit first. (Target the head)" // Stop eva helms equipping.
-			else
-				if(C.equip_time > 0)
-					delay_clothing_equip_to_slot_if_possible(C, slot)
-				else
-					equip_to_slot_if_possible(C, slot)
-		else
-			equip_to_slot_if_possible(W, slot)
-
-/mob/proc/put_in_any_hand_if_possible(obj/item/W as obj, del_on_fail = 0, disable_warning = 1, redraw_mob = 1)
-	if(equip_to_slot_if_possible(W, slot_l_hand, del_on_fail, disable_warning, redraw_mob))
-		return 1
-	else if(equip_to_slot_if_possible(W, slot_r_hand, del_on_fail, disable_warning, redraw_mob))
-		return 1
-	return 0
-
-/mob/proc/delay_clothing_equip_to_slot_if_possible(obj/item/clothing/X as obj, slot, del_on_fail = 0, disable_warning = 0, redraw_mob = 1, delay_time = 0)
-	if(!istype(X)) return 0
-
-	if(X.equipping == 1) return 0 // Item is already being equipped
-
-	var/tempX = usr.x
-	var/tempY = usr.y
-	usr << "\blue You start equipping the [X]."
-	X.equipping = 1
-	var/equip_time = round(X.equip_time/10)
-	var/i
-	for(i=1; i<=equip_time; i++)
-		sleep (10) // Check if they've moved every 10 time units
-		if ((tempX != usr.x) || (tempY != usr.y))
-			src << "\red \The [X] is too fiddly to fasten whilst moving."
-			X.equipping = 0
-			return 0
-	equip_to_slot_if_possible(X, slot)
-	usr << "\blue You have finished equipping the [X]."
-	X.equipping = 0
-
-//This is a SAFE proc. Use this instead of equip_to_splot()!
-//set del_on_fail to have it delete W if it fails to equip
-//set disable_warning to disable the 'you are unable to equip that' warning.
-//unset redraw_mob to prevent the mob from being redrawn at the end.
-/mob/proc/equip_to_slot_if_possible(obj/item/W as obj, slot, del_on_fail = 0, disable_warning = 0, redraw_mob = 1)
-	if(!istype(W)) return 0
-
-	if(!W.mob_can_equip(src, slot, disable_warning))
-		if(del_on_fail)
-			del(W)
-		else
-			if(!disable_warning)
-				src << "\red You are unable to equip that." //Only print if del_on_fail is false
-		return 0
-
-	equip_to_slot(W, slot, redraw_mob) //This proc should not ever fail.
-	return 1
-
-//This is an UNSAFE proc. It merely handles the actual job of equipping. All the checks on whether you can or can't eqip need to be done before! Use mob_can_equip() for that task.
-//In most cases you will want to use equip_to_slot_if_possible()
-/mob/proc/equip_to_slot(obj/item/W as obj, slot)
-	return
-
-//This is just a commonly used configuration for the equip_to_slot_if_possible() proc, used to equip people when the rounds tarts and when events happen and such.
-/mob/proc/equip_to_slot_or_del(obj/item/W as obj, slot)
-	return equip_to_slot_if_possible(W, slot, 1, 1, 0)
-
-//The list of slots by priority. equip_to_appropriate_slot() uses this list. Doesn't matter if a mob type doesn't have a slot.
-var/list/slot_equipment_priority = list( \
-		slot_back,\
-		slot_wear_id,\
-		slot_w_uniform,\
-		slot_wear_suit,\
-		slot_wear_mask,\
-		slot_head,\
-		slot_shoes,\
-		slot_gloves,\
-		slot_l_ear,\
-		slot_r_ear,\
-		slot_glasses,\
-		slot_belt,\
-		slot_s_store,\
-		slot_l_store,\
-		slot_r_store\
-	)
-
-//puts the item "W" into an appropriate slot in a human's inventory
-//returns 0 if it cannot, 1 if successful
-/mob/proc/equip_to_appropriate_slot(obj/item/W)
-	if(!istype(W)) return 0
-
-	for(var/slot in slot_equipment_priority)
-		if(equip_to_slot_if_possible(W, slot, 0, 1, 1)) //del_on_fail = 0; disable_warning = 0; redraw_mob = 1
-			return 1
-
-	return 0
 
 /mob/proc/reset_view(atom/A)
 	if (client)
@@ -274,7 +172,7 @@ var/list/slot_equipment_priority = list( \
 				var/list/temp = list(  )
 				temp += L.container
 				//L = null
-				del(L)
+				qdel(L)
 				return temp
 			else
 				return L.container
@@ -388,7 +286,7 @@ var/list/slot_equipment_priority = list( \
 	if ((stat != 2 || !( ticker )))
 		usr << "\blue <B>You must be dead to use this!</B>"
 		return
-	if (ticker.mode.name == "meteor" || ticker.mode.name == "epidemic") //BS12 EDIT
+	if(ticker && istype(ticker.mode,/datum/game_mode/meteor))
 		usr << "\blue Respawn is disabled for this roundtype."
 		return
 	else
@@ -430,7 +328,7 @@ var/list/slot_equipment_priority = list( \
 	var/mob/new_player/M = new /mob/new_player()
 	if(!client)
 		log_game("[usr.key] AM failed due to disconnect.")
-		del(M)
+		qdel(M)
 		return
 
 	M.key = key
@@ -556,8 +454,9 @@ var/list/slot_equipment_priority = list( \
 	reset_view(null)
 	unset_machine()
 	if(istype(src, /mob/living))
-		if(src:cameraFollow)
-			src:cameraFollow = null
+		var/mob/living/M = src
+		if(M.cameraFollow)
+			M.cameraFollow = null
 
 /mob/Topic(href, href_list)
 	if(href_list["mach_close"])
@@ -724,8 +623,6 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 // Typo from the oriignal coder here, below lies the jitteriness process. So make of his code what you will, the previous comment here was just a copypaste of the above.
 /mob/proc/jittery_process()
-	var/old_x = pixel_x
-	var/old_y = pixel_y
 	is_jittery = 1
 	while(jitteriness > 100)
 //		var/amplitude = jitteriness*(sin(jitteriness * 0.044 * world.time) + 1) / 70
@@ -739,8 +636,8 @@ note dizziness decrements automatically in the mob's Life() proc.
 		sleep(1)
 	//endwhile - reset the pixel offsets to zero
 	is_jittery = 0
-	pixel_x = old_x
-	pixel_y = old_y
+	pixel_x = initial(pixel_x)
+	pixel_y = initial(pixel_y)
 
 /mob/Stat()
 	..()
@@ -748,9 +645,10 @@ note dizziness decrements automatically in the mob's Life() proc.
 	if(statpanel("Status"))	//not looking at that panel
 
 		if(client && client.holder)
-			stat(null,"Location:\t([x], [y], [z])")
-			stat(null,"CPU:\t[world.cpu]")
-			stat(null,"Instances:\t[world.contents.len]")
+			if(statpanel("Status"))
+				statpanel("Status","Location:","([x], [y], [z])")
+				statpanel("Status","CPU:","[world.cpu]")
+				statpanel("Status","Instances:","[world.contents.len]")
 
 			if(master_controller)
 				stat(null,"MasterController-[last_tick_duration] ([master_controller.processing?"On":"Off"]-[controller_iteration])")
@@ -761,18 +659,28 @@ note dizziness decrements automatically in the mob's Life() proc.
 				stat(null,"Obj-[master_controller.objects_cost]\t#[processing_objects.len]")
 				stat(null,"Net-[master_controller.networks_cost]\tPnet-[master_controller.powernets_cost]")
 				stat(null,"NanoUI-[master_controller.nano_cost]\t#[nanomanager.processing_uis.len]")
-				stat(null,"GC-[master_controller.gc_cost]\t#[garbage.destroyed.len]-#dels[garbage.dels]")
 				stat(null,"Tick-[master_controller.ticker_cost]\tALL-[master_controller.total_cost]")
 			else
 				stat(null,"MasterController-ERROR")
 
+			if(statpanel("Status") && processScheduler && processScheduler.getIsRunning())
+				for(var/datum/controller/process/P in processScheduler.processes)
+					statpanel("Status",P.getStatName(), P.getTickTime())
+			else
+				stat(null, "processScheduler is not running.")
+
+
 	if(listed_turf && client)
-		if(get_dist(listed_turf,src) > 1)
+		if(!TurfAdjacent(listed_turf))
 			listed_turf = null
 		else
 			statpanel(listed_turf.name, null, listed_turf)
 			for(var/atom/A in listed_turf)
+				if(!A.mouse_opacity)
+					continue
 				if(A.invisibility > see_invisible)
+					continue
+				if(is_type_in_list(A, shouldnt_see))
 					continue
 				statpanel(listed_turf.name, null, A)
 
@@ -784,11 +692,12 @@ note dizziness decrements automatically in the mob's Life() proc.
 		for(var/obj/effect/proc_holder/spell/S in spell_list)
 			switch(S.charge_type)
 				if("recharge")
-					statpanel("Spells","[S.charge_counter/10.0]/[S.charge_max/10]",S)
+					statpanel(S.panel,"[S.charge_counter/10.0]/[S.charge_max/10]",S)
 				if("charges")
-					statpanel("Spells","[S.charge_counter]/[S.charge_max]",S)
+					statpanel(S.panel,"[S.charge_counter]/[S.charge_max]",S)
 				if("holdervar")
-					statpanel("Spells","[S.holder_var_type] [S.holder_var_amount]",S)
+					statpanel(S.panel,"[S.holder_var_type] [S.holder_var_amount]",S)
+	sleep(2) //Prevent updating the stat panel for the next .2 seconds, prevents clientside latency from updates
 
 /mob/proc/add_stings_to_statpanel(var/list/stings)
 	for(var/obj/effect/proc_holder/changeling/S in stings)
@@ -824,8 +733,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 	else if( stat || weakened || paralysis || resting || sleeping || (status_flags & FAKEDEATH))
 		lying = 1
 		canmove = 0
-	else if( stunned )
-//		lying = 0
+	else if(stunned)
 		canmove = 0
 	else if(captured)
 		anchored = 1
@@ -841,10 +749,16 @@ note dizziness decrements automatically in the mob's Life() proc.
 	if(lying)
 		density = 0
 		if((l_hand && l_hand.canremove) || (r_hand && r_hand.canremove) )
-			drop_l_hand()
-			drop_r_hand()
+			if(!isalien(src))
+				drop_l_hand()
+				drop_r_hand()
 	else
 		density = 1
+
+	for(var/obj/item/weapon/grab/G in grabbed_by)
+		if(G.state >= GRAB_AGGRESSIVE)
+			canmove = 0
+			break
 
 	//Temporarily moved here from the various life() procs
 	//I'm fixing stuff incrementally so this will likely find a better home.
@@ -1018,7 +932,7 @@ mob/proc/yank_out_object()
 	else
 		U << "<span class='warning'>You attempt to get a good grip on the [selection] in [S]'s body.</span>"
 
-	if(!do_after(U, 80))
+	if(!do_after(U, 80, target = S))
 		return
 	if(!selection || !S || !U)
 		return
@@ -1058,3 +972,25 @@ mob/proc/yank_out_object()
 		if(!pinned.len)
 			anchored = 0
 	return 1
+
+/mob/proc/get_ghost(even_if_they_cant_reenter = 0)
+	if(mind)
+		for(var/mob/dead/observer/G in dead_mob_list)
+			if(G.mind == mind)
+				if(G.can_reenter_corpse || even_if_they_cant_reenter)
+					return G
+				break
+
+/mob/proc/AddSpell(var/obj/effect/proc_holder/spell/spell)
+	spell_list += spell
+	mind.spell_list += spell	//Connect spell to the mind for transfering action buttons between mobs
+	if(!spell.action)
+		spell.action = new/datum/action/spell_action
+		spell.action.target = spell
+		spell.action.name = spell.name
+		spell.action.button_icon = spell.action_icon
+		spell.action.button_icon_state = spell.action_icon_state
+		spell.action.background_icon_state = spell.action_background_icon_state
+	if(isliving(src))
+		spell.action.Grant(src)
+	return

@@ -4,27 +4,25 @@
 	desc = "Space barf from another dimension. It just keeps spreading!"
 	icon = 'tauceti/icons/mob/alien.dmi'
 	icon_state = "resin"
-	
+
 	anchored = 1
 	density = 1
 	opacity = 1
-	
+
 	var/grip = 0
 	var/health = 100
 	var/energy = 0
-	
+
 	var/obj/effect/cellular_biomass_controller/master = null
 
 	New()
 		..()
 		var/turf/T = get_turf(src)
 		T.thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
-		
 
-	Del()
+
+	Destroy()
 		density = 0
-		if(opacity)
-			UpdateAffectingLights()
 		var/turf/T = get_turf(src)
 		T.thermal_conductivity = initial(T.thermal_conductivity)
 		if(master)
@@ -35,7 +33,7 @@
 /obj/effect/cellular_biomass/proc/healthcheck()
 	if(health <=0)
 		density = 0
-		Del(src)
+		Destroy(src)
 	return
 
 /obj/effect/cellular_biomass/bullet_act(var/obj/item/projectile/Proj)
@@ -131,7 +129,7 @@
 	health = 20
 	layer = 2
 	energy = 4
-	
+
 /obj/effect/cellular_biomass/grass/light
 	luminosity = 3
 	icon_state = "weednode"
@@ -146,12 +144,12 @@
 
 	New()
 		if(!istype(src.loc,/turf/simulated/floor))
-			Del(src)
+			Destroy(src)
 
 		spawn_cellular_biomass_piece(src.loc)
 		processing_objects.Add(src)
 
-	Del()
+	Destroy()
 		processing_objects.Remove(src)
 		..()
 
@@ -168,9 +166,9 @@
 			var/random = rand(1,15)
 			location.icon_state = "ironsand[random]"
 			location.color = "gray"
-			
+
 			var/obj/effect/cellular_biomass/BM = new(location)
-			
+
 			BM.grip = newgrip
 			growth_queue += BM
 			biomass_cells += BM
@@ -178,10 +176,10 @@
 
 	process()
 		if(!biomass_cells)
-			Del(src) //space  biomass_cells exterminated. Remove the controller
+			Destroy(src) //space  biomass_cells exterminated. Remove the controller
 			return
 		if(!growth_queue)
-			Del(src) //Sanity check
+			Destroy(src) //Sanity check
 			return
 
 		var/length = min(5, max(50, biomass_cells.len / 5))
@@ -193,7 +191,7 @@
 			i++
 			growth_queue -= BM
 			BM.grow()
-			if(BM) 
+			if(BM)
 				if(BM.energy < 4)
 					queue_end += BM
 				BM.spread()
@@ -213,13 +211,13 @@
 				var/chosen = pick(critters)
 				var/mob/living/simple_animal/hostile/C = new chosen
 				C.loc = src.loc
-				
+
 			var/obj/effect/cellular_biomass/grass/BM = new(src.loc)
 			BM.icon_state = pick("weeds","weeds1","weeds2")
 
 		//if(air_master)
-		//		air_master.mark_for_update(get_turf(src))	
-		Del(src)
+		//		air_master.mark_for_update(get_turf(src))
+		Destroy(src)
 
 
 /obj/effect/cellular_biomass/proc/spread()
@@ -270,23 +268,23 @@
 /obj/effect/cellular_biomass/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			Del(src)
+			Destroy(src)
 			return
 		if(2.0)
 			if (prob(90))
-				Del(src)
+				Destroy(src)
 				return
 		if(3.0)
 			if (prob(50))
-				Del(src)
+				Destroy(src)
 				return
 	return
 
 /obj/effect/cellular_biomass/temperature_expose(null, temp, volume) //hotspots kill cellular_biomass
-	Del(src)
+	Destroy(src)
 
 
-	
+
 /proc/cellular_biomass_infestation()
 
 	spawn() //to stop the secrets panel hanging

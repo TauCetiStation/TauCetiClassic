@@ -46,7 +46,7 @@
 	if(istype(I, /obj/item/weapon/crowbar))
 		user << "<span class='notice'>You start to [cistern ? "replace the lid on the cistern" : "lift the lid off the cistern"].</span>"
 		playsound(loc, 'sound/effects/stonedoor_openclose.ogg', 50, 1)
-		if(do_after(user, 30))
+		if(do_after(user, 30, target = src))
 			user.visible_message("<span class='notice'>[user] [cistern ? "replaces the lid on the cistern" : "lifts the lid off the cistern"]!</span>", "<span class='notice'>You [cistern ? "replace the lid on the cistern" : "lift the lid off the cistern"]!</span>", "You hear grinding porcelain.")
 			cistern = !cistern
 			update_icon()
@@ -65,7 +65,7 @@
 				if(open && !swirlie)
 					user.visible_message("<span class='danger'>[user] starts to give [GM.name] a swirlie!</span>", "<span class='notice'>You start to give [GM.name] a swirlie!</span>")
 					swirlie = GM
-					if(do_after(user, 30, 5, 0))
+					if(do_after(user, 30, 5, 0, target = src))
 						user.visible_message("<span class='danger'>[user] gives [GM.name] a swirlie!</span>", "<span class='notice'>You give [GM.name] a swirlie!</span>", "You hear a toilet flushing.")
 						if(!GM.internal)
 							GM.adjustOxyLoss(5)
@@ -113,7 +113,146 @@
 			else
 				user << "<span class='notice'>You need a tighter grip.</span>"
 
+/obj/structure/dryer
+	name = "hand dryer"
+	desc = "The Breath Of Lizads-3000, an experimental dryer."
+	icon = 'tauceti/icons/obj/dryer.dmi'
+	icon_state = "dryer"
+	density = 0
+	anchored = 1
+	var/busy = 0
+	var/emagged = 0
 
+/obj/structure/dryer/attack_hand(mob/user as mob)
+
+	if(isrobot(user) || isAI(user))
+		return
+
+	if(!Adjacent(user))
+		return
+
+	if(busy)
+		user << "\red Someone's already drying here."
+		return
+
+	usr << "\blue You start drying your hands."
+	playsound(src, 'tauceti/sounds/items/drying.ogg', 30, 1, 1)
+	add_fingerprint(user)
+	busy = 1
+	sleep(60)
+	if(emagged)
+		var/mob/living/carbon/C = user
+		if(ishuman(C))
+			var/mob/living/carbon/human/H = C
+			if(H.gloves)
+				new /obj/effect/decal/cleanable/ash(H.loc)
+				qdel(H.gloves)
+				H.adjustFireLoss(5)
+			else
+				H.adjustFireLoss(20)
+	busy = 0
+
+	if(!Adjacent(user)) return		//Person has moved away from the dryer
+
+	for(var/mob/V in viewers(src, null))
+		V.show_message("\blue [user] dried their hands using \the [src].")
+
+/obj/structure/dryer/attackby(obj/item/O as obj, mob/user as mob)
+
+	if (istype(O, /obj/item/weapon/card/emag))
+		if (emagged)
+			user << "\red [src] is already cracked."
+			return
+		else
+			add_fingerprint(user)
+			emagged = 1
+			flick("dryer-broken",src)
+			playsound(src, 'sound/effects/sparks3.ogg', 50, 1, 1)
+			icon_state = "dryer-emag"
+			user << "\red You swipe near [O] and crack it to be hot."
+			return
+
+	if((istype(O, /obj/item/weapon/grab)) && !emagged)
+		var/obj/item/weapon/grab/G = O
+		if(isliving(G.affecting))
+			var/mob/living/GM = G.affecting
+			if(G.state>1)
+				if(!GM.loc == get_turf(src))
+					user << "<span class='notice'>[GM.name] needs to be on the urinal.</span>"
+					return
+				user.visible_message("<span class='danger'>[user] slams [GM.name] into the [src]!</span>", "<span class='notice'>You slam [GM.name] into the [src]!</span>")
+				GM.apply_damage(8,BRUTE,"head")
+				playsound(src, 'sound/weapons/smash.ogg', 50, 1, 1)
+				return
+			else
+				user << "<span class='notice'>You need a tighter grip.</span>"
+				return
+
+	if(busy)
+		user << "\red Someone's already drying here."
+		return
+
+	var/turf/location = user.loc
+	if(!isturf(location)) return
+
+	var/obj/item/I = O
+	if(!I || !istype(I,/obj/item)) return
+
+	add_fingerprint(user)
+
+	if(emagged)		//Let's make it a little bit dangerous
+
+		if(istype(O, /obj/item/weapon/grab))	//Holding someone under dryer
+			var/obj/item/weapon/grab/G = O
+			if(isliving(G.affecting))
+				var/mob/living/GM = G.affecting
+				if(G.state>2)
+					if(!GM.loc == get_turf(src))
+						user << "<span class='notice'>[GM.name] needs to be near the dryer.</span>"
+						return
+					busy = 1
+					user.visible_message("<span class='danger'>[user] hold [GM.name] under the [src]!</span>", "<span class='notice'>You hold [GM.name] under the [src]!</span>")
+					playsound(src, 'tauceti/sounds/items/drying.ogg', 30, 1, 1)
+					GM.adjustFireLoss(10)
+					sleep(60)
+					busy = 0
+					if(!Adjacent(user) || !Adjacent(GM)) return		//User or target has moved
+					GM.adjustFireLoss(25)
+					user.visible_message("<span class='danger'>[GM.name] skins are burning under the [src]!</span>")
+					return
+				else
+					user << "<span class='notice'>You need a tighter grip.</span>"
+					return
+
+		busy = 1
+		usr << "\blue You start drying \the [I]."
+		playsound(src, 'tauceti/sounds/items/drying.ogg', 30, 1, 1)
+		sleep(60)
+		var/mob/living/carbon/C = user
+		if(C.r_hand)
+			C.apply_damage(25,BURN,"r_hand")
+		if(C.l_hand)
+			C.apply_damage(25,BURN,"l_hand")
+		C << "<span class='danger'>The dryer is burning!</span>"
+		new /obj/effect/decal/cleanable/ash(C.loc)
+		qdel(O)
+		busy = 0
+		return
+
+	busy = 1
+	usr << "\blue You start drying \the [I]."
+	playsound(src, 'tauceti/sounds/items/drying.ogg', 30, 1, 1)
+	sleep(60)
+	busy = 0
+
+	if(user.loc != location) return				//User has moved
+	if(!I) return 								//Item's been destroyed while drying
+	if(user.get_active_hand() != I) return		//Person has switched hands or the item in their hands
+
+	O.wet = 0
+	user.visible_message( \
+		"\blue [user] drying \a [I] using \the [src].", \
+		"\blue You dry \a [I] using \the [src].")
 
 /obj/machinery/shower
 	name = "shower"
@@ -128,6 +267,7 @@
 	var/ismist = 0				//needs a var so we can make it linger~
 	var/watertemp = "normal"	//freezing, normal, or boiling
 	var/mobpresent = 0		//true if there is a mob on the shower's loc, this is to ease process()
+	var/is_payed = 0
 
 //add heat controls? when emagged, you can freeze to death in it?
 
@@ -140,21 +280,26 @@
 	mouse_opacity = 0
 
 /obj/machinery/shower/attack_hand(mob/M as mob)
-	on = !on
-	update_icon()
-	if(on)
-		if (M.loc == loc)
-			wash(M)
-			check_heat(M)
-		for (var/atom/movable/G in src.loc)
-			G.clean_blood()
+	if(is_payed)
+		on = !on
+		update_icon()
+		if(on)
+			if (M.loc == loc)
+				wash(M)
+				check_heat(M)
+			for (var/atom/movable/G in src.loc)
+				G.clean_blood()
+		else
+			is_payed = 0 // Если игрок выключил раньше времени - принудительное аннулирование платы.
+	else
+		M << "You didn't pay for that. Swipe a card against [src]."
 
 /obj/machinery/shower/attackby(obj/item/I as obj, mob/user as mob)
 	if(I.type == /obj/item/device/analyzer)
 		user << "<span class='notice'>The water temperature seems to be [watertemp].</span>"
-	if(istype(I, /obj/item/weapon/wrench))
+	else if(istype(I, /obj/item/weapon/wrench))
 		user << "<span class='notice'>You begin to adjust the temperature valve with \the [I].</span>"
-		if(do_after(user, 50))
+		if(do_after(user, 50, target = src))
 			switch(watertemp)
 				if("normal")
 					watertemp = "freezing"
@@ -164,6 +309,53 @@
 					watertemp = "normal"
 			user.visible_message("<span class='notice'>[user] adjusts the shower with \the [I].</span>", "<span class='notice'>You adjust the shower with \the [I].</span>")
 			add_fingerprint(user)
+	else if(istype(I, /obj/item/weapon/card))
+		if(!is_payed)
+			if(!on)
+				var/obj/item/weapon/card/C = I
+				visible_message("<span class='info'>[usr] swipes a card through [src].</span>")
+				if(station_account)
+					var/datum/money_account/D = get_account(C.associated_account_number)
+					var/attempt_pin = 0
+					if(D.security_level > 0)
+						attempt_pin = input("Enter pin code", "Transaction") as num
+					if(attempt_pin)
+						D = attempt_account_access(C.associated_account_number, attempt_pin, 2)
+					if(D)
+						var/transaction_amount = 150
+						if(transaction_amount <= D.money)
+							//transfer the money
+							D.money -= transaction_amount
+							station_account.money += transaction_amount
+
+							//create entries in the two account transaction logs
+							var/datum/transaction/T = new()
+							T.target_name = "[station_account.owner_name] (via [src.name])"
+							T.purpose = "Purchase of shower use"
+							if(transaction_amount > 0)
+								T.amount = "([transaction_amount])"
+							else
+								T.amount = "[transaction_amount]"
+							T.source_terminal = src.name
+							T.date = current_date_string
+							T.time = worldtime2text()
+							D.transaction_log.Add(T)
+
+							T = new()
+							T.target_name = D.owner_name
+							T.purpose = "Purchase of shower use"
+							T.amount = "[transaction_amount]"
+							T.source_terminal = src.name
+							T.date = current_date_string
+							T.time = worldtime2text()
+							station_account.transaction_log.Add(T)
+
+							is_payed = 60
+							usr << "\icon[src]Thank you, happy washing time and don't turn me off accidently or i will take your precious credits again! Teehee.</span>"
+						else
+							usr << "\icon[src]<span class='warning'>You don't have that much money!</span>"
+		else
+			usr << "\icon[src]Is payed, you may turn it on now.</span>"
 
 /obj/machinery/shower/update_icon()	//this is terribly unreadable, but basically it makes the shower mist up
 	overlays.Cut()					//once it's been on for a while, in addition to handling the water overlay.
@@ -178,19 +370,19 @@
 			spawn(50)
 				if(src && on)
 					ismist = 1
-					mymist = new /obj/effect/mist(loc)
+					mymist = PoolOrNew(/obj/effect/mist,loc)
 		else
 			ismist = 1
-			mymist = new /obj/effect/mist(loc)
+			mymist = PoolOrNew(/obj/effect/mist,loc)
 	else if(ismist)
 		ismist = 1
-		mymist = new /obj/effect/mist(loc)
+		mymist = PoolOrNew(/obj/effect/mist,loc)
 		spawn(250)
 			if(src && !on)
 				qdel(mymist)
 				ismist = 0
 
-/obj/machinery/shower/HasEntered(atom/movable/O)
+/obj/machinery/shower/Crossed(atom/movable/O)
 	..()
 	wash(O)
 	if(ismob(O))
@@ -214,10 +406,13 @@
 	if(iscarbon(O))
 		var/mob/living/carbon/M = O
 		if(M.r_hand)
+			M.r_hand.make_wet(1) //<= wet
 			M.r_hand.clean_blood()
 		if(M.l_hand)
+			M.l_hand.make_wet(1) //<= wet
 			M.l_hand.clean_blood()
 		if(M.back)
+			M.back.make_wet(1) //<= wet
 			if(M.back.clean_blood())
 				M.update_inv_back(0)
 		if(ishuman(M))
@@ -244,24 +439,31 @@
 					washglasses = !(H.wear_mask.flags_inv & HIDEEYES)
 
 			if(H.head)
+				H.head.make_wet(1) //<= wet
 				if(H.head.clean_blood())
 					H.update_inv_head(0)
 			if(H.wear_suit)
+				H.wear_suit.make_wet(1) //<= wet
 				if(H.wear_suit.clean_blood())
 					H.update_inv_wear_suit(0)
 			else if(H.w_uniform)
+				H.w_uniform.make_wet(1) //<= wet
 				if(H.w_uniform.clean_blood())
 					H.update_inv_w_uniform(0)
 			if(H.gloves && washgloves)
+				H.gloves.make_wet(1) //<= wet
 				if(H.gloves.clean_blood())
 					H.update_inv_gloves(0)
 			if(H.shoes && washshoes)
+				H.shoes.make_wet(1) //<= wet
 				if(H.shoes.clean_blood())
 					H.update_inv_shoes(0)
 			if(H.wear_mask && washmask)
+				H.wear_mask.make_wet(1) //<= wet
 				if(H.wear_mask.clean_blood())
 					H.update_inv_wear_mask(0)
 			if(H.glasses && washglasses)
+				H.glasses.make_wet(1) //<= wet
 				if(H.glasses.clean_blood())
 					H.update_inv_glasses(0)
 			if(H.l_ear && washears)
@@ -271,6 +473,7 @@
 				if(H.r_ear.clean_blood())
 					H.update_inv_ears(0)
 			if(H.belt)
+				H.belt.make_wet(1) //<= wet
 				if(H.belt.clean_blood())
 					H.update_inv_belt(0)
 			H.clean_blood(washshoes)
@@ -286,11 +489,22 @@
 		var/turf/tile = loc
 		loc.clean_blood()
 		for(var/obj/effect/E in tile)
-			if(istype(E,/obj/effect/rune) || istype(E,/obj/effect/decal/cleanable) || istype(E,/obj/effect/overlay))
+			if((istype(E,/obj/effect/rune) || istype(E,/obj/effect/decal/cleanable) || istype(E,/obj/effect/overlay)) && !istype(E, /obj/effect/decal/cleanable/water))
 				qdel(E)
 
 /obj/machinery/shower/process()
-	if(!on || !mobpresent) return
+	if(!on) return
+	if(is_payed < 1)
+		on = 0
+		update_icon()
+		return
+	else
+		is_payed--
+
+	create_water(src)
+
+	if(!mobpresent) return
+
 	for(var/mob/living/carbon/C in loc)
 		check_heat(C)
 
@@ -347,6 +561,8 @@
 		user << "\red Someone's already washing here."
 		return
 
+	playsound(src, 'tauceti/sounds/items/wash.ogg', 50, 1, 1)
+
 	usr << "\blue You start washing your hands."
 
 	busy = 1
@@ -360,7 +576,6 @@
 		user:update_inv_gloves()
 	for(var/mob/V in viewers(src, null))
 		V.show_message("\blue [user] washes their hands using \the [src].")
-
 
 /obj/structure/sink/attackby(obj/item/O as obj, mob/user as mob)
 	if(busy)
@@ -398,6 +613,7 @@
 
 	usr << "\blue You start washing \the [I]."
 
+	playsound(src, 'tauceti/sounds/items/wash.ogg', 50, 1, 1)
 	busy = 1
 	sleep(40)
 	busy = 0
@@ -407,6 +623,7 @@
 	if(user.get_active_hand() != I) return		//Person has switched hands or the item in their hands
 
 	O.clean_blood()
+	O.make_wet()
 	user.visible_message( \
 		"\blue [user] washes \a [I] using \the [src].", \
 		"\blue You wash \a [I] using \the [src].")

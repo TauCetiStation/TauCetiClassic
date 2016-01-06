@@ -1,3 +1,8 @@
+/mob/living/silicon/robot/Process_Spaceslipping(var/prob_slip)
+	if(module && (istype(module,/obj/item/weapon/robot_module/construction) || istype(module,/obj/item/weapon/robot_module/drone)))
+		return 0
+	..(prob_slip)
+
 /mob/living/silicon/robot/Process_Spacemove()
 	if(module)
 		for(var/obj/item/weapon/tank/jetpack/J in module.modules)
@@ -15,7 +20,16 @@
 	if(module_active && istype(module_active,/obj/item/borg/combat/mobility))
 		tally-=3
 
+	if(confused)
+		tally+=8
+
 	return tally+config.robot_delay
 
-/mob/living/silicon/robot/Move()
-	..()
+// NEW: Use power while moving.
+/mob/living/silicon/robot/SelfMove(turf/n, direct)
+	if (!is_component_functioning("actuator"))
+		return 0
+
+	var/datum/robot_component/actuator/A = get_component("actuator")
+	if (cell_use_power(A.active_usage))
+		return ..()

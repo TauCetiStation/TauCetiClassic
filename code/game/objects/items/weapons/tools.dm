@@ -77,8 +77,8 @@
 			icon_state = "screwdriver7"
 			item_state = "screwdriver_yellow"
 
-	if (prob(75))
-		src.pixel_y = rand(0, 16)
+	src.pixel_y = rand(-6, 6)
+	src.pixel_x = rand(-4, 4)
 	return
 
 /obj/item/weapon/screwdriver/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
@@ -134,6 +134,7 @@
 	icon_state = "welder"
 	flags = FPRINT | TABLEPASS| CONDUCT
 	slot_flags = SLOT_BELT
+	action_button_name = "Switch Welding tool"
 
 	//Amount of OUCH when it's thrown
 	force = 3.0
@@ -191,12 +192,12 @@
 		if (user.client)
 			user.client.screen -= src
 		if (user.r_hand == src)
-			user.u_equip(src)
+			user.remove_from_mob(src)
 		else
-			user.u_equip(src)
+			user.remove_from_mob(src)
 		src.master = F
 		src.layer = initial(src.layer)
-		user.u_equip(src)
+		user.remove_from_mob(src)
 		if (user.client)
 			user.client.screen -= src
 		src.loc = F
@@ -214,8 +215,9 @@
 			if(src.icon_state != "welder") //Check that the sprite is correct, if it isnt, it means toggle() was not called
 				src.force = 3
 				src.damtype = "brute"
-				src.icon_state = "welder"
+				src.icon_state = initial(src.icon_state)
 				src.welding = 0
+			set_light(0)
 			processing_objects.Remove(src)
 			return
 		//Welders left on now use up fuel, but lets not have them run out quite that fast
@@ -223,9 +225,11 @@
 			if(src.icon_state != "welder1") //Check that the sprite is correct, if it isnt, it means toggle() was not called
 				src.force = 15
 				src.damtype = "fire"
-				src.icon_state = "welder1"
+				src.icon_state = initial(src.icon_state) + "1"
 			if(prob(5))
 				remove_fuel(1)
+			light_color = "#dbe2ff"
+			set_light(2)
 
 		//If you're actually actively welding, use fuel faster.
 		//Is this actually used or set anywhere? - Nodrak
@@ -268,6 +272,14 @@
 			if(isliving(O))				//Welding can ignite mobs, splashed with fuel
 				var/mob/living/L = O
 				L.IgniteMob()
+		if(isturf(O))
+			var/datum/effect/effect/system/spark_spread/s = PoolOrNew(/datum/effect/effect/system/spark_spread)
+			s.set_up(3, 1, O)
+			s.start()
+		else if(isobj(O))
+			var/datum/effect/effect/system/spark_spread/s = PoolOrNew(/datum/effect/effect/system/spark_spread)
+			s.set_up(3, 1, O)
+			s.start()
 	return
 
 
@@ -308,7 +320,7 @@
 			usr << "\blue The [src] switches on."
 			src.force = 15
 			src.damtype = "fire"
-			src.icon_state = "welder1"
+			src.icon_state = initial(src.icon_state) + "1"
 			processing_objects.Add(src)
 		else
 			usr << "\blue Need more fuel!"
@@ -319,7 +331,7 @@
 		usr << "\blue The [src] switches off."
 		src.force = 3
 		src.damtype = "brute"
-		src.icon_state = "welder"
+		src.icon_state = initial(src.icon_state)
 		src.welding = 0
 
 //Turns off the welder if there is no more fuel (does this really need to be its own proc?)
@@ -339,7 +351,7 @@
 			usr << "\blue You switch the [src] on."
 			src.force = 15
 			src.damtype = "fire"
-			src.icon_state = "welder1"
+			src.icon_state = initial(src.icon_state) + "1"
 			processing_objects.Add(src)
 		else
 			usr << "\blue Need more fuel!"
@@ -352,7 +364,7 @@
 			usr << "\blue The [src] shuts off!"
 		src.force = 3
 		src.damtype = "brute"
-		src.icon_state = "welder"
+		src.icon_state = initial(src.icon_state)
 		src.welding = 0
 
 	if(usr.hand)
@@ -405,6 +417,8 @@
 
 /obj/item/weapon/weldingtool/largetank
 	name = "Industrial Welding Tool"
+	icon = 'icons/obj/items.dmi'
+	icon_state = "indwelder"
 	max_fuel = 40
 	m_amt = 70
 	g_amt = 60
@@ -412,6 +426,8 @@
 
 /obj/item/weapon/weldingtool/hugetank
 	name = "Upgraded Welding Tool"
+	icon = 'icons/obj/items.dmi'
+	icon_state = "hugewelder"
 	max_fuel = 80
 	w_class = 3.0
 	m_amt = 70
@@ -420,6 +436,8 @@
 
 /obj/item/weapon/weldingtool/experimental
 	name = "Experimental Welding Tool"
+	icon = 'icons/obj/items.dmi'
+	icon_state = "expwelder"
 	max_fuel = 40
 	w_class = 3.0
 	m_amt = 70

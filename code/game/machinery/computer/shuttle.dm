@@ -5,6 +5,8 @@
 	var/auth_need = 3.0
 	var/list/authorized = list(  )
 
+	light_color = "#7BF9FF"
+
 
 	attackby(var/obj/item/weapon/card/W as obj, var/mob/user as mob)
 		if(stat & (BROKEN|NOPOWER))	return
@@ -44,7 +46,7 @@
 						emergency_shuttle.online = 1
 						emergency_shuttle.settimeleft(10)
 						//src.authorized = null
-						del(src.authorized)
+						qdel(src.authorized)
 						src.authorized = list(  )
 
 				if("Repeal")

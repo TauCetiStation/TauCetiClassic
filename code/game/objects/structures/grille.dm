@@ -31,6 +31,7 @@
 	attack_hand(user)
 
 /obj/structure/grille/attack_hand(mob/user as mob)
+	user.do_attack_animation(src)
 	playsound(loc, 'sound/effects/grillehit.ogg', 80, 1)
 	user.visible_message("<span class='warning'>[user] kicks [src].</span>", \
 						 "<span class='warning'>You kick [src].</span>", \
@@ -45,6 +46,7 @@
 	healthcheck()
 
 /obj/structure/grille/attack_alien(mob/user as mob)
+	user.do_attack_animation(src)
 	if(istype(user, /mob/living/carbon/alien/larva))	return
 
 	playsound(loc, 'sound/effects/grillehit.ogg', 80, 1)
@@ -59,6 +61,7 @@
 
 /obj/structure/grille/attack_slime(mob/user as mob)
 	if(!istype(user, /mob/living/carbon/slime/adult))	return
+	user.do_attack_animation(src)
 
 	playsound(loc, 'sound/effects/grillehit.ogg', 80, 1)
 	user.visible_message("<span class='warning'>[user] smashes against [src].</span>", \
@@ -71,6 +74,7 @@
 
 /obj/structure/grille/attack_animal(var/mob/living/simple_animal/M as mob)
 	if(M.melee_damage_upper == 0)	return
+	M.do_attack_animation(src)
 
 	playsound(loc, 'sound/effects/grillehit.ogg', 80, 1)
 	M.visible_message("<span class='warning'>[M] smashes against [src].</span>", \
@@ -108,7 +112,7 @@
 	if(iswirecutter(W))
 		if(!shock(user, 100))
 			playsound(loc, 'sound/items/Wirecutter.ogg', 100, 1)
-			new /obj/item/stack/rods(loc, 2)
+			PoolOrNew(/obj/item/stack/rods, list(get_turf(src), 2))
 			qdel(src)
 	else if((isscrewdriver(W)) && (istype(loc, /turf/simulated) || anchored))
 		if(!shock(user, 90))
@@ -143,7 +147,7 @@
 				user << "<span class='notice'>There is already a window facing this way there.</span>"
 				return
 		user << "<span class='notice'>You start placing the window.</span>"
-		if(do_after(user,20))
+		if(do_after(user,20,target = src))
 			if(!src) return //Grille destroyed while waiting
 			for(var/obj/structure/window/WINDOW in loc)
 				if(WINDOW.dir == dir_to_set)//checking this for a 2nd time to check if a window was made while we were waiting.
@@ -185,11 +189,11 @@
 			icon_state = "brokengrille"
 			density = 0
 			destroyed = 1
-			new /obj/item/stack/rods(loc)
+			PoolOrNew(/obj/item/stack/rods, get_turf(src))
 
 		else
 			if(health <= -6)
-				new /obj/item/stack/rods(loc)
+				PoolOrNew(/obj/item/stack/rods, get_turf(src))
 				qdel(src)
 				return
 	return

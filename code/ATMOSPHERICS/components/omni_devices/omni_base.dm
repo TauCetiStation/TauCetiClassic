@@ -89,13 +89,13 @@
 		return 1
 	user << "\blue You begin to unfasten \the [src]..."
 	playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-	if(do_after(user, 40))
+	if(do_after(user, 40, target = src))
 		user.visible_message( \
 			"[user] unfastens \the [src].", \
 			"\blue You have unfastened \the [src].", \
 			"You hear a ratchet.")
 		new /obj/item/pipe(loc, make_from=src)
-		del(src)
+		qdel(src)
 
 /obj/machinery/atmospherics/omni/attack_hand(user as mob)
 	if(..())
@@ -209,13 +209,13 @@
 
 	return null
 
-/obj/machinery/atmospherics/omni/Del()
+/obj/machinery/atmospherics/omni/Destroy()
 	loc = null
 
 	for(var/datum/omni_port/P in ports)
 		if(P.node)
 			P.node.disconnect(src)
-			del(P.network)
+			qdel(P.network)
 			P.node = null
 
 	..()
@@ -269,7 +269,7 @@
 /obj/machinery/atmospherics/omni/disconnect(obj/machinery/atmospherics/reference)
 	for(var/datum/omni_port/P in ports)
 		if(reference == P.node)
-			del(P.network)
+			qdel(P.network)
 			P.node = null
 			P.update = 1
 			break

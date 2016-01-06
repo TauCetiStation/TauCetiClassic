@@ -99,7 +99,7 @@
 		brute -= brute / 2
 
 	if(status & ORGAN_BROKEN && prob(40) && brute)
-		owner.emote("scream")	//getting hit on broken hand hurts
+		owner.emote("scream",,, 1)	//getting hit on broken hand hurts
 	if(used_weapon)
 		add_autopsy_data("[used_weapon]", brute + burn)
 
@@ -568,7 +568,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 		src.status &= ~ORGAN_BLEEDING
 		src.status &= ~ORGAN_SPLINTED
 		for(var/implant in implants)
-			del(implant)
+			qdel(implant)
 
 		// If any organs are attached to this, destroy them
 		for(var/datum/organ/external/O in owner.organs)
@@ -587,6 +587,13 @@ Note that amputating the affected organ does in fact remove the infection from t
 				owner.u_equip(owner.l_ear)
 				owner.u_equip(owner.r_ear)
 				owner.u_equip(owner.wear_mask)
+				if(istype(owner.wear_suit, /obj/item/clothing/suit/space/space_ninja)) //When ninja looses head, it does not go thru death() proc.
+					var/obj/item/clothing/suit/space/space_ninja/my_suit = owner.wear_suit
+					if(my_suit.s_initialized)
+						spawn(30)
+							var/location = owner.loc
+							explosion(location, 0, 0, 3, 4)
+							owner.gib()
 			if(ARM_RIGHT)
 				if(status & ORGAN_ROBOT)
 					organ = new /obj/item/robot_parts/r_arm(owner.loc)
@@ -636,7 +643,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 				spark_system.attach(owner)
 				spark_system.start()
 				spawn(10)
-					del(spark_system)
+					qdel(spark_system)
 
 			owner.visible_message("\red [owner.name]'s [display_name] flies off in an arc.",\
 			"<span class='moderate'><b>Your [display_name] goes flying off!</b></span>",\
@@ -709,6 +716,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 /datum/organ/external/proc/fracture()
 
+	if(owner.dna && owner.dna.mutantrace == "adamantine")
+		return
+
 	if(status & ORGAN_BROKEN)
 		return
 
@@ -718,7 +728,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 		"You hear a sickening crack.")
 
 	if(owner.species && !(owner.species.flags & NO_PAIN))
-		owner.emote("scream")
+		owner.emote("scream",,, 1)
 
 	status |= ORGAN_BROKEN
 	broken_description = pick("broken","fracture","hairline fracture")
@@ -802,20 +812,22 @@ Note that amputating the affected organ does in fact remove the infection from t
 		return
 
 	if(is_broken())
-		owner.u_equip(c_hand)
+		owner.drop_from_inventory(c_hand)
 		var/emote_scream = pick("screams in pain and", "lets out a sharp cry and", "cries out and")
 		owner.emote("me", 1, "[(owner.species && owner.species.flags & NO_PAIN) ? "" : emote_scream ] drops what they were holding in their [hand_name]!")
 	if(is_malfunctioning())
-		owner.u_equip(c_hand)
+		owner.drop_from_inventory(c_hand)
 		owner.emote("me", 1, "drops what they were holding, their [hand_name] malfunctioning!")
 		var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
 		spark_system.set_up(5, 0, owner)
 		spark_system.attach(owner)
 		spark_system.start()
 		spawn(10)
-			del(spark_system)
+			qdel(spark_system)
 
 /datum/organ/external/proc/embed(var/obj/item/weapon/W, var/silent = 0)
+	if(istype(W, /obj/item/weapon/melee/energy))
+		return
 	if(!silent)
 		owner.visible_message("<span class='danger'>\The [W] sticks in the wound!</span>")
 	implants += W
@@ -979,10 +991,10 @@ Note that amputating the affected organ does in fact remove the infection from t
 			   EXTERNAL ORGAN ITEMS
 ****************************************************/
 
-obj/item/weapon/organ
+/obj/item/weapon/organ
 	icon = 'icons/mob/human_races/r_human.dmi'
 
-obj/item/weapon/organ/New(loc, mob/living/carbon/human/H)
+/obj/item/weapon/organ/New(loc, mob/living/carbon/human/H)
 	..(loc)
 	if(!istype(H))
 		return
@@ -1022,31 +1034,31 @@ obj/item/weapon/organ/New(loc, mob/living/carbon/human/H)
 			   EXTERNAL ORGAN ITEMS DEFINES
 ****************************************************/
 
-obj/item/weapon/organ/l_arm
+/obj/item/weapon/organ/l_arm
 	name = "left arm"
 	icon_state = "l_arm"
-obj/item/weapon/organ/l_foot
+/obj/item/weapon/organ/l_foot
 	name = "left foot"
 	icon_state = "l_foot"
-obj/item/weapon/organ/l_hand
+/obj/item/weapon/organ/l_hand
 	name = "left hand"
 	icon_state = "l_hand"
-obj/item/weapon/organ/l_leg
+/obj/item/weapon/organ/l_leg
 	name = "left leg"
 	icon_state = "l_leg"
-obj/item/weapon/organ/r_arm
+/obj/item/weapon/organ/r_arm
 	name = "right arm"
 	icon_state = "r_arm"
-obj/item/weapon/organ/r_foot
+/obj/item/weapon/organ/r_foot
 	name = "right foot"
 	icon_state = "r_foot"
-obj/item/weapon/organ/r_hand
+/obj/item/weapon/organ/r_hand
 	name = "right hand"
 	icon_state = "r_hand"
-obj/item/weapon/organ/r_leg
+/obj/item/weapon/organ/r_leg
 	name = "right leg"
 	icon_state = "r_leg"
-obj/item/weapon/organ/head
+/obj/item/weapon/organ/head
 	name = "head"
 	icon_state = "head_m"
 	var/mob/living/carbon/brain/brainmob
@@ -1055,7 +1067,7 @@ obj/item/weapon/organ/head
 /obj/item/weapon/organ/head/posi
 	name = "robotic head"
 
-obj/item/weapon/organ/head/New(loc, mob/living/carbon/human/H)
+/obj/item/weapon/organ/head/New(loc, mob/living/carbon/human/H)
 	if(istype(H))
 		src.icon_state = H.gender == MALE? "head_m" : "head_f"
 	..()
@@ -1096,7 +1108,7 @@ obj/item/weapon/organ/head/New(loc, mob/living/carbon/human/H)
 	brainmob.stat = 2
 	brainmob.death()
 
-obj/item/weapon/organ/head/proc/transfer_identity(var/mob/living/carbon/human/H)//Same deal as the regular brain proc. Used for human-->head
+/obj/item/weapon/organ/head/proc/transfer_identity(var/mob/living/carbon/human/H)//Same deal as the regular brain proc. Used for human-->head
 	brainmob = new(src)
 	brainmob.name = H.real_name
 	brainmob.real_name = H.real_name
@@ -1105,7 +1117,7 @@ obj/item/weapon/organ/head/proc/transfer_identity(var/mob/living/carbon/human/H)
 		H.mind.transfer_to(brainmob)
 	brainmob.container = src
 
-obj/item/weapon/organ/head/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/weapon/organ/head/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W,/obj/item/weapon/scalpel))
 		switch(brain_op_stage)
 			if(0)

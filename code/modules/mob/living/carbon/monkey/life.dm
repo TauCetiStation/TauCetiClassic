@@ -221,6 +221,7 @@
 			if(reagents.has_reagent("lexorin")) return
 
 		if(!loc) return //probably ought to make a proper fix for this, but :effort: --NeoFite
+		if(istype(loc, /obj/item/weapon/holder)) return // типа быстрофикс на обезьянок что берут на руки, хотя бы не будут умирать.. но нужно нормальное решение.
 
 		var/datum/gas_mixture/environment = loc.return_air()
 		var/datum/gas_mixture/breath
@@ -467,10 +468,11 @@
 			var/light_amount = 0 //how much light there is in the place, affects receiving nutrition and healing
 			if(isturf(loc)) //else, there's considered to be no light
 				var/turf/T = loc
-				var/area/A = T.loc
-				if(A)
-					if(A.lighting_use_dynamic)	light_amount = min(10,T.lighting_lumcount) - 5 //hardcapped so it's not abused by having a ton of flashlights
-					else						light_amount =  5
+				var/atom/movable/lighting_overlay/L = locate(/atom/movable/lighting_overlay) in T
+				if(L)
+					light_amount = (L.get_clamped_lum()*10) - 5 //hardcapped so it's not abused by having a ton of flashlights
+				else
+					light_amount =  5
 
 			nutrition += light_amount
 			traumatic_shock -= light_amount
@@ -599,11 +601,18 @@
 			see_in_dark = 8
 			see_invisible = SEE_INVISIBLE_LEVEL_TWO
 		else if (stat != 2)
-			sight &= ~SEE_TURFS
-			sight &= ~SEE_MOBS
-			sight &= ~SEE_OBJS
-			see_in_dark = 2
-			see_invisible = SEE_INVISIBLE_LIVING
+			if(changeling_aug)
+				sight &= ~SEE_TURFS
+				sight |= SEE_MOBS
+				sight &= ~SEE_OBJS
+				see_in_dark = 8
+				see_invisible = SEE_INVISIBLE_MINIMUM
+			else
+				sight &= ~SEE_TURFS
+				sight &= ~SEE_MOBS
+				sight &= ~SEE_OBJS
+				see_in_dark = 2
+				see_invisible = SEE_INVISIBLE_LIVING
 
 		if (healths)
 			if (stat != 2)
@@ -694,12 +703,12 @@
 
 
 	proc/handle_changeling()
-		/*
+		
 		if(mind && mind.changeling)
 			mind.changeling.regenerate()
-			hud_used.lingchemdisplay.invisibility = 0
-			hud_used.lingchemdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'> <font color='#dd66dd'>[src.mind.changeling.chem_charges]</font></div>"
-		*/
+			//hud_used.lingchemdisplay.invisibility = 0
+			//hud_used.lingchemdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'> <font color='#dd66dd'>[src.mind.changeling.chem_charges]</font></div>"
+		
 		return
 
 ///FIRE CODE

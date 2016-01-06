@@ -254,8 +254,8 @@ obj/item/ammo_box/magazine/tommygunm45
 
 /obj/item/ammo_box/shotgun
 	name = "shotgun shells box"
-	icon = 'tauceti/icons/obj/ammo.dmi'
-	icon_state = "shotgun_shells"
+	icon = 'icons/obj/ammo.dmi'
+	icon_state = "9mm"
 	origin_tech = "combat=2"
 	ammo_type = /obj/item/ammo_casing/shotgun/buckshot
 	max_ammo = 20
@@ -288,6 +288,7 @@ obj/item/ammo_box/magazine/tommygunm45
 	slot_flags = SLOT_BELT
 	name = "sawn-off shotgun"
 	desc = "Omar's coming!"
+	short = 1
 
 /obj/item/ammo_box/magazine/internal/cylinder/dualshot/dungeon
 	name = "double-barrel shotgun internal magazine"

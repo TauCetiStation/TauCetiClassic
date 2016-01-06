@@ -107,19 +107,19 @@ turf/simulated/floor/proc/update_icon()
 			switch(T.state)
 				if(0)
 					icon_state = "light_on"
-					SetLuminosity(5)
+					set_light(5)
 				if(1)
 					var/num = pick("1","2","3","4")
 					icon_state = "light_on_flicker[num]"
-					SetLuminosity(5)
+					set_light(5)
 				if(2)
 					icon_state = "light_on_broken"
-					SetLuminosity(5)
+					set_light(5)
 				if(3)
 					icon_state = "light_off"
-					SetLuminosity(0)
+					set_light(0)
 		else
-			SetLuminosity(0)
+			set_light(0)
 			icon_state = "light_off"
 	else if(is_grass_floor())
 		if(!broken && !burnt)
@@ -336,7 +336,7 @@ turf/simulated/floor/proc/update_icon()
 	if(!floor_tile) return
 	qdel(floor_tile)
 	icon_plating = "plating"
-	SetLuminosity(0)
+	set_light(0)
 	floor_tile = null
 	intact = 0
 	broken = 0
@@ -352,7 +352,7 @@ turf/simulated/floor/proc/update_icon()
 	broken = 0
 	burnt = 0
 	intact = 1
-	SetLuminosity(0)
+	set_light(0)
 	if(T)
 		if(istype(T,/obj/item/stack/tile/plasteel))
 			floor_tile = T
@@ -454,7 +454,7 @@ turf/simulated/floor/proc/update_icon()
 		if(is_light_floor())
 			var/obj/item/stack/tile/light/T = floor_tile
 			if(T.state)
-				user.drop_item(C)
+				user.remove_from_mob(C)
 				qdel(C)
 				T.state = C //fixing it by bashing it with a light bulb, fun eh?
 				update_icon()
@@ -500,7 +500,7 @@ turf/simulated/floor/proc/update_icon()
 		if (is_plating())
 			if (R.amount >= 2)
 				user << "\blue Reinforcing the floor..."
-				if(do_after(user, 30) && R && R.amount >= 2 && is_plating())
+				if(do_after(user, 30, target = src) && R && R.amount >= 2 && is_plating())
 					ChangeTurf(/turf/simulated/floor/engine)
 					playsound(src, 'sound/items/Deconstruct.ogg', 80, 1)
 					R.use(2)

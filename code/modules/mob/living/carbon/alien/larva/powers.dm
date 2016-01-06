@@ -28,8 +28,13 @@
 	if(stat != CONSCIOUS)
 		return
 
+	if(!isturf(src.loc))
+		src << "\red You cannot evolve when you are inside something." //Silly aliens!
+		return
+
 	if(handcuffed || legcuffed)
 		src << "\red You cannot evolve when you are cuffed."
+		return
 
 	if(amount_grown >= max_grown)	//TODO ~Carn
 		//green is impossible to read, so i made these blue and changed the formatting slightly
@@ -38,6 +43,9 @@
 		src << "<B>Hunters</B> \blue are strong and agile, able to hunt away from the hive and rapidly move through ventilation shafts. Hunters generate plasma slowly and have low reserves."
 		src << "<B>Sentinels</B> \blue are tasked with protecting the hive and are deadly up close and at a range. They are not as physically imposing nor fast as the hunters."
 		src << "<B>Drones</B> \blue are the working class, offering the largest plasma storage and generation. They are the only caste which may evolve again, turning into the dreaded alien queen."
+		var/evolve_now = alert(src, "Are you sure?",,"Yes","No")
+		if(evolve_now == "No")
+			return
 		var/alien_caste = alert(src, "Please choose which alien caste you shall belong to.",,"Hunter","Sentinel","Drone")
 
 		var/mob/living/carbon/alien/humanoid/new_xeno
@@ -49,7 +57,7 @@
 			if("Drone")
 				new_xeno = new /mob/living/carbon/alien/humanoid/drone(loc)
 		if(mind)	mind.transfer_to(new_xeno)
-		del(src)
+		qdel(src)
 		return
 	else
 		src << "\red You are not fully grown."

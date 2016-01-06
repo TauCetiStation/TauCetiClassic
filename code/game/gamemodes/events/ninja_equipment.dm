@@ -40,23 +40,23 @@ ________________________________________________________________________________
 	cell = new/obj/item/weapon/cell/high//The suit should *always* have a battery because so many things rely on it.
 	cell.charge = 9000//Starting charge should not be higher than maximum charge. It leads to problems with recharging.
 
-/obj/item/clothing/suit/space/space_ninja/Del()
+/obj/item/clothing/suit/space/space_ninja/Destroy()
 	if(affecting)//To make sure the window is closed.
 		affecting << browse(null, "window=hack spideros")
 	if(AI)//If there are AIs present when the ninja kicks the bucket.
 		killai()
 	if(hologram)//If there is a hologram
-		del(hologram.i_attached)//Delete it and the attached image.
-		del(hologram)
+		qdel(hologram.i_attached)//Delete it and the attached image.
+		qdel(hologram)
 	..()
 	return
 
 //Simply deletes all the attachments and self, killing all related procs.
 /obj/item/clothing/suit/space/space_ninja/proc/terminate()
-	del(n_hood)
-	del(n_gloves)
-	del(n_shoes)
-	del(src)
+	qdel(n_hood)
+	qdel(n_gloves)
+	qdel(n_shoes)
+	qdel(src)
 
 /obj/item/clothing/suit/space/space_ninja/proc/killai(mob/living/silicon/ai/A = AI)
 	if(A.client)
@@ -64,7 +64,7 @@ ________________________________________________________________________________
 		A << browse(null, "window=hack spideros")
 	AI = null
 	A.death(1)//Kill, deleting mob.
-	del(A)
+	qdel(A)
 	return
 
 //=======//SUIT VERBS//=======//
@@ -103,7 +103,8 @@ ________________________________________________________________________________
 /obj/item/clothing/suit/space/space_ninja/proc/stealth()
 	set name = "Toggle Stealth"
 	set desc = "Utilize the internal CLOAK-tech device to activate or deactivate stealth-camo."
-	set category = "Ninja Equip"
+	//set category = "Ninja Equip"
+	set category = "Ninja Ability"
 
 	if(s_control&&!s_busy)
 		toggle_stealth()
@@ -538,13 +539,41 @@ ________________________________________________________________________________
 				display_to << "\red Error: unable to deliver message."
 				display_spideros()
 				return
-			P.tnote += "<i><b>&larr; From [!s_control?(A):"an unknown source"]:</b></i><br>[t]<br>"
-			if (!P.silent)
-				playsound(P.loc, 'sound/machines/twobeep.ogg', 50, 1)
-				for (var/mob/O in hearers(3, P.loc))
-					O.show_message(text("\icon[P] *[P.ttone]*"))
-			P.overlays.Cut()
-			P.overlays += image('icons/obj/pda.dmi', "pda-r")
+			var/obj/machinery/message_server/useMS = null
+			if(!useMS || !useMS.active)
+				useMS = null
+				if(message_servers)
+					for (var/obj/machinery/message_server/MS in message_servers)
+						if(MS.active)
+							useMS = MS
+							break
+			if(useMS)
+				var/sender = "an unknown source"
+				useMS.send_pda_message("[P.owner]",sender,"[t]")
+
+				for(var/mob/M in player_list)
+					if(M.stat == DEAD && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTEARS)) // src.client is so that ghosts don't have to listen to mice
+						if(istype(M, /mob/new_player))
+							continue
+						M.show_message("<span class='game say'>PDA Message - <span class='name'>[U]</span> -> <span class='name'>[P.owner]</span>: <span class='message'>[sanitize_chat(t)]</span></span>")
+
+				if (!P.message_silent)
+					playsound(P.loc, 'sound/machines/twobeep.ogg', 50, 1)
+					for (var/mob/O in hearers(3, P.loc))
+						O.show_message(text("\icon[P] *[P.ttone]*"))
+				P.overlays.Cut()
+				P.overlays += image('icons/obj/pda.dmi', "pda-r")
+				var/mob/living/L = null
+				if(P.loc && isliving(P.loc))
+					L = P.loc
+				//Maybe they are a pAI!
+				else
+					L = get(P, /mob/living/silicon)
+
+				if(L)
+					L << "\icon[P] <b>Message from [sender], </b>\"[t]\" (Unable to Reply)"
+			else
+				U << "<span class='notice'>ERROR: Messaging server is not responding.</span>"
 
 		if("Inject")
 			if( (href_list["tag"]=="radium"? (reagents.get_reagent_amount("radium"))<=(a_boost*a_transfer) : !reagents.get_reagent_amount(href_list["tag"])) )//Special case for radium. If there are only a_boost*a_transfer radium units left.
@@ -747,8 +776,8 @@ ________________________________________________________________________________
 
 	spawn while(hologram&&s_initialized&&AI)//Suit on and there is an AI present.
 		if(!s_initialized||get_dist(affecting,hologram.loc)>3)//Once suit is de-initialized or hologram reaches out of bounds.
-			del(hologram.i_attached)
-			del(hologram)
+			qdel(hologram.i_attached)
+			qdel(hologram)
 
 			verbs -= /obj/item/clothing/suit/space/space_ninja/proc/ai_holo_clear
 			return
@@ -768,8 +797,8 @@ ________________________________________________________________________________
 	set category = "AI Ninja Equip"
 	set src = usr.loc
 
-	del(hologram.i_attached)
-	del(hologram)
+	qdel(hologram.i_attached)
+	qdel(hologram)
 
 	verbs -= /obj/item/clothing/suit/space/space_ninja/proc/ai_holo_clear
 	return
@@ -831,7 +860,7 @@ ________________________________________________________________________________
 		else if(istype(I, /obj/item/weapon/cell))
 			if(I:maxcharge>cell.maxcharge&&n_gloves&&n_gloves.candrain)
 				U << "\blue Higher maximum capacity detected.\nUpgrading..."
-				if (n_gloves&&n_gloves.candrain&&do_after(U,s_delay))
+				if (n_gloves&&n_gloves.candrain&&do_after(U,s_delay, target = U))
 					U.drop_item()
 					I.loc = src
 					I:charge = min(I:charge+cell.charge, I:maxcharge)
@@ -850,7 +879,7 @@ ________________________________________________________________________________
 			var/obj/item/weapon/disk/tech_disk/TD = I
 			if(TD.stored)//If it has something on it.
 				U << "Research information detected, processing..."
-				if(do_after(U,s_delay))
+				if(do_after(U,s_delay,target = U))
 					for(var/datum/tech/current_data in stored_research)
 						if(current_data.id==TD.stored.id)
 							if(current_data.level<TD.stored.level)
@@ -879,7 +908,7 @@ ________________________________________________________________________________
 		U << "\blue You are now invisible to normal detection."
 		for(var/mob/O in oviewers(U))
 			O.show_message("[U.name] vanishes into thin air!",1)
-		U.invisibility = INVISIBILITY_OBSERVER
+		U.invisibility = INVISIBILITY_LEVEL_TWO
 	return
 
 /obj/item/clothing/suit/space/space_ninja/proc/cancel_stealth()
@@ -891,7 +920,10 @@ ________________________________________________________________________________
 		U.invisibility = 0
 		for(var/mob/O in oviewers(U))
 			O.show_message("[U.name] appears from thin air!",1)
-		icon_state = U.gender==FEMALE ? "s-ninjanf" : "s-ninjan"
+		if(U.mind.protector_role == 1)
+			icon_state = U.gender==FEMALE ? "s-ninjakf" : "s-ninjak"
+		else
+			icon_state = U.gender==FEMALE ? "s-ninjanf" : "s-ninjan"
 		U.regenerate_icons()	//update their icons
 		return 1
 	return 0
@@ -969,7 +1001,7 @@ ________________________________________________________________________________
 					if(S.cell.charge+drain>S.cell.maxcharge)
 						drain = S.cell.maxcharge-S.cell.charge
 						maxcapacity = 1//Reached maximum battery capacity.
-					if (do_after(U,10))
+					if (do_after(U,10,target = A))
 						spark_system.start()
 						playsound(A.loc, "sparks", 50, 1)
 						A.cell.charge-=drain
@@ -997,7 +1029,7 @@ ________________________________________________________________________________
 					if(S.cell.charge+drain>S.cell.maxcharge)
 						drain = S.cell.maxcharge-S.cell.charge
 						maxcapacity = 1
-					if (do_after(U,10))
+					if (do_after(U,10,target = A))
 						spark_system.start()
 						playsound(A.loc, "sparks", 50, 1)
 						A.charge-=drain
@@ -1011,7 +1043,7 @@ ________________________________________________________________________________
 		if("CELL")
 			var/obj/item/weapon/cell/A = target
 			if(A.charge)
-				if (G.candrain&&do_after(U,30))
+				if (G.candrain&&do_after(U,30,target = A))
 					U << "\blue Gained <B>[A.charge]</B> energy from the cell."
 					if(S.cell.charge+A.charge>S.cell.maxcharge)
 						S.cell.charge=S.cell.maxcharge
@@ -1039,7 +1071,7 @@ ________________________________________________________________________________
 					while(G.candrain&&!maxcapacity&&!isnull(A))//And start a proc similar to drain from wire.
 						drain = rand(G.mindrain,G.maxdrain)
 						var/drained = 0
-						if(PN&&do_after(U,10))
+						if(PN&&do_after(U,10,target = A))
 							drained = min(drain, PN.avail)
 							PN.newload += drained
 							if(drained < drain)//if no power on net, drain apcs
@@ -1075,7 +1107,7 @@ ________________________________________________________________________________
 			if(A:files&&A:files.known_tech.len)
 				for(var/datum/tech/current_data in S.stored_research)
 					U << "\blue Checking \the [current_data.name] database."
-					if(do_after(U, S.s_delay)&&G.candrain&&!isnull(A))
+					if(do_after(U, S.s_delay, target = A)&&G.candrain&&!isnull(A))
 						for(var/datum/tech/analyzing_data in A:files.known_tech)
 							if(current_data.id==analyzing_data.id)
 								if(analyzing_data.level>current_data.level)
@@ -1091,7 +1123,7 @@ ________________________________________________________________________________
 			while(G.candrain&&!maxcapacity&&!isnull(A))
 				drain = (round((rand(G.mindrain,G.maxdrain))/2))
 				var/drained = 0
-				if(PN&&do_after(U,10))
+				if(PN&&do_after(U,10,target = A))
 					drained = min(drain, PN.avail)
 					PN.newload += drained
 					if(drained < drain)//if no power on net, drain apcs
@@ -1124,7 +1156,7 @@ ________________________________________________________________________________
 					if(S.cell.charge+drain>S.cell.maxcharge)
 						drain = S.cell.maxcharge-S.cell.charge
 						maxcapacity = 1
-					if (do_after(U,10))
+					if (do_after(U,10,target = A))
 						A.spark_system.start()
 						playsound(A.loc, "sparks", 50, 1)
 						A.cell.use(drain)
@@ -1147,7 +1179,7 @@ ________________________________________________________________________________
 					if(S.cell.charge+drain>S.cell.maxcharge)
 						drain = S.cell.maxcharge-S.cell.charge
 						maxcapacity = 1
-					if (do_after(U,10))
+					if (do_after(U,10,target = A))
 						A.spark_system.start()
 						playsound(A.loc, "sparks", 50, 1)
 						A.cell.charge-=drain
@@ -1319,7 +1351,7 @@ It is possible to destroy the net by the occupant or someone else.
 	mouse_opacity = 1//So you can hit it with stuff.
 	anchored = 1//Can't drag/grab the trapped mob.
 
-	var/health = 25//How much health it has.
+	var/health = 100//How much health it has.
 	var/mob/living/affecting = null//Who it is currently affecting, if anyone.
 	var/mob/living/master = null//Who shot web. Will let this person know if the net was successful or failed.
 
@@ -1329,29 +1361,42 @@ It is possible to destroy the net by the occupant or someone else.
 				density = 0
 				if(affecting)
 					var/mob/living/carbon/M = affecting
-					M.anchored = 0
+					M.captured = 0 //Important.
+					M.anchored = initial(M.anchored) //Changes the mob's anchored status to the original one; this is not handled by the can_move proc.
 					for(var/mob/O in viewers(src, 3))
 						O.show_message(text("[] was recovered from the energy net!", M.name), 1, text("You hear a grunt."), 2)
-					if(!isnull(master))//As long as they still exist.
-						master << "\red <b>ERROR</b>: \black unable to initiate transport protocol. Procedure terminated."
-				del(src)
+					//if(!isnull(master))//As long as they still exist.
+					//	master << "\red <b>ERROR</b>: \black unable to initiate transport protocol. Procedure terminated."
+				qdel(src)
 			return
 
 	process(var/mob/living/carbon/M as mob)
 		var/check = 60//30 seconds before teleportation. Could be extended I guess. - Extended to one minute
-		var/mob_name = affecting.name//Since they will report as null if terminated before teleport.
+		//var/mob_name = affecting.name//Since they will report as null if terminated before teleport.
 		//The person can still try and attack the net when inside.
 		while(!isnull(M)&&!isnull(src)&&check>0)//While M and net exist, and 60 seconds have not passed.
-			check--
-			sleep(10)
+			var/turf/T = get_turf(src)
+			if(M in T.contents)
+				check--
+				sleep(10)
+			else
+				check = 0
+				M.captured = 0 //Important.
+				M.anchored = initial(M.anchored) //Changes the mob's anchored status to the original one; this is not handled by the can_move proc.
 
 		if(isnull(M)||M.loc!=loc)//If mob is gone or not at the location.
-			if(!isnull(master))//As long as they still exist.
-				master << "\red <b>ERROR</b>: \black unable to locate \the [mob_name]. Procedure terminated."
-			del(src)//Get rid of the net.
+			//if(!isnull(master))//As long as they still exist.
+			//	master << "\red <b>ERROR</b>: \black unable to locate \the [mob_name]. Procedure terminated."
+			qdel(src)//Get rid of the net.
 			return
 
-		if(!isnull(src))//As long as both net and person exist.
+		if(!isnull(src))
+			M.captured = 0
+			M.anchored = initial(M.anchored)
+			qdel(src)
+		return
+
+		/*if(!isnull(src))//As long as both net and person exist.
 			//No need to check for countdown here since while() broke, it's implicit that it finished.
 
 			density = 0//Make the net pass-through.
@@ -1376,7 +1421,7 @@ It is possible to destroy the net by the occupant or someone else.
 					playsound(M.loc, 'sound/effects/phasein.ogg', 25, 1)
 					playsound(M.loc, 'sound/effects/sparks2.ogg', 50, 1)
 					anim(M.loc,M,'icons/mob/mob.dmi',,"phasein",,M.dir)
-					del(src)//Wait for everything to finish, delete the net. Else it will stop everything once net is deleted, including the spawn(0).
+					qdel(src)//Wait for everything to finish, delete the net. Else it will stop everything once net is deleted, including the spawn(0).
 			else
 				M.loc = null
 
@@ -1393,7 +1438,7 @@ It is possible to destroy the net by the occupant or someone else.
 
 		else//And they are free.
 			M << "\blue You are free of the net!"
-		return
+		return*/
 
 	bullet_act(var/obj/item/projectile/Proj)
 		health -= Proj.damage
@@ -1449,7 +1494,8 @@ It is possible to destroy the net by the occupant or someone else.
 		return attack_hand()
 
 	attack_alien()
-		if (islarva(usr))
+		usr.do_attack_animation(src)
+		if (islarva(usr) || isfacehugger(usr))
 			return
 		usr << text("\green You claw at the net.")
 		for(var/mob/O in oviewers(src))

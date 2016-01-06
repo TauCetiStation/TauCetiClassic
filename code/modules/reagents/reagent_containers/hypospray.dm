@@ -64,6 +64,20 @@
 	update_icon()
 	return
 
+/obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack //goliath kiting
+	name = "stimpack"
+	desc = "A rapid way to stimulate your body's adrenaline, allowing for freer movement in restrictive armor."
+	icon_state = "stimpen"
+	volume = 20
+	amount_per_transfer_from_this = 20
+
+/obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack/New()
+	..()
+	reagents.add_reagent("coffee", 13)
+	reagents.add_reagent("hyperzine", 2)
+	update_icon()
+	return
+
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/attack(mob/M as mob, mob/user as mob)
 	..()
 	if(reagents.total_volume <= 0) //Prevents autoinjectors to be refilled.

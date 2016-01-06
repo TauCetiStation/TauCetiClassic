@@ -234,7 +234,7 @@ var/global/datum/controller/occupations/job_master
 		for(var/mob/new_player/player in player_list)
 			if(player.ready && player.mind && !player.mind.assigned_role)
 				unassigned += player
-
+				if(player.client.prefs.randomslot) player.client.prefs.random_character()
 		Debug("DO, Len: [unassigned.len]")
 		if(unassigned.len == 0)	return 0
 
@@ -350,6 +350,7 @@ var/global/datum/controller/occupations/job_master
 		var/datum/job/job = GetJob(rank)
 		if(job)
 			job.equip(H)
+			job.apply_fingerprints(H)
 		else
 			H << "Your job is [rank] and the game just can't handle it! Please report this bug to an administrator."
 
@@ -410,7 +411,9 @@ var/global/datum/controller/occupations/job_master
 				if("Cyborg")
 					H.Robotize()
 					return 1
-				if("AI","Clown")	//don't need bag preference stuff!
+				if("AI")
+					return H
+				if("Clown")	//don't need bag preference stuff!
 				else
 					switch(H.backbag) //BS12 EDIT
 						if(1)
@@ -499,6 +502,7 @@ var/global/datum/controller/occupations/job_master
 			var/obj/item/device/pda/pda = locate(/obj/item/device/pda,H)
 			pda.owner = H.real_name
 			pda.ownjob = C.assignment
+			pda.ownrank = C.rank
 			pda.name = "PDA-[H.real_name] ([pda.ownjob])"
 
 		return 1

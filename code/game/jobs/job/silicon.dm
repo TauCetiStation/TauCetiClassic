@@ -14,6 +14,8 @@
 		if(!H)	return 0
 		return 1
 
+/datum/job/ai/is_position_available()
+	return (empty_playable_ai_cores.len != 0)
 
 
 /datum/job/cyborg
@@ -21,7 +23,7 @@
 	flag = CYBORG
 	department_flag = ENGSEC
 	faction = "Station"
-	total_positions = 0
+	total_positions = 0 // Not used for AI, see is_position_available below and modules/mob/living/silicon/ai/latejoin.dm
 	spawn_positions = 2
 	supervisors = "your laws and the AI"	//Nodrak
 	selection_color = "#ddffdd"

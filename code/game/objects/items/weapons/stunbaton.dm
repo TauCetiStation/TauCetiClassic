@@ -11,6 +11,7 @@
 	var/charges = 10
 	var/status = 0
 	var/mob/foundmob = "" //Used in throwing proc.
+	var/agony = 60
 
 	origin_tech = "combat=2"
 
@@ -66,19 +67,17 @@
 		//H.apply_effect(5, WEAKEN, 0)
 		H.visible_message("<span class='danger'>[M] has been beaten with the [src] by [user]!</span>")
 
-		user.attack_log += "\[[time_stamp()]\]<font color='red'> Beat [H.name] ([H.ckey]) with [src.name]</font>"
-		H.attack_log += "\[[time_stamp()]\]<font color='orange'> Beaten by [user.name] ([user.ckey]) with [src.name]</font>"
-		msg_admin_attack("[user.name] ([user.ckey]) beat [H.name] ([H.ckey]) with [src.name] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
-
 		playsound(src.loc, "swing_hit", 50, 1, -1)
-	else if(!status)
+
+	if(!status)
 		H.visible_message("<span class='warning'>[M] has been prodded with the [src] by [user]. Luckily it was off.</span>")
 		return
-
-	if(status)
-		H.apply_effect(10, STUN, 0)
-		H.apply_effect(10, WEAKEN, 0)
-		H.apply_effect(10, STUTTER, 0)
+	else
+		user.do_attack_animation(M)
+		//H.apply_effect(10, STUN, 0)
+		//H.apply_effect(10, WEAKEN, 0)
+		//H.apply_effect(10, STUTTER, 0)
+		H.apply_effect(agony,AGONY,0)
 		user.lastattacked = M
 		H.lastattacker = user
 		if(isrobot(src.loc))
@@ -87,11 +86,12 @@
 				R.cell.use(50)
 		else
 			charges--
-		H.visible_message("<span class='danger'>[M] has been stunned with the [src] by [user]!</span>")
+		H.visible_message("<span class='danger'>[M] has been attacked with the [src] by [user]!</span>")
 
-		user.attack_log += "\[[time_stamp()]\]<font color='red'> Stunned [H.name] ([H.ckey]) with [src.name]</font>"
-		H.attack_log += "\[[time_stamp()]\]<font color='orange'> Stunned by [user.name] ([user.ckey]) with [src.name]</font>"
-		msg_admin_attack("[key_name(user)] stunned [key_name(H)] with [src.name]")
+		if(!(user.a_intent == "hurt"))
+			user.attack_log += "\[[time_stamp()]\]<font color='red'> attempted to stun [H.name] ([H.ckey]) with [src.name]</font>"
+			H.attack_log += "\[[time_stamp()]\]<font color='orange'> stunned by [user.name] ([user.ckey]) with [src.name]</font>"
+			msg_admin_attack("[key_name(user)] attempted to stun [key_name(H)] with [src.name]")
 
 		playsound(src.loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
 		if(charges < 1)
@@ -106,19 +106,20 @@
 		if(istype(hit_atom, /mob/living))
 			var/mob/living/carbon/human/H = hit_atom
 			if(status)
-				H.apply_effect(10, STUN, 0)
-				H.apply_effect(10, WEAKEN, 0)
-				H.apply_effect(10, STUTTER, 0)
+				//H.apply_effect(10, STUN, 0)
+				//H.apply_effect(10, WEAKEN, 0)
+				//H.apply_effect(10, STUTTER, 0)
+				H.apply_effect(agony,AGONY,0)
 				charges--
 
 				for(var/mob/M in player_list) if(M.key == src.fingerprintslast)
 					foundmob = M
 					break
 
-				H.visible_message("<span class='danger'>[src], thrown by [foundmob.name], strikes [H] and stuns them!</span>")
+				H.visible_message("<span class='danger'>[src], thrown by [foundmob.name], strikes [H]!</span>")
 
-				H.attack_log += "\[[time_stamp()]\]<font color='orange'> Stunned by thrown [src.name] last touched by ([src.fingerprintslast])</font>"
-				msg_admin_attack("Flying [src.name], last touched by ([src.fingerprintslast]) stunned [key_name(H)]" )
+				H.attack_log += "\[[time_stamp()]\]<font color='orange'> Hit by thrown [src.name] last touched by ([src.fingerprintslast])</font>"
+				msg_admin_attack("Flying [src.name], last touched by ([src.fingerprintslast]) hit [key_name(H)]" )
 
 /obj/item/weapon/melee/baton/emp_act(severity)
 	switch(severity)

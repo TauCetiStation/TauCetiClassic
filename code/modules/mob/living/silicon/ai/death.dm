@@ -3,7 +3,11 @@
 	stat = DEAD
 	if (src.custom_sprite == 1)//check for custom AI sprite, defaulting to blue screen if no.
 		icon_state = "[ckey]-ai-crash"
-	else icon_state = "ai-crash"
+	if("[icon_state]_dead" in icon_states(src.icon,1))
+		icon_state = "[icon_state]_dead"
+	else
+		icon_state = "ai_dead"
+
 	update_canmove()
 	if(src.eyeobj)
 		src.eyeobj.setLoc(get_turf(src))
@@ -11,6 +15,7 @@
 	sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
 	see_in_dark = 8
 	see_invisible = SEE_INVISIBLE_LEVEL_TWO
+	remove_ai_verbs(src)
 
 	var/callshuttle = 0
 

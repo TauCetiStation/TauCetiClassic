@@ -7,6 +7,7 @@
 	icon_state = "crate"
 	icon_opened = "crateopen"
 	icon_closed = "crate"
+	climbable = 1
 //	mouse_drag_pointer = MOUSE_ACTIVE_POINTER	//???
 	var/rigged = 0
 
@@ -36,6 +37,10 @@
 		O.loc = get_turf(src)
 	icon_state = icon_opened
 	src.opened = 1
+
+	if(climbable)
+		structure_shaken()
+
 	return 1
 
 /obj/structure/closet/crate/close()
@@ -77,7 +82,7 @@
 			return
 		user  << "<span class='notice'>You rig [src].</span>"
 		user.drop_item()
-		del(W)
+		qdel(W)
 		rigged = 1
 		return
 	else if(istype(W, /obj/item/device/radio/electropack))
@@ -98,18 +103,18 @@
 	switch(severity)
 		if(1.0)
 			for(var/obj/O in src.contents)
-				del(O)
-			del(src)
+				qdel(O)
+			qdel(src)
 			return
 		if(2.0)
 			for(var/obj/O in src.contents)
 				if(prob(50))
-					del(O)
-			del(src)
+					qdel(O)
+			qdel(src)
 			return
 		if(3.0)
 			if (prob(50))
-				del(src)
+				qdel(src)
 			return
 		else
 	return

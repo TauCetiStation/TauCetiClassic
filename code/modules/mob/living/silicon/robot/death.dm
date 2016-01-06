@@ -17,8 +17,8 @@
 	living_mob_list -= src
 	dead_mob_list -= src
 	spawn(15)
-		if(animation)	del(animation)
-		if(src)			del(src)
+		if(animation)	qdel(animation)
+		if(src)			qdel(src)
 
 /mob/living/silicon/robot/dust()
 	death(1)
@@ -35,18 +35,20 @@
 
 	flick("dust-r", animation)
 	new /obj/effect/decal/remains/robot(loc)
-	if(mmi)		del(mmi)	//Delete the MMI first so that it won't go popping out.
+	if(mmi)		qdel(mmi)	//Delete the MMI first so that it won't go popping out.
 
 	dead_mob_list -= src
 	spawn(15)
-		if(animation)	del(animation)
-		if(src)			del(src)
+		if(animation)	qdel(animation)
+		if(src)			qdel(src)
 
 
 /mob/living/silicon/robot/death(gibbed)
 	if(stat == DEAD)	return
 	if(!gibbed)
 		emote("deathgasp")
+		if(typing)	//turn off typing indicator
+			qdel(typing_indicator)
 	stat = DEAD
 	update_canmove()
 	if(camera)
@@ -55,6 +57,8 @@
 	if(in_contents_of(/obj/machinery/recharge_station))//exit the recharge station
 		var/obj/machinery/recharge_station/RC = loc
 		RC.go_out()
+
+	remove_robot_verbs()
 
 	if(blind)	blind.layer = 0
 	sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS

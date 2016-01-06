@@ -48,8 +48,26 @@ var/list/department_radio_keys = list(
 	  ":è" = "binary",		"#è" = "binary",		".è" = "binary",
 	  ":ô" = "alientalk",	"#ô" = "alientalk",		".ô" = "alientalk",
 	  ":å" = "Syndicate",	"#å" = "Syndicate",		".å" = "Syndicate",
-	  ":é" = "Supply",		"#é" = "Supply",		".é" = "Supply",
-	  ":ï" = "changeling",	"#ï" = "changeling",	".ï" = "changeling"
+	  ":ã" = "Supply",		"#ã" = "Supply",		".ã" = "Supply",
+	  ":ï" = "changeling",	"#ï" = "changeling",	".ï" = "changeling",
+	  ":â" = "dronechat",	"#â" = "dronechat",		".â" = "dronechat",
+
+	  ":Ê" = "right ear",	"#Ê" = "right ear",		".Ê" = "right ear",
+	  ":Ä" = "left ear",	"#Ä" = "left ear",		".Ä" = "left ear",
+	  ":Ø" = "intercom",	"#Ø" = "intercom",		".Ø" = "intercom",
+	  ":Ð" = "department",	"#Ð" = "department",	".Ð" = "department",
+	  ":Ñ" = "Command",		"#Ñ" = "Command",		".Ñ" = "Command",
+	  ":Ò" = "Science",		"#Ò" = "Science",		".Ò" = "Science",
+	  ":Ü" = "Medical",		"#Ü" = "Medical",		".Ü" = "Medical",
+	  ":Ó" = "Engineering",	"#Ó" = "Engineering",	".Ó" = "Engineering",
+	  ":Û" = "Security",	"#Û" = "Security",		".Û" = "Security",
+	  ":Ö" = "whisper",		"#Ö" = "whisper",		".Ö" = "whisper",
+	  ":È" = "binary",		"#È" = "binary",		".È" = "binary",
+	  ":Ô" = "alientalk",	"#Ô" = "alientalk",		".Ô" = "alientalk",
+	  ":Å" = "Syndicate",	"#Å" = "Syndicate",		".Å" = "Syndicate",
+	  ":Ã" = "Supply",		"#Ã" = "Supply",		".Ã" = "Supply",
+	  ":Ï" = "changeling",	"#Ï" = "changeling",	".Ï" = "changeling",
+	  ":Â" = "dronechat",	"#Â" = "dronechat",		".Â" = "dronechat"
 )
 
 /mob/living/proc/binarycheck()
@@ -83,6 +101,12 @@ var/list/department_radio_keys = list(
 		if(dongle.translate_binary) return 1
 
 /mob/living/say(var/message, var/datum/language/speaking = null, var/verb="says", var/alt_name="", var/italics=0, var/message_range = world.view, var/list/used_radios = list(), var/sound/speech_sound, var/sound_vol, var/sanitize = 1)
+	if (src.client)
+		if(client.prefs.muted & MUTE_IC)
+			src << "You cannot send IC messages (muted)."
+			return
+		if (src.client.handle_spam_prevention(message,MUTE_IC))
+			return
 
 	if(sanitize)
 		message = sanitize_plus(copytext(message, 1, MAX_MESSAGE_LEN))
@@ -97,18 +121,19 @@ var/list/department_radio_keys = list(
 
 		if (speaking.flags & SIGNLANG)
 			say_signlang(message, pick(speaking.signlang_verb), speaking)
-			return
+			return 1
 
 	//speaking into radios
 	if(used_radios.len)
 		italics = 1
 		message_range = 1
 
-		for(var/mob/living/M in hearers(5, src))
-			if(M != src)
-				M.show_message("<span class='notice'>[src] talks into [used_radios.len ? used_radios[1] : "the radio."]</span>")
-			if (speech_sound)
-				src.playsound_local(get_turf(src), speech_sound, sound_vol * 0.5, 1)
+		if (!istype(src, /mob/living/silicon/ai)) // Atlantis: Prevents nearby people from hearing the AI when it talks using it's integrated radio.
+			for(var/mob/living/M in hearers(5, src))
+				if(M != src)
+					M.show_message("<span class='notice'>[src] talks into [used_radios.len ? used_radios[1] : "the radio."]</span>")
+				if (speech_sound)
+					src.playsound_local(get_turf(src), speech_sound, sound_vol * 0.5, 1)
 
 		speech_sound = null	//so we don't play it twice.
 
@@ -143,7 +168,7 @@ var/list/department_radio_keys = list(
 				listening_obj |= O
 
 		for(var/mob/M in player_list)
-			if(M.stat == DEAD && M.client && (M.client.prefs.toggles & CHAT_GHOSTEARS))
+			if(M.stat == DEAD && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTEARS))
 				listening |= M
 				continue
 			if(M.loc && M.locs[1] in hearturfs)
@@ -151,7 +176,18 @@ var/list/department_radio_keys = list(
 
 	var/speech_bubble_test = say_test(message)
 	var/image/speech_bubble = image('icons/mob/talk.dmi',src,"h[speech_bubble_test]")
-	spawn(30) del(speech_bubble)
+
+	//Speech bubble animation
+	if(!typing_shown && !typing)
+		speech_bubble.alpha = 0
+		speech_bubble.transform = matrix()*0.5
+		animate(speech_bubble, transform = matrix(), alpha = 255, time = 2, easing = CUBIC_EASING)
+	typing_shown = 1
+	spawn(30)
+		animate(speech_bubble, alpha = 0, time = 2, easing = CUBIC_EASING)
+		spawn(2)
+			qdel(speech_bubble)
+			typing_shown = 0
 
 	for(var/mob/M in listening)
 		M << speech_bubble
@@ -163,6 +199,7 @@ var/list/department_radio_keys = list(
 				O.hear_talk(src, message, verb, speaking)
 
 	log_say("[name]/[key] : [message]")
+	return 1
 
 /mob/living/proc/say_signlang(var/message, var/verb="gestures", var/datum/language/language)
 	for (var/mob/O in viewers(src, null))

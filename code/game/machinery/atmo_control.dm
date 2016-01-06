@@ -82,6 +82,7 @@ obj/machinery/air_sensor
 obj/machinery/computer/general_air_control
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "tank"
+	light_color = "#78eeea"
 
 	name = "Computer"
 
@@ -109,7 +110,7 @@ obj/machinery/computer/general_air_control
 	attackby(I as obj, user as mob)
 		if(istype(I, /obj/item/weapon/screwdriver))
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-			if(do_after(user, 20))
+			if(do_after(user, 20, target = src))
 				if (src.stat & BROKEN)
 					user << "\blue The broken glass falls out."
 					var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
@@ -122,7 +123,7 @@ obj/machinery/computer/general_air_control
 					A.state = 3
 					A.icon_state = "3"
 					A.anchored = 1
-					del(src)
+					qdel(src)
 				else
 					user << "\blue You disconnect the monitor."
 					var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
@@ -134,7 +135,7 @@ obj/machinery/computer/general_air_control
 					A.state = 4
 					A.icon_state = "4"
 					A.anchored = 1
-					del(src)
+					qdel(src)
 		else
 			src.attack_hand(user)
 		return
@@ -308,7 +309,7 @@ Max Output Pressure: [output_pressure] kPa<BR>"}
 		attackby(I as obj, user as mob)
 			if(istype(I, /obj/item/weapon/screwdriver))
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-				if(do_after(user, 20))
+				if(do_after(user, 20, target = src))
 					if (src.stat & BROKEN)
 						user << "\blue The broken glass falls out."
 						var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
@@ -321,7 +322,7 @@ Max Output Pressure: [output_pressure] kPa<BR>"}
 						A.state = 3
 						A.icon_state = "3"
 						A.anchored = 1
-						del(src)
+						qdel(src)
 					else
 						user << "\blue You disconnect the monitor."
 						var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
@@ -333,7 +334,7 @@ Max Output Pressure: [output_pressure] kPa<BR>"}
 						A.state = 4
 						A.icon_state = "4"
 						A.anchored = 1
-						del(src)
+						qdel(src)
 			else
 				src.attack_hand(user)
 			return

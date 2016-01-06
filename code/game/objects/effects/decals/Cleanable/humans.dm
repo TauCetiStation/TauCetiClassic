@@ -45,7 +45,7 @@ var/global/list/image/splatter_cache=list()
 	if(basecolor == "rainbow") basecolor = "#[pick(list("FF0000","FF7F00","FFFF00","00FF00","0000FF","4B0082","8F00FF"))]"
 	color = basecolor
 
-/obj/effect/decal/cleanable/blood/HasEntered(mob/living/carbon/human/perp)
+/obj/effect/decal/cleanable/blood/Crossed(mob/living/carbon/human/perp)
 	if (!istype(perp))
 		return
 	if(amount < 1)
@@ -57,15 +57,22 @@ var/global/list/image/splatter_cache=list()
 	if((!l_foot || l_foot.status & ORGAN_DESTROYED) && (!r_foot || r_foot.status & ORGAN_DESTROYED))
 		hasfeet = 0
 	if(perp.shoes && !perp.buckled)//Adding blood to shoes
-		perp.shoes.blood_color = basecolor
-		perp.shoes:track_blood = max(amount,perp.shoes:track_blood)
-		if(!perp.shoes.blood_overlay)
-			perp.shoes.generate_blood_overlay()
-		if(!perp.shoes.blood_DNA)
-			perp.shoes.blood_DNA = list()
-			perp.shoes.blood_overlay.color = basecolor
-			perp.shoes.overlays += perp.shoes.blood_overlay
-		perp.shoes.blood_DNA |= blood_DNA.Copy()
+		var/obj/item/clothing/shoes/S = perp.shoes
+		if(istype(S))
+			S.blood_color = basecolor
+			S.track_blood = max(amount,S.track_blood)
+			if(!S.blood_overlay)
+				S.generate_blood_overlay()
+			if(!S.blood_DNA)
+				S.blood_DNA = list()
+				S.blood_overlay.color = basecolor
+				S.overlays += S.blood_overlay
+			if(S.blood_overlay && S.blood_overlay.color != basecolor)
+				S.blood_overlay.color = basecolor
+				S.overlays.Cut()
+				S.overlays += S.blood_overlay
+			if(blood_DNA.len)
+				S.blood_DNA |= blood_DNA.Copy()
 
 	else if (hasfeet)//Or feet
 		perp.feet_blood_color = basecolor
@@ -78,6 +85,10 @@ var/global/list/image/splatter_cache=list()
 		W.bloodiness = 4
 
 	perp.update_inv_shoes(1)
+	if(!istype(src, /obj/effect/decal/cleanable/blood/oil))
+		if(perp.lying)
+			perp.bloody_body(perp)
+			perp.bloody_hands(perp)
 	amount--
 
 /obj/effect/decal/cleanable/blood/proc/dry()
@@ -186,7 +197,7 @@ var/global/list/image/splatter_cache=list()
                 for (var/i = 0, i < pick(1, 200; 2, 150; 3, 50; 4), i++)
                         sleep(3)
                         if (i > 0)
-                                var/obj/effect/decal/cleanable/blood/b = new /obj/effect/decal/cleanable/blood/splatter(src.loc)
+                                var/obj/effect/decal/cleanable/blood/b = PoolOrNew(/obj/effect/decal/cleanable/blood/splatter, src.loc)
                                 b.basecolor = src.basecolor
                                 b.update_icon()
                                 for(var/datum/disease/D in src.viruses)

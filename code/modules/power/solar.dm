@@ -65,14 +65,14 @@ var/list/solars_list = list()
 
 	if(iscrowbar(W))
 		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-		if(do_after(user, 50))
+		if(do_after(user, 50,target = src))
 			var/obj/item/solar_assembly/S = locate() in src
 			if(S)
 				S.loc = src.loc
 				S.give_glass()
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			user.visible_message("<span class='notice'>[user] takes the glass off the solar panel.</span>")
-			del(src)
+			qdel(src)
 		return
 	else if (W)
 		src.add_fingerprint(user)
@@ -94,7 +94,7 @@ var/list/solars_list = list()
 		else
 			new /obj/item/weapon/shard(src.loc)
 			new /obj/item/weapon/shard(src.loc)
-			del(src)
+			qdel(src)
 			return
 	return
 
@@ -151,20 +151,20 @@ var/list/solars_list = list()
 	if(stat & !BROKEN)
 		broken()
 	else
-		del(src)
+		qdel(src)
 
 
 /obj/machinery/power/solar/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			del(src)
+			qdel(src)
 			if(prob(15))
 				new /obj/item/weapon/shard( src.loc )
 			return
 		if(2.0)
 			if (prob(25))
 				new /obj/item/weapon/shard( src.loc )
-				del(src)
+				qdel(src)
 				return
 			if (prob(50))
 				broken()
@@ -247,7 +247,7 @@ var/list/solars_list = list()
 		if(istype(W, /obj/item/weapon/tracker_electronics))
 			tracker = 1
 			user.drop_item()
-			del(W)
+			qdel(W)
 			user.visible_message("<span class='notice'>[user] inserts the electronics into the solar assembly.</span>")
 			return 1
 	else
@@ -267,12 +267,15 @@ var/list/solars_list = list()
 	desc = "A controller for solar panel arrays."
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "solar"
+	light_color = "#b88b2e"
 	anchored = 1
 	density = 1
 	directwired = 1
 	use_power = 1
 	idle_power_usage = 5
 	active_power_usage = 20
+	var/light_range_on = 3
+	var/light_power_on = 1
 	var/id = 0
 	var/cdir = 0
 	var/gen = 0
@@ -306,13 +309,16 @@ var/list/solars_list = list()
 /obj/machinery/power/solar_control/update_icon()
 	if(stat & BROKEN)
 		icon_state = "broken"
+		set_light(0)
 		overlays.Cut()
 		return
 	if(stat & NOPOWER)
 		icon_state = "c_unpowered"
+		set_light(0)
 		overlays.Cut()
 		return
 	icon_state = "solar"
+	set_light(light_range_on, light_power_on)
 	overlays.Cut()
 	if(cdir > 0)
 		overlays += image('icons/obj/computer.dmi', "solcon-o", FLY_LAYER, angle2dir(cdir))
@@ -334,7 +340,7 @@ var/list/solars_list = list()
 /obj/machinery/power/solar_control/attackby(I as obj, user as mob)
 	if(istype(I, /obj/item/weapon/screwdriver))
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-		if(do_after(user, 20))
+		if(do_after(user, 20, target = src))
 			if (src.stat & BROKEN)
 				user << "\blue The broken glass falls out."
 				var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
@@ -346,7 +352,7 @@ var/list/solars_list = list()
 				A.state = 3
 				A.icon_state = "3"
 				A.anchored = 1
-				del(src)
+				qdel(src)
 			else
 				user << "\blue You disconnect the monitor."
 				var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
@@ -357,7 +363,7 @@ var/list/solars_list = list()
 				A.state = 4
 				A.icon_state = "4"
 				A.anchored = 1
-				del(src)
+				qdel(src)
 	else
 		src.attack_hand(user)
 	return
@@ -511,7 +517,7 @@ var/list/solars_list = list()
 	switch(severity)
 		if(1.0)
 			//SN src = null
-			del(src)
+			qdel(src)
 			return
 		if(2.0)
 			if (prob(50))

@@ -102,7 +102,7 @@
 	desc = "Protects the eyes from welders, approved by the mad scientist association."
 	icon_state = "welding-g"
 	item_state = "welding-g"
-	icon_action_button = "action_welding_g"
+	action_button_name = "Flip Welding Goggles"
 	var/up = 0
 
 /obj/item/clothing/glasses/welding/attack_self()
@@ -137,7 +137,6 @@
 	desc = "Welding goggles made from more expensive materials, strangely smells like potatoes."
 	icon_state = "rwelding-g"
 	item_state = "rwelding-g"
-	icon_action_button = "action_welding_g"
 
 /obj/item/clothing/glasses/sunglasses/blindfold
 	name = "blindfold"
@@ -161,10 +160,10 @@
 	icon_state = "sunhud"
 	var/obj/item/clothing/glasses/hud/security/hud = null
 
-	New()
-		..()
-		src.hud = new/obj/item/clothing/glasses/hud/security(src)
-		return
+/obj/item/clothing/glasses/sunglasses/sechud/New()
+	..()
+	src.hud = new/obj/item/clothing/glasses/hud/security(src)
+	return
 
 /obj/item/clothing/glasses/sunglasses/sechud/tactical
 	name = "tactical HUD"
@@ -180,17 +179,17 @@
 	vision_flags = SEE_MOBS
 	invisa_view = 2
 
-	emp_act(severity)
-		if(istype(src.loc, /mob/living/carbon/human))
-			var/mob/living/carbon/human/M = src.loc
-			M << "\red The Optical Thermal Scanner overloads and blinds you!"
-			if(M.glasses == src)
-				M.eye_blind = 3
-				M.eye_blurry = 5
-				M.disabilities |= NEARSIGHTED
-				spawn(100)
-					M.disabilities &= ~NEARSIGHTED
-		..()
+/obj/item/clothing/glasses/thermal/emp_act(severity)
+	if(istype(src.loc, /mob/living/carbon/human))
+		var/mob/living/carbon/human/M = src.loc
+		M << "\red The Optical Thermal Scanner overloads and blinds you!"
+		if(M.glasses == src)
+			M.eye_blind = 3
+			M.eye_blurry = 5
+			M.disabilities |= NEARSIGHTED
+			spawn(100)
+				M.disabilities &= ~NEARSIGHTED
+	..()
 
 /obj/item/clothing/glasses/thermal/syndi	//These are now a traitor item, concealed as mesons.	-Pete
 	name = "Optical Meson Scanner"

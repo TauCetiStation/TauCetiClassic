@@ -36,6 +36,7 @@ var/global/list/autolathe_recipes = list( \
 		new /obj/item/weapon/reagent_containers/syringe(), \
 		new /obj/item/ammo_casing/shotgun/beanbag(), \
 		new /obj/item/ammo_box/magazine/c45r(), \
+		new /obj/item/ammo_box/magazine/m9mmr_2(), \
 		new /obj/item/device/taperecorder(), \
 		new /obj/item/device/assembly/igniter(), \
 		new /obj/item/device/assembly/signaler(), \
@@ -58,6 +59,7 @@ var/global/list/autolathe_recipes_hidden = list( \
 		new /obj/item/weapon/handcuffs(), \
 		new /obj/item/ammo_box/a357(), \
 		new /obj/item/ammo_box/magazine/c45m(), \
+		new /obj/item/ammo_box/magazine/m9mm_2(), \
 		new /obj/item/ammo_casing/shotgun(), \
 		new /obj/item/ammo_casing/shotgun/dart(), \
 		new /obj/item/ammo_casing/shotgun/buckshot(), \
@@ -193,7 +195,7 @@ var/global/list/autolathe_recipes_hidden = list( \
 				if(g_amount >= 3750)
 					var/obj/item/stack/sheet/glass/G = new /obj/item/stack/sheet/glass(src.loc)
 					G.amount = round(g_amount / 3750)
-				del(src)
+				qdel(src)
 				return 1
 			else
 				user.set_machine(src)
@@ -233,7 +235,7 @@ var/global/list/autolathe_recipes_hidden = list( \
 				flick("autolathe_r",src)//plays glass insertion animation
 			stack.use(amount)
 		else
-			usr.before_take_item(O)
+			usr.remove_from_mob(O)
 			O.loc = src
 		icon_state = "autolathe"
 		busy = 1

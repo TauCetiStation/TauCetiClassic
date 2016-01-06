@@ -2,6 +2,7 @@
 	name = "R&D Server"
 	icon = 'icons/obj/machines/research.dmi'
 	icon_state = "server"
+	light_color = "#a97faa"
 	var/datum/research/files
 	var/health = 100
 	var/list/id_with_upload = list()		//List of R&D consoles with upload to server access.
@@ -24,7 +25,7 @@
 	RefreshParts()
 	src.initialize(); //Agouri
 
-/obj/machinery/r_n_d/server/Del()
+/obj/machinery/r_n_d/server/Destroy()
 	griefProtection()
 	..()
 
@@ -146,7 +147,7 @@
 				if(I.reliability != 100 && crit_fail)
 					I.crit_fail = 1
 				I.loc = src.loc
-			del(src)
+			qdel(src)
 			return 1
 
 /obj/machinery/r_n_d/server/attack_hand(mob/user as mob)

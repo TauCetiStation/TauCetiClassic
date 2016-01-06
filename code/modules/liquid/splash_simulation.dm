@@ -4,10 +4,10 @@ var/liquid_delay = 4
 
 var/list/datum/puddle/puddles = list()
 
-datum/puddle
+/datum/puddle
 	var/list/obj/effect/liquid/liquid_objects = list()
 
-datum/puddle/proc/process()
+/datum/puddle/proc/process()
 	//world << "DEBUG: Puddle process!"
 	for(var/obj/effect/liquid/L in liquid_objects)
 		L.spread()
@@ -16,19 +16,19 @@ datum/puddle/proc/process()
 		L.apply_calculated_effect()
 
 	if(liquid_objects.len == 0)
-		del(src)
+		qdel(src)
 
-datum/puddle/New()
+/datum/puddle/New()
 	..()
 	puddles += src
 
-datum/puddle/Del()
+/datum/puddle/Destroy()
 	puddles -= src
 	for(var/obj/O in liquid_objects)
-		del(O)
+		qdel(O)
 	..()
 
-client/proc/splash()
+/client/proc/splash()
 	var/volume = input("Volume?","Volume?", 0 ) as num
 	if(!isnum(volume)) return
 	if(volume <= LIQUID_TRANSFER_THRESHOLD) return
@@ -36,7 +36,7 @@ client/proc/splash()
 	if(!isturf(T)) return
 	trigger_splash(T, volume)
 
-proc/trigger_splash(turf/epicenter as turf, volume as num)
+/proc/trigger_splash(turf/epicenter as turf, volume as num)
 	if(!epicenter)
 		return
 	if(volume <= 0)
@@ -52,7 +52,7 @@ proc/trigger_splash(turf/epicenter as turf, volume as num)
 
 
 
-obj/effect/liquid
+/obj/effect/liquid
 	icon = 'icons/effects/liquid.dmi'
 	icon_state = "0"
 	name = "liquid"
@@ -60,16 +60,16 @@ obj/effect/liquid
 	var/new_volume = 0
 	var/datum/puddle/controller
 
-obj/effect/liquid/New()
+/obj/effect/liquid/New()
 	..()
 	if( !isturf(loc) )
-		del(src)
+		qdel(src)
 
 	for( var/obj/effect/liquid/L in loc )
 		if(L != src)
-			del(L)
+			qdel(L)
 
-obj/effect/liquid/proc/spread()
+/obj/effect/liquid/proc/spread()
 
 	//world << "DEBUG: liquid spread!"
 	var/surrounding_volume = 0
@@ -120,27 +120,27 @@ obj/effect/liquid/proc/spread()
 			src.volume -= volume_per_tile //Remove the volume from this tile
 			L.new_volume = L.new_volume + volume_per_tile //Add it to the volume to the other tile
 
-obj/effect/liquid/proc/apply_calculated_effect()
+/obj/effect/liquid/proc/apply_calculated_effect()
 	volume += new_volume
 
 	if(volume < LIQUID_TRANSFER_THRESHOLD)
-		del(src)
+		qdel(src)
 	new_volume = 0
 	update_icon2()
 
-obj/effect/liquid/Move()
+/obj/effect/liquid/Move()
 	return 0
 
-obj/effect/liquid/Del()
+/obj/effect/liquid/Destroy()
 	src.controller.liquid_objects.Remove(src)
 	..()
 
-obj/effect/liquid/proc/update_icon2()
+/obj/effect/liquid/proc/update_icon2()
 	//icon_state = num2text( max(1,min(7,(floor(volume),10)/10)) )
 
 	switch(volume)
 		if(0 to 0.1)
-			del(src)
+			qdel(src)
 		if(0.1 to 5)
 			icon_state = "1"
 		if(5 to 10)
@@ -156,17 +156,17 @@ obj/effect/liquid/proc/update_icon2()
 		if(50 to INFINITY)
 			icon_state = "7"
 
-turf/proc/can_accept_liquid(from_direction)
+/turf/proc/can_accept_liquid(from_direction)
 	return 0
-turf/proc/can_leave_liquid(from_direction)
+/turf/proc/can_leave_liquid(from_direction)
 	return 0
 
-turf/space/can_accept_liquid(from_direction)
+/turf/space/can_accept_liquid(from_direction)
 	return 1
-turf/space/can_leave_liquid(from_direction)
+/turf/space/can_leave_liquid(from_direction)
 	return 1
 
-turf/simulated/floor/can_accept_liquid(from_direction)
+/turf/simulated/floor/can_accept_liquid(from_direction)
 	for(var/obj/structure/window/W in src)
 		if(W.dir in list(5,6,9,10))
 			return 0
@@ -177,7 +177,7 @@ turf/simulated/floor/can_accept_liquid(from_direction)
 			return 0
 	return 1
 
-turf/simulated/floor/can_leave_liquid(to_direction)
+/turf/simulated/floor/can_leave_liquid(to_direction)
 	for(var/obj/structure/window/W in src)
 		if(W.dir in list(5,6,9,10))
 			return 0
@@ -188,15 +188,15 @@ turf/simulated/floor/can_leave_liquid(to_direction)
 			return 0
 	return 1
 
-turf/simulated/wall/can_accept_liquid(from_direction)
+/turf/simulated/wall/can_accept_liquid(from_direction)
 	return 0
-turf/simulated/wall/can_leave_liquid(from_direction)
+/turf/simulated/wall/can_leave_liquid(from_direction)
 	return 0
 
-obj/proc/liquid_pass()
+/obj/proc/liquid_pass()
 	return 1
 
-obj/machinery/door/liquid_pass()
+/obj/machinery/door/liquid_pass()
 	return !density
 
 #undef LIQUID_TRANSFER_THRESHOLD

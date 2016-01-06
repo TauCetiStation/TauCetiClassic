@@ -709,7 +709,7 @@ datum/design/vindicator_peri
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/mecha/vindicator/peripherals"
 
-datum/design/durand_targ
+datum/design/vindicator_targ
 	name = "Circuit Design (\"Vindicator\" Weapons & Targeting Control module)"
 	desc = "Allows for the construction of a \"Vindicator\" Weapons & Targeting Control module."
 	id = "vindicator_targ"
@@ -717,7 +717,7 @@ datum/design/durand_targ
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/mecha/vindicator/targeting"
-
+/*
 datum/design/honker_main
 	name = "Circuit Design (\"H.O.N.K\" Central Control module)"
 	desc = "Allows for the construction of a \"H.O.N.K\" Central Control module."
@@ -743,7 +743,7 @@ datum/design/honker_targ
 	req_tech = list("programming" = 3)
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
-	build_path = "/obj/item/weapon/circuitboard/mecha/honker/targeting"
+	build_path = "/obj/item/weapon/circuitboard/mecha/honker/targeting"*/
 
 datum/design/ultra_main
 	name = "Circuit Design (\"Gygax Ultra\" Central Control module)"
@@ -1404,31 +1404,31 @@ datum/design/nanopaste
 	build_path = "/obj/item/stack/nanopaste"
 
 datum/design/implant_loyal
-	name = "loyalty implant"
-	desc = "Makes you loyal or such."
+	name = "Glass Case- 'Loyalty'"
+	desc = "A case containing a loyalty implant."
 	id = "implant_loyal"
 	req_tech = list("materials" = 2, "biotech" = 3)
 	build_type = PROTOLATHE
-	materials = list("$metal" = 7000, "$glass" = 7000)
-	build_path = "/obj/item/weapon/implant/loyalty"
+	materials = list("$metal" = 1000, "$glass" = 1000, "$silver" = 100, "$gold" = 100)
+	build_path = "/obj/item/weapon/implantcase/loyalty"
 
 datum/design/implant_chem
-	name = "chemical implant"
-	desc = "Injects things."
+	name = "Glass Case- 'Chem'"
+	desc = "A case containing a chemical implant."
 	id = "implant_chem"
 	req_tech = list("materials" = 2, "biotech" = 3)
 	build_type = PROTOLATHE
-	materials = list("$metal" = 50, "$glass" = 50)
-	build_path = "/obj/item/weapon/implant/chem"
+	materials = list("$metal" = 1000, "$glass" = 1000, "$silver" = 100, "$gold" = 100)
+	build_path = "/obj/item/weapon/implantcase/chem"
 
 datum/design/implant_free
-	name = "freedom implant"
-	desc = "Use this to escape from those evil Red Shirts."
+	name = "boxed freedom implant (with injector)"
+	desc = "A sleek, sturdy box"
 	id = "implant_free"
 	req_tech = list("syndicate" = 2, "biotech" = 3)
 	build_type = PROTOLATHE
-	materials = list("$metal" = 50, "$glass" = 50)
-	build_path = "/obj/item/weapon/implant/freedom"
+	materials = list("$metal" = 1000, "$glass" = 1000, "$silver" = 100, "$gold" = 100, "$diamond" = 100)
+	build_path = "/obj/item/weapon/storage/box/syndie_kit/imp_freedom"
 
 datum/design/chameleon
 	name = "Chameleon Kit"
@@ -1436,7 +1436,7 @@ datum/design/chameleon
 	id = "chameleon"
 	req_tech = list("syndicate" = 2)
 	build_type = PROTOLATHE
-	materials = list("$metal" = 500)
+	materials = list("$metal" = 5000)
 	build_path = "/obj/item/weapon/storage/box/syndie_kit/chameleon"
 
 
@@ -1528,7 +1528,7 @@ datum/design/lasercannon
 	id = "lasercannon"
 	req_tech = list("combat" = 4, "materials" = 3, "powerstorage" = 3)
 	build_type = PROTOLATHE
-	materials = list("$metal" = 10000, "$glass" = 1000, "$diamond" = 2000)
+	materials = list("$metal" = 10000, "$glass" = 1000, "$uranium" = 100, "$diamond" = 2000)
 	build_path = "/obj/item/weapon/gun/energy/lasercannon"
 	locked = 1
 
@@ -1536,9 +1536,9 @@ datum/design/decloner
 	name = "Decloner"
 	desc = "Your opponent will bubble into a messy pile of goop."
 	id = "decloner"
-	req_tech = list("combat" = 8, "materials" = 7, "biotech" = 5, "powerstorage" = 6)
+	req_tech = list("combat" = 7, "materials" = 7, "biotech" = 5, "powerstorage" = 6)
 	build_type = PROTOLATHE
-	materials = list("$gold" = 5000,"$uranium" = 10000, "mutagen" = 40)
+	materials = list("$gold" = 5000,"$uranium" = 10000)
 	build_path = "/obj/item/weapon/gun/energy/decloner"
 	locked = 1
 
@@ -1646,7 +1646,7 @@ datum/design/jackhammer
 	req_tech = list("materials" = 3, "powerstorage" = 2, "engineering" = 2)
 	build_type = PROTOLATHE
 	materials = list("$metal" = 2000, "$glass" = 500, "$silver" = 500)
-	build_path = "/obj/item/weapon/pickaxe/jackhammer"
+	build_path = "/obj/item/weapon/pickaxe/drill/jackhammer"
 
 datum/design/drill
 	name = "Mining Drill"
@@ -1684,7 +1684,7 @@ datum/design/drill_diamond
 	build_type = PROTOLATHE
 	materials = list("$metal" = 3000, "$glass" = 1000, "$diamond" = 3750) //Yes, a whole diamond is needed.
 	reliability_base = 79
-	build_path = "/obj/item/weapon/pickaxe/diamonddrill"
+	build_path = "/obj/item/weapon/pickaxe/drill/diamond_drill"
 
 datum/design/mesons
 	name = "Optical Meson Scanners"
@@ -1963,3 +1963,72 @@ datum/design/cart_captain
 	materials = list("$metal" = 50, "$glass" = 50)
 	build_path = "/obj/item/weapon/cartridge/captain"
 	locked = 1
+
+///////////////////////////////
+/////////////New stuff/////////
+///////////////////////////////
+datum/design/beacon_warp
+	name = "Medical Tracking Beacon"
+	desc = "A beacon used by a body teleporter."
+	id = "beacon_warp"
+	req_tech = list("materials" = 2)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 10000)
+	build_path = "/obj/item/device/beacon/medical"
+
+datum/design/body_warp
+	name = "Medical Body Teleporter Device"
+	desc = "A device used for teleporting injured or dead people."
+	id = "body_warp"
+	req_tech = list("materials" = 2)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 3500, "$glass" = 3500)
+	build_path = "/obj/item/weapon/medical/teleporter"
+
+datum/design/spraycan
+	name = "Spraycan"
+	id = "spraycan"
+	build_type = AUTOLATHE
+	materials = list("$metal" = 100, "$glass" = 100)
+	build_path = "/obj/item/toy/crayon/spraycan"
+
+/datum/design/welding_mask
+	name = "Welding Gas Mask"
+	desc = "A gas mask with built in welding goggles and face shield. Looks like a skull, clearly designed by a nerd."
+	id = "weldingmask"
+	req_tech = list("materials" = 2, "engineering" = 2)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 4000, "$glass" = 1000)
+	build_path = /obj/item/clothing/mask/gas/welding
+
+/////////////////////////////////////////
+////////////Janitor Designs//////////////
+/////////////////////////////////////////
+
+datum/design/advmop
+	name = "Advanced Mop"
+	desc = "An upgraded mop with a large internal capacity for holding water or other cleaning chemicals."
+	id = "advmop"
+	req_tech = list("materials" = 4, "engineering" = 3)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 2500, "$glass" = 200)
+	build_path = /obj/item/weapon/mop/advanced
+
+datum/design/blutrash
+	name = "Trashbag of Holding"
+	desc = "An advanced trashbag with bluespace properties; capable of holding a plethora of garbage."
+	id = "blutrash"
+	req_tech = list("materials" = 5, "bluespace" = 3)
+	build_type = PROTOLATHE
+	materials = list("$gold" = 1500, "$uranium" = 250, "$phoron" = 1500)
+	build_path = /obj/item/weapon/storage/bag/trash/bluespace
+
+datum/design/holosign
+	name = "Holographic Sign Projector"
+	desc = "A holograpic projector used to project various warning signs."
+	id = "holosign"
+	req_tech = list("magnets" = 3, "powerstorage" = 2)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 2000, "$glass" = 1000)
+	build_path = /obj/item/weapon/holosign_creator
+

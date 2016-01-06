@@ -32,9 +32,36 @@
 	color = color_windows()
 	return
 
+/obj/machinery/door/window/proc/shatter(var/display_message = 1)
+	new /obj/item/weapon/shard(src.loc)
+	var/obj/item/weapon/cable_coil/CC = new /obj/item/weapon/cable_coil(src.loc)
+	CC.amount = 2
+	var/obj/item/weapon/airlock_electronics/ae
+	if(!electronics)
+		ae = new/obj/item/weapon/airlock_electronics( src.loc )
+		if(!src.req_access)
+			src.check_access()
+		if(src.req_access.len)
+			ae.conf_access = src.req_access
+		else if (src.req_one_access.len)
+			ae.conf_access = src.req_one_access
+			ae.one_access = 1
+	else
+		ae = electronics
+		electronics = null
+		ae.loc = src.loc
+	if(operating == -1)
+		ae.icon_state = "door_electronics_smoked"
+		operating = 0
+	src.density = 0
+	playsound(src, "shatter", 70, 1)
+	if(display_message)
+		visible_message("[src] shatters!")
+	qdel(src)
+
 /obj/machinery/door/window/Destroy()
 	density = 0
-	playsound(src, "shatter", 70, 1)
+	update_nearby_tiles()
 	..()
 
 //painter
@@ -89,7 +116,7 @@
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return 1
 	if(get_dir(loc, target) == dir) //Make sure looking at appropriate border
-		if(air_group) return 0
+		//if(air_group) return 0
 		return !density
 	else
 		return 1
@@ -116,7 +143,8 @@
 
 	explosion_resistance = 0
 	src.density = 0
-//	src.sd_SetOpacity(0)	//TODO: why is this here? Opaque windoors? ~Carn
+	src.block_air_zones = 0 // We merge zones if door is open.
+//	src.sd_set_opacity(0)	//TODO: why is this here? Opaque windoors? ~Carn
 	update_nearby_tiles()
 
 	if(operating == 1) //emag again
@@ -132,9 +160,10 @@
 	src.icon_state = src.base_state
 
 	src.density = 1
+	src.block_air_zones = 1
 	explosion_resistance = initial(explosion_resistance)
 //	if(src.visible)
-//		SetOpacity(1)	//TODO: why is this here? Opaque windoors? ~Carn
+//		set_opacity(1)	//TODO: why is this here? Opaque windoors? ~Carn
 	update_nearby_tiles()
 
 	sleep(10)
@@ -145,28 +174,7 @@
 /obj/machinery/door/window/proc/take_damage(var/damage)
 	src.health = max(0, src.health - damage)
 	if (src.health <= 0)
-		new /obj/item/weapon/shard(src.loc)
-		var/obj/item/weapon/cable_coil/CC = new /obj/item/weapon/cable_coil(src.loc)
-		CC.amount = 2
-		var/obj/item/weapon/airlock_electronics/ae
-		if(!electronics)
-			ae = new/obj/item/weapon/airlock_electronics( src.loc )
-			if(!src.req_access)
-				src.check_access()
-			if(src.req_access.len)
-				ae.conf_access = src.req_access
-			else if (src.req_one_access.len)
-				ae.conf_access = src.req_one_access
-				ae.one_access = 1
-		else
-			ae = electronics
-			electronics = null
-			ae.loc = src.loc
-		if(operating == -1)
-			ae.icon_state = "door_electronics_smoked"
-			operating = 0
-		src.density = 0
-		qdel(src)
+		shatter()
 		return
 
 /obj/machinery/door/window/bullet_act(var/obj/item/projectile/Proj)
@@ -197,6 +205,7 @@
 	if(istype(user, /mob/living/carbon/alien/humanoid) || istype(user, /mob/living/carbon/slime/adult))
 		if(src.operating)
 			return
+		user.do_attack_animation(src)
 		playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
 		visible_message("\red <B>[user] smashes against the [src.name].</B>", 1)
 		take_damage(25)
@@ -236,7 +245,7 @@
 	if (src.operating == -1 && istype(I, /obj/item/weapon/crowbar))
 		playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
 		user.visible_message("[user] removes the electronics from the windoor.", "You start to remove electronics from the windoor.")
-		if (do_after(user,40))
+		if (do_after(user,40,target = src))
 			user << "\blue You removed the windoor electronics!"
 
 			var/obj/structure/windoor_assembly/wa = new/obj/structure/windoor_assembly(src.loc)
@@ -268,11 +277,12 @@
 			ae.icon_state = "door_electronics_smoked"
 
 			operating = 0
-			qdel(src)
+			shatter(src)
 			return
 
 	//If it's a weapon, smash windoor. Unless it's an id card, agent card, ect.. then ignore it (Cards really shouldnt damage a door anyway)
 	if(src.density && istype(I, /obj/item/weapon) && !istype(I, /obj/item/weapon/card))
+		user.do_attack_animation(src)
 		var/aforce = I.force
 		playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
 		visible_message("\red <B>[src] was hit by [I].</B>")
@@ -300,10 +310,12 @@
 /obj/machinery/door/window/attack_animal(mob/user as mob)
 	if(!isanimal(user)) return
 	var/mob/living/simple_animal/M = user
+	M.do_attack_animation(src)
 	if(M.melee_damage_upper <= 0) return
 	attack_generic(M, M.melee_damage_upper)
 
 /obj/machinery/door/window/proc/attack_generic(mob/user as mob, damage = 0)	//used by attack_alien, attack_animal, and attack_slime
+	user.do_attack_animation(src)
 	take_damage(damage)
 	user.visible_message("<span class='danger'>[user] smashes into [src]!</span>")
 	playsound(loc, 'sound/effects/Glasshit.ogg', 100, 1)

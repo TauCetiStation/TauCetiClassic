@@ -6,11 +6,11 @@
 	item_state = "eng_helm"
 	armor = list(melee = 40, bullet = 5, laser = 10,energy = 5, bomb = 35, bio = 100, rad = 20)
 
+	action_button_name = "Toggle Helmet Light"
 	allowed = list(/obj/item/device/flashlight)
 	var/brightness_on = 4 //luminosity when on
 	var/on = 0
 	item_color = "engineering" //Determines used sprites: rig[on]-[color] and rig[on]-[color]2 (lying down sprite)
-	icon_action_button = "action_hardhat"
 	heat_protection = HEAD
 	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 
@@ -27,33 +27,21 @@
 		"Skrell" = 'icons/obj/clothing/species/skrell/hats.dmi',
 		)
 
-	attack_self(mob/user)
-		if(!isturf(user.loc))
-			user << "You cannot turn the light on while in this [user.loc]" //To prevent some lighting anomalities.
-			return
-		on = !on
-		icon_state = "rig[on]-[item_color]"
-//		item_state = "rig[on]-[color]"
-		usr.update_inv_head()
+/obj/item/clothing/head/helmet/space/rig/attack_self(mob/user)
+	if(!isturf(user.loc))
+		user << "You cannot turn the light on while in this [user.loc]" //To prevent some lighting anomalities.
+		return
+	on = !on
+	icon_state = "rig[on]-[item_color]"
+//	item_state = "rig[on]-[color]"
+	usr.update_inv_head()
 
-		if(on)	user.SetLuminosity(user.luminosity + brightness_on)
-		else	user.SetLuminosity(user.luminosity - brightness_on)
+	if(on)	set_light(brightness_on)
+	else	set_light(0)
 
-		if(istype(user,/mob/living/carbon/human))
-			var/mob/living/carbon/human/H = user
-			H.update_inv_head()
-
-	pickup(mob/user)
-		if(on)
-			user.SetLuminosity(user.luminosity + brightness_on)
-//			user.UpdateLuminosity()
-			SetLuminosity(0)
-
-	dropped(mob/user)
-		if(on)
-			user.SetLuminosity(user.luminosity - brightness_on)
-//			user.UpdateLuminosity()
-			SetLuminosity(brightness_on)
+	if(istype(user,/mob/living/carbon/human))
+		var/mob/living/carbon/human/H = user
+		H.update_inv_head()
 
 /obj/item/clothing/suit/space/rig
 	name = "hardsuit"
@@ -105,26 +93,7 @@
 
 	if(H.wear_suit != src)
 		return
-/*
-	if(attached_helmet && helmet)
-		if(H.head)
-			M << "You are unable to deploy your suit's helmet as \the [H.head] is in the way."
-		else
-			M << "Your suit's helmet deploys with a hiss."
-			//TODO: Species check, skull damage for forcing an unfitting helmet on?
-			helmet.loc = H
-			H.equip_to_slot(helmet, slot_head)
-			helmet.canremove = 0
 
-	if(attached_boots && boots)
-		if(H.shoes)
-			M << "You are unable to deploy your suit's magboots as \the [H.shoes] are in the way."
-		else
-			M << "Your suit's boots deploy with a hiss."
-			boots.loc = H
-			H.equip_to_slot(boots, slot_shoes)
-			boots.canremove = 0
-*/
 /obj/item/clothing/suit/space/rig/dropped()
 	..()
 
@@ -145,49 +114,6 @@
 				boots.canremove = 1
 				H.drop_from_inventory(boots)
 				boots.loc = src
-
-/*
-/obj/item/clothing/suit/space/rig/verb/get_mounted_device()
-
-	set name = "Deploy Mounted Device"
-	set category = "Object"
-	set src in usr
-
-	if(!can_mount)
-		verbs -= /obj/item/clothing/suit/space/rig/verb/get_mounted_device
-		verbs -= /obj/item/clothing/suit/space/rig/verb/stow_mounted_device
-		return
-
-	if(!istype(usr, /mob/living)) return
-	if(usr.stat) return
-
-	if(active_device)
-		usr << "You already have \the [active_device] deployed."
-		return
-
-	if(!mounted_devices.len)
-		usr << "You do not have any devices mounted on \the [src]."
-		return
-
-/obj/item/clothing/suit/space/rig/verb/stow_mounted_device()
-
-	set name = "Stow Mounted Device"
-	set category = "Object"
-	set src in usr
-
-	if(!can_mount)
-		verbs -= /obj/item/clothing/suit/space/rig/verb/get_mounted_device
-		verbs -= /obj/item/clothing/suit/space/rig/verb/stow_mounted_device
-		return
-
-	if(!istype(usr, /mob/living)) return
-
-	if(usr.stat) return
-
-	if(!active_device)
-		usr << "You have no device currently deployed."
-		return
-*/
 
 /obj/item/clothing/suit/space/rig/verb/toggle_helmet()
 
@@ -257,7 +183,7 @@
 
 	if(user.a_intent == "help")
 
-		if(istype(src.loc,/mob/living))
+		if(istype(src.loc,/mob/living) && !istype(W, /obj/item/weapon/patcher))
 			user << "How do you propose to modify a hardsuit while it is being worn?"
 			return
 
@@ -316,19 +242,6 @@
 			else
 				return ..()
 
-		/*
-		else if(target_zone == "l_arm" || target_zone == "r_arm" || target_zone == "l_hand" || target_zone == "r_hand")
-
-			//Installing a component into or modifying the contents of the hands.
-
-		else if(target_zone == "torso" || target_zone == "groin")
-
-			//Modifying the cell or mounted devices
-
-			if(!mounted_devices)
-				return
-		*/
-
 		else //wat
 			return ..()
 
@@ -346,15 +259,17 @@
 	icon_state = "rig0-engineering"
 	item_state = "eng_helm"
 	armor = list(melee = 40, bullet = 5, laser = 10,energy = 5, bomb = 35, bio = 100, rad = 80)
+	siemens_coefficient = 0
 
 /obj/item/clothing/suit/space/rig/engineering
 	name = "engineering hardsuit"
-	desc = "A special suit that protects against hazardous, low pressure environments. Has radiation shielding."
+	desc = "A special suit that protects against hazardous, low pressure environments. Has radiation shielding. Heavy insulation layer adds additional weight"
 	icon_state = "rig-engineering"
 	item_state = "eng_hardsuit"
-	slowdown = 1
+	slowdown = 3
 	armor = list(melee = 40, bullet = 5, laser = 10,energy = 5, bomb = 35, bio = 100, rad = 80)
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/device/suit_cooling_unit,/obj/item/weapon/storage/bag/ore,/obj/item/device/t_scanner,/obj/item/weapon/pickaxe, /obj/item/weapon/rcd)
+	siemens_coefficient = 0
 
 //Chief Engineer's rig
 /obj/item/clothing/head/helmet/space/rig/engineering/chief
@@ -373,6 +288,7 @@
 	name = "advanced hardsuit"
 	desc = "An advanced suit that protects against hazardous, low pressure environments. Shines with a high polish."
 	item_state = "ce_hardsuit"
+	slowdown = 1
 	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 	sprite_sheets = null
 	sprite_sheets_refit = null
@@ -385,14 +301,15 @@
 	icon_state = "rig0-mining"
 	item_state = "mining_helm"
 	item_color = "mining"
-	armor = list(melee = 50, bullet = 5, laser = 10,energy = 5, bomb = 55, bio = 100, rad = 20)
+	armor = list(melee = 60, bullet = 5, laser = 10,energy = 5, bomb = 55, bio = 100, rad = 20)
 
 /obj/item/clothing/suit/space/rig/mining
 	icon_state = "rig-mining"
 	name = "mining hardsuit"
 	desc = "A special suit that protects against hazardous, low pressure environments. Has reinforced plating."
 	item_state = "mining_hardsuit"
-	armor = list(melee = 50, bullet = 5, laser = 10,energy = 5, bomb = 55, bio = 100, rad = 20)
+	armor = list(melee = 90, bullet = 5, laser = 10,energy = 5, bomb = 55, bio = 100, rad = 20)
+	breach_threshold = 26
 
 
 //Syndicate rig
@@ -402,8 +319,7 @@
 	icon_state = "rig0-syndie"
 	item_state = "syndie_helm"
 	item_color = "syndie"
-	armor = list(melee = 60, bullet = 35, laser = 30,energy = 15, bomb = 35, bio = 100, rad = 60)
-	siemens_coefficient = 0.6
+	armor = list(melee = 60, bullet = 65, laser = 55,energy = 45, bomb = 50, bio = 100, rad = 60)
 	var/obj/machinery/camera/camera
 	species_restricted = list("exclude","Unathi","Tajaran","Skrell","Vox")
 
@@ -412,7 +328,7 @@
 		..(user)
 	else
 		camera = new /obj/machinery/camera(src)
-		camera.network = list("NUKE")
+		camera.replace_networks(list("NUKE"))
 		cameranet.removeCamera(camera)
 		camera.c_tag = user.name
 		user << "\blue User scanned as [camera.c_tag]. Camera activated."
@@ -427,13 +343,12 @@
 	name = "blood-red hardsuit"
 	desc = "An advanced suit that protects against injuries during special operations. Property of Gorlex Marauders."
 	item_state = "syndie_hardsuit"
-	slowdown = 1
+	slowdown = 1.4
 	w_class = 3
-	armor = list(melee = 60, bullet = 35, laser = 30, energy = 15, bomb = 35, bio = 100, rad = 60)
+	armor = list(melee = 60, bullet = 65, laser = 55, energy = 45, bomb = 50, bio = 100, rad = 60)
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/device/suit_cooling_unit,/obj/item/weapon/gun,/obj/item/ammo_box/magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/melee/energy/sword,/obj/item/weapon/handcuffs)
-	siemens_coefficient = 0.6
 	species_restricted = list("exclude","Unathi","Tajaran","Skrell","Vox")
-	breach_threshold = 25
+	breach_threshold = 28
 
 //Wizard Rig
 /obj/item/clothing/head/helmet/space/rig/wizard
@@ -443,8 +358,7 @@
 	item_state = "wiz_helm"
 	item_color = "wiz"
 	unacidable = 1 //No longer shall our kind be foiled by lone chemists with spray bottles!
-	armor = list(melee = 40, bullet = 20, laser = 20,energy = 20, bomb = 35, bio = 100, rad = 60)
-	siemens_coefficient = 0.7
+	armor = list(melee = 66, bullet = 66, laser = 66,energy = 66, bomb = 66, bio = 100, rad = 60)
 	sprite_sheets_refit = null
 	sprite_sheets_obj = null
 
@@ -456,8 +370,7 @@
 	slowdown = 1
 	w_class = 3
 	unacidable = 1
-	armor = list(melee = 40, bullet = 20, laser = 20,energy = 20, bomb = 35, bio = 100, rad = 60)
-	siemens_coefficient = 0.7
+	armor = list(melee = 40, bullet = 66, laser = 66,energy = 66, bomb = 66, bio = 100, rad = 60)
 	sprite_sheets_refit = null
 	sprite_sheets_obj = null
 
@@ -485,18 +398,17 @@
 	icon_state = "rig0-sec"
 	item_state = "sec_helm"
 	item_color = "sec"
-	armor = list(melee = 60, bullet = 30, laser = 30, energy = 5, bomb = 45, bio = 100, rad = 10)
-	siemens_coefficient = 0.7
+	armor = list(melee = 60, bullet = 60, laser = 60, energy = 30, bomb = 65, bio = 100, rad = 10)
 
 /obj/item/clothing/suit/space/rig/security
 	icon_state = "rig-sec"
 	name = "security hardsuit"
 	desc = "A special suit that protects against hazardous, low pressure environments. Has an additional layer of armor."
 	item_state = "sec_hardsuit"
-	armor = list(melee = 60, bullet = 30, laser = 30, energy = 5, bomb = 45, bio = 100, rad = 10)
+	armor = list(melee = 60, bullet = 60, laser = 60, energy = 30, bomb = 65, bio = 100, rad = 10)
 	allowed = list(/obj/item/weapon/gun,/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/device/suit_cooling_unit,/obj/item/weapon/melee/baton)
-	siemens_coefficient = 0.7
 	breach_threshold = 20
+	slowdown = 1.4
 
 //Atmospherics Rig (BS12)
 /obj/item/clothing/head/helmet/space/rig/atmos

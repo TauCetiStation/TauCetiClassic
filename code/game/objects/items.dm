@@ -9,6 +9,7 @@
 	var/burn_point = null
 	var/burning = null
 	var/hitsound = null
+	var/wet = 0
 	var/w_class = 3.0
 	flags = FPRINT | TABLEPASS
 	var/slot_flags = 0		//This is used to determine on which slots an item can fit.
@@ -22,8 +23,9 @@
 	var/max_heat_protection_temperature //Set this variable to determine up to which temperature (IN KELVIN) the item protects against heat damage. Keep at null to disable protection. Only protects areas set by heat_protection flags
 	var/min_cold_protection_temperature //Set this variable to determine down to which temperature (IN KELVIN) the item protects against cold damage. 0 is NOT an acceptable number due to if(varname) tests!! Keep at null to disable protection. Only protects areas set by cold_protection flags
 
-	var/icon_action_button //If this is set, The item will make an action button on the player's HUD when picked up. The button will have the icon_action_button sprite from the screen1_action.dmi file.
-	var/action_button_name //This is the text which gets displayed on the action button. If not set it defaults to 'Use [name]'. Note that icon_action_button needs to be set in order for the action button to appear.
+	var/datum/action/item_action/action = null
+	var/action_button_name //It is also the text which gets displayed on the action button. If not set it defaults to 'Use [name]'. If it's not set, there'll be no button.
+	var/action_button_is_hands_free = 0 //If 1, bypass the restrained, lying, and stunned checks action buttons normally test for
 
 	//Since any item can now be a piece of clothing, this has to be put here so all items share it.
 	var/flags_inv //This flag is used to determine when items in someone's inventory cover others. IE helmets making it so you can't see glasses, etc.
@@ -37,6 +39,17 @@
 	var/canremove = 1 //Mostly for Ninja code at this point but basically will not allow the item to be removed if set to 0. /N
 	var/armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	var/list/allowed = null //suit storage stuff.
+	var/list/can_be_placed_into = list(
+		/obj/structure/table,
+		/obj/structure/rack,
+		/obj/structure/closet,
+		/obj/item/weapon/storage,
+		/obj/structure/safe,
+		/obj/machinery/disposal,
+		/obj/machinery/r_n_d/destructive_analyzer,
+//		/obj/machinery/r_n_d/experimentor,
+		/obj/machinery/autolathe
+	)
 	var/obj/item/device/uplink/hidden/hidden_uplink = null // All items can have an uplink hidden inside, just remember to add the triggers.
 
 	/* Species-specific sprites, concept stolen from Paradise//vg/.
@@ -53,6 +66,12 @@
 	Works similarly to worn sprite_sheets, except the alternate sprites are used when the clothing/refit_for_species() proc is called.
 	*/
 	var/list/sprite_sheets_obj = null
+
+/obj/item/proc/check_allowed_items(atom/target, not_inside, target_self)
+	if(((src in target) && !target_self) || ((!istype(target.loc, /turf)) && (!istype(target, /turf)) && (not_inside)) || is_type_in_list(target, can_be_placed_into))
+		return 0
+	else
+		return 1
 
 /obj/item/device
 	icon = 'icons/obj/device.dmi'
@@ -123,7 +142,7 @@
 			size = "huge"
 		else
 	//if ((CLUMSY in usr.mutations) && prob(50)) t = "funny-looking"
-	usr << "This is a [src.blood_DNA ? "bloody " : ""]\icon[src][src.name]. It is a [size] item."
+	usr << "[src.blood_DNA ? "<span class='warning'>" : "[src.wet ? "<span class='wet'>" : ""]"]This is a [blood_DNA ? blood_color != "#030303" ? "bloody " : "oil-stained " : ""][src.wet ? "wet " : ""]\icon[src][src.name]. It is a [size] item."
 	if(src.desc)
 		usr << src.desc
 	return
@@ -139,7 +158,7 @@
 		else if(istype(src, /obj/item/weapon/gun/))
 			if(prob(20)) user.say(pick(";RAAAAAAAARGH! WEAPON!", ";HNNNNNNNNNGGGGGGH! I HATE WEAPONS!!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGUUUUUNNNNHH!", ";AAAAAAARRRGH!" ))
 			user.visible_message("\blue [user] crushes \a [src] with hands.", "\blue You crush the [src].")
-			del(src)
+			qdel(src)
 			//user << "\red \The [src] is far too small for you to pick up."
 			return
 		else if(istype(src, /obj/item/clothing/))
@@ -174,12 +193,12 @@
 			return
 		if(istype(user,/mob/living/carbon/human))
 			if(istype(src, /obj/item/clothing/suit/space)) // If the item to be unequipped is a rigid suit
-				if(user.delay_clothing_u_equip(src) == 0)
+				if(!user.delay_clothing_u_equip(src))
 					return 0
 			else
-				user.u_equip(src)
+				user.remove_from_mob(src)
 		else
-			user.u_equip(src)
+			user.remove_from_mob(src)
 
 	else
 		if(isliving(src.loc))
@@ -213,7 +232,7 @@
 		if(istype(src, /obj/item/clothing) && !src:canremove)
 			return
 		else
-			user.u_equip(src)
+			user.remove_from_mob(src)
 	else
 		if(istype(src.loc, /mob/living))
 			return
@@ -223,9 +242,19 @@
 	user.put_in_active_hand(src)
 	return
 
+
+/obj/item/attack_ai(mob/user as mob)
+	if (istype(src.loc, /obj/item/weapon/robot_module))
+		//If the item is part of a cyborg module, equip it
+		if(!isrobot(user))
+			return
+		var/mob/living/silicon/robot/R = user
+		R.activate_module(src)
+		R.hud_used.update_robot_modules_display()
+
 // Due to storage type consolidation this should get used more now.
 // I have cleaned it up a little, but it could probably use more.  -Sayu
-/obj/item/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	if(istype(W,/obj/item/weapon/storage))
 		var/obj/item/weapon/storage/S = W
 		if(S.use_to_pickup)
@@ -303,7 +332,7 @@
 		//fat mutation
 		if(istype(src, /obj/item/clothing/under) || istype(src, /obj/item/clothing/suit))
 			if(FAT in H.mutations)
-				testing("[M] TOO FAT TO WEAR [src]!")
+				//testing("[M] TOO FAT TO WEAR [src]!")
 				if(!(flags & ONESIZEFITSALL))
 					if(!disable_warning)
 						H << "\red You're too fat to wear the [name]."
@@ -529,8 +558,7 @@
 //The default action is attack_self().
 //Checks before we get to here are: mob is alive, mob is not restrained, paralyzed, asleep, resting, laying, item is on the mob.
 /obj/item/proc/ui_action_click()
-	if( src in usr )
-		attack_self(usr)
+	attack_self(usr)
 
 
 /obj/item/proc/IsShield()
@@ -670,4 +698,3 @@
 	var/obj/item/I = get_active_hand()
 	if(I && !I.abstract)
 		I.showoff(src)
-

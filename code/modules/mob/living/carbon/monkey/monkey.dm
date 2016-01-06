@@ -7,6 +7,7 @@
 	gender = NEUTER
 	pass_flags = PASSTABLE
 	update_icon = 0		///no need to call regenerate_icon
+	ventcrawler = 1
 
 	var/obj/item/weapon/card/id/wear_id = null // Fix for station bounced radios -- Skie
 	var/greaterform = "Human"                  // Used when humanizing a monkey.
@@ -15,6 +16,7 @@
 	var/list/uni_append = list(0x12C,0x4E2)    // Same as above for DNA2.
 	var/update_muts = 1                        // Monkey gene must be set at start.
 	var/alien = 0				   //Used for reagent metabolism.
+	holder_type = /obj/item/weapon/holder/monkey
 
 /mob/living/carbon/monkey/tajara
 	name = "farwa"
@@ -22,6 +24,7 @@
 	speak_emote = list("mews")
 	icon_state = "tajkey1"
 	uni_append = list(0x0A0,0xE00) // 0A0E00
+	holder_type = /obj/item/weapon/holder/monkey/farwa
 
 /mob/living/carbon/monkey/skrell
 	name = "neaera"
@@ -29,6 +32,7 @@
 	speak_emote = list("squicks")
 	icon_state = "skrellkey1"
 	uni_append = list(0x01C,0xC92) // 01CC92
+	holder_type = /obj/item/weapon/holder/monkey/neaera
 
 /mob/living/carbon/monkey/unathi
 	name = "stok"
@@ -36,6 +40,7 @@
 	speak_emote = list("hisses")
 	icon_state = "stokkey1"
 	uni_append = list(0x044,0xC5D) // 044C5D
+	holder_type = /obj/item/weapon/holder/monkey/stok
 
 /mob/living/carbon/monkey/New()
 	var/datum/reagents/R = new/datum/reagents(1000)
@@ -199,6 +204,7 @@
 		help_shake_act(M)
 	else
 		if ((M.a_intent == "hurt" && !( istype(wear_mask, /obj/item/clothing/mask/muzzle) )))
+			M.do_attack_animation(src)
 			if ((prob(75) && health > 0))
 				playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
 				for(var/mob/O in viewers(src, null))
@@ -229,11 +235,13 @@
 			if(M.a_intent == "hurt")//Stungloves. Any contact will stun the alien.
 				if(G.cell.charge >= 2500)
 					G.cell.use(2500)
-					Weaken(5)
-					if (stuttering < 5)
-						stuttering = 5
-					Stun(5)
+					apply_effects(0,0,0,0,5,0,0,150)
 
+					var/datum/effect/effect/system/spark_spread/s = PoolOrNew(/datum/effect/effect/system/spark_spread)
+					s.set_up(3, 1, src)
+					s.start()
+
+					M.do_attack_animation(src)
 					for(var/mob/O in viewers(src, null))
 						if (O.client)
 							O.show_message("\red <B>[src] has been touched with the stun gloves by [M]!</B>", 1, "\red You hear someone fall", 2)
@@ -244,8 +252,10 @@
 
 	if (M.a_intent == "help")
 		help_shake_act(M)
+		get_scooped(M)
 	else
 		if (M.a_intent == "hurt")
+			M.do_attack_animation(src)
 			if ((prob(75) && health > 0))
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
@@ -450,15 +460,15 @@
 
 /mob/living/carbon/monkey/Stat()
 	..()
-	statpanel("Status")
-	stat(null, text("Intent: []", a_intent))
-	stat(null, text("Move Mode: []", m_intent))
-	if(client && mind)
-		if (client.statpanel == "Status")
-			if(mind.changeling)
-				stat("Chemical Storage", "[mind.changeling.chem_charges]/[mind.changeling.chem_storage]")
-				stat("Genetic Damage Time", mind.changeling.geneticdamage)
-				stat("Absorbed DNA", mind.changeling.absorbedcount)
+	if(statpanel("Status"))
+		stat(null, text("Intent: []", a_intent))
+		stat(null, text("Move Mode: []", m_intent))
+		if(client && mind)
+			if (client.statpanel == "Status")
+				if(mind.changeling)
+					stat("Chemical Storage", "[mind.changeling.chem_charges]/[mind.changeling.chem_storage]")
+					stat("Genetic Damage Time", mind.changeling.geneticdamage)
+					stat("Absorbed DNA", mind.changeling.absorbedcount)
 	return
 
 
@@ -509,7 +519,7 @@
 		return
 	if (stat == DEAD && !client)
 		gibs(loc, viruses)
-		del(src)
+		qdel(src)
 		return
 
 

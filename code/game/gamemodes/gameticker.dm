@@ -41,13 +41,22 @@ var/global/datum/controller/gameticker/ticker
 	/*
 	'sound/music/space.ogg',\
 	'sound/music/clouds.s3m',\
-	'sound/music/space_oddity.ogg'\
-	*/
+	'sound/music/title1.ogg',\	//disgusting
+
+	'sound/music/space_oddity.ogg',\
 	'sound/music/b12_combined_start.ogg',\
-	'sound/music/title1.ogg',\
 	'sound/music/title2.ogg',\
 	'sound/music/traitor.ogg',\
-	'tauceti/sounds/lobby/sundown.ogg',)
+	'tauceti/sounds/lobby/sundown.ogg',\
+	'tauceti/sounds/lobby/hanging_masses.ogg',\
+	'tauceti/sounds/lobby/admiral-station-13.ogg',\
+	'tauceti/sounds/lobby/robocop_gb_intro.ogg')
+	*/
+	//New year part
+	'tauceti/modules/_holidays/new_year/music/Carol_of_the_Bells.ogg',\
+	'tauceti/modules/_holidays/new_year/music/Last_Christmas.ogg',\
+	'tauceti/modules/_holidays/new_year/music/Pop_Culture.ogg',\
+	'tauceti/modules/_holidays/new_year/music/Zov_Ktulhu.ogg')
 	do
 		pregame_timeleft = 180
 		world << "<B><FONT color='blue'>Welcome to the pre-game lobby!</FONT></B>"
@@ -74,6 +83,8 @@ var/global/datum/controller/gameticker/ticker
 	//Create and announce mode
 	if(master_mode=="secret")
 		src.hide_mode = 1
+	if(master_mode=="bs12" || master_mode=="tau classic" || master_mode=="ayyy lmao" || master_mode=="WTF?")
+		src.hide_mode = 1
 	var/list/datum/game_mode/runnable_modes
 	if((master_mode=="random") || (master_mode=="secret"))
 		runnable_modes = config.get_runnable_modes()
@@ -91,11 +102,23 @@ var/global/datum/controller/gameticker/ticker
 		if(src.mode)
 			var/mtype = src.mode.type
 			src.mode = new mtype
+	else if(master_mode=="bs12" || master_mode=="tau classic" || master_mode=="ayyy lmao" || master_mode=="WTF?")
+		runnable_modes = config.get_custom_modes(master_mode)
+		if (runnable_modes.len==0)
+			current_state = GAME_STATE_PREGAME
+			world << "<B>Unable to choose playable game mode.</B> Reverting to pre-game lobby."
+			return 0
+		job_master.ResetOccupations()
+		if(!src.mode)
+			src.mode = pick(runnable_modes)
+		if(src.mode)
+			var/mtype = src.mode.type
+			src.mode = new mtype
 	else
 		src.mode = config.pick_mode(master_mode)
 	if (!src.mode.can_start())
 		world << "<B>Unable to start [mode.name].</B> Not enough players, [mode.required_players] players needed. Reverting to pre-game lobby."
-		del(mode)
+		qdel(mode)
 		current_state = GAME_STATE_PREGAME
 		job_master.ResetOccupations()
 		return 0
@@ -104,7 +127,7 @@ var/global/datum/controller/gameticker/ticker
 	job_master.DivideOccupations() //Distribute jobs
 	var/can_continue = src.mode.pre_setup()//Setup special modes
 	if(!can_continue)
-		del(mode)
+		qdel(mode)
 		current_state = GAME_STATE_PREGAME
 		world << "<B>Error setting up [master_mode].</B> Reverting to pre-game lobby."
 		job_master.ResetOccupations()
@@ -155,13 +178,22 @@ var/global/datum/controller/gameticker/ticker
 
 	supply_shuttle.process() 		//Start the supply shuttle regenerating points -- TLE
 	master_controller.process()		//Start master_controller.process()
-	lighting_controller.process()	//Start processing DynamicAreaLighting updates
+
+	processScheduler.start()
 
 	for(var/obj/multiz/ladder/L in world) L.connect() //Lazy hackfix for ladders. TODO: move this to an actual controller. ~ Z
 
 	if(config.sql_enabled)
 		spawn(3000)
 		statistic_cycle() // Polls population totals regularly and stores them in an SQL DB -- TLE
+
+	config.allow_vote_restart = 0
+	config.allow_vote_mode = 0
+	spawn(36000)
+		if(!( config.allow_vote_restart && config.allow_vote_mode))
+			world << "\b Voting allowed"
+			config.allow_vote_restart = 1
+			config.allow_vote_mode = 1
 
 	return 1
 
@@ -272,7 +304,8 @@ var/global/datum/controller/gameticker/ticker
 	proc/create_characters()
 		for(var/mob/new_player/player in player_list)
 			sleep(1)
-			if(player.ready && player.mind)
+			if(player && player.ready && player.mind)
+				joined_player_list += player.ckey
 				if(player.mind.assigned_role=="AI")
 					player.close_spawn_windows()
 					player.AIize()
@@ -280,7 +313,7 @@ var/global/datum/controller/gameticker/ticker
 					continue
 				else
 					player.create_character()
-					del(player)
+					qdel(player)
 
 
 	proc/collect_minds()
@@ -331,6 +364,7 @@ var/global/datum/controller/gameticker/ticker
 					if(!delay_end)
 						world << "\blue <B>Restarting in [restart_timeout/10] seconds</B>"
 
+				world.save_last_mode(ticker.mode.name)
 
 				if(blackbox)
 					blackbox.save_all_data_to_sql()
@@ -341,8 +375,10 @@ var/global/datum/controller/gameticker/ticker
 						world.Reboot()
 					else
 						world << "\blue <B>An admin has delayed the round end</B>"
+						send2slack_service("An admin has delayed the round end")
 				else
 					world << "\blue <B>An admin has delayed the round end</B>"
+					send2slack_service("An admin has delayed the round end")
 
 		return 1
 
@@ -353,10 +389,50 @@ var/global/datum/controller/gameticker/ticker
 
 
 /datum/controller/gameticker/proc/declare_completion()
+	var/station_evacuated
+	if(emergency_shuttle.location > 0)
+		station_evacuated = 1
+	var/num_survivors = 0
+	var/num_escapees = 0
 
+	world << "<BR><BR><BR><FONT size=3><B>The round has ended.</B></FONT>"
+
+	//Player status report
+	for(var/mob/Player in mob_list)
+		if(Player.mind)
+			if(Player.stat != DEAD && !isbrain(Player))
+				num_survivors++
+				if(station_evacuated) //If the shuttle has already left the station
+					var/turf/playerTurf = get_turf(Player)
+					if(playerTurf.z != 2)
+						Player << "<font color='red'><b>You managed to survive, but were marooned on [station_name()]...</b>"
+					else
+						num_escapees++
+						Player << "<font color='green'><b>You managed to survive the events on [station_name()] as [Player.real_name].</b>"
+				else
+					Player << "<font color='green'><b>You managed to survive the events on [station_name()] as [Player.real_name].</b>"
+			else
+				Player << "<font color='red'><b>You did not survive the events on [station_name()]...</b>"
+
+	//Round statistics report
+	var/datum/station_state/end_state = new /datum/station_state()
+	end_state.count()
+	var/station_integrity = "---"
+	if(start_state)
+		station_integrity = round( 100.0 *  start_state.score(end_state), 0.1)
+
+	world << "<BR>[TAB]Shift Duration: <B>[round(world.time / 36000)]:[add_zero(world.time / 600 % 60, 2)]:[world.time / 100 % 6][world.time / 100 % 10]</B>"
+	world << "<BR>[TAB]Station Integrity: <B>[mode.station_was_nuked ? "<font color='red'>Destroyed</font>" : "[station_integrity]%"]</B>"
+	world << "<BR>[TAB]Total Population: <B>[joined_player_list.len]</B>"
+	world << "<BR>[TAB]Survival Rate: <B>[num_survivors] ([round((num_survivors/joined_player_list.len)*100, 0.1)]%)</B>"
+	if(station_evacuated)
+		world << "<BR>[TAB]Evacuation Rate: <B>[num_escapees] ([round((num_escapees/joined_player_list.len)*100, 0.1)]%)</B>"
+	world << "<BR>"
+
+	//Silicon laws report
 	for (var/mob/living/silicon/ai/aiPlayer in mob_list)
 		if (aiPlayer.stat != 2)
-			world << "<b>[aiPlayer.name] (Played by: [aiPlayer.key])'s laws at the end of the game were:</b>"
+			world << "<b>[aiPlayer.name] (Played by: [aiPlayer.mind.key])'s laws at the end of the round were:</b>"
 		else
 			world << "<b>[aiPlayer.name] (Played by: [aiPlayer.key])'s laws when it was deactivated were:</b>"
 		aiPlayer.show_laws(1)
@@ -389,26 +465,17 @@ var/global/datum/controller/gameticker/ticker
 
 	mode.declare_completion()//To declare normal completion.
 
-	//calls auto_declare_completion_* for all modes
-	for(var/handler in typesof(/datum/game_mode/proc))
-		if (findtext("[handler]","auto_declare_completion_"))
-			call(mode, handler)()
+	scoreboard()
 
-	//Print a list of antagonists to the server log
-	var/list/total_antagonists = list()
-	//Look into all mobs in world, dead or alive
-	for(var/datum/mind/Mind in minds)
-		var/temprole = Mind.special_role
-		if(temprole)							//if they are an antagonist of some sort.
-			if(temprole in total_antagonists)	//If the role exists already, add the name to it
-				total_antagonists[temprole] += ", [Mind.name]([Mind.key])"
-			else
-				total_antagonists.Add(temprole) //If the role doesnt exist in the list, create it and add the mob
-				total_antagonists[temprole] += ": [Mind.name]([Mind.key])"
-
-	//Now print them all into the log!
-	log_game("Antagonists at round end were...")
-	for(var/i in total_antagonists)
-		log_game("[i]s[total_antagonists[i]].")
+	if(achievements.len)
+		achievement_declare_completion()
 
 	return 1
+
+/datum/controller/gameticker/proc/achievement_declare_completion()
+	var/text = "<br><FONT size = 2><B>Additionally, the following players earned achievements:</B></FONT>"
+	var/icon/cup = icon('icons/obj/drinks.dmi', "golden_cup")
+	for(var/winner in achievements)
+		text += "<br>\icon[cup] [winner]"
+
+	world << text

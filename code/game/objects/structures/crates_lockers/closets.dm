@@ -120,8 +120,7 @@
 	return 1
 
 /obj/structure/closet/proc/toggle(mob/user as mob)
-	. = src.opened ? src.close() : src.open()
-	if(!.)
+	if(!(src.opened ? src.close() : src.open()))
 		user << "<span class='notice'>It won't budge!</span>"
 	return
 
@@ -158,6 +157,8 @@
 
 /obj/structure/closet/attack_animal(mob/living/simple_animal/user as mob)
 	if(user.environment_smash)
+		playsound(user.loc, 'sound/effects/grillehit.ogg', 50, 1)
+		user.do_attack_animation(src)
 		visible_message("\red [user] destroys the [src]. ")
 		for(var/atom/movable/A as mob|obj in src)
 			A.loc = src.loc

@@ -14,6 +14,8 @@
 	var/moved_recently = 0
 	var/mob/pulledby = null
 
+/atom/movable/New()
+	. = ..()
 
 /atom/movable/Move()
 	var/atom/A = src.loc
@@ -26,24 +28,37 @@
 	return
 
 /*
-/atom/movable/Del()
-	if(isnull(gc_destroyed) && loc)
+/atom/movable/Destroy()
+	if(isnull(gcDestroyed) && loc)
 		testing("GC: -- [type] was deleted via del() rather than qdel() --")
-	else if(isnull(gc_destroyed))
+	else if(isnull(gcDestroyed))
 		testing("GC: [type] was deleted via GC without qdel()") //Not really a huge issue but from now on, please qdel()
 	else
 		testing("GC: [type] was deleted via GC with qdel()")
 	..()
 */
+
+/atom/movable/Del()
+	if(isnull(gcDestroyed) && loc)
+		testing("GC: -- [type] was deleted via del() rather than qdel() --")
+//	else if(isnull(gcDestroyed))
+//		testing("GC: [type] was deleted via GC without qdel()") //Not really a huge issue but from now on, please qdel()
+//	else
+//		testing("GC: [type] was deleted via GC with qdel()")
+	..()
+
 /atom/movable/Destroy()
+	. = ..()
 	if(reagents)
 		qdel(reagents)
 	for(var/atom/movable/AM in contents)
 		qdel(AM)
-	tag = null
 	loc = null
 	invisibility = 101
-	// Do not call ..()
+	if (pulledby)
+		if (pulledby.pulling == src)
+			pulledby.pulling = null
+		pulledby = null
 
 /atom/movable/Bump(var/atom/A as mob|obj|turf|area, yes)
 	if(src.throwing)
@@ -209,7 +224,7 @@
 		src.verbs -= x
 	return
 
-/atom/movable/overlay/attackby(a, b)
+/atom/movable/overlay/attackby(a, b, params)
 	if (src.master)
 		return src.master.attackby(a, b)
 	return
@@ -223,3 +238,9 @@
 	if (src.master)
 		return src.master.attack_hand(a, b, c)
 	return
+
+/////////////////////////////
+// SINGULOTH PULL REFACTOR
+/////////////////////////////
+/atom/movable/proc/canSingulothPull(var/obj/machinery/singularity/singulo)
+	return 1

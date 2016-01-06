@@ -1,10 +1,11 @@
 // the power monitoring computer
 // for the moment, just report the status of all APCs in the same powernet
 /obj/machinery/power/monitor
-	name = "power monitoring computer"
+	name = "Power Monitoring Console"
 	desc = "It monitors power levels across the station."
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "power"
+	light_color = "#ffcc33"
 	density = 1
 	anchored = 1
 	use_power = 2
@@ -40,7 +41,7 @@
 /obj/machinery/power/monitor/attackby(I as obj, user as mob)
 	if(istype(I, /obj/item/weapon/screwdriver))
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-		if(do_after(user, 20))
+		if(do_after(user, 20, target = src))
 			if (src.stat & BROKEN)
 				user << "\blue The broken glass falls out."
 				var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
@@ -52,7 +53,7 @@
 				A.state = 3
 				A.icon_state = "3"
 				A.anchored = 1
-				del(src)
+				qdel(src)
 			else
 				user << "\blue You disconnect the monitor."
 				var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
@@ -63,7 +64,7 @@
 				A.state = 4
 				A.icon_state = "4"
 				A.anchored = 1
-				del(src)
+				qdel(src)
 	else
 		src.attack_hand(user)
 	return

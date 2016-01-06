@@ -26,6 +26,9 @@
 	item_state = "syringe_kit"
 	foldable = /obj/item/stack/sheet/cardboard	//BubbleWrap
 
+/obj/item/weapon/storage/box/alien
+	icon_state = "alienbox"
+
 /obj/item/weapon/storage/box/survival/
 	New()
 		..()
@@ -178,6 +181,21 @@
 	new /obj/item/weapon/grenade/chem_grenade/teargas(src)
 	new /obj/item/weapon/grenade/chem_grenade/teargas(src)
 
+/obj/item/weapon/storage/box/r4046
+	name = "box of 40x46mm rubber grenades (WARNING)"
+	desc = "<B>WARNING: These devices are extremely dangerous and can cause injury.</B>"
+	icon_state = "box_4046"
+
+/obj/item/weapon/storage/box/r4046/New()
+	..()
+	new /obj/item/ammo_casing/r4046(src)
+	new /obj/item/ammo_casing/r4046(src)
+	new /obj/item/ammo_casing/r4046(src)
+	new /obj/item/ammo_casing/r4046(src)
+	new /obj/item/ammo_casing/r4046(src)
+	new /obj/item/ammo_casing/r4046(src)
+	new /obj/item/ammo_casing/r4046(src)
+
 /obj/item/weapon/storage/box/emps
 	name = "box of emp grenades"
 	desc = "A box with 5 emp grenades."
@@ -190,7 +208,6 @@
 		new /obj/item/weapon/grenade/empgrenade(src)
 		new /obj/item/weapon/grenade/empgrenade(src)
 		new /obj/item/weapon/grenade/empgrenade(src)
-
 
 /obj/item/weapon/storage/box/trackimp
 	name = "boxed tracking implant kit"
@@ -222,7 +239,18 @@
 		new /obj/item/weapon/implanter(src)
 		new /obj/item/weapon/implantpad(src)
 
+/obj/item/weapon/storage/box/autoinjector/stimpack
+	name = "stimpack value kit"
+	desc = "A box with several stimpack autoinjectors for the economical miner."
+	icon_state = "syringe"
 
+	New()
+		..()
+		new /obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack(src)
+		new /obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack(src)
+		new /obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack(src)
+		new /obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack(src)
+		new /obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack(src)
 
 /obj/item/weapon/storage/box/rxglasses
 	name = "box of prescription glasses"
@@ -395,6 +423,20 @@
 		new /obj/item/weapon/handcuffs(src)
 		new /obj/item/weapon/handcuffs(src)
 
+/obj/item/weapon/storage/box/alienhandcuffs
+	name = "box of spare handcuffs"
+	desc = "A box full of handcuffs."
+	icon_state = "alienboxCuffs"
+
+/obj/item/weapon/storage/box/alienhandcuffs/New()
+	..()
+	new	/obj/item/weapon/handcuffs/alien(src)
+	new	/obj/item/weapon/handcuffs/alien(src)
+	new	/obj/item/weapon/handcuffs/alien(src)
+	new	/obj/item/weapon/handcuffs/alien(src)
+	new	/obj/item/weapon/handcuffs/alien(src)
+	new	/obj/item/weapon/handcuffs/alien(src)
+	new	/obj/item/weapon/handcuffs/alien(src)
 
 /obj/item/weapon/storage/box/mousetraps
 	name = "box of Pest-B-Gon mousetraps"
@@ -456,6 +498,10 @@
 
 	attackby(obj/item/weapon/match/W as obj, mob/user as mob)
 		if(istype(W) && !W.lit && !W.burnt)
+			if (prob (20))
+				playsound(src, 'tauceti/sounds/items/matchstick_hit.ogg', 20, 1, 1)
+				return
+			playsound(src, 'tauceti/sounds/items/matchstick_light.ogg', 20, 1, 1)
 			W.lit = 1
 			W.damtype = "burn"
 			W.icon_state = "match_lit"

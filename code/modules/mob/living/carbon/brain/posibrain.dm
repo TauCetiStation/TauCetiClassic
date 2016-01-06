@@ -15,6 +15,8 @@
 	locked = 0
 	mecha = null//This does not appear to be used outside of reference in mecha.dm.
 
+	var/ping_cd = 0//attack_ghost cooldown
+
 
 	attack_self(mob/user as mob)
 		if(brainmob && !brainmob.key && searching == 0)
@@ -127,6 +129,15 @@
 			if(3)
 				src.brainmob.emp_damage += rand(0,10)
 	..()
+
+/obj/item/device/mmi/posibrain/attack_ghost(var/mob/dead/observer/O)
+	if(!ping_cd)
+		ping_cd = 1
+		spawn(50)
+			ping_cd = 0
+		var/turf/T = get_turf(src.loc)
+		for (var/mob/M in viewers(T))
+			M.show_message("<span class='notice'>\The [src] pings softly.</span>")
 
 /obj/item/device/mmi/posibrain/New()
 

@@ -11,6 +11,7 @@
 	var/pass_flags = 0
 	var/throwpass = 0
 	var/germ_level = GERM_LEVEL_AMBIENT // The higher the germ level, the more germ on the atom.
+	var/simulated = 1 //filter for actions - used by lighting overlays
 
 	///Chemistry.
 	var/datum/reagents/reagents = null
@@ -69,9 +70,6 @@
 
 /atom/proc/CheckExit()
 	return 1
-
-/atom/proc/HasEntered(atom/movable/AM as mob|obj)
-	return
 
 /atom/proc/HasProximity(atom/movable/AM as mob|obj)
 	return
@@ -145,7 +143,7 @@ its easier to just keep the beam vertical.
 
 		for(var/obj/effect/overlay/beam/O in orange(10,src))	//This section erases the previously drawn beam because I found it was easier to
 			if(O.BeamSource==src)				//just draw another instance of the beam instead of trying to manipulate all the
-				del O							//pieces to a new orientation.
+				qdel(O)							//pieces to a new orientation.
 		var/Angle=round(Get_Angle(src,BeamTarget))
 		var/icon/I=new(icon,icon_state)
 		I.Turn(Angle)
@@ -186,7 +184,7 @@ its easier to just keep the beam vertical.
 			X.pixel_y=Pixel_y
 		sleep(3)	//Changing this to a lower value will cause the beam to follow more smoothly with movement, but it will also be more laggy.
 					//I've found that 3 ticks provided a nice balance for my use.
-	for(var/obj/effect/overlay/beam/O in orange(10,src)) if(O.BeamSource==src) del O
+	for(var/obj/effect/overlay/beam/O in orange(10,src)) if(O.BeamSource==src) qdel(O)
 
 
 //All atoms
@@ -202,6 +200,11 @@ its easier to just keep the beam vertical.
 	// *****RM
 	//usr << "[name]: Dn:[density] dir:[dir] cont:[contents] icon:[icon] is:[icon_state] loc:[loc]"
 	return
+
+//called to set the atom's dir and used to add behaviour to dir-changes
+/atom/proc/set_dir(new_dir)
+	. = new_dir != dir
+	dir = new_dir
 
 /atom/proc/relaymove()
 	return
@@ -245,7 +248,7 @@ its easier to just keep the beam vertical.
 			src.fingerprintslast = M.key
 	return
 
-/atom/proc/add_fingerprint(mob/living/M as mob)
+/atom/proc/add_fingerprint(mob/living/M as mob, ignoregloves = 0)
 	if(isnull(M)) return
 	if(isAI(M)) return
 	if(isnull(M.key)) return
@@ -281,11 +284,12 @@ its easier to just keep the beam vertical.
 			H.gloves.add_fingerprint(M)
 
 		//Deal with gloves the pass finger/palm prints.
-		if(H.gloves != src)
-			if(prob(75) && istype(H.gloves, /obj/item/clothing/gloves/latex))
-				return 0
-			else if(H.gloves && !istype(H.gloves, /obj/item/clothing/gloves/latex))
-				return 0
+		if(!ignoregloves)
+			if(H.gloves != src)
+				if(prob(75) && istype(H.gloves, /obj/item/clothing/gloves/latex))
+					return 0
+				else if(H.gloves && !istype(H.gloves, /obj/item/clothing/gloves/latex))
+					return 0
 
 		//More adminstuffz
 		if(fingerprintslast != H.key)
@@ -347,7 +351,7 @@ its easier to just keep the beam vertical.
 
 	//Cleaning up shit.
 	if(fingerprints && !fingerprints.len)
-		del(fingerprints)
+		qdel(fingerprints)
 	return
 
 
@@ -396,13 +400,23 @@ its easier to just keep the beam vertical.
 
 		// Make toxins vomit look different
 		if(toxvomit)
-			this.icon_state = "vomittox_[pick(1,4)]"
+			var/datum/reagents/R = M.reagents
+			if(!locate(/datum/reagent/luminophore) in R.reagent_list)
+				this.icon_state = "vomittox_[pick(1,4)]"
+			else
+				this.icon_state = "vomittox_nc_[pick(1,4)]"
+				this.alpha = 127
+				var/datum/reagent/new_color = locate(/datum/reagent/luminophore) in R.reagent_list
+				this.color = new_color.color
+				this.light_color = this.color
+				this.set_light(3)
+				this.stop_light()
 
 
 /atom/proc/clean_blood()
 	src.germ_level = 0
 	if(istype(blood_DNA, /list))
-		del(blood_DNA)
+		qdel(blood_DNA)
 		return 1
 
 

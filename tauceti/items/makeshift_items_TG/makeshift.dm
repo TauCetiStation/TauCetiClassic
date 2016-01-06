@@ -34,12 +34,12 @@
 		var/obj/item/weapon/wirerod/W = new /obj/item/weapon/wirerod
 		R.use(1)
 
-		user.before_take_item(src)
+		user.remove_from_mob(src)
 
 		user.put_in_hands(W)
 		user << "<span class='notice'>You wrap the cable restraint around the top of the rod.</span>"
 
-		del(src)
+		qdel(src)
 
 /*
 /obj/item/weapon/unfinished_prod
@@ -58,13 +58,13 @@
 		var/obj/item/weapon/melee/baton/cattleprod/P = new /obj/item/weapon/melee/baton/cattleprod
 		P.charges = Charges
 
-		user.before_take_item(I)
-		user.before_take_item(src)
+		user.remove_from_mob(I)
+		user.remove_from_mob(src)
 
 		user.put_in_hands(P)
 		user << "<span class='notice'>You fasten the battery to rod and connect it to the wires.</span>"
-		del(I)
-		del(src) */
+		qdel(I)
+		qdel(src) */
 
 /obj/item/weapon/melee/cattleprod
 		icon = 'tauceti/items/makeshift_items_TG/makeshift_tg.dmi'
@@ -104,7 +104,7 @@
 			user.update_inv_l_hand()
 		else
 			user.update_inv_r_hand()
-		del(src)
+		qdel(src)
 		return
 	update_icon()
 	add_fingerprint(user)
@@ -179,9 +179,10 @@
 		return
 
 	if(status)
-		H.Stun(stunforce)
-		H.Weaken(stunforce)
-		H.apply_effect(STUTTER, stunforce)
+		//H.Stun(stunforce)
+		//H.Weaken(stunforce)
+		//H.apply_effect(STUTTER, stunforce)
+		H.apply_effect(60,AGONY,0)
 		user.lastattacked = M
 		H.lastattacker = user
 		if(isrobot(src.loc))
@@ -231,22 +232,22 @@
 	if(istype(I, /obj/item/weapon/shard))
 		var/obj/item/weapon/twohanded/spear/S = new /obj/item/weapon/twohanded/spear
 
-		user.before_take_item(I)
-		user.before_take_item(src)
+		user.remove_from_mob(I)
+		user.remove_from_mob(src)
 
 		user.put_in_hands(S)
 		user << "<span class='notice'>You fasten the glass shard to the top of the rod with the cable.</span>"
-		del(I)
-		del(src)
+		qdel(I)
+		qdel(src)
 
 	else if(istype(I, /obj/item/weapon/wirecutters))
 
 		var/obj/item/weapon/melee/cattleprod/P = new /obj/item/weapon/melee/cattleprod
 
-		user.before_take_item(I)
-		user.before_take_item(src)
+		user.remove_from_mob(I)
+		user.remove_from_mob(src)
 
 		user.put_in_hands(P)
 		user << "<span class='notice'>You fasten the wirecutters to the top of the rod with the cable, prongs outward.</span>"
-		del(I)
-		del(src)
+		qdel(I)
+		qdel(src)

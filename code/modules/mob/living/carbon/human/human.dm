@@ -10,6 +10,10 @@
 	var/heart_beat = 0
 	var/embedded_flag	  //To check if we've need to roll for damage on movement while an item is imbedded in us.
 
+	var/scientist = 0	//Vars used in abductors checks and etc. Should be here because in species datums it changes globaly.
+	var/agent = 0
+	var/team = 0
+
 /mob/living/carbon/human/dummy
 	real_name = "Test Dummy"
 	status_flags = GODMODE|CANPUSH
@@ -40,6 +44,9 @@
 /mob/living/carbon/human/machine/New(var/new_loc)
 	h_style = "blue IPC screen"
 	..(new_loc, "Machine")
+
+/mob/living/carbon/human/abductor/New(var/new_loc)
+	..(new_loc, "Abductor")
 
 /mob/living/carbon/human/New(var/new_loc, var/new_species = null)
 
@@ -159,29 +166,32 @@
 							now_pushing = 0
 							return
 				step(AM, t)
+				if(ishuman(AM) && AM:grabbed_by)
+					for(var/obj/item/weapon/grab/G in AM:grabbed_by)
+						step(G:assailant, get_dir(G:assailant, AM))
+						G.adjust_position()
 			now_pushing = 0
 		return
 	return
 
 /mob/living/carbon/human/Stat()
 	..()
-	statpanel("Status")
 
-	stat(null, "Intent: [a_intent]")
-	stat(null, "Move Mode: [m_intent]")
-	if(ticker && ticker.mode && ticker.mode.name == "AI malfunction")
-		if(ticker.mode:malf_mode_declared)
-			stat(null, "Time left: [max(ticker.mode:AI_win_timeleft/(ticker.mode:apcs/3), 0)]")
-	if(emergency_shuttle)
-		if(emergency_shuttle.online && emergency_shuttle.location < 2)
-			var/timeleft = emergency_shuttle.timeleft()
-			if (timeleft)
-				stat(null, "ETA-[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
+	if(statpanel("Status"))
+		stat(null, "Intent: [a_intent]")
+		stat(null, "Move Mode: [m_intent]")
+		if(ticker && ticker.mode && ticker.mode.name == "AI malfunction")
+			if(ticker.mode:malf_mode_declared)
+				stat(null, "Time left: [max(ticker.mode:AI_win_timeleft/(ticker.mode:apcs/3), 0)]")
+		if(emergency_shuttle)
+			if(emergency_shuttle.online && emergency_shuttle.location < 2)
+				var/timeleft = emergency_shuttle.timeleft()
+				if (timeleft)
+					stat(null, "ETA-[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
 
-	if (client.statpanel == "Status")
 		if (internal)
 			if (!internal.air_contents)
-				del(internal)
+				qdel(internal)
 			else
 				stat("Internal Atmosphere Info", internal.name)
 				stat("Tank Pressure", internal.air_contents.return_pressure())
@@ -444,10 +454,25 @@
 
 // called when something steps onto a human
 // this could be made more general, but for now just handle mulebot
-/mob/living/carbon/human/HasEntered(var/atom/movable/AM)
+/mob/living/carbon/human/Crossed(var/atom/movable/AM)
 	var/obj/machinery/bot/mulebot/MB = AM
 	if(istype(MB))
 		MB.RunOver(src)
+
+// Get rank from ID, ID inside PDA, PDA, ID in wallet, etc.
+/mob/living/carbon/human/proc/get_authentification_rank(var/if_no_id = "No id", var/if_no_job = "No job")
+	var/obj/item/device/pda/pda = wear_id
+	if (istype(pda))
+		if (pda.id)
+			return pda.id.rank
+		else
+			return pda.ownrank
+	else
+		var/obj/item/weapon/card/id/id = get_idcard()
+		if(id)
+			return id.rank ? id.rank : if_no_job
+		else
+			return if_no_id
 
 //gets assignment from ID or ID inside PDA or PDA itself
 //Useful when player do something with computers
@@ -489,6 +514,8 @@
 		return get_id_name("Unknown")
 	if( head && (head.flags_inv&HIDEFACE) )
 		return get_id_name("Unknown")		//Likewise for hats
+	if(name_override)
+		return name_override
 	var/face_name = get_face_name()
 	var/id_name = get_id_name("")
 	if(id_name && (id_name != face_name))
@@ -838,10 +865,16 @@
 		number -= 1
 	if(istype(src.glasses, /obj/item/clothing/glasses/sunglasses))
 		number += 1
+	if(istype(src.wear_mask, /obj/item/clothing/mask/gas/welding))
+		var/obj/item/clothing/mask/gas/welding/W = src.wear_mask
+		if(!W.up)
+			number += 2
 	if(istype(src.glasses, /obj/item/clothing/glasses/welding))
 		var/obj/item/clothing/glasses/welding/W = src.glasses
 		if(!W.up)
 			number += 2
+	if(istype(src.glasses, /obj/item/clothing/glasses/night/shadowling))
+		number -= 1
 	return number
 
 
@@ -870,6 +903,8 @@
 
 	if(dna && dna.mutantrace == "golem")
 		return "Animated Construct"
+
+
 
 	return species.name
 
@@ -954,7 +989,7 @@
 	for(var/x in all_hairs)
 		var/datum/sprite_accessory/hair/H = new x // create new hair datum based on type x
 		hairs.Add(H.name) // add hair name to hairs
-		del(H) // delete the hair after it's all done
+		qdel(H) // delete the hair after it's all done
 
 	var/new_style = input("Please select hair style", "Character Generation",h_style)  as null|anything in hairs
 
@@ -969,7 +1004,7 @@
 	for(var/x in all_fhairs)
 		var/datum/sprite_accessory/facial_hair/H = new x
 		fhairs.Add(H.name)
-		del(H)
+		qdel(H)
 
 	new_style = input("Please select facial style", "Character Generation",f_style)  as null|anything in fhairs
 
@@ -1022,6 +1057,10 @@
 		return
 
 	var/say = input ("What do you wish to say")
+	if(!say)
+		return
+	else
+		say = sanitize(say)
 	var/mob/T = creatures[target]
 	if(mRemotetalk in T.mutations)
 		T.show_message("\blue You hear [src.real_name]'s voice: [say]")
@@ -1129,7 +1168,7 @@
 			if(H.brainmob.real_name == src.real_name)
 				if(H.brainmob.mind)
 					H.brainmob.mind.transfer_to(src)
-					del(H)
+					qdel(H)
 
 	for(var/datum/organ/internal/I in internal_organs)
 		I.damage = 0
@@ -1201,7 +1240,7 @@
 	.=..()
 	if(clean_feet && !shoes && istype(feet_blood_DNA, /list) && feet_blood_DNA.len)
 		feet_blood_color = null
-		del(feet_blood_DNA)
+		qdel(feet_blood_DNA)
 		update_inv_shoes(1)
 		return 1
 
@@ -1370,25 +1409,49 @@
 		W.message = message
 		W.add_fingerprint(src)
 
+/mob/living/carbon/human/canSingulothPull(var/obj/machinery/singularity/singulo)
+	if(!..())
+		return 0
+
+	if(istype(shoes,/obj/item/clothing/shoes/magboots))
+		var/obj/item/clothing/shoes/magboots/M = shoes
+		if(M.magpulse)
+			return 0
+	return 1
+
+/mob/living/carbon/human/var/crawl_getup = 0
 /mob/living/carbon/human/verb/crawl()
 	set name = "Crawl"
 	set category = "IC"
 
 	if( stat || weakened || paralysis || resting || sleeping || (status_flags & FAKEDEATH) || buckled) return
 
+	if(crawl_getup)
+		return
 	var/T = get_turf(src)
 	if( (locate(/obj/structure/table) in T) || (locate(/obj/structure/stool/bed) in T) )
 		return
 	else
 		if(crawling)
+			crawl_getup = 1
+			sleep(10)
+			crawl_getup = 0
+			T = get_turf(src)
+			if( (locate(/obj/structure/table) in T) || (locate(/obj/structure/stool/bed) in T) )
+				playsound(loc, 'sound/weapons/tablehit1.ogg', 50, 1)
+				var/datum/organ/external/E = get_organ("head")
+				E.take_damage(5, 0, 0, 0, "Table")
+				src << "<span class='danger'>Ouch!</span>"
+				return
 			pass_flags += PASSCRAWL
+			layer = 3.9
 		else
 			pass_flags -= PASSCRAWL
-			layer = 4.0
+			//layer = 4.0
 		crawling = !crawling
 
 	update_canmove()
-	src << "\blue You are now [crawling ? "crawling" : "getting up"]"
+	src << "<span class='notice'>You are now [crawling ? "crawling" : "getting up"].</span>"
 
 /mob/living/carbon/human/can_inject(var/mob/user, var/error_msg, var/target_zone)
 	. = 1
@@ -1510,3 +1573,10 @@
 		M.apply_damage(50,BRUTE)
 		if(M.stat == 2)
 			M.gib()
+
+/mob/living/carbon/human/has_eyes()
+	if(internal_organs_by_name["eyes"])
+		var/datum/organ/internal/eyes = internal_organs_by_name["eyes"]
+		if(eyes && istype(eyes))
+			return 1
+	return 0

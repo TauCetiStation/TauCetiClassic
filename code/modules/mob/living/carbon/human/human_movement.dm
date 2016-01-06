@@ -1,18 +1,24 @@
 /mob/living/carbon/human/movement_delay()
 	var/tally = 0
 
-	if(species && species.flags & IS_SLOW)
+	if(species && species.flags & IS_PLANT)
 		tally = 7
 
 	if(crawling)
 		tally += 7
+	else if(reagents.has_reagent("hyperzine")) return -1
+
+	if(istype(l_hand, /obj/item/weapon/gun))
+		if(l_hand.w_class > 3)
+			tally += 0.5
+	if(istype(r_hand, /obj/item/weapon/gun))
+		if(r_hand.w_class > 3)
+			tally += 0.5
 
 	if (istype(loc, /turf/space)) return -1 // It's hard to be slowed down in space by... anything
 
 	if(embedded_flag)
 		handle_embedded_objects() //Moving with objects stuck in you can cause bad times.
-
-	if(reagents.has_reagent("hyperzine")) return -1
 
 	if(reagents.has_reagent("nuka_cola")) return -1
 
@@ -85,6 +91,8 @@
 
 	//Do we have magboots or such on if so no slip
 	if(istype(shoes, /obj/item/clothing/shoes/magboots) && (shoes.flags & NOSLIP))
+		prob_slip = 0
+	if(istype(wear_suit, /obj/item/clothing/suit/space/rig) && (wear_suit.flags & NOSLIP))
 		prob_slip = 0
 
 	//Check hands and mod slip

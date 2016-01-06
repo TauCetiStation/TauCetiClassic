@@ -160,6 +160,7 @@ This could be a lot better but I'm too tired atm.*/
 		var/targets[] = list()//So yo can shoot while yo throw dawg
 		for(var/mob/living/M in oview(loc))
 			if(M.stat)	continue//Doesn't target corpses or paralyzed persons.
+			if(M.lying)	continue
 			targets.Add(M)
 		if(targets.len)
 			var/mob/living/target=pick(targets)//The point here is to pick a random, living mob in oview to shoot stuff at.
@@ -184,12 +185,13 @@ This could be a lot better but I'm too tired atm.*/
 /*Allows the ninja to capture people, I guess.
 Must right click on a mob to activate.*/
 /obj/item/clothing/suit/space/space_ninja/proc/ninjanet(mob/living/carbon/M in oview())//Only living carbon mobs.
-	set name = "Energy Net (7,000E)"
-	set desc = "Captures a fallen opponent in a net of energy. Will teleport them to a holding facility after 30 seconds."
+	set name = "Energy Net (500E)"
+	set desc = "Captures a opponent in a net of energy."
 	set category = null
 	set src = usr.contents
 
-	var/C = 700
+	//var/C = 700
+	var/C = 50
 	if(!ninjacost(C,0)&&iscarbon(M))
 		var/mob/living/carbon/human/U = affecting
 		if(M.client)//Monkeys without a client can still step_to() and bypass the net. Also, netting inactive people is lame.

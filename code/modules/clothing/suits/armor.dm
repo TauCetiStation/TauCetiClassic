@@ -1,4 +1,3 @@
-
 /obj/item/clothing/suit/armor
 	allowed = list(/obj/item/weapon/gun/energy,/obj/item/weapon/reagent_containers/spray/pepper,/obj/item/weapon/gun/projectile,/obj/item/ammo_box/magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs)
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
@@ -8,7 +7,7 @@
 	min_cold_protection_temperature = ARMOR_MIN_COLD_PROTECTION_TEMPERATURE
 	heat_protection = UPPER_TORSO|LOWER_TORSO
 	max_heat_protection_temperature = ARMOR_MAX_HEAT_PROTECTION_TEMPERATURE
-	siemens_coefficient = 0.6
+	siemens_coefficient = 0.4
 
 
 /obj/item/clothing/suit/armor/vest
@@ -18,7 +17,7 @@
 	item_state = "armor"
 	blood_overlay_type = "armor"
 	flags = FPRINT | TABLEPASS | THICKMATERIAL
-	armor = list(melee = 50, bullet = 15, laser = 15, energy = 10, bomb = 25, bio = 0, rad = 0)
+	armor = list(melee = 50, bullet = 55, laser = 25, energy = 20, bomb = 35, bio = 0, rad = 0)
 
 /obj/item/clothing/suit/armor/vest/security
 	name = "security armor"
@@ -33,6 +32,14 @@
 	item_state = "armor"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
 
+/obj/item/clothing/suit/armor/vest/leather
+	name = "security overcoat"
+	desc = "Lightly armored leather overcoat meant as casual wear for high-ranking officers. Bears the crest of Nanotrasen Security."
+	icon_state = "leathercoat-sec"
+	item_state = "hostrench"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
+	cold_protection = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
+	heat_protection = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 
 /obj/item/clothing/suit/armor/riot
 	name = "Riot Suit"
@@ -45,8 +52,6 @@
 	slowdown = 1
 	armor = list(melee = 80, bullet = 10, laser = 5, energy = 10, bomb = 0, bio = 0, rad = 0)
 	flags_inv = HIDEJUMPSUIT
-	siemens_coefficient = 0.5
-
 
 /obj/item/clothing/suit/armor/bulletproof
 	name = "Bulletproof Vest"
@@ -54,8 +59,7 @@
 	icon_state = "bulletproof"
 	item_state = "armor"
 	blood_overlay_type = "armor"
-	armor = list(melee = 10, bullet = 40, laser = 5, energy = 10, bomb = 0, bio = 0, rad = 0)
-	siemens_coefficient = 0.7
+	armor = list(melee = 10, bullet = 80, laser = 25, energy = 20, bomb = 35, bio = 0, rad = 0)
 
 /obj/item/clothing/suit/armor/laserproof
 	name = "Ablative Armor Vest"
@@ -63,7 +67,7 @@
 	icon_state = "armor_reflec"
 	item_state = "armor_reflec"
 	blood_overlay_type = "armor"
-	armor = list(melee = 10, bullet = 10, laser = 45, energy = 50, bomb = 0, bio = 0, rad = 0)
+	armor = list(melee = 10, bullet = 10, laser = 65, energy = 75, bomb = 0, bio = 0, rad = 0)
 	siemens_coefficient = 0
 
 /obj/item/clothing/suit/armor/swat
@@ -77,12 +81,10 @@
 	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box/magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/tank/emergency_oxygen)
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS
 	slowdown = 1
-	armor = list(melee = 80, bullet = 40, laser = 45,energy = 25, bomb = 50, bio = 0, rad = 0)
+	armor = list(melee = 80, bullet = 70, laser = 70,energy = 70, bomb = 70, bio = 0, rad = 0)
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	cold_protection = UPPER_TORSO | LOWER_TORSO | LEGS | FEET | ARMS | HANDS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
-	siemens_coefficient = 0.5
-
 
 /obj/item/clothing/suit/armor/swat/officer
 	name = "officer jacket"
@@ -102,7 +104,7 @@
 	blood_overlay_type = "armor"
 	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
-	armor = list(melee = 50, bullet = 15, laser = 15, energy = 10, bomb = 25, bio = 0, rad = 0)
+	armor = list(melee = 50, bullet = 55, laser = 25, energy = 20, bomb = 35, bio = 0, rad = 0)
 
 
 //Reactive armor
@@ -197,37 +199,36 @@
 	var/obj/item/weapon/gun/holstered = null
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	slowdown = 1
-	armor = list(melee = 60, bullet = 30, laser = 30, energy = 40, bomb = 20, bio = 0, rad = 0)
-	siemens_coefficient = 0.7
+	armor = list(melee = 60, bullet = 65, laser = 50, energy = 60, bomb = 40, bio = 0, rad = 0)
 
-	/obj/item/clothing/suit/armor/tactical/verb/holster()
-		set name = "Holster"
-		set category = "Object"
-		set src in usr
-		if(!istype(usr, /mob/living)) return
-		if(usr.stat) return
+/obj/item/clothing/suit/armor/tactical/verb/holster()
+	set name = "Holster"
+	set category = "Object"
+	set src in usr
+	if(!istype(usr, /mob/living)) return
+	if(usr.stat) return
 
-		if(!holstered)
-			if(!istype(usr.get_active_hand(), /obj/item/weapon/gun))
-				usr << "\blue You need your gun equiped to holster it."
-				return
-			var/obj/item/weapon/gun/W = usr.get_active_hand()
-			if (!W.isHandgun())
-				usr << "\red This gun won't fit in \the belt!"
-				return
-			holstered = usr.get_active_hand()
-			usr.drop_item()
-			holstered.loc = src
-			usr.visible_message("\blue \The [usr] holsters \the [holstered].", "You holster \the [holstered].")
+	if(!holstered)
+		if(!istype(usr.get_active_hand(), /obj/item/weapon/gun))
+			usr << "\blue You need your gun equiped to holster it."
+			return
+		var/obj/item/weapon/gun/W = usr.get_active_hand()
+		if (!W.isHandgun())
+			usr << "\red This gun won't fit in \the belt!"
+			return
+		holstered = usr.get_active_hand()
+		usr.drop_item()
+		holstered.loc = src
+		usr.visible_message("\blue \The [usr] holsters \the [holstered].", "You holster \the [holstered].")
+	else
+		if(istype(usr.get_active_hand(),/obj) && istype(usr.get_inactive_hand(),/obj))
+			usr << "\red You need an empty hand to draw the gun!"
 		else
-			if(istype(usr.get_active_hand(),/obj) && istype(usr.get_inactive_hand(),/obj))
-				usr << "\red You need an empty hand to draw the gun!"
+			if(usr.a_intent == "hurt")
+				usr.visible_message("\red \The [usr] draws \the [holstered], ready to shoot!", \
+				"\red You draw \the [holstered], ready to shoot!")
 			else
-				if(usr.a_intent == "hurt")
-					usr.visible_message("\red \The [usr] draws \the [holstered], ready to shoot!", \
-					"\red You draw \the [holstered], ready to shoot!")
-				else
-					usr.visible_message("\blue \The [usr] draws \the [holstered], pointing it at the ground.", \
-					"\blue You draw \the [holstered], pointing it at the ground.")
-				usr.put_in_hands(holstered)
-			holstered = null
+				usr.visible_message("\blue \The [usr] draws \the [holstered], pointing it at the ground.", \
+				"\blue You draw \the [holstered], pointing it at the ground.")
+			usr.put_in_hands(holstered)
+		holstered = null

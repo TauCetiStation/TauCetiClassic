@@ -10,6 +10,8 @@
 	required_enemies = 1
 	recommended_enemies = 1
 
+	votable = 0
+
 	uplink_welcome = "Wizardly Uplink Console:"
 	uplink_uses = 10
 
@@ -219,12 +221,14 @@
 
 /datum/game_mode/proc/auto_declare_completion_wizard()
 	if(wizards.len)
-		var/text = "<FONT size = 2><B>The wizards/witches were:</B></FONT>"
+		var/icon/logo = icon('icons/mob/mob.dmi', "wizard-logo")
+		var/text = "<br>\icon[logo] <font size=3><b>the wizards/witches were:</b></font> \icon[logo]"
 
 		for(var/datum/mind/wizard in wizards)
 
-			text += "<br>[wizard.key] was [wizard.name] ("
 			if(wizard.current)
+				var/icon/flat = getFlatIcon(wizard.current)
+				text += "<br>\icon[flat] <b>[wizard.key]</b> was <b>[wizard.name]</b> ("
 				if(wizard.current.stat == DEAD)
 					text += "died"
 				else
@@ -232,6 +236,8 @@
 				if(wizard.current.real_name != wizard.name)
 					text += " as [wizard.current.real_name]"
 			else
+				var/icon/sprotch = icon('icons/effects/blood.dmi', "floor1-old")
+				text += "<br>\icon[sprotch] <b>[wizard.key]</b> was <b>[wizard.name]</b> ("
 				text += "body destroyed"
 			text += ")"
 
@@ -251,9 +257,21 @@
 				if(wizard.current && wizard.current.stat!=2 && wizardwin)
 					text += "<br><font color='green'><B>The wizard was successful!</B></font>"
 					feedback_add_details("wizard_success","SUCCESS")
+					score["roleswon"]++
 				else
 					text += "<br><font color='red'><B>The wizard has failed!</B></font>"
 					feedback_add_details("wizard_success","FAIL")
+				if(wizard.current && wizard.current.spell_list)
+					text += "<br><B>[wizard.name] used the following spells: </B>"
+					var/i = 1
+					for(var/obj/effect/proc_holder/spell/S in wizard.current.spell_list)
+					//var/icon/spellicon = icon('icons/mob/screen_spells.dmi', S.hud_state)
+					//text += "<br>\icon[spellicon] [S.name]"
+						text += "<br>[S.name]"
+						if(wizard.current.spell_list.len > i)
+							text += ", "
+						i++
+				text += "<br>"
 
 		world << text
 	return 1
@@ -263,7 +281,9 @@
 //To batch-remove wizard spells. Linked to mind.dm.
 /mob/proc/spellremove(var/mob/M as mob)
 	for(var/obj/effect/proc_holder/spell/spell_to_remove in src.spell_list)
-		del(spell_to_remove)
+		qdel(spell_to_remove)
+	spell_list.Cut()
+	mind.spell_list.Cut()
 
 /*Checks if the wizard can cast spells.
 Made a proc so this is not repeated 14 (or more) times.*/

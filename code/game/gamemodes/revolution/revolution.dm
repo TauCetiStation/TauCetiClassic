@@ -20,6 +20,8 @@
 	required_enemies = 3
 	recommended_enemies = 3
 
+	votable = 0
+
 
 	uplink_welcome = "AntagCorp Uplink Console:"
 	uplink_uses = 10
@@ -82,10 +84,11 @@
 				rev_obj.explanation_text = "Assassinate [head_mind.name], the [head_mind.assigned_role]."
 				rev_mind.objectives += rev_obj
 
-	//	equip_traitor(rev_mind.current, 1) //changing how revs get assigned their uplink so they can get PDA uplinks. --NEO
-	//	Removing revolutionary uplinks.	-Pete
-		equip_revolutionary(rev_mind.current)
-		update_rev_icons_added(rev_mind)
+		spawn(rand(10,100))
+		//	equip_traitor(rev_mind.current, 1) //changing how revs get assigned their uplink so they can get PDA uplinks. --NEO
+		//	Removing revolutionary uplinks.	-Pete
+			equip_revolutionary(rev_mind.current)
+			update_all_rev_icons()
 
 	for(var/datum/mind/rev_mind in head_revolutionaries)
 		greet_revolutionary(rev_mind)
@@ -113,7 +116,7 @@
 			var/datum/objective/mutiny/rev_obj = new
 			rev_obj.owner = rev_mind
 			rev_obj.target = head_mind
-			rev_obj.explanation_text = "Assassinate [head_mind.name], the [head_mind.assigned_role]."
+			rev_obj.explanation_text = "Assassinate or exile [head_mind.name], the [head_mind.assigned_role]."
 			rev_mind.objectives += rev_obj
 
 /datum/game_mode/proc/greet_revolutionary(var/datum/mind/rev_mind, var/you_are=1)
@@ -142,6 +145,7 @@
 
 
 	var/obj/item/device/flash/T = new(mob)
+	var/obj/item/toy/crayon/spraycan/R = new(mob)
 
 	var/list/slots = list (
 		"backpack" = slot_in_backpack,
@@ -151,11 +155,14 @@
 		"right hand" = slot_r_hand,
 	)
 	var/where = mob.equip_in_one_of_slots(T, slots)
+	mob.equip_in_one_of_slots(R,slots)
+
+	mob.update_icons()
+
 	if (!where)
 		mob << "The Syndicate were unfortunately unable to get you a flash."
 	else
 		mob << "The flash in your [where] will help you to persuade the crew to join your cause."
-		mob.update_icons()
 		return 1
 
 //////////////////////////////////////
@@ -195,11 +202,15 @@
 	if((rev_mind in revolutionaries) || (rev_mind in head_revolutionaries))
 		return 0
 	revolutionaries += rev_mind
+	if(iscarbon(rev_mind.current))
+		var/mob/living/carbon/carbon_mob = rev_mind.current
+		carbon_mob.silent = max(carbon_mob.silent, 5)
+	rev_mind.current.Stun(5)
 	rev_mind.current << "\red <FONT size = 3> You are now a revolutionary! Help your cause. Do not harm your fellow freedom fighters. You can identify your comrades by the red \"R\" icons, and your leaders by the blue \"R\" icons. Help them kill the heads to win the revolution!</FONT>"
 	rev_mind.special_role = "Revolutionary"
 	if(config.objectives_disabled)
 		rev_mind.current << "<font color=blue>Within the rules,</font> try to act as an opposing force to the crew. Further RP and try to make sure other players have </i>fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>"
-	update_rev_icons_added(rev_mind)
+	update_all_rev_icons()
 	return 1
 //////////////////////////////////////////////////////////////////////////////
 //Deals with players being converted from the revolution (Not a rev anymore)//  // Modified to handle borged MMIs.  Accepts another var if the target is being borged at the time  -- Polymorph.
@@ -219,7 +230,8 @@
 		update_rev_icons_removed(rev_mind)
 		for(var/mob/living/M in view(rev_mind.current))
 			if(beingborged)
-				M << "The frame beeps contentedly, purging the hostile memory engram from the MMI before initalizing it."
+				rev_mind.current << "\red <FONT size = 3><B>The frame's firmware detects and deletes your neural reprogramming!  You remember nothing but the name of the one who flashed you.</B></FONT>"
+				message_admins("[key_name_admin(rev_mind.current)] <A HREF='?_src_=holder;adminmoreinfo=\ref[rev_mind.current]'>?</A> has been borged while being a member of the revolution.")
 
 			else
 				M << "[rev_mind.current] looks like they just remembered their real allegiance!"
@@ -239,14 +251,14 @@
 				if(head_rev_mind.current.client)
 					for(var/image/I in head_rev_mind.current.client.images)
 						if(I.icon_state == "rev" || I.icon_state == "rev_head")
-							del(I)
+							qdel(I)
 
 		for(var/datum/mind/rev_mind in revolutionaries)
 			if(rev_mind.current)
 				if(rev_mind.current.client)
 					for(var/image/I in rev_mind.current.client.images)
 						if(I.icon_state == "rev" || I.icon_state == "rev_head")
-							del(I)
+							qdel(I)
 
 		for(var/datum/mind/head_rev in head_revolutionaries)
 			if(head_rev.current)
@@ -279,20 +291,36 @@
 /datum/game_mode/proc/update_rev_icons_added(datum/mind/rev_mind)
 	spawn(0)
 		for(var/datum/mind/head_rev_mind in head_revolutionaries)
+
+			//Tagging the new rev for revheads to see
 			if(head_rev_mind.current)
 				if(head_rev_mind.current.client)
-					var/I = image('icons/mob/mob.dmi', loc = rev_mind.current, icon_state = "rev")
+					var/I
+					if(rev_mind in head_revolutionaries) //If the new rev is a head rev
+						I = image('icons/mob/mob.dmi', loc = rev_mind.current, icon_state = "rev_head")
+					else
+						I = image('icons/mob/mob.dmi', loc = rev_mind.current, icon_state = "rev")
 					head_rev_mind.current.client.images += I
+
+			//Tagging the revheads for new rev to see
 			if(rev_mind.current)
 				if(rev_mind.current.client)
 					var/image/J = image('icons/mob/mob.dmi', loc = head_rev_mind.current, icon_state = "rev_head")
 					rev_mind.current.client.images += J
 
 		for(var/datum/mind/rev_mind_1 in revolutionaries)
+
+			//Tagging the new rev for fellow revs to see
 			if(rev_mind_1.current)
 				if(rev_mind_1.current.client)
-					var/I = image('icons/mob/mob.dmi', loc = rev_mind.current, icon_state = "rev")
+					var/I
+					if(rev_mind in head_revolutionaries) //If the new rev is a head rev
+						I = image('icons/mob/mob.dmi', loc = rev_mind.current, icon_state = "rev_head")
+					else
+						I = image('icons/mob/mob.dmi', loc = rev_mind.current, icon_state = "rev")
 					rev_mind_1.current.client.images += I
+
+			//Tagging fellow revs for the new rev to see
 			if(rev_mind.current)
 				if(rev_mind.current.client)
 					var/image/J = image('icons/mob/mob.dmi', loc = rev_mind_1.current, icon_state = "rev")
@@ -308,20 +336,20 @@
 				if(head_rev_mind.current.client)
 					for(var/image/I in head_rev_mind.current.client.images)
 						if((I.icon_state == "rev" || I.icon_state == "rev_head") && I.loc == rev_mind.current)
-							del(I)
+							qdel(I)
 
 		for(var/datum/mind/rev_mind_1 in revolutionaries)
 			if(rev_mind_1.current)
 				if(rev_mind_1.current.client)
 					for(var/image/I in rev_mind_1.current.client.images)
 						if((I.icon_state == "rev" || I.icon_state == "rev_head") && I.loc == rev_mind.current)
-							del(I)
+							qdel(I)
 
 		if(rev_mind.current)
 			if(rev_mind.current.client)
 				for(var/image/I in rev_mind.current.client.images)
 					if(I.icon_state == "rev" || I.icon_state == "rev_head")
-						del(I)
+						qdel(I)
 
 //////////////////////////
 //Checks for rev victory//
@@ -352,22 +380,30 @@
 	if(!config.objectives_disabled)
 		if(finished == 1)
 			feedback_set_details("round_end_result","win - heads killed")
-			world << "\red <FONT size = 3><B> The heads of staff were killed or abandoned the station! The revolutionaries win!</B></FONT>"
+			world << "\red <FONT size = 3><B> The heads of staff were killed or exiled! The revolutionaries win!</B></FONT>"
 		else if(finished == 2)
 			feedback_set_details("round_end_result","loss - rev heads killed")
 			world << "\red <FONT size = 3><B> The heads of staff managed to stop the revolution!</B></FONT>"
-		..()
+	var/num_revs = 0
+	for(var/mob/living/carbon/mob in living_mob_list)
+		if(mob.mind)
+			if(mob.mind in head_revolutionaries || mob.mind in revolutionaries)
+				num_revs++
+	world << "<BR>[TAB]Command's Approval Rating: <B>[100 - round((num_revs/living_mob_list.len)*100, 0.1)]%</B>" // % of loyal crew
+	..()
 	return 1
 
 /datum/game_mode/proc/auto_declare_completion_revolution()
 	var/list/targets = list()
 
 	if(head_revolutionaries.len || istype(ticker.mode,/datum/game_mode/revolution))
-		var/text = "<FONT size = 2><B>The head revolutionaries were:</B></FONT>"
+		var/icon/logo1 = icon('icons/mob/mob.dmi', "rev_head-logo")
+		var/text = "\icon[logo1] <FONT size = 2><B>The head revolutionaries were:</B></FONT> \icon[logo1]"
 
 		for(var/datum/mind/headrev in head_revolutionaries)
-			text += "<br>[headrev.key] was [headrev.name] ("
 			if(headrev.current)
+				var/icon/flat = getFlatIcon(headrev.current)
+				text += "<br>\icon[flat] [headrev.key] was [headrev.name] ("
 				if(headrev.current.stat == DEAD)
 					text += "died"
 				else if(headrev.current.z != 1)
@@ -377,8 +413,18 @@
 				if(headrev.current.real_name != headrev.name)
 					text += " as [headrev.current.real_name]"
 			else
+				var/icon/sprotch = icon('icons/effects/blood.dmi', "floor1-old")
+				text += "<br>\icon[sprotch] [headrev.key] was [headrev.name] ("
 				text += "body destroyed"
 			text += ")"
+			if(headrev.total_TC)
+				if(headrev.spent_TC)
+					text += "<br><span class='sinister'>TC Remaining: [headrev.total_TC - headrev.spent_TC]/[headrev.total_TC] - The tools used by the Head Revolutionary were:"
+					for(var/entry in headrev.uplink_items_bought)
+						text += "<br>[entry]"
+					text += "</span>"
+				else
+					text += "<br><span class='sinister'>The Head Revolutionary was a smooth operator this round (did not purchase any uplink items)</span>"
 
 			for(var/datum/objective/mutiny/objective in headrev.objectives)
 				targets |= objective.target
@@ -386,12 +432,14 @@
 		world << text
 
 	if(revolutionaries.len || istype(ticker.mode,/datum/game_mode/revolution))
-		var/text = "<FONT size = 2><B>The revolutionaries were:</B></FONT>"
+		var/icon/logo2 = icon('icons/mob/mob.dmi', "rev-logo")
+		var/text = "<br>\icon[logo2] <FONT size = 2><B>The revolutionaries were:</B></FONT> \icon[logo2]"
 
 		for(var/datum/mind/rev in revolutionaries)
-			text += "<br>[rev.key] was [rev.name] ("
 			if(rev.current)
-				if(rev.current.stat == DEAD)
+				var/icon/flat = getFlatIcon(rev.current)
+				text += "<br>\icon[flat] [rev.key] was [rev.name] ("
+				if(rev.current.stat == DEAD || isbrain(rev.current))
 					text += "died"
 				else if(rev.current.z != 1)
 					text += "fled the station"
@@ -400,6 +448,8 @@
 				if(rev.current.real_name != rev.name)
 					text += " as [rev.current.real_name]"
 			else
+				var/icon/sprotch = icon('icons/effects/blood.dmi', "floor1-old")
+				text += "<br>\icon[sprotch] [rev.key] was [rev.name] ("
 				text += "body destroyed"
 			text += ")"
 
@@ -407,16 +457,18 @@
 
 
 	if( head_revolutionaries.len || revolutionaries.len || istype(ticker.mode,/datum/game_mode/revolution) )
-		var/text = "<FONT size = 2><B>The heads of staff were:</B></FONT>"
+		var/icon/logo3 = icon('icons/mob/mob.dmi', "nano-logo")
+		var/text = "\icon[logo3] <FONT size = 2><B>The heads of staff were:</B></FONT> \icon[logo3]"
 
 		var/list/heads = get_all_heads()
 		for(var/datum/mind/head in heads)
 			var/target = (head in targets)
 			if(target)
 				text += "<font color='red'>"
-			text += "<br>[head.key] was [head.name] ("
 			if(head.current)
-				if(head.current.stat == DEAD)
+				var/icon/flat = getFlatIcon(head.current)
+				text += "<br>\icon[flat] [head.key] was [head.name] ("
+				if(head.current.stat == DEAD || isbrain(head.current))
 					text += "died"
 				else if(head.current.z != 1)
 					text += "fled the station"
@@ -425,15 +477,11 @@
 				if(head.current.real_name != head.name)
 					text += " as [head.current.real_name]"
 			else
+				var/icon/sprotch = icon('icons/effects/blood.dmi', "floor1-old")
+				text += "<br>\icon[sprotch] [head.key] was [head.name] ("
 				text += "body destroyed"
 			text += ")"
 			if(target)
 				text += "</font>"
 
 		world << text
-
-/proc/is_convertable_to_rev(datum/mind/mind)
-	return istype(mind) && \
-		istype(mind.current, /mob/living/carbon/human) && \
-		!(mind.assigned_role in command_positions) && \
-		!(mind.assigned_role in list("Security Officer", "Detective", "Warden"))

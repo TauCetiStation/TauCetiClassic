@@ -4,6 +4,7 @@
 	name = "Security Records"
 	desc = "Used to view and edit personnel's security records"
 	icon_state = "security"
+	light_color = "#a91515"
 	req_one_access = list(access_security, access_forensics_lockers)
 	circuit = "/obj/item/weapon/circuitboard/secure_data"
 	var/obj/item/weapon/card/id/scan = null
@@ -364,7 +365,7 @@ What a mess.*/
 
 			if ("Purge All Records")
 				for(var/datum/data/record/R in data_core.security)
-					del(R)
+					qdel(R)
 				temp = "All Security records deleted."
 
 			if ("Add Entry")
@@ -548,17 +549,17 @@ What a mess.*/
 
 					if ("Delete Record (Security) Execute")
 						if (active2)
-							del(active2)
+							qdel(active2)
 
 					if ("Delete Record (ALL) Execute")
 						if (active1)
 							for(var/datum/data/record/R in data_core.medical)
 								if ((R.fields["name"] == active1.fields["name"] || R.fields["id"] == active1.fields["id"]))
-									del(R)
+									qdel(R)
 								else
-							del(active1)
+							qdel(active1)
 						if (active2)
-							del(active2)
+							qdel(active2)
 					else
 						temp = "This function does not appear to be working at the moment. Our apologies."
 
@@ -589,7 +590,7 @@ What a mess.*/
 			continue
 
 		else if(prob(1))
-			del(R)
+			qdel(R)
 			continue
 
 	..(severity)

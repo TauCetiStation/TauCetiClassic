@@ -13,13 +13,6 @@
 	Therefore, the top right corner (except during admin shenanigans) is at "15,15"
 */
 
-//Upper left action buttons, displayed when you pick up an item that has this enabled.
-#define ui_action_slot1 "1:6,14:26"
-#define ui_action_slot2 "2:8,14:26"
-#define ui_action_slot3 "3:10,14:26"
-#define ui_action_slot4 "4:12,14:26"
-#define ui_action_slot5 "5:14,14:26"
-
 //Middle left indicators с ТГ, для чейнджей
 #define ui_lingchemdisplay "WEST:6,CENTER-1:15"
 #define ui_lingstingdisplay "WEST:6,CENTER-3:11"
@@ -43,10 +36,11 @@
 #define ui_alien_head "4:12,1:5"	//aliens
 #define ui_alien_oclothing "5:14,1:5"	//aliens
 
-#define ui_inv1 "6:16,1:5"			//borgs
-#define ui_inv2 "7:16,1:5"			//borgs
-#define ui_inv3 "8:16,1:5"			//borgs
-#define ui_borg_store "9:16,1:5"	//borgs
+#define ui_inv1 "7,1:5"			//borgs
+#define ui_inv2 "8,1:5"			//borgs
+#define ui_inv3 "9,1:5"			//borgs
+#define ui_borg_store "10,1:5"	//borgs
+#define ui_borg_inventory "6,1:5"//borgs
 
 #define ui_monkey_mask "5:14,1:5"	//monkey
 #define ui_monkey_back "6:14,1:5"	//monkey
@@ -80,14 +74,43 @@
 #define ui_alien_fire "14:28,12:25"
 #define ui_alien_oxygen "14:28,11:25"
 
+//Upper-middle right (alerts)
+#define ui_alert1 "EAST-1:28,CENTER+5:27"
+#define ui_alert2 "EAST-1:28,CENTER+4:25"
+#define ui_alert3 "EAST-1:28,CENTER+3:23"
+#define ui_alert4 "EAST-1:28,CENTER+2:21"
+#define ui_alert5 "EAST-1:28,CENTER+1:19"
+
 //Middle right (status indicators)
 #define ui_nutrition "14:28,5:11"
 #define ui_temp "14:28,6:13"
 #define ui_health "14:28,7:15"
 #define ui_internal "14:28,8:17"
-									//borgs
+
+//borgs and aliens
+#define ui_alien_nightvision "EAST-1:28,CENTER:17"
 #define ui_borg_health "14:28,6:13" //borgs have the health display where humans have the pressure damage indicator.
-#define ui_alien_health "14:28,6:13" //aliens have the health display where humans have the pressure damage indicator.
+#define ui_alien_health "EAST-1:28,CENTER-1:15" //aliens have the health display where humans have the pressure damage indicator.
+#define ui_alienplasmadisplay "EAST-1:28,CENTER-2:15"
+
+
+// AI
+#define ui_ai_core "SOUTH:6,WEST"
+#define ui_ai_camera_list "SOUTH:6,WEST+1"
+#define ui_ai_track_with_camera "SOUTH:6,WEST+2"
+#define ui_ai_camera_light "SOUTH:6,WEST+3"
+#define ui_ai_sensor "SOUTH:6,WEST+4"
+#define ui_ai_crew_manifest "SOUTH:6,WEST+5"
+#define ui_ai_alerts "SOUTH:6,WEST+6"
+#define ui_ai_announcement "SOUTH:6,WEST+7"
+#define ui_ai_state_laws "SOUTH:6,WEST+8"
+#define ui_ai_pda_send "SOUTH:6,WEST+9"
+#define ui_ai_pda_log "SOUTH:6,WEST+10"
+#define ui_ai_control_integrated_radio "SOUTH:6,WEST+11"
+#define ui_ai_take_picture "SOUTH:6,WEST+12"
+#define ui_ai_view_images "SOUTH:6,WEST+13"
+#define ui_ai_shuttle "SOUTH:6,WEST+14"
+
 
 //Pop-up inventory
 #define ui_shoes "2:8,1:5"

@@ -10,7 +10,7 @@ var/bomb_set
 	var/extended = 0.0
 	var/lighthack = 0
 	var/opened = 0.0
-	var/timeleft = 60.0
+	var/timeleft = 600.0
 	var/timing = 0.0
 	var/r_code = "ADMIN"
 	var/code = ""
@@ -25,6 +25,8 @@ var/bomb_set
 	                      // 3 is sealant open, 4 is unwrenched, 5 is removed from bolts.
 	flags = FPRINT
 	use_power = 0
+	var/detonated = 0 //used for scoreboard.
+	var/lastentered = ""
 
 
 
@@ -51,6 +53,7 @@ var/bomb_set
 	if (src.timing)
 		bomb_set = 1 //So long as there is one nuke timing, it means one nuke is armed.
 		src.timeleft--
+		playsound(loc, 'sound/items/timer.ogg', 30, 0)
 		if (src.timeleft <= 0)
 			explode()
 		for(var/mob/M in viewers(1, src))
@@ -62,7 +65,17 @@ var/bomb_set
 
 	if (istype(O, /obj/item/weapon/screwdriver))
 		src.add_fingerprint(user)
-		if (src.auth)
+		if (removal_stage == 5)
+			if (src.opened == 0)
+				src.opened = 1
+				overlays += image(icon, "npanel_open")
+				user << "You unscrew the control panel of [src]."
+
+			else
+				src.opened = 0
+				overlays -= image(icon, "npanel_open")
+				user << "You screw the control panel of [src] back on."
+		else if (src.auth)
 			if (src.opened == 0)
 				src.opened = 1
 				overlays += image(icon, "npanel_open")
@@ -98,6 +111,72 @@ var/bomb_set
 	if (src.anchored)
 		switch(removal_stage)
 			if(0)
+				if(istype(O,/obj/item/weapon/weldingtool))
+
+					var/obj/item/weapon/weldingtool/WT = O
+					if(!WT.isOn()) return
+					if (WT.get_fuel() < 5) // uses up 5 fuel.
+						user << "\red You need more fuel to complete this task."
+						return
+
+					user.visible_message("[user] starts cutting thru something on [src] like \he knows what to do.", "With [O] you start cutting thru first layer...")
+
+					if(do_after(user,150,target = src))
+						if(!src || !user || !WT.remove_fuel(5, user)) return
+						user.visible_message("[user] finishes cutting something on [src].", "You cut thru first layer.")
+						removal_stage = 1
+				return
+
+			if(1)
+				if(istype(O,/obj/item/weapon/crowbar))
+					user.visible_message("[user] starts smashing [src].", "You start forcing open the covers with [O]...")
+
+					if(do_after(user,50,target = src))
+						if(!src || !user) return
+						user.visible_message("[user] finishes smashing [src].", "You force open covers.")
+						removal_stage = 2
+				return
+
+			if(2)
+				if(istype(O,/obj/item/weapon/weldingtool))
+
+					var/obj/item/weapon/weldingtool/WT = O
+					if(!WT.isOn()) return
+					if (WT.get_fuel() < 5) // uses up 5 fuel.
+						user << "\red You need more fuel to complete this task."
+						return
+
+					user.visible_message("[user] starts cutting something on [src].. Again.", "You start cutting apart the safety plate with [O]...")
+
+					if(do_after(user,100,target = src))
+						if(!src || !user || !WT.remove_fuel(5, user)) return
+						user.visible_message("[user] finishes cutting something on [src].", "You cut apart the safety plate.")
+						removal_stage = 3
+				return
+
+			if(3)
+				if(istype(O,/obj/item/weapon/wrench))
+
+					user.visible_message("[user] begins poking inside [src].", "You begin unwrenching bolts...")
+
+					if(do_after(user,75,target = src))
+						if(!src || !user) return
+						user.visible_message("[user] begins poking inside [src].", "You unwrench bolts.")
+						removal_stage = 4
+				return
+
+			if(4)
+				if(istype(O,/obj/item/weapon/crowbar))
+
+					user.visible_message("[user] begings hitting [src].", "You begin forcing open last safety layer...")
+
+					if(do_after(user,75,target = src))
+						if(!src || !user) return
+						user.visible_message("[user] finishes hitting [src].", "You can now get inside the [src]. Use screwdriver to open control panel")
+						//anchored = 0
+						removal_stage = 5
+				return
+			/*if(0)
 				if(istype(O,/obj/item/weapon/weldingtool))
 
 					var/obj/item/weapon/weldingtool/WT = O
@@ -162,7 +241,7 @@ var/bomb_set
 						user.visible_message("[user] crowbars [src] off of the anchors. It can now be moved.", "You jam the crowbar under the nuclear device and lift it off its anchors. You can now move it!")
 						anchored = 0
 						removal_stage = 5
-				return
+				return*/
 	..()
 
 /obj/machinery/nuclearbomb/attack_paw(mob/user as mob)
@@ -181,14 +260,14 @@ var/bomb_set
 		var/dat = text("<TT><B>Nuclear Fission Explosive</B><BR>\nAuth. Disk: <A href='?src=\ref[];auth=1'>[]</A><HR>", src, (src.auth ? "++++++++++" : "----------"))
 		if (src.auth)
 			if (src.yes_code)
-				dat += text("\n<B>Status</B>: []-[]<BR>\n<B>Timer</B>: []<BR>\n<BR>\nTimer: [] <A href='?src=\ref[];timer=1'>Toggle</A><BR>\nTime: <A href='?src=\ref[];time=-10'>-</A> <A href='?src=\ref[];time=-1'>-</A> [] <A href='?src=\ref[];time=1'>+</A> <A href='?src=\ref[];time=10'>+</A><BR>\n<BR>\nSafety: [] <A href='?src=\ref[];safety=1'>Toggle</A><BR>\nAnchor: [] <A href='?src=\ref[];anchor=1'>Toggle</A><BR>\n", (src.timing ? "Func/Set" : "Functional"), (src.safety ? "Safe" : "Engaged"), src.timeleft, (src.timing ? "On" : "Off"), src, src, src, src.timeleft, src, src, (src.safety ? "On" : "Off"), src, (src.anchored ? "Engaged" : "Off"), src)
+				dat += text("\n<B>Status</B>: []-[]<BR>\n<B>Timer</B>: []<BR>\n<BR>\nTimer: [] <A href='?src=\ref[];timer=1'>Toggle</A><BR>\nTime: <A href='?src=\ref[];time=-10'>-</A> <A href='?src=\ref[];time=-1'>-</A> [] <A href='?src=\ref[];time=1'>+</A> <A href='?src=\ref[];time=10'>+</A><BR>\n<BR>\n[] Safety: <A href='?src=\ref[];safety=1'>Toggle</A><BR>\nAnchor: [] <A href='?src=\ref[];anchor=1'>Toggle</A><BR>\n", (src.timing ? "Func/Set" : "Functional"), (src.safety ? "Safe" : "Engaged"), src.timeleft, (src.timing ? "On" : "Off"), src, src, src, src.timeleft, src, src, (src.safety ? "On" : "Off"), src, (src.anchored ? "Engaged" : "Off"), src)
 			else
-				dat += text("\n<B>Status</B>: Auth. S2-[]<BR>\n<B>Timer</B>: []<BR>\n<BR>\nTimer: [] Toggle<BR>\nTime: - - [] + +<BR>\n<BR>\n[] Safety: Toggle<BR>\nAnchor: [] Toggle<BR>\n", (src.safety ? "Safe" : "Engaged"), src.timeleft, (src.timing ? "On" : "Off"), src.timeleft, (src.safety ? "On" : "Off"), (src.anchored ? "Engaged" : "Off"))
+				dat += text("\n<B>Status</B>: Auth. S2-[]<BR>\n<B>Timer</B>: []<BR>\n<BR>\nTimer: [] Toggle<BR>\nTime: - - [] + +<BR>\n<BR>\n[] Safety: Toggle<BR>\nAnchor: [] <A href='?src=\ref[];anchor=1'>Toggle</A><BR>\n", (src.safety ? "Safe" : "Engaged"), src.timeleft, (src.timing ? "On" : "Off"), src.timeleft, (src.safety ? "On" : "Off"), (src.anchored ? "Engaged" : "Off"), src)
 		else
 			if (src.timing)
-				dat += text("\n<B>Status</B>: Set-[]<BR>\n<B>Timer</B>: []<BR>\n<BR>\nTimer: [] Toggle<BR>\nTime: - - [] + +<BR>\n<BR>\nSafety: [] Toggle<BR>\nAnchor: [] Toggle<BR>\n", (src.safety ? "Safe" : "Engaged"), src.timeleft, (src.timing ? "On" : "Off"), src.timeleft, (src.safety ? "On" : "Off"), (src.anchored ? "Engaged" : "Off"))
+				dat += text("\n<B>Status</B>: Set-[]<BR>\n<B>Timer</B>: []<BR>\n<BR>\nTimer: [] Toggle<BR>\nTime: - - [] + +<BR>\n<BR>\n[] Safety: Toggle<BR>\nAnchor: [] Toggle<BR>\n", (src.safety ? "Safe" : "Engaged"), src.timeleft, (src.timing ? "On" : "Off"), src.timeleft, (src.safety ? "On" : "Off"), (src.anchored ? "Engaged" : "Off"))
 			else
-				dat += text("\n<B>Status</B>: Auth. S1-[]<BR>\n<B>Timer</B>: []<BR>\n<BR>\nTimer: [] Toggle<BR>\nTime: - - [] + +<BR>\n<BR>\nSafety: [] Toggle<BR>\nAnchor: [] Toggle<BR>\n", (src.safety ? "Safe" : "Engaged"), src.timeleft, (src.timing ? "On" : "Off"), src.timeleft, (src.safety ? "On" : "Off"), (src.anchored ? "Engaged" : "Off"))
+				dat += text("\n<B>Status</B>: Auth. S1-[]<BR>\n<B>Timer</B>: []<BR>\n<BR>\nTimer: [] Toggle<BR>\nTime: - - [] + +<BR>\n<BR>\n[] Safety: Toggle<BR>\nAnchor: [] Toggle<BR>\n", (src.safety ? "Safe" : "Engaged"), src.timeleft, (src.timing ? "On" : "Off"), src.timeleft, (src.safety ? "On" : "Off"), (src.anchored ? "Engaged" : "Off"))
 		var/message = "AUTH"
 		if (src.auth)
 			message = text("[]", src.code)
@@ -247,6 +326,9 @@ obj/machinery/nuclearbomb/proc/nukehack_win(mob/user as mob)
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))))
 		usr.set_machine(src)
 		if(href_list["act"])
+			if(!ishuman(usr))
+				usr << "Impossible."
+				return
 			var/temp_wire = href_list["wire"]
 			if(href_list["act"] == "pulse")
 				if (!istype(usr.get_active_hand(), /obj/item/device/multitool))
@@ -285,8 +367,11 @@ obj/machinery/nuclearbomb/proc/nukehack_win(mob/user as mob)
 								src.icon_state = "nuclearbomb1"
 						src.timing = 0
 						bomb_set = 0
+						if (get_security_level() == "delta")
+							set_security_level("red")
 					if(src.light_wire == temp_wire)
 						src.lighthack = !src.lighthack
+			nukehack_win(usr)
 
 		if (href_list["auth"])
 			if (src.auth)
@@ -312,14 +397,20 @@ obj/machinery/nuclearbomb/proc/nukehack_win(mob/user as mob)
 						src.yes_code = 0
 						src.code = null
 					else
-						src.code += text("[]", href_list["type"])
-						if (length(src.code) > 5)
-							src.code = "ERROR"
+						lastentered = text("[]", href_list["type"])
+						if (text2num(lastentered) == null)
+							var/turf/LOC = get_turf(usr)
+							message_admins("[key_name_admin(usr)] tried to exploit a nuclear bomb by entering non-numerical codes: <a href='?_src_=vars;Vars=\ref[src]'>[lastentered]</a> ! ([LOC ? "<a href='?_src_=holder;adminplayerobservecoodjump=1;X=[LOC.x];Y=[LOC.y];Z=[LOC.z]'>JMP</a>" : "null"])", 0)
+							log_admin("EXPLOIT : [key_name(usr)] tried to exploit a nuclear bomb by entering non-numerical codes: [lastentered] !")
+						else
+							src.code += lastentered
+							if (length(src.code) > 5)
+								src.code = "ERROR"
 			if (src.yes_code)
 				if (href_list["time"])
 					var/time = text2num(href_list["time"])
 					src.timeleft += time
-					src.timeleft = min(max(round(src.timeleft), 60), 600)
+					src.timeleft = min(max(round(src.timeleft), 180), 600)
 				if (href_list["timer"])
 					if (src.timing == -1.0)
 						return
@@ -331,6 +422,7 @@ obj/machinery/nuclearbomb/proc/nukehack_win(mob/user as mob)
 						if(!src.lighthack)
 							src.icon_state = "nuclearbomb2"
 						if(!src.safety)
+							set_security_level("delta")
 							bomb_set = 1//There can still be issues with this reseting when there are multiple bombs. Not a big deal tho for Nuke/N
 						else
 							bomb_set = 0
@@ -343,18 +435,18 @@ obj/machinery/nuclearbomb/proc/nukehack_win(mob/user as mob)
 					if(safety)
 						src.timing = 0
 						bomb_set = 0
-				if (href_list["anchor"])
+			if (href_list["anchor"])
 
-					if(removal_stage == 5)
-						src.anchored = 0
-						visible_message("\red \The [src] makes a highly unpleasant crunching noise. It looks like the anchoring bolts have been cut.")
-						return
+				//if(removal_stage == 5)
+				//	src.anchored = 0
+				//	visible_message("\red \The [src] makes a highly unpleasant crunching noise. It looks like the anchoring bolts have been cut.")
+				//	return
 
-					src.anchored = !( src.anchored )
-					if(src.anchored)
-						visible_message("\red With a steely snap, bolts slide out of [src] and anchor it to the flooring.")
-					else
-						visible_message("\red The anchoring bolts slide back into the depths of [src].")
+				src.anchored = !( src.anchored )
+				if(src.anchored)
+					visible_message("\red With a steely snap, bolts slide out of [src] and anchor it to the flooring.")
+				else
+					visible_message("\red The anchoring bolts slide back into the depths of [src].")
 
 		src.add_fingerprint(usr)
 		for(var/mob/M in viewers(1, src))
@@ -382,6 +474,7 @@ obj/machinery/nuclearbomb/proc/nukehack_win(mob/user as mob)
 	if (src.safety)
 		src.timing = 0
 		return
+	src.detonated = 1
 	src.timing = -1.0
 	src.yes_code = 0
 	src.safety = 1
@@ -399,6 +492,8 @@ obj/machinery/nuclearbomb/proc/nukehack_win(mob/user as mob)
 	if( bomb_location && (bomb_location.z == 1) )
 		if( (bomb_location.x < (128-NUKERANGE)) || (bomb_location.x > (128+NUKERANGE)) || (bomb_location.y < (128-NUKERANGE)) || (bomb_location.y > (128+NUKERANGE)) )
 			off_station = 1
+		else
+			score["nuked"]++
 	else
 		off_station = 2
 

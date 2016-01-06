@@ -45,6 +45,13 @@ var/list/whitelist = list()
 	if(!alien_whitelist)
 		return 0
 	if(M && species)
+		switch(species) //When something passes language name instead race name, we magically change variable.
+			if("Sinta'unathi")
+				species = "Unathi"
+			if("Siik'maas","Siik'tajr")
+				species = "Tajaran"
+			if("Skrellian")
+				species = "Skrell"
 		for (var/s in alien_whitelist)
 			if(findtext(s,"[M.ckey] - [species]"))
 				return 1
@@ -76,14 +83,16 @@ client/proc/get_alienwhitelist()
 	if(length(player) == 0)
 		return
 	player += " - "
-	player += input("Input alien species, e.g. Soghun, Tajaran, Skrell, Diona, Machine") as text
+	player += input("Input alien species, e.g. Unathi, Tajaran, Skrell, Diona, Machine") as text
+	var/log_text = player + ",added by [src.key]."	//log without creating new line buy \n macros
 	player += " ,added by [src.key]\n"
 	if(fexists(path))
 		text2file(player,path)
 		load_alienwhitelist()
 	else
 		src << "<font color='red'>Error: get_alienwhitelist(): File not found/Invalid path([path]).</font>"
-	message_admins("Alien whitelist: [player]", 1)
+	log_admin("[log_text]")
+	message_admins("[log_text]", 1)
 	return
 
 client/proc/get_whitelist()
@@ -116,5 +125,6 @@ client/proc/get_whitelist()
 		load_whitelist()
 	else
 		src << "<font color='red'>Error: get_whitelist(): File not found/Invalid path([path]).</font>"
+	log_admin("Whitelist: [player]")
 	message_admins("Whitelist: [player]", 1)
 	return

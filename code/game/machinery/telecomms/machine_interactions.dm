@@ -56,13 +56,13 @@
 					A.amount -= 5
 					if(A.amount <= 0)
 						user.drop_item()
-						del(A)
+						qdel(A)
 					construct_op --
 					stat &= ~BROKEN // the machine's not borked anymore!
 			if(istype(P, /obj/item/weapon/crowbar))
 				user << "You begin prying out the circuit board other components..."
 				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
-				if(do_after(user,60))
+				if(do_after(user,60,target = src))
 					user << "You finish prying out the components."
 
 					// Drop all the component stuff
@@ -90,7 +90,7 @@
 					// Create a machine frame and delete the current machine
 					var/obj/machinery/constructable_frame/machine_frame/F = new
 					F.loc = src.loc
-					del(src)
+					qdel(src)
 
 
 /obj/machinery/telecomms/attack_ai(var/mob/user as mob)

@@ -5,6 +5,7 @@
 	name = "Communications Console"
 	desc = "This can be used for various important functions. Still under developement."
 	icon_state = "comm"
+	light_color = "#0099ff"
 	req_access = list(access_heads)
 	circuit = "/obj/item/weapon/circuitboard/communications"
 	var/prints_intercept = 1
@@ -32,8 +33,6 @@
 	var/status_display_freq = "1435"
 	var/stat_msg1
 	var/stat_msg2
-
-
 
 /obj/machinery/computer/communications/process()
 	if(..())
@@ -507,6 +506,7 @@
 		emergency_shuttle.recall()
 		log_game("[key_name(user)] has recalled the shuttle.")
 		message_admins("[key_name_admin(user)] has recalled the shuttle.", 1)
+		return 1
 	return
 
 /obj/machinery/computer/communications/proc/post_status(var/command, var/data1, var/data2)
@@ -532,7 +532,7 @@
 	frequency.post_signal(src, status_signal)
 
 
-/obj/machinery/computer/communications/Del()
+/obj/machinery/computer/communications/Destroy()
 
 	for(var/obj/machinery/computer/communications/commconsole in world)
 		if(istype(commconsole.loc,/turf) && commconsole != src)

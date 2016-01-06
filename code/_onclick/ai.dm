@@ -36,6 +36,9 @@
 		return
 
 	var/list/modifiers = params2list(params)
+	if(modifiers["shift"] && modifiers["ctrl"])
+		CtrlShiftClickOn(A)
+		return
 	if(modifiers["middle"])
 		MiddleClickOn(A)
 		return
@@ -52,6 +55,11 @@
 	if(world.time <= next_move)
 		return
 	next_move = world.time + 9
+
+	if(aiCamera.in_camera_mode)
+		aiCamera.camera_mode_off()
+		aiCamera.captureimage(A, usr)
+		return
 
 	/*
 		AI restrained() currently does nothing
@@ -93,6 +101,14 @@
 	I have no idea why it was in atoms.dm instead of respective files.
 */
 
+/atom/proc/AICtrlShiftClick()
+	return
+
+/obj/machinery/door/airlock/AICtrlShiftClick()
+	if(emagged)
+		return
+	return
+
 /atom/proc/AIShiftClick()
 	return
 
@@ -128,3 +144,10 @@
 		// disable/6 is not in Topic; disable/5 disables both temporary and permenant shock
 		Topic("aiDisable=5", list("aiDisable"="5"), 1)
 	return
+
+//
+// Override AdjacentQuick for AltClicking
+//
+
+/mob/living/silicon/ai/TurfAdjacent(var/turf/T)
+	return (cameranet && cameranet.checkTurfVis(T))

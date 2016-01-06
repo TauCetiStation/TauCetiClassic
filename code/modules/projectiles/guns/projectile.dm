@@ -6,8 +6,10 @@
 	w_class = 3.0
 	m_amt = 1000
 	fire_delay = 0
+	recoil = 1
 	var/mag_type = /obj/item/ammo_box/magazine/m9mm //Removes the need for max_ammo and caliber info
 	var/obj/item/ammo_box/magazine/magazine
+	var/energy_gun = 0 //Used in examine, if 1 - no ammo count.
 
 /obj/item/weapon/gun/projectile/New()
 	..()
@@ -16,7 +18,7 @@
 	update_icon()
 	return
 
-/obj/item/weapon/gun/projectile/process_chamber(var/eject_casing = 1, var/empty_chamber = 1)
+/obj/item/weapon/gun/projectile/process_chamber(var/eject_casing = 1, var/empty_chamber = 1, var/no_casing = 0)
 //	if(chambered)
 //		return 1
 	var/obj/item/ammo_casing/AC = chambered //Find chambered round
@@ -26,8 +28,12 @@
 	if(eject_casing)
 		AC.loc = get_turf(src) //Eject casing onto ground.
 		AC.SpinAnimation(10, 1) //next gen special effects
+		spawn(3) //next gen sound effects
+			playsound(src.loc, 'sound/weapons/shell_drop.ogg', 50, 1)
 	if(empty_chamber)
 		chambered = null
+	if(no_casing)
+		qdel(AC)
 	chamber_round()
 	return
 
@@ -79,7 +85,8 @@
 
 /obj/item/weapon/gun/projectile/examine()
 	..()
-	usr << "Has [get_ammo()] round\s remaining."
+	if(!energy_gun)
+		usr << "Has [get_ammo()] round\s remaining."
 	return
 
 /obj/item/weapon/gun/projectile/proc/get_ammo(var/countchambered = 1)

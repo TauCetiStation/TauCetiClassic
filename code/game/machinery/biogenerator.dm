@@ -36,7 +36,7 @@
 		if(beaker)
 			user << "\red The biogenerator is already loaded."
 		else
-			user.before_take_item(O)
+			user.remove_from_mob(O)
 			O.loc = src
 			beaker = O
 			updateUsrDialog()
@@ -70,7 +70,7 @@
 		if(i >= 10)
 			user << "\red The biogenerator is full! Activate it."
 		else
-			user.before_take_item(O)
+			user.remove_from_mob(O)
 			O.loc = src
 			user << "\blue You put [O.name] in [src.name]"
 	update_icon()
@@ -103,6 +103,8 @@
 					dat += "<A href='?src=\ref[src];action=create;item=tbelt;cost=300'>Utility belt</A> <FONT COLOR=blue>(300)</FONT><BR>"
 					dat += "<A href='?src=\ref[src];action=create;item=satchel;cost=400'>Leather Satchel</A> <FONT COLOR=blue>(400)</FONT><BR>"
 					dat += "<A href='?src=\ref[src];action=create;item=cashbag;cost=400'>Cash Bag</A> <FONT COLOR=blue>(400)</FONT><BR>"
+					dat += "<A href='?src=\ref[src];action=create;item=jacket;cost=500'>Leather Jacket</A> <FONT COLOR=blue>(500)</FONT><BR>"
+					dat += "<A href='?src=\ref[src];action=create;item=overcoat;cost=1000'>Leather Overcoat</A> <FONT COLOR=blue>(1000)</FONT><BR>"
 					//dat += "Other<BR>"
 					//dat += "<A href='?src=\ref[src];action=create;item=monkey;cost=500'>Monkey</A> <FONT COLOR=blue>(500)</FONT><BR>"
 				else
@@ -199,6 +201,10 @@
 			new/obj/item/weapon/storage/backpack/satchel(src.loc)
 		if("cashbag")
 			new/obj/item/weapon/storage/bag/cash(src.loc)
+		if("jacket")
+			new/obj/item/clothing/suit/jacket/leather(src.loc)
+		if("overcoat")
+			new/obj/item/clothing/suit/jacket/leather/overcoat(src.loc)
 		if("monkey")
 			new/mob/living/carbon/monkey(src.loc)
 	processing = 0

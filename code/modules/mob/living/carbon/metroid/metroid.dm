@@ -17,6 +17,8 @@
 	see_in_dark = 8
 	update_slimes = 0
 
+	ventcrawler = 2
+
 	// canstun and canweaken don't affect slimes because they ignore stun and weakened variables
 	// for the sake of cleanliness, though, here they are.
 	status_flags = CANPARALYSE|CANPUSH
@@ -39,6 +41,13 @@
 	var/list/FriendsWeight = list() // A list containing values respective to Friends. This determines how many times a slime "likes" something. If the slime likes it more than 2 times, it becomes a friend
 
 	// slimes pass on genetic data, so all their offspring have the same "Friends",
+
+	var/mood = "" // To show its face
+	var/list/speech_buffer = list() // Last phrase said near it and person who said it
+	var/number = 0 // Used to understand when someone is talking to it
+	var/mob/living/Leader = null // AI variable - tells the slime to follow this person
+	var/holding_still = 0 // AI variable, cooloff-ish for how long it's going to stay in one place
+	var/target_patience = 0 // AI variable, cooloff-ish for how long it's going to follow its target
 
 	///////////TIME FOR SUBSPECIES
 
@@ -80,6 +89,19 @@
 
 /mob/living/carbon/slime/adult/New()
 	//verbs.Remove(/mob/living/carbon/slime/verb/ventcrawl)
+	..()
+
+/mob/living/carbon/slime/regenerate_icons()
+	overlays.len = 0
+	//var/icon_text = "[colour] [is_adult ? "adult" : "baby"] slime"
+	//icon_dead = "[icon_text] dead"
+	//if(stat != DEAD)
+		//icon_state = icon_text
+	if(stat != DEAD)
+		if(mood)
+			overlays += image('icons/mob/slimes.dmi', icon_state = "aslime-[mood]")
+	//else
+		//icon_state = icon_dead
 	..()
 
 /mob/living/carbon/slime/movement_delay()
@@ -221,7 +243,7 @@
 		return
 
 	else if (stat == 2 && !client)
-		del(src)
+		qdel(src)
 		return
 
 	var/b_loss = null
@@ -401,6 +423,7 @@
 			return
 
 		else
+			M.do_attack_animation(src)
 			if(prob(30))
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
@@ -661,7 +684,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 			user <<"You apply the enhancer. It now has triple the amount of uses."
 			Uses = 3
 			enhanced = 1
-			del(O)
+			qdel(O)
 
 /obj/item/slime_extract/New()
 		..()
@@ -782,14 +805,14 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 		pet.icon_dead = "[M.colour] baby slime dead"
 		pet.colour = "[M.colour]"
 		user <<"You feed the slime the potion, removing it's powers and calming it."
-		del (M)
+		qdel(M)
 		var/newname = copytext(sanitize(input(user, "Would you like to give the slime a name?", "Name your new pet", "pet slime") as null|text),1,MAX_NAME_LEN)
 
 		if (!newname)
 			newname = "pet slime"
 		pet.name = newname
 		pet.real_name = newname
-		del (src)
+		qdel(src)
 
 /obj/item/weapon/slimepotion2
 	name = "advanced docility potion"
@@ -810,14 +833,14 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 		pet.icon_dead = "[M.colour] baby slime dead"
 		pet.colour = "[M.colour]"
 		user <<"You feed the slime the potion, removing it's powers and calming it."
-		del (M)
+		qdel(M)
 		var/newname = copytext(sanitize(input(user, "Would you like to give the slime a name?", "Name your new pet", "pet slime") as null|text),1,MAX_NAME_LEN)
 
 		if (!newname)
 			newname = "pet slime"
 		pet.name = newname
 		pet.real_name = newname
-		del (src)
+		qdel(src)
 
 
 /obj/item/weapon/slimesteroid
@@ -842,7 +865,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 
 		user <<"You feed the slime the steroid. It now has triple the amount of extract."
 		M.cores = 3
-		del (src)
+		qdel(src)
 
 /obj/item/weapon/slimesteroid2
 	name = "extract enhancer"
@@ -859,27 +882,8 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	item_state = "golem"
 	item_color = "golem"
 	has_sensor = 0
-	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	canremove = 0
-
-/obj/item/clothing/suit/golem
-	name = "adamantine shell"
-	desc = "a golem's thick outter shell"
-	icon_state = "golem"
-	item_state = "golem"
-	w_class = 4//bulky item
-	gas_transfer_coefficient = 0.90
-	permeability_coefficient = 0.50
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS|HEAD
-	slowdown = 1.0
-	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
-	flags = FPRINT | TABLEPASS | ONESIZEFITSALL | STOPSPRESSUREDMAGE
-	heat_protection = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS | HEAD
-	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECTION_TEMPERATURE
-	cold_protection = UPPER_TORSO | LOWER_TORSO | LEGS | FEET | ARMS | HANDS | HEAD
-	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
-	canremove = 0
-	armor = list(melee = 80, bullet = 20, laser = 20, energy = 10, bomb = 0, bio = 0, rad = 0)
+	unacidable = 1
 
 /obj/item/clothing/shoes/golem
 	name = "golem's feet"
@@ -888,7 +892,8 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	item_state = null
 	canremove = 0
 	flags = NOSLIP
-	slowdown = SHOES_SLOWDOWN+1
+	slowdown = SHOES_SLOWDOWN+2
+	unacidable = 1
 
 
 /obj/item/clothing/mask/gas/golem
@@ -908,6 +913,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	canremove = 0
 	siemens_coefficient = 0
 	unacidable = 1
+	flags_inv = 0
 
 
 /obj/item/clothing/gloves/golem
@@ -917,9 +923,10 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	item_state = null
 	siemens_coefficient = 0
 	canremove = 0
+	unacidable = 1
 
 
-/obj/item/clothing/head/space/golem
+/obj/item/clothing/head/helmet/space/golem
 	icon_state = "golem"
 	item_state = "dermal"
 	item_color = "dermal"
@@ -927,10 +934,44 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	desc = "a golem's head"
 	canremove = 0
 	unacidable = 1
-	flags = FPRINT | TABLEPASS | STOPSPRESSUREDMAGE
+
+	body_parts_covered = HEAD|FACE|EYES
+	cold_protection = HEAD
+	min_cold_protection_temperature = SPACE_HELMET_MIN_COLD_PROTECTION_TEMPERATURE
 	heat_protection = HEAD
 	max_heat_protection_temperature = FIRE_HELMET_MAX_HEAT_PROTECTION_TEMPERATURE
-	armor = list(melee = 80, bullet = 20, laser = 20, energy = 10, bomb = 0, bio = 0, rad = 0)
+
+	flags_inv = 0
+	slowdown = 0
+	unacidable = 1
+	canremove = 0
+	siemens_coefficient = 0
+
+	armor = list(melee = 77, bullet = 66, laser = 44, energy = 44, bomb = 80, bio = 100, rad = 80)
+
+
+/obj/item/clothing/suit/space/golem
+	name = "adamantine shell"
+	desc = "a golem's thick outter shell"
+	icon_state = "golem"
+	item_state = "golem"
+	w_class = 4//bulky item
+	allowed = null
+
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
+	cold_protection = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
+	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
+	heat_protection = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
+	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECTION_TEMPERATURE
+
+	flags_inv = HIDEGLOVES | HIDESHOES | HIDEJUMPSUIT
+	slowdown = 0
+	unacidable = 1
+	canremove = 0
+	siemens_coefficient = 0
+	can_breach = 0
+
+	armor = list(melee = 77, bullet = 66, laser = 44, energy = 44, bomb = 80, bio = 100, rad = 80)
 
 /obj/effect/golemrune
 	anchored = 1
@@ -971,15 +1012,23 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 		G.dna.mutantrace = "adamantine"
 		G.real_name = text("Adamantine Golem ([rand(1, 1000)])")
 		G.equip_to_slot_or_del(new /obj/item/clothing/under/golem(G), slot_w_uniform)
-		G.equip_to_slot_or_del(new /obj/item/clothing/suit/golem(G), slot_wear_suit)
+		G.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/golem(G), slot_head)
+		G.equip_to_slot_or_del(new /obj/item/clothing/suit/space/golem(G), slot_wear_suit)
 		G.equip_to_slot_or_del(new /obj/item/clothing/shoes/golem(G), slot_shoes)
 		G.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/golem(G), slot_wear_mask)
 		G.equip_to_slot_or_del(new /obj/item/clothing/gloves/golem(G), slot_gloves)
-		//G.equip_to_slot_or_del(new /obj/item/clothing/head/space/golem(G), slot_head)
+		G.status_flags &= ~(CANSTUN|CANWEAKEN|CANPARALYSE)
 		G.loc = src.loc
 		G.key = ghost.key
+
+		G.my_master = user
+		G.update_golem_hud_icons()
+		if(istype(user, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = user
+			H.my_golems += G
+			H.update_golem_hud_icons()
 		G << "You are an adamantine golem. You move slowly, but are highly resistant to heat and cold as well as blunt trauma. You are unable to wear clothes, but can still use most tools. Serve [user], and assist them in completing their goals at any cost."
-		del (src)
+		qdel(src)
 
 
 	proc/announce_to_ghosts()
@@ -987,7 +1036,20 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 			if(G.client)
 				var/area/A = get_area(src)
 				if(A)
-					G << "Golem rune created in [A.name]."
+					G << "\red <FONT size = 3><B>Golem rune created in [A.name].</B></FONT>"
+
+/mob/living/carbon/human/proc/update_golem_hud_icons()
+	if(client)
+		if(dna && (dna.mutantrace == "adamantine"))
+			if(my_master)
+				var/I = image('tauceti/icons/mob/hud_mob.dmi', loc = my_master, icon_state = "agolem_master")
+				client.images += I
+		else
+			if(my_golems)
+				for(var/mob/living/carbon/human/G in my_golems)
+					var/I = image('tauceti/icons/mob/hud_mob.dmi', loc = G, icon_state = "agolem_master")
+					client.images += I
+
 //////////////////////////////Old shit from metroids/RoRos, and the old cores, would not take much work to re-add them////////////////////////
 
 /*
@@ -1016,7 +1078,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 		POWERFLAG = rand(1,10)
 		Uses = rand(7, 25)
 		//flags |= NOREACT
-/*
+
 		spawn()
 			Life()
 
@@ -1060,7 +1122,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	spawn(rand(50,100))
 		src.visible_message("\blue The [name] bursts open!")
 		new/mob/living/carbon/slime(T)
-		del(src)
+		qdel(src)
 
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/slime/process()
@@ -1074,4 +1136,3 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 		return
 	else
 		..()
-*/

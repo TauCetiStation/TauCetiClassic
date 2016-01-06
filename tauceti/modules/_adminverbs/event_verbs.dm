@@ -1,7 +1,7 @@
 var/list/admin_verbs_event = list(
 	/client/proc/event_map_loader,
 	/client/proc/gateway_fix,
-	/client/proc/Noir_anomaly,
+	//client/proc/Noir_anomaly,
 	/client/proc/centcom_barriers_toggle
 	)
 
@@ -59,7 +59,7 @@ var/list/admin_verbs_event = list(
 //////////////////////////////
 // Noir event
 //////////////////////////////
-
+/*
 /client/proc/Noir_anomaly()
 	set category = "Event"
 	set name = "Noir event(in dev!)"
@@ -79,7 +79,7 @@ var/list/admin_verbs_event = list(
 
 	log_admin("[key_name(src)] started noir event!", 1)
 	message_admins("\blue [key_name_admin(src)] started noir event!", 1)
-
+*/
 //////////////////////////////
 // Gateway
 //////////////////////////////
@@ -124,7 +124,7 @@ var/centcom_barriers_stat = 1
 	var/active = 1
 	var/lchannel = 999
 
-	HasEntered(M as mob)
+	Crossed(M as mob)
 		if(!active) return
 		if(istype(M, /mob/living/carbon))
 			M << sound(melody,0,1,lchannel,20)

@@ -21,6 +21,7 @@
 	min_oxy = 16 //Require atleast 16kPA oxygen
 	minbodytemp = 223		//Below -50 Degrees Celcius
 	maxbodytemp = 323	//Above 50 Degrees Celcius
+	holder_type = /obj/item/weapon/holder/cat
 
 /mob/living/simple_animal/cat/Life()
 	//MICE!
@@ -60,9 +61,32 @@
 				stop_automated_movement = 1
 				walk_to(src,movement_target,0,3)
 
+
+/mob/living/simple_animal/cat/MouseDrop(atom/over_object)
+
+	var/mob/living/carbon/H = over_object
+	if(!istype(H) || !Adjacent(H)) return ..()
+
+	//This REALLY needs to be moved to a general mob proc somewhere.
+	if(H.a_intent == "help")
+		get_scooped(H)
+		return
+	else
+		return ..()
+
 //RUNTIME IS ALIVE! SQUEEEEEEEE~
 /mob/living/simple_animal/cat/Runtime
 	name = "Runtime"
 	desc = "Its fur has the look and feel of velvet, and its tail quivers occasionally."
 
-
+/mob/living/simple_animal/cat/Syndi
+	name = "SyndiCat"
+	desc = "It's a SyndiCat droid."
+	icon_state = "Syndicat"
+	icon_living = "Syndicat"
+	icon_dead = "Syndicat_dead"
+	//gender = FEMALE
+	flags = IS_SYNTHETIC|NO_BREATHE
+	faction = list("syndicate")
+	//var/turns_since_scan = 0
+	//var/mob/living/simple_animal/mouse/movement_target

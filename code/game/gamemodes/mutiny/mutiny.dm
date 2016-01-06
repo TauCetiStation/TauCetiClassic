@@ -17,6 +17,11 @@ datum/game_mode/mutiny
 	name = "mutiny"
 	config_tag = "mutiny"
 	required_players = 7
+	recommended_enemies = 2
+	required_players_secret = 10
+
+	votable = 0
+
 	ert_disabled = 1
 
 	uplink_welcome = "Mutineers Uplink Console:"
@@ -103,7 +108,7 @@ datum/game_mode/mutiny
 		if (!pda)
 			return 0
 
-		if (!pda.silent)
+		if (!pda.message_silent)
 			playsound(pda.loc, 'sound/machines/twobeep.ogg', 50, 1)
 			for (var/mob/O in hearers(3, pda.loc))
 				O.show_message(text("\icon[pda] *[pda.ttone]*"))
@@ -188,7 +193,7 @@ datum/game_mode/mutiny
 	proc/replace_nuke_with_ead()
 		for(var/obj/machinery/nuclearbomb/N in world)
 			ead = new(N.loc, src)
-			del(N)
+			qdel(N)
 
 	proc/unbolt_vault_door()
 		var/obj/machinery/door/airlock/vault = locate(/obj/machinery/door/airlock/vault)
@@ -245,11 +250,11 @@ datum/game_mode/mutiny
 
 		for(var/image/I in head_loyalist.current.client.images)
 			if(I.loc == M.current && (I.icon_state == "loyalist" || I.icon_state == "mutineer"))
-				del(I)
+				qdel(I)
 
 		for(var/image/I in head_mutineer.current.client.images)
 			if(I.loc == M.current && (I.icon_state == "loyalist" || I.icon_state == "mutineer"))
-				del(I)
+				qdel(I)
 
 		if(M in loyalists)
 			var/I = image('icons/mob/mob.dmi', loc=M.current, icon_state = "loyalist")

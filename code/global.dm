@@ -12,6 +12,8 @@ var/global/list/machines = list()
 var/global/list/processing_objects = list()
 var/global/list/active_diseases = list()
 var/global/list/events = list()
+var/global/list/med_hud_users = list() //list of all entities using a medical HUD.
+var/global/list/sec_hud_users = list() //list of all entities using a security HUD.
 		//items that ask to be called every cycle
 
 var/global/defer_powernet_rebuild = 0		// true if net rebuild will be called manually after an event
@@ -88,10 +90,12 @@ var/datum/air_tunnel/air_tunnel1/SS13_airtunnel = null
 var/going = 1.0
 var/master_mode = "extended"//"extended"
 var/secret_force_mode = "secret" // if this is anything but "secret", the secret rotation will forceably choose this mode
+var/master_last_mode = null // this variable contain the last played mode from previous round
 
 var/datum/engine_eject/engine_eject_control = null
 var/host = null
 var/aliens_allowed = 0
+var/visual_counter = 1
 var/ooc_allowed = 1
 var/looc_allowed = 1
 var/dsay_allowed = 1
@@ -260,3 +264,60 @@ var/DBConnection/dbcon_old = new()	//Tgstation database (Old database) - See the
 
 //added for Xenoarchaeology, might be useful for other stuff
 var/global/list/alphabet_uppercase = list("A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z")
+
+//var/red_alert_code = 0 //Used in new code red and emergency shuttle call lighting
+//var/red_alert_evac = 0
+
+var/TAB = "&nbsp;&nbsp;&nbsp;&nbsp;"
+
+var/list/ac_nameholder = list() //Список ckey которые использовали кнопку AdminCall. Используется для блокировки использования этой кнопки.
+
+//Goonstyle scoreboard
+// NOW AN ASSOCIATIVE LIST
+// NO FUCKING EXCUSE FOR THE ATROCITY THAT WAS
+var/list/score=list(
+	"crewscore"      = 0, // this is the overall var/score for the whole round
+	"stuffshipped"   = 0, // how many useful items have cargo shipped out?
+	"stuffharvested" = 0, // how many harvests have hydroponics done?
+	"oremined"       = 0, // obvious
+	"researchdone"   = 0,
+	"eventsendured"  = 0, // how many random events did the station survive?
+	"powerloss"      = 0, // how many APCs have poor charge?
+	"escapees"       = 0, // how many people got out alive?
+	"deadcrew"       = 0, // dead bodies on the station, oh no
+	"mess"           = 0, // how much poo, puke, gibs, etc went uncleaned
+	"meals"          = 0,
+	"disease"        = 0, // how many rampant, uncured diseases are on board the station
+	"deadcommand"    = 0, // used during rev, how many command staff perished
+	"arrested"       = 0, // how many traitors/revs/whatever are alive in the brig
+	"traitorswon"    = 0, // how many traitors were successful?
+	"roleswon"        = 0, // how many roles were successful?
+	"allarrested"    = 0, // did the crew catch all the enemies alive?
+	"opkilled"       = 0, // used during nuke mode, how many operatives died?
+	"disc"           = 0, // is the disc safe and secure?
+	"nuked"          = 0, // was the station blown into little bits?
+
+	// these ones are mainly for the stat panel
+	"powerbonus"    = 0, // if all APCs on the station are running optimally, big bonus
+	"messbonus"     = 0, // if there are no messes on the station anywhere, huge bonus
+	"deadaipenalty" = 0, // is the AI dead? if so, big penalty
+	"foodeaten"     = 0, // nom nom nom
+	"clownabuse"    = 0, // how many times a clown was punched, struck or otherwise maligned
+	"richestname"   = null, // this is all stuff to show who was the richest alive on the shuttle
+	"richestjob"    = null,  // kinda pointless if you dont have a money system i guess
+	"richestcash"   = 0,
+	"richestkey"    = null,
+	"dmgestname"    = null, // who had the most damage on the shuttle (but was still alive)
+	"dmgestjob"     = null,
+	"dmgestdamage"  = 0,
+	"dmgestkey"     = null
+)
+
+var/global/list/achievements = list()
+
+// Announcer intercom, because too much stuff creates an intercom for one message then hard del()s it.
+var/global/obj/item/device/radio/intercom/global_announcer = new(null)
+
+// Unsorted stuff
+var/global_message_cooldown = 1
+var/list/stealth_keys = list()

@@ -27,12 +27,12 @@
 	if (!message)
 		return
 
-	if (src.client)
+	/*if (src.client)
 		if(client.prefs.muted & MUTE_IC)
 			src << "You cannot send IC messages (muted)."
 			return
 		if (src.client.handle_spam_prevention(message,MUTE_IC))
-			return
+			return*/
 
 	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 
@@ -72,6 +72,11 @@
 	if(message_mode && bot_type == IS_ROBOT && message_mode != "binary" && !R.is_component_functioning("radio"))
 		src << "\red Your radio isn't functional at this time."
 		return
+	if(bot_type == IS_ROBOT && message_mode != "binary")
+		var/datum/robot_component/radio/RA = R.get_component("radio")
+		if (!R.cell_use_power(RA.active_usage))
+			usr << "\red Not enough power to transmit message."
+			return
 
 	//parse language key and consume it
 	var/datum/language/speaking = parse_language(message)
@@ -83,14 +88,14 @@
 		if("department")
 			switch(bot_type)
 				if(IS_AI)
-					AI.holopad_talk(message)
+					return AI.holopad_talk(message)
 				if(IS_ROBOT)
 					log_say("[key_name(src)] : [message]")
 					R.radio.talk_into(src,message,message_mode,verb,speaking)
 				if(IS_PAI)
 					log_say("[key_name(src)] : [message]")
 					P.radio.talk_into(src,message,message_mode,verb,speaking)
-			return
+			return 1
 
 		if("binary")
 			switch(bot_type)
@@ -98,37 +103,50 @@
 					if(!R.is_component_functioning("comms"))
 						src << "\red Your binary communications component isn't functional."
 						return
+					var/datum/robot_component/binary_communication/B = R.get_component("comms")
+					if(!R.cell_use_power(B.active_usage))
+						src << "\red Not enough power to transmit message."
+						return
 				if(IS_PAI)
 					src << "You do not appear to have that function"
 					return
 
 			robot_talk(message)
-			return
+			return 1
 		if("general")
 			switch(bot_type)
 				if(IS_AI)
-					src << "Yeah, not yet, sorry"
+					if (AI.aiRadio.disabledAi)
+						src << "\red System Error - Transceiver Disabled"
+						return
+					else
+						log_say("[key_name(src)] : [message]")
+						AI.aiRadio.talk_into(src,message,null,verb,speaking)
 				if(IS_ROBOT)
 					log_say("[key_name(src)] : [message]")
 					R.radio.talk_into(src,message,null,verb,speaking)
 				if(IS_PAI)
 					log_say("[key_name(src)] : [message]")
 					P.radio.talk_into(src,message,null,verb,speaking)
-			return
+			return 1
 
 		else
 			if(message_mode && message_mode in radiochannels)
 				switch(bot_type)
 					if(IS_AI)
-						src << "You don't have this function yet, I'm working on it"
-						return
+						if (AI.aiRadio.disabledAi)
+							src << "\red System Error - Transceiver Disabled"
+							return
+						else
+							log_say("[key_name(src)] : [message]")
+							AI.aiRadio.talk_into(src,message,message_mode,verb,speaking)
 					if(IS_ROBOT)
 						log_say("[key_name(src)] : [message]")
 						R.radio.talk_into(src,message,message_mode,verb,speaking)
 					if(IS_PAI)
 						log_say("[key_name(src)] : [message]")
 						P.radio.talk_into(src,message,message_mode,verb,speaking)
-				return
+				return 1
 
 	return ..(html_decode(message),speaking,verb)
 
@@ -163,7 +181,8 @@
 		This is another way of saying that we won't bother dealing with them.*/
 	else
 		src << "No holopad connected."
-	return
+		return
+	return 1
 
 /mob/living/proc/robot_talk(var/message)
 
@@ -185,6 +204,12 @@
 				var/renderedAI = "<i><span class='game say'>Robotic Talk, <a href='byond://?src=\ref[S];track2=\ref[S];track=\ref[src];trackname=[html_encode(src.name)]'><span class='name'>[name]</span></a> <span class='message'>[verb], \"[message]\"</span></span></i>"
 				S.show_message(renderedAI, 2)
 			else
+				var/mob/living/silicon/robot/borg = S
+				//if(istype(borg) && borg.is_component_functioning("comms"))
+				//	var/datum/robot_component/RC = borg.get_component("comms")
+				//	if(!borg.use_power(RC.active_usage))
+				if(!istype(borg) || !borg.is_component_functioning("comms"))
+					continue // No power.
 				S.show_message(rendered, 2)
 
 

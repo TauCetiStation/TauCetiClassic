@@ -105,7 +105,7 @@ mob/living/parasite/meme/death()
 	if(host) src.loc = host.loc
 	src.stat = 2
 	..()
-	del src
+	qdel(src)
 
 // When a meme speaks, it speaks through its host
 mob/living/parasite/meme/say(message as text)
@@ -218,15 +218,16 @@ mob/living/parasite/meme/verb/Thought()
 	var/speaker = sanitize(copytext(input("Select the voice in which you would like to make yourself heard.", "Voice") as null|text, 1, MAX_NAME_LEN))
 	if(!speaker) return
 
-	var/message = sanitize(copytext(input("What would you like to say?", "Message") as null, 1, MAX_MESSAGE_LEN))
+	var/message = sanitize(copytext(input("What would you like to say?", "Message") as null|text, 1, MAX_MESSAGE_LEN))
 	if(!message) return
 
 	// Use the points at the end rather than the beginning, because the user might cancel
 	if(!use_points(50)) return
 
-	message = say_quote(message)
-	var/rendered = "<span class='game say'><span class='name'>[speaker]</span> <span class='message'>[message]</span></span>"
-	target.show_message(rendered)
+	//message = say_quote(message)
+	var/rendered = "<span class='game say'><span class='name'>[speaker]</span> <span class='message'><i>[sanitize_plus_chat(message)]</i></span></span>"
+	//target.show_message(rendered)
+	target << rendered
 
 	usr << "<i>You make [target] hear:</i> [rendered]"
 
@@ -306,7 +307,7 @@ mob/living/parasite/meme/verb/Agony()
 
 		usr << "<b>You send a jolt of agonizing pain through [host], they should be unable to concentrate on anything else for half a minute.</b>"
 
-		host.emote("scream")
+		host.emote("scream",,, 1)
 
 		for(var/i=0, i<10, i++)
 			host.stuttering = 2
@@ -314,7 +315,7 @@ mob/living/parasite/meme/verb/Agony()
 			if(prob(80)) host.flash_weak_pain()
 			if(prob(10)) host.paralysis = max(host.paralysis, 2)
 			if(prob(15)) host.emote("twitch")
-			else if(prob(15)) host.emote("scream")
+			else if(prob(15)) host.emote("scream",,, 1)
 			else if(prob(10)) host.emote("collapse")
 
 			if(i == 10)
@@ -554,7 +555,7 @@ mob/living/parasite/meme/verb/Possession()
 		host.update_body()
 		src << "\red You lose control.."
 
-		del dummy
+		qdel(dummy)
 
 // Enter dormant mode, increases meme point gain
 mob/living/parasite/meme/verb/Dormant()
