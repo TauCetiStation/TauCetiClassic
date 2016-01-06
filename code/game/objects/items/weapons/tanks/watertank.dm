@@ -130,10 +130,11 @@
 		loc = tank
 	return
 
+// Here is some magic. Problems with drop, no problems with throw. Too wierd for me - Smalltasty
 /obj/item/weapon/reagent_containers/spray/mister/dropped(mob/user)
 	user << "<span class='notice'>The mister snaps back onto the watertank.</span>"
 	tank.on = 0
-	loc = tank
+	spawn(1) loc = tank
 
 
 /obj/item/weapon/reagent_containers/spray/mister/attack_self()
@@ -147,7 +148,6 @@
 	else
 		return 1
 
-// Here is some magic. Problems with drop, no problems with throw. Too wierd for me - Smalltasty
 /obj/item/weapon/reagent_containers/spray/mister/afterattack(obj/target, mob/user, proximity)
 	if(target.loc == loc || target == tank) //Safety check so you don't fill your mister with mutagen or something and then blast yourself in the face with it putting it away
 		return
