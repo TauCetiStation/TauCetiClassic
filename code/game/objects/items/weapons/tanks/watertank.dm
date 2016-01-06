@@ -147,10 +147,6 @@
 	else
 		return 1
 
-/obj/item/weapon/reagent_containers/spray/mister/Move()
-	..()
-	if(loc != tank.loc)
-		loc = tank.loc
 // Here is some magic. Problems with drop, no problems with throw. Too wierd for me - Smalltasty
 /obj/item/weapon/reagent_containers/spray/mister/afterattack(obj/target, mob/user, proximity)
 	if(target.loc == loc || target == tank) //Safety check so you don't fill your mister with mutagen or something and then blast yourself in the face with it putting it away
