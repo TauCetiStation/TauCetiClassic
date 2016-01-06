@@ -17,6 +17,8 @@
 	var/last_use = 1.0
 	var/safety = 1
 	var/sprite_name = "fire_extinguisher"
+	var/spray_amount = 1	//units of liquid per particle
+	var/spray_range = 4
 
 /obj/item/weapon/extinguisher/mini
 	name = "fire extinguisher"
@@ -49,22 +51,22 @@
 	safety = !safety
 	src.icon_state = "[sprite_name][!safety]"
 	src.desc = "The safety is [safety ? "on" : "off"]."
-	user << "The safety is [safety ? "on" : "off"]."
+	user << "<span class='notice'>The safety is [safety ? "on" : "off"].</span>"
 	return
 
 /obj/item/weapon/extinguisher/afterattack(atom/target, mob/user , flag)
 	//TODO; Add support for reagents in water.
 
 	if( istype(target, /obj/structure/reagent_dispensers/watertank) && get_dist(src,target) <= 1)
-		var/obj/o = target
-		o.reagents.trans_to(src, 50)
-		user << "\blue \The [src] is now refilled"
+		var/obj/O = target
+		O.reagents.trans_to(src, 50)
+		user << "<span class='notice'>[src] is now refilled.</span>"
 		playsound(src.loc, 'sound/effects/refill.ogg', 50, 1, -6)
 		return
 
 	if (!safety)
 		if (src.reagents.total_volume < 1)
-			usr << "\red \The [src] is empty."
+			usr << "<span class='rose'>[src] is empty.</span>"
 			return
 
 		if (world.time < src.last_use + 20)
@@ -112,29 +114,32 @@
 
 		var/list/the_targets = list(T,T1,T2)
 
-		for(var/a=0, a<5, a++)
+		for(var/a in 0 to spray_range)
 			spawn(0)
-				var/obj/effect/effect/water/W = PoolOrNew(/obj/effect/effect/water, get_turf(src))
+				var/obj/effect/effect/water/W = new /obj/effect/effect/water( get_turf(src) )
 				var/turf/my_target = pick(the_targets)
-				var/datum/reagents/R = new/datum/reagents(5)
+				var/datum/reagents/R = new/datum/reagents(spray_amount)
 				if(!W) return
 				W.reagents = R
 				R.my_atom = W
 				if(!W || !src) return
-				src.reagents.trans_to(W,1)
-				for(var/b=0, b<5, b++)
+				src.reagents.trans_to(W, spray_amount)
+
+				for(var/b in 0 to spray_range)
 					step_towards(W,my_target)
 					if(!W) return
+					if(!W.reagents) break
 					W.reagents.reaction(get_turf(W))
 					for(var/atom/atm in get_turf(W))
 						if(!W) return
+						if(!W.reagents) break
 						W.reagents.reaction(atm)
 						if(isliving(atm)) //For extinguishing mobs on fire
 							var/mob/living/M = atm
 							M.ExtinguishMob()
 					if(W.loc == my_target) break
 					sleep(2)
-				W.delete()
+				qdel(W)
 
 		if((istype(usr.loc, /turf/space)) || (usr.lastarea.has_gravity == 0))
 			user.inertia_dir = get_dir(target, user)
