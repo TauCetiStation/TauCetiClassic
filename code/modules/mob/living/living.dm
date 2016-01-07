@@ -479,7 +479,8 @@
 				if(istype(A,/mob/living/simple_animal/borer) || istype(A,/obj/item/weapon/holder))
 					return
 
-		M.status_flags &= ~PASSEMOTES
+		if(ismob(M))
+			M.status_flags &= ~PASSEMOTES
 		return
 
 	//Resisting control by an alien mind.

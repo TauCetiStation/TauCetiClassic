@@ -49,8 +49,8 @@
 	attack_verb = list("stabbed")
 
 	suicide_act(mob/user)
-		viewers(user) << pick("\red <b>[user] is stabbing the [src.name] into \his temple! It looks like \he's trying to commit suicide.</b>", \
-							"\red <b>[user] is stabbing the [src.name] into \his heart! It looks like \he's trying to commit suicide.</b>")
+		viewers(user) << pick("<span class='danger'>[user] is stabbing the [src.name] into \his temple! It looks like \he's trying to commit suicide.</span>", \
+							"<span class='danger'>[user] is stabbing the [src.name] into \his heart! It looks like \he's trying to commit suicide.</span>")
 		return(BRUTELOSS)
 
 /obj/item/weapon/screwdriver/New()
@@ -117,7 +117,7 @@
 /obj/item/weapon/wirecutters/attack(mob/living/carbon/C as mob, mob/user as mob)
 	if((C.handcuffed) && (istype(C.handcuffed, /obj/item/weapon/handcuffs/cable)))
 		usr.visible_message("\The [usr] cuts \the [C]'s restraints with \the [src]!",\
-		"You cut \the [C]'s restraints with \the [src]!",\
+		"<span class='notice'>You cut \the [C]'s restraints with \the [src]!</span>",\
 		"You hear cable being cut.")
 		C.handcuffed = null
 		C.update_inv_handcuffed()
@@ -173,13 +173,13 @@
 /obj/item/weapon/weldingtool/attackby(obj/item/W as obj, mob/user as mob)
 	if(istype(W,/obj/item/weapon/screwdriver))
 		if(welding)
-			user << "\red Stop welding first!"
+			user << "<span class='rose'>Stop welding first!</span>"
 			return
 		status = !status
 		if(status)
-			user << "\blue You resecure the welder."
+			user << "<span class='notice'>You resecure the welder.</span>"
 		else
-			user << "\blue The welder can now be attached and modified."
+			user << "<span class='info'>The welder can now be attached and modified.</span>"
 		src.add_fingerprint(user)
 		return
 
@@ -253,13 +253,13 @@
 	if(!proximity) return
 	if (istype(O, /obj/structure/reagent_dispensers/fueltank) && get_dist(src,O) <= 1 && !src.welding)
 		O.reagents.trans_to(src, max_fuel)
-		user << "\blue Welder refueled"
+		user << "<span class='notice'>Welder refueled"
 		playsound(src.loc, 'sound/effects/refill.ogg', 50, 1, -6)
 		return
 	else if (istype(O, /obj/structure/reagent_dispensers/fueltank) && get_dist(src,O) <= 1 && src.welding)
 		message_admins("[key_name_admin(user)] triggered a fueltank explosion.")
 		log_game("[key_name(user)] triggered a fueltank explosion.")
-		user << "\red That was stupid of you."
+		user << "<span class='rose'>That was stupid of you.</span>"
 		var/obj/structure/reagent_dispensers/fueltank/tank = O
 		tank.explode()
 		return
@@ -304,7 +304,7 @@
 		return 1
 	else
 		if(M)
-			M << "\blue You need more welding fuel to complete this task."
+			M << "<span class='notice'>You need more welding fuel to complete this task.</span>"
 		return 0
 
 //Returns whether or not the welding tool is currently on.
@@ -317,18 +317,18 @@
 	//If we're turning it on
 	if(temp_welding > 0)
 		if (remove_fuel(1))
-			usr << "\blue The [src] switches on."
+			usr << "<span class='info'>The [src] switches on.</span>"
 			src.force = 15
 			src.damtype = "fire"
 			src.icon_state = initial(src.icon_state) + "1"
 			processing_objects.Add(src)
 		else
-			usr << "\blue Need more fuel!"
+			usr << "<span class='info'>Need more fuel!</span>"
 			src.welding = 0
 			return
 	//Otherwise
 	else
-		usr << "\blue The [src] switches off."
+		usr << "<span class='info'>The [src] switches off.</span>"
 		src.force = 3
 		src.damtype = "brute"
 		src.icon_state = initial(src.icon_state)
@@ -345,23 +345,24 @@
 //Toggles the welder off and on
 /obj/item/weapon/weldingtool/proc/toggle(var/message = 0)
 	if(!status)	return
+	if(!usr) return
 	src.welding = !( src.welding )
 	if (src.welding)
 		if (remove_fuel(1))
-			usr << "\blue You switch the [src] on."
+			usr << "<span class='notice'>You switch the [src] on.</span>"
 			src.force = 15
 			src.damtype = "fire"
 			src.icon_state = initial(src.icon_state) + "1"
 			processing_objects.Add(src)
 		else
-			usr << "\blue Need more fuel!"
+			usr << "<span class='info'>Need more fuel!</span>"
 			src.welding = 0
 			return
 	else
 		if(!message)
-			usr << "\blue You switch the [src] off."
+			usr << "<span class='notice'>You switch the [src] off.</span>"
 		else
-			usr << "\blue The [src] shuts off!"
+			usr << "<span class='info'>The [src] shuts off!</span>"
 		src.force = 3
 		src.damtype = "brute"
 		src.icon_state = initial(src.icon_state)
@@ -384,29 +385,29 @@
 			return
 		switch(safety)
 			if(1)
-				usr << "\red Your eyes sting a little."
+				usr << "<span class='warning'>Your eyes sting a little.</span>"
 				E.damage += rand(1, 2)
 				if(E.damage > 12)
 					user.eye_blurry += rand(3,6)
 			if(0)
-				usr << "\red Your eyes burn."
+				usr << "<span class='warning'>Your eyes burn.</span>"
 				E.damage += rand(2, 4)
 				if(E.damage > 10)
 					E.damage += rand(4,10)
 			if(-1)
-				usr << "\red Your thermals intensify the welder's glow. Your eyes itch and burn severely."
+				usr << "<span class='danger'>Your thermals intensify the welder's glow. Your eyes itch and burn severely.</span>"
 				user.eye_blurry += rand(12,20)
 				E.damage += rand(12, 16)
 		if(safety<2)
 
 			if(E.damage > 10)
-				user << "\red Your eyes are really starting to hurt. This can't be good for you!"
+				user << "<span class='warning'>Your eyes are really starting to hurt. This can't be good for you!</span>"
 
 			if (E.damage >= E.min_broken_damage)
-				user << "\red You go blind!"
+				user << "<span class='danger'>You go blind!</span>"
 				user.sdisabilities |= BLIND
 			else if (E.damage >= E.min_bruised_damage)
-				user << "\red You go blind!"
+				user << "<span class='danger'>You go blind!</span>"
 				user.eye_blind = 5
 				user.eye_blurry = 5
 				user.disabilities |= NEARSIGHTED
@@ -491,15 +492,15 @@
 			var/mob/living/carbon/human/H = M
 			if(H.species.flags & IS_SYNTHETIC)
 				if(M == user)
-					user << "\red You can't repair damage to your own body - it's against OH&S."
+					user << "<span class='rose'>You can't repair damage to your own body - it's against OH&S.</span>"
 					return
 
 		if(S.brute_dam)
 			S.heal_damage(15,0,0,1)
-			user.visible_message("\red \The [user] patches some dents on \the [M]'s [S.display_name] with \the [src].")
+			user.visible_message("<span class='rose'>\The [user] patches some dents on \the [M]'s [S.display_name] with \the [src].</span>")
 			return
 		else
-			user << "Nothing to fix!"
+			user << "<span class='info'>Nothing to fix!</span>"
 
 	else
 		return ..()
