@@ -90,12 +90,12 @@ var/global/pipe_processing_killed = 0
 
 
 /datum/controller/game_controller/proc/setup_objects()
-	world << "\red \b Initializing objects"
+	world << "\red \b Initializing objects."
 	sleep(-1)
 	for(var/atom/movable/object in world)
 		object.initialize()
 
-	world << "\red \b Initializing pipe networks"
+	world << "\red \b Initializing pipe networks."
 	sleep(-1)
 	for(var/obj/machinery/atmospherics/machine in machines)
 		machine.build_network()
@@ -286,7 +286,7 @@ var/global/pipe_processing_killed = 0
 						if(M.use_power)
 							M.auto_use_power()
 
-		if(A.apc.len && A.master == A)
+		if(A.apc && A.master == A)
 			i++
 			continue
 

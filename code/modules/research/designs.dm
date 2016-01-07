@@ -1991,3 +1991,44 @@ datum/design/spraycan
 	build_type = AUTOLATHE
 	materials = list("$metal" = 100, "$glass" = 100)
 	build_path = "/obj/item/toy/crayon/spraycan"
+
+/datum/design/welding_mask
+	name = "Welding Gas Mask"
+	desc = "A gas mask with built in welding goggles and face shield. Looks like a skull, clearly designed by a nerd."
+	id = "weldingmask"
+	req_tech = list("materials" = 2, "engineering" = 2)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 4000, "$glass" = 1000)
+	build_path = /obj/item/clothing/mask/gas/welding
+
+/////////////////////////////////////////
+////////////Janitor Designs//////////////
+/////////////////////////////////////////
+
+datum/design/advmop
+	name = "Advanced Mop"
+	desc = "An upgraded mop with a large internal capacity for holding water or other cleaning chemicals."
+	id = "advmop"
+	req_tech = list("materials" = 4, "engineering" = 3)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 2500, "$glass" = 200)
+	build_path = /obj/item/weapon/mop/advanced
+
+datum/design/blutrash
+	name = "Trashbag of Holding"
+	desc = "An advanced trashbag with bluespace properties; capable of holding a plethora of garbage."
+	id = "blutrash"
+	req_tech = list("materials" = 5, "bluespace" = 3)
+	build_type = PROTOLATHE
+	materials = list("$gold" = 1500, "$uranium" = 250, "$phoron" = 1500)
+	build_path = /obj/item/weapon/storage/bag/trash/bluespace
+
+datum/design/holosign
+	name = "Holographic Sign Projector"
+	desc = "A holograpic projector used to project various warning signs."
+	id = "holosign"
+	req_tech = list("magnets" = 3, "powerstorage" = 2)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 2000, "$glass" = 1000)
+	build_path = /obj/item/weapon/holosign_creator
+

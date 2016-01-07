@@ -48,7 +48,9 @@ var/global/datum/controller/gameticker/ticker
 	'sound/music/title2.ogg',\
 	'sound/music/traitor.ogg',\
 	'tauceti/sounds/lobby/sundown.ogg',\
-	'tauceti/sounds/lobby/hanging_masses.ogg')
+	'tauceti/sounds/lobby/hanging_masses.ogg',\
+	'tauceti/sounds/lobby/admiral-station-13.ogg',\
+	'tauceti/sounds/lobby/robocop_gb_intro.ogg')
 	*/
 	//New year part
 	'tauceti/modules/_holidays/new_year/music/Carol_of_the_Bells.ogg',\
@@ -302,7 +304,7 @@ var/global/datum/controller/gameticker/ticker
 	proc/create_characters()
 		for(var/mob/new_player/player in player_list)
 			sleep(1)
-			if(player.ready && player.mind)
+			if(player && player.ready && player.mind)
 				joined_player_list += player.ckey
 				if(player.mind.assigned_role=="AI")
 					player.close_spawn_windows()

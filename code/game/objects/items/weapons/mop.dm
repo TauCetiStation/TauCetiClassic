@@ -48,3 +48,13 @@ obj/item/weapon/mop/proc/clean(turf/simulated/A)
 	if(istype(I, /obj/item/weapon/mop) || istype(I, /obj/item/weapon/soap))
 		return
 	..()
+
+
+/obj/item/weapon/mop/advanced
+	desc = "The most advanced tool in a custodian's arsenal. Just think of all the viscera you will clean up with this!"
+	name = "advanced mop"
+	icon_state = "advmop"
+	item_state = "mop"
+	force = 6.0
+	throwforce = 10.0
+	throw_range = 10.0
