@@ -1604,4 +1604,6 @@
 #include "tauceti\modules\_locations\shuttles\wall.dm"
 #include "tauceti\modules\_locations\shuttles\warning_stripes.dm"
 #include "tauceti\modules\clothing\spacesuits\suits.dm"
+#include "tauceti\modules\jexp\jexp_list.dm"
+#include "tauceti\modules\jexp\jexp_procs.dm"
 // END_INCLUDE

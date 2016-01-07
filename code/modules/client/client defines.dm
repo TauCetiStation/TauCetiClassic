@@ -14,6 +14,7 @@
 		//OTHER//
 		/////////
 	var/datum/preferences/prefs = null
+	var/datum/jobs_experience/jexp = null
 	var/move_delay		= 1
 	var/moving			= null
 	var/adminobs		= null

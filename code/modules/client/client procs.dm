@@ -143,6 +143,9 @@
 	prefs.last_ip = address				//these are gonna be used for banning
 	prefs.last_id = computer_id			//these are gonna be used for banning
 
+	//jobs experience stuff here
+	jexp = new /datum/jobs_experience(src)
+
 	. = ..()	//calls mob.Login()
 
 	if(custom_event_msg && custom_event_msg != "")
