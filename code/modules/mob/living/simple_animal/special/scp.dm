@@ -1,0 +1,168 @@
+//SCP173 sprite by Lagoon Sadness - lagoon-sadnes.deviantart.com/art/SCP-173-RPG-sprite-sheet-502690979
+/mob/living/simple_animal/special/scp173
+	name = "friend"
+	real_name = "friend"
+	desc = ""
+	icon = 'tauceti/icons/mob/scp.dmi'
+	icon_state = "scp_173"
+	icon_living = "scp_173"
+	maxHealth = INFINITY
+	health = INFINITY
+	immune_to_ssd = 1
+	density = 1
+
+	speak_emote = list("")
+	emote_hear = list("")
+	response_help  = "thinks better of touching"
+	response_disarm = "flails at"
+	response_harm   = "punches"
+
+	harm_intent_damage = 0
+	melee_damage_lower = 0
+	melee_damage_upper = 0
+	attacktext = "brutally crushes"
+	environment_smash = 0
+
+	speed = 1
+	a_intent = "harm"
+	stop_automated_movement = 1
+	status_flags = CANPUSH
+	universal_speak = 1
+	universal_understand = 1
+	attack_sound = 'sound/weapons/punch1.ogg'
+	min_oxy = 0
+	max_oxy = 0
+	min_tox = 0
+	max_tox = 0
+	min_co2 = 0
+	max_co2 = 0
+	min_n2 = 0
+	max_n2 = 0
+	minbodytemp = 0
+
+	see_in_dark = 100
+
+	var/life_cicle = 0
+	var/next_cicle = 10
+	var/activated = 0 //So, it wont start its massacre right away and can be delayed for event or what ever...
+
+/mob/living/var/scp_mark = 0
+
+/mob/living/simple_animal/special/scp173/New()
+	for(var/mob/living/simple_animal/special/scp173/SA in world) //only 1 can exist at the same time
+		if(SA && SA != src)
+			qdel(src)
+			return
+	..()
+
+/mob/living/simple_animal/special/scp173/Life()
+	if(!activated) return
+
+	if(istype(src.loc, /obj/structure/closet)) //Nope.avi
+		var/obj/structure/closet/C = src.loc
+		C.dump_contents()
+		qdel(C)
+	else if(!isturf(src.loc))
+		loc = get_turf(src)
+
+	for(var/obj/machinery/singularity/S in view(7,src))
+		if(S)
+			qdel(src)
+			return
+
+	life_cicle++
+	var/did_move = 0
+	var/list/turfs_around = list()
+	if(life_cicle > next_cicle)
+		next_cicle = rand(8,20)
+		life_cicle = 0
+
+		for(var/turf/T in view(7, src))
+			if(istype(T,/turf/space)) continue
+			turfs_around += T
+			for(var/obj/item/F in T.contents)
+				F.set_light(0)
+			for(var/obj/machinery/L in T.contents)
+				if(istype(L, /obj/machinery/power/apc))
+					var/obj/machinery/power/apc/apc = L
+					apc.overload_lighting(1)
+				else if(istype(L, /obj/machinery/light))
+					var/obj/machinery/light/Light = L
+					Light.on = 0
+					Light.update(0)
+				else
+					L.set_light(0)
+			for(var/obj/effect/glowshroom/G in T.contents) //Very small radius
+				qdel(G)
+			for(var/mob/living/carbon/human/H in T.contents)
+				for(var/obj/item/F in H)
+					F.set_light(0)
+				H.set_light(0) //This is required with the object-based lighting
+
+	for(var/mob/living/L in view(7,src))
+		if(L == src) continue
+		var/turf/T = get_turf(L)
+		if(istype(T,/turf/space)) continue
+
+		var/light_amount = 0
+		var/atom/movable/lighting_overlay/Light = locate(/atom/movable/lighting_overlay) in T
+		if(Light)
+			light_amount = Light.lum_r + Light.lum_g + Light.lum_b
+		else
+			continue
+
+		if(light_amount < 1)
+			L.scp_mark++
+
+			if(L.scp_mark >= 3)
+				src.loc = T
+				src.dir = L.dir
+				playsound(L, 'sound/effects/blobattack.ogg', 100, 1)
+				L.gib()
+				did_move = 1
+
+	if(did_move)
+		life_cicle = 0
+
+	if(!did_move && turfs_around.len)
+		playsound(src, 'tauceti/sounds/effects/scp_move.ogg', 100, 1)
+		loc = pick(turfs_around)
+		dir = pick(cardinal)
+
+/mob/living/simple_animal/special/scp173/death()
+	return
+
+ //Only singularity can harm us! Praise the lord singulo!
+/mob/living/simple_animal/special/scp173/gib()
+	return
+/mob/living/simple_animal/special/scp173/dust()
+	return
+
+/mob/living/simple_animal/special/scp173/examine()
+	set src in oview()
+
+	var/msg = "<span cass='info'>*---------*\nThis is \icon[src] \a <EM>[src]</EM>!\n*---------*</span>"
+
+	usr << msg
+	return
+
+/mob/living/simple_animal/special/scp173/attack_animal(mob/living/simple_animal/M as mob)
+	M.emote("[M.friendly] \the <EM>[src]</EM>")
+
+/mob/living/simple_animal/special/scp173/airflow_stun()
+	return
+	
+/mob/living/simple_animal/special/scp173/airflow_hit(atom/A)
+	return
+
+/mob/living/simple_animal/special/scp173/Process_Spacemove(var/check_drift = 0)
+	return 1 //copypasta from carp code
+
+/mob/living/simple_animal/special/scp173/attackby(var/obj/item/O as obj, var/mob/user as mob)
+	usr << "<span class='warning'>This weapon is ineffective, it does no damage.</span>"
+	for(var/mob/M in viewers(src, null))
+		if ((M.client && !( M.blinded )))
+			M.show_message("<span class='warning'>[user] gently taps [src] with [O].</span>")
+
+/mob/living/simple_animal/special/scp173/bullet_act(var/obj/item/projectile/Proj)
+	visible_message("[Proj] ricochets off [src]!")
