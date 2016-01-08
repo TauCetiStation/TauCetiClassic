@@ -633,7 +633,8 @@
 	//breaking out of handcuffs and putting off fires
 	else if(iscarbon(L))
 		var/mob/living/carbon/CM = L
-		if(CM.on_fire && CM.canmove)
+		if(CM.on_fire)
+			if(!CM.canmove & !CM.resting)	return
 			CM.fire_stacks -= 5
 			CM.weakened = 5
 			CM.visible_message("<span class='danger'>[CM] rolls on the floor, trying to put themselves out!</span>", \
@@ -643,7 +644,8 @@
 					"<span class='notice'>You extinguish yourself.</span>")
 				ExtinguishMob()
 			return
-		if(CM.handcuffed && CM.canmove && (CM.last_special <= world.time))
+		if(CM.handcuffed && (CM.last_special <= world.time))
+			if(!CM.canmove & !CM.resting)	return
 			CM.next_move = world.time + 100
 			CM.last_special = world.time + 100
 			if(isalienadult(CM) || (HULK in usr.mutations))//Don't want to do a lot of logic gating here.
@@ -688,7 +690,8 @@
 								"<span class='notice'>You successfully remove \the [CM.handcuffed].</span>")
 							CM.drop_from_inventory(CM.handcuffed)
 
-		else if(CM.legcuffed && CM.canmove && (CM.last_special <= world.time))
+		else if(CM.legcuffed && (CM.last_special <= world.time))
+			if(!CM.canmove & !CM.resting)	return
 			CM.next_move = world.time + 100
 			CM.last_special = world.time + 100
 			if(isalienadult(CM) || (HULK in usr.mutations))//Don't want to do a lot of logic gating here.
@@ -741,8 +744,26 @@
 	set name = "Rest"
 	set category = "IC"
 
-	if(restrained() || weakened || sleeping || paralysis || stunned)
+//Already resting and have others debuffs
+	if( resting && (sleeping || weakened || paralysis || stunned) )
+		src << "<span class='rose'>You can't wake up.</span>"
+
+//Restrained and some debuffs
+	else if( restrained() && (paralysis || stunned) )
 		src << "<span class='rose'>You can't move.</span>"
+
+//Restrained and lying on optable or simple table
+	else if( restrained() && can_operate(src) )	//TO DO: Refactor OpTable code to /bed subtype or "Rest" verb
+		src << "<span class='rose'>You can't move.</span>"
+
+//Debuffs check
+	else if( paralysis || stunned )
+		src << "<span class='rose'>You can't control yourself.</span>"
+
+//Sleep style debuffs
+	else if( !resting && (sleeping || weakened) )
+		src << "<span class='rose'>You are already sleeping.</span>"
+
 	else
 		resting = !resting
 		src << "<span class='notice'>You are now [resting ? "resting" : "getting up"].</span>"
