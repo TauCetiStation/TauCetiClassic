@@ -2,7 +2,7 @@
 /mob/living/simple_animal/special/scp173
 	name = "friend"
 	real_name = "friend"
-	desc = ""
+	desc = "It's some kind of human sized, doll-like sculpture, with weird discolourations on some parts of it. It appears to be quite solid."
 	icon = 'tauceti/icons/mob/scp.dmi'
 	icon_state = "scp_173"
 	icon_living = "scp_173"
@@ -13,9 +13,9 @@
 
 	speak_emote = list("")
 	emote_hear = list("")
-	response_help  = "thinks better of touching"
-	response_disarm = "flails at"
-	response_harm   = "punches"
+	response_help  = "touches the"
+	response_disarm = "pushes the"
+	response_harm   = "hits the"
 
 	harm_intent_damage = 0
 	melee_damage_lower = 0
@@ -98,7 +98,15 @@
 			for(var/mob/living/carbon/human/H in T.contents)
 				for(var/obj/item/F in H)
 					F.set_light(0)
+					if(istype(F, /obj/item/device/flashlight)) //More survival!
+						var/obj/item/device/flashlight/FL = F
+						if(FL.on)
+							H.drop_from_inventory(FL)
+							if(prob(45)) //Poooof
+								qdel(FL)
 				H.set_light(0) //This is required with the object-based lighting
+			for(var/mob/living/silicon/robot/R in T.contents)
+				R.set_light(0)
 
 	for(var/mob/living/L in view(7,src))
 		if(L == src) continue
@@ -160,6 +168,8 @@
 	return
 /mob/living/simple_animal/special/scp173/dust()
 	return
+/mob/living/simple_animal/special/scp173/ex_act(severity)
+	return
 
 /mob/living/simple_animal/special/scp173/examine()
 	set src in oview()
@@ -179,8 +189,7 @@
 			return
 		else
 			L.scp_mark = 0
-	var/msg = "<span cass='info'>*---------*\nThis is \icon[src] \a <EM>[src]</EM>!\n*---------*</span>"
-	usr << msg
+	..()
 
 /mob/living/simple_animal/special/scp173/attack_animal(mob/living/simple_animal/M as mob)
 	M.emote("[M.friendly] \the <EM>[src]</EM>")
