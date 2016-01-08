@@ -40,13 +40,6 @@ var/global/list/image/splatter_cache=list()
 					qdel(B)
 	spawn(DRYING_TIME * (amount+1))
 		dry()
-/*
-/obj/effect/decal/cleanable/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/weapon/mop) || istype(W, /obj/item/weapon/kitchen/utensil/fork) || istype(W, /obj/item/weapon/soap))
-		return
-	else
-		return ..() */
-
 
 /obj/effect/decal/cleanable/blood/update_icon()
 	if(basecolor == "rainbow") basecolor = "#[pick(list("FF0000","FF7F00","FFFF00","00FF00","0000FF","4B0082","8F00FF"))]"
