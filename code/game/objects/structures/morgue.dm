@@ -113,9 +113,9 @@
 	if (user.stat)
 		return
 	src.connected = new /obj/structure/m_tray( src.loc )
-	step(src.connected, WEST)
+	step(src.connected, src.dir)
 	src.connected.layer = OBJ_LAYER
-	var/turf/T = get_step(src, WEST)
+	var/turf/T = get_step(src, src.dir)
 	if (T.contents.Find(src.connected))
 		src.connected.connected = src
 		src.icon_state = "morgue0"
