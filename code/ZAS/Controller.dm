@@ -296,6 +296,7 @@ Total Unsimulated Turfs: [world.maxx*world.maxy*world.maxz - simulated_turf_coun
 	#ifdef ZASDBG
 	ASSERT(isturf(T))
 	#endif
+	if(!T) return
 	if(T.needs_air_update) return
 	tiles_to_update |= T
 	#ifdef ZASDBG
@@ -307,6 +308,7 @@ Total Unsimulated Turfs: [world.maxx*world.maxy*world.maxz - simulated_turf_coun
 	#ifdef ZASDBG
 	ASSERT(istype(Z))
 	#endif
+	if(!Z) return
 	if(Z.needs_update) return
 	zones_to_update.Add(Z)
 	Z.needs_update = 1
