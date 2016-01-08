@@ -47,6 +47,7 @@
 	var/activated = 0 //So, it wont start its massacre right away and can be delayed for event or what ever...
 
 /mob/living/var/scp_mark = 0
+/turf/var/scp_was_here = 0
 
 /mob/living/simple_animal/special/scp173/New()
 	for(var/mob/living/simple_animal/special/scp173/SA in world) //only 1 can exist at the same time
@@ -112,7 +113,7 @@
 			continue
 
 		if(light_amount <= 0.3)
-			if(prob(max(1,L.scp_mark * 7)))
+			if(prob(max(1,L.scp_mark * 4)))
 				src.loc = T
 				src.dir = L.dir
 				playsound(L, 'sound/effects/blobattack.ogg', 100, 1)
@@ -126,9 +127,30 @@
 		life_cicle = 0
 
 	if(!did_move && turfs_around.len)
-		playsound(src, 'tauceti/sounds/effects/scp_move.ogg', 100, 1)
-		loc = pick(turfs_around)
-		dir = pick(cardinal)
+		var/no_where_to_jump = 0
+		var/turf/target_turf = pick(turfs_around)
+		for(var/i=0,i<4,i++)
+			if(turfs_around.len)
+				if(target_turf.scp_was_here)
+					if(prob(3))
+						target_turf.scp_was_here = 0
+						break
+					turfs_around -= target_turf
+					if(turfs_around.len < 1)
+						continue
+					target_turf = pick(turfs_around)
+					continue
+				else
+					break
+			else
+				no_where_to_jump = 1
+				break
+
+		if(!no_where_to_jump)
+			target_turf.scp_was_here = 1
+			loc = target_turf
+			dir = pick(cardinal)
+			playsound(src, 'tauceti/sounds/effects/scp_move.ogg', 100, 1)
 
 /mob/living/simple_animal/special/scp173/death()
 	return
