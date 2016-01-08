@@ -41,6 +41,14 @@ var/global/list/image/splatter_cache=list()
 	spawn(DRYING_TIME * (amount+1))
 		dry()
 
+/obj/effect/decal/cleanable/blood/attackby(obj/item/W, mob/user)
+	if(W != /obj/item/weapon/mop && W != /obj/item/weapon/kitchen/utensil/fork && W != /obj/item/weapon/soap)
+		user.do_attack_animation(src)
+		if(W && !(W.flags&NOBLUDGEON))
+			visible_message("<span class='danger'>[src] has been hit by [user] with [W].</span>")
+	else
+		return
+
 /obj/effect/decal/cleanable/blood/update_icon()
 	if(basecolor == "rainbow") basecolor = "#[pick(list("FF0000","FF7F00","FFFF00","00FF00","0000FF","4B0082","8F00FF"))]"
 	color = basecolor

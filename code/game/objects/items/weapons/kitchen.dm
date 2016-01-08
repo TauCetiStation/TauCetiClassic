@@ -83,17 +83,13 @@
 	if(!proximity) return
 	//I couldn't feasibly  fix the overlay bugs caused by cleaning items we are wearing.
 	//So this is a workaround. This also makes more sense from an IC standpoint. ~Carn
-	if(user.client && (target in user.client.screen))
-		user << "<span class='notice'>You need to take that [target.name] off before cleaning it.</span>"
-	else if(istype(target,/obj/effect/decal/cleanable))
-		user << "<span class='notice'>You scrub \the [target.name] out.</span>"
-		qdel(target)
-	else
-		user << "<span class='notice'>You clean \the [target.name].</span>"
-		var/obj/effect/decal/cleanable/C = locate() in target
-		qdel(C)
-		target.clean_blood()
-	return
+	user.visible_message("<span class='warning'>[user] begins to clean .</span>")
+	if(istype(target,/obj/effect/decal/cleanable))
+		if(do_after(user, 60, target = target))
+			user << "<span class='notice'>You scrub \the [target.name] out.</span>"
+			qdel(target)
+		else
+			return
 
 /obj/item/weapon/kitchen/utensil/pfork
 	name = "plastic fork"
