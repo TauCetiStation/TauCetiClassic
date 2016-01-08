@@ -105,21 +105,22 @@
 		if(istype(T,/turf/space)) continue
 
 		var/light_amount = 0
-		var/atom/movable/lighting_overlay/Light = locate(/atom/movable/lighting_overlay) in T
-		if(Light)
-			light_amount = Light.lum_r + Light.lum_g + Light.lum_b
+		var/atom/movable/lighting_overlay/lo = locate(/atom/movable/lighting_overlay) in T
+		if(lo)
+			light_amount = lo.lum_r + lo.lum_g + lo.lum_b
 		else
 			continue
 
-		if(light_amount < 1)
-			L.scp_mark++
-
-			if(L.scp_mark >= 3)
+		if(light_amount <= 0.3)
+			if(prob(max(1,L.scp_mark * 7)))
 				src.loc = T
 				src.dir = L.dir
 				playsound(L, 'sound/effects/blobattack.ogg', 100, 1)
 				L.gib()
 				did_move = 1
+			var/chance = rand(10,65)
+			if(prob(chance))
+				L.scp_mark++
 
 	if(did_move)
 		life_cicle = 0
@@ -141,10 +142,23 @@
 /mob/living/simple_animal/special/scp173/examine()
 	set src in oview()
 
-	var/msg = "<span cass='info'>*---------*\nThis is \icon[src] \a <EM>[src]</EM>!\n*---------*</span>"
+	var/turf/T = get_turf(src)
 
+	var/light_amount = 0
+	var/atom/movable/lighting_overlay/lo = locate(/atom/movable/lighting_overlay) in T
+	if(lo)
+		light_amount = lo.lum_r + lo.lum_g + lo.lum_b
+
+	if(isliving(usr))
+		var/mob/living/L = usr
+		if(lo && light_amount <= 0.3)
+			var/msg = "<span cass='info'>It's too dark in there...</span>"
+			usr << msg
+			return
+		else
+			L.scp_mark = 0
+	var/msg = "<span cass='info'>*---------*\nThis is \icon[src] \a <EM>[src]</EM>!\n*---------*</span>"
 	usr << msg
-	return
 
 /mob/living/simple_animal/special/scp173/attack_animal(mob/living/simple_animal/M as mob)
 	M.emote("[M.friendly] \the <EM>[src]</EM>")
