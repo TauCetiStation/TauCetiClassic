@@ -350,7 +350,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		usr << "<span class='warning'>No area available.</span>"
 
 	usr.loc = pick(L)
-	following = null
+	if(following)
+		following = null
 
 /mob/dead/observer/verb/follow(input in getmobs())
 	set category = "Ghost"
