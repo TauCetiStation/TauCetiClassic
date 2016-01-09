@@ -69,7 +69,9 @@ if(vlc.attachEvent) {
 			M.update_music()
 
 /mob/proc/update_music()
+	//world << "Update start"
 	if (client && client.media)
+		//world << "Media Exists"
 		client.media.update_music()
 	//else
 	//	testing("[src] - client: [client?"Y":"N"]; client.media: [client && client.media ? "Y":"N"]")
@@ -77,7 +79,6 @@ if(vlc.attachEvent) {
 /area
 	// One media source per area.
 	var/obj/machinery/media/media_source = null
-
 
 #ifdef DEBUG_MEDIAPLAYER
 #define MP_DEBUG(x) owner << x
@@ -109,11 +110,7 @@ if(vlc.attachEvent) {
 
 	// Tell the player to play something via JS.
 	proc/send_update()
-		if(!(owner.prefs.toggles) && url != "") // Add SOUND_STREAMING flag check for streaming sound preferences.
-			return // Nope.
-		MP_DEBUG("\green Sending update to WMP ([url])...")
 		owner << output(list2params(list(url, (world.time - start_time) / 10, volume)), "[window]:SetMusic")
-
 	proc/stop_music()
 		url=""
 		start_time=world.time
@@ -128,7 +125,6 @@ if(vlc.attachEvent) {
 		if (!owner)
 			//testing("owner is null")
 			return
-
 		var/area/A = get_area_master(mob)
 		if(!A)
 			//testing("[owner] in [mob.loc].  Aborting.")
@@ -141,7 +137,6 @@ if(vlc.attachEvent) {
 			//owner << "Found audio source: [M.media_url] @ [(world.time - start_time) / 10]s."
 		//else
 		//	testing("M is not playing or null.")
-
 		if (url != targetURL || abs(targetStartTime - start_time) > 1)
 			url = targetURL
 			start_time = targetStartTime

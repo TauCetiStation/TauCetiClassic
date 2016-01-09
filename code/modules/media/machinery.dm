@@ -35,13 +35,11 @@
 	if(exclusive_hook)
 		disconnect_media_source() // Just to be sure.
 		return
-
 	update_media_source()
 
 	// Bail if we lost connection to master.
 	if(!master_area)
 		return
-
 	// Send update to clients.
 	for(var/mob/M in mobs_in_area(master_area))
 		if(M && M.client)

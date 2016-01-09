@@ -29,6 +29,7 @@
 
 	if(config && config.log_runtime)
 		log = file("data/logs/runtime/[time2text(world.realtime,"YYYY-MM-DD-(hh-mm-ss)")]-runtime.log")
+	SetupHooks() // /vg/
 
 	callHook("startup")
 	//Emergency Fix
