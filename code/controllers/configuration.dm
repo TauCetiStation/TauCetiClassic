@@ -91,6 +91,7 @@
 	var/banappeals
 	var/wikiurl
 	var/forumurl
+	var/media_base_url = "http://example.org"
 
 	//Alert level description
 	var/alert_desc_green = "All threats to the station have passed. Security may not have weapons visible, privacy laws are once again fully enforced."
@@ -365,6 +366,9 @@
 
 				if ("serverwhitelist")
 					config.serverwhitelist = 1
+
+				if("media_base_url")
+					media_base_url = value
 
 				if("serverwhitelist_message")
 					config.serverwhitelist_message = value
