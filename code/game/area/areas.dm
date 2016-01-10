@@ -298,22 +298,26 @@
 	var/musVolume = 25
 	var/sound = 'sound/ambience/ambigen1.ogg'
 
-	if(!istype(A,/mob/living))	return
+	if(!istype(A,/mob/))	return
+	var/mob/M = A
 
-	var/mob/living/L = A
-	if(!L.ckey)	return
-
-	if(!L.lastarea)
-		L.lastarea = get_area(L.loc)
-	var/area/newarea = get_area(L.loc)
-	var/area/oldarea = L.lastarea
+	if(!M.lastarea)
+		M.lastarea = get_area(M.loc)
+	var/area/newarea = get_area(M.loc)
+	var/area/oldarea = M.lastarea
 	if(newarea != oldarea)
 		CallHook("MobAreaChange", list("mob" = A, "new" = newarea, "old" = oldarea))
+
+	if(!istype(A,/mob/living))
+		M.lastarea = newarea
+		return
+
+	var/mob/living/L = A
 	if((oldarea.has_gravity == 0) && (newarea.has_gravity == 1) && (L.m_intent == "run")) // Being ready when you change areas gives you a chance to avoid falling all together.
 		thunk(L)
 
 	L.lastarea = newarea
-
+	if(!L.ckey)	return
 	// Ambience goes down here -- make sure to list each area seperately for ease of adding things in later, thanks! Note: areas adjacent to each other should have the same sounds to prevent cutoff when possible.- LastyScratch
 	if(!(L && L.client && (L.client.prefs.toggles & SOUND_AMBIENCE)))	return
 
