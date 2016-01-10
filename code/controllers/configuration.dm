@@ -165,6 +165,7 @@
 	var/use_slack_bot = 0
 	var/slack_team = 0
 	var/slack_bot_token = 0
+	var/antigrief_alarm_level = 1
 
 /datum/configuration/New()
 	var/list/L = typesof(/datum/game_mode) - /datum/game_mode
@@ -562,6 +563,9 @@
 
 				if("slack_bot_token")
 					config.slack_bot_token = value
+
+				if("antigrief_alarm_level")
+					config.antigrief_alarm_level = value
 
 				else
 					log_misc("Unknown setting in configuration: '[name]'")
