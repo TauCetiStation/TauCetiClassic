@@ -286,10 +286,11 @@ var/global/loopModeNames=list(
 	// Must be defined on your server.
 	playlists=list(
 		"bar"  = "Bar Mix",
-		"aussie" = "Aussie",
-		"club" = "Club",
-		"lounge" = "Portishead - Dummy",
+		"moges" = "Moges Club Music",
+		"club" = "Club Mix",
 		"customs" = "Customs Music",
+		"japan" = "Banzai Radio",
+		"classic" = "Classical Music",
 	)
 
 // Relaxing elevator music~
@@ -303,10 +304,11 @@ var/global/loopModeNames=list(
 	// Must be defined on your server.
 	playlists=list(
 		"bar"  = "Bar Mix",
-		"aussie" = "Aussie",
-		"club" = "Club",
-		"lounge" = "Portishead - Dummy",
+		"moges" = "Moges Club Music",
+		"club" = "Club Mix",
 		"customs" = "Customs Music",
+		"japan" = "Banzai Radio",
+		"classic" = "Classical Music",
 	)
 
 /obj/machinery/media/jukebox/techno
