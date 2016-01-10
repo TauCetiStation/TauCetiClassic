@@ -1007,3 +1007,29 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		usr << "Random events disabled"
 		message_admins("Admin [key_name_admin(usr)] has disabled random events.", 1)
 	feedback_add_details("admin_verb","TRE") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+
+/client/proc/send_fax_message()
+	set category = "Special Verbs"
+	set name = "Send Fax Message"
+
+	var/mob/Sender
+
+	if(!holder)
+		src << "Only administrators may use this command."
+		return
+	var/sent = sanitize_alt(input(usr, "Please enter anything you want. Anything. Serious.", "What?", "") as message|null)
+	var/sentname = sanitize_alt(input(usr, "Pick a title for the message.", "Title") as text|null)
+	if(!sent)
+		return
+	if(!sentname)
+		sentname = "NanoTrasen Update"
+	var/dpt = input(usr, "Please choose the needed fax, choose unknown to send to all faxes on the station") as null|anything in alldepartments
+	world << dpt
+	var/list/stampos = list("CentCom", "Syndicate", "Clown", "FakeCentCom", "Unknown")
+	var/stamp = input(usr, "Please choose the needed stamp, choose unkown to send without any stamp") as null|anything in stampos
+
+	SendFax(sent, sentname, Sender, dpt, stamp)
+
+
+
