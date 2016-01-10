@@ -260,6 +260,7 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 					/obj/item/weapon/caution,
 					/obj/item/weapon/caution,
 					/obj/item/weapon/caution,
+					/obj/item/weapon/watertank/janitor,
 					/obj/item/weapon/storage/bag/trash,
 					/obj/item/weapon/reagent_containers/spray/cleaner,
 					/obj/item/weapon/reagent_containers/glass/rag,
