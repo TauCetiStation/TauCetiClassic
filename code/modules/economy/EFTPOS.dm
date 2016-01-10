@@ -175,7 +175,7 @@
 				var/attempt_account_num = input("Enter account number to pay EFTPOS charges into", "New account number") as num
 				var/attempt_pin = input("Enter pin code", "Account pin") as num
 				linked_account = attempt_account_access(attempt_account_num, attempt_pin, 1)
-				if(linked_account.suspended)
+				if(linked_account && linked_account.suspended)
 					linked_account = null
 					usr << "\icon[src]<span class='warning'>Account has been suspended.</span>"
 			if("trans_purpose")

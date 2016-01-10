@@ -50,6 +50,8 @@ var/global/list/image/splatter_cache=list()
 		return
 	if(amount < 1)
 		return
+	if(!islist(blood_DNA))	//prevent from runtime errors connected with shitspawn
+		blood_DNA = list()
 
 	var/datum/organ/external/l_foot = perp.get_organ("l_foot")
 	var/datum/organ/external/r_foot = perp.get_organ("r_foot")

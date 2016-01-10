@@ -1450,8 +1450,8 @@
 			//layer = 4.0
 		crawling = !crawling
 
-	update_canmove()
 	src << "<span class='notice'>You are now [crawling ? "crawling" : "getting up"].</span>"
+	update_canmove()
 
 /mob/living/carbon/human/can_inject(var/mob/user, var/error_msg, var/target_zone)
 	. = 1

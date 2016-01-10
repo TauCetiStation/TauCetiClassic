@@ -316,7 +316,7 @@
 	name = "alien weapon"
 	desc = "An odd device that resembles human weapon."
 	origin_tech = "materials=6;biotech=4;combat=5"
-	tc_custom = 'tauceti/icons/mob/abduction/alienpistol.dmi'
+	tc_custom = 'tauceti/icons/mob/guns.dmi'
 	icon_state = "alienpistol"
 	item_state = "alienpistol"
 
