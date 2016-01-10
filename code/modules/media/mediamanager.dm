@@ -17,6 +17,7 @@ function SetMusic(url, time, volume) {
 	var player = document.getElementById('player');
 	player.URL = url;
 	player.Controls.currentPosition = time;
+	player.controls.currentPosition = time;
 	player.Settings.volume = volume;
 }
 function SetVolume(volume) {
@@ -87,7 +88,9 @@ function SetVolume(volume) {
 	proc/send_update()
 		if(!(owner.prefs.toggles & SOUND_STREAMING) && url != "")
 			return // Nope.
-		owner << output(list2params(list(url, (world.time - start_time) / 10, volume)), "[window]:SetMusic")
+		var/playtime = round((world.time - start_time) / 10)
+		owner << output(list2params(list(url, playtime, volume)), "[window]:SetMusic")
+
 	proc/stop_music()
 		url=""
 		start_time=world.time
