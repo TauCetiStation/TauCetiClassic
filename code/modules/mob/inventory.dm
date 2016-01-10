@@ -5,7 +5,7 @@
 		if (istype(W, /obj/item/clothing))
 			var/obj/item/clothing/C = W
 			if(C.rig_restrict_helmet)
-				src << "\red You must fasten the helmet to a hardsuit first. (Target the head)" // Stop eva helms equipping.
+				src << "<span class='rose'>You must fasten the helmet to a hardsuit first. (Target the head)</span>" // Stop eva helms equipping.
 			else
 				if(C.equip_time > 0)
 					delay_clothing_equip_to_slot_if_possible(C, slot)
@@ -33,7 +33,7 @@
 			qdel(W)
 		else
 			if(!disable_warning)
-				src << "\red You are unable to equip that." //Only print if del_on_fail is false
+				src << "<span class='rose'>You are unable to equip that.</span>" //Only print if del_on_fail is false
 		return 0
 
 	equip_to_slot(W, slot, redraw_mob) //This proc should not ever fail.
@@ -227,6 +227,7 @@ var/list/slot_equipment_priority = list( \
 
 //Attemps to remove an object on a mob.  Will not move it to another area or such, just removes from the mob.
 /mob/proc/remove_from_mob(var/obj/O)
+	if(!O) return
 	src.u_equip(O)
 	if (src.client)
 		src.client.screen -= O
@@ -271,18 +272,18 @@ var/list/slot_equipment_priority = list( \
 
 	var/tempX = usr.x
 	var/tempY = usr.y
-	usr << "\blue You start unequipping the [C]."
+	usr << "<span class='notice'>You start unequipping the [C].</span>"
 	C.equipping = 1
 	var/equip_time = round(C.equip_time/10)
 	var/i
 	for(i=1; i<=equip_time; i++)
 		sleep (10) // Check if they've moved every 10 time units
 		if ((tempX != usr.x) || (tempY != usr.y))
-			src << "\red \The [C] is too fiddly to unequip whilst moving."
+			src << "<span class='rose'>\The [C] is too fiddly to unequip whilst moving.</span>"
 			C.equipping = 0
 			return 0
 	remove_from_mob(C)
-	usr << "\blue You have finished unequipping the [C]."
+	usr << "<span class='notice'>You have finished unequipping the [C].</span>"
 	C.equipping = 0
 
 /mob/proc/delay_clothing_equip_to_slot_if_possible(obj/item/clothing/C as obj, slot, del_on_fail = 0, disable_warning = 0, redraw_mob = 1, delay_time = 0)
@@ -291,23 +292,23 @@ var/list/slot_equipment_priority = list( \
 	if(ishuman(usr))
 		var/mob/living/carbon/human/H = usr
 		if(H.wear_suit)
-			H << "\red You need to take off [H.wear_suit.name] first."
+			H << "<span class='rose'>You need to take off [H.wear_suit.name] first.</span>"
 			return
 
 	if(C.equipping) return 0 // Item is already being equipped
 
 	var/tempX = usr.x
 	var/tempY = usr.y
-	usr << "\blue You start equipping the [C]."
+	usr << "<span class='notice'>You start equipping the [C].</span>"
 	C.equipping = 1
 	var/equip_time = round(C.equip_time/10)
 	var/i
 	for(i=1; i<=equip_time; i++)
 		sleep (10) // Check if they've moved every 10 time units
 		if ((tempX != usr.x) || (tempY != usr.y))
-			src << "\red \The [C] is too fiddly to fasten whilst moving."
+			src << "<span class='rose'>\The [C] is too fiddly to fasten whilst moving.</span>"
 			C.equipping = 0
 			return 0
 	equip_to_slot_if_possible(C, slot)
-	usr << "\blue You have finished equipping the [C]."
+	usr << "<span class='notice'>You have finished equipping the [C].</span>"
 	C.equipping = 0

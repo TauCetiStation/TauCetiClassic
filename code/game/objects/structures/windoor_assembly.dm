@@ -297,6 +297,6 @@ obj/structure/windoor_assembly/Destroy()
 	if(!air_master)
 		return 0
 
-	air_master.mark_for_update(loc)
+	air_master.mark_for_update(get_turf(src))
 
 	return 1

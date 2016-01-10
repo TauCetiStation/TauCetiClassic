@@ -73,6 +73,7 @@
 
 /obj/item/weapon/stool/attack_self(mob/user as mob)
 	..()
+	if(!user) return
 	user.drop_from_inventory(src.origin)
 	user.visible_message("[user] puts [src] down.", "<span class='notice'>You put [src] down.</span>")
 	qdel(src)

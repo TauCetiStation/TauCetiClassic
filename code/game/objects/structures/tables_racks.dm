@@ -404,8 +404,10 @@
 			W.Move(loc)
 			var/list/click_params = params2list(params)
 			//Center the icon where the user clicked.
-			W.pixel_x = (text2num(click_params["icon-x"]) - 16)
-			W.pixel_y = (text2num(click_params["icon-y"]) - 16)
+			if(!click_params || !click_params["icon-x"] || !click_params["icon-y"])
+				return
+			W.pixel_x = Clamp(text2num(click_params["icon-x"]) - 16, -(world.icon_size/2), world.icon_size/2)
+			W.pixel_y = Clamp(text2num(click_params["icon-y"]) - 16, -(world.icon_size/2), world.icon_size/2)
 	return
 
 /obj/structure/table/proc/straight_table_check(var/direction)

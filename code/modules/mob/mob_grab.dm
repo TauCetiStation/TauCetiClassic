@@ -207,6 +207,8 @@
 /obj/item/weapon/grab/proc/s_click(obj/screen/S)
 	if(!affecting)
 		return
+	if(!assailant)
+		return
 	if(state == GRAB_UPGRADING)
 		return
 	if(assailant.next_move > world.time)

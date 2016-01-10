@@ -12,6 +12,7 @@
 /obj/item/weapon/gun/projectile/sigi
 	name = "\improper pistol"
 	desc = "A W&J Company designed SIGI p250, found pretty much everywhere humans are. Looks like SIG 250, but it's not. Uses 9mm rounds."
+	tc_custom = 'tauceti/icons/mob/guns.dmi'
 	icon_state = "sigi250"
 	item_state = "sigi250"
 	origin_tech = "combat=2;materials=2"
@@ -30,6 +31,7 @@
 /obj/item/weapon/gun/projectile/sigi/spec
 	name = "\improper pistol"
 	desc = "A W&J Company designed Special SIGI p250, this one has a military coloring. Looks like SIG 250, but it's not. Uses 9mm rounds."
+	tc_custom = 'tauceti/icons/mob/guns.dmi'
 	icon_state = "sigi250special"
 	item_state = "sigi250special"
 
