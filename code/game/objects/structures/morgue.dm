@@ -113,9 +113,9 @@
 	if (user.stat)
 		return
 	src.connected = new /obj/structure/m_tray( src.loc )
-	step(src.connected, EAST)
+	step(src.connected, src.dir)
 	src.connected.layer = OBJ_LAYER
-	var/turf/T = get_step(src, EAST)
+	var/turf/T = get_step(src, src.dir)
 	if (T.contents.Find(src.connected))
 		src.connected.connected = src
 		src.icon_state = "morgue0"
@@ -176,7 +176,7 @@
 	if (user != O)
 		for(var/mob/B in viewers(user, 3))
 			if ((B.client && !( B.blinded )))
-				B << text("\red [] stuffs [] into []!", user, O, src)
+				B << text("<span class='rose'>[] stuffs [] into []!</span>", user, O, src)
 	return
 
 
@@ -250,7 +250,7 @@
 //		src:loc:firelevel = src:loc:poison
 //		return
 	if (cremating)
-		usr << "\red It's locked."
+		usr << "<span class='rose'>It's locked.</span>"
 		return
 	if ((src.connected) && (src.locked == 0))
 		for(var/atom/movable/A as mob|obj in src.connected.loc)
@@ -319,16 +319,16 @@
 
 	if(contents.len <= 0)
 		for (var/mob/M in viewers(src))
-			M.show_message("\red You hear a hollow crackle.", 1)
+			M.show_message("<span class='rose'>You hear a hollow crackle.</span>", 1)
 			return
 
 	else
 		if(!isemptylist(src.search_contents_for(/obj/item/weapon/disk/nuclear)))
-			usr << "You get the feeling that you shouldn't cremate one of the items in the cremator."
+			usr << "<span class='notice'>You get the feeling that you shouldn't cremate one of the items in the cremator.</span>"
 			return
 
 		for (var/mob/M in viewers(src))
-			M.show_message("\red You hear a roar as the crematorium activates.", 1)
+			M.show_message("<span class='rose'>You hear a roar as the crematorium activates.</span>", 1)
 
 		cremating = 1
 		locked = 1
@@ -397,7 +397,7 @@
 	if (user != O)
 		for(var/mob/B in viewers(user, 3))
 			if ((B.client && !( B.blinded )))
-				B << text("\red [] stuffs [] into []!", user, O, src)
+				B << text("<span class='rose'>[] stuffs [] into []!</span>", user, O, src)
 			//Foreach goto(99)
 	return
 
@@ -411,6 +411,6 @@
 						message_admins("[user.name] ([user.ckey]) <font color='red'>Cremating</font> [M.name] ([M.ckey]).")
 					C.cremate(user)
 	else
-		usr << "\red Access denied."
+		usr << "<span class='rose'>Access denied.</span>"
 	return
 

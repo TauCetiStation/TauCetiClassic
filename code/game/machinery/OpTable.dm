@@ -47,21 +47,21 @@
 
 /obj/machinery/optable/attack_paw(mob/user as mob)
 	if ((HULK in usr.mutations))
-		usr << text("\blue You destroy the operating table.")
-		visible_message("\red [usr] destroys the operating table!")
+		usr << text("<span class='notice'>You destroy the operating table.</span>")
+		visible_message("<span class='danger'>[usr] destroys the operating table!</span>")
 		src.density = 0
 		qdel(src)
 	if (!( locate(/obj/machinery/optable, user.loc) ))
 		step(user, get_dir(user, src))
 		if (user.loc == src.loc)
 			user.layer = TURF_LAYER
-			visible_message("The monkey hides under the table!")
+			visible_message("<span class='notice'>The monkey hides under the table!</span>")
 	return
 
 /obj/machinery/optable/attack_hand(mob/user as mob)
 	if (HULK in usr.mutations)
-		usr << text("\blue You destroy the table.")
-		visible_message("\red [usr] destroys the operating table!")
+		usr << text("<span class='notice'>You destroy the table.</span>")
+		visible_message("<span class='danger'>[usr] destroys the operating table!</span>")
 		src.density = 0
 		qdel(src)
 	return
@@ -102,9 +102,9 @@
 
 /obj/machinery/optable/proc/take_victim(mob/living/carbon/C, mob/living/carbon/user as mob)
 	if (C == user)
-		user.visible_message("[user] climbs on the operating table.","You climb on the operating table.")
+		user.visible_message("<span class='rose'>[user] climbs on the operating table.</span>","<span class='notice'>You climb on the operating table.</span>")
 	else
-		visible_message("\red [C] has been laid on the operating table by [user].", 3)
+		visible_message("<span class='notice'>[C] has been laid on the operating table by [user].</span>", 3)
 	if (C.client)
 		C.client.perspective = EYE_PERSPECTIVE
 		C.client.eye = src
@@ -129,7 +129,7 @@
 		return
 
 	if(src.victim)
-		usr << "\blue <B>The table is already occupied!</B>"
+		usr << "<span class='rose'>The table is already occupied!</span>"
 		return
 
 	take_victim(usr,usr)

@@ -8,7 +8,7 @@
 	if ((src.health < 0 && src.health > -95.0))
 		src.adjustOxyLoss(src.health + 200)
 		src.health = 100 - src.getOxyLoss() - src.getToxLoss() - src.getFireLoss() - src.getBruteLoss()
-		src << "\blue You have given up life and succumbed to death."
+		src << "<span class='notice'>You have given up life and succumbed to death.</span>"
 
 
 /mob/living/proc/updatehealth()
@@ -396,7 +396,7 @@
 							var/obj/item/weapon/grab/G = pick(M.grabbed_by)
 							if (istype(G, /obj/item/weapon/grab))
 								for(var/mob/O in viewers(M, null))
-									O.show_message(text("\red [] has been pulled from []'s grip by []", G.affecting, G.assailant, src), 1)
+									O.show_message(text("<span class='warning'>[] has been pulled from []'s grip by [].</span>", G.affecting, G.assailant, src), 1)
 								//G = null
 								qdel(G)
 						else
@@ -415,11 +415,11 @@
 						//pull damage with injured people
 							if(prob(25))
 								M.adjustBruteLoss(1)
-								visible_message("\red \The [M]'s wounds open more from being dragged!")
+								visible_message("<span class='warning'>[M]'s wounds open more from being dragged!</span>")
 						if(M.pull_damage())
 							if(prob(25))
 								M.adjustBruteLoss(2)
-								visible_message("\red \The [M]'s wounds worsen terribly from being dragged!")
+								visible_message("<span class='warning'>[M]'s wounds worsen terribly from being dragged!</span>")
 								var/turf/location = M.loc
 								if (istype(location, /turf/simulated))
 									location.add_blood(M)
@@ -468,10 +468,10 @@
 
 		if(istype(M))
 			M.drop_from_inventory(H)
-			M << "[H] wriggles out of your grip!"
-			src << "You wriggle out of [M]'s grip!"
+			M << "<span class='notice'>[H] wriggles out of your grip!</span>"
+			src << "<span class='notice'>You wriggle out of [M]'s grip!</span>"
 		else if(istype(H.loc,/obj/item))
-			src << "You struggle free of [H.loc]."
+			src << "<span class='notice'>You struggle free of [H.loc].</span>"
 			H.forceMove(get_turf(H))
 
 		if(istype(M))
@@ -479,7 +479,8 @@
 				if(istype(A,/mob/living/simple_animal/borer) || istype(A,/obj/item/weapon/holder))
 					return
 
-		M.status_flags &= ~PASSEMOTES
+		if(ismob(M))
+			M.status_flags &= ~PASSEMOTES
 		return
 
 	//Resisting control by an alien mind.
@@ -487,8 +488,8 @@
 		var/mob/living/simple_animal/borer/B = src.loc
 		var/mob/living/captive_brain/H = src
 
-		H << "\red <B>You begin doggedly resisting the parasite's control (this will take approximately sixty seconds).</B>"
-		B.host << "\red <B>You feel the captive mind of [src] begin to resist your control.</B>"
+		H << "<span class='danger'>You begin doggedly resisting the parasite's control (this will take approximately sixty seconds).</span>"
+		B.host << "<span class='danger'>You feel the captive mind of [src] begin to resist your control.</span>"
 
 		spawn(rand(350,450)+B.host.brainloss)
 
@@ -496,8 +497,8 @@
 				return
 
 			B.host.adjustBrainLoss(rand(5,10))
-			H << "\red <B>With an immense exertion of will, you regain control of your body!</B>"
-			B.host << "\red <B>You feel control of the host brain ripped from your grasp, and retract your probosci before the wild neural impulses can damage you.</b>"
+			H << "<span class='danger'>With an immense exertion of will, you regain control of your body!</span>"
+			B.host << "<span class='danger'>You feel control of the host brain ripped from your grasp, and retract your probosci before the wild neural impulses can damage you.</span>"
 			B.controlling = 0
 
 			B.ckey = B.host.ckey
@@ -529,16 +530,15 @@
 					qdel(G)
 				if(GRAB_AGGRESSIVE)
 					if(prob(60)) //same chance of breaking the grab as disarm
-						L.visible_message("<span class='warning'>[L] has broken free of [G.assailant]'s grip!</span>")
+						L.visible_message("<span class='danger'>[L] has broken free of [G.assailant]'s grip!</span>")
 						qdel(G)
 				if(GRAB_NECK)
 					//If the you move when grabbing someone then it's easier for them to break free. Same if the affected mob is immune to stun.
 					if (((world.time - G.assailant.l_move_time < 20 || !L.stunned) && prob(15)) || prob(3))
-						L.visible_message("<span class='warning'>[L] has broken free of [G.assailant]'s headlock!</span>")
+						L.visible_message("<span class='danger'>[L] has broken free of [G.assailant]'s headlock!</span>")
 						qdel(G)
 		if(resisting)
 			L.visible_message("<span class='danger'>[L] resists!</span>")
-
 
 	//unbuckling yourself
 	if(L.buckled && (L.last_special <= world.time) )
@@ -547,16 +547,16 @@
 			if( C.handcuffed )
 				C.next_move = world.time + 100
 				C.last_special = world.time + 100
-				C << "\red You attempt to unbuckle yourself. (This will take around 2 minutes and you need to stand still)"
+				C << "<span class='rose'>You attempt to unbuckle yourself. (This will take around 2 minutes and you need to stand still)</span>"
 				for(var/mob/O in viewers(L))
-					O.show_message("\red <B>[usr] attempts to unbuckle themself!</B>", 1)
+					O.show_message("<span class='danger'>[usr] attempts to unbuckle themself!</span>", 1)
 				spawn(0)
 					if(do_after(usr, 1200, target = usr))
 						if(!C.buckled)
 							return
 						for(var/mob/O in viewers(C))
-							O.show_message("\red <B>[usr] manages to unbuckle themself!</B>", 1)
-						C << "\blue You successfully unbuckle yourself."
+							O.show_message("<span class='danger'>[usr] manages to unbuckle themself!</span>", 1)
+						C << "<span class='notice'>You successfully unbuckle yourself.</span>"
 						C.buckled.manual_unbuckle(C)
 		else
 			L.buckled.manual_unbuckle(L)
@@ -581,9 +581,9 @@
 		//okay, so the closet is either welded or locked... resist!!!
 		usr.next_move = world.time + 100
 		L.last_special = world.time + 100
-		L << "\red You lean on the back of \the [C] and start pushing the door open. (this will take about [breakout_time] minutes)"
+		L << "<span class='rose'>You lean on the back of \the [C] and start pushing the door open. (this will take about [breakout_time] minutes)</span>"
 		for(var/mob/O in viewers(usr.loc))
-			O.show_message("\red <B>The [L.loc] begins to shake violently!</B>", 1)
+			O.show_message("<span class='danger'>The [L.loc] begins to shake violently!</span>", 1)
 
 
 		spawn(0)
@@ -612,9 +612,9 @@
 					SC.broken = 1
 					SC.locked = 0
 					SC.update_icon()
-					usr << "\red You successfully break out!"
+					usr << "<span class='notice'>You successfully break out!</span>"
 					for(var/mob/O in viewers(L.loc))
-						O.show_message("\red <B>\the [usr] successfully broke out of \the [SC]!</B>", 1)
+						O.show_message("<span class='danger'>[usr] successfully broke out of \the [SC]!</span>", 1)
 					if(istype(SC.loc, /obj/structure/bigDelivery)) //Do this to prevent contents from being opened into nullspace (read: bluespace)
 						var/obj/structure/bigDelivery/BD = SC.loc
 						BD.attack_hand(usr)
@@ -622,9 +622,9 @@
 				else
 					C.welded = 0
 					C.update_icon()
-					usr << "\red You successfully break out!"
+					usr << "<span class='notice'>You successfully break out!</span>"
 					for(var/mob/O in viewers(L.loc))
-						O.show_message("\red <B>\the [usr] successfully broke out of \the [C]!</B>", 1)
+						O.show_message("<span class='danger'>[usr] successfully broke out of \the [C]!</span>", 1)
 					if(istype(C.loc, /obj/structure/bigDelivery)) //nullspace ect.. read the comment above
 						var/obj/structure/bigDelivery/BD = C.loc
 						BD.attack_hand(usr)
@@ -633,30 +633,32 @@
 	//breaking out of handcuffs and putting off fires
 	else if(iscarbon(L))
 		var/mob/living/carbon/CM = L
-		if(CM.on_fire && CM.canmove)
+		if(CM.on_fire)
+			if(!CM.canmove && !CM.resting)	return
 			CM.fire_stacks -= 5
 			CM.weakened = 5
 			CM.visible_message("<span class='danger'>[CM] rolls on the floor, trying to put themselves out!</span>", \
-				"<span class='notice'>You stop, drop, and roll!</span>")
+				"<span class='rose'>You stop, drop, and roll!</span>")
 			if(fire_stacks <= 0)
 				CM.visible_message("<span class='danger'>[CM] has successfully extinguished themselves!</span>", \
 					"<span class='notice'>You extinguish yourself.</span>")
 				ExtinguishMob()
 			return
-		if(CM.handcuffed && CM.canmove && (CM.last_special <= world.time))
+		if(CM.handcuffed && (CM.last_special <= world.time))
+			if(!CM.canmove && !CM.resting)	return
 			CM.next_move = world.time + 100
 			CM.last_special = world.time + 100
 			if(isalienadult(CM) || (HULK in usr.mutations))//Don't want to do a lot of logic gating here.
-				usr << "\red You attempt to break your handcuffs. (This will take around 5 seconds and you need to stand still)"
+				usr << "<span class='rose'>You attempt to break your handcuffs. (This will take around 5 seconds and you need to stand still)</span>"
 				for(var/mob/O in viewers(CM))
-					O.show_message(text("\red <B>[] is trying to break the handcuffs!</B>", CM), 1)
+					O.show_message(text("<span class='danger'>[] is trying to break the handcuffs!</span>", CM), 1)
 				spawn(0)
 					if(do_after(CM, 50, target = usr))
 						if(!CM.handcuffed || CM.buckled)
 							return
 						for(var/mob/O in viewers(CM))
-							O.show_message(text("\red <B>[] manages to break the handcuffs!</B>", CM), 1)
-						CM << "\red You successfully break your handcuffs."
+							O.show_message(text("<span class='danger'>[] manages to break the handcuffs!</span>", CM), 1)
+						CM << "<span class='notice'>You successfully break your handcuffs.</span>"
 						CM.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 						qdel(CM.handcuffed)
 						CM.handcuffed = null
@@ -668,40 +670,41 @@
 				if(istype(HC)) //If you are handcuffed with actual handcuffs... Well what do I know, maybe someone will want to handcuff you with toilet paper in the future...
 					breakouttime = HC.breakouttime
 					displaytime = breakouttime / 600 //Minutes
-				CM << "\red You attempt to remove \the [HC]. (This will take around [displaytime] minutes and you need to stand still)"
+				CM << "<span class='notice'>You attempt to remove \the [HC]. (This will take around [displaytime] minutes and you need to stand still)</span>"
 				for(var/mob/O in viewers(CM))
-					O.show_message( "\red <B>[usr] attempts to remove \the [HC]!</B>", 1)
+					O.show_message( "<span class='danger'>[usr] attempts to remove \the [HC]!</span>", 1)
 				spawn(0)
 					if(do_after(CM, breakouttime, target = usr))
 						if(!CM.handcuffed || CM.buckled)
 							return // time leniency for lag which also might make this whole thing pointless but the server lags so hard that 40s isn't lenient enough - Quarxink
 						if(istype(HC, /obj/item/weapon/handcuffs/alien))
-							CM.visible_message("\red <B>[CM] break in a discharge of energy!</B>", \
-							"\blue You successfully break in a discharge of energy!")
+							CM.visible_message("<span class='danger'>[CM] break in a discharge of energy!</span>", \
+							"<span class='notice'>You successfully break in a discharge of energy!</span>")
 							var/datum/effect/effect/system/spark_spread/S = new
 							S.set_up(4,0,CM.loc)
 							S.start()
 							CM.drop_from_inventory(CM.handcuffed)
 							qdel(HC)
 						else
-							CM.visible_message("\red <B>[CM] manages to remove the handcuffs!</B>", \
-								"\blue You successfully remove \the [CM.handcuffed].")
+							CM.visible_message("<span class='danger'>[CM] manages to remove the handcuffs!</span>", \
+								"<span class='notice'>You successfully remove \the [CM.handcuffed].</span>")
 							CM.drop_from_inventory(CM.handcuffed)
 
-		else if(CM.legcuffed && CM.canmove && (CM.last_special <= world.time))
+		else if(CM.legcuffed && (CM.last_special <= world.time))
+			if(!CM.canmove && !CM.resting)	return
 			CM.next_move = world.time + 100
 			CM.last_special = world.time + 100
 			if(isalienadult(CM) || (HULK in usr.mutations))//Don't want to do a lot of logic gating here.
-				usr << "\red You attempt to break your legcuffs. (This will take around 5 seconds and you need to stand still)"
+				usr << "<span class='notice'>You attempt to break your legcuffs. (This will take around 5 seconds and you need to stand still)</span>"
 				for(var/mob/O in viewers(CM))
-					O.show_message(text("\red <B>[] is trying to break the legcuffs!</B>", CM), 1)
+					O.show_message(text("<span class='danger'>[] is trying to break the legcuffs!</span>", CM), 1)
 				spawn(0)
 					if(do_after(CM, 50, target = usr))
 						if(!CM.legcuffed || CM.buckled)
 							return
 						for(var/mob/O in viewers(CM))
-							O.show_message(text("\red <B>[] manages to break the legcuffs!</B>", CM), 1)
-						CM << "\red You successfully break your legcuffs."
+							O.show_message(text("<span class='danger'>[] manages to break the legcuffs!</span>", CM), 1)
+						CM << "<span class='notice'>You successfully break your legcuffs."
 						CM.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 						qdel(CM.legcuffed)
 						CM.legcuffed = null
@@ -713,16 +716,16 @@
 				if(istype(HC)) //If you are legcuffed with actual legcuffs... Well what do I know, maybe someone will want to legcuff you with toilet paper in the future...
 					breakouttime = HC.breakouttime
 					displaytime = breakouttime / 600 //Minutes
-				CM << "\red You attempt to remove \the [HC]. (This will take around [displaytime] minutes and you need to stand still)"
+				CM << "<span class='notice'>You attempt to remove \the [HC]. (This will take around [displaytime] minutes and you need to stand still)</span>"
 				for(var/mob/O in viewers(CM))
-					O.show_message( "\red <B>[usr] attempts to remove \the [HC]!</B>", 1)
+					O.show_message( "<span class='danger'>[usr] attempts to remove \the [HC]!</span>", 1)
 				spawn(0)
 					if(do_after(CM, breakouttime, target = usr))
 						if(!CM.legcuffed || CM.buckled)
 							return // time leniency for lag which also might make this whole thing pointless but the server lags so hard that 40s isn't lenient enough - Quarxink
 						if(istype(HC, /obj/item/weapon/handcuffs/alien))
-							CM.visible_message("\red <B>[CM] break in a discharge of energy!</B>", \
-							"\blue You successfully break in a discharge of energy!")
+							CM.visible_message("<span class='danger'>[CM] break in a discharge of energy!</span>", \
+							"<span class='notice'>You successfully break in a discharge of energy!</span>")
 							var/datum/effect/effect/system/spark_spread/S = new
 							S.set_up(4,0,CM.loc)
 							S.start()
@@ -731,8 +734,8 @@
 							CM.update_inv_legcuffed()
 							qdel(HC)
 						else
-							CM.visible_message("\red <B>[CM] manages to remove the legcuffs!</B>", \
-								"\blue You successfully remove \the [CM.legcuffed].")
+							CM.visible_message("<span class='danger'>[CM] manages to remove the legcuffs!</span>", \
+								"<span class='notice'>You successfully remove \the [CM.legcuffed].</span>")
 							CM.drop_from_inventory(CM.legcuffed)
 							CM.legcuffed = null
 							CM.update_inv_legcuffed()
@@ -741,8 +744,29 @@
 	set name = "Rest"
 	set category = "IC"
 
-	resting = !resting
-	src << "\blue You are now [resting ? "resting" : "getting up"]"
+//Already resting and have others debuffs
+	if( resting && (sleeping || weakened || paralysis || stunned) )
+		src << "<span class='rose'>You can't wake up.</span>"
+
+//Restrained and some debuffs
+	else if( restrained() && (paralysis || stunned) )
+		src << "<span class='rose'>You can't move.</span>"
+
+//Restrained and lying on optable or simple table
+	else if( restrained() && can_operate(src) )	//TO DO: Refactor OpTable code to /bed subtype or "Rest" verb
+		src << "<span class='rose'>You can't move.</span>"
+
+//Debuffs check
+	else if( paralysis || stunned )
+		src << "<span class='rose'>You can't control yourself.</span>"
+
+//Sleep style debuffs
+	else if( !resting && (sleeping || weakened) )
+		src << "<span class='rose'>You are already sleeping.</span>"
+
+	else
+		resting = !resting
+		src << "<span class='notice'>You are now [resting ? "resting" : "getting up"].</span>"
 
 /mob/living/proc/has_eyes()
 	return 1
