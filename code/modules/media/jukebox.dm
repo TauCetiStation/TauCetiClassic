@@ -179,6 +179,10 @@ var/global/loopModeNames=list(
 
 /obj/machinery/media/jukebox/Topic(href, href_list)
 	..()
+	if(stat & (NOPOWER|BROKEN)) return
+	if(usr.stat || usr.restrained()) return
+	if(!in_range(src, usr)) return
+
 	if(emagged)
 		usr << "\red You touch the bluescreened menu. Nothing happens. You feel dumber."
 		return

@@ -308,7 +308,7 @@
 	var/area/newarea = get_area(L.loc)
 	var/area/oldarea = L.lastarea
 	if(newarea != oldarea)
-		CallHook("MobAreaChange", list("mob" = M, "new" = newarea, "old" = oldarea))
+		CallHook("MobAreaChange", list("mob" = A, "new" = newarea, "old" = oldarea))
 	if((oldarea.has_gravity == 0) && (newarea.has_gravity == 1) && (L.m_intent == "run")) // Being ready when you change areas gives you a chance to avoid falling all together.
 		thunk(L)
 

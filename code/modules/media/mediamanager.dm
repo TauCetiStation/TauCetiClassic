@@ -9,46 +9,21 @@
 // Open up VLC and play musique.
 // Converted to VLC for cross-platform and ogg support. - N3X
 var/const/PLAYER_HTML={"
-<embed type="application/x-vlc-plugin" pluginspage="http://www.videolan.org" />
-<object classid="clsid:9BE31822-FDAD-461B-AD51-BE1D1C159921" codebase="http://download.videolan.org/pub/videolan/vlc/last/win32/axvlc.cab" version="VideoLAN.VLCPlugin.2" id="player"></object>
+	<OBJECT id='player' CLASSID='CLSID:6BF52A52-394A-11d3-B153-00C04F79FAA6' type='application/x-oleobject'></OBJECT>
 	<script>
-var _volume = 50;
-var vlc = document.getElementById('player');
-
 function noErrorMessages () { return true; }
 window.onerror = noErrorMessages;
-
 function SetMusic(url, time, volume) {
-	// scaling volume log-wise so that it's a more useful range
-	_volume = Math.log(volume) / Math.LN10 * 50; // volume ranges from 0-200
-
-	// Stop playing
-	vlc.playlist.stop();
-
-	// Clear playlist
-	vlc.playlist.items.clear();
-
-	// Add new playlist item.
-	var id = vlc.playlist.add(url);
-
-	// Play playlist item
-	vlc.playlist.playItem(id);
-
-	vlc.input.time = time*1000; // VLC takes milliseconds.
+	var player = document.getElementById('player');
+	player.URL = url;
+	player.Controls.currentPosition = time;
+	player.Settings.volume = volume;
 }
-
-function UpdateVolume() {
-	vlc.audio.volume = _volume;
+function SetVolume(volume) {
+	var player = document.getElementById('player');
+	player.Settings.volume = volume;
 }
-
-// volume must be set after song already playing
-if(vlc.attachEvent) {
-	vlc.attachEvent("MediaPlayerBuffering", UpdateVolume);
-} else {
-	vlc.addEventListener("MediaPlayerBuffering", UpdateVolume, false);
-}
-	</script>
-"}
+	</script>"}
 
 // Hook into the events we desire.
 /hook_handler/soundmanager
@@ -110,6 +85,8 @@ if(vlc.attachEvent) {
 
 	// Tell the player to play something via JS.
 	proc/send_update()
+		if(!(owner.prefs.toggles & SOUND_STREAMING) && url != "")
+			return // Nope.
 		owner << output(list2params(list(url, (world.time - start_time) / 10, volume)), "[window]:SetMusic")
 	proc/stop_music()
 		url=""
@@ -145,7 +122,8 @@ if(vlc.attachEvent) {
 
 	proc/update_volume(var/value)
 		volume = value
-		send_update()
+		owner << output(list2params(list(volume)), "[window]:SetVolume")
+		//send_update()
 
 /client/verb/change_volume()
 	set name = "Set Volume"
