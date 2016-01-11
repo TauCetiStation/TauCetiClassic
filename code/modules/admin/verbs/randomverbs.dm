@@ -626,7 +626,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		src << "Only administrators may use this command."
 		return
 	var/input = input(usr, "Please enter anything you want. Anything. Serious.", "What?", "") as message|null
-	var/customname = input(usr, "Pick a title for the report.", "Title") as text|null
+	var/customname = input(usr, "Pick a title for the report. Do not forget about prohibit of the use of the Cyrillic alphabet in the names of objects. ", "Title") as text|null
 	if(!input)
 		return
 	if(!customname)
@@ -1019,14 +1019,14 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		src << "Only administrators may use this command."
 		return
 	var/sent = sanitize_alt(input(usr, "Please enter anything you want. Anything. Serious.", "What?", "") as message|null)
-	var/sentname = sanitize_alt(input(usr, "Pick a title for the message.", "Title") as text|null)
+	var/sentname = sanitize_alt(input(usr, "Pick a title for the message. Do not forget about prohibit of the use of the Cyrillic alphabet in the names of objects. ", "Title") as text|null)
 	if(!sent)
 		return
 	if(!sentname)
 		sentname = "NanoTrasen Update"
 	var/dpt = input(usr, "Please choose the needed fax, choose unknown to send to all faxes on the station") as null|anything in alldepartments
 	var/list/stampos = list("CentCom", "Syndicate", "Clown", "FakeCentCom", "Unknown")
-	var/stamp = input(usr, "Please choose the needed stamp, choose unkown to send without any stamp") as null|anything in stampos
+	var/stamp = input(usr, "Please choose the needed stamp, choose unknown to send without any stamp") as null|anything in stampos
 
 	SendFax(sent, sentname, Sender, dpt, stamp)
 
