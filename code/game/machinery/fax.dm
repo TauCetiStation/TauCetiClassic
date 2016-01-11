@@ -187,9 +187,10 @@ var/list/alldepartments = list("Central Command")
 			C << msg
 
 
-proc/SendFax(var/sent, var/sentname, var/mob/Sender, var/dpt, var/stamp)
+proc/SendFax(var/sent, var/sentname, var/mob/Sender, var/dpt, var/stamp, var/stamps)
 
 	log_fax("[Sender] sending [sentname] to [dpt] : [sent]")
+
 	for(var/obj/machinery/faxmachine/F in allfaxes)
 		if(dpt == "Unknown")
 			if(! (F.stat & (BROKEN|NOPOWER) ) )
@@ -204,22 +205,34 @@ proc/SendFax(var/sent, var/sentname, var/mob/Sender, var/dpt, var/stamp)
 					if(stamp == "CentCom")
 						var/image/stampoverlay = image('icons/obj/bureaucracy.dmi')
 						stampoverlay.icon_state = "paper_stamp-cent"
-						P.stamps += "<HR><i>This paper has been stamped by the Central Command Quantum Relay.</i>"
+						if(!stamps)
+							P.stamps += "<HR><i>This paper has been stamped by the Central Command Quantum Relay.</i>"
+						else
+							P.stamps += "<HR><i>[stamps]</i>"
 						P.overlays += stampoverlay
 					if (stamp == "Clown")
 						var/image/stampoverlay = image('icons/obj/bureaucracy.dmi')
 						stampoverlay.icon_state = "paper_stamp-clown"
-						P.stamps += "<HR><i>This paper has been stamped by strange pink stamp.</i>"
+						if(!stamps)
+							P.stamps += "<HR><i>This paper has been stamped by strange pink stamp.</i>"
+						else
+							P.stamps += "<HR><i>[stamps]</i>"
 						P.overlays += stampoverlay
 					if (stamp == "Syndicate")
 						var/image/stampoverlay = image('tauceti/icons/obj/bureaucracy.dmi')
 						stampoverlay.icon_state = "paper_stamp-syndicate"
-						P.stamps += "<HR><i>This paper has been stamped by the Central Command Quantum Relay.</i>"
+						if(!stamps)
+							P.stamps += "<HR><i>This paper has been stamped by the Syndicate Command Interception Relay.</i>"
+						else
+							P.stamps += "<HR><i>[stamps]</i>"
 						P.overlays += stampoverlay
 					if (stamp == "FakeCentCom")
 						var/image/stampoverlay = image('tauceti/icons/obj/bureaucracy.dmi')
 						stampoverlay.icon_state = "paper_stamp-fakecentcom"
-						P.stamps += "<HR><i>This paper has been stamped by the Central Command Quantum Relay.</i>"
+						if(!stamps)
+							P.stamps += "<HR><i>This paper has been stamped by the Central Compound Quantum Relay.</i>"
+						else
+							P.stamps += "<HR><i>[stamps]</i>"
 						P.overlays += stampoverlay
 					playsound(F.loc, "sound/items/polaroid1.ogg", 50, 1)
 
@@ -237,21 +250,33 @@ proc/SendFax(var/sent, var/sentname, var/mob/Sender, var/dpt, var/stamp)
 					if(stamp == "CentCom")
 						var/image/stampoverlay = image('icons/obj/bureaucracy.dmi')
 						stampoverlay.icon_state = "paper_stamp-cent"
-						P.stamps += "<HR><i>This paper has been stamped by the Central Command Quantum Relay.</i>"
+						if(!stamps)
+							P.stamps += "<HR><i>This paper has been stamped by the Central Command Quantum Relay.</i>"
+						else
+							P.stamps += "<HR><i>[stamps]</i>"
 						P.overlays += stampoverlay
 					if (stamp == "Clown")
 						var/image/stampoverlay = image('icons/obj/bureaucracy.dmi')
 						stampoverlay.icon_state = "paper_stamp-clown"
-						P.stamps += "<HR><i>This paper has been stamped by strange pink stamp.</i>"
+						if(!stamps)
+							P.stamps += "<HR><i>This paper has been stamped by strange pink stamp.</i>"
+						else
+							P.stamps += "<HR><i>[stamps]</i>"
 						P.overlays += stampoverlay
 					if (stamp == "Syndicate")
 						var/image/stampoverlay = image('tauceti/icons/obj/bureaucracy.dmi')
 						stampoverlay.icon_state = "paper_stamp-syndicate"
-						P.stamps += "<HR><i>This paper has been stamped by the Central Command Quantum Relay.</i>"
+						if(!stamps)
+							P.stamps += "<HR><i>This paper has been stamped by the Syndicate Command Interception Relay.</i>"
+						else
+							P.stamps += "<HR><i>[stamps]</i>"
 						P.overlays += stampoverlay
 					if (stamp == "FakeCentCom")
 						var/image/stampoverlay = image('tauceti/icons/obj/bureaucracy.dmi')
 						stampoverlay.icon_state = "paper_stamp-fakecentcom"
-						P.stamps += "<HR><i>This paper has been stamped by the Central Command Quantum Relay.</i>"
+						if(!stamps)
+							P.stamps += "<HR><i>This paper has been stamped by the Central Compound Quantum Relay.</i>"
+						else
+							P.stamps += "<HR><i>[stamps]</i>"
 						P.overlays += stampoverlay
 					playsound(F.loc, "sound/items/polaroid1.ogg", 50, 1)
