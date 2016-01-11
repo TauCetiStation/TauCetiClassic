@@ -17,6 +17,7 @@
 	var/log_adminchat = 0				// log admin chat messages
 	var/log_adminwarn = 0				// log warnings admins get about bomb construction and such
 	var/log_pda = 0						// log pda messages
+	var/log_fax = 0						// log fax messages
 	var/log_hrefs = 0					// logs all links clicked in-game. Could be used for debugging and tracking down exploits
 	var/log_runtime = 0					// logs world.log to a file
 	var/sql_enabled = 1					// for sql switching
@@ -164,6 +165,7 @@
 	var/use_slack_bot = 0
 	var/slack_team = 0
 	var/slack_bot_token = 0
+	var/antigrief_alarm_level = 1
 
 /datum/configuration/New()
 	var/list/L = typesof(/datum/game_mode) - /datum/game_mode
@@ -270,6 +272,9 @@
 
 				if ("log_pda")
 					config.log_pda = 1
+
+				if ("log_fax")
+					config.log_fax = 1
 
 				if ("log_hrefs")
 					config.log_hrefs = 1
@@ -558,6 +563,9 @@
 
 				if("slack_bot_token")
 					config.slack_bot_token = value
+
+				if("antigrief_alarm_level")
+					config.antigrief_alarm_level = value
 
 				else
 					log_misc("Unknown setting in configuration: '[name]'")
