@@ -212,14 +212,14 @@ proc/SendFax(var/sent, var/sentname, var/mob/Sender, var/dpt, var/stamp)
 						P.stamps += "<HR><i>This paper has been stamped by strange pink stamp.</i>"
 						P.overlays += stampoverlay
 					if (stamp == "Syndicate")
-						var/image/stampoverlay = image(null)
+						var/image/stampoverlay = image('tauceti/icons/obj/bureaucracy.dmi')
 						stampoverlay.icon_state = "paper_stamp-syndicate"
-						P.stamps += "<HR><i>This paper has been stamped by the Central Command Quantum Relay3.</i>"
+						P.stamps += "<HR><i>This paper has been stamped by the Central Command Quantum Relay.</i>"
 						P.overlays += stampoverlay
 					if (stamp == "FakeCentCom")
-						var/image/stampoverlay = image(null)
+						var/image/stampoverlay = image('tauceti/icons/obj/bureaucracy.dmi')
 						stampoverlay.icon_state = "paper_stamp-fakecentcom"
-						P.stamps += "<HR><i>This paper has been stamped by the Central Command Quantum Relay4.</i>"
+						P.stamps += "<HR><i>This paper has been stamped by the Central Command Quantum Relay.</i>"
 						P.overlays += stampoverlay
 					playsound(F.loc, "sound/items/polaroid1.ogg", 50, 1)
 
@@ -245,13 +245,13 @@ proc/SendFax(var/sent, var/sentname, var/mob/Sender, var/dpt, var/stamp)
 						P.stamps += "<HR><i>This paper has been stamped by strange pink stamp.</i>"
 						P.overlays += stampoverlay
 					if (stamp == "Syndicate")
-						var/image/stampoverlay = image(null)
+						var/image/stampoverlay = image('tauceti/icons/obj/bureaucracy.dmi')
 						stampoverlay.icon_state = "paper_stamp-syndicate"
-						P.stamps += "<HR><i>This paper has been stamped by the Central Command Quantum Relay3.</i>"
+						P.stamps += "<HR><i>This paper has been stamped by the Central Command Quantum Relay.</i>"
 						P.overlays += stampoverlay
 					if (stamp == "FakeCentCom")
-						var/image/stampoverlay = image(null)
+						var/image/stampoverlay = image('tauceti/icons/obj/bureaucracy.dmi')
 						stampoverlay.icon_state = "paper_stamp-fakecentcom"
-						P.stamps += "<HR><i>This paper has been stamped by the Central Command Quantum Relay4.</i>"
+						P.stamps += "<HR><i>This paper has been stamped by the Central Command Quantum Relay.</i>"
 						P.overlays += stampoverlay
 					playsound(F.loc, "sound/items/polaroid1.ogg", 50, 1)
