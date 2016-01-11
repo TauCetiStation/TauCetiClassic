@@ -1025,7 +1025,6 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!sentname)
 		sentname = "NanoTrasen Update"
 	var/dpt = input(usr, "Please choose the needed fax, choose unknown to send to all faxes on the station") as null|anything in alldepartments
-	world << dpt
 	var/list/stampos = list("CentCom", "Syndicate", "Clown", "FakeCentCom", "Unknown")
 	var/stamp = input(usr, "Please choose the needed stamp, choose unkown to send without any stamp") as null|anything in stampos
 
