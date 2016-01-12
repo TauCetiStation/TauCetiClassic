@@ -26,9 +26,6 @@
 	var/has_resources
 	var/list/resources
 
-	var/dynamic_lighting = 1
-	luminosity = 1
-
 /turf/New()
 	..()
 	for(var/atom/movable/AM as mob|obj in src)
@@ -174,7 +171,7 @@
 		qdel(L)
 
 //Creates a new turf
-/turf/proc/ChangeTurf(var/turf/N)
+/turf/proc/ChangeTurf(var/turf/N, var/force_lighting_update = 0)
 	if (!N)
 		return
 
@@ -192,10 +189,15 @@
 					return W
 ///// Z-Level Stuff
 
+	// Back all this data up, so we can set it after the turf replace.
+	// If you're wondering how this proc'll keep running since the turf should be "deleted":
+	// BYOND never deletes turfs, when you "delete" a turf, it actually morphs the turf into a new one.
+	// Running procs do NOT get stopped due to this.
 	var/old_opacity = opacity
 	var/old_dynamic_lighting = dynamic_lighting
 	var/list/old_affecting_lights = affecting_lights
-	var/old_lighting_overlay = lighting_overlay
+	var/old_lighting_overlay = lighting_overlay // Not even a need to cast this, honestly.
+	var/list/old_lighting_corners = corners
 
 	//world << "Replacing [src.type] with [N]"
 
@@ -240,13 +242,20 @@
 
 	lighting_overlay = old_lighting_overlay
 	affecting_lights = old_affecting_lights
-	if((old_opacity != opacity) || (dynamic_lighting != old_dynamic_lighting))
+	corners = old_lighting_corners
+
+	for(var/i = 1 to 4)//Generate more light corners when needed. If removed - pitch black shuttles will come for your soul!
+		if(corners[i]) // Already have a corner on this direction.
+			continue
+		corners[i] = new/datum/lighting_corner(src, LIGHTING_CORNER_DIAGONAL[i])
+
+	if((old_opacity != opacity) || (dynamic_lighting != old_dynamic_lighting) || force_lighting_update)
 		reconsider_lights()
 	if(dynamic_lighting != old_dynamic_lighting)
 		if(dynamic_lighting)
-			lighting_build_overlays()
+			lighting_build_overlay()
 		else
-			lighting_clear_overlays()
+			lighting_clear_overlay()
 
 
 //Commented out by SkyMarshal 5/10/13 - If you are patching up space, it should be vacuum.

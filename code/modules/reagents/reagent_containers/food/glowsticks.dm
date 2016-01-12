@@ -8,8 +8,7 @@
 	item_state = null
 	action_button_name = null	//just pull it manually, neckbeard.
 	slot_flags = SLOT_BELT
-	light_power = 3
-	var/brightness_on = 7
+	light_power = 2
 	var/on = 0
 	var/colourName = null
 	var/eaten = 0
@@ -27,9 +26,9 @@
 	liquid_fuel.volume = max(liquid_fuel.volume - 0.1, 0)
 	if(liquid_fuel.volume)
 		if(liquid_fuel.volume < reagents.maximum_volume/3)
-			if(light_range != 3) set_light(3)
+			if(light_range != 3) set_light(2,1)
 		else if(liquid_fuel.volume < reagents.maximum_volume/2)
-			if(light_range != 5) set_light(5)
+			if(light_range != 5) set_light(3)
 	if(!liquid_fuel.volume || !on)
 		turn_off()
 		if(!liquid_fuel.volume)
@@ -39,7 +38,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/proc/update_brightness(var/mob/user = null)
 	if(on)
 		icon_state = "glowstick_[colourName]-on"
-		set_light(brightness_on)
+		set_light(4)
 	else
 		icon_state = "glowstick_[colourName]"
 		set_light(0)

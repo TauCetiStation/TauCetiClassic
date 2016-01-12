@@ -16,16 +16,6 @@
 	active_areas += src
 	all_areas += src
 
-	if(type == /area)	// override defaults for space. TODO: make space areas of type /area/space rather than /area
-		requires_power = 1
-		always_unpowered = 1
-		lighting_use_dynamic = 1
-		power_light = 0
-		power_equip = 0
-		power_environ = 0
-//		lighting_state = 4
-		//has_gravity = 0    // Space has gravity.  Because.. because.
-
 	if(!requires_power)
 		power_light = 0			//rastaf0
 		power_equip = 0			//rastaf0
