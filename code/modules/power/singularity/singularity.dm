@@ -17,7 +17,9 @@ var/global/list/uneatable = list(
 	anchored = 1
 	density = 1
 	layer = 6
-	light_range = 6
+	light_power = 20
+	light_range = 3
+	light_color = "#E42B2B"
 	unacidable = 1 //Don't comment this out.
 	use_power = 0
 	var/current_size = 1
@@ -135,6 +137,8 @@ var/global/list/uneatable = list(
 			dissipate_delay = 10
 			dissipate_track = 0
 			dissipate_strength = 1
+			light_color = "#E42B2B"
+			light_range = 3
 		if(3)//1 to 3 does not check for the turfs if you put the gens right next to a 1x1 then its going to eat them
 			current_size = 3
 			icon = 'icons/effects/96x96.dmi'
@@ -146,6 +150,8 @@ var/global/list/uneatable = list(
 			dissipate_delay = 5
 			dissipate_track = 0
 			dissipate_strength = 5
+			light_color = "#E42B2B"
+			light_range = 5
 		if(5)
 			if((check_turfs_in(1,2))&&(check_turfs_in(2,2))&&(check_turfs_in(4,2))&&(check_turfs_in(8,2)))
 				current_size = 5
@@ -158,6 +164,8 @@ var/global/list/uneatable = list(
 				dissipate_delay = 4
 				dissipate_track = 0
 				dissipate_strength = 20
+				light_color = "#E02BE4"
+				light_range = 7
 		if(7)
 			if((check_turfs_in(1,3))&&(check_turfs_in(2,3))&&(check_turfs_in(4,3))&&(check_turfs_in(8,3)))
 				current_size = 7
@@ -170,6 +178,8 @@ var/global/list/uneatable = list(
 				dissipate_delay = 10
 				dissipate_track = 0
 				dissipate_strength = 10
+				light_color = "#312BE4"
+				light_range = 10
 		if(9)//this one also lacks a check for gens because it eats everything
 			current_size = 9
 			icon = 'icons/effects/288x288.dmi'
@@ -179,6 +189,8 @@ var/global/list/uneatable = list(
 			grav_pull = 10
 			consume_range = 4
 			dissipate = 0 //It cant go smaller due to e loss
+			light_color = "#432854"
+			light_range = 12
 	if(current_size == allowed_size)
 		investigate_log("<font color='red'>grew to size [current_size]</font>","singulo")
 		return 1
