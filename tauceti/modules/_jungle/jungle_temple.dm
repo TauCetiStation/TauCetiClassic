@@ -2,37 +2,37 @@
 
 /area/jungle/temple_one
 	name = "temple"
-	lighting_use_dynamic = 1
+	dynamic_lighting = 1
 	icon = 'tauceti/modules/_jungle/jungle.dmi'
 	icon_state = "temple1"
 
 /area/jungle/temple_two
 	name = "temple"
-	lighting_use_dynamic = 1
+	dynamic_lighting = 1
 	icon = 'tauceti/modules/_jungle/jungle.dmi'
 	icon_state = "temple2"
 
 /area/jungle/temple_three
 	name = "temple"
-	lighting_use_dynamic = 1
+	dynamic_lighting = 1
 	icon = 'tauceti/modules/_jungle/jungle.dmi'
 	icon_state = "temple3"
 
 /area/jungle/temple_four
 	name = "temple"
-	lighting_use_dynamic = 1
+	dynamic_lighting = 1
 	icon = 'tauceti/modules/_jungle/jungle.dmi'
 	icon_state = "temple4"
 
 /area/jungle/temple_five
 	name = "temple"
-	lighting_use_dynamic = 1
+	dynamic_lighting = 1
 	icon = 'tauceti/modules/_jungle/jungle.dmi'
 	icon_state = "temple5"
 
 /area/jungle/temple_six
 	name = "temple"
-	lighting_use_dynamic = 1
+	dynamic_lighting = 1
 	icon = 'tauceti/modules/_jungle/jungle.dmi'
 	icon_state = "temple6"
 
