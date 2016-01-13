@@ -211,16 +211,21 @@
 
 	if(istype(source_turf))
 		FOR_DVIEW(var/turf/T, light_range, source_turf, INVISIBILITY_LIGHTING)
-			for(var/datum/lighting_corner/C in T.get_corners(get_dir(source_turf, T)))
-				if(effect_str.Find(C))
-					continue
+			if(T.lighting_overlay)
+				for(var/A in T.get_corners(get_dir(source_turf, T)))
+					if(!A)
+						continue
 
-				C.affecting += src
+					var/datum/lighting_corner/C = A
+					if(effect_str.Find(C))
+						continue
 
-				if(!C.active)
-					continue
+					C.affecting += src
 
-				APPLY_CORNER(C)
+					if(!C.active)
+						continue
+
+					APPLY_CORNER(C)
 
 			if(!T.affecting_lights)
 				T.affecting_lights = list()
@@ -232,13 +237,21 @@
 /datum/light_source/proc/remove_lum()
 	applied = FALSE
 
-	for(var/turf/T in affecting_turfs)
+	for(var/A in affecting_turfs)
+		if(!A)
+			continue
+
+		var/turf/T = A
 		if(T.affecting_lights)
 			T.affecting_lights -= src
 
 	affecting_turfs.Cut()
 
-	for(var/datum/lighting_corner/C in effect_str)
+	for(var/A in effect_str)
+		if(!A)
+			continue
+
+		var/datum/lighting_corner/C = A
 		REMOVE_CORNER(C)
 
 		C.affecting -= src
@@ -259,23 +272,39 @@
 		turfs   += T
 	END_FOR_DVIEW
 
-	for(var/turf/T in turfs - affecting_turfs) // New turfs, add us to the affecting lights of them.
+	for(var/A in turfs - affecting_turfs) // New turfs, add us to the affecting lights of them.
+		if(!A)
+			continue
+
+		var/turf/T = A
 		if(!T.affecting_lights)
 			T.affecting_lights = list()
 
 		T.affecting_lights += src
 
-	for(var/turf/T in affecting_turfs - turfs) // Now-gone turfs, remove us from the affecting lights.
+	for(var/A in affecting_turfs - turfs) // Now-gone turfs, remove us from the affecting lights.
+		if(!A)
+			continue
+
+		var/turf/T = A
 		T.affecting_lights -= src
 
-	for(var/datum/lighting_corner/C in corners - effect_str) // New corners
+	for(var/A in corners - effect_str) // New corners
+		if(!A)
+			continue
+
+		var/datum/lighting_corner/C = A
 		C.affecting += src
 		if(!C.active)
 			continue
 
 		APPLY_CORNER(C)
 
-	for(var/datum/lighting_corner/C in effect_str - corners) // Old, now gone, corners.
+	for(var/A in effect_str - corners) // Old, now gone, corners.
+		if(!A)
+			continue
+
+		var/datum/lighting_corner/C = A
 		REMOVE_CORNER(C)
 		effect_str -= C
 

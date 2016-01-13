@@ -13,7 +13,11 @@
 		lighting_process()
 
 /proc/lighting_process()
-	for(var/datum/light_source/L in lighting_update_lights)
+	for(var/A in lighting_update_lights)
+		if(!A)
+			continue
+
+		var/datum/light_source/L = A
 		. = L.check()
 		if(L.destroyed || . || L.force_update)
 			L.remove_lum()
