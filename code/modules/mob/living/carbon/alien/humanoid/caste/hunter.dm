@@ -50,7 +50,7 @@
 /*
 /mob/living/carbon/alien/humanoid/hunter/verb/invis()
 	set name = "Invisibility (50)"
-	set desc = "Makes you invisible for 15 seconds"
+	set desc = "Makes you invisible for 15 seconds."
 	set category = "Alien"
 
 	if(alien_invis)

@@ -12,7 +12,7 @@
  */
 /obj/effect/alien
 	name = "alien thing"
-	desc = "theres something alien about this"
+	desc = "theres something alien about this."
 	icon = 'icons/mob/xenomorph.dmi'
 //	unacidable = 1 //Aliens won't ment their own.
 
@@ -245,7 +245,7 @@ Alien plants should do something if theres a lot of poison
 
 	if(!linked_node || (get_dist(linked_node, src) > linked_node.node_range) )
 		return
-	
+
 	direction_loop:
 		for(var/dirn in cardinal)
 			var/turf/T = get_step(src, dirn)
@@ -396,7 +396,7 @@ Alien plants should do something if theres a lot of poison
 	MAX_GROWTH_TIME = 3000
 
 /obj/effect/alien/egg
-	desc = "It looks like a weird egg"
+	desc = "It looks like a weird egg."
 	name = "egg"
 	icon_state = "egg_growing"
 	density = 0

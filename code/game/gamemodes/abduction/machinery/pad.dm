@@ -2,7 +2,7 @@
 
 /obj/machinery/abductor/pad
 	name = "alien telepad"
-	desc = "Use this to transport to and from human habitat"
+	desc = "Use this to transport to and from human habitat."
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "alien-pad-idle"
 	anchored = 1

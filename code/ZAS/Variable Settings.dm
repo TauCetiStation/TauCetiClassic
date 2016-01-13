@@ -11,11 +11,11 @@ var/global/vs_control/vsc = new
 
 	var/fire_fuel_energy_release = 397000
 	var/fire_fuel_energy_release_NAME = "Fire - Fuel energy release"
-	var/fire_fuel_energy_release_DESC = "The energy in joule released when burning one mol of a burnable substance"
+	var/fire_fuel_energy_release_DESC = "The energy in joule released when burning one mol of a burnable substance."
 
 
 	var/IgnitionLevel = 0.5
-	var/IgnitionLevel_DESC = "Determines point at which fire can ignite"
+	var/IgnitionLevel_DESC = "Determines point at which fire can ignite."
 
 	var/airflow_lightest_pressure = 20
 	var/airflow_lightest_pressure_NAME = "Airflow - Small Movement Threshold %"

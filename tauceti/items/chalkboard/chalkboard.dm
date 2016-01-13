@@ -17,7 +17,7 @@
 /obj/structure/chalkboard/verb/honk()
 	set src in oview(1)
 	set name = "HONK"
-	set desc = "Make HONK"
+	set desc = "Make HONK!"
 	set category = "Object"
 
 	if (usr.stat != 0)

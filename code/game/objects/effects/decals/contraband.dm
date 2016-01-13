@@ -205,11 +205,6 @@ obj/structure/sign/poster/attackby(obj/item/weapon/W as obj, mob/user as mob)
 		P.resulting_poster = src
 		P.loc = location
 		loc = P
-//	var/obj/item/weapon/contraband/poster/P = new(src, serial_number)
-//	P.loc = newloc
-//	src.loc = P
-//	qdel(src)
-
 
 //separated to reduce code duplication. Moved here for ease of reference and to unclutter r_wall/attackby()
 /turf/simulated/wall/proc/place_poster(var/obj/item/weapon/poster/P, var/mob/user)

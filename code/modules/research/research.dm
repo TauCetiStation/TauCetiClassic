@@ -200,7 +200,7 @@ datum/tech/powerstorage
 
 datum/tech/bluespace
 	name = "'Blue-space' Research"
-	desc = "Research into the sub-reality known as 'blue-space'"
+	desc = "Research into the sub-reality known as 'blue-space'."
 	id = "bluespace"
 
 datum/tech/biotech
@@ -231,7 +231,7 @@ datum/tech/syndicate
 /*
 datum/tech/arcane
 	name = "Arcane Research"
-	desc = "Research into the occult and arcane field for use in practical science"
+	desc = "Research into the occult and arcane field for use in practical science."
 	id = "arcane"
 	level = 0 //It didn't become "secret" as advertised.
 

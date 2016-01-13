@@ -65,7 +65,7 @@
 	body_parts_covered = FEET
 
 /obj/item/clothing/shoes/galoshes
-	desc = "Rubber boots"
+	desc = "Rubber boots."
 	name = "galoshes"
 	icon_state = "galoshes"
 	permeability_coefficient = 0.05
@@ -107,7 +107,7 @@
 
 /obj/item/clothing/shoes/cyborg
 	name = "cyborg boots"
-	desc = "Shoes for a cyborg costume"
+	desc = "Shoes for a cyborg costume."
 	icon_state = "boots"
 
 /obj/item/clothing/shoes/slippers

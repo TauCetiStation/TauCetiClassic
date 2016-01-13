@@ -20,7 +20,7 @@ Doesn't work on other aliens/AI.*/
 
 /mob/living/carbon/alien/humanoid/verb/plant()
 	set name = "Plant Weeds (50)"
-	set desc = "Plants some alien weeds"
+	set desc = "Plants some alien weeds."
 	set category = "Alien"
 
 	if(powerc(50,1))
@@ -33,7 +33,7 @@ Doesn't work on other aliens/AI.*/
 /*
 /mob/living/carbon/alien/humanoid/verb/ActivateHuggers()
 	set name = "Activate facehuggers (5)"
-	set desc = "Makes all nearby facehuggers activate"
+	set desc = "Makes all nearby facehuggers activate."
 	set category = "Alien"
 
 	if(powerc(5))
@@ -45,7 +45,7 @@ Doesn't work on other aliens/AI.*/
 */
 /mob/living/carbon/alien/humanoid/verb/whisp(mob/M as mob in oview())
 	set name = "Whisper (10)"
-	set desc = "Whisper to someone"
+	set desc = "Whisper to someone."
 	set category = "Alien"
 
 	if(powerc(10))
@@ -59,7 +59,7 @@ Doesn't work on other aliens/AI.*/
 
 /mob/living/carbon/alien/humanoid/verb/transfer_plasma(mob/living/carbon/alien/M as mob in oview())
 	set name = "Transfer Plasma"
-	set desc = "Transfer Plasma to another alien"
+	set desc = "Transfer Plasma to another alien."
 	set category = "Alien"
 
 	if(isalien(M))
@@ -174,7 +174,7 @@ Doesn't work on other aliens/AI.*/
 
 /mob/living/carbon/alien/humanoid/verb/regurgitate()
 	set name = "Regurgitate"
-	set desc = "Empties the contents of your stomach"
+	set desc = "Empties the contents of your stomach."
 	set category = "Alien"
 
 	if(powerc())

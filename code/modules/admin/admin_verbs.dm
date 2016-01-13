@@ -693,7 +693,7 @@ var/list/admin_verbs_mentor = list(
 /client/proc/make_sound(var/obj/O in world) // -- TLE
 	set category = "Special Verbs"
 	set name = "Make Sound"
-	set desc = "Display a message to everyone who can hear the target"
+	set desc = "Display a message to everyone who can hear the target."
 	if(O)
 		var/message = input("What do you want the message to be?", "Make Sound") as text|null
 		if(!message)
@@ -715,7 +715,7 @@ var/list/admin_verbs_mentor = list(
 /client/proc/object_talk(var/msg as text) // -- TLE
 	set category = "Special Verbs"
 	set name = "oSay"
-	set desc = "Display a message to everyone who can hear the target"
+	set desc = "Display a message to everyone who can hear the target."
 	if(mob.control_object)
 		if(!msg)
 			return
@@ -726,7 +726,7 @@ var/list/admin_verbs_mentor = list(
 /client/proc/kill_air() // -- TLE
 	set category = "Debug"
 	set name = "Kill Air"
-	set desc = "Toggle Air Processing"
+	set desc = "Toggle Air Processing."
 	if(air_processing_killed)
 		air_processing_killed = 0
 		usr << "<b>Enabled air processing.</b>"
@@ -782,7 +782,7 @@ var/list/admin_verbs_mentor = list(
 
 /client/proc/change_security_level()
 	set name = "Set security level"
-	set desc = "Sets the station security level"
+	set desc = "Sets the station security level."
 	set category = "Admin"
 
 	if(!check_rights(R_ADMIN))	return

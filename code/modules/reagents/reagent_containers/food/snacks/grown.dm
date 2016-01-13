@@ -244,7 +244,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/plastellium
 	seed = "/obj/item/seeds/plastiseed"
 	name = "clump of plastellium"
-	desc = "Hmm, needs some processing"
+	desc = "Hmm, needs some processing."
 	icon_state = "plastellium"
 	filling_color = "#C4C4C4"
 	New()
@@ -769,7 +769,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/icepepper
 	seed = "/obj/item/seeds/icepepperseed"
 	name = "ice-pepper"
-	desc = "It's a mutant strain of chili"
+	desc = "It's a mutant strain of chili."
 	icon_state = "icepepper"
 	potency = 20
 	filling_color = "#66CEED"

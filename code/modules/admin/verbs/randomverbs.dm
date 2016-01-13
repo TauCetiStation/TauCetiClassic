@@ -319,7 +319,7 @@ Ccomp's first proc.
 /client/proc/toggle_antagHUD_use()
 	set category = "Server"
 	set name = "Toggle antagHUD usage"
-	set desc = "Toggles antagHUD usage for observers"
+	set desc = "Toggles antagHUD usage for observers."
 
 	if(!holder)
 		src << "Only administrators may use this command."
@@ -867,7 +867,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 /client/proc/toggle_view_range()
 	set category = "Special Verbs"
 	set name = "Change View Range"
-	set desc = "switches between 1x and custom views"
+	set desc = "switches between 1x and custom views."
 
 	if(view == world.view)
 		view = input("Select view range:", "FUCK YE", 7) in list(1,2,3,4,5,6,7,8,9,10,11,12,13,14,128)
@@ -995,7 +995,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	set category = "Server"
 	set name = "Toggle random events on/off"
 
-	set desc = "Toggles random events such as meteors, black holes, blob (but not space dust) on/off"
+	set desc = "Toggles random events such as meteors, black holes, blob (but not space dust) on/off."
 	if(!check_rights(R_SERVER))	return
 
 	if(!config.allow_random_events)

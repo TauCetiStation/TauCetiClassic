@@ -99,7 +99,7 @@
 	icon = 'icons/obj/pipes.dmi'
 
 	name = "pipe"
-	desc = "A one meter section of regular pipe"
+	desc = "A one meter section of regular pipe."
 
 	volume = 70
 
@@ -323,7 +323,7 @@
 	icon = 'icons/obj/atmospherics/pipe_manifold.dmi'
 
 	name = "pipe manifold"
-	desc = "A manifold composed of regular pipes"
+	desc = "A manifold composed of regular pipes."
 
 	volume = 105
 
@@ -522,7 +522,7 @@
 	icon = 'icons/obj/atmospherics/pipe_manifold.dmi'
 
 	name = "4-way pipe manifold"
-	desc = "A manifold composed of regular pipes"
+	desc = "A manifold composed of regular pipes."
 
 	volume = 140
 
@@ -701,7 +701,7 @@ obj/machinery/atmospherics/pipe/manifold4w/New()
 /************-Cap-************/
 /obj/machinery/atmospherics/pipe/cap
 	name = "pipe endcap"
-	desc = "An endcap for pipes"
+	desc = "An endcap for pipes."
 	icon = 'icons/obj/pipes.dmi'
 	icon_state = "cap"
 	level = 2
@@ -980,7 +980,7 @@ obj/machinery/atmospherics/pipe/cap/update_icon()
 	icon_state = "intact"
 
 	name = "Vent"
-	desc = "A large air vent"
+	desc = "A large air vent."
 
 	level = 1
 
