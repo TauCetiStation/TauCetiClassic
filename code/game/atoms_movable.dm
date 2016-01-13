@@ -27,6 +27,9 @@
 		src.last_move = get_dir(A, src.loc)
 	return
 
+/atom/movable/proc/setLoc(var/T, var/teleported=0)
+	loc = T
+
 /*
 /atom/movable/Destroy()
 	if(isnull(gcDestroyed) && loc)

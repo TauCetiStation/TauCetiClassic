@@ -26,7 +26,7 @@ json_reader
 			src.json = json
 			. = new/list()
 			src.i = 1
-			while(src.i <= lentext(json))
+			while(src.i <= length(json))
 				var/char = get_char()
 				if(is_whitespace(char))
 					i++
@@ -44,7 +44,7 @@ json_reader
 
 		read_word()
 			var/val = ""
-			while(i <= lentext(json))
+			while(i <= length(json))
 				var/char = get_char()
 				if(is_whitespace(char) || symbols.Find(char))
 					i-- // let scanner handle this character
@@ -56,14 +56,16 @@ json_reader
 			var
 				escape 	= FALSE
 				val		= ""
-			while(++i <= lentext(json))
+			while(++i <= length(json))
 				var/char = get_char()
 				if(escape)
+					escape=FALSE // WHICH STUPID ASSHOLE FORGOT THIS - N3X
 					switch(char)
 						if("\\", "'", "\"", "/", "u")
 							val += char
 						else
 							// TODO: support octal, hex, unicode sequences
+							//testing("Having trouble with \"\\[char]\" in string \"[val]\"")
 							ASSERT(sequences.Find(char))
 							val += ascii2text(sequences[char])
 				else
@@ -97,6 +99,13 @@ json_reader
 		is_digit(char)
 			var/c = text2ascii(char)
 			return 48 <= c && c <= 57 || char == "+" || char == "-"
+
+
+		// parser
+		ReadArray(list/tokens)
+			src.tokens = tokens
+			i = 1
+			return read_array()
 
 
 		// parser
