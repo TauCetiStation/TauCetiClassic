@@ -89,14 +89,22 @@
 	. = ..()
 
 	if(Obj && OldLoc != src)
-		for(var/datum/light_source/L in Obj.light_sources) // Cycle through the light sources on this atom and tell them to update.
+		for(var/A in Obj.light_sources) // Cycle through the light sources on this atom and tell them to update.
+			if(!A)
+				continue
+
+			var/datum/light_source/L = A
 			L.source_atom.update_light()
 
 /atom/Exited(var/atom/movable/Obj, var/atom/newloc)
 	. = ..()
 
 	if(!newloc && Obj && newloc != src) // Incase the atom is being moved to nullspace, we handle queuing for a lighting update here.
-		for(var/datum/light_source/L in Obj.light_sources) // Cycle through the light sources on this atom and tell them to update.
+		for(var/A in Obj.light_sources) // Cycle through the light sources on this atom and tell them to update.
+			if(!A)
+				continue
+
+			var/datum/light_source/L = A
 			L.source_atom.update_light()
 
 /obj/item/equipped()

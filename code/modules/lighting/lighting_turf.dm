@@ -15,14 +15,22 @@
 
 // Causes any affecting light sources to be queued for a visibility update, for example a door got opened.
 /turf/proc/reconsider_lights()
-	for(var/datum/light_source/L in affecting_lights)
+	for(var/A in affecting_lights)
+		if(!A)
+			continue
+
+		var/datum/light_source/L = A
 		L.vis_update()
 
 /turf/proc/lighting_clear_overlay()
 	if(lighting_overlay)
 		qdel(lighting_overlay)
 
-	for(var/datum/lighting_corner/C in corners)
+	for(var/A in corners)
+		if(!A)
+			continue
+
+		var/datum/lighting_corner/C = A
 		C.update_active()
 
 // Builds a lighting overlay for us, but only if our area is dynamic.
@@ -32,7 +40,11 @@
 		if(A.dynamic_lighting)
 			PoolOrNew(/atom/movable/lighting_overlay, src)
 
-			for(var/datum/lighting_corner/C in corners)
+			for(var/LC in corners)
+				if(!LC)
+					continue
+
+				var/datum/lighting_corner/C = LC
 				if(!C.active) // We would activate the corner, calculate the lighting for it.
 					for(var/L in C.affecting)
 						var/datum/light_source/S = L

@@ -56,7 +56,11 @@
 
 	var/list/L = src.color:Copy() // For some dumb reason BYOND won't allow me to use [] on a colour matrix directly.
 
-	for(var/datum/lighting_corner/C in T.corners)
+	for(var/A in T.corners)
+		if(!A)
+			continue
+
+		var/datum/lighting_corner/C = A
 		var/i = 0
 
 		// Huge switch to determine i based on D.
