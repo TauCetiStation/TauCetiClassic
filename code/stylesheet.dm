@@ -13,6 +13,7 @@ em						{font-style: normal;	font-weight: bold;}
 
 .prefix					{					font-weight: bold;}
 
+/* OOC */
 .ooc					{					font-weight: bold;}
 .adminobserverooc		{color: #0099cc;	font-weight: bold;}
 .adminooc				{color: #b82e00;	font-weight: bold;}
@@ -21,12 +22,18 @@ em						{font-style: normal;	font-weight: bold;}
 .admin					{color: #386aff;	font-weight: bold;}
 .adminsay				{color: #006666;	font-weight: bold;}
 
+/* Miscellaneous */
+.say					{}
+.alert					{color: #ff0000;}
 .name					{					font-weight: bold;}
 
-.say					{}
-.deadsay				{color: #5c00e6;}
-.radio					{color: #008000;}
-.deptradio				{color: #993399;}
+h1.alert, h2.alert		{color: #000000;}
+
+.emote					{					font-style: italic;}
+.selecteddna			{color: #FFFFFF; 	background-color: #001B1B}
+.artefact				{color: #ffa500;}
+
+/* Radio Channels */
 .comradio				{color: #193A7A;}
 .syndradio				{color: #6D3F40;}
 .centradio				{color: #5C5C8A;}
@@ -38,17 +45,17 @@ em						{font-style: normal;	font-weight: bold;}
 .sciradio				{color: #993399;}
 .supradio				{color: #5F4519;}
 
-.alert					{color: #ff0000;}
-h1.alert, h2.alert		{color: #000000;}
+/* Radio: Misc */
+.radio					{color: #008000;}
+.deptradio				{color: #993399;}
+.deadsay				{color: #5c00e6;}
+.newscaster				{color: #800000;}
 
-.emote					{					font-style: italic;}
-.selecteddna			{color: #FFFFFF; 	background-color: #001B1B}
-
+/* Game Messages */
 .attack					{color: #ff0000;}
 .moderate				{color: #CC0000;}
 .disarm					{color: #990000;}
 .passive				{color: #660000;}
-.artefact				{color: #ffa500;}
 
 .danger					{color: #ff0000;	font-weight: bold;}
 .warning				{color: #ff0000;	font-style: italic;}
@@ -58,17 +65,19 @@ h1.alert, h2.alert		{color: #000000;}
 
 .wet					{color: #007FBF;	font-weight: bold;}
 
-.shadowling				{color: #3b2769;}
-
 .big					{font-size: 3;}
 .reallybig				{font-size: 4;}
 
+.shadowling				{color: #3b2769;}
+.cult					{color: #800080; font-weight: bold; font-style: italic;}
 .alien					{color: #543354;}
-.newscaster				{color: #800000;}
 
+/* Admin: Channels */
 .mod					{color: #735638;	font-weight: bold;}
 .modooc					{color: #184880;	font-weight: bold;}
 .adminmod				{color: #402A14;	font-weight: bold;}
+
+/* Languages */
 .tajaran				{color: #803B56;}
 .tajaran_signlang		{color: #941C1C;}
 .skrell					{color: #00CED1;}
