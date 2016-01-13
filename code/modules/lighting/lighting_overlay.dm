@@ -55,7 +55,6 @@
 		qdel(src)
 
 	var/list/L = src.color:Copy() // For some dumb reason BYOND won't allow me to use [] on a colour matrix directly.
-	var/max    = 0
 
 	for(var/datum/lighting_corner/C in T.corners)
 		var/i = 0
@@ -79,11 +78,9 @@
 		if(mx > 1)
 			. = 1 / mx
 
-		max = max(., mx)
-
 		L[i + 0]   = C.lum_r * .
 		L[i + 1]   = C.lum_g * .
 		L[i + 2]   = C.lum_b * .
 
 	src.color  = L
-	luminosity = (max > LIGHTING_SOFT_THRESHOLD)
+	luminosity = (T.get_lumcount() ? 1 : 0)
