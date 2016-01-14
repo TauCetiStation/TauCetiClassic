@@ -3044,8 +3044,6 @@ datum
 
 				if(alien && alien == IS_SKRELL) //Skrell get very drunk very quickly.
 					d*=5
-				else if(alien && alien == IS_KIDAN) //Alcohol is like water to Kida according to lore
-					d*=0
 
 
 				M.dizziness += dizzy_adj.
