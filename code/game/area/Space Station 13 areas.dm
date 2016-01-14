@@ -26,7 +26,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon = 'icons/turf/areas.dmi'
 	icon_state = "unknown"
 	layer = 10
-	luminosity = 0
 	mouse_opacity = 0
 	var/lightswitch = 1
 	var/valid_territory = 1 //If it's a valid territory for gangs to claim
@@ -52,7 +51,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	var/area/master				// master area used for power calcluations
 								// (original area before splitting due to sd_DAL)
 	var/list/related			// the other areas of the same type as this
-//	var/list/lights				// list of all lights on this area
 	var/list/all_doors = list()		//Added by Strumpetplaya - Alarm Change - Contains a list of doors adjacent to this area
 	var/air_doors_activated = 0
 
@@ -122,7 +120,6 @@ var/list/ghostteleportlocs = list()
 	name = "\improper Admin room"
 	icon_state = "start"
 	requires_power = 0
-	lighting_use_dynamic = 0
 
 
 
@@ -328,8 +325,7 @@ var/list/ghostteleportlocs = list()
 	name = "start area"
 	icon_state = "start"
 	requires_power = 0
-	luminosity = 1
-	lighting_use_dynamic = 0
+	dynamic_lighting = 0
 	has_gravity = 1
 
 // === end remove
@@ -345,7 +341,6 @@ var/list/ghostteleportlocs = list()
 	name = "\improper Centcom"
 	icon_state = "centcom"
 	requires_power = 0
-	lighting_use_dynamic = 0
 
 /area/centcom/control
 	name = "\improper Centcom Control"
@@ -490,7 +485,6 @@ var/list/ghostteleportlocs = list()
 	name = "\improper Abductor Ship"
 	icon_state = "yellow"
 	power_equip = 1
-	lighting_use_dynamic = 0
 
 /area/wizard_station
 	name = "\improper Wizard's Den"
@@ -889,7 +883,7 @@ var/list/ghostteleportlocs = list()
 /area/holodeck
 	name = "\improper Holodeck"
 	icon_state = "Holodeck"
-	lighting_use_dynamic = 0
+	dynamic_lighting = 0
 
 /area/holodeck/alphadeck
 	name = "\improper Holodeck Alpha"
@@ -1035,7 +1029,6 @@ var/list/ghostteleportlocs = list()
 
 /area/solar
 	requires_power = 0
-	lighting_use_dynamic = 0
 	valid_territory = 0
 
 	auxport
@@ -1669,26 +1662,18 @@ var/list/ghostteleportlocs = list()
 /area/turret_protected/AIsatextFP
 	name = "\improper AI Sat Ext"
 	icon_state = "storage"
-	luminosity = 1
-	lighting_use_dynamic = 0
 
 /area/turret_protected/AIsatextFS
 	name = "\improper AI Sat Ext"
 	icon_state = "storage"
-	luminosity = 1
-	lighting_use_dynamic = 0
 
 /area/turret_protected/AIsatextAS
 	name = "\improper AI Sat Ext"
 	icon_state = "storage"
-	luminosity = 1
-	lighting_use_dynamic = 0
 
 /area/turret_protected/AIsatextAP
 	name = "\improper AI Sat Ext"
 	icon_state = "storage"
-	luminosity = 1
-	lighting_use_dynamic = 0
 
 /area/turret_protected/NewAIMain
 	name = "\improper AI Main New"
@@ -1770,31 +1755,26 @@ var/list/ghostteleportlocs = list()
 /area/awaymission/wwmines
 	name = "\improper Wild West Mines"
 	icon_state = "away1"
-	luminosity = 1
 	requires_power = 0
 
 /area/awaymission/wwgov
 	name = "\improper Wild West Mansion"
 	icon_state = "away2"
-	luminosity = 1
 	requires_power = 0
 
 /area/awaymission/wwrefine
 	name = "\improper Wild West Refinery"
 	icon_state = "away3"
-	luminosity = 1
 	requires_power = 0
 
 /area/awaymission/wwvault
 	name = "\improper Wild West Vault"
 	icon_state = "away3"
-	luminosity = 0
 
 /area/awaymission/wwvaultdoors
 	name = "\improper Wild West Vault Doors"  // this is to keep the vault area being entirely lit because of requires_power
 	icon_state = "away2"
 	requires_power = 0
-	luminosity = 0
 
 /area/awaymission/desert
 	name = "Mars"
@@ -1852,8 +1832,7 @@ var/list/ghostteleportlocs = list()
 /area/awaymission/beach
 	name = "Beach"
 	icon_state = "null"
-	luminosity = 1
-	lighting_use_dynamic = 0
+	dynamic_lighting = 0
 	requires_power = 0
 	var/sound/mysound = null
 
@@ -1974,8 +1953,7 @@ var/list/the_station_areas = list (
 /area/beach
 	name = "Keelin's private beach"
 	icon_state = "null"
-	luminosity = 1
-	lighting_use_dynamic = 0
+	dynamic_lighting = 0
 	requires_power = 0
 	var/sound/mysound = null
 

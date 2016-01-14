@@ -33,7 +33,7 @@
 	return
 
 /obj/item/weapon/reagent_containers/food/snacks/attack(mob/M as mob, mob/user as mob, def_zone)
-	if(!reagents || reagents.total_volume)				//Shouldn't be needed but it checks to see if it has anything left in it.
+	if(!reagents || !reagents.total_volume)				//Shouldn't be needed but it checks to see if it has anything left in it.
 		user << "<span class='rose'>None of [src] left, oh no!</span>"
 		M.drop_from_inventory(src)	//so icons update :[
 		qdel(src)

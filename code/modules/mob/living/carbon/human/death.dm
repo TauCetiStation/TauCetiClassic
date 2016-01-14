@@ -53,6 +53,8 @@
 /mob/living/carbon/human/death(gibbed)
 	if(stat == DEAD)	return
 	if(healths)		healths.icon_state = "health5"
+	if(typing)	//turn off typing indicator
+		qdel(typing_indicator)
 
 	stat = DEAD
 	dizziness = 0
@@ -99,8 +101,6 @@
 
 	if(!gibbed)
 		emote("deathgasp") //let the world KNOW WE ARE DEAD
-		if(typing)	//turn off typing indicator
-			qdel(typing_indicator)
 
 		//For ninjas exploding when they die.
 		if( istype(wear_suit, /obj/item/clothing/suit/space/space_ninja) && wear_suit:s_initialized )

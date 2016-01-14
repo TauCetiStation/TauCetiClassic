@@ -34,7 +34,7 @@
 
 	playsound(src.loc, 'sound/machines/click.ogg', 15, 1, -3)
 	for(var/obj/O in src)
-		O.loc = get_turf(src)
+		O.forceMove(get_turf(src))
 	icon_state = icon_opened
 	src.opened = 1
 
@@ -60,7 +60,7 @@
 			var/obj/structure/stool/bed/B = O
 			if(B.buckled_mob)
 				continue
-		O.loc = src
+		O.forceMove(src)
 		itemcount++
 
 	icon_state = icon_closed
@@ -73,7 +73,7 @@
 			return
 		user.drop_item()
 		if(W)
-			W.loc = src.loc
+			W.forceMove(src.loc)
 	else if(istype(W, /obj/item/weapon/packageWrap))
 		return
 	else if(istype(W, /obj/item/weapon/cable_coil))
@@ -89,7 +89,7 @@
 		if(rigged)
 			user  << "<span class='notice'>You attach [W] to [src].</span>"
 			user.drop_item()
-			W.loc = src
+			W.forceMove(src)
 			return
 	else if(istype(W, /obj/item/weapon/wirecutters))
 		if(rigged)
@@ -429,12 +429,12 @@
 				continue
 			if(!S.anchored)
 				found = 1
-				S.loc = src
+				S.forceMove(src)
 				break
 		if(!found)
 			for(var/obj/machinery/M in src.loc)
 				if(!M.anchored)
-					M.loc = src
+					M.forceMove(src)
 					break
 	return
 
@@ -457,12 +457,12 @@
 				continue
 			if(!S.anchored)
 				found = 1
-				S.loc = src
+				S.forceMove(src)
 				break
 		if(!found)
 			for(var/obj/machinery/M in src.loc)
 				if(!M.anchored)
-					M.loc = src
+					M.forceMove(src)
 					break
 	return
 

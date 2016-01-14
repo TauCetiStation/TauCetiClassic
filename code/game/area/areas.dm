@@ -16,16 +16,6 @@
 	active_areas += src
 	all_areas += src
 
-	if(type == /area)	// override defaults for space. TODO: make space areas of type /area/space rather than /area
-		requires_power = 1
-		always_unpowered = 1
-		lighting_use_dynamic = 1
-		power_light = 0
-		power_equip = 0
-		power_environ = 0
-//		lighting_state = 4
-		//has_gravity = 0    // Space has gravity.  Because.. because.
-
 	if(!requires_power)
 		power_light = 0			//rastaf0
 		power_equip = 0			//rastaf0
@@ -298,20 +288,26 @@
 	var/musVolume = 25
 	var/sound = 'sound/ambience/ambigen1.ogg'
 
-	if(!istype(A,/mob/living))	return
+	if(!istype(A,/mob/))	return
+	var/mob/M = A
+
+	if(!M.lastarea)
+		M.lastarea = get_area(M.loc)
+	var/area/newarea = get_area(M.loc)
+	var/area/oldarea = M.lastarea
+	if(newarea != oldarea)
+		CallHook("MobAreaChange", list("mob" = A, "new" = newarea, "old" = oldarea))
+
+	if(!istype(A,/mob/living))
+		M.lastarea = newarea
+		return
 
 	var/mob/living/L = A
-	if(!L.ckey)	return
-
-	if(!L.lastarea)
-		L.lastarea = get_area(L.loc)
-	var/area/newarea = get_area(L.loc)
-	var/area/oldarea = L.lastarea
 	if((oldarea.has_gravity == 0) && (newarea.has_gravity == 1) && (L.m_intent == "run")) // Being ready when you change areas gives you a chance to avoid falling all together.
 		thunk(L)
 
 	L.lastarea = newarea
-
+	if(!L.ckey)	return
 	// Ambience goes down here -- make sure to list each area seperately for ease of adding things in later, thanks! Note: areas adjacent to each other should have the same sounds to prevent cutoff when possible.- LastyScratch
 	if(!(L && L.client && (L.client.prefs.toggles & SOUND_AMBIENCE)))	return
 

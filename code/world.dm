@@ -1,7 +1,7 @@
 /world
 	mob = /mob/new_player
 	turf = /turf/space
-	area = /area
+	area = /area/space
 	view = "15x15"
 	cache_lifespan = 0	//stops player uploaded stuff from being kept in the rsc past the current session
 
@@ -29,6 +29,7 @@
 
 	if(config && config.log_runtime)
 		log = file("data/logs/runtime/[time2text(world.realtime,"YYYY-MM-DD-(hh-mm-ss)")]-runtime.log")
+	SetupHooks() // /vg/
 
 	callHook("startup")
 	//Emergency Fix
@@ -260,6 +261,10 @@ var/world_topic_spam_protect_time = world.timeofday
 	fdel(F)
 	F << the_last_mode
 
+/hook/startup/proc/loadMusic()
+	for(var/obj/machinery/media/jukebox/J in machines)
+		J.process()
+	return 1
 
 /hook/startup/proc/loadMOTD()
 	world.load_motd()

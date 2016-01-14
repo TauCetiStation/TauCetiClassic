@@ -459,7 +459,7 @@ var/list/robot_verbs_default = list(
 	lights_on = !lights_on
 	usr << "You [lights_on ? "enable" : "disable"] your integrated light."
 	if(lights_on)
-		set_light(12,2) // 1.5x luminosity of flashlight
+		set_light(5)
 	else
 		set_light(0)
 

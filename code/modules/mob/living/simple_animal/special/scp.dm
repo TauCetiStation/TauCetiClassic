@@ -114,13 +114,9 @@
 		if(istype(T,/turf/space)) continue
 
 		var/light_amount = 0
-		var/atom/movable/lighting_overlay/lo = locate(/atom/movable/lighting_overlay) in T
-		if(lo)
-			light_amount = lo.lum_r + lo.lum_g + lo.lum_b
-		else
-			continue
+		light_amount = round(T.get_lumcount()*10)
 
-		if(light_amount <= 0.3)
+		if(light_amount <= 3)
 			if(prob(max(1,L.scp_mark * 4)))
 				src.loc = T
 				src.dir = L.dir
@@ -177,13 +173,11 @@
 	var/turf/T = get_turf(src)
 
 	var/light_amount = 0
-	var/atom/movable/lighting_overlay/lo = locate(/atom/movable/lighting_overlay) in T
-	if(lo)
-		light_amount = lo.lum_r + lo.lum_g + lo.lum_b
+	light_amount = round(T.get_lumcount()*10)
 
 	if(isliving(usr))
 		var/mob/living/L = usr
-		if(lo && light_amount <= 0.3)
+		if(light_amount <= 3)
 			var/msg = "<span cass='info'>It's too dark in there...</span>"
 			usr << msg
 			return

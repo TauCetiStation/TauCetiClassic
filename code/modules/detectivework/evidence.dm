@@ -71,7 +71,7 @@
 		"You hear someone rustle around in a plastic bag, and remove something.")
 		overlays.Cut()	//remove the overlays
 		user.put_in_hands(I)
-		w_class = 1
+		w_class = initial(w_class)
 		icon_state = "evidenceobj"
 		desc = "An empty evidence bag."
 

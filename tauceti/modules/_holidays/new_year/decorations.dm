@@ -149,6 +149,8 @@
 	if(decals.len && (C.a_intent != "help"))
 		for(var/item in decals)
 			var/obj/item/I = item
+			if(!I)
+				return
 			I.forceMove(src.loc)
 			I.layer = initial(layer)
 			I.pixel_x = initial(pixel_x)
