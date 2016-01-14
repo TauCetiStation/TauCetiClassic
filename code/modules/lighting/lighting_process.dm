@@ -1,10 +1,18 @@
 /var/list/lighting_update_lights    = list()    // List of lighting sources  queued for update.
 
-/datum/controller/process/lighting/setup()
-	name = "lighting"
-	schedule_interval = LIGHTING_INTERVAL
+/var/lighting_processing            = 1
 
-/datum/controller/process/lighting/doWork()
+/world/New()
+	. = ..()
+	lighting_start_process()
+
+/proc/lighting_start_process()
+	set waitfor = FALSE
+	while(lighting_processing)
+		sleep(LIGHTING_INTERVAL)
+		lighting_process()
+
+/proc/lighting_process()
 	for(var/A in lighting_update_lights)
 		if(!A)
 			continue
@@ -23,8 +31,6 @@
 		L.force_update = FALSE
 		L.needs_update = FALSE
 
-		scheck()
-
 	for(var/A in lighting_update_overlays)
 		if(!A)
 			continue
@@ -32,8 +38,6 @@
 		var/atom/movable/lighting_overlay/L = A // Typecasting this later so BYOND doesn't istype each entry.
 		L.update_overlay()
 		L.needs_update = FALSE
-
-		scheck()
 
 	lighting_update_overlays.Cut()
 	lighting_update_lights.Cut()
