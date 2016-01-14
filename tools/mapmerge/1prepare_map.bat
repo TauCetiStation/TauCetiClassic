@@ -1,6 +1,5 @@
-set MAPFILE=tauceti.2.0.dmm
-
 cd ../../maps
-copy %MAPFILE% %MAPFILE%.backup
+
+for %%f in (*.dmm) do copy "%%f" "%%f.backup"
 
 pause

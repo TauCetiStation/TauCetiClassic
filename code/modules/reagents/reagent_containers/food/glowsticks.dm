@@ -8,8 +8,7 @@
 	item_state = null
 	action_button_name = null	//just pull it manually, neckbeard.
 	slot_flags = SLOT_BELT
-	light_power = 3
-	var/brightness_on = 7
+	light_power = 2
 	var/on = 0
 	var/colourName = null
 	var/eaten = 0
@@ -27,9 +26,9 @@
 	liquid_fuel.volume = max(liquid_fuel.volume - 0.1, 0)
 	if(liquid_fuel.volume)
 		if(liquid_fuel.volume < reagents.maximum_volume/3)
-			if(light_range != 3) set_light(3)
+			if(light_range != 3) set_light(2,1)
 		else if(liquid_fuel.volume < reagents.maximum_volume/2)
-			if(light_range != 5) set_light(5)
+			if(light_range != 5) set_light(3)
 	if(!liquid_fuel.volume || !on)
 		turn_off()
 		if(!liquid_fuel.volume)
@@ -39,7 +38,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/proc/update_brightness(var/mob/user = null)
 	if(on)
 		icon_state = "glowstick_[colourName]-on"
-		set_light(brightness_on)
+		set_light(4)
 	else
 		icon_state = "glowstick_[colourName]"
 		set_light(0)
@@ -65,6 +64,9 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/attack_self(mob/user as mob)
 	// Usual checks
+	if(!liquid_fuel)	//it shouldn't happen but if it will we have save from runtime errors
+		user << "<span class='info'>[src] is defective.</span>"
+		return
 	if(!liquid_fuel.volume)
 		user << "<span class='notice'>It's out of chemicals.</span>"
 		return
@@ -72,7 +74,7 @@
 		return
 
 	if(!isturf(user.loc))
-		user << "You cannot turn the light on while in this [user.loc]." //To prevent some lighting anomalities.
+		user << "<span class='info'>You cannot turn the light on while in this [user.loc].</span>" //To prevent some lighting anomalities.
 		return
 	on = !on
 	update_brightness(user)
@@ -83,8 +85,11 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/attack(mob/M as mob, mob/user as mob, def_zone)
 	var/datum/reagent/luminophore = locate(/datum/reagent/luminophore) in reagents.reagent_list
+	if(!luminophore)	//it shouldn't happen but if it will we have save from runtime errors
+		user << "<span class='info'>[src] is defective.</span>"
+		return
 	if(!luminophore.volume)
-		user << "\red None of chemicals left in [src], oh no!"
+		user << "<span class='rose'>None of chemicals left in [src]!</span>"
 		return 0
 
 	if(!CanEat(user, M, src, "eat")) return	//tc code
@@ -94,19 +99,19 @@
 			if(istype(M,/mob/living/carbon/human))
 				var/mob/living/carbon/human/H = M
 				if(H.species.flags & IS_SYNTHETIC)
-					H << "\red You have a monitor for a head, where do you think you're going to put that?"
+					H << "<span class='rose'>You have a monitor for a head, where do you think you're going to put that?</span>"
 					return
 		else
 			if(istype(M,/mob/living/carbon/human))
 				var/mob/living/carbon/human/H = M
 				if(H.species.flags & IS_SYNTHETIC)
-					H << "\red They have a monitor for a head, where do you think you're going to put that?"
+					H << "<span class='rose'>They have a monitor for a head, where do you think you're going to put that?</span>"
 					return
 
 			if(!istype(M, /mob/living/carbon/slime))		//If you're feeding it to someone else.
 
 				for(var/mob/O in viewers(world.view, user))
-					O.show_message("\red [user] attempts to feed [M] [src].", 1)
+					O.show_message("<span class='rose'>[user] attempts to feed [M] [src].</span>", 1)
 
 				if(!do_mob(user, M)) return
 
@@ -115,10 +120,10 @@
 				msg_admin_attack("[key_name(user)] fed [key_name(M)] with [src.name] Reagents: [reagentlist(src)] (INTENT: [uppertext(user.a_intent)])")
 
 				for(var/mob/O in viewers(world.view, user))
-					O.show_message("\red [user] feeds [M] [src].", 1)
+					O.show_message("<span class='danger'>[user] feeds [M] [src].</span>", 1)
 
 			else
-				user << "This creature does not seem to have a mouth!"
+				user << "<span class='warning'>This creature does not seem to have a mouth!</span>"
 				return
 
 		if(reagents)								//Handle ingestion of the reagent.
@@ -166,7 +171,7 @@
 	if(prob(95))
 		src.reagents.add_reagent("luminophore", rand(18,36))
 	else
-		src.reagents.add_reagent("luminophore", rand(0.5,2))
+		src.reagents.add_reagent("luminophore", rand(1,2))
 	var/datum/reagents/R = reagents
 	for(var/datum/reagent/luminophore/luminophore in R.reagent_list)
 		if(luminophore)

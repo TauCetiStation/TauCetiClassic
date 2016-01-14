@@ -27,6 +27,9 @@
 		src.last_move = get_dir(A, src.loc)
 	return
 
+/atom/movable/proc/setLoc(var/T, var/teleported=0)
+	loc = T
+
 /*
 /atom/movable/Destroy()
 	if(isnull(gcDestroyed) && loc)
@@ -73,6 +76,19 @@
 	return
 
 /atom/movable/proc/forceMove(atom/destination)
+	if(destination)
+		var/atom/oldloc = loc
+		if(oldloc)
+			oldloc.Exited(src, destination)
+		loc = destination
+		destination.Entered(src, oldloc)
+		for(var/atom/movable/AM in destination)
+			if(AM == src)	continue
+			AM.Crossed(src)
+		return 1
+	return 0
+
+/atom/movable/proc/forceMoveOld(atom/destination)
 	if(destination)
 		if(loc)
 			loc.Exited(src)
@@ -178,7 +194,7 @@
 			a = get_area(src.loc)
 	else
 		var/error = dist_y/2 - dist_x
-		while(src && target &&((((src.y < target.y && dy == NORTH) || (src.y > target.y && dy == SOUTH)) && dist_travelled < range) || (a.has_gravity == 0)  || istype(src.loc, /turf/space)) && src.throwing && istype(src.loc, /turf))
+		while(src && target &&((((src.y < target.y && dy == NORTH) || (src.y > target.y && dy == SOUTH)) && dist_travelled < range) || (a && a.has_gravity == 0)  || istype(src.loc, /turf/space)) && src.throwing && istype(src.loc, /turf))
 			// only stop when we've gone the whole distance (or max throw range) and are on a non-space tile, or hit something, or hit the end of the map, or someone picks it up
 			if(error < 0)
 				var/atom/step = get_step(src, dx)

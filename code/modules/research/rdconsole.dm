@@ -164,7 +164,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	else
 		//The construction/deconstruction of the console code.
 		..()
-	
+
 	src.updateUsrDialog()
 	return
 
@@ -367,7 +367,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 								else
 									linked_lathe.reagents.remove_reagent(M, being_built.materials[M])
 
-						if(being_built.build_path)
+						if(being_built.build_path && !isnull(being_built.build_path))
 							var/obj/new_item = new being_built.build_path(src)
 							if( new_item.type == /obj/item/weapon/storage/backpack/holding )
 								new_item.investigate_log("built by [key]","singulo")

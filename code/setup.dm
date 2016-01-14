@@ -641,6 +641,7 @@ var/list/liftable_structures = list(\
 #define SOUND_LOBBY		8
 #define SHOW_ANIMATIONS	16
 #define SHOW_PROGBAR	32
+#define SOUND_STREAMING	64
 
 #define TOGGLES_DEFAULT (SOUND_ADMINHELP|SOUND_MIDI|SOUND_AMBIENCE|SOUND_LOBBY|SHOW_ANIMATIONS|SHOW_PROGBAR)
 
@@ -801,7 +802,6 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define IS_VOX 2
 #define IS_SKRELL 3
 #define IS_UNATHI 4
-#define IS_KIDAN 5
 
 // Suit sensor levels
 #define SUIT_SENSOR_OFF      0
