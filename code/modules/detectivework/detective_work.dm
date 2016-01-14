@@ -157,6 +157,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 						scanning = I.contents[1]
 						scanning.loc = src
 						I.overlays.Cut()
+						I.w_class = initial(I.w_class)
 						I.icon_state = "evidenceobj"
 					else
 						scanning = I

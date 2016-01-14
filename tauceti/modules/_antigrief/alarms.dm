@@ -18,22 +18,23 @@
 	return
 
 /obj/effect/landmark/antigrief_alarm/HasProximity(var/atom/A)
-	if(!ismob(A))
+	if(!isliving(A))
 		return
 
-	var/mob/M = A
+	var/mob/living/M = A
 
 	if(!M.client || !config.antigrief_alarm_level || (world.time - last_activation < cooldown))
 		return
 
 	//check if it's first-day player or first-round, and current alarm level
-	if((M.client.player_age == 0 && config.antigrief_alarm_level == 2) || (!isnum(M.client.player_age) && config.antigrief_alarm_level))
-		last_activation = world.time
+	if(((M.client.player_age == 0) && (config.antigrief_alarm_level == 2)) || (!isnum(M.client.player_age) && config.antigrief_alarm_level))
+		if(issilicon(M) || iscarbon(M))
+			last_activation = world.time
 
-		if(trigger_tag)
-			message_admins("Noob alarm (<font color='[tag_color]'>[trigger_tag]</font>): [M.name] ([M.ckey]) at [area_name] area <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[src.x];Y=[src.y];Z=[src.z]'>JMP</a>")
-		else
-			message_admins("Noob alarm: [M.name] ([M.ckey]) at [area_name] area <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[src.x];Y=[src.y];Z=[src.z]'>JMP</a>")
+			if(trigger_tag)
+				message_admins("Noob alarm (<font color='[tag_color]'>[trigger_tag]</font>): [M.name] ([M.ckey]) at [area_name] area <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[src.x];Y=[src.y];Z=[src.z]'>JMP</a>")
+			else
+				message_admins("Noob alarm: [M.name] ([M.ckey]) at [area_name] area <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[src.x];Y=[src.y];Z=[src.z]'>JMP</a>")
 
 /obj/effect/landmark/antigrief_alarm/fueltank
 	name = "Alarm trigger (fueltank)"
