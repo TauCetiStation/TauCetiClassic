@@ -73,7 +73,7 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 		mind = body.mind	//we don't transfer the mind but we keep a reference to it.
 
 	if(!T)	T = pick(latejoin)			//Safety in case we cannot find the body's position
-	forceMove(T)
+	forceMoveOld(T)
 
 	if(!name)							//To prevent nameless ghosts
 		name = capitalize(pick(first_names_male)) + " " + capitalize(pick(last_names))
@@ -213,12 +213,12 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		remove_following(src)
 	dir = direct
 	if(NewLoc)
-		forceMove(NewLoc)
+		forceMoveOld(NewLoc)
 		for(var/obj/effect/step_trigger/S in NewLoc)
 			S.Crossed(src)
 
 		return
-	forceMove(get_turf(src)) //Get out of closets and such as a ghost
+	forceMoveOld(get_turf(src)) //Get out of closets and such as a ghost
 	if((direct & NORTH) && y < world.maxy)
 		y++
 	else if((direct & SOUTH) && y > 1)
@@ -371,7 +371,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		following = target
 		src << "<span class='notice'>Now following [target]</span>"
 		if(ismob(target))
-			forceMove(get_turf(target))
+			forceMoveOld(get_turf(target))
 			var/mob/M = target
 			M.following_mobs += src
 		else
@@ -382,7 +382,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 						break
 					// To stop the ghost flickering.
 					if(loc != T)
-						forceMove(T)
+						forceMoveOld(T)
 					sleep(15)
 
 /mob/proc/update_following()
@@ -392,7 +392,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			following_mobs -= M
 		else
 			if(M.loc != .)
-				M.forceMove(.)
+				M.forceMoveOld(.)
 
 /mob
 	var/list/following_mobs = list()
@@ -441,7 +441,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			var/turf/T = get_turf(M) //Turf of the destination mob
 
 			if(T && isturf(T))	//Make sure the turf exists, then move the source to that destination.
-				forceMove(T)
+				forceMoveOld(T)
 				following = null
 			else
 				src << "This mob is not located in the game world."

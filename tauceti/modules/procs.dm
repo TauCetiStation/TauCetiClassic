@@ -54,7 +54,11 @@ proc/CanEat(user, mob, food, eatverb = "consume")
 
 /proc/noob_notify(var/mob/M)
 	//todo: check db before
-	if(M.client && !M.client.holder && !isnum(M.client.player_age))
+	if(!M.client)
+		return
+	if(M.client.holder)
+		return
+	if(!isnum(M.client.player_age))
 		for(var/client/C in clients)
 			if(C.holder)
 				C << "<span class=\"admin\"><span class=\"prefix\">New player notify:</span> <span class=\"message\">[M.ckey] join to the game as [M.mind.name] [M.mind.assigned_role ? "([M.mind.assigned_role])" : ""] - <a href='http://www.byond.com/members/[M.ckey]'>Byond Profile</a> (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[M.x];Y=[M.y];Z=[M.z]'>JMP</a>)</span></span>"

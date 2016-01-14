@@ -802,7 +802,6 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define IS_VOX 2
 #define IS_SKRELL 3
 #define IS_UNATHI 4
-#define IS_KIDAN 5
 
 // Suit sensor levels
 #define SUIT_SENSOR_OFF      0

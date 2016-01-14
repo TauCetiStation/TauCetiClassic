@@ -166,6 +166,9 @@
 /turf/simulated/floor/beach/water
 	name = "Water"
 	icon_state = "water"
+	light_color = "#00BFFF"
+	light_power = 2
+	light_range = 2
 
 /turf/simulated/floor/beach/water/New()
 	..()
@@ -239,8 +242,6 @@
 
 	New()
 		..()
-		set_light(4) //starlight
-		name = "catwalk"
 		update_icon(1)
 
 	update_icon(var/propogate=1)
