@@ -1021,12 +1021,18 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	var/sent = sanitize_alt(input(usr, "Please enter anything you want. Anything. Serious.", "What?", "") as message|null)
 	if(!sent)
 		return
-	var/sentname = sanitize_alt(input(usr, "Pick a title for the message. Do not forget about prohibit of the use of the Cyrillic alphabet in the names of objects. ", "Title") as text)
+	var/sentname = sanitize_alt(input(usr, "Pick a title for the message. Do not forget about prohibit of the use of the Cyrillic alphabet in the names of objects, enter Cancel to stop sending", "Title") as text)
 	if(!sentname)
 		sentname = "NanoTrasen Update"
-	var/dpt = input(usr, "Please choose the needed fax, choose unknown to send to all faxes on the station") as anything in alldepartments
+	if(sentname == "Cancel")
+		return
+	var/dpt = input(usr, "Please choose the needed fax, choose unknown to send to all faxes on the station") as null|anything in alldepartments
+	if(!dpt)
+		return
 	var/list/stampos = list("CentCom", "Syndicate", "Clown", "FakeCentCom", "Unknown")
-	var/stamp = input(usr, "Please choose the needed stamp, choose unknown to send without any stamp") as anything in stampos
+	var/stamp = input(usr, "Please choose the needed stamp, choose unknown to send without any stamp") as null|anything in stampos
+	if(!stamp)
+		return
 	var/stamps = sanitize_alt(input(usr, "Pick a message for stamp text (e.g. This paper has been stamped by the Central Compound Quantum Relay), if empty will be chosen default text for the selected stamp") as text)
 
 	var/question1 = alert(src, "Do you want to cancel the sending of this fax?", "Confirm", "Yes", "No")
