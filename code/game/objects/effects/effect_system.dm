@@ -20,11 +20,10 @@ would spawn and follow the beaker, even if it is carried or thrown.
 	var/life = 15.0
 	mouse_opacity = 0
 
-/obj/effect/proc/delete()
-	loc = null
+/obj/effect/Destroy()
 	if(reagents)
 		reagents.delete()
-	return
+	return ..()
 
 /obj/effect/effect/water/Move(turf/newloc)
 	//var/turf/T = src.loc
@@ -32,7 +31,7 @@ would spawn and follow the beaker, even if it is carried or thrown.
 	//	T.firelevel = 0 //TODO: FIX
 	if (--src.life < 1)
 		//SN src = null
-		delete()
+		qdel(src)
 	if(newloc.density)
 		return 0
 	.=..()
@@ -110,7 +109,7 @@ steam.start() -- spawns the effect
 					sleep(5)
 					step(steam,direction)
 				spawn(20)
-					steam.delete()
+					qdel(steam)
 
 /////////////////////////////////////////////
 //SPARK SYSTEM (like steam system)
@@ -133,7 +132,7 @@ steam.start() -- spawns the effect
 	if (istype(T, /turf))
 		T.hotspot_expose(1000,100)
 	spawn (100)
-		delete()
+		qdel(src)
 	return
 
 /obj/effect/effect/sparks/Destroy()
@@ -183,7 +182,7 @@ steam.start() -- spawns the effect
 					step(sparks,direction)
 				spawn(20)
 					if(sparks)
-						sparks.delete()
+						qdel(sparks)
 					src.total_sparks--
 
 
@@ -212,7 +211,7 @@ steam.start() -- spawns the effect
 /obj/effect/effect/smoke/New()
 	..()
 	spawn (time_to_live)
-		delete()
+		qdel(src)
 	return
 
 /obj/effect/effect/smoke/Crossed(mob/living/carbon/M as mob )
@@ -348,7 +347,7 @@ steam.start() -- spawns the effect
 				sleep(10)
 				step(smoke,direction)
 			spawn(smoke.time_to_live*0.75+rand(10,30))
-				if (smoke) smoke.delete()
+				if (smoke) qdel(smoke)
 				src.total_smoke--
 
 
@@ -400,7 +399,7 @@ steam.start() -- spawns the effect
 						flick("ion_fade", I)
 						I.icon_state = "blank"
 						spawn( 20 )
-							I.delete()
+							qdel(I)
 					spawn(2)
 						if(src.on)
 							src.processing = 1
@@ -445,7 +444,7 @@ steam.start() -- spawns the effect
 					src.oldposition = get_turf(holder)
 					I.dir = src.holder.dir
 					spawn(10)
-						I.delete()
+						qdel(I)
 						src.number--
 					spawn(2)
 						if(src.on)
@@ -500,7 +499,7 @@ steam.start() -- spawns the effect
 
 		flick("[icon_state]-disolve", src)
 		sleep(5)
-		delete()
+		qdel(src)
 	return
 
 // transfer any reagents to the floor
@@ -530,7 +529,7 @@ steam.start() -- spawns the effect
 		if(F)
 			continue
 
-		F = new(T, metal)
+		F = PoolOrNew(/obj/effect/effect/foam, list(T, metal))
 		F.amount = amount
 		if(!metal)
 			F.create_reagents(10)
@@ -545,7 +544,7 @@ steam.start() -- spawns the effect
 		flick("[icon_state]-disolve", src)
 
 		spawn(5)
-			delete()
+			qdel(src)
 
 
 /obj/effect/effect/foam/Crossed(var/atom/movable/AM)
@@ -601,7 +600,7 @@ steam.start() -- spawns the effect
 				F.amount += amount
 				return
 
-			F = new(src.location, metal)
+			F = PoolOrNew(/obj/effect/effect/foam, list(src.location, metal))
 			F.amount = amount
 
 			if(!metal)			// don't carry other chemicals if a metal foam
@@ -620,7 +619,7 @@ steam.start() -- spawns the effect
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "metalfoam"
 	density = 1
-	opacity = 1 	// changed in New()
+	opacity = 0
 	anchored = 1
 	name = "foamed metal"
 	desc = "A lightweight foamed metal wall."
