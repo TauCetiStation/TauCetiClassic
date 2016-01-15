@@ -1434,20 +1434,18 @@
 	else
 		if(crawling)
 			crawl_getup = 1
-			sleep(10)
-			crawl_getup = 0
-			T = get_turf(src)
-			if( (locate(/obj/structure/table) in T) || (locate(/obj/structure/stool/bed) in T) )
-				playsound(loc, 'sound/weapons/tablehit1.ogg', 50, 1)
-				var/datum/organ/external/E = get_organ("head")
-				E.take_damage(5, 0, 0, 0, "Table")
-				src << "<span class='danger'>Ouch!</span>"
-				return
-			pass_flags += PASSCRAWL
-			layer = 3.9
+			if(do_after(src, 10 , target = src))
+				crawl_getup = 0
+				T = get_turf(src)
+				if( (locate(/obj/structure/table) in T) || (locate(/obj/structure/stool/bed) in T) )
+					playsound(loc, 'sound/weapons/tablehit1.ogg', 50, 1)
+					var/datum/organ/external/E = get_organ("head")
+					E.take_damage(5, 0, 0, 0, "Table")
+					src << "<span class='danger'>Ouch!</span>"
+					return
+				pass_flags += PASSCRAWL
 		else
 			pass_flags -= PASSCRAWL
-			//layer = 4.0
 		crawling = !crawling
 
 	src << "<span class='notice'>You are now [crawling ? "crawling" : "getting up"].</span>"

@@ -757,12 +757,8 @@
 		src << "<span class='rose'>You can't move.</span>"
 
 //Debuffs check
-	else if( paralysis || stunned )
+	else if(!resting && (sleeping || weakened || paralysis || stunned) )
 		src << "<span class='rose'>You can't control yourself.</span>"
-
-//Sleep style debuffs
-	else if( !resting && (sleeping || weakened) )
-		src << "<span class='rose'>You are already sleeping.</span>"
 
 	else
 		resting = !resting
