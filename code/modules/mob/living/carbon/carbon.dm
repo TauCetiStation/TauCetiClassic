@@ -239,7 +239,8 @@
 				if(!src.sleeping)
 					src.resting = 0
 				if(src.crawling)
-					pass_flags -= PASSCRAWL
+					if(pass_flags & PASSCRAWL)
+						pass_flags ^= PASSCRAWL
 					src.crawling = 0
 				M.visible_message("<span class='notice'>[M] shakes [src] trying to wake [t_him] up!</span>", \
 									"<span class='notice'>You shake [src] trying to wake [t_him] up!</span>")
