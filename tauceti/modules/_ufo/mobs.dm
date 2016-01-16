@@ -1,6 +1,6 @@
 /mob/living/simple_animal/hostile/chryssalid
 	name = "Chryssalid"
-	desc = "Alien monster from worst nightmares"
+	desc = "Alien monster from worst nightmares."
 	icon = 'tauceti/modules/_ufo/mobs.dmi'
 	icon_state = "chrys"
 	icon_living = "chrys"

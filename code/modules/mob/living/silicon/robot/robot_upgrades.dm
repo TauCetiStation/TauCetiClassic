@@ -129,7 +129,7 @@
 
 /obj/item/borg/upgrade/jetpack/
 	name = "Mining Borg Jetpack"
-	desc = "A carbon dioxide jetpack suitable for low-gravity mining operations"
+	desc = "A carbon dioxide jetpack suitable for low-gravity mining operations."
 	construction_cost = list("metal"=10000,"phoron"=15000,"uranium" = 20000)
 	icon_state = "cyborg_upgrade3"
 	require_module = 1

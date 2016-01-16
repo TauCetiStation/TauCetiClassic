@@ -3,7 +3,7 @@
 	icon = 'tauceti/items/WalterJ_Items_Pack/WERMAHT UNIFORMS/WJ_Wermaht_uniforms.dmi'
 	tc_custom = 'tauceti/items/WalterJ_Items_Pack/WERMAHT UNIFORMS/WJ_Wermaht_uniforms.dmi'
 	name = "M35 Filde Jacket"
-	desc = "Standart wehrmacht field uniform"
+	desc = "Standart wehrmacht field uniform."
 
 	icon_state = "M35_Filde_Jacket"
 	item_state = "M35_Filde_Jacket"
@@ -15,7 +15,7 @@
 	icon = 'tauceti/items/WalterJ_Items_Pack/WERMAHT UNIFORMS/WJ_Wermaht_uniforms.dmi'
 	tc_custom = 'tauceti/items/WalterJ_Items_Pack/WERMAHT UNIFORMS/WJ_Wermaht_uniforms.dmi'
 	name = "M35 Filde Oficer Jacket"
-	desc = "Werhmacht officer jacket uniform"
+	desc = "Werhmacht officer jacket uniform."
 
 	icon_state = "M35_Filde_Jacket_Officer"
 	item_state = "M35_Filde_Jacket_Officer"
@@ -54,7 +54,7 @@
 	icon = 'tauceti/items/WalterJ_Items_Pack/WERMAHT UNIFORMS/WJ_Wermaht_uniforms.dmi'
 	tc_custom = 'tauceti/items/WalterJ_Items_Pack/WERMAHT UNIFORMS/WJ_Wermaht_uniforms.dmi'
 	name = "M35 Helmet"
-	desc = "The Basic werhmacht army helmet"
+	desc = "The Basic werhmacht army helmet."
 
 	icon_state = "M35_Helmet"
 	item_state = "M35_Helmet"
@@ -63,7 +63,7 @@
 	icon = 'tauceti/items/WalterJ_Items_Pack/WERMAHT UNIFORMS/WJ_Wermaht_uniforms.dmi'
 	tc_custom = 'tauceti/items/WalterJ_Items_Pack/WERMAHT UNIFORMS/WJ_Wermaht_uniforms.dmi'
 	name = "Waffen SS Helmet"
-	desc = "A helmet from SS uniform set"
+	desc = "A helmet from SS uniform set."
 
 	icon_state = "WAFFEN_SS_Helmet"
 	item_state = "WAFFEN_SS_Helmet"
@@ -73,7 +73,7 @@
 	icon = 'tauceti/items/WalterJ_Items_Pack/WERMAHT UNIFORMS/WJ_Wermaht_uniforms.dmi'
 	tc_custom = 'tauceti/items/WalterJ_Items_Pack/WERMAHT UNIFORMS/WJ_Wermaht_uniforms.dmi'
 	name = "Waffen SS Cap"
-	desc = "An officer's SS cap"
+	desc = "An officer's SS cap."
 
 	icon_state = "WAFFEN_SS_cap"
 	item_state = "WAFFEN_SS_cap"
@@ -92,7 +92,7 @@
 	icon = 'tauceti/items/WalterJ_Items_Pack/WERMAHT UNIFORMS/WJ_Wermaht_uniforms.dmi'
 	tc_custom = 'tauceti/items/WalterJ_Items_Pack/WERMAHT UNIFORMS/WJ_Wermaht_uniforms.dmi'
 	name = "Black Boots"
-	desc = "Deutschland army boots"
+	desc = "Deutschland army boots."
 
 	icon_state = "Black_Boots"
 	item_state = "Black_Boots"

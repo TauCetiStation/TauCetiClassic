@@ -2,7 +2,7 @@
 
 /obj/machinery/computer/skills//TODO:SANITY
 	name = "Employment Records"
-	desc = "Used to view personnel's employment records"
+	desc = "Used to view personnel's employment records."
 	icon_state = "medlaptop"
 	light_color = "#00b000"
 	req_one_access = list(access_heads)

@@ -127,9 +127,9 @@
 			dat += "Recruitment Pen<br>"
 
 		var/tool_cost = (boss ? 10 : 30)
-		var/gangtooldesc = "Promote a Gangster ([3-gang_bosses] left)"
+		var/gangtooldesc = "Promote a Gangster ([3-gang_bosses] left)."
 		if(gang_bosses >= 3)
-			gangtooldesc = "Additional Gangtools"
+			gangtooldesc = "Additional Gangtools."
 		dat += "([tool_cost] Influence) "
 		if(points >= tool_cost)
 			dat += "<a href='?src=\ref[src];purchase=gangtool'>[gangtooldesc]</a><br>"

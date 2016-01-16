@@ -2,6 +2,7 @@
 
 /obj/item/device/analyzer/plant_analyzer
 	name = "plant analyzer"
+	desc = "A hand-held scanner which reports condition of the plant."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "hydro"
 	item_state = "analyzer"
@@ -65,7 +66,7 @@
 
 /obj/item/seeds/plastiseed
 	name = "plastellium mycelium"
-	desc = "This mycelium grows into Plastellium"
+	desc = "This mycelium grows into Plastellium."
 	icon_state = "mycelium-plast"
 	mypath = "/obj/item/seeds/plastiseed"
 	species = "plastellium"

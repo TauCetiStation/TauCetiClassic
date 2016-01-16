@@ -117,7 +117,7 @@ proc/spacecraft_boom(atom/location)
 
 /obj/machinery/spacecraft_beacon
 	name = "Hyperspace beacon"
-	desc = "It used for navigation through space"
+	desc = "It used for navigation through space."
 	icon = 'tauceti/modules/_spacecraft/spacecraft_parts.dmi'
 	icon_state = "hyper_beacon"
 	density = 0

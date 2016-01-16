@@ -289,7 +289,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 /mob/dead/observer/verb/toggle_medHUD()
 	set category = "Ghost"
 	set name = "Toggle MedicHUD"
-	set desc = "Toggles Medical HUD allowing you to see how everyone is doing"
+	set desc = "Toggles Medical HUD allowing you to see how everyone is doing."
 	if(!client)
 		return
 	if(medHUD)
@@ -302,7 +302,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 /mob/dead/observer/verb/toggle_antagHUD()
 	set category = "Ghost"
 	set name = "Toggle AntagHUD"
-	set desc = "Toggles AntagHUD allowing you to see who is the antagonist"
+	set desc = "Toggles AntagHUD allowing you to see who is the antagonist."
 
 	if(!client)
 		return
@@ -430,7 +430,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 /mob/dead/observer/verb/jumptomob(target in getmobs()) //Moves the ghost instead of just changing the ghosts's eye -Nodrak
 	set category = "Ghost"
 	set name = "Jump to Mob"
-	set desc = "Teleport to a mob"
+	set desc = "Teleport to a mob."
 
 	if(istype(usr, /mob/dead/observer)) //Make sure they're an observer!
 
@@ -652,7 +652,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 /mob/dead/observer/verb/toggle_ghostsee()
 	set name = "Toggle Ghost Vision"
-	set desc = "Toggles your ability to see things only ghosts can see, like other ghosts"
+	set desc = "Toggles your ability to see things only ghosts can see, like other ghosts."
 	set category = "Ghost"
 	ghostvision = !(ghostvision)
 	updateghostsight()

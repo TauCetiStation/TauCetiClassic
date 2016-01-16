@@ -3,7 +3,7 @@
 	name = "blob"
 	icon = 'tauceti/icons/mob/blob.dmi'
 	light_range = 3
-	desc = "Some blob creature thingy"
+	desc = "Some blob creature thingy."
 	density = 0
 	opacity = 0
 	anchored = 1
