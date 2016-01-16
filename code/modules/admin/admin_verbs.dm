@@ -84,8 +84,9 @@ var/list/admin_verbs_admin = list(
 	/client/proc/allow_character_respawn,    /* Allows a ghost to respawn */
 	/client/proc/aooc,
 	/client/proc/change_security_level,
-	/client/proc/empty_ai_core_toggle_latejoin
-)
+	/client/proc/empty_ai_core_toggle_latejoin,
+	/client/proc/send_fax_message
+	)
 var/list/admin_verbs_ban = list(
 	/client/proc/unban_panel,
 //	/client/proc/stickybanpanel,
