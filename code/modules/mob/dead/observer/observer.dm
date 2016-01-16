@@ -398,7 +398,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	var/list/following_mobs = list()
 
 /proc/remove_following(mob/dead/observer/F)
-	if(!F)
+	if(!isobserver(F))
 		return
 
 	if(F.following)
