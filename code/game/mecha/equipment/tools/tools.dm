@@ -241,28 +241,27 @@
 
 				var/list/the_targets = list(T,T1,T2)
 				spawn(0)
-					for(var/a=0, a<5, a++)
+					for(var/a in 1 to 5)
 						var/obj/effect/effect/water/W = PoolOrNew(/obj/effect/effect/water, get_turf(chassis))
-						if(!W)
-							return
+						if(!W)	return
 						var/turf/my_target = pick(the_targets)
 						var/datum/reagents/R = new/datum/reagents(5)
 						W.reagents = R
 						R.my_atom = W
 						src.reagents.trans_to(W,1)
-						for(var/b=0, b<4, b++)
-							if(!W)
-								return
+						for(var/b in 1 to 4)
+							if(!W)	return
+							if(!W.reagents) break
 							step_towards(W,my_target)
-							if(!W)
-								return
-							var/turf/W_turf = get_turf(W)
-							W.reagents.reaction(W_turf)
-							for(var/atom/atm in W_turf)
+							W.reagents.reaction(get_turf(W))
+							for(var/atom/atm in get_turf(W))
 								W.reagents.reaction(atm)
-							if(W.loc == my_target)
-								break
+								if(isliving(atm)) //For extinguishing mobs on fire
+									var/mob/living/M = atm
+									M.ExtinguishMob()
+							if(W.loc == my_target)	break
 							sleep(2)
+						qdel(W)
 	return 1
 
 /obj/item/mecha_parts/mecha_equipment/tool/extinguisher/get_equip_info()
