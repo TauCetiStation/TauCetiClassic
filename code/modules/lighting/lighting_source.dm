@@ -211,21 +211,20 @@
 
 	if(istype(source_turf))
 		FOR_DVIEW(var/turf/T, light_range, source_turf, INVISIBILITY_LIGHTING)
-			if(T.lighting_overlay)
-				for(var/A in T.get_corners(get_dir(source_turf, T)))
-					if(!A)
-						continue
+			for(var/A in T.get_corners(get_dir(source_turf, T)))
+				if(!A)
+					continue
 
-					var/datum/lighting_corner/C = A
-					if(effect_str.Find(C))
-						continue
+				var/datum/lighting_corner/C = A
+				if(effect_str.Find(C))
+					continue
 
-					C.affecting += src
+				C.affecting += src
 
-					if(!C.active)
-						continue
+				if(!C.active)
+					continue
 
-					APPLY_CORNER(C)
+				APPLY_CORNER(C)
 
 			if(!T.affecting_lights)
 				T.affecting_lights = list()

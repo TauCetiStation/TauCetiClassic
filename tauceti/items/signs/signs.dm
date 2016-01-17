@@ -3,7 +3,7 @@
 	layer = 2
 	icon = 'icons/misc/mark.dmi'
 	name = "\improper Symbol"
-	desc = "You look at a symbol"
+	desc = "You look at a symbol."
 	icon_state = "b1"
 
 //Leshiy CenCom
@@ -11,7 +11,7 @@
 	layer = 2
 	icon = 'icons/misc/blue_symbol.dmi'
 	name = "\improper Symbol"
-	desc = "You look at a blue symbol"
+	desc = "You look at a blue symbol."
 	icon_state = "C"
 
 /obj/structure/sign/morgue_disposal

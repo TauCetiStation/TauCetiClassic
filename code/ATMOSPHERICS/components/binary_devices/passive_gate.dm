@@ -5,7 +5,7 @@
 	icon_state = "intact_off"
 
 	name = "Passive gate"
-	desc = "A one-way air valve that does not require power"
+	desc = "A one-way air valve that does not require power."
 
 	var/on = 0
 	var/target_pressure = ONE_ATMOSPHERE

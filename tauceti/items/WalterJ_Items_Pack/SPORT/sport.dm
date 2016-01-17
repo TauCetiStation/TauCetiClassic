@@ -1,6 +1,6 @@
 /obj/item/clothing/under/sport
 	name = "white and black sport uniform"
-	desc = "No pain - no gain"
+	desc = "No pain - no gain."
 	icon = 'tauceti/items/WalterJ_Items_Pack/SPORT/sport.dmi'
 	tc_custom = 'tauceti/items/WalterJ_Items_Pack/SPORT/sport.dmi'
 	icon_state = "DDR_sport"

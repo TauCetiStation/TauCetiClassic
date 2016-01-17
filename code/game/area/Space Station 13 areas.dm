@@ -484,7 +484,7 @@ var/list/ghostteleportlocs = list()
 /area/abductor_ship
 	name = "\improper Abductor Ship"
 	icon_state = "yellow"
-	power_equip = 1
+	requires_power = 0
 
 /area/wizard_station
 	name = "\improper Wizard's Den"

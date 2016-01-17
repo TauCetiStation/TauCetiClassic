@@ -51,7 +51,7 @@
 /mob/living/silicon/ai/proc/ai_store_location(loc as text)
 	set category = "AI Commands"
 	set name = "Store Camera Location"
-	set desc = "Stores your current camera location by the given name"
+	set desc = "Stores your current camera location by the given name."
 
 	if(stored_locations.len >= max_locations)
 		src << "\red Cannot store additional locations. Remove one first"
@@ -80,7 +80,7 @@
 /mob/living/silicon/ai/proc/ai_goto_location(loc in sorted_stored_locations())
 	set category = "AI Commands"
 	set name = "Goto Camera Location"
-	set desc = "Returns to the selected camera location"
+	set desc = "Returns to the selected camera location."
 
 	if (!(loc in stored_locations))
 		src << "\red Location [loc] not found"
@@ -92,7 +92,7 @@
 /mob/living/silicon/ai/proc/ai_remove_location(loc in sorted_stored_locations())
 	set category = "AI Commands"
 	set name = "Delete Camera Location"
-	set desc = "Deletes the selected camera location"
+	set desc = "Deletes the selected camera location."
 
 	if (!(loc in stored_locations))
 		src << "\red Location [loc] not found"

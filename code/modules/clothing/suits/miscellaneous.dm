@@ -62,7 +62,7 @@
 
 /obj/item/clothing/suit/greatcoat
 	name = "great coat"
-	desc = "A Nazi great coat"
+	desc = "A Nazi great coat."
 	icon_state = "nazi"
 	item_state = "nazi"
 	flags = FPRINT | TABLEPASS
@@ -129,7 +129,7 @@
 
 /obj/item/clothing/suit/hastur
 	name = "Hastur's Robes"
-	desc = "Robes not meant to be worn by man"
+	desc = "Robes not meant to be worn by man."
 	icon_state = "hastur"
 	item_state = "hastur"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS
@@ -157,7 +157,7 @@
 
 /obj/item/clothing/suit/monkeysuit
 	name = "Monkey Suit"
-	desc = "A suit that looks like a primate"
+	desc = "A suit that looks like a primate."
 	icon_state = "monkeysuit"
 	item_state = "monkeysuit"
 	body_parts_covered = UPPER_TORSO|ARMS|LOWER_TORSO|LEGS|FEET|HANDS

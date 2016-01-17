@@ -1,6 +1,6 @@
 /client/proc/Jump(var/area/A in return_sorted_areas())
 	set name = "Jump to Area"
-	set desc = "Area to jump to"
+	set desc = "Area to jump to."
 	set category = "Admin"
 	if(!src.holder)
 		src << "Only administrators may use this command."
@@ -107,7 +107,7 @@
 /client/proc/Getmob(var/mob/M in mob_list)
 	set category = "Admin"
 	set name = "Get Mob"
-	set desc = "Mob to teleport"
+	set desc = "Mob to teleport."
 	if(!src.holder)
 		src << "Only administrators may use this command."
 		return
@@ -124,7 +124,7 @@
 /client/proc/Getkey()
 	set category = "Admin"
 	set name = "Get Key"
-	set desc = "Key to teleport"
+	set desc = "Key to teleport."
 
 	if(!src.holder)
 		src << "Only administrators may use this command."

@@ -1,5 +1,5 @@
 /obj/item/weapon/banhammer
-	desc = "A banhammer"
+	desc = "A banhammer."
 	name = "banhammer"
 	icon = 'icons/obj/items.dmi'
 	icon_state = "toyhammer"
@@ -119,7 +119,7 @@
 
 /obj/item/weapon/katana
 	name = "katana"
-	desc = "Woefully underpowered in D20"
+	desc = "Woefully underpowered in D20."
 	icon_state = "katana"
 	item_state = "katana"
 	flags = FPRINT | TABLEPASS | CONDUCT
@@ -190,4 +190,4 @@
 
 /obj/item/weapon/switchblade/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is slitting \his own throat with the [src.name]! It looks like \he's trying to commit suicide.</span>")
-	return (BRUTELOSS) 
+	return (BRUTELOSS)

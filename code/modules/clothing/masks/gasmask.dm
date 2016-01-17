@@ -159,7 +159,7 @@
 	icon = 'icons/obj/clothing/masks.dmi'
 	tc_custom = null
 	name = "cyborg visor"
-	desc = "Beep boop"
+	desc = "Beep boop."
 	icon_state = "death"
 
 /obj/item/clothing/mask/gas/owl_mask
