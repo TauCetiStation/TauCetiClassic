@@ -303,7 +303,7 @@
 
 /obj/item/clothing/tie/holster/armpit
 	name = "shoulder holster"
-	desc = "A worn-out handgun holster. Perfect for concealed carry"
+	desc = "A worn-out handgun holster. Perfect for concealed carry."
 	icon_state = "holster"
 	item_color = "holster"
 

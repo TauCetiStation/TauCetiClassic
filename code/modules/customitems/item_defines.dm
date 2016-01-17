@@ -76,7 +76,7 @@
 
 /obj/item/fluff/john_mckeever_1 //kirbyelder: John McKeever
 	name = "Suspicious Paper"
-	desc = "A piece of paper reading: Smash = 1/3 Leaf Juice, 1/3 Tricker, 1/3 Aajkli Extract"
+	desc = "A piece of paper reading: Smash = 1/3 Leaf Juice, 1/3 Tricker, 1/3 Aajkli Extract."
 	icon_state = "paper"
 	item_state = "paper"
 
@@ -216,7 +216,7 @@
 
 /obj/item/weapon/lighter/zippo/fluff/fay_sullivan_1 //furohman: Fay Sullivan
 	name = "Graduation Lighter"
-	desc = "A silver engraved lighter with 41 on one side and Tharsis University on the other. The lid reads Fay Sullivan, Cybernetic Engineering, 2541"
+	desc = "A silver engraved lighter with 41 on one side and Tharsis University on the other. The lid reads Fay Sullivan, Cybernetic Engineering, 2541."
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "gradzippo"
 	icon_on = "gradzippoon"
@@ -433,7 +433,7 @@
 
 /obj/item/weapon/crowbar/fluff/zelda_creedy_1 //daaneesh: Zelda Creedy
 	name = "Zelda's Crowbar"
-	desc = "A pink crow bar that has an engraving that reads, 'To Zelda. Love always, Dawn'"
+	desc = "A pink crow bar that has an engraving that reads, 'To Zelda. Love always, Dawn'."
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "zeldacrowbar"
 	item_state = "crowbar"

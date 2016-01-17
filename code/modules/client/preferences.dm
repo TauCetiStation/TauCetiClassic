@@ -43,7 +43,6 @@ var/const/MAX_SAVE_SLOTS = 10
 	var/last_id
 
 	//game-preferences
-	var/lastchangelog = ""				//Saved changlog filesize to detect if there was a change
 	var/ooccolor = "#b82e00"
 	var/be_special = 0					//Special role selection
 	var/UI_style = "White"

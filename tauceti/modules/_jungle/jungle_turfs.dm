@@ -3,7 +3,7 @@
 	var/bushes_spawn = 1
 	var/plants_spawn = 1
 	name = "wet grass"
-	desc = "Thick, long wet grass"
+	desc = "Thick, long wet grass."
 	icon = 'tauceti/modules/_jungle/jungle.dmi'
 	icon_state = "grass1"
 	var/icon_spawn_state = "grass1"
@@ -45,7 +45,7 @@
 /turf/unsimulated/jungle/path
 	bushes_spawn = 0
 	name = "wet grass"
-	desc = "thick, long wet grass"
+	desc = "Thick, long wet grass."
 	icon = 'tauceti/modules/_jungle/jungle.dmi'
 	icon_state = "grass_path"
 	icon_spawn_state = "grass2"
@@ -115,7 +115,7 @@
 /turf/unsimulated/jungle/water
 	bushes_spawn = 0
 	name = "murky water"
-	desc = "thick, murky water"
+	desc = "Thick, murky water."
 	icon = 'icons/misc/beach.dmi'
 	icon_state = "water"
 	icon_spawn_state = "water"

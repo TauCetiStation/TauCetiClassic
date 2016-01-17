@@ -1,7 +1,7 @@
 /obj/item/stack/tile/plasteel
 	name = "floor tile"
 	singular_name = "floor tile"
-	desc = "Those could work as a pretty decent throwing weapon"
+	desc = "Those could work as a pretty decent throwing weapon."
 	icon_state = "tile"
 	w_class = 3.0
 	force = 6.0

@@ -43,7 +43,7 @@
 			assembled = 1
 			user << "<span  class='notice'>You've filled the makeshift explosive with welding fuel.</span>"
 			playsound(src.loc, 'sound/effects/refill.ogg', 50, 1, -6)
-			desc = "An improvised explosive assembly. Filled to the brim with 'Explosive flavor'"
+			desc = "An improvised explosive assembly. Filled to the brim with 'Explosive flavor'."
 			overlays += image('tauceti/items/makeshift_items_TG/makeshift_tg.dmi', icon_state = "improvised_grenade_filled")
 			return
 

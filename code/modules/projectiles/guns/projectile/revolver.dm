@@ -1,5 +1,5 @@
 /obj/item/weapon/gun/projectile/revolver
-	desc = "A classic revolver. Uses 357 ammo"
+	desc = "A classic revolver. Uses 357 ammo."
 	name = "revolver"
 	icon_state = "revolver"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder

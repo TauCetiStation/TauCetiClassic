@@ -73,7 +73,7 @@
 
 		var/obj/item/weapon/twohanded/offhand/O = new(user) ////Let's reserve his other hand~
 		O.name = "[initial(name)] - offhand"
-		O.desc = "Your second grip on the [initial(name)]"
+		O.desc = "Your second grip on the [initial(name)]."
 		user.put_in_inactive_hand(O)
 		return
 
