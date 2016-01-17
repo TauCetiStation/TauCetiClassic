@@ -281,19 +281,15 @@
 	setOxyLoss(0)
 	setCloneLoss(0)
 	setBrainLoss(0)
+	setHalLoss(0)
 	SetParalysis(0)
 	SetStunned(0)
 	SetWeakened(0)
 
-	//restore all HP
-	if(!(health == maxHealth))
-		health = initial(health)
-		icon_state = initial(icon_state)
-
 	// shut down ongoing problems
 	radiation = 0
 	nutrition = 400
-	bodytemperature = T20C
+	bodytemperature = T20C+20
 	sdisabilities = 0
 	disabilities = 0
 	ExtinguishMob()
@@ -321,6 +317,11 @@
 		living_mob_list += src
 		tod = null
 		timeofdeath = 0
+
+	//restore all HP
+	if(health != maxHealth)
+		health = maxHealth
+		icon_state = initial(icon_state)
 
 	// restore us to conciousness
 	stat = CONSCIOUS
