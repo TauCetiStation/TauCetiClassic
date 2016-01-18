@@ -18,6 +18,8 @@
 	..()
 */
 /mob/New()
+	spawn()
+		if(client) animate(client, color = null, time = 0)
 	mob_list += src
 	if(stat == DEAD)
 		dead_mob_list += src
@@ -996,3 +998,18 @@ mob/proc/yank_out_object()
 	if(isliving(src))
 		spell.action.Grant(src)
 	return
+
+/mob/proc/set_EyesVision(preset = null, transition_time = 5)
+	if(!client) return
+	if(ishuman(src) && druggy)
+		var/datum/ColorMatrix/DruggyMatrix = new(pick("bgr_d","brg_d","gbr_d","grb_d","rbg_d","rgb_d"))
+		var/multiplied
+		if(preset)
+			var/datum/ColorMatrix/CM = new(preset)
+			multiplied = matrixMultiply(DruggyMatrix.matrix, CM.matrix)
+		animate(client, color = multiplied ? multiplied : DruggyMatrix.matrix, time = transition_time)
+	else if(preset)
+		var/datum/ColorMatrix/CM = new(preset)
+		animate(client, color = CM.matrix, time = transition_time)
+	else
+		animate(client, color = null, time = transition_time)
