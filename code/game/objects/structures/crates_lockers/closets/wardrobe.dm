@@ -28,7 +28,7 @@
 	new /obj/item/clothing/head/beret/sec(src)
 	new /obj/item/clothing/head/beret/sec(src)
 	new /obj/item/clothing/head/beret/sec(src)
-	//New year part
+	/*/New year part
 	new /obj/item/clothing/head/santa(src)
 	new /obj/item/clothing/head/santa(src)
 	new /obj/item/clothing/head/santa(src)
@@ -38,6 +38,7 @@
 	new /obj/item/clothing/shoes/winterboots(src)
 	new /obj/item/clothing/shoes/winterboots(src)
 	new /obj/item/clothing/shoes/winterboots(src)
+	*/
 	return
 
 
@@ -73,7 +74,7 @@
 	new /obj/item/clothing/shoes/black(src)
 	new /obj/item/clothing/shoes/black(src)
 	new /obj/item/clothing/shoes/black(src)
-	//New year part
+	/*/New year part
 	new /obj/item/clothing/suit/wintercoat(src)
 	new /obj/item/clothing/suit/wintercoat(src)
 	new /obj/item/clothing/suit/wintercoat(src)
@@ -81,6 +82,7 @@
 	new /obj/item/clothing/shoes/winterboots(src)
 	new /obj/item/clothing/shoes/winterboots(src)
 	new /obj/item/clothing/head/santa(src)
+	*/
 	return
 
 
@@ -192,13 +194,14 @@
 	new /obj/item/clothing/head/beret/eng(src)
 	new /obj/item/clothing/head/beret/eng(src)
 	new /obj/item/clothing/head/beret/eng(src)
-	//New year part
+	/*/New year part
 	new /obj/item/clothing/suit/wintercoat/engineering/atmos(src)
 	new /obj/item/clothing/suit/wintercoat/engineering/atmos(src)
 	new /obj/item/clothing/suit/wintercoat/engineering/atmos(src)
 	new /obj/item/clothing/shoes/winterboots(src)
 	new /obj/item/clothing/shoes/winterboots(src)
 	new /obj/item/clothing/shoes/winterboots(src)
+	*/
 	return
 
 
@@ -222,13 +225,14 @@
 	new /obj/item/clothing/head/beret/eng(src)
 	new /obj/item/clothing/head/beret/eng(src)
 	new /obj/item/clothing/head/beret/eng(src)
-	//New year part
+	/*/New year part
 	new /obj/item/clothing/suit/wintercoat/engineering(src)
 	new /obj/item/clothing/suit/wintercoat/engineering(src)
 	new /obj/item/clothing/suit/wintercoat/engineering(src)
 	new /obj/item/clothing/shoes/winterboots(src)
 	new /obj/item/clothing/shoes/winterboots(src)
 	new /obj/item/clothing/shoes/winterboots(src)
+	*/
 	return
 
 
@@ -303,12 +307,13 @@
 	new /obj/item/clothing/shoes/black(src)
 	new /obj/item/clothing/gloves/black(src)
 	new /obj/item/clothing/gloves/black(src)
-	//New year part
+	/*/New year part
 	new /obj/item/clothing/suit/wintercoat/science(src)
 	new /obj/item/clothing/suit/wintercoat/science(src)
 	new /obj/item/clothing/shoes/winterboots(src)
 	new /obj/item/clothing/shoes/winterboots(src)
 	new /obj/item/clothing/head/santa(src)
+	*/
 	return
 
 
@@ -341,12 +346,13 @@
 	new /obj/item/clothing/shoes/white(src)
 	new /obj/item/clothing/suit/storage/labcoat/genetics(src)
 	new /obj/item/clothing/suit/storage/labcoat/genetics(src)
-	//New year part
+	/*/New year part
 	new /obj/item/clothing/suit/wintercoat/science(src)
 	new /obj/item/clothing/suit/wintercoat/science(src)
 	new /obj/item/clothing/shoes/winterboots(src)
 	new /obj/item/clothing/shoes/winterboots(src)
 	new /obj/item/clothing/head/santa(src)
+	*/
 	return
 
 
@@ -365,10 +371,11 @@
 	new /obj/item/clothing/suit/storage/labcoat/virologist(src)
 	new /obj/item/clothing/mask/surgical(src)
 	new /obj/item/clothing/mask/surgical(src)
-	//New year part
+	/*/New year part
 	new /obj/item/clothing/suit/wintercoat/medical(src)
 	new /obj/item/clothing/shoes/winterboots(src)
 	new /obj/item/clothing/head/santa(src)
+	*/
 	return
 
 
@@ -390,11 +397,12 @@
 	new /obj/item/clothing/suit/storage/labcoat(src)
 	new /obj/item/clothing/mask/surgical(src)
 	new /obj/item/clothing/mask/surgical(src)
-	//New year part
+	/*/New year part
 	new /obj/item/clothing/suit/wintercoat/medical(src)
 	new /obj/item/clothing/shoes/winterboots(src)
 	new /obj/item/clothing/head/santa(src)
 	new /obj/item/clothing/suit/storage/labcoat/winterlabcoat(src)
+	*/
 	return
 
 
@@ -414,12 +422,13 @@
 	new /obj/item/clothing/head/soft/grey(src)
 	new /obj/item/clothing/head/soft/grey(src)
 	new /obj/item/clothing/head/soft/grey(src)
-	//New year part
+	/*//New year part
 	new /obj/item/clothing/suit/wintercoat(src)
 	new /obj/item/clothing/suit/wintercoat(src)
 	new /obj/item/clothing/shoes/winterboots(src)
 	new /obj/item/clothing/shoes/winterboots(src)
 	new /obj/item/clothing/head/santa(src)
+	*/
 	return
 
 
@@ -464,10 +473,11 @@
 	new /obj/item/clothing/shoes/purple(src)
 	new /obj/item/clothing/shoes/red(src)
 	new /obj/item/clothing/shoes/leather(src)
-	//New year part
+	/*/New year part
 	new /obj/item/clothing/suit/wintercoat(src)
 	new /obj/item/clothing/shoes/winterboots(src)
 	new /obj/item/clothing/head/santa(src)
+	*/
 	return
 
 /obj/structure/closet/wardrobe/tactical

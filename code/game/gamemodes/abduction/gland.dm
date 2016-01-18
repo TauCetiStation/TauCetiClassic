@@ -1,6 +1,6 @@
 /obj/item/gland/
 	name = "fleshy mass"
-	desc = "Eww"
+	desc = "Eww!"
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "gland"
 	var/cooldown_low = 300

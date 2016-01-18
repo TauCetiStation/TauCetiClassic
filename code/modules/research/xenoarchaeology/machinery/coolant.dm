@@ -17,7 +17,7 @@ datum/chemical_reaction/coolant
 
 /obj/structure/reagent_dispensers/coolanttank
 	name = "coolant tank"
-	desc = "A tank of industrial coolant"
+	desc = "A tank of industrial coolant."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "coolanttank"
 	amount_per_transfer_from_this = 10

@@ -319,7 +319,7 @@ Ccomp's first proc.
 /client/proc/toggle_antagHUD_use()
 	set category = "Server"
 	set name = "Toggle antagHUD usage"
-	set desc = "Toggles antagHUD usage for observers"
+	set desc = "Toggles antagHUD usage for observers."
 
 	if(!holder)
 		src << "Only administrators may use this command."
@@ -626,7 +626,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		src << "Only administrators may use this command."
 		return
 	var/input = input(usr, "Please enter anything you want. Anything. Serious.", "What?", "") as message|null
-	var/customname = input(usr, "Pick a title for the report.", "Title") as text|null
+	var/customname = input(usr, "Pick a title for the report. Do not forget about prohibit of the use of the Cyrillic alphabet in the names of objects. ", "Title") as text|null
 	if(!input)
 		return
 	if(!customname)
@@ -867,7 +867,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 /client/proc/toggle_view_range()
 	set category = "Special Verbs"
 	set name = "Change View Range"
-	set desc = "switches between 1x and custom views"
+	set desc = "switches between 1x and custom views."
 
 	if(view == world.view)
 		view = input("Select view range:", "FUCK YE", 7) in list(1,2,3,4,5,6,7,8,9,10,11,12,13,14,128)
@@ -995,7 +995,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	set category = "Server"
 	set name = "Toggle random events on/off"
 
-	set desc = "Toggles random events such as meteors, black holes, blob (but not space dust) on/off"
+	set desc = "Toggles random events such as meteors, black holes, blob (but not space dust) on/off."
 	if(!check_rights(R_SERVER))	return
 
 	if(!config.allow_random_events)
@@ -1007,3 +1007,39 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		usr << "Random events disabled"
 		message_admins("Admin [key_name_admin(usr)] has disabled random events.", 1)
 	feedback_add_details("admin_verb","TRE") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+
+/client/proc/send_fax_message()
+	set category = "Special Verbs"
+	set name = "Send Fax Message"
+
+	var/mob/Sender
+
+	if(!check_rights(R_ADMIN))
+		return
+
+	var/sent = sanitize_alt(input(usr, "Please enter anything you want. Anything. Serious.", "What?", "") as message|null)
+	if(!sent)
+		return
+	var/sentname = sanitize_alt(input(usr, "Pick a title for the message. Do not forget about prohibit of the use of the Cyrillic alphabet in the names of objects, enter Cancel to stop sending", "Title") as text)
+	if(!sentname)
+		sentname = "NanoTrasen Update"
+	if(sentname == "Cancel")
+		return
+	var/dpt = input(usr, "Please choose the needed fax, choose unknown to send to all faxes on the station") as null|anything in alldepartments
+	if(!dpt)
+		return
+	var/list/stampos = list("CentCom", "Syndicate", "Clown", "FakeCentCom", "Unknown")
+	var/stamp = input(usr, "Please choose the needed stamp, choose unknown to send without any stamp") as null|anything in stampos
+	if(!stamp)
+		return
+	var/stamps = sanitize_alt(input(usr, "Pick a message for stamp text (e.g. This paper has been stamped by the Central Compound Quantum Relay), if empty will be chosen default text for the selected stamp") as text)
+
+	var/question1 = alert(src, "Do you want to cancel the sending of this fax?", "Confirm", "Yes", "No")
+	if(question1 != "No")
+		return
+
+	SendFax(sent, sentname, Sender, dpt, stamp, stamps)
+
+
+

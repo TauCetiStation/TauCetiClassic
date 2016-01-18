@@ -56,7 +56,7 @@
 	layer = 2
 	icon = 'tauceti/modules/_locations/centcomm/overlay_velocity.dmi'
 	name = "\improper Object"
-	desc = "Just object"
+	desc = "Just object."
 	icon_state = "tool"
 
 /obj/structure/sign/velocity_overlay/car_impala
@@ -77,21 +77,21 @@
 	layer = 4
 	icon = 'tauceti/modules/_locations/centcomm/car_ferrari.dmi'
 	name = "\improper Ferrari Daytona"
-	desc = "Ferrari Daytona"
+	desc = "Ferrari Daytona."
 	icon_state = "Ferrari Daytona"
 
 /obj/structure/sign/velocity_overlay/car_M105
 	layer = 4
 	icon = 'tauceti/modules/_locations/centcomm/car_m105.dmi'
 	name = "\improper M105"
-	desc = "M105"
+	desc = "M105."
 	icon_state = "M105"
 
 /obj/structure/sign/velocity_overlay/reklama
 	layer = 4
 	icon = 'tauceti/modules/_locations/centcomm/reklama.dmi'
 	name = "\improper Object"
-	desc = "Just object"
+	desc = "Just object."
 	icon_state = "SpaceBeer_Anim"
 
 /obj/structure/closet/secure_closet/velocity_security

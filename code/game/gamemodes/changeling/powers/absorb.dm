@@ -108,6 +108,10 @@
 //Checks if the target DNA is valid and absorbable.
 /datum/changeling/proc/can_absorb_dna(mob/living/carbon/U, mob/living/carbon/T)
 	if(T)
+		if(!ishuman(T))
+			U << "<span class='warning'>[T] is too simple for absorption.</span>"
+			return 0
+
 		if(NOCLONE in T.mutations || HUSK in T.mutations)
 			U << "<span class='warning'>DNA of [T] is ruined beyond usability!</span>"
 			return 0
