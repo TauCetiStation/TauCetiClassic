@@ -1581,7 +1581,7 @@
 					client.screen += global_hud.vimpaired
 
 			if(eye_blurry)			client.screen += global_hud.blurry
-			if(druggy)				client.screen += global_hud.druggy
+			//if(druggy)				client.screen += global_hud.druggy
 
 			var/masked = 0
 
