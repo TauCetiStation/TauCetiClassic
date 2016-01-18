@@ -289,7 +289,7 @@
 	// shut down ongoing problems
 	radiation = 0
 	nutrition = 400
-	bodytemperature = T20C+20
+	bodytemperature = T20C
 	sdisabilities = 0
 	disabilities = 0
 	ExtinguishMob()

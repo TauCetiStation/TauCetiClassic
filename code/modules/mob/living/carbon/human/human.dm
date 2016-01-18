@@ -1442,6 +1442,7 @@
 				src << "<span class='danger'>Ouch!</span>"
 				return
 			layer = 4.0
+		crawl_getup = 0
 	else
 		if( (locate(/obj/structure/table) in T) || (locate(/obj/structure/stool/bed) in T) )
 			src << "<span class='notice'>You can't crawl here!</span>"
