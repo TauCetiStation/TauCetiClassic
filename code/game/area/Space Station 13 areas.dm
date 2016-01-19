@@ -1913,8 +1913,6 @@ var/list/the_station_areas = list (
 	/area/shuttle/escape_pod5/station,
 	/area/shuttle/mining/station,
 	/area/shuttle/transport1/station,
-	// /area/shuttle/transport2/station,
-	/area/shuttle/prison/station,
 	/area/shuttle/administration/station,
 	/area/shuttle/specops/station,
 	/area/atmos,
@@ -1923,7 +1921,6 @@ var/list/the_station_areas = list (
 	/area/bridge,
 	/area/crew_quarters,
 	/area/holodeck,
-	/area/mint,
 	/area/library,
 	/area/chapel,
 	/area/lawoffice,
@@ -1941,10 +1938,8 @@ var/list/the_station_areas = list (
 	/area/construction,
 	/area/ai_monitored/storage/eva, //do not try to simplify to "/area/ai_monitored" --rastaf0
 	/area/ai_monitored/storage/secure,
-	/area/ai_monitored/storage/emergency,
 	/area/turret_protected/ai_upload, //do not try to simplify to "/area/turret_protected" --rastaf0
-	/area/turret_protected/ai_upload_foyer,
-	/area/turret_protected/ai,
+	/area/turret_protected/ai
 )
 
 
