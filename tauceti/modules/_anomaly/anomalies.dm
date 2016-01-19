@@ -8,11 +8,10 @@
 	unacidable = 1
 	density = 0
 	anchored = 1
-	luminosity = 3
 	var/obj/item/device/assembly/signaler/anomaly/aSignal = null
 
 /obj/effect/anomaly/New()
-	set_light(initial(luminosity))
+	set_light(3,5,light_color)
 	aSignal = new(src)
 	aSignal.code = rand(1,100)
 
@@ -82,6 +81,7 @@
 /obj/effect/anomaly/flux
 	name = "flux wave anomaly"
 	icon_state = "flux2"
+	light_color = "#FFE194"
 
 /obj/effect/anomaly/flux/New()
 	..()
@@ -93,6 +93,7 @@
 	name = "bluespace anomaly"
 	icon_state = "bluespace"
 	density = 1
+	light_color = "#009EFF"
 
 /obj/effect/anomaly/bluespace/New()
 	..()
