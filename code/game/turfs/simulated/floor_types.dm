@@ -243,6 +243,7 @@
 	New()
 		..()
 		update_icon(1)
+		set_light(1.5)
 
 	update_icon(var/propogate=1)
 		underlays.Cut()

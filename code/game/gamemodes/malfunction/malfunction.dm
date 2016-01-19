@@ -155,7 +155,7 @@
 /datum/game_mode/malfunction/proc/takeover()
 	set category = "Malfunction"
 	set name = "System Override"
-	set desc = "Start the victory timer"
+	set desc = "Start the victory timer."
 	if (!istype(ticker.mode,/datum/game_mode/malfunction))
 		usr << "You cannot begin a takeover in this round type!."
 		return
@@ -183,7 +183,7 @@
 /datum/game_mode/malfunction/proc/ai_win()
 	set category = "Malfunction"
 	set name = "Explode"
-	set desc = "Station go boom"
+	set desc = "Station go boom."
 	if (!ticker.mode:to_nuke_or_not_to_nuke)
 		return
 	ticker.mode:to_nuke_or_not_to_nuke = 0

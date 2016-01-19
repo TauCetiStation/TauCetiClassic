@@ -1424,17 +1424,15 @@
 	set name = "Crawl"
 	set category = "IC"
 
-	if( stat || weakened || paralysis || resting || sleeping || (status_flags & FAKEDEATH) || buckled) return
-
+	if( stat || weakened || paralysis || resting || sleeping || (status_flags & FAKEDEATH) || buckled)
+		return
 	if(crawl_getup)
 		return
+
 	var/T = get_turf(src)
-	if( (locate(/obj/structure/table) in T) || (locate(/obj/structure/stool/bed) in T) )
-		return
-	else
-		if(crawling)
-			crawl_getup = 1
-			sleep(10)
+	if(crawling)
+		crawl_getup = 1
+		if(do_after(src, 10 , target = src))
 			crawl_getup = 0
 			T = get_turf(src)
 			if( (locate(/obj/structure/table) in T) || (locate(/obj/structure/stool/bed) in T) )
@@ -1443,12 +1441,16 @@
 				E.take_damage(5, 0, 0, 0, "Table")
 				src << "<span class='danger'>Ouch!</span>"
 				return
-			pass_flags += PASSCRAWL
-			layer = 3.9
-		else
-			pass_flags -= PASSCRAWL
-			//layer = 4.0
-		crawling = !crawling
+			layer = 4.0
+		crawl_getup = 0
+	else
+		if( (locate(/obj/structure/table) in T) || (locate(/obj/structure/stool/bed) in T) )
+			src << "<span class='notice'>You can't crawl here!</span>"
+			return
+		layer = 3.9
+
+	pass_flags ^= PASSCRAWL
+	crawling = !crawling
 
 	src << "<span class='notice'>You are now [crawling ? "crawling" : "getting up"].</span>"
 	update_canmove()

@@ -281,14 +281,10 @@
 	setOxyLoss(0)
 	setCloneLoss(0)
 	setBrainLoss(0)
+	setHalLoss(0)
 	SetParalysis(0)
 	SetStunned(0)
 	SetWeakened(0)
-
-	//restore all HP
-	if(!(health == maxHealth))
-		health = initial(health)
-		icon_state = initial(icon_state)
 
 	// shut down ongoing problems
 	radiation = 0
@@ -321,6 +317,11 @@
 		living_mob_list += src
 		tod = null
 		timeofdeath = 0
+
+	//restore all HP
+	if(health != maxHealth)
+		health = maxHealth
+		icon_state = initial(icon_state)
 
 	// restore us to conciousness
 	stat = CONSCIOUS
@@ -757,12 +758,8 @@
 		src << "<span class='rose'>You can't move.</span>"
 
 //Debuffs check
-	else if( paralysis || stunned )
+	else if(!resting && (sleeping || weakened || paralysis || stunned) )
 		src << "<span class='rose'>You can't control yourself.</span>"
-
-//Sleep style debuffs
-	else if( !resting && (sleeping || weakened) )
-		src << "<span class='rose'>You are already sleeping.</span>"
 
 	else
 		resting = !resting

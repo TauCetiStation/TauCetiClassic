@@ -18,6 +18,8 @@
 	..()
 */
 /mob/New()
+	spawn()
+		if(client) animate(client, color = null, time = 0)
 	mob_list += src
 	if(stat == DEAD)
 		dead_mob_list += src
@@ -338,32 +340,8 @@
 /client/verb/changes()
 	set name = "Changelog"
 	set category = "OOC"
-	getFiles(
-		'html/postcardsmall.jpg',
-		'html/somerights20.png',
-		'html/88x31.png',
-		'html/bug-minus.png',
-		'html/cross-circle.png',
-		'html/hard-hat-exclamation.png',
-		'html/image-minus.png',
-		'html/image-plus.png',
-		'html/music-minus.png',
-		'html/music-plus.png',
-		'html/tick-circle.png',
-		'html/wrench-screwdriver.png',
-		'html/spell-check.png',
-		'html/burn-exclamation.png',
-		'html/chevron.png',
-		'html/chevron-expand.png',
-		'html/changelog.css',
-		'html/changelog.js',
-		'html/changelog.html'
-		)
-	src << browse('html/changelog.html', "window=changes;size=675x650")
-	if(prefs.lastchangelog != changelog_hash)
-		prefs.lastchangelog = changelog_hash
-		prefs.save_preferences()
-		winset(src, "rpane.changelog", "background-color=none;font-style=;")
+
+	usr << link("http://tauceti.ru/forums/index.php?topic=3551.msg75105#new")
 
 /mob/verb/observe()
 	set name = "Observe"
@@ -996,3 +974,18 @@ mob/proc/yank_out_object()
 	if(isliving(src))
 		spell.action.Grant(src)
 	return
+
+/mob/proc/set_EyesVision(preset = null, transition_time = 5)
+	if(!client) return
+	if(ishuman(src) && druggy)
+		var/datum/ColorMatrix/DruggyMatrix = new(pick("bgr_d","brg_d","gbr_d","grb_d","rbg_d","rgb_d"))
+		var/multiplied
+		if(preset)
+			var/datum/ColorMatrix/CM = new(preset)
+			multiplied = matrixMultiply(DruggyMatrix.matrix, CM.matrix)
+		animate(client, color = multiplied ? multiplied : DruggyMatrix.matrix, time = 40)
+	else if(preset)
+		var/datum/ColorMatrix/CM = new(preset)
+		animate(client, color = CM.matrix, time = transition_time)
+	else
+		animate(client, color = null, time = transition_time)

@@ -852,6 +852,7 @@
 	desc = "Wall-mounted Medical Equipment dispenser."
 	product_ads = "Go save some lives!;The best stuff for your medbay.;Only the finest tools.;Natural chemicals!;This stuff saves lives.;Don't you want some?"
 	icon_state = "wallmed"
+	light_power_on = 1
 	light_color = "#e6fff2"
 	icon_deny = "wallmed-deny"
 	req_access_txt = "5"
@@ -863,6 +864,7 @@
 	name = "NanoMed"
 	desc = "Wall-mounted Medical Equipment dispenser."
 	icon_state = "wallmed"
+	light_power_on = 1
 	light_color = "#e6fff2"
 	icon_deny = "wallmed-deny"
 	req_access_txt = "5"

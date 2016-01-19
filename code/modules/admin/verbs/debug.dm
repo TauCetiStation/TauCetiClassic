@@ -191,7 +191,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 /client/proc/makepAI(var/turf/T in mob_list)
 	set category = "Fun"
 	set name = "Make pAI"
-	set desc = "Specify a location to spawn a pAI device, then specify a key to play that pAI"
+	set desc = "Specify a location to spawn a pAI device, then specify a key to play that pAI."
 
 	var/list/available = list()
 	for(var/mob/C in mob_list)
@@ -441,7 +441,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 /client/proc/cmd_assume_direct_control(var/mob/M in mob_list)
 	set category = "Admin"
 	set name = "Assume direct control"
-	set desc = "Direct intervention"
+	set desc = "Direct intervention."
 
 	if(!check_rights(R_DEBUG|R_ADMIN))	return
 	if(M.ckey)
@@ -1609,7 +1609,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 	set category = "Debug"
 	set name = "Start Singularity"
-	set desc = "Sets up the singularity and all machines to get power flowing through the station"
+	set desc = "Sets up the singularity and all machines to get power flowing through the station."
 
 	if(alert("Are you sure? This will start up the engine. Should only be used during debug!",,"Yes","No") != "Yes")
 		return
@@ -1659,7 +1659,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 /client/proc/setup_supermatter_engine()
 	set category = "Debug"
 	set name = "Setup supermatter"
-	set desc = "Sets up the supermatter engine"
+	set desc = "Sets up the supermatter engine."
 
 	if(!check_rights(R_DEBUG|R_ADMIN))      return
 
@@ -1742,7 +1742,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 /client/proc/cmd_debug_mob_lists()
 	set category = "Debug"
 	set name = "Debug Mob Lists"
-	set desc = "For when you just gotta know"
+	set desc = "For when you just gotta know."
 
 	switch(input("Which list?") in list("Players","Admins","Mobs","Living Mobs","Dead Mobs", "Clients", "Joined Clients"))
 		if("Players")

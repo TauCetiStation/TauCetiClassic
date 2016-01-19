@@ -17,12 +17,13 @@
 		new /obj/item/clothing/gloves/brown(src)
 		new /obj/item/clothing/head/soft(src)
 //		new /obj/item/weapon/cartridge/quartermaster(src)
-		//New year part
+		/*/New year part
 		new /obj/item/clothing/suit/wintercoat/cargo(src)
 		new /obj/item/clothing/suit/wintercoat/cargo(src)
 		new /obj/item/clothing/shoes/winterboots(src)
 		new /obj/item/clothing/shoes/winterboots(src)
 		new /obj/item/clothing/head/santa(src)
+		*/
 		return
 
 /obj/structure/closet/secure_closet/quartermaster
@@ -52,8 +53,9 @@
 		new /obj/item/clothing/glasses/meson(src)
 		new /obj/item/clothing/head/soft(src)
 		new /obj/item/weapon/mining_voucher(src)
-		//New year part
+		/*/New year part
 		new /obj/item/clothing/suit/wintercoat/cargo(src)
 		new /obj/item/clothing/shoes/winterboots(src)
 		new /obj/item/clothing/head/santa(src)
+		*/
 		return
