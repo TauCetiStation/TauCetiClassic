@@ -67,6 +67,15 @@
 		A.master.powerupdate = 2	// Decremented by 2 each GC tick, since it's not auto power change we're going to update power twice.
 	return 1
 
+/obj/machinery/proc/addStaticPower(value, powerchannel)
+	var/area/A = get_area(src)
+	if(!A)
+		return
+	A.addStaticPower(value, powerchannel)
+
+/obj/machinery/proc/removeStaticPower(value, powerchannel)
+	addStaticPower(-value, powerchannel)
+
 /obj/machinery/proc/power_change()		// called whenever the power settings of the containing area change
 										// by default, check equipment channel & set flag
 										// can override if needed
