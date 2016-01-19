@@ -14,7 +14,7 @@
 /datum/event/anomaly_pyro/start()
 	var/turf/T = pick(get_area_turfs(impact_area))
 	if(T)
-		newAnomaly = new /obj/effect/anomaly/pyro(T.loc)
+		newAnomaly = new /obj/effect/anomaly/pyro(T)
 
 /datum/event/anomaly_pyro/tick()
 	if(!newAnomaly)

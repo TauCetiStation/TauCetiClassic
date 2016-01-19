@@ -14,7 +14,7 @@
 /datum/event/anomaly_vortex/start()
 	var/turf/T = pick(get_area_turfs(impact_area))
 	if(T)
-		newAnomaly = new /obj/effect/anomaly/bhole(T.loc)
+		newAnomaly = new /obj/effect/anomaly/bhole(T)
 
 /datum/event/anomaly_vortex/tick()
 	if(!newAnomaly)

@@ -14,7 +14,7 @@
 /datum/event/anomaly_flux/start()
 	var/turf/T = pick(get_area_turfs(impact_area))
 	if(T)
-		newAnomaly = new /obj/effect/anomaly/flux(T.loc)
+		newAnomaly = new /obj/effect/anomaly/flux(T)
 
 /datum/event/anomaly_flux/tick()
 	if(!newAnomaly)
