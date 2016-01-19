@@ -153,7 +153,7 @@ var/datum/global_hud/global_hud = new()
 	var/action_buttons_hidden = 0
 
 
-datum/hud/New(mob/owner)
+/datum/hud/New(mob/owner)
 	mymob = owner
 	instantiate()
 	..()
@@ -174,7 +174,7 @@ datum/hud/New(mob/owner)
 	adding = null
 	other = null
 	hotkeybuttons = null
-	action_button = null
+	hide_actions_toggle = null
 	mymob = null
 
 /datum/hud/proc/hidden_inventory_update()
