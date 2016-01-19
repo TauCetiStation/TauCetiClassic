@@ -745,6 +745,16 @@
 	set name = "Rest"
 	set category = "IC"
 
+	if(issilicon(usr))
+		var/mob/living/silicon/robot/R = usr
+		for(var/V in R.components)
+			if(V == "power cell") continue
+			var/datum/robot_component/C = R.components[V]
+			if(C.installed)
+				C.toggled = !C.toggled
+		R << "<span class='notice'>You toggle all your components.</span>"
+		return
+
 //Already resting and have others debuffs
 	if( resting && (sleeping || weakened || paralysis || stunned) )
 		src << "<span class='rose'>You can't wake up.</span>"
