@@ -22,7 +22,7 @@
 				user.adjustFireLoss(rand(200,300))
 			if("clone")
 				user.adjustCloneLoss(rand(200,300))
-			
+
 		//user.death(0)
 		//dead_mob_list -= user
 		//living_mob_list += user
@@ -73,7 +73,7 @@
 		return
 	//if(!user.stat && alert("Are we sure we wish to fake our death?",,"Yes","No") == "No")//Confirmation for living changeling if they want to fake their death
 	//	return
-	if(!user.stat)
+	if(user.stat != DEAD)
 		switch(alert("Are we sure we wish to fake our death?",null,"Yes","No"))
 			if("No")
 				return

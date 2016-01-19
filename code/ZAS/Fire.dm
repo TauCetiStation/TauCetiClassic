@@ -63,6 +63,11 @@ Attach to transfer valve and open. BOOM.
 
 	var/firelevel = 10000 //Calculated by gas_mixture.calculate_firelevel()
 
+/obj/fire/Crossed(mob/living/L)
+	..()
+	if(isliving(L))
+		L.fire_act()
+
 /obj/fire/process()
 	. = 1
 
@@ -95,8 +100,7 @@ Attach to transfer valve and open. BOOM.
 
 	//check if there is something to combust
 	if(!air_contents.check_combustability(liquid))
-		//qdel(src)
-		RemoveFire()
+		qdel(src)
 		return
 
 	//get a firelevel and set the icon
@@ -115,11 +119,7 @@ Attach to transfer valve and open. BOOM.
 	//im not sure how to implement a version that works for every creature so for now monkeys are firesafe
 	for(var/mob/living/carbon/human/M in loc)
 		M.FireBurn(firelevel, air_contents.temperature, air_contents.return_pressure() ) //Burn the humans!
-		M.fire_act()
-	for(var/mob/living/carbon/monkey/A in loc)
-		A.fire_act()
-	for(var/mob/living/carbon/alien/humanoid/X in loc)
-		X.fire_act()
+
 	loc.fire_act(air_contents, air_contents.temperature, air_contents.return_volume())
 	for(var/atom/A in loc)
 		A.fire_act(air_contents, air_contents.temperature, air_contents.return_volume())
@@ -179,14 +179,12 @@ Attach to transfer valve and open. BOOM.
 	firelevel = fl
 	air_master.active_hotspots.Add(src)
 
+	for(var/mob/living/L in loc)
+		L.fire_act()
+
 /obj/fire/Destroy()
-	if (istype(loc, /turf/simulated))
-		set_light(0)
-
-		loc = null
-	air_master.active_hotspots.Remove(src)
-
-	..()
+	RemoveFire()
+	return ..()
 
 /obj/fire/proc/RemoveFire()
 	if (istype(loc, /turf/simulated))
@@ -196,9 +194,9 @@ Attach to transfer valve and open. BOOM.
 
 
 
-turf/simulated/var/fire_protection = 0 //Protects newly extinguished tiles from being overrun again.
-turf/proc/apply_fire_protection()
-turf/simulated/apply_fire_protection()
+/turf/simulated/var/fire_protection = 0 //Protects newly extinguished tiles from being overrun again.
+/turf/proc/apply_fire_protection()
+/turf/simulated/apply_fire_protection()
 	fire_protection = world.time
 
 
