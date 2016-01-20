@@ -8,11 +8,10 @@
 	unacidable = 1
 	density = 0
 	anchored = 1
-	luminosity = 3
 	var/obj/item/device/assembly/signaler/anomaly/aSignal = null
 
 /obj/effect/anomaly/New()
-	set_light(initial(luminosity))
+	set_light(3,5,light_color)
 	aSignal = new(src)
 	aSignal.code = rand(1,100)
 
@@ -82,10 +81,11 @@
 /obj/effect/anomaly/flux
 	name = "flux wave anomaly"
 	icon_state = "flux2"
+	light_color = "#FFE194"
 
 /obj/effect/anomaly/flux/New()
 	..()
-	aSignal.origin_tech = "powerstorage=5;programming=3;plasmatech=2"
+	aSignal.origin_tech = "powerstorage=6;programming=4;plasmatech=4"
 
 /////////////////////
 
@@ -93,10 +93,11 @@
 	name = "bluespace anomaly"
 	icon_state = "bluespace"
 	density = 1
+	light_color = "#009EFF"
 
 /obj/effect/anomaly/bluespace/New()
 	..()
-	aSignal.origin_tech = "bluespace=5;magnets=3;powerstorage=2"
+	aSignal.origin_tech = "bluespace=5;magnets=5;powerstorage=3"
 
 /obj/effect/anomaly/bluespace/Bumped(atom/A)
 	if(isliving(A))
@@ -111,7 +112,7 @@
 
 /obj/effect/anomaly/pyro/New()
 	..()
-	aSignal.origin_tech = "plasmatech=5;powerstorage=3;biotech=3"
+	aSignal.origin_tech = "plasmatech=5;powerstorage=4;biotech=6"
 
 /obj/effect/anomaly/pyro/anomalyEffect()
 	..()
@@ -132,7 +133,7 @@
 
 /obj/effect/anomaly/bhole/New()
 	..()
-	aSignal.origin_tech = "materials=5;combat=4;engineering=3"
+	aSignal.origin_tech = "materials=5;combat=4;engineering=4"
 
 /obj/effect/anomaly/bhole/anomalyEffect()
 	..()
