@@ -21,6 +21,12 @@
 	heat_capacity = 312500 //a little over 5 cm thick , 312500 for 1 m by 2.5 m by 0.25 m plasteel wall
 
 	var/walltype = "metal"
+	var/obj/item/stack/sheet/builtin_sheet = null
+	var/sheet_type = /obj/item/stack/sheet/metal
+
+/turf/simulated/wall/New()
+	..()
+	builtin_sheet = new sheet_type
 
 /turf/simulated/wall/Destroy()
 	for(var/obj/effect/E in src) if(E.name == "Wallrot") qdel(E)
@@ -29,6 +35,7 @@
 /turf/simulated/wall/ChangeTurf(var/newtype)
 	for(var/obj/effect/E in src) if(E.name == "Wallrot") qdel(E)
 	..(newtype)
+	relativewall_neighbours()
 
 //Appearance
 
@@ -36,7 +43,7 @@
 	. = ..()
 
 	if(!damage)
-		usr << "<span class='notice'>It looks fully intact.</span>"
+		usr << "<span class='info'>It looks fully intact.</span>"
 	else
 		var/dam = damage / damage_cap
 		if(dam <= 0.3)
@@ -106,45 +113,12 @@
 	return ..()
 
 /turf/simulated/wall/proc/dismantle_wall(devastated=0, explode=0)
-	if(istype(src,/turf/simulated/wall/r_wall))
-		if(!devastated)
-			playsound(src, 'sound/items/Welder.ogg', 100, 1)
-			new /obj/structure/girder/reinforced(src)
-			new /obj/item/stack/sheet/plasteel( src )
-		else
-			new /obj/item/stack/sheet/metal( src )
-			new /obj/item/stack/sheet/metal( src )
-			new /obj/item/stack/sheet/plasteel( src )
-	else if(istype(src,/turf/simulated/wall/cult))
-		if(!devastated)
-			playsound(src, 'sound/items/Welder.ogg', 100, 1)
-			new /obj/effect/decal/cleanable/blood(src)
-			new /obj/structure/cultgirder(src)
-		else
-			new /obj/effect/decal/cleanable/blood(src)
-			new /obj/effect/decal/remains/human(src)
-
+	if(devastated)
+		devastate_wall()
 	else
-		if(!devastated)
-			playsound(src, 'sound/items/Welder.ogg', 100, 1)
-			new /obj/structure/girder(src)
-			if (mineral == "metal")
-				new /obj/item/stack/sheet/metal( src )
-				new /obj/item/stack/sheet/metal( src )
-			else
-				var/M = text2path("/obj/item/stack/sheet/mineral/[mineral]")
-				new M( src )
-				new M( src )
-		else
-			if (mineral == "metal")
-				new /obj/item/stack/sheet/metal( src )
-				new /obj/item/stack/sheet/metal( src )
-				new /obj/item/stack/sheet/metal( src )
-			else
-				var/M = text2path("/obj/item/stack/sheet/mineral/[mineral]")
-				new M( src )
-				new M( src )
-				new /obj/item/stack/sheet/metal( src )
+		playsound(src, 'sound/items/Welder.ogg', 100, 1)
+		var/newgirder = break_wall()
+		transfer_fingerprints_to(newgirder)
 
 	for(var/obj/O in src.contents) //Eject contents!
 		if(istype(O,/obj/structure/sign/poster))
@@ -152,8 +126,26 @@
 			P.roll_and_drop(src)
 		else
 			O.loc = src
-
 	ChangeTurf(/turf/simulated/floor/plating)
+
+/turf/simulated/wall/proc/break_wall()
+	if(istype(src, /turf/simulated/wall/cult))
+		new /obj/effect/decal/cleanable/blood(src)
+		return (new /obj/structure/cultgirder(src))
+
+	builtin_sheet.amount = 2
+	builtin_sheet.loc = src
+	return (new /obj/structure/girder(src))
+
+/turf/simulated/wall/proc/devastate_wall()
+	if(istype(src, /turf/simulated/wall/cult))
+		new /obj/effect/decal/cleanable/blood(src)
+		new /obj/effect/decal/remains/human(src)
+	return
+
+	builtin_sheet.amount = 2
+	builtin_sheet.loc = src
+	new /obj/item/stack/sheet/metal(src)
 
 /turf/simulated/wall/ex_act(severity)
 	switch(severity)

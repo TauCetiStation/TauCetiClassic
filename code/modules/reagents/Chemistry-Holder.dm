@@ -340,13 +340,12 @@ var/const/INGEST = 2
 	for(var/A in reagent_list)
 		var/datum/reagent/R = A
 		if (R.id == reagent)
-			reagent_list -= A
-			qdel(A)
+			reagent_list -= R
+			qdel(R)
 			update_total()
-			my_atom.on_reagent_change()
+			if(my_atom)
+				my_atom.on_reagent_change()
 			return 0
-
-
 	return 1
 
 /datum/reagents/proc/update_total()
@@ -356,7 +355,6 @@ var/const/INGEST = 2
 			del_reagent(R.id)
 		else
 			total_volume += R.volume
-
 	return 0
 
 /datum/reagents/proc/clear_reagents()
