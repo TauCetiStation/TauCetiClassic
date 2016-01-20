@@ -164,7 +164,7 @@
 
 
 	for(var/i=0; i<icount;i++)
-		var/obj/screen/H = new /obj/screen()
+		var/obj/screen/H = PoolOrNew(/obj/screen)
 
 		H.screen_loc = "[5 + i%icx],[6+ round(i/icx)]"
 
@@ -295,7 +295,7 @@
 
 
 	for(var/i=0; i<icount;i++)
-		var/obj/screen/H = new /obj/screen()
+		var/obj/screen/H = PoolOrNew(/obj/screen)
 
 		H.screen_loc = "[5 + i%icx],[6+ round(i/icx)]"
 

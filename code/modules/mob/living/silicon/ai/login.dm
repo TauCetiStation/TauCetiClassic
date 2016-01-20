@@ -5,12 +5,12 @@
 		blood.override = 1
 		client.images += blood
 	regenerate_icons()
-	flash = new /obj/screen()
+	flash = PoolOrNew(/obj/screen)
 	flash.icon_state = "blank"
 	flash.name = "flash"
 	flash.screen_loc = "1,1 to 15,15"
 	flash.layer = 17
-	blind = new /obj/screen()
+	blind = PoolOrNew(/obj/screen)
 	blind.icon_state = "black"
 	blind.name = " "
 	blind.screen_loc = "1,1 to 15,15"

@@ -33,7 +33,7 @@
 		qdel(src)
 		return
 
-	hud = new /obj/screen/grab(src)
+	hud = PoolOrNew(/obj/screen/grab,src)
 	hud.icon_state = "reinforce"
 	icon_state = "grabbed"
 	hud.name = "reinforce grab"
@@ -439,4 +439,4 @@
 	qdel(hud)
 	hud = null
 	destroying = 1 // stops us calling qdel(src) on dropped()
-	..()
+	return ..()
