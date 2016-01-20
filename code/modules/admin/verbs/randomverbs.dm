@@ -1039,6 +1039,9 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(question1 != "No")
 		return
 
+	message_admins("Fax message was created by [key_name_admin(src)] and sent to [dpt]", 1)
+	feedback_add_details("admin_verb","FAXMESS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
 	SendFax(sent, sentname, Sender, dpt, stamp, stamps)
 
 
