@@ -139,8 +139,7 @@ steam.start() -- spawns the effect
 	var/turf/T = src.loc
 	if (istype(T, /turf))
 		T.hotspot_expose(1000,100)
-	..()
-	return
+	return	..()
 
 /obj/effect/effect/sparks/Move()
 	..()
