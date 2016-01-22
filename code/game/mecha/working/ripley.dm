@@ -40,7 +40,31 @@
 
 /obj/mecha/working/ripley/deathripley/New()
 	..()
-	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/tool/safety_clamp
+	if(!istype(src,/obj/mecha/working/ripley/deathripley/pirate))
+		var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/tool/safety_clamp
+		ME.attach(src)
+	return
+
+/obj/mecha/working/ripley/deathripley/pirate
+	name = "LOOT-RIPLEY"
+	desc = "OH SHIT IT'S THE LOOTERS WE'RE ALL GONNA DIE!!!"
+	step_in = 5
+	step_energy_drain = 10
+	health = 750
+	deflect_chance = 0
+	damage_absorption = list("brute"=1,"fire"=1,"bullet"=1,"laser"=1,"energy"=1,"bomb"=1)
+	add_req_access = 0
+	maint_access = 0
+	operation_req_access = list(access_syndicate)
+	internals_req_access = list(access_syndicate)
+	wreckage = /obj/effect/decal/mecha_wreckage/ripley/deathripley
+	max_equip = 2
+
+/obj/mecha/working/ripley/deathripley/pirate/New()
+	..()
+	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp(src)
+	ME.attach(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/tool/drill(src)
 	ME.attach(src)
 	return
 
