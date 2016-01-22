@@ -16,6 +16,10 @@
 	access = access_crate_cash
 	var/worth = 0
 
+/obj/item/weapon/spacecash/New()
+	..()
+	price = worth
+
 /obj/item/weapon/spacecash/c1
 	name = "1 credit chip"
 	icon_state = "spacecash"

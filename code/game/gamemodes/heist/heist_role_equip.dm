@@ -6,10 +6,6 @@ var/global/raider_tick = 1
 	R.set_frequency(SYND_FREQ) //Same frequency as the syndicate team in Nuke mode.
 	equip_to_slot_or_del(R, slot_l_ear)
 
-	//equip_to_slot_or_del(new /obj/item/clothing/under/vox/vox_robes(src), slot_w_uniform)
-	//equip_to_slot_or_del(new /obj/item/clothing/shoes/magboots/vox(src), slot_shoes) // REPLACE THESE WITH CODED VOX ALTERNATIVES.
-	//equip_to_slot_or_del(new /obj/item/clothing/gloves/yellow/vox(src), slot_gloves) // AS ABOVE.
-
 	switch(raider_tick)
 		if(1) // Aye Cap'n!
 			equip_to_slot_or_del(new /obj/item/clothing/under/pirate(src), slot_w_uniform)
@@ -17,19 +13,7 @@ var/global/raider_tick = 1
 			equip_to_slot_or_del(new /obj/item/clothing/suit/space/pirate(src), slot_wear_suit)
 			equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/pirate(src), slot_head)
 			equip_to_slot_or_del(new /obj/item/clothing/glasses/thermal/eyepatch(src), slot_glasses)
-
 			equip_to_slot_or_del(new /obj/item/weapon/melee/energy/sword/pirate(src), slot_r_hand)
-
-			//equip_to_slot_or_del(new /obj/item/clothing/suit/space/vox/carapace(src), slot_wear_suit)
-			//equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/vox/carapace(src), slot_head)
-			//equip_to_slot_or_del(new /obj/item/weapon/melee/telebaton(src), slot_belt)
-			//equip_to_slot_or_del(new /obj/item/clothing/glasses/thermal/monocle(src), slot_glasses) // REPLACE WITH CODED VOX ALTERNATIVE.
-			//equip_to_slot_or_del(new /obj/item/device/chameleon(src), slot_l_store)
-
-			//var/obj/item/weapon/spikethrower/W = new(src)
-			//equip_to_slot_or_del(W, slot_r_hand)
-
-
 		if(2) // Piretezzz
 			equip_to_slot_or_del(new /obj/item/clothing/under/pirate(src), slot_w_uniform)
 			equip_to_slot_or_del(new /obj/item/clothing/shoes/brown(src), slot_shoes)
@@ -37,52 +21,8 @@ var/global/raider_tick = 1
 			//equip_to_slot_or_del(new /obj/item/clothing/glasses/eyepatch(src), slot_glasses)
 			equip_to_slot_or_del(new /obj/item/weapon/melee/energy/sword/pirate(src), slot_r_hand)
 
-			//equip_to_slot_or_del(new /obj/item/clothing/suit/space/vox/pressure(src), slot_wear_suit)
-			//equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/vox/pressure(src), slot_head)
-			//equip_to_slot_or_del(new /obj/item/weapon/storage/belt/utility/full(src), slot_belt)
-			//equip_to_slot_or_del(new /obj/item/clothing/glasses/meson(src), slot_glasses) // REPLACE WITH CODED VOX ALTERNATIVE.
-			//equip_to_slot_or_del(new /obj/item/weapon/storage/box/emps(src), slot_r_hand)
-			//equip_to_slot_or_del(new /obj/item/device/multitool(src), slot_l_hand)
-
-
-		if(3)
-			equip_to_slot_or_del(new /obj/item/clothing/under/pirate(src), slot_w_uniform)
-			equip_to_slot_or_del(new /obj/item/clothing/shoes/brown(src), slot_shoes)
-			equip_to_slot_or_del(new /obj/item/clothing/head/bandana(src), slot_head)
-			//equip_to_slot_or_del(new /obj/item/clothing/glasses/eyepatch(src), slot_glasses)
-			equip_to_slot_or_del(new /obj/item/weapon/melee/energy/sword/pirate(src), slot_r_hand)
-
-			//equip_to_slot_or_del(new /obj/item/clothing/suit/space/vox/stealth(src), slot_wear_suit)
-			//equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/vox/stealth(src), slot_head)
-			//equip_to_slot_or_del(new /obj/item/weapon/storage/belt/utility/full(src), slot_belt)
-			//equip_to_slot_or_del(new /obj/item/clothing/glasses/thermal/monocle(src), slot_glasses) // REPLACE WITH CODED VOX ALTERNATIVE.
-			//equip_to_slot_or_del(new /obj/item/weapon/card/emag(src), slot_l_store)
-			//equip_to_slot_or_del(new /obj/item/weapon/gun/dartgun/vox/raider(src), slot_r_hand)
-			//equip_to_slot_or_del(new /obj/item/device/multitool(src), slot_l_hand)
-
-		if(4)
-			equip_to_slot_or_del(new /obj/item/clothing/under/pirate(src), slot_w_uniform)
-			equip_to_slot_or_del(new /obj/item/clothing/shoes/brown(src), slot_shoes)
-			equip_to_slot_or_del(new /obj/item/clothing/head/bandana(src), slot_head)
-			//equip_to_slot_or_del(new /obj/item/clothing/glasses/eyepatch(src), slot_glasses)
-			equip_to_slot_or_del(new /obj/item/weapon/melee/energy/sword/pirate(src), slot_r_hand)
-
-			//equip_to_slot_or_del(new /obj/item/clothing/suit/space/vox/medic(src), slot_wear_suit)
-			//equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/vox/medic(src), slot_head)
-			//equip_to_slot_or_del(new /obj/item/weapon/storage/belt/utility/full(src), slot_belt) // Who needs actual surgical tools?
-			//equip_to_slot_or_del(new /obj/item/clothing/glasses/hud/health(src), slot_glasses) // REPLACE WITH CODED VOX ALTERNATIVE.
-			//equip_to_slot_or_del(new /obj/item/weapon/circular_saw(src), slot_l_store)
-			//equip_to_slot_or_del(new /obj/item/weapon/gun/dartgun/vox/medical, slot_r_hand)
-
-	//equip_to_slot_or_del(new /obj/item/clothing/mask/breath/vox(src), slot_wear_mask)
-	//equip_to_slot_or_del(new /obj/item/weapon/tank/nitrogen(src), slot_back)
+	equip_to_slot_or_del(new /obj/item/device/price_tool(src), slot_l_store)
 	equip_to_slot_or_del(new /obj/item/device/flashlight(src), slot_r_store)
-
-	//for(var/obj/item/weapon/tank/nitrogen/N in contents)
-	//	if(N)
-	//		src.internal = N
-	//		if(src.internals)
-	//			src.internals.icon_state = "internal1"
 
 	var/obj/item/weapon/card/id/syndicate/C = new(src)
 	C.name = "[real_name]'s Legitimate Human ID Card"
@@ -95,7 +35,138 @@ var/global/raider_tick = 1
 	W.handle_item_insertion(C)
 	spawn_money(rand(50,150)*10,W)
 	equip_to_slot_or_del(W, slot_wear_id)
-	raider_tick++
-	if (raider_tick > 4) raider_tick = 2
 
+	raider_tick = 2
 	return 1
+
+/obj/item/weapon/gun/projectile/automatic/a28/nonlethal
+	name = "A28 assault rifle NL"
+	icon = 'tauceti/items/weapons/syndicate/syndicate_guns.dmi'
+	tc_custom = 'tauceti/items/weapons/syndicate/syndicate_guns.dmi'
+	icon_state = "a28w"
+	item_state = "a28w"
+	silenced = 1
+	mag_type = /obj/item/ammo_box/magazine/m556/nonlethal
+	fire_sound = 'tauceti/sounds/weapon/Gunshot_silenced.ogg'
+
+/obj/item/weapon/gun/projectile/automatic/silenced/nonlethal
+	name = "Silenced pistol NL"
+	icon = 'icons/obj/gun.dmi'
+	icon_state = "silenced_pistol_nl"
+	mag_type = /obj/item/ammo_box/magazine/sm45/nonlethal
+
+/obj/item/weapon/gun/projectile/automatic/a28/nonlethal/update_icon()
+	src.overlays = 0
+	update_magazine()
+	icon_state = "a28w[chambered ? "" : "-e"]"
+	return
+
+/obj/item/ammo_box/magazine/m556/nonlethal
+	name = "A28 magazine (.556NL)"
+	icon = 'tauceti/items/weapons/syndicate/syndicate_guns.dmi'
+	ammo_type = /obj/item/ammo_casing/a556/nonlethal
+	caliber = "5.56mm"
+	max_ammo = 30
+
+/obj/item/ammo_box/magazine/sm45/nonlethal
+	name = "magazine (.45NL)"
+	icon_state = "9x19p"
+	ammo_type = /obj/item/ammo_casing/c45/nonlethal
+	caliber = ".45"
+	max_ammo = 12
+
+/obj/item/ammo_casing/a556/nonlethal
+	desc = "A 5.56mm bullet casing."
+	projectile_type = /obj/item/projectile/bullet/weakbullet/nl_rifle
+
+/obj/item/ammo_casing/c45/nonlethal
+	desc = "A .45 bullet casing."
+	caliber = ".45"
+	projectile_type = /obj/item/projectile/bullet/weakbullet/nl_pistol
+
+/obj/item/projectile/bullet/weakbullet/nl_rifle
+	stutter = 10
+	agony = 120
+	//stoping_power = 5
+
+/obj/item/projectile/bullet/weakbullet/nl_rifle/on_hit(var/atom/target, var/blocked = 0)
+	if(issilicon(target))
+		var/mob/living/silicon/S = target
+		if(prob(10))
+			S.take_organ_damage(40)//+20=60
+			S.emp_act(1)
+		else
+			S.take_organ_damage(20)//+10=30
+			S.emp_act(2)
+	..()
+
+/obj/item/projectile/bullet/weakbullet/nl_pistol
+	stutter = 10
+	agony = 80
+
+/obj/item/projectile/bullet/weakbullet/nl_pistol/on_hit(var/atom/target, var/blocked = 0)
+	if(issilicon(target))
+		var/mob/living/silicon/S = target
+		S.take_organ_damage(20)//+10=30
+		S.emp_act(2)
+	..()
+
+/obj/item/weapon/storage/backpack/santabag/pirate
+	name = "Loot bag"
+	desc = "Just another ordinary bag."
+	max_w_class = 3
+
+/obj/item/weapon/grenade/monsternade
+	name = "pocketnade"
+	desc = "<span class='danger'>Warning: use with extreme caution!</span>"
+	icon_state = "pocketnade"
+	item_state = "flashbang"
+	origin_tech = "materials=2;combat=1"
+
+/obj/item/weapon/grenade/monsternade/prime()
+	..()
+	playsound(src.loc, 'sound/effects/bang.ogg', 50, 1, 5)
+	switch(rand(1,3))
+		if(1)
+			for(var/i=0,i<2,i++)
+				new /mob/living/simple_animal/hostile/samak(loc)
+		if(2)
+			for(var/i=0, i<7, i++)
+				new /mob/living/simple_animal/hostile/diyaab(loc)
+		if(3)
+			for(var/i=0, i<4, i++)
+				new /mob/living/simple_animal/hostile/shantak(loc)
+	qdel(src)
+	return
+
+/obj/item/device/price_tool
+	icon = 'icons/obj/hacktool.dmi'
+	name = "appraiser"
+	desc = "Use this on anything to get its price."
+	icon_state = "hacktool"
+	flags = FPRINT | TABLEPASS| CONDUCT
+	force = 0
+	w_class = 2.0
+	throwforce = 5.0
+	throw_range = 15
+	throw_speed = 3
+	m_amt = 50
+	g_amt = 20
+	origin_tech = "magnets=1;engineering=1"
+
+/obj/item/device/price_tool/attack(mob/living/M as mob, mob/living/user as mob, def_zone)
+	if(!istype(M))
+		return 0
+	var/price_check = M.get_price()
+	if(M.stat == DEAD)
+		user << "<span class='notice'>This [issilicon(M) ? "destroyed thing" : "dead being"] being will bring us approximately $[price_check]$</span>"
+	else
+		user << "<span class='notice'>This [issilicon(M) ? "silicon thing" : "living being"] will bring us approximately <span class='danger'>[issilicon(M) ? "DESTROYED:" : "DEAD:"]</span> $[price_check ? price_check / 50 : 0]$ or <span class='danger'>[issilicon(M) ? "WORKING:" : "ALIVE:"]</span>$[price_check]$</span>"
+	return 1
+
+/obj/item/device/price_tool/afterattack(obj/O as obj, mob/user as mob, proximity)
+	if(!proximity) return
+	if(!istype(O))
+		return
+	user << "<span class='notice'>This object will bring us approximately $[num2text(O.get_price(),9)]$</span>"
+	return
