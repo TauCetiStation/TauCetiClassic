@@ -249,11 +249,20 @@
 				move_delay += 7+config.walk_speed
 		move_delay += mob.movement_delay()
 
+		var/tickcomp = 0
 		if(config.Tickcomp)
-			move_delay -= 1.3
-			var/tickcomp = ((1/(world.tick_lag))*1.3)
+			//move_delay -= 1.3
+			tickcomp = ((1/(world.tick_lag))*1.3) - 1.3
 			move_delay = move_delay + tickcomp
 
+		if(istype(mob.buckled, /obj/vehicle))
+			//manually set move_delay for vehicles so we don't inherit any mob movement penalties
+			//specific vehicle move delays are set in code\modules\vehicles\vehicle.dm
+			move_delay = world.time + tickcomp
+			//drunk driving
+			if(mob.confused)
+				direct = pick(cardinal)
+			return mob.buckled.relaymove(mob,direct)
 
 		if(mob.pulledby || mob.buckled) // Wheelchair driving!
 			if(istype(mob.loc, /turf/space))
@@ -452,7 +461,7 @@
 
 
 	//Check to see if we slipped
-	if(prob(Process_Spaceslipping(5)))
+	if(prob(Process_Spaceslipping(5)) && !buckled)
 		src << "\blue <B>You slipped!</B>"
 		src.inertia_dir = src.last_move
 		step(src, src.inertia_dir)

@@ -107,6 +107,8 @@
 	//handle_typing_indicator()
 	return
 
+/mob/proc/incapacitated()
+	return
 
 /mob/proc/restrained()
 	return
@@ -697,7 +699,17 @@ note dizziness decrements automatically in the mob's Life() proc.
 /mob/proc/update_canmove()
 	if(!ismob(src))
 		return
-	if(buckled && (!buckled.movable))
+	if(istype(buckled, /obj/vehicle))
+		var/obj/vehicle/V = buckled
+		if(incapacitated())
+			lying = 1
+			canmove = 0
+			pixel_y = V.mob_offset_y - 5
+		else
+			lying = 0
+			canmove = 1
+			pixel_y = V.mob_offset_y
+	else if(buckled && (!buckled.movable))
 		anchored = 1
 		canmove = 0
 		if( istype(buckled,/obj/structure/stool/bed/chair) )
