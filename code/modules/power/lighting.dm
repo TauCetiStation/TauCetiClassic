@@ -199,8 +199,9 @@
 	power_channel = LIGHT //Lights are calc'd via area so they dont need to be in the machine list
 	var/on = 0					// 1 if on, 0 if off
 	var/on_gs = 0
-	var/brightness_range = 5	// luminosity when on, also used in power calculation
-	var/brightness_power = 1
+	var/static_power_used = 0
+	var/brightness_range = 7	// luminosity when on, also used in power calculation
+	var/brightness_power = 2
 	var/brightness_color = null
 	var/status = LIGHT_OK		// LIGHT_OK, _EMPTY, _BURNED or _BROKEN
 	var/flickering = 0
@@ -218,11 +219,15 @@
 	base_state = "bulb"
 	fitting = "bulb"
 	brightness_range = 4
-	brightness_power = 1
+	brightness_power = 2
 	brightness_color = "#a0a080"
 	desc = "A small lighting fixture."
 	light_type = /obj/item/weapon/light/bulb
 
+/obj/machinery/light/small/emergency
+	brightness_range = 6
+	brightness_power = 2
+	brightness_color = "#da0205"
 
 /obj/machinery/light/spot
 	name = "spotlight"
@@ -312,6 +317,12 @@
 	active_power_usage = ((light_range + light_power) * 10)
 	if(on != on_gs)
 		on_gs = on
+
+		if(on)
+			static_power_used = ((light_range + light_power) * 20) //20W per unit luminosity
+			addStaticPower(static_power_used, STATIC_LIGHT)
+		else
+			removeStaticPower(static_power_used, STATIC_LIGHT)
 
 
 // attempt to set the light's on/off status
@@ -615,23 +626,11 @@
 // timed process
 // use power
 
-#define LIGHTING_POWER_FACTOR 20		//20W per unit luminosity
-
-/*
-/obj/machinery/light/process()
-	if(on)
-		use_power(light_range * LIGHTING_POWER_FACTOR, LIGHT)*/
-
 
 // called when area power state changes
 /obj/machinery/light/power_change()
-	spawn(10)
-		var/area/A
-		if(src && src.loc && src.loc.loc)
-			A = src.loc.loc
-		if(A)
-			A = A.master
-			seton(A.lightswitch && A.power_light)
+	var/area/A = get_area_master(src)
+	if(A) seton(A.lightswitch && A.power_light)
 
 // called when on fire
 

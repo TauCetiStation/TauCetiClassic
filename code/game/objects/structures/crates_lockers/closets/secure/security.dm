@@ -30,10 +30,11 @@
 		new /obj/item/weapon/melee/telebaton(src)
 		new /obj/item/clothing/under/dress/dress_cap(src)
 		new /obj/item/clothing/under/rank/capcamsole(src)
-		//New year part
+		/*/New year part
 		new /obj/item/clothing/suit/wintercoat/captain(src)
 		new /obj/item/clothing/head/santa(src)
 		new /obj/item/clothing/shoes/winterboots(src)
+		*/
 		return
 
 
@@ -137,10 +138,11 @@
 		new /obj/item/clothing/tie/holster/waist(src)
 		new /obj/item/weapon/melee/telebaton(src)
 		new /obj/item/clothing/mask/gas/sechailer/hos(src)
-		//New year part
+		/*/New year part
 		new /obj/item/clothing/suit/wintercoat/security(src)
 		new /obj/item/clothing/shoes/winterboots(src)
 		new /obj/item/clothing/head/santa(src)
+		*/
 		return
 
 
@@ -182,10 +184,11 @@
 		new /obj/item/weapon/gun/energy/taser(src)
 		new /obj/item/weapon/storage/box/holobadge(src)
 		new /obj/item/clothing/mask/gas/sechailer/warden(src)
-		//New year part
+		/*/New year part
 		new /obj/item/clothing/suit/wintercoat/security(src)
 		new /obj/item/clothing/shoes/winterboots(src)
 		new /obj/item/clothing/head/santa(src)
+		*/
 		return
 
 
@@ -224,10 +227,11 @@
 		new /obj/item/clothing/head/soft/sec/corp(src)
 		new /obj/item/clothing/under/rank/security/corp(src)
 		new /obj/item/clothing/gloves/security(src)
-		//New year part
+		/*/New year part
 		new /obj/item/clothing/suit/wintercoat/security(src)
 		new /obj/item/clothing/shoes/winterboots(src)
 		new /obj/item/clothing/head/ushanka(src)
+		*/
 		return
 
 

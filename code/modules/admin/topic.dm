@@ -2154,13 +2154,13 @@
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","BA")
 				message_admins("[key_name_admin(usr)] has triggered a bluespace anomaly", 1)
-				new /datum/event/anomaly_bluespace()
+				new /datum/event/anomaly/anomaly_bluespace()
 
 			if("energeticflux")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","FLUX")
 				message_admins("[key_name_admin(usr)] has triggered an energetic flux")
-				new /datum/event/anomaly_flux()
+				new /datum/event/anomaly/anomaly_flux()
 
 			if("frost")
 				feedback_inc("admin_secrets_fun_used",1)
@@ -2173,19 +2173,19 @@
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","PYRO")
 				message_admins("[key_name_admin(usr)] has spawned a pyroclastic anomaly")
-				new /datum/event/anomaly_pyro()
+				new /datum/event/anomaly/anomaly_pyro()
 
 			if("gravanomalies1")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","GA")
 				message_admins("[key_name_admin(usr)] has spawned a gravitational anomaly")
-				new /datum/event/anomaly_grav()
+				new /datum/event/anomaly/anomaly_grav()
 
 			if("blackhole")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","BH")
 				message_admins("[key_name_admin(usr)] has spawned a vortex anomaly")
-				new /datum/event/anomaly_vortex()
+				new /datum/event/anomaly/anomaly_vortex()
 
 			if("gravanomalies")
 				feedback_inc("admin_secrets_fun_used",1)

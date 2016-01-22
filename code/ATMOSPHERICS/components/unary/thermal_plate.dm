@@ -9,7 +9,7 @@
 	icon_state = "intact_off"
 
 	name = "Thermal Transfer Plate"
-	desc = "Transfers heat to and from an area"
+	desc = "Transfers heat to and from an area."
 
 	update_icon()
 		if(node)

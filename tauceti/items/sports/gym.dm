@@ -1,6 +1,6 @@
 /obj/structure/pbag
 	name = "punching bag"
-	desc = "It's made by some goons"
+	desc = "It's made by some goons."
 
 	icon = 'tauceti/items/sports/pbag.dmi'
 	icon_state = "pbag"

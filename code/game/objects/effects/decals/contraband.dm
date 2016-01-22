@@ -141,7 +141,7 @@ obj/structure/sign/poster
 	var/serial_number	//Will hold the value of src.loc if nobody initialises it
 	var/ruined = 0
 	var/official = 0
-	var/placespeed = 37 // don't change this, otherwise the animation will not sync to the progress bar
+	var/placespeed = 30 // don't change this, otherwise the animation will not sync to the progress bar
 
 
 
@@ -198,25 +198,20 @@ obj/structure/sign/poster/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (!official)
 		var/obj/item/weapon/poster/contraband/P = new(src, serial_number)
 		P.resulting_poster = src
-		P.loc = location
-		loc = P
+		P.loc = newloc
+		src.loc = P
 	else
 		var/obj/item/weapon/poster/legit/P = new(src, serial_number)
 		P.resulting_poster = src
-		P.loc = location
-		loc = P
-//	var/obj/item/weapon/contraband/poster/P = new(src, serial_number)
-//	P.loc = newloc
-//	src.loc = P
-//	qdel(src)
-
+		P.loc = newloc
+		src.loc = P
 
 //separated to reduce code duplication. Moved here for ease of reference and to unclutter r_wall/attackby()
 /turf/simulated/wall/proc/place_poster(var/obj/item/weapon/poster/P, var/mob/user)
 	if(!P.resulting_poster)	return
 
 	if(!istype(src,/turf/simulated/wall))
-		user << "\red You can't place this here!"
+		user << "<span class='red'> You can't place this here!</span>"
 		return
 
 	var/stuff_on_wall = 0

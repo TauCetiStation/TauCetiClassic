@@ -2,7 +2,7 @@
 	name = "strong blob"
 	icon = 'tauceti/icons/mob/blob.dmi'
 	icon_state = "blob_idle"
-	desc = "Some blob creature thingy"
+	desc = "Some blob creature thingy."
 	health = 75
 	fire_resist = 2
 

@@ -2,7 +2,7 @@
 
 /obj/machinery/zero_point_emitter
 	name = "Zero-point laser"
-	desc = "A super-powerful laser"
+	desc = "A super-powerful laser."
 	icon = 'icons/obj/engine.dmi'
 	icon_state = "laser"
 	anchored = 0
