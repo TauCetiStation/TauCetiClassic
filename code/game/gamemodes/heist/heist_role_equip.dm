@@ -126,7 +126,7 @@ var/global/raider_tick = 1
 /obj/item/weapon/grenade/monsternade/prime()
 	..()
 	playsound(src.loc, 'sound/effects/bang.ogg', 50, 1, 5)
-	switch(rand(1,3))
+	switch(rand(1,4))
 		if(1)
 			for(var/i=0,i<2,i++)
 				new /mob/living/simple_animal/hostile/samak(loc)
@@ -136,6 +136,9 @@ var/global/raider_tick = 1
 		if(3)
 			for(var/i=0, i<4, i++)
 				new /mob/living/simple_animal/hostile/shantak(loc)
+		if(4)
+			for(var/i=0, i<3, i++)
+				new /mob/living/simple_animal/hostile/clown(loc)
 	qdel(src)
 	return
 
