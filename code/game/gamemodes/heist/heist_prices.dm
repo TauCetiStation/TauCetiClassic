@@ -29,8 +29,7 @@
 			return price / 50
 		else if((ishuman(src) || issilicon(src)) && !mind)
 			return price / 35
-	else
-		return price
+	return price
 
 /mob/living/silicon/robot/price = 36784
 /mob/living/silicon/robot/drone/price = 0
