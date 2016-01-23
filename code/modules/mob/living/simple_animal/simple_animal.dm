@@ -62,7 +62,7 @@
 
 /mob/living/simple_animal/Login()
 	if(src && src.client)
-		src.client.reset_screen()
+		src.client.screen = null
 	..()
 
 /mob/living/simple_animal/updatehealth()

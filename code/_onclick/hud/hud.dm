@@ -4,6 +4,11 @@
 */
 var/datum/global_hud/global_hud = new()
 
+/datum/hud/var/obj/screen/grab_intent
+/datum/hud/var/obj/screen/hurt_intent
+/datum/hud/var/obj/screen/disarm_intent
+/datum/hud/var/obj/screen/help_intent
+
 /datum/global_hud
 	var/obj/screen/druggy
 	var/obj/screen/blurry
@@ -18,21 +23,21 @@ var/datum/global_hud/global_hud = new()
 
 /datum/global_hud/New()
 	//420erryday psychedellic colours screen overlay for when you are high
-	druggy = PoolOrNew(/obj/screen)
+	druggy = new /obj/screen()
 	druggy.screen_loc = "WEST,SOUTH to EAST,NORTH"
 	druggy.icon_state = "druggy"
 	druggy.layer = 17
 	druggy.mouse_opacity = 0
 
 	//that white blurry effect you get when you eyes are damaged
-	blurry = PoolOrNew(/obj/screen)
+	blurry = new /obj/screen()
 	blurry.screen_loc = "WEST,SOUTH to EAST,NORTH"
 	blurry.icon_state = "blurry"
 	blurry.layer = 17
 	blurry.mouse_opacity = 0
 
 	//green vision nvg for meson
-	meson = PoolOrNew(/obj/screen)
+	meson = new /obj/screen()
 	meson.icon = 'icons/effects/alert.dmi'
 	meson.icon_state = "dark128"
 	meson.icon += rgb(0, 130, 0, 90)
@@ -41,7 +46,7 @@ var/datum/global_hud/global_hud = new()
 	meson.mouse_opacity = 0
 
 	//red vision for thermals
-	thermal = PoolOrNew(/obj/screen)
+	thermal = new /obj/screen()
 	thermal.icon = 'icons/effects/alert.dmi'
 	thermal.icon_state = "dark128"
 	thermal.icon += rgb(130, 0, 0, 90)
@@ -50,7 +55,7 @@ var/datum/global_hud/global_hud = new()
 	thermal.mouse_opacity = 0
 
 	//violet vision for science googles
-	science = PoolOrNew(/obj/screen)
+	science = new /obj/screen()
 	science.icon = 'icons/effects/alert.dmi'
 	science.icon_state = "dark128"
 	//science.icon += rgb(56, 0, 130, 90) cold color
@@ -100,7 +105,7 @@ var/datum/global_hud/global_hud = new()
 	O = darkMask[8]
 	O.screen_loc = "3,14 to 13,15"
 
-	for(i in 1 to 4)
+	for(i = 1, i <= 4, i++)
 		O = vimpaired[i]
 		O.icon_state = "dither50"
 		O.layer = 17
@@ -111,7 +116,7 @@ var/datum/global_hud/global_hud = new()
 		O.layer = 17
 		O.mouse_opacity = 0
 
-	for(i in 5 to 8)
+	for(i = 5, i <= 8, i++)
 		O = darkMask[i]
 		O.icon_state = "black"
 		O.layer = 17
@@ -125,11 +130,6 @@ var/datum/global_hud/global_hud = new()
 
 /datum/hud
 	var/mob/mymob
-
-	var/obj/screen/grab_intent
-	var/obj/screen/hurt_intent
-	var/obj/screen/disarm_intent
-	var/obj/screen/help_intent
 
 	var/hud_shown = 1			//Used for the HUD toggle (F12)
 	var/inventory_shown = 1		//the inventory
@@ -310,8 +310,6 @@ var/datum/global_hud/global_hud = new()
 			hud_used.persistant_inventory_update()
 			update_action_buttons()
 		else
-			usr << "<span class='red'>Inventory hiding is currently only supported for human mobs, sorry.</span>"
+			usr << "\red Inventory hiding is currently only supported for human mobs, sorry."
 	else
-		usr << "<span class='red'>This mob type does not use a HUD.</span>"
-
-
+		usr << "\red This mob type does not use a HUD."
