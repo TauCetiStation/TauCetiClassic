@@ -36,12 +36,12 @@
 	var/turf/T   = loc
 	if(istype(T))
 		T.lighting_overlay = null
-
 		T.luminosity = TRUE
 
+	global.all_lighting_overlays -= src
 	lighting_update_overlays -= src;
 
-	..()
+	return ..()
 
 /atom/movable/lighting_overlay/proc/update_overlay()
 	var/turf/T = loc

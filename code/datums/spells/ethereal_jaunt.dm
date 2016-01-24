@@ -114,4 +114,4 @@
 /obj/effect/dummy/spell_jaunt/Destroy()
 	for(var/atom/movable/AM in src)
 		AM.loc = get_turf(src)
-	..()
+	return ..()

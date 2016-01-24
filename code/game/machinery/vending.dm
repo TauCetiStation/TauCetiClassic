@@ -80,6 +80,11 @@
 
 	return
 
+/obj/machinery/vending/Destroy()
+	qdel(coin)
+	coin = null
+	return ..()
+
 /obj/machinery/vending/ex_act(severity)
 	switch(severity)
 		if(1.0)
@@ -1040,13 +1045,3 @@
 	/obj/item/clothing/mask/bandana/blue=384,/obj/item/clothing/mask/bluescarf=250,/obj/item/clothing/mask/redscarf=250,/obj/item/clothing/mask/greenscarf=250,
 	/obj/item/clothing/suit/wintercoat=130,/obj/item/clothing/shoes/winterboots=70,/obj/item/clothing/head/santa=50)
 	refill_canister = /obj/item/weapon/vending_refill/clothing
-
-/obj/machinery/vending/clothing/New()
-	..()
-	component_parts = list()
-	//var/obj/item/weapon/circuitboard/vendor/V = new(null)
-	//V.set_type(type)
-	//component_parts += V
-	component_parts += new /obj/item/weapon/vending_refill/clothing(0)
-	component_parts += new /obj/item/weapon/vending_refill/clothing(0)
-	component_parts += new /obj/item/weapon/vending_refill/clothing(0)

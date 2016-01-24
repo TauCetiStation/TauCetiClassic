@@ -127,8 +127,10 @@ obj/machinery/door/airlock/New()
 	if(radio_controller)
 		set_frequency(frequency)
 
-
-
+obj/machinery/door/airlock/Destroy()
+	if(frequency && radio_controller)
+		radio_controller.remove_object(src,frequency)
+	return ..()
 
 obj/machinery/airlock_sensor
 	icon = 'icons/obj/airlock_machines.dmi'
@@ -200,6 +202,10 @@ obj/machinery/airlock_sensor/New()
 	if(radio_controller)
 		set_frequency(frequency)
 
+obj/machinery/airlock_sensor/Destroy()
+	if(radio_controller)
+		radio_controller.remove_object(src,frequency)
+	return ..()
 
 obj/machinery/airlock_sensor/airlock_interior
 	command = "cycle_interior"
@@ -261,6 +267,11 @@ obj/machinery/access_button/New()
 
 	if(radio_controller)
 		set_frequency(frequency)
+
+obj/machinery/access_button/Destroy()
+	if(radio_controller)
+		radio_controller.remove_object(src, frequency)
+	return ..()
 
 obj/machinery/access_button/airlock_interior
 	frequency = 1379

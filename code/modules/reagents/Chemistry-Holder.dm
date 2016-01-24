@@ -572,6 +572,15 @@ var/const/INGEST = 2
 
 	return trans_data
 
+datum/reagents/Destroy()
+	..()
+	for(var/datum/reagent/R in reagent_list)
+		qdel(R)
+	reagent_list.Cut()
+	reagent_list = null
+	if(my_atom && my_atom.reagents == src)
+		my_atom.reagents = null
+
 ///////////////////////////////////////////////////////////////////////////////////
 
 

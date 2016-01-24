@@ -69,6 +69,12 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	for (var/ch_name in channels)
 		secure_radio_connections[ch_name] = radio_controller.add_object(src, radiochannels[ch_name],  RADIO_CHAT)
 
+/obj/item/device/radio/Destroy()
+	if(radio_controller)
+		radio_controller.remove_object(src, frequency)
+		for (var/ch_name in channels)
+			radio_controller.remove_object(src, radiochannels[ch_name])
+	return ..()
 
 /obj/item/device/radio/attack_self(mob/user as mob)
 	user.set_machine(src)

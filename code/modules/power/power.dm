@@ -11,6 +11,7 @@
 
 /obj/machinery/power/Destroy()
 	disconnect_from_network()
+	disconnect_terminal()
 	..()
 
 // common helper procs for all power machines
@@ -33,6 +34,9 @@
 		return powernet.avail
 	else
 		return 0
+
+/obj/machinery/power/proc/disconnect_terminal() // machines without a terminal will just return, no harm no fowl.
+	return
 
 // returns true if the area has power on given channel (or doesn't require power).
 // defaults to power_channel

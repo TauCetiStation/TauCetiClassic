@@ -41,6 +41,11 @@
 		//gas.volume = 1.05 * CELLSTANDARD
 		update()
 
+/obj/machinery/disposal/Destroy()
+	eject()
+	if(trunk)
+		trunk.linked = null
+	..()
 
 	// attack by item places it in to disposal
 /obj/machinery/disposal/attackby(var/obj/item/I, var/mob/user)
@@ -534,6 +539,10 @@
 
 	var/partialTag = "" //set by a partial tagger the first time round, then put in destinationTag if it goes through again.
 
+/obj/structure/disposalholder/Destroy()
+	qdel(gas)
+	active = 0
+	..()
 
 	// initialize a holder from the contents of a disposal unit
 /obj/structure/disposalholder/proc/init(var/obj/machinery/disposal/D)
@@ -1556,8 +1565,3 @@
 		visible_message("<span class='danger'>[M.name] smashes [src] apart!</span>")
 		qdel(src)
 	return
-
-/obj/machinery/disposal/Destroy()
-	for(var/atom/movable/AM in contents)
-		AM.loc = src.loc
-	..()

@@ -25,7 +25,7 @@
 	var/obj/item/weapon/reagent_containers/glass/B = beaker
 	if(beaker)
 		B.loc = get_step(loc, SOUTH) //Beaker is carefully ejected from the wreckage of the cryotube
-	..()
+	return ..()
 
 /obj/machinery/atmospherics/unary/cryo_cell/initialize()
 	if(node) return

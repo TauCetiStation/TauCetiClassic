@@ -32,6 +32,11 @@
 			if(radio_controller)
 				radio_controller.add_object(src, freq, RADIO_NAVBEACONS)
 
+	Destroy()
+		if(radio_controller)
+			radio_controller.remove_object(src, freq)
+		return ..()
+
 	// set the transponder codes assoc list from codes_txt
 	proc/set_codes()
 		if(!codes_txt)

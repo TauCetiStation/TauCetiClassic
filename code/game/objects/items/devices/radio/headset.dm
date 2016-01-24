@@ -14,10 +14,23 @@
 	var/obj/item/device/encryptionkey/keyslot2 = null
 	maxf = 1489
 
+	var/ks1type = /obj/item/device/encryptionkey
+	var/ks2type = null
+
 /obj/item/device/radio/headset/New()
 	..()
-	keyslot1 = new /obj/item/device/encryptionkey/
+	if(ks1type)
+		keyslot1 = new ks1type(src)
+	if(ks2type)
+		keyslot2 = new ks2type(src)
 	recalculateChannels()
+
+/obj/item/device/radio/headset/Destroy()
+	qdel(keyslot1)
+	qdel(keyslot2)
+	keyslot1 = null
+	keyslot2 = null
+	return ..()
 
 /obj/item/device/radio/headset/receive_range(freq, level, aiOverride = 0)
 	if (aiOverride)
@@ -29,24 +42,16 @@
 	return -1
 
 /obj/item/device/radio/headset/syndicate
-	origin_tech = "syndicate=3"
-/obj/item/device/radio/headset/syndicate/New()
-	..()
-	qdel(keyslot1)
-	keyslot1 = new /obj/item/device/encryptionkey/syndicate
 	syndie = 1
-	recalculateChannels()
+	ks1type = /obj/item/device/encryptionkey/syndicate
+
 /obj/item/device/radio/headset/syndicate/alt
 	icon_state = "syndie_headset"
 	item_state = "syndie_headset"
 
 /obj/item/device/radio/headset/binary
 	origin_tech = "syndicate=3"
-/obj/item/device/radio/headset/binary/New()
-	..()
-	qdel(keyslot1)
-	keyslot1 = new /obj/item/device/encryptionkey/binary
-	recalculateChannels()
+	ks1type = /obj/item/device/encryptionkey/binary
 
 /obj/item/device/radio/headset/headset_sec
 	name = "security radio headset"
@@ -54,21 +59,21 @@
 	icon = 'tauceti/icons/obj/radio.dmi'
 	icon_state = "sec_headset"
 	item_state = "headset"
-	keyslot2 = new /obj/item/device/encryptionkey/headset_sec
+	ks2type = /obj/item/device/encryptionkey/headset_sec
 
 /obj/item/device/radio/headset/headset_eng
 	name = "engineering radio headset"
 	desc = "When the engineers wish to chat like girls. To access the engineering channel, use :e. "
 	icon_state = "eng_headset"
 	item_state = "headset"
-	keyslot2 = new /obj/item/device/encryptionkey/headset_eng
+	ks2type = /obj/item/device/encryptionkey/headset_eng
 
 /obj/item/device/radio/headset/headset_rob
 	name = "robotics radio headset"
 	desc = "Made specifically for the roboticists who cannot decide between departments. To access the engineering channel, use :e. For research, use :n."
 	icon_state = "rob_headset"
 	item_state = "headset"
-	keyslot2 = new /obj/item/device/encryptionkey/headset_rob
+	ks2type = /obj/item/device/encryptionkey/headset_rob
 
 /obj/item/device/radio/headset/headset_med
 	name = "medical radio headset"
@@ -76,7 +81,7 @@
 	icon = 'tauceti/icons/obj/radio.dmi'
 	icon_state = "med_headset"
 	item_state = "headset"
-	keyslot2 = new /obj/item/device/encryptionkey/headset_med
+	ks2type = /obj/item/device/encryptionkey/headset_med
 
 /obj/item/device/radio/headset/headset_sci
 	name = "science radio headset"
@@ -84,7 +89,7 @@
 	icon = 'tauceti/icons/obj/radio.dmi'
 	icon_state = "sci_headset"
 	item_state = "headset"
-	keyslot2 = new /obj/item/device/encryptionkey/headset_sci
+	ks2type = /obj/item/device/encryptionkey/headset_sci
 
 /obj/item/device/radio/headset/headset_medsci
 	name = "medical research radio headset"
@@ -92,14 +97,14 @@
 	icon = 'tauceti/icons/obj/radio.dmi'
 	icon_state = "medsci_headset"
 	item_state = "headset"
-	keyslot2 = new /obj/item/device/encryptionkey/headset_medsci
+	ks2type = /obj/item/device/encryptionkey/headset_medsci
 
 /obj/item/device/radio/headset/headset_com
 	name = "command radio headset"
 	desc = "A headset with a commanding channel. To access the command channel, use :c."
 	icon_state = "com_headset"
 	item_state = "headset"
-	keyslot2 = new /obj/item/device/encryptionkey/headset_com
+	ks2type = /obj/item/device/encryptionkey/headset_com
 
 /obj/item/device/radio/headset/heads/captain
 	name = "captain's headset"
@@ -107,7 +112,7 @@
 	icon = 'tauceti/icons/obj/radio.dmi'
 	icon_state = "cap_headset"
 	item_state = "headset"
-	keyslot2 = new /obj/item/device/encryptionkey/heads/captain
+	ks2type = /obj/item/device/encryptionkey/heads/captain
 
 /obj/item/device/radio/headset/heads/ai_integrated //No need to care about icons, it should be hidden inside the AI anyway.
 	name = "AI Subspace Transceiver"
@@ -115,7 +120,7 @@
 	icon = 'icons/obj/robot_component.dmi'
 	icon_state = "radio"
 	item_state = "headset"
-	keyslot2 = new /obj/item/device/encryptionkey/heads/ai_integrated
+	ks2type = /obj/item/device/encryptionkey/heads/ai_integrated
 	var/myAi = null    // Atlantis: Reference back to the AI which has this radio.
 	var/disabledAi = 0 // Atlantis: Used to manually disable AI's integrated radio via intellicard menu.
 
@@ -130,7 +135,7 @@
 	icon = 'tauceti/icons/obj/radio.dmi'
 	icon_state = "rd_headset"
 	item_state = "headset"
-	keyslot2 = new /obj/item/device/encryptionkey/heads/rd
+	ks2type = /obj/item/device/encryptionkey/heads/rd
 
 /obj/item/device/radio/headset/heads/hos
 	name = "head of security's headset"
@@ -138,7 +143,7 @@
 	icon = 'tauceti/icons/obj/radio.dmi'
 	icon_state = "hos_headset"
 	item_state = "headset"
-	keyslot2 = new /obj/item/device/encryptionkey/heads/hos
+	ks2type = /obj/item/device/encryptionkey/heads/hos
 
 /obj/item/device/radio/headset/heads/ce
 	name = "chief engineer's headset"
@@ -146,7 +151,7 @@
 	icon = 'tauceti/icons/obj/radio.dmi'
 	icon_state = "ce_headset"
 	item_state = "headset"
-	keyslot2 = new /obj/item/device/encryptionkey/heads/ce
+	ks2type = /obj/item/device/encryptionkey/heads/ce
 
 /obj/item/device/radio/headset/heads/cmo
 	name = "chief medical officer's headset"
@@ -154,7 +159,7 @@
 	icon = 'tauceti/icons/obj/radio.dmi'
 	icon_state = "cmo_headset"
 	item_state = "headset"
-	keyslot2 = new /obj/item/device/encryptionkey/heads/cmo
+	ks2type = /obj/item/device/encryptionkey/heads/cmo
 
 /obj/item/device/radio/headset/heads/hop
 	name = "head of personnel's headset"
@@ -162,21 +167,21 @@
 	icon = 'tauceti/icons/obj/radio.dmi'
 	icon_state = "hop_headset"
 	item_state = "headset"
-	keyslot2 = new /obj/item/device/encryptionkey/heads/hop
+	ks2type = /obj/item/device/encryptionkey/heads/hop
 /*
 /obj/item/device/radio/headset/headset_mine
 	name = "mining radio headset"
 	desc = "Headset used by miners. How useless. To access the mining channel, use :d."
 	icon_state = "mine_headset"
 	item_state = "headset"
-	keyslot2 = new /obj/item/device/encryptionkey/headset_mine
+	ks2type = /obj/item/device/encryptionkey/headset_mine
 
 /obj/item/device/radio/headset/heads/qm
 	name = "quartermaster's headset"
 	desc = "The headset of the man who control your toiletpaper supply. To access the cargo channel, use :q. For mining, use :d."
 	icon_state = "cargo_headset"
 	item_state = "headset"
-	keyslot2 = new /obj/item/device/encryptionkey/heads/qm
+	ks2type = /obj/item/device/encryptionkey/heads/qm
 */
 /obj/item/device/radio/headset/headset_cargo
 	name = "supply radio headset"
@@ -184,7 +189,7 @@
 	icon = 'tauceti/icons/obj/radio.dmi'
 	icon_state = "cargo_headset"
 	item_state = "headset"
-	keyslot2 = new /obj/item/device/encryptionkey/headset_cargo
+	ks2type = /obj/item/device/encryptionkey/headset_cargo
 
 /obj/item/device/radio/headset/ert
 	name = "CentCom Response Team headset"
@@ -192,7 +197,7 @@
 	icon_state = "com_headset"
 	item_state = "headset"
 	freerange = 1
-	keyslot2 = new /obj/item/device/encryptionkey/ert
+	ks2type = /obj/item/device/encryptionkey/ert
 
 /obj/item/device/radio/headset/attackby(obj/item/weapon/W as obj, mob/user as mob)
 //	..()
