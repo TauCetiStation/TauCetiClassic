@@ -98,7 +98,7 @@ display round(lastgen) and phorontank amount
 	name = "P.A.C.M.A.N.-type Portable Generator"
 	var/sheets = 0
 	var/max_sheets = 100
-	var/sheet_name = ""
+	var/sheet_name = "solid phoron"
 	var/sheet_path = /obj/item/stack/sheet/mineral/phoron
 	var/board_path = "/obj/item/weapon/circuitboard/pacman"
 	var/sheet_left = 0 // How much is left of the sheet
@@ -119,8 +119,6 @@ display round(lastgen) and phorontank amount
 	component_parts += new /obj/item/weapon/cable_coil(src)
 	component_parts += new /obj/item/weapon/stock_parts/capacitor(src)
 	component_parts += new board_path(src)
-	var/obj/sheet = new sheet_path(null)
-	sheet_name = sheet.name
 	RefreshParts()
 
 /obj/machinery/power/port_gen/pacman/Destroy()
@@ -328,6 +326,7 @@ display round(lastgen) and phorontank amount
 /obj/machinery/power/port_gen/pacman/super
 	name = "S.U.P.E.R.P.A.C.M.A.N.-type Portable Generator"
 	icon_state = "portgen1"
+	sheet_name = "uranium"
 	sheet_path = /obj/item/stack/sheet/mineral/uranium
 	power_gen = 15000
 	time_per_sheet = 65
@@ -338,6 +337,7 @@ display round(lastgen) and phorontank amount
 /obj/machinery/power/port_gen/pacman/mrs
 	name = "M.R.S.P.A.C.M.A.N.-type Portable Generator"
 	icon_state = "portgen2"
+	sheet_name = "tritium"
 	sheet_path = /obj/item/stack/sheet/mineral/tritium
 	power_gen = 40000
 	time_per_sheet = 80
