@@ -203,10 +203,10 @@
 	return
 
 /obj/item/weapon/storage/fancy/cigarettes/remove_from_storage(obj/item/W as obj, atom/new_location)
-		var/obj/item/clothing/mask/cigarette/C = W
-		if(!istype(C)) return // what
-		reagents.trans_to(C, (reagents.total_volume/contents.len))
-		..()
+	if(istype(W, /obj/item/clothing/mask/cigarette))
+		if(reagents)
+			reagents.trans_to(W, (reagents.total_volume/contents.len))
+	..()
 
 /obj/item/weapon/storage/fancy/cigarettes/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 	if(!istype(M, /mob))
