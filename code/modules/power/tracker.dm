@@ -30,8 +30,9 @@
 	solars_list.Remove(src)
 
 /obj/machinery/power/tracker/connect_to_network()
-	..()
+	var/to_return = ..()
 	solars_list.Add(src)
+	return to_return
 
 // called by datum/sun/calc_position() as sun's angle changes
 /obj/machinery/power/tracker/proc/set_angle(var/angle)
