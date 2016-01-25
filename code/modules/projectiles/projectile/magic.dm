@@ -9,6 +9,9 @@
 /obj/item/projectile/magic/change
 	name = "bolt of change"
 	icon_state = "ice_1"
+	light_color = "#00bfff"
+	light_power = 2
+	light_range = 2
 	damage = 0
 	damage_type = BURN
 	nodamage = 1
@@ -124,6 +127,9 @@
 	name = "bolt of animation"
 	icon = 'tauceti/icons/obj/projectiles.dmi'
 	icon_state = "red_1"
+	light_color = "#ff0000"
+	light_power = 2
+	light_range = 2
 	damage = 0
 	damage_type = BURN
 	nodamage = 1

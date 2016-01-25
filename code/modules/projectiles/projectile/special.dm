@@ -1,6 +1,9 @@
 /obj/item/projectile/ion
 	name = "ion bolt"
 	icon_state = "ion"
+	light_color = "#a9e2f3"
+	light_power = 2
+	light_range = 2
 	damage = 0
 	damage_type = BURN
 	nodamage = 1
@@ -29,6 +32,9 @@
 /obj/item/projectile/temp
 	name = "freeze beam"
 	icon_state = "ice_2"
+	light_color = "#00ffff"
+	light_power = 2
+	light_range = 2
 	damage = 0
 	damage_type = BURN
 	nodamage = 1
@@ -52,6 +58,9 @@
 	name = "meteor"
 	icon = 'icons/obj/meteor.dmi'
 	icon_state = "smallf"
+	light_color = "#ffffff"
+	light_power = 2
+	light_range = 2
 	damage = 0
 	damage_type = BRUTE
 	nodamage = 1
@@ -159,6 +168,9 @@
 	name ="rocket"
 	icon = 'tauceti/icons/obj/projectiles.dmi'
 	icon_state= "rocket"
+	light_color = "#ffffff"
+	light_power = 2
+	light_range = 2
 	damage = 20
 	flag = "bullet"
 	sharp = 0

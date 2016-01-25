@@ -65,6 +65,11 @@
 	var/matrix/effect_transform			// matrix to rotate and scale projectile effects - putting it here so it doesn't
 										//  have to be recreated multiple times
 
+/obj/item/projectile/New()
+	..()
+	if(light_color)
+		set_light(light_range,light_power,light_color)
+
 /obj/item/projectile/proc/on_hit(var/atom/target, var/blocked = 0)
 	if(!isliving(target))	return 0
 	if(isanimal(target))	return 0

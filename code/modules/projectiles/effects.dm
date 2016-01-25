@@ -6,6 +6,8 @@
 /obj/effect/projectile/New(var/turf/location)
 	if(istype(location))
 		loc = location
+	if(light_color)
+		set_light(light_range,light_power,light_color)
 
 /obj/effect/projectile/proc/set_transform(var/matrix/M)
 	if(istype(M))
@@ -22,6 +24,9 @@
 //----------------------------
 /obj/effect/projectile/laser/tracer
 	icon_state = "beam"
+	light_range = 1.5
+	light_power = 2
+	light_color = "#ff0000"
 
 /obj/effect/projectile/laser/muzzle
 	icon_state = "muzzle_laser"
@@ -34,6 +39,9 @@
 //----------------------------
 /obj/effect/projectile/laser_blue/tracer
 	icon_state = "beam_blue"
+	light_range = 1.5
+	light_power = 2
+	light_color = "#0000ff"
 
 /obj/effect/projectile/laser_blue/muzzle
 	icon_state = "muzzle_blue"
@@ -46,6 +54,9 @@
 //----------------------------
 /obj/effect/projectile/laser_omni/tracer
 	icon_state = "beam_omni"
+	light_range = 1.5
+	light_power = 2
+	light_color = "#00ffff"
 
 /obj/effect/projectile/laser_omni/muzzle
 	icon_state = "muzzle_omni"
@@ -58,6 +69,9 @@
 //----------------------------
 /obj/effect/projectile/xray/tracer
 	icon_state = "xray"
+	light_range = 1.5
+	light_power = 2
+	light_color = "#00ff00"
 
 /obj/effect/projectile/xray/muzzle
 	icon_state = "muzzle_xray"
@@ -70,6 +84,9 @@
 //----------------------------
 /obj/effect/projectile/laser_heavy/tracer
 	icon_state = "beam_heavy"
+	light_range = 2
+	light_power = 3
+	light_color = "#ff0000"
 
 /obj/effect/projectile/laser_heavy/muzzle
 	icon_state = "muzzle_beam_heavy"
@@ -82,6 +99,9 @@
 //----------------------------
 /obj/effect/projectile/laser_pulse/tracer
 	icon_state = "u_laser"
+	light_range = 1.5
+	light_power = 2
+	light_color = "#0000ff"
 
 /obj/effect/projectile/laser_pulse/muzzle
 	icon_state = "muzzle_u_laser"
@@ -94,12 +114,18 @@
 //----------------------------
 /obj/effect/projectile/pulse/muzzle
 	icon_state = "muzzle_pulse"
+	light_range = 1.5
+	light_power = 2
+	light_color = "#0000ff"
 
 //----------------------------
 // Emitter beam
 //----------------------------
 /obj/effect/projectile/emitter/tracer
 	icon_state = "emitter"
+	light_range = 1.5
+	light_power = 2
+	light_color = "#01df74"
 
 /obj/effect/projectile/emitter/muzzle
 	icon_state = "muzzle_emitter"
@@ -112,6 +138,9 @@
 //----------------------------
 /obj/effect/projectile/stun/tracer
 	icon_state = "stun"
+	light_range = 1.5
+	light_power = 2
+	light_color = "#f2f5a9"
 
 /obj/effect/projectile/stun/muzzle
 	icon_state = "muzzle_stun"
@@ -124,9 +153,15 @@
 //----------------------------
 /obj/effect/projectile/bullet/muzzle
 	icon_state = "muzzle_bullet"
+	light_range = 3
+	light_power = 2
+	light_color = "#f2f5a9"
 
 //----------------------------
 // New
 //----------------------------
 /obj/effect/projectile/energy/muzzle
 	icon_state = "muzzle_energy"
+	light_range = 2
+	light_power = 2
+	light_color = "#2be4b8"
