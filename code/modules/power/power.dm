@@ -59,9 +59,7 @@
 // increment the power usage stats for an area
 
 /obj/machinery/proc/use_power(var/amount, var/chan = -1, var/autocalled = 0) // defaults to power_channel
-	var/area/A
-	if(src && src.loc && src.loc.loc)
-		A = src.loc.loc		// make sure it's in an area
+	var/area/A = get_area(src)		// make sure it's in an area
 	if(!A || !isarea(A) || !A.master)
 		return
 	if(chan == -1)
