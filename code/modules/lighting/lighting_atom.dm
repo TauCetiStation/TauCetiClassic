@@ -17,13 +17,6 @@
 // Will update the light (duh).
 // Creates or destroys it if needed, makes it update values, makes sure it's got the correct source turf...
 /atom/proc/update_light()
-	set waitfor = FALSE
-	if(gcDestroyed)
-		return
-
-	if(!lighting_corners_initialised)
-		sleep(20)
-
 	if(!light_power || !light_range) // We won't emit light anyways, destroy the light source.
 		if(light)
 			light.destroy()
@@ -42,7 +35,6 @@
 // Incase any lighting vars are on in the typepath we turn the light on in New().
 /atom/New()
 	. = ..()
-
 	if(light_power && light_range)
 		update_light()
 
@@ -55,7 +47,7 @@
 	if(light)
 		light.destroy()
 		light = null
-	. = ..()
+	return ..()
 
 /atom/movable/New()
 	. = ..()
@@ -71,8 +63,7 @@
 		opacity = 0
 		T.recalc_atom_opacity()
 		T.reconsider_lights()
-
-	. = ..()
+	return ..()
 
 // Should always be used to change the opacity of an atom.
 // It notifies (potentially) affected light sources so they can update (if needed).

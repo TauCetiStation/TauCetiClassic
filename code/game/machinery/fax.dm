@@ -30,6 +30,10 @@ var/list/alldepartments = list("Central Command")
 	if( !("[department]" in alldepartments) )
 		alldepartments += department
 
+/obj/machinery/faxmachine/Destroy()
+	allfaxes -= src
+	return ..()
+
 /obj/machinery/faxmachine/process()
 	return 0
 

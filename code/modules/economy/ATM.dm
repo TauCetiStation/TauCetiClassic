@@ -41,6 +41,11 @@ log transactions
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 
+/obj/machinery/atm/Destroy()
+	if(spark_system)
+		qdel(spark_system)
+	return ..()
+
 /obj/machinery/atm/process()
 	if(stat & NOPOWER)
 		return
