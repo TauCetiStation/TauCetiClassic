@@ -8,10 +8,8 @@
 	icon_broken = "securecebroken"
 	icon_off = "secureceoff"
 
-
 	New()
 		..()
-		sleep(2)
 		if(prob(50))
 			new /obj/item/weapon/storage/backpack/industrial(src)
 		else
@@ -36,8 +34,6 @@
 		new /obj/item/taperoll/engineering(src)
 		return
 
-
-
 /obj/structure/closet/secure_closet/engineering_electrical
 	name = "Electrical Supplies"
 	req_access = list(access_engine_equip)
@@ -48,10 +44,8 @@
 	icon_broken = "secureengelecbroken"
 	icon_off = "secureengelecoff"
 
-
 	New()
 		..()
-		sleep(2)
 		new /obj/item/clothing/gloves/yellow(src)
 		new /obj/item/clothing/gloves/yellow(src)
 		new /obj/item/weapon/storage/toolbox/electrical(src)
@@ -64,8 +58,6 @@
 		new /obj/item/device/multitool(src)
 		new /obj/item/device/multitool(src)
 		return
-
-
 
 /obj/structure/closet/secure_closet/engineering_welding
 	name = "Welding Supplies"
@@ -77,10 +69,8 @@
 	icon_broken = "secureengweldbroken"
 	icon_off = "secureengweldoff"
 
-
 	New()
 		..()
-		sleep(2)
 		new /obj/item/clothing/head/welding(src)
 		new /obj/item/clothing/head/welding(src)
 		new /obj/item/clothing/head/welding(src)
@@ -92,8 +82,6 @@
 		new /obj/item/weapon/weldpack(src)
 		return
 
-
-
 /obj/structure/closet/secure_closet/engineering_personal
 	name = "Engineer's Locker"
 	req_access = list(access_engine_equip)
@@ -104,10 +92,8 @@
 	icon_broken = "secureengbroken"
 	icon_off = "secureengoff"
 
-
 	New()
 		..()
-		sleep(2)
 		if(prob(50))
 			new /obj/item/weapon/storage/backpack/industrial(src)
 		else
@@ -124,6 +110,7 @@
 		new /obj/item/weapon/cartridge/engineering(src)
 		new /obj/item/taperoll/engineering(src)
 		return
+
 /obj/structure/closet/secure_closet/atmos_personal
 	name = "Technician's Locker"
 	req_access = list(access_atmospherics)
@@ -134,10 +121,8 @@
 	icon_broken = "secureatmbroken"
 	icon_off = "secureatmoff"
 
-
 	New()
 		..()
-		sleep(2)
 		if(prob(50))
 			new /obj/item/weapon/storage/backpack/industrial(src)
 		else
