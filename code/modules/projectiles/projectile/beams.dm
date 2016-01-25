@@ -13,12 +13,6 @@
 	tracer_type = /obj/effect/projectile/laser/tracer
 	impact_type = /obj/effect/projectile/laser/impact
 
-	e_color = "#ff0000"
-
-/obj/item/projectile/beam/before_move()
-	if(e_color)
-		new /obj/effect/projectile_effect(loc,e_range,e_power,e_color)
-
 /obj/item/projectile/beam/practice
 	name = "laser"
 	icon_state = "laser"
@@ -28,14 +22,10 @@
 	flag = "laser"
 	eyeblur = 2
 
-	e_color = "#ff0000"
-
 /obj/item/projectile/beam/scatter
 	name = "laser pellet"
 	icon_state = "scatterlaser"
 	damage = 5
-
-	e_color = "#ff0000"
 
 /obj/item/projectile/beam/heavylaser
 	name = "heavy laser"
@@ -46,10 +36,6 @@
 	tracer_type = /obj/effect/projectile/laser_heavy/tracer
 	impact_type = /obj/effect/projectile/laser_heavy/impact
 
-	e_color = "#ff0000"
-	e_range = 2
-	e_power = 3
-
 /obj/item/projectile/beam/xray
 	name = "xray beam"
 	icon_state = "xray"
@@ -58,8 +44,6 @@
 	muzzle_type = /obj/effect/projectile/xray/muzzle
 	tracer_type = /obj/effect/projectile/xray/tracer
 	impact_type = /obj/effect/projectile/xray/impact
-
-	e_color = "#00ff00"
 
 /obj/item/projectile/beam/pulse
 	name = "pulse"
@@ -70,14 +54,10 @@
 	tracer_type = /obj/effect/projectile/laser_pulse/tracer
 	impact_type = /obj/effect/projectile/laser_pulse/impact
 
-	e_color = "#0000ff"
-
 /obj/item/projectile/beam/deathlaser
 	name = "death laser"
 	icon_state = "heavylaser"
 	damage = 60
-
-	e_color = "#ff0000"
 
 /obj/item/projectile/beam/emitter
 	name = "emitter beam"
@@ -87,8 +67,6 @@
 	muzzle_type = /obj/effect/projectile/emitter/muzzle
 	tracer_type = /obj/effect/projectile/emitter/tracer
 	impact_type = /obj/effect/projectile/emitter/impact
-
-	e_color = "#01DF74"
 
 /obj/item/projectile/beam/lastertag/blue
 	name = "lasertag beam"
@@ -101,8 +79,6 @@
 	muzzle_type = /obj/effect/projectile/laser_blue/muzzle
 	tracer_type = /obj/effect/projectile/laser_blue/tracer
 	impact_type = /obj/effect/projectile/laser_blue/impact
-
-	e_color = "#0000ff"
 
 	on_hit(var/atom/target, var/blocked = 0)
 		if(istype(target, /mob/living/carbon/human))
@@ -118,8 +94,6 @@
 	damage = 0
 	damage_type = BURN
 	flag = "laser"
-
-	e_color = "#ff0000"
 
 	on_hit(var/atom/target, var/blocked = 0)
 		if(istype(target, /mob/living/carbon/human))
@@ -140,8 +114,6 @@
 	tracer_type = /obj/effect/projectile/laser_omni/tracer
 	impact_type = /obj/effect/projectile/laser_omni/impact
 
-	e_color = "#00FFFF"
-
 	on_hit(var/atom/target, var/blocked = 0)
 		if(istype(target, /mob/living/carbon/human))
 			var/mob/living/carbon/human/M = target
@@ -161,8 +133,6 @@
 	tracer_type = /obj/effect/projectile/laser/tracer
 	impact_type = /obj/effect/projectile/laser/impact
 
-	e_color = "#ff0000"
-
 /obj/item/projectile/beam/stun
 	name = "stun beam"
 	icon_state = "stun"
@@ -175,5 +145,3 @@
 	muzzle_type = /obj/effect/projectile/stun/muzzle
 	tracer_type = /obj/effect/projectile/stun/tracer
 	impact_type = /obj/effect/projectile/stun/impact
-
-	e_color = "#F2F5A9"

@@ -60,24 +60,10 @@
 	var/tracer_type
 	var/impact_type
 
-	//light effect vars for instant projectiles
-	var/e_color //set this if you want to get light effect at all. (hex: #ffffff)
-	var/e_power = 2
-	var/e_range = 1.5
-
 	var/datum/plot_vector/trajectory	// used to plot the path of the projectile
 	var/datum/vector_loc/location		// current location of the projectile in pixel space
 	var/matrix/effect_transform			// matrix to rotate and scale projectile effects - putting it here so it doesn't
 										//  have to be recreated multiple times
-
-/obj/effect/projectile_effect
-	name = ""
-	invisibility = 101
-
-/obj/effect/projectile_effect/New(var/loc, var/range, var/power, var/l_color)
-	set_light(range,power,l_color)
-	spawn(3)
-		qdel(src)
 
 /obj/item/projectile/proc/on_hit(var/atom/target, var/blocked = 0)
 	if(!isliving(target))	return 0
@@ -259,7 +245,6 @@
 
 		if(first_step)
 			muzzle_effect(effect_transform)
-			first_move()
 			first_step = 0
 		else
 			tracer_effect(effect_transform)
@@ -275,10 +260,6 @@
 			sleep(step_delay)	//add delay between movement iterations if it's not a hitscan weapon
 
 /obj/item/projectile/proc/before_move()
-	return
-
-/obj/item/projectile/proc/first_move()
-	return
 
 /obj/item/projectile/proc/setup_trajectory()
 	var/offset = 0

@@ -6,10 +6,6 @@
 	nodamage = 1
 	flag = "energy"
 
-	light_color = "#A9E2F3"
-	light_power = 2
-	light_range = 2
-
 /obj/item/projectile/ion/on_hit(var/atom/target, var/blocked = 0)
 	empulse(target, 1, 1)
 	return 1
@@ -39,10 +35,6 @@
 	flag = "energy"
 	var/temperature = 100
 
-	light_color = "#00FFFF"
-	light_power = 2
-	light_range = 2
-
 
 /obj/item/projectile/temp/on_hit(var/atom/target, var/blocked = 0)//These two could likely check temp protection on the mob
 	if(istype(target, /mob/living))
@@ -64,9 +56,6 @@
 	damage_type = BRUTE
 	nodamage = 1
 	flag = "bullet"
-
-	light_power = 2
-	light_range = 2
 
 /obj/item/projectile/meteor/Bump(atom/A as mob|obj|turf|area)
 	if(A == firer)
@@ -174,9 +163,6 @@
 	flag = "bullet"
 	sharp = 0
 	edge = 0
-
-	light_power = 2
-	light_range = 2
 
 /obj/item/projectile/missile/on_hit(var/atom/target, var/blocked = 0)
 	explosion(target, 1,2,4,5)

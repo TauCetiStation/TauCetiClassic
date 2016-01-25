@@ -6,10 +6,6 @@
 	nodamage = 1
 	flag = "energy"
 
-	light_color = "#00BFFF"
-	light_power = 2
-	light_range = 2
-
 	on_hit(var/atom/change)
 		wabbajack(change)
 

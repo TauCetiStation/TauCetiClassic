@@ -5,6 +5,7 @@
 	damage_type = BURN
 	flag = "energy"
 
+
 /obj/item/projectile/energy/electrode
 	name = "electrode"
 	icon_state = "spark"
@@ -17,10 +18,6 @@
 	damage_type = HALLOSS
 	//Damage will be handled on the MOB side, to prevent window shattering.
 
-	light_color = "#F2F5A9"
-	light_power = 2
-	light_range = 2
-
 
 
 /obj/item/projectile/energy/declone
@@ -29,10 +26,6 @@
 	nodamage = 1
 	damage_type = CLONE
 	irradiate = 40
-
-	light_color = "#00FF00"
-	light_power = 2
-	light_range = 2
 
 /obj/item/projectile/energy/declone/light
 	irradiate = 30
@@ -43,10 +36,6 @@
 	damage = 5
 	damage_type = TOX
 	weaken = 5
-
-	light_color = "#00FF00"
-	light_power = 2
-	light_range = 2
 
 
 /obj/item/projectile/energy/bolt
@@ -78,7 +67,3 @@
 	damage = 20
 	damage_type = TOX
 	irradiate = 20
-
-	light_color = "#00FF00"
-	light_power = 2
-	light_range = 2
