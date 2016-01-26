@@ -43,6 +43,12 @@
 	armor = list(melee = 60, bullet = 35, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30)
 	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box/magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/melee/energy/sword,/obj/item/weapon/handcuffs,/obj/item/weapon/tank)
 
+/obj/item/clothing/suit/space/globose/black/pirate
+	name = "pirate space suit"
+	breach_threshold = 25
+	slowdown = 1
+	armor = list(melee = 60, bullet = 35, laser = 60,energy = 60, bomb = 30, bio = 30, rad = 30)
+
 /obj/item/clothing/head/helmet/space/globose/black
 	name = "black space helmet"
 	desc = "Has a tag: Totally not property of an enemy corporation, honest."
@@ -51,10 +57,11 @@
 	armor = list(melee = 60, bullet = 35, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30)
 
 /obj/item/clothing/head/helmet/space/globose/black/pirate
-	name = "balck pirate space helmet"
+	name = "black pirate space helmet"
 	desc = "Pirate helmet, which brings horror into people hearts."
 	icon_state = "glob0_pirate"
 	mode = "pirate"
+	armor = list(melee = 60, bullet = 35, laser = 60,energy = 60, bomb = 30, bio = 30, rad = 30)
 
 
 /***********-Mining-***********/
@@ -73,4 +80,3 @@
 	icon_state = "glob0_mining"
 	mode = "mining"
 	armor = list(melee = 50, bullet = 5, laser = 10,energy = 5, bomb = 55, bio = 100, rad = 20)
-

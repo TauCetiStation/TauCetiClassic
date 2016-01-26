@@ -38,9 +38,8 @@
 	desc = "Yarr."
 	icon_state = "pirate"
 	item_state = "pirate"
-	armor = list(melee = 60, bullet = 35, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30)
+	armor = list(melee = 60, bullet = 35, laser = 60,energy = 60, bomb = 30, bio = 30, rad = 30)
 	flags = FPRINT | TABLEPASS | HEADCOVERSEYES | BLOCKHAIR | STOPSPRESSUREDMAGE
-	body_parts_covered = 0
 
 /obj/item/clothing/suit/space/pirate
 	name = "pirate coat"
@@ -48,9 +47,7 @@
 	icon_state = "pirate"
 	item_state = "pirate"
 	w_class = 3
-	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box/magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/tank/emergency_oxygen)
+	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box/magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/tank)
 	slowdown = 0
-	armor = list(melee = 60, bullet = 35, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30)
-	body_parts_covered = UPPER_TORSO|ARMS
-
-
+	armor = list(melee = 60, bullet = 35, laser = 60,energy = 60, bomb = 30, bio = 30, rad = 30)
+	breach_threshold = 25
