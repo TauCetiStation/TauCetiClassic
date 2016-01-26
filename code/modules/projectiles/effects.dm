@@ -123,9 +123,9 @@
 //----------------------------
 /obj/effect/projectile/emitter/tracer
 	icon_state = "emitter"
-	light_range = 1.5
-	light_power = 2
-	light_color = "#01df74"
+	//light_range = 1.5
+	//light_power = 2
+	//light_color = "#01df74"
 
 /obj/effect/projectile/emitter/muzzle
 	icon_state = "muzzle_emitter"
