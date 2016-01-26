@@ -97,6 +97,9 @@
 			return 1
 
 		if(href_list["ready"])
+			if(ready && ticker && ticker.pregame_timeleft < 3)
+				src << "<span class='warning'>Locked! The round is about to start.</span>"
+				return 0
 			ready = !ready
 
 		if(href_list["refresh"])
