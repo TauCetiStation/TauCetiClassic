@@ -675,7 +675,6 @@ note dizziness decrements automatically in the mob's Life() proc.
 					statpanel(S.panel,"[S.charge_counter]/[S.charge_max]",S)
 				if("holdervar")
 					statpanel(S.panel,"[S.holder_var_type] [S.holder_var_amount]",S)
-	sleep(2) //Prevent updating the stat panel for the next .2 seconds, prevents clientside latency from updates
 
 /mob/proc/add_stings_to_statpanel(var/list/stings)
 	for(var/obj/effect/proc_holder/changeling/S in stings)

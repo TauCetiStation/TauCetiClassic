@@ -18,11 +18,13 @@ var/global/list/image/splatter_cache=list()
 	var/basecolor="#A10808" // Color when wet.
 	var/list/datum/disease2/disease/virus2 = list()
 	var/amount = 5
+	var/drytime
 
 /obj/effect/decal/cleanable/blood/Destroy()
 	for(var/datum/disease/D in viruses)
 		D.cure(0)
-	..()
+	processing_objects -= src
+	return ..()
 
 /obj/effect/decal/cleanable/blood/New()
 	..()
@@ -38,7 +40,11 @@ var/global/list/image/splatter_cache=list()
 					if (B.blood_DNA)
 						blood_DNA |= B.blood_DNA.Copy()
 					qdel(B)
-	spawn(DRYING_TIME * (amount+1))
+	drytime = world.time + DRYING_TIME * (amount+1)
+	processing_objects += src
+
+/obj/effect/decal/cleanable/blood/process()
+	if(world.time > drytime)
 		dry()
 
 /obj/effect/decal/cleanable/blood/update_icon()
@@ -75,7 +81,6 @@ var/global/list/image/splatter_cache=list()
 				S.overlays += S.blood_overlay
 			if(blood_DNA.len)
 				S.blood_DNA |= blood_DNA.Copy()
-
 	else if (hasfeet)//Or feet
 		perp.feet_blood_color = basecolor
 		perp.track_blood = max(amount,perp.track_blood)
@@ -94,10 +99,11 @@ var/global/list/image/splatter_cache=list()
 	amount--
 
 /obj/effect/decal/cleanable/blood/proc/dry()
-		name = "dried [src.name]"
-		desc = "It's dry and crusty. Someone is not doing their job."
-		color = adjust_brightness(color, -50)
-		amount = 0
+	name = "dried [src.name]"
+	desc = "It's dry and crusty. Someone is not doing their job."
+	color = adjust_brightness(color, -50)
+	amount = 0
+	processing_objects -= src
 
 /obj/effect/decal/cleanable/blood/attack_hand(mob/living/carbon/human/user)
 	..()
@@ -117,17 +123,17 @@ var/global/list/image/splatter_cache=list()
 		user.verbs += /mob/living/carbon/human/proc/bloody_doodle
 
 /obj/effect/decal/cleanable/blood/splatter
-        random_icon_states = list("mgibbl1", "mgibbl2", "mgibbl3", "mgibbl4", "mgibbl5")
-        amount = 2
+	random_icon_states = list("mgibbl1", "mgibbl2", "mgibbl3", "mgibbl4", "mgibbl5")
+	amount = 2
 
 /obj/effect/decal/cleanable/blood/drip
-        name = "drips of blood"
-        desc = "It's red."
-        gender = PLURAL
-        icon = 'icons/effects/drip.dmi'
-        icon_state = "1"
-        random_icon_states = list("1","2","3","4","5")
-        amount = 0
+	name = "drips of blood"
+	desc = "It's red."
+	gender = PLURAL
+	icon = 'icons/effects/drip.dmi'
+	icon_state = "1"
+	random_icon_states = list("1","2","3","4","5")
+	amount = 0
 
 /obj/effect/decal/cleanable/blood/writing
 	icon_state = "tracks"
@@ -163,7 +169,6 @@ var/global/list/image/splatter_cache=list()
 	var/fleshcolor = "#FFFFFF"
 
 /obj/effect/decal/cleanable/blood/gibs/update_icon()
-
 	var/image/giblets = new(base_icon, "[icon_state]_flesh", dir)
 	if(!fleshcolor || fleshcolor == "rainbow")
 		fleshcolor = "#[pick(list("FF0000","FF7F00","FFFF00","00FF00","0000FF","4B0082","8F00FF"))]"
@@ -194,21 +199,21 @@ var/global/list/image/splatter_cache=list()
 
 
 /obj/effect/decal/cleanable/blood/gibs/proc/streak(var/list/directions)
-        spawn (0)
-                var/direction = pick(directions)
-                for (var/i = 0, i < pick(1, 200; 2, 150; 3, 50; 4), i++)
-                        sleep(3)
-                        if (i > 0)
-                                var/obj/effect/decal/cleanable/blood/b = PoolOrNew(/obj/effect/decal/cleanable/blood/splatter, src.loc)
-                                b.basecolor = src.basecolor
-                                b.update_icon()
-                                for(var/datum/disease/D in src.viruses)
-                                        var/datum/disease/ND = D.Copy(1)
-                                        b.viruses += ND
-                                        ND.holder = b
+	spawn(0)
+		var/direction = pick(directions)
+		for (var/i = 0, i < pick(1, 200; 2, 150; 3, 50; 4), i++)
+			sleep(3)
+			if (i > 0)
+				var/obj/effect/decal/cleanable/blood/b = PoolOrNew(/obj/effect/decal/cleanable/blood/splatter, src.loc)
+				b.basecolor = src.basecolor
+				b.update_icon()
+				for(var/datum/disease/D in src.viruses)
+					var/datum/disease/ND = D.Copy(1)
+					b.viruses += ND
+					ND.holder = b
 
-                        if (step_to(src, get_step(src, direction), 0))
-                                break
+				if (step_to(src, get_step(src, direction), 0))
+					break
 
 
 /obj/effect/decal/cleanable/mucus

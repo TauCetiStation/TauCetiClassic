@@ -95,9 +95,11 @@
 		eyeobj.loc = src.loc
 
 /mob/living/silicon/ai/Destroy()
-	eyeobj.ai = null
-	qdel(eyeobj) // No AI, no Eye
-	..()
+	if(eyeobj)
+		eyeobj.ai = null
+		qdel(eyeobj) // No AI, no Eye
+		eyeobj = null
+	return ..()
 
 /atom/proc/move_camera_by_click()
 	if(istype(usr, /mob/living/silicon/ai))

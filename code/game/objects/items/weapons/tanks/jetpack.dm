@@ -19,6 +19,11 @@
 		src.ion_trail.set_up(src)
 		return
 
+	Destroy()
+		if(ion_trail)
+			qdel(ion_trail)
+		return ..()
+
 
 	examine()
 		set src in usr

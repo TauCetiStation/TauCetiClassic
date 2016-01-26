@@ -80,6 +80,14 @@
 	..()
 	return
 
+/obj/machinery/turret/Destroy()
+	if(spark_system)
+		qdel(spark_system)
+	if(cover)
+		cover.host = null
+		qdel(cover)
+	return ..()
+
 /obj/machinery/turretcover
 	name = "pop-up turret cover"
 	icon = 'icons/obj/turrets.dmi'

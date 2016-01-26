@@ -54,8 +54,6 @@
 	if(terminal)
 		terminal.master = null
 		terminal = null
-		return 1
-	return 0
 
 /obj/machinery/power/smes/proc/updateicon()
 	overlays.Cut()

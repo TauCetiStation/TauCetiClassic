@@ -74,6 +74,9 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 		radio_controller.remove_object(src, frequency)
 		for (var/ch_name in channels)
 			radio_controller.remove_object(src, radiochannels[ch_name])
+	if(secure_radio_connections)
+		for(var/ch_name in channels)
+			secure_radio_connections[ch_name] =  radio_controller.remove_object(src, radiochannels[ch_name])
 	return ..()
 
 /obj/item/device/radio/attack_self(mob/user as mob)

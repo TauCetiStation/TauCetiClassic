@@ -34,6 +34,11 @@
 	var/message2
 	var/list/stored_data = list()
 
+/obj/item/weapon/cartridge/Destroy()
+	if(radio)
+		qdel(radio)
+	return ..()
+
 /obj/item/weapon/cartridge/engineering
 	name = "Power-ON Cartridge"
 	icon_state = "cart-e"
@@ -115,8 +120,6 @@
 	..()
 	spawn(5)
 		radio = new /obj/item/radio/integrated/signal(src)
-
-
 
 /obj/item/weapon/cartridge/quartermaster
 	name = "Space Parts & Space Vendors Cartridge"
