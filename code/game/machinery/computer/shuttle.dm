@@ -3,7 +3,7 @@
 	desc = "For shuttle control."
 	icon_state = "shuttle"
 	var/auth_need = 3.0
-	var/list/authorized = list(  )
+	var/list/authorized = list()
 
 	light_color = "#7BF9FF"
 
@@ -45,9 +45,7 @@
 						world << "\blue <B>Alert: Shuttle launch time shortened to 10 seconds!</B>"
 						emergency_shuttle.online = 1
 						emergency_shuttle.settimeleft(10)
-						//src.authorized = null
-						qdel(src.authorized)
-						src.authorized = list(  )
+						src.authorized.Cut()
 
 				if("Repeal")
 					src.authorized -= W:registered_name
@@ -55,8 +53,7 @@
 
 				if("Abort")
 					world << "\blue <B>All authorizations to shortening time for shuttle launch have been revoked!</B>"
-					src.authorized.len = 0
-					src.authorized = list(  )
+					src.authorized.Cut()
 
 		else if (istype(W, /obj/item/weapon/card/emag) && !emagged)
 			var/choice = alert(user, "Would you like to launch the shuttle?","Shuttle control", "Launch", "Cancel")

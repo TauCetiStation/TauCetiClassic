@@ -351,7 +351,7 @@ its easier to just keep the beam vertical.
 
 	//Cleaning up shit.
 	if(fingerprints && !fingerprints.len)
-		qdel(fingerprints)
+		fingerprints = null
 	return
 
 
@@ -416,7 +416,7 @@ its easier to just keep the beam vertical.
 /atom/proc/clean_blood()
 	src.germ_level = 0
 	if(istype(blood_DNA, /list))
-		qdel(blood_DNA)
+		blood_DNA = null
 		return 1
 
 
