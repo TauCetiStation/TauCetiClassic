@@ -80,6 +80,11 @@
 
 	return
 
+/obj/machinery/vending/Destroy()
+	qdel(coin)
+	coin = null
+	return ..()
+
 /obj/machinery/vending/ex_act(severity)
 	switch(severity)
 		if(1.0)
@@ -113,9 +118,8 @@
 		var/price = prices[typepath]
 		if(isnull(amount)) amount = 1
 
-		var/atom/temp = new typepath(null)
 		var/datum/data/vending_product/R = new /datum/data/vending_product()
-		R.product_name = temp.name
+
 		R.product_path = typepath
 		R.amount = amount
 		R.max_amount = amount
@@ -128,6 +132,9 @@
 			coin_records += R
 		else
 			product_records += R
+
+		var/atom/temp = typepath
+		R.product_name = initial(temp.name)
 //		world << "Added: [R.product_name]] - [R.amount] - [R.product_path]"
 	return
 
@@ -1038,13 +1045,3 @@
 	/obj/item/clothing/mask/bandana/blue=384,/obj/item/clothing/mask/bluescarf=250,/obj/item/clothing/mask/redscarf=250,/obj/item/clothing/mask/greenscarf=250,
 	/obj/item/clothing/suit/wintercoat=130,/obj/item/clothing/shoes/winterboots=70,/obj/item/clothing/head/santa=50)
 	refill_canister = /obj/item/weapon/vending_refill/clothing
-
-/obj/machinery/vending/clothing/New()
-	..()
-	component_parts = list()
-	//var/obj/item/weapon/circuitboard/vendor/V = new(null)
-	//V.set_type(type)
-	//component_parts += V
-	component_parts += new /obj/item/weapon/vending_refill/clothing(0)
-	component_parts += new /obj/item/weapon/vending_refill/clothing(0)
-	component_parts += new /obj/item/weapon/vending_refill/clothing(0)

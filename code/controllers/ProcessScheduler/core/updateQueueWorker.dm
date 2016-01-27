@@ -60,7 +60,7 @@
 	 * created in the kill() proc.
 	 */
 	if(killed)
-		qdel(src)
+		del(src)
 
 	finished = 1
 
@@ -75,7 +75,7 @@
 	 * running to be terminated. Hasta la vista, baby.
 	 */
 	spawn(300)
-		qdel(src)
+		del(src)
 
 /datum/updateQueueWorker/proc/start()
 	uq_dbg("updateQueueWorker started.")
