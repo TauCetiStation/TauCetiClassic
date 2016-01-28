@@ -181,6 +181,21 @@
 	new /obj/item/weapon/grenade/chem_grenade/teargas(src)
 	new /obj/item/weapon/grenade/chem_grenade/teargas(src)
 
+/obj/item/weapon/storage/box/smokegrenades
+	name = "box of smoke grenades"
+	desc = "This box contains smoke grenades it seems."
+	icon_state = "flashbang"
+
+/obj/item/weapon/storage/box/smokegrenades/New()
+	..()
+	new /obj/item/weapon/grenade/smokebomb(src)
+	new /obj/item/weapon/grenade/smokebomb(src)
+	new /obj/item/weapon/grenade/smokebomb(src)
+	new /obj/item/weapon/grenade/smokebomb(src)
+	new /obj/item/weapon/grenade/smokebomb(src)
+	new /obj/item/weapon/grenade/smokebomb(src)
+	new /obj/item/weapon/grenade/smokebomb(src)
+
 /obj/item/weapon/storage/box/r4046
 	name = "box of 40x46mm rubber grenades (WARNING)"
 	desc = "<B>WARNING: These devices are extremely dangerous and can cause injury.</B>"

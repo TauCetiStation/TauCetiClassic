@@ -62,6 +62,10 @@ would spawn and follow the beaker, even if it is carried or thrown.
 
 	proc/start()
 
+/datum/effect/effect/system/Destroy()
+	holder = null
+	location = null
+	return ..()
 
 /////////////////////////////////////////////
 // GENERIC STEAM SPREAD SYSTEM
@@ -378,6 +382,10 @@ steam.start() -- spawns the effect
 	var/processing = 1
 	var/on = 1
 
+	Destroy()
+		oldposition = null
+		return ..()
+
 	set_up(atom/atom)
 		attach(atom)
 		oldposition = get_turf(atom)
@@ -631,10 +639,9 @@ steam.start() -- spawns the effect
 
 
 	Destroy()
-
 		density = 0
 		update_nearby_tiles(1)
-		..()
+		return ..()
 
 	proc/updateicon()
 		if(metal == 1)

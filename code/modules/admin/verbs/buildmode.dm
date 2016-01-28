@@ -42,6 +42,12 @@
 	icon = 'tauceti/icons/misc/buildmode.dmi'
 	var/obj/effect/bmode/buildholder/master = null
 
+/obj/effect/bmode/Destroy()
+	if(master && master.cl)
+		master.cl.screen -= src
+	master = null
+	return ..()
+
 /obj/effect/bmode/builddir
 	icon_state = "build"
 	screen_loc = "NORTH,WEST"

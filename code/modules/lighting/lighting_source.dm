@@ -63,9 +63,11 @@
 	force_update()
 	if(source_atom && source_atom.light_sources)
 		source_atom.light_sources -= src
+		source_atom                = null
 
 	if(top_atom && top_atom.light_sources)
 		top_atom.light_sources    -= src
+		top_atom                   = null
 
 #ifdef LIGHTING_INSTANT_UPDATES
 /datum/light_source/proc/effect_update()

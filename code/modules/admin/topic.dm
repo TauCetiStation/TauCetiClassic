@@ -924,7 +924,7 @@
 			log_admin("[key_name(usr)] booted [key_name(M)].")
 			message_admins("\blue [key_name_admin(usr)] booted [key_name_admin(M)].", 1)
 			//M.client = null
-			qdel(M.client)
+			del(M.client)
 /*
 	//Player Notes
 	else if(href_list["notes"])
@@ -990,7 +990,7 @@
 				log_admin("[usr.client.ckey] has banned [M.ckey].\nReason: [reason]\nThis will be removed in [mins] minutes.")
 				message_admins("\blue[usr.client.ckey] has banned [M.ckey].\nReason: [reason]\nThis will be removed in [mins] minutes.")
 
-				qdel(M.client)
+				del(M.client)
 				//del(M)	// See no reason why to delete mob. Important stuff can be lost. And ban can be lifted before round ends.
 			if("No")
 				if(!check_rights(R_BAN))   return
@@ -1015,7 +1015,7 @@
 				feedback_inc("ban_perma",1)
 				DB_ban_record(BANTYPE_PERMA, M, -1, reason)
 
-				qdel(M.client)
+				del(M.client)
 				//del(M)
 			if("Cancel")
 				return
@@ -2154,13 +2154,13 @@
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","BA")
 				message_admins("[key_name_admin(usr)] has triggered a bluespace anomaly", 1)
-				new /datum/event/anomaly_bluespace()
+				new /datum/event/anomaly/anomaly_bluespace()
 
 			if("energeticflux")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","FLUX")
 				message_admins("[key_name_admin(usr)] has triggered an energetic flux")
-				new /datum/event/anomaly_flux()
+				new /datum/event/anomaly/anomaly_flux()
 
 			if("frost")
 				feedback_inc("admin_secrets_fun_used",1)
@@ -2173,19 +2173,19 @@
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","PYRO")
 				message_admins("[key_name_admin(usr)] has spawned a pyroclastic anomaly")
-				new /datum/event/anomaly_pyro()
+				new /datum/event/anomaly/anomaly_pyro()
 
 			if("gravanomalies1")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","GA")
 				message_admins("[key_name_admin(usr)] has spawned a gravitational anomaly")
-				new /datum/event/anomaly_grav()
+				new /datum/event/anomaly/anomaly_grav()
 
 			if("blackhole")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","BH")
 				message_admins("[key_name_admin(usr)] has spawned a vortex anomaly")
-				new /datum/event/anomaly_vortex()
+				new /datum/event/anomaly/anomaly_vortex()
 
 			if("gravanomalies")
 				feedback_inc("admin_secrets_fun_used",1)
@@ -2531,6 +2531,15 @@
 				if(!admin_log.len)
 					dat += "No-one has done anything this round!"
 				usr << browse(dat, "window=admin_log")
+			if("garbage_fail_log")
+				var/dat = "<B>Garbage Log<HR></B>"
+				if(garbage_collector)
+					if(garbage_collector.logging.len)
+						for(var/l in garbage_collector.logging)
+							dat += "<li>[l]</li>"
+					else
+						dat += "Empty."
+				usr << browse(dat, "window=garbage_fail_log")
 			if("maint_access_brig")
 				for(var/obj/machinery/door/airlock/maintenance/M in world)
 					if (access_maint_tunnels in M.req_access)

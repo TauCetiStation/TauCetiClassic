@@ -1,5 +1,4 @@
-
-/obj/item/device/encryptionkey/
+/obj/item/device/encryptionkey
 	name = "Standard Encrpytion Key"
 	desc = "An encyption key for a radio headset.  Has no special codes in it.  WHY DOES IT EXIST?  ASK NANOTRASEN."
 	icon = 'icons/obj/radio.dmi'
@@ -9,7 +8,6 @@
 	var/translate_hive = 0
 	var/syndie = 0
 	var/list/channels = list()
-
 
 /obj/item/device/encryptionkey/New()
 

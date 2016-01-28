@@ -56,7 +56,7 @@
 	if ( !M.blood_DNA || !M.blood_DNA.len )
 		user << "\blue No blood found on [M]"
 		if(M.blood_DNA)
-			qdel(M.blood_DNA)
+			M.blood_DNA = null
 	else
 		user << "\blue Blood found on [M]. Analysing..."
 		spawn(15)
@@ -103,7 +103,7 @@
 	//PRINTS
 	if(!A.fingerprints || !A.fingerprints.len)
 		if(A.fingerprints)
-			qdel(A.fingerprints)
+			A.fingerprints = null
 	else
 		user << "\blue Isolated [A.fingerprints.len] fingerprints: Data Stored: Scan with Hi-Res Forensic Scanner to retrieve."
 		var/list/complete_prints = list()

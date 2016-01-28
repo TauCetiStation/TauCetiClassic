@@ -651,7 +651,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	message_admins("[key_name_admin(src)] has created a command report", 1)
 	feedback_add_details("admin_verb","CCR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/cmd_admin_delete(atom/O as obj|mob|turf in world)
+/client/proc/cmd_admin_delete(atom/O as obj|mob|turf in view())
 	set category = "Admin"
 	set name = "Delete"
 
@@ -800,7 +800,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 			log_admin("[usr.client.ckey] has banned [M.ckey].\nReason: [reason]\nThis will be removed in [mins] minutes.")
 			message_admins("\blue[usr.client.ckey] has banned [M.ckey].\nReason: [reason]\nThis will be removed in [mins] minutes.")
 			world.Export("http://216.38.134.132/adminlog.php?type=ban&key=[usr.client.key]&key2=[M.key]&msg=[html_decode(reason)]&time=[mins]&server=[replacetext(config.server_name, "#", "")]")
-			qdel(M.client)
+			del(M.client)
 			qdel(M)
 		else
 
@@ -815,7 +815,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		log_admin("[usr.client.ckey] has banned [M.ckey].\nReason: [reason]\nThis is a permanent ban.")
 		message_admins("\blue[usr.client.ckey] has banned [M.ckey].\nReason: [reason]\nThis is a permanent ban.")
 		world.Export("http://216.38.134.132/adminlog.php?type=ban&key=[usr.client.key]&key2=[M.key]&msg=[html_decode(reason)]&time=perma&server=[replacetext(config.server_name, "#", "")]")
-		qdel(M.client)
+		del(M.client)
 		qdel(M)
 */
 
@@ -1038,6 +1038,9 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	var/question1 = alert(src, "Do you want to cancel the sending of this fax?", "Confirm", "Yes", "No")
 	if(question1 != "No")
 		return
+
+	message_admins("Fax message was created by [key_name_admin(src)] and sent to [dpt]", 1)
+	feedback_add_details("admin_verb","FAXMESS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 	SendFax(sent, sentname, Sender, dpt, stamp, stamps)
 

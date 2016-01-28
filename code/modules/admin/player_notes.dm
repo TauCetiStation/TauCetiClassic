@@ -128,7 +128,7 @@ datum/admins/proc/notes_gethtml(var/ckey)
 	message_admins("\blue [key_name_admin(usr)] has edited [key]'s notes.")
 	log_admin("[key_name(usr)] has edited [key]'s notes.")
 
-	qdel(info)
+	del(info) // savefile, so NOT qdel
 
 	//Updating list of keys with notes on them
 	var/savefile/note_list = new("data/player_notes.sav")

@@ -36,8 +36,7 @@
 		qdel(air_contents)
 
 	processing_objects.Remove(src)
-
-	..()
+	return ..()
 
 /obj/item/weapon/tank/examine()
 	var/obj/icon = src

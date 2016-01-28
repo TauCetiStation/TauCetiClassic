@@ -1,14 +1,13 @@
 /obj/item/projectile/ion
 	name = "ion bolt"
 	icon_state = "ion"
+	light_color = "#a9e2f3"
+	light_power = 2
+	light_range = 2
 	damage = 0
 	damage_type = BURN
 	nodamage = 1
 	flag = "energy"
-
-	light_color = "#A9E2F3"
-	light_power = 2
-	light_range = 2
 
 /obj/item/projectile/ion/on_hit(var/atom/target, var/blocked = 0)
 	empulse(target, 1, 1)
@@ -33,15 +32,14 @@
 /obj/item/projectile/temp
 	name = "freeze beam"
 	icon_state = "ice_2"
+	light_color = "#00ffff"
+	light_power = 2
+	light_range = 2
 	damage = 0
 	damage_type = BURN
 	nodamage = 1
 	flag = "energy"
 	var/temperature = 100
-
-	light_color = "#00FFFF"
-	light_power = 2
-	light_range = 2
 
 
 /obj/item/projectile/temp/on_hit(var/atom/target, var/blocked = 0)//These two could likely check temp protection on the mob
@@ -60,13 +58,13 @@
 	name = "meteor"
 	icon = 'icons/obj/meteor.dmi'
 	icon_state = "smallf"
+	light_color = "#ffffff"
+	light_power = 2
+	light_range = 2
 	damage = 0
 	damage_type = BRUTE
 	nodamage = 1
 	flag = "bullet"
-
-	light_power = 2
-	light_range = 2
 
 /obj/item/projectile/meteor/Bump(atom/A as mob|obj|turf|area)
 	if(A == firer)
@@ -170,13 +168,13 @@
 	name ="rocket"
 	icon = 'tauceti/icons/obj/projectiles.dmi'
 	icon_state= "rocket"
+	light_color = "#ffffff"
+	light_power = 2
+	light_range = 2
 	damage = 20
 	flag = "bullet"
 	sharp = 0
 	edge = 0
-
-	light_power = 2
-	light_range = 2
 
 /obj/item/projectile/missile/on_hit(var/atom/target, var/blocked = 0)
 	explosion(target, 1,2,4,5)

@@ -46,9 +46,10 @@ var/list/solars_list = list()
 	solars_list.Remove(src)
 
 /obj/machinery/power/solar/connect_to_network(var/process)
-	..()
+	var/to_return = ..()
 	if(process)
 		solars_list.Add(src)
+	return to_return
 
 
 /obj/machinery/power/solar/proc/Make(var/obj/item/solar_assembly/S)
@@ -297,9 +298,10 @@ var/list/solars_list = list()
 	solars_list.Remove(src)
 
 /obj/machinery/power/solar_control/connect_to_network()
-	..()
+	var/to_return = ..()
 	if(powernet)
 		solars_list.Add(src)
+	return to_return
 
 /obj/machinery/power/solar_control/initialize()
 	..()
