@@ -924,7 +924,7 @@
 			log_admin("[key_name(usr)] booted [key_name(M)].")
 			message_admins("\blue [key_name_admin(usr)] booted [key_name_admin(M)].", 1)
 			//M.client = null
-			qdel(M.client)
+			del(M.client)
 /*
 	//Player Notes
 	else if(href_list["notes"])
@@ -990,7 +990,7 @@
 				log_admin("[usr.client.ckey] has banned [M.ckey].\nReason: [reason]\nThis will be removed in [mins] minutes.")
 				message_admins("\blue[usr.client.ckey] has banned [M.ckey].\nReason: [reason]\nThis will be removed in [mins] minutes.")
 
-				qdel(M.client)
+				del(M.client)
 				//del(M)	// See no reason why to delete mob. Important stuff can be lost. And ban can be lifted before round ends.
 			if("No")
 				if(!check_rights(R_BAN))   return
@@ -1015,7 +1015,7 @@
 				feedback_inc("ban_perma",1)
 				DB_ban_record(BANTYPE_PERMA, M, -1, reason)
 
-				qdel(M.client)
+				del(M.client)
 				//del(M)
 			if("Cancel")
 				return
@@ -2531,6 +2531,15 @@
 				if(!admin_log.len)
 					dat += "No-one has done anything this round!"
 				usr << browse(dat, "window=admin_log")
+			if("garbage_fail_log")
+				var/dat = "<B>Garbage Log<HR></B>"
+				if(garbage_collector)
+					if(garbage_collector.logging.len)
+						for(var/l in garbage_collector.logging)
+							dat += "<li>[l]</li>"
+					else
+						dat += "Empty."
+				usr << browse(dat, "window=garbage_fail_log")
 			if("maint_access_brig")
 				for(var/obj/machinery/door/airlock/maintenance/M in world)
 					if (access_maint_tunnels in M.req_access)

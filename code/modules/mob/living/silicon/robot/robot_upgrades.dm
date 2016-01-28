@@ -1,7 +1,7 @@
 // robot_upgrades.dm
 // Contains various borg upgrades.
 
-/obj/item/borg/upgrade/
+/obj/item/borg/upgrade
 	name = "A borg upgrade module."
 	desc = "Protected by FRM."
 	icon = 'icons/obj/module.dmi'
@@ -16,7 +16,7 @@
 	return
 
 
-/obj/item/borg/upgrade/reset/
+/obj/item/borg/upgrade/reset
 	name = "Borg module reset board"
 	desc = "Used to reset a borg's module. Destroys any other upgrades applied to the borg."
 	icon_state = "cyborg_upgrade1"

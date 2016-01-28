@@ -17,7 +17,7 @@
 
 /obj/screen/Destroy()
 	master = null
-	return ..()
+	..()
 
 /obj/screen/text
 	icon = null
@@ -591,8 +591,3 @@
 				usr.update_inv_r_hand(0)
 				usr.next_move = world.time+6
 	return 1
-
-/client/proc/reset_screen()
-	for(var/obj/screen/objects in src.screen)
-		qdel(objects)
-	src.screen = null

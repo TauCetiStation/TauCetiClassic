@@ -127,11 +127,13 @@ VOX HEIST ROUNDTYPE
 		raider.objectives = raid_objectives
 		greet_vox(raider)
 
+	for(var/atom/movable/AM in locate(/area/shuttle/vox/station))
+		heist_recursive_price_reset(AM)
+
 	spawn (rand(waittime_l, waittime_h))
 		send_intercept()
 
 /datum/game_mode/heist/proc/is_raider_crew_safe()
-
 	if(cortical_stacks.len == 0)
 		return 0
 
@@ -141,7 +143,6 @@ VOX HEIST ROUNDTYPE
 	return 1
 
 /datum/game_mode/heist/proc/is_raider_crew_alive()
-
 	for(var/datum/mind/raider in raiders)
 		if(raider.current)
 			if(istype(raider.current,/mob/living/carbon/human) && raider.current.stat != 2)
@@ -149,40 +150,10 @@ VOX HEIST ROUNDTYPE
 	return 0
 
 /datum/game_mode/heist/proc/forge_vox_objectives()
-
-	var/i = 1
-	//var/max_objectives = pick(2,2,2,2,3,3,3,4)
-	var/max_objectives = 3
-	var/cur_obj = 0
 	var/list/objs = list()
-	while(i<= max_objectives)
-		cur_obj++
-		var/datum/objective/heist/O
-		if(cur_obj == 1)
-			O = new /datum/objective/heist/kidnap()
-		if(cur_obj == 2)
-			O = new /datum/objective/heist/loot()
-		if(cur_obj == 3)
-			O = new /datum/objective/heist/salvage()
-		//var/list/goals = list("kidnap","loot","salvage")
-		//var/goal = pick(goals)
-		
-
-		//if(goal == "kidnap")
-		//	goals -= "kidnap"
-		//	O = new /datum/objective/heist/kidnap()
-		//else if(goal == "loot")
-		//	O = new /datum/objective/heist/loot()
-		//else
-		//	O = new /datum/objective/heist/salvage()
-		O.choose_target()
-		objs += O
-
-		i++
-
-	//-All- vox raids have these two objectives. Failing them loses the game.
-	//objs += new /datum/objective/heist/inviolate_crew
-	//objs += new /datum/objective/heist/inviolate_death
+	var/datum/objective/heist/O = new /datum/objective/heist/robbery()
+	O.choose_target()
+	objs += O
 
 	return objs
 
@@ -218,34 +189,22 @@ VOX HEIST ROUNDTYPE
 	//Set result by objectives.
 	if(success == raid_objectives.len)
 		win_type = "Major"
-		win_group = "Vox"
+		win_group = "Raider"
 	else if(success > 2)
 		win_type = "Minor"
-		win_group = "Vox"
+		win_group = "Raider"
 	else
 		win_type = "Minor"
 		win_group = "Crew"
 
-	//Now we modify that result by the state of the vox crew.
+	//Now we modify that result by the state of the pirate crew.
 	if(!is_raider_crew_alive())
-
 		win_type = "Major"
 		win_group = "Crew"
 		win_msg += "<B>The Raiders have been wiped out!</B>"
-
-	else if(!is_raider_crew_safe())
-
-		if(win_group == "Crew" && win_type == "Minor")
-			win_type = "Major"
-
-		win_group = "Crew"
-		//win_msg += "<B>The Raiders have left someone behind!</B>"
-
 	else
-
-		if(win_group == "Vox")
+		if(win_group == "Raider")
 			if(win_type == "Minor")
-
 				win_type = "Major"
 			win_msg += "<B>The Raiders escaped the station!</B>"
 		else
@@ -258,36 +217,58 @@ VOX HEIST ROUNDTYPE
 	var/count = 1
 	for(var/datum/objective/objective in raid_objectives)
 		if(objective.check_completion())
-			world << "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font>"
-			feedback_add_details("traitor_objective","[objective.type]|SUCCESS")
+			if(objective.target == "valuables")
+				world << "<br><B>Objective #[count]</B>: [objective.explanation_text] ([num2text(heist_rob_total,9)]/[num2text(objective.target_amount,9)]) <font color='green'><B>Success!</B></font>"
+				feedback_add_details("traitor_objective","[objective.type]|SUCCESS")
+			else
+				world << "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font>"
+				feedback_add_details("traitor_objective","[objective.type]|SUCCESS")
 		else
-			world << "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='red'>Fail.</font>"
-			feedback_add_details("traitor_objective","[objective.type]|FAIL")
+			if(objective.target == "valuables")
+				world << "<br><B>Objective #[count]</B>: [objective.explanation_text] ([num2text(heist_rob_total,9)]/[num2text(objective.target_amount,9)]) <font color='red'>Fail.</font>"
+				feedback_add_details("traitor_objective","[objective.type]|FAIL")
+			else
+				world << "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='red'>Fail.</font>"
+				feedback_add_details("traitor_objective","[objective.type]|FAIL")
 		count++
 
 	..()
 
 datum/game_mode/proc/auto_declare_completion_heist()
 	if(raiders.len)
-		var/check_return = 0
-		//if(ticker && istype(ticker.mode,/datum/game_mode/heist))
-		//	check_return = 1
-		var/text = "<FONT size = 2><B>The raiders were:</B></FONT>"
+		var/loot_savefile = "data/pirate_loot.sav" //loot statistics
+		var/savefile/S = new /savefile(loot_savefile)
+		if(S)
+			S.cd = "/"
+			var/max_score = heist_rob_total
+			var/sav_score
+			S["HeistMaxScore"] >> sav_score
+			sav_score = text2num(sav_score)
+			if(!sav_score)
+				sav_score = 0
+			if(max_score > sav_score)
+				S["HeistMaxScore"] << num2text(heist_rob_total,9)
+			for(var/atom/movable/AM in locate(/area/shuttle/vox/station))
+				if(AM.get_price())
+					var/count = 0
+					S["[AM.type]"] >> count
+					count++
+					S["[AM.type]"] << count
 
-		for(var/datum/mind/vox in raiders)
-			text += "<br>[vox.key] was [vox.name] ("
-			if(check_return)
-				var/obj/stack = raiders[vox]
-				if(get_area(stack) != locate(/area/shuttle/vox/station))
+		var/text = "<FONT size = 2><B>The raiders were:</B></FONT>"
+		for(var/datum/mind/raider in raiders)
+			text += "<br>[raider.key] was [raider.name] ("
+			if(raider.current)
+				var/area/A = get_area(raider.current)
+				if(!istype(A, /area/shuttle/vox/station))
 					text += "left behind)"
 					continue
-			if(vox.current)
-				if(vox.current.stat == DEAD)
+				else if(raider.current.stat == DEAD)
 					text += "died"
 				else
 					text += "survived"
-				if(vox.current.real_name != vox.name)
-					text += " as [vox.current.real_name]"
+				if(raider.current.real_name != raider.name)
+					text += " as [raider.current.real_name]"
 			else
 				text += "body destroyed"
 			text += ")"

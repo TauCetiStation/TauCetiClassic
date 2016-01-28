@@ -25,6 +25,11 @@
 		set_frequency(frequency)
 	return
 
+/obj/item/device/assembly/signaler/Destroy()
+	if(radio_controller)
+		radio_controller.remove_object(src,frequency)
+	frequency = 0
+	return ..()
 
 /obj/item/device/assembly/signaler/activate()
 	if(cooldown > 0)	return 0
@@ -157,6 +162,8 @@ Code:
 
 
 /obj/item/device/assembly/signaler/proc/set_frequency(new_frequency)
+	if(!frequency)
+		return
 	if(!radio_controller)
 		sleep(20)
 	if(!radio_controller)

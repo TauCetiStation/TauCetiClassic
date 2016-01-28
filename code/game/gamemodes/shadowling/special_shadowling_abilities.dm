@@ -33,7 +33,6 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 				new /obj/effect/alien/resin/wall/shadowling(F)
 			//for(var/obj/structure/alien/resin/wall/shadowling/R in shadowturf) //extremely hacky
 			for(var/obj/effect/alien/resin/wall/shadowling/R in shadowturf)
-				//qdel(R)
 				qdel(R)
 				//new /obj/structure/alien/weeds/node(shadowturf) //Dim lighting in the chrysalis -- removes itself with the chrysalis
 				new /obj/effect/alien/weeds/node(shadowturf)
