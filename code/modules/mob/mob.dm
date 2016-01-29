@@ -343,7 +343,7 @@
 	set name = "Changelog"
 	set category = "OOC"
 
-	usr << link("http://tauceti.ru/forums/index.php?topic=3551.msg75105#new")
+	usr << link("http://tauceti.ru/forums/index.php?topic=3551")
 
 /mob/verb/observe()
 	set name = "Observe"
