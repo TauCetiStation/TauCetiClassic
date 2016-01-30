@@ -21,19 +21,22 @@
 	heat_capacity = 312500 //a little over 5 cm thick , 312500 for 1 m by 2.5 m by 0.25 m plasteel wall
 
 	var/walltype = "metal"
-	var/obj/item/stack/sheet/builtin_sheet = null
 	var/sheet_type = /obj/item/stack/sheet/metal
 
 /turf/simulated/wall/New()
 	..()
-	builtin_sheet = new sheet_type
 
 /turf/simulated/wall/Destroy()
-	for(var/obj/effect/E in src) if(E.name == "Wallrot") qdel(E)
-	..()
+	for(var/obj/effect/E in src)
+		if(E.name == "Wallrot")
+			qdel(E)
+	dismantle_wall()
+	return ..()
 
 /turf/simulated/wall/ChangeTurf(var/newtype)
-	for(var/obj/effect/E in src) if(E.name == "Wallrot") qdel(E)
+	for(var/obj/effect/E in src)
+		if(E.name == "Wallrot")
+			qdel(E)
 	..(newtype)
 	relativewall_neighbours()
 
@@ -133,18 +136,17 @@
 		new /obj/effect/decal/cleanable/blood(src)
 		return (new /obj/structure/cultgirder(src))
 
-	builtin_sheet.amount = 2
-	builtin_sheet.loc = src
+	var/obj/item/stack/sheet/sheet = new sheet_type(src)
+	sheet.amount = 2
 	return (new /obj/structure/girder(src))
 
 /turf/simulated/wall/proc/devastate_wall()
 	if(istype(src, /turf/simulated/wall/cult))
 		new /obj/effect/decal/cleanable/blood(src)
 		new /obj/effect/decal/remains/human(src)
-	return
 
-	builtin_sheet.amount = 2
-	builtin_sheet.loc = src
+	var/obj/item/stack/sheet/sheet = new sheet_type(src)
+	sheet.amount = 2
 	new /obj/item/stack/sheet/metal(src)
 
 /turf/simulated/wall/ex_act(severity)

@@ -36,6 +36,8 @@
 	var/reagent_tag                 //Used for metabolizing reagents.
 
 	var/darksight = 2
+	var/nighteyes = 0
+	var/sightglassesmod = 0
 	var/hazard_high_pressure = HAZARD_HIGH_PRESSURE   // Dangerously high pressure.
 	var/warning_high_pressure = WARNING_HIGH_PRESSURE // High pressure warning.
 	var/warning_low_pressure = WARNING_LOW_PRESSURE   // Low pressure warning.
@@ -173,6 +175,7 @@
 	tail = "tajtail"
 	unarmed_type = /datum/unarmed_attack/claws
 	darksight = 8
+	nighteyes = 1
 
 	cold_level_1 = 200 //Default 260
 	cold_level_2 = 140 //Default 200

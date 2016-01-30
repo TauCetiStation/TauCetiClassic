@@ -11,7 +11,7 @@
 	max_combined_w_class = 20
 
 	var/obj/item/weapon/tank/tank = null                // Tank of gas for use in firing the cannon.
-	var/obj/item/weapon/storage/tank_container = new()  // Something to hold the tank item so we don't accidentally fire it.
+	var/obj/item/weapon/storage/tank_container          // Something to hold the tank item so we don't accidentally fire it.
 	var/pressure_setting = 10                           // Percentage of the gas in the tank used to fire the projectile.
 	var/possible_pressure_amounts = list(5,10,20,25,50) // Possible pressure settings.
 	var/minimum_tank_pressure = 10                      // Minimum pressure to fire the gun.
@@ -22,6 +22,7 @@
 	                                                    // analyzer with a force_divisor of 10 hit with a damage multiplier of 3000+.
 /obj/item/weapon/storage/pneumatic/New()
 	..()
+	tank_container = new(src)
 	tank_container.tag = "gas_tank_holder"
 
 /obj/item/weapon/storage/pneumatic/verb/set_pressure() //set amount of tank pressure.
@@ -52,7 +53,7 @@
 
 /obj/item/weapon/storage/pneumatic/attackby(obj/item/W as obj, mob/user as mob)
 	if(!tank && istype(W,/obj/item/weapon/tank))
-		user.remove_from_mob()
+		user.remove_from_mob(W)
 		tank = W
 		tank.loc = src.tank_container
 		user.visible_message("[user] jams [W] into [src]'s valve and twists it closed.","You jam [W] into [src]'s valve and twist it closed.")

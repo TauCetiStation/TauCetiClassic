@@ -316,16 +316,16 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/glowberries/Destroy()
 	if(istype(loc,/mob))
-		loc.set_light(round(loc.luminosity - potency/5,1))
+		loc.set_light(0)
 	..()
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/glowberries/pickup(mob/user)
 	src.set_light(0)
-	user.set_light(round(user.luminosity + (potency/5),1))
+	user.set_light(2,1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/glowberries/dropped(mob/user)
-	user.set_light(round(user.luminosity - (potency/5),1))
-	src.set_light(round(potency/5,1))
+	user.set_light(0)
+	src.set_light(2,1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/cocoapod
 	seed = "/obj/item/seeds/cocoapodseed"

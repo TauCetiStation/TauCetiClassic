@@ -106,7 +106,6 @@
 				var/obj/item/stack/S = O
 				if(!isnull(stack_storage[S.name]))
 					stack_storage[S.name] += S.amount
-					S.loc = null
 					qdel(S)
 				else
 					S.loc = output.loc

@@ -1589,6 +1589,7 @@
 #include "tauceti\modules\_adminverbs\fun_verbs.dm"
 #include "tauceti\modules\_adminverbs\library.dm"
 #include "tauceti\modules\_anomaly\anomalies.dm"
+#include "tauceti\modules\_anomaly\anomaly.dm"
 #include "tauceti\modules\_anomaly\anomaly_bluespace.dm"
 #include "tauceti\modules\_anomaly\anomaly_flux.dm"
 #include "tauceti\modules\_anomaly\anomaly_frost.dm"

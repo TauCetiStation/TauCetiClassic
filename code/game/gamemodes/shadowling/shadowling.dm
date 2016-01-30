@@ -77,6 +77,9 @@ Made by Xhuis
 	restricted_jobs = list("AI", "Cyborg")
 	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain")
 
+	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
+	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
+
 /datum/game_mode/shadowling/announce()
 	world << "<b>The current game mode is - Shadowling!</b>"
 	world << "<b>There are alien <span class='userdanger'>shadowlings</span> on the station. Crew: Kill the shadowlings before they can eat or enthrall the crew. Shadowlings: Enthrall the crew while remaining in hiding.</b>"
@@ -119,6 +122,10 @@ Made by Xhuis
 		process_shadow_objectives(shadow)
 		update_shadows_icons_added(shadow)
 		//give_shadowling_abilities(shadow)
+
+	spawn (rand(waittime_l, waittime_h))
+		send_intercept()
+
 	..()
 	return
 

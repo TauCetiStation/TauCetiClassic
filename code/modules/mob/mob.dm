@@ -18,6 +18,8 @@
 	..()
 */
 /mob/New()
+	spawn()
+		if(client) animate(client, color = null, time = 0)
 	mob_list += src
 	if(stat == DEAD)
 		dead_mob_list += src
@@ -341,7 +343,7 @@
 	set name = "Changelog"
 	set category = "OOC"
 
-	usr << link("http://tauceti.ru/forums/index.php?topic=3551.msg75105#new")
+	usr << link("http://tauceti.ru/forums/index.php?topic=3551")
 
 /mob/verb/observe()
 	set name = "Observe"
@@ -675,7 +677,6 @@ note dizziness decrements automatically in the mob's Life() proc.
 					statpanel(S.panel,"[S.charge_counter]/[S.charge_max]",S)
 				if("holdervar")
 					statpanel(S.panel,"[S.holder_var_type] [S.holder_var_amount]",S)
-	sleep(2) //Prevent updating the stat panel for the next .2 seconds, prevents clientside latency from updates
 
 /mob/proc/add_stings_to_statpanel(var/list/stings)
 	for(var/obj/effect/proc_holder/changeling/S in stings)
@@ -984,3 +985,18 @@ mob/proc/yank_out_object()
 	if(isliving(src))
 		spell.action.Grant(src)
 	return
+
+/mob/proc/set_EyesVision(preset = null, transition_time = 5)
+	if(!client) return
+	if(ishuman(src) && druggy)
+		var/datum/ColorMatrix/DruggyMatrix = new(pick("bgr_d","brg_d","gbr_d","grb_d","rbg_d","rgb_d"))
+		var/multiplied
+		if(preset)
+			var/datum/ColorMatrix/CM = new(preset)
+			multiplied = matrixMultiply(DruggyMatrix.matrix, CM.matrix)
+		animate(client, color = multiplied ? multiplied : DruggyMatrix.matrix, time = 40)
+	else if(preset)
+		var/datum/ColorMatrix/CM = new(preset)
+		animate(client, color = CM.matrix, time = transition_time)
+	else
+		animate(client, color = null, time = transition_time)

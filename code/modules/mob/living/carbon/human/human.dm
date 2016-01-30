@@ -1240,7 +1240,7 @@
 	.=..()
 	if(clean_feet && !shoes && istype(feet_blood_DNA, /list) && feet_blood_DNA.len)
 		feet_blood_color = null
-		qdel(feet_blood_DNA)
+		feet_blood_DNA = null
 		update_inv_shoes(1)
 		return 1
 
@@ -1442,6 +1442,7 @@
 				src << "<span class='danger'>Ouch!</span>"
 				return
 			layer = 4.0
+		crawl_getup = 0
 	else
 		if( (locate(/obj/structure/table) in T) || (locate(/obj/structure/stool/bed) in T) )
 			src << "<span class='notice'>You can't crawl here!</span>"

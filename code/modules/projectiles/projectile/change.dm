@@ -1,18 +1,16 @@
 /obj/item/projectile/change
 	name = "bolt of change"
 	icon_state = "ice_1"
+	light_color = "#00bfff"
+	light_power = 2
+	light_range = 2
 	damage = 0
 	damage_type = BURN
 	nodamage = 1
 	flag = "energy"
 
-	light_color = "#00BFFF"
-	light_power = 2
-	light_range = 2
-
 	on_hit(var/atom/change)
 		wabbajack(change)
-
 
 /obj/item/projectile/change/proc/wabbajack (mob/M as mob in living_mob_list)
 	if(istype(M, /mob/living) && M.stat != DEAD)

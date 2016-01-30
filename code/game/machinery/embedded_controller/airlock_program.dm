@@ -36,7 +36,9 @@
 	memory["purge"] = 0
 	memory["secure"] = 0
 
-
+/datum/computer/file/embedded_program/Destroy()
+	master = null
+	return ..()
 
 
 /datum/computer/file/embedded_program/proc/receive_signal(datum/signal/signal, receive_method, receive_param)

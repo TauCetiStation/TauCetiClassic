@@ -14,7 +14,7 @@
 	status_flags = GODMODE  // You can't damage it.
 	see_in_dark = 7
 	invisibility = INVISIBILITY_AI_EYE
-	var/ghostimage = null
+	var/image/ghostimage = null
 
 /mob/aiEye/New()
 	ghostimage = image(src.icon,src,src.icon_state)
@@ -28,9 +28,9 @@
 		ghost_darkness_images -= ghostimage
 		ghost_sightless_images -= ghostimage
 		qdel(ghostimage)
-		ghostimage = null;
+		ghostimage = null
 		updateallghostimages()
-	..()
+	return ..()
 
 // Movement code. Returns 0 to stop air movement from moving it.
 /mob/aiEye/Move()
@@ -95,9 +95,11 @@
 		eyeobj.loc = src.loc
 
 /mob/living/silicon/ai/Destroy()
-	eyeobj.ai = null
-	qdel(eyeobj) // No AI, no Eye
-	..()
+	if(eyeobj)
+		eyeobj.ai = null
+		qdel(eyeobj) // No AI, no Eye
+		eyeobj = null
+	return ..()
 
 /atom/proc/move_camera_by_click()
 	if(istype(usr, /mob/living/silicon/ai))

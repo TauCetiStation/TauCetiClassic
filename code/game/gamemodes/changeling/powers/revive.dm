@@ -16,14 +16,6 @@
 	user.tod = null
 	user.timeofdeath = 0
 	user.reagents.clear_reagents()
-/*	user.setToxLoss(0)
-	user.setOxyLoss(0)
-	user.setCloneLoss(0)
-	user.SetParalysis(0)
-	user.SetStunned(0)
-	user.SetWeakened(0)
-	user.radiation = 0
-	user.heal_overall_damage(user.getBruteLoss(), user.getFireLoss()) */
 	user.rejuvenate()
 	user << "<span class='notice'>We have regenerated.</span>"
 	//user.status_flags &= ~(FAKEDEATH)

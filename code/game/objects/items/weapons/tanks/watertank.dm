@@ -124,7 +124,7 @@
 
 /obj/item/weapon/reagent_containers/spray/mister/New(parent_tank)
 	..()
-	if(check_tank_exists(parent_tank, src))
+	if(check_tank_exists(parent_tank))
 		tank = parent_tank
 		reagents = tank.reagents	//This mister is really just a proxy for the tank's reagents
 		loc = tank
@@ -140,10 +140,12 @@
 /obj/item/weapon/reagent_containers/spray/mister/attack_self()
 	return
 
-/proc/check_tank_exists(parent_tank, mob/living/carbon/human/M, obj/O)
+/obj/item/weapon/reagent_containers/spray/mister/proc/check_tank_exists(parent_tank)
 	if (!parent_tank || !istype(parent_tank, /obj/item/weapon/watertank))	//To avoid weird issues from admin spawns
-		M.unEquip(O)
-		qdel(0)
+		if(ismob(loc))
+			var/mob/M = loc
+			M.unEquip(src)
+		qdel(src)
 		return 0
 	else
 		return 1

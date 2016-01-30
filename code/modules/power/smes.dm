@@ -45,6 +45,15 @@
 		updateicon()
 	return
 
+/obj/machinery/power/smes/Destroy()
+	if(terminal)
+		disconnect_terminal()
+	return ..()
+
+/obj/machinery/power/smes/disconnect_terminal()
+	if(terminal)
+		terminal.master = null
+		terminal = null
 
 /obj/machinery/power/smes/proc/updateicon()
 	overlays.Cut()

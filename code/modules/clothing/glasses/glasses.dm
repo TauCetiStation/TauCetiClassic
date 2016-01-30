@@ -39,6 +39,19 @@
 //	darkness_view = 3
 //	vision_flags = SEE_SELF
 	darkness_view = 7
+	action_button_name = "Toggle Night Vision"
+	var/on = 0
+
+/obj/item/clothing/glasses/night/attack_self()
+	toggle_nvg()
+
+/obj/item/clothing/glasses/night/proc/toggle_nvg()
+	if(ishuman(usr))
+		var/mob/living/carbon/human/H = usr
+		on = !on
+		if(on)
+			playsound(src.loc, 'sound/effects/nvg_on.ogg', 50, 1)
+		H.handle_vision()
 
 /obj/item/clothing/glasses/eyepatch
 	name = "eyepatch"
