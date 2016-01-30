@@ -26,6 +26,7 @@
 /obj/structure/Destroy()
 	if(ticker)
 		cameranet.updateVisibility(src)
+	climbers = null
 	return ..()
 
 /obj/structure/New()
