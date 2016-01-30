@@ -215,8 +215,17 @@ Implants;
 	var/list/suspects = list()
 	for(var/mob/living/carbon/human/man in player_list) if(man.client && man.mind)
 		// NT relation option
+		var/list/invisible_roles = list("Wizard",
+										"Ninja",
+										"Syndicate",
+										"Vox Raider",
+										"Raider",
+										"Abductor scientist",
+										"Abductor agent",
+										"Meme"
+										)
 		var/special_role = man.mind.special_role
-		if (special_role == ("Wizard" || "Ninja" || "Syndicate" || "Vox Raider" || "Raider" || "Abductor" || "Meme"))
+		if (special_role in invisible_roles)
 			continue	//NT intelligence ruled out possiblity that those are too classy to pretend to be a crew.
 		for(var/spec_role in gang_name_pool)
 			if (special_role == "[spec_role] Gang (A) Boss")
