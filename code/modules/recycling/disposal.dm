@@ -5,7 +5,8 @@
 // Automatically recharges air (unless off), will flush when ready if pre-set
 // Can hold items and human size things, no other draggables
 // Toilets are a type of disposal bin for small objects only and work on magic. By magic, I mean torque rotation
-#define SEND_PRESSURE 0.05*ONE_ATMOSPHERE
+#define SEND_PRESSURE (700 + ONE_ATMOSPHERE) //kPa - assume the inside of a dispoal pipe is 1 atm, so that needs to be added.
+#define PRESSURE_TANK_VOLUME 150	//L
 
 /obj/machinery/disposal
 	name = "disposal unit"
@@ -37,15 +38,14 @@
 		else
 			trunk.linked = src	// link the pipe trunk to self
 
-		air_contents = new/datum/gas_mixture()
-		//gas.volume = 1.05 * CELLSTANDARD
+		air_contents = new/datum/gas_mixture(PRESSURE_TANK_VOLUME)
 		update()
 
 /obj/machinery/disposal/Destroy()
 	eject()
 	if(trunk)
 		trunk.linked = null
-	..()
+	return ..()
 
 	// attack by item places it in to disposal
 /obj/machinery/disposal/attackby(var/obj/item/I, var/mob/user)
@@ -140,12 +140,17 @@
 
 	update()
 
-	// mouse drop another mob or self
-	//
+// mouse drop another mob or self
+//
 /obj/machinery/disposal/proc/MouseDrop_T2(mob/target, mob/user)
-	if (!istype(target) || target.buckled || get_dist(user, src) > 1 || get_dist(user, target) > 1 || user.stat || istype(user, /mob/living/silicon/ai))
+	if(user.stat || !user.canmove || !istype(target))
 		return
-	if(isanimal(user) && target != user) return //animals cannot put mobs other than themselves into disposal
+	if(target.buckled || get_dist(user, src) > 1 || get_dist(user, target) > 1)
+		return
+	//animals cannot put mobs other than themselves into disposal
+	if(isanimal(user) && target != user)
+		return
+
 	src.add_fingerprint(user)
 	var/target_loc = target.loc
 	var/msg
@@ -457,7 +462,6 @@
 		H.tomail = 1
 
 
-	air_contents = new()		// new empty gas resv.
 
 	sleep(10)
 	if(last_sound < world.time + 1)
@@ -466,7 +470,8 @@
 	sleep(5) // wait for animation to finish
 
 
-	H.init(src)	// copy the contents of disposer to holder
+	H.init(src, air_contents)	// copy the contents of disposer to holder
+	air_contents = new(PRESSURE_TANK_VOLUME)	// new empty gas resv.
 
 	H.start(src) // start the holder processing movement
 	flushing = 0
@@ -542,11 +547,11 @@
 /obj/structure/disposalholder/Destroy()
 	qdel(gas)
 	active = 0
-	..()
+	return ..()
 
-	// initialize a holder from the contents of a disposal unit
-/obj/structure/disposalholder/proc/init(var/obj/machinery/disposal/D)
-	gas = D.air_contents// transfer gas resv. into holder object
+// initialize a holder from the contents of a disposal unit
+/obj/structure/disposalholder/proc/init(var/obj/machinery/disposal/D, var/datum/gas_mixture/flush_gas)
+	gas = flush_gas	// transfer gas resv. into holder object -- let's be explicit about the data this proc consumes, please.
 
 	//Check for any living mobs trigger hasmob.
 	//hasmob effects whether the package goes to cargo or its tagged destination.
@@ -601,6 +606,9 @@
 /obj/structure/disposalholder/proc/move()
 	var/obj/structure/disposalpipe/last
 	while(active)
+		sleep(1)		// was 1
+		if(!loc) return // check if we got GC'd
+
 		if(hasmob && prob(3))
 			for(var/mob/living/H in src)
 				if(!istype(H,/mob/living/silicon/robot/drone)) //Drones use the mailing code to move through the disposal system,
@@ -800,12 +808,16 @@
 //
 
 /obj/structure/disposalpipe/proc/expel(var/obj/structure/disposalholder/H, var/turf/T, var/direction)
+	if(!istype(H))
+		return
 
-	var/turf/target
-
-	if(T.density)		// dense ouput turf, so stop holder
-		H.active = 0
-		H.loc = src
+	// Empty the holder if it is expelled into a dense turf.
+	// Leaving it intact and sitting in a wall is stupid.
+	if(T.density)
+		for(var/atom/movable/AM in H)
+			AM.loc = T
+			AM.pipe_eject(0)
+		qdel(H)
 		return
 	if(T.intact && istype(T,/turf/simulated/floor)) //intact floor, pop the tile
 		var/turf/simulated/floor/F = T
@@ -816,6 +828,7 @@
 		new /obj/item/stack/tile(H)	// add to holder so it will be thrown with other stuff
 		F.icon_state = "Floor[F.burnt ? "1" : ""]"
 
+	var/turf/target
 	if(direction)		// direction is specified
 		if(istype(T, /turf/space)) // if ended in space, then range is unlimited
 			target = get_edge_target_turf(T, direction)
