@@ -938,8 +938,6 @@
 		if(W.remove_fuel(0,user))
 			playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
 			// check if anything changed over 2 seconds
-			var/turf/uloc = user.loc
-			var/atom/wloc = W.loc
 			user << "You start slice the disposal pipe."
 			if(do_after(user, 30, target = src))
 				if(!W.isOn()) return
@@ -1391,8 +1389,6 @@
 		if(W.remove_fuel(0,user))
 			playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
 			// check if anything changed over 2 seconds
-			var/turf/uloc = user.loc
-			var/atom/wloc = W.loc
 			user << "You start slicing the disposal pipe."
 			if(do_after(user, 30, target = src))
 				if(!W.isOn()) return
