@@ -168,6 +168,7 @@ var/list/ai_verbs_default = list(
 	return
 
 /mob/living/silicon/ai/Destroy()
+	connected_robots.Cut()
 	ai_list -= src
 	qdel(eyeobj)
 	return ..()
