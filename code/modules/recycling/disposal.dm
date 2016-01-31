@@ -938,9 +938,10 @@
 		if(W.remove_fuel(0,user))
 			playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
 			// check if anything changed over 2 seconds
-			user << "You start slice the disposal pipe."
+			user << "You start slicing the disposal pipe."
 			if(do_after(user, 30, target = src))
 				if(!W.isOn()) return
+				user << "<span class='notice'>You sliced the disposal pipe.</span>"
 				welded()
 			else
 				user << "<span class='warning'>You must stay still while welding the pipe.</span>"
@@ -1392,6 +1393,7 @@
 			user << "You start slicing the disposal pipe."
 			if(do_after(user, 30, target = src))
 				if(!W.isOn()) return
+				user << "<span class='notice'>You sliced the disposal pipe.</span>"
 				welded()
 			else
 				user << "<span class='warning'>You must stay still while welding the pipe.</span>"
