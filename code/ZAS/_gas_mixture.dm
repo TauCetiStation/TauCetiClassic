@@ -73,6 +73,9 @@ What are the archived variables for?
 
 	var/reacting = 0
 
+/datum/gas_mixture/New(vol = CELL_VOLUME)
+	volume = vol
+
 //FOR THE LOVE OF GOD PLEASE USE THIS PROC
 //Call it with negative numbers to remove gases.
 
