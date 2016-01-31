@@ -71,7 +71,8 @@ h1.alert, h2.alert		{color: #000000;}
 .reallybig				{font-size: 4;}
 
 .shadowling				{color: #3b2769;}
-.cult					{color: #800080; font-weight: bold; font-style: italic;}
+.abductor				{color: #800080;	font-style: italic;}
+.cult					{color: #800080;	font-weight: bold; font-style: italic;}
 .alien					{color: #543354;}
 
 /* Admin: Channels */

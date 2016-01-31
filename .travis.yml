@@ -3,7 +3,7 @@ language: c
 
 env:
   BYOND_MAJOR="509"
-  BYOND_MINOR="1315"
+  BYOND_MINOR="1319"
 
 before_install:
   - sudo apt-get update -qq
