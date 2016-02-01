@@ -87,28 +87,43 @@ var/global/raider_tick = 1
 /obj/item/projectile/bullet/weakbullet/nl_rifle
 	stutter = 10
 	agony = 120
+	hitscan = 1
 	//stoping_power = 5
+	muzzle_type = /obj/effect/projectile/bullet/muzzle
+	tracer_type = /obj/effect/projectile/bullet/tracer
+	impact_type = /obj/effect/projectile/bullet/impact
 
 /obj/item/projectile/bullet/weakbullet/nl_rifle/on_hit(var/atom/target, var/blocked = 0)
 	if(issilicon(target))
 		var/mob/living/silicon/S = target
 		if(prob(10))
-			S.take_organ_damage(40)//+20=60
+			S.take_organ_damage(75)//+20=95
 			S.emp_act(1)
 		else
-			S.take_organ_damage(20)//+10=30
+			S.take_organ_damage(45)//+10=55
 			S.emp_act(2)
+	else if(istype(target,/obj/mecha))
+		var/obj/mecha/M = target
+		M.take_damage(75)
 	..()
 
 /obj/item/projectile/bullet/weakbullet/nl_pistol
 	stutter = 10
 	agony = 80
+	hitscan = 1
+
+	muzzle_type = /obj/effect/projectile/bullet/muzzle
+	tracer_type = /obj/effect/projectile/bullet/tracer
+	impact_type = /obj/effect/projectile/bullet/impact
 
 /obj/item/projectile/bullet/weakbullet/nl_pistol/on_hit(var/atom/target, var/blocked = 0)
 	if(issilicon(target))
 		var/mob/living/silicon/S = target
-		S.take_organ_damage(20)//+10=30
+		S.take_organ_damage(45)//+10=55
 		S.emp_act(2)
+	else if(istype(target,/obj/mecha))
+		var/obj/mecha/M = target
+		M.take_damage(45)
 	..()
 
 /obj/item/weapon/storage/backpack/santabag/pirate
