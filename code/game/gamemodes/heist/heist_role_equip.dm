@@ -14,6 +14,7 @@ var/global/raider_tick = 1
 			equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/pirate(src), slot_head)
 			equip_to_slot_or_del(new /obj/item/clothing/glasses/thermal/eyepatch(src), slot_glasses)
 			equip_to_slot_or_del(new /obj/item/weapon/melee/energy/sword/pirate(src), slot_r_hand)
+			equip_to_slot_or_del(new /obj/item/weapon/extraction_pack(src), slot_l_hand)
 		if(2) // Piretezzz
 			equip_to_slot_or_del(new /obj/item/clothing/under/pirate(src), slot_w_uniform)
 			equip_to_slot_or_del(new /obj/item/clothing/shoes/brown(src), slot_shoes)
@@ -133,7 +134,7 @@ var/global/raider_tick = 1
 
 /obj/item/weapon/grenade/monsternade
 	name = "pocketnade"
-	desc = "<span class='danger'>Warning: use with extreme caution!</span>"
+	desc = "<span class='danger'>Warning:</span> use with extreme caution! Contains various hostile creatures which will hunt anyone on sight and you are not an exception!"
 	icon_state = "pocketnade"
 	item_state = "flashbang"
 	origin_tech = "materials=2;combat=1"
