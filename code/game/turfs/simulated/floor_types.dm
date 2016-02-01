@@ -16,10 +16,9 @@
 	name = "Light floor"
 	light_range = 5
 	icon_state = "light_on"
-	floor_tile = new/obj/item/stack/tile/light
+	floor_type = /obj/item/stack/tile/light
 
 	New()
-		floor_tile.New() //I guess New() isn't run on objects spawned without the definition of a turf to house them, ah well.
 		var/n = name //just in case commands rename it in the ..() call
 		..()
 		spawn(4)
@@ -32,7 +31,7 @@
 /turf/simulated/floor/wood
 	name = "floor"
 	icon_state = "wood"
-	floor_tile = new/obj/item/stack/tile/wood
+	floor_type = /obj/item/stack/tile/wood
 
 /turf/simulated/floor/vault
 	icon_state = "rockvault"
@@ -96,7 +95,7 @@
 /turf/simulated/floor/plating
 	name = "plating"
 	icon_state = "plating"
-	floor_tile = null
+	floor_type = null
 	intact = 0
 
 /turf/simulated/floor/plating/airless
@@ -177,10 +176,9 @@
 /turf/simulated/floor/grass
 	name = "Grass patch"
 	icon_state = "grass1"
-	floor_tile = new/obj/item/stack/tile/grass
+	floor_type = /obj/item/stack/tile/grass
 
 	New()
-		floor_tile.New() //I guess New() isn't ran on objects spawned without the definition of a turf to house them, ah well.
 		icon_state = "grass[pick("1","2","3","4")]"
 		..()
 		spawn(4)
@@ -194,10 +192,9 @@
 /turf/simulated/floor/carpet
 	name = "Carpet"
 	icon_state = "carpet"
-	floor_tile = new/obj/item/stack/tile/carpet
+	floor_type = /obj/item/stack/tile/carpet
 
 	New()
-		floor_tile.New() //I guess New() isn't ran on objects spawned without the definition of a turf to house them, ah well.
 		if(!icon_state)
 			icon_state = "carpet"
 		..()

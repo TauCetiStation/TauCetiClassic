@@ -12,17 +12,10 @@
 
 	muzzle_type = /obj/effect/projectile/bullet/muzzle
 
-	e_color = "#F2F5A9"
-	e_range = 3
-
 	on_hit(var/atom/target, var/blocked = 0)
 		if (..(target, blocked))
 			var/mob/living/L = target
 			shake_camera(L, 3, 2)
-
-/obj/item/projectile/bullet/first_move()
-	if(e_color)
-		new /obj/effect/projectile_effect(loc,e_range,e_power,e_color)
 
 /obj/item/projectile/bullet/weakbullet // "rubber" bullets
 	damage = 10
@@ -129,7 +122,10 @@
 	name ="projectile"
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "l10"
-	layer = 11
+	layer = 20
+	light_color = "#2be4b8"
+	light_power = 2
+	light_range = 2
 	damage = 15
 	damage_type = BURN
 	flag = "energy"
@@ -138,7 +134,3 @@
 	edge = 0
 
 	muzzle_type = /obj/effect/projectile/energy/muzzle
-
-	light_color = "#2BE4B8"
-	light_power = 2
-	light_range = 2

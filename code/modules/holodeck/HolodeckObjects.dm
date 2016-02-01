@@ -6,7 +6,7 @@
 /turf/simulated/floor/holofloor/grass
 	name = "Lush Grass"
 	icon_state = "grass1"
-	floor_tile = /obj/item/stack/tile/grass
+	floor_type = /obj/item/stack/tile/grass
 
 	New()
 		icon_state = "grass[pick("1","2","3","4")]"

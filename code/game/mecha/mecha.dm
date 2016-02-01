@@ -1218,6 +1218,9 @@
 	if(istype(I, /obj/item/device/pda))
 		var/obj/item/device/pda/pda = I
 		I = pda.id
+	if(istype(I, /obj/item/weapon/storage/wallet))
+		var/obj/item/weapon/storage/wallet/wallet = I
+		I = wallet.GetID()
 	if(!istype(I) || !I.access) //not ID or no access
 		return 0
 	if(access_list==src.operation_req_access)

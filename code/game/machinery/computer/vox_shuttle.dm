@@ -79,26 +79,27 @@ var/global/announce_vox_departure = 0 //Stealth systems - give an announcement o
 	return attack_hand(user)
 
 /obj/machinery/computer/vox_station/attack_ai(mob/user as mob)
-	return attack_hand(user)
+	user << "<span class='red'><b>W�r#nING</b>: #%@!!WȆ|_4�54@ \nUn�B88l3 T� L�-�o-L�CaT2 ##$!�RN�0..%..</span>" //Totally not stolen from ninja.
+	return
 
 /obj/machinery/computer/vox_station/attack_paw(mob/user as mob)
 	return attack_hand(user)
 
 /obj/machinery/computer/vox_station/attack_hand(mob/user as mob)
 	if(!allowed(user))
-		user << "\red Access Denied"
+		user << "<span class='red'>Access Denied.</span>"
 		return
 
 	user.set_machine(src)
 
 	var/dat = {"Location: [curr_location]<br>
 	Ready to move[max(lastMove + VOX_SHUTTLE_COOLDOWN - world.time, 0) ? " in [max(round((lastMove + VOX_SHUTTLE_COOLDOWN - world.time) * 0.1), 0)] seconds" : ": now"]<br>
-	<a href='?src=\ref[src];start=1'>Return to dark space</a><br>
-	<a href='?src=\ref[src];solars_fore_port=1'>Fore port solar</a> |
-	<a href='?src=\ref[src];solars_aft_port=1'>Aft port solar</a> |
-	<a href='?src=\ref[src];solars_fore_starboard=1'>Fore starboard solar</a><br>
-	<a href='?src=\ref[src];solars_aft_starboard=1'>Aft starboard solar</a> |
-	<a href='?src=\ref[src];mining=1'>Mining Asteroid</a><br>
+	<a href='?src=\ref[src];start=1'>Return to dark space</a><br><br>
+	<a href='?src=\ref[src];solars_fore_port=1'>North-west solar port</a> |
+	<a href='?src=\ref[src];solars_fore_starboard=1'>North-east starboard</a><br>
+	<a href='?src=\ref[src];solars_aft_port=1'>South-west solar port</a> |
+	<a href='?src=\ref[src];solars_aft_starboard=1'>South-east starboard</a><br>
+	<a href='?src=\ref[src];mining=1'>Mining Asteroid</a><br><br>
 	<a href='?src=\ref[user];mach_close=computer'>Close</a>"}
 
 	user << browse(dat, "window=computer;size=575x450")
@@ -117,7 +118,7 @@ var/global/announce_vox_departure = 0 //Stealth systems - give an announcement o
 	if(href_list["start"])
 		if(ticker && (istype(ticker.mode,/datum/game_mode/heist)))
 			if(!warning)
-				user << "\red Returning to dark space will end your raid and report your success or failure. If you are sure, press the button again."
+				user << "<span class='red'>Returning to dark space will end your raid and report your success or failure. If you are sure, press the button again.</span>"
 				warning = 1
 				return
 		vox_move_to(/area/shuttle/vox/station)

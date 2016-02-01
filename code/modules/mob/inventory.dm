@@ -5,7 +5,7 @@
 		if (istype(W, /obj/item/clothing))
 			var/obj/item/clothing/C = W
 			if(C.rig_restrict_helmet)
-				src << "<span class='rose'>You must fasten the helmet to a hardsuit first. (Target the head)</span>" // Stop eva helms equipping.
+				src << "<span class='red'>You must fasten the helmet to a hardsuit first. (Target the head)</span>" // Stop eva helms equipping.
 			else
 				if(C.equip_time > 0)
 					delay_clothing_equip_to_slot_if_possible(C, slot)
@@ -33,7 +33,7 @@
 			qdel(W)
 		else
 			if(!disable_warning)
-				src << "<span class='rose'>You are unable to equip that.</span>" //Only print if del_on_fail is false
+				src << "<span class='red'>You are unable to equip that.</span>" //Only print if del_on_fail is false
 		return 0
 
 	equip_to_slot(W, slot, redraw_mob) //This proc should not ever fail.
@@ -103,6 +103,7 @@ var/list/slot_equipment_priority = list( \
 		W.loc = src		//TODO: move to equipped?
 		l_hand = W
 		W.layer = 20	//TODO: move to equipped?
+		W.appearance_flags = APPEARANCE_UI
 //		l_hand.screen_loc = ui_lhand
 		W.equipped(src,slot_l_hand)
 		if(client)	client.screen |= W
@@ -122,6 +123,7 @@ var/list/slot_equipment_priority = list( \
 		W.loc = src
 		r_hand = W
 		W.layer = 20
+		W.appearance_flags = APPEARANCE_UI
 //		r_hand.screen_loc = ui_rhand
 		W.equipped(src,slot_r_hand)
 		if(client)	client.screen |= W
@@ -158,6 +160,7 @@ var/list/slot_equipment_priority = list( \
 	else
 		W.forceMove(get_turf(src))
 		W.layer = initial(W.layer)
+		W.appearance_flags = 0
 		W.dropped()
 		return 0
 
@@ -232,6 +235,7 @@ var/list/slot_equipment_priority = list( \
 	if (src.client)
 		src.client.screen -= O
 	O.layer = initial(O.layer)
+	O.appearance_flags = 0
 	O.screen_loc = null
 	if(istype(O, /obj/item))
 		var/obj/item/I = O
@@ -279,7 +283,7 @@ var/list/slot_equipment_priority = list( \
 	for(i=1; i<=equip_time; i++)
 		sleep (10) // Check if they've moved every 10 time units
 		if ((tempX != usr.x) || (tempY != usr.y))
-			src << "<span class='rose'>\The [C] is too fiddly to unequip whilst moving.</span>"
+			src << "<span class='red'>\The [C] is too fiddly to unequip whilst moving.</span>"
 			C.equipping = 0
 			return 0
 	remove_from_mob(C)
@@ -292,7 +296,7 @@ var/list/slot_equipment_priority = list( \
 	if(ishuman(usr))
 		var/mob/living/carbon/human/H = usr
 		if(H.wear_suit)
-			H << "<span class='rose'>You need to take off [H.wear_suit.name] first.</span>"
+			H << "<span class='red'>You need to take off [H.wear_suit.name] first.</span>"
 			return
 
 	if(C.equipping) return 0 // Item is already being equipped
@@ -306,7 +310,7 @@ var/list/slot_equipment_priority = list( \
 	for(i=1; i<=equip_time; i++)
 		sleep (10) // Check if they've moved every 10 time units
 		if ((tempX != usr.x) || (tempY != usr.y))
-			src << "<span class='rose'>\The [C] is too fiddly to fasten whilst moving.</span>"
+			src << "<span class='red'>\The [C] is too fiddly to fasten whilst moving.</span>"
 			C.equipping = 0
 			return 0
 	equip_to_slot_if_possible(C, slot)

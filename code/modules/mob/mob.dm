@@ -109,6 +109,8 @@
 	//handle_typing_indicator()
 	return
 
+/mob/proc/incapacitated()
+	return
 
 /mob/proc/restrained()
 	return
@@ -341,7 +343,7 @@
 	set name = "Changelog"
 	set category = "OOC"
 
-	usr << link("http://tauceti.ru/forums/index.php?topic=3551.msg75105#new")
+	usr << link("http://tauceti.ru/forums/index.php?topic=3551")
 
 /mob/verb/observe()
 	set name = "Observe"
@@ -675,7 +677,6 @@ note dizziness decrements automatically in the mob's Life() proc.
 					statpanel(S.panel,"[S.charge_counter]/[S.charge_max]",S)
 				if("holdervar")
 					statpanel(S.panel,"[S.holder_var_type] [S.holder_var_amount]",S)
-	sleep(2) //Prevent updating the stat panel for the next .2 seconds, prevents clientside latency from updates
 
 /mob/proc/add_stings_to_statpanel(var/list/stings)
 	for(var/obj/effect/proc_holder/changeling/S in stings)
@@ -699,7 +700,17 @@ note dizziness decrements automatically in the mob's Life() proc.
 /mob/proc/update_canmove()
 	if(!ismob(src))
 		return
-	if(buckled && (!buckled.movable))
+	if(istype(buckled, /obj/vehicle))
+		var/obj/vehicle/V = buckled
+		if(incapacitated())
+			lying = 1
+			canmove = 0
+			pixel_y = V.mob_offset_y - 5
+		else
+			lying = 0
+			canmove = 1
+			pixel_y = V.mob_offset_y
+	else if(buckled && (!buckled.movable))
 		anchored = 1
 		canmove = 0
 		if( istype(buckled,/obj/structure/stool/bed/chair) )
