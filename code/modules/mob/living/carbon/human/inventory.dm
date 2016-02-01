@@ -262,6 +262,7 @@
 				O.loc = src
 				src.r_ear = O
 				O.layer = 20
+				O.appearance_flags = APPEARANCE_UI
 			W.equipped(src, slot)
 			update_inv_ears(redraw_mob)
 		if(slot_r_ear)
@@ -271,6 +272,7 @@
 				O.loc = src
 				src.l_ear = O
 				O.layer = 20
+				O.appearance_flags = APPEARANCE_UI
 			W.equipped(src, slot)
 			update_inv_ears(redraw_mob)
 		if(slot_glasses)
@@ -322,6 +324,7 @@
 			return
 
 	W.layer = 20
+	W.appearance_flags = APPEARANCE_UI
 
 	return
 
@@ -736,6 +739,7 @@ It can still be worn/put on as normal.
 					if (W)
 						W.loc = target.loc
 						W.layer = initial(W.layer)
+						W.appearance_flags = 0
 						W.add_fingerprint(source)
 		if("CPR")
 			if ((target.health > config.health_threshold_dead && target.health < config.health_threshold_crit))

@@ -36,31 +36,31 @@
 				return
 		for(var/mob/O in viewers(target, null))
 			if ((O.client && !( O.blinded )))
-				O.show_message(text("\red <B>[] is trying to put a [] on []</B>", source, item, target), 1)
+				O.show_message(text("<span class='danger'>[] is trying to put a [] on [].</span>", source, item, target), 1)
 	else
 		var/message = null
 		switch(place)
 			if("mask")
 				if(istype(target.wear_mask, /obj/item/clothing)&&!target.wear_mask:canremove)
-					message = text("\red <B>[] fails to take off \a [] from []'s body!</B>", source, target.wear_mask, target)
+					message = text("<span class='danger'>[] fails to take off \a [] from []'s body!</span>", source, target.wear_mask, target)
 				else
-					message = text("\red <B>[] is trying to take off \a [] from []'s head!</B>", source, target.wear_mask, target)
+					message = text("<span class='danger'>[] is trying to take off \a [] from []'s head!</span>", source, target.wear_mask, target)
 			if("l_hand")
-				message = text("\red <B>[] is trying to take off a [] from []'s left hand!</B>", source, target.l_hand, target)
+				message = text("<span class='danger'>[] is trying to take off a [] from []'s left hand!</span>", source, target.l_hand, target)
 			if("r_hand")
-				message = text("\red <B>[] is trying to take off a [] from []'s right hand!</B>", source, target.r_hand, target)
+				message = text("<span class='danger'>[] is trying to take off a [] from []'s right hand!</span>", source, target.r_hand, target)
 			if("back")
-				message = text("\red <B>[] is trying to take off a [] from []'s back!</B>", source, target.back, target)
+				message = text("<span class='danger'>[] is trying to take off a [] from []'s back!</span>", source, target.back, target)
 			if("handcuff")
-				message = text("\red <B>[] is trying to unhandcuff []!</B>", source, target)
+				message = text("<span class='danger'>[] is trying to unhandcuff []!</span>", source, target)
 			if("internal")
 				if (target.internal)
-					message = text("\red <B>[] is trying to remove []'s internals</B>", source, target)
+					message = text("<span class='danger'>[] is trying to remove []'s internals.</span>", source, target)
 				else
-					message = text("\red <B>[] is trying to set on []'s internals.</B>", source, target)
+					message = text("<span class='danger'>[] is trying to set on []'s internals.</span>", source, target)
 			if("pockets")
-				message = text("\red <B>[] is trying to empty []'s pockets</B>",source, target)
-			else
+				message = text("<span class='danger'>[] is trying to empty []'s pockets.</span>",source, target)
+
 		for(var/mob/M in viewers(target, null))
 			M.show_message(message, 1)
 	spawn( 30 )
@@ -88,6 +88,7 @@
 					source.drop_item()
 					loc = target
 					item.layer = 20
+					item.appearance_flags = APPEARANCE_UI
 					target.wear_mask = item
 					item.loc = target
 		if("l_hand")
@@ -100,6 +101,7 @@
 					source.drop_item()
 					loc = target
 					item.layer = 20
+					item.appearance_flags = APPEARANCE_UI
 					target.l_hand = item
 					item.loc = target
 					item.dropped(source)
@@ -114,6 +116,7 @@
 					source.drop_item()
 					loc = target
 					item.layer = 20
+					item.appearance_flags = APPEARANCE_UI
 					target.r_hand = item
 					item.loc = target
 					item.dropped(source)
@@ -128,6 +131,7 @@
 					source.drop_item()
 					loc = target
 					item.layer = 20
+					item.appearance_flags = APPEARANCE_UI
 					target.back = item
 					item.loc = target
 		if("handcuff")
@@ -155,8 +159,7 @@
 						target.internal.add_fingerprint(source)
 						for(var/mob/M in viewers(target, 1))
 							if ((M.client && !( M.blinded )))
-								M.show_message(text("[] is now running on internals.", target), 1)
-		else
+								M.show_message(text("<span class='notice'>[] is now running on internals.</span>", target), 1)
 	source.regenerate_icons()
 	target.regenerate_icons()
 	qdel(src)
@@ -171,38 +174,39 @@
 	if(!istype(W)) return
 
 	if(W == get_active_hand())
-		remove_from_mob(W)
+		u_equip(W)
 
 	switch(slot)
 		if(slot_back)
 			src.back = W
-			W.equipped(src, slot)
+			equip_to_slot_if_possible(W,slot,0,1)
 			update_inv_back(redraw_mob)
 		if(slot_wear_mask)
 			src.wear_mask = W
-			W.equipped(src, slot)
+			equip_to_slot_if_possible(W,slot,0,1)
 			update_inv_wear_mask(redraw_mob)
 		if(slot_handcuffed)
 			src.handcuffed = W
 			update_inv_handcuffed(redraw_mob)
 		if(slot_legcuffed)
 			src.legcuffed = W
-			W.equipped(src, slot)
+			equip_to_slot_if_possible(W,slot,0,1)
 			update_inv_legcuffed(redraw_mob)
 		if(slot_l_hand)
 			src.l_hand = W
-			W.equipped(src, slot)
+			equip_to_slot_if_possible(W,slot,0,1)
 			update_inv_l_hand(redraw_mob)
 		if(slot_r_hand)
 			src.r_hand = W
-			W.equipped(src, slot)
+			equip_to_slot_if_possible(W,slot,0,1)
 			update_inv_r_hand(redraw_mob)
 		if(slot_in_backpack)
-			W.loc = src.back
+			W.forceMove(src.back)
 		else
-			usr << "\red You are trying to eqip this item to an unsupported inventory slot. How the heck did you manage that? Stop it..."
+			usr << "<span class='red'>You are trying to eqip this item to an unsupported inventory slot. How the heck did you manage that? Stop it...</span>"
 			return
 
 	W.layer = 20
+	W.appearance_flags = APPEARANCE_UI
 
 	return

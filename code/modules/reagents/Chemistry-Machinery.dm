@@ -615,13 +615,7 @@
 
 /obj/machinery/chem_master/proc/isgoodnumber(var/num)
 	if(isnum(num))
-		if(num > 200)
-			num = 200
-		else if(num < 0)
-			num = 1
-		else
-			num = round(num)
-		return num
+		return Clamp(round(num), 0, 200)
 	else
 		return 0
 

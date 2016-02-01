@@ -31,7 +31,7 @@
 			playsound(src, 'sound/effects/hulk_step.ogg', 50, 1)
 	if (istype(A,/mob/living/carbon))
 		var/mob/living/carbon/M = A
-		if(M.lying)        return
+		if(M.lying && !M.crawling)        return
 
 		dirt++
 		if (dirt >= 200)

@@ -1,6 +1,7 @@
 /obj/structure
 	icon = 'icons/obj/structures.dmi'
 	var/climbable
+	var/list/climbers = list()
 
 /obj/structure/blob_act()
 	if(prob(50))
@@ -35,36 +36,68 @@
 
 	do_climb(usr)
 
-/obj/structure/MouseDrop(atom/over_object)
+/obj/structure/MouseDrop_T(mob/target, mob/user)
+	var/mob/living/H = user
+	if(istype(H) && can_climb(H) && target == user)
+		do_climb(target)
+	else
+		return ..()
 
-	var/mob/living/H = over_object
-	if(!istype(H)) return ..()
+/obj/structure/proc/can_climb(var/mob/living/user, post_climb_check=0)
+	if (!can_touch(user) || !climbable || (!post_climb_check && (user in climbers)))
+		return 0
 
-	do_climb(H)
+	if (!user.Adjacent(src))
+		user << "<span class='danger'>You can't climb there, the way is blocked.</span>"
+		return 0
+
+	var/obj/occupied = turf_is_crowded()
+	if(occupied)
+		user << "<span class='danger'>There's \a [occupied] in the way.</span>"
+		return 0
+	return 1
+
+/obj/structure/proc/turf_is_crowded()
+	var/turf/T = get_turf(src)
+	if(!T || !istype(T))
+		return 0
+	for(var/obj/O in T.contents)
+		if(istype(O,/obj/structure))
+			var/obj/structure/S = O
+			if(S.climbable) continue
+		if(O && O.density)
+			return O
+	return 0
 
 /obj/structure/proc/do_climb(var/mob/living/user)
-
-	if (!can_touch(user) || !climbable)
+	if (!can_climb(user))
 		return
 
 	usr.visible_message("<span class='warning'>[user] starts climbing onto \the [src]!</span>")
+	climbers |= user
 
-	if(!do_after(user,50,target = src))
+	if(!do_after(user,50,target = user))
+		climbers -= user
 		return
 
-	if (!can_touch(user) || !climbable)
+	if (!can_climb(user, post_climb_check=1))
+		climbers -= user
 		return
 
-	usr.loc = get_turf(src)
+	usr.forceMove(get_turf(src))
+
 	if (get_turf(user) == get_turf(src))
 		usr.visible_message("<span class='warning'>[user] climbs onto \the [src]!</span>")
+	climbers -= user
 
 /obj/structure/proc/structure_shaken()
+	for(var/mob/living/M in climbers)
+		M.Weaken(2)
+		M << "<span class='danger'>You topple as you are shaken off \the [src]!</span>"
+		climbers.Cut(1,2)
 
 	for(var/mob/living/M in get_turf(src))
-
 		if(M.lying) return //No spamming this on people.
-
 		M.Weaken(5)
 		M << "\red You topple as \the [src] moves under you!"
 

@@ -378,6 +378,12 @@
 
 	flags = NO_BREATHE | NO_BLOOD | NO_SCAN | VIRUS_IMMUNE
 
+/datum/species/abductor/handle_post_spawn(var/mob/living/carbon/human/H)
+	H.gender = NEUTER
+
+	return ..()
+
+
 //Species unarmed attacks
 
 /datum/unarmed_attack

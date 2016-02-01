@@ -746,7 +746,8 @@ var/list/cheartstopper = list("potassium_chloride") //this stops the heart when 
 var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accessed by preexisting terminals. AIs and new terminals can't use them.
 	"thunder",
 	"ERT",
-	"NUKE"
+	"NUKE",
+	"AURORA"
 	)
 
 //Species flags.
@@ -821,7 +822,7 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define HYDRO_SPEED_MULTIPLIER 1
 #define NANO_IGNORE_DISTANCE 1
 
-#define Clamp(x, y, z) 	(x <= y ? y : (x >= z ? z : x))
+#define Clamp(CLVALUE,CLMIN,CLMAX) ( max( (CLMIN), min((CLVALUE), (CLMAX)) ) )
 
 #define CLAMP01(x) 		(Clamp(x, 0, 1))
 
