@@ -24,11 +24,6 @@ var/list/extraction_appends = list("AAAAAAAAAAAAAAAAAUGH", "AAAAAAAAAAAHHHHHHHHH
 			return
 		if(A.anchored)
 			return
-		if(istype(A, /mob/living/carbon/human))
-			var/mob/living/carbon/human/H = A
-			if(!H.restrained())
-				user << "<span class='notice'>You must handcuff your target first...</span>"
-				return
 		user << "<span class='notice'>You start attaching the pack to [A]...</span>"
 		if(do_after(user,50,target=A))
 			if(A.anchored)
