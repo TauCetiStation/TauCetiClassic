@@ -36,12 +36,12 @@
 	var/turf/T   = loc
 	if(istype(T))
 		T.lighting_overlay = null
-
 		T.luminosity = TRUE
 
+	global.all_lighting_overlays -= src
 	lighting_update_overlays -= src;
 
-	..()
+	return ..()
 
 /atom/movable/lighting_overlay/proc/update_overlay()
 	var/turf/T = loc
@@ -55,6 +55,7 @@
 		qdel(src)
 
 	var/list/L = src.color:Copy() // For some dumb reason BYOND won't allow me to use [] on a colour matrix directly.
+	var/anylums = 0
 
 	for(var/A in T.corners)
 		if(!A)
@@ -78,6 +79,7 @@
 				i = BR
 
 		var/mx = max(C.lum_r, C.lum_g, C.lum_b) // Scale it so 1 is the strongest lum, if it is above 1.
+		anylums += mx
 		. = 1 // factor
 		if(mx > 1)
 			. = 1 / mx
@@ -87,4 +89,4 @@
 		L[i + 2]   = C.lum_b * .
 
 	src.color  = L
-	luminosity = (T.get_lumcount() ? 1 : 0)
+	luminosity = (anylums > 0)

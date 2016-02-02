@@ -1,7 +1,7 @@
 //Parent to shields and blades because muh copypasted code.
 /obj/effect/proc_holder/changeling/weapon
 	name = "Organic Weapon"
-	desc = "Go tell a coder if you see this"
+	desc = "Go tell a coder if you see this."
 	helptext = "Yell at Miauw and/or Perakp"
 	chemical_cost = 1000
 	genomecost = -1
@@ -34,7 +34,7 @@
 //Parent to space suits and armor.
 /obj/effect/proc_holder/changeling/suit
 	name = "Organic Suit"
-	desc = "Go tell a coder if you see this"
+	desc = "Go tell a coder if you see this."
 	helptext = "Yell at Miauw and/or Perakp"
 	chemical_cost = 1000
 	genomecost = -1
@@ -104,7 +104,7 @@
 
 /obj/item/weapon/melee/arm_blade
 	name = "arm blade"
-	desc = "A grotesque blade made out of bone and flesh that cleaves through people as a hot knife through butter"
+	desc = "A grotesque blade made out of bone and flesh that cleaves through people as a hot knife through butter."
 	icon = 'tauceti/icons/mob/mutant_stuff.dmi'
 	tc_custom = 'tauceti/icons/mob/mutant_stuff.dmi'
 	icon_state = "arm_blade"

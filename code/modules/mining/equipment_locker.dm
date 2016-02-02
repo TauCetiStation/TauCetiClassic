@@ -38,7 +38,6 @@
 			stack_list[processed_sheet] = s
 		var/obj/item/stack/sheet/mineral/storage = stack_list[processed_sheet]
 		storage.amount += 1 //Stack the sheets
-		O.loc = null //Let the old sheet...
 		qdel(O) //... garbage collect
 
 /obj/machinery/mineral/ore_redemption/process()

@@ -26,7 +26,8 @@
 /obj/structure/Destroy()
 	if(ticker)
 		cameranet.updateVisibility(src)
-	..()
+	climbers.Cut()
+	return ..()
 
 /obj/structure/New()
 	..()
@@ -38,7 +39,7 @@
 /obj/effect/Destroy()
 	if(ticker)
 		cameranet.updateVisibility(src)
-	..()
+	return ..()
 
 /obj/effect/New()
 	..()

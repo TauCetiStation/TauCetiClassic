@@ -3,7 +3,7 @@
 	icon_state = "valve0"
 
 	name = "manual valve"
-	desc = "A pipe valve"
+	desc = "A pipe valve."
 
 	dir = SOUTH
 	initialize_directions = SOUTH|NORTH

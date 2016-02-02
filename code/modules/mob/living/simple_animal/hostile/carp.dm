@@ -69,9 +69,11 @@
 	melee_damage_lower = 20
 	melee_damage_upper = 20
 
-/mob/living/simple_animal/hostile/carp/polkan
-	name = "POLKAN"
+/mob/living/simple_animal/hostile/carp/dog
+	name = "REX"
 	desc = "That's a cute little doge... WAIT, WHAT???!!"
+	icon = 'tauceti/mobs/smart_animal/dogs/doge.dmi'
+	icon_state = "shepherd"
 	maxHealth = 9001
 	health = 9001
 
@@ -88,7 +90,11 @@
 
 	attack_sound = 'tauceti/sounds/weapon/polkan_atk.ogg'
 
-/mob/living/simple_animal/hostile/carp/polkan/Life()
+/mob/living/simple_animal/hostile/carp/dog/polkan
+	name = "POLKAN"
+	icon_state = "husky"
+
+/mob/living/simple_animal/hostile/carp/dog/Life()
 	..()
 
 	if(!client)

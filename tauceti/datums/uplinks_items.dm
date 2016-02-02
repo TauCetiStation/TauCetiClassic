@@ -52,7 +52,7 @@
 	var/list/gamemodes = list() // Empty list means it is in all the gamemodes. Otherwise place the gamemode name here.
 	var/list/excludefrom = list()//Empty list does nothing. Place the name of gamemode you don't want this item to be available in here. This is so you dont have to list EVERY mode to exclude something.
 	var/list/uplink_types = list() //Empty list means that the object will be available in all types of uplinks. Alias you will need to state its type.
-	var/list/excludefrom_uplinks = list() //Empty list does nothing. Alias you will need to state the type of uplink, where the object won't be available. 
+	var/list/excludefrom_uplinks = list() //Empty list does nothing. Alias you will need to state the type of uplink, where the object won't be available.
 
 
 /datum/uplink_item/proc/spawn_item(var/turf/loc, var/obj/item/device/uplink/U)
@@ -346,7 +346,7 @@
 
 /datum/uplink_item/ammo/rocket
 	name = "HE missile"
-	desc = "A high explosive missile for Goliath launcher"
+	desc = "A high explosive missile for Goliath launcher."
 	item = /obj/item/ammo_casing/caseless/rocket
 	cost = 5
 	gamemodes = list(/datum/game_mode/nuclear)
@@ -354,7 +354,7 @@
 
 /datum/uplink_item/ammo/rocket_emp
 	name = "EMP missile"
-	desc = "A EMP missile for Goliath launcher"
+	desc = "A EMP missile for Goliath launcher."
 	item = /obj/item/ammo_casing/caseless/rocket/emp
 	cost = 6
 	gamemodes = list(/datum/game_mode/nuclear)

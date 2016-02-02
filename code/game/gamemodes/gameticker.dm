@@ -42,7 +42,7 @@ var/global/datum/controller/gameticker/ticker
 	'sound/music/space.ogg',\
 	'sound/music/clouds.s3m',\
 	'sound/music/title1.ogg',\	//disgusting
-
+	*/
 	'sound/music/space_oddity.ogg',\
 	'sound/music/b12_combined_start.ogg',\
 	'sound/music/title2.ogg',\
@@ -51,12 +51,13 @@ var/global/datum/controller/gameticker/ticker
 	'tauceti/sounds/lobby/hanging_masses.ogg',\
 	'tauceti/sounds/lobby/admiral-station-13.ogg',\
 	'tauceti/sounds/lobby/robocop_gb_intro.ogg')
-	*/
+	/*
 	//New year part
 	'tauceti/modules/_holidays/new_year/music/Carol_of_the_Bells.ogg',\
 	'tauceti/modules/_holidays/new_year/music/Last_Christmas.ogg',\
 	'tauceti/modules/_holidays/new_year/music/Pop_Culture.ogg',\
 	'tauceti/modules/_holidays/new_year/music/Zov_Ktulhu.ogg')
+	*/
 	do
 		pregame_timeleft = 180
 		world << "<B><FONT color='blue'>Welcome to the pre-game lobby!</FONT></B>"

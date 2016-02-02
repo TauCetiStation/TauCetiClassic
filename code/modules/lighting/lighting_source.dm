@@ -63,9 +63,11 @@
 	force_update()
 	if(source_atom && source_atom.light_sources)
 		source_atom.light_sources -= src
+		source_atom                = null
 
 	if(top_atom && top_atom.light_sources)
 		top_atom.light_sources    -= src
+		top_atom                   = null
 
 #ifdef LIGHTING_INSTANT_UPDATES
 /datum/light_source/proc/effect_update()
@@ -211,24 +213,28 @@
 
 	if(istype(source_turf))
 		FOR_DVIEW(var/turf/T, light_range, source_turf, INVISIBILITY_LIGHTING)
-			if(T.lighting_overlay)
-				for(var/A in T.get_corners(get_dir(source_turf, T)))
-					if(!A)
-						continue
+			for(var/A in T.get_corners(get_dir(source_turf, T)))
+				if(!A)
+					continue
 
-					var/datum/lighting_corner/C = A
-					if(effect_str.Find(C))
-						continue
+				var/datum/lighting_corner/C = A
+				if(effect_str.Find(C))
+					continue
 
-					C.affecting += src
+				if(!C.active)
+					continue
 
-					if(!C.active)
-						continue
-
-					APPLY_CORNER(C)
+				C.affecting += src
+				APPLY_CORNER(C)
 
 			if(!T.affecting_lights)
 				T.affecting_lights = list()
+
+			if(T.corners[1])
+				var/datum/lighting_corner/C = T.corners[1]
+				if(!C.active)
+					END_FOR_DVIEW
+					return
 
 			T.affecting_lights += src
 			affecting_turfs += T
@@ -266,38 +272,25 @@
 
 /datum/light_source/proc/smart_vis_update()
 	var/list/datum/lighting_corner/corners = list()
-	var/list/turf/turfs                    = list()
 	FOR_DVIEW(var/turf/T, light_range, source_turf, 0)
 		corners |= T.get_corners(get_dir(source_turf, T))
-		turfs   += T
 	END_FOR_DVIEW
-
-	for(var/A in turfs - affecting_turfs) // New turfs, add us to the affecting lights of them.
-		if(!A)
-			continue
-
-		var/turf/T = A
-		if(!T.affecting_lights)
-			T.affecting_lights = list()
-
-		T.affecting_lights += src
-
-	for(var/A in affecting_turfs - turfs) // Now-gone turfs, remove us from the affecting lights.
-		if(!A)
-			continue
-
-		var/turf/T = A
-		T.affecting_lights -= src
 
 	for(var/A in corners - effect_str) // New corners
 		if(!A)
 			continue
 
 		var/datum/lighting_corner/C = A
-		C.affecting += src
 		if(!C.active)
 			continue
 
+		if(C.masters[1])
+			var/turf/T = C.masters[1]
+			if(!T.affecting_lights)
+				T.affecting_lights = list()
+			T.affecting_lights += src
+
+		C.affecting += src
 		APPLY_CORNER(C)
 
 	for(var/A in effect_str - corners) // Old, now gone, corners.
@@ -305,6 +298,15 @@
 			continue
 
 		var/datum/lighting_corner/C = A
+		if(!C.active)
+			continue
+
+		if(C.masters[1])
+			var/turf/T = C.masters[1]
+			if(T.affecting_lights)
+				T.affecting_lights -= src
+
+		C.affecting -= src
 		REMOVE_CORNER(C)
 		effect_str -= C
 

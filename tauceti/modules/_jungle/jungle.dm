@@ -130,7 +130,7 @@
 
 /obj/machinery/jungle_controller
 	name = "jungle controller"
-	desc = "a mysterious and ancient piece of machinery"
+	desc = "a mysterious and ancient piece of machinery."
 	var/list/animal_spawners = list()
 
 

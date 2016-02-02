@@ -389,6 +389,7 @@
 		src.occupant.ghostize()
 		spawn(5)
 			qdel(src.occupant)
+			src.occupant = null
 	return
 
 /obj/machinery/clonepod/relaymove(mob/user as mob)

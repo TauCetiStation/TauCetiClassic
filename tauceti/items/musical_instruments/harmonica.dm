@@ -1,6 +1,6 @@
 /obj/item/device/harmonica
 	name = "harmonica"
-	desc = "Much blues. so amaze. wow."
+	desc = "Much blues. So amaze. Wow."
 	icon = 'tauceti/items/musical_instruments/harmonica.dmi'
 	icon_state = "harmonica"
 	item_state = "harmonica"

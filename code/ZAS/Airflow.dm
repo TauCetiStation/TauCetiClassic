@@ -11,6 +11,9 @@ Contains helper procs for airflow, handled in /connection_group.
 	if(!(status_flags & CANSTUN) && !(status_flags & CANWEAKEN))
 		src << "\blue You stay upright as the air rushes past you."
 		return 0
+	if(buckled)
+		src << "<span class='notice'>Air suddenly rushes past you!</span>"
+		return 0
 	if(weakened <= 0) src << "\red The sudden rush of air knocks you over!"
 	weakened = max(weakened,5)
 	last_airflow_stun = world.time

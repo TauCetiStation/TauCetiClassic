@@ -167,6 +167,11 @@
 	min_duration = 80
 	max_duration = 100
 
+	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+		if(..())
+			var/datum/organ/external/affected = target.get_organ(target_zone)
+			return ((affected.open == 3 && affected.name == "chest") || (affected.open == 2))
+
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/affected = target.get_organ(target_zone)
 		user.visible_message("[user] starts poking around inside the incision on [target]'s [affected.display_name] with \the [tool].", \

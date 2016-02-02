@@ -276,7 +276,7 @@
 			if(3)
 				modedesc = "Scan book to local buffer, attempt to add book to general inventory."
 			else
-				modedesc = "ERROR"
+				modedesc = "ERROR!"
 		user << " - Mode [mode] : [modedesc]"
 		if(src.computer)
 			user << "<font color=green>Computer has been associated with this unit.</font>"

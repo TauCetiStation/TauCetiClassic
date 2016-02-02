@@ -113,13 +113,15 @@
 
 	to_nuke_or_not_to_nuke = 1
 	for(var/datum/mind/AI_mind in malf_ai)
-		AI_mind.current << "Congratulations you have taken control of the station."
-		AI_mind.current << "You may decide to blow up the station. You have 60 seconds to choose."
-		AI_mind.current << "You should have a new verb in the Malfunction tab. If you dont - rejoin the game."
-		AI_mind.current.verbs += /datum/game_mode/malfunction/proc/ai_win
+		var/mob/living/silicon/ai/AI = AI_mind.current
+		AI << "Congratulations you have taken control of the station."
+		AI << "You may decide to blow up the station. You have 60 seconds to choose."
+		AI << "You should have a new verb in the Malfunction tab. If you dont - rejoin the game."
+		AI.client.verbs += /datum/game_mode/malfunction/proc/ai_win	//We won't see verb, added to mob which is out of view, so we adding it to client.
 	spawn (600)
 		for(var/datum/mind/AI_mind in malf_ai)
-			AI_mind.current.verbs -= /datum/game_mode/malfunction/proc/ai_win
+			var/mob/living/silicon/ai/AI = AI_mind.current
+			AI.client.verbs -= /datum/game_mode/malfunction/proc/ai_win
 		to_nuke_or_not_to_nuke = 0
 	return
 
@@ -155,9 +157,9 @@
 /datum/game_mode/malfunction/proc/takeover()
 	set category = "Malfunction"
 	set name = "System Override"
-	set desc = "Start the victory timer"
+	set desc = "Start the victory timer."
 	if (!istype(ticker.mode,/datum/game_mode/malfunction))
-		usr << "You cannot begin a takeover in this round type!."
+		usr << "You cannot begin a takeover in this round type!"
 		return
 	if (ticker.mode:malf_mode_declared)
 		usr << "You've already begun your takeover."
@@ -183,12 +185,14 @@
 /datum/game_mode/malfunction/proc/ai_win()
 	set category = "Malfunction"
 	set name = "Explode"
-	set desc = "Station go boom"
+	set desc = "Station go boom."
 	if (!ticker.mode:to_nuke_or_not_to_nuke)
 		return
 	ticker.mode:to_nuke_or_not_to_nuke = 0
 	for(var/datum/mind/AI_mind in ticker.mode:malf_ai)
-		AI_mind.current.verbs -= /datum/game_mode/malfunction/proc/ai_win
+		var/mob/living/silicon/ai/AI = AI_mind.current
+		AI.client.verbs -= /datum/game_mode/malfunction/proc/ai_win
+		AI.client.screen.Cut()
 	ticker.mode:explosion_in_progress = 1
 	for(var/mob/M in player_list)
 		M << 'sound/machines/Alarm.ogg'

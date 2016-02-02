@@ -85,7 +85,7 @@
 	icon = 'icons/mob/screen1_alert.dmi'
 	icon_state = "default"
 	name = "Alert"
-	desc = "Something seems to have gone wrong with this alert, so report this bug please"
+	desc = "Something seems to have gone wrong with this alert, so report this bug please."
 
 
 //Gas alerts

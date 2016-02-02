@@ -51,7 +51,7 @@
 	icon = 'tauceti/items/WalterJ_Items_Pack/NT PMC/WJ_NT_PMC.dmi'
 	tc_custom = 'tauceti/items/WalterJ_Items_Pack/NT PMC/WJ_NT_PMC.dmi'
 	name = "NT PMC Boots"
-	desc = "Private security boots. Now with extra grip"
+	desc = "Private security boots. Now with extra grip."
 
 
 	icon_state = "boots"
@@ -63,7 +63,7 @@
 	tc_custom = 'tauceti/items/WalterJ_Items_Pack/NT PMC/WJ_NT_PMC.dmi'
 
 	name = "Lizard Boots"
-	desc = "Private security boots for Unathi"
+	desc = "Private security boots for Unathi."
 
 	icon_state = "Lizard_Boots"
 	item_state = "Lizard_Boots"

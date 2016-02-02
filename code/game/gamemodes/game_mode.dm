@@ -215,8 +215,17 @@ Implants;
 	var/list/suspects = list()
 	for(var/mob/living/carbon/human/man in player_list) if(man.client && man.mind)
 		// NT relation option
+		var/list/invisible_roles = list("Wizard",
+										"Ninja",
+										"Syndicate",
+										"Vox Raider",
+										"Raider",
+										"Abductor scientist",
+										"Abductor agent",
+										"Meme"
+										)
 		var/special_role = man.mind.special_role
-		if (special_role == "Wizard" || special_role == "Ninja" || special_role == "Syndicate" || special_role == "Vox Raider" || special_role == "Raider")
+		if (special_role in invisible_roles)
 			continue	//NT intelligence ruled out possiblity that those are too classy to pretend to be a crew.
 		for(var/spec_role in gang_name_pool)
 			if (special_role == "[spec_role] Gang (A) Boss")
@@ -228,9 +237,10 @@ Implants;
 			suspects += man
 		// Antags
 		else if(special_role == "traitor" && prob(40) || \
-		   special_role == "Changeling" && prob(50) || \
-		   special_role == "Cultist" && prob(30) || \
-		   special_role == "Head Revolutionary" && prob(30))
+			special_role == "Changeling" && prob(50) || \
+			special_role == "Cultist" && prob(30) || \
+			special_role == "Head Revolutionary" && prob(30) || \
+			special_role == "Shadowling" && prob(20))
 			suspects += man
 
 			// If they're a traitor or likewise, give them extra TC in exchange.
@@ -519,8 +529,8 @@ proc/get_nt_opposed()
 	var/count = 1
 	for(var/datum/objective/objective in ply.objectives)
 		if(objective.check_completion())
-			text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <font color='green'>Success!</font>"
+			text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <font color='green'><b>Success!</b></font>"
 		else
-			text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <font color='red'>Fail.</font>"
+			text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <font color='red'><b>Fail</b></font>"
 		count++
 	return text

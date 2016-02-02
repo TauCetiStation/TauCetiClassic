@@ -153,11 +153,29 @@ var/datum/global_hud/global_hud = new()
 	var/action_buttons_hidden = 0
 
 
-datum/hud/New(mob/owner)
+/datum/hud/New(mob/owner)
 	mymob = owner
 	instantiate()
 	..()
 
+/datum/hud/Destroy()
+	..()
+	grab_intent = null
+	hurt_intent = null
+	disarm_intent = null
+	help_intent = null
+	lingchemdisplay = null
+	blobpwrdisplay = null
+	blobhealthdisplay = null
+	r_hand_hud_object = null
+	l_hand_hud_object = null
+	action_intent = null
+	move_intent = null
+	adding = null
+	other = null
+	hotkeybuttons = null
+	hide_actions_toggle = null
+	mymob = null
 
 /datum/hud/proc/hidden_inventory_update()
 	if(!mymob) return

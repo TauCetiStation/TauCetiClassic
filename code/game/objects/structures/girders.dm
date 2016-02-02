@@ -2,7 +2,7 @@
 	icon_state = "girder"
 	anchored = 1
 	density = 1
-	layer = 2
+	layer = 2.9
 	var/state = 0
 	var/health = 200
 
@@ -207,7 +207,7 @@
 	icon_state= "cultgirder"
 	anchored = 1
 	density = 1
-	layer = 2
+	layer = 2.9
 	var/health = 250
 
 	attackby(obj/item/W as obj, mob/user as mob)

@@ -281,14 +281,10 @@
 	setOxyLoss(0)
 	setCloneLoss(0)
 	setBrainLoss(0)
+	setHalLoss(0)
 	SetParalysis(0)
 	SetStunned(0)
 	SetWeakened(0)
-
-	//restore all HP
-	if(!(health == maxHealth))
-		health = initial(health)
-		icon_state = initial(icon_state)
 
 	// shut down ongoing problems
 	radiation = 0
@@ -321,6 +317,11 @@
 		living_mob_list += src
 		tod = null
 		timeofdeath = 0
+
+	//restore all HP
+	if(health != maxHealth)
+		health = maxHealth
+		icon_state = initial(icon_state)
 
 	// restore us to conciousness
 	stat = CONSCIOUS
@@ -744,6 +745,16 @@
 	set name = "Rest"
 	set category = "IC"
 
+	if(issilicon(usr))
+		var/mob/living/silicon/robot/R = usr
+		for(var/V in R.components)
+			if(V == "power cell") continue
+			var/datum/robot_component/C = R.components[V]
+			if(C.installed)
+				C.toggled = !C.toggled
+		R << "<span class='notice'>You toggle all your components.</span>"
+		return
+
 //Already resting and have others debuffs
 	if( resting && (sleeping || weakened || paralysis || stunned) )
 		src << "<span class='rose'>You can't wake up.</span>"
@@ -757,12 +768,8 @@
 		src << "<span class='rose'>You can't move.</span>"
 
 //Debuffs check
-	else if( paralysis || stunned )
+	else if(!resting && (sleeping || weakened || paralysis || stunned) )
 		src << "<span class='rose'>You can't control yourself.</span>"
-
-//Sleep style debuffs
-	else if( !resting && (sleeping || weakened) )
-		src << "<span class='rose'>You are already sleeping.</span>"
 
 	else
 		resting = !resting

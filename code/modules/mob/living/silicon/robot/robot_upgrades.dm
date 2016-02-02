@@ -1,7 +1,7 @@
 // robot_upgrades.dm
 // Contains various borg upgrades.
 
-/obj/item/borg/upgrade/
+/obj/item/borg/upgrade
 	name = "A borg upgrade module."
 	desc = "Protected by FRM."
 	icon = 'icons/obj/module.dmi'
@@ -16,7 +16,7 @@
 	return
 
 
-/obj/item/borg/upgrade/reset/
+/obj/item/borg/upgrade/reset
 	name = "Borg module reset board"
 	desc = "Used to reset a borg's module. Destroys any other upgrades applied to the borg."
 	icon_state = "cyborg_upgrade1"
@@ -129,7 +129,7 @@
 
 /obj/item/borg/upgrade/jetpack/
 	name = "Mining Borg Jetpack"
-	desc = "A carbon dioxide jetpack suitable for low-gravity mining operations"
+	desc = "A carbon dioxide jetpack suitable for low-gravity mining operations."
 	construction_cost = list("metal"=10000,"phoron"=15000,"uranium" = 20000)
 	icon_state = "cyborg_upgrade3"
 	require_module = 1

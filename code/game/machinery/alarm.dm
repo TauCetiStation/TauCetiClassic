@@ -1558,7 +1558,7 @@ Code shamelessly copied from apc_frame
 */
 /obj/item/firealarm_frame
 	name = "fire alarm frame"
-	desc = "Used for building Fire Alarms"
+	desc = "Used for building Fire Alarms."
 	icon = 'tauceti/icons/obj/wall_monitors.dmi'
 	icon_state = "fire_bitem"
 	flags = FPRINT | TABLEPASS| CONDUCT

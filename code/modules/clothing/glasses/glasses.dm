@@ -39,6 +39,19 @@
 //	darkness_view = 3
 //	vision_flags = SEE_SELF
 	darkness_view = 7
+	action_button_name = "Toggle Night Vision"
+	var/on = 0
+
+/obj/item/clothing/glasses/night/attack_self()
+	toggle_nvg()
+
+/obj/item/clothing/glasses/night/proc/toggle_nvg()
+	if(ishuman(usr))
+		var/mob/living/carbon/human/H = usr
+		on = !on
+		if(on)
+			playsound(src.loc, 'sound/effects/nvg_on.ogg', 50, 1)
+		H.handle_vision()
 
 /obj/item/clothing/glasses/eyepatch
 	name = "eyepatch"
@@ -206,13 +219,13 @@
 
 /obj/item/clothing/glasses/thermal/eyepatch
 	name = "Optical Thermal Eyepatch"
-	desc = "An eyepatch with built-in thermal optics"
+	desc = "An eyepatch with built-in thermal optics."
 	icon_state = "eyepatch"
 	item_state = "eyepatch"
 	body_parts_covered = 0
 
 /obj/item/clothing/glasses/thermal/jensen
 	name = "Optical Thermal Implants"
-	desc = "A set of implantable lenses designed to augment your vision"
+	desc = "A set of implantable lenses designed to augment your vision."
 	icon_state = "thermalimplants"
 	item_state = "syringe_kit"

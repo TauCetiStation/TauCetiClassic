@@ -24,7 +24,7 @@ obj/item/ammo_box/magazine/tommygunm45
 
 /obj/item/weapon/gun/projectile/shotgun/repeater
 	name = "repeater rifle"
-	desc = "Winchester Model 1894"
+	desc = "Winchester Model 1894."
 	icon = 'tauceti/items/weapons/guns/antique_guns.dmi'
 	tc_custom = 'tauceti/items/weapons/guns/antique_guns.dmi'
 	icon_state = "repeater"
@@ -56,7 +56,7 @@ obj/item/ammo_box/magazine/tommygunm45
 
 /obj/item/ammo_box/magazine/internal/repeater
 	name = "repeater internal magazine"
-	desc = "Oh god, this shouldn't be here"
+	desc = "Oh god, this shouldn't be here."
 	ammo_type = /obj/item/ammo_casing/a762
 	caliber = "a762"
 	max_ammo = 8
@@ -64,7 +64,7 @@ obj/item/ammo_box/magazine/tommygunm45
 
 /obj/item/weapon/gun/projectile/shotgun/bolt_action
 	name = "bolt-action rifle"
-	desc = "Springfield M1903"
+	desc = "Springfield M1903."
 	icon = 'tauceti/items/weapons/guns/antique_guns.dmi'
 	tc_custom = 'tauceti/items/weapons/guns/antique_guns.dmi'
 	icon_state = "bolt-action"
@@ -130,7 +130,7 @@ obj/item/ammo_box/magazine/tommygunm45
 
 /obj/item/weapon/gun/projectile/automatic/bar
 	name = "Browning M1918"
-	desc = "Browning Automatic Rifle"
+	desc = "Browning Automatic Rifle."
 	icon = 'tauceti/items/weapons/guns/antique_guns.dmi'
 	tc_custom = 'tauceti/items/weapons/guns/antique_guns.dmi'
 	icon_state = "bar"
@@ -176,7 +176,7 @@ obj/item/ammo_box/magazine/tommygunm45
 
 /obj/item/weapon/gun/projectile/revolver/peacemaker
 	name = "Colt SAA"
-	desc = "A legend of Wild West"
+	desc = "A legend of Wild West."
 	icon = 'tauceti/items/weapons/guns/antique_guns.dmi'
 	icon_state = "peacemaker"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rev45
@@ -200,7 +200,7 @@ obj/item/ammo_box/magazine/tommygunm45
 
 /obj/item/ammo_box/magazine/internal/cylinder/rev45
 	name = "Colt revolver cylinder"
-	desc = "Oh god, this shouldn't be here"
+	desc = "Oh god, this shouldn't be here."
 	ammo_type = /obj/item/ammo_casing/c45
 	caliber = ".45"
 	max_ammo = 6
@@ -208,14 +208,14 @@ obj/item/ammo_box/magazine/tommygunm45
 
 /obj/item/weapon/gun/projectile/revolver/flare
 	name = "flare gun"
-	desc = "Fires flares"
+	desc = "Fires flares."
 	icon = 'tauceti/items/weapons/guns/antique_guns.dmi'
 	icon_state = "flaregun"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/flaregun
 
 /obj/item/ammo_box/magazine/internal/cylinder/flaregun
 	name = "Flare gun cylinder"
-	desc = "Oh god, this shouldn't be here"
+	desc = "Oh god, this shouldn't be here."
 	ammo_type = /obj/item/ammo_casing/flare
 	caliber = "flare"
 	max_ammo = 1
@@ -273,7 +273,7 @@ obj/item/ammo_box/magazine/tommygunm45
 
 /obj/item/ammo_box/magazine/internal/cylinder/rev38/dungeon
 	name = "d-tiv revolver cylinder"
-	desc = "Oh god, this shouldn't be here"
+	desc = "Oh god, this shouldn't be here."
 	ammo_type = /obj/item/ammo_casing/c38m
 	caliber = "38"
 	max_ammo = 6
@@ -292,7 +292,7 @@ obj/item/ammo_box/magazine/tommygunm45
 
 /obj/item/ammo_box/magazine/internal/cylinder/dualshot/dungeon
 	name = "double-barrel shotgun internal magazine"
-	desc = "This doesn't even exist"
+	desc = "This doesn't even exist."
 	ammo_type = /obj/item/ammo_casing/shotgun/buckshot
 
 /obj/item/weapon/gun/projectile/shotgun/dungeon

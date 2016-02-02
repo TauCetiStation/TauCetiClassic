@@ -209,7 +209,7 @@ obj/item/toy/cardhand/attackby(obj/item/toy/singlecard/C, mob/living/user)
 
 obj/item/toy/singlecard
 	name = "card"
-	desc = "a card"
+	desc = "A card."
 	icon = 'tauceti/items/cards/cards.dmi'
 	icon_state = "singlecard_down"
 	w_class = 1.0

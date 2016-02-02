@@ -79,11 +79,11 @@
 		add_fingerprint(user)
 		return 1
 	playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-	user << "\blue You begin to unfasten \the [src]..."
+	user << "<span class='notice'> You begin to unfasten \the [src]...</span>"
 	if (do_after(user, 40, target = src))
 		user.visible_message( \
 			"[user] unfastens \the [src].", \
-			"\blue You have unfastened \the [src].", \
+			"<span class='notice'>You have unfastened \the [src].</span>", \
 			"You hear ratchet.")
 		new /obj/item/pipe(loc, make_from=src)
 		for (var/obj/machinery/meter/meter in T)
@@ -99,7 +99,7 @@
 	icon = 'icons/obj/pipes.dmi'
 
 	name = "pipe"
-	desc = "A one meter section of regular pipe"
+	desc = "A one meter section of regular pipe."
 
 	volume = 70
 
@@ -323,7 +323,7 @@
 	icon = 'icons/obj/atmospherics/pipe_manifold.dmi'
 
 	name = "pipe manifold"
-	desc = "A manifold composed of regular pipes"
+	desc = "A manifold composed of regular pipes."
 
 	volume = 105
 
@@ -522,7 +522,7 @@
 	icon = 'icons/obj/atmospherics/pipe_manifold.dmi'
 
 	name = "4-way pipe manifold"
-	desc = "A manifold composed of regular pipes"
+	desc = "A manifold composed of regular pipes."
 
 	volume = 140
 
@@ -701,7 +701,7 @@ obj/machinery/atmospherics/pipe/manifold4w/New()
 /************-Cap-************/
 /obj/machinery/atmospherics/pipe/cap
 	name = "pipe endcap"
-	desc = "An endcap for pipes"
+	desc = "An endcap for pipes."
 	icon = 'icons/obj/pipes.dmi'
 	icon_state = "cap"
 	level = 2
@@ -980,7 +980,7 @@ obj/machinery/atmospherics/pipe/cap/update_icon()
 	icon_state = "intact"
 
 	name = "Vent"
-	desc = "A large air vent"
+	desc = "A large air vent."
 
 	level = 1
 

@@ -7,7 +7,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 /client/proc/check_words() // -- Urist
 	set category = "Special Verbs"
 	set name = "Check Rune Words"
-	set desc = "Check the rune-word meaning"
+	set desc = "Check the rune-word meaning."
 	if(!cultwords["travel"])
 		runerandom()
 	for (var/word in engwords)

@@ -1430,16 +1430,12 @@
 						sight |= G.vision_flags
 						if(!druggy)
 							see_invisible = SEE_INVISIBLE_MINIMUM
-				if(istype(G,/obj/item/clothing/glasses/night))
-					if(istype(G,/obj/item/clothing/glasses/night/shadowling))
-						var/obj/item/clothing/glasses/night/shadowling/S = G
-						if(S.vision)
-							see_invisible = SEE_INVISIBLE_LIVING
-						else
-							see_invisible = SEE_INVISIBLE_MINIMUM
+				if(istype(G,/obj/item/clothing/glasses/night/shadowling))
+					var/obj/item/clothing/glasses/night/shadowling/S = G
+					if(S.vision)
+						see_invisible = SEE_INVISIBLE_LIVING
 					else
 						see_invisible = SEE_INVISIBLE_MINIMUM
-//					client.screen += global_hud.nvg
 
 	/* HUD shit goes here, as long as it doesn't modify sight flags */
 	// The purpose of this is to stop xray and w/e from preventing you from using huds -- Love, Doohl
@@ -1585,7 +1581,7 @@
 					client.screen += global_hud.vimpaired
 
 			if(eye_blurry)			client.screen += global_hud.blurry
-			if(druggy)				client.screen += global_hud.druggy
+			//if(druggy)				client.screen += global_hud.druggy
 
 			var/masked = 0
 
@@ -1603,14 +1599,9 @@
 				if(!O.up && tinted_weldhelh)
 					client.screen += global_hud.darkMask
 
-			if(istype(glasses, /obj/item/clothing/glasses/meson) || istype(glasses, /obj/item/clothing/glasses/night) || istype(glasses, /obj/item/clothing/glasses/gglasses))
-				if(!(istype(glasses, /obj/item/clothing/glasses/night/shadowling)))
-					client.screen += global_hud.meson
-
-			if(istype(glasses, /obj/item/clothing/glasses/thermal) )
-				client.screen += global_hud.thermal
-
-			if(istype(glasses, /obj/item/clothing/glasses/science) )
+			if(istype(glasses, /obj/item/clothing/glasses/gglasses))
+				client.screen += global_hud.meson
+			else if(istype(glasses, /obj/item/clothing/glasses/science) )
 				client.screen += global_hud.science
 
 			if(machine)
@@ -1640,7 +1631,46 @@
 			else
 				hud_used.lingchemdisplay.invisibility = 101
 */
+
+		handle_vision()
 		return 1
+
+	proc/handle_vision()
+		if(client)
+			species.sightglassesmod = 0
+			if(glasses)
+				if(istype(glasses, /obj/item/clothing/glasses/meson))
+					species.sightglassesmod = 1
+				else if(istype(glasses, /obj/item/clothing/glasses/night) && !istype(glasses, /obj/item/clothing/glasses/night/shadowling))
+					var/obj/item/clothing/glasses/night/nvg = glasses
+					if(nvg.on)
+						species.sightglassesmod = 2
+				else if(istype(glasses, /obj/item/clothing/glasses/thermal) )
+					species.sightglassesmod = 3
+
+			if(stat == DEAD)
+				set_EyesVision(transition_time = 0)
+			else
+				if(species.nighteyes)
+					if(species.sightglassesmod)
+						set_EyesVision("nightsight_glasses")
+					else
+						var/turf/T = get_turf(src)
+						if(T.lighting_overlay && T.lighting_overlay.luminosity == 0)
+							set_EyesVision("nightsight",20)
+						else
+							set_EyesVision(transition_time = 20)
+				else
+					switch(species.sightglassesmod)
+						if(0)
+							set_EyesVision()
+						if(1)
+							set_EyesVision("meson")
+						if(2)
+							set_EyesVision("nvg")
+						if(3)
+							set_EyesVision("thermal")
+
 
 	proc/handle_random_events()
 		// Puke if toxloss is too high
@@ -1651,7 +1681,7 @@
 		//0.1% chance of playing a scary sound to someone who's in complete darkness
 		if(isturf(loc) && rand(1,1000) == 1)
 			var/turf/T = loc
-			if(T.get_lumcount() == 0)
+			if(T.lighting_overlay && T.lighting_overlay.luminosity == 0)
 				playsound_local(src,pick(scarySounds),50, 1, -1)
 
 	proc/handle_virus_updates()

@@ -10,19 +10,19 @@
 
 	New()
 		..()
-		sleep(2)
 		new /obj/item/clothing/under/rank/cargotech(src)
 		new /obj/item/clothing/shoes/black(src)
 		new /obj/item/device/radio/headset/headset_cargo(src)
 		new /obj/item/clothing/gloves/brown(src)
 		new /obj/item/clothing/head/soft(src)
 //		new /obj/item/weapon/cartridge/quartermaster(src)
-		//New year part
+		/*/New year part
 		new /obj/item/clothing/suit/wintercoat/cargo(src)
 		new /obj/item/clothing/suit/wintercoat/cargo(src)
 		new /obj/item/clothing/shoes/winterboots(src)
 		new /obj/item/clothing/shoes/winterboots(src)
 		new /obj/item/clothing/head/santa(src)
+		*/
 		return
 
 /obj/structure/closet/secure_closet/quartermaster
@@ -37,7 +37,6 @@
 
 	New()
 		..()
-		sleep(2)
 		new /obj/item/clothing/under/rank/postal_dude_shirt(src)
 		new /obj/item/clothing/suit/storage/postal_dude_coat(src)
 		new /obj/item/clothing/under/rank/cargo(src)
@@ -52,8 +51,9 @@
 		new /obj/item/clothing/glasses/meson(src)
 		new /obj/item/clothing/head/soft(src)
 		new /obj/item/weapon/mining_voucher(src)
-		//New year part
+		/*/New year part
 		new /obj/item/clothing/suit/wintercoat/cargo(src)
 		new /obj/item/clothing/shoes/winterboots(src)
 		new /obj/item/clothing/head/santa(src)
+		*/
 		return

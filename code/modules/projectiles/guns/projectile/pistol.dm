@@ -87,7 +87,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/deagle
 	name = "desert eagle"
-	desc = "A robust handgun that uses .50 AE ammo"
+	desc = "A robust handgun that uses .50 AE ammo."
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "deagle"
 	item_state = "deagle"
@@ -134,7 +134,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/gyropistol
 	name = "gyrojet pistol"
-	desc = "A bulky pistol designed to fire self propelled rounds"
+	desc = "A bulky pistol designed to fire self propelled rounds."
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "gyropistol"
 	fire_sound = 'sound/effects/Explosion1.ogg'

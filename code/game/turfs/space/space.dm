@@ -14,7 +14,9 @@
 	//update_starlight()
 
 /turf/space/proc/update_starlight()
-	set_light(0) // Too lazy to port starlight configuration and its 0 by default anyway... ~Zve
+	return
+	//if(locate(/turf/simulated) in orange(src,1))
+	//	set_light(2,2) // Too lazy to port starlight configuration and its 0 by default anyway... ~Zve
 	/*if(!config.starlight)
 		return
 	if(locate(/turf/simulated) in orange(src,1))

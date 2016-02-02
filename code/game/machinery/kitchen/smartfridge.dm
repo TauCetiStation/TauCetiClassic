@@ -70,7 +70,7 @@
 
 /obj/machinery/smartfridge/secure/extract
 	name = "\improper Slime Extract Storage"
-	desc = "A refrigerated storage unit for slime extracts"
+	desc = "A refrigerated storage unit for slime extracts."
 	req_access_txt = "47"
 
 /obj/machinery/smartfridge/secure/extract/accept_check(var/obj/item/O as obj)

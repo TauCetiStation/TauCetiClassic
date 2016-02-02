@@ -37,6 +37,10 @@ RCD
 		spark_system.attach(src)
 		return
 
+	Destroy()
+		qdel(spark_system)
+		spark_system = null
+		return ..()
 
 	attackby(obj/item/weapon/W, mob/user)
 		..()

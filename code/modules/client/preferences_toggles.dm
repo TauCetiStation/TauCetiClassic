@@ -2,7 +2,7 @@
 /client/verb/toggle_ghost_ears()
 	set name = "Show/Hide GhostEars"
 	set category = "Preferences"
-	set desc = ".Toggle Between seeing all mob speech, and only speech of nearby mobs"
+	set desc = ".Toggle Between seeing all mob speech, and only speech of nearby mobs."
 	prefs.chat_toggles ^= CHAT_GHOSTEARS
 	src << "As a ghost, you will now [(prefs.chat_toggles & CHAT_GHOSTEARS) ? "see all speech in the world" : "only see speech from nearby mobs"]."
 	prefs.save_preferences()
@@ -11,7 +11,7 @@
 /client/verb/toggle_ghost_sight()
 	set name = "Show/Hide GhostSight"
 	set category = "Preferences"
-	set desc = ".Toggle Between seeing all mob emotes, and only emotes of nearby mobs"
+	set desc = ".Toggle Between seeing all mob emotes, and only emotes of nearby mobs."
 	prefs.chat_toggles ^= CHAT_GHOSTSIGHT
 	src << "As a ghost, you will now [(prefs.chat_toggles & CHAT_GHOSTSIGHT) ? "see all emotes in the world" : "only see emotes from nearby mobs"]."
 	prefs.save_preferences()
@@ -20,7 +20,7 @@
 /client/verb/toggle_ghost_radio()
 	set name = "Enable/Disable GhostRadio"
 	set category = "Preferences"
-	set desc = ".Toggle between hearing all radio chatter, or only from nearby speakers"
+	set desc = ".Toggle between hearing all radio chatter, or only from nearby speakers."
 	prefs.chat_toggles ^= CHAT_GHOSTRADIO
 	src << "As a ghost, you will now [(prefs.chat_toggles & CHAT_GHOSTRADIO) ? "hear all radio chat in the world" : "only hear from nearby speakers"]."
 	prefs.save_preferences()
@@ -29,7 +29,7 @@
 /client/proc/toggle_hear_radio()
 	set name = "Show/Hide RadioChatter"
 	set category = "Preferences"
-	set desc = "Toggle seeing radiochatter from radios and speakers"
+	set desc = "Toggle seeing radiochatter from radios and speakers."
 	if(!holder) return
 	prefs.chat_toggles ^= CHAT_RADIO
 	prefs.save_preferences()
@@ -39,7 +39,7 @@
 /client/proc/toggleadminhelpsound()
 	set name = "Hear/Silence Adminhelps"
 	set category = "Preferences"
-	set desc = "Toggle hearing a notification when admin PMs are recieved"
+	set desc = "Toggle hearing a notification when admin PMs are recieved."
 	if(!holder)	return
 	prefs.toggles ^= SOUND_ADMINHELP
 	prefs.save_preferences()
@@ -49,7 +49,7 @@
 /client/verb/deadchat() // Deadchat toggle is usable by anyone.
 	set name = "Show/Hide Deadchat"
 	set category = "Preferences"
-	set desc ="Toggles seeing deadchat"
+	set desc ="Toggles seeing deadchat."
 	prefs.chat_toggles ^= CHAT_DEAD
 	prefs.save_preferences()
 
@@ -63,7 +63,7 @@
 /client/proc/toggleprayers()
 	set name = "Show/Hide Prayers"
 	set category = "Preferences"
-	set desc = "Toggles seeing prayers"
+	set desc = "Toggles seeing prayers."
 	prefs.chat_toggles ^= CHAT_PRAYER
 	prefs.save_preferences()
 	src << "You will [(prefs.chat_toggles & CHAT_PRAYER) ? "now" : "no longer"] see prayerchat."
@@ -72,7 +72,7 @@
 /client/verb/toggletitlemusic()
 	set name = "Hear/Silence LobbyMusic"
 	set category = "Preferences"
-	set desc = "Toggles hearing the GameLobby music"
+	set desc = "Toggles hearing the GameLobby music."
 	prefs.toggles ^= SOUND_LOBBY
 	prefs.save_preferences()
 	if(prefs.toggles & SOUND_LOBBY)
@@ -88,7 +88,7 @@
 /client/verb/togglemidis()
 	set name = "Hear/Silence Midis"
 	set category = "Preferences"
-	set desc = "Toggles hearing sounds uploaded by admins"
+	set desc = "Toggles hearing sounds uploaded by admins."
 	prefs.toggles ^= SOUND_MIDI
 	prefs.save_preferences()
 	if(prefs.toggles & SOUND_MIDI)
@@ -103,7 +103,7 @@
 /client/verb/listen_ooc()
 	set name = "Show/Hide OOC"
 	set category = "Preferences"
-	set desc = "Toggles seeing OutOfCharacter chat"
+	set desc = "Toggles seeing OutOfCharacter chat."
 	prefs.chat_toggles ^= CHAT_OOC
 	prefs.save_preferences()
 	src << "You will [(prefs.chat_toggles & CHAT_OOC) ? "now" : "no longer"] see messages on the OOC channel."
@@ -112,7 +112,7 @@
 /client/verb/listen_looc()
 	set name = "Show/Hide LOOC"
 	set category = "Preferences"
-	set desc = "Toggles seeing Local OutOfCharacter chat"
+	set desc = "Toggles seeing Local OutOfCharacter chat."
 	prefs.chat_toggles ^= CHAT_LOOC
 	prefs.save_preferences()
 
@@ -123,7 +123,7 @@
 /client/verb/Toggle_Soundscape() //All new ambience should be added here so it works with this verb until someone better at things comes up with a fix that isn't awful
 	set name = "Hear/Silence Ambience"
 	set category = "Preferences"
-	set desc = "Toggles hearing ambient sound effects"
+	set desc = "Toggles hearing ambient sound effects."
 	prefs.toggles ^= SOUND_AMBIENCE
 	prefs.save_preferences()
 	if(prefs.toggles & SOUND_AMBIENCE)
@@ -149,7 +149,7 @@
 /client/verb/change_ui()
 	set name = "Change UI"
 	set category = "Preferences"
-	set desc = "Configure your user interface"
+	set desc = "Configure your user interface."
 
 	if(!ishuman(usr))
 		usr << "This only for human"
@@ -186,7 +186,7 @@
 /client/verb/toggle_anim_attacks()
 	set name = "Show/Hide Melee Animations"
 	set category = "Preferences"
-	set desc = "Toggles seeing melee attack animations"
+	set desc = "Toggles seeing melee attack animations."
 	prefs.toggles ^= SHOW_ANIMATIONS
 	prefs.save_preferences()
 	src << "You will [(prefs.toggles & SHOW_ANIMATIONS) ? "no longer" : "now"] see melee attack animations."
@@ -195,7 +195,7 @@
 /client/verb/toggle_progress_bar()
 	set name = "Show/Hide Progress Bar"
 	set category = "Preferences"
-	set desc = "Toggles visibility of progress bars"
+	set desc = "Toggles visibility of progress bars."
 	prefs.toggles ^= SHOW_PROGBAR
 	prefs.save_preferences()
 	src << "You will [(prefs.toggles & SHOW_PROGBAR) ? "no longer" : "now"] see progress bars."
@@ -204,7 +204,7 @@
 /client/verb/toggle_media()
 	set name = "Hear/Silence Streaming"
 	set category = "Preferences"
-	set desc = "Toggle hearing streaming media (radios, jukeboxes, etc)"
+	set desc = "Toggle hearing streaming media (radios, jukeboxes, etc)."
 	prefs.toggles ^= SOUND_STREAMING
 	prefs.save_preferences()
 	src << "You will [(prefs.toggles & SOUND_STREAMING) ? "now" : "no longer"] hear streamed media."

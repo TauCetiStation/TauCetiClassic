@@ -169,7 +169,7 @@
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/construct
 	name = "Artificer"
-	desc = "This spell conjures a construct which may be controlled by Shades"
+	desc = "This spell conjures a construct which may be controlled by Shades."
 
 	school = "conjuration"
 	charge_max = 600
@@ -185,7 +185,7 @@
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/creature
 	name = "Summon Creature Swarm"
-	desc = "This spell tears the fabric of reality, allowing horrific daemons to spill forth"
+	desc = "This spell tears the fabric of reality, allowing horrific daemons to spill forth."
 
 	school = "conjuration"
 	charge_max = 1200
@@ -266,7 +266,7 @@
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/floor
 	name = "Floor Construction"
-	desc = "This spell constructs a cult floor"
+	desc = "This spell constructs a cult floor."
 
 	school = "conjuration"
 	charge_max = 20
@@ -279,7 +279,7 @@
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/wall
 	name = "Leser Construction"
-	desc = "This spell constructs a cult wall"
+	desc = "This spell constructs a cult wall."
 
 	school = "conjuration"
 	charge_max = 100
@@ -292,7 +292,7 @@
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/wall/reinforced
 	name = "Greater Construction"
-	desc = "This spell constructs a reinforced metal wall"
+	desc = "This spell constructs a reinforced metal wall."
 
 	school = "conjuration"
 	charge_max = 300
@@ -307,7 +307,7 @@
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone
 	name = "Summon Soulstone"
-	desc = "This spell reaches into Nar-Sie's realm, summoning one of the legendary fragments across time and space"
+	desc = "This spell reaches into Nar-Sie's realm, summoning one of the legendary fragments across time and space."
 
 	school = "conjuration"
 	charge_max = 3000
@@ -321,7 +321,7 @@
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/lesserforcewall
 	name = "Shield"
-	desc = "This spell creates a temporary forcefield to shield yourself and allies from incoming fire"
+	desc = "This spell creates a temporary forcefield to shield yourself and allies from incoming fire."
 
 	school = "transmutation"
 	charge_max = 300
@@ -335,7 +335,7 @@
 
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift
 	name = "Phase Shift"
-	desc = "This spell allows you to pass through walls"
+	desc = "This spell allows you to pass through walls."
 
 	school = "transmutation"
 	charge_max = 200

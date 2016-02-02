@@ -7,7 +7,7 @@ var/global/const
 datum/skill/var
     ID = "none" // ID of the skill, used in code
     name = "None" // name of the skill
-    desc = "Placeholder skill" // detailed description of the skill
+    desc = "Placeholder skill." // detailed description of the skill
     field = "Misc" // the field under which the skill will be listed
     secondary = 0 // secondary skills only have two levels and cost significantly less
 
@@ -152,7 +152,7 @@ datum/skill/science
 datum/attribute/var
 	ID = "none"
 	name = "None"
-	desc = "This is a placeholder"
+	desc = "This is a placeholder."
 
 
 proc/setup_skills()

@@ -44,6 +44,9 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	var/used_equip = 0
 	var/used_light = 0
 	var/used_environ = 0
+	var/static_equip
+	var/static_light = 0
+	var/static_environ
 
 	var/has_gravity = 1
 	var/obj/machinery/power/apc/apc = null
@@ -484,7 +487,7 @@ var/list/ghostteleportlocs = list()
 /area/abductor_ship
 	name = "\improper Abductor Ship"
 	icon_state = "yellow"
-	power_equip = 1
+	requires_power = 0
 
 /area/wizard_station
 	name = "\improper Wizard's Den"
@@ -1913,8 +1916,6 @@ var/list/the_station_areas = list (
 	/area/shuttle/escape_pod5/station,
 	/area/shuttle/mining/station,
 	/area/shuttle/transport1/station,
-	// /area/shuttle/transport2/station,
-	/area/shuttle/prison/station,
 	/area/shuttle/administration/station,
 	/area/shuttle/specops/station,
 	/area/atmos,
@@ -1923,7 +1924,6 @@ var/list/the_station_areas = list (
 	/area/bridge,
 	/area/crew_quarters,
 	/area/holodeck,
-	/area/mint,
 	/area/library,
 	/area/chapel,
 	/area/lawoffice,
@@ -1941,10 +1941,8 @@ var/list/the_station_areas = list (
 	/area/construction,
 	/area/ai_monitored/storage/eva, //do not try to simplify to "/area/ai_monitored" --rastaf0
 	/area/ai_monitored/storage/secure,
-	/area/ai_monitored/storage/emergency,
 	/area/turret_protected/ai_upload, //do not try to simplify to "/area/turret_protected" --rastaf0
-	/area/turret_protected/ai_upload_foyer,
-	/area/turret_protected/ai,
+	/area/turret_protected/ai
 )
 
 

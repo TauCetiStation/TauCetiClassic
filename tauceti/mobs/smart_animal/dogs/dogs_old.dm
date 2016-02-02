@@ -23,7 +23,7 @@
 /mob/living/simple_animal/dog
 
 	name = "Dog"
-	desc = "Just Dog"
+	desc = "Just Dog."
 	icon = 'tauceti/mobs/smart_animal/dogs/doge.dmi'
 	icon_state = "shepherd"
 	icon_dead = "shepherd_dead"
@@ -51,7 +51,7 @@
 
 /mob/living/simple_animal/dog/sheppard
 	name = "Sheppard"
-	desc = "Real hero guarding our galaxy"
+	desc = "Real hero guarding our galaxy."
 //	loyalty = 70
 
 /mob/living/simple_animal/dog/sheppard/New()

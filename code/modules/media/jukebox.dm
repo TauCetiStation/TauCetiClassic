@@ -137,7 +137,7 @@ var/global/loopModeNames=list(
 		else
 			t += "<i>Please wait before changing playlists.</i>"
 		t += "<br />"
-		if(current_song && islist(current_song))
+		if(current_song && current_song < playlist.len)
 			var/datum/song_info/song=playlist[current_song]
 			t += "<b>Current song:</b> [song.artist] - [song.title]<br />"
 		t += "<table class='prettytable'><tr><th colspan='2'>Artist - Title</th><th>Album</th></tr>"
@@ -248,7 +248,7 @@ var/global/loopModeNames=list(
 			return
 	if(playing)
 		var/datum/song_info/song
-		if(current_song && islist(current_song))
+		if(current_song && current_song < playlist.len)
 			song = playlist[current_song]
 		if(!current_song || (song && world.time >= media_start_time + song.length))
 			current_song=1
@@ -264,7 +264,7 @@ var/global/loopModeNames=list(
 			update_music()
 
 /obj/machinery/media/jukebox/update_music()
-	if(current_song && islist(current_song) && playing )
+	if(current_song && current_song < playlist.len && playing )
 		var/datum/song_info/song = playlist[current_song]
 		media_url = song.url
 		media_start_time = world.time
