@@ -244,6 +244,10 @@
 	affecting_lights = old_affecting_lights
 	corners = old_lighting_corners
 
+	for(var/atom/A in contents)
+		if(A.light)
+			A.light.force_update = 1
+
 	for(var/i = 1 to 4)//Generate more light corners when needed. If removed - pitch black shuttles will come for your soul!
 		if(corners[i]) // Already have a corner on this direction.
 			continue
