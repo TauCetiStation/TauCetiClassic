@@ -34,23 +34,15 @@
 	set name = ".Say"
 	set hidden = 1
 
-	set_typing_indicator(1)
-	hud_typing = 1
-	typing_shown = 1
-	var/message = input("","say (text)") as text
-	hud_typing = 0
-	set_typing_indicator(0)
-	if(message)
-		say_verb(message)
-	typing_shown = 0
+	if(client)
+		winset(client, "input", "focus=true;text='Say \"'")
 
 /mob/verb/me_wrapper()
 	set name = ".Me"
 	set hidden = 1
 
-	var/message = input("","me (text)") as text
-	if(message)
-		me_verb(message)
+	if(client)
+		winset(client, "input", "focus=true;text='Me '")
 
 /mob/proc/handle_typing_indicator()
 	if(client)

@@ -101,6 +101,7 @@
 #include "code\controllers\verbs.dm"
 #include "code\controllers\voting.dm"
 #include "code\controllers\Processes\garbage.dm"
+#include "code\controllers\Processes\typing.dm"
 #include "code\controllers\Processes\water.dm"
 #include "code\controllers\ProcessScheduler\core\_define.dm"
 #include "code\controllers\ProcessScheduler\core\_stubs.dm"
