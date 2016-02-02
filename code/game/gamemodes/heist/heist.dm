@@ -1,6 +1,14 @@
-/*
-VOX HEIST ROUNDTYPE
-*/
+/obj/effect/landmark/heist/aurora //used to locate shuttle.
+	name = "Aurora"
+	icon_state = "x3"
+
+/obj/effect/landmark/heist/mob_loot //fulton - locate where to drop mobs.
+	name = "mob loot"
+	icon_state = "x3"
+
+/obj/effect/landmark/heist/obj_loot //fulton - locate where to drop objs.
+	name = "obj loot"
+	icon_state = "x3"
 
 /datum/game_mode/
 	var/list/datum/mind/raiders = list()  //Antags.
@@ -26,7 +34,7 @@ VOX HEIST ROUNDTYPE
 	world << "<B>An unidentified bluespace signature has slipped past the Icarus and is approaching [station_name()]!</B>"
 	world << "Whoever they are, they're likely up to no good. Protect the crew and station resources against this dastardly threat!"
 	world << "<B>Raiders:</B> Loot [station_name()] for anything and everything you need."
-	world << "<B>Personnel:</B> Repel the raiders and their low, low prices and/or crossbows."
+	world << "<B>Personnel:</B> Repel the raiders and their low, low prices and/or guns."
 
 /datum/game_mode/heist/can_start()
 
@@ -158,18 +166,22 @@ VOX HEIST ROUNDTYPE
 	return objs
 
 /datum/game_mode/heist/proc/greet_vox(var/datum/mind/raider)
-	raider.current << "\blue <B>You are a Pirate....ARGH!</b>"
-	//raider.current << "\blue The Vox are a race of cunning, sharp-eyed nomadic raiders and traders endemic to Tau Ceti and much of the unexplored galaxy. You and the crew have come to the Exodus for plunder, trade or both."
-	//raider.current << "\blue Vox are cowardly and will flee from larger groups, but corner one or find them en masse and they are vicious."
-	raider.current << "\blue Use :3 to guttertalk, :H to talk on your encrypted channel!"
+	var/msg = ""
+	raider.current << "<span class='notice'><B>You are a Pirate....ARGH!</B></span>"
+	raider.current << "<span class='notice'>Use :3 to guttertalk, :H to talk on your encrypted channel!</span>"
+	msg = "” вашего капитана имеетс€ fulton recovery pack! »спользуйте его, чтобы быстро доставить все что угодно на ваш корабль (если цель жива€ - попадет в комнату удержани€ на шаттле)."
+	raider.current << "[sanitize(msg)]"
+	msg = "Ќа вашем корабле лежат семена кудзу и эксклюзивные кубические гранаты! »спользуйте их на станции, чтобы се€ть хаос (осторожно, гранаты содержат агрессивную живность котора€ с удовольствием перекусит даже вами, а семена можно сажать пр€мо на пол станции)."
+	raider.current << "<span class='notice'>[sanitize(msg)]</span>"
+	msg = "¬аша винтовка и пистолет модифицированы дл€ использовани€ специальных сверхзвуковых снар€дов нового поколени€, они не нанос€т вреда обычным живым существам но имеют огромную силу удара, что позвол€ет вывести из бо€ человека нацепившего на себ€ много брони, а синтетам и мехам наносит колоссальный вред."
+	raider.current << "[sanitize(msg)]"
+	msg = "Debugger который вы найдете на корабле - поможет вам со взломом APC и дверей. ”чтите что такой метод наносит вред программному обеспечению и в случае с дверьми - попросту сжигает плату. Ќе используйте его на двер€х с опущенными болтами, конечно если ваша цель не €вл€етс€ полностью заблокировать дверь."
+	raider.current << "<span class='notice'>[sanitize(msg)]</span>"
 	var/obj_count = 1
 	if(!config.objectives_disabled)
 		for(var/datum/objective/objective in raider.objectives)
 			raider.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
 			obj_count++
-	//else
-	//	raider.current << "<font color=blue>Within the rules,</font> try to act as an opposing force to the crew or come up with other fun ideas. Further RP and try to make sure other players have </i>fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>"
-
 
 /datum/game_mode/heist/declare_completion()
 
@@ -232,6 +244,9 @@ VOX HEIST ROUNDTYPE
 				feedback_add_details("traitor_objective","[objective.type]|FAIL")
 		count++
 
+	if(heist_rob_total == 0)
+		heist_get_shuttle_price()
+		world << "<br><br>Estimated value of valuables left on Aurora - $<font color='red'>[num2text(heist_rob_total,9)]</font> spacebucks."
 	..()
 
 datum/game_mode/proc/auto_declare_completion_heist()
