@@ -50,6 +50,8 @@
 	for(var/mob/M in src)
 		M.forceMove(src.loc)
 		if(M.client)
+			if(!M.blinded)
+				M.blind.layer = 0
 			M.client.eye = M.client.mob
 			M.client.perspective = MOB_PERSPECTIVE
 
@@ -102,6 +104,7 @@
 			continue
 
 		if(M.client)
+			M.blind.layer = 18
 			M.client.perspective = EYE_PERSPECTIVE
 			M.client.eye = src
 

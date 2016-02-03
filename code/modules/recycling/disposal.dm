@@ -116,6 +116,7 @@
 				V.show_message("<span class='red'>[usr] starts putting [GM.name] into the disposal.</span>", 3)
 			if(do_after(usr, 20, target = src))
 				if (GM.client)
+					GM.blind.layer = 18
 					GM.client.perspective = EYE_PERSPECTIVE
 					GM.client.eye = src
 				GM.loc = src
@@ -179,6 +180,7 @@
 	else
 		return
 	if (target.client)
+		target.blind.layer = 18
 		target.client.perspective = EYE_PERSPECTIVE
 		target.client.eye = src
 	target.loc = src
@@ -245,6 +247,8 @@
 /obj/machinery/disposal/proc/go_out(mob/user)
 
 	if (user.client)
+		if(!user.blinded)
+			user.blind.layer = 0
 		user.client.eye = user.client.mob
 		user.client.perspective = MOB_PERSPECTIVE
 	user.loc = src.loc
@@ -662,6 +666,7 @@
 		if(ismob(AM))
 			var/mob/M = AM
 			if(M.client)	// if a client mob, update eye to follow this holder
+				M.blind.layer = 18
 				M.client.eye = src
 
 	if(other.has_fat_guy)
@@ -1542,6 +1547,8 @@
 // check if mob has client, if so restore client view on eject
 /mob/pipe_eject(var/direction)
 	if (src.client)
+		if(!blinded)
+			src.blind.layer = 0
 		src.client.perspective = MOB_PERSPECTIVE
 		src.client.eye = src
 
