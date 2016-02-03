@@ -1655,11 +1655,13 @@
 					if(species.sightglassesmod)
 						set_EyesVision("nightsight_glasses")
 					else
+						var/light_amount = 0
 						var/turf/T = get_turf(src)
-						if(T.lighting_overlay && T.lighting_overlay.luminosity == 0)
-							set_EyesVision("nightsight",20)
-						else
+						light_amount = round(T.get_lumcount()*10)
+						if(light_amount > 1)
 							set_EyesVision(transition_time = 20)
+						else
+							set_EyesVision("nightsight",20)
 				else
 					switch(species.sightglassesmod)
 						if(0)

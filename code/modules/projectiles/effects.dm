@@ -151,11 +151,17 @@
 //----------------------------
 // Bullet
 //----------------------------
+/obj/effect/projectile/bullet/tracer
+	icon_state = "tracer_bullet"
+
 /obj/effect/projectile/bullet/muzzle
 	icon_state = "muzzle_bullet"
 	light_range = 3
 	light_power = 2
 	light_color = "#f2f5a9"
+
+/obj/effect/projectile/bullet/impact
+	icon_state = "impact_bullet"
 
 //----------------------------
 // New

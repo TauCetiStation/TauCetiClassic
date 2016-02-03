@@ -1073,7 +1073,8 @@
 	plant_type = 1
 
 /obj/item/seeds/kudzuseed/attack_self(mob/user as mob)
-	if(istype(user.loc,/turf/space))
+	if(istype(user.loc,/turf/space) || istype(user.loc,/turf/simulated/shuttle))
+		user << "<span class='notice'>You cannot plant kudzu on a moving shuttle or space.</span>"
 		return
 	user << "<span class='notice'>You plant the kudzu. You monster.</span>"
 	new /obj/effect/spacevine_controller(user.loc)
