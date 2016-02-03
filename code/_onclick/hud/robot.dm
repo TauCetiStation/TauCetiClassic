@@ -171,10 +171,11 @@ var/obj/screen/robot_inventory
 				src.adding += mymob.gun_run_icon
 			src.adding += mymob.gun_move_icon
 
-	mymob.client.screen = null
+	mymob.client.screen = list()
 
 	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.oxygen, mymob.fire, mymob.hands, mymob.healths, mymob:cells, mymob.pullin, mymob.blind, mymob.flash, mymob.gun_setting_icon, robot_inventory) //, mymob.rest, mymob.sleep, mymob.mach )
 	mymob.client.screen += src.adding + src.other
+	mymob.client.screen += mymob.client.void
 
 	return
 

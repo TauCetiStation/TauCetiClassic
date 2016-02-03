@@ -27,6 +27,7 @@
 	blobhealthdisplay.screen_loc = ui_internal
 	blobhealthdisplay.layer = 20
 
-	mymob.client.screen = null
+	mymob.client.screen = list()
 
 	mymob.client.screen += list(blobpwrdisplay, blobhealthdisplay)
+	mymob.client.screen += mymob.client.void
