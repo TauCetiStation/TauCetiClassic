@@ -1001,3 +1001,19 @@ mob/proc/yank_out_object()
 		animate(client, color = CM.matrix, time = transition_time)
 	else
 		animate(client, color = null, time = transition_time)
+
+/mob/proc/instant_vision_update(state=null, atom/A)
+	if(!client || isnull(state) || !blind)
+		return
+
+	switch(state)
+		if(0)
+			if(!blinded)
+				blind.layer = 0
+			client.eye = client.mob
+			client.perspective = MOB_PERSPECTIVE
+		if(1)
+			blind.layer = 18
+			if(A)
+				client.perspective = EYE_PERSPECTIVE
+				client.eye = A
