@@ -115,11 +115,8 @@
 			for (var/mob/V in viewers(usr))
 				V.show_message("<span class='red'>[usr] starts putting [GM.name] into the disposal.</span>", 3)
 			if(do_after(usr, 20, target = src))
-				if (GM.client)
-					GM.blind.layer = 18
-					GM.client.perspective = EYE_PERSPECTIVE
-					GM.client.eye = src
 				GM.loc = src
+				GM.instant_vision_update(1,src)
 				for (var/mob/C in viewers(src))
 					C.show_message("<span class='danger'>[GM.name] has been placed in the [src] by [user].</span>", 3)
 				qdel(G)
@@ -244,7 +241,7 @@
 // leave the disposal
 /obj/machinery/disposal/proc/go_out(mob/user)
 	user.loc = src.loc
-	user.instant_vision_update(1,src)
+	user.instant_vision_update(0)
 	update()
 	return
 
