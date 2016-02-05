@@ -1,5 +1,6 @@
 /mob/living/Life()
 	..()
+	check_typing()
 	if(stat != DEAD)
 		handle_actions()
 
