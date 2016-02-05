@@ -36,6 +36,7 @@
 
 	if(client)
 		winset(client, "input", "focus=true;text='Say \"'")
+		check_typing()
 
 /mob/verb/me_wrapper()
 	set name = ".Me"
@@ -43,6 +44,27 @@
 
 	if(client)
 		winset(client, "input", "focus=true;text='Me '")
+
+/mob/proc/check_typing()
+	return
+
+/mob/living/check_typing()
+	if(client)
+		if(stat)
+			if(typing_indicator)
+				qdel(typing_indicator)
+			return
+		else
+			var/infocus = winget(client, "input", "focus")
+			var/temp = winget(client, "input", "text")
+			if(infocus == "true" && findtext(temp, "Say \"", 1, 7) || findtext(temp, "Say \"", 1, 7) && length(temp) > 5)
+				if(!typing_indicator)
+					typing_indicator = image('icons/mob/talk.dmi',src,"typing")
+					for(var/mob/M in viewers(src, null))
+						M << typing_indicator
+				return
+	if(typing_indicator)
+		qdel(typing_indicator)
 
 /mob/proc/handle_typing_indicator()
 	if(client)
