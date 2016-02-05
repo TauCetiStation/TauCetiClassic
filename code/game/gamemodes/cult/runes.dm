@@ -1086,7 +1086,7 @@ var/list/sacrificed = list()
 
 		brainswap()
 			var/list/compatible_mobs = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
-			var/bdam = rand(15,40)
+			var/bdam = rand(2,10)
 			for(var/obj/effect/rune/R in world)
 				if(R.word1==cultwords["travel"] && R.word2==cultwords["blood"] && R.word3==cultwords["other"])
 					for(var/mob/living/carbon/D in R.loc)
@@ -1104,9 +1104,8 @@ var/list/sacrificed = list()
 							D << "<span class='red'>You feel weakened.</span>"
 							D.adjustBrainLoss(bdam)
 							user.adjustBrainLoss(bdam)
-							user.say ("Yu[pick("'","`")]Ai! Lauri lantar lassi srinen,ni nótim ve rmar aldaron!")
-							user.visible_message("<span class='red'>Your brain blows and your mind starts flowing into the rune!</span>", \
-							"<span class='red'>Your mind flows into other body. You feel a lack of intelligence.</span>")
+							user.say ("Yu[pick("'","`")]Ai! Lauri lantar lassi srinen,ni nï¿½tim ve rmar aldaron!")
+							user << "<span class='red'>Your mind flows into other body. You feel a lack of intelligence.</span>"
 							var/mob/dead/observer/ghost = D.ghostize(0)
 							user.mind.transfer_to(D)
 							ghost.mind.transfer_to(user)
