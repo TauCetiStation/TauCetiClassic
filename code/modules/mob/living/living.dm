@@ -405,25 +405,18 @@
 						if (locate(/obj/item/weapon/grab, M.grabbed_by.len))
 							ok = 0
 					if (ok)
-						var/atom/movable/t = M.pulling
+						var/atom/movable/AM = M.pulling
 						M.stop_pulling()
 
 						//this is the gay blood on floor shit -- Added back -- Skie
-						if (M.lying && (prob(M.getBruteLoss() / 6)))
-							var/turf/location = M.loc
-							if (istype(location, /turf/simulated))
-								location.add_blood(M)
-						//pull damage with injured people
-							if(prob(25))
-								M.adjustBruteLoss(1)
-								visible_message("<span class='warning'>[M]'s wounds open more from being dragged!</span>")
+						if(M.lying && (prob(M.getBruteLoss() / 2)))
+							makeTrail(T, M)
 						if(M.pull_damage())
 							if(prob(25))
 								M.adjustBruteLoss(2)
 								visible_message("<span class='warning'>[M]'s wounds worsen terribly from being dragged!</span>")
 								var/turf/location = M.loc
 								if (istype(location, /turf/simulated))
-									location.add_blood(M)
 									if(ishuman(M))
 										var/mob/living/carbon/H = M
 										var/blood_volume = round(H:vessel.get_reagent_amount("blood"))
@@ -432,7 +425,7 @@
 
 
 						step(pulling, get_dir(pulling.loc, T))
-						M.start_pulling(t)
+						M.start_pulling(AM)
 				else
 					if (pulling)
 						if (istype(pulling, /obj/structure/window))
@@ -451,6 +444,50 @@
 	if(update_slimes)
 		for(var/mob/living/carbon/slime/M in view(1,src))
 			M.UpdateFeed(src)
+
+/mob/living/proc/makeTrail(turf/T, mob/living/M)
+	var/blood_exists = 0
+	var/trail_type = M.getTrail()
+	for(var/obj/effect/decal/cleanable/blood/trail_holder/C in M.loc) //checks for blood splatter already on the floor
+		blood_exists = 1
+	if (istype(M.loc, /turf/simulated) && trail_type != null)
+		var/newdir = get_dir(T, M.loc)
+		if(newdir != M.dir)
+			newdir = newdir | M.dir
+			if(newdir == 3) //N + S
+				newdir = NORTH
+			else if(newdir == 12) //E + W
+				newdir = EAST
+		if((newdir in list(1, 2, 4, 8)) && (prob(50)))
+			newdir = turn(get_dir(T, M.loc), 180)
+		if(!blood_exists)
+			new /obj/effect/decal/cleanable/blood/trail_holder(M.loc)
+		for(var/obj/effect/decal/cleanable/blood/trail_holder/TH in M.loc)
+			if(ishuman(M))
+				var/mob/living/carbon/human/H = M
+				if(H.species)
+					if(TH.color != H.species.blood_color)
+						TH.basecolor = H.species.blood_color
+						TH.update_icon()
+			else
+				if(TH.color != initial(TH.basecolor))
+					TH.basecolor = initial(TH.basecolor)
+					TH.update_icon()
+			if(!TH.amount)
+				processing_objects -= TH
+				TH.name = initial(TH.name)
+				TH.desc = initial(TH.desc)
+				TH.amount = initial(TH.amount)
+				TH.drytime = world.time + DRYING_TIME * (TH.amount+1)
+				processing_objects += TH
+			if((!(newdir in TH.existing_dirs) || trail_type == "trails_1") && TH.existing_dirs.len <= 16) //maximum amount of overlays is 16 (all light & heavy directions filled)
+				TH.existing_dirs += newdir
+				TH.overlays.Add(image('icons/effects/blood.dmi',trail_type,dir = newdir))
+			if(M.dna)
+				TH.blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
+
+/mob/living/proc/getTrail() //silicon and simple_animals don't get blood trails
+	return null
 
 /mob/living/verb/resist()
 	set name = "Resist"

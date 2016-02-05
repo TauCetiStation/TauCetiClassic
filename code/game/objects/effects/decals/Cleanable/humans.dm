@@ -29,8 +29,9 @@ var/global/list/image/splatter_cache=list()
 /obj/effect/decal/cleanable/blood/New()
 	..()
 	update_icon()
-	if(istype(src, /obj/effect/decal/cleanable/blood/gibs))
-		return
+	remove_ex_blood()
+
+/obj/effect/decal/cleanable/blood/proc/remove_ex_blood() //removes existant blood on the turf
 	if(istype(src, /obj/effect/decal/cleanable/blood/tracks))
 		return // We handle our own drying.
 	if(src.type == /obj/effect/decal/cleanable/blood)
@@ -156,6 +157,19 @@ var/global/list/image/splatter_cache=list()
 	..()
 	usr << "It reads: <font color='[basecolor]'>\"[message]\"<font>"
 
+/obj/effect/decal/cleanable/blood/trail_holder //not a child of blood on purpose
+	name = "blood"
+	icon_state = "blank"
+	desc = "Your instincts say you shouldn't be following these."
+	gender = PLURAL
+	density = 0
+	anchored = 1
+	layer = 2
+	random_icon_states = null
+	amount = 3
+	var/list/existing_dirs = list()
+	blood_DNA = list()
+
 /obj/effect/decal/cleanable/blood/gibs
 	name = "gibs"
 	desc = "They look bloody and gruesome."
@@ -167,6 +181,9 @@ var/global/list/image/splatter_cache=list()
 	icon_state = "gibbl5"
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6")
 	var/fleshcolor = "#FFFFFF"
+
+/obj/effect/decal/cleanable/blood/gibs/remove_ex_blood()
+	return
 
 /obj/effect/decal/cleanable/blood/gibs/update_icon()
 	var/image/giblets = new(base_icon, "[icon_state]_flesh", dir)
