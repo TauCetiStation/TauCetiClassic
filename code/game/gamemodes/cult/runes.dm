@@ -1080,3 +1080,37 @@ var/list/sacrificed = list()
 
 			qdel(src)
 			return
+
+
+//////////////////////////////////////////TWENTY-SIXTH RUNE
+
+		brainswap()
+			var/list/compatible_mobs = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
+			var/bdam = rand(15,40)
+			for(var/obj/effect/rune/R in world)
+				if(R.word1==cultwords["travel"] && R.word2==cultwords["blood"] && R.word3==cultwords["other"])
+					for(var/mob/living/carbon/D in R.loc)
+						var/mob/living/carbon/user = usr
+
+						if(!(D.type in compatible_mobs))
+							usr << "Their mind isn't compatible with yours."
+							return
+
+						if(!(usr.type in compatible_mobs))
+							usr << "Your mind isn't compatible with their."
+							return
+
+						else
+							D << "<span class='rose'>You feel weakened.</span>"
+							D.adjustBrainLoss(bdam)
+							user.adjustBrainLoss(bdam)
+							usr.say ("Yu[pick("'","`")]Ai! Lauri lantar lassi srinen,ni nótim ve rmar aldaron!")
+							usr.visible_message("<span class='rose'>Your brain blows and your mind starts flowing into the rune [usr]!</span>", \
+							"<span class='rose'>Your mind flows into other body. You feel a lack of intelligence.</span>")
+							var/mob/dead/observer/ghost = D.ghostize(0)
+							usr.mind.transfer_to(D)
+							ghost.mind.transfer_to(usr)
+							user.Paralyse(7)
+							D.Paralyse(7)
+
+			return
