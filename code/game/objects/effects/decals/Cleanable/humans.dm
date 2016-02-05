@@ -157,7 +157,7 @@ var/global/list/image/splatter_cache=list()
 	..()
 	usr << "It reads: <font color='[basecolor]'>\"[message]\"<font>"
 
-/obj/effect/decal/cleanable/blood/trail_holder //not a child of blood on purpose
+/obj/effect/decal/cleanable/blood/trail_holder
 	name = "blood"
 	icon_state = "blank"
 	desc = "Your instincts say you shouldn't be following these."
