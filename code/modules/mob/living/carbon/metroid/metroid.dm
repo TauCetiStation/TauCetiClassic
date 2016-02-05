@@ -1050,6 +1050,10 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 					var/I = image('tauceti/icons/mob/hud_mob.dmi', loc = G, icon_state = "agolem_master")
 					client.images += I
 
+
+/mob/living/carbon/slime/getTrail()
+	return null
+
 //////////////////////////////Old shit from metroids/RoRos, and the old cores, would not take much work to re-add them////////////////////////
 
 /*

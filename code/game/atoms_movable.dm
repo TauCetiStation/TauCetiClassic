@@ -30,26 +30,6 @@
 /atom/movable/proc/setLoc(var/T, var/teleported=0)
 	loc = T
 
-/*
-/atom/movable/Destroy()
-	if(isnull(gcDestroyed) && loc)
-		testing("GC: -- [type] was deleted via del() rather than qdel() --")
-	else if(isnull(gcDestroyed))
-		testing("GC: [type] was deleted via GC without qdel()") //Not really a huge issue but from now on, please qdel()
-	else
-		testing("GC: [type] was deleted via GC with qdel()")
-	..()
-*/
-
-/atom/movable/Del()
-	if(isnull(gcDestroyed) && loc)
-		testing("GC: -- [type] was deleted via del() rather than qdel() --")
-//	else if(isnull(gcDestroyed))
-//		testing("GC: [type] was deleted via GC without qdel()") //Not really a huge issue but from now on, please qdel()
-//	else
-//		testing("GC: [type] was deleted via GC with qdel()")
-	..()
-
 /atom/movable/Destroy()
 	. = ..()
 	if(loc)

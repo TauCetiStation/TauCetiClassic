@@ -947,6 +947,13 @@ var/heist_rob_total = 0
 			if(I.contents && I.contents.len)
 				heist_recursive_price_reset(I,loop)
 
+/proc/heist_get_shuttle_price()
+	heist_rob_total = 0
+	var/area/A = get_area(locate(/obj/effect/landmark/heist/aurora))
+	if(A)
+		for(var/atom/movable/AM in A)
+			heist_recursive_price_check(AM)
+
 /datum/objective/heist/robbery/choose_target()
 	target = "valuables"
 	target_amount = 1000000
