@@ -303,7 +303,7 @@
 	if(alive >= 2)
 		text += "All of them <B>alive</B>. "
 	else
-		text += "Some from them is <B>dead</B>. "
+		text += "Someone from them is <B>dead</B>. "
 	return text
 
 /datum/game_mode/proc/auto_declare_completion_abduction()
