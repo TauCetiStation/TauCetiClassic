@@ -1,5 +1,5 @@
 #define ARRIVAL_SHUTTLE_MOVE_TIME 200
-#define ARRIVAL_SHUTTLE_COOLDOWN 400
+#define ARRIVAL_SHUTTLE_COOLDOWN 650
 
 var/location = 0 // 0 - Start 2 - NSS Exodus 1 - transit
 var/moving = 0
@@ -29,24 +29,30 @@ var/lastMove = 0
 
 	if(location == 0)
 		fromArea = locate(/area/shuttle/arrival/pre_game)
-		sleep(75)
+		for(var/obj/machinery/light/small/L in fromArea)
+			L.brightness_color = "#00ff00"
+			L.color = "#00ff00"
+			L.update(0)
 
-		for(var/obj/machinery/door/unpowered/shuttle/D in fromArea)
-			spawn(0)
-			D.close()
+		sleep(140)
+
+		lock_doors(fromArea)
+
+		sleep(10)
+
+		for(var/obj/machinery/light/small/L in fromArea)
+			L.brightness_color = initial(L.brightness_color)
+			L.color = initial(L.color)
+			L.update(0)
+
+		sleep(50)
 
 		toArea = locate(/area/shuttle/arrival/transit)
 		curr_location = fromArea
 
 		fromArea.move_contents_to(toArea, null, WEST)
-		for(var/mob/M in toArea)
-			if(M.client)
-				spawn(0)
-					if(M.buckled)
-						shake_camera(M, 2, 1)
-					else
-						shake_camera(M, 4, 2)
-						M.Weaken (4)
+		shake_mobs(toArea)
+
 		location = 1
 		curr_location = locate(/area/shuttle/arrival/transit)
 		sleep(ARRIVAL_SHUTTLE_MOVE_TIME)
@@ -56,40 +62,45 @@ var/lastMove = 0
 
 		fromArea.move_contents_to(toArea, null, WEST)
 		radio.autosay(arrival_note, "Arrivals Alert System")
-		for(var/mob/M in toArea)
-			if(M.client)
-				spawn(0)
-					if(M.buckled)
-						shake_camera(M, 2, 1)
-					else
-						shake_camera(M, 4, 2)
-						M.Weaken (4)
+
+		shake_mobs(toArea)
+
 		location = 2
 		curr_location = locate(/area/shuttle/arrival/station)
 		moving = 0
+
+		open_doors(toArea, 1)
+
 		return
 
 	if(location == 2)
 		fromArea = locate(/area/shuttle/arrival/station)
-		sleep(75)
+		for(var/obj/machinery/light/small/L in fromArea)
+			L.brightness_color = "#00ff00"
+			L.color = "#00ff00"
+			L.update(0)
 
-		for(var/obj/machinery/door/unpowered/shuttle/D in fromArea)
-			spawn(0)
-			D.close()
+		sleep(140)
+
+		lock_doors(fromArea)
+
+		sleep(10)
+
+		for(var/obj/machinery/light/small/L in fromArea)
+			L.brightness_color = initial(L.brightness_color)
+			L.color = initial(L.color)
+			L.update(0)
+
+		sleep(50)
 
 		toArea = locate(/area/shuttle/arrival/transit)
 		radio.autosay(department_note, "Arrivals Alert System")
 		curr_location = fromArea
 
 		fromArea.move_contents_to(toArea, null, WEST)
-		for(var/mob/M in toArea)
-			if(M.client)
-				spawn(0)
-					if(M.buckled)
-						shake_camera(M, 2, 1)
-					else
-						shake_camera(M, 4, 2)
-						M.Weaken (4)
+
+		shake_mobs(toArea)
+
 		location = 1
 		curr_location = locate(/area/shuttle/arrival/transit)
 		sleep(ARRIVAL_SHUTTLE_MOVE_TIME)
@@ -98,17 +109,15 @@ var/lastMove = 0
 		toArea = locate(/area/shuttle/arrival/pre_game)
 
 		fromArea.move_contents_to(toArea, null, WEST)
-		for(var/mob/M in toArea)
-			if(M.client)
-				spawn(0)
-					if(M.buckled)
-						shake_camera(M, 2, 1)
-					else
-						shake_camera(M, 4, 2)
-						M.Weaken (4)
+
+		shake_mobs(toArea)
+
 		location = 0
 		curr_location = locate(/area/shuttle/arrival/pre_game)
 		moving = 0
+
+		open_doors(toArea, 2)
+
 		return
 
 
@@ -144,6 +153,90 @@ var/lastMove = 0
 	moving = 0
 
 	return */
+
+/obj/machinery/computer/arrival_shuttle/proc/lock_doors(area/A)
+	var/area/velocity = locate(/area/centcom/arrival)
+	for(var/obj/machinery/door/airlock/external/D in velocity)
+		if(D.tag == "velocity_1")
+			D.close()
+			spawn(10) //incase someone messing with door.
+				if(D && D.density)
+					D.locked = 1
+					D.update_icon()
+
+	var/area/station = locate(/area/hallway/secondary/entry)
+	for(var/obj/machinery/door/airlock/external/D in station)
+		if(D.tag == "arrival_1")
+			D.close()
+			spawn(10)
+				if(D && D.density)
+					D.locked = 1
+					D.update_icon()
+
+	for(var/obj/machinery/door/unpowered/shuttle/D in A)
+		spawn(0)
+			D.close()
+			D.locked = 1
+
+/obj/machinery/computer/arrival_shuttle/proc/open_doors(area/A, arrival)
+	switch(arrival)
+		if(1) //Station
+			var/area/station = locate(/area/hallway/secondary/entry)
+			for(var/obj/machinery/door/airlock/external/D in station)
+				if(D.tag == "arrival_1")
+					D.locked = 0
+					D.update_icon()
+
+			for(var/obj/machinery/door/unpowered/shuttle/D in A)
+				spawn(0)
+					D.locked = 0
+					D.open()
+		if(2) //Velocity
+			var/area/velocity = locate(/area/centcom/arrival)
+			for(var/obj/machinery/door/airlock/external/D in velocity)
+				if(D.tag == "velocity_1")
+					D.locked = 0
+					D.update_icon()
+
+			for(var/obj/machinery/door/unpowered/shuttle/D in A)
+				spawn(0)
+					D.locked = 0
+					D.open()
+
+/obj/machinery/computer/arrival_shuttle/proc/shake_mobs(area/A)
+	for(var/mob/M in A)
+		if(M.client)
+			spawn(0)
+				if(M.buckled)
+					shake_camera(M, 2, 1)
+				else
+					shake_camera(M, 4, 2)
+		M.Weaken(4)
+		if(isliving(M) && !M.buckled)
+			var/mob/living/L = M
+			if(isturf(L.loc))
+				for(var/i=0, i < 5, i++)
+					var/turf/T = L.loc
+					var/hit = 0
+					T = get_step(T, EAST)
+					if(T.density)
+						hit = 1
+						if(i > 1)
+							L.adjustBruteLoss(10)
+						break
+					else
+						for(var/atom/movable/AM in T.contents)
+							if(AM.density)
+								hit = 1
+								if(i > 1)
+									L.adjustBruteLoss(10)
+									if(isliving(AM))
+										var/mob/living/bumped = AM
+										bumped.adjustBruteLoss(10)
+								break
+					if(hit)
+						break
+					step(L, EAST)
 
 /obj/machinery/computer/arrival_shuttle/attack_hand(user as mob)
 	src.add_fingerprint(usr)
