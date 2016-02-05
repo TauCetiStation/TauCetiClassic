@@ -1105,7 +1105,7 @@ var/list/sacrificed = list()
 							D.adjustBrainLoss(bdam)
 							user.adjustBrainLoss(bdam)
 							usr.say ("Yu[pick("'","`")]Ai! Lauri lantar lassi srinen,ni nótim ve rmar aldaron!")
-							usr.visible_message("<span class='rose'>Your brain blows and your mind starts flowing into the rune [usr]!</span>", \
+							usr.visible_message("<span class='rose'>Your brain blows and your mind starts flowing into the rune!</span>", \
 							"<span class='rose'>Your mind flows into other body. You feel a lack of intelligence.</span>")
 							var/mob/dead/observer/ghost = D.ghostize(0)
 							usr.mind.transfer_to(D)
