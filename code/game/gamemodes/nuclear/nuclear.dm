@@ -1,5 +1,6 @@
 /datum/game_mode
 	var/list/datum/mind/syndicates = list()
+	var/obj/nuclear_uplink
 
 
 /datum/game_mode/nuclear
@@ -15,7 +16,6 @@
 	uplink_welcome = "Corporate Backed Uplink Console:"
 	uplink_uses = 10
 
-	var/obj/nuclear_uplink
 	var/const/agents_possible = 5 //If we ever need more syndicate agents.
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
@@ -228,9 +228,9 @@
 
 /datum/game_mode/proc/greet_syndicate(var/datum/mind/syndicate, var/you_are=1, var/boss=0)
 	if (you_are)
-		syndicate.current << "\blue You are a Gorlex Maradeurs agent!"
+		syndicate.current << "<span class = 'info'>You are a <font color='red'>Gorlex Maradeurs agent</font>!</span>"
 	if(boss)
-		syndicate.current << "\blue You are a Gorlex Maradeurs Commander!"
+		syndicate.current << "<span class = 'info'>You are a <font color='red'>Gorlex Maradeurs Commander</font>!</span>"
 	var/obj_count = 1
 
 	if(!config.objectives_disabled)
@@ -326,85 +326,71 @@
 
 	if      (!disk_rescued &&  station_was_nuked &&          !syndies_didnt_escape)
 		feedback_set_details("round_end_result","win - syndicate nuke")
-		world << "<FONT size = 3><B>Syndicate Major Victory!</B></FONT>"
-		world << "<B>Gorlex Maradeurs operatives have destroyed NSS Exodus!</B>"
+		completion_text += "<FONT size = 3, color='red'><B>Syndicate Major Victory!</B></FONT>"
+		completion_text += "<BR><B>Gorlex Maradeurs operatives have destroyed NSS Exodus!</B>"
+		score["roleswon"]++
 
 	else if (!disk_rescued &&  station_was_nuked &&           syndies_didnt_escape)
 		feedback_set_details("round_end_result","halfwin - syndicate nuke - did not evacuate in time")
-		world << "<FONT size = 3><B>Total Annihilation</B></FONT>"
-		world << "<B>Gorlex Maradeurs operatives destroyed NSS Exodus but did not leave the area in time and got caught in the explosion.</B> Next time, don't lose the disk!"
+		completion_text += "<FONT size = 3, color='red'><B>Total Annihilation</B></FONT>"
+		completion_text += "<BR><B>Gorlex Maradeurs operatives destroyed NSS Exodus but did not leave the area in time and got caught in the explosion.</B> Next time, don't lose the disk!"
 
 	else if (!disk_rescued && !station_was_nuked &&  nuke_off_station && !syndies_didnt_escape)
 		feedback_set_details("round_end_result","halfwin - blew wrong station")
-		world << "<FONT size = 3><B>Crew Minor Victory</B></FONT>"
-		world << "<B>Gorlex Maradeurs operatives secured the authentication disk but blew up something that wasn't NSS Exodus.</B> Next time, don't lose the disk!"
+		completion_text += "<FONT size = 3, color='red'><B>Crew Minor Victory</B></FONT>"
+		completion_text += "<BR><B>Gorlex Maradeurs operatives secured the authentication disk but blew up something that wasn't NSS Exodus.</B> Next time, don't lose the disk!"
 
 	else if (!disk_rescued && !station_was_nuked &&  nuke_off_station &&  syndies_didnt_escape)
 		feedback_set_details("round_end_result","halfwin - blew wrong station - did not evacuate in time")
-		world << "<FONT size = 3><B>Gorlex Maradeurs operatives have earned Darwin Award!</B></FONT>"
-		world << "<B>Gorlex Maradeurs operatives blew up something that wasn't NSS Exodus and got caught in the explosion.</B> Next time, don't lose the disk!"
+		completion_text += "<FONT size = 3, color='red'><B>Gorlex Maradeurs operatives have earned Darwin Award!</B></FONT>"
+		completion_text += "<BR><B>Gorlex Maradeurs operatives blew up something that wasn't NSS Exodus and got caught in the explosion.</B> Next time, don't lose the disk!"
 
 	else if ( disk_rescued                                         && is_operatives_are_dead())
 		feedback_set_details("round_end_result","loss - evacuation - disk secured - syndi team dead")
-		world << "<FONT size = 3><B>Crew Major Victory!</B></FONT>"
-		world << "<B>The Research Staff has saved the disc and killed the Gorlex Maradeurs Operatives</B>"
+		completion_text += "<FONT size = 3, color='red'><B>Crew Major Victory!</B></FONT>"
+		completion_text += "<BR><B>The Research Staff has saved the disc and killed the Gorlex Maradeurs Operatives</B>"
 
 	else if ( disk_rescued                                        )
 		feedback_set_details("round_end_result","loss - evacuation - disk secured")
-		world << "<FONT size = 3><B>Crew Major Victory</B></FONT>"
-		world << "<B>The Research Staff has saved the disc and stopped the Gorlex Maradeurs Operatives!</B>"
+		completion_text += "<FONT size = 3, color='red'><B>Crew Major Victory</B></FONT>"
+		completion_text += "<BR><B>The Research Staff has saved the disc and stopped the Gorlex Maradeurs Operatives!</B>"
 
 	else if (!disk_rescued                                         && is_operatives_are_dead())
 		feedback_set_details("round_end_result","loss - evacuation - disk not secured")
-		world << "<FONT size = 3><B>Syndicate Minor Victory!</B></FONT>"
-		world << "<B>The Research Staff failed to secure the authentication disk but did manage to kill most of the Gorlex Maradeurs Operatives!</B>"
+		completion_text += "<FONT size = 3, color='red'><B>Syndicate Minor Victory!</B></FONT>"
+		completion_text += "<BR><B>The Research Staff failed to secure the authentication disk but did manage to kill most of the Gorlex Maradeurs Operatives!</B>"
 
 	else if (!disk_rescued                                         &&  crew_evacuated)
 		feedback_set_details("round_end_result","halfwin - detonation averted")
-		world << "<FONT size = 3><B>Syndicate Minor Victory!</B></FONT>"
-		world << "<B>Gorlex Maradeurs operatives recovered the abandoned authentication disk but detonation of NSS Exodus was averted.</B> Next time, don't lose the disk!"
+		completion_text += "<FONT size = 3, color='red'><B>Syndicate Minor Victory!</B></FONT>"
+		completion_text += "<BR><B>Gorlex Maradeurs operatives recovered the abandoned authentication disk but detonation of NSS Exodus was averted.</B> Next time, don't lose the disk!"
 
 	else if (!disk_rescued                                         && !crew_evacuated)
 		feedback_set_details("round_end_result","halfwin - interrupted")
-		world << "<FONT size = 3><B>Neutral Victory</B></FONT>"
-		world << "<B>Round was mysteriously interrupted!</B>"
+		completion_text += "<FONT size = 3, color='red'><B>Neutral Victory</B></FONT>"
+		completion_text += "<BR><B>Round was mysteriously interrupted!</B>"
 
 	..()
-	return
+	return 1
 
 
 /datum/game_mode/proc/auto_declare_completion_nuclear()
+	var/text = ""
 	if( syndicates.len || (ticker && istype(ticker.mode,/datum/game_mode/nuclear)) )
-		var/icon/logo = icon('icons/mob/mob.dmi', "nuke-logo")
-		var/text = "<br>\icon[logo] <FONT size = 2><B>The syndicate operatives were:</B></FONT> \icon[logo]"
-
+		text += printlogo("nuke", "syndicate operatives")
 		for(var/datum/mind/syndicate in syndicates)
+			text += printplayerwithicon(syndicate)
 
-			if(syndicate.current)
-				var/icon/flat = getFlatIcon(syndicate.current)
-				text += "<br>\icon[flat] [syndicate.key] was [syndicate.name] ("
-				if(syndicate.current.stat == DEAD)
-					text += "died"
-				else
-					text += "survived"
-				if(syndicate.current.real_name != syndicate.name)
-					text += " as [syndicate.current.real_name]"
-			else
-				var/icon/sprotch = icon('icons/effects/blood.dmi', "floor1-old")
-				text += "<br>\icon[sprotch] [syndicate.key] was [syndicate.name] ("
-				text += "body destroyed"
-			text += ")"
 		var/obj/item/nuclear_uplink = src:nuclear_uplink
 		if(nuclear_uplink && nuclear_uplink.hidden_uplink)
 			if(nuclear_uplink.hidden_uplink.purchase_log.len)
-				text += "<br><span class='sinister'>The tools used by the syndicate operatives were: "
+				text += "<BR><B>The tools used by the syndicate operatives were:</B> "
 				for(var/entry in nuclear_uplink.hidden_uplink.purchase_log)
-					text += "<br>[entry]TC(s)"
-				text += "</span>"
+					text += "<BR>[entry]TC(s)"
 			else
-				text += "<br><span class='sinister'>The nukeops were smooth operators this round<br>(did not purchase any uplink items)</span>"
-		world << text
-	return 1
+				text += "<BR>The nukeops were smooth operators this round (did not purchase any uplink items)."
+		text += "<BR><HR>"
+	return text
 
 
 /*/proc/nukelastname(var/mob/M as mob) //--All praise goes to NEO|Phyte, all blame goes to DH, and it was Cindi-Kate's idea. Also praise Urist for copypasta ho.

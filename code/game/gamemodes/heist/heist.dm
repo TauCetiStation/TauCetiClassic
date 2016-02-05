@@ -167,16 +167,16 @@
 
 /datum/game_mode/heist/proc/greet_vox(var/datum/mind/raider)
 	var/msg = ""
-	raider.current << "<span class='notice'><B>You are a Pirate....ARGH!</B></span>"
-	raider.current << "<span class='notice'>Use :3 to guttertalk, :H to talk on your encrypted channel!</span>"
+	raider.current << "<span class='info'><B>You are a <font color='red'>Pirate</font>....ARGH!</B></span>"
+	raider.current << "<span class='info'>Use :3 to guttertalk, :H to talk on your encrypted channel!</span>"
 	msg = "” вашего капитана имеетс€ fulton recovery pack! »спользуйте его, чтобы быстро доставить все что угодно на ваш корабль (если цель жива€ - попадет в комнату удержани€ на шаттле)."
 	raider.current << "[sanitize(msg)]"
 	msg = "Ќа вашем корабле лежат семена кудзу и эксклюзивные кубические гранаты! »спользуйте их на станции, чтобы се€ть хаос (осторожно, гранаты содержат агрессивную живность котора€ с удовольствием перекусит даже вами, а семена можно сажать пр€мо на пол станции)."
-	raider.current << "<span class='notice'>[sanitize(msg)]</span>"
+	raider.current << "<span class='info'>[sanitize(msg)]</span>"
 	msg = "¬аша винтовка и пистолет модифицированы дл€ использовани€ специальных сверхзвуковых снар€дов нового поколени€, они не нанос€т вреда обычным живым существам но имеют огромную силу удара, что позвол€ет вывести из бо€ человека нацепившего на себ€ много брони, а синтетам и мехам наносит колоссальный вред."
 	raider.current << "[sanitize(msg)]"
 	msg = "Debugger который вы найдете на корабле - поможет вам со взломом APC и дверей. ”чтите что такой метод наносит вред программному обеспечению и в случае с дверьми - попросту сжигает плату. Ќе используйте его на двер€х с опущенными болтами, конечно если ваша цель не €вл€етс€ полностью заблокировать дверь."
-	raider.current << "<span class='notice'>[sanitize(msg)]</span>"
+	raider.current << "<span class='info'>[sanitize(msg)]</span>"
 	var/obj_count = 1
 	if(!config.objectives_disabled)
 		for(var/datum/objective/objective in raider.objectives)
@@ -187,6 +187,8 @@
 
 	//No objectives, go straight to the feedback.
 	if(!(raid_objectives.len)) return ..()
+
+	completion_text += "<B>Heist mode resume:</B><BR>"
 
 	var/win_type = "Major"
 	var/win_group = "Crew"
@@ -219,37 +221,40 @@
 			if(win_type == "Minor")
 				win_type = "Major"
 			win_msg += "<B>The Raiders escaped the station!</B>"
+			score["roleswon"]++
 		else
 			win_msg += "<B>The Raiders were repelled!</B>"
 
-	world << "\red <FONT size = 3><B>[win_type] [win_group] victory!</B></FONT>"
-	world << "[win_msg]"
+	completion_text += "<FONT size = 3, color='red'><B>[win_type] [win_group] victory!</B></FONT>"
+	completion_text += "<BR>[win_msg]"
 	feedback_set_details("round_end_result","heist - [win_type] [win_group]")
 
 	var/count = 1
 	for(var/datum/objective/objective in raid_objectives)
 		if(objective.check_completion())
 			if(objective.target == "valuables")
-				world << "<br><B>Objective #[count]</B>: [objective.explanation_text] ([num2text(heist_rob_total,9)]/[num2text(objective.target_amount,9)]) <font color='green'><B>Success!</B></font>"
+				completion_text += "<BR><B>Objective #[count]</B>: [objective.explanation_text] ([num2text(heist_rob_total,9)]/[num2text(objective.target_amount,9)]) <font color='green'><B>Success!</B></font>"
 				feedback_add_details("traitor_objective","[objective.type]|SUCCESS")
 			else
-				world << "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font>"
+				completion_text += "<BR><B>Objective #[count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font>"
 				feedback_add_details("traitor_objective","[objective.type]|SUCCESS")
 		else
 			if(objective.target == "valuables")
-				world << "<br><B>Objective #[count]</B>: [objective.explanation_text] ([num2text(heist_rob_total,9)]/[num2text(objective.target_amount,9)]) <font color='red'>Fail.</font>"
+				completion_text += "<BR><B>Objective #[count]</B>: [objective.explanation_text] ([num2text(heist_rob_total,9)]/[num2text(objective.target_amount,9)]) <font color='red'>Fail.</font>"
 				feedback_add_details("traitor_objective","[objective.type]|FAIL")
 			else
-				world << "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='red'>Fail.</font>"
+				completion_text += "<BR><B>Objective #[count]</B>: [objective.explanation_text] <font color='red'>Fail.</font>"
 				feedback_add_details("traitor_objective","[objective.type]|FAIL")
 		count++
 
 	if(heist_rob_total == 0)
 		heist_get_shuttle_price()
-		world << "<br><br>Estimated value of valuables left on Aurora - $<font color='red'>[num2text(heist_rob_total,9)]</font> spacebucks."
+		completion_text += "<BR><BR>Estimated value of valuables left on Aurora - $<font color='red'>[num2text(heist_rob_total,9)]</font> spacebucks."
 	..()
+	return 1
 
 datum/game_mode/proc/auto_declare_completion_heist()
+	var/text =""
 	if(raiders.len)
 		var/loot_savefile = "data/pirate_loot.sav" //loot statistics
 		var/savefile/S = new /savefile(loot_savefile)
@@ -270,26 +275,35 @@ datum/game_mode/proc/auto_declare_completion_heist()
 					count++
 					S["[AM.type]"] << count
 
-		var/text = "<FONT size = 2><B>The raiders were:</B></FONT>"
+		text += printlogo("raider", "raiders")
 		for(var/datum/mind/raider in raiders)
-			text += "<br>[raider.key] was [raider.name] ("
 			if(raider.current)
+				var/icon/flat = getFlatIcon(raider.current,exact=1)
+				end_icons += flat
+				var/tempstate = end_icons.len
+				text += {"<br><img src="logo_[tempstate].png"> <b>[raider.key]</b> was <b>[raider.name]</b> ("}
 				var/area/A = get_area(raider.current)
 				if(!istype(A, /area/shuttle/vox/station))
 					text += "left behind)"
 					continue
 				else if(raider.current.stat == DEAD)
 					text += "died"
+					flat.Turn(90)
+					end_icons[tempstate] = flat
 				else
 					text += "survived"
 				if(raider.current.real_name != raider.name)
 					text += " as [raider.current.real_name]"
 			else
+				var/icon/sprotch = icon('icons/effects/blood.dmi', "gibbearcore")
+				end_icons += sprotch
+				var/tempstate = end_icons.len
+				text += {"<br><img src="logo_[tempstate].png"> [raider.key] was [raider.name] ("}
 				text += "body destroyed"
 			text += ")"
 
-		world << text
-	return 1
+		text += "<BR><HR>"
+	return text
 
 /datum/game_mode/heist/check_finished()
 	if (!(is_raider_crew_alive()) || (vox_shuttle_location && (vox_shuttle_location == "start")))

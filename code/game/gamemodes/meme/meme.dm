@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:04
-
 /datum/game_mode/var/list/memes = list()
 
 /datum/game_mode/meme
@@ -189,7 +187,7 @@
 
 /datum/game_mode/proc/greet_meme(var/datum/mind/meme, var/you_are=1)
 	if (you_are)
-		meme.current << "<B>\red You are a meme!</B>"
+		meme.current << "<B>You are a <span class = 'red'>meme</span>!</B>"
 
 	var/obj_count = 1
 	for(var/datum/objective/objective in meme.objectives)
@@ -212,21 +210,22 @@
 		return 1
 
 /datum/game_mode/proc/auto_declare_completion_meme()
+	var/text = ""
 	for(var/datum/mind/meme in memes)
 		var/memewin = 1
 		var/attuned = 0
 		if((meme.current) && istype(meme.current,/mob/living/parasite/meme))
-			world << "<B>The meme was [meme.current.key].</B>"
-			world << "<B>The last host was [meme.current:host.key].</B>"
-			world << "<B>Hosts attuned: [attuned]</B>"
+			text += "The meme was <B>[meme.current.key]</B>.<BR>"
+			text += "The last host was <B>[meme.current:host.key]</B>.<BR>"
+			text += "<B>Hosts attuned:</B> [attuned]<BR>"
 
 			var/count = 1
 			for(var/datum/objective/objective in meme.objectives)
 				if(objective.check_completion())
-					world << "<B>Objective #[count]</B>: [objective.explanation_text] \green <B>Success</B>"
+					text += "<B>Objective #[count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font><BR>"
 					feedback_add_details("meme_objective","[objective.type]|SUCCESS")
 				else
-					world << "<B>Objective #[count]</B>: [objective.explanation_text] \red Failed"
+					text += "<B>Objective #[count]</B>: [objective.explanation_text] <font color='red'>Failed.</font><BR>"
 					feedback_add_details("meme_objective","[objective.type]|FAIL")
 					memewin = 0
 				count++
@@ -235,10 +234,11 @@
 			memewin = 0
 
 		if(memewin)
-			world << "<B>The meme was successful!<B>"
+			text += "<B>The meme was successful!<B>"
 			feedback_add_details("meme_success","SUCCESS")
 			score["roleswon"]++
 		else
-			world << "<B>The meme has failed!<B>"
+			text += "<B>The meme has failed!<B>"
 			feedback_add_details("meme_success","FAIL")
-	return 1
+		text += "<BR><HR>"
+	return text
