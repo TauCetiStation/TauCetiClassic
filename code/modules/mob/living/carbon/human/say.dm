@@ -66,7 +66,7 @@
 							//return - technically you can add more aliens to a team
 				for(var/mob/M in dead_mob_list)
 					M << text("<span class='abductor_team[]'><b>[user.real_name]:</b> [sanitize(message)]</span>", user.team)
-					if(!isobserver(M))
+					if(!isobserver(M) && (M.stat != DEAD))
 						M << "<hr><span class='warning'>If you see this message, that means something broken. Please, contact to <b>SpaiR</b> on forum (http://tauceti.ru/forums/index.php?action=profile;u=1929) or ask someone call him. Please, <u>remember</u> what happened in this round, this information is very <b>important</b>. To skip this message ask admins to get out you from your body and back.</span><hr>"
 				return ""
 
