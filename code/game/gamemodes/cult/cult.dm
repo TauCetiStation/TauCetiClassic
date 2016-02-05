@@ -99,13 +99,13 @@
 
 	for(var/datum/mind/cult_mind in cult)
 		equip_cultist(cult_mind.current)
-		grant_runeword(cult_mind.current)
 		update_all_cult_icons()
-		cult_mind.current << "\blue You are a member of the cult!"
+		cult_mind.current << "<span class = 'info'><b>You are a member of the <font color='red'>cult</font>!</b></span>"
+		grant_runeword(cult_mind.current)
 		if(!config.objectives_disabled)
 			memoize_cult_objectives(cult_mind)
 		else
-			cult_mind.current << "<font color=blue>Within the rules,</font> try to act as an opposing force to the crew. Further RP and try to make sure other players have </i>fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>"
+			cult_mind.current << "<span class ='blue'>Within the rules,</span> try to act as an opposing force to the crew. Further RP and try to make sure other players have </i>fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>"
 		cult_mind.special_role = "Cultist"
 
 	spawn (rand(waittime_l, waittime_h))
@@ -173,7 +173,7 @@
 	if (!word)
 		word=pick(allwords)
 	var/wordexp = "[cultwords[word]] is [word]..."
-	cult_mob << "\red You remember one thing from the dark teachings of your master... [wordexp]"
+	cult_mob << "<span class = 'red'>You remember one thing from the dark teachings of your master... <b>[wordexp]</b></span>"
 	cult_mob.mind.store_memory("<B>You remember that</B> [wordexp]", 0, 0)
 
 
@@ -289,20 +289,22 @@
 /datum/game_mode/cult/declare_completion()
 	if(config.objectives_disabled)
 		return 1
+	completion_text += "<B>Cult mode resume:</B><BR>"
 	if(!check_cult_victory())
 		feedback_set_details("round_end_result","win - cult win")
 		feedback_set("round_end_result",acolytes_survived)
-		world << "\red <FONT size = 3><B> The cult wins! It has succeeded in serving its dark masters!</B></FONT>"
+		completion_text += "<FONT size = 3 color='red'><B>The cult <font color='green'>wins</font>! It has succeeded in serving its dark masters!</B></FONT>"
+		score["roleswon"]++
 	else
 		feedback_set_details("round_end_result","loss - staff stopped the cult")
 		feedback_set("round_end_result",acolytes_survived)
-		world << "\red <FONT size = 3><B> The staff managed to stop the cult!</B></FONT>"
+		completion_text += "<FONT size = 3 color='red'><B>The staff managed to stop the cult!</B></FONT><BR>"
 
 	var/text = "<b>Cultists escaped:</b> [acolytes_survived]"
 	if(!config.objectives_disabled)
 		if(objectives.len)
 			text += "<br><b>The cultists' objectives were:</b>"
-			for(var/obj_count=1, obj_count <= objectives.len, obj_count++)
+			for(var/obj_count in 1 to objectives.len)
 				var/explanation
 				switch(objectives[obj_count])
 					if("survive")
@@ -320,9 +322,12 @@
 							else if(sacrifice_target && sacrifice_target.current)
 								explanation = "Sacrifice [sacrifice_target.name], the [sacrifice_target.assigned_role]. <font color='red'>Fail.</font>"
 								feedback_add_details("cult_objective","cult_sacrifice|FAIL")
+							else
+								explanation = "Sacrifice [sacrifice_target.name], the [sacrifice_target.assigned_role]. <font color='red'>Fail (Gibbed).</font>"
+								feedback_add_details("cult_objective","cult_sacrifice|FAIL|GIBBED")
 						else
-							explanation = "Sacrifice [sacrifice_target.name], the [sacrifice_target.assigned_role]. <font color='red'>Fail (Gibbed).</font>"
-							feedback_add_details("cult_objective","cult_sacrifice|FAIL|GIBBED")
+							explanation = "Free objective. <font color='green'><B>Success!</B></font>"
+							feedback_add_details("cult_objective","cult_free_objective|SUCCESS")
 					if("eldergod")
 						if(!eldergod)
 							explanation = "Summon Nar-Sie. <font color='green'><B>Success!</B></font>"
@@ -330,31 +335,17 @@
 						else
 							explanation = "Summon Nar-Sie. <font color='red'>Fail.</font>"
 						feedback_add_details("cult_objective","cult_narsie|FAIL")
-				text += "<br><B>Objective #[obj_count]</B>: [explanation]"
+				text += "<BR><B>Objective #[obj_count]</B>: [explanation]"
 
-	world << text
+	completion_text += text
 	..()
 	return 1
 
-
 /datum/game_mode/proc/auto_declare_completion_cult()
+	var/text = ""
 	if( cult.len || (ticker && istype(ticker.mode,/datum/game_mode/cult)) )
-		var/icon/logo = icon('icons/mob/mob.dmi', "cult-logo")
-		var/text = "<br>\icon[logo] <FONT size = 2><B>The cultists were:</B></FONT> \icon[logo]"
+		text += printlogo("cult", "cultists")
 		for(var/datum/mind/cultist in cult)
-			if(cultist.current)
-				var/icon/flat = getFlatIcon(cultist.current)
-				text += "<br>\icon[flat] [cultist.key] was [cultist.name] ("
-				if(cultist.current.stat == DEAD)
-					text += "died"
-				else
-					text += "survived"
-				if(cultist.current.real_name != cultist.name)
-					text += " as [cultist.current.real_name]"
-			else
-				var/icon/sprotch = icon('icons/effects/blood.dmi', "floor1-old")
-				text += "<br>\icon[sprotch] [cultist.key] was [cultist.name] ("
-				text += "body destroyed"
-			text += ")"
-
-		world << text
+			text += printplayerwithicon(cultist)
+		text += "<BR><HR>"
+	return text

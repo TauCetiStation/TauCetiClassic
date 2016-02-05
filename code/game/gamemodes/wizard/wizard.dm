@@ -39,7 +39,7 @@
 	wizard.special_role = "Wizard"
 	wizard.original = wizard.current
 	if(wizardstart.len == 0)
-		wizard.current << "<B>\red A starting location for you could not be found, please report this bug!</B>"
+		wizard.current << "<span class='danger'>A starting location for you could not be found, please report this bug!</span>"
 		return 0
 	return 1
 
@@ -136,7 +136,7 @@
 
 /datum/game_mode/proc/greet_wizard(var/datum/mind/wizard, var/you_are=1)
 	if (you_are)
-		wizard.current << "<B>\red You are the Space Wizard!</B>"
+		wizard.current << "<span class='danger'>You are the Space Wizard!</span>"
 	wizard.current << "<B>The Space Wizards Federation has given you the following tasks:</B>"
 	if(!config.objectives_disabled)
 		var/obj_count = 1
@@ -144,7 +144,7 @@
 			wizard.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
 			obj_count++
 	else
-		wizard.current << "<font color=blue>Within the rules,</font> try to act as an opposing force to the crew. Further RP and try to make sure other players have </i>fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>"
+		wizard.current << "<span class='info'>Within the rules,</span> try to act as an opposing force to the crew. Further RP and try to make sure other players have </i>fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>"
 	return
 
 
@@ -212,69 +212,74 @@
 
 
 /datum/game_mode/wizard/declare_completion()
-	if(finished)
-		feedback_set_details("round_end_result","loss - wizard killed")
-		world << "\red <FONT size = 3><B> The wizard[(wizards.len>1)?"s":""] has been killed by the crew! The Space Wizards Federation has been taught a lesson they will not soon forget!</B></FONT>"
+	var/prefinal_text = ""
+	var/final_text = ""
+	completion_text += "<B>Wizard mode resume:</B><BR>"
+
+	for(var/datum/mind/wizard in wizards)
+		if(wizard.current.stat == DEAD || finished)
+			feedback_set_details("round_end_result","loss - wizard killed")
+			prefinal_text = "<FONT size = 3>Wizard <b>[wizard.name]</b><i> ([wizard.key])</I> has been <font color='red'><b>killed</b></font by the crew! The Space Wizards Federation has been taught a lesson they will not soon forget!</FONT><BR>"
+		else
+			var/failed = 0
+			for(var/datum/objective/objective in wizard.objectives)
+				if(!objective.check_completion())
+					failed = 1
+			if(!failed)
+				feedback_set_details("round_end_result","win - wizard alive")
+				prefinal_text = "<FONT size = 3>Wizard <b>[wizard.name]</b><i> ([wizard.key])</i> managed to <font color='green'><B>complete</B></font> his mission! The Space Wizards Federation understood that station crew - easy target and will use them next time.</FONT><BR>"
+			else
+				feedback_set_details("round_end_result","loss - wizard alive")
+				prefinal_text = "<FONT size = 3>Wizard <b>[wizard.name]</b><i> ([wizard.key])</i> managed to stay alive, but <font color='red'><B>failed</B></font> his mission! The Space Wizards Federation wouldn't forget this shame!</FONT><BR>"
+		final_text += "[prefinal_text]"
+
+	completion_text += "[final_text]"
 	..()
 	return 1
 
 
 /datum/game_mode/proc/auto_declare_completion_wizard()
+	var/text = ""
 	if(wizards.len)
-		var/icon/logo = icon('icons/mob/mob.dmi', "wizard-logo")
-		var/text = "<br>\icon[logo] <font size=3><b>the wizards/witches were:</b></font> \icon[logo]"
+		text += printlogo("wizard", "wizards/witches")
 
 		for(var/datum/mind/wizard in wizards)
-
-			if(wizard.current)
-				var/icon/flat = getFlatIcon(wizard.current)
-				text += "<br>\icon[flat] <b>[wizard.key]</b> was <b>[wizard.name]</b> ("
-				if(wizard.current.stat == DEAD)
-					text += "died"
-				else
-					text += "survived"
-				if(wizard.current.real_name != wizard.name)
-					text += " as [wizard.current.real_name]"
-			else
-				var/icon/sprotch = icon('icons/effects/blood.dmi', "floor1-old")
-				text += "<br>\icon[sprotch] <b>[wizard.key]</b> was <b>[wizard.name]</b> ("
-				text += "body destroyed"
-			text += ")"
+			text += printplayerwithicon(wizard)
 
 			var/count = 1
 			var/wizardwin = 1
 			if(!config.objectives_disabled)
 				for(var/datum/objective/objective in wizard.objectives)
 					if(objective.check_completion())
-						text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font>"
+						text += "<BR><B>Objective #[count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font>"
 						feedback_add_details("wizard_objective","[objective.type]|SUCCESS")
 					else
-						text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='red'>Fail.</font>"
+						text += "<BR><B>Objective #[count]</B>: [objective.explanation_text] <font color='red'>Fail.</font>"
 						feedback_add_details("wizard_objective","[objective.type]|FAIL")
 						wizardwin = 0
 					count++
 
 				if(wizard.current && wizard.current.stat!=2 && wizardwin)
-					text += "<br><font color='green'><B>The wizard was successful!</B></font>"
+					text += "<BR><FONT color='green'><B>The wizard was successful!</B></FONT>"
 					feedback_add_details("wizard_success","SUCCESS")
 					score["roleswon"]++
 				else
-					text += "<br><font color='red'><B>The wizard has failed!</B></font>"
+					text += "<BR><FONT color='red'><B>The wizard has failed!</B></FONT>"
 					feedback_add_details("wizard_success","FAIL")
 				if(wizard.current && wizard.current.spell_list)
-					text += "<br><B>[wizard.name] used the following spells: </B>"
+					text += "<BR><B>[wizard.name] used the following spells: </B>"
 					var/i = 1
 					for(var/obj/effect/proc_holder/spell/S in wizard.current.spell_list)
-					//var/icon/spellicon = icon('icons/mob/screen_spells.dmi', S.hud_state)
-					//text += "<br>\icon[spellicon] [S.name]"
-						text += "<br>[S.name]"
+						var/icon/spellicon = icon('icons/mob/actions.dmi', S.action_icon_state)
+						end_icons += spellicon
+						var/tempstate = end_icons.len
+						text += {"<BR><img src="logo_[tempstate].png"> [S.name]"}
 						if(wizard.current.spell_list.len > i)
 							text += ", "
 						i++
-				text += "<br>"
-
-		world << text
-	return 1
+				text += "<BR>"
+		text += "<HR>"
+	return text
 
 //OTHER PROCS
 

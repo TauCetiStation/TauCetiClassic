@@ -2,6 +2,7 @@
 	var/abductor_teams = 0
 	var/list/datum/mind/abductors = list()
 	var/list/datum/mind/abductees = list()
+	var/list/abduction_teams = list()
 
 /datum/game_mode/abduction
 	name = "abduction"
@@ -58,6 +59,7 @@
 		antag_candidates = get_players_for_role(BE_ABDUCTOR)
 	//Team Name
 	team_names[team_number] = "Mothership [pick(possible_changeling_IDs)]" //TODO Ensure unique and actual alieny names
+	abduction_teams += team_names[team_number]
 	//Team Objective
 	var/datum/objective/experiment/team_objective = new
 	team_objective.team = team_number
@@ -102,7 +104,7 @@
 	var/datum/mind/scientist
 	var/team_name
 	var/mob/living/carbon/human/abductor/H
-	for(var/team_number=1,team_number<=abductor_teams,team_number++)
+	for(var/team_number in 1 to abductor_teams)
 		team_name = team_names[team_number]
 		agent = agents[team_number]
 		H = agent.current
@@ -112,6 +114,7 @@
 		H.agent = 1
 		H.team = team_number
 		H.real_name = team_name + " Agent"
+		H.mind.name = H.real_name
 		H.flavor_text = ""
 		equip_common(H,team_number)
 		equip_agent(H,team_number)
@@ -126,6 +129,7 @@
 		H.scientist = 1
 		H.team = team_number
 		H.real_name = team_name + " Scientist"
+		H.mind.name = H.real_name
 		H.flavor_text = ""
 		equip_common(H,team_number)
 		equip_scientist(H,team_number)
@@ -188,7 +192,7 @@
 	abductor.objectives += team_objectives[team_number]
 	var/team_name = team_names[team_number]
 
-	abductor.current << "<span class='info'><b>You are an <u>agent</u> of [team_name]!</b></span>"
+	abductor.current << "<span class='info'><B>You are an <font color='red'>agent</font> of [team_name]!</B></span>"
 	abductor.current << "<span class='info'>With the help of your teammate, kidnap and experiment on station crew members!</span>"
 	abductor.current << "<span class='info'>Use your stealth technology and equipment to incapacitate humans for your scientist to retrieve.</span>"
 
@@ -201,7 +205,7 @@
 /datum/game_mode/abduction/proc/greet_scientist(var/datum/mind/abductor,var/team_number)
 	abductor.objectives += team_objectives[team_number]
 	var/team_name = team_names[team_number]
-	abductor.current << "<span class='info'><b>You are a <u>scientist</u> of [team_name]!</b></span>"
+	abductor.current << "<span class='info'><B>You are a <font color='red'>scientist</font> of [team_name]!</B></span>"
 	abductor.current << "<span class='info'>With the help of your teammate, kidnap and experiment on station crew members!</span>"
 	abductor.current << "<span class='info'>Use your tool and ship consoles to support the agent and retrieve human specimens.</span>"
 	var/obj_count = 1
@@ -259,7 +263,7 @@
 
 /datum/game_mode/abduction/check_finished()
 	if(!finished)
-		for(var/team_number=1,team_number<=abductor_teams,team_number++)
+		for(var/team_number in 1 to abductor_teams)
 			var/obj/machinery/abductor/console/con = get_team_console(team_number)
 			var/datum/objective/objective = team_objectives[team_number]
 			if (con.experiment.points >= objective.target_amount)
@@ -271,32 +275,77 @@
 	return ..()
 
 /datum/game_mode/abduction/declare_completion()
+	completion_text += "<B>Abduction mode resume:</B><br>"
 	for(var/team_number in 1 to abductor_teams)
 		var/obj/machinery/abductor/console/console = get_team_console(team_number)
 		var/datum/objective/objective = team_objectives[team_number]
 		var/team_name = team_names[team_number]
 		if(console.experiment.points >= objective.target_amount)
-			world << "<b>[team_name] team <font color='green'>completed</font> its mission!</b></span>"
+			completion_text += "<B>[team_name]</B> team managed to <font color='green'><B>complete</B></font> their mission! "
+			completion_text += "[live_check(team_number)]"
+			completion_text += "[pick("Science of Galaxy","Greytide Science")] continues moving forward!<BR>"
 		else
-			world << "<b>[team_name] team <font color='red'>failed</font> its mission.</b></span>"
+			completion_text += "<B>[team_name]</B> team <font color='red'>failed</font> their mission."
+			completion_text += "[live_check(team_number)]"
+			completion_text += "Station crew managed to stop [pick("Science of Galaxy","Greytide Science")].<BR>"
 	..()
 	return 1
+
+/datum/game_mode/abduction/proc/live_check(var/team_number)
+	var/alive = 0
+	var/text = ""
+	for(var/datum/mind/abductor in abductors)
+		if(!ishuman(abductor.current))
+			continue
+		var/mob/living/carbon/human/A = abductor.current
+		if((A.team == team_number) && (A.stat != DEAD))
+			alive++
+	if(alive >= 2)
+		text += "All of them <B>alive</B>. "
+	else
+		text += "Some from them is <B>dead</B>. "
+	return text
 
 /datum/game_mode/proc/auto_declare_completion_abduction()
 	var/text = ""
 	if(abductors.len)
-		text += "<br><span class='big'><b>The abductors were:</b></span>"
-		for(var/datum/mind/abductor_mind in abductors)
-			text += printplayer(abductor_mind)
-			text += printobjectives(abductor_mind)
-		text += "<br>"
+		text += printlogo("abductor", "abductors")
+		for(var/team_name in abduction_teams)
+			text += "<BR><FONT size = 4, color = #800080><b>[team_name] members:</B></FONT>"
+
+			for(var/datum/mind/abductor in abductors)
+				if(findtext(abductor.name,team_name))
+					text += printplayerwithicon(abductor)
+
+					var/count = 1
+					var/abductorwin = 1
+					if(!config.objectives_disabled)
+						for(var/datum/objective/objective in abductor.objectives)
+							if(objective.check_completion())
+								text += "<BR><B>Objective #[count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font>"
+								feedback_add_details("abductor_objective","[objective.type]|SUCCESS")
+							else
+								text += "<BR><B>Objective #[count]</B>: [objective.explanation_text] <font color='red'>Fail.</font>"
+								feedback_add_details("abductor_objective","[objective.type]|FAIL")
+								abductorwin = 0
+							count++
+
+						if(abductor.current && abductor.current.stat!=2 && abductorwin)
+							text += "<BR><font color='green'><B>The abductor was successful!</B></font>"
+							feedback_add_details("abductor_success","SUCCESS")
+							score["roleswon"]++
+						else
+							text += "<BR><font color='red'><B>The abductor has failed!</B></font>"
+							feedback_add_details("abductor_success","FAIL")
+
+		text += "<BR>"
 		if(abductees.len)
-			text += "<br><span class='big'><b>The abductees were:</b></span>"
+			text += "<BR><B>The abductees were:</B>"
 			for(var/datum/mind/abductee_mind in abductees)
 				text += printplayer(abductee_mind)
 				text += printobjectives(abductee_mind)
-	text += "<br>"
-	world << text
+		text += "<BR><HR>"
+	return text
 
 //Landmarks
 // TODO: Split into seperate landmarks for prettier ships
@@ -340,7 +389,7 @@
 
 /datum/objective/abductee/steal/New()
 	var/target = pick(list("pets","lights","monkeys","fruits","shoes","bars of soap"))
-	explanation_text+=" [target]."
+	explanation_text += " [target]."
 
 datum/objective/abductee/capture
 	explanation_text = "Capture"

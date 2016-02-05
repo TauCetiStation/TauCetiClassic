@@ -316,6 +316,10 @@ var/global/list/achievements = list()
 // Announcer intercom, because too much stuff creates an intercom for one message then hard del()s it.
 var/global/obj/item/device/radio/intercom/global_announcer = new(null)
 
+// Icons that appear on the Round End pop-up browser
+var/global/list/end_icons = list()
+var/endgame_info_logged = 0
+
 // Unsorted stuff
 var/global_message_cooldown = 1
 var/list/stealth_keys = list()
