@@ -90,7 +90,7 @@
 			missing_ages = 1
 			continue
 		if(C.player_age < age)
-			msg += "[key_name(C, 1, 1, highlight_special_characters)]: account is [C.player_age] days and [C.player_ingame_age] ingame minutes old.<br>"
+			msg += "[key_name(C, 1, 1, highlight_special_characters)]: account is [C.player_age] days and [C.player_ingame_age] in-game minutes old.<br>"
 
 	if(missing_ages)
 		src << "Some accounts did not have proper ages set in their clients.  This function requires database to be present"

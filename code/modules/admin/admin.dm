@@ -273,7 +273,7 @@ var/global/floorIsLava = 0
 
 			D = C.prefs
 			p_warns = D.warnbans
-	dat +="<span style='color:#000000; font-weight: bold'>Player age: [p_age] / Ingame age: [p_ingame_age]</span><br>"
+	dat +="<span style='color:#000000; font-weight: bold'>Player age: [p_age] / In-game age: [p_ingame_age]</span><br>"
 	dat +="<span style='color:#000000'>Player warnbans: [p_warns]</span><hr>"
 
 	var/savefile/info = new("data/player_saves/[copytext(key, 1, 2)]/[key]/info.sav")
