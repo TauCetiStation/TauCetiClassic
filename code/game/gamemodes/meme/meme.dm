@@ -129,6 +129,7 @@
 	for(var/datum/mind/meme in memes)
 		var/mob/living/parasite/meme/M = new
 		var/mob/original = meme.current
+		M.meme_death = pick ("stoxin", "bdam", "holywater", "mindbreaker", "beer", "burns")
 		meme.transfer_to(M)
 		M.clearHUD()
 
