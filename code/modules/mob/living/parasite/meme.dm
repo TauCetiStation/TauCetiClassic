@@ -57,6 +57,8 @@ mob/living/parasite/proc/exit_host()
 // Memes use points for many actions
 mob/living/parasite/meme/var/meme_points = 100
 mob/living/parasite/meme/var/dormant = 0
+mob/living/parasite/meme/var/meme_death
+
 
 // Memes have a list of indoctrinated hosts
 mob/living/parasite/meme/var/list/indoctrinated = list()
@@ -69,6 +71,11 @@ mob/living/parasite/meme/New()
 mob/living/parasite/meme/Life()
 	..()
 
+	var/rollingthedeath = 0
+	if(rollingthedeath == 0)
+		meme_death = pick ("stoxin", "bdam", "holywater", "mindbreaker", "beer", "burns")
+		rollingthedeath++
+
 	if(client)
 		if(blinded) client.eye = null
 		else		client.eye = host
@@ -80,12 +87,37 @@ mob/living/parasite/meme/Life()
 	if(dormant) gain = 9 // dormant recovers points faster
 
 	meme_points = min(meme_points + gain, MAXIMUM_MEME_POINTS)
-
 	// if there are sleep toxins in the host's body, that's bad
-	if(host.reagents.has_reagent("stoxin"))
-		src << "\red <b>Something in your host's blood makes you lose consciousness.. you fade away..</b>"
-		src.death()
-		return
+	if(meme_death == "stoxin")
+		if(host.reagents.has_reagent("stoxin"))
+			src << "\red <b>Something in your host's blood makes you lose consciousness.. you fade away..</b>"
+			src.death()
+			return
+	if (meme_death == "bdam")
+		if(host.brainloss > 60)
+			src << "\red <b>Something in your host's brain makes you lose consciousness.. you fade away..</b>"
+			src.death()
+			return
+	if (meme_death == "holywater")
+		if(host.reagents.has_reagent("holywater"))
+			src << "\red <b>Something in your host's blood makes you lose consciousness.. you fade away..</b>"
+			src.death()
+			return
+	if (meme_death == "mindbreaker")
+		if(host.reagents.has_reagent("mindbreaker"))
+			src << "\red <b>Something in your host's blood makes you unstable.. you fade away..</b>"
+			src.death()
+			return
+	if (meme_death == "beer")
+		if(host.reagents.has_reagent("beer"))
+			src << "\red <b>Something in your host's blood makes you unstable.. you fade away..</b>"
+			src.death()
+			return
+	if (meme_death == "burns")
+		if(host.fireloss > 70)
+			src << "\red <b>Something on your host's skin makes you unstable.. you fade away..</b>"
+			src.death()
+			return
 	// a host without brain is no good
 	if(!host.mind)
 		src << "\red <b>Your host has no mind.. you fade away..</b>"
