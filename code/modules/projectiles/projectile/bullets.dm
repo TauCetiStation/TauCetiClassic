@@ -122,7 +122,10 @@
 	name ="projectile"
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "l10"
-	layer = 11
+	layer = 20
+	light_color = "#2be4b8"
+	light_power = 2
+	light_range = 2
 	damage = 15
 	damage_type = BURN
 	flag = "energy"

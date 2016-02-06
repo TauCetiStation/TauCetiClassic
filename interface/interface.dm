@@ -23,13 +23,11 @@
 		src << "\red The forum URL is not set in the server configuration."
 	return
 
-#define RULES_FILE "config/rules.html"
 /client/verb/rules()
 	set name = "Rules"
 	set desc = "Show Server Rules."
 	set hidden = 1
-	src << browse(file(RULES_FILE), "window=rules;size=480x320")
-#undef RULES_FILE
+	src << link("http://tauceti.ru/wiki/Rules")
 
 /client/verb/hotkeys_help()
 	set name = "hotkeys-help"

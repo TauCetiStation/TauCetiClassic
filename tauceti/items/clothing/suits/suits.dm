@@ -101,7 +101,7 @@
 
 /obj/item/clothing/suit/armor/vest/cuirass
 	name = "cuirass"
-	desc = "A metal armor, which cover torso"
+	desc = "A metal armor, which cover torso."
 	icon = 'tauceti/items/clothing/suits/suits.dmi'
 	tc_custom = 'tauceti/items/clothing/suits/suits.dmi'
 	icon_state = "cuirass"

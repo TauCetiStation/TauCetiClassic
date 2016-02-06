@@ -1,6 +1,9 @@
 /obj/item/projectile/animate
 	name = "bolt of animation"
 	icon_state = "ice_1"
+	light_color = "#00bfff"
+	light_power = 2
+	light_range = 2
 	damage = 0
 	damage_type = BURN
 	nodamage = 1

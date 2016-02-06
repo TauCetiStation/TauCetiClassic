@@ -42,7 +42,7 @@ var/global/datum/controller/gameticker/ticker
 	'sound/music/space.ogg',\
 	'sound/music/clouds.s3m',\
 	'sound/music/title1.ogg',\	//disgusting
-
+	*/
 	'sound/music/space_oddity.ogg',\
 	'sound/music/b12_combined_start.ogg',\
 	'sound/music/title2.ogg',\
@@ -51,12 +51,13 @@ var/global/datum/controller/gameticker/ticker
 	'tauceti/sounds/lobby/hanging_masses.ogg',\
 	'tauceti/sounds/lobby/admiral-station-13.ogg',\
 	'tauceti/sounds/lobby/robocop_gb_intro.ogg')
-	*/
+	/*
 	//New year part
 	'tauceti/modules/_holidays/new_year/music/Carol_of_the_Bells.ogg',\
 	'tauceti/modules/_holidays/new_year/music/Last_Christmas.ogg',\
 	'tauceti/modules/_holidays/new_year/music/Pop_Culture.ogg',\
 	'tauceti/modules/_holidays/new_year/music/Zov_Ktulhu.ogg')
+	*/
 	do
 		pregame_timeleft = 180
 		world << "<B><FONT color='blue'>Welcome to the pre-game lobby!</FONT></B>"
@@ -405,14 +406,14 @@ var/global/datum/controller/gameticker/ticker
 				if(station_evacuated) //If the shuttle has already left the station
 					var/turf/playerTurf = get_turf(Player)
 					if(playerTurf.z != 2)
-						Player << "<font color='red'><b>You managed to survive, but were marooned on [station_name()]...</b>"
+						Player << "<span class='danger>You managed to survive, but were marooned on [station_name()]...</span>"
 					else
 						num_escapees++
-						Player << "<font color='green'><b>You managed to survive the events on [station_name()] as [Player.real_name].</b>"
+						Player << "<span class='green'><b>You managed to survive the events on [station_name()] as [Player.real_name].</b></span>"
 				else
-					Player << "<font color='green'><b>You managed to survive the events on [station_name()] as [Player.real_name].</b>"
+					Player << "<span class='green'><b>You managed to survive the events on [station_name()] as [Player.real_name].</b></span>"
 			else
-				Player << "<font color='red'><b>You did not survive the events on [station_name()]...</b>"
+				Player << "<span class='danger>You did not survive the events on [station_name()]...</span>"
 
 	//Round statistics report
 	var/datum/station_state/end_state = new /datum/station_state()
@@ -420,6 +421,8 @@ var/global/datum/controller/gameticker/ticker
 	var/station_integrity = "---"
 	if(start_state)
 		station_integrity = round( 100.0 *  start_state.score(end_state), 0.1)
+	if(!joined_player_list.len)	//we can't into division by zero
+		joined_player_list += 1
 
 	world << "<BR>[TAB]Shift Duration: <B>[round(world.time / 36000)]:[add_zero(world.time / 600 % 60, 2)]:[world.time / 100 % 6][world.time / 100 % 10]</B>"
 	world << "<BR>[TAB]Station Integrity: <B>[mode.station_was_nuked ? "<font color='red'>Destroyed</font>" : "[station_integrity]%"]</B>"
@@ -430,52 +433,74 @@ var/global/datum/controller/gameticker/ticker
 	world << "<BR>"
 
 	//Silicon laws report
-	for (var/mob/living/silicon/ai/aiPlayer in mob_list)
-		if (aiPlayer.stat != 2)
-			world << "<b>[aiPlayer.name] (Played by: [aiPlayer.mind.key])'s laws at the end of the round were:</b>"
-		else
-			world << "<b>[aiPlayer.name] (Played by: [aiPlayer.key])'s laws when it was deactivated were:</b>"
-		aiPlayer.show_laws(1)
+	var/ai_completions = "<h1>Round End Information</h1><HR>"
 
-		if (aiPlayer.connected_robots.len)
-			var/robolist = "<b>The AI's loyal minions were:</b> "
-			for(var/mob/living/silicon/robot/robo in aiPlayer.connected_robots)
-				robolist += "[robo.name][robo.stat?" (Deactivated) (Played by: [robo.key]), ":" (Played by: [robo.key]), "]"
-			world << "[robolist]"
+	var/ai_or_borgs_in_round = 0
+	for (var/mob/living/silicon/silicon in mob_list)
+		if(silicon)
+			ai_or_borgs_in_round = 1
+			break
 
-	var/dronecount = 0
-
-	for (var/mob/living/silicon/robot/robo in mob_list)
-
-		if(istype(robo,/mob/living/silicon/robot/drone))
-			dronecount++
-			continue
-
-		if (!robo.connected_ai)
-			if (robo.stat != 2)
-				world << "<b>[robo.name] (Played by: [robo.key]) survived as an AI-less borg! Its laws were:</b>"
+	if(ai_or_borgs_in_round)
+		ai_completions += "<H3>Silicons Laws</H3>"
+		for (var/mob/living/silicon/ai/aiPlayer in mob_list)
+			if(!aiPlayer)
+				continue
+			var/icon/flat = getFlatIcon(aiPlayer)
+			end_icons += flat
+			var/tempstate = end_icons.len
+			if (aiPlayer.stat != 2)
+				ai_completions += {"<BR><B><img src="logo_[tempstate].png"> [aiPlayer.name] (Played by: [aiPlayer.key])'s laws at the end of the game were:</B>"}
 			else
-				world << "<b>[robo.name] (Played by: [robo.key]) was unable to survive the rigors of being a cyborg without an AI. Its laws were:</b>"
+				ai_completions += {"<BR><B><img src="logo_[tempstate].png"> [aiPlayer.name] (Played by: [aiPlayer.key])'s laws when it was deactivated were:</B>"}
+			ai_completions += "<BR>[aiPlayer.write_laws()]"
 
-			if(robo) //How the hell do we lose robo between here and the world messages directly above this?
-				robo.laws.show_laws(world)
+			if (aiPlayer.connected_robots.len)
+				var/robolist = "<BR><B>The AI's loyal minions were:</B> "
+				for(var/mob/living/silicon/robot/robo in aiPlayer.connected_robots)
+					robolist += "[robo.name][robo.stat?" (Deactivated) (Played by: [robo.key]), ":" (Played by: [robo.key]), "]"
+				ai_completions += "[robolist]"
 
-	if(dronecount)
-		world << "<b>There [dronecount>1 ? "were" : "was"] [dronecount] industrious maintenance [dronecount>1 ? "drones" : "drone"] this round."
+		var/dronecount = 0
+
+		for (var/mob/living/silicon/robot/robo in mob_list)
+			if(!robo)
+				continue
+			if(istype(robo,/mob/living/silicon/robot/drone))
+				dronecount++
+				continue
+			var/icon/flat = getFlatIcon(robo,exact=1)
+			end_icons += flat
+			var/tempstate = end_icons.len
+			if (!robo.connected_ai)
+				if (robo.stat != 2)
+					ai_completions += {"<BR><B><img src="logo_[tempstate].png"> [robo.name] (Played by: [robo.key]) survived as an AI-less borg! Its laws were:</B>"}
+				else
+					ai_completions += {"<BR><B><img src="logo_[tempstate].png"> [robo.name] (Played by: [robo.key]) was unable to survive the rigors of being a cyborg without an AI. Its laws were:</B>"}
+			else
+				ai_completions += {"<BR><B><img src="logo_[tempstate].png"> [robo.name] (Played by: [robo.key]) [robo.stat!=2?"survived":"perished"] as a cyborg slaved to [robo.connected_ai]! Its laws were:</B>"}
+			ai_completions += "<BR>[robo.write_laws()]"
+
+		if(dronecount)
+			ai_completions << "<B>There [dronecount>1 ? "were" : "was"] [dronecount] industrious maintenance [dronecount>1 ? "drones" : "drone"] this round.</B>"
+
+		ai_completions += "<HR>"
 
 	mode.declare_completion()//To declare normal completion.
 
-	scoreboard()
+	ai_completions += "<BR><h2>Mode Result</h2>"
+	ai_completions += "[mode.completion_text]<HR>"
 
-	if(achievements.len)
-		achievement_declare_completion()
+	scoreboard(ai_completions)
 
 	return 1
 
 /datum/controller/gameticker/proc/achievement_declare_completion()
-	var/text = "<br><FONT size = 2><B>Additionally, the following players earned achievements:</B></FONT>"
+	var/text = "<br><FONT size = 5><b>Additionally, the following players earned achievements:</b></FONT>"
 	var/icon/cup = icon('icons/obj/drinks.dmi', "golden_cup")
+	end_icons += cup
+	var/tempstate = end_icons.len
 	for(var/winner in achievements)
-		text += "<br>\icon[cup] [winner]"
+		text += {"<br><img src="logo_[tempstate].png"> [winner]"}
 
-	world << text
+	return text

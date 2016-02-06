@@ -23,7 +23,10 @@
 	if(!say_understands(speaker,language))
 		if(istype(speaker,/mob/living/simple_animal))
 			var/mob/living/simple_animal/S = speaker
-			message = pick(S.speak)
+			if(islist(S.speak) && S.speak.len)
+				message = pick(S.speak)
+			else
+				message = S.speak
 		else
 			message = stars(message)
 
@@ -81,7 +84,10 @@
 	if(!say_understands(speaker,language))
 		if(istype(speaker,/mob/living/simple_animal))
 			var/mob/living/simple_animal/S = speaker
-			message = pick(S.speak)
+			if(islist(S.speak) && S.speak.len)
+				message = pick(S.speak)
+			else
+				message = S.speak
 		else
 			message = stars(message)
 

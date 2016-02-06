@@ -16,17 +16,19 @@
 		return 1
 	return 0
 
+/proc/get_area_master(const/O)
+	var/area/A = get_area(O)
+
+	if (isarea(A))
+		return A
+
 /proc/get_area(O)
-	var/atom/location = O
-	var/i
-	for(i=1, i<=20, i++)
-		if(isarea(location))
-			return location
-		else if (istype(location))
-			location = location.loc
-		else
-			return null
-	return 0
+	if(isarea(O))
+		return O
+	var/turf/loc = get_turf(O)
+	if(loc)
+		var/area/res = loc.loc
+		.= res
 
 /proc/get_area_name(N) //get area by its name
 	for(var/area/A in world)
@@ -276,6 +278,17 @@ proc/isInSight(var/atom/A, var/atom/B)
 
 	else
 		return 0
+
+/proc/mobs_in_area(var/area/the_area, var/client_needed=0, var/moblist=mob_list)
+	var/list/mobs_found[0]
+	var/area/our_area = get_area_master(the_area)
+	for(var/mob/M in moblist)
+		if(client_needed && !M.client)
+			continue
+		if(our_area != get_area_master(M))
+			continue
+		mobs_found += M
+	return mobs_found
 
 /proc/get_cardinal_step_away(atom/start, atom/finish) //returns the position of a step from start away from finish, in one of the cardinal directions
 	//returns only NORTH, SOUTH, EAST, or WEST

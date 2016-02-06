@@ -65,6 +65,11 @@
 	var/matrix/effect_transform			// matrix to rotate and scale projectile effects - putting it here so it doesn't
 										//  have to be recreated multiple times
 
+/obj/item/projectile/New()
+	..()
+	if(light_color)
+		set_light(light_range,light_power,light_color)
+
 /obj/item/projectile/proc/on_hit(var/atom/target, var/blocked = 0)
 	if(!isliving(target))	return 0
 	if(isanimal(target))	return 0
@@ -243,23 +248,25 @@
 		before_move()
 		Move(location.return_turf())
 
-		if(first_step)
-			muzzle_effect(effect_transform)
-			first_step = 0
-		else
-			tracer_effect(effect_transform)
-
 		if(!bumped && !isturf(original))
 			if(loc == get_turf(original))
 				if(!(original in permutated))
 					if(Bump(original))
 						return
+
+		if(first_step)
+			muzzle_effect(effect_transform)
+			first_step = 0
+		else if(!bumped)
+			tracer_effect(effect_transform)
+
 		Range()
 
 		if(!hitscan)
 			sleep(step_delay)	//add delay between movement iterations if it's not a hitscan weapon
 
 /obj/item/projectile/proc/before_move()
+	return
 
 /obj/item/projectile/proc/setup_trajectory()
 	var/offset = 0

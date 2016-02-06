@@ -62,10 +62,12 @@
 						if(user.team != H.team)
 							continue
 						else
-							H << "<i><font color=#800080><b>[user.real_name]:</b> [sanitize(message)]</font></i>"
+							H << text("<span class='abductor_team[]'><b>[user.real_name]:</b> [sanitize(message)]</span>", user.team)
 							//return - technically you can add more aliens to a team
 				for(var/mob/M in dead_mob_list)
-					M << "<i><font color=#800080><b>[user.real_name]:</b> [sanitize(message)]</font></i>"
+					M << text("<span class='abductor_team[]'><b>[user.real_name]:</b> [sanitize(message)]</span>", user.team)
+					if(!isobserver(M) && (M.stat != DEAD))
+						M << "<hr><span class='warning'>≈сли вы видите это сообщение, значит что-то сломалось. ѕожалуйста, свяжитесь со мной <b>SpaiR</b> на форуме (http://tauceti.ru/forums/index.php?action=profile;u=1929) или попросите кого-нибудь меня позвать. ѕожалуйста, <u>запомните</u> что произошло в раунде, эта информация очень <b>важна</b>. „тобы сообщение исчезло попросите админа достать вас из тела и поместить обратно или сами уйдите в обсерверы.</span><hr>"
 				return ""
 
 	message = capitalize(trim(message))
@@ -142,7 +144,7 @@
 			if(mind && mind.changeling)
 				for(var/mob/Changeling in mob_list)
 					if((Changeling.mind && Changeling.mind.changeling) || istype(Changeling, /mob/dead/observer))
-						Changeling << "<i><font color=#800080><b>[mind.changeling.changelingID]:</b> [sanitize_plus_chat(message)]</font></i>"
+						Changeling << "<span class='changeling'><b>[mind.changeling.changelingID]:</b> [sanitize_plus_chat(message)]</span>"
 			return
 		else
 			if(message_mode)

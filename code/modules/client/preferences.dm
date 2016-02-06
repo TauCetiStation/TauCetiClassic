@@ -43,7 +43,6 @@ var/const/MAX_SAVE_SLOTS = 10
 	var/last_id
 
 	//game-preferences
-	var/lastchangelog = ""				//Saved changlog filesize to detect if there was a change
 	var/ooccolor = "#b82e00"
 	var/be_special = 0					//Special role selection
 	var/UI_style = "White"
@@ -126,6 +125,8 @@ var/const/MAX_SAVE_SLOTS = 10
 
 	// Whether or not to use randomized character slots
 	var/randomslot = 0
+	// jukebox volume
+	var/volume = 100
 
 /datum/preferences/New(client/C)
 	b_type = pick(4;"O-", 36;"O+", 3;"A-", 28;"A+", 1;"B-", 20;"B+", 1;"AB-", 5;"AB+")

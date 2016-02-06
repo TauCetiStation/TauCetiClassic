@@ -168,9 +168,10 @@ var/list/ai_verbs_default = list(
 	return
 
 /mob/living/silicon/ai/Destroy()
+	connected_robots.Cut()
 	ai_list -= src
 	qdel(eyeobj)
-	..()
+	return ..()
 
 
 /*
@@ -188,19 +189,19 @@ var/list/ai_verbs_default = list(
 /obj/machinery/ai_powersupply/New(var/mob/living/silicon/ai/ai=null)
 	powered_ai = ai
 	if(isnull(powered_ai))
-		qdel()
+		qdel(src)
 
-	loc = powered_ai.loc
+	forceMove(powered_ai.loc)
 	use_power(1) // Just incase we need to wake up the power system.
 
 	..()
 
 /obj/machinery/ai_powersupply/process()
 	if(!powered_ai || powered_ai.stat & DEAD)
-		qdel()
+		qdel(src)
 		return
 	if(!powered_ai.anchored)
-		loc = powered_ai.loc
+		forceMove(powered_ai.loc)
 		use_power = 0
 	if(powered_ai.anchored)
 		use_power = 2
@@ -493,12 +494,11 @@ var/list/ai_verbs_default = list(
 
 	if (href_list["track"])
 		var/mob/target = locate(href_list["track"]) in mob_list
-
 		if(target && (!istype(target, /mob/living/carbon/human) || html_decode(href_list["trackname"]) == target:get_face_name()))
 			ai_actual_track(target)
-
-		src << "\red System error. Cannot locate [html_decode(href_list["trackname"])]."
-		return
+		else
+			src << "<span class='rose'>System error. Cannot locate [html_decode(href_list["trackname"])].</span>"
+			return
 
 	else if (href_list["faketrack"])
 		var/mob/target = locate(href_list["track"]) in mob_list

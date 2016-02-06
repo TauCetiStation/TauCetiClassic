@@ -18,7 +18,7 @@
 	name = "jungle"
 	icon = 'tauceti/modules/_jungle/jungle.dmi'
 	icon_state = "area"
-	lighting_use_dynamic = 0
+	dynamic_lighting = 0
 	luminosity = 1
 
 //randomly spawns, will create paths around the map
@@ -130,7 +130,7 @@
 
 /obj/machinery/jungle_controller
 	name = "jungle controller"
-	desc = "a mysterious and ancient piece of machinery"
+	desc = "a mysterious and ancient piece of machinery."
 	var/list/animal_spawners = list()
 
 

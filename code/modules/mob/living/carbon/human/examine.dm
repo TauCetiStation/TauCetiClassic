@@ -241,7 +241,7 @@
 			for(var/mob/O in viewers(usr.loc, null))
 				O.show_message("[usr] checks [src]'s pulse.", 1)
 		spawn(15)
-			if(distance <= 1 && usr.stat != 1)
+			if(distance <= 1 && usr && usr.stat != 1)
 				if(pulse == PULSE_NONE)
 					usr << "<span class='deadsay'>[t_He] has no pulse[src.client ? "" : " and [t_his] soul has departed"]...</span>"
 				else

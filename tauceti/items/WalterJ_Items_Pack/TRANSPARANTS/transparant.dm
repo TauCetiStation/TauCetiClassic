@@ -4,7 +4,7 @@
 	icon_state = "blank"
 
 	name = "blank sign"
-	desc = "nothing"
+	desc = "Nothing."
 	var/not_bloody_state
 	force = 8
 	w_class = 4.0

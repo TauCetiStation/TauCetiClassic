@@ -119,7 +119,7 @@
 /************-Simple pipe-************/
 /obj/machinery/atmospherics/mains_pipe/simple
 	name = "mains pipe"
-	desc = "A one meter section of 3-line mains pipe"
+	desc = "A one meter section of 3-line mains pipe."
 
 	dir = SOUTH
 	initialize_mains_directions = SOUTH|NORTH
@@ -205,7 +205,7 @@
 /************-Manifold pipe-************/
 /obj/machinery/atmospherics/mains_pipe/manifold
 	name = "manifold pipe"
-	desc = "A manifold composed of mains pipes"
+	desc = "A manifold composed of mains pipes."
 
 	dir = SOUTH
 	initialize_mains_directions = EAST|NORTH|WEST
@@ -273,7 +273,7 @@
 /************-Manifold4w pipe-************/
 /obj/machinery/atmospherics/mains_pipe/manifold4w
 	name = "manifold pipe"
-	desc = "A manifold composed of mains pipes"
+	desc = "A manifold composed of mains pipes."
 
 	dir = SOUTH
 	initialize_mains_directions = EAST|NORTH|WEST|SOUTH
@@ -547,7 +547,7 @@
 /************-Cup-************/
 /obj/machinery/atmospherics/mains_pipe/cap
 	name = "pipe cap"
-	desc = "A cap for the end of a mains pipe"
+	desc = "A cap for the end of a mains pipe."
 
 	dir = SOUTH
 	initialize_directions = SOUTH

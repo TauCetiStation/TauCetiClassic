@@ -1,5 +1,5 @@
-#define LIGHT_DAM_THRESHOLD 1
-#define LIGHT_HEAL_THRESHOLD 2
+#define LIGHT_DAM_THRESHOLD 3
+#define LIGHT_HEAL_THRESHOLD 3
 #define LIGHT_DAMAGE_TAKEN 10
 /*
 
@@ -77,6 +77,9 @@ Made by Xhuis
 	restricted_jobs = list("AI", "Cyborg")
 	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain")
 
+	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
+	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
+
 /datum/game_mode/shadowling/announce()
 	world << "<b>The current game mode is - Shadowling!</b>"
 	world << "<b>There are alien <span class='userdanger'>shadowlings</span> on the station. Crew: Kill the shadowlings before they can eat or enthrall the crew. Shadowlings: Enthrall the crew while remaining in hiding.</b>"
@@ -119,6 +122,10 @@ Made by Xhuis
 		process_shadow_objectives(shadow)
 		update_shadows_icons_added(shadow)
 		//give_shadowling_abilities(shadow)
+
+	spawn (rand(waittime_l, waittime_h))
+		send_intercept()
+
 	..()
 	return
 
@@ -207,14 +214,16 @@ Made by Xhuis
 
 /datum/game_mode/shadowling/declare_completion()
 	//if(check_shadow_victory() && SSshuttle.emergency.mode >= SHUTTLE_ESCAPE) //Doesn't end instantly - this is hacky and I don't know of a better way ~X
+	completion_text += "<B>Shadowling mode resume:</B><BR>"
 	if(check_shadow_victory() && emergency_shuttle.location==2)
-		world << "<font size=3 color=green><b>The shadowlings have ascended and taken over the station!</FONT></b></span>"
+		completion_text += "<font size=3, color=green><B>The shadowlings have ascended and taken over the station!</FONT></B>"
+		score["roleswon"]++
 	//else if(shadowling_dead && !check_shadow_victory()) //If the shadowlings have ascended, they can not lose the round
 	else if(check_shadow_killed() && !check_shadow_victory())
-		world << "<span class='danger'><font size=3><b>The shadowlings have been killed by the crew!</b></FONT></span>"
+		completion_text += "<font size=3, color=red><B>The shadowlings have been killed by the crew!</B></FONT>"
 	//else if(!check_shadow_victory() && SSshuttle.emergency.mode >= SHUTTLE_ESCAPE)
 	else if(!check_shadow_victory() && emergency_shuttle.location==2)
-		world << "<span class='danger'><font size=3><b>The crew has escaped the station before the shadowlings could ascend!</b></FONT></span>"
+		completion_text += "<font size=3, color=red><B>The crew has escaped the station before the shadowlings could ascend!</B></FONT>"
 	..()
 	return 1
 
@@ -222,17 +231,17 @@ Made by Xhuis
 /datum/game_mode/proc/auto_declare_completion_shadowling()
 	var/text = ""
 	if(shadows.len)
-		text += "<br><span class='big'><b>The shadowlings were:</b></span>"
+		text += printlogo("shadowling", "shadowlings")
 		for(var/datum/mind/shadow in shadows)
-			text += printplayer(shadow)
-		text += "<br>"
+			text += printplayerwithicon(shadow)
+		text += "<BR>"
 		if(thralls.len)
-			text += "<br><span class='big'><b>The thralls were:</b></span>"
+			text += printlogo("thrall", "thralls")
 			for(var/datum/mind/thrall in thralls)
-				text += printplayer(thrall)
-	text += "<br>"
-	world << text
-
+				text += printplayerwithicon(thrall)
+			text += "<BR>"
+		text += "<HR>"
+	return text
 
 /*
 	MISCELLANEOUS

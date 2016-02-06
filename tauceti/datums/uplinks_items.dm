@@ -52,7 +52,7 @@
 	var/list/gamemodes = list() // Empty list means it is in all the gamemodes. Otherwise place the gamemode name here.
 	var/list/excludefrom = list()//Empty list does nothing. Place the name of gamemode you don't want this item to be available in here. This is so you dont have to list EVERY mode to exclude something.
 	var/list/uplink_types = list() //Empty list means that the object will be available in all types of uplinks. Alias you will need to state its type.
-	var/list/excludefrom_uplinks = list() //Empty list does nothing. Alias you will need to state the type of uplink, where the object won't be available. 
+	var/list/excludefrom_uplinks = list() //Empty list does nothing. Alias you will need to state the type of uplink, where the object won't be available.
 
 
 /datum/uplink_item/proc/spawn_item(var/turf/loc, var/obj/item/device/uplink/U)
@@ -82,6 +82,9 @@
 		var/obj/I = spawn_item(get_turf(user), U)
 		if(!I)
 			return 0
+		var/icon/tempimage = icon(I.icon, I.icon_state)
+		end_icons += tempimage
+		var/tempstate = end_icons.len
 		var/bundlename = name
 		if(name == "Random Item" || name == "For showing that you are The Boss")
 			bundlename = I.name
@@ -91,9 +94,9 @@
 		if(istype(I, /obj/item) && ishuman(user))
 			var/mob/living/carbon/human/A = user
 			A.put_in_any_hand_if_possible(I)
-			U.purchase_log += "[user] ([user.ckey]) bought \icon[I] [name] for [cost]."
+			U.purchase_log += {"[user] ([user.ckey]) bought <img src="logo_[tempstate].png"> [name] for [cost]."}
 			if(user.mind)
-				user.mind.uplink_items_bought += "\icon[I] [bundlename]"
+				user.mind.uplink_items_bought += {"<img src="logo_[tempstate].png"> [bundlename]"}
 				user.mind.spent_TC += cost
 		U.interact(user)
 
@@ -346,7 +349,7 @@
 
 /datum/uplink_item/ammo/rocket
 	name = "HE missile"
-	desc = "A high explosive missile for Goliath launcher"
+	desc = "A high explosive missile for Goliath launcher."
 	item = /obj/item/ammo_casing/caseless/rocket
 	cost = 5
 	gamemodes = list(/datum/game_mode/nuclear)
@@ -354,7 +357,7 @@
 
 /datum/uplink_item/ammo/rocket_emp
 	name = "EMP missile"
-	desc = "A EMP missile for Goliath launcher"
+	desc = "A EMP missile for Goliath launcher."
 	item = /obj/item/ammo_casing/caseless/rocket/emp
 	cost = 6
 	gamemodes = list(/datum/game_mode/nuclear)

@@ -261,6 +261,9 @@ proc/get_damage_icon_part(damage_state, body_part)
 	if(stand_icon)
 		qdel(stand_icon)
 
+	if(typing && (stat == DEAD))	//turn off typing indicator
+		qdel(typing_indicator)
+
 	stand_icon = new(species.icon_template ? species.icon_template : 'icons/mob/human.dmi',"blank")
 
 	var/icon_key = "[species.race_key][g][s_tone]"

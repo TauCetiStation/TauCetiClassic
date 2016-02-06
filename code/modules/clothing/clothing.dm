@@ -389,6 +389,8 @@ BLIND     // can't see anything
 		//makes sure that the clothing is equipped so that we can't drag it into our hand from miles away.
 		if (!(src.loc == usr))
 			return
+		if (!over_object)
+			return
 
 		if (!( usr.restrained() ) && !( usr.stat ))
 			switch(over_object.name)

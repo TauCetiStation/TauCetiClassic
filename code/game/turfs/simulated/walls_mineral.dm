@@ -1,6 +1,6 @@
 /turf/simulated/wall/mineral
 	name = "mineral wall"
-	desc = "This shouldn't exist"
+	desc = "This shouldn't exist."
 	icon_state = ""
 	var/last_event = 0
 	var/active = null
@@ -11,6 +11,7 @@
 	icon_state = "gold0"
 	walltype = "gold"
 	mineral = "gold"
+	sheet_type = /obj/item/stack/sheet/mineral/gold
 	//var/electro = 1
 	//var/shocked = null
 
@@ -20,6 +21,7 @@
 	icon_state = "silver0"
 	walltype = "silver"
 	mineral = "silver"
+	sheet_type = /obj/item/stack/sheet/mineral/silver
 	//var/electro = 0.75
 	//var/shocked = null
 
@@ -29,6 +31,7 @@
 	icon_state = "diamond0"
 	walltype = "diamond"
 	mineral = "diamond"
+	sheet_type = /obj/item/stack/sheet/mineral/diamond
 
 /turf/simulated/wall/mineral/clown
 	name = "bananium wall"
@@ -36,6 +39,7 @@
 	icon_state = "clown0"
 	walltype = "clown"
 	mineral = "clown"
+//	sheet_type = /obj/item/stack/sheet/mineral/bananium
 
 /turf/simulated/wall/mineral/sandstone
 	name = "sandstone wall"
@@ -43,6 +47,7 @@
 	icon_state = "sandstone0"
 	walltype = "sandstone"
 	mineral = "sandstone"
+	sheet_type = /obj/item/stack/sheet/mineral/sandstone
 
 /turf/simulated/wall/mineral/uranium
 	name = "uranium wall"
@@ -50,6 +55,7 @@
 	icon_state = "uranium0"
 	walltype = "uranium"
 	mineral = "uranium"
+	sheet_type = /obj/item/stack/sheet/mineral/uranium
 
 /turf/simulated/wall/mineral/uranium/proc/radiate()
 	if(!active)
@@ -82,6 +88,7 @@
 	icon_state = "phoron0"
 	walltype = "phoron"
 	mineral = "phoron"
+	sheet_type = /obj/item/stack/sheet/mineral/phoron
 
 /turf/simulated/wall/mineral/phoron/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(is_hot(W) > 300)//If the temperature of the object is over 300, then ignite

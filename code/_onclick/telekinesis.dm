@@ -62,7 +62,7 @@ var/const/tk_maxrange = 15
 */
 /obj/item/tk_grab
 	name = "Telekinetic Grab"
-	desc = "Magic"
+	desc = "Magic."
 	icon = 'icons/obj/magic.dmi'//Needs sprites
 	icon_state = "2"
 	flags = NOBLUDGEON | ABSTRACT
@@ -172,7 +172,7 @@ var/const/tk_maxrange = 15
 	O.icon_state = "nothing"
 	flick("empdisable",O)
 	spawn(5)
-		O.delete()
+		qdel(O)
 	return
 
 

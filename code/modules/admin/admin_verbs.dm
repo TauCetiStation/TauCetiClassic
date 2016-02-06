@@ -84,8 +84,9 @@ var/list/admin_verbs_admin = list(
 	/client/proc/allow_character_respawn,    /* Allows a ghost to respawn */
 	/client/proc/aooc,
 	/client/proc/change_security_level,
-	/client/proc/empty_ai_core_toggle_latejoin
-)
+	/client/proc/empty_ai_core_toggle_latejoin,
+	/client/proc/send_fax_message
+	)
 var/list/admin_verbs_ban = list(
 	/client/proc/unban_panel,
 //	/client/proc/stickybanpanel,
@@ -555,7 +556,7 @@ var/list/admin_verbs_mentor = list(
 		holder.DB_ban_record(BANTYPE_TEMP, null, bantime, reason, , ,warned_ckey)
 		feedback_inc("ban_warn",1)
 		D.save_preferences()
-		qdel(C)
+		del(C)
 	else
 		if(C)
 			C << "<font color='red'><BIG><B>You have been formally warned by an administrator.</B></BIG><br>Further warnings will result in an autoban.</font>"
@@ -693,7 +694,7 @@ var/list/admin_verbs_mentor = list(
 /client/proc/make_sound(var/obj/O in world) // -- TLE
 	set category = "Special Verbs"
 	set name = "Make Sound"
-	set desc = "Display a message to everyone who can hear the target"
+	set desc = "Display a message to everyone who can hear the target."
 	if(O)
 		var/message = input("What do you want the message to be?", "Make Sound") as text|null
 		if(!message)
@@ -715,7 +716,7 @@ var/list/admin_verbs_mentor = list(
 /client/proc/object_talk(var/msg as text) // -- TLE
 	set category = "Special Verbs"
 	set name = "oSay"
-	set desc = "Display a message to everyone who can hear the target"
+	set desc = "Display a message to everyone who can hear the target."
 	if(mob.control_object)
 		if(!msg)
 			return
@@ -726,7 +727,7 @@ var/list/admin_verbs_mentor = list(
 /client/proc/kill_air() // -- TLE
 	set category = "Debug"
 	set name = "Kill Air"
-	set desc = "Toggle Air Processing"
+	set desc = "Toggle Air Processing."
 	if(air_processing_killed)
 		air_processing_killed = 0
 		usr << "<b>Enabled air processing.</b>"
@@ -782,7 +783,7 @@ var/list/admin_verbs_mentor = list(
 
 /client/proc/change_security_level()
 	set name = "Set security level"
-	set desc = "Sets the station security level"
+	set desc = "Sets the station security level."
 	set category = "Admin"
 
 	if(!check_rights(R_ADMIN))	return
@@ -996,8 +997,8 @@ var/list/admin_verbs_mentor = list(
 		winner.client << sound('sound/misc/achievement.ogg')
 	else
 		world  << sound('sound/misc/achievement.ogg')
-		world << "<span class='danger'>\icon[cup] [winner.name] wins \"[name]\"!</span>"
+		world << "<span class='danger'>\icon[cup] <b>[winner.name]</b> wins \"<b>[name]</b>\"!</span>"
 
 	winner << "<span class='danger'>Congratulations!</span>"
 
-	achievements += "[winner.key] as [winner.name] won \"[name]\"! \"[desc]\""
+	achievements += "<b>[winner.key]</b> as <b>[winner.name]</b> won \"<b>[name]</b>\"! \"[desc]\""

@@ -498,7 +498,7 @@
 /mob/proc/changeling_unstun()
 	set category = "Changeling"
 	set name = "Epinephrine Sacs (45)"
-	set desc = "Removes all stuns"
+	set desc = "Removes all stuns."
 
 	var/datum/changeling/changeling = changeling_power(45,0,100,UNCONSCIOUS)
 	if(!changeling)	return 0
@@ -812,7 +812,7 @@ var/list/datum/dna/hivemind_bank = list()
 /mob/proc/changeling_unfat_sting()
 	set category = "Changeling"
 	set name = "Unfat sting (5)"
-	set desc = "Sting target"
+	set desc = "Sting target."
 
 	var/mob/living/carbon/T = changeling_sting(5,/mob/proc/changeling_unfat_sting)
 	if(!T)	return 0

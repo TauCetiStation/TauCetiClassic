@@ -155,8 +155,9 @@
 
 /obj/machinery/shieldgen/Destroy()
 	for(var/obj/machinery/shield/shield_tile in deployed_shields)
+		deployed_shields -= shield_tile
 		qdel(shield_tile)
-	..()
+	return ..()
 
 
 /obj/machinery/shieldgen/proc/shields_up()
@@ -177,6 +178,7 @@
 	update_icon()
 
 	for(var/obj/machinery/shield/shield_tile in deployed_shields)
+		deployed_shields -= shield_tile
 		qdel(shield_tile)
 
 /obj/machinery/shieldgen/process()
@@ -525,7 +527,8 @@
 	src.cleanup(2)
 	src.cleanup(4)
 	src.cleanup(8)
-	..()
+	attached = null
+	return ..()
 
 /obj/machinery/shieldwallgen/bullet_act(var/obj/item/projectile/Proj)
 	storedpower -= Proj.damage

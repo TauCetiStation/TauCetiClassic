@@ -5,7 +5,8 @@
 // Automatically recharges air (unless off), will flush when ready if pre-set
 // Can hold items and human size things, no other draggables
 // Toilets are a type of disposal bin for small objects only and work on magic. By magic, I mean torque rotation
-#define SEND_PRESSURE 0.05*ONE_ATMOSPHERE
+#define SEND_PRESSURE (need_env_pressure ? (700 + ONE_ATMOSPHERE) : 0) //kPa - assume the inside of a dispoal pipe is 1 atm, so that needs to be added.
+#define PRESSURE_TANK_VOLUME 150	//L
 
 /obj/machinery/disposal
 	name = "disposal unit"
@@ -22,6 +23,7 @@
 	var/flush_every_ticks = 30 //Every 30 ticks it will look whether it is ready to flush
 	var/flush_count = 0 //this var adds 1 once per tick. When it reaches flush_every_ticks it resets and tries to flush.
 	var/last_sound = 0
+	var/need_env_pressure = 1
 	active_power_usage = 600
 	idle_power_usage = 100
 
@@ -37,10 +39,14 @@
 		else
 			trunk.linked = src	// link the pipe trunk to self
 
-		air_contents = new/datum/gas_mixture()
-		//gas.volume = 1.05 * CELLSTANDARD
+		air_contents = new/datum/gas_mixture(PRESSURE_TANK_VOLUME)
 		update()
 
+/obj/machinery/disposal/Destroy()
+	eject()
+	if(trunk)
+		trunk.linked = null
+	return ..()
 
 	// attack by item places it in to disposal
 /obj/machinery/disposal/attackby(var/obj/item/I, var/mob/user)
@@ -67,7 +73,7 @@
 				return
 		else if(istype(I,/obj/item/weapon/weldingtool) && mode==-1)
 			if(contents.len > 0)
-				user << "Eject the items first!"
+				user << "<span class='warning'>Eject the items first!</span>"
 				return
 			var/obj/item/weapon/weldingtool/W = I
 			if(W.remove_fuel(0,user))
@@ -86,16 +92,16 @@
 					qdel(src)
 				return
 			else
-				user << "You need more welding fuel to complete this task."
+				user << "<span class='warning'>You need more welding fuel to complete this task.</span>"
 				return
 
 	if(istype(I, /obj/item/weapon/melee/energy/blade))
-		user << "You can't place that item inside the disposal unit."
+		user << "<span class='warning'>You can't place that item inside the disposal unit.</span>"
 		return
 
 	if(istype(I, /obj/item/weapon/storage/bag/trash))
 		var/obj/item/weapon/storage/bag/trash/T = I
-		user << "\blue You empty the bag."
+		user << "<span class='notice'>You empty the bag.</span>"
 		for(var/obj/item/O in T.contents)
 			T.remove_from_storage(O,src)
 		T.update_icon()
@@ -107,14 +113,12 @@
 		if(ismob(G.affecting))
 			var/mob/GM = G.affecting
 			for (var/mob/V in viewers(usr))
-				V.show_message("[usr] starts putting [GM.name] into the disposal.", 3)
+				V.show_message("<span class='red'>[usr] starts putting [GM.name] into the disposal.</span>", 3)
 			if(do_after(usr, 20, target = src))
-				if (GM.client)
-					GM.client.perspective = EYE_PERSPECTIVE
-					GM.client.eye = src
 				GM.loc = src
+				GM.instant_vision_update(1,src)
 				for (var/mob/C in viewers(src))
-					C.show_message("\red [GM.name] has been placed in the [src] by [user].", 3)
+					C.show_message("<span class='danger'>[GM.name] has been placed in the [src] by [user].</span>", 3)
 				qdel(G)
 				usr.attack_log += text("\[[time_stamp()]\] <font color='red'>Has placed [GM.name] ([GM.ckey]) in disposals.</font>")
 				GM.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been placed in disposals by [usr.name] ([usr.ckey])</font>")
@@ -127,50 +131,54 @@
 	if(I)
 		I.loc = src
 
-	user << "You place \the [I] into the [src]."
+	user << "<span class='notice'>You place \the [I] into the [src].</span>"
 	for(var/mob/M in viewers(src))
 		if(M == user)
 			continue
-		M.show_message("[user.name] places \the [I] into the [src].", 3)
+		M.show_message("<span class='notice'>[user.name] places \the [I] into the [src].</span>", 3)
 
 	update()
 
-	// mouse drop another mob or self
-	//
+// mouse drop another mob or self
+//
 /obj/machinery/disposal/proc/MouseDrop_T2(mob/target, mob/user)
-	if (!istype(target) || target.buckled || get_dist(user, src) > 1 || get_dist(user, target) > 1 || user.stat || istype(user, /mob/living/silicon/ai))
+	if(user.stat || !user.canmove || !istype(target))
 		return
-	if(isanimal(user) && target != user) return //animals cannot put mobs other than themselves into disposal
+	if(target.buckled || get_dist(user, src) > 1 || get_dist(user, target) > 1)
+		return
+	//animals cannot put mobs other than themselves into disposal
+	if(isanimal(user) && target != user)
+		return
+
 	src.add_fingerprint(user)
 	var/target_loc = target.loc
 	var/msg
 	for (var/mob/V in viewers(usr))
 		if(target == user && !user.stat && !user.weakened && !user.stunned && !user.paralysis)
-			V.show_message("[usr] starts climbing into the disposal.", 3)
+			V.show_message("<span class='red'>[usr] starts climbing into the disposal.</span>", 3)
 		if(target != user && !user.restrained() && !user.stat && !user.weakened && !user.stunned && !user.paralysis)
 			if(target.anchored) return
-			V.show_message("[usr] starts stuffing [target.name] into the disposal.", 3)
-	if(!do_after(usr, 20, target = src))
+			V.show_message("<span class='red'>[usr] starts stuffing [target.name] into the disposal.</span>", 3)
+	if(!do_after(usr, 20, target = usr))
 		return
 	if(target_loc != target.loc)
 		return
 	if(target == user && !user.stat && !user.weakened && !user.stunned && !user.paralysis)	// if drop self, then climbed in
 											// must be awake, not stunned or whatever
-		msg = "[user.name] climbs into the [src]."
-		user << "You climb into the [src]."
+		msg = "<span class='red'>[user.name] climbs into the [src].</span>"
+		user << "<span class='notice'>You climb into the [src].</span>"
 	else if(target != user && !user.restrained() && !user.stat && !user.weakened && !user.stunned && !user.paralysis)
-		msg = "[user.name] stuffs [target.name] into the [src]!"
-		user << "You stuff [target.name] into the [src]!"
+		msg = "<span class='danger'>[user.name] stuffs [target.name] into the [src]!</span>"
+		user << "<span class='red'>You stuff [target.name] into the [src]!</span>"
 
 		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Has placed [target.name] ([target.ckey]) in disposals.</font>")
 		target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been placed in disposals by [user.name] ([user.ckey])</font>")
 		msg_admin_attack("[user] ([user.ckey]) placed [target] ([target.ckey]) in a disposals unit. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 	else
 		return
-	if (target.client)
-		target.client.perspective = EYE_PERSPECTIVE
-		target.client.eye = src
+
 	target.loc = src
+	target.instant_vision_update(1,src)
 
 	for (var/mob/C in viewers(src))
 		if(C == user)
@@ -195,15 +203,15 @@
 
 		if(user.restrained() || user.stat || user.weakened || user.stunned || user.paralysis) return
 		for (var/mob/V in viewers(usr))
-			V.show_message("[usr] starts stuffing [target.name] into the disposal.", 3)
+			V.show_message("<span class='notice'>[usr] starts stuffing [target.name] into the disposal.</span>", 3)
 		if(!do_after(usr, 20, target = src))
 			return
 		if(target_loc != target.loc)
 			return
 
 		if(user.restrained() || user.stat || user.weakened || user.stunned || user.paralysis) return
-		msg = "[user.name] stuffs [target.name] into the [src]!"
-		user << "You stuff [target.name] into the [src]!"
+		msg = "<span class='notice'>[user.name] stuffs [target.name] into the [src]!</span>"
+		user << "<span class='notice'>You stuff [target.name] into the [src]!</span>"
 
 		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Has placed [target.name] () in disposals.</font>")
 		//target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been placed in disposals by [user.name] ([user.ckey])</font>")
@@ -232,11 +240,8 @@
 
 // leave the disposal
 /obj/machinery/disposal/proc/go_out(mob/user)
-
-	if (user.client)
-		user.client.eye = user.client.mob
-		user.client.perspective = MOB_PERSPECTIVE
 	user.loc = src.loc
+	user.instant_vision_update(0)
 	update()
 	return
 
@@ -257,13 +262,8 @@
 // human interact with machine
 /obj/machinery/disposal/attack_hand(mob/user as mob)
 	if(user && user.loc == src)
-		usr << "\red You cannot reach the controls from inside."
+		usr << "<span class='red'>You cannot reach the controls from inside.</span>"
 		return
-	/*
-	if(mode==-1)
-		usr << "\red The disposal units power is disabled."
-		return
-	*/
 	interact(user, 0)
 
 // user interaction
@@ -291,9 +291,11 @@
 	else
 		dat += "Pump: <A href='?src=\ref[src];pump=0'>Off</A> <B>On</B> (idle)<BR>"
 
-	var/per = 100* air_contents.return_pressure() / (SEND_PRESSURE)
+	var/per
+	if(need_env_pressure)
+		per = 100* air_contents.return_pressure() / (SEND_PRESSURE)
 
-	dat += "Pressure: [round(per, 1)]%<BR></body>"
+	dat += "Pressure: [need_env_pressure ? round(per, 1):"100"]%<BR></body>"
 
 
 	user.set_machine(src)
@@ -304,11 +306,11 @@
 
 /obj/machinery/disposal/Topic(href, href_list)
 	if(usr.loc == src)
-		usr << "\red You cannot reach the controls from inside."
+		usr << "<span class='red'>You cannot reach the controls from inside.</span>"
 		return
 
 	if(mode==-1 && !href_list["eject"]) // only allow ejecting if mode is -1
-		usr << "\red The disposal units power is disabled."
+		usr << "<span class='red'>The disposal units power is disabled.</span>"
 		return
 	..()
 	src.add_fingerprint(usr)
@@ -415,15 +417,16 @@
 
 	var/atom/L = loc						// recharging from loc turf
 
-	var/datum/gas_mixture/env = L.return_air()
-	var/pressure_delta = (SEND_PRESSURE*1.01) - air_contents.return_pressure()
+	if(need_env_pressure)
+		var/datum/gas_mixture/env = L.return_air()
+		var/pressure_delta = (SEND_PRESSURE*1.01) - air_contents.return_pressure()
 
-	if(env.temperature > 0)
-		var/transfer_moles = 0.1 * pressure_delta*air_contents.volume/(env.temperature * R_IDEAL_GAS_EQUATION)
+		if(env.temperature > 0)
+			var/transfer_moles = 0.1 * pressure_delta*air_contents.volume/(env.temperature * R_IDEAL_GAS_EQUATION)
 
-		//Actually transfer the gas
-		var/datum/gas_mixture/removed = env.remove(transfer_moles)
-		air_contents.merge(removed)
+			//Actually transfer the gas
+			var/datum/gas_mixture/removed = env.remove(transfer_moles)
+			air_contents.merge(removed)
 
 
 	// if full enough, switch to ready mode
@@ -452,7 +455,6 @@
 		H.tomail = 1
 
 
-	air_contents = new()		// new empty gas resv.
 
 	sleep(10)
 	if(last_sound < world.time + 1)
@@ -461,7 +463,8 @@
 	sleep(5) // wait for animation to finish
 
 
-	H.init(src)	// copy the contents of disposer to holder
+	H.init(src, air_contents)	// copy the contents of disposer to holder
+	air_contents = new(PRESSURE_TANK_VOLUME)	// new empty gas resv.
 
 	H.start(src) // start the holder processing movement
 	flushing = 0
@@ -534,10 +537,14 @@
 
 	var/partialTag = "" //set by a partial tagger the first time round, then put in destinationTag if it goes through again.
 
+/obj/structure/disposalholder/Destroy()
+	qdel(gas)
+	active = 0
+	return ..()
 
-	// initialize a holder from the contents of a disposal unit
-/obj/structure/disposalholder/proc/init(var/obj/machinery/disposal/D)
-	gas = D.air_contents// transfer gas resv. into holder object
+// initialize a holder from the contents of a disposal unit
+/obj/structure/disposalholder/proc/init(var/obj/machinery/disposal/D, var/datum/gas_mixture/flush_gas)
+	gas = flush_gas	// transfer gas resv. into holder object -- let's be explicit about the data this proc consumes, please.
 
 	//Check for any living mobs trigger hasmob.
 	//hasmob effects whether the package goes to cargo or its tagged destination.
@@ -592,6 +599,9 @@
 /obj/structure/disposalholder/proc/move()
 	var/obj/structure/disposalpipe/last
 	while(active)
+		sleep(1)		// was 1
+		if(!loc) return // check if we got GC'd
+
 		if(hasmob && prob(3))
 			for(var/mob/living/H in src)
 				if(!istype(H,/mob/living/silicon/robot/drone)) //Drones use the mailing code to move through the disposal system,
@@ -606,7 +616,8 @@
 		sleep(1)		// was 1
 		var/obj/structure/disposalpipe/curr = loc
 		last = curr
-		curr = curr.transfer(src)
+		if(curr)
+			curr = curr.transfer(src)
 
 		if(!loc) return
 
@@ -644,8 +655,7 @@
 		AM.loc = src		// move everything in other holder to this one
 		if(ismob(AM))
 			var/mob/M = AM
-			if(M.client)	// if a client mob, update eye to follow this holder
-				M.client.eye = src
+			M.instant_vision_update(1,src)
 
 	if(other.has_fat_guy)
 		has_fat_guy = 1
@@ -790,12 +800,16 @@
 //
 
 /obj/structure/disposalpipe/proc/expel(var/obj/structure/disposalholder/H, var/turf/T, var/direction)
+	if(!istype(H))
+		return
 
-	var/turf/target
-
-	if(T.density)		// dense ouput turf, so stop holder
-		H.active = 0
-		H.loc = src
+	// Empty the holder if it is expelled into a dense turf.
+	// Leaving it intact and sitting in a wall is stupid.
+	if(T.density)
+		for(var/atom/movable/AM in H)
+			AM.loc = T
+			AM.pipe_eject(0)
+		qdel(H)
 		return
 	if(T.intact && istype(T,/turf/simulated/floor)) //intact floor, pop the tile
 		var/turf/simulated/floor/F = T
@@ -806,6 +820,7 @@
 		new /obj/item/stack/tile(H)	// add to holder so it will be thrown with other stuff
 		F.icon_state = "Floor[F.burnt ? "1" : ""]"
 
+	var/turf/target
 	if(direction)		// direction is specified
 		if(istype(T, /turf/space)) // if ended in space, then range is unlimited
 			target = get_edge_target_turf(T, direction)
@@ -916,17 +931,15 @@
 		if(W.remove_fuel(0,user))
 			playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
 			// check if anything changed over 2 seconds
-			var/turf/uloc = user.loc
-			var/atom/wloc = W.loc
-			user << "Slicing the disposal pipe."
-			sleep(30)
-			if(!W.isOn()) return
-			if(user.loc == uloc && wloc == W.loc)
+			user << "You start slicing the disposal pipe."
+			if(do_after(user, 30, target = src))
+				if(!W.isOn()) return
+				user << "<span class='notice'>You sliced the disposal pipe.</span>"
 				welded()
 			else
-				user << "You must stay still while welding the pipe."
+				user << "<span class='warning'>You must stay still while welding the pipe.</span>"
 		else
-			user << "You need more welding fuel to cut the pipe."
+			user << "<span class='warning'>You need more welding fuel to cut the pipe.</span>"
 			return
 
 // called when pipe is cut with welder
@@ -1175,7 +1188,7 @@
 		if(O.currTag)// Tag set
 			sort_tag = O.currTag
 			playsound(src.loc, 'sound/machines/twobeep.ogg', 100, 1)
-			user << "\blue Changed tag to '[sort_tag]'."
+			user << "<span class='notice'>You changed tag to '[sort_tag]'.</span>"
 			updatename()
 			updatedesc()
 
@@ -1244,7 +1257,7 @@
 		if(O.currTag)// Tag set
 			sortType = O.currTag
 			playsound(src.loc, 'sound/machines/twobeep.ogg', 100, 1)
-			user << "\blue Changed filter to '[sortType]'."
+			user << "<span class='notice'>You changed filter to '[sortType]'.</span>"
 			updatename()
 			updatedesc()
 
@@ -1370,17 +1383,15 @@
 		if(W.remove_fuel(0,user))
 			playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
 			// check if anything changed over 2 seconds
-			var/turf/uloc = user.loc
-			var/atom/wloc = W.loc
-			user << "Slicing the disposal pipe."
-			sleep(30)
-			if(!W.isOn()) return
-			if(user.loc == uloc && wloc == W.loc)
+			user << "You start slicing the disposal pipe."
+			if(do_after(user, 30, target = src))
+				if(!W.isOn()) return
+				user << "<span class='notice'>You sliced the disposal pipe.</span>"
 				welded()
 			else
-				user << "You must stay still while welding the pipe."
+				user << "<span class='warning'>You must stay still while welding the pipe.</span>"
 		else
-			user << "You need more welding fuel to cut the pipe."
+			user << "<span class='warning'>You need more welding fuel to cut the pipe.</span>"
 			return
 
 	// would transfer to next pipe segment, but we are in a trunk
@@ -1510,7 +1521,7 @@
 				qdel(src)
 			return
 		else
-			user << "You need more welding fuel to complete this task."
+			user << "<span class='warning'>You need more welding fuel to complete this task.</span>"
 			return
 
 
@@ -1523,10 +1534,7 @@
 
 // check if mob has client, if so restore client view on eject
 /mob/pipe_eject(var/direction)
-	if (src.client)
-		src.client.perspective = MOB_PERSPECTIVE
-		src.client.eye = src
-
+	instant_vision_update(0)
 	return
 
 /obj/effect/decal/cleanable/blood/gibs/pipe_eject(var/direction)
@@ -1556,7 +1564,5 @@
 		qdel(src)
 	return
 
-/obj/machinery/disposal/Destroy()
-	for(var/atom/movable/AM in contents)
-		AM.loc = src.loc
-	..()
+#undef SEND_PRESSURE
+#undef PRESSURE_TANK_VOLUME

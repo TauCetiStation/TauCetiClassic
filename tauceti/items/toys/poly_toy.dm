@@ -80,12 +80,12 @@
 
 /obj/item/toy/prize/poly/polygold
 	name = "golden Poly"
-	desc = "Mini-Borg action figure! Limited edition! 11/11. Fully from gold and platinum"
+	desc = "Mini-Borg action figure! Limited edition! 11/11. Fully from gold and platinum."
 	icon_state = "poly_gold"
 
 /obj/item/toy/prize/poly/polyspecial
 	name = "toy special Poly"
-	desc = "Mini-Borg action figure! Limited edition! 11/11. Fully from gold and platinum"
+	desc = "Mini-Borg action figure! Limited edition! 11/11. Fully from gold and platinum."
 	icon_state = "poly_special"
 
 	attack_self(mob/user as mob)

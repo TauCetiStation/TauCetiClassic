@@ -21,6 +21,8 @@
 	var/probability = 0
 	var/station_was_nuked = 0 //see nuclearbomb.dm and malfunction.dm
 	var/explosion_in_progress = 0 //sit back and relax
+	var/nar_sie_has_risen = 0 //check, if there is already one god in the world who was summoned (only for tomes)
+	var/completion_text = ""
 	var/list/datum/mind/modePlayer = new
 	var/list/restricted_jobs = list()	// Jobs it doesn't make sense to be.  I.E chaplain or AI cultist
 	var/list/protected_jobs = list()	// Jobs that can't be traitors because
@@ -214,8 +216,17 @@ Implants;
 	var/list/suspects = list()
 	for(var/mob/living/carbon/human/man in player_list) if(man.client && man.mind)
 		// NT relation option
+		var/list/invisible_roles = list("Wizard",
+										"Ninja",
+										"Syndicate",
+										"Vox Raider",
+										"Raider",
+										"Abductor scientist",
+										"Abductor agent",
+										"Meme"
+										)
 		var/special_role = man.mind.special_role
-		if (special_role == "Wizard" || special_role == "Ninja" || special_role == "Syndicate" || special_role == "Vox Raider" || special_role == "Raider")
+		if (special_role in invisible_roles)
 			continue	//NT intelligence ruled out possiblity that those are too classy to pretend to be a crew.
 		for(var/spec_role in gang_name_pool)
 			if (special_role == "[spec_role] Gang (A) Boss")
@@ -227,9 +238,10 @@ Implants;
 			suspects += man
 		// Antags
 		else if(special_role == "traitor" && prob(40) || \
-		   special_role == "Changeling" && prob(50) || \
-		   special_role == "Cultist" && prob(30) || \
-		   special_role == "Head Revolutionary" && prob(30))
+			special_role == "Changeling" && prob(50) || \
+			special_role == "Cultist" && prob(30) || \
+			special_role == "Head Revolutionary" && prob(30) || \
+			special_role == "Shadowling" && prob(20))
 			suspects += man
 
 			// If they're a traitor or likewise, give them extra TC in exchange.
@@ -498,7 +510,7 @@ proc/get_nt_opposed()
 ///////////////////////////
 
 /datum/game_mode/proc/printplayer(var/datum/mind/ply)
-	var/role = "\improper[ply.special_role]"
+	var/role = "[ply.special_role]"
 	var/text = "<br><b>[ply.name]</b>(<b>[ply.key]</b>) as \a <b>[role]</b> ("
 	if(ply.current)
 		if(ply.current.stat == DEAD)
@@ -518,8 +530,43 @@ proc/get_nt_opposed()
 	var/count = 1
 	for(var/datum/objective/objective in ply.objectives)
 		if(objective.check_completion())
-			text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <font color='green'>Success!</font>"
+			text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <font color='green'><b>Success!</b></font>"
 		else
-			text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <font color='red'>Fail.</font>"
+			text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <font color='red'><b>Fail.</b></font>"
 		count++
+	return text
+
+//Used for printing player with there icons in round ending staticstic
+/datum/game_mode/proc/printplayerwithicon(datum/mind/ply)
+	var/text = ""
+	var/tempstate = end_icons.len
+	if(ply.current)
+		var/icon/flat = getFlatIcon(ply.current,exact=1)
+		end_icons += flat
+		tempstate = end_icons.len
+		text += {"<BR><img src="logo_[tempstate].png"> <B>[ply.key]</B> was <B>[ply.name]</B> ("}
+		if(ply.current.stat == DEAD)
+			text += "died"
+			flat.Turn(90)
+			end_icons[tempstate] = flat
+		else
+			text += "survived"
+		if(ply.current.real_name != ply.name)
+			text += " as [ply.current.real_name]"
+	else
+		var/icon/sprotch = icon('icons/effects/blood.dmi', "gibbearcore")
+		end_icons += sprotch
+		tempstate = end_icons.len
+		text += {"<BR><img src="logo_[tempstate].png"> <B>[ply.key]</B> was <B>[ply.name]</B> ("}
+		text += "body destroyed"
+	text += ")"
+	return text
+
+//Used for printing antag logo
+/datum/game_mode/proc/printlogo(logoname, antagname)
+	var/icon/logo = icon('icons/mob/mob.dmi', "[logoname]-logo")
+	end_icons += logo
+	var/tempstate = end_icons.len
+	var/text = ""
+	text += {"<img src="logo_[tempstate].png"> <B>The [antagname] were:</B> <img src="logo_[tempstate].png">"}
 	return text

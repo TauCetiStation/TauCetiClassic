@@ -177,7 +177,7 @@
 							continue
 						var/datum/objective/protect/ninja_objective = new
 						ninja_objective.owner = ninja
-						
+
 						ninja_objective.target = objective_p.target
 						ninja_objective.explanation_text = "Protect [objective_p.target.current.real_name], the [objective_p.target.assigned_role]."
 
@@ -186,7 +186,7 @@
 					if(istype(objective_p, /datum/objective/steal))
 						var/datum/objective/steal/ninja_objective = new
 						ninja_objective.owner = ninja
-						
+
 						ninja_objective.target = objective_p.target
 						ninja_objective.steal_target = objective_p.target
 						ninja_objective.explanation_text = objective_p.explanation_text
@@ -223,42 +223,35 @@
 	ninja.current.mind = ninja
 
 	var/directive = generate_ninja_directive("heel")//Only hired by antags, not NT
-	ninja.current << "You are an elite mercenary assassin of the Spider Clan, [ninja.current.real_name]. You have a variety of abilities at your disposal, thanks to your nano-enhanced cyber armor.\nYour current directive is: \red <B>[directive]</B>\n \blue Try your best to adhere to this."
-	ninja.store_memory("<B>Directive:</B> \red [directive]<br>")
+	ninja.current << "<span class = 'info'><B>You are <font color='red'>Ninja</font>!</B></span>"
+	ninja.current << "You are an elite mercenary assassin of the Spider Clan, [ninja.current.real_name]. You have a variety of abilities at your disposal, thanks to your nano-enhanced cyber armor"
+	ninja.current << "Your current directive is: <span class = 'red'><B>[directive]</B></span>"
+	ninja.current << "<span class = 'info'>Try your best to adhere to this.</span>"
+	ninja.store_memory("<B>Directive:</B> <span class='red'>[directive]</span><br>")
 
 	var/obj_count = 1
-	ninja.current << "\blue Your current objectives:"
+	ninja.current << "<span class = 'info'><B>Your current objectives:</B></span>"
 	for(var/datum/objective/objective in ninja.objectives)
 		ninja.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
 		obj_count++
 
 /datum/game_mode/proc/auto_declare_completion_ninja()
+	var/text = ""
 	if(ninjas.len)
-		var/text = "<FONT size = 2><B>The ninjas were:</B></FONT>"
+		text += printlogo("ninja", "ninjas")
 		for(var/datum/mind/ninja in ninjas)
+			text += printplayerwithicon(ninja)
+
 			var/ninjawin = 1
-
-			text += "<br>[ninja.key] was [ninja.name] ("
-			if(ninja.current)
-				if(ninja.current.stat == DEAD)
-					text += "died"
-				else
-					text += "survived"
-				if(ninja.current.real_name != ninja.name)
-					text += " as [ninja.current.real_name]"
-			else
-				text += "body destroyed"
-			text += ")"
-
 			if(ninja.objectives.len)//If the ninja had no objectives, don't need to process this.
 				var/count = 1
 				for(var/datum/objective/objective in ninja.objectives)
 					if(objective.check_completion())
 						text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font>"
-						feedback_add_details("traitor_objective","[objective.type]|SUCCESS")
+						feedback_add_details("ninja_objective","[objective.type]|SUCCESS")
 					else
 						text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='red'>Fail.</font>"
-						feedback_add_details("traitor_objective","[objective.type]|FAIL")
+						feedback_add_details("ninja_objective","[objective.type]|FAIL")
 						ninjawin = 0
 					count++
 
@@ -277,5 +270,7 @@
 					text += "<br><font color='red'><B>The [special_role_text] has failed!</B></font>"
 					feedback_add_details("traitor_success","FAIL")
 
-		world << text
-	return 1
+				text += "<BR>"
+		text += "<HR>"
+	return text
+

@@ -78,6 +78,19 @@
 			M = user
 		return eyestab(M,user)
 
+/obj/item/weapon/kitchen/utensil/fork/afterattack(atom/target, mob/user as mob, proximity)
+	if(istype(target,/obj/item/weapon/reagent_containers/food/snacks))	return // fork is not only for cleanning
+	if(!proximity) return
+	//I couldn't feasibly  fix the overlay bugs caused by cleaning items we are wearing.
+	//So this is a workaround. This also makes more sense from an IC standpoint. ~Carn
+	if(istype(target,/obj/effect/decal/cleanable))
+		user.visible_message("<span class='warning'>[user] begins to clean \the [target.name].</span>","<span class='notice'>You begin to clean \the [target.name].</span>")
+		if(do_after(user, 60, target = target))
+			user.visible_message("<span class='warning'>[user] scrub \the [target.name] out.</span>","<span class='notice'>You scrub \the [target.name] out.</span>")
+			qdel(target)
+		else
+			return
+
 /obj/item/weapon/kitchen/utensil/pfork
 	name = "plastic fork"
 	desc = "Yay, no washing up to do."

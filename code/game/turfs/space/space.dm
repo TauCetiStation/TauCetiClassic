@@ -11,10 +11,12 @@
 /turf/space/New()
 	if(!istype(src, /turf/space/transit))
 		icon_state = "[((x + y) ^ ~(x * y) + z) % 25]"
-	update_starlight()
+	//update_starlight()
 
 /turf/space/proc/update_starlight()
-	set_light(0) // Too lazy to port starlight configuration and its 0 by default anyway... ~Zve
+	return
+	//if(locate(/turf/simulated) in orange(src,1))
+	//	set_light(2,2) // Too lazy to port starlight configuration and its 0 by default anyway... ~Zve
 	/*if(!config.starlight)
 		return
 	if(locate(/turf/simulated) in orange(src,1))
@@ -273,3 +275,6 @@
 				if ((A && A.loc))
 					A.loc.Entered(A)
 	return
+
+/turf/space/ChangeTurf(var/turf/N, var/force_lighting_update = 0)
+	return ..(N, 1)

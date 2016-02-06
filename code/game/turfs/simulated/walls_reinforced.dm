@@ -9,6 +9,7 @@
 	max_temperature = 20000
 
 	walltype = "rwall"
+	sheet_type = /obj/item/stack/sheet/plasteel
 
 	var/d_state = 0
 

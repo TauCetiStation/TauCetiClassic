@@ -2,6 +2,7 @@
 	var/abductor_teams = 0
 	var/list/datum/mind/abductors = list()
 	var/list/datum/mind/abductees = list()
+	var/list/abduction_teams = list()
 
 /datum/game_mode/abduction
 	name = "abduction"
@@ -18,10 +19,14 @@
 	var/list/datum/mind/agents = list()
 	var/list/datum/objective/team_objectives = list()
 	var/list/team_names = list()
+	var/list/datum/mind/antag_candidates = list()
 
 	votable = 0
 
 	var/finished = 0
+
+	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
+	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
 
 /datum/game_mode/abduction/announce()
 	world << "<B>The current game mode is - Abduction!</B>"
@@ -31,7 +36,7 @@
 
 /datum/game_mode/abduction/pre_setup()
 	var/abductor_scaling_coeff = 15	////how many players per abductor team
-	var/list/datum/mind/antag_candidates = get_players_for_role(BE_ABDUCTOR)
+	antag_candidates = get_players_for_role(BE_ABDUCTOR)
 
 	abductor_teams = max(1, min(max_teams,round(num_players()/abductor_scaling_coeff)))
 	var/possible_teams = max(1,round(antag_candidates.len / 2))
@@ -43,16 +48,18 @@
 	team_objectives.len = abductor_teams
 	team_names.len = abductor_teams
 
-	for(var/i=1,i<=abductor_teams,i++)
+	for(var/i in 1 to abductor_teams)
 		if(!make_abductor_team(i))
 			return 0
 
 	return 1
 
 /datum/game_mode/abduction/proc/make_abductor_team(var/team_number,var/preset_agent=null,var/preset_scientist=null)
-	var/list/datum/mind/antag_candidates = get_players_for_role(BE_ABDUCTOR)
+	if(!antag_candidates.len)
+		antag_candidates = get_players_for_role(BE_ABDUCTOR)
 	//Team Name
 	team_names[team_number] = "Mothership [pick(possible_changeling_IDs)]" //TODO Ensure unique and actual alieny names
+	abduction_teams += team_names[team_number]
 	//Team Objective
 	var/datum/objective/experiment/team_objective = new
 	team_objective.team = team_number
@@ -65,17 +72,18 @@
 		antag_candidates -= agent
 
 		scientist.assigned_role = "MODE"
-		scientist.special_role = "abductor scientist"
+		scientist.special_role = "Abductor scientist"
 		log_game("[scientist.key] (ckey) has been selected as an abductor team [team_number] scientist.")
 
 		agent.assigned_role = "MODE"
-		agent.special_role = "abductor agent"
+		agent.special_role = "Abductor agent"
 		log_game("[agent.key] (ckey) has been selected as an abductor team [team_number] agent.")
 
-		abductors += agent
-		abductors += scientist
+		abductors |= agent
+		abductors |= scientist
 		scientists[team_number] = scientist
 		agents[team_number] = agent
+
 		return 1
 	return 0
 
@@ -96,7 +104,7 @@
 	var/datum/mind/scientist
 	var/team_name
 	var/mob/living/carbon/human/abductor/H
-	for(var/team_number=1,team_number<=abductor_teams,team_number++)
+	for(var/team_number in 1 to abductor_teams)
 		team_name = team_names[team_number]
 		agent = agents[team_number]
 		H = agent.current
@@ -106,6 +114,8 @@
 		H.agent = 1
 		H.team = team_number
 		H.real_name = team_name + " Agent"
+		H.mind.name = H.real_name
+		H.flavor_text = ""
 		equip_common(H,team_number)
 		equip_agent(H,team_number)
 		greet_agent(agent,team_number)
@@ -119,10 +129,16 @@
 		H.scientist = 1
 		H.team = team_number
 		H.real_name = team_name + " Scientist"
+		H.mind.name = H.real_name
+		H.flavor_text = ""
 		equip_common(H,team_number)
 		equip_scientist(H,team_number)
 		greet_scientist(scientist,team_number)
 		H.regenerate_icons()
+
+	spawn (rand(waittime_l, waittime_h))
+		send_intercept()
+
 	return ..()
 
 //Used for create antag buttons
@@ -176,9 +192,9 @@
 	abductor.objectives += team_objectives[team_number]
 	var/team_name = team_names[team_number]
 
-	abductor.current << "<span class='notice'>You are an agent of [team_name]!</span>"
-	abductor.current << "<span class='notice'>With the help of your teammate, kidnap and experiment on station crew members!</span>"
-	abductor.current << "<span class='notice'>Use your stealth technology and equipment to incapacitate humans for your scientist to retrieve.</span>"
+	abductor.current << "<span class='info'><B>You are an <font color='red'>agent</font> of [team_name]!</B></span>"
+	abductor.current << "<span class='info'>With the help of your teammate, kidnap and experiment on station crew members!</span>"
+	abductor.current << "<span class='info'>Use your stealth technology and equipment to incapacitate humans for your scientist to retrieve.</span>"
 
 	var/obj_count = 1
 	for(var/datum/objective/objective in abductor.objectives)
@@ -189,9 +205,9 @@
 /datum/game_mode/abduction/proc/greet_scientist(var/datum/mind/abductor,var/team_number)
 	abductor.objectives += team_objectives[team_number]
 	var/team_name = team_names[team_number]
-	abductor.current << "<span class='notice'>You are a scientist of [team_name]!</span>"
-	abductor.current << "<span class='notice'>With the help of your teammate, kidnap and experiment on station crew members!</span>"
-	abductor.current << "<span class='notice'>Use your tool and ship consoles to support the agent and retrieve human specimens.</span>"
+	abductor.current << "<span class='info'><B>You are a <font color='red'>scientist</font> of [team_name]!</B></span>"
+	abductor.current << "<span class='info'>With the help of your teammate, kidnap and experiment on station crew members!</span>"
+	abductor.current << "<span class='info'>Use your tool and ship consoles to support the agent and retrieve human specimens.</span>"
 	var/obj_count = 1
 	for(var/datum/objective/objective in abductor.objectives)
 		abductor.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
@@ -247,7 +263,7 @@
 
 /datum/game_mode/abduction/check_finished()
 	if(!finished)
-		for(var/team_number=1,team_number<=abductor_teams,team_number++)
+		for(var/team_number in 1 to abductor_teams)
 			var/obj/machinery/abductor/console/con = get_team_console(team_number)
 			var/datum/objective/objective = team_objectives[team_number]
 			if (con.experiment.points >= objective.target_amount)
@@ -259,32 +275,77 @@
 	return ..()
 
 /datum/game_mode/abduction/declare_completion()
-	for(var/team_number=1,team_number<=abductor_teams,team_number++)
+	completion_text += "<B>Abduction mode resume:</B><br>"
+	for(var/team_number in 1 to abductor_teams)
 		var/obj/machinery/abductor/console/console = get_team_console(team_number)
 		var/datum/objective/objective = team_objectives[team_number]
 		var/team_name = team_names[team_number]
 		if(console.experiment.points >= objective.target_amount)
-			world << "<b>[team_name] team <font color='green'>completed</font> its mission!</b></span>"
+			completion_text += "<B>[team_name]</B> team managed to <font color='green'><B>complete</B></font> their mission! "
+			completion_text += "[live_check(team_number)]"
+			completion_text += "[pick("Science of Galaxy","Greytide Science")] continues moving forward!<BR>"
 		else
-			world << "<b>[team_name] team <font color='red'>failed</font> its mission.</b></span>"
+			completion_text += "<B>[team_name]</B> team <font color='red'>failed</font> their mission."
+			completion_text += "[live_check(team_number)]"
+			completion_text += "Station crew managed to stop [pick("Science of Galaxy","Greytide Science")].<BR>"
 	..()
 	return 1
+
+/datum/game_mode/abduction/proc/live_check(var/team_number)
+	var/alive = 0
+	var/text = ""
+	for(var/datum/mind/abductor in abductors)
+		if(!ishuman(abductor.current))
+			continue
+		var/mob/living/carbon/human/A = abductor.current
+		if((A.team == team_number) && (A.stat != DEAD))
+			alive++
+	if(alive >= 2)
+		text += "All of them <B>alive</B>. "
+	else
+		text += "Someone from them is <B>dead</B>. "
+	return text
 
 /datum/game_mode/proc/auto_declare_completion_abduction()
 	var/text = ""
 	if(abductors.len)
-		text += "<br><span class='big'><b>The abductors were:</b></span>"
-		for(var/datum/mind/abductor_mind in abductors)
-			text += printplayer(abductor_mind)
-			text += printobjectives(abductor_mind)
-		text += "<br>"
+		text += printlogo("abductor", "abductors")
+		for(var/team_name in abduction_teams)
+			text += "<BR><FONT size = 4, color = #800080><b>[team_name] members:</B></FONT>"
+
+			for(var/datum/mind/abductor in abductors)
+				if(findtext(abductor.name,team_name))
+					text += printplayerwithicon(abductor)
+
+					var/count = 1
+					var/abductorwin = 1
+					if(!config.objectives_disabled)
+						for(var/datum/objective/objective in abductor.objectives)
+							if(objective.check_completion())
+								text += "<BR><B>Objective #[count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font>"
+								feedback_add_details("abductor_objective","[objective.type]|SUCCESS")
+							else
+								text += "<BR><B>Objective #[count]</B>: [objective.explanation_text] <font color='red'>Fail.</font>"
+								feedback_add_details("abductor_objective","[objective.type]|FAIL")
+								abductorwin = 0
+							count++
+
+						if(abductor.current && abductor.current.stat!=2 && abductorwin)
+							text += "<BR><font color='green'><B>The abductor was successful!</B></font>"
+							feedback_add_details("abductor_success","SUCCESS")
+							score["roleswon"]++
+						else
+							text += "<BR><font color='red'><B>The abductor has failed!</B></font>"
+							feedback_add_details("abductor_success","FAIL")
+
+		text += "<BR>"
 		if(abductees.len)
-			text += "<br><span class='big'><b>The abductees were:</b></span>"
+			text += "<BR><B>The abductees were:</B>"
 			for(var/datum/mind/abductee_mind in abductees)
 				text += printplayer(abductee_mind)
 				text += printobjectives(abductee_mind)
-	text += "<br>"
-	world << text
+		text += "<BR><HR>"
+	return text
 
 //Landmarks
 // TODO: Split into seperate landmarks for prettier ships
@@ -312,21 +373,12 @@
 	explanation_text = "Experiment on [target_amount] humans."
 
 /datum/objective/experiment/check_completion()
+	. = 0
 	var/ab_team = team
-	if(owner)
-		if(!owner.current || !ishuman(owner.current))
-			return 0
-		var/mob/living/carbon/human/H = owner.current
-		if(!H.species || !(H.species.name == "Abductor"))
-			return 0
-		ab_team = H.team
-	for(var/obj/machinery/abductor/experiment/E in machines)
+	for(var/obj/machinery/abductor/experiment/E in world)
 		if(E.team == ab_team)
 			if(E.points >= target_amount)
 				return 1
-			else
-				return 0
-	return 0
 
 /datum/objective/abductee
 //	dangerrating = 5
@@ -337,7 +389,7 @@
 
 /datum/objective/abductee/steal/New()
 	var/target = pick(list("pets","lights","monkeys","fruits","shoes","bars of soap"))
-	explanation_text+=" [target]."
+	explanation_text += " [target]."
 
 datum/objective/abductee/capture
 	explanation_text = "Capture"

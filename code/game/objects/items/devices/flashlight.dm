@@ -11,7 +11,7 @@
 	g_amt = 20
 	action_button_name = "Toggle Flashlight"
 	var/on = 0
-	var/brightness_on = 4 //luminosity when on
+	var/brightness_on = 5 //luminosity when on
 
 /obj/item/device/flashlight/initialize()
 	..()
@@ -112,7 +112,7 @@
 	desc = "A desk lamp with an adjustable mount."
 	icon_state = "lamp"
 	item_state = "lamp"
-	brightness_on = 5
+	brightness_on = 4
 	w_class = 4
 	flags = FPRINT | TABLEPASS | CONDUCT
 	m_amt = 0
@@ -125,7 +125,7 @@
 	desc = "A classic green-shaded desk lamp."
 	icon_state = "lampgreen"
 	item_state = "lampgreen"
-	brightness_on = 5
+	brightness_on = 4
 
 
 /obj/item/device/flashlight/lamp/verb/toggle_light()
@@ -142,7 +142,7 @@
 	name = "flare"
 	desc = "A red Nanotrasen issued flare. There are instructions on the side, it reads 'pull cord, make light'."
 	w_class = 2.0
-	brightness_on = 9 // Pretty bright.
+	brightness_on = 4
 	icon_state = "flare"
 	item_state = "flare"
 	action_button_name = null //just pull it manually, neckbeard.
@@ -150,7 +150,7 @@
 	var/on_damage = 7
 	var/produce_heat = 1500
 	light_color = "#ff0000"
-	light_power = 3
+	light_power = 2
 	action_button_name = "Toggle Flare"
 
 

@@ -27,7 +27,8 @@
 /obj/Destroy()
 	if(!istype(src, /obj/machinery))
 		processing_objects.Remove(src) // TODO: Have a processing bitflag to reduce on unnecessary loops through the processing lists
-	..()
+	nanomanager.close_uis(src)
+	return ..()
 
 /obj/assume_air(datum/gas_mixture/giver)
 	if(loc)

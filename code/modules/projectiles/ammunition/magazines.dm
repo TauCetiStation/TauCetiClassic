@@ -1,7 +1,7 @@
 ////////////////INTERNAL MAGAZINES//////////////////////
 /obj/item/ammo_box/magazine/internal/cylinder
 	name = "revolver cylinder"
-	desc = "Oh god, this shouldn't be here"
+	desc = "Oh god, this shouldn't be here!"
 	ammo_type = /obj/item/ammo_casing/a357
 	caliber = "357"
 	max_ammo = 7
@@ -19,7 +19,7 @@
 
 /obj/item/ammo_box/magazine/internal/cylinder/rus357
 	name = "russian revolver cylinder"
-	desc = "Oh god, this shouldn't be here"
+	desc = "Oh god, this shouldn't be here!"
 	ammo_type = /obj/item/ammo_casing/a357
 	caliber = "357"
 	max_ammo = 6
@@ -30,14 +30,14 @@
 
 /obj/item/ammo_box/magazine/internal/cylinder/rev38
 	name = "d-tiv revolver cylinder"
-	desc = "Oh god, this shouldn't be here"
+	desc = "Oh god, this shouldn't be here!"
 	ammo_type = /obj/item/ammo_casing/c38
 	caliber = "38"
 	max_ammo = 6
 
 /obj/item/ammo_box/magazine/internal/shot
 	name = "shotgun internal magazine"
-	desc = "Oh god, this shouldn't be here"
+	desc = "Oh god, this shouldn't be here!"
 	ammo_type = /obj/item/ammo_casing/shotgun/beanbag
 	caliber = "shotgun"
 	max_ammo = 4
@@ -45,7 +45,7 @@
 
 /obj/item/ammo_box/magazine/internal/heavyrifle
 	name = "heavysniper internal magazine"
-	desc = "Oh god, this shouldn't be here"
+	desc = "Oh god, this shouldn't be here!"
 	ammo_type = /obj/item/ammo_casing/a145
 	caliber = "14.5mm"
 	max_ammo = 1
@@ -53,7 +53,7 @@
 
 /obj/item/ammo_box/magazine/internal/m79
 	name = "m79 grenade launcher internal magazine"
-	desc = "Oh god, this shouldn't be here"
+	desc = "Oh god, this shouldn't be here!"
 	ammo_type = /obj/item/ammo_casing/r4046
 	caliber = "40x46"
 	max_ammo = 1
@@ -61,7 +61,7 @@
 
 /obj/item/ammo_box/magazine/internal/shotcom
 	name = "combat shotgun internal magazine"
-	desc = "Oh god, this shouldn't be here"
+	desc = "Oh god, this shouldn't be here!"
 	ammo_type = /obj/item/ammo_casing/shotgun/buckshot
 	caliber = "shotgun"
 	max_ammo = 8
@@ -69,7 +69,7 @@
 
 /obj/item/ammo_box/magazine/internal/cylinder/dualshot
 	name = "double-barrel shotgun internal magazine"
-	desc = "This doesn't even exist"
+	desc = "This doesn't even exist!"
 	ammo_type = /obj/item/ammo_casing/shotgun/beanbag
 	caliber = "shotgun"
 	max_ammo = 2
@@ -77,7 +77,7 @@
 
 /obj/item/ammo_box/magazine/internal/cylinder/rocket
 	name = "bazooka internal magazine"
-	desc = "This doesn't even exist"
+	desc = "This doesn't even exist!"
 	ammo_type = /obj/item/ammo_casing/caseless/rocket
 	caliber = "rocket"
 	max_ammo = 1

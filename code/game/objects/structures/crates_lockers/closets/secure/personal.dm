@@ -6,12 +6,11 @@
 
 /obj/structure/closet/secure_closet/personal/New()
 	..()
-	spawn(2)
-		if(prob(50))
-			new /obj/item/weapon/storage/backpack(src)
-		else
-			new /obj/item/weapon/storage/backpack/satchel_norm(src)
-		new /obj/item/device/radio/headset( src )
+	if(prob(50))
+		new /obj/item/weapon/storage/backpack(src)
+	else
+		new /obj/item/weapon/storage/backpack/satchel_norm(src)
+	new /obj/item/device/radio/headset( src )
 	return
 
 
@@ -20,13 +19,12 @@
 
 /obj/structure/closet/secure_closet/personal/patient/New()
 	..()
-	spawn(4)
-		contents = list()
-		new /obj/item/clothing/under/color/white( src )
-		new /obj/item/clothing/shoes/white( src )
+	// Not really the best way to do this, but it's better than "contents = list()"!
+	for(var/atom/movable/AM in contents)
+		qdel(AM)
+	new /obj/item/clothing/under/color/white(src)
+	new /obj/item/clothing/shoes/white(src)
 	return
-
-
 
 /obj/structure/closet/secure_closet/personal/cabinet
 	icon_state = "cabinetdetective_locked"
@@ -50,10 +48,11 @@
 
 /obj/structure/closet/secure_closet/personal/cabinet/New()
 	..()
-	spawn(4)
-		contents = list()
-		new /obj/item/weapon/storage/backpack/satchel/withwallet( src )
-		new /obj/item/device/radio/headset( src )
+	// Not really the best way to do this, but it's better than "contents = list()"!
+	for(var/atom/movable/AM in contents)
+		qdel(AM)
+	new /obj/item/weapon/storage/backpack/satchel/withwallet(src)
+	new /obj/item/device/radio/headset(src)
 	return
 
 /obj/structure/closet/secure_closet/personal/attackby(obj/item/weapon/W as obj, mob/user as mob)
@@ -61,10 +60,10 @@
 		if (istype(W, /obj/item/weapon/grab))
 			src.MouseDrop_T(W:affecting, user)      //act like they were dragged onto the closet
 		user.drop_item()
-		if (W) W.loc = src.loc
+		if (W) W.forceMove(src.loc)
 	else if(istype(W, /obj/item/weapon/card/id))
 		if(src.broken)
-			user << "\red It appears to be broken."
+			user << "<span class='warning'>It appears to be broken.</span>"
 			return
 		var/obj/item/weapon/card/id/I = W
 		if(!I || !I.registered_name)	return

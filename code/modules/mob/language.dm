@@ -86,14 +86,6 @@
 	colour = "rough"
 	key = "3"
 
-/datum/language/kidan
-	name = "Chittin"
-	desc = "The main language spoken by the Kida.It consists of constant rapid clicks, buzzes, movement of antennae and limbs, and small shrieks."
-	speech_verb = "rubs it's antenna together"
-	colour = "kidan"
-	key = "4"
-	flags = RESTRICTED | NONVERBAL
-
 // Language handling.
 /mob/proc/add_language(var/language)
 

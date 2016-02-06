@@ -1,6 +1,14 @@
-/*
-VOX HEIST ROUNDTYPE
-*/
+/obj/effect/landmark/heist/aurora //used to locate shuttle.
+	name = "Aurora"
+	icon_state = "x3"
+
+/obj/effect/landmark/heist/mob_loot //fulton - locate where to drop mobs.
+	name = "mob loot"
+	icon_state = "x3"
+
+/obj/effect/landmark/heist/obj_loot //fulton - locate where to drop objs.
+	name = "obj loot"
+	icon_state = "x3"
 
 /datum/game_mode/
 	var/list/datum/mind/raiders = list()  //Antags.
@@ -26,7 +34,7 @@ VOX HEIST ROUNDTYPE
 	world << "<B>An unidentified bluespace signature has slipped past the Icarus and is approaching [station_name()]!</B>"
 	world << "Whoever they are, they're likely up to no good. Protect the crew and station resources against this dastardly threat!"
 	world << "<B>Raiders:</B> Loot [station_name()] for anything and everything you need."
-	world << "<B>Personnel:</B> Repel the raiders and their low, low prices and/or crossbows."
+	world << "<B>Personnel:</B> Repel the raiders and their low, low prices and/or guns."
 
 /datum/game_mode/heist/can_start()
 
@@ -127,11 +135,13 @@ VOX HEIST ROUNDTYPE
 		raider.objectives = raid_objectives
 		greet_vox(raider)
 
+	for(var/atom/movable/AM in locate(/area/shuttle/vox/station))
+		heist_recursive_price_reset(AM)
+
 	spawn (rand(waittime_l, waittime_h))
 		send_intercept()
 
 /datum/game_mode/heist/proc/is_raider_crew_safe()
-
 	if(cortical_stacks.len == 0)
 		return 0
 
@@ -141,7 +151,6 @@ VOX HEIST ROUNDTYPE
 	return 1
 
 /datum/game_mode/heist/proc/is_raider_crew_alive()
-
 	for(var/datum/mind/raider in raiders)
 		if(raider.current)
 			if(istype(raider.current,/mob/living/carbon/human) && raider.current.stat != 2)
@@ -149,61 +158,37 @@ VOX HEIST ROUNDTYPE
 	return 0
 
 /datum/game_mode/heist/proc/forge_vox_objectives()
-
-	var/i = 1
-	//var/max_objectives = pick(2,2,2,2,3,3,3,4)
-	var/max_objectives = 3
-	var/cur_obj = 0
 	var/list/objs = list()
-	while(i<= max_objectives)
-		cur_obj++
-		var/datum/objective/heist/O
-		if(cur_obj == 1)
-			O = new /datum/objective/heist/kidnap()
-		if(cur_obj == 2)
-			O = new /datum/objective/heist/loot()
-		if(cur_obj == 3)
-			O = new /datum/objective/heist/salvage()
-		//var/list/goals = list("kidnap","loot","salvage")
-		//var/goal = pick(goals)
-		
-
-		//if(goal == "kidnap")
-		//	goals -= "kidnap"
-		//	O = new /datum/objective/heist/kidnap()
-		//else if(goal == "loot")
-		//	O = new /datum/objective/heist/loot()
-		//else
-		//	O = new /datum/objective/heist/salvage()
-		O.choose_target()
-		objs += O
-
-		i++
-
-	//-All- vox raids have these two objectives. Failing them loses the game.
-	//objs += new /datum/objective/heist/inviolate_crew
-	//objs += new /datum/objective/heist/inviolate_death
+	var/datum/objective/heist/O = new /datum/objective/heist/robbery()
+	O.choose_target()
+	objs += O
 
 	return objs
 
 /datum/game_mode/heist/proc/greet_vox(var/datum/mind/raider)
-	raider.current << "\blue <B>You are a Pirate....ARGH!</b>"
-	//raider.current << "\blue The Vox are a race of cunning, sharp-eyed nomadic raiders and traders endemic to Tau Ceti and much of the unexplored galaxy. You and the crew have come to the Exodus for plunder, trade or both."
-	//raider.current << "\blue Vox are cowardly and will flee from larger groups, but corner one or find them en masse and they are vicious."
-	raider.current << "\blue Use :3 to guttertalk, :H to talk on your encrypted channel!"
+	var/msg = ""
+	raider.current << "<span class='info'><B>You are a <font color='red'>Pirate</font>....ARGH!</B></span>"
+	raider.current << "<span class='info'>Use :3 to guttertalk, :H to talk on your encrypted channel!</span>"
+	msg = "” вашего капитана имеетс€ fulton recovery pack! »спользуйте его, чтобы быстро доставить все что угодно на ваш корабль (если цель жива€ - попадет в комнату удержани€ на шаттле)."
+	raider.current << "[sanitize(msg)]"
+	msg = "Ќа вашем корабле лежат семена кудзу и эксклюзивные кубические гранаты! »спользуйте их на станции, чтобы се€ть хаос (осторожно, гранаты содержат агрессивную живность котора€ с удовольствием перекусит даже вами, а семена можно сажать пр€мо на пол станции)."
+	raider.current << "<span class='info'>[sanitize(msg)]</span>"
+	msg = "¬аша винтовка и пистолет модифицированы дл€ использовани€ специальных сверхзвуковых снар€дов нового поколени€, они не нанос€т вреда обычным живым существам но имеют огромную силу удара, что позвол€ет вывести из бо€ человека нацепившего на себ€ много брони, а синтетам и мехам наносит колоссальный вред."
+	raider.current << "[sanitize(msg)]"
+	msg = "Debugger который вы найдете на корабле - поможет вам со взломом APC и дверей. ”чтите что такой метод наносит вред программному обеспечению и в случае с дверьми - попросту сжигает плату. Ќе используйте его на двер€х с опущенными болтами, конечно если ваша цель не €вл€етс€ полностью заблокировать дверь."
+	raider.current << "<span class='info'>[sanitize(msg)]</span>"
 	var/obj_count = 1
 	if(!config.objectives_disabled)
 		for(var/datum/objective/objective in raider.objectives)
 			raider.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
 			obj_count++
-	//else
-	//	raider.current << "<font color=blue>Within the rules,</font> try to act as an opposing force to the crew or come up with other fun ideas. Further RP and try to make sure other players have </i>fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>"
-
 
 /datum/game_mode/heist/declare_completion()
 
 	//No objectives, go straight to the feedback.
 	if(!(raid_objectives.len)) return ..()
+
+	completion_text += "<B>Heist mode resume:</B><BR>"
 
 	var/win_type = "Major"
 	var/win_group = "Crew"
@@ -218,82 +203,107 @@ VOX HEIST ROUNDTYPE
 	//Set result by objectives.
 	if(success == raid_objectives.len)
 		win_type = "Major"
-		win_group = "Vox"
+		win_group = "Raider"
 	else if(success > 2)
 		win_type = "Minor"
-		win_group = "Vox"
+		win_group = "Raider"
 	else
 		win_type = "Minor"
 		win_group = "Crew"
 
-	//Now we modify that result by the state of the vox crew.
+	//Now we modify that result by the state of the pirate crew.
 	if(!is_raider_crew_alive())
-
 		win_type = "Major"
 		win_group = "Crew"
 		win_msg += "<B>The Raiders have been wiped out!</B>"
-
-	else if(!is_raider_crew_safe())
-
-		if(win_group == "Crew" && win_type == "Minor")
-			win_type = "Major"
-
-		win_group = "Crew"
-		//win_msg += "<B>The Raiders have left someone behind!</B>"
-
 	else
-
-		if(win_group == "Vox")
+		if(win_group == "Raider")
 			if(win_type == "Minor")
-
 				win_type = "Major"
 			win_msg += "<B>The Raiders escaped the station!</B>"
+			score["roleswon"]++
 		else
 			win_msg += "<B>The Raiders were repelled!</B>"
 
-	world << "\red <FONT size = 3><B>[win_type] [win_group] victory!</B></FONT>"
-	world << "[win_msg]"
+	completion_text += "<FONT size = 3, color='red'><B>[win_type] [win_group] victory!</B></FONT>"
+	completion_text += "<BR>[win_msg]"
 	feedback_set_details("round_end_result","heist - [win_type] [win_group]")
 
 	var/count = 1
 	for(var/datum/objective/objective in raid_objectives)
 		if(objective.check_completion())
-			world << "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font>"
-			feedback_add_details("traitor_objective","[objective.type]|SUCCESS")
+			if(objective.target == "valuables")
+				completion_text += "<BR><B>Objective #[count]</B>: [objective.explanation_text] ([num2text(heist_rob_total,9)]/[num2text(objective.target_amount,9)]) <font color='green'><B>Success!</B></font>"
+				feedback_add_details("traitor_objective","[objective.type]|SUCCESS")
+			else
+				completion_text += "<BR><B>Objective #[count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font>"
+				feedback_add_details("traitor_objective","[objective.type]|SUCCESS")
 		else
-			world << "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='red'>Fail.</font>"
-			feedback_add_details("traitor_objective","[objective.type]|FAIL")
+			if(objective.target == "valuables")
+				completion_text += "<BR><B>Objective #[count]</B>: [objective.explanation_text] ([num2text(heist_rob_total,9)]/[num2text(objective.target_amount,9)]) <font color='red'>Fail.</font>"
+				feedback_add_details("traitor_objective","[objective.type]|FAIL")
+			else
+				completion_text += "<BR><B>Objective #[count]</B>: [objective.explanation_text] <font color='red'>Fail.</font>"
+				feedback_add_details("traitor_objective","[objective.type]|FAIL")
 		count++
 
+	if(heist_rob_total == 0)
+		heist_get_shuttle_price()
+		completion_text += "<BR><BR>Estimated value of valuables left on Aurora - $<font color='red'>[num2text(heist_rob_total,9)]</font> spacebucks."
 	..()
+	return 1
 
 datum/game_mode/proc/auto_declare_completion_heist()
+	var/text =""
 	if(raiders.len)
-		var/check_return = 0
-		//if(ticker && istype(ticker.mode,/datum/game_mode/heist))
-		//	check_return = 1
-		var/text = "<FONT size = 2><B>The raiders were:</B></FONT>"
+		var/loot_savefile = "data/pirate_loot.sav" //loot statistics
+		var/savefile/S = new /savefile(loot_savefile)
+		if(S)
+			S.cd = "/"
+			var/max_score = heist_rob_total
+			var/sav_score
+			S["HeistMaxScore"] >> sav_score
+			sav_score = text2num(sav_score)
+			if(!sav_score)
+				sav_score = 0
+			if(max_score > sav_score)
+				S["HeistMaxScore"] << num2text(heist_rob_total,9)
+			for(var/atom/movable/AM in locate(/area/shuttle/vox/station))
+				if(AM.get_price())
+					var/count = 0
+					S["[AM.type]"] >> count
+					count++
+					S["[AM.type]"] << count
 
-		for(var/datum/mind/vox in raiders)
-			text += "<br>[vox.key] was [vox.name] ("
-			if(check_return)
-				var/obj/stack = raiders[vox]
-				if(get_area(stack) != locate(/area/shuttle/vox/station))
+		text += printlogo("raider", "raiders")
+		for(var/datum/mind/raider in raiders)
+			if(raider.current)
+				var/icon/flat = getFlatIcon(raider.current,exact=1)
+				end_icons += flat
+				var/tempstate = end_icons.len
+				text += {"<br><img src="logo_[tempstate].png"> <b>[raider.key]</b> was <b>[raider.name]</b> ("}
+				var/area/A = get_area(raider.current)
+				if(!istype(A, /area/shuttle/vox/station))
 					text += "left behind)"
 					continue
-			if(vox.current)
-				if(vox.current.stat == DEAD)
+				else if(raider.current.stat == DEAD)
 					text += "died"
+					flat.Turn(90)
+					end_icons[tempstate] = flat
 				else
 					text += "survived"
-				if(vox.current.real_name != vox.name)
-					text += " as [vox.current.real_name]"
+				if(raider.current.real_name != raider.name)
+					text += " as [raider.current.real_name]"
 			else
+				var/icon/sprotch = icon('icons/effects/blood.dmi', "gibbearcore")
+				end_icons += sprotch
+				var/tempstate = end_icons.len
+				text += {"<br><img src="logo_[tempstate].png"> [raider.key] was [raider.name] ("}
 				text += "body destroyed"
 			text += ")"
 
-		world << text
-	return 1
+		text += "<BR><HR>"
+	return text
 
 /datum/game_mode/heist/check_finished()
 	if (!(is_raider_crew_alive()) || (vox_shuttle_location && (vox_shuttle_location == "start")))

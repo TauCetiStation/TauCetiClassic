@@ -17,7 +17,7 @@ Thus, the two variables affect pump operation are set in New():
 	icon_state = "intact_off"
 
 	name = "Gas pump"
-	desc = "A pump"
+	desc = "A pump."
 
 	var/on = 0
 	var/target_pressure = ONE_ATMOSPHERE
@@ -28,7 +28,7 @@ Thus, the two variables affect pump operation are set in New():
 
 /obj/machinery/atmospherics/binary/pump/highcap
 	name = "High capacity gas pump"
-	desc = "A high capacity pump"
+	desc = "A high capacity pump."
 
 	target_pressure = 15000000
 

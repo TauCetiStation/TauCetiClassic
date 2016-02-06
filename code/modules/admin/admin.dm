@@ -687,6 +687,7 @@ var/global/floorIsLava = 0
 			<BR>
 			<A href='?src=\ref[src];secretsadmin=list_job_debug'>Show Job Debug</A><BR>
 			<A href='?src=\ref[src];secretscoder=spawn_objects'>Admin Log</A><BR>
+			<A href='?src=\ref[src];secretscoder=garbage_fail_log'>Garbage Log</A><BR>
 			<BR>
 			"}
 
@@ -1022,7 +1023,7 @@ var/global/floorIsLava = 0
 */
 /datum/admins/proc/spawn_atom(var/object as text)
 	set category = "Debug"
-	set desc = "(atom path) Spawn an atom"
+	set desc = "(atom path) Spawn an atom."
 	set name = "Spawn"
 
 	if(!check_rights(R_SPAWN))	return
@@ -1057,7 +1058,7 @@ var/global/floorIsLava = 0
 
 /datum/admins/proc/show_traitor_panel(var/mob/M in mob_list)
 	set category = "Admin"
-	set desc = "Edit mobs's memory and role"
+	set desc = "Edit mobs's memory and role."
 	set name = "Show Traitor Panel"
 
 	if(!istype(M))

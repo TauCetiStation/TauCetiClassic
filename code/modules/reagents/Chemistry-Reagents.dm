@@ -3044,8 +3044,6 @@ datum
 
 				if(alien && alien == IS_SKRELL) //Skrell get very drunk very quickly.
 					d*=5
-				else if(alien && alien == IS_KIDAN) //Alcohol is like water to Kida according to lore
-					d*=0
 
 
 				M.dizziness += dizzy_adj.
@@ -3820,6 +3818,10 @@ datum
 					H.apply_effect(1,IRRADIATE,0)
 				..()
 				return
+
+/datum/reagent/Destroy() // This should only be called by the holder, so it's already handled clearing its references
+	..()
+	holder = null
 
 // Undefine the alias for REAGENTS_EFFECT_MULTIPLER
 #undef REM

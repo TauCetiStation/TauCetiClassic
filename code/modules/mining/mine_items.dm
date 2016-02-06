@@ -34,10 +34,11 @@
 	new /obj/item/weapon/shovel(src)
 //	new /obj/item/weapon/pickaxe(src)
 	new /obj/item/clothing/glasses/hud/mining(src)
-	//New year part
+	/*/New year part
 	new /obj/item/clothing/suit/wintercoat/cargo
 	new /obj/item/clothing/head/santa(src)
 	new /obj/item/clothing/shoes/winterboots(src)
+	*/
 
 /**********************Shuttle Computer**************************/
 var/mining_shuttle_tickstomove = 10
@@ -168,7 +169,7 @@ proc/move_mining_shuttle()
 	name = "lantern"
 	icon_state = "lantern"
 	desc = "A mining lantern."
-	brightness_on = 6			// luminosity when on
+	brightness_on = 4			// luminosity when on
 
 /*****************************Pickaxe********************************/
 /obj/item/weapon/pickaxe

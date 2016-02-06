@@ -1,6 +1,6 @@
 /obj/item/weapon/gun/energy/laser
 	name = "laser gun"
-	desc = "a basic weapon designed kill with concentrated energy bolts"
+	desc = "a basic weapon designed kill with concentrated energy bolts."
 	icon = 'tauceti/icons/obj/guns.dmi'
 	tc_custom = 'tauceti/icons/obj/guns.dmi'
 	icon_state = "laser"
@@ -114,7 +114,7 @@ obj/item/weapon/gun/energy/laser/retro
 	name = "laser tag gun"
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "bluetag"
-	desc = "Standard issue weapon of the Imperial Guard"
+	desc = "Standard issue weapon of the Imperial Guard."
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/bluetag)
 	origin_tech = "combat=1;magnets=2"
 	clumsy_check = 0
@@ -150,7 +150,7 @@ obj/item/weapon/gun/energy/laser/retro
 	name = "laser tag gun"
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "redtag"
-	desc = "Standard issue weapon of the Imperial Guard"
+	desc = "Standard issue weapon of the Imperial Guard."
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/redtag)
 	origin_tech = "combat=1;magnets=2"
 	clumsy_check = 0

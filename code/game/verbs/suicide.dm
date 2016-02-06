@@ -178,7 +178,7 @@
 
 /mob/living/silicon/pai/verb/suicide()
 	set category = "pAI Commands"
-	set desc = "Kill yourself and become a ghost (You will receive a confirmation prompt)"
+	set desc = "Kill yourself and become a ghost (You will receive a confirmation prompt)."
 	set name = "pAI Suicide"
 	var/answer = input("REALLY kill yourself? This action can't be undone.", "Suicide", "No") in list ("Yes", "No")
 	if(answer == "Yes")

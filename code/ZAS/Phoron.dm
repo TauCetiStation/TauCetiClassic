@@ -3,7 +3,7 @@ var/image/contamination_overlay = image('icons/effects/contamination.dmi')
 /pl_control
 	var/PHORON_DMG = 5
 	var/PHORON_DMG_NAME = "Phoron Damage Amount"
-	var/PHORON_DMG_DESC = "Self Descriptive"
+	var/PHORON_DMG_DESC = "Self Descriptive."
 
 	var/CLOTH_CONTAMINATION = 1
 	var/CLOTH_CONTAMINATION_NAME = "Cloth Contamination"
@@ -27,7 +27,7 @@ var/image/contamination_overlay = image('icons/effects/contamination.dmi')
 
 	var/CONTAMINATION_LOSS = 0.075
 	var/CONTAMINATION_LOSS_NAME = "Contamination Loss"
-	var/CONTAMINATION_LOSS_DESC = "How much toxin damage is dealt from contaminated clothing" //Per tick?  ASK ARYN
+	var/CONTAMINATION_LOSS_DESC = "How much toxin damage is dealt from contaminated clothing." //Per tick?  ASK ARYN
 
 	var/PHORON_HALLUCINATION = 1
 	var/PHORON_HALLUCINATION_NAME = "Phoron Hallucination"

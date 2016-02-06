@@ -391,10 +391,13 @@ var/MAX_EXPLOSION_RANGE = 14
 #define DEAD		2
 
 // channel numbers for power
-#define EQUIP	1
-#define LIGHT	2
-#define ENVIRON	3
-#define TOTAL	4	//for total power used only
+#define EQUIP			1
+#define LIGHT			2
+#define ENVIRON			3
+#define TOTAL			4	//for total power used only
+#define STATIC_EQUIP	5
+#define STATIC_LIGHT	6
+#define STATIC_ENVIRON	7
 
 // bitflags for machine stat variable
 #define BROKEN		1
@@ -641,6 +644,7 @@ var/list/liftable_structures = list(\
 #define SOUND_LOBBY		8
 #define SHOW_ANIMATIONS	16
 #define SHOW_PROGBAR	32
+#define SOUND_STREAMING	64
 
 #define TOGGLES_DEFAULT (SOUND_ADMINHELP|SOUND_MIDI|SOUND_AMBIENCE|SOUND_LOBBY|SHOW_ANIMATIONS|SHOW_PROGBAR)
 
@@ -742,7 +746,8 @@ var/list/cheartstopper = list("potassium_chloride") //this stops the heart when 
 var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accessed by preexisting terminals. AIs and new terminals can't use them.
 	"thunder",
 	"ERT",
-	"NUKE"
+	"NUKE",
+	"AURORA"
 	)
 
 //Species flags.
@@ -801,7 +806,6 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define IS_VOX 2
 #define IS_SKRELL 3
 #define IS_UNATHI 4
-#define IS_KIDAN 5
 
 // Suit sensor levels
 #define SUIT_SENSOR_OFF      0
@@ -818,7 +822,7 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define HYDRO_SPEED_MULTIPLIER 1
 #define NANO_IGNORE_DISTANCE 1
 
-#define Clamp(x, y, z) 	(x <= y ? y : (x >= z ? z : x))
+#define Clamp(CLVALUE,CLMIN,CLMAX) ( max( (CLMIN), min((CLVALUE), (CLMAX)) ) )
 
 #define CLAMP01(x) 		(Clamp(x, 0, 1))
 

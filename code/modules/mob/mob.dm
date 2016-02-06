@@ -18,6 +18,8 @@
 	..()
 */
 /mob/New()
+	spawn()
+		if(client) animate(client, color = null, time = 0)
 	mob_list += src
 	if(stat == DEAD)
 		dead_mob_list += src
@@ -107,6 +109,8 @@
 	//handle_typing_indicator()
 	return
 
+/mob/proc/incapacitated()
+	return
 
 /mob/proc/restrained()
 	return
@@ -321,6 +325,7 @@
 		log_game("[usr.key] AM failed due to disconnect.")
 		return
 	client.screen.Cut()
+	client.screen += client.void
 	if(!client)
 		log_game("[usr.key] AM failed due to disconnect.")
 		return
@@ -338,32 +343,8 @@
 /client/verb/changes()
 	set name = "Changelog"
 	set category = "OOC"
-	getFiles(
-		'html/postcardsmall.jpg',
-		'html/somerights20.png',
-		'html/88x31.png',
-		'html/bug-minus.png',
-		'html/cross-circle.png',
-		'html/hard-hat-exclamation.png',
-		'html/image-minus.png',
-		'html/image-plus.png',
-		'html/music-minus.png',
-		'html/music-plus.png',
-		'html/tick-circle.png',
-		'html/wrench-screwdriver.png',
-		'html/spell-check.png',
-		'html/burn-exclamation.png',
-		'html/chevron.png',
-		'html/chevron-expand.png',
-		'html/changelog.css',
-		'html/changelog.js',
-		'html/changelog.html'
-		)
-	src << browse('html/changelog.html', "window=changes;size=675x650")
-	if(prefs.lastchangelog != changelog_hash)
-		prefs.lastchangelog = changelog_hash
-		prefs.save_preferences()
-		winset(src, "rpane.changelog", "background-color=none;font-style=;")
+
+	usr << link("http://tauceti.ru/forums/index.php?topic=3551")
 
 /mob/verb/observe()
 	set name = "Observe"
@@ -697,7 +678,6 @@ note dizziness decrements automatically in the mob's Life() proc.
 					statpanel(S.panel,"[S.charge_counter]/[S.charge_max]",S)
 				if("holdervar")
 					statpanel(S.panel,"[S.holder_var_type] [S.holder_var_amount]",S)
-	sleep(2) //Prevent updating the stat panel for the next .2 seconds, prevents clientside latency from updates
 
 /mob/proc/add_stings_to_statpanel(var/list/stings)
 	for(var/obj/effect/proc_holder/changeling/S in stings)
@@ -719,7 +699,19 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 //Updates canmove, lying and icons. Could perhaps do with a rename but I can't think of anything to describe it.
 /mob/proc/update_canmove()
-	if(buckled && (!buckled.movable))
+	if(!ismob(src))
+		return
+	if(istype(buckled, /obj/vehicle))
+		var/obj/vehicle/V = buckled
+		if(incapacitated())
+			lying = 1
+			canmove = 0
+			pixel_y = V.mob_offset_y - 5
+		else
+			lying = 0
+			canmove = 1
+			pixel_y = V.mob_offset_y
+	else if(buckled && (!buckled.movable))
 		anchored = 1
 		canmove = 0
 		if( istype(buckled,/obj/structure/stool/bed/chair) )
@@ -994,3 +986,34 @@ mob/proc/yank_out_object()
 	if(isliving(src))
 		spell.action.Grant(src)
 	return
+
+/mob/proc/set_EyesVision(preset = null, transition_time = 5)
+	if(!client) return
+	if(ishuman(src) && druggy)
+		var/datum/ColorMatrix/DruggyMatrix = new(pick("bgr_d","brg_d","gbr_d","grb_d","rbg_d","rgb_d"))
+		var/multiplied
+		if(preset)
+			var/datum/ColorMatrix/CM = new(preset)
+			multiplied = matrixMultiply(DruggyMatrix.matrix, CM.matrix)
+		animate(client, color = multiplied ? multiplied : DruggyMatrix.matrix, time = 40)
+	else if(preset)
+		var/datum/ColorMatrix/CM = new(preset)
+		animate(client, color = CM.matrix, time = transition_time)
+	else
+		animate(client, color = null, time = transition_time)
+
+/mob/proc/instant_vision_update(state=null, atom/A)
+	if(!client || isnull(state) || !blind)
+		return
+
+	switch(state)
+		if(0)
+			if(!blinded)
+				blind.layer = 0
+			client.eye = client.mob
+			client.perspective = MOB_PERSPECTIVE
+		if(1)
+			blind.layer = 18
+			if(A)
+				client.perspective = EYE_PERSPECTIVE
+				client.eye = A

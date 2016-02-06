@@ -2,7 +2,7 @@
 /obj/item/weapon/storage/box/contraband/New()
 	..()
 	name = "box"
-	desc = "Strange box"
+	desc = "Strange box."
 	icon_state = "box_of_doom"
 
 	if(prob(30))

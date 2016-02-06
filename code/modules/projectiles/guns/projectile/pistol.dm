@@ -12,6 +12,7 @@
 /obj/item/weapon/gun/projectile/sigi
 	name = "\improper pistol"
 	desc = "A W&J Company designed SIGI p250, found pretty much everywhere humans are. Looks like SIG 250, but it's not. Uses 9mm rounds."
+	tc_custom = 'tauceti/icons/mob/guns.dmi'
 	icon_state = "sigi250"
 	item_state = "sigi250"
 	origin_tech = "combat=2;materials=2"
@@ -30,6 +31,7 @@
 /obj/item/weapon/gun/projectile/sigi/spec
 	name = "\improper pistol"
 	desc = "A W&J Company designed Special SIGI p250, this one has a military coloring. Looks like SIG 250, but it's not. Uses 9mm rounds."
+	tc_custom = 'tauceti/icons/mob/guns.dmi'
 	icon_state = "sigi250special"
 	item_state = "sigi250special"
 
@@ -85,7 +87,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/deagle
 	name = "desert eagle"
-	desc = "A robust handgun that uses .50 AE ammo"
+	desc = "A robust handgun that uses .50 AE ammo."
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "deagle"
 	item_state = "deagle"
@@ -132,7 +134,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/gyropistol
 	name = "gyrojet pistol"
-	desc = "A bulky pistol designed to fire self propelled rounds"
+	desc = "A bulky pistol designed to fire self propelled rounds."
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "gyropistol"
 	fire_sound = 'sound/effects/Explosion1.ogg'

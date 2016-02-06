@@ -94,3 +94,7 @@
 	if(dir & DOWN) comps += "DOWN"
 
 	return english_list(comps, nothing_text="0", and_text="|", comma_text="|")
+
+proc/log_fax(text)
+	if (config.log_fax)
+		diary << "\[[time_stamp()]]FAX: [revert_ja(text)][log_end]"

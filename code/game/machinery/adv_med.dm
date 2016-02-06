@@ -373,14 +373,14 @@
 							mech = "Assisted:"
 						if(i.robotic == 2)
 							mech = "Mechanical:"
-							
+
 						var/infection = "None"
 						switch (i.germ_level)
 							if (1 to INFECTION_LEVEL_TWO)
 								infection = "Mild Infection:"
 							if (INFECTION_LEVEL_TWO to INFINITY)
 								infection = "Acute Infection:"
-							
+
 						dat += "<tr>"
 						dat += "<td>[i.name]</td><td>N/A</td><td>[i.damage]</td><td>[infection]:[mech]</td><td></td>"
 						dat += "</tr>"
@@ -416,7 +416,7 @@
 					src.printing = 0
 					var/obj/item/weapon/paper/P = new(loc)
 					var/mob/living/carbon/human/occupant = src.connected.occupant
-					var/t1 = "<B>[occupant.name]'s</B> advanced scanner report.<BR>"
+					var/t1 = "<B>[occupant ? occupant.name : "Unknown"]'s</B> advanced scanner report.<BR>"
 					t1 += "Station Time: <B>[worldtime2text()]</B><BR>"
 					switch(occupant.stat) // obvious, see what their status is
 						if(0)

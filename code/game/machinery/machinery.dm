@@ -117,7 +117,13 @@ Class Procs:
 
 /obj/machinery/Destroy()
 	machines -= src
-	..()
+	if(component_parts)
+		for(var/atom/A in component_parts)
+			if(A.loc == src) // If the components are inside the machine, delete them.
+				qdel(A)
+			else // Otherwise we assume they were dropped to the ground during deconstruction, and were not removed from the component_parts list by deconstruction code.
+				component_parts -= A
+	return ..()
 
 /obj/machinery/process()//If you dont use process or power why are you here
 	return PROCESS_KILL
@@ -134,7 +140,7 @@ Class Procs:
 		pulse2.dir = pick(cardinal)
 
 		spawn(10)
-			pulse2.delete()
+			qdel(pulse2)
 	..()
 
 /obj/machinery/ex_act(severity)

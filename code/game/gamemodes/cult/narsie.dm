@@ -51,7 +51,7 @@
 /obj/effect/effect/sleep_smoke/New()
 	..()
 	spawn (200+rand(10,30))
-		delete()
+		qdel(src)
 	return
 
 /obj/effect/effect/sleep_smoke/Move()
@@ -137,7 +137,7 @@
 			spawn(150+rand(10,30))
 				if(smoke)
 					fadeOut2(smoke)
-					smoke.delete()
+					qdel(smoke)
 				src.total_smoke--
 
 //////////////////////END?////////////////////////////////////////////

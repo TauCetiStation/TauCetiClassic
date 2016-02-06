@@ -28,7 +28,7 @@
 
 /obj/machinery/computer/turbine_computer
 	name = "Gas turbine control computer"
-	desc = "A computer to remotely control a gas turbine"
+	desc = "A computer to remotely control a gas turbine."
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "airtunnel0e"
 	circuit = /obj/item/weapon/circuitboard/turbine_control

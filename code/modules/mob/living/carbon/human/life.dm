@@ -1047,11 +1047,8 @@
 			var/light_amount = 0 //how much light there is in the place, affects receiving nutrition and healing
 			if(isturf(loc)) //else, there's considered to be no light
 				var/turf/T = loc
-				var/atom/movable/lighting_overlay/L = locate(/atom/movable/lighting_overlay) in T
-				if(L)
-					light_amount = (L.get_clamped_lum()*10) - 5 //hardcapped so it's not abused by having a ton of flashlights
-				else
-					light_amount =  5
+				light_amount = round((T.get_lumcount()*10)-5)
+
 			nutrition += light_amount
 			traumatic_shock -= light_amount
 
@@ -1068,11 +1065,8 @@
 			var/light_amount = 0
 			if(isturf(loc))
 				var/turf/T = loc
-				var/atom/movable/lighting_overlay/L = locate(/atom/movable/lighting_overlay) in T
-				if(L)
-					light_amount = L.lum_r + L.lum_g + L.lum_b //hardcapped so it's not abused by having a ton of flashlights
-				else
-					light_amount =  10
+				light_amount = round(T.get_lumcount()*10)
+
 			if(light_amount > 2) //if there's enough light, start dying
 				take_overall_damage(1,1)
 			else if (light_amount < 2) //heal in the dark
@@ -1083,11 +1077,8 @@
 			nutrition = 450 //i aint never get hongry
 			if(isturf(loc))
 				var/turf/T = loc
-				var/atom/movable/lighting_overlay/L = locate(/atom/movable/lighting_overlay) in T
-				if(L)
-					light_amount = L.lum_r + L.lum_g + L.lum_b
-				else
-					light_amount =  10
+				light_amount = round(T.get_lumcount()*10)
+
 			if(light_amount > LIGHT_DAM_THRESHOLD)
 				take_overall_damage(0,LIGHT_DAMAGE_TAKEN)
 				src << "<span class='userdanger'>The light burns you!</span>"
@@ -1439,16 +1430,12 @@
 						sight |= G.vision_flags
 						if(!druggy)
 							see_invisible = SEE_INVISIBLE_MINIMUM
-				if(istype(G,/obj/item/clothing/glasses/night))
-					if(istype(G,/obj/item/clothing/glasses/night/shadowling))
-						var/obj/item/clothing/glasses/night/shadowling/S = G
-						if(S.vision)
-							see_invisible = SEE_INVISIBLE_LIVING
-						else
-							see_invisible = SEE_INVISIBLE_MINIMUM
+				if(istype(G,/obj/item/clothing/glasses/night/shadowling))
+					var/obj/item/clothing/glasses/night/shadowling/S = G
+					if(S.vision)
+						see_invisible = SEE_INVISIBLE_LIVING
 					else
 						see_invisible = SEE_INVISIBLE_MINIMUM
-//					client.screen += global_hud.nvg
 
 	/* HUD shit goes here, as long as it doesn't modify sight flags */
 	// The purpose of this is to stop xray and w/e from preventing you from using huds -- Love, Doohl
@@ -1581,9 +1568,6 @@
 							bodytemp.icon_state = "temp-1"
 						else
 							bodytemp.icon_state = "temp0"
-			if(blind)
-				if(blinded)		blind.layer = 18
-				else			blind.layer = 0
 
 			if(disabilities & NEARSIGHTED)	//this looks meh but saves a lot of memory by not requiring to add var/prescription
 				if(glasses)					//to every /obj/item
@@ -1594,7 +1578,7 @@
 					client.screen += global_hud.vimpaired
 
 			if(eye_blurry)			client.screen += global_hud.blurry
-			if(druggy)				client.screen += global_hud.druggy
+			//if(druggy)				client.screen += global_hud.druggy
 
 			var/masked = 0
 
@@ -1612,14 +1596,9 @@
 				if(!O.up && tinted_weldhelh)
 					client.screen += global_hud.darkMask
 
-			if(istype(glasses, /obj/item/clothing/glasses/meson) || istype(glasses, /obj/item/clothing/glasses/night) || istype(glasses, /obj/item/clothing/glasses/gglasses))
-				if(!(istype(glasses, /obj/item/clothing/glasses/night/shadowling)))
-					client.screen += global_hud.meson
-
-			if(istype(glasses, /obj/item/clothing/glasses/thermal) )
-				client.screen += global_hud.thermal
-
-			if(istype(glasses, /obj/item/clothing/glasses/science) )
+			if(istype(glasses, /obj/item/clothing/glasses/gglasses))
+				client.screen += global_hud.meson
+			else if(istype(glasses, /obj/item/clothing/glasses/science) )
 				client.screen += global_hud.science
 
 			if(machine)
@@ -1649,7 +1628,56 @@
 			else
 				hud_used.lingchemdisplay.invisibility = 101
 */
+
+		handle_vision()
 		return 1
+
+	proc/handle_vision()
+		if(client)
+			if(blind)
+				if(loc && !isturf(loc) && !is_type_in_list(loc, ignore_vision_inside))
+					blind.layer = 18
+				else if(blinded)
+					blind.layer = 18
+				else
+					blind.layer = 0
+
+			species.sightglassesmod = 0
+			if(glasses)
+				if(istype(glasses, /obj/item/clothing/glasses/meson))
+					species.sightglassesmod = 1
+				else if(istype(glasses, /obj/item/clothing/glasses/night) && !istype(glasses, /obj/item/clothing/glasses/night/shadowling))
+					var/obj/item/clothing/glasses/night/nvg = glasses
+					if(nvg.on)
+						species.sightglassesmod = 2
+				else if(istype(glasses, /obj/item/clothing/glasses/thermal) )
+					species.sightglassesmod = 3
+
+			if(stat == DEAD)
+				set_EyesVision(transition_time = 0)
+			else
+				if(species.nighteyes)
+					if(species.sightglassesmod)
+						set_EyesVision("nightsight_glasses")
+					else
+						var/light_amount = 0
+						var/turf/T = get_turf(src)
+						light_amount = round(T.get_lumcount()*10)
+						if(light_amount > 1)
+							set_EyesVision(transition_time = 20)
+						else
+							set_EyesVision("nightsight",20)
+				else
+					switch(species.sightglassesmod)
+						if(0)
+							set_EyesVision()
+						if(1)
+							set_EyesVision("meson")
+						if(2)
+							set_EyesVision("nvg")
+						if(3)
+							set_EyesVision("thermal")
+
 
 	proc/handle_random_events()
 		// Puke if toxloss is too high
@@ -1660,8 +1688,7 @@
 		//0.1% chance of playing a scary sound to someone who's in complete darkness
 		if(isturf(loc) && rand(1,1000) == 1)
 			var/turf/T = loc
-			var/atom/movable/lighting_overlay/L = locate(/atom/movable/lighting_overlay) in T
-			if(L && L.lum_r + L.lum_g + L.lum_b == 0)
+			if(T.lighting_overlay && T.lighting_overlay.luminosity == 0)
 				playsound_local(src,pick(scarySounds),50, 1, -1)
 
 	proc/handle_virus_updates()
@@ -1676,14 +1703,14 @@
 			for(var/obj/effect/decal/cleanable/O in view(1,src))
 				if(istype(O,/obj/effect/decal/cleanable/blood))
 					var/obj/effect/decal/cleanable/blood/B = O
-					if(B.virus2 && B.virus2.len)
+					if(B && B.virus2 && B.virus2.len)
 						for (var/ID in B.virus2)
 							var/datum/disease2/disease/V = B.virus2[ID]
 							infect_virus2(src,V.getcopy())
 
 				else if(istype(O,/obj/effect/decal/cleanable/mucus))
 					var/obj/effect/decal/cleanable/mucus/M = O
-					if(M.virus2 && M.virus2.len)
+					if(M && M.virus2 && M.virus2.len)
 						for (var/ID in M.virus2)
 							var/datum/disease2/disease/V = M.virus2[ID]
 							infect_virus2(src,V.getcopy())

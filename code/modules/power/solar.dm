@@ -46,9 +46,10 @@ var/list/solars_list = list()
 	solars_list.Remove(src)
 
 /obj/machinery/power/solar/connect_to_network(var/process)
-	..()
+	var/to_return = ..()
 	if(process)
 		solars_list.Add(src)
+	return to_return
 
 
 /obj/machinery/power/solar/proc/Make(var/obj/item/solar_assembly/S)
@@ -194,7 +195,7 @@ var/list/solars_list = list()
 
 /obj/item/solar_assembly
 	name = "solar panel assembly"
-	desc = "A solar panel assembly kit, allows constructions of a solar panel, or with a tracking circuit board, a solar tracker"
+	desc = "A solar panel assembly kit, allows constructions of a solar panel, or with a tracking circuit board, a solar tracker."
 	icon = 'icons/obj/power.dmi'
 	icon_state = "sp_base"
 	item_state = "electropack"
@@ -274,8 +275,8 @@ var/list/solars_list = list()
 	use_power = 1
 	idle_power_usage = 5
 	active_power_usage = 20
-	var/light_range_on = 3
-	var/light_power_on = 1
+	var/light_range_on = 1.5
+	var/light_power_on = 3
 	var/id = 0
 	var/cdir = 0
 	var/gen = 0
@@ -297,9 +298,10 @@ var/list/solars_list = list()
 	solars_list.Remove(src)
 
 /obj/machinery/power/solar_control/connect_to_network()
-	..()
+	var/to_return = ..()
 	if(powernet)
 		solars_list.Add(src)
+	return to_return
 
 /obj/machinery/power/solar_control/initialize()
 	..()

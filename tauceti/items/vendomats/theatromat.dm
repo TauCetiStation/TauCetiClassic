@@ -1,7 +1,7 @@
 //from old nanotrasen
 /obj/machinery/vending/theater
 	name = "Theater-o-mat"
-	desc = "Special costume pack to add randomness in boring life"
+	desc = "Special costume pack to add randomness in boring life."
 	icon = 'tauceti/items/vendomats/vendings.dmi'
 	icon_state = "Theater"
 	products = list(/obj/item/clothing/head/xenos = 5, /obj/item/clothing/suit/xenos = 5, /obj/item/clothing/suit/monkeysuit = 5, /obj/item/clothing/suit/syndicatefake = 5, /obj/item/clothing/head/syndicatefake = 5,

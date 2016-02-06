@@ -11,16 +11,16 @@
 	var/energy = 0
 	var/obj/effect/spacevine_controller/master = null
 	var/mob/living/buckled_mob
+	var/movable = 0
 
-	New()
-		return
+/obj/effect/spacevine/New()
+	return
 
-	Destroy()
-		if(master)
-			master.vines -= src
-			master.growth_queue -= src
-		..()
-
+/obj/effect/spacevine/Destroy()
+	if(master)
+		master.vines -= src
+		master.growth_queue -= src
+	..()
 
 /obj/effect/spacevine/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (!W || !user || !W.type) return
@@ -49,10 +49,8 @@
 		//Plant-b-gone damage is handled in its entry in chemistry-reagents.dm
 	..()
 
-
 /obj/effect/spacevine/attack_hand(mob/user as mob)
 	manual_unbuckle(user)
-
 
 /obj/effect/spacevine/attack_paw(mob/user as mob)
 	manual_unbuckle(user)
@@ -97,67 +95,67 @@
 	//What this does is that instead of having the grow minimum of 1, required to start growing, the minimum will be 0,
 	//meaning if you get the spacevines' size to something less than 20 plots, it won't grow anymore.
 
-	New()
-		if(!istype(src.loc,/turf/simulated/floor))
-			qdel(src)
+/obj/effect/spacevine_controller/New()
+	if(!istype(src.loc,/turf/simulated/floor))
+		qdel(src)
 
-		spawn_spacevine_piece(src.loc)
-		processing_objects.Add(src)
+	spawn_spacevine_piece(src.loc)
+	processing_objects.Add(src)
 
-	Destroy()
-		processing_objects.Remove(src)
-		..()
+/obj/effect/spacevine_controller/Destroy()
+	processing_objects.Remove(src)
+	..()
 
-	proc/spawn_spacevine_piece(var/turf/location)
-		var/obj/effect/spacevine/SV = new(location)
-		growth_queue += SV
-		vines += SV
-		SV.master = src
+/obj/effect/spacevine_controller/proc/spawn_spacevine_piece(var/turf/location)
+	var/obj/effect/spacevine/SV = new(location)
+	growth_queue += SV
+	vines += SV
+	SV.master = src
 
-	process()
-		if(!vines)
-			qdel(src) //space  vines exterminated. Remove the controller
-			return
-		if(!growth_queue)
-			qdel(src) //Sanity check
-			return
-		if(vines.len >= 250 && !reached_collapse_size)
-			reached_collapse_size = 1
-		if(vines.len >= 30 && !reached_slowdown_size )
-			reached_slowdown_size = 1
+/obj/effect/spacevine_controller/process()
+	if(!vines)
+		qdel(src) //space  vines exterminated. Remove the controller
+		return
+	if(!growth_queue)
+		qdel(src) //Sanity check
+		return
+	if(vines.len >= 250 && !reached_collapse_size)
+		reached_collapse_size = 1
+	if(vines.len >= 30 && !reached_slowdown_size )
+		reached_slowdown_size = 1
 
-		var/length = 0
-		if(reached_collapse_size)
-			length = 0
-		else if(reached_slowdown_size)
-			if(prob(25))
-				length = 1
-			else
-				length = 0
-		else
+	var/length = 0
+	if(reached_collapse_size)
+		length = 0
+	else if(reached_slowdown_size)
+		if(prob(25))
 			length = 1
-		length = min( 30 , max( length , vines.len / 5 ) )
-		var/i = 0
-		var/list/obj/effect/spacevine/queue_end = list()
+		else
+			length = 0
+	else
+		length = 1
+	length = min( 30 , max( length , vines.len / 5 ) )
+	var/i = 0
+	var/list/obj/effect/spacevine/queue_end = list()
 
-		for( var/obj/effect/spacevine/SV in growth_queue )
-			i++
-			queue_end += SV
-			growth_queue -= SV
-			if(SV.energy < 2) //If tile isn't fully grown
-				if(prob(20))
-					SV.grow()
-			else //If tile is fully grown
-				SV.buckle_mob()
+	for( var/obj/effect/spacevine/SV in growth_queue )
+		i++
+		queue_end += SV
+		growth_queue -= SV
+		if(SV.energy < 2) //If tile isn't fully grown
+			if(prob(20))
+				SV.grow()
+		else //If tile is fully grown
+			SV.buckle_mob()
 
-			//if(prob(25))
-			SV.spread()
-			if(i >= length)
-				break
+		//if(prob(25))
+		SV.spread()
+		if(i >= length)
+			break
 
-		growth_queue = growth_queue + queue_end
-		//sleep(5)
-		//src.process()
+	growth_queue = growth_queue + queue_end
+	//sleep(5)
+	//src.process()
 
 /obj/effect/spacevine/proc/grow()
 	if(!energy)
@@ -245,7 +243,6 @@
 
 //Carn: Spacevines random event.
 /proc/spacevine_infestation()
-
 	spawn() //to stop the secrets panel hanging
 		var/list/turf/simulated/floor/turfs = list() //list of all the empty floor turfs in the hallway areas
 		for(var/areapath in typesof(/area/hallway))

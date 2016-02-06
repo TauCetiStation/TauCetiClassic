@@ -10,7 +10,6 @@
 
 	New()
 		..()
-		sleep(2)
 		if(prob(50))
 			new /obj/item/weapon/storage/backpack/captain(src)
 		else
@@ -30,10 +29,11 @@
 		new /obj/item/weapon/melee/telebaton(src)
 		new /obj/item/clothing/under/dress/dress_cap(src)
 		new /obj/item/clothing/under/rank/capcamsole(src)
-		//New year part
+		/*/New year part
 		new /obj/item/clothing/suit/wintercoat/captain(src)
 		new /obj/item/clothing/head/santa(src)
 		new /obj/item/clothing/shoes/winterboots(src)
+		*/
 		return
 
 
@@ -50,14 +50,13 @@
 
 	New()
 		..()
-		sleep(2)
 		new /obj/item/clothing/glasses/sunglasses(src)
 		new /obj/item/clothing/suit/armor/vest(src)
 		new /obj/item/clothing/head/helmet(src)
 		new /obj/item/weapon/cartridge/hop(src)
 		new /obj/item/device/radio/headset/heads/hop(src)
 		new /obj/item/weapon/storage/box/ids(src)
-		new /obj/item/weapon/storage/box/ids( src )
+		new /obj/item/weapon/storage/box/ids(src)
 		new /obj/item/weapon/gun/energy/gun(src)
 		new /obj/item/device/flash(src)
 		return
@@ -74,7 +73,6 @@
 
 	New()
 		..()
-		sleep(2)
 		new /obj/item/clothing/head/fez(src)
 		new /obj/item/clothing/under/rank/head_of_personnel(src)
 		new /obj/item/clothing/under/dress/dress_hop(src)
@@ -106,7 +104,6 @@
 
 	New()
 		..()
-		sleep(2)
 		if(prob(50))
 			new /obj/item/weapon/storage/backpack/security(src)
 		else
@@ -137,10 +134,11 @@
 		new /obj/item/clothing/tie/holster/waist(src)
 		new /obj/item/weapon/melee/telebaton(src)
 		new /obj/item/clothing/mask/gas/sechailer/hos(src)
-		//New year part
+		/*/New year part
 		new /obj/item/clothing/suit/wintercoat/security(src)
 		new /obj/item/clothing/shoes/winterboots(src)
 		new /obj/item/clothing/head/santa(src)
+		*/
 		return
 
 
@@ -158,7 +156,6 @@
 
 	New()
 		..()
-		sleep(2)
 		if(prob(50))
 			new /obj/item/weapon/storage/backpack/security(src)
 		else
@@ -182,10 +179,11 @@
 		new /obj/item/weapon/gun/energy/taser(src)
 		new /obj/item/weapon/storage/box/holobadge(src)
 		new /obj/item/clothing/mask/gas/sechailer/warden(src)
-		//New year part
+		/*/New year part
 		new /obj/item/clothing/suit/wintercoat/security(src)
 		new /obj/item/clothing/shoes/winterboots(src)
 		new /obj/item/clothing/head/santa(src)
+		*/
 		return
 
 
@@ -202,7 +200,6 @@
 
 	New()
 		..()
-		sleep(2)
 		if(prob(50))
 			new /obj/item/weapon/storage/backpack/security(src)
 		else
@@ -224,10 +221,11 @@
 		new /obj/item/clothing/head/soft/sec/corp(src)
 		new /obj/item/clothing/under/rank/security/corp(src)
 		new /obj/item/clothing/gloves/security(src)
-		//New year part
+		/*/New year part
 		new /obj/item/clothing/suit/wintercoat/security(src)
 		new /obj/item/clothing/shoes/winterboots(src)
 		new /obj/item/clothing/head/ushanka(src)
+		*/
 		return
 
 
@@ -276,7 +274,6 @@
 
 	New()
 		..()
-		sleep(2)
 		new /obj/item/clothing/under/det(src)
 		new /obj/item/clothing/under/det/black(src)
 		new /obj/item/clothing/under/det/slob(src)
@@ -318,7 +315,6 @@
 
 	New()
 		..()
-		sleep(2)
 		new /obj/item/weapon/reagent_containers/ld50_syringe/choral(src)
 		new /obj/item/weapon/reagent_containers/ld50_syringe/choral(src)
 		return
@@ -333,8 +329,8 @@
 
 	New()
 		..()
-		new /obj/item/clothing/under/color/orange( src )
-		new /obj/item/clothing/shoes/orange( src )
+		new /obj/item/clothing/under/color/orange(src)
+		new /obj/item/clothing/shoes/orange(src)
 		return
 
 
@@ -345,14 +341,13 @@
 
 	New()
 		..()
-		sleep(2)
 		new /obj/item/clothing/shoes/brown(src)
-		new /obj/item/weapon/paper/Court (src)
-		new /obj/item/weapon/paper/Court (src)
-		new /obj/item/weapon/paper/Court (src)
-		new /obj/item/weapon/pen (src)
-		new /obj/item/clothing/suit/judgerobe (src)
-		new /obj/item/clothing/head/powdered_wig (src)
+		new /obj/item/weapon/paper/Court(src)
+		new /obj/item/weapon/paper/Court(src)
+		new /obj/item/weapon/paper/Court(src)
+		new /obj/item/weapon/pen(src)
+		new /obj/item/clothing/suit/judgerobe(src)
+		new /obj/item/clothing/head/powdered_wig(src)
 		new /obj/item/weapon/storage/briefcase(src)
 		return
 
