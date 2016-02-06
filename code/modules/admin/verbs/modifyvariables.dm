@@ -269,8 +269,9 @@ var/list/forbidden_varedit_object_types = list(
 /client/proc/modify_variables(var/atom/O, var/param_var_name = null, var/autodetect_class = 0)
 	if(!check_rights(R_VAREDIT))	return
 
-	var/list/locked = list("vars", "key", "ckey", "client", "firemut", "ishulk", "telekinesis", "xray", "virus", "cuffed", "ka", "last_eaten", "icon", "icon_state", "mutantrace")
-	var/list/fully_locked = list("player_next_age_tick", "player_ingame_age")
+	var/list/locked = list("vars", "key", "ckey", "client", "firemut", "ishulk", "telekinesis", "xray", "virus", "cuffed", "ka", "last_eaten", "icon", "icon_state", "mutantrace", "player_ingame_age")
+	var/list/typechange_locked = list("player_next_age_tick","player_ingame_age")
+	var/list/fully_locked = list("player_next_age_tick")
 
 	for(var/p in forbidden_varedit_object_types)
 		if( istype(O,p) )
@@ -289,6 +290,9 @@ var/list/forbidden_varedit_object_types = list(
 		if(param_var_name in fully_locked)
 			usr << "\red It is forbidden to edit this variable."
 			return
+
+		if(!autodetect_class)
+			if(param_var_name in typechange_locked) return
 
 		if(param_var_name == "holder" || (param_var_name in locked))
 			if(!check_rights(R_DEBUG))	return
@@ -458,6 +462,14 @@ var/list/forbidden_varedit_object_types = list(
 				var/var_new = input("Enter new number:","Num",O.vars[variable]) as null|num
 				if(var_new == null) return
 				O.set_light(var_new)
+			else if(variable=="player_ingame_age")
+				var/var_new = input("Enter new number:","Num",O.vars[variable]) as null|num
+				if(var_new == null) return
+				else if(var_new < 0) return
+				O.vars[variable] = var_new
+				if(istype(O,/client))
+					var/client/C = O
+					if(C) C.log_client_ingame_age_to_db()
 			else if(variable=="stat")
 				var/var_new = input("Enter new number:","Num",O.vars[variable]) as null|num
 				if(var_new == null) return
