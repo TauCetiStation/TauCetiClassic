@@ -1503,10 +1503,6 @@
 #include "interface\skin.dmf"
 #include "maps\z1.dmm"
 #include "maps\z2.dmm"
-#include "maps\z3.dmm"
-#include "maps\z4.dmm"
-#include "maps\z5.dmm"
-#include "maps\z6.dmm"
 #include "maps\RandomZLevels\Academy.dm"
 #include "maps\RandomZLevels\challenge.dm"
 #include "maps\RandomZLevels\wildwest.dm"
@@ -1628,6 +1624,4 @@
 #include "tauceti\modules\_locations\shuttles\wall.dm"
 #include "tauceti\modules\_locations\shuttles\warning_stripes.dm"
 #include "tauceti\modules\clothing\spacesuits\suits.dm"
-#include "tauceti\modules\jexp\jexp_list.dm"
-#include "tauceti\modules\jexp\jexp_procs.dm"
 // END_INCLUDE

@@ -365,6 +365,9 @@ var/global/datum/controller/gameticker/ticker
 					if(!delay_end)
 						world << "\blue <B>Restarting in [restart_timeout/10] seconds</B>"
 
+				for(var/client/C in clients)
+					C.log_client_ingame_age_to_db()
+
 				world.save_last_mode(ticker.mode.name)
 
 				if(blackbox)
