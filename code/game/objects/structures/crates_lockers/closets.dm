@@ -49,9 +49,7 @@
 
 	for(var/mob/M in src)
 		M.forceMove(src.loc)
-		if(M.client)
-			M.client.eye = M.client.mob
-			M.client.perspective = MOB_PERSPECTIVE
+		M.instant_vision_update(0)
 
 /obj/structure/closet/proc/open()
 	if(src.opened)
@@ -101,11 +99,8 @@
 		if(M.buckled)
 			continue
 
-		if(M.client)
-			M.client.perspective = EYE_PERSPECTIVE
-			M.client.eye = src
-
 		M.forceMove(src)
+		M.instant_vision_update(1,src)
 		itemcount++
 
 	src.icon_state = src.icon_closed

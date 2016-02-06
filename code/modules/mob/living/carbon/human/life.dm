@@ -1568,9 +1568,6 @@
 							bodytemp.icon_state = "temp-1"
 						else
 							bodytemp.icon_state = "temp0"
-			if(blind)
-				if(blinded)		blind.layer = 18
-				else			blind.layer = 0
 
 			if(disabilities & NEARSIGHTED)	//this looks meh but saves a lot of memory by not requiring to add var/prescription
 				if(glasses)					//to every /obj/item
@@ -1637,6 +1634,14 @@
 
 	proc/handle_vision()
 		if(client)
+			if(blind)
+				if(loc && !isturf(loc) && !is_type_in_list(loc, ignore_vision_inside))
+					blind.layer = 18
+				else if(blinded)
+					blind.layer = 18
+				else
+					blind.layer = 0
+
 			species.sightglassesmod = 0
 			if(glasses)
 				if(istype(glasses, /obj/item/clothing/glasses/meson))
@@ -1655,11 +1660,13 @@
 					if(species.sightglassesmod)
 						set_EyesVision("nightsight_glasses")
 					else
+						var/light_amount = 0
 						var/turf/T = get_turf(src)
-						if(T.lighting_overlay && T.lighting_overlay.luminosity == 0)
-							set_EyesVision("nightsight",20)
-						else
+						light_amount = round(T.get_lumcount()*10)
+						if(light_amount > 1)
 							set_EyesVision(transition_time = 20)
+						else
+							set_EyesVision("nightsight",20)
 				else
 					switch(species.sightglassesmod)
 						if(0)

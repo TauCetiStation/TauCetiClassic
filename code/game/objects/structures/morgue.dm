@@ -71,6 +71,9 @@
 		for(var/atom/movable/A as mob|obj in src.connected.loc)
 			if (!( A.anchored ))
 				A.loc = src
+				if(ismob(A))
+					var/mob/M = A
+					M.instant_vision_update(1,src)
 		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 		qdel(src.connected)
 		src.connected = null
@@ -85,6 +88,9 @@
 			src.icon_state = "morgue0"
 			for(var/atom/movable/A as mob|obj in src)
 				A.loc = src.connected.loc
+				if(ismob(A))
+					var/mob/M = A
+					M.instant_vision_update(0)
 			src.connected.icon_state = "morguet"
 			src.connected.dir = src.dir
 		else
