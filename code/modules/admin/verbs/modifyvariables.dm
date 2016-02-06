@@ -270,6 +270,7 @@ var/list/forbidden_varedit_object_types = list(
 	if(!check_rights(R_VAREDIT))	return
 
 	var/list/locked = list("vars", "key", "ckey", "client", "firemut", "ishulk", "telekinesis", "xray", "virus", "cuffed", "ka", "last_eaten", "icon", "icon_state", "mutantrace")
+	var/list/fully_locked = list("player_next_age_tick", "player_ingame_age")
 
 	for(var/p in forbidden_varedit_object_types)
 		if( istype(O,p) )
@@ -283,6 +284,10 @@ var/list/forbidden_varedit_object_types = list(
 	if(param_var_name)
 		if(!param_var_name in O.vars)
 			src << "A variable with this name ([param_var_name]) doesn't exist in this atom ([O])"
+			return
+
+		if(param_var_name in fully_locked)
+			usr << "\red It is forbidden to edit this variable."
 			return
 
 		if(param_var_name == "holder" || (param_var_name in locked))

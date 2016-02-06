@@ -27,6 +27,7 @@
 	if(!check_rights(R_VAREDIT))	return
 
 	var/list/locked = list("vars", "key", "ckey", "client")
+	var/list/fully_locked = list("player_next_age_tick", "player_ingame_age")
 
 	for(var/p in forbidden_varedit_object_types)
 		if( istype(O,p) )
@@ -50,6 +51,10 @@
 	var/default
 	var/var_value = O.vars[variable]
 	var/dir
+
+	if(variable in fully_locked)
+		usr << "\red It is forbidden to edit this variable."
+		return
 
 	if(variable == "holder" || (variable in locked))
 		if(!check_rights(R_DEBUG))	return
