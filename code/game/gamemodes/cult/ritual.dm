@@ -161,6 +161,8 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 			return itemport(src.word3)
 		if(word1 == cultwords["join"] && word2 == cultwords["hide"] && word3 == cultwords["technology"])
 			return runestun()
+		if(word1 == cultwords["travel"] && word2 == cultwords["blood"] && word3 == cultwords["other"])
+			return brainswap()
 		else
 			return fizzle()
 
@@ -507,7 +509,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 			var/r
 			if (!istype(user.loc,/turf))
 				user << "\red You do not have enough space to write a proper rune."
-			var/list/runes = list("teleport", "itemport", "tome", "armor", "convert", "tear in reality", "emp", "drain", "seer", "raise", "obscure", "reveal", "astral journey", "manifest", "imbue talisman", "sacrifice", "wall", "freedom", "cultsummon", "deafen", "blind", "bloodboil", "communicate", "stun")
+			var/list/runes = list("teleport", "itemport", "tome", "armor", "convert", "tear in reality", "emp", "drain", "seer", "raise", "obscure", "reveal", "astral journey", "manifest", "imbue talisman", "sacrifice", "wall", "freedom", "cultsummon", "deafen", "blind", "bloodboil", "communicate", "stun", "brainswap")
 			r = input("Choose a rune to scribe", "Rune Scribing") in runes //not cancellable.
 			var/obj/effect/rune/R = new /obj/effect/rune
 			if(istype(user, /mob/living/carbon/human))
@@ -665,6 +667,12 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 					R.word1=cultwords["join"]
 					R.word2=cultwords["hide"]
 					R.word3=cultwords["technology"]
+					R.loc = user.loc
+					R.check_icon()
+				if("brainswap")
+					R.word1=cultwords["travel"]
+					R.word2=cultwords["blood"]
+					R.word3=cultwords["other"]
 					R.loc = user.loc
 					R.check_icon()
 
