@@ -558,3 +558,6 @@
 				if(270)	return -2
 	else
 		return initial(pixel_x)
+
+/mob/living/carbon/getTrail()
+	return "trails_1"

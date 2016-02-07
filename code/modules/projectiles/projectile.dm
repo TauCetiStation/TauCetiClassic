@@ -248,23 +248,25 @@
 		before_move()
 		Move(location.return_turf())
 
-		if(first_step)
-			muzzle_effect(effect_transform)
-			first_step = 0
-		else
-			tracer_effect(effect_transform)
-
 		if(!bumped && !isturf(original))
 			if(loc == get_turf(original))
 				if(!(original in permutated))
 					if(Bump(original))
 						return
+
+		if(first_step)
+			muzzle_effect(effect_transform)
+			first_step = 0
+		else if(!bumped)
+			tracer_effect(effect_transform)
+
 		Range()
 
 		if(!hitscan)
 			sleep(step_delay)	//add delay between movement iterations if it's not a hitscan weapon
 
 /obj/item/projectile/proc/before_move()
+	return
 
 /obj/item/projectile/proc/setup_trajectory()
 	var/offset = 0
