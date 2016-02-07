@@ -361,7 +361,7 @@
 				if(gang_mind.current.client)
 					for(var/image/I in gang_mind.current.client.images)
 						if(I.icon_state == "gangster" || I.icon_state == "gang_boss")
-							del(I)
+							qdel(I)
 
 		update_gang_icons("A")
 		update_gang_icons("B")
@@ -458,71 +458,87 @@
 				if(boss_mind.current.client)
 					for(var/image/I in boss_mind.current.client.images)
 						if((I.icon_state == "gangster" || I.icon_state == "gang_boss") && I.loc == defector_mind.current)
-							del(I)
+							qdel(I)
 
 		//Remove gang icons from defector's vision
 		if(defector_mind.current)
 			if(defector_mind.current.client)
 				for(var/image/I in defector_mind.current.client.images)
 					if(I.icon_state == "gangster" || I.icon_state == "gang_boss")
-						del(I)
+						qdel(I)
 
 //////////////////////////////////////////////////////////////////////
 //Announces the end of the game with all relavent information stated//
 //////////////////////////////////////////////////////////////////////
 /datum/game_mode/gang/declare_completion()
+	completion_text += "<B>Gang mode resume:</B><BR>"
 	if(!finished)
-		world << "<FONT size=3 color=red><B>The station was [station_was_nuked ? "destroyed!" : "evacuated before either gang could claim it!"]</B></FONT>"
+		completion_text += "<FONT size=3 color=red><B>The station was [station_was_nuked ? "destroyed!" : "evacuated before either gang could claim it!"]</B></FONT>"
 	else
-		world << "<FONT size=3 color=red><B>The [finished=="A" ? gang_name("A") : gang_name("B")] Gang successfully performed a hostile takeover of the station!!</B></FONT>"
+		completion_text += "<FONT size=3 color=red><B>The [finished=="A" ? gang_name("A") : gang_name("B")] Gang successfully performed a hostile takeover of the station!!</B></FONT>"
+		score["roleswon"]++
 	..()
 	return 1
 
 /datum/game_mode/proc/auto_declare_completion_gang()
 	var/winner
+	var/text = ""
 	var/datum/game_mode/gang/game_mode = ticker.mode
 	if(istype(game_mode))
 		if(game_mode.finished)
 			winner = game_mode.finished
 		else
 			winner = "Draw"
+	if(A_bosses.len || A_gang.len || B_bosses.len || B_gang.len)
+		text += printlogo("gang", "gangsters")
 
-	if(A_bosses.len || A_gang.len)
-		if(winner)
-			world << "<br><b>The [gang_name("A")] Gang was [winner=="A" ? "<font color=green>victorious</font>" : "<font color=red>defeated</font>"] with [round((A_territory.len/start_state.num_territories)*100, 1)]% control of the station!</b>"
-		world << "<br>The [gang_name("A")] Gang Bosses were:"
-		gang_membership_report(A_bosses)
-		world << "<br>The [gang_name("A")] Gangsters were:"
-		gang_membership_report(A_gang)
-		world << "<br>"
+		if(A_bosses.len || A_gang.len)
+			if(winner)
+				text += "<BR><B>The [gang_name("A")] Gang was [winner=="A" ? "<font color=green>victorious</font>" : "<font color=red>defeated</font>"] with [round((A_territory.len/start_state.num_territories)*100, 1)]% control of the station!</B>"
+			text += "<BR><B>The [gang_name("A")] Gang Bosses were:</B>"
+			text += gang_membership_report(A_bosses)
+			text += "<BR><B>The [gang_name("A")] Gangsters were:</B>"
+			text += gang_membership_report(A_gang)
+			text += "<BR>"
 
-	if(B_bosses.len || B_gang.len)
-		if(winner)
-			world << "<br><b>The [gang_name("B")] Gang was [winner=="B" ? "<font color=green>victorious</font>" : "<font color=red>defeated</font>"] with [round((B_territory.len/start_state.num_territories)*100, 1)]% control of the station!</b></b>"
-		world << "<br>The [gang_name("B")] Gang Bosses were:"
-		gang_membership_report(B_bosses)
-		world << "<br>The [gang_name("B")] Gangsters were:"
-		gang_membership_report(B_gang)
-		world << "<br>"
+		if(B_bosses.len || B_gang.len)
+			if(winner)
+				text += "<BR><B>The [gang_name("B")] Gang was [winner=="B" ? "<font color=green>victorious</font>" : "<font color=red>defeated</font>"] with [round((B_territory.len/start_state.num_territories)*100, 1)]% control of the station!</B>"
+			text += "<BR>The [gang_name("B")] Gang Bosses were:"
+			text += gang_membership_report(B_bosses)
+			text += "<BR>The [gang_name("B")] Gangsters were:"
+			text += gang_membership_report(B_gang)
+			text += "<BR>"
+		text += "<HR>"
+	return text
 
 /datum/game_mode/proc/gang_membership_report(var/list/membership)
 	var/text = ""
-	for(var/datum/mind/gang_mind in membership)
-		text += "<br><b>[gang_mind.key]</b> was <b>[gang_mind.name]</b> ("
-		if(gang_mind.current)
-			if(gang_mind.current.stat == DEAD || isbrain(gang_mind.current))
+	var/tempstate = end_icons.len
+	for(var/datum/mind/gangster in membership)
+		if(gangster.current)
+			var/icon/flat = getFlatIcon(gangster.current,exact=1)
+			end_icons += flat
+			tempstate = end_icons.len
+			text += {"<BR><img src="logo_[tempstate].png"> <B>[gangster.key]</B> was <B>[gangster.name]</B> ("}
+			if(gangster.current.stat == DEAD || isbrain(gangster.current))
 				text += "died"
-			else if(gang_mind.current.z != 1)
+				flat.Turn(90)
+				end_icons[tempstate] = flat
+			else if(gangster.current.z != 1)
 				text += "fled the station"
 			else
 				text += "survived"
-			if(gang_mind.current.real_name != gang_mind.name)
-				text += " as <b>[gang_mind.current.real_name]</b>"
+			if(gangster.current.real_name != gangster.name)
+				text += " as <B>[gangster.current.real_name]</B>"
 		else
+			var/icon/sprotch = icon('icons/effects/blood.dmi', "gibbearcore")
+			end_icons += sprotch
+			tempstate = end_icons.len
+			text += {"<BR><img src="logo_[tempstate].png"> [gangster.key] was [gangster.name] ("}
 			text += "body destroyed"
 		text += ")"
-
-	world << text
+	return text
 
 
 //////////////////////////////////////////////////////////

@@ -71,7 +71,12 @@ h1.alert, h2.alert		{color: #000000;}
 .reallybig				{font-size: 4;}
 
 .shadowling				{color: #3b2769;}
-.abductor				{color: #800080;	font-style: italic;}
+.changeling				{color: #800080;	font-style: italic;}
+.abductor_team0			{color: #800080;	font-style: italic;}
+.abductor_team1			{color: #C00070;	font-style: italic;}
+.abductor_team2			{color: #406E6A;	font-style: italic;}
+.abductor_team3			{color: #6E4040;	font-style: italic;}
+.abductor_team4			{color: #800080;	font-style: italic;}
 .cult					{color: #800080;	font-weight: bold; font-style: italic;}
 .alien					{color: #543354;}
 

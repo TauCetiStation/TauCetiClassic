@@ -268,8 +268,6 @@ This function restores all organs.
 	return organs_by_name[zone]
 
 /mob/living/carbon/human/apply_damage(var/damage = 0, var/damagetype = BRUTE, var/def_zone = null, var/blocked = 0, var/sharp = 0, var/edge = 0, var/obj/used_weapon = null)
-	handle_suit_punctures(damagetype, damage)
-
 //	visible_message("Hit debug. [damage] | [damagetype] | [def_zone] | [blocked] | [sharp] | [used_weapon]")
 	if((damagetype != BRUTE) && (damagetype != BURN))
 		..(damage, damagetype, def_zone, blocked)
@@ -304,6 +302,8 @@ This function restores all organs.
 				damage = damage*species.burn_mod
 			if(organ.take_damage(0, damage, sharp, edge, used_weapon))
 				UpdateDamageIcon()
+
+	handle_suit_punctures(damagetype, damage)
 
 	// Will set our damageoverlay icon to the next level, which will then be set back to the normal level the next mob.Life().
 	updatehealth()
