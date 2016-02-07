@@ -200,27 +200,14 @@
 
 
 /datum/game_mode/proc/auto_declare_completion_traitor()
+	var/text = ""
 	if(traitors.len)
-		var/icon/logo = icon('icons/mob/mob.dmi', "synd-logo")
-		var/text = "\icon[logo] <FONT size = 2><B>The traitors were:</B></FONT> \icon[logo]"
+		text += printlogo("synd", "traitors")
 		for(var/datum/mind/traitor in traitors)
+
+			text += printplayerwithicon(traitor)
+
 			var/traitorwin = 1
-
-			if(traitor.current)
-				var/icon/flat = getFlatIcon(traitor.current)
-				text += "<br>\icon[flat] [traitor.key] was [traitor.name] ("
-				if(traitor.current.stat == DEAD)
-					text += "died"
-				else
-					text += "survived"
-				if(traitor.current.real_name != traitor.name)
-					text += " as [traitor.current.real_name]"
-			else
-				var/icon/sprotch = icon('icons/effects/blood.dmi', "floor1-old")
-				text += "<br>\icon[sprotch] [traitor.key] was [traitor.name] ("
-				text += "body destroyed"
-			text += ")"
-
 			if(traitor.objectives && traitor.objectives.len)//If the traitor had no objectives, don't need to process this.
 				var/count = 1
 				for(var/datum/objective/objective in traitor.objectives)
@@ -249,15 +236,14 @@
 
 			if(traitor.total_TC)
 				if(traitor.spent_TC)
-					text += "<br><span class='sinister'>TC Remaining : [traitor.total_TC - traitor.spent_TC]/[traitor.total_TC] - The tools used by the traitor were:"
+					text += "<BR><B>TC Remaining:</B> [traitor.total_TC - traitor.spent_TC]/[traitor.total_TC]"
+					text += "<BR><B>The tools used by the traitor were:</B>"
 					for(var/entry in traitor.uplink_items_bought)
 						text += "<br>[entry]"
-					text += "</span>"
 				else
-					text += "<br><span class='sinister'>The traitor was a smooth operator this round<br>(did not purchase any uplink items)</span>"
-
-		world << text
-	return 1
+					text += "<br>The traitor was a smooth operator this round (did not purchase any uplink items)."
+		text += "<BR><HR>"
+	return text
 
 
 /datum/game_mode/proc/equip_traitor(mob/living/carbon/human/traitor_mob, var/safety = 0)
