@@ -92,7 +92,7 @@ mob/living/parasite/meme/Life()
 			src.death()
 			return
 	else if (meme_death == "burns")
-		if(host.fireloss > 70)
+		if(host.on_fire)
 			src << "\red <b>Something on your host's skin makes you unstable.. you fade away..</b>"
 			src.death()
 			return
