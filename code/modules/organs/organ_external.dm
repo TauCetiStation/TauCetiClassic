@@ -1096,7 +1096,6 @@ Note that amputating the affected organ does in fact remove the infection from t
 	//if(ishuman(H))
 	//	if(H.gender == FEMALE)
 	//		H.icon_state = "head_f"
-	//	H.overlays += H.generate_head_icon()
 	transfer_identity(H)
 
 	name = "[H.real_name]'s head"
