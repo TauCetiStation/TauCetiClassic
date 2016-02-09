@@ -136,9 +136,6 @@ Please contact me on #coderbus IRC. ~Carn x
 
 /mob/living/carbon/human
 	var/list/overlays_standing[TOTAL_LAYERS]
-	var/previous_damage_appearance // store what the body last looked like, so we only have to update it if something changed
-	var/icon/race_icon
-	var/icon/deform_icon
 
 /mob/living/carbon/human/proc/apply_overlay(cache_index)
 	var/image/I = overlays_standing[cache_index]
@@ -154,8 +151,6 @@ Please contact me on #coderbus IRC. ~Carn x
 //this proc is messy as I was forced to include some old laggy cloaking code to it so that I don't break cloakers
 //I'll work on removing that stuff by rewriting some of the cloaking stuff at a later date.
 /mob/living/carbon/human/update_icons()
-	..()
-	//lying_prev = lying	//so we don't update overlays for lying/standing unless our stance changes again
 	update_hud()		//TODO: remove the need for this
 
 	//prevent from updating overlays when abductor in stealth
@@ -183,73 +178,40 @@ Please contact me on #coderbus IRC. ~Carn x
 		for(var/image/I in overlays_standing)
 			overlays += I
 
-	/*if(lying)
-		var/matrix/M = matrix()
-		M.Turn(90)
-		M.Translate(1,-6)
-		src.transform = M
-	else
-		var/matrix/M = matrix()
-		src.transform = M*/
-
 var/global/list/damage_icon_parts = list()
 /proc/pre_generate_damage_icons()
 	var/list/body_parts = list("head","torso","l_arm","l_hand","r_arm","r_hand","groin","l_leg","l_foot","r_leg","r_foot")
 	var/list/damage_states = list("01","10","11","12","13","02","20","21","22","23","03","30","31","32","33")
-
 	for(var/body_part in body_parts)
 		for(var/damage_state in damage_states)
 			var/icon/DI = new /icon('icons/mob/dam_human.dmi', damage_state)
 			DI.Blend(new /icon('icons/mob/dam_mask.dmi', body_part), ICON_MULTIPLY)
 			damage_icon_parts["[damage_state]/[body_part]"] = DI
 
-/*
-proc/get_damage_icon_part(damage_state, body_part)
-	if(damage_icon_parts["[damage_state]/[body_part]"] == null)
-		var/icon/DI = new /icon('icons/mob/dam_human.dmi', damage_state)			// the damage icon for whole human
-		DI.Blend(new /icon('icons/mob/dam_mask.dmi', body_part), ICON_MULTIPLY)		// mask with this organ's pixels
-		damage_icon_parts["[damage_state]/[body_part]"] = DI
-		return DI
-	else
-		return damage_icon_parts["[damage_state]/[body_part]"]
-*/
-
 //DAMAGE OVERLAYS
 //constructs damage icon for each organ from mask * damage field and saves it in our overlays_ lists
 /mob/living/carbon/human/UpdateDamageIcon(update_icons=0)
-	remove_overlay(DAMAGE_LAYER)
-
-	// first check whether something actually changed about damage appearance
-	//var/damage_appearance = ""
-
-	//for(var/datum/organ/external/O in organs)
-	//	if(O.status & ORGAN_DESTROYED) damage_appearance += "d"
-	//	else
-	//		damage_appearance += O.damage_state
-
-	//if(damage_appearance == previous_damage_appearance)
-	//	// nothing to do here
-	//	return
-
-	//previous_damage_appearance = damage_appearance
-
-	var/image/standing = image("icon" = 'icons/mob/dam_human.dmi', "icon_state" = "00")
-	overlays_standing[DAMAGE_LAYER]	= standing
-
+	var/icon/ConstructOverlay = icon('icons/mob/dam_human.dmi',"00")
+	var/constructed = 0
 	// blend the individual damage states with our icons
 	for(var/datum/organ/external/O in organs)
 		if(!(O.status & ORGAN_DESTROYED))
 			O.update_icon()
-			if(O.damage_state == "00") continue
-			//var/icon/DI = get_damage_icon_part(O.damage_state, O.icon_name)
-			standing.overlays += damage_icon_parts["[O.damage_state]/[O.icon_name]"]
+			if(O.damage_state == "00")
+				continue
+			ConstructOverlay.Blend(damage_icon_parts["[O.damage_state]/[O.icon_name]"], ICON_OVERLAY)
+			constructed = 1
 
+	remove_overlay(DAMAGE_LAYER)
+	if(constructed)
+		var/image/standing = image("icon"='icons/mob/dam_human.dmi', "icon_state"="00", "layer"=-DAMAGE_LAYER)
+		overlays_standing[DAMAGE_LAYER]	= standing
+		standing.overlays += ConstructOverlay
 	apply_overlay(DAMAGE_LAYER)
 	if(update_icons)   update_icons()
 
 //BASE MOB SPRITE
 /mob/living/carbon/human/proc/update_body(var/update_icons=1)
-
 	var/husk_color_mod = rgb(96,88,80)
 	var/hulk_color_mod = rgb(48,224,40)
 	var/necrosis_color_mod = rgb(10,50,0)
@@ -264,25 +226,12 @@ proc/get_damage_icon_part(damage_state, body_part)
 	var/g = (gender == FEMALE ? "f" : "m")
 	var/has_head = 0
 
-	var/datum/organ/external/chest = get_organ("chest")
-	stand_icon = chest.get_icon(g,fat)
-	if(!skeleton)
-		if(husk)
-			stand_icon.ColorTone(husk_color_mod)
-		else if(hulk)
-			var/list/TONE = ReadRGB(hulk_color_mod)
-			stand_icon.MapColors(rgb(TONE[1],0,0),rgb(0,TONE[2],0),rgb(0,0,TONE[3]))
-
 	//CACHING: Generate an index key from visible bodyparts.
 	//0 = destroyed, 1 = normal, 2 = robotic, 3 = necrotic.
-
 
 	//Create a new, blank icon for our mob to use.
 	if(stand_icon)
 		qdel(stand_icon)
-
-	if(typing && (stat == DEAD))	//turn off typing indicator
-		qdel(typing_indicator)
 
 	stand_icon = new(species.icon_template ? species.icon_template : 'icons/mob/human.dmi',"blank")
 
@@ -314,12 +263,18 @@ proc/get_damage_icon_part(damage_state, body_part)
 
 	//BEGIN CACHED ICON GENERATION.
 
-		//Icon is not cached, generate and store it.
+		// Why don't we just make skeletons/shadows/golems a species? ~Z
+		var/race_icon =   (skeleton ? 'icons/mob/human_races/r_skeleton.dmi' : species.icobase)
+		var/deform_icon = (skeleton ? 'icons/mob/human_races/r_skeleton.dmi' : species.icobase)
+
 		//Robotic limbs are handled in get_icon() so all we worry about are missing or dead limbs.
 		//No icon stored, so we need to start with a basic one.
+		var/datum/organ/external/chest = get_organ("chest")
+		base_icon = chest.get_icon(race_icon,deform_icon,g,fat)
 
-		//var/datum/organ/external/chest = get_organ("chest")
-		base_icon = chest.get_icon(g, fat)
+		if(chest.status & ORGAN_DEAD)
+			base_icon.ColorTone(necrosis_color_mod)
+			base_icon.SetIntensity(0.7)
 
 		for(var/datum/organ/external/part in organs)
 
@@ -329,9 +284,9 @@ proc/get_damage_icon_part(damage_state, body_part)
 				continue
 
 			if (istype(part, /datum/organ/external/groin) || istype(part, /datum/organ/external/head))
-				temp = part.get_icon(g)
+				temp = part.get_icon(race_icon,deform_icon,g)
 			else
-				temp = part.get_icon()
+				temp = part.get_icon(race_icon,deform_icon)
 
 			if(part.status & ORGAN_DEAD)
 				temp.ColorTone(necrosis_color_mod)
@@ -523,18 +478,8 @@ proc/get_damage_icon_part(damage_state, body_part)
 	remove_overlay(MUTANTRACE_LAYER)
 
 	var/fat
-	if( FAT in mutations )
+	if(FAT in mutations)
 		fat = "fat"
-//	var/g = "m"
-//	if (gender == FEMALE)	g = "f"
-//BS12 EDIT
-	var/skeleton = (SKELETON in src.mutations)
-	if(skeleton)
-		race_icon = 'icons/mob/human_races/r_skeleton.dmi'
-	else
-		//Icon data is kept in species datums within the mob.
-		race_icon = species.icobase
-		deform_icon = species.deform
 
 	if(dna)
 		switch(dna.mutantrace)
