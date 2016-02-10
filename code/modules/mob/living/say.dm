@@ -101,8 +101,6 @@ var/list/department_radio_keys = list(
 		if(dongle.translate_binary) return 1
 
 /mob/living/say(var/message, var/datum/language/speaking = null, var/verb="says", var/alt_name="", var/italics=0, var/message_range = world.view, var/list/used_radios = list(), var/sound/speech_sound, var/sound_vol, var/sanitize = 1)
-	check_typing()
-
 	if (src.client)
 		if(client.prefs.muted & MUTE_IC)
 			src << "You cannot send IC messages (muted)."
