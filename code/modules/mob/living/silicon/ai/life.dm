@@ -172,6 +172,7 @@
 							sleep(50)
 							theAPC = null
 
+	add_ingame_age()
 	regular_hud_updates()
 	switch(src.sensor_mode)
 		if (SEC_HUD)
