@@ -98,8 +98,8 @@
 /obj/item/clothing/head/helmet/HoS/dermal/price = 12888
 /obj/item/clothing/head/helmet/cap/price = 3866
 /obj/item/clothing/head/helmet/helmet_of_justice/price = 9166
-/obj/item/clothing/head/helmet/space/price = 15000
-/obj/item/clothing/head/helmet/space/rig/price = 25000
+/obj/item/clothing/head/helmet/space/price = 8700
+/obj/item/clothing/head/helmet/space/rig/price = 12300
 /obj/item/clothing/head/helmet/tactical/price = 4444
 /obj/item/clothing/head/welding/price = 250
 
@@ -122,8 +122,8 @@
 /obj/item/clothing/suit/armor/tactical/price = 9990
 /obj/item/clothing/suit/captunic/price = 6000
 /obj/item/clothing/suit/ianshirt/price = 7500
-/obj/item/clothing/suit/space/price = 40000
-/obj/item/clothing/suit/space/rig/price = 75000
+/obj/item/clothing/suit/space/price = 24456
+/obj/item/clothing/suit/space/rig/price = 32547
 /obj/item/clothing/suit/storage/labcoat/cmo/price = 5500
 /obj/item/clothing/tie/holobadge/price = 350
 /obj/item/clothing/tie/holster/price = 1600
@@ -235,7 +235,7 @@
 /obj/item/weapon/gun/energy/kinetic_accelerator/price = 2760
 /obj/item/weapon/gun/energy/laser/price = 4380
 /obj/item/weapon/gun/energy/laser/captain/price = 13500
-obj/item/weapon/gun/energy/laser/retro/price = 5430
+/obj/item/weapon/gun/energy/laser/retro/price = 5430
 /obj/item/weapon/gun/energy/lasercannon/price = 6600
 /obj/item/weapon/gun/energy/sniperrifle/price = 5700
 /obj/item/weapon/gun/energy/stunrevolver/price = 3200
@@ -287,18 +287,20 @@ obj/item/weapon/gun/energy/laser/retro/price = 5430
 /obj/item/weapon/weldpack/price = 180
 
 /obj/machinery/deployable/barrier/price = 1500
-/obj/machinery/faxmachine/price = 9500
+/obj/machinery/faxmachine/price = 19500
 /obj/machinery/flasher/portable/price = 400
+/obj/machinery/field_generator/price = 7500
 /obj/machinery/floodlight/price = 150
 /obj/machinery/giga_drill/price = 40000
 /obj/machinery/gravity_generator/price = 7500
 /obj/machinery/iv_drip/price = 250
-/obj/machinery/nuclearbomb/price = 15000
+/obj/machinery/nuclearbomb/price = 35333
 /obj/machinery/pipedispenser/price = 850
 /obj/machinery/recharger/price = 350
-/obj/machinery/shield_gen/price = 1100
+/obj/machinery/shield_gen/price = 11000
 /obj/machinery/shieldgen/price = 700
 /obj/machinery/shieldwallgen/price = 700
+/obj/machinery/the_singularitygen/price = 25223
 /obj/machinery/vending/price = 15000
 
 /obj/mecha/working/ripley/price = 40000
@@ -310,3 +312,5 @@ obj/item/weapon/gun/energy/laser/retro/price = 5430
 /obj/structure/flora/price = 300
 /obj/structure/janitorialcart/price = 3000
 /obj/structure/mopbucket/price = 1500
+/obj/structure/particle_accelerator/price = 20000
+/obj/structure/sign/price = 987
