@@ -3,6 +3,16 @@
 	check_typing()
 	if(stat != DEAD)
 		handle_actions()
+		add_ingame_age()
+
+/mob/living/proc/add_ingame_age()
+	if(client && !client.is_afk()) //5 minutes of inactive time will disable this, until player come back.
+		var/client/C = client
+		if(C.player_next_age_tick == 0) //All clients start with 0, so we need to set next tick for the first time.
+			C.player_next_age_tick = world.time + 600
+		else if(world.time > C.player_next_age_tick) //Every 60 seconds we add +1 to player ingame age.
+			C.player_next_age_tick = world.time + 600
+			C.player_ingame_age++
 
 /mob/living/verb/succumb()
 	set hidden = 1
