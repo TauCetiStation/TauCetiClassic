@@ -16,7 +16,7 @@
 		typing_indicator.transform = matrix()*0.5
 		animate(typing_indicator, transform = matrix(), alpha = 255, time = 2, easing = CUBIC_EASING)
 
-	if(client)
+	if(client && !stat)
 		if(state)
 			if(!typing)
 				typing = 1
@@ -34,27 +34,23 @@
 	set name = ".Say"
 	set hidden = 1
 
-	if(client)
-		winset(client, "input", "focus=true;text='Say \"'")
+	set_typing_indicator(1)
+	hud_typing = 1
+	typing_shown = 1
+	var/message = input("","say (text)") as text
+	hud_typing = 0
+	set_typing_indicator(0)
+	if(message)
+		say_verb(message)
+	typing_shown = 0
 
 /mob/verb/me_wrapper()
 	set name = ".Me"
 	set hidden = 1
 
-	if(client)
-		winset(client, "input", "focus=true;text='Me '")
-
-/mob/proc/check_typing()
-	return
-
-/mob/living/check_typing()
-	if(client)
-		if(!stat)
-			var/temp = winget(client, "input", "text")
-			if(findtext(temp, "Say \"", 1, 7) && length(temp) > 5)
-				set_typing_indicator(1)
-				return
-		set_typing_indicator(0)
+	var/message = input("","me (text)") as text
+	if(message)
+		me_verb(message)
 
 /mob/proc/handle_typing_indicator()
 	if(client)
