@@ -190,30 +190,6 @@ Please contact me on #coderbus IRC. ~Carn x
 	//for(var/image/I in overlays_standing)
 	//	overlays += I
 
-var/global/list/damage_icon_parts = list()
-/proc/generate_damage_overlays_dmi()
-	spawn(50)
-		var/list/body_parts = list("head","torso","l_arm","l_hand","r_arm","r_hand","groin","l_leg","l_foot","r_leg","r_foot")
-		var/list/damage_states = list("01","10","11","12","13","02","20","21","22","23","03","30","31","32","33")
-
-		var/total = body_parts.len * damage_states.len
-		var/count = 0
-
-		for(var/body_part in body_parts)
-			var/icon/master = new()
-			for(var/damage_state in damage_states)
-				var/icon/DI = new /icon('icons/mob/dam_human.dmi', damage_state)
-				DI.Blend(new /icon('icons/mob/dam_mask_gen.dmi', body_part), ICON_MULTIPLY)
-				master.Insert(DI, "[body_part]_[damage_state]")
-				damage_icon_parts["[damage_state]/[body_part]"] = DI
-
-				count += 1
-				var/pct = round(100 * count / total)
-				world << "[pct]%"
-				sleep(world.tick_lag)
-
-			world << ftp(master, "[body_part].dmi")
-
 //DAMAGE OVERLAYS
 /mob/living/carbon/human/UpdateDamageIcon(datum/organ/external/O)
 	remove_damage_overlay(O.damage_layer)
