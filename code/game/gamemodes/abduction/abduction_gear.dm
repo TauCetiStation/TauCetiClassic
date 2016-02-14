@@ -419,7 +419,7 @@
 
 	user << "<span class='notice'>You switch the baton to [txt] mode.</span>"
 	update_icon()
-	user.update_inv_l_hand(0)
+	user.update_inv_l_hand()
 	user.update_inv_r_hand()
 
 /obj/item/weapon/abductor_baton/update_icon()

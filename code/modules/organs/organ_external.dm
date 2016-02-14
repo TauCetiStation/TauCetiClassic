@@ -45,6 +45,9 @@
 	// how often wounds should be updated, a higher number means less often
 	var/wound_update_accuracy = 1
 
+	var/damage_layer = 0
+	var/prev_damage_state = 00
+
 
 /datum/organ/external/New(var/datum/organ/external/P)
 	if(P)
@@ -98,7 +101,7 @@
 		I.take_damage(brute / 2)
 		brute -= brute / 2
 
-	if(status & ORGAN_BROKEN && prob(40) && brute)
+	if((status & ORGAN_BROKEN) && prob(40) && brute)
 		owner.emote("scream",,, 1)	//getting hit on broken hand hurts
 	if(used_weapon)
 		add_autopsy_data("[used_weapon]", brute + burn)
@@ -275,7 +278,7 @@ This function completely restores a damaged organ to perfect condition.
 //Determines if we even need to process this organ.
 
 /datum/organ/external/proc/need_process()
-	if(status && status != ORGAN_ROBOT) // If it's robotic, that's fine it will have a status.
+	if(status && (status & ORGAN_ROBOT)) // If it's robotic, that's fine it will have a status.
 		return 1
 	if(brute_dam || burn_dam)
 		return 1
@@ -308,7 +311,7 @@ This function completely restores a damaged organ to perfect condition.
 	if(parent)
 		if(parent.status & ORGAN_DESTROYED)
 			status |= ORGAN_DESTROYED
-			owner.update_body(1)
+			owner.update_body()
 			return
 
 	//Bone fracurtes
@@ -424,7 +427,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 		if (!(status & ORGAN_DEAD))
 			status |= ORGAN_DEAD
 			owner << "<span class='notice'>You can't feel your [display_name] anymore...</span>"
-			owner.update_body(1)
+			owner.update_body()
 
 		germ_level++
 		owner.adjustToxLoss(1)
@@ -481,7 +484,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	// sync the organ's damage with its wounds
 	src.update_damages()
 	if (update_icon())
-		owner.UpdateDamageIcon(1)
+		owner.UpdateDamageIcon()
 
 //Updates brute_damn and burn_damn from wound damages. Updates BLEEDING status.
 /datum/organ/external/proc/update_damages()
@@ -511,6 +514,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 // new damage icon system
 // adjusted to set damage_state to brute/burn code only (without r_name0 as before)
 /datum/organ/external/proc/update_icon()
+	prev_damage_state = damage_state
 	var/n_is = damage_state_text()
 	if (n_is != damage_state)
 		damage_state = n_is
@@ -653,7 +657,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 			var/lol = pick(cardinal)
 			step(organ,lol)
 
-			owner.update_body(1)
+			owner.update_body()
 
 			// OK so maybe your limb just flew off, but if it was attached to a pair of cuffs then hooray! Freedom!
 			release_restraints()
@@ -847,6 +851,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	name = "chest"
 	icon_name = "torso"
 	display_name = "chest"
+	damage_layer = D_TORSO_LAYER
 	max_damage = 75
 	min_broken_damage = 40
 	body_part = UPPER_TORSO
@@ -856,6 +861,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	name = "groin"
 	icon_name = "groin"
 	display_name = "groin"
+	damage_layer = D_GROIN_LAYER
 	max_damage = 50
 	min_broken_damage = 30
 	body_part = LOWER_TORSO
@@ -865,6 +871,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	name = "l_arm"
 	display_name = "left arm"
 	icon_name = "l_arm"
+	damage_layer = D_L_ARM_LAYER
 	max_damage = 50
 	min_broken_damage = 20
 	body_part = ARM_LEFT
@@ -877,6 +884,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	name = "l_leg"
 	display_name = "left leg"
 	icon_name = "l_leg"
+	damage_layer = D_L_LEG_LAYER
 	max_damage = 50
 	min_broken_damage = 20
 	body_part = LEG_LEFT
@@ -886,6 +894,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	name = "r_arm"
 	display_name = "right arm"
 	icon_name = "r_arm"
+	damage_layer = D_R_ARM_LAYER
 	max_damage = 50
 	min_broken_damage = 20
 	body_part = ARM_RIGHT
@@ -898,6 +907,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	name = "r_leg"
 	display_name = "right leg"
 	icon_name = "r_leg"
+	damage_layer = D_R_LEG_LAYER
 	max_damage = 50
 	min_broken_damage = 20
 	body_part = LEG_RIGHT
@@ -907,6 +917,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	name = "l_foot"
 	display_name = "left foot"
 	icon_name = "l_foot"
+	damage_layer = D_L_FOOT_LAYER
 	max_damage = 30
 	min_broken_damage = 15
 	body_part = FOOT_LEFT
@@ -916,6 +927,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	name = "r_foot"
 	display_name = "right foot"
 	icon_name = "r_foot"
+	damage_layer = D_R_FOOT_LAYER
 	max_damage = 30
 	min_broken_damage = 15
 	body_part = FOOT_RIGHT
@@ -925,6 +937,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	name = "r_hand"
 	display_name = "right hand"
 	icon_name = "r_hand"
+	damage_layer = D_R_HAND_LAYER
 	max_damage = 30
 	min_broken_damage = 15
 	body_part = HAND_RIGHT
@@ -937,6 +950,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	name = "l_hand"
 	display_name = "left hand"
 	icon_name = "l_hand"
+	damage_layer = D_L_HAND_LAYER
 	max_damage = 30
 	min_broken_damage = 15
 	body_part = HAND_LEFT
@@ -949,6 +963,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	name = "head"
 	icon_name = "head"
 	display_name = "head"
+	damage_layer = D_HEAD_LAYER
 	max_damage = 75
 	min_broken_damage = 40
 	body_part = HEAD
@@ -966,12 +981,13 @@ Note that amputating the affected organ does in fact remove the infection from t
 		. = new /icon(race_icon, "[icon_name]_[g]")
 
 /datum/organ/external/head/take_damage(brute, burn, sharp, edge, used_weapon = null, list/forbidden_limbs = list())
-	..(brute, burn, sharp, edge, used_weapon, forbidden_limbs)
-	if (!disfigured)
-		if (brute_dam > 40)
+	world << 1
+	. = ..(brute, burn, sharp, edge, used_weapon, forbidden_limbs)
+	if(!disfigured)
+		if(brute_dam > 40)
 			if (prob(50))
 				disfigure("brute")
-		if (burn_dam > 40)
+		if(burn_dam > 40)
 			disfigure("burn")
 
 /datum/organ/external/head/proc/disfigure(var/type = "brute")

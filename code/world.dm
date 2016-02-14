@@ -33,7 +33,6 @@
 	load_mods()
 	//end-emergency fix
 
-	pre_generate_damage_icons()
 	src.update_status()
 
 	. = ..()

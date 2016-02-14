@@ -383,6 +383,18 @@
 
 	return ..()
 
+/datum/species/skeleton
+	name = "Skeleton"
+
+	icobase = 'icons/mob/human_races/r_skeleton.dmi'
+	deform = 'icons/mob/human_races/r_skeleton.dmi'
+
+	flags = NO_BREATHE | NO_BLOOD | NO_SCAN | VIRUS_IMMUNE
+
+/datum/species/skeleton/handle_post_spawn(var/mob/living/carbon/human/H)
+	H.gender = NEUTER
+
+	return ..()
 
 //Species unarmed attacks
 

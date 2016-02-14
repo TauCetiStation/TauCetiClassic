@@ -325,7 +325,7 @@ datum
 				if(!M) M = holder.my_atom
 				if(ishuman(M))
 					var/mob/living/carbon/human/human = M
-					if(human.dna.mutantrace == null)
+					if(human.dna && !human.dna.mutantrace)
 						M << "\red Your flesh rapidly mutates!"
 						human.dna.mutantrace = "slime"
 						human.update_mutantrace()
@@ -1004,21 +1004,21 @@ datum
 						C.l_hand.clean_blood()
 					if(C.wear_mask)
 						if(C.wear_mask.clean_blood())
-							C.update_inv_wear_mask(0)
+							C.update_inv_wear_mask()
 					if(ishuman(M))
 						var/mob/living/carbon/human/H = C
 						if(H.head)
 							if(H.head.clean_blood())
-								H.update_inv_head(0)
+								H.update_inv_head()
 						if(H.wear_suit)
 							if(H.wear_suit.clean_blood())
-								H.update_inv_wear_suit(0)
+								H.update_inv_wear_suit()
 						else if(H.w_uniform)
 							if(H.w_uniform.clean_blood())
-								H.update_inv_w_uniform(0)
+								H.update_inv_w_uniform()
 						if(H.shoes)
 							if(H.shoes.clean_blood())
-								H.update_inv_shoes(0)
+								H.update_inv_shoes()
 						else
 							H.clean_blood(1)
 							return
@@ -1953,8 +1953,8 @@ datum
 							if(prob(meltprob) && !H.head.unacidable)
 								H << "<span class='danger'>Your headgear melts away but protects you from the acid!</span>"
 								qdel(H.head)
-								H.update_inv_head(0)
-								H.update_hair(0)
+								H.update_inv_head()
+								H.update_hair()
 							else
 								H << "<span class='warning'>Your headgear protects you from the acid.</span>"
 							return
@@ -1963,8 +1963,8 @@ datum
 							if(prob(meltprob) && !H.wear_mask.unacidable)
 								H << "<span class='danger'>Your mask melts away but protects you from the acid!</span>"
 								qdel(H.wear_mask)
-								H.update_inv_wear_mask(0)
-								H.update_hair(0)
+								H.update_inv_wear_mask()
+								H.update_hair()
 							else
 								H << "<span class='warning'>Your mask protects you from the acid.</span>"
 							return
@@ -1973,7 +1973,7 @@ datum
 							if(prob(meltprob) && !H.glasses.unacidable)
 								H << "<span class='danger'>Your glasses melts away!</span>"
 								qdel(H.glasses)
-								H.update_inv_glasses(0)
+								H.update_inv_glasses()
 
 					else if(ismonkey(M))
 						var/mob/living/carbon/monkey/MK = M
@@ -1981,7 +1981,7 @@ datum
 							if(!MK.wear_mask.unacidable)
 								MK << "<span class='danger'>Your mask melts away but protects you from the acid!</span>"
 								qdel(MK.wear_mask)
-								MK.update_inv_wear_mask(0)
+								MK.update_inv_wear_mask()
 							else
 								MK << "<span class='warning'>Your mask protects you from the acid.</span>"
 							return
