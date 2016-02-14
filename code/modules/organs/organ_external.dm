@@ -46,7 +46,6 @@
 	var/wound_update_accuracy = 1
 
 	var/damage_layer = 0
-	var/prev_damage_state = 00
 
 
 /datum/organ/external/New(var/datum/organ/external/P)
@@ -169,6 +168,8 @@
 	owner.updatehealth()
 
 	var/result = update_icon()
+	if(result)
+		owner.UpdateDamageIcon(src)
 	return result
 
 /datum/organ/external/proc/heal_damage(brute, burn, internal = 0, robo_repair = 0)
@@ -195,6 +196,8 @@
 	owner.updatehealth()
 
 	var/result = update_icon()
+	if(result)
+		owner.UpdateDamageIcon(src)
 	return result
 
 /*
@@ -483,8 +486,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 	// sync the organ's damage with its wounds
 	src.update_damages()
-	if (update_icon())
-		owner.UpdateDamageIcon()
+	if(update_icon())
+		owner.UpdateDamageIcon(src)
 
 //Updates brute_damn and burn_damn from wound damages. Updates BLEEDING status.
 /datum/organ/external/proc/update_damages()
@@ -514,9 +517,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 // new damage icon system
 // adjusted to set damage_state to brute/burn code only (without r_name0 as before)
 /datum/organ/external/proc/update_icon()
-	prev_damage_state = damage_state
 	var/n_is = damage_state_text()
-	if (n_is != damage_state)
+	if(n_is != damage_state)
 		damage_state = n_is
 		return 1
 	return 0
@@ -664,6 +666,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 			if(vital)
 				owner.death()
+
+		if(update_icon())
+			owner.UpdateDamageIcon(src)
 
 /****************************************************
 			   HELPERS
@@ -972,16 +977,16 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 /datum/organ/external/head/get_icon(var/icon/race_icon, var/icon/deform_icon)
 	if (!owner)
-	 return ..()
+		return ..()
 	var/g = "m"
-	if(owner.gender == FEMALE)	g = "f"
-	if (status & ORGAN_MUTATED)
+	if(owner.gender == FEMALE)
+		g = "f"
+	if(status & ORGAN_MUTATED)
 		. = new /icon(deform_icon, "[icon_name]_[g]")
 	else
 		. = new /icon(race_icon, "[icon_name]_[g]")
 
 /datum/organ/external/head/take_damage(brute, burn, sharp, edge, used_weapon = null, list/forbidden_limbs = list())
-	world << 1
 	. = ..(brute, burn, sharp, edge, used_weapon, forbidden_limbs)
 	if(!disfigured)
 		if(brute_dam > 40)
@@ -1049,7 +1054,6 @@ Note that amputating the affected organ does in fact remove the infection from t
 /****************************************************
 			   EXTERNAL ORGAN ITEMS DEFINES
 ****************************************************/
-
 /obj/item/weapon/organ/l_arm
 	name = "left arm"
 	icon_state = "l_arm"

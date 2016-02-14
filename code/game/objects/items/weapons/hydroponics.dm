@@ -140,8 +140,7 @@
 		if(istype(user, /mob/living/carbon/human))
 			var/organ = ((user.hand ? "l_":"r_") + "arm")
 			var/datum/organ/external/affecting = user.get_organ(organ)
-			if(affecting.take_damage(0,force))
-				user.UpdateDamageIcon()
+			affecting.take_damage(0,force)
 		else
 			user.take_organ_damage(0,force)
 
@@ -167,8 +166,7 @@
 		if(istype(user, /mob/living/carbon/human))
 			var/organ = ((user.hand ? "l_":"r_") + "arm")
 			var/datum/organ/external/affecting = user.get_organ(organ)
-			if(affecting.take_damage(0,force))
-				user.UpdateDamageIcon()
+			affecting.take_damage(0,force)
 		else
 			user.take_organ_damage(0,force)
 		if(prob(50))

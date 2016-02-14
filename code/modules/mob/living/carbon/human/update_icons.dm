@@ -215,75 +215,11 @@ var/global/list/damage_icon_parts = list()
 			world << ftp(master, "[body_part].dmi")
 
 //DAMAGE OVERLAYS
-//constructs damage icon for each organ from mask * damage field and saves it in our overlays_ lists
 /mob/living/carbon/human/UpdateDamageIcon(datum/organ/external/O)
-	if(O)
-		world << "[O.name] | [O.damage_layer] | [O.damage_state] | [O.prev_damage_state]"
+	remove_damage_overlay(O.damage_layer)
+	overlays_damage[O.damage_layer]	= image("icon"='icons/mob/dam_human.dmi', "icon_state"="[O.icon_name]_[O.damage_state]", "layer"=-DAMAGE_LAYER)
+	apply_damage_overlay(O.damage_layer)
 
-		if(O.prev_damage_state == O.damage_state)
-			return
-
-		if(O in organs)
-			if(!(O.status & ORGAN_DESTROYED))
-				O.update_icon()
-				if(O.damage_state == "00")
-					return
-
-		remove_damage_overlay(O.damage_layer)
-		overlays_damage[O.damage_layer]	= image("icon"='icons/mob/dam_human.dmi', "icon_state"="[O.icon_name]_[O.damage_state]", "layer"=-DAMAGE_LAYER)
-		apply_damage_overlay(O.damage_layer)
-	else
-		for(var/datum/organ/external/OE in organs)
-			world << "[OE.name] | [OE.damage_layer] | [OE.damage_state] | [OE.prev_damage_state]"
-
-			var/image/I = overlays_damage[OE.damage_layer]
-			if(I && I.icon_state == "[OE.icon_name]_[OE.damage_state]")
-				continue
-
-			//if(OE.prev_damage_state == OE.damage_state)
-			//	continue
-
-			if(!(OE.status & ORGAN_DESTROYED))
-				OE.update_icon()
-				if(OE.damage_state == "00")
-					remove_damage_overlay(OE.damage_layer)
-					continue
-
-			remove_damage_overlay(OE.damage_layer)
-			overlays_damage[OE.damage_layer]	= image("icon"='icons/mob/dam_human.dmi', "icon_state"="[OE.icon_name]_[OE.damage_state]", "layer"=-DAMAGE_LAYER)
-			apply_damage_overlay(OE.damage_layer)
-
-/*	for(var/datum/organ/external/O in organs)
-		if(!(O.status & ORGAN_DESTROYED))
-			O.update_icon()
-			if(O.damage_state == "00")
-				continue
-
-			standing += image("icon"='icons/mob/dam_human.dmi', "icon_state"="[O.icon_name]_[O.damage_state]", "layer"=-DAMAGE_LAYER)
-
-	if(standing.len)
-		overlays_damage[damage_layer]	= standing*/
-
-	//apply_damage_overlay(damage_layer)
-
-/*	var/icon/ConstructOverlay = icon('icons/mob/dam_human.dmi',"00")
-	var/constructed = 0
-	// blend the individual damage states with our icons
-	for(var/datum/organ/external/O in organs)
-		if(!(O.status & ORGAN_DESTROYED))
-			O.update_icon()
-			if(O.damage_state == "00")
-				continue
-			ConstructOverlay.Blend(damage_icon_parts["[O.damage_state]/[O.icon_name]"], ICON_OVERLAY)
-			constructed = 1
-
-	remove_overlay(DAMAGE_LAYER)
-	if(constructed)
-		var/image/standing = image("icon"='icons/mob/dam_human.dmi', "icon_state"="00", "layer"=-DAMAGE_LAYER)
-		overlays_standing[DAMAGE_LAYER]	= standing
-		standing.overlays += ConstructOverlay
-	apply_overlay(DAMAGE_LAYER)
-	if(update_icons)   update_icons()*/
 
 //BASE MOB SPRITE
 /mob/living/carbon/human/proc/update_body()
@@ -623,7 +559,8 @@ var/global/list/damage_icon_parts = list()
 	update_inv_pockets()
 	update_surgery()
 	update_bandage()
-	UpdateDamageIcon()
+	for(var/datum/organ/external/O in organs)
+		UpdateDamageIcon(O)
 	update_icons()
 	update_transform()
 	//Hud Stuff

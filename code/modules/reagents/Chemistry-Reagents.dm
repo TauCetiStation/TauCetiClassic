@@ -1991,8 +1991,7 @@ datum
 							var/mob/living/carbon/human/H = M
 							var/datum/organ/external/affecting = H.get_organ("head")
 							if(affecting)
-								if(affecting.take_damage(4*toxpwr, 2*toxpwr))
-									H.UpdateDamageIcon()
+								affecting.take_damage(4*toxpwr, 2*toxpwr)
 								if(prob(meltprob)) //Applies disfigurement
 									H.emote("scream",,, 1)
 									H.status_flags |= DISFIGURED
