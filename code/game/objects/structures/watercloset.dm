@@ -437,6 +437,9 @@
 					washears = !(H.wear_mask.flags_inv & HIDEEARS)
 				if (washglasses)
 					washglasses = !(H.wear_mask.flags_inv & HIDEEYES)
+			else
+				H.lip_style = null
+				H.update_body()
 
 			if(H.head)
 				H.head.make_wet(1) //<= wet

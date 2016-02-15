@@ -196,6 +196,8 @@ Please contact me on #coderbus IRC. ~Carn x
 /mob/living/carbon/human/proc/update_body()
 	remove_overlay(BODY_LAYER)
 
+	var/list/standing	= list()
+
 	var/husk_color_mod = rgb(96,88,80)
 	var/hulk_color_mod = rgb(48,224,40)
 	var/necrosis_color_mod = rgb(10,50,0)
@@ -337,16 +339,6 @@ Please contact me on #coderbus IRC. ~Carn x
 	if (species.flags & HAS_SKIN_COLOR)
 		stand_icon.Blend(rgb(r_skin, g_skin, b_skin), ICON_ADD)
 
-	if(has_head)
-		//Eyes
-		var/icon/eyes = new/icon('icons/mob/human_face.dmi', species.eyes)
-		eyes.Blend(rgb(r_eyes, g_eyes, b_eyes), ICON_ADD)
-		stand_icon.Blend(eyes, ICON_OVERLAY)
-
-		//Mouth	(lipstick!)
-		if(lip_style && (species && species.flags & HAS_LIPS))	//skeletons are allowed to wear lipstick no matter what you think, agouri.
-			stand_icon.Blend(new/icon('icons/mob/human_face.dmi', "lips_[lip_style]_s"), ICON_OVERLAY)
-
 	//Underwear
 	if(underwear >0 && underwear < 12 && species.flags & HAS_UNDERWEAR)
 		if(!fat)
@@ -356,10 +348,23 @@ Please contact me on #coderbus IRC. ~Carn x
 		if(!fat)
 			stand_icon.Blend(new /icon('icons/mob/human_undershirt.dmi', "undershirt[undershirt]_s"), ICON_OVERLAY)
 
-	//tail
+	standing	+= image("icon"=stand_icon, "layer"=-BODY_LAYER)
+
+	if(has_head)
+		//Eyes
+		var/image/img_eyes_s = image("icon"='icons/mob/human_face.dmi', "icon_state"=species.eyes, "layer"=-BODY_LAYER)
+		img_eyes_s.color = rgb(r_eyes, g_eyes, b_eyes)
+		standing	+= img_eyes_s
+
+		//Mouth	(lipstick!)
+		if(lip_style && (species && species.flags & HAS_LIPS))	//skeletons are allowed to wear lipstick no matter what you think, agouri.
+			var/image/lips = image("icon"='icons/mob/human_face.dmi', "icon_state"="lips_[lip_style]_s", "layer"=-BODY_LAYER)
+			lips.color = lip_color
+			standing	+= lips
+
 	update_tail_showing()
 
-	overlays_standing[BODY_LAYER] = image("icon"=stand_icon, "layer"=-BODY_LAYER)
+	overlays_standing[BODY_LAYER] = standing
 	apply_overlay(BODY_LAYER)
 
 
@@ -924,10 +929,10 @@ Please contact me on #coderbus IRC. ~Carn x
 
 	if(species.tail && species.flags & HAS_TAIL)
 		if(!wear_suit || !(wear_suit.flags_inv & HIDETAIL) && !istype(wear_suit, /obj/item/clothing/suit/space))
-			var/icon/tail_s = new/icon("icon"='icons/effects/species.dmi', "icon_state"="[species.tail]_s", "layer"=-TAIL_LAYER)
+			var/icon/tail_s = new/icon("icon"='icons/effects/species.dmi', "icon_state"="[species.tail]_s")
 			tail_s.Blend(rgb(r_skin, g_skin, b_skin), ICON_ADD)
 
-			overlays_standing[TAIL_LAYER]	= image(tail_s)
+			overlays_standing[TAIL_LAYER]	= image("icon"=tail_s, "layer"=-TAIL_LAYER)
 
 	apply_overlay(TAIL_LAYER)
 
