@@ -416,7 +416,7 @@ Please contact me on #coderbus IRC. ~Carn x
 		if(!gene.block)
 			continue
 		if(gene.is_active(src))
-			var/underlay=gene.OnDrawUnderlays(src,g,fat)
+			var/image/underlay = image("icon"='icons/effects/genetics.dmi', "icon_state"=gene.OnDrawUnderlays(src,g,fat), "layer"=-MUTATIONS_LAYER)
 			if(underlay)
 				standing += underlay
 	for(var/mut in mutations)
@@ -447,20 +447,22 @@ Please contact me on #coderbus IRC. ~Carn x
 	if(FAT in mutations)
 		fat = "fat"
 
+	var/list/standing	= list()
 	if(dna)
 		switch(dna.mutantrace)
 			if("slime")
-				overlays_standing[MUTANTRACE_LAYER]	= image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "[dna.mutantrace][fat]_[gender]_[species.name]_s")
+				standing	+= image("icon"='icons/effects/genetics.dmi', "icon_state"="[dna.mutantrace][fat]_[gender]_[species.name]_s", "layer"=-MUTANTRACE_LAYER)
 			if("golem","shadow","adamantine")
-				overlays_standing[MUTANTRACE_LAYER]	= image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "[dna.mutantrace][fat]_[gender]_s")
+				standing	+= image("icon"='icons/effects/genetics.dmi', "icon_state"="[dna.mutantrace][fat]_[gender]_s", "layer"=-MUTANTRACE_LAYER)
 			if("shadowling")
-				overlays_standing[MUTANTRACE_LAYER]	= image("icon" = 'tauceti/icons/mob/shadow_ling.dmi', "icon_state" = "[dna.mutantrace]_s")
-				overlays_standing[MUTATIONS_LAYER]	= image("icon" = 'tauceti/icons/mob/shadow_ling.dmi', "icon_state" = "[dna.mutantrace]_ms_s", "layer" = GLASSES_LAYER)
-			else
-				overlays_standing[MUTANTRACE_LAYER]	= null
+				standing	+= image("icon"='tauceti/icons/mob/shadow_ling.dmi', "icon_state"="[dna.mutantrace]_s", "layer"=-MUTANTRACE_LAYER)
+				standing	+= image("icon"='tauceti/icons/mob/shadow_ling.dmi', "icon_state"="[dna.mutantrace]_ms_s", "layer"=GLASSES_LAYER)
 
 	if(!dna || !(dna.mutantrace in list("golem","metroid")))
 		update_body()
+
+	if(standing.len)
+		overlays_standing[MUTANTRACE_LAYER]	= standing
 
 	update_hair()
 
@@ -472,7 +474,7 @@ Please contact me on #coderbus IRC. ~Carn x
 	remove_overlay(TARGETED_LAYER)
 
 	if(targeted_by && target_locked)
-		overlays_standing[TARGETED_LAYER]	= target_locked
+		overlays_standing[TARGETED_LAYER]	= image("icon"=target_locked, "layer"=-TARGETED_LAYER)
 	else if (!targeted_by && target_locked)
 		qdel(target_locked)
 
@@ -480,12 +482,12 @@ Please contact me on #coderbus IRC. ~Carn x
 
 
 /mob/living/carbon/human/update_fire() //TG-stuff, fire layer
-	remove_overlay(TARGETED_LAYER)
+	remove_overlay(FIRE_LAYER)
 
 	if(on_fire)
-		overlays_standing[FIRE_LAYER]	= image("icon"='icons/mob/OnFire.dmi', "icon_state"="Standing")
+		overlays_standing[FIRE_LAYER]	= image("icon"='icons/mob/OnFire.dmi', "icon_state"="Standing", "layer"=-FIRE_LAYER)
 
-	apply_overlay(TARGETED_LAYER)
+	apply_overlay(FIRE_LAYER)
 
 
 /* --------------------------------------- */
@@ -536,26 +538,26 @@ Please contact me on #coderbus IRC. ~Carn x
 			client.screen += U
 		var/t_color = U.item_color
 		if(!t_color)		t_color = icon_state
-		var/image/standing = image("icon_state" = "[t_color]_s")
+		var/image/standing = image("icon_state"="[t_color]_s", "layer"=-UNIFORM_LAYER)
 		if(!U.tc_custom || U.icon_override || species.sprite_sheets["uniform"])
 			standing.icon	= (U.icon_override ? U.icon_override : (species.sprite_sheets["uniform"] ? species.sprite_sheets["uniform"] : 'icons/mob/uniform.dmi'))
 		else
-			standing = image("icon" = U.tc_custom, "icon_state" = "[t_color]_mob")
+			standing = image("icon"=U.tc_custom, "icon_state"="[t_color]_mob", "layer"=-UNIFORM_LAYER)
 		overlays_standing[UNIFORM_LAYER]	= standing
 
 		if(U.blood_DNA)
-			var/image/bloodsies	= image("icon" = 'icons/effects/blood.dmi', "icon_state" = "uniformblood")
+			var/image/bloodsies	= image("icon"='icons/effects/blood.dmi', "icon_state"="uniformblood")
 			bloodsies.color		= U.blood_color
 			standing.overlays	+= bloodsies
 
-		if(U.hastie)	//WE CHECKED THE TYPE ABOVE. THIS REALLY SHOULD BE FINE.
+		if(U.hastie)
 			var/tie_color = U.hastie.item_color
 			if(!tie_color) tie_color = U.hastie.icon_state
 
 			if(U.hastie.tc_custom)
-				standing.overlays	+= image("icon" = U.hastie.tc_custom, "icon_state" = "[tie_color]_mob")
+				standing.overlays	+= image("icon"=U.hastie.tc_custom, "icon_state"="[tie_color]_mob", "layer"=-UNIFORM_LAYER)
 			else
-				standing.overlays	+= image("icon" = 'icons/mob/ties.dmi', "icon_state" = "[tie_color]")
+				standing.overlays	+= image("icon"='icons/mob/ties.dmi', "icon_state"="[tie_color]", "layer"=-UNIFORM_LAYER)
 
 		if(FAT in mutations)
 			if(U.flags & ONESIZEFITSALL)
@@ -580,7 +582,7 @@ Please contact me on #coderbus IRC. ~Carn x
 			wear_id.screen_loc = ui_id	//TODO
 			client.screen += wear_id
 
-		overlays_standing[ID_LAYER]	= image("icon" = 'icons/mob/mob.dmi', "icon_state" = "id")
+		overlays_standing[ID_LAYER]	= image("icon"='icons/mob/mob.dmi', "icon_state"="id", "layer"=-ID_LAYER)
 
 	hud_updateflag |= 1 << ID_HUD
 	hud_updateflag |= 1 << WANTED_HUD
@@ -599,18 +601,18 @@ Please contact me on #coderbus IRC. ~Carn x
 		if(!t_state)	t_state = gloves.icon_state
 		var/image/standing
 		if(!gloves:tc_custom || gloves.icon_override || species.sprite_sheets["gloves"])
-			standing = image("icon" = ((gloves.icon_override) ? gloves.icon_override : (species.sprite_sheets["gloves"] ? species.sprite_sheets["gloves"] : 'icons/mob/hands.dmi')), "icon_state" = "[t_state]")
+			standing = image("icon"=((gloves.icon_override) ? gloves.icon_override : (species.sprite_sheets["gloves"] ? species.sprite_sheets["gloves"] : 'icons/mob/hands.dmi')), "icon_state"="[t_state]", "layer"=-GLOVES_LAYER)
 		else
-			standing = image("icon" = gloves:tc_custom, "icon_state" = "[t_state]_mob")
+			standing = image("icon"=gloves:tc_custom, "icon_state"="[t_state]_mob", "layer"=-GLOVES_LAYER)
 		overlays_standing[GLOVES_LAYER]	= standing
 
 		if(gloves.blood_DNA)
-			var/image/bloodsies	= image("icon" = 'icons/effects/blood.dmi', "icon_state" = "bloodyhands")
+			var/image/bloodsies	= image("icon"='icons/effects/blood.dmi', "icon_state"="bloodyhands")
 			bloodsies.color = gloves.blood_color
 			standing.overlays	+= bloodsies
 	else
 		if(blood_DNA)
-			var/image/bloodsies	= image("icon" = 'icons/effects/blood.dmi', "icon_state" = "bloodyhands")
+			var/image/bloodsies	= image("icon"='icons/effects/blood.dmi', "icon_state"="bloodyhands")
 			bloodsies.color = hand_blood_color
 			overlays_standing[GLOVES_LAYER]	= bloodsies
 
@@ -625,9 +627,9 @@ Please contact me on #coderbus IRC. ~Carn x
 			glasses.screen_loc = ui_glasses
 			client.screen += glasses
 		if(!glasses:tc_custom || glasses.icon_override || species.sprite_sheets["eyes"])
-			overlays_standing[GLASSES_LAYER] = image("icon" = ((glasses.icon_override) ? glasses.icon_override : (species.sprite_sheets["eyes"] ? species.sprite_sheets["eyes"] : 'icons/mob/eyes.dmi')), "icon_state" = "[glasses.icon_state]")
+			overlays_standing[GLASSES_LAYER] = image("icon"=((glasses.icon_override) ? glasses.icon_override : (species.sprite_sheets["eyes"] ? species.sprite_sheets["eyes"] : 'icons/mob/eyes.dmi')), "icon_state"="[glasses.icon_state]", "layer"=-GLASSES_LAYER)
 		else
-			overlays_standing[GLASSES_LAYER] = image("icon" = glasses:tc_custom, "icon_state" = "[glasses.icon_state]_mob")
+			overlays_standing[GLASSES_LAYER] = image("icon"=glasses:tc_custom, "icon_state"="[glasses.icon_state]_mob", "layer"=-GLASSES_LAYER)
 
 	apply_overlay(GLASSES_LAYER)
 
@@ -641,18 +643,18 @@ Please contact me on #coderbus IRC. ~Carn x
 				l_ear.screen_loc = ui_l_ear
 				client.screen += l_ear
 			if(!l_ear:tc_custom || l_ear.icon_override || species.sprite_sheets["ears"])
-				overlays_standing[EARS_LAYER] = image("icon" = ((l_ear.icon_override) ? l_ear.icon_override : (species.sprite_sheets["ears"] ? species.sprite_sheets["ears"] : 'icons/mob/ears.dmi')), "icon_state" = "[l_ear.icon_state]")
+				overlays_standing[EARS_LAYER] = image("icon"=((l_ear.icon_override) ? l_ear.icon_override : (species.sprite_sheets["ears"] ? species.sprite_sheets["ears"] : 'icons/mob/ears.dmi')), "icon_state"="[l_ear.icon_state]", "layer"=-EARS_LAYER)
 			else
-				overlays_standing[EARS_LAYER] = image("icon" = l_ear:tc_custom, "icon_state" = "[l_ear.icon_state]_mob")
+				overlays_standing[EARS_LAYER] = image("icon"=l_ear:tc_custom, "icon_state"="[l_ear.icon_state]_mob", "layer"=-EARS_LAYER)
 
 		if(r_ear)
 			if(client && hud_used && hud_used.hud_shown && hud_used.inventory_shown)
 				r_ear.screen_loc = ui_r_ear
 				client.screen += r_ear
 			if(!r_ear:tc_custom || r_ear.icon_override || species.sprite_sheets["ears"])
-				overlays_standing[EARS_LAYER] = image("icon" = ((r_ear.icon_override) ? r_ear.icon_override : (species.sprite_sheets["ears"] ? species.sprite_sheets["ears"] : 'icons/mob/ears.dmi')), "icon_state" = "[r_ear.icon_state]")
+				overlays_standing[EARS_LAYER] = image("icon"=((r_ear.icon_override) ? r_ear.icon_override : (species.sprite_sheets["ears"] ? species.sprite_sheets["ears"] : 'icons/mob/ears.dmi')), "icon_state"="[r_ear.icon_state]", "layer"=-EARS_LAYER)
 			else
-				overlays_standing[EARS_LAYER] = image("icon" = r_ear:tc_custom, "icon_state" = "[r_ear.icon_state]_mob")
+				overlays_standing[EARS_LAYER] = image("icon"=r_ear:tc_custom, "icon_state"="[r_ear.icon_state]_mob", "layer"=-EARS_LAYER)
 
 	apply_overlay(EARS_LAYER)
 
@@ -667,18 +669,18 @@ Please contact me on #coderbus IRC. ~Carn x
 
 		var/image/standing
 		if(!shoes:tc_custom || shoes.icon_override || species.sprite_sheets["feet"])
-			standing = image("icon" = ((shoes.icon_override) ? shoes.icon_override : (species.sprite_sheets["feet"] ? species.sprite_sheets["feet"] : 'icons/mob/feet.dmi')), "icon_state" = "[shoes.icon_state]")
+			standing = image("icon"=((shoes.icon_override) ? shoes.icon_override : (species.sprite_sheets["feet"] ? species.sprite_sheets["feet"] : 'icons/mob/feet.dmi')), "icon_state"="[shoes.icon_state]", "layer"=-SHOES_LAYER)
 		else
-			standing = image("icon" = shoes:tc_custom, "icon_state" = "[shoes.icon_state]_mob")
+			standing = image("icon"=shoes:tc_custom, "icon_state"="[shoes.icon_state]_mob", "layer"=-SHOES_LAYER)
 		overlays_standing[SHOES_LAYER] = standing
 
 		if(shoes.blood_DNA)
-			var/image/bloodsies = image("icon" = 'icons/effects/blood.dmi', "icon_state" = "shoeblood")
+			var/image/bloodsies = image("icon"='icons/effects/blood.dmi', "icon_state"="shoeblood")
 			bloodsies.color = shoes.blood_color
 			standing.overlays += bloodsies
 	else
 		if(feet_blood_DNA)
-			var/image/bloodsies = image("icon" = 'icons/effects/blood.dmi', "icon_state" = "shoeblood")
+			var/image/bloodsies = image("icon"='icons/effects/blood.dmi', "icon_state"="shoeblood")
 			bloodsies.color = feet_blood_color
 			overlays_standing[SHOES_LAYER] = bloodsies
 
@@ -695,7 +697,7 @@ Please contact me on #coderbus IRC. ~Carn x
 
 		var/t_state = s_store.item_state
 		if(!t_state)	t_state = s_store.icon_state
-		overlays_standing[SUIT_STORE_LAYER]	= image("icon" = 'icons/mob/belt_mirror.dmi', "icon_state" = "[t_state]")
+		overlays_standing[SUIT_STORE_LAYER]	= image("icon"='icons/mob/belt_mirror.dmi', "icon_state"="[t_state]", "layer"=-SUIT_STORE_LAYER)
 
 	apply_overlay(SUIT_STORE_LAYER)
 
@@ -711,16 +713,16 @@ Please contact me on #coderbus IRC. ~Carn x
 		var/image/standing
 		if(istype(head,/obj/item/clothing/head/kitty))
 			var/obj/item/clothing/head/kitty/K = head
-			standing	= image("icon" = K.mob)
+			standing	= image("icon"=K.mob, "layer"=-HEAD_LAYER)
 		else
 			if(!head:tc_custom || head.icon_override || species.sprite_sheets["head"])
-				standing = image("icon" = ((head.icon_override) ? head.icon_override : (species.sprite_sheets["head"] ? species.sprite_sheets["head"] : 'icons/mob/head.dmi')), "icon_state" = "[head.icon_state]")
+				standing = image("icon"=((head.icon_override) ? head.icon_override : (species.sprite_sheets["head"] ? species.sprite_sheets["head"] : 'icons/mob/head.dmi')), "icon_state"="[head.icon_state]", "layer"=-HEAD_LAYER)
 			else
-				standing = image("icon" = head:tc_custom, "icon_state" = "[head.icon_state]_mob")
+				standing = image("icon"=head:tc_custom, "icon_state"="[head.icon_state]_mob", "layer"=-HEAD_LAYER)
 		overlays_standing[HEAD_LAYER]	= standing
 
 		if(head.blood_DNA)
-			var/image/bloodsies = image("icon" = 'icons/effects/blood.dmi', "icon_state" = "helmetblood")
+			var/image/bloodsies = image("icon"='icons/effects/blood.dmi', "icon_state"="helmetblood")
 			bloodsies.color = head.blood_color
 			standing.overlays	+= bloodsies
 
@@ -739,9 +741,9 @@ Please contact me on #coderbus IRC. ~Carn x
 		if(!t_state)	t_state = belt.icon_state
 
 		if(!belt:tc_custom || belt.icon_override || species.sprite_sheets["belt"])
-			overlays_standing[BELT_LAYER] = image("icon" = ((belt.icon_override) ? belt.icon_override : (species.sprite_sheets["belt"] ? species.sprite_sheets["belt"] : 'icons/mob/belt.dmi')), "icon_state" = "[t_state]")
+			overlays_standing[BELT_LAYER] = image("icon"=((belt.icon_override) ? belt.icon_override : (species.sprite_sheets["belt"] ? species.sprite_sheets["belt"] : 'icons/mob/belt.dmi')), "icon_state"="[t_state]", "layer"=-BELT_LAYER)
 		else
-			overlays_standing[BELT_LAYER] = image("icon" = belt:tc_custom, "icon_state" = "[belt.icon_state]_mob")
+			overlays_standing[BELT_LAYER] = image("icon"=belt:tc_custom, "icon_state"="[belt.icon_state]_mob", "layer"=-BELT_LAYER)
 
 	apply_overlay(BELT_LAYER)
 
@@ -756,9 +758,9 @@ Please contact me on #coderbus IRC. ~Carn x
 
 		var/image/standing
 		if(!wear_suit:tc_custom || wear_suit.icon_override || species.sprite_sheets["suit"])
-			standing = image("icon" = ((wear_suit.icon_override) ? wear_suit.icon_override : (species.sprite_sheets["suit"] ? species.sprite_sheets["suit"] : 'icons/mob/suit.dmi')), "icon_state" = "[wear_suit.icon_state]")
+			standing = image("icon"=((wear_suit.icon_override) ? wear_suit.icon_override : (species.sprite_sheets["suit"] ? species.sprite_sheets["suit"] : 'icons/mob/suit.dmi')), "icon_state"="[wear_suit.icon_state]", "layer"=-SUIT_LAYER)
 		else
-			standing = image("icon" = wear_suit:tc_custom, "icon_state" = "[wear_suit.icon_state]_mob")
+			standing = image("icon"=wear_suit:tc_custom, "icon_state"="[wear_suit.icon_state]_mob", "layer"=-SUIT_LAYER)
 		overlays_standing[SUIT_LAYER]	= standing
 
 		if(istype(wear_suit, /obj/item/clothing/suit/straight_jacket))
@@ -768,7 +770,7 @@ Please contact me on #coderbus IRC. ~Carn x
 
 		if(wear_suit.blood_DNA)
 			var/obj/item/clothing/suit/S = wear_suit
-			var/image/bloodsies = image("icon" = 'icons/effects/blood.dmi', "icon_state" = "[S.blood_overlay_type]blood")
+			var/image/bloodsies = image("icon"='icons/effects/blood.dmi', "icon_state"="[S.blood_overlay_type]blood")
 			bloodsies.color = wear_suit.blood_color
 			standing.overlays	+= bloodsies
 
@@ -813,13 +815,13 @@ Please contact me on #coderbus IRC. ~Carn x
 
 		var/image/standing
 		if(!wear_mask:tc_custom || wear_mask.icon_override || species.sprite_sheets["mask"])
-			standing = image("icon" = ((wear_mask.icon_override) ? wear_mask.icon_override : (species.sprite_sheets["mask"] ? species.sprite_sheets["mask"] : 'icons/mob/mask.dmi')), "icon_state" = "[wear_mask.icon_state]")
+			standing = image("icon"=((wear_mask.icon_override) ? wear_mask.icon_override : (species.sprite_sheets["mask"] ? species.sprite_sheets["mask"] : 'icons/mob/mask.dmi')), "icon_state"="[wear_mask.icon_state]", "layer"=-FACEMASK_LAYER)
 		else
-			standing = image("icon" = wear_mask:tc_custom, "icon_state" = "[wear_mask.icon_state]_mob")
+			standing = image("icon"=wear_mask:tc_custom, "icon_state"="[wear_mask.icon_state]_mob", "layer"=-FACEMASK_LAYER)
 		overlays_standing[FACEMASK_LAYER]	= standing
 
 		if(wear_mask.blood_DNA && !istype(wear_mask, /obj/item/clothing/mask/cigarette))
-			var/image/bloodsies = image("icon" = 'icons/effects/blood.dmi', "icon_state" = "maskblood")
+			var/image/bloodsies = image("icon"='icons/effects/blood.dmi', "icon_state"="maskblood")
 			bloodsies.color = wear_mask.blood_color
 			standing.overlays	+= bloodsies
 
@@ -835,9 +837,9 @@ Please contact me on #coderbus IRC. ~Carn x
 			client.screen += back
 
 		if(!back:tc_custom || back.icon_override || species.sprite_sheets["back"])
-			overlays_standing[BACK_LAYER]	= image("icon" = ((back.icon_override) ? back.icon_override : (species.sprite_sheets["back"] ? species.sprite_sheets["back"] : 'icons/mob/back.dmi')), "icon_state" = "[back.icon_state]")
+			overlays_standing[BACK_LAYER]	= image("icon"=((back.icon_override) ? back.icon_override : (species.sprite_sheets["back"] ? species.sprite_sheets["back"] : 'icons/mob/back.dmi')), "icon_state"="[back.icon_state]", "layer"=-BACK_LAYER)
 		else
-			overlays_standing[BACK_LAYER]	= image("icon" = back:tc_custom, "icon_state" = "[back.icon_state]_mob")
+			overlays_standing[BACK_LAYER]	= image("icon"=back:tc_custom, "icon_state"="[back.icon_state]_mob", "layer"=-BACK_LAYER)
 
 	apply_overlay(BACK_LAYER)
 
@@ -856,7 +858,7 @@ Please contact me on #coderbus IRC. ~Carn x
 		drop_r_hand()
 		drop_l_hand()
 		stop_pulling()	//TODO: should be handled elsewhere
-		overlays_standing[HANDCUFF_LAYER]	= image("icon" = 'icons/mob/mob.dmi', "icon_state" = "handcuff1")
+		overlays_standing[HANDCUFF_LAYER]	= image("icon"='icons/mob/mob.dmi', "icon_state"="handcuff1", "layer"=-HANDCUFF_LAYER)
 
 	apply_overlay(HANDCUFF_LAYER)
 
@@ -870,7 +872,7 @@ Please contact me on #coderbus IRC. ~Carn x
 			if(src.hud_used && src.hud_used.move_intent)
 				src.hud_used.move_intent.icon_state = "walking"
 
-		overlays_standing[LEGCUFF_LAYER]	= image("icon" = 'icons/mob/mob.dmi', "icon_state" = "legcuff1")
+		overlays_standing[LEGCUFF_LAYER]	= image("icon"='icons/mob/mob.dmi', "icon_state"="legcuff1", "layer"=-LEGCUFF_LAYER)
 
 	apply_overlay(LEGCUFF_LAYER)
 
@@ -881,15 +883,17 @@ Please contact me on #coderbus IRC. ~Carn x
 	if(r_hand)
 		r_hand.screen_loc = ui_rhand	//TODO
 		var/t_state = r_hand.item_state
-		if(!t_state)	t_state = r_hand.icon_state
+		if(!t_state)
+			t_state = r_hand.icon_state
 
 		if(!r_hand:tc_custom || r_hand.icon_override || species.sprite_sheets["held"])
 			if(r_hand.icon_override || species.sprite_sheets["held"]) t_state = "[t_state]_r"
-			overlays_standing[R_HAND_LAYER] = image("icon" = ((r_hand.icon_override) ? r_hand.icon_override : (species.sprite_sheets["held"] ? species.sprite_sheets["held"] : 'icons/mob/items_righthand.dmi')), "icon_state" = "[t_state]")
+			overlays_standing[R_HAND_LAYER] = image("icon"=((r_hand.icon_override) ? r_hand.icon_override : (species.sprite_sheets["held"] ? species.sprite_sheets["held"] : 'icons/mob/items_righthand.dmi')), "icon_state"="[t_state]", "layer"=-R_HAND_LAYER)
 		else
-			overlays_standing[R_HAND_LAYER] = image("icon" = r_hand:tc_custom, "icon_state" = "[t_state]_r")
+			overlays_standing[R_HAND_LAYER] = image("icon"=r_hand:tc_custom, "icon_state"="[t_state]_r", "layer"=-R_HAND_LAYER)
 
-		if (handcuffed) drop_r_hand()
+		if(handcuffed)
+			drop_r_hand()
 
 	apply_overlay(R_HAND_LAYER)
 
@@ -900,15 +904,17 @@ Please contact me on #coderbus IRC. ~Carn x
 	if(l_hand)
 		l_hand.screen_loc = ui_lhand	//TODO
 		var/t_state = l_hand.item_state
-		if(!t_state)	t_state = l_hand.icon_state
+		if(!t_state)
+			t_state = l_hand.icon_state
 
 		if(!l_hand:tc_custom || l_hand.icon_override || species.sprite_sheets["held"])
 			if(l_hand.icon_override || species.sprite_sheets["held"]) t_state = "[t_state]_l"
-			overlays_standing[L_HAND_LAYER] = image("icon" = ((l_hand.icon_override) ? l_hand.icon_override : (species.sprite_sheets["held"] ? species.sprite_sheets["held"] : 'icons/mob/items_lefthand.dmi')), "icon_state" = "[t_state]")
+			overlays_standing[L_HAND_LAYER] = image("icon"=((l_hand.icon_override) ? l_hand.icon_override : (species.sprite_sheets["held"] ? species.sprite_sheets["held"] : 'icons/mob/items_lefthand.dmi')), "icon_state"="[t_state]", "layer"=-L_HAND_LAYER)
 		else
-			overlays_standing[L_HAND_LAYER] = image("icon" = l_hand:tc_custom, "icon_state" = "[t_state]_l")
+			overlays_standing[L_HAND_LAYER] = image("icon"=l_hand:tc_custom, "icon_state"="[t_state]_l", "layer"=-L_HAND_LAYER)
 
-		if (handcuffed) drop_l_hand()
+		if(handcuffed)
+			drop_l_hand()
 
 	apply_overlay(L_HAND_LAYER)
 
@@ -918,7 +924,7 @@ Please contact me on #coderbus IRC. ~Carn x
 
 	if(species.tail && species.flags & HAS_TAIL)
 		if(!wear_suit || !(wear_suit.flags_inv & HIDETAIL) && !istype(wear_suit, /obj/item/clothing/suit/space))
-			var/icon/tail_s = new/icon("icon" = 'icons/effects/species.dmi', "icon_state" = "[species.tail]_s")
+			var/icon/tail_s = new/icon("icon"='icons/effects/species.dmi', "icon_state"="[species.tail]_s", "layer"=-TAIL_LAYER)
 			tail_s.Blend(rgb(r_skin, g_skin, b_skin), ICON_ADD)
 
 			overlays_standing[TAIL_LAYER]	= image(tail_s)
@@ -935,7 +941,7 @@ Please contact me on #coderbus IRC. ~Carn x
 		var/icon/C = new('icons/mob/collar.dmi')
 		if(wear_suit.icon_state in C.IconStates())
 			var/image/standing
-			standing = image("icon" = C, "icon_state" = "[wear_suit.icon_state]")
+			standing = image("icon" = C, "icon_state" = "[wear_suit.icon_state]", "layer"=-COLLAR_LAYER)
 			overlays_standing[COLLAR_LAYER]	= standing
 
 	apply_overlay(COLLAR_LAYER)
@@ -945,9 +951,9 @@ Please contact me on #coderbus IRC. ~Carn x
 	remove_overlay(SURGERY_LAYER)
 
 	var/image/total
-	for(var/datum/organ/external/E in organs)
-		if(E.open)
-			var/image/I = image("icon"='icons/mob/surgery.dmi', "icon_state"="[E.name][round(E.open)]", "layer"=-SURGERY_LAYER)
+	for(var/datum/organ/external/O in organs)
+		if(O.open)
+			var/image/I = image("icon"='icons/mob/surgery.dmi', "icon_state"="[O.name][round(O.open)]", "layer"=-SURGERY_LAYER)
 			total.overlays += I
 	overlays_standing[SURGERY_LAYER] = total
 
