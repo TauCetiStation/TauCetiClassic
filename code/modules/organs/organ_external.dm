@@ -45,7 +45,7 @@
 	// how often wounds should be updated, a higher number means less often
 	var/wound_update_accuracy = 1
 
-	var/damage_layer = 0
+	var/limb_layer = 0
 
 
 /datum/organ/external/New(var/datum/organ/external/P)
@@ -856,7 +856,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	name = "chest"
 	icon_name = "torso"
 	display_name = "chest"
-	damage_layer = D_TORSO_LAYER
+	limb_layer = LIMB_TORSO_LAYER
 	max_damage = 75
 	min_broken_damage = 40
 	body_part = UPPER_TORSO
@@ -866,7 +866,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	name = "groin"
 	icon_name = "groin"
 	display_name = "groin"
-	damage_layer = D_GROIN_LAYER
+	limb_layer = LIMB_GROIN_LAYER
 	max_damage = 50
 	min_broken_damage = 30
 	body_part = LOWER_TORSO
@@ -876,7 +876,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	name = "l_arm"
 	display_name = "left arm"
 	icon_name = "l_arm"
-	damage_layer = D_L_ARM_LAYER
+	limb_layer = LIMB_L_ARM_LAYER
 	max_damage = 50
 	min_broken_damage = 20
 	body_part = ARM_LEFT
@@ -889,7 +889,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	name = "l_leg"
 	display_name = "left leg"
 	icon_name = "l_leg"
-	damage_layer = D_L_LEG_LAYER
+	limb_layer = LIMB_L_LEG_LAYER
 	max_damage = 50
 	min_broken_damage = 20
 	body_part = LEG_LEFT
@@ -899,7 +899,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	name = "r_arm"
 	display_name = "right arm"
 	icon_name = "r_arm"
-	damage_layer = D_R_ARM_LAYER
+	limb_layer = LIMB_R_ARM_LAYER
 	max_damage = 50
 	min_broken_damage = 20
 	body_part = ARM_RIGHT
@@ -912,7 +912,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	name = "r_leg"
 	display_name = "right leg"
 	icon_name = "r_leg"
-	damage_layer = D_R_LEG_LAYER
+	limb_layer = LIMB_R_LEG_LAYER
 	max_damage = 50
 	min_broken_damage = 20
 	body_part = LEG_RIGHT
@@ -922,7 +922,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	name = "l_foot"
 	display_name = "left foot"
 	icon_name = "l_foot"
-	damage_layer = D_L_FOOT_LAYER
+	limb_layer = LIMB_L_FOOT_LAYER
 	max_damage = 30
 	min_broken_damage = 15
 	body_part = FOOT_LEFT
@@ -932,7 +932,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	name = "r_foot"
 	display_name = "right foot"
 	icon_name = "r_foot"
-	damage_layer = D_R_FOOT_LAYER
+	limb_layer = LIMB_R_FOOT_LAYER
 	max_damage = 30
 	min_broken_damage = 15
 	body_part = FOOT_RIGHT
@@ -942,7 +942,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	name = "r_hand"
 	display_name = "right hand"
 	icon_name = "r_hand"
-	damage_layer = D_R_HAND_LAYER
+	limb_layer = LIMB_R_HAND_LAYER
 	max_damage = 30
 	min_broken_damage = 15
 	body_part = HAND_RIGHT
@@ -955,7 +955,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	name = "l_hand"
 	display_name = "left hand"
 	icon_name = "l_hand"
-	damage_layer = D_L_HAND_LAYER
+	limb_layer = LIMB_L_HAND_LAYER
 	max_damage = 30
 	min_broken_damage = 15
 	body_part = HAND_LEFT
@@ -968,7 +968,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	name = "head"
 	icon_name = "head"
 	display_name = "head"
-	damage_layer = D_HEAD_LAYER
+	limb_layer = LIMB_HEAD_LAYER
 	max_damage = 75
 	min_broken_damage = 40
 	body_part = HEAD

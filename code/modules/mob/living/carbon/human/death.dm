@@ -150,7 +150,6 @@
 	status_flags |= DISFIGURED	//makes them unknown without fucking up other stuff like admintools
 	update_body()
 	update_mutantrace()
-	update_mutations()
 	return
 
 /mob/living/carbon/human/proc/Drain()

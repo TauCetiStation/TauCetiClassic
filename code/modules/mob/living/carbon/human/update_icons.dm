@@ -134,24 +134,24 @@ Please contact me on #coderbus IRC. ~Carn x
 #define FIRE_LAYER				1
 #define TOTAL_LAYERS			27
 //////////////////////////////////
-//Human Damage Overlays Indexes///
-#define D_HEAD_LAYER			11
-#define D_TORSO_LAYER			10
-#define D_L_ARM_LAYER			9
-#define D_L_HAND_LAYER			8
-#define D_R_ARM_LAYER			7
-#define D_R_HAND_LAYER			6
-#define D_GROIN_LAYER			5
-#define D_L_LEG_LAYER			4
-#define D_L_FOOT_LAYER			3
-#define D_R_LEG_LAYER			2
-#define D_R_FOOT_LAYER			1
-#define TOTAL_DAMAGE_LAYERS		11
+//Human Limb Overlays Indexes/////
+#define LIMB_HEAD_LAYER			11
+#define LIMB_TORSO_LAYER		10
+#define LIMB_L_ARM_LAYER		9
+#define LIMB_L_HAND_LAYER		8
+#define LIMB_R_ARM_LAYER		7
+#define LIMB_R_HAND_LAYER		6
+#define LIMB_GROIN_LAYER		5
+#define LIMB_L_LEG_LAYER		4
+#define LIMB_L_FOOT_LAYER		3
+#define LIMB_R_LEG_LAYER		2
+#define LIMB_R_FOOT_LAYER		1
+#define TOTAL_LIMB_LAYERS		11
 //////////////////////////////////
 
 /mob/living/carbon/human
 	var/list/overlays_standing[TOTAL_LAYERS]
-	var/list/overlays_damage[TOTAL_DAMAGE_LAYERS]
+	var/list/overlays_damage[TOTAL_LIMB_LAYERS]
 
 /mob/living/carbon/human/proc/apply_overlay(cache_index)
 	var/image/I = overlays_standing[cache_index]
@@ -184,29 +184,26 @@ Please contact me on #coderbus IRC. ~Carn x
 		for(var/obj/item/clothing/suit/armor/abductor/vest/V in list(wear_suit))
 			if(V.stealth_active)	return
 
-	//overlays.Cut()
-
-	//icon = stand_icon
-	//for(var/image/I in overlays_standing)
-	//	overlays += I
 
 //DAMAGE OVERLAYS
 /mob/living/carbon/human/UpdateDamageIcon(datum/organ/external/O)
-	remove_damage_overlay(O.damage_layer)
-	overlays_damage[O.damage_layer]	= image("icon"='icons/mob/dam_human.dmi', "icon_state"="[O.icon_name]_[O.damage_state]", "layer"=-DAMAGE_LAYER)
-	apply_damage_overlay(O.damage_layer)
+	remove_damage_overlay(O.limb_layer)
+	overlays_damage[O.limb_layer]	= image("icon"='icons/mob/dam_human.dmi', "icon_state"="[O.icon_name]_[O.damage_state]", "layer"=-DAMAGE_LAYER)
+	apply_damage_overlay(O.limb_layer)
 
 
 //BASE MOB SPRITE
 /mob/living/carbon/human/proc/update_body()
-	//remove_overlay(BODY_LAYER)
+	remove_overlay(BODY_LAYER)
 
+	var/husk_color_mod = rgb(96,88,80)
 	var/hulk_color_mod = rgb(48,224,40)
 	var/necrosis_color_mod = rgb(10,50,0)
 
+	var/husk = (HUSK in src.mutations)
 	var/fat //= (FAT in src.mutations)
 	var/hulk = (HULK in src.mutations)
-	if( FAT in mutations )
+	if(FAT in mutations)
 		fat = "fat"
 
 	var/g = (gender == FEMALE ? "f" : "m")
@@ -236,7 +233,7 @@ Please contact me on #coderbus IRC. ~Carn x
 		else
 			icon_key = "[icon_key]1"
 
-	icon_key = "[icon_key][fat ? 1 : 0][hulk ? 1 : 0][s_tone]"
+	icon_key = "[icon_key][husk ? 1 : 0][fat ? 1 : 0][hulk ? 1 : 0][s_tone]"
 
 	var/icon/base_icon
 	if(human_icon_cache[icon_key])
@@ -306,12 +303,22 @@ Please contact me on #coderbus IRC. ~Carn x
 
 				base_icon.Blend(temp, ICON_OVERLAY)
 
-		if(hulk)
+		if(husk)
+			base_icon.ColorTone(husk_color_mod)
+		else if(hulk)
 			var/list/tone = ReadRGB(hulk_color_mod)
 			base_icon.MapColors(rgb(tone[1],0,0),rgb(0,tone[2],0),rgb(0,0,tone[3]))
 
+		//Handle husk overlay.
+		if(husk)
+			var/icon/mask = new(base_icon)
+			var/icon/husk_over = new(race_icon,"overlay_husk")
+			mask.MapColors(0,0,0,1, 0,0,0,1, 0,0,0,1, 0,0,0,1, 0,0,0,0)
+			husk_over.Blend(mask, ICON_ADD)
+			base_icon.Blend(husk_over, ICON_OVERLAY)
+
 		//Skin tone.
-		if(!hulk)
+		if(!husk && !hulk)
 			if(species.flags & HAS_SKIN_TONE)
 				if(s_tone >= 0)
 					base_icon.Blend(rgb(s_tone, s_tone, s_tone), ICON_ADD)
@@ -352,15 +359,8 @@ Please contact me on #coderbus IRC. ~Carn x
 	//tail
 	update_tail_showing()
 
-	//var/image/standing = image("icon"='icons/mob/dam_human.dmi', "icon_state"="00", "layer"=-DAMAGE_LAYER)
-	//overlays_standing[DAMAGE_LAYER]	= standing
-	//standing.overlays += ConstructOverlay
-	//var/image/standing = image("icon"='icons/mob/dam_human.dmi', "icon_state"="00", "layer"=-BODY_LAYER)
-	//overlays_standing[BODY_LAYER]	= standing
-	//standing.overlays += stand_icon
-	icon = stand_icon
-
-	//apply_overlay(BODY_LAYER)
+	overlays_standing[BODY_LAYER] = image("icon"=stand_icon, "layer"=-BODY_LAYER)
+	apply_overlay(BODY_LAYER)
 
 
 
@@ -409,51 +409,31 @@ Please contact me on #coderbus IRC. ~Carn x
 	if(FAT in mutations)
 		fat = "fat"
 
-	//if(husk)
-	//	base_icon.ColorTone(husk_color_mod)
-	//else if(hulk)
-	//	var/list/tone = ReadRGB(hulk_color_mod)
-	//	base_icon.MapColors(rgb(tone[1],0,0),rgb(0,tone[2],0),rgb(0,0,tone[3]))
-
 	var/list/standing	= list()
+	var/g = (gender == FEMALE) ? "f" : "m"
 
-	if(species && (HUSK in mutations))
-		var/husk_color_mod = rgb(96,88,80)
-		var/icon/race_icon = icon(species.icobase)
-
-		var/icon/mask = new(race_icon)
-		mask.ColorTone(husk_color_mod)
-		var/icon/husk_over = new(species.icobase,"overlay_husk")
-		mask.MapColors(0,0,0,1, 0,0,0,1, 0,0,0,1, 0,0,0,1, 0,0,0,0)
-		husk_over.Blend(mask, ICON_ADD)
-		race_icon.Blend(husk_over, ICON_OVERLAY)
-
-		//var/image/husk_overlay = image("icon"=species.icobase, "icon_state"="overlay_husk", "layer"=-MUTATIONS_LAYER)
-		standing	+= race_icon
-	else
-		var/g = (gender == FEMALE) ? "f" : "m"
-		for(var/datum/dna/gene/gene in dna_genes)
-			if(!gene.block)
-				continue
-			if(gene.is_active(src))
-				var/underlay=gene.OnDrawUnderlays(src,g,fat)
-				if(underlay)
-					standing += underlay
-		for(var/mut in mutations)
-			switch(mut)
-				/*
-				if(HULK)
-					if(fat)
-						standing.underlays	+= "hulk_[fat]_s"
-					else
-						standing.underlays	+= "hulk_[g]_s"
-				if(COLD_RESISTANCE)
-					standing.underlays	+= "fire[fat]_s"
-				if(TK)
-					standing.underlays	+= "telekinesishead[fat]_s"
-				*/
-				if(LASER)
-					standing	+= image("icon"='icons/effects/genetics.dmi', "icon_state"="lasereyes_s", "layer"=-MUTATIONS_LAYER)
+	for(var/datum/dna/gene/gene in dna_genes)
+		if(!gene.block)
+			continue
+		if(gene.is_active(src))
+			var/underlay=gene.OnDrawUnderlays(src,g,fat)
+			if(underlay)
+				standing += underlay
+	for(var/mut in mutations)
+		switch(mut)
+			/*
+			if(HULK)
+				if(fat)
+					standing.underlays	+= "hulk_[fat]_s"
+				else
+					standing.underlays	+= "hulk_[g]_s"
+			if(COLD_RESISTANCE)
+				standing.underlays	+= "fire[fat]_s"
+			if(TK)
+				standing.underlays	+= "telekinesishead[fat]_s"
+			*/
+			if(LASER)
+				standing	+= image("icon"='icons/effects/genetics.dmi', "icon_state"="lasereyes_s", "layer"=-MUTATIONS_LAYER)
 	if(standing.len)
 		overlays_standing[MUTATIONS_LAYER]	= standing
 
