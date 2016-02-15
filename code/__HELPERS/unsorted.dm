@@ -1512,8 +1512,8 @@ var/mob/dview/dview_mob = new
 
 /*
  * Use proc below to generate new damage overlays for humans.
- * Put generate_damage_overlays_dmi() somewhere in /world/New()
- * Compile and start server, then join it.
+ * Uncomment generate_damage_overlays_dmi() and gen_dam_dmi() below.
+ * Compile and start server, then join it. You will find verb in command tab.
  */
 /*
 var/global/list/damage_icon_parts = list()
@@ -1543,4 +1543,7 @@ var/global/list/damage_icon_parts = list()
 				sleep(world.tick_lag)
 
 			world << ftp(master, "[body_part].dmi")
+
+/mob/verb/gen_dam_dmi()
+	generate_damage_overlays_dmi()
 */
