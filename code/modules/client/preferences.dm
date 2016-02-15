@@ -955,42 +955,8 @@ var/const/MAX_SAVE_SLOTS = 10
 					species = input("Please select a species", "Character Generation", null) in new_species
 
 					if(prev_species != species)
-						//grab one of the valid hair styles for the newly chosen species
-						var/list/valid_hairstyles = list()
-						for(var/hairstyle in hair_styles_list)
-							var/datum/sprite_accessory/S = hair_styles_list[hairstyle]
-							if(gender == MALE && S.gender == FEMALE)
-								continue
-							if(gender == FEMALE && S.gender == MALE)
-								continue
-							if( !(species in S.species_allowed))
-								continue
-							valid_hairstyles[hairstyle] = hair_styles_list[hairstyle]
-
-						if(valid_hairstyles.len)
-							h_style = pick(valid_hairstyles)
-						else
-							//this shouldn't happen
-							h_style = hair_styles_list["Bald"]
-
-						//grab one of the valid facial hair styles for the newly chosen species
-						var/list/valid_facialhairstyles = list()
-						for(var/facialhairstyle in facial_hair_styles_list)
-							var/datum/sprite_accessory/S = facial_hair_styles_list[facialhairstyle]
-							if(gender == MALE && S.gender == FEMALE)
-								continue
-							if(gender == FEMALE && S.gender == MALE)
-								continue
-							if( !(species in S.species_allowed))
-								continue
-
-							valid_facialhairstyles[facialhairstyle] = facial_hair_styles_list[facialhairstyle]
-
-						if(valid_facialhairstyles.len)
-							f_style = pick(valid_facialhairstyles)
-						else
-							//this shouldn't happen
-							f_style = facial_hair_styles_list["Shaved"]
+						f_style = random_facial_hair_style(gender, species)
+						h_style = random_hair_style(gender, species)
 
 						//reset hair colour and skin colour
 						r_hair = 0//hex2num(copytext(new_hair, 2, 4))
@@ -1048,7 +1014,11 @@ var/const/MAX_SAVE_SLOTS = 10
 					var/list/valid_hairstyles = list()
 					for(var/hairstyle in hair_styles_list)
 						var/datum/sprite_accessory/S = hair_styles_list[hairstyle]
-						if( !(species in S.species_allowed))
+						if(gender == MALE && S.gender == FEMALE)
+							continue
+						if(gender == FEMALE && S.gender == MALE)
+							continue
+						if(!(species in S.species_allowed))
 							continue
 
 						valid_hairstyles[hairstyle] = hair_styles_list[hairstyle]
@@ -1072,7 +1042,7 @@ var/const/MAX_SAVE_SLOTS = 10
 							continue
 						if(gender == FEMALE && S.gender == MALE)
 							continue
-						if( !(species in S.species_allowed))
+						if(!(species in S.species_allowed))
 							continue
 
 						valid_facialhairstyles[facialhairstyle] = facial_hair_styles_list[facialhairstyle]
@@ -1241,6 +1211,9 @@ var/const/MAX_SAVE_SLOTS = 10
 						gender = FEMALE
 					else
 						gender = MALE
+
+					f_style = random_facial_hair_style(gender, species)
+					h_style = random_hair_style(gender, species)
 
 				if("disabilities")				//please note: current code only allows nearsightedness as a disability
 					disabilities = !disabilities//if you want to add actual disabilities, code that selects them should be here
