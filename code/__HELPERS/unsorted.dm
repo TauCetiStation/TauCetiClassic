@@ -1516,33 +1516,32 @@ var/mob/dview/dview_mob = new
  * Compile and start server, then join it. You will find verb in command tab.
  */
 /*
-var/global/list/damage_icon_parts = list()
 /proc/generate_damage_overlays_dmi()
-	spawn(50)
+	spawn()
 		//if limb names will ever be changed or procs that use names of limbs,
 		//you must adjust names of body_parts according to the current that server uses or mobs will be missing some icon_states.
 		var/list/body_parts = list("head","torso","l_arm","l_hand","r_arm","r_hand","groin","l_leg","l_foot","r_leg","r_foot")
 		//Same rules for damage states.. must be exactly same as other code uses...
 		var/list/damage_states = list("01","10","11","12","13","02","20","21","22","23","03","30","31","32","33")
 
+		var/icon/master = new()
 		var/total = body_parts.len * damage_states.len
 		var/count = 0
 
 		//Use different dam_human.dmi and dam_mask_gen.dmi files, if you need something else.
+
 		for(var/body_part in body_parts)
-			var/icon/master = new()
 			for(var/damage_state in damage_states)
-				var/icon/DI = new /icon('icons/mob/dam_human.dmi', damage_state)
-				DI.Blend(new /icon('icons/mob/dam_mask_gen.dmi', body_part), ICON_MULTIPLY)
+				var/icon/DI = new /icon('icons/mob/human_races/masks/dam_human.dmi', damage_state)
+				DI.Blend(new /icon('icons/mob/human_races/masks/dam_mask_gen.dmi', body_part), ICON_MULTIPLY)
 				master.Insert(DI, "[body_part]_[damage_state]")
-				damage_icon_parts["[damage_state]/[body_part]"] = DI
 
 				count += 1
 				var/pct = round(100 * count / total)
 				world << "[pct]%"
 				sleep(world.tick_lag)
 
-			world << ftp(master, "[body_part].dmi")
+		world << ftp(master, "damage_overlays.dmi")
 
 /mob/verb/gen_dam_dmi()
 	generate_damage_overlays_dmi()

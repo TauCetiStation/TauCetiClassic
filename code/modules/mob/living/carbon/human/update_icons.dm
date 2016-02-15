@@ -188,8 +188,11 @@ Please contact me on #coderbus IRC. ~Carn x
 //DAMAGE OVERLAYS
 /mob/living/carbon/human/UpdateDamageIcon(datum/organ/external/O)
 	remove_damage_overlay(O.limb_layer)
-	overlays_damage[O.limb_layer]	= image("icon"='icons/mob/dam_human.dmi', "icon_state"="[O.icon_name]_[O.damage_state]", "layer"=-DAMAGE_LAYER)
-	apply_damage_overlay(O.limb_layer)
+	if(species.damage_mask)
+		var/image/standing = image("icon"='icons/mob/human_races/damage_overlays.dmi', "icon_state"="[O.icon_name]_[O.damage_state]", "layer"=-DAMAGE_LAYER)
+		standing.color = species.blood_color
+		overlays_damage[O.limb_layer]	= standing
+		apply_damage_overlay(O.limb_layer)
 
 
 //BASE MOB SPRITE
