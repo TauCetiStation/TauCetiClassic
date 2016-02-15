@@ -179,11 +179,6 @@ Please contact me on #coderbus IRC. ~Carn x
 /mob/living/carbon/human/update_icons()
 	update_hud()		//TODO: remove the need for this
 
-	//prevent from updating overlays when abductor in stealth
-	if(istype(wear_suit, /obj/item/clothing/suit/armor/abductor/vest))
-		for(var/obj/item/clothing/suit/armor/abductor/vest/V in list(wear_suit))
-			if(V.stealth_active)	return
-
 
 //DAMAGE OVERLAYS
 /mob/living/carbon/human/UpdateDamageIcon(datum/organ/external/O)

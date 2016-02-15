@@ -174,7 +174,7 @@
 			user << "\red \The [src] is far too small for you to pick up."
 			return
 
-	if (hasorgans(user))
+	if(hasorgans(user))
 		var/datum/organ/external/temp = user:organs_by_name["r_hand"]
 		if (user.hand)
 			temp = user:organs_by_name["l_hand"]
@@ -182,16 +182,21 @@
 			user << "<span class='notice'>You try to move your [temp.display_name], but cannot!"
 			return
 
-	if (istype(src.loc, /obj/item/weapon/storage))
+	if(istype(src.loc, /obj/item/weapon/storage))
 		var/obj/item/weapon/storage/S = src.loc
 		S.remove_from_storage(src)
 
 	src.throwing = 0
-	if (src.loc == user)
+	if(src.loc == user)
 		//canremove==0 means that object may not be removed. You can still wear it. This only applies to clothing. /N
 		if(!src.canremove)
 			return
 		if(istype(user,/mob/living/carbon/human))
+			var/mob/living/carbon/human/H = user
+			if(H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit/armor/abductor/vest))
+				for(var/obj/item/clothing/suit/armor/abductor/vest/V in list(H.wear_suit))
+					if(V.stealth_active)
+						V.DeactivateStealth()
 			if(istype(src, /obj/item/clothing/suit/space)) // If the item to be unequipped is a rigid suit
 				if(!user.delay_clothing_u_equip(src))
 					return 0
