@@ -2,7 +2,7 @@
 	Global associative list for caching humanoid icons.
 	Index format m or f, followed by a string of 0 and 1 to represent bodyparts followed by husk fat hulk skeleton 1 or 0.
 	TODO: Proper documentation
-	icon_key is [species.race_key][g][husk][fat][hulk][skeleton][s_tone]
+	icon_key is [species.race_key][g][husk][fat][hulk][s_tone]
 */
 var/global/list/human_icon_cache = list()
 
@@ -463,7 +463,7 @@ Please contact me on #coderbus IRC. ~Carn x
 				standing	+= image("icon"='tauceti/icons/mob/shadow_ling.dmi', "icon_state"="[dna.mutantrace]_s", "layer"=-MUTANTRACE_LAYER)
 				standing	+= image("icon"='tauceti/icons/mob/shadow_ling.dmi', "icon_state"="[dna.mutantrace]_ms_s", "layer"=GLASSES_LAYER)
 
-	if(!dna || !(dna.mutantrace in list("golem","metroid")))
+	if(!dna || !(dna.mutantrace == "golem"))
 		update_body()
 
 	if(standing.len)

@@ -221,7 +221,7 @@
 				if(status == "")
 					status = "OK"
 				src.show_message(text("\t []My [] is [].",status=="OK"?"\blue ":"\red ",org.display_name,status),1)
-			if(dna && (dna.mutantrace == "skeleton") && !H.w_uniform && !H.wear_suit)
+			if(H.species && (H.species.name == "Skeleton") && !H.w_uniform && !H.wear_suit)
 				H.play_xylophone()
 		else
 			var/t_him = "it"

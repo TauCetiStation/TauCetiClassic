@@ -123,29 +123,25 @@
 	return ..(gibbed)
 
 /mob/living/carbon/human/proc/makeSkeleton()
-	if(!dna || (dna.mutantrace == "skeleton")) return
-	dna.mutantrace = "skeleton"
-
+	if(!species || (species.name == "Skeleton")) return
 	if(f_style)
 		f_style = "Shaved"
 	if(h_style)
 		h_style = "Bald"
-	update_hair()
 
+	set_species("Skeleton")
 	status_flags |= DISFIGURED
-	update_body()
-	update_mutantrace()
+	regenerate_icons()
 	return
 
 /mob/living/carbon/human/proc/ChangeToHusk()
 	if(HUSK in mutations)	return
-
 	if(f_style)
 		f_style = "Shaved"		//we only change the icon_state of the hair datum, so it doesn't mess up their UI/UE
 	if(h_style)
 		h_style = "Bald"
-	update_hair()
 
+	update_hair()
 	mutations.Add(HUSK)
 	status_flags |= DISFIGURED	//makes them unknown without fucking up other stuff like admintools
 	update_body()
