@@ -254,7 +254,9 @@
 	var/list/datum/organ/external/update = list()
 
 	// focus most of the blast on one organ
+	var/datum/organ/external/take_blast = pick(organs)
 	take_blast.take_damage(b_loss * 0.9, f_loss * 0.9, used_weapon = "Explosive blast")
+	update |= take_blast
 
 	// distribute the remaining 10% on all limbs equally
 	b_loss *= 0.1
