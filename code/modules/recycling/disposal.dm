@@ -115,10 +115,8 @@
 			for (var/mob/V in viewers(usr))
 				V.show_message("<span class='red'>[usr] starts putting [GM.name] into the disposal.</span>", 3)
 			if(do_after(usr, 20, target = src))
-				if (GM.client)
-					GM.client.perspective = EYE_PERSPECTIVE
-					GM.client.eye = src
 				GM.loc = src
+				GM.instant_vision_update(1,src)
 				for (var/mob/C in viewers(src))
 					C.show_message("<span class='danger'>[GM.name] has been placed in the [src] by [user].</span>", 3)
 				qdel(G)
@@ -178,10 +176,9 @@
 		msg_admin_attack("[user] ([user.ckey]) placed [target] ([target.ckey]) in a disposals unit. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 	else
 		return
-	if (target.client)
-		target.client.perspective = EYE_PERSPECTIVE
-		target.client.eye = src
+
 	target.loc = src
+	target.instant_vision_update(1,src)
 
 	for (var/mob/C in viewers(src))
 		if(C == user)
@@ -243,11 +240,8 @@
 
 // leave the disposal
 /obj/machinery/disposal/proc/go_out(mob/user)
-
-	if (user.client)
-		user.client.eye = user.client.mob
-		user.client.perspective = MOB_PERSPECTIVE
 	user.loc = src.loc
+	user.instant_vision_update(0)
 	update()
 	return
 
@@ -661,8 +655,7 @@
 		AM.loc = src		// move everything in other holder to this one
 		if(ismob(AM))
 			var/mob/M = AM
-			if(M.client)	// if a client mob, update eye to follow this holder
-				M.client.eye = src
+			M.instant_vision_update(1,src)
 
 	if(other.has_fat_guy)
 		has_fat_guy = 1
@@ -1541,10 +1534,7 @@
 
 // check if mob has client, if so restore client view on eject
 /mob/pipe_eject(var/direction)
-	if (src.client)
-		src.client.perspective = MOB_PERSPECTIVE
-		src.client.eye = src
-
+	instant_vision_update(0)
 	return
 
 /obj/effect/decal/cleanable/blood/gibs/pipe_eject(var/direction)

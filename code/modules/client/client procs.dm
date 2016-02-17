@@ -163,12 +163,17 @@
 
 	send_resources()
 
+	if(!void)
+		void = new()
+
+	screen += void
 
 
 	//////////////
 	//DISCONNECT//
 	//////////////
 /client/Del()
+	log_client_ingame_age_to_db()
 	if(holder)
 		holder.owner = null
 		admins -= src
@@ -189,13 +194,15 @@
 
 	var/sql_ckey = sql_sanitize_text(src.ckey)
 
-	var/DBQuery/query = dbcon.NewQuery("SELECT id, datediff(Now(),firstseen) as age FROM erro_player WHERE ckey = '[sql_ckey]'")
+	var/DBQuery/query = dbcon.NewQuery("SELECT id, datediff(Now(),firstseen) as age, ingameage FROM erro_player WHERE ckey = '[sql_ckey]'")
 	query.Execute()
 	var/sql_id = 0
 	player_age = 0	// New players won't have an entry so knowing we have a connection we set this to zero to be updated if their is a record.
+	player_ingame_age = 0
 	while(query.NextRow())
 		sql_id = query.item[1]
 		player_age = text2num(query.item[2])
+		player_ingame_age = text2num(query.item[3])
 		break
 
 	var/DBQuery/query_ip = dbcon.NewQuery("SELECT ckey FROM erro_player WHERE ip = '[address]'")
@@ -234,7 +241,7 @@
 		query_update.Execute()
 	else if(!config.serverwhitelist)
 		//New player!! Need to insert all the stuff
-		var/DBQuery/query_insert = dbcon.NewQuery("INSERT INTO erro_player (id, ckey, firstseen, lastseen, ip, computerid, lastadminrank) VALUES (null, '[sql_ckey]', Now(), Now(), '[sql_ip]', '[sql_computerid]', '[sql_admin_rank]')")
+		var/DBQuery/query_insert = dbcon.NewQuery("INSERT INTO erro_player (id, ckey, firstseen, lastseen, ip, computerid, lastadminrank, ingameage) VALUES (null, '[sql_ckey]', Now(), Now(), '[sql_ip]', '[sql_computerid]', '[sql_admin_rank]', '[player_ingame_age]')")
 		query_insert.Execute()
 
 	//Logging player access
@@ -242,6 +249,20 @@
 	var/DBQuery/query_accesslog = dbcon.NewQuery("INSERT INTO `erro_connection_log`(`id`,`datetime`,`serverip`,`ckey`,`ip`,`computerid`) VALUES(null,Now(),'[serverip]','[sql_ckey]','[sql_ip]','[sql_computerid]');")
 	query_accesslog.Execute()
 
+/client/proc/log_client_ingame_age_to_db()
+	if ( IsGuestKey(src.key) )
+		return
+
+	establish_db_connection()
+	if(!dbcon.IsConnected())
+		return
+
+	if(!isnum(player_ingame_age))
+		return
+
+	var/sql_ckey = sql_sanitize_text(src.ckey)
+	var/DBQuery/query_update = dbcon.NewQuery("UPDATE erro_player SET ingameage = '[player_ingame_age]' WHERE ckey = '[sql_ckey]'")
+	query_update.Execute()
 
 #undef TOPIC_SPAM_DELAY
 #undef UPLOAD_LIMIT

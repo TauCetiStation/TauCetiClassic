@@ -310,7 +310,9 @@
 			client.screen.Remove(global_hud.blurry,global_hud.druggy,global_hud.vimpaired)
 
 		if (blind && stat != 2)
-			if(blinded)
+			if(loc && !isturf(loc) && !is_type_in_list(loc, ignore_vision_inside))
+				blind.layer = 18
+			else if(blinded)
 				blind.layer = 18
 			else
 				blind.layer = 0

@@ -132,18 +132,19 @@ Infestation:
 	return count
 
 /datum/game_mode/proc/auto_declare_completion_infestation()
+	var/text =""
 	if(xenomorphs.len)
 		if(check_xeno_queen())
 			if(check_xeno_queen() == 1)
-				world << "<font size=3 color=green><b>The Queen is alive!</FONT></b></span>"
+				text += "<font size=3 color=green><b>The Queen is alive!</FONT></b></span>"
 			if(check_xeno_queen() == 2)
-				world << "<span class='danger'><font size=3><b>The Queen has been killed!</b></FONT></span>"
+				text += "<span class='danger'><font size=3><b>The Queen has been killed!</b></FONT></span>"
 		else
-			world << "<font size=3 color=blue><b>The Queen was never born.</FONT></b></span>"
+			text += "<font size=3 color=blue><b>The Queen was never born.</FONT></b></span>"
 		if(count_hive_power())
-			world << "<font size=3 color=green><b>There is [count_hive_power()] xenomorphs alive!</FONT></b></span>"
+			text += "<font size=3 color=green><b>There is [count_hive_power()] xenomorphs alive!</FONT></b></span>"
 		else
-			world << "<span class='danger'><font size=3><b>All xenomorphs were eradicated.</b></FONT></span>"
+			text += "<span class='danger'><font size=3><b>All xenomorphs were eradicated.</b></FONT></span>"
 		if(count_hive_looses())
-			world << "<span class='danger'><font size=3><b>[count_hive_looses()] xenomorphs are dead.</b></FONT></span>"
-	return 1
+			text += "<span class='danger'><font size=3><b>[count_hive_looses()] xenomorphs are dead.</b></FONT></span>"
+	return text

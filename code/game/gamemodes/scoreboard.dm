@@ -1,9 +1,12 @@
-/datum/controller/gameticker/proc/scoreboard()
+/datum/controller/gameticker/proc/scoreboard(var/completions)
 
 	//calls auto_declare_completion_* for all modes
 	for(var/handler in typesof(/datum/game_mode/proc))
 		if (findtext("[handler]","auto_declare_completion_"))
-			call(mode, handler)()
+			completions += "[call(mode, handler)()]"
+
+	if(achievements.len)
+		completions += "<br>[achievement_declare_completion()]"
 
 	//Print a list of antagonists to the server log
 	var/list/total_antagonists = list()
@@ -225,13 +228,14 @@
 	world << "<b>The crew's final score is:</b>"
 	world << "<b><font size='4'>[score["crewscore"]]</font></b>"
 	for(var/mob/E in player_list)
-		if(E.client) E.scorestats()
+		if(E.client) E.scorestats(completions)
 	return
 
 
 
-/mob/proc/scorestats()
-	var/dat = {"<B>Round Statistics and Score</B><BR><HR>"}
+/mob/proc/scorestats(var/completions)
+	var/dat = completions
+	dat += {"<BR><h2>Round Statistics and Score</h2>"}
 	if (ticker.mode.name == "nuclear emergency")
 		var/foecount = 0
 		var/crewcount = 0
@@ -366,5 +370,12 @@
 		if(10000 to 49999) score["rating"] = "The Pride of Science Itself"
 		if(50000 to INFINITY) score["rating"] = "NanoTrasen's Finest"
 	dat += "<B><U>RATING:</U></B> [score["rating"]]"
-	src << browse(dat, "window=roundstats;size=500x600")
+	for(var/i in 1 to end_icons.len)
+		src << browse_rsc(end_icons[i],"logo_[i].png")
+
+	if(!endgame_info_logged)//so the End Round info only gets logged on the first player.
+		endgame_info_logged = 1
+		log_game(dat)
+
+	src << browse(dat, "window=roundstats;size=1000x600")
 	return

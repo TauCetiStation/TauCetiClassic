@@ -16,6 +16,7 @@
 		handle_regular_hud_updates()
 		update_items()
 	if (src.stat != DEAD) //still using power
+		add_ingame_age()
 		use_power()
 		process_killswitch()
 		process_locks()
@@ -281,7 +282,9 @@
 	client.screen.Remove(global_hud.blurry,global_hud.druggy,global_hud.vimpaired)
 
 	if ((src.blind && src.stat != 2))
-		if(src.blinded)
+		if(loc && !isturf(loc) && !is_type_in_list(loc, ignore_vision_inside))
+			blind.layer = 18
+		else if(blinded)
 			src.blind.layer = 18
 		else
 			src.blind.layer = 0
