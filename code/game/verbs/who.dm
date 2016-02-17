@@ -40,6 +40,19 @@
 
 			entry += " - [age]"
 
+			var/ingame_age
+			if(isnum(C.player_ingame_age))
+				ingame_age = C.player_ingame_age
+			else
+				ingame_age = 0
+
+			if(ingame_age <= 60)
+				ingame_age = "<font color='red'><b>[ingame_age]</b></font>"
+			else if(ingame_age < 1440)
+				ingame_age = "<font color='#ff8c00'><b>[ingame_age]</b></font>"
+
+			entry += " - [ingame_age]"
+
 			if(is_special_character(C.mob))
 				entry += " - <b><font color='red'>Antagonist</font></b>"
 			entry += " (<A HREF='?_src_=holder;adminmoreinfo=\ref[C.mob]'>?</A>)"

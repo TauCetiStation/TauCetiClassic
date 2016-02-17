@@ -34,37 +34,23 @@
 	set name = ".Say"
 	set hidden = 1
 
-	if(client)
-		winset(client, "input", "focus=true;text='Say \"'")
-		check_typing()
+	set_typing_indicator(1)
+	hud_typing = 1
+	typing_shown = 1
+	var/message = input("","say (text)") as text
+	hud_typing = 0
+	set_typing_indicator(0)
+	if(message)
+		say_verb(message)
+	typing_shown = 0
 
 /mob/verb/me_wrapper()
 	set name = ".Me"
 	set hidden = 1
 
-	if(client)
-		winset(client, "input", "focus=true;text='Me '")
-
-/mob/proc/check_typing()
-	return
-
-/mob/living/check_typing()
-	if(client)
-		if(stat)
-			if(typing_indicator)
-				qdel(typing_indicator)
-			return
-		else
-			var/infocus = winget(client, "input", "focus")
-			var/temp = winget(client, "input", "text")
-			if(infocus == "true" && findtext(temp, "Say \"", 1, 7) || findtext(temp, "Say \"", 1, 7) && length(temp) > 5)
-				if(!typing_indicator)
-					typing_indicator = image('icons/mob/talk.dmi',src,"typing")
-					for(var/mob/M in viewers(src, null))
-						M << typing_indicator
-				return
-	if(typing_indicator)
-		qdel(typing_indicator)
+	var/message = input("","me (text)") as text
+	if(message)
+		me_verb(message)
 
 /mob/proc/handle_typing_indicator()
 	if(client)
