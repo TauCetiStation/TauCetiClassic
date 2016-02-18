@@ -10,7 +10,6 @@
 /////////////////////////////////
 
 /mob/living/carbon/monkey
-	var/list/overlays_lying[M_TOTAL_LAYERS]
 	var/list/overlays_standing[M_TOTAL_LAYERS]
 
 /mob/living/carbon/monkey/regenerate_icons()
@@ -21,6 +20,7 @@
 	update_inv_l_hand(0)
 	update_inv_handcuffed(0)
 	update_icons()
+	update_transform()
 	//Hud Stuff
 	update_hud()
 	return
@@ -33,14 +33,6 @@
 	for(var/image/I in overlays_standing)
 		overlays += I
 
-	/*if(lying)
-		var/matrix/M = matrix()
-		M.Turn(90)
-		M.Translate(1,-6)
-		src.transform = M
-	else
-		var/matrix/M = matrix()
-		src.transform = M*/
 
 
 ////////
@@ -123,14 +115,14 @@
 		overlays_standing[TARGETED_LAYER]	= null
 	if(update_icons)		update_icons()
 
-/mob/living/carbon/monkey/update_fire(var/update_icons=1)
-	if (on_fire)
-		overlays_lying[M_FIRE_LAYER]		= image("icon"='icons/mob/OnFire.dmi', "icon_state"="Lying")
+/mob/living/carbon/monkey/update_fire()
+	overlays -= overlays_standing[M_FIRE_LAYER]
+	if(on_fire)
 		overlays_standing[M_FIRE_LAYER]		= image("icon"='icons/mob/OnFire.dmi', "icon_state"="Standing")
-	if (!on_fire)
-		overlays_lying[M_FIRE_LAYER]		= null
+		overlays += overlays_standing[M_FIRE_LAYER]
+		return
+	else
 		overlays_standing[M_FIRE_LAYER]		= null
-	if(update_icons)		update_icons()
 
 //Monkey Overlays Indexes////////
 #undef M_MASK_LAYER

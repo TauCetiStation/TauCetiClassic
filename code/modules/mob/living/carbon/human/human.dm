@@ -3,7 +3,7 @@
 	real_name = "unknown"
 	voice_name = "unknown"
 	icon = 'icons/mob/human.dmi'
-	icon_state = "body_m_s"
+	//icon_state = "body_m_s"
 	var/list/hud_list[9]
 	var/datum/species/species //Contains icon generation and language information, set during New().
 	var/dog_owner
@@ -74,7 +74,6 @@
 	hud_list[SPECIALROLE_HUD] = image('icons/mob/hud.dmi', src, "hudblank")
 	hud_list[STATUS_HUD_OOC]  = image('icons/mob/hud.dmi', src, "hudhealthy")
 
-
 	..()
 
 	if(dna)
@@ -82,6 +81,7 @@
 
 	prev_gender = gender // Debug for plural genders
 	make_blood()
+	regenerate_icons()
 
 /mob/living/carbon/human/Bump(atom/movable/AM as mob|obj, yes)
 	if ((!( yes ) || now_pushing))
@@ -251,41 +251,16 @@
 			if (prob(50) && !shielded)
 				Paralyse(10)
 
-	var/update = 0
-
 	// focus most of the blast on one organ
-	var/datum/organ/external/take_blast = pick(organs)
-	update |= take_blast.take_damage(b_loss * 0.9, f_loss * 0.9, used_weapon = "Explosive blast")
+	var/datum/organ/external/O = pick(organs)
+	O.take_damage(b_loss * 0.9, f_loss * 0.9, used_weapon = "Explosive blast")
 
 	// distribute the remaining 10% on all limbs equally
 	b_loss *= 0.1
 	f_loss *= 0.1
 
 	var/weapon_message = "Explosive Blast"
-
-	for(var/datum/organ/external/temp in organs)
-		switch(temp.name)
-			if("head")
-				update |= temp.take_damage(b_loss * 0.2, f_loss * 0.2, used_weapon = weapon_message)
-			if("chest")
-				update |= temp.take_damage(b_loss * 0.4, f_loss * 0.4, used_weapon = weapon_message)
-			if("l_arm")
-				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05, used_weapon = weapon_message)
-			if("r_arm")
-				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05, used_weapon = weapon_message)
-			if("l_leg")
-				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05, used_weapon = weapon_message)
-			if("r_leg")
-				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05, used_weapon = weapon_message)
-			if("r_foot")
-				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05, used_weapon = weapon_message)
-			if("l_foot")
-				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05, used_weapon = weapon_message)
-			if("r_arm")
-				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05, used_weapon = weapon_message)
-			if("l_arm")
-				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05, used_weapon = weapon_message)
-	if(update)	UpdateDamageIcon()
+	take_overall_damage(b_loss * 0.2, f_loss * 0.2, used_weapon = weapon_message)
 
 
 /mob/living/carbon/human/blob_act()
@@ -304,11 +279,9 @@
 		var/datum/organ/external/affecting = get_organ(pick("chest", "chest", "chest", "head"))
 		if(!affecting)	return
 		if (istype(O, /obj/effect/immovablerod))
-			if(affecting.take_damage(101, 0))
-				UpdateDamageIcon()
+			affecting.take_damage(101, 0)
 		else
-			if(affecting.take_damage((istype(O, /obj/effect/meteor/small) ? 10 : 25), 30))
-				UpdateDamageIcon()
+			affecting.take_damage((istype(O, /obj/effect/meteor/small) ? 10 : 25), 30)
 		updatehealth()
 	return
 
@@ -1241,7 +1214,7 @@
 	if(clean_feet && !shoes && istype(feet_blood_DNA, /list) && feet_blood_DNA.len)
 		feet_blood_color = null
 		feet_blood_DNA = null
-		update_inv_shoes(1)
+		update_inv_shoes()
 		return 1
 
 /mob/living/carbon/human/get_visible_implants(var/class = 0)

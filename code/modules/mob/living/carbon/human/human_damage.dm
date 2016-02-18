@@ -171,7 +171,6 @@
 	if(!parts.len)	return
 	var/datum/organ/external/picked = pick(parts)
 	if(picked.heal_damage(brute,burn))
-		UpdateDamageIcon()
 		hud_updateflag |= 1 << HEALTH_HUD
 	updatehealth()
 
@@ -183,7 +182,6 @@
 	if(!parts.len)	return
 	var/datum/organ/external/picked = pick(parts)
 	if(picked.take_damage(brute,burn,sharp,edge))
-		UpdateDamageIcon()
 		hud_updateflag |= 1 << HEALTH_HUD
 	updatehealth()
 	speech_problem_flag = 1
@@ -192,44 +190,33 @@
 //Heal MANY external organs, in random order
 /mob/living/carbon/human/heal_overall_damage(var/brute, var/burn)
 	var/list/datum/organ/external/parts = get_damaged_organs(brute,burn)
-
-	var/update = 0
 	while(parts.len && (brute>0 || burn>0) )
 		var/datum/organ/external/picked = pick(parts)
-
 		var/brute_was = picked.brute_dam
 		var/burn_was = picked.burn_dam
-
-		update |= picked.heal_damage(brute,burn)
-
+		picked.heal_damage(brute,burn)
 		brute -= (brute_was-picked.brute_dam)
 		burn -= (burn_was-picked.burn_dam)
-
 		parts -= picked
 	updatehealth()
 	hud_updateflag |= 1 << HEALTH_HUD
 	speech_problem_flag = 1
-	if(update)	UpdateDamageIcon()
+
 
 // damage MANY external organs, in random order
 /mob/living/carbon/human/take_overall_damage(var/brute, var/burn, var/sharp = 0, var/edge = 0, var/used_weapon = null)
 	if(status_flags & GODMODE)	return	//godmode
 	var/list/datum/organ/external/parts = get_damageable_organs()
-	var/update = 0
 	while(parts.len && (brute>0 || burn>0) )
 		var/datum/organ/external/picked = pick(parts)
-
 		var/brute_was = picked.brute_dam
 		var/burn_was = picked.burn_dam
-
-		update |= picked.take_damage(brute,burn,sharp,edge,used_weapon)
+		picked.take_damage(brute,burn,sharp,edge,used_weapon)
 		brute	-= (picked.brute_dam - brute_was)
 		burn	-= (picked.burn_dam - burn_was)
-
 		parts -= picked
 	updatehealth()
 	hud_updateflag |= 1 << HEALTH_HUD
-	if(update)	UpdateDamageIcon()
 
 
 ////////////////////////////////////////////
@@ -251,10 +238,9 @@ This function restores all organs.
 		current_organ.rejuvenate()
 
 /mob/living/carbon/human/proc/HealDamage(zone, brute, burn)
-	var/datum/organ/external/E = get_organ(zone)
-	if(istype(E, /datum/organ/external))
-		if (E.heal_damage(brute, burn))
-			UpdateDamageIcon()
+	var/datum/organ/external/O = get_organ(zone)
+	if(istype(O, /datum/organ/external))
+		if(O.heal_damage(brute, burn))
 			hud_updateflag |= 1 << HEALTH_HUD
 	else
 		return 0
@@ -294,14 +280,12 @@ This function restores all organs.
 			damageoverlaytemp = 20
 			if(species && species.brute_mod)
 				damage = damage*species.brute_mod
-			if(organ.take_damage(damage, 0, sharp, edge, used_weapon))
-				UpdateDamageIcon()
+			organ.take_damage(damage, 0, sharp, edge, used_weapon)
 		if(BURN)
 			damageoverlaytemp = 20
 			if(species && species.burn_mod)
 				damage = damage*species.burn_mod
-			if(organ.take_damage(0, damage, sharp, edge, used_weapon))
-				UpdateDamageIcon()
+			organ.take_damage(0, damage, sharp, edge, used_weapon)
 
 	handle_suit_punctures(damagetype, damage)
 
