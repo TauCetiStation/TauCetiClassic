@@ -100,7 +100,8 @@
 			if(ready && ticker && ticker.pregame_timeleft < 3)
 				src << "<span class='warning'>Locked! The round is about to start.</span>"
 				return 0
-			ready = !ready
+			if(ticker && ticker.current_state <= GAME_STATE_PREGAME)
+				ready = !ready
 
 		if(href_list["refresh"])
 			src << browse(null, "window=playersetup") //closes the player setup window
