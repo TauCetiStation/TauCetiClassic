@@ -8,6 +8,7 @@
 				M.show_message("\red The data cable rapidly retracts back into its spool.", 3, "\red You hear a click and the sound of wire spooling rapidly.", 2)
 			qdel(src.cable)
 
+	add_ingame_age()
 	regular_hud_updates()
 	if(src.secHUD == 1)
 		process_sec_hud(src, 1)

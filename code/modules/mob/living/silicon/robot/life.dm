@@ -16,6 +16,7 @@
 		handle_regular_hud_updates()
 		update_items()
 	if (src.stat != DEAD) //still using power
+		add_ingame_age()
 		use_power()
 		process_killswitch()
 		process_locks()
