@@ -507,7 +507,7 @@ datum/projectile_data
 		var/list/rstats = new /list(stats.len)
 		if(T && istype(T) && T.zone)
 			var/datum/gas_mixture/environment = T.return_air()
-			for(var/i=1;i<=stats.len;i++)
+			for(var/i in 1 to stats.len)
 				if(stats[i] == "pressure")
 					rstats[i] = environment.return_pressure()
 				else
@@ -517,7 +517,7 @@ datum/projectile_data
 		else if(istype(T, /turf))
 			// Should still work.  (/turf/return_air())
 			var/datum/gas_mixture/environment = T.return_air()
-			for(var/i=1;i<=stats.len;i++)
+			for(var/i in 1 to stats.len)
 				if(stats[i] == "pressure")
 					rstats[i] = environment.return_pressure()
 				else

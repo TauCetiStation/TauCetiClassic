@@ -329,9 +329,9 @@
 		if(pdiff_alert)
 			overlays += "palert"
 		if(dir_alerts)
-			for(var/d=1;d<=4;d++)
+			for(var/d in 1 to 4)
 				var/cdir = cardinal[d]
-				for(var/i=1;i<=ALERT_STATES.len;i++)
+				for(var/i in 1 to ALERT_STATES.len)
 					if(dir_alerts[d] & (1<<(i-1)))
 						overlays += new/icon(icon,"alert_[ALERT_STATES[i]]", dir=cdir)
 	else
@@ -362,7 +362,7 @@
 
 		tile_info = getCardinalAirInfo(src.loc,list("temperature","pressure"))
 		var/old_alerts = dir_alerts
-		for(var/index = 1; index <= 4; index++)
+		for(var/index in 1 to 4)
 			var/list/tileinfo=tile_info[index]
 			if(tileinfo==null)
 				continue // Bad data.
