@@ -880,7 +880,10 @@ Please contact me on #coderbus IRC. ~Carn x
 	remove_overlay(R_HAND_LAYER)
 
 	if(r_hand)
-		r_hand.screen_loc = ui_rhand	//TODO
+		r_hand.screen_loc = ui_rhand
+		if(client && hud_used)
+			client.screen += r_hand
+
 		var/t_state = r_hand.item_state
 		if(!t_state)
 			t_state = r_hand.icon_state
@@ -901,7 +904,10 @@ Please contact me on #coderbus IRC. ~Carn x
 	remove_overlay(L_HAND_LAYER)
 
 	if(l_hand)
-		l_hand.screen_loc = ui_lhand	//TODO
+		l_hand.screen_loc = ui_lhand
+		if(client && hud_used)
+			client.screen += l_hand
+
 		var/t_state = l_hand.item_state
 		if(!t_state)
 			t_state = l_hand.icon_state
@@ -939,8 +945,8 @@ Please contact me on #coderbus IRC. ~Carn x
 	if(wear_suit)
 		var/icon/C = new('icons/mob/collar.dmi')
 		if(wear_suit.icon_state in C.IconStates())
-			var/image/standing
-			standing = image("icon" = C, "icon_state" = "[wear_suit.icon_state]", "layer"=-COLLAR_LAYER)
+			
+			var/image/standing = image("icon" = C, "icon_state" = "[wear_suit.icon_state]", "layer"=-COLLAR_LAYER)
 			overlays_standing[COLLAR_LAYER]	= standing
 
 	apply_overlay(COLLAR_LAYER)
@@ -949,12 +955,13 @@ Please contact me on #coderbus IRC. ~Carn x
 /mob/living/carbon/human/proc/update_surgery()
 	remove_overlay(SURGERY_LAYER)
 
-	var/image/total
+	var/list/standing	= list()
 	for(var/datum/organ/external/O in organs)
 		if(O.open)
-			var/image/I = image("icon"='icons/mob/surgery.dmi', "icon_state"="[O.name][round(O.open)]", "layer"=-SURGERY_LAYER)
-			total.overlays += I
-	overlays_standing[SURGERY_LAYER] = total
+			standing += image("icon"='icons/mob/surgery.dmi', "icon_state"="[O.name][round(O.open)]", "layer"=-SURGERY_LAYER)
+
+	if(standing.len)
+		overlays_standing[SURGERY_LAYER] = standing
 
 	apply_overlay(SURGERY_LAYER)
 
@@ -962,14 +969,15 @@ Please contact me on #coderbus IRC. ~Carn x
 /mob/living/carbon/human/proc/update_bandage()
 	remove_overlay(BANDAGE_LAYER)
 
-	var/image/total
+	var/list/standing	= list()
 	for(var/datum/organ/external/E in organs)
 		if(E.wounds.len)
 			for(var/datum/wound/W in E.wounds)
 				if(W.bandaged)
-					var/image/I = image("icon"='icons/mob/bandages.dmi', "icon_state"="[E.name]", "layer"=-BANDAGE_LAYER)
-					total.overlays += I
-	overlays_standing[BANDAGE_LAYER] = total
+					standing += image("icon"='icons/mob/bandages.dmi', "icon_state"="[E.name]", "layer"=-BANDAGE_LAYER)
+
+	if(standing.len)
+		overlays_standing[BANDAGE_LAYER] = standing
 
 	apply_overlay(BANDAGE_LAYER)
 
