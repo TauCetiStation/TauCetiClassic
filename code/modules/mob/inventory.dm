@@ -225,7 +225,7 @@ var/list/slot_equipment_priority = list( \
 	if(!I.canremove && !force)
 		return 0
 
-	remove_from_mob(I)
+	drop_from_inventory(I)
 	return 1
 
 //Attemps to remove an object on a mob.  Will not move it to another area or such, just removes from the mob.
