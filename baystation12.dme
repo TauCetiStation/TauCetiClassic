@@ -1556,7 +1556,6 @@
 #include "tauceti\items\telecrystall_stations\tc_station.dm"
 #include "tauceti\items\toys\poly_toy.dm"
 #include "tauceti\items\vending items(renameitpls)\vending_items.dm"
-#include "tauceti\items\vendomats\bloodvend.dm"
 #include "tauceti\items\vendomats\holybane.dm"
 #include "tauceti\items\vendomats\modkit.dm"
 #include "tauceti\items\vendomats\omskvend.dm"
