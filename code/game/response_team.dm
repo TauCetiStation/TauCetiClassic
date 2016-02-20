@@ -241,6 +241,7 @@ var/can_call_ert
 	if(leader_selected)
 		var/obj/item/weapon/card/id/ert/W = new(src)
 		W.assignment = "Emergency Response Team Leader"
+		W.rank = "Emergency Response Team Leader"
 		W.registered_name = real_name
 		W.name = "[real_name]'s ID Card ([W.assignment])"
 		W.icon_state = "ert-leader"
@@ -248,6 +249,7 @@ var/can_call_ert
 	else
 		var/obj/item/weapon/card/id/ert/W = new(src)
 		W.assignment = "Emergency Response Team"
+		W.rank = "Emergency Response Team"
 		W.registered_name = real_name
 		W.name = "[real_name]'s ID Card ([W.assignment])"
 		W.icon_state = "ert"
