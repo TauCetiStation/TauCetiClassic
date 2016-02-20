@@ -80,8 +80,6 @@ var/const/MAX_SAVE_SLOTS = 10
 
 		//Mob preview
 	var/icon/preview_icon = null
-	var/icon/preview_icon_front = null
-	var/icon/preview_icon_side = null
 
 		//Jobs, uses bitflags
 	var/job_civilian_high = 0
@@ -230,8 +228,7 @@ var/const/MAX_SAVE_SLOTS = 10
 /datum/preferences/proc/ShowChoices(mob/user)
 	if(!user || !user.client)	return
 	update_preview_icon()
-	user << browse_rsc(preview_icon_front, "previewicon.png")
-	user << browse_rsc(preview_icon_side, "previewicon2.png")
+	user << browse_rsc(preview_icon, "previewicon.png")
 	var/dat = "<html><body><center>"
 
 	if(path)
@@ -359,7 +356,7 @@ var/const/MAX_SAVE_SLOTS = 10
 
 	dat += "Nanotrasen Relation:<br><a href ='?_src_=prefs;preference=nt_relation;task=input'><b>[nanotrasen_relation]</b></a><br>"
 
-	dat += "</td><td><b>Preview</b><br><img src=previewicon.png height=64 width=64><img src=previewicon2.png height=64 width=64></td></tr></table>"
+	dat += "</td><td><b>Preview</b><br><img src=previewicon.png width=[preview_icon.Width()] height=[preview_icon.Height()]></td></tr></table>"
 
 	dat += "</td><td width='300px' height='300px'>"
 
@@ -958,42 +955,8 @@ var/const/MAX_SAVE_SLOTS = 10
 					species = input("Please select a species", "Character Generation", null) in new_species
 
 					if(prev_species != species)
-						//grab one of the valid hair styles for the newly chosen species
-						var/list/valid_hairstyles = list()
-						for(var/hairstyle in hair_styles_list)
-							var/datum/sprite_accessory/S = hair_styles_list[hairstyle]
-							if(gender == MALE && S.gender == FEMALE)
-								continue
-							if(gender == FEMALE && S.gender == MALE)
-								continue
-							if( !(species in S.species_allowed))
-								continue
-							valid_hairstyles[hairstyle] = hair_styles_list[hairstyle]
-
-						if(valid_hairstyles.len)
-							h_style = pick(valid_hairstyles)
-						else
-							//this shouldn't happen
-							h_style = hair_styles_list["Bald"]
-
-						//grab one of the valid facial hair styles for the newly chosen species
-						var/list/valid_facialhairstyles = list()
-						for(var/facialhairstyle in facial_hair_styles_list)
-							var/datum/sprite_accessory/S = facial_hair_styles_list[facialhairstyle]
-							if(gender == MALE && S.gender == FEMALE)
-								continue
-							if(gender == FEMALE && S.gender == MALE)
-								continue
-							if( !(species in S.species_allowed))
-								continue
-
-							valid_facialhairstyles[facialhairstyle] = facial_hair_styles_list[facialhairstyle]
-
-						if(valid_facialhairstyles.len)
-							f_style = pick(valid_facialhairstyles)
-						else
-							//this shouldn't happen
-							f_style = facial_hair_styles_list["Shaved"]
+						f_style = random_facial_hair_style(gender, species)
+						h_style = random_hair_style(gender, species)
 
 						//reset hair colour and skin colour
 						r_hair = 0//hex2num(copytext(new_hair, 2, 4))
@@ -1051,7 +1014,11 @@ var/const/MAX_SAVE_SLOTS = 10
 					var/list/valid_hairstyles = list()
 					for(var/hairstyle in hair_styles_list)
 						var/datum/sprite_accessory/S = hair_styles_list[hairstyle]
-						if( !(species in S.species_allowed))
+						if(gender == MALE && S.gender == FEMALE)
+							continue
+						if(gender == FEMALE && S.gender == MALE)
+							continue
+						if(!(species in S.species_allowed))
 							continue
 
 						valid_hairstyles[hairstyle] = hair_styles_list[hairstyle]
@@ -1075,7 +1042,7 @@ var/const/MAX_SAVE_SLOTS = 10
 							continue
 						if(gender == FEMALE && S.gender == MALE)
 							continue
-						if( !(species in S.species_allowed))
+						if(!(species in S.species_allowed))
 							continue
 
 						valid_facialhairstyles[facialhairstyle] = facial_hair_styles_list[facialhairstyle]
@@ -1245,6 +1212,9 @@ var/const/MAX_SAVE_SLOTS = 10
 					else
 						gender = MALE
 
+					f_style = random_facial_hair_style(gender, species)
+					h_style = random_hair_style(gender, species)
+
 				if("disabilities")				//please note: current code only allows nearsightedness as a disability
 					disabilities = !disabilities//if you want to add actual disabilities, code that selects them should be here
 
@@ -1335,7 +1305,7 @@ var/const/MAX_SAVE_SLOTS = 10
 	ShowChoices(user)
 	return 1
 
-/datum/preferences/proc/copy_to(mob/living/carbon/human/character, safety = 0)
+/datum/preferences/proc/copy_to(mob/living/carbon/human/character, icon_updates = 1)
 	if(be_random_name)
 		real_name = random_name(gender)
 
@@ -1447,6 +1417,10 @@ var/const/MAX_SAVE_SLOTS = 10
 		if(isliving(src)) //Ghosts get neuter by default
 			message_admins("[character] ([character.ckey]) has spawned with their gender as plural or neuter. Please notify coders.")
 			character.gender = MALE
+
+	if(icon_updates)
+		character.update_body()
+		character.update_hair()
 
 /datum/preferences/proc/open_load_dialog(mob/user)
 	var/dat = "<body>"

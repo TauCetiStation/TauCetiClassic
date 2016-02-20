@@ -157,61 +157,68 @@
 	..()
 
 
-/obj/item/device/camera/proc/get_icon(turf/the_turf as turf)
-	//Bigger icon base to capture those icons that were shifted to the next tile
-	//i.e. pretty much all wall-mounted machinery
+
+/obj/item/device/camera/proc/camera_get_icon(list/turfs, turf/center)
+	var/atoms[] = list()
+	for(var/turf/T in turfs)
+		atoms.Add(T)
+		for(var/atom/movable/A in T)
+			if(A.invisibility) continue
+			atoms.Add(A)
+
+	var/list/sorted = list()
+	var/j
+	for(var/i = 1 to atoms.len)
+		var/atom/c = atoms[i]
+		for(j = sorted.len, j > 0, --j)
+			var/atom/c2 = sorted[j]
+			if(c2.layer <= c.layer)
+				break
+		sorted.Insert(j+1, c)
+
 	var/icon/res = icon('icons/effects/96x96.dmi', "")
 
-	var/icon/turficon = build_composite_icon(the_turf)
-	res.Blend(turficon, ICON_OVERLAY, 33, 33)
+	for(var/atom/A in sorted)
+		var/icon/img = getFlatIcon(A)
+		if(istype(A, /mob/living) && A:lying)
+			img.Turn(A:lying_current)
 
-	var/atoms[] = list()
-	for(var/atom/A in the_turf)
-		if(A.invisibility) continue
-		atoms.Add(A)
+		var/offX = 32 * (A.x - center.x) + A.pixel_x + 33
+		var/offY = 32 * (A.y - center.y) + A.pixel_y + 33
+		if(istype(A, /atom/movable))
+			offX += A:step_x
+			offY += A:step_y
 
-	//Sorting icons based on levels
-	var/gap = atoms.len
-	var/swapped = 1
-	while (gap > 1 || swapped)
-		swapped = 0
-		if(gap > 1)
-			gap = round(gap / 1.247330950103979)
-		if(gap < 1)
-			gap = 1
-		for(var/i = 1; gap + i <= atoms.len; i++)
-			var/atom/l = atoms[i]		//Fucking hate
-			var/atom/r = atoms[gap+i]	//how lists work here
-			if(l.layer > r.layer)		//no "atoms[i].layer" for me
-				atoms.Swap(i, gap + i)
-				swapped = 1
+		res.Blend(img, blendMode2iconMode(A.blend_mode), offX, offY)
 
-	for(var/i; i <= atoms.len; i++)
-		var/atom/A = atoms[i]
-		if(A)
-			var/icon/img = getFlatIcon(A, A.dir)//build_composite_icon(A)
-			if(istype(img, /icon))
-				res.Blend(new/icon(img, "", 2), ICON_OVERLAY, 33 + A.pixel_x, 33 + A.pixel_y)
+	for(var/turf/T in turfs)
+		res.Blend(getFlatIcon(T.loc), blendMode2iconMode(T.blend_mode), 32 * (T.x - center.x) + 33, 32 * (T.y - center.y) + 33)
+
 	return res
 
 
-/obj/item/device/camera/proc/get_mobs(turf/the_turf as turf)
+/obj/item/device/camera/proc/camera_get_mobs(turf/the_turf)
 	var/mob_detail
-	for(var/mob/living/carbon/A in the_turf)
-		if(A.invisibility) continue
-		var/holding = null
-		if(A.l_hand || A.r_hand)
-			if(A.l_hand) holding = "They are holding \a [A.l_hand]"
-			if(A.r_hand)
-				if(holding)
-					holding += " and \a [A.r_hand]"
-				else
-					holding = "They are holding \a [A.r_hand]"
+	for(var/mob/M in the_turf)
+		if(M.invisibility) continue
 
-		if(!mob_detail)
-			mob_detail = "You can see [A] on the photo[A:health < 75 ? " - [A] looks hurt":""].[holding ? " [holding]":"."]. "
-		else
-			mob_detail += "You can also see [A] on the photo[A:health < 75 ? " - [A] looks hurt":""].[holding ? " [holding]":"."]."
+		var/holding = null
+
+		if(istype(M, /mob/living))
+			var/mob/living/L = M
+			if(L.l_hand || L.r_hand)
+				if(L.l_hand) holding = "They are holding \a [L.l_hand]"
+				if(L.r_hand)
+					if(holding)
+						holding += " and \a [L.r_hand]"
+					else
+						holding = "They are holding \a [L.r_hand]"
+
+			if(!mob_detail)
+				mob_detail = "You can see [L] on the photo[L.health < 75 ? " - [L] looks hurt":""].[holding ? " [holding]":"."]. "
+			else
+				mob_detail += "You can also see [L] on the photo[L.health < 75 ? " - [L] looks hurt":""].[holding ? " [holding]":"."]."
+
 	return mob_detail
 
 /obj/item/device/camera/afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
@@ -229,36 +236,30 @@
 		icon_state = icon_on
 		on = 1
 
-/obj/item/device/camera/proc/can_capture_turf(turf/T, mob/user)
-	var/mob/dummy = new(T)	//Go go visibility check dummy
-	var/viewer = user
-	if(user.client)		//To make shooting through security cameras possible
-		viewer = user.client.eye
-	var/can_see = (dummy in viewers(world.view, viewer)) != null
+/obj/item/device/camera/proc/captureimage(atom/target, mob/user, flag)  //Proc for both regular and AI-based camera to take the image
+	var/mobs = ""
+	var/isAi = istype(user, /mob/living/silicon/ai)
+	var/list/seen
+	if(!isAi) //crappy check, but without it AI photos would be subject to line of sight from the AI Eye object. Made the best of it by moving the sec camera check inside
+		if(user.client)		//To make shooting through security cameras possible
+			seen = hear(world.view, user.client.eye) //To make shooting through security cameras possible
+		else
+			seen = hear(world.view, user)
+	else
+		seen = hear(world.view, target)
 
-	dummy.loc = null
-	dummy = null	//Alas, nameless creature	//garbage collect it instead
-	return can_see
-
-/obj/item/device/camera/proc/captureimage(atom/target, mob/user, flag)
-	var/x_c = target.x - 1
-	var/y_c = target.y + 1
-	var/z_c	= target.z
+	var/list/turfs = list()
+	for(var/turf/T in range(1, target))
+		if(T in seen)
+			if(isAi && !cameranet.checkTurfVis(T))
+				continue
+			else
+				turfs += T
+				mobs += camera_get_mobs(T)
 
 	var/icon/temp = icon('icons/effects/96x96.dmi',"")
-	var/icon/black = icon('icons/turf/space.dmi', "black")
-	var/mobs = ""
-	for(var/i = 1; i <= 3; i++)
-		for(var/j = 1; j <= 3; j++)
-			var/turf/T = locate(x_c, y_c, z_c)
-			if(can_capture_turf(T, user))
-				temp.Blend(get_icon(T), ICON_OVERLAY, 32 * (j-1-1), 32 - 32 * (i-1))
-				mobs += get_mobs(T, user)
-			else
-				temp.Blend(black, ICON_OVERLAY, 32 * (j-1), 64 - 32 * (i-1))
-			x_c++
-		y_c--
-		x_c = x_c - 3
+	temp.Blend("#000", ICON_OVERLAY)
+	temp.Blend(camera_get_icon(turfs, target), ICON_OVERLAY)
 
 	var/datum/picture/P = createpicture(user, temp, mobs, flag)
 	printpicture(user, P)
