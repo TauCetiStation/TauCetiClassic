@@ -362,8 +362,6 @@ Please contact me on #coderbus IRC. ~Carn x
 	apply_overlay(BODY_LAYER)
 
 
-
-
 //HAIR OVERLAY
 /mob/living/carbon/human/proc/update_hair()
 	//Reset our hair
@@ -531,10 +529,12 @@ Please contact me on #coderbus IRC. ~Carn x
 	remove_overlay(UNIFORM_LAYER)
 
 	if(istype(w_uniform, /obj/item/clothing/under))
+		if(client && hud_used && hud_used.hud_shown)
+			if(hud_used.inventory_shown)			//if the inventory is open ...
+				w_uniform.screen_loc = ui_iclothing //...draw the item in the inventory screen
+			client.screen += w_uniform				//Either way, add the item to the HUD
+
 		var/obj/item/clothing/under/U = w_uniform
-		if(client && hud_used && hud_used.hud_shown && hud_used.inventory_shown)
-			U.screen_loc = ui_iclothing
-			client.screen += U
 		var/t_color = U.item_color
 		if(!t_color)		t_color = icon_state
 		var/image/standing = image("icon_state"="[t_color]_s", "layer"=-UNIFORM_LAYER)
@@ -577,8 +577,8 @@ Please contact me on #coderbus IRC. ~Carn x
 /mob/living/carbon/human/update_inv_wear_id()
 	remove_overlay(ID_LAYER)
 	if(wear_id)
-		if(client && hud_used && hud_used.hud_shown)
-			wear_id.screen_loc = ui_id	//TODO
+		wear_id.screen_loc = ui_id
+		if(client && hud_used)
 			client.screen += wear_id
 
 		overlays_standing[ID_LAYER]	= image("icon"='icons/mob/mob.dmi', "icon_state"="id", "layer"=-ID_LAYER)
@@ -592,9 +592,10 @@ Please contact me on #coderbus IRC. ~Carn x
 /mob/living/carbon/human/update_inv_gloves()
 	remove_overlay(GLOVES_LAYER)
 	if(gloves)
-		if(client && hud_used && hud_used.hud_shown && hud_used.inventory_shown)
-			gloves.screen_loc = ui_gloves
-			client.screen += gloves
+		if(client && hud_used && hud_used.hud_shown)
+			if(hud_used.inventory_shown)			//if the inventory is open ...
+				gloves.screen_loc = ui_gloves		//...draw the item in the inventory screen
+			client.screen += gloves					//Either way, add the item to the HUD
 
 		var/t_state = gloves.item_state
 		if(!t_state)	t_state = gloves.icon_state
@@ -622,9 +623,11 @@ Please contact me on #coderbus IRC. ~Carn x
 	remove_overlay(GLASSES_LAYER)
 
 	if(glasses)
-		if(client && hud_used && hud_used.hud_shown && hud_used.inventory_shown)
-			glasses.screen_loc = ui_glasses
-			client.screen += glasses
+		if(client && hud_used && hud_used.hud_shown)
+			if(hud_used.inventory_shown)			//if the inventory is open ...
+				glasses.screen_loc = ui_glasses		//...draw the item in the inventory screen
+			client.screen += glasses				//Either way, add the item to the HUD
+
 		if(!glasses:tc_custom || glasses.icon_override || species.sprite_sheets["eyes"])
 			overlays_standing[GLASSES_LAYER] = image("icon"=((glasses.icon_override) ? glasses.icon_override : (species.sprite_sheets["eyes"] ? species.sprite_sheets["eyes"] : 'icons/mob/eyes.dmi')), "icon_state"="[glasses.icon_state]", "layer"=-GLASSES_LAYER)
 		else
@@ -638,18 +641,22 @@ Please contact me on #coderbus IRC. ~Carn x
 
 	if(l_ear || r_ear)
 		if(l_ear)
-			if(client && hud_used && hud_used.hud_shown && hud_used.inventory_shown)
-				l_ear.screen_loc = ui_l_ear
-				client.screen += l_ear
+			if(client && hud_used && hud_used.hud_shown)
+				if(hud_used.inventory_shown)			//if the inventory is open ...
+					l_ear.screen_loc = ui_l_ear			//...draw the item in the inventory screen
+				client.screen += l_ear					//Either way, add the item to the HUD
+
 			if(!l_ear:tc_custom || l_ear.icon_override || species.sprite_sheets["ears"])
 				overlays_standing[EARS_LAYER] = image("icon"=((l_ear.icon_override) ? l_ear.icon_override : (species.sprite_sheets["ears"] ? species.sprite_sheets["ears"] : 'icons/mob/ears.dmi')), "icon_state"="[l_ear.icon_state]", "layer"=-EARS_LAYER)
 			else
 				overlays_standing[EARS_LAYER] = image("icon"=l_ear:tc_custom, "icon_state"="[l_ear.icon_state]_mob", "layer"=-EARS_LAYER)
 
 		if(r_ear)
-			if(client && hud_used && hud_used.hud_shown && hud_used.inventory_shown)
-				r_ear.screen_loc = ui_r_ear
-				client.screen += r_ear
+			if(client && hud_used && hud_used.hud_shown)
+				if(hud_used.inventory_shown)		//if the inventory is open ...
+					r_ear.screen_loc = ui_r_ear		//...draw the item in the inventory screen
+				client.screen += r_ear				//Either way, add the item to the HUD
+
 			if(!r_ear:tc_custom || r_ear.icon_override || species.sprite_sheets["ears"])
 				overlays_standing[EARS_LAYER] = image("icon"=((r_ear.icon_override) ? r_ear.icon_override : (species.sprite_sheets["ears"] ? species.sprite_sheets["ears"] : 'icons/mob/ears.dmi')), "icon_state"="[r_ear.icon_state]", "layer"=-EARS_LAYER)
 			else
@@ -662,9 +669,10 @@ Please contact me on #coderbus IRC. ~Carn x
 	remove_overlay(SHOES_LAYER)
 
 	if(shoes)
-		if(client && hud_used && hud_used.hud_shown && hud_used.inventory_shown)
-			shoes.screen_loc = ui_shoes
-			client.screen += shoes
+		if(client && hud_used && hud_used.hud_shown)
+			if(hud_used.inventory_shown)			//if the inventory is open ...
+				shoes.screen_loc = ui_shoes			//...draw the item in the inventory screen
+			client.screen += shoes					//Either way, add the item to the HUD
 
 		var/image/standing
 		if(!shoes:tc_custom || shoes.icon_override || species.sprite_sheets["feet"])
@@ -690,8 +698,8 @@ Please contact me on #coderbus IRC. ~Carn x
 	remove_overlay(SUIT_STORE_LAYER)
 
 	if(s_store)
-		if(client && hud_used && hud_used.hud_shown)
-			s_store.screen_loc = ui_sstore1		//TODO
+		s_store.screen_loc = ui_sstore1
+		if(client && hud_used)
 			client.screen += s_store
 
 		var/t_state = s_store.item_state
@@ -705,9 +713,10 @@ Please contact me on #coderbus IRC. ~Carn x
 	remove_overlay(HEAD_LAYER)
 
 	if(head)
-		if(client && hud_used && hud_used.hud_shown && hud_used.inventory_shown)
-			head.screen_loc = ui_head		//TODO
-			client.screen += head
+		if(client && hud_used && hud_used.hud_shown)
+			if(hud_used.inventory_shown)			//if the inventory is open ...
+				head.screen_loc = ui_head			//...draw the item in the inventory screen
+			client.screen += head					//Either way, add the item to the HUD
 
 		var/image/standing
 		if(istype(head,/obj/item/clothing/head/kitty))
@@ -732,8 +741,8 @@ Please contact me on #coderbus IRC. ~Carn x
 	remove_overlay(BELT_LAYER)
 
 	if(belt)
-		if(client && hud_used && hud_used.hud_shown)
-			belt.screen_loc = ui_belt
+		belt.screen_loc = ui_belt
+		if(client && hud_used)
 			client.screen += belt
 
 		var/t_state = belt.item_state
@@ -751,9 +760,10 @@ Please contact me on #coderbus IRC. ~Carn x
 	remove_overlay(SUIT_LAYER)
 
 	if(istype(wear_suit, /obj/item/clothing/suit))
-		if(client && hud_used && hud_used.hud_shown && hud_used.inventory_shown)
-			wear_suit.screen_loc = ui_oclothing	//TODO
-			client.screen += wear_suit
+		if(client && hud_used && hud_used.hud_shown)
+			if(hud_used.inventory_shown)			//if the inventory is open ...
+				wear_suit.screen_loc = ui_oclothing	//...draw the item in the inventory screen
+			client.screen += wear_suit				//Either way, add the item to the HUD
 
 		var/image/standing
 		if(!wear_suit:tc_custom || wear_suit.icon_override || species.sprite_sheets["suit"])
@@ -795,12 +805,12 @@ Please contact me on #coderbus IRC. ~Carn x
 
 /mob/living/carbon/human/update_inv_pockets()
 	if(l_store)
-		if(client && hud_used && hud_used.hud_shown)
-			l_store.screen_loc = ui_storage1	//TODO
+		l_store.screen_loc = ui_storage1
+		if(client && hud_used)
 			client.screen += l_store
 	if(r_store)
-		if(client && hud_used && hud_used.hud_shown)
-			r_store.screen_loc = ui_storage2	//TODO
+		r_store.screen_loc = ui_storage2
+		if(client && hud_used)
 			client.screen += r_store
 
 
@@ -808,9 +818,10 @@ Please contact me on #coderbus IRC. ~Carn x
 	remove_overlay(FACEMASK_LAYER)
 
 	if(istype(wear_mask, /obj/item/clothing/mask) || istype(wear_mask, /obj/item/clothing/tie))
-		if(client && hud_used && hud_used.hud_shown && hud_used.inventory_shown)
-			wear_mask.screen_loc = ui_mask	//TODO
-			client.screen += wear_mask
+		if(client && hud_used && hud_used.hud_shown)
+			if(hud_used.inventory_shown)			//if the inventory is open ...
+				wear_mask.screen_loc = ui_mask		//...draw the item in the inventory screen
+			client.screen += wear_mask				//Either way, add the item to the HUD
 
 		var/image/standing
 		if(!wear_mask:tc_custom || wear_mask.icon_override || species.sprite_sheets["mask"])
@@ -831,8 +842,8 @@ Please contact me on #coderbus IRC. ~Carn x
 	remove_overlay(BACK_LAYER)
 
 	if(back)
+		back.screen_loc = ui_back
 		if(client && hud_used && hud_used.hud_shown)
-			back.screen_loc = ui_back	//TODO
 			client.screen += back
 
 		if(!back:tc_custom || back.icon_override || species.sprite_sheets["back"])
@@ -880,7 +891,10 @@ Please contact me on #coderbus IRC. ~Carn x
 	remove_overlay(R_HAND_LAYER)
 
 	if(r_hand)
-		r_hand.screen_loc = ui_rhand	//TODO
+		r_hand.screen_loc = ui_rhand
+		if(client && hud_used)
+			client.screen += r_hand
+
 		var/t_state = r_hand.item_state
 		if(!t_state)
 			t_state = r_hand.icon_state
@@ -901,7 +915,10 @@ Please contact me on #coderbus IRC. ~Carn x
 	remove_overlay(L_HAND_LAYER)
 
 	if(l_hand)
-		l_hand.screen_loc = ui_lhand	//TODO
+		l_hand.screen_loc = ui_lhand
+		if(client && hud_used)
+			client.screen += l_hand
+
 		var/t_state = l_hand.item_state
 		if(!t_state)
 			t_state = l_hand.icon_state
@@ -939,8 +956,8 @@ Please contact me on #coderbus IRC. ~Carn x
 	if(wear_suit)
 		var/icon/C = new('icons/mob/collar.dmi')
 		if(wear_suit.icon_state in C.IconStates())
-			var/image/standing
-			standing = image("icon" = C, "icon_state" = "[wear_suit.icon_state]", "layer"=-COLLAR_LAYER)
+			
+			var/image/standing = image("icon" = C, "icon_state" = "[wear_suit.icon_state]", "layer"=-COLLAR_LAYER)
 			overlays_standing[COLLAR_LAYER]	= standing
 
 	apply_overlay(COLLAR_LAYER)
@@ -949,12 +966,13 @@ Please contact me on #coderbus IRC. ~Carn x
 /mob/living/carbon/human/proc/update_surgery()
 	remove_overlay(SURGERY_LAYER)
 
-	var/image/total
+	var/list/standing	= list()
 	for(var/datum/organ/external/O in organs)
 		if(O.open)
-			var/image/I = image("icon"='icons/mob/surgery.dmi', "icon_state"="[O.name][round(O.open)]", "layer"=-SURGERY_LAYER)
-			total.overlays += I
-	overlays_standing[SURGERY_LAYER] = total
+			standing += image("icon"='icons/mob/surgery.dmi', "icon_state"="[O.name][round(O.open)]", "layer"=-SURGERY_LAYER)
+
+	if(standing.len)
+		overlays_standing[SURGERY_LAYER] = standing
 
 	apply_overlay(SURGERY_LAYER)
 
@@ -962,14 +980,15 @@ Please contact me on #coderbus IRC. ~Carn x
 /mob/living/carbon/human/proc/update_bandage()
 	remove_overlay(BANDAGE_LAYER)
 
-	var/image/total
+	var/list/standing	= list()
 	for(var/datum/organ/external/E in organs)
 		if(E.wounds.len)
 			for(var/datum/wound/W in E.wounds)
 				if(W.bandaged)
-					var/image/I = image("icon"='icons/mob/bandages.dmi', "icon_state"="[E.name]", "layer"=-BANDAGE_LAYER)
-					total.overlays += I
-	overlays_standing[BANDAGE_LAYER] = total
+					standing += image("icon"='icons/mob/bandages.dmi', "icon_state"="[E.name]", "layer"=-BANDAGE_LAYER)
+
+	if(standing.len)
+		overlays_standing[BANDAGE_LAYER] = standing
 
 	apply_overlay(BANDAGE_LAYER)
 
