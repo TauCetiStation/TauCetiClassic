@@ -11,17 +11,17 @@
 	var/heal_burn = 0
 
 /obj/item/stack/medical/attack(mob/living/carbon/M as mob, mob/user as mob)
-	if (!istype(M))
+	if(!istype(M))
 		user << "\red \The [src] cannot be applied to [M]!"
 		return 1
 
-	if ( ! (istype(user, /mob/living/carbon/human) || \
+	if(!(istype(user, /mob/living/carbon/human) || \
 			istype(user, /mob/living/silicon) || \
 			istype(user, /mob/living/carbon/monkey)) )
 		user << "\red You don't have the dexterity to do this!"
 		return 1
 
-	if (istype(M, /mob/living/carbon/human))
+	if(istype(M, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = M
 		var/datum/organ/external/affecting = H.get_organ(user.zone_sel.selecting)
 
@@ -37,19 +37,15 @@
 		if(affecting.status & ORGAN_ROBOT)
 			user << "\red This isn't useful at all on a robotic limb.."
 			return 1
-
-		H.UpdateDamageIcon()
-
 	else
-
-		M.heal_organ_damage((src.heal_brute/2), (src.heal_burn/2))
+		M.heal_organ_damage((heal_brute/2), (heal_burn/2))
 		user.visible_message( \
 			"\blue [M] has been applied with [src] by [user].", \
 			"\blue You apply \the [src] to [M]." \
 		)
 		use(1)
-
 	M.updatehealth()
+
 /obj/item/stack/medical/bruise_pack
 	name = "roll of gauze"
 	singular_name = "gauze length"

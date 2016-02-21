@@ -42,6 +42,7 @@ var/const/MAX_SAVE_SLOTS = 10
 	var/last_ip
 	var/last_id
 	var/menu_type = "general"
+	var/submenu_type = "body"
 
 	//game-preferences
 	var/ooccolor = "#b82e00"
@@ -87,8 +88,6 @@ var/const/MAX_SAVE_SLOTS = 10
 
 	//Mob preview
 	var/icon/preview_icon = null
-	var/icon/preview_icon_front = null
-	var/icon/preview_icon_side = null
 
 	//Jobs, uses bitflags
 	var/job_civilian_high = 0
@@ -128,7 +127,6 @@ var/const/MAX_SAVE_SLOTS = 10
 
 	// Whether or not to use randomized character slots
 	var/randomslot = 0
-
 	// jukebox volume
 	var/volume = 100
 
@@ -146,8 +144,7 @@ var/const/MAX_SAVE_SLOTS = 10
 /datum/preferences/proc/ShowChoices(mob/user)
 	if(!user || !user.client)	return
 	update_preview_icon()
-	user << browse_rsc(preview_icon_front, "previewicon.png")
-	user << browse_rsc(preview_icon_side, "previewicon2.png")
+	user << browse_rsc(preview_icon, "previewicon.png")
 	var/dat = "<html><body><center>"
 
 	if(path)
@@ -157,10 +154,10 @@ var/const/MAX_SAVE_SLOTS = 10
 		dat += "<a href=\"byond://?src=\ref[user];preference=save\">Save slot</a> - "
 		dat += "<a href=\"byond://?src=\ref[user];preference=reload\">Reload slot</a>"
 		dat += "<br>"
-		dat += "[menu_type=="general"?"General":"<a href=\"byond://?src=\ref[user];preference=general\">General</a>"] - "
-		dat += "[menu_type=="occupation"?"Occupation":"<a href=\"byond://?src=\ref[user];preference=occupation\">Occupation</a>"] - "
-		dat += "[menu_type=="roles"?"Roles":"<a href=\"byond://?src=\ref[user];preference=roles\">Roles</a>"] - "
-		dat += "[menu_type=="glob"?"Global":"<a href=\"byond://?src=\ref[user];preference=glob\">Global</a>"]"
+		dat += "[menu_type=="general"?"<b>General</b>":"<a href=\"byond://?src=\ref[user];preference=general\">General</a>"] - "
+		dat += "[menu_type=="occupation"?"<b>Occupation</b>":"<a href=\"byond://?src=\ref[user];preference=occupation\">Occupation</a>"] - "
+		dat += "[menu_type=="roles"?"<b>Roles</b>":"<a href=\"byond://?src=\ref[user];preference=roles\">Roles</a>"] - "
+		dat += "[menu_type=="glob"?"<b>Global</b>":"<a href=\"byond://?src=\ref[user];preference=glob\">Global</a>"]"
 		dat += "</center>"
 	else
 		dat += "Please create an account to save your preferences."
@@ -233,7 +230,7 @@ var/const/MAX_SAVE_SLOTS = 10
 	ShowChoices(user)
 	return 1
 
-/datum/preferences/proc/copy_to(mob/living/carbon/human/character, safety = 0)
+/datum/preferences/proc/copy_to(mob/living/carbon/human/character, icon_updates = 1)
 	if(be_random_name)
 		real_name = random_name(gender)
 
@@ -347,3 +344,7 @@ var/const/MAX_SAVE_SLOTS = 10
 		if(isliving(src)) //Ghosts get neuter by default
 			message_admins("[character] ([character.ckey]) has spawned with their gender as plural or neuter. Please notify coders.")
 			character.gender = MALE
+
+	if(icon_updates)
+		character.update_body()
+		character.update_hair()

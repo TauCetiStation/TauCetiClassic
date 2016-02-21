@@ -173,7 +173,10 @@
 	if(targeted_by.len == 1)
 		spawn(0)
 			target_locked = image("icon" = 'icons/effects/Targeted.dmi', "icon_state" = "locking")
-			overlays += target_locked
+			if(ishuman(src)) //Until this part rewrite.
+				update_targeted()
+			else
+				overlays += target_locked
 			spawn(0)
 				sleep(20)
 				if(target_locked)

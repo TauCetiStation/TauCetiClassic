@@ -5,7 +5,7 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 	name = "ghost"
 	desc = "It's a g-g-g-g-ghooooost!" //jinkies!
 	icon = 'icons/mob/mob.dmi'
-	icon_state = "ghost"
+	icon_state = "blank"
 	layer = 4
 	stat = DEAD
 	density = 0
@@ -38,7 +38,7 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 
 	stat = DEAD
 
-	ghostimage = image(src.icon,src,src.icon_state)
+	ghostimage = image(icon,src,"ghost")
 	ghost_darkness_images |= ghostimage
 	updateallghostimages()
 
@@ -47,10 +47,8 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 		T = get_turf(body)				//Where is the body located?
 		attack_log = body.attack_log	//preserve our attack logs by copying them to our ghost
 
-		if (ishuman(body))
-			var/mob/living/carbon/human/H = body
-			icon = H.stand_icon
-			overlays = H.overlays_standing
+		if(ishuman(body))
+			overlays = body.overlays
 		else
 			icon = body.icon
 			icon_state = body.icon_state

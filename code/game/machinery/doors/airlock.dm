@@ -966,8 +966,7 @@ About the new airlock wires panel:
 				var/datum/organ/external/affecting = H.get_organ("head")
 				H.Stun(8)
 				H.Weaken(5)
-				if(affecting.take_damage(10, 0))
-					H.UpdateDamageIcon()
+				affecting.take_damage(10, 0)
 			else
 				visible_message("\red [user] headbutts the airlock. Good thing they're wearing a helmet.")
 			return

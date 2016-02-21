@@ -1,145 +1,194 @@
 /datum/preferences/proc/ShowGeneral(mob/user)
-	. = "<table cellpadding='5' cellspacing='0'><tr><td width='340px' height='320px' valign='top'>"
+	. =  "<table cellspacing='0' width='100%'>"	//Main body table start
+	. += 	"<tr>"
+	. += 		"<td width='340px' height='320px'>"
+
 	//General
-	. += "<b>Name:</b> "
-	. += "<a href='?_src_=prefs;preference=name;task=input'><b>[real_name]</b></a><br>"
-	. += "(<a href='?_src_=prefs;preference=name;task=random'>Random Name</A>) "
-	. += "(<a href='?_src_=prefs;preference=name'>Always Random Name: [be_random_name ? "Yes" : "No"]</a>)<br>"
-	. += "<br><b>Gender:</b> <a href='?_src_=prefs;preference=gender'><b>[gender == MALE ? "Male" : "Female"]</b></a><br>"
-	. += "<b>Age:</b> <a href='?_src_=prefs;preference=age;task=input'>[age]</a><br>"
-	. += "<b>Randomized Character Slot:</b> <a href='?_src_=prefs;preference=randomslot'><b>[randomslot ? "Yes" : "No"]</b></a>"
-	. += "<br><br>"
+	. += 			"<table width='100%' cellpadding='5' cellspacing='0'>"	//General table start
+	. += 				"<tr valign='top'>"
+	. += 					"<td colspan='2'>"
+	. += 						"<b>Name:</b> "
+	. += 						"<a href='?_src_=prefs;preference=name;task=input'><b>[real_name]</b></a>"
+	. += 						"<br>(<a href='?_src_=prefs;preference=name;task=random'>Random Name</A>) "
+	. += 						"(<a href='?_src_=prefs;preference=name'>Always Random Name: [be_random_name ? "Yes" : "No"]</a>)"
+	. += 						"<br><b>Gender:</b> <a href='?_src_=prefs;preference=gender'><b>[gender == MALE ? "Male" : "Female"]</b></a>"
+	. += 						"<br><b>Age:</b> <a href='?_src_=prefs;preference=age;task=input'>[age]</a>"
+	. += 						"<br><b>Randomized Character Slot:</b> <a href='?_src_=prefs;preference=randomslot'><b>[randomslot ? "Yes" : "No"]</b></a>"
+	. += 						"<hr>"
+	. += 					"</td>"
+	. += 				"</tr>"
 
-	//Body
-	. += "<table><tr><td><b>Body</b> "
-	. += "(<a href='?_src_=prefs;preference=all;task=random'>&reg;</A>)<br>"
-	. += "Species: <a href='byond://?src=\ref[user];preference=species;task=input'>[species]</a><br>"
-	. += "Secondary Language: <a href='byond://?src=\ref[user];preference=language;task=input'>[language]</a><br>"
-	. += "Blood Type: <a href='byond://?src=\ref[user];preference=b_type;task=input'>[b_type]</a><br>"
-	. += "Skin Tone: <a href='?_src_=prefs;preference=s_tone;task=input'>[-s_tone + 35]/220</a><br>"
-	. += "Limbs: <a href='byond://?src=\ref[user];preference=limbs;task=input'>Adjust</a><br>"
-	. += "Internal Organs: <a href='byond://?src=\ref[user];preference=organs;task=input'>Adjust</a><br>"
+	//Charachter setup menu
+	. += 				"<tr>"
+	. += 					"<td>"
+	. += 						"<center>"
+	. += 						"<b>Charachter setup</b>"
+	. += 						"<br><br>"
+	. += 						"[submenu_type=="body"?"<b>Body</b>":"<a href=\"byond://?src=\ref[user];preference=body\">Body</a>"] - "
+	. += 						"[submenu_type=="appearance"?"<b>Appearance</b>":"<a href=\"byond://?src=\ref[user];preference=appearance\">Appearance</a>"] - "
+	. += 						"[submenu_type=="disabil_menu"?"<b>Disabilities</b>":"<a href=\"byond://?src=\ref[user];preference=disabil_menu\">Disabilities</a>"] - "
+	. += 						"[submenu_type=="gear"?"<b>Gear</b>":"<a href=\"byond://?src=\ref[user];preference=gear\">Gear</a>"]"
+	. += 						"</center>"
+	. += 						"<br>"
+	. += 						"<table border width='100%' bgcolor='F7F7F7' bordercolor='838383' cellspacing='0'>"	//Submenu table start
+	. += 							"<tr valign='top'>"
+	. += 								"<td height='180px'>"
 
-	//(display limbs below)
-	var/ind = 0
-	for(var/name in organ_data)
-		//world << "[ind] \ [organ_data.len]"
-		var/status = organ_data[name]
-		var/organ_name = null
-		switch(name)
-			if("l_arm")
-				organ_name = "left arm"
-			if("r_arm")
-				organ_name = "right arm"
-			if("l_leg")
-				organ_name = "left leg"
-			if("r_leg")
-				organ_name = "right leg"
-			if("l_foot")
-				organ_name = "left foot"
-			if("r_foot")
-				organ_name = "right foot"
-			if("l_hand")
-				organ_name = "left hand"
-			if("r_hand")
-				organ_name = "right hand"
-			if("heart")
-				organ_name = "heart"
-			if("eyes")
-				organ_name = "eyes"
+	switch(submenu_type)	//Submenu
+		//Body
+		if("body")
+			. += "<b>Body</b> "
+			. += "<br>(<a href='?_src_=prefs;preference=all;task=random'>&reg;</A>)"
+			. += "<br>Species: <a href='byond://?src=\ref[user];preference=species;task=input'>[species]</a>"
+			. += "<br>Secondary Language: <a href='byond://?src=\ref[user];preference=language;task=input'>[language]</a>"
+			. += "<br>Blood Type: <a href='byond://?src=\ref[user];preference=b_type;task=input'>[b_type]</a>"
+			. += "<br>Skin Tone: <a href='?_src_=prefs;preference=s_tone;task=input'>[-s_tone + 35]/220</a>"
+			. += "<br>Limbs: <a href='byond://?src=\ref[user];preference=limbs;task=input'>Adjust</a>"
+			. += "<br>Internal Organs: <a href='byond://?src=\ref[user];preference=organs;task=input'>Adjust</a>"
+			. += "<br>"
 
-		if(status == "cyborg")
-			++ind
-			if(ind > 1)
-				. += ", "
-			. += "\tMechanical [organ_name] prothesis"
-		else if(status == "amputated")
-			++ind
-			if(ind > 1)
-				. += ", "
-			. += "\tAmputated [organ_name]"
-		else if(status == "mechanical")
-			++ind
-			if(ind > 1)
-				. += ", "
-			. += "\tMechanical [organ_name]"
-		else if(status == "assisted")
-			++ind
-			if(ind > 1)
-				. += ", "
-			switch(organ_name)
-				if("heart")
-					. += "\tPacemaker-assisted [organ_name]"
-				if("voicebox") //on adding voiceboxes for speaking skrell/similar replacements
-					. += "\tSurgically altered [organ_name]"
-				if("eyes")
-					. += "\tRetinal overlayed [organ_name]"
-				else
-					. += "\tMechanically assisted [organ_name]"
-	if(!ind)
-		. += "\[...\]<br><br>"
-	else
-		. += "<br><br>"
+			//(display limbs below)
+			var/ind = 0
+			for(var/name in organ_data)
+				//world << "[ind] \ [organ_data.len]"
+				var/status = organ_data[name]
+				var/organ_name = null
+				switch(name)
+					if("l_arm")
+						organ_name = "left arm"
+					if("r_arm")
+						organ_name = "right arm"
+					if("l_leg")
+						organ_name = "left leg"
+					if("r_leg")
+						organ_name = "right leg"
+					if("l_foot")
+						organ_name = "left foot"
+					if("r_foot")
+						organ_name = "right foot"
+					if("l_hand")
+						organ_name = "left hand"
+					if("r_hand")
+						organ_name = "right hand"
+					if("heart")
+						organ_name = "heart"
+					if("eyes")
+						organ_name = "eyes"
 
-	//Adjustment
-	. += "<b>Disabilities:</b>"
-	. += "<br>"
-	. += ShowDisabilityState(user,DISABILITY_NEARSIGHTED,"Needs Glasses")
-	. += ShowDisabilityState(user,DISABILITY_COUGHING,"Coughing")
-	. += ShowDisabilityState(user,DISABILITY_EPILEPTIC,"Seizures")
-	. += ShowDisabilityState(user,DISABILITY_TOURETTES,"Tourettes/Twitching")
-	. += ShowDisabilityState(user,DISABILITY_NERVOUS,"Nervousness")
-	. += "<br>"
+				if(status == "cyborg")
+					++ind
+					if(ind > 1)
+						. += ", "
+					. += "\tMechanical [organ_name] prothesis"
+				else if(status == "amputated")
+					++ind
+					if(ind > 1)
+						. += ", "
+					. += "\tAmputated [organ_name]"
+				else if(status == "mechanical")
+					++ind
+					if(ind > 1)
+						. += ", "
+					. += "\tMechanical [organ_name]"
+				else if(status == "assisted")
+					++ind
+					if(ind > 1)
+						. += ", "
+					switch(organ_name)
+						if("heart")
+							. += "\tPacemaker-assisted [organ_name]"
+						if("voicebox") //on adding voiceboxes for speaking skrell/similar replacements
+							. += "\tSurgically altered [organ_name]"
+						if("eyes")
+							. += "\tRetinal overlayed [organ_name]"
+						else
+							. += "\tMechanically assisted [organ_name]"
+			if(!ind)
+				. += "\[...\]"
 
-	//Gear
-	. += "<b>Gear:</b><br>"
-	if(gender == MALE)
-		. += "Underwear: <a href ='?_src_=prefs;preference=underwear;task=input'><b>[underwear_m[underwear]]</b></a><br>"
-	else
-		. += "Underwear: <a href ='?_src_=prefs;preference=underwear;task=input'><b>[underwear_f[underwear]]</b></a><br>"
-	. += "Undershirt: <a href='?_src_=prefs;preference=undershirt;task=input'><b>[undershirt_t[undershirt]]</b></a><br>"
-	. += "Backpack Type: <a href ='?_src_=prefs;preference=bag;task=input'><b>[backbaglist[backbag]]</b></a><br>"
+		//Appearance
+		if("appearance")
+			. += "<b>Hair</b>"
+			. += "<br><a href='?_src_=prefs;preference=hair;task=input'>Change Color</a> <font face='fixedsys' size='3' color='#[num2hex(r_hair, 2)][num2hex(g_hair, 2)][num2hex(b_hair, 2)]'><table border cellspacing='0' style='display:inline;' bgcolor='#[num2hex(r_hair, 2)][num2hex(g_hair, 2)][num2hex(b_hair)]'><tr><td width='20' height='15'></td></tr></table></font>"
+			. += " Style: <a href='?_src_=prefs;preference=h_style;task=input'>[h_style]</a><br>"
+			. += "<b>Facial</b>"
+			. += "<br><a href='?_src_=prefs;preference=facial;task=input'>Change Color</a> <font face='fixedsys' size='3' color='#[num2hex(r_facial, 2)][num2hex(g_facial, 2)][num2hex(b_facial, 2)]'><table border cellspacing='0' style='display:inline;' bgcolor='#[num2hex(r_facial, 2)][num2hex(g_facial, 2)][num2hex(b_facial)]'><tr><td width='20' height='15'></td></tr></table></font>"
+			. += " Style: <a href='?_src_=prefs;preference=f_style;task=input'>[f_style]</a><br>"
+			. += "<b>Eyes</b>"
+			. += "<br><a href='?_src_=prefs;preference=eyes;task=input'>Change Color</a> <font face='fixedsys' size='3' color='#[num2hex(r_eyes, 2)][num2hex(g_eyes, 2)][num2hex(b_eyes, 2)]'><table border cellspacing='0' style='display:inline;' bgcolor='#[num2hex(r_eyes, 2)][num2hex(g_eyes, 2)][num2hex(b_eyes)]'><tr><td width='20' height='15'></td></tr></table></font><br>"
+			. += "<b>Body Color</b>"
+			. += "<br><a href='?_src_=prefs;preference=skin;task=input'>Change Color</a> <font face='fixedsys' size='3' color='#[num2hex(r_skin, 2)][num2hex(g_skin, 2)][num2hex(b_skin, 2)]'><table border cellspacing='0' style='display:inline;' bgcolor='#[num2hex(r_skin, 2)][num2hex(g_skin, 2)][num2hex(b_skin)]'><tr><td width='20' height='15'></td></tr></table></font>"
+
+		//Adjustment
+		if("disabil_menu")
+			. += "<b>Disabilities:</b>"
+			. += "<br>"
+			. += ShowDisabilityState(user,DISABILITY_NEARSIGHTED,"Needs Glasses")
+			. += ShowDisabilityState(user,DISABILITY_COUGHING,"Coughing")
+			. += ShowDisabilityState(user,DISABILITY_EPILEPTIC,"Seizures")
+			. += ShowDisabilityState(user,DISABILITY_TOURETTES,"Twitching")
+			. += ShowDisabilityState(user,DISABILITY_NERVOUS,"Nervousness")
+
+		//Gear
+		if("gear")
+			. += "<b>Gear:</b><br>"
+			if(gender == MALE)
+				. += "Underwear: <a href ='?_src_=prefs;preference=underwear;task=input'>[underwear_m[underwear]]</a><br>"
+			else
+				. += "Underwear: <a href ='?_src_=prefs;preference=underwear;task=input'>[underwear_f[underwear]]</a><br>"
+			. += "Undershirt: <a href='?_src_=prefs;preference=undershirt;task=input'>[undershirt_t[undershirt]]</a><br>"
+			. += "Backpack Type: <a href ='?_src_=prefs;preference=bag;task=input'>[backbaglist[backbag]]</a>"
+
+	. += 								"</td>"
+	. += 							"</tr>"
+	. += 						"</table>"	//Submenu table end
+	. += 					"</td>"
+	. += 				"</tr>"
 
 	//Preview image
-	. += "</td><td><center><b>Preview</b></center><br><img src=previewicon.png height=64 width=64><img src=previewicon2.png height=64 width=64></td></tr></table>"
+	. += 				"<tr>"
+	. += 					"<td align='center'>"
+	. += 						"<b>Preview</b><br><img src=previewicon.png width=[preview_icon.Width()] height=[preview_icon.Height()]>"
+	. += 					"</td>"
+	. += 				"</tr>"
+	. += 			"</table>"	//General table end
+	. += 		"</td>"
 
-	. += "</td><td width='300px' height='300px' valign='top'>"
-
-	//Appearance
-	. += "<b>Hair</b><br>"
-	. += "<a href='?_src_=prefs;preference=hair;task=input'>Change Color</a> <font face='fixedsys' size='3' color='#[num2hex(r_hair, 2)][num2hex(g_hair, 2)][num2hex(b_hair, 2)]'><table cellspacing='0' style='display:inline;' bgcolor='#[num2hex(r_hair, 2)][num2hex(g_hair, 2)][num2hex(b_hair)]'><tr><td width='20' height='15'></td></tr></table></font> "
-	. += " Style: <a href='?_src_=prefs;preference=h_style;task=input'>[h_style]</a><br>"
-	. += "<br><b>Facial</b><br>"
-	. += "<a href='?_src_=prefs;preference=facial;task=input'>Change Color</a> <font face='fixedsys' size='3' color='#[num2hex(r_facial, 2)][num2hex(g_facial, 2)][num2hex(b_facial, 2)]'><table cellspacing='0' style='display:inline;' bgcolor='#[num2hex(r_facial, 2)][num2hex(g_facial, 2)][num2hex(b_facial)]'><tr><td width='20' height='15'></td></tr></table></font> "
-	. += " Style: <a href='?_src_=prefs;preference=f_style;task=input'>[f_style]</a><br>"
-	. += "<br><b>Eyes</b><br>"
-	. += "<a href='?_src_=prefs;preference=eyes;task=input'>Change Color</a> <font face='fixedsys' size='3' color='#[num2hex(r_eyes, 2)][num2hex(g_eyes, 2)][num2hex(b_eyes, 2)]'><table cellspacing='0' style='display:inline;' bgcolor='#[num2hex(r_eyes, 2)][num2hex(g_eyes, 2)][num2hex(b_eyes)]'><tr><td width='20' height='15'></td></tr></table></font><br>"
-	. += "<br><b>Body Color</b><br>"
-	. += "<a href='?_src_=prefs;preference=skin;task=input'>Change Color</a> <font face='fixedsys' size='3' color='#[num2hex(r_skin, 2)][num2hex(g_skin, 2)][num2hex(b_skin, 2)]'><table cellspacing='0' style='display:inline;' bgcolor='#[num2hex(r_skin, 2)][num2hex(g_skin, 2)][num2hex(b_skin)]'><tr><td width='20' height='15'></td></tr></table></font>"
+	. += 		"<td width='300px' height='300px' valign='top'>"
+	. += 			"<table width='100%' cellpadding='5'>"	//Backstory table start
+	. += 				"<tr>"
+	. += 					"<td>"
 
 	//Backstory
-	. += "<br><br><br>"
-	. += "<b>Background information:</b><br>"
-	. += "Nanotrasen Relation: <a href ='?_src_=prefs;preference=nt_relation;task=input'>[nanotrasen_relation]</a><br>"
-	. += "Home system</b>: <a href='byond://?src=\ref[user];preference=home_system;task=input'>[home_system]</a><br/>"
-	. += "Citizenship</b>: <a href='byond://?src=\ref[user];preference=citizenship;task=input'>[citizenship]</a><br/>"
-	. += "Faction: <a href='byond://?src=\ref[user];preference=faction;task=input'>[faction]</a><br/>"
-	. += "Religion: <a href='byond://?src=\ref[user];preference=religion;task=input'>[religion]</a><br/>"
+	. += 						"<b>Background information:</b>"
+	. += 						"<br>Nanotrasen Relation: <a href ='?_src_=prefs;preference=nt_relation;task=input'>[nanotrasen_relation]</a>"
+	. += 						"<br>Home system</b>: <a href='byond://?src=\ref[user];preference=home_system;task=input'>[home_system]</a>"
+	. += 						"<br>Citizenship</b>: <a href='byond://?src=\ref[user];preference=citizenship;task=input'>[citizenship]</a>"
+	. += 						"<br>Faction: <a href='byond://?src=\ref[user];preference=faction;task=input'>[faction]</a>"
+	. += 						"<br>Religion: <a href='byond://?src=\ref[user];preference=religion;task=input'>[religion]</a>"
+	. += 						"<br>"
 
 	if(jobban_isbanned(user, "Records"))
-		. += "<br><b>You are banned from using character records.</b><br>"
+		. += 					"<br><b>You are banned from using character records.</b><br>"
 	else
-		. += "<br><b>Records:</b><br>"
-		. += "Medical Records:<br>"
-		. += "<a href=\"byond://?src=\ref[user];preference=records;task=med_record\">[length(med_record)>0?"[sanitize_popup(copytext(med_record, 1, 37))]...":"\[...\]"]</a><br>"
-		. += "Security Records:<br>"
-		. += "<a href=\"byond://?src=\ref[user];preference=records;task=sec_record\">[length(sec_record)>0?"[sanitize_popup(copytext(sec_record, 1, 37))]...":"\[...\]"]</a><br>"
-		. += "Employment Records:<br>"
-		. += "<a href=\"byond://?src=\ref[user];preference=records;task=gen_record\">[length(gen_record)>0?"[sanitize_popup(copytext(gen_record, 1, 37))]...":"\[...\]"]</a><br>"
+		. += 					"<br><b>Records:</b><br>"
+		. += 					"<br>Medical Records:"
+		. += 					" <a href=\"byond://?src=\ref[user];preference=records;task=med_record\">[length(med_record)>0?"[sanitize_popup(copytext(med_record, 1, 3))]...":"\[...\]"]</a>"
+		. += 					"<br>Security Records:"
+		. += 					" <a href=\"byond://?src=\ref[user];preference=records;task=sec_record\">[length(sec_record)>0?"[sanitize_popup(copytext(sec_record, 1, 3))]...":"\[...\]"]</a>"
+		. += 					"<br>Employment Records:"
+		. += 					" <a href=\"byond://?src=\ref[user];preference=records;task=gen_record\">[length(gen_record)>0?"[sanitize_popup(copytext(gen_record, 1, 3))]...":"\[...\]"]</a>"
 
-	. += "<br><b>Flavor:</b><br>"
-	. += "<a href='byond://?src=\ref[user];preference=flavor_text;task=input'>[length(flavor_text)>0?"[sanitize_popup(copytext(flavor_text, 1, 37))]...":"\[...\]"]</a><br><br>"
-	. += "</td></tr></table>"
+	. += 						"<br><br>"
+
+	. += 						"<b>Flavor:</b>"
+	. += 						" <a href='byond://?src=\ref[user];preference=flavor_text;task=input'>[length(flavor_text)>0?"[sanitize_popup(copytext(flavor_text, 1, 3))]...":"\[...\]"]</a>"
+	. += 					"</td>"
+	. += 				"</tr>"
+	. += 			"</table>"	//Backstory table end
+	. += 		"</td>"
+	. += 	"</tr>"
+	. += "</table>"	//Main body table end
 
 
 /datum/preferences/proc/ShowDisabilityState(mob/user,flag,label)
@@ -242,49 +291,8 @@
 					species = input("Please select a species", "Character Generation", null) in new_species
 
 					if(prev_species != species)
-						//grab one of the valid hair styles for the newly chosen species
-						var/list/valid_hairstyles = list()
-						for(var/hairstyle in hair_styles_list)
-							var/datum/sprite_accessory/S = hair_styles_list[hairstyle]
-							if(gender == MALE && S.gender == FEMALE)
-								continue
-							if(gender == FEMALE && S.gender == MALE)
-								continue
-							if( !(species in S.species_allowed))
-								continue
-							valid_hairstyles[hairstyle] = hair_styles_list[hairstyle]
-
-						if(valid_hairstyles.len)
-							h_style = pick(valid_hairstyles)
-						else
-							//this shouldn't happen
-							h_style = hair_styles_list["Bald"]
-
-						//grab one of the valid facial hair styles for the newly chosen species
-						var/list/valid_facialhairstyles = list()
-						for(var/facialhairstyle in facial_hair_styles_list)
-							var/datum/sprite_accessory/S = facial_hair_styles_list[facialhairstyle]
-							if(gender == MALE && S.gender == FEMALE)
-								continue
-							if(gender == FEMALE && S.gender == MALE)
-								continue
-							if( !(species in S.species_allowed))
-								continue
-
-							valid_facialhairstyles[facialhairstyle] = facial_hair_styles_list[facialhairstyle]
-
-						if(valid_facialhairstyles.len)
-							f_style = pick(valid_facialhairstyles)
-						else
-							//this shouldn't happen
-							f_style = facial_hair_styles_list["Shaved"]
-
-						//reset hair colour and skin colour
-						r_hair = 0//hex2num(copytext(new_hair, 2, 4))
-						g_hair = 0//hex2num(copytext(new_hair, 4, 6))
-						b_hair = 0//hex2num(copytext(new_hair, 6, 8))
-
-						s_tone = 0
+						f_style = random_facial_hair_style(gender, species)
+						h_style = random_hair_style(gender, species)
 
 				if("language")
 					var/languages_available
@@ -331,7 +339,12 @@
 					for(var/hairstyle in hair_styles_list)
 						var/datum/sprite_accessory/S = hair_styles_list[hairstyle]
 						if( !(species in S.species_allowed))
-							continue
+							if(gender == MALE && S.gender == FEMALE)
+								continue
+							if(gender == FEMALE && S.gender == MALE)
+								continue
+							if(!(species in S.species_allowed))
+								continue
 
 						valid_hairstyles[hairstyle] = hair_styles_list[hairstyle]
 
@@ -354,7 +367,7 @@
 							continue
 						if(gender == FEMALE && S.gender == MALE)
 							continue
-						if( !(species in S.species_allowed))
+						if(!(species in S.species_allowed))
 							continue
 
 						valid_facialhairstyles[facialhairstyle] = facial_hair_styles_list[facialhairstyle]
@@ -548,6 +561,9 @@
 					else
 						gender = MALE
 
+					f_style = random_facial_hair_style(gender, species)
+					h_style = random_hair_style(gender, species)
+
 				if("disabilities")				//please note: current code only allows nearsightedness as a disability
 					disabilities = !disabilities//if you want to add actual disabilities, code that selects them should be here
 
@@ -556,3 +572,15 @@
 
 				if("name")
 					be_random_name = !be_random_name
+
+				if("body")
+					submenu_type = "body"
+
+				if("appearance")
+					submenu_type = "appearance"
+
+				if("disabil_menu")
+					submenu_type = "disabil_menu"
+
+				if("gear")
+					submenu_type = "gear"

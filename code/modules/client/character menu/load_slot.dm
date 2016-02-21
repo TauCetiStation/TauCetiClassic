@@ -13,4 +13,4 @@
 				name = "<b>[name]</b>"
 			. += "<a href='?_src_=prefs;preference=changeslot;num=[i];'>[name]</a><br>"
 		. += "<br><br><b>Charachter preview:</b>"
-		. += "<br><img src=previewicon.png height=72 width=72><img src=previewicon2.png height=72 width=72></center>"
+		. += "<br><img src=previewicon.png width=[preview_icon.Width()] height=[preview_icon.Height()]></center>"
