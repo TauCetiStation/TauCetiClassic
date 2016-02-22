@@ -366,3 +366,16 @@ proc/tg_list2text(list/list, glue=",")
 			. = 0
 		else
 			. = max(0, min(255, 138.5177312231 * log(temp - 10) - 305.0447927307)) 
+
+//Converts a positive interger to its roman numeral equivilent. Ignores any decimals.
+//Numbers over 3999 will display with extra "M"s (don't tell the Romans) and can get comically long, so be careful.
+/proc/num2roman(A)
+	var/list/values = list("M" = 1000, "CM" = 900, "D" = 500, "CD" = 400, "C" = 100, "XC" = 90, "L" = 50, "XL" = 40, "X" = 10, "IX" = 9, "V" = 5, "IV" = 4, "I" = 1)
+	if(!A || !isnum(A))
+		return 0
+	while(A >= 1)
+		for(var/i in values)
+			if(A >= values[i])
+				. += i
+				A -= values[i]
+				break
