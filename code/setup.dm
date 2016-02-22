@@ -355,10 +355,6 @@ var/MAX_EXPLOSION_RANGE = 14
 #define SHOCKWAVE		19 	// attack a nearby tile and cause a massive shockwave, knocking most people on their asses (25%)
 #define ELECTRICITY		20 	// ability to shoot electric attacks (15%)
 
-	//2spooky
-#define SKELETON 29
-#define PLANT 30
-
 // Other Mutations:
 #define mNobreath		100 	// no need to breathe
 #define mRemote			101 	// remote viewing

@@ -133,7 +133,6 @@
 				H << "\red You land heavily!"
 				H.adjustBruteLoss(damage)
 
-			H.UpdateDamageIcon()
 			H.updatehealth()
 	return
 

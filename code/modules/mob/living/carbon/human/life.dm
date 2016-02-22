@@ -1098,18 +1098,18 @@
 				src << "\blue You feel fit again!"
 				mutations.Remove(FAT)
 				update_body()
-				update_mutantrace(0)
-				update_mutations(0)
-				update_inv_w_uniform(0)
+				update_mutantrace()
+				update_mutations()
+				update_inv_w_uniform()
 				update_inv_wear_suit()
 		else
 			if(overeatduration > 500 && !(species.flags & IS_SYNTHETIC) && !(species.flags & IS_PLANT))
 				src << "\red You suddenly feel blubbery!"
 				mutations.Add(FAT)
 				update_body()
-				update_mutantrace(0)
-				update_mutations(0)
-				update_inv_w_uniform(0)
+				update_mutantrace()
+				update_mutations()
+				update_inv_w_uniform()
 				update_inv_wear_suit()
 
 

@@ -205,16 +205,16 @@ var/list/slot_equipment_priority = list( \
 /mob/proc/u_equip(obj/W as obj)
 	if (W == r_hand)
 		r_hand = null
-		update_inv_r_hand(0)
+		update_inv_r_hand()
 	else if (W == l_hand)
 		l_hand = null
-		update_inv_l_hand(0)
+		update_inv_l_hand()
 	else if (W == back)
 		back = null
-		update_inv_back(0)
+		update_inv_back()
 	else if (W == wear_mask)
 		wear_mask = null
-		update_inv_wear_mask(0)
+		update_inv_wear_mask()
 	return
 
 //This differs from remove_from_mob() in that it checks canremove first.
@@ -225,7 +225,7 @@ var/list/slot_equipment_priority = list( \
 	if(!I.canremove && !force)
 		return 0
 
-	remove_from_mob(I)
+	drop_from_inventory(I)
 	return 1
 
 //Attemps to remove an object on a mob.  Will not move it to another area or such, just removes from the mob.
