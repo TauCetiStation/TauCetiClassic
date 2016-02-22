@@ -129,9 +129,7 @@
 	for(var/datum/mind/meme in memes)
 		var/mob/living/parasite/meme/M = new
 		var/mob/original = meme.current
-		var/meme_death_buffer = "heh"
 		M.meme_death = pick ("stoxin", "bdam", "holywater", "mindbreaker", "beer", "burns")
-		meme_death_buffer = M.meme_death
 		meme.transfer_to(M)
 		M.clearHUD()
 
@@ -148,7 +146,7 @@
 			first_host = pick(first_hosts)
 			first_hosts.Remove(first_host)*/
 
-		forge_meme_objectives(meme, meme_death_buffer)
+		forge_meme_objectives(meme)
 
 		qdel(original)
 
@@ -160,7 +158,7 @@
 	return
 
 
-/datum/game_mode/proc/forge_meme_objectives(var/datum/mind/meme, var/meme_death_buffer, var/datum/mind/first_host)
+/datum/game_mode/proc/forge_meme_objectives(var/datum/mind/meme, var/datum/mind/first_host)
 	if (config.objectives_disabled)
 		return
 
@@ -185,27 +183,28 @@
 /*	for(var/datum/objective/o in SelectObjectives(job, meme))
 		o.owner = meme
 		meme.objectives += o */
-	greet_meme(meme, meme_death_buffer)
+	greet_meme(meme)
 	return
 
-/datum/game_mode/proc/greet_meme(var/datum/mind/meme, var/meme_death_buffer, var/you_are=1)
+/datum/game_mode/proc/greet_meme(var/datum/mind/meme, var/you_are=1)
 	if (you_are)
 		var/meme_death_explained = "sleep toxin"
-		if (meme_death_buffer == "stoxin")
+		var/mob/living/parasite/meme/M = meme.current
+		if (M.meme_death == "stoxin")
 			meme_death_explained = "sleep toxin"
-		if (meme_death_buffer == "bdam")
+		if (M.meme_death == "bdam")
 			meme_death_explained = "brain"
-		if (meme_death_buffer == "holywater")
+		if (M.meme_death == "holywater")
 			meme_death_explained = "holy water"
-		if (meme_death_buffer == "mindbreaker")
+		if (M.meme_death == "mindbreaker")
 			meme_death_explained = "mind breaking drug"
-		if (meme_death_buffer == "beer")
+		if (M.meme_death == "beer")
 			meme_death_explained = "firewater"
-		if (meme_death_buffer == "burns")
+		if (M.meme_death == "burns")
 			meme_death_explained = "fire"
 		meme.current << "<B>You are a <span class = 'red'>meme</span>!</B>"
 		meme.current << "<B>Your death is in <span class = 'red'>[meme_death_explained]</span>!</B>"
-		meme.store_memory("<B>Your death is in: [meme_death_explained]!</B>", 0, 0)
+		meme.store_memory("<B>Your death is in [meme_death_explained]!</B>", 0, 0)
 
 	var/obj_count = 1
 	for(var/datum/objective/objective in meme.objectives)
