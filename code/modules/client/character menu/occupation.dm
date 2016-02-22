@@ -5,8 +5,18 @@
 	if(!job_master)
 		return
 	. = "<tt><center>"
-	. += "<b>Choose occupation chances</b><br>Unavailable occupations are crossed out.<br><br>"
-	. += "<table width='100%' cellpadding='1' cellspacing='0'><tr><td width='20%'>" // Table within a table for alignment, also allows you to easily add more colomns.
+
+	switch(alternate_option)
+		if(GET_RANDOM_JOB)
+			. += "<u><a href='?_src_=prefs;preference=job;task=random'><font color=green>Get random job if preferences unavailable</font></a></u>"
+		if(BE_ASSISTANT)
+			. += "<u><a href='?_src_=prefs;preference=job;task=random'><font color=red>Be assistant if preference unavailable</font></a></u>"
+		if(RETURN_TO_LOBBY)
+			. += "<u><a href='?_src_=prefs;preference=job;task=random'><font color=purple>Return to lobby if preference unavailable</font></a></u>"
+
+	. += "<br><a href='?_src_=prefs;preference=job;task=reset'>\[Reset\]</a>"
+
+	. += "<table width='100%' cellpadding='1' cellspacing='0' style='margin-top:10px'><tr><td width='20%'>" // Table within a table for alignment, also allows you to easily add more colomns.
 	. += "<table width='100%' cellpadding='1' cellspacing='0'>"
 	var/index = -1
 
@@ -70,19 +80,10 @@
 			. += "</a></td></tr><tr bgcolor='[lastJob.selection_color]'><td width='60%' align='center'><a>&nbsp</a></td><td><a href=\"byond://?src=\ref[user];preference=job;task=alt_title;job=\ref[job]\">\[[GetPlayerAltTitle(job)]\]</a></td></tr>"
 		. += "</a></td></tr>"
 
-	. += "</td'></tr></table>"
+	. += "</td></tr></table>"
 
 	. += "</center></table>"
 
-	switch(alternate_option)
-		if(GET_RANDOM_JOB)
-			. += "<center><br><u><a href='?_src_=prefs;preference=job;task=random'><font color=green>Get random job if preferences unavailable</font></a></u></center><br>"
-		if(BE_ASSISTANT)
-			. += "<center><br><u><a href='?_src_=prefs;preference=job;task=random'><font color=red>Be assistant if preference unavailable</font></a></u></center><br>"
-		if(RETURN_TO_LOBBY)
-			. += "<center><br><u><a href='?_src_=prefs;preference=job;task=random'><font color=purple>Return to lobby if preference unavailable</font></a></u></center><br>"
-
-	. += "<center><a href='?_src_=prefs;preference=job;task=reset'>\[Reset\]</a></center>"
 	. += "</tt>"
 
 /datum/preferences/proc/process_link_occupation(mob/user, list/href_list)

@@ -1,7 +1,7 @@
 /datum/preferences/proc/ShowGeneral(mob/user)
 	. =  "<table cellspacing='0' width='100%'>"	//Main body table start
 	. += 	"<tr>"
-	. += 		"<td width='340px' height='320px'>"
+	. += 		"<td width='340px' height='320px' style='padding-left:25px'>"
 
 	//General
 	. += 			"<table width='100%' cellpadding='5' cellspacing='0'>"	//General table start
@@ -9,43 +9,49 @@
 	. += 					"<td colspan='2'>"
 	. += 						"<b>Name:</b> "
 	. += 						"<a href='?_src_=prefs;preference=name;task=input'><b>[real_name]</b></a>"
-	. += 						"<br>(<a href='?_src_=prefs;preference=name;task=random'>Random Name</A>) "
+	. += 						"<br>(<a href='?_src_=prefs;preference=name;task=random'>Random Name</a>)"
 	. += 						"(<a href='?_src_=prefs;preference=name'>Always Random Name: [be_random_name ? "Yes" : "No"]</a>)"
-	. += 						"<br><b>Gender:</b> <a href='?_src_=prefs;preference=gender'><b>[gender == MALE ? "Male" : "Female"]</b></a>"
+	. += 						"<table width='100%' cellpadding='1' cellspacing='0'>"
+	. += 							"<td background='dossier_photos.png' style='background-repeat: no-repeat'>"
+	. += 							"<img src=previewicon.png width=[preview_icon.Width()] height=[preview_icon.Height()]>"
+	. += 							"</td>"
+	. += 						"</table>"
+	. += 						"<b>Gender:</b> <a href='?_src_=prefs;preference=gender'><b>[gender == MALE ? "Male" : "Female"]</b></a>"
 	. += 						"<br><b>Age:</b> <a href='?_src_=prefs;preference=age;task=input'>[age]</a>"
 	. += 						"<br><b>Randomized Character Slot:</b> <a href='?_src_=prefs;preference=randomslot'><b>[randomslot ? "Yes" : "No"]</b></a>"
 	. += 						"<hr>"
 	. += 					"</td>"
 	. += 				"</tr>"
 
-	//Charachter setup menu
+	//Character setup menu
 	. += 				"<tr>"
 	. += 					"<td>"
 	. += 						"<center>"
-	. += 						"<b>Charachter setup</b>"
-	. += 						"<br><br>"
+	. += 						"<b>Character setup</b>"
+	. += 						"<br>"
 	. += 						"[submenu_type=="body"?"<b>Body</b>":"<a href=\"byond://?src=\ref[user];preference=body\">Body</a>"] - "
+	. += 						"[submenu_type=="organs"?"<b>Organs</b>":"<a href=\"byond://?src=\ref[user];preference=organs\">Organs</a>"] - "
 	. += 						"[submenu_type=="appearance"?"<b>Appearance</b>":"<a href=\"byond://?src=\ref[user];preference=appearance\">Appearance</a>"] - "
 	. += 						"[submenu_type=="disabil_menu"?"<b>Disabilities</b>":"<a href=\"byond://?src=\ref[user];preference=disabil_menu\">Disabilities</a>"] - "
 	. += 						"[submenu_type=="gear"?"<b>Gear</b>":"<a href=\"byond://?src=\ref[user];preference=gear\">Gear</a>"]"
 	. += 						"</center>"
 	. += 						"<br>"
-	. += 						"<table border width='100%' bgcolor='F7F7F7' bordercolor='838383' cellspacing='0'>"	//Submenu table start
+	. += 						"<table border width='100%' background='opacity7.png' bordercolor='5A6E7D' cellspacing='0'>"	//Submenu table start
 	. += 							"<tr valign='top'>"
 	. += 								"<td height='180px'>"
 
 	switch(submenu_type)	//Submenu
 		//Body
 		if("body")
-			. += "<b>Body</b> "
-			. += "<br>(<a href='?_src_=prefs;preference=all;task=random'>&reg;</A>)"
+			. += "Body: <a href='?_src_=prefs;preference=all;task=random'>&reg;</a>"
 			. += "<br>Species: <a href='byond://?src=\ref[user];preference=species;task=input'>[species]</a>"
 			. += "<br>Secondary Language: <a href='byond://?src=\ref[user];preference=language;task=input'>[language]</a>"
 			. += "<br>Blood Type: <a href='byond://?src=\ref[user];preference=b_type;task=input'>[b_type]</a>"
 			. += "<br>Skin Tone: <a href='?_src_=prefs;preference=s_tone;task=input'>[-s_tone + 35]/220</a>"
-			. += "<br>Limbs: <a href='byond://?src=\ref[user];preference=limbs;task=input'>Adjust</a>"
-			. += "<br>Internal Organs: <a href='byond://?src=\ref[user];preference=organs;task=input'>Adjust</a>"
-			. += "<br>"
+
+		//Organs
+		if("organs")
+			. += "Limbs & Internal Organs: <a href='byond://?src=\ref[user];preference=organs;task=input'>Adjust</a>"
 
 			//(display limbs below)
 			var/ind = 0
@@ -77,34 +83,26 @@
 
 				if(status == "cyborg")
 					++ind
-					if(ind > 1)
-						. += ", "
-					. += "\tMechanical [organ_name] prothesis"
+					. += "<li>Mechanical [organ_name] prothesis</li>"
 				else if(status == "amputated")
 					++ind
-					if(ind > 1)
-						. += ", "
-					. += "\tAmputated [organ_name]"
+					. += "<li>Amputated [organ_name]</li>"
 				else if(status == "mechanical")
 					++ind
-					if(ind > 1)
-						. += ", "
-					. += "\tMechanical [organ_name]"
+					. += "<li>Mechanical [organ_name]</li>"
 				else if(status == "assisted")
 					++ind
-					if(ind > 1)
-						. += ", "
 					switch(organ_name)
 						if("heart")
-							. += "\tPacemaker-assisted [organ_name]"
+							. += "<li>Pacemaker-assisted [organ_name]</li>"
 						if("voicebox") //on adding voiceboxes for speaking skrell/similar replacements
-							. += "\tSurgically altered [organ_name]"
+							. += "<li>Surgically altered [organ_name]</li>"
 						if("eyes")
-							. += "\tRetinal overlayed [organ_name]"
+							. += "<li>Retinal overlayed [organ_name]</li>"
 						else
-							. += "\tMechanically assisted [organ_name]"
+							. += "<li>Mechanically assisted [organ_name]</li>"
 			if(!ind)
-				. += "\[...\]"
+				. += "<br>\[...\]"
 
 		//Appearance
 		if("appearance")
@@ -145,12 +143,6 @@
 	. += 					"</td>"
 	. += 				"</tr>"
 
-	//Preview image
-	. += 				"<tr>"
-	. += 					"<td align='center'>"
-	. += 						"<b>Preview</b><br><img src=previewicon.png width=[preview_icon.Width()] height=[preview_icon.Height()]>"
-	. += 					"</td>"
-	. += 				"</tr>"
 	. += 			"</table>"	//General table end
 	. += 		"</td>"
 
@@ -171,7 +163,7 @@
 	if(jobban_isbanned(user, "Records"))
 		. += 					"<br><b>You are banned from using character records.</b><br>"
 	else
-		. += 					"<br><b>Records:</b><br>"
+		. += 					"<br><b>Records:</b>"
 		. += 					"<br>Medical Records:"
 		. += 					" <a href=\"byond://?src=\ref[user];preference=records;task=med_record\">[length(med_record)>0?"[sanitize_popup(copytext(med_record, 1, 3))]...":"\[...\]"]</a>"
 		. += 					"<br>Security Records:"
@@ -477,77 +469,82 @@
 					if(msg != null)
 						flavor_text = msg
 
-				if("limbs")
-					var/limb_name = input(user, "Which limb do you want to change?") as null|anything in list("Left Leg","Right Leg","Left Arm","Right Arm","Left Foot","Right Foot","Left Hand","Right Hand")
-					if(!limb_name) return
-
-					var/limb = null
-					var/second_limb = null // if you try to change the arm, the hand should also change
-					var/third_limb = null  // if you try to unchange the hand, the arm should also change
-					switch(limb_name)
-						if("Left Leg")
-							limb = "l_leg"
-							second_limb = "l_foot"
-						if("Right Leg")
-							limb = "r_leg"
-							second_limb = "r_foot"
-						if("Left Arm")
-							limb = "l_arm"
-							second_limb = "l_hand"
-						if("Right Arm")
-							limb = "r_arm"
-							second_limb = "r_hand"
-						if("Left Foot")
-							limb = "l_foot"
-							third_limb = "l_leg"
-						if("Right Foot")
-							limb = "r_foot"
-							third_limb = "r_leg"
-						if("Left Hand")
-							limb = "l_hand"
-							third_limb = "l_arm"
-						if("Right Hand")
-							limb = "r_hand"
-							third_limb = "r_arm"
-
-					var/new_state = input(user, "What state do you wish the limb to be in?") as null|anything in list("Normal","Amputated","Prothesis")
-					if(!new_state) return
-
-					switch(new_state)
-						if("Normal")
-							organ_data[limb] = null
-							if(third_limb)
-								organ_data[third_limb] = null
-						if("Amputated")
-							organ_data[limb] = "amputated"
-							if(second_limb)
-								organ_data[second_limb] = "amputated"
-						if("Prothesis")
-							organ_data[limb] = "cyborg"
-							if(second_limb)
-								organ_data[second_limb] = "cyborg"
-
 				if("organs")
-					var/organ_name = input(user, "Which internal function do you want to change?") as null|anything in list("Heart", "Eyes")
-					if(!organ_name) return
+					var/menu_type = input(user, "Menu") as null|anything in list("Limbs", "Internal Organs")
+					if(!menu_type) return
 
-					var/organ = null
-					switch(organ_name)
-						if("Heart")
-							organ = "heart"
-						if("Eyes")
-							organ = "eyes"
+					switch(menu_type)
+						if("Limbs")
+							var/limb_name = input(user, "Which limb do you want to change?") as null|anything in list("Left Leg","Right Leg","Left Arm","Right Arm","Left Foot","Right Foot","Left Hand","Right Hand")
+							if(!limb_name) return
 
-					var/new_state = input(user, "What state do you wish the organ to be in?") as null|anything in list("Normal","Assisted","Mechanical")
-					if(!new_state) return
+							var/limb = null
+							var/second_limb = null // if you try to change the arm, the hand should also change
+							var/third_limb = null  // if you try to unchange the hand, the arm should also change
+							switch(limb_name)
+								if("Left Leg")
+									limb = "l_leg"
+									second_limb = "l_foot"
+								if("Right Leg")
+									limb = "r_leg"
+									second_limb = "r_foot"
+								if("Left Arm")
+									limb = "l_arm"
+									second_limb = "l_hand"
+								if("Right Arm")
+									limb = "r_arm"
+									second_limb = "r_hand"
+								if("Left Foot")
+									limb = "l_foot"
+									third_limb = "l_leg"
+								if("Right Foot")
+									limb = "r_foot"
+									third_limb = "r_leg"
+								if("Left Hand")
+									limb = "l_hand"
+									third_limb = "l_arm"
+								if("Right Hand")
+									limb = "r_hand"
+									third_limb = "r_arm"
 
-					switch(new_state)
-						if("Normal")
-							organ_data[organ] = null
-						if("Assisted")
-							organ_data[organ] = "assisted"
-						if("Mechanical")
-							organ_data[organ] = "mechanical"
+							var/new_state = input(user, "What state do you wish the limb to be in?") as null|anything in list("Normal","Amputated","Prothesis")
+							if(!new_state) return
+
+							switch(new_state)
+								if("Normal")
+									organ_data[limb] = null
+									if(third_limb)
+										organ_data[third_limb] = null
+								if("Amputated")
+									organ_data[limb] = "amputated"
+									if(second_limb)
+										organ_data[second_limb] = "amputated"
+								if("Prothesis")
+									organ_data[limb] = "cyborg"
+									if(second_limb)
+										organ_data[second_limb] = "cyborg"
+
+						if("Internal Organs")
+							var/organ_name = input(user, "Which internal function do you want to change?") as null|anything in list("Heart", "Eyes")
+							if(!organ_name) return
+
+							var/organ = null
+							switch(organ_name)
+								if("Heart")
+									organ = "heart"
+								if("Eyes")
+									organ = "eyes"
+
+							var/new_state = input(user, "What state do you wish the organ to be in?") as null|anything in list("Normal","Assisted","Mechanical")
+							if(!new_state) return
+
+							switch(new_state)
+								if("Normal")
+									organ_data[organ] = null
+								if("Assisted")
+									organ_data[organ] = "assisted"
+								if("Mechanical")
+									organ_data[organ] = "mechanical"
 
 				if("skin_style")
 					var/skin_style_name = input(user, "Select a new skin style") as null|anything in list("default1", "default2", "default3")
@@ -575,6 +572,9 @@
 
 				if("body")
 					submenu_type = "body"
+
+				if("organs")
+					submenu_type = "organs"
 
 				if("appearance")
 					submenu_type = "appearance"
