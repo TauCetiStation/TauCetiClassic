@@ -183,7 +183,7 @@ var/const/MAX_SAVE_SLOTS = 10
 
 	dat += "</body></html>"
 
-	user << browse(dat, "window=preferences;size=618x778")
+	user << browse(dat, "window=preferences;size=618x778;can_resize=0")
 
 /datum/preferences/proc/process_link(mob/user, list/href_list)
 	if(!user)	return
