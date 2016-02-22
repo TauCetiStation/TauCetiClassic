@@ -124,7 +124,6 @@
 /datum/preferences/proc/SetJob(mob/user, role)
 	var/datum/job/job = job_master.GetJob(role)
 	if(!job)
-		user << browse(null, "window=mob_occupation")
 		return
 
 	if(role == "Assistant")
