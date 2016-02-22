@@ -145,24 +145,29 @@ var/const/MAX_SAVE_SLOTS = 10
 	if(!user || !user.client)	return
 	update_preview_icon()
 	user << browse_rsc(preview_icon, "previewicon.png")
-	var/dat = "<html><body><center>"
+	user << browse_rsc('html/prefs/dossier_empty.png')
+	user << browse_rsc('html/prefs/dossier_photos.png')
+	user << browse_rsc('html/prefs/opacity7.png')
 
+	var/dat = "<html><body link='#045EBE' vlink='045EBE' alink='045EBE'><center>"
+	dat += "<style type='text/css'><!--A{text-decoration:none}--></style>"
+	dat += "<style>body{background-image:url('dossier_empty.png');background-color: #F5ECDD;background-repeat:no-repeat;background-position:center top;}</style>"
+	dat += "<style>.main_menu{margin-left:150px;margin-top:135px;margin-bottom:15px}</style>"
 	if(path)
-		dat += "<center>"
+		dat += "<div class='main_menu'>"
 		dat += "Slot: <b>[real_name]</b> - "
-		dat += "[menu_type=="load_slot"?"Load slot":"<a href=\"byond://?src=\ref[user];preference=load_slot\">Load slot</a>"] - "
+		dat += "[menu_type=="load_slot"?"<b>Load slot</b>":"<a href=\"byond://?src=\ref[user];preference=load_slot\">Load slot</a>"] - "
 		dat += "<a href=\"byond://?src=\ref[user];preference=save\">Save slot</a> - "
-		dat += "<a href=\"byond://?src=\ref[user];preference=reload\">Reload slot</a>"
-		dat += "<br>"
+		dat += "<a href=\"byond://?src=\ref[user];preference=reload\">Reload slot</a><br>"
 		dat += "[menu_type=="general"?"<b>General</b>":"<a href=\"byond://?src=\ref[user];preference=general\">General</a>"] - "
 		dat += "[menu_type=="occupation"?"<b>Occupation</b>":"<a href=\"byond://?src=\ref[user];preference=occupation\">Occupation</a>"] - "
 		dat += "[menu_type=="roles"?"<b>Roles</b>":"<a href=\"byond://?src=\ref[user];preference=roles\">Roles</a>"] - "
 		dat += "[menu_type=="glob"?"<b>Global</b>":"<a href=\"byond://?src=\ref[user];preference=glob\">Global</a>"]"
-		dat += "</center>"
+		dat += "</div>"
 	else
 		dat += "Please create an account to save your preferences."
 
-	dat += "</center><hr>"
+	dat += "</center><hr width='535'>"
 
 	switch(menu_type)
 		if("general")
@@ -178,7 +183,7 @@ var/const/MAX_SAVE_SLOTS = 10
 
 	dat += "</body></html>"
 
-	user << browse(dat, "window=preferences;size=600x736")
+	user << browse(dat, "window=preferences;size=618x778")
 
 /datum/preferences/proc/process_link(mob/user, list/href_list)
 	if(!user)	return

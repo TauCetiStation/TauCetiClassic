@@ -1,5 +1,5 @@
 /datum/preferences/proc/ShowRoles(mob/user)
-	. =  "<table width='100%' cellpadding='5' cellspacing='0'>"
+	. =  "<table cellspacing='0' width='100%'>"
 	. += 	"<tr>"
 	. += 		"<td width='50%'>"
 	. += 			"<table width='100%'>"
