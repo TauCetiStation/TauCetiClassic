@@ -75,7 +75,6 @@
 
 		var/id = add_zero(num2hex(rand(1, 1.6777215E7)), 6)	//this was the best they could come up with? A large random number? *sigh*
 
-
 		//General Record
 		var/datum/data/record/G = new()
 		G.fields["id"]			= id
@@ -88,6 +87,10 @@
 		G.fields["m_stat"]		= "Stable"
 		G.fields["sex"]			= H.gender
 		G.fields["species"]		= H.get_species()
+		G.fields["home_system"]	= H.home_system
+		G.fields["citizenship"]	= H.citizenship
+		G.fields["faction"]		= H.personal_faction
+		G.fields["religion"]	= H.religion
 		G.fields["photo"]		= get_id_photo(H)
 		if(H.gen_record && !jobban_isbanned(H, "Records"))
 			G.fields["notes"] = H.gen_record
@@ -141,6 +144,10 @@
 		L.fields["b_type"]		= H.b_type
 		L.fields["b_dna"]		= H.dna.unique_enzymes
 		L.fields["enzymes"]		= H.dna.SE // Used in respawning
+		L.fields["home_system"]	= H.home_system
+		L.fields["citizenship"]	= H.citizenship
+		L.fields["faction"]		= H.personal_faction
+		L.fields["religion"]	= H.religion
 		L.fields["identity"]	= H.dna.UI // "
 		//L.fields["image"]		= getFlatIcon(H)	//This is god-awful
 		L.fields["image"]		= get_id_photo(H)
