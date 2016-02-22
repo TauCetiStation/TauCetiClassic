@@ -9,12 +9,34 @@
 	wreckage = /obj/effect/decal/mecha_wreckage/ripley
 	var/list/cargo = new
 	var/cargo_capacity = 15
+	var/hides = 0
 
 /*
 /obj/mecha/working/ripley/New()
 	..()
 	return
 */
+
+/obj/mecha/working/ripley/go_out()
+	..()
+	update_icon()
+
+/obj/mecha/working/ripley/moved_inside(mob/living/carbon/human/H)
+	..()
+	update_icon()
+
+/obj/mecha/working/ripley/mmi_moved_inside(obj/item/device/mmi/mmi_as_oc,mob/user)
+	..()
+	update_icon()
+
+/obj/mecha/working/ripley/update_icon()
+	..()
+	if(hides)
+		overlays = null
+		if(hides < 3)
+			overlays += image("icon" = "mecha.dmi", "icon_state" = occupant ? "ripley-g" : "ripley-g-open")
+		else
+			overlays += image("icon" = "mecha.dmi", "icon_state" = occupant ? "ripley-g-full" : "ripley-g-full-open")
 
 /obj/mecha/working/ripley/firefighter
 	desc = "Standart APLU chassis was refitted with additional thermal protection and cistern."

@@ -313,13 +313,13 @@ emp_act
 				if(bloody)//Apply blood
 					if(wear_mask)
 						wear_mask.add_blood(src)
-						update_inv_wear_mask(0)
+						update_inv_wear_mask()
 					if(head)
 						head.add_blood(src)
-						update_inv_head(0)
+						update_inv_head()
 					if(glasses && prob(33))
 						glasses.add_blood(src)
-						update_inv_glasses(0)
+						update_inv_glasses()
 
 			if("chest")//Easier to score a stun but lasts less time
 				if(prob((I.force + 10)))
@@ -415,10 +415,10 @@ emp_act
 /mob/living/carbon/human/proc/bloody_body(var/mob/living/source)
 	if(wear_suit)
 		wear_suit.add_blood(source)
-		update_inv_wear_suit(0)
+		update_inv_wear_suit()
 	if(w_uniform)
 		w_uniform.add_blood(source)
-		update_inv_w_uniform(0)
+		update_inv_w_uniform()
 
 /mob/living/carbon/human/proc/check_thickmaterial(var/datum/organ/external/def_zone, var/type)
 //	if(!type)	return 0

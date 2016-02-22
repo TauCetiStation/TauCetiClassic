@@ -143,6 +143,9 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 	if(!amt)
 		return
 
+	if(!isturf(loc))	//No drips, if we are in closet, or disposal pipe or anywhere else, but not on the floor
+		return
+
 	var/amm = 0.1 * amt
 	var/turf/T = get_turf(src)
 	var/list/obj/effect/decal/cleanable/blood/drip/nums = list()

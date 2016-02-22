@@ -109,9 +109,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		light("<span class='notice'>[user] fiddles with [W], and manages to light their [name].</span>")
 
 	//can't think of any other way to update the overlays :<
-	user.update_inv_wear_mask(0)
-	user.update_inv_l_hand(0)
-	user.update_inv_r_hand(1)
+	user.update_inv_wear_mask()
+	user.update_inv_l_hand()
+	user.update_inv_r_hand()
 	return
 
 
