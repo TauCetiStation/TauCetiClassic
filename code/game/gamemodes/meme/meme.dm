@@ -129,6 +129,7 @@
 	for(var/datum/mind/meme in memes)
 		var/mob/living/parasite/meme/M = new
 		var/mob/original = meme.current
+		M.meme_death = pick ("stoxin", "bdam", "holywater", "mindbreaker", "beer", "burns")
 		meme.transfer_to(M)
 		M.clearHUD()
 
@@ -187,7 +188,23 @@
 
 /datum/game_mode/proc/greet_meme(var/datum/mind/meme, var/you_are=1)
 	if (you_are)
+		var/meme_death_explained = "sleep toxin"
+		var/mob/living/parasite/meme/M = meme.current
+		if (M.meme_death == "stoxin")
+			meme_death_explained = "sleep toxin"
+		if (M.meme_death == "bdam")
+			meme_death_explained = "brain"
+		if (M.meme_death == "holywater")
+			meme_death_explained = "holy water"
+		if (M.meme_death == "mindbreaker")
+			meme_death_explained = "mind breaking drug"
+		if (M.meme_death == "beer")
+			meme_death_explained = "firewater"
+		if (M.meme_death == "burns")
+			meme_death_explained = "fire"
 		meme.current << "<B>You are a <span class = 'red'>meme</span>!</B>"
+		meme.current << "<B>Your death is in <span class = 'red'>[meme_death_explained]</span>!</B>"
+		meme.store_memory("<B>Your death is in [meme_death_explained]!</B>", 0, 0)
 
 	var/obj_count = 1
 	for(var/datum/objective/objective in meme.objectives)

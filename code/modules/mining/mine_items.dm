@@ -289,9 +289,6 @@ proc/move_mining_shuttle()
 	drill_sound = 'tauceti/sounds/items/drill.ogg'
 	drill_verb = "drill"
 	digspeed = 30
-	reliability = 600
-	crit_fail = 1
-	var/max_reliability = 600
 	var/drill_cost = 15
 	var/state = 0
 	var/obj/item/weapon/cell/power_supply
@@ -341,36 +338,6 @@ proc/move_mining_shuttle()
 		else
 			user <<"<span class='notice'>[src] panel is closed.</span>"
 		return
-	else if(istype(W, /obj/item/weapon/repairkit))
-		var/obj/item/weapon/repairkit/R = W
-		if(state == 1)
-			if(reliability <= max_reliability/2)
-				if(R.uses == 0)
-					return
-				else
-					R.uses -= 1
-					reliability = max_reliability
-					user << "<span class='notice'>You repaired [src].</span>"
-					if(R.uses == 0)
-						qdel(R)
-			else user << "<span class='notice'>[src] is in well condition.</span>"
-		else if(state == 2)
-			if(R.uses == 0)
-				return
-			else
-				R.uses -= 1
-				reliability = max_reliability
-				state = 1
-				update_icon()
-				user << "<span class='notice'>You repaired [src].</span>"
-				if(R.uses == 0)
-					qdel(R)
-		return
-
-/obj/item/weapon/pickaxe/drill/proc/update_reliability()
-	if(reliability <= 0)
-		state = 2
-		update_icon()
 
 /obj/item/weapon/pickaxe/drill/attack_hand(mob/user as mob)
 	if(loc != user)
@@ -428,12 +395,6 @@ proc/move_mining_shuttle()
 		return
 
 
-/obj/item/weapon/repairkit
-	name = "mining equipment repair kit"
-	desc = "A generic kit containing all the needed tools and parts to repair mining tools."
-	icon = 'icons/obj/custom_items.dmi'
-	icon_state = "sven_kit"
-	var/uses = 10
 
 /*****************************Explosives********************************/
 /obj/item/weapon/mining_charge
