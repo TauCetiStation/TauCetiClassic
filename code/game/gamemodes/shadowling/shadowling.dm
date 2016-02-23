@@ -384,15 +384,11 @@ Made by Xhuis
 	heat_level_3 = 4000
 
 	blood_color = "#000000"
-	//flesh_color = "#000000"
 	darksight = 8
-	//id = "shadowling"
-	//say_mod = "chitters"
-	//speak_emote = list("chitters")
-	//specflags = list(NOBREATH,NOBLOOD,RADIMMUNE,NOGUNS) //Can't use guns due to muzzle flash
+
 	flags = NO_BREATHE | NO_BLOOD | RAD_IMMUNE | VIRUS_IMMUNE
 	burn_mod = 2 //2x burn damage lel
-	//var/heat_mod = 2
+
 
 /datum/species/shadow/ling/handle_post_spawn(var/mob/living/carbon/human/H)
 	H.gender = NEUTER

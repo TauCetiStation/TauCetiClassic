@@ -386,6 +386,7 @@ BLIND     // can't see anything
 //This is to ensure people can take off suits when there is an attached accessory
 /obj/item/clothing/under/MouseDrop(obj/over_object as obj)
 	if (ishuman(usr) || ismonkey(usr))
+		var/mob/M = usr
 		//makes sure that the clothing is equipped so that we can't drag it into our hand from miles away.
 		if (!(src.loc == usr))
 			return
@@ -395,11 +396,13 @@ BLIND     // can't see anything
 		if (!( usr.restrained() ) && !( usr.stat ))
 			switch(over_object.name)
 				if("r_hand")
-					usr.u_equip(src)
-					usr.put_in_r_hand(src)
+					if(!M.unEquip(src))
+						return
+					M.put_in_r_hand(src)
 				if("l_hand")
-					usr.u_equip(src)
-					usr.put_in_l_hand(src)
+					if(!M.unEquip(src))
+						return
+					M.put_in_l_hand(src)
 			src.add_fingerprint(usr)
 			return
 	return

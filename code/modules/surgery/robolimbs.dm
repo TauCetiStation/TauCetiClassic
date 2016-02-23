@@ -165,7 +165,7 @@
 			affected.sabotaged = 0
 		target.update_body()
 		target.updatehealth()
-		target.UpdateDamageIcon()
+		target.UpdateDamageIcon(affected)
 		qdel(tool)
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)

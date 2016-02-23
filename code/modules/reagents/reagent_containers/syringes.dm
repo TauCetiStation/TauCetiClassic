@@ -238,9 +238,10 @@
 	msg_admin_attack("[user.name] ([user.ckey]) attacked [target.name] ([target.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 
 	if(istype(target, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = target
 
-		var/target_zone = ran_zone(check_zone(user.zone_sel.selecting, target))
-		var/datum/organ/external/affecting = target:get_organ(target_zone)
+		var/target_zone = ran_zone(check_zone(user.zone_sel.selecting, H))
+		var/datum/organ/external/affecting = H.get_organ(target_zone)
 
 		if (!affecting)
 			return
@@ -249,22 +250,20 @@
 			return
 		var/hit_area = affecting.display_name
 
-		var/mob/living/carbon/human/H = target
-		if((user != target) && H.check_shields(7, "the [src.name]"))
+		if((user != H) && H.check_shields(7, "the [src.name]"))
 			return
 
-		if (target != user && target.getarmor(target_zone, "melee") > 5 && prob(50))
+		if (H != user && H.getarmor(target_zone, "melee") > 5 && prob(50))
 			for(var/mob/O in viewers(world.view, user))
-				O.show_message(text("\red <B>[user] tries to stab [target] in \the [hit_area] with [src.name], but the attack is deflected by armor!</B>"), 1)
+				O.show_message(text("\red <B>[user] tries to stab [H] in \the [hit_area] with [name], but the attack is deflected by armor!</B>"), 1)
 			user.remove_from_mob(src)
 			qdel(src)
 			return
 
 		for(var/mob/O in viewers(world.view, user))
-			O.show_message(text("\red <B>[user] stabs [target] in \the [hit_area] with [src.name]!</B>"), 1)
+			O.show_message(text("\red <B>[user] stabs [H] in \the [hit_area] with [name]!</B>"), 1)
 
-		if(affecting.take_damage(3))
-			target:UpdateDamageIcon()
+		affecting.take_damage(3)
 
 	else
 		for(var/mob/O in viewers(world.view, user))
