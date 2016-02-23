@@ -183,12 +183,16 @@ datum/preferences
 	if(job_engsec_high)
 		switch(job_engsec_high)
 			if(AI)
-				preview_icon = icon('icons/mob/AI.dmi', "AI", SOUTH)
-				preview_icon.Scale(64, 64)
+				preview_icon = icon('icons/effects/effects.dmi', "nothing")
+				preview_icon.Scale(150, 70)
+				preview_icon.Blend(icon('icons/mob/AI.dmi', "AI", SOUTH), ICON_OVERLAY, 60, 18)
+				preview_icon.Scale(preview_icon.Width() * 2, preview_icon.Height() * 2)
 				return
 			if(CYBORG)
-				preview_icon = icon('icons/mob/robots.dmi', "robot", SOUTH)
-				preview_icon.Scale(64, 64)
+				preview_icon = icon('icons/effects/effects.dmi', "nothing")
+				preview_icon.Scale(150, 70)
+				preview_icon.Blend(icon('icons/mob/robots.dmi', "robot", SOUTH), ICON_OVERLAY, 60, 18)
+				preview_icon.Scale(preview_icon.Width() * 2, preview_icon.Height() * 2)
 				return
 
 	// Set up the dummy for its photoshoot
