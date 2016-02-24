@@ -179,15 +179,7 @@
 				if(D.mode)
 					if(mineral)
 						mined_ore = mineral.ore_loss
-				if(prob(D.crit_fail))
-					user << "<span class='danger'>[D] is broken!</span>"
-					D.state = 2
-					D.reliability = 0
-					D.update_icon()
-					return
-				D.reliability -= 5
 				D.power_supply.use(D.drill_cost)
-				D.update_reliability()
 
 		playsound(user, P.drill_sound, 70, 0)
 

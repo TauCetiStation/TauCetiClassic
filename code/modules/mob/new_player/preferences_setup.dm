@@ -183,12 +183,16 @@ datum/preferences
 	if(job_engsec_high)
 		switch(job_engsec_high)
 			if(AI)
-				preview_icon = icon('icons/mob/AI.dmi', "AI", SOUTH)
-				preview_icon.Scale(64, 64)
+				preview_icon = icon('icons/effects/effects.dmi', "nothing")
+				preview_icon.Scale(150, 70)
+				preview_icon.Blend(icon('icons/mob/AI.dmi', "AI", SOUTH), ICON_OVERLAY, 60, 18)
+				preview_icon.Scale(preview_icon.Width() * 2, preview_icon.Height() * 2)
 				return
 			if(CYBORG)
-				preview_icon = icon('icons/mob/robots.dmi', "robot", SOUTH)
-				preview_icon.Scale(64, 64)
+				preview_icon = icon('icons/effects/effects.dmi', "nothing")
+				preview_icon.Scale(150, 70)
+				preview_icon.Blend(icon('icons/mob/robots.dmi', "robot", SOUTH), ICON_OVERLAY, 60, 18)
+				preview_icon.Scale(preview_icon.Width() * 2, preview_icon.Height() * 2)
 				return
 
 	// Set up the dummy for its photoshoot
@@ -220,19 +224,19 @@ datum/preferences
 		previewJob.equip(mannequin, TRUE)
 
 	preview_icon = icon('icons/effects/effects.dmi', "nothing")
-	preview_icon.Scale(48+32, 16+32)
+	preview_icon.Scale(150, 70)
 
 	mannequin.dir = NORTH
 	var/icon/stamp = getFlatIcon(mannequin)
-	preview_icon.Blend(stamp, ICON_OVERLAY, 25, 17)
+	preview_icon.Blend(stamp, ICON_OVERLAY, 109, 19)
 
 	mannequin.dir = WEST
 	stamp = getFlatIcon(mannequin)
-	preview_icon.Blend(stamp, ICON_OVERLAY, 1, 9)
+	preview_icon.Blend(stamp, ICON_OVERLAY, 60, 18)
 
 	mannequin.dir = SOUTH
 	stamp = getFlatIcon(mannequin)
-	preview_icon.Blend(stamp, ICON_OVERLAY, 49, 1)
+	preview_icon.Blend(stamp, ICON_OVERLAY, 13, 22)
 
 	preview_icon.Scale(preview_icon.Width() * 2, preview_icon.Height() * 2) // Scaling here to prevent blurring in the browser.
 	qdel(mannequin)

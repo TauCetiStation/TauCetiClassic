@@ -3,17 +3,23 @@
 
 #define FIREDOOR_CLOSED_MOD	0.4
 #define FIREDOOR_MAX_PRESSURE_DIFF 25 // kPa
+#define FIREDOOR_MAX_TEMP 50 // °C
+#define FIREDOOR_MIN_TEMP 0
+
+// Bitflags
+#define FIREDOOR_ALERT_HOT      1
+#define FIREDOOR_ALERT_COLD     2
 /obj/machinery/door/firedoor
 	name = "\improper Emergency Shutter"
 	desc = "Emergency air-tight shutter, capable of sealing off breached areas."
-	icon = 'tauceti/icons/obj/DoorHazard.dmi'
+	icon = 'icons/obj/doors/DoorHazard.dmi'
 	icon_state = "door_open"
 	req_one_access = list(access_atmospherics, access_engine_equip)
 	opacity = 0
 	density = 0
 	layer = DOOR_LAYER - 0.1
 	base_layer = DOOR_LAYER - 0.1
-	glass = 1
+	glass = 0
 
 	//These are frequenly used with windows, so make sure zones can pass.
 	//Generally if a firedoor is at a place where there should be a zone boundery then there will be a regular door underneath it.
@@ -27,6 +33,17 @@
 	var/list/users_to_open
 	var/pdiff_alert = 0
 	var/pdiff = 0
+
+	var/lockdown = 0 // When the door has detected a problem, it locks.
+	var/next_process_time = 0
+	var/list/tile_info[4]
+	var/list/dir_alerts[4] // 4 dirs, bitflags
+
+	// MUST be in same order as FIREDOOR_ALERT_*
+	var/list/ALERT_STATES=list(
+		"hot",
+		"cold"
+	)
 
 /obj/machinery/door/firedoor/New()
 	. = ..()
@@ -305,12 +322,18 @@
 	overlays.Cut()
 	if(density)
 		icon_state = "door_closed"
-		if(blocked)
-			overlays += "welded"
 		if(hatch_open)
 			overlays += "hatch"
+		if(blocked)
+			overlays += "welded"
 		if(pdiff_alert)
 			overlays += "palert"
+		if(dir_alerts)
+			for(var/d in 1 to 4)
+				var/cdir = cardinal[d]
+				for(var/i in 1 to ALERT_STATES.len)
+					if(dir_alerts[d] & (1<<(i-1)))
+						overlays += new/icon(icon,"alert_[ALERT_STATES[i]]", dir=cdir)
 	else
 		icon_state = "door_open"
 		if(blocked)
@@ -321,16 +344,46 @@
 /obj/machinery/door/firedoor/process()
 	..()
 
-	if(density)
-		pdiff = getOPressureDifferential(get_turf(src))
+	if(density && next_process_time <= world.time)
+		next_process_time = world.time + 100		// 10 second delays between process updates
+		var/changed = 0
+		lockdown=0
+		// Pressure alerts
+		pdiff = getOPressureDifferential(src.loc)
 		if(pdiff >= FIREDOOR_MAX_PRESSURE_DIFF)
+			lockdown = 1
 			if(!pdiff_alert)
 				pdiff_alert = 1
-				update_icon()
+				changed = 1 // update_icon()
 		else
 			if(pdiff_alert)
 				pdiff_alert = 0
-				update_icon()
+				changed = 1 // update_icon()
+
+		tile_info = getCardinalAirInfo(src.loc,list("temperature","pressure"))
+		var/old_alerts = dir_alerts
+		for(var/index in 1 to 4)
+			var/list/tileinfo=tile_info[index]
+			if(tileinfo==null)
+				continue // Bad data.
+			var/celsius = convert_k2c(tileinfo[1])
+
+			var/alerts=0
+
+			// Temperatures
+			if(celsius >= FIREDOOR_MAX_TEMP)
+				alerts |= FIREDOOR_ALERT_HOT
+				lockdown = 1
+			else if(celsius <= FIREDOOR_MIN_TEMP)
+				alerts |= FIREDOOR_ALERT_COLD
+				lockdown = 1
+
+			dir_alerts[index]=alerts
+
+		if(dir_alerts != old_alerts)
+			changed = 1
+		if(changed)
+			update_icon()
 
 
 /obj/machinery/door/firedoor/border_only
