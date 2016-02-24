@@ -33,6 +33,7 @@
 
 /obj/item/weapon/storage/MouseDrop(obj/over_object as obj)
 	if (ishuman(usr) || ismonkey(usr)) //so monkeys can take off their backpacks -- Urist
+		var/mob/M = usr
 
 		if(!over_object)
 			return
@@ -55,11 +56,13 @@
 		if (!( usr.restrained() ) && !( usr.stat ))
 			switch(over_object.name)
 				if("r_hand")
-					usr.u_equip(src)
-					usr.put_in_r_hand(src)
+					if(!M.unEquip(src))
+						return
+					M.put_in_r_hand(src)
 				if("l_hand")
-					usr.u_equip(src)
-					usr.put_in_l_hand(src)
+					if(!M.unEquip(src))
+						return
+					M.put_in_l_hand(src)
 			src.add_fingerprint(usr)
 			return
 	return

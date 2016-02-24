@@ -1,5 +1,6 @@
 //Terribly sorry for the code doubling, but things go derpy otherwise.
 /obj/machinery/door/airlock/multi_tile
+	dir = EAST
 	width = 2
 
 /obj/machinery/door/airlock/multi_tile/glass

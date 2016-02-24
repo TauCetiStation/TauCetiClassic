@@ -100,7 +100,8 @@
 			if(ready && ticker && ticker.pregame_timeleft < 3)
 				src << "<span class='warning'>Locked! The round is about to start.</span>"
 				return 0
-			ready = !ready
+			if(ticker && ticker.current_state <= GAME_STATE_PREGAME)
+				ready = !ready
 
 		if(href_list["refresh"])
 			src << browse(null, "window=playersetup") //closes the player setup window
@@ -123,8 +124,13 @@
 				observer.loc = O.loc
 				observer.timeofdeath = world.time // Set the time of death so that the respawn timer works correctly.
 
-				client.prefs.update_preview_icon()
-				observer.icon = client.prefs.preview_icon
+				//client.prefs.update_preview_icon()
+				//observer.icon = client.prefs.preview_icon
+				observer.icon = 'icons/mob/mob.dmi'
+				if(client.holder)
+					observer.icon_state = "ghostking"
+				else
+					observer.icon_state = "ghost"
 				observer.alpha = 127
 
 				if(client.prefs.be_random_name)

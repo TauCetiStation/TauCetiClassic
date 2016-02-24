@@ -33,8 +33,7 @@
 					var/organ = H.get_organ("chest")
 					if (istype(organ, /datum/organ/external))
 						var/datum/organ/external/temp = organ
-						if(temp.take_damage(d, 0))
-							H.UpdateDamageIcon()
+						temp.take_damage(d, 0)
 					H.updatehealth()
 				else
 					src.take_organ_damage(d)
@@ -222,7 +221,7 @@
 				if(status == "")
 					status = "OK"
 				src.show_message(text("\t []My [] is [].",status=="OK"?"\blue ":"\red ",org.display_name,status),1)
-			if((SKELETON in H.mutations) && (!H.w_uniform) && (!H.wear_suit))
+			if(H.species && (H.species.name == "Skeleton") && !H.w_uniform && !H.wear_suit)
 				H.play_xylophone()
 		else
 			var/t_him = "it"
@@ -274,12 +273,12 @@
 		var/mob/living/carbon/human/H = src
 		if(H.gloves)
 			if(H.gloves.clean_blood())
-				H.update_inv_gloves(0)
+				H.update_inv_gloves()
 			H.gloves.germ_level = 0
 		else
 			if(H.bloody_hands)
 				H.bloody_hands = 0
-				H.update_inv_gloves(0)
+				H.update_inv_gloves()
 			H.germ_level = 0
 	update_icons()	//apply the now updated overlays to the mob
 

@@ -228,8 +228,11 @@
 					//if(C.check_eye_prot() <= 0) // no eye protection? ARGH IT BURNS. Need fix
 					//	C.confused = max(C.confused, 3)
 					//	C.Weaken(3)
-				//C.lip_style = "spray_face"
-				//C.lip_color = colour
+				if(ishuman(C))
+					var/mob/living/carbon/human/H = C
+					C.lip_style = "spray_face"
+					C.lip_color = colour
+					H.update_body()
 				C.update_body()
 		playsound(user.loc, 'sound/effects/spray.ogg', 5, 1, 5)
 		..()

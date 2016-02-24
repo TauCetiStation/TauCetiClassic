@@ -10,9 +10,13 @@
 	req_admin_notify = 1
 	minimal_player_age = 7
 
-	equip(var/mob/living/carbon/human/H)
-		if(!H)	return 0
-		return 1
+/datum/job/ai/equip(var/mob/living/carbon/human/H, visualsOnly = FALSE)
+	if(!H)	return 0
+
+	if(visualsOnly)
+		return
+
+	return 1
 
 /datum/job/ai/is_position_available()
 	return (empty_playable_ai_cores.len != 0)
@@ -30,6 +34,10 @@
 	minimal_player_age = 1
 	alt_titles = list("Android", "Robot")
 
-	equip(var/mob/living/carbon/human/H)
-		if(!H)	return 0
-		return 1
+/datum/job/cyborg/equip(var/mob/living/carbon/human/H, visualsOnly = FALSE)
+	if(!H)	return 0
+
+	if(visualsOnly)
+		return
+
+	return 1
