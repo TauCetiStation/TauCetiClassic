@@ -761,7 +761,8 @@
 	if(isnull(speech_buffer))
 		speech_buffer = list()
 	else
-		speak += pick(speech_buffer)
+		if(speach_buffer.len)
+			speak += pick(speech_buffer)
 
 /mob/living/simple_animal/parrot/Poly/proc/Write_Memory()
 	var/savefile/S = new /savefile("data/npc_saves/Poly.sav")
