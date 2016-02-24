@@ -151,8 +151,9 @@ var/const/MAX_SAVE_SLOTS = 10
 
 	var/dat = "<html><body link='#045EBE' vlink='045EBE' alink='045EBE'><center>"
 	dat += "<style type='text/css'><!--A{text-decoration:none}--></style>"
+	dat += "<style type='text/css'>a.white, a.white:link, a.white:visited, a.white:active{color: #40628a;text-decoration: none;background: #ffffff;border: 1px solid #161616;padding: 1px 4px 1px 4px;margin: 0 2px 0 0;cursor:default;}</style>"
 	dat += "<style>body{background-image:url('dossier_empty.png');background-color: #F5ECDD;background-repeat:no-repeat;background-position:center top;}</style>"
-	dat += "<style>.main_menu{margin-left:150px;margin-top:135px;margin-bottom:15px}</style>"
+	dat += "<style>.main_menu{margin-left:150px;margin-top:135px}</style>"
 	if(path)
 		dat += "<div class='main_menu'>"
 		dat += "Slot: <b>[real_name]</b> - "
@@ -162,8 +163,8 @@ var/const/MAX_SAVE_SLOTS = 10
 		dat += "[menu_type=="general"?"<b>General</b>":"<a href=\"byond://?src=\ref[user];preference=general\">General</a>"] - "
 		dat += "[menu_type=="occupation"?"<b>Occupation</b>":"<a href=\"byond://?src=\ref[user];preference=occupation\">Occupation</a>"] - "
 		dat += "[menu_type=="roles"?"<b>Roles</b>":"<a href=\"byond://?src=\ref[user];preference=roles\">Roles</a>"] - "
-		dat += "[menu_type=="glob"?"<b>Global</b>":"<a href=\"byond://?src=\ref[user];preference=glob\">Global</a>"] - "
-		dat += "<a href='?src=\ref[user];preference=close\'>Close</a>"
+		dat += "[menu_type=="glob"?"<b>Global</b>":"<a href=\"byond://?src=\ref[user];preference=glob\">Global</a>"]"
+		dat += "<br><a href='?src=\ref[user];preference=close\'>Close</a>"
 		dat += "</div>"
 	else
 		dat += "Please create an account to save your preferences."
