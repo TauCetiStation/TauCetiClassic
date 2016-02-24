@@ -162,7 +162,8 @@ var/const/MAX_SAVE_SLOTS = 10
 		dat += "[menu_type=="general"?"<b>General</b>":"<a href=\"byond://?src=\ref[user];preference=general\">General</a>"] - "
 		dat += "[menu_type=="occupation"?"<b>Occupation</b>":"<a href=\"byond://?src=\ref[user];preference=occupation\">Occupation</a>"] - "
 		dat += "[menu_type=="roles"?"<b>Roles</b>":"<a href=\"byond://?src=\ref[user];preference=roles\">Roles</a>"] - "
-		dat += "[menu_type=="glob"?"<b>Global</b>":"<a href=\"byond://?src=\ref[user];preference=glob\">Global</a>"]"
+		dat += "[menu_type=="glob"?"<b>Global</b>":"<a href=\"byond://?src=\ref[user];preference=glob\">Global</a>"] - "
+		dat += "<a href='?src=\ref[user];preference=close\'>Close</a>"
 		dat += "</div>"
 	else
 		dat += "Please create an account to save your preferences."
@@ -182,8 +183,7 @@ var/const/MAX_SAVE_SLOTS = 10
 			dat += ShowLoadSlot(user)
 
 	dat += "</body></html>"
-
-	user << browse(dat, "window=preferences;size=618x778;can_resize=0")
+	user << browse(dat, "window=preferences;size=618x778;can_close=0;can_minimize=0;can_maximize=0;can_resize=0")
 
 /datum/preferences/proc/process_link(mob/user, list/href_list)
 	if(!user)	return
@@ -191,6 +191,9 @@ var/const/MAX_SAVE_SLOTS = 10
 	if(!istype(user, /mob/new_player))	return
 
 	switch(href_list["preference"])
+		if("close")
+			user << browse(null, "window=preferences")
+			return
 
 		if("save")
 			save_preferences()
