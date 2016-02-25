@@ -254,10 +254,10 @@ obj/item/gland/slime/activate()
 	for(var/mob/living/carbon/human/H in oview(3,host)) //Blood decals for simple animals would be neat. aka Carp with blood on it.
 		if(H.wear_suit)
 			H.wear_suit.add_blood(host)
-			H.update_inv_wear_suit(0)
+			H.update_inv_wear_suit()
 		else if(H.w_uniform)
 			H.w_uniform.add_blood(host)
-			H.update_inv_w_uniform(0)
+			H.update_inv_w_uniform()
 
 
 //BODYSNATCH

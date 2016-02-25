@@ -1166,8 +1166,6 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	name = "Mining Equipment Crate"
 	contains = list(/obj/item/weapon/pickaxe/drill,
 					/obj/item/weapon/pickaxe/drill,
-					/obj/item/weapon/repairkit,
-					/obj/item/weapon/repairkit,
 					/obj/item/weapon/mining_charge,
 					/obj/item/weapon/mining_charge,
 					/obj/item/weapon/mining_charge,

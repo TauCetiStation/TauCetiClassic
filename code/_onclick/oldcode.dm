@@ -109,9 +109,9 @@
 	if (W == src && usr.stat == 0)
 		W.attack_self(usr)
 		if(usr.hand)
-			usr.update_inv_l_hand(0)	//update in-hand overlays
+			usr.update_inv_l_hand()	//update in-hand overlays
 		else
-			usr.update_inv_r_hand(0)
+			usr.update_inv_r_hand()
 		return
 
 	// ------- PARALYSIS, STUN, WEAKENED, DEAD, (And not AI) -------
