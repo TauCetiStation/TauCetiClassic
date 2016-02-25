@@ -899,4 +899,3 @@
 						stat(null, "[gang_name("A")] Gang Takeover: [max(mode.A_timer, 0)]")
 					if(isnum(mode.B_timer))
 						stat(null, "[gang_name("B")] Gang Takeover: [max(mode.B_timer, 0)]")
-

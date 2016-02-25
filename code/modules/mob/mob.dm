@@ -622,10 +622,18 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 /mob/Stat()
 	..()
-
-	if(statpanel("Status"))	//not looking at that panel
-
+	if(statpanel("Status"))
+		stat(null, "Server Time: [time2text(world.realtime, "YYYY-MM-DD hh:mm")]")
 		if(client && client.holder)
+			if(ticker && ticker.mode && ticker.mode.name == "AI malfunction")
+				if(ticker.mode:malf_mode_declared)
+					stat(null, "Time left: [max(ticker.mode:AI_win_timeleft/(ticker.mode:apcs/3), 0)]")
+			if(emergency_shuttle)
+				if(emergency_shuttle.online && emergency_shuttle.location < 2)
+					var/timeleft = emergency_shuttle.timeleft()
+					if(timeleft)
+						stat(null, "ETA-[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
+
 			if(statpanel("Status"))
 				statpanel("Status","Location:","([x], [y], [z])")
 				statpanel("Status","CPU:","[world.cpu]")
