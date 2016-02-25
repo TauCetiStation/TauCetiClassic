@@ -9,7 +9,7 @@ var/global/list/uneatable = list(
 	/atom/movable/lighting_overlay
 	)
 
-/obj/machinery/singularity/
+/obj/machinery/singularity
 	name = "Gravitational Singularity"
 	desc = "A Gravitational Singularity."
 	icon = 'icons/obj/singularity.dmi'
@@ -46,12 +46,16 @@ var/global/list/uneatable = list(
 		spawn(temp)
 			qdel(src)
 	..()
+	poi_list |= src
 	for(var/obj/machinery/singularity_beacon/singubeacon in machines)
 		if(singubeacon.active)
 			target = singubeacon
 			break
 	return
 
+/obj/machinery/singularity/Destroy()
+	poi_list.Remove(src)
+	return ..()
 
 /obj/machinery/singularity/attack_hand(mob/user as mob)
 	consume(user)

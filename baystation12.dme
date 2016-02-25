@@ -36,6 +36,7 @@
 #include "code\__HELPERS\type2type.dm"
 #include "code\__HELPERS\unsorted.dm"
 #include "code\__HELPERS\vector.dm"
+#include "code\_globalvars\lists\objects.dm"
 #include "code\_hooks\area.dm"
 #include "code\_hooks\hooks.dm"
 #include "code\_hooks\mob.dm"

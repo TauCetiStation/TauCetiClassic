@@ -357,13 +357,16 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(following)
 		remove_following(usr)
 
-/mob/dead/observer/verb/follow(input in getmobs())
+/mob/dead/observer/verb/follow()
 	set category = "Ghost"
 	set name = "Orbit" // "Haunt"
 	set desc = "Follow and orbit a mob."
 
-	var/target = getmobs()[input]
-	if(!target) return
+	var/list/mobs = getpois()
+	var/input = input("Please, select a mob!", "Haunt", null, null) as null|anything in mobs
+	var/mob/target = mobs[input]
+	if(!target)
+		return
 	ManualFollow(target)
 
 // This is the ghost's follow verb with an argument
@@ -434,24 +437,30 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	update_following()
 	return ..()
 
-/mob/dead/observer/verb/jumptomob(target in getmobs()) //Moves the ghost instead of just changing the ghosts's eye -Nodrak
+/mob/dead/observer/verb/jumptomob() //Moves the ghost instead of just changing the ghosts's eye -Nodrak
 	set category = "Ghost"
 	set name = "Jump to Mob"
 	set desc = "Teleport to a mob."
 
 	if(istype(usr, /mob/dead/observer)) //Make sure they're an observer!
+		var/list/dest = list() //List of possible destinations (mobs)
+		var/target = null	   //Chosen target.
+
+		dest += getpois(mobs_only=1) //Fill list, prompt user with list
+		target = input("Please, select a player!", "Jump to Mob", null, null) as null|anything in dest
 
 		if (!target)//Make sure we actually have a target
 			return
 		else
-			var/mob/M = getmobs()[target] //Destination mob
+			var/mob/M = dest[target] //Destination mob
+			var/mob/A = src			 //Source mob
 			var/turf/T = get_turf(M) //Turf of the destination mob
 
 			if(T && isturf(T))	//Make sure the turf exists, then move the source to that destination.
-				forceMoveOld(T)
-				following = null
+				A.loc = T
 			else
-				src << "This mob is not located in the game world."
+				A << "This mob is not located in the game world."
+
 /*
 /mob/dead/observer/verb/boo()
 	set category = "Ghost"
