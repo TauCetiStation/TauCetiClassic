@@ -510,6 +510,7 @@
 	var/mob/living/L = usr
 
 	//Getting out of someone's inventory.
+
 	if(istype(src.loc,/obj/item/weapon/holder))
 		var/obj/item/weapon/holder/H = src.loc //Get our item holder.
 		var/mob/M = H.loc                      //Get our mob holder (if any).
@@ -587,7 +588,10 @@
 						qdel(G)
 		if(resisting)
 			L.visible_message("<span class='danger'>[L] resists!</span>")
-
+	//Digging yourself out of a grave
+	if(istype(src.loc, /obj/structure/pit))
+		var/obj/structure/pit/P = loc
+		spawn() P.digout(src)
 	//unbuckling yourself
 	if(L.buckled && (L.last_special <= world.time) )
 		if(iscarbon(L))
