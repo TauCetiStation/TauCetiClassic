@@ -532,7 +532,9 @@
 	var/datum/organ/external/affected_organ = get_organ(check_zone(def_zone))
 	var/siemens_coeff = base_siemens_coeff * get_siemens_coefficient_organ(affected_organ)
 
-	return ..(shock_damage, source, siemens_coeff, def_zone)
+	. = ..(shock_damage, source, siemens_coeff, def_zone)
+	if(.)
+		electrocution_animation(40)
 
 /mob/living/carbon/human/Topic(href, href_list)
 	if (href_list["refresh"])
@@ -1555,3 +1557,29 @@
 		if(eyes && istype(eyes))
 			return 1
 	return 0
+
+
+
+//Turns a mob black, flashes a skeleton overlay
+//Just like a cartoon!
+/mob/living/carbon/human/proc/electrocution_animation(anim_duration)
+	//TG...
+	//Handle mutant parts if possible
+	//if(species)
+	//	species.handle_mutant_bodyparts(src,"black")
+	//	species.handle_hair(src,"black")
+	//	species.update_color(src,"black")
+	//	overlays += "electrocuted_base"
+	//	spawn(anim_duration)
+	//		if(src)
+	//			if(dna && dna.species)
+	//				dna.species.handle_mutant_bodyparts(src)
+	//				dna.species.handle_hair(src)
+	//				dna.species.update_color(src)
+	//			overlays -= "electrocuted_base"
+	//else //or just do a generic animation
+	var/list/viewing = list()
+	for(var/mob/M in viewers(src))
+		if(M.client)
+			viewing += M.client
+	flick_overlay(image(icon,src,"electrocuted_generic",MOB_LAYER+1), viewing, anim_duration)
