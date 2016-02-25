@@ -5,7 +5,7 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 	name = "ghost"
 	desc = "It's a g-g-g-g-ghooooost!" //jinkies!
 	icon = 'icons/mob/mob.dmi'
-	icon_state = "ghost"
+	icon_state = "blank"
 	layer = 4
 	stat = DEAD
 	density = 0
@@ -24,7 +24,7 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 	var/antagHUD = 0
 	universal_speak = 1
 	var/atom/movable/following = null
-
+	var/golem_rune = null //Used to check, if we already queued as a golem.
 
 	var/image/ghostimage = null //this mobs ghost image, for deleting and stuff
 	var/ghostvision = 1 //is the ghost able to see things humans can't?
@@ -38,7 +38,7 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 
 	stat = DEAD
 
-	ghostimage = image(src.icon,src,src.icon_state)
+	ghostimage = image(icon,src,"ghost")
 	ghost_darkness_images |= ghostimage
 	updateallghostimages()
 
@@ -47,10 +47,8 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 		T = get_turf(body)				//Where is the body located?
 		attack_log = body.attack_log	//preserve our attack logs by copying them to our ghost
 
-		if (ishuman(body))
-			var/mob/living/carbon/human/H = body
-			icon = H.stand_icon
-			overlays = H.overlays_standing
+		if(ishuman(body))
+			overlays = body.overlays
 		else
 			icon = body.icon
 			icon_state = body.icon_state
@@ -98,12 +96,21 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 	return ..()
 
 /mob/dead/observer/Topic(href, href_list)
-	if (href_list["track"])
+	if(href_list["track"])
 		var/mob/target = locate(href_list["track"]) in mob_list
 		if(target)
 			ManualFollow(target)
 
+	if(href_list["ghostplayerobservejump"])
+		var/atom/movable/target = locate(href_list["ghostplayerobservejump"])
+		if(!target)
+			return
 
+		if(following)
+			remove_following(usr)
+
+		var/turf/T = get_turf(target)
+		forceMoveOld(T)
 
 /mob/dead/attackby(obj/item/W, mob/user)
 	if(istype(W,/obj/item/weapon/book/tome))

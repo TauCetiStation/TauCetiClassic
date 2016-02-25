@@ -19,8 +19,7 @@
 		user << "\red An unexplicable force powerfully repels the sword from [target]!"
 		var/organ = ((user.hand ? "l_":"r_") + "arm")
 		var/datum/organ/external/affecting = user.get_organ(organ)
-		if(affecting.take_damage(rand(force/2, force))) //random amount of damage between half of the blade's force and the full force of the blade.
-			user.UpdateDamageIcon()
+		affecting.take_damage(rand(force/2, force)) //random amount of damage between half of the blade's force and the full force of the blade.
 	return
 
 /obj/item/weapon/melee/cultblade/pickup(mob/living/user as mob)
