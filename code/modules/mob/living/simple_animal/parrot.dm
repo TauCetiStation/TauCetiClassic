@@ -761,7 +761,7 @@
 	if(isnull(speech_buffer))
 		speech_buffer = list()
 	else
-		if(speach_buffer.len)
+		if(speech_buffer.len)
 			speak += pick(speech_buffer)
 
 /mob/living/simple_animal/parrot/Poly/proc/Write_Memory()
