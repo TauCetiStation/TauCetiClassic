@@ -87,9 +87,8 @@ var/list/admin_verbs_admin = list(
 	/client/proc/send_fax_message
 	)
 var/list/admin_verbs_ban = list(
-	/client/proc/unban_panel,
+	/client/proc/unban_panel
 //	/client/proc/stickybanpanel,
-	/client/proc/jobbans
 	)
 var/list/admin_verbs_sounds = list(
 	/client/proc/play_local_sound,
@@ -278,7 +277,6 @@ var/list/admin_verbs_mod = list(
 	/client/proc/dsay,
 	/datum/admins/proc/show_player_panel,
 	/client/proc/check_antagonists,
-	/client/proc/jobbans,
 	/client/proc/cmd_admin_subtle_message 	/*send an message to somebody as a 'voice in their head'*/
 )
 
@@ -451,17 +449,6 @@ var/list/admin_verbs_mentor = list(
 		holder.check_antagonists()
 		log_admin("[key_name(usr)] checked antagonists.")	//for tsar~
 	feedback_add_details("admin_verb","CHA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-	return
-
-/client/proc/jobbans()
-	set name = "Display Job bans"
-	set category = "Admin"
-	if(holder)
-		if(config.ban_legacy_system)
-			holder.Jobbans()
-		else
-			holder.DB_ban_panel()
-	feedback_add_details("admin_verb","VJB") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
 /client/proc/unban_panel()

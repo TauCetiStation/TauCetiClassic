@@ -533,6 +533,7 @@ var/list/liftable_structures = list(\
 #define BANTYPE_JOB_PERMA	3
 #define BANTYPE_JOB_TEMP	4
 #define BANTYPE_ANY_FULLBAN	5 //used to locate stuff to unban.
+#define BANTYPE_ANY_JOB		9 //used to remove jobbans
 
 #define INVISIBILITY_LIGHTING 20
 #define INVISIBILITY_LEVEL_ONE 35
