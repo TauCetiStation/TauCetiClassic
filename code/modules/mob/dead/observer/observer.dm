@@ -220,12 +220,12 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		remove_following(src)
 	dir = direct
 	if(NewLoc)
-		forceMoveOld(NewLoc)
+		loc = NewLoc
 		for(var/obj/effect/step_trigger/S in NewLoc)
 			S.Crossed(src)
 
 		return
-	forceMoveOld(get_turf(src)) //Get out of closets and such as a ghost
+	loc = get_turf(src) //Get out of closets and such as a ghost
 	if((direct & NORTH) && y < world.maxy)
 		y++
 	else if((direct & SOUTH) && y > 1)
@@ -238,7 +238,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	for(var/obj/effect/step_trigger/S in locate(x, y, z))	//<-- this is dumb
 		S.Crossed(src)
 
-	..()
 
 /mob/dead/observer/examine()
 	if(usr)
@@ -360,8 +359,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 /mob/dead/observer/verb/follow(input in getmobs())
 	set category = "Ghost"
-	set name = "Follow" // "Haunt"
-	set desc = "Follow and haunt a mob."
+	set name = "Orbit" // "Haunt"
+	set desc = "Follow and orbit a mob."
 
 	var/target = getmobs()[input]
 	if(!target) return
@@ -369,28 +368,26 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 // This is the ghost's follow verb with an argument
 /mob/dead/observer/proc/ManualFollow(var/atom/movable/target)
-	if(!target)
+	if (!istype(target))
 		return
 
-	if(target != src)
-		if(following && following == target)
-			return
-		following = target
-		src << "<span class='notice'>Now following [target]</span>"
-		if(ismob(target))
-			forceMoveOld(get_turf(target))
-			var/mob/M = target
-			M.following_mobs += src
-		else
-			spawn(0)
-				while(target && following == target && client)
-					var/turf/T = get_turf(target)
-					if(!T)
-						break
-					// To stop the ghost flickering.
-					if(loc != T)
-						forceMoveOld(T)
-					sleep(15)
+	var/icon/I = icon(target.icon,target.icon_state,target.dir)
+
+	var/orbitsize = (I.Width()+I.Height())*0.5
+	orbitsize -= (orbitsize/world.icon_size)*(world.icon_size*0.25)
+
+	if(orbiting != target)
+		src << "<span class='notice'>Now orbiting [target].</span>"
+
+	orbit(target,orbitsize,0)
+
+/mob/dead/observer/orbit()
+	..()
+	//restart our floating animation after orbit is done.
+	sleep 2  //orbit sets up a 2ds animation when it finishes, so we wait for that to end
+	if (!orbiting) //make sure another orbit hasn't started
+		pixel_y = 0
+		animate(src, pixel_y = 2, time = 10, loop = -1)
 
 /mob/proc/update_following()
 	. = get_turf(src)

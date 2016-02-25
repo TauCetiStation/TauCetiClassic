@@ -1510,6 +1510,57 @@ var/mob/dview/dview_mob = new
 		c_dist++
 	return L
 
+
+//This is just so you can stop an orbit.
+//orbit() can run without it (swap orbiting for A)
+//but then you can never stop it and that's just silly.
+/atom/movable/var/atom/orbiting = null
+//we raise this each time orbit is called to prevent mutiple calls in a short time frame from breaking things
+/atom/movable/var/orbitid = 0 
+
+/atom/movable/proc/orbit(atom/A, radius = 10, clockwise = 1, angle_increment = 15, lockinorbit = 0)
+	if(!istype(A))
+		return
+	orbitid++
+	var/myid = orbitid
+	if (orbiting)
+		stop_orbit()
+		//sadly this is the only way to ensure the original orbit proc stops
+		//and resets the atom's transform before we continue.
+		//time is based on the sleep in the loop and the time for the final animation of initial_transform.
+		sleep(2.6+world.tick_lag)
+		if (orbiting || !istype(A) || orbitid != myid) //post sleep re-check
+			return
+	orbiting = A
+	var/lastloc = loc
+	var/angle = 0
+	var/matrix/initial_transform = matrix(transform)
+
+	while(orbiting && orbiting.loc && orbitid == myid)
+		var/targetloc = get_turf(orbiting)
+		if (!lockinorbit && loc != lastloc && loc != targetloc)
+			break
+		loc = targetloc
+		lastloc = loc
+		angle += angle_increment
+
+		var/matrix/shift = matrix(initial_transform)
+		shift.Translate(radius,0)
+		if(clockwise)
+			shift.Turn(angle)
+		else
+			shift.Turn(-angle)
+		animate(src, transform = shift, 2)
+		sleep(0.6) //the effect breaks above 0.6 delay
+	animate(src, transform = initial_transform, 2)
+	orbiting = null
+
+
+/atom/movable/proc/stop_orbit()
+	if(orbiting)
+		loc = get_turf(orbiting)
+		orbiting = null
+
 /*
  * Use proc below to generate new damage overlays for humans.
  * Uncomment generate_damage_overlays_dmi() and gen_dam_dmi() below.
