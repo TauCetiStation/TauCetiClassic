@@ -112,7 +112,7 @@
 
 	return
 
-/mob/living/carbon/electrocute_act(var/shock_damage, var/obj/source, var/siemens_coeff = 1.0, var/def_zone = null)
+/mob/living/carbon/electrocute_act(shock_damage, obj/source, siemens_coeff = 1.0, def_zone = null, tesla_shock = 0)
 	if(status_flags & GODMODE)	return 0	//godmode
 
 	var/turf/T = get_turf(src)
@@ -123,22 +123,27 @@
 		W.electrocute_act(shock_damage)
 
 	shock_damage *= siemens_coeff
-	if (shock_damage<1)
+	if(shock_damage<1)
 		return 0
-
-	src.apply_damage(shock_damage, BURN, def_zone, used_weapon="Electrocution")
-
+	apply_damage(shock_damage, BURN, def_zone, used_weapon="Electrocution")
 	playsound(loc, "sparks", 50, 1, -1)
-	if (shock_damage > 10)
-		src.visible_message(
+	if(shock_damage > 10)
+		visible_message(
 			"<span class='rose'>[src] was shocked by the [source]!</span>", \
 			"<span class='danger'>You feel a powerful shock course through your body!</span>", \
 			"<span class='rose'>You hear a heavy electrical crack.</span>" \
 		)
-		Stun(10)//This should work for now, more is really silly and makes you lay there forever
-		Weaken(10)
+		make_jittery(1000)
+		stuttering += 2
+		if(!tesla_shock || (tesla_shock && siemens_coeff > 0.5))
+			Stun(2)
+		spawn(20)
+			jitteriness = max(jitteriness - 990, 10) //Still jittery, but vastly less
+			if(!tesla_shock || (tesla_shock && siemens_coeff > 0.5))
+				Stun(8)
+				Weaken(8)
 	else
-		src.visible_message(
+		visible_message(
 			"<span class='rose'>[src] was mildly shocked by the [source].</span>", \
 			"<span class='rose'>You feel a mild shock course through your body.</span>", \
 			"<span class='rose'>You hear a light zapping.</span>" \

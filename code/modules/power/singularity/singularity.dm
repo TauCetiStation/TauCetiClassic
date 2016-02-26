@@ -9,7 +9,7 @@ var/global/list/uneatable = list(
 	/atom/movable/lighting_overlay
 	)
 
-/obj/machinery/singularity
+/obj/singularity
 	name = "Gravitational Singularity"
 	desc = "A Gravitational Singularity."
 	icon = 'icons/obj/singularity.dmi'
@@ -19,7 +19,6 @@ var/global/list/uneatable = list(
 	layer = 6
 	//light_range = 6
 	unacidable = 1 //Don't comment this out.
-	use_power = 0
 	var/current_size = 1
 	var/allowed_size = 1
 	var/contained = 1 //Are we going to move around?
@@ -37,7 +36,7 @@ var/global/list/uneatable = list(
 	var/teleport_del = 0
 	var/last_warning
 
-/obj/machinery/singularity/New(loc, var/starting_energy = 50, var/temp = 0)
+/obj/singularity/New(loc, var/starting_energy = 50, var/temp = 0)
 	//CARN: admin-alert for chuckle-fuckery.
 	admin_investigate_setup()
 
@@ -46,6 +45,7 @@ var/global/list/uneatable = list(
 		spawn(temp)
 			qdel(src)
 	..()
+	processing_objects.Add(src)
 	poi_list |= src
 	for(var/obj/machinery/singularity_beacon/singubeacon in machines)
 		if(singubeacon.active)
@@ -53,20 +53,21 @@ var/global/list/uneatable = list(
 			break
 	return
 
-/obj/machinery/singularity/Destroy()
+/obj/singularity/Destroy()
+	processing_objects.Remove(src)
 	poi_list.Remove(src)
 	return ..()
 
-/obj/machinery/singularity/attack_hand(mob/user as mob)
+/obj/singularity/attack_hand(mob/user as mob)
 	consume(user)
 	return 1
 
 
-/obj/machinery/singularity/blob_act(severity)
+/obj/singularity/blob_act(severity)
 	return
 
 
-/obj/machinery/singularity/ex_act(severity)
+/obj/singularity/ex_act(severity)
 	switch(severity)
 		if(1.0)
 			if(prob(25))
@@ -80,17 +81,17 @@ var/global/list/uneatable = list(
 	return
 
 
-/obj/machinery/singularity/Bump(atom/A)
+/obj/singularity/Bump(atom/A)
 	consume(A)
 	return
 
 
-/obj/machinery/singularity/Bumped(atom/A)
+/obj/singularity/Bumped(atom/A)
 	consume(A)
 	return
 
 
-/obj/machinery/singularity/process()
+/obj/singularity/process()
 	eat()
 	dissipate()
 	check_energy()
@@ -103,17 +104,17 @@ var/global/list/uneatable = list(
 	return
 
 
-/obj/machinery/singularity/attack_ai() //to prevent ais from gibbing themselves when they click on one.
+/obj/singularity/attack_ai() //to prevent ais from gibbing themselves when they click on one.
 	return
 
 
-/obj/machinery/singularity/proc/admin_investigate_setup()
+/obj/singularity/proc/admin_investigate_setup()
 	last_warning = world.time
 	var/count = locate(/obj/machinery/containment_field) in orange(30, src)
 	if(!count)	message_admins("A singulo has been created without containment fields active ([x],[y],[z])",1)
 	investigate_log("was created. [count?"":"<font color='red'>No containment fields were active</font>"]","singulo")
 
-/obj/machinery/singularity/proc/dissipate()
+/obj/singularity/proc/dissipate()
 	if(!dissipate)
 		return
 	if(dissipate_track >= dissipate_delay)
@@ -123,7 +124,7 @@ var/global/list/uneatable = list(
 		dissipate_track++
 
 
-/obj/machinery/singularity/proc/expand(var/force_size = 0)
+/obj/singularity/proc/expand(var/force_size = 0)
 	var/temp_allowed_size = src.allowed_size
 	if(force_size)
 		temp_allowed_size = force_size
@@ -192,7 +193,7 @@ var/global/list/uneatable = list(
 		return 0
 
 
-/obj/machinery/singularity/proc/check_energy()
+/obj/singularity/proc/check_energy()
 	if(energy <= 0)
 		qdel(src)
 		return 0
@@ -212,7 +213,7 @@ var/global/list/uneatable = list(
 	return 1
 
 
-/obj/machinery/singularity/proc/eat()
+/obj/singularity/proc/eat()
 	//set background = 1
 	if(defer_powernet_rebuild != 2)
 		defer_powernet_rebuild = 1
@@ -248,7 +249,7 @@ var/global/list/uneatable = list(
 
 // Singulo optimization:
 // Jump out whenever we've made a decision.
-/obj/machinery/singularity/proc/canPull(var/atom/movable/A)
+/obj/singularity/proc/canPull(var/atom/movable/A)
 	// If we're big enough, stop checking for this and that and JUST EAT.
 	if(current_size >= 9)
 		return 1
@@ -258,7 +259,7 @@ var/global/list/uneatable = list(
 				return 1
 	return 0
 
-/obj/machinery/singularity/proc/consume(var/atom/A)
+/obj/singularity/proc/consume(var/atom/A)
 	var/gain = 0
 	if(is_type_in_list(A, uneatable))
 		return 0
@@ -285,8 +286,8 @@ var/global/list/uneatable = list(
 			explosion(src.loc,(dist),(dist*2),(dist*4))
 			return
 
-		if(istype(A, /obj/machinery/singularity))//Welp now you did it
-			var/obj/machinery/singularity/S = A
+		if(istype(A, /obj/singularity))//Welp now you did it
+			var/obj/singularity/S = A
 			src.energy += (S.energy/2)//Absorb most of it
 			qdel(S)
 			var/dist = max((current_size - 2),1)
@@ -313,7 +314,7 @@ var/global/list/uneatable = list(
 	return
 
 
-/obj/machinery/singularity/proc/move(var/force_move = 0)
+/obj/singularity/proc/move(var/force_move = 0)
 	if(!move_self)
 		return 0
 
@@ -341,7 +342,7 @@ var/global/list/uneatable = list(
 	return 0
 
 
-/obj/machinery/singularity/proc/check_turfs_in(var/direction = 0, var/step = 0)
+/obj/singularity/proc/check_turfs_in(var/direction = 0, var/step = 0)
 	if(!direction)
 		return 0
 	var/steps = 0
@@ -394,7 +395,7 @@ var/global/list/uneatable = list(
 	return 1
 
 
-/obj/machinery/singularity/proc/can_move(var/turf/T)
+/obj/singularity/proc/can_move(var/turf/T)
 	if(!T)
 		return 0
 	if((locate(/obj/machinery/containment_field) in T)||(locate(/obj/machinery/shieldwall) in T))
@@ -410,7 +411,7 @@ var/global/list/uneatable = list(
 	return 1
 
 
-/obj/machinery/singularity/proc/event()
+/obj/singularity/proc/event()
 	var/numb = pick(1,2,3,4,5,6)
 	switch(numb)
 		if(1)//EMP
@@ -424,7 +425,7 @@ var/global/list/uneatable = list(
 	return 1
 
 
-/obj/machinery/singularity/proc/toxmob()
+/obj/singularity/proc/toxmob()
 	var/toxrange = 10
 	var/toxdamage = 4
 	var/radiation = 15
@@ -440,7 +441,7 @@ var/global/list/uneatable = list(
 	return
 
 
-/obj/machinery/singularity/proc/mezzer()
+/obj/singularity/proc/mezzer()
 	for(var/mob/living/carbon/M in oviewers(8, src))
 		if(istype(M, /mob/living/carbon/brain)) //Ignore brains
 			continue
@@ -458,12 +459,12 @@ var/global/list/uneatable = list(
 	return
 
 
-/obj/machinery/singularity/proc/emp_area()
+/obj/singularity/proc/emp_area()
 	empulse(src, 8, 10)
 	return
 
 
-/obj/machinery/singularity/proc/pulse()
+/obj/singularity/proc/pulse()
 
 	for(var/obj/machinery/power/rad_collector/R in rad_collectors)
 		if(get_dist(R, src) <= 15) // Better than using orange() every process

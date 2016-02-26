@@ -17,50 +17,6 @@
 		return H.scientist
 	return 0
 
-//TG Machinery staff
-/obj/machinery/abductor
-	var/panel_open = 0
-	var/state_open = 0
-	var/mob/living/occupant = null
-
-/obj/machinery/abductor/proc/dropContents()
-	var/turf/T = get_turf(src)
-	T.contents += contents
-	if(occupant)
-		if(occupant.client)
-			occupant.client.eye = occupant
-			occupant.client.perspective = MOB_PERSPECTIVE
-		occupant = null
-
-/obj/machinery/abductor/proc/close_machine(mob/living/target = null)
-	state_open = 0
-	density = 1
-	if(!target)
-		for(var/mob/living/carbon/C in loc)
-			if(C.buckled)
-				continue
-			else
-				target = C
-	if(target && !target.buckled)
-		if(target.client)
-			target.client.perspective = EYE_PERSPECTIVE
-			target.client.eye = src
-		occupant = target
-		target.loc = src
-		target.stop_pulling()
-		if(target.pulledby)
-			target.pulledby.stop_pulling()
-	updateUsrDialog()
-	update_icon()
-
-/obj/machinery/abductor/proc/open_machine()
-	state_open = 1
-	density = 0
-	dropContents()
-	update_icon()
-	updateUsrDialog()
-
-
 //*************-Console-*************//
 
 /obj/machinery/abductor/console

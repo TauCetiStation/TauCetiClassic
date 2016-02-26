@@ -325,6 +325,24 @@ obj/item/weapon/circuitboard/rdserver
 							"/obj/item/weapon/cable_coil" = 1,
 							"/obj/item/weapon/stock_parts/subspace/filter" = 1)
 
+/obj/item/weapon/circuitboard/tesla_coil
+	name = "circuit board (Tesla Coil)"
+	build_path = /obj/machinery/power/tesla_coil
+	board_type = "machine"
+	origin_tech = "programming=1"
+	frame_desc = "Requires 1 Capacitor."
+	req_components = list(
+							/obj/item/weapon/stock_parts/capacitor = 1)
+
+/obj/item/weapon/circuitboard/grounding_rod
+	name = "circuit board (Grounding Rod)"
+	build_path = /obj/machinery/power/grounding_rod
+	board_type = "machine"
+	origin_tech = "programming=1"
+	frame_desc = "Requires 1 Capacitor."
+	req_components = list(
+							/obj/item/weapon/stock_parts/capacitor = 1)
+
 /obj/item/weapon/circuitboard/telecomms/processor
 	name = "Circuit Board (Processor Unit)"
 	build_path = "/obj/machinery/telecomms/processor"

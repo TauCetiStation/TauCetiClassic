@@ -1546,6 +1546,22 @@ var/mob/dview/dview_mob = new
 		loc = get_turf(orbiting)
 		orbiting = null
 
+/proc/get_closest_atom(type, list, source)
+	var/closest_atom
+	var/closest_distance
+	for(var/A in list)
+		if(!istype(A, type))
+			continue
+		var/distance = get_dist(source, A)
+		if(!closest_distance)
+			closest_distance = distance
+			closest_atom = A
+		else
+			if(closest_distance > distance)
+				closest_distance = distance
+				closest_atom = A
+	return closest_atom 
+
 /*
  * Use proc below to generate new damage overlays for humans.
  * Uncomment generate_damage_overlays_dmi() and gen_dam_dmi() below.

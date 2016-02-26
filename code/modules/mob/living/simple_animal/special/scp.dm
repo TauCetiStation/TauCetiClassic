@@ -66,7 +66,7 @@
 	else if(!isturf(src.loc))
 		loc = get_turf(src)
 
-	for(var/obj/machinery/singularity/S in view(7,src))
+	for(var/obj/singularity/S in view(7,src))
 		if(S)
 			qdel(src)
 			return
