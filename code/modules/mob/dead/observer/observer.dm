@@ -23,7 +23,6 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 	var/medHUD = 0
 	var/antagHUD = 0
 	universal_speak = 1
-	var/atom/movable/following = null
 	var/golem_rune = null //Used to check, if we already queued as a golem.
 
 	var/image/ghostimage = null //this mobs ghost image, for deleting and stuff
@@ -106,9 +105,6 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 		var/atom/movable/target = locate(href_list["ghostplayerobservejump"])
 		if(!target)
 			return
-
-		if(following)
-			remove_following(usr)
 
 		var/turf/T = get_turf(target)
 		loc = T
@@ -217,8 +213,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 
 /mob/dead/observer/Move(NewLoc, direct)
-	if(following)
-		remove_following(src)
 	dir = direct
 	if(NewLoc)
 		loc = NewLoc
@@ -355,8 +349,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		usr << "<span class='warning'>No area available.</span>"
 
 	usr.forceMove(pick(L))
-	if(following)
-		remove_following(usr)
 
 /mob/dead/observer/verb/follow()
 	set category = "Ghost"
@@ -406,51 +398,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if (!orbiting) //make sure another orbit hasn't started
 		pixel_y = 0
 		animate(src, pixel_y = 2, time = 10, loop = -1)
-
-/mob/proc/update_following()
-	. = get_turf(src)
-	for(var/mob/dead/observer/M in following_mobs)
-		if(M.following != src)
-			following_mobs -= M
-		else
-			if(M.loc != .)
-				M.forceMoveOld(.)
-
-/mob
-	var/list/following_mobs = list()
-
-/proc/remove_following(mob/dead/observer/F)
-	if(!isobserver(F))
-		return
-
-	if(F.following)
-		if(ismob(F.following))
-			var/mob/M = F.following
-			M.following_mobs -= F
-		F.following = null
-
-/mob/Destroy()
-	for(var/mob/dead/observer/M in following_mobs)
-		M.following = null
-	following_mobs = null
-	return ..()
-
-/mob/dead/observer/Destroy()
-	if(ismob(following))
-		var/mob/M = following
-		M.following_mobs -= src
-	following = null
-	return ..()
-
-/mob/Move()
-	. = ..()
-	if(.)
-		update_following()
-
-/mob/Life()
-	// to catch teleports etc which directly set loc
-	update_following()
-	return ..()
 
 /mob/dead/observer/verb/jumptomob() //Moves the ghost instead of just changing the ghosts's eye -Nodrak
 	set category = "Ghost"
