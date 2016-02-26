@@ -1514,7 +1514,7 @@
 #include "code\ZAS\Zone.dm"
 #include "interface\interface.dm"
 #include "interface\skin.dmf"
-#include "maps\z1.dmm"
+#include "maps\z1_tesla.dmm"
 #include "maps\z2.dmm"
 #include "maps\z3.dmm"
 #include "maps\z4.dmm"
