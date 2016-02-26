@@ -189,7 +189,6 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	var/mob/living/carbon/human/my_target = null
 	var/weapon_name = null
 	var/obj/item/weap = null
-	var/image/stand_icon = null
 	var/image/currentimage = null
 	var/icon/base = null
 	var/s_tone
@@ -347,8 +346,5 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/projectile, /obj/ite
 	F.right = image(clone,dir = EAST)
 	F.up = image(clone,dir = NORTH)
 	F.down = image(clone,dir = SOUTH)
-
-//	F.base = new /icon(clone.stand_icon)
-//	F.currentimage = new /image(clone)
 
 	F.updateimage()

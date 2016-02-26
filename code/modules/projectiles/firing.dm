@@ -1,12 +1,12 @@
 /obj/item/ammo_casing/proc/fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, params, var/distro, var/quiet)
 	distro += variance
-	for (var/i = max(1, pellets), i > 0, i--)
+	for(var/i = max(1, pellets), i > 0, i--)
 		var/curloc = user.loc
 		var/targloc = get_turf(target)
 		ready_proj(target, user, quiet)
 		if(distro)
 			targloc = spread(targloc, curloc, distro)
-		if(!throw_proj(targloc, user, params))
+		if(!throw_proj(target, targloc, user, params))
 			return 0
 		if(i > 1)
 			newshot()
@@ -14,8 +14,8 @@
 	update_icon()
 	return 1
 
-/obj/item/ammo_casing/proc/ready_proj(atom/target as mob|obj|turf, mob/living/user, var/quiet)
-	if (!BB)
+/obj/item/ammo_casing/proc/ready_proj(atom/target, mob/living/user, quiet)
+	if(!BB)
 		return
 	BB.original = target
 	BB.firer = user
@@ -23,13 +23,15 @@
 	BB.silenced = quiet
 	return
 
-/obj/item/ammo_casing/proc/throw_proj(var/turf/targloc, mob/living/user as mob|obj, params)
+/obj/item/ammo_casing/proc/throw_proj(atom/target, turf/targloc, mob/living/user, params)
 	var/turf/curloc = user.loc
 	if (!istype(targloc) || !istype(curloc) || !BB)
 		return 0
-	if(targloc == curloc)			//Fire the projectile
-		user.bullet_act(BB)
+	if(targloc == curloc)
+		if(target) //if the target is right on our location we go straight to bullet_act()
+			target.bullet_act(BB, BB.def_zone)
 		qdel(BB)
+		BB = null
 		return 1
 	BB.loc = get_turf(user)
 	BB.starting = get_turf(user)
@@ -43,7 +45,6 @@
 			BB.p_x = text2num(mouse_control["icon-x"])
 		if(mouse_control["icon-y"])
 			BB.p_y = text2num(mouse_control["icon-y"])
-
 	if(BB)
 		BB.process()
 	BB = null
