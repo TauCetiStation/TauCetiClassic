@@ -69,6 +69,12 @@
 
 	..()	//redirect to hsrc.Topic()
 
+//client/proc/is_content_unlocked()
+//	if(!prefs.unlock_content)
+//		src << "Become a BYOND member to access member-perks and features, as well as support the engine that makes this game possible. Only 10 bucks for 3 months! <a href='http://www.byond.com/membership'>Click Here to find out more</a>."
+//		return 0
+//	return 1
+
 /client/proc/handle_spam_prevention(var/message, var/mute_type)
 	if(global_message_cooldown && (world.time < last_message_time + 5))
 		return 1

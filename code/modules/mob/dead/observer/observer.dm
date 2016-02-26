@@ -29,6 +29,7 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 	var/image/ghostimage = null //this mobs ghost image, for deleting and stuff
 	var/ghostvision = 1 //is the ghost able to see things humans can't?
 	var/seedarkness = 1
+	var/ghost_orbit = GHOST_ORBIT_CIRCLE
 
 /mob/dead/observer/New(mob/body)
 	sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
@@ -71,7 +72,7 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 		mind = body.mind	//we don't transfer the mind but we keep a reference to it.
 
 	if(!T)	T = pick(latejoin)			//Safety in case we cannot find the body's position
-	forceMoveOld(T)
+	loc = T
 
 	if(!name)							//To prevent nameless ghosts
 		name = capitalize(pick(first_names_male)) + " " + capitalize(pick(last_names))
@@ -110,7 +111,7 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 			remove_following(usr)
 
 		var/turf/T = get_turf(target)
-		forceMoveOld(T)
+		loc = T
 
 /mob/dead/attackby(obj/item/W, mob/user)
 	if(istype(W,/obj/item/weapon/book/tome))
@@ -362,7 +363,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set name = "Orbit" // "Haunt"
 	set desc = "Follow and orbit a mob."
 
-	var/list/mobs = getpois()
+	var/list/mobs = getpois(skip_mindless=1)
 	var/input = input("Please, select a mob!", "Haunt", null, null) as null|anything in mobs
 	var/mob/target = mobs[input]
 	if(!target)
@@ -382,7 +383,21 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(orbiting != target)
 		src << "<span class='notice'>Now orbiting [target].</span>"
 
-	orbit(target,orbitsize,0)
+	var/rot_seg
+
+	switch(ghost_orbit)
+		if(GHOST_ORBIT_TRIANGLE)
+			rot_seg = 3
+		if(GHOST_ORBIT_SQUARE)
+			rot_seg = 4
+		if(GHOST_ORBIT_PENTAGON)
+			rot_seg = 5
+		if(GHOST_ORBIT_HEXAGON)
+			rot_seg = 6
+		else //Circular
+			rot_seg = 36 //360/10 bby, smooth enough aproximation of a circle
+
+	orbit(target,orbitsize, FALSE, 20, rot_seg)
 
 /mob/dead/observer/orbit()
 	..()

@@ -16,6 +16,7 @@
 #include "code\setup.dm"
 #include "code\stylesheet.dm"
 #include "code\world.dm"
+#include "code\__DEFINES\is_helpers.dm"
 #include "code\__DEFINES\misc.dm"
 #include "code\__DEFINES\qdel.dm"
 #include "code\__DEFINES\say.dm"
