@@ -14,9 +14,10 @@
 	var/origin_oldloc = null
 	var/static_beam = 0
 	var/beam_type = /obj/effect/ebeam //must be subtype
+	var/layer = null
 
 
-/datum/beam/New(beam_origin,beam_target,beam_icon='icons/effects/beam.dmi',beam_icon_state="b_beam",time=50,maxdistance=10,btype = /obj/effect/ebeam)
+/datum/beam/New(beam_origin,beam_target,beam_icon='icons/effects/beam.dmi',beam_icon_state="b_beam",time=50,maxdistance=10,btype = /obj/effect/ebeam,beam_layer)
 	endtime = world.time+time
 	origin = beam_origin
 	origin_oldloc =	get_turf(origin)
@@ -29,6 +30,7 @@
 	icon = beam_icon
 	icon_state = beam_icon_state
 	beam_type = btype
+	layer = beam_layer
 
 
 /datum/beam/proc/Start()
@@ -77,6 +79,8 @@
 	for(N in 0 to length-1 step 32)//-1 as we want < not <=, but we want the speed of X in Y to Z and step X
 		var/obj/effect/ebeam/X = new beam_type(origin_oldloc)
 		X.owner = src
+		if(layer)
+			X.layer = layer
 		elements |= X
 
 		//Assign icon, for main segments it's base_icon, for the end, it's icon+icon_state
@@ -127,8 +131,8 @@
 	return ..()
 
 
-/atom/proc/Beam(atom/BeamTarget,icon_state="b_beam",icon='icons/effects/beam.dmi',time=50, maxdistance=10,beam_type=/obj/effect/ebeam)
-	var/datum/beam/newbeam = new(src,BeamTarget,icon,icon_state,time,maxdistance,beam_type)
+/atom/proc/Beam(atom/BeamTarget,icon_state="b_beam",icon='icons/effects/beam.dmi',time=50, maxdistance=10,beam_type=/obj/effect/ebeam,beam_layer=null)
+	var/datum/beam/newbeam = new(src,BeamTarget,icon,icon_state,time,maxdistance,beam_type,beam_layer)
 	spawn(0)
 		newbeam.Start()
 	return newbeam

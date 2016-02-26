@@ -21,6 +21,7 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 	desc = "An energy ball."
 	icon = 'icons/obj/tesla_engine/energy_ball.dmi'
 	icon_state = "energy_ball"
+	layer = LIGHTING_LAYER+1
 	pixel_x = -32
 	pixel_y = -32
 	current_size = STAGE_TWO
@@ -209,7 +210,7 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 	//Alright, we've done our loop, now lets see if was anything interesting in range
 	if(closest_atom)
 		//common stuff
-		source.Beam(closest_atom, icon_state="lightning[rand(1,12)]", icon='icons/effects/effects.dmi', time=5)
+		source.Beam(closest_atom, icon_state="lightning[rand(1,12)]", icon='icons/effects/effects.dmi', time=5, beam_layer=LIGHTING_LAYER+1)
 		var/zapdir = get_dir(source, closest_atom)
 		if(zapdir)
 			. = zapdir
