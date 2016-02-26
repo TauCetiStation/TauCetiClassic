@@ -139,6 +139,8 @@
 		/obj/item/clothing/under/pants/camo,
 		/obj/item/clothing/under/det,
 		/obj/item/clothing/under/brown,
+		/obj/item/clothing/under/jetsons,
+		/obj/item/clothing/under/jetsons/j2
 		)
 	loot = pick(uniforms)
 	new loot(C)
@@ -152,7 +154,8 @@
 			/obj/item/clothing/tie/medal/silver,
 			/obj/item/clothing/tie/medal/silver/valor,
 			/obj/item/clothing/tie/medal/gold,
-			/obj/item/clothing/tie/medal/gold/heroism
+			/obj/item/clothing/tie/medal/gold/heroism,
+			obj/item/weapon/gun/energy/laser/retro/jetsons
 			)
 		loot = pick(misc)
 		new loot(C)
@@ -203,4 +206,29 @@
 		var/msg = sanitize(input(user, "What should it say?", "Grave marker", message) as text|null)
 		if(msg)
 			message = msg
+
+
+//Grave jetsons items
+
+
+obj/item/weapon/gun/energy/laser/retro/jetsons
+	name ="unwanted laser"
+	icon = 'icons/obj/jetsons.dmi'
+	tc_custom = 'icons/obj/jetsons.dmi'
+	icon_state = "jetsons_gun"
+	desc = "Very unusual version of laser gun, oldschool style"
+
+/obj/item/clothing/under/jetsons
+	name = "old overall"
+	desc = "Mr. Spacely's favorite overalls"
+	icon = 'icons/obj/jetsons.dmi'
+	tc_custom = 'icons/obj/jetsons.dmi'
+	icon_state = "jetsons_s"
+	item_color = "jetsons_s"
+
+/obj/item/clothing/under/jetsons/j2
+	name = "old dress"
+	desc = "Jetson is coming appart"
+	icon_state = "jetsons_f"
+	item_color = "jetsons_f"
 
