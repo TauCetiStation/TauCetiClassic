@@ -155,7 +155,7 @@
 			/obj/item/clothing/tie/medal/silver/valor,
 			/obj/item/clothing/tie/medal/gold,
 			/obj/item/clothing/tie/medal/gold/heroism,
-			obj/item/weapon/gun/energy/laser/retro/jetsons
+			/obj/item/weapon/gun/energy/laser/retro/jetsons
 			)
 		loot = pick(misc)
 		new loot(C)
@@ -213,16 +213,16 @@
 
 obj/item/weapon/gun/energy/laser/retro/jetsons
 	name ="unwanted laser"
-	icon = 'icons/obj/jetsons.dmi'
-	tc_custom = 'icons/obj/jetsons.dmi'
+	icon = 'tauceti/icons/obj/jetsons.dmi'
+	tc_custom = 'tauceti/icons/obj/jetsons.dmi'
 	icon_state = "jetsons_gun"
 	desc = "Very unusual version of laser gun, oldschool style"
 
 /obj/item/clothing/under/jetsons
 	name = "old overall"
 	desc = "Mr. Spacely's favorite overalls"
-	icon = 'icons/obj/jetsons.dmi'
-	tc_custom = 'icons/obj/jetsons.dmi'
+	icon = 'tauceti/icons/obj/jetsons.dmi'
+	tc_custom = 'tauceti/icons/obj/jetsons.dmi'
 	icon_state = "jetsons_s"
 	item_color = "jetsons_s"
 
