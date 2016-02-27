@@ -755,12 +755,12 @@ note dizziness decrements automatically in the mob's Life() proc.
 	//Temporarily moved here from the various life() procs
 	//I'm fixing stuff incrementally so this will likely find a better home.
 	//It just makes sense for now. ~Carn
-	if( update_icon )	//forces a full overlay update
+
+	if(lying != lying_prev)
+		update_transform()
+	if(update_icon)	//forces a full overlay update
 		update_icon = 0
 		regenerate_icons()
-	else if( lying != lying_prev )
-		update_icons()
-
 	return canmove
 
 

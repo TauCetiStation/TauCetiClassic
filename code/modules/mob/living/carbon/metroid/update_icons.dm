@@ -1,1 +1,2 @@
-//no special icon processing
+/mob/living/carbon/slime/update_transform()
+	return

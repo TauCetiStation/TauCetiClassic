@@ -94,9 +94,9 @@
 			next_move += 5
 		W.attack_self(src)
 		if(hand)
-			update_inv_l_hand(0)
+			update_inv_l_hand()
 		else
-			update_inv_r_hand(0)
+			update_inv_r_hand()
 
 		return
 
