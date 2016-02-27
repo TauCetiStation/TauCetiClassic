@@ -709,6 +709,10 @@
 <br>
 Congratulations! You are now trained for xenobiology research!"}
 
+/obj/item/weapon/paper/abductor/New()
+	..()
+	verbs -= /obj/item/weapon/paper/verb/crumple
+
 /obj/item/weapon/paper/abductor/update_icon()
 	return
 
