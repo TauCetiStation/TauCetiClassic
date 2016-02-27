@@ -24,7 +24,7 @@
 		if(prob(40))
 			for(var/mob/M in hearers(4, src))
 				if(M.client)
-					M.show_message(text("<span class='rose'>You hear something rumbling inside [src]'s stomach...</span>"), 2)
+					M.show_message(text("<span class='red'>You hear something rumbling inside [src]'s stomach...</span>"), 2)
 			var/obj/item/I = user.get_active_hand()
 			if(I && I.force)
 				var/d = rand(round(I.force / 4), I.force)
@@ -79,7 +79,7 @@
 		if (M.hand)
 			temp = M:organs_by_name["l_hand"]
 		if(temp && !temp.is_usable())
-			M << "<span class='rose'>You can't use your [temp.display_name].</span>"
+			M << "<span class='red'>You can't use your [temp.display_name].</span>"
 			return
 
 	for(var/datum/disease/D in viruses)
@@ -131,17 +131,17 @@
 	playsound(loc, "sparks", 50, 1, -1)
 	if (shock_damage > 10)
 		src.visible_message(
-			"<span class='rose'>[src] was shocked by the [source]!</span>", \
+			"<span class='red'>[src] was shocked by the [source]!</span>", \
 			"<span class='danger'>You feel a powerful shock course through your body!</span>", \
-			"<span class='rose'>You hear a heavy electrical crack.</span>" \
+			"<span class='red'>You hear a heavy electrical crack.</span>" \
 		)
 		Stun(10)//This should work for now, more is really silly and makes you lay there forever
 		Weaken(10)
 	else
 		src.visible_message(
-			"<span class='rose'>[src] was mildly shocked by the [source].</span>", \
-			"<span class='rose'>You feel a mild shock course through your body.</span>", \
-			"<span class='rose'>You hear a light zapping.</span>" \
+			"<span class='red'>[src] was mildly shocked by the [source].</span>", \
+			"<span class='red'>You feel a mild shock course through your body.</span>", \
+			"<span class='red'>You hear a light zapping.</span>" \
 		)
 	return shock_damage
 
@@ -337,7 +337,7 @@
 
 	//actually throw it!
 	if (item)
-		src.visible_message("<span class='rose'>[src] has thrown [item].</span>")
+		src.visible_message("<span class='red'>[src] has thrown [item].</span>")
 
 		if(!src.lastarea)
 			src.lastarea = get_area(src.loc)
@@ -432,7 +432,7 @@
 	set category = "IC"
 
 	if(usr.sleeping)
-		usr << "<span class='rose'>You are already sleeping"
+		usr << "<span class='red'>You are already sleeping"
 		return
 	if(alert(src,"You sure you want to sleep for a while?","Sleep","Yes","No") == "Yes")
 		usr.sleeping = 20 //Short nap
