@@ -213,13 +213,16 @@
 		return
 
 	if(M == user && user.zone_sel.selecting == "mouth" && contents.len > 0 && !user.wear_mask)
-		var/obj/item/clothing/mask/cigarette/W = new /obj/item/clothing/mask/cigarette(user)
-		reagents.trans_to(W, (reagents.total_volume/contents.len))
-		user.equip_to_slot_if_possible(W, slot_wear_mask)
-		reagents.maximum_volume = 15 * contents.len
-		contents.len--
-		user << "<span class='notice'>You take a cigarette out of the pack.</span>"
-		update_icon()
+		for(var/obj/item/I in contents)
+			if(istype(I, /obj/item/clothing/mask/cigarette))
+				var/obj/item/clothing/mask/cigarette/C = I
+				contents.Remove(C)
+				user.equip_to_slot_if_possible(C, slot_wear_mask)
+				user << "<span class='notice'>You take a cigarette out of the pack.</span>"
+				update_icon()
+				break
+			else
+				user << "<span class='notice'>You tried to get any cigarette, but they ran out.</span>"
 	else
 		..()
 
