@@ -47,7 +47,7 @@
 			return
 		if(speaker_name != speaker.real_name && speaker.real_name)
 			speaker_name = "[speaker.real_name] ([speaker_name])"
-		track = "(<a href='byond://?src=\ref[src];track=\ref[speaker]'>follow</a>) "
+		track = "<a href='byond://?src=\ref[src];track=\ref[speaker]'>(F)</a> "
 		if(client.prefs.chat_toggles & CHAT_GHOSTEARS && speaker in view(src))
 			message = "<b>[message]</b>"
 
@@ -157,10 +157,10 @@
 	if(istype(src, /mob/dead/observer))
 		if(speaker_name != speaker.real_name && !isAI(speaker)) //Announce computer and various stuff that broadcasts doesn't use it's real name but AI's can't pretend to be other mobs.
 			speaker_name = "[speaker.real_name] ([speaker_name])"
-		if(istype(speaker, /mob/living/silicon/ai))
-			var/mob/living/silicon/ai/S
+		if(isAI(speaker))
+			var/mob/living/silicon/ai/S = speaker
 			speaker = S.eyeobj
-		track = "[speaker_name] (<a href='byond://?src=\ref[src];track=\ref[speaker]'>(F)</a>)"
+		track = "[speaker_name] <a href='byond://?src=\ref[src];track=\ref[speaker]'>(F)</a>"
 
 	if(sdisabilities & DEAF || ear_deaf)
 		if(prob(20))
