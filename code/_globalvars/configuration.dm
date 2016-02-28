@@ -30,25 +30,6 @@ var/Debug2 = 1   // enables detailed job debug file in secrets
 //This was a define, but I changed it to a variable so it can be changed in-game.(kept the all-caps definition because... code...) -Errorage
 var/MAX_EXPLOSION_RANGE = 14
 
-var/list/be_special_flags = list(
-	"Traitor" = BE_TRAITOR,
-	"Operative" = BE_OPERATIVE,
-	"Changeling" = BE_CHANGELING,
-	"Wizard" = BE_WIZARD,
-	"Malf AI" = BE_MALF,
-	"Revolutionary" = BE_REV,
-	"Xenomorph" = BE_ALIEN,
-	"pAI" = BE_PAI,
-	"Cultist" = BE_CULTIST,
-	"Ninja" = BE_NINJA,
-	"Raider" = BE_RAIDER,
-	"Diona" = BE_PLANT,
-	"Meme" = BE_MEME,
-	"Mutineer" = BE_MUTINEER,
-	"Shadowling" = BE_SHADOWLING,
-	"Abductor" = BE_ABDUCTOR
-	)
-
 var/eventchance = 10 //% per 5 mins
 var/event = 0
 var/hadevent = 0
