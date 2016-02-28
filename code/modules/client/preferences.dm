@@ -45,13 +45,14 @@ var/const/MAX_SAVE_SLOTS = 10
 	var/submenu_type = "body"
 
 	//game-preferences
-	var/ooccolor = "#b82e00"
-	var/be_special = 0					//Special role selection
 	var/UI_style = "White"
-	var/toggles = TOGGLES_DEFAULT
-	var/chat_toggles = TOGGLES_DEFAULT_CHAT
 	var/UI_style_color = "#ffffff"
 	var/UI_style_alpha = 255
+	var/ooccolor = "#b82e00"
+	var/be_special = 0					//Special role selection
+	var/toggles = TOGGLES_DEFAULT
+	var/chat_toggles = TOGGLES_DEFAULT_CHAT
+	var/ghost_orbit = GHOST_ORBIT_CIRCLE
 
 	//character preferences
 	var/real_name						//our character's name

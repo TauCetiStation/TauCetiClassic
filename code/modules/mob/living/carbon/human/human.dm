@@ -530,17 +530,32 @@
 
 //Removed the horrible safety parameter. It was only being used by ninja code anyways.
 //Now checks siemens_coefficient of the affected area by default
-/mob/living/carbon/human/electrocute_act(var/shock_damage, var/obj/source, var/base_siemens_coeff = 1.0, var/def_zone = null)
+/mob/living/carbon/human/electrocute_act(shock_damage, obj/source, siemens_coeff = 1.0, def_zone = null, tesla_shock = 0)
 	if(status_flags & GODMODE)	return 0	//godmode
 	if(mShock in src.mutations)	return 0 //#Z2 no shock with that mutation.
 
-	if (!def_zone)
+	if(!def_zone)
 		def_zone = pick("l_hand", "r_hand")
 
 	var/datum/organ/external/affected_organ = get_organ(check_zone(def_zone))
-	var/siemens_coeff = base_siemens_coeff * get_siemens_coefficient_organ(affected_organ)
 
-	return ..(shock_damage, source, siemens_coeff, def_zone)
+	if(tesla_shock)
+		var/total_coeff = 1
+		if(gloves)
+			var/obj/item/clothing/gloves/G = gloves
+			if(G.siemens_coefficient <= 0)
+				total_coeff -= 0.5
+		if(wear_suit)
+			var/obj/item/clothing/suit/S = wear_suit
+			if(S.siemens_coefficient <= 0)
+				total_coeff -= 0.95
+		siemens_coeff = total_coeff
+	else
+		siemens_coeff *= get_siemens_coefficient_organ(affected_organ)
+
+	. = ..(shock_damage, source, siemens_coeff, def_zone, tesla_shock)
+	if(.)
+		electrocution_animation(40)
 
 /mob/living/carbon/human/Topic(href, href_list)
 	if (href_list["refresh"])
@@ -1390,7 +1405,7 @@
 		W.message = message
 		W.add_fingerprint(src)
 
-/mob/living/carbon/human/canSingulothPull(var/obj/machinery/singularity/singulo)
+/mob/living/carbon/human/canSingulothPull(var/obj/singularity/singulo)
 	if(!..())
 		return 0
 
@@ -1563,3 +1578,29 @@
 		if(eyes && istype(eyes))
 			return 1
 	return 0
+
+
+
+//Turns a mob black, flashes a skeleton overlay
+//Just like a cartoon!
+/mob/living/carbon/human/proc/electrocution_animation(anim_duration)
+	//TG...
+	//Handle mutant parts if possible
+	//if(species)
+	//	species.handle_mutant_bodyparts(src,"black")
+	//	species.handle_hair(src,"black")
+	//	species.update_color(src,"black")
+	//	overlays += "electrocuted_base"
+	//	spawn(anim_duration)
+	//		if(src)
+	//			if(dna && dna.species)
+	//				dna.species.handle_mutant_bodyparts(src)
+	//				dna.species.handle_hair(src)
+	//				dna.species.update_color(src)
+	//			overlays -= "electrocuted_base"
+	//else //or just do a generic animation
+	var/list/viewing = list()
+	for(var/mob/M in viewers(src))
+		if(M.client)
+			viewing += M.client
+	flick_overlay(image(icon,src,"electrocuted_generic",MOB_LAYER+1), viewing, anim_duration)

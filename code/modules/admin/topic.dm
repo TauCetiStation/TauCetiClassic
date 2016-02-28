@@ -1397,6 +1397,16 @@
 
 		check_antagonists()
 
+	else if(href_list["adminplayerobservefollow"])
+		if(!isobserver(usr) && !check_rights(R_ADMIN))	return
+
+		var/atom/movable/AM = locate(href_list["adminplayerobservefollow"])
+
+		var/client/C = usr.client
+		if(!isobserver(usr))	C.admin_ghost()
+		var/mob/dead/observer/A = C.mob
+		A.ManualFollow(AM)
+
 	else if(href_list["adminplayerobservecoodjump"])
 		if(!check_rights(R_ADMIN))	return
 

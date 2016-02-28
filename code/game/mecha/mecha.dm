@@ -81,6 +81,7 @@
 	spark_system.set_up(2, 0, src)
 	spark_system.attach(src)
 	add_cell()
+	poi_list |= src
 	add_iterators()
 	removeVerb(/obj/mecha/verb/disconnect_from_port)
 	removeVerb(/atom/movable/verb/pull)
@@ -90,7 +91,8 @@
 	return
 
 /obj/mecha/Destroy()
-	src.go_out()
+	go_out()
+	poi_list.Remove(src)
 	mechas_list -= src //global mech list
 	..()
 	return
