@@ -161,7 +161,6 @@
 	density = 1
 	anchored = 1
 	var/orient = "LEFT" // "RIGHT" changes the dir suffix to "-r"
-	var/mob/living/carbon/human/occupant = null
 	var/available_chemicals = list("inaprovaline" = "Inaprovaline", "stoxin" = "Soporific", "paracetamol" = "Paracetamol", "anti_toxin" = "Dylovene", "dexalin" = "Dexalin")
 	var/amounts = list(5, 10)
 	var/obj/item/weapon/reagent_containers/glass/beaker = null
@@ -191,13 +190,15 @@
 
 
 	process()
-		if(filtering > 0)
-			if(beaker)
-				if(beaker.reagents.total_volume < beaker.reagents.maximum_volume)
-					src.occupant.vessel.trans_to(beaker, 1)
-					for(var/datum/reagent/x in src.occupant.reagents.reagent_list)
-						src.occupant.reagents.trans_to(beaker, 3)
-						src.occupant.vessel.trans_to(beaker, 1)
+		if(ishuman(occupant))
+			var/mob/living/carbon/human/H = occupant
+			if(filtering > 0)
+				if(beaker)
+					if(beaker.reagents.total_volume < beaker.reagents.maximum_volume)
+						H.vessel.trans_to(beaker, 1)
+						for(var/datum/reagent/x in src.occupant.reagents.reagent_list)
+							H.reagents.trans_to(beaker, 3)
+							H.vessel.trans_to(beaker, 1)
 		src.updateUsrDialog()
 		return
 

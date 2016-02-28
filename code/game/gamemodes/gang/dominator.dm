@@ -17,6 +17,9 @@
 		return
 	set_light(2)
 
+/obj/machinery/dominator/tesla_act()
+	qdel(src)
+
 /obj/machinery/dominator/examine(mob/user)
 	..()
 	if(operating == -1)

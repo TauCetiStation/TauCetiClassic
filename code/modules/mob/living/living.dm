@@ -215,7 +215,7 @@
 	return 0
 
 
-/mob/living/proc/electrocute_act(var/shock_damage, var/obj/source, var/siemens_coeff = 1.0)
+/mob/living/proc/electrocute_act(shock_damage, obj/source, siemens_coeff = 1.0, def_zone = null, tesla_shock = 0)
 	  return 0 //only carbon liveforms have this proc
 
 /mob/living/emp_act(severity)
@@ -899,4 +899,3 @@
 						stat(null, "[gang_name("A")] Gang Takeover: [max(mode.A_timer, 0)]")
 					if(isnum(mode.B_timer))
 						stat(null, "[gang_name("B")] Gang Takeover: [max(mode.B_timer, 0)]")
-

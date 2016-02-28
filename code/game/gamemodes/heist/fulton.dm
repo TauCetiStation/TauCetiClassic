@@ -5,34 +5,49 @@ var/list/extraction_appends = list("AAAAAAAAAAAAAAAAAUGH", "AAAAAAAAAAAHHHHHHHHH
 	desc = "A marker that can be used to extract a target to a Aurora. Anything not bolted down can be moved. Anything living will be dropped off into a holding cell"
 	icon = 'icons/obj/fulton.dmi'
 	icon_state = "extraction_pack"
+	var/is_extracting = 0
 
 /obj/item/weapon/extraction_pack/afterattack(atom/movable/A, mob/user as mob, proximity)
+	var/extract_time = 70
 	if(!proximity)
 		return
+	if(is_extracting)
+		return
 	if(!istype(A))
+		return
+	else if(istype(A, /obj/effect/extraction_holder)) // This is stupid...
 		return
 	else
 		var/obj/effect/landmark/heist/fulton_mark
 		if(ismob(A))
 			fulton_mark = locate(/obj/effect/landmark/heist/mob_loot)
+			extract_time = 100
 		else
 			fulton_mark = locate(/obj/effect/landmark/heist/obj_loot)
 		if(!fulton_mark)
 			user << "<span class='notice'>Error... Aurora beacon not found.</span>"
 			return
-		if(A.loc == user || A == user) // no extracting stuff you're holding in your hands/yourself
+		if(A.loc == user || A == user) // No extracting stuff you're holding in your hands/yourself.
 			return
 		if(A.anchored)
 			return
+		is_extracting = 1
 		user << "<span class='notice'>You start attaching the pack to [A]...</span>"
-		if(do_after(user,50,target=A))
+		if(istype(A, /obj/item))
+			var/obj/item/I = A
+			if(I.w_class <= 2)
+				extract_time = 50
+			else
+				extract_time = w_class * 20 // 3 = 6 seconds, 4 = 8 seconds, 5 = 10 seconds.
+		if(do_after(user, extract_time, target=A))
+			is_extracting = 0
 			if(A.anchored)
 				return
 			user << "<span class='notice'>You attach the pack to [A] and activate it.</span>"
 			var/image/balloon
 			if(istype(A, /mob/living))
 				var/mob/living/M = A
-				M.Weaken(16) // Keep them from moving during the duration of the extraction
+				M.Weaken(16) // Keep them from moving during the duration of the extraction.
 				if(M && M.buckled)
 					M.buckled.unbuckle()
 			else
@@ -87,6 +102,8 @@ var/list/extraction_appends = list("AAAAAAAAAAAAAAAAAUGH", "AAAAAAAAAAAHHHHHHHHH
 			sleep(5)
 			A.forceMove(holder_obj.loc)
 			qdel(holder_obj)
+		else
+			is_extracting = 0
 
 /obj/effect/extraction_holder
 	name = "extraction holder"

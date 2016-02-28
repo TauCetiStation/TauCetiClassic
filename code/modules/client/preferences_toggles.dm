@@ -213,3 +213,37 @@
 		media.update_music()
 	else
 		media.stop_music()
+
+//var/global/list/ghost_forms = list("ghost","ghostking","ghostian2","skeleghost","ghost_red","ghost_black", \
+//							"ghost_blue","ghost_yellow","ghost_green","ghost_pink", \
+//							"ghost_cyan","ghost_dblue","ghost_dred","ghost_dgreen", \
+//							"ghost_dcyan","ghost_grey","ghost_dyellow","ghost_dpink", "ghost_purpleswirl","ghost_funkypurp","ghost_pinksherbert","ghost_blazeit",\
+//							"ghost_mellow","ghost_rainbow","ghost_camo","ghost_fire")
+
+//client/verb/pick_form()
+//	set name = "Choose Ghost Form"
+//	set category = "Preferences"
+//	set desc = "Choose your preferred ghostly appearance."
+//	if(!is_content_unlocked())	return
+//	var/new_form = input(src, "Thanks for supporting BYOND - Choose your ghostly form:","Thanks for supporting BYOND",null) as null|anything in ghost_forms
+//	if(new_form)
+//		prefs.ghost_form = new_form
+//		prefs.save_preferences()
+//		if(istype(mob,/mob/dead/observer))
+//			mob.icon_state = new_form
+
+var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOST_ORBIT_SQUARE,GHOST_ORBIT_HEXAGON,GHOST_ORBIT_PENTAGON)
+
+//client/verb/pick_ghost_orbit()
+//	set name = "Choose Ghost Orbit"
+//	set category = "Preferences"
+//	set desc = "Choose your preferred ghostly orbit."
+	//if(!is_content_unlocked())
+	//	return
+//	var/new_orbit = input(src, "Thanks for supporting BYOND - Choose your ghostly orbit:","Thanks for supporting BYOND",null) as null|anything in ghost_orbits
+//	if(new_orbit)
+//		prefs.ghost_orbit = new_orbit
+//		prefs.save_preferences()
+//		if(istype(mob, /mob/dead/observer))
+//			var/mob/dead/observer/O = mob
+//			O.ghost_orbit = new_orbit

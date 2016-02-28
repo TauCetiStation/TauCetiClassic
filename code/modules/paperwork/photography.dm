@@ -132,7 +132,12 @@
 	var/on = 1
 	var/icon_on = "camera"
 	var/icon_off = "camera_off"
+	var/see_ghosts = 0 //for the spoop of it
 
+/obj/item/device/camera/spooky
+	name = "camera obscura"
+	desc = "A polaroid camera, some say it can see ghosts!"
+	see_ghosts = 1
 
 /obj/item/device/camera/attack(mob/living/carbon/human/M as mob, mob/user as mob)
 	return
@@ -165,7 +170,14 @@
 	for(var/turf/T in turfs)
 		atoms.Add(T)
 		for(var/atom/movable/A in T)
-			if(A.invisibility) continue
+			if(A.invisibility)
+				if(see_ghosts)
+					if(istype(A, /mob/dead/observer))
+						var/mob/dead/observer/O = A
+						if(O.orbiting) //so you dont see ghosts following people like antags, etc.
+							continue
+				else
+					continue
 			atoms.Add(A)
 
 	var/list/sorted = list()
@@ -202,7 +214,17 @@
 /obj/item/device/camera/proc/camera_get_mobs(turf/the_turf)
 	var/mob_detail
 	for(var/mob/M in the_turf)
-		if(M.invisibility) continue
+		if(M.invisibility)
+			if(see_ghosts && istype(M,/mob/dead/observer))
+				var/mob/dead/observer/O = M
+				if(O.orbiting)
+					continue
+				if(!mob_detail)
+					mob_detail = "You can see a g-g-g-g-ghooooost! "
+				else
+					mob_detail += "You can also see a g-g-g-g-ghooooost!"
+			else
+				continue
 
 		var/holding = null
 

@@ -23,12 +23,12 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 	var/medHUD = 0
 	var/antagHUD = 0
 	universal_speak = 1
-	var/atom/movable/following = null
 	var/golem_rune = null //Used to check, if we already queued as a golem.
 
 	var/image/ghostimage = null //this mobs ghost image, for deleting and stuff
 	var/ghostvision = 1 //is the ghost able to see things humans can't?
 	var/seedarkness = 1
+	var/ghost_orbit = GHOST_ORBIT_CIRCLE
 
 /mob/dead/observer/New(mob/body)
 	sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
@@ -71,7 +71,7 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 		mind = body.mind	//we don't transfer the mind but we keep a reference to it.
 
 	if(!T)	T = pick(latejoin)			//Safety in case we cannot find the body's position
-	forceMoveOld(T)
+	loc = T
 
 	if(!name)							//To prevent nameless ghosts
 		name = capitalize(pick(first_names_male)) + " " + capitalize(pick(last_names))
@@ -106,11 +106,8 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 		if(!target)
 			return
 
-		if(following)
-			remove_following(usr)
-
 		var/turf/T = get_turf(target)
-		forceMoveOld(T)
+		loc = T
 
 /mob/dead/attackby(obj/item/W, mob/user)
 	if(istype(W,/obj/item/weapon/book/tome))
@@ -216,16 +213,14 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 
 /mob/dead/observer/Move(NewLoc, direct)
-	if(following)
-		remove_following(src)
 	dir = direct
 	if(NewLoc)
-		forceMoveOld(NewLoc)
+		loc = NewLoc
 		for(var/obj/effect/step_trigger/S in NewLoc)
 			S.Crossed(src)
 
 		return
-	forceMoveOld(get_turf(src)) //Get out of closets and such as a ghost
+	loc = get_turf(src) //Get out of closets and such as a ghost
 	if((direct & NORTH) && y < world.maxy)
 		y++
 	else if((direct & SOUTH) && y > 1)
@@ -238,7 +233,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	for(var/obj/effect/step_trigger/S in locate(x, y, z))	//<-- this is dumb
 		S.Crossed(src)
 
-	..()
 
 /mob/dead/observer/examine()
 	if(usr)
@@ -253,22 +247,12 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		stat(null, "Station Time: [worldtime2text()]")
 		if(ticker)
 			if(ticker.mode)
-				//world << "DEBUG: ticker not null"
-				if(ticker.mode.name == "AI malfunction")
-					//world << "DEBUG: malf mode ticker test"
-					if(ticker.mode:malf_mode_declared)
-						stat(null, "Time left: [max(ticker.mode:AI_win_timeleft/(ticker.mode:apcs/3), 0)]")
 				if(istype(ticker.mode, /datum/game_mode/gang))
 					var/datum/game_mode/gang/mode = ticker.mode
 					if(isnum(mode.A_timer))
 						stat(null, "[gang_name("A")] Gang Takeover: [max(mode.A_timer, 0)]")
 					if(isnum(mode.B_timer))
 						stat(null, "[gang_name("B")] Gang Takeover: [max(mode.B_timer, 0)]")
-		if(emergency_shuttle)
-			if(emergency_shuttle.online && emergency_shuttle.location < 2)
-				var/timeleft = emergency_shuttle.timeleft()
-				if (timeleft)
-					stat(null, "ETA-[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
 
 /mob/dead/observer/verb/reenter_corpse()
 	set category = "Ghost"
@@ -355,106 +339,80 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		usr << "<span class='warning'>No area available.</span>"
 
 	usr.forceMove(pick(L))
-	if(following)
-		remove_following(usr)
 
-/mob/dead/observer/verb/follow(input in getmobs())
+/mob/dead/observer/verb/follow()
 	set category = "Ghost"
-	set name = "Follow" // "Haunt"
-	set desc = "Follow and haunt a mob."
+	set name = "Orbit" // "Haunt"
+	set desc = "Follow and orbit a mob."
 
-	var/target = getmobs()[input]
-	if(!target) return
+	var/list/mobs = getpois(skip_mindless=1)
+	var/input = input("Please, select a mob!", "Haunt", null, null) as null|anything in mobs
+	var/mob/target = mobs[input]
+	if(!target)
+		return
 	ManualFollow(target)
 
 // This is the ghost's follow verb with an argument
 /mob/dead/observer/proc/ManualFollow(var/atom/movable/target)
-	if(!target)
+	if (!istype(target))
 		return
 
-	if(target != src)
-		if(following && following == target)
-			return
-		following = target
-		src << "<span class='notice'>Now following [target]</span>"
-		if(ismob(target))
-			forceMoveOld(get_turf(target))
-			var/mob/M = target
-			M.following_mobs += src
-		else
-			spawn(0)
-				while(target && following == target && client)
-					var/turf/T = get_turf(target)
-					if(!T)
-						break
-					// To stop the ghost flickering.
-					if(loc != T)
-						forceMoveOld(T)
-					sleep(15)
+	var/icon/I = icon(target.icon,target.icon_state,target.dir)
 
-/mob/proc/update_following()
-	. = get_turf(src)
-	for(var/mob/dead/observer/M in following_mobs)
-		if(M.following != src)
-			following_mobs -= M
-		else
-			if(M.loc != .)
-				M.forceMoveOld(.)
+	var/orbitsize = (I.Width()+I.Height())*0.5
+	orbitsize -= (orbitsize/world.icon_size)*(world.icon_size*0.25)
 
-/mob
-	var/list/following_mobs = list()
+	if(orbiting != target)
+		src << "<span class='notice'>Now orbiting [target].</span>"
 
-/proc/remove_following(mob/dead/observer/F)
-	if(!isobserver(F))
-		return
+	var/rot_seg
 
-	if(F.following)
-		if(ismob(F.following))
-			var/mob/M = F.following
-			M.following_mobs -= F
-		F.following = null
+	switch(ghost_orbit)
+		if(GHOST_ORBIT_TRIANGLE)
+			rot_seg = 3
+		if(GHOST_ORBIT_SQUARE)
+			rot_seg = 4
+		if(GHOST_ORBIT_PENTAGON)
+			rot_seg = 5
+		if(GHOST_ORBIT_HEXAGON)
+			rot_seg = 6
+		else //Circular
+			rot_seg = 36 //360/10 bby, smooth enough aproximation of a circle
 
-/mob/Destroy()
-	for(var/mob/dead/observer/M in following_mobs)
-		M.following = null
-	following_mobs = null
-	return ..()
+	orbit(target,orbitsize, FALSE, 20, rot_seg)
 
-/mob/dead/observer/Destroy()
-	if(ismob(following))
-		var/mob/M = following
-		M.following_mobs -= src
-	following = null
-	return ..()
+/mob/dead/observer/orbit()
+	..()
+	//restart our floating animation after orbit is done.
+	sleep 2  //orbit sets up a 2ds animation when it finishes, so we wait for that to end
+	if (!orbiting) //make sure another orbit hasn't started
+		pixel_y = 0
+		animate(src, pixel_y = 2, time = 10, loop = -1)
 
-/mob/Move()
-	. = ..()
-	if(.)
-		update_following()
-
-/mob/Life()
-	// to catch teleports etc which directly set loc
-	update_following()
-	return ..()
-
-/mob/dead/observer/verb/jumptomob(target in getmobs()) //Moves the ghost instead of just changing the ghosts's eye -Nodrak
+/mob/dead/observer/verb/jumptomob() //Moves the ghost instead of just changing the ghosts's eye -Nodrak
 	set category = "Ghost"
 	set name = "Jump to Mob"
 	set desc = "Teleport to a mob."
 
 	if(istype(usr, /mob/dead/observer)) //Make sure they're an observer!
+		var/list/dest = list() //List of possible destinations (mobs)
+		var/target = null	   //Chosen target.
+
+		dest += getpois(mobs_only=1) //Fill list, prompt user with list
+		target = input("Please, select a player!", "Jump to Mob", null, null) as null|anything in dest
 
 		if (!target)//Make sure we actually have a target
 			return
 		else
-			var/mob/M = getmobs()[target] //Destination mob
+			var/mob/M = dest[target] //Destination mob
+			var/mob/A = src			 //Source mob
 			var/turf/T = get_turf(M) //Turf of the destination mob
 
 			if(T && isturf(T))	//Make sure the turf exists, then move the source to that destination.
-				forceMoveOld(T)
-				following = null
+				A.loc = T
 			else
-				src << "This mob is not located in the game world."
+				A << "This mob is not located in the game world."
+
 /*
 /mob/dead/observer/verb/boo()
 	set category = "Ghost"
