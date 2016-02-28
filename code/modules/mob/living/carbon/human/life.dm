@@ -336,7 +336,7 @@
 					if(istype(O)) O.add_autopsy_data("Radiation Poisoning", damage)
 
 	proc/breathe()
-		if(mNobreath in src.mutations)	return //#Z2 We need no breath with this mutation
+		if(NO_BREATH in src.mutations)	return //#Z2 We need no breath with this mutation
 		if(reagents.has_reagent("lexorin")) return
 		if(istype(loc, /obj/machinery/atmospherics/unary/cryo_cell)) return
 		if(species && (species.flags & NO_BREATHE || species.flags & IS_SYNTHETIC)) return
@@ -874,7 +874,7 @@
 		return thermal_protection_flags
 
 	proc/get_heat_protection(temperature) //Temperature is the temperature you're being exposed to.
-		if(mHeatres in mutations) //#Z2
+		if(RESIST_HEAT in mutations) //#Z2
 			return 1 //Fully protected from the fire. //##Z2
 
 		var/thermal_protection_flags = get_heat_protection_flags(temperature)
@@ -1604,7 +1604,7 @@
 				if(!machine.check_eye(src))		reset_view(null)
 			else
 				var/isRemoteObserve = 0
-				if((mRemote in mutations) && remoteview_target)
+				if((REMOTE_VIEW in mutations) && remoteview_target)
 					if(getBrainLoss() <= 100)//#Z2 We burn our brain with active remote_view mutation
 						if(remoteview_target.stat==CONSCIOUS)
 							isRemoteObserve = 1

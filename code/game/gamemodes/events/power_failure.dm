@@ -24,7 +24,7 @@
 
 
 	for(var/obj/machinery/power/apc/C in world)
-		if(C.cell && C.z == 1)
+		if(C.cell && C.z == ZLEVEL_STATION)
 			C.cell.charge = 0
 
 /proc/power_restore(var/announce = 1)
@@ -35,7 +35,7 @@
 		for(var/mob/M in player_list)
 			M << sound('sound/AI/poweron.ogg')
 	for(var/obj/machinery/power/apc/C in world)
-		if(C.cell && C.z == 1)
+		if(C.cell && C.z == ZLEVEL_STATION)
 			C.cell.charge = C.cell.maxcharge
 	for(var/obj/machinery/power/smes/S in world)
 		var/area/current_area = get_area(S)

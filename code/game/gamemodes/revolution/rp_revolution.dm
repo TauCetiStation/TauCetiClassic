@@ -131,7 +131,7 @@
 			//       probably wanna export this stuff into a separate function for use by both
 			//       revs and heads
 			//assume that only carbon mobs can become rev heads for now
-			if(!rev_mind.current:handcuffed && T && T.z == 1)
+			if(!rev_mind.current:handcuffed && T && T.z == ZLEVEL_STATION)
 				return 0
 	return 1
 

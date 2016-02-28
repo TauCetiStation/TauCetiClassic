@@ -4,9 +4,9 @@
 /mob/living/silicon/ai/proc/InvalidTurf(turf/T as turf)
 	if(!T)
 		return 1
-	if(T.z == 2)
+	if(T.z == ZLEVEL_CENTCOMM)
 		return 1
-	if(T.z > 6)
+	if(T.z > ZLEVEL_DERELICT)
 		return 1
 	return 0
 

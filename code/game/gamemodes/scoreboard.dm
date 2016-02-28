@@ -29,14 +29,14 @@
 
 	// Who is alive/dead, who escaped
 	for (var/mob/living/silicon/ai/I in mob_list)
-		if (I.stat == 2 && I.z == 1)
+		if (I.stat == 2 && I.z == ZLEVEL_STATION)
 			score["deadaipenalty"] = 1
 			score["deadcrew"] += 1
 
 	for (var/mob/living/carbon/human/I in mob_list)
 //		for (var/datum/ailment/disease/V in I.ailments)
 //			if (!V.vaccine && !V.spread != "Remissive") score["disease"]++
-		if (I.stat == 2 && I.z == 1) score["deadcrew"] += 1
+		if (I.stat == 2 && I.z == ZLEVEL_STATION) score["deadcrew"] += 1
 		if (I.job == "Clown")
 			for(var/thing in I.attack_log)
 				if(findtext(thing, "<font color='orange'>")) score["clownabuse"]++

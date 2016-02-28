@@ -532,7 +532,7 @@
 //Now checks siemens_coefficient of the affected area by default
 /mob/living/carbon/human/electrocute_act(shock_damage, obj/source, siemens_coeff = 1.0, def_zone = null, tesla_shock = 0)
 	if(status_flags & GODMODE)	return 0	//godmode
-	if(mShock in src.mutations)	return 0 //#Z2 no shock with that mutation.
+	if(NO_SHOCK in src.mutations)	return 0 //#Z2 no shock with that mutation.
 
 	if(!def_zone)
 		def_zone = pick("l_hand", "r_hand")
@@ -948,7 +948,7 @@
 		remoteview_target = null
 		return
 
-	if(!(mMorph in mutations))
+	if(!(MORPH in mutations))
 		src.verbs -= /mob/living/carbon/human/proc/morph
 		return
 
@@ -1027,7 +1027,7 @@
 		remoteview_target = null
 		return
 
-	if(!(mRemotetalk in src.mutations))
+	if(!(REMOTE_TALK in src.mutations))
 		src.verbs -= /mob/living/carbon/human/proc/remotesay
 		return
 
@@ -1058,7 +1058,7 @@
 	else
 		say = sanitize(say)
 	var/mob/T = creatures[target]
-	if(mRemotetalk in T.mutations)
+	if(REMOTE_TALK in T.mutations)
 		T.show_message("\blue You hear [src.real_name]'s voice: [say]")
 	else
 		T.show_message("\blue You hear a voice that seems to echo around the room: [say]")
@@ -1075,7 +1075,7 @@
 		reset_view(0)
 		return
 
-	if(!(mRemote in src.mutations))
+	if(!(REMOTE_VIEW in src.mutations))
 		remoteview_target = null
 		reset_view(0)
 		src.verbs -= /mob/living/carbon/human/proc/remoteobserve
@@ -1098,7 +1098,7 @@
 
 	for(var/mob/living/carbon/human/M in world) //#Z2 only carbon/human for now
 		var/name = M.real_name
-		if(!(mRemotetalk in src.mutations))
+		if(!(REMOTE_TALK in src.mutations))
 			namecounts++
 			name = "([namecounts])"
 		else
