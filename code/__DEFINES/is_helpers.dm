@@ -2,7 +2,7 @@
 
 #define isdrone(A) (istype(A, /mob/living/silicon/robot/drone))
 
-#define ishuman(A) (istype(A, /obj/machinery/bot))
+#define ishuman(A) (istype(A, /mob/living/carbon/human))
 
 #define ismonkey(A) (istype(A, /mob/living/carbon/monkey))
 
