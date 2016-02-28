@@ -761,6 +761,7 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 
 	var/delayfraction = round(delay/numticks)
 	var/original_loc = user.loc
+	var/target_loc = target.loc
 	var/original_turf = get_turf(user)
 	var/holding = user.get_active_hand()
 	var/image/progbar
@@ -772,7 +773,7 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 
 		sleep(delayfraction)
 
-		if(!user || user.stat || user.weakened || user.stunned || user.loc != original_loc || get_turf(user) != original_turf)
+		if(!user || user.stat || user.weakened || user.stunned || user.loc != original_loc || get_turf(user) != original_turf || target.loc != target_loc)
 			if(user && user.client)
 				user.client.images -= progbar
 			return 0

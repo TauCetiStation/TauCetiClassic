@@ -461,14 +461,13 @@
 /mob/living/carbon/monkey/Stat()
 	..()
 	if(statpanel("Status"))
-		stat(null, text("Intent: []", a_intent))
-		stat(null, text("Move Mode: []", m_intent))
+		stat(null, "Intent: [a_intent]")
+		stat(null, "Move Mode: [m_intent]")
 		if(client && mind)
-			if (client.statpanel == "Status")
-				if(mind.changeling)
-					stat("Chemical Storage", "[mind.changeling.chem_charges]/[mind.changeling.chem_storage]")
-					stat("Genetic Damage Time", mind.changeling.geneticdamage)
-					stat("Absorbed DNA", mind.changeling.absorbedcount)
+			if(mind.changeling)
+				stat("Chemical Storage", "[mind.changeling.chem_charges]/[mind.changeling.chem_storage]")
+				stat("Genetic Damage Time", mind.changeling.geneticdamage)
+				stat("Absorbed DNA", mind.changeling.absorbedcount)
 	return
 
 
