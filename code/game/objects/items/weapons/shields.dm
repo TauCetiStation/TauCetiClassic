@@ -46,6 +46,9 @@
 	attack_verb = list("shoved", "bashed")
 	var/active = 0
 
+/obj/item/weapon/shield/energy/IsReflect()
+	return (active)
+
 /*
 /obj/item/weapon/cloaking_device
 	name = "cloaking device"

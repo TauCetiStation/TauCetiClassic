@@ -81,6 +81,10 @@
 	DeactivateStealth()
 	return 0
 
+/obj/item/clothing/suit/armor/abductor/vest/IsReflect()
+	DeactivateStealth()
+	return 0
+
 /obj/item/clothing/suit/armor/abductor/vest/proc/IsAbductor(var/user)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
