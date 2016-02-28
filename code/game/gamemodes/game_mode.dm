@@ -22,6 +22,7 @@
 	var/station_was_nuked = 0 //see nuclearbomb.dm and malfunction.dm
 	var/explosion_in_progress = 0 //sit back and relax
 	var/nar_sie_has_risen = 0 //check, if there is already one god in the world who was summoned (only for tomes)
+	var/completion_text = ""
 	var/list/datum/mind/modePlayer = new
 	var/list/restricted_jobs = list()	// Jobs it doesn't make sense to be.  I.E chaplain or AI cultist
 	var/list/protected_jobs = list()	// Jobs that can't be traitors because
@@ -72,11 +73,6 @@ Implants;
 /obj/item/weapon/storage/box/syndie_kit/imp_compress:4:Compressed Matter Implant;Whitespace:Seperator;
 (Pointless) Badassery;
 /obj/item/toy/syndicateballoon:10:For showing that You Are The BOSS (Useless Balloon);"}
-
-// Items removed from above:
-/*
-/obj/item/weapon/cloaking_device:4:Cloaking Device;	//Replacing cloakers with thermals.	-Pete
-*/
 
 /datum/game_mode/proc/announce() //to be calles when round starts
 	world << "<B>Notice</B>: [src] did not define announce()"
@@ -509,7 +505,7 @@ proc/get_nt_opposed()
 ///////////////////////////
 
 /datum/game_mode/proc/printplayer(var/datum/mind/ply)
-	var/role = "\improper[ply.special_role]"
+	var/role = "[ply.special_role]"
 	var/text = "<br><b>[ply.name]</b>(<b>[ply.key]</b>) as \a <b>[role]</b> ("
 	if(ply.current)
 		if(ply.current.stat == DEAD)
@@ -531,6 +527,41 @@ proc/get_nt_opposed()
 		if(objective.check_completion())
 			text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <font color='green'><b>Success!</b></font>"
 		else
-			text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <font color='red'><b>Fail</b></font>"
+			text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <font color='red'><b>Fail.</b></font>"
 		count++
+	return text
+
+//Used for printing player with there icons in round ending staticstic
+/datum/game_mode/proc/printplayerwithicon(datum/mind/ply)
+	var/text = ""
+	var/tempstate = end_icons.len
+	if(ply.current)
+		var/icon/flat = getFlatIcon(ply.current,exact=1)
+		end_icons += flat
+		tempstate = end_icons.len
+		text += {"<BR><img src="logo_[tempstate].png"> <B>[ply.key]</B> was <B>[ply.name]</B> ("}
+		if(ply.current.stat == DEAD)
+			text += "died"
+			flat.Turn(90)
+			end_icons[tempstate] = flat
+		else
+			text += "survived"
+		if(ply.current.real_name != ply.name)
+			text += " as [ply.current.real_name]"
+	else
+		var/icon/sprotch = icon('icons/effects/blood.dmi', "gibbearcore")
+		end_icons += sprotch
+		tempstate = end_icons.len
+		text += {"<BR><img src="logo_[tempstate].png"> <B>[ply.key]</B> was <B>[ply.name]</B> ("}
+		text += "body destroyed"
+	text += ")"
+	return text
+
+//Used for printing antag logo
+/datum/game_mode/proc/printlogo(logoname, antagname)
+	var/icon/logo = icon('icons/mob/mob.dmi', "[logoname]-logo")
+	end_icons += logo
+	var/tempstate = end_icons.len
+	var/text = ""
+	text += {"<img src="logo_[tempstate].png"> <B>The [antagname] were:</B> <img src="logo_[tempstate].png">"}
 	return text

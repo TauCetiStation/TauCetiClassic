@@ -66,8 +66,8 @@
 							//return - technically you can add more aliens to a team
 				for(var/mob/M in dead_mob_list)
 					M << text("<span class='abductor_team[]'><b>[user.real_name]:</b> [sanitize(message)]</span>", user.team)
-					if(!isobserver(M))
-						M << "<hr><span class='warning'>If you see this message, that means something broken. Please, contact to <b>SpaiR</b> on forum (http://tauceti.ru/forums/index.php?action=profile;u=1929) or ask someone call him. Please, <u>remember</u> what happened in this round, this information is very <b>important</b>. To skip this message ask admins to get out you from your body and back.</span><hr>"
+					if(!isobserver(M) && (M.stat != DEAD))
+						M << "<hr><span class='warning'>≈сли вы видите это сообщение, значит что-то сломалось. ѕожалуйста, свяжитесь со мной <b>SpaiR</b> на форуме (http://tauceti.ru/forums/index.php?action=profile;u=1929) или попросите кого-нибудь меня позвать. ѕожалуйста, <u>запомните</u> что произошло в раунде, эта информация очень <b>важна</b>. „тобы сообщение исчезло попросите админа достать вас из тела и поместить обратно или сами уйдите в обсерверы.</span><hr>"
 				return ""
 
 	message = capitalize(trim(message))

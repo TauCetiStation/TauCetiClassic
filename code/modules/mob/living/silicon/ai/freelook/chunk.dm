@@ -78,6 +78,14 @@
 		if(!c)
 			continue
 
+		var/restricted = 0
+		for(var/N in c.network)
+			if(N in RESTRICTED_CAMERA_NETWORKS)
+				restricted = 1
+				break
+		if(restricted)
+			continue
+
 		if(!c.can_use())
 			continue
 
@@ -136,6 +144,14 @@
 	src.z = z
 
 	for(var/obj/machinery/camera/c in range(16, locate(x + 8, y + 8, z)))
+		var/restricted = 0
+		for(var/N in c.network)
+			if(N in RESTRICTED_CAMERA_NETWORKS)
+				restricted = 1
+				break
+		if(restricted)
+			continue
+
 		if(c.can_use())
 			cameras += c
 

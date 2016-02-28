@@ -184,3 +184,8 @@
 		if ("Disable")
 			sensor_mode = 0
 			src << "Sensor augmentations disabled."
+
+/mob/living/silicon/proc/write_laws()
+	if(laws)
+		var/text = src.laws.write_laws()
+		return text

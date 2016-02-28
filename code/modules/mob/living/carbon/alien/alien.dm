@@ -310,6 +310,9 @@ Hit Procs
 	onclose(user, "mob[name]")
 	return
 
+/mob/living/carbon/alien/getTrail()
+	return "xltrails"
+
 /*----------------------------------------
 Proc: AddInfectionImages()
 Des: Gives the client of the alien an image on each infected mob.

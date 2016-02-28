@@ -70,6 +70,8 @@ var/global/announce_vox_departure = 0 //Stealth systems - give an announcement o
 
 	curr_location.move_contents_to(dest_location)
 	curr_location = dest_location
+	if(istype(dest_location, /area/shuttle/vox/station))
+		vox_shuttle_location = "start"
 	moving = 0
 
 	return 1
@@ -122,7 +124,6 @@ var/global/announce_vox_departure = 0 //Stealth systems - give an announcement o
 				warning = 1
 				return
 		vox_move_to(/area/shuttle/vox/station)
-		vox_shuttle_location = "start"
 	else if(href_list["solars_fore_starboard"])
 		vox_move_to(/area/vox_station/northeast_solars)
 	else if(href_list["solars_fore_port"])

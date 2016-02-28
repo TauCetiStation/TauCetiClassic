@@ -981,62 +981,101 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	icon_state = "golem"
 	unacidable = 1
 	layer = TURF_LAYER
+	var/last_ghost_click = 0
+	var/mob/dead/observer/spirit
 
-	New()
-		..()
+/obj/effect/golemrune/New()
+	..()
+	announce_to_ghosts()
+
+/obj/effect/golemrune/update_icon()
+	if(spirit)
+		icon_state = "golem2"
+	else
+		icon_state = "golem"
+
+/obj/effect/golemrune/process()
+	check_spirit()
+
+/obj/effect/golemrune/attack_ghost(mob/dead/observer/user)
+	if(user.mind && user.mind.current && user.mind.current.stat != DEAD)
+		user << "<span class='notice'>Your spirit linked to another body.</span>"
+		return
+	if(user.golem_rune && user.golem_rune != src)
+		user << "<span class='notice'>One rune per one poor little spirit.</span>"
+		return
+	if(spirit && spirit != user)
+		user << "<span class='warning'>This rune is taken by another spirit, wait or find new one.</span>"
+		return
+	if(last_ghost_click >= world.time)
+		user << "<span class='notice'>You cannot do this so often.</span>"
+		return
+	if(user == spirit)
+		for(var/image/I in user.client.images)
+			if(I.loc == src && I.icon_state == "agolem_master")
+				user.client.images -= I
+				break
+		spirit = null
+		user.golem_rune = null
+		user << "<span class='notice'>You are no longer queued for golem role.</span>"
+	else
 		processing_objects.Add(src)
+		last_ghost_click = world.time + 50
+		var/image/I = image('tauceti/icons/mob/hud_mob.dmi', src, "agolem_master") //If there is alot activated rune close by, we can see which is ours.
+		user.client.images += I
+		spirit = user
+		user.golem_rune = src
+		user << "<span class='notice'>You are now queued for golem role.</span>"
+	check_spirit()
 
-	process()
-		var/mob/dead/observer/ghost
-		for(var/mob/dead/observer/O in src.loc)
-			if(!O.client)	continue
-			if(O.mind && O.mind.current && O.mind.current.stat != DEAD)	continue
-			ghost = O
-			break
-		if(ghost)
-			icon_state = "golem2"
-		else
-			icon_state = "golem"
+/obj/effect/golemrune/attack_hand(mob/living/user)
+	if(!check_spirit())
+		user << "The rune fizzles uselessly. There is no spirit nearby."
+		return
 
-	attack_hand(mob/living/user as mob)
-		var/mob/dead/observer/ghost
-		for(var/mob/dead/observer/O in src.loc)
-			if(!O.client)	continue
-			if(O.mind && O.mind.current && O.mind.current.stat != DEAD)	continue
-			ghost = O
-			break
-		if(!ghost)
-			user << "The rune fizzles uselessly. There is no spirit nearby."
-			return
-		var/mob/living/carbon/human/G = new /mob/living/carbon/human
-		G.dna.mutantrace = "adamantine"
-		G.real_name = text("Adamantine Golem ([rand(1, 1000)])")
-		G.equip_to_slot_or_del(new /obj/item/clothing/under/golem(G), slot_w_uniform)
-		G.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/golem(G), slot_head)
-		G.equip_to_slot_or_del(new /obj/item/clothing/suit/space/golem(G), slot_wear_suit)
-		G.equip_to_slot_or_del(new /obj/item/clothing/shoes/golem(G), slot_shoes)
-		G.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/golem(G), slot_wear_mask)
-		G.equip_to_slot_or_del(new /obj/item/clothing/gloves/golem(G), slot_gloves)
-		G.status_flags &= ~(CANSTUN|CANWEAKEN|CANPARALYSE)
-		G.loc = src.loc
-		G.key = ghost.key
+	var/mob/living/carbon/human/G = new /mob/living/carbon/human
+	G.dna.mutantrace = "adamantine"
+	G.update_mutantrace()
+	G.real_name = text("Adamantine Golem ([rand(1, 1000)])")
+	G.equip_to_slot_or_del(new /obj/item/clothing/under/golem(G), slot_w_uniform)
+	G.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/golem(G), slot_head)
+	G.equip_to_slot_or_del(new /obj/item/clothing/suit/space/golem(G), slot_wear_suit)
+	G.equip_to_slot_or_del(new /obj/item/clothing/shoes/golem(G), slot_shoes)
+	G.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/golem(G), slot_wear_mask)
+	G.equip_to_slot_or_del(new /obj/item/clothing/gloves/golem(G), slot_gloves)
+	G.status_flags &= ~(CANSTUN|CANWEAKEN|CANPARALYSE)
+	G.forceMove(loc)
+	G.attack_log = spirit.attack_log //Preserve attack log, if there is any...
+	G.attack_log += "\[[time_stamp()]\]<font color='blue'> ======GOLEM LIFE======</font>"
+	G.key = spirit.key
+	G.my_master = user
+	G.update_golem_hud_icons()
+	if(istype(user, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = user
+		H.my_golems += G
+		H.update_golem_hud_icons()
+	G << "You are an adamantine golem. You move slowly, but are highly resistant to heat and cold as well as blunt trauma. You are unable to wear clothes, but can still use most tools. Serve [user], and assist them in completing their goals at any cost."
+	qdel(src)
 
-		G.my_master = user
-		G.update_golem_hud_icons()
-		if(istype(user, /mob/living/carbon/human))
-			var/mob/living/carbon/human/H = user
-			H.my_golems += G
-			H.update_golem_hud_icons()
-		G << "You are an adamantine golem. You move slowly, but are highly resistant to heat and cold as well as blunt trauma. You are unable to wear clothes, but can still use most tools. Serve [user], and assist them in completing their goals at any cost."
-		qdel(src)
+/obj/effect/golemrune/proc/announce_to_ghosts()
+	for(var/mob/dead/observer/O in player_list)
+		if(O.client)
+			var/area/A = get_area(src)
+			if(A)
+				O << "<span class='userdanger'>Golem rune created in [A.name] (<A HREF='?src=\ref[O];ghostplayerobservejump=\ref[src]'>JMP</A>).</span>"
 
-
-	proc/announce_to_ghosts()
-		for(var/mob/dead/observer/G in player_list)
-			if(G.client)
-				var/area/A = get_area(src)
-				if(A)
-					G << "\red <FONT size = 3><B>Golem rune created in [A.name].</B></FONT>"
+/obj/effect/golemrune/proc/check_spirit()
+	var/result = 1
+	if(!spirit)
+		result = 0
+	else if(spirit && (!spirit.client || spirit.mind && spirit.mind.current && spirit.mind.current.stat != DEAD))
+		spirit.golem_rune = null
+		spirit = null
+		result = 0
+	if(!result)
+		processing_objects.Remove(src)
+	update_icon()
+	return result
 
 /mob/living/carbon/human/proc/update_golem_hud_icons()
 	if(client)
@@ -1049,6 +1088,10 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 				for(var/mob/living/carbon/human/G in my_golems)
 					var/I = image('tauceti/icons/mob/hud_mob.dmi', loc = G, icon_state = "agolem_master")
 					client.images += I
+
+
+/mob/living/carbon/slime/getTrail()
+	return null
 
 //////////////////////////////Old shit from metroids/RoRos, and the old cores, would not take much work to re-add them////////////////////////
 

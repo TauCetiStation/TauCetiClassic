@@ -11,8 +11,14 @@
 	minimal_access = list()	//See /datum/job/assistant/get_access()
 	alt_titles = list("Technical Assistant","Medical Intern","Research Assistant","Security Cadet", "Lawyer","Mecha Operator","Private Eye","Reporter","Security Cadet","Test Subject","Waiter","Vice Officer","Paranormal Investigator")
 
-/datum/job/assistant/equip(var/mob/living/carbon/human/H)
+/datum/job/assistant/equip(var/mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
+
+	if(visualsOnly)
+		H.equip_to_slot_or_del(new /obj/item/clothing/under/color/grey(H), slot_w_uniform)
+		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), slot_shoes)
+		return
+
 	if (H.mind.role_alt_title)
 		switch(H.mind.role_alt_title)
 			if("Technical Assistant")

@@ -33,6 +33,12 @@
 	var/undershirt = 0	//Which undershirt the player wants.
 	var/backbag = 2		//Which backpack type the player has chosen. Nothing, Satchel or Backpack.
 
+	// General information
+	var/home_system = ""
+	var/citizenship = ""
+	var/personal_faction = ""
+	var/religion = ""
+
 	//Equipment slots
 	var/obj/item/wear_suit = null
 	var/obj/item/w_uniform = null
@@ -51,9 +57,6 @@
 	var/used_skillpoints = 0
 	var/skill_specialization = null
 	var/list/skills = null
-
-	var/icon/stand_icon = null
-	var/icon/lying_icon = null
 
 	var/voice = ""	//Instead of new say code calling GetVoice() over and over and over, we're just going to ask this variable, which gets updated in Life()
 

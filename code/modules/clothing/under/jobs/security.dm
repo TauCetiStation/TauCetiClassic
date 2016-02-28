@@ -101,7 +101,7 @@
 	item_color = item_color == "polsuit" ? "polsuit_rolled" : "polsuit"
 	if (ishuman(loc))
 		var/mob/living/carbon/human/H = loc
-		H.update_inv_w_uniform(1)
+		H.update_inv_w_uniform()
 
 /obj/item/clothing/head/det_hat
 	name = "hat"

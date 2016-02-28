@@ -174,7 +174,7 @@
 			user << "\red \The [src] is far too small for you to pick up."
 			return
 
-	if (hasorgans(user))
+	if(hasorgans(user))
 		var/datum/organ/external/temp = user:organs_by_name["r_hand"]
 		if (user.hand)
 			temp = user:organs_by_name["l_hand"]
@@ -182,16 +182,21 @@
 			user << "<span class='notice'>You try to move your [temp.display_name], but cannot!"
 			return
 
-	if (istype(src.loc, /obj/item/weapon/storage))
+	if(istype(src.loc, /obj/item/weapon/storage))
 		var/obj/item/weapon/storage/S = src.loc
 		S.remove_from_storage(src)
 
 	src.throwing = 0
-	if (src.loc == user)
+	if(src.loc == user)
 		//canremove==0 means that object may not be removed. You can still wear it. This only applies to clothing. /N
 		if(!src.canremove)
 			return
 		if(istype(user,/mob/living/carbon/human))
+			var/mob/living/carbon/human/H = user
+			if(H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit/armor/abductor/vest))
+				for(var/obj/item/clothing/suit/armor/abductor/vest/V in list(H.wear_suit))
+					if(V.stealth_active)
+						V.DeactivateStealth()
 			if(istype(src, /obj/item/clothing/suit/space)) // If the item to be unequipped is a rigid suit
 				if(!user.delay_clothing_u_equip(src))
 					return 0
@@ -572,15 +577,12 @@
 
 /obj/item/proc/eyestab(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 
-	var/mob/living/carbon/human/H = M
-	if(istype(H) && ( \
-			(H.head && H.head.flags & HEADCOVERSEYES) || \
-			(H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) || \
-			(H.glasses && H.glasses.flags & GLASSESCOVERSEYES) \
-		))
-		// you can't stab someone in the eyes wearing a mask!
-		user << "\red You're going to need to remove the eye covering first."
-		return
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(((H.head && H.head.flags & HEADCOVERSEYES) || (H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) || (H.glasses && H.glasses.flags & GLASSESCOVERSEYES)))
+			// you can't stab someone in the eyes wearing a mask!
+			user << "\red You're going to need to remove the eye covering first."
+			return
 
 	var/mob/living/carbon/monkey/Mo = M
 	if(istype(Mo) && ( \
@@ -617,26 +619,26 @@
 			"\red [user] has stabbed themself with [src]!", \
 			"\red You stab yourself in the eyes with [src]!" \
 		)
-	if(istype(M, /mob/living/carbon/human))
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
 		var/datum/organ/internal/eyes/eyes = H.internal_organs_by_name["eyes"]
 		eyes.damage += rand(3,4)
 		if(eyes.damage >= eyes.min_bruised_damage)
-			if(M.stat != 2)
+			if(H.stat != 2)
 				if(eyes.robotic <= 1) //robot eyes bleeding might be a bit silly
-					M << "\red Your eyes start to bleed profusely!"
+					H << "\red Your eyes start to bleed profusely!"
 			if(prob(50))
-				if(M.stat != 2)
-					M << "\red You drop what you're holding and clutch at your eyes!"
-					M.drop_item()
-				M.eye_blurry += 10
-				M.Paralyse(1)
-				M.Weaken(4)
+				if(H.stat != 2)
+					H << "\red You drop what you're holding and clutch at your eyes!"
+					H.drop_item()
+				H.eye_blurry += 10
+				H.Paralyse(1)
+				H.Weaken(4)
 			if (eyes.damage >= eyes.min_broken_damage)
-				if(M.stat != 2)
-					M << "\red You go blind!"
-		var/datum/organ/external/affecting = M:get_organ("head")
-		if(affecting.take_damage(7))
-			M:UpdateDamageIcon()
+				if(H.stat != 2)
+					H << "\red You go blind!"
+		var/datum/organ/external/affecting = H.get_organ("head")
+		affecting.take_damage(7)
 	else
 		M.take_organ_damage(7)
 	M.eye_blurry += rand(3,4)

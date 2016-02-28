@@ -74,7 +74,6 @@ var/list/admin_verbs_admin = list(
 	/client/proc/toggledebuglogs,
 	/client/proc/toggleghostwriters,
 	/client/proc/toggledrones,
-	/datum/admins/proc/show_skills,
 	/client/proc/check_customitem_activity,
 	/client/proc/man_up,
 	/client/proc/global_man_up,
@@ -277,7 +276,6 @@ var/list/admin_verbs_mod = list(
 	/datum/admins/proc/show_player_info,
 	/client/proc/player_panel_new,
 	/client/proc/dsay,
-	/datum/admins/proc/show_skills,
 	/datum/admins/proc/show_player_panel,
 	/client/proc/check_antagonists,
 	/client/proc/jobbans,
@@ -997,8 +995,8 @@ var/list/admin_verbs_mentor = list(
 		winner.client << sound('sound/misc/achievement.ogg')
 	else
 		world  << sound('sound/misc/achievement.ogg')
-		world << "<span class='danger'>\icon[cup] [winner.name] wins \"[name]\"!</span>"
+		world << "<span class='danger'>\icon[cup] <b>[winner.name]</b> wins \"<b>[name]</b>\"!</span>"
 
 	winner << "<span class='danger'>Congratulations!</span>"
 
-	achievements += "[winner.key] as [winner.name] won \"[name]\"! \"[desc]\""
+	achievements += "<b>[winner.key]</b> as <b>[winner.name]</b> won \"<b>[name]</b>\"! \"[desc]\""

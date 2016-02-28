@@ -265,13 +265,15 @@ var/global/floorIsLava = 0
 	var/datum/preferences/D
 	var/p_warns
 	var/p_age
+	var/p_ingame_age
 	for(var/client/C in clients)
 		if(C.ckey == key)
 			p_age = C.player_age
+			p_ingame_age = C.player_ingame_age
 
 			D = C.prefs
 			p_warns = D.warnbans
-	dat +="<span style='color:#000000; font-weight: bold'>Player age: [p_age]</span><br>"
+	dat +="<span style='color:#000000; font-weight: bold'>Player age: [p_age] / In-game age: [p_ingame_age]</span><br>"
 	dat +="<span style='color:#000000'>Player warnbans: [p_warns]</span><hr>"
 
 	var/savefile/info = new("data/player_saves/[copytext(key, 1, 2)]/[key]/info.sav")
@@ -1118,20 +1120,6 @@ var/global/floorIsLava = 0
 			S.laws.show_laws(usr)
 	if(!ai_number)
 		usr << "<b>No AIs located</b>" //Just so you know the thing is actually working and not just ignoring you.
-
-/datum/admins/proc/show_skills(var/mob/living/carbon/human/M as mob in world)
-	set category = "Admin"
-	set name = "Show Skills"
-
-	if (!istype(src,/datum/admins))
-		src = usr.client.holder
-	if (!istype(src,/datum/admins))
-		usr << "Error: you are not an admin!"
-		return
-
-	show_skill_window(usr, M)
-
-	return
 
 /client/proc/update_mob_sprite(mob/living/carbon/human/H as mob)
 	set category = "Admin"
