@@ -4,22 +4,22 @@ var/list/preferences_datums = list()
 
 var/global/list/special_roles = list( //keep synced with the defines BE_* in setup.dm --rastaf
 //some autodetection here.
-	"traitor" = IS_MODE_COMPILED("traitor"),             // 0
-	"operative" = IS_MODE_COMPILED("nuclear"),           // 1
-	"changeling" = IS_MODE_COMPILED("changeling"),       // 2
-	"wizard" = IS_MODE_COMPILED("wizard"),               // 3
-	"malf AI" = IS_MODE_COMPILED("malfunction"),         // 4
-	"revolutionary" = IS_MODE_COMPILED("revolution"),    // 5
-	"alien candidate" = 1, //always show                 // 6
+	"Traitor" = IS_MODE_COMPILED("traitor"),             // 0
+	"Operative" = IS_MODE_COMPILED("nuclear"),           // 1
+	"Changeling" = IS_MODE_COMPILED("changeling"),       // 2
+	"Wizard" = IS_MODE_COMPILED("wizard"),               // 3
+	"Malf AI" = IS_MODE_COMPILED("malfunction"),         // 4
+	"Revolutionary" = IS_MODE_COMPILED("revolution"),    // 5
+	"Alien candidate" = 1, //always show                 // 6
 	"pAI candidate" = 1, // -- TLE                       // 7
-	"cultist" = IS_MODE_COMPILED("cult"),                // 8
-	"ninja" = "true",									 // 9
-	"raider" = IS_MODE_COMPILED("heist"),			 	 // 10
-	"diona" = 1,                                         // 11
-	"meme" = IS_MODE_COMPILED("meme"),				 	 // 12
-	"mutineer" = IS_MODE_COMPILED("mutiny"),			 // 13
-	"shadowling" = IS_MODE_COMPILED("shadowling"),		 // 14
-	"abductor" = IS_MODE_COMPILED("abduction"),			 // 15
+	"Cultist" = IS_MODE_COMPILED("cult"),                // 8
+	"Ninja" = "true",									 // 9
+	"Raider" = IS_MODE_COMPILED("heist"),			 	 // 10
+	"Diona" = 1,                                         // 11
+	"Meme" = IS_MODE_COMPILED("meme"),				 	 // 12
+	"Mutineer" = IS_MODE_COMPILED("mutiny"),			 // 13
+	"Shadowling" = IS_MODE_COMPILED("shadowling"),		 // 14
+	"Abductor" = IS_MODE_COMPILED("abduction"),			 // 15
 )
 
 var/const/MAX_SAVE_SLOTS = 10
@@ -41,15 +41,18 @@ var/const/MAX_SAVE_SLOTS = 10
 	var/muted = 0
 	var/last_ip
 	var/last_id
+	var/menu_type = "general"
+	var/submenu_type = "body"
 
 	//game-preferences
-	var/ooccolor = "#b82e00"
-	var/be_special = 0					//Special role selection
 	var/UI_style = "White"
-	var/toggles = TOGGLES_DEFAULT
-	var/chat_toggles = TOGGLES_DEFAULT_CHAT
 	var/UI_style_color = "#ffffff"
 	var/UI_style_alpha = 255
+	var/ooccolor = "#b82e00"
+	var/be_special = 0					//Special role selection
+	var/toggles = TOGGLES_DEFAULT
+	var/chat_toggles = TOGGLES_DEFAULT_CHAT
+	var/ghost_orbit = GHOST_ORBIT_CIRCLE
 
 	//character preferences
 	var/real_name						//our character's name
@@ -78,12 +81,16 @@ var/const/MAX_SAVE_SLOTS = 10
 	var/species = "Human"
 	var/language = "None"				//Secondary language
 
-		//Mob preview
-	var/icon/preview_icon = null
-	var/icon/preview_icon_front = null
-	var/icon/preview_icon_side = null
+	//Some faction information.
+	var/home_system = "None"            //System of birth.
+	var/citizenship = "None"            //Current home system.
+	var/faction = "None"                //Antag faction/general associated faction.
+	var/religion = "None"               //Religious association.
 
-		//Jobs, uses bitflags
+	//Mob preview
+	var/icon/preview_icon = null
+
+	//Jobs, uses bitflags
 	var/job_civilian_high = 0
 	var/job_civilian_med = 0
 	var/job_civilian_low = 0
@@ -98,10 +105,6 @@ var/const/MAX_SAVE_SLOTS = 10
 
 	//Keeps track of preferrence for not getting any wanted jobs
 	var/alternate_option = 0
-
-	var/used_skillpoints = 0
-	var/skill_specialization = null
-	var/list/skills = list() // skills can range from 0 to 3
 
 	// maps each organ to either null(intact), "cyborg" or "amputated"
 	// will probably not be able to do this for head and torso ;)
@@ -119,7 +122,7 @@ var/const/MAX_SAVE_SLOTS = 10
 
 	var/uplinklocation = "PDA"
 
-		// OOC Metadata:
+	// OOC Metadata:
 	var/metadata = ""
 	var/slot_name = ""
 
@@ -139,1203 +142,105 @@ var/const/MAX_SAVE_SLOTS = 10
 	gender = pick(MALE, FEMALE)
 	real_name = random_name(gender)
 
-/datum/preferences/proc/ZeroSkills(var/forced = 0)
-	for(var/V in SKILLS) for(var/datum/skill/S in SKILLS[V])
-		if(!skills.Find(S.ID) || forced)
-			skills[S.ID] = SKILL_NONE
-
-/datum/preferences/proc/CalculateSkillPoints()
-	used_skillpoints = 0
-	for(var/V in SKILLS) for(var/datum/skill/S in SKILLS[V])
-		var/multiplier = 1
-		switch(skills[S.ID])
-			if(SKILL_NONE)
-				used_skillpoints += 0 * multiplier
-			if(SKILL_BASIC)
-				used_skillpoints += 1 * multiplier
-			if(SKILL_ADEPT)
-				// secondary skills cost less
-				if(S.secondary)
-					used_skillpoints += 1 * multiplier
-				else
-					used_skillpoints += 3 * multiplier
-			if(SKILL_EXPERT)
-				// secondary skills cost less
-				if(S.secondary)
-					used_skillpoints += 3 * multiplier
-				else
-					used_skillpoints += 6 * multiplier
-
-/datum/preferences/proc/GetSkillClass(points)
-	// skill classes describe how your character compares in total points
-	var/original_points = points
-	points -= min(round((age - 20) / 2.5), 4) // every 2.5 years after 20, one extra skillpoint
-	if(age > 30)
-		points -= round((age - 30) / 5) // every 5 years after 30, one extra skillpoint
-	if(original_points > 0 && points <= 0) points = 1
-	switch(points)
-		if(0)
-			return "Unconfigured"
-		if(1 to 3)
-			return "Terrifying"
-		if(4 to 6)
-			return "Below Average"
-		if(7 to 10)
-			return "Average"
-		if(11 to 14)
-			return "Above Average"
-		if(15 to 18)
-			return "Exceptional"
-		if(19 to 24)
-			return "Genius"
-		if(24 to 1000)
-			return "God"
-
-/datum/preferences/proc/SetSkills(mob/user)
-	if(SKILLS == null)
-		setup_skills()
-
-	if(skills.len == 0)
-		ZeroSkills()
-
-
-	var/HTML = "<body>"
-	HTML += "<b>Select your Skills</b><br>"
-	HTML += "Current skill level: <b>[GetSkillClass(used_skillpoints)]</b> ([used_skillpoints])<br>"
-	HTML += "<a href=\"byond://?src=\ref[user];preference=skills;preconfigured=1;\">Use preconfigured skillset</a><br>"
-	HTML += "<table>"
-	for(var/V in SKILLS)
-		HTML += "<tr><th colspan = 5><b>[V]</b>"
-		HTML += "</th></tr>"
-		for(var/datum/skill/S in SKILLS[V])
-			var/level = skills[S.ID]
-			HTML += "<tr style='text-align:left;'>"
-			HTML += "<th><a href='byond://?src=\ref[user];preference=skills;skillinfo=\ref[S]'>[S.name]</a></th>"
-			HTML += "<th><a href='byond://?src=\ref[user];preference=skills;setskill=\ref[S];newvalue=[SKILL_NONE]'><font color=[(level == SKILL_NONE) ? "red" : "black"]>\[Untrained\]</font></a></th>"
-			// secondary skills don't have an amateur level
-			if(S.secondary)
-				HTML += "<th></th>"
-			else
-				HTML += "<th><a href='byond://?src=\ref[user];preference=skills;setskill=\ref[S];newvalue=[SKILL_BASIC]'><font color=[(level == SKILL_BASIC) ? "red" : "black"]>\[Amateur\]</font></a></th>"
-			HTML += "<th><a href='byond://?src=\ref[user];preference=skills;setskill=\ref[S];newvalue=[SKILL_ADEPT]'><font color=[(level == SKILL_ADEPT) ? "red" : "black"]>\[Trained\]</font></a></th>"
-			HTML += "<th><a href='byond://?src=\ref[user];preference=skills;setskill=\ref[S];newvalue=[SKILL_EXPERT]'><font color=[(level == SKILL_EXPERT) ? "red" : "black"]>\[Professional\]</font></a></th>"
-			HTML += "</tr>"
-	HTML += "</table>"
-	HTML += "<a href=\"byond://?src=\ref[user];preference=skills;cancel=1;\">\[Done\]</a>"
-
-	user << browse(null, "window=preferences")
-	user << browse(HTML, "window=show_skills;size=600x800")
-	return
-
 /datum/preferences/proc/ShowChoices(mob/user)
 	if(!user || !user.client)	return
 	update_preview_icon()
-	user << browse_rsc(preview_icon_front, "previewicon.png")
-	user << browse_rsc(preview_icon_side, "previewicon2.png")
-	var/dat = "<html><body><center>"
+	user << browse_rsc(preview_icon, "previewicon.png")
+	user << browse_rsc('html/prefs/dossier_empty.png')
+	user << browse_rsc('html/prefs/dossier_photos.png')
+	user << browse_rsc('html/prefs/opacity7.png')
 
+	var/dat = "<html><body link='#045EBE' vlink='045EBE' alink='045EBE'><center>"
+	dat += "<style type='text/css'><!--A{text-decoration:none}--></style>"
+	dat += "<style type='text/css'>a.white, a.white:link, a.white:visited, a.white:active{color: #40628a;text-decoration: none;background: #ffffff;border: 1px solid #161616;padding: 1px 4px 1px 4px;margin: 0 2px 0 0;cursor:default;}</style>"
+	dat += "<style>body{background-image:url('dossier_empty.png');background-color: #F5ECDD;background-repeat:no-repeat;background-position:center top;}</style>"
+	dat += "<style>.main_menu{margin-left:150px;margin-top:135px}</style>"
 	if(path)
-		dat += "<center>"
-		dat += "Slot <b>[slot_name]</b> - "
-		dat += "<a href=\"byond://?src=\ref[user];preference=open_load_dialog\">Load slot</a> - "
+		dat += "<div class='main_menu'>"
+		dat += "Slot: <b>[real_name]</b> - "
+		dat += "[menu_type=="load_slot"?"<b>Load slot</b>":"<a href=\"byond://?src=\ref[user];preference=load_slot\">Load slot</a>"] - "
 		dat += "<a href=\"byond://?src=\ref[user];preference=save\">Save slot</a> - "
-		dat += "<a href=\"byond://?src=\ref[user];preference=reload\">Reload slot</a>"
-		dat += "</center>"
-
+		dat += "<a href=\"byond://?src=\ref[user];preference=reload\">Reload slot</a><br>"
+		dat += "[menu_type=="general"?"<b>General</b>":"<a href=\"byond://?src=\ref[user];preference=general\">General</a>"] - "
+		dat += "[menu_type=="occupation"?"<b>Occupation</b>":"<a href=\"byond://?src=\ref[user];preference=occupation\">Occupation</a>"] - "
+		dat += "[menu_type=="roles"?"<b>Roles</b>":"<a href=\"byond://?src=\ref[user];preference=roles\">Roles</a>"] - "
+		dat += "[menu_type=="glob"?"<b>Global</b>":"<a href=\"byond://?src=\ref[user];preference=glob\">Global</a>"]"
+		dat += "<br><a href='?src=\ref[user];preference=close\'>Close</a>"
+		dat += "</div>"
 	else
 		dat += "Please create an account to save your preferences."
 
-	dat += "</center><hr><table><tr><td width='340px' height='320px'>"
-
-	dat += "<b>Name:</b> "
-	dat += "<a href='?_src_=prefs;preference=name;task=input'><b>[real_name]</b></a><br>"
-	dat += "(<a href='?_src_=prefs;preference=name;task=random'>Random Name</A>) "
-	dat += "(<a href='?_src_=prefs;preference=name'>Always Random Name: [be_random_name ? "Yes" : "No"]</a>)"
-	dat += "<br>"
-
-	dat += "<b>Gender:</b> <a href='?_src_=prefs;preference=gender'><b>[gender == MALE ? "Male" : "Female"]</b></a><br>"
-	dat += "<b>Age:</b> <a href='?_src_=prefs;preference=age;task=input'>[age]</a>"
-
-	dat += "<br>"
-	dat += "<b>UI Style:</b> <a href='?_src_=prefs;preference=ui'><b>[UI_style]</b></a><br>"
-	dat += "<b>Custom UI</b>(recommended for White UI):<br>"
-	dat += "-Color: <a href='?_src_=prefs;preference=UIcolor'><b>[UI_style_color]</b></a> <table style='display:inline;' bgcolor='[UI_style_color]'><tr><td>__</td></tr></table><br>"
-	dat += "-Alpha(transparency): <a href='?_src_=prefs;preference=UIalpha'><b>[UI_style_alpha]</b></a><br>"
-	dat += "<b>Play admin midis:</b> <a href='?_src_=prefs;preference=hear_midis'><b>[(toggles & SOUND_MIDI) ? "Yes" : "No"]</b></a><br>"
-	dat += "<b>Play lobby music:</b> <a href='?_src_=prefs;preference=lobby_music'><b>[(toggles & SOUND_LOBBY) ? "Yes" : "No"]</b></a><br>"
-	dat += "<b>Randomized Character Slot:</b> <a href='?_src_=prefs;preference=randomslot'><b>[randomslot ? "Yes" : "No"]</b></a><br>"
-	dat += "<b>Ghost ears:</b> <a href='?_src_=prefs;preference=ghost_ears'><b>[(chat_toggles & CHAT_GHOSTEARS) ? "All Speech" : "Nearest Creatures"]</b></a><br>"
-	dat += "<b>Ghost sight:</b> <a href='?_src_=prefs;preference=ghost_sight'><b>[(chat_toggles & CHAT_GHOSTSIGHT) ? "All Emotes" : "Nearest Creatures"]</b></a><br>"
-	dat += "<b>Ghost radio:</b> <a href='?_src_=prefs;preference=ghost_radio'><b>[(chat_toggles & CHAT_GHOSTRADIO) ? "All Chatter" : "Nearest Speakers"]</b></a><br>"
-
-	if(config.allow_Metadata)
-		dat += "<b>OOC Notes:</b><br>[sanitize_popup(copytext(metadata, 1, 37))]...<a href='?_src_=prefs;preference=metadata;task=input'> Edit</a><br>"
-
-	dat += "<br><b>Occupation Choices</b><br>"
-	dat += "\t<a href='?_src_=prefs;preference=job;task=menu'><b>Set Preferences</b></a><br>"
-
-	dat += "<br><table><tr><td><b>Body</b> "
-	dat += "(<a href='?_src_=prefs;preference=all;task=random'>&reg;</A>)"
-	dat += "<br>"
-	dat += "Species: <a href='byond://?src=\ref[user];preference=species;task=input'>[species]</a><br>"
-	dat += "Secondary Language:<br><a href='byond://?src=\ref[user];preference=language;task=input'>[language]</a><br>"
-	dat += "Blood Type: <a href='byond://?src=\ref[user];preference=b_type;task=input'>[b_type]</a><br>"
-	dat += "Skin Tone: <a href='?_src_=prefs;preference=s_tone;task=input'>[-s_tone + 35]/220<br></a>"
-	//dat += "Skin pattern: <a href='byond://?src=\ref[user];preference=skin_style;task=input'>Adjust</a><br>"
-//	dat += "Needs Glasses: <a href='?_src_=prefs;preference=disabilities'><b>[disabilities == 0 ? "No" : "Yes"]</b></a><br>"
-	dat += "\t<a href='byond://?src=\ref[user];task=input;preference=disabilities'><b>Set Disabilities</b></a><br>"
-	dat += "Limbs: <a href='byond://?src=\ref[user];preference=limbs;task=input'>Adjust</a><br>"
-	dat += "Internal Organs: <a href='byond://?src=\ref[user];preference=organs;task=input'>Adjust</a><br>"
-
-	//display limbs below
-	var/ind = 0
-	for(var/name in organ_data)
-		//world << "[ind] \ [organ_data.len]"
-		var/status = organ_data[name]
-		var/organ_name = null
-		switch(name)
-			if("l_arm")
-				organ_name = "left arm"
-			if("r_arm")
-				organ_name = "right arm"
-			if("l_leg")
-				organ_name = "left leg"
-			if("r_leg")
-				organ_name = "right leg"
-			if("l_foot")
-				organ_name = "left foot"
-			if("r_foot")
-				organ_name = "right foot"
-			if("l_hand")
-				organ_name = "left hand"
-			if("r_hand")
-				organ_name = "right hand"
-			if("heart")
-				organ_name = "heart"
-			if("eyes")
-				organ_name = "eyes"
-
-		if(status == "cyborg")
-			++ind
-			if(ind > 1)
-				dat += ", "
-			dat += "\tMechanical [organ_name] prothesis"
-		else if(status == "amputated")
-			++ind
-			if(ind > 1)
-				dat += ", "
-			dat += "\tAmputated [organ_name]"
-		else if(status == "mechanical")
-			++ind
-			if(ind > 1)
-				dat += ", "
-			dat += "\tMechanical [organ_name]"
-		else if(status == "assisted")
-			++ind
-			if(ind > 1)
-				dat += ", "
-			switch(organ_name)
-				if("heart")
-					dat += "\tPacemaker-assisted [organ_name]"
-				if("voicebox") //on adding voiceboxes for speaking skrell/similar replacements
-					dat += "\tSurgically altered [organ_name]"
-				if("eyes")
-					dat += "\tRetinal overlayed [organ_name]"
-				else
-					dat += "\tMechanically assisted [organ_name]"
-	if(!ind)
-		dat += "\[...\]<br><br>"
-	else
-		dat += "<br><br>"
-
-	if(gender == MALE)
-		dat += "Underwear: <a href ='?_src_=prefs;preference=underwear;task=input'><b>[underwear_m[underwear]]</b></a><br>"
-	else
-		dat += "Underwear: <a href ='?_src_=prefs;preference=underwear;task=input'><b>[underwear_f[underwear]]</b></a><br>"
-
-	dat += "Undershirt: <a href='?_src_=prefs;preference=undershirt;task=input'><b>[undershirt_t[undershirt]]</b></a><br>"
-
-	dat += "Backpack Type:<br><a href ='?_src_=prefs;preference=bag;task=input'><b>[backbaglist[backbag]]</b></a><br>"
-
-	dat += "Nanotrasen Relation:<br><a href ='?_src_=prefs;preference=nt_relation;task=input'><b>[nanotrasen_relation]</b></a><br>"
-
-	dat += "</td><td><b>Preview</b><br><img src=previewicon.png height=64 width=64><img src=previewicon2.png height=64 width=64></td></tr></table>"
-
-	dat += "</td><td width='300px' height='300px'>"
-
-	if(jobban_isbanned(user, "Records"))
-		dat += "<b>You are banned from using character records.</b><br>"
-	else
-		dat += "<b><a href=\"byond://?src=\ref[user];preference=records;record=1\">Character Records</a></b><br>"
-
-	dat += "<b><a href=\"byond://?src=\ref[user];preference=antagoptions;active=0\">Set Antag Options</b></a><br>"
-
-//	dat += "\t<a href=\"byond://?src=\ref[user];preference=skills\"><b>Set Skills</b> (<i>[GetSkillClass(used_skillpoints)][used_skillpoints > 0 ? " [used_skillpoints]" : "0"])</i></a><br>"
-
-	dat += "<a href='byond://?src=\ref[user];preference=flavor_text;task=input'><b>Set Flavor Text</b></a><br>"
-	if(lentext(flavor_text) <= 40)
-		if(!lentext(flavor_text))
-			dat += "\[...\]"
-		else
-			dat += "[sanitize_popup(flavor_text)]"
-	else
-		dat += "[sanitize_popup(copytext(flavor_text, 1, 37))]...<br>"
-	dat += "<br>"
-
-	dat += "<br><b>Hair</b><br>"
-	dat += "<a href='?_src_=prefs;preference=hair;task=input'>Change Color</a> <font face='fixedsys' size='3' color='#[num2hex(r_hair, 2)][num2hex(g_hair, 2)][num2hex(b_hair, 2)]'><table style='display:inline;' bgcolor='#[num2hex(r_hair, 2)][num2hex(g_hair, 2)][num2hex(b_hair)]'><tr><td>__</td></tr></table></font> "
-	dat += " Style: <a href='?_src_=prefs;preference=h_style;task=input'>[h_style]</a><br>"
-
-	dat += "<br><b>Facial</b><br>"
-	dat += "<a href='?_src_=prefs;preference=facial;task=input'>Change Color</a> <font face='fixedsys' size='3' color='#[num2hex(r_facial, 2)][num2hex(g_facial, 2)][num2hex(b_facial, 2)]'><table  style='display:inline;' bgcolor='#[num2hex(r_facial, 2)][num2hex(g_facial, 2)][num2hex(b_facial)]'><tr><td>__</td></tr></table></font> "
-	dat += " Style: <a href='?_src_=prefs;preference=f_style;task=input'>[f_style]</a><br>"
-
-	dat += "<br><b>Eyes</b><br>"
-	dat += "<a href='?_src_=prefs;preference=eyes;task=input'>Change Color</a> <font face='fixedsys' size='3' color='#[num2hex(r_eyes, 2)][num2hex(g_eyes, 2)][num2hex(b_eyes, 2)]'><table  style='display:inline;' bgcolor='#[num2hex(r_eyes, 2)][num2hex(g_eyes, 2)][num2hex(b_eyes)]'><tr><td>__</td></tr></table></font><br>"
-
-	dat += "<br><b>Body Color</b><br>"
-	dat += "<a href='?_src_=prefs;preference=skin;task=input'>Change Color</a> <font face='fixedsys' size='3' color='#[num2hex(r_skin, 2)][num2hex(g_skin, 2)][num2hex(b_skin, 2)]'><table style='display:inline;' bgcolor='#[num2hex(r_skin, 2)][num2hex(g_skin, 2)][num2hex(b_skin)]'><tr><td>__</td></tr></table></font>"
-
-	dat += "<br><br>"
-	if(jobban_isbanned(user, "Syndicate"))
-		dat += "<b>You are banned from antagonist roles.</b>"
-		src.be_special = 0
-	else
-		var/n = 0
-		for (var/i in special_roles)
-			if(special_roles[i]) //if mode is available on the server
-				if(jobban_isbanned(user, i))
-					dat += "<b>Be [i]:</b> <font color=red><b> \[BANNED]</b></font><br>"
-				else if(i == "pai candidate")
-					if(jobban_isbanned(user, "pAI"))
-						dat += "<b>Be [i]:</b> <font color=red><b> \[BANNED]</b></font><br>"
-				else
-					dat += "<b>Be [i]:</b> <a href='?_src_=prefs;preference=be_special;num=[n]'><b>[src.be_special&(1<<n) ? "Yes" : "No"]</b></a><br>"
-			n++
-	dat += "</td></tr></table><hr><center>"
-
-	if(!IsGuestKey(user.key))
-		dat += "<a href='?_src_=prefs;preference=load'>Undo</a> - "
-		dat += "<a href='?_src_=prefs;preference=save'>Save Setup</a> - "
-
-	dat += "<a href='?_src_=prefs;preference=reset_all'>Reset Setup</a>"
-	dat += "</center></body></html>"
-
-	user << browse(dat, "window=preferences;size=560x736")
-
-/datum/preferences/proc/SetChoices(mob/user, limit = 16, list/splitJobs = list("Chief Medical Officer"), width = 550, height = 660)
-	if(!job_master)
-		return
-
-	//limit 	 - The amount of jobs allowed per column. Defaults to 17 to make it look nice.
-	//splitJobs - Allows you split the table by job. You can make different tables for each department by including their heads. Defaults to CE to make it look nice.
-	//width	 - Screen' width. Defaults to 550 to make it look nice.
-	//height 	 - Screen's height. Defaults to 500 to make it look nice.
-
-
-	var/HTML = "<body>"
-	HTML += "<tt><center>"
-	HTML += "<b>Choose occupation chances</b><br>Unavailable occupations are crossed out.<br><br>"
-	HTML += "<center><a href='?_src_=prefs;preference=job;task=close'>\[Done\]</a></center><br>" // Easier to press up here.
-	HTML += "<table width='100%' cellpadding='1' cellspacing='0'><tr><td width='20%'>" // Table within a table for alignment, also allows you to easily add more colomns.
-	HTML += "<table width='100%' cellpadding='1' cellspacing='0'>"
-	var/index = -1
-
-	//The job before the current job. I only use this to get the previous jobs color when I'm filling in blank rows.
-	var/datum/job/lastJob
-	if (!job_master)		return
-	for(var/datum/job/job in job_master.occupations)
-
-		index += 1
-		if((index >= limit) || (job.title in splitJobs))
-			if((index < limit) && (lastJob != null))
-				//If the cells were broken up by a job in the splitJob list then it will fill in the rest of the cells with
-				//the last job's selection color. Creating a rather nice effect.
-				for(var/i = 0, i < (limit - index), i += 1)
-					HTML += "<tr bgcolor='[lastJob.selection_color]'><td width='60%' align='right'><a>&nbsp</a></td><td><a>&nbsp</a></td></tr>"
-			HTML += "</table></td><td width='20%'><table width='100%' cellpadding='1' cellspacing='0'>"
-			index = 0
-
-		HTML += "<tr bgcolor='[job.selection_color]'><td width='60%' align='right'>"
-		var/rank = job.title
-		lastJob = job
-		if(jobban_isbanned(user, rank))
-			HTML += "<del>[rank]</del></td><td><b> \[BANNED]</b></td></tr>"
-			continue
-		if(!job.player_old_enough(user.client))
-			var/available_in_days = job.available_in_days(user.client)
-			HTML += "<del>[rank]</del></td><td> \[IN [(available_in_days)] DAYS]</td></tr>"
-			continue
-		if((job_civilian_low & ASSISTANT) && (rank != "Assistant"))
-			HTML += "<font color=orange>[rank]</font></td><td></td></tr>"
-			continue
-		if((rank in command_positions) || (rank == "AI"))//Bold head jobs
-			HTML += "<b>[rank]</b>"
-		else
-			HTML += "[rank]"
-
-		HTML += "</td><td width='40%'>"
-
-		HTML += "<a href='?_src_=prefs;preference=job;task=input;text=[rank]'>"
-
-		if(rank == "Assistant")//Assistant is special
-			if(job_civilian_low & ASSISTANT)
-				HTML += " <font color=green>\[Yes]</font>"
-			else
-				HTML += " <font color=red>\[No]</font>"
-			HTML += "</a></td></tr>"
-			if(job.alt_titles)
-				HTML += "</a></td></tr><tr bgcolor='[lastJob.selection_color]'><td width='60%' align='center'><a>&nbsp</a></td><td><a href=\"byond://?src=\ref[user];preference=job;task=alt_title;job=\ref[job]\">\[[GetPlayerAltTitle(job)]\]</a></td></tr>"
-			continue
-
-		if(GetJobDepartment(job, 1) & job.flag)
-			HTML += " <font color=blue>\[High]</font>"
-		else if(GetJobDepartment(job, 2) & job.flag)
-			HTML += " <font color=green>\[Medium]</font>"
-		else if(GetJobDepartment(job, 3) & job.flag)
-			HTML += " <font color=orange>\[Low]</font>"
-		else
-			HTML += " <font color=red>\[NEVER]</font>"
-		if(job.alt_titles)
-			HTML += "</a></td></tr><tr bgcolor='[lastJob.selection_color]'><td width='60%' align='center'><a>&nbsp</a></td><td><a href=\"byond://?src=\ref[user];preference=job;task=alt_title;job=\ref[job]\">\[[GetPlayerAltTitle(job)]\]</a></td></tr>"
-		HTML += "</a></td></tr>"
-
-	HTML += "</td'></tr></table>"
-
-	HTML += "</center></table>"
-
-	switch(alternate_option)
-		if(GET_RANDOM_JOB)
-			HTML += "<center><br><u><a href='?_src_=prefs;preference=job;task=random'><font color=green>Get random job if preferences unavailable</font></a></u></center><br>"
-		if(BE_ASSISTANT)
-			HTML += "<center><br><u><a href='?_src_=prefs;preference=job;task=random'><font color=red>Be assistant if preference unavailable</font></a></u></center><br>"
-		if(RETURN_TO_LOBBY)
-			HTML += "<center><br><u><a href='?_src_=prefs;preference=job;task=random'><font color=purple>Return to lobby if preference unavailable</font></a></u></center><br>"
-
-	HTML += "<center><a href='?_src_=prefs;preference=job;task=reset'>\[Reset\]</a></center>"
-	HTML += "</tt>"
-
-	user << browse(null, "window=preferences")
-	user << browse(HTML, "window=mob_occupation;size=[width]x[height]")
-	return
-
-/*	proc/SetDisabilities(mob/user)
-		var/HTML = "<body>"
-		HTML += "<tt><center>"
-		HTML += "<b>Choose disabilities</b><br>"
-
-		HTML += "Need Glasses? <a href=\"byond://?src=\ref[user];preferences=1;disabilities=0\">[disabilities & (1<<0) ? "Yes" : "No"]</a><br>"
-		HTML += "Seizures? <a href=\"byond://?src=\ref[user];preferences=1;disabilities=1\">[disabilities & (1<<1) ? "Yes" : "No"]</a><br>"
-		HTML += "Coughing? <a href=\"byond://?src=\ref[user];preferences=1;disabilities=2\">[disabilities & (1<<2) ? "Yes" : "No"]</a><br>"
-		HTML += "Tourettes/Twitching? <a href=\"byond://?src=\ref[user];preferences=1;disabilities=3\">[disabilities & (1<<3) ? "Yes" : "No"]</a><br>"
-		HTML += "Nervousness? <a href=\"byond://?src=\ref[user];preferences=1;disabilities=4\">[disabilities & (1<<4) ? "Yes" : "No"]</a><br>"
-		HTML += "Deafness? <a href=\"byond://?src=\ref[user];preferences=1;disabilities=5\">[disabilities & (1<<5) ? "Yes" : "No"]</a><br>"
-
-		HTML += "<br>"
-		HTML += "<a href=\"byond://?src=\ref[user];preferences=1;disabilities=-2\">\[Done\]</a>"
-		HTML += "</center></tt>"
-
-		user << browse(null, "window=preferences")
-		user << browse(HTML, "window=disabil;size=350x300")
-		return */
-
-/datum/preferences/proc/ShowDisabilityState(mob/user,flag,label)
-	return "<li><b>[label]:</b> <a href=\"?_src_=prefs;task=input;preference=disabilities;disability=[flag]\">[disabilities & flag ? "Yes" : "No"]</a></li>"
-
-/datum/preferences/proc/SetDisabilities(mob/user)
-	var/HTML = "<body>"
-
-	HTML += {"<tt><center>
-		<b>Choose disabilities</b><ul>"}
-
-	HTML += ShowDisabilityState(user,DISABILITY_NEARSIGHTED,"Needs Glasses")
-	HTML += ShowDisabilityState(user,DISABILITY_COUGHING,"Coughing")
-	HTML += ShowDisabilityState(user,DISABILITY_EPILEPTIC,"Seizures")
-	HTML += ShowDisabilityState(user,DISABILITY_TOURETTES,"Tourettes/Twitching")
-	HTML += ShowDisabilityState(user,DISABILITY_NERVOUS,"Nervousness")
-
-	HTML += {"</ul>
-		<a href=\"?_src_=prefs;task=close;preference=disabilities\">\[Done\]</a>
-		<a href=\"?_src_=prefs;task=reset;preference=disabilities\">\[Reset\]</a>
-		</center></tt>"}
-	user << browse(null, "window=preferences")
-	user << browse(HTML, "window=disabil;size=350x300")
-	return
-
-/datum/preferences/proc/SetRecords(mob/user)
-	var/HTML = "<body>"
-	HTML += "<tt><center>"
-	HTML += "<b>Set Character Records</b><br>"
-
-	HTML += "<a href=\"byond://?src=\ref[user];preference=records;task=med_record\">Medical Records</a><br>"
-
-	if(lentext(med_record) <= 40)
-		HTML += "[sanitize_popup(med_record)]"
-	else
-		HTML += "[sanitize_popup(copytext(med_record, 1, 37))]..."
-
-	HTML += "<br><br><a href=\"byond://?src=\ref[user];preference=records;task=gen_record\">Employment Records</a><br>"
-
-	if(lentext(gen_record) <= 40)
-		HTML += "[sanitize_popup(gen_record)]"
-	else
-		HTML += "[sanitize_popup(copytext(gen_record, 1, 37))]..."
-
-	HTML += "<br><br><a href=\"byond://?src=\ref[user];preference=records;task=sec_record\">Security Records</a><br>"
-
-	if(lentext(sec_record) <= 40)
-		HTML += "[sanitize_popup(sec_record)]<br>"
-	else
-		HTML += "[sanitize_popup(copytext(sec_record, 1, 37))]...<br>"
-
-	HTML += "<br>"
-	HTML += "<a href=\"byond://?src=\ref[user];preference=records;records=-1\">\[Done\]</a>"
-	HTML += "</center></tt>"
-
-	user << browse(null, "window=preferences")
-	user << browse(HTML, "window=records;size=350x300")
-	return
-
-/datum/preferences/proc/SetAntagoptions(mob/user)
-	if(uplinklocation == "" || !uplinklocation)
-		uplinklocation = "PDA"
-	var/HTML = "<body>"
-	HTML += "<tt><center>"
-	HTML += "<b>Antagonist Options</b> <hr />"
-	HTML += "<br>"
-	HTML +="Uplink Type : <b><a href='?src=\ref[user];preference=antagoptions;antagtask=uplinktype;active=1'>[uplinklocation]</a></b>"
-	HTML +="<br>"
-	HTML +="<hr />"
-	HTML +="<a href='?src=\ref[user];preference=antagoptions;antagtask=done;active=1'>\[Done\]</a>"
-
-	HTML += "</center></tt>"
-
-	user << browse(null, "window=preferences")
-	user << browse(HTML, "window=antagoptions")
-	return
-
-/datum/preferences/proc/GetPlayerAltTitle(datum/job/job)
-	return player_alt_titles.Find(job.title) > 0 \
-		? player_alt_titles[job.title] \
-		: job.title
-
-/datum/preferences/proc/SetPlayerAltTitle(datum/job/job, new_title)
-	// remove existing entry
-	if(player_alt_titles.Find(job.title))
-		player_alt_titles -= job.title
-	// add one if it's not default
-	if(job.title != new_title)
-		player_alt_titles[job.title] = new_title
-
-/datum/preferences/proc/SetJob(mob/user, role)
-	var/datum/job/job = job_master.GetJob(role)
-	if(!job)
-		user << browse(null, "window=mob_occupation")
-		ShowChoices(user)
-		return
-
-	if(role == "Assistant")
-		if(job_civilian_low & job.flag)
-			job_civilian_low &= ~job.flag
-		else
-			job_civilian_low |= job.flag
-		SetChoices(user)
-		return 1
-
-	if(GetJobDepartment(job, 1) & job.flag)
-		SetJobDepartment(job, 1)
-	else if(GetJobDepartment(job, 2) & job.flag)
-		SetJobDepartment(job, 2)
-	else if(GetJobDepartment(job, 3) & job.flag)
-		SetJobDepartment(job, 3)
-	else//job = Never
-		SetJobDepartment(job, 4)
-
-	SetChoices(user)
-	return 1
-
-/datum/preferences/proc/ResetJobs()
-	job_civilian_high = 0
-	job_civilian_med = 0
-	job_civilian_low = 0
-
-	job_medsci_high = 0
-	job_medsci_med = 0
-	job_medsci_low = 0
-
-	job_engsec_high = 0
-	job_engsec_med = 0
-	job_engsec_low = 0
-
-
-/datum/preferences/proc/GetJobDepartment(var/datum/job/job, var/level)
-	if(!job || !level)	return 0
-	switch(job.department_flag)
-		if(CIVILIAN)
-			switch(level)
-				if(1)
-					return job_civilian_high
-				if(2)
-					return job_civilian_med
-				if(3)
-					return job_civilian_low
-		if(MEDSCI)
-			switch(level)
-				if(1)
-					return job_medsci_high
-				if(2)
-					return job_medsci_med
-				if(3)
-					return job_medsci_low
-		if(ENGSEC)
-			switch(level)
-				if(1)
-					return job_engsec_high
-				if(2)
-					return job_engsec_med
-				if(3)
-					return job_engsec_low
-	return 0
-
-/datum/preferences/proc/SetJobDepartment(var/datum/job/job, var/level)
-	if(!job || !level)	return 0
-	switch(level)
-		if(1)//Only one of these should ever be active at once so clear them all here
-			job_civilian_high = 0
-			job_medsci_high = 0
-			job_engsec_high = 0
-			return 1
-		if(2)//Set current highs to med, then reset them
-			job_civilian_med |= job_civilian_high
-			job_medsci_med |= job_medsci_high
-			job_engsec_med |= job_engsec_high
-			job_civilian_high = 0
-			job_medsci_high = 0
-			job_engsec_high = 0
-
-	switch(job.department_flag)
-		if(CIVILIAN)
-			switch(level)
-				if(2)
-					job_civilian_high = job.flag
-					job_civilian_med &= ~job.flag
-				if(3)
-					job_civilian_med |= job.flag
-					job_civilian_low &= ~job.flag
-				else
-					job_civilian_low |= job.flag
-		if(MEDSCI)
-			switch(level)
-				if(2)
-					job_medsci_high = job.flag
-					job_medsci_med &= ~job.flag
-				if(3)
-					job_medsci_med |= job.flag
-					job_medsci_low &= ~job.flag
-				else
-					job_medsci_low |= job.flag
-		if(ENGSEC)
-			switch(level)
-				if(2)
-					job_engsec_high = job.flag
-					job_engsec_med &= ~job.flag
-				if(3)
-					job_engsec_med |= job.flag
-					job_engsec_low &= ~job.flag
-				else
-					job_engsec_low |= job.flag
-	return 1
+	dat += "</center><hr width='535'>"
+
+	switch(menu_type)
+		if("general")
+			dat += ShowGeneral(user)
+		if("occupation")
+			dat += ShowOccupation(user)
+		if("roles")
+			dat += ShowRoles(user)
+		if("glob")
+			dat += ShowGlobal(user)
+		if("load_slot")
+			dat += ShowLoadSlot(user)
+
+	dat += "</body></html>"
+	user << browse(dat, "window=preferences;size=618x778;can_close=0;can_minimize=0;can_maximize=0;can_resize=0")
 
 /datum/preferences/proc/process_link(mob/user, list/href_list)
 	if(!user)	return
 
 	if(!istype(user, /mob/new_player))	return
-	if(href_list["preference"] == "job")
-		switch(href_list["task"])
-			if("close")
-				user << browse(null, "window=mob_occupation")
-				ShowChoices(user)
-			if("reset")
-				ResetJobs()
-				SetChoices(user)
-			if("random")
-				if(alternate_option == GET_RANDOM_JOB || alternate_option == BE_ASSISTANT)
-					alternate_option += 1
-				else if(alternate_option == RETURN_TO_LOBBY)
-					alternate_option = 0
-				else
-					return 0
-				SetChoices(user)
-			if ("alt_title")
-				var/datum/job/job = locate(href_list["job"])
-				if (job)
-					var/choices = list(job.title) + job.alt_titles
-					var/choice = input("Pick a title for [job.title].", "Character Generation", GetPlayerAltTitle(job)) as anything in choices | null
-					if(choice)
-						SetPlayerAltTitle(job, choice)
-						SetChoices(user)
-			if("input")
-				SetJob(user, href_list["text"])
-			else
-				SetChoices(user)
-		return 1
-	else if(href_list["preference"] == "skills")
-		if(href_list["cancel"])
-			user << browse(null, "window=show_skills")
-			ShowChoices(user)
-		else if(href_list["skillinfo"])
-			var/datum/skill/S = locate(href_list["skillinfo"])
-			var/HTML = "<b>[S.name]</b><br>[S.desc]"
-			user << browse(HTML, "window=\ref[user]skillinfo")
-		else if(href_list["setskill"])
-			var/datum/skill/S = locate(href_list["setskill"])
-			var/value = text2num(href_list["newvalue"])
-			skills[S.ID] = value
-			CalculateSkillPoints()
-			SetSkills(user)
-		else if(href_list["preconfigured"])
-			var/selected = input(user, "Select a skillset", "Skillset") as null|anything in SKILL_PRE
-			if(!selected) return
 
-			ZeroSkills(1)
-			for(var/V in SKILL_PRE[selected])
-				if(V == "field")
-					skill_specialization = SKILL_PRE[selected]["field"]
-					continue
-				skills[V] = SKILL_PRE[selected][V]
-			CalculateSkillPoints()
-
-			SetSkills(user)
-		else if(href_list["setspecialization"])
-			skill_specialization = href_list["setspecialization"]
-			CalculateSkillPoints()
-			SetSkills(user)
-		else
-			SetSkills(user)
-		return 1
-
-	//disabilities
-	else if(href_list["preference"] == "disabilities")
-
-		switch(href_list["task"])
-			if("close")
-				user << browse(null, "window=disabil")
-				ShowChoices(user)
-			if("reset")
-				disabilities=0
-				SetDisabilities(user)
-			if("input")
-				var/dflag=text2num(href_list["disability"])
-				if(dflag >= 0)
-					disabilities ^= text2num(href_list["disability"]) //MAGIC
-				SetDisabilities(user)
-			else
-				SetDisabilities(user)
-		return 1
-
-	else if(href_list["preference"] == "records")
-		if(text2num(href_list["record"]) >= 1)
-			SetRecords(user)
+	switch(href_list["preference"])
+		if("close")
+			user << browse(null, "window=preferences")
 			return
-		else
-			user << browse(null, "window=records")
-		if(href_list["task"] == "med_record")
-			var/medmsg = sanitize(copytext(input(usr,"Set your medical notes here.","Medical Records",html_decode(revert_ja(med_record))) as message, 1, MAX_PAPER_MESSAGE_LEN), list("ÿ"=LETTER_255))
 
-			if(medmsg != null)
-				//medmsg = sanitize_simple(copytext(medmsg, 1, MAX_PAPER_MESSAGE_LEN))
-				//medmsg = html_encode(medmsg)
+		if("save")
+			save_preferences()
+			save_character()
 
-				med_record = medmsg
-				SetRecords(user)
+		if("reload")
+			load_preferences()
+			load_character()
 
-		if(href_list["task"] == "sec_record")
-			var/secmsg = sanitize(copytext(input(usr,"Set your security notes here.","Security Records",html_decode(revert_ja(sec_record))) as message, 1, MAX_PAPER_MESSAGE_LEN), list("ÿ"=LETTER_255))
+		if("changeslot")
+			load_character(text2num(href_list["num"]))
 
-			if(secmsg != null)
-				//secmsg = sanitize_simple(copytext(secmsg, 1, MAX_PAPER_MESSAGE_LEN))
-				//secmsg = html_encode(secmsg)
+		if("general")
+			menu_type = "general"
 
-				sec_record = secmsg
-				SetRecords(user)
-		if(href_list["task"] == "gen_record")
-			var/genmsg = sanitize(copytext(input(usr,"Set your employment notes here.","Employment Records",html_decode(revert_ja(gen_record))) as message, 1, MAX_PAPER_MESSAGE_LEN), list("ÿ"=LETTER_255))
+		if("occupation")
+			menu_type = "occupation"
 
-			if(genmsg != null)
-				//genmsg = sanitize_simple(copytext(genmsg, 1, MAX_PAPER_MESSAGE_LEN))
-				//genmsg = html_encode(genmsg)
+		if("roles")
+			menu_type = "roles"
 
-				gen_record = genmsg
-				SetRecords(user)
+		if("glob")
+			menu_type = "glob"
 
-	else if (href_list["preference"] == "antagoptions")
-		if(text2num(href_list["active"]) == 0)
-			SetAntagoptions(user)
-			return
-		if (href_list["antagtask"] == "uplinktype")
-			if (uplinklocation == "PDA")
-				uplinklocation = "Headset"
-			else if(uplinklocation == "Headset")
-				uplinklocation = "None"
-			else
-				uplinklocation = "PDA"
-			SetAntagoptions(user)
-		if (href_list["antagtask"] == "done")
-			user << browse(null, "window=antagoptions")
-			ShowChoices(user)
-		return 1
+		if("load_slot")
+			if(!IsGuestKey(user.key))
+				menu_type = "load_slot"
 
-	switch(href_list["task"])
-		if("random")
-			switch(href_list["preference"])
-				if("name")
-					real_name = random_name(gender)
-				if("age")
-					age = rand(AGE_MIN, AGE_MAX)
-				if("hair")
-					r_hair = rand(0,255)
-					g_hair = rand(0,255)
-					b_hair = rand(0,255)
-				if("h_style")
-					h_style = random_hair_style(gender, species)
-				if("facial")
-					r_facial = rand(0,255)
-					g_facial = rand(0,255)
-					b_facial = rand(0,255)
-				if("f_style")
-					f_style = random_facial_hair_style(gender, species)
-				if("underwear")
-					underwear = rand(1,underwear_m.len)
-					ShowChoices(user)
-				if("undershirt")
-					undershirt = rand(1,undershirt_t.len)
-					ShowChoices(user)
-				if("eyes")
-					r_eyes = rand(0,255)
-					g_eyes = rand(0,255)
-					b_eyes = rand(0,255)
-				if("s_tone")
-					s_tone = random_skin_tone()
-				if("s_color")
-					r_skin = rand(0,255)
-					g_skin = rand(0,255)
-					b_skin = rand(0,255)
-				if("bag")
-					backbag = rand(1,4)
-				/*if("skin_style")
-					h_style = random_skin_style(gender)*/
-				if("all")
-					randomize_appearance_for()	//no params needed
-		if("input")
-			switch(href_list["preference"])
-				if("name")
-					var/new_name = reject_bad_name( input(user, "Choose your character's name:", "Character Preference")  as text|null )
-					if(new_name)
-						real_name = new_name
-					else
-						user << "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>"
+	switch(menu_type)
+		if("general")
+			process_link_general(user, href_list)
 
-				if("age")
-					var/new_age = input(user, "Choose your character's age:\n([AGE_MIN]-[AGE_MAX])", "Character Preference") as num|null
-					if(new_age)
-						age = max(min( round(text2num(new_age)), AGE_MAX),AGE_MIN)
-				if("species")
+		if("occupation")
+			process_link_occupation(user, href_list)
 
-					var/list/new_species = list("Human")
-					var/prev_species = species
-					var/whitelisted = 0
+		if("roles")
+			process_link_roles(user, href_list)
 
-					if(config.usealienwhitelist) //If we're using the whitelist, make sure to check it!
-						for(var/S in whitelisted_species)
-							if(is_alien_whitelisted(user,S))
-								new_species += S
-								whitelisted = 1
-						if(!whitelisted)
-							alert(user, "You cannot change your species as you need to be whitelisted. If you wish to be whitelisted contact an admin in-game, on the forums, or on IRC.")
-					else //Not using the whitelist? Aliens for everyone!
-						new_species = whitelisted_species
-
-					species = input("Please select a species", "Character Generation", null) in new_species
-
-					if(prev_species != species)
-						//grab one of the valid hair styles for the newly chosen species
-						var/list/valid_hairstyles = list()
-						for(var/hairstyle in hair_styles_list)
-							var/datum/sprite_accessory/S = hair_styles_list[hairstyle]
-							if(gender == MALE && S.gender == FEMALE)
-								continue
-							if(gender == FEMALE && S.gender == MALE)
-								continue
-							if( !(species in S.species_allowed))
-								continue
-							valid_hairstyles[hairstyle] = hair_styles_list[hairstyle]
-
-						if(valid_hairstyles.len)
-							h_style = pick(valid_hairstyles)
-						else
-							//this shouldn't happen
-							h_style = hair_styles_list["Bald"]
-
-						//grab one of the valid facial hair styles for the newly chosen species
-						var/list/valid_facialhairstyles = list()
-						for(var/facialhairstyle in facial_hair_styles_list)
-							var/datum/sprite_accessory/S = facial_hair_styles_list[facialhairstyle]
-							if(gender == MALE && S.gender == FEMALE)
-								continue
-							if(gender == FEMALE && S.gender == MALE)
-								continue
-							if( !(species in S.species_allowed))
-								continue
-
-							valid_facialhairstyles[facialhairstyle] = facial_hair_styles_list[facialhairstyle]
-
-						if(valid_facialhairstyles.len)
-							f_style = pick(valid_facialhairstyles)
-						else
-							//this shouldn't happen
-							f_style = facial_hair_styles_list["Shaved"]
-
-						//reset hair colour and skin colour
-						r_hair = 0//hex2num(copytext(new_hair, 2, 4))
-						g_hair = 0//hex2num(copytext(new_hair, 4, 6))
-						b_hair = 0//hex2num(copytext(new_hair, 6, 8))
-
-						s_tone = 0
-
-				if("language")
-					var/languages_available
-					var/list/new_languages = list("None")
-					var/datum/species/S = all_species[species]
-
-					//I don't understant, how it works(and does not), so..
-					if(config.usealienwhitelist)
-						for(var/L in all_languages)
-							var/datum/language/lang = all_languages[L]
-							if((!(lang.flags & RESTRICTED)) && (is_alien_whitelisted(user, L)||(!( lang.flags & WHITELISTED ))||(S && (L in S.secondary_langs))))
-								new_languages += lang.name
-								languages_available = 1
-
-						if(!(languages_available))
-							alert(user, "There are not currently any available secondary languages.")
-					else
-						for(var/L in all_languages)
-							var/datum/language/lang = all_languages[L]
-							if(!(lang.flags & RESTRICTED))
-								new_languages += lang.name
-					for(var/L in all_languages)
-						var/datum/language/lang = all_languages[L]
-						if(!(lang.flags & RESTRICTED))
-							new_languages += lang.name
-
-					language = input("Please select a secondary language", "Character Generation", null) in new_languages
-
-				if("metadata")
-					var/new_metadata = input(user, "Enter any OOC information you'd like others to see:", "Game Preference" , html_decode(revert_ja(metadata)))  as message|null
-					if(new_metadata)
-						metadata = sanitize(copytext(new_metadata,1,MAX_MESSAGE_LEN))
-
-				if("b_type")
-					var/new_b_type = input(user, "Choose your character's blood-type:", "Character Preference") as null|anything in list( "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-" )
-					if(new_b_type)
-						b_type = new_b_type
-
-				if("hair")
-					if(species == "Human" || species == "Unathi" || species == "Tajaran" || species == "Skrell")
-						var/new_hair = input(user, "Choose your character's hair colour:", "Character Preference") as color|null
-						if(new_hair)
-							r_hair = hex2num(copytext(new_hair, 2, 4))
-							g_hair = hex2num(copytext(new_hair, 4, 6))
-							b_hair = hex2num(copytext(new_hair, 6, 8))
-
-				if("h_style")
-					var/list/valid_hairstyles = list()
-					for(var/hairstyle in hair_styles_list)
-						var/datum/sprite_accessory/S = hair_styles_list[hairstyle]
-						if( !(species in S.species_allowed))
-							continue
-
-						valid_hairstyles[hairstyle] = hair_styles_list[hairstyle]
-
-					var/new_h_style = input(user, "Choose your character's hair style:", "Character Preference")  as null|anything in valid_hairstyles
-					if(new_h_style)
-						h_style = new_h_style
-
-				if("facial")
-					var/new_facial = input(user, "Choose your character's facial-hair colour:", "Character Preference") as color|null
-					if(new_facial)
-						r_facial = hex2num(copytext(new_facial, 2, 4))
-						g_facial = hex2num(copytext(new_facial, 4, 6))
-						b_facial = hex2num(copytext(new_facial, 6, 8))
-
-				if("f_style")
-					var/list/valid_facialhairstyles = list()
-					for(var/facialhairstyle in facial_hair_styles_list)
-						var/datum/sprite_accessory/S = facial_hair_styles_list[facialhairstyle]
-						if(gender == MALE && S.gender == FEMALE)
-							continue
-						if(gender == FEMALE && S.gender == MALE)
-							continue
-						if( !(species in S.species_allowed))
-							continue
-
-						valid_facialhairstyles[facialhairstyle] = facial_hair_styles_list[facialhairstyle]
-
-					var/new_f_style = input(user, "Choose your character's facial-hair style:", "Character Preference")  as null|anything in valid_facialhairstyles
-					if(new_f_style)
-						f_style = new_f_style
-
-				if("underwear")
-					var/list/underwear_options
-					if(gender == MALE)
-						underwear_options = underwear_m
-					else
-						underwear_options = underwear_f
-
-					var/new_underwear = input(user, "Choose your character's underwear:", "Character Preference")  as null|anything in underwear_options
-					if(new_underwear)
-						underwear = underwear_options.Find(new_underwear)
-					ShowChoices(user)
-
-				if("undershirt")
-					var/list/undershirt_options
-					undershirt_options = undershirt_t
-
-					var/new_undershirt = input(user, "Choose your character's undershirt:", "Character Preference") as null|anything in undershirt_options
-					if (new_undershirt)
-						undershirt = undershirt_options.Find(new_undershirt)
-					ShowChoices(user)
-
-				if("eyes")
-					var/new_eyes = input(user, "Choose your character's eye colour:", "Character Preference") as color|null
-					if(new_eyes)
-						r_eyes = hex2num(copytext(new_eyes, 2, 4))
-						g_eyes = hex2num(copytext(new_eyes, 4, 6))
-						b_eyes = hex2num(copytext(new_eyes, 6, 8))
-
-				if("s_tone")
-					if(species != "Human")
-						return
-					var/new_s_tone = input(user, "Choose your character's skin-tone:\n(Light 1 - 220 Dark)", "Character Preference")  as num|null
-					if(new_s_tone)
-						s_tone = 35 - max(min( round(new_s_tone), 220),1)
-
-				if("skin")
-					if(species == "Unathi" || species == "Tajaran" || species == "Skrell")
-						var/new_skin = input(user, "Choose your character's skin colour: ", "Character Preference") as color|null
-						if(new_skin)
-							r_skin = hex2num(copytext(new_skin, 2, 4))
-							g_skin = hex2num(copytext(new_skin, 4, 6))
-							b_skin = hex2num(copytext(new_skin, 6, 8))
-
-				if("ooccolor")
-					var/new_ooccolor = input(user, "Choose your OOC colour:", "Game Preference") as color|null
-					if(new_ooccolor)
-						ooccolor = new_ooccolor
-
-				if("bag")
-					var/new_backbag = input(user, "Choose your character's style of bag:", "Character Preference")  as null|anything in backbaglist
-					if(new_backbag)
-						backbag = backbaglist.Find(new_backbag)
-
-				if("nt_relation")
-					var/new_relation = input(user, "Choose your relation to NT. Note that this represents what others can find out about your character by researching your background, not what your character actually thinks.", "Character Preference")  as null|anything in list("Loyal", "Supportive", "Neutral", "Skeptical", "Opposed")
-					if(new_relation)
-						nanotrasen_relation = new_relation
-
-				if("flavor_text")
-					var/msg = sanitize(copytext(input(usr,"Set the flavor text in your 'examine' verb.","Flavor Text",html_decode(revert_ja(flavor_text))) as message, 1, MAX_MESSAGE_LEN))
-
-					if(msg != null)
-						//msg = sanitize_simple(copytext(msg, 1, MAX_MESSAGE_LEN))
-						//msg = html_encode(msg)
-
-						flavor_text = msg
-
-			/*	if("disabilities")
-					if(text2num(href_list["disabilities"]) >= -1)
-						if(text2num(href_list["disabilities"]) >= 0)
-							disabilities ^= (1<<text2num(href_list["disabilities"])) //MAGIC
-						SetDisabilities(user)
-						return
-					else
-						user << browse(null, "window=disabil") */
-
-				if("limbs")
-					var/limb_name = input(user, "Which limb do you want to change?") as null|anything in list("Left Leg","Right Leg","Left Arm","Right Arm","Left Foot","Right Foot","Left Hand","Right Hand")
-					if(!limb_name) return
-
-					var/limb = null
-					var/second_limb = null // if you try to change the arm, the hand should also change
-					var/third_limb = null  // if you try to unchange the hand, the arm should also change
-					switch(limb_name)
-						if("Left Leg")
-							limb = "l_leg"
-							second_limb = "l_foot"
-						if("Right Leg")
-							limb = "r_leg"
-							second_limb = "r_foot"
-						if("Left Arm")
-							limb = "l_arm"
-							second_limb = "l_hand"
-						if("Right Arm")
-							limb = "r_arm"
-							second_limb = "r_hand"
-						if("Left Foot")
-							limb = "l_foot"
-							third_limb = "l_leg"
-						if("Right Foot")
-							limb = "r_foot"
-							third_limb = "r_leg"
-						if("Left Hand")
-							limb = "l_hand"
-							third_limb = "l_arm"
-						if("Right Hand")
-							limb = "r_hand"
-							third_limb = "r_arm"
-
-					var/new_state = input(user, "What state do you wish the limb to be in?") as null|anything in list("Normal","Amputated","Prothesis")
-					if(!new_state) return
-
-					switch(new_state)
-						if("Normal")
-							organ_data[limb] = null
-							if(third_limb)
-								organ_data[third_limb] = null
-						if("Amputated")
-							organ_data[limb] = "amputated"
-							if(second_limb)
-								organ_data[second_limb] = "amputated"
-						if("Prothesis")
-							organ_data[limb] = "cyborg"
-							if(second_limb)
-								organ_data[second_limb] = "cyborg"
-
-				if("organs")
-					var/organ_name = input(user, "Which internal function do you want to change?") as null|anything in list("Heart", "Eyes")
-					if(!organ_name) return
-
-					var/organ = null
-					switch(organ_name)
-						if("Heart")
-							organ = "heart"
-						if("Eyes")
-							organ = "eyes"
-
-					var/new_state = input(user, "What state do you wish the organ to be in?") as null|anything in list("Normal","Assisted","Mechanical")
-					if(!new_state) return
-
-					switch(new_state)
-						if("Normal")
-							organ_data[organ] = null
-						if("Assisted")
-							organ_data[organ] = "assisted"
-						if("Mechanical")
-							organ_data[organ] = "mechanical"
-
-				if("skin_style")
-					var/skin_style_name = input(user, "Select a new skin style") as null|anything in list("default1", "default2", "default3")
-					if(!skin_style_name) return
-
-
-		else
-			switch(href_list["preference"])
-				if("gender")
-					if(gender == MALE)
-						gender = FEMALE
-					else
-						gender = MALE
-
-				if("disabilities")				//please note: current code only allows nearsightedness as a disability
-					disabilities = !disabilities//if you want to add actual disabilities, code that selects them should be here
-
-				if("hear_adminhelps")
-					toggles ^= SOUND_ADMINHELP
-
-				if("UIcolor")
-					var/UI_style_color_new = input(user, "Choose your UI color, dark colors are not recommended!") as color|null
-					if(!UI_style_color_new) return
-					UI_style_color = UI_style_color_new
-
-				if("UIalpha")
-					var/UI_style_alpha_new = input(user, "Select a new alpha(transparence) parametr for UI, between 50 and 255") as num
-					if(!UI_style_alpha_new | !(UI_style_alpha_new <= 255 && UI_style_alpha_new >= 50)) return
-					UI_style_alpha = UI_style_alpha_new
-
-				if("ui")
-					switch(UI_style)
-						if("White")
-							UI_style = "Midnight"
-						if("Midnight")
-							UI_style = "Orange"
-						if("Orange")
-							UI_style = "old"
-						if("old")
-							UI_style = "White"
-						else
-							UI_style = "White"
-
-				if("UIcolor")
-					var/UI_style_color_new = input(user, "Choose your UI color, dark colors are not recommended!") as color|null
-					if(!UI_style_color_new) return
-					UI_style_color = UI_style_color_new
-
-				if("UIalpha")
-					var/UI_style_alpha_new = input(user, "Select a new alpha(transparence) parametr for UI, between 50 and 255") as num
-					if(!UI_style_alpha_new | !(UI_style_alpha_new <= 255 && UI_style_alpha_new >= 50)) return
-					UI_style_alpha = UI_style_alpha_new
-
-				if("be_special")
-					var/num = text2num(href_list["num"])
-					be_special ^= (1<<num)
-
-				if("name")
-					be_random_name = !be_random_name
-
-				if("randomslot")
-					randomslot = !randomslot
-
-				if("hear_midis")
-					toggles ^= SOUND_MIDI
-
-				if("lobby_music")
-					toggles ^= SOUND_LOBBY
-					if(toggles & SOUND_LOBBY)
-						user << sound(ticker.login_music, repeat = 0, wait = 0, volume = 85, channel = 1)
-					else
-						user << sound(null, repeat = 0, wait = 0, volume = 85, channel = 1)
-
-				if("ghost_ears")
-					chat_toggles ^= CHAT_GHOSTEARS
-
-				if("ghost_sight")
-					chat_toggles ^= CHAT_GHOSTSIGHT
-
-				if("ghost_radio")
-					chat_toggles ^= CHAT_GHOSTRADIO
-
-				if("save")
-					save_preferences()
-					save_character()
-
-				if("reload")
-					load_preferences()
-					load_character()
-
-				if("open_load_dialog")
-					if(!IsGuestKey(user.key))
-						open_load_dialog(user)
-
-				if("close_load_dialog")
-					close_load_dialog(user)
-
-				if("changeslot")
-					load_character(text2num(href_list["num"]))
-					close_load_dialog(user)
+		if("glob")
+			process_link_glob(user, href_list)
 
 	ShowChoices(user)
 	return 1
 
-/datum/preferences/proc/copy_to(mob/living/carbon/human/character, safety = 0)
+/datum/preferences/proc/copy_to(mob/living/carbon/human/character, icon_updates = 1)
 	if(be_random_name)
 		real_name = random_name(gender)
 
@@ -1383,8 +288,10 @@ var/const/MAX_SAVE_SLOTS = 10
 	character.h_style = h_style
 	character.f_style = f_style
 
-
-	character.skills = skills
+	character.home_system = home_system
+	character.citizenship = citizenship
+	character.personal_faction = faction
+	character.religion = religion
 
 	// Destroy/cyborgize organs
 
@@ -1448,26 +355,6 @@ var/const/MAX_SAVE_SLOTS = 10
 			message_admins("[character] ([character.ckey]) has spawned with their gender as plural or neuter. Please notify coders.")
 			character.gender = MALE
 
-/datum/preferences/proc/open_load_dialog(mob/user)
-	var/dat = "<body>"
-	dat += "<tt><center>"
-
-	var/savefile/S = new /savefile(path)
-	if(S)
-		dat += "<b>Select a character slot to load</b><hr>"
-		var/name
-		for(var/i=1, i<=MAX_SAVE_SLOTS, i++)
-			S.cd = "/character[i]"
-			S["real_name"] >> name
-			if(!name)	name = "Character[i]"
-			if(i==default_slot)
-				name = "<b>[name]</b>"
-			dat += "<a href='?_src_=prefs;preference=changeslot;num=[i];'>[name]</a><br>"
-
-	dat += "<hr>"
-	dat += "<a href='byond://?src=\ref[user];preference=close_load_dialog'>Close</a><br>"
-	dat += "</center></tt>"
-	user << browse(dat, "window=saves;size=300x390")
-
-/datum/preferences/proc/close_load_dialog(mob/user)
-	user << browse(null, "window=saves")
+	if(icon_updates)
+		character.update_body()
+		character.update_hair()

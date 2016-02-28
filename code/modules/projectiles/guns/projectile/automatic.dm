@@ -299,7 +299,7 @@
 		item_state = "[initial(item_state)]-0"
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		H.update_inv_l_hand(1)
-		H.update_inv_r_hand(1)
-		H.update_inv_belt(1)
+		H.update_inv_l_hand()
+		H.update_inv_r_hand()
+		H.update_inv_belt()
 	return

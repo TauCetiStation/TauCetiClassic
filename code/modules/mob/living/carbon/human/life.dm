@@ -723,7 +723,6 @@
 				protected = 1
 			if(!protected && radiation < 100)
 				apply_effect(5, IRRADIATE)
-				take_overall_damage(burn=10, used_weapon = "Space Radiation")
 
 		// +/- 50 degrees from 310.15K is the 'safe' zone, where no damage is dealt.
 		if(bodytemperature > species.heat_level_1)
@@ -1098,18 +1097,18 @@
 				src << "\blue You feel fit again!"
 				mutations.Remove(FAT)
 				update_body()
-				update_mutantrace(0)
-				update_mutations(0)
-				update_inv_w_uniform(0)
+				update_mutantrace()
+				update_mutations()
+				update_inv_w_uniform()
 				update_inv_wear_suit()
 		else
 			if(overeatduration > 500 && !(species.flags & IS_SYNTHETIC) && !(species.flags & IS_PLANT))
 				src << "\red You suddenly feel blubbery!"
 				mutations.Add(FAT)
 				update_body()
-				update_mutantrace(0)
-				update_mutations(0)
-				update_inv_w_uniform(0)
+				update_mutantrace()
+				update_mutations()
+				update_inv_w_uniform()
 				update_inv_wear_suit()
 
 

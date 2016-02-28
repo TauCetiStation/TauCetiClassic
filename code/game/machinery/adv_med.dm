@@ -2,7 +2,6 @@
 
 
 /obj/machinery/bodyscanner
-	var/mob/living/carbon/occupant
 	var/locked
 	name = "Body Scanner"
 	icon = 'icons/obj/Cryogenic2.dmi'

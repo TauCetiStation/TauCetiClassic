@@ -110,7 +110,8 @@
 
 /mob/living/simple_animal/parrot/Stat()
 	..()
-	stat("Held Item", held_item)
+	if(statpanel("Status"))
+		stat("Held Item", held_item)
 
 /*
  * Inventory
@@ -699,10 +700,89 @@
 	name = "Poly"
 	desc = "Poly the Parrot. An expert on quantum cracker theory."
 	speak = list("Poly wanna cracker!", ":e Check the singlo, you chucklefucks!",":e Wire the solars, you lazy bums!",":e WHO TOOK THE DAMN HARDSUITS?",":e OH GOD ITS LOOSE CALL THE SHUTTLE")
+	speak_chance = 3
+	var/memory_saved = 0
+	var/rounds_survived = 0
+	var/longest_survival = 0
+	var/longest_deathstreak = 0
+
 
 /mob/living/simple_animal/parrot/Poly/New()
 	ears = new /obj/item/device/radio/headset/headset_eng(src)
 	available_channels = list(":e")
+	Read_Memory()
+	if(rounds_survived == longest_survival)
+		speak += pick("...[longest_survival].", "The things I have seen!", "I have lived many lives!", "What are you before me?")
+		desc += " Old as sin, and just as loud. Claimed to be [rounds_survived]."
+		speak_chance = 20 //His hubris has made him more annoying/easier to justify killing
+		color = "#EEEE22"
+	else if(rounds_survived == longest_deathstreak)
+		speak += pick("What are you waiting for!", "Violence breeds violence!", "Blood! Blood!", "Strike me down if you dare!")
+		desc += " The squawks of [-rounds_survived] dead parrots ring out in your ears..."
+		color = "#BB7777"
+	else if(rounds_survived > 0)
+		speak += pick("...again?", "No, It was over!", "Let me out!", "It never ends!")
+		desc += " Over [rounds_survived] shifts without a \"terrible\" \"accident\"!"
+	else
+		speak += pick("...alive?", "This isn't parrot heaven!", "I live, I die, I live again!", "The void fades!")
+	..()
+
+/mob/living/simple_animal/parrot/Poly/Life()
+	if(!stat && ticker.current_state == GAME_STATE_FINISHED && !memory_saved)
+		rounds_survived = max(++rounds_survived,1)
+		if(rounds_survived > longest_survival)
+			longest_survival = rounds_survived
+		Write_Memory()
+	..()
+
+/mob/living/simple_animal/parrot/Poly/death(gibbed)
+	if(!memory_saved)
+		var/go_ghost = 0
+		if(rounds_survived == longest_survival || rounds_survived == longest_deathstreak)
+			go_ghost = 1
+		rounds_survived = min(--rounds_survived,0)
+		if(rounds_survived < longest_deathstreak)
+			longest_deathstreak = rounds_survived
+		Write_Memory()
+		if(go_ghost)
+			var/mob/living/simple_animal/parrot/Poly/ghost/G = new(loc)
+			if(mind)
+				mind.transfer_to(G)
+			else
+				G.key = key
+	..(gibbed)
+
+/mob/living/simple_animal/parrot/Poly/proc/Read_Memory()
+	var/savefile/S = new /savefile("data/npc_saves/Poly.sav")
+	S["phrases"] 			>> speech_buffer
+	S["roundssurvived"]		>> rounds_survived
+	S["longestsurvival"]	>> longest_survival
+	S["longestdeathstreak"] >> longest_deathstreak
+
+	if(isnull(speech_buffer))
+		speech_buffer = list()
+	else
+		if(speech_buffer.len)
+			speak += pick(speech_buffer)
+
+/mob/living/simple_animal/parrot/Poly/proc/Write_Memory()
+	var/savefile/S = new /savefile("data/npc_saves/Poly.sav")
+	S["phrases"] 			<< speech_buffer
+	S["roundssurvived"]		<< rounds_survived
+	S["longestsurvival"]	<< longest_survival
+	S["longestdeathstreak"] << longest_deathstreak
+	memory_saved = 1
+
+/mob/living/simple_animal/parrot/Poly/ghost
+	name = "The Ghost of Poly"
+	desc = "Doomed to squawk the earth."
+	color = "#FFFFFF77"
+	speak_chance = 20
+	status_flags = GODMODE
+	incorporeal_move = 1
+	meat_type = list(/obj/item/weapon/ectoplasm = 1)
+/mob/living/simple_animal/parrot/Poly/ghost/New()
+	memory_saved = 1 //At this point nothing is saved
 	..()
 
 /mob/living/simple_animal/parrot/say(var/message)
@@ -740,14 +820,14 @@
 
 
 /mob/living/simple_animal/parrot/hear_say(var/message, var/verb = "says", var/datum/language/language = null, var/alt_name = "",var/italics = 0, var/mob/speaker = null)
-	if(prob(50))
+	if(speaker != src)
 		parrot_hear(message)
 	..(message,verb,language,alt_name,italics,speaker)
 
 
 
 /mob/living/simple_animal/parrot/hear_radio(var/message, var/verb="says", var/datum/language/language=null, var/part_a, var/part_b, var/mob/speaker = null, var/hard_to_hear = 0)
-	if(prob(50))
+	if(speaker != src)
 		parrot_hear("[pick(available_channels)] [message]")
 	..(message,verb,language,part_a,part_b,speaker,hard_to_hear)
 

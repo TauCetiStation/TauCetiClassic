@@ -51,18 +51,17 @@
 /obj/item/clothing/suit/armor/abductor/vest/proc/ActivateStealth()
 	if(disguise == null)
 		return
-
 	stealth_active = 1
 	if(istype(src.loc, /mob/living/carbon/human))
 		var/mob/living/carbon/human/M = src.loc
 		spawn(0)
 			anim(M.loc,M,'icons/mob/mob.dmi',,"cloak",,M.dir)
-
 		M.name_override = disguise.name
 		M.icon = disguise.icon
 		M.icon_state = disguise.icon_state
 		M.overlays = disguise.overlays
-		M.overlays_standing = disguise.overlays_standing
+		M.update_inv_r_hand()
+		M.update_inv_l_hand()
 	return
 
 /obj/item/clothing/suit/armor/abductor/vest/proc/DeactivateStealth()
@@ -74,10 +73,15 @@
 		spawn(0)
 			anim(M.loc,M,'icons/mob/mob.dmi',,"uncloak",,M.dir)
 		M.name_override = null
+		M.overlays.Cut()
 		M.regenerate_icons()
 	return
 
 /obj/item/clothing/suit/armor/abductor/vest/IsShield()
+	DeactivateStealth()
+	return 0
+
+/obj/item/clothing/suit/armor/abductor/vest/IsReflect()
 	DeactivateStealth()
 	return 0
 
@@ -419,7 +423,7 @@
 
 	user << "<span class='notice'>You switch the baton to [txt] mode.</span>"
 	update_icon()
-	user.update_inv_l_hand(0)
+	user.update_inv_l_hand()
 	user.update_inv_r_hand()
 
 /obj/item/weapon/abductor_baton/update_icon()

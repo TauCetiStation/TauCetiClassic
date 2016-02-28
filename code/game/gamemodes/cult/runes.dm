@@ -174,7 +174,7 @@ var/list/sacrificed = list()
 							M << "<font size='4'><span class='danger'>I am already here!</span></font>"
 							return
 				ticker.mode.nar_sie_has_risen = 1
-				new /obj/machinery/singularity/narsie/large(src.loc)
+				new /obj/singularity/narsie/large(src.loc)
 				return
 			else
 				return fizzle()

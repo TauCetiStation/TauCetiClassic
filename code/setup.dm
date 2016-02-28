@@ -71,6 +71,9 @@
 //#define PRESSURE_SUIT_REDUCTION_COEFFICIENT 0.8 //This is how much (percentual) a suit with the flag STOPSPRESSUREDMAGE reduces pressure.
 //#define PRESSURE_HEAD_REDUCTION_COEFFICIENT 0.4 //This is how much (percentual) a helmet/hat with the flag STOPSPRESSUREDMAGE reduces pressure.
 
+// Misc
+#define LIGHTING_LAYER 10
+
 // Doors!
 #define DOOR_CRUSH_DAMAGE 10
 
@@ -188,15 +191,16 @@ var/MAX_EXPLOSION_RANGE = 14
 #define MASKINTERNALS	8	// mask allows internals
 //#define SUITSPACE		8	// suit protects against space
 
-#define USEDELAY 	16		// 1 second extra delay on use (Can be used once every 2s)
-#define NODELAY 	32768	// 1 second attackby delay skipped (Can be used once every 0.2s). Most objects have a 1s attackby delay, which doesn't require a flag.
-#define NOSHIELD	32		// weapon not affected by shield
-#define CONDUCT		64		// conducts electricity (metal etc.)
-#define FPRINT		256		// takes a fingerprint
-#define ON_BORDER	512		// item has priority to check when entering or leaving
-#define NOBLUDGEON  4  // when an item has this it produces no "X has been hit by Y with Z" message with the default handler
-#define NOBLOODY	2048	// used to items if they don't want to get a blood overlay
-#define ABSTRACT    128		// for all things that are technically items but used for various different stuff, made it 128 because it could conflict with other flags other way
+#define USEDELAY 		16		// 1 second extra delay on use (Can be used once every 2s)
+#define NODELAY 		32768	// 1 second attackby delay skipped (Can be used once every 0.2s). Most objects have a 1s attackby delay, which doesn't require a flag.
+#define NOSHIELD		32		// weapon not affected by shield
+#define CONDUCT			64		// conducts electricity (metal etc.)
+#define FPRINT			256		// takes a fingerprint
+#define ON_BORDER		512		// item has priority to check when entering or leaving
+#define NOBLUDGEON		4		// when an item has this it produces no "X has been hit by Y with Z" message with the default handler
+#define NOBLOODY		2048	// used to items if they don't want to get a blood overlay
+#define ABSTRACT		128		// for all things that are technically items but used for various different stuff, made it 128 because it could conflict with other flags other way
+#define NODECONSTRUCT	128		// For machines and structures that should not break into parts, eg, holodeck stuff
 
 #define GLASSESCOVERSEYES	1024
 #define MASKCOVERSEYES		1024		// get rid of some of the other retardation in these flags
@@ -354,10 +358,6 @@ var/MAX_EXPLOSION_RANGE = 14
 #define SHIELD			18 	// shielding from all projectile attacks (30%)
 #define SHOCKWAVE		19 	// attack a nearby tile and cause a massive shockwave, knocking most people on their asses (25%)
 #define ELECTRICITY		20 	// ability to shoot electric attacks (15%)
-
-	//2spooky
-#define SKELETON 29
-#define PLANT 30
 
 // Other Mutations:
 #define mNobreath		100 	// no need to breathe
@@ -537,6 +537,7 @@ var/list/liftable_structures = list(\
 #define BANTYPE_JOB_PERMA	3
 #define BANTYPE_JOB_TEMP	4
 #define BANTYPE_ANY_FULLBAN	5 //used to locate stuff to unban.
+#define BANTYPE_ANY_JOB		9 //used to remove jobbans
 
 #define INVISIBILITY_LIGHTING 20
 #define INVISIBILITY_LEVEL_ONE 35

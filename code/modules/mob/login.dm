@@ -53,6 +53,11 @@
 	if(abilities)
 		client.verbs |= abilities
 
+	if(istype(src, /mob/living/silicon/ai))
+		client.show_popup_menus = 0
+	else
+		client.show_popup_menus = 1
+
 	if(istype(src,/mob/living/carbon/human))
 		var/mob/living/carbon/human/H = src
 		if(H.species && H.species.abilities)

@@ -8,7 +8,6 @@
 	anchored = 1
 	var/operating = 0 //Is it on?
 	var/dirty = 0 // Does it need cleaning?
-	var/mob/living/occupant // Mob who has been put inside
 
 	var/gib_time = 40 // Time from starting until meat appears
 	var/gib_throw_dir // Direction to spit meat and gibs in.

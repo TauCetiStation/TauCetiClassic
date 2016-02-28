@@ -47,7 +47,6 @@
 	var/shoot_inventory = 0 //Fire items at customers! We're broken!
 	var/shut_up = 1 //Stop spouting those godawful pitches!
 	var/extended_inventory = 0 //can we access the hidden inventory?
-	var/panel_open = 0 //Hacking that vending machine. Gonna get a free candy bar.
 	var/wires = 15
 	var/obj/item/weapon/coin/coin
 	var/const/WIRE_EXTEND = 1
@@ -1045,3 +1044,18 @@
 	/obj/item/clothing/mask/bandana/blue=384,/obj/item/clothing/mask/bluescarf=250,/obj/item/clothing/mask/redscarf=250,/obj/item/clothing/mask/greenscarf=250,
 	/obj/item/clothing/suit/wintercoat=130,/obj/item/clothing/shoes/winterboots=70,/obj/item/clothing/head/santa=50)
 	refill_canister = /obj/item/weapon/vending_refill/clothing
+
+//from old nanotrasen
+/obj/machinery/vending/blood
+	name = "Blood'O'Matic"
+	desc = "Human blood dispenser. With internal freezer. Brought to you by EmpireV corp."
+	icon = 'tauceti/items/vendomats/vendings.dmi'
+	icon_state = "blood2"
+	light_color = "#ffc0c0"
+	icon_deny = "blood2deny"
+	product_ads = "Go and grab some blood!;I'm hope you are not bloody vampire.;Only from nice virgins!;Natural liquids!;This stuff saves lives."
+	//req_access_txt = "5"
+	products = list(/obj/item/weapon/reagent_containers/blood/APlus = 7, /obj/item/weapon/reagent_containers/blood/AMinus = 4,
+					/obj/item/weapon/reagent_containers/blood/BPlus = 4, /obj/item/weapon/reagent_containers/blood/BMinus = 2,
+					/obj/item/weapon/reagent_containers/blood/OPlus = 7, /obj/item/weapon/reagent_containers/blood/OMinus = 4)
+	contraband = list(/obj/item/weapon/reagent_containers/pill/stox = 10, /obj/item/weapon/reagent_containers/blood/empty = 10)
