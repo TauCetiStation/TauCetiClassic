@@ -20,13 +20,12 @@
 			return									// seems legit.
 
 	// Things you might plausibly want to follow
-	if((ismob(A) && A != src) || istype(A,/obj/machinery/bot) || istype(A,/obj/machinery/singularity))
+	if(istype(A, /atom/movable))
 		ManualFollow(A)
 
 	// Otherwise jump
 	else
-		following = null
-		forceMoveOld(get_turf(A))
+		loc = get_turf(A)
 
 /mob/dead/observer/ClickOn(var/atom/A, var/params)
 	if(client.buildmode)
@@ -52,21 +51,21 @@
 	var/atom/l = loc
 	var/obj/machinery/computer/teleporter/com = locate(/obj/machinery/computer/teleporter, locate(l.x - 2, l.y, l.z))
 	if(com.locked)
-		user.forceMoveOld(get_turf(com.locked))
+		user.loc = get_turf(com.locked)
 
 /obj/effect/portal/attack_ghost(mob/user as mob)
 	if(target)
-		user.forceMoveOld(get_turf(target))
+		user.loc = get_turf(target)
 
 /obj/machinery/gateway/centerstation/attack_ghost(mob/user as mob)
 	if(awaygate)
-		user.forceMoveOld(awaygate.loc)
+		user.loc = awaygate.loc
 	else
 		user << "[src] has no destination."
 
 /obj/machinery/gateway/centeraway/attack_ghost(mob/user as mob)
 	if(stationgate)
-		user.forceMoveOld(stationgate.loc)
+		user.loc = stationgate.loc
 	else
 		user << "[src] has no destination."
 

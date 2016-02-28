@@ -828,9 +828,6 @@
 			switch(alert("Temporary Ban?",,"Yes","No", "Cancel"))
 				if("Yes")
 					if(!check_rights(R_MOD,0) && !check_rights(R_BAN))  return
-					if(config.ban_legacy_system)
-						usr << "\red Your server is using the legacy banning system, which does not support temporary job bans. Consider upgrading. Aborting ban."
-						return
 					var/mins = input(usr,"How long (in minutes)?","Ban time",1440) as num|null
 					if(!mins)
 						return
@@ -844,8 +841,9 @@
 						log_admin("[key_name(usr)] temp-jobbanned [key_name(M)] from [job] for [mins] minutes")
 						feedback_inc("ban_job_tmp",1)
 						DB_ban_record(BANTYPE_JOB_TEMP, M, mins, reason, job)
+						if(M.client)
+							jobban_buildcache(M.client)
 						feedback_add_details("ban_job_tmp","- [job]")
-						jobban_fullban(M, job, "[reason]; By [usr.ckey] on [time2text(world.realtime)]") //Legacy banning does not support temporary jobbans.
 						if(!msg)
 							msg = job
 						else
@@ -867,8 +865,9 @@
 							log_admin("[key_name(usr)] perma-banned [key_name(M)] from [job]")
 							feedback_inc("ban_job",1)
 							DB_ban_record(BANTYPE_JOB_PERMA, M, -1, reason, job)
+							if(M.client)
+								jobban_buildcache(M.client)
 							feedback_add_details("ban_job","- [job]")
-							jobban_fullban(M, job, "[reason]; By [usr.ckey] on [time2text(world.realtime)]")
 							if(!msg)	msg = job
 							else		msg += ", [job]"
 						notes_add(M.ckey, "Banned  from [msg] - [reason]")
@@ -884,10 +883,6 @@
 		//Unbanning joblist
 		//all jobs in joblist are banned already OR we didn't give a reason (implying they shouldn't be banned)
 		if(joblist.len) //at least 1 banned job exists in joblist so we have stuff to unban.
-			if(!config.ban_legacy_system)
-				usr << "Unfortunately, database based unbanning cannot be done through this panel"
-				DB_ban_panel(M.ckey)
-				return
 			var/msg
 			for(var/job in joblist)
 				var/reason = jobban_isbanned(M, job)
@@ -896,10 +891,11 @@
 					if("Yes")
 						ban_unban_log_save("[key_name(usr)] unjobbanned [key_name(M)] from [job]")
 						log_admin("[key_name(usr)] unbanned [key_name(M)] from [job]")
-						DB_ban_unban(M.ckey, BANTYPE_JOB_PERMA, job)
+						DB_ban_unban(M.ckey, BANTYPE_ANY_JOB, job)
+						if(M.client)
+							jobban_buildcache(M.client)
 						feedback_inc("ban_job_unban",1)
 						feedback_add_details("ban_job_unban","- [job]")
-						jobban_unban(M, job)
 						if(!msg)	msg = job
 						else		msg += ", [job]"
 					else
@@ -944,20 +940,6 @@
 				notes_remove(ckey,text2num(href_list["from"]),text2num(href_list["to"]))
 				notes_show(ckey)
 */
-	else if(href_list["removejobban"])
-		if(!check_rights(R_BAN))	return
-
-		var/t = href_list["removejobban"]
-		if(t)
-			if((alert("Do you want to unjobban [t]?","Unjobban confirmation", "Yes", "No") == "Yes") && t) //No more misclicks! Unless you do it twice.
-				log_admin("[key_name(usr)] removed [t]")
-				message_admins("\blue [key_name_admin(usr)] removed [t]", 1)
-				jobban_remove(t)
-				href_list["ban"] = 1 // lets it fall through and refresh
-				var/t_split = text2list(t, " - ")
-				var/key = t_split[1]
-				var/job = t_split[2]
-				DB_ban_unban(ckey(key), BANTYPE_JOB_PERMA, job)
 
 	else if(href_list["newban"])
 		if(!check_rights(R_MOD,0) && !check_rights(R_BAN))  return
@@ -1414,6 +1396,16 @@
 		if(!check_rights(R_MOD|R_ADMIN))	return
 
 		check_antagonists()
+
+	else if(href_list["adminplayerobservefollow"])
+		if(!isobserver(usr) && !check_rights(R_ADMIN))	return
+
+		var/atom/movable/AM = locate(href_list["adminplayerobservefollow"])
+
+		var/client/C = usr.client
+		if(!isobserver(usr))	C.admin_ghost()
+		var/mob/dead/observer/A = C.mob
+		A.ManualFollow(AM)
 
 	else if(href_list["adminplayerobservecoodjump"])
 		if(!check_rights(R_ADMIN))	return

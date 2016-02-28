@@ -600,13 +600,8 @@ mob/living/parasite/meme/verb/Show_Points()
 // Stat panel to show meme points, copypasted from alien
 /mob/living/parasite/meme/Stat()
 	..()
-
-	statpanel("Status")
-	if (client && client.holder)
-		stat(null, "([x], [y], [z])")
-
-	if (client && client.statpanel == "Status")
-		stat(null, "Meme Points: [src.meme_points]")
+	if(statpanel("Status"))
+		stat(null, "Meme Points: [meme_points]")
 
 // Game mode helpers, used for theft objectives
 // --------------------------------------------

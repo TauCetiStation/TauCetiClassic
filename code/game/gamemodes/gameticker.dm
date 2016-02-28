@@ -134,14 +134,16 @@ var/global/datum/controller/gameticker/ticker
 		job_master.ResetOccupations()
 		return 0
 
-	if(hide_mode)
+	// Lets try to live without this information.
+	/*if(hide_mode)
 		var/list/modes = new
 		for (var/datum/game_mode/M in runnable_modes)
 			modes+=M.name
 		modes = sortList(modes)
 		world << "<B>The current game mode is - Secret!</B>"
 		world << "<B>Possibilities:</B> [english_list(modes)]"
-	else
+	else*/
+	if(!hide_mode)
 		src.mode.announce()
 
 	create_characters() //Create player characters and transfer them

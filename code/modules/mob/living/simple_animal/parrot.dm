@@ -110,7 +110,8 @@
 
 /mob/living/simple_animal/parrot/Stat()
 	..()
-	stat("Held Item", held_item)
+	if(statpanel("Status"))
+		stat("Held Item", held_item)
 
 /*
  * Inventory
@@ -761,7 +762,8 @@
 	if(isnull(speech_buffer))
 		speech_buffer = list()
 	else
-		speak += pick(speech_buffer)
+		if(speech_buffer.len)
+			speak += pick(speech_buffer)
 
 /mob/living/simple_animal/parrot/Poly/proc/Write_Memory()
 	var/savefile/S = new /savefile("data/npc_saves/Poly.sav")
