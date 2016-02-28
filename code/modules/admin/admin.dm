@@ -87,7 +87,7 @@ var/global/floorIsLava = 0
 	"}
 
 	if (M.client)
-		if(!istype(M, /mob/new_player))
+		if(!isnewplayer(M))
 			body += "<br><br>"
 			body += "<b>Transformation:</b>"
 			body += "<br>"

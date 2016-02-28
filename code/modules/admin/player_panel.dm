@@ -340,9 +340,9 @@
 			dat += "<td>Cyborg</td>"
 		else if(ishuman(M))
 			dat += "<td>[M.real_name]</td>"
-		else if(istype(M, /mob/living/silicon/pai))
+		else if(ispAI(M))
 			dat += "<td>pAI</td>"
-		else if(istype(M, /mob/new_player))
+		else if(isnewplayer(M))
 			dat += "<td>New Player</td>"
 		else if(isobserver(M))
 			dat += "<td>Ghost</td>"
@@ -356,7 +356,7 @@
 			dat += "<td>Unknown</td>"
 
 
-		if(istype(M,/mob/living/carbon/human))
+		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if(H.mind && H.mind.assigned_role)
 				dat += "<td>[H.mind.assigned_role]</td>"

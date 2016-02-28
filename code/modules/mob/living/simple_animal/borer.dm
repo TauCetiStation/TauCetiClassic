@@ -138,7 +138,7 @@
 	host << "Your own thoughts speak: \"[message]\""
 
 	for (var/mob/M in player_list)
-		if (istype(M, /mob/new_player))
+		if (isnewplayer(M))
 			continue
 		else if(M.stat == 2 &&  M.client.prefs.chat_toggles & CHAT_GHOSTEARS)
 			M << "[src.truename] whispers to [host], \"[message]\""
@@ -156,7 +156,7 @@
 		return
 
 	for(var/mob/M in mob_list)
-		if(M.mind && (istype(M, /mob/living/simple_animal/borer) || istype(M, /mob/dead/observer)))
+		if(M.mind && (istype(M, /mob/living/simple_animal/borer) || isobserver(M)))
 			M << "<i>Cortical link, <b>[truename]:</b> [copytext(message, 2)]</i>"
 
 /mob/living/simple_animal/borer/verb/dominate_victim()

@@ -336,7 +336,7 @@ var/global/datum/controller/gameticker/ticker
 					EquipCustomItems(player)
 		if(captainless)
 			for(var/mob/M in player_list)
-				if(!istype(M,/mob/new_player))
+				if(!isnewplayer(M))
 					M << "Captainship not forced on anyone."
 
 

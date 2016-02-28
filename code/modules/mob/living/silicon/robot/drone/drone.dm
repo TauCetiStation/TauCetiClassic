@@ -118,11 +118,11 @@
 				return
 
 			for (var/mob/living/S in living_mob_list)
-				if(istype(S, /mob/living/silicon/robot/drone))
+				if(isdrone(S))
 					S << "<i><span class='game say'>Drone Talk, <span class='name'>[name]</span><span class='message'> transmits, \"[trim(copytext(message,3))]\"</span></span></i>"
 
 			for (var/mob/M in dead_mob_list)
-				if(!istype(M,/mob/new_player) && !istype(M,/mob/living/carbon/brain))
+				if(!isnewplayer(M) && !isbrain(M))
 					M << "<i><span class='game say'>Drone Talk, <span class='name'>[name]</span><span class='message'> transmits, \"[trim(copytext(message,3))]\"</span></span></i>"
 
 		else
@@ -134,7 +134,7 @@
 				if(D.client) D << "<b>[src]</b> transmits, \"[message]\""
 
 			for (var/mob/M in player_list)
-				if (istype(M, /mob/new_player))
+				if (isnewplayer(M))
 					continue
 				else if(M.stat == 2 &&  M.client.prefs.chat_toggles & CHAT_GHOSTEARS)
 					if(M.client) M << "<b>[src]</b> transmits, \"[message]\""
