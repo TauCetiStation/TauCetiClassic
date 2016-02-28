@@ -260,6 +260,9 @@
 	if(!isnum(player_ingame_age))
 		return
 
+	if(player_ingame_age <= 0)
+		return
+
 	var/sql_ckey = sql_sanitize_text(src.ckey)
 	var/DBQuery/query_update = dbcon.NewQuery("UPDATE erro_player SET ingameage = '[player_ingame_age]' WHERE ckey = '[sql_ckey]'")
 	query_update.Execute()
