@@ -307,6 +307,7 @@ var/list/admin_verbs_mentor = list(
 		if(holder.rights & R_MOD)			verbs += admin_verbs_mod
 		if(holder.rights & R_MENTOR)		verbs += admin_verbs_mentor
 
+		if(holder.rights & R_ADMIN)			control_freak = CONTROL_FREAK_SKIN | CONTROL_FREAK_MACROS
 		if(holder.rights & R_FUN)			verbs += admin_verbs_event
 
 /client/proc/remove_admin_verbs()
