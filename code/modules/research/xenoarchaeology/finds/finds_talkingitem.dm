@@ -119,7 +119,7 @@
 			continue //skip monkeys and leavers
 		if (isnewplayer(M))
 			continue
-		if(M.stat == 2 &&  M.client.prefs.chat_toggles & CHAT_GHOSTEARS)
+		if(M.stat == DEAD &&  M.client.prefs.chat_toggles & CHAT_GHOSTEARS)
 			listening|=M
 
 	msg = sanitize_plus_chat(msg)

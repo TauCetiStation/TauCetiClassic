@@ -97,12 +97,12 @@
 		if(istype(tmob, /mob/living/carbon/human))
 
 			for(var/mob/M in range(tmob, 1))
-				if(tmob.pinned.len ||  ((M.pulling == tmob && ( tmob.restrained() && !( M.restrained() ) && M.stat == 0)) || locate(/obj/item/weapon/grab, tmob.grabbed_by.len)) )
+				if(tmob.pinned.len ||  ((M.pulling == tmob && ( tmob.restrained() && !( M.restrained() ) && M.stat == CONSCIOUS)) || locate(/obj/item/weapon/grab, tmob.grabbed_by.len)) )
 					if ( !(world.time % 5) )
 						src << "\red [tmob] is restrained, you cannot push past"
 					now_pushing = 0
 					return
-				if( tmob.pulling == M && ( M.restrained() && !( tmob.restrained() ) && tmob.stat == 0) )
+				if( tmob.pulling == M && ( M.restrained() && !( tmob.restrained() ) && tmob.stat == CONSCIOUS) )
 					if ( !(world.time % 5) )
 						src << "\red [tmob] is restraining [M], you cannot push past"
 					now_pushing = 0
@@ -272,7 +272,7 @@
 
 
 /mob/living/carbon/human/blob_act()
-	if(stat == 2)	return
+	if(stat == DEAD)	return
 	show_message("\red The blob attacks you!")
 	var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
 	var/datum/organ/external/affecting = get_organ(ran_zone(dam_zone))
@@ -1563,13 +1563,13 @@
 	if(istype(G.affecting,/mob/living/carbon/human))
 		var/mob/living/carbon/human/H = G.affecting
 		H.apply_damage(50,BRUTE)
-		if(H.stat == 2)
+		if(H.stat == DEAD)
 			H.gib()
 	else
 		var/mob/living/M = G.affecting
 		if(!istype(M)) return //wut
 		M.apply_damage(50,BRUTE)
-		if(M.stat == 2)
+		if(M.stat == DEAD)
 			M.gib()
 
 /mob/living/carbon/human/has_eyes()

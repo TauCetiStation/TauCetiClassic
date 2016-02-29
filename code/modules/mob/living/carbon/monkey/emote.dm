@@ -126,7 +126,7 @@
 			src << text
 		else
 			src << text("Invalid Emote: []", act)
-	if ((message && src.stat == 0))
+	if ((message && src.stat == CONSCIOUS))
 		if(src.client)
 			log_emote("[name]/[key] : [message]")
 		if (m_type & 1)

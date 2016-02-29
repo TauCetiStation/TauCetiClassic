@@ -102,7 +102,7 @@
 	return 1
 
 /mob/living/silicon/pai/blob_act()
-	if (src.stat != 2)
+	if (src.stat != DEAD)
 		src.adjustBruteLoss(60)
 		src.updatehealth()
 		return 1
@@ -148,15 +148,15 @@
 
 	switch(severity)
 		if(1.0)
-			if (src.stat != 2)
+			if (src.stat != DEAD)
 				adjustBruteLoss(100)
 				adjustFireLoss(100)
 		if(2.0)
-			if (src.stat != 2)
+			if (src.stat != DEAD)
 				adjustBruteLoss(60)
 				adjustFireLoss(60)
 		if(3.0)
-			if (src.stat != 2)
+			if (src.stat != DEAD)
 				adjustBruteLoss(30)
 
 	src.updatehealth()
@@ -220,7 +220,7 @@
 		src.unset_machine()
 		src.reset_view(null)
 		return 0
-	if (stat == 2 || !C.status || !(src.network in C.network)) return 0
+	if (stat == DEAD || !C.status || !(src.network in C.network)) return 0
 
 	// ok, we're alive, camera is good and in our network...
 
@@ -247,7 +247,7 @@
 	src.cameraFollow = null
 	var/cameralist[0]
 
-	if(usr.stat == 2)
+	if(usr.stat == DEAD)
 		usr << "You can't change your camera network because you are dead!"
 		return
 

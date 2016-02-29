@@ -459,7 +459,7 @@
 		if (C.c_tag == target)
 			target = C
 			break
-	if (usr.stat == 2) return
+	if (usr.stat == DEAD) return
 
 	usr.client.eye = target
 

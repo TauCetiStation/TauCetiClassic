@@ -9,7 +9,7 @@
 		if (department_radio_keys[copytext(message, 1, 3)] == "alientalk")
 			message = copytext(message, 3)
 			message = trim(message)
-			if (stat == 2)
+			if (stat == DEAD)
 				return say_dead(message)
 			else
 				alien_talk(message)
@@ -29,7 +29,7 @@
 		if (department_radio_keys[copytext(message, 1, 3)] == "alientalk")
 			message = copytext(message, 3)
 			message = trim(message)
-			if (stat == 2)
+			if (stat == DEAD)
 				return say_dead(message)
 			else
 				alien_talk(message)
@@ -45,7 +45,7 @@
 		if (department_radio_keys[copytext(message, 1, 3)] == "alientalk")
 			message = copytext(message, 3)
 			message = trim(message)
-			if (stat == 2)
+			if (stat == DEAD)
 				return say_dead(message)
 			else
 				alien_talk(message)

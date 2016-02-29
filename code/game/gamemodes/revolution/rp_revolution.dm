@@ -126,7 +126,7 @@
 /datum/game_mode/revolution/rp_revolution/check_heads_victory()
 	for(var/datum/mind/rev_mind in head_revolutionaries)
 		var/turf/T = get_turf(rev_mind.current)
-		if(rev_mind.current.stat != 2)
+		if(rev_mind.current.stat != DEAD)
 			// TODO: add a similar check that also checks whether they're without ID in the brig..
 			//       probably wanna export this stuff into a separate function for use by both
 			//       revs and heads

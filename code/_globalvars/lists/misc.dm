@@ -9,3 +9,6 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 	"NUKE",
 	"AURORA"
 	)
+
+// Posters
+//var/global/list/datum/poster/poster_designs = typesof(/datum/poster) - /datum/poster

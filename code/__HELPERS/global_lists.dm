@@ -1,9 +1,3 @@
-
-// Posters
-//var/global/list/datum/poster/poster_designs = typesof(/datum/poster) - /datum/poster
-
-
-
 //////////////////////////
 /////Initial Building/////
 //////////////////////////

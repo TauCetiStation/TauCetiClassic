@@ -77,7 +77,7 @@
 /mob/living/silicon/robot/drone/updateicon()
 
 	overlays.Cut()
-	if(stat == 0)
+	if(stat == CONSCIOUS)
 		overlays += "eyes-[icon_state]"
 	else
 		overlays -= "eyes"
@@ -104,7 +104,7 @@
 
 	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 
-	if (stat == 2)
+	if (stat == DEAD)
 		return say_dead(message)
 
 	if(copytext(message,1,2) == "*")
@@ -136,7 +136,7 @@
 			for (var/mob/M in player_list)
 				if (isnewplayer(M))
 					continue
-				else if(M.stat == 2 &&  M.client.prefs.chat_toggles & CHAT_GHOSTEARS)
+				else if(M.stat == DEAD &&  M.client.prefs.chat_toggles & CHAT_GHOSTEARS)
 					if(M.client) M << "<b>[src]</b> transmits, \"[message]\""
 
 //Drones cannot be upgraded with borg modules so we need to catch some items before they get used in ..().
@@ -152,7 +152,7 @@
 
 	else if (istype(W, /obj/item/weapon/card/emag))
 
-		if(!client || stat == 2)
+		if(!client || stat == DEAD)
 			user << "\red There's not much point subverting this heap of junk."
 			return
 
@@ -187,7 +187,7 @@
 
 	else if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 
-		if(stat == 2)
+		if(stat == DEAD)
 
 			if(!config.allow_drone_spawn || emagged || health < -35) //It's dead, Dave.
 				user << "\red The interface is fried, and a distressing burned smell wafts from the robot's interior. You're not rebooting this one."
@@ -237,7 +237,7 @@
 //Drones killed by damage will gib.
 /mob/living/silicon/robot/drone/handle_regular_status_updates()
 
-	if(health <= -10 && src.stat != 2)
+	if(health <= -10 && src.stat != DEAD)
 		timeofdeath = world.time
 		death() //Possibly redundant, having trouble making death() cooperate.
 		gib()
@@ -259,7 +259,7 @@
 
 //CONSOLE PROCS
 /mob/living/silicon/robot/drone/proc/law_resync()
-	if(stat != 2)
+	if(stat != DEAD)
 		if(emagged)
 			src << "\red You feel something attempting to modify your programming, but your hacked subroutines are unaffected."
 		else
@@ -268,7 +268,7 @@
 			show_laws()
 
 /mob/living/silicon/robot/drone/proc/shut_down()
-	if(stat != 2)
+	if(stat != DEAD)
 		if(emagged)
 			src << "\red You feel a system kill order percolate through your tiny brain, but it doesn't seem like a good idea to you."
 		else

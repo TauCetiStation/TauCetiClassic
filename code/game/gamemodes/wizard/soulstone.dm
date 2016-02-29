@@ -106,7 +106,7 @@
 			if(C.imprinted != "empty")
 				U << "\red <b>Capture failed!</b>: \black The soul stone has already been imprinted with [C.imprinted]'s mind!"
 			else
-				if (T.stat == 0)
+				if (T.stat == CONSCIOUS)
 					U << "\red <b>Capture failed!</b>: \black Kill or maim the victim first!"
 				else
 					if(T.client == null)

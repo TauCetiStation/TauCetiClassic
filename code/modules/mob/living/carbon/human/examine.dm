@@ -231,17 +231,17 @@
 		msg += "[t_He] [t_is] small halfling!\n"
 
 	var/distance = get_dist(usr,src)
-	if(istype(usr, /mob/dead/observer) || usr.stat == 2) // ghosts can see anything
+	if(istype(usr, /mob/dead/observer) || usr.stat == DEAD) // ghosts can see anything
 		distance = 1
 	if (src.stat)
 		msg += "<span class='warning'>[t_He] [t_is]n't responding to anything around [t_him] and seems to be asleep.</span>\n"
-		if((stat == 2 || src.losebreath) && distance <= 3)
+		if((stat == DEAD || src.losebreath) && distance <= 3)
 			msg += "<span class='warning'>[t_He] does not appear to be breathing.</span>\n"
 		if(istype(usr, /mob/living/carbon/human) && !usr.stat && distance <= 1)
 			for(var/mob/O in viewers(usr.loc, null))
 				O.show_message("[usr] checks [src]'s pulse.", 1)
 		spawn(15)
-			if(distance <= 1 && usr && usr.stat != 1)
+			if(distance <= 1 && usr && usr.stat != UNCONSCIOUS)
 				if(pulse == PULSE_NONE)
 					usr << "<span class='deadsay'>[t_He] has no pulse[src.client ? "" : " and [t_his] soul has departed"]...</span>"
 				else

@@ -725,7 +725,7 @@ ________________________________________________________________________________
 					A << "Your core files are being purged! This is the end..."
 					spawn(0)
 						display_spideros()//To refresh the screen and let this finish.
-					while (A.stat != 2)
+					while (A.stat != DEAD)
 						A.adjustOxyLoss(2)
 						A.updatehealth()
 						sleep(10)

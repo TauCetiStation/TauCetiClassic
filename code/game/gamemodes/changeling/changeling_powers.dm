@@ -504,7 +504,7 @@
 	changeling.chem_charges -= 45
 
 	var/mob/living/carbon/human/C = src
-	C.stat = 0
+	C.stat = CONSCIOUS
 	C.SetParalysis(0)
 	C.SetStunned(0)
 	C.SetWeakened(0)

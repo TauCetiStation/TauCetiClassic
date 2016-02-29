@@ -108,7 +108,7 @@
 		var/foundAlready = 0 // don't infect someone that already has the virus
 		for(var/datum/disease/D in H.viruses)
 			foundAlready = 1
-		if(H.stat == 2 || foundAlready)
+		if(H.stat == DEAD || foundAlready)
 			continue
 
 		var/datum/disease/D = new /datum/disease/appendicitis
@@ -155,7 +155,7 @@
 			continue
 		for(var/datum/disease/D in H.viruses)
 			foundAlready = 1
-		if(H.stat == 2 || foundAlready)
+		if(H.stat == DEAD || foundAlready)
 			continue
 
 		if(virus_type == /datum/disease/dnaspread) //Dnaspread needs strain_data set to work.
@@ -339,7 +339,7 @@ Would like to add a law like "Law x is _______" where x = a number, and _____ is
 
 	//AI laws
 	for(var/mob/living/silicon/ai/M in living_mob_list)
-		if(M.stat != 2 && M.see_in_dark != 0)
+		if(M.stat != DEAD && M.see_in_dark != 0)
 			var/who2 = pick("ALIENS", "BEARS", "CLOWNS", "XENOS", "PETES", "BOMBS", "FETISHES", "WIZARDS", "SYNDICATE AGENTS", "CENTCOM OFFICERS", "SPACE PIRATES", "TRAITORS", "MONKEYS",  "BEES", "CARP", "CRABS", "EELS", "BANDITS", "LIGHTS")
 			var/what2 = pick("BOLTERS", "STAVES", "DICE", "SINGULARITIES", "TOOLBOXES", "NETTLES", "AIRLOCKS", "CLOTHES", "WEAPONS", "MEDKITS", "BOMBS", "CANISTERS", "CHAIRS", "BBQ GRILLS", "ID CARDS", "CAPTAINS")
 			var/what2pref = pick("SOFT", "WARM", "WET", "COLD", "ICY", "SEXY", "UGLY", "CUBAN")

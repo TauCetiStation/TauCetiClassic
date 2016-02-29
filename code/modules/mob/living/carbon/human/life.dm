@@ -206,7 +206,7 @@
 				stuttering = max(10, stuttering)
 		// No. -- cib
 		//Oh, really?
-		if (getBrainLoss() >= 60 && stat != 2)
+		if (getBrainLoss() >= 60 && stat != DEAD)
 			if(prob(3))
 				if(config.rus_language)
 					switch(pick(1,2,3))
@@ -225,7 +225,7 @@
 						if(3)
 							emote("drool")
 
-		if(stat != 2)
+		if(stat != DEAD)
 			var/rn = rand(0, 200)
 			if(getBrainLoss() >= 5)
 				if(0 <= rn && rn <= 3)
@@ -1113,7 +1113,7 @@
 
 
 		// nutrition decrease
-		if (nutrition > 0 && stat != 2)
+		if (nutrition > 0 && stat != DEAD)
 			nutrition = max (0, nutrition - HUNGER_FACTOR)
 
 		if (nutrition > 450)
@@ -1737,8 +1737,8 @@
 				if(M.loc != src)
 					stomach_contents.Remove(M)
 					continue
-				if(istype(M, /mob/living/carbon) && stat != 2)
-					if(M.stat == 2)
+				if(istype(M, /mob/living/carbon) && stat != DEAD)
+					if(M.stat == DEAD)
 						M.death(1)
 						stomach_contents.Remove(M)
 						qdel(M)
@@ -1847,7 +1847,7 @@
 
 	if(hud_updateflag & 1 << HEALTH_HUD)
 		var/image/holder = hud_list[HEALTH_HUD]
-		if(stat == 2)
+		if(stat == DEAD)
 			holder.icon_state = "hudhealth-100" 	// X_X
 		else
 			holder.icon_state = "hud[RoundHealth(health)]"
@@ -1866,7 +1866,7 @@
 
 		var/image/holder = hud_list[STATUS_HUD]
 		var/image/holder2 = hud_list[STATUS_HUD_OOC]
-		if(stat == 2)
+		if(stat == DEAD)
 			holder.icon_state = "huddead"
 			holder2.icon_state = "huddead"
 		else if(status_flags & XENO_HOST)

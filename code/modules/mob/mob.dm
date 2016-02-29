@@ -287,7 +287,7 @@
 	if (!( abandon_allowed ))
 		usr << "\blue Respawn is disabled."
 		return
-	if ((stat != 2 || !( ticker )))
+	if ((stat != DEAD || !( ticker )))
 		usr << "\blue <B>You must be dead to use this!</B>"
 		return
 	if(ticker && istype(ticker.mode,/datum/game_mode/meteor))

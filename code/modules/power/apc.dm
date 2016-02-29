@@ -1108,7 +1108,7 @@
 /obj/machinery/power/apc/proc/malfvacate(var/forced)
 	if(!src.occupier)
 		return
-	if(src.occupier.parent && src.occupier.parent.stat != 2)
+	if(src.occupier.parent && src.occupier.parent.stat != DEAD)
 		src.occupier.mind.transfer_to(src.occupier.parent)
 		src.occupier.parent.adjustOxyLoss(src.occupier.getOxyLoss())
 		src.occupier.parent.cancel_camera()

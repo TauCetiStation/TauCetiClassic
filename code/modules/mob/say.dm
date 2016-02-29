@@ -75,7 +75,7 @@
 
 /mob/proc/say_understands(var/mob/other,var/datum/language/speaking = null)
 
-	if (src.stat == 2)		//Dead
+	if (src.stat == DEAD)		//Dead
 		return 1
 
 	//Universal speak makes everything understandable, for obvious reasons.

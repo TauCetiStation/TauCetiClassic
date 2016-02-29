@@ -12,7 +12,7 @@
 
 /mob/living/silicon/ai/proc/get_camera_list()
 
-	if(src.stat == 2)
+	if(src.stat == DEAD)
 		return
 
 	var/list/L = list()
@@ -35,7 +35,7 @@
 
 /mob/living/silicon/ai/proc/ai_camera_list(var/camera in get_camera_list())
 
-	if(src.stat == 2)
+	if(src.stat == DEAD)
 		src << "You can't list the cameras because you are dead!"
 		return
 
@@ -111,7 +111,7 @@
 
 /mob/living/silicon/ai/proc/trackable_mobs()
 
-	if(usr.stat == 2)
+	if(usr.stat == DEAD)
 		return list()
 
 	var/datum/trackable/TB = new()
@@ -164,7 +164,7 @@
 
 /mob/living/silicon/ai/proc/ai_camera_track(var/target_name in trackable_mobs())
 
-	if(src.stat == 2)
+	if(src.stat == DEAD)
 		src << "You can't track with camera because you are dead!"
 		return
 	if(target_name == "Cancel")

@@ -43,7 +43,7 @@
 		return
 
 	if(occupant)
-		if(occupant.stat != 2)
+		if(occupant.stat != DEAD)
 			process_occupant()
 
 	if(air_contents)
@@ -207,11 +207,11 @@
 	if(air_contents.total_moles() < 10)
 		return
 	if(occupant)
-		if(occupant.stat == 2)
+		if(occupant.stat == DEAD)
 			return
 		occupant.bodytemperature += 2*(air_contents.temperature - occupant.bodytemperature)*current_heat_capacity/(current_heat_capacity + air_contents.heat_capacity())
 		occupant.bodytemperature = max(occupant.bodytemperature, air_contents.temperature) // this is so ugly i'm sorry for doing it i'll fix it later i promise
-		occupant.stat = 1
+		occupant.stat = UNCONSCIOUS
 		if(occupant.bodytemperature < T0C)
 			occupant.sleeping = max(5, (1/occupant.bodytemperature)*2000)
 			occupant.Paralyse(max(5, (1/occupant.bodytemperature)*3000))
@@ -300,7 +300,7 @@
 	set category = "Object"
 	set src in oview(1)
 	if(usr == occupant)//If the user is inside the tube...
-		if (usr.stat == 2)//and he's not dead....
+		if (usr.stat == DEAD)//and he's not dead....
 			return
 		usr << "\blue Release sequence activated. This will take two minutes."
 		sleep(1200)
@@ -308,7 +308,7 @@
 			return
 		go_out()//and release him from the eternal prison.
 	else
-		if (usr.stat != 0)
+		if (usr.stat != CONSCIOUS)
 			return
 		go_out()
 	add_fingerprint(usr)
@@ -322,7 +322,7 @@
 		if(M.Victim == usr)
 			usr << "You're too busy getting your life sucked out of you."
 			return
-	if (usr.stat != 0 || stat & (NOPOWER|BROKEN))
+	if (usr.stat != CONSCIOUS || stat & (NOPOWER|BROKEN))
 		return
 	put_mob(usr)
 	return

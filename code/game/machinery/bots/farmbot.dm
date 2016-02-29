@@ -297,7 +297,7 @@
 /obj/machinery/bot/farmbot/proc/find_target()
 	if ( emagged ) //Find a human and help them!
 		for ( var/mob/living/carbon/human/human in view(7,src) )
-			if (human.stat == 2)
+			if (human.stat == DEAD)
 				continue
 
 			var list/options = list(FARMBOT_MODE_WEED)

@@ -454,7 +454,7 @@ var/global/datum/controller/gameticker/ticker
 			var/icon/flat = getFlatIcon(aiPlayer)
 			end_icons += flat
 			var/tempstate = end_icons.len
-			if (aiPlayer.stat != 2)
+			if (aiPlayer.stat != DEAD)
 				ai_completions += {"<BR><B><img src="logo_[tempstate].png"> [aiPlayer.name] (Played by: [aiPlayer.key])'s laws at the end of the game were:</B>"}
 			else
 				ai_completions += {"<BR><B><img src="logo_[tempstate].png"> [aiPlayer.name] (Played by: [aiPlayer.key])'s laws when it was deactivated were:</B>"}
@@ -478,7 +478,7 @@ var/global/datum/controller/gameticker/ticker
 			end_icons += flat
 			var/tempstate = end_icons.len
 			if (!robo.connected_ai)
-				if (robo.stat != 2)
+				if (robo.stat != DEAD)
 					ai_completions += {"<BR><B><img src="logo_[tempstate].png"> [robo.name] (Played by: [robo.key]) survived as an AI-less borg! Its laws were:</B>"}
 				else
 					ai_completions += {"<BR><B><img src="logo_[tempstate].png"> [robo.name] (Played by: [robo.key]) was unable to survive the rigors of being a cyborg without an AI. Its laws were:</B>"}
