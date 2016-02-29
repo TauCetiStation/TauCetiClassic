@@ -151,15 +151,9 @@
 	return 0 // Don't slip in space.
 
 /mob/living/carbon/alien/Stat()
-
-	statpanel("Status")
-	stat(null, "Intent: [a_intent]")
-	stat(null, "Move Mode: [m_intent]")
-
 	..()
 
-	if (client.statpanel == "Status")
-		stat(null, "Plasma Stored: [getPlasma()]/[max_plasma]")
+	if(statpanel("Status"))
 		var/baby = 0
 		var/drone = 0
 		var/sentinel = 0
@@ -200,12 +194,6 @@
 				stat(null, "Conscious: [queen.stat ? "No":"Yes"]")
 				stat(null, "Health: [queen.health]/[queen.maxHealth]")
 				stat(null, "Location: [queen.loc.loc.name]")
-
-	if(emergency_shuttle)
-		if(emergency_shuttle.online && emergency_shuttle.location < 2)
-			var/timeleft = emergency_shuttle.timeleft()
-			if (timeleft)
-				stat(null, "ETA-[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
 
 /mob/living/carbon/alien/Stun(amount)
 	if(status_flags & CANSTUN)

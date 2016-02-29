@@ -240,5 +240,5 @@
 /////////////////////////////
 // SINGULOTH PULL REFACTOR
 /////////////////////////////
-/atom/movable/proc/canSingulothPull(var/obj/machinery/singularity/singulo)
+/atom/movable/proc/canSingulothPull(var/obj/singularity/singulo)
 	return 1

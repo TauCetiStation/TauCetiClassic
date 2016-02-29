@@ -56,26 +56,26 @@
 
 		. += "</td><td width='40%'>"
 
-		. += "<a href='?_src_=prefs;preference=job;task=input;text=[rank]'>"
+		. += "<a class='white' href='?_src_=prefs;preference=job;task=input;text=[rank]'>"
 
 		if(rank == "Assistant")//Assistant is special
 			if(job_civilian_low & ASSISTANT)
-				. += " <font color=green>\[Yes]</font>"
+				. += " <font color=green size=2>Yes</font>"
 			else
-				. += " <font color=red>\[No]</font>"
+				. += " <font color=red size=2>No</font>"
 			. += "</a></td></tr>"
 			if(job.alt_titles)
 				. += "</a></td></tr><tr bgcolor='[lastJob.selection_color]'><td width='60%' align='center'><a>&nbsp</a></td><td><a href=\"byond://?src=\ref[user];preference=job;task=alt_title;job=\ref[job]\">\[[GetPlayerAltTitle(job)]\]</a></td></tr>"
 			continue
 
 		if(GetJobDepartment(job, 1) & job.flag)
-			. += " <font color=blue>\[High]</font>"
+			. += " <font color=blue size=2>High</font>"
 		else if(GetJobDepartment(job, 2) & job.flag)
-			. += " <font color=green>\[Medium]</font>"
+			. += " <font color=green size=2>Medium</font>"
 		else if(GetJobDepartment(job, 3) & job.flag)
-			. += " <font color=orange>\[Low]</font>"
+			. += " <font color=orange size=2>Low</font>"
 		else
-			. += " <font color=red>\[NEVER]</font>"
+			. += " <font color=red size=2>NEVER</font>"
 		if(job.alt_titles)
 			. += "</a></td></tr><tr bgcolor='[lastJob.selection_color]'><td width='60%' align='center'><a>&nbsp</a></td><td><a href=\"byond://?src=\ref[user];preference=job;task=alt_title;job=\ref[job]\">\[[GetPlayerAltTitle(job)]\]</a></td></tr>"
 		. += "</a></td></tr>"
@@ -124,7 +124,6 @@
 /datum/preferences/proc/SetJob(mob/user, role)
 	var/datum/job/job = job_master.GetJob(role)
 	if(!job)
-		user << browse(null, "window=mob_occupation")
 		return
 
 	if(role == "Assistant")

@@ -1,13 +1,3 @@
-/*
-Contains most of the procs that are called when a mob is attacked by something
-
-bullet_act
-ex_act
-meteor_act
-emp_act
-
-*/
-
 /mob/living/carbon/human/bullet_act(var/obj/item/projectile/P, var/def_zone)
 	if(P.impact_force)
 		for(var/i=1, i<=P.impact_force, i++)
@@ -15,14 +5,11 @@ emp_act
 			if(istype(src.loc, /turf/simulated))
 				src.loc.add_blood(src)
 
-	if(wear_suit && istype(wear_suit, /obj/item/clothing/suit/armor/laserproof))
+	if(!(P.original == src && P.firer == src)) //can't block or reflect when shooting yourself
 		if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam))
-			var/reflectchance = 40 - round(P.damage/3)
-			if(!(def_zone in list("chest", "groin")))
-				reflectchance /= 2
-			if(prob(reflectchance))
-				visible_message("\red <B>The [P.name] gets reflected by [src]'s [wear_suit.name]!</B>")
-
+			if(check_reflect(def_zone)) // Checks if you've passed a reflection% check
+				visible_message("<span class='danger'>The [P.name] gets reflected by [src]!</span>", \
+								"<span class='userdanger'>The [P.name] gets reflected by [src]!</span>")
 				// Find a turf near or on the original location to bounce to
 				if(P.starting)
 					var/new_x = P.starting.x + pick(0, 0, 0, 0, 0, -1, 1, -2, 2)
@@ -30,16 +17,10 @@ emp_act
 					var/turf/curloc = get_turf(src)
 
 					// redirect the projectile
-					P.original = locate(new_x, new_y, P.z)
-					P.starting = curloc
-					P.current = curloc
-					P.firer = src
-					P.yo = new_y - curloc.y
-					P.xo = new_x - curloc.x
+					P.redirect(new_x, new_y, curloc, src)
 
 				return -1 // complete projectile permutation
 
-//BEGIN BOOK'S TASER NERF.
 	if(istype(P, /obj/item/projectile/bullet/weakbullet))
 		var/datum/organ/external/select_area = get_organ(def_zone) // We're checking the outside, buddy!
 		if(check_thickmaterial(select_area))
@@ -65,7 +46,6 @@ emp_act
 		qdel(P)
 		return
 
-//END TASER NERF
 	if(istype(P, /obj/item/projectile/energy/bolt))
 		var/datum/organ/external/select_area = get_organ(def_zone) // We're checking the outside, buddy!
 		var/list/body_parts = list(head, wear_mask, wear_suit, w_uniform, gloves, shoes) // What all are we checking?
@@ -88,19 +68,18 @@ emp_act
 		src <<"\red You have been shot!"
 		qdel(P)
 		return
-//Конец ребаланса арбалета синди
 
 	if(check_shields(P.damage, "the [P.name]"))
 		P.on_hit(src, 100, def_zone)
 		return 2
 
 	if(istype(P, /obj/item/projectile/bullet))
-		var/datum/organ/external/organ = get_organ(check_zone(def_zone))
+		var/obj/item/projectile/bullet/B = P
 
+		var/datum/organ/external/organ = get_organ(check_zone(def_zone))
 		var/armor = getarmor_organ(organ, "bullet")
 
 		var/delta = max(0, P.damage - (P.damage * (armor/100)))
-
 		if(delta)
 			apply_effect(delta,AGONY,armor)
 			P.on_hit(src, armor, def_zone)
@@ -109,12 +88,12 @@ emp_act
 			P.sharp = 0
 			P.embed = 0
 
-		if(P:stoping_power)
+		if(B.stoping_power)
 			var/force =  (armor/P.damage)*100
 			if (force <= 60 && force > 40)
-				apply_effects(P:stoping_power/2,P:stoping_power/2,0,0,P:stoping_power/2,0,0,armor)
+				apply_effects(B.stoping_power/2,B.stoping_power/2,0,0,B.stoping_power/2,0,0,armor)
 			else if(force <= 40)
-				apply_effects(P:stoping_power,P:stoping_power,0,0,P:stoping_power,0,0,armor)
+				apply_effects(B.stoping_power,B.stoping_power,0,0,B.stoping_power,0,0,armor)
 
 		if((P.embed && prob(20 + max(P.damage - armor, -20))) && P.damage_type == BRUTE)
 			var/obj/item/weapon/shard/shrapnel/SP = new()
@@ -125,6 +104,17 @@ emp_act
 
 	return (..(P , def_zone))
 
+/mob/living/carbon/human/proc/check_reflect(def_zone) //Reflection checks for anything in your l_hand, r_hand, or wear_suit based on the reflection chance of the object
+	if(wear_suit)
+		if(wear_suit.IsReflect(def_zone) == 1)
+			return 1
+	if(l_hand)
+		if(l_hand.IsReflect(def_zone) == 1)
+			return 1
+	if(r_hand)
+		if(r_hand.IsReflect(def_zone) == 1)
+			return 1
+	return 0
 
 /mob/living/carbon/human/getarmor(var/def_zone, var/type)
 	var/armorval = 0

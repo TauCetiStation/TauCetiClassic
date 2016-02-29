@@ -38,9 +38,6 @@ var/const/MAX_IMPREGNATION_TIME = 150
 	a_intent = "grab"
 	..()
 
-/mob/living/carbon/alien/facehugger/Stat()
-	..()
-
 /mob/living/carbon/alien/facehugger/adjustToxLoss(amount)
 	..(amount)
 

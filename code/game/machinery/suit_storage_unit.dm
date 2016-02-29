@@ -594,7 +594,6 @@
 	var/radiation_level = 2 // 1 is removing germs, 2 is removing blood, 3 is removing phoron.
 	var/model_text = ""     // Some flavour text for the topic box.
 	var/locked = 1          // If locked, nothing can be taken from or added to the cycler.
-	var/panel_open = 0      // Hacking!
 
 	// Wiring bollocks.
 	var/wires = 15
@@ -611,7 +610,6 @@
 	var/target_department = "Engineering"
 	var/target_species = "Human"
 
-	var/mob/living/carbon/human/occupant = null
 	var/obj/item/clothing/suit/space/rig/suit = null
 	var/obj/item/clothing/head/helmet/space/helmet = null
 

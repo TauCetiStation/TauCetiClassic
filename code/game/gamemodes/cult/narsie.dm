@@ -1,4 +1,4 @@
-/obj/machinery/singularity/narsie //Moving narsie to a child object of the singularity so it can be made to function differently. --NEO
+/obj/singularity/narsie //Moving narsie to a child object of the singularity so it can be made to function differently. --NEO
 	name = "Nar-sie's Avatar"
 	desc = "Your mind begins to bubble and ooze as it tries to comprehend what it sees."
 	icon = 'icons/obj/magic_terror.dmi'
@@ -142,7 +142,7 @@
 
 //////////////////////END?////////////////////////////////////////////
 
-/obj/machinery/singularity/narsie/large
+/obj/singularity/narsie/large
 	name = "Nar-Sie"
 	icon = 'icons/obj/narsie.dmi'
 	// Pixel stuff centers Narsie.
@@ -155,7 +155,7 @@
 	grav_pull = 10
 	consume_range = 12 //How many tiles out do we eat
 
-/obj/machinery/singularity/narsie/large/New()
+/obj/singularity/narsie/large/New()
 	..()
 	world << "<font size='15' color='red'><b>NAR-SIE HAS RISEN</b></font>"
 	world << pick(sound('sound/hallucinations/im_here1.ogg'), sound('sound/hallucinations/im_here2.ogg'))
@@ -171,7 +171,7 @@
 		emergency_shuttle.incall(0.5)	// Cannot recall
 
 
-/obj/machinery/singularity/narsie/large/attack_ghost(mob/living/user as mob)
+/obj/singularity/narsie/large/attack_ghost(mob/living/user as mob)
 	if(!(src in view()))
 		user << "Your soul is too far away."
 		return
@@ -184,7 +184,7 @@
 		Bring those who still cling to this world of illusion back to the Geometer so they may know Truth"
 
 
-/obj/machinery/singularity/narsie/process()
+/obj/singularity/narsie/process()
 	eat()
 	if(!target || prob(5))
 		pickcultist()
@@ -193,13 +193,13 @@
 		mezzer()
 
 
-/obj/machinery/singularity/narsie/Bump(atom/A)//you dare stand before a god?!
+/obj/singularity/narsie/Bump(atom/A)//you dare stand before a god?!
 	return
 
-/obj/machinery/singularity/narsie/Bumped(atom/A)
+/obj/singularity/narsie/Bumped(atom/A)
 	return
 
-/obj/machinery/singularity/narsie/mezzer()
+/obj/singularity/narsie/mezzer()
 	for(var/mob/living/carbon/M in oviewers(8, src))
 		if(M.stat == CONSCIOUS)
 			if(!iscultist(M))
@@ -207,7 +207,7 @@
 				M.apply_effect(3, STUN)
 
 
-/obj/machinery/singularity/narsie/consume(var/atom/A)
+/obj/singularity/narsie/consume(var/atom/A)
 	//if(is_type_in_list(A, uneatable))
 	//	return 0
 	if(istype(A, /mob/living))
@@ -241,7 +241,7 @@
 				T.ChangeTurf(/turf/simulated/wall/cult)
 	return
 
-/obj/machinery/singularity/narsie/move()
+/obj/singularity/narsie/move()
 	if(!move_self)
 		return 0
 
@@ -256,11 +256,11 @@
 		loc = get_step(src, movement_dir)
 	return 1
 
-/obj/machinery/singularity/narsie/ex_act() //No throwing bombs at it either. --NEO
+/obj/singularity/narsie/ex_act() //No throwing bombs at it either. --NEO
 	return
 
 
-/obj/machinery/singularity/narsie/proc/pickcultist() //Narsie rewards his cultists with being devoured first, then picks a ghost to follow. --NEO
+/obj/singularity/narsie/proc/pickcultist() //Narsie rewards his cultists with being devoured first, then picks a ghost to follow. --NEO
 	var/list/cultists = list()
 	var/list/noncultists = list()
 	for(var/mob/living/carbon/food in living_mob_list) //we don't care about constructs or cult-Ians or whatever. cult-monkeys are fair game i guess
@@ -295,7 +295,7 @@
 		return
 
 
-/obj/machinery/singularity/narsie/proc/acquire(var/mob/food)
+/obj/singularity/narsie/proc/acquire(var/mob/food)
 	target << "<span class='notice'>NAR-SIE HAS LOST INTEREST IN YOU</span>"
 	target = food
 	if(ishuman(target))
@@ -304,7 +304,7 @@
 		target << "<span class ='userdanger'>NAR-SIE HAS CHOSEN YOU TO LEAD HIM TO HIS NEXT MEAL</span>"
 
 
-/obj/machinery/singularity/narsie/proc/narsie_spawn_animation()
+/obj/singularity/narsie/proc/narsie_spawn_animation()
 	icon = 'tauceti/icons/obj/narsie_spawn_anim.dmi'
 	dir = SOUTH
 	move_self = 0
@@ -314,10 +314,10 @@
 	icon = initial(icon)
 
 //Wizard narsie
-/obj/machinery/singularity/narsie/wizard
+/obj/singularity/narsie/wizard
 	grav_pull = 0
 
-/obj/machinery/singularity/narsie/wizard/eat()
+/obj/singularity/narsie/wizard/eat()
 //	if(defer_powernet_rebuild != 2)
 //		defer_powernet_rebuild = 1
 	for(var/atom/X in orange(consume_range,src))

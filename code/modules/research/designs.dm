@@ -1281,6 +1281,25 @@ datum/design/mechfab
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/mechfab"
 
+/datum/design/tesla_coil
+	name = "Machine Design (Tesla Coil Board)"
+	desc = "The circuit board for a tesla coil."
+	id = "tesla_coil"
+	req_tech = list("programming" = 1)
+	build_type = IMPRINTER
+	materials = list("$glass" = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/tesla_coil
+	//category = list ("Misc. Machinery")
+
+/datum/design/grounding_rod
+	name = "Machine Design (Grounding Rod Board)"
+	desc = "The circuit board for a grounding rod."
+	id = "grounding_rod"
+	req_tech = list("programming" = 1)
+	build_type = IMPRINTER
+	materials = list("$glass" = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/grounding_rod
+	//category = list ("Misc. Machinery") 
 
 /////////////////////////////////////////
 ////////////Power Stuff//////////////////

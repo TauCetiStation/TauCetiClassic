@@ -146,15 +146,7 @@
 
 /mob/living/simple_animal/borer/Stat()
 	..()
-	statpanel("Status")
-
-	if(emergency_shuttle)
-		if(emergency_shuttle.online && emergency_shuttle.location < 2)
-			var/timeleft = emergency_shuttle.timeleft()
-			if (timeleft)
-				stat(null, "ETA-[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
-
-	if (client.statpanel == "Status")
+	if(statpanel("Status"))
 		stat("Chemicals", chemicals)
 
 // VERBS!
