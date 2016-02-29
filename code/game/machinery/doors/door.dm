@@ -425,5 +425,8 @@
 
 	update_nearby_tiles()
 
+/obj/machinery/door/proc/hasPower()
+	return !(stat & NOPOWER)
+
 /obj/machinery/door/morgue
 	icon = 'icons/obj/doors/doormorgue.dmi'

@@ -301,14 +301,6 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	containername = "MULEbot Crate"
 	group = "Operations"
 
-/datum/supply_packs/lisa
-	name = "Corgi Crate"
-	contains = list()
-	cost = 50
-	containertype = /obj/structure/largecrate/lisa
-	containername = "Corgi Crate"
-	group = "Hydroponics"
-
 /datum/supply_packs/hydroponics // -- Skie
 	name = "Hydroponics Supply Crate"
 	contains = list(/obj/item/weapon/reagent_containers/spray/plantbgone,
@@ -330,7 +322,7 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 /datum/supply_packs/cow
 	name = "Cow crate"
 	cost = 30
-	containertype = /obj/structure/largecrate/cow
+	containertype = /obj/structure/closet/critter/cow
 	containername = "Cow crate"
 	access = access_hydroponics
 	group = "Hydroponics"
@@ -338,7 +330,7 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 /datum/supply_packs/goat
 	name = "Goat crate"
 	cost = 25
-	containertype = /obj/structure/largecrate/goat
+	containertype = /obj/structure/closet/critter/goat
 	containername = "Goat crate"
 	access = access_hydroponics
 	group = "Hydroponics"
@@ -346,17 +338,30 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 /datum/supply_packs/chicken
 	name = "Chicken crate"
 	cost = 20
-	containertype = /obj/structure/largecrate/chick
+	containertype = /obj/structure/closet/critter/chick
 	containername = "Chicken crate"
 	access = access_hydroponics
 	group = "Hydroponics"
 
-/datum/supply_packs/lisa
+/datum/supply_packs/corgi
 	name = "Corgi crate"
-	contains = list()
 	cost = 50
-	containertype = /obj/structure/largecrate/lisa
-	containername = "Corgi crate"
+	containertype = /obj/structure/closet/critter/corgi
+	containername = "corgi crate"
+	group = "Hydroponics"
+
+/datum/supply_packs/cat
+	name = "Cat crate"
+	cost = 40
+	containertype = /obj/structure/closet/critter/cat
+	containername = "cat crate"
+	group = "Hydroponics"
+
+/datum/supply_packs/pug
+	name = "Pug crate"
+	cost = 50
+	containertype = /obj/structure/closet/critter/pug
+	containername = "pug crate"
 	group = "Hydroponics"
 
 /datum/supply_packs/seeds

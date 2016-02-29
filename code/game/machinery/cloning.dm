@@ -20,8 +20,20 @@
 	var/attempting = 0 //One clone attempt at a time thanks
 	var/eject_wait = 0 //Don't eject them as soon as they are created fuckkk
 	var/biomass = CLONE_BIOMASS * 3
-
 	light_color = "#00FF00"
+
+/obj/machinery/clonepod/New()
+	..()
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/clonepod(src)
+	component_parts += new /obj/item/weapon/stock_parts/scanning_module(src)
+	component_parts += new /obj/item/weapon/stock_parts/scanning_module(src)
+	component_parts += new /obj/item/weapon/stock_parts/manipulator(src)
+	component_parts += new /obj/item/weapon/stock_parts/manipulator(src)
+	component_parts += new /obj/item/weapon/stock_parts/console_screen(src)
+	component_parts += new /obj/item/weapon/cable_coil(src, 1)
+	component_parts += new /obj/item/weapon/cable_coil(src, 1)
+
 
 //The return of data disks?? Just for transferring between genetics machine/cloning machine.
 //TO-DO: Make the genetics machine accept them.
@@ -42,29 +54,29 @@
 	name = "data disk - 'God Emperor of Mankind'"
 	read_only = 1
 
-	New()
-		Initialize()
-		buf.types=DNA2_BUF_UE|DNA2_BUF_UI
-		//data = "066000033000000000AF00330660FF4DB002690"
-		//data = "0C80C80C80C80C80C8000000000000161FBDDEF" - Farmer Jeff
-		buf.dna.real_name="God Emperor of Mankind"
-		buf.dna.unique_enzymes = md5(buf.dna.real_name)
-		buf.dna.UI=list(0x066,0x000,0x033,0x000,0x000,0x000,0xAF0,0x033,0x066,0x0FF,0x4DB,0x002,0x690)
-		//buf.dna.UI=list(0x0C8,0x0C8,0x0C8,0x0C8,0x0C8,0x0C8,0x000,0x000,0x000,0x000,0x161,0xFBD,0xDEF) // Farmer Jeff
-		buf.dna.UpdateUI()
+/obj/item/weapon/disk/data/demo/New()
+	Initialize()
+	buf.types=DNA2_BUF_UE|DNA2_BUF_UI
+	//data = "066000033000000000AF00330660FF4DB002690"
+	//data = "0C80C80C80C80C80C8000000000000161FBDDEF" - Farmer Jeff
+	buf.dna.real_name="God Emperor of Mankind"
+	buf.dna.unique_enzymes = md5(buf.dna.real_name)
+	buf.dna.UI=list(0x066,0x000,0x033,0x000,0x000,0x000,0xAF0,0x033,0x066,0x0FF,0x4DB,0x002,0x690)
+	//buf.dna.UI=list(0x0C8,0x0C8,0x0C8,0x0C8,0x0C8,0x0C8,0x000,0x000,0x000,0x000,0x161,0xFBD,0xDEF) // Farmer Jeff
+	buf.dna.UpdateUI()
 
 /obj/item/weapon/disk/data/monkey
 	name = "data disk - 'Mr. Muggles'"
 	read_only = 1
 
-	New()
-		Initialize()
-		buf.types=DNA2_BUF_SE
-		var/list/new_SE=list(0x098,0x3E8,0x403,0x44C,0x39F,0x4B0,0x59D,0x514,0x5FC,0x578,0x5DC,0x640,0x6A4)
-		for(var/i=new_SE.len;i<=DNA_SE_LENGTH;i++)
-			new_SE += rand(1,1024)
-		buf.dna.SE=new_SE
-		buf.dna.SetSEValueRange(MONKEYBLOCK,0xDAC, 0xFFF)
+/obj/item/weapon/disk/data/monkey/New()
+	Initialize()
+	buf.types=DNA2_BUF_SE
+	var/list/new_SE=list(0x098,0x3E8,0x403,0x44C,0x39F,0x4B0,0x59D,0x514,0x5FC,0x578,0x5DC,0x640,0x6A4)
+	for(var/i=new_SE.len;i<=DNA_SE_LENGTH;i++)
+		new_SE += rand(1,1024)
+	buf.dna.SE=new_SE
+	buf.dna.SetSEValueRange(MONKEYBLOCK,0xDAC, 0xFFF)
 
 
 //Find a dead mob with a brain and client.
@@ -136,6 +148,8 @@
 
 //Start growing a human clone in the pod!
 /obj/machinery/clonepod/proc/growclone(var/datum/dna2/record/R)
+	if(panel_open)
+		return 0
 	if(mess || attempting)
 		return 0
 	var/datum/mind/clonemind = locate(R.mind)
@@ -269,7 +283,7 @@
 		src.occupant = null
 		if (src.locked)
 			src.locked = 0
-		if (!src.mess)
+		if (!src.mess && !panel_open)
 			icon_state = "pod_0"
 		//use_power(200)
 		return
@@ -278,14 +292,20 @@
 
 //Let's unlock this early I guess.  Might be too early, needs tweaking.
 /obj/machinery/clonepod/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if(!(occupant || mess || locked))
+		if(default_deconstruction_screwdriver(user, "[icon_state]_maintenance", "[initial(icon_state)]",W))
+			return
+
+	default_deconstruction_crowbar(W)
+
 	if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if (!src.check_access(W))
-			user << "\red Access Denied."
+			user << "<span class='danger'>Access Denied.</span>"
 			return
 		if ((!src.locked) || (isnull(src.occupant)))
 			return
 		if ((src.occupant.health < -20) && (src.occupant.stat != 2))
-			user << "\red Access Refused."
+			user << "<span class='danger'>Access Refused.</span>"
 			return
 		else
 			src.locked = 0
@@ -303,21 +323,6 @@
 		user.drop_item()
 		qdel(W)
 		return
-	else if (istype(W, /obj/item/weapon/wrench))
-		if(src.locked && (src.anchored || src.occupant))
-			user << "\red Can not do that while [src] is in use."
-		else
-			if(src.anchored)
-				src.anchored = 0
-				connected.pod1 = null
-				connected = null
-			else
-				src.anchored = 1
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
-			if(anchored)
-				user.visible_message("[user] secures [src] to the floor.", "You secure [src] to the floor.")
-			else
-				user.visible_message("[user] unsecures [src] from the floor.", "You unsecure [src] from the floor.")
 	else
 		..()
 
@@ -337,6 +342,8 @@
 	set category = "Object"
 	set src in oview(1)
 
+	if(!usr)
+		return
 	if (usr.stat != 0)
 		return
 	src.go_out()

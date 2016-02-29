@@ -62,8 +62,8 @@
 	return 0
 
 
-/obj/machinery/atmospherics/unary/cryo_cell/relaymove(mob/user as mob)
-	if(user.stat)
+/obj/machinery/atmospherics/unary/cryo_cell/container_resist()
+	if(usr.stat)
 		return
 	go_out()
 	return

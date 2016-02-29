@@ -608,74 +608,11 @@
 		else
 			L.buckled.manual_unbuckle(L)
 
-	//Breaking out of a locker?
-	else if( src.loc && (istype(src.loc, /obj/structure/closet)) )
-		var/breakout_time = 2 //2 minutes by default
-
-		var/obj/structure/closet/C = L.loc
-		if(C.opened)
-			return //Door's open... wait, why are you in it's contents then?
-		if(istype(L.loc, /obj/structure/closet/secure_closet))
-			var/obj/structure/closet/secure_closet/SC = L.loc
-			if(!SC.locked && !SC.welded)
-				return //It's a secure closet, but isn't locked. Easily escapable from, no need to 'resist'
-		else
-			if(!C.welded)
-				return //closed but not welded...
-		//	else Meh, lets just keep it at 2 minutes for now
-		//		breakout_time++ //Harder to get out of welded lockers than locked lockers
-
-		//okay, so the closet is either welded or locked... resist!!!
-		usr.next_move = world.time + 100
-		L.last_special = world.time + 100
-		L << "<span class='rose'>You lean on the back of \the [C] and start pushing the door open. (this will take about [breakout_time] minutes)</span>"
-		for(var/mob/O in viewers(usr.loc))
-			O.show_message("<span class='danger'>The [L.loc] begins to shake violently!</span>", 1)
-
-
-		spawn(0)
-			if(do_after(usr,(breakout_time*60*10), target = C)) //minutes * 60seconds * 10deciseconds
-				if(!C || !L || L.stat != CONSCIOUS || L.loc != C || C.opened) //closet/user destroyed OR user dead/unconcious OR user no longer in closet OR closet opened
-					return
-
-				//Perform the same set of checks as above for weld and lock status to determine if there is even still a point in 'resisting'...
-				if(istype(L.loc, /obj/structure/closet/secure_closet))
-					var/obj/structure/closet/secure_closet/SC = L.loc
-					if(!SC.locked && !SC.welded)
-						return
-				else
-					if(!C.welded)
-						return
-
-				//Well then break it!
-				if(istype(usr.loc, /obj/structure/closet/secure_closet))
-					var/obj/structure/closet/secure_closet/SC = L.loc
-					SC.desc = "It appears to be broken."
-					SC.icon_state = SC.icon_off
-					flick(SC.icon_broken, SC)
-					sleep(10)
-					flick(SC.icon_broken, SC)
-					sleep(10)
-					SC.broken = 1
-					SC.locked = 0
-					SC.update_icon()
-					usr << "<span class='notice'>You successfully break out!</span>"
-					for(var/mob/O in viewers(L.loc))
-						O.show_message("<span class='danger'>[usr] successfully broke out of \the [SC]!</span>", 1)
-					if(istype(SC.loc, /obj/structure/bigDelivery)) //Do this to prevent contents from being opened into nullspace (read: bluespace)
-						var/obj/structure/bigDelivery/BD = SC.loc
-						BD.attack_hand(usr)
-					SC.open()
-				else
-					C.welded = 0
-					C.update_icon()
-					usr << "<span class='notice'>You successfully break out!</span>"
-					for(var/mob/O in viewers(L.loc))
-						O.show_message("<span class='danger'>[usr] successfully broke out of \the [C]!</span>", 1)
-					if(istype(C.loc, /obj/structure/bigDelivery)) //nullspace ect.. read the comment above
-						var/obj/structure/bigDelivery/BD = C.loc
-						BD.attack_hand(usr)
-					C.open()
+	//Breaking out of a container (Locker, sleeper, cryo...)
+	else if(loc && istype(loc, /obj) && !isturf(loc))
+		if(L.stat == CONSCIOUS && !L.stunned && !L.weakened && !L.paralysis)
+			var/obj/C = loc
+			C.container_resist(L)
 
 	//breaking out of handcuffs and putting off fires
 	else if(iscarbon(L))

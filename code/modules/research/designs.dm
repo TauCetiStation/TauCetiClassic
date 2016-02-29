@@ -1247,7 +1247,7 @@ datum/design/circuit_imprinter
 
 datum/design/autolathe
 	name = "Autolathe Board"
-	desc = "The circuit board for a autolathe."
+	desc = "The circuit board for an autolathe."
 	id = "autolathe"
 	req_tech = list("programming" = 2, "engineering" = 2)
 	build_type = IMPRINTER
@@ -1256,7 +1256,7 @@ datum/design/autolathe
 
 datum/design/rdservercontrol
 	name = "R&D Server Control Console Board"
-	desc = "The circuit board for a R&D Server Control Console"
+	desc = "The circuit board for an R&D Server Control Console"
 	id = "rdservercontrol"
 	req_tech = list("programming" = 3)
 	build_type = IMPRINTER
@@ -1280,6 +1280,15 @@ datum/design/mechfab
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/mechfab"
+
+datum/design/cyborgrecharger
+	name = "Cyborg Recharger Board"
+	desc = "The circuit board for a Cyborg Recharger"
+	id = "cyborgrecharger"
+	req_tech = list("powerstorage" = 3, "engineering" = 3)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	build_path = "/obj/item/weapon/circuitboard/cyborgrecharger"
 
 /datum/design/tesla_coil
 	name = "Machine Design (Tesla Coil Board)"

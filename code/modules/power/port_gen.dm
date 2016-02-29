@@ -53,7 +53,6 @@ display round(lastgen) and phorontank amount
 
 	var/active = 0
 	var/power_gen = 5000
-	var/open = 0
 	var/recent_fault = 0
 	var/power_output = 1
 
@@ -115,8 +114,8 @@ display round(lastgen) and phorontank amount
 	component_parts = list()
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(src)
 	component_parts += new /obj/item/weapon/stock_parts/micro_laser(src)
-	component_parts += new /obj/item/weapon/cable_coil(src)
-	component_parts += new /obj/item/weapon/cable_coil(src)
+	component_parts += new /obj/item/weapon/cable_coil(src, 1)
+	component_parts += new /obj/item/weapon/cable_coil(src, 1)
 	component_parts += new /obj/item/weapon/stock_parts/capacitor(src)
 	component_parts += new board_path(src)
 	RefreshParts()
@@ -198,9 +197,9 @@ display round(lastgen) and phorontank amount
 /obj/machinery/power/port_gen/pacman/proc/overheat()
 	explosion(src.loc, 2, 5, 2, -1)
 
-/obj/machinery/power/port_gen/pacman/attackby(var/obj/item/O as obj, var/mob/user as mob)
-	if(istype(O, sheet_path))
-		var/obj/item/stack/addstack = O
+/obj/machinery/power/port_gen/pacman/attackby(var/obj/item/I as obj, var/mob/user as mob)
+	if(istype(I, sheet_path))
+		var/obj/item/stack/addstack = I
 		var/amount = min((max_sheets - sheets), addstack.amount)
 		if(amount < 1)
 			user << "\blue The [src.name] is full!"
@@ -210,12 +209,12 @@ display round(lastgen) and phorontank amount
 		addstack.use(amount)
 		updateUsrDialog()
 		return
-	else if (istype(O, /obj/item/weapon/card/emag))
+	else if (istype(I, /obj/item/weapon/card/emag))
 		emagged = 1
 		emp_act(1)
 	else if(!active)
 
-		if(istype(O, /obj/item/weapon/wrench))
+		if(istype(I, /obj/item/weapon/wrench))
 
 			if(!anchored)
 				connect_to_network()
@@ -227,32 +226,15 @@ display round(lastgen) and phorontank amount
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			anchored = !anchored
 
-		else if(istype(O, /obj/item/weapon/screwdriver))
-			open = !open
+		else if(istype(I, /obj/item/weapon/screwdriver))
+			panel_open = !panel_open
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-			if(open)
+			if(panel_open)
 				user << "\blue You open the access panel."
 			else
 				user << "\blue You close the access panel."
-		else if(istype(O, /obj/item/weapon/crowbar) && open)
-			var/obj/machinery/constructable_frame/machine_frame/new_frame = new /obj/machinery/constructable_frame/machine_frame(src.loc)
-			for(var/obj/item/I in component_parts)
-				if(I.reliability < 100)
-					I.crit_fail = 1
-				I.loc = src.loc
-			while ( sheets > 0 )
-				var/obj/item/stack/sheet/G = new sheet_path(src.loc)
-
-				if ( sheets > 50 )
-					G.amount = 50
-				else
-					G.amount = sheets
-
-				sheets -= G.amount
-
-			new_frame.state = 2
-			new_frame.icon_state = "box_1"
-			qdel(src)
+		else if(istype(I, /obj/item/weapon/crowbar) && panel_open)
+			default_deconstruction_crowbar(I)
 
 /obj/machinery/power/port_gen/pacman/attack_hand(mob/user as mob)
 	..()

@@ -20,8 +20,8 @@
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/rdserver(src)
 	component_parts += new /obj/item/weapon/stock_parts/scanning_module(src)
-	component_parts += new /obj/item/weapon/cable_coil(src)
-	component_parts += new /obj/item/weapon/cable_coil(src)
+	component_parts += new /obj/item/weapon/cable_coil(src, 1)
+	component_parts += new /obj/item/weapon/cable_coil(src, 1)
 	RefreshParts()
 	src.initialize(); //Agouri
 
@@ -121,33 +121,18 @@
 
 				env.merge(removed)
 
-/obj/machinery/r_n_d/server/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/obj/machinery/r_n_d/server/attackby(var/obj/item/I as obj, var/mob/user as mob)
 	if (disabled)
 		return
 	if (shocked)
 		shock(user,50)
-	if (istype(O, /obj/item/weapon/screwdriver))
-		if (!opened)
-			opened = 1
-			icon_state = "server_o"
-			user << "You open the maintenance hatch of [src]."
-		else
-			opened = 0
-			icon_state = "server"
-			user << "You close the maintenance hatch of [src]."
+	if (istype(I, /obj/item/weapon/screwdriver))
+		default_deconstruction_screwdriver(user, "server_o", "server", I)
 		return
-	if (opened)
-		if(istype(O, /obj/item/weapon/crowbar))
+	if (panel_open)
+		if(istype(I, /obj/item/weapon/crowbar))
 			griefProtection()
-			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
-			var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
-			M.state = 2
-			M.icon_state = "box_1"
-			for(var/obj/I in component_parts)
-				if(I.reliability != 100 && crit_fail)
-					I.crit_fail = 1
-				I.loc = src.loc
-			qdel(src)
+			default_deconstruction_crowbar(I)
 			return 1
 
 /obj/machinery/r_n_d/server/attack_hand(mob/user as mob)
