@@ -164,7 +164,6 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	else
 		//The construction/deconstruction of the console code.
 		..()
-
 	src.updateUsrDialog()
 	return
 
@@ -526,7 +525,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	return
 
 /obj/machinery/computer/rdconsole/attack_hand(mob/user as mob)
-	if(stat & (BROKEN|NOPOWER))
+	if(..())
 		return
 
 	user.set_machine(src)

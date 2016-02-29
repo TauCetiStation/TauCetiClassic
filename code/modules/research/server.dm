@@ -258,7 +258,7 @@
 	return
 
 /obj/machinery/computer/rdservercontrol/attack_hand(mob/user as mob)
-	if(stat & (BROKEN|NOPOWER))
+	if(..())
 		return
 	user.set_machine(src)
 	var/dat = ""
@@ -323,8 +323,10 @@
 		playsound(src.loc, 'sound/effects/sparks4.ogg', 75, 1)
 		emagged = 1
 		user << "\blue You you disable the security protocols"
+	else
+		..()
 	src.updateUsrDialog()
-	return ..()
+	return
 
 
 /obj/machinery/r_n_d/server/robotics

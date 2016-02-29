@@ -156,7 +156,6 @@ proc/move_mining_shuttle()
 	updateUsrDialog()
 
 /obj/machinery/computer/mining_shuttle/attackby(obj/item/weapon/W as obj, mob/user as mob)
-
 	if (istype(W, /obj/item/weapon/card/emag) && !emagged)
 		src.req_access = list()
 		emagged = 1

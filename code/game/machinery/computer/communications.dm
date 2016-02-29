@@ -7,7 +7,7 @@
 	icon_state = "comm"
 	light_color = "#0099ff"
 	req_access = list(access_heads)
-	circuit = "/obj/item/weapon/circuitboard/communications"
+	circuit = /obj/item/weapon/circuitboard/communications
 	var/prints_intercept = 1
 	var/authenticated = 0
 	var/list/messagetitle = list()
@@ -264,15 +264,9 @@
 	if(istype(I,/obj/item/weapon/card/emag/))
 		src.emagged = 1
 		user << "You scramble the communication routing circuits!"
-	..()
-
-/obj/machinery/computer/communications/attack_ai(var/mob/user as mob)
-	return src.attack_hand(user)
-
-
-/obj/machinery/computer/communications/attack_paw(var/mob/user as mob)
-	return src.attack_hand(user)
-
+	else
+		..()
+	return
 
 /obj/machinery/computer/communications/attack_hand(var/mob/user as mob)
 	if(..())

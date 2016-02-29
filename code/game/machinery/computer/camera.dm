@@ -10,6 +10,7 @@
 	name = "security camera monitor"
 	desc = "Used to access the various cameras on the station."
 	icon_state = "cameras"
+	circuit = /obj/item/weapon/circuitboard/security
 	light_color = "#a91515"
 	var/obj/machinery/camera/current = null
 	var/last_pic = 1.0
@@ -18,15 +19,16 @@
 
 	var/camera_cache = null
 
-	attack_ai(var/mob/user as mob)
-		return attack_hand(user)
-
 	check_eye(var/mob/user as mob)
 		if (user.stat || ((get_dist(user, src) > 1 || !( user.canmove ) || user.blinded) && !istype(user, /mob/living/silicon))) //user can't see - not sure why canmove is here.
 			return null
 		if ( !current || !current.can_use() ) //camera doesn't work
 			reset_current()
+		var/list/viewing = viewers(src)
+		if((istype(user,/mob/living/silicon/robot)) && (!(viewing.Find(user))))
+			return null
 		user.reset_view(current)
+		attack_hand(user)
 		return 1
 
 	ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1)
@@ -98,10 +100,16 @@
 		if (src.z > 6)
 			user << "\red <b>Unable to establish a connection</b>: \black You're too far away from the station!"
 			return
-		if(stat & (NOPOWER|BROKEN))	return
+		if (!network)
+			world.log << "A computer lacks a network at [x],[y],[z]."
+			return
+		if (!(istype(network,/list)))
+			world.log << "The computer at [x],[y],[z] has a network that is not a list!"
+			return
 
-		if(!isAI(user))
-			user.set_machine(src)
+		if(..())
+			return
+
 		ui_interact(user)
 
 	proc/can_access_camera(var/obj/machinery/camera/C)

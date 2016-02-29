@@ -6,7 +6,7 @@
 	icon_state = "id"
 	light_color = "#0099ff"
 	req_access = list(access_change_ids)
-	circuit = "/obj/item/weapon/circuitboard/card"
+	circuit = /obj/item/weapon/circuitboard/card
 	var/obj/item/weapon/card/id/scan = null
 	var/obj/item/weapon/card/id/modify = null
 	var/mode = 0.0
@@ -69,12 +69,6 @@
 
 	nanomanager.update_uis(src)
 	attack_hand(user)
-
-/obj/machinery/computer/card/attack_ai(var/mob/user as mob)
-	return attack_hand(user)
-
-/obj/machinery/computer/card/attack_paw(var/mob/user as mob)
-	return attack_hand(user)
 
 /obj/machinery/computer/card/attack_hand(mob/user as mob)
 	if(..()) return
@@ -286,5 +280,5 @@
 
 /obj/machinery/computer/card/centcom
 	name = "CentCom Identification Computer"
-	circuit = "/obj/item/weapon/circuitboard/card/centcom"
+	circuit = /obj/item/weapon/circuitboard/card/centcom
 	req_access = list(access_cent_captain)

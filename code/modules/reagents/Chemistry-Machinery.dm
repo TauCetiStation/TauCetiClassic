@@ -765,12 +765,6 @@
 	src.add_fingerprint(usr)
 	return
 
-/obj/machinery/computer/pandemic/attack_ai(mob/user as mob)
-	return src.attack_hand(user)
-
-/obj/machinery/computer/pandemic/attack_paw(mob/user as mob)
-	return src.attack_hand(user)
-
 /obj/machinery/computer/pandemic/attack_hand(mob/user as mob)
 	if(stat & (NOPOWER|BROKEN))
 		return
@@ -877,6 +871,12 @@
 		user << "You add the beaker to the machine!"
 		src.updateUsrDialog()
 		icon_state = "mixer1"
+
+	else if(istype(I, /obj/item/weapon/screwdriver))
+		if(src.beaker)
+			beaker.loc = get_turf(src)
+		..()
+		return
 
 	else
 		..()

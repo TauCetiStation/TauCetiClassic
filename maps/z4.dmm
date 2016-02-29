@@ -98,7 +98,7 @@
 "bT" = (/obj/machinery/power/terminal{icon_state = "term"; dir = 1},/obj/structure/cable{icon_state = "0-4"; d2 = 4},/turf/simulated/floor,/area/derelict/solar_control)
 "bU" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/structure/cable{d1 = 2; d2 = 8; icon_state = "2-8"},/turf/simulated/floor,/area/derelict/solar_control)
 "bV" = (/obj/structure/window/reinforced{dir = 4},/turf/simulated/floor,/area/derelict/solar_control)
-"bW" = (/obj/structure/cable{icon_state = "0-2"; d2 = 2},/obj/structure/cable,/obj/machinery/power/monitor,/turf/simulated/floor,/area/derelict/solar_control)
+"bW" = (/obj/structure/cable{icon_state = "0-2"; d2 = 2},/obj/structure/cable,/obj/machinery/computer/monitor,/turf/simulated/floor,/area/derelict/solar_control)
 "bX" = (/obj/structure/cable{d1 = 1; d2 = 4; icon_state = "1-4"},/turf/simulated/floor/plating,/area/derelict/solar_control)
 "bY" = (/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/machinery/door/window/eastleft,/turf/simulated/floor,/area/derelict/solar_control)
 "bZ" = (/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"},/turf/simulated/floor,/area/derelict/solar_control)

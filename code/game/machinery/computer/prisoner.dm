@@ -6,24 +6,14 @@
 	icon_state = "explosive"
 	light_color = "#a91515"
 	req_access = list(access_armory)
-	circuit = "/obj/item/weapon/circuitboard/prisoner"
+	circuit = /obj/item/weapon/circuitboard/prisoner
 	var/id = 0.0
 	var/temp = null
 	var/status = 0
 	var/timeleft = 60
 	var/stop = 0.0
 	var/screen = 0 // 0 - No Access Denied, 1 - Access allowed
-
 	light_color = "#B40000"
-
-
-	attack_ai(var/mob/user as mob)
-		return src.attack_hand(user)
-
-
-	attack_paw(var/mob/user as mob)
-		return
-
 
 	attack_hand(var/mob/user as mob)
 		if(..())

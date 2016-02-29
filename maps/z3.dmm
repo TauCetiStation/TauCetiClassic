@@ -333,7 +333,7 @@
 "gu" = (/obj/machinery/turretid{ailock = 1; control_area = "\improper Telecoms Foyer"; desc = "A firewall prevents AIs from interacting with this device."; icon_state = "motion3"; lethal = 0; name = "Telecoms Foyer turret control"; pixel_y = 29; req_access = list(61)},/obj/machinery/atmospherics/unary/vent_pump{dir = 8; external_pressure_bound = 101.325; icon_state = "out"; name = "Air Vent (Normal)"; on = 1; pressure_checks = 1},/turf/simulated/floor,/area/tcommsat/entrance)
 "gv" = (/obj/structure/sign/electricshock,/turf/simulated/wall/r_wall,/area/tcommsat/entrance)
 "gw" = (/turf/simulated/floor,/area/tcommsat/entrance)
-"gx" = (/obj/structure/cable{icon_state = "0-2"; pixel_y = 1; d2 = 2},/obj/machinery/power/monitor{name = "telecoms power monitoring"},/obj/structure/cable{icon_state = "0-4"; d2 = 4},/turf/simulated/floor{icon_state = "bot"},/area/tcommsat/entrance)
+"gx" = (/obj/structure/cable{icon_state = "0-2"; pixel_y = 1; d2 = 2},/obj/machinery/computer/monitor{name = "telecoms power monitoring"},/obj/structure/cable{icon_state = "0-4"; d2 = 4},/turf/simulated/floor{icon_state = "bot"},/area/tcommsat/entrance)
 "gy" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced,/obj/structure/cable{d2 = 8; icon_state = "0-8"},/turf/simulated/floor/plating,/area/tcommsat/entrance)
 "gz" = (/obj/structure/cable{d1 = 1; d2 = 4; icon_state = "1-4"},/turf/simulated/floor{dir = 1; icon_state = "warning"},/area/tcommsat/entrance)
 "gA" = (/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_x = 0},/turf/simulated/floor{icon_state = "warningcorner"; dir = 4},/area/tcommsat/entrance)

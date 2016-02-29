@@ -281,40 +281,6 @@
 		..()
 	return
 
-/obj/machinery/computer/scan_consolenew/ex_act(severity)
-
-	switch(severity)
-		if(1.0)
-			//SN src = null
-			qdel(src)
-			return
-		if(2.0)
-			if (prob(50))
-				//SN src = null
-				qdel(src)
-				return
-		else
-	return
-
-/obj/machinery/computer/scan_consolenew/blob_act()
-
-	if(prob(75))
-		qdel(src)
-
-/obj/machinery/computer/scan_consolenew/power_change()
-	if(stat & BROKEN)
-		icon_state = "broken"
-		set_light(0)
-	else if(powered())
-		icon_state = initial(icon_state)
-		stat &= ~NOPOWER
-		set_light(light_range_on, light_power_on)
-	else
-		spawn(rand(0, 15))
-			src.icon_state = "c_unpowered"
-			stat |= NOPOWER
-			set_light(0)
-
 /obj/machinery/computer/scan_consolenew/New()
 	..()
 	for(var/i=0;i<3;i++)
@@ -343,33 +309,6 @@
 	I.block = id
 	I.buf = buffer
 	return 1
-
-/*
-/obj/machinery/computer/scan_consolenew/process() //not really used right now
-	if(stat & (NOPOWER|BROKEN))
-		return
-	if (!( src.status )) //remove this
-		return
-	return
-*/
-/obj/machinery/computer/scan_consolenew/attack_paw(user as mob)
-	if(istype(user, /mob/living/carbon/human/)) //#Z2 Hulk </3 computers
-		var/mob/living/carbon/human/H = user
-		if(HULK in H.mutations)
-			if(stat & (BROKEN))
-				return
-			if(H.a_intent == "hurt")
-				H.visible_message("\red [H.name] smashes [src] with \his mighty arms!")
-				set_broken()
-				return
-			else
-				H.visible_message("\red [H.name] stares cluelessly at [src] and drools.")
-				return//##Z2
-	ui_interact(user)
-
-/obj/machinery/computer/scan_consolenew/attack_ai(user as mob)
-	src.add_hiddenprint(user)
-	ui_interact(user)
 
 /obj/machinery/computer/scan_consolenew/attack_hand(user as mob)
 	if(..())

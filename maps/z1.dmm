@@ -5137,7 +5137,7 @@
 "bUO" = (/obj/structure/extinguisher_cabinet{pixel_x = 0; pixel_y = 30},/obj/structure/closet/secure_closet/atmos_personal,/turf/simulated/floor,/area/engine/break_room)
 "bUP" = (/obj/structure/closet/secure_closet/atmos_personal,/obj/machinery/light{dir = 1},/turf/simulated/floor,/area/engine/break_room)
 "bUQ" = (/obj/machinery/computer/security/telescreen{desc = "Used for watching the singularity chamber."; dir = 2; layer = 4; name = "Singularity Engine Telescreen"; network = list("Singularity"); pixel_x = 0; pixel_y = 30},/obj/structure/stool/bed/chair/office/dark{dir = 4},/obj/machinery/atmospherics/unary/vent_scrubber{dir = 1; icon_state = "on"; name = "Air Scrubber (Normal)"; on = 1; scrub_CO2 = 1; scrub_N2O = 0; scrub_Toxins = 0},/turf/simulated/floor,/area/engine/break_room)
-"bUR" = (/obj/machinery/power/monitor,/obj/structure/cable,/obj/structure/disposalpipe/segment,/turf/simulated/floor{icon_state = "caution"; dir = 5},/area/engine/break_room)
+"bUR" = (/obj/machinery/computer/monitor,/obj/structure/cable,/obj/structure/disposalpipe/segment,/turf/simulated/floor{icon_state = "caution"; dir = 5},/area/engine/break_room)
 "bUS" = (/turf/simulated/wall/r_wall,/area/atmos)
 "bUT" = (/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/turf/simulated/wall/r_wall,/area/atmos)
 "bUU" = (/obj/machinery/atmospherics/pipe/simple/hidden/supply,/turf/simulated/wall/r_wall,/area/atmos)

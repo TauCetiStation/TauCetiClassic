@@ -304,11 +304,11 @@ Class Procs:
 			user << "<span class='danger'>You momentarily forget how to use [src].</span>"
 			return 1
 
-	src.add_fingerprint(user)
-
 	var/area/A = get_area(src)
 	A.master.powerupdate = 1
 
+	src.add_fingerprint(user)
+	user.set_machine(src)
 	return 0
 
 /obj/machinery/proc/RefreshParts() //Placeholder proc for machines that are built using frames.
