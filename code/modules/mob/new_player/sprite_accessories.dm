@@ -647,47 +647,47 @@
 	name = "Shinibu"
 	icon_state = "hair_shinobu"
 //SHIT INCOMING
-/datum/sprite_accessory/hair/trap
-	name = "Trap long hair"
+/datum/sprite_accessory/hair/modern
+	name = "Modern"
 	icon_state = "hair_trap"
 	gender = FEMALE
 
-/datum/sprite_accessory/hair/trap2
-	name = "Trap hair"
+/datum/sprite_accessory/hair/twincurl
+	name = "Twincurl"
 	icon_state = "hair_trap2"
 	gender = FEMALE
 
-/datum/sprite_accessory/hair/insane
-	name = "Insane trap hair"
+/datum/sprite_accessory/hair/rapunzel
+	name = "Rapunzel"
 	icon_state = "hair_trapinsane"
 	gender = FEMALE
 
-/datum/sprite_accessory/hair/insane2
-	name = "Insane trap hair 2 "
+/datum/sprite_accessory/hair/quadcurls
+	name = "Quadcurls "
 	icon_state = "hair_trapinsane2"
 	gender = FEMALE
 
-/datum/sprite_accessory/hair/trap3
-	name = "Trap hair 2"
+/datum/sprite_accessory/hair/twincurl2
+	name = "Twincurl 2"
 	icon_state = "hair_trap3"
 	gender = FEMALE
 
-/datum/sprite_accessory/hair/pidor
-	name = "Pidor hair "
+/datum/sprite_accessory/hair/birdnest
+	name = "Birdnest "
 	icon_state = "hair_nolife"
 
-/datum/sprite_accessory/hair/pidor2
-	name = "Pidor hair 2 "
+/datum/sprite_accessory/hair/unkept
+	name = "Unkept"
 	icon_state = "hair_pidor"
 
-/datum/sprite_accessory/hair/pidor3
-	name = "Pidor hair 3 "
+/datum/sprite_accessory/hair/fastline
+	name = "Fastline"
 	icon_state = "hair_dniwe"
 	gender = MALE
 
-/datum/sprite_accessory/hair/pidor4
-	name = "Pidor hair 4 "
-	icon_state = "hair_pidor4"
+/datum/sprite_accessory/hair/duelist
+	name = "Duelist "
+	icon_state = "hair_pidor2"
 
 /datum/sprite_accessory/hair/sparta
 	name = "Sparta hair"
