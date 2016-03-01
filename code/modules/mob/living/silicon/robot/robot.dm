@@ -47,7 +47,7 @@ var/list/robot_verbs_default = list(
 
 	var/obj/item/device/mmi/mmi = null
 
-	var/obj/item/device/pda/ai/rbPDA = null
+	var/obj/item/device/pda/ai/robot/rbPDA = null
 
 	var/opened = 0
 	var/emagged = 0
@@ -165,7 +165,7 @@ var/list/robot_verbs_default = list(
 // setup the PDA and its name
 /mob/living/silicon/robot/proc/setup_PDA()
 	if (!rbPDA)
-		rbPDA = new/obj/item/device/pda/ai(src)
+		rbPDA = new/obj/item/device/pda/ai/robot(src)
 	rbPDA.set_name_and_job(custom_name,"[modtype] [braintype]")
 
 //If there's an MMI in the robot, have it ejected when the mob goes away. --NEO

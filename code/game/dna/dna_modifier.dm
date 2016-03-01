@@ -798,23 +798,22 @@
 			return 1
 
 		if (bufferOption == "createInjector")
-			if (src.injector_ready || waiting_for_user_input)
-
-				var/success = 1
+			if (src.injector_ready && !waiting_for_user_input)
+				var/success = 0
 				var/obj/item/weapon/dnainjector/I = new /obj/item/weapon/dnainjector
 				var/datum/dna2/record/buf = src.buffers[bufferId]
 				if(href_list["createBlockInjector"])
-					waiting_for_user_input=1
+					waiting_for_user_input = 1
 					var/list/selectedbuf
 					if(buf.types & DNA2_BUF_SE)
 						selectedbuf=buf.dna.SE
 					else
 						selectedbuf=buf.dna.UI
-					var/blk = input(usr,"Select Block","Block") in all_dna_blocks(selectedbuf)
+					var/blk = input(usr,"Select Block","Block") as null|anything in all_dna_blocks(selectedbuf)
 					success = setInjectorBlock(I,blk,buf)
 				else
 					I.buf = buf
-				waiting_for_user_input=0
+				waiting_for_user_input = 0
 				if(success)
 					I.loc = src.loc
 					I.name += " ([buf.name])"

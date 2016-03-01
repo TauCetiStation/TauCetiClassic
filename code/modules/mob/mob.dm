@@ -104,9 +104,6 @@
 	return 0
 
 /mob/proc/Life()
-//	if(organStructure)
-//		organStructure.ProcessOrgans()
-	//handle_typing_indicator()
 	return
 
 /mob/proc/incapacitated()
