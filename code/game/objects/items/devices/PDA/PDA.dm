@@ -235,7 +235,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	set name = "Send Message"
 	set src in usr
 	set hidden = 1
-	if(usr.stat == 2)
+	if(usr.stat == DEAD)
 		usr << "You can't send PDA messages because you are dead!"
 		return
 	var/list/plist = available_pdas()
@@ -251,7 +251,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	set category = "AI Commands"
 	set name = "Toggle Sender/Receiver"
 	set src in usr
-	if(usr.stat == 2)
+	if(usr.stat == DEAD)
 		usr << "You can't do that because you are dead!"
 		return
 	toff = !toff
@@ -262,7 +262,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	set category = "AI Commands"
 	set name = "Toggle Ringer"
 	set src in usr
-	if(usr.stat == 2)
+	if(usr.stat == DEAD)
 		usr << "You can't do that because you are dead!"
 		return
 	message_silent=!message_silent
@@ -274,7 +274,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	set name = "Show Message Log"
 	set src in usr
 	set hidden = 1
-	if(usr.stat == 2)
+	if(usr.stat == DEAD)
 		usr << "You can't do that because you are dead!"
 		return
 	var/HTML = "<html><head><title>AI PDA Message Log</title></head><body>"
@@ -978,7 +978,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		P.tnote.Add(list(list("sent" = 0, "owner" = "[owner]", "job" = "[ownjob]", "message" = "[t]", "target" = "\ref[src]")))
 		for(var/mob/M in player_list)
 			if(M.stat == DEAD && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTEARS)) // src.client is so that ghosts don't have to listen to mice
-				if(istype(M, /mob/new_player))
+				if(isnewplayer(M))
 					continue
 				M.show_message("<span class='game say'>PDA Message - <span class='name'>[owner]</span> -> <span class='name'>[P.owner]</span>: <span class='message'>[sanitize_chat(t)]</span></span>")
 

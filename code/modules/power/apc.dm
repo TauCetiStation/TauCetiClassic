@@ -157,7 +157,7 @@
 /obj/machinery/power/apc/Destroy()
 	if(malfai && operating)
 		if (ticker.mode.config_tag == "malfunction")
-			if (src.z == 1) //if (is_type_in_list(get_area(src), the_station_areas))
+			if (src.z == ZLEVEL_STATION) //if (is_type_in_list(get_area(src), the_station_areas))
 				ticker.mode:apcs--
 	area.apc = null
 	area.power_light = 0
@@ -998,7 +998,7 @@
 		operating = !operating
 		if(malfai)
 			if (ticker.mode.config_tag == "malfunction")
-				if (src.z == 1) //if (is_type_in_list(get_area(src), the_station_areas))
+				if (src.z == ZLEVEL_STATION) //if (is_type_in_list(get_area(src), the_station_areas))
 					operating ? ticker.mode:apcs++ : ticker.mode:apcs--
 
 		src.update()
@@ -1060,7 +1060,7 @@
 					malfai.malfhack = null
 					malfai.malfhacking = 0
 					if (ticker.mode.config_tag == "malfunction")
-						if (src.z == 1) //if (is_type_in_list(get_area(src), the_station_areas))
+						if (src.z == ZLEVEL_STATION) //if (is_type_in_list(get_area(src), the_station_areas))
 							ticker.mode:apcs++
 					if(usr:parent)
 						src.malfai = usr:parent
@@ -1108,7 +1108,7 @@
 /obj/machinery/power/apc/proc/malfvacate(var/forced)
 	if(!src.occupier)
 		return
-	if(src.occupier.parent && src.occupier.parent.stat != 2)
+	if(src.occupier.parent && src.occupier.parent.stat != DEAD)
 		src.occupier.mind.transfer_to(src.occupier.parent)
 		src.occupier.parent.adjustOxyLoss(src.occupier.getOxyLoss())
 		src.occupier.parent.cancel_camera()
@@ -1124,7 +1124,7 @@
 
 /obj/machinery/power/apc/proc/ion_act()
 	//intended to be exactly the same as an AI malf attack
-	if(!src.malfhack && src.z == 1)
+	if(!src.malfhack && src.z == ZLEVEL_STATION)
 		if(prob(3))
 			src.locked = 1
 			if (src.cell.charge > 0)
@@ -1404,7 +1404,7 @@
 /obj/machinery/power/apc/proc/set_broken()
 	if(malfai && operating)
 		if (ticker.mode.config_tag == "malfunction")
-			if (src.z == 1) //if (is_type_in_list(get_area(src), the_station_areas))
+			if (src.z == ZLEVEL_STATION) //if (is_type_in_list(get_area(src), the_station_areas))
 				ticker.mode:apcs--
 	stat |= BROKEN
 	operating = 0

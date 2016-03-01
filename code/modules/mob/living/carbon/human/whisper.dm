@@ -20,7 +20,7 @@
 		usr << "\red You can't speak."
 		return
 
-	if(src.stat == 2)
+	if (src.stat == DEAD)
 		if(fake_death) //Our changeling with fake_death status must not speak in dead chat!!
 			return
 		return src.say_dead(message)

@@ -106,19 +106,19 @@ mob/living/parasite/meme/Life()
 		src << "\red <b>Your host has no mind.. you fade away..</b>"
 		src.death()
 		return
-	else if(host.stat == 2)
+	else if(host.stat == DEAD)
 		src << "\red <b>Your host has died.. you fade away..</b>"
 		src.death()
 		return
 
-	else if(host.blinded && host.stat != 1) src.blinded = 1
+	else if(host.blinded && host.stat != UNCONSCIOUS) src.blinded = 1
 	else 			 				   src.blinded = 0
 
 
 mob/living/parasite/meme/death()
 	// make sure the mob is on the actual map before gibbing
 	if(host) src.loc = host.loc
-	src.stat = 2
+	src.stat = DEAD
 	..()
 	qdel(src)
 

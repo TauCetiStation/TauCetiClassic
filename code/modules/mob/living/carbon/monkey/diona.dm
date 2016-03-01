@@ -239,7 +239,7 @@
 
 	message = trim(copytext(message, 1, MAX_MESSAGE_LEN))
 
-	if(stat == 2)
+	if(stat == DEAD)
 		return say_dead(message)
 
 	var/datum/language/speaking = null

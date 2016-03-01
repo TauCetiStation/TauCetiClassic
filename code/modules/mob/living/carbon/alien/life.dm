@@ -309,7 +309,7 @@
 		if (client)
 			client.screen.Remove(global_hud.blurry,global_hud.druggy,global_hud.vimpaired)
 
-		if (blind && stat != 2)
+		if (blind && stat != DEAD)
 			if(loc && !isturf(loc) && !is_type_in_list(loc, ignore_vision_inside))
 				blind.layer = 18
 			else if(blinded)
@@ -326,7 +326,7 @@
 				//if (druggy)
 				//	client.screen += global_hud.druggy
 
-		if (stat != 2)
+		if (stat != DEAD)
 			if (machine)
 				if (!( machine.check_eye(src) ))
 					reset_view(null)
@@ -371,8 +371,8 @@
 				if(M.loc != src)
 					stomach_contents.Remove(M)
 					continue
-				if(istype(M, /mob/living/carbon) && stat != 2)
-					if(M.stat == 2)
+				if(istype(M, /mob/living/carbon) && stat != DEAD)
+					if(M.stat == DEAD)
 						M.death(1)
 						stomach_contents.Remove(M)
 						qdel(M)

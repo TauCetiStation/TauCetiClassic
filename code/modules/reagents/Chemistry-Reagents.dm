@@ -500,7 +500,7 @@ datum
 			custom_metabolism = 0.01
 
 			on_mob_life(var/mob/living/M as mob, var/alien)
-				if(M.stat == 2) return
+				if(M.stat == DEAD) return
 				if(alien && alien == IS_VOX)
 					M.adjustToxLoss(REAGENTS_METABOLISM)
 					holder.remove_reagent(src.id, REAGENTS_METABOLISM) //By default it slowly disappears.
@@ -525,7 +525,7 @@ datum
 			custom_metabolism = 0.01
 
 			on_mob_life(var/mob/living/M as mob, var/alien)
-				if(M.stat == 2) return
+				if(M.stat == DEAD) return
 				if(alien && alien == IS_VOX)
 					M.adjustOxyLoss(-2*REM)
 					holder.remove_reagent(src.id, REAGENTS_METABOLISM) //By default it slowly disappears.
@@ -1068,7 +1068,7 @@ datum
 			overdose = REAGENTS_OVERDOSE
 
 			on_mob_life(var/mob/living/M as mob)
-				if(M.stat == 2.0)
+				if(M.stat == DEAD)
 					return
 				if(!M) M = holder.my_atom
 				//This needs a diona check but if one is added they won't be able to heal burn damage at all.
@@ -1085,7 +1085,7 @@ datum
 			overdose = REAGENTS_OVERDOSE/2
 
 			on_mob_life(var/mob/living/M as mob, var/alien)
-				if(M.stat == 2.0) //THE GUY IS **DEAD**! BEREFT OF ALL LIFE HE RESTS IN PEACE etc etc. He does NOT metabolise shit anymore, god DAMN
+				if(M.stat == DEAD) //THE GUY IS **DEAD**! BEREFT OF ALL LIFE HE RESTS IN PEACE etc etc. He does NOT metabolise shit anymore, god DAMN
 					return
 				if(!M) M = holder.my_atom
 				if(!alien || alien != IS_DIONA)
@@ -1102,7 +1102,7 @@ datum
 			overdose = REAGENTS_OVERDOSE
 
 			on_mob_life(var/mob/living/M as mob, var/alien)
-				if(M.stat == 2.0)
+				if(M.stat == DEAD)
 					return  //See above, down and around. --Agouri
 				if(!M) M = holder.my_atom
 
@@ -1125,7 +1125,7 @@ datum
 			overdose = REAGENTS_OVERDOSE/2
 
 			on_mob_life(var/mob/living/M as mob, var/alien)
-				if(M.stat == 2.0)
+				if(M.stat == DEAD)
 					return
 				if(!M) M = holder.my_atom
 
@@ -1147,7 +1147,7 @@ datum
 			color = "#C8A5DC" // rgb: 200, 165, 220
 
 			on_mob_life(var/mob/living/M as mob, var/alien)
-				if(M.stat == 2.0)
+				if(M.stat == DEAD)
 					return
 				if(!M) M = holder.my_atom
 				if(!alien || alien != IS_DIONA)
@@ -1278,7 +1278,7 @@ datum
 			overdose = REAGENTS_OVERDOSE
 
 			on_mob_life(var/mob/living/M as mob)
-				if(M.stat == 2.0)
+				if(M.stat == DEAD)
 					return  //See above, down and around. --Agouri
 				if(!M) M = holder.my_atom
 				M.radiation = max(M.radiation-7*REM,0)
@@ -1353,7 +1353,7 @@ datum
 			overdose = REAGENTS_OVERDOSE
 
 			on_mob_life(var/mob/living/M as mob, var/alien)
-				if(M.stat == 2.0)
+				if(M.stat == DEAD)
 					return
 				if(!M) M = holder.my_atom
 				if(alien != IS_DIONA)
@@ -1645,7 +1645,7 @@ datum
 			overdose = REAGENTS_OVERDOSE
 
 			on_mob_life(var/mob/living/M as mob)
-				if(M.stat == 2.0)
+				if(M.stat == DEAD)
 					return
 				if(!M) M = holder.my_atom
 				if(prob(33))
@@ -1859,7 +1859,7 @@ datum
 
 			on_mob_life(var/mob/living/carbon/M as mob)
 				var/mob/living/carbon/human/H = M
-				if(H.stat != 1)
+				if(H.stat != UNCONSCIOUS)
 					if (volume >= overdose)
 						if(H.losebreath >= 10)
 							H.losebreath = max(10, H.losebreath-10)
@@ -1880,7 +1880,7 @@ datum
 			on_mob_life(var/mob/living/carbon/M as mob)
 				if(ishuman(M))
 					var/mob/living/carbon/human/H = M
-					if(H.stat != 1)
+					if(H.stat != UNCONSCIOUS)
 						if(H.losebreath >= 10)
 							H.losebreath = max(10, M.losebreath-10)
 						H.adjustOxyLoss(2)

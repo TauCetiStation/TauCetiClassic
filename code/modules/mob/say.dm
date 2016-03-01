@@ -57,7 +57,7 @@
 	var/rendered = "<span class='game deadsay'><span class='prefix'>DEAD:</span> <span class='name'>[name]</span>[alt_name] [pick("complains","moans","whines","laments","blubbers")], <span class='message'>\"[sanitize_plus_chat(message)]\"</span></span>"
 
 	for(var/mob/M in player_list)
-		if(istype(M, /mob/new_player))
+		if(isnewplayer(M))
 			continue
 		if(M.client && M.stat == DEAD && (M.client.prefs.chat_toggles & CHAT_DEAD))
 			if(M.fake_death) //Our changeling with fake_death status must not hear dead chat!!
@@ -73,7 +73,7 @@
 
 /mob/proc/say_understands(var/mob/other,var/datum/language/speaking = null)
 
-	if (src.stat == 2)		//Dead
+	if (src.stat == DEAD)		//Dead
 		return 1
 
 	//Universal speak makes everything understandable, for obvious reasons.

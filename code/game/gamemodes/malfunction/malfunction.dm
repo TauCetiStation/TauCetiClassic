@@ -178,7 +178,7 @@
 	for(var/datum/mind/AI_mind in ticker.mode:malf_ai)
 		AI_mind.current.verbs -= /datum/game_mode/malfunction/proc/takeover
 	for(var/mob/M in player_list)
-		if(!istype(M,/mob/new_player))
+		if(!isnewplayer(M))
 			M << sound('sound/AI/aimalf.ogg')
 
 

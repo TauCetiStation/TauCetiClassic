@@ -234,10 +234,10 @@
 
 /mob/living/carbon/slime/ex_act(severity)
 
-	if (stat == 2 && client)
+	if (stat == DEAD && client)
 		return
 
-	else if (stat == 2 && !client)
+	else if (stat == DEAD && !client)
 		qdel(src)
 		return
 
@@ -264,12 +264,12 @@
 
 
 /mob/living/carbon/slime/blob_act()
-	if (stat == 2)
+	if (stat == DEAD)
 		return
 	var/shielded = 0
 
 	var/damage = null
-	if (stat != 2)
+	if (stat != DEAD)
 		damage = rand(10,30)
 
 	if(shielded)

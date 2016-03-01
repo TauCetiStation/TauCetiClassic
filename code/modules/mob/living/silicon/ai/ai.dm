@@ -398,7 +398,7 @@ var/list/ai_verbs_default = list(
 	return 1
 
 /mob/living/silicon/ai/blob_act()
-	if (stat != 2)
+	if (stat != DEAD)
 		adjustBruteLoss(60)
 		updatehealth()
 		return 1
@@ -422,15 +422,15 @@ var/list/ai_verbs_default = list(
 
 	switch(severity)
 		if(1.0)
-			if (stat != 2)
+			if (stat != DEAD)
 				adjustBruteLoss(100)
 				adjustFireLoss(100)
 		if(2.0)
-			if (stat != 2)
+			if (stat != DEAD)
 				adjustBruteLoss(60)
 				adjustFireLoss(60)
 		if(3.0)
-			if (stat != 2)
+			if (stat != DEAD)
 				adjustBruteLoss(30)
 
 	updatehealth()
@@ -611,7 +611,7 @@ var/list/ai_verbs_default = list(
 	return 1
 
 /mob/living/silicon/ai/triggerAlarm(var/class, area/A, list/cameralist, var/source)
-	if (stat == 2)
+	if (stat == DEAD)
 		return 1
 
 	..()

@@ -86,11 +86,11 @@
 		var/possible_traitors[0]
 		for(var/mob/living/player in mob_list)
 
-			if (player.client && player.stat != 2)
+			if (player.client && player.stat != DEAD)
 				playercount += 1
-			if (player.client && player.mind && player.mind.special_role && player.stat != 2)
+			if (player.client && player.mind && player.mind.special_role && player.stat != DEAD)
 				traitorcount += 1
-			if (player.client && player.mind && !player.mind.special_role && player.stat != 2 && (player.client && player.client.prefs.be_special & BE_TRAITOR) && !jobban_isbanned(player, "Syndicate"))
+			if (player.client && player.mind && !player.mind.special_role && player.stat != DEAD && (player.client && player.client.prefs.be_special & BE_TRAITOR) && !jobban_isbanned(player, "Syndicate"))
 				possible_traitors += player
 		for(var/datum/mind/player in possible_traitors)
 			for(var/job in restricted_jobs)
@@ -168,9 +168,9 @@
 		var/traitorcount = 0
 		for(var/mob/living/player in mob_list)
 
-			if (player.client && player.stat != 2)
+			if (player.client && player.stat != DEAD)
 				playercount += 1
-			if (player.client && player.mind && player.mind.special_role && player.stat != 2)
+			if (player.client && player.mind && player.mind.special_role && player.stat != DEAD)
 				traitorcount += 1
 		//message_admins("Live Players: [playercount]")
 		//message_admins("Live Traitors: [traitorcount]")

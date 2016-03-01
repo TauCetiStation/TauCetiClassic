@@ -33,7 +33,7 @@
 			O:brainmob = null
 			brainmob.loc = src
 			brainmob.container = src
-			brainmob.stat = 0
+			brainmob.stat = CONSCIOUS
 			dead_mob_list -= brainmob//Update dem lists
 			living_mob_list += brainmob
 

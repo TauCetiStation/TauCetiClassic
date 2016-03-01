@@ -89,7 +89,7 @@
 			src << "Help for slime emotes. You can use these emotes with say \"*emote\":\n\nbounce, jiggle, light, moan, shiver, sway, twitch, vibrate. \n\nYou may also change your face with: \n\nsmile, :3, pout, frown, scowl, noface"
 		else
 			src << "<span class='notice'>Unusable emote '[act]'. Say *help for a list.</span>"
-	if ((message && src.stat == 0))
+	if ((message && src.stat == CONSCIOUS))
 		if (m_type & 1)
 			for(var/mob/O in viewers(src, null))
 				O.show_message(message, m_type)

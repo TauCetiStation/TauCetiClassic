@@ -133,7 +133,7 @@
 	return
 
 /obj/machinery/processor/attack_hand(var/mob/user as mob)
-	if (src.stat != 0) //NOPOWER etc
+	if (src.stat != CONSCIOUS) //NOPOWER etc
 		return
 	if(src.processing)
 		user << "\red The processor is in the process of processing."

@@ -22,7 +22,7 @@
 			continue
 		for(var/datum/disease/D in H.viruses)
 			foundAlready = 1
-		if(H.stat == 2 || foundAlready)
+		if(H.stat == DEAD || foundAlready)
 			continue
 
 		if(virus_type == /datum/disease/dnaspread)		//Dnaspread needs strain_data set to work.

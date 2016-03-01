@@ -134,7 +134,7 @@
 /datum/game_mode/anti_revolution/proc/check_crew_victory()
 	for(var/datum/mind/head_mind in heads)
 		var/turf/T = get_turf(head_mind.current)
-		if((head_mind) && (head_mind.current) && (head_mind.current.stat != 2) && T && (T.z == 1) && !head_mind.is_brigged(600))
+		if((head_mind) && (head_mind.current) && (head_mind.current.stat != DEAD) && T && (T.z == ZLEVEL_STATION) && !head_mind.is_brigged(600))
 			if(ishuman(head_mind.current))
 				return 0
 	return 1
@@ -168,7 +168,7 @@
 		text = ""
 		if(head_mind.current)
 			text += "[head_mind.current.real_name]"
-			if(head_mind.current.stat == 2)
+			if(head_mind.current.stat == DEAD)
 				text += " (Dead)"
 			else
 				text += " (Survived!)"

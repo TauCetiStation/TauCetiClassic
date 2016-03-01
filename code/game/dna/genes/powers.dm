@@ -7,7 +7,7 @@
 /datum/dna/gene/basic/nobreath
 	name="No Breathing"
 	activation_messages=list("You feel no need to breathe.")
-	mutation=mNobreath
+	mutation=NO_BREATH
 	activation_prob=50
 
 	New()
@@ -16,7 +16,7 @@
 /datum/dna/gene/basic/remoteview
 	name="Remote Viewing"
 	activation_messages=list("Your mind expands.")
-	mutation=mRemote
+	mutation=REMOTE_VIEW
 	activation_prob=50
 
 	New()
@@ -33,14 +33,14 @@
 /datum/dna/gene/basic/regenerate
 	name="Regenerate"
 	activation_messages=list("You feel better.")
-	mutation=mRegen
+	mutation=REGEN
 	activation_prob=50
 
 	New()
 		block=REGENERATEBLOCK
 
 	can_activate(var/mob/M,var/flags)
-		if((mSmallsize in M.mutations))
+		if((SMALLSIZE in M.mutations))
 			return 0
 		return ..(M,flags)
 
@@ -74,7 +74,7 @@
 /datum/dna/gene/basic/increaserun
 	name="Super Speed"
 	activation_messages=list("Your leg muscles pulsate.")
-	mutation=mRun
+	mutation=RUN
 	activation_prob=50
 
 	New()
@@ -83,7 +83,7 @@
 /datum/dna/gene/basic/remotetalk
 	name="Telepathy"
 	activation_messages=list("You feel your voice can penetrate other minds.")
-	mutation=mRemotetalk
+	mutation=REMOTE_TALK
 	activation_prob=50
 
 	New()
@@ -100,7 +100,7 @@
 /datum/dna/gene/basic/morph
 	name="Morph"
 	activation_messages=list("Your skin feels strange.")
-	mutation=mMorph
+	mutation=MORPH
 	activation_prob=50
 
 	New()
@@ -117,7 +117,7 @@
 /datum/dna/gene/basic/heat_resist
 	name="Heat Resistance"
 	activation_messages=list("Your skin is icy to the touch.")
-	mutation=mHeatres
+	mutation=RESIST_HEAT
 	activation_prob=30
 
 	New()
@@ -141,7 +141,7 @@
 		block=FIREBLOCK
 
 	can_activate(var/mob/M,var/flags)
-		if(mHeatres in M.mutations)
+		if(RESIST_HEAT in M.mutations)
 			return 0
 		return ..(M,flags)
 
@@ -151,7 +151,7 @@
 /datum/dna/gene/basic/noprints
 	name="No Prints"
 	activation_messages=list("Your fingers feel numb.")
-	mutation=mFingerprints
+	mutation=FINGERPRINTS
 	activation_prob=50
 
 	New()
@@ -160,7 +160,7 @@
 /datum/dna/gene/basic/noshock
 	name="Shock Immunity"
 	activation_messages=list("Your skin feels electric.")
-	mutation=mShock
+	mutation=NO_SHOCK
 	activation_prob=50
 
 	New()
@@ -169,7 +169,7 @@
 /datum/dna/gene/basic/midget
 	name="Midget"
 	activation_messages=list("You feel small.")
-	mutation=mSmallsize
+	mutation=SMALLSIZE
 	activation_prob=50
 
 	New()
@@ -177,7 +177,7 @@
 
 	can_activate(var/mob/M,var/flags)
 		// Can't be big, small and regenerate.
-		if( (mRegen in M.mutations)) //#Z2
+		if( (REGEN in M.mutations)) //#Z2
 			return 0
 		return ..(M,flags)
 
@@ -217,7 +217,7 @@
 
 	/*can_activate(var/mob/M,var/flags)
 		// Can't be big, small and regenerate.
-		if( (mSmallsize in M.mutations) || (mRegen in M.mutations)) //#Z2
+		if( (SMALLSIZE in M.mutations) || (REGEN in M.mutations)) //#Z2
 			return 0
 		return ..(M,flags)*/
 

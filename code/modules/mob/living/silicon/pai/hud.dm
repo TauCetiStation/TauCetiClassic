@@ -66,7 +66,7 @@
 					break
 
 			holder = patient.hud_list[HEALTH_HUD]
-			if(patient.stat == 2)
+			if(patient.stat == DEAD)
 				holder.icon_state = "hudhealth-100"
 				client.images += holder
 			else
@@ -74,7 +74,7 @@
 				client.images += holder
 
 			holder = patient.hud_list[STATUS_HUD]
-			if(patient.stat == 2)
+			if(patient.stat == DEAD)
 				holder.icon_state = "huddead"
 			else if(patient.status_flags & XENO_HOST)
 				holder.icon_state = "hudxeno"
