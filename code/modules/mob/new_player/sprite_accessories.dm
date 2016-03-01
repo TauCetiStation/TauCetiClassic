@@ -490,6 +490,208 @@
 /datum/sprite_accessory/hair/sidepartlongalt
 	name = "Long Side Part"
 	icon_state = "hair_longsidepart"
+//Зопилено обратно
+/datum/sprite_accessory/hair/flair
+	name = "Flaired Hair"
+	icon_state = "hair_flair"
+
+/datum/sprite_accessory/hair/himecut3
+	name = "Hime Cut 3"
+	icon_state = "hair_himecut3"
+	gender = FEMALE
+//Убоа
+/datum/sprite_accessory/hair/big_tails
+	name = "Big tails"
+	icon_state = "hair_long_d_tails"
+	gender = FEMALE
+
+/datum/sprite_accessory/hair/long_bedhead
+	name = "Long bedhead"
+	icon_state = "hair_long_bedhead"
+	gender = FEMALE
+
+/datum/sprite_accessory/hair/fluttershy
+	name = "Fluttershy"
+	icon_state = "hair_fluttershy"
+	gender = FEMALE
+
+/datum/sprite_accessory/hair/judge
+	name = "Judge"
+	icon_state = "hair_judge"
+	gender = FEMALE
+
+/datum/sprite_accessory/hair/long_braid
+	name = "Long braid"
+	icon_state = "hair_long_braid"
+	gender = FEMALE
+
+/datum/sprite_accessory/hair/elize
+	name = "Elize"
+	icon_state = "hair_elize"
+	gender = FEMALE
+
+/datum/sprite_accessory/hair/elize2
+	name = "Elize2"
+	icon_state = "hair_elize_2"
+	gender = FEMALE
+
+/datum/sprite_accessory/hair/undercut_fem
+	name = "Female undercut"
+	icon_state = "hair_undercut_fem"
+	gender = FEMALE
+
+/datum/sprite_accessory/hair/emo_right
+	name = "Emo right"
+	icon_state = "hair_emo_r"
+
+/datum/sprite_accessory/hair/applejack
+	name = "Applejack"
+	icon_state = "hair_applejack"
+	gender = FEMALE
+
+/datum/sprite_accessory/hair/rosa
+	name = "Rosa"
+	icon_state = "hair_rosa"
+	gender = FEMALE
+
+//TC trap powah
+/datum/sprite_accessory/hair/dave
+	name = "Dave"
+	icon_state = "hair_dave"
+
+/datum/sprite_accessory/hair/aradia
+	name = "Aradia"
+	icon_state = "hair_aradia"
+
+/datum/sprite_accessory/hair/nepeta
+	name = "Nepeta"
+	icon_state = "hair_nepeta"
+
+/datum/sprite_accessory/hair/kanaya
+	name = "Kanaya"
+	icon_state = "hair_kanaya"
+
+/datum/sprite_accessory/hair/terezi
+	name = "Terezi"
+	icon_state = "hair_terezi"
+
+/datum/sprite_accessory/hair/vriska
+	name = "Vriska"
+	icon_state = "hair_vriska"
+
+/datum/sprite_accessory/hair/equius
+	name = "Equius"
+	icon_state = "hair_equius"
+
+/datum/sprite_accessory/hair/gamzee
+	name = "Gamzee"
+	icon_state = "hair_gamzee"
+
+/datum/sprite_accessory/hair/feferi
+	name = "Feferi"
+	icon_state = "hair_feferi"
+
+/datum/sprite_accessory/hair/rose
+	name = "Rose"
+	icon_state = "hair_rose"
+
+/datum/sprite_accessory/hair/dirk
+	name = "Dirk"
+	icon_state = "hair_dirk"
+
+/datum/sprite_accessory/hair/jade
+	name = "Jade"
+	icon_state = "hair_jade"
+
+/datum/sprite_accessory/hair/roxy
+	name = "Roxy"
+	icon_state = "hair_roxy"
+
+/datum/sprite_accessory/hair/side_tail3
+	name = "Side tail 3"
+	icon_state = "hair_stail"
+
+/datum/sprite_accessory/hair/familyman
+	name = "Big Flat Top"
+	icon_state = "hair_thefamilyman"
+
+/datum/sprite_accessory/hair/dubsman
+	name = "Dubs Hair "
+	icon_state = "hair_dubs"
+
+/datum/sprite_accessory/hair/objection
+	name = "Swept Back Hair"
+	icon_state = "hair_objection"
+
+/datum/sprite_accessory/hair/metal
+	name = "Metal"
+	icon_state = "hair_80s"
+
+/datum/sprite_accessory/hair/mentalist
+	name = "Mentalist"
+	icon_state = "hair_mentalist"
+
+/datum/sprite_accessory/hair/fujisaki
+	name = "fujisaki"
+	icon_state = "hair_fujisaki"
+
+/datum/sprite_accessory/hair/akari
+	name = "Twin Buns"
+	icon_state = "hair_akari"
+
+/datum/sprite_accessory/hair/fujiyabashi
+	name = "Fujiyabashi"
+	icon_state = "hair_fujiyabashi"
+
+/datum/sprite_accessory/hair/shinobu
+	name = "Shinibu"
+	icon_state = "hair_shinobu"
+//SHIT INCOMING
+/datum/sprite_accessory/hair/trap
+	name = "Trap long hair"
+	icon_state = "hair_trap"
+	gender = FEMALE
+
+/datum/sprite_accessory/hair/trap2
+	name = "Trap hair"
+	icon_state = "hair_trap2"
+	gender = FEMALE
+
+/datum/sprite_accessory/hair/insane
+	name = "Insane trap hair"
+	icon_state = "hair_trapinsane"
+	gender = FEMALE
+
+/datum/sprite_accessory/hair/insane2
+	name = "Insane trap hair 2 "
+	icon_state = "hair_trapinsane2"
+	gender = FEMALE
+
+/datum/sprite_accessory/hair/trap3
+	name = "Trap hair 2"
+	icon_state = "hair_trap3"
+	gender = FEMALE
+
+/datum/sprite_accessory/hair/pidor
+	name = "Pidor hair "
+	icon_state = "hair_nolife"
+
+/datum/sprite_accessory/hair/pidor2
+	name = "Pidor hair 2 "
+	icon_state = "hair_pidor"
+
+/datum/sprite_accessory/hair/pidor3
+	name = "Pidor hair 3 "
+	icon_state = "hair_dniwe"
+	gender = MALE
+
+/datum/sprite_accessory/hair/pidor4
+	name = "Pidor hair 4 "
+	icon_state = "hair_pidor4"
+
+/datum/sprite_accessory/hair/sparta
+	name = "Sparta hair"
+	icon_state = "hair_sparta"
 
 /datum/sprite_accessory/hair/icp_screen_pink
 	name = "pink IPC screen"
@@ -670,6 +872,32 @@
 /datum/sprite_accessory/facial_hair/fu
 	name = "Fu Manchu"
 	icon_state = "facial_fumanchu"
+
+//POWAH OF BEARD
+/datum/sprite_accessory/facial_hair/postal
+	name = "Goat Beard"
+	icon_state = "facial_goatbeard"
+
+/datum/sprite_accessory/facial_hair/britstache
+	name = "Britstache"
+	icon_state = "facial_britstache"
+
+/datum/sprite_accessory/facial_hair/martial_artist
+	name = "Martial Artist"
+	icon_state = "facial_martialartist"
+
+/datum/sprite_accessory/facial_hair/moonshiner
+	name = "Moonshiner"
+	icon_state = "facial_moonshiner"
+
+/datum/sprite_accessory/facial_hair/tribeard
+	name = "Tri-Beard"
+	icon_state = "facial_tribeard"
+
+/datum/sprite_accessory/facial_hair/unshaven
+	name = "Unshaven"
+	icon_state = "facial_unshaven"
+
 
 /*
 ///////////////////////////////////
