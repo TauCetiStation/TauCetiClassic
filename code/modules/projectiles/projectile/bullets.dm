@@ -116,6 +116,7 @@
 /obj/item/projectile/bullet/chameleon
 	damage = 1 // stop trying to murderbone with a fake gun dumbass!!!
 	embed = 0 // nope
+	fake = 1
 
 //=================NEW PROJECTILES=================\\
 /obj/item/projectile/l10
