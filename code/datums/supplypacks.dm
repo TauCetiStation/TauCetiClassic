@@ -522,6 +522,21 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	containername = "Mechanical maintenance crate"
 	group = "Engineering"
 
+/datum/supply_packs/conveyor
+	name = "Conveyor Assembly Crate"
+	contains = list(/obj/item/conveyor_construct,
+					/obj/item/conveyor_construct,
+					/obj/item/conveyor_construct,
+					/obj/item/conveyor_construct,
+					/obj/item/conveyor_construct,
+					/obj/item/conveyor_construct,
+					/obj/item/conveyor_switch_construct,
+					/obj/item/weapon/paper/conveyor)
+	cost = 15
+	containertype = /obj/structure/closet/crate
+	containername = "conveyor assembly crate"
+	group = "Miscellaneous"
+
 /datum/supply_packs/watertank
 	name = "Water tank crate"
 	contains = list(/obj/structure/reagent_dispensers/watertank)
