@@ -153,7 +153,7 @@
 /datum/game_mode/heist/proc/is_raider_crew_alive()
 	for(var/datum/mind/raider in raiders)
 		if(raider.current)
-			if(istype(raider.current,/mob/living/carbon/human) && raider.current.stat != 2)
+			if(istype(raider.current,/mob/living/carbon/human) && raider.current.stat != DEAD)
 				return 1
 	return 0
 

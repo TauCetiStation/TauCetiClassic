@@ -77,7 +77,7 @@
 		var/turf/T = get_turf(R)
 		if (!T)
 			continue
-		if(T.z == 2 || T.z > 7)
+		if(T.z == ZLEVEL_CENTCOMM || T.z > 7)
 			continue
 		var/tmpname = T.loc.name
 		if(areaindex[tmpname])
@@ -91,12 +91,12 @@
 			continue
 		else
 			var/mob/M = I.loc
-			if (M.stat == 2)
+			if (M.stat == DEAD)
 				if (M.timeofdeath + 6000 < world.time)
 					continue
 			var/turf/T = get_turf(M)
 			if(T)	continue
-			if(T.z == 2)	continue
+			if(T.z == ZLEVEL_CENTCOMM)	continue
 			var/tmpname = M.real_name
 			if(areaindex[tmpname])
 				tmpname = "[tmpname] ([++areaindex[tmpname]])"

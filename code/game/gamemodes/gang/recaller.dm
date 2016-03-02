@@ -276,7 +276,7 @@
 	var/message = stripped_input(user,"Discreetly send a gang-wide message.","Send Message") as null|text
 	if(!message || (message == "") || !can_use(user))
 		return
-	if(user.z > 2)
+	if(user.z > ZLEVEL_CENTCOMM)
 		user << "<span class='info'>\icon[src]Error: Station out of range.</span>"
 		return
 	var/list/members = list()
@@ -383,7 +383,7 @@
 	log_game("[key_name(user)] has tried to recall the shuttle with a gangtool.")
 	message_admins("[key_name_admin(user)] has tried to recall the shuttle with a gangtool.", 1)
 	userturf = get_turf(user)
-	if(userturf.z == 1) //Check one more time that they are on station.
+	if(userturf.z == ZLEVEL_STATION) //Check one more time that they are on station.
 		if(cancel_call_proc(user))
 			return 1
 

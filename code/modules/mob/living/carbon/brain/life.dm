@@ -205,13 +205,13 @@
 
 	proc/handle_regular_hud_updates()
 
-		if (stat == 2 || (XRAY in src.mutations))
+		if (stat == DEAD || (XRAY in src.mutations))
 			sight |= SEE_TURFS
 			sight |= SEE_MOBS
 			sight |= SEE_OBJS
 			see_in_dark = 8
 			see_invisible = SEE_INVISIBLE_LEVEL_TWO
-		else if (stat != 2)
+		else if (stat != DEAD)
 			sight &= ~SEE_TURFS
 			sight &= ~SEE_MOBS
 			sight &= ~SEE_OBJS
@@ -219,7 +219,7 @@
 			see_invisible = SEE_INVISIBLE_LIVING
 
 		if (healths)
-			if (stat != 2)
+			if (stat != DEAD)
 				switch(health)
 					if(100 to INFINITY)
 						healths.icon_state = "health0"
@@ -242,7 +242,7 @@
 		if (client)
 			client.screen.Remove(global_hud.blurry,global_hud.druggy,global_hud.vimpaired)
 
-		if ((blind && stat != 2))
+		if ((blind && stat != DEAD))
 			if(loc && !isturf(loc) && !is_type_in_list(loc, ignore_vision_inside))
 				blind.layer = 18
 			else if(blinded)
@@ -259,7 +259,7 @@
 				if (druggy)
 					client.screen += global_hud.druggy
 
-		if (stat != 2)
+		if (stat != DEAD)
 			if (machine)
 				if (!( machine.check_eye(src) ))
 					reset_view(null)

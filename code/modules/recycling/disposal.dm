@@ -549,7 +549,7 @@
 	//Check for any living mobs trigger hasmob.
 	//hasmob effects whether the package goes to cargo or its tagged destination.
 	for(var/mob/living/M in D)
-		if(M && M.stat != 2 && !istype(M,/mob/living/silicon/robot/drone))
+		if(M && M.stat != DEAD && !istype(M,/mob/living/silicon/robot/drone))
 			hasmob = 1
 
 	//Checks 1 contents level deep. This means that players can be sent through disposals...
@@ -557,7 +557,7 @@
 	for(var/obj/O in D)
 		if(O.contents)
 			for(var/mob/living/M in O.contents)
-				if(M && M.stat != 2 && !istype(M,/mob/living/silicon/robot/drone))
+				if(M && M.stat != DEAD && !istype(M,/mob/living/silicon/robot/drone))
 					hasmob = 1
 
 	// now everything inside the disposal gets put into the holder

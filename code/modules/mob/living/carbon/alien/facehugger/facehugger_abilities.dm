@@ -23,7 +23,7 @@ This is modified grab mechanic for facehugger
 			if(istype(src, /mob/living/carbon/human/machine))
 				FH << "You can't impregnate that!"
 				return
-			if(src.stat != 2)
+			if(src.stat != DEAD)
 				if(FH == src)
 					return
 				var/obj/item/weapon/fh_grab/G = new /obj/item/weapon/fh_grab(FH, src)
@@ -42,7 +42,7 @@ This is modified grab mechanic for facehugger
 /mob/living/carbon/monkey/attack_facehugger(mob/living/carbon/alien/facehugger/FH as mob)
 	switch(FH.a_intent)
 		if("grab")
-			if(src.stat != 2)
+			if(src.stat != DEAD)
 				if(FH == src)
 					return
 				var/obj/item/weapon/fh_grab/G = new /obj/item/weapon/fh_grab(FH, src)
@@ -61,7 +61,7 @@ This is modified grab mechanic for facehugger
 /mob/living/simple_animal/corgi/attack_facehugger(mob/living/carbon/alien/facehugger/FH as mob)
 	switch(FH.a_intent)
 		if("grab")
-			if(src.stat != 2)
+			if(src.stat != DEAD)
 				if(FH == src)
 					return
 				var/obj/item/weapon/fh_grab/G = new /obj/item/weapon/fh_grab(FH, src)

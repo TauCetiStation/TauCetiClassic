@@ -117,9 +117,9 @@
 	for(var/mob/M in mob_list)
 		if (!M.client)
 			continue //skip monkeys and leavers
-		if (istype(M, /mob/new_player))
+		if (isnewplayer(M))
 			continue
-		if(M.stat == 2 &&  M.client.prefs.chat_toggles & CHAT_GHOSTEARS)
+		if(M.stat == DEAD &&  M.client.prefs.chat_toggles & CHAT_GHOSTEARS)
 			listening|=M
 
 	msg = sanitize_plus_chat(msg)

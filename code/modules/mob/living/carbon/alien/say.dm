@@ -9,7 +9,7 @@
 		if (department_radio_keys[copytext(message, 1, 3)] == "alientalk")
 			message = copytext(message, 3)
 			message = trim(message)
-			if (stat == 2)
+			if (stat == DEAD)
 				return say_dead(message)
 			else
 				alien_talk(message)
@@ -29,7 +29,7 @@
 		if (department_radio_keys[copytext(message, 1, 3)] == "alientalk")
 			message = copytext(message, 3)
 			message = trim(message)
-			if (stat == 2)
+			if (stat == DEAD)
 				return say_dead(message)
 			else
 				alien_talk(message)
@@ -45,7 +45,7 @@
 		if (department_radio_keys[copytext(message, 1, 3)] == "alientalk")
 			message = copytext(message, 3)
 			message = trim(message)
-			if (stat == 2)
+			if (stat == DEAD)
 				return say_dead(message)
 			else
 				alien_talk(message)
@@ -77,7 +77,7 @@
 
 	var/list/heard = list()
 	for (var/mob/M in listening)
-		if(!istype(M, /mob/living/carbon/alien) && !M.alien_talk_understand)
+		if(!isalien(M) && !M.alien_talk_understand)
 			heard += M
 
 
@@ -100,7 +100,7 @@
 	rendered = "<i><span class='game say'>Hivemind, <span class='name'>[name]</span> <span class='message'>[message_a]</span></span></i>"
 
 	for (var/mob/M in player_list)
-		if (istype(M, /mob/new_player))
+		if (isnewplayer(M))
 			continue
 		if (M.stat > 1)
 			M.show_message(rendered, 2)

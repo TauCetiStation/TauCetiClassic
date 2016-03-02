@@ -502,7 +502,7 @@ var/list/robot_verbs_default = list(
 		src << "\red You enable [C.name]."
 
 /mob/living/silicon/robot/blob_act()
-	if (stat != 2)
+	if (stat != DEAD)
 		adjustBruteLoss(60)
 		updatehealth()
 		return 1
@@ -567,17 +567,17 @@ var/list/robot_verbs_default = list(
 
 	switch(severity)
 		if(1.0)
-			if (stat != 2)
+			if (stat != DEAD)
 				adjustBruteLoss(100)
 				adjustFireLoss(100)
 				gib()
 				return
 		if(2.0)
-			if (stat != 2)
+			if (stat != DEAD)
 				adjustBruteLoss(60)
 				adjustFireLoss(60)
 		if(3.0)
-			if (stat != 2)
+			if (stat != DEAD)
 				adjustBruteLoss(30)
 
 	updatehealth()
@@ -640,7 +640,7 @@ var/list/robot_verbs_default = list(
 
 
 /mob/living/silicon/robot/triggerAlarm(var/class, area/A, list/cameralist, var/source)
-	if (stat == 2)
+	if (stat == DEAD)
 		return 1
 
 	..()
@@ -1103,7 +1103,7 @@ var/list/robot_verbs_default = list(
 /mob/living/silicon/robot/proc/updateicon()
 
 	overlays.Cut()
-	if(stat == 0)
+	if(stat == CONSCIOUS)
 		overlays += "eyes"
 		overlays.Cut()
 		overlays += "eyes-[icon_state]"
