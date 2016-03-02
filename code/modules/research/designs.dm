@@ -1546,6 +1546,46 @@ datum/design/autolathe
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/autolathe
 
+/datum/design/recharger
+	name = "Machine Design (Weapon Recharger Board)"
+	desc = "The circuit board for a Weapon Recharger."
+	id = "recharger"
+	req_tech = list("powerstorage" = 3, "engineering" = 3, "materials" = 4)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, "sacid" = 20, MAT_GOLD = 100)
+	build_path = /obj/item/weapon/circuitboard/recharger
+//	category = list("Misc. Machinery")
+
+/datum/design/vendor
+	name = "Machine Design (Vendor Board)"
+	desc = "The circuit board for a Vendor."
+	id = "vendor"
+	req_tech = list("programming" = 1)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/vendor
+//	category = list ("Misc. Machinery")
+ 
+/datum/design/ore_redemption
+	name = "Machine Design (Ore Redemption Board)"
+	desc = "The circuit board for an Ore Redemption machine."
+	id = "ore_redemption"
+	req_tech = list("programming" = 1, "engineering" = 2)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/ore_redemption
+//	category = list ("Misc. Machinery")
+
+/datum/design/mining_equipment_vendor
+	name = "Machine Design (Mining Rewards Vender Board)"
+	desc = "The circuit board for a Mining Rewards Vender."
+	id = "mining_equipment_vendor"
+	req_tech = list("programming" = 1, "engineering" = 2)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/mining_equipment_vendor
+//	category = list ("Misc. Machinery")
+
 datum/design/rdservercontrol
 	name = "R&D Server Control Console Board"
 	desc = "The circuit board for an R&D Server Control Console"

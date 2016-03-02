@@ -274,6 +274,27 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 	src.equipment_path = path
 	src.cost = cost
 
+/obj/machinery/mineral/equipment_vendor/New()
+	..()
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/mining_equipment_vendor(null)
+	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
+	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
+	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
+	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
+	RefreshParts()
+
+/obj/machinery/mineral/equipment_vendor/power_change()
+	..()
+	update_icon()
+
+/obj/machinery/mineral/equipment_vendor/update_icon()
+	if(powered())
+		icon_state = initial(icon_state)
+	else
+		icon_state = "[initial(icon_state)]-off"
+	return
+
 /obj/machinery/mineral/equipment_locker/attack_hand(user as mob)
 	if(..())
 		return
@@ -340,6 +361,13 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 			inserted_id = C
 			interact(user)
 		return
+	if(default_deconstruction_screwdriver(user, "mining-open", "mining", I))
+		updateUsrDialog()
+		return
+	if(panel_open)
+		if(istype(I, /obj/item/weapon/crowbar))
+			default_deconstruction_crowbar(I)
+		return 1
 	..()
 
 /obj/machinery/mineral/equipment_locker/proc/RedeemVoucher(voucher, redeemer)
