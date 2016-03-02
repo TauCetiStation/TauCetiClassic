@@ -17,12 +17,31 @@
 	var/locked = 1
 	var/open = 1
 	req_access = list(access_robotics)
+	var/recharge_speed
+	var/repairs
 
 
 /obj/machinery/recharge_station/New()
 	..()
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/cyborgrecharger(null)
+	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
+	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
+	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
+	component_parts += new /obj/item/weapon/cell/high(null)
+	RefreshParts()
 	build_icon()
 	update_icon()
+
+/obj/machinery/recharge_station/RefreshParts()
+	recharge_speed = 0
+	repairs = 0
+	for(var/obj/item/weapon/stock_parts/capacitor/C in component_parts)
+		recharge_speed += C.rating * 100
+	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
+		repairs += M.rating - 1
+	for(var/obj/item/weapon/cell/C in component_parts)
+		recharge_speed *= C.maxcharge / 10000
 
 /obj/machinery/recharge_station/process()
 	if(stat & (BROKEN))
@@ -79,7 +98,7 @@
 /obj/machinery/recharge_station/relaymove(mob/user as mob)
 	if(user.stat)
 		return
-	open()
+	open_machine()
 
 /obj/machinery/recharge_station/emp_act(severity)
 	if(stat & (BROKEN|NOPOWER))
@@ -87,7 +106,7 @@
 		return
 	if(occupant)
 		occupant.emp_act(severity)
-	open()
+	open_machine()
 	..(severity)
 
 /obj/machinery/recharge_station/attack_paw(user as mob)
@@ -227,11 +246,11 @@
 
 /obj/machinery/recharge_station/proc/toggle_open()
 	if(open)
-		close()
+		close_machine()
 	else
-		open()
+		open_machine()
 
-/obj/machinery/recharge_station/proc/open()
+/obj/machinery/recharge_station/open_machine()
 	if(occupant)
 		if (occupant.client)
 			occupant.client.eye = occupant
@@ -243,7 +262,7 @@
 	density = 0
 	build_icon()
 
-/obj/machinery/recharge_station/proc/close()
+/obj/machinery/recharge_station/close_machine()
 	for(var/mob/living/silicon/robot/R in loc)
 		R.stop_pulling()
 		if(R.client)
@@ -293,6 +312,8 @@
 			var/mob/living/silicon/robot/R = occupant
 			if(R.module)
 				R.module.respawn_consumable(R)
+			if(repairs)
+				R.heal_organ_damage(repairs, repairs - 1)
 			if(!R.cell)
 				return
 			else if(R.cell.charge >= R.cell.maxcharge)
@@ -302,5 +323,5 @@
 				current_internal_charge -= diff
 				return
 			else
-				R.cell.charge = min(R.cell.charge + 200, R.cell.maxcharge)
+				R.cell.charge = min(R.cell.charge + recharge_speed, R.cell.maxcharge)
 				return

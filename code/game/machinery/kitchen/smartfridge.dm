@@ -156,6 +156,8 @@
 ********************/
 
 /obj/machinery/smartfridge/attackby(var/obj/item/O as obj, var/mob/user as mob)
+	if(default_unfasten_wrench(user, O))
+		return
 	if(istype(O, /obj/item/weapon/screwdriver))
 		panel_open = !panel_open
 		user << "You [panel_open ? "open" : "close"] the maintenance panel."

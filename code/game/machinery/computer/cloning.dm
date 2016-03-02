@@ -14,6 +14,7 @@
 	var/datum/dna2/record/active_record = null
 	var/obj/item/weapon/disk/data/diskette = null //Mostly so the geneticist can steal everything.
 	var/loading = 0 // Nice loading text
+	var/autoprocess = 0
 
 /obj/machinery/computer/cloning/New()
 	..()
@@ -21,6 +22,19 @@
 		updatemodules()
 		return
 	return
+
+/obj/machinery/computer/cloning/process()
+	if(!(scanner && pod1 && autoprocess))
+		return
+
+	if(scanner.occupant && (scanner.scan_level > 2))
+		scan_mob(scanner.occupant)
+
+	if(!(pod1.occupant || pod1.mess) && (pod1.efficiency > 5))
+		for(var/datum/data/record/R in records)
+			if(!(pod1.occupant || pod1.mess))
+				if(pod1.growclone(R.fields["ckey"], R.fields["name"], R.fields["UI"], R.fields["SE"], R.fields["mind"], R.fields["mrace"]))
+					records -= R
 
 /obj/machinery/computer/cloning/proc/updatemodules()
 	src.scanner = findscanner()
@@ -70,18 +84,28 @@
 		..()
 	return
 
-/obj/machinery/computer/cloning/attack_hand(mob/user as mob)
+/obj/machinery/computer/cloning/attack_hand(mob/user)
+	if(..())
+		return
+	interact(user)
+
+/obj/machinery/computer/cloning/interact(mob/user)
 	user.set_machine(src)
 	add_fingerprint(user)
-
 	if(..())
 		return
 
 	updatemodules()
 
 	var/dat = "<h3>Cloning System Control</h3>"
-	dat += "<font size=-1><a href='byond://?src=\ref[src];refresh=1'>Refresh</a></font>"
-
+	dat += "<font size=-1><a href='byond://?src=\ref[src];refresh=1'>Refresh</a></font><br>"
+	if(scanner && pod1 && ((scanner.scan_level > 2) || (pod1.efficiency > 5)))
+		if(!autoprocess)
+			dat += "<a href='byond://?src=\ref[src];task=autoprocess'>Autoprocess</a>"
+		else
+			dat += "<a href='byond://?src=\ref[src];task=stopautoprocess'>Stop autoprocess</a>"
+	else
+		dat += "<span class='linkOff'>Autoprocess</span>"
 	dat += "<br><tt>[temp]</tt><br>"
 
 	switch(src.menu)
@@ -191,7 +215,14 @@
 	if(loading)
 		return
 
-	if ((href_list["scan"]) && (!isnull(src.scanner)))
+	if(href_list["task"])
+		switch(href_list["task"])
+			if("autoprocess")
+				autoprocess = 1
+			if("stopautoprocess")
+				autoprocess = 0
+
+	else if ((href_list["scan"]) && (!isnull(src.scanner)))
 		scantemp = ""
 
 		loading = 1
@@ -301,12 +332,11 @@
 				temp = "Error: Unable to initiate cloning cycle."
 
 			else if(pod1.growclone(C))
-				temp = "Initiating cloning cycle..."
+				temp = "<font class='good'>Cloning cycle in progress...</font>"
 				records.Remove(C)
 				qdel(C)
 				menu = 1
 			else
-
 				var/mob/selected = find_dead_player("[C.ckey]")
 				selected << 'sound/machines/chime.ogg'	//probably not the best sound but I think it's reasonable
 				var/answer = alert(selected,"Do you want to return to life?","Cloning","Yes","No")
@@ -341,8 +371,8 @@
 	if ((!subject.ckey) || (!subject.client))
 		scantemp = "Error: Mental interface failure."
 		return
-	if (NOCLONE in subject.mutations)
-		scantemp = "Error: Unable to locate valid genetic data."
+	if (NOCLONE in subject.mutations && src.scanner.scan_level < 2)
+		scantemp = "<font class='bad'>Subject no longer contains the fundamental materials required to create a living clone.</font>"
 		return
 	if (!isnull(find_record(subject.ckey)))
 		scantemp = "Subject already in database."

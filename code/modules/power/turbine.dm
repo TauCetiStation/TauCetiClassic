@@ -13,6 +13,7 @@
 	var/rpmtarget = 0
 	var/capacity = 1e6
 	var/comp_id = 0
+	var/efficiency
 
 /obj/machinery/power/turbine
 	name = "gas turbine generator"
@@ -25,6 +26,7 @@
 	directwired = 1
 	var/turf/simulated/outturf
 	var/lastgen
+	var/productivity = 1
 
 /obj/machinery/computer/turbine_computer
 	name = "Gas turbine control computer"
@@ -34,6 +36,7 @@
 	circuit = /obj/item/weapon/circuitboard/turbine_control
 	anchored = 1
 	density = 1
+	circuit = /obj/item/weapon/circuitboard/turbine_computer
 	var/obj/machinery/compressor/compressor
 	var/list/obj/machinery/door/poddoor/doors
 	var/id = 0
@@ -43,7 +46,16 @@
 
 /obj/machinery/compressor/New()
 	..()
-
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/power_compressor(null)
+	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
+	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
+	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
+	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
+	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
+	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
+	component_parts += new /obj/item/weapon/cable_coil(null, 5)
+	RefreshParts()
 	gas_contained = new
 	inturf = get_step(src, dir)
 
@@ -58,6 +70,28 @@
 
 #define COMPFRICTION 5e5
 #define COMPSTARTERLOAD 2800
+
+/obj/machinery/compressor/RefreshParts()
+	var/E = 0
+	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
+		E += M.rating
+	efficiency = E / 6
+
+/obj/machinery/compressor/attackby(obj/item/I, mob/user)
+	if(default_deconstruction_screwdriver(user, initial(icon_state), initial(icon_state), I))
+		return
+
+	if(default_change_direction_wrench(user, I))
+		turbine = null
+		inturf = get_step(src, dir)
+		turbine = locate() in get_step(src, get_dir(inturf, src))
+		if(turbine)
+			user << "<span class='notice'>Turbine connected.</span>"
+		else
+			user << "<span class='alert'>Turbine not connected.</span>"
+		return
+
+	default_deconstruction_crowbar(I)
 
 /obj/machinery/compressor/process()
 	if(!starter)
@@ -75,7 +109,7 @@
 	var/datum/gas_mixture/removed = inturf.remove_air(transfer_moles)
 	gas_contained.merge(removed)
 
-	rpm = max(0, rpm - (rpm*rpm)/COMPFRICTION)
+	rpm = max(0, rpm - (rpm*rpm)/(COMPFRICTION/efficiency))
 
 
 	if(starter && !(stat & NOPOWER))
@@ -100,6 +134,16 @@
 
 /obj/machinery/power/turbine/New()
 	..()
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/power_turbine(src)
+	component_parts += new /obj/item/weapon/stock_parts/capacitor(src)
+	component_parts += new /obj/item/weapon/stock_parts/capacitor(src)
+	component_parts += new /obj/item/weapon/stock_parts/capacitor(src)
+	component_parts += new /obj/item/weapon/stock_parts/capacitor(src)
+	component_parts += new /obj/item/weapon/stock_parts/capacitor(src)
+	component_parts += new /obj/item/weapon/stock_parts/capacitor(src)
+	component_parts += new /obj/item/weapon/cable_coil(src, 5)
+	RefreshParts()
 
 	outturf = get_step(src, dir)
 
@@ -112,6 +156,11 @@
 			compressor.stat &= !BROKEN
 			compressor.turbine = src
 
+/obj/machinery/power/turbine/RefreshParts()
+	var/P = 0
+	for(var/obj/item/weapon/stock_parts/capacitor/C in component_parts)
+		P += C.rating
+	productivity = P / 6
 
 #define TURBPRES 9000000
 #define TURBGENQ 20000
@@ -126,7 +175,7 @@
 	if(!compressor)
 		stat |= BROKEN
 		return
-	lastgen = ((compressor.rpm / TURBGENQ)**TURBGENG) *TURBGENQ
+	lastgen = ((compressor.rpm / TURBGENQ)**TURBGENG) * TURBGENQ * productivity
 
 	add_avail(lastgen)
 	var/newrpm = ((compressor.gas_contained.temperature) * compressor.gas_contained.total_moles())/4
@@ -143,15 +192,31 @@
 	if(lastgen > 100)
 		overlays += image('icons/obj/pipes.dmi', "turb-o", FLY_LAYER)
 
+/obj/machinery/power/turbine/attack_hand(mob/user)
+	if(..())
+		return
 
-	for(var/mob/M in viewers(1, src))
-		if ((M.client && M.machine == src))
-			src.interact(M)
-	AutoUpdateAI(src)
+	interact(user)
+
+/obj/machinery/power/turbine/attackby(obj/item/I, mob/user)
+	if(default_deconstruction_screwdriver(user, initial(icon_state), initial(icon_state), I))
+		return
+
+	if(default_change_direction_wrench(user, I))
+		compressor = null
+		outturf = get_step(src, dir)
+		compressor = locate() in get_step(src, get_dir(outturf, src))
+		if(compressor)
+			user << "<span class='notice'>Compressor connected.</span>"
+		else
+			user << "<span class='alert'>Compressor not connected.</span>"
+		return
+
+	default_deconstruction_crowbar(I)
 
 /obj/machinery/power/turbine/interact(mob/user)
 
-	if ( (get_dist(src, user) > 1 ) || (stat & (NOPOWER|BROKEN)) && (!istype(user, /mob/living/silicon/ai)) )
+	if ( !Adjacent(user)  || (stat & (NOPOWER|BROKEN)) && (!istype(user, /mob/living/silicon)) )
 		user.machine = null
 		user << browse(null, "window=turbine")
 		return
@@ -219,53 +284,24 @@
 /obj/machinery/computer/turbine_computer/New()
 	..()
 	spawn(5)
-		for(var/obj/machinery/compressor/C in machines)
-			if(id == C.comp_id)
-				compressor = C
+		search_turbine()
 		doors = new /list()
 		for(var/obj/machinery/door/poddoor/P in machines)
 			if(P.id == id)
 				doors += P
 
-/*
-/obj/machinery/computer/turbine_computer/attackby(I as obj, user as mob)
-	if(istype(I, /obj/item/weapon/screwdriver))
-		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-		if(do_after(user, 20))
-			if (src.stat & BROKEN)
-				user << "\blue The broken glass falls out."
-				var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
-				new /obj/item/weapon/shard( src.loc )
-				var/obj/item/weapon/circuitboard/turbine_control/M = new /obj/item/weapon/circuitboard/turbine_control( A )
-				for (var/obj/C in src)
-					C.loc = src.loc
-				M.id = src.id
-				A.circuit = M
-				A.state = 3
-				A.icon_state = "3"
-				A.anchored = 1
-				qdel(src)
-			else
-				user << "\blue You disconnect the monitor."
-				var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
-				var/obj/item/weapon/circuitboard/turbine_control/M = new /obj/item/weapon/circuitboard/turbine_control( A )
-				for (var/obj/C in src)
-					C.loc = src.loc
-				M.id = src.id
-				A.circuit = M
-				A.state = 4
-				A.icon_state = "4"
-				A.anchored = 1
-				qdel(src)
-	else
-		src.attack_hand(user)
-	return
-*/
+/obj/machinery/computer/turbine_computer/proc/search_turbine()
+	compressor = locate(/obj/machinery/compressor) in range(5)
 
 /obj/machinery/computer/turbine_computer/attack_hand(var/mob/user as mob)
-	user.machine = src
+	if(..())
+		return
+
+	interact(user)
+
+/obj/machinery/computer/turbine_computer/interact(mob/user)
 	var/dat
-	if(src.compressor)
+	if(compressor && compressor.turbine)
 		dat += {"<BR><B>Gas turbine remote control system</B><HR>
 		\nTurbine status: [ src.compressor.starter ? "<A href='?src=\ref[src];str=1'>Off</A> <B>On</B>" : "<B>Off</B> <A href='?src=\ref[src];str=1'>On</A>"]
 		\n<BR>
@@ -278,7 +314,9 @@
 		\n<BR>
 		\n"}
 	else
-		dat += "\red<B>No compatible attached compressor found."
+		dat += "<B>There is [!compressor ? "no compressor" : " compressor[!compressor.turbine ? " and no turbine" : ""]"].</B><BR>"
+		if(!compressor)
+			dat += "<A href='?src=\ref[src];search=1'>Search for compressor</A>"
 
 	user << browse(dat, "window=computer;size=400x500")
 	onclose(user, "computer")
@@ -310,6 +348,8 @@
 			usr << browse(null, "window=computer")
 			usr.machine = null
 			return
+		else if(href_list["search"])
+			search_turbine()
 
 		src.add_fingerprint(usr)
 	src.updateUsrDialog()

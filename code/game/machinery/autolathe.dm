@@ -49,6 +49,7 @@ var/global/list/autolathe_recipes = list( \
 		new /obj/item/weapon/light/bulb(), \
 		new /obj/item/ashtray/glass(), \
 		new /obj/item/weapon/camera_assembly(), \
+		new /obj/item/newscaster_frame(), \
 	)
 
 var/global/list/autolathe_recipes_hidden = list( \
@@ -93,6 +94,7 @@ var/global/list/autolathe_recipes_hidden = list( \
 	idle_power_usage = 10
 	active_power_usage = 100
 	var/busy = 0
+	var/prod_coeff
 
 /obj/machinery/autolathe/New()
 	..()
@@ -128,11 +130,14 @@ var/global/list/autolathe_recipes_hidden = list( \
 /obj/machinery/autolathe/RefreshParts()
 	..()
 	var/tot_rating = 0
+	prod_coeff = 0
 	for(var/obj/item/weapon/stock_parts/matter_bin/MB in component_parts)
 		tot_rating += MB.rating
 	tot_rating *= 25000
 	max_m_amount = tot_rating * 2
 	max_g_amount = tot_rating
+	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
+		prod_coeff += M.rating - 1
 
 /obj/machinery/autolathe/proc/wires_win(mob/user)
 	var/dat as text
@@ -147,6 +152,7 @@ var/global/list/autolathe_recipes_hidden = list( \
 	onclose(user, "autolathe_hack")
 
 /obj/machinery/autolathe/proc/regular_win(mob/user)
+	var/coeff = 2 ** prod_coeff
 	var/dat as text
 	if(!panel_open)
 		dat = text("<B>Metal Amount:</B> [src.m_amount] cm<sup>3</sup> (MAX: [max_m_amount])<BR>\n<FONT color=blue><B>Glass Amount:</B></FONT> [src.g_amount] cm<sup>3</sup> (MAX: [max_g_amount])<HR>")
@@ -155,12 +161,13 @@ var/global/list/autolathe_recipes_hidden = list( \
 		if (src.hacked)
 			objs += src.LL
 		for(var/obj/t in objs)
-			var/title = "[t.name] ([t.m_amt] m /[t.g_amt] g)"
-			if (m_amount<t.m_amt || g_amount<t.g_amt)
-				dat += title + "<br>"
-				continue
-			dat += "<A href='?src=\ref[src];make=\ref[t]'>[title]</A>"
 			if (istype(t, /obj/item/stack))
+				var/title = "[t.name] ([t.m_amt] m /[t.g_amt] g)"
+				if (m_amount<t.m_amt || g_amount<t.g_amt)
+					dat += title + "<br>"
+					continue
+				dat += "<A href='?src=\ref[src];make=\ref[t]'>[title]</A>"
+
 				var/obj/item/stack/S = t
 				var/max_multiplier = min(S.max_amount, S.m_amt?round(m_amount/S.m_amt):INFINITY, S.g_amt?round(g_amount/S.g_amt):INFINITY)
 				if (max_multiplier>1)
@@ -171,6 +178,12 @@ var/global/list/autolathe_recipes_hidden = list( \
 					dat += " <A href='?src=\ref[src];make=\ref[t];multiplier=[25]'>x[25]</A>"
 				if (max_multiplier>1)
 					dat += " <A href='?src=\ref[src];make=\ref[t];multiplier=[max_multiplier]'>x[max_multiplier]</A>"
+			else
+				var/title = "[t.name] ([t.m_amt/coeff] m /[t.g_amt/coeff] g)"
+				if (m_amount<t.m_amt/coeff || g_amount<t.g_amt/coeff)
+					dat += title + "<br>"
+					continue
+				dat += "<A href='?src=\ref[src];make=\ref[t]'>[title]</A>"
 			dat += "<br>"
 	else
 		wires_win(user)
@@ -271,17 +284,14 @@ var/global/list/autolathe_recipes_hidden = list( \
 /obj/machinery/autolathe/attack_hand(mob/user as mob)
 	if(..())
 		return
-	user.set_machine(src)
 	interact(user)
-
 
 /obj/machinery/autolathe/Topic(href, href_list)
 	if(..())
 		return
-	usr.set_machine(src)
-	src.add_fingerprint(usr)
-	if (!busy)
+	if(!busy)
 		if(href_list["make"])
+			var/coeff = 2 ** prod_coeff
 			var/turf/T = get_step(src.loc, get_dir(src,usr))
 
 			// critical exploit fix start -walter0o
@@ -320,28 +330,29 @@ var/global/list/autolathe_recipes_hidden = list( \
 				return
 
 			var/power = max(2000, (template.m_amt+template.g_amt)*multiplier/5)
-			if(src.m_amount >= template.m_amt*multiplier && src.g_amount >= template.g_amt*multiplier)
+			if(src.m_amount >= template.m_amt*multiplier/coeff && src.g_amount >= template.g_amt*multiplier/coeff)
 				busy = 1
 				use_power(power)
 				icon_state = "autolathe"
 				flick("autolathe_n",src)
-				spawn(16)
-					use_power(power)
-					spawn(16)
-						use_power(power)
-						spawn(16)
-							src.m_amount -= template.m_amt*multiplier
-							src.g_amount -= template.g_amt*multiplier
-							if(src.m_amount < 0)
-								src.m_amount = 0
-							if(src.g_amount < 0)
-								src.g_amount = 0
-							var/obj/new_item = new template.type(T)
-							if (multiplier>1)
-								var/obj/item/stack/S = new_item
-								S.amount = multiplier
-							busy = 0
-							src.updateUsrDialog()
+				spawn(32/coeff)
+					if(istype(template, /obj/item/stack))
+						src.m_amount -= template.m_amt*multiplier
+						src.g_amount -= template.g_amt*multiplier
+						var/obj/new_item = new template.type(T)
+						var/obj/item/stack/S = new_item
+						S.amount = multiplier
+					else
+						src.m_amount -= template.m_amt/coeff
+						src.g_amount -= template.g_amt/coeff
+						var/obj/new_item = new template.type(T)
+						new_item.m_amt /= coeff
+						new_item.g_amt /= coeff
+					if(src.m_amount < 0)
+						src.m_amount = 0
+					if(src.g_amount < 0)
+						src.g_amount = 0
+					busy = 0
 		if(href_list["act"])
 			var/temp_wire = href_list["wire"]
 			if(href_list["act"] == "pulse")

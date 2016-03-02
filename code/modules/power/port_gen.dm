@@ -55,6 +55,7 @@ display round(lastgen) and phorontank amount
 	var/power_gen = 5000
 	var/recent_fault = 0
 	var/power_output = 1
+	var/consumption = 0
 
 /obj/machinery/power/port_gen/proc/HasFuel() //Placeholder for fuel check.
 	return 1
@@ -122,20 +123,24 @@ display round(lastgen) and phorontank amount
 
 /obj/machinery/power/port_gen/pacman/Destroy()
 	DropFuel()
-	..()
+	return ..()
 
 /obj/machinery/power/port_gen/pacman/RefreshParts()
 	var/temp_rating = 0
 	var/temp_reliability = 0
+	var/consumption_coeff = 0
 	for(var/obj/item/weapon/stock_parts/SP in component_parts)
 		if(istype(SP, /obj/item/weapon/stock_parts/matter_bin))
 			max_sheets = SP.rating * SP.rating * 50
-		else if(istype(SP, /obj/item/weapon/stock_parts/micro_laser) || istype(SP, /obj/item/weapon/stock_parts/capacitor))
+		else if(istype(SP, /obj/item/weapon/stock_parts/capacitor))
 			temp_rating += SP.rating
+		else
+			consumption_coeff += SP.rating
 	for(var/obj/item/weapon/CP in component_parts)
 		temp_reliability += CP.reliability
 	reliability = min(round(temp_reliability / 4), 100)
-	power_gen = round(initial(power_gen) * (max(2, temp_rating) / 2))
+	power_gen = round(initial(power_gen) * temp_rating * 2)
+	consumption = consumption_coeff
 
 /obj/machinery/power/port_gen/pacman/examine()
 	..()
@@ -158,7 +163,7 @@ display round(lastgen) and phorontank amount
 			sheets -= amount
 
 /obj/machinery/power/port_gen/pacman/UseFuel()
-	var/needed_sheets = 1 / (time_per_sheet / power_output)
+	var/needed_sheets = 1 / (time_per_sheet * consumption / power_output)
 	var/temp = min(needed_sheets, sheet_left)
 	needed_sheets -= temp
 	sheet_left -= temp
@@ -173,9 +178,9 @@ display round(lastgen) and phorontank amount
 	var/bias = 0
 	if (power_output > 4)
 		upper_limit = 400
-		bias = power_output * 3
+		bias = power_output - consumption * (4 - consumption)
 	if (heat < lower_limit)
-		heat += 3
+		heat += 4 - consumption
 	else
 		heat += rand(-7 + bias, 7 + bias)
 		if (heat < lower_limit)

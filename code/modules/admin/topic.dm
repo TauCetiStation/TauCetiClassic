@@ -1914,7 +1914,7 @@
 				feedback_add_details("admin_secrets_fun_used","P")
 				log_admin("[key_name(usr)] made all areas powered", 1)
 				message_admins("\blue [key_name_admin(usr)] made all areas powered", 1)
-				power_restore()
+				power_restore(badminery=1)
 			if("unpower")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","UP")
@@ -1922,6 +1922,9 @@
 				message_admins("\blue [key_name_admin(usr)] made all areas unpowered", 1)
 				power_failure()
 			if("quickpower")
+				if(power_fail_event)
+					usr << "Power fail event is in progress.. Please wait or use normal power restore."
+					return
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","QP")
 				log_admin("[key_name(usr)] made all SMESs powered", 1)

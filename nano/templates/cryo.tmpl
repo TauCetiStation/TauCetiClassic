@@ -63,6 +63,7 @@ Used In File(s): \code\game\machinery\cryo.dm
 	</div>
 </div>
 
+
 <h3>Cryo Cell Operation</h3>
 <div class="item">
 	<div class="itemLabel">
@@ -71,8 +72,13 @@ Used In File(s): \code\game\machinery\cryo.dm
 	<div class="itemContent" style="width: 40%;">
 		{{:helper.link('On', 'power', {'switchOn' : 1}, data.isOperating ? 'selected' : null)}}{{:helper.link('Off', 'close', {'switchOff' : 1}, data.isOperating ? null : 'selected')}}
 	</div>
-	<div class="itemContent" style="width: 26%;">
-		{{:helper.link('Eject Occupant', 'arrowreturnthick-1-s', {'ejectOccupant' : 1}, data.hasOccupant ? null : 'disabled')}}
+</div>
+<div class="item">
+	<div class="itemLabel">
+		Door:
+	</div>
+	<div class="itemContent" style="width: 40%;">
+		{{:helper.link('Open', 'unlocked', {'open' : 1}, data.isOpen ? 'selected' : null)}}{{:helper.link('Close', 'locked', {'close' : 1}, data.isOpen ? null : 'selected')}}
 	</div>
 </div>
 <div class="item">&nbsp;</div>

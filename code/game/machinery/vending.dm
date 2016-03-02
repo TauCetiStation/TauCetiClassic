@@ -61,6 +61,8 @@
 
 /obj/machinery/vending/New()
 	..()
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/vendor(null)
 	spawn(4)
 		src.slogan_list = text2list(src.product_slogans, ";")
 
@@ -166,12 +168,19 @@
 				break
 	return total
 
-/obj/machinery/vending/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/machinery/vending/attackby(obj/item/weapon/W, mob/user)
+	if(panel_open)
+		if(default_unfasten_wrench(user, W, time = 60))
+			return
+
+		if(istype(W, /obj/item/weapon/crowbar))
+			default_deconstruction_crowbar(W)
+
 	if (istype(W, /obj/item/weapon/card/emag))
 		src.emagged = 1
 		user << "You short out the product lock on [src]"
 		return
-	else if(istype(W, /obj/item/weapon/screwdriver))
+	else if(istype(W, /obj/item/weapon/screwdriver) && anchored)
 		src.panel_open = !src.panel_open
 		user << "You [src.panel_open ? "open" : "close"] the maintenance panel."
 		src.overlays.Cut()
@@ -242,6 +251,24 @@
 				qdel(W)
 	else
 		..()
+
+/obj/machinery/vending/default_deconstruction_crowbar(var/obj/item/O)
+	var/list/all_products = product_records + hidden_records + coin_records
+	for(var/datum/data/vending_product/machine_content in all_products)
+		while(machine_content.amount !=0)
+			var/safety = 0 //to avoid infinite loop
+			for(var/obj/item/weapon/vending_refill/VR in component_parts)
+				safety++
+				if(VR.charges < initial(VR.charges))
+					VR.charges++
+					machine_content.amount--
+					if(!machine_content.amount)
+						break
+				else
+					safety--
+			if(safety <= 0)
+				break
+	..()
 
 /obj/machinery/vending/proc/scan_card(var/obj/item/weapon/card/I)
 	if(!currently_vending) return
@@ -605,7 +632,7 @@
 		while(R.amount>0)
 			new dump_path(src.loc)
 			R.amount--
-		break
+		continue
 
 	stat |= BROKEN
 	src.icon_state = "[initial(icon_state)]-broken"

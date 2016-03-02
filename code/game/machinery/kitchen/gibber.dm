@@ -90,6 +90,9 @@
 		emagged = 1
 		return
 
+	if(default_unfasten_wrench(user, W))
+		return
+
 	var/obj/item/weapon/grab/G = W
 
 	if(!istype(G))

@@ -114,6 +114,8 @@
 	if(src.processing)
 		user << "\red The processor is in the process of processing."
 		return 1
+	if(default_unfasten_wrench(user, O))
+		return
 	if(src.contents.len > 0) //TODO: several items at once? several different items?
 		user << "\red Something is already in the processing chamber."
 		return 1

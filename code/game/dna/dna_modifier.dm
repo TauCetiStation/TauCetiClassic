@@ -45,6 +45,9 @@
 	use_power = 1
 	idle_power_usage = 50
 	active_power_usage = 300
+	var/damage_coeff
+	var/scan_level
+	var/precision_coeff
 	var/locked = 0
 	var/open = 0
 	var/obj/item/weapon/reagent_containers/glass/beaker = null
@@ -61,6 +64,16 @@
 	component_parts += new /obj/item/weapon/cable_coil(null, 1)
 	RefreshParts()
 
+/obj/machinery/dna_scannernew/RefreshParts()
+	scan_level = 0
+	damage_coeff = 0
+	precision_coeff = 0
+	for(var/obj/item/weapon/stock_parts/scanning_module/P in component_parts)
+		scan_level += P.rating
+	for(var/obj/item/weapon/stock_parts/manipulator/P in component_parts)
+		precision_coeff = P.rating
+	for(var/obj/item/weapon/stock_parts/micro_laser/P in component_parts)
+		damage_coeff = P.rating
 
 /obj/machinery/dna_scannernew/proc/toggle_open(mob/user=usr)
 	if(!user)
@@ -151,21 +164,7 @@
 	return
 
 /obj/machinery/dna_scannernew/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/weapon/screwdriver))
-		if(occupant)
-			user << "<span class='notice'>The maintenance panel is locked.</span>"
-			return
-		playsound(loc, 'sound/items/Screwdriver.ogg', 50, 1)
-		panel_open = !panel_open
-		if(panel_open)
-			icon_state = "[icon_state]_maintenance"
-			user << "<span class='notice'>You open the maintenance panel of [src].</span>"
-		else
-			if(open)
-				icon_state = "[initial(icon_state)]_open"
-			else
-				icon_state = "[initial(icon_state)]"
-			user << "<span class='notice'>You close the maintenance panel of [src].</span>"
+	if(!occupant && default_deconstruction_screwdriver(user, "[initial(icon_state)]_open", "[initial(icon_state)]", I))
 		return
 
 	if(istype(I, /obj/item/weapon/crowbar))
@@ -398,7 +397,7 @@
 			occupantData["name"] = connected.occupant.name
 			occupantData["stat"] = connected.occupant.stat
 			occupantData["isViableSubject"] = 1
-			if (NOCLONE in connected.occupant.mutations || !src.connected.occupant.dna)
+			if (!src.connected.occupant.dna || NOCLONE in connected.occupant.mutations || (connected.scan_level == 3))
 				occupantData["isViableSubject"] = 0
 			occupantData["health"] = connected.occupant.health
 			occupantData["maxHealth"] = connected.occupant.maxHealth
@@ -576,7 +575,7 @@
 			block = miniscrambletarget(num2text(selected_ui_target), src.radiation_intensity, src.radiation_duration)
 			src.connected.occupant.dna.SetUISubBlock(src.selected_ui_block,src.selected_ui_subblock,block)
 			src.connected.occupant.UpdateAppearance()
-			src.connected.occupant.radiation += (src.radiation_intensity+src.radiation_duration)
+			src.connected.occupant.radiation += (src.radiation_intensity+src.radiation_duration)/(connected.damage_coeff ** 2)
 		else
 			if	(prob(20+src.radiation_intensity))
 				randmutb(src.connected.occupant)
@@ -584,7 +583,7 @@
 			else
 				randmuti(src.connected.occupant)
 				src.connected.occupant.UpdateAppearance()
-			src.connected.occupant.radiation += ((src.radiation_intensity*2)+src.radiation_duration)
+			src.connected.occupant.radiation += ((src.radiation_intensity*2)+src.radiation_duration + (connected.precision_coeff ** 2))
 		src.connected.locked = lock_state
 		return 1 // return 1 forces an update to all Nano uis attached to src
 
@@ -642,10 +641,10 @@
 
 				//testing("Irradiated SE block [real_SE_block]:[src.selected_se_subblock] ([original_block] now [block]) [(real_SE_block!=selected_se_block) ? "(SHIFTED)":""]!")
 				connected.occupant.dna.SetSESubBlock(real_SE_block,selected_se_subblock,block)
-				src.connected.occupant.radiation += (src.radiation_intensity+src.radiation_duration)
+				src.connected.occupant.radiation += (src.radiation_intensity+src.radiation_duration)/(connected.damage_coeff ** 2)
 				domutcheck(src.connected.occupant,src.connected, block!=null, 1)//#Z2
 			else
-				src.connected.occupant.radiation += ((src.radiation_intensity*2)+src.radiation_duration)
+				src.connected.occupant.radiation += ((src.radiation_intensity*2)+src.radiation_duration + (connected.precision_coeff ** 2))
 				if	(prob(80-src.radiation_duration))
 					//testing("Random bad mut!")
 					randmutb(src.connected.occupant)
@@ -763,7 +762,7 @@
 				src.connected.occupant.dna.SE = buf.dna.SE
 				src.connected.occupant.dna.UpdateSE()
 				domutcheck(src.connected.occupant,src.connected)
-			src.connected.occupant.radiation += rand(20,50)
+			src.connected.occupant.radiation += rand(15/(connected.damage_coeff ** 2),40/(connected.damage_coeff ** 2))
 			return 1
 
 		if (bufferOption == "createInjector")

@@ -21,6 +21,7 @@ Note: Must be placed west/left of and R&D console to function.
 	var/uranium_amount = 0.0
 	var/diamond_amount = 0.0
 	var/clown_amount = 0.0
+	var/efficiency_coeff
 
 
 /obj/machinery/r_n_d/protolathe/New()
@@ -49,17 +50,20 @@ Note: Must be placed west/left of and R&D console to function.
 	for(var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
 		T += M.rating
 	max_material_storage = T * 75000
+	T = 0
+	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
+		T += M.rating
+	efficiency_coeff = T-1
 
 /obj/machinery/r_n_d/protolathe/attackby(var/obj/item/I as obj, var/mob/user as mob)
 	if (shocked)
 		shock(user,50)
 	if (I.is_open_container())
 		return 1
-	if (istype(I, /obj/item/weapon/screwdriver))
+	if (default_deconstruction_screwdriver(user, "protolathe_t", "protolathe", I))
 		if(linked_console)
 			linked_console.linked_lathe = null
 			linked_console = null
-		default_deconstruction_screwdriver(user, "protolathe_t", "protolathe", I)
 		return
 	if (panel_open)
 		if(istype(I, /obj/item/weapon/crowbar))
