@@ -12,8 +12,13 @@
 	var/light_range_on = 1.5
 	var/light_power_on = 3
 
-/obj/machinery/computer/New()
-	..()
+/obj/machinery/computer/New(location, obj/item/weapon/circuitboard/C)
+	..(location)
+	if(C && istype(C))
+		circuit = C
+	else
+		if(circuit)
+			circuit = new circuit(null)
 	power_change()
 
 /obj/machinery/computer/initialize()
@@ -113,9 +118,9 @@
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		if(do_after(user, 20, target = src))
 			var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
-			var/obj/item/weapon/circuitboard/M = new circuit( A )
-			A.circuit = M
+			A.circuit = circuit
 			A.anchored = 1
+			circuit = null
 			for (var/obj/C in src)
 				C.loc = src.loc
 			if (src.stat & BROKEN)

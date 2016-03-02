@@ -363,6 +363,16 @@ datum/design/aifixer
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/aifixer
 
+/datum/design/libraryconsole
+	name = "Computer Design (Library Console)"
+	desc = "Allows for the construction of circuit boards used to build a new library console."
+	id = "libraryconsole"
+	req_tech = list("programming" = 1)
+	build_type = IMPRINTER
+	materials = list("$glass" = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/libraryconsole
+	//category = list("Computer Boards")
+
 ///////////////////////////////////
 //////////AI Module Disks//////////
 ///////////////////////////////////
