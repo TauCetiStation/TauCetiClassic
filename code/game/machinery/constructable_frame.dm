@@ -276,7 +276,7 @@ to destroy them and players will be able to make replacements.
 	desc = "Use screwdriver to switch between heating and cooling modes."
 	build_path = /obj/machinery/atmospherics/unary/cold_sink/freezer
 	board_type = "machine"
-	origin_tech = "programming=3;plasmatech=3"
+	origin_tech = "programming=3;phorontech=3"
 	req_components = list(
 							"/obj/item/weapon/stock_parts/matter_bin" = 2,
 							"/obj/item/weapon/stock_parts/micro_laser" = 2,
@@ -328,7 +328,7 @@ obj/item/weapon/circuitboard/biogenerator
 	name = "circuit board (Portable Chem Dispenser)"
 	build_path = /obj/machinery/chem_dispenser/constructable
 	board_type = "machine"
-	origin_tech = "materials=4;engineering=4;programming=4;plasmatech=3;biotech=3"
+	origin_tech = "materials=4;engineering=4;programming=4;phorontech=3;biotech=3"
 	req_components = list(
 							"/obj/item/weapon/stock_parts/matter_bin" = 2,
 							"/obj/item/weapon/stock_parts/capacitor" = 1,

@@ -40,7 +40,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 	T = 0
 	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
 		T += M.rating
-	efficiency_coeff = T-1
+	efficiency_coeff = 2 ** (T - 1)
 
 /obj/machinery/r_n_d/circuit_imprinter/blob_act()
 	if (prob(50))
@@ -49,6 +49,18 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 /obj/machinery/r_n_d/circuit_imprinter/meteorhit()
 	qdel(src)
 	return
+
+/obj/machinery/r_n_d/circuit_imprinter/proc/check_mat(datum/design/being_built, var/M)
+	switch(M)
+		if("$glass")
+			return (g_amount - (being_built.materials[M]/efficiency_coeff) >= 0) ? 1 : 0
+		if("$gold")
+			return (gold_amount - (being_built.materials[M]/efficiency_coeff) >= 0) ? 1 : 0
+		if("$diamond")
+			return (diamond_amount - (being_built.materials[M]/efficiency_coeff) >= 0) ? 1 : 0
+		else
+			return (reagents.has_reagent(M, (being_built.materials[M]/efficiency_coeff)) != 0) ? 1 : 0
+
 
 /obj/machinery/r_n_d/circuit_imprinter/proc/TotalMaterials()
 	return g_amount + gold_amount + diamond_amount + uranium_amount

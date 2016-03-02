@@ -1290,7 +1290,7 @@ datum/design/thermomachine
 	name = "Freezer/Heater Board"
 	desc = "The circuit board for a freezer/heater."
 	id = "thermomachine"
-	req_tech = list("programming" = 3, "plasmatech" = 3)
+	req_tech = list("programming" = 3, "phorontech" = 3)
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/thermomachine
@@ -1326,7 +1326,7 @@ datum/design/chem_dispenser
 	name = "Portable Chem Dispenser Board"
 	desc = "The circuit board for a portable chem dispenser."
 	id = "chem_dispenser"
-	req_tech = list("programming" = 4, "biotech" = 3, "engineering" = 4, "materials" = 4, "plasmatech" = 3)
+	req_tech = list("programming" = 4, "biotech" = 3, "engineering" = 4, "materials" = 4, "phorontech" = 3)
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/chem_dispenser
