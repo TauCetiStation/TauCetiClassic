@@ -167,6 +167,9 @@
 	if(!occupant && default_deconstruction_screwdriver(user, "[initial(icon_state)]_open", "[initial(icon_state)]", I))
 		return
 
+	if(exchange_parts(user, I))
+		return
+
 	if(istype(I, /obj/item/weapon/crowbar))
 		if(panel_open)
 			for(var/obj/O in contents) // in case there is something in the scanner

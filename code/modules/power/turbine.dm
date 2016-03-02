@@ -91,6 +91,9 @@
 			user << "<span class='alert'>Turbine not connected.</span>"
 		return
 
+	if(exchange_parts(user, I))
+		return
+
 	default_deconstruction_crowbar(I)
 
 /obj/machinery/compressor/process()
@@ -210,6 +213,9 @@
 			user << "<span class='notice'>Compressor connected.</span>"
 		else
 			user << "<span class='alert'>Compressor not connected.</span>"
+		return
+
+	if(exchange_parts(user, I))
 		return
 
 	default_deconstruction_crowbar(I)

@@ -69,6 +69,9 @@
 		recharging_turf = get_step(loc, dir)
 		return
 
+	if(exchange_parts(user, I))
+		return
+
 	default_deconstruction_crowbar(I)
 
 	if(panel_open)

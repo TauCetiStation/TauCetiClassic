@@ -226,6 +226,9 @@ var/global/list/autolathe_recipes_hidden = list( \
 		updateUsrDialog()
 		return
 
+	if(exchange_parts(user, I))
+		return
+
 	if (panel_open)
 		if(istype(I, /obj/item/weapon/crowbar))
 			if(m_amount >= 3750)

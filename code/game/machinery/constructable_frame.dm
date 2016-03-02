@@ -22,9 +22,15 @@
 
 	req_component_names = new()
 	for(var/tname in req_components)
-		var/path = text2path(tname)
+		var/path = tname
 		var/obj/O = new path()
 		req_component_names[tname] = O.name
+
+/obj/machinery/constructable_frame/proc/get_req_components_amt()
+	var/amt = 0
+	for(var/path in req_components)
+		amt += req_components[path]
+	return amt
 
 // update description of required components remaining
 /obj/machinery/constructable_frame/proc/update_req_desc()
@@ -100,6 +106,7 @@
 				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 				state = 2
 				circuit.loc = src.loc
+				components.Remove(circuit)
 				circuit = null
 				if(components.len == 0)
 					user << "<span class='notice'>You remove the circuit board.</span>"
@@ -131,10 +138,38 @@
 					new_machine.RefreshParts()
 					qdel(src)
 
-			if(istype(P, /obj/item/weapon))
+			if(istype(P, /obj/item/weapon/storage/part_replacer) && P.contents.len && get_req_components_amt())
+				var/obj/item/weapon/storage/part_replacer/replacer = P
+				var/list/added_components = list()
+				var/list/part_list = list()
+
+				//Assemble a list of current parts, then sort them by their rating!
+				for(var/obj/item/weapon/stock_parts/co in replacer)
+					part_list += co
+				//Sort the parts. This ensures that higher tier items are applied first.
+				part_list = sortTim(part_list, /proc/cmp_rped_sort)
+
+				for(var/path in req_components)
+					while(req_components[path] > 0 && (locate(path) in part_list))
+						var/obj/item/part = (locate(path) in part_list)
+						if(!part.crit_fail)
+							added_components[part] = path
+							replacer.remove_from_storage(part, src)
+							req_components[path]--
+							part_list -= part
+
+				for(var/obj/item/weapon/stock_parts/part in added_components)
+					components += part
+					user << "<span class='notice'>[part.name] applied.</span>"
+				replacer.play_rped_sound()
+
+				update_req_desc()
+				return
+
+			if(istype(P, /obj/item) && get_req_components_amt())
 				var/success
 				for(var/I in req_components)
-					if(istype(P, text2path(I)) && (req_components[I] > 0))
+					if(istype(P, I) && (req_components[I] > 0))
 						success=1
 						if(istype(P, /obj/item/weapon/cable_coil))
 							var/obj/item/weapon/cable_coil/CP = P
@@ -149,9 +184,10 @@
 						components += P
 						req_components[I]--
 						update_req_desc()
-						break
+						return 1
 				if(!success)
 					user << "<span class='danger'>You cannot add that to the machine!</span>"
+					return 0
 
 
 //Machine Frame Circuit Boards
@@ -167,7 +203,7 @@ to destroy them and players will be able to make replacements.
 	board_type = "machine"
 	origin_tech = "programming=1"
 	req_components = list(
-							"/obj/item/weapon/vending_refill/boozeomat" = 3)
+							/obj/item/weapon/vending_refill/boozeomat = 3)
 
 /obj/item/weapon/circuitboard/vendor/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/screwdriver))
@@ -181,7 +217,7 @@ to destroy them and players will be able to make replacements.
 		build_path = pick(names)
 		name = "circuit board ([names[build_path]] Vendor)"
 		user << "<span class='notice'>You set the board to [names[build_path]].</span>"
-		req_components = list("/obj/item/weapon/vending_refill/[copytext("[build_path]", 24)]" = 3)       //Never before has i used a method as horrible as this one, im so sorry
+		req_components = list(text2path("/obj/item/weapon/vending_refill/[copytext("[build_path]", 24)]") = 3)       //Never before has i used a method as horrible as this one, im so sorry
 
 /obj/item/weapon/circuitboard/smes
 	name = "circuit board (SMES)"
@@ -189,9 +225,18 @@ to destroy them and players will be able to make replacements.
 	board_type = "machine"
 	origin_tech = "programming=4;powerstorage=5;engineering=5"
 	req_components = list(
-							"/obj/item/weapon/cable_coil" = 5,
-							"/obj/item/weapon/cell" = 5,
-							"/obj/item/weapon/stock_parts/capacitor" = 1)
+							/obj/item/weapon/cable_coil = 5,
+							/obj/item/weapon/stock_parts/cell = 5,
+							/obj/item/weapon/stock_parts/capacitor = 1)
+
+/obj/item/weapon/circuitboard/emitter
+	name = "circuit board (Emitter)"
+	build_path = /obj/machinery/power/emitter
+	board_type = "machine"
+	origin_tech = "programming=4;powerstorage=5;engineering=5"
+	req_components = list(
+							/obj/item/weapon/stock_parts/micro_laser = 1,
+							/obj/item/weapon/stock_parts/manipulator = 1)
 
 /obj/item/weapon/circuitboard/power_compressor
 	name = "circuit board (Power Compressor)"
@@ -199,8 +244,8 @@ to destroy them and players will be able to make replacements.
 	board_type = "machine"
 	origin_tech = "programming=4;powerstorage=5;engineering=4"
 	req_components = list(
-							"/obj/item/weapon/cable_coil" = 5,
-							"/obj/item/weapon/stock_parts/manipulator" = 6)
+							/obj/item/weapon/cable_coil = 5,
+							/obj/item/weapon/stock_parts/manipulator = 6)
 
 /obj/item/weapon/circuitboard/power_turbine
 	name = "circuit board (Power Turbine)"
@@ -208,8 +253,8 @@ to destroy them and players will be able to make replacements.
 	board_type = "machine"
 	origin_tech = "programming=4;powerstorage=4;engineering=5"
 	req_components = list(
-							"/obj/item/weapon/cable_coil" = 5,
-							"/obj/item/weapon/stock_parts/capacitor" = 6)
+							/obj/item/weapon/cable_coil = 5,
+							/obj/item/weapon/stock_parts/capacitor = 6)
 
 /obj/item/weapon/circuitboard/mech_recharger
 	name = "circuit board (Mechbay Recharger)"
@@ -217,8 +262,8 @@ to destroy them and players will be able to make replacements.
 	board_type = "machine"
 	origin_tech = "programming=3;powerstorage=4;engineering=4"
 	req_components = list(
-							"/obj/item/weapon/cable_coil" = 1,
-							"/obj/item/weapon/stock_parts/capacitor" = 5)
+							/obj/item/weapon/cable_coil = 1,
+							/obj/item/weapon/stock_parts/capacitor = 5)
 
 /obj/item/weapon/circuitboard/teleporter_hub
 	name = "circuit board (Teleporter Hub)"
@@ -226,8 +271,8 @@ to destroy them and players will be able to make replacements.
 	board_type = "machine"
 	origin_tech = "programming=3;engineering=5;bluespace=5;materials=4"
 	req_components = list(
-							"/obj/item/bluespace_crystal" = 3,
-							"/obj/item/weapon/stock_parts/matter_bin" = 1)
+							/obj/item/bluespace_crystal = 3,
+							/obj/item/weapon/stock_parts/matter_bin = 1)
 
 /obj/item/weapon/circuitboard/teleporter_station
 	name = "circuit board (Teleporter Station)"
@@ -235,9 +280,9 @@ to destroy them and players will be able to make replacements.
 	board_type = "machine"
 	origin_tech = "programming=4;engineering=4;bluespace=4"
 	req_components = list(
-							"/obj/item/bluespace_crystal" = 2,
-							"/obj/item/weapon/stock_parts/capacitor" = 2,
-							"/obj/item/weapon/stock_parts/console_screen" = 1)
+							/obj/item/bluespace_crystal = 2,
+							/obj/item/weapon/stock_parts/capacitor = 2,
+							/obj/item/weapon/stock_parts/console_screen = 1)
 
 /obj/item/weapon/circuitboard/telesci_pad
 	name = "circuit board (Telepad)"
@@ -245,10 +290,10 @@ to destroy them and players will be able to make replacements.
 	board_type = "machine"
 	origin_tech = "programming=4;engineering=3;materials=3;bluespace=4"
 	req_components = list(
-							"/obj/item/bluespace_crystal" = 2,
-							"/obj/item/weapon/stock_parts/capacitor" = 1,
-							"/obj/item/weapon/cable_coil" = 1,
-							"/obj/item/weapon/stock_parts/console_screen" = 1)
+							/obj/item/bluespace_crystal = 2,
+							/obj/item/weapon/stock_parts/capacitor = 1,
+							/obj/item/weapon/cable_coil = 1,
+							/obj/item/weapon/stock_parts/console_screen = 1)
 
 /obj/item/weapon/circuitboard/sleeper
 	name = "circuit board (Sleeper)"
@@ -256,10 +301,10 @@ to destroy them and players will be able to make replacements.
 	board_type = "machine"
 	origin_tech = "programming=3;biotech=2;engineering=3;materials=3"
 	req_components = list(
-							"/obj/item/weapon/stock_parts/matter_bin" = 1,
-							"/obj/item/weapon/stock_parts/manipulator" = 1,
-							"/obj/item/weapon/cable_coil" = 1,
-							"/obj/item/weapon/stock_parts/console_screen" = 2)
+							/obj/item/weapon/stock_parts/matter_bin = 1,
+							/obj/item/weapon/stock_parts/manipulator = 1,
+							/obj/item/weapon/cable_coil = 1,
+							/obj/item/weapon/stock_parts/console_screen = 2)
 
 /obj/item/weapon/circuitboard/cryo_tube
 	name = "circuit board (Cryotube)"
@@ -267,9 +312,9 @@ to destroy them and players will be able to make replacements.
 	board_type = "machine"
 	origin_tech = "programming=4;biotech=3;engineering=4"
 	req_components = list(
-							"/obj/item/weapon/stock_parts/matter_bin" = 1,
-							"/obj/item/weapon/cable_coil" = 1,
-							"/obj/item/weapon/stock_parts/console_screen" = 4)
+							/obj/item/weapon/stock_parts/matter_bin = 1,
+							/obj/item/weapon/cable_coil = 1,
+							/obj/item/weapon/stock_parts/console_screen = 4)
 
 /obj/item/weapon/circuitboard/thermomachine
 	name = "circuit board (Cooler)"
@@ -278,10 +323,10 @@ to destroy them and players will be able to make replacements.
 	board_type = "machine"
 	origin_tech = "programming=3;phorontech=3"
 	req_components = list(
-							"/obj/item/weapon/stock_parts/matter_bin" = 2,
-							"/obj/item/weapon/stock_parts/micro_laser" = 2,
-							"/obj/item/weapon/cable_coil" = 1,
-							"/obj/item/weapon/stock_parts/console_screen" = 1)
+							/obj/item/weapon/stock_parts/matter_bin = 2,
+							/obj/item/weapon/stock_parts/micro_laser = 2,
+							/obj/item/weapon/cable_coil = 1,
+							/obj/item/weapon/stock_parts/console_screen = 1)
 
 /obj/item/weapon/circuitboard/thermomachine/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/screwdriver))
@@ -300,29 +345,92 @@ obj/item/weapon/circuitboard/biogenerator
 	board_type = "machine"
 	origin_tech = "programming=3;biotech=2;materials=3"
 	req_components = list(
-							"/obj/item/weapon/stock_parts/matter_bin" = 1,
-							"/obj/item/weapon/stock_parts/manipulator" = 1,
-							"/obj/item/weapon/cable_coil" = 1,
-							"/obj/item/weapon/stock_parts/console_screen" = 1)
-/*
+							/obj/item/weapon/stock_parts/matter_bin = 1,
+							/obj/item/weapon/stock_parts/manipulator = 1,
+							/obj/item/weapon/cable_coil = 1,
+							/obj/item/weapon/stock_parts/console_screen = 1)
+
 /obj/item/weapon/circuitboard/hydroponics
 	name = "circuit board (Hydroponics Tray)"
 	build_path = /obj/machinery/hydroponics/constructable
 	board_type = "machine"
 	origin_tech = "programming=1;biotech=1"
 	req_components = list(
-							"/obj/item/weapon/reagent_containers/glass/beaker" = 2,
-							"/obj/item/weapon/stock_parts/console_screen" = 1)
-*/
+							/obj/item/weapon/stock_parts/matter_bin = 2,
+							/obj/item/weapon/stock_parts/manipulator = 1,
+							/obj/item/weapon/stock_parts/console_screen = 1)
+
 /obj/item/weapon/circuitboard/microwave
 	name = "circuit board (Microwave)"
 	build_path = /obj/machinery/microwave
 	board_type = "machine"
 	origin_tech = "programming=1"
 	req_components = list(
-							"/obj/item/weapon/stock_parts/micro_laser" = 1,
-							"/obj/item/weapon/cable_coil" = 2,
-							"/obj/item/weapon/stock_parts/console_screen" = 1)
+							/obj/item/weapon/stock_parts/micro_laser = 1,
+							/obj/item/weapon/stock_parts/matter_bin = 1,
+							/obj/item/weapon/cable_coil = 2,
+							/obj/item/weapon/stock_parts/console_screen = 1)
+
+/obj/item/weapon/circuitboard/gibber
+	name = "circuit board (Gibber)"
+	build_path = /obj/machinery/gibber
+	board_type = "machine"
+	origin_tech = "programming=1"
+	req_components = list(
+							/obj/item/weapon/stock_parts/matter_bin = 1,
+							/obj/item/weapon/stock_parts/manipulator = 1)
+
+/obj/item/weapon/circuitboard/processor
+	name = "circuit board (Food processor)"
+	build_path = /obj/machinery/processor
+	board_type = "machine"
+	origin_tech = "programming=1"
+	req_components = list(
+							/obj/item/weapon/stock_parts/matter_bin = 1,
+							/obj/item/weapon/stock_parts/manipulator = 1)
+
+//obj/item/weapon/circuitboard/recycler
+//	name = "circuit board (Recycler)"
+//	build_path = /obj/machinery/recycler
+//	board_type = "machine"
+//	origin_tech = "programming=1"
+//	req_components = list(
+//							/obj/item/weapon/stock_parts/matter_bin = 1,
+//							/obj/item/weapon/stock_parts/manipulator = 1)
+
+/obj/item/weapon/circuitboard/seed_extractor
+	name = "circuit board (Seed Extractor)"
+	build_path = /obj/machinery/seed_extractor
+	board_type = "machine"
+	origin_tech = "programming=1"
+	req_components = list(
+							/obj/item/weapon/stock_parts/matter_bin = 1,
+							/obj/item/weapon/stock_parts/manipulator = 1)
+
+/obj/item/weapon/circuitboard/smartfridge
+	name = "circuit board (Smartfridge)"
+	build_path = /obj/machinery/smartfridge
+	board_type = "machine"
+	origin_tech = "programming=1"
+	req_components = list(
+							/obj/item/weapon/stock_parts/matter_bin = 1)
+
+/obj/item/weapon/circuitboard/monkey_recycler
+	name = "circuit board (Monkey Recycler)"
+	build_path = /obj/machinery/monkey_recycler
+	board_type = "machine"
+	origin_tech = "programming=1"
+	req_components = list(
+							/obj/item/weapon/stock_parts/matter_bin = 1,
+							/obj/item/weapon/stock_parts/manipulator = 1)
+
+/obj/item/weapon/circuitboard/holopad
+	name = "circuit board (AI Holopad)"
+	build_path = /obj/machinery/hologram/holopad
+	board_type = "machine"
+	origin_tech = "programming=1"
+	req_components = list(
+							/obj/item/weapon/stock_parts/capacitor = 1)
 
 /obj/item/weapon/circuitboard/chem_dispenser
 	name = "circuit board (Portable Chem Dispenser)"
@@ -330,11 +438,11 @@ obj/item/weapon/circuitboard/biogenerator
 	board_type = "machine"
 	origin_tech = "materials=4;engineering=4;programming=4;phorontech=3;biotech=3"
 	req_components = list(
-							"/obj/item/weapon/stock_parts/matter_bin" = 2,
-							"/obj/item/weapon/stock_parts/capacitor" = 1,
-							"/obj/item/weapon/stock_parts/manipulator" = 1,
-							"/obj/item/weapon/stock_parts/console_screen" = 1,
-							"/obj/item/weapon/cell" = 1)
+							/obj/item/weapon/stock_parts/matter_bin = 2,
+							/obj/item/weapon/stock_parts/capacitor = 1,
+							/obj/item/weapon/stock_parts/manipulator = 1,
+							/obj/item/weapon/stock_parts/console_screen = 1,
+							/obj/item/weapon/stock_parts/cell = 1)
 
 /obj/item/weapon/circuitboard/chem_master
 	name = "circuit board (Chem Master 2999)"
@@ -352,9 +460,9 @@ obj/item/weapon/circuitboard/biogenerator
 	board_type = "machine"
 	origin_tech = "magnets=2;engineering=2;programming=2"
 	req_components = list(
-							"/obj/item/weapon/stock_parts/scanning_module" = 1,
-							"/obj/item/weapon/stock_parts/manipulator" = 1,
-							"/obj/item/weapon/stock_parts/micro_laser" = 1)
+							/obj/item/weapon/stock_parts/scanning_module = 1,
+							/obj/item/weapon/stock_parts/manipulator = 1,
+							/obj/item/weapon/stock_parts/micro_laser = 1)
 
 /obj/item/weapon/circuitboard/autolathe
 	name = "Circuit board (Autolathe)"
@@ -362,9 +470,9 @@ obj/item/weapon/circuitboard/biogenerator
 	board_type = "machine"
 	origin_tech = "engineering=2;programming=2"
 	req_components = list(
-							"/obj/item/weapon/stock_parts/matter_bin" = 3,
-							"/obj/item/weapon/stock_parts/manipulator" = 1,
-							"/obj/item/weapon/stock_parts/console_screen" = 1)
+							/obj/item/weapon/stock_parts/matter_bin = 3,
+							/obj/item/weapon/stock_parts/manipulator = 1,
+							/obj/item/weapon/stock_parts/console_screen = 1)
 
 /obj/item/weapon/circuitboard/protolathe
 	name = "Circuit board (Protolathe)"
@@ -372,9 +480,9 @@ obj/item/weapon/circuitboard/biogenerator
 	board_type = "machine"
 	origin_tech = "engineering=2;programming=2"
 	req_components = list(
-							"/obj/item/weapon/stock_parts/matter_bin" = 2,
-							"/obj/item/weapon/stock_parts/manipulator" = 2,
-							"/obj/item/weapon/reagent_containers/glass/beaker" = 2)
+							/obj/item/weapon/stock_parts/matter_bin = 2,
+							/obj/item/weapon/stock_parts/manipulator = 2,
+							/obj/item/weapon/reagent_containers/glass/beaker = 2)
 
 
 /obj/item/weapon/circuitboard/circuit_imprinter
@@ -383,9 +491,9 @@ obj/item/weapon/circuitboard/biogenerator
 	board_type = "machine"
 	origin_tech = "engineering=2;programming=2"
 	req_components = list(
-							"/obj/item/weapon/stock_parts/matter_bin" = 1,
-							"/obj/item/weapon/stock_parts/manipulator" = 1,
-							"/obj/item/weapon/reagent_containers/glass/beaker" = 2)
+							/obj/item/weapon/stock_parts/matter_bin = 1,
+							/obj/item/weapon/stock_parts/manipulator = 1,
+							/obj/item/weapon/reagent_containers/glass/beaker = 2)
 
 /obj/item/weapon/circuitboard/pacman
 	name = "Circuit Board (PACMAN-type Generator)"
@@ -393,10 +501,10 @@ obj/item/weapon/circuitboard/biogenerator
 	board_type = "machine"
 	origin_tech = "programming=3:powerstorage=3;phorontech=3;engineering=3"
 	req_components = list(
-							"/obj/item/weapon/stock_parts/matter_bin" = 1,
-							"/obj/item/weapon/stock_parts/micro_laser" = 1,
-							"/obj/item/weapon/cable_coil" = 2,
-							"/obj/item/weapon/stock_parts/capacitor" = 1)
+							/obj/item/weapon/stock_parts/matter_bin = 1,
+							/obj/item/weapon/stock_parts/micro_laser = 1,
+							/obj/item/weapon/cable_coil = 2,
+							/obj/item/weapon/stock_parts/capacitor = 1)
 
 /obj/item/weapon/circuitboard/pacman/super
 	name = "Circuit Board (SUPERPACMAN-type Generator)"
@@ -414,8 +522,8 @@ obj/item/weapon/circuitboard/rdserver
 	board_type = "machine"
 	origin_tech = "programming=3"
 	req_components = list(
-							"/obj/item/weapon/cable_coil" = 2,
-							"/obj/item/weapon/stock_parts/scanning_module" = 1)
+							/obj/item/weapon/cable_coil = 2,
+							/obj/item/weapon/stock_parts/scanning_module = 1)
 
 /obj/item/weapon/circuitboard/mechfab
 	name = "Circuit board (Exosuit Fabricator)"
@@ -423,10 +531,10 @@ obj/item/weapon/circuitboard/rdserver
 	board_type = "machine"
 	origin_tech = "programming=3;engineering=3"
 	req_components = list(
-							"/obj/item/weapon/stock_parts/matter_bin" = 2,
-							"/obj/item/weapon/stock_parts/manipulator" = 1,
-							"/obj/item/weapon/stock_parts/micro_laser" = 1,
-							"/obj/item/weapon/stock_parts/console_screen" = 1)
+							/obj/item/weapon/stock_parts/matter_bin = 2,
+							/obj/item/weapon/stock_parts/manipulator = 1,
+							/obj/item/weapon/stock_parts/micro_laser = 1,
+							/obj/item/weapon/stock_parts/console_screen = 1)
 
 /obj/item/weapon/circuitboard/clonepod
 	name = "Circuit board (Clone Pod)"
@@ -434,10 +542,10 @@ obj/item/weapon/circuitboard/rdserver
 	board_type = "machine"
 	origin_tech = "programming=3;biotech=3"
 	req_components = list(
-							"/obj/item/weapon/cable_coil" = 2,
-							"/obj/item/weapon/stock_parts/scanning_module" = 2,
-							"/obj/item/weapon/stock_parts/manipulator" = 2,
-							"/obj/item/weapon/stock_parts/console_screen" = 1)
+							/obj/item/weapon/cable_coil = 2,
+							/obj/item/weapon/stock_parts/scanning_module = 2,
+							/obj/item/weapon/stock_parts/manipulator = 2,
+							/obj/item/weapon/stock_parts/console_screen = 1)
 
 /obj/item/weapon/circuitboard/clonescanner
 	name = "Circuit board (Cloning Scanner)"
@@ -445,11 +553,11 @@ obj/item/weapon/circuitboard/rdserver
 	board_type = "machine"
 	origin_tech = "programming=2;biotech=2"
 	req_components = list(
-							"/obj/item/weapon/stock_parts/scanning_module" = 1,
-							"/obj/item/weapon/stock_parts/manipulator" = 1,
-							"/obj/item/weapon/stock_parts/micro_laser" = 1,
-							"/obj/item/weapon/stock_parts/console_screen" = 1,
-							"/obj/item/weapon/cable_coil" = 2)
+							/obj/item/weapon/stock_parts/scanning_module = 1,
+							/obj/item/weapon/stock_parts/manipulator = 1,
+							/obj/item/weapon/stock_parts/micro_laser = 1,
+							/obj/item/weapon/stock_parts/console_screen = 1,
+							/obj/item/weapon/cable_coil = 2)
 
 /obj/item/weapon/circuitboard/cyborgrecharger
 	name = "Circuit board (Cyborg Recharger)"
@@ -457,9 +565,9 @@ obj/item/weapon/circuitboard/rdserver
 	board_type = "machine"
 	origin_tech = "powerstorage=3;engineering=3"
 	req_components = list(
-							"/obj/item/weapon/stock_parts/capacitor" = 2,
-							"/obj/item/weapon/cell" = 1,
-							"/obj/item/weapon/stock_parts/manipulator" = 1)
+							/obj/item/weapon/stock_parts/capacitor = 2,
+							/obj/item/weapon/stock_parts/cell = 1,
+							/obj/item/weapon/stock_parts/manipulator = 1)
 
 // Telecomms circuit boards:
 /obj/item/weapon/circuitboard/telecomms/receiver
@@ -468,10 +576,10 @@ obj/item/weapon/circuitboard/rdserver
 	board_type = "machine"
 	origin_tech = "programming=4;engineering=3;bluespace=2"
 	req_components = list(
-							"/obj/item/weapon/stock_parts/subspace/ansible" = 1,
-							"/obj/item/weapon/stock_parts/subspace/filter" = 1,
-							"/obj/item/weapon/stock_parts/manipulator" = 2,
-							"/obj/item/weapon/stock_parts/micro_laser" = 1)
+							/obj/item/weapon/stock_parts/subspace/ansible = 1,
+							/obj/item/weapon/stock_parts/subspace/filter = 1,
+							/obj/item/weapon/stock_parts/manipulator = 2,
+							/obj/item/weapon/stock_parts/micro_laser = 1)
 
 /obj/item/weapon/circuitboard/telecomms/hub
 	name = "Circuit Board (Hub Mainframe)"
@@ -479,9 +587,9 @@ obj/item/weapon/circuitboard/rdserver
 	board_type = "machine"
 	origin_tech = "programming=4;engineering=4"
 	req_components = list(
-							"/obj/item/weapon/stock_parts/manipulator" = 2,
-							"/obj/item/weapon/cable_coil" = 2,
-							"/obj/item/weapon/stock_parts/subspace/filter" = 2)
+							/obj/item/weapon/stock_parts/manipulator = 2,
+							/obj/item/weapon/cable_coil = 2,
+							/obj/item/weapon/stock_parts/subspace/filter = 2)
 
 /obj/item/weapon/circuitboard/telecomms/relay
 	name = "Circuit Board (Relay Mainframe)"
@@ -489,9 +597,9 @@ obj/item/weapon/circuitboard/rdserver
 	board_type = "machine"
 	origin_tech = "programming=3;engineering=4;bluespace=3"
 	req_components = list(
-							"/obj/item/weapon/stock_parts/manipulator" = 2,
-							"/obj/item/weapon/cable_coil" = 2,
-							"/obj/item/weapon/stock_parts/subspace/filter" = 2)
+							/obj/item/weapon/stock_parts/manipulator = 2,
+							/obj/item/weapon/cable_coil = 2,
+							/obj/item/weapon/stock_parts/subspace/filter = 2)
 
 /obj/item/weapon/circuitboard/telecomms/bus
 	name = "Circuit Board (Bus Mainframe)"
@@ -499,9 +607,9 @@ obj/item/weapon/circuitboard/rdserver
 	board_type = "machine"
 	origin_tech = "programming=4;engineering=4"
 	req_components = list(
-							"/obj/item/weapon/stock_parts/manipulator" = 2,
-							"/obj/item/weapon/cable_coil" = 1,
-							"/obj/item/weapon/stock_parts/subspace/filter" = 1)
+							/obj/item/weapon/stock_parts/manipulator = 2,
+							/obj/item/weapon/cable_coil = 1,
+							/obj/item/weapon/stock_parts/subspace/filter = 1)
 
 /obj/item/weapon/circuitboard/tesla_coil
 	name = "circuit board (Tesla Coil)"
@@ -525,12 +633,12 @@ obj/item/weapon/circuitboard/rdserver
 	board_type = "machine"
 	origin_tech = "programming=4;engineering=4"
 	req_components = list(
-							"/obj/item/weapon/stock_parts/manipulator" = 3,
-							"/obj/item/weapon/stock_parts/subspace/filter" = 1,
-							"/obj/item/weapon/stock_parts/subspace/treatment" = 2,
-							"/obj/item/weapon/stock_parts/subspace/analyzer" = 1,
-							"/obj/item/weapon/cable_coil" = 2,
-							"/obj/item/weapon/stock_parts/subspace/amplifier" = 1)
+							/obj/item/weapon/stock_parts/manipulator = 3,
+							/obj/item/weapon/stock_parts/subspace/filter = 1,
+							/obj/item/weapon/stock_parts/subspace/treatment = 2,
+							/obj/item/weapon/stock_parts/subspace/analyzer = 1,
+							/obj/item/weapon/cable_coil = 2,
+							/obj/item/weapon/stock_parts/subspace/amplifier = 1)
 
 /obj/item/weapon/circuitboard/telecomms/server
 	name = "Circuit Board (Telecommunication Server)"
@@ -538,9 +646,9 @@ obj/item/weapon/circuitboard/rdserver
 	board_type = "machine"
 	origin_tech = "programming=4;engineering=4"
 	req_components = list(
-							"/obj/item/weapon/stock_parts/manipulator" = 2,
-							"/obj/item/weapon/cable_coil" = 1,
-							"/obj/item/weapon/stock_parts/subspace/filter" = 1)
+							/obj/item/weapon/stock_parts/manipulator = 2,
+							/obj/item/weapon/cable_coil = 1,
+							/obj/item/weapon/stock_parts/subspace/filter = 1)
 
 /obj/item/weapon/circuitboard/telecomms/broadcaster
 	name = "Circuit Board (Subspace Broadcaster)"
@@ -548,8 +656,21 @@ obj/item/weapon/circuitboard/rdserver
 	board_type = "machine"
 	origin_tech = "programming=4;engineering=4;bluespace=2"
 	req_components = list(
-							"/obj/item/weapon/stock_parts/manipulator" = 2,
-							"/obj/item/weapon/cable_coil" = 1,
-							"/obj/item/weapon/stock_parts/subspace/filter" = 1,
-							"/obj/item/weapon/stock_parts/subspace/crystal" = 1,
-							"/obj/item/weapon/stock_parts/micro_laser/high" = 2)
+							/obj/item/weapon/stock_parts/manipulator = 2,
+							/obj/item/weapon/cable_coil = 1,
+							/obj/item/weapon/stock_parts/subspace/filter = 1,
+							/obj/item/weapon/stock_parts/subspace/crystal = 1,
+							/obj/item/weapon/stock_parts/micro_laser/high = 2)
+
+/obj/item/weapon/circuitboard/ore_redemption
+	name = "circuit board (Ore Redemption)"
+	build_path = /obj/machinery/mineral/ore_redemption
+	board_type = "machine"
+	origin_tech = "programming=1;engineering=2"
+	req_components = list(
+							/obj/item/weapon/stock_parts/console_screen = 1,
+							/obj/item/weapon/stock_parts/matter_bin = 1,
+							/obj/item/weapon/stock_parts/micro_laser = 1,
+							/obj/item/weapon/stock_parts/manipulator = 1,
+							/obj/item/device/assembly/igniter = 1)
+

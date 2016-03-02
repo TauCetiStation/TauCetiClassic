@@ -364,6 +364,12 @@
 	else
 		return 0
 
+/atom/proc/isinspace()
+	if(istype(get_turf(src), /turf/space))
+		return 1
+	else
+		return 0
+
 /atom/proc/checkpass(passflag)
 	return pass_flags&passflag
 

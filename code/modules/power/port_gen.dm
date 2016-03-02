@@ -219,6 +219,9 @@ display round(lastgen) and phorontank amount
 		emp_act(1)
 	else if(!active)
 
+		if(exchange_parts(user, I))
+			return
+
 		if(istype(I, /obj/item/weapon/wrench))
 
 			if(!anchored)

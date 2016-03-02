@@ -243,6 +243,9 @@
 			node.update_icon()
 		return
 
+	if(exchange_parts(user, G))
+		return
+
 	default_deconstruction_crowbar(G)
 
 /obj/machinery/atmospherics/unary/cryo_cell/open_machine()

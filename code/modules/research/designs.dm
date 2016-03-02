@@ -942,6 +942,26 @@ datum/design/tech_disk
 /////////////Stock Parts////////////////
 ////////////////////////////////////////
 
+datum/design/RPED
+	name = "Rapid Part Exchange Device"
+	desc = "Special mechanical module made to store, sort, and apply standart machine parts."
+	id = "rped"
+	req_tech = list("engineering" = 3,
+					"materials" = 3)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 10000, "$glass" = 5000) //hardcore
+	build_path = /obj/item/weapon/storage/part_replacer
+
+/datum/design/BS_RPED
+	name = "Bluespace RPED"
+	desc = "Powered by bluespace technology, this RPED variant can upgrade buildings from a distance, without needing to remove the panel first."
+	id = "bs_rped"
+	req_tech = list("engineering" = 3, "materials" = 5, "programming" = 3, "bluespace" = 3)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 15000, "$glass" = 5000, "$silver" = 2500) //hardcore
+	build_path = /obj/item/weapon/storage/part_replacer/bluespace
+	category = list("Stock Parts")
+
 datum/design/basic_capacitor
 	name = "Basic Capacitor"
 	desc = "A stock part used in the construction of various devices."
@@ -1042,6 +1062,18 @@ datum/design/super_capacitor
 	materials = list("$metal" = 50, "$glass" = 50, "$gold" = 20)
 	build_path = /obj/item/weapon/stock_parts/capacitor/super
 
+/datum/design/quadratic_capacitor
+	name = "Quadratic Capacitor"
+	desc = "A stock part used in the construction of various devices."
+	id = "quadratic_capacitor"
+	req_tech = list("powerstorage" = 6, "materials" = 5)
+	build_type = PROTOLATHE
+	reliability = 71
+	materials = list("$metal" = 100, "$glass" = 100, "$diamond" = 40)
+	build_path = /obj/item/weapon/stock_parts/capacitor/quadratic
+//	category = list("Stock Parts")
+
+
 datum/design/phasic_sensor
 	name = "Phasic Sensor Module"
 	desc = "A stock part used in the construction of various devices."
@@ -1051,6 +1083,17 @@ datum/design/phasic_sensor
 	materials = list("$metal" = 50, "$glass" = 20, "$silver" = 10)
 	reliability = 72
 	build_path = /obj/item/weapon/stock_parts/scanning_module/phasic
+
+/datum/design/triphasic_scanning
+	name = "Triphasic Scanning Module"
+	desc = "A stock part used in the construction of various devices."
+	id = "triphasic_scanning"
+	req_tech = list("magnets" = 6, "materials" = 4)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 100, "$glass" = 40, "$diamond" = 20)
+	reliability = 72
+	build_path = /obj/item/weapon/stock_parts/scanning_module/triphasic
+//	category = list("Stock Parts")
 
 datum/design/pico_mani
 	name = "Pico Manipulator"
@@ -1062,6 +1105,17 @@ datum/design/pico_mani
 	reliability = 73
 	build_path = /obj/item/weapon/stock_parts/manipulator/pico
 
+/datum/design/femto_mani
+	name = "Femto Manipulator"
+	desc = "A stock part used in the construction of various devices."
+	id = "femto_mani"
+	req_tech = list("materials" = 6, "programming" = 3)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 60, "$diamond" = 30)
+	reliability = 73
+	build_path = /obj/item/weapon/stock_parts/manipulator/femto
+//	category = list("Stock Parts")
+
 datum/design/ultra_micro_laser
 	name = "Ultra-High-Power Micro-Laser"
 	desc = "A stock part used in the construction of various devices."
@@ -1071,6 +1125,17 @@ datum/design/ultra_micro_laser
 	materials = list("$metal" = 10, "$glass" = 20, "$uranium" = 10)
 	reliability = 70
 	build_path = /obj/item/weapon/stock_parts/micro_laser/ultra
+
+/datum/design/quadultra_micro_laser
+	name = "Quad-Ultra Micro-Laser"
+	desc = "A stock part used in the construction of various devices."
+	id = "quadultra_micro_laser"
+	req_tech = list("magnets" = 6, "materials" = 6)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 20, "$glass" = 40, "$uranium" = 20, "$diamond" = 20)
+	reliability = 70
+	build_path = /obj/item/weapon/stock_parts/micro_laser/quadultra
+//	category = list("Stock Parts")
 
 datum/design/super_matter_bin
 	name = "Super Matter Bin"
@@ -1082,6 +1147,16 @@ datum/design/super_matter_bin
 	reliability = 75
 	build_path = /obj/item/weapon/stock_parts/matter_bin/super
 
+/datum/design/bluespace_matter_bin
+	name = "Bluespace Matter Bin"
+	desc = "A stock part used in the construction of various devices."
+	id = "bluespace_matter_bin"
+	req_tech = list("materials" = 6)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 160, "$diamond" = 200)
+	reliability = 75
+	build_path = /obj/item/weapon/stock_parts/matter_bin/bluespace
+//	category = list("Stock Parts")
 
 
 datum/design/telesci_gps
@@ -1167,7 +1242,7 @@ datum/design/basic_cell
 	req_tech = list("powerstorage" = 1)
 	build_type = PROTOLATHE | AUTOLATHE |MECHFAB
 	materials = list("$metal" = 700, "$glass" = 50)
-	build_path = /obj/item/weapon/cell
+	build_path = /obj/item/weapon/stock_parts/cell
 	category = "Misc"
 
 datum/design/high_cell
@@ -1177,7 +1252,7 @@ datum/design/high_cell
 	req_tech = list("powerstorage" = 2)
 	build_type = PROTOLATHE | AUTOLATHE | MECHFAB
 	materials = list("$metal" = 700, "$glass" = 60)
-	build_path = /obj/item/weapon/cell/high
+	build_path = /obj/item/weapon/stock_parts/cell/high
 	category = "Misc"
 
 datum/design/super_cell
@@ -1188,7 +1263,7 @@ datum/design/super_cell
 	reliability = 75
 	build_type = PROTOLATHE | MECHFAB
 	materials = list("$metal" = 700, "$glass" = 70)
-	build_path = /obj/item/weapon/cell/super
+	build_path = /obj/item/weapon/stock_parts/cell/super
 	category = "Misc"
 
 datum/design/hyper_cell
@@ -1199,8 +1274,22 @@ datum/design/hyper_cell
 	reliability = 70
 	build_type = PROTOLATHE | MECHFAB
 	materials = list("$metal" = 400, "$gold" = 150, "$silver" = 150, "$glass" = 70)
-	build_path = /obj/item/weapon/cell/hyper
+	build_path = /obj/item/weapon/stock_parts/cell/hyper
 	category = "Misc"
+
+/datum/design/bluespace_cell
+	name = "Bluespace Power Cell"
+	desc = "A power cell that holds 40000 units of energy."
+	id = "bluespace_cell"
+	req_tech = list("powerstorage" = 6, "materials" = 5)
+	reliability = 70
+	build_type = PROTOLATHE | MECHFAB
+	materials = list("$metal" = 800, "$gold" = 300, "$silver" = 300, "$glass" = 160, "$diamond" = 160)
+//	construction_time=100
+	build_path = /obj/item/weapon/stock_parts/cell/bluespace
+//	category = list("Misc","Power Designs")
+	category = "Misc"
+
 
 datum/design/light_replacer
 	name = "Light Replacer"
@@ -1313,7 +1402,7 @@ datum/design/biogenerator
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/biogenerator
-/*
+
 datum/design/hydroponics
 	name = "Hydroponics Tray Board"
 	desc = "The circuit board for a hydroponics tray."
@@ -1322,7 +1411,77 @@ datum/design/hydroponics
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/hydroponics
-*/
+
+/datum/design/gibber
+	name = "Machine Design (Gibber Board)"
+	desc = "The circuit board for a gibber."
+	id = "gibber"
+	req_tech = list("programming" = 1)
+	build_type = IMPRINTER
+	materials = list("$glass" = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/gibber
+//	category = list ("Misc. Machinery")
+
+/datum/design/smartfridge
+	name = "Machine Design (Smartfridge Board)"
+	desc = "The circuit board for a smartfridge."
+	id = "smartfridge"
+	req_tech = list("programming" = 1)
+	build_type = IMPRINTER
+	materials = list("$glass" = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/smartfridge
+//	category = list ("Misc. Machinery")
+
+/datum/design/monkey_recycler
+	name = "Machine Design (Monkey Recycler Board)"
+	desc = "The circuit board for a monkey recycler."
+	id = "smartfridge"
+	req_tech = list("programming" = 1)
+	build_type = IMPRINTER
+	materials = list("$glass" = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/monkey_recycler
+//	category = list ("Misc. Machinery")
+
+/datum/design/seed_extractor
+	name = "Machine Design (Seed Extractor Board)"
+	desc = "The circuit board for a seed extractor."
+	id = "seed_extractor"
+	req_tech = list("programming" = 1)
+	build_type = IMPRINTER
+	materials = list("$glass" = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/seed_extractor
+//	category = list ("Misc. Machinery")
+
+/datum/design/processor
+	name = "Machine Design (Processor Board)"
+	desc = "The circuit board for a processor."
+	id = "processor"
+	req_tech = list("programming" = 1)
+	build_type = IMPRINTER
+	materials = list("$glass" = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/processor
+//	category = list ("Misc. Machinery")
+
+//datum/design/recycler
+//	name = "Machine Design (Recycler Board)"
+//	desc = "The circuit board for a recycler."
+//	id = "recycler"
+//	req_tech = list("programming" = 1)
+//	build_type = IMPRINTER
+//	materials = list("$glass" = 1000, "sacid" = 20)
+//	build_path = /obj/item/weapon/circuitboard/recycler
+//	category = list ("Misc. Machinery")
+
+/datum/design/holopad
+	name = "Machine Design (AI Holopad Board)"
+	desc = "The circuit board for a holopad."
+	id = "holopad"
+	req_tech = list("programming" = 1)
+	build_type = IMPRINTER
+	materials = list("$glass" = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/holopad
+//	category = list ("Misc. Machinery")
+
 datum/design/microwave
 	name = "Microwave Board"
 	desc = "The circuit board for a microwave."

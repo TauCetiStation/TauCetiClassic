@@ -170,7 +170,8 @@ var/list/admin_verbs_debug = list(
 	/*/client/proc/callproc,*/
 	/client/proc/toggledebuglogs,
 	/client/proc/SDQL_query,
-	/client/proc/SDQL2_query
+	/client/proc/SDQL2_query,
+	/proc/machine_upgrade
 	)
 var/list/admin_verbs_possess = list(
 	/proc/possess,

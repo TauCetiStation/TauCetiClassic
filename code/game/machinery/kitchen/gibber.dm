@@ -9,9 +9,10 @@
 	var/operating = 0 //Is it on?
 	var/dirty = 0 // Does it need cleaning?
 
-	var/gib_time = 40 // Time from starting until meat appears
+	var/gibtime = 40 // Time from starting until meat appears
 	var/gib_throw_dir // Direction to spit meat and gibs in.
-
+	var/meat_produced = 0
+	var/ignore_clothing = 0
 	use_power = 1
 	idle_power_usage = 2
 	active_power_usage = 500
@@ -50,6 +51,21 @@
 /obj/machinery/gibber/New()
 	..()
 	src.overlays += image('icons/obj/kitchen.dmi', "grjam")
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/gibber(null)
+	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
+	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
+	RefreshParts()
+
+/obj/machinery/gibber/RefreshParts()
+	var/gib_time = 40
+	for(var/obj/item/weapon/stock_parts/matter_bin/B in component_parts)
+		meat_produced += 3 * B.rating
+	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
+		gib_time -= 5 * M.rating
+		gibtime = gib_time
+		if(M.rating >= 2)
+			ignore_clothing = 1
 
 /obj/machinery/gibber/update_icon()
 	overlays.Cut()
@@ -90,20 +106,24 @@
 		emagged = 1
 		return
 
+	if (istype(W, /obj/item/weapon/grab))
+		src.add_fingerprint(user)
+		var/obj/item/weapon/grab/G = W
+		move_into_gibber(user,G)
+		update_icon()
+
+	if(default_deconstruction_screwdriver(user, "grinder_open", "grinder", W))
+		return
+
+	if(exchange_parts(user, W))
+		return
+
+	if(default_pry_open(W))
+		return
+
 	if(default_unfasten_wrench(user, W))
 		return
 
-	var/obj/item/weapon/grab/G = W
-
-	if(!istype(G))
-		return ..()
-
-	if(G.state < 2)
-		user << "<span class='danger'>You need a better grip to do that!</span>"
-		return
-
-	move_into_gibber(user,G.affecting)
-	// Grab() process should clean up the grab item, no need to del it.
 
 /obj/machinery/gibber/MouseDrop_T(mob/target, mob/user)
 	if(user.stat || user.restrained())
@@ -128,8 +148,7 @@
 		user << "<span class='danger'>The gibber safety guard is engaged!</span>"
 		return
 
-
-	if(victim.abiotic(1))
+	if(victim.abiotic(1) && !ignore_clothing)
 		user << "<span class='danger'>Subject may not have abiotic items on.</span>"
 		return
 
@@ -205,7 +224,7 @@
 		slab_nutrition *= 0.5
 	slab_nutrition /= slab_count
 
-	spawn(gib_time)
+	spawn(gibtime)
 		for(var/i=1 to slab_count)
 			var/obj/item/weapon/reagent_containers/food/snacks/meat/new_meat = new slab_type(get_turf(get_step(src, 8)))
 			new_meat.name = "[slab_name] [new_meat.name]"
