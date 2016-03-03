@@ -1,7 +1,7 @@
 /obj/machinery/atmospherics/unary/cryo_cell
 	name = "cryo cell"
 	icon = 'icons/obj/cryogenics.dmi'
-	icon_state = "cell-off"
+	icon_state = "pod-off"
 	density = 1
 	anchored = 1
 
@@ -232,7 +232,7 @@
 		user.visible_message("[user] adds \a [G] to \the [src]!", "You add \a [G] to \the [src]!")
 
 	if(!(on || occupant || state_open))
-		if(default_deconstruction_screwdriver(user, "cell-o", "cell-off", G))
+		if(default_deconstruction_screwdriver(user, "pod-o", "pod-off", G))
 			return
 
 	if(default_change_direction_wrench(user, G))
@@ -261,17 +261,23 @@
 		return occupant
 
 /obj/machinery/atmospherics/unary/cryo_cell/update_icon()
+	overlays.Cut()
+	if(occupant)
+		var/image/pickle = image(occupant.icon, occupant.icon_state)
+		pickle.overlays = occupant.overlays
+		pickle.pixel_y = 20
+		overlays += pickle
 	if(panel_open)
-		icon_state = "cell-o"
+		icon_state = "pod-o"
+		overlays += "lid-off"
 	else if(state_open)
-		icon_state = "cell-open"
+		icon_state = "pod-open"
 	else if(on && is_operational())
-		if(occupant)
-			icon_state = "cell-occupied"
-		else
-			icon_state = "cell-on"
+		icon_state = "pod-on"
+		overlays += "lid-on"
 	else
-		icon_state = "cell-off"
+		icon_state = "pod-off"
+		overlays += "lid-off"
 
 /obj/machinery/atmospherics/unary/cryo_cell/proc/process_occupant()
 	if(air_contents.total_moles() < 10)
