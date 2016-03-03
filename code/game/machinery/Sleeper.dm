@@ -22,6 +22,7 @@
 	var/list/injection_chems = list() //list of injectable chems except inaprovaline, coz inaprovaline is always avalible
 	var/list/possible_chems = list(list("stoxin", "dexalin", "bicaridine", "kelotane"),
 									list("stoxin", "dexalinp", "imidazoline", "dermaline", "bicaridine"),
+									list("tricordrazine", "anti_toxin", "ryetalyn", "dermaline", "bicaridine", "imidazoline"),
 									list("tricordrazine", "anti_toxin", "ryetalyn", "dermaline", "bicaridine", "imidazoline", "alkysine", "arithrazine"))
 
 	var/available_chemicals = list("inaprovaline" = "Inaprovaline", "stoxin" = "Soporific", "paracetamol" = "Paracetamol", "anti_toxin" = "Dylovene", "dexalin" = "Dexalin")
@@ -41,6 +42,18 @@
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
 	component_parts += new /obj/item/weapon/cable_coil(null, 1)
 	RefreshParts()
+
+/obj/machinery/sleeper/RefreshParts()
+	var/E
+	var/I
+	for(var/obj/item/weapon/stock_parts/matter_bin/B in component_parts)
+		E += B.rating
+	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
+		I += M.rating
+
+	injection_chems = possible_chems[I]
+	efficiency = E
+	min_health = -E * 25
 
 /obj/machinery/sleeper/allow_drop()
 	return 0
