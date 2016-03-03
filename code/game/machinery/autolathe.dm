@@ -216,8 +216,6 @@ var/global/list/autolathe_recipes_hidden = list( \
 	return
 
 /obj/machinery/autolathe/attackby(var/obj/item/I as obj, var/mob/user as mob)
-	if (stat)
-		return 1
 	if (busy)
 		user << "\red The autolathe is busy. Please wait for completion of previous operation."
 		return 1
@@ -242,6 +240,9 @@ var/global/list/autolathe_recipes_hidden = list( \
 		else
 			attack_hand(user)
 			return 1
+
+	if (stat)
+		return 1
 
 	if (src.m_amount + I.m_amt > max_m_amount)
 		user << "\red The autolathe is full. Please remove metal from the autolathe in order to insert more."
