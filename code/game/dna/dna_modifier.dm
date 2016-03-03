@@ -813,6 +813,7 @@
 					success = setInjectorBlock(I,blk,buf)
 				else
 					I.buf = buf
+					success = 1
 				waiting_for_user_input = 0
 				if(success)
 					I.loc = src.loc
