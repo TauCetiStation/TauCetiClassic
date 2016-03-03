@@ -30,7 +30,7 @@ var/power_fail_event = 0
 		S.power_change()
 
 	for(var/obj/machinery/power/apc/C in world)
-		if(C.cell && C.z == 1)
+		if(C.cell && C.z == ZLEVEL_STATION)
 			C.cell.charge = 0
 
 /proc/power_restore(var/announce = 1, var/badminery = 0)
@@ -43,7 +43,7 @@ var/power_fail_event = 0
 			M << sound('sound/AI/poweron.ogg')
 	if(badminery)
 		for(var/obj/machinery/power/apc/C in world)
-			if(C.cell && C.z == 1)
+			if(C.cell && C.z == ZLEVEL_STATION)
 				C.cell.charge = C.cell.maxcharge
 	for(var/obj/machinery/power/smes/S in world)
 		var/area/current_area = get_area(S)

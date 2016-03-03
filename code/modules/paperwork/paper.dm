@@ -83,7 +83,7 @@
 		usr << "<span class='warning'>You cut yourself on the paper.</span>"
 		return
 	var/n_name = sanitize(copytext(input(usr, "What would you like to label the paper?", "Paper Labelling", null)  as text, 1, MAX_NAME_LEN))
-	if((loc == usr && usr.stat == 0))
+	if((loc == usr && usr.stat == CONSCIOUS))
 		name = "[(n_name ? text("[n_name]") : "paper")]"
 	add_fingerprint(usr)
 	return

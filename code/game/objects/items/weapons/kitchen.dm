@@ -256,7 +256,7 @@
 					H.Paralyse(time)
 				else
 					H.Stun(time)
-				if(H.stat != 2)	H.stat = 1
+				if(H.stat != DEAD)	H.stat = UNCONSCIOUS
 				user.visible_message("\red <B>[H] has been knocked unconscious!</B>", "\red <B>You knock [H] unconscious!</B>")
 				return
 			else

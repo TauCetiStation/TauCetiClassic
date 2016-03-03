@@ -451,7 +451,7 @@
 	set category = "Object"
 	set src in oview(1)
 
-	if (usr.stat != 0)
+	if (usr.stat != CONSCIOUS)
 		return
 	if (!src.isopen)
 		usr << "<font color='red'>The unit's doors are shut.</font>"
@@ -972,7 +972,7 @@
 	set category = "Object"
 	set src in oview(1)
 
-	if (usr.stat != 0)
+	if (usr.stat != CONSCIOUS)
 		return
 
 	eject_occupant(usr)

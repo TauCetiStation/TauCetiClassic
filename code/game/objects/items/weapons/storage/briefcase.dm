@@ -39,7 +39,7 @@
 			M.Paralyse(time)
 		else
 			M.Stun(time)
-		if(M.stat != 2)	M.stat = 1
+		if(M.stat != DEAD)	M.stat = UNCONSCIOUS
 		for(var/mob/O in viewers(M, null))
 			O.show_message(text("\red <B>[] has been knocked unconscious!</B>", M), 1, "\red You hear someone fall.", 2)
 	else

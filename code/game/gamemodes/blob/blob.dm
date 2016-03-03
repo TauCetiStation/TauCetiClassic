@@ -156,7 +156,7 @@ var/list/blob_nodes = list()
 		if (1)
 			command_alert("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert")
 			for(var/mob/M in player_list)
-				if(!istype(M,/mob/new_player))
+				if(!isnewplayer(M))
 					M << sound('sound/AI/outbreak5.ogg')
 			return
 

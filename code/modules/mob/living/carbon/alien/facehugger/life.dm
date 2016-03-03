@@ -13,7 +13,7 @@
 
 /mob/living/carbon/alien/facehugger/handle_hud_icons_health()
 	if (healths)
-		if (stat != 2)
+		if (stat != DEAD)
 			switch(health)
 				if(25 to INFINITY)
 					healths.icon_state = "health0"

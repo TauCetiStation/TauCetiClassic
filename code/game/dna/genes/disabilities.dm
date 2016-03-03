@@ -55,7 +55,7 @@
 /datum/dna/gene/disability/hallucinate
 	name="Hallucinate"
 	activation_message="Your mind says 'Hello'."
-	mutation=mHallucination
+	mutation=HALLUCINATE
 
 	New()
 		block=HALLUCINATIONBLOCK

@@ -269,7 +269,7 @@ datum
 			check_completion()
 				if(emergency_shuttle.location<2)
 					return 0
-				if(target.current.stat == 2)
+				if(target.current.stat == DEAD)
 					return 0
 				var/turf/location = get_turf(target.current.loc)
 				if(!location)
@@ -316,7 +316,7 @@ datum
 				if(emergency_shuttle.location<2)
 					return 0
 
-				if(target.current.stat == 2)
+				if(target.current.stat == DEAD)
 					return 0
 
 				var/turf/location = get_turf(target.current.loc)
@@ -358,7 +358,7 @@ datum
 
 			check_completion()
 				if(target && target.current)
-					if(target.current.stat == 2 || istype(get_area(target.current), /area/tdome) || issilicon(target.current) || isbrain(target.current))
+					if(target.current.stat == DEAD || istype(get_area(target.current), /area/tdome) || issilicon(target.current) || isbrain(target.current))
 						return 1
 					else
 						return 0
@@ -429,7 +429,7 @@ datum
 
 			check_completion()
 				if(target && target.current)
-					if(target.current.stat == 2)
+					if(target.current.stat == DEAD)
 						if(config.require_heads_alive) return 0
 					else
 						if(!target.current.handcuffed)
@@ -480,14 +480,14 @@ datum
 				if(emergency_shuttle.location<2)
 					return 0
 
-				if(!owner.current || owner.current.stat == 2)
+				if(!owner.current || owner.current.stat == DEAD)
 					return 0
 				var/turf/location = get_turf(owner.current.loc)
 
 				if(location in locate(/area/shuttle/escape/centcom))
 					for(var/mob/living/player in locate(/area/shuttle/escape/centcom))
 						if (player.mind && (player.mind != owner))
-							if (player.stat != 2) //they're not dead
+							if (player.stat != DEAD) //they're not dead
 								return 0
 					return 1
 
@@ -540,7 +540,7 @@ datum
 			explanation_text = "Stay alive."
 
 			check_completion()
-				if(!owner.current || owner.current.stat == 2)
+				if(!owner.current || owner.current.stat == DEAD)
 					return 0
 
 				return 1
@@ -1062,7 +1062,7 @@ datum
 					if(steal_target)
 						for(var/obj/item/device/aicard/C in owner.current.get_contents())
 							for(var/mob/living/silicon/ai/M in C)
-								if(istype(M, /mob/living/silicon/ai) && M.stat != 2)
+								if(istype(M, /mob/living/silicon/ai) && M.stat != DEAD)
 									return 1
 						for(var/mob/living/silicon/ai/M in world)
 							if(istype(M.loc, /turf))
@@ -1233,7 +1233,7 @@ datum
 				for(var/mob/living/player in world)
 					if(player.type in protected_mobs)	continue
 					if (player.mind)
-						if (player.stat != 2)
+						if (player.stat != DEAD)
 							if (get_turf(player) in shuttle)
 								return 0
 				return 1
@@ -1323,7 +1323,7 @@ datum
 			check_completion()
 				if(!ishuman(owner.current))
 					return 0
-				if(!owner.current || owner.current.stat == 2)
+				if(!owner.current || owner.current.stat == DEAD)
 					return 0
 				if(!(istype(owner.current:wear_suit, /obj/item/clothing/suit/space/space_ninja)&&owner.current:wear_suit:s_initialized))
 					return 0
@@ -1396,7 +1396,7 @@ datum
 			check_completion()
 				if(target && target.current)
 					var/turf/T = get_turf(target.current)
-					if(target.current.stat == 2)
+					if(target.current.stat == DEAD)
 						return 1
 					else if((T) && (T.z != 1))//If they leave the station they count as dead for this
 						return 2
@@ -1460,7 +1460,7 @@ datum/objective/silence
 			if (player == owner.current)
 				continue
 			if (player.mind)
-				if (player.stat != 2)
+				if (player.stat != DEAD)
 					if (get_turf(player) in shuttle)
 						return 0
 					if (get_turf(player) in pod1)

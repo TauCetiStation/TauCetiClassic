@@ -16,7 +16,7 @@
 		if (I.implanted)
 			I.trigger(act, src)
 
-	if(src.stat == 2.0 && (act != "deathgasp"))
+	if(src.stat == DEAD && (act != "deathgasp"))
 		return
 	switch(act)
 		if ("airguitar")
@@ -569,7 +569,7 @@
  // Maybe some people are okay with that.
 
 		for(var/mob/M in dead_mob_list)
-			if(!M.client || istype(M, /mob/new_player))
+			if(!M.client || isnewplayer(M))
 				continue //skip monkeys, leavers and new players
 			if(M.stat == DEAD && (M.client.prefs.chat_toggles & CHAT_GHOSTSIGHT) && !(M in viewers(src,null)))
 				M.show_message(message)

@@ -255,7 +255,7 @@
 		if(A && !A.requires_power)
 			on = 1
 
-		if(src.z == 1 || src.z == 5)
+		if(src.z == ZLEVEL_STATION || src.z == ZLEVEL_ASTEROID)
 			switch(fitting)
 				if("tube","bulb")
 					if(prob(2))

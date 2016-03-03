@@ -118,7 +118,7 @@
 			src << "burp, deathgasp, choke, collapse, dance, drool, gasp, shiver, gnarl, jump, moan, nod, roar, roll, scratch,\nscretch, shake, sign-#, sit, sulk, sway, tail, twitch, whimper"
 		else
 			src << text("Invalid Emote: []", act)
-	if ((message && src.stat == 0))
+	if ((message && src.stat == CONSCIOUS))
 		log_emote("[name]/[key] : [message]")
 		if (act == "roar")
 			playsound(src.loc, 'sound/voice/hiss5.ogg', 40, 1, 1)

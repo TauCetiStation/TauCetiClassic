@@ -553,7 +553,7 @@ ________________________________________________________________________________
 
 				for(var/mob/M in player_list)
 					if(M.stat == DEAD && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTEARS)) // src.client is so that ghosts don't have to listen to mice
-						if(istype(M, /mob/new_player))
+						if(isnewplayer(M))
 							continue
 						M.show_message("<span class='game say'>PDA Message - <span class='name'>[U]</span> -> <span class='name'>[P.owner]</span>: <span class='message'>[sanitize_chat(t)]</span></span>")
 
@@ -725,7 +725,7 @@ ________________________________________________________________________________
 					A << "Your core files are being purged! This is the end..."
 					spawn(0)
 						display_spideros()//To refresh the screen and let this finish.
-					while (A.stat != 2)
+					while (A.stat != DEAD)
 						A.adjustOxyLoss(2)
 						A.updatehealth()
 						sleep(10)

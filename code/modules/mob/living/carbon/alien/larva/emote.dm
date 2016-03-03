@@ -114,7 +114,7 @@
 			src << "burp, choke, collapse, dance, drool, gasp, shiver, gnarl, jump, moan, nod, roll, scratch,\nscretch, shake, sign-#, sulk, sway, tail, twitch, whimper"
 		else
 			src << text("Invalid Emote: []", act)
-	if ((message && src.stat == 0))
+	if ((message && src.stat == CONSCIOUS))
 		log_emote("[name]/[key] : [message]")
 		if (m_type & 1)
 			for(var/mob/O in viewers(src, null))

@@ -97,12 +97,12 @@
 		if(istype(tmob, /mob/living/carbon/human))
 
 			for(var/mob/M in range(tmob, 1))
-				if(tmob.pinned.len ||  ((M.pulling == tmob && ( tmob.restrained() && !( M.restrained() ) && M.stat == 0)) || locate(/obj/item/weapon/grab, tmob.grabbed_by.len)) )
+				if(tmob.pinned.len ||  ((M.pulling == tmob && ( tmob.restrained() && !( M.restrained() ) && M.stat == CONSCIOUS)) || locate(/obj/item/weapon/grab, tmob.grabbed_by.len)) )
 					if ( !(world.time % 5) )
 						src << "\red [tmob] is restrained, you cannot push past"
 					now_pushing = 0
 					return
-				if( tmob.pulling == M && ( M.restrained() && !( tmob.restrained() ) && tmob.stat == 0) )
+				if( tmob.pulling == M && ( M.restrained() && !( tmob.restrained() ) && tmob.stat == CONSCIOUS) )
 					if ( !(world.time % 5) )
 						src << "\red [tmob] is restraining [M], you cannot push past"
 					now_pushing = 0
@@ -272,7 +272,7 @@
 
 
 /mob/living/carbon/human/blob_act()
-	if(stat == 2)	return
+	if(stat == DEAD)	return
 	show_message("\red The blob attacks you!")
 	var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
 	var/datum/organ/external/affecting = get_organ(ran_zone(dam_zone))
@@ -532,7 +532,7 @@
 //Now checks siemens_coefficient of the affected area by default
 /mob/living/carbon/human/electrocute_act(shock_damage, obj/source, siemens_coeff = 1.0, def_zone = null, tesla_shock = 0)
 	if(status_flags & GODMODE)	return 0	//godmode
-	if(mShock in src.mutations)	return 0 //#Z2 no shock with that mutation.
+	if(NO_SHOCK in src.mutations)	return 0 //#Z2 no shock with that mutation.
 
 	if(!def_zone)
 		def_zone = pick("l_hand", "r_hand")
@@ -948,7 +948,7 @@
 		remoteview_target = null
 		return
 
-	if(!(mMorph in mutations))
+	if(!(MORPH in mutations))
 		src.verbs -= /mob/living/carbon/human/proc/morph
 		return
 
@@ -1027,7 +1027,7 @@
 		remoteview_target = null
 		return
 
-	if(!(mRemotetalk in src.mutations))
+	if(!(REMOTE_TALK in src.mutations))
 		src.verbs -= /mob/living/carbon/human/proc/remotesay
 		return
 
@@ -1058,7 +1058,7 @@
 	else
 		say = sanitize(say)
 	var/mob/T = creatures[target]
-	if(mRemotetalk in T.mutations)
+	if(REMOTE_TALK in T.mutations)
 		T.show_message("\blue You hear [src.real_name]'s voice: [say]")
 	else
 		T.show_message("\blue You hear a voice that seems to echo around the room: [say]")
@@ -1075,7 +1075,7 @@
 		reset_view(0)
 		return
 
-	if(!(mRemote in src.mutations))
+	if(!(REMOTE_VIEW in src.mutations))
 		remoteview_target = null
 		reset_view(0)
 		src.verbs -= /mob/living/carbon/human/proc/remoteobserve
@@ -1098,7 +1098,7 @@
 
 	for(var/mob/living/carbon/human/M in world) //#Z2 only carbon/human for now
 		var/name = M.real_name
-		if(!(mRemotetalk in src.mutations))
+		if(!(REMOTE_TALK in src.mutations))
 			namecounts++
 			name = "([namecounts])"
 		else
@@ -1563,13 +1563,13 @@
 	if(istype(G.affecting,/mob/living/carbon/human))
 		var/mob/living/carbon/human/H = G.affecting
 		H.apply_damage(50,BRUTE)
-		if(H.stat == 2)
+		if(H.stat == DEAD)
 			H.gib()
 	else
 		var/mob/living/M = G.affecting
 		if(!istype(M)) return //wut
 		M.apply_damage(50,BRUTE)
-		if(M.stat == 2)
+		if(M.stat == DEAD)
 			M.gib()
 
 /mob/living/carbon/human/has_eyes()

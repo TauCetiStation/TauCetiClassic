@@ -230,11 +230,12 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 
 //AI verb and proc for sending PDA messages.
-/obj/item/device/pda/ai/proc/cmd_send_pdamesg()
-	set category = "AI IM"
+/obj/item/device/pda/ai/verb/cmd_send_pdamesg()
+	set category = "AI Commands"
 	set name = "Send Message"
 	set src in usr
-	if(usr.stat == 2)
+	set hidden = 1
+	if(usr.stat == DEAD)
 		usr << "You can't send PDA messages because you are dead!"
 		return
 	var/list/plist = available_pdas()
@@ -247,10 +248,10 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 
 /obj/item/device/pda/ai/verb/cmd_toggle_pda_receiver()
-	set category = "AI IM"
+	set category = "AI Commands"
 	set name = "Toggle Sender/Receiver"
 	set src in usr
-	if(usr.stat == 2)
+	if(usr.stat == DEAD)
 		usr << "You can't do that because you are dead!"
 		return
 	toff = !toff
@@ -258,21 +259,22 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 
 /obj/item/device/pda/ai/verb/cmd_toggle_pda_silent()
-	set category = "AI IM"
+	set category = "AI Commands"
 	set name = "Toggle Ringer"
 	set src in usr
-	if(usr.stat == 2)
+	if(usr.stat == DEAD)
 		usr << "You can't do that because you are dead!"
 		return
 	message_silent=!message_silent
 	usr << "<span class='notice'>PDA ringer toggled [(message_silent ? "Off" : "On")]!</span>"
 
 
-/obj/item/device/pda/ai/proc/cmd_show_message_log()
-	set category = "AI IM"
+/obj/item/device/pda/ai/verb/cmd_show_message_log()
+	set category = "AI Commands"
 	set name = "Show Message Log"
 	set src in usr
-	if(usr.stat == 2)
+	set hidden = 1
+	if(usr.stat == DEAD)
 		usr << "You can't do that because you are dead!"
 		return
 	var/HTML = "<html><head><title>AI PDA Message Log</title></head><body>"
@@ -295,6 +297,24 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		playsound(loc, 'sound/items/bikehorn.ogg', 30, 1)
 	return
 
+//Special PDA for robots
+/obj/item/device/pda/ai/robot/cmd_send_pdamesg()
+	set category = "Robot Commands"
+	set hidden = 0
+	..()
+
+/obj/item/device/pda/ai/robot/cmd_toggle_pda_receiver()
+	set category = "Robot Commands"
+	..()
+
+/obj/item/device/pda/ai/robot/cmd_toggle_pda_silent()
+	set category = "Robot Commands"
+	..()
+
+/obj/item/device/pda/ai/robot/cmd_show_message_log()
+	set category = "Robot Commands"
+	set hidden = 0
+	..()
 
 /obj/item/device/pda/ai/pai
 	ttone = "assist"
@@ -958,7 +978,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		P.tnote.Add(list(list("sent" = 0, "owner" = "[owner]", "job" = "[ownjob]", "message" = "[t]", "target" = "\ref[src]")))
 		for(var/mob/M in player_list)
 			if(M.stat == DEAD && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTEARS)) // src.client is so that ghosts don't have to listen to mice
-				if(istype(M, /mob/new_player))
+				if(isnewplayer(M))
 					continue
 				M.show_message("<span class='game say'>PDA Message - <span class='name'>[owner]</span> -> <span class='name'>[P.owner]</span>: <span class='message'>[sanitize_chat(t)]</span></span>")
 
@@ -1325,29 +1345,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 		plist[text("[name]")] = P
 	return plist
-
-
-//Some spare PDAs in a box
-/obj/item/weapon/storage/box/PDAs
-	name = "box of spare PDAs"
-	desc = "A box of spare PDA microcomputers."
-	icon = 'icons/obj/pda.dmi'
-	icon_state = "pdabox"
-
-	New()
-		..()
-		new /obj/item/device/pda(src)
-		new /obj/item/device/pda(src)
-		new /obj/item/device/pda(src)
-		new /obj/item/device/pda(src)
-		new /obj/item/weapon/cartridge/head(src)
-
-		var/newcart = pick(	/obj/item/weapon/cartridge/engineering,
-							/obj/item/weapon/cartridge/security,
-							/obj/item/weapon/cartridge/medical,
-							/obj/item/weapon/cartridge/signal/science,
-							/obj/item/weapon/cartridge/quartermaster)
-		new newcart(src)
 
 // Pass along the pulse to atoms in contents, largely added so pAIs are vulnerable to EMP
 /obj/item/device/pda/emp_act(severity)

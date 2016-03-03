@@ -32,7 +32,7 @@
 		return 1
 
 	ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1)
-		if(src.z > 6) return
+		if(src.z > ZLEVEL_DERELICT) return
 		if(stat & (NOPOWER|BROKEN)) return
 		if(user.stat) return
 
@@ -97,7 +97,7 @@
 			. = ..()
 
 	attack_hand(var/mob/user as mob)
-		if (src.z > 6)
+		if (src.z > ZLEVEL_EMPTY)
 			user << "\red <b>Unable to establish a connection</b>: \black You're too far away from the station!"
 			return
 		if (!network)

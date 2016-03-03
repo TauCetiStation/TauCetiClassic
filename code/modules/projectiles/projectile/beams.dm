@@ -19,6 +19,7 @@
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 	damage = 0
 	damage_type = BURN
+	fake = 1
 	flag = "laser"
 	eyeblur = 2
 
@@ -74,6 +75,7 @@
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 	damage = 0
 	damage_type = BURN
+	fake = 1
 	flag = "laser"
 
 	muzzle_type = /obj/effect/projectile/laser_blue/muzzle
@@ -93,6 +95,7 @@
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 	damage = 0
 	damage_type = BURN
+	fake = 1
 	flag = "laser"
 
 	on_hit(var/atom/target, var/blocked = 0)

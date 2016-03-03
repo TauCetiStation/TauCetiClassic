@@ -23,7 +23,7 @@ datum/objective
 	proc/find_target()
 		var/list/possible_targets = list()
 		for(var/datum/mind/possible_target in ticker.minds)
-			if(possible_target != owner && ishuman(possible_target.current) && (possible_target.current.stat != 2))
+			if(possible_target != owner && ishuman(possible_target.current) && (possible_target.current.stat != DEAD))
 				possible_targets += possible_target
 		if(possible_targets.len > 0)
 			target = pick(possible_targets)
@@ -58,7 +58,7 @@ datum/objective/assassinate
 
 	check_completion()
 		if(target && target.current)
-			if(target.current.stat == DEAD || issilicon(target.current) || isbrain(target.current) || target.current.z > 6 || !target.current.ckey) //Borgs/brains/AIs count as dead for traitor objectives. --NeoFite
+			if(target.current.stat == DEAD || issilicon(target.current) || isbrain(target.current) || target.current.z > ZLEVEL_EMPTY || !target.current.ckey) //Borgs/brains/AIs count as dead for traitor objectives. --NeoFite
 				return 1
 			return 0
 		return 1
@@ -316,7 +316,7 @@ datum/objective/block
 		for(var/mob/living/player in player_list)
 			if(player.type in protected_mobs)	continue
 			if (player.mind)
-				if (player.stat != 2)
+				if (player.stat != DEAD)
 					if (get_turf(player) in shuttle)
 						return 0
 		return 1
@@ -573,11 +573,11 @@ datum/objective/steal
 			if("a functional AI")
 				for(var/obj/item/device/aicard/C in all_items) //Check for ai card
 					for(var/mob/living/silicon/ai/M in C)
-						if(istype(M, /mob/living/silicon/ai) && M.stat != 2) //See if any AI's are alive inside that card.
+						if(istype(M, /mob/living/silicon/ai) && M.stat != DEAD) //See if any AI's are alive inside that card.
 							return 1
 
 				for(var/obj/item/clothing/suit/space/space_ninja/S in all_items) //Let an AI downloaded into a space ninja suit count
-					if(S.AI && S.AI.stat != 2)
+					if(S.AI && S.AI.stat != DEAD)
 						return 1
 				for(var/mob/living/silicon/ai/ai in world)
 					if(istype(ai.loc, /turf))
@@ -611,7 +611,7 @@ datum/objective/download
 	check_completion()
 		if(!ishuman(owner.current))
 			return 0
-		if(!owner.current || owner.current.stat == 2)
+		if(!owner.current || owner.current.stat == DEAD)
 			return 0
 		if(!(istype(owner.current:wear_suit, /obj/item/clothing/suit/space/space_ninja)&&owner.current:wear_suit:s_initialized))
 			return 0
@@ -775,7 +775,7 @@ datum/objective/heist/kidnap
 		var/list/priority_targets = list()
 
 		for(var/datum/mind/possible_target in ticker.minds)
-			if(possible_target != owner && ishuman(possible_target.current) && (possible_target.current.stat != 2) && (possible_target.assigned_role != "MODE"))
+			if(possible_target != owner && ishuman(possible_target.current) && (possible_target.current.stat != DEAD) && (possible_target.assigned_role != "MODE"))
 				possible_targets += possible_target
 				for(var/role in roles)
 					if(possible_target.assigned_role == role)
@@ -795,7 +795,7 @@ datum/objective/heist/kidnap
 
 	check_completion()
 		if(target && target.current)
-			if (target.current.stat == 2)
+			if (target.current.stat == DEAD)
 				return 0 // They're dead. Fail.
 			//if (!target.current.restrained())
 			//	return 0 // They're loose. Close but no cigar.

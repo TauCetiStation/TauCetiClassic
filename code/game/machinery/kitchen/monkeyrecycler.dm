@@ -47,14 +47,14 @@
 
 	default_deconstruction_crowbar(O)
 
-	if (src.stat != 0) //NOPOWER etc
+	if (src.stat != CONSCIOUS) //NOPOWER etc
 		return
 	if (istype(O, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = O
 		var/grabbed = G.affecting
 		if(ismonkey(grabbed))
 			var/mob/living/carbon/monkey/target = grabbed
-			if(target.stat == 0)
+			if(target.stat == CONSCIOUS)
 				user << "\red The monkey is struggling far too much to put it in the recycler."
 			else
 				user.drop_item()
@@ -73,7 +73,7 @@
 	return
 
 /obj/machinery/monkey_recycler/attack_hand(var/mob/user as mob)
-	if (src.stat != 0) //NOPOWER etc
+	if (src.stat != CONSCIOUS) //NOPOWER etc
 		return
 	if(grinded >= required_grind)
 		user << "\blue The machine hisses loudly as it condenses the grinded monkey meat. After a moment, it dispenses a brand new monkey cube."

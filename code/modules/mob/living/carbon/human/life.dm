@@ -206,7 +206,7 @@
 				stuttering = max(10, stuttering)
 		// No. -- cib
 		//Oh, really?
-		if (getBrainLoss() >= 60 && stat != 2)
+		if (getBrainLoss() >= 60 && stat != DEAD)
 			if(prob(3))
 				if(config.rus_language)
 					switch(pick(1,2,3))
@@ -225,7 +225,7 @@
 						if(3)
 							emote("drool")
 
-		if(stat != 2)
+		if(stat != DEAD)
 			var/rn = rand(0, 200)
 			if(getBrainLoss() >= 5)
 				if(0 <= rn && rn <= 3)
@@ -336,7 +336,7 @@
 					if(istype(O)) O.add_autopsy_data("Radiation Poisoning", damage)
 
 	proc/breathe()
-		if(mNobreath in src.mutations)	return //#Z2 We need no breath with this mutation
+		if(NO_BREATH in src.mutations)	return //#Z2 We need no breath with this mutation
 		if(reagents.has_reagent("lexorin")) return
 		if(istype(loc, /obj/machinery/atmospherics/unary/cryo_cell)) return
 		if(species && (species.flags & NO_BREATHE || species.flags & IS_SYNTHETIC)) return
@@ -874,7 +874,7 @@
 		return thermal_protection_flags
 
 	proc/get_heat_protection(temperature) //Temperature is the temperature you're being exposed to.
-		if(mHeatres in mutations) //#Z2
+		if(RESIST_HEAT in mutations) //#Z2
 			return 1 //Fully protected from the fire. //##Z2
 
 		var/thermal_protection_flags = get_heat_protection_flags(temperature)
@@ -1113,7 +1113,7 @@
 
 
 		// nutrition decrease
-		if (nutrition > 0 && stat != 2)
+		if (nutrition > 0 && stat != DEAD)
 			nutrition = max (0, nutrition - HUNGER_FACTOR)
 
 		if (nutrition > 450)
@@ -1604,7 +1604,7 @@
 				if(!machine.check_eye(src))		reset_view(null)
 			else
 				var/isRemoteObserve = 0
-				if((mRemote in mutations) && remoteview_target)
+				if((REMOTE_VIEW in mutations) && remoteview_target)
 					if(getBrainLoss() <= 100)//#Z2 We burn our brain with active remote_view mutation
 						if(remoteview_target.stat==CONSCIOUS)
 							isRemoteObserve = 1
@@ -1737,8 +1737,8 @@
 				if(M.loc != src)
 					stomach_contents.Remove(M)
 					continue
-				if(istype(M, /mob/living/carbon) && stat != 2)
-					if(M.stat == 2)
+				if(istype(M, /mob/living/carbon) && stat != DEAD)
+					if(M.stat == DEAD)
 						M.death(1)
 						stomach_contents.Remove(M)
 						qdel(M)
@@ -1847,7 +1847,7 @@
 
 	if(hud_updateflag & 1 << HEALTH_HUD)
 		var/image/holder = hud_list[HEALTH_HUD]
-		if(stat == 2)
+		if(stat == DEAD)
 			holder.icon_state = "hudhealth-100" 	// X_X
 		else
 			holder.icon_state = "hud[RoundHealth(health)]"
@@ -1866,7 +1866,7 @@
 
 		var/image/holder = hud_list[STATUS_HUD]
 		var/image/holder2 = hud_list[STATUS_HUD_OOC]
-		if(stat == 2)
+		if(stat == DEAD)
 			holder.icon_state = "huddead"
 			holder2.icon_state = "huddead"
 		else if(status_flags & XENO_HOST)
