@@ -402,6 +402,8 @@ Turf and target are seperate in case you want to teleport some distance from a t
 				continue
 		if(M.client && M.client.holder && M.client.holder.fakekey) //stealthmins
 			continue
+		if(usr == M)	//skip yourself
+			continue
 		var/name = M.name
 		if (name in names)
 			namecounts[name]++
@@ -1546,7 +1548,7 @@ var/mob/dview/dview_mob = new
 		var/targetloc = get_turf(A)
 		if(!lockinorbit && loc != lastloc && loc != targetloc)
 			break
-		loc = targetloc
+		forceMove(targetloc)
 		lastloc = loc
 		sleep(0.6)
 
