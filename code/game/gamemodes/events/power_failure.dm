@@ -16,7 +16,7 @@ var/power_fail_event = 0
 
 	for(var/obj/machinery/power/smes/S in world)
 		var/area/current_area = get_area(S)
-		if(current_area.type in skipped_areas ||S.z != 1)
+		if(current_area.type in skipped_areas ||S.z != ZLEVEL_STATION)
 			continue
 		S.last_charge = S.charge
 		S.last_output = S.output
@@ -47,7 +47,7 @@ var/power_fail_event = 0
 				C.cell.charge = C.cell.maxcharge
 	for(var/obj/machinery/power/smes/S in world)
 		var/area/current_area = get_area(S)
-		if(current_area.type in skipped_areas ||S.z != 1)
+		if(current_area.type in skipped_areas ||S.z != ZLEVEL_STATION)
 			continue
 		S.RefreshParts()
 		if(badminery)
@@ -64,7 +64,7 @@ var/power_fail_event = 0
 		for(var/mob/M in player_list)
 			M << sound('sound/AI/poweron.ogg')
 	for(var/obj/machinery/power/smes/S in world)
-		if(S.z != 1)
+		if(S.z != ZLEVEL_STATION)
 			continue
 		S.RefreshParts()
 		S.charge = S.capacity

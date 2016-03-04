@@ -167,7 +167,7 @@
 			var/turf/T = get_turf(R)
 			if (!T)
 				continue
-			if(T.z == 2 || T.z > 7)
+			if(T.z == ZLEVEL_CENTCOMM || T.z > TRANSITIONEDGE)
 				continue
 			var/tmpname = T.loc.name
 			if(areaindex[tmpname])
@@ -186,7 +186,7 @@
 						continue
 				var/turf/T = get_turf(M)
 				if(!T)	continue
-				if(T.z == 2)	continue
+				if(T.z == ZLEVEL_CENTCOMM)	continue
 				var/tmpname = M.real_name
 				if(areaindex[tmpname])
 					tmpname = "[tmpname] ([++areaindex[tmpname]])"
@@ -208,7 +208,7 @@
 			var/turf/T = get_turf(R)
 			if (!T || !R.teleporter_hub || !R.teleporter_console)
 				continue
-			if(T.z == 2 || T.z > 7)
+			if(T.z == ZLEVEL_CENTCOMM || T.z > TRANSITIONEDGE)
 				continue
 			var/tmpname = T.loc.name
 			if(areaindex[tmpname])
@@ -283,7 +283,7 @@
 	return power_station
 
 /obj/machinery/teleport/hub/Bumped(M as mob|obj)
-	if(z == 2)
+	if(z == ZLEVEL_CENTCOMM)
 		M << "You can't use this here."
 	if(is_ready())
 		teleport(M)

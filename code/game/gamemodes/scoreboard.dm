@@ -107,7 +107,7 @@
 			if (location in bad_zone1) score["disc"] = 0
 			if (location in bad_zone2) score["disc"] = 0
 			if (location in bad_zone3) score["disc"] = 0
-			if (A.loc.z != 1) score["disc"] = 0
+			if (A.loc.z != ZLEVEL_STATION) score["disc"] = 0
 */
 		if (score["nuked"])
 			for (var/obj/machinery/nuclearbomb/NUKE in machines)
@@ -138,13 +138,13 @@
 
 	// Check station's power levels
 	for (var/obj/machinery/power/apc/A in machines)
-		if (A.z != 1) continue
+		if (A.z != ZLEVEL_STATION) continue
 		for (var/obj/item/weapon/stock_parts/cell/C in A.contents)
 			if (C.charge < 2300) score["powerloss"] += 1 // 200 charge leeway
 
 	// Check how much uncleaned mess is on the station
 	for (var/obj/effect/decal/cleanable/M in world)
-		if (M.z != 1) continue
+		if (M.z != ZLEVEL_STATION) continue
 		if (istype(M, /obj/effect/decal/cleanable/blood/gibs/)) score["mess"] += 3
 		if (istype(M, /obj/effect/decal/cleanable/blood/)) score["mess"] += 1
 //		if (istype(M, /obj/effect/decal/cleanable/greenpuke)) score["mess"] += 1

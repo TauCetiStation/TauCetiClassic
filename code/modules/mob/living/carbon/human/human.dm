@@ -1109,7 +1109,7 @@
 				names.Add(name)
 				namecounts[name] = 1
 		var/turf/temp_turf = get_turf(M)
-		if((temp_turf.z != 1 && temp_turf.z != 5 || temp_turf.z != src.z) || M.stat!=CONSCIOUS) //Not on mining or the station. Or dead #Z2 + target on the same Z level as player
+		if((temp_turf.z != ZLEVEL_STATION && temp_turf.z != ZLEVEL_ASTEROID || temp_turf.z != src.z) || M.stat!=CONSCIOUS) //Not on mining or the station. Or dead #Z2 + target on the same Z level as player
 			continue
 		creatures[name] += M
 

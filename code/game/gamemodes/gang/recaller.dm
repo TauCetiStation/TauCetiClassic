@@ -228,7 +228,7 @@
 
 					var/area/usrarea = get_area(usr.loc)
 					var/usrturf = get_turf(usr.loc)
-					if(initial(usrarea.name) == "Space" || istype(usrturf,/turf/space) || usr.z != 1)
+					if(initial(usrarea.name) == "Space" || istype(usrturf,/turf/space) || usr.z != ZLEVEL_STATION)
 						usr << "<span class='warning'>You can only use this on the station!</span>"
 						return
 
@@ -365,7 +365,7 @@
 		return 0
 
 	var/turf/userturf = get_turf(user)
-	if(userturf.z != 1) //Shuttle can only be recalled while on station
+	if(userturf.z != ZLEVEL_STATION) //Shuttle can only be recalled while on station
 		user << "<span class='info'>\icon[src]Error: Device out of range of station communication arrays.</span>"
 		recalling = 0
 		return 0
