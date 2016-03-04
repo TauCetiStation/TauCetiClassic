@@ -306,9 +306,9 @@
 		else if(deathtimeminutes > 1)
 			pluralcheck = " [deathtimeminutes] minutes and"
 		var/deathtimeseconds = round((deathtime - deathtimeminutes * 600) / 10,1)
-		usr << "You have been dead for[pluralcheck] [deathtimeseconds] seconds."
 
-		if (deathtime < config.deathtime_required)
+		if(deathtime < config.deathtime_required && !(client.holder && (client.holder.rights & R_ADMIN)))	//Holders with R_ADMIN can give themselvs respawn, so it doesn't matter
+			usr << "You have been dead for[pluralcheck] [deathtimeseconds] seconds."
 			usr << "You must wait 30 minutes to respawn!"
 			return
 		else
