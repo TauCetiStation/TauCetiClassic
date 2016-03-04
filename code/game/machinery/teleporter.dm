@@ -167,7 +167,7 @@
 			var/turf/T = get_turf(R)
 			if (!T)
 				continue
-			if(T.z == ZLEVEL_CENTCOMM || T.z > TRANSITIONEDGE)
+			if(T.z == ZLEVEL_CENTCOMM || T.z > 7)
 				continue
 			var/tmpname = T.loc.name
 			if(areaindex[tmpname])
@@ -208,7 +208,7 @@
 			var/turf/T = get_turf(R)
 			if (!T || !R.teleporter_hub || !R.teleporter_console)
 				continue
-			if(T.z == ZLEVEL_CENTCOMM || T.z > TRANSITIONEDGE)
+			if(T.z == ZLEVEL_CENTCOMM || T.z > 7)
 				continue
 			var/tmpname = T.loc.name
 			if(areaindex[tmpname])
