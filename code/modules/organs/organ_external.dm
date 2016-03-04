@@ -1146,9 +1146,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 	H.regenerate_icons()
 
-	H.stat = 2
+	H.stat = DEAD
 	H.death()
-	brainmob.stat = 2
+	brainmob.stat = DEAD
 	brainmob.death()
 
 /obj/item/weapon/organ/head/proc/transfer_identity(var/mob/living/carbon/human/H)//Same deal as the regular brain proc. Used for human-->head

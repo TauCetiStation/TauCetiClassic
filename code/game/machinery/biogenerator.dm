@@ -126,9 +126,9 @@
 	interact(user)
 
 /obj/machinery/biogenerator/proc/activate()
-	if (usr.stat != 0)
+	if (usr.stat != CONSCIOUS)
 		return
-	if (src.stat != 0) //NOPOWER etc
+	if (src.stat != CONSCIOUS) //NOPOWER etc
 		return
 	if(src.processing)
 		usr << "\red The biogenerator is in the process of working."

@@ -54,7 +54,7 @@
 		brainmob.real_name = H.real_name
 		brainmob.dna = H.dna
 		brainmob.timeofhostdeath = H.timeofdeath
-		brainmob.stat = 0
+		brainmob.stat = CONSCIOUS
 		if(brainmob.mind)
 			brainmob.mind.assigned_role = "Positronic Brain"
 		if(H.mind)
@@ -147,7 +147,7 @@
 	src.brainmob.loc = src
 	src.brainmob.container = src
 	src.brainmob.robot_talk_understand = 1
-	src.brainmob.stat = 0
+	src.brainmob.stat = CONSCIOUS
 	src.brainmob.silent = 0
 	src.brainmob.brain_op_stage = 4.0
 	dead_mob_list -= src.brainmob

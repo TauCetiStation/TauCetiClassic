@@ -17,7 +17,7 @@
 	var/inactive_on_main_station = 0
 	for(var/zone/zone in air_master.zones)
 		var/turf/simulated/turf = locate() in zone.contents
-		if(turf && turf.z == 1)
+		if(turf && turf.z == ZLEVEL_STATION)
 			if(zone.needs_update)
 				active_on_main_station++
 			else
@@ -145,7 +145,7 @@
 	set category = "Debug"
 
 	if(!check_rights(R_SERVER)) return
-	
+
 	message_admins("[usr] manually reloaded Mentors")
 	world.load_mods()
 

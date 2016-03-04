@@ -21,7 +21,7 @@
 		for (var/mob/M in player_list)
 			if (istype(M, /mob/new_player))
 				continue
-			else if(M.stat == 2 &&  M.client.prefs.chat_toggles & CHAT_GHOSTEARS)
+			else if(M.stat == DEAD &&  M.client.prefs.chat_toggles & CHAT_GHOSTEARS)
 				M << "The captive mind of [src] whispers, \"[message]\""
 
 /mob/living/captive_brain/emote(var/message)
@@ -111,7 +111,7 @@
 	if(!message)
 		return
 
-	if (stat == 2)
+	if (stat == DEAD)
 		return say_dead(message)
 
 	if (stat)
@@ -138,9 +138,9 @@
 	host << "Your own thoughts speak: \"[message]\""
 
 	for (var/mob/M in player_list)
-		if (istype(M, /mob/new_player))
+		if (isnewplayer(M))
 			continue
-		else if(M.stat == 2 &&  M.client.prefs.chat_toggles & CHAT_GHOSTEARS)
+		else if(M.stat == DEAD &&  M.client.prefs.chat_toggles & CHAT_GHOSTEARS)
 			M << "[src.truename] whispers to [host], \"[message]\""
 
 
@@ -156,7 +156,7 @@
 		return
 
 	for(var/mob/M in mob_list)
-		if(M.mind && (istype(M, /mob/living/simple_animal/borer) || istype(M, /mob/dead/observer)))
+		if(M.mind && (istype(M, /mob/living/simple_animal/borer) || isobserver(M)))
 			M << "<i>Cortical link, <b>[truename]:</b> [copytext(message, 2)]</i>"
 
 /mob/living/simple_animal/borer/verb/dominate_victim()
@@ -178,7 +178,7 @@
 
 	var/list/choices = list()
 	for(var/mob/living/carbon/C in view(3,src))
-		if(C.stat != 2)
+		if(C.stat != DEAD)
 			choices += C
 
 	if(world.time - used_dominate < 300)
@@ -355,7 +355,7 @@ mob/living/simple_animal/borer/proc/detatch()
 
 	var/list/choices = list()
 	for(var/mob/living/carbon/C in view(1,src))
-		if(C.stat != 2 && src.Adjacent(C))
+		if(C.stat != DEAD && src.Adjacent(C))
 			choices += C
 
 	var/mob/living/carbon/M = input(src,"Who do you wish to infest?") in null|choices
@@ -387,7 +387,7 @@ mob/living/simple_animal/borer/proc/detatch()
 		src << "You cannot infest a target in your current state."
 		return
 
-	if(M.stat == 2)
+	if(M.stat == DEAD)
 		src << "That is not an appropriate target."
 		return
 

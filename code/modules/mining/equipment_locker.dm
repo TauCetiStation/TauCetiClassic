@@ -299,9 +299,13 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 		return
 	..()
 
-/obj/machinery/mineral/equipment_locker/proc/RedeemVoucher(voucher, redeemer)
+/obj/machinery/mineral/equipment_locker/proc/RedeemVoucher(obj/voucher, redeemer)
+	if(voucher.in_use)
+		return
+	voucher.in_use = 1
 	var/selection = input(redeemer, "Pick your equipment", "Mining Voucher Redemption") in list("Resonator kit", "Kinetic Accelerator", "Mining Drone","Special Mining Rig", "Cancel")
 	if(!selection || !Adjacent(redeemer))
+		voucher.in_use = 0
 		return
 	switch(selection)
 		if("Resonator kit")
@@ -313,6 +317,7 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 		if("Special Mining Rig")
 			new /obj/item/mining_rig_pack(src.loc)
 		if("Cancel")
+			voucher.in_use = 0
 			return
 	qdel(voucher)
 
@@ -345,6 +350,7 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 	desc = "A small card preloaded with mining points. Swipe your ID card over it to transfer the points, then discard."
 	icon_state = "data"
 	var/points = 500
+
 /obj/item/weapon/card/mining_point_card/attackby(obj/item/I as obj, mob/user as mob)
 	if(istype(I, /obj/item/weapon/card/id))
 		if(points)
@@ -355,6 +361,7 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 		else
 			user << "<span class='info'>There's no points left on [src].</span>"
 	..()
+
 /obj/item/weapon/card/mining_point_card/examine()
 	..()
 	usr << "There's [points] points on the card."
@@ -386,7 +393,7 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 		var/list/L = list()
 		for(var/obj/item/device/radio/beacon/B in world)
 			var/turf/T = get_turf(B)
-			if(T.z == 1)
+			if(T.z == ZLEVEL_STATION)
 				L += B
 		if(!L.len)
 			user << "<span class='notice'>The [src.name] failed to create a wormhole.</span>"

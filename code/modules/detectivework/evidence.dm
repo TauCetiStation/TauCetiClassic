@@ -80,19 +80,6 @@
 		icon_state = "evidenceobj"
 	return
 
-/obj/item/weapon/storage/box/evidence
-	name = "evidence bag box"
-	desc = "A box claiming to contain evidence bags."
-	New()
-		new /obj/item/weapon/evidencebag(src)
-		new /obj/item/weapon/evidencebag(src)
-		new /obj/item/weapon/evidencebag(src)
-		new /obj/item/weapon/evidencebag(src)
-		new /obj/item/weapon/evidencebag(src)
-		new /obj/item/weapon/evidencebag(src)
-		..()
-		return
-
 /obj/item/weapon/f_card
 	name = "finger print card"
 	desc = "Used to take fingerprints."

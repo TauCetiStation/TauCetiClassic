@@ -71,7 +71,7 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 	user.visible_message("\blue [user] carefully begins to open the pod...","\blue You carefully begin to open the pod...")
 
 	//If a sample is injected (and revival is allowed) the plant will be controlled by the original donor.
-	if(source && source.stat == 2 && source.client && source.ckey && config.revival_pod_plants)
+	if(source && source.stat == DEAD && source.client && source.ckey && config.revival_pod_plants)
 		transfer_personality(source.client)
 	else // If no sample was injected or revival is not allowed, we grab an interested observer.
 		request_player()

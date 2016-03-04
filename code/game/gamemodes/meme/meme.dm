@@ -77,7 +77,7 @@
 	/*for(var/mob/new_player/player in player_list)
 	var/list/possible_targets = list()
 		for(var/datum/mind/possible_target in ticker.minds)
-			if(possible_target != owner && ishuman(possible_target.current) && (possible_target.current.stat != 2))
+			if(possible_target != owner && ishuman(possible_target.current) && (possible_target.current.stat != DEAD))
 				possible_targets += possible_target*/
 
 	if(possible_memes.len < 1)
@@ -114,7 +114,7 @@
 	var/list/possible_hosts = list()
 	var/datum/mind/target = null
 	for(var/datum/mind/possible_host in ticker.minds)
-		if(possible_host.assigned_role != "MODE" && ishuman(possible_host.current) && (possible_host.current.stat != 2))
+		if(possible_host.assigned_role != "MODE" && ishuman(possible_host.current) && (possible_host.current.stat != DEAD))
 			possible_hosts += possible_host
 	/**for(var/mob/living/carbon/possible_host in world)
 		//if(possible_host.assigned_role != "MODE")

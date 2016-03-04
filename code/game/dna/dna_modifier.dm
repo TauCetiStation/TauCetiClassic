@@ -75,7 +75,7 @@
 	set category = "Object"
 	set name = "Eject DNA Scanner"
 
-	if (usr.stat != 0)
+	if (usr.stat != CONSCIOUS)
 		return
 
 	eject_occupant()
@@ -97,7 +97,7 @@
 	set category = "Object"
 	set name = "Enter DNA Scanner"
 
-	if (usr.stat != 0)
+	if (usr.stat != CONSCIOUS)
 		return
 	if (!ishuman(usr) && !ismonkey(usr)) //Make sure they're a mob that has dna
 		usr << "\blue Try as you might, you can not climb up into the scanner."
@@ -798,23 +798,23 @@
 			return 1
 
 		if (bufferOption == "createInjector")
-			if (src.injector_ready || waiting_for_user_input)
-
-				var/success = 1
+			if (src.injector_ready && !waiting_for_user_input)
+				var/success = 0
 				var/obj/item/weapon/dnainjector/I = new /obj/item/weapon/dnainjector
 				var/datum/dna2/record/buf = src.buffers[bufferId]
 				if(href_list["createBlockInjector"])
-					waiting_for_user_input=1
+					waiting_for_user_input = 1
 					var/list/selectedbuf
 					if(buf.types & DNA2_BUF_SE)
 						selectedbuf=buf.dna.SE
 					else
 						selectedbuf=buf.dna.UI
-					var/blk = input(usr,"Select Block","Block") in all_dna_blocks(selectedbuf)
+					var/blk = input(usr,"Select Block","Block") as null|anything in all_dna_blocks(selectedbuf)
 					success = setInjectorBlock(I,blk,buf)
 				else
 					I.buf = buf
-				waiting_for_user_input=0
+					success = 1
+				waiting_for_user_input = 0
 				if(success)
 					I.loc = src.loc
 					I.name += " ([buf.name])"

@@ -123,7 +123,7 @@
 		if(combat_cooldown != initial(combat_cooldown))
 			src.loc << "<span class='warning'>Combat injection is still recharging.</span>"
 		var/mob/living/carbon/human/M = src.loc
-		M.stat = 0
+		M.stat = CONSCIOUS
 		M.SetParalysis(0)
 		M.SetStunned(0)
 		M.SetWeakened(0)
@@ -712,6 +712,10 @@
  11.Choose one of the machine options and follow displayed instructions.<br>
 <br>
 Congratulations! You are now trained for xenobiology research!"}
+
+/obj/item/weapon/paper/abductor/New()
+	..()
+	verbs -= /obj/item/weapon/paper/verb/crumple
 
 /obj/item/weapon/paper/abductor/update_icon()
 	return

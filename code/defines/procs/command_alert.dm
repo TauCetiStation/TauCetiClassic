@@ -7,5 +7,5 @@
 	command += "<br><span class='alert'>[sanitize(copytext(text, 1, MAX_MESSAGE_LEN), list("ÿ"=LETTER_255))]</span><br>"
 	command += "<br>"
 	for(var/mob/M in player_list)
-		if(!istype(M,/mob/new_player))
+		if(!isnewplayer(M))
 			M << command

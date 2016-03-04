@@ -248,11 +248,11 @@ Hit Procs
 	updatehealth()
 
 /mob/living/carbon/alien/blob_act()
-	if (stat == 2)
+	if (stat == DEAD)
 		return
 	var/shielded = 0
 	var/damage = null
-	if (stat != 2)
+	if (stat != DEAD)
 		damage = rand(30,40)
 
 	if(shielded)

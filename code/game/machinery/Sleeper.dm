@@ -378,7 +378,7 @@
 		set name = "Eject Sleeper"
 		set category = "Object"
 		set src in oview(1)
-		if(usr.stat != 0)
+		if(usr.stat != CONSCIOUS)
 			return
 		if(orient == "RIGHT")
 			icon_state = "sleeper_0-r"
@@ -391,7 +391,7 @@
 		set name = "Remove Beaker"
 		set category = "Object"
 		set src in oview(1)
-		if(usr.stat != 0)
+		if(usr.stat != CONSCIOUS)
 			return
 		if(beaker)
 			filtering = 0
@@ -405,7 +405,7 @@
 		set category = "Object"
 		set src in oview(1)
 
-		if(usr.stat != 0 || !(ishuman(usr) || ismonkey(usr)))
+		if(usr.stat != CONSCIOUS || !(ishuman(usr) || ismonkey(usr)))
 			return
 
 		if(src.occupant)

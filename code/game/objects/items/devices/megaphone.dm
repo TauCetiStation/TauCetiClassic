@@ -32,7 +32,7 @@
 	if(!message)
 		return
 	message = sanitize_plus_chat(capitalize(message))
-	if ((src.loc == user && usr.stat == 0))
+	if ((src.loc == user && usr.stat == CONSCIOUS))
 		if(emagged)
 			if(insults)
 				for(var/mob/O in (viewers(user)))

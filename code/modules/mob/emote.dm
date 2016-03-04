@@ -32,7 +32,7 @@
 				continue
 			if(findtext(message," snores.")) //Because we have so many sleeping people.
 				break
-			if(M.stat == 2 && (M.client.prefs.chat_toggles & CHAT_GHOSTSIGHT) && !(M in viewers(src,null)))
+			if(M.stat == DEAD && (M.client.prefs.chat_toggles & CHAT_GHOSTSIGHT) && !(M in viewers(src,null)))
 				M.show_message(message)
 
 
@@ -97,7 +97,7 @@
 		log_emote("Ghost/[src.key] : [message]")
 
 		for(var/mob/M in player_list)
-			if(istype(M, /mob/new_player))
+			if(isnewplayer(M))
 				continue
 
 			if(M.client && M.client.holder && (M.client.holder.rights & R_ADMIN|R_MOD) && (M.client.prefs.chat_toggles & CHAT_DEAD)) // Show the emote to admins/mods

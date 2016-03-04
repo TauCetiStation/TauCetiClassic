@@ -340,7 +340,7 @@ obj/machinery/computer/cryopod/Topic(href, href_list)
 	set name = "Eject Pod"
 	set category = "Object"
 	set src in oview(1)
-	if(usr.stat != 0)
+	if(usr.stat != CONSCIOUS)
 		return
 
 	if(orient_right)
@@ -357,7 +357,7 @@ obj/machinery/computer/cryopod/Topic(href, href_list)
 	set category = "Object"
 	set src in oview(1)
 
-	if(usr.stat != 0 || !(ishuman(usr) || ismonkey(usr)))
+	if(usr.stat != CONSCIOUS || !(ishuman(usr) || ismonkey(usr)))
 		return
 
 	if(src.occupant)

@@ -1,5 +1,5 @@
 /mob/living/silicon/ai/Life()
-	if (src.stat == 2)
+	if (src.stat == DEAD)
 		return
 	else //I'm not removing that shitton of tabs, unneeded as they are. -- Urist
 		//Being dead doesn't mean your temperature never changes
@@ -192,4 +192,4 @@
 
 /mob/living/silicon/ai/rejuvenate()
 	..()
-	add_ai_verbs(src) 
+	add_ai_verbs(src)

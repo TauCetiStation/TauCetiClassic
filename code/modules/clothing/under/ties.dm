@@ -443,20 +443,6 @@
 	if(isliving(user))
 		user.visible_message("\red [user] invades [M]'s personal space, thrusting [src] into their face insistently.","\red You invade [M]'s personal space, thrusting [src] into their face insistently. You are the law.")
 
-/obj/item/weapon/storage/box/holobadge
-	name = "holobadge box"
-	desc = "A box claiming to contain holobadges."
-
-/obj/item/weapon/storage/box/holobadge/New()
-	new /obj/item/clothing/tie/holobadge(src)
-	new /obj/item/clothing/tie/holobadge(src)
-	new /obj/item/clothing/tie/holobadge(src)
-	new /obj/item/clothing/tie/holobadge(src)
-	new /obj/item/clothing/tie/holobadge/cord(src)
-	new /obj/item/clothing/tie/holobadge/cord(src)
-	..()
-	return
-
 /obj/item/clothing/tie/storage/knifeharness
 	name = "decorated harness"
 	desc = "A heavily decorated harness of sinew and leather with two knife-loops."
