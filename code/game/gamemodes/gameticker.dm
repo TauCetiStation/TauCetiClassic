@@ -410,7 +410,7 @@ var/global/datum/controller/gameticker/ticker
 				num_survivors++
 				if(station_evacuated) //If the shuttle has already left the station
 					var/turf/playerTurf = get_turf(Player)
-					if(playerTurf.z != 2)
+					if(playerTurf.z != ZLEVEL_CENTCOMM)
 						Player << "<span class='danger>You managed to survive, but were marooned on [station_name()]...</span>"
 					else
 						num_escapees++

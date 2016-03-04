@@ -1358,7 +1358,7 @@
 						foo += text("<B>Is an AI</B> | ")
 					else
 						foo += text("<A HREF='?src=\ref[];makeai=\ref[]'>Make AI</A> | ", src, M)
-					if(M.z != 2)
+					if(M.z != ZLEVEL_CENTCOMM)
 						foo += text("<A HREF='?src=\ref[];sendtoprison=\ref[]'>Prison</A> | ", src, M)
 						foo += text("<A HREF='?src=\ref[];sendtomaze=\ref[]'>Maze</A> | ", src, M)
 					else
@@ -1938,7 +1938,7 @@
 				/*
 				var/A = locate(/area/shuttle_prison)
 				for(var/atom/movable/AM as mob|obj in A)
-					AM.z = 1
+					AM.z = ZLEVEL_STATION
 					AM.Move()
 				*/
 				message_admins("\blue [key_name_admin(usr)] sent the prison shuttle to the station.", 1)
@@ -1948,7 +1948,7 @@
 				feedback_add_details("admin_secrets_fun_used","DP")
 				var/A = locate(/area/shuttle_prison)
 				for(var/atom/movable/AM as mob|obj in A)
-					AM.z = 2
+					AM.z == ZLEVEL_CENTCOMM
 					AM.Move()
 				*/
 				message_admins("\blue [key_name_admin(usr)] sent the prison shuttle back.", 1)

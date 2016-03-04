@@ -1087,7 +1087,7 @@
 	if(istype(malf.loc, /obj/machinery/power/apc)) // Already in an APC
 		malf << "<span class='warning'>You must evacuate your current apc first.</span>"
 		return
-	if(src.z != 1)
+	if(src.z != ZLEVEL_STATION)
 		return
 	src.occupier = new /mob/living/silicon/ai(src,malf.laws,null,1)
 	src.occupier.adjustOxyLoss(malf.getOxyLoss())
