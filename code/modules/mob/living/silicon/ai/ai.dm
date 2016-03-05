@@ -418,7 +418,7 @@ var/list/ai_verbs_default = list(
 
 /mob/living/silicon/ai/ex_act(severity)
 	if(!blinded)
-		flick("flash", flash)
+		flash_eyes()
 
 	switch(severity)
 		if(1.0)
@@ -559,7 +559,7 @@ var/list/ai_verbs_default = list(
 					if ((O.client && !( O.blinded )))
 						O.show_message(text("\red <B>[] has slashed at []!</B>", M, src), 1)
 				if(prob(8))
-					flick("noise", flash)
+					flash_eyes(affect_silicon = 1)
 				adjustBruteLoss(damage)
 				updatehealth()
 			else

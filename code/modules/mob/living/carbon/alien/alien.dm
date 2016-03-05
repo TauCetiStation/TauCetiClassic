@@ -214,7 +214,7 @@ Hit Procs
 -----------------------------------------*/
 /mob/living/carbon/alien/ex_act(severity)
 	if(!blinded)
-		flick("flash", flash)
+		flash_eyes()
 
 	var/shielded = 0
 

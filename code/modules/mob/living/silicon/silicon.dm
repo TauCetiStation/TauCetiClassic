@@ -33,7 +33,7 @@
 		if(2)
 			src.take_organ_damage(10)
 			Stun(rand(1,5))
-	flick("noise", src:flash)
+	flash_eyes(affect_silicon = 1)
 	src << "\red <B>*BZZZT*</B>"
 	src << "\red Warning: Electromagnetic pulse detected."
 	..()
@@ -188,3 +188,7 @@
 	if(laws)
 		var/text = src.laws.write_laws()
 		return text
+
+/mob/living/silicon/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /obj/screen/fullscreen/flash/noise)
+	if(affect_silicon)
+		return ..()

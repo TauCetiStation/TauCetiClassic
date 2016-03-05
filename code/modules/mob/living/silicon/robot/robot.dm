@@ -563,7 +563,7 @@ var/list/robot_verbs_default = list(
 
 /mob/living/silicon/robot/ex_act(severity)
 	if(!blinded)
-		flick("flash", flash)
+		flash_eyes()
 
 	switch(severity)
 		if(1.0)
@@ -947,7 +947,7 @@ var/list/robot_verbs_default = list(
 				for(var/mob/O in viewers(src, null))
 					O.show_message(text("\red <B>[] has slashed at []!</B>", M, src), 1)
 				if(prob(8))
-					flick("noise", flash)
+					flash_eyes(affect_silicon = 1)
 				adjustBruteLoss(damage)
 				updatehealth()
 			else
@@ -1020,7 +1020,7 @@ var/list/robot_verbs_default = list(
 					if ((O.client && !( O.blinded )))
 						O.show_message(text("\red <B>The [M.name] has electrified []!</B>", src), 1)
 
-				flick("noise", flash)
+				flash_eyes(affect_silicon = 1)
 
 				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 				s.set_up(5, 1, src)

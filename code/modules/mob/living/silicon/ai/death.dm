@@ -9,9 +9,8 @@
 		icon_state = "ai_dead"
 
 	update_canmove()
-	if(src.eyeobj)
-		src.eyeobj.setLoc(get_turf(src))
-	if(blind)	blind.layer = 0
+	if(eyeobj)
+		eyeobj.setLoc(get_turf(src))
 	sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
 	see_in_dark = 8
 	see_invisible = SEE_INVISIBLE_LEVEL_TWO

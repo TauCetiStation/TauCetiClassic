@@ -821,6 +821,16 @@
 		resting = !resting
 		src << "<span class='notice'>You are now [resting ? "resting" : "getting up"].</span>"
 
+//called when the mob receives a bright flash
+/mob/living/proc/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /obj/screen/fullscreen/flash)
+	if(override_blindness_check || !(disabilities & BLIND))
+		overlay_fullscreen("flash", type)
+		spawn(0)
+			sleep(25)
+			if(src)
+				clear_fullscreen("flash", 25)
+		return 1
+
 /mob/living/proc/has_eyes()
 	return 1
 

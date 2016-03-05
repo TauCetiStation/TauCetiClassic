@@ -214,6 +214,8 @@ var/global/loopModeNames=list(
 	return attack_hand(usr)
 
 /obj/machinery/media/jukebox/process()
+	return
+/* FIX ME 510
 	if(!playlist)
 		var/url="[config.media_base_url]/index.php?playlist=[playlist_id]"
 		//testing("[src] - Updating playlist from [url]...")
@@ -261,7 +263,7 @@ var/global/loopModeNames=list(
 					playing=0
 					update_icon()
 					return
-			update_music()
+			update_music()*/
 
 /obj/machinery/media/jukebox/update_music()
 	if(current_song && current_song < playlist.len && playing )
