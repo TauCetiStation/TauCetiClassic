@@ -131,7 +131,7 @@ var/list/forbidden_varedit_object_types = list(
 
 	if(!istype(L,/list)) src << "Not a List."
 
-	var/list/locked = list("vars", "key", "ckey", "client", "firemut", "ishulk", "telekinesis", "xray", "virus", "viruses", "cuffed", "ka", "last_eaten", "urine", "poo", "icon", "icon_state")
+	var/list/locked = list("vars", "key", "ckey", "client", "virus", "viruses", "icon", "icon_state")
 	var/list/names = sortList(L)
 
 	var/variable = input("Which var?","Var") as null|anything in names + "(ADD VAR)"
@@ -269,7 +269,7 @@ var/list/forbidden_varedit_object_types = list(
 /client/proc/modify_variables(var/atom/O, var/param_var_name = null, var/autodetect_class = 0)
 	if(!check_rights(R_VAREDIT))	return
 
-	var/list/locked = list("vars", "key", "ckey", "client", "firemut", "ishulk", "telekinesis", "xray", "virus", "cuffed", "ka", "last_eaten", "icon", "icon_state", "mutantrace", "player_ingame_age", "resize")
+	var/list/locked = list("vars", "key", "ckey", "client", "virus", "viruses", "icon", "icon_state", "mutantrace", "player_ingame_age", "resize")
 	var/list/typechange_locked = list("player_next_age_tick","player_ingame_age")
 	var/list/fully_locked = list("player_next_age_tick", "resize_rev")
 

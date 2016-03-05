@@ -159,9 +159,13 @@
 						if(ispath(objholder,/mob) && !check_rights(R_DEBUG,0))
 							objholder = /obj/structure/closet
 				if(3)
-					var/list/locked = list("vars", "key", "ckey", "client", "firemut", "ishulk", "telekinesis", "xray", "virus", "viruses", "cuffed", "ka", "last_eaten", "urine")
+					var/list/locked = list("vars", "key", "ckey", "client", "virus", "viruses", "icon", "icon_state")
+					var/list/fully_locked = list("resize", "resize_rev")
 
 					master.buildmode.varholder = input(usr,"Enter variable name:" ,"Name", "name")
+					if(master.buildmode.varholder in fully_locked)
+						usr << "\red It is forbidden to edit this variable."
+						return
 					if(master.buildmode.varholder in locked && !check_rights(R_DEBUG,0))
 						return 1
 					var/thetype = input(usr,"Select variable type:" ,"Type") in list("text","number","mob-reference","obj-reference","turf-reference")
