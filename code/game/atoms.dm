@@ -13,6 +13,9 @@
 	var/germ_level = GERM_LEVEL_AMBIENT // The higher the germ level, the more germ on the atom.
 	var/simulated = 1 //filter for actions - used by lighting overlays
 
+	var/resize = 1		//don't abuse this shit
+	var/resize_rev = 1	//helps to restore default size
+
 	///Chemistry.
 	var/datum/reagents/reagents = null
 
@@ -377,3 +380,16 @@
 /atom/Stat()
 	. = ..()
 	sleep(1)
+
+/atom/proc/update_transform()
+	var/matrix/ntransform = matrix(transform)
+	var/changed = 0
+
+	if(resize != RESIZE_DEFAULT_SIZE)
+		resize_rev *= 1/resize	//saving revert parameter for restoring size
+		changed++
+		ntransform.Scale(resize)
+		resize = RESIZE_DEFAULT_SIZE
+
+	if(changed)
+		animate(src, transform = ntransform, time = 2, easing = EASE_IN|EASE_OUT)
