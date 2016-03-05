@@ -30,6 +30,7 @@
 		cubes_made = M.rating
 	cube_production = cubes_made
 	required_grind = req_grind
+	desc = "A machine used for recycling dead monkeys into monkey cubes. It currently produces [cubes_made] cube(s) for every [required_grind] monkey(s) inserted."
 
 /obj/machinery/monkey_recycler/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
 	if(default_deconstruction_screwdriver(user, "grinder_open", "grinder", O))

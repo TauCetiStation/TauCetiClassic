@@ -15,7 +15,7 @@
 	var/icon_on = "smartfridge"
 	var/icon_off = "smartfridge-off"
 	var/icon_panel = "smartfridge-panel"
-	var/item_quants = list()
+	var/list/item_quants = list()
 	var/ispowered = 1 //starts powered
 	var/isbroken = 0
 	var/seconds_electrified = 0;
@@ -29,9 +29,17 @@
 /obj/machinery/smartfridge/New()
 	..()
 	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/smartfridge(null)
+	component_parts += new /obj/item/weapon/circuitboard/smartfridge(null, type)
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
 	RefreshParts()
+
+/obj/machinery/smartfridge/construction()
+	for(var/datum/A in contents)
+		qdel(A)
+
+/obj/machinery/smartfridge/deconstruction()
+	for(var/atom/movable/A in contents)
+		A.loc = loc
 
 /obj/machinery/smartfridge/RefreshParts()
 	for(var/obj/item/weapon/stock_parts/matter_bin/B in component_parts)

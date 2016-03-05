@@ -17,7 +17,7 @@
 	var/accept_glass = 0
 	var/beaker = null
 	var/recharged = 0
-	var/recharge_delay = 15  //Time it game ticks between recharges
+	var/recharge_delay = 15
 	var/hackedcheck = 0
 	var/list/dispensable_reagents = list("hydrogen","lithium","carbon","nitrogen","oxygen","fluorine",
 	"sodium","aluminum","silicon","phosphorus","sulfur","chlorine","potassium","iron",
@@ -31,7 +31,7 @@
 	var/oldenergy = energy
 	energy = min(energy + addenergy, max_energy)
 	if(energy != oldenergy)
-		use_power(1500) // This thing uses up alot of power (this is still low as shit for creating reagents from thin air)
+		use_power(2500) // This thing uses up alot of power (this is still low as shit for creating reagents from thin air)
 		nanomanager.update_uis(src) // update all UIs attached to src
 
 /obj/machinery/chem_dispenser/power_change()
@@ -234,14 +234,46 @@
 	name = "portable chem dispenser"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "minidispenser"
-	energy = 5
-	max_energy = 5
+	energy = 10
+	max_energy = 10
 	amount = 5
 	recharge_delay = 30
 	dispensable_reagents = list()
-	var/list/special_reagents = list(list("hydrogen", "oxygen", "silicon", "phosphorus", "sulfur", "carbon", "nitrogen"),
-						 		list("lithium", "sugar", "sacid", "water", "copper", "mercury", "sodium"),
-								list("ethanol", "chlorine", "potassium", "aluminium", "radium", "fluorine", "iron"))
+	var/list/dispensable_reagent_tiers = list(
+		list(
+				"hydrogen",
+				"oxygen",
+				"silicon",
+				"phosphorus",
+				"sulfur",
+				"carbon",
+				"nitrogen",
+				"water"
+		),
+		list(
+				"lithium",
+				"sugar",
+				"sacid",
+				"copper",
+				"mercury",
+				"sodium"
+		),
+		list(
+				"ethanol",
+				"chlorine",
+				"potassium",
+				"aluminium",
+				"radium",
+				"fluorine",
+				"iron",
+				"fuel",
+				"silver"
+		),
+		list(
+				"ammonia",
+				"diethylamine"
+		)
+	)
 
 /obj/machinery/chem_dispenser/constructable/New()
 	..()
@@ -270,7 +302,8 @@
 	recharge_delay /= time/2         //delay between recharges, double the usual time on lowest 50% less than usual on highest
 	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
 		for(i=1, i<=M.rating, i++)
-			dispensable_reagents |= sortList(special_reagents[i])
+			dispensable_reagents |= dispensable_reagent_tiers[i]
+	dispensable_reagents = sortList(dispensable_reagents)
 
 /obj/machinery/chem_dispenser/constructable/attackby(var/obj/item/I, var/mob/user)
 	..()
@@ -715,8 +748,8 @@
 			loaded_pill_bottle = null
 		return
 
-	//if(exchange_parts(user, B))
-	//	return
+	if(exchange_parts(user, B))
+		return
 
 	if(panel_open)
 		if(istype(B, /obj/item/weapon/crowbar))

@@ -50,8 +50,8 @@ Note: Must be placed west/left of and R&D console to function.
 	max_material_storage = T * 75000
 	T = 0
 	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
-		T += M.rating
-	efficiency_coeff = T-1
+		T += (M.rating/3)
+	efficiency_coeff = max(T, 1)
 
 /obj/machinery/r_n_d/protolathe/proc/check_mat(datum/design/being_built, var/M)
 	switch(M)

@@ -366,9 +366,9 @@ obj/machinery/hydroponics/proc/plantdies() // OH NOES!!!!! I put this all in one
 obj/machinery/hydroponics/proc/mutatepest()  // Until someone makes a spaceworm, this is commented out
 	if ( pestlevel > 5 )
 		visible_message("The pests seem to behave oddly...")
-		//for(var/i=0, i<3, i++)
-		//	var/obj/effect/spider/spiderling/S = new(src.loc)
-		//	S.grow_as = /mob/living/simple_animal/hostile/giant_spider/hunter
+		for(var/i=0, i<3, i++)
+			new /obj/effect/spider/spiderling(loc)
+			//S.grow_as = /mob/living/simple_animal/hostile/giant_spider/hunter
 	else
 		usr << "The pests seem to behave oddly, but quickly settle down..." //Modified to give a better idea of what's happening when you inject mutagen. There's still nothing proper to spawn here though. -Cheridan
 	return

@@ -59,31 +59,60 @@
 		return
 	switch(state)
 		if(1)
+			if(istype(P, /obj/item/weapon/circuitboard))
+				user << "<span class='warning'>The frame needs wiring first!</span>"
+				return
 			if(istype(P, /obj/item/weapon/cable_coil))
 				var/obj/item/weapon/cable_coil/C = P
 				if(C.amount >= 5)
 					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 					user << "<span class='notice'>You start to add cables to the frame.</span>"
-					if(do_after(user, 20, target = src))
-						if(C)
+					if(do_after(user, 20/P.toolspeed, target = src))
+						if(C && state == 1)
 							C.amount -= 5
 							if(!C.amount) qdel(C)
 							user << "<span class='notice'>You add cables to the frame.</span>"
 							state = 2
 							icon_state = "box_1"
+				else
+					user << "<span class='warning'>You need five length of cable to wire the frame!</span>"
+					return
+			if(istype(P, /obj/item/weapon/screwdriver) && !anchored)
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+				user.visible_message("<span class='warning'>[user] disassembles the frame.</span>", \
+									"<span class='notice'>You start to disassemble the frame...</span>", "You hear banging and clanking.")
+				if(do_after(user, 40/P.toolspeed, target = src))
+					if(state == 1)
+						user << "<span class='notice'>You disassemble the frame.</span>"
+						var/obj/item/stack/sheet/metal/M = new (loc, 5)
+						M.add_fingerprint(user)
+						qdel(src)
 			if(istype(P, /obj/item/weapon/wrench))
+				user << "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>"
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
-				user << "<span class='notice'>You dismantle the frame.</span>"
-				new /obj/item/stack/sheet/metal(src.loc, 5)
-				qdel(src)
+				if(do_after(user, 40/P.toolspeed, target = src))
+					if(state == 1)
+						user << "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>"
+						anchored = !anchored
 		if(2)
+			if(istype(P, /obj/item/weapon/wrench))
+				user << "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>"
+				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+				if(do_after(user, 40/P.toolspeed, target = src))
+					user << "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>"
+					anchored = !anchored
+
 			if(istype(P, /obj/item/weapon/circuitboard))
+				if(!anchored)
+					user << "<span class='warning'>The frame needs to be secured first!</span>"
+					return
 				var/obj/item/weapon/circuitboard/B = P
 				if(B.board_type == "machine")
+					if(!user.drop_item())
+						return
 					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 					user << "<span class='notice'>You add the circuit board to the frame.</span>"
 					circuit = P
-					user.drop_item()
 					P.loc = src
 					icon_state = "box_2"
 					state = 3
@@ -92,7 +121,7 @@
 					update_namelist()
 					update_req_desc()
 				else
-					user << "<span class='danger'>This frame does not accept circuit boards of this type!</span>"
+					user << "<span class='warning'>This frame does not accept circuit boards of this type!</span>"
 			if(istype(P, /obj/item/weapon/wirecutters))
 				playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
 				user << "<span class='notice'>You remove the cables.</span>"
@@ -128,6 +157,7 @@
 				if(component_check)
 					playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 					var/obj/machinery/new_machine = new src.circuit.build_path(src.loc)
+					new_machine.construction()
 					for(var/obj/O in new_machine.component_parts)
 						qdel(O)
 					new_machine.component_parts = list()
@@ -167,27 +197,28 @@
 				return
 
 			if(istype(P, /obj/item) && get_req_components_amt())
-				var/success
 				for(var/I in req_components)
 					if(istype(P, I) && (req_components[I] > 0))
-						success=1
 						if(istype(P, /obj/item/weapon/cable_coil))
 							var/obj/item/weapon/cable_coil/CP = P
-							var/obj/item/weapon/cable_coil/CC = new /obj/item/weapon/cable_coil(src, 1, CP.item_color)
+							var/cable_color = CP.item_color
 							if(CP.use(1))
+								var/obj/item/weapon/cable_coil/CC = new /obj/item/weapon/cable_coil(src, 1, cable_color)
 								components += CC
 								req_components[I]--
 								update_req_desc()
+							else
+								user << "<span class='warning'>You need more cable!</span>"
+							return
+						if(!user.drop_item())
 							break
-						user.drop_item()
 						P.loc = src
 						components += P
 						req_components[I]--
 						update_req_desc()
 						return 1
-				if(!success)
-					user << "<span class='danger'>You cannot add that to the machine!</span>"
-					return 0
+				user << "<span class='warning'>You cannot add that to the machine!</span>"
+				return 0
 
 
 //Machine Frame Circuit Boards
@@ -338,6 +369,16 @@ to destroy them and players will be able to make replacements.
 			build_path = /obj/machinery/atmospherics/unary/cold_sink/freezer
 			name = "circuit board (Cooler)"
 			user << "<span class='notice'>You set the board to cooling.</span>"
+
+/obj/item/weapon/circuitboard/space_heater
+	name = "circuit board (Space Heater)"
+	build_path = /obj/machinery/space_heater
+	board_type = "machine"
+	origin_tech = "programming=2;engineering=2"
+	req_components = list(
+							/obj/item/weapon/stock_parts/micro_laser = 1,
+							/obj/item/weapon/stock_parts/capacitor = 1,
+							/obj/item/weapon/cable_coil = 3)
 
 obj/item/weapon/circuitboard/biogenerator
 	name = "circuit board (Biogenerator)"

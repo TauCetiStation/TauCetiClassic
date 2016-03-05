@@ -16,20 +16,19 @@
 	icon_state = "sleeper-open"
 	density = 0
 	anchored = 1
-	var/efficiency
 	state_open = 1
-	var/min_health = 25
-	var/list/injection_chems = list() //list of injectable chems except inaprovaline, coz inaprovaline is always avalible
-	var/list/possible_chems = list(list("stoxin", "dexalin", "bicaridine", "kelotane"),
-									list("stoxin", "dexalinp", "imidazoline", "dermaline", "bicaridine"),
-									list("tricordrazine", "anti_toxin", "ryetalyn", "dermaline", "bicaridine", "imidazoline"),
-									list("tricordrazine", "anti_toxin", "ryetalyn", "dermaline", "bicaridine", "imidazoline", "alkysine", "arithrazine"))
-
-	var/available_chemicals = list("inaprovaline" = "Inaprovaline", "stoxin" = "Soporific", "paracetamol" = "Paracetamol", "anti_toxin" = "Dylovene", "dexalin" = "Dexalin")
-	var/amounts = list(5, 10)
+	light_color = "#7BF9FF"
 	var/obj/item/weapon/reagent_containers/glass/beaker = null
 	var/filtering = 0
-	light_color = "#7BF9FF"
+	var/efficiency = 1
+	var/min_health = -25
+	var/list/available_chems
+	var/list/possible_chems = list(
+		list("tricordrazine", "paracetamol", "stoxin", "dexalin", "bicaridine", "kelotane"),
+		list("imidazoline"),
+		list("anti_toxin", "ryetalyn" ,"dermaline", "arithrazine"),
+		list("dexalinp", "alkysine")
+	)
 
 /obj/machinery/sleeper/New()
 	..()
@@ -45,15 +44,17 @@
 
 /obj/machinery/sleeper/RefreshParts()
 	var/E
-	var/I
 	for(var/obj/item/weapon/stock_parts/matter_bin/B in component_parts)
 		E += B.rating
+	var/I
 	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
 		I += M.rating
 
-	injection_chems = possible_chems[I]
-	efficiency = E
-	min_health = -E * 25
+	efficiency = initial(efficiency)* E
+	min_health = initial(min_health) * E
+	available_chems = list()
+	for(var/i in 1 to I)
+		available_chems |= possible_chems[i]
 
 /obj/machinery/sleeper/allow_drop()
 	return 0
@@ -104,14 +105,14 @@
 	if(!state_open && !occupant)
 		if(default_deconstruction_screwdriver(user, "sleeper-o", "sleeper", I))
 			return
-
 	if(default_change_direction_wrench(user, I))
 		return
-
 	if(exchange_parts(user, I))
 		return
-
-	default_deconstruction_crowbar(I)
+	if(default_pry_open(I))
+		return
+	if(default_deconstruction_crowbar(I))
+		return
 
 /obj/machinery/sleeper/ex_act(severity)
 	if(filtering)
@@ -169,15 +170,6 @@
 		occupant.client.perspective = MOB_PERSPECTIVE
 	occupant = null
 	icon_state = "sleeper-open"
-
-/obj/machinery/sleeper/proc/inject_chemical(mob/living/user as mob, chemical, amount)
-	if(src.occupant && src.occupant.reagents)
-		if(src.occupant.reagents.get_reagent_amount(chemical) + amount <= 20)
-			src.occupant.reagents.add_reagent(chemical, amount)
-			user << "Occupant now has [src.occupant.reagents.get_reagent_amount(chemical)] units of [available_chemicals[chemical]] in his/her bloodstream."
-			return
-	user << "There's no occupant in the sleeper or the subject has too many chemicals!"
-	return
 
 /obj/machinery/sleeper/container_resist()
 	open_machine()
@@ -262,12 +254,12 @@
 	else
 		dat += "<span class='linkOff'>Inject Inaprovaline</span>"
 	if(occupant && occupant.health > min_health)
-		for(var/re in injection_chems)
+		for(var/re in available_chems)
 			var/datum/reagent/C = chemical_reagents_list[re]
 			if(C)
 				dat += "<BR><A href='?src=\ref[src];inject=[C.id]'>Inject [C.name]</A>"
 	else
-		for(var/re in injection_chems)
+		for(var/re in available_chems)
 			var/datum/reagent/C = chemical_reagents_list[re]
 			if(C)
 				dat += "<BR><span class='linkOff'>Inject [C.name]</span>"
@@ -301,7 +293,7 @@
 		toggle_filter()
 		updateUsrDialog()
 		return
-	if(occupant && occupant.stat != DEAD)
+	if(occupant && occupant.stat != DEAD && is_operational())
 		if(href_list["inject"] == "inaprovaline" || occupant.health > min_health)
 			inject_chem(usr, href_list["inject"])
 		else
@@ -339,6 +331,3 @@
 		icon_state = "sleeper-open"
 	else
 		icon_state = "sleeper"
-
-/obj/machinery/atmospherics/components/unary/cryo_cell/can_crawl_through()
-	return //can't ventcrawl in or out of cryo.

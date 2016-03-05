@@ -101,6 +101,10 @@
 
 	default_deconstruction_crowbar(I)
 
+/obj/machinery/power/smes/deconstruction()
+	for(var/obj/item/weapon/stock_parts/cell/cell in component_parts)
+		cell.charge = (charge / capacity) * cell.maxcharge
+
 /obj/machinery/power/smes/Destroy()
 	if(terminal)
 		disconnect_terminal()

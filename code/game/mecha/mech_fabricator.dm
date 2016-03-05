@@ -184,24 +184,23 @@
 
 /obj/machinery/mecha_part_fabricator/RefreshParts()
 	var/T = 0
+
+	//maximum stocking amount (max 412000)
 	for(var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
 		T += M.rating
-	res_max_amount = (187500+(T * 37500))
-	T = 0
+	res_max_amount = (187000+(T * 37500))
+
+	//ressources adjustment coefficient (1 -> 0.88 -> 0.75)
+	T = -1
 	for(var/obj/item/weapon/stock_parts/micro_laser/Ma in component_parts)
 		T += Ma.rating
-	T -= 1
-	var/diff
-	diff = round(initial(resource_coeff) - (initial(resource_coeff)*(T))/6,0.01)
-	if(resource_coeff!=diff)
-		resource_coeff = diff
-	T = 0
+	resource_coeff = round(initial(resource_coeff) - (initial(resource_coeff)*(T))/8,0.01)
+
+	//building time adjustment coefficient (1 -> 0.8 -> 0.6)
+	T = -1
 	for(var/obj/item/weapon/stock_parts/manipulator/Ml in component_parts)
 		T += Ml.rating
-	T -= 1
-	diff = round(initial(time_coeff) - (initial(time_coeff)*(T))/4,0.01)
-	if(time_coeff!=diff)
-		time_coeff = diff
+	time_coeff = round(initial(time_coeff) - (initial(time_coeff)*(T))/5,0.01)
 
 /obj/machinery/mecha_part_fabricator/Destroy()
 	for(var/atom/A in src)

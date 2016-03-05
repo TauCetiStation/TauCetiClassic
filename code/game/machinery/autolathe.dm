@@ -134,8 +134,8 @@ var/global/list/autolathe_recipes_hidden = list( \
 	for(var/obj/item/weapon/stock_parts/matter_bin/MB in component_parts)
 		tot_rating += MB.rating
 	tot_rating *= 25000
-	max_m_amount = tot_rating * 2
-	max_g_amount = tot_rating
+	max_m_amount = tot_rating * 3
+	max_g_amount = tot_rating * 3
 	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
 		prod_coeff += M.rating - 1
 

@@ -1340,6 +1340,16 @@ datum/design/power_turbine
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/power_turbine
 
+/datum/design/space_heater
+	name = "Machine Design (Space Heater Board)"
+	desc = "The circuit board for a space heater."
+	id = "space_heater"
+	req_tech = list("programming" = 2, "engineering" = 2)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/space_heater
+	//category = list ("Engineering Machinery")
+
 datum/design/teleport_station
 	name = "Teleportation Station Board"
 	desc = "The circuit board for a teleportation station."
