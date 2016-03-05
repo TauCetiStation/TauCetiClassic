@@ -1619,7 +1619,7 @@
 			else if(blinded)
 				overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
 			else
-				clear_fullscreen("blind")
+				clear_fullscreen("blind", 0)
 
 			species.sightglassesmod = 0
 			if(glasses)

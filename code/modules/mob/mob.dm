@@ -966,7 +966,7 @@ mob/proc/yank_out_object()
 	switch(state)
 		if(0)
 			if(!blinded)
-				clear_fullscreen("blind")
+				clear_fullscreen("blind", 0)
 			client.eye = client.mob
 			client.perspective = MOB_PERSPECTIVE
 		if(1)
