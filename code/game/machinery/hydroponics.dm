@@ -639,7 +639,6 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			user.visible_message("<span class='notice'>[user] uproots the weeds.</span>", "<span class='notice'>You remove the weeds from [src].</span>")
 			weedlevel = 0
 			update_icon()
-			src.update_icon()
 		else
 			user << "<span class='notice'>This plot is completely devoid of weeds. It doesn't need uprooting.</span>"
 
