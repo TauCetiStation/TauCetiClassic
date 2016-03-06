@@ -88,7 +88,7 @@ datum/objective/mutiny
 			if(target.current.stat == DEAD || !ishuman(target.current) || !target.current.ckey)
 				return 1
 			var/turf/T = get_turf(target.current)
-			if(T && (T.z != 1))			//If they leave the station they count as dead for this
+			if(T && (T.z != ZLEVEL_STATION))			//If they leave the station they count as dead for this
 				return 2
 			return 0
 		return 1
@@ -123,7 +123,7 @@ datum/objective/mutiny/rp
 				if(target in ticker.mode:head_revolutionaries)
 					return 1
 			var/turf/T = get_turf(target.current)
-			if(T && (T.z != 1))			//If they leave the station they count as dead for this
+			if(T && (T.z != ZLEVEL_STATION))			//If they leave the station they count as dead for this
 				rval = 2
 			return 0
 		return rval
@@ -507,7 +507,7 @@ datum/objective/steal
 		"nuclear gun" = /obj/item/weapon/gun/energy/gun/nuclear,
 		"diamond drill" = /obj/item/weapon/pickaxe/drill/diamond_drill,
 		"bag of holding" = /obj/item/weapon/storage/backpack/holding,
-		"hyper-capacity cell" = /obj/item/weapon/cell/hyper,
+		"hyper-capacity cell" = /obj/item/weapon/stock_parts/cell/hyper,
 		"10 diamonds" = /obj/item/stack/sheet/mineral/diamond,
 		"50 gold bars" = /obj/item/stack/sheet/mineral/gold,
 		"25 refined uranium bars" = /obj/item/stack/sheet/mineral/uranium,

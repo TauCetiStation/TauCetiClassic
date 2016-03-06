@@ -1611,3 +1611,11 @@ var/mob/dview/dview_mob = new
 /mob/verb/gen_dam_dmi()
 	generate_damage_overlays_dmi()
 */
+
+/proc/find_loc(obj/R as obj)
+	if (!R)	return null
+	var/turf/T = R.loc
+	while(!istype(T, /turf))
+		T = T.loc
+		if(!T || istype(T, /area))	return null
+	return T

@@ -51,11 +51,7 @@ var/global/list/holodeck_programs = list(
 	)
 	var/list/restricted_programs = list("Atmospheric Burn Simulation" = "burntest", "Wildlife Simulation" = "wildlifecarp")
 
-/obj/machinery/computer/HolodeckControl/attack_ai(var/mob/user as mob)
-	return src.attack_hand(user)
-
 /obj/machinery/computer/HolodeckControl/attack_hand(var/mob/user as mob)
-
 	if(..())
 		return
 	user.set_machine(src)
@@ -151,7 +147,9 @@ var/global/list/holodeck_programs = list(
 			user << "<span class='notice'>You vastly increase projector power and override the safety and security protocols.</span>"
 			user << "Warning.  Automatic shutoff and derezing protocols have been corrupted.  Please call Nanotrasen maintenance and do not use the simulator."
 			log_game("[key_name(usr)] emagged the Holodeck Control Computer")
-	src.updateUsrDialog()
+		src.updateUsrDialog()
+	else
+		..()
 	return
 
 /obj/machinery/computer/HolodeckControl/proc/update_projections()
@@ -172,10 +170,6 @@ var/global/list/holodeck_programs = list(
 /obj/machinery/computer/HolodeckControl/New()
 	..()
 	linkedholodeck = locate(/area/holodeck/alphadeck)
-	//if(linkedholodeck)
-	//	target = locate(/area/holodeck/source_emptycourt)
-	//	if(target)
-	//		loadProgram(target)
 
 //This could all be done better, but it works for now.
 /obj/machinery/computer/HolodeckControl/Destroy()

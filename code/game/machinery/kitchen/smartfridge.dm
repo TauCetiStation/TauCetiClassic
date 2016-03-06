@@ -11,11 +11,11 @@
 	idle_power_usage = 5
 	active_power_usage = 100
 	flags = NOREACT
-	var/global/max_n_of_items = 999 // Sorry but the BYOND infinite loop detector doesn't look things over 1000.
+	var/max_n_of_items = 1500
 	var/icon_on = "smartfridge"
 	var/icon_off = "smartfridge-off"
 	var/icon_panel = "smartfridge-panel"
-	var/item_quants = list()
+	var/list/item_quants = list()
 	var/ispowered = 1 //starts powered
 	var/isbroken = 0
 	var/seconds_electrified = 0;
@@ -26,6 +26,24 @@
 	var/const/WIRE_SHOOTINV = 2
 	var/const/WIRE_SCANID = 3 //Only used by the secure smartfridge, but required by the cut, mend and pulse procs.
 
+/obj/machinery/smartfridge/New()
+	..()
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/smartfridge(null, type)
+	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
+	RefreshParts()
+
+/obj/machinery/smartfridge/construction()
+	for(var/datum/A in contents)
+		qdel(A)
+
+/obj/machinery/smartfridge/deconstruction()
+	for(var/atom/movable/A in contents)
+		A.loc = loc
+
+/obj/machinery/smartfridge/RefreshParts()
+	for(var/obj/item/weapon/stock_parts/matter_bin/B in component_parts)
+		max_n_of_items = 1500 * B.rating
 
 /obj/machinery/smartfridge/proc/accept_check(var/obj/item/O as obj)
 	if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/grown/) || istype(O,/obj/item/seeds/))
@@ -156,6 +174,21 @@
 ********************/
 
 /obj/machinery/smartfridge/attackby(var/obj/item/O as obj, var/mob/user as mob)
+	if(default_deconstruction_screwdriver(user, "smartfridge_open", "smartfridge", O))
+		return
+
+	if(exchange_parts(user, O))
+		return
+
+	if(default_pry_open(O))
+		return
+
+	if(default_unfasten_wrench(user, O))
+		power_change()
+		return
+
+	default_deconstruction_crowbar(O)
+
 	if(istype(O, /obj/item/weapon/screwdriver))
 		panel_open = !panel_open
 		user << "You [panel_open ? "open" : "close"] the maintenance panel."

@@ -129,8 +129,8 @@
 	var/greenlight = "securecrateg"
 	var/sparks = "securecratesparks"
 	var/emag = "securecrateemag"
-	var/broken = 0
-	var/locked = 1
+	broken = 0
+	locked = 1
 
 /obj/structure/closet/crate/secure/New()
 	..()

@@ -8,7 +8,7 @@
 	idle_power_usage = 5
 	active_power_usage = 60
 	power_channel = EQUIP
-	var/obj/item/weapon/cell/charging = null
+	var/obj/item/weapon/stock_parts/cell/charging = null
 	var/chargelevel = -1
 	var/efficiency = 0.875	//<1.0 means some power is lost in the charging process, >1.0 means free energy.
 	proc
@@ -39,7 +39,7 @@
 		if(stat & BROKEN)
 			return
 
-		if(istype(W, /obj/item/weapon/cell) && anchored)
+		if(istype(W, /obj/item/weapon/stock_parts/cell) && anchored)
 			if(charging)
 				user << "\red There is already a cell in the charger."
 				return
