@@ -207,7 +207,6 @@
 	if(..())
 		return
 	toggle_open(user)
-	add_fingerprint(user)
 
 /obj/machinery/dna_scannernew/ex_act(severity)
 	switch(severity)
@@ -231,7 +230,6 @@
 					A.ex_act(severity)
 				qdel(src)
 				return
-		else //WTF?!
 	return
 
 
