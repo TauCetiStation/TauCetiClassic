@@ -248,7 +248,7 @@ var/global/ManifestJSON
 		"bot" = bot,\
 		"misc" = misc\
 		)
-	ManifestJSON = json_encode(PDA_Manifest)
+	ManifestJSON = list2json(PDA_Manifest)
 	return PDA_Manifest
 
 
