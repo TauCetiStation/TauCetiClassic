@@ -131,7 +131,7 @@ var/list/forbidden_varedit_object_types = list(
 
 	if(!istype(L,/list)) src << "Not a List."
 
-	var/list/locked = list("vars", "key", "ckey", "client", "firemut", "ishulk", "telekinesis", "xray", "virus", "viruses", "cuffed", "ka", "last_eaten", "urine", "poo", "icon", "icon_state")
+	var/list/locked = list("vars", "key", "ckey", "client", "virus", "viruses", "icon", "icon_state")
 	var/list/names = sortList(L)
 
 	var/variable = input("Which var?","Var") as null|anything in names + "(ADD VAR)"
@@ -269,9 +269,9 @@ var/list/forbidden_varedit_object_types = list(
 /client/proc/modify_variables(var/atom/O, var/param_var_name = null, var/autodetect_class = 0)
 	if(!check_rights(R_VAREDIT))	return
 
-	var/list/locked = list("vars", "key", "ckey", "client", "firemut", "ishulk", "telekinesis", "xray", "virus", "cuffed", "ka", "last_eaten", "icon", "icon_state", "mutantrace", "player_ingame_age")
+	var/list/locked = list("vars", "key", "ckey", "client", "virus", "viruses", "icon", "icon_state", "mutantrace", "player_ingame_age", "resize")
 	var/list/typechange_locked = list("player_next_age_tick","player_ingame_age")
-	var/list/fully_locked = list("player_next_age_tick")
+	var/list/fully_locked = list("player_next_age_tick", "resize_rev")
 
 	for(var/p in forbidden_varedit_object_types)
 		if( istype(O,p) )
@@ -447,7 +447,16 @@ var/list/forbidden_varedit_object_types = list(
 			return
 
 		if("restore to default")
-			O.vars[variable] = initial(O.vars[variable])
+			if(variable=="resize")
+				O.vars[variable] = O.resize_rev
+				world.log << "### VarEdit by [src]: [O.type] [variable]=[html_encode("[O.vars[variable]]")]"
+				log_admin("[key_name(src)] modified [original_name]'s [variable] to [O.vars[variable]]")
+				message_admins("[key_name_admin(src)] modified [original_name]'s [variable] to [O.vars[variable]]", 1)
+				O.update_transform()
+				O.resize_rev = initial(O.resize_rev)
+				return
+			else
+				O.vars[variable] = initial(O.vars[variable])
 
 		if("edit referenced object")
 			return .(O.vars[variable])
@@ -480,6 +489,18 @@ var/list/forbidden_varedit_object_types = list(
 					living_mob_list -= O
 					dead_mob_list += O
 				O.vars[variable] = var_new
+			else if(variable=="resize")
+				var/var_new = input("Enter new coefficient: \n(object will be resized by multiplying this number)","Num",O.vars[variable]) as null|num
+				if(var_new == null) return
+				if(var_new == 0)
+					usr << "<b>Resize coefficient can't be equal 0</b>"
+					return
+				O.vars[variable] = var_new
+				world.log << "### VarEdit by [src]: [O.type] [variable]=[html_encode("[O.vars[variable]]")]"
+				log_admin("[key_name(src)] modified [original_name]'s [variable] to [O.vars[variable]]")
+				message_admins("[key_name_admin(src)] modified [original_name]'s [variable] to [O.vars[variable]]", 1)
+				O.update_transform()
+				return
 			else
 				var/var_new =  input("Enter new number:","Num",O.vars[variable]) as null|num
 				if(var_new==null) return

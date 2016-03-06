@@ -5,8 +5,40 @@
 	icon_state = "sextractor"
 	density = 1
 	anchored = 1
+	var/max_seeds = 1000
+	var/seed_multiplier = 1
+
+/obj/machinery/seed_extractor/New()
+	..()
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/seed_extractor(null)
+	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
+	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
+	RefreshParts()
+
+/obj/machinery/seed_extractor/RefreshParts()
+	for(var/obj/item/weapon/stock_parts/matter_bin/B in component_parts)
+		max_seeds = 1000 * B.rating
+	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
+		seed_multiplier = M.rating
+
 
 obj/machinery/seed_extractor/attackby(var/obj/item/O as obj, var/mob/user as mob)
+
+	if(default_deconstruction_screwdriver(user, "sextractor_open", "sextractor", O))
+		return
+
+	if(exchange_parts(user, O))
+		return
+
+	if(default_pry_open(O))
+		return
+
+	if(default_unfasten_wrench(user, O))
+		return
+
+	default_deconstruction_crowbar(O)
+
 	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/))
 		var/obj/item/weapon/reagent_containers/food/snacks/grown/F = O
 		user.drop_item()

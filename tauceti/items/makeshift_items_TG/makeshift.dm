@@ -52,7 +52,7 @@
 
 /obj/item/weapon/unfinished_prod/attackby(var/obj/item/I, mob/user as mob)
 	if(istype(I,/obj/item/weapon/cell))
-		var/obj/item/weapon/cell/C = I
+		var/obj/item/weapon/stock_parts/cell/C = I
 		var/Charges = round(C.charge/2500 + 0.49)
 
 		var/obj/item/weapon/melee/baton/cattleprod/P = new /obj/item/weapon/melee/baton/cattleprod
@@ -73,7 +73,7 @@
 		desc = "An improvised stun baton."
 		icon_state = "stunprod"
 		item_state = "prod"
-		var/obj/item/weapon/cell/bcell = null
+		var/obj/item/weapon/stock_parts/cell/bcell = null
 		var/stunforce = 5
 		var/hitcost = 2500
 		force = 3
@@ -130,7 +130,7 @@
 		icon_state = "[initial(name)]"
 
 /obj/item/weapon/melee/cattleprod/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/weapon/cell))
+	if(istype(W, /obj/item/weapon/stock_parts/cell))
 		if(!bcell)
 			user.drop_item()
 			W.loc = src

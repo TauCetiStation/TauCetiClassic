@@ -291,19 +291,20 @@ Used In File(s): D:\Development\SS13-BS12\code\game\dna\dna_modifier.dm
 
 <div class="item">
 	<div class="itemLabelNarrow">
-		Occupant:
+		Door:
 	</div>
 	<div class="itemContentWide">
-		{{:helper.link('Eject Occupant', 'eject', {'ejectOccupant' : 1}, data.locked || !data.hasOccupant || data.irradiating ? 'disabled' : null)}}
+		{{:helper.link('Open', 'unlocked', {'toggleOpen' : 1}, data.open ? 'selected' : data.locked ? 'disabled' : null)}}
+		{{:helper.link('Close', 'locked', {'toggleOpen' : 1}, !data.open ? 'selected' : data.locked ? 'disabled' : null)}}
 	</div>
 </div>
 <div class="item">
 	<div class="itemLabelNarrow">
-		Door Lock:
+		Door Bolts:
 	</div>
 	<div class="itemContentWide">
 		{{:helper.link('Engaged', 'locked', {'toggleLock' : 1}, data.locked ? 'selected' : !data.hasOccupant ? 'disabled' : null)}}
-        {{:helper.link('Disengaged', 'unlocked', {'toggleLock' : 1}, !data.locked ? 'selected' : data.irradiating ? 'disabled' : null)}}
+		{{:helper.link('Disengaged', 'unlocked', {'toggleLock' : 1}, !data.locked ? 'selected' : data.irradiating ? 'disabled' : null)}}
 	</div>
 </div>
 

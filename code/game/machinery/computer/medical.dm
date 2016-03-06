@@ -6,7 +6,7 @@
 	icon_state = "medcomp"
 	light_color = "#315ab4"
 	req_one_access = list(access_medical, access_forensics_lockers)
-	circuit = "/obj/item/weapon/circuitboard/med_data"
+	circuit = /obj/item/weapon/circuitboard/med_data
 	var/obj/item/weapon/card/id/scan = null
 	var/authenticated = null
 	var/rank = null
@@ -24,12 +24,6 @@
 		scan = O
 		user << "You insert [O]."
 	..()
-
-/obj/machinery/computer/med_data/attack_ai(user as mob)
-	return src.attack_hand(user)
-
-/obj/machinery/computer/med_data/attack_paw(user as mob)
-	return src.attack_hand(user)
 
 /obj/machinery/computer/med_data/attack_hand(mob/user as mob)
 	if(..())

@@ -24,6 +24,19 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 	delay = 7
 	circuitboard = "/obj/item/weapon/circuitboard/telecomms/broadcaster"
 
+/obj/machinery/telecomms/broadcaster/New()
+	..()
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/telecomms/broadcaster(null)
+	component_parts += new /obj/item/weapon/stock_parts/subspace/filter(null)
+	component_parts += new /obj/item/weapon/stock_parts/subspace/crystal(null)
+	component_parts += new /obj/item/weapon/stock_parts/micro_laser/high(null)
+	component_parts += new /obj/item/weapon/stock_parts/micro_laser/high(null)
+	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
+	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
+	component_parts += new /obj/item/weapon/cable_coil(null, 1)
+	RefreshParts()
+
 /obj/machinery/telecomms/broadcaster/receive_information(datum/signal/signal, obj/machinery/telecomms/machine_from)
 	// Don't broadcast rejected signals
 	if(signal.data["reject"])

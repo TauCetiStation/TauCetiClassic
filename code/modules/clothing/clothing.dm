@@ -178,7 +178,7 @@ BLIND     // can't see anything
 	icon = 'icons/obj/clothing/gloves.dmi'
 	siemens_coefficient = 0.9
 	var/wired = 0
-	var/obj/item/weapon/cell/cell = 0
+	var/obj/item/weapon/stock_parts/cell/cell = 0
 	var/clipped = 0
 	body_parts_covered = HANDS
 	slot_flags = SLOT_GLOVES

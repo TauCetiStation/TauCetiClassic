@@ -168,6 +168,7 @@ var/list/admin_verbs_debug = list(
 //	/client/proc/show_distribution_map,
 	/client/proc/enable_debug_verbs,
 	/*/client/proc/callproc,*/
+//	/proc/machine_upgrade,
 	/client/proc/toggledebuglogs,
 	/client/proc/SDQL_query,
 	/client/proc/SDQL2_query

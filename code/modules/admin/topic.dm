@@ -659,6 +659,12 @@
 		else
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=revolutionary;jobban4=\ref[M]'>[replacetext("Revolutionary", " ", "&nbsp")]</a></td>"
 
+		//Raider (New heist)
+		if(jobban_isbanned(M, "Raider") || isbanned_dept)
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Raider;jobban4=\ref[M]'><font color=red>Raider</font></a></td>"
+		else
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Raider;jobban4=\ref[M]'>Raider</a></td>"
+
 		jobs += "</tr><tr align='center'>" //Breaking it up so it fits nicer on the screen every 5 entries
 
 		//Cultist
@@ -690,29 +696,34 @@
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Vox Raider;jobban4=\ref[M]'><font color=red>Vox Raider</font></a></td>"
 		else
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Vox Raider;jobban4=\ref[M]'>Vox Raider</a></td>"
-		//Raider (New heist)
-		if(jobban_isbanned(M, "Raider") || isbanned_dept)
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Raider;jobban4=\ref[M]'><font color=red>Raider</font></a></td>"
-		else
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Raider;jobban4=\ref[M]'>Raider</a></td>"
+
+		jobs += "</tr><tr align='center'>" //Breaking it up so it fits nicer on the screen every 5 entries
+
 		//Mutineer
 		if(jobban_isbanned(M, "Mutineer") || isbanned_dept)
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Mutineer;jobban4=\ref[M]'><font color=red>Mutineer</font></a></td>"
 		else
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Mutineer;jobban4=\ref[M]'>Mutineer</a></td>"
+
 		//Shadowling
 		if(jobban_isbanned(M, "Shadowling") || isbanned_dept)
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Shadowling;jobban4=\ref[M]'><font color=red>Shadowling</font></a></td>"
 		else
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Shadowling;jobban4=\ref[M]'>Shadowling</a></td>"
 
-/*		//Malfunctioning AI	//Removed Malf-bans because they're a pain to impliment
+		//Abductor
+		if(jobban_isbanned(M, "Abductor") || isbanned_dept)
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Abductor;jobban4=\ref[M]'><font color=red>Abductor</font></a></td>"
+		else
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Abductor;jobban4=\ref[M]'>Abductor</a></td>"
+
+		//Malfunctioning AI
 		if(jobban_isbanned(M, "malf AI") || isbanned_dept)
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=malf AI;jobban4=\ref[M]'><font color=red>[replacetext("Malf AI", " ", "&nbsp")]</font></a></td>"
 		else
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=malf AI;jobban4=\ref[M]'>[replacetext("Malf AI", " ", "&nbsp")]</a></td>"
 
-		//Alien
+/*		//Alien
 		if(jobban_isbanned(M, "alien candidate") || isbanned_dept)
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=alien candidate;jobban4=\ref[M]'><font color=red>[replacetext("Alien", " ", "&nbsp")]</font></a></td>"
 		else
@@ -1358,7 +1369,7 @@
 						foo += text("<B>Is an AI</B> | ")
 					else
 						foo += text("<A HREF='?src=\ref[];makeai=\ref[]'>Make AI</A> | ", src, M)
-					if(M.z != 2)
+					if(M.z != ZLEVEL_CENTCOMM)
 						foo += text("<A HREF='?src=\ref[];sendtoprison=\ref[]'>Prison</A> | ", src, M)
 						foo += text("<A HREF='?src=\ref[];sendtomaze=\ref[]'>Maze</A> | ", src, M)
 					else
@@ -1914,7 +1925,7 @@
 				feedback_add_details("admin_secrets_fun_used","P")
 				log_admin("[key_name(usr)] made all areas powered", 1)
 				message_admins("\blue [key_name_admin(usr)] made all areas powered", 1)
-				power_restore()
+				power_restore(badminery=1)
 			if("unpower")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","UP")
@@ -1922,6 +1933,9 @@
 				message_admins("\blue [key_name_admin(usr)] made all areas unpowered", 1)
 				power_failure()
 			if("quickpower")
+				if(power_fail_event)
+					usr << "Power fail event is in progress.. Please wait or use normal power restore."
+					return
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","QP")
 				log_admin("[key_name(usr)] made all SMESs powered", 1)
@@ -1935,7 +1949,7 @@
 				/*
 				var/A = locate(/area/shuttle_prison)
 				for(var/atom/movable/AM as mob|obj in A)
-					AM.z = 1
+					AM.z = ZLEVEL_STATION
 					AM.Move()
 				*/
 				message_admins("\blue [key_name_admin(usr)] sent the prison shuttle to the station.", 1)
@@ -1945,7 +1959,7 @@
 				feedback_add_details("admin_secrets_fun_used","DP")
 				var/A = locate(/area/shuttle_prison)
 				for(var/atom/movable/AM as mob|obj in A)
-					AM.z = 2
+					AM.z == ZLEVEL_CENTCOMM
 					AM.Move()
 				*/
 				message_admins("\blue [key_name_admin(usr)] sent the prison shuttle back.", 1)

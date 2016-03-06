@@ -99,14 +99,14 @@
 	for(var/mob/living/M in get_turf(src))
 		if(M.lying) return //No spamming this on people.
 		M.Weaken(5)
-		M << "\red You topple as \the [src] moves under you!"
+		M << "<span class='red'>You topple as \the [src] moves under you!</span>"
 
 		if(prob(25))
 
 			var/damage = rand(15,30)
 			var/mob/living/carbon/human/H = M
 			if(!istype(M))
-				H << "\red You land heavily!"
+				H << "<span class='red'>You land heavily!</span>"
 				M.adjustBruteLoss(damage)
 				return
 
@@ -125,31 +125,31 @@
 					affecting = H.get_organ("head")
 
 			if(affecting)
-				M << "\red You land heavily on your [affecting.display_name]!"
+				M << "<span class='red'>You land heavily on your [affecting.display_name]!</span>"
 				affecting.take_damage(damage, 0)
 				if(affecting.parent)
 					affecting.parent.add_autopsy_data("Misadventure", damage)
 			else
-				H << "\red You land heavily!"
+				H << "<span class='red'>You land heavily!</span>"
 				H.adjustBruteLoss(damage)
 
 			H.updatehealth()
 	return
 
 /obj/structure/proc/can_touch(var/mob/user)
-	if (!user)
+	if(!user)
 		return 0
 	if(!Adjacent(user))
 		return 0
-	if (user.restrained() || user.buckled)
+	if(user.restrained() || user.buckled)
 		user << "<span class='notice'>You need your hands and legs free for this.</span>"
 		return 0
-	if (user.stat || user.paralysis || user.sleeping || user.lying || user.weakened)
+	if(user.stat || user.paralysis || user.sleeping || user.lying || user.weakened)
 		return 0
-	if (issilicon(user))
+	if(issilicon(user))
 		user << "<span class='notice'>You need hands for this.</span>"
 		return 0
 	for(var/obj/O in src.loc)
-		if (O.density > 0 && istype(O, /obj/machinery/door/firedoor) || (O.density && O.opacity) > 0)
+		if((O.density && O.opacity) > 0)
 			return 0
 	return 1

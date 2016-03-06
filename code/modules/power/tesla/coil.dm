@@ -25,8 +25,8 @@
 	if(default_deconstruction_screwdriver(user, "coil", "coil", W))
 		return
 
-	//if(exchange_parts(user, W))
-	//	return
+	if(exchange_parts(user, W))
+		return
 
 	if(default_pry_open(W))
 		return
@@ -69,8 +69,8 @@
 	if(default_deconstruction_screwdriver(user, "grounding_rod", "grounding_rod", W))
 		return
 
-	//if(exchange_parts(user, W))
-	//	return
+	if(exchange_parts(user, W))
+		return
 
 	if(default_pry_open(W))
 		return

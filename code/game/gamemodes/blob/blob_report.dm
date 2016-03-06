@@ -66,7 +66,7 @@
 
 	proc/count(var/count_territories)
 		for(var/turf/T in world)
-			if(T.z != 1)
+			if(T.z != ZLEVEL_STATION)
 				continue
 
 			if(istype(T,/turf/simulated/floor))
@@ -88,7 +88,7 @@
 					src.r_wall += 1
 
 		for(var/obj/O in world)
-			if(O.z != 1)
+			if(O.z != ZLEVEL_STATION)
 				continue
 
 			if(istype(O, /obj/structure/window))
