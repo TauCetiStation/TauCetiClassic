@@ -107,7 +107,7 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 			return
 
 		var/turf/T = get_turf(target)
-		forceMove(T)
+		forceMoveOld(T)
 
 /mob/dead/attackby(obj/item/W, mob/user)
 	if(istype(W,/obj/item/weapon/book/tome))
@@ -338,7 +338,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(!L || !L.len)
 		usr << "<span class='warning'>No area available.</span>"
 
-	usr.forceMove(pick(L))
+	usr.forceMoveOld(pick(L))
 
 /mob/dead/observer/verb/follow()
 	set category = "Ghost"
@@ -409,7 +409,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			var/turf/T = get_turf(M) //Turf of the destination mob
 
 			if(T && isturf(T))	//Make sure the turf exists, then move the source to that destination.
-				A.forceMove(T)
+				A.forceMoveOld(T)
 			else
 				A << "This mob is not located in the game world."
 
