@@ -189,7 +189,7 @@
 	set desc = "Toggles seeing melee attack animations."
 	prefs.toggles ^= SHOW_ANIMATIONS
 	prefs.save_preferences()
-	src << "You will [(prefs.toggles & SHOW_ANIMATIONS) ? "no longer" : "now"] see melee attack animations."
+	src << "You will [(prefs.toggles & SHOW_ANIMATIONS) ? "now" : "no longer"] see melee attack animations."
 	feedback_add_details("admin_verb","MAA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/verb/toggle_progress_bar()
@@ -198,7 +198,7 @@
 	set desc = "Toggles visibility of progress bars."
 	prefs.toggles ^= SHOW_PROGBAR
 	prefs.save_preferences()
-	src << "You will [(prefs.toggles & SHOW_PROGBAR) ? "no longer" : "now"] see progress bars."
+	src << "You will [(prefs.toggles & SHOW_PROGBAR) ? "now" : "no longer"] see progress bars."
 	feedback_add_details("admin_verb","PRB") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/verb/toggle_media()

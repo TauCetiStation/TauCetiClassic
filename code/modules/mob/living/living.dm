@@ -818,9 +818,8 @@
 		I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 		var/list/viewing = list()
 		for(var/mob/M in viewers(A))
-			if(M.client)
-				if(!(M.client.prefs.toggles & SHOW_ANIMATIONS))
-					viewing |= M.client
+			if(M.client && (M.client.prefs.toggles & SHOW_ANIMATIONS))
+				viewing |= M.client
 		flick_overlay(I,viewing,5)
 		I.pixel_z = 16 //lift it up...
 		animate(I, pixel_z = 0, alpha = 125, time = 3) //smash it down into them!

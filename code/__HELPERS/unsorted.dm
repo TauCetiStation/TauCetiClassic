@@ -402,6 +402,8 @@ Turf and target are seperate in case you want to teleport some distance from a t
 				continue
 		if(M.client && M.client.holder && M.client.holder.fakekey) //stealthmins
 			continue
+		if(usr == M)	//skip yourself
+			continue
 		var/name = M.name
 		if (name in names)
 			namecounts[name]++
@@ -715,7 +717,7 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 	var/image/progbar
 
 	for(var/i = 1 to numticks)
-		if(user.client && !(user.client.prefs.toggles & SHOW_PROGBAR))
+		if(user.client && (user.client.prefs.toggles & SHOW_PROGBAR))
 			progbar = make_progress_bar(i, numticks, target)
 			user.client.images |= progbar
 		sleep(timefraction)
@@ -757,7 +759,7 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 	var/image/progbar
 
 	for (var/i = 1 to numticks)
-		if(user.client && !(user.client.prefs.toggles & SHOW_PROGBAR))
+		if(user.client && (user.client.prefs.toggles & SHOW_PROGBAR))
 			progbar = make_progress_bar(i, numticks, target)
 			user.client.images |= progbar
 
@@ -1546,7 +1548,7 @@ var/mob/dview/dview_mob = new
 		var/targetloc = get_turf(A)
 		if(!lockinorbit && loc != lastloc && loc != targetloc)
 			break
-		loc = targetloc
+		forceMove(targetloc)
 		lastloc = loc
 		sleep(0.6)
 
