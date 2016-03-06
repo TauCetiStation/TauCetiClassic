@@ -765,7 +765,6 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	var/t_amount = 0
 	var/list/result = list()
 	var/output_loc = parent.Adjacent(user) ? user.loc : parent.loc //needed for TK
-	var/product_name
 	while(t_amount < getYield())
 		var/obj/item/weapon/reagent_containers/food/snacks/grown/t_prod = new produce(output_loc, potency)
 		result.Add(t_prod) // User gets a consumable
@@ -779,7 +778,6 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 		t_prod.potency = potency
 		t_prod.plant_type = plant_type
 		t_amount++
-		product_name = t_prod.name
 	if(getYield() >= 1)
 		score["stuffharvested"]++
 
