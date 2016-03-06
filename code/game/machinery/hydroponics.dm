@@ -781,7 +781,6 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 		t_amount++
 		product_name = t_prod.name
 	if(getYield() >= 1)
-		feedback_add_details("food_harvested","[product_name]|[getYield()]")
 		score["stuffharvested"]++
 
 	parent.update_tray()
