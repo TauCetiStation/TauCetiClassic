@@ -625,7 +625,7 @@
 "ma" = (/turf/simulated/wall/r_wall,/area/research_outpost/longtermstorage)
 "mb" = (/obj/structure/sign/nosmoking_2{pixel_y = -32},/obj/machinery/camera{c_tag = "Research Outpost Exotic Particles Lab"; dir = 4; network = list("Research","SS13")},/turf/simulated/floor{dir = 4; icon_state = "warning"},/area/research_outpost/harvesting)
 "mc" = (/obj/structure/table,/obj/item/weapon/wrench,/obj/item/weapon/pickaxe/drill,/turf/simulated/floor,/area/research_outpost/gearstore)
-"md" = (/obj/machinery/hydroponics,/turf/simulated/floor{icon_state = "dark"},/area/mine/abandoned)
+"md" = (/obj/machinery/hydroponics/constructable,/turf/simulated/floor{icon_state = "dark"},/area/mine/abandoned)
 "me" = (/obj/structure/table,/obj/item/weapon/paper/crumpled,/turf/simulated/floor/airless{icon_state = "floorscorched2"},/area/mine/abandoned)
 "mf" = (/obj/structure/grille,/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 1},/turf/simulated/floor/plating,/area/mine/abandoned)
 "mg" = (/obj/structure/grille,/obj/structure/window/reinforced,/obj/item/weapon/shard{icon_state = "medium"},/turf/simulated/floor/plating,/area/mine/abandoned)
