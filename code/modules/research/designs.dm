@@ -1346,7 +1346,7 @@ datum/design/power_turbine
 	id = "space_heater"
 	req_tech = list("programming" = 2, "engineering" = 2)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	materials = list("$glass" = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/space_heater
 	//category = list ("Engineering Machinery")
 
@@ -1562,7 +1562,7 @@ datum/design/autolathe
 	id = "recharger"
 	req_tech = list("powerstorage" = 3, "engineering" = 3, "materials" = 4)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 1000, "sacid" = 20, MAT_GOLD = 100)
+	materials = list("$glass" = 1000, "sacid" = 20, "$gold" = 100)
 	build_path = /obj/item/weapon/circuitboard/recharger
 //	category = list("Misc. Machinery")
 
@@ -1572,7 +1572,7 @@ datum/design/autolathe
 	id = "vendor"
 	req_tech = list("programming" = 1)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	materials = list("$glass" = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/vendor
 //	category = list ("Misc. Machinery")
  
@@ -1582,7 +1582,7 @@ datum/design/autolathe
 	id = "ore_redemption"
 	req_tech = list("programming" = 1, "engineering" = 2)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	materials = list("$glass" = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/ore_redemption
 //	category = list ("Misc. Machinery")
 
@@ -1592,7 +1592,7 @@ datum/design/autolathe
 	id = "mining_equipment_vendor"
 	req_tech = list("programming" = 1, "engineering" = 2)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	materials = list("$glass" = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/mining_equipment_vendor
 //	category = list ("Misc. Machinery")
 
