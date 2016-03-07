@@ -27,7 +27,7 @@
 		return
 
 	//add cell
-	else if(istype(W, /obj/item/weapon/cell))
+	else if(istype(W, /obj/item/weapon/stock_parts/cell))
 		if(!wired)
 			user << "<span class='notice'>The [src] need to be wired first.</span>"
 		else if(!cell)

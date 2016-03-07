@@ -20,7 +20,8 @@
 
 
 /obj/machinery/computer/crew/attack_hand(mob/user)
-	add_fingerprint(user)
+	if(..())
+		return
 	if(stat & (BROKEN|NOPOWER))
 		return
 	ui_interact(user)
@@ -28,17 +29,6 @@
 /obj/machinery/computer/crew/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null, var/force_open = 1)
 	crew_monitor.ui_interact(user, ui_key, ui, force_open)
 
-/obj/machinery/computer/crew/update_icon()
-
-	if(stat & BROKEN)
-		icon_state = "crewb"
-	else
-		if(stat & NOPOWER)
-			src.icon_state = "c_unpowered"
-			stat |= NOPOWER
-		else
-			icon_state = initial(icon_state)
-			stat &= ~NOPOWER
 
 /obj/machinery/computer/crew/interact(mob/user)
 	crew_monitor.ui_interact(user)

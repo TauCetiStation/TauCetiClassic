@@ -20,11 +20,12 @@ obj/structure/windoor_assembly
 
 	var/ini_dir
 	var/obj/item/weapon/airlock_electronics/electronics = null
+	var/created_name = null
 
 	//Vars to help with the icon's name
 	var/facing = "l"	//Does the windoor open to the left or right?
-	var/secure = ""		//Whether or not this creates a secure windoor
-	var/state = "01"	//How far the door assembly has progressed in terms of sprites
+	var/secure = 0		//Whether or not this creates a secure windoor
+	var/state = "01"	//How far the door assembly has progressed
 
 obj/structure/windoor_assembly/New(dir=NORTH)
 	..()
@@ -37,7 +38,7 @@ obj/structure/windoor_assembly/Destroy()
 	..()
 
 /obj/structure/windoor_assembly/update_icon()
-	icon_state = "[facing]_[secure]windoor_assembly[state]"
+	icon_state = "[facing]_[secure ? "secure_" : ""]windoor_assembly[state]"
 
 /obj/structure/windoor_assembly/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
@@ -84,7 +85,8 @@ obj/structure/windoor_assembly/Destroy()
 				user.visible_message("[user] secures the windoor assembly to the floor.", "You start to secure the windoor assembly to the floor.")
 
 				if(do_after(user, 40, target = src))
-					if(!src) return
+					if(!src || src.anchored)
+						return
 					user << "\blue You've secured the windoor assembly!"
 					src.anchored = 1
 					if(src.secure)
@@ -98,7 +100,8 @@ obj/structure/windoor_assembly/Destroy()
 				user.visible_message("[user] unsecures the windoor assembly to the floor.", "You start to unsecure the windoor assembly to the floor.")
 
 				if(do_after(user, 40, target = src))
-					if(!src) return
+					if(!src || !src.anchored)
+						return
 					user << "\blue You've unsecured the windoor assembly!"
 					src.anchored = 0
 					if(src.secure)
@@ -115,11 +118,12 @@ obj/structure/windoor_assembly/Destroy()
 				user << "\blue You start to reinforce the windoor with rods."
 
 				if(do_after(user,40, target = src))
-					if(!src) return
+					if(!src || !secure)
+						return
 
 					R.use(4)
 					user << "\blue You reinforce the windoor."
-					src.secure = "secure_"
+					src.secure = 1
 					if(src.anchored)
 						src.name = "Secure Anchored Windoor Assembly"
 					else
@@ -130,7 +134,8 @@ obj/structure/windoor_assembly/Destroy()
 				user.visible_message("[user] wires the windoor assembly.", "You start to wire the windoor assembly.")
 
 				if(do_after(user, 40, target = src))
-					if(!src) return
+					if(!src || !src.anchored || src.state != "01")
+						return
 					var/obj/item/weapon/cable_coil/CC = W
 					CC.use(1)
 					user << "\blue You wire the windoor!"
@@ -150,7 +155,8 @@ obj/structure/windoor_assembly/Destroy()
 				user.visible_message("[user] cuts the wires from the airlock assembly.", "You start to cut the wires from airlock assembly.")
 
 				if(do_after(user, 40, target = src))
-					if(!src) return
+					if(!src || src.state != "02")
+						return
 
 					user << "\blue You cut the windoor wires.!"
 					new/obj/item/weapon/cable_coil(get_turf(user), 1)
@@ -164,12 +170,13 @@ obj/structure/windoor_assembly/Destroy()
 			else if(istype(W, /obj/item/weapon/airlock_electronics) && W:icon_state != "door_electronics_smoked")
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
 				user.visible_message("[user] installs the electronics into the airlock assembly.", "You start to install electronics into the airlock assembly.")
+				user.drop_item()
+				W.loc = src
 
 				if(do_after(user, 40, target = src))
-					if(!src) return
-
-					user.drop_item()
-					W.loc = src
+					if(!src || src.electronics)
+						W.loc = src.loc
+						return
 					user << "\blue You've installed the airlock electronics!"
 					src.name = "Near finished Windoor Assembly"
 					src.electronics = W
@@ -177,20 +184,31 @@ obj/structure/windoor_assembly/Destroy()
 					W.loc = src.loc
 
 			//Screwdriver to remove airlock electronics. Step 6 undone.
-			else if(istype(W, /obj/item/weapon/screwdriver) && src.electronics)
+			else if(istype(W, /obj/item/weapon/screwdriver))
+				if(!electronics)
+					return
+
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
 				user.visible_message("[user] removes the electronics from the airlock assembly.", "You start to uninstall electronics from the airlock assembly.")
 
 				if(do_after(user, 40, target = src))
-					if(!src || !src.electronics) return
+					if(!src || !electronics)
+						return
 					user << "\blue You've removed the airlock electronics!"
-					if(src.secure)
-						src.name = "Secure Wired Windoor Assembly"
-					else
-						src.name = "Wired Windoor Assembly"
 					var/obj/item/weapon/airlock_electronics/ae = electronics
+					ae = electronics
 					electronics = null
 					ae.loc = src.loc
+
+			else if(istype(W, /obj/item/weapon/pen))
+				var/t = copytext(stripped_input(user, "Enter the name for the door.", src.name, src.created_name),1,MAX_NAME_LEN)
+				if(!t)
+					return
+				if(!in_range(src, usr) && src.loc != usr)
+					return
+				created_name = t
+				return
+
 
 			//Crowbar to complete the assembly, Step 7 complete.
 			else if(istype(W, /obj/item/weapon/crowbar))
@@ -203,7 +221,8 @@ obj/structure/windoor_assembly/Destroy()
 
 				if(do_after(user, 40, target = src))
 
-					if(!src) return
+					if(!src.loc || !src.electronics)
+						return
 
 					density = 1 //Shouldn't matter but just incase
 					user << "\blue You finish the windoor!"
@@ -226,6 +245,10 @@ obj/structure/windoor_assembly/Destroy()
 							windoor.req_access = src.electronics.conf_access
 						windoor.electronics = src.electronics
 						src.electronics.loc = windoor
+						if(created_name)
+							windoor.name = created_name
+
+
 					else
 						var/obj/machinery/door/window/windoor = new /obj/machinery/door/window(src.loc)
 						if(src.facing == "l")
@@ -244,7 +267,9 @@ obj/structure/windoor_assembly/Destroy()
 							windoor.req_access = src.electronics.conf_access
 						windoor.electronics = src.electronics
 						src.electronics.loc = windoor
-
+						if(created_name)
+							windoor.name = created_name
+						windoor.close()
 
 					qdel(src)
 

@@ -239,7 +239,7 @@ Class Procs:
 	if ( ! (istype(usr, /mob/living/carbon/human) || \
 			istype(usr, /mob/living/silicon) || \
 			istype(usr, /mob/living/carbon/monkey)) )
-		usr << "\red You don't have the dexterity to do this!"
+		usr << "<span class='danger'>You don't have the dexterity to do this!</span>"
 		return 1
 
 	var/norange = 0
@@ -288,7 +288,7 @@ Class Procs:
 	if ( ! (istype(usr, /mob/living/carbon/human) || \
 			istype(usr, /mob/living/silicon) || \
 			istype(usr, /mob/living/carbon/monkey)) )
-		usr << "\red You don't have the dexterity to do this!"
+		usr << "<span class='danger'>You don't have the dexterity to do this!</span>"
 		return 1
 /*
 	//distance checks are made by atom/proc/DblClick
@@ -298,17 +298,17 @@ Class Procs:
 	if (ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(H.getBrainLoss() >= 60)
-			visible_message("\red [H] stares cluelessly at [src] and drools.")
+			visible_message("<span class='danger'>[H] stares cluelessly at [src] and drools.</span>")
 			return 1
 		else if(prob(H.getBrainLoss()))
-			user << "\red You momentarily forget how to use [src]."
+			user << "<span class='danger'>You momentarily forget how to use [src].</span>"
 			return 1
-
-	src.add_fingerprint(user)
 
 	var/area/A = get_area(src)
 	A.master.powerupdate = 1
 
+	src.add_fingerprint(user)
+	user.set_machine(src)
 	return 0
 
 /obj/machinery/proc/RefreshParts() //Placeholder proc for machines that are built using frames.
@@ -374,17 +374,16 @@ Class Procs:
 		return 1
 	return 0
 
-/*
 /obj/machinery/proc/exchange_parts(mob/user, obj/item/weapon/storage/part_replacer/W)
-	if(flags & NODECONSTRUCT)
-		return
 	var/shouldplaysound = 0
 	if(istype(W) && component_parts)
 		if(panel_open || W.works_from_distance)
 			var/obj/item/weapon/circuitboard/CB = locate(/obj/item/weapon/circuitboard) in component_parts
 			var/P
 			if(W.works_from_distance)
-				display_parts(user)
+				user << "<span class='notice'>Following parts detected in the machine:</span>"
+				for(var/var/obj/item/C in component_parts)
+					user << "<span class='notice'>    [C.name]</span>"
 			for(var/obj/item/weapon/stock_parts/A in component_parts)
 				for(var/D in CB.req_components)
 					if(ispath(A.type, D))
@@ -403,11 +402,13 @@ Class Procs:
 							break
 			RefreshParts()
 		else
-			display_parts(user)
+			user << "<span class='notice'>Following parts detected in the machine:</span>"
+			for(var/var/obj/item/C in component_parts)
+				user << "<span class='notice'>    [C.name]</span>"
 		if(shouldplaysound)
 			W.play_rped_sound()
 		return 1
-	return 0*/
+	return 0
 
 /obj/machinery/proc/display_parts(mob/user)
 	user << "<span class='notice'>Following parts detected in the machine:</span>"

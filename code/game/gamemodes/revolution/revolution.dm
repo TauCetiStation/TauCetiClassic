@@ -411,7 +411,7 @@
 					text += "died"
 					flat.Turn(90)
 					end_icons[tempstate] = flat
-				else if(headrev.current.z != 1)
+				else if(headrev.current.z != ZLEVEL_STATION)
 					text += "fled the station"
 				else
 					text += "survived the revolution"
@@ -454,7 +454,7 @@
 					text += "died"
 					flat.Turn(90)
 					end_icons[tempstate] = flat
-				else if(rev.current.z != 1)
+				else if(rev.current.z != ZLEVEL_STATION)
 					text += "fled the station"
 				else
 					text += "survived the revolution"
@@ -487,7 +487,7 @@
 					text += "died"
 					flat.Turn(90)
 					end_icons[tempstate] = flat
-				else if(head.current.z != 1)
+				else if(head.current.z != ZLEVEL_STATION)
 					text += "fled the station"
 				else
 					text += "survived the revolution"

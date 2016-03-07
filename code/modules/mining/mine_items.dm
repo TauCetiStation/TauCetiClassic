@@ -156,7 +156,6 @@ proc/move_mining_shuttle()
 	updateUsrDialog()
 
 /obj/machinery/computer/mining_shuttle/attackby(obj/item/weapon/W as obj, mob/user as mob)
-
 	if (istype(W, /obj/item/weapon/card/emag) && !emagged)
 		src.req_access = list()
 		emagged = 1
@@ -291,8 +290,8 @@ proc/move_mining_shuttle()
 	digspeed = 30
 	var/drill_cost = 15
 	var/state = 0
-	var/obj/item/weapon/cell/power_supply
-	var/cell_type = /obj/item/weapon/cell
+	var/obj/item/weapon/stock_parts/cell/power_supply
+	var/cell_type = /obj/item/weapon/stock_parts/cell
 	var/mode = 0
 
 /obj/item/weapon/pickaxe/drill/New()
@@ -326,7 +325,7 @@ proc/move_mining_shuttle()
 		else if(state == 2)
 			user << "<span class='danger'>[src] is broken!</span>"
 		return
-	else if(istype(W, /obj/item/weapon/cell))
+	else if(istype(W, /obj/item/weapon/stock_parts/cell))
 		if(state == 1 || state == 2)
 			if(!power_supply)
 				user.remove_from_mob(W)
@@ -457,7 +456,7 @@ proc/move_mining_shuttle()
 	icon_state = "kineticgun"
 	item_state = "kineticgun"
 	ammo_type = list(/obj/item/ammo_casing/energy/kinetic)
-	cell_type = "/obj/item/weapon/cell/crap"
+	cell_type = "/obj/item/weapon/stock_parts/cell/crap"
 	var/overheat = 0
 	var/overheat_time = 20
 	var/recent_reload = 1

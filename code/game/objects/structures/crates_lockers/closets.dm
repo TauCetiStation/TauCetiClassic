@@ -9,6 +9,8 @@
 	var/icon_opened = "open"
 	var/opened = 0
 	var/welded = 0
+	var/locked = 0
+	var/broken = 0
 	var/wall_mounted = 0 //never solid (You can always pass over it)
 	var/health = 100
 	var/lastbang
@@ -287,3 +289,31 @@
 		if(istype(A,/obj/))
 			var/obj/O = A
 			O.hear_talk(M, text)
+
+/obj/structure/closet/container_resist()
+	var/mob/living/user = usr
+	var/breakout_time = 2 //2 minutes by default
+	//if(istype(user.loc, /obj/structure/closet/critter) && !welded)
+	//	breakout_time = 0.75 //45 seconds if it's an unwelded critter crate
+
+	if(opened || (!welded && !locked))
+		return  //Door's open, not locked or welded, no point in resisting.
+
+	//okay, so the closet is either welded or locked... resist!!!
+	user.next_move = world.time + 100
+	user.last_special = world.time + 100
+	user << "<span class='notice'>You lean on the back of [src] and start pushing the door open. (this will take about [breakout_time] minutes.)</span>"
+	for(var/mob/O in viewers(src))
+		O << "<span class='warning'>[src] begins to shake violently!</span>"
+
+	if(do_after(user,(breakout_time*60*10),target=src)) //minutes * 60seconds * 10deciseconds
+		if(!user || user.stat != CONSCIOUS || user.loc != src || opened || (!locked && !welded))
+			return
+		//we check after a while whether there is a point of resisting anymore and whether the user is capable of resisting
+
+		welded = 0 //applies to all lockers lockers
+		locked = 0 //applies to critter crates and secure lockers only
+		broken = 1 //applies to secure lockers only
+		visible_message("<span class='danger'>[user] successfully broke out of [src]!</span>")
+		user << "<span class='notice'>You successfully break out of [src]!</span>"
+		open()

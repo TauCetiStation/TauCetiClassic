@@ -29,7 +29,14 @@
 	var/frame_desc = null
 	var/contain_parts = 1
 
-
+/obj/item/weapon/circuitboard/turbine_computer
+	name = "circuit board (Turbine Computer)"
+	build_path = /obj/machinery/computer/turbine_computer
+	origin_tech = "programming=4;engineering=4;power=4"
+/obj/item/weapon/circuitboard/telesci_console
+	name = "circuit board (Telescience Console)"
+	build_path = /obj/machinery/computer/telescience
+	origin_tech = "programming=3;bluespace=2"
 /obj/item/weapon/circuitboard/message_monitor
 	name = "Circuit board (Message Monitor)"
 	build_path = "/obj/machinery/computer/message_monitor"
@@ -68,6 +75,12 @@
 	name = "Circuit board (Communications)"
 	build_path = "/obj/machinery/computer/communications"
 	origin_tech = "programming=2;magnets=2"
+	var/cooldown = 0
+/obj/item/weapon/circuitboard/communications/New()
+	..()
+	processing_objects |= src
+/obj/item/weapon/circuitboard/communications/process()
+	cooldown = max(cooldown - 1, 0)
 /obj/item/weapon/circuitboard/card
 	name = "Circuit board (ID Computer)"
 	build_path = "/obj/machinery/computer/card"
@@ -130,7 +143,7 @@
 	origin_tech = "programming=2;powerstorage=2"
 /obj/item/weapon/circuitboard/powermonitor
 	name = "Circuit board (Power Monitor)"  //name fixed 250810
-	build_path = "/obj/machinery/power/monitor"
+	build_path = "/obj/machinery/computer/monitor"
 /obj/item/weapon/circuitboard/olddoor
 	name = "Circuit board (DoorMex)"
 	build_path = "/obj/machinery/computer/pod/old"
@@ -221,6 +234,10 @@
 	name = "Circuit board (Prison Shuttle)"
 	build_path = "/obj/machinery/computer/prison_shuttle"
 	origin_tech = "programming=2"
+/obj/item/weapon/circuitboard/libraryconsole
+	name = "circuit board (Library Visitor Console)"
+	build_path = /obj/machinery/computer/libraryconsole
+	origin_tech = "programming=1"
 
 
 /obj/item/weapon/circuitboard/supplycomp/attackby(obj/item/I as obj, mob/user as mob)
@@ -243,6 +260,18 @@
 				return
 			else
 				user << "DERP! BUG! Report this (And what you were doing to cause it) to Agouri"
+	return
+
+/obj/item/weapon/circuitboard/libraryconsole/attackby(obj/item/I as obj, mob/user as mob)
+	if(istype(I,/obj/item/weapon/screwdriver))
+		if(build_path == /obj/machinery/computer/libraryconsole/bookmanagement)
+			name = "circuit board (Library Visitor Console)"
+			build_path = /obj/machinery/computer/libraryconsole
+			user << "<span class='notice'>Defaulting access protocols.</span>"
+		else
+			name = "circuit board (Book Inventory Management Console)"
+			build_path = /obj/machinery/computer/libraryconsole/bookmanagement
+			user << "<span class='notice'>Access protocols successfully updated.</span>"
 	return
 
 /obj/item/weapon/circuitboard/security/attackby(obj/item/I as obj, mob/user as mob)
@@ -324,10 +353,11 @@
 				if(B.board_type == "computer")
 					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 					user << "\blue You place the circuit board inside the frame."
-					src.icon_state = "1"
-					src.circuit = P
+					icon_state = "1"
+					circuit = P
 					user.drop_item()
-					P.loc = src
+					circuit.add_fingerprint(user)
+					P.loc = null
 				else
 					user << "\red This frame does not accept circuit boards of this type!"
 			if(istype(P, /obj/item/weapon/screwdriver) && circuit)
@@ -386,17 +416,5 @@
 			if(istype(P, /obj/item/weapon/screwdriver))
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				user << "\blue You connect the monitor."
-				var/B = new src.circuit.build_path ( src.loc )
-				if(circuit.powernet) B:powernet = circuit.powernet
-				if(circuit.id) B:id = circuit.id
-				if(circuit.records) B:records = circuit.records
-				if(circuit.frequency) B:frequency = circuit.frequency
-				if(istype(circuit,/obj/item/weapon/circuitboard/supplycomp))
-					var/obj/machinery/computer/supplycomp/SC = B
-					var/obj/item/weapon/circuitboard/supplycomp/C = circuit
-					SC.can_order_contraband = C.contraband_enabled
-				if(istype(circuit,/obj/item/weapon/circuitboard/security))
-					var/obj/machinery/computer/security/C = B
-					var/obj/item/weapon/circuitboard/security/CB = circuit
-					C.network = CB.network
+				new src.circuit.build_path (src.loc, circuit)
 				qdel(src)
