@@ -70,10 +70,12 @@
 		capacity = C / (15000) * 1e6
 
 /obj/machinery/power/smes/attackby(obj/item/I, mob/user)
+	//opening using screwdriver
 	if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-o", initial(icon_state), I))
 		update_icon()
 		return
 
+	//changing direction using wrench
 	if(default_change_direction_wrench(user, I))
 		terminal = null
 		var/turf/T = get_step(src, dir)
@@ -84,31 +86,94 @@
 				user << "<span class='notice'>Terminal found.</span>"
 				break
 		if(!terminal)
-			for(var/obj/structure/cable/C in T)
-				if(C.d1 == turn(dir, 180) || C.d2 == turn(dir, 180))
-					terminal = C
-					user << "<span class='notice'>Cable found.</span>"
-					break
-		if(!terminal)
 			user << "<span class='alert'>No power source found.</span>"
 			return
 		stat &= ~BROKEN
 		update_icon()
 		return
 
+	//exchanging parts using the RPED
 	if(exchange_parts(user, I))
 		return
 
-	default_deconstruction_crowbar(I)
+
+	//building and linking a terminal
+	if(istype(I, /obj/item/weapon/cable_coil))
+		var/dir = get_dir(user,src)
+		if(dir & (dir-1))//we don't want diagonal click
+			return
+
+		if(terminal) //is there already a terminal ?
+			user << "<span class='warning'>This SMES already have a power terminal!</span>"
+			return
+
+		if(!panel_open) //is the panel open ?
+			user << "<span class='warning'>You must open the maintenance panel first!</span>"
+			return
+
+		var/turf/T = get_turf(user)
+		if(T.intact) //is the floor plating removed ?
+			user << "<span class='warning'>You must first remove the floor plating!</span>"
+			return
+
+
+		var/obj/item/weapon/cable_coil/C = I
+		if(C.amount < 10)
+			user << "<span class='warning'>You need more wires!</span>"
+			return
+
+		user << "<span class='notice'>You start building the power terminal...</span>"
+		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+
+		if(do_after(user, 20, target = src) && C.amount >= 10)
+			var/obj/structure/cable/N = T.get_cable_node() //get the connecting node cable, if there's one
+			if (prob(50) && electrocute_mob(usr, N, N)) //animate the electrocution if uncautious and unlucky
+				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+				s.set_up(5, 1, src)
+				s.start()
+				return
+
+			C.use(10)
+			user.visible_message(\
+				"[user.name] has built a power terminal.",\
+				"<span class='notice'>You build the power terminal.</span>")
+
+			//build the terminal and link it to the network
+			make_terminal(T)
+			terminal.connect_to_network()
+		return
+
+	//disassembling the terminal
+	if(istype(I, /obj/item/weapon/wirecutters) && terminal && panel_open)
+		terminal.dismantle(user)
+
+	//crowbarring it !
+	var/turf/T = get_turf(src)
+	if(default_deconstruction_crowbar(I))
+		message_admins("[src] has been deconstructed by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) in ([T.x],[T.y],[T.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>)",0,1)
+		log_game("[src] has been deconstructed by [key_name(user)]")
+		investigate_log("SMES deconstructed by [key_name(user)]","singulo")
 
 /obj/machinery/power/smes/deconstruction()
 	for(var/obj/item/weapon/stock_parts/cell/cell in component_parts)
 		cell.charge = (charge / capacity) * cell.maxcharge
 
 /obj/machinery/power/smes/Destroy()
+	if(ticker && ticker.current_state == GAME_STATE_PLAYING)
+		var/area/area = get_area(src)
+		message_admins("SMES deleted at (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>[area.name]</a>)")
+		log_game("SMES deleted at ([area.name])")
+		investigate_log("<font color='red'>deleted</font> at ([area.name])","singulo")
 	if(terminal)
 		disconnect_terminal()
 	return ..()
+
+// create a terminal object pointing towards the SMES
+// wires will attach to this
+/obj/machinery/power/smes/proc/make_terminal(turf/T)
+	terminal = new/obj/machinery/power/terminal(T)
+	terminal.dir = get_dir(T,src)
+	terminal.master = src
 
 /obj/machinery/power/smes/disconnect_terminal()
 	if(terminal)

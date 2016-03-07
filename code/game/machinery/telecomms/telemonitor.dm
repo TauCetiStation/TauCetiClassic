@@ -23,7 +23,8 @@
 	light_color = "#50AB00"
 
 	attack_hand(mob/user as mob)
-		if(..())
+		return
+/*		if(..())
 			return
 		user.set_machine(src)
 		var/dat = "<TITLE>Telecommunications Monitor</TITLE><center><b>Telecommunications Monitor</b></center>"
@@ -124,7 +125,7 @@
 					temp = "<font color = #336699>- NEW NETWORK TAG SET IN ADDRESS \[[network]\] -</font color>"
 
 		updateUsrDialog()
-		return
+		return*/
 
 	attackby(var/obj/item/weapon/D as obj, var/mob/user as mob)
 		if(istype(D, /obj/item/weapon/card/emag) && !emagged)
