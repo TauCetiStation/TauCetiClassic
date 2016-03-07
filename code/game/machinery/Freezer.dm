@@ -44,9 +44,14 @@
 
 	if(default_change_direction_wrench(user, I))
 		if(node)
+			node.disconnect(src)
 			disconnect(node)
+		initialize_directions = dir
 		initialize()
+		build_network()
 		if(node)
+			node.initialize()
+			node.build_network()
 			node.update_icon()
 		return
 
@@ -166,9 +171,14 @@
 
 	if(default_change_direction_wrench(user, I))
 		if(node)
+			node.disconnect(src)
 			disconnect(node)
+		initialize_directions = dir
 		initialize()
+		build_network()
 		if(node)
+			node.initialize()
+			node.build_network()
 			node.update_icon()
 		return
 

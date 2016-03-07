@@ -87,6 +87,7 @@
 	name = "bananium ore"
 	icon_state = "Clown ore"
 	origin_tech = "materials=4"
+	oretag = "bananium"
 
 /obj/item/weapon/ore/slag
 	name = "Slag"

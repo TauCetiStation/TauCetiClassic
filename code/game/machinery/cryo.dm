@@ -109,15 +109,15 @@
 	else
 		open_machine()
 
-//obj/machinery/atmospherics/unary/cryo_cell/examine(mob/user)
-//	..()
-//	if(occupant)
-//		if(on)
-//			user << "Someone's inside [src]!"
-//		else
-//			user << "You can barely make out a form floating in [src]."
-//	else
-//		user << "[src] seems empty."
+/obj/machinery/atmospherics/unary/cryo_cell/examine()
+	..()
+	if(occupant)
+		if(on)
+			usr << "Someone's inside [src]!"
+		else
+			usr << "You can barely make out a form floating in [src]."
+	else
+		usr << "[src] seems empty."
 
 /obj/machinery/atmospherics/unary/cryo_cell/attack_hand(mob/user)
 	ui_interact(user)
@@ -237,9 +237,14 @@
 
 	if(default_change_direction_wrench(user, G))
 		if(node)
+			node.disconnect(src)
 			disconnect(node)
+		initialize_directions = dir
 		initialize()
+		build_network()
 		if(node)
+			node.initialize()
+			node.build_network()
 			node.update_icon()
 		return
 
