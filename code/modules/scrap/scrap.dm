@@ -15,9 +15,8 @@
 		/obj/item/stack/sheet/metal/scrap,
 		/obj/item/stack/sheet/glass/scrap,
 		/obj/item/stack/sheet/plasteel/scrap,
-		/obj/item/weapon/shard,
-		/obj/random/tech_supply/,
-		/obj/random/tech_supply/,
+		/obj/item/stack/sheet/wood/scrap,
+		/obj/item/weapon/shard
 		)
 	var/dig_amount = 7
 	var/parts_icon = 'icons/obj/structures/scrap/trash.dmi'
@@ -39,7 +38,7 @@
 /obj/structure/scrap/Destroy()
 	for (var/obj/item in loot)
 		qdel(item)
-	..()
+	return ..()
 
 /obj/structure/scrap/proc/shuffle_loot()
 	loot.close_all()
@@ -80,6 +79,9 @@
 		underlays |= randomize_image(I)
 
 /obj/structure/scrap/attack_hand(mob/user)
+	if(!(loot.contents.len || contents.len > 1))
+		user << "<span class='notice'>There doesn't seem to be anything of interest left in \the [src]...</span>"
+		return ..(user)
 	loot.open(user)
 	..(user)
 
@@ -92,10 +94,8 @@
 		visible_message("<span class='notice'>\The [user] [pick(ways)] \the [src].</span>")
 		if(--dig_amount <= 0)
 			user << "<span class='notice'>You cleared out  \the [src]...</span>"
-			Destroy()
+			return Destroy()
 		shuffle_loot()
-		if(!(loot.contents.len || contents.len > 1))
-			user << "<span class='notice'>There doesn't seem to be anything of interest left in \the [src]...</span>"
 	..()
 
 /obj/structure/scrap/large
@@ -110,17 +110,28 @@
 	base_max = 14
 	base_spread = 16
 
+/obj/structure/scrap/medical
+	name = "medical refuse pile"
+	parts_icon = 'icons/obj/structures/scrap/medical_trash.dmi'
+	loot_list = list(
+		/obj/random/medical_supply/,
+		/obj/random/medical_supply/,
+		/obj/random/medical_supply/,
+		/obj/random/medical_supply/,
+		/obj/item/stack/rods/scrap,
+		/obj/item/stack/sheet/mineral/plastic/scrap,
+		/obj/item/weapon/shard
+		)
 
 /obj/structure/scrap/vehicle
 	name = "debris pile"
 	parts_icon = 'icons/obj/structures/scrap/vehicle.dmi'
 	loot_list = list(
-		/obj/random/tech_supply/,
-		/obj/random/tech_supply/,
-		/obj/random/tech_supply/,
-		/obj/random/tech_supply/,
+		/obj/random/tech_supply/guaranteed,
+		/obj/random/tech_supply/guaranteed,
+		/obj/random/tech_supply/guaranteed,
+		/obj/random/tech_supply/guaranteed,
 		/obj/item/stack/rods/scrap,
-		/obj/item/stack/sheet/mineral/plastic/scrap,
 		/obj/item/stack/sheet/metal/scrap,
 		/obj/item/weapon/shard
 		)
@@ -165,6 +176,17 @@
 	base_max = 14
 	base_spread = 16
 
+/obj/structure/scrap/medical/large
+	name = "large medical refuse pile"
+	opacity = 1
+	density = 1
+	icon_state = "big"
+	loot_min = 10
+	loot_max = 20
+	dig_amount = 15
+	base_min = 9
+	base_max = 14
+	base_spread = 16
 
 /obj/item/weapon/storage/internal/updating/update_icon()
 	master_item.update_icon()

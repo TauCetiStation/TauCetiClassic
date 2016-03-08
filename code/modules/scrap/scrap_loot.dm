@@ -12,3 +12,6 @@
 
 /obj/item/stack/sheet/plasteel/scrap/New(var/newloc)
 	..(newloc, rand(1,3))
+
+/obj/item/stack/sheet/wood/scrap/New(var/newloc)
+	..(newloc, rand(5,10))
