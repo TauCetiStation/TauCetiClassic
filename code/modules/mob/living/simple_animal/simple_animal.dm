@@ -195,14 +195,6 @@
 		adjustBruteLoss(unsuitable_atoms_damage)
 	return 1
 
-/mob/living/simple_animal/Bumped(AM as mob|obj)
-	if(!AM) return
-
-	if(resting || buckled)
-		return
-
-	..()
-
 /mob/living/simple_animal/gib()
 	if(icon_gib)
 		flick(icon_gib, src)

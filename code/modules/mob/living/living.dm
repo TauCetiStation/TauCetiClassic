@@ -4,6 +4,119 @@
 		handle_actions()
 		add_ingame_age()
 
+//Generic Bump(). Override MobBump() and ObjBump() instead of this.
+/mob/living/Bump(atom/A, yes)
+	if (buckled || !yes || now_pushing)
+		return
+	if(ismob(A))
+		var/mob/M = A
+		if(MobBump(M))
+			return
+	..()
+	if(isobj(A))
+		var/obj/O = A
+		if(ObjBump(O))
+			return
+	if(istype(A, /atom/movable))
+		var/atom/movable/AM = A
+		if(PushAM(AM))
+			return
+
+//Called when we bump onto a mob
+/mob/living/proc/MobBump(mob/M)
+	if(now_pushing)
+		return 1
+
+	if(prob(10) && iscarbon(src) && iscarbon(M))
+		var/mob/living/carbon/C = src
+		C.spread_disease_to(M, "Contact")
+
+	//BubbleWrap: Should stop you pushing a restrained person out of the way
+	if(ishuman(M))
+		for(var/mob/MM in range(M, 1))
+			if(MM.pinned.len || ((MM.pulling == M && ( M.restrained() && !( MM.restrained() ) && MM.stat == CONSCIOUS)) || locate(/obj/item/weapon/grab, M.grabbed_by.len)) )
+				if ( !(world.time % 5) )
+					src << "<span class='warning'>[M] is restrained, you cannot push past.</span>"
+				return 1
+			if( M.pulling == MM && ( MM.restrained() && !( M.restrained() ) && M.stat == CONSCIOUS) )
+				if ( !(world.time % 5) )
+					src << "<span class='warning'>[M] is restraining [MM], you cannot push past.</span>"
+				return 1
+
+		//Fat
+		if(FAT in M.mutations)
+			var/ran = 40
+			if(isrobot(src))
+				ran = 20
+			if(prob(ran))
+				src << "<span class='danger'>You fail to push [M]'s fat ass out of the way.</span>"
+			return 1
+
+	//Leaping mobs just land on the tile, no pushing, no anything.
+	if(status_flags & LEAPING)
+		loc = M.loc
+		status_flags &= ~LEAPING
+		return 1
+
+	//TO DO: so ugly, need to be redone
+	if(isdrone(M) || isdrone(src))
+		loc = M.loc
+		return 1
+
+	//switch our position with M
+	//BubbleWrap: people in handcuffs are always switched around as if they were on 'help' intent to prevent a person being pulled from being seperated from their puller
+	if((M.a_intent == "help" || M.restrained()) && (a_intent == "help" || restrained()) && M.canmove && canmove && !M.buckled && !M.buckled_mob) // mutual brohugs all around!
+		now_pushing = 1
+		//TODO: Make this use Move(). we're pretty much recreating it here.
+		//it could be done by setting one of the locs to null to make Move() work, then setting it back and Move() the other mob
+		var/oldloc = loc
+		loc = M.loc
+		M.loc = oldloc
+		M.LAssailant = src
+
+		for(var/mob/living/carbon/slime/slime in view(1,M))
+			if(slime.Victim == M)
+				slime.UpdateFeed()
+
+		now_pushing = 0
+		return 1
+
+	//okay, so we didn't switch. but should we push?
+	//not if he's not CANPUSH of course
+	if(!(M.status_flags & CANPUSH) )
+		return 1
+	//anti-riot equipment is also anti-push
+	if(M.r_hand && istype(M.r_hand, /obj/item/weapon/shield/riot))
+		return 1
+	if(M.l_hand && istype(M.l_hand, /obj/item/weapon/shield/riot))
+		return 1
+
+//Called when we bump onto an obj
+/mob/living/proc/ObjBump(obj/O)
+	return
+
+//Called when we want to push an atom/movable
+/mob/living/proc/PushAM(atom/movable/AM)
+	if(now_pushing)
+		return 1
+	if(!AM.anchored)
+		now_pushing = 1
+		var/t = get_dir(src, AM)
+		if(istype(AM, /obj/structure/window))
+			var/obj/structure/window/W = AM
+			if(W.ini_dir == NORTHWEST || W.ini_dir == NORTHEAST || W.ini_dir == SOUTHWEST || W.ini_dir == SOUTHEAST)
+				for(var/obj/structure/window/win in get_step(AM,t))
+					now_pushing = 0
+					return
+//			if(W.fulltile)
+//				for(var/obj/structure/window/win in get_step(W,t))
+//					now_pushing = 0
+//					return
+		if(pulling == AM)
+			stop_pulling()
+		step(AM, t)
+		now_pushing = 0
+
 /mob/living/proc/add_ingame_age()
 	if(client && !client.is_afk()) //5 minutes of inactive time will disable this, until player come back.
 		var/client/C = client
