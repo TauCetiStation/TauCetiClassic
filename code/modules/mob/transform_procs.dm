@@ -13,6 +13,7 @@
 	stunned = 1
 	icon = null
 	invisibility = 101
+	alpha = 0
 	for(var/t in organs)
 		qdel(t)
 	var/atom/movable/overlay/animation = new /atom/movable/overlay( loc )
