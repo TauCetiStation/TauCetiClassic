@@ -153,3 +153,6 @@
 
 /obj/proc/reset_shocked()
 	being_shocked = 0
+
+/obj/proc/handle_rotation()
+	return

@@ -3,6 +3,7 @@
 	desc = "You sit in this. Either by will or force."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "chair"
+	buckle_lying = 0 //force people to sit up in chairs when buckled
 
 	var/propelled = 0 // Check for fire-extinguisher-driven chairs
 
@@ -80,9 +81,6 @@
 	else
 		overlays -= sarmrest
 
-/obj/structure/stool/MouseDrop(atom/over_object)
-	return
-
 /obj/structure/stool/bed/chair/New()
 	if(anchored)
 		src.verbs -= /atom/movable/verb/pull
@@ -142,11 +140,6 @@
 		src.dir = turn(src.dir, 90)
 		handle_rotation()
 		return
-
-/obj/structure/stool/bed/chair/MouseDrop_T(mob/M as mob, mob/user as mob)
-	if(!istype(M)) return
-	buckle_mob(M, user)
-	return
 
 // Chair types
 /obj/structure/stool/bed/chair/wood/normal
@@ -213,7 +206,7 @@
 
 /obj/structure/stool/bed/chair/office
 	anchored = 0
-	movable = 1
+	buckle_movable = 1
 
 /obj/structure/stool/bed/chair/office/Move()
 	..()
@@ -228,7 +221,7 @@
 					if (O != occupant)
 						Bump(O)
 			else
-				unbuckle()
+				unbuckle_mob()
 	handle_rotation()
 
 /obj/structure/stool/bed/chair/office/Bump(atom/A)
@@ -236,8 +229,7 @@
 	if(!buckled_mob)	return
 
 	if(propelled)
-		var/mob/living/occupant = buckled_mob
-		unbuckle()
+		var/mob/living/occupant = unbuckle_mob()
 		occupant.throw_at(A, 3, propelled)
 		occupant.apply_effect(6, STUN, 0)
 		occupant.apply_effect(6, WEAKEN, 0)

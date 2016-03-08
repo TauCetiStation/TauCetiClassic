@@ -604,9 +604,9 @@
 						for(var/mob/O in viewers(C))
 							O.show_message("<span class='danger'>[usr] manages to unbuckle themself!</span>", 1)
 						C << "<span class='notice'>You successfully unbuckle yourself.</span>"
-						C.buckled.manual_unbuckle(C)
+						C.buckled.user_unbuckle_mob(C)
 		else
-			L.buckled.manual_unbuckle(L)
+			L.buckled.user_unbuckle_mob(L)
 
 	//Breaking out of a container (Locker, sleeper, cryo...)
 	else if(loc && istype(loc, /obj) && !isturf(loc))
