@@ -17,8 +17,10 @@
 	var/stk_amt   = list()
 	var/stack_list[0] //Key: Type.  Value: Instance of type.
 	var/obj/item/weapon/card/id/inserted_id
-	var/ore_pickup_rate = 15
 	var/points = 0
+	var/ore_pickup_rate = 15
+	var/sheet_per_ore = 1
+	var/point_upgrade = 1
 	var/list/ore_values = list(
 								"sand" = 	1,
 								"iron" = 	1,
@@ -29,6 +31,31 @@
 								"uranium" = 20,
 								"osmium" = 	40)
 
+/obj/machinery/mineral/ore_redemption/New()
+	..()
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/ore_redemption(null)
+	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
+	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
+	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
+	component_parts += new /obj/item/device/assembly/igniter(null)
+	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
+	RefreshParts()
+
+/obj/machinery/mineral/ore_redemption/RefreshParts()
+	var/ore_pickup_rate_temp = 15
+	var/point_upgrade_temp = 1
+	var/sheet_per_ore_temp = 1
+	for(var/obj/item/weapon/stock_parts/matter_bin/B in component_parts)
+		sheet_per_ore_temp = B.rating
+	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
+		ore_pickup_rate_temp = 15 * M.rating
+	for(var/obj/item/weapon/stock_parts/micro_laser/L in component_parts)
+		point_upgrade_temp = L.rating
+	ore_pickup_rate = ore_pickup_rate_temp
+	point_upgrade = point_upgrade_temp
+	sheet_per_ore = sheet_per_ore_temp
+
 /obj/machinery/mineral/ore_redemption/proc/process_sheet(obj/item/weapon/ore/O)
 	var/obj/item/stack/sheet/mineral/processed_sheet = SmeltMineral(O)
 	if(processed_sheet)
@@ -37,7 +64,7 @@
 			s.amount = 0
 			stack_list[processed_sheet] = s
 		var/obj/item/stack/sheet/mineral/storage = stack_list[processed_sheet]
-		storage.amount += 1 //Stack the sheets
+		storage.amount += sheet_per_ore //Stack the sheets
 		qdel(O) //... garbage collect
 
 /obj/machinery/mineral/ore_redemption/process()
@@ -70,13 +97,29 @@
 			I.loc = src
 			inserted_id = I
 			interact(user)
-	else
-		..()
+		return
+	if(exchange_parts(user, W))
+		return
+
+	if(default_pry_open(W))
+		return
+
+	if(default_unfasten_wrench(user, W))
+		return
+	if(default_deconstruction_screwdriver(user, "ore_redemption-open", "ore_redemption", W))
+		updateUsrDialog()
+		return
+	if(panel_open)
+		if(istype(W, /obj/item/weapon/crowbar))
+			empty_content()
+			default_deconstruction_crowbar(W)
+		return 1
+	..()
 
 /obj/machinery/mineral/ore_redemption/proc/SmeltMineral(var/obj/item/weapon/ore/O)
 	if(O.refined_type)
 		var/obj/item/stack/sheet/mineral/M = O.refined_type
-		points += O.points
+		points += O.points * point_upgrade
 		return M
 	qdel(O)//No refined type? Purge it.
 	return
@@ -117,7 +160,7 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 	var/dat = "<table border='0' width='300'>"
 	for(var/ore in ore_values)
 		var/value = ore_values[ore]
-		dat += "<tr><td>[capitalize(ore)]</td><td>[value]</td></tr>"
+		dat += "<tr><td>[capitalize(ore)]</td><td>[value * point_upgrade]</td></tr>"
 	dat += "</table>"
 	return dat
 
@@ -231,6 +274,27 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 	src.equipment_path = path
 	src.cost = cost
 
+/obj/machinery/mineral/equipment_vendor/New()
+	..()
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/mining_equipment_vendor(null)
+	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
+	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
+	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
+	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
+	RefreshParts()
+
+/obj/machinery/mineral/equipment_vendor/power_change()
+	..()
+	update_icon()
+
+/obj/machinery/mineral/equipment_vendor/update_icon()
+	if(powered())
+		icon_state = initial(icon_state)
+	else
+		icon_state = "[initial(icon_state)]-off"
+	return
+
 /obj/machinery/mineral/equipment_locker/attack_hand(user as mob)
 	if(..())
 		return
@@ -297,11 +361,22 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 			inserted_id = C
 			interact(user)
 		return
+	if(default_deconstruction_screwdriver(user, "mining-open", "mining", I))
+		updateUsrDialog()
+		return
+	if(panel_open)
+		if(istype(I, /obj/item/weapon/crowbar))
+			default_deconstruction_crowbar(I)
+		return 1
 	..()
 
-/obj/machinery/mineral/equipment_locker/proc/RedeemVoucher(voucher, redeemer)
+/obj/machinery/mineral/equipment_locker/proc/RedeemVoucher(obj/voucher, redeemer)
+	if(voucher.in_use)
+		return
+	voucher.in_use = 1
 	var/selection = input(redeemer, "Pick your equipment", "Mining Voucher Redemption") in list("Resonator kit", "Kinetic Accelerator", "Mining Drone","Special Mining Rig", "Cancel")
 	if(!selection || !Adjacent(redeemer))
+		voucher.in_use = 0
 		return
 	switch(selection)
 		if("Resonator kit")
@@ -313,6 +388,7 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 		if("Special Mining Rig")
 			new /obj/item/mining_rig_pack(src.loc)
 		if("Cancel")
+			voucher.in_use = 0
 			return
 	qdel(voucher)
 
@@ -345,6 +421,7 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 	desc = "A small card preloaded with mining points. Swipe your ID card over it to transfer the points, then discard."
 	icon_state = "data"
 	var/points = 500
+
 /obj/item/weapon/card/mining_point_card/attackby(obj/item/I as obj, mob/user as mob)
 	if(istype(I, /obj/item/weapon/card/id))
 		if(points)
@@ -355,6 +432,7 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 		else
 			user << "<span class='info'>There's no points left on [src].</span>"
 	..()
+
 /obj/item/weapon/card/mining_point_card/examine()
 	..()
 	usr << "There's [points] points on the card."
@@ -386,7 +464,7 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 		var/list/L = list()
 		for(var/obj/item/device/radio/beacon/B in world)
 			var/turf/T = get_turf(B)
-			if(T.z == 1)
+			if(T.z == ZLEVEL_STATION)
 				L += B
 		if(!L.len)
 			user << "<span class='notice'>The [src.name] failed to create a wormhole.</span>"

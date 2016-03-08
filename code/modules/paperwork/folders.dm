@@ -36,7 +36,7 @@
 		update_icon()
 	else if(istype(W, /obj/item/weapon/pen))
 		var/n_name = sanitize_alt(copytext(input(usr, "What would you like to label the folder?", "Folder Labelling", null)  as text, 1, MAX_NAME_LEN))
-		if((loc == usr && usr.stat == 0))
+		if((loc == usr && usr.stat == CONSCIOUS))
 			name = "folder[(n_name ? text("- '[n_name]'") : null)]"
 	return
 

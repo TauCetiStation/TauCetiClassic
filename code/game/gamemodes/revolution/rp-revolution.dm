@@ -218,7 +218,7 @@
 
 /datum/game_mode/rp_revolution/proc/check_heads_victory()
 	for(var/datum/mind/rev_mind in head_revolutionaries)
-		if(rev_mind.current.stat != 2)
+		if(rev_mind.current.stat != DEAD)
 			var/turf/revloc = rev_mind.current.loc
 			if(!istype(revloc.loc,/area/security/brig) && !rev_mind.current.handcuffed)
 				return 0
@@ -238,7 +238,7 @@
 		text = ""
 		if(rev_mind.current)
 			text += "[rev_mind.current.real_name]"
-			if(rev_mind.current.stat == 2)
+			if(rev_mind.current.stat == DEAD)
 				text += " (Dead)"
 			else
 				text += " (Survived!)"
@@ -252,7 +252,7 @@
 	for(var/datum/mind/rev_nh_mind in revolutionaries)
 		if(rev_nh_mind.current)
 			text += "[rev_nh_mind.current.real_name]"
-			if(rev_nh_mind.current.stat == 2)
+			if(rev_nh_mind.current.stat == DEAD)
 				text += " (Dead)"
 			else
 				text += " (Survived!)"
@@ -269,7 +269,7 @@
 		text = ""
 		if(head_mind.current)
 			text += "[head_mind.current.real_name]"
-			if(head_mind.current.stat == 2)
+			if(head_mind.current.stat == DEAD)
 				text += " (Dead)"
 			else
 				text += " (Survived!)"

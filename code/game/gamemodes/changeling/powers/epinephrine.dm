@@ -14,7 +14,7 @@
 		user << "<span class='notice'>We arise.</span>"
 	else
 		user << "<span class='notice'>Adrenaline rushes through us.</span>"
-	user.stat = 0
+	user.stat = CONSCIOUS
 	user.SetParalysis(0)
 	user.SetStunned(0)
 	user.SetWeakened(0)

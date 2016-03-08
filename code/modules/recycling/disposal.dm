@@ -231,11 +231,11 @@
 /obj/machinery/disposal/alter_health()
 	return get_turf(src)
 
-	// attempt to move while inside
-/obj/machinery/disposal/relaymove(mob/user as mob)
-	if(user.stat || src.flushing)
+// resist to escape the bin
+/obj/machinery/disposal/container_resist()
+	if(src.flushing)
 		return
-	src.go_out(user)
+	go_out(usr)
 	return
 
 // leave the disposal
@@ -549,7 +549,7 @@
 	//Check for any living mobs trigger hasmob.
 	//hasmob effects whether the package goes to cargo or its tagged destination.
 	for(var/mob/living/M in D)
-		if(M && M.stat != 2 && !istype(M,/mob/living/silicon/robot/drone))
+		if(M && M.stat != DEAD && !istype(M,/mob/living/silicon/robot/drone))
 			hasmob = 1
 
 	//Checks 1 contents level deep. This means that players can be sent through disposals...
@@ -557,7 +557,7 @@
 	for(var/obj/O in D)
 		if(O.contents)
 			for(var/mob/living/M in O.contents)
-				if(M && M.stat != 2 && !istype(M,/mob/living/silicon/robot/drone))
+				if(M && M.stat != DEAD && !istype(M,/mob/living/silicon/robot/drone))
 					hasmob = 1
 
 	// now everything inside the disposal gets put into the holder

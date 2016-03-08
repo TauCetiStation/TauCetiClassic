@@ -587,7 +587,7 @@
 			usr:swap_hand()
 		else
 			if(usr.attack_ui(slot_id))
-				usr.update_inv_l_hand(0)
-				usr.update_inv_r_hand(0)
+				usr.update_inv_l_hand()
+				usr.update_inv_r_hand()
 				usr.next_move = world.time+6
 	return 1

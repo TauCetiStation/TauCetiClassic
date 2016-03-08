@@ -5,16 +5,16 @@ Contains helper procs for airflow, handled in /connection_group.
 
 /mob/var/tmp/last_airflow_stun = 0
 /mob/proc/airflow_stun()
-	if(stat == 2)
+	if(stat == DEAD)
 		return 0
 	if(last_airflow_stun > world.time - vsc.airflow_stun_cooldown)	return 0
 	if(!(status_flags & CANSTUN) && !(status_flags & CANWEAKEN))
-		src << "\blue You stay upright as the air rushes past you."
+		src << "<span class='notice'>You stay upright as the air rushes past you.</span>"
 		return 0
 	if(buckled)
 		src << "<span class='notice'>Air suddenly rushes past you!</span>"
 		return 0
-	if(weakened <= 0) src << "\red The sudden rush of air knocks you over!"
+	if(weakened <= 0) src << "<span class='red'>The sudden rush of air knocks you over!</span>"
 	weakened = max(weakened,5)
 	last_airflow_stun = world.time
 
@@ -32,11 +32,11 @@ Contains helper procs for airflow, handled in /connection_group.
 	if(wear_suit)
 		if(wear_suit.flags & NOSLIP) return 0
 	if(!(status_flags & CANSTUN) && !(status_flags & CANWEAKEN))
-		src << "\blue You stay upright as the air rushes past you."
+		src << "<span class='notice'>You stay upright as the air rushes past you.</span>"
 		return 0
 	if(FAT in mutations)
 		return 0
-	if(weakened <= 0) src << "\red The sudden rush of air knocks you over!"
+	if(weakened <= 0) src << "<span class='red'>The sudden rush of air knocks you over!</span>"
 	weakened = max(weakened,rand(1,5))
 	last_airflow_stun = world.time
 
@@ -99,7 +99,7 @@ Contains helper procs for airflow, handled in /connection_group.
 				if(istype(src:wear_suit, /obj/item/clothing/suit/space/rig))
 					if(src:wear_suit:magpulse)
 						return
-		src << "\red You are sucked away by airflow!"
+		src << "<span class='red'>You are sucked away by airflow!</span>"
 	var/airflow_falloff = 9 - ul_FalloffAmount(airflow_dest) //It's a fast falloff calc.  Very useful.
 	if(airflow_falloff < 1)
 		airflow_dest = null
@@ -167,7 +167,7 @@ Contains helper procs for airflow, handled in /connection_group.
 				if(istype(src:wear_suit, /obj/item/clothing/suit/space/rig))
 					if(src:wear_suit.flags & NOSLIP)
 						return
-		src << "\red You are pushed away by airflow!"
+		src << "<span class='red'>You are pushed away by airflow!</span>"
 		last_airflow = world.time
 	var/airflow_falloff = 9 - ul_FalloffAmount(airflow_dest) //It's a fast falloff calc.  Very useful.
 	if(airflow_falloff < 1)
@@ -220,14 +220,14 @@ Contains helper procs for airflow, handled in /connection_group.
 
 /mob/airflow_hit(atom/A)
 	for(var/mob/M in hearers(src))
-		M.show_message("\red <B>\The [src] slams into \a [A]!</B>",1,"\red You hear a loud slam!",2)
+		M.show_message("<span class='danger'>\The [src] slams into \a [A]!</span>",1,"<span class='red'>You hear a loud slam!</span>",2)
 	playsound(src.loc, "smash.ogg", 25, 1, -1)
 	weakened = max(weakened, (istype(A,/obj/item) ? A:w_class : rand(1,5))) //Heheheh
 	. = ..()
 
 /obj/airflow_hit(atom/A)
 	for(var/mob/M in hearers(src))
-		M.show_message("\red <B>\The [src] slams into \a [A]!</B>",1,"\red You hear a loud slam!",2)
+		M.show_message("<span class='danger'>\The [src] slams into \a [A]!</span>",1,"<span class='red'>You hear a loud slam!</span>",2)
 	playsound(src.loc, "smash.ogg", 25, 1, -1)
 	. = ..()
 

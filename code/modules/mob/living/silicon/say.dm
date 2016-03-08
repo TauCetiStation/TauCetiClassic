@@ -36,7 +36,7 @@
 
 	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 
-	if (stat == 2)
+	if (stat == DEAD)
 		return say_dead(message)
 
 	if(copytext(message,1,2) == "*")

@@ -590,13 +590,13 @@
 
 	proc/handle_regular_hud_updates()
 
-		if (stat == 2 || (XRAY in mutations))
+		if (stat == DEAD || (XRAY in mutations))
 			sight |= SEE_TURFS
 			sight |= SEE_MOBS
 			sight |= SEE_OBJS
 			see_in_dark = 8
 			see_invisible = SEE_INVISIBLE_LEVEL_TWO
-		else if (stat != 2)
+		else if (stat != DEAD)
 			if(changeling_aug)
 				sight &= ~SEE_TURFS
 				sight |= SEE_MOBS
@@ -611,7 +611,7 @@
 				see_invisible = SEE_INVISIBLE_LIVING
 
 		if (healths)
-			if (stat != 2)
+			if (stat != DEAD)
 				switch(health)
 					if(100 to INFINITY)
 						healths.icon_state = "health0"
@@ -683,7 +683,7 @@
 				if(druggy)
 					client.screen += global_hud.druggy
 
-		if (stat != 2)
+		if (stat != DEAD)
 			if (machine)
 				if (!( machine.check_eye(src) ))
 					reset_view(null)

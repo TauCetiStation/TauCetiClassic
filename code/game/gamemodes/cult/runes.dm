@@ -12,7 +12,7 @@ var/list/sacrificed = list()
 			for(var/obj/effect/rune/R in world)
 				if(R == src)
 					continue
-				if(R.word1 == cultwords["travel"] && R.word2 == cultwords["self"] && R.word3 == key && R.z != 2)
+				if(R.word1 == cultwords["travel"] && R.word2 == cultwords["self"] && R.word3 == key && R.z != ZLEVEL_CENTCOMM)
 					index++
 					allrunesloc.len = index
 					allrunesloc[index] = R.loc
@@ -174,7 +174,7 @@ var/list/sacrificed = list()
 							M << "<font size='4'><span class='danger'>I am already here!</span></font>"
 							return
 				ticker.mode.nar_sie_has_risen = 1
-				new /obj/machinery/singularity/narsie/large(src.loc)
+				new /obj/singularity/narsie/large(src.loc)
 				return
 			else
 				return fizzle()

@@ -525,7 +525,7 @@
 				text += "died"
 				flat.Turn(90)
 				end_icons[tempstate] = flat
-			else if(gangster.current.z != 1)
+			else if(gangster.current.z != ZLEVEL_STATION)
 				text += "fled the station"
 			else
 				text += "survived"
@@ -590,7 +590,7 @@
 		if(ishuman(gangmind.current))
 			var/mob/living/carbon/human/gangster = gangmind.current
 			//Gangster must be alive and on station
-			if((gangster.stat == DEAD) || (gangster.z > 1))
+			if((gangster.stat == DEAD) || (gangster.z > ZLEVEL_STATION))
 				continue
 
 			var/obj/item/clothing/outfit

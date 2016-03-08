@@ -12,6 +12,8 @@
 	var/obj/item/device/assembly/signaler/anomaly/aSignal = null
 
 /obj/effect/anomaly/New()
+	..()
+	poi_list |= src
 	SetLuminosity(initial(luminosity))
 	aSignal = new(src)
 	aSignal.code = rand(1,100)
@@ -20,6 +22,9 @@
 	if(IsMultiple(aSignal.frequency, 2))//signaller frequencies are always uneven!
 		aSignal.frequency++
 
+/obj/effect/anomaly/Destroy()
+	poi_list.Remove(src)
+	return ..()
 
 /obj/effect/anomaly/proc/anomalyEffect()
 	if(prob(50))
@@ -85,7 +90,7 @@
 
 /obj/effect/anomaly/flux/New()
 	..()
-	aSignal.origin_tech = "powerstorage=5;programming=3;plasmatech=2"
+	aSignal.origin_tech = "powerstorage=5;programming=3;phorontech=2"
 
 /////////////////////
 
@@ -111,7 +116,7 @@
 
 /obj/effect/anomaly/pyro/New()
 	..()
-	aSignal.origin_tech = "plasmatech=5;powerstorage=3;biotech=3"
+	aSignal.origin_tech = "phorontech=5;powerstorage=3;biotech=3"
 
 /obj/effect/anomaly/pyro/anomalyEffect()
 	..()

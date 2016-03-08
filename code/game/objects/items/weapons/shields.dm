@@ -46,6 +46,10 @@
 	attack_verb = list("shoved", "bashed")
 	var/active = 0
 
+/obj/item/weapon/shield/energy/IsReflect()
+	return (active)
+
+/*
 /obj/item/weapon/cloaking_device
 	name = "cloaking device"
 	desc = "Use this to become invisible to the human eyesocket."
@@ -59,7 +63,6 @@
 	throw_range = 10
 	w_class = 2.0
 	origin_tech = "magnets=3;syndicate=4"
-
 
 /obj/item/weapon/cloaking_device/attack_self(mob/user as mob)
 	src.active = !( src.active )
@@ -78,3 +81,4 @@
 	if(ismob(loc))
 		loc:update_icons()
 	..()
+*/

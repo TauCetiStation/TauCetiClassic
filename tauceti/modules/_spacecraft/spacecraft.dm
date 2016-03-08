@@ -29,7 +29,7 @@
 	var/turn_energy_drain = 5
 	var/turn_slow_rate = 2 //степень замедления при повороте
 
-	var/obj/item/weapon/cell/cell //энергоячейка
+	var/obj/item/weapon/stock_parts/cell/cell //энергоячейка
 	var/online = 0 //есть питание/нет питания
 	//Двигло
 	var/obj/item/spacecraft_parts/engine/engine = null
@@ -142,7 +142,7 @@
 	radio.icon_state = icon_state
 	radio.subspace_transmission = 1
 
-/obj/spacecraft/proc/add_cell(var/obj/item/weapon/cell/C=null)
+/obj/spacecraft/proc/add_cell(var/obj/item/weapon/stock_parts/cell/C=null)
 	if(C)
 		C.forceMove(src)
 		cell = C
@@ -911,7 +911,7 @@
 			user << "You screw the cell in place"
 		return
 
-	else if(istype(W, /obj/item/weapon/cell))
+	else if(istype(W, /obj/item/weapon/stock_parts/cell))
 		if(state==4)
 			if(!src.cell)
 				user << "You install the powercell"

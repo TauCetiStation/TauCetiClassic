@@ -69,6 +69,13 @@
 	blood_overlay_type = "armor"
 	armor = list(melee = 10, bullet = 10, laser = 65, energy = 75, bomb = 0, bio = 0, rad = 0)
 	siemens_coefficient = 0
+	var/hit_reflect_chance = 40
+
+/obj/item/clothing/suit/armor/laserproof/IsReflect(def_zone)
+	if(!(def_zone in list("chest", "groin"))) //If not shot where ablative is covering you, you don't get the reflection bonus!
+		return 0
+	if (prob(hit_reflect_chance))
+		return 1
 
 /obj/item/clothing/suit/armor/swat
 	name = "swat suit"
