@@ -19,10 +19,11 @@
 		/obj/random/tech_supply/,
 		/obj/random/tech_supply/,
 		)
+	var/dig_amount = 7
 	var/parts_icon = 'icons/obj/structures/scrap/trash.dmi'
 	var/base_min = 4	//min and max number of random pieces of base icon
 	var/base_max = 7
-	var/base_spread = 8	//limits on pixel offsets of base pieces
+	var/base_spread = 8 //limits on pixel offsets of base pieces
 
 /obj/structure/scrap/New()
 	var/amt = rand(loot_min, loot_max)
@@ -36,8 +37,8 @@
 	..()
 
 /obj/structure/scrap/Destroy()
-	qdel(loot)
-	loot = null
+	for (var/obj/item in loot)
+		qdel(item)
 	..()
 
 /obj/structure/scrap/proc/shuffle_loot()
@@ -89,10 +90,26 @@
 	if(istype(W,/obj/item/weapon/shovel))
 		var/list/ways = list("pokes around", "digs through", "rummages through", "goes through","picks through")
 		visible_message("<span class='notice'>\The [user] [pick(ways)] \the [src].</span>")
+		if(--dig_amount <= 0)
+			user << "<span class='notice'>You cleared out  \the [src]...</span>"
+			Destroy()
 		shuffle_loot()
 		if(!(loot.contents.len || contents.len > 1))
 			user << "<span class='notice'>There doesn't seem to be anything of interest left in \the [src]...</span>"
 	..()
+
+/obj/structure/scrap/large
+	name = "large scrap pile"
+	opacity = 1
+	density = 1
+	icon_state = "big"
+	loot_min = 10
+	loot_max = 20
+	dig_amount = 15
+	base_min = 9
+	base_max = 14
+	base_spread = 16
+
 
 /obj/structure/scrap/vehicle
 	name = "debris pile"
@@ -108,14 +125,42 @@
 		/obj/item/weapon/shard
 		)
 
-/obj/structure/scrap/large
-	name = "large scrap pile"
+/obj/structure/scrap/food
+	name = "trash pile"
+	parts_icon = 'icons/obj/structures/scrap/food_trash.dmi'
+	loot_list = list(
+		/obj/random/food_with_garbage,
+		/obj/random/food_with_garbage,
+		/obj/random/food_with_garbage,
+		/obj/random/food_with_garbage,
+		/obj/random/food_with_garbage,
+		/obj/random/food_with_garbage,
+		/obj/random/food_with_garbage,
+		/obj/item/weapon/shard,
+		/obj/item/stack/rods/scrap,
+		/obj/item/stack/sheet/mineral/plastic/scrap
+		)
+
+/obj/structure/scrap/vehicle/large
+	name = "large debris pile"
 	opacity = 1
 	density = 1
 	icon_state = "big"
 	loot_min = 10
 	loot_max = 20
+	dig_amount = 15
+	base_min = 9
+	base_max = 14
+	base_spread = 16
 
+/obj/structure/scrap/food/large
+	name = "large trash pile"
+	opacity = 1
+	density = 1
+	icon_state = "big"
+	loot_min = 10
+	loot_max = 20
+	dig_amount = 15
 	base_min = 9
 	base_max = 14
 	base_spread = 16

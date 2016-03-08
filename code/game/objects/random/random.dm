@@ -1,5 +1,3 @@
-#define subtypesof(typepath) ( typesof(typepath) - typepath )
-
 /obj/random
 	name = "Random Object"
 	desc = "This item type is used to spawn random objects at round-start."
@@ -168,7 +166,6 @@
 	desc = "This is a random food for junkyard."
 	icon = 'icons/obj/food.dmi'
 	icon_state = "mysterysoup"
-	spawn_nothing_percentage = 50
 	item_to_spawn()
 		return pick(prob(4);/obj/random/food_snack,\
 					prob(1);/obj/random/drink_bottle,\
