@@ -253,7 +253,7 @@
 		if((0 < index) && (index <= facial_hair_styles_list.len))
 			H.f_style = facial_hair_styles_list[index]
 
-		H.update_body(0)
+		H.update_body()
 		H.update_hair()
 
 		return 1
@@ -286,49 +286,49 @@
 		M.mutations.Add(HUSK)
 
 	if(ismuton(NOBREATHBLOCK,M))
-		if(probinj(45,inj) || (mNobreath in old_mutations))
+		if(probinj(45,inj) || (NO_BREATH in old_mutations))
 			M << "\blue You feel no need to breathe."
-			M.mutations.Add(mNobreath)
+			M.mutations.Add(NO_BREATH)
 	if(ismuton(REMOTEVIEWBLOCK,M))
-		if(probinj(45,inj) || (mRemote in old_mutations))
+		if(probinj(45,inj) || (REMOTE_VIEW in old_mutations))
 			M << "\blue Your mind expands"
-			M.mutations.Add(mRemote)
+			M.mutations.Add(REMOTE_VIEW)
 	if(ismuton(REGENERATEBLOCK,M))
-		if(probinj(45,inj) || (mRegen in old_mutations))
+		if(probinj(45,inj) || (REGEN in old_mutations))
 			M << "\blue You feel strange"
-			M.mutations.Add(mRegen)
+			M.mutations.Add(REGEN)
 	if(ismuton(INCREASERUNBLOCK,M))
-		if(probinj(45,inj) || (mRun in old_mutations))
+		if(probinj(45,inj) || (RUN in old_mutations))
 			M << "\blue You feel quick"
-			M.mutations.Add(mRun)
+			M.mutations.Add(RUN)
 	if(ismuton(REMOTETALKBLOCK,M))
-		if(probinj(45,inj) || (mRemotetalk in old_mutations))
+		if(probinj(45,inj) || (REMOTE_TALK in old_mutations))
 			M << "\blue You expand your mind outwards"
-			M.mutations.Add(mRemotetalk)
+			M.mutations.Add(REMOTE_TALK)
 	if(ismuton(MORPHBLOCK,M))
-		if(probinj(45,inj) || (mMorph in old_mutations))
-			M.mutations.Add(mMorph)
+		if(probinj(45,inj) || (MORPH in old_mutations))
+			M.mutations.Add(MORPH)
 			M << "\blue Your skin feels strange"
 	if(ismuton(BLENDBLOCK,M))
-		if(probinj(45,inj) || (mBlend in old_mutations))
-			M.mutations.Add(mBlend)
+		if(probinj(45,inj) || (BLEND in old_mutations))
+			M.mutations.Add(BLEND)
 			M << "\blue You feel alone"
 	if(ismuton(HALLUCINATIONBLOCK,M))
-		if(probinj(45,inj) || (mHallucination in old_mutations))
-			M.mutations.Add(mHallucination)
+		if(probinj(45,inj) || (HALLUCINATE in old_mutations))
+			M.mutations.Add(HALLUCINATE)
 			M << "\blue Your mind says 'Hello'"
 	if(ismuton(NOPRINTSBLOCK,M))
-		if(probinj(45,inj) || (mFingerprints in old_mutations))
-			M.mutations.Add(mFingerprints)
+		if(probinj(45,inj) || (FINGERPRINTS in old_mutations))
+			M.mutations.Add(FINGERPRINTS)
 			M << "\blue Your fingers feel numb"
 	if(ismuton(SHOCKIMMUNITYBLOCK,M))
-		if(probinj(45,inj) || (mShock in old_mutations))
-			M.mutations.Add(mShock)
+		if(probinj(45,inj) || (NO_SHOCK in old_mutations))
+			M.mutations.Add(NO_SHOCK)
 			M << "\blue You feel strange"
 	if(ismuton(SMALLSIZEBLOCK,M))
-		if(probinj(45,inj) || (mSmallsize in old_mutations))
+		if(probinj(45,inj) || (SMALLSIZE in old_mutations))
 			M << "\blue Your skin feels rubbery"
-			M.mutations.Add(mSmallsize)
+			M.mutations.Add(SMALLSIZE)
 
 
 

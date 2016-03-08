@@ -58,6 +58,9 @@ mob/living/parasite/proc/exit_host()
 mob/living/parasite/meme/var/meme_points = 100
 mob/living/parasite/meme/var/dormant = 0
 
+mob/living/parasite/meme/var/meme_death = "stoxin"
+
+
 // Memes have a list of indoctrinated hosts
 mob/living/parasite/meme/var/list/indoctrinated = list()
 
@@ -68,6 +71,7 @@ mob/living/parasite/meme/New()
 
 mob/living/parasite/meme/Life()
 	..()
+
 
 	if(client)
 		if(blinded) client.eye = null
@@ -80,30 +84,41 @@ mob/living/parasite/meme/Life()
 	if(dormant) gain = 9 // dormant recovers points faster
 
 	meme_points = min(meme_points + gain, MAXIMUM_MEME_POINTS)
-
 	// if there are sleep toxins in the host's body, that's bad
-	if(host.reagents.has_reagent("stoxin"))
+
+	if (meme_death == "bdam")
+		if(host.brainloss > 60)
+			src << "\red <b>Something in your host's brain makes you lose consciousness.. you fade away..</b>"
+			src.death()
+			return
+	else if (meme_death == "burns")
+		if(host.on_fire)
+			src << "\red <b>Something on your host's skin makes you unstable.. you fade away..</b>"
+			src.death()
+			return
+	else if(host.reagents.has_reagent(meme_death))
 		src << "\red <b>Something in your host's blood makes you lose consciousness.. you fade away..</b>"
 		src.death()
 		return
+
 	// a host without brain is no good
-	if(!host.mind)
+	else if(!host.mind)
 		src << "\red <b>Your host has no mind.. you fade away..</b>"
 		src.death()
 		return
-	if(host.stat == 2)
+	else if(host.stat == DEAD)
 		src << "\red <b>Your host has died.. you fade away..</b>"
 		src.death()
 		return
 
-	if(host.blinded && host.stat != 1) src.blinded = 1
+	else if(host.blinded && host.stat != UNCONSCIOUS) src.blinded = 1
 	else 			 				   src.blinded = 0
 
 
 mob/living/parasite/meme/death()
 	// make sure the mob is on the actual map before gibbing
 	if(host) src.loc = host.loc
-	src.stat = 2
+	src.stat = DEAD
 	..()
 	qdel(src)
 
@@ -585,13 +600,8 @@ mob/living/parasite/meme/verb/Show_Points()
 // Stat panel to show meme points, copypasted from alien
 /mob/living/parasite/meme/Stat()
 	..()
-
-	statpanel("Status")
-	if (client && client.holder)
-		stat(null, "([x], [y], [z])")
-
-	if (client && client.statpanel == "Status")
-		stat(null, "Meme Points: [src.meme_points]")
+	if(statpanel("Status"))
+		stat(null, "Meme Points: [meme_points]")
 
 // Game mode helpers, used for theft objectives
 // --------------------------------------------

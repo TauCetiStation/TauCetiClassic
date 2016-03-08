@@ -140,7 +140,6 @@ obj/machinery/computer/cryopod/Topic(href, href_list)
 	anchored = 1
 	var/storage = 1	//tc, criopods on centcomm
 
-	var/mob/occupant = null      // Person waiting to be despawned.
 	var/orient_right = null      // Flips the sprite.
 	var/time_till_despawn = 9000 // 15 minutes-ish safe period before being despawned.
 	var/time_entered = 0         // Used to keep track of the safe period.
@@ -341,7 +340,7 @@ obj/machinery/computer/cryopod/Topic(href, href_list)
 	set name = "Eject Pod"
 	set category = "Object"
 	set src in oview(1)
-	if(usr.stat != 0)
+	if(usr.stat != CONSCIOUS)
 		return
 
 	if(orient_right)
@@ -358,7 +357,7 @@ obj/machinery/computer/cryopod/Topic(href, href_list)
 	set category = "Object"
 	set src in oview(1)
 
-	if(usr.stat != 0 || !(ishuman(usr) || ismonkey(usr)))
+	if(usr.stat != CONSCIOUS || !(ishuman(usr) || ismonkey(usr)))
 		return
 
 	if(src.occupant)

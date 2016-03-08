@@ -20,7 +20,7 @@
 
 		if(!istype(src, /mob/living/carbon/brain))
 			if(!istype(M, /mob/living/carbon/slime))
-				if(stat != 2)
+				if(stat != DEAD)
 					if(health > -70)
 
 						for(var/mob/living/carbon/slime/met in view())
@@ -54,7 +54,7 @@
 	else
 		icon_state = "[colour] baby slime eat"
 
-	while(Victim && M.health > -70 && stat != 2)
+	while(Victim && M.health > -70 && stat != DEAD)
 		// M.canmove = 0
 		canmove = 0
 
@@ -118,7 +118,7 @@
 		else
 			break
 
-	if(stat == 2)
+	if(stat == DEAD)
 		if(!istype(src, /mob/living/carbon/slime/adult))
 			icon_state = "[colour] baby slime dead"
 

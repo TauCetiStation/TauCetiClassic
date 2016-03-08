@@ -104,9 +104,6 @@
 	return 0
 
 /mob/proc/Life()
-//	if(organStructure)
-//		organStructure.ProcessOrgans()
-	//handle_typing_indicator()
 	return
 
 /mob/proc/incapacitated()
@@ -287,7 +284,7 @@
 	if (!( abandon_allowed ))
 		usr << "\blue Respawn is disabled."
 		return
-	if ((stat != 2 || !( ticker )))
+	if ((stat != DEAD || !( ticker )))
 		usr << "\blue <B>You must be dead to use this!</B>"
 		return
 	if(ticker && istype(ticker.mode,/datum/game_mode/meteor))
@@ -309,9 +306,9 @@
 		else if(deathtimeminutes > 1)
 			pluralcheck = " [deathtimeminutes] minutes and"
 		var/deathtimeseconds = round((deathtime - deathtimeminutes * 600) / 10,1)
-		usr << "You have been dead for[pluralcheck] [deathtimeseconds] seconds."
 
-		if (deathtime < config.deathtime_required)
+		if(deathtime < config.deathtime_required && !(client.holder && (client.holder.rights & R_ADMIN)))	//Holders with R_ADMIN can give themselvs respawn, so it doesn't matter
+			usr << "You have been dead for[pluralcheck] [deathtimeseconds] seconds."
 			usr << "You must wait 30 minutes to respawn!"
 			return
 		else
@@ -360,55 +357,7 @@
 	if(is_admin && stat == DEAD)
 		is_admin = 0
 
-	var/list/names = list()
-	var/list/namecounts = list()
-	var/list/creatures = list()
-
-	for(var/obj/O in world)				//EWWWWWWWWWWWWWWWWWWWWWWWW ~needs to be optimised
-		if(!O.loc)
-			continue
-		if(istype(O, /obj/item/weapon/disk/nuclear))
-			var/name = "Nuclear Disk"
-			if (names.Find(name))
-				namecounts[name]++
-				name = "[name] ([namecounts[name]])"
-			else
-				names.Add(name)
-				namecounts[name] = 1
-			creatures[name] = O
-
-		if(istype(O, /obj/machinery/singularity))
-			var/name = "Singularity"
-			if (names.Find(name))
-				namecounts[name]++
-				name = "[name] ([namecounts[name]])"
-			else
-				names.Add(name)
-				namecounts[name] = 1
-			creatures[name] = O
-
-		if(istype(O, /obj/machinery/bot))
-			var/name = "BOT: [O.name]"
-			if (names.Find(name))
-				namecounts[name]++
-				name = "[name] ([namecounts[name]])"
-			else
-				names.Add(name)
-				namecounts[name] = 1
-			creatures[name] = O
-
-
-	for(var/mob/M in sortAtom(mob_list))
-		var/name = M.name
-		if (names.Find(name))
-			namecounts[name]++
-			name = "[name] ([namecounts[name]])"
-		else
-			names.Add(name)
-			namecounts[name] = 1
-
-		creatures[name] = M
-
+	var/list/creatures = getpois()
 
 	client.perspective = EYE_PERSPECTIVE
 
@@ -622,10 +571,18 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 /mob/Stat()
 	..()
-
-	if(statpanel("Status"))	//not looking at that panel
-
+	if(statpanel("Status"))
+		stat(null, "Server Time: [time2text(world.realtime, "YYYY-MM-DD hh:mm")]")
 		if(client && client.holder)
+			if(ticker && ticker.mode && ticker.mode.name == "AI malfunction")
+				if(ticker.mode:malf_mode_declared)
+					stat(null, "Time left: [max(ticker.mode:AI_win_timeleft/(ticker.mode:apcs/3), 0)]")
+			if(emergency_shuttle)
+				if(emergency_shuttle.online && emergency_shuttle.location < 2)
+					var/timeleft = emergency_shuttle.timeleft()
+					if(timeleft)
+						stat(null, "ETA-[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
+
 			if(statpanel("Status"))
 				statpanel("Status","Location:","([x], [y], [z])")
 				statpanel("Status","CPU:","[world.cpu]")
@@ -755,12 +712,12 @@ note dizziness decrements automatically in the mob's Life() proc.
 	//Temporarily moved here from the various life() procs
 	//I'm fixing stuff incrementally so this will likely find a better home.
 	//It just makes sense for now. ~Carn
-	if( update_icon )	//forces a full overlay update
+
+	if(lying != lying_prev)
+		update_transform()
+	if(update_icon)	//forces a full overlay update
 		update_icon = 0
 		regenerate_icons()
-	else if( lying != lying_prev )
-		update_icons()
-
 	return canmove
 
 

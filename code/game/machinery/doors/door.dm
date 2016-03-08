@@ -25,8 +25,6 @@
 	var/air_properties_vary_with_direction = 0
 	var/block_air_zones = 1 //If set, air zones cannot merge across the door even when it is opened.
 
-	//Multi-tile doors
-	dir = EAST
 	var/width = 1
 
 /obj/machinery/door/New()
@@ -426,6 +424,9 @@
 			bound_height = width * world.icon_size
 
 	update_nearby_tiles()
+
+/obj/machinery/door/proc/hasPower()
+	return !(stat & NOPOWER)
 
 /obj/machinery/door/morgue
 	icon = 'icons/obj/doors/doormorgue.dmi'

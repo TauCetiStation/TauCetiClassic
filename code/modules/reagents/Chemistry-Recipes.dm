@@ -1236,7 +1236,7 @@ datum
 			required_container = /obj/item/slime_extract/yellow
 			required_other = 1
 			on_reaction(var/datum/reagents/holder, var/created_volume)
-				var/obj/item/weapon/cell/slime/P = new /obj/item/weapon/cell/slime
+				var/obj/item/weapon/stock_parts/cell/slime/P = new /obj/item/weapon/stock_parts/cell/slime
 				P.loc = get_turf_loc(holder.my_atom)
 
 		slimeglow
@@ -1383,7 +1383,6 @@ datum
 			on_reaction(var/datum/reagents/holder)
 				var/obj/effect/golemrune/Z = new /obj/effect/golemrune
 				Z.loc = get_turf_loc(holder.my_atom)
-				Z.announce_to_ghosts()
 
 //Bluespace
 		slimecrystal

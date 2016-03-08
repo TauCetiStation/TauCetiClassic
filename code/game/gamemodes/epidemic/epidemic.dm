@@ -169,8 +169,8 @@
 	var/alive = 0
 	var/sick = 0
 	for(var/mob/living/carbon/human/H in world)
-		if(H.key && H.stat != 2) alive++
-		if(H.virus2.len && H.stat != 2) sick++
+		if(H.key && H.stat != DEAD) alive++
+		if(H.virus2.len && H.stat != DEAD) sick++
 
 	if(alive == 0)
 		finished = 2

@@ -134,14 +134,16 @@ var/global/datum/controller/gameticker/ticker
 		job_master.ResetOccupations()
 		return 0
 
-	if(hide_mode)
+	// Lets try to live without this information.
+	/*if(hide_mode)
 		var/list/modes = new
 		for (var/datum/game_mode/M in runnable_modes)
 			modes+=M.name
 		modes = sortList(modes)
 		world << "<B>The current game mode is - Secret!</B>"
 		world << "<B>Possibilities:</B> [english_list(modes)]"
-	else
+	else*/
+	if(!hide_mode)
 		src.mode.announce()
 
 	create_characters() //Create player characters and transfer them
@@ -291,7 +293,7 @@ var/global/datum/controller/gameticker/ticker
 						world << sound('sound/effects/explosionfar.ogg')
 						cinematic.icon_state = "summary_selfdes"
 				for(var/mob/living/M in living_mob_list)
-					if(M.loc.z == 1)
+					if(M.loc.z == ZLEVEL_STATION)
 						M.death()//No mercy
 		//If its actually the end of the round, wait for it to end.
 		//Otherwise if its a verb it will continue on afterwards.
@@ -334,7 +336,7 @@ var/global/datum/controller/gameticker/ticker
 					EquipCustomItems(player)
 		if(captainless)
 			for(var/mob/M in player_list)
-				if(!istype(M,/mob/new_player))
+				if(!isnewplayer(M))
 					M << "Captainship not forced on anyone."
 
 
@@ -408,7 +410,7 @@ var/global/datum/controller/gameticker/ticker
 				num_survivors++
 				if(station_evacuated) //If the shuttle has already left the station
 					var/turf/playerTurf = get_turf(Player)
-					if(playerTurf.z != 2)
+					if(playerTurf.z != ZLEVEL_CENTCOMM)
 						Player << "<span class='danger>You managed to survive, but were marooned on [station_name()]...</span>"
 					else
 						num_escapees++
@@ -452,7 +454,7 @@ var/global/datum/controller/gameticker/ticker
 			var/icon/flat = getFlatIcon(aiPlayer)
 			end_icons += flat
 			var/tempstate = end_icons.len
-			if (aiPlayer.stat != 2)
+			if (aiPlayer.stat != DEAD)
 				ai_completions += {"<BR><B><img src="logo_[tempstate].png"> [aiPlayer.name] (Played by: [aiPlayer.key])'s laws at the end of the game were:</B>"}
 			else
 				ai_completions += {"<BR><B><img src="logo_[tempstate].png"> [aiPlayer.name] (Played by: [aiPlayer.key])'s laws when it was deactivated were:</B>"}
@@ -476,7 +478,7 @@ var/global/datum/controller/gameticker/ticker
 			end_icons += flat
 			var/tempstate = end_icons.len
 			if (!robo.connected_ai)
-				if (robo.stat != 2)
+				if (robo.stat != DEAD)
 					ai_completions += {"<BR><B><img src="logo_[tempstate].png"> [robo.name] (Played by: [robo.key]) survived as an AI-less borg! Its laws were:</B>"}
 				else
 					ai_completions += {"<BR><B><img src="logo_[tempstate].png"> [robo.name] (Played by: [robo.key]) was unable to survive the rigors of being a cyborg without an AI. Its laws were:</B>"}

@@ -143,6 +143,15 @@
 
 		return 0
 
+	proc/bandage()
+		bandaged = 1
+
+	proc/salve()
+		salved = 1
+
+	proc/disinfect()
+		disinfected = 1
+
 	// heal the given amount of damage, and if the given amount of damage was more
 	// than what needed to be healed, return how much heal was left
 	// set @heals_internal to also heal internal organ damage

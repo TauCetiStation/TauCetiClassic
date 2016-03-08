@@ -81,10 +81,11 @@ Any-Mode: (hotkey doesn't need to be on)
 
 	var/admin = {"<font color='purple'>
 Admin:
-\tF5 = Aghost (admin-ghost)
+\tF5 = Asay
 \tF6 = player-panel-new
 \tF7 = admin-pm
 \tF8 = Invisimin
+\tF9 = Msay
 </font>"}
 
 	src << hotkey_mode

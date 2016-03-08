@@ -34,6 +34,9 @@
 	set category = "Vehicle"
 	set src in view(0)
 
+	if(isobserver(usr)) //Ghost riders? Nope, never heard about them.
+		return
+
 	if(usr.incapacitated()) return
 
 	if(!on)
@@ -48,15 +51,18 @@
 	set category = "Vehicle"
 	set src in view(0)
 
+	if(isobserver(usr))
+		return
+
 	if(usr.incapacitated()) return
 
 	if(kickstand)
-		src.visible_message("You put up \the [src]'s kickstand.")
+		src.visible_message("[usr.name] puts up \the [src]'s kickstand.", "You put up \the [src]'s kickstand.")
 	else
 		if(istype(src.loc,/turf/space))
-			usr << "<span class='warning'> You don't think kickstands work in space...</span>"
+			usr << "<span class='warning'>You don't think kickstands work in space...</span>"
 			return
-		src.visible_message("You put down \the [src]'s kickstand.")
+		src.visible_message("[usr.name] puts down \the [src]'s kickstand.", "You put down \the [src]'s kickstand.")
 		if(pulledby)
 			pulledby.stop_pulling()
 
@@ -76,9 +82,20 @@
 		return
 
 /obj/vehicle/bike/attack_hand(var/mob/user as mob)
-	if(user == load)
-		unload(load)
-		user << "You unbuckle yourself from \the [src]"
+	if(load != user)
+		if(do_after(user, 20, target=src))
+			load.visible_message(\
+				"<span class='notice'>[load.name] was unbuckled by [user.name]!</span>",\
+				"You were unbuckled from [src] by [user.name].",\
+				"You hear metal clanking")
+		else
+			return
+	else
+		load.visible_message(\
+			"<span class='notice'>[load.name] unbuckled \himself!</span>",\
+			"You unbuckle yourself from [src].",\
+			"You hear metal clanking")
+	unload(load)
 
 /obj/vehicle/bike/Bump(atom/A)
 	if(istype(loc, /turf/space) && isliving(load) && isliving(A))
@@ -94,6 +111,8 @@
 				Driver.apply_effects(8,5)
 				Driver.lying = 1
 		else
+			if(Driver == L)
+				unload(Driver)
 			visible_message("<span class='danger'>[Driver] drives over [L]!</span>")
 
 			Driver.attack_log += text("\[[time_stamp()]\] <font color='red'>drives over [L.name] ([L.ckey])</font>")

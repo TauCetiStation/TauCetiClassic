@@ -5,28 +5,24 @@
 	light_color = "#a97faa"
 	circuit = /obj/item/weapon/circuitboard/aifixer
 	req_access = list(access_captain, access_robotics, access_heads)
-	var/mob/living/silicon/ai/occupant = null
+	var/mob/living/silicon/ai/occupier = null
 	var/active = 0
+	circuit = /obj/item/weapon/circuitboard/aifixer
 
 /obj/machinery/computer/aifixer/New()
 	src.overlays += image('icons/obj/computer.dmi', "ai-fixer-empty")
-
+	..()
 
 /obj/machinery/computer/aifixer/attackby(I as obj, user as mob)
 	if(istype(I, /obj/item/device/aicard))
+		var/obj/item/device/aicard/AIcard = I
 		if(stat & (NOPOWER|BROKEN))
 			user << "This terminal isn't functioning right now, get it working!"
 			return
-		I:transfer_ai("AIFIXER","AICARD",src,user)
-
-	..()
+		AIcard.transfer_ai("AIFIXER","AICARD",src,user)
+	else
+		..()
 	return
-
-/obj/machinery/computer/aifixer/attack_ai(var/mob/user as mob)
-	return attack_hand(user)
-
-/obj/machinery/computer/aifixer/attack_paw(var/mob/user as mob)
-	return attack_hand(user)
 
 /obj/machinery/computer/aifixer/attack_hand(var/mob/user as mob)
 	if(..())
@@ -35,29 +31,29 @@
 	user.set_machine(src)
 	var/dat = "<h3>AI System Integrity Restorer</h3><br><br>"
 
-	if (src.occupant)
+	if (src.occupier)
 		var/laws
-		dat += "Stored AI: [src.occupant.name]<br>System integrity: [(src.occupant.health+100)/2]%<br>"
+		dat += "Stored AI: [src.occupier.name]<br>System integrity: [(src.occupier.health+100)/2]%<br>"
 
-		if (src.occupant.laws.zeroth)
-			laws += "0: [src.occupant.laws.zeroth]<BR>"
+		if (src.occupier.laws.zeroth)
+			laws += "0: [src.occupier.laws.zeroth]<BR>"
 
 		var/number = 1
-		for (var/index = 1, index <= src.occupant.laws.inherent.len, index++)
-			var/law = src.occupant.laws.inherent[index]
+		for (var/index = 1, index <= src.occupier.laws.inherent.len, index++)
+			var/law = src.occupier.laws.inherent[index]
 			if (length(law) > 0)
 				laws += "[number]: [law]<BR>"
 				number++
 
-		for (var/index = 1, index <= src.occupant.laws.supplied.len, index++)
-			var/law = src.occupant.laws.supplied[index]
+		for (var/index = 1, index <= src.occupier.laws.supplied.len, index++)
+			var/law = src.occupier.laws.supplied[index]
 			if (length(law) > 0)
 				laws += "[number]: [law]<BR>"
 				number++
 
 		dat += "Laws:<br>[laws]<br>"
 
-		if (src.occupant.stat == 2)
+		if (src.occupier.stat == DEAD)
 			dat += "<b>AI nonfunctional</b>"
 		else
 			dat += "<b>AI functional</b>"
@@ -82,20 +78,20 @@
 	if (href_list["fix"])
 		src.active = 1
 		src.overlays += image('icons/obj/computer.dmi', "ai-fixer-on")
-		while (src.occupant.health < 100)
-			src.occupant.adjustOxyLoss(-1)
-			src.occupant.adjustFireLoss(-1)
-			src.occupant.adjustToxLoss(-1)
-			src.occupant.adjustBruteLoss(-1)
-			src.occupant.updatehealth()
-			if (src.occupant.health >= 0 && src.occupant.stat == DEAD)
-				src.occupant.stat = CONSCIOUS
-				src.occupant.lying = 0
+		while (src.occupier.health < 100)
+			src.occupier.adjustOxyLoss(-1)
+			src.occupier.adjustFireLoss(-1)
+			src.occupier.adjustToxLoss(-1)
+			src.occupier.adjustBruteLoss(-1)
+			src.occupier.updatehealth()
+			if (src.occupier.health >= 0 && src.occupant.stat == DEAD)
+				src.occupier.stat = CONSCIOUS
+				src.occupier.lying = 0
 				dead_mob_list -= src.occupant
 				living_mob_list += src.occupant
 				src.overlays -= image('icons/obj/computer.dmi', "ai-fixer-404")
 				src.overlays += image('icons/obj/computer.dmi', "ai-fixer-full")
-				src.occupant.add_ai_verbs()
+				src.occupier.add_ai_verbs()
 			src.updateUsrDialog()
 			sleep(10)
 		src.active = 0
@@ -115,8 +111,8 @@
 
 	// Working / Powered
 	else
-		if (occupant)
-			switch (occupant.stat)
+		if (occupier)
+			switch (occupier.stat)
 				if (0)
 					overlays += image('icons/obj/computer.dmi', "ai-fixer-full")
 				if (2)

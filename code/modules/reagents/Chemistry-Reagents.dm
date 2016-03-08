@@ -325,7 +325,7 @@ datum
 				if(!M) M = holder.my_atom
 				if(ishuman(M))
 					var/mob/living/carbon/human/human = M
-					if(human.dna.mutantrace == null)
+					if(human.dna && !human.dna.mutantrace)
 						M << "\red Your flesh rapidly mutates!"
 						human.dna.mutantrace = "slime"
 						human.update_mutantrace()
@@ -500,7 +500,7 @@ datum
 			custom_metabolism = 0.01
 
 			on_mob_life(var/mob/living/M as mob, var/alien)
-				if(M.stat == 2) return
+				if(M.stat == DEAD) return
 				if(alien && alien == IS_VOX)
 					M.adjustToxLoss(REAGENTS_METABOLISM)
 					holder.remove_reagent(src.id, REAGENTS_METABOLISM) //By default it slowly disappears.
@@ -525,7 +525,7 @@ datum
 			custom_metabolism = 0.01
 
 			on_mob_life(var/mob/living/M as mob, var/alien)
-				if(M.stat == 2) return
+				if(M.stat == DEAD) return
 				if(alien && alien == IS_VOX)
 					M.adjustOxyLoss(-2*REM)
 					holder.remove_reagent(src.id, REAGENTS_METABOLISM) //By default it slowly disappears.
@@ -1004,21 +1004,21 @@ datum
 						C.l_hand.clean_blood()
 					if(C.wear_mask)
 						if(C.wear_mask.clean_blood())
-							C.update_inv_wear_mask(0)
+							C.update_inv_wear_mask()
 					if(ishuman(M))
 						var/mob/living/carbon/human/H = C
 						if(H.head)
 							if(H.head.clean_blood())
-								H.update_inv_head(0)
+								H.update_inv_head()
 						if(H.wear_suit)
 							if(H.wear_suit.clean_blood())
-								H.update_inv_wear_suit(0)
+								H.update_inv_wear_suit()
 						else if(H.w_uniform)
 							if(H.w_uniform.clean_blood())
-								H.update_inv_w_uniform(0)
+								H.update_inv_w_uniform()
 						if(H.shoes)
 							if(H.shoes.clean_blood())
-								H.update_inv_shoes(0)
+								H.update_inv_shoes()
 						else
 							H.clean_blood(1)
 							return
@@ -1068,7 +1068,7 @@ datum
 			overdose = REAGENTS_OVERDOSE
 
 			on_mob_life(var/mob/living/M as mob)
-				if(M.stat == 2.0)
+				if(M.stat == DEAD)
 					return
 				if(!M) M = holder.my_atom
 				//This needs a diona check but if one is added they won't be able to heal burn damage at all.
@@ -1085,7 +1085,7 @@ datum
 			overdose = REAGENTS_OVERDOSE/2
 
 			on_mob_life(var/mob/living/M as mob, var/alien)
-				if(M.stat == 2.0) //THE GUY IS **DEAD**! BEREFT OF ALL LIFE HE RESTS IN PEACE etc etc. He does NOT metabolise shit anymore, god DAMN
+				if(M.stat == DEAD) //THE GUY IS **DEAD**! BEREFT OF ALL LIFE HE RESTS IN PEACE etc etc. He does NOT metabolise shit anymore, god DAMN
 					return
 				if(!M) M = holder.my_atom
 				if(!alien || alien != IS_DIONA)
@@ -1102,7 +1102,7 @@ datum
 			overdose = REAGENTS_OVERDOSE
 
 			on_mob_life(var/mob/living/M as mob, var/alien)
-				if(M.stat == 2.0)
+				if(M.stat == DEAD)
 					return  //See above, down and around. --Agouri
 				if(!M) M = holder.my_atom
 
@@ -1125,7 +1125,7 @@ datum
 			overdose = REAGENTS_OVERDOSE/2
 
 			on_mob_life(var/mob/living/M as mob, var/alien)
-				if(M.stat == 2.0)
+				if(M.stat == DEAD)
 					return
 				if(!M) M = holder.my_atom
 
@@ -1147,7 +1147,7 @@ datum
 			color = "#C8A5DC" // rgb: 200, 165, 220
 
 			on_mob_life(var/mob/living/M as mob, var/alien)
-				if(M.stat == 2.0)
+				if(M.stat == DEAD)
 					return
 				if(!M) M = holder.my_atom
 				if(!alien || alien != IS_DIONA)
@@ -1278,7 +1278,7 @@ datum
 			overdose = REAGENTS_OVERDOSE
 
 			on_mob_life(var/mob/living/M as mob)
-				if(M.stat == 2.0)
+				if(M.stat == DEAD)
 					return  //See above, down and around. --Agouri
 				if(!M) M = holder.my_atom
 				M.radiation = max(M.radiation-7*REM,0)
@@ -1353,7 +1353,7 @@ datum
 			overdose = REAGENTS_OVERDOSE
 
 			on_mob_life(var/mob/living/M as mob, var/alien)
-				if(M.stat == 2.0)
+				if(M.stat == DEAD)
 					return
 				if(!M) M = holder.my_atom
 				if(alien != IS_DIONA)
@@ -1645,7 +1645,7 @@ datum
 			overdose = REAGENTS_OVERDOSE
 
 			on_mob_life(var/mob/living/M as mob)
-				if(M.stat == 2.0)
+				if(M.stat == DEAD)
 					return
 				if(!M) M = holder.my_atom
 				if(prob(33))
@@ -1859,7 +1859,7 @@ datum
 
 			on_mob_life(var/mob/living/carbon/M as mob)
 				var/mob/living/carbon/human/H = M
-				if(H.stat != 1)
+				if(H.stat != UNCONSCIOUS)
 					if (volume >= overdose)
 						if(H.losebreath >= 10)
 							H.losebreath = max(10, H.losebreath-10)
@@ -1880,7 +1880,7 @@ datum
 			on_mob_life(var/mob/living/carbon/M as mob)
 				if(ishuman(M))
 					var/mob/living/carbon/human/H = M
-					if(H.stat != 1)
+					if(H.stat != UNCONSCIOUS)
 						if(H.losebreath >= 10)
 							H.losebreath = max(10, M.losebreath-10)
 						H.adjustOxyLoss(2)
@@ -1953,8 +1953,8 @@ datum
 							if(prob(meltprob) && !H.head.unacidable)
 								H << "<span class='danger'>Your headgear melts away but protects you from the acid!</span>"
 								qdel(H.head)
-								H.update_inv_head(0)
-								H.update_hair(0)
+								H.update_inv_head()
+								H.update_hair()
 							else
 								H << "<span class='warning'>Your headgear protects you from the acid.</span>"
 							return
@@ -1963,8 +1963,8 @@ datum
 							if(prob(meltprob) && !H.wear_mask.unacidable)
 								H << "<span class='danger'>Your mask melts away but protects you from the acid!</span>"
 								qdel(H.wear_mask)
-								H.update_inv_wear_mask(0)
-								H.update_hair(0)
+								H.update_inv_wear_mask()
+								H.update_hair()
 							else
 								H << "<span class='warning'>Your mask protects you from the acid.</span>"
 							return
@@ -1973,7 +1973,7 @@ datum
 							if(prob(meltprob) && !H.glasses.unacidable)
 								H << "<span class='danger'>Your glasses melts away!</span>"
 								qdel(H.glasses)
-								H.update_inv_glasses(0)
+								H.update_inv_glasses()
 
 					else if(ismonkey(M))
 						var/mob/living/carbon/monkey/MK = M
@@ -1981,7 +1981,7 @@ datum
 							if(!MK.wear_mask.unacidable)
 								MK << "<span class='danger'>Your mask melts away but protects you from the acid!</span>"
 								qdel(MK.wear_mask)
-								MK.update_inv_wear_mask(0)
+								MK.update_inv_wear_mask()
 							else
 								MK << "<span class='warning'>Your mask protects you from the acid.</span>"
 							return
@@ -1991,8 +1991,7 @@ datum
 							var/mob/living/carbon/human/H = M
 							var/datum/organ/external/affecting = H.get_organ("head")
 							if(affecting)
-								if(affecting.take_damage(4*toxpwr, 2*toxpwr))
-									H.UpdateDamageIcon()
+								affecting.take_damage(4*toxpwr, 2*toxpwr)
 								if(prob(meltprob)) //Applies disfigurement
 									H.emote("scream",,, 1)
 									H.status_flags |= DISFIGURED

@@ -14,7 +14,7 @@
 	spawn(rand(1000, 2000)) //Delayed announcements to keep the crew on their toes.
 		command_alert("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert")
 		for(var/mob/M in player_list)
-			if(!istype(M,/mob/new_player))
+			if(!isnewplayer(M))
 				M << sound('sound/AI/outbreak5.ogg')
 
 /proc/dotheblobbaby()
@@ -24,7 +24,7 @@
 				sleep(-1)
 				if(!blob_cores.len)	break
 				var/obj/effect/blob/B = pick(blob_cores)
-				if(B.z != 1)
+				if(B.z != ZLEVEL_STATION)
 					continue
 				B.Life()
 		spawn(30)

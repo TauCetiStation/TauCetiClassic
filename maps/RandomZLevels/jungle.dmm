@@ -193,7 +193,7 @@
 "dK" = (/obj/item/weapon/shard{icon_state = "small"},/turf/unsimulated/floor,/area/jungle/crash_ship_source)
 "dL" = (/obj/structure/girder,/turf/unsimulated/floor,/area/jungle/crash_ship_source)
 "dM" = (/obj/item/weapon/shard{icon_state = "medium"},/turf/unsimulated/jungle/path,/area/jungle/crash_ship_source)
-"dN" = (/obj/item/weapon/cell,/turf/unsimulated/floor,/area/jungle/crash_ship_source)
+"dN" = (/obj/item/weapon/stock_parts/cell,/turf/unsimulated/floor,/area/jungle/crash_ship_source)
 "dO" = (/obj/structure/grille{density = 0; icon_state = "brokengrille"},/turf/unsimulated/jungle/path,/area/jungle/crash_ship_source)
 "dP" = (/obj/structure/rack,/obj/item/weapon/storage/toolbox/mechanical,/turf/unsimulated/floor,/area/jungle/crash_ship_source)
 "dQ" = (/obj/effect/landmark/path_waypoint,/turf/unsimulated/floor,/area/jungle/crash_ship_source)

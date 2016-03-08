@@ -175,7 +175,6 @@
 				T << "<span class='danger'>You feel a sharp stabbing pain!</span>"
 				var/datum/organ/external/affecting = T.get_organ(src.zone_sel.selecting)
 				if(affecting.take_damage(39,0,1,0,"large organic needle"))
-					T:UpdateDamageIcon()
 					continue
 
 		feedback_add_details("changeling_powers","A[stage]")
@@ -505,7 +504,7 @@
 	changeling.chem_charges -= 45
 
 	var/mob/living/carbon/human/C = src
-	C.stat = 0
+	C.stat = CONSCIOUS
 	C.SetParalysis(0)
 	C.SetStunned(0)
 	C.SetWeakened(0)

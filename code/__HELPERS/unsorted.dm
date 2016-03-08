@@ -352,7 +352,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	var/select = null
 	var/list/borgs = list()
 	for (var/mob/living/silicon/robot/A in player_list)
-		if (A.stat == 2 || A.connected_ai || A.scrambledcodes || istype(A,/mob/living/silicon/robot/drone))
+		if (A.stat == DEAD || A.connected_ai || A.scrambledcodes || istype(A,/mob/living/silicon/robot/drone))
 			continue
 		var/name = "[A.real_name] ([A.modtype] [A.braintype])"
 		borgs[name] = A
@@ -389,42 +389,21 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		else		. = pick(ais)
 	return .
 
-/proc/get_sorted_mobs()
-	var/list/old_list = getmobs()
-	var/list/AI_list = list()
-	var/list/Dead_list = list()
-	var/list/keyclient_list = list()
-	var/list/key_list = list()
-	var/list/logged_list = list()
-	for(var/named in old_list)
-		var/mob/M = old_list[named]
-		if(issilicon(M))
-			AI_list |= M
-		else if(isobserver(M) || M.stat == 2)
-			Dead_list |= M
-		else if(M.key && M.client)
-			keyclient_list |= M
-		else if(M.key)
-			key_list |= M
-		else
-			logged_list |= M
-		old_list.Remove(named)
-	var/list/new_list = list()
-	new_list += AI_list
-	new_list += keyclient_list
-	new_list += key_list
-	new_list += logged_list
-	new_list += Dead_list
-	return new_list
-
-//Returns a list of all mobs with their name
-/proc/getmobs()
-
+//Returns a list of all items of interest with their name
+/proc/getpois(mobs_only=0, skip_mindless=0)
 	var/list/mobs = sortmobs()
 	var/list/names = list()
-	var/list/creatures = list()
+	var/list/pois = list()
 	var/list/namecounts = list()
+
 	for(var/mob/M in mobs)
+		if(skip_mindless && (!M.mind && !M.ckey))
+			if(!isbot(M) && !istype(M, /mob/camera/))
+				continue
+		if(M.client && M.client.holder && M.client.holder.fakekey) //stealthmins
+			continue
+		if(usr == M)	//skip yourself
+			continue
 		var/name = M.name
 		if (name in names)
 			namecounts[name]++
@@ -434,14 +413,27 @@ Turf and target are seperate in case you want to teleport some distance from a t
 			namecounts[name] = 1
 		if (M.real_name && M.real_name != M.name)
 			name += " \[[M.real_name]\]"
-		if (M.stat == 2)
+		if (M.stat == DEAD)
 			if(istype(M, /mob/dead/observer/))
 				name += " \[ghost\]"
 			else
 				name += " \[dead\]"
-		creatures[name] = M
+		pois[name] = M
 
-	return creatures
+	if(!mobs_only)
+		for(var/atom/A in poi_list)
+			if(!A || !A.loc)
+				continue
+			var/name = A.name
+			if (names.Find(name))
+				namecounts[name]++
+				name = "[name] ([namecounts[name]])"
+			else
+				names.Add(name)
+				namecounts[name] = 1
+			pois[name] = A
+
+	return pois
 
 //Orders mobs by type then by name
 /proc/sortmobs()
@@ -725,7 +717,7 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 	var/image/progbar
 
 	for(var/i = 1 to numticks)
-		if(user.client && !(user.client.prefs.toggles & SHOW_PROGBAR))
+		if(user.client && (user.client.prefs.toggles & SHOW_PROGBAR))
 			progbar = make_progress_bar(i, numticks, target)
 			user.client.images |= progbar
 		sleep(timefraction)
@@ -761,18 +753,19 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 
 	var/delayfraction = round(delay/numticks)
 	var/original_loc = user.loc
+	var/target_loc = target.loc
 	var/original_turf = get_turf(user)
 	var/holding = user.get_active_hand()
 	var/image/progbar
 
 	for (var/i = 1 to numticks)
-		if(user.client && !(user.client.prefs.toggles & SHOW_PROGBAR))
+		if(user.client && (user.client.prefs.toggles & SHOW_PROGBAR))
 			progbar = make_progress_bar(i, numticks, target)
 			user.client.images |= progbar
 
 		sleep(delayfraction)
 
-		if(!user || user.stat || user.weakened || user.stunned || user.loc != original_loc || get_turf(user) != original_turf)
+		if(!user || user.stat || user.weakened || user.stunned || user.loc != original_loc || get_turf(user) != original_turf || target.loc != target_loc)
 			if(user && user.client)
 				user.client.images -= progbar
 			return 0
@@ -1509,3 +1502,122 @@ var/mob/dview/dview_mob = new
 				L += T.contents
 		c_dist++
 	return L
+
+
+//This is just so you can stop an orbit.
+//orbit() can run without it (swap orbiting for A)
+//but then you can never stop it and that's just silly.
+/atom/movable/var/atom/orbiting = null
+//A: atom to orbit
+//radius: range to orbit at, radius of the circle formed by orbiting
+//clockwise: whether you orbit clockwise or anti clockwise
+//rotation_speed: how fast to rotate
+//rotation_segments: the resolution of the orbit circle, less = a more block circle, this can be used to produce hexagons (6 segments) triangles (3 segments), and so on, 36 is the best default.
+//pre_rotation: Chooses to rotate src 90 degress towards the orbit dir (clockwise/anticlockwise), useful for things to go "head first" like ghosts
+//lockinorbit: Forces src to always be on A's turf, otherwise the orbit cancels when src gets too far away (eg: ghosts)
+
+/atom/movable/proc/orbit(atom/A, radius = 10, clockwise = FALSE, rotation_speed = 20, rotation_segments = 36, pre_rotation = TRUE, lockinorbit = FALSE)
+	if(!istype(A))
+		return
+
+	if(orbiting)
+		stop_orbit()
+
+	orbiting = A
+	var/matrix/initial_transform = matrix(transform)
+	var/lastloc = loc
+
+	//Head first!
+	if(pre_rotation)
+		var/matrix/M = matrix(transform)
+		var/pre_rot = 90
+		if(!clockwise)
+			pre_rot = -90
+		M.Turn(pre_rot)
+		transform = M
+
+	var/matrix/shift = matrix(transform)
+	shift.Translate(0,radius)
+	transform = shift
+
+	SpinAnimation(rotation_speed, -1, clockwise, rotation_segments)
+
+	//we stack the orbits up client side, so we can assign this back to normal server side without it breaking the orbit
+	transform = initial_transform
+	while(orbiting && orbiting == A && A.loc)
+		var/targetloc = get_turf(A)
+		if(!lockinorbit && loc != lastloc && loc != targetloc)
+			break
+		forceMoveOld(targetloc)
+		lastloc = loc
+		sleep(0.6)
+
+	if(orbiting == A) //make sure we haven't started orbiting something else.
+		orbiting = null
+		SpinAnimation(0,0)
+
+
+
+/atom/movable/proc/stop_orbit()
+	orbiting = null
+
+/proc/get_closest_atom(type, list, source)
+	var/closest_atom
+	var/closest_distance
+	for(var/A in list)
+		if(!istype(A, type))
+			continue
+		var/distance = get_dist(source, A)
+		if(!closest_distance)
+			closest_distance = distance
+			closest_atom = A
+		else
+			if(closest_distance > distance)
+				closest_distance = distance
+				closest_atom = A
+	return closest_atom
+
+/*
+ * Use proc below to generate new damage overlays for humans.
+ * Uncomment generate_damage_overlays_dmi() and gen_dam_dmi() below.
+ * Compile and start server, then join it. You will find verb in command tab.
+ */
+/*
+/proc/generate_damage_overlays_dmi()
+	spawn()
+		//if limb names will ever be changed or procs that use names of limbs,
+		//you must adjust names of body_parts according to the current that server uses or mobs will be missing some icon_states.
+		var/list/body_parts = list("head","torso","l_arm","l_hand","r_arm","r_hand","groin","l_leg","l_foot","r_leg","r_foot")
+		//Same rules for damage states.. must be exactly same as other code uses...
+		var/list/damage_states = list("01","10","11","12","13","02","20","21","22","23","03","30","31","32","33")
+
+		var/icon/master = new()
+		var/total = body_parts.len * damage_states.len
+		var/count = 0
+
+		//Use different dam_human.dmi and dam_mask_gen.dmi files, if you need something else.
+
+		for(var/body_part in body_parts)
+			for(var/damage_state in damage_states)
+				var/icon/DI = new /icon('icons/mob/human_races/masks/dam_human.dmi', damage_state)
+				DI.Blend(new /icon('icons/mob/human_races/masks/dam_mask_gen.dmi', body_part), ICON_MULTIPLY)
+				master.Insert(DI, "[body_part]_[damage_state]")
+
+				count += 1
+				var/pct = round(100 * count / total)
+				world << "[pct]%"
+				sleep(world.tick_lag)
+
+		world << ftp(master, "damage_overlays.dmi")
+
+/mob/verb/gen_dam_dmi()
+	generate_damage_overlays_dmi()
+*/
+
+/proc/find_loc(obj/R as obj)
+	if (!R)	return null
+	var/turf/T = R.loc
+	while(!istype(T, /turf))
+		T = T.loc
+		if(!T || istype(T, /area))	return null
+	return T
