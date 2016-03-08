@@ -9,9 +9,9 @@
 	var/open = 1
 
 /obj/structure/pit/attackby(obj/item/weapon/W, mob/user)
-	if( istype(W,/obj/item/weapon/shovel) )
+	if(istype(W,/obj/item/weapon/shovel))
 		visible_message("<span class='notice'>\The [user] starts [open ? "filling" : "digging open"] \the [src]</span>")
-		if( do_after(user, 50) )
+		if(do_after(user, 50, target = src) )
 			visible_message("<span class='notice'>\The [user] [open ? "fills" : "digs open"] \the [src]!</span>")
 			if(open)
 				close(user)
@@ -20,12 +20,12 @@
 		else
 			user << "<span class='notice'>You stop shoveling.</span>"
 		return
-	if (!open && istype(W,/obj/item/stack/sheet/wood))
+	if(!open && istype(W,/obj/item/stack/sheet/wood))
 		if(locate(/obj/structure/gravemarker) in src.loc)
 			user << "<span class='notice'>There's already a grave marker here.</span>"
 		else
 			visible_message("<span class='notice'>\The [user] starts making a grave marker on top of \the [src]</span>")
-			if( do_after(user, 50) )
+			if(do_after(user, 50, target = src))
 				visible_message("<span class='notice'>\The [user] finishes the grave marker</span>")
 				var/obj/item/stack/sheet/wood/plank = W
 				plank.use(1)
@@ -74,7 +74,7 @@
 	for(var/i in 1 to (6*breakout_time * 2)) //minutes * 6 * 5seconds * 2
 		playsound(src.loc, 'sound/weapons/bite.ogg', 100, 1)
 
-		if(!do_after(escapee, 50))
+		if(!do_after(escapee, 50, target = src))
 			escapee << "<span class='warning'>You have stopped digging.</span>"
 			return
 		if(!escapee || escapee.stat || escapee.loc != src)
@@ -195,7 +195,7 @@
 /obj/structure/gravemarker/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W,/obj/item/weapon/hatchet))
 		visible_message("<span class = 'warning'>\The [user] starts hacking away at \the [src] with \the [W].</span>")
-		if(!do_after(user, 30))
+		if(!do_after(user, 30, target = src))
 			visible_message("<span class = 'warning'>\The [user] hacks \the [src] apart.</span>")
 			new /obj/item/stack/sheet/wood(src)
 			qdel(src)

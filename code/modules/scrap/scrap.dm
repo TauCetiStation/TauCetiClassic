@@ -11,16 +11,17 @@
 	var/loot_max = 5
 	var/list/loot_list = list(
 		/obj/item/stack/rods/scrap,
-		/obj/item/stack/sheet/plastic/scrap,
-		/obj/item/stack/sheet/scrap,
+		/obj/item/stack/sheet/mineral/plastic/scrap,
+		/obj/item/stack/sheet/metal/scrap,
 		/obj/item/stack/sheet/glass/scrap,
 		/obj/item/stack/sheet/plasteel/scrap,
 		/obj/item/weapon/shard,
-		/obj/item/weapon/shard/shrapnel
+		/obj/random/tech_supply/,
+		/obj/random/tech_supply/,
 		)
 	var/parts_icon = 'icons/obj/structures/scrap/trash.dmi'
-	var/base_min = 3	//min and max number of random pieces of base icon
-	var/base_max = 5
+	var/base_min = 4	//min and max number of random pieces of base icon
+	var/base_max = 7
 	var/base_spread = 8	//limits on pixel offsets of base pieces
 
 /obj/structure/scrap/New()
@@ -102,8 +103,8 @@
 		/obj/random/tech_supply/,
 		/obj/random/tech_supply/,
 		/obj/item/stack/rods/scrap,
-		/obj/item/stack/sheet/plastic/scrap,
-		/obj/item/stack/sheet/scrap,
+		/obj/item/stack/sheet/mineral/plastic/scrap,
+		/obj/item/stack/sheet/metal/scrap,
 		/obj/item/weapon/shard
 		)
 
