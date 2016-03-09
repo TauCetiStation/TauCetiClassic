@@ -34,6 +34,9 @@
 	set category = "Vehicle"
 	set src in view(0)
 
+	if(isobserver(usr)) //Ghost riders? Nope, never heard about them.
+		return
+
 	if(usr.incapacitated()) return
 
 	if(!on)
@@ -47,6 +50,9 @@
 	set name = "Toggle Kickstand"
 	set category = "Vehicle"
 	set src in view(0)
+
+	if(isobserver(usr))
+		return
 
 	if(usr.incapacitated()) return
 
