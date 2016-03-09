@@ -958,7 +958,7 @@
 /mob/living/proc/float(on)
 	if(on && !floating && !buckled)
 		start_floating()
-	else if((!on && floating) || buckled)
+	else if((!on || buckled) && floating)
 		stop_floating()
 
 /mob/living/proc/start_floating()
