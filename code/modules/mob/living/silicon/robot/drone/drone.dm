@@ -252,11 +252,6 @@
 
 	..(gibbed)
 
-//DRONE MOVEMENT.
-/mob/living/silicon/robot/drone/Process_Spaceslipping(var/prob_slip)
-	//TODO: Consider making a magboot item for drones to equip. ~Z
-	return 0
-
 //CONSOLE PROCS
 /mob/living/silicon/robot/drone/proc/law_resync()
 	if(stat != DEAD)
@@ -348,3 +343,9 @@
 /mob/living/silicon/robot/drone/add_robot_verbs()
 
 /mob/living/silicon/robot/drone/remove_robot_verbs()
+
+/mob/living/simple_animal/drone/mob_negates_gravity()
+	return 1
+
+/mob/living/simple_animal/drone/mob_has_gravity()
+	return ..() || mob_negates_gravity()

@@ -4,6 +4,8 @@
 		handle_actions()
 		add_ingame_age()
 
+	update_gravity(mob_has_gravity())
+
 //Generic Bump(). Override MobBump() and ObjBump() instead of this.
 /mob/living/Bump(atom/A, yes)
 	if (buckled || !yes || now_pushing)
@@ -65,7 +67,7 @@
 
 	//switch our position with M
 	//BubbleWrap: people in handcuffs are always switched around as if they were on 'help' intent to prevent a person being pulled from being seperated from their puller
-	if((M.a_intent == "help" || M.restrained()) && (a_intent == "help" || restrained()) && M.canmove && canmove && !M.buckled && !M.buckled_mob) // mutual brohugs all around!
+	if((M.a_intent == "help" || M.restrained()) && (a_intent == "help" || restrained()) && M.canmove && canmove && !M.buckled) // mutual brohugs all around!
 		now_pushing = 1
 		//TODO: Make this use Move(). we're pretty much recreating it here.
 		//it could be done by setting one of the locs to null to make Move() work, then setting it back and Move() the other mob
@@ -474,9 +476,12 @@
 
 	return
 
-/mob/living/Move(a, b, flag)
-	if (buckled)
-		return
+/mob/living/Move(atom/newloc, direct)
+	if (buckled && buckled.loc != newloc)
+		if (!buckled.anchored)
+			return buckled.Move(newloc, direct)
+		else
+			return 0
 
 	if (restrained())
 		stop_pulling()
@@ -487,7 +492,7 @@
 		for(var/mob/living/M in range(src, 1))
 			if ((M.pulling == src && M.stat == CONSCIOUS && !( M.restrained() )))
 				t7 = null
-	if ((t7 && (pulling && ((get_dist(src, pulling) <= 1 || pulling.loc == loc) && (client && client.moving)))))
+	if(t7 && pulling && (get_dist(src, pulling) <= 1 || pulling.loc == loc))
 		var/turf/T = loc
 		. = ..()
 
@@ -546,16 +551,12 @@
 											H:vessel.remove_reagent("blood",1)
 
 
-						step(pulling, get_dir(pulling.loc, T))
-						M.start_pulling(AM)
+						pulling.Move(T, get_dir(pulling, T))
+						if(M)
+							M.start_pulling(AM)
 				else
 					if (pulling)
-						if (istype(pulling, /obj/structure/window))
-							if(pulling:ini_dir == NORTHWEST || pulling:ini_dir == NORTHEAST || pulling:ini_dir == SOUTHWEST || pulling:ini_dir == SOUTHEAST)
-								for(var/obj/structure/window/win in get_step(pulling,get_dir(pulling.loc, T)))
-									stop_pulling()
-					if (pulling)
-						step(pulling, get_dir(pulling.loc, T))
+						pulling.Move(T, get_dir(pulling, T))
 	else
 		stop_pulling()
 		. = ..()
@@ -948,3 +949,35 @@
 						stat(null, "[gang_name("A")] Gang Takeover: [max(mode.A_timer, 0)]")
 					if(isnum(mode.B_timer))
 						stat(null, "[gang_name("B")] Gang Takeover: [max(mode.B_timer, 0)]")
+
+/mob/living/update_gravity(has_gravity)
+	if(!ticker)
+		return
+	float(!has_gravity)
+
+/mob/living/proc/float(on)
+	if(on && !floating && !buckled)
+		start_floating()
+	else if((!on && floating) || buckled)
+		stop_floating()
+
+/mob/living/proc/start_floating()
+
+	floating = 1
+
+	var/amplitude = 2 //maximum displacement from original position
+	var/period = 36 //time taken for the mob to go up >> down >> original position, in deciseconds. Should be multiple of 4
+
+	var/top = old_y + amplitude
+	var/bottom = old_y - amplitude
+	var/half_period = period / 2
+	var/quarter_period = period / 4
+
+	animate(src, pixel_y = top, time = quarter_period, easing = SINE_EASING | EASE_OUT, loop = -1)		//up
+	animate(pixel_y = bottom, time = half_period, easing = SINE_EASING, loop = -1)						//down
+	animate(pixel_y = old_y, time = quarter_period, easing = SINE_EASING | EASE_IN, loop = -1)			//back
+
+/mob/living/proc/stop_floating()
+	animate(src, pixel_y = old_y, time = 5, easing = SINE_EASING | EASE_IN) //halt animation
+	//reset the pixel offsets to zero
+	floating = 0

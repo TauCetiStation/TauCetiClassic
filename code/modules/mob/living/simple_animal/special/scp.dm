@@ -190,11 +190,11 @@
 
 /mob/living/simple_animal/special/scp173/airflow_stun()
 	return
-	
+
 /mob/living/simple_animal/special/scp173/airflow_hit(atom/A)
 	return
 
-/mob/living/simple_animal/special/scp173/Process_Spacemove(var/check_drift = 0)
+/mob/living/simple_animal/special/scp173/Process_Spacemove(var/movement_dir = 0)
 	return 1 //copypasta from carp code
 
 /mob/living/simple_animal/special/scp173/attackby(var/obj/item/O as obj, var/mob/user as mob)

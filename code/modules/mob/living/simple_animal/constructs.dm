@@ -231,3 +231,26 @@
 	else
 		usr << "<span class='red'>This weapon is ineffective, it does no damage.</span>"
 		visible_message("<span class='red'>[user] gently taps [src] with [O].</span>")
+
+
+/////////////////////////////////////Harvester construct/////////////////////////////////
+/mob/living/simple_animal/construct/harvester
+	name = "Harvester"
+	real_name = "Harvester"
+	desc = "A harbinger of Nar-Sie's enlightenment. It'll be all over soon."
+	icon = 'tauceti/icons/mob/harvester.dmi'
+	icon_state = "harvester"
+	icon_living = "harvester"
+	maxHealth = 60
+	health = 60
+	melee_damage_lower = 1
+	melee_damage_upper = 5
+	attacktext = "prods"
+	speed = 0
+	environment_smash = 1
+	see_in_dark = 7
+	attack_sound = 'sound/weapons/slash.ogg'
+	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/conjure/smoke)
+
+/mob/living/simple_animal/construct/harvester/Process_Spacemove(var/movement_dir = 0)
+	return 1

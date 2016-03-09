@@ -93,17 +93,12 @@
 		return
 
 	var/atom/movable/A = atom
-
 	var/loopsanity = 100
 	if(ismob(A))
 		var/mob/M = A
 		if(!M.lastarea)
 			M.lastarea = get_area(M.loc)
-		if(isarea(M.lastarea) && !M.lastarea.has_gravity)
-			inertial_drift(M)
 
-		else if(!istype(src, /turf/space))
-			M.inertia_dir = 0
 	..()
 	var/objects = 0
 	for(var/atom/O as mob|obj|turf|area in range(1))
@@ -136,22 +131,6 @@
 	return 0
 /turf/proc/return_siding_icon_state()		//used for grass floors, which have siding.
 	return 0
-
-/turf/proc/inertial_drift(atom/movable/A as mob|obj)
-	if(!(A.last_move))	return
-	if((istype(A, /mob/) && src.x > 2 && src.x < (world.maxx - 1) && src.y > 2 && src.y < (world.maxy-1)))
-		var/mob/M = A
-		if(M.Process_Spacemove(1))
-			M.inertia_dir  = 0
-			return
-		spawn(5)
-			if((M && !(M.anchored) && !(M.pulledby) && (M.loc == src)))
-				if(M.inertia_dir)
-					step(M, M.inertia_dir)
-					return
-				M.inertia_dir = M.last_move
-				step(M, M.inertia_dir)
-	return
 
 /turf/proc/levelupdate()
 	for(var/obj/O in src)

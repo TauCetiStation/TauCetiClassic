@@ -40,12 +40,27 @@
 		O.layer = 4.0
 	return ..()
 
+/obj/structure/stool/bed/Move(atom/newloc, direct)
+	..()
+	if(buckled_mob)
+		if(buckled_mob.buckled == src)
+			buckled_mob.loc = src.loc
+			last_move = buckled_mob.last_move
+			inertia_dir = last_move
+		else
+			buckled_mob = null
+
+/obj/structure/stool/bed/Process_Spacemove(movement_dir = 0)
+	if(buckled_mob)
+		return buckled_mob.Process_Spacemove(movement_dir)
+	return ..()
+
 /obj/structure/stool/bed/examine()
 	..()
 	var/T = get_turf(src)
 	var/mob/living/carbon/human/H = locate() in T
 	if(H && H.crawling)
-		usr << "Some jerk hiding under [src]"
+		usr << "Someone is hiding under [src]"
 	return
 
 /*
@@ -120,13 +135,7 @@
 	held = null
 
 
-/obj/structure/stool/bed/roller/Move()
-	..()
-	if(buckled_mob)
-		if(buckled_mob.buckled == src)
-			buckled_mob.loc = src.loc
-		else
-			buckled_mob = null
+
 
 /obj/structure/stool/bed/roller/post_buckle_mob(mob/living/M)
 	if(M == buckled_mob)

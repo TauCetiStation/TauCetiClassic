@@ -58,6 +58,10 @@
 	behind = "chair_behind_bla"
 	return ..()
 
+/obj/structure/stool/bed/chair/Move(atom/newloc, direct)
+	..()
+	handle_rotation()
+
 /obj/structure/stool/bed/chair/metal/post_buckle_mob(mob/living/M)
 	if(buckled_mob)
 		icon_state = behind
@@ -212,9 +216,6 @@
 	..()
 	if(buckled_mob)
 		var/mob/living/occupant = buckled_mob
-		occupant.buckled = null
-		occupant.Move(src.loc)
-		occupant.buckled = src
 		if (occupant && (src.loc != occupant.loc))
 			if (propelled)
 				for (var/mob/O in src.loc)

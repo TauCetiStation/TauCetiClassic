@@ -241,6 +241,8 @@ BLIND     // can't see anything
 	var/footstep = 1	//used for squeeks whilst walking(tc)
 	sprite_sheets = list("Vox" = 'icons/mob/species/vox/shoes.dmi')
 
+/obj/item/proc/negates_gravity()
+	return 0
 
 //Suit
 /obj/item/clothing/suit

@@ -194,7 +194,7 @@
 /mob/living/simple_animal/hulk/airflow_hit(atom/A)
 	return
 
-//mob/living/simple_animal/hulk/Process_Spacemove(var/check_drift = 0)
+//mob/living/simple_animal/hulk/Process_Spacemove(var/movement_dir = 0)
 //	return 1 //copypasta from carp code
 
 /mob/living/simple_animal/hulk/attackby(var/obj/item/O as obj, var/mob/user as mob)

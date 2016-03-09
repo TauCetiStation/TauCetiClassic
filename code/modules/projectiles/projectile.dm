@@ -370,3 +370,6 @@
 
 /obj/item/projectile/proc/Range() ///tg/
 	return
+
+/obj/item/projectile/Process_Spacemove(var/movement_dir = 0)
+		return 1 //Bullets don't drift in space
