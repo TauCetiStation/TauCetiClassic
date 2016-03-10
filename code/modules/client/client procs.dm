@@ -174,11 +174,7 @@
 
 	screen += void
 
-	if(!fov)
-		fov = new()
-
-	if(mob && isliving(mob))
-		screen += fov
+	add_fov_overlay()
 
 
 	//////////////
