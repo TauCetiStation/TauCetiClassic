@@ -95,7 +95,7 @@
 	desc = "Some things are better left buried."
 	open = 0
 
-/obj/structure/pit/closed/initialize()
+/obj/structure/pit/closed/New()
 	..()
 	close()
 
@@ -112,7 +112,7 @@
 	name = "grave"
 	icon_state = "pit0"
 
-/obj/structure/pit/closed/grave/initialize()
+/obj/structure/pit/closed/grave/New()
 	var/obj/structure/closet/coffin/C = new(src.loc)
 
 	var/obj/effect/decal/remains/human/bones = new(C)
@@ -181,7 +181,7 @@
 	..()
 	usr << message
 
-/obj/structure/gravemarker/random/initialize()
+/obj/structure/gravemarker/random/New()
 	generate()
 	..()
 
