@@ -130,7 +130,7 @@ proc/get_degree_angle(atom/a, direct, atom/b)
 	var/eye_left_fov = 360 - fov
 	var/eye_right_fov = 0 + fov
 
-	//For visual testing remove:
+	//For visual testing:
 	//Leave if(client...) part if you want local testing just for yourself.
 	//Remove ckey part if you want to test with multiple clients.
 	//Also, adjust colours if need (if you want different for every mob, think that's shouldn't very hard to code), otherwise use as is.
