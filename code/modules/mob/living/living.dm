@@ -60,11 +60,6 @@
 		status_flags &= ~LEAPING
 		return 1
 
-	//TO DO: so ugly, need to be redone
-	if(isdrone(M) || isdrone(src))
-		loc = M.loc
-		return 1
-
 	//switch our position with M
 	//BubbleWrap: people in handcuffs are always switched around as if they were on 'help' intent to prevent a person being pulled from being seperated from their puller
 	if((M.a_intent == "help" || M.restrained()) && (a_intent == "help" || restrained()) && M.canmove && canmove && !M.buckled && !M.buckled_mob) // mutual brohugs all around!
