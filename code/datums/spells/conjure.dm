@@ -85,3 +85,39 @@
 			for(var/mob/M in T)
 				Proj.on_hit(M,M.bullet_act(Proj, def_zone))
 		return
+		
+/obj/effect/proc_holder/spell/aoe_turf/conjure/smoke
+	name = "Paralysing Smoke"
+	desc = "This spell spawns a cloud of paralysing smoke."
+
+	school = "conjuration"
+	charge_max = 200
+	clothes_req = 0
+	invocation = "none"
+	invocation_type = "none"
+	range = 1
+
+/obj/effect/proc_holder/spell/aoe_turf/conjure/smoke/cast()
+	var/datum/effect/effect/system/smoke_spread/chem/S = new
+	var/turf/location = get_turf(loc)
+	create_reagents(80)
+	reagents.add_reagent("harvester", 80)
+	S.attach(location)
+	S.set_up(reagents, 5, 0, location, 15, 5)
+	S.start()
+	
+/datum/reagent/toxin/harvester
+	name = "Harvester Toxin"
+	id = "harvester"
+	description = "A toxic cloud."
+	color = "#9C3636"
+	toxpwr = 0
+	custom_metabolism = 1
+	
+	on_mob_life(var/mob/living/carbon/M as mob)
+		if(!M) M = holder.my_atom
+		if(!data) data = 1
+		if(!volume) volume = 1
+		if(volume > 5)
+			M.Weaken(4)
+		return
