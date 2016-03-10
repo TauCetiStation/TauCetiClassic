@@ -174,6 +174,12 @@
 
 	screen += void
 
+	if(!fov)
+		fov = new()
+
+	if(mob && isliving(mob))
+		screen += fov
+
 
 	//////////////
 	//DISCONNECT//
