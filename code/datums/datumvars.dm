@@ -545,49 +545,20 @@ body
 			usr << "This can only be used on instances of type /mob"
 			return
 
-		if(M.client.ignore_darky == 2)
+		if(M && M.client && M.client.ignore_darky == 2)
 			M.client.ignore_darky = 0
 			M.call_fov_update()
 			log_admin("[key_name(usr)] forced [M] to no longer ignore Darky.")
 			message_admins("\blue [key_name(usr)] forced [M] to no longer ignore Darky.")
-
-		if(alert("Really?",,"Yes","No") != "Yes")
 			return
 
-		if(alert("Are you really sure?",,"Yes","No") != "Yes")
+		if(alert("I hope you know what are you doing.",,"Yes","No") != "Yes")
 			return
 
-		if(alert("Are you really realy sure?",,"Yes","No") != "Yes")
+		if(alert("Just checking.. Proceed?",,"Yes","No") != "Yes")
 			return
 
-		if(alert("Are you really really really sure?",,"Yes","No") != "Yes")
-			return
-
-		if(alert("Maybe no?",,"Yes","No") != "Yes")
-			return
-
-		if(alert("Pleeeease?",,"Yes","No") != "Yes")
-			return
-
-		if(alert("Still yes?",,"Yes","No") != "Yes")
-			return
-
-		if(alert("Just give up already.",,"Yes","No") != "Yes")
-			return
-
-		if(alert("Okay, heres your cake.",,"Yes","No") != "Yes")
-			return
-
-		if(alert("Nope.avi",,"Yes","No") != "Yes")
-			return
-
-		if(alert("Are you a robot?",,"Yes","No") != "Yes")
-			return
-
-		if(alert("Okay, you win.. MONSTER!",,"Yes","No") != "Yes")
-			return
-
-		if(!M.client)
+		if(!M || !M.client)
 			usr << "This can only be used on mobs with client."
 			return
 
