@@ -1,5 +1,5 @@
 //TOOLS RANDOM
-/obj/random/tool
+/obj/random/tools/tool
 	name = "Random Tool"
 	desc = "This is a random tool."
 	icon = 'icons/obj/items.dmi'
@@ -13,7 +13,7 @@
 					/obj/item/device/flashlight)
 
 
-/obj/random/technology_scanner
+/obj/random/tools/technology_scanner
 	name = "Random Scanner"
 	desc = "This is a random technology scanner."
 	icon = 'icons/obj/device.dmi'
@@ -24,7 +24,7 @@
 					prob(5);/obj/item/device/analyzer)
 
 
-/obj/random/powercell
+/obj/random/tools/powercell
 	name = "Random Powercell"
 	desc = "This is a random powercell."
 	icon = 'icons/obj/power.dmi'
@@ -37,7 +37,7 @@
 					prob(1);/obj/item/weapon/stock_parts/cell/hyper)
 
 
-/obj/random/bomb_supply
+/obj/random/tools/bomb_supply
 	name = "Bomb Supply"
 	desc = "This is a random bomb supply."
 	icon = 'icons/obj/assemblies/new_assemblies.dmi'
@@ -49,7 +49,7 @@
 					/obj/item/device/multitool)
 
 
-/obj/random/toolbox
+/obj/random/tools/toolbox
 	name = "Random Toolbox"
 	desc = "This is a random toolbox."
 	icon = 'icons/obj/storage.dmi'
@@ -60,22 +60,22 @@
 					prob(1);/obj/item/weapon/storage/toolbox/emergency)
 
 
-/obj/random/tech_supply
+/obj/random/tools/tech_supply
 	name = "Random Tech Supply"
 	desc = "This is a random piece of technology supplies."
 	icon = 'icons/obj/power.dmi'
 	icon_state = "cell"
 	spawn_nothing_percentage = 50
 	item_to_spawn()
-		return pick(prob(3);/obj/random/powercell,\
-					prob(2);/obj/random/technology_scanner,\
+		return pick(prob(3);/obj/random/tools/powercell,\
+					prob(2);/obj/random/tools/technology_scanner,\
 					prob(1);/obj/item/weapon/packageWrap,\
-					prob(2);/obj/random/bomb_supply,\
+					prob(2);/obj/random/tools/bomb_supply,\
 					prob(1);/obj/item/weapon/extinguisher,\
 					prob(1);/obj/item/clothing/gloves/fyellow,\
 					prob(3);/obj/item/weapon/cable_coil,\
-					prob(2);/obj/random/toolbox,\
+					prob(2);/obj/random/tools/toolbox,\
 					prob(2);/obj/item/weapon/storage/belt/utility,\
-					prob(5);/obj/random/tool)
-/obj/random/tech_supply/guaranteed
+					prob(5);/obj/random/tools/tool)
+/obj/random/tools/tech_supply/guaranteed
 	spawn_nothing_percentage = 0

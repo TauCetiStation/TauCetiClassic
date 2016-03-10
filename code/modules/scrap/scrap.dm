@@ -114,10 +114,10 @@
 	name = "medical refuse pile"
 	parts_icon = 'icons/obj/structures/scrap/medical_trash.dmi'
 	loot_list = list(
-		/obj/random/medical_supply/,
-		/obj/random/medical_supply/,
-		/obj/random/medical_supply/,
-		/obj/random/medical_supply/,
+		/obj/random/meds/medical_supply/,
+		/obj/random/meds/medical_supply/,
+		/obj/random/meds/medical_supply/,
+		/obj/random/meds/medical_supply/,
 		/obj/item/stack/rods/scrap,
 		/obj/item/stack/sheet/mineral/plastic/scrap,
 		/obj/item/weapon/shard
@@ -127,10 +127,10 @@
 	name = "debris pile"
 	parts_icon = 'icons/obj/structures/scrap/vehicle.dmi'
 	loot_list = list(
-		/obj/random/tech_supply/guaranteed,
-		/obj/random/tech_supply/guaranteed,
-		/obj/random/tech_supply/guaranteed,
-		/obj/random/tech_supply/guaranteed,
+		/obj/random/tools/tech_supply/guaranteed,
+		/obj/random/tools/tech_supply/guaranteed,
+		/obj/random/tools/tech_supply/guaranteed,
+		/obj/random/tools/tech_supply/guaranteed,
 		/obj/item/stack/rods/scrap,
 		/obj/item/stack/sheet/metal/scrap,
 		/obj/item/weapon/shard
@@ -140,13 +140,13 @@
 	name = "trash pile"
 	parts_icon = 'icons/obj/structures/scrap/food_trash.dmi'
 	loot_list = list(
-		/obj/random/food_with_garbage,
-		/obj/random/food_with_garbage,
-		/obj/random/food_with_garbage,
-		/obj/random/food_with_garbage,
-		/obj/random/food_with_garbage,
-		/obj/random/food_with_garbage,
-		/obj/random/food_with_garbage,
+		/obj/random/foods/food_with_garbage,
+		/obj/random/foods/food_with_garbage,
+		/obj/random/foods/food_with_garbage,
+		/obj/random/foods/food_with_garbage,
+		/obj/random/foods/food_with_garbage,
+		/obj/random/foods/food_with_garbage,
+		/obj/random/foods/food_with_garbage,
 		/obj/item/weapon/shard,
 		/obj/item/stack/rods/scrap,
 		/obj/item/stack/sheet/mineral/plastic/scrap

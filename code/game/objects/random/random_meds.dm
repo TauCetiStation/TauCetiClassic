@@ -1,5 +1,5 @@
 //MEDICAL RANDOM
-/obj/random/pills
+/obj/random/meds/pills
 	name = "Random Pill Bottle"
 	desc = "This is a random pill bottle."
 	icon = 'icons/obj/chemical.dmi'
@@ -7,7 +7,7 @@
 	item_to_spawn()
 		return pick(subtypesof(/obj/item/weapon/storage/pill_bottle/))
 
-/obj/random/medkit
+/obj/random/meds/medkit
 	name = "Random Medkit"
 	desc = "This is a random medical kit."
 	icon = 'icons/obj/storage.dmi'
@@ -20,7 +20,7 @@
 					prob(2);/obj/item/weapon/storage/firstaid/adv,\
 					prob(1);/obj/item/weapon/storage/firstaid/tactical)
 
-/obj/random/syringe
+/obj/random/meds/syringe
 	name = "Random Syringe"
 	desc = "This is a random syringe."
 	icon = 'icons/obj/storage.dmi'
@@ -31,7 +31,7 @@
 					prob(2);/obj/item/weapon/reagent_containers/syringe/antiviral,\
 					prob(10);/obj/item/weapon/reagent_containers/syringe)
 
-/obj/random/medical_tool
+/obj/random/meds/medical_tool
 	name = "Random Surgery Equipment"
 	desc = "This is a random medical surgery equipment."
 	icon = 'icons/obj/surgery.dmi'
@@ -51,7 +51,7 @@
 					prob(1);/obj/item/weapon/storage/box/gloves,\
 					prob(1);/obj/item/weapon/storage/box/masks)
 
-/obj/random/dna_injector
+/obj/random/meds/dna_injector
 	name = "Random DNA injector"
 	desc = "This is a random dna injector syringe."
 	icon = 'icons/obj/items.dmi'
@@ -59,7 +59,7 @@
 	item_to_spawn()
 		return pick(subtypesof(/obj/item/weapon/dnainjector))
 
-/obj/random/medical_single_item
+/obj/random/meds/medical_single_item
 	name = "Random small medical item"
 	desc = "This is a random small medical item."
 	icon = 'icons/obj/items.dmi'
@@ -67,7 +67,7 @@
 	item_to_spawn()
 		return pick(subtypesof(/obj/item/stack/medical) - /obj/item/stack/medical/advanced)
 
-/obj/random/chemical_bottle
+/obj/random/meds/chemical_bottle
 	name = "Random Chemical bottle"
 	desc = "This is a random Chemical bottle."
 	icon = 'icons/obj/surgery.dmi'
@@ -83,16 +83,16 @@
 					prob(3);/obj/item/weapon/reagent_containers/glass/bottle/chloralhydrate,\
 					prob(1);/obj/item/weapon/reagent_containers/glass/bottle/random)
 
-/obj/random/medical_supply
+/obj/random/meds/medical_supply
 	name = "Random medical supply"
 	desc = "This is a random medical supply."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "traumakit"
 	item_to_spawn()
-		return pick(prob(20);/obj/random/medical_single_item,\
-					prob(15);/obj/random/syringe,\
-					prob(10);/obj/random/chemical_bottle,\
-					prob(8);/obj/random/medkit,\
-					prob(8);/obj/random/medical_tool,\
-					prob(6);/obj/random/pills,\
-					prob(1);/obj/random/dna_injector)
+		return pick(prob(20);/obj/random/meds/medical_single_item,\
+					prob(15);/obj/random/meds/syringe,\
+					prob(10);/obj/random/meds/chemical_bottle,\
+					prob(8);/obj/random/meds/medkit,\
+					prob(8);/obj/random/meds/medical_tool,\
+					prob(6);/obj/random/meds/pills,\
+					prob(1);/obj/random/meds/dna_injector)

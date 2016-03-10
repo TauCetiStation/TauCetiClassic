@@ -1,5 +1,5 @@
 //GUNS RANDOM
-/obj/random/handgun_security
+/obj/random/guns/handgun_security
 	name = "Random Handgun"
 	desc = "This is a random security sidearm."
 	icon = 'icons/obj/gun.dmi'
@@ -8,7 +8,7 @@
 		return pick(prob(3);/obj/item/weapon/gun/projectile/sigi,\
 					prob(1);/obj/item/weapon/gun/projectile/sigi/spec)
 
-/obj/random/projectile_security
+/obj/random/guns/projectile_security
 	name = "Random Projectile Weapon"
 	desc = "This is a random security weapon."
 	icon = 'icons/obj/gun.dmi'
@@ -17,7 +17,7 @@
 		return pick(prob(3);/obj/item/weapon/gun/projectile/shotgun,\
 					prob(1);/obj/item/weapon/gun/projectile/shotgun/combat)
 
-/obj/random/energy_weapon
+/obj/random/guns/energy_weapon
 	name = "Random Energy Weapon"
 	desc = "This is a random energy weapon."
 	icon = 'icons/obj/gun.dmi'
@@ -42,7 +42,7 @@
 					prob(1);/obj/item/weapon/gun/energy/pulse_rifle/M1911,\
 					prob(1);/obj/item/weapon/gun/energy/laser/captain)
 
-/obj/random/projectile_handgun
+/obj/random/guns/projectile_handgun
 	name = "Random Handgun"
 	desc = "This is a random energy weapon."
 	icon = 'icons/obj/gun.dmi'
@@ -64,7 +64,7 @@
 					prob(2);/obj/item/weapon/gun/projectile/automatic/deagle/gold,\
 					prob(2);/obj/item/weapon/gun/projectile/revolver/mateba)
 
-/obj/random/projectile_shotgun
+/obj/random/guns/projectile_shotgun
 	name = "Random Shotgun"
 	desc = "This is a random shotgun."
 	icon = 'icons/obj/gun.dmi'
@@ -76,7 +76,7 @@
 					prob(7);/obj/item/weapon/gun/projectile/shotgun/combat,\
 					prob(5);/obj/item/weapon/gun/projectile/automatic/bulldog)
 
-/obj/random/projectile_assault
+/obj/random/guns/projectile_assault
 	name = "Random Shotgun"
 	desc = "This is a random shotgun."
 	icon = 'icons/obj/gun.dmi'
@@ -94,7 +94,7 @@
 					prob(5);/obj/item/weapon/gun/projectile/heavyrifle,\
 					prob(5);/obj/item/weapon/gun/projectile/automatic/l6_saw)
 
-/obj/random/projectile_grenade
+/obj/random/guns/projectile_grenade
 	name = "Random Grenade Launcher"
 	desc = "This is a random shotgun."
 	icon = 'icons/obj/gun.dmi'
@@ -104,14 +104,14 @@
 					prob(1);/obj/item/weapon/gun/projectile/revolver/rocketlauncher,\
 					prob(3);/obj/item/weapon/gun/projectile/m79)
 
-/obj/random/weapon_item
+/obj/random/guns/weapon_item
 	name = "Random Weapon"
 	desc = "This is a random weapon."
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "saber-18"
 	item_to_spawn()
-		return pick(prob(100);/obj/random/energy_weapon,\
-					prob(70);/obj/random/projectile_handgun,\
-					prob(50);/obj/random/projectile_assault,\
-					prob(30);/obj/random/projectile_shotgun,\
-					prob(10);/obj/random/projectile_grenade)
+		return pick(prob(100);/obj/random/guns/energy_weapon,\
+					prob(70);/obj/random/guns/projectile_handgun,\
+					prob(50);/obj/random/guns/projectile_assault,\
+					prob(30);/obj/random/guns/projectile_shotgun,\
+					prob(10);/obj/random/guns/projectile_grenade)
