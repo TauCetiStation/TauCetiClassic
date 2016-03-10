@@ -20,20 +20,7 @@
 			if(ghost_sound)
 				O << sound(ghost_sound)
 
-/obj/effect/proc_holder/spell/aoe_turf/conjure/smoke
-	name = "Paralysing Smoke"
-	desc = "This spell spawns a cloud of paralysing smoke."
-
-	school = "conjuration"
-	charge_max = 200
-	clothes_req = 0
-	invocation = "none"
-	invocation_type = "none"
-	range = 1
-	summon_type = list(/obj/effect/effect/sleep_smoke)
-/////////////////////////////////////////////
-// Sleep smoke
-/////////////////////////////////////////////
+/* Old TG code that didn't work
 
 /obj/effect/effect/sleep_smoke
 	name = "smoke"
@@ -142,6 +129,8 @@
 
 //////////////////////END?////////////////////////////////////////////
 
+*/
+
 /obj/singularity/narsie/large
 	name = "Nar-Sie"
 	icon = 'icons/obj/narsie.dmi'
@@ -175,7 +164,7 @@
 	if(!(src in view()))
 		user << "Your soul is too far away."
 		return
-	new /obj/effect/effect/sleep_smoke(user.loc)
+	new /obj/effect/effect/smoke(user.loc)
 	var/mob/living/simple_animal/construct/harvester/G = new /mob/living/simple_animal/construct/harvester(user.loc)
 	G.real_name = pick("harvester([rand(1, 10)])", "reaper([rand(1, 10)])")
 	G.loc = src.loc
