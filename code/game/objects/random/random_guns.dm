@@ -114,3 +114,43 @@
 					prob(50);/obj/random/guns/projectile_assault,\
 					prob(30);/obj/random/guns/projectile_shotgun,\
 					prob(10);/obj/random/guns/projectile_grenade)
+
+/obj/random/guns/set_9mm
+	name = "Random 9mm Weapon with ammunition"
+	desc = "This is a random weapon."
+	icon = 'icons/obj/gun.dmi'
+	icon_state = "pistol"
+	item_to_spawn()
+		return pick(prob(180);/obj/item/ammo_casing/c9mm,\
+					prob(25);/obj/item/ammo_casing/c9mmr,\
+					prob(5);/obj/item/ammo_box/c9mm,\
+					prob(2);/obj/item/weapon/gun/projectile/automatic/luger,\
+					prob(2);/obj/item/weapon/gun/projectile/sigi,\
+					prob(2);/obj/item/weapon/gun/projectile/automatic/pistol,\
+					prob(1);/obj/item/weapon/gun/projectile/automatic/mini_uzi)
+
+/obj/random/guns/set_shotgun
+	name = "Random shotgun Weapon with ammunition"
+	desc = "This is a random weapon."
+	icon = 'icons/obj/gun.dmi'
+	icon_state = "saber-18"
+	item_to_spawn()
+		return pick(prob(100);/obj/item/ammo_casing/shotgun/beanbag,\
+					prob(75);/obj/item/ammo_casing/shotgun/stunslug,\
+					prob(50);/obj/item/ammo_casing/shotgun/buckshot,\
+					prob(50);/obj/item/ammo_casing/shotgun/incendiary,\
+					prob(50);/obj/item/ammo_casing/shotgun/dart,\
+					prob(10);/obj/item/ammo_box/shotgun,\
+					prob(10);/obj/random/guns/projectile_shotgun)
+
+/obj/random/guns/set_357
+	name = "Random lethal Weapon with ammunition"
+	desc = "This is a random weapon."
+	icon = 'icons/obj/gun.dmi'
+	icon_state = "saber-18"
+	item_to_spawn()
+		return pick(prob(200);/obj/item/ammo_casing/a357,\
+					prob(20);/obj/item/ammo_box/a357,\
+					prob(2);/obj/item/weapon/gun/projectile/revolver/mateba,\
+					prob(2);/obj/item/weapon/gun/projectile/revolver/,\
+					prob(2);/obj/item/weapon/gun/projectile/revolver/syndie)

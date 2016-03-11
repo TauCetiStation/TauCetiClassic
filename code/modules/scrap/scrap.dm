@@ -152,6 +152,21 @@
 		/obj/item/stack/sheet/mineral/plastic/scrap
 		)
 
+/obj/structure/scrap/guns
+	name = "trash pile"
+	parts_icon = 'icons/obj/structures/scrap/guns_trash.dmi'
+	loot_list = list(
+		/obj/preset/storage/weapons/random/,
+		/obj/preset/storage/weapons/random/,
+		/obj/random/tools/powercell,
+		/obj/random/guns/energy_weapon,
+		/obj/item/toy/gun,
+		/obj/item/toy/crossbow,
+		/obj/item/weapon/crossbowframe,
+		/obj/item/stack/sheet/mineral/plastic/scrap,
+		/obj/item/weapon/shard,
+		/obj/item/stack/rods/scrap,
+		)
 /obj/structure/scrap/vehicle/large
 	name = "large debris pile"
 	opacity = 1
@@ -178,6 +193,18 @@
 
 /obj/structure/scrap/medical/large
 	name = "large medical refuse pile"
+	opacity = 1
+	density = 1
+	icon_state = "big"
+	loot_min = 10
+	loot_max = 20
+	dig_amount = 15
+	base_min = 9
+	base_max = 14
+	base_spread = 16
+
+/obj/structure/scrap/guns/large
+	name = "large gun refuse pile"
 	opacity = 1
 	density = 1
 	icon_state = "big"
