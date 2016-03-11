@@ -4,7 +4,7 @@
 	desc = "This is a random piece of trash."
 	icon = 'icons/obj/trash.dmi'
 	icon_state = "sosjerky"
-	item_to_spawn()
+/obj/random/foods/food_trash/item_to_spawn()
 		return pick(subtypesof(/obj/item/trash))
 
 /obj/random/foods/drink_can
@@ -12,7 +12,7 @@
 	desc = "This is a random drink can."
 	icon = 'icons/obj/drinks.dmi'
 	icon_state = "grapesoda"
-	item_to_spawn()
+/obj/random/foods/drink_can/item_to_spawn()
 		return pick(subtypesof(/obj/item/weapon/reagent_containers/food/drinks/cans))
 
 /obj/random/foods/food_snack
@@ -20,7 +20,7 @@
 	desc = "This is a random snack."
 	icon = 'icons/obj/drinks.dmi'
 	icon_state = "grapesoda"
-	item_to_spawn()
+/obj/random/foods/food_snack/item_to_spawn()
 		return pick(prob(2);/obj/item/weapon/reagent_containers/food/snacks/candy,\
 					prob(2);/obj/item/weapon/reagent_containers/food/drinks/dry_ramen,\
 					prob(2);/obj/item/weapon/reagent_containers/food/snacks/chips,\
@@ -34,7 +34,7 @@
 	desc = "This is a random snack."
 	icon = 'icons/obj/drinks.dmi'
 	icon_state = "grapesoda"
-	item_to_spawn()
+/obj/random/foods/drink_bottle/item_to_spawn()
 		return pick(subtypesof(/obj/item/weapon/reagent_containers/food/drinks/bottle))
 
 /obj/random/foods/food_without_garbage
@@ -42,7 +42,7 @@
 	desc = "This is a random food."
 	icon = 'icons/obj/food.dmi'
 	icon_state = "mysterysoup"
-	item_to_spawn()
+/obj/random/foods/food_without_garbage/item_to_spawn()
 		return pick(prob(5);/obj/random/foods/food_snack,\
 					prob(1);/obj/random/foods/drink_bottle,\
 					prob(2);/obj/random/foods/drink_can)
@@ -52,7 +52,7 @@
 	desc = "This is a random food for junkyard."
 	icon = 'icons/obj/food.dmi'
 	icon_state = "mysterysoup"
-	item_to_spawn()
+/obj/random/foods/food_with_garbage/item_to_spawn()
 		return pick(prob(5);/obj/random/foods/food_snack,\
 					prob(1);/obj/random/foods/drink_bottle,\
 					prob(2);/obj/random/foods/drink_can,\

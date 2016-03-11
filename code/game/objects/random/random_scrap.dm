@@ -4,7 +4,7 @@
 	desc = "This is a random trash."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "welder"
-	item_to_spawn()
+/obj/random/scrap/dense_even/item_to_spawn()
 		return pick(/obj/structure/scrap/large,\
 					/obj/structure/scrap/medical/large,\
 					/obj/structure/scrap/vehicle/large,\
@@ -16,7 +16,7 @@
 	desc = "This is a random trash."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "welder"
-	item_to_spawn()
+/obj/random/scrap/dense_weighted/item_to_spawn()
 		return pick(prob(12);/obj/structure/scrap/large,\
 					prob(4);/obj/structure/scrap/medical/large,\
 					prob(6);/obj/structure/scrap/vehicle/large,\
@@ -28,7 +28,7 @@
 	desc = "This is a random trash."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "welder"
-	item_to_spawn()
+/obj/random/scrap/sparse_even/item_to_spawn()
 		return pick(/obj/structure/scrap,\
 					/obj/structure/scrap/medical,\
 					/obj/structure/scrap/vehicle,\
@@ -40,7 +40,7 @@
 	desc = "This is a random trash."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "welder"
-	item_to_spawn()
+/obj/random/scrap/sparse_weighted/item_to_spawn()
 		return pick(prob(12);/obj/structure/scrap,\
 					prob(4);/obj/structure/scrap/medical,\
 					prob(6);/obj/structure/scrap/vehicle,\
@@ -52,6 +52,6 @@
 	desc = "This is a random tool."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "welder"
-	item_to_spawn()
+/obj/random/scrap/moderate_weighted/item_to_spawn()
 		return pick(prob(3);/obj/random/scrap/sparse_weighted,\
 					prob(1);/obj/random/scrap/dense_weighted)
