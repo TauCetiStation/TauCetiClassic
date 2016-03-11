@@ -144,7 +144,7 @@
 
 /mob/living/silicon/pai/ex_act(severity)
 	if(!blinded)
-		flick("flash", src.flash)
+		flash_eyes()
 
 	switch(severity)
 		if(1.0)
@@ -200,7 +200,7 @@
 					if ((O.client && !( O.blinded )))
 						O.show_message(text("\red <B>[] has slashed at []!</B>", M, src), 1)
 				if(prob(8))
-					flick("noise", src.flash)
+					flash_eyes(affect_silicon = 1)
 				src.adjustBruteLoss(damage)
 				src.updatehealth()
 			else

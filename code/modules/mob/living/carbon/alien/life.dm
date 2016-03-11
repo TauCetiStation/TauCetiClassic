@@ -306,28 +306,26 @@
 			if(pulling)								pullin.icon_state = "pull"
 			else									pullin.icon_state = "pull0"
 
-		if (client)
-			client.screen.Remove(global_hud.blurry,global_hud.druggy,global_hud.vimpaired)
-
-		if (blind && stat != DEAD)
+		if(stat != DEAD)
 			if(loc && !isturf(loc) && !is_type_in_list(loc, ignore_vision_inside))
-				blind.layer = 18
+				overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
 			else if(blinded)
-				blind.layer = 18
+				overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
 			else
-				blind.layer = 0
-
-				//if (disabilities & NEARSIGHTED)
-				//	client.screen += global_hud.vimpaired
-
-				//if (eye_blurry)
-				//	client.screen += global_hud.blurry
-
-				//if (druggy)
-				//	client.screen += global_hud.druggy
-
-		if (stat != DEAD)
-			if (machine)
+				clear_fullscreen("blind")
+				if(disabilities & NEARSIGHTED)
+					overlay_fullscreen("impaired", /obj/screen/fullscreen/impaired, 1)
+				else
+					clear_fullscreen("impaired")
+				if(eye_blurry)
+					overlay_fullscreen("blurry", /obj/screen/fullscreen/blurry)
+				else
+					clear_fullscreen("blurry")
+				if(druggy)
+					overlay_fullscreen("high", /obj/screen/fullscreen/high)
+				else
+					clear_fullscreen("high")
+			if(machine)
 				if (!( machine.check_eye(src) ))
 					reset_view(null)
 			else

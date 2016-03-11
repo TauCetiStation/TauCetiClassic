@@ -618,6 +618,7 @@
 	var/mob/living/L = usr
 
 	//Getting out of someone's inventory.
+
 	if(istype(src.loc,/obj/item/weapon/holder))
 		var/obj/item/weapon/holder/H = src.loc //Get our item holder.
 		var/mob/M = H.loc                      //Get our mob holder (if any).
@@ -695,7 +696,10 @@
 						qdel(G)
 		if(resisting)
 			L.visible_message("<span class='danger'>[L] resists!</span>")
-
+	//Digging yourself out of a grave
+	if(istype(src.loc, /obj/structure/pit))
+		var/obj/structure/pit/P = loc
+		spawn() P.digout(src)
 	//unbuckling yourself
 	if(L.buckled && (L.last_special <= world.time) )
 		if(iscarbon(L))
@@ -866,6 +870,16 @@
 	else
 		resting = !resting
 		src << "<span class='notice'>You are now [resting ? "resting" : "getting up"].</span>"
+
+//called when the mob receives a bright flash
+/mob/living/proc/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /obj/screen/fullscreen/flash)
+	if(override_blindness_check || !(disabilities & BLIND))
+		overlay_fullscreen("flash", type)
+		spawn(0)
+			sleep(25)
+			if(src)
+				clear_fullscreen("flash", 25)
+		return 1
 
 /mob/living/proc/has_eyes()
 	return 1

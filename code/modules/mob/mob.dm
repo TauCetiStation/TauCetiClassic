@@ -959,17 +959,17 @@ mob/proc/yank_out_object()
 		animate(client, color = null, time = transition_time)
 
 /mob/proc/instant_vision_update(state=null, atom/A)
-	if(!client || isnull(state) || !blind)
+	if(!client || isnull(state))
 		return
 
 	switch(state)
 		if(0)
 			if(!blinded)
-				blind.layer = 0
+				clear_fullscreen("blind", 0)
 			client.eye = client.mob
 			client.perspective = MOB_PERSPECTIVE
 		if(1)
-			blind.layer = 18
+			overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
 			if(A)
 				client.perspective = EYE_PERSPECTIVE
 				client.eye = A

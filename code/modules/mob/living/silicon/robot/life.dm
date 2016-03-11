@@ -279,25 +279,26 @@
 //	if (src.oxygen) src.oxygen.icon_state = "oxy[src.oxygen_alert ? 1 : 0]"
 //	if (src.fire) src.fire.icon_state = "fire[src.fire_alert ? 1 : 0]"
 
-	client.screen.Remove(global_hud.blurry,global_hud.druggy,global_hud.vimpaired)
-
-	if ((src.blind && src.stat != DEAD))
+	if(src.stat != DEAD)
 		if(loc && !isturf(loc) && !is_type_in_list(loc, ignore_vision_inside))
-			blind.layer = 18
+			overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
 		else if(blinded)
-			src.blind.layer = 18
+			overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
 		else
-			src.blind.layer = 0
-			if (src.disabilities & NEARSIGHTED)
-				src.client.screen += global_hud.vimpaired
+			clear_fullscreen("blind")
+			if(disabilities & NEARSIGHTED)
+				overlay_fullscreen("impaired", /obj/screen/fullscreen/impaired, 1)
+			else
+				clear_fullscreen("impaired")
+			if(eye_blurry)
+				overlay_fullscreen("blurry", /obj/screen/fullscreen/blurry)
+			else
+				clear_fullscreen("blurry")
+			if(druggy)
+				overlay_fullscreen("high", /obj/screen/fullscreen/high)
+			else
+				clear_fullscreen("high")
 
-			if (src.eye_blurry)
-				src.client.screen += global_hud.blurry
-
-			if (src.druggy)
-				src.client.screen += global_hud.druggy
-
-	if (src.stat != DEAD)
 		if (src.machine)
 			if (!( src.machine.check_eye(src) ))
 				src.reset_view(null)

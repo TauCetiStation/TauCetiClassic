@@ -450,7 +450,7 @@
 
 /mob/living/carbon/monkey/ex_act(severity)
 	if(!blinded)
-		flick("flash", flash)
+		flash_eyes()
 
 	switch(severity)
 		if(1.0)
