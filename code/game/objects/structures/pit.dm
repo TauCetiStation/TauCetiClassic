@@ -198,7 +198,7 @@
 /obj/structure/gravemarker/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W,/obj/item/weapon/hatchet))
 		visible_message("<span class = 'warning'>\The [user] starts hacking away at \the [src] with \the [W].</span>")
-		if(!do_after(user, 30, target = src))
+		if(do_after(user, 30, target = src))
 			visible_message("<span class = 'warning'>\The [user] hacks \the [src] apart.</span>")
 			new /obj/item/stack/sheet/wood(src)
 			qdel(src)
