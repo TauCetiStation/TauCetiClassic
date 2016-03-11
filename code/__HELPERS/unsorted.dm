@@ -1548,7 +1548,7 @@ var/mob/dview/dview_mob = new
 		var/targetloc = get_turf(A)
 		if(!lockinorbit && loc != lastloc && loc != targetloc)
 			break
-		forceMoveOld(targetloc)
+		loc = targetloc
 		lastloc = loc
 		sleep(0.6)
 
