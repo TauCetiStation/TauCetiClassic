@@ -545,11 +545,7 @@ body
 			usr << "This can only be used on instances of type /mob"
 			return
 
-		if(!M || !M.client)
-			usr << "This can only be used on mobs with client."
-			return
-
-		if(M.client.ignore_darky == 2)
+		if(M && M.client && M.client.ignore_darky == 2)
 			M.client.ignore_darky = 0
 			M.call_fov_update()
 			log_admin("[key_name(usr)] forced [M] to no longer ignore Darky.")
