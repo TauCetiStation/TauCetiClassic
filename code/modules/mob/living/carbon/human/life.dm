@@ -1609,7 +1609,7 @@
 				hud_used.lingchemdisplay.invisibility = 101
 */
 
-		handle_vision()
+			handle_vision()
 		return 1
 
 	proc/handle_vision()
