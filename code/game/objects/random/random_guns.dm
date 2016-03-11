@@ -34,7 +34,6 @@
 					prob(4);/obj/item/weapon/gun/energy/gun,\
 					prob(4);/obj/item/weapon/gun/energy/decloner,\
 					prob(4);/obj/item/weapon/gun/energy/mindflayer,\
-					prob(3);/obj/item/weapon/gun/energy/laser/captain,\
 					prob(3);/obj/item/weapon/gun/energy/sniperrifle,\
 					prob(3);/obj/item/weapon/gun/energy/gun/nuclear,\
 					prob(2);/obj/item/weapon/gun/energy/pulse_rifle,\
@@ -55,10 +54,10 @@
 					prob(15);/obj/item/weapon/gun/projectile/automatic/silenced,\
 					prob(15);/obj/item/weapon/gun/projectile/revolver/peacemaker,\
 					prob(15);/obj/item/weapon/gun/projectile/revolver/detective,\
-					prob(9);/obj/item/weapon/gun/projectile/automatic/silenced/nonlethal,\
-					prob(9);/obj/item/weapon/gun/projectile/revolver/syndie,\
-					prob(9);/obj/item/weapon/gun/projectile/revolver,\
-					prob(9);/obj/item/weapon/gun/projectile/automatic/deagle,\
+					prob(5);/obj/item/weapon/gun/projectile/automatic/silenced/nonlethal,\
+					prob(5);/obj/item/weapon/gun/projectile/revolver/syndie,\
+					prob(5);/obj/item/weapon/gun/projectile/revolver,\
+					prob(5);/obj/item/weapon/gun/projectile/automatic/deagle,\
 					prob(2);/obj/item/weapon/gun/projectile/automatic/gyropistol,\
 					prob(2);/obj/item/weapon/gun/projectile/sigi/spec,\
 					prob(2);/obj/item/weapon/gun/projectile/automatic/deagle/gold,\
