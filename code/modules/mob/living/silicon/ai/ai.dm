@@ -213,11 +213,11 @@ var/list/ai_verbs_default = list(
 		return
 	if(!custom_sprite) //Check to see if custom sprite time, checking the appopriate file to change a var
 		var/file = file2text("config/custom_sprites.txt")
-		var/lines = text2list(file, "\n")
+		var/lines = splittext(file, "\n")
 
 		for(var/line in lines)
 		// split & clean up
-			var/list/Entry = text2list(line, ":")
+			var/list/Entry = splittext(line, ":")
 			for(var/i = 1 to Entry.len)
 				Entry[i] = trim(Entry[i])
 
@@ -418,7 +418,7 @@ var/list/ai_verbs_default = list(
 
 /mob/living/silicon/ai/ex_act(severity)
 	if(!blinded)
-		flick("flash", flash)
+		flash_eyes()
 
 	switch(severity)
 		if(1.0)
@@ -559,7 +559,7 @@ var/list/ai_verbs_default = list(
 					if ((O.client && !( O.blinded )))
 						O.show_message(text("\red <B>[] has slashed at []!</B>", M, src), 1)
 				if(prob(8))
-					flick("noise", flash)
+					flash_eyes(affect_silicon = 1)
 				adjustBruteLoss(damage)
 				updatehealth()
 			else
