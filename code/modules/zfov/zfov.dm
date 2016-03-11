@@ -23,9 +23,6 @@ proc/atan2(x, y)
 	if(fov in screen)
 		screen -= fov
 
-/client
-	var/ignore_darky = 0
-
 /mob
 	var/face_direction = 0
 	var/last_dir = 0
@@ -38,7 +35,6 @@ proc/atan2(x, y)
 	. = ..()
 
 	blank_image = image(loc = src)
-	blank_image.name = "darky"
 	blank_image.override = 1
 
 /mob/living/Move()
@@ -102,23 +98,8 @@ proc/atan2(x, y)
 		L.call_fov_update()
 	. = ..()
 
-/mob/living/proc/ignore_darky()
-	if(client)
-		if(client.ignore_darky)
-			if(client.ignore_darky == 1)
-				if(client && client.ignore_darky)
-					client.remove_fov_overlay()
-					for(var/image/whos_hiding in client.images)
-						if(whos_hiding.name == "darky")
-							client.images -= whos_hiding
-				client.ignore_darky = 2
-			return 1
-	return 0
-
 /mob/living/proc/call_fov_update(self=0,atom/face_atom)
 	if(is_our_eyes_invalid_for_fov())
-		return
-	if(ignore_darky())
 		return
 	if(fov_update)//I hope such method will reduce update_fov() calls in the same tick. We want speed, no point in calling update million times in same tick.
 		return

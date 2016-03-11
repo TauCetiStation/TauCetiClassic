@@ -280,7 +280,6 @@
 			body += "<option value='?_src_=vars;makeslime=\ref[D]'>Make slime</option>"
 		body += "<option value>---</option>"
 		body += "<option value='?_src_=vars;gib=\ref[D]'>Gib</option>"
-		body += "<option value='?_src_=vars;darky=\ref[D]'>Toggle Darky</option>"
 	if(isobj(D))
 		body += "<option value='?_src_=vars;delall=\ref[D]'>Delete all of type</option>"
 	if(isobj(D) || ismob(D) || isturf(D))
@@ -536,66 +535,6 @@ body
 
 		src.cmd_admin_godmode(M)
 		href_list["datumrefresh"] = href_list["godmode"]
-
-	else if(href_list["darky"])
-		if(!check_rights(R_DEBUG))	return
-
-		var/mob/living/M = locate(href_list["darky"])
-		if(!istype(M))
-			usr << "This can only be used on instances of type /mob"
-			return
-
-		if(M.client.ignore_darky == 2)
-			M.client.ignore_darky = 0
-			M.call_fov_update()
-			log_admin("[key_name(usr)] forced [M] to no longer ignore Darky.")
-			message_admins("\blue [key_name(usr)] forced [M] to no longer ignore Darky.")
-
-		if(alert("Really?",,"Yes","No") != "Yes")
-			return
-
-		if(alert("Are you really sure?",,"Yes","No") != "Yes")
-			return
-
-		if(alert("Are you really realy sure?",,"Yes","No") != "Yes")
-			return
-
-		if(alert("Are you really really really sure?",,"Yes","No") != "Yes")
-			return
-
-		if(alert("Maybe no?",,"Yes","No") != "Yes")
-			return
-
-		if(alert("Pleeeease?",,"Yes","No") != "Yes")
-			return
-
-		if(alert("Still yes?",,"Yes","No") != "Yes")
-			return
-
-		if(alert("Just give up already.",,"Yes","No") != "Yes")
-			return
-
-		if(alert("Okay, heres your cake.",,"Yes","No") != "Yes")
-			return
-
-		if(alert("Nope.avi",,"Yes","No") != "Yes")
-			return
-
-		if(alert("Are you a robot?",,"Yes","No") != "Yes")
-			return
-
-		if(alert("Okay, you win.. MONSTER!",,"Yes","No") != "Yes")
-			return
-
-		if(!M.client)
-			usr << "This can only be used on mobs with client."
-			return
-
-		if(M.client.ignore_darky == 0)
-			M.client.ignore_darky = 1
-			M.call_fov_update()
-			log_admin("[key_name(usr)] forced [M] to ignore Darky... Sad story.")
-			message_admins("\blue [key_name(usr)] forced [M] to ignore Darky... Sad story. ")
 
 	else if(href_list["gib"])
 		if(!check_rights(0))	return
