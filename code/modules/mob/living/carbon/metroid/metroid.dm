@@ -128,77 +128,43 @@
 
 	return tally+config.slime_delay
 
+/mob/living/carbon/slime/ObjBump(obj/O)
+	if(!client && powerlevel > 0)
+		var/probab = 10
+		switch(powerlevel)
+			if(1 to 2)	probab = 20
+			if(3 to 4)	probab = 30
+			if(5 to 6)	probab = 40
+			if(7 to 8)	probab = 60
+			if(9)		probab = 70
+			if(10)		probab = 95
+		if(prob(probab))
+			if(istype(O, /obj/structure/window) || istype(O, /obj/structure/grille))
+				if(isslimeadult(src))
+					if(nutrition <= 600 && !Atkcool)
+						O.attack_slime(src)
+						spawn()
+							Atkcool = 1
+							sleep(15)
+							Atkcool = 0
+				else
+					if(nutrition <= 500 && !Atkcool)
+						if(prob(5))
+							O.attack_slime(src)
+							spawn()
+								Atkcool = 1
+								sleep(15)
+								Atkcool = 0
 
-/mob/living/carbon/slime/Bump(atom/movable/AM as mob|obj, yes)
-	spawn( 0 )
-		if ((!( yes ) || now_pushing))
-			return
-		now_pushing = 1
+/mob/living/carbon/slime/MobBump(mob/M)
+	if(ishuman(M)) //pushing humans
+		if(isslimeadult(src) && prob(10)) //only if we're adult, and 10% of the time
+			return 0
+		else
+			return 1
 
-		if(isobj(AM))
-			if(!client && powerlevel > 0)
-				var/probab = 10
-				switch(powerlevel)
-					if(1 to 2) probab = 20
-					if(3 to 4) probab = 30
-					if(5 to 6) probab = 40
-					if(7 to 8) probab = 60
-					if(9) 	   probab = 70
-					if(10) 	   probab = 95
-				if(prob(probab))
-
-
-					if(istype(AM, /obj/structure/window) || istype(AM, /obj/structure/grille))
-						if(istype(src, /mob/living/carbon/slime/adult))
-							if(nutrition <= 600 && !Atkcool)
-								AM.attack_slime(src)
-								spawn()
-									Atkcool = 1
-									sleep(15)
-									Atkcool = 0
-						else
-							if(nutrition <= 500 && !Atkcool)
-								if(prob(5))
-									AM.attack_slime(src)
-									spawn()
-										Atkcool = 1
-										sleep(15)
-										Atkcool = 0
-
-		if(ismob(AM))
-			var/mob/tmob = AM
-
-			if(istype(src, /mob/living/carbon/slime/adult))
-				if(istype(tmob, /mob/living/carbon/human))
-					if(prob(90))
-						now_pushing = 0
-						return
-			else
-				if(istype(tmob, /mob/living/carbon/human))
-					now_pushing = 0
-					return
-
-		now_pushing = 0
-		..()
-		if (!( istype(AM, /atom/movable) ))
-			return
-		if (!( now_pushing ))
-			now_pushing = 1
-			if (!( AM.anchored ))
-				var/t = get_dir(src, AM)
-				if (istype(AM, /obj/structure/window))
-					if(AM:ini_dir == NORTHWEST || AM:ini_dir == NORTHEAST || AM:ini_dir == SOUTHWEST || AM:ini_dir == SOUTHEAST)
-						for(var/obj/structure/window/win in get_step(AM,t))
-							now_pushing = 0
-							return
-				step(AM, t)
-			now_pushing = null
-		return
-	return
-
-/mob/living/carbon/slime/Process_Spacemove()
+/mob/living/carbon/slime/Process_Spacemove(var/movement_dir = 0)
 	return 2
-
 
 /mob/living/carbon/slime/Stat()
 	..()

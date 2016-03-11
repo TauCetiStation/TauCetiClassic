@@ -77,6 +77,7 @@
 	..()
 	name = text("[initial(name)] ([rand(1, 1000)])")
 	real_name = name
+	status_flags ^= CANPUSH
 	for(var/spell in hulk_powers)
 		spell_list += new spell(src)
 
@@ -173,33 +174,6 @@
 	usr << msg
 	return
 
-/mob/living/simple_animal/hulk/Bump(atom/movable/AM as mob|obj, yes)
-	if ((!( yes ) || now_pushing))
-		return
-	now_pushing = 1
-	if(ismob(AM))
-		var/mob/tmob = AM
-		if(!(tmob.status_flags & CANPUSH))
-			now_pushing = 0
-			return
-
-		tmob.LAssailant = src
-	now_pushing = 0
-	..()
-	if (!istype(AM, /atom/movable))
-		return
-	if (!( now_pushing ))
-		now_pushing = 1
-		if (!( AM.anchored ))
-			var/t = get_dir(src, AM)
-			if (istype(AM, /obj/structure/window))
-				if(AM:ini_dir == NORTHWEST || AM:ini_dir == NORTHEAST || AM:ini_dir == SOUTHWEST || AM:ini_dir == SOUTHEAST)
-					for(var/obj/structure/window/win in get_step(AM,t))
-						now_pushing = 0
-						return
-			step(AM, t)
-		now_pushing = null
-
 /mob/living/simple_animal/hulk/attack_animal(mob/living/simple_animal/M as mob)
 	if(M.melee_damage_upper <= 0)
 		M.emote("[M.friendly] \the <EM>[src]</EM>")
@@ -216,11 +190,11 @@
 
 /mob/living/simple_animal/hulk/airflow_stun()
 	return
-	
+
 /mob/living/simple_animal/hulk/airflow_hit(atom/A)
 	return
 
-//mob/living/simple_animal/hulk/Process_Spacemove(var/check_drift = 0)
+//mob/living/simple_animal/hulk/Process_Spacemove(var/movement_dir = 0)
 //	return 1 //copypasta from carp code
 
 /mob/living/simple_animal/hulk/attackby(var/obj/item/O as obj, var/mob/user as mob)

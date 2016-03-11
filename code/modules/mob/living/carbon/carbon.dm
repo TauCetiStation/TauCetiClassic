@@ -344,19 +344,7 @@
 	if (item)
 		src.visible_message("<span class='rose'>[src] has thrown [item].</span>")
 
-		if(!src.lastarea)
-			src.lastarea = get_area(src.loc)
-		if((istype(src.loc, /turf/space)) || (src.lastarea.has_gravity == 0))
-			src.inertia_dir = get_dir(target, src)
-			step(src, inertia_dir)
-
-
-/*
-		if(istype(src.loc, /turf/space) || (src.flags & NOGRAV)) //they're in space, move em one space in the opposite direction
-			src.inertia_dir = get_dir(target, src)
-			step(src, inertia_dir)
-*/
-
+		newtonian_move(get_dir(target, src))
 
 		item.throw_at(target, item.throw_range, item.throw_speed, src)
 
@@ -382,6 +370,8 @@
 	else if (W == handcuffed)
 		handcuffed = null
 		update_inv_handcuffed()
+		if(buckled && buckled.buckle_require_restraints)
+			buckled.unbuckle_mob()
 
 	else if (W == legcuffed)
 		legcuffed = null
@@ -517,18 +507,20 @@
 		return
 
 /mob/living/carbon/proc/uncuff()
-	if (handcuffed)
+	if(handcuffed)
 		var/obj/item/weapon/W = handcuffed
 		handcuffed = null
+		if(buckled && buckled.buckle_require_restraints)
+			buckled.unbuckle_mob()
 		update_inv_handcuffed()
-		if (client)
+		if(client)
 			client.screen -= W
-		if (W)
+		if(W)
 			W.loc = loc
 			W.dropped(src)
-			if (W)
+			if(W)
 				W.layer = initial(W.layer)
-	if (legcuffed)
+	if(legcuffed)
 		var/obj/item/weapon/W = legcuffed
 		legcuffed = null
 		update_inv_legcuffed()
@@ -537,14 +529,16 @@
 		if (W)
 			W.loc = loc
 			W.dropped(src)
-			if (W)
+			if(W)
 				W.layer = initial(W.layer)
 
 //-TG- port for smooth lying/standing animations
 /mob/living/carbon/get_standard_pixel_y_offset(lying_current = 0)
 	if(lying)
 		if(buckled && istype(buckled, /obj/structure/stool/bed/roller))
-			return 0
+			return 1
+		else if(locate(/obj/structure/stool/bed/roller, src.loc))
+			return -5
 		else if(locate(/obj/machinery/optable, src.loc)||locate(/obj/structure/stool/bed, src.loc))	//we need special pixel shift for beds & optable to make mob lying centered
 			return -4
 		else
@@ -554,9 +548,7 @@
 
 /mob/living/carbon/get_standard_pixel_x_offset(lying_current = 0)
 	if(lying)
-		if(buckled && istype(buckled, /obj/structure/stool/bed/roller))
-			return 0
-		else if(locate(/obj/machinery/optable, src.loc)||locate(/obj/structure/stool/bed, src.loc))	//we need special pixel shift for beds & optable to make mob lying centered
+		if(locate(/obj/machinery/optable, src.loc)||locate(/obj/structure/stool/bed, src.loc))	//we need special pixel shift for beds & optable to make mob lying centered
 			switch(src.lying_current)
 				if(90)	return 2
 				if(270)	return -2

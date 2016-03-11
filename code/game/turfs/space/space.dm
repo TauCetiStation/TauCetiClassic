@@ -91,8 +91,6 @@
 	..()
 	if ((!(A) || src != A.loc))	return
 
-	inertial_drift(A)
-
 	if(ticker && ticker.mode)
 
 		// Okay, so let's make it so that people can travel z levels but not nuke disks!
@@ -161,11 +159,8 @@
 				A.x = rand(TRANSITIONEDGE + 2, world.maxx - TRANSITIONEDGE - 2)
 
 
-
-
-			spawn (0)
-				if ((A && A.loc))
-					A.loc.Entered(A)
+			sleep(0)//Let a diagonal move finish, if necessary
+			A.newtonian_move(A.inertia_dir)
 
 /turf/space/proc/Sandbox_Spacemove(atom/movable/A as mob|obj)
 	var/cur_x

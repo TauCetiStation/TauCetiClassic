@@ -37,3 +37,4 @@
 			resize = RESIZE_DEFAULT_SIZE
 	if(changed)
 		animate(src, transform = ntransform, time = 2, pixel_y = final_pixel_y, pixel_x = final_pixel_x, dir = final_dir, easing = EASE_IN|EASE_OUT, layer = final_layer)
+		floating = 0

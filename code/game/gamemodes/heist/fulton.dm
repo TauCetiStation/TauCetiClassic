@@ -49,7 +49,7 @@ var/list/extraction_appends = list("AAAAAAAAAAAAAAAAAUGH", "AAAAAAAAAAAHHHHHHHHH
 				var/mob/living/M = A
 				M.Weaken(16) // Keep them from moving during the duration of the extraction.
 				if(M && M.buckled)
-					M.buckled.unbuckle()
+					M.buckled.unbuckle_mob()
 			else
 				A.anchored = 1
 				A.density = 0

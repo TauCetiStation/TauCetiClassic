@@ -247,6 +247,9 @@ var/global/list/uneatable = list(
 		defer_powernet_rebuild = 0
 	return
 
+/obj/singularity/Process_Spacemove() //The singularity stops drifting for no man!
+ 	return 0
+
 // Singulo optimization:
 // Jump out whenever we've made a decision.
 /obj/singularity/proc/canPull(var/atom/movable/A)
