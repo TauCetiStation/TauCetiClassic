@@ -328,7 +328,7 @@
 
 	if(isliving(src))
 		var/mob/living/L = src
-		L.call_fov_update(1,A)
+		L.call_fov_update(1)
 
 
 /obj/screen/click_catcher

@@ -3,29 +3,35 @@ proc/atan2(x, y)
 	if(istype(x, /list) && x:len == 2) { y = x[2]; x = x[1] }
 	return x >= 0 ? arccos(y / sqrt(x * x + y * y)) : 360 - arccos(y / sqrt(x * x + y * y))
 
+proc/get_angle(atom/a, atom/b)
+	return atan2(b.y - a.y, b.x - a.x)
+
+proc/get_degree_angle(atom/a, direct, atom/b)
+	var/orient = 270
+	switch(direct) //set zero to dir atom/a is facing.
+		if(NORTH)
+			orient = 270
+		if(SOUTH)
+			orient = 90
+		if(WEST)
+			orient = 180
+		if(EAST)
+			orient = 0
+	. = get_angle(a, b) + orient
+
+	while(. > 360)
+		. -= 360
+
+	if(. == 360)
+		. = 0
+
 /obj/screen/field_of_view
 	icon = 'icons/mob/fov.dmi'
 	icon_state = "105"
-	layer = 16
+	layer = 30
 	alpha = 40
 	mouse_opacity = 0
 	screen_loc = "CENTER-7,CENTER-7"
-
-/client/proc/add_fov_overlay()
-	if(!fov)
-		fov = new()
-
-	if(mob && isliving(mob) && !isAI(mob))
-		if(!(fov in screen))
-			screen += fov
-
-/client/proc/remove_fov_overlay()
-	if(fov in screen)
-		screen -= fov
-
-/mob
-	var/face_direction = 0
-	var/last_dir = 0
 
 /mob/living
 	var/image/blank_image = null
@@ -98,59 +104,18 @@ proc/atan2(x, y)
 		L.call_fov_update()
 	. = ..()
 
-/mob/living/proc/call_fov_update(self=0,atom/face_atom)
-	if(is_our_eyes_invalid_for_fov())
-		return
+/mob/living/proc/call_fov_update(self=0)
 	if(fov_update)//I hope such method will reduce update_fov() calls in the same tick. We want speed, no point in calling update million times in same tick.
 		return
 	fov_update = 1
 	spawn()
 		fov_update = 0
+	update_fov(self)
 
-	var/new_dir = 0
-	if(face_atom)
-		new_dir = 1
-		var/turf/origin = get_turf(src)
-		var/turf/target = get_turf(face_atom)
-		face_direction = round(atan2(origin.x-target.x,origin.y-target.y))
-	else if(last_dir != dir)
-		new_dir = 1
-		switch(dir)
-			if(NORTH)     face_direction = 180
-			if(SOUTH)     face_direction = 0
-			if(EAST)      face_direction = 270
-			if(WEST)      face_direction = 90
-
-	last_dir = dir
-	update_fov(self,new_dir)
-
-/mob/living/proc/i_want_to_override_default_fov(fov)
-	return fov
-
-/mob/living/proc/is_our_eyes_invalid_for_fov()
-	return 0
-
-/mob/living/silicon/ai/is_our_eyes_invalid_for_fov()
-	return 1
-
-var/list/of_non_default_fov_values = list(
-	/obj/item/clothing/head/helmet/space = 45
-	)
-
-/mob/living/carbon/human/i_want_to_override_default_fov(fov)
-	if(head)
-		. = of_non_default_fov_values[head]
-	if(!.)
-		return fov
-
-/mob/living/proc/update_fov(self=0,new_dir=0)
-	if(is_our_eyes_invalid_for_fov())
-		return
-
+/mob/living/proc/update_fov(self=0)
 	var/view_range = 7
-	var/default_fov = 135 //Per eye!! And don't put less than 1 or more than 179. Actually, use something between 15 and 165 and don't forget to draw new overlay.
-
-	var/fov = i_want_to_override_default_fov(default_fov)
+	var/fov = 105 //Per eye!!
+	var/direct = dir
 
 	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
@@ -158,34 +123,35 @@ var/list/of_non_default_fov_values = list(
 			fov = 45
 
 	if(client)
-		if(lying)
-			client.remove_fov_overlay()
-		else
-			client.add_fov_overlay()
-		if(new_dir)
-			var/matrix/M = matrix()
-			M.Turn(face_direction)
-			M.Scale(3)
-			client.fov.transform = M
-		if(client.fov.icon_state != "[fov]")
-			client.fov.icon_state = "[fov]"
-		view_range = client.view+1
+		client.fov.dir = dir
+		client.fov.icon_state = "[fov]"
+		view_range = client.view
 
 	var/eye_left_fov = 360 - fov
 	var/eye_right_fov = 0 + fov
+
+	//For visual testing:
+	//Leave if(client...) part if you want local testing just for yourself.
+	//Remove ckey part if you want to test with multiple clients.
+	//Also, adjust colours if need (if you want different for every mob, think that's shouldn't very hard to code), otherwise use as is.
+	//Or you can code your own method for testing, i prefer turf colouring for myself.
+	//if(client && client.ckey == "zve")
+	//	for(var/turf/T in view(view_range))
+	//		var/mob_angle = get_degree_angle(src, direct, T)
+	//		if(mob_angle >= eye_left_fov || mob_angle <= eye_right_fov)
+	//			T.color = "#ff0000"
+	//		else
+	//			T.color = "#ffffff"
 
 	for(var/mob/living/target in view(view_range))
 		if(target == src)
 			continue
 
 		if(client)
-			var/mob_angle = round(atan2(src.x-target.x,src.y-target.y))
-			mob_angle -= face_direction
-			while(mob_angle < 0)
-				mob_angle += 360
-
-			if(mob_angle >= eye_left_fov || mob_angle <= eye_right_fov || lying)
-				client.images -= target.blank_image
+			var/mob_angle = get_degree_angle(src, direct, target)
+			if(mob_angle > eye_left_fov || mob_angle < eye_right_fov)
+				if(target.blank_image in client.images)
+					client.images -= target.blank_image
 			else
 				client.images |= target.blank_image
 

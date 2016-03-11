@@ -7,7 +7,6 @@
 	var/changed = 0
 	if(lying)
 		if(lying != lying_prev)
-			call_fov_update()
 			lying_prev = lying
 			if(locate(/obj/machinery/optable, loc) || locate(/obj/structure/stool/bed, loc))
 				lying_current = 90
@@ -25,7 +24,6 @@
 				final_dir = pick(NORTH, SOUTH) //So you fall on your side rather than your face or ass
 	else
 		if(lying != lying_prev)
-			call_fov_update()
 			lying_prev = lying
 			changed++
 			ntransform.TurnTo(lying_current,0)
