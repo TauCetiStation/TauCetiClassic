@@ -34,7 +34,6 @@
 	shuffle_loot()
 	update_icon(1)
 	..()
-
 /obj/structure/scrap/Destroy()
 	for (var/obj/item in loot)
 		qdel(item)
@@ -94,7 +93,8 @@
 		visible_message("<span class='notice'>\The [user] [pick(ways)] \the [src].</span>")
 		if(--dig_amount <= 0)
 			user << "<span class='notice'>You cleared out  \the [src]...</span>"
-			return Destroy()
+			qdel(src)
+			return
 		shuffle_loot()
 	..()
 
@@ -153,7 +153,7 @@
 		)
 
 /obj/structure/scrap/guns
-	name = "trash pile"
+	name = "gun refuse pile"
 	parts_icon = 'icons/obj/structures/scrap/guns_trash.dmi'
 	loot_list = list(
 		/obj/preset/storage/weapons/random/,
