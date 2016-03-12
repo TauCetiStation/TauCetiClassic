@@ -4,6 +4,116 @@
 		handle_actions()
 		add_ingame_age()
 
+	update_gravity(mob_has_gravity())
+
+//Generic Bump(). Override MobBump() and ObjBump() instead of this.
+/mob/living/Bump(atom/A, yes)
+	if (buckled || !yes || now_pushing)
+		return
+	if(ismob(A))
+		var/mob/M = A
+		if(MobBump(M))
+			return
+	..()
+	if(isobj(A))
+		var/obj/O = A
+		if(ObjBump(O))
+			return
+	if(istype(A, /atom/movable))
+		var/atom/movable/AM = A
+		if(PushAM(AM))
+			return
+
+//Called when we bump onto a mob
+/mob/living/proc/MobBump(mob/M)
+	if(now_pushing)
+		return 1
+
+	if(prob(10) && iscarbon(src) && iscarbon(M))
+		var/mob/living/carbon/C = src
+		C.spread_disease_to(M, "Contact")
+
+	//BubbleWrap: Should stop you pushing a restrained person out of the way
+	if(ishuman(M))
+		for(var/mob/MM in range(M, 1))
+			if(MM.pinned.len || ((MM.pulling == M && ( M.restrained() && !( MM.restrained() ) && MM.stat == CONSCIOUS)) || locate(/obj/item/weapon/grab, M.grabbed_by.len)) )
+				if ( !(world.time % 5) )
+					src << "<span class='warning'>[M] is restrained, you cannot push past.</span>"
+				return 1
+			if( M.pulling == MM && ( MM.restrained() && !( M.restrained() ) && M.stat == CONSCIOUS) )
+				if ( !(world.time % 5) )
+					src << "<span class='warning'>[M] is restraining [MM], you cannot push past.</span>"
+				return 1
+
+		//Fat
+		if(FAT in M.mutations)
+			var/ran = 40
+			if(isrobot(src))
+				ran = 20
+			if(prob(ran))
+				src << "<span class='danger'>You fail to push [M]'s fat ass out of the way.</span>"
+			return 1
+
+	//Leaping mobs just land on the tile, no pushing, no anything.
+	if(status_flags & LEAPING)
+		loc = M.loc
+		status_flags &= ~LEAPING
+		return 1
+
+	//switch our position with M
+	//BubbleWrap: people in handcuffs are always switched around as if they were on 'help' intent to prevent a person being pulled from being seperated from their puller
+	if((M.a_intent == "help" || M.restrained()) && (a_intent == "help" || restrained()) && M.canmove && canmove && !M.buckled && !M.buckled_mob) // mutual brohugs all around!
+		now_pushing = 1
+		//TODO: Make this use Move(). we're pretty much recreating it here.
+		//it could be done by setting one of the locs to null to make Move() work, then setting it back and Move() the other mob
+		var/oldloc = loc
+		loc = M.loc
+		M.loc = oldloc
+		M.LAssailant = src
+
+		for(var/mob/living/carbon/slime/slime in view(1,M))
+			if(slime.Victim == M)
+				slime.UpdateFeed()
+
+		now_pushing = 0
+		return 1
+
+	//okay, so we didn't switch. but should we push?
+	//not if he's not CANPUSH of course
+	if(!(M.status_flags & CANPUSH) )
+		return 1
+	//anti-riot equipment is also anti-push
+	if(M.r_hand && istype(M.r_hand, /obj/item/weapon/shield/riot))
+		return 1
+	if(M.l_hand && istype(M.l_hand, /obj/item/weapon/shield/riot))
+		return 1
+
+//Called when we bump onto an obj
+/mob/living/proc/ObjBump(obj/O)
+	return
+
+//Called when we want to push an atom/movable
+/mob/living/proc/PushAM(atom/movable/AM)
+	if(now_pushing)
+		return 1
+	if(!AM.anchored)
+		now_pushing = 1
+		var/t = get_dir(src, AM)
+		if(istype(AM, /obj/structure/window))
+			var/obj/structure/window/W = AM
+			if(W.ini_dir == NORTHWEST || W.ini_dir == NORTHEAST || W.ini_dir == SOUTHWEST || W.ini_dir == SOUTHEAST)
+				for(var/obj/structure/window/win in get_step(AM,t))
+					now_pushing = 0
+					return
+//			if(W.fulltile)
+//				for(var/obj/structure/window/win in get_step(W,t))
+//					now_pushing = 0
+//					return
+		if(pulling == AM)
+			stop_pulling()
+		step(AM, t)
+		now_pushing = 0
+
 /mob/living/proc/add_ingame_age()
 	if(client && !client.is_afk()) //5 minutes of inactive time will disable this, until player come back.
 		var/client/C = client
@@ -361,9 +471,12 @@
 
 	return
 
-/mob/living/Move(a, b, flag)
-	if (buckled)
-		return
+/mob/living/Move(atom/newloc, direct)
+	if (buckled && buckled.loc != newloc)
+		if (!buckled.anchored)
+			return buckled.Move(newloc, direct)
+		else
+			return 0
 
 	if (restrained())
 		stop_pulling()
@@ -374,7 +487,7 @@
 		for(var/mob/living/M in range(src, 1))
 			if ((M.pulling == src && M.stat == CONSCIOUS && !( M.restrained() )))
 				t7 = null
-	if ((t7 && (pulling && ((get_dist(src, pulling) <= 1 || pulling.loc == loc) && (client && client.moving)))))
+	if(t7 && pulling && (get_dist(src, pulling) <= 1 || pulling.loc == loc))
 		var/turf/T = loc
 		. = ..()
 
@@ -433,16 +546,12 @@
 											H:vessel.remove_reagent("blood",1)
 
 
-						step(pulling, get_dir(pulling.loc, T))
-						M.start_pulling(AM)
+						pulling.Move(T, get_dir(pulling, T))
+						if(M)
+							M.start_pulling(AM)
 				else
 					if (pulling)
-						if (istype(pulling, /obj/structure/window))
-							if(pulling:ini_dir == NORTHWEST || pulling:ini_dir == NORTHEAST || pulling:ini_dir == SOUTHWEST || pulling:ini_dir == SOUTHEAST)
-								for(var/obj/structure/window/win in get_step(pulling,get_dir(pulling.loc, T)))
-									stop_pulling()
-					if (pulling)
-						step(pulling, get_dir(pulling.loc, T))
+						pulling.Move(T, get_dir(pulling, T))
 	else
 		stop_pulling()
 		. = ..()
@@ -509,6 +618,7 @@
 	var/mob/living/L = usr
 
 	//Getting out of someone's inventory.
+
 	if(istype(src.loc,/obj/item/weapon/holder))
 		var/obj/item/weapon/holder/H = src.loc //Get our item holder.
 		var/mob/M = H.loc                      //Get our mob holder (if any).
@@ -586,7 +696,10 @@
 						qdel(G)
 		if(resisting)
 			L.visible_message("<span class='danger'>[L] resists!</span>")
-
+	//Digging yourself out of a grave
+	if(istype(src.loc, /obj/structure/pit))
+		var/obj/structure/pit/P = loc
+		spawn() P.digout(src)
 	//unbuckling yourself
 	if(L.buckled && (L.last_special <= world.time) )
 		if(iscarbon(L))
@@ -604,9 +717,9 @@
 						for(var/mob/O in viewers(C))
 							O.show_message("<span class='danger'>[usr] manages to unbuckle themself!</span>", 1)
 						C << "<span class='notice'>You successfully unbuckle yourself.</span>"
-						C.buckled.manual_unbuckle(C)
+						C.buckled.user_unbuckle_mob(C)
 		else
-			L.buckled.manual_unbuckle(L)
+			L.buckled.user_unbuckle_mob(L)
 
 	//Breaking out of a container (Locker, sleeper, cryo...)
 	else if(loc && istype(loc, /obj) && !isturf(loc))
@@ -758,6 +871,16 @@
 		resting = !resting
 		src << "<span class='notice'>You are now [resting ? "resting" : "getting up"].</span>"
 
+//called when the mob receives a bright flash
+/mob/living/proc/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /obj/screen/fullscreen/flash)
+	if(override_blindness_check || !(disabilities & BLIND))
+		overlay_fullscreen("flash", type)
+		spawn(0)
+			sleep(25)
+			if(src)
+				clear_fullscreen("flash", 25)
+		return 1
+
 /mob/living/proc/has_eyes()
 	return 1
 
@@ -835,3 +958,35 @@
 						stat(null, "[gang_name("A")] Gang Takeover: [max(mode.A_timer, 0)]")
 					if(isnum(mode.B_timer))
 						stat(null, "[gang_name("B")] Gang Takeover: [max(mode.B_timer, 0)]")
+
+/mob/living/update_gravity(has_gravity)
+	if(!ticker)
+		return
+	float(!has_gravity)
+
+/mob/living/proc/float(on)
+	if(on && !floating && !buckled)
+		start_floating()
+	else if((!on || buckled) && floating)
+		stop_floating()
+
+/mob/living/proc/start_floating()
+
+	floating = 1
+
+	var/amplitude = 2 //maximum displacement from original position
+	var/period = 36 //time taken for the mob to go up >> down >> original position, in deciseconds. Should be multiple of 4
+
+	var/top = old_y + amplitude
+	var/bottom = old_y - amplitude
+	var/half_period = period / 2
+	var/quarter_period = period / 4
+
+	animate(src, pixel_y = top, time = quarter_period, easing = SINE_EASING | EASE_OUT, loop = -1)		//up
+	animate(pixel_y = bottom, time = half_period, easing = SINE_EASING, loop = -1)						//down
+	animate(pixel_y = old_y, time = quarter_period, easing = SINE_EASING | EASE_IN, loop = -1)			//back
+
+/mob/living/proc/stop_floating()
+	animate(src, pixel_y = old_y, time = 5, easing = SINE_EASING | EASE_IN) //halt animation
+	//reset the pixel offsets to zero
+	floating = 0

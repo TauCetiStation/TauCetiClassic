@@ -815,7 +815,8 @@ var/list/sacrificed = list()
 				))
 					user << "<span class='red'>The [cultist] is already free.</span>"
 					return
-				cultist.buckled = null
+				if(cultist.buckled)
+					cultist.buckled.unbuckle_mob()
 				if (cultist.handcuffed)
 					cultist.drop_from_inventory(cultist.handcuffed)
 				if (cultist.legcuffed)
@@ -1025,7 +1026,7 @@ var/list/sacrificed = list()
 
 					if(iscarbon(L))
 						var/mob/living/carbon/C = L
-						flick("e_flash", C.flash)
+						C.flash_eyes()
 						if(C.stuttering < 1 && (!(HULK in C.mutations)))
 							C.stuttering = 1
 						C.Weaken(1)
@@ -1052,7 +1053,7 @@ var/list/sacrificed = list()
 
 					else if(iscarbon(T))
 						var/mob/living/carbon/C = T
-						flick("e_flash", C.flash)
+						C.flash_eyes()
 						if (!(HULK in C.mutations))
 							C.silent += 15
 						C.Weaken(25)

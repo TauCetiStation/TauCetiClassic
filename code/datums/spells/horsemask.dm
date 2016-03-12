@@ -35,7 +35,7 @@
 	target.equip_to_slot(magichead, slot_wear_mask)
 	if(istype(target, /mob/living/carbon/human/))
 		target:speech_problem_flag = 1
-	flick("e_flash", target.flash)
+	target.flash_eyes()
 
 //item used by the horsehead spell
 /obj/item/clothing/mask/horsehead/magic

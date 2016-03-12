@@ -101,8 +101,10 @@
 			turns_since_move++
 			if(turns_since_move >= turns_per_move)
 				if(!(stop_automated_movement_when_pulled && pulledby)) //Soma animals don't move when pulled
-					Move(get_step(src,pick(cardinal)))
-					turns_since_move = 0
+					var/anydir = pick(cardinal)
+					if(Process_Spacemove(anydir))
+						Move(get_step(src,anydir), anydir)
+						turns_since_move = 0
 
 	//Speaking
 	if(!client && speak_chance)
@@ -194,14 +196,6 @@
 	if(!atmos_suitable)
 		adjustBruteLoss(unsuitable_atoms_damage)
 	return 1
-
-/mob/living/simple_animal/Bumped(AM as mob|obj)
-	if(!AM) return
-
-	if(resting || buckled)
-		return
-
-	..()
 
 /mob/living/simple_animal/gib()
 	if(icon_gib)
@@ -408,7 +402,7 @@
 
 /mob/living/simple_animal/ex_act(severity)
 	if(!blinded)
-		flick("flash", flash)
+		flash_eyes()
 	switch (severity)
 		if (1.0)
 			adjustBruteLoss(500)

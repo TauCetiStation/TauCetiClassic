@@ -64,7 +64,7 @@
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/vendor(null)
 	spawn(4)
-		src.slogan_list = text2list(src.product_slogans, ";")
+		src.slogan_list = splittext(src.product_slogans, ";")
 
 		// So not all machines speak at the exact same time.
 		// The first time this machine says something will be at slogantime + this random value,

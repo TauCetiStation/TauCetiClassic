@@ -1,3 +1,6 @@
+//gets all subtypes of type
+#define subtypesof(typepath) ( typesof(typepath) - typepath )
+
 //singularity defines
 #define STAGE_ONE	 1
 #define STAGE_TWO 	 3

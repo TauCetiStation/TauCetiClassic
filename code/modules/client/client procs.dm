@@ -174,8 +174,6 @@
 
 	screen += void
 
-	add_fov_overlay()
-
 
 	//////////////
 	//DISCONNECT//

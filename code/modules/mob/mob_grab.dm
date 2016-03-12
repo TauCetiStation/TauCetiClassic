@@ -79,6 +79,10 @@
 		qdel(src)
 		return PROCESS_KILL
 
+	if(affecting.buckled)
+		qdel(src)
+		return PROCESS_KILL
+
 	if(assailant.client)
 		assailant.client.screen -= hud
 		assailant.client.screen += hud

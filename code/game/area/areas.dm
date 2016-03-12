@@ -387,3 +387,13 @@
 			H.AdjustStunned(1)
 			H.AdjustWeakened(1)
 		mob << "<span class='notice'>The sudden appearance of gravity makes you fall to the floor!</span>"
+
+/proc/has_gravity(atom/AT, turf/T)
+	if(!T)
+		T = get_turf(AT)
+	var/area/A = get_area(T)
+	if(istype(T, /turf/space)) // Turf never has gravity
+		return 0
+	else if(A && A.has_gravity) // Areas which always has gravity
+		return 1
+	return 0

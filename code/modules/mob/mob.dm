@@ -665,20 +665,19 @@ note dizziness decrements automatically in the mob's Life() proc.
 			canmove = 0
 			pixel_y = V.mob_offset_y - 5
 		else
-			lying = 0
+			if(buckled.buckle_lying != -1)
+				lying = buckled.buckle_lying
 			canmove = 1
 			pixel_y = V.mob_offset_y
-	else if(buckled && (!buckled.movable))
-		anchored = 1
-		canmove = 0
-		if( istype(buckled,/obj/structure/stool/bed/chair) )
-			lying = 0
+	else if(buckled)
+		if(buckled.buckle_lying != -1)
+			lying = buckled.buckle_lying
+		if(!buckled.buckle_movable)
+			anchored = 1
+			canmove = 0
 		else
-			lying = 1
-	else if(buckled && (buckled.movable))
-		anchored = 0
-		canmove = 1
-		lying = 0
+			anchored = 0
+			canmove = 1
 	else if( stat || weakened || paralysis || resting || sleeping || (status_flags & FAKEDEATH))
 		lying = 1
 		canmove = 0
@@ -724,7 +723,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 /mob/proc/facedir(var/ndir)
 	if(!canface())	return 0
 	dir = ndir
-	if(buckled && buckled.movable)
+	if(buckled && buckled.buckle_movable)
 		buckled.dir = ndir
 		buckled.handle_rotation()
 	client.move_delay += movement_delay()
@@ -960,17 +959,44 @@ mob/proc/yank_out_object()
 		animate(client, color = null, time = transition_time)
 
 /mob/proc/instant_vision_update(state=null, atom/A)
-	if(!client || isnull(state) || !blind)
+	if(!client || isnull(state))
 		return
 
 	switch(state)
 		if(0)
 			if(!blinded)
-				blind.layer = 0
+				clear_fullscreen("blind", 0)
 			client.eye = client.mob
 			client.perspective = MOB_PERSPECTIVE
 		if(1)
-			blind.layer = 18
+			overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
 			if(A)
 				client.perspective = EYE_PERSPECTIVE
 				client.eye = A
+
+//You can buckle on mobs if you're next to them since most are dense
+/mob/buckle_mob(mob/living/M)
+	if(M.buckled)
+		return 0
+	var/turf/T = get_turf(src)
+	if(M.loc != T)
+		var/old_density = density
+		density = 0
+		var/can_step = step_towards(M, T)
+		density = old_density
+		if(!can_step)
+			return 0
+	return ..()
+
+//Default buckling shift visual for mobs
+/mob/post_buckle_mob(mob/living/M)
+	if(M == buckled_mob) //post buckling
+		M.pixel_y = initial(M.pixel_y) + 9
+		if(M.layer < layer)
+			M.layer = layer + 0.1
+	else //post unbuckling
+		M.layer = initial(M.layer)
+		M.pixel_y = initial(M.pixel_y)
+
+/mob/proc/can_unbuckle(mob/user)
+	return 1

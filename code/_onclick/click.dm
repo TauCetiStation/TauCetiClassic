@@ -326,15 +326,11 @@
 		if(dx > 0)	usr.dir = EAST
 		else		usr.dir = WEST
 
-	if(isliving(src))
-		var/mob/living/L = src
-		L.call_fov_update(1,A)
-
 
 /obj/screen/click_catcher
 	icon = 'icons/mob/screen1_full.dmi'
 	icon_state = "passage0"
-	layer = 0
+	plane = CLICKCATCHER_PLANE
 	mouse_opacity = 2
 	screen_loc = "CENTER-7,CENTER-7"
 

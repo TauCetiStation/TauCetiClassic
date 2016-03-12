@@ -53,14 +53,16 @@
 	return
 
 /obj/structure/stool/MouseDrop(atom/over_object)
-	if (istype(over_object, /mob/living/carbon/human))
+	if(ishuman(over_object) && type == /obj/structure/stool)
 		var/mob/living/carbon/human/H = over_object
-		if (H==usr && !H.restrained() && !H.stat && in_range(src, over_object))
+		if(H==usr && !H.restrained() && !H.stat && in_range(src, over_object))
 			var/obj/item/weapon/stool/S = new/obj/item/weapon/stool()
 			S.origin = src
 			src.loc = S
 			H.put_in_hands(S)
-			H.visible_message("\red [H] grabs [src] from the floor!", "\red You grab [src] from the floor!")
+			H.visible_message("<span class='red'>[H] grabs [src] from the floor!</span>", "<span class='red'>You grab [src] from the floor!</span>")
+			return
+	return ..()
 
 /obj/item/weapon/stool
 	name = "stool"
