@@ -26,25 +26,7 @@ function SetVolume(volume) {
 }
 	</script>"}
 
-// Hook into the events we desire.
-/hook_handler/soundmanager
-	// Set up player on login
-	proc/OnLogin(var/list/args)
-		//testing("Received OnLogin.")
-		var/client/C = args["client"]
-		C.media = new /datum/media_manager(args["mob"])
-		C.media.open()
-		C.media.update_music()
-
-	// Update when moving between areas.
-	proc/OnMobAreaChange(var/list/args)
-		var/mob/M = args["mob"]
-		//if(istype(M, /mob/living/carbon/human)||istype(M, /mob/dead/observer))
-		//	testing("Received OnMobAreaChange for [M.type] [M] (M.client=[M.client==null?"null":"/client"]).")
-		if(M.client)
-			M.update_music()
-
-/mob/proc/update_music()
+/mob/living/proc/update_music()
 	//world << "Update start"
 	if (client && client.media)
 		//world << "Media Exists"
@@ -70,63 +52,67 @@ function SetVolume(volume) {
 	var/volume = 25
 
 	var/client/owner
-	var/mob/mob
+	var/mob/living/mob
 
 	var/const/window = "rpane.hosttracker"
 	//var/const/window = "mediaplayer" // For debugging.
 
-	New(var/mob/holder)
-		src.mob=holder
-		owner=src.mob.client
+/datum/media_manager/New(mob/living/holder)
+	if(!istype(holder))
+		return
+	mob = holder
+	owner = mob.client
 
-	// Actually pop open the player in the background.
-	proc/open()
-		owner << browse(PLAYER_HTML, "window=[window]")
+// Actually pop open the player in the background.
+/datum/media_manager/proc/open()
+	owner << browse(PLAYER_HTML, "window=[window]")
+	send_update()
+
+// Tell the player to play something via JS.
+/datum/media_manager/proc/send_update()
+	if(!(owner.prefs.toggles & SOUND_STREAMING) && url != "")
+		return // Nope.
+	var/playtime = round((world.time - start_time) / 10)
+	owner << output(list2params(list(url, playtime, volume)), "[window]:SetMusic")
+
+/datum/media_manager/proc/stop_music()
+	url=""
+	start_time=world.time
+	send_update()
+
+// Scan for media sources and use them.
+/datum/media_manager/proc/update_music()
+	var/targetURL = ""
+	var/targetStartTime = 0
+	//var/targetVolume = volume
+
+	if (!owner)
+		//testing("owner is null")
+		return
+	if(!isliving(mob))
+		return
+	var/area/A = get_area_master(mob)
+	if(!A)
+		//testing("[owner] in [mob.loc].  Aborting.")
+		stop_music()
+		return
+	var/obj/machinery/media/M = A.media_source
+	if(M && M.playing)
+		targetURL = M.media_url
+		targetStartTime = M.media_start_time
+		//owner << "Found audio source: [M.media_url] @ [(world.time - start_time) / 10]s."
+	//else
+	//	testing("M is not playing or null.")
+	if (url != targetURL || abs(targetStartTime - start_time) > 1)
+		url = targetURL
+		start_time = targetStartTime
+		//volume = targetVolume
 		send_update()
 
-	// Tell the player to play something via JS.
-	proc/send_update()
-		if(!(owner.prefs.toggles & SOUND_STREAMING) && url != "")
-			return // Nope.
-		var/playtime = round((world.time - start_time) / 10)
-		owner << output(list2params(list(url, playtime, volume)), "[window]:SetMusic")
-
-	proc/stop_music()
-		url=""
-		start_time=world.time
-		send_update()
-
-	// Scan for media sources and use them.
-	proc/update_music()
-		var/targetURL = ""
-		var/targetStartTime = 0
-		//var/targetVolume = volume
-
-		if (!owner)
-			//testing("owner is null")
-			return
-		var/area/A = get_area_master(mob)
-		if(!A)
-			//testing("[owner] in [mob.loc].  Aborting.")
-			stop_music()
-			return
-		var/obj/machinery/media/M = A.media_source
-		if(M && M.playing)
-			targetURL = M.media_url
-			targetStartTime = M.media_start_time
-			//owner << "Found audio source: [M.media_url] @ [(world.time - start_time) / 10]s."
-		//else
-		//	testing("M is not playing or null.")
-		if (url != targetURL || abs(targetStartTime - start_time) > 1)
-			url = targetURL
-			start_time = targetStartTime
-			//volume = targetVolume
-			send_update()
-
-	proc/update_volume(var/value)
-		volume = value
-		owner << output(list2params(list(volume)), "[window]:SetVolume")
-		//send_update()
+/datum/media_manager/proc/update_volume(var/value)
+	volume = value
+	owner << output(list2params(list(volume)), "[window]:SetVolume")
+	//send_update()
 
 /client/verb/change_volume()
 	set name = "Set Volume"
