@@ -6,11 +6,6 @@
 
 /var/list/custom_items = list()
 
-/hook/startup/proc/loadCustomItems()
-	var/custom_items_file = file2text("config/custom_items.txt")
-	custom_items = splittext(custom_items_file, "\n")
-	return 1
-
 /proc/EquipCustomItems(mob/living/carbon/human/M)
 	for(var/line in custom_items)
 		// split & clean up

@@ -5,4 +5,6 @@
 	ghost_orbit = client.prefs.ghost_orbit
 
 	updateghostimages()
-	client.media.stop_music()
+
+	if(client.media)
+		client.media.stop_music()

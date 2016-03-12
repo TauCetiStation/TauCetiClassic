@@ -213,7 +213,10 @@
 					modify.assignment = t1
 					modify.rank = t1
 
-				callHook("reassign_employee", list(modify))
+				var/datum/game_mode/mutiny/mode = get_mutiny_mode()
+				if(mode)
+					mode.research_reassignments(modify)
+					mode.command_reassignments(modify)
 
 		if ("reg")
 			if (is_authenticated())
@@ -271,7 +274,11 @@
 				modify.assignment = "Terminated"
 				modify.access = list()
 
-				callHook("terminate_employee", list(modify))
+				var/datum/game_mode/mutiny/mode = get_mutiny_mode()
+				if(mode)
+					mode.ipc_termination(modify)
+					mode.gender_target_termination_directive(modify)
+					mode.termination_directive(modify)
 
 	if (modify)
 		modify.name = text("[modify.registered_name]'s ID Card ([modify.assignment])")

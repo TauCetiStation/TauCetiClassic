@@ -242,7 +242,9 @@ var/list/mechtoys = list(
 
 		// Must be in a crate (or a critter crate)!
 		if(istype(MA,/obj/structure/closet/crate) || istype(MA,/obj/structure/closet/critter))
-			callHook("sell_crate", list(MA, shuttle))
+			var/datum/game_mode/mutiny/mode = get_mutiny_mode()
+			if(mode)
+				mode.deliver_materials(MA, shuttle)
 
 			points += points_per_crate
 			var/find_slip = 1
