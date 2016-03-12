@@ -43,10 +43,10 @@
 	if(opened && has_electronics != 2)
 		. = 1
 
-/*/obj/machinery/power/smes/can_terminal_dismantle()
+/obj/machinery/power/smes/can_terminal_dismantle()
 	. = 0
 	if(panel_open)
-		. = 1*/
+		. = 1
 
 
 /obj/machinery/power/terminal/proc/dismantle(var/mob/living/user)

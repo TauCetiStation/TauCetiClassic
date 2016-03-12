@@ -2,7 +2,6 @@
 
 
 /obj/machinery/bodyscanner
-	var/mob/living/carbon/occupant
 	var/locked
 	name = "Body Scanner"
 	icon = 'icons/obj/Cryogenic2.dmi'
@@ -33,7 +32,7 @@
 	set category = "Object"
 	set name = "Eject Body Scanner"
 
-	if (usr.stat != 0)
+	if (usr.stat != CONSCIOUS)
 		return
 	src.go_out()
 	add_fingerprint(usr)
@@ -44,7 +43,7 @@
 	set category = "Object"
 	set name = "Enter Body Scanner"
 
-	if (usr.stat != 0)
+	if (usr.stat != CONSCIOUS)
 		return
 	if (src.occupant)
 		usr << "\blue <B>The scanner is already occupied!</B>"

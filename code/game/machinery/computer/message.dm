@@ -11,7 +11,7 @@
 	light_color = "#00b000"
 	var/hack_icon = "comm_logsc"
 	var/normal_icon = "comm_logs"
-	circuit = "/obj/item/weapon/circuitboard/message_monitor"
+	circuit = /obj/item/weapon/circuitboard/message_monitor
 	//Server linked to.
 	var/obj/machinery/message_server/linkedServer = null
 	//Sparks effect - For emag
@@ -34,11 +34,8 @@
 	var/customjob		= "Admin"
 	var/custommessage 	= "This is a test, please ignore."
 
-
 /obj/machinery/computer/message_monitor/attackby(obj/item/weapon/O as obj, mob/living/user as mob)
-	if(stat & (NOPOWER|BROKEN))
-		return
-	if(!istype(user))
+	if(..())
 		return
 	if(istype(O,/obj/item/weapon/card/emag/))
 		// Will create sparks and print out the console's password. You will then have to wait a while for the console to be back online.
@@ -248,9 +245,6 @@
 	onclose(user, "message")
 	return
 
-/obj/machinery/computer/message_monitor/attack_ai(mob/user as mob)
-	return src.attack_hand(user)
-
 /obj/machinery/computer/message_monitor/proc/BruteForce(mob/user as mob)
 	if(isnull(linkedServer))
 		user << "<span class='warning'>Could not complete brute-force: Linked Server Disconnected!</span>"
@@ -274,10 +268,7 @@
 /obj/machinery/computer/message_monitor/Topic(href, href_list)
 	if(..())
 		return
-	if(stat & (NOPOWER|BROKEN))
-		return
-	if(!istype(usr, /mob/living))
-		return
+
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon)))
 		//Authenticate
 		if (href_list["auth"])

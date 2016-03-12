@@ -21,15 +21,15 @@ var/global/vs_control/vsc = new
 	var/airflow_lightest_pressure_NAME = "Airflow - Small Movement Threshold %"
 	var/airflow_lightest_pressure_DESC = "Percent of 1 Atm. at which items with the small weight classes will move."
 
-	var/airflow_light_pressure = 25
+	var/airflow_light_pressure = 35
 	var/airflow_light_pressure_NAME = "Airflow - Medium Movement Threshold %"
 	var/airflow_light_pressure_DESC = "Percent of 1 Atm. at which items with the medium weight classes will move."
 
-	var/airflow_medium_pressure = 65
+	var/airflow_medium_pressure = 60
 	var/airflow_medium_pressure_NAME = "Airflow - Heavy Movement Threshold %"
 	var/airflow_medium_pressure_DESC = "Percent of 1 Atm. at which items with the largest weight classes will move."
 
-	var/airflow_heavy_pressure = 40
+	var/airflow_heavy_pressure = 50
 	var/airflow_heavy_pressure_NAME = "Airflow - Mob Movement Threshold %"
 	var/airflow_heavy_pressure_DESC = "Percent of 1 Atm. at which mobs will move."
 
@@ -37,7 +37,7 @@ var/global/vs_control/vsc = new
 	var/airflow_dense_pressure_NAME = "Airflow - Dense Movement Threshold %"
 	var/airflow_dense_pressure_DESC = "Percent of 1 Atm. at which items with canisters and closets will move."
 
-	var/airflow_stun_pressure = 35
+	var/airflow_stun_pressure = 40
 	var/airflow_stun_pressure_NAME = "Airflow - Mob Stunning Threshold %"
 	var/airflow_stun_pressure_DESC = "Percent of 1 Atm. at which mobs will be stunned by airflow."
 
@@ -49,11 +49,11 @@ var/global/vs_control/vsc = new
 	var/airflow_stun_NAME = "Airflow Impact - Stunning"
 	var/airflow_stun_DESC = "How much a mob is stunned when hit by an object."
 
-	var/airflow_damage = 9
+	var/airflow_damage = 5
 	var/airflow_damage_NAME = "Airflow Impact - Damage"
 	var/airflow_damage_DESC = "Damage from airflow impacts."
 
-	var/airflow_speed_decay = 0.5
+	var/airflow_speed_decay = 0.8
 	var/airflow_speed_decay_NAME = "Airflow Speed Decay"
 	var/airflow_speed_decay_DESC = "How rapidly the speed gained from airflow decays."
 
@@ -351,7 +351,7 @@ var/global/vs_control/vsc = new
 		else if(istext(vars["[V]_RANDOM"]))
 			var/txt = vars["[V]_RANDOM"]
 			if(findtextEx(txt,"PROB"))
-				txt = text2list(txt,"/")
+				txt = splittext(txt,"/")
 				txt[1] = replacetext(txt[1],"PROB","")
 				var/p = text2num(txt[1])
 				var/r = txt[2]
@@ -361,7 +361,7 @@ var/global/vs_control/vsc = new
 					newvalue = vars[V]
 			else if(findtextEx(txt,"PICK"))
 				txt = replacetext(txt,"PICK","")
-				txt = text2list(txt,",")
+				txt = splittext(txt,",")
 				newvalue = pick(txt)
 			else
 				newvalue = roll(txt)

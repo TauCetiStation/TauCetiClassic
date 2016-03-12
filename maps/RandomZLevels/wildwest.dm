@@ -92,7 +92,7 @@
 				user << "You feel as if you just narrowly avoided a terrible fate..."
 				for(var/mob/living/simple_animal/hostile/faithless/F in living_mob_list)
 					F.health = -10
-					F.stat = 2
+					F.stat = DEAD
 					F.icon_state = "faithless_dead"
 
 

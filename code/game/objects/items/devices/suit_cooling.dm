@@ -17,7 +17,7 @@
 	
 	var/on = 0				//is it turned on?
 	var/cover_open = 0		//is the cover open?
-	var/obj/item/weapon/cell/cell
+	var/obj/item/weapon/stock_parts/cell/cell
 	var/max_cooling = 12				//in degrees per second - probably don't need to mess with heat capacity here
 	var/charge_consumption = 16.6		//charge per second at max_cooling
 	var/thermostat = T20C
@@ -27,7 +27,7 @@
 /obj/item/device/suit_cooling_unit/New()
 	processing_objects |= src
 	
-	cell = new/obj/item/weapon/cell()	//comes with the crappy default power cell - high-capacity ones shouldn't be hard to find
+	cell = new/obj/item/weapon/stock_parts/cell()	//comes with the crappy default power cell - high-capacity ones shouldn't be hard to find
 	cell.loc = src
 
 /obj/item/device/suit_cooling_unit/process()
@@ -138,7 +138,7 @@
 		updateicon()
 		return
 
-	if (istype(W, /obj/item/weapon/cell))
+	if (istype(W, /obj/item/weapon/stock_parts/cell))
 		if(cover_open)
 			if(cell)
 				user << "There is a [cell] already installed here."

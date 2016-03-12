@@ -84,22 +84,16 @@
 	usr << browse_rsc('html/paigrid.png')			// Go ahead and cache the interface resources as early as possible
 
 
-// this function shows the information about being silenced as a pAI in the Status panel
-/mob/living/silicon/pai/proc/show_silenced()
-	if(src.silence_time)
-		var/timeleft = round((silence_time - world.timeofday)/10 ,1)
-		stat(null, "Communications system reboot in -[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
-
-
 /mob/living/silicon/pai/Stat()
 	..()
-	statpanel("Status")
-	if (src.client.statpanel == "Status")
-		show_silenced()
+	if(statpanel("Status"))
+		if(src.silence_time)
+			var/timeleft = round((silence_time - world.timeofday)/10 ,1)
+			stat(null, "Communications system reboot in -[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
 
-	if (proc_holder_list.len)//Generic list for proc_holder objects.
-		for(var/obj/effect/proc_holder/P in proc_holder_list)
-			statpanel("[P.panel]","",P)
+		if(proc_holder_list.len)//Generic list for proc_holder objects.
+			for(var/obj/effect/proc_holder/P in proc_holder_list)
+				statpanel("[P.panel]","",P)
 
 /mob/living/silicon/pai/check_eye(var/mob/user as mob)
 	if (!src.current)
@@ -108,7 +102,7 @@
 	return 1
 
 /mob/living/silicon/pai/blob_act()
-	if (src.stat != 2)
+	if (src.stat != DEAD)
 		src.adjustBruteLoss(60)
 		src.updatehealth()
 		return 1
@@ -150,19 +144,19 @@
 
 /mob/living/silicon/pai/ex_act(severity)
 	if(!blinded)
-		flick("flash", src.flash)
+		flash_eyes()
 
 	switch(severity)
 		if(1.0)
-			if (src.stat != 2)
+			if (src.stat != DEAD)
 				adjustBruteLoss(100)
 				adjustFireLoss(100)
 		if(2.0)
-			if (src.stat != 2)
+			if (src.stat != DEAD)
 				adjustBruteLoss(60)
 				adjustFireLoss(60)
 		if(3.0)
-			if (src.stat != 2)
+			if (src.stat != DEAD)
 				adjustBruteLoss(30)
 
 	src.updatehealth()
@@ -206,7 +200,7 @@
 					if ((O.client && !( O.blinded )))
 						O.show_message(text("\red <B>[] has slashed at []!</B>", M, src), 1)
 				if(prob(8))
-					flick("noise", src.flash)
+					flash_eyes(affect_silicon = 1)
 				src.adjustBruteLoss(damage)
 				src.updatehealth()
 			else
@@ -226,7 +220,7 @@
 		src.unset_machine()
 		src.reset_view(null)
 		return 0
-	if (stat == 2 || !C.status || !(src.network in C.network)) return 0
+	if (stat == DEAD || !C.status || !(src.network in C.network)) return 0
 
 	// ok, we're alive, camera is good and in our network...
 
@@ -253,7 +247,7 @@
 	src.cameraFollow = null
 	var/cameralist[0]
 
-	if(usr.stat == 2)
+	if(usr.stat == DEAD)
 		usr << "You can't change your camera network because you are dead!"
 		return
 

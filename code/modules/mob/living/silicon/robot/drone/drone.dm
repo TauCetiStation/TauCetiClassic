@@ -11,7 +11,7 @@
 	pass_flags = PASSTABLE
 	braintype = "Robot"
 	lawupdate = 0
-	density = 1
+	density = 0
 	req_access = list(access_engine, access_robotics)
 	ventcrawler = 2
 
@@ -77,7 +77,7 @@
 /mob/living/silicon/robot/drone/updateicon()
 
 	overlays.Cut()
-	if(stat == 0)
+	if(stat == CONSCIOUS)
 		overlays += "eyes-[icon_state]"
 	else
 		overlays -= "eyes"
@@ -104,7 +104,7 @@
 
 	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 
-	if (stat == 2)
+	if (stat == DEAD)
 		return say_dead(message)
 
 	if(copytext(message,1,2) == "*")
@@ -118,11 +118,11 @@
 				return
 
 			for (var/mob/living/S in living_mob_list)
-				if(istype(S, /mob/living/silicon/robot/drone))
+				if(isdrone(S))
 					S << "<i><span class='game say'>Drone Talk, <span class='name'>[name]</span><span class='message'> transmits, \"[trim(copytext(message,3))]\"</span></span></i>"
 
 			for (var/mob/M in dead_mob_list)
-				if(!istype(M,/mob/new_player) && !istype(M,/mob/living/carbon/brain))
+				if(!isnewplayer(M) && !isbrain(M))
 					M << "<i><span class='game say'>Drone Talk, <span class='name'>[name]</span><span class='message'> transmits, \"[trim(copytext(message,3))]\"</span></span></i>"
 
 		else
@@ -134,9 +134,9 @@
 				if(D.client) D << "<b>[src]</b> transmits, \"[message]\""
 
 			for (var/mob/M in player_list)
-				if (istype(M, /mob/new_player))
+				if (isnewplayer(M))
 					continue
-				else if(M.stat == 2 &&  M.client.prefs.chat_toggles & CHAT_GHOSTEARS)
+				else if(M.stat == DEAD &&  M.client.prefs.chat_toggles & CHAT_GHOSTEARS)
 					if(M.client) M << "<b>[src]</b> transmits, \"[message]\""
 
 //Drones cannot be upgraded with borg modules so we need to catch some items before they get used in ..().
@@ -152,7 +152,7 @@
 
 	else if (istype(W, /obj/item/weapon/card/emag))
 
-		if(!client || stat == 2)
+		if(!client || stat == DEAD)
 			user << "\red There's not much point subverting this heap of junk."
 			return
 
@@ -187,7 +187,7 @@
 
 	else if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 
-		if(stat == 2)
+		if(stat == DEAD)
 
 			if(!config.allow_drone_spawn || emagged || health < -35) //It's dead, Dave.
 				user << "\red The interface is fried, and a distressing burned smell wafts from the robot's interior. You're not rebooting this one."
@@ -237,7 +237,7 @@
 //Drones killed by damage will gib.
 /mob/living/silicon/robot/drone/handle_regular_status_updates()
 
-	if(health <= -10 && src.stat != 2)
+	if(health <= -10 && src.stat != DEAD)
 		timeofdeath = world.time
 		death() //Possibly redundant, having trouble making death() cooperate.
 		gib()
@@ -252,14 +252,9 @@
 
 	..(gibbed)
 
-//DRONE MOVEMENT.
-/mob/living/silicon/robot/drone/Process_Spaceslipping(var/prob_slip)
-	//TODO: Consider making a magboot item for drones to equip. ~Z
-	return 0
-
 //CONSOLE PROCS
 /mob/living/silicon/robot/drone/proc/law_resync()
-	if(stat != 2)
+	if(stat != DEAD)
 		if(emagged)
 			src << "\red You feel something attempting to modify your programming, but your hacked subroutines are unaffected."
 		else
@@ -268,7 +263,7 @@
 			show_laws()
 
 /mob/living/silicon/robot/drone/proc/shut_down()
-	if(stat != 2)
+	if(stat != DEAD)
 		if(emagged)
 			src << "\red You feel a system kill order percolate through your tiny brain, but it doesn't seem like a good idea to you."
 		else
@@ -321,19 +316,14 @@
 	src << "<b>Don't invade their worksites, don't steal their resources, don't tell them about the changeling in the toilets.</b>"
 	src << "<b>If a crewmember has noticed you, <i>you are probably breaking your third law</i></b>."
 
-/mob/living/silicon/robot/drone/Bump(atom/movable/AM as mob|obj, yes)
-	if (!yes || ( \
-	 !istype(AM,/obj/machinery/door) && \
-	 !istype(AM,/obj/machinery/recharge_station) && \
-	 !istype(AM,/obj/machinery/disposal/deliveryChute) && \
-	 !istype(AM,/obj/machinery/teleport/hub) && \
-	 !istype(AM,/obj/effect/portal)
-	)) return
-	..()
-	return
-
-/mob/living/silicon/robot/drone/Bumped(AM as mob|obj)
-	return
+/mob/living/silicon/robot/drone/ObjBump(obj/O)
+	var/list/can_bump = list(/obj/machinery/door,
+							/obj/machinery/recharge_station,
+							/obj/machinery/disposal/deliveryChute,
+							/obj/machinery/teleport/hub,
+							/obj/effect/portal)
+	if(!(O in can_bump))
+		return 0
 
 /mob/living/silicon/robot/drone/start_pulling(var/atom/movable/AM)
 
@@ -353,3 +343,9 @@
 /mob/living/silicon/robot/drone/add_robot_verbs()
 
 /mob/living/silicon/robot/drone/remove_robot_verbs()
+
+/mob/living/simple_animal/drone/mob_negates_gravity()
+	return 1
+
+/mob/living/simple_animal/drone/mob_has_gravity()
+	return ..() || mob_negates_gravity()

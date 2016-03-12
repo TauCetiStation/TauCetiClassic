@@ -69,6 +69,12 @@
 
 	..()	//redirect to hsrc.Topic()
 
+//client/proc/is_content_unlocked()
+//	if(!prefs.unlock_content)
+//		src << "Become a BYOND member to access member-perks and features, as well as support the engine that makes this game possible. Only 10 bucks for 3 months! <a href='http://www.byond.com/membership'>Click Here to find out more</a>."
+//		return 0
+//	return 1
+
 /client/proc/handle_spam_prevention(var/message, var/mute_type)
 	if(global_message_cooldown && (world.time < last_message_time + 5))
 		return 1
@@ -260,6 +266,9 @@
 	if(!isnum(player_ingame_age))
 		return
 
+	if(player_ingame_age <= 0)
+		return
+
 	var/sql_ckey = sql_sanitize_text(src.ckey)
 	var/DBQuery/query_update = dbcon.NewQuery("UPDATE erro_player SET ingameage = '[player_ingame_age]' WHERE ckey = '[sql_ckey]'")
 	query_update.Execute()
@@ -273,6 +282,17 @@
 /client/proc/is_afk(duration=3000)
 	if(inactivity > duration)	return inactivity
 	return 0
+
+// Byond seemingly calls stat, each tick.
+// Calling things each tick can get expensive real quick.
+// So we slow this down a little.
+// See: http://www.byond.com/docs/ref/info.html#/client/proc/Stat
+/client/Stat()
+	. = ..()
+	if (holder)
+		sleep(1)
+	else
+		sleep(5)
 
 //send resources to the client. It's here in its own proc so we can move it around easiliy if need be
 /client/proc/send_resources()

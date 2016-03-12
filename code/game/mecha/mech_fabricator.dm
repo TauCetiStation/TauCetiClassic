@@ -34,7 +34,6 @@
 	var/list/queue = list()
 	var/processing_queue = 0
 	var/screen = "main"
-	var/opened = 0
 	var/temp
 	var/output_dir = SOUTH	//the direction relative to the fabber at which completed parts appear.
 	var/list/part_sets = list( //set names must be unique
@@ -162,12 +161,12 @@
 /obj/machinery/mecha_part_fabricator/New()
 	..()
 	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/mechfab(src)
-	component_parts += new /obj/item/weapon/stock_parts/matter_bin(src)
-	component_parts += new /obj/item/weapon/stock_parts/matter_bin(src)
-	component_parts += new /obj/item/weapon/stock_parts/manipulator(src)
-	component_parts += new /obj/item/weapon/stock_parts/micro_laser(src)
-	component_parts += new /obj/item/weapon/stock_parts/console_screen(src)
+	component_parts += new /obj/item/weapon/circuitboard/mechfab(null)
+	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
+	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
+	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
+	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
+	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
 	RefreshParts()
 
 	//	part_sets["Cyborg Upgrade Modules"] = typesof(/obj/item/borg/upgrade/) - /obj/item/borg/upgrade/  // Eh.  This does it dymaically, but to support having the items referenced otherwhere in the code but not being constructable, going to do it manaully.
@@ -185,26 +184,23 @@
 
 /obj/machinery/mecha_part_fabricator/RefreshParts()
 	var/T = 0
+
+	//maximum stocking amount (max 412000)
 	for(var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
 		T += M.rating
-	res_max_amount = (187500+(T * 37500))
-	T = 0
+	res_max_amount = (187000+(T * 37500))
+
+	//ressources adjustment coefficient (1 -> 0.88 -> 0.75)
+	T = -1
 	for(var/obj/item/weapon/stock_parts/micro_laser/Ma in component_parts)
 		T += Ma.rating
-	if(T >= 1)
-		T -= 1
-	var/diff
-	diff = round(initial(resource_coeff) - (initial(resource_coeff)*(T))/25,0.01)
-	if(resource_coeff!=diff)
-		resource_coeff = diff
-	T = 0
+	resource_coeff = round(initial(resource_coeff) - (initial(resource_coeff)*(T))/8,0.01)
+
+	//building time adjustment coefficient (1 -> 0.8 -> 0.6)
+	T = -1
 	for(var/obj/item/weapon/stock_parts/manipulator/Ml in component_parts)
 		T += Ml.rating
-	if(T>= 1)
-		T -= 1
-	diff = round(initial(time_coeff) - (initial(time_coeff)*(T))/25,0.01)
-	if(time_coeff!=diff)
-		time_coeff = diff
+	time_coeff = round(initial(time_coeff) - (initial(time_coeff)*(T))/5,0.01)
 
 /obj/machinery/mecha_part_fabricator/Destroy()
 	for(var/atom/A in src)
@@ -342,7 +338,7 @@
 /obj/machinery/mecha_part_fabricator/proc/output_part_cost(var/obj/item/part)
 	var/i = 0
 	var/output
-	if(part.vars.Find("construction_time") && part.vars.Find("construction_cost"))//The most efficient way to go about this. Not all objects have these vars, but if they don't then they CANNOT be made by the mech fab. Doing it this way reduces a major amount of typecasting and switches, while cutting down maintenece for them as well -Sieve
+	if(hasvar(part, "construction_time") && hasvar(part, "construction_cost"))//The most efficient way to go about this. Not all objects have these vars, but if they don't then they CANNOT be made by the mech fab. Doing it this way reduces a major amount of typecasting and switches, while cutting down maintenece for them as well -Sieve
 		for(var/c in part:construction_cost)//The check should ensure that anything without the var doesn't make it to this point
 			if(c in resources)
 				output += "[i?" | ":null][get_resource_cost_w_coeff(part,c)] [c]"
@@ -363,7 +359,7 @@
 
 /obj/machinery/mecha_part_fabricator/proc/remove_resources(var/obj/item/part)
 //Be SURE to add any new equipment to this switch, but don't be suprised if it spits out children objects
-	if(part.vars.Find("construction_time") && part.vars.Find("construction_cost"))
+	if(hasvar(part, "construction_time") && hasvar(part, "construction_cost"))
 		for(var/resource in part:construction_cost)
 			if(resource in src.resources)
 				src.resources[resource] -= get_resource_cost_w_coeff(part,resource)
@@ -373,7 +369,7 @@
 /obj/machinery/mecha_part_fabricator/proc/check_resources(var/obj/item/part)
 //		if(istype(part, /obj/item/robot_parts) || istype(part, /obj/item/mecha_parts) || istype(part,/obj/item/borg/upgrade))
 //Be SURE to add any new equipment to this switch, but don't be suprised if it spits out children objects
-	if(part.vars.Find("construction_time") && part.vars.Find("construction_cost"))
+	if(hasvar(part, "construction_time") && hasvar(part, "construction_cost"))
 		for(var/resource in part:construction_cost)
 			if(resource in src.resources)
 				if(src.resources[resource] < get_resource_cost_w_coeff(part,resource))
@@ -385,13 +381,15 @@
 /obj/machinery/mecha_part_fabricator/proc/build_part(var/obj/item/part)
 	if(!part) return
 
-	 // critical exploit prevention, do not remove unless you replace it -walter0o
-	if( !(locate(part, src.contents)) || !(part.vars.Find("construction_time")) || !(part.vars.Find("construction_cost")) ) // these 3 are the current requirements for an object being buildable by the mech_fabricator
+	 // critical exploit prevention, do not remove unless you replace it
+	if( (part.loc != src) || !(hasvar(part, "construction_time")) || !(hasvar(part, "construction_cost")) ) // these 3 are the current requirements for an object being buildable by the mech_fabricator
 		return
 
 	src.being_built = new part.type(src)
 	src.desc = "It's building [src.being_built]."
 	src.remove_resources(part)
+	part.m_amt = get_resource_cost_w_coeff(part,"metal")
+	part.g_amt = get_resource_cost_w_coeff(part,"glass")
 	src.overlays += "fab-active"
 	src.use_power = 2
 	src.updateUsrDialog()
@@ -439,7 +437,7 @@
 			return process_queue()
 		else
 			return
-	if(!(part.vars.Find("construction_time")) || !(part.vars.Find("construction_cost")))//If it shouldn't be printed
+	if(!(hasvar(part, "construction_time")) || !(hasvar(part, "construction_cost")))//If it shouldn't be printed
 		remove_from_queue(1)//Take it out of the quene
 		return process_queue()//Then reprocess it
 	temp = null
@@ -466,7 +464,7 @@
 		for(var/i=1;i<=queue.len;i++)
 			var/obj/item/part = listgetindex(src.queue, i)
 			if(istype(part))
-				if(part.vars.Find("construction_time") && part.vars.Find("construction_cost"))
+				if(hasvar(part, "construction_time") && hasvar(part, "construction_cost"))
 					output += "<li[!check_resources(part)?" style='color: #f00;'":null]>[part.name] - [i>1?"<a href='?src=\ref[src];queue_move=-1;index=[i]' class='arrow'>&uarr;</a>":null] [i<queue.len?"<a href='?src=\ref[src];queue_move=+1;index=[i]' class='arrow'>&darr;</a>":null] <a href='?src=\ref[src];remove_from_queue=[i]'>Remove</a></li>"
 				else//Prevents junk items from even appearing in the list, and they will be silently removed when the fab processes
 					remove_from_queue(i)//Trash it
@@ -557,20 +555,26 @@
 
 /obj/machinery/mecha_part_fabricator/proc/get_resource_cost_w_coeff(var/obj/item/part as obj,var/resource as text, var/roundto=1)
 //Be SURE to add any new equipment to this switch, but don't be suprised if it spits out children objects
-	if(part.vars.Find("construction_time") && part.vars.Find("construction_cost"))
+	if(hasvar(part, "construction_time") && hasvar(part, "construction_cost"))
+		var/list/L = part_sets["Misc"]
+		if(L.Find(part.type))
+			return round(part:construction_cost[resource]*(resource_coeff/2), roundto)             //hacky scary skeletons send shivers down your spine
 		return round(part:construction_cost[resource]*resource_coeff, roundto)
 	else
 		return 0
 
 /obj/machinery/mecha_part_fabricator/proc/get_construction_time_w_coeff(var/obj/item/part as obj, var/roundto=1)
 //Be SURE to add any new equipment to this switch, but don't be suprised if it spits out children objects
-	if(part.vars.Find("construction_time") && part.vars.Find("construction_cost"))
+	if(hasvar(part, "construction_time") && hasvar(part, "construction_cost"))
 		return round(part:construction_time*time_coeff, roundto)
 	else
 		return 0
 
+/obj/machinery/mecha_part_fabricator/attack_hand(mob/user)
+	if(!(..()))
+		return interact(user)
 
-/obj/machinery/mecha_part_fabricator/attack_hand(mob/user as mob)
+/obj/machinery/mecha_part_fabricator/interact(mob/user as mob)
 	var/dat, left_part
 	if (..())
 		return
@@ -616,10 +620,10 @@
 				<body>
 				<table style='width: 100%;'>
 				<tr>
-				<td style='width: 70%; padding-right: 10px;'>
+				<td style='width: 65%; padding-right: 10px;'>
 				[left_part]
 				</td>
-				<td style='width: 30%; background: #ccc;' id='queue'>
+				<td style='width: 35%; background: #ccc;' id='queue'>
 				[list_queue()]
 				</td>
 				<tr>
@@ -631,18 +635,18 @@
 	return
 
 /obj/machinery/mecha_part_fabricator/proc/exploit_prevention(var/obj/Part, mob/user as mob, var/desc_exploit)
-// critical exploit prevention, feel free to improve or replace this, but do not remove it -walter0o
-
-	if(!Part || !user || !istype(Part) || !istype(user)) // sanity
+// critical exploit prevention, feel free to improve or replace this, but do not remove it
+	
+	if(!istype(Part) || !istype(user)) // sanity
 		return 1
-
-	if( !(locate(Part, src.contents)) || !(Part.vars.Find("construction_time")) || !(Part.vars.Find("construction_cost")) ) // these 3 are the current requirements for an object being buildable by the mech_fabricator
-
+	
+	if( (Part.loc != src) || !(hasvar(Part, "construction_time")) || !(hasvar(Part, "construction_cost")) ) // these 3 are the current requirements for an object being buildable by the mech_fabricator
+	
 		var/turf/LOC = get_turf(user)
 		message_admins("[key_name_admin(user)] tried to exploit an Exosuit Fabricator to [desc_exploit ? "get the desc of" : "duplicate"] <a href='?_src_=vars;Vars=\ref[Part]'>[Part]</a> ! ([LOC ? "<a href='?_src_=holder;adminplayerobservecoodjump=1;X=[LOC.x];Y=[LOC.y];Z=[LOC.z]'>JMP</a>" : "null"])", 0)
-		log_admin("EXPLOIT : [key_name(user)] tried to exploit an Exosuit Fabricator to [desc_exploit ? "get the desc of" : "duplicate"] [Part] !")
+		log_admin("EXPLOIT : [key_name(user)] tried to exploit an Exosuit Fabricator to [desc_exploit ? "get the desc of" : "duplicate"] [Part] !")		
 		return 1
-
+	
 	return null
 
 /obj/machinery/mecha_part_fabricator/Topic(href, href_list)
@@ -662,7 +666,7 @@
 	if(href_list["part"])
 		var/obj/part = filter.getObj("part")
 
-		// critical exploit prevention, do not remove unless you replace it -walter0o
+		// critical exploit prevention, do not remove unless you replace it
 		if(src.exploit_prevention(part, usr))
 			return
 
@@ -673,7 +677,7 @@
 	if(href_list["add_to_queue"])
 		var/obj/part = filter.getObj("add_to_queue")
 
-		// critical exploit prevention, do not remove unless you replace it -walter0o
+		// critical exploit prevention, do not remove unless you replace it
 		if(src.exploit_prevention(part, usr))
 			return
 
@@ -718,7 +722,7 @@
 	if(href_list["part_desc"])
 		var/obj/part = filter.getObj("part_desc")
 
-		// critical exploit prevention, do not remove unless you replace it -walter0o
+		// critical exploit prevention, do not remove unless you replace it
 		if(src.exploit_prevention(part, usr, 1))
 			return
 
@@ -766,27 +770,17 @@
 	return result
 
 
-/obj/machinery/mecha_part_fabricator/attackby(obj/W as obj, mob/user as mob)
-	if(istype(W,/obj/item/weapon/screwdriver))
-		if (!opened)
-			opened = 1
-			icon_state = "fab-o"
-			user << "You open the maintenance hatch of [src]."
-		else
-			opened = 0
-			icon_state = "fab-idle"
-			user << "You close the maintenance hatch of [src]."
+/obj/machinery/mecha_part_fabricator/attackby(obj/O as obj, mob/user as mob)
+	if(default_deconstruction_screwdriver(user, "fab-o", "fab-idle", O))
 		return
-	if (opened)
-		if(istype(W, /obj/item/weapon/crowbar))
-			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
-			var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
-			M.state = 2
-			M.icon_state = "box_1"
-			for(var/obj/I in component_parts)
-				if(I.reliability != 100 && crit_fail)
-					I.crit_fail = 1
-				I.loc = src.loc
+
+	if(exchange_parts(user, O))
+		return
+
+	default_deconstruction_crowbar(O)
+
+	if(panel_open)
+		if(istype(O, /obj/item/weapon/crowbar))
 			if(src.resources["metal"] >= 3750)
 				var/obj/item/stack/sheet/metal/G = new /obj/item/stack/sheet/metal(src.loc)
 				G.amount = round(src.resources["metal"] / G.perunit)
@@ -811,17 +805,17 @@
 			/*if(src.resources["bananium"] >= 2000)
 				var/obj/item/stack/sheet/mineral/clown/G = new /obj/item/stack/sheet/mineral/clown(src.loc)
 				G.amount = round(src.resources["bananium"] / G.perunit) Sorry, but no bananium allowed*/
-			qdel(src)
+			default_deconstruction_crowbar(O)
 			return 1
 		else
 			user << "\red You can't load the [src.name] while it's opened."
 			return 1
 
-	if(istype(W, /obj/item/weapon/card/emag))
+	if(istype(O, /obj/item/weapon/card/emag))
 		emag()
 		return
 	var/material
-	switch(W.type)
+	switch(O.type)
 		if(/obj/item/stack/sheet/mineral/gold)
 			material = "gold"
 		if(/obj/item/stack/sheet/mineral/silver)
@@ -844,7 +838,7 @@
 	if(src.being_built)
 		user << "The fabricator is currently processing. Please wait until completion."
 		return
-	var/obj/item/stack/sheet/stack = W
+	var/obj/item/stack/sheet/stack = O
 	var/sname = "[stack.name]"
 	var/amnt = stack.perunit
 	if(src.resources[material] < res_max_amount)

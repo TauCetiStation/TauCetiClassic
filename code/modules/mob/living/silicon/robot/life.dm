@@ -64,7 +64,7 @@
 /mob/living/silicon/robot/proc/handle_regular_status_updates()
 
 	if(src.camera && !scrambledcodes)
-		if(src.stat == 2 || isWireCut(5))
+		if(src.stat == DEAD || isWireCut(5))
 			src.camera.status = 0
 		else
 			src.camera.status = 1
@@ -78,12 +78,12 @@
 	if(src.resting)
 		Weaken(5)
 
-	if(health < config.health_threshold_dead && src.stat != 2) //die only once
+	if(health < config.health_threshold_dead && src.stat != DEAD) //die only once
 		death()
 
-	if (src.stat != 2) //Alive.
+	if (src.stat != DEAD) //Alive.
 		if (src.paralysis || src.stunned || src.weakened || !src.has_power) //Stunned etc.
-			src.stat = 1
+			src.stat = UNCONSCIOUS
 			if (src.stunned > 0)
 				AdjustStunned(-1)
 			if (src.weakened > 0)
@@ -95,11 +95,11 @@
 				src.blinded = 0
 
 		else	//Not stunned.
-			src.stat = 0
+			src.stat = CONSCIOUS
 
 	else //Dead.
 		src.blinded = 1
-		src.stat = 2
+		src.stat = DEAD
 
 	if (src.stuttering) src.stuttering--
 
@@ -132,7 +132,7 @@
 		src.confused = max(0, src.confused)
 
 	//update the state of modules and components here
-	if (src.stat != 0)
+	if (src.stat != CONSCIOUS)
 		uneq_all()
 
 	if(!is_component_functioning("radio"))
@@ -154,7 +154,7 @@
 
 /mob/living/silicon/robot/proc/handle_regular_hud_updates()
 
-	if (src.stat == 2 || XRAY in mutations || src.sight_mode & BORGXRAY)
+	if (src.stat == DEAD || XRAY in mutations || src.sight_mode & BORGXRAY)
 		src.sight |= SEE_TURFS
 		src.sight |= SEE_MOBS
 		src.sight |= SEE_OBJS
@@ -173,7 +173,7 @@
 		src.sight |= SEE_MOBS
 		src.see_in_dark = 8
 		src.see_invisible = SEE_INVISIBLE_LEVEL_TWO
-	else if (src.stat != 2)
+	else if (src.stat != DEAD)
 		src.sight &= ~SEE_MOBS
 		src.sight &= ~SEE_TURFS
 		src.sight &= ~SEE_OBJS
@@ -193,7 +193,7 @@
 				process_med_hud(src,0)
 
 	if (src.healths)
-		if (src.stat != 2)
+		if (src.stat != DEAD)
 			if(istype(src,/mob/living/silicon/robot/drone))
 				switch(health)
 					if(15 to INFINITY)
@@ -279,25 +279,26 @@
 //	if (src.oxygen) src.oxygen.icon_state = "oxy[src.oxygen_alert ? 1 : 0]"
 //	if (src.fire) src.fire.icon_state = "fire[src.fire_alert ? 1 : 0]"
 
-	client.screen.Remove(global_hud.blurry,global_hud.druggy,global_hud.vimpaired)
-
-	if ((src.blind && src.stat != 2))
+	if(src.stat != DEAD)
 		if(loc && !isturf(loc) && !is_type_in_list(loc, ignore_vision_inside))
-			blind.layer = 18
+			overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
 		else if(blinded)
-			src.blind.layer = 18
+			overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
 		else
-			src.blind.layer = 0
-			if (src.disabilities & NEARSIGHTED)
-				src.client.screen += global_hud.vimpaired
+			clear_fullscreen("blind")
+			if(disabilities & NEARSIGHTED)
+				overlay_fullscreen("impaired", /obj/screen/fullscreen/impaired, 1)
+			else
+				clear_fullscreen("impaired")
+			if(eye_blurry)
+				overlay_fullscreen("blurry", /obj/screen/fullscreen/blurry)
+			else
+				clear_fullscreen("blurry")
+			if(druggy)
+				overlay_fullscreen("high", /obj/screen/fullscreen/high)
+			else
+				clear_fullscreen("high")
 
-			if (src.eye_blurry)
-				src.client.screen += global_hud.blurry
-
-			if (src.druggy)
-				src.client.screen += global_hud.druggy
-
-	if (src.stat != 2)
 		if (src.machine)
 			if (!( src.machine.check_eye(src) ))
 				src.reset_view(null)
@@ -311,7 +312,7 @@
 	if (src.client)
 		src.client.screen -= src.contents
 		for(var/obj/I in src.contents)
-			if(I && !(istype(I,/obj/item/weapon/cell) || istype(I,/obj/item/device/radio)  || istype(I,/obj/machinery/camera) || istype(I,/obj/item/device/mmi)))
+			if(I && !(istype(I,/obj/item/weapon/stock_parts/cell) || istype(I,/obj/item/device/radio)  || istype(I,/obj/machinery/camera) || istype(I,/obj/item/device/mmi)))
 				src.client.screen += I
 	if(src.module_state_1)
 		src.module_state_1:screen_loc = ui_inv1

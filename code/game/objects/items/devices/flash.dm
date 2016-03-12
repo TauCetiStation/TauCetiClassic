@@ -69,7 +69,7 @@
 		var/safety = M:eyecheck()
 		if(safety <= 0)
 			M.Weaken(10)
-			flick("e_flash", M.flash)
+			M.flash_eyes()
 
 			if(ishuman(M) && ishuman(user) && M.stat!=DEAD)
 
@@ -162,15 +162,10 @@
 			qdel(animation)
 
 	for(var/mob/living/carbon/M in oviewers(3, null))
-		if(prob(50))
-			if (locate(/obj/item/weapon/cloaking_device, M))
-				for(var/obj/item/weapon/cloaking_device/S in M)
-					S.active = 0
-					S.icon_state = "shield0"
 		var/safety = M:eyecheck()
 		if(!safety)
 			if(!M.blinded)
-				flick("flash", M.flash)
+				M.flash_eyes()
 
 	return
 
@@ -189,7 +184,7 @@
 				var/safety = M.eyecheck()
 				if(safety <= 0)
 					M.Weaken(10)
-					flick("e_flash", M.flash)
+					M.flash_eyes()
 					for(var/mob/O in viewers(M, null))
 						O.show_message("<span class='disarm'>[M] is blinded by the flash!</span>")
 	..()

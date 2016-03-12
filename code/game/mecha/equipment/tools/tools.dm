@@ -392,7 +392,7 @@
 	range = RANGED
 
 /obj/item/mecha_parts/mecha_equipment/teleporter/action(atom/target)
-	if(!action_checks(target) || src.loc.z == 2) return
+	if(!action_checks(target) || src.loc.z == ZLEVEL_CENTCOMM) return
 	var/turf/T = get_turf(target)
 	if(T)
 		set_ready_state(0)
@@ -413,7 +413,7 @@
 	range = RANGED
 
 /obj/item/mecha_parts/mecha_equipment/wormhole_generator/action(atom/target)
-	if(!action_checks(target) || src.loc.z == 2) return
+	if(!action_checks(target) || src.loc.z == ZLEVEL_CENTCOMM) return
 	var/list/theareas = list()
 	for(var/area/AR in orange(100, chassis))
 		if(AR in theareas) continue
@@ -1021,10 +1021,7 @@
 /datum/global_iterator/mecha_generator/nuclear/process(var/obj/item/mecha_parts/mecha_equipment/generator/nuclear/EG)
 	if(..())
 		for(var/mob/living/carbon/M in view(EG.chassis))
-			if(istype(M,/mob/living/carbon/human))
-				M.apply_effect((EG.rad_per_cycle*3),IRRADIATE,0)
-			else
-				M.radiation += EG.rad_per_cycle
+			M.apply_effect((EG.rad_per_cycle*3),IRRADIATE,0)
 	return 1
 
 

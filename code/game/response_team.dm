@@ -42,7 +42,7 @@ var/can_call_ert
 /client/verb/JoinResponseTeam()
 	set category = "IC"
 
-	if(istype(usr,/mob/dead/observer) || istype(usr,/mob/new_player))
+	if(isobserver(usr) || isnewplayer(usr))
 		if(!send_emergency_team)
 			usr << "No emergency response team is currently being sent."
 			return
@@ -85,7 +85,7 @@ var/can_call_ert
 	var/deadcount = 0
 	for(var/mob/living/carbon/human/H in mob_list)
 		if(H.client) // Monkeys and mice don't have a client, amirite?
-			if(H.stat == 2) deadcount++
+			if(H.stat == DEAD) deadcount++
 			total++
 
 	if(total == 0) return 0
@@ -206,7 +206,7 @@ var/can_call_ert
 			M.gender = FEMALE
 	//M.rebuild_appearance()
 	M.update_hair()
-	M.update_body_f()
+	M.update_body()
 	M.check_dna(M)
 
 	M.real_name = commando_name
@@ -241,6 +241,7 @@ var/can_call_ert
 	if(leader_selected)
 		var/obj/item/weapon/card/id/ert/W = new(src)
 		W.assignment = "Emergency Response Team Leader"
+		W.rank = "Emergency Response Team Leader"
 		W.registered_name = real_name
 		W.name = "[real_name]'s ID Card ([W.assignment])"
 		W.icon_state = "ert-leader"
@@ -248,6 +249,7 @@ var/can_call_ert
 	else
 		var/obj/item/weapon/card/id/ert/W = new(src)
 		W.assignment = "Emergency Response Team"
+		W.rank = "Emergency Response Team"
 		W.registered_name = real_name
 		W.name = "[real_name]'s ID Card ([W.assignment])"
 		W.icon_state = "ert"

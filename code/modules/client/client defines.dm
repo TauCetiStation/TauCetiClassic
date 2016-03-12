@@ -6,6 +6,7 @@
 	var/datum/admins/deadmin_holder = null
 	var/buildmode		= 0
 
+	var/jobbancache = null //Used to cache this client's jobbans to save on DB queries
 	var/last_message	= "" //Contains the last message sent by this client - used to protect against copy-paste spamming.
 	var/last_message_count = 0 //contins a number of how many times a message identical to last_message was sent.
 	var/last_message_time = 0 //Contains time of last message typed by client, used as delay to prevent continuous message spam with macro.
@@ -33,7 +34,7 @@
 		////////////
 	var/next_allowed_topic_time = 10
 	// comment out the line below when debugging locally to enable the options & messages menu
-	//control_freak = 1
+	control_freak = 1
 
 	var/received_irc_pm = -99999
 	var/irc_admin			//IRC admin that spoke with them last.

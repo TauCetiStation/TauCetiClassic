@@ -89,7 +89,7 @@ var/list/blob_nodes = list()
 			if(directory[ckey(blob.key)])
 				blob_client = directory[ckey(blob.key)]
 				location = get_turf(C)
-				if(location.z != 1 || istype(location, /turf/space))
+				if(location.z != ZLEVEL_STATION || istype(location, /turf/space))
 					location = null
 				C.gib()
 
@@ -156,7 +156,7 @@ var/list/blob_nodes = list()
 		if (1)
 			command_alert("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert")
 			for(var/mob/M in player_list)
-				if(!istype(M,/mob/new_player))
+				if(!isnewplayer(M))
 					M << sound('sound/AI/outbreak5.ogg')
 			return
 

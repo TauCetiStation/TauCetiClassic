@@ -91,13 +91,11 @@
 	..()
 	if ((!(A) || src != A.loc))	return
 
-	inertial_drift(A)
-
 	if(ticker && ticker.mode)
 
 		// Okay, so let's make it so that people can travel z levels but not nuke disks!
 		// if(ticker.mode.name == "nuclear emergency")	return
-		if(A.z > 6) return
+		if(A.z > ZLEVEL_EMPTY) return
 		if (A.x <= TRANSITIONEDGE || A.x >= (world.maxx - TRANSITIONEDGE - 1) || A.y <= TRANSITIONEDGE || A.y >= (world.maxy - TRANSITIONEDGE - 1))
 			if(istype(A, /obj/effect/meteor)||istype(A, /obj/effect/space_dust))
 				qdel(A)
@@ -161,11 +159,8 @@
 				A.x = rand(TRANSITIONEDGE + 2, world.maxx - TRANSITIONEDGE - 2)
 
 
-
-
-			spawn (0)
-				if ((A && A.loc))
-					A.loc.Entered(A)
+			sleep(0)//Let a diagonal move finish, if necessary
+			A.newtonian_move(A.inertia_dir)
 
 /turf/space/proc/Sandbox_Spacemove(atom/movable/A as mob|obj)
 	var/cur_x

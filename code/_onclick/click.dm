@@ -94,9 +94,9 @@
 			next_move += 5
 		W.attack_self(src)
 		if(hand)
-			update_inv_l_hand(0)
+			update_inv_l_hand()
 		else
-			update_inv_r_hand(0)
+			update_inv_r_hand()
 
 		return
 
@@ -330,7 +330,7 @@
 /obj/screen/click_catcher
 	icon = 'icons/mob/screen1_full.dmi'
 	icon_state = "passage0"
-	layer = 0
+	plane = CLICKCATCHER_PLANE
 	mouse_opacity = 2
 	screen_loc = "CENTER-7,CENTER-7"
 

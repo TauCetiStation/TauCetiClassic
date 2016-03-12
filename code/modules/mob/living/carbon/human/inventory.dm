@@ -26,9 +26,9 @@
 
 		if(H.equip_to_appropriate_slot(I))
 			if(hand)
-				update_inv_l_hand(0)
+				update_inv_l_hand()
 			else
-				update_inv_r_hand(0)
+				update_inv_r_hand()
 
 		else if(s_active && s_active.can_be_inserted(I,1))	//if storage active insert there
 			s_active.handle_item_insertion(I)
@@ -142,9 +142,9 @@
 			if(I.flags_inv & HIDEMASK)
 				update_hair = 1
 		if(update_hair)
-			update_hair(0)	//rebuild hair
-			update_inv_ears(0)
-			update_inv_wear_mask(0)
+			update_hair()
+			update_inv_ears()
+			update_inv_wear_mask()
 
 		update_inv_head()
 	else if (W == l_ear)
@@ -162,7 +162,7 @@
 	else if (W == wear_mask)
 		wear_mask = null
 		if((W.flags & BLOCKHAIR) || (W.flags & BLOCKHEADHAIR))
-			update_hair(0)	//rebuild hair
+			update_hair()	//rebuild hair
 		if(internal)
 			if(internals)
 				internals.icon_state = "internal0"
@@ -186,6 +186,8 @@
 	else if (W == handcuffed)
 		handcuffed = null
 		update_inv_handcuffed()
+		if(buckled && buckled.buckle_require_restraints)
+			buckled.unbuckle_mob()
 	else if (W == legcuffed)
 		legcuffed = null
 		update_inv_legcuffed()
@@ -225,36 +227,36 @@
 		if(slot_back)
 			src.back = W
 			W.equipped(src, slot)
-			update_inv_back(redraw_mob)
+			update_inv_back()
 		if(slot_wear_mask)
 			src.wear_mask = W
 			if((wear_mask.flags & BLOCKHAIR) || (wear_mask.flags & BLOCKHEADHAIR))
-				update_hair(redraw_mob)	//rebuild hair
+				update_hair()
 			W.equipped(src, slot)
-			update_inv_wear_mask(redraw_mob)
+			update_inv_wear_mask()
 		if(slot_handcuffed)
 			src.handcuffed = W
-			update_inv_handcuffed(redraw_mob)
+			update_inv_handcuffed()
 		if(slot_legcuffed)
 			src.legcuffed = W
 			W.equipped(src, slot)
-			update_inv_legcuffed(redraw_mob)
+			update_inv_legcuffed()
 		if(slot_l_hand)
 			src.l_hand = W
 			W.equipped(src, slot)
-			update_inv_l_hand(redraw_mob)
+			update_inv_l_hand()
 		if(slot_r_hand)
 			src.r_hand = W
 			W.equipped(src, slot)
-			update_inv_r_hand(redraw_mob)
+			update_inv_r_hand()
 		if(slot_belt)
 			src.belt = W
 			W.equipped(src, slot)
-			update_inv_belt(redraw_mob)
+			update_inv_belt()
 		if(slot_wear_id)
 			src.wear_id = W
 			W.equipped(src, slot)
-			update_inv_wear_id(redraw_mob)
+			update_inv_wear_id()
 		if(slot_l_ear)
 			src.l_ear = W
 			if(l_ear.slot_flags & SLOT_TWOEARS)
@@ -264,7 +266,7 @@
 				O.layer = 20
 				O.appearance_flags = APPEARANCE_UI
 			W.equipped(src, slot)
-			update_inv_ears(redraw_mob)
+			update_inv_ears()
 		if(slot_r_ear)
 			src.r_ear = W
 			if(r_ear.slot_flags & SLOT_TWOEARS)
@@ -274,47 +276,47 @@
 				O.layer = 20
 				O.appearance_flags = APPEARANCE_UI
 			W.equipped(src, slot)
-			update_inv_ears(redraw_mob)
+			update_inv_ears()
 		if(slot_glasses)
 			src.glasses = W
 			W.equipped(src, slot)
-			update_inv_glasses(redraw_mob)
+			update_inv_glasses()
 		if(slot_gloves)
 			src.gloves = W
 			W.equipped(src, slot)
-			update_inv_gloves(redraw_mob)
+			update_inv_gloves()
 		if(slot_head)
 			src.head = W
 			if((head.flags & BLOCKHAIR) || (head.flags & BLOCKHEADHAIR))
-				update_hair(redraw_mob)	//rebuild hair
+				update_hair()	//rebuild hair
 			if(istype(W,/obj/item/clothing/head/kitty))
 				W.update_icon(src)
 			W.equipped(src, slot)
-			update_inv_head(redraw_mob)
+			update_inv_head()
 		if(slot_shoes)
 			src.shoes = W
 			W.equipped(src, slot)
-			update_inv_shoes(redraw_mob)
+			update_inv_shoes()
 		if(slot_wear_suit)
 			src.wear_suit = W
 			W.equipped(src, slot)
-			update_inv_wear_suit(redraw_mob)
+			update_inv_wear_suit()
 		if(slot_w_uniform)
 			src.w_uniform = W
 			W.equipped(src, slot)
-			update_inv_w_uniform(redraw_mob)
+			update_inv_w_uniform()
 		if(slot_l_store)
 			src.l_store = W
 			W.equipped(src, slot)
-			update_inv_pockets(redraw_mob)
+			update_inv_pockets()
 		if(slot_r_store)
 			src.r_store = W
 			W.equipped(src, slot)
-			update_inv_pockets(redraw_mob)
+			update_inv_pockets()
 		if(slot_s_store)
 			src.s_store = W
 			W.equipped(src, slot)
-			update_inv_s_store(redraw_mob)
+			update_inv_s_store()
 		if(slot_in_backpack)
 			if(src.get_active_hand() == W)
 				src.remove_from_mob(W)

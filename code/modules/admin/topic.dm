@@ -659,6 +659,12 @@
 		else
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=revolutionary;jobban4=\ref[M]'>[replacetext("Revolutionary", " ", "&nbsp")]</a></td>"
 
+		//Raider (New heist)
+		if(jobban_isbanned(M, "Raider") || isbanned_dept)
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Raider;jobban4=\ref[M]'><font color=red>Raider</font></a></td>"
+		else
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Raider;jobban4=\ref[M]'>Raider</a></td>"
+
 		jobs += "</tr><tr align='center'>" //Breaking it up so it fits nicer on the screen every 5 entries
 
 		//Cultist
@@ -690,29 +696,34 @@
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Vox Raider;jobban4=\ref[M]'><font color=red>Vox Raider</font></a></td>"
 		else
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Vox Raider;jobban4=\ref[M]'>Vox Raider</a></td>"
-		//Raider (New heist)
-		if(jobban_isbanned(M, "Raider") || isbanned_dept)
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Raider;jobban4=\ref[M]'><font color=red>Raider</font></a></td>"
-		else
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Raider;jobban4=\ref[M]'>Raider</a></td>"
+
+		jobs += "</tr><tr align='center'>" //Breaking it up so it fits nicer on the screen every 5 entries
+
 		//Mutineer
 		if(jobban_isbanned(M, "Mutineer") || isbanned_dept)
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Mutineer;jobban4=\ref[M]'><font color=red>Mutineer</font></a></td>"
 		else
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Mutineer;jobban4=\ref[M]'>Mutineer</a></td>"
+
 		//Shadowling
 		if(jobban_isbanned(M, "Shadowling") || isbanned_dept)
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Shadowling;jobban4=\ref[M]'><font color=red>Shadowling</font></a></td>"
 		else
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Shadowling;jobban4=\ref[M]'>Shadowling</a></td>"
 
-/*		//Malfunctioning AI	//Removed Malf-bans because they're a pain to impliment
+		//Abductor
+		if(jobban_isbanned(M, "Abductor") || isbanned_dept)
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Abductor;jobban4=\ref[M]'><font color=red>Abductor</font></a></td>"
+		else
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Abductor;jobban4=\ref[M]'>Abductor</a></td>"
+
+		//Malfunctioning AI
 		if(jobban_isbanned(M, "malf AI") || isbanned_dept)
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=malf AI;jobban4=\ref[M]'><font color=red>[replacetext("Malf AI", " ", "&nbsp")]</font></a></td>"
 		else
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=malf AI;jobban4=\ref[M]'>[replacetext("Malf AI", " ", "&nbsp")]</a></td>"
 
-		//Alien
+/*		//Alien
 		if(jobban_isbanned(M, "alien candidate") || isbanned_dept)
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=alien candidate;jobban4=\ref[M]'><font color=red>[replacetext("Alien", " ", "&nbsp")]</font></a></td>"
 		else
@@ -828,9 +839,6 @@
 			switch(alert("Temporary Ban?",,"Yes","No", "Cancel"))
 				if("Yes")
 					if(!check_rights(R_MOD,0) && !check_rights(R_BAN))  return
-					if(config.ban_legacy_system)
-						usr << "\red Your server is using the legacy banning system, which does not support temporary job bans. Consider upgrading. Aborting ban."
-						return
 					var/mins = input(usr,"How long (in minutes)?","Ban time",1440) as num|null
 					if(!mins)
 						return
@@ -844,8 +852,9 @@
 						log_admin("[key_name(usr)] temp-jobbanned [key_name(M)] from [job] for [mins] minutes")
 						feedback_inc("ban_job_tmp",1)
 						DB_ban_record(BANTYPE_JOB_TEMP, M, mins, reason, job)
+						if(M.client)
+							jobban_buildcache(M.client)
 						feedback_add_details("ban_job_tmp","- [job]")
-						jobban_fullban(M, job, "[reason]; By [usr.ckey] on [time2text(world.realtime)]") //Legacy banning does not support temporary jobbans.
 						if(!msg)
 							msg = job
 						else
@@ -867,8 +876,9 @@
 							log_admin("[key_name(usr)] perma-banned [key_name(M)] from [job]")
 							feedback_inc("ban_job",1)
 							DB_ban_record(BANTYPE_JOB_PERMA, M, -1, reason, job)
+							if(M.client)
+								jobban_buildcache(M.client)
 							feedback_add_details("ban_job","- [job]")
-							jobban_fullban(M, job, "[reason]; By [usr.ckey] on [time2text(world.realtime)]")
 							if(!msg)	msg = job
 							else		msg += ", [job]"
 						notes_add(M.ckey, "Banned  from [msg] - [reason]")
@@ -884,10 +894,6 @@
 		//Unbanning joblist
 		//all jobs in joblist are banned already OR we didn't give a reason (implying they shouldn't be banned)
 		if(joblist.len) //at least 1 banned job exists in joblist so we have stuff to unban.
-			if(!config.ban_legacy_system)
-				usr << "Unfortunately, database based unbanning cannot be done through this panel"
-				DB_ban_panel(M.ckey)
-				return
 			var/msg
 			for(var/job in joblist)
 				var/reason = jobban_isbanned(M, job)
@@ -896,10 +902,11 @@
 					if("Yes")
 						ban_unban_log_save("[key_name(usr)] unjobbanned [key_name(M)] from [job]")
 						log_admin("[key_name(usr)] unbanned [key_name(M)] from [job]")
-						DB_ban_unban(M.ckey, BANTYPE_JOB_PERMA, job)
+						DB_ban_unban(M.ckey, BANTYPE_ANY_JOB, job)
+						if(M.client)
+							jobban_buildcache(M.client)
 						feedback_inc("ban_job_unban",1)
 						feedback_add_details("ban_job_unban","- [job]")
-						jobban_unban(M, job)
 						if(!msg)	msg = job
 						else		msg += ", [job]"
 					else
@@ -944,20 +951,6 @@
 				notes_remove(ckey,text2num(href_list["from"]),text2num(href_list["to"]))
 				notes_show(ckey)
 */
-	else if(href_list["removejobban"])
-		if(!check_rights(R_BAN))	return
-
-		var/t = href_list["removejobban"]
-		if(t)
-			if((alert("Do you want to unjobban [t]?","Unjobban confirmation", "Yes", "No") == "Yes") && t) //No more misclicks! Unless you do it twice.
-				log_admin("[key_name(usr)] removed [t]")
-				message_admins("\blue [key_name_admin(usr)] removed [t]", 1)
-				jobban_remove(t)
-				href_list["ban"] = 1 // lets it fall through and refresh
-				var/t_split = text2list(t, " - ")
-				var/key = t_split[1]
-				var/job = t_split[2]
-				DB_ban_unban(ckey(key), BANTYPE_JOB_PERMA, job)
 
 	else if(href_list["newban"])
 		if(!check_rights(R_MOD,0) && !check_rights(R_BAN))  return
@@ -1337,7 +1330,7 @@
 		if(!check_rights(R_SPAWN))	return
 
 		var/mob/M = locate(href_list["makeanimal"])
-		if(istype(M, /mob/new_player))
+		if(isnewplayer(M))
 			usr << "This cannot be used on instances of type /mob/new_player"
 			return
 
@@ -1376,7 +1369,7 @@
 						foo += text("<B>Is an AI</B> | ")
 					else
 						foo += text("<A HREF='?src=\ref[];makeai=\ref[]'>Make AI</A> | ", src, M)
-					if(M.z != 2)
+					if(M.z != ZLEVEL_CENTCOMM)
 						foo += text("<A HREF='?src=\ref[];sendtoprison=\ref[]'>Prison</A> | ", src, M)
 						foo += text("<A HREF='?src=\ref[];sendtomaze=\ref[]'>Maze</A> | ", src, M)
 					else
@@ -1414,6 +1407,16 @@
 		if(!check_rights(R_MOD|R_ADMIN))	return
 
 		check_antagonists()
+
+	else if(href_list["adminplayerobservefollow"])
+		if(!isobserver(usr) && !check_rights(R_ADMIN))	return
+
+		var/atom/movable/AM = locate(href_list["adminplayerobservefollow"])
+
+		var/client/C = usr.client
+		if(!isobserver(usr))	C.admin_ghost()
+		var/mob/dead/observer/A = C.mob
+		A.ManualFollow(AM)
 
 	else if(href_list["adminplayerobservecoodjump"])
 		if(!check_rights(R_ADMIN))	return
@@ -1731,9 +1734,9 @@
 			alert("Select fewer object types, (max 5)")
 			return
 		else if(length(removed_paths))
-			alert("Removed:\n" + list2text(removed_paths, "\n"))
+			alert("Removed:\n" + jointext(removed_paths, "\n"))
 
-		var/list/offset = text2list(href_list["offset"],",")
+		var/list/offset = splittext(href_list["offset"],",")
 		var/number = dd_range(1, 100, text2num(href_list["object_count"]))
 		var/X = offset.len > 0 ? text2num(offset[1]) : 0
 		var/Y = offset.len > 1 ? text2num(offset[2]) : 0
@@ -1922,7 +1925,7 @@
 				feedback_add_details("admin_secrets_fun_used","P")
 				log_admin("[key_name(usr)] made all areas powered", 1)
 				message_admins("\blue [key_name_admin(usr)] made all areas powered", 1)
-				power_restore()
+				power_restore(badminery=1)
 			if("unpower")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","UP")
@@ -1930,6 +1933,9 @@
 				message_admins("\blue [key_name_admin(usr)] made all areas unpowered", 1)
 				power_failure()
 			if("quickpower")
+				if(power_fail_event)
+					usr << "Power fail event is in progress.. Please wait or use normal power restore."
+					return
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","QP")
 				log_admin("[key_name(usr)] made all SMESs powered", 1)
@@ -1943,7 +1949,7 @@
 				/*
 				var/A = locate(/area/shuttle_prison)
 				for(var/atom/movable/AM as mob|obj in A)
-					AM.z = 1
+					AM.z = ZLEVEL_STATION
 					AM.Move()
 				*/
 				message_admins("\blue [key_name_admin(usr)] sent the prison shuttle to the station.", 1)
@@ -1953,7 +1959,7 @@
 				feedback_add_details("admin_secrets_fun_used","DP")
 				var/A = locate(/area/shuttle_prison)
 				for(var/atom/movable/AM as mob|obj in A)
-					AM.z = 2
+					AM.z == ZLEVEL_CENTCOMM
 					AM.Move()
 				*/
 				message_admins("\blue [key_name_admin(usr)] sent the prison shuttle back.", 1)
@@ -1973,7 +1979,7 @@
 				for(var/mob/living/carbon/human/H in mob_list)
 					var/turf/loc = find_loc(H)
 					var/security = 0
-					if(loc.z > 1 || prisonwarped.Find(H))
+					if(loc.z > ZLEVEL_STATION || prisonwarped.Find(H))
 //don't warp them if they aren't ready or are already there
 						continue
 					H.Paralyse(5)
@@ -2007,7 +2013,7 @@
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","TA([objective])")
 				for(var/mob/living/carbon/human/H in player_list)
-					if(H.stat == 2 || !H.client || !H.mind) continue
+					if(H.stat == DEAD || !H.client || !H.mind) continue
 					if(is_special_character(H)) continue
 					//traitorize(H, objective, 0)
 					ticker.mode.traitors += H.mind
@@ -2078,7 +2084,7 @@
 				while(!usr.stat)
 //knock yourself out to stop the ghosts
 					for(var/mob/M in player_list)
-						if(M.stat != 2 && prob(25))
+						if(M.stat != DEAD && prob(25))
 							var/area/AffectedArea = get_area(M)
 							if(AffectedArea.name != "Space" && AffectedArea.name != "Engine Walls" && AffectedArea.name != "Chemical Lab Test Chamber" && AffectedArea.name != "Escape Shuttle" && AffectedArea.name != "Arrival Area" && AffectedArea.name != "Arrival Shuttle" && AffectedArea.name != "start area" && AffectedArea.name != "Engine Combustion Chamber")
 								AffectedArea.power_light = 0
@@ -2101,7 +2107,7 @@
 										step_rand(W)
 					sleep(rand(100,1000))
 				for(var/mob/M in player_list)
-					if(M.stat != 2)
+					if(M.stat != DEAD)
 						M.show_message(text("\blue The chilling wind suddenly stops..."), 1)
 /*				if("shockwave")
 				ok = 1
@@ -2313,7 +2319,7 @@
 				message_admins("[key_name_admin(usr)] made the floor LAVA! It'll last [length] seconds and it will deal [damage] damage to everyone.", 1)
 
 				for(var/turf/simulated/floor/F in world)
-					if(F.z == 1)
+					if(F.z == ZLEVEL_STATION)
 						F.name = "lava"
 						F.desc = "The floor is LAVA!"
 						F.overlays += "lava"
@@ -2338,7 +2344,7 @@
 						sleep(10)
 
 					for(var/turf/simulated/floor/F in world) // Reset everything.
-						if(F.z == 1)
+						if(F.z == ZLEVEL_STATION)
 							F.name = initial(F.name)
 							F.desc = initial(F.desc)
 							F.overlays.Cut()
@@ -2386,7 +2392,7 @@
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","EgL")
 				for(var/obj/machinery/door/airlock/W in world)
-					if(W.z == 1 && !istype(get_area(W), /area/bridge) && !istype(get_area(W), /area/crew_quarters) && !istype(get_area(W), /area/security/prison))
+					if(W.z == ZLEVEL_STATION && !istype(get_area(W), /area/bridge) && !istype(get_area(W), /area/crew_quarters) && !istype(get_area(W), /area/security/prison))
 						W.req_access = list()
 				message_admins("[key_name_admin(usr)] activated Egalitarian Station mode")
 				command_alert("Centcomm airlock control override activated. Please take this time to get acquainted with your coworkers.")

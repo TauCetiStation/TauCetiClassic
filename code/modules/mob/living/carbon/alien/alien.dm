@@ -147,19 +147,10 @@
 /mob/living/carbon/alien/IsAdvancedToolUser()
 	return has_fine_manipulation
 
-/mob/living/carbon/alien/Process_Spaceslipping()
-	return 0 // Don't slip in space.
-
 /mob/living/carbon/alien/Stat()
-
-	statpanel("Status")
-	stat(null, "Intent: [a_intent]")
-	stat(null, "Move Mode: [m_intent]")
-
 	..()
 
-	if (client.statpanel == "Status")
-		stat(null, "Plasma Stored: [getPlasma()]/[max_plasma]")
+	if(statpanel("Status"))
 		var/baby = 0
 		var/drone = 0
 		var/sentinel = 0
@@ -201,12 +192,6 @@
 				stat(null, "Health: [queen.health]/[queen.maxHealth]")
 				stat(null, "Location: [queen.loc.loc.name]")
 
-	if(emergency_shuttle)
-		if(emergency_shuttle.online && emergency_shuttle.location < 2)
-			var/timeleft = emergency_shuttle.timeleft()
-			if (timeleft)
-				stat(null, "ETA-[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
-
 /mob/living/carbon/alien/Stun(amount)
 	if(status_flags & CANSTUN)
 		stunned = max(max(stunned,amount),0) //can't go below 0, getting a low amount of stun doesn't lower your current stun
@@ -226,7 +211,7 @@ Hit Procs
 -----------------------------------------*/
 /mob/living/carbon/alien/ex_act(severity)
 	if(!blinded)
-		flick("flash", flash)
+		flash_eyes()
 
 	var/shielded = 0
 
@@ -260,11 +245,11 @@ Hit Procs
 	updatehealth()
 
 /mob/living/carbon/alien/blob_act()
-	if (stat == 2)
+	if (stat == DEAD)
 		return
 	var/shielded = 0
 	var/damage = null
-	if (stat != 2)
+	if (stat != DEAD)
 		damage = rand(30,40)
 
 	if(shielded)

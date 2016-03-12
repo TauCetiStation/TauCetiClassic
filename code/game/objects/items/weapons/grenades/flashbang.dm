@@ -26,11 +26,6 @@
 		return
 
 	proc/bang(var/turf/T , var/mob/living/carbon/M)						// Added a new proc called 'bang' that takes a location and a person to be banged.
-		if (locate(/obj/item/weapon/cloaking_device, M))			// Called during the loop that bangs people in lockers/containers and when banging
-			for(var/obj/item/weapon/cloaking_device/S in M)			// people in normal view.  Could theroetically be called during other explosions.
-				S.active = 0										// -- Polymorph
-				S.icon_state = "shield0"
-
 		M << "\red <B>BANG</B>"
 		playsound(src.loc, 'sound/effects/bang.ogg', 50, 1, 5)
 
@@ -49,7 +44,7 @@
 
 //Flashing everyone
 		if(eye_safety < 1)
-			flick("e_flash", M.flash)
+			M.flash_eyes()
 			M.Stun(2)
 			M.Weaken(10)
 

@@ -12,6 +12,12 @@ var/list/ventcrawl_machinery = list(/obj/machinery/atmospherics/unary/vent_pump,
 	if(lying)
 		src << "You can't vent crawl while you're stunned!"
 		return
+	if(restrained())
+		src << "You can't vent crawl while you're restrained!"
+		return
+	if(buckled_mob)
+		src << "You can't vent crawl with [buckled_mob] on you!"
+		return
 
 	var/obj/machinery/atmospherics/unary/vent_found
 

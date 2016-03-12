@@ -446,6 +446,7 @@ datum/projectile_data
 	var/b = mixOneColor(weights, blues)
 	return rgb(r,g,b)
 
+
 //============VG PORTS============
 /proc/recursive_type_check(atom/O, type = /atom)
 	var/list/processing_list = list(O)
@@ -480,3 +481,46 @@ datum/projectile_data
 	spawn(duration)
 		for(var/client/C in show_to)
 			C.images -= I
+
+
+//============Bay12 atmos=============
+/proc/convert_k2c(var/temp)
+	return ((temp - T0C))
+
+/proc/convert_c2k(var/temp)
+	return ((temp + T0C))
+
+/proc/getCardinalAirInfo(var/turf/loc, var/list/stats=list("temperature"))
+	var/list/temps = new/list(4)
+	for(var/dir in cardinal)
+		var/direction
+		switch(dir)
+			if(NORTH)
+				direction = 1
+			if(SOUTH)
+				direction = 2
+			if(EAST)
+				direction = 3
+			if(WEST)
+				direction = 4
+		var/turf/simulated/T=get_turf(get_step(loc,dir))
+		var/list/rstats = new /list(stats.len)
+		if(T && istype(T) && T.zone)
+			var/datum/gas_mixture/environment = T.return_air()
+			for(var/i in 1 to stats.len)
+				if(stats[i] == "pressure")
+					rstats[i] = environment.return_pressure()
+				else
+					rstats[i] = environment.vars[stats[i]]
+		else if(istype(T, /turf/simulated))
+			rstats = null // Exclude zone (wall, door, etc).
+		else if(istype(T, /turf))
+			// Should still work.  (/turf/return_air())
+			var/datum/gas_mixture/environment = T.return_air()
+			for(var/i in 1 to stats.len)
+				if(stats[i] == "pressure")
+					rstats[i] = environment.return_pressure()
+				else
+					rstats[i] = environment.vars[stats[i]]
+		temps[direction] = rstats
+	return temps

@@ -240,8 +240,8 @@ var/list/mechtoys = list(
 	for(var/atom/movable/MA in shuttle)
 		if(MA.anchored)	continue
 
-		// Must be in a crate!
-		if(istype(MA,/obj/structure/closet/crate))
+		// Must be in a crate (or a critter crate)!
+		if(istype(MA,/obj/structure/closet/crate) || istype(MA,/obj/structure/closet/critter))
 			callHook("sell_crate", list(MA, shuttle))
 
 			points += points_per_crate
@@ -447,7 +447,7 @@ var/list/mechtoys = list(
 		reqform.info += "RANK: [idrank]<br>"
 		reqform.info += "REASON: [reason]<br>"
 		reqform.info += "SUPPLY CRATE TYPE: [P.name]<br>"
-		reqform.info += "ACCESS RESTRICTION: [replacetext(get_access_desc(P.access))]<br>"
+		reqform.info += "ACCESS RESTRICTION: [get_access_desc(P.access)]<br>"
 		reqform.info += "CONTENTS:<br>"
 		reqform.info += P.manifest
 		reqform.info += "<hr>"
@@ -612,7 +612,7 @@ var/list/mechtoys = list(
 		reqform.info += "RANK: [idrank]<br>"
 		reqform.info += "REASON: [reason]<br>"
 		reqform.info += "SUPPLY CRATE TYPE: [P.name]<br>"
-		reqform.info += "ACCESS RESTRICTION: [replacetext(get_access_desc(P.access))]<br>"
+		reqform.info += "ACCESS RESTRICTION: [get_access_desc(P.access)]<br>"
 		reqform.info += "CONTENTS:<br>"
 		reqform.info += P.manifest
 		reqform.info += "<hr>"

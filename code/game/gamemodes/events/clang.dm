@@ -78,8 +78,8 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 		walk_towards(immrod, end,1)
 	sleep(1)
 	while (immrod)
-		if (immrod.z != 1)
-			immrod.z = 1
+		if (immrod.z != ZLEVEL_STATION)
+			immrod.z = ZLEVEL_STATION
 		if(immrod.loc == end)
 			qdel(immrod)
 		sleep(10)

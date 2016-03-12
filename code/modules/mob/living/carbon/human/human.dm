@@ -3,7 +3,7 @@
 	real_name = "unknown"
 	voice_name = "unknown"
 	icon = 'icons/mob/human.dmi'
-	icon_state = "body_m_s"
+	//icon_state = "body_m_s"
 	var/list/hud_list[9]
 	var/datum/species/species //Contains icon generation and language information, set during New().
 	var/dog_owner
@@ -74,7 +74,6 @@
 	hud_list[SPECIALROLE_HUD] = image('icons/mob/hud.dmi', src, "hudblank")
 	hud_list[STATUS_HUD_OOC]  = image('icons/mob/hud.dmi', src, "hudhealthy")
 
-
 	..()
 
 	if(dna)
@@ -82,97 +81,7 @@
 
 	prev_gender = gender // Debug for plural genders
 	make_blood()
-
-/mob/living/carbon/human/Bump(atom/movable/AM as mob|obj, yes)
-	if ((!( yes ) || now_pushing))
-		return
-	now_pushing = 1
-	if (ismob(AM))
-		var/mob/tmob = AM
-
-		if( istype(tmob, /mob/living/carbon) && prob(10) )
-			src.spread_disease_to(AM, "Contact")
-//BubbleWrap - Should stop you pushing a restrained person out of the way
-
-		if(istype(tmob, /mob/living/carbon/human))
-
-			for(var/mob/M in range(tmob, 1))
-				if(tmob.pinned.len ||  ((M.pulling == tmob && ( tmob.restrained() && !( M.restrained() ) && M.stat == 0)) || locate(/obj/item/weapon/grab, tmob.grabbed_by.len)) )
-					if ( !(world.time % 5) )
-						src << "\red [tmob] is restrained, you cannot push past"
-					now_pushing = 0
-					return
-				if( tmob.pulling == M && ( M.restrained() && !( tmob.restrained() ) && tmob.stat == 0) )
-					if ( !(world.time % 5) )
-						src << "\red [tmob] is restraining [M], you cannot push past"
-					now_pushing = 0
-					return
-
-		//Leaping mobs just land on the tile, no pushing, no anything.
-		if(status_flags & LEAPING)
-			loc = tmob.loc
-			status_flags &= ~LEAPING
-			now_pushing = 0
-			return
-
-		if(istype(tmob,/mob/living/silicon/robot/drone)) //I have no idea why the hell this isn't already happening. How do mice do it?
-			loc = tmob.loc
-			now_pushing = 0
-			return
-
-		//BubbleWrap: people in handcuffs are always switched around as if they were on 'help' intent to prevent a person being pulled from being seperated from their puller
-		if((tmob.a_intent == "help" || tmob.restrained()) && (a_intent == "help" || src.restrained()) && tmob.canmove && !tmob.buckled && canmove) // mutual brohugs all around!
-			var/turf/oldloc = loc
-			loc = tmob.loc
-			tmob.loc = oldloc
-			now_pushing = 0
-			for(var/mob/living/carbon/slime/slime in view(1,tmob))
-				if(slime.Victim == tmob)
-					slime.UpdateFeed()
-			return
-
-		if(istype(tmob, /mob/living/carbon/human) && (FAT in tmob.mutations))
-			if(prob(40) && !(FAT in src.mutations))
-				src << "\red <B>You fail to push [tmob]'s fat ass out of the way.</B>"
-				now_pushing = 0
-				return
-		if(tmob.r_hand && istype(tmob.r_hand, /obj/item/weapon/shield/riot))
-			if(prob(99))
-				now_pushing = 0
-				return
-		if(tmob.l_hand && istype(tmob.l_hand, /obj/item/weapon/shield/riot))
-			if(prob(99))
-				now_pushing = 0
-				return
-		if(!(tmob.status_flags & CANPUSH))
-			now_pushing = 0
-			return
-
-		tmob.LAssailant = src
-
-	now_pushing = 0
-	spawn(0)
-		..()
-		if (!istype(AM, /atom/movable))
-			return
-		if (!now_pushing)
-			now_pushing = 1
-
-			if (!AM.anchored)
-				var/t = get_dir(src, AM)
-				if (istype(AM, /obj/structure/window))
-					if(AM:ini_dir == NORTHWEST || AM:ini_dir == NORTHEAST || AM:ini_dir == SOUTHWEST || AM:ini_dir == SOUTHEAST)
-						for(var/obj/structure/window/win in get_step(AM,t))
-							now_pushing = 0
-							return
-				step(AM, t)
-				if(ishuman(AM) && AM:grabbed_by)
-					for(var/obj/item/weapon/grab/G in AM:grabbed_by)
-						step(G:assailant, get_dir(G:assailant, AM))
-						G.adjust_position()
-			now_pushing = 0
-		return
-	return
+	regenerate_icons()
 
 /mob/living/carbon/human/Stat()
 	..()
@@ -180,17 +89,8 @@
 	if(statpanel("Status"))
 		stat(null, "Intent: [a_intent]")
 		stat(null, "Move Mode: [m_intent]")
-		if(ticker && ticker.mode && ticker.mode.name == "AI malfunction")
-			if(ticker.mode:malf_mode_declared)
-				stat(null, "Time left: [max(ticker.mode:AI_win_timeleft/(ticker.mode:apcs/3), 0)]")
-		if(emergency_shuttle)
-			if(emergency_shuttle.online && emergency_shuttle.location < 2)
-				var/timeleft = emergency_shuttle.timeleft()
-				if (timeleft)
-					stat(null, "ETA-[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
-
-		if (internal)
-			if (!internal.air_contents)
+		if(internal)
+			if(!internal.air_contents)
 				qdel(internal)
 			else
 				stat("Internal Atmosphere Info", internal.name)
@@ -201,13 +101,30 @@
 				stat("Chemical Storage", "[mind.changeling.chem_charges]/[mind.changeling.chem_storage]")
 				stat("Genetic Damage Time", mind.changeling.geneticdamage)
 				stat("Absorbed DNA", mind.changeling.absorbedcount)
-		if (istype(wear_suit, /obj/item/clothing/suit/space/space_ninja)&&wear_suit:s_initialized)
-			stat("Energy Charge", round(wear_suit:cell:charge/100))
+		if(istype(wear_suit, /obj/item/clothing/suit/space/space_ninja))
+			var/obj/item/clothing/suit/space/space_ninja/SN = wear_suit
+			stat("SpiderOS Status:","[SN.s_initialized ? "Initialized" : "Disabled"]")
+			stat("Current Time:", "[worldtime2text()]")
+			if(SN.s_initialized)
+				//Suit gear
+				stat("Energy Charge", "[round(SN.cell.charge/100)]%")
+				stat("Smoke Bombs:", "\Roman [SN.s_bombs]")
+				//Ninja status
+				stat("Fingerprints:", "[md5(dna.uni_identity)]")
+				stat("Unique Identity:", "[dna.unique_enzymes]")
+				stat("Overall Status:", "[stat > 1 ? "dead" : "[health]% healthy"]")
+				stat("Nutrition Status:", "[nutrition]")
+				stat("Oxygen Loss:", "[getOxyLoss()]")
+				stat("Toxin Levels:", "[getToxLoss()]")
+				stat("Burn Severity:", "[getFireLoss()]")
+				stat("Brute Trauma:", "[getBruteLoss()]")
+				stat("Radiation Levels:","[radiation] rad")
+				stat("Body Temperature:","[bodytemperature-T0C] degrees C ([bodytemperature*1.8-459.67] degrees F)")
 
 
 /mob/living/carbon/human/ex_act(severity)
 	if(!blinded)
-		flick("flash", flash)
+		flash_eyes()
 
 	var/shielded = 0
 	var/b_loss = null
@@ -251,45 +168,20 @@
 			if (prob(50) && !shielded)
 				Paralyse(10)
 
-	var/update = 0
-
 	// focus most of the blast on one organ
-	var/datum/organ/external/take_blast = pick(organs)
-	update |= take_blast.take_damage(b_loss * 0.9, f_loss * 0.9, used_weapon = "Explosive blast")
+	var/datum/organ/external/O = pick(organs)
+	O.take_damage(b_loss * 0.9, f_loss * 0.9, used_weapon = "Explosive blast")
 
 	// distribute the remaining 10% on all limbs equally
 	b_loss *= 0.1
 	f_loss *= 0.1
 
 	var/weapon_message = "Explosive Blast"
-
-	for(var/datum/organ/external/temp in organs)
-		switch(temp.name)
-			if("head")
-				update |= temp.take_damage(b_loss * 0.2, f_loss * 0.2, used_weapon = weapon_message)
-			if("chest")
-				update |= temp.take_damage(b_loss * 0.4, f_loss * 0.4, used_weapon = weapon_message)
-			if("l_arm")
-				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05, used_weapon = weapon_message)
-			if("r_arm")
-				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05, used_weapon = weapon_message)
-			if("l_leg")
-				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05, used_weapon = weapon_message)
-			if("r_leg")
-				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05, used_weapon = weapon_message)
-			if("r_foot")
-				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05, used_weapon = weapon_message)
-			if("l_foot")
-				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05, used_weapon = weapon_message)
-			if("r_arm")
-				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05, used_weapon = weapon_message)
-			if("l_arm")
-				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05, used_weapon = weapon_message)
-	if(update)	UpdateDamageIcon()
+	take_overall_damage(b_loss * 0.2, f_loss * 0.2, used_weapon = weapon_message)
 
 
 /mob/living/carbon/human/blob_act()
-	if(stat == 2)	return
+	if(stat == DEAD)	return
 	show_message("\red The blob attacks you!")
 	var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
 	var/datum/organ/external/affecting = get_organ(ran_zone(dam_zone))
@@ -304,11 +196,9 @@
 		var/datum/organ/external/affecting = get_organ(pick("chest", "chest", "chest", "head"))
 		if(!affecting)	return
 		if (istype(O, /obj/effect/immovablerod))
-			if(affecting.take_damage(101, 0))
-				UpdateDamageIcon()
+			affecting.take_damage(101, 0)
 		else
-			if(affecting.take_damage((istype(O, /obj/effect/meteor/small) ? 10 : 25), 30))
-				UpdateDamageIcon()
+			affecting.take_damage((istype(O, /obj/effect/meteor/small) ? 10 : 25), 30)
 		updatehealth()
 	return
 
@@ -549,17 +439,32 @@
 
 //Removed the horrible safety parameter. It was only being used by ninja code anyways.
 //Now checks siemens_coefficient of the affected area by default
-/mob/living/carbon/human/electrocute_act(var/shock_damage, var/obj/source, var/base_siemens_coeff = 1.0, var/def_zone = null)
+/mob/living/carbon/human/electrocute_act(shock_damage, obj/source, siemens_coeff = 1.0, def_zone = null, tesla_shock = 0)
 	if(status_flags & GODMODE)	return 0	//godmode
-	if(mShock in src.mutations)	return 0 //#Z2 no shock with that mutation.
+	if(NO_SHOCK in src.mutations)	return 0 //#Z2 no shock with that mutation.
 
-	if (!def_zone)
+	if(!def_zone)
 		def_zone = pick("l_hand", "r_hand")
 
 	var/datum/organ/external/affected_organ = get_organ(check_zone(def_zone))
-	var/siemens_coeff = base_siemens_coeff * get_siemens_coefficient_organ(affected_organ)
 
-	return ..(shock_damage, source, siemens_coeff, def_zone)
+	if(tesla_shock)
+		var/total_coeff = 1
+		if(gloves)
+			var/obj/item/clothing/gloves/G = gloves
+			if(G.siemens_coefficient <= 0)
+				total_coeff -= 0.5
+		if(wear_suit)
+			var/obj/item/clothing/suit/S = wear_suit
+			if(S.siemens_coefficient <= 0)
+				total_coeff -= 0.95
+		siemens_coeff = total_coeff
+	else
+		siemens_coeff *= get_siemens_coefficient_organ(affected_organ)
+
+	. = ..(shock_damage, source, siemens_coeff, def_zone, tesla_shock)
+	if(.)
+		electrocution_animation(40)
 
 /mob/living/carbon/human/Topic(href, href_list)
 	if (href_list["refresh"])
@@ -952,7 +857,7 @@
 		remoteview_target = null
 		return
 
-	if(!(mMorph in mutations))
+	if(!(MORPH in mutations))
 		src.verbs -= /mob/living/carbon/human/proc/morph
 		return
 
@@ -1031,7 +936,7 @@
 		remoteview_target = null
 		return
 
-	if(!(mRemotetalk in src.mutations))
+	if(!(REMOTE_TALK in src.mutations))
 		src.verbs -= /mob/living/carbon/human/proc/remotesay
 		return
 
@@ -1062,7 +967,7 @@
 	else
 		say = sanitize(say)
 	var/mob/T = creatures[target]
-	if(mRemotetalk in T.mutations)
+	if(REMOTE_TALK in T.mutations)
 		T.show_message("\blue You hear [src.real_name]'s voice: [say]")
 	else
 		T.show_message("\blue You hear a voice that seems to echo around the room: [say]")
@@ -1079,7 +984,7 @@
 		reset_view(0)
 		return
 
-	if(!(mRemote in src.mutations))
+	if(!(REMOTE_VIEW in src.mutations))
 		remoteview_target = null
 		reset_view(0)
 		src.verbs -= /mob/living/carbon/human/proc/remoteobserve
@@ -1102,7 +1007,7 @@
 
 	for(var/mob/living/carbon/human/M in world) //#Z2 only carbon/human for now
 		var/name = M.real_name
-		if(!(mRemotetalk in src.mutations))
+		if(!(REMOTE_TALK in src.mutations))
 			namecounts++
 			name = "([namecounts])"
 		else
@@ -1113,7 +1018,7 @@
 				names.Add(name)
 				namecounts[name] = 1
 		var/turf/temp_turf = get_turf(M)
-		if((temp_turf.z != 1 && temp_turf.z != 5 || temp_turf.z != src.z) || M.stat!=CONSCIOUS) //Not on mining or the station. Or dead #Z2 + target on the same Z level as player
+		if((temp_turf.z != ZLEVEL_STATION && temp_turf.z != ZLEVEL_ASTEROID || temp_turf.z != src.z) || M.stat!=CONSCIOUS) //Not on mining or the station. Or dead #Z2 + target on the same Z level as player
 			continue
 		creatures[name] += M
 
@@ -1241,7 +1146,7 @@
 	if(clean_feet && !shoes && istype(feet_blood_DNA, /list) && feet_blood_DNA.len)
 		feet_blood_color = null
 		feet_blood_DNA = null
-		update_inv_shoes(1)
+		update_inv_shoes()
 		return 1
 
 /mob/living/carbon/human/get_visible_implants(var/class = 0)
@@ -1409,7 +1314,7 @@
 		W.message = message
 		W.add_fingerprint(src)
 
-/mob/living/carbon/human/canSingulothPull(var/obj/machinery/singularity/singulo)
+/mob/living/carbon/human/canSingulothPull(var/obj/singularity/singulo)
 	if(!..())
 		return 0
 
@@ -1567,13 +1472,13 @@
 	if(istype(G.affecting,/mob/living/carbon/human))
 		var/mob/living/carbon/human/H = G.affecting
 		H.apply_damage(50,BRUTE)
-		if(H.stat == 2)
+		if(H.stat == DEAD)
 			H.gib()
 	else
 		var/mob/living/M = G.affecting
 		if(!istype(M)) return //wut
 		M.apply_damage(50,BRUTE)
-		if(M.stat == 2)
+		if(M.stat == DEAD)
 			M.gib()
 
 /mob/living/carbon/human/has_eyes()
@@ -1582,3 +1487,29 @@
 		if(eyes && istype(eyes))
 			return 1
 	return 0
+
+
+
+//Turns a mob black, flashes a skeleton overlay
+//Just like a cartoon!
+/mob/living/carbon/human/proc/electrocution_animation(anim_duration)
+	//TG...
+	//Handle mutant parts if possible
+	//if(species)
+	//	species.handle_mutant_bodyparts(src,"black")
+	//	species.handle_hair(src,"black")
+	//	species.update_color(src,"black")
+	//	overlays += "electrocuted_base"
+	//	spawn(anim_duration)
+	//		if(src)
+	//			if(dna && dna.species)
+	//				dna.species.handle_mutant_bodyparts(src)
+	//				dna.species.handle_hair(src)
+	//				dna.species.update_color(src)
+	//			overlays -= "electrocuted_base"
+	//else //or just do a generic animation
+	var/list/viewing = list()
+	for(var/mob/M in viewers(src))
+		if(M.client)
+			viewing += M.client
+	flick_overlay(image(icon,src,"electrocuted_generic",MOB_LAYER+1), viewing, anim_duration)

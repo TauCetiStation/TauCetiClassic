@@ -4,6 +4,9 @@
 // Navigates via floor navbeacons
 // Remote Controlled from QM's PDA
 
+#define SIGH 0
+#define ANNOYED 1
+#define DELIGHT 2
 
 /obj/machinery/bot/mulebot
 	name = "Mulebot"
@@ -20,6 +23,8 @@
 	var/atom/movable/load = null		// the loaded crate (usually)
 	var/beacon_freq = 1400
 	var/control_freq = 1447
+	can_buckle = 1
+	buckle_lying = 0
 
 	suffix = ""
 
@@ -47,7 +52,7 @@
 	var/auto_return = 1	// true if auto return to home beacon after unload
 	var/auto_pickup = 1 // true if auto-pickup at beacon
 
-	var/obj/item/weapon/cell/cell
+	var/obj/item/weapon/stock_parts/cell/cell
 						// the installed power cell
 
 	// constants for internal wiring bitflags
@@ -99,6 +104,7 @@
 	if(radio_controller)
 		radio_controller.remove_object(src,beacon_freq)
 		radio_controller.remove_object(src,control_freq)
+	unload(0)
 	return ..()
 
 // set up the wire colours in random order
@@ -131,8 +137,8 @@
 		user << "\blue You [locked ? "lock" : "unlock"] the mulebot's controls!"
 		flick("mulebot-emagged", src)
 		playsound(src.loc, 'sound/effects/sparks1.ogg', 100, 0)
-	else if(istype(I,/obj/item/weapon/cell) && open && !cell)
-		var/obj/item/weapon/cell/C = I
+	else if(istype(I,/obj/item/weapon/stock_parts/cell) && open && !cell)
+		var/obj/item/weapon/stock_parts/cell/C = I
 		user.drop_item()
 		C.loc = src
 		cell = C
@@ -287,9 +293,6 @@
 
 	return t
 
-
-
-
 /obj/machinery/bot/mulebot/Topic(href, href_list)
 	if(..())
 		return
@@ -331,7 +334,7 @@
 
 			if("cellinsert")
 				if(open && !cell)
-					var/obj/item/weapon/cell/C = usr.get_active_hand()
+					var/obj/item/weapon/stock_parts/cell/C = usr.get_active_hand()
 					if(istype(C))
 						usr.drop_item()
 						cell = C
@@ -438,122 +441,131 @@
 		usr.unset_machine()
 	return
 
-
-
 // returns true if the bot has power
 /obj/machinery/bot/mulebot/proc/has_power()
 	return !open && cell && cell.charge>0 && (wires & wire_power1) && (wires & wire_power2)
 
-// mousedrop a crate to load the bot
-// can load anything if emagged
+/obj/machinery/bot/mulebot/proc/buzz(type)
+	switch(type)
+		if(SIGH)
+			visible_message("[src] makes a sighing buzz.", "<span class='italics'>You hear an electronic buzzing sound.</span>")
+			playsound(loc, 'sound/machines/buzz-sigh.ogg', 50, 0)
+		if(ANNOYED)
+			visible_message("[src] makes an annoyed buzzing sound.", "<span class='italics'>You hear an electronic buzzing sound.</span>")
+			playsound(loc, 'sound/machines/buzz-two.ogg', 50, 0)
+		if(DELIGHT)
+			visible_message("[src] makes a delighted ping!", "<span class='italics'>You hear a ping.</span>")
+			playsound(loc, 'sound/machines/ping.ogg', 50, 0)
 
-/obj/machinery/bot/mulebot/MouseDrop_T(var/atom/movable/C, mob/user)
+/obj/machinery/bot/mulebot/MouseDrop_T(var/atom/movable/AM, mob/user)
 
 	if(user.stat)
 		return
 
-	if (!on || !istype(C)|| C.anchored || get_dist(user, src) > 1 || get_dist(src,C) > 1 )
+	if(user.incapacitated() || user.lying)
 		return
 
-	if(load)
+	if (!istype(AM))
 		return
 
-	load(C)
+	load(AM)
 
+// mousedrop a crate to load the bot
+// can load anything if emagged
+/obj/machinery/bot/mulebot/MouseDrop_T(atom/movable/AM, mob/user)
+	if(user.incapacitated() || user.lying)
+		return
+	if (!istype(AM))
+		return
+	load(AM)
 
 // called to load a crate
-/obj/machinery/bot/mulebot/proc/load(var/atom/movable/C)
-	if((wires & wire_loadcheck) && !istype(C,/obj/structure/closet/crate))
-		src.visible_message("[src] makes a sighing buzz.", "You hear an electronic buzzing sound.")
-		playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, 0)
-		return		// if not emagged, only allow crates to be loaded
-
-	//I'm sure someone will come along and ask why this is here... well people were dragging screen items onto the mule, and that was not cool.
-	//So this is a simple fix that only allows a selection of item types to be considered. Further narrowing-down is below.
-	if(!istype(C,/obj/item) && !istype(C,/obj/machinery) && !istype(C,/obj/structure) && !ismob(C))
+/obj/machinery/bot/mulebot/proc/load(atom/movable/AM)
+	if(load ||  AM.anchored)
 		return
-	if(!isturf(C.loc)) //To prevent the loading from stuff from someone's inventory, which wouldn't get handled properly.
+	if(!isturf(AM.loc)) //To prevent the loading from stuff from someone's inventory or screen icons.
 		return
 
-	if(get_dist(C, src) > 1 || load || !on)
-		return
-	for(var/obj/structure/plasticflaps/P in src.loc)//Takes flaps into account
-		if(!CanPass(C,P))
+	var/obj/structure/closet/crate/CRATE
+	if(istype(AM,/obj/structure/closet/crate))
+		CRATE = AM
+	else
+		if(wires & wire_loadcheck)
+			buzz(SIGH)
+			return		// if not emagged, only allow crates to be loaded
+
+	if(CRATE) // if it's a crate, close before loading
+		CRATE.close()
+
+	if(isobj(AM))
+		var/obj/O = AM
+		if(O.buckled_mob || (locate(/mob) in AM)) //can't load non crates objects with mobs buckled to it or inside it.
+			buzz(SIGH)
 			return
-	mode = 1
 
-	// if a create, close before loading
-	var/obj/structure/closet/crate/crate = C
-	if(istype(crate))
-		crate.close()
+	if(isliving(AM))
+		if(!buckle_mob(AM))
+			return
+	else
+		AM.loc = src
+		AM.pixel_y += 9
+		if(AM.layer < layer)
+			AM.layer = layer + 0.1
+		overlays += AM
 
-	C.loc = src.loc
-	sleep(2)
-	if(C.loc != src.loc) //To prevent you from going onto more thano ne bot.
-		return
-	C.loc = src
-	load = C
-
-	C.pixel_y += 9
-	if(C.layer < layer)
-		C.layer = layer + 0.1
-	overlays += C
-
-	if(ismob(C))
-		var/mob/M = C
-		if(M.client)
-			M.client.perspective = EYE_PERSPECTIVE
-			M.client.eye = src
-
+	load= AM
 	mode = 0
 	send_status()
+
+/obj/machinery/bot/mulebot/buckle_mob(mob/living/M)
+	if(M.buckled)
+		return 0
+	var/turf/T = get_turf(src)
+	if(M.loc != T)
+		density = 0
+		var/can_step = step_towards(M, T)
+		density = 1
+		if(!can_step)
+			return 0
+	return ..()
+
+
+/obj/machinery/bot/mulebot/post_buckle_mob(mob/living/M)
+	if(M == buckled_mob) //post buckling
+		M.pixel_y = initial(M.pixel_y) + 9
+		if(M.layer < layer)
+			M.layer = layer + 0.1
+
+	else //post unbuckling
+		load = null
+		M.layer = initial(M.layer)
+		M.pixel_y = initial(M.pixel_y)
 
 // called to unload the bot
 // argument is optional direction to unload
 // if zero, unload at bot's location
-/obj/machinery/bot/mulebot/proc/unload(var/dirn = 0)
+/obj/machinery/bot/mulebot/proc/unload(dirn)
 	if(!load)
 		return
 
-	mode = 1
+	mode = 0
+
 	overlays.Cut()
 
-	load.loc = src.loc
-	load.pixel_y -= 9
+	if(buckled_mob)
+		unbuckle_mob()
+		return
+
+	load.loc = loc
+	load.pixel_y = initial(load.pixel_y)
 	load.layer = initial(load.layer)
-	if(ismob(load))
-		var/mob/M = load
-		if(M.client)
-			M.client.perspective = MOB_PERSPECTIVE
-			M.client.eye = src
-
-
 	if(dirn)
-		var/turf/T = src.loc
-		T = get_step(T,dirn)
-		if(CanPass(load,T))//Can't get off onto anything that wouldn't let you pass normally
+		var/turf/T = loc
+		var/turf/newT = get_step(T,dirn)
+		if(load.CanPass(load,newT)) //Can't get off onto anything that wouldn't let you pass normally
 			step(load, dirn)
-		else
-			load.loc = src.loc//Drops you right there, so you shouldn't be able to get yourself stuck
 
 	load = null
-
-	// in case non-load items end up in contents, dump every else too
-	// this seems to happen sometimes due to race conditions
-	// with items dropping as mobs are loaded
-
-	for(var/atom/movable/AM in src)
-		if(AM == cell || AM == botcard) continue
-
-		AM.loc = src.loc
-		AM.layer = initial(AM.layer)
-		AM.pixel_y = initial(AM.pixel_y)
-		if(ismob(AM))
-			var/mob/M = AM
-			if(M.client)
-				M.client.perspective = MOB_PERSPECTIVE
-				M.client.eye = src
-	mode = 0
 
 
 /obj/machinery/bot/mulebot/process()
@@ -586,7 +598,9 @@
 	if(refresh) updateDialog()
 
 /obj/machinery/bot/mulebot/proc/process_bot()
-	//if(mode) world << "Mode: [mode]"
+	if(!on)
+		return
+
 	switch(mode)
 		if(0)		// idle
 			icon_state = "mulebot0"
@@ -609,9 +623,6 @@
 
 
 				if(istype( next, /turf/simulated))
-					//world << "at ([x],[y]) moving to ([next.x],[next.y])"
-
-
 					if(bloodiness)
 						var/obj/effect/decal/cleanable/blood/tracks/B = new(loc)
 						var/newdir = get_dir(next, loc)
@@ -626,12 +637,9 @@
 							B.dir = newdir
 						bloodiness--
 
-
-
 					var/moved = step_towards(src, next)	// attempt to move
 					if(cell) cell.use(1)
 					if(moved)	// successful move
-						//world << "Successful move."
 						blockcount = 0
 						path -= loc
 
@@ -647,43 +655,32 @@
 
 					else		// failed to move
 
-						//world << "Unable to move."
-
-
-
 						blockcount++
 						mode = 4
 						if(blockcount == 3)
-							src.visible_message("[src] makes an annoyed buzzing sound", "You hear an electronic buzzing sound.")
-							playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 0)
+							buzz(ANNOYED)
 
 						if(blockcount > 5)	// attempt 5 times before recomputing
 							// find new path excluding blocked turf
-							src.visible_message("[src] makes a sighing buzz.", "You hear an electronic buzzing sound.")
-							playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, 0)
+							buzz(SIGH)
 
 							spawn(2)
 								calc_path(next)
 								if(path.len > 0)
-									src.visible_message("[src] makes a delighted ping!", "You hear a ping.")
-									playsound(src.loc, 'sound/machines/ping.ogg', 50, 0)
+									buzz(DELIGHT)
 								mode = 4
 							mode =6
 							return
 						return
 				else
-					src.visible_message("[src] makes an annoyed buzzing sound", "You hear an electronic buzzing sound.")
-					playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 0)
-					//world << "Bad turf."
+					buzz(ANNOYED)
 					mode = 5
 					return
 			else
-				//world << "No path."
 				mode = 5
 				return
 
 		if(5)		// calculate new path
-			//world << "Calc new path."
 			mode = 6
 			spawn(0)
 
@@ -692,18 +689,12 @@
 				if(path.len > 0)
 					blockcount = 0
 					mode = 4
-					src.visible_message("[src] makes a delighted ping!", "You hear a ping.")
-					playsound(src.loc, 'sound/machines/ping.ogg', 50, 0)
+					buzz(DELIGHT)
 
 				else
-					src.visible_message("[src] makes a sighing buzz.", "You hear an electronic buzzing sound.")
-					playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, 0)
+					buzz(SIGH)
 
 					mode = 7
-		//if(6)
-			//world << "Pending path calc."
-		//if(7)
-			//world << "No dest / no route."
 	return
 
 
@@ -726,6 +717,8 @@
 
 // starts bot moving to current destination
 /obj/machinery/bot/mulebot/proc/start()
+	if(!on)
+		return
 	if(destination == home_destination)
 		mode = 3
 	else
@@ -735,6 +728,8 @@
 // starts bot moving to home
 // sends a beacon query to find
 /obj/machinery/bot/mulebot/proc/start_home()
+	if(!on)
+		return
 	spawn(0)
 		set_destination(home_destination)
 		mode = 4
@@ -760,7 +755,7 @@
 							break
 				else			// otherwise, look for crates only
 					AM = locate(/obj/structure/closet/crate) in get_step(loc,loaddir)
-				if(AM)
+				if(AM && AM.Adjacent(src))
 					load(AM)
 		// whatever happened, check to see if we return home
 
@@ -816,11 +811,10 @@
 
 // player on mulebot attempted to move
 /obj/machinery/bot/mulebot/relaymove(var/mob/user)
-	if(user.stat)
+	if(user.incapacitated())
 		return
 	if(load == user)
 		unload(0)
-	return
 
 // receive a radio signal
 // used for control and beacon reception
@@ -970,5 +964,8 @@
 	s.start()
 
 	new /obj/effect/decal/cleanable/blood/oil(src.loc)
-	unload(0)
 	qdel(src)
+
+#undef SIGH
+#undef ANNOYED
+#undef DELIGHT

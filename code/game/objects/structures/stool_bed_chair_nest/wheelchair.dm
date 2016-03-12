@@ -3,7 +3,7 @@
 	desc = "You sit in this. Either by will or force."
 	icon_state = "wheelchair"
 	anchored = 0
-	movable = 1
+	buckle_movable = 1
 
 	var/driving = 0
 	var/mob/living/pulling = null
@@ -22,7 +22,7 @@
 		if(user==pulling)
 			pulling = null
 			user.pulledby = null
-			user << "\red You lost your grip!"
+			user << "<span class='red'>You lost your grip!</span>"
 		return
 	if(user.pulling && (user == pulling))
 		pulling = null
@@ -36,10 +36,10 @@
 		if(user==pulling)
 			return
 	if(pulling && (get_dir(src.loc, pulling.loc) == direction))
-		user << "\red You cannot go there."
+		user << "<span class='red'>You cannot go there."
 		return
 	if(pulling && buckled_mob && (buckled_mob == user))
-		user << "\red You cannot drive while being pushed."
+		user << "<span class='red'>You cannot drive while being pushed.</span>"
 		return
 
 	// Let's roll
@@ -88,21 +88,21 @@
 						if (O != occupant)
 							Bump(O)
 				else
-					unbuckle()
+					unbuckle_mob()
 			if (pulling && (get_dist(src, pulling) > 1))
 				pulling.pulledby = null
-				pulling << "\red You lost your grip!"
+				pulling << "<span class='red'>You lost your grip!</span>"
 				pulling = null
 		else
 			if (occupant && (src.loc != occupant.loc))
 				src.loc = occupant.loc // Failsafe to make sure the wheelchair stays beneath the occupant after driving
 	handle_rotation()
 
-/obj/structure/stool/bed/chair/wheelchair/attack_hand(mob/user as mob)
+/obj/structure/stool/bed/chair/wheelchair/attack_hand(mob/living/user as mob)
 	if (pulling)
 		MouseDrop(usr)
 	else
-		manual_unbuckle(user)
+		user_unbuckle_mob(user)
 	return
 
 /obj/structure/stool/bed/chair/wheelchair/MouseDrop(over_object, src_location, over_location)
@@ -110,7 +110,7 @@
 	if(over_object == usr && in_range(src, usr))
 		if(!ishuman(usr))	return
 		if(usr == buckled_mob)
-			usr << "\red You realize you are unable to push the wheelchair you sit in."
+			usr << "<span class='red'>You realize you are unable to push the wheelchair you sit in.</span>"
 			return
 		if(!pulling)
 			pulling = usr
@@ -122,7 +122,7 @@
 		else
 			if(usr != pulling)
 				for(var/mob/O in viewers(pulling, null))
-					O.show_message("\red [usr] breaks [pulling]'s grip on the wheelchair.", 1)
+					O.show_message("<span class='red'>[usr] breaks [pulling]'s grip on the wheelchair.</span>", 1)
 			else
 				usr << "You let go of \the [name]'s handles."
 			pulling.pulledby = null
@@ -134,8 +134,7 @@
 	if(!buckled_mob)	return
 
 	if(propelled || (pulling && (pulling.a_intent == "hurt")))
-		var/mob/living/occupant = buckled_mob
-		unbuckle()
+		var/mob/living/occupant = unbuckle_mob()
 		if (pulling && (pulling.a_intent == "hurt"))
 			occupant.throw_at(A, 3, 3, pulling)
 		else if (propelled)
@@ -172,9 +171,3 @@
 			newdir = 4
 		B.dir = newdir
 	bloodiness--
-
-/obj/structure/stool/bed/chair/wheelchair/buckle_mob(mob/M as mob, mob/user as mob)
-	if(M == pulling)
-		pulling = null
-		usr.pulledby = null
-	..()

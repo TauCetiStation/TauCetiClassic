@@ -414,7 +414,7 @@
 		if(M.back)
 			M.back.make_wet(1) //<= wet
 			if(M.back.clean_blood())
-				M.update_inv_back(0)
+				M.update_inv_back()
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			var/washgloves = 1
@@ -437,50 +437,53 @@
 					washears = !(H.wear_mask.flags_inv & HIDEEARS)
 				if (washglasses)
 					washglasses = !(H.wear_mask.flags_inv & HIDEEYES)
+			else
+				H.lip_style = null
+				H.update_body()
 
 			if(H.head)
 				H.head.make_wet(1) //<= wet
 				if(H.head.clean_blood())
-					H.update_inv_head(0)
+					H.update_inv_head()
 			if(H.wear_suit)
 				H.wear_suit.make_wet(1) //<= wet
 				if(H.wear_suit.clean_blood())
-					H.update_inv_wear_suit(0)
+					H.update_inv_wear_suit()
 			else if(H.w_uniform)
 				H.w_uniform.make_wet(1) //<= wet
 				if(H.w_uniform.clean_blood())
-					H.update_inv_w_uniform(0)
+					H.update_inv_w_uniform()
 			if(H.gloves && washgloves)
 				H.gloves.make_wet(1) //<= wet
 				if(H.gloves.clean_blood())
-					H.update_inv_gloves(0)
+					H.update_inv_gloves()
 			if(H.shoes && washshoes)
 				H.shoes.make_wet(1) //<= wet
 				if(H.shoes.clean_blood())
-					H.update_inv_shoes(0)
+					H.update_inv_shoes()
 			if(H.wear_mask && washmask)
 				H.wear_mask.make_wet(1) //<= wet
 				if(H.wear_mask.clean_blood())
-					H.update_inv_wear_mask(0)
+					H.update_inv_wear_mask()
 			if(H.glasses && washglasses)
 				H.glasses.make_wet(1) //<= wet
 				if(H.glasses.clean_blood())
-					H.update_inv_glasses(0)
+					H.update_inv_glasses()
 			if(H.l_ear && washears)
 				if(H.l_ear.clean_blood())
-					H.update_inv_ears(0)
+					H.update_inv_ears()
 			if(H.r_ear && washears)
 				if(H.r_ear.clean_blood())
-					H.update_inv_ears(0)
+					H.update_inv_ears()
 			if(H.belt)
 				H.belt.make_wet(1) //<= wet
 				if(H.belt.clean_blood())
-					H.update_inv_belt(0)
+					H.update_inv_belt()
 			H.clean_blood(washshoes)
 		else
 			if(M.wear_mask)						//if the mob is not human, it cleans the mask without asking for bitflags
 				if(M.wear_mask.clean_blood())
-					M.update_inv_wear_mask(0)
+					M.update_inv_wear_mask()
 			M.clean_blood()
 	else
 		O.clean_blood()

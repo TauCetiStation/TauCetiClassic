@@ -9,9 +9,8 @@
 		icon_state = "ai_dead"
 
 	update_canmove()
-	if(src.eyeobj)
-		src.eyeobj.setLoc(get_turf(src))
-	if(blind)	blind.layer = 0
+	if(eyeobj)
+		eyeobj.setLoc(get_turf(src))
 	sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
 	see_in_dark = 8
 	see_invisible = SEE_INVISIBLE_LEVEL_TWO
@@ -21,21 +20,21 @@
 	var/callshuttle = 0
 
 	for(var/obj/machinery/computer/communications/commconsole in world)
-		if(commconsole.z == 2)
+		if(commconsole.z == ZLEVEL_CENTCOMM)
 			continue
 		if(istype(commconsole.loc,/turf))
 			break
 		callshuttle++
 
 	for(var/obj/item/weapon/circuitboard/communications/commboard in world)
-		if(commboard.z == 2)
+		if(commboard.z == ZLEVEL_CENTCOMM)
 			continue
 		if(istype(commboard.loc,/turf) || istype(commboard.loc,/obj/item/weapon/storage))
 			break
 		callshuttle++
 
 	for(var/mob/living/silicon/ai/shuttlecaller in player_list)
-		if(shuttlecaller.z == 2)
+		if(shuttlecaller.z == ZLEVEL_CENTCOMM)
 			continue
 		if(!shuttlecaller.stat && shuttlecaller.client && istype(shuttlecaller.loc,/turf))
 			break

@@ -126,42 +126,6 @@
 		tally += (283.222 - bodytemperature) / 10 * 1.75
 	return tally+config.monkey_delay
 
-/mob/living/carbon/monkey/Bump(atom/movable/AM as mob|obj, yes)
-
-	spawn( 0 )
-		if ((!( yes ) || now_pushing))
-			return
-		now_pushing = 1
-		if(ismob(AM))
-			var/mob/tmob = AM
-			if(istype(tmob, /mob/living/carbon/human) && (HULK in tmob.mutations))
-				if(prob(70))
-					usr << "\red <B>You fail to push [tmob]'s fat ass out of the way.</B>"
-					now_pushing = 0
-					return
-			if(!(tmob.status_flags & CANPUSH))
-				now_pushing = 0
-				return
-
-			tmob.LAssailant = src
-		now_pushing = 0
-		..()
-		if (!( istype(AM, /atom/movable) ))
-			return
-		if (!( now_pushing ))
-			now_pushing = 1
-			if (!( AM.anchored ))
-				var/t = get_dir(src, AM)
-				if (istype(AM, /obj/structure/window))
-					if(AM:ini_dir == NORTHWEST || AM:ini_dir == NORTHEAST || AM:ini_dir == SOUTHWEST || AM:ini_dir == SOUTHEAST)
-						for(var/obj/structure/window/win in get_step(AM,t))
-							now_pushing = 0
-							return
-				step(AM, t)
-			now_pushing = null
-		return
-	return
-
 /mob/living/carbon/monkey/Topic(href, href_list)
 	..()
 	if (href_list["mach_close"])
@@ -461,14 +425,13 @@
 /mob/living/carbon/monkey/Stat()
 	..()
 	if(statpanel("Status"))
-		stat(null, text("Intent: []", a_intent))
-		stat(null, text("Move Mode: []", m_intent))
+		stat(null, "Intent: [a_intent]")
+		stat(null, "Move Mode: [m_intent]")
 		if(client && mind)
-			if (client.statpanel == "Status")
-				if(mind.changeling)
-					stat("Chemical Storage", "[mind.changeling.chem_charges]/[mind.changeling.chem_storage]")
-					stat("Genetic Damage Time", mind.changeling.geneticdamage)
-					stat("Absorbed DNA", mind.changeling.absorbedcount)
+			if(mind.changeling)
+				stat("Chemical Storage", "[mind.changeling.chem_charges]/[mind.changeling.chem_storage]")
+				stat("Genetic Damage Time", mind.changeling.geneticdamage)
+				stat("Absorbed DNA", mind.changeling.absorbedcount)
 	return
 
 
@@ -487,20 +450,20 @@
 
 /mob/living/carbon/monkey/ex_act(severity)
 	if(!blinded)
-		flick("flash", flash)
+		flash_eyes()
 
 	switch(severity)
 		if(1.0)
-			if (stat != 2)
+			if (stat != DEAD)
 				adjustBruteLoss(200)
 				health = 100 - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss()
 		if(2.0)
-			if (stat != 2)
+			if (stat != DEAD)
 				adjustBruteLoss(60)
 				adjustFireLoss(60)
 				health = 100 - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss()
 		if(3.0)
-			if (stat != 2)
+			if (stat != DEAD)
 				adjustBruteLoss(30)
 				health = 100 - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss()
 			if (prob(50))
@@ -509,7 +472,7 @@
 	return
 
 /mob/living/carbon/monkey/blob_act()
-	if (stat != 2)
+	if (stat != DEAD)
 		adjustFireLoss(60)
 		health = 100 - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss()
 	if (prob(50))

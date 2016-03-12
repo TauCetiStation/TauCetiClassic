@@ -29,14 +29,14 @@
 
 	// Who is alive/dead, who escaped
 	for (var/mob/living/silicon/ai/I in mob_list)
-		if (I.stat == 2 && I.z == 1)
+		if (I.stat == DEAD && I.z == ZLEVEL_STATION)
 			score["deadaipenalty"] = 1
 			score["deadcrew"] += 1
 
 	for (var/mob/living/carbon/human/I in mob_list)
 //		for (var/datum/ailment/disease/V in I.ailments)
 //			if (!V.vaccine && !V.spread != "Remissive") score["disease"]++
-		if (I.stat == 2 && I.z == 1) score["deadcrew"] += 1
+		if (I.stat == DEAD && I.z == ZLEVEL_STATION) score["deadcrew"] += 1
 		if (I.job == "Clown")
 			for(var/thing in I.attack_log)
 				if(findtext(thing, "<font color='orange'>")) score["clownabuse"]++
@@ -44,7 +44,7 @@
 
 	for(var/mob/living/player in mob_list)
 		if (player.client)
-			if (player.stat != 2)
+			if (player.stat != DEAD)
 				var/turf/location = get_turf(player.loc)
 				var/area/escape_zone = locate(/area/shuttle/escape/centcom)
 				if (location in escape_zone)
@@ -62,7 +62,7 @@
 		dmgscore = 0
 		var/turf/location = get_turf(E.loc)
 		var/area/escape_zone = locate(/area/shuttle/escape/centcom)
-		if(E.stat != 2 && location in escape_zone) // Escapee Scores
+		if(E.stat != DEAD && location in escape_zone) // Escapee Scores
 			//for (var/obj/item/weapon/card/id/C1 in get_contents_in_object(E, /obj/item/weapon/card/id))
 			//	cashscore += C1.money
 
@@ -93,7 +93,7 @@
 				continue
 			var/turf/T = M.current.loc
 			if (T && istype(T.loc, /area/security/brig)) score["arrested"] += 1
-			else if (M.current.stat == 2) score["opkilled"]++
+			else if (M.current.stat == DEAD) score["opkilled"]++
 		if(foecount == score["arrested"]) score["allarrested"] = 1
 
 /*
@@ -107,7 +107,7 @@
 			if (location in bad_zone1) score["disc"] = 0
 			if (location in bad_zone2) score["disc"] = 0
 			if (location in bad_zone3) score["disc"] = 0
-			if (A.loc.z != 1) score["disc"] = 0
+			if (A.loc.z != ZLEVEL_STATION) score["disc"] = 0
 */
 		if (score["nuked"])
 			for (var/obj/machinery/nuclearbomb/NUKE in machines)
@@ -128,23 +128,23 @@
 				continue
 			var/turf/T = M.current.loc
 			if (istype(T.loc, /area/security/brig)) score["arrested"] += 1
-			else if (M.current.stat == 2) score["opkilled"]++
+			else if (M.current.stat == DEAD) score["opkilled"]++
 		if(foecount == score["arrested"]) score["allarrested"] = 1
 		for(var/mob/living/carbon/human/player in world)
 			if(player.mind)
 				var/role = player.mind.assigned_role
 				if(role in list("Captain", "Head of Security", "Head of Personnel", "Chief Engineer", "Research Director"))
-					if (player.stat == 2) score["deadcommand"]++
+					if (player.stat == DEAD) score["deadcommand"]++
 
 	// Check station's power levels
 	for (var/obj/machinery/power/apc/A in machines)
-		if (A.z != 1) continue
-		for (var/obj/item/weapon/cell/C in A.contents)
+		if (A.z != ZLEVEL_STATION) continue
+		for (var/obj/item/weapon/stock_parts/cell/C in A.contents)
 			if (C.charge < 2300) score["powerloss"] += 1 // 200 charge leeway
 
 	// Check how much uncleaned mess is on the station
 	for (var/obj/effect/decal/cleanable/M in world)
-		if (M.z != 1) continue
+		if (M.z != ZLEVEL_STATION) continue
 		if (istype(M, /obj/effect/decal/cleanable/blood/gibs/)) score["mess"] += 3
 		if (istype(M, /obj/effect/decal/cleanable/blood/)) score["mess"] += 1
 //		if (istype(M, /obj/effect/decal/cleanable/greenpuke)) score["mess"] += 1
@@ -245,7 +245,7 @@
 			foecount++
 		for(var/mob/living/C in world)
 			if (!istype(C,/mob/living/carbon/human) || !istype(C,/mob/living/silicon/robot) || !istype(C,/mob/living/silicon/ai)) continue
-			if (C.stat == 2) continue
+			if (C.stat == DEAD) continue
 			if (!C.client) continue
 			crewcount++
 
@@ -291,19 +291,19 @@
 		var/revcount = 0
 		var/loycount = 0
 		for(var/datum/mind/M in ticker.mode:head_revolutionaries)
-			if (M.current && M.current.stat != 2) foecount++
+			if (M.current && M.current.stat != DEAD) foecount++
 		for(var/datum/mind/M in ticker.mode:revolutionaries)
-			if (M.current && M.current.stat != 2) revcount++
+			if (M.current && M.current.stat != DEAD) revcount++
 		for(var/mob/living/carbon/human/player in world)
 			if(player.mind)
 				var/role = player.mind.assigned_role
 				if(role in list("Captain", "Head of Security", "Head of Personnel", "Chief Engineer", "Research Director"))
-					if (player.stat != 2) comcount++
+					if (player.stat != DEAD) comcount++
 				else
 					if(player.mind in ticker.mode:revolutionaries) continue
 					loycount++
 		for(var/mob/living/silicon/X in world)
-			if (X.stat != 2) loycount++
+			if (X.stat != DEAD) loycount++
 		var/revpenalty = 10000
 		dat += {"<B><U>MODE STATS</U></B><BR>
 		<B>Number of Surviving Revolution Heads:</B> [foecount]<BR>

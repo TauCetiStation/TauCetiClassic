@@ -297,7 +297,7 @@
 /obj/machinery/bot/farmbot/proc/find_target()
 	if ( emagged ) //Find a human and help them!
 		for ( var/mob/living/carbon/human/human in view(7,src) )
-			if (human.stat == 2)
+			if (human.stat == DEAD)
 				continue
 
 			var list/options = list(FARMBOT_MODE_WEED)
@@ -408,7 +408,7 @@
 		tray.yieldmod = fert.yieldmod
 		tray.mutmod = fert.mutmod
 		qdel(fert)
-		tray.updateicon()
+		tray.update_icon()
 		icon_state = "farmbot_fertile"
 		mode = FARMBOT_MODE_WAITING
 
@@ -450,7 +450,7 @@
 
 		var /obj/machinery/hydroponics/tray = target
 		tray.weedlevel = 0
-		tray.updateicon()
+		tray.update_icon()
 
 /obj/machinery/bot/farmbot/proc/water()
 	if ( !tank || tank.reagents.total_volume < 1 )
@@ -491,7 +491,7 @@
 			if (tray.toxic < 0 ) // Make sure it won't go overboard
 				tray.toxic = 0
 
-		tray.updateicon()
+		tray.update_icon()
 		mode = FARMBOT_MODE_WAITING
 		spawn(FARMBOT_ACTION_DELAY)
 			mode = 0

@@ -40,7 +40,7 @@
 		/*var/l = lentext(msg)
 		if(findtext(msg," ",l,l+1)==0)
 			msg+=" "*/
-		seperate = text2list(msg, " ")
+		seperate = splittext(msg, " ")
 
 	for(var/Xa = 1,Xa<seperate.len,Xa++)
 		var/next = Xa + 1
@@ -82,7 +82,7 @@
 	if(!word)
 		text = "[pick(heard_words)]"
 	else
-		text = pick(text2list(word, " "))
+		text = pick(splittext(word, " "))
 	if(lentext(text)==1)
 		text=uppertext(text)
 	else
@@ -117,9 +117,9 @@
 	for(var/mob/M in mob_list)
 		if (!M.client)
 			continue //skip monkeys and leavers
-		if (istype(M, /mob/new_player))
+		if (isnewplayer(M))
 			continue
-		if(M.stat == 2 &&  M.client.prefs.chat_toggles & CHAT_GHOSTEARS)
+		if(M.stat == DEAD &&  M.client.prefs.chat_toggles & CHAT_GHOSTEARS)
 			listening|=M
 
 	msg = sanitize_plus_chat(msg)

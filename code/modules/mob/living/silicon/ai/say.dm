@@ -1,5 +1,5 @@
 /mob/living/silicon/ai/say(var/message)
-	if(parent && istype(parent) && parent.stat != 2)
+	if(parent && istype(parent) && parent.stat != DEAD)
 		return parent.say(message)
 		//If there is a defined "parent" AI, it is actually an AI, and it is alive, anything the AI tries to say is said by the parent instead.
 	return ..(message)
@@ -56,7 +56,7 @@ var/const/VOX_PATH = "sound/vox/"
 	if(!message || announcing_vox > world.time)
 		return
 
-	var/list/words = text2list(trim(message), " ")
+	var/list/words = splittext(trim(message), " ")
 	var/list/incorrect_words = list()
 
 	if(words.len > 30)

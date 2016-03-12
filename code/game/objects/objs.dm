@@ -18,6 +18,8 @@
 	var/force = 0
 	var/tc_custom = null //Default Bay12 sprite or not
 
+	var/being_shocked = 0
+
 /obj/item/proc/is_used_on(obj/O, mob/user)
 
 /obj/proc/process()
@@ -102,6 +104,9 @@
 /obj/proc/interact(mob/user)
 	return
 
+/obj/proc/container_resist()
+	return
+
 /obj/proc/update_icon()
 	return
 
@@ -138,3 +143,13 @@
 		mo.show_message(rendered, 2)
 		*/
 	return
+
+/obj/proc/tesla_act(var/power)
+	being_shocked = 1
+	var/power_bounced = power / 2
+	tesla_zap(src, 3, power_bounced)
+	spawn(10)
+		reset_shocked()
+
+/obj/proc/reset_shocked()
+	being_shocked = 0

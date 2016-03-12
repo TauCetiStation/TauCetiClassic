@@ -8,7 +8,7 @@
 
 	log_whisper("[src.name]/[src.key] : [message]")
 
-	if (src.client)
+	if(src.client)
 		if (src.client.prefs.muted & MUTE_IC)
 			src << "\red You cannot whisper (muted)."
 			return
@@ -20,12 +20,12 @@
 		usr << "\red You can't speak."
 		return
 
-	if (src.stat == 2)
+	if (src.stat == DEAD)
 		if(fake_death) //Our changeling with fake_death status must not speak in dead chat!!
 			return
 		return src.say_dead(message)
 
-	if (src.stat)
+	if(src.stat)
 		return
 
 	message = trim(sanitize_plus(copytext(message,1,MAX_MESSAGE_LEN)))	//made consistent with say
@@ -35,7 +35,7 @@
 
 	//parse the language code and consume it
 	var/datum/language/speaking = parse_language(message)
-	if (speaking)
+	if(speaking)
 		message = copytext(message,3)
 
 	whisper_say(message, speaking, alt_name)
@@ -54,22 +54,25 @@
 	message = capitalize(trim(message))
 
 	//TODO: handle_speech_problems for silent
-	if (!message || silent || miming)
+	if(!message || silent || miming)
 		return
 
 	// Mute disability
 	//TODO: handle_speech_problems
-	if (src.sdisabilities & MUTE)
+	if(src.sdisabilities & MUTE)
 		return
 
 	//TODO: handle_speech_problems
-	if (istype(src.wear_mask, /obj/item/clothing/mask/muzzle))
+	if(istype(src.wear_mask, /obj/item/clothing/mask/muzzle))
+		return
+
+	if(src.species.name == "Abductor")
 		return
 
 	//looks like this only appears in whisper. Should it be elsewhere as well? Maybe handle_speech_problems?
 	if(istype(src.wear_mask, /obj/item/clothing/mask/gas/voice/space_ninja)&&src.wear_mask:voice=="Unknown")
 		if(copytext(message, 1, 2) != "*")
-			var/list/temp_message = text2list(message, " ")
+			var/list/temp_message = splittext(message, " ")
 			var/list/pick_list = list()
 			for(var/i = 1, i <= temp_message.len, i++)
 				pick_list += i
@@ -79,7 +82,7 @@
 				temp_message[H] = ninjaspeak(temp_message[H])
 				pick_list -= H
 			// TODO:CYRILLIC
-			message = list2text(temp_message, " ")
+			message = jointext(temp_message, " ")
 			message = replacetext(message, "o", "¤")
 			message = replacetext(message, "p", "þ")
 			message = replacetext(message, "l", "£")
@@ -88,14 +91,14 @@
 			message = replacetext(message, "b", "ß")
 
 	//TODO: handle_speech_problems
-	if (src.stuttering)
+	if(src.stuttering)
 		message = stutter(message)
 
 	var/list/listening = hearers(message_range, src)
 	listening |= src
 
 	//ghosts
-	for (var/mob/M in dead_mob_list)	//does this include players who joined as observers as well?
+	for(var/mob/M in dead_mob_list)	//does this include players who joined as observers as well?
 		if (!(M.client))
 			continue
 		if(M.stat == DEAD && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTEARS))
@@ -112,7 +115,7 @@
 				listening += C
 
 	//pass on the message to objects that can hear us.
-	for (var/obj/O in view(message_range, src))
+	for(var/obj/O in view(message_range, src))
 		spawn (0)
 			if (O)
 				O.hear_talk(src, message)	//O.hear_talk(src, message, verb, speaking)
@@ -129,19 +132,20 @@
 	//now mobs
 	var/speech_bubble_test = say_test(message)
 	var/image/speech_bubble = image('icons/mob/talk.dmi',src,"h[speech_bubble_test]")
-	spawn(30) qdel(speech_bubble)
+
+	speech_bubble_animation(speech_bubble)
 
 	for(var/mob/M in listening)
 		M << speech_bubble
 		M.hear_say(message, verb, speaking, alt_name, italics, src)
 
-	if (eavesdropping.len)
+	if(eavesdropping.len)
 		var/new_message = stars(message)	//hopefully passing the message twice through stars() won't hurt... I guess if you already don't understand the language, when they speak it too quietly to hear normally you would be able to catch even less.
 		for(var/mob/M in eavesdropping)
 			M << speech_bubble
 			M.hear_say(new_message, verb, speaking, alt_name, italics, src)
 
-	if (watching.len)
+	if(watching.len)
 		var/rendered = "<span class='game say'><span class='name'>[src.name]</span> whispers something.</span>"
 		for (var/mob/M in watching)
 			M.show_message(rendered, 2)

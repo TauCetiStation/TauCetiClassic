@@ -239,6 +239,12 @@
 	body += "<option value='?_src_=vars;mark_object=\ref[D]'>Mark Object</option>"
 	if(ismob(D))
 		body += "<option value='?_src_=vars;mob_player_panel=\ref[D]'>Show player panel</option>"
+	if(istype(D, /atom/movable))
+		body += "<option value='?_src_=holder;adminplayerobservefollow=\ref[D]'>Follow</option>"
+	else
+		var/atom/A = D
+		if(istype(A))
+			body += "<option value='?_src_=holder;adminplayerobservecoodjump=1;X=[A.x];Y=[A.y];Z=[A.z]'>Jump to</option>"
 
 	body += "<option value>---</option>"
 
@@ -250,7 +256,6 @@
 		body += "<option value='?_src_=vars;build_mode=\ref[D]'>Toggle Build Mode</option>"
 
 		body += "<option value='?_src_=vars;ninja=\ref[D]'>Make Space Ninja</option>"
-		body += "<option value='?_src_=vars;make_skeleton=\ref[D]'>Make 2spooky</option>"
 
 		body += "<option value='?_src_=vars;direct_control=\ref[D]'>Assume Direct Control</option>"
 		body += "<option value='?_src_=vars;drop_everything=\ref[D]'>Drop Everything</option>"
@@ -574,19 +579,6 @@ body
 		if(usr.client)
 			usr.client.cmd_assume_direct_control(M)
 
-	else if(href_list["make_skeleton"])
-		if(!check_rights(R_FUN))	return
-
-		var/mob/living/carbon/human/H = locate(href_list["make_skeleton"])
-		if(!istype(H))
-			usr << "This can only be used on instances of type /mob/living/carbon/human"
-			return
-
-		H.makeSkeleton()
-		H.s_tone = 25
-		H.regenerate_icons()
-		href_list["datumrefresh"] = href_list["make_skeleton"]
-
 	else if(href_list["delall"])
 		if(!check_rights(R_DEBUG|R_SERVER))	return
 
@@ -754,7 +746,7 @@ body
 			usr << "This can only be done to instances of type /mob/living/carbon/human"
 			return
 
-		var/new_mutantrace = input("Please choose a new mutantrace","Mutantrace",null) as null|anything in list("NONE","golem","lizard","slime","plant","shadow","tajaran","skrell","vox")
+		var/new_mutantrace = input("Please choose a new mutantrace","Mutantrace",null) as null|anything in list("NONE","adamantine","golem","shadow","shadowling","slime")
 		switch(new_mutantrace)
 			if(null)
 				return

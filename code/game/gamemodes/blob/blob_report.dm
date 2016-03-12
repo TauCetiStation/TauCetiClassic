@@ -24,7 +24,7 @@
 			var/nukecode = "ERROR"
 			for(var/obj/machinery/nuclearbomb/bomb in world)
 				if(bomb && bomb.r_code)
-					if(bomb.z == 1)
+					if(bomb.z == ZLEVEL_STATION)
 						nukecode = bomb.r_code
 			interceptname = "Directive 7-12"
 			intercepttext += "<FONT size = 3><B>NanoTrasen Update</B>: Biohazard Alert.</FONT><HR>"
@@ -66,7 +66,7 @@
 
 	proc/count(var/count_territories)
 		for(var/turf/T in world)
-			if(T.z != 1)
+			if(T.z != ZLEVEL_STATION)
 				continue
 
 			if(istype(T,/turf/simulated/floor))
@@ -88,7 +88,7 @@
 					src.r_wall += 1
 
 		for(var/obj/O in world)
-			if(O.z != 1)
+			if(O.z != ZLEVEL_STATION)
 				continue
 
 			if(istype(O, /obj/structure/window))
@@ -103,7 +103,7 @@
 		if(count_territories)
 			var/list/valid_territories = list()
 			for(var/area/A in world) //First, collect all area types on the station zlevel
-				if(A.z == 1)
+				if(A.z == ZLEVEL_STATION)
 					if(!(A.type in valid_territories) && A.valid_territory)
 						valid_territories |= A.type
 			if(valid_territories.len)

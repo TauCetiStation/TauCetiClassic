@@ -561,6 +561,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	if(src.amount < used)
 		return 0
 	else if (src.amount == used)
+		. = 1
 		qdel(src)
 	else
 		amount -= used

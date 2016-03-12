@@ -380,7 +380,7 @@ datum
 								if(istype(M:glasses, /obj/item/clothing/glasses/sunglasses))
 									continue
 
-							flick("e_flash", M.flash)
+							M.flash_eyes()
 							M.Weaken(15)
 
 						if(4 to 5)
@@ -388,7 +388,7 @@ datum
 								if(istype(M:glasses, /obj/item/clothing/glasses/sunglasses))
 									continue
 
-							flick("e_flash", M.flash)
+							M.flash_eyes()
 							M.Stun(5)
 
 		napalm
@@ -840,7 +840,7 @@ datum
 					var/list/flashers = list()
 					for(var/mob/living/carbon/human/M in viewers(TO, null))
 						if(M:eyecheck() <= 0)
-							flick("e_flash", M.flash)
+							M.flash_eyes()
 							flashers += M
 
 					var/y_distance = TO.y - FROM.y
@@ -898,7 +898,7 @@ datum
 
 				for(var/mob/living/carbon/human/M in viewers(get_turf_loc(holder.my_atom), null))
 					if(M:eyecheck() <= 0)
-						flick("e_flash", M.flash)
+						M.flash_eyes()
 
 				for(var/i = 1, i <= created_volume, i++)
 					var/chosen = pick(critters)
@@ -924,7 +924,7 @@ datum
 
 				for(var/mob/living/carbon/human/M in viewers(get_turf_loc(holder.my_atom), null))
 					if(M:eyecheck() <= 0)
-						flick("e_flash", M.flash)
+						M.flash_eyes()
 
 				for(var/i = 1, i <= created_volume + rand(1,2), i++)
 					var/chosen = pick(borks)
@@ -1080,7 +1080,7 @@ datum
 
 				for(var/mob/living/carbon/human/M in viewers(get_turf_loc(holder.my_atom), null))
 					if(M:eyecheck() <= 0)
-						flick("e_flash", M.flash)
+						M.flash_eyes()
 
 				for(var/i = 1, i <= 5, i++)
 					var/chosen = pick(critters)
@@ -1111,7 +1111,7 @@ datum
 
 				for(var/mob/living/carbon/human/M in viewers(get_turf_loc(holder.my_atom), null))
 					if(M:eyecheck() <= 0)
-						flick("e_flash", M.flash)
+						M.flash_eyes()
 
 				for(var/i = 1, i <= 4 + rand(1,2), i++)
 					var/chosen = pick(borks)
@@ -1139,7 +1139,7 @@ datum
 
 				for(var/mob/living/carbon/human/M in viewers(get_turf(holder.my_atom), null))
 					if(M:eyecheck() <= 0)
-						flick("e_flash", M.flash)
+						M.flash_eyes()
 
 				for(var/i = 1, i <= 4 + rand(1,2), i++)
 					var/chosen = pick(borks2)
@@ -1236,7 +1236,7 @@ datum
 			required_container = /obj/item/slime_extract/yellow
 			required_other = 1
 			on_reaction(var/datum/reagents/holder, var/created_volume)
-				var/obj/item/weapon/cell/slime/P = new /obj/item/weapon/cell/slime
+				var/obj/item/weapon/stock_parts/cell/slime/P = new /obj/item/weapon/stock_parts/cell/slime
 				P.loc = get_turf_loc(holder.my_atom)
 
 		slimeglow
@@ -1383,7 +1383,6 @@ datum
 			on_reaction(var/datum/reagents/holder)
 				var/obj/effect/golemrune/Z = new /obj/effect/golemrune
 				Z.loc = get_turf_loc(holder.my_atom)
-				Z.announce_to_ghosts()
 
 //Bluespace
 		slimecrystal

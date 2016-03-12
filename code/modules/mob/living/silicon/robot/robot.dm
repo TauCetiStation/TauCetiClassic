@@ -39,7 +39,7 @@ var/list/robot_verbs_default = list(
 
 	var/obj/item/device/radio/borg/radio = null
 	var/mob/living/silicon/ai/connected_ai = null
-	var/obj/item/weapon/cell/cell = null
+	var/obj/item/weapon/stock_parts/cell/cell = null
 	var/obj/machinery/camera/camera = null
 
 	// Components are basically robot organs.
@@ -47,7 +47,7 @@ var/list/robot_verbs_default = list(
 
 	var/obj/item/device/mmi/mmi = null
 
-	var/obj/item/device/pda/ai/rbPDA = null
+	var/obj/item/device/pda/ai/robot/rbPDA = null
 
 	var/opened = 0
 	var/emagged = 0
@@ -96,7 +96,7 @@ var/list/robot_verbs_default = list(
 
 	if(syndie)
 		if(!cell)
-			cell = new /obj/item/weapon/cell(src)
+			cell = new /obj/item/weapon/stock_parts/cell(src)
 
 		laws = new /datum/ai_laws/antimov()
 		lawupdate = 0
@@ -126,7 +126,7 @@ var/list/robot_verbs_default = list(
 		C.wrapped = new C.external_type
 
 	if(!cell)
-		cell = new /obj/item/weapon/cell(src)
+		cell = new /obj/item/weapon/stock_parts/cell(src)
 		cell.maxcharge = 7500
 		cell.charge = 7500
 
@@ -165,7 +165,7 @@ var/list/robot_verbs_default = list(
 // setup the PDA and its name
 /mob/living/silicon/robot/proc/setup_PDA()
 	if (!rbPDA)
-		rbPDA = new/obj/item/device/pda/ai(src)
+		rbPDA = new/obj/item/device/pda/ai/robot(src)
 	rbPDA.set_name_and_job(custom_name,"[modtype] [braintype]")
 
 //If there's an MMI in the robot, have it ejected when the mob goes away. --NEO
@@ -377,11 +377,11 @@ var/list/robot_verbs_default = list(
 
 	if(!custom_sprite) //Check for custom sprite
 		var/file = file2text("config/custom_sprites.txt")
-		var/lines = text2list(file, "\n")
+		var/lines = splittext(file, "\n")
 
 		for(var/line in lines)
 		// split & clean up
-			var/list/Entry = text2list(line, "-")
+			var/list/Entry = splittext(line, "-")
 			for(var/i = 1 to Entry.len)
 				Entry[i] = trim(Entry[i])
 
@@ -502,7 +502,7 @@ var/list/robot_verbs_default = list(
 		src << "\red You enable [C.name]."
 
 /mob/living/silicon/robot/blob_act()
-	if (stat != 2)
+	if (stat != DEAD)
 		adjustBruteLoss(60)
 		updatehealth()
 		return 1
@@ -511,7 +511,7 @@ var/list/robot_verbs_default = list(
 // this function shows information about the malf_ai gameplay type in the status screen
 /mob/living/silicon/robot/show_malf_ai()
 	..()
-	if(ticker.mode.name == "AI malfunction")
+	if(ticker && ticker.mode.name == "AI malfunction")
 		var/datum/game_mode/malfunction/malf = ticker.mode
 		for (var/datum/mind/malfai in malf.malf_ai)
 			if(connected_ai)
@@ -552,8 +552,7 @@ var/list/robot_verbs_default = list(
 // update the status screen display
 /mob/living/silicon/robot/Stat()
 	..()
-	statpanel("Status")
-	if (client && client.statpanel == "Status")
+	if(statpanel("Status"))
 		show_cell_power()
 		show_jetpack_pressure()
 		stat(null, text("Lights: [lights_on ? "ON" : "OFF"]"))
@@ -564,21 +563,21 @@ var/list/robot_verbs_default = list(
 
 /mob/living/silicon/robot/ex_act(severity)
 	if(!blinded)
-		flick("flash", flash)
+		flash_eyes()
 
 	switch(severity)
 		if(1.0)
-			if (stat != 2)
+			if (stat != DEAD)
 				adjustBruteLoss(100)
 				adjustFireLoss(100)
 				gib()
 				return
 		if(2.0)
-			if (stat != 2)
+			if (stat != DEAD)
 				adjustBruteLoss(60)
 				adjustFireLoss(60)
 		if(3.0)
-			if (stat != 2)
+			if (stat != DEAD)
 				adjustBruteLoss(30)
 
 	updatehealth()
@@ -602,50 +601,10 @@ var/list/robot_verbs_default = list(
 	if(prob(75) && Proj.damage > 0) spark_system.start()
 	return 2
 
-
-/mob/living/silicon/robot/Bump(atom/movable/AM as mob|obj, yes)
-	spawn( 0 )
-		if ((!( yes ) || now_pushing))
-			return
-		now_pushing = 1
-		if(ismob(AM))
-			var/mob/tmob = AM
-			if(istype(tmob, /mob/living/carbon/human) && (FAT in tmob.mutations))
-				if(prob(20))
-					usr << "\red <B>You fail to push [tmob]'s fat ass out of the way.</B>"
-					now_pushing = 0
-					return
-			if(!(tmob.status_flags & CANPUSH))
-				now_pushing = 0
-				return
-		now_pushing = 0
-		..()
-		if (istype(AM, /obj/machinery/recharge_station))
-			var/obj/machinery/recharge_station/F = AM
-			F.move_inside()
-		if (!istype(AM, /atom/movable))
-			return
-		if (!now_pushing)
-			now_pushing = 1
-			if (!AM.anchored)
-				var/t = get_dir(src, AM)
-				if (istype(AM, /obj/structure/window))
-					if(AM:ini_dir == NORTHWEST || AM:ini_dir == NORTHEAST || AM:ini_dir == SOUTHWEST || AM:ini_dir == SOUTHEAST)
-						for(var/obj/structure/window/win in get_step(AM,t))
-							now_pushing = 0
-							return
-				step(AM, t)
-			now_pushing = null
-		return
-	return
-
-
 /mob/living/silicon/robot/triggerAlarm(var/class, area/A, list/cameralist, var/source)
-	if (stat == 2)
+	if (stat == DEAD)
 		return 1
-
 	..()
-
 	queueAlarm(text("--- [class] alarm detected in [A.name]!"), class)
 
 
@@ -769,7 +728,7 @@ var/list/robot_verbs_default = list(
 				opened = 1
 				updateicon()
 
-	else if (istype(W, /obj/item/weapon/cell) && opened)	// trying to put a cell inside
+	else if (istype(W, /obj/item/weapon/stock_parts/cell) && opened)	// trying to put a cell inside
 		var/datum/robot_component/C = components["power cell"]
 		if(wiresexposed)
 			user << "Close the panel first."
@@ -948,7 +907,7 @@ var/list/robot_verbs_default = list(
 				for(var/mob/O in viewers(src, null))
 					O.show_message(text("\red <B>[] has slashed at []!</B>", M, src), 1)
 				if(prob(8))
-					flick("noise", flash)
+					flash_eyes(affect_silicon = 1)
 				adjustBruteLoss(damage)
 				updatehealth()
 			else
@@ -1021,7 +980,7 @@ var/list/robot_verbs_default = list(
 					if ((O.client && !( O.blinded )))
 						O.show_message(text("\red <B>The [M.name] has electrified []!</B>", src), 1)
 
-				flick("noise", flash)
+				flash_eyes(affect_silicon = 1)
 
 				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 				s.set_up(5, 1, src)
@@ -1104,7 +1063,7 @@ var/list/robot_verbs_default = list(
 /mob/living/silicon/robot/proc/updateicon()
 
 	overlays.Cut()
-	if(stat == 0)
+	if(stat == CONSCIOUS)
 		overlays += "eyes"
 		overlays.Cut()
 		overlays += "eyes-[icon_state]"
@@ -1325,16 +1284,16 @@ var/list/robot_verbs_default = list(
 						if(cleaned_human.lying)
 							if(cleaned_human.head)
 								cleaned_human.head.clean_blood()
-								cleaned_human.update_inv_head(0)
+								cleaned_human.update_inv_head()
 							if(cleaned_human.wear_suit)
 								cleaned_human.wear_suit.clean_blood()
-								cleaned_human.update_inv_wear_suit(0)
+								cleaned_human.update_inv_wear_suit()
 							else if(cleaned_human.w_uniform)
 								cleaned_human.w_uniform.clean_blood()
-								cleaned_human.update_inv_w_uniform(0)
+								cleaned_human.update_inv_w_uniform()
 							if(cleaned_human.shoes)
 								cleaned_human.shoes.clean_blood()
-								cleaned_human.update_inv_shoes(0)
+								cleaned_human.update_inv_shoes()
 							cleaned_human.clean_blood(1)
 							cleaned_human << "\red [src] cleans your face!"
 		return

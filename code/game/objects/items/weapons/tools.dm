@@ -120,6 +120,8 @@
 		"<span class='notice'>You cut \the [C]'s restraints with \the [src]!</span>",\
 		"You hear cable being cut.")
 		C.handcuffed = null
+		if(C.buckled && C.buckled.buckle_require_restraints)
+			C.buckled.unbuckle_mob()
 		C.update_inv_handcuffed()
 		return
 	else

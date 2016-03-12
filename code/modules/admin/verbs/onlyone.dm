@@ -4,7 +4,7 @@
 		return
 
 	for(var/mob/living/carbon/human/H in player_list)
-		if(H.stat == 2 || !(H.client)) continue
+		if(H.stat == DEAD || !(H.client)) continue
 		if(is_special_character(H)) continue
 
 		ticker.mode.traitors += H.mind

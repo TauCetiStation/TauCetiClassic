@@ -13,6 +13,10 @@
 	animate_movement=1
 	light_range = 3
 
+	can_buckle = 1
+	buckle_movable = 1
+	buckle_lying = 0
+
 	var/attack_log = null
 	var/on = 0
 	var/health = 0	//do not forget to set health for your vehicle!
@@ -25,9 +29,8 @@
 	var/emagged = 0
 	var/powered = 0		//set if vehicle is powered and should use fuel when moving
 	var/move_delay = 1	//set this to limit the speed of the vehicle
-	var/movable = 1
 
-	var/obj/item/weapon/cell/cell
+	var/obj/item/weapon/stock_parts/cell/cell
 	var/charge_use = 5	//set this to adjust the amount of power the vehicle uses per move
 
 	var/atom/movable/load		//all vehicles can take a load, since they should all be a least drivable
@@ -82,7 +85,7 @@
 	else if(istype(W, /obj/item/weapon/crowbar) && cell && open)
 		remove_cell(user)
 
-	else if(istype(W, /obj/item/weapon/cell) && !cell && open)
+	else if(istype(W, /obj/item/weapon/stock_parts/cell) && !cell && open)
 		insert_cell(W, user)
 	else if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/T = W
@@ -164,10 +167,6 @@
 /obj/vehicle/attack_ai(mob/user as mob)
 	return
 
-// For downstream compatibility (in particular Paradise)
-/obj/vehicle/proc/handle_rotation()
-	return
-
 //-------------------------------------------
 // Vehicle procs
 //-------------------------------------------
@@ -238,7 +237,7 @@
 		turn_on()
 		return
 
-/obj/vehicle/proc/insert_cell(var/obj/item/weapon/cell/C, var/mob/living/carbon/human/H)
+/obj/vehicle/proc/insert_cell(var/obj/item/weapon/stock_parts/cell/C, var/mob/living/carbon/human/H)
 	if(cell)
 		return
 	if(!istype(C))
@@ -298,9 +297,7 @@
 		C.layer = layer + 0.1		//so it sits above the vehicle
 
 	if(ismob(C))
-		var/mob/M = C
-		M.buckled = src
-		M.update_canmove()
+		buckle_mob(C)
 
 	return 1
 
@@ -343,10 +340,7 @@
 	load.layer = initial(load.layer)
 
 	if(ismob(load))
-		var/mob/M = load
-		M.buckled = null
-		M.anchored = initial(M.anchored)
-		M.update_canmove()
+		unbuckle_mob(load)
 
 	load = null
 

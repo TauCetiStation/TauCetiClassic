@@ -178,7 +178,7 @@ BLIND     // can't see anything
 	icon = 'icons/obj/clothing/gloves.dmi'
 	siemens_coefficient = 0.9
 	var/wired = 0
-	var/obj/item/weapon/cell/cell = 0
+	var/obj/item/weapon/stock_parts/cell/cell = 0
 	var/clipped = 0
 	body_parts_covered = HANDS
 	slot_flags = SLOT_GLOVES
@@ -241,6 +241,8 @@ BLIND     // can't see anything
 	var/footstep = 1	//used for squeeks whilst walking(tc)
 	sprite_sheets = list("Vox" = 'icons/mob/species/vox/shoes.dmi')
 
+/obj/item/proc/negates_gravity()
+	return 0
 
 //Suit
 /obj/item/clothing/suit
@@ -386,6 +388,7 @@ BLIND     // can't see anything
 //This is to ensure people can take off suits when there is an attached accessory
 /obj/item/clothing/under/MouseDrop(obj/over_object as obj)
 	if (ishuman(usr) || ismonkey(usr))
+		var/mob/M = usr
 		//makes sure that the clothing is equipped so that we can't drag it into our hand from miles away.
 		if (!(src.loc == usr))
 			return
@@ -395,11 +398,13 @@ BLIND     // can't see anything
 		if (!( usr.restrained() ) && !( usr.stat ))
 			switch(over_object.name)
 				if("r_hand")
-					usr.u_equip(src)
-					usr.put_in_r_hand(src)
+					if(!M.unEquip(src))
+						return
+					M.put_in_r_hand(src)
 				if("l_hand")
-					usr.u_equip(src)
-					usr.put_in_l_hand(src)
+					if(!M.unEquip(src))
+						return
+					M.put_in_l_hand(src)
 			src.add_fingerprint(usr)
 			return
 	return

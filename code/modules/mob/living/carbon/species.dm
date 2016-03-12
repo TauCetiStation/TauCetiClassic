@@ -7,6 +7,7 @@
 
 	var/icobase = 'icons/mob/human_races/r_human.dmi'    // Normal icon set.
 	var/deform = 'icons/mob/human_races/r_def_human.dmi' // Mutated icon set.
+	var/damage_mask = TRUE
 	var/eyes = "eyes_s"                                  // Icon for eyes.
 
 	var/primitive                // Lesser form, if any (ie. monkey for humans)
@@ -29,7 +30,7 @@
 
 	var/heat_level_1 = 360  // Heat damage level 1 above this point.
 	var/heat_level_2 = 400  // Heat damage level 2 above this point.
-	var/heat_level_3 = 1000 // Heat damage level 2 above this point.
+	var/heat_level_3 = 1000 // Heat damage level 3 above this point.
 
 	var/body_temperature = 310.15	//non-IS_SYNTHETIC species will try to stabilize at this temperature. (also affects temperature processing)
 	var/synth_temp_gain = 0			//IS_SYNTHETIC species will gain this much temperature every second
@@ -254,6 +255,7 @@
 	name = "Vox Armalis"
 	icobase = 'icons/mob/human_races/r_armalis.dmi'
 	deform = 'icons/mob/human_races/r_armalis.dmi'
+	damage_mask = FALSE
 	language = "Vox-pidgin"
 	unarmed_type = /datum/unarmed_attack/claws/armalis
 
@@ -372,17 +374,31 @@
 	name = "Abductor"
 	darksight = 3
 
-
 	icobase = 'icons/mob/human_races/r_abductor.dmi'
 	deform = 'icons/mob/human_races/r_abductor.dmi'
 
 	flags = NO_BREATHE | NO_BLOOD | NO_SCAN | VIRUS_IMMUNE
+
+	blood_color = "#BCBCBC"
 
 /datum/species/abductor/handle_post_spawn(var/mob/living/carbon/human/H)
 	H.gender = NEUTER
 
 	return ..()
 
+/datum/species/skeleton
+	name = "Skeleton"
+
+	icobase = 'icons/mob/human_races/r_skeleton.dmi'
+	deform = 'icons/mob/human_races/r_skeleton.dmi'
+	damage_mask = FALSE
+
+	flags = NO_BREATHE | NO_BLOOD | NO_SCAN | VIRUS_IMMUNE
+
+/datum/species/skeleton/handle_post_spawn(var/mob/living/carbon/human/H)
+	H.gender = NEUTER
+
+	return ..()
 
 //Species unarmed attacks
 

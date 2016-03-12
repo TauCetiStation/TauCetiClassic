@@ -52,7 +52,7 @@
 	req_access = list(access_engine_equip)
 	var/area/area
 	var/areastring = null
-	var/obj/item/weapon/cell/cell
+	var/obj/item/weapon/stock_parts/cell/cell
 	var/start_charge = 90				// initial cell charge %
 	var/cell_type = 5000				// 0=no cell, 1=regular, 2=high-cap (x5) <- old, now it's just 0=no cell, otherwise dictate cellcapacity by changing this value. 1 used to be 1000, 2 was 2500
 	var/opened = 0 //0=closed, 1=opened, 2=cover removed
@@ -85,7 +85,7 @@
 	var/has_electronics = 0 // 0 - none, 1 - plugged in, 2 - secured by screwdriver
 	var/overload = 1 //used for the Blackout malf module
 	var/beenhit = 0 // used for counting how many times it has been hit, used for Aliens at the moment
-	var/mob/living/silicon/ai/occupant = null
+	var/mob/living/silicon/ai/occupier = null
 	var/list/apcwirelist = list(
 		"Orange" = 1,
 		"Dark red" = 2,
@@ -157,14 +157,14 @@
 /obj/machinery/power/apc/Destroy()
 	if(malfai && operating)
 		if (ticker.mode.config_tag == "malfunction")
-			if (src.z == 1) //if (is_type_in_list(get_area(src), the_station_areas))
+			if (src.z == ZLEVEL_STATION) //if (is_type_in_list(get_area(src), the_station_areas))
 				ticker.mode:apcs--
 	area.apc = null
 	area.power_light = 0
 	area.power_equip = 0
 	area.power_environ = 0
 	area.power_change()
-	/*if(occupant)
+	/*if(occupier)
 		malfvacate(1)*/
 	if(cell)
 		qdel(cell)
@@ -188,7 +188,7 @@
 	has_electronics = 2 //installed and secured
 	// is starting with a power cell installed, create it and set its charge level
 	if(cell_type)
-		src.cell = new/obj/item/weapon/cell(src)
+		src.cell = new/obj/item/weapon/stock_parts/cell(src)
 		cell.maxcharge = cell_type	// cell_type is maximum charge (old default was 1000 or 2500 (values one and two respectively)
 		cell.charge = start_charge * cell.maxcharge / 100.0 		// (convert percentage to actual value)
 
@@ -442,7 +442,7 @@
 		else
 			opened = 1
 			update_icon()
-	else if	(istype(W, /obj/item/weapon/cell) && opened)	// trying to put a cell inside
+	else if	(istype(W, /obj/item/weapon/stock_parts/cell) && opened)	// trying to put a cell inside
 		if(cell)
 			user << "There is a power cell already installed."
 			return
@@ -738,7 +738,7 @@
 /obj/machinery/power/apc/proc/get_malf_status(mob/user)
 	if (ticker && ticker.mode && (user.mind in ticker.mode.malf_ai) && istype(user, /mob/living/silicon/ai))
 		if (src.malfai == (user:parent ? user:parent : user))
-			if (src.occupant == user)
+			if (src.occupier == user)
 				return 3 // 3 = User is shunted in this APC
 			else if (istype(user.loc, /obj/machinery/power/apc))
 				return 4 // 4 = User is shunted in another APC
@@ -998,7 +998,7 @@
 		operating = !operating
 		if(malfai)
 			if (ticker.mode.config_tag == "malfunction")
-				if (src.z == 1) //if (is_type_in_list(get_area(src), the_station_areas))
+				if (src.z == ZLEVEL_STATION) //if (is_type_in_list(get_area(src), the_station_areas))
 					operating ? ticker.mode:apcs++ : ticker.mode:apcs--
 
 		src.update()
@@ -1060,7 +1060,7 @@
 					malfai.malfhack = null
 					malfai.malfhacking = 0
 					if (ticker.mode.config_tag == "malfunction")
-						if (src.z == 1) //if (is_type_in_list(get_area(src), the_station_areas))
+						if (src.z == ZLEVEL_STATION) //if (is_type_in_list(get_area(src), the_station_areas))
 							ticker.mode:apcs++
 					if(usr:parent)
 						src.malfai = usr:parent
@@ -1087,44 +1087,44 @@
 	if(istype(malf.loc, /obj/machinery/power/apc)) // Already in an APC
 		malf << "<span class='warning'>You must evacuate your current apc first.</span>"
 		return
-	if(src.z != 1)
+	if(src.z != ZLEVEL_STATION)
 		return
-	src.occupant = new /mob/living/silicon/ai(src,malf.laws,null,1)
-	src.occupant.adjustOxyLoss(malf.getOxyLoss())
-	if(!findtext(src.occupant.name,"APC Copy"))
-		src.occupant.name = "[malf.name] APC Copy"
+	src.occupier = new /mob/living/silicon/ai(src,malf.laws,null,1)
+	src.occupier.adjustOxyLoss(malf.getOxyLoss())
+	if(!findtext(src.occupier.name,"APC Copy"))
+		src.occupier.name = "[malf.name] APC Copy"
 	if(malf.parent)
-		src.occupant.parent = malf.parent
+		src.occupier.parent = malf.parent
 	else
-		src.occupant.parent = malf
-	malf.mind.transfer_to(src.occupant)
-	src.occupant.eyeobj.name = "[src.occupant.name] (AI Eye)"
+		src.occupier.parent = malf
+	malf.mind.transfer_to(src.occupier)
+	src.occupier.eyeobj.name = "[src.occupier.name] (AI Eye)"
 	if(malf.parent)
 		qdel(malf)
-	src.occupant.verbs += /mob/living/silicon/ai/proc/corereturn
-	src.occupant.verbs += /datum/game_mode/malfunction/proc/takeover
-	src.occupant.cancel_camera()
+	src.occupier.verbs += /mob/living/silicon/ai/proc/corereturn
+	src.occupier.verbs += /datum/game_mode/malfunction/proc/takeover
+	src.occupier.cancel_camera()
 
 /obj/machinery/power/apc/proc/malfvacate(var/forced)
-	if(!src.occupant)
+	if(!src.occupier)
 		return
-	if(src.occupant.parent && src.occupant.parent.stat != 2)
-		src.occupant.mind.transfer_to(src.occupant.parent)
-		src.occupant.parent.adjustOxyLoss(src.occupant.getOxyLoss())
-		src.occupant.parent.cancel_camera()
-		qdel(src.occupant)
+	if(src.occupier.parent && src.occupier.parent.stat != DEAD)
+		src.occupier.mind.transfer_to(src.occupier.parent)
+		src.occupier.parent.adjustOxyLoss(src.occupier.getOxyLoss())
+		src.occupier.parent.cancel_camera()
+		qdel(src.occupier)
 
 	else
-		src.occupant << "\red Primary core damaged, unable to return core processes."
+		src.occupier << "\red Primary core damaged, unable to return core processes."
 		if(forced)
-			src.occupant.loc = src.loc
-			src.occupant.death()
-			src.occupant.gib()*/
+			src.occupier.loc = src.loc
+			src.occupier.death()
+			src.occupier.gib()*/
 
 
 /obj/machinery/power/apc/proc/ion_act()
 	//intended to be exactly the same as an AI malf attack
-	if(!src.malfhack && src.z == 1)
+	if(!src.malfhack && src.z == ZLEVEL_STATION)
 		if(prob(3))
 			src.locked = 1
 			if (src.cell.charge > 0)
@@ -1358,16 +1358,20 @@
 	return
 
 /obj/machinery/power/apc/emp_act(severity)
+	flick("apc-spark", src)
 	if(cell)
 		cell.emp_act(severity)
-	if(occupant)
-		occupant.emp_act(severity)
+	if(occupier)
+		occupier.emp_act(severity)
 	lighting = 0
 	equipment = 0
 	environ = 0
-	spawn(600)
+	update()
+	spawn(600/severity)
+		lighting = 3
 		equipment = 3
 		environ = 3
+		update()
 	..()
 
 /obj/machinery/power/apc/ex_act(severity)
@@ -1400,11 +1404,11 @@
 /obj/machinery/power/apc/proc/set_broken()
 	if(malfai && operating)
 		if (ticker.mode.config_tag == "malfunction")
-			if (src.z == 1) //if (is_type_in_list(get_area(src), the_station_areas))
+			if (src.z == ZLEVEL_STATION) //if (is_type_in_list(get_area(src), the_station_areas))
 				ticker.mode:apcs--
 	stat |= BROKEN
 	operating = 0
-	/*if(occupant)
+	/*if(occupier)
 		malfvacate(1)*/
 	update_icon()
 	update()

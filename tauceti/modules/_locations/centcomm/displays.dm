@@ -68,7 +68,7 @@
 		set name = "Switch monitor"
 		set category = "Object"
 
-		if (usr.stat != 0 || !ishuman(usr))
+		if (usr.stat != CONSCIOUS || !ishuman(usr))
 			return
 
 		add_fingerprint(usr)

@@ -159,7 +159,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	if(!ticker)
 		alert("Wait until the game starts")
 		return
-	if(istype(M, /mob/living/carbon/human))
+	if(ishuman(M))
 		log_admin("[key_name(src)] has robotized [M.key].")
 		spawn(10)
 			M:Robotize()
@@ -179,7 +179,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		alert("That mob doesn't seem to exist, close the panel and try again.")
 		return
 
-	if(istype(M, /mob/new_player))
+	if(isnewplayer(M))
 		alert("The mob must not be a new_player.")
 		return
 
@@ -200,7 +200,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	var/mob/choice = input("Choose a player to play the pAI", "Spawn pAI") in available
 	if(!choice)
 		return 0
-	if(!istype(choice, /mob/dead/observer))
+	if(!isobserver(choice))
 		var/confirm = input("[choice.key] isn't ghosting right now. Are you sure you want to yank him out of them out of their body and place them in this pAI?", "Spawn pAI Confirmation", "No") in list("Yes", "No")
 		if(confirm != "Yes")
 			return 0
@@ -668,8 +668,6 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/thermal/monocle(M), slot_glasses)
 			M.equip_to_slot_or_del(new /obj/item/clothing/head/det_hat(M), slot_head)
 
-			M.equip_to_slot_or_del(new /obj/item/weapon/cloaking_device(M), slot_r_store)
-
 			M.equip_to_slot_or_del(new /obj/item/weapon/gun/projectile(M), slot_r_hand)
 			M.equip_to_slot_or_del(new /obj/item/ammo_box/a357(M), slot_l_store)
 
@@ -777,7 +775,6 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses(M), slot_glasses)
 			M.equip_to_slot_or_del(new /obj/item/clothing/suit/wcoat(M), slot_wear_suit)
 			M.equip_to_slot_or_del(new /obj/item/weapon/melee/energy/sword(M), slot_l_store)
-			M.equip_to_slot_or_del(new /obj/item/weapon/cloaking_device(M), slot_r_store)
 
 			var/obj/item/weapon/storage/secure/briefcase/sec_briefcase = new(M)
 			for(var/obj/item/briefcase_item in sec_briefcase)
@@ -832,6 +829,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			W.access = get_all_accesses()
 			W.access += list("VIP Guest","Custodian","Thunderdome Overseer","Intel Officer","Medical Officer","Death Commando","Research Officer")
 			W.assignment = "NanoTrasen Navy Representative"
+			W.rank = "NanoTrasen Representative"
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
 
@@ -856,6 +854,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			W.access = get_all_accesses()
 			W.access += get_all_centcom_access()
 			W.assignment = "NanoTrasen Navy Officer"
+			W.rank = "NanoTrasen Representative"
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
 
@@ -881,6 +880,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			W.access = get_all_accesses()
 			W.access += get_all_centcom_access()
 			W.assignment = "NanoTrasen Navy Captain"
+			W.rank = "NanoTrasen Representative"
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
 
@@ -899,6 +899,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			W.access = get_all_accesses()
 			W.access += get_all_centcom_access()
 			W.assignment = "Emergency Response Team"
+			W.rank = "Emergency Response Team"
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
 
@@ -921,6 +922,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			W.access = get_all_accesses()
 			W.access += get_all_centcom_access()
 			W.assignment = "Special Operations Officer"
+			W.rank = "NanoTrasen Representative"
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
 
@@ -971,7 +973,6 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/soviet(M), slot_w_uniform)
 			var/obj/item/weapon/card/id/W = new(M)
 			W.name = "[M.real_name]'s ID Card"
-			W.icon_state = "centcom"
 			W.access = get_all_accesses()
 			W.access += get_all_centcom_access()
 			W.assignment = "Admiral"
@@ -1624,7 +1625,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	spawn(30)
 		for(var/obj/machinery/the_singularitygen/G in world)
 			if(G.anchored)
-				var/obj/machinery/singularity/S = new /obj/machinery/singularity(get_turf(G), 50)
+				var/obj/singularity/S = new /obj/singularity(get_turf(G), 50)
 				spawn(0)
 					qdel(G)
 				S.energy = 1750
@@ -1746,19 +1747,19 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 	switch(input("Which list?") in list("Players","Admins","Mobs","Living Mobs","Dead Mobs", "Clients", "Joined Clients"))
 		if("Players")
-			usr << list2text(player_list,",")
+			usr << jointext(player_list,",")
 		if("Admins")
-			usr << list2text(admins,",")
+			usr << jointext(admins,",")
 		if("Mobs")
-			usr << list2text(mob_list,",")
+			usr << jointext(mob_list,",")
 		if("Living Mobs")
-			usr << list2text(living_mob_list,",")
+			usr << jointext(living_mob_list,",")
 		if("Dead Mobs")
-			usr << list2text(dead_mob_list,",")
+			usr << jointext(dead_mob_list,",")
 		if("Clients")
-			usr << list2text(clients,",")
+			usr << jointext(clients,",")
 		if("Joined Clients")
-			usr << list2text(joined_player_list,",")
+			usr << jointext(joined_player_list,",")
 
 // DNA2 - Admin Hax
 /client/proc/cmd_admin_toggle_block(var/mob/M,var/block)

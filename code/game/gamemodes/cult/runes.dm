@@ -12,7 +12,7 @@ var/list/sacrificed = list()
 			for(var/obj/effect/rune/R in world)
 				if(R == src)
 					continue
-				if(R.word1 == cultwords["travel"] && R.word2 == cultwords["self"] && R.word3 == key && R.z != 2)
+				if(R.word1 == cultwords["travel"] && R.word2 == cultwords["self"] && R.word3 == key && R.z != ZLEVEL_CENTCOMM)
 					index++
 					allrunesloc.len = index
 					allrunesloc[index] = R.loc
@@ -174,7 +174,7 @@ var/list/sacrificed = list()
 							M << "<font size='4'><span class='danger'>I am already here!</span></font>"
 							return
 				ticker.mode.nar_sie_has_risen = 1
-				new /obj/machinery/singularity/narsie/large(src.loc)
+				new /obj/singularity/narsie/large(src.loc)
 				return
 			else
 				return fizzle()
@@ -815,7 +815,8 @@ var/list/sacrificed = list()
 				))
 					user << "<span class='red'>The [cultist] is already free.</span>"
 					return
-				cultist.buckled = null
+				if(cultist.buckled)
+					cultist.buckled.unbuckle_mob()
 				if (cultist.handcuffed)
 					cultist.drop_from_inventory(cultist.handcuffed)
 				if (cultist.legcuffed)
@@ -1025,7 +1026,7 @@ var/list/sacrificed = list()
 
 					if(iscarbon(L))
 						var/mob/living/carbon/C = L
-						flick("e_flash", C.flash)
+						C.flash_eyes()
 						if(C.stuttering < 1 && (!(HULK in C.mutations)))
 							C.stuttering = 1
 						C.Weaken(1)
@@ -1052,7 +1053,7 @@ var/list/sacrificed = list()
 
 					else if(iscarbon(T))
 						var/mob/living/carbon/C = T
-						flick("e_flash", C.flash)
+						C.flash_eyes()
 						if (!(HULK in C.mutations))
 							C.silent += 15
 						C.Weaken(25)

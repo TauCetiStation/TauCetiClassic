@@ -86,12 +86,12 @@
 				return
 
 	if (!user.IsAdvancedToolUser())
-		user << "\red You don't have the dexterity to do this!"
+		user << "<span class='red'>You don't have the dexterity to do this!</span>"
 		return
 	if(istype(user, /mob/living))
 		var/mob/living/M = user
 		if (HULK in M.mutations)
-			M << "\red Your meaty finger is much too large for the trigger guard!"
+			M << "<span class='red'>Your meaty finger is much too large for the trigger guard!</span>"
 			return
 		if(istype(user, /mob/living/carbon/human/))
 			var/mob/living/carbon/human/H = user
@@ -100,7 +100,7 @@
 				return
 	if(ishuman(user))
 		if(user.dna && user.dna.mutantrace == "adamantine")
-			user << "\red Your metal fingers don't fit in the trigger guard!"
+			user << "<span class='red'>Your metal fingers don't fit in the trigger guard!</span>"
 			return
 		var/mob/living/carbon/human/H = user
 		if(H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit/armor/abductor/vest))
@@ -115,7 +115,7 @@
 
 	if (!ready_to_fire())
 		if (world.time % 3) //to prevent spam
-			user << "<span class='warning'>[src] is not ready to fire again!"
+			user << "<span class='warning'>[src] is not ready to fire again!</span>"
 		return
 	if(chambered)
 		if(!chambered.fire(target, user, params, , silenced))
@@ -125,6 +125,7 @@
 	else
 		shoot_with_empty_chamber(user)
 	process_chamber()
+	user.newtonian_move(get_dir(target, user))
 	update_icon()
 
 	if(user.hand)
@@ -141,7 +142,7 @@
 
 /obj/item/weapon/gun/proc/click_empty(mob/user = null)
 	if (user)
-		user.visible_message("*click click*", "\red <b>*click*</b>")
+		user.visible_message("*click click*", "<span class='red'><b>*click*</b></span>")
 		playsound(user, 'sound/weapons/empty.ogg', 100, 1)
 	else
 		src.visible_message("*click click*")
@@ -154,9 +155,9 @@
 	//Suicide handling.
 	if (M == user && user.zone_sel.selecting == "mouth" && !mouthshoot)
 		mouthshoot = 1
-		M.visible_message("\red [user] sticks their gun in their mouth, ready to pull the trigger...")
+		M.visible_message("<span class='warning'>[user] sticks their gun in their mouth, ready to pull the trigger...</span>")
 		if(!do_after(user, 40, target = user))
-			M.visible_message("\blue [user] decided life was worth living")
+			M.visible_message("<span class='notice'>[user] decided life was worth living.</span>")
 			mouthshoot = 0
 			return
 		if (can_fire())
@@ -165,8 +166,15 @@
 				playsound(user, fire_sound, 10, 1)
 			else
 				playsound(user, fire_sound, 50, 1)
-			if(istype(chambered.BB, /obj/item/projectile/beam/lastertag))
-				user.show_message("<span class = 'warning'>You feel rather silly, trying to commit suicide with a toy.</span>")
+			if(istype(chambered.BB, /obj/item/projectile/beam/lastertag) || istype(chambered.BB, /obj/item/projectile/beam/practice))
+				user.visible_message("<span class = 'notice'>Nothing happens.</span>",\
+									"<span class = 'notice'>You feel rather silly, trying to commit suicide with a toy.</span>")
+				mouthshoot = 0
+				return
+			if(istype(chambered.BB, /obj/item/projectile/bullet/chameleon))
+				user.visible_message("<span class = 'notice'>Nothing happens.</span>",\
+									"<span class = 'notice'>You feel weakness and the taste of gunpowder, but no more.</span>")
+				user.apply_effect(5,WEAKEN,0)
 				mouthshoot = 0
 				return
 
@@ -191,7 +199,7 @@
 	if (can_fire())
 		//Point blank shooting if on harm intent or target we were targeting.
 		if(user.a_intent == "hurt")
-			user.visible_message("\red <b> \The [user] fires \the [src] point blank at [M]!</b>")
+			user.visible_message("<span class='red'><b> \The [user] fires \the [src] point blank at [M]!</b></span>")
 			chambered.BB.damage *= 1.3
 			Fire(M,user)
 			return

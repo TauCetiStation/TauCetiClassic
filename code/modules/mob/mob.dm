@@ -104,9 +104,6 @@
 	return 0
 
 /mob/proc/Life()
-//	if(organStructure)
-//		organStructure.ProcessOrgans()
-	//handle_typing_indicator()
 	return
 
 /mob/proc/incapacitated()
@@ -287,7 +284,7 @@
 	if (!( abandon_allowed ))
 		usr << "\blue Respawn is disabled."
 		return
-	if ((stat != 2 || !( ticker )))
+	if ((stat != DEAD || !( ticker )))
 		usr << "\blue <B>You must be dead to use this!</B>"
 		return
 	if(ticker && istype(ticker.mode,/datum/game_mode/meteor))
@@ -309,9 +306,9 @@
 		else if(deathtimeminutes > 1)
 			pluralcheck = " [deathtimeminutes] minutes and"
 		var/deathtimeseconds = round((deathtime - deathtimeminutes * 600) / 10,1)
-		usr << "You have been dead for[pluralcheck] [deathtimeseconds] seconds."
 
-		if (deathtime < config.deathtime_required)
+		if(deathtime < config.deathtime_required && !(client.holder && (client.holder.rights & R_ADMIN)))	//Holders with R_ADMIN can give themselvs respawn, so it doesn't matter
+			usr << "You have been dead for[pluralcheck] [deathtimeseconds] seconds."
 			usr << "You must wait 30 minutes to respawn!"
 			return
 		else
@@ -360,55 +357,7 @@
 	if(is_admin && stat == DEAD)
 		is_admin = 0
 
-	var/list/names = list()
-	var/list/namecounts = list()
-	var/list/creatures = list()
-
-	for(var/obj/O in world)				//EWWWWWWWWWWWWWWWWWWWWWWWW ~needs to be optimised
-		if(!O.loc)
-			continue
-		if(istype(O, /obj/item/weapon/disk/nuclear))
-			var/name = "Nuclear Disk"
-			if (names.Find(name))
-				namecounts[name]++
-				name = "[name] ([namecounts[name]])"
-			else
-				names.Add(name)
-				namecounts[name] = 1
-			creatures[name] = O
-
-		if(istype(O, /obj/machinery/singularity))
-			var/name = "Singularity"
-			if (names.Find(name))
-				namecounts[name]++
-				name = "[name] ([namecounts[name]])"
-			else
-				names.Add(name)
-				namecounts[name] = 1
-			creatures[name] = O
-
-		if(istype(O, /obj/machinery/bot))
-			var/name = "BOT: [O.name]"
-			if (names.Find(name))
-				namecounts[name]++
-				name = "[name] ([namecounts[name]])"
-			else
-				names.Add(name)
-				namecounts[name] = 1
-			creatures[name] = O
-
-
-	for(var/mob/M in sortAtom(mob_list))
-		var/name = M.name
-		if (names.Find(name))
-			namecounts[name]++
-			name = "[name] ([namecounts[name]])"
-		else
-			names.Add(name)
-			namecounts[name] = 1
-
-		creatures[name] = M
-
+	var/list/creatures = getpois()
 
 	client.perspective = EYE_PERSPECTIVE
 
@@ -622,10 +571,18 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 /mob/Stat()
 	..()
-
-	if(statpanel("Status"))	//not looking at that panel
-
+	if(statpanel("Status"))
+		stat(null, "Server Time: [time2text(world.realtime, "YYYY-MM-DD hh:mm")]")
 		if(client && client.holder)
+			if(ticker && ticker.mode && ticker.mode.name == "AI malfunction")
+				if(ticker.mode:malf_mode_declared)
+					stat(null, "Time left: [max(ticker.mode:AI_win_timeleft/(ticker.mode:apcs/3), 0)]")
+			if(emergency_shuttle)
+				if(emergency_shuttle.online && emergency_shuttle.location < 2)
+					var/timeleft = emergency_shuttle.timeleft()
+					if(timeleft)
+						stat(null, "ETA-[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
+
 			if(statpanel("Status"))
 				statpanel("Status","Location:","([x], [y], [z])")
 				statpanel("Status","CPU:","[world.cpu]")
@@ -708,20 +665,19 @@ note dizziness decrements automatically in the mob's Life() proc.
 			canmove = 0
 			pixel_y = V.mob_offset_y - 5
 		else
-			lying = 0
+			if(buckled.buckle_lying != -1)
+				lying = buckled.buckle_lying
 			canmove = 1
 			pixel_y = V.mob_offset_y
-	else if(buckled && (!buckled.movable))
-		anchored = 1
-		canmove = 0
-		if( istype(buckled,/obj/structure/stool/bed/chair) )
-			lying = 0
+	else if(buckled)
+		if(buckled.buckle_lying != -1)
+			lying = buckled.buckle_lying
+		if(!buckled.buckle_movable)
+			anchored = 1
+			canmove = 0
 		else
-			lying = 1
-	else if(buckled && (buckled.movable))
-		anchored = 0
-		canmove = 1
-		lying = 0
+			anchored = 0
+			canmove = 1
 	else if( stat || weakened || paralysis || resting || sleeping || (status_flags & FAKEDEATH))
 		lying = 1
 		canmove = 0
@@ -755,19 +711,19 @@ note dizziness decrements automatically in the mob's Life() proc.
 	//Temporarily moved here from the various life() procs
 	//I'm fixing stuff incrementally so this will likely find a better home.
 	//It just makes sense for now. ~Carn
-	if( update_icon )	//forces a full overlay update
+
+	if(lying != lying_prev)
+		update_transform()
+	if(update_icon)	//forces a full overlay update
 		update_icon = 0
 		regenerate_icons()
-	else if( lying != lying_prev )
-		update_icons()
-
 	return canmove
 
 
 /mob/proc/facedir(var/ndir)
 	if(!canface())	return 0
 	dir = ndir
-	if(buckled && buckled.movable)
+	if(buckled && buckled.buckle_movable)
 		buckled.dir = ndir
 		buckled.handle_rotation()
 	client.move_delay += movement_delay()
@@ -1003,17 +959,44 @@ mob/proc/yank_out_object()
 		animate(client, color = null, time = transition_time)
 
 /mob/proc/instant_vision_update(state=null, atom/A)
-	if(!client || isnull(state) || !blind)
+	if(!client || isnull(state))
 		return
 
 	switch(state)
 		if(0)
 			if(!blinded)
-				blind.layer = 0
+				clear_fullscreen("blind", 0)
 			client.eye = client.mob
 			client.perspective = MOB_PERSPECTIVE
 		if(1)
-			blind.layer = 18
+			overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
 			if(A)
 				client.perspective = EYE_PERSPECTIVE
 				client.eye = A
+
+//You can buckle on mobs if you're next to them since most are dense
+/mob/buckle_mob(mob/living/M)
+	if(M.buckled)
+		return 0
+	var/turf/T = get_turf(src)
+	if(M.loc != T)
+		var/old_density = density
+		density = 0
+		var/can_step = step_towards(M, T)
+		density = old_density
+		if(!can_step)
+			return 0
+	return ..()
+
+//Default buckling shift visual for mobs
+/mob/post_buckle_mob(mob/living/M)
+	if(M == buckled_mob) //post buckling
+		M.pixel_y = initial(M.pixel_y) + 9
+		if(M.layer < layer)
+			M.layer = layer + 0.1
+	else //post unbuckling
+		M.layer = initial(M.layer)
+		M.pixel_y = initial(M.pixel_y)
+
+/mob/proc/can_unbuckle(mob/user)
+	return 1

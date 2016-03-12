@@ -20,7 +20,7 @@
 
 /mob/living/carbon/alien/humanoid/sentinel/handle_hud_icons_health()
 	if (healths)
-		if (stat != 2)
+		if (stat != DEAD)
 			switch(health)
 				if(125 to INFINITY)
 					healths.icon_state = "health0"

@@ -206,7 +206,7 @@
 				stuttering = max(10, stuttering)
 		// No. -- cib
 		//Oh, really?
-		if (getBrainLoss() >= 60 && stat != 2)
+		if (getBrainLoss() >= 60 && stat != DEAD)
 			if(prob(3))
 				if(config.rus_language)
 					switch(pick(1,2,3))
@@ -225,7 +225,7 @@
 						if(3)
 							emote("drool")
 
-		if(stat != 2)
+		if(stat != DEAD)
 			var/rn = rand(0, 200)
 			if(getBrainLoss() >= 5)
 				if(0 <= rn && rn <= 3)
@@ -336,7 +336,7 @@
 					if(istype(O)) O.add_autopsy_data("Radiation Poisoning", damage)
 
 	proc/breathe()
-		if(mNobreath in src.mutations)	return //#Z2 We need no breath with this mutation
+		if(NO_BREATH in src.mutations)	return //#Z2 We need no breath with this mutation
 		if(reagents.has_reagent("lexorin")) return
 		if(istype(loc, /obj/machinery/atmospherics/unary/cryo_cell)) return
 		if(species && (species.flags & NO_BREATHE || species.flags & IS_SYNTHETIC)) return
@@ -723,7 +723,6 @@
 				protected = 1
 			if(!protected && radiation < 100)
 				apply_effect(5, IRRADIATE)
-				take_overall_damage(burn=10, used_weapon = "Space Radiation")
 
 		// +/- 50 degrees from 310.15K is the 'safe' zone, where no damage is dealt.
 		if(bodytemperature > species.heat_level_1)
@@ -875,7 +874,7 @@
 		return thermal_protection_flags
 
 	proc/get_heat_protection(temperature) //Temperature is the temperature you're being exposed to.
-		if(mHeatres in mutations) //#Z2
+		if(RESIST_HEAT in mutations) //#Z2
 			return 1 //Fully protected from the fire. //##Z2
 
 		var/thermal_protection_flags = get_heat_protection_flags(temperature)
@@ -1098,23 +1097,23 @@
 				src << "\blue You feel fit again!"
 				mutations.Remove(FAT)
 				update_body()
-				update_mutantrace(0)
-				update_mutations(0)
-				update_inv_w_uniform(0)
+				update_mutantrace()
+				update_mutations()
+				update_inv_w_uniform()
 				update_inv_wear_suit()
 		else
 			if(overeatduration > 500 && !(species.flags & IS_SYNTHETIC) && !(species.flags & IS_PLANT))
 				src << "\red You suddenly feel blubbery!"
 				mutations.Add(FAT)
 				update_body()
-				update_mutantrace(0)
-				update_mutations(0)
-				update_inv_w_uniform(0)
+				update_mutantrace()
+				update_mutations()
+				update_inv_w_uniform()
 				update_inv_wear_suit()
 
 
 		// nutrition decrease
-		if (nutrition > 0 && stat != 2)
+		if (nutrition > 0 && stat != DEAD)
 			nutrition = max (0, nutrition - HUNGER_FACTOR)
 
 		if (nutrition > 450)
@@ -1308,81 +1307,55 @@
 			if(copytext(hud.icon_state,1,4) == "hud") //ugly, but icon comparison is worse, I believe
 				client.images.Remove(hud)
 
-		client.screen.Remove(global_hud.blurry, global_hud.druggy, global_hud.vimpaired, global_hud.darkMask)
-		client.screen.Remove(global_hud.meson, global_hud.thermal, global_hud.science)
-//		client.screen.Remove(global_hud.blurry, global_hud.druggy, global_hud.vimpaired, global_hud.darkMask, global_hud.nvg)
-
 		update_action_buttons()
 
-		if(damageoverlay.overlays)
-			damageoverlay.overlays = list()
-
-		if(stat == UNCONSCIOUS)
+		if(stat == UNCONSCIOUS && health <= 0)
 			//Critical damage passage overlay
-			if(health <= 0)
-				var/image/I
-				switch(health)
-					if(-20 to -10)
-						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "passage1")
-					if(-30 to -20)
-						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "passage2")
-					if(-40 to -30)
-						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "passage3")
-					if(-50 to -40)
-						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "passage4")
-					if(-60 to -50)
-						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "passage5")
-					if(-70 to -60)
-						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "passage6")
-					if(-80 to -70)
-						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "passage7")
-					if(-90 to -80)
-						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "passage8")
-					if(-95 to -90)
-						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "passage9")
-					if(-INFINITY to -95)
-						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "passage10")
-				damageoverlay.overlays += I
+			var/severity = 0
+			switch(health)
+				if(-20 to -10)			severity = 1
+				if(-30 to -20)			severity = 2
+				if(-40 to -30)			severity = 3
+				if(-50 to -40)			severity = 4
+				if(-60 to -50)			severity = 5
+				if(-70 to -60)			severity = 6
+				if(-80 to -70)			severity = 7
+				if(-90 to -80)			severity = 8
+				if(-95 to -90)			severity = 9
+				if(-INFINITY to -95)	severity = 10
+			overlay_fullscreen("crit", /obj/screen/fullscreen/crit, severity)
 		else
+			clear_fullscreen("crit")
 			//Oxygen damage overlay
 			if(oxyloss)
-				var/image/I
+				var/severity = 0
 				switch(oxyloss)
-					if(10 to 20)
-						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "oxydamageoverlay1")
-					if(20 to 25)
-						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "oxydamageoverlay2")
-					if(25 to 30)
-						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "oxydamageoverlay3")
-					if(30 to 35)
-						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "oxydamageoverlay4")
-					if(35 to 40)
-						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "oxydamageoverlay5")
-					if(40 to 45)
-						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "oxydamageoverlay6")
-					if(45 to INFINITY)
-						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "oxydamageoverlay7")
-				damageoverlay.overlays += I
+					if(10 to 20)		severity = 1
+					if(20 to 25)		severity = 2
+					if(25 to 30)		severity = 3
+					if(30 to 35)		severity = 4
+					if(35 to 40)		severity = 5
+					if(40 to 45)		severity = 6
+					if(45 to INFINITY)	severity = 7
+				overlay_fullscreen("oxy", /obj/screen/fullscreen/oxy, severity)
+			else
+				clear_fullscreen("oxy")
 
 			//Fire and Brute damage overlay (BSSR)
 			var/hurtdamage = src.getBruteLoss() + src.getFireLoss() + damageoverlaytemp
 			damageoverlaytemp = 0 // We do this so we can detect if someone hits us or not.
 			if(hurtdamage)
-				var/image/I
+				var/severity = 0
 				switch(hurtdamage)
-					if(10 to 25)
-						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "brutedamageoverlay1")
-					if(25 to 40)
-						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "brutedamageoverlay2")
-					if(40 to 55)
-						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "brutedamageoverlay3")
-					if(55 to 70)
-						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "brutedamageoverlay4")
-					if(70 to 85)
-						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "brutedamageoverlay5")
-					if(85 to INFINITY)
-						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "brutedamageoverlay6")
-				damageoverlay.overlays += I
+					if(10 to 25)		severity = 1
+					if(25 to 40)		severity = 2
+					if(40 to 55)		severity = 3
+					if(55 to 70)		severity = 4
+					if(70 to 85)		severity = 5
+					if(85 to INFINITY)	severity = 6
+				overlay_fullscreen("brute", /obj/screen/fullscreen/brute, severity)
+			else
+				clear_fullscreen("brute")
 
 		if( stat == DEAD )
 			sight |= (SEE_TURFS|SEE_MOBS|SEE_OBJS)
@@ -1514,9 +1487,6 @@
 			if(pullin)
 				if(pulling)								pullin.icon_state = "pull1"
 				else									pullin.icon_state = "pull0"
-//			if(rest)	//Not used with new UI
-//				if(resting || lying || sleeping)		rest.icon_state = "rest1"
-//				else									rest.icon_state = "rest0"
 			if(toxin)
 				if(hal_screwyhud == 4 || phoron_alert)	toxin.icon_state = "tox1"
 				else									toxin.icon_state = "tox0"
@@ -1573,39 +1543,49 @@
 				if(glasses)					//to every /obj/item
 					var/obj/item/clothing/glasses/G = glasses
 					if(!G.prescription)
-						client.screen += global_hud.vimpaired
+						overlay_fullscreen("nearsighted", /obj/screen/fullscreen/impaired, 1)
 				else
-					client.screen += global_hud.vimpaired
+					overlay_fullscreen("nearsighted", /obj/screen/fullscreen/impaired, 1)
+			else
+				clear_fullscreen("nearsighted")
 
-			if(eye_blurry)			client.screen += global_hud.blurry
-			//if(druggy)				client.screen += global_hud.druggy
+			if(eye_blurry)
+				overlay_fullscreen("blurry", /obj/screen/fullscreen/blurry)
+			else
+				clear_fullscreen("blurry")
 
+			if(druggy)
+				overlay_fullscreen("high", /obj/screen/fullscreen/high)
+			else
+				clear_fullscreen("high")
+
+			//OH cmon...
 			var/masked = 0
-
-			if( istype(head, /obj/item/clothing/head/welding) || istype(head, /obj/item/clothing/head/helmet/space/unathi))
+			if(istype(head, /obj/item/clothing/head/welding) || istype(head, /obj/item/clothing/head/helmet/space/unathi))
 				var/obj/item/clothing/head/welding/O = head
 				if(!O.up && tinted_weldhelh)
-					client.screen += global_hud.darkMask
+					overlay_fullscreen("impaired", /obj/screen/fullscreen/impaired, 2)
 					masked = 1
+				else
+					clear_fullscreen("impaired")
 			if(istype(wear_mask, /obj/item/clothing/mask/gas/welding) )
 				var/obj/item/clothing/mask/gas/welding/O = wear_mask
 				if(!O.up && tinted_weldhelh)
-					client.screen += global_hud.darkMask
+					overlay_fullscreen("impaired", /obj/screen/fullscreen/impaired, 2)
+				else
+					clear_fullscreen("impaired")
 			if(!masked && istype(glasses, /obj/item/clothing/glasses/welding) )
 				var/obj/item/clothing/glasses/welding/O = glasses
 				if(!O.up && tinted_weldhelh)
-					client.screen += global_hud.darkMask
-
-			if(istype(glasses, /obj/item/clothing/glasses/gglasses))
-				client.screen += global_hud.meson
-			else if(istype(glasses, /obj/item/clothing/glasses/science) )
-				client.screen += global_hud.science
+					overlay_fullscreen("impaired", /obj/screen/fullscreen/impaired, 1)
+				else
+					clear_fullscreen("impaired")
 
 			if(machine)
 				if(!machine.check_eye(src))		reset_view(null)
 			else
 				var/isRemoteObserve = 0
-				if((mRemote in mutations) && remoteview_target)
+				if((REMOTE_VIEW in mutations) && remoteview_target)
 					if(getBrainLoss() <= 100)//#Z2 We burn our brain with active remote_view mutation
 						if(remoteview_target.stat==CONSCIOUS)
 							isRemoteObserve = 1
@@ -1629,18 +1609,17 @@
 				hud_used.lingchemdisplay.invisibility = 101
 */
 
-		handle_vision()
+			handle_vision()
 		return 1
 
 	proc/handle_vision()
 		if(client)
-			if(blind)
-				if(loc && !isturf(loc) && !is_type_in_list(loc, ignore_vision_inside))
-					blind.layer = 18
-				else if(blinded)
-					blind.layer = 18
-				else
-					blind.layer = 0
+			if(loc && !isturf(loc) && !is_type_in_list(loc, ignore_vision_inside))
+				overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
+			else if(blinded)
+				overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
+			else
+				clear_fullscreen("blind", 0)
 
 			species.sightglassesmod = 0
 			if(glasses)
@@ -1738,8 +1717,8 @@
 				if(M.loc != src)
 					stomach_contents.Remove(M)
 					continue
-				if(istype(M, /mob/living/carbon) && stat != 2)
-					if(M.stat == 2)
+				if(istype(M, /mob/living/carbon) && stat != DEAD)
+					if(M.stat == DEAD)
 						M.death(1)
 						stomach_contents.Remove(M)
 						qdel(M)
@@ -1848,7 +1827,7 @@
 
 	if(hud_updateflag & 1 << HEALTH_HUD)
 		var/image/holder = hud_list[HEALTH_HUD]
-		if(stat == 2)
+		if(stat == DEAD)
 			holder.icon_state = "hudhealth-100" 	// X_X
 		else
 			holder.icon_state = "hud[RoundHealth(health)]"
@@ -1867,7 +1846,7 @@
 
 		var/image/holder = hud_list[STATUS_HUD]
 		var/image/holder2 = hud_list[STATUS_HUD_OOC]
-		if(stat == 2)
+		if(stat == DEAD)
 			holder.icon_state = "huddead"
 			holder2.icon_state = "huddead"
 		else if(status_flags & XENO_HOST)

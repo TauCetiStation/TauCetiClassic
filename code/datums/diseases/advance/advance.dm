@@ -297,7 +297,7 @@ var/list/advance_cures = 	list(
 	for(var/datum/symptom/S in symptoms)
 		L += S.id
 	L = sortList(L) // Sort the list so it doesn't matter which order the symptoms are in.
-	var/result = list2text(L, ":")
+	var/result = jointext(L, ":")
 	id = result
 	return result
 
@@ -402,7 +402,7 @@ var/list/advance_cures = 	list(
 			AD.Refresh()
 
 		for(var/mob/living/carbon/human/H in shuffle(living_mob_list))
-			if(H.z != 1)
+			if(H.z != ZLEVEL_STATION)
 				continue
 			if(!H.has_disease(D))
 				H.contract_disease(D, 1)

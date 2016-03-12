@@ -79,6 +79,10 @@
 		qdel(src)
 		return PROCESS_KILL
 
+	if(affecting.buckled)
+		qdel(src)
+		return PROCESS_KILL
+
 	if(assailant.client)
 		assailant.client.screen -= hud
 		assailant.client.screen += hud
@@ -336,7 +340,7 @@
 						var/datum/organ/internal/eyes/eyes = affecting:internal_organs_by_name["eyes"]
 						eyes.damage += rand(3,4)
 						if (eyes.damage >= eyes.min_broken_damage)
-							if(affecting.stat != 2)
+							if(affecting.stat != DEAD)
 								affecting << "\red You go blind!"
 //					else if(hit_zone != "head")
 //						if(state < GRAB_NECK)

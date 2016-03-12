@@ -6,7 +6,7 @@
 	anchored = 1.0
 	icon_state = "operating"
 	light_color = "#315ab4"
-	circuit = "/obj/item/weapon/circuitboard/operating"
+	circuit = /obj/item/weapon/circuitboard/operating
 	var/mob/living/carbon/human/victim = null
 	var/obj/machinery/optable/table = null
 
@@ -18,19 +18,10 @@
 			table.computer = src
 			break
 
-/obj/machinery/computer/operating/attack_ai(mob/user)
-	add_fingerprint(user)
-	if(stat & (BROKEN|NOPOWER))
-		return
-	interact(user)
-
-
 /obj/machinery/computer/operating/attack_hand(mob/user)
-	add_fingerprint(user)
-	if(stat & (BROKEN|NOPOWER))
+	if(..())
 		return
 	interact(user)
-
 
 /obj/machinery/computer/operating/interact(mob/user)
 	if ( (get_dist(src, user) > 1 ) || (stat & (BROKEN|NOPOWER)) )

@@ -5,7 +5,6 @@
 	// var/elevation = 2    - not used anywhere
 	var/move_speed = 10
 	var/l_move_time = 1
-	var/m_flag = 1
 	var/throwing = 0
 	var/thrower
 	var/turf/throw_source = null
@@ -13,19 +12,60 @@
 	var/throw_range = 7
 	var/moved_recently = 0
 	var/mob/pulledby = null
+	var/inertia_dir = 0
 
 /atom/movable/New()
 	. = ..()
 
-/atom/movable/Move()
-	var/atom/A = src.loc
-	. = ..()
-	src.move_speed = world.time - src.l_move_time
-	src.l_move_time = world.time
-	src.m_flag = 1
-	if ((A != src.loc && A && A.z == src.z))
-		src.last_move = get_dir(A, src.loc)
-	return
+/atom/movable/Move(atom/newloc, direct = 0)
+	if(!loc || !newloc) return 0
+	var/atom/oldloc = loc
+
+	if(loc != newloc)
+		if (!(direct & (direct - 1))) //Cardinal move
+			. = ..()
+		else //Diagonal move, split it into cardinal moves
+			if (direct & 1)
+				if (direct & 4)
+					if (step(src, NORTH))
+						. = step(src, EAST)
+					else if (step(src, EAST))
+						. = step(src, NORTH)
+				else if (direct & 8)
+					if (step(src, NORTH))
+						. = step(src, WEST)
+					else if (step(src, WEST))
+						. = step(src, NORTH)
+			else if (direct & 2)
+				if (direct & 4)
+					if (step(src, SOUTH))
+						. = step(src, EAST)
+					else if (step(src, EAST))
+						. = step(src, SOUTH)
+				else if (direct & 8)
+					if (step(src, SOUTH))
+						. = step(src, WEST)
+					else if (step(src, WEST))
+						. = step(src, SOUTH)
+
+
+	if(!loc || (loc == oldloc && oldloc != newloc))
+		last_move = 0
+		return
+
+	src.move_speed = world.timeofday - src.l_move_time
+	src.l_move_time = world.timeofday
+
+	last_move = direct
+
+
+	spawn(5)	// Causes space drifting. /tg/station has no concept of speed, we just use 5
+		if(loc && direct && last_move == direct)
+			if(loc == newloc) //Remove this check and people can accelerate. Not opening that can of worms just yet.
+				newtonian_move(last_move)
+
+	if(. && buckled_mob && !handle_buckled_mob_movement(loc,direct)) //movement failed due to buckled mob
+		. = 0
 
 /atom/movable/proc/setLoc(var/T, var/teleported=0)
 	loc = T
@@ -101,6 +141,37 @@
 				var/mob/living/M = src
 				M.turf_collision(T, speed)
 
+//Called whenever an object moves and by mobs when they attempt to move themselves through space
+//And when an object or action applies a force on src, see newtonian_move() below
+//Return 0 to have src start/keep drifting in a no-grav area and 1 to stop/not start drifting
+//Mobs should return 1 if they should be able to move of their own volition, see client/Move() in mob_movement.dm
+//movement_dir == 0 when stopping or any dir when trying to move
+/atom/movable/proc/Process_Spacemove(var/movement_dir = 0)
+	if(has_gravity(src))
+		return 1
+
+	if(pulledby)
+		return 1
+
+	if(locate(/obj/structure/lattice) in orange(1, get_turf(src))) //Not realistic but makes pushing things in space easier
+		return 1
+
+	return 0
+
+/atom/movable/proc/newtonian_move(direction) //Only moves the object if it's under no gravity
+
+	if(!loc || Process_Spacemove(0))
+		inertia_dir = 0
+		return 0
+
+	inertia_dir = direction
+	if(!direction)
+		return 1
+
+	var/old_dir = dir
+	. = step(src, direction)
+	dir = old_dir
+
 //decided whether a movable atom being thrown can pass through the turf it is in.
 /atom/movable/proc/hit_check(var/speed)
 	if(src.throwing)
@@ -153,7 +224,7 @@
 				var/atom/step = get_step(src, dy)
 				if(!step) // going off the edge of the map makes get_step return null, don't let things go off the edge
 					break
-				src.Move(step)
+				src.Move(step, get_dir(loc, step))
 				hit_check(speed)
 				error += dist_x
 				dist_travelled++
@@ -237,8 +308,25 @@
 		return src.master.attack_hand(a, b, c)
 	return
 
+/atom/movable/proc/handle_rotation()
+	return
+
+/atom/movable/proc/handle_buckled_mob_movement(newloc,direct)
+	if(!buckled_mob.Move(newloc, direct))
+		loc = buckled_mob.loc
+		last_move = buckled_mob.last_move
+		inertia_dir = last_move
+		buckled_mob.inertia_dir = last_move
+		return 0
+	return 1
+
+/atom/movable/CanPass(atom/movable/mover, turf/target, height=1.5)
+	if(buckled_mob == mover)
+		return 1
+	return ..()
+
 /////////////////////////////
 // SINGULOTH PULL REFACTOR
 /////////////////////////////
-/atom/movable/proc/canSingulothPull(var/obj/machinery/singularity/singulo)
+/atom/movable/proc/canSingulothPull(var/obj/singularity/singulo)
 	return 1

@@ -372,7 +372,7 @@ the implant may become unstable and either pre-maturely inject the subject or si
 
 		if(!M)	return
 
-		if(M.stat == 2 || isnull(M))
+		if(M.stat == DEAD || isnull(M))
 			processing_objects.Remove(src)
 			return
 
@@ -444,7 +444,7 @@ the implant may become unstable and either pre-maturely inject the subject or si
 
 		if(isnull(M)) // If the mob got gibbed
 			activate()
-		else if(M.stat == 2)
+		else if(M.stat == DEAD)
 			activate("death")
 
 	activate(var/cause)

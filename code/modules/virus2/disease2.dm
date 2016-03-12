@@ -54,7 +54,7 @@
 		cure(mob)
 		return
 
-	if(mob.stat == 2)
+	if(mob.stat == DEAD)
 		return
 	if(stage <= 1 && clicks == 0) 	// with a certain chance, the mob may become immune to the disease before it starts properly
 		if(prob(5))
@@ -178,7 +178,7 @@ var/global/list/virusDB = list()
 	<u>Antigen:</u> [antigens2string(antigen)]<br>
 	<u>Transmitted By:</u> [spreadtype]<br>
 	<u>Rate of Progression:</u> [stageprob * 10]<br>
-	<u>Species Affected:</u> [list2text(affected_species, ", ")]<br>
+	<u>Species Affected:</u> [jointext(affected_species, ", ")]<br>
 "}
 
 	r += "<u>Symptoms:</u><br>"

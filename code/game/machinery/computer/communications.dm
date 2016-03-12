@@ -7,7 +7,7 @@
 	icon_state = "comm"
 	light_color = "#0099ff"
 	req_access = list(access_heads)
-	circuit = "/obj/item/weapon/circuitboard/communications"
+	circuit = /obj/item/weapon/circuitboard/communications
 	var/prints_intercept = 1
 	var/authenticated = 0
 	var/list/messagetitle = list()
@@ -43,13 +43,14 @@
 /obj/machinery/computer/communications/Topic(href, href_list)
 	if(..())
 		return
-	if (src.z > 1)
+	if (src.z > ZLEVEL_STATION)
 		usr << "\red <b>Unable to establish a connection</b>: \black You're too far away from the station!"
 		return
 	usr.set_machine(src)
 
 	if(!href_list["operation"])
 		return
+	var/obj/item/weapon/circuitboard/communications/CM = circuit
 	switch(href_list["operation"])
 		// main interface
 		if("main")
@@ -177,7 +178,7 @@
 		// OMG CENTCOMM LETTERHEAD
 		if("MessageCentcomm")
 			if(src.authenticated==2)
-				if(centcomm_message_cooldown)
+				if(CM.cooldown)
 					usr << "\red Arrays recycling.  Please stand by."
 					return
 				var/input = stripped_input(usr, "Please choose a message to transmit to Centcomm via quantum entanglement.  Please be aware that this process is very expensive, and abuse will lead to... termination.  Transmission does not guarantee a response. There is a 30 second delay before you may send another message, be clear, full and concise.", "To abort, send an empty message.", "")
@@ -186,15 +187,13 @@
 				Centcomm_announce(input, usr)
 				usr << "\blue Message transmitted."
 				log_say("[key_name(usr)] has made an IA Centcomm announcement: [input]")
-				centcomm_message_cooldown = 1
-				spawn(300)//10 minute cooldown
-					centcomm_message_cooldown = 0
+				CM.cooldown = 55
 
 
 		// OMG SYNDICATE ...LETTERHEAD
 		if("MessageSyndicate")
 			if((src.authenticated==2) && (src.emagged))
-				if(centcomm_message_cooldown)
+				if(CM.cooldown)
 					usr << "\red Arrays recycling.  Please stand by."
 					return
 				var/input = stripped_input(usr, "Please choose a message to transmit to \[ABNORMAL ROUTING CORDINATES\] via quantum entanglement.  Please be aware that this process is very expensive, and abuse will lead to... termination. Transmission does not guarantee a response. There is a 30 second delay before you may send another message, be clear, full and concise.", "To abort, send an empty message.", "")
@@ -203,9 +202,7 @@
 				Syndicate_announce(input, usr)
 				usr << "\blue Message transmitted."
 				log_say("[key_name(usr)] has made a Syndicate announcement: [input]")
-				centcomm_message_cooldown = 1
-				spawn(300)//10 minute cooldown
-					centcomm_message_cooldown = 0
+				CM.cooldown = 55 //about one minute
 
 		if("RestoreBackup")
 			usr << "Backup routing data restored!"
@@ -264,20 +261,14 @@
 	if(istype(I,/obj/item/weapon/card/emag/))
 		src.emagged = 1
 		user << "You scramble the communication routing circuits!"
-	..()
-
-/obj/machinery/computer/communications/attack_ai(var/mob/user as mob)
-	return src.attack_hand(user)
-
-
-/obj/machinery/computer/communications/attack_paw(var/mob/user as mob)
-	return src.attack_hand(user)
-
+	else
+		..()
+	return
 
 /obj/machinery/computer/communications/attack_hand(var/mob/user as mob)
 	if(..())
 		return
-	if (src.z > 6)
+	if (src.z > ZLEVEL_EMPTY)
 		user << "\red <b>Unable to establish a connection</b>: \black You're too far away from the station!"
 		return
 
