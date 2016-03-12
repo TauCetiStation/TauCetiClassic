@@ -52,21 +52,16 @@
 		src.updateDialog()
 
 /obj/machinery/computer/atmos_alert/update_icon()
-	if(stat & BROKEN)
-		icon_state = "alert:b"
-		return
-	else if (stat & NOPOWER)
-		icon_state = "alert:O"
-		return
+	if (stat & NOPOWER)
+		icon_state = "atmos0"
+	else if(stat & BROKEN)
+		icon_state = "atmosb"
 	else if(priority_alarms.len)
 		icon_state = "alert:2"
-
 	else if(minor_alarms.len)
 		icon_state = "alert:1"
-
 	else
 		icon_state = "alert:0"
-	return
 
 
 /obj/machinery/computer/atmos_alert/proc/return_text()
