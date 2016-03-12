@@ -215,8 +215,7 @@
 
 				var/datum/game_mode/mutiny/mode = get_mutiny_mode()
 				if(mode)
-					mode.research_reassignments(modify)
-					mode.command_reassignments(modify)
+					mode.reassign_employee(modify)
 
 		if ("reg")
 			if (is_authenticated())
@@ -276,9 +275,7 @@
 
 				var/datum/game_mode/mutiny/mode = get_mutiny_mode()
 				if(mode)
-					mode.ipc_termination(modify)
-					mode.gender_target_termination_directive(modify)
-					mode.termination_directive(modify)
+					mode.terminate_employee(modify)
 
 	if (modify)
 		modify.name = text("[modify.registered_name]'s ID Card ([modify.assignment])")

@@ -216,43 +216,34 @@ datum/game_mode/mutiny
 			if("mutineer")
 				return M.special_role == "loyalist"
 
-	proc/research_reassignments(obj/item/weapon/card/id/id_card)
-		var/datum/directive/research_to_ripleys/D = get_directive("research_to_ripleys")
-		if(!D) return
+	proc/reassign_employee(obj/item/weapon/card/id/id_card)
+		var/datum/directive/research_to_ripleys/D1 = get_directive("research_to_ripleys")
+		if(D1)
+			if(D1.ids_to_reassign && D1.ids_to_reassign.Find(id_card))
+				D1.ids_to_reassign[id_card] = id_card.assignment == "Shaft Miner" ? 1 : 0
 
-		if(D.ids_to_reassign && D.ids_to_reassign.Find(id_card))
-			D.ids_to_reassign[id_card] = id_card.assignment == "Shaft Miner" ? 1 : 0
+		var/datum/directive/tau_ceti_needs_women/D2 = get_directive("tau_ceti_needs_women")
+		if(D2)
+			if(D2.command_targets && D2.command_targets.Find(id_card))
+				D2.command_targets[id_card] = command_positions.Find(id_card.assignment) ? 0 : 1
 
-	proc/command_reassignments(obj/item/weapon/card/id/id_card)
-		var/datum/directive/tau_ceti_needs_women/D = get_directive("tau_ceti_needs_women")
-		if(!D) return
+	proc/terminate_employee(obj/item/weapon/card/id)
+		var/datum/directive/ipc_virus/D1 = get_directive("ipc_virus")
+		if(D1)
+			if(D1.ids_to_terminate && D1.ids_to_terminate.Find(id))
+				D1.ids_to_terminate.Remove(id)
 
-		if(D.command_targets && D.command_targets.Find(id_card))
-			D.command_targets[id_card] = command_positions.Find(id_card.assignment) ? 0 : 1
+		var/datum/directive/tau_ceti_needs_women/D2 = get_directive("tau_ceti_needs_women")
+		if(D2)
+			if(D2.alien_targets && D2.alien_targets.Find(id))
+				D2.alien_targets.Remove(id)
+			if(D2.command_targets && D2.command_targets.Find(id))
+				D2.command_targets[id] = 1
 
-	proc/ipc_termination(obj/item/weapon/card/id)
-		var/datum/directive/ipc_virus/D = get_directive("ipc_virus")
-		if (!D) return
-
-		if(D.ids_to_terminate && D.ids_to_terminate.Find(id))
-			D.ids_to_terminate.Remove(id)
-
-	proc/gender_target_termination_directive(obj/item/weapon/card/id)
-		var/datum/directive/tau_ceti_needs_women/D = get_directive("tau_ceti_needs_women")
-		if (!D) return
-
-		if(D.alien_targets && D.alien_targets.Find(id))
-			D.alien_targets.Remove(id)
-
-		if(D.command_targets && D.command_targets.Find(id))
-			D.command_targets[id] = 1
-
-	proc/termination_directive(obj/item/weapon/card/id)
-		var/datum/directive/terminations/D = get_directive("terminations")
-		if (!D) return
-
-		if(D.ids_to_terminate && D.ids_to_terminate.Find(id))
-			D.ids_to_terminate.Remove(id)
+		var/datum/directive/terminations/D3 = get_directive("terminations")
+		if(D3)
+			if(D3.ids_to_terminate && D3.ids_to_terminate.Find(id))
+				D3.ids_to_terminate.Remove(id)
 
 	proc/borgify_directive(mob/living/silicon/robot/cyborg)
 		var/datum/directive/ipc_virus/D = get_directive("ipc_virus")
