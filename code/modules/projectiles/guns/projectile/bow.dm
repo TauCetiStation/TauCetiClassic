@@ -54,7 +54,7 @@
 	var/release_speed = 5                 // Speed per unit of tension.
 	var/mob/living/current_user = null    // Used to see if the person drawing the bow started drawing it.
 	var/obj/item/weapon/arrow = null      // Nocked arrow.
-	var/obj/item/weapon/cell/cell = null  // Used for firing special projectiles like rods.
+	var/obj/item/weapon/stock_parts/cell/cell = null  // Used for firing special projectiles like rods.
 
 /obj/item/weapon/crossbow/attackby(obj/item/W as obj, mob/user as mob)
 	if(!arrow)
@@ -81,7 +81,7 @@
 					cell.use(500)
 			return
 
-	if(istype(W, /obj/item/weapon/cell))
+	if(istype(W, /obj/item/weapon/stock_parts/cell))
 		if(!cell)
 			user.drop_item()
 			W.loc = src

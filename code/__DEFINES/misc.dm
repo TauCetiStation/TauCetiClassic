@@ -1,3 +1,6 @@
+//gets all subtypes of type
+#define subtypesof(typepath) ( typesof(typepath) - typepath )
+
 //singularity defines
 #define STAGE_ONE	 1
 #define STAGE_TWO 	 3
@@ -79,3 +82,6 @@
 	dview_mob.see_invisible = invis_flags; \
 	for(type in view(range, dview_mob))
 #define END_FOR_DVIEW dview_mob.loc = null
+
+//defines
+#define RESIZE_DEFAULT_SIZE 1

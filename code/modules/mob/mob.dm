@@ -306,9 +306,9 @@
 		else if(deathtimeminutes > 1)
 			pluralcheck = " [deathtimeminutes] minutes and"
 		var/deathtimeseconds = round((deathtime - deathtimeminutes * 600) / 10,1)
-		usr << "You have been dead for[pluralcheck] [deathtimeseconds] seconds."
 
-		if (deathtime < config.deathtime_required)
+		if(deathtime < config.deathtime_required && !(client.holder && (client.holder.rights & R_ADMIN)))	//Holders with R_ADMIN can give themselvs respawn, so it doesn't matter
+			usr << "You have been dead for[pluralcheck] [deathtimeseconds] seconds."
 			usr << "You must wait 30 minutes to respawn!"
 			return
 		else
@@ -665,20 +665,19 @@ note dizziness decrements automatically in the mob's Life() proc.
 			canmove = 0
 			pixel_y = V.mob_offset_y - 5
 		else
-			lying = 0
+			if(buckled.buckle_lying != -1)
+				lying = buckled.buckle_lying
 			canmove = 1
 			pixel_y = V.mob_offset_y
-	else if(buckled && (!buckled.movable))
-		anchored = 1
-		canmove = 0
-		if( istype(buckled,/obj/structure/stool/bed/chair) )
-			lying = 0
+	else if(buckled)
+		if(buckled.buckle_lying != -1)
+			lying = buckled.buckle_lying
+		if(!buckled.buckle_movable)
+			anchored = 1
+			canmove = 0
 		else
-			lying = 1
-	else if(buckled && (buckled.movable))
-		anchored = 0
-		canmove = 1
-		lying = 0
+			anchored = 0
+			canmove = 1
 	else if( stat || weakened || paralysis || resting || sleeping || (status_flags & FAKEDEATH))
 		lying = 1
 		canmove = 0
@@ -724,7 +723,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 /mob/proc/facedir(var/ndir)
 	if(!canface())	return 0
 	dir = ndir
-	if(buckled && buckled.movable)
+	if(buckled && buckled.buckle_movable)
 		buckled.dir = ndir
 		buckled.handle_rotation()
 	client.move_delay += movement_delay()
@@ -974,3 +973,30 @@ mob/proc/yank_out_object()
 			if(A)
 				client.perspective = EYE_PERSPECTIVE
 				client.eye = A
+
+//You can buckle on mobs if you're next to them since most are dense
+/mob/buckle_mob(mob/living/M)
+	if(M.buckled)
+		return 0
+	var/turf/T = get_turf(src)
+	if(M.loc != T)
+		var/old_density = density
+		density = 0
+		var/can_step = step_towards(M, T)
+		density = old_density
+		if(!can_step)
+			return 0
+	return ..()
+
+//Default buckling shift visual for mobs
+/mob/post_buckle_mob(mob/living/M)
+	if(M == buckled_mob) //post buckling
+		M.pixel_y = initial(M.pixel_y) + 9
+		if(M.layer < layer)
+			M.layer = layer + 0.1
+	else //post unbuckling
+		M.layer = initial(M.layer)
+		M.pixel_y = initial(M.pixel_y)
+
+/mob/proc/can_unbuckle(mob/user)
+	return 1

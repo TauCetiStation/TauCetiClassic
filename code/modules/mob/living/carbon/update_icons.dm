@@ -30,5 +30,11 @@
 			final_pixel_y = get_standard_pixel_y_offset()
 			final_pixel_x = get_standard_pixel_x_offset()
 			final_layer = initial(layer)
+		if(resize != RESIZE_DEFAULT_SIZE)
+			resize_rev *= 1/resize
+			changed++
+			ntransform.Scale(resize)
+			resize = RESIZE_DEFAULT_SIZE
 	if(changed)
 		animate(src, transform = ntransform, time = 2, pixel_y = final_pixel_y, pixel_x = final_pixel_x, dir = final_dir, easing = EASE_IN|EASE_OUT, layer = final_layer)
+		floating = 0

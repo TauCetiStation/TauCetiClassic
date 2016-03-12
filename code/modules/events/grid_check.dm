@@ -13,4 +13,5 @@
 		M << sound('sound/AI/poweroff.ogg')
 
 /datum/event/grid_check/end()
-	power_restore()
+	if(power_fail_event)
+		power_restore()

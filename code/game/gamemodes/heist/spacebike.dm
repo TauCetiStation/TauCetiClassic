@@ -34,6 +34,9 @@
 	set category = "Vehicle"
 	set src in view(0)
 
+	if(isobserver(usr)) //Ghost riders? Nope, never heard about them.
+		return
+
 	if(usr.incapacitated()) return
 
 	if(!on)
@@ -47,6 +50,9 @@
 	set name = "Toggle Kickstand"
 	set category = "Vehicle"
 	set src in view(0)
+
+	if(isobserver(usr))
+		return
 
 	if(usr.incapacitated()) return
 
@@ -72,7 +78,7 @@
 
 /obj/vehicle/bike/MouseDrop_T(var/atom/movable/C, mob/user as mob)
 	if(!load(C))
-		user << "<span class='warning'> You were unable to load \the [C] onto \the [src].</span>"
+		user << "<span class='warning'>You were unable to load \the [C] onto \the [src].</span>"
 		return
 
 /obj/vehicle/bike/attack_hand(var/mob/user as mob)
@@ -164,7 +170,7 @@
 	..()
 
 /obj/vehicle/bike/bullet_act(var/obj/item/projectile/Proj)
-	if(istype(load, /mob/living) && prob(protection_percent))
+	if(isliving(load) && prob(protection_percent))
 		var/mob/living/M = load
 		M.bullet_act(Proj)
 		return

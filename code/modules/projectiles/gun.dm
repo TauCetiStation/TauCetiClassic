@@ -125,6 +125,7 @@
 	else
 		shoot_with_empty_chamber(user)
 	process_chamber()
+	user.newtonian_move(get_dir(target, user))
 	update_icon()
 
 	if(user.hand)

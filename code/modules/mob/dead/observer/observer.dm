@@ -107,7 +107,7 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 			return
 
 		var/turf/T = get_turf(target)
-		loc = T
+		forceMoveOld(T)
 
 /mob/dead/attackby(obj/item/W, mob/user)
 	if(istype(W,/obj/item/weapon/book/tome))
@@ -115,13 +115,13 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 		if(src.invisibility != 0)
 			M.invisibility = 0
 			user.visible_message( \
-				"<span class='rose'>[user] drags ghost, [M], to our plan of reality!</span>", \
-				"<span class='rose'>You drag [M] to our plan of reality!</span>" \
+				"<span class='red'>[user] drags ghost, [M], to our plan of reality!</span>", \
+				"<span class='red'>You drag [M] to our plan of reality!</span>" \
 			)
 		else
 			user.visible_message ( \
-				"<span class='rose'>[user] just tried to smash his book into that ghost!  It's not very effective.</span>", \
-				"<span class='rose'>You get the feeling that the ghost can't become any more visible.</span>" \
+				"<span class='red'>[user] just tried to smash his book into that ghost!  It's not very effective.</span>", \
+				"<span class='red'>You get the feeling that the ghost can't become any more visible.</span>" \
 			)
 
 
@@ -299,7 +299,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		return
 	var/mentor = is_mentor(usr.client)
 	if(!config.antag_hud_allowed && (!client.holder || mentor))
-		src << "<span class='rose'>Admins have disabled this for this round.</span>"
+		src << "<span class='red'>Admins have disabled this for this round.</span>"
 		return
 	var/mob/dead/observer/M = src
 	if(jobban_isbanned(M, "AntagHUD"))
@@ -338,7 +338,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(!L || !L.len)
 		usr << "<span class='warning'>No area available.</span>"
 
-	usr.forceMove(pick(L))
+	usr.forceMoveOld(pick(L))
 
 /mob/dead/observer/verb/follow()
 	set category = "Ghost"
@@ -379,6 +379,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		else //Circular
 			rot_seg = 36 //360/10 bby, smooth enough aproximation of a circle
 
+	forceMoveOld(target)
+
 	orbit(target,orbitsize, FALSE, 20, rot_seg)
 
 /mob/dead/observer/orbit()
@@ -409,7 +411,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			var/turf/T = get_turf(M) //Turf of the destination mob
 
 			if(T && isturf(T))	//Make sure the turf exists, then move the source to that destination.
-				A.loc = T
+				A.forceMoveOld(T)
 			else
 				A << "This mob is not located in the game world."
 
@@ -431,11 +433,11 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 /mob/dead/observer/memory()
 	set hidden = 1
-	src << "<span class='rose'>You are dead! You have no mind to store memory!</span>"
+	src << "<span class='red'>You are dead! You have no mind to store memory!</span>"
 
 /mob/dead/observer/add_memory()
 	set hidden = 1
-	src << "<span class='rose'>You are dead! You have no mind to store memory!</span>"
+	src << "<span class='red'>You are dead! You have no mind to store memory!</span>"
 
 /mob/dead/observer/verb/analyze_air()
 	set name = "Analyze Air"
@@ -456,7 +458,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(abs(pressure - ONE_ATMOSPHERE) < 10)
 		src << "<span class='info'>Pressure: [round(pressure,0.1)] kPa</span>"
 	else
-		src << "<span class='rose'>Pressure: [round(pressure,0.1)] kPa</span>"
+		src << "<span class='red'>Pressure: [round(pressure,0.1)] kPa</span>"
 	if(total_moles)
 		var/o2_concentration = environment.oxygen/total_moles
 		var/n2_concentration = environment.nitrogen/total_moles
@@ -467,23 +469,23 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		if(abs(n2_concentration - N2STANDARD) < 20)
 			src << "<span class='info'>Nitrogen: [round(n2_concentration*100)]% ([round(environment.nitrogen,0.01)] moles)</span>"
 		else
-			src << "<span class='rose'>Nitrogen: [round(n2_concentration*100)]% ([round(environment.nitrogen,0.01)] moles)</span>"
+			src << "<span class='red'>Nitrogen: [round(n2_concentration*100)]% ([round(environment.nitrogen,0.01)] moles)</span>"
 
 		if(abs(o2_concentration - O2STANDARD) < 2)
 			src << "<span class='info'>Oxygen: [round(o2_concentration*100)]% ([round(environment.oxygen,0.01)] moles)</span>"
 		else
-			src << "<span class='rose'>Oxygen: [round(o2_concentration*100)]% ([round(environment.oxygen,0.01)] moles)</span>"
+			src << "<span class='red'>Oxygen: [round(o2_concentration*100)]% ([round(environment.oxygen,0.01)] moles)</span>"
 
 		if(co2_concentration > 0.01)
-			src << "<span class='rose'>CO2: [round(co2_concentration*100)]% ([round(environment.carbon_dioxide,0.01)] moles)</span>"
+			src << "<span class='red'>CO2: [round(co2_concentration*100)]% ([round(environment.carbon_dioxide,0.01)] moles)</span>"
 		else
 			src << "<span class='info'>CO2: [round(co2_concentration*100)]% ([round(environment.carbon_dioxide,0.01)] moles)</span>"
 
 		if(phoron_concentration > 0.01)
-			src << "<span class='rose'>Phoron: [round(phoron_concentration*100)]% ([round(environment.phoron,0.01)] moles)</span>"
+			src << "<span class='red'>Phoron: [round(phoron_concentration*100)]% ([round(environment.phoron,0.01)] moles)</span>"
 
 		if(unknown_concentration > 0.01)
-			src << "<span class='rose'>Unknown: [round(unknown_concentration*100)]% ([round(unknown_concentration*total_moles,0.01)] moles)</span>"
+			src << "<span class='red'>Unknown: [round(unknown_concentration*100)]% ([round(unknown_concentration*total_moles,0.01)] moles)</span>"
 
 		src << "<span class='info'>Temperature: [round(environment.temperature-T0C,0.1)]&deg;C</span>"
 		src << "<span class='info'>Heat Capacity: [round(environment.heat_capacity(),0.1)]</span>"
@@ -550,7 +552,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set desc = "If the round is sufficiently spooky, write a short message in blood on the floor or a wall. Remember, no IC in OOC or OOC in IC."
 
 	if(!(config.cult_ghostwriter))
-		src << "<span class='rose'>That verb is not currently permitted.</span>"
+		src << "<span class='red'>That verb is not currently permitted.</span>"
 		return
 
 	if (!src.stat)
@@ -566,7 +568,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			ghosts_can_write = 1
 
 	if(!ghosts_can_write)
-		src << "<span class='rose'>The veil is not thin enough for you to do that.</span>"
+		src << "<span class='red'>The veil is not thin enough for you to do that.</span>"
 		return
 
 	var/list/choices = list()
@@ -616,7 +618,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		W.update_icon()
 		W.message = message
 		W.add_hiddenprint(src)
-		W.visible_message("<span class='rose'>Invisible fingers crudely paint something in blood on [T]...</span>")
+		W.visible_message("<span class='red'>Invisible fingers crudely paint something in blood on [T]...</span>")
 
 /mob/dead/observer/verb/toggle_ghostsee()
 	set name = "Toggle Ghost Vision"

@@ -16,14 +16,13 @@
 /obj/machinery/power/dynamo/proc/Rotated()
 	raw_power += 2
 
-
 /obj/structure/stool/bed/chair/pedalgen
 	name = "Pedal Generator"
+	desc = "Push it to the limit!"
 	icon = 'tauceti/items/sports/pedalgen.dmi'
 	icon_state = "pedalgen"
 	anchored = 0
 	density = 0
-	flags = OPENCONTAINER
 	//copypaste sorry
 	var/obj/machinery/power/dynamo/Generator = null
 	var/callme = "Pedal Generator"	//how do people refer to it?
@@ -42,21 +41,16 @@
 /obj/structure/stool/bed/chair/pedalgen/examine()
 	set src in usr
 	usr << "\icon[src] This [callme] generates power from raw human force!"
-	if (Generator.raw_power>0)
+	if(Generator.raw_power>0)
 		usr << "It has [Generator.raw_power] raw power stored and it generates [(Generator.raw_power>10)?"20k":"10k"] energy!"
 	else
 		usr << "Generator stands still. Someone need to pedal that thing."
 
 
 /obj/structure/stool/bed/chair/pedalgen/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/weapon/wrench))
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
-		src.anchored = !src.anchored
-		user.visible_message("[user.name] [anchored? "secures":"unsecures"] the [src.name].", \
-			"You [anchored? "secure":"undo"] the external bolts.", \
-			"You hear a ratchet")
-		Generator.loc = src.loc //this is really needed
+	if(default_unfasten_wrench(user,W))
 		if(anchored)
+			Generator.loc = src.loc
 			Generator.connect_to_network()
 		else
 			Generator.disconnect_from_network()
@@ -72,10 +66,10 @@
 	if(buckled_mob.buckled == src)
 		if(buckled_mob != user)
 			buckled_mob.visible_message(\
-				"\blue [buckled_mob.name] was unbuckled by [user.name]!",\
+				"<span class='notice'>[buckled_mob.name] was unbuckled by [user.name]!</span>",\
 				"You were unbuckled from [src] by [user.name].",\
 				"You hear metal clanking")
-			unbuckle()
+			unbuckle_mob()
 			src.add_fingerprint(user)
 		else
 			if(buckled_mob.nutrition > 10)
@@ -87,7 +81,7 @@
 				if(pedaler.halloss > 80)
 					user << "You pushed yourself too hard."
 					pedaler.apply_effect(24,AGONY,0)
-					unbuckle()
+					unbuckle_mob()
 				sleep(5)
 				pedaled = 0
 			else
@@ -95,10 +89,11 @@
 		return 1
 
 /obj/structure/stool/bed/chair/pedalgen/relaymove(mob/user, direction)
-	if(!ishuman(user)) unbuckle()
+	if(!ishuman(user))
+		unbuckle_mob()
 	var/mob/living/carbon/human/pedaler = user
-	if (!pedaler.handcuffed)
-		unbuckle()
+	if(!pedaler.handcuffed)
+		unbuckle_mob()
 	else
 		if(!pedaled)
 			pedal(user)
@@ -109,33 +104,11 @@
 	if(buckled_mob)
 		if(buckled_mob.buckled == src)
 			buckled_mob.loc = loc
-			update_mob()
+			update_mob(buckled_mob)
 
 
-/obj/structure/stool/bed/chair/pedalgen/buckle_mob(mob/M, mob/user)
-	if(!ismob(M) || get_dist(src, user) > 1 || user.restrained() || user.lying || user.stat || M.buckled || istype(user, /mob/living/silicon))
-		return
-
-	unbuckle()
-
-	M.visible_message(\
-		"<span class='notice'>[M] climbs onto the [callme]!</span>",\
-		"<span class='notice'>You climb onto the [callme]!</span>")
-	M.buckled = src
-	M.loc = loc
-	M.dir = dir
-	M.update_canmove()
-	buckled_mob = M
-	verbs += /obj/structure/stool/bed/chair/pedalgen/verb/release
-	update_mob()
-	add_fingerprint(user)
-
-/obj/structure/stool/bed/chair/pedalgen/unbuckle()
-	if(buckled_mob)
-		buckled_mob.pixel_x = 0
-		buckled_mob.pixel_y = 0
-	..()
-
+/obj/structure/stool/bed/chair/pedalgen/post_buckle_mob(mob/user)
+	update_mob(user,1)
 
 /obj/structure/stool/bed/chair/pedalgen/handle_rotation()
 	if(dir == SOUTH)
@@ -147,27 +120,34 @@
 		if(buckled_mob.loc != loc)
 			buckled_mob.buckled = null //Temporary, so Move() succeeds.
 			buckled_mob.buckled = src //Restoring
+		update_mob(buckled_mob)
 
-	update_mob()
 
-
-/obj/structure/stool/bed/chair/pedalgen/proc/update_mob()
-	if(buckled_mob)
-		buckled_mob.dir = dir
+/obj/structure/stool/bed/chair/pedalgen/proc/update_mob(mob/M, buckling = 0)
+	if(M == buckled_mob)
+		M.dir = dir
+		var/new_pixel_x = 0
+		var/new_pixel_y = 0
 		switch(dir)
 			if(SOUTH)
-				buckled_mob.pixel_x = 0
-				buckled_mob.pixel_y = 7
+				new_pixel_x = 0
+				new_pixel_y = 7
 			if(WEST)
-				buckled_mob.pixel_x = 13
-				buckled_mob.pixel_y = 7
+				new_pixel_x = 13
+				new_pixel_y = 7
 			if(NORTH)
-				buckled_mob.pixel_x = 0
-				buckled_mob.pixel_y = 4
+				new_pixel_x = 0
+				new_pixel_y = 4
 			if(EAST)
-				buckled_mob.pixel_x = -13
-				buckled_mob.pixel_y = 7
-
+				new_pixel_x = -13
+				new_pixel_y = 7
+		if(buckling)
+			animate(M, pixel_x = new_pixel_x, pixel_y = new_pixel_y, 2, 1, LINEAR_EASING)
+		else
+			M.pixel_x = new_pixel_x
+			M.pixel_y = new_pixel_y
+	else
+		animate(M, pixel_x = 0, pixel_y = 0, 2, 1, LINEAR_EASING)
 
 /obj/structure/stool/bed/chair/pedalgen/bullet_act(var/obj/item/projectile/Proj)
 	if(buckled_mob)
@@ -177,7 +157,7 @@
 
 /obj/structure/stool/bed/chair/pedalgen/Destroy()
 	qdel(Generator)
-	..()
+	return..()
 
 /obj/structure/stool/bed/chair/pedalgen/verb/release()
 	set name = "Release Pedalgen"
@@ -188,5 +168,4 @@
 		usr << "You can't do it until you restrained"
 		return
 
-	unbuckle()
-	verbs -= /obj/structure/stool/bed/chair/pedalgen/verb/release
+	unbuckle_mob()

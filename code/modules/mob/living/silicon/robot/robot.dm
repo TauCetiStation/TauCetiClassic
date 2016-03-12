@@ -39,7 +39,7 @@ var/list/robot_verbs_default = list(
 
 	var/obj/item/device/radio/borg/radio = null
 	var/mob/living/silicon/ai/connected_ai = null
-	var/obj/item/weapon/cell/cell = null
+	var/obj/item/weapon/stock_parts/cell/cell = null
 	var/obj/machinery/camera/camera = null
 
 	// Components are basically robot organs.
@@ -96,7 +96,7 @@ var/list/robot_verbs_default = list(
 
 	if(syndie)
 		if(!cell)
-			cell = new /obj/item/weapon/cell(src)
+			cell = new /obj/item/weapon/stock_parts/cell(src)
 
 		laws = new /datum/ai_laws/antimov()
 		lawupdate = 0
@@ -126,7 +126,7 @@ var/list/robot_verbs_default = list(
 		C.wrapped = new C.external_type
 
 	if(!cell)
-		cell = new /obj/item/weapon/cell(src)
+		cell = new /obj/item/weapon/stock_parts/cell(src)
 		cell.maxcharge = 7500
 		cell.charge = 7500
 
@@ -511,7 +511,7 @@ var/list/robot_verbs_default = list(
 // this function shows information about the malf_ai gameplay type in the status screen
 /mob/living/silicon/robot/show_malf_ai()
 	..()
-	if(ticker.mode.name == "AI malfunction")
+	if(ticker && ticker.mode.name == "AI malfunction")
 		var/datum/game_mode/malfunction/malf = ticker.mode
 		for (var/datum/mind/malfai in malf.malf_ai)
 			if(connected_ai)
@@ -601,50 +601,10 @@ var/list/robot_verbs_default = list(
 	if(prob(75) && Proj.damage > 0) spark_system.start()
 	return 2
 
-
-/mob/living/silicon/robot/Bump(atom/movable/AM as mob|obj, yes)
-	spawn( 0 )
-		if ((!( yes ) || now_pushing))
-			return
-		now_pushing = 1
-		if(ismob(AM))
-			var/mob/tmob = AM
-			if(istype(tmob, /mob/living/carbon/human) && (FAT in tmob.mutations))
-				if(prob(20))
-					usr << "\red <B>You fail to push [tmob]'s fat ass out of the way.</B>"
-					now_pushing = 0
-					return
-			if(!(tmob.status_flags & CANPUSH))
-				now_pushing = 0
-				return
-		now_pushing = 0
-		..()
-		if (istype(AM, /obj/machinery/recharge_station))
-			var/obj/machinery/recharge_station/F = AM
-			F.move_inside()
-		if (!istype(AM, /atom/movable))
-			return
-		if (!now_pushing)
-			now_pushing = 1
-			if (!AM.anchored)
-				var/t = get_dir(src, AM)
-				if (istype(AM, /obj/structure/window))
-					if(AM:ini_dir == NORTHWEST || AM:ini_dir == NORTHEAST || AM:ini_dir == SOUTHWEST || AM:ini_dir == SOUTHEAST)
-						for(var/obj/structure/window/win in get_step(AM,t))
-							now_pushing = 0
-							return
-				step(AM, t)
-			now_pushing = null
-		return
-	return
-
-
 /mob/living/silicon/robot/triggerAlarm(var/class, area/A, list/cameralist, var/source)
 	if (stat == DEAD)
 		return 1
-
 	..()
-
 	queueAlarm(text("--- [class] alarm detected in [A.name]!"), class)
 
 
@@ -768,7 +728,7 @@ var/list/robot_verbs_default = list(
 				opened = 1
 				updateicon()
 
-	else if (istype(W, /obj/item/weapon/cell) && opened)	// trying to put a cell inside
+	else if (istype(W, /obj/item/weapon/stock_parts/cell) && opened)	// trying to put a cell inside
 		var/datum/robot_component/C = components["power cell"]
 		if(wiresexposed)
 			user << "Close the panel first."

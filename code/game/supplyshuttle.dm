@@ -240,8 +240,8 @@ var/list/mechtoys = list(
 	for(var/atom/movable/MA in shuttle)
 		if(MA.anchored)	continue
 
-		// Must be in a crate!
-		if(istype(MA,/obj/structure/closet/crate))
+		// Must be in a crate (or a critter crate)!
+		if(istype(MA,/obj/structure/closet/crate) || istype(MA,/obj/structure/closet/critter))
 			callHook("sell_crate", list(MA, shuttle))
 
 			points += points_per_crate

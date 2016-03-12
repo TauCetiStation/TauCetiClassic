@@ -16,11 +16,36 @@
 	var/active = 0
 	var/powered = 0
 	var/fire_delay = 100
+	var/maximum_fire_delay = 100
+	var/minimum_fire_delay = 20
 	var/last_shot = 0
 	var/shot_number = 0
 	var/state = 0
 	var/locked = 0
 
+/obj/machinery/power/emitter/New()
+	..()
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/emitter(null)
+	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
+	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
+	RefreshParts()
+
+/obj/machinery/power/emitter/RefreshParts()
+	var/max_firedelay = 120
+	var/firedelay = 120
+	var/min_firedelay = 24
+	var/power_usage = 350
+	for(var/obj/item/weapon/stock_parts/micro_laser/L in component_parts)
+		max_firedelay -= 20 * L.rating
+		min_firedelay -= 4 * L.rating
+		firedelay -= 20 * L.rating
+	maximum_fire_delay = max_firedelay
+	minimum_fire_delay = min_firedelay
+	fire_delay = firedelay
+	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
+		power_usage -= 50 * M.rating
+	active_power_usage = power_usage
 
 /obj/machinery/power/emitter/verb/rotate()
 	set name = "Rotate"
@@ -69,7 +94,7 @@
 				src.active = 1
 				user << "You turn on the [src]."
 				src.shot_number = 0
-				src.fire_delay = 100
+				src.fire_delay = maximum_fire_delay
 				message_admins("Emitter turned on by [key_name(user, user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 				log_game("Emitter turned on by [user.ckey]([user]) in ([x],[y],[z])")
 				investigate_log("turned <font color='green'>on</font> by [user.key]","singulo")
@@ -119,7 +144,7 @@
 			src.fire_delay = 2
 			src.shot_number ++
 		else
-			src.fire_delay = rand(20,100)
+			src.fire_delay = rand(minimum_fire_delay,maximum_fire_delay)
 			src.shot_number = 0
 		var/obj/item/projectile/beam/emitter/A = new /obj/item/projectile/beam/emitter( src.loc )
 		playsound(src.loc, 'sound/weapons/emitter.ogg', 25, 1)
@@ -225,6 +250,17 @@
 		emagged = 1
 		user.visible_message("[user.name] emags the [src.name].","\red You short out the lock.")
 		return
+
+	if(default_deconstruction_screwdriver(user, "emitter_open", "emitter", W))
+		return
+
+	if(exchange_parts(user, W))
+		return
+
+	if(default_pry_open(W))
+		return
+
+	default_deconstruction_crowbar(W)
 
 	..()
 	return

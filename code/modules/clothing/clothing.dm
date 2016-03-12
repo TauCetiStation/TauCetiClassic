@@ -178,7 +178,7 @@ BLIND     // can't see anything
 	icon = 'icons/obj/clothing/gloves.dmi'
 	siemens_coefficient = 0.9
 	var/wired = 0
-	var/obj/item/weapon/cell/cell = 0
+	var/obj/item/weapon/stock_parts/cell/cell = 0
 	var/clipped = 0
 	body_parts_covered = HANDS
 	slot_flags = SLOT_GLOVES
@@ -241,6 +241,8 @@ BLIND     // can't see anything
 	var/footstep = 1	//used for squeeks whilst walking(tc)
 	sprite_sheets = list("Vox" = 'icons/mob/species/vox/shoes.dmi')
 
+/obj/item/proc/negates_gravity()
+	return 0
 
 //Suit
 /obj/item/clothing/suit

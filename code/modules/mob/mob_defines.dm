@@ -7,6 +7,9 @@
 
 	var/stat = 0 //Whether a mob is alive or dead. TODO: Move this to living - Nodrak
 
+	var/old_x = 0
+	var/old_y = 0
+
 	//Not in use yet
 	var/obj/effect/organstructure/organStructure = null
 
@@ -95,6 +98,7 @@
 	var/list/abilities = list()         // For species-derived or admin-given powers.
 	var/list/speak_emote = list("says") // Verbs used when speaking. Defaults to 'say' if speak_emote is null.
 	var/emote_type = 1		// Define emote default type, 1 for seen emotes, 2 for heard emotes
+	var/floating = 0
 
 	var/name_archive //For admin things like possession
 
@@ -121,7 +125,7 @@
 	var/m_int = null//Living
 	var/m_intent = "run"//Living
 	var/lastKnownIP = null
-	var/obj/structure/stool/bed/buckled = null//Living
+	var/atom/movable/buckled = null//Living
 	var/obj/item/l_hand = null//Living
 	var/obj/item/r_hand = null//Living
 	var/obj/item/weapon/back = null//Human/Monkey
@@ -141,8 +145,6 @@
 	var/in_throw_mode = 0
 
 	var/coughedtime = null
-
-	var/inertia_dir = 0
 
 	var/music_lastplayed = "null"
 

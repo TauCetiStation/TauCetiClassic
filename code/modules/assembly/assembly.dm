@@ -49,6 +49,11 @@
 /obj/item/device/assembly/interact(mob/user as mob)	//Called when attack_self is called
 	return
 
+/obj/item/device/assembly/proc/is_secured(mob/user)
+	if(!secured)
+		user << "<span class='warning'>The [name] is unsecured!</span>"
+		return 0
+	return 1
 
 /obj/item/device/assembly/process_cooldown()
 	cooldown--

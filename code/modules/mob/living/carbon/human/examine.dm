@@ -47,8 +47,6 @@
 		t_has = "have"
 		t_is = "are"
 	else
-		if(icon)
-			msg += "\icon[icon] " //fucking BYOND: this should stop dreamseeker crashing if we -somehow- examine somebody before their icon is generated
 		switch(gender)
 			if(MALE)
 				t_He = "He"
@@ -141,13 +139,15 @@
 		msg += "<span class='warning'>[t_He] [t_has] [(hand_blood_color != "#030303") ? "blood" : "oil"]-stained hands!</span>\n"
 
 	//handcuffed?
-
-	//handcuffed?
 	if(handcuffed)
 		if(istype(handcuffed, /obj/item/weapon/handcuffs/cable))
 			msg += "<span class='warning'>[t_He] [t_is] \icon[handcuffed] restrained with cable!</span>\n"
 		else
 			msg += "<span class='warning'>[t_He] [t_is] \icon[handcuffed] handcuffed!</span>\n"
+
+	//buckled
+	if(buckled)
+		msg += "<span class='warning'>[t_He] [t_is] \icon[buckled] buckled to [buckled]!</span>\n"
 
 	//belt
 	if(belt)

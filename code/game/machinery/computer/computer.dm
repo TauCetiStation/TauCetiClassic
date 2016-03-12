@@ -12,11 +12,14 @@
 	var/light_range_on = 1.5
 	var/light_power_on = 3
 
-/obj/machinery/computer/New()
-	..()
-	if(ticker)
-		initialize()
-
+/obj/machinery/computer/New(location, obj/item/weapon/circuitboard/C)
+	..(location)
+	if(C && istype(C))
+		circuit = C
+	else
+		if(circuit)
+			circuit = new circuit(null)
+	power_change()
 
 /obj/machinery/computer/initialize()
 	power_change()
@@ -96,26 +99,28 @@
 		set_light(0)
 	else
 		set_light(light_range_on, light_power_on)
+	return
 
 
 /obj/machinery/computer/proc/set_broken()
-	stat |= BROKEN
-	update_icon()
+	if(circuit) //no circuit, no breaking
+		stat |= BROKEN
+		update_icon()
+	return
 
 /obj/machinery/computer/proc/decode(text)
 	// Adds line breaks
 	text = replacetext(text, "\n", "<BR>")
 	return text
 
-
 /obj/machinery/computer/attackby(I as obj, user as mob)
-	if(istype(I, /obj/item/weapon/screwdriver) && circuit)
+	if(istype(I, /obj/item/weapon/screwdriver) && circuit && !(flags&NODECONSTRUCT))
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		if(do_after(user, 20, target = src))
 			var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
-			var/obj/item/weapon/circuitboard/M = new circuit( A )
-			A.circuit = M
+			A.circuit = circuit
 			A.anchored = 1
+			circuit = null
 			for (var/obj/C in src)
 				C.loc = src.loc
 			if (src.stat & BROKEN)
@@ -129,6 +134,32 @@
 				A.state = 4
 				A.icon_state = "4"
 			qdel(src)
-	else
-		src.attack_hand(user)
 	return
+
+/obj/machinery/computer/attack_hand(user)
+	. = ..()
+	return
+
+/obj/machinery/computer/attack_paw(mob/user)
+	if(circuit)
+		if(prob(10))
+			user.visible_message("<span class='danger'>[user.name] smashes the [src.name] with /his paws.</span>",\
+			"<span class='danger'>You smash the [src.name] with your paws.</span>",\
+			"<span class='danger'>You hear a smashing sound.</span>")
+			set_broken()
+			return
+	user.visible_message("<span class='danger'>[user.name] smashes against the [src.name] with /his paws.</span>",\
+	"<span class='danger'>You smash against the [src.name] with your paws.</span>",\
+	"<span class='danger'>You hear a clicking sound.</span>")
+
+/obj/machinery/computer/attack_alien(mob/user)
+	if(circuit)
+		if(prob(80))
+			user.visible_message("<span class='danger'>[user.name] smashes the [src.name] with /his claws.</span>",\
+			"<span class='danger'>You smash the [src.name] with your claws.</span>",\
+			"<span class='danger'>You hear a smashing sound.</span>")
+			set_broken()
+			return
+	user.visible_message("<span class='danger'>[user.name] smashes against the [src.name] with /his claws.</spanclass>",\
+	"<span class='danger'>You smash against the [src.name] with your claws.</spanclass>",\
+	"<span class='danger'>You hear a clicking sound.</spanclass>") 

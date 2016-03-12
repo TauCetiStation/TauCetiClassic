@@ -11,6 +11,7 @@
 			src.unset_machine()
 
 		src.updatehealth()
+		update_gravity(mob_has_gravity())
 
 		if (src.malfhack)
 			if (src.malfhack.aidisabled)

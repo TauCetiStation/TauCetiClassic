@@ -28,7 +28,7 @@
 	var/deflect_chance = 10 //chance to deflect the incoming projectiles, hits, or lesser the effect of ex_act.
 	//the values in this list show how much damage will pass through, not how much will be absorbed.
 	var/list/damage_absorption = list("brute"=0.8,"fire"=1.2,"bullet"=0.9,"laser"=1,"energy"=1,"bomb"=1)
-	var/obj/item/weapon/cell/cell
+	var/obj/item/weapon/stock_parts/cell/cell
 	var/state = 0
 	var/list/log = new
 	var/last_message = 0
@@ -57,7 +57,6 @@
 	var/list/internals_req_access = list(access_engine,access_robotics)//required access level to open cell compartment
 
 	var/datum/global_iterator/pr_int_temp_processor //normalizes internal air mixture temperature
-	var/datum/global_iterator/pr_inertial_movement //controls intertial movement in spesss
 	var/datum/global_iterator/pr_give_air //moves air from tank to cabin
 	var/datum/global_iterator/pr_internal_damage //processes internal damage
 
@@ -111,7 +110,7 @@
 	internal_tank = new /obj/machinery/portable_atmospherics/canister/air(src)
 	return internal_tank
 
-/obj/mecha/proc/add_cell(var/obj/item/weapon/cell/C=null)
+/obj/mecha/proc/add_cell(var/obj/item/weapon/stock_parts/cell/C=null)
 	if(C)
 		C.forceMove(src)
 		cell = C
@@ -138,7 +137,6 @@
 
 /obj/mecha/proc/add_iterators()
 	pr_int_temp_processor = new /datum/global_iterator/mecha_preserve_temp(list(src))
-	pr_inertial_movement = new /datum/global_iterator/mecha_intertial_movement(null,0)
 	pr_give_air = new /datum/global_iterator/mecha_tank_give_air(list(src))
 	pr_internal_damage = new /datum/global_iterator/mecha_internal_damage(list(src),0)
 
@@ -159,14 +157,6 @@
 			return 0
 
 	return 1
-
-
-
-/obj/mecha/proc/check_for_support()
-	if(locate(/obj/structure/grille, orange(1, src)) || locate(/obj/structure/lattice, orange(1, src)) || locate(/turf/simulated, orange(1, src)) || locate(/turf/unsimulated, orange(1, src)))
-		return 1
-	else
-		return 0
 
 /obj/mecha/examine()
 	set src in view()
@@ -260,11 +250,15 @@
 ////////  Movement procs  ////////
 //////////////////////////////////
 
-/obj/mecha/Move()
+/obj/mecha/Move(atom/newLoc, direct)
 	. = ..()
 	if(.)
 		events.fireEvent("onMove",get_turf(src))
-	return
+
+/obj/mecha/Process_Spacemove(var/movement_dir = 0)
+	if(occupant)
+		return occupant.Process_Spacemove(movement_dir) //We'll just say you used the clamp to grab the wall
+	return ..()
 
 /obj/mecha/relaymove(mob/user,direction)
 	if(user != src.occupant) //While not "realistic", this piece is player friendly.
@@ -287,7 +281,7 @@
 /obj/mecha/proc/dyndomove(direction)
 	if(!can_move)
 		return 0
-	if(src.pr_inertial_movement.active())
+	if(!Process_Spacemove(direction))
 		return 0
 	if(!has_charge(step_energy_drain))
 		return 0
@@ -300,11 +294,6 @@
 		move_result	= mechstep(direction)
 	if(move_result)
 		can_move = 0
-		use_power(step_energy_drain)
-		if(istype(src.loc, /turf/space))
-			if(!src.check_for_support())
-				src.pr_inertial_movement.start(list(src,direction))
-				src.log_message("Movement control lost. Inertial movement started.")
 		if(do_after(step_in))
 			can_move = 1
 		return 1
@@ -328,24 +317,18 @@
 		playsound(src,'sound/mecha/mechstep.ogg',40,1)
 	return result
 
-/obj/mecha/Bump(var/atom/obstacle)
-//	src.inertia_dir = null
-	if(istype(obstacle, /obj))
-		var/obj/O = obstacle
-		if(istype(O, /obj/effect/portal)) //derpfix
-			src.anchored = 0
-			O.Crossed(src)
-			spawn(0)//countering portal teleport spawn(0), hurr
-				src.anchored = 1
-		else if(!O.anchored)
-			step(obstacle,src.dir)
-		else //I have no idea why I disabled this
-			obstacle.Bumped(src)
-	else if(istype(obstacle, /mob))
-		step(obstacle,src.dir)
-	else
+/obj/mecha/Bump(var/atom/obstacle, yes)
+	if(yes)
+		if(throwing)
+			..()
+			return
 		obstacle.Bumped(src)
-	return
+		if(istype(obstacle, /obj))
+			var/obj/O = obstacle
+			if(!O.anchored)
+				step(obstacle, dir)
+		else if(istype(obstacle, /mob))
+			step(obstacle, dir)
 
 ///////////////////////////////////
 ////////  Internal damage  ////////
@@ -734,7 +717,7 @@
 			user << "You screw the cell in place"
 		return
 
-	else if(istype(W, /obj/item/weapon/cell))
+	else if(istype(W, /obj/item/weapon/stock_parts/cell))
 		if(state==4)
 			if(!src.cell)
 				user << "You install the powercell"
@@ -1140,6 +1123,8 @@
 	add_fingerprint(usr)
 	return
 
+/obj/mecha/container_resist()
+	go_out()
 
 /obj/mecha/proc/go_out()
 	if(!src.occupant) return
@@ -1758,17 +1743,6 @@
 						qdel(removed)
 		else
 			return stop()
-		return
-
-/datum/global_iterator/mecha_intertial_movement //inertial movement in space
-	delay = 7
-
-	process(var/obj/mecha/mecha as obj,direction)
-		if(direction)
-			if(!step(mecha, direction)||mecha.check_for_support())
-				src.stop()
-		else
-			src.stop()
 		return
 
 /datum/global_iterator/mecha_internal_damage // processing internal damage

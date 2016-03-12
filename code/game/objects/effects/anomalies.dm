@@ -90,7 +90,7 @@
 
 /obj/effect/anomaly/flux/New()
 	..()
-	aSignal.origin_tech = "powerstorage=5;programming=3;plasmatech=2"
+	aSignal.origin_tech = "powerstorage=5;programming=3;phorontech=2"
 
 /////////////////////
 
@@ -116,7 +116,7 @@
 
 /obj/effect/anomaly/pyro/New()
 	..()
-	aSignal.origin_tech = "plasmatech=5;powerstorage=3;biotech=3"
+	aSignal.origin_tech = "phorontech=5;powerstorage=3;biotech=3"
 
 /obj/effect/anomaly/pyro/anomalyEffect()
 	..()

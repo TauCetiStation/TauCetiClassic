@@ -11,7 +11,7 @@
 	pass_flags = PASSTABLE
 	braintype = "Robot"
 	lawupdate = 0
-	density = 1
+	density = 0
 	req_access = list(access_engine, access_robotics)
 	ventcrawler = 2
 
@@ -252,11 +252,6 @@
 
 	..(gibbed)
 
-//DRONE MOVEMENT.
-/mob/living/silicon/robot/drone/Process_Spaceslipping(var/prob_slip)
-	//TODO: Consider making a magboot item for drones to equip. ~Z
-	return 0
-
 //CONSOLE PROCS
 /mob/living/silicon/robot/drone/proc/law_resync()
 	if(stat != DEAD)
@@ -321,19 +316,14 @@
 	src << "<b>Don't invade their worksites, don't steal their resources, don't tell them about the changeling in the toilets.</b>"
 	src << "<b>If a crewmember has noticed you, <i>you are probably breaking your third law</i></b>."
 
-/mob/living/silicon/robot/drone/Bump(atom/movable/AM as mob|obj, yes)
-	if (!yes || ( \
-	 !istype(AM,/obj/machinery/door) && \
-	 !istype(AM,/obj/machinery/recharge_station) && \
-	 !istype(AM,/obj/machinery/disposal/deliveryChute) && \
-	 !istype(AM,/obj/machinery/teleport/hub) && \
-	 !istype(AM,/obj/effect/portal)
-	)) return
-	..()
-	return
-
-/mob/living/silicon/robot/drone/Bumped(AM as mob|obj)
-	return
+/mob/living/silicon/robot/drone/ObjBump(obj/O)
+	var/list/can_bump = list(/obj/machinery/door,
+							/obj/machinery/recharge_station,
+							/obj/machinery/disposal/deliveryChute,
+							/obj/machinery/teleport/hub,
+							/obj/effect/portal)
+	if(!(O in can_bump))
+		return 0
 
 /mob/living/silicon/robot/drone/start_pulling(var/atom/movable/AM)
 
@@ -353,3 +343,9 @@
 /mob/living/silicon/robot/drone/add_robot_verbs()
 
 /mob/living/silicon/robot/drone/remove_robot_verbs()
+
+/mob/living/simple_animal/drone/mob_negates_gravity()
+	return 1
+
+/mob/living/simple_animal/drone/mob_has_gravity()
+	return ..() || mob_negates_gravity()
