@@ -186,13 +186,13 @@
 	name = "food trash pile"
 	parts_icon = 'icons/obj/structures/scrap/food_trash.dmi'
 	loot_list = list(
-		/obj/random/foods/food_with_garbage,
-		/obj/random/foods/food_with_garbage,
-		/obj/random/foods/food_with_garbage,
-		/obj/random/foods/food_with_garbage,
-		/obj/random/foods/food_with_garbage,
-		/obj/random/foods/food_with_garbage,
-		/obj/random/foods/food_with_garbage,
+		/obj/random/foods/food_without_garbage,
+		/obj/random/foods/food_without_garbage,
+		/obj/random/foods/food_without_garbage,
+		/obj/random/foods/food_without_garbage,
+		/obj/random/foods/food_without_garbage,
+		/obj/random/foods/food_without_garbage,
+		/obj/random/foods/food_without_garbage,
 		/obj/item/weapon/shard,
 		/obj/item/stack/rods/scrap,
 		/obj/item/stack/sheet/mineral/plastic/scrap
