@@ -3,6 +3,7 @@
 	desc += " Warranty has expired."
 	for(var/obj/item/sub_item in contents)
 		sub_item.make_old()
+	update_icon()
 
 /obj/item/weapon/storage/make_old()
 	var/del_count = rand(0,contents.len)
@@ -27,11 +28,13 @@
 	..()
 
 /obj/item/weapon/stock_parts/cell/make_old()
-	if(prob(70))
+	if(prob(50))
 		charge = 0
 	else
 		charge = rand(0, charge)
-	if(prob(30))
+	if(prob(50))
+		crit_fail = 1
+	if(prob(25))
 		rigged = 1
 	..()
 
