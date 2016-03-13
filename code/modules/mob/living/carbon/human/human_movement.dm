@@ -6,7 +6,8 @@
 
 	if(crawling)
 		tally += 7
-	else if(reagents.has_reagent("hyperzine")) return -1
+	else if(reagents.has_reagent("hyperzine"))
+		return -1
 
 	if(istype(l_hand, /obj/item/weapon/gun))
 		if(l_hand.w_class > 3)
@@ -21,13 +22,16 @@
 	if(embedded_flag)
 		handle_embedded_objects() //Moving with objects stuck in you can cause bad times.
 
-	if(reagents.has_reagent("nuka_cola")) return -1
+	if(reagents.has_reagent("nuka_cola"))
+		return -1
 
 	var/health_deficiency = (100 - health + halloss)
-	if(health_deficiency >= 40) tally += (health_deficiency / 25)
+	if(health_deficiency >= 40)
+		tally += (health_deficiency / 25)
 
 	var/hungry = (500 - nutrition)/5 // So overeat would be 100 and default level would be 80
-	if (hungry >= 70) tally += hungry/50
+	if (hungry >= 70)
+		tally += hungry/50
 
 	if(wear_suit)
 		tally += wear_suit.slowdown
@@ -45,17 +49,21 @@
 			else if(E.status & ORGAN_BROKEN)
 				tally += 1.5
 
-	if(buckled && istype(buckled, /obj/structure/stool/bed/chair/wheelchair))
-		for(var/organ_name in list("l_hand","r_hand","l_arm","r_arm"))
-			var/datum/organ/external/E = get_organ(organ_name)
-			if(!E || (E.status & ORGAN_DESTROYED))
-				tally += 4
-			if(E.status & ORGAN_SPLINTED)
-				tally += 0.5
-			else if(E.status & ORGAN_BROKEN)
-				tally += 1.5
+	if(buckled)
+		if(istype(buckled, /obj/structure/stool/bed/chair/wheelchair))
+			for(var/organ_name in list("l_hand","r_hand","l_arm","r_arm"))
+				var/datum/organ/external/E = get_organ(organ_name)
+				if(!E || (E.status & ORGAN_DESTROYED))
+					tally += 4
+				if(E.status & ORGAN_SPLINTED)
+					tally += 0.5
+				else if(E.status & ORGAN_BROKEN)
+					tally += 1.5
+		else
+			tally += 5.5
 
-	if(shock_stage >= 10) tally += 3
+	if(shock_stage >= 10)
+		tally += 3
 
 	if(FAT in src.mutations)
 		tally += 1.5
