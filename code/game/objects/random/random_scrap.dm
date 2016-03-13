@@ -21,7 +21,7 @@
 					prob(4);/obj/structure/scrap/medical/large,\
 					prob(6);/obj/structure/scrap/vehicle/large,\
 					prob(16);/obj/structure/scrap/food/large,\
-					prob(2);/obj/structure/scrap/guns/large)
+					prob(1);/obj/structure/scrap/guns/large)
 
 /obj/random/scrap/sparse_even
 	name = "Random sparse even trash"
@@ -45,7 +45,7 @@
 					prob(4);/obj/structure/scrap/medical,\
 					prob(6);/obj/structure/scrap/vehicle,\
 					prob(16);/obj/structure/scrap/food,\
-					prob(2);/obj/structure/scrap/guns)
+					prob(1);/obj/structure/scrap/guns)
 
 /obj/random/scrap/moderate_weighted
 	name = "Random moderate weighted trash"
