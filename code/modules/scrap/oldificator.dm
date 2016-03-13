@@ -16,7 +16,7 @@
 /obj/item/weapon/reagent_containers/make_old()
 	for(var/datum/reagent/R in reagents.reagent_list)
 		R.volume = rand(0,R.volume)
-	reagents.add_reagent("toxin", 10)
+	reagents.add_reagent("toxin", rand(0,10))
 	..()
 
 /obj/item/ammo_box/make_old()
