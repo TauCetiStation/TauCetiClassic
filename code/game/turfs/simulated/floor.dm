@@ -44,7 +44,6 @@ var/list/wood_icons = list("wood","wood-broken")
 	var/mineral = "metal"
 	var/floor_type = /obj/item/stack/tile/plasteel
 	var/lightfloor_state // for light floors, this is the state of the tile. 0-7, 0x4 is on-bit - use the helper procs below
-	var/obj/item/stack/tile/builtin_tile = null //needed for performance reasons when the singularity rips off floor tiles
 
 	proc/get_lightfloor_state()
 		return lightfloor_state & LIGHTFLOOR_STATE_BITS
@@ -70,8 +69,12 @@ var/list/wood_icons = list("wood","wood-broken")
 		icon_regular_floor = "floor"
 	else
 		icon_regular_floor = icon_state
+
+/turf/simulated/floor/Destroy()
 	if(floor_type)
-		builtin_tile = new floor_type
+		qdel(floor_type)
+		floor_type = null
+	return ..()
 
 //turf/simulated/floor/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 //	if ((istype(mover, /obj/machinery/vehicle) && !(src.burnt)))
@@ -125,18 +128,18 @@ var/list/wood_icons = list("wood","wood-broken")
 /turf/simulated/floor/singularity_pull(S, current_size)
 	if(current_size == STAGE_THREE)
 		if(prob(30))
-			if(builtin_tile)
-				builtin_tile.loc = src
+			if(floor_type)
+				new floor_type(src)
 				make_plating()
 	else if(current_size == STAGE_FOUR)
 		if(prob(50))
-			if(builtin_tile)
-				builtin_tile.loc = src
+			if(floor_type)
+				new floor_type(src)
 				make_plating()
 	else if(current_size >= STAGE_FIVE)
-		if(builtin_tile)
+		if(floor_type)
 			if(prob(70))
-				builtin_tile.loc = src
+				new floor_type(src)
 				make_plating()
 		else if(prob(50))
 			ReplaceWithLattice()
