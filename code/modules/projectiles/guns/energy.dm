@@ -38,7 +38,10 @@
 /obj/item/weapon/gun/energy/proc/newshot()
 	if (!ammo_type || !power_supply)	return
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
-	if (!power_supply.use(shot.e_cost))	return
+	if (!power_supply.use(shot.e_cost))	
+		if(power_supply.exploded)
+			qdel(src)
+		return
 	chambered = shot
 	chambered.newshot()
 	return

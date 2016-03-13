@@ -1,7 +1,7 @@
 // the power cell
 // charge from 0 to 100%
 // fits in APC to provide backup power
-
+/obj/item/weapon/stock_parts/cell/var/exploded = 0
 /obj/item/weapon/stock_parts/cell/New()
 	..()
 	charge = maxcharge
@@ -97,6 +97,7 @@
  * */
 	if (charge==0)
 		return
+	exploded = 1
 	var/devastation_range = -1 //round(charge/11000)
 	var/heavy_impact_range = round(sqrt(charge)/58)
 	var/light_impact_range = round(sqrt(charge)/27)
@@ -112,7 +113,7 @@
 
 	explosion(T, devastation_range, heavy_impact_range, light_impact_range, flash_range)
 
-	spawn(1)
+	spawn(2)
 		qdel(src)
 
 /obj/item/weapon/stock_parts/cell/proc/corrupt()
