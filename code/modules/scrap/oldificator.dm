@@ -40,4 +40,3 @@
 
 /obj/item/weapon/shard/make_old()
 	return
-/obj/item/stack/medical/make_old()
