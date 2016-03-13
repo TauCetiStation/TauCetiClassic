@@ -334,6 +334,15 @@
 		O.emp_act(severity)
 	..()
 
+/mob/living/singularity_act()
+	var/gain = 20
+	investigate_log(" has consumed [key_name(src)].","singulo") //Oh that's where the clown ended up!
+	gib()
+	return(gain)
+
+/mob/living/singularity_pull(S)
+	step_towards(src,S)
+
 /mob/living/proc/can_inject()
 	return 1
 
