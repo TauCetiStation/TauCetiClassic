@@ -672,6 +672,10 @@ note dizziness decrements automatically in the mob's Life() proc.
 	else if(buckled)
 		if(buckled.buckle_lying != -1)
 			lying = buckled.buckle_lying
+		if(istype(buckled, /obj/structure/stool/bed/chair))
+			var/obj/structure/stool/bed/chair/C = buckled
+			if(C.flipped)
+				lying = 1
 		if(!buckled.buckle_movable)
 			anchored = 1
 			canmove = 0

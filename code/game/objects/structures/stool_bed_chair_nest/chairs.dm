@@ -4,11 +4,15 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "chair"
 	buckle_lying = 0 //force people to sit up in chairs when buckled
+	var/can_flipped = 0
+	var/flipped = 0
+	var/flip_angle = 0
 
 	var/propelled = 0 // Check for fire-extinguisher-driven chairs
 
 /obj/structure/stool/bed/chair/metal
 	icon_state = "chair_g"
+	can_flipped = 1
 	var/behind = null
 	var/behind_buckled = null
 
@@ -109,6 +113,33 @@
 		SK.master = E
 		qdel(src)
 
+/obj/structure/stool/bed/chair/attack_hand()
+	if(can_flip(usr))
+		var/flip_time = 20	//2 sec without someone
+		if(!isnull(buckled_mob))
+			flip_time = 60	//6 sec with
+		if(!flipped)
+			usr.visible_message("<span class='notice'>[usr] flips \the [src] down.</span>","<span class='notice'>You flips \the [src] down.")
+			flip()
+			if(buckled_mob && !buckled_mob.restrained())
+				var/mob/living/L = buckled_mob
+				unbuckle_mob()
+				L.apply_effect(2, WEAKEN, 0)
+				L.apply_damage(3, BRUTE, "head")
+		else if(do_after(usr, flip_time, target = usr))
+			usr.visible_message("<span class='notice'>[usr] flips \the [src] up.</span>","<span class='notice'>You flips \the [src] up.")
+			flip()
+	else
+		..()
+
+/obj/structure/stool/bed/chair/user_buckle_mob(mob/living/M, mob/user)
+	if(flipped)
+		usr << "<span class='notice'>You can do it, while \the [src] is flipped.</span>"
+		if(usr != M)
+			M << "<span class='warning'>Tried buckle you to \the [src].</span>"
+	else
+		..()
+
 /obj/structure/stool/bed/chair/attack_tk(mob/user as mob)
 	if(buckled_mob)
 		..()
@@ -121,8 +152,10 @@
 		src.layer = FLY_LAYER
 	else
 		src.layer = OBJ_LAYER
+
 	if(buckled_mob)
 		buckled_mob.dir = dir
+		buckled_mob.update_canmove()
 
 /obj/structure/stool/bed/chair/verb/rotate()
 	set name = "Rotate Chair"
@@ -134,16 +167,49 @@
 		handle_rotation()
 		return
 	else
-		if(istype(usr,/mob/living/simple_animal/mouse))
+		if(ismouse(usr))
 			return
 		if(!usr || !isturf(usr.loc))
 			return
-		if(usr.stat || usr.restrained())
+		if(usr.incapacitated())
 			return
 
 		src.dir = turn(src.dir, 90)
 		handle_rotation()
 		return
+
+/obj/structure/stool/bed/chair/proc/can_flip(mob/living/carbon/human/user)
+	if(!user || !isturf(user.loc) || user.incapacitated() || user.lying || user.a_intent != "hurt"|| !can_flipped)
+		return 0
+	return 1
+
+/obj/structure/stool/bed/chair/proc/flip()
+	var/matrix/M = matrix(transform)
+	var/offset_y = 0
+	var/offset_x = 0
+	var/new_angle = pick(90, 270)
+
+	if(!flipped)
+		M.TurnTo(0,new_angle)
+		flip_angle = new_angle	//save our angle for future flip
+		if(new_angle==90)
+			offset_y = -4
+			offset_x = 2
+		else
+			offset_y = -4
+			offset_x = -2
+		flipped = 1
+		anchored = 0		//can be pulled
+		buckle_movable = 0
+		playsound(src.loc, 'sound/items/chair_fall.ogg', 25, 1)
+	else
+		M.TurnTo(flip_angle,0)
+		flipped = 0
+		anchored = initial(anchored)
+		buckle_movable = initial(buckle_movable)
+
+	animate(src, transform = M, pixel_y = offset_y, pixel_x = offset_x, time = 2, easing = EASE_IN|EASE_OUT)
+	handle_rotation()
 
 // Chair types
 /obj/structure/stool/bed/chair/wood/normal
@@ -211,6 +277,7 @@
 /obj/structure/stool/bed/chair/office
 	anchored = 0
 	buckle_movable = 1
+	can_flipped = 1
 
 /obj/structure/stool/bed/chair/office/Move()
 	..()
