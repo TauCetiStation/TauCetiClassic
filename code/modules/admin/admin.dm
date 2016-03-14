@@ -676,7 +676,6 @@ var/global/floorIsLava = 0
 			<BR>
 			<A href='?src=\ref[src];secretsadmin=list_job_debug'>Show Job Debug</A><BR>
 			<A href='?src=\ref[src];secretscoder=spawn_objects'>Admin Log</A><BR>
-			<A href='?src=\ref[src];secretscoder=garbage_fail_log'>Garbage Log</A><BR>
 			<BR>
 			"}
 
@@ -924,13 +923,6 @@ var/global/floorIsLava = 0
 		blackbox.save_all_data_to_sql()
 
 	world.Reboot()
-
-/datum/admins/proc/getProcessSchedulerContext()
-	set category = "Debug"
-	set name = "Process Scheduler Status Panel"
-
-	feedback_add_details("admin_verb","GPSSP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-	processSchedulerView.getContext()
 
 /datum/admins/proc/unprison(var/mob/M in mob_list)
 	set category = "Admin"

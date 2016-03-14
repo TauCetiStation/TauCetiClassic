@@ -2537,15 +2537,6 @@
 				if(!admin_log.len)
 					dat += "No-one has done anything this round!"
 				usr << browse(dat, "window=admin_log")
-			if("garbage_fail_log")
-				var/dat = "<B>Garbage Log<HR></B>"
-				if(garbage_collector)
-					if(garbage_collector.logging.len)
-						for(var/l in garbage_collector.logging)
-							dat += "<li>[l]</li>"
-					else
-						dat += "Empty."
-				usr << browse(dat, "window=garbage_fail_log")
 			if("maint_access_brig")
 				for(var/obj/machinery/door/airlock/maintenance/M in world)
 					if (access_maint_tunnels in M.req_access)

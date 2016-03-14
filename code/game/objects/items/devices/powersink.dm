@@ -43,7 +43,7 @@
 					return
 			else
 				if (mode == 2)
-					processing_objects.Remove(src) // Now the power sink actually stops draining the station's power if you unhook it. --NeoFite
+					SSobj.processing.Remove(src) // Now the power sink actually stops draining the station's power if you unhook it. --NeoFite
 				anchored = 0
 				mode = 0
 				user << "You detach	the device from the cable."
@@ -77,7 +77,7 @@
 					M << "[user] activates the power sink!"
 				mode = 2
 				icon_state = "powersink1"
-				processing_objects.Add(src)
+				SSobj.processing |= src
 
 			if(2)  //This switch option wasn't originally included. It exists now. --NeoFite
 				user << "You deactivate the device!"
@@ -87,7 +87,7 @@
 				mode = 1
 				set_light(0)
 				icon_state = "powersink0"
-				processing_objects.Remove(src)
+				SSobj.processing.Remove(src)
 
 	process()
 		if(attached)
@@ -115,6 +115,6 @@
 			if(power_drained > max_power * 0.95)
 				playsound(src, 'sound/effects/screech.ogg', 100, 1, 1)
 			if(power_drained >= max_power)
-				processing_objects.Remove(src)
+				SSobj.processing.Remove(src)
 				explosion(src.loc, 3,6,9,12)
 				qdel(src)

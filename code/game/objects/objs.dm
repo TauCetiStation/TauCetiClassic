@@ -22,13 +22,13 @@
 
 /obj/item/proc/is_used_on(obj/O, mob/user)
 
-/obj/proc/process()
-	processing_objects.Remove(src)
+/obj/process()
+	SSobj.processing.Remove(src)
 	return 0
 
 /obj/Destroy()
 	if(!istype(src, /obj/machinery))
-		processing_objects.Remove(src) // TODO: Have a processing bitflag to reduce on unnecessary loops through the processing lists
+		SSobj.processing.Remove(src) // TODO: Have a processing bitflag to reduce on unnecessary loops through the processing lists
 	nanomanager.close_uis(src)
 	return ..()
 
@@ -59,9 +59,6 @@
 		return remove_air(breath_request)
 	else
 		return null
-
-/atom/movable/proc/initialize()
-	return
 
 /obj/proc/updateUsrDialog()
 	if(in_use)

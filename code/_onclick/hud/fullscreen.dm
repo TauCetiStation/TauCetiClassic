@@ -59,8 +59,9 @@
 	var/severity = 0
 
 /obj/screen/fullscreen/Destroy()
+	..()
 	severity = 0
-	return ..()
+	return QDEL_HINT_PUTINPOOL
 
 /obj/screen/fullscreen/brute
 	icon_state = "brutedamageoverlay"

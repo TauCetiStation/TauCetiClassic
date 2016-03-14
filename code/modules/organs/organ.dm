@@ -8,7 +8,7 @@
 
 	var/germ_level = 0		// INTERNAL germs inside the organ, this is BAD if it's greater than INFECTION_LEVEL_ONE
 
-	proc/process()
+	process()
 		return 0
 
 	proc/receive_chem(chemical as obj)
@@ -91,7 +91,7 @@
 					var/datum/organ/internal/I = pick(E.internal_organs)
 					custom_pain("You feel broken bones moving in your [E.display_name]!", 1)
 					I.take_damage(rand(3,5))
-				
+
 				//Moving makes open wounds get infected much faster
 				if (E.wounds.len)
 					for(var/datum/wound/W in E.wounds)

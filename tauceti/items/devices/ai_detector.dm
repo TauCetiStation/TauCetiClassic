@@ -6,11 +6,11 @@
 
 /obj/item/device/multitool/ai_detect/New()
 	..()
-	processing_objects += src
+	SSobj.processing |= src
 
 /obj/item/device/multitool/ai_detect/Destroy()
-	processing_objects -= src
-	..()
+	SSobj.processing.Remove(src)
+	return ..()
 
 /obj/item/device/multitool/ai_detect/process()
 

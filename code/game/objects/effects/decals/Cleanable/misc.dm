@@ -172,14 +172,14 @@
 		qdel(src)
 		return
 
-	processing_objects |= src
+	SSobj.processing |= src
 	processing_water |= src
 
 	overlays |= get_water_icon("water")
 	update_icon()
 
 /obj/effect/decal/cleanable/water/Destroy()
-	processing_objects -= src
+	SSobj.processing.Remove(src)
 	processing_water -= src
 	..()
 

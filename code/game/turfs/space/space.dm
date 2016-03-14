@@ -4,14 +4,16 @@
 	icon_state = "0"
 	dynamic_lighting = 0
 
-	temperature = T20C
+	temperature = TCMB
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
 //	heat_capacity = 700000 No.
 
 /turf/space/New()
 	if(!istype(src, /turf/space/transit))
-		icon_state = "[((x + y) ^ ~(x * y) + z) % 25]"
-	//update_starlight()
+		icon_state = SPACE_ICON_STATE
+
+/turf/space/Destroy()
+	return QDEL_HINT_LETMELIVE
 
 /turf/space/proc/update_starlight()
 	return

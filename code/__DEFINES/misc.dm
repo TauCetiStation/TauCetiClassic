@@ -18,7 +18,8 @@
 
 //zlevel defines, can be overriden for different maps in the appropriate _maps file.
 #define ZLEVEL_STATION  	1
-#define ZLEVEL_CENTCOMM 	2
+#define ZLEVEL_CENTCOMM 	2 //EI NATH!!
+#define ZLEVEL_CENTCOM  	2
 #define ZLEVEL_TELECOMMS	3
 #define ZLEVEL_DERELICT		4
 #define ZLEVEL_ASTEROID 	5
@@ -85,3 +86,6 @@
 
 //defines
 #define RESIZE_DEFAULT_SIZE 1
+
+//Just space
+#define SPACE_ICON_STATE	"[((x + y) ^ ~(x * y) + z) % 25]"

@@ -107,12 +107,12 @@
 	set_light(0)
 	icon_state = "dominator-broken"
 	operating = -1
-	processing_objects -= src
+	SSobj.processing.Remove(src)
 
 /obj/machinery/dominator/Destroy()
 	if(!(stat & BROKEN))
 		set_broken()
-	..()
+	return ..()
 
 /obj/machinery/dominator/emp_act(severity)
 	healthcheck(100)
@@ -194,7 +194,7 @@
 		healthcheck(0)
 		operating = 1
 		ticker.mode.message_gangtools(((gang=="A") ? ticker.mode.A_tools : ticker.mode.B_tools),"Hostile takeover in progress: Estimated [time] seconds until victory.")
-		processing_objects += src
+		SSobj.processing |= src
 
 /obj/machinery/dominator/attack_alien(mob/living/user)
 	user.do_attack_animation(src)

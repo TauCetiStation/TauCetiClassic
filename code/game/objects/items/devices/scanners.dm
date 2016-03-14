@@ -26,13 +26,13 @@ REAGENT SCANNER
 	icon_state = "t-ray[on]"
 
 	if(on)
-		processing_objects.Add(src)
+		SSobj.processing |= src
 
 
 /obj/item/device/t_scanner/process()
 	if(!on)
-		processing_objects.Remove(src)
-		return null
+		SSobj.processing.Remove(src)
+		return
 
 	for(var/turf/T in range(1, src.loc) )
 

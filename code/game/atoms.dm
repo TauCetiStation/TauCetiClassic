@@ -387,6 +387,10 @@
 	. = ..()
 	sleep(1)
 
+//This will be called after the map and objects are loaded
+/atom/proc/initialize()
+	return
+
 /atom/proc/update_transform()
 	var/matrix/ntransform = matrix(transform)
 	var/changed = 0

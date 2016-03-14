@@ -356,16 +356,16 @@ the implant may become unstable and either pre-maturely inject the subject or si
 				"\red Suddenly the horrible pain strikes your body! Your mind is in complete disorder! Blood pulses and starts burning! The pain is impossible!!!")
 			H.adjustBrainLoss(80)
 
-		processing_objects.Add(src)
+		SSobj.processing |= src
 		return 1
 
 	New()
 		..()
-		processing_objects.Add(src)
+		SSobj.processing |= src
 
 	process()
 		if (!implanted)
-			processing_objects.Remove(src)
+			SSobj.processing.Remove(src)
 			return
 
 		var/mob/M = imp_in
@@ -373,7 +373,7 @@ the implant may become unstable and either pre-maturely inject the subject or si
 		if(!M)	return
 
 		if(M.stat == DEAD || isnull(M))
-			processing_objects.Remove(src)
+			SSobj.processing.Remove(src)
 			return
 
 		if(prob(1) && prob(25))//1/400
@@ -458,8 +458,8 @@ the implant may become unstable and either pre-maturely inject the subject or si
 					a.autosay("[mobname] has died in Space!", "[mobname]'s Death Alarm")
 				else
 					a.autosay("[mobname] has died in [t.name]!", "[mobname]'s Death Alarm")
+				SSobj.processing.Remove(src)
 				qdel(a)
-				processing_objects.Remove(src)
 			if ("emp")
 				var/obj/item/device/radio/headset/a = new /obj/item/device/radio/headset(null)
 				var/name = prob(50) ? t.name : pick(teleportlocs)
@@ -468,8 +468,8 @@ the implant may become unstable and either pre-maturely inject the subject or si
 			else
 				var/obj/item/device/radio/headset/a = new /obj/item/device/radio/headset(null)
 				a.autosay("[mobname] has died-zzzzt in-in-in...", "[mobname]'s Death Alarm")
+				SSobj.processing.Remove(src)
 				qdel(a)
-				processing_objects.Remove(src)
 
 	emp_act(severity)			//for some reason alarms stop going off in case they are emp'd, even without this
 		if (malfunction)		//so I'm just going to add a meltdown chance here
@@ -482,14 +482,14 @@ the implant may become unstable and either pre-maturely inject the subject or si
 				meltdown()
 			else if (prob(60))	//but more likely it will just quietly die
 				malfunction = MALFUNCTION_PERMANENT
-			processing_objects.Remove(src)
+			SSobj.processing.Remove(src)
 
 		spawn(20)
 			malfunction--
 
 	implanted(mob/source as mob)
 		mobname = source.real_name
-		processing_objects.Add(src)
+		SSobj.processing |= src
 		return 1
 
 /obj/item/weapon/implant/compressed

@@ -1,4 +1,7 @@
-#define DEBUG
+#define DEBUG					//Enables byond profiling and full runtime logs - note, this may also be defined in your .dme file
+								//Enables in-depth debug messages to runtime log (used for debugging)
+//#define TESTING				//By using the testing("message") proc you can create debug-feedback for people with this
+								//uncommented, but not visible in the release version)
 
 #define LETTER_255	"¶"
 #define LETTER_255_CODE 182
@@ -11,5 +14,3 @@
 #define MAX_PAPER_MESSAGE_LEN 3072
 #define MAX_BOOK_MESSAGE_LEN 9216
 #define MAX_NAME_LEN 26
-
-var/global/list/processing_objects = list() //This has to be initialized BEFORE world

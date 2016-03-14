@@ -36,12 +36,12 @@
 	if(active && !defused && (timer <= 0))	//Boom
 		active = 0
 		timer = 60
-		processing_objects.Remove(src)
+		SSobj.processing.Remove(src)
 		explosion(src.loc,2,5,11)
 		qdel(src)
 		return
 	if(!active || defused)					//Counter terrorists win
-		processing_objects.Remove(src)
+		SSobj.processing.Remove(src)
 		return
 
 /obj/machinery/syndicatebomb/New()
@@ -147,7 +147,7 @@
 			var/area/A = get_area(bombturf)
 			message_admins("[key_name(usr)]<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A> has primed a [name] for detonation at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>.")
 			log_game("[key_name(usr)] has primed a [name] for detonation at [A.name]([bombturf.x],[bombturf.y],[bombturf.z])")
-			processing_objects.Add(src) //Ticking down
+			SSobj.processing |= src //Ticking down
 
 /obj/machinery/syndicatebomb/proc/isWireCut(var/index)
 	return wires.IsIndexCut(index)
@@ -245,7 +245,7 @@ var/const/WIRE_ACTIVATE = 16	// Will start a bombs timer if pulsed, will hint if
 					P.icon_state = "syndicate-bomb-active"
 				else
 					P.icon_state = "syndicate-bomb-active-wires"
-				processing_objects.Add(P)
+				SSobj.processing |= P
 			else
 				P.loc.visible_message("\blue \icon[holder] The bomb seems to hesitate for a moment.")
 				P.timer += 5

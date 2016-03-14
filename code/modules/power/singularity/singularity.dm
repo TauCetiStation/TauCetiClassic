@@ -45,7 +45,7 @@ var/global/list/uneatable = list(
 		spawn(temp)
 			qdel(src)
 	..()
-	processing_objects.Add(src)
+	SSobj.processing |= src
 	poi_list |= src
 	for(var/obj/machinery/singularity_beacon/singubeacon in machines)
 		if(singubeacon.active)
@@ -54,7 +54,7 @@ var/global/list/uneatable = list(
 	return
 
 /obj/singularity/Destroy()
-	processing_objects.Remove(src)
+	SSobj.processing.Remove(src)
 	poi_list.Remove(src)
 	return ..()
 
@@ -301,7 +301,7 @@ var/global/list/uneatable = list(
 			qdel(A)
 		else
 			A.ex_act(1.0)
-			if(A && isnull(A.gcDestroyed)) qdel(A)
+			if(A && !qdeleted(A)) qdel(A)
 		gain = 2
 	else if(isturf(A))
 		var/turf/T = A
