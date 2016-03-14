@@ -104,6 +104,7 @@
 	return 0
 
 /mob/proc/Life()
+	set waitfor = 0
 	return
 
 /mob/proc/incapacitated()
