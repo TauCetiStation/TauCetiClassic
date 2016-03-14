@@ -324,9 +324,3 @@
 	if(buckled_mob == mover)
 		return 1
 	return ..()
-
-/////////////////////////////
-// SINGULOTH PULL REFACTOR
-/////////////////////////////
-/atom/movable/proc/canSingulothPull(var/obj/singularity/singulo)
-	return 1
