@@ -152,7 +152,8 @@ var/global/datum/controller/gameticker/ticker
 	data_core.manifest()
 	current_state = GAME_STATE_PLAYING
 
-	callHook("roundstart")
+	spawn_empty_ai()
+	slack_roundstart()
 
 	//here to initialize the random events nicely at round start
 	setup_economy()
@@ -356,7 +357,11 @@ var/global/datum/controller/gameticker/ticker
 				declare_completion()
 
 			spawn(50)
-				callHook("roundend")
+				var/datum/game_mode/mutiny/mutiny = get_mutiny_mode()
+				if(mutiny)
+					mutiny.round_outcome()
+
+				slack_roundend()
 
 				if (mode.station_was_nuked)
 					feedback_set_details("end_proper","nuke")

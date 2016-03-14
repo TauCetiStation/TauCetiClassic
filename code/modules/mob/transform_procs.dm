@@ -178,7 +178,9 @@
 
 		if(O.mmi) O.mmi.transfer_identity(src) //Does not transfer key/client.
 
-	callHook("borgify", list(O))
+	var/datum/game_mode/mutiny/mode = get_mutiny_mode()
+	if(mode)
+		mode.borgify_directive(O)
 
 	O.Namepick()
 

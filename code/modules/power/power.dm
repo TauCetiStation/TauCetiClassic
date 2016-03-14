@@ -221,9 +221,6 @@
 
 // rebuild all power networks from scratch - only called at world creation or by the admin verb
 
-/hook/startup/proc/buildPowernets()
-	return makepowernets()
-
 /proc/makepowernets()
 	for(var/datum/powernet/PN in powernets)
 		del(PN)

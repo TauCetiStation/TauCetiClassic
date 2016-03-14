@@ -299,29 +299,26 @@
 
 
 /area/Entered(A)
-	var/musVolume = 25
-	var/sound = 'sound/ambience/ambigen1.ogg'
-
-	if(!istype(A,/mob/))	return
-	var/mob/M = A
-
-	if(!M.lastarea)
-		M.lastarea = get_area(M.loc)
-	var/area/newarea = get_area(M.loc)
-	var/area/oldarea = M.lastarea
-	if(newarea != oldarea)
-		CallHook("MobAreaChange", list("mob" = A, "new" = newarea, "old" = oldarea))
-
 	if(!istype(A,/mob/living))
-		M.lastarea = newarea
 		return
 
 	var/mob/living/L = A
+	if(!L.ckey)
+		return
+
+	//Jukebox
+	if(!L.lastarea)
+		L.lastarea = get_area(L.loc)
+	var/area/newarea = get_area(L.loc)
+	var/area/oldarea = L.lastarea
+	if(newarea != oldarea)
+		if(L.client)
+			L.update_music()
+	L.lastarea = newarea
+
 	if((oldarea.has_gravity == 0) && (newarea.has_gravity == 1) && (L.m_intent == "run")) // Being ready when you change areas gives you a chance to avoid falling all together.
 		thunk(L)
 
-	L.lastarea = newarea
-	if(!L.ckey)	return
 	// Ambience goes down here -- make sure to list each area seperately for ease of adding things in later, thanks! Note: areas adjacent to each other should have the same sounds to prevent cutoff when possible.- LastyScratch
 	if(!(L && L.client && (L.client.prefs.toggles & SOUND_AMBIENCE)))	return
 
@@ -330,6 +327,7 @@
 		L << sound('sound/ambience/shipambience.ogg', repeat = 1, wait = 0, volume = 35, channel = 2)
 
 	if(prob(35))
+		var/sound = 'sound/ambience/ambigen1.ogg'
 
 		if(istype(src, /area/chapel))
 			sound = pick('sound/ambience/ambicha1.ogg','sound/ambience/ambicha2.ogg','sound/ambience/ambicha3.ogg','sound/ambience/ambicha4.ogg','sound/music/traitor.ogg')
@@ -343,7 +341,6 @@
 			sound = pick('sound/ambience/ambimalf.ogg')
 		else if(istype(src, /area/mine/explored) || istype(src, /area/mine/unexplored))
 			sound = pick('sound/ambience/ambimine.ogg', 'sound/ambience/song_game.ogg','tauceti/sounds/ambience/mars.ogg')
-			musVolume = 25
 		else if(istype(src, /area/tcommsat) || istype(src, /area/turret_protected/tcomwest) || istype(src, /area/turret_protected/tcomeast) || istype(src, /area/turret_protected/tcomfoyer) || istype(src, /area/turret_protected/tcomsat))
 			sound = pick('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg')
 		else if (istype(src, /area/syndicate_station) || istype(src, /area/syndicate_station/start) || istype(src,/area/syndicate_station/transit))
@@ -352,7 +349,7 @@
 			sound = pick('sound/ambience/ambigen1.ogg','sound/ambience/ambigen3.ogg','sound/ambience/ambigen4.ogg','sound/ambience/ambigen5.ogg','sound/ambience/ambigen6.ogg','sound/ambience/ambigen7.ogg','sound/ambience/ambigen8.ogg','sound/ambience/ambigen9.ogg','sound/ambience/ambigen10.ogg','sound/ambience/ambigen11.ogg','sound/ambience/ambigen12.ogg','sound/ambience/ambigen14.ogg')
 
 		if(!L.client.played)
-			L << sound(sound, repeat = 0, wait = 0, volume = musVolume, channel = 1)
+			L << sound(sound, repeat = 0, wait = 0, volume = 25, channel = 1)
 			L.client.played = 1
 			spawn(600)			//ewww - this is very very bad
 				if(L.&& L.client)
