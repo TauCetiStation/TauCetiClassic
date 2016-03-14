@@ -18,7 +18,6 @@ var/global/pipe_processing_killed = 0
 
 	var/air_cost 		= 0
 	var/sun_cost		= 0
-	var/mobs_cost		= 0
 	var/diseases_cost	= 0
 	var/networks_cost	= 0
 	var/powernets_cost	= 0
@@ -28,7 +27,6 @@ var/global/pipe_processing_killed = 0
 	var/gc_cost			= 0
 
 	var/last_thing_processed
-	var/mob/list/expensive_mobs = list()
 	var/rebuild_active_areas = 0
 
 	var/datum/ore_distribution/asteroid_ore_map // For debugging and VV.
@@ -156,13 +154,6 @@ var/global/pipe_processing_killed = 0
 
 				sleep(breather_ticks)
 
-				//MOBS
-				timer = world.timeofday
-				process_mobs()
-				mobs_cost = (world.timeofday - timer) / 10
-
-				sleep(breather_ticks)
-
 				//DISEASES
 				timer = world.timeofday
 				process_diseases()
@@ -190,7 +181,7 @@ var/global/pipe_processing_killed = 0
 				ticker_cost = (world.timeofday - timer) / 10
 
 				//TIMING
-				total_cost = air_cost + sun_cost + mobs_cost + diseases_cost + networks_cost + events_cost + ticker_cost
+				total_cost = air_cost + sun_cost + diseases_cost + networks_cost + events_cost + ticker_cost
 
 				var/end_time = world.timeofday
 				if(end_time < start_time)
@@ -198,21 +189,6 @@ var/global/pipe_processing_killed = 0
 				sleep( round(minimum_ticks - (end_time - start_time),1) )
 			else
 				sleep(10)
-
-/datum/controller/game_controller/proc/process_mobs()
-	var/i = 1
-	expensive_mobs.Cut()
-	while(i<=mob_list.len)
-		var/mob/M = mob_list[i]
-		if(M && !qdeleted(M))
-			var/clock = world.timeofday
-			last_thing_processed = M.type
-			M.Life()
-			if((world.timeofday - clock) > 1)
-				expensive_mobs += M
-			i++
-			continue
-		mob_list.Cut(i,i+1)
 
 /datum/controller/game_controller/proc/process_diseases()
 	var/i = 1
