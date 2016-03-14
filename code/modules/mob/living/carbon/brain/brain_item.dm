@@ -34,7 +34,9 @@
 				H.mind.transfer_to(brainmob)
 
 			brainmob << "\blue You feel slightly disoriented. That's normal when you're just a brain."
-			callHook("debrain", list(brainmob))
+			var/datum/game_mode/mutiny/mode = get_mutiny_mode()
+			if(mode)
+				mode.debrain_directive(src)
 
 /obj/item/brain/examine() // -- TLE
 	set src in oview(12)

@@ -18,7 +18,22 @@
 	if(byond_version < RECOMMENDED_VERSION)
 		world.log << "Your server's byond version does not meet the recommended requirements for this server. Please update BYOND"
 
+	make_datum_references_lists() //initialises global lists for referencing frequently used datums (so that we only ever do it once)
+
 	load_configuration()
+	load_stealth_keys()
+	load_mode()
+	load_last_mode()
+	load_motd()
+	load_admins()
+	load_mods()
+	if(config.usewhitelist)
+		load_whitelist()
+	if(config.usealienwhitelist)
+		load_alienwhitelist()
+
+	LoadBans()
+	investigate_reset()
 
 	if(config && config.server_name != null && config.server_suffix && world.port > 0)
 		// dumb and hardcoded but I don't care~
@@ -26,14 +41,47 @@
 
 	if(config && config.log_runtime)
 		log = file("data/logs/runtime/[time2text(world.realtime,"YYYY-MM-DD-(hh-mm-ss)")]-runtime.log")
-	SetupHooks() // /vg/
 
-	callHook("startup")
-	//Emergency Fix
-	load_mods()
-	//end-emergency fix
+	var/custom_items_file = file2text("config/custom_items.txt")
+	custom_items = splittext(custom_items_file, "\n")
+
+	slack_startup()
+
+	sun = new /datum/sun()
+	radio_controller = new /datum/controller/radio()
+	data_core = new /obj/effect/datacore()
+	paiController = new /datum/paiController()
+
+	if(!setup_old_database_connection())
+		world.log << "Your server failed to establish a connection with the SQL database."
+	else
+		world.log << "SQL database connection established."
+
+	if(!setup_database_connection())
+		world.log << "Your server failed to establish a connection with the feedback database."
+	else
+		world.log << "Feedback database connection established."
+
+	plmaster = new /obj/effect/overlay()
+	plmaster.icon = 'icons/effects/tile_effects.dmi'
+	plmaster.icon_state = "plasma-purple"  //fuck phoron!
+	plmaster.layer = FLY_LAYER
+	plmaster.mouse_opacity = 0
+
+	slmaster = new /obj/effect/overlay()
+	slmaster.icon = 'icons/effects/tile_effects.dmi'
+	slmaster.icon_state = "sleeping_agent"
+	slmaster.layer = FLY_LAYER
+	slmaster.mouse_opacity = 0
+
+	Get_Holiday()
+
+	makepowernets()
 
 	src.update_status()
+
+	process_teleport_locs()			//Sets up the wizard teleport locations
+	process_ghost_teleport_locs()	//Sets up ghost teleport locations.
 
 	. = ..()
 
@@ -45,7 +93,6 @@
 	spawn(1)
 		//processScheduler.deferSetupFor(/datum/controller/process/ticker)
 		processScheduler.setup()
-
 		master_controller.setup()
 
 	spawn(3000)		//so we aren't adding to the round-start lag
@@ -219,20 +266,11 @@ var/world_topic_spam_protect_time = world.timeofday
 						qdel(C)
 #undef INACTIVITY_KICK
 
-/hook/startup/proc/loadStealthKeys()
-	world.load_stealth_keys()
-	return 1
-
 /world/proc/load_stealth_keys()
 	var/list/keys_list = file2list("config/stealth_keys.txt")
 	if(keys_list.len)
 		for(var/X in keys_list)
 			stealth_keys += lowertext(X)
-
-/hook/startup/proc/loadMode()
-	world.load_mode()
-	world.load_last_mode()
-	return 1
 
 /world/proc/load_mode()
 	var/list/Lines = file2list("data/mode.txt")
@@ -258,9 +296,6 @@ var/world_topic_spam_protect_time = world.timeofday
 	fdel(F)
 	F << the_last_mode
 
-/hook/startup/proc/loadMOTD()
-	world.load_motd()
-	return 1
 
 /world/proc/load_motd()
 	join_motd = file2text("config/motd.txt")
@@ -275,10 +310,6 @@ var/world_topic_spam_protect_time = world.timeofday
 	// apply some settings from config..
 	abandon_allowed = config.respawn
 
-
-/hook/startup/proc/loadMods()
-	world.load_mods()
-	return 1
 
 /world/proc/load_mods()
 	if(config.admin_legacy_system)
@@ -365,13 +396,6 @@ var/world_topic_spam_protect_time = world.timeofday
 var/failed_db_connections = 0
 var/failed_old_db_connections = 0
 
-/hook/startup/proc/connectDB()
-	if(!setup_database_connection())
-		world.log << "Your server failed to establish a connection with the feedback database."
-	else
-		world.log << "Feedback database connection established."
-	return 1
-
 proc/setup_database_connection()
 
 	if(failed_db_connections > FAILED_DB_CONNECTION_CUTOFF)	//If it failed to establish a connection more than 5 times in a row, don't bother attempting to conenct anymore.
@@ -405,14 +429,6 @@ proc/establish_db_connection()
 		return setup_database_connection()
 	else
 		return 1
-
-
-/hook/startup/proc/connectOldDB()
-	if(!setup_old_database_connection())
-		world.log << "Your server failed to establish a connection with the SQL database."
-	else
-		world.log << "SQL database connection established."
-	return 1
 
 //These two procs are for the old database, while it's being phased out. See the tgstation.sql file in the SQL folder for more information.
 proc/setup_old_database_connection()

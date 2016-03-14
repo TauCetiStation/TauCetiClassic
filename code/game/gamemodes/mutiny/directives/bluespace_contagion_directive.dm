@@ -48,11 +48,3 @@ datum/directive/bluespace_contagion/get_remaining_orders()
 	for(var/victim in infected)
 		text += "<li>Kill [victim]</li>"
 	return text
-
-/hook/death/proc/infected_killed(mob/living/carbon/human/deceased, gibbed)
-	var/datum/directive/bluespace_contagion/D = get_directive("bluespace_contagion")
-	if(!D) return 1
-
-	if(deceased in D.infected)
-		D.infected.Remove(deceased)
-	return 1

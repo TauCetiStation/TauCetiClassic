@@ -85,24 +85,3 @@ datum/directive/tau_ceti_needs_women/get_remaining_orders()
 		text += "<li>Terminate [id]</li>"
 
 	return text
-
-/hook/reassign_employee/proc/command_reassignments(obj/item/weapon/card/id/id_card)
-	var/datum/directive/tau_ceti_needs_women/D = get_directive("tau_ceti_needs_women")
-	if(!D) return 1
-
-	if(D.command_targets && D.command_targets.Find(id_card))
-		D.command_targets[id_card] = command_positions.Find(id_card.assignment) ? 0 : 1
-
-	return 1
-
-/hook/terminate_employee/proc/gender_target_termination_directive(obj/item/weapon/card/id)
-	var/datum/directive/tau_ceti_needs_women/D = get_directive("tau_ceti_needs_women")
-	if (!D) return 1
-
-	if(D.alien_targets && D.alien_targets.Find(id))
-		D.alien_targets.Remove(id)
-
-	if(D.command_targets && D.command_targets.Find(id))
-		D.command_targets[id] = 1
-
-	return 1

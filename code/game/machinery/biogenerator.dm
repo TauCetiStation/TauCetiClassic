@@ -13,7 +13,7 @@
 	var/menustat = "menu"
 	var/efficiency = 0
 	var/productivity = 0
-	var/max_items = 40
+	var/max_items = 10
 
 /obj/machinery/biogenerator/New()
 	..()
@@ -31,10 +31,10 @@
 /obj/machinery/biogenerator/RefreshParts()
 	var/E = 0
 	var/P = 0
-	var/max_storage = 40
+	var/max_storage = 10
 	for(var/obj/item/weapon/stock_parts/matter_bin/B in component_parts)
 		P += B.rating
-		max_storage = 40 * B.rating
+		max_storage = B.rating * 3 + 10
 	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
 		E += M.rating
 	efficiency = E
