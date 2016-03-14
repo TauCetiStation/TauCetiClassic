@@ -78,8 +78,6 @@
 
 	Get_Holiday()
 
-	makepowernets()
-
 	src.update_status()
 
 	process_teleport_locs()			//Sets up the wizard teleport locations

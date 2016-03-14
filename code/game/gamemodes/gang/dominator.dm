@@ -11,14 +11,16 @@
 	var/gang
 	var/operating = 0
 
+/obj/machinery/dominator/tesla_act()
+	qdel(src)
+
 /obj/machinery/dominator/New()
+	..()
 	if(!istype(ticker.mode, /datum/game_mode/gang))
 		qdel(src)
 		return
 	set_light(2)
-
-/obj/machinery/dominator/tesla_act()
-	qdel(src)
+	poi_list |= src
 
 /obj/machinery/dominator/examine(mob/user)
 	..()
@@ -44,9 +46,13 @@
 	user << "<span class='danger'>System Integrity: [round((health/maxhealth)*100,1)]%</span>"
 
 /obj/machinery/dominator/process()
+	..()
 	var/datum/game_mode/gang/mode = ticker.mode
-	if(((gang == "A") && mode.A_timer) || ((gang == "B") && mode.B_timer))
-		playsound(loc, 'sound/items/timer.ogg', 30, 0)
+	if(gang && (isnum(mode.A_timer) || isnum(mode.B_timer)))
+		if(((gang == "A") && mode.A_timer) || ((gang == "B") && mode.B_timer))
+			playsound(loc, 'sound/items/timer.ogg', 30, 0)
+	else
+		SSmachine.processing -= src
 
 /obj/machinery/dominator/proc/healthcheck(var/damage)
 	var/iconname = "dominator"
@@ -107,11 +113,12 @@
 	set_light(0)
 	icon_state = "dominator-broken"
 	operating = -1
-	SSobj.processing.Remove(src)
+	SSmachine.processing -= src
 
 /obj/machinery/dominator/Destroy()
 	if(!(stat & BROKEN))
 		set_broken()
+	poi_list.Remove(src)
 	return ..()
 
 /obj/machinery/dominator/emp_act(severity)
@@ -194,7 +201,7 @@
 		healthcheck(0)
 		operating = 1
 		ticker.mode.message_gangtools(((gang=="A") ? ticker.mode.A_tools : ticker.mode.B_tools),"Hostile takeover in progress: Estimated [time] seconds until victory.")
-		SSobj.processing |= src
+		SSmachine.processing |= src
 
 /obj/machinery/dominator/attack_alien(mob/living/user)
 	user.do_attack_animation(src)

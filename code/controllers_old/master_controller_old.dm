@@ -20,7 +20,6 @@ var/global/pipe_processing_killed = 0
 	var/sun_cost		= 0
 	var/mobs_cost		= 0
 	var/diseases_cost	= 0
-	var/machines_cost	= 0
 	var/networks_cost	= 0
 	var/powernets_cost	= 0
 	var/nano_cost		= 0
@@ -172,25 +171,11 @@ var/global/pipe_processing_killed = 0
 
 				sleep(breather_ticks)
 
-				//MACHINES
-				timer = world.timeofday
-				process_machines()
-				machines_cost = (world.timeofday - timer) / 10
-
-				sleep(breather_ticks)
-
 				//PIPENETS
 				if(!pipe_processing_killed)
 					timer = world.timeofday
 					process_pipenets()
 					networks_cost = (world.timeofday - timer) / 10
-
-				sleep(breather_ticks)
-
-				//POWERNETS
-				timer = world.timeofday
-				process_powernets()
-				powernets_cost = (world.timeofday - timer) / 10
 
 				sleep(breather_ticks)
 
@@ -213,7 +198,7 @@ var/global/pipe_processing_killed = 0
 				ticker_cost = (world.timeofday - timer) / 10
 
 				//TIMING
-				total_cost = air_cost + sun_cost + mobs_cost + diseases_cost + machines_cost + networks_cost + powernets_cost + nano_cost + events_cost + ticker_cost
+				total_cost = air_cost + sun_cost + mobs_cost + diseases_cost + networks_cost + nano_cost + events_cost + ticker_cost
 
 				var/end_time = world.timeofday
 				if(end_time < start_time)
@@ -247,7 +232,7 @@ var/global/pipe_processing_killed = 0
 			i++
 			continue
 		active_diseases.Cut(i,i+1)
-
+/*
 /datum/controller/game_controller/proc/process_machines()
 	process_machines_process()
 	process_machines_power()
@@ -289,7 +274,7 @@ var/global/pipe_processing_killed = 0
 			if(A == A.master)
 				A.powerupdate += 1
 				active_areas |= A
-		rebuild_active_areas = 0
+		rebuild_active_areas = 0*/
 
 /datum/controller/game_controller/proc/process_pipenets()
 	last_thing_processed = /datum/pipe_network
