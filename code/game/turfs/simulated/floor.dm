@@ -72,7 +72,6 @@ var/list/wood_icons = list("wood","wood-broken")
 
 /turf/simulated/floor/Destroy()
 	if(floor_type)
-		qdel(floor_type)
 		floor_type = null
 	return ..()
 
