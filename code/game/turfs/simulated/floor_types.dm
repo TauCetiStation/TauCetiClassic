@@ -68,6 +68,15 @@
 			F.make_plating()
 			return
 
+/turf/simulated/floor/engine/singularity_pull(S, current_size)
+	if(current_size >= STAGE_FIVE)
+		if(floor_type)
+			if(prob(30))
+				new floor_type(src)
+				make_plating()
+		else if(prob(30))
+			ReplaceWithLattice()
+
 /turf/simulated/floor/engine/cult
 	name = "engraved floor"
 	icon_state = "cult"

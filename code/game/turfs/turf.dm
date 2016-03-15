@@ -40,7 +40,6 @@
 /turf/ex_act(severity)
 	return 0
 
-
 /turf/bullet_act(var/obj/item/projectile/Proj)
 	if(istype(Proj ,/obj/item/projectile/beam/pulse))
 		src.ex_act(2)
@@ -338,3 +337,13 @@
 			if(!LinkBlocked(src, t) && !TurfBlockedNonWindow(t))
 				L.Add(t)
 	return L
+
+/turf/singularity_act()
+	if(intact)
+		for(var/obj/O in contents) //this is for deleting things like wires contained in the turf
+			if(O.level != 1)
+				continue
+			if(O.invisibility == 101)
+				O.singularity_act()
+	ChangeTurf(/turf/space)
+	return(2)

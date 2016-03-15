@@ -1,6 +1,6 @@
 /obj/structure/scrap
 	name = "scrap pile"
-	desc = "Someone met an unfortunate fate. Better see what's left."
+	desc = "Pile of industrial debris. It could use a shovel and pair of hands in gloves. "
 	anchored = 1
 	opacity = 0
 	density = 0
@@ -23,12 +23,15 @@
 	var/base_min = 4	//min and max number of random pieces of base icon
 	var/base_max = 7
 	var/base_spread = 8 //limits on pixel offsets of base pieces
+	var/list/ways = list("pokes around", "digs through", "rummages through", "goes through","picks through")
 
 /obj/structure/scrap/New()
 	var/amt = rand(loot_min, loot_max)
 	for(var/x = 1 to amt)
 		var/loot_path = pick(loot_list)
 		new loot_path(src)
+	for(var/obj/item/loot in contents)
+		if(prob(80)) loot.make_old()
 	loot = new(src)
 	loot.max_w_class = 5
 	shuffle_loot()
@@ -38,6 +41,26 @@
 	for (var/obj/item in loot)
 		qdel(item)
 	return ..()
+
+//stupid shard copypaste
+/obj/structure/scrap/Crossed(AM as mob|obj)
+	if(ismob(AM))
+		var/mob/M = AM
+		playsound(src.loc, 'sound/effects/glass_step.ogg', 50, 1)
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			if(H.species.flags & IS_SYNTHETIC)
+				return
+			if( !H.shoes && ( !H.wear_suit || !(H.wear_suit.body_parts_covered & FEET) ) )
+				var/datum/organ/external/affecting = H.get_organ(pick("l_foot", "r_foot"))
+				if(affecting.status & ORGAN_ROBOT)
+					return
+				M << "<span class='danger'>You step on the sharp debris!</span>"
+				H.Weaken(3)
+				affecting.take_damage(5, 0)
+				H.reagents.add_reagent("toxin", pick(prob(50);0,prob(50);5,prob(10);10,prob(1);25))
+				H.updatehealth()
+	..()
 
 /obj/structure/scrap/proc/shuffle_loot()
 	loot.close_all()
@@ -77,10 +100,34 @@
 		I.color = O.color
 		underlays |= randomize_image(I)
 
+/obj/structure/scrap/proc/hurt_hand(mob/user)
+	if(prob(50))
+		if(!ishuman(user))
+			return 0
+		var/mob/living/carbon/human/victim = user
+		if(victim.species.flags & IS_SYNTHETIC)
+			return 0
+		if(victim.gloves)
+			return 0
+		var/def_zone = pick("l_hand", "r_hand")
+		var/datum/organ/external/affected_organ = victim.get_organ(check_zone(def_zone))
+		if(!affected_organ)
+			return 0
+		if(affected_organ.status & ORGAN_ROBOT)
+			return 0
+		user << "<span class='danger'>Ouch! You cut yourself while picking through \the [src].</span>"
+		affected_organ.take_damage(5, 0, 1, 1, used_weapon = "Sharp debris")
+		victim.reagents.add_reagent("toxin", pick(prob(50);0,prob(50);5,prob(10);10,prob(1);25))
+		return 1
+	return 0
+
 /obj/structure/scrap/attack_hand(mob/user)
-	if(!(loot.contents.len || contents.len > 1))
-		user << "<span class='notice'>There doesn't seem to be anything of interest left in \the [src]...</span>"
-		return ..(user)
+	if(hurt_hand(user))
+		return
+	loot.open(user)
+	..(user)
+
+/obj/structure/scrap/attack_paw(mob/user)
 	loot.open(user)
 	..(user)
 
@@ -89,14 +136,13 @@
 
 /obj/structure/scrap/attackby(obj/item/W, mob/user)
 	if(istype(W,/obj/item/weapon/shovel))
-		var/list/ways = list("pokes around", "digs through", "rummages through", "goes through","picks through")
+		user.do_attack_animation(src)
 		visible_message("<span class='notice'>\The [user] [pick(ways)] \the [src].</span>")
 		if(--dig_amount <= 0)
 			user << "<span class='notice'>You cleared out  \the [src]...</span>"
 			qdel(src)
 			return
 		shuffle_loot()
-	..()
 
 /obj/structure/scrap/large
 	name = "large scrap pile"
@@ -124,7 +170,7 @@
 		)
 
 /obj/structure/scrap/vehicle
-	name = "debris pile"
+	name = "industrial debris pile"
 	parts_icon = 'icons/obj/structures/scrap/vehicle.dmi'
 	loot_list = list(
 		/obj/random/tools/tech_supply/guaranteed,
@@ -137,16 +183,16 @@
 		)
 
 /obj/structure/scrap/food
-	name = "trash pile"
+	name = "food trash pile"
 	parts_icon = 'icons/obj/structures/scrap/food_trash.dmi'
 	loot_list = list(
-		/obj/random/foods/food_with_garbage,
-		/obj/random/foods/food_with_garbage,
-		/obj/random/foods/food_with_garbage,
-		/obj/random/foods/food_with_garbage,
-		/obj/random/foods/food_with_garbage,
-		/obj/random/foods/food_with_garbage,
-		/obj/random/foods/food_with_garbage,
+		/obj/random/foods/food_without_garbage,
+		/obj/random/foods/food_without_garbage,
+		/obj/random/foods/food_without_garbage,
+		/obj/random/foods/food_without_garbage,
+		/obj/random/foods/food_without_garbage,
+		/obj/random/foods/food_without_garbage,
+		/obj/random/foods/food_without_garbage,
 		/obj/item/weapon/shard,
 		/obj/item/stack/rods/scrap,
 		/obj/item/stack/sheet/mineral/plastic/scrap
@@ -168,7 +214,7 @@
 		/obj/item/stack/rods/scrap,
 		)
 /obj/structure/scrap/vehicle/large
-	name = "large debris pile"
+	name = "large industrial debris pile"
 	opacity = 1
 	density = 1
 	icon_state = "big"
@@ -180,7 +226,7 @@
 	base_spread = 16
 
 /obj/structure/scrap/food/large
-	name = "large trash pile"
+	name = "large food trash pile"
 	opacity = 1
 	density = 1
 	icon_state = "big"

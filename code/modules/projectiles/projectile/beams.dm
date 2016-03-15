@@ -73,6 +73,9 @@
 	..()
 	return QDEL_HINT_PUTINPOOL
 
+/obj/item/projectile/beam/emitter/singularity_pull()
+	return //don't want the emitters to miss
+
 /obj/item/projectile/beam/lastertag/blue
 	name = "lasertag beam"
 	icon_state = "bluelaser"

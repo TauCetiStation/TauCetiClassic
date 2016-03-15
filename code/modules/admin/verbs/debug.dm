@@ -1629,7 +1629,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 				spawn(0)
 					qdel(G)
 				S.energy = 1750
-				S.current_size = 7
+				S.current_size = STAGE_FOUR
 				S.icon = 'icons/effects/224x224.dmi'
 				S.icon_state = "singularity_s7"
 				S.pixel_x = -96

@@ -275,3 +275,6 @@
 
 /turf/space/ChangeTurf(var/turf/N, var/force_lighting_update = 0)
 	return ..(N, 1)
+
+/turf/space/singularity_act()
+	return
