@@ -60,7 +60,10 @@ var/datum/subsystem/garbage_collector/SSgarbage
 //If you see this proc high on the profile, what you are really seeing is the garbage collection/soft delete overhead in byond.
 //Don't attempt to optimize, not worth the effort.
 /datum/subsystem/garbage_collector/proc/HandleToBeQueued(time_to_stop)
+	var/list/tobequeued = src.tobequeued
 	while(tobequeued.len && world.timeofday < time_to_stop)
+		if (MC_TICK_CHECK)
+			break
 		var/ref = tobequeued[1]
 		Queue(ref)
 		tobequeued.Cut(1, 2)
@@ -69,8 +72,10 @@ var/datum/subsystem/garbage_collector/SSgarbage
 	delslasttick = 0
 	gcedlasttick = 0
 	var/time_to_kill = world.time - collection_timeout // Anything qdel() but not GC'd BEFORE this time needs to be manually del()
-
+	var/list/queue = src.queue
 	while(queue.len && world.timeofday < time_to_stop)
+		if (MC_TICK_CHECK)
+			break
 		var/refID = queue[1]
 		if (!refID)
 			queue.Cut(1, 2)

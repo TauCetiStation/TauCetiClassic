@@ -215,27 +215,21 @@ var/global/list/uneatable = list(
 	return 1
 
 /obj/singularity/proc/eat()
-	//set background = 1
-	if(defer_powernet_rebuild != 2)
-		defer_powernet_rebuild = 1
+	set background = BACKGROUND_ENABLED
 	// Let's just make this one loop.
-	for(var/atom/A in orange(grav_pull,src))
-		if(is_type_in_list(A, uneatable))
+	for(var/atom/X in spiral_range(grav_pull, src, 1))
+		if(is_type_in_list(X, uneatable))
 			continue
-		if(!A.simulated)
+		if(!X.simulated)
 			continue
 
-		var/dist = get_dist(A, src)
-
-		// Movable atoms only
+		var/dist = get_dist(X, src)
 		var/obj/singularity/S = src
 		if(dist > consume_range)
-			A.singularity_pull(S, current_size)
+			X.singularity_pull(S, current_size)
 		else if(dist <= consume_range)
-			consume(A)
-
-	if(defer_powernet_rebuild != 2)
-		defer_powernet_rebuild = 0
+			consume(X)
+		CHECK_TICK
 	return
 
 /obj/singularity/Process_Spacemove() //The singularity stops drifting for no man!

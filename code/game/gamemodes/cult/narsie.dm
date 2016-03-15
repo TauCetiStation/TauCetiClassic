@@ -307,11 +307,7 @@
 	grav_pull = 0
 
 /obj/singularity/narsie/wizard/eat()
-//	if(defer_powernet_rebuild != 2)
-//		defer_powernet_rebuild = 1
 	for(var/atom/X in orange(consume_range,src))
 		if(isturf(X) || istype(X, /atom/movable))
 			consume(X)
-//	if(defer_powernet_rebuild != 2)
-//		defer_powernet_rebuild = 0
 	return
