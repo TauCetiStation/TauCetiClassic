@@ -342,7 +342,6 @@ var/list/admin_verbs_mentor = list(
 		/client/proc/startSinglo,
 		/client/proc/fps,
 		/client/proc/cmd_admin_grantfullaccess,
-		/client/proc/kaboom,
 		/client/proc/splash,
 		/client/proc/cmd_admin_areatest
 		)
