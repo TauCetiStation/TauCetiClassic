@@ -134,7 +134,7 @@
 
 /obj/structure/stool/bed/chair/user_buckle_mob(mob/living/M, mob/user)
 	if(flipped)
-		usr << "<span class='notice'>You can do it, while \the [src] is flipped.</span>"
+		usr << "<span class='notice'>You can't do it, while \the [src] is flipped.</span>"
 		if(usr != M)
 			M << "<span class='warning'>Tried buckle you to \the [src].</span>"
 	else
