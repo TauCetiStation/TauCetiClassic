@@ -52,7 +52,7 @@
 
 /obj/singularity_act()
 	ex_act(1.0)
-	if(src && isnull(gcDestroyed))
+	if(src && !qdeleted(src))
 		qdel(src)
 	return 2
 
