@@ -475,6 +475,8 @@ obj/machinery/nuclearbomb/proc/nukehack_win(mob/user as mob)
 	if (src.safety)
 		src.timing = 0
 		return
+	if(detonated)
+		return
 	src.detonated = 1
 	src.timing = -1.0
 	src.yes_code = 0
@@ -495,6 +497,8 @@ obj/machinery/nuclearbomb/proc/nukehack_win(mob/user as mob)
 			off_station = 1
 		else
 			score["nuked"]++
+			sleep(10)
+			explosion(src, 15, 70, 200)
 	else
 		off_station = 2
 
@@ -504,7 +508,7 @@ obj/machinery/nuclearbomb/proc/nukehack_win(mob/user as mob)
 			if(syndie_location)
 				ticker.mode:syndies_didnt_escape = (syndie_location.z > ZLEVEL_STATION ? 0 : 1)	//muskets will make me change this, but it will do for now
 			ticker.mode:nuke_off_station = off_station
-		ticker.station_explosion_cinematic(off_station,null)
+		//ticker.station_explosion_cinematic(off_station,null)
 		if(ticker.mode)
 			ticker.mode.explosion_in_progress = 0
 			if(ticker.mode.name == "nuclear emergency")
@@ -516,13 +520,13 @@ obj/machinery/nuclearbomb/proc/nukehack_win(mob/user as mob)
 															//kinda shit but I couldn't  get permission to do what I wanted to do.
 
 			if(!ticker.mode.check_finished())//If the mode does not deal with the nuke going off so just reboot because everyone is stuck as is
-				world << "<B>Resetting in 30 seconds!</B>"
+				world << "<B>Resetting in 45 seconds!</B>"
 
 				feedback_set_details("end_error","nuke - unhandled ending")
 
 				if(blackbox)
 					blackbox.save_all_data_to_sql()
-				sleep(300)
+				sleep(450)
 				log_game("Rebooting due to nuclear detonation")
 				world.Reboot()
 				return

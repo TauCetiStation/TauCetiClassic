@@ -189,10 +189,13 @@
 	if (!ticker.mode:to_nuke_or_not_to_nuke)
 		return
 	ticker.mode:to_nuke_or_not_to_nuke = 0
+	var/turf/malf_turf
 	for(var/datum/mind/AI_mind in ticker.mode:malf_ai)
 		var/mob/living/silicon/ai/AI = AI_mind.current
 		AI.client.verbs -= /datum/game_mode/malfunction/proc/ai_win
 		AI.client.screen.Cut()
+		if(!malf_turf)
+			malf_turf = get_turf(AI)
 	ticker.mode:explosion_in_progress = 1
 	for(var/mob/M in player_list)
 		M << 'sound/machines/Alarm.ogg'
@@ -203,7 +206,10 @@
 	sleep(10)
 	enter_allowed = 0
 	if(ticker)
-		ticker.station_explosion_cinematic(0,null)
+		//ticker.station_explosion_cinematic(0,null)
+		if(malf_turf)
+			sleep(20)
+			explosion(malf_turf, 15, 70, 200)
 		if(ticker.mode)
 			ticker.mode:station_was_nuked = 1
 			ticker.mode:explosion_in_progress = 0
