@@ -27,11 +27,11 @@
 
 /obj/machinery/power/tracker/disconnect_from_network()
 	..()
-	solars_list.Remove(src)
+	SSsun.solars.Remove(src)
 
 /obj/machinery/power/tracker/connect_to_network()
 	var/to_return = ..()
-	solars_list.Add(src)
+	SSsun.solars.Add(src)
 	return to_return
 
 // called by datum/sun/calc_position() as sun's angle changes

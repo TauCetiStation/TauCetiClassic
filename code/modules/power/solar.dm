@@ -3,15 +3,13 @@
 #define SOLAR_MAX_DIST 40
 #define SOLARGENRATE 1500
 
-var/list/solars_list = list()
-
 // This will choose whether to get the solar list from the powernet or the powernet nodes,
 // depending on the size of the nodes.
 /obj/machinery/power/proc/get_solars_powernet()
 	if(!powernet)
 		return list()
-	if(solars_list.len < powernet.nodes)
-		return solars_list
+	if(SSsun.solars.len < powernet.nodes)
+		return SSsun.solars
 	else
 		return powernet.nodes
 
@@ -43,12 +41,12 @@ var/list/solars_list = list()
 
 /obj/machinery/power/solar/disconnect_from_network()
 	..()
-	solars_list.Remove(src)
+	SSsun.solars.Remove(src)
 
 /obj/machinery/power/solar/connect_to_network(var/process)
 	var/to_return = ..()
 	if(process)
-		solars_list.Add(src)
+		SSsun.solars.Add(src)
 	return to_return
 
 
@@ -295,12 +293,12 @@ var/list/solars_list = list()
 
 /obj/machinery/power/solar_control/disconnect_from_network()
 	..()
-	solars_list.Remove(src)
+	SSsun.solars.Remove(src)
 
 /obj/machinery/power/solar_control/connect_to_network()
 	var/to_return = ..()
 	if(powernet)
-		solars_list.Add(src)
+		SSsun.solars.Add(src)
 	return to_return
 
 /obj/machinery/power/solar_control/initialize()
@@ -469,8 +467,8 @@ var/list/solars_list = list()
 		if(src.trackrate) nexttime = world.time + 6000/trackrate
 		track = text2num(href_list["track"])
 		if(powernet && (track == 2))
-			if(!solars_list.Find(src,1,0))
-				solars_list.Add(src)
+			if(!SSsun.solars.Find(src,1,0))
+				SSsun.solars.Add(src)
 			for(var/obj/machinery/power/tracker/T in get_solars_powernet())
 				if(powernet.nodes[T])
 					cdir = T.sun_angle

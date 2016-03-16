@@ -16,7 +16,6 @@ var/datum/subsystem/sun/SSsun
 /datum/subsystem/sun/New()
 	NEW_SS_GLOBAL(SSsun)
 
-	solars = solars_list
 	angle = rand (0,360)			// the station position to the sun is randomised at round start
 	rate = rand(500,2000)/1000			// 50% - 200% of standard rotation
 	if(prob(50))					// same chance to rotate clockwise than counter-clockwise
@@ -33,9 +32,9 @@ var/datum/subsystem/sun/SSsun
 		Rotation rate can vary from 4.8 deg/min to 8 deg/min (288 to 480 deg/hr)
 	*/
 	if(lastAngleUpdate != angle)
-		for(var/obj/machinery/power/tracker/T in solars_list)
+		for(var/obj/machinery/power/tracker/T in solars)
 			if(!T.powernet)
-				solars_list.Remove(T)
+				solars.Remove(T)
 				continue
 			T.set_angle(angle)
 	lastAngleUpdate=angle
@@ -57,9 +56,9 @@ var/datum/subsystem/sun/SSsun
 		dx = s/abs(s)
 		dy = c / abs(s)
 
-	for(var/obj/machinery/power/solar/S in solars_list)
+	for(var/obj/machinery/power/solar/S in solars)
 		if(!S.powernet)
-			solars_list.Remove(S)
+			solars.Remove(S)
 			continue
 		if(S.control)
 			occlusion(S)
