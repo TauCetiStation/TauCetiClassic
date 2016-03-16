@@ -32,9 +32,6 @@
 	var/allow_admin_rev = 1				// allows admin revives
 	var/vote_delay = 6000				// minimum time between voting sessions (deciseconds, 10 minute default)
 	var/vote_period = 600				// length of voting period (deciseconds, default 1 minute)
-	var/vote_autotransfer_initial = 108000 // Length of time before the first autotransfer vote is called
-	var/vote_autotransfer_interval = 36000 // length of time before next sequential autotransfer vote
-	var/vote_autogamemode_timeleft = 100 //Length of time before round start when autogamemode vote is called (in seconds, default 100).
 	var/vote_no_default = 0				// vote does not default to nochange/norestart (tbi)
 	var/vote_no_dead = 0				// dead people can't vote (tbi)
 //	var/enable_authentication = 0		// goon authentication
@@ -313,15 +310,6 @@
 
 				if ("vote_period")
 					config.vote_period = text2num(value)
-
-				if ("vote_autotransfer_initial")
-					config.vote_autotransfer_initial = text2num(value)
-
-				if ("vote_autotransfer_interval")
-					config.vote_autotransfer_interval = text2num(value)
-
-				if ("vote_autogamemode_timeleft")
-					config.vote_autogamemode_timeleft = text2num(value)
 
 				if("ert_admin_only")
 					config.ert_admin_call_only = 1
