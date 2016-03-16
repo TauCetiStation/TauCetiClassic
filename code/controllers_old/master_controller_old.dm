@@ -16,10 +16,8 @@ var/global/pipe_processing_killed = 0
 	var/breather_ticks = 2		//a somewhat crude attempt to iron over the 'bumps' caused by high-cpu use by letting the MC have a breather for this many ticks after every loop
 	var/minimum_ticks = 20		//The minimum length of time between MC ticks
 
-	var/air_cost 		= 0
 	var/sun_cost		= 0
 	var/diseases_cost	= 0
-	var/networks_cost	= 0
 	var/events_cost		= 0
 	var/ticker_cost		= 0
 	var/total_cost		= 0
@@ -51,14 +49,9 @@ var/global/pipe_processing_killed = 0
 	if(!emergency_shuttle)			emergency_shuttle = new /datum/shuttle_controller/emergency_shuttle()
 
 /datum/controller/game_controller/proc/setup()
-	if(!air_master)
-		air_master = new /datum/controller/air_system()
-		air_master.Setup()
-
 	if(!ticker)
 		ticker = new /datum/controller/gameticker()
 
-	setup_objects()
 	setupfactions()
 	setup_economy()
 	SetupXenoarch()
@@ -74,33 +67,6 @@ var/global/pipe_processing_killed = 0
 	spawn(0)
 		if(ticker)
 			ticker.pregame()
-
-
-
-/datum/controller/game_controller/proc/setup_objects()
-	world << "\red \b Initializing objects."
-	sleep(-1)
-	for(var/atom/movable/object in world)
-		object.initialize()
-
-	world << "\red \b Initializing pipe networks."
-	sleep(-1)
-	for(var/obj/machinery/atmospherics/machine in machines)
-		machine.build_network()
-
-	world << "\red \b Initializing atmos machinery."
-	sleep(-1)
-	for(var/obj/machinery/atmospherics/unary/U in machines)
-		if(istype(U, /obj/machinery/atmospherics/unary/vent_pump))
-			var/obj/machinery/atmospherics/unary/vent_pump/T = U
-			T.broadcast_status()
-		else if(istype(U, /obj/machinery/atmospherics/unary/vent_scrubber))
-			var/obj/machinery/atmospherics/unary/vent_scrubber/T = U
-			T.broadcast_status()
-
-	world << "\red \b Initializations complete."
-	sleep(-1)
-
 
 /datum/controller/game_controller/process()
 	processing = 1
@@ -121,26 +87,6 @@ var/global/pipe_processing_killed = 0
 				transfer_controller.process()
 				process_newscaster()
 
-				//AIR
-
-				if(!air_processing_killed)
-					timer = world.timeofday
-					last_thing_processed = air_master.type
-
-					if(!air_master.Tick()) //Runtimed.
-						air_master.failed_ticks++
-						if(air_master.failed_ticks > 5)
-							world << "<font color='red'><b>RUNTIMES IN ATMOS TICKER.  Killing air simulation!</font></b>"
-							world.log << "### ZAS SHUTDOWN"
-							message_admins("ZASALERT: unable to run [air_master.tick_progress], shutting down!")
-							log_admin("ZASALERT: unable run zone/process() -- [air_master.tick_progress]")
-							air_processing_killed = 1
-							air_master.failed_ticks = 0
-
-					air_cost = (world.timeofday - timer) / 10
-
-				sleep(breather_ticks)
-
 				//SUN
 				timer = world.timeofday
 				last_thing_processed = sun.type
@@ -156,14 +102,6 @@ var/global/pipe_processing_killed = 0
 
 				sleep(breather_ticks)
 
-				//PIPENETS
-				if(!pipe_processing_killed)
-					timer = world.timeofday
-					process_pipenets()
-					networks_cost = (world.timeofday - timer) / 10
-
-				sleep(breather_ticks)
-
 				//EVENTS
 				timer = world.timeofday
 				process_events()
@@ -176,7 +114,7 @@ var/global/pipe_processing_killed = 0
 				ticker_cost = (world.timeofday - timer) / 10
 
 				//TIMING
-				total_cost = air_cost + sun_cost + diseases_cost + networks_cost + events_cost + ticker_cost
+				total_cost = sun_cost + diseases_cost + events_cost + ticker_cost
 
 				var/end_time = world.timeofday
 				if(end_time < start_time)
@@ -195,17 +133,6 @@ var/global/pipe_processing_killed = 0
 			i++
 			continue
 		active_diseases.Cut(i,i+1)
-
-/datum/controller/game_controller/proc/process_pipenets()
-	last_thing_processed = /datum/pipe_network
-	var/i = 1
-	while(i<=pipe_networks.len)
-		var/datum/pipe_network/Network = pipe_networks[i]
-		if(Network)
-			Network.process()
-			i++
-			continue
-		pipe_networks.Cut(i,i+1)
 
 /datum/controller/game_controller/proc/process_events()
 	last_thing_processed = /datum/event

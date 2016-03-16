@@ -177,7 +177,7 @@ Attach to transfer valve and open. BOOM.
 	set_light(3, 1, color)
 
 	firelevel = fl
-	air_master.active_hotspots.Add(src)
+	SSair.active_hotspots.Add(src)
 
 	for(var/mob/living/L in loc)
 		L.fire_act()
@@ -191,7 +191,7 @@ Attach to transfer valve and open. BOOM.
 	if (istype(loc, /turf/simulated))
 		set_light(0)
 		loc = null
-	air_master.active_hotspots.Remove(src)
+	SSair.active_hotspots.Remove(src)
 
 
 

@@ -22,7 +22,7 @@
 /datum/anomaly_frost/process()
 	spawn(0)
 		if(prob(Speed))
-			for(var/zone/A in air_master.zones)
+			for(var/zone/A in SSair.zones)
 				if(A.air != null && A.contents.len > 0)
 					var/turf/T =pick(A.contents)
 					if(T.z == Zlevel)

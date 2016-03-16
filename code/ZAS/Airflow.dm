@@ -2,6 +2,7 @@
 Contains helper procs for airflow, handled in /connection_group.
 */
 
+var/tick_multiplier = 2
 
 /mob/var/tmp/last_airflow_stun = 0
 /mob/proc/airflow_stun()

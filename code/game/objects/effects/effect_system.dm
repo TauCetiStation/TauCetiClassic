@@ -695,10 +695,10 @@ steam.start() -- spawns the effect
 
 
 	proc/update_nearby_tiles(need_rebuild)
-		if(!air_master)
+		if(!SSair)
 			return 0
 
-		air_master.mark_for_update(get_turf(src))
+		SSair.mark_for_update(get_turf(src))
 
 		return 1
 

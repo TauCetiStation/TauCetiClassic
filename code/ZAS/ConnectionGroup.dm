@@ -2,7 +2,7 @@
 
 Overview:
 	These are what handle gas transfers between zones and into space.
-	They are found in a zone's edges list and in air_master.edges.
+	They are found in a zone's edges list and in SSair.edges.
 	Each edge updates every air tick due to their role in gas transfer.
 	They come in two flavors, /connection_edge/zone and /connection_edge/unsimulated.
 	As the type names might suggest, they handle inter-zone and spacelike connections respectively.
@@ -80,7 +80,7 @@ Class Procs:
 /connection_edge/proc/contains_zone(zone/Z)
 
 /connection_edge/proc/erase()
-	air_master.remove_edge(src)
+	SSair.remove_edge(src)
 	//world << "[type] Erased."
 
 /connection_edge/proc/tick()
@@ -146,19 +146,19 @@ Class Procs:
 	if(A.invalid || B.invalid)
 		erase()
 		return
-	//world << "[id]: Tick [air_master.current_cycle]: \..."
+	//world << "[id]: Tick [SSair.current_cycle]: \..."
 	if(direct)
-		if(air_master.equivalent_pressure(A, B))
+		if(SSair.equivalent_pressure(A, B))
 			//world << "merged."
 			erase()
-			air_master.merge(A, B)
+			SSair.merge(A, B)
 			//world << "zones merged."
 			return
 
-	//air_master.equalize(A, B)
+	//SSair.equalize(A, B)
 	ShareRatio(A.air,B.air,coefficient)
-	air_master.mark_zone_update(A)
-	air_master.mark_zone_update(B)
+	SSair.mark_zone_update(A)
+	SSair.mark_zone_update(B)
 	//world << "equalized."
 
 	var/differential = A.air.return_pressure() - B.air.return_pressure()
@@ -213,10 +213,10 @@ Class Procs:
 	if(A.invalid)
 		erase()
 		return
-	//world << "[id]: Tick [air_master.current_cycle]: To [B]!"
+	//world << "[id]: Tick [SSair.current_cycle]: To [B]!"
 	//A.air.mimic(B, coefficient)
 	ShareSpace(A.air,air,dbg_out)
-	air_master.mark_zone_update(A)
+	SSair.mark_zone_update(A)
 
 	var/differential = A.air.return_pressure() - air.return_pressure()
 	if(abs(differential) < vsc.airflow_lightest_pressure) return
