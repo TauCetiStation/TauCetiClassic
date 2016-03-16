@@ -20,7 +20,6 @@ var/global/pipe_processing_killed = 0
 	var/sun_cost		= 0
 	var/diseases_cost	= 0
 	var/networks_cost	= 0
-	var/powernets_cost	= 0
 	var/events_cost		= 0
 	var/ticker_cost		= 0
 	var/total_cost		= 0
@@ -196,49 +195,6 @@ var/global/pipe_processing_killed = 0
 			i++
 			continue
 		active_diseases.Cut(i,i+1)
-/*
-/datum/controller/game_controller/proc/process_machines()
-	process_machines_process()
-	process_machines_power()
-	process_machines_rebuild()
-/datum/controller/game_controller/proc/process_machines_process()
-	var/i = 1
-	while(i<=machines.len)
-		var/obj/machinery/Machine = machines[i]
-		if(Machine && !qdeleted(Machine))
-			last_thing_processed = Machine.type
-			if(Machine.process() != PROCESS_KILL)
-				if(Machine)
-					i++
-					continue
-		machines.Cut(i,i+1)
-
-/datum/controller/game_controller/proc/process_machines_power()
-	var/i=1
-	while(i<=active_areas.len)
-		var/area/A = active_areas[i]
-		if(A.powerupdate && A.master == A)
-			A.powerupdate -= 1
-			for(var/area/SubArea in A.related)
-				for(var/obj/machinery/M in SubArea)
-					if(M)
-						if(M.use_power)
-							M.auto_use_power()
-
-		if(A.apc && A.master == A)
-			i++
-			continue
-
-		A.powerupdate = 0
-		active_areas.Cut(i,i+1)
-
-/datum/controller/game_controller/proc/process_machines_rebuild()
-	if(controller_iteration % 150 == 0 || rebuild_active_areas)	//Every 300 seconds we retest every area/machine
-		for(var/area/A in all_areas)
-			if(A == A.master)
-				A.powerupdate += 1
-				active_areas |= A
-		rebuild_active_areas = 0*/
 
 /datum/controller/game_controller/proc/process_pipenets()
 	last_thing_processed = /datum/pipe_network
@@ -250,27 +206,6 @@ var/global/pipe_processing_killed = 0
 			i++
 			continue
 		pipe_networks.Cut(i,i+1)
-
-/datum/controller/game_controller/proc/process_powernets()
-	last_thing_processed = /datum/powernet
-	var/i = 1
-	while(i<=powernets.len)
-		var/datum/powernet/Powernet = powernets[i]
-		if(Powernet)
-			Powernet.reset()
-			i++
-			continue
-		powernets.Cut(i,i+1)
-/*
-/datum/controller/game_controller/proc/process_nano()
-	var/i = 1
-	while(i<=nanomanager.processing_uis.len)
-		var/datum/nanoui/ui = nanomanager.processing_uis[i]
-		if(ui)
-			ui.process()
-			i++
-			continue
-		nanomanager.processing_uis.Cut(i,i+1)*/
 
 /datum/controller/game_controller/proc/process_events()
 	last_thing_processed = /datum/event
