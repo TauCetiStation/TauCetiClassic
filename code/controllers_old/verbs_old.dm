@@ -45,9 +45,6 @@
 
 	if(!holder)	return
 	switch(controller)
-		if("Jobs")
-			debug_variables(job_master)
-			feedback_add_details("admin_verb","DJobs")
 		if("Radio")
 			debug_variables(radio_controller)
 			feedback_add_details("admin_verb","DRadio")

@@ -174,7 +174,7 @@ var/datum/subsystem/ticker/ticker
 			else
 				mode = smode
 
-		job_master.ResetOccupations()
+		SSjob.ResetOccupations()
 		if(!src.mode)
 			src.mode = pickweight(runnable_modes)
 		if(src.mode)
@@ -187,7 +187,7 @@ var/datum/subsystem/ticker/ticker
 			current_state = GAME_STATE_PREGAME
 			world << "<B>Unable to choose playable game mode.</B> Reverting to pre-game lobby."
 			return 0
-		job_master.ResetOccupations()
+		SSjob.ResetOccupations()
 		if(!src.mode)
 			src.mode = pick(runnable_modes)
 		if(src.mode)
@@ -201,17 +201,17 @@ var/datum/subsystem/ticker/ticker
 		world << "<B>Unable to start [mode.name].</B> Not enough players, [mode.required_players] players needed. Reverting to pre-game lobby."
 		qdel(mode)
 		current_state = GAME_STATE_PREGAME
-		job_master.ResetOccupations()
+		SSjob.ResetOccupations()
 		return 0
 
 	//Configure mode and assign player to special mode stuff
-	job_master.DivideOccupations() //Distribute jobs
+	SSjob.DivideOccupations() //Distribute jobs
 	var/can_continue = src.mode.pre_setup()//Setup special modes
 	if(!can_continue)
 		qdel(mode)
 		current_state = GAME_STATE_PREGAME
 		world << "<B>Error setting up [master_mode].</B> Reverting to pre-game lobby."
-		job_master.ResetOccupations()
+		SSjob.ResetOccupations()
 		return 0
 
 	if(!hide_mode)
@@ -374,7 +374,7 @@ var/datum/subsystem/ticker/ticker
 			if(player.mind.assigned_role == "Captain")
 				captainless=0
 			if(player.mind.assigned_role != "MODE")
-				job_master.EquipRank(player, player.mind.assigned_role, 0)
+				SSjob.EquipRank(player, player.mind.assigned_role, 0)
 				EquipCustomItems(player)
 	if(captainless)
 		for(var/mob/M in player_list)

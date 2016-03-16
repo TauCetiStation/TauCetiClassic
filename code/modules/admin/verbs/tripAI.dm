@@ -6,8 +6,8 @@
 		usr << "This option is currently only usable during pregame. This may change at a later date."
 		return
 
-	if(job_master && ticker)
-		var/datum/job/job = job_master.GetJob("AI")
+	if(SSjob && ticker)
+		var/datum/job/job = SSjob.GetJob("AI")
 		if(!job)
 			usr << "Unable to locate the AI job"
 			return

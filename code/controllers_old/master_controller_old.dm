@@ -35,12 +35,6 @@ var/global/pipe_processing_killed = 0
 			qdel(master_controller)
 		master_controller = src
 
-	if(!job_master)
-		job_master = new /datum/controller/occupations()
-		job_master.SetupOccupations()
-		job_master.LoadJobs("config/jobs.txt")
-		world << "\red \b Job setup complete"
-
 	if(!emergency_shuttle)			emergency_shuttle = new /datum/shuttle_controller/emergency_shuttle()
 
 /datum/controller/game_controller/proc/setup()
