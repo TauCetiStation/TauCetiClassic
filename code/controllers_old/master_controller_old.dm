@@ -16,7 +16,6 @@ var/global/pipe_processing_killed = 0
 	var/breather_ticks = 2		//a somewhat crude attempt to iron over the 'bumps' caused by high-cpu use by letting the MC have a breather for this many ticks after every loop
 	var/minimum_ticks = 20		//The minimum length of time between MC ticks
 
-	var/diseases_cost	= 0
 	var/events_cost		= 0
 	var/ticker_cost		= 0
 	var/total_cost		= 0
@@ -86,13 +85,6 @@ var/global/pipe_processing_killed = 0
 				transfer_controller.process()
 				process_newscaster()
 
-				//DISEASES
-				timer = world.timeofday
-				process_diseases()
-				diseases_cost = (world.timeofday - timer) / 10
-
-				sleep(breather_ticks)
-
 				//EVENTS
 				timer = world.timeofday
 				process_events()
@@ -105,7 +97,7 @@ var/global/pipe_processing_killed = 0
 				ticker_cost = (world.timeofday - timer) / 10
 
 				//TIMING
-				total_cost = diseases_cost + events_cost + ticker_cost
+				total_cost = events_cost + ticker_cost
 
 				var/end_time = world.timeofday
 				if(end_time < start_time)
@@ -113,17 +105,6 @@ var/global/pipe_processing_killed = 0
 				sleep( round(minimum_ticks - (end_time - start_time),1) )
 			else
 				sleep(10)
-
-/datum/controller/game_controller/proc/process_diseases()
-	var/i = 1
-	while(i<=active_diseases.len)
-		var/datum/disease/Disease = active_diseases[i]
-		if(Disease)
-			last_thing_processed = Disease.type
-			Disease.process()
-			i++
-			continue
-		active_diseases.Cut(i,i+1)
 
 /datum/controller/game_controller/proc/process_events()
 	last_thing_processed = /datum/event
