@@ -8,14 +8,16 @@ var/tick_multiplier = 2
 /mob/proc/airflow_stun()
 	if(stat == DEAD)
 		return 0
-	if(last_airflow_stun > world.time - vsc.airflow_stun_cooldown)	return 0
+	if(last_airflow_stun > world.time - vsc.airflow_stun_cooldown)
+		return 0
 	if(!(status_flags & CANSTUN) && !(status_flags & CANWEAKEN))
 		src << "<span class='notice'>You stay upright as the air rushes past you.</span>"
 		return 0
 	if(buckled)
 		src << "<span class='notice'>Air suddenly rushes past you!</span>"
 		return 0
-	if(weakened <= 0) src << "<span class='red'>The sudden rush of air knocks you over!</span>"
+	if(weakened <= 0)
+		src << "<span class='red'>The sudden rush of air knocks you over!</span>"
 	weakened = max(weakened,5)
 	last_airflow_stun = world.time
 
@@ -26,12 +28,16 @@ var/tick_multiplier = 2
 	return
 
 /mob/living/carbon/human/airflow_stun()
-	if(last_airflow_stun > world.time - vsc.airflow_stun_cooldown)	return 0
-	if(buckled) return 0
+	if(last_airflow_stun > world.time - vsc.airflow_stun_cooldown)
+		return 0
+	if(buckled)
+		return 0
 	if(shoes)
-		if(shoes.flags & NOSLIP) return 0
+		if(shoes.flags & NOSLIP)
+			return 0
 	if(wear_suit)
-		if(wear_suit.flags & NOSLIP) return 0
+		if(wear_suit.flags & NOSLIP)
+			return 0
 	if(!(status_flags & CANSTUN) && !(status_flags & CANWEAKEN))
 		src << "<span class='notice'>You stay upright as the air rushes past you.</span>"
 		return 0
@@ -42,10 +48,11 @@ var/tick_multiplier = 2
 	last_airflow_stun = world.time
 
 /atom/movable/proc/check_airflow_movable(n)
+	if(anchored && !ismob(src))
+		return 0
 
-	if(anchored && !ismob(src)) return 0
-
-	if(!istype(src,/obj/item) && n < vsc.airflow_dense_pressure) return 0
+	if(!istype(src,/obj/item) && n < vsc.airflow_dense_pressure)
+		return 0
 
 	return 1
 
@@ -65,11 +72,14 @@ var/tick_multiplier = 2
 	. = ..()
 	switch(w_class)
 		if(2)
-			if(n < vsc.airflow_lightest_pressure) return 0
+			if(n < vsc.airflow_lightest_pressure)
+				return 0
 		if(3)
-			if(n < vsc.airflow_light_pressure) return 0
+			if(n < vsc.airflow_light_pressure)
+				return 0
 		if(4,5)
-			if(n < vsc.airflow_medium_pressure) return 0
+			if(n < vsc.airflow_medium_pressure)
+				return 0
 
 /atom/movable/var/tmp/turf/airflow_dest
 /atom/movable/var/tmp/airflow_speed = 0
@@ -77,9 +87,12 @@ var/tick_multiplier = 2
 /atom/movable/var/tmp/last_airflow = 0
 
 /atom/movable/proc/GotoAirflowDest(n)
-	if(!airflow_dest) return
-	if(airflow_speed < 0) return
-	if(last_airflow > world.time - (ismob(src) ? vsc.airflow_mob_delay : vsc.airflow_delay)) return
+	if(!airflow_dest)
+		return
+	if(airflow_speed < 0)
+		return
+	if(last_airflow > world.time - (ismob(src) ? vsc.airflow_mob_delay : vsc.airflow_delay))
+		return
 	if(airflow_speed)
 		airflow_speed = n/max(get_dist(src,airflow_dest),1)
 		return
@@ -115,7 +128,8 @@ var/tick_multiplier = 2
 		density = 1
 		od = 1
 	while(airflow_speed > 0)
-		if(airflow_speed <= 0) return
+		if(airflow_speed <= 0)
+			return
 		airflow_speed = min(airflow_speed,15)
 		airflow_speed -= vsc.airflow_speed_decay
 		if(airflow_speed > 7)
@@ -146,9 +160,12 @@ var/tick_multiplier = 2
 
 
 /atom/movable/proc/RepelAirflowDest(n)
-	if(!airflow_dest) return
-	if(airflow_speed < 0) return
-	if(last_airflow > world.time - (ismob(src) ? vsc.airflow_mob_delay : vsc.airflow_delay)) return
+	if(!airflow_dest)
+		return
+	if(airflow_speed < 0)
+		return
+	if(last_airflow > world.time - (ismob(src) ? vsc.airflow_mob_delay : vsc.airflow_delay))
+		return
 	if(airflow_speed)
 		airflow_speed = n/max(get_dist(src,airflow_dest),1)
 		return
@@ -184,7 +201,8 @@ var/tick_multiplier = 2
 		density = 1
 		od = 1
 	while(airflow_speed > 0)
-		if(airflow_speed <= 0) return
+		if(airflow_speed <= 0)
+			return
 		airflow_speed = min(airflow_speed,15)
 		airflow_speed -= vsc.airflow_speed_decay
 		if(airflow_speed > 7)
@@ -269,3 +287,4 @@ var/tick_multiplier = 2
 			if(!A.simulated || A.anchored || istype(A, /obj/effect) || istype(A, /mob/aiEye))
 				continue
 			. += A
+			CHECK_TICK
