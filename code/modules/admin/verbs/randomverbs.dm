@@ -884,7 +884,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	set category = "Admin"
 	set name = "Call Shuttle"
 
-	if ((!( ticker ) || emergency_shuttle.location))
+	if ((!( ticker ) || SSshuttle.location))
 		return
 
 	if(!check_rights(R_ADMIN))	return
@@ -895,19 +895,19 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(ticker.mode.name == "revolution" || ticker.mode.name == "AI malfunction" || ticker.mode.name == "confliction")
 		var/choice = input("The shuttle will just return if you call it. Call anyway?") in list("Confirm", "Cancel")
 		if(choice == "Confirm")
-			emergency_shuttle.fake_recall = rand(300,500)
+			SSshuttle.fake_recall = rand(300,500)
 		else
 			return
 
 	var/type = alert(src, "It's emergency shuttle or crew transfer?", "Confirm", "Emergency", "Crew transfer")
 
 	if(type == "Crew transfer")
-		emergency_shuttle.shuttlealert(1)
-		emergency_shuttle.incall()
-		captain_announce("A crew transfer has been initiated. The shuttle has been called. It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.")
+		SSshuttle.shuttlealert(1)
+		SSshuttle.incall()
+		captain_announce("A crew transfer has been initiated. The shuttle has been called. It will arrive in [round(SSshuttle.timeleft()/60)] minutes.")
 	else
-		emergency_shuttle.incall()
-		captain_announce("The emergency shuttle has been called. It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.")
+		SSshuttle.incall()
+		captain_announce("The emergency shuttle has been called. It will arrive in [round(SSshuttle.timeleft()/60)] minutes.")
 
 	world << sound('sound/AI/shuttlecalled.ogg')
 	feedback_add_details("admin_verb","CSHUT") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -923,10 +923,10 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	if(alert(src, "You sure?", "Confirm", "Yes", "No") != "Yes") return
 
-	if(!ticker || emergency_shuttle.location || emergency_shuttle.direction == 0)
+	if(!ticker || SSshuttle.location || SSshuttle.direction == 0)
 		return
 
-	emergency_shuttle.recall()
+	SSshuttle.recall()
 	feedback_add_details("admin_verb","CCSHUT") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	log_admin("[key_name(usr)] admin-recalled the emergency shuttle.")
 	message_admins("\blue [key_name_admin(usr)] admin-recalled the emergency shuttle.", 1)
@@ -942,10 +942,10 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	if(!check_rights(R_ADMIN))	return
 
-	emergency_shuttle.deny_shuttle = !emergency_shuttle.deny_shuttle
+	SSshuttle.deny_shuttle = !SSshuttle.deny_shuttle
 
-	log_admin("[key_name(src)] has [emergency_shuttle.deny_shuttle ? "denied" : "allowed"] the shuttle to be called.")
-	message_admins("[key_name_admin(usr)] has [emergency_shuttle.deny_shuttle ? "denied" : "allowed"] the shuttle to be called.")
+	log_admin("[key_name(src)] has [SSshuttle.deny_shuttle ? "denied" : "allowed"] the shuttle to be called.")
+	message_admins("[key_name_admin(usr)] has [SSshuttle.deny_shuttle ? "denied" : "allowed"] the shuttle to be called.")
 
 /client/proc/cmd_admin_attack_log(mob/M as mob in mob_list)
 	set category = "Special Verbs"

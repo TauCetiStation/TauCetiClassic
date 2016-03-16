@@ -92,11 +92,11 @@
 	if(gang)
 		//SSshuttle.emergencyNoEscape = 0
 		//if(SSshuttle.emergency.mode == SHUTTLE_STRANDED)
-		//emergency_shuttle.location!=0
+		//SSshuttle.location!=0
 		if(!isnum(mode.A_timer) && !isnum(mode.B_timer))
 
-			//if(emergency_shuttle.direction == 1)
-			//	emergency_shuttle.settimeleft(0)
+			//if(SSshuttle.direction == 1)
+			//	SSshuttle.settimeleft(0)
 				//SSshuttle.emergency.mode = SHUTTLE_DOCKED
 				//SSshuttle.emergency.timer = world.time
 				//priority_announce("Hostile enviroment resolved. You have 3 minutes to board the Emergency Shuttle.", null, 'sound/AI/shuttledock.ogg', "Priority")

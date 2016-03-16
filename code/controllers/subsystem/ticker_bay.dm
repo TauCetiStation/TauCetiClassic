@@ -113,9 +113,8 @@ var/datum/subsystem/ticker/ticker
 				return 0
 
 			mode.process()
-			emergency_shuttle.process()
 
-			var/mode_finished = mode.check_finished() || (emergency_shuttle.location == 2 && emergency_shuttle.alert == 1)
+			var/mode_finished = mode.check_finished() || (SSshuttle.location == 2 && SSshuttle.alert == 1)
 			if(!mode.explosion_in_progress && mode_finished)
 				current_state = GAME_STATE_FINISHED
 				declare_completion()
@@ -228,7 +227,6 @@ var/datum/subsystem/ticker/ticker
 	spawn_empty_ai()
 	setup_economy()
 
-	supply_shuttle.process() 		//Start the supply shuttle regenerating points -- TLE
 	master_controller.process()		//Start master_controller.process()
 	Master.RoundStart()
 
@@ -384,7 +382,7 @@ var/datum/subsystem/ticker/ticker
 
 /datum/subsystem/ticker/proc/declare_completion()
 	var/station_evacuated
-	if(emergency_shuttle.location > 0)
+	if(SSshuttle.location > 0)
 		station_evacuated = 1
 	var/num_survivors = 0
 	var/num_escapees = 0

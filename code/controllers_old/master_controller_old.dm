@@ -35,8 +35,6 @@ var/global/pipe_processing_killed = 0
 			qdel(master_controller)
 		master_controller = src
 
-	if(!emergency_shuttle)			emergency_shuttle = new /datum/shuttle_controller/emergency_shuttle()
-
 /datum/controller/game_controller/proc/setup()
 
 	SetupXenoarch()

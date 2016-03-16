@@ -156,8 +156,8 @@
 	invisibility = 60
 
 	sleep(70)
-	if(emergency_shuttle)
-		emergency_shuttle.incall(0.5)	// Cannot recall
+	if(SSshuttle)
+		SSshuttle.incall(0.5)	// Cannot recall
 
 
 /obj/singularity/narsie/large/attack_ghost(mob/living/user as mob)

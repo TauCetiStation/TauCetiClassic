@@ -351,7 +351,7 @@
 
 	sleep(rand(100,300))
 
-	if(emergency_shuttle.location!=0) //Shuttle can only be recalled when it's moving to the station
+	if(SSshuttle.location!=0) //Shuttle can only be recalled when it's moving to the station
 		user << "<span class='info'>\icon[src]Emergency shuttle cannot be recalled at this time.</span>"
 		recalling = 0
 		return 0
