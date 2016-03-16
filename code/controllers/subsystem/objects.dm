@@ -12,6 +12,7 @@ var/datum/subsystem/objects/SSobj
 	var/list/processing = list()
 	var/list/currentrun = list()
 	var/list/burning = list()
+	var/list/drying = list()
 
 /datum/subsystem/objects/New()
 	NEW_SS_GLOBAL(SSobj)
@@ -49,6 +50,12 @@ var/datum/subsystem/objects/SSobj
 			SSobj.processing.Remove(thing)
 		if (MC_TICK_CHECK)
 			return
+
+	for(var/obj/item/dryingobj in SSobj.drying)
+		if(dryingobj && dryingobj.wet)
+			dryingobj.dry_process()
+		else
+			SSobj.drying.Remove(dryingobj)
 
 	//for(var/obj/burningobj in SSobj.burning)
 	//	if(burningobj && (burningobj.burn_state == ON_FIRE))

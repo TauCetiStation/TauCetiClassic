@@ -173,14 +173,12 @@
 		return
 
 	SSobj.processing |= src
-	processing_water |= src
 
 	overlays |= get_water_icon("water")
 	update_icon()
 
 /obj/effect/decal/cleanable/water/Destroy()
 	SSobj.processing.Remove(src)
-	processing_water -= src
 	..()
 
 /obj/effect/decal/cleanable/water/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
@@ -337,6 +335,10 @@
 	if(depth < 0.3)
 		qdel(src)
 		return
+
+	check_flamable()
+	spread_and_eat()
+	update_icon()
 
 /obj/effect/decal/cleanable/water/Crossed(var/mob/living/carbon/C)
 	if(!istype(C)) return
