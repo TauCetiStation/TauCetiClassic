@@ -65,21 +65,15 @@
 /mob/new_player/Stat()
 	..()
 
-	if(statpanel("Lobby") && ticker)
+	if(statpanel("Lobby"))
 		stat("Game Mode:", (ticker.hide_mode) ? "Secret" : "[master_mode]")
 
 		if(ticker.current_state == GAME_STATE_PREGAME)
-			stat("Time To Start:", "[ticker.pregame_timeleft][going ? "" : " (DELAYED)"]")
+			stat("Time To Start:", (ticker.timeLeft >= 0) ? "[round(ticker.timeLeft / 10)]s" : "DELAYED")
 
-			stat("Players:", "[totalPlayers]")
+			stat("Players:", "[ticker.totalPlayers]")
 			if(client.holder)
-				stat("Players Ready:", "[totalPlayersReady]")
-			totalPlayers = 0
-			totalPlayersReady = 0
-			for(var/mob/new_player/player in player_list)
-				totalPlayers++
-				if(player.ready)
-					totalPlayersReady++
+				stat("Players Ready:", "[ticker.totalPlayersReady]")
 
 /mob/new_player/Topic(href, href_list[])
 	if(src != usr)
@@ -92,7 +86,7 @@
 		return 1
 
 	if(href_list["ready"])
-		if(ready && ticker && ticker.pregame_timeleft < 3)
+		if(ready && ticker.timeLeft <= 50)
 			src << "<span class='warning'>Locked! The round is about to start.</span>"
 			return 0
 		if(ticker && ticker.current_state <= GAME_STATE_PREGAME)

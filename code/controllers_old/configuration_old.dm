@@ -760,16 +760,6 @@
 					if("traitor","blob","extended","gang","heist","infestation","meme","meteor","mutiny","ninja","rp-revolution","revolution","shadowling")
 						qdel(M)
 						continue
-			if("ayyy lmao")
-				switch(M.config_tag)
-					if("autotraitor","traitor","cult","extended","gang","heist","infestation","malfunction","meteor","mutiny","ninja","nuclear","rp-revolution","revolution","wizard")
-						qdel(M)
-						continue
-			if("WTF?")
-				switch(M.config_tag)
-					if("infestation","revolution")
-						qdel(M)
-						continue
 		if (M.can_start())
 			runnable_modes[M] = probabilities[M.config_tag]
 			//world << "DEBUG: runnable_mode\[[runnable_modes.len]\] = [M.config_tag]"

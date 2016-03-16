@@ -1,10 +1,4 @@
-/datum/controller/gameticker/proc/scoreboard(var/completions)
-
-	//calls auto_declare_completion_* for all modes
-	for(var/handler in typesof(/datum/game_mode/proc))
-		if (findtext("[handler]","auto_declare_completion_"))
-			completions += "[call(mode, handler)()]"
-
+/datum/subsystem/ticker/proc/scoreboard(var/completions)
 	if(achievements.len)
 		completions += "<br>[achievement_declare_completion()]"
 

@@ -17,7 +17,6 @@ var/global/pipe_processing_killed = 0
 	var/minimum_ticks = 20		//The minimum length of time between MC ticks
 
 	var/events_cost		= 0
-	var/ticker_cost		= 0
 	var/total_cost		= 0
 	var/gc_cost			= 0
 
@@ -42,19 +41,13 @@ var/global/pipe_processing_killed = 0
 		job_master.LoadJobs("config/jobs.txt")
 		world << "\red \b Job setup complete"
 
-	if(!syndicate_code_phrase)		syndicate_code_phrase	= generate_code_phrase()
-	if(!syndicate_code_response)	syndicate_code_response	= generate_code_phrase()
 	if(!emergency_shuttle)			emergency_shuttle = new /datum/shuttle_controller/emergency_shuttle()
 
 /datum/controller/game_controller/proc/setup()
-	if(!ticker)
-		ticker = new /datum/controller/gameticker()
 
-	setupfactions()
-	setup_economy()
 	SetupXenoarch()
 
-	transfer_controller = new
+	//transfer_controller = new
 
 	for(var/i=0, i<max_secret_rooms, i++)
 		make_mining_asteroid_secret()
@@ -62,9 +55,6 @@ var/global/pipe_processing_killed = 0
 //Create the mining ore distribution map.
 	asteroid_ore_map = new /datum/ore_distribution()
 	asteroid_ore_map.populate_distribution_map()
-	spawn(0)
-		if(ticker)
-			ticker.pregame()
 
 /datum/controller/game_controller/process()
 	processing = 1
@@ -81,8 +71,7 @@ var/global/pipe_processing_killed = 0
 				var/start_time = world.timeofday
 				controller_iteration++
 
-				vote.process()
-				transfer_controller.process()
+				//transfer_controller.process()
 				process_newscaster()
 
 				//EVENTS
@@ -90,14 +79,8 @@ var/global/pipe_processing_killed = 0
 				process_events()
 				events_cost = (world.timeofday - timer) / 10
 
-				//TICKER
-				timer = world.timeofday
-				last_thing_processed = ticker.type
-				ticker.process()
-				ticker_cost = (world.timeofday - timer) / 10
-
 				//TIMING
-				total_cost = events_cost + ticker_cost
+				total_cost = events_cost
 
 				var/end_time = world.timeofday
 				if(end_time < start_time)

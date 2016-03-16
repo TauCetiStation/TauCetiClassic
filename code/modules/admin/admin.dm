@@ -789,18 +789,19 @@ var/global/floorIsLava = 0
 	set category = "Server"
 	set desc="Start the round RIGHT NOW"
 	set name="Start Now"
-	if(!ticker)
-		alert("Unable to start the game as it is not set up.")
-		return
 	if(ticker.current_state == GAME_STATE_PREGAME)
-		ticker.current_state = GAME_STATE_SETTING_UP
+		ticker.can_fire = 1
+		ticker.timeLeft = 0
 		log_admin("[usr.key] has started the game.")
 		message_admins("<font color='blue'>[usr.key] has started the game.</font>")
 		feedback_add_details("admin_verb","SN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 		return 1
+	else if (ticker.current_state == GAME_STATE_STARTUP)
+		usr << "<font color='red'>Error: Start Now: Game is in startup, please wait until it has finished.</font>"
 	else
 		usr << "<font color='red'>Error: Start Now: Game has already started.</font>"
-		return 0
+
+	return 0
 
 /datum/admins/proc/toggleenter()
 	set category = "Server"
@@ -863,24 +864,38 @@ var/global/floorIsLava = 0
 
 /datum/admins/proc/delay()
 	set category = "Server"
-	set desc="Delay the game start/end"
-	set name="Delay"
+	set desc="Delay the game start"
+	set name="Delay pre-game"
 
 	if(!check_rights(R_SERVER))	return
-	if (!ticker || ticker.current_state != GAME_STATE_PREGAME)
+	var/newtime = input("Set a new time in seconds. Set -1 for indefinite delay.","Set Delay",round(ticker.timeLeft/10)) as num|null
+	if(ticker.current_state > GAME_STATE_PREGAME)
+		return alert("Too late... The game has already started!")
+	if(newtime)
+		ticker.timeLeft = newtime * 10
+		if(newtime < 0)
+			world << "<b>The game start has been delayed.</b>"
+			log_admin("[key_name(usr)] delayed the round start.")
+			send2slack_service("[key_name(usr)] delayed the round start.")
+		else
+			world << "<b>The game will start in [newtime] seconds.</b>"
+			log_admin("[key_name(usr)] set the pre-game delay to [newtime] seconds.")
+			send2slack_service("[key_name(usr)] set the pre-game delay to [newtime] seconds.")
+		feedback_add_details("admin_verb","DELAY") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/datum/admins/proc/delay_end()
+	set category = "Server"
+	set desc="Delay the game end"
+	set name="Delay end-game"
+
+	if(!check_rights(R_SERVER))	return
+	if(ticker.current_state > GAME_STATE_PREGAME)
 		ticker.delay_end = !ticker.delay_end
 		log_admin("[key_name(usr)] [ticker.delay_end ? "delayed the round end" : "has made the round end normally"].")
-		message_admins("\blue [key_name(usr)] [ticker.delay_end ? "delayed the round end" : "has made the round end normally"].", 1)
+		message_admins("<span class='adminnotice'>[key_name(usr)] [ticker.delay_end ? "delayed the round end" : "has made the round end normally"].</span>")
 		send2slack_service("[key_name(usr)] [ticker.delay_end ? "delayed the round end" : "has made the round end normally"].")
-		return //alert("Round end delayed", null, null, null, null, null)
-	going = !( going )
-	if (!( going ))
-		world << "<b>The game start has been delayed.</b>"
-		log_admin("[key_name(usr)] delayed the game.")
 	else
-		world << "<b>The game will start soon.</b>"
-		log_admin("[key_name(usr)] removed the delay.")
-	feedback_add_details("admin_verb","DELAY") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		return alert("The game has not started yet!")
 
 /datum/admins/proc/adjump()
 	set category = "Server"
