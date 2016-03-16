@@ -20,6 +20,7 @@ var/datum/subsystem/objects/SSobj
 	setupGenetics()
 	GenerateGasOverlays()
 	color_windows_init()
+	global_announcer = new(null) //Doh...
 	for(var/V in world)
 		var/atom/A = V
 		if (zlevel && A.z != zlevel)
