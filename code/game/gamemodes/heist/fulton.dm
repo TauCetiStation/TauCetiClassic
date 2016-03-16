@@ -84,7 +84,7 @@ var/list/extraction_appends = list("AAAAAAAAAAAAAAAAAUGH", "AAAAAAAAAAAHHHHHHHHH
 				H.sleeping = 0
 			sleep(30)
 			var/list/flooring_near_beacon = list()
-			for(var/turf/T in trange(1, fulton_mark))
+			for(var/turf/T in RANGE_TURFS(1, fulton_mark))
 				flooring_near_beacon += T
 			holder_obj.loc = pick(flooring_near_beacon)
 			animate(holder_obj, pixel_z = 10, time = 50)

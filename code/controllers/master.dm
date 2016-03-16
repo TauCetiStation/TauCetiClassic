@@ -77,8 +77,15 @@ var/global/datum/controller/master/Master = new()
 	//preloadTemplates()
 	// Pick a random away mission.
 	//createRandomZlevel()
-	// Generate asteroid.
-	//make_mining_asteroid_secrets()
+	// Generate mining.
+
+	//var/mining_type = MINETYPE
+	//if(mining_type == "lavaland")
+	//	seedRuins(5, 5, /area/lavaland/surface/outdoors, lava_ruins_templates)
+	//	spawn_rivers()
+	//else
+	//	make_mining_asteroid_secrets()
+
 	// Set up Z-level transistions.
 	//setup_map_transitions()
 
@@ -142,6 +149,7 @@ var/global/datum/controller/master/Master = new()
 				if (priority_queue.len)
 					priorityrunning = priority_queue.len
 					subsystemstorun = priority_queue | subsystems
+#endif
 				var/ran_subsystems = 0
 				while(subsystemstorun.len)
 					var/datum/subsystem/SS = subsystemstorun[1]
@@ -207,6 +215,7 @@ var/global/datum/controller/master/Master = new()
 #if DM_VERSION < 510
 							sleep(0)
 #endif
+
 				cost = max(MC_AVERAGE(cost, world.timeofday - start_time), 0)
 				if(ran_subsystems)
 					var/oldcost = subsystem_cost

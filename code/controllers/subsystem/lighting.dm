@@ -61,6 +61,7 @@ var/datum/subsystem/lighting/SSlighting
 				A.SetDynamicLighting()
 		CHECK_TICK
 
+
 	for(var/thing in changed_lights)
 		var/datum/light_source/LS = thing
 		LS.check()

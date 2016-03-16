@@ -43,6 +43,9 @@
 
 	return ..()
 
+/atom/movable/lighting_overlay/singularity_act()
+	return
+
 /atom/movable/lighting_overlay/proc/update_overlay()
 	var/turf/T = loc
 	if(!istype(T)) // Erm...

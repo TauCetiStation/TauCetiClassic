@@ -1,14 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
-
-var/global/list/uneatable = list(
-	/turf/space,
-	/mob/dead,
-	/mob/camera,
-	/mob/new_player,
-	/obj/effect/overlay,
-	/atom/movable/lighting_overlay
-	)
-
 /obj/singularity
 	name = "gravitational singularity"
 	desc = "A gravitational singularity."
@@ -216,20 +205,21 @@ var/global/list/uneatable = list(
 
 /obj/singularity/proc/eat()
 	set background = BACKGROUND_ENABLED
-	// Let's just make this one loop.
-	for(var/atom/X in spiral_range(grav_pull, src, 1))
-		if(is_type_in_list(X, uneatable))
+	for(var/tile in spiral_range_turfs(grav_pull, src, 1))
+		var/turf/T = tile
+		if(!T)
 			continue
-		if(!X.simulated)
-			continue
-
-		var/dist = get_dist(X, src)
-		var/obj/singularity/S = src
-		if(dist > consume_range)
-			X.singularity_pull(S, current_size)
-		else if(dist <= consume_range)
-			consume(X)
-		CHECK_TICK
+		if(get_dist(T, src) > consume_range)
+			T.singularity_pull(src, current_size)
+		else
+			consume(T)
+		for(var/thing in T)
+			var/atom/movable/X = thing
+			if(get_dist(X, src) > consume_range)
+				X.singularity_pull(src, current_size)
+			else
+				consume(X)
+			CHECK_TICK
 	return
 
 /obj/singularity/Process_Spacemove() //The singularity stops drifting for no man!

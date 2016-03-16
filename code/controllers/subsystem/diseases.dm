@@ -3,7 +3,6 @@ var/datum/subsystem/diseases/SSdisease
 /datum/subsystem/diseases
 	name = "Diseases"
 	priority = 7
-
 	var/list/currentrun = list()
 	var/list/processing = list()
 
