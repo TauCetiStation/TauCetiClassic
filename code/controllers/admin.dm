@@ -16,6 +16,8 @@
 /obj/effect/statclick/debug/Click()
 	if(!usr.client.holder)
 		return
+	if(!(usr.client.holder.rights & R_DEBUG))
+		return
 	if(!class)
 		if(istype(target, /datum/subsystem))
 			class = "subsystem"
@@ -37,6 +39,8 @@
 	set desc = "Restart one of the various periodic loop controllers for the game (be careful!)"
 
 	if(!holder)
+		return
+	if(!check_rights(R_DEBUG))
 		return
 	switch(controller)
 		if("Master")
