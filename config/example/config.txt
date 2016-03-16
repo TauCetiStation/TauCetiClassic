@@ -128,7 +128,7 @@ ALLOW_VOTE_MODE
 VOTE_DELAY 36000
 
 ## time period (deciseconds) which voting session will last (default 1 minute)
-VOTE_PERIOD 600
+VOTE_PERIOD 1200
 
 ## autovote initial delay (deciseconds) before first automatic transfer vote call (default 180 minutes)
 VOTE_AUTOTRANSFER_INITIAL 108000
