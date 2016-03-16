@@ -16,7 +16,6 @@ var/global/pipe_processing_killed = 0
 	var/breather_ticks = 2		//a somewhat crude attempt to iron over the 'bumps' caused by high-cpu use by letting the MC have a breather for this many ticks after every loop
 	var/minimum_ticks = 20		//The minimum length of time between MC ticks
 
-	var/sun_cost		= 0
 	var/diseases_cost	= 0
 	var/events_cost		= 0
 	var/ticker_cost		= 0
@@ -87,14 +86,6 @@ var/global/pipe_processing_killed = 0
 				transfer_controller.process()
 				process_newscaster()
 
-				//SUN
-				timer = world.timeofday
-				last_thing_processed = sun.type
-				sun.calc_position()
-				sun_cost = (world.timeofday - timer) / 10
-
-				sleep(breather_ticks)
-
 				//DISEASES
 				timer = world.timeofday
 				process_diseases()
@@ -114,7 +105,7 @@ var/global/pipe_processing_killed = 0
 				ticker_cost = (world.timeofday - timer) / 10
 
 				//TIMING
-				total_cost = sun_cost + diseases_cost + events_cost + ticker_cost
+				total_cost = diseases_cost + events_cost + ticker_cost
 
 				var/end_time = world.timeofday
 				if(end_time < start_time)
