@@ -17,7 +17,9 @@ var/datum/subsystem/objects/SSobj
 	NEW_SS_GLOBAL(SSobj)
 
 /datum/subsystem/objects/Initialize(timeofday, zlevel)
-	//setupGenetics()
+	setupGenetics()
+	GenerateGasOverlays()
+	color_windows_init()
 	for(var/V in world)
 		var/atom/A = V
 		if (zlevel && A.z != zlevel)

@@ -52,9 +52,6 @@ var/global/pipe_processing_killed = 0
 	if(!emergency_shuttle)			emergency_shuttle = new /datum/shuttle_controller/emergency_shuttle()
 
 /datum/controller/game_controller/proc/setup()
-	//spawn(20) Gateway lighting broken after new object lighting update
-	//	createRandomZlevel()
-
 	if(!air_master)
 		air_master = new /datum/controller/air_system()
 		air_master.Setup()
@@ -63,7 +60,6 @@ var/global/pipe_processing_killed = 0
 		ticker = new /datum/controller/gameticker()
 
 	setup_objects()
-	setupgenetics()
 	setupfactions()
 	setup_economy()
 	SetupXenoarch()

@@ -64,26 +64,12 @@
 	else
 		world.log << "Feedback database connection established."
 
-	plmaster = new /obj/effect/overlay()
-	plmaster.icon = 'icons/effects/tile_effects.dmi'
-	plmaster.icon_state = "plasma-purple"  //fuck phoron!
-	plmaster.layer = FLY_LAYER
-	plmaster.mouse_opacity = 0
-
-	slmaster = new /obj/effect/overlay()
-	slmaster.icon = 'icons/effects/tile_effects.dmi'
-	slmaster.icon_state = "sleeping_agent"
-	slmaster.layer = FLY_LAYER
-	slmaster.mouse_opacity = 0
-
 	Get_Holiday()
 
 	src.update_status()
 
 	process_teleport_locs()			//Sets up the wizard teleport locations
 	process_ghost_teleport_locs()	//Sets up ghost teleport locations.
-
-	color_windows_init()			//Colorizing windows
 
 	. = ..()
 
