@@ -606,12 +606,6 @@ note dizziness decrements automatically in the mob's Life() proc.
 					SS.stat_entry()
 			cameranet.stat_entry()
 
-			if(master_controller)
-				stat(null,"MasterController-[last_tick_duration] ([master_controller.processing?"On":"Off"]-[controller_iteration])")
-				stat(null,"ALL-[master_controller.total_cost]")
-			else
-				stat(null,"MasterController-ERROR")
-
 	if(listed_turf && client)
 		if(!TurfAdjacent(listed_turf))
 			listed_turf = null

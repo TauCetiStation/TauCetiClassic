@@ -1,5 +1,5 @@
-
-/datum/controller/game_controller
+//MUST UNLINK FROM MASTER CONTROLLER !!!!!NEEDS REWRITE!!!!
+/datum/controller/master
 	var/list/all_animal_genesequences = list()
 	var/list/all_plant_genesequences = list()
 	var/list/genome_prefixes = null
@@ -38,7 +38,7 @@
 #define ARTIFACTSPAWNNUM_LOWER 6
 #define ARTIFACTSPAWNNUM_UPPER 12
 
-datum/controller/game_controller/proc/SetupXenoarch()
+/datum/controller/master/proc/SetupXenoarch()
 	//create digsites
 	for(var/turf/simulated/mineral/M in block(locate(1,1,1), locate(world.maxx, world.maxy, world.maxz)))
 		if(isnull(M.geologic_data))
@@ -93,6 +93,7 @@ datum/controller/game_controller/proc/SetupXenoarch()
 			//have a chance for an artifact to spawn here, but not in animal or plant digsites
 			if(isnull(M.artifact_find) && digsite != 1 && digsite != 2)
 				artifact_spawning_turfs.Add(archeo_turf)
+		CHECK_TICK
 
 	//create artifact machinery
 	var/num_artifacts_spawn = rand(ARTIFACTSPAWNNUM_LOWER, ARTIFACTSPAWNNUM_UPPER)

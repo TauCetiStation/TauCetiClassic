@@ -89,9 +89,9 @@
 	intercept_hacked = 1
 
 
-/datum/game_mode/malfunction/process()
+/datum/game_mode/malfunction/process(seconds)
 	if (apcs >= 3 && malf_mode_declared)
-		AI_win_timeleft -= ((apcs/6)*last_tick_duration) //Victory timer now de-increments based on how many APCs are hacked. --NeoFite
+		AI_win_timeleft -= apcs * seconds //Victory timer now de-increments based on how many APCs are hacked. --NeoFite
 	..()
 	if (AI_win_timeleft<=0)
 		check_win()

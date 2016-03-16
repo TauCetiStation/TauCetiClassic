@@ -81,7 +81,7 @@ var/datum/subsystem/ticker/ticker
 /datum/subsystem/ticker/fire()
 	switch(current_state)
 		if(GAME_STATE_STARTUP)
-			//timeLeft = config.lobby_countdown * 10
+			timeLeft = initial(timeLeft)
 			world << "<b><font color='blue'>Welcome to the pre-game lobby!</font></b>"
 			world << "Please, setup your character and select ready. Game will start in [timeLeft/10] seconds"
 			current_state = GAME_STATE_PREGAME
@@ -109,10 +109,7 @@ var/datum/subsystem/ticker/ticker
 				current_state = GAME_STATE_STARTUP
 
 		if(GAME_STATE_PLAYING)
-			if(current_state != GAME_STATE_PLAYING)
-				return 0
-
-			mode.process()
+			mode.process(wait * 0.1)
 
 			var/mode_finished = mode.check_finished() || (SSshuttle.location == 2 && SSshuttle.alert == 1)
 			if(!mode.explosion_in_progress && mode_finished)
@@ -227,7 +224,6 @@ var/datum/subsystem/ticker/ticker
 	spawn_empty_ai()
 	setup_economy()
 
-	master_controller.process()		//Start master_controller.process()
 	Master.RoundStart()
 
 	slack_roundstart()

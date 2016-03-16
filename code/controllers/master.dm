@@ -77,14 +77,9 @@ var/global/datum/controller/master/Master = new()
 	//preloadTemplates()
 	// Pick a random away mission.
 	//createRandomZlevel() Gateway lighting broken after new object lighting update
+	SetupXenoarch()
 	// Generate mining.
-
-	//var/mining_type = MINETYPE
-	//if(mining_type == "lavaland")
-	//	seedRuins(5, 5, /area/lavaland/surface/outdoors, lava_ruins_templates)
-	//	spawn_rivers()
-	//else
-	//	make_mining_asteroid_secrets()
+	make_mining_asteroid_secrets()
 
 	// Set up Z-level transistions.
 	//setup_map_transitions()
