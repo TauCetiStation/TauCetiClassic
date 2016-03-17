@@ -60,7 +60,7 @@
 	if(zlevel) // If only initialized for one Z-level.
 		testing(msg)
 		return time
-	world << "<span class='boldannounce'>[msg]</span>"
+	world.log << "[msg]"
 	return time
 
 //hook for printing stats to the "MC" statuspanel for admins to see performance and related stats etc.

@@ -72,7 +72,7 @@ var/global/datum/controller/master/Master = new()
 			SS.Initialize(world.timeofday, zlevel)
 			CHECK_TICK
 		return
-	world << "<span class='boldannounce'>Initializing subsystems...</span>"
+	world.log << "<span class='boldannounce'>Initializing subsystems...</span>"
 
 	//preloadTemplates()
 	// Pick a random away mission.
@@ -92,7 +92,7 @@ var/global/datum/controller/master/Master = new()
 		SS.Initialize(world.timeofday, zlevel)
 		CHECK_TICK
 
-	world << "<span class='boldannounce'>Initializations complete!</span>"
+	world.log << "<span class='boldannounce'>Initializations complete!</span>"
 
 	// Sort subsystems by display setting for easy access.
 	sortTim(subsystems, /proc/cmp_subsystem_display)
