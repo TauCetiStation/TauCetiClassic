@@ -7,7 +7,7 @@
 
 
 
-#define RECOMMENDED_VERSION 509
+#define RECOMMENDED_VERSION 510
 /world/New()
 	//logs
 	var/date_string = time2text(world.realtime, "YYYY/MM-Month/DD-Day")
@@ -81,8 +81,10 @@
 	src.update_status()
 
 	process_teleport_locs()			//Sets up the wizard teleport locations
-	process_ghost_teleport_locs()	//Sets up ghost teleport locations.
+	process_ghost_teleport_locs()		//Sets up ghost teleport locations.
 
+	color_windows_init()			//Colorizing windows
+	
 	. = ..()
 
 	sleep_offline = 1
