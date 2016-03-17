@@ -901,7 +901,7 @@ Please contact me on #coderbus IRC. ~Carn x
 
 		if(!r_hand:tc_custom || r_hand.icon_override || species.sprite_sheets["held"])
 			if(r_hand.icon_override || species.sprite_sheets["held"]) t_state = "[t_state]_r"
-			overlays_standing[R_HAND_LAYER] = image("icon"=((r_hand.icon_override) ? r_hand.icon_override : (species.sprite_sheets["held"] ? species.sprite_sheets["held"] : 'icons/mob/items_righthand.dmi')), "icon_state"="[t_state]", "layer"=-R_HAND_LAYER)
+			overlays_standing[R_HAND_LAYER] = image("icon"=((r_hand.icon_override) ? r_hand.icon_override : (species.sprite_sheets["held"] ? species.sprite_sheets["held"] : r_hand.righthand_file)), "icon_state"="[t_state]", "layer"=-R_HAND_LAYER)
 		else
 			overlays_standing[R_HAND_LAYER] = image("icon"=r_hand:tc_custom, "icon_state"="[t_state]_r", "layer"=-R_HAND_LAYER)
 
@@ -925,7 +925,7 @@ Please contact me on #coderbus IRC. ~Carn x
 
 		if(!l_hand:tc_custom || l_hand.icon_override || species.sprite_sheets["held"])
 			if(l_hand.icon_override || species.sprite_sheets["held"]) t_state = "[t_state]_l"
-			overlays_standing[L_HAND_LAYER] = image("icon"=((l_hand.icon_override) ? l_hand.icon_override : (species.sprite_sheets["held"] ? species.sprite_sheets["held"] : 'icons/mob/items_lefthand.dmi')), "icon_state"="[t_state]", "layer"=-L_HAND_LAYER)
+			overlays_standing[L_HAND_LAYER] = image("icon"=((l_hand.icon_override) ? l_hand.icon_override : (species.sprite_sheets["held"] ? species.sprite_sheets["held"] : l_hand.lefthand_file)), "icon_state"="[t_state]", "layer"=-L_HAND_LAYER)
 		else
 			overlays_standing[L_HAND_LAYER] = image("icon"=l_hand:tc_custom, "icon_state"="[t_state]_l", "layer"=-L_HAND_LAYER)
 
@@ -956,7 +956,7 @@ Please contact me on #coderbus IRC. ~Carn x
 	if(wear_suit)
 		var/icon/C = new('icons/mob/collar.dmi')
 		if(wear_suit.icon_state in C.IconStates())
-			
+
 			var/image/standing = image("icon" = C, "icon_state" = "[wear_suit.icon_state]", "layer"=-COLLAR_LAYER)
 			overlays_standing[COLLAR_LAYER]	= standing
 

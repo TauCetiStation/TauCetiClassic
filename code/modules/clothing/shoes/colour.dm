@@ -2,6 +2,7 @@
 	name = "black shoes"
 	icon_state = "black"
 	item_color = "black"
+	item_state = "bl_shoes"
 	desc = "A pair of black shoes."
 
 	cold_protection = FEET
@@ -18,6 +19,7 @@
 	desc = "A pair of brown shoes."
 	icon_state = "brown"
 	item_color = "brown"
+	item_state = "b_shoes"
 
 /obj/item/clothing/shoes/brown/captain
 	item_color = "captain"	//Exists for washing machines. Is not different from brown shoes in any way.
@@ -58,22 +60,19 @@
 	icon_state = "purple"
 	item_color = "purple"
 
-/obj/item/clothing/shoes/brown
-	name = "brown shoes"
-	icon_state = "brown"
-	item_color = "brown"
-
 /obj/item/clothing/shoes/red
 	name = "red shoes"
 	desc = "Stylish red shoes."
 	icon_state = "red"
 	item_color = "red"
+	item_state = "r_shoes"
 
 /obj/item/clothing/shoes/white
 	name = "white shoes"
 	icon_state = "white"
 	permeability_coefficient = 0.01
 	item_color = "white"
+	item_state = "w_shoes"
 
 /obj/item/clothing/shoes/leather
 	name = "leather shoes"
@@ -91,6 +90,7 @@
 	name = "orange shoes"
 	icon_state = "orange"
 	item_color = "orange"
+	item_state = "o_shoes"
 	var/obj/item/weapon/handcuffs/chained = null
 
 /obj/item/clothing/shoes/orange/proc/attach_cuffs(var/obj/item/weapon/handcuffs/cuffs)
@@ -100,6 +100,7 @@
 	src.chained = cuffs
 	src.slowdown = 15
 	src.icon_state = "orange1"
+	src.item_state = "o_shoes1"
 
 /obj/item/clothing/shoes/orange/proc/remove_cuffs()
 	if (!src.chained) return
@@ -107,6 +108,7 @@
 	src.chained.loc = get_turf(src)
 	src.slowdown = initial(slowdown)
 	src.icon_state = "orange"
+	src.item_state = "o_shoes"
 	src.chained = null
 
 /obj/item/clothing/shoes/orange/attack_self(mob/user as mob)
