@@ -3,8 +3,6 @@
 /datum/nanomanager
 	// a list of current open /nanoui UIs, grouped by src_object and ui_key
 	var/open_uis[0]
-	// a list of current open /nanoui UIs, not grouped, for use in processing
-	var/list/processing_uis = list()
 	// a list of asset filenames which are to be sent to the client on user logon
 	var/list/asset_files = list()
 
@@ -187,8 +185,8 @@
 	ui.user.open_uis.Add(ui)
 	var/list/uis = open_uis[src_object_key][ui.ui_key]
 	uis.Add(ui)
-	processing_uis.Add(ui)
-	//testing("nanomanager/ui_opened mob [ui.user.name] [ui.src_object:name] [ui.ui_key] - user.open_uis [ui.user.open_uis.len] | uis [uis.len] | processing_uis [processing_uis.len]")
+	SSnano.processing_uis.Add(ui)
+	//testing("nanomanager/ui_opened mob [ui.user.name] [ui.src_object:name] [ui.ui_key] - user.open_uis [ui.user.open_uis.len] | uis [uis.len] | processing_uis [SSnano.processing_uis.len]")
 
  /**
   * Remove a /nanoui ui from the list of open uis
@@ -205,13 +203,13 @@
 	else if (isnull(open_uis[src_object_key][ui.ui_key]) || !istype(open_uis[src_object_key][ui.ui_key], /list))
 		return 0 // wasn't open
 
-	processing_uis.Remove(ui)
+	SSnano.processing_uis.Remove(ui)
 	if(ui.user)	// Sanity check in case a user has been deleted (say a blown up borg watching the alarm interface)
 		ui.user.open_uis.Remove(ui)
 	var/list/uis = open_uis[src_object_key][ui.ui_key]
 	uis.Remove(ui)
 
-	//testing("nanomanager/ui_closed mob [ui.user.name] [ui.src_object:name] [ui.ui_key] - user.open_uis [ui.user.open_uis.len] | uis [uis.len] | processing_uis [processing_uis.len]")
+	//testing("nanomanager/ui_closed mob [ui.user.name] [ui.src_object:name] [ui.ui_key] - user.open_uis [ui.user.open_uis.len] | uis [uis.len] | processing_uis [SSnano.processing_uis.len]")
 
 	return 1
 

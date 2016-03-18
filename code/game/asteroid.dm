@@ -84,9 +84,11 @@ proc/admin_spawn_room_at_pos()
 	return
 
 
+//////////////
 
-
-
+/proc/make_mining_asteroid_secrets()
+	for(var/i in 1 to max_secret_rooms)
+		make_mining_asteroid_secret()
 
 proc/make_mining_asteroid_secret(var/size = 5)
 	var/valid = 0
@@ -158,5 +160,3 @@ proc/make_mining_asteroid_secret(var/size = 5)
 			new surprise(T)
 
 	return 1
-
-

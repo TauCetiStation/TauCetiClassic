@@ -2,12 +2,12 @@
 #define subtypesof(typepath) ( typesof(typepath) - typepath )
 
 //singularity defines
-#define STAGE_ONE		 1
-#define STAGE_TWO		 3
-#define STAGE_THREE	 5
-#define STAGE_FOUR	 7
-#define STAGE_FIVE	 9
-#define STAGE_SIX		 11 //From supermatter shard
+#define STAGE_ONE	1
+#define STAGE_TWO	3
+#define STAGE_THREE	5
+#define STAGE_FOUR	7
+#define STAGE_FIVE	9
+#define STAGE_SIX	11 //From supermatter shard
 
 //Ghost orbit types:
 #define GHOST_ORBIT_CIRCLE		"circle"
@@ -18,7 +18,8 @@
 
 //zlevel defines, can be overriden for different maps in the appropriate _maps file.
 #define ZLEVEL_STATION  	1
-#define ZLEVEL_CENTCOMM 	2
+#define ZLEVEL_CENTCOMM 	2 //EI NATH!!
+#define ZLEVEL_CENTCOM  	2
 #define ZLEVEL_TELECOMMS	3
 #define ZLEVEL_DERELICT		4
 #define ZLEVEL_ASTEROID 	5
@@ -27,6 +28,13 @@
 #define TRANSITIONEDGE		7 //Distance from edge to move to another z-level
 
 #define ENGINE_EJECT_Z		3 //Unused now
+
+//ticker.current_state values
+#define GAME_STATE_STARTUP		0
+#define GAME_STATE_PREGAME		1
+#define GAME_STATE_SETTING_UP	2
+#define GAME_STATE_PLAYING		3
+#define GAME_STATE_FINISHED		4
 
 //Object specific defines
 #define CANDLE_LUM 3 //For how bright candles are
@@ -85,3 +93,6 @@
 
 //defines
 #define RESIZE_DEFAULT_SIZE 1
+
+//Just space
+#define SPACE_ICON_STATE	"[((x + y) ^ ~(x * y) + z) % 25]"

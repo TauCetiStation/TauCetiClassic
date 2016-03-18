@@ -30,9 +30,7 @@ var/list/liftable_structures = list(\
 //	list/traitors = list()	//traitor list
 //  reverse_dir[dir] = reverse of dir
 var/datum/engine_eject/engine_eject_control = null
-var/datum/sun/sun = null
 var/datum/air_tunnel/air_tunnel1/SS13_airtunnel = null
-var/going = 1.0
 
 //var/red_alert_code = 0 //Used in new code red and emergency shuttle call lighting
 //var/red_alert_evac = 0

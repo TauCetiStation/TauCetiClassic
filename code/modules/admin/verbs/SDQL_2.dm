@@ -48,6 +48,7 @@
 		if(char == "/" || char == "*")
 			for(var/from in from_objs)
 				objs += SDQL_get_all(type, from)
+				CHECK_TICK
 
 		else if(char == "'" || char == "\"")
 			objs += locate(copytext(type, 2, length(type)))
@@ -58,6 +59,7 @@
 		for(var/datum/d in objs_temp)
 			if(SDQL_expression(d, query_tree["where"]))
 				objs += d
+			CHECK_TICK
 
 	//usr << "Query: [query_text]"
 	message_admins("[usr] executed SDQL query: \"[query_text]\".")
@@ -66,6 +68,7 @@
 		if("delete")
 			for(var/datum/d in objs)
 				qdel(d)
+				CHECK_TICK
 
 		if("select")
 			var/text = ""
@@ -107,6 +110,7 @@
 					else
 						for(var/v in vals)
 							d.vars[v] = vals[v]
+					CHECK_TICK
 
 
 
@@ -181,31 +185,37 @@
 		for(var/mob/d in location)
 			if(istype(d, type))
 				out += d
+			CHECK_TICK
 
 	else if(ispath(type, /turf))
 		for(var/turf/d in location)
 			if(istype(d, type))
 				out += d
+			CHECK_TICK
 
 	else if(ispath(type, /obj))
 		for(var/obj/d in location)
 			if(istype(d, type))
 				out += d
+			CHECK_TICK
 
 	else if(ispath(type, /area))
 		for(var/area/d in location)
 			if(istype(d, type))
 				out += d
+			CHECK_TICK
 
 	else if(ispath(type, /atom))
 		for(var/atom/d in location)
 			if(istype(d, type))
 				out += d
+			CHECK_TICK
 
 	else
 		for(var/datum/d in location)
 			if(istype(d, type))
 				out += d
+			CHECK_TICK
 
 	return out
 

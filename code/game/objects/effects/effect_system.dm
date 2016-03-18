@@ -487,7 +487,7 @@ steam.start() -- spawns the effect
 		process()
 		checkReagents()
 	spawn(120)
-		processing_objects.Remove(src)
+		SSobj.processing.Remove(src)
 		sleep(30)
 
 		if(metal)
@@ -695,10 +695,10 @@ steam.start() -- spawns the effect
 
 
 	proc/update_nearby_tiles(need_rebuild)
-		if(!air_master)
+		if(!SSair)
 			return 0
 
-		air_master.mark_for_update(get_turf(src))
+		SSair.mark_for_update(get_turf(src))
 
 		return 1
 

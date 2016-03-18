@@ -96,8 +96,8 @@
 
 /obj/item/weapon/flamethrower_M2/process()
 	if(!lit)
-		processing_objects.Remove(src)
-		return null
+		SSobj.processing.Remove(src)
+		return
 	var/turf/location = loc
 	if(istype(location, /mob/))
 		var/mob/M = location
@@ -147,7 +147,7 @@
 		return
 	if(!lit)
 		lit = 1
-		processing_objects.Add(src)
+		SSobj.processing |= src
 		usr << "You had opend fuel intake and lit your M2 Flamethrower!"
 	else
 		lit = 0

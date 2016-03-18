@@ -31,7 +31,6 @@
 		load_whitelist()
 	if(config.usealienwhitelist)
 		load_alienwhitelist()
-
 	LoadBans()
 	investigate_reset()
 
@@ -47,10 +46,12 @@
 
 	slack_startup()
 
-	sun = new /datum/sun()
 	radio_controller = new /datum/controller/radio()
 	data_core = new /obj/effect/datacore()
 	paiController = new /datum/paiController()
+
+	spawn(10)
+		Master.Setup()
 
 	if(!setup_old_database_connection())
 		world.log << "Your server failed to establish a connection with the SQL database."
@@ -62,40 +63,16 @@
 	else
 		world.log << "Feedback database connection established."
 
-	plmaster = new /obj/effect/overlay()
-	plmaster.icon = 'icons/effects/tile_effects.dmi'
-	plmaster.icon_state = "plasma-purple"  //fuck phoron!
-	plmaster.layer = FLY_LAYER
-	plmaster.mouse_opacity = 0
-
-	slmaster = new /obj/effect/overlay()
-	slmaster.icon = 'icons/effects/tile_effects.dmi'
-	slmaster.icon_state = "sleeping_agent"
-	slmaster.layer = FLY_LAYER
-	slmaster.mouse_opacity = 0
-
 	Get_Holiday()
-
-	makepowernets()
 
 	src.update_status()
 
 	process_teleport_locs()			//Sets up the wizard teleport locations
-	process_ghost_teleport_locs()		//Sets up ghost teleport locations.
+	process_ghost_teleport_locs()	//Sets up ghost teleport locations.
 
-	color_windows_init()			//Colorizing windows
-	
 	. = ..()
 
 	sleep_offline = 1
-
-	processScheduler = new
-	processSchedulerView = new
-	master_controller = new /datum/controller/game_controller()
-	spawn(1)
-		//processScheduler.deferSetupFor(/datum/controller/process/ticker)
-		processScheduler.setup()
-		master_controller.setup()
 
 	spawn(3000)		//so we aren't adding to the round-start lag
 		if(config.ToRban)
@@ -242,8 +219,6 @@ var/world_topic_spam_protect_time = world.timeofday
 	/*spawn(0)
 		world << sound(pick('sound/AI/newroundsexy.ogg','sound/misc/apcdestroyed.ogg','sound/misc/bangindonk.ogg')) // random end sounds!! - LastyBatsy
 		*/
-
-	processScheduler.stop()
 
 	for(var/client/C in clients)
 		if(config.server)	//if you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite

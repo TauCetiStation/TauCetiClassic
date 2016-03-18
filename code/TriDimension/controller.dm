@@ -23,14 +23,14 @@
 	normal_time = world.time + 600
 	fast_time = world.time + 10
 
-	processing_objects.Add(src)
+	SSobj.processing |= src
 
 	initialized = 1
 	return 1
 
 /obj/effect/landmark/zcontroller/Destroy()
-	processing_objects.Remove(src)
-	return
+	SSobj.processing.Remove(src)
+	return ..()
 
 /obj/effect/landmark/zcontroller/process()
 	if (world.time > fast_time)

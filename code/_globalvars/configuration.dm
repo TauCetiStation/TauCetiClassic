@@ -35,8 +35,5 @@ var/event = 0
 var/hadevent = 0
 var/blobevent = 0
 
-var/global/list/events = list()
-
-
 //Admin call for slack
 var/list/ac_nameholder = list()

@@ -16,13 +16,13 @@
 		if("Yes")
 			command_alert("Atmospheric anomaly detected on long range scanners. Prepare for station temperature drop.", "Anomaly Alert")
 
-	processing_objects += src
+	SSobj.processing |= src
 	message_admins("Station freezing started!")
 
-/datum/anomaly_frost/proc/process()
+/datum/anomaly_frost/process()
 	spawn(0)
 		if(prob(Speed))
-			for(var/zone/A in air_master.zones)
+			for(var/zone/A in SSair.zones)
 				if(A.air != null && A.contents.len > 0)
 					var/turf/T =pick(A.contents)
 					if(T.z == Zlevel)
@@ -38,6 +38,6 @@
 
 		Time -= 1
 		if(Time < 0)
-			processing_objects -= src
+			SSobj.processing.Remove(src)
 			message_admins("Station freezing stopped!")
-			src = null
+			qdel(src)

@@ -16,7 +16,7 @@
 //	testing("[name] assigned to block #[assigned].")
 	return assigned
 
-/proc/setupgenetics()
+/proc/setupGenetics()
 
 	if (prob(50))
 		// Currently unused.  Will revisit. - N3X
@@ -151,7 +151,7 @@
 	*/
 
 
-/proc/setupfactions()
+/proc/setupFactions()
 
 	// Populate the factions list:
 	for(var/x in typesof(/datum/faction))

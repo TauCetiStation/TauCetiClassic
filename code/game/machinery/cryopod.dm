@@ -233,7 +233,7 @@ obj/machinery/computer/cryopod/Topic(href, href_list)
 			//Handle job slot/tater cleanup.
 			var/job = occupant.mind.assigned_role
 
-			job_master.FreeRole(job)
+			SSjob.FreeRole(job)
 
 			/*if(occupant.mind.objectives.len)
 				qdel(occupant.mind.objectives)

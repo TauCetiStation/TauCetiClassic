@@ -102,7 +102,7 @@
 /obj/item/alien_embryo/chryssalid/New()
 	if(istype(loc, /mob/living))
 		affected_mob = loc
-		processing_objects.Add(src)
+		SSobj.processing |= src
 		spawn(0)
 			AddInfectionImages(affected_mob)
 	else
@@ -119,7 +119,7 @@
 	if(!affected_mob)	return
 	if(loc != affected_mob)
 		affected_mob.status_flags &= ~(XENO_HOST)
-		processing_objects.Remove(src)
+		SSobj.processing.Remove(src)
 		spawn(0)
 			RemoveInfectionImages(affected_mob)
 			affected_mob = null
