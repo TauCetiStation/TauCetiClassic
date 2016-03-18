@@ -28,14 +28,14 @@
 	src.air_contents.volume = volume //liters
 	src.air_contents.temperature = T20C
 
-	processing_objects.Add(src)
+	SSobj.processing |= src
 	return
 
 /obj/item/weapon/tank/Destroy()
 	if(air_contents)
 		qdel(air_contents)
 
-	processing_objects.Remove(src)
+	SSobj.processing.Remove(src)
 	return ..()
 
 /obj/item/weapon/tank/examine()

@@ -107,9 +107,9 @@
 
 
 // this function displays the shuttles ETA in the status panel if the shuttle has been called
-/mob/living/silicon/proc/show_emergency_shuttle_eta()
-	if(emergency_shuttle.online && emergency_shuttle.location < 2)
-		var/timeleft = emergency_shuttle.timeleft()
+/mob/living/silicon/proc/show_SSshuttle_eta()
+	if(SSshuttle.online && SSshuttle.location < 2)
+		var/timeleft = SSshuttle.timeleft()
 		if (timeleft)
 			stat(null, "ETA-[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
 
@@ -119,7 +119,7 @@
 	..()
 	if(statpanel("Status"))
 		show_station_time()
-		show_emergency_shuttle_eta()
+		show_SSshuttle_eta()
 		show_system_integrity()
 		show_malf_ai()
 

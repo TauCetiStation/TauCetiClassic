@@ -1,14 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
-
-var/global/list/uneatable = list(
-	/turf/space,
-	/mob/dead,
-	/mob/camera,
-	/mob/new_player,
-	/obj/effect/overlay,
-	/atom/movable/lighting_overlay
-	)
-
 /obj/singularity
 	name = "gravitational singularity"
 	desc = "A gravitational singularity."
@@ -44,7 +33,7 @@ var/global/list/uneatable = list(
 		spawn(temp)
 			qdel(src)
 	..()
-	processing_objects.Add(src)
+	SSobj.processing |= src
 	poi_list |= src
 	for(var/obj/machinery/singularity_beacon/singubeacon in machines)
 		if(singubeacon.active)
@@ -53,7 +42,7 @@ var/global/list/uneatable = list(
 	return
 
 /obj/singularity/Destroy()
-	processing_objects.Remove(src)
+	SSobj.processing.Remove(src)
 	poi_list.Remove(src)
 	return ..()
 
@@ -215,27 +204,22 @@ var/global/list/uneatable = list(
 	return 1
 
 /obj/singularity/proc/eat()
-	//set background = 1
-	if(defer_powernet_rebuild != 2)
-		defer_powernet_rebuild = 1
-	// Let's just make this one loop.
-	for(var/atom/A in orange(grav_pull,src))
-		if(is_type_in_list(A, uneatable))
+	set background = BACKGROUND_ENABLED
+	for(var/tile in spiral_range_turfs(grav_pull, src, 1))
+		var/turf/T = tile
+		if(!T)
 			continue
-		if(!A.simulated)
-			continue
-
-		var/dist = get_dist(A, src)
-
-		// Movable atoms only
-		var/obj/singularity/S = src
-		if(dist > consume_range)
-			A.singularity_pull(S, current_size)
-		else if(dist <= consume_range)
-			consume(A)
-
-	if(defer_powernet_rebuild != 2)
-		defer_powernet_rebuild = 0
+		if(get_dist(T, src) > consume_range)
+			T.singularity_pull(src, current_size)
+		else
+			consume(T)
+		for(var/thing in T)
+			var/atom/movable/X = thing
+			if(get_dist(X, src) > consume_range)
+				X.singularity_pull(src, current_size)
+			else
+				consume(X)
+			CHECK_TICK
 	return
 
 /obj/singularity/Process_Spacemove() //The singularity stops drifting for no man!

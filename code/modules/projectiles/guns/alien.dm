@@ -35,12 +35,12 @@
 
 /obj/item/weapon/spikethrower/New()
 	..()
-	processing_objects.Add(src)
+	SSobj.processing |= src
 	last_regen = world.time
 
 /obj/item/weapon/spikethrower/Destroy()
-	processing_objects.Remove(src)
-	..()
+	SSobj.processing.Remove(src)
+	return ..()
 
 /obj/item/weapon/spikethrower/process()
 

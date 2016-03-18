@@ -131,12 +131,12 @@
 		M.update_canmove()
 //		M.adjustStaminaLoss(-75)
 		combat_cooldown = 0
-		processing_objects.Add(src)
+		SSobj.processing |= src
 
 /obj/item/clothing/suit/armor/abductor/vest/process()
 	combat_cooldown++
 	if(combat_cooldown==initial(combat_cooldown))
-		processing_objects.Remove(src)
+		SSobj.processing.Remove(src)
 
 
 //SCIENCE TOOL
@@ -303,7 +303,7 @@
 	if(cooldown == initial(cooldown))
 		home.Retrieve(imp_in,1)
 		cooldown = 0
-		processing_objects.Add(src)
+		SSobj.processing |= src
 	else
 		imp_in << "<span class='warning'>You must wait [30 - cooldown] seconds to use [src] again!</span>"
 	return
@@ -312,7 +312,7 @@
 	if(cooldown < initial(cooldown))
 		cooldown++
 		if(cooldown == initial(cooldown))
-			processing_objects.Remove(src)
+			SSobj.processing.Remove(src)
 
 
 //ALIEN DECLONER

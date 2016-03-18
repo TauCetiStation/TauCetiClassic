@@ -107,8 +107,8 @@ var/list/blob_nodes = list()
 	for(var/datum/mind/blob in infected_crew)
 		greet_blob(blob)
 
-	if(emergency_shuttle)
-		emergency_shuttle.always_fake_recall = 1
+	if(SSshuttle)
+		SSshuttle.always_fake_recall = 1
 
 
 	spawn(10)

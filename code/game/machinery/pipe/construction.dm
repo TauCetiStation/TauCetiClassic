@@ -335,7 +335,7 @@ Buildable meters
 			var/turf/T = P.loc
 			P.level = T.intact ? 2 : 1
 			P.initialize()
-			if (deleted(P))
+			if (qdeleted(P))
 				usr << pipefailtext
 				return 1
 			P.build_network()
@@ -354,7 +354,7 @@ Buildable meters
 			//var/turf/T = P.loc
 			//P.level = T.intact ? 2 : 1
 			P.initialize()
-			if (deleted(P))
+			if (qdeleted(P))
 				usr << pipefailtext
 				return 1
 			P.build_network()
@@ -389,7 +389,7 @@ Buildable meters
 			var/turf/T = M.loc
 			M.level = T.intact ? 2 : 1
 			M.initialize()
-			if (deleted(M))
+			if (qdeleted(M))
 				usr << pipefailtext
 				return 1
 			M.build_network()
@@ -412,7 +412,7 @@ Buildable meters
 			var/turf/T = M.loc
 			M.level = T.intact ? 2 : 1
 			M.initialize()
-			if (deleted(M))
+			if (qdeleted(M))
 				usr << pipefailtext
 				return 1
 			M.build_network()
@@ -437,7 +437,7 @@ Buildable meters
 			//var/turf/T = P.loc
 			//P.level = T.intact ? 2 : 1
 			P.initialize()
-			if (deleted(P))
+			if (qdeleted(P))
 				usr << pipefailtext
 				return 1
 			P.build_network()
@@ -620,7 +620,7 @@ Buildable meters
 			var/turf/T = P.loc
 			P.level = T.intact ? 2 : 1
 			P.initialize()
-			if (deleted(P))
+			if (qdeleted(P))
 				usr << pipefailtext
 				return 1
 			P.build_network()

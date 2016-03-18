@@ -416,12 +416,12 @@
 
 	if(mode==47)
 		var/supplyData[0]
-		supplyData["shuttle_moving"] = supply_shuttle.moving
-		supplyData["shuttle_eta"] = supply_shuttle.eta
-		supplyData["shuttle_loc"] = supply_shuttle.at_station ? "Station" : "Dock"
+		supplyData["shuttle_moving"] = SSshuttle.moving
+		supplyData["shuttle_eta"] = SSshuttle.eta
+		supplyData["shuttle_loc"] = SSshuttle.at_station ? "Station" : "Dock"
 		var/supplyOrderCount = 0
 		var/supplyOrderData[0]
-		for(var/S in supply_shuttle.shoppinglist)
+		for(var/S in SSshuttle.shoppinglist)
 			var/datum/supply_order/SO = S
 		
 			supplyOrderData[++supplyOrderData.len] = list("Number" = SO.ordernum, "Name" = html_encode(SO.object.name), "ApprovedBy" = SO.orderedby, "Comment" = html_encode(SO.comment))
@@ -433,7 +433,7 @@
 
 		var/requestCount = 0
 		var/requestData[0]
-		for(var/S in supply_shuttle.requestlist)
+		for(var/S in SSshuttle.requestlist)
 			var/datum/supply_order/SO = S
 			requestCount++
 			requestData[++requestData.len] = list("Number" = SO.ordernum, "Name" = html_encode(SO.object.name), "OrderedBy" = SO.orderedby, "Comment" = html_encode(SO.comment))

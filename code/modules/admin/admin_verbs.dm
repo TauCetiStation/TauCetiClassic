@@ -127,6 +127,7 @@ var/list/admin_verbs_server = list(
 	/datum/admins/proc/startnow,
 	/datum/admins/proc/restart,
 	/datum/admins/proc/delay,
+	/datum/admins/proc/delay_end,
 	/datum/admins/proc/toggleaban,
 	/client/proc/toggle_log_hrefs,
 	/datum/admins/proc/immreboot,
@@ -144,15 +145,12 @@ var/list/admin_verbs_server = list(
 	/client/proc/nanomapgen_DumpImage
 	)
 var/list/admin_verbs_debug = list(
-        /client/proc/getruntimelog,                     /*allows us to access runtime logs to somebody*/
+	/client/proc/restart_controller,
+	/client/proc/getruntimelog,                     /*allows us to access runtime logs to somebody*/
 	/client/proc/cmd_admin_list_open_jobs,
 	/client/proc/Debug2,
-	/client/proc/kill_air,
 	/client/proc/ZASSettings,
-	/datum/admins/proc/getProcessSchedulerContext,
 	/client/proc/cmd_debug_make_powernets,
-	/client/proc/kill_airgroup,
-	/client/proc/debug_controller,
 	/client/proc/cmd_debug_mob_lists,
 	/client/proc/cmd_admin_delete,
 	/client/proc/cmd_debug_del_all,
@@ -160,10 +158,8 @@ var/list/admin_verbs_debug = list(
 	/client/proc/cmd_debug_tog_vcounter,
 	/client/proc/cmd_message_spam_control,
 	/client/proc/investigate_show,
-	/client/proc/air_report,
 	/client/proc/reload_admins,
 	/client/proc/reload_mentors,
-	/client/proc/restart_controller,
 //	/client/proc/remake_distribution_map,
 //	/client/proc/show_distribution_map,
 	/client/proc/enable_debug_verbs,
@@ -237,30 +233,26 @@ var/list/admin_verbs_hideable = list(
 	/datum/admins/proc/startnow,
 	/datum/admins/proc/restart,
 	/datum/admins/proc/delay,
+	/datum/admins/proc/delay_end,
 	/datum/admins/proc/toggleaban,
 	/client/proc/toggle_log_hrefs,
 	/datum/admins/proc/immreboot,
-	/datum/admins/proc/getProcessSchedulerContext,
 	/client/proc/everyone_random,
 	/datum/admins/proc/toggleAI,
+	/client/proc/restart_controller,
 	/datum/admins/proc/adrev,
 	/datum/admins/proc/adspawn,
 	/datum/admins/proc/adjump,
-	/client/proc/restart_controller,
 	/client/proc/cmd_admin_list_open_jobs,
 	/*/client/proc/callproc,*/
 	/client/proc/Debug2,
 	/client/proc/reload_admins,
-	/client/proc/kill_air,
 	/client/proc/cmd_debug_make_powernets,
-	/client/proc/kill_airgroup,
-	/client/proc/debug_controller,
 	/client/proc/startSinglo,
 	/client/proc/cmd_debug_mob_lists,
 	/client/proc/cmd_debug_del_all,
 	/client/proc/cmd_debug_tog_aliens,
 	/client/proc/cmd_debug_tog_vcounter,
-	/client/proc/air_report,
 	/client/proc/enable_debug_verbs,
 	/proc/possess,
 	/proc/release
@@ -334,17 +326,14 @@ var/list/admin_verbs_mentor = list(
 		/client/proc/camera_view,
 		/client/proc/sec_camera_report,
 		/client/proc/intercom_view,
-		/client/proc/air_status,
 		/client/proc/atmosscan,
 		/client/proc/powerdebug,
 		/client/proc/count_objects_on_z_level,
 		/client/proc/count_objects_all,
 		/client/proc/cmd_assume_direct_control,
-		/client/proc/jump_to_dead_group,
 		/client/proc/startSinglo,
-		/client/proc/ticklag,
+		/client/proc/fps,
 		/client/proc/cmd_admin_grantfullaccess,
-		/client/proc/kaboom,
 		/client/proc/splash,
 		/client/proc/cmd_admin_areatest
 		)
@@ -717,20 +706,6 @@ var/list/admin_verbs_mentor = list(
 			V.show_message("<b>[mob.control_object.name]</b> says: \"" + msg + "\"", 2)
 	feedback_add_details("admin_verb","OT") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/kill_air() // -- TLE
-	set category = "Debug"
-	set name = "Kill Air"
-	set desc = "Toggle Air Processing."
-	if(air_processing_killed)
-		air_processing_killed = 0
-		usr << "<b>Enabled air processing.</b>"
-	else
-		air_processing_killed = 1
-		usr << "<b>Disabled air processing.</b>"
-	feedback_add_details("admin_verb","KA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-	log_admin("[key_name(usr)] used 'kill air'.")
-	message_admins("\blue [key_name_admin(usr)] used 'kill air'.", 1)
-
 /client/proc/readmin_self()
 	set name = "Re-admin self"
 	set category = "Admin"
@@ -870,7 +845,7 @@ var/list/admin_verbs_mentor = list(
 	set category = "Admin"
 	if(holder)
 		var/list/jobs = list()
-		for (var/datum/job/J in job_master.occupations)
+		for (var/datum/job/J in SSjob.occupations)
 			if (J.current_positions >= J.total_positions && J.total_positions != -1)
 				jobs += J.title
 		if (!jobs.len)
@@ -878,7 +853,7 @@ var/list/admin_verbs_mentor = list(
 			return
 		var/job = input("Please select job slot to free", "Free job slot")  as null|anything in jobs
 		if (job)
-			job_master.FreeRole(job)
+			SSjob.FreeRole(job)
 	return
 
 /client/proc/toggleattacklogs()
