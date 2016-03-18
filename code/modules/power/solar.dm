@@ -3,15 +3,13 @@
 #define SOLAR_MAX_DIST 40
 #define SOLARGENRATE 1500
 
-var/list/solars_list = list()
-
 // This will choose whether to get the solar list from the powernet or the powernet nodes,
 // depending on the size of the nodes.
 /obj/machinery/power/proc/get_solars_powernet()
 	if(!powernet)
 		return list()
-	if(solars_list.len < powernet.nodes)
-		return solars_list
+	if(SSsun.solars.len < powernet.nodes)
+		return SSsun.solars
 	else
 		return powernet.nodes
 
@@ -43,12 +41,12 @@ var/list/solars_list = list()
 
 /obj/machinery/power/solar/disconnect_from_network()
 	..()
-	solars_list.Remove(src)
+	SSsun.solars.Remove(src)
 
 /obj/machinery/power/solar/connect_to_network(var/process)
 	var/to_return = ..()
 	if(process)
-		solars_list.Add(src)
+		SSsun.solars.Add(src)
 	return to_return
 
 
@@ -112,12 +110,12 @@ var/list/solars_list = list()
 
 
 /obj/machinery/power/solar/proc/update_solar_exposure()
-	if(!sun)
+	if(!SSsun)
 		return
 	if(obscured)
 		sunfrac = 0
 		return
-	var/p_angle = abs((360+adir)%360 - (360+sun.angle)%360)
+	var/p_angle = abs((360+adir)%360 - (360+SSsun.angle)%360)
 	if(p_angle > 90)			// if facing more than 90deg from sun, zero output
 		sunfrac = 0
 		return
@@ -295,12 +293,12 @@ var/list/solars_list = list()
 
 /obj/machinery/power/solar_control/disconnect_from_network()
 	..()
-	solars_list.Remove(src)
+	SSsun.solars.Remove(src)
 
 /obj/machinery/power/solar_control/connect_to_network()
 	var/to_return = ..()
 	if(powernet)
-		solars_list.Add(src)
+		SSsun.solars.Add(src)
 	return to_return
 
 /obj/machinery/power/solar_control/initialize()
@@ -413,9 +411,9 @@ var/list/solars_list = list()
 
 	var/t = "<TT><B>Solar Generator Control</B><HR><PRE>"
 	t += "<B>Generated power</B> : [round(lastgen)] W<BR>"
-	t += "Station Rotational Period: [60/abs(sun.rate)] minutes<BR>"
-	t += "Station Rotational Direction: [sun.rate<0 ? "CCW" : "CW"]<BR>"
-	t += "Star Orientation: [sun.angle]&deg ([angle2text(sun.angle)])<BR>"
+	t += "Station Rotational Period: [60/abs(SSsun.rate)] minutes<BR>"
+	t += "Station Rotational Direction: [SSsun.rate<0 ? "CCW" : "CW"]<BR>"
+	t += "Star Orientation: [SSsun.angle]&deg ([angle2text(SSsun.angle)])<BR>"
 	t += "Array Orientation: [rate_control(src,"cdir","[cdir]&deg",1,10,60)] ([angle2text(cdir)])<BR>"
 	t += "<BR><HR><BR>"
 	t += "Tracking: "
@@ -469,8 +467,8 @@ var/list/solars_list = list()
 		if(src.trackrate) nexttime = world.time + 6000/trackrate
 		track = text2num(href_list["track"])
 		if(powernet && (track == 2))
-			if(!solars_list.Find(src,1,0))
-				solars_list.Add(src)
+			if(!SSsun.solars.Find(src,1,0))
+				SSsun.solars.Add(src)
 			for(var/obj/machinery/power/tracker/T in get_solars_powernet())
 				if(powernet.nodes[T])
 					cdir = T.sun_angle

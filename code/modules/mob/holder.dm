@@ -7,11 +7,11 @@
 
 /obj/item/weapon/holder/New()
 	..()
-	processing_objects.Add(src)
+	SSobj.processing |= src
 
 /obj/item/weapon/holder/Destroy()
-	processing_objects.Remove(src)
-	..()
+	SSobj.processing.Remove(src)
+	return ..()
 
 /obj/item/weapon/holder/process()
 
@@ -113,4 +113,4 @@
 	name = "neaera"
 	desc = "It's a neaera."
 	icon_state = "skrellkey1"
-	origin_tech = null 
+	origin_tech = null

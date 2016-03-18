@@ -57,23 +57,3 @@ datum/directive/research_to_ripleys/get_remaining_orders()
 			text += "<li>Reassign [id] to Shaft Miner</li>"
 
 	return text
-
-/hook/reassign_employee/proc/research_reassignments(obj/item/weapon/card/id/id_card)
-	var/datum/directive/research_to_ripleys/D = get_directive("research_to_ripleys")
-	if(!D) return 1
-
-	if(D.ids_to_reassign && D.ids_to_reassign.Find(id_card))
-		D.ids_to_reassign[id_card] = id_card.assignment == "Shaft Miner" ? 1 : 0
-
-	return 1
-
-/hook/sell_crate/proc/deliver_materials(obj/structure/closet/crate/sold, area/shuttle)
-	var/datum/directive/research_to_ripleys/D = get_directive("research_to_ripleys")
-	if(!D) return 1
-
-	for(var/atom/A in sold)
-		if(istype(A, /obj/item/stack/sheet/mineral) || istype(A, /obj/item/stack/sheet/metal))
-			var/obj/item/stack/S = A
-			D.materials_shipped += S.amount
-
-	return 1

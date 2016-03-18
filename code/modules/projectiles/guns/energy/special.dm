@@ -52,12 +52,12 @@
 
 	New()
 		..()
-		processing_objects.Add(src)
+		SSobj.processing |= src
 
 
 	Destroy()
-		processing_objects.Remove(src)
-		..()
+		SSobj.processing.Remove(src)
+		return ..()
 
 	process()
 		charge_tick++
@@ -87,12 +87,12 @@
 
 	New()
 		..()
-		processing_objects.Add(src)
+		SSobj.processing |= src
 
 
 	Destroy()
-		processing_objects.Remove(src)
-		..()
+		SSobj.processing.Remove(src)
+		return ..()
 
 	process()
 		charge_tick++

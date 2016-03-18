@@ -27,15 +27,11 @@
 
 	send2slack("everything-talks", msg)
 
-/* some hooks */
-/hook/startup/proc/slack_startup()
+/proc/slack_startup()
 	send2slack_service("server starting up")
-	return 1
 
-/hook/roundstart/proc/slack_roundstart()
+/proc/slack_roundstart()
 	send2slack_service("round is started, gamemode - [master_mode]")
-	return 1
 
-/hook/roundend/proc/slack_roundend()
+/proc/slack_roundend()
 	send2slack_service("round is over")
-	return 1

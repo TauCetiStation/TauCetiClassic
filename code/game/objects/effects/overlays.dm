@@ -32,3 +32,9 @@
 	name = "Coconuts"
 	icon = 'icons/misc/beach.dmi'
 	icon_state = "coconuts"
+
+/obj/effect/overlay/singularity_act()
+	return
+
+/obj/effect/overlay/singularity_pull()
+	return

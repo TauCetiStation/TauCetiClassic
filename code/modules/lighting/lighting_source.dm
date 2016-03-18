@@ -69,32 +69,15 @@
 		top_atom.light_sources    -= src
 		top_atom                   = null
 
-#ifdef LIGHTING_INSTANT_UPDATES
-/datum/light_source/proc/effect_update()
-	. = check()
-	if(destroyed || . || force_update)
-		remove_lum()
-		if(!destroyed)
-			apply_lum()
-
-	else if(vis_update)	// We smartly update only tiles that became (in) visible to use.
-		smart_vis_update()
-
-	vis_update   = FALSE
-	force_update = FALSE
-	needs_update = FALSE
-#else
-
 // Call it dirty, I don't care.
 // This is here so there's no performance loss on non-instant updates from the fact that the engine can also do instant updates.
 // If you're wondering what's with the "BYOND" argument: BYOND won't let me have a () macro that has no arguments :|.
-#define effect_update(BYOND)            \
-	if(!needs_update)                   \
-	{                                   \
-		lighting_update_lights += src;  \
-		needs_update            = TRUE; \
+#define effect_update(BYOND)               \
+	if(!needs_update)                      \
+	{                                      \
+		SSlighting.changed_lights += src;  \
+		needs_update            = TRUE;    \
 	}
-#endif
 
 // This proc will cause the light source to update the top atom, and add itself to the update queue.
 /datum/light_source/proc/update(var/atom/new_top_atom)

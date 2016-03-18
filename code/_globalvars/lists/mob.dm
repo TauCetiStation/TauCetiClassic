@@ -20,8 +20,6 @@ var/global/list/joined_player_list = list()			//List of all clients that have jo
 var/global/list/med_hud_users = list() //list of all entities using a medical HUD.
 var/global/list/sec_hud_users = list() //list of all entities using a security HUD.
 
-var/global/list/active_diseases = list()
-
 //feel free to add shit to lists below
 var/list/tachycardics = list("coffee", "inaprovaline", "hyperzine", "nitroglycerin", "thirteenloko", "nicotine")	//increase heart rate
 var/list/bradycardics = list("neurotoxin", "cryoxadone", "clonexadone", "space_drugs", "stoxin")					//decrease heart rate

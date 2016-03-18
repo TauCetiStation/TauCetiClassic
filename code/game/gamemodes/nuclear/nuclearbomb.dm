@@ -475,6 +475,8 @@ obj/machinery/nuclearbomb/proc/nukehack_win(mob/user as mob)
 	if (src.safety)
 		src.timing = 0
 		return
+	if(detonated)
+		return
 	src.detonated = 1
 	src.timing = -1.0
 	src.yes_code = 0
@@ -495,6 +497,8 @@ obj/machinery/nuclearbomb/proc/nukehack_win(mob/user as mob)
 			off_station = 1
 		else
 			score["nuked"]++
+			sleep(10)
+			explosion(src, 15, 70, 200)
 	else
 		off_station = 2
 
@@ -504,7 +508,7 @@ obj/machinery/nuclearbomb/proc/nukehack_win(mob/user as mob)
 			if(syndie_location)
 				ticker.mode:syndies_didnt_escape = (syndie_location.z > ZLEVEL_STATION ? 0 : 1)	//muskets will make me change this, but it will do for now
 			ticker.mode:nuke_off_station = off_station
-		ticker.station_explosion_cinematic(off_station,null)
+		//ticker.station_explosion_cinematic(off_station,null)
 		if(ticker.mode)
 			ticker.mode.explosion_in_progress = 0
 			if(ticker.mode.name == "nuclear emergency")
@@ -516,22 +520,48 @@ obj/machinery/nuclearbomb/proc/nukehack_win(mob/user as mob)
 															//kinda shit but I couldn't  get permission to do what I wanted to do.
 
 			if(!ticker.mode.check_finished())//If the mode does not deal with the nuke going off so just reboot because everyone is stuck as is
-				world << "<B>Resetting in 30 seconds!</B>"
+				world << "<B>Resetting in 45 seconds!</B>"
 
 				feedback_set_details("end_error","nuke - unhandled ending")
 
 				if(blackbox)
 					blackbox.save_all_data_to_sql()
-				sleep(300)
+				sleep(450)
 				log_game("Rebooting due to nuclear detonation")
 				world.Reboot()
 				return
 	return
 
+//==========DAT FUKKEN DISK===============
+/obj/item/weapon/disk
+	icon = 'icons/obj/items.dmi'
+	w_class = 1
+	item_state = "card-id"
+	icon_state = "datadisk0"
+
+/obj/item/weapon/disk/nuclear
+	name = "nuclear authentication disk"
+	desc = "Better keep this safe."
+	icon_state = "nucleardisk"
+
+/obj/item/weapon/disk/nuclear/New()
+	..()
+	poi_list |= src
+	SSobj.processing |= src
+
+/obj/item/weapon/disk/nuclear/process()
+	var/turf/disk_loc = get_turf(src)
+	if(disk_loc.z > ZLEVEL_CENTCOM)
+		get(src, /mob) << "<span class='danger'>You can't help but feel that you just lost something back there...</span>"
+		qdel(src)
+
 /obj/item/weapon/disk/nuclear/Destroy()
 	if(blobstart.len > 0)
-		poi_list.Remove(src)
-		var/obj/D = new /obj/item/weapon/disk/nuclear(pick(blobstart))
-		message_admins("[src] has been destroyed. Spawning [D] at ([D.x], [D.y], [D.z]).")
-		log_game("[src] has been destroyed. Spawning [D] at ([D.x], [D.y], [D.z]).")
-//	..()
+		var/turf/targetturf = get_turf(pick(blobstart))
+		var/turf/diskturf = get_turf(src)
+		forceMove(targetturf) //move the disc, so ghosts remain orbitting it even if it's "destroyed"
+		message_admins("[src] has been destroyed in ([diskturf.x], [diskturf.y] ,[diskturf.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[diskturf.x];Y=[diskturf.y];Z=[diskturf.z]'>JMP</a>). Moving it to ([targetturf.x], [targetturf.y], [targetturf.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[targetturf.x];Y=[targetturf.y];Z=[targetturf.z]'>JMP</a>).")
+		log_game("[src] has been destroyed in ([diskturf.x], [diskturf.y] ,[diskturf.z]). Moving it to ([targetturf.x], [targetturf.y], [targetturf.z]).")
+	else
+		throw EXCEPTION("Unable to find a blobstart landmark")
+	return QDEL_HINT_LETMELIVE //Cancel destruction regardless of success

@@ -140,8 +140,9 @@ display round(lastgen) and phorontank amount
 
 /obj/machinery/power/port_gen/pacman/examine()
 	..()
-	usr << "\blue The generator has [sheets] units of [sheet_name] fuel left, producing [power_gen] per cycle."
-	if(crit_fail) usr << "\red The generator seems to have broken down."
+	usr << "<span class='notice'>The generator has [sheets] units of [sheet_name] fuel left, producing [power_gen] per cycle.</span>"
+	if(crit_fail)
+		usr << "<span class='danger'>The generator seems to have broken down.</span>"
 
 /obj/machinery/power/port_gen/pacman/HasFuel()
 	if(sheets >= 1 / (time_per_sheet / power_output) - sheet_left)
@@ -198,47 +199,48 @@ display round(lastgen) and phorontank amount
 /obj/machinery/power/port_gen/pacman/proc/overheat()
 	explosion(src.loc, 2, 5, 2, -1)
 
-/obj/machinery/power/port_gen/pacman/attackby(var/obj/item/I as obj, var/mob/user as mob)
-	if(istype(I, sheet_path))
-		var/obj/item/stack/addstack = I
+/obj/machinery/power/port_gen/pacman/attackby(obj/item/O, mob/user, params)
+	if(istype(O, sheet_path))
+		var/obj/item/stack/addstack = O
 		var/amount = min((max_sheets - sheets), addstack.amount)
 		if(amount < 1)
-			user << "\blue The [src.name] is full!"
+			user << "<span class='notice'>The [src.name] is full!</span>"
 			return
-		user << "\blue You add [amount] sheets to the [src.name]."
+		user << "<span class='notice'>You add [amount] sheets to the [src.name].</span>"
 		sheets += amount
 		addstack.use(amount)
 		updateUsrDialog()
 		return
-	else if (istype(I, /obj/item/weapon/card/emag))
+	else if (istype(O, /obj/item/weapon/card/emag))
 		emagged = 1
 		emp_act(1)
 	else if(!active)
 
-		if(exchange_parts(user, I))
+		if(exchange_parts(user, O))
 			return
 
-		if(istype(I, /obj/item/weapon/wrench))
+		if(istype(O, /obj/item/weapon/wrench))
 
-			if(!anchored)
+			if(!anchored && !isinspace())
 				connect_to_network()
-				user << "\blue You secure the generator to the floor."
-			else
+				user << "<span class='notice'>You secure the generator to the floor.</span>"
+				anchored = 1
+			else if(anchored)
 				disconnect_from_network()
-				user << "\blue You unsecure the generator from the floor."
+				user << "<span class='notice'>You unsecure the generator from the floor.</span>"
+				anchored = 0
 
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-			anchored = !anchored
 
-		else if(istype(I, /obj/item/weapon/screwdriver))
+		else if(istype(O, /obj/item/weapon/screwdriver))
 			panel_open = !panel_open
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 			if(panel_open)
-				user << "\blue You open the access panel."
+				user << "<span class='notice'>You open the access panel.</span>"
 			else
-				user << "\blue You close the access panel."
-		else if(istype(I, /obj/item/weapon/crowbar) && panel_open)
-			default_deconstruction_crowbar(I)
+				user << "<span class='notice'>You close the access panel.</span>"
+		else if(istype(O, /obj/item/weapon/crowbar) && panel_open)
+			default_deconstruction_crowbar(O)
 
 /obj/machinery/power/port_gen/pacman/attack_hand(mob/user as mob)
 	..()

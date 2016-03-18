@@ -23,7 +23,7 @@ var/global/list/image/splatter_cache=list()
 /obj/effect/decal/cleanable/blood/Destroy()
 	for(var/datum/disease/D in viruses)
 		D.cure(0)
-	processing_objects -= src
+	SSobj.processing.Remove(src)
 	return ..()
 
 /obj/effect/decal/cleanable/blood/New()
@@ -42,7 +42,7 @@ var/global/list/image/splatter_cache=list()
 						blood_DNA |= B.blood_DNA.Copy()
 					qdel(B)
 	drytime = world.time + DRYING_TIME * (amount+1)
-	processing_objects += src
+	SSobj.processing |= src
 
 /obj/effect/decal/cleanable/blood/process()
 	if(world.time > drytime)
@@ -104,7 +104,7 @@ var/global/list/image/splatter_cache=list()
 	desc = "It's dry and crusty. Someone is not doing their job."
 	color = adjust_brightness(color, -50)
 	amount = 0
-	processing_objects -= src
+	SSobj.processing.Remove(src)
 
 /obj/effect/decal/cleanable/blood/attack_hand(mob/living/carbon/human/user)
 	..()

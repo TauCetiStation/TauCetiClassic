@@ -42,14 +42,14 @@
 	else //if on the floor, glowshroom on-floor sprite
 		icon_state = "glowshroomf"
 
-	processing_objects += src
+	SSobj.processing |= src
 
 	set_light(round(potency/10))
 	lastTick = world.timeofday
 
 /obj/effect/glowshroom/Destroy()
-	processing_objects -= src
-	..()
+	SSobj.processing.Remove(src)
+	return ..()
 
 /obj/effect/glowshroom/process()
 	if(!spreaded)

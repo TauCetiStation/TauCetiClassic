@@ -40,4 +40,9 @@
 
 	noob_notify(src)
 
+	//Jukebox
+	client.media = new /datum/media_manager(src)
+	client.media.open()
+	client.media.update_music()
+
 	return .

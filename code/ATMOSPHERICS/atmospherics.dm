@@ -20,7 +20,7 @@ Pipelines + Other Objects -> Pipe network
 	var/global/list/pipeimages = list()
 
 /obj/machinery/atmospherics/process()
-	if(gcDestroyed) //comments on /vg/ imply that GC'd pipes still process
+	if(qdeleted(src)) //comments on /vg/ imply that GC'd pipes still process
 		return PROCESS_KILL
 	build_network()
 

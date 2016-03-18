@@ -23,11 +23,11 @@
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "laser"
 /obj/random/guns/energy_weapon/item_to_spawn()
-		return pick(prob(15);/obj/item/weapon/gun/energy/laser/retro,\
-					prob(12);/obj/item/weapon/gun/energy/laser/practice,\
+		return pick(prob(25);/obj/item/weapon/gun/energy/taser,\
+					prob(15);/obj/item/weapon/gun/energy/laser/retro,\
+					prob(15);/obj/item/weapon/gun/energy/laser/practice,\
 					prob(10);/obj/item/weapon/gun/energy/toxgun,\
 					prob(10);/obj/item/weapon/gun/energy/laser,\
-					prob(10);/obj/item/weapon/gun/energy/taser,\
 					prob(8);/obj/item/weapon/gun/energy/ionrifle,\
 					prob(4);/obj/item/weapon/gun/projectile/automatic/l10c,\
 					prob(4);/obj/item/weapon/gun/energy/xray,\
@@ -36,10 +36,9 @@
 					prob(4);/obj/item/weapon/gun/energy/mindflayer,\
 					prob(3);/obj/item/weapon/gun/energy/sniperrifle,\
 					prob(3);/obj/item/weapon/gun/energy/gun/nuclear,\
-					prob(2);/obj/item/weapon/gun/energy/pulse_rifle,\
+					prob(2);/obj/item/weapon/gun/energy/laser/captain,\
 					prob(2);/obj/item/weapon/gun/energy/crossbow,\
-					prob(1);/obj/item/weapon/gun/energy/pulse_rifle/M1911,\
-					prob(1);/obj/item/weapon/gun/energy/laser/captain)
+					prob(1);/obj/item/weapon/gun/energy/pulse_rifle)
 
 /obj/random/guns/projectile_handgun
 	name = "Random Handgun"

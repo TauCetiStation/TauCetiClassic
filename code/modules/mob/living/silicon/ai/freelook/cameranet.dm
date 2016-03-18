@@ -5,12 +5,17 @@
 var/datum/cameranet/cameranet = new()
 
 /datum/cameranet
+	var/name = "Camera Net" // Name to show for VV and stat()
+
 	// The cameras on the map, no matter if they work or not. Updated in obj/machinery/camera.dm by New() and Destroy().
 	var/list/cameras = list()
 	var/cameras_unsorted = 1
 	// The chunks of the map, mapping the areas that the cameras can see.
 	var/list/chunks = list()
 	var/ready = 0
+
+	// The object used for the clickable stat() button.
+	var/obj/effect/statclick/statclick
 
 /datum/cameranet/proc/process_sort()
 	if(cameras_unsorted)
@@ -150,6 +155,12 @@ var/datum/cameranet/cameranet = new()
 		if(chunk.visibleTurfs[position])
 			return 1
 	return 0
+
+/datum/cameranet/proc/stat_entry()
+	if(!statclick)
+		statclick = new/obj/effect/statclick/debug("Initializing...", src)
+
+	stat(name, statclick.update("Cameras: [cameranet.cameras.len] | Chunks: [cameranet.chunks.len]"))
 
 // Debug verb for VVing the chunk that the turf is in.
 /*

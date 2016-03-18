@@ -65,21 +65,15 @@
 /mob/new_player/Stat()
 	..()
 
-	if(statpanel("Lobby") && ticker)
+	if(statpanel("Lobby"))
 		stat("Game Mode:", (ticker.hide_mode) ? "Secret" : "[master_mode]")
 
 		if(ticker.current_state == GAME_STATE_PREGAME)
-			stat("Time To Start:", "[ticker.pregame_timeleft][going ? "" : " (DELAYED)"]")
+			stat("Time To Start:", (ticker.timeLeft >= 0) ? "[round(ticker.timeLeft / 10)]s" : "DELAYED")
 
-			stat("Players:", "[totalPlayers]")
+			stat("Players:", "[ticker.totalPlayers]")
 			if(client.holder)
-				stat("Players Ready:", "[totalPlayersReady]")
-			totalPlayers = 0
-			totalPlayersReady = 0
-			for(var/mob/new_player/player in player_list)
-				totalPlayers++
-				if(player.ready)
-					totalPlayersReady++
+				stat("Players Ready:", "[ticker.totalPlayersReady]")
 
 /mob/new_player/Topic(href, href_list[])
 	if(src != usr)
@@ -92,7 +86,7 @@
 		return 1
 
 	if(href_list["ready"])
-		if(ready && ticker && ticker.pregame_timeleft < 3)
+		if(ready && ticker.timeLeft <= 50)
 			src << "<span class='warning'>Locked! The round is about to start.</span>"
 			return 0
 		if(ticker && ticker.current_state <= GAME_STATE_PREGAME)
@@ -268,7 +262,7 @@
 						vote_on_poll(pollid, optionid, 1)
 
 /mob/new_player/proc/IsJobAvailable(rank)
-	var/datum/job/job = job_master.GetJob(rank)
+	var/datum/job/job = SSjob.GetJob(rank)
 	if(!job)	return 0
 	if(!job.is_position_available()) return 0
 	if(jobban_isbanned(src,rank))	return 0
@@ -292,10 +286,10 @@
 	spawning = 1
 	close_spawn_windows()
 
-	job_master.AssignRole(src, rank, 1)
+	SSjob.AssignRole(src, rank, 1)
 
 	var/mob/living/carbon/human/character = create_character()	//creates the human and transfers vars and mind
-	job_master.EquipRank(character, rank, 1)					//equips the human
+	SSjob.EquipRank(character, rank, 1)					//equips the human
 	EquipCustomItems(character)
 
 	// AIs don't need a spawnpoint, they must spawn at an empty core
@@ -356,16 +350,16 @@
 	var/dat = "<html><body><center>"
 	dat += "Round Duration: [round(hours)]h [round(mins)]m<br>"
 
-	if(emergency_shuttle) //In case Nanotrasen decides reposess CentComm's shuttles.
-		if(emergency_shuttle.direction == 2) //Shuttle is going to centcomm, not recalled
+	if(SSshuttle) //In case Nanotrasen decides reposess CentComm's shuttles.
+		if(SSshuttle.direction == 2) //Shuttle is going to centcomm, not recalled
 			dat += "<font color='red'><b>The station has been evacuated.</b></font><br>"
-		if(emergency_shuttle.direction == 1 && emergency_shuttle.timeleft() < 300 && emergency_shuttle.alert == 0) // Emergency shuttle is past the point of no recall
+		if(SSshuttle.direction == 1 && SSshuttle.timeleft() < 300 && SSshuttle.alert == 0) // Emergency shuttle is past the point of no recall
 			dat += "<font color='red'>The station is currently undergoing evacuation procedures.</font><br>"
-		if(emergency_shuttle.direction == 1 && emergency_shuttle.alert == 1) // Crew transfer initiated
+		if(SSshuttle.direction == 1 && SSshuttle.alert == 1) // Crew transfer initiated
 			dat += "<font color='red'>The station is currently undergoing crew transfer procedures.</font><br>"
 
 	dat += "Choose from the following open positions:<br>"
-	for(var/datum/job/job in job_master.occupations)
+	for(var/datum/job/job in SSjob.occupations)
 		if(job && IsJobAvailable(job.title))
 			var/active = 0
 			// Only players with the job assigned and AFK for less than 10 minutes count as active

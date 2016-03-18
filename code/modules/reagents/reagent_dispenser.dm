@@ -91,7 +91,7 @@
 			"You wrench [src]'s faucet [modded ? "closed" : "open"]")
 		modded = modded ? 0 : 1
 		if (modded)
-			processing_objects.Add(src)
+			SSobj.processing |= src
 			leak_water(amount_per_transfer_from_this)
 
 	add_fingerprint(usr)
@@ -102,7 +102,7 @@
 	if(modded)
 		leak_water(2)
 	else
-		processing_objects.Remove(src)
+		SSobj.processing.Remove(src)
 
 /obj/structure/reagent_dispensers/watertank/Move()
 	if (..() && modded)

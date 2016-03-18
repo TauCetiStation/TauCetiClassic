@@ -33,9 +33,12 @@
 			src.Entered(AM)
 			return
 
+/turf/Destroy()
+	..()
+	return QDEL_HINT_HARDDEL_NOW
+
 /turf/ex_act(severity)
 	return 0
-
 
 /turf/bullet_act(var/obj/item/projectile/Proj)
 	if(istype(Proj ,/obj/item/projectile/beam/pulse))
@@ -160,7 +163,7 @@
 		for(var/obj/effect/landmark/zcontroller/c in controller)
 			if(c.down)
 				var/turf/below = locate(src.x, src.y, c.down_target)
-				if((air_master.has_valid_zone(below) || air_master.has_valid_zone(src)) && !istype(below, /turf/space)) // dont make open space into space, its pointless and makes people drop out of the station
+				if((SSair.has_valid_zone(below) || SSair.has_valid_zone(src)) && !istype(below, /turf/space)) // dont make open space into space, its pointless and makes people drop out of the station
 					var/turf/W = src.ChangeTurf(/turf/simulated/floor/open)
 					var/list/temp = list()
 					temp += W
@@ -197,8 +200,8 @@
 		if (istype(W,/turf/simulated/floor))
 			W.RemoveLattice()
 
-		if(air_master)
-			air_master.mark_for_update(src) //handle the addition of the new turf.
+		if(SSair)
+			SSair.mark_for_update(src) //handle the addition of the new turf.
 
 		for(var/turf/space/S in range(W,1))
 			S.update_starlight()
@@ -213,8 +216,8 @@
 		for(var/turf/space/S in range(W,1))
 			S.update_starlight()
 
-		if(air_master)
-			air_master.mark_for_update(src)
+		if(SSair)
+			SSair.mark_for_update(src)
 
 		W.levelupdate()
 		. =  W
@@ -334,3 +337,13 @@
 			if(!LinkBlocked(src, t) && !TurfBlockedNonWindow(t))
 				L.Add(t)
 	return L
+
+/turf/singularity_act()
+	if(intact)
+		for(var/obj/O in contents) //this is for deleting things like wires contained in the turf
+			if(O.level != 1)
+				continue
+			if(O.invisibility == 101)
+				O.singularity_act()
+	ChangeTurf(/turf/space)
+	return(2)

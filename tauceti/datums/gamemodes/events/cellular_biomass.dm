@@ -144,14 +144,15 @@
 
 	New()
 		if(!istype(src.loc,/turf/simulated/floor))
-			Destroy(src)
+			qdel(src)
+			return
 
 		spawn_cellular_biomass_piece(src.loc)
-		processing_objects.Add(src)
+		SSobj.processing |= src
 
 	Destroy()
-		processing_objects.Remove(src)
-		..()
+		SSobj.processing.Remove(src)
+		return ..()
 
 	proc/spawn_cellular_biomass_piece(var/turf/location, var/obj/effect/cellular_biomass/parent)
 		var/newgrip = 0

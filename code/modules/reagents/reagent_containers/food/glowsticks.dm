@@ -33,7 +33,7 @@
 		turn_off()
 		if(!liquid_fuel.volume)
 			src.icon_state = "glowstick_[colourName]-over"
-		processing_objects -= src
+		SSobj.processing.Remove(src)
 
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/proc/update_brightness(var/mob/user = null)
 	if(on)
@@ -81,7 +81,7 @@
 	action_button_name = null
 	playsound(src, 'sound/weapons/glowstick_bend.ogg', 35, 0)
 	user.visible_message("<span class='notice'>[user] bends the [name].</span>", "<span class='notice'>You bend the [name]!</span>")
-	processing_objects += src
+	SSobj.processing |= src
 
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/attack(mob/M as mob, mob/user as mob, def_zone)
 	var/datum/reagent/luminophore = locate(/datum/reagent/luminophore) in reagents.reagent_list
@@ -161,8 +161,8 @@
 	if(contents)
 		for(var/atom/movable/something in contents)
 			something.loc = get_turf(src)
-	processing_objects -= src
-	..()
+	SSobj.processing.Remove(src)
+	return ..()
 
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/attack_animal(var/mob/M)
 	return
