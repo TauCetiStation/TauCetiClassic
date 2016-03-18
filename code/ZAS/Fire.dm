@@ -108,13 +108,10 @@ Attach to transfer valve and open. BOOM.
 
 	if(firelevel > 6)
 		icon_state = "3"
-		set_light(7, 3)
 	else if(firelevel > 2.5)
 		icon_state = "2"
-		set_light(5, 2)
 	else
 		icon_state = "1"
-		set_light(3, 1)
 
 	//im not sure how to implement a version that works for every creature so for now monkeys are firesafe
 	for(var/mob/living/carbon/human/M in loc)
@@ -178,7 +175,7 @@ Attach to transfer valve and open. BOOM.
 
 	var/datum/gas_mixture/air_contents = loc.return_air()
 	color = heat2color(air_contents.temperature)
-	set_light(3, 1, color)
+	set_light(1.5, 2, color)
 
 	firelevel = fl
 	SSair.active_hotspots.Add(src)
