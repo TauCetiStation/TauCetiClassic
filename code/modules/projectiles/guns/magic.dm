@@ -16,6 +16,9 @@
 	origin_tech = null
 	clumsy_check = 0
 
+	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi' //not really a gun and some toys use these inhands
+	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
+
 /obj/item/weapon/gun/magic/afterattack(atom/target as mob, mob/living/user as mob, flag)
 	newshot()
 	var/area/A = get_area(user)

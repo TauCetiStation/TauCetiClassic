@@ -1368,7 +1368,7 @@
 	icon = 'icons/obj/hydroponics.dmi'
 	name = "pest-spray"
 	icon_state = "pestspray"
-	item_state = "spray"
+	item_state = "spraycan"
 	flags = TABLEPASS | OPENCONTAINER | FPRINT | NOBLUDGEON
 	slot_flags = SLOT_BELT
 	throwforce = 4

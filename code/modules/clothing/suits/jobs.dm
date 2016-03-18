@@ -7,7 +7,7 @@
 	name = "apron"
 	desc = "A basic blue apron."
 	icon_state = "apron"
-	item_state = "apron"
+	item_state = "overalls"
 	blood_overlay_type = "armor"
 	body_parts_covered = 0
 	allowed = list (/obj/item/weapon/reagent_containers/spray/plantbgone,/obj/item/device/analyzer/plant_analyzer,/obj/item/seeds,/obj/item/nutrient,/obj/item/weapon/minihoe)
