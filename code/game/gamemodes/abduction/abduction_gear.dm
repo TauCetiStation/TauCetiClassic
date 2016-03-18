@@ -131,7 +131,7 @@
 		M.update_canmove()
 //		M.adjustStaminaLoss(-75)
 		combat_cooldown = 0
-		SSobj.processing. |= src
+		SSobj.processing |= src
 
 /obj/item/clothing/suit/armor/abductor/vest/process()
 	combat_cooldown++

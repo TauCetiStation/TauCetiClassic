@@ -348,3 +348,10 @@
 		if(get_dist(R, src) <= 15) // Better than using orange() every process
 			R.receive_pulse(energy)
 	return
+
+/obj/singularity/singularity_act()
+	var/gain = (energy/2)
+	var/dist = max((current_size - 2),1)
+	explosion(src.loc,(dist),(dist*2),(dist*4))
+	qdel(src)
+	return(gain)
