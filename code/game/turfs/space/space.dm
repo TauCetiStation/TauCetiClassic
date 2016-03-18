@@ -11,20 +11,17 @@
 /turf/space/New()
 	if(!istype(src, /turf/space/transit))
 		icon_state = SPACE_ICON_STATE
+	update_starlight()
+	..()
 
 /turf/space/Destroy()
 	return QDEL_HINT_LETMELIVE
 
 /turf/space/proc/update_starlight()
-	return
-	//if(locate(/turf/simulated) in orange(src,1))
-	//	set_light(2,2) // Too lazy to port starlight configuration and its 0 by default anyway... ~Zve
-	/*if(!config.starlight)
+	for(var/turf/simulated/T in RANGE_TURFS(1,src)) //RANGE_TURFS is in code\__HELPERS\game.dm
+		set_light(2,2)
 		return
-	if(locate(/turf/simulated) in orange(src,1))
-		set_light(config.starlight)
-	else
-		set_light(0)*/
+	set_light(0)
 
 /turf/space/attack_paw(mob/user as mob)
 	return src.attack_hand(user)

@@ -76,7 +76,7 @@ var/global/datum/controller/master/Master = new()
 
 	//preloadTemplates()
 	// Pick a random away mission.
-	//createRandomZlevel() Gateway lighting broken after new object lighting update
+	//createRandomZlevel()
 	SetupXenoarch()
 	// Generate mining.
 	make_mining_asteroid_secrets()
