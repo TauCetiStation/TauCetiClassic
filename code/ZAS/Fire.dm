@@ -148,7 +148,7 @@ Attach to transfer valve and open. BOOM.
 				enemy_tile.adjacent_fire_act(loc, air_contents, air_contents.temperature, air_contents.return_volume())
 		CHECK_TICK
 
-	animate(src, color = heat2color(air_contents.temperature), 5)
+	color = heat2color(air_contents.temperature)
 	set_light(l_color = color)
 
 	//seperate part of the present gas
