@@ -22,13 +22,13 @@
 
 /obj/item/proc/is_used_on(obj/O, mob/user)
 
-/obj/proc/process()
-	processing_objects.Remove(src)
+/obj/process()
+	SSobj.processing.Remove(src)
 	return 0
 
 /obj/Destroy()
 	if(!istype(src, /obj/machinery))
-		processing_objects.Remove(src) // TODO: Have a processing bitflag to reduce on unnecessary loops through the processing lists
+		SSobj.processing.Remove(src) // TODO: Have a processing bitflag to reduce on unnecessary loops through the processing lists
 	nanomanager.close_uis(src)
 	return ..()
 
@@ -50,6 +50,20 @@
 	else
 		return null
 
+/obj/singularity_act()
+	ex_act(1.0)
+	if(src && !qdeleted(src))
+		qdel(src)
+	return 2
+
+/obj/singularity_pull(S, current_size)
+	if(anchored)
+		if(current_size >= STAGE_FIVE)
+			anchored = 0
+			step_towards(src,S)
+	else
+		step_towards(src,S)
+
 /obj/proc/handle_internal_lifeform(mob/lifeform_inside_me, breath_request)
 	//Return: (NONSTANDARD)
 	//		null if object handles breathing logic for lifeform
@@ -59,9 +73,6 @@
 		return remove_air(breath_request)
 	else
 		return null
-
-/atom/movable/proc/initialize()
-	return
 
 /obj/proc/updateUsrDialog()
 	if(in_use)

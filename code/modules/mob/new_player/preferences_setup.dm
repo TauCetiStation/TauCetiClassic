@@ -204,7 +204,7 @@ datum/preferences
 	var/highRankFlag = job_civilian_high | job_medsci_high | job_engsec_high
 
 	if(job_civilian_low & ASSISTANT)
-		previewJob = job_master.GetJob("Assistant")
+		previewJob = SSjob.GetJob("Assistant")
 	else if(highRankFlag)
 		var/highDeptFlag
 		if(job_civilian_high)
@@ -214,7 +214,7 @@ datum/preferences
 		else if(job_engsec_high)
 			highDeptFlag = ENGSEC
 
-		for(var/datum/job/job in job_master.occupations)
+		for(var/datum/job/job in SSjob.occupations)
 			if(job.flag == highRankFlag && job.department_flag == highDeptFlag)
 				previewJob = job
 				break

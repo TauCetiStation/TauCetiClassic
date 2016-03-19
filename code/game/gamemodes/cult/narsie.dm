@@ -156,8 +156,8 @@
 	invisibility = 60
 
 	sleep(70)
-	if(emergency_shuttle)
-		emergency_shuttle.incall(0.5)	// Cannot recall
+	if(SSshuttle)
+		SSshuttle.incall(0.5)	// Cannot recall
 
 
 /obj/singularity/narsie/large/attack_ghost(mob/living/user as mob)
@@ -307,11 +307,7 @@
 	grav_pull = 0
 
 /obj/singularity/narsie/wizard/eat()
-//	if(defer_powernet_rebuild != 2)
-//		defer_powernet_rebuild = 1
 	for(var/atom/X in orange(consume_range,src))
 		if(isturf(X) || istype(X, /atom/movable))
 			consume(X)
-//	if(defer_powernet_rebuild != 2)
-//		defer_powernet_rebuild = 0
 	return

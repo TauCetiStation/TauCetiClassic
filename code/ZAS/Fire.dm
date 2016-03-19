@@ -108,13 +108,10 @@ Attach to transfer valve and open. BOOM.
 
 	if(firelevel > 6)
 		icon_state = "3"
-		set_light(7, 3)
 	else if(firelevel > 2.5)
 		icon_state = "2"
-		set_light(5, 2)
 	else
 		icon_state = "1"
-		set_light(3, 1)
 
 	//im not sure how to implement a version that works for every creature so for now monkeys are firesafe
 	for(var/mob/living/carbon/human/M in loc)
@@ -123,6 +120,7 @@ Attach to transfer valve and open. BOOM.
 	loc.fire_act(air_contents, air_contents.temperature, air_contents.return_volume())
 	for(var/atom/A in loc)
 		A.fire_act(air_contents, air_contents.temperature, air_contents.return_volume())
+		CHECK_TICK
 	//spread
 	for(var/direction in cardinal)
 		var/turf/simulated/enemy_tile = get_step(S, direction)
@@ -131,8 +129,10 @@ Attach to transfer valve and open. BOOM.
 			if(S.open_directions & direction) //Grab all valid bordering tiles
 				var/datum/gas_mixture/acs = enemy_tile.return_air()
 				var/obj/effect/decal/cleanable/liquid_fuel/liq = locate() in enemy_tile
-				if(!acs) continue
-				if(!acs.check_combustability(liq)) continue
+				if(!acs)
+					continue
+				if(!acs.check_combustability(liq))
+					continue
 				//If extinguisher mist passed over the turf it's trying to spread to, don't spread and
 				//reduce firelevel.
 				if(enemy_tile.fire_protection > world.time-30)
@@ -146,8 +146,9 @@ Attach to transfer valve and open. BOOM.
 
 			else
 				enemy_tile.adjacent_fire_act(loc, air_contents, air_contents.temperature, air_contents.return_volume())
+		CHECK_TICK
 
-	animate(src, color = heat2color(air_contents.temperature), 5)
+	color = heat2color(air_contents.temperature)
 	set_light(l_color = color)
 
 	//seperate part of the present gas
@@ -174,23 +175,24 @@ Attach to transfer valve and open. BOOM.
 
 	var/datum/gas_mixture/air_contents = loc.return_air()
 	color = heat2color(air_contents.temperature)
-	set_light(3, 1, color)
+	set_light(1.5, 2, color)
 
 	firelevel = fl
-	air_master.active_hotspots.Add(src)
+	SSair.active_hotspots.Add(src)
 
 	for(var/mob/living/L in loc)
 		L.fire_act()
 
 /obj/fire/Destroy()
 	RemoveFire()
-	return ..()
+	..()
+	return QDEL_HINT_PUTINPOOL
 
 /obj/fire/proc/RemoveFire()
 	if (istype(loc, /turf/simulated))
 		set_light(0)
 		loc = null
-	air_master.active_hotspots.Remove(src)
+	SSair.active_hotspots.Remove(src)
 
 
 

@@ -1,5 +1,3 @@
-/var/list/lighting_update_overlays  = list()    // List of lighting overlays queued for update.
-
 /atom/movable/lighting_overlay
 	name             = ""
 
@@ -21,7 +19,6 @@
 /atom/movable/lighting_overlay/New(var/atom/loc, var/no_update = FALSE)
 	. = ..()
 	verbs.Cut()
-	global.all_lighting_overlays += src
 
 	var/turf/T         = loc // If this runtimes atleast we'll know what's creating overlays in things that aren't turfs.
 	T.lighting_overlay = src
@@ -38,10 +35,12 @@
 		T.lighting_overlay = null
 		T.luminosity = TRUE
 
-	global.all_lighting_overlays -= src
-	lighting_update_overlays -= src;
+	SSlighting.changed_overlays -= src;
 
 	return ..()
+
+/atom/movable/lighting_overlay/singularity_act()
+	return
 
 /atom/movable/lighting_overlay/proc/update_overlay()
 	var/turf/T = loc

@@ -149,8 +149,14 @@
 /atom/proc/fire_act()
 	return
 
+/atom/proc/singularity_act()
+	return
+
+/atom/proc/singularity_pull()
+	return
+
 /atom/proc/hitby(atom/movable/AM as mob|obj)
-	if (density)
+	if(density)
 		AM.throwing = 0
 	return
 
@@ -386,6 +392,10 @@
 /atom/Stat()
 	. = ..()
 	sleep(1)
+
+//This will be called after the map and objects are loaded
+/atom/proc/initialize()
+	return
 
 /atom/proc/update_transform()
 	var/matrix/ntransform = matrix(transform)

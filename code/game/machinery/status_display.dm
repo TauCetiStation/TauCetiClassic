@@ -80,10 +80,10 @@
 		if(0)				//blank
 			remove_display()
 		if(1)				//emergency shuttle timer
-			if(emergency_shuttle.online)
+			if(SSshuttle.online)
 				var/line1
 				var/line2 = get_shuttle_timer()
-				if(emergency_shuttle.location == 1)
+				if(SSshuttle.location == 1)
 					line1 = "-ETD-"
 				else
 					line1 = "-ETA-"
@@ -117,12 +117,12 @@
 		if(4)				// supply shuttle timer
 			var/line1 = "SUPPLY"
 			var/line2
-			if(supply_shuttle.moving)
-				line2 = get_supply_shuttle_timer()
+			if(SSshuttle.moving)
+				line2 = get_SSshuttle_timer()
 				if(lentext(line2) > CHARS_PER_LINE)
 					line2 = "Error"
 			else
-				if(supply_shuttle.at_station)
+				if(SSshuttle.at_station)
 					line2 = "Docked"
 				else
 					line1 = ""
@@ -162,14 +162,14 @@
 		maptext = new_text
 
 /obj/machinery/status_display/proc/get_shuttle_timer()
-	var/timeleft = emergency_shuttle.timeleft()
+	var/timeleft = SSshuttle.timeleft()
 	if(timeleft)
 		return "[add_zero(num2text((timeleft / 60) % 60),2)]:[add_zero(num2text(timeleft % 60), 2)]"
 	return ""
 
-/obj/machinery/status_display/proc/get_supply_shuttle_timer()
-	if(supply_shuttle.moving)
-		var/timeleft = round((supply_shuttle.eta_timeofday - world.timeofday) / 10,1)
+/obj/machinery/status_display/proc/get_SSshuttle_timer()
+	if(SSshuttle.moving)
+		var/timeleft = round((SSshuttle.eta_timeofday - world.timeofday) / 10,1)
 		if(timeleft < 0)
 			return "Late"
 		return "[add_zero(num2text((timeleft / 60) % 60),2)]:[add_zero(num2text(timeleft % 60), 2)]"

@@ -220,7 +220,7 @@
 				src.icon_state = initial(src.icon_state)
 				src.welding = 0
 			set_light(0)
-			processing_objects.Remove(src)
+			SSobj.processing.Remove(src)
 			return
 		//Welders left on now use up fuel, but lets not have them run out quite that fast
 		if(1)
@@ -323,7 +323,7 @@
 			src.force = 15
 			src.damtype = "fire"
 			src.icon_state = initial(src.icon_state) + "1"
-			processing_objects.Add(src)
+			SSobj.processing |= src
 		else
 			usr << "<span class='info'>Need more fuel!</span>"
 			src.welding = 0
@@ -355,7 +355,7 @@
 			src.force = 15
 			src.damtype = "fire"
 			src.icon_state = initial(src.icon_state) + "1"
-			processing_objects.Add(src)
+			SSobj.processing |= src
 		else
 			usr << "<span class='info'>Need more fuel!</span>"
 			src.welding = 0

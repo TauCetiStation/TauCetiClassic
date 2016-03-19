@@ -16,6 +16,9 @@
 	origin_tech = null
 	clumsy_check = 0
 
+	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi' //not really a gun and some toys use these inhands
+	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
+
 /obj/item/weapon/gun/magic/afterattack(atom/target as mob, mob/living/user as mob, flag)
 	newshot()
 	var/area/A = get_area(user)
@@ -37,12 +40,14 @@
 	..()
 	charges = max_charges
 	chambered = new ammo_type(src)
-	if(can_charge)	processing_objects.Add(src)
+	if(can_charge)
+		SSobj.processing |= src
 
 
 /obj/item/weapon/gun/magic/Destroy()
-	if(can_charge)	processing_objects.Remove(src)
-	..()
+	if(can_charge)
+		SSobj.processing.Remove(src)
+	return ..()
 
 
 /obj/item/weapon/gun/magic/process()

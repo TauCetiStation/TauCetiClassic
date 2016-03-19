@@ -6,6 +6,10 @@
 
 	update_gravity(mob_has_gravity())
 
+/mob/living/Destroy()
+	..()
+	return QDEL_HINT_HARDDEL_NOW
+
 //Generic Bump(). Override MobBump() and ObjBump() instead of this.
 /mob/living/Bump(atom/A, yes)
 	if (buckled || !yes || now_pushing)
@@ -334,6 +338,15 @@
 		O.emp_act(severity)
 	..()
 
+/mob/living/singularity_act()
+	var/gain = 20
+	investigate_log(" has consumed [key_name(src)].","singulo") //Oh that's where the clown ended up!
+	gib()
+	return(gain)
+
+/mob/living/singularity_pull(S)
+	step_towards(src,S)
+
 /mob/living/proc/can_inject()
 	return 1
 
@@ -592,12 +605,12 @@
 					TH.basecolor = initial(TH.basecolor)
 					TH.update_icon()
 			if(!TH.amount)
-				processing_objects -= TH
+				SSobj.processing.Remove(TH)
 				TH.name = initial(TH.name)
 				TH.desc = initial(TH.desc)
 				TH.amount = initial(TH.amount)
 				TH.drytime = world.time + DRYING_TIME * (TH.amount+1)
-				processing_objects += TH
+				SSobj.processing |= TH
 			if((!(newdir in TH.existing_dirs) || trail_type == "trails_1") && TH.existing_dirs.len <= 16) //maximum amount of overlays is 16 (all light & heavy directions filled)
 				TH.existing_dirs += newdir
 				TH.overlays.Add(image('icons/effects/blood.dmi',trail_type,dir = newdir))

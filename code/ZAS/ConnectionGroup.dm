@@ -2,7 +2,7 @@
 
 Overview:
 	These are what handle gas transfers between zones and into space.
-	They are found in a zone's edges list and in air_master.edges.
+	They are found in a zone's edges list and in SSair.edges.
 	Each edge updates every air tick due to their role in gas transfer.
 	They come in two flavors, /connection_edge/zone and /connection_edge/unsimulated.
 	As the type names might suggest, they handle inter-zone and spacelike connections respectively.
@@ -80,7 +80,7 @@ Class Procs:
 /connection_edge/proc/contains_zone(zone/Z)
 
 /connection_edge/proc/erase()
-	air_master.remove_edge(src)
+	SSair.remove_edge(src)
 	//world << "[type] Erased."
 
 /connection_edge/proc/tick()
@@ -89,25 +89,32 @@ Class Procs:
 	for(var/atom/movable/M in movable)
 
 		//If they're already being tossed, don't do it again.
-		if(M.last_airflow > world.time - (ismob(src) ? vsc.airflow_mob_delay : vsc.airflow_delay)) continue
-		if(M.airflow_speed) continue
+		if(M.last_airflow > world.time - (ismob(src) ? vsc.airflow_mob_delay : vsc.airflow_delay))
+			continue
+		if(M.airflow_speed)
+			continue
 
 		//Check for knocking people over
 		if(ismob(M) && differential > vsc.airflow_stun_pressure)
-			if(M:status_flags & GODMODE) continue
+			if(M:status_flags & GODMODE)
+				continue
 			M:airflow_stun()
 
 		if(M.check_airflow_movable(differential))
 			//Check for things that are in range of the midpoint turfs.
 			var/list/close_turfs = list()
 			for(var/turf/U in connecting_turfs)
-				if(get_dist(M,U) < world.view) close_turfs += U
+				if(get_dist(M,U) < world.view)
+					close_turfs += U
 			if(!close_turfs.len) continue
 
 			M.airflow_dest = pick(close_turfs) //Pick a random midpoint to fly towards.
 
-			if(repelled) spawn if(M) M.RepelAirflowDest(differential/5)
-			else spawn if(M) M.GotoAirflowDest(differential/10)
+			if(repelled)
+				if(M) M.RepelAirflowDest(differential/5)
+			else
+				if(M) M.GotoAirflowDest(differential/10)
+		CHECK_TICK
 
 
 
@@ -127,11 +134,13 @@ Class Procs:
 /connection_edge/zone/add_connection(connection/c)
 	. = ..()
 	connecting_turfs.Add(c.A)
-	if(c.direct()) direct++
+	if(c.direct())
+		direct++
 
 /connection_edge/zone/remove_connection(connection/c)
 	connecting_turfs.Remove(c.A)
-	if(c.direct()) direct--
+	if(c.direct())
+		direct--
 	. = ..()
 
 /connection_edge/zone/contains_zone(zone/Z)
@@ -146,19 +155,19 @@ Class Procs:
 	if(A.invalid || B.invalid)
 		erase()
 		return
-	//world << "[id]: Tick [air_master.current_cycle]: \..."
+	//world << "[id]: Tick [SSair.current_cycle]: \..."
 	if(direct)
-		if(air_master.equivalent_pressure(A, B))
+		if(SSair.equivalent_pressure(A, B))
 			//world << "merged."
 			erase()
-			air_master.merge(A, B)
+			SSair.merge(A, B)
 			//world << "zones merged."
 			return
 
-	//air_master.equalize(A, B)
+	//SSair.equalize(A, B)
 	ShareRatio(A.air,B.air,coefficient)
-	air_master.mark_zone_update(A)
-	air_master.mark_zone_update(B)
+	SSair.mark_zone_update(A)
+	SSair.mark_zone_update(B)
 	//world << "equalized."
 
 	var/differential = A.air.return_pressure() - B.air.return_pressure()
@@ -178,8 +187,10 @@ Class Procs:
 
 //Helper proc to get connections for a zone.
 /connection_edge/zone/proc/get_connected_zone(zone/from)
-	if(A == from) return B
-	else return A
+	if(A == from)
+		return B
+	else
+		return A
 
 /connection_edge/unsimulated/var/turf/B
 /connection_edge/unsimulated/var/datum/gas_mixture/air
@@ -213,13 +224,14 @@ Class Procs:
 	if(A.invalid)
 		erase()
 		return
-	//world << "[id]: Tick [air_master.current_cycle]: To [B]!"
+	//world << "[id]: Tick [SSair.current_cycle]: To [B]!"
 	//A.air.mimic(B, coefficient)
 	ShareSpace(A.air,air,dbg_out)
-	air_master.mark_zone_update(A)
+	SSair.mark_zone_update(A)
 
 	var/differential = A.air.return_pressure() - air.return_pressure()
-	if(abs(differential) < vsc.airflow_lightest_pressure) return
+	if(abs(differential) < vsc.airflow_lightest_pressure)
+		return
 
 	var/list/attracted = A.movables()
 	flow(attracted, abs(differential), differential < 0)
@@ -302,8 +314,10 @@ proc/ShareRatio(datum/gas_mixture/A, datum/gas_mixture/B, connecting_tiles)
 	A.update_values()
 	B.update_values()
 
-	if(A.compare(B)) return 1
-	else return 0
+	if(A.compare(B))
+		return 1
+	else
+		return 0
 
 proc/ShareSpace(datum/gas_mixture/A, list/unsimulated_tiles, dbg_output)
 	//A modified version of ShareRatio for spacing gas at the same rate as if it were going into a large airless room.
@@ -409,7 +423,8 @@ proc/ShareSpace(datum/gas_mixture/A, list/unsimulated_tiles, dbg_output)
 
 	A.update_values()
 
-	if(dbg_output) world << "Result: [abs(old_pressure - A.return_pressure())] kPa"
+	if(dbg_output)
+		world << "Result: [abs(old_pressure - A.return_pressure())] kPa"
 
 	return abs(old_pressure - A.return_pressure())
 

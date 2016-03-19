@@ -70,6 +70,11 @@ var/list/wood_icons = list("wood","wood-broken")
 	else
 		icon_regular_floor = icon_state
 
+/turf/simulated/floor/Destroy()
+	if(floor_type)
+		floor_type = null
+	return ..()
+
 //turf/simulated/floor/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 //	if ((istype(mover, /obj/machinery/vehicle) && !(src.burnt)))
 //		if (!( locate(/obj/machinery/mass_driver, src) ))
@@ -118,6 +123,25 @@ var/list/wood_icons = list("wood","wood-broken")
 
 /turf/simulated/floor/blob_act()
 	return
+
+/turf/simulated/floor/singularity_pull(S, current_size)
+	if(current_size == STAGE_THREE)
+		if(prob(30))
+			if(floor_type)
+				new floor_type(src)
+				make_plating()
+	else if(current_size == STAGE_FOUR)
+		if(prob(50))
+			if(floor_type)
+				new floor_type(src)
+				make_plating()
+	else if(current_size >= STAGE_FIVE)
+		if(floor_type)
+			if(prob(70))
+				new floor_type(src)
+				make_plating()
+		else if(prob(50))
+			ReplaceWithLattice()
 
 turf/simulated/floor/proc/update_icon()
 	if(lava)
@@ -609,4 +633,4 @@ turf/simulated/floor/proc/update_icon()
 #undef LIGHTFLOOR_STATE_FLICKER
 #undef LIGHTFLOOR_STATE_BREAKING
 #undef LIGHTFLOOR_STATE_BROKEN
-#undef LIGHTFLOOR_STATE_BITS 
+#undef LIGHTFLOOR_STATE_BITS

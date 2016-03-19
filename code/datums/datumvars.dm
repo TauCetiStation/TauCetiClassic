@@ -1,5 +1,7 @@
-
 // reference: /client/proc/modify_variables(var/atom/O, var/param_var_name = null, var/autodetect_class = 0)
+
+datum/proc/on_varedit(modified_var) //called whenever a var is edited
+	return
 
 /client/proc/debug_variables(datum/D in world)
 	set category = "Debug"
@@ -605,6 +607,7 @@ body
 					if(Obj.type == O_type)
 						i++
 						qdel(Obj)
+					CHECK_TICK
 				if(!i)
 					usr << "No objects of this type exist"
 					return
@@ -616,6 +619,7 @@ body
 					if(istype(Obj,O_type))
 						i++
 						qdel(Obj)
+					CHECK_TICK
 				if(!i)
 					usr << "No objects of this type exist"
 					return
@@ -951,4 +955,3 @@ body
 		src.debug_variables(DAT)
 
 	return
-

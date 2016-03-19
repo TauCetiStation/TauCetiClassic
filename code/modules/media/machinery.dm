@@ -41,9 +41,9 @@
 	if(!master_area)
 		return
 	// Send update to clients.
-	for(var/mob/M in mobs_in_area(master_area))
-		if(M && M.client)
-			M.update_music()
+	for(var/mob/living/L in mobs_in_area(master_area))
+		if(L && L.client)
+			L.update_music()
 
 /obj/machinery/media/proc/update_media_source()
 	var/area/A = get_area_master(src)
@@ -76,9 +76,9 @@
 	A.media_source=null
 
 	// Clients
-	for(var/mob/M in mobs_in_area(A))
-		if(M && M.client)
-			M.update_music()
+	for(var/mob/living/L in mobs_in_area(A))
+		if(L && L.client)
+			L.update_music()
 
 	master_area=null
 

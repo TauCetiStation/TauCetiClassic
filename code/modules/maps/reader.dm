@@ -2,7 +2,7 @@ dmm_suite
 
 	var/debug_file = file("maploader_debug.txt")
 
-	load_map(var/dmm_file as file, var/z_offset as num, var/y_offset as num, var/x_offset as num, var/load_speed = 0 as num)
+	load_map(var/dmm_file as file, var/z_offset as num, var/y_offset as num, var/x_offset as num)
 		if(!z_offset)
 			z_offset = world.maxz + 1
 
@@ -22,13 +22,7 @@ dmm_suite
 		else if(!isnum(y_offset))
 			y_offset = 0
 
-		debug_file << "Starting Map Load @ ([x_offset], [y_offset], [z_offset]), [load_speed] tiles per second."
-
-		//Handle slowed loading.
-		var/delay_chance = 0
-		if(load_speed > 0)
-			//Chance out of 100 every tenth of a second.
-			delay_chance = 1000 / load_speed
+		debug_file << "Starting Map Load @ ([x_offset], [y_offset], [z_offset])"
 
 		//String holding a quotation mark.
 		var/quote = ascii2text(34)
@@ -59,8 +53,7 @@ dmm_suite
 			if(!default_key && model_contents == "[world.turf],[world.area]")
 				default_key = model_key
 			grid_models[model_key] = model_contents
-			if(prob(delay_chance))
-				sleep(1)
+			CHECK_TICK
 
 		//Co-ordinates of the tile being loaded.
 		var/z_coordinate = -1
@@ -123,9 +116,7 @@ dmm_suite
 					if(world.maxx < x_coordinate)
 						world.maxx = x_coordinate
 					parse_grid(grid_models[model_key], x_coordinate, y_coordinate, z_coordinate + z_offset)
-
-					if(prob(delay_chance))
-						sleep(1)
+					CHECK_TICK
 
 				//If we hit the last tile in this z-level, we should break out of the loop.
 				if(grid_position + length(grid_line) + 1 > length(z_level))

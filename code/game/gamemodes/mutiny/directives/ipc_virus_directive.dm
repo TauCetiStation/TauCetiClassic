@@ -61,36 +61,3 @@ datum/directive/ipc_virus/get_remaining_orders()
 		text += "<li>Terminate [id]</li>"
 
 	return text
-
-/hook/debrain/proc/debrain_directive(obj/item/brain/B)
-	var/datum/directive/ipc_virus/D = get_directive("ipc_virus")
-	if (!D) return 1
-
-	if(D.brains_to_enslave.Find(B.brainmob.mind))
-		D.brains_to_enslave.Remove(B.brainmob.mind)
-
-	return 1
-
-/hook/borgify/proc/borgify_directive(mob/living/silicon/robot/cyborg)
-	var/datum/directive/ipc_virus/D = get_directive("ipc_virus")
-	if (!D) return 1
-
-	if(D.cyborgs_to_make.Find(cyborg.mind))
-		D.cyborgs_to_make.Remove(cyborg.mind)
-
-	// In case something glitchy happened and the victim got
-	// borged without us tracking the brain removal, go ahead
-	// and update that list too.
-	if(D.brains_to_enslave.Find(cyborg.mind))
-		D.brains_to_enslave.Remove(cyborg.mind)
-
-	return 1
-
-/hook/terminate_employee/proc/ipc_termination(obj/item/weapon/card/id)
-	var/datum/directive/ipc_virus/D = get_directive("ipc_virus")
-	if (!D) return 1
-
-	if(D.ids_to_terminate && D.ids_to_terminate.Find(id))
-		D.ids_to_terminate.Remove(id)
-
-	return 1

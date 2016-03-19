@@ -104,6 +104,7 @@
 	return 0
 
 /mob/proc/Life()
+	set waitfor = 0
 	return
 
 /mob/proc/incapacitated()
@@ -577,36 +578,35 @@ note dizziness decrements automatically in the mob's Life() proc.
 			if(ticker && ticker.mode && ticker.mode.name == "AI malfunction")
 				if(ticker.mode:malf_mode_declared)
 					stat(null, "Time left: [max(ticker.mode:AI_win_timeleft/(ticker.mode:apcs/3), 0)]")
-			if(emergency_shuttle)
-				if(emergency_shuttle.online && emergency_shuttle.location < 2)
-					var/timeleft = emergency_shuttle.timeleft()
+			if(SSshuttle)
+				if(SSshuttle.online && SSshuttle.location < 2)
+					var/timeleft = SSshuttle.timeleft()
 					if(timeleft)
 						stat(null, "ETA-[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
 
-			if(statpanel("Status"))
-				statpanel("Status","Location:","([x], [y], [z])")
-				statpanel("Status","CPU:","[world.cpu]")
-				statpanel("Status","Instances:","[world.contents.len]")
-
-			if(master_controller)
-				stat(null,"MasterController-[last_tick_duration] ([master_controller.processing?"On":"Off"]-[controller_iteration])")
-				stat(null,"Air-[master_controller.air_cost]\tSun-[master_controller.sun_cost]")
-				stat(null,"Mob-[master_controller.mobs_cost]\t#[mob_list.len]")
-				stat(null,"Dis-[master_controller.diseases_cost]\t#[active_diseases.len]")
-				stat(null,"Mch-[master_controller.machines_cost]\t#[machines.len]")
-				stat(null,"Obj-[master_controller.objects_cost]\t#[processing_objects.len]")
-				stat(null,"Net-[master_controller.networks_cost]\tPnet-[master_controller.powernets_cost]")
-				stat(null,"NanoUI-[master_controller.nano_cost]\t#[nanomanager.processing_uis.len]")
-				stat(null,"Tick-[master_controller.ticker_cost]\tALL-[master_controller.total_cost]")
-			else
-				stat(null,"MasterController-ERROR")
-
-			if(statpanel("Status") && processScheduler && processScheduler.getIsRunning())
-				for(var/datum/controller/process/P in processScheduler.processes)
-					statpanel("Status",P.getStatName(), P.getTickTime())
-			else
-				stat(null, "processScheduler is not running.")
-
+	if(client && client.holder)
+		if((client.holder.rights & R_ADMIN))
+			if(statpanel("MC"))
+				stat("CPU:", "[world.cpu]")
+				if(client.holder.rights & R_DEBUG)
+					stat("Location:", "([x], [y], [z])")
+					stat("Instances:", "[world.contents.len]")
+					config.stat_entry()
+					stat(null)
+					if(Master)
+						Master.stat_entry()
+					else
+						stat("Master Controller:", "ERROR")
+					if(Failsafe)
+						Failsafe.stat_entry()
+					else
+						stat("Failsafe Controller:", "ERROR")
+					if(Master)
+						stat("Subsystems:", "[round(Master.subsystem_cost, 0.01)]ds")
+						stat(null)
+						for(var/datum/subsystem/SS in Master.subsystems)
+							SS.stat_entry()
+					cameranet.stat_entry()
 
 	if(listed_turf && client)
 		if(!TurfAdjacent(listed_turf))
@@ -672,6 +672,10 @@ note dizziness decrements automatically in the mob's Life() proc.
 	else if(buckled)
 		if(buckled.buckle_lying != -1)
 			lying = buckled.buckle_lying
+		if(istype(buckled, /obj/structure/stool/bed/chair))
+			var/obj/structure/stool/bed/chair/C = buckled
+			if(C.flipped)
+				lying = 1
 		if(!buckled.buckle_movable)
 			anchored = 1
 			canmove = 0
@@ -1000,3 +1004,29 @@ mob/proc/yank_out_object()
 
 /mob/proc/can_unbuckle(mob/user)
 	return 1
+
+/*
+/mob/living/on_varedit(modified_var)
+	switch(modified_var)
+		if("weakened")
+			SetWeakened(weakened)
+		if("stunned")
+			SetStunned(stunned)
+		if("paralysis")
+			SetParalysis(paralysis)
+		if("sleeping")
+			SetSleeping(sleeping)
+		if("eye_blind")
+			set_blindness(eye_blind)
+		if("eye_damage")
+			set_eye_damage(eye_damage)
+		if("eye_blurry")
+			set_blurriness(eye_blurry)
+		if("ear_deaf")
+			setEarDamage(-1, ear_deaf)
+		if("ear_damage")
+			setEarDamage(ear_damage, -1)
+		if("maxHealth")
+			updatehealth()
+		if("resize")
+			update_transform()*/

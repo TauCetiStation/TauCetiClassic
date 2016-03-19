@@ -196,7 +196,7 @@
 
 /datum/game_mode/anti_revolution/latespawn(mob/living/carbon/human/character)
 	..()
-	if(emergency_shuttle.departed)
+	if(SSshuttle.departed)
 		return
 
 	if(character.mind.assigned_role in command_positions)

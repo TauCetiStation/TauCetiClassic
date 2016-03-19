@@ -1,10 +1,3 @@
-//#define LIGHTING_INSTANT_UPDATES   // Uncomment to use instant updates. NOTE: These are WiP and much more laggy than interval-based updating.
-
-#ifndef LIGHTING_INSTANT_UPDATES
-#define LIGHTING_INTERVAL       1    // Frequency, in 1/10ths of a second, of the lighting process.
-#include "lighting_process.dm"
-#endif
-
 #define LIGHTING_FALLOFF        1    // Type of falloff to use for lighting; 1 for circular, 2 for square.
 #define LIGHTING_LAMBERTIAN     0    // Use lambertian shading for light sources.
 #define LIGHTING_HEIGHT         1    // Height off the ground of light sources on the pseudo-z-axis, you should probably leave this alone.

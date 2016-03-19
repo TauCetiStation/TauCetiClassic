@@ -88,7 +88,10 @@
 
 		verbs -= /mob/living/carbon/proc/release_control
 
-	callHook("death", list(src, gibbed))
+	var/datum/game_mode/mutiny/mode = get_mutiny_mode()
+	if(mode)
+		mode.infected_killed(src)
+		mode.body_count.Add(mind)
 
 	//Check for heist mode kill count.
 	if(ticker.mode && ( istype( ticker.mode,/datum/game_mode/heist) ) )

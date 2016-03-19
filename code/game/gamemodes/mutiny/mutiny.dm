@@ -216,6 +216,85 @@ datum/game_mode/mutiny
 			if("mutineer")
 				return M.special_role == "loyalist"
 
+	proc/reassign_employee(obj/item/weapon/card/id/id_card)
+		var/datum/directive/research_to_ripleys/D1 = get_directive("research_to_ripleys")
+		if(D1)
+			if(D1.ids_to_reassign && D1.ids_to_reassign.Find(id_card))
+				D1.ids_to_reassign[id_card] = id_card.assignment == "Shaft Miner" ? 1 : 0
+
+		var/datum/directive/tau_ceti_needs_women/D2 = get_directive("tau_ceti_needs_women")
+		if(D2)
+			if(D2.command_targets && D2.command_targets.Find(id_card))
+				D2.command_targets[id_card] = command_positions.Find(id_card.assignment) ? 0 : 1
+
+	proc/terminate_employee(obj/item/weapon/card/id)
+		var/datum/directive/ipc_virus/D1 = get_directive("ipc_virus")
+		if(D1)
+			if(D1.ids_to_terminate && D1.ids_to_terminate.Find(id))
+				D1.ids_to_terminate.Remove(id)
+
+		var/datum/directive/tau_ceti_needs_women/D2 = get_directive("tau_ceti_needs_women")
+		if(D2)
+			if(D2.alien_targets && D2.alien_targets.Find(id))
+				D2.alien_targets.Remove(id)
+			if(D2.command_targets && D2.command_targets.Find(id))
+				D2.command_targets[id] = 1
+
+		var/datum/directive/terminations/D3 = get_directive("terminations")
+		if(D3)
+			if(D3.ids_to_terminate && D3.ids_to_terminate.Find(id))
+				D3.ids_to_terminate.Remove(id)
+
+	proc/borgify_directive(mob/living/silicon/robot/cyborg)
+		var/datum/directive/ipc_virus/D = get_directive("ipc_virus")
+		if (!D) return
+
+		if(D.cyborgs_to_make.Find(cyborg.mind))
+			D.cyborgs_to_make.Remove(cyborg.mind)
+
+		// In case something glitchy happened and the victim got
+		// borged without us tracking the brain removal, go ahead
+		// and update that list too.
+		if(D.brains_to_enslave.Find(cyborg.mind))
+			D.brains_to_enslave.Remove(cyborg.mind)
+
+	proc/deliver_materials(obj/structure/closet/crate/sold, area/shuttle)
+		var/datum/directive/research_to_ripleys/D = get_directive("research_to_ripleys")
+		if(!D) return
+
+		for(var/atom/A in sold)
+			if(istype(A, /obj/item/stack/sheet/mineral) || istype(A, /obj/item/stack/sheet/metal))
+				var/obj/item/stack/S = A
+				D.materials_shipped += S.amount
+
+	proc/suspension_directive(datum/money_account/account)
+		var/datum/directive/terminations/D = get_directive("terminations")
+		if (!D) return
+
+		if(D.accounts_to_suspend && D.accounts_to_suspend.Find("[account.account_number]"))
+			D.accounts_to_suspend["[account.account_number]"] = account.suspended
+
+	proc/payroll_directive(datum/money_account/account)
+		var/datum/directive/terminations/D = get_directive("terminations")
+		if (!D) return
+
+		if(D.accounts_to_revoke && D.accounts_to_revoke.Find("[account.account_number]"))
+			D.accounts_to_revoke["[account.account_number]"] = 1
+
+	proc/debrain_directive(obj/item/brain/B)
+		var/datum/directive/ipc_virus/D = get_directive("ipc_virus")
+		if (!D) return
+
+		if(D.brains_to_enslave.Find(B.brainmob.mind))
+			D.brains_to_enslave.Remove(B.brainmob.mind)
+
+	proc/infected_killed(mob/living/carbon/human/deceased)
+		var/datum/directive/bluespace_contagion/D = get_directive("bluespace_contagion")
+		if(!D) return
+
+		if(deceased in D.infected)
+			D.infected.Remove(deceased)
+
 	proc/round_outcome()
 		world << "<center><h4>Breaking News</h4></center><br><hr>"
 		if (was_bloodbath())
