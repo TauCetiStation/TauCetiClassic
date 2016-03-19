@@ -49,12 +49,6 @@
 			else
 				occupant_message("<font color='red'>Not enough room in cargo compartment.</font>")
 		else
-			if(istype(target, /obj/structure/scrap))
-				var/obj/structure/scrap/pile = target
-				playsound(target, 'sound/effects/metal_creaking.ogg', 50, 1)
-				if(do_after_cooldown(pile))
-					occupant_message("<font color='red'>You squeeze the [pile.name] into compact shape.</font>")
-					pile.make_cube()
 			occupant_message("<font color='red'>[target] is firmly secured.</font>")
 
 	else if(istype(target,/mob/living))
