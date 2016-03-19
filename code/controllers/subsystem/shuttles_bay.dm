@@ -286,9 +286,9 @@ var/datum/subsystem/shuttle/SSshuttle
 
 			/* --- Shuttle leaves the station, enters transit --- */
 			else
-				if(alert == 1)
-					captain_announce("Departing...")
-					sleep(100)
+				//if(alert == 1)
+				//	captain_announce("Departing...")
+				//	sleep(100)
 				// Turn on the star effects
 
 				/* // kinda buggy atm, i'll fix this later
