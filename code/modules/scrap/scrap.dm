@@ -25,6 +25,10 @@
 	var/base_spread = 8 //limits on pixel offsets of base pieces
 	var/list/ways = list("pokes around", "digs through", "rummages through", "goes through","picks through")
 
+/obj/structure/scrap/proc/make_cube()
+	var/obj/container = new /obj/structure/scrap_cube(src, loot_max)
+	src.forceMove(container)
+
 /obj/structure/scrap/New()
 	var/amt = rand(loot_min, loot_max)
 	for(var/x = 1 to amt)
@@ -135,15 +139,19 @@
 /obj/structure/scrap/MouseDrop(obj/over_object)
 	..(over_object)
 
+/obj/structure/scrap/proc/dig_out_lump(var/newloc = loc)
+	new /obj/item/weapon/scrap_lump(newloc)
+	if(--dig_amount <= 0)
+		visible_message("<span class='notice'>\The [src] is cleared out!</span>")
+		qdel(src)
+
 /obj/structure/scrap/attackby(obj/item/W, mob/user)
 	if(istype(W,/obj/item/weapon/shovel))
 		user.do_attack_animation(src)
-		visible_message("<span class='notice'>\The [user] [pick(ways)] \the [src].</span>")
-		if(--dig_amount <= 0)
-			user << "<span class='notice'>You cleared out  \the [src]...</span>"
-			qdel(src)
-			return
-		shuffle_loot()
+		if(do_after(user, 30, target = src))
+			visible_message("<span class='notice'>\The [user] [pick(ways)] \the [src].</span>")
+			shuffle_loot()
+			dig_out_lump(user.loc)
 
 /obj/structure/scrap/large
 	name = "large scrap pile"
