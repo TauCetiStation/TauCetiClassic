@@ -18,27 +18,27 @@
 	unacidable = 1
 	anchored = 1
 	bounds = "64,64"
-	layer = MOB_LAYER  //Нужно посмотреть
-	var/mob/living/carbon/pilot = null //Оператор аппарата
+	layer = MOB_LAYER  //пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+	var/mob/living/carbon/pilot = null //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	var/state = 0
-	//Движение
-	var/can_turn = 1 //может ли повернуть
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+	var/can_turn = 1 //пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	var/can_move = 0
-	var/speed = 0 //Текущая скорость
+	var/speed = 0 //пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	var/last_relay = 0
 	var/turn_energy_drain = 5
-	var/turn_slow_rate = 2 //степень замедления при повороте
+	var/turn_slow_rate = 2 //пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
-	var/obj/item/weapon/stock_parts/cell/cell //энергоячейка
-	var/online = 0 //есть питание/нет питания
-	//Двигло
+	var/obj/item/weapon/stock_parts/cell/cell //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+	var/online = 0 //пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ/пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+	//пїЅпїЅпїЅпїЅпїЅпїЅ
 	var/obj/item/spacecraft_parts/engine/engine = null
 	var/engine_on = 0
-	var/cooling_rate = 3 //степень охлаждения
-	//итераторы
-	var/datum/global_iterator/pr_inertial_movement //итератор инерционного движения в космосе
-	var/datum/global_iterator/pr_speed_increment //увеличение скорости
-	var/datum/global_iterator/pr_cooling //охлаждение подсистем
+	var/cooling_rate = 3 //пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+	var/datum/global_iterator/pr_inertial_movement //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+	var/datum/global_iterator/pr_speed_increment //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+	var/datum/global_iterator/pr_cooling //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	var/datum/global_iterator/pr_int_temp_processor //normalizes internal air mixture temperature
 	var/datum/global_iterator/pr_give_air //moves air from tank to cabin
 	var/datum/global_iterator/pr_internal_damage //processes internal damage
@@ -52,19 +52,19 @@
 	var/internal_damage_threshold = 50 //health percentage below which internal damage is possible
 	var/internal_damage = 0 //contains bitflags
 
-	//Атмос
+	//пїЅпїЅпїЅпїЅпїЅ
 	var/use_internal_tank = 0
 	var/internal_tank_valve = ONE_ATMOSPHERE
 	var/obj/machinery/portable_atmospherics/canister/internal_tank
 	var/datum/gas_mixture/cabin_air
-	//эффекты
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	var/datum/effect/effect/system/jet_trail_follow/jet_trail
 	var/datum/effect/effect/system/spark_spread/spark_system = new
 
 	var/class = "test"
 	var/list/log = new
 
-	//Оборудование
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	var/list/equipment = new
 	var/list/equipment_wing = new
 	var/max_equip = 3
@@ -74,16 +74,16 @@
 
 	var/wreckage
 
-	var/obj/machinery/spacecraft_refill_station/connected_port = null //станция зарядки
+	var/obj/machinery/spacecraft_refill_station/connected_port = null //пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	var/icon/C = 'tauceti/modules/_spacecraft/spacecraft_bay.dmi'
-	//Освещение
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	var/lights = 0
 	var/lights_power = 6
-	//Радио
+	//пїЅпїЅпїЅпїЅпїЅ
 	var/obj/item/device/radio/radio = null
-	//Доступ
-	var/list/operation_req_access = list()//уровень допуска для пилотирования
-	var/list/internals_req_access = list(access_engine,access_robotics)//уроваень допуска для техобслуживания
+	//пїЅпїЅпїЅпїЅпїЅпїЅ
+	var/list/operation_req_access = list()//пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+	var/list/internals_req_access = list(access_engine,access_robotics)//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	var/add_req_access = 1
 	var/maint_access = 1
 
@@ -103,7 +103,6 @@
 		spark_system.set_up(2, 0, src)
 		spark_system.attach(src)
 		src.verbs -= /obj/spacecraft/verb/disconnect_from_port
-		src.verbs -= /atom/movable/verb/pull
 		src.verbs -= /obj/spacecraft/verb/toggle_engine
 		src.verbs -= /obj/spacecraft/verb/view_stats
 //		var/obj/spacecraft_parts/spacecraft_equipment/L = new /obj/item/spacecraft_parts/spacecraft_equipment
@@ -124,10 +123,10 @@
 	verbs += verb_path
 
 /obj/spacecraft/proc/add_airtank()
-	internal_tank = new /obj/machinery/portable_atmospherics/canister/air(src)  	//Внутренний бак с воздухом
+	internal_tank = new /obj/machinery/portable_atmospherics/canister/air(src)  	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	return internal_tank
 
-/obj/spacecraft/proc/add_cabin()															//Кокпит,а точнее, её атмосфера
+/obj/spacecraft/proc/add_cabin()															//пїЅпїЅпїЅпїЅпїЅпїЅ,пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	cabin_air = new
 	cabin_air.temperature = T20C
 	cabin_air.volume = 200
@@ -152,7 +151,7 @@
 	cell.maxcharge = 15000
 
 
-/obj/spacecraft/proc/add_iterators()														//Итераторы
+/obj/spacecraft/proc/add_iterators()														//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	pr_int_temp_processor = new /datum/global_iterator/spacecraft_preserve_temp(list(src))
 	pr_give_air = new /datum/global_iterator/spacecraft_tank_give_air(list(src))
 	pr_internal_damage = new /datum/global_iterator/spacecraft_internal_damage(list(src),0)
@@ -1507,7 +1506,7 @@
 	return
 
 ////ITERATORS///////
-/datum/global_iterator/spacecraft_preserve_temp  //normalizing cabin air temperature to 20 degrees celsium. Типо кондиционер.
+/datum/global_iterator/spacecraft_preserve_temp  //normalizing cabin air temperature to 20 degrees celsium. пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ.
 	delay = 20
 
 	process(var/obj/spacecraft/SC)

@@ -192,6 +192,20 @@
 	overlays.Cut()
 	overlays += image('icons/mob/zone_sel.dmi', "[selecting]")
 
+/obj/screen/pull
+	name = "stop pulling"
+	icon = 'icons/mob/screen1_Midnight.dmi'
+	icon_state = "pull"
+
+/obj/screen/pull/Click()
+	usr.stop_pulling()
+
+/obj/screen/pull/update_icon(mob/mymob)
+	if(!mymob) return
+	if(mymob.pulling)
+		icon_state = "pull"
+	else
+		icon_state = "pull0"
 
 /obj/screen/Click(location, control, params)
 	if(!usr)	return 1
@@ -363,9 +377,6 @@
 		if("disarm")
 			usr.a_intent = "disarm"
 			usr.hud_used.action_intent.icon_state = "intent_disarm"
-
-		if("pull")
-			usr.stop_pulling()
 		if("throw")
 			if(!usr.stat && isturf(usr.loc) && !usr.restrained())
 				usr:toggle_throw_mode()

@@ -1,4 +1,4 @@
-/datum/hud/proc/facehugger_hud()
+/datum/hud/proc/larva_hud()
 
 	src.adding = list()
 	src.other = list()
@@ -16,19 +16,11 @@
 	src.adding += using
 	move_intent = using
 
-	using = new /obj/screen()
-	using.name = "drop"
-	using.icon = 'icons/mob/screen1_xeno.dmi'
-	using.icon_state = "act_drop"
-	using.screen_loc = ui_drop_throw
-	using.layer = 19
-	src.adding += using
-
 	inv_box = new /obj/screen/inventory()
-	inv_box.name = "tail"
+	inv_box.name = "mouth"
 	inv_box.dir = WEST
 	inv_box.icon = 'icons/mob/screen1_xeno.dmi'
-	inv_box.icon_state = "hand_tail_active"
+	inv_box.icon_state = "hand_larva_active"
 	inv_box.screen_loc = ui_rhand
 	inv_box.layer = 19
 	inv_box.slot_id = slot_r_hand
@@ -45,10 +37,9 @@
 	mymob.healths.name = "health"
 	mymob.healths.screen_loc = ui_alien_health
 
-	mymob.pullin = new /obj/screen()
+	mymob.pullin = new /obj/screen/pull()
 	mymob.pullin.icon = 'icons/mob/screen1_xeno.dmi'
-	mymob.pullin.icon_state = "pull0"
-	mymob.pullin.name = "pull"
+	mymob.pullin.update_icon(mymob)
 	mymob.pullin.screen_loc = ui_pull_resist
 
 	mymob.zone_sel = new /obj/screen/zone_sel()
