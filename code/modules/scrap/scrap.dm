@@ -92,6 +92,7 @@
 		var/num = rand(base_min,base_max)
 		for(var/i=1 to num)
 			var/image/I = image(parts_icon,pick(icon_states(parts_icon)))
+			I.color = pick("#996633", "#663300", "#666666", "")
 			overlays |= randomize_image(I)
 
 	underlays.Cut()

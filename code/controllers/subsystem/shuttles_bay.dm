@@ -35,7 +35,7 @@ var/datum/subsystem/shuttle/SSshuttle
 
 		//supply shuttle stuff
 	var/points = 50
-	var/points_per_process = 1
+	var/points_per_decisecond = 0.005	//points gained every decisecond
 	var/points_per_slip = 2
 	var/points_per_crate = 5
 	var/points_per_platinum = 5	// 5 points per sheet
@@ -69,7 +69,7 @@ var/datum/subsystem/shuttle/SSshuttle
 	..()
 
 /datum/subsystem/shuttle/fire()
-	points += points_per_process
+	points += points_per_decisecond * wait
 	if(moving == 1)
 		var/ticksleft = (eta_timeofday - world.timeofday)
 		if(ticksleft > 0)
@@ -286,9 +286,9 @@ var/datum/subsystem/shuttle/SSshuttle
 
 			/* --- Shuttle leaves the station, enters transit --- */
 			else
-				if(alert == 1)
-					captain_announce("Departing...")
-					sleep(100)
+				//if(alert == 1)
+				//	captain_announce("Departing...")
+				//	sleep(100)
 				// Turn on the star effects
 
 				/* // kinda buggy atm, i'll fix this later

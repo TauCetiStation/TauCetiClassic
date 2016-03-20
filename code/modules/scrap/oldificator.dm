@@ -1,5 +1,9 @@
 /obj/item/proc/make_old()
-	color = "#aaaa22"
+	color = list(0.393,0.349,0.272,
+				 0.769,0.686,0.534,
+				 0.189,0.168,0.131,
+				 0,0,0) //sepia matrix
+	name = "old " + name
 	desc += " Warranty has expired."
 	for(var/obj/item/sub_item in contents)
 		sub_item.make_old()

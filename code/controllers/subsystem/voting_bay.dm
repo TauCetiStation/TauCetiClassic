@@ -7,7 +7,8 @@ var/datum/subsystem/vote/SSvote
 	priority = -1
 
 	var/initiator = null
-	var/started_time = null
+	var/started_time = null			//Not counting for custom votes, because it will apply voting cooldown and this is bad...
+	var/voting_started_time = null	//...thats why we use separate var to count remaining vote time.
 	var/time_remaining = 0
 	var/mode = null
 	var/question = null
@@ -20,7 +21,7 @@ var/datum/subsystem/vote/SSvote
 
 /datum/subsystem/vote/fire()	//called by master_controller
 	if(mode)
-		time_remaining = round((started_time + config.vote_period - world.time)/10)
+		time_remaining = round((voting_started_time + config.vote_period - world.time)/10)
 
 		if(time_remaining < 0)
 			result()
@@ -160,8 +161,11 @@ var/datum/subsystem/vote/SSvote
 	return 0
 
 /datum/subsystem/vote/proc/initiate_vote(vote_type, initiator_key)
+	var/is_admin = 0
+	if(check_rights(R_ADMIN))
+		is_admin = 1
 	if(!mode)
-		if(started_time != null)
+		if(started_time != null && !is_admin)
 			var/next_allowed_time = (started_time + config.vote_delay)
 			if(next_allowed_time > world.time)
 				return 0
@@ -169,10 +173,21 @@ var/datum/subsystem/vote/SSvote
 		reset()
 		switch(vote_type)
 			if("restart")
+				if(!is_admin)
+					var/num_admins_online = 0
+					for(var/client/C in admins)
+						if(R_ADMIN & C.holder.rights || !(R_MOD & C.holder.rights))
+							if(!C.holder.fakekey && !C.is_afk())
+								num_admins_online++
+					if(num_admins_online)
+						return 0
 				choices.Add("Restart Round","Continue Playing")
 			if("gamemode")
 				choices.Add(config.votable_modes)
 			if("crew_transfer")
+				if(!is_admin)
+					if(get_security_level() == "red" || get_security_level() == "delta")
+						return 0
 				choices.Add("End Shift","Continue Playing")
 			if("custom")
 				question = stripped_input(usr,"What is the vote for?")
@@ -187,14 +202,23 @@ var/datum/subsystem/vote/SSvote
 				return 0
 		mode = vote_type
 		initiator = initiator_key
-		started_time = world.time
+		voting_started_time = world.time
 		var/text = "[capitalize(mode)] vote started by [initiator]."
 		if(mode == "custom")
 			text += "\n[question]"
+		else
+			started_time = world.time
 		log_vote(text)
 		world << sound('sound/misc/notice1.ogg')
 		world << "\n<font color='purple'><b>[text]</b>\nType <b>vote</b> or click <a href='?src=\ref[src]'>here</a> to place your votes.\nYou have [config.vote_period/10] seconds to vote.</font>"
 		time_remaining = round(config.vote_period/10)
+
+		if(vote_type == "crew_transfer")
+			for(var/client/C in clients)
+				var/datum/browser/popup = new(C, "vote", "Voting Panel")
+				popup.set_window_options("can_close=0")
+				popup.set_content(SSvote.interface(C))
+				popup.open(0)
 		return 1
 	return 0
 
