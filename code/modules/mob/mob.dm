@@ -449,16 +449,17 @@
 			else
 				M.LAssailant = usr
 
-	src.pulling = AM
-	AM.pulledby = src
+		src.pulling = AM
+		AM.pulledby = src
 
-	if(ishuman(AM))
-		var/mob/living/carbon/human/H = AM
-		if(H.pull_damage())
-			src << "<span class='danger'>Pulling \the [H] in their current condition would probably be a bad idea.</span>"
+		if(ishuman(AM))
+			var/mob/living/carbon/human/H = AM
+			if(H.pull_damage())
+				src << "<span class='danger'>Pulling \the [H] in their current condition would probably be a bad idea.</span>"
+
+		count_pull_debuff()
 
 /mob/verb/stop_pulling()
-
 	set name = "Stop Pulling"
 	set category = "IC"
 
@@ -467,6 +468,10 @@
 		pulling = null
 		if(pullin)
 			pullin.update_icon(src)
+		count_pull_debuff()
+
+/mob/proc/count_pull_debuff()
+	return
 
 /mob/proc/can_use_hands()
 	return

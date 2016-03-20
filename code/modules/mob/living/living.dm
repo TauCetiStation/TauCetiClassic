@@ -4,6 +4,9 @@
 		handle_actions()
 		add_ingame_age()
 
+	if(pull_debuff && !pulling)	//For cases when pulling was stopped by 'pulling = null'
+		pull_debuff = 0
+
 	update_gravity(mob_has_gravity())
 
 /mob/living/Destroy()
@@ -127,6 +130,37 @@
 	if(AM.Adjacent(src))
 		src.start_pulling(AM)
 	return
+
+/mob/living/count_pull_debuff()
+	pull_debuff = 0
+	if(pulling)
+		var/tally = 0
+
+		//General pull debuff for playable mobs (playable without shitspawn, yeah)
+		if(ismonkey(src))
+			tally += 1
+		else if(isslime(src))
+			tally += 1.5
+		else
+			tally += 0.3
+
+		var/atom/movable/AM = pulling
+		//Mob pulling
+		if(ismob(AM))
+			tally += 1
+			var/mob/M = AM
+			if(M.lying)
+				tally += 0.5
+		//Structure pulling
+		if(istype(AM, /obj/structure))
+			tally += 0.5
+			var/obj/structure/S = AM
+			if(istype(S, /obj/structure/stool/bed/roller))//should be without debuff
+				tally -= 0.5
+		//Machinery pulling
+		if(istype(AM, /obj/machinery))
+			tally += 0.5
+		pull_debuff += tally
 
 /mob/living/proc/add_ingame_age()
 	if(client && !client.is_afk()) //5 minutes of inactive time will disable this, until player come back.
