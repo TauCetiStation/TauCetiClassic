@@ -42,7 +42,6 @@ datum/design						//Datum for object designs, used in construction
 	var/construction_time			//Amount of time required for building the object
 	var/build_path = ""				//The file path of the object that gets created
 	var/list/category = null		//Primarily used for Mech Fabricators, but can be used for anything
-	var/locked = 0					//If true it will spawn inside a lockbox with currently sec access
 
 //A proc to calculate the reliability of a design based on tech levels and innate modifiers.
 //Input: A list of /datum/tech; Output: The new reliabilty.
@@ -1679,7 +1678,6 @@ datum/design/nuclear_gun
 	materials = list("$metal" = 5000, "$glass" = 1000, "$uranium" = 500)
 	reliability = 76
 	build_path = /obj/item/weapon/gun/energy/gun/nuclear
-	locked = 1
 
 datum/design/stunrevolver
 	name = "Stun Revolver"
@@ -1689,7 +1687,6 @@ datum/design/stunrevolver
 	build_type = PROTOLATHE
 	materials = list("$metal" = 4000)
 	build_path = /obj/item/weapon/gun/energy/stunrevolver
-	locked = 1
 
 datum/design/lasercannon
 	name = "Laser Cannon"
@@ -1699,7 +1696,6 @@ datum/design/lasercannon
 	build_type = PROTOLATHE
 	materials = list("$metal" = 10000, "$glass" = 1000, "$uranium" = 100, "$diamond" = 2000)
 	build_path = /obj/item/weapon/gun/energy/lasercannon
-	locked = 1
 
 datum/design/decloner
 	name = "Decloner"
@@ -1709,7 +1705,6 @@ datum/design/decloner
 	build_type = PROTOLATHE
 	materials = list("$gold" = 5000,"$uranium" = 10000)
 	build_path = /obj/item/weapon/gun/energy/decloner
-	locked = 1
 
 datum/design/chemsprayer
 	name = "Chem Sprayer"
@@ -1747,7 +1742,6 @@ datum/design/temp_gun
 	build_type = PROTOLATHE
 	materials = list("$metal" = 5000, "$glass" = 500, "$silver" = 3000)
 	build_path = /obj/item/weapon/gun/energy/temperature
-	locked = 1
 
 datum/design/flora_gun
 	name = "Floral Somatoray"
@@ -1776,7 +1770,6 @@ datum/design/smg
 	build_type = PROTOLATHE
 	materials = list("$metal" = 8000, "$silver" = 2000, "$diamond" = 1000)
 	build_path = /obj/item/weapon/gun/projectile/automatic
-	locked = 1
 
 datum/design/ammo_9mm
 	name = "Ammunition Box (9mm)"
@@ -1918,7 +1911,6 @@ datum/design/security_hud
 	build_type = PROTOLATHE
 	materials = list("$metal" = 50, "$glass" = 50)
 	build_path = /obj/item/clothing/glasses/hud/security
-	locked = 1
 
 /////////////////////////////////////////
 //////////////////Test///////////////////
@@ -2041,7 +2033,6 @@ datum/design/cart_security
 	build_type = PROTOLATHE
 	materials = list("$metal" = 50, "$glass" = 50)
 	build_path = /obj/item/weapon/cartridge/security
-	locked = 1
 
 datum/design/cart_janitor
 	name = "CustodiPRO Cartridge"
@@ -2089,7 +2080,6 @@ datum/design/cart_quartermaster
 	build_type = PROTOLATHE
 	materials = list("$metal" = 50, "$glass" = 50)
 	build_path = /obj/item/weapon/cartridge/quartermaster
-	locked = 1
 
 datum/design/cart_hop
 	name = "Human Resources 9001 Cartridge"
@@ -2099,7 +2089,6 @@ datum/design/cart_hop
 	build_type = PROTOLATHE
 	materials = list("$metal" = 50, "$glass" = 50)
 	build_path = /obj/item/weapon/cartridge/hop
-	locked = 1
 
 datum/design/cart_hos
 	name = "R.O.B.U.S.T. DELUXE Cartridge"
@@ -2109,7 +2098,6 @@ datum/design/cart_hos
 	build_type = PROTOLATHE
 	materials = list("$metal" = 50, "$glass" = 50)
 	build_path = /obj/item/weapon/cartridge/hos
-	locked = 1
 
 datum/design/cart_ce
 	name = "Power-On DELUXE Cartridge"
@@ -2119,7 +2107,6 @@ datum/design/cart_ce
 	build_type = PROTOLATHE
 	materials = list("$metal" = 50, "$glass" = 50)
 	build_path = /obj/item/weapon/cartridge/ce
-	locked = 1
 
 datum/design/cart_cmo
 	name = "Med-U DELUXE Cartridge"
@@ -2129,7 +2116,6 @@ datum/design/cart_cmo
 	build_type = PROTOLATHE
 	materials = list("$metal" = 50, "$glass" = 50)
 	build_path = /obj/item/weapon/cartridge/cmo
-	locked = 1
 
 datum/design/cart_rd
 	name = "Signal Ace DELUXE Cartridge"
@@ -2139,7 +2125,6 @@ datum/design/cart_rd
 	build_type = PROTOLATHE
 	materials = list("$metal" = 50, "$glass" = 50)
 	build_path = /obj/item/weapon/cartridge/rd
-	locked = 1
 
 datum/design/cart_captain
 	name = "Value-PAK Cartridge"
@@ -2149,7 +2134,6 @@ datum/design/cart_captain
 	build_type = PROTOLATHE
 	materials = list("$metal" = 50, "$glass" = 50)
 	build_path = /obj/item/weapon/cartridge/captain
-	locked = 1
 
 ///////////////////////////////
 /////////////New stuff/////////
