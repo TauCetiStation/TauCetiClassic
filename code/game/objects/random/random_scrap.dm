@@ -17,11 +17,11 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "welder"
 /obj/random/scrap/dense_weighted/item_to_spawn()
-		return pick(prob(12);/obj/structure/scrap/large,\
+		return pick(prob(6);/obj/structure/scrap/large,\
 					prob(4);/obj/structure/scrap/medical/large,\
 					prob(6);/obj/structure/scrap/vehicle/large,\
-					prob(10);/obj/structure/scrap/food/large,\
-					prob(2);/obj/structure/scrap/guns/large)
+					prob(16);/obj/structure/scrap/food/large,\
+					prob(1);/obj/structure/scrap/guns/large)
 
 /obj/random/scrap/sparse_even
 	name = "Random sparse even trash"
@@ -41,11 +41,11 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "welder"
 /obj/random/scrap/sparse_weighted/item_to_spawn()
-		return pick(prob(12);/obj/structure/scrap,\
+		return pick(prob(6);/obj/structure/scrap,\
 					prob(4);/obj/structure/scrap/medical,\
 					prob(6);/obj/structure/scrap/vehicle,\
-					prob(10);/obj/structure/scrap/food,\
-					prob(2);/obj/structure/scrap/guns)
+					prob(16);/obj/structure/scrap/food,\
+					prob(1);/obj/structure/scrap/guns)
 
 /obj/random/scrap/moderate_weighted
 	name = "Random moderate weighted trash"

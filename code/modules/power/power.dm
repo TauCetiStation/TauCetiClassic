@@ -182,7 +182,8 @@
 /obj/machinery/power/proc/get_indirect_connections()
 	. = list()
 	for(var/obj/structure/cable/C in loc)
-		if(C.powernet)	continue
+		if(C.powernet)
+			continue
 		if(C.d1 == 0) // the cable is a node cable
 			. += C
 	return .
@@ -200,11 +201,13 @@
 	var/fdir = (!d)? 0 : turn(d, 180)			// the opposite direction to d (or 0 if d==0)
 //	world.log << "d=[d] fdir=[fdir]"
 	for(var/AM in T)
-		if(AM == source)	continue			//we don't want to return source
+		if(AM == source)
+			continue			//we don't want to return source
 
 		if(!cable_only && istype(AM,/obj/machinery/power))
 			var/obj/machinery/power/P = AM
-			if(P.powernet == 0)	continue		// exclude APCs which have powernet=0
+			if(P.powernet == 0)
+				continue		// exclude APCs which have powernet=0
 
 			if(!unmarked || !P.powernet)		//if unmarked=1 we only return things with no powernet
 				if(d == 0)
@@ -217,24 +220,6 @@
 				if(C.d1 == fdir || C.d2 == fdir)
 					. += C
 	return .
-
-
-// rebuild all power networks from scratch - only called at world creation or by the admin verb
-
-/hook/startup/proc/buildPowernets()
-	return makepowernets()
-
-/proc/makepowernets()
-	for(var/datum/powernet/PN in powernets)
-		del(PN)
-	powernets.Cut()
-
-	for(var/obj/structure/cable/PC in cable_list)
-		if(!PC.powernet)
-			PC.powernet = new()
-			propagate_network(PC,PC.powernet)
-
-	return 1
 
 //remove the old powernet and replace it with a new one throughout the network.
 /proc/propagate_network(var/obj/O, var/datum/powernet/PN)
@@ -284,21 +269,13 @@
 		net1 = net2
 		net2 = temp
 
-	//we don't use add_cable and add_machine here, because that could
-	//change the size of net2.nodes or net2.cables while in the loop (runtime galore)
-	for(var/i=1,i<=net2.nodes.len,i++)		//merge net2 into net1
-		var/obj/machinery/power/Node = net2.nodes[i] //merge power machines
-		if(Node)
-			Node.powernet = net1
-			net1.nodes[Node] = Node
+	//merge net2 into net1
+	for(var/obj/structure/cable/Cable in net2.cables) //merge cables
+		net1.add_cable(Cable)
 
-	for(var/i=1,i<=net2.cables.len,i++)
-		var/obj/structure/cable/Cable = net2.cables[i] //merge cables
-		if(Cable)
-			Cable.powernet = net1
-			net1.cables += Cable
-
-	qdel(net2) //garbage collect the now empty powernet
+	for(var/obj/machinery/power/Node in net2.nodes) //merge power machines
+		if(!Node.connect_to_network())
+			Node.disconnect_from_network() //if somehow we can't connect the machine to the new powernet, disconnect it from the old nonetheless
 
 	return net1
 
@@ -370,125 +347,6 @@
 		cell.use(drained_energy)
 	return drained_energy
 
-////////////////////////////////////////////
-// POWERNET DATUM PROCS
-// each contiguous network of cables & nodes
-////////////////////////////////////////////
-
-/datum/powernet/New()
-	powernets += src
-
-/datum/powernet/Destroy()
-	powernets -= src
-
-/datum/powernet/proc/is_empty()
-	return !cables.len && !nodes.len
-
-//remove a cable from the current powernet
-//if the powernet is then empty, delete it
-//Warning : this proc DON'T check if the cable exists
-/datum/powernet/proc/remove_cable(var/obj/structure/cable/C)
-	cables -= C
-	C.powernet = null
-	if(is_empty())//the powernet is now empty...
-		qdel(src)///... delete it
-
-//add a cable to the current powernet
-//Warning : this proc DON'T check if the cable exists
-/datum/powernet/proc/add_cable(var/obj/structure/cable/C)
-	if(C.powernet)// if C already has a powernet...
-		if(C.powernet == src)
-			return
-		else
-			C.powernet.remove_cable(C) //..remove it
-	C.powernet = src
-	cables +=C
-
-//remove a power machine from the current powernet
-//if the powernet is then empty, delete it
-//Warning : this proc DON'T check if the machine exists
-/datum/powernet/proc/remove_machine(var/obj/machinery/power/M)
-	nodes -=M
-	M.powernet = null
-	if(is_empty())//the powernet is now empty...
-		qdel(src)///... delete it
-
-
-//add a power machine to the current powernet
-//Warning : this proc DON'T check if the machine exists
-/datum/powernet/proc/add_machine(var/obj/machinery/power/M)
-	if(M.powernet)// if M already has a powernet...
-		if(M.powernet == src)
-			return
-		else
-			M.powernet.remove_machine(M) //..remove it
-	M.powernet = src
-	nodes[M] = M
-
-//handles the power changes in the powernet
-//called every ticks by the powernet controller
-/datum/powernet/proc/reset()
-	load = newload
-	newload = 0
-	avail = newavail
-	newavail = 0
-
-
-	viewload = 0.8*viewload + 0.2*load
-
-	viewload = round(viewload)
-
-	var/numapc = 0
-
-	if(nodes && nodes.len)
-		for(var/obj/machinery/power/terminal/term in nodes)
-			if( istype( term.master, /obj/machinery/power/apc ) )
-				numapc++
-
-	if(numapc)
-		perapc = avail/numapc
-
-	netexcess = avail - load
-
-	if( netexcess > 100)		// if there was excess power last cycle
-		if(nodes && nodes.len)
-			for(var/obj/machinery/power/smes/S in nodes)	// find the SMESes in the network
-				if(S.powernet == src)
-					S.restore()				// and restore some of the power that was used
-				else
-					error("[S.name] (\ref[S]) had a [S.powernet ? "different (\ref[S.powernet])" : "null"] powernet to our powernet (\ref[src]).") //this line is a faggot and using the normal ERROR proc breaks it
-					nodes.Remove(S)
-
-/datum/powernet/proc/get_electrocute_damage()
-	switch(avail)/*
-		if (1300000 to INFINITY)
-			return min(rand(70,150),rand(70,150))
-		if (750000 to 1300000)
-			return min(rand(50,115),rand(50,115))
-		if (100000 to 750000-1)
-			return min(rand(35,101),rand(35,101))
-		if (75000 to 100000-1)
-			return min(rand(30,95),rand(30,95))
-		if (50000 to 75000-1)
-			return min(rand(25,80),rand(25,80))
-		if (25000 to 50000-1)
-			return min(rand(20,70),rand(20,70))
-		if (10000 to 25000-1)
-			return min(rand(20,65),rand(20,65))
-		if (1000 to 10000-1)
-			return min(rand(10,20),rand(10,20))*/
-		if (1000000 to INFINITY)
-			return min(rand(50,160),rand(50,160))
-		if (200000 to 1000000)
-			return min(rand(25,80),rand(25,80))
-		if (100000 to 200000)//Ave powernet
-			return min(rand(20,60),rand(20,60))
-		if (50000 to 100000)
-			return min(rand(15,40),rand(15,40))
-		if (1000 to 50000)
-			return min(rand(10,20),rand(10,20))
-		else
-			return 0
 
 ////////////////////////////////////////////////
 // Misc.

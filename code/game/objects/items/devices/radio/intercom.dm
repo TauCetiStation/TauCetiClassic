@@ -13,11 +13,11 @@
 
 /obj/item/device/radio/intercom/New()
 	..()
-	processing_objects += src
+	SSobj.processing |= src
 
 /obj/item/device/radio/intercom/Destroy()
-	processing_objects -= src
-	..()
+	SSobj.processing.Remove(src)
+	return ..()
 
 /obj/item/device/radio/intercom/attack_ai(mob/user as mob)
 	src.add_fingerprint(user)

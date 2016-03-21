@@ -1,20 +1,10 @@
-/client/proc/kaboom()
-	var/power = input(src, "power?", "power?") as num
-	var/turf/T = get_turf(src.mob)
-	explosion_rec(T, power)
-
 /obj
 	var/explosion_resistance
 
-
-
 var/list/explosion_turfs = list()
-
 var/explosion_in_progress = 0
 
-
 proc/explosion_rec(turf/epicenter, power)
-
 	var/loopbreak = 0
 	while(explosion_in_progress)
 		if(loopbreak >= 15) return
@@ -40,6 +30,7 @@ proc/explosion_rec(turf/epicenter, power)
 	for(var/direction in cardinal)
 		var/turf/T = get_step(epicenter, direction)
 		T.explosion_spread(power - epicenter.explosion_resistance, direction)
+		CHECK_TICK
 
 	//This step applies the ex_act effects for the explosion, as planned in the previous step.
 	for(var/turf/T in explosion_turfs)
@@ -58,6 +49,7 @@ proc/explosion_rec(turf/epicenter, power)
 			T = locate(x,y,z)
 		for(var/atom/A in T)
 			A.ex_act(severity)
+		CHECK_TICK
 
 	explosion_in_progress = 0
 
@@ -112,6 +104,7 @@ proc/explosion_rec(turf/epicenter, power)
 		if(O.explosion_resistance)
 			spread_power -= O.explosion_resistance
 			side_spread_power -= O.explosion_resistance
+		CHECK_TICK
 
 	var/turf/T = get_step(src, direction)
 	T.explosion_spread(spread_power, direction)

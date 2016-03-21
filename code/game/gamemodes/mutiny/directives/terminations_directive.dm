@@ -42,30 +42,3 @@ datum/directive/terminations/get_remaining_orders()
 		text += "<li>Terminate [id]</li>"
 
 	return text
-
-/hook/revoke_payroll/proc/payroll_directive(datum/money_account/account)
-	var/datum/directive/terminations/D = get_directive("terminations")
-	if (!D) return 1
-
-	if(D.accounts_to_revoke && D.accounts_to_revoke.Find("[account.account_number]"))
-		D.accounts_to_revoke["[account.account_number]"] = 1
-
-	return 1
-
-/hook/change_account_status/proc/suspension_directive(datum/money_account/account)
-	var/datum/directive/terminations/D = get_directive("terminations")
-	if (!D) return 1
-
-	if(D.accounts_to_suspend && D.accounts_to_suspend.Find("[account.account_number]"))
-		D.accounts_to_suspend["[account.account_number]"] = account.suspended
-
-	return 1
-
-/hook/terminate_employee/proc/termination_directive(obj/item/weapon/card/id)
-	var/datum/directive/terminations/D = get_directive("terminations")
-	if (!D) return 1
-
-	if(D.ids_to_terminate && D.ids_to_terminate.Find(id))
-		D.ids_to_terminate.Remove(id)
-
-	return 1

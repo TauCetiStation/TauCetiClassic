@@ -68,8 +68,8 @@
 			if(alert(AI_mind.current,"Do you want to use an alternative sprite for your real core?",,"Yes","No")=="Yes")
 				AI_mind.current.icon_state = "ai-malf2"
 */
-	if(emergency_shuttle)
-		emergency_shuttle.always_fake_recall = 1
+	if(SSshuttle)
+		SSshuttle.always_fake_recall = 1
 	spawn (rand(waittime_l, waittime_h))
 		send_intercept()
 	..()
@@ -89,9 +89,9 @@
 	intercept_hacked = 1
 
 
-/datum/game_mode/malfunction/process()
+/datum/game_mode/malfunction/process(seconds)
 	if (apcs >= 3 && malf_mode_declared)
-		AI_win_timeleft -= ((apcs/6)*last_tick_duration) //Victory timer now de-increments based on how many APCs are hacked. --NeoFite
+		AI_win_timeleft -= apcs * seconds //Victory timer now de-increments based on how many APCs are hacked. --NeoFite
 	..()
 	if (AI_win_timeleft<=0)
 		check_win()
@@ -139,8 +139,8 @@
 		return 1
 	if (is_malf_ai_dead())
 		if(config.continous_rounds)
-			if(emergency_shuttle)
-				emergency_shuttle.always_fake_recall = 0
+			if(SSshuttle)
+				SSshuttle.always_fake_recall = 0
 			malf_mode_declared = 0
 		else
 			return 1
@@ -189,10 +189,13 @@
 	if (!ticker.mode:to_nuke_or_not_to_nuke)
 		return
 	ticker.mode:to_nuke_or_not_to_nuke = 0
+	var/turf/malf_turf
 	for(var/datum/mind/AI_mind in ticker.mode:malf_ai)
 		var/mob/living/silicon/ai/AI = AI_mind.current
 		AI.client.verbs -= /datum/game_mode/malfunction/proc/ai_win
 		AI.client.screen.Cut()
+		if(!malf_turf)
+			malf_turf = get_turf(AI)
 	ticker.mode:explosion_in_progress = 1
 	for(var/mob/M in player_list)
 		M << 'sound/machines/Alarm.ogg'
@@ -203,7 +206,10 @@
 	sleep(10)
 	enter_allowed = 0
 	if(ticker)
-		ticker.station_explosion_cinematic(0,null)
+		//ticker.station_explosion_cinematic(0,null)
+		if(malf_turf)
+			sleep(20)
+			explosion(malf_turf, 15, 70, 200)
 		if(ticker.mode)
 			ticker.mode:station_was_nuked = 1
 			ticker.mode:explosion_in_progress = 0
@@ -212,7 +218,7 @@
 
 /datum/game_mode/malfunction/declare_completion()
 	var/malf_dead = is_malf_ai_dead()
-	var/crew_evacuated = (emergency_shuttle.location==2)
+	var/crew_evacuated = (SSshuttle.location==2)
 	completion_text += "<B>Malfunction mode resume:</B><BR>"
 
 	if      ( station_captured &&                station_was_nuked)

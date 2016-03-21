@@ -1,6 +1,6 @@
 var/global/list/empty_playable_ai_cores = list()
 
-/hook/roundstart/proc/spawn_empty_ai()
+/proc/spawn_empty_ai()
 	for(var/obj/effect/landmark/start/S in landmarks_list)
 		if(S.name != "AI")
 			continue
@@ -31,7 +31,7 @@ var/global/list/empty_playable_ai_cores = list()
 	//Handle job slot/tater cleanup.
 	var/job = mind.assigned_role
 
-	job_master.FreeRole(job)
+	SSjob.FreeRole(job)
 
 	if(mind.objectives.len)
 		qdel(mind.objectives)

@@ -2,7 +2,7 @@
 	var/limit = 18	//The amount of jobs allowed per column. Defaults to 18 to make it look nice.
 	var/list/splitJobs = list("Chief Medical Officer")	//Allows you split the table by job. You can make different tables for each department by including their heads.
 														//Defaults to CMO to make it look nice.
-	if(!job_master)
+	if(!SSjob)
 		return
 	. = "<tt><center>"
 
@@ -22,8 +22,8 @@
 
 	//The job before the current job. I only use this to get the previous jobs color when I'm filling in blank rows.
 	var/datum/job/lastJob
-	if (!job_master)		return
-	for(var/datum/job/job in job_master.occupations)
+	if (!SSjob)		return
+	for(var/datum/job/job in SSjob.occupations)
 
 		index += 1
 		if((index >= limit) || (job.title in splitJobs))
@@ -122,7 +122,7 @@
 		player_alt_titles[job.title] = new_title
 
 /datum/preferences/proc/SetJob(mob/user, role)
-	var/datum/job/job = job_master.GetJob(role)
+	var/datum/job/job = SSjob.GetJob(role)
 	if(!job)
 		return
 

@@ -179,10 +179,33 @@
 	var/weapon_message = "Explosive Blast"
 	take_overall_damage(b_loss * 0.2, f_loss * 0.2, used_weapon = weapon_message)
 
+/mob/living/carbon/human/singularity_act()
+	var/gain = 20
+	if(mind)
+		switch(mind.assigned_role)
+			if("Station Engineer","Chief Engineer")
+				gain = 100
+			if("Clown")
+				gain = rand(-300, 300)//HONK
+	investigate_log(" has consumed [key_name(src)].","singulo") //Oh that's where the clown ended up!
+	gib()
+	return(gain)
+
+/mob/living/carbon/human/singularity_pull(S, current_size)
+	if(current_size >= STAGE_THREE)
+		var/list/handlist = list(l_hand, r_hand)
+		for(var/obj/item/hand in handlist)
+			if(prob(current_size * 5) && hand.w_class >= ((STAGE_FIVE-current_size)/2)  && unEquip(hand))
+				step_towards(hand, src)
+				src << "<span class='warning'>\The [S] pulls \the [hand] from your grip!</span>"
+	apply_effect(current_size * 3, IRRADIATE)
+	if(mob_negates_gravity())//Magboots protection
+		return
+	..()
 
 /mob/living/carbon/human/blob_act()
 	if(stat == DEAD)	return
-	show_message("\red The blob attacks you!")
+	src << "<span class='danger'>\The blob attacks you!</span>"
 	var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
 	var/datum/organ/external/affecting = get_organ(ran_zone(dam_zone))
 	apply_damage(rand(30,40), BRUTE, affecting, run_armor_check(affecting, "melee"))
@@ -1314,16 +1337,6 @@
 		W.message = message
 		W.add_fingerprint(src)
 
-/mob/living/carbon/human/canSingulothPull(var/obj/singularity/singulo)
-	if(!..())
-		return 0
-
-	if(istype(shoes,/obj/item/clothing/shoes/magboots))
-		var/obj/item/clothing/shoes/magboots/M = shoes
-		if(M.magpulse)
-			return 0
-	return 1
-
 /mob/living/carbon/human/var/crawl_getup = 0
 /mob/living/carbon/human/verb/crawl()
 	set name = "Crawl"
@@ -1487,8 +1500,6 @@
 		if(eyes && istype(eyes))
 			return 1
 	return 0
-
-
 
 //Turns a mob black, flashes a skeleton overlay
 //Just like a cartoon!

@@ -13,7 +13,7 @@
 
 		//First, resolve location and get a breath
 
-		if(air_master.current_cycle%4==2)
+		if(SSmob.times_fired%4==2)
 			//Only try to take a breath every 4 seconds, unless suffocating
 			spawn(0) breathe()
 
@@ -375,7 +375,7 @@
 						stomach_contents.Remove(M)
 						qdel(M)
 						continue
-					if(air_master.current_cycle%3==1)
+					if(SSmob.times_fired%3==1)
 						if(!(status_flags & GODMODE))
 							M.adjustBruteLoss(5)
 						nutrition += 10

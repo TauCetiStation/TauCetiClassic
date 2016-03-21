@@ -35,8 +35,9 @@
 
 /obj/item/weapon/flamethrower/process()
 	if(!lit)
-		processing_objects.Remove(src)
-		return null
+		SSobj.processing.Remove(src)
+		return
+
 	var/turf/location = loc
 	if(istype(location, /mob/))
 		var/mob/M = location
@@ -44,8 +45,6 @@
 			location = M.loc
 	if(isturf(location)) //start a fire if possible
 		location.hotspot_expose(700, 2)
-	return
-
 
 /obj/item/weapon/flamethrower/update_icon()
 	overlays.Cut()
@@ -167,7 +166,7 @@
 		if(!status)	return
 		lit = !lit
 		if(lit)
-			processing_objects.Add(src)
+			SSobj.processing |= src
 	if(href_list["amount"])
 		throw_amount = throw_amount + text2num(href_list["amount"])
 		throw_amount = max(50, min(5000, throw_amount))

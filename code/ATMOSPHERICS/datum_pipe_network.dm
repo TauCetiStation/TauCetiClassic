@@ -15,7 +15,7 @@ var/global/list/datum/pipe_network/pipe_networks = list()
 
 	..()
 
-/datum/pipe_network/proc/process()
+/datum/pipe_network/process()
 	//Equalize gases amongst pipe if called for
 	if(update)
 		update = 0

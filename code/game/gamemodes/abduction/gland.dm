@@ -32,7 +32,7 @@
 /obj/item/gland/proc/Start()
 	active = 1
 	next_activation  = world.time + rand(cooldown_low,cooldown_high)
-	processing_objects.Add(src)
+	SSobj.processing |= src
 
 /obj/item/gland/proc/Inject(var/mob/living/carbon/human/target)
 	host = target
@@ -41,7 +41,7 @@
 
 /obj/item/gland/process()
 	if(!active)
-		processing_objects.Remove(src)
+		SSobj.processing.Remove(src)
 		return
 	if(next_activation <= world.time)
 		//This gives a chance to transplant the gland active into someone else if you're fast
@@ -293,11 +293,11 @@ obj/item/gland/slime/activate()
 
 /obj/effect/cocoon/abductor/proc/Start()
 	hatch_time = world.time + 600
-	processing_objects.Add(src)
+	SSobj.processing |= src
 
 /obj/effect/cocoon/abductor/process()
 	if(world.time > hatch_time)
-		processing_objects.Remove(src)
+		SSobj.processing.Remove(src)
 		for(var/mob/M in contents)
 			src.visible_message("<span class='warning'>[src] hatches!</span>")
 			M.loc = src.loc

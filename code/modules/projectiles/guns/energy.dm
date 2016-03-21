@@ -84,3 +84,10 @@
 			else
 				icon_state = "[initial(icon_state)][shot.select_name][ratio]"
 	return
+/*
+/obj/item/weapon/gun/energy/on_varedit(modified_var)
+	if(modified_var == "selfcharge")
+		if(selfcharge)
+			SSobj.processing |= src
+		else
+			SSobj.processing -= src*/
