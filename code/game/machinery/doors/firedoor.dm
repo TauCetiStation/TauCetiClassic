@@ -1,7 +1,7 @@
 /var/const/OPEN = 1
 /var/const/CLOSED = 2
 
-#define FIREDOOR_CLOSED_MOD	0.4
+#define FIREDOOR_CLOSED_MOD	1.6	//Above everything
 #define FIREDOOR_MAX_PRESSURE_DIFF 25 // kPa
 #define FIREDOOR_MAX_TEMP 50 // °C
 #define FIREDOOR_MIN_TEMP 0
@@ -162,9 +162,10 @@
 			user << "<span class='warning'>Access denied.</span>"
 			return
 
-	for(var/obj/O in src.loc)
-		if(istype(O, /obj/machinery/door/airlock) && O.layer == (DOOR_LAYER + DOOR_CLOSED_MOD))
-			return
+	if(!opacity)
+		for(var/obj/O in src.loc)
+			if(istype(O, /obj/machinery/door/airlock) && O.layer == (DOOR_LAYER + DOOR_CLOSED_MOD))
+				return
 
 	var/alarmed = 0
 
@@ -294,11 +295,12 @@
 	return
 
 /obj/machinery/door/firedoor/close()
+	..()
 	latetoggle()
 	layer = base_layer + FIREDOOR_CLOSED_MOD
-	return ..()
 
 /obj/machinery/door/firedoor/open()
+	..()
 	if(hatch_open)
 		hatch_open = 0
 		visible_message("The maintenance hatch of \the [src] closes.")
@@ -306,7 +308,6 @@
 
 	latetoggle()
 	layer = base_layer
-	return ..()
 
 
 /obj/machinery/door/firedoor/do_animate(animation)
