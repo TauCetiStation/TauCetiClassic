@@ -651,7 +651,7 @@ datum/design/mech_rcd
 	build_type = MECHFAB
 	req_tech = list("materials" = 4, "bluespace" = 3, "magnets" = 4, "powerstorage"=4, "engineering" = 4)
 	build_path = /obj/item/mecha_parts/mecha_equipment/tool/rcd
-	materials = list("$metal"=30000,"$gold"=20000,"$plasma"=25000,"$silver"=20000)
+	materials = list("$metal"=30000,"$gold"=20000,"$phoron"=25000,"$silver"=20000)
 	construction_time = 1200
 	category = list("Exosuit Equipment")
 
