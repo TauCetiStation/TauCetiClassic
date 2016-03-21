@@ -200,7 +200,7 @@
 	mymob.pullin.update_icon(mymob)
 	mymob.pullin.screen_loc = ui_pull_resist
 
-//��� ��������
+//For changelings
 	lingchemdisplay = new /obj/screen()
 	lingchemdisplay.icon = 'tauceti/icons/mob/screen_gen.dmi'
 	lingchemdisplay.name = "chemical storage"
