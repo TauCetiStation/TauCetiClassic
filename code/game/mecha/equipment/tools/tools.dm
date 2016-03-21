@@ -55,7 +55,8 @@
 				if(do_after_cooldown(pile))
 					occupant_message("<font color='red'>You squeeze the [pile.name] into compact shape.</font>")
 					pile.make_cube()
-			occupant_message("<font color='red'>[target] is firmly secured.</font>")
+			else
+				occupant_message("<font color='red'>[target] is firmly secured.</font>")
 
 	else if(istype(target,/mob/living))
 		var/mob/living/M = target

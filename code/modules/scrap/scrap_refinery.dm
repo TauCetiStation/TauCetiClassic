@@ -1,5 +1,14 @@
 var/const/SAFETY_COOLDOWN = 100
 
+/obj/item/weapon/circuitboard/recycler
+	name = "Circuit board (Recycler)"
+	board_type = "machine"
+	build_path = "/obj/machinery/recycler"
+	origin_tech = "engineering = 3"
+	frame_desc = "Requires 1 Manipulator"
+	req_components = list("/obj/item/weapon/stock_parts/manipulator" = 1)
+
+
 /obj/machinery/recycler
 	name = "recycler"
 	desc = "A large crushing machine which is used to grind lumps of trash down; there are lights on the side of it."
@@ -41,6 +50,8 @@ var/const/SAFETY_COOLDOWN = 100
 
 
 /obj/machinery/recycler/attackby(obj/item/I, mob/user, params)
+	if (istype(I, /obj/item/weapon/card/emag))
+		emag_act(user)
 	if(default_deconstruction_screwdriver(user, "grinder-oOpen", "grinder-o0", I))
 		return
 
@@ -58,7 +69,7 @@ var/const/SAFETY_COOLDOWN = 100
 	add_fingerprint(user)
 	return
 
-/obj/machinery/recycler/emag_act(mob/user)
+/obj/machinery/recycler/proc/emag_act(mob/user)
 	if(!emagged)
 		emagged = 1
 		if(safety_mode)
@@ -94,7 +105,8 @@ var/const/SAFETY_COOLDOWN = 100
 	if(move_dir == eat_dir)
 		if(isliving(AM))
 			if(emagged)
-				eat(AM)
+				spawn()
+					eat(AM)
 			else
 				stop(AM)
 		else if(istype(AM, /obj/item))
@@ -114,7 +126,7 @@ var/const/SAFETY_COOLDOWN = 100
 	if(!istype(I, /obj/item/weapon/scrap_lump))
 		chance_mod = 5
 	if(prob(chance_to_recycle / chance_mod))
-		new /obj/item/weapon/refined_scrap(loc)
+		new /obj/item/weapon/scrap_refined(loc)
 	qdel(I)
 
 
@@ -143,7 +155,7 @@ var/const/SAFETY_COOLDOWN = 100
 	if(iscarbon(L))
 		gib = 0
 		if(L.stat == CONSCIOUS)
-			L.say("ARRRRRRRRRRRGH!!!")
+			L.emote("scream",,, 1)
 		add_blood(L)
 
 	if(!blood && !issilicon(L))
@@ -157,15 +169,11 @@ var/const/SAFETY_COOLDOWN = 100
 
 	// Instantly lie down, also go unconscious from the pain, before you die.
 	L.Paralyse(5)
-
+	L.anchored = 1
 	// For admin fun, var edit emagged to 2.
 	if(gib || emagged == 2)
 		L.gib()
 	else if(emagged == 1)
 		for(var/i = 1 to 10)
-			L.adjustBruteLoss(20)
-			spawn(1)
-
-/obj/item/weapon/paper/recycler
-	name = "paper - 'garbage duty instructions'"
-	info = "<h2>New Assignment</h2> You have been assigned to collect garbage from trash bins, located around the station. The crewmembers will put their trash into it and you will collect the said trash.<br><br>There is a recycling machine near your closet, inside maintenance; use it to recycle the trash for a small chance to get useful minerals. Then deliver these minerals to cargo or engineering. You are our last hope for a clean station, do not screw this up!"
+			sleep(5)
+			L.adjustBruteLoss(25)

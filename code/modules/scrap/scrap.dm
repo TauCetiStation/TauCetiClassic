@@ -27,7 +27,7 @@
 
 /obj/structure/scrap/proc/make_cube()
 	var/obj/container = new /obj/structure/scrap_cube(src, loot_max)
-	src.forceMove(container)
+	src.loc = container
 
 /obj/structure/scrap/New()
 	var/amt = rand(loot_min, loot_max)
@@ -139,11 +139,13 @@
 /obj/structure/scrap/MouseDrop(obj/over_object)
 	..(over_object)
 
-/obj/structure/scrap/proc/dig_out_lump(var/newloc = loc)
-	new /obj/item/weapon/scrap_lump(newloc)
-	if(--dig_amount <= 0)
+/obj/structure/scrap/proc/dig_out_lump(newloc = loc)
+	src.dig_amount--
+	if(src.dig_amount <= 0)
 		visible_message("<span class='notice'>\The [src] is cleared out!</span>")
 		qdel(src)
+	else
+		new /obj/item/weapon/scrap_lump(newloc)
 
 /obj/structure/scrap/attackby(obj/item/W, mob/user)
 	if(istype(W,/obj/item/weapon/shovel))
