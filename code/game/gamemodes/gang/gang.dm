@@ -84,7 +84,7 @@
 
 	modePlayer += A_bosses
 	modePlayer += B_bosses
-	..()
+	return ..()
 
 /datum/game_mode/gang/process()
 	if(!finished)
