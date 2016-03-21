@@ -148,9 +148,6 @@
 		//Mob pulling
 		if(ismob(AM))
 			tally += 1
-			var/mob/M = AM
-			if(M.lying)
-				tally += 0.5
 		//Structure pulling
 		if(istype(AM, /obj/structure))
 			tally += 0.5
