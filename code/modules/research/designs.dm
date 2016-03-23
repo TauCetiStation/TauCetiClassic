@@ -930,7 +930,7 @@ datum/design/super_matter_bin
 	req_tech = list("powerstorage" = 6, "materials" = 5)
 	build_type = PROTOLATHE
 	reliability = 71
-	materials = list(MAT_METAL = 800, MAT_GLASS = 800, MAT_DIAMOND = 250)
+	materials = list(MAT_METAL = 800, MAT_GLASS = 800, MAT_SILVER = 250, MAT_GOLD = 250, MAT_DIAMOND = 250)
 	build_path = /obj/item/weapon/stock_parts/capacitor/quadratic
 //	category = list("Stock Parts")
 
@@ -940,7 +940,7 @@ datum/design/super_matter_bin
 	id = "triphasic_scanning"
 	req_tech = list("magnets" = 6, "materials" = 4)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 800, MAT_GLASS = 320, MAT_DIAMOND = 250)
+	materials = list(MAT_METAL = 800, MAT_GLASS = 320, MAT_SILVER = 250, MAT_GOLD = 250, MAT_DIAMOND = 250)
 	reliability = 72
 	build_path = /obj/item/weapon/stock_parts/scanning_module/triphasic
 //	category = list("Stock Parts")
@@ -951,7 +951,7 @@ datum/design/super_matter_bin
 	id = "femto_mani"
 	req_tech = list("materials" = 6, "programming" = 3)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 480, MAT_DIAMOND = 250)
+	materials = list(MAT_METAL = 480, MAT_SILVER = 250, MAT_GOLD = 250, MAT_DIAMOND = 250)
 	reliability = 73
 	build_path = /obj/item/weapon/stock_parts/manipulator/femto
 //	category = list("Stock Parts")
@@ -962,7 +962,7 @@ datum/design/super_matter_bin
 	id = "quadultra_micro_laser"
 	req_tech = list("magnets" = 6, "materials" = 6)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 160, MAT_GLASS = 320, MAT_DIAMOND = 250, MAT_URANIUM = 160)
+	materials = list(MAT_METAL = 160, MAT_GLASS = 320, MAT_SILVER = 250, MAT_GOLD = 250, MAT_DIAMOND = 250, MAT_URANIUM = 160)
 	reliability = 70
 	build_path = /obj/item/weapon/stock_parts/micro_laser/quadultra
 //	category = list("Stock Parts")
@@ -973,7 +973,7 @@ datum/design/super_matter_bin
 	id = "bluespace_matter_bin"
 	req_tech = list("materials" = 6)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 1280, MAT_DIAMOND = 400)
+	materials = list(MAT_METAL = 1280, MAT_SILVER = 300, MAT_GOLD = 300, MAT_DIAMOND = 400)
 	reliability = 75
 	build_path = /obj/item/weapon/stock_parts/matter_bin/bluespace
 //	category = list("Stock Parts")
@@ -1955,7 +1955,7 @@ datum/design/borg_syndicate_module
 	build_type = MECHFAB
 	req_tech = list("combat" = 4, "syndicate" = 3)
 	build_path = /obj/item/borg/upgrade/syndicate
-	materials = list("$metal" = 10000,"$glass" = 15000, "$diamond" = 10000)
+	materials = list(MAT_METAL = 10000, MAT_GLASS = 15000, MAT_DIAMOND = 10000)
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")
 
