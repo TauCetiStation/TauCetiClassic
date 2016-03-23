@@ -13,6 +13,7 @@
 /obj/effect/anomaly/New()
 	set_light(3,5,light_color)
 	aSignal = new(src)
+	aSignal.name = "[name] core"
 	aSignal.code = rand(1,100)
 
 	aSignal.frequency = rand(1200, 1599)
