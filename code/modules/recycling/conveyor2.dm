@@ -76,8 +76,10 @@
 		backwards = temp
 	if(operating == 1)
 		movedir = forwards
-	else
+	else if(operating == -1)
 		movedir = backwards
+	else
+		operating = 0
 	update()
 
 /obj/machinery/conveyor/proc/update()
@@ -121,7 +123,7 @@
 		user << "<span class='notice'>You remove the conveyor belt.</span>"
 		qdel(src)
 		return
-	if(istype(I, /obj/item/weapon/wrench))	
+	if(istype(I, /obj/item/weapon/wrench))
 		if(!(stat & BROKEN))
 			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 			dir = turn(dir,-45)
