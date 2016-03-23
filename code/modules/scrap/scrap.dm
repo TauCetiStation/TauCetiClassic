@@ -10,12 +10,12 @@
 	var/loot_min = 3
 	var/loot_max = 5
 	var/list/loot_list = list(
-		/obj/item/stack/rods/scrap,
-		/obj/item/stack/sheet/mineral/plastic/scrap,
-		/obj/item/stack/sheet/metal/scrap,
-		/obj/item/stack/sheet/glass/scrap,
-		/obj/item/stack/sheet/plasteel/scrap,
-		/obj/item/stack/sheet/wood/scrap,
+		/obj/random/materials/rods_scrap,
+		/obj/random/materials/plastic_scrap,
+		/obj/random/materials/metal_scrap,
+		/obj/random/materials/glass_scrap,
+		/obj/random/materials/plasteel_scrap,
+		/obj/random/materials/wood_scrap,
 		/obj/item/weapon/shard
 		)
 	var/dig_amount = 7
@@ -26,7 +26,7 @@
 	var/list/ways = list("pokes around", "digs through", "rummages through", "goes through","picks through")
 
 /obj/structure/scrap/proc/make_cube()
-	var/obj/container = new /obj/structure/scrap_cube(src, loot_max)
+	var/obj/container = new /obj/structure/scrap_cube(src.loc, loot_max)
 	src.loc = container
 
 /obj/structure/scrap/New()
@@ -175,8 +175,7 @@
 		/obj/random/meds/medical_supply/,
 		/obj/random/meds/medical_supply/,
 		/obj/random/meds/medical_supply/,
-		/obj/item/stack/rods/scrap,
-		/obj/item/stack/sheet/mineral/plastic/scrap,
+		/obj/random/materials/rods_scrap,
 		/obj/item/weapon/shard
 		)
 
@@ -188,8 +187,9 @@
 		/obj/random/tools/tech_supply/guaranteed,
 		/obj/random/tools/tech_supply/guaranteed,
 		/obj/random/tools/tech_supply/guaranteed,
-		/obj/item/stack/rods/scrap,
-		/obj/item/stack/sheet/metal/scrap,
+		/obj/random/tools/tech_supply/guaranteed,
+		/obj/random/materials/rods_scrap,
+		/obj/random/materials/metal_scrap,
 		/obj/item/weapon/shard
 		)
 
@@ -202,11 +202,8 @@
 		/obj/random/foods/food_without_garbage,
 		/obj/random/foods/food_without_garbage,
 		/obj/random/foods/food_without_garbage,
-		/obj/random/foods/food_without_garbage,
-		/obj/random/foods/food_without_garbage,
 		/obj/item/weapon/shard,
-		/obj/item/stack/rods/scrap,
-		/obj/item/stack/sheet/mineral/plastic/scrap
+		/obj/random/materials/rods_scrap,
 		)
 
 /obj/structure/scrap/guns
@@ -219,10 +216,9 @@
 		/obj/random/guns/energy_weapon,
 		/obj/item/toy/gun,
 		/obj/item/toy/crossbow,
-		/obj/item/weapon/crossbowframe,
-		/obj/item/stack/sheet/mineral/plastic/scrap,
 		/obj/item/weapon/shard,
-		/obj/item/stack/rods/scrap,
+		/obj/random/materials/metal_scrap,
+		/obj/random/materials/rods_scrap,
 		)
 /obj/structure/scrap/vehicle/large
 	name = "large industrial debris pile"

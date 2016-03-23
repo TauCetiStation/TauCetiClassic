@@ -3,7 +3,7 @@
 	desc = "Cube made of compressed scrap"
 	density = 1
 	anchored = 0
-	icon_state = "trash_cube_small"
+	icon_state = "trash_cube"
 	icon = 'icons/obj/structures/scrap/refine.dmi'
 
 /obj/structure/scrap_cube/proc/make_pile()
@@ -13,7 +13,7 @@
 
 /obj/structure/scrap_cube/New(var/newloc, var/size = 4)
 	if(size > 10)
-		icon_state = "trash_cube_large"
+		icon_state = "trash_cube"
 	..(newloc)
 
 /obj/structure/scrap_cube/attackby(obj/item/W, mob/user)
@@ -31,9 +31,15 @@
 	icon_state = "unrefined"
 	w_class = 4
 
-/obj/item/weapon/scrap_refined
+var/global/list/datum/stack_recipe/scrap_recipes = list ( \
+	new/datum/stack_recipe("cardborg suit", /obj/item/clothing/suit/cardborg, 3), \
+	new/datum/stack_recipe("cardborg helmet", /obj/item/clothing/head/cardborg), \
+)
+
+/obj/item/stack/sheet/refined_scrap
 	name = "refined scrap"
-	desc = "This is ghetto gold!"
+	desc = "This is ghetto gold! It could be used as fuel or building material. Even central Command would give cargo points for this."
 	icon = 'icons/obj/structures/scrap/refine.dmi'
 	icon_state = "refined"
-	w_class = 3
+	max_amount = 20
+	amount = 1

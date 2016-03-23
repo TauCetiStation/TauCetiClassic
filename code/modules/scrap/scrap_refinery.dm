@@ -126,7 +126,7 @@ var/const/SAFETY_COOLDOWN = 100
 	if(!istype(I, /obj/item/weapon/scrap_lump))
 		chance_mod = 5
 	if(prob(chance_to_recycle / chance_mod))
-		new /obj/item/weapon/scrap_refined(loc)
+		new /obj/item/stack/sheet/refined_scrap(loc)
 	qdel(I)
 
 
