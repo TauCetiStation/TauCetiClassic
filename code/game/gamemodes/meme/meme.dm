@@ -3,6 +3,7 @@
 /datum/game_mode/meme
 	name = "Memetic Anomaly"
 	config_tag = "meme"
+	role_type = ROLE_MEME
 	required_players = 6
 	required_players_secret = 15
 	restricted_jobs = list("AI", "Cyborg")
@@ -47,9 +48,7 @@
 	// also make sure that there's at least one meme and one host
 	//recommended_enemies = max(src.num_players() / 20 * 2, 2)
 
-	var/list/datum/mind/possible_memes = get_players_for_role(BE_MEME)
-
-	if(possible_memes.len < 1)
+	if(antag_candidates.len < 1)
 		//log_admin("MODE FAILURE: MEME. NOT ENOUGH MEME CANDIDATES.") // We need no spam anymore, it works for a long time.
 		return 0 // not enough candidates for meme
 
@@ -64,14 +63,14 @@
 	//testing("Current meme limit is [meme_limit]")
 	var/i = 0
 
-	while(possible_memes.len > meme_limit)
+	while(antag_candidates.len > meme_limit)
 		i++
-		var/datum/mind/meme = pick(possible_memes)
-		possible_memes.Remove(meme)
+		var/datum/mind/meme = pick(antag_candidates)
+		antag_candidates.Remove(meme)
 	if(i)
 		log_misc("Deleted [i] possible memes from list")
 	else
-		log_misc("Everything was O.K. No meme candidates over limit. Limit was [meme_limit] and possible meme candidates is [possible_memes.len]")
+		log_misc("Everything was O.K. No meme candidates over limit. Limit was [meme_limit] and possible meme candidates is [antag_candidates.len]")
 
 	// for each 2 possible memes, add one meme and one host
 	/*for(var/mob/new_player/player in player_list)
@@ -80,15 +79,15 @@
 			if(possible_target != owner && ishuman(possible_target.current) && (possible_target.current.stat != DEAD))
 				possible_targets += possible_target*/
 
-	if(possible_memes.len < 1)
+	if(antag_candidates.len < 1)
 		log_admin("Something went wrong after calculations for possible memes.")
 		testing("Something went wrong after calculations for possible memes.")
 		return 0 // not enough candidates for meme
 
-	while(possible_memes.len >= 1)
+	while(antag_candidates.len >= 1)
 		//for(var/mob/new_player/player in player_list)
-		var/datum/mind/meme = pick(possible_memes)
-		possible_memes.Remove(meme)
+		var/datum/mind/meme = pick(antag_candidates)
+		antag_candidates.Remove(meme)
 
 		//var/datum/mind/first_host = pick(possible_memes)
 		//possible_memes.Remove(first_host)

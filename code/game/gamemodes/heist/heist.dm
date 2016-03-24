@@ -16,6 +16,7 @@
 /datum/game_mode/heist
 	name = "heist"
 	config_tag = "heist"
+	role_type = ROLE_RAIDER
 	required_players = 15
 	required_players_secret = 15
 	required_enemies = 4
@@ -41,22 +42,21 @@
 	if(!..())
 		return 0
 
-	var/list/candidates = get_players_for_role(BE_RAIDER)
 	var/raider_num = 0
 
 	//Check that we have enough vox.
-	if(candidates.len < required_enemies)
+	if(antag_candidates.len < required_enemies)
 		return 0
-	else if(candidates.len < recommended_enemies)
-		raider_num = candidates.len
+	else if(antag_candidates.len < recommended_enemies)
+		raider_num = antag_candidates.len
 	else
 		raider_num = recommended_enemies
 
 	//Grab candidates randomly until we have enough.
 	while(raider_num > 0)
-		var/datum/mind/new_raider = pick(candidates)
+		var/datum/mind/new_raider = pick(antag_candidates)
 		raiders += new_raider
-		candidates -= new_raider
+		antag_candidates -= new_raider
 		raider_num--
 
 	for(var/datum/mind/raider in raiders)

@@ -103,7 +103,7 @@ var/datum/subsystem/job/SSjob
 		if(!job.player_old_enough(player.client))
 			Debug("FOC player not old enough, Player: [player]")
 			continue
-		if(flag && (!player.client.prefs.be_special & flag))
+		if(flag && (!(flag in player.client.prefs.be_role)))
 			Debug("FOC flag failed, Player: [player], Flag: [flag], ")
 			continue
 		if(player.client.prefs.GetJobDepartment(job, level) & job.flag)
@@ -219,7 +219,7 @@ var/datum/subsystem/job/SSjob
 		for(var/level = 1 to 3)
 			var/list/candidates = list()
 			if(ticker.mode.name == "AI malfunction")//Make sure they want to malf if its malf
-				candidates = FindOccupationCandidates(job, level, BE_MALF)
+				candidates = FindOccupationCandidates(job, level, ROLE_MALF)
 			else
 				candidates = FindOccupationCandidates(job, level)
 			if(candidates.len)

@@ -34,8 +34,9 @@
 			if(jobban_isbanned(O, "pAI"))
 				continue
 			if(O.client)
-				if(O.client.prefs.be_special & BE_PAI)
-					question(O.client)
+				var/client/C = O.client
+				if(!C.prefs.ignore_question.Find(ROLE_PLANT) && (ROLE_PAI in C.prefs.be_role))
+					question(C)
 
 	proc/question(var/client/C)
 		spawn(0)
@@ -45,7 +46,7 @@
 			if(response == "Yes")
 				transfer_personality(C.mob)
 			else if (response == "Never for this round")
-				C.prefs.be_special ^= BE_PAI
+				C.prefs.ignore_question += ROLE_PAI
 
 
 	transfer_identity(var/mob/living/carbon/H)

@@ -14,7 +14,7 @@ Infestation:
 /datum/game_mode/infestation
 	name = "infestation"
 	config_tag = "infestation"
-	//antag_flag = BE_ALIEN
+	role_type = ROLE_ALIEN
 	required_players = 20
 	required_players_secret = 15
 	required_enemies = 2
@@ -30,21 +30,20 @@ Infestation:
 	if(!..())
 		return 0
 
-	var/list/candidates = get_players_for_role(BE_ALIEN)
 	var/xenomorphs_num = 0
 
 	//Check that we have enough vox.
-	if(candidates.len < required_enemies)
+	if(antag_candidates.len < required_enemies)
 		return 0
-	else if(candidates.len < recommended_enemies)
-		xenomorphs_num = candidates.len
+	else if(antag_candidates.len < recommended_enemies)
+		xenomorphs_num = antag_candidates.len
 	else
 		xenomorphs_num = recommended_enemies
 
 	while(xenomorphs_num > 0)
-		var/datum/mind/new_xeno = pick(candidates)
+		var/datum/mind/new_xeno = pick(antag_candidates)
 		xenomorphs += new_xeno
-		candidates -= new_xeno
+		antag_candidates -= new_xeno
 		xenomorphs_num--
 
 	for(var/datum/mind/xeno in xenomorphs)

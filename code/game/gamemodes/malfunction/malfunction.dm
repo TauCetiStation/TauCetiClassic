@@ -4,6 +4,7 @@
 /datum/game_mode/malfunction
 	name = "AI malfunction"
 	config_tag = "malfunction"
+	role_type = ROLE_MALF
 	required_players = 2
 	required_players_secret = 15
 	required_enemies = 1
@@ -32,7 +33,7 @@
 
 /datum/game_mode/malfunction/pre_setup()
 	for(var/mob/new_player/player in player_list)
-		if(player.mind && player.mind.assigned_role == "AI" && (player.client.prefs.be_special & BE_MALF))
+		if(player.mind && player.mind.assigned_role == "AI" && (ROLE_MALF in player.client.prefs.be_role))
 			malf_ai+=player.mind
 	if(malf_ai.len)
 		return 1

@@ -3,6 +3,7 @@
 /datum/game_mode/revolution/rp_revolution
 	name = "rp-revolution"
 	config_tag = "rp-revolution"
+	role_type = ROLE_REV
 	required_players = 4
 	required_players_secret = 15
 	required_enemies = 2
@@ -30,24 +31,22 @@
 	max_headrevs = 2
 	recommended_enemies = max_headrevs
 
-	var/list/datum/mind/possible_headrevs = get_players_for_role(BE_REV)
-
 	var/head_check = 0
 	for(var/mob/new_player/player in player_list)
 		if(player.mind.assigned_role in command_positions)
 			head_check = 1
 			break
 
-	for(var/datum/mind/player in possible_headrevs)
+	for(var/datum/mind/player in antag_candidates)
 		for(var/job in restricted_jobs)//Removing heads and such from the list
 			if(player.assigned_role == job)
-				possible_headrevs -= player
+				antag_candidates -= player
 
 	for (var/i=1 to max_headrevs)
-		if (possible_headrevs.len==0)
+		if (antag_candidates.len==0)
 			break
-		var/datum/mind/lenin = pick(possible_headrevs)
-		possible_headrevs -= lenin
+		var/datum/mind/lenin = pick(antag_candidates)	//>lenin LMAO
+		antag_candidates -= lenin
 		head_revolutionaries += lenin
 
 	if((head_revolutionaries.len==0)||(!head_check))

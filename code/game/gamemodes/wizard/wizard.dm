@@ -5,6 +5,7 @@
 /datum/game_mode/wizard
 	name = "wizard"
 	config_tag = "wizard"
+	role_type = ROLE_WIZARD
 	required_players = 2
 	required_players_secret = 10
 	required_enemies = 1
@@ -29,10 +30,7 @@
 /datum/game_mode/wizard/can_start()//This could be better, will likely have to recode it later
 	if(!..())
 		return 0
-	var/list/datum/mind/possible_wizards = get_players_for_role(BE_WIZARD)
-	if(possible_wizards.len==0)
-		return 0
-	var/datum/mind/wizard = pick(possible_wizards)
+	var/datum/mind/wizard = pick(antag_candidates)
 	wizards += wizard
 	modePlayer += wizard
 	wizard.assigned_role = "MODE" //So they aren't chosen for other jobs.
