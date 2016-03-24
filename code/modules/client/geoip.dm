@@ -1,5 +1,6 @@
 var/global/geoip_query_counter = 0
 var/global/geoip_next_counter_reset = 0
+var/global/list/geoip_ckey_updated = list()
 
 /datum/geoip_data
 	var/holder = null
@@ -23,7 +24,8 @@ var/global/geoip_next_counter_reset = 0
 	if(!try_update_geoip(C, addr))
 		return
 
-	if(ticker.current_state > GAME_STATE_STARTUP && status == "updated")
+	if(ticker.current_state > GAME_STATE_STARTUP && status == "updated" && !(C.ckey in geoip_ckey_updated))
+		geoip_ckey_updated |= C.ckey
 		message_admins("[holder] connected from ([country], [regionName], [city]) using ISP: ([isp]) with IP: ([ip]) Proxy: ([proxy])")
 
 /datum/geoip_data/proc/try_update_geoip(client/C, addr)
