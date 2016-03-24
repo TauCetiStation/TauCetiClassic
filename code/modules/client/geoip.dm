@@ -23,7 +23,7 @@ var/global/geoip_next_counter_reset = 0
 	if(!try_update_geoip(C, addr))
 		return
 
-	if (ticker.current_state > GAME_STATE_STARTUP)
+	if(ticker.current_state > GAME_STATE_STARTUP && status == "updated")
 		message_admins("[holder] connected from ([country], [regionName], [city]) using ISP: ([isp]) with IP: ([ip]) Proxy: ([proxy])")
 
 /datum/geoip_data/proc/try_update_geoip(client/C, addr)
@@ -34,9 +34,9 @@ var/global/geoip_next_counter_reset = 0
 		status = "admin"
 		return 0//Lets save calls.
 
-	holder = C.ckey
-
 	if(status != "updated")
+		holder = C.ckey
+
 		var/msg = geoip_check(addr)
 		if(msg == "limit reached" || msg == "export fail")
 			status = msg
