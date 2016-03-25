@@ -109,7 +109,10 @@ proc/RoundHealth(health)
 	var/holding = user.get_active_hand()
 	var/datum/progressbar/progbar
 	if (progress)
-		progbar = new(user, time, target)
+		if(user.client && (user.client.prefs.toggles & SHOW_PROGBAR))
+			progbar = new(user, time, target)
+		else
+			progress = 0
 
 	var/endtime = world.time+time
 	var/starttime = world.time
@@ -147,7 +150,10 @@ proc/RoundHealth(health)
 
 	var/datum/progressbar/progbar
 	if (progress)
-		progbar = new(user, delay, target)
+		if(user.client && (user.client.prefs.toggles & SHOW_PROGBAR))
+			progbar = new(user, delay, target)
+		else
+			progress = 0
 
 	var/endtime = world.time + delay
 	var/starttime = world.time
