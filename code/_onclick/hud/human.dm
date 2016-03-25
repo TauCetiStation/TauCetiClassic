@@ -351,53 +351,22 @@
 	mymob.throw_icon.alpha = ui_alpha
 	src.hotkeybuttons += mymob.throw_icon
 
-	mymob.oxygen = new /obj/screen()
-	mymob.oxygen.icon = ui_style
-	mymob.oxygen.icon_state = "oxy0"
-	mymob.oxygen.name = "oxygen"
-	mymob.oxygen.screen_loc = ui_oxygen
-
-	mymob.pressure = new /obj/screen()
-	mymob.pressure.icon = ui_style
-	mymob.pressure.icon_state = "pressure0"
-	mymob.pressure.name = "pressure"
-	mymob.pressure.screen_loc = ui_pressure
-
-	mymob.toxin = new /obj/screen()
-	mymob.toxin.icon = ui_style
-	mymob.toxin.icon_state = "tox0"
-	mymob.toxin.name = "toxin"
-	mymob.toxin.screen_loc = ui_toxin
-
 	mymob.internals = new /obj/screen()
 	mymob.internals.icon = ui_style
 	mymob.internals.icon_state = "internal0"
 	mymob.internals.name = "internal"
 	mymob.internals.screen_loc = ui_internal
 
-	mymob.fire = new /obj/screen()
-	mymob.fire.icon = ui_style
-	mymob.fire.icon_state = "fire0"
-	mymob.fire.name = "fire"
-	mymob.fire.screen_loc = ui_fire
-
-	mymob.bodytemp = new /obj/screen()
-	mymob.bodytemp.icon = ui_style
-	mymob.bodytemp.icon_state = "temp1"
-	mymob.bodytemp.name = "body temperature"
-	mymob.bodytemp.screen_loc = ui_temp
-
 	mymob.healths = new /obj/screen()
-	mymob.healths.icon = ui_style
+	mymob.healths.icon = 'icons/mob/screen_gen.dmi'
 	mymob.healths.icon_state = "health0"
 	mymob.healths.name = "health"
 	mymob.healths.screen_loc = ui_health
 
-	mymob.nutrition_icon = new /obj/screen()
-	mymob.nutrition_icon.icon = ui_style
-	mymob.nutrition_icon.icon_state = "nutrition0"
-	mymob.nutrition_icon.name = "nutrition"
-	mymob.nutrition_icon.screen_loc = ui_nutrition
+	mymob.healthdoll = new /obj/screen()
+	mymob.healthdoll.icon = 'icons/mob/screen_gen.dmi'
+	mymob.healthdoll.name = "health doll"
+	mymob.healthdoll.screen_loc = ui_healthdoll
 
 	mymob.pullin = new /obj/screen()
 	mymob.pullin.icon = ui_style
@@ -405,9 +374,9 @@
 	mymob.pullin.name = "pull"
 	mymob.pullin.screen_loc = ui_pull_resist
 	src.hotkeybuttons += mymob.pullin
-//для чейнджей
+
 	lingchemdisplay = new /obj/screen()
-	lingchemdisplay.icon = 'tauceti/icons/mob/screen_gen.dmi'
+	lingchemdisplay.icon = 'icons/mob/screen_gen.dmi'
 	lingchemdisplay.name = "chemical storage"
 	lingchemdisplay.icon_state = "power_display"
 	lingchemdisplay.screen_loc = ui_lingchemdisplay
@@ -415,12 +384,12 @@
 	lingchemdisplay.invisibility = 101
 
 	lingstingdisplay = new /obj/screen()
-	lingstingdisplay.icon = 'tauceti/icons/mob/screen_gen.dmi'
+	lingstingdisplay.icon = 'icons/mob/screen_gen.dmi'
 	lingstingdisplay.name = "current sting"
 	lingstingdisplay.screen_loc = ui_lingstingdisplay
 	lingstingdisplay.layer = 20
 	lingstingdisplay.invisibility = 101
-//
+
 	mymob.pain = new /obj/screen( null )
 
 	mymob.zone_sel = new /obj/screen/zone_sel( null )
@@ -453,12 +422,10 @@
 
 	mymob.client.screen = list()
 
-	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.oxygen, mymob.pressure, mymob.toxin, mymob.bodytemp, mymob.internals, mymob.fire, mymob.healths, mymob.nutrition_icon, mymob.pullin, mymob.gun_setting_icon, lingchemdisplay, lingstingdisplay) //, mymob.hands, mymob.rest, mymob.sleep) //, mymob.mach )
+	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.internals, mymob.healths, mymob.healthdoll, mymob.pullin, mymob.gun_setting_icon, lingchemdisplay, lingstingdisplay) //, mymob.hands, mymob.rest, mymob.sleep) //, mymob.mach )
 	mymob.client.screen += src.adding + src.hotkeybuttons
 	mymob.client.screen += mymob.client.void
 	inventory_shown = 0
-
-	return
 
 
 /mob/living/carbon/human/verb/toggle_hotkey_verbs()

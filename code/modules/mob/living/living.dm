@@ -1,11 +1,3 @@
-/mob/living/Life()
-	..()
-	if(stat != DEAD)
-		handle_actions()
-		add_ingame_age()
-
-	update_gravity(mob_has_gravity())
-
 /mob/living/Destroy()
 	..()
 	return QDEL_HINT_HARDDEL_NOW

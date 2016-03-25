@@ -896,6 +896,7 @@ mob/proc/yank_out_object()
 	valid_objects = get_visible_implants(0)
 	if(valid_objects.len == 1) //Yanking out last object - removing verb.
 		src.verbs -= /mob/proc/yank_out_object
+		clear_alert("embeddedobject")
 
 	if(istype(src,/mob/living/carbon/human))
 

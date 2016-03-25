@@ -203,7 +203,6 @@
 	if(lying)
 		drop_from_inventory(W)
 
-	update_action_buttons()
 	return 1
 
 
@@ -221,6 +220,8 @@
 	else if(W == src.r_hand)
 		src.r_hand = null
 		update_inv_r_hand()
+
+	W.screen_loc = null // will get moved if inventory is visible
 
 	W.loc = src
 	switch(slot)
