@@ -155,6 +155,7 @@
 #include "code\datums\disease.dm"
 #include "code\datums\mind.dm"
 #include "code\datums\modules.dm"
+#include "code\datums\progressbar.dm"
 #include "code\datums\recipe.dm"
 #include "code\datums\spell.dm"
 #include "code\datums\supplypacks.dm"
