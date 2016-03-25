@@ -433,7 +433,7 @@ mob/living/simple_animal/borer/proc/request_player()
 			continue
 		if(O.client)
 			var/client/C = O.client
-			if(!C.prefs.ignore_question.Find(ROLE_ALIEN) && (ROLE_ALIEN in C.prefs.be_role))
+			if(!C.prefs.ignore_question.Find("borer") && (ROLE_ALIEN in C.prefs.be_role))
 				question(C)
 
 mob/living/simple_animal/borer/proc/question(var/client/C)
@@ -445,7 +445,7 @@ mob/living/simple_animal/borer/proc/question(var/client/C)
 		if(response == "Yes")
 			transfer_personality(C)
 		else if (response == "Never for this round")
-			C.prefs.ignore_question += ROLE_ALIEN
+			C.prefs.ignore_question += "borer"
 
 mob/living/simple_animal/borer/proc/transfer_personality(var/client/candidate)
 

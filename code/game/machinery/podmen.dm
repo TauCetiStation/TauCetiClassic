@@ -96,7 +96,7 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 			continue
 		if(O.client)
 			var/client/C = O.client
-			if(!C.prefs.ignore_question.Find(ROLE_PLANT) && (ROLE_PLANT in C.prefs.be_role))
+			if(!C.prefs.ignore_question.Find("diona") && (ROLE_PLANT in C.prefs.be_role))
 				if(O.has_enabled_antagHUD == 1 && config.antag_hud_restricted) //No love for ghost with antaghud enabled
 					continue
 				question(C)
@@ -110,7 +110,7 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 		if(response == "Yes")
 			transfer_personality(C)
 		else if (response == "Never for this round")
-			C.prefs.ignore_question += ROLE_PLANT
+			C.prefs.ignore_question += "diona"
 
 /obj/item/seeds/replicapod/proc/transfer_personality(var/client/player)
 
