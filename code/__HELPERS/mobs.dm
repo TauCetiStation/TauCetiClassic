@@ -112,10 +112,12 @@ proc/RoundHealth(health)
 		progbar = new(user, time, target)
 
 	var/endtime = world.time+time
+	var/starttime = world.time
 	. = 1
 	while (world.time < endtime)
+		sleep(1)
 		if (progress)
-			progbar.update(endtime - world.time)
+			progbar.update(world.time - starttime)
 		if(!user || !target)
 			. = 0
 			break
@@ -124,7 +126,6 @@ proc/RoundHealth(health)
 		if(user.loc != user_loc || target.loc != target_loc || user.get_active_hand() != holding || user.incapacitated() || user.lying )
 			. = 0
 			break
-		sleep(1)
 	if (progress)
 		qdel(progbar)
 
@@ -152,6 +153,7 @@ proc/RoundHealth(health)
 	var/starttime = world.time
 	. = 1
 	while (world.time < endtime)
+		sleep(1)
 		if (progress)
 			progbar.update(world.time - starttime)
 
@@ -173,6 +175,5 @@ proc/RoundHealth(health)
 			if(user.get_active_hand() != holding)
 				. = 0
 				break
-		sleep(1)
 	if (progress)
 		qdel(progbar)
