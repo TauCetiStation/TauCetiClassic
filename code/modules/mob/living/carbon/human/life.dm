@@ -774,7 +774,8 @@
 		else if(adjusted_pressure >= species.hazard_low_pressure)
 			pressure_alert = -1
 		else
-			take_overall_damage(brute=LOW_PRESSURE_DAMAGE, used_weapon = "Low Pressure")
+			apply_effect(15, AGONY, 0)
+			take_overall_damage(burn=LOW_PRESSURE_DAMAGE, used_weapon = "Low Pressure")
 			pressure_alert = -2
 
 
@@ -1199,9 +1200,9 @@
 					qdel(a)
 
 				if(halloss > 100)
-					src << "<span class='notice'>You're in too much pain to keep going...</span>"
-					for(var/mob/O in oviewers(src, null))
-						O.show_message("<B>[src]</B> slumps to the ground, too weak to continue fighting.", 1)
+					//src << "<span class='notice'>You're in too much pain to keep going...</span>"
+					//for(var/mob/O in oviewers(src, null))
+					//	O.show_message("<B>[src]</B> slumps to the ground, too weak to continue fighting.", 1)
 					if(prob(3))
 						Paralyse(10)
 					else
