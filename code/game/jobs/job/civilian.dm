@@ -69,7 +69,7 @@
 	flag = MINER
 	department_flag = CIVILIAN
 	faction = "Station"
-	total_positions = 3
+	total_positions = 4
 	spawn_positions = 3
 	supervisors = "the quartermaster and the head of personnel"
 	selection_color = "#d7b088"
