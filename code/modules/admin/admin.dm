@@ -56,6 +56,7 @@ var/global/floorIsLava = 0
 		<a href='?src=\ref[src];subtlemessage=\ref[M]'>SM</a> -
 		<a href='?src=\ref[src];adminplayerobservejump=\ref[M]'>JMP</a>\] </b><br>
 		<b>Mob type</b> = [M.type]<br><br>
+		<b>GeoIP:</b> <A href='?src=\ref[src];geoip=\ref[M]'>Get</A><br><br>
 		<A href='?src=\ref[src];boot2=\ref[M]'>Kick</A> |
 		<A href='?_src_=holder;warn=[M.ckey]'>Warn</A> |
 		<A href='?_src_=holder;unwarn=[M.ckey]'>UNWarn</A> |

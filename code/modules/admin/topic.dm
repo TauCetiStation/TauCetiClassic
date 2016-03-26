@@ -918,6 +918,28 @@
 			return 1
 		return 0 //we didn't do anything!
 
+	else if(href_list["geoip"])
+		var/mob/M = locate(href_list["geoip"])
+		if (ismob(M))
+			if(!M.client)
+				return
+			var/dat = "<html><head><title>GeoIP info</title></head>"
+			var/client/C = M.client
+			if(C.geoip.status != "updated" || C.geoip.status != "admin")
+				C.geoip.try_update_geoip(C, C.address)
+			dat += "<center><b>Ckey:</b> [M.ckey]</center>"
+			dat += "<b>City:</b> [C.geoip.city]<br>"
+			dat += "<b>Country:</b> [C.geoip.country]<br>"
+			dat += "<b>CountryCode:</b> [C.geoip.countryCode]<br>"
+			dat += "<b>ISP:</b> [C.geoip.isp]<br>"
+			dat += "<b>Proxy:</b> [C.geoip.proxy]<br>"
+			dat += "<b>IP:</b> [C.geoip.ip]<br>"
+			dat += "<b>Region:</b> [C.geoip.region]<br>"
+			dat += "<b>Region Name:</b> [C.geoip.regionName]<br>"
+			dat += "<b>Timezone:</b> [C.geoip.timezone]<br>"
+			dat += "<hr><b>Status:</b> [C.geoip.status]"
+			usr << browse(dat, "window=geoip")
+
 	else if(href_list["boot2"])
 		var/mob/M = locate(href_list["boot2"])
 		if (ismob(M))
