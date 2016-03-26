@@ -25,9 +25,6 @@
 
 	var/finished = 0
 
-	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
-	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
-
 /datum/game_mode/abduction/announce()
 	world << "<B>The current game mode is - Abduction!</B>"
 	world << "There are alien <b>abductors</b> sent to [world.name] to perform nefarious experiments!"
@@ -135,9 +132,6 @@
 		equip_scientist(H,team_number)
 		greet_scientist(scientist,team_number)
 		H.regenerate_icons()
-
-	spawn (rand(waittime_l, waittime_h))
-		send_intercept()
 
 	return ..()
 

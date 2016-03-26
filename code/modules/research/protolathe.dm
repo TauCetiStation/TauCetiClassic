@@ -55,19 +55,19 @@ Note: Must be placed west/left of and R&D console to function.
 
 /obj/machinery/r_n_d/protolathe/proc/check_mat(datum/design/being_built, var/M)
 	switch(M)
-		if("$metal")
+		if(MAT_METAL)
 			return (m_amount - (being_built.materials[M]/efficiency_coeff) >= 0) ? 1 : 0
-		if("$glass")
+		if(MAT_GLASS)
 			return (g_amount - (being_built.materials[M]/efficiency_coeff) >= 0) ? 1 : 0
-		if("$gold")
+		if(MAT_GOLD)
 			return (gold_amount - (being_built.materials[M]/efficiency_coeff) >= 0) ? 1 : 0
-		if("$silver")
+		if(MAT_SILVER)
 			return (silver_amount - (being_built.materials[M]/efficiency_coeff) >= 0) ? 1 : 0
-		if("$phoron")
+		if(MAT_PHORON)
 			return (phoron_amount - (being_built.materials[M]/efficiency_coeff) >= 0) ? 1 : 0
-		if("$uranium")
+		if(MAT_URANIUM)
 			return (uranium_amount - (being_built.materials[M]/efficiency_coeff) >= 0) ? 1 : 0
-		if("$diamond")
+		if(MAT_DIAMOND)
 			return (diamond_amount - (being_built.materials[M]/efficiency_coeff) >= 0) ? 1 : 0
 		if("$clown")
 			return (clown_amount - (being_built.materials[M]/efficiency_coeff) >= 0) ? 1 : 0
