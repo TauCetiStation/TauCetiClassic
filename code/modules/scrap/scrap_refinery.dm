@@ -134,7 +134,7 @@ var/const/SAFETY_COOLDOWN = 100
 	playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, 0)
 	safety_mode = 1
 	update_icon()
-	L.loc = src.loc
+	L.forceMove(src.loc)
 
 	spawn(SAFETY_COOLDOWN)
 		playsound(src.loc, 'sound/machines/ping.ogg', 50, 0)
@@ -143,7 +143,7 @@ var/const/SAFETY_COOLDOWN = 100
 
 /obj/machinery/recycler/proc/eat(mob/living/L)
 
-	L.forceMove(src)
+	L.forceMove(src.loc)
 
 	if(issilicon(L))
 		playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)

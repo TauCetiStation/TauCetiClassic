@@ -1,6 +1,6 @@
 /obj/structure/scrap_cube
 	name = "compressed scrap"
-	desc = "Cube made of compressed scrap"
+	desc = "A cube made of scrap compressed with hydraulic clamp."
 	density = 1
 	anchored = 0
 	icon_state = "trash_cube"
