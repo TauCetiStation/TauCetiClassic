@@ -50,6 +50,7 @@ var/const/SAFETY_COOLDOWN = 100
 
 
 /obj/machinery/recycler/attackby(obj/item/I, mob/user, params)
+	add_fingerprint(user)
 	if (istype(I, /obj/item/weapon/card/emag))
 		emag_act(user)
 	if(default_deconstruction_screwdriver(user, "grinder-oOpen", "grinder-o0", I))
@@ -66,7 +67,6 @@ var/const/SAFETY_COOLDOWN = 100
 
 	default_deconstruction_crowbar(I)
 	..()
-	add_fingerprint(user)
 	return
 
 /obj/machinery/recycler/proc/emag_act(mob/user)
@@ -143,12 +143,12 @@ var/const/SAFETY_COOLDOWN = 100
 
 /obj/machinery/recycler/proc/eat(mob/living/L)
 
-	L.loc = src.loc
+	L.forceMove(src)
 
 	if(issilicon(L))
 		playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
 	else
-		playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
+		L.emote("scream",,, 1)
 
 	var/gib = 1
 	// By default, the emagged recycler will gib all non-carbons. (human simple animal mobs don't count)
@@ -173,7 +173,9 @@ var/const/SAFETY_COOLDOWN = 100
 	// For admin fun, var edit emagged to 2.
 	if(gib || emagged == 2)
 		L.gib()
+		playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
 	else if(emagged == 1)
-		for(var/i = 1 to 10)
-			sleep(5)
-			L.adjustBruteLoss(25)
+		for(var/i = 1 to 3)
+			sleep(10)
+			L.adjustBruteLoss(80)
+	L.anchored = 0

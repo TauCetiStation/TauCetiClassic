@@ -27,7 +27,7 @@
 
 /obj/structure/scrap/proc/make_cube()
 	var/obj/container = new /obj/structure/scrap_cube(src.loc, loot_max)
-	src.loc = container
+	src.forceMove(container)
 
 /obj/structure/scrap/New()
 	var/amt = rand(loot_min, loot_max)
@@ -169,6 +169,7 @@
 
 /obj/structure/scrap/medical
 	name = "medical refuse pile"
+	desc = "Pile of medical refuse. They sure don't cut expenses on these. "
 	parts_icon = 'icons/obj/structures/scrap/medical_trash.dmi'
 	loot_list = list(
 		/obj/random/meds/medical_supply/,
@@ -181,6 +182,7 @@
 
 /obj/structure/scrap/vehicle
 	name = "industrial debris pile"
+	desc = "Pile of used machinery. You could use tools from this to build something."
 	parts_icon = 'icons/obj/structures/scrap/vehicle.dmi'
 	loot_list = list(
 		/obj/random/tools/tech_supply/guaranteed,
@@ -195,6 +197,7 @@
 
 /obj/structure/scrap/food
 	name = "food trash pile"
+	desc = "Pile of thrown away food. Someone sure have lots of spare food while children on Mars are starving."
 	parts_icon = 'icons/obj/structures/scrap/food_trash.dmi'
 	loot_list = list(
 		/obj/random/foods/food_without_garbage,
@@ -208,6 +211,7 @@
 
 /obj/structure/scrap/guns
 	name = "gun refuse pile"
+	desc = "Pile of military supply refuse. Who thought it was a clever idea to throw that out?"
 	parts_icon = 'icons/obj/structures/scrap/guns_trash.dmi'
 	loot_list = list(
 		/obj/preset/storage/weapons/random/,
@@ -220,6 +224,31 @@
 		/obj/random/materials/metal_scrap,
 		/obj/random/materials/rods_scrap,
 		)
+
+/obj/structure/scrap/poor
+	name = "mixed rubbish"
+	desc = "Pile of mixed rubbish. Useless and rotten, mostly."
+	parts_icon = 'icons/obj/structures/scrap/all_mixed.dmi'
+	loot_list = list(
+		/obj/random/misc/all,
+		/obj/random/misc/all,
+		/obj/random/misc/all,
+		/obj/random/misc/all,
+		/obj/item/weapon/shard,
+		/obj/random/materials/rods_scrap
+		)
+
+/obj/structure/scrap/poor/large
+	name = "large mixed rubbish"
+	opacity = 1
+	density = 1
+	icon_state = "big"
+	loot_min = 10
+	loot_max = 20
+	dig_amount = 15
+	base_min = 9
+	base_max = 14
+
 /obj/structure/scrap/vehicle/large
 	name = "large industrial debris pile"
 	opacity = 1

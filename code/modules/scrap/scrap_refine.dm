@@ -11,9 +11,9 @@
 		item.forceMove(loc)
 	qdel(src)
 
-/obj/structure/scrap_cube/New(var/newloc, var/size = 4)
-	if(size > 10)
-		icon_state = "trash_cube"
+/obj/structure/scrap_cube/New(var/newloc, var/size = -1)
+	if(size < 0)
+		new /obj/random/scrap/moderate_weighted(src)
 	..(newloc)
 
 /obj/structure/scrap_cube/attackby(obj/item/W, mob/user)

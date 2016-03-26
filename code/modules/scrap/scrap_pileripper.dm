@@ -15,16 +15,13 @@
 	anchored = 1
 	density = 1
 	use_power = 1
-	idle_power_usage = 100
-	active_power_usage = 600
+	idle_power_usage = 300
 
 	var/safety_mode = 0 // Temporality stops the machine if it detects a mob
-	var/active = 0
 	var/icon_name = "grinder-b"
 	var/blood = 0
-	var/cooldown = 30
+	var/cooldown = 10
 	var/last_ripped = 0
-	var/turf/ripped_turf
 
 /obj/machinery/pile_ripper/New()
 	// On us
@@ -36,10 +33,8 @@
 	update_icon()
 
 /obj/machinery/pile_ripper/process()
-	if(!active || !ripped_turf)
-		update_use_power(1)
-		return
 
+	var/turf/ripped_turf = get_turf(get_step(src, 8))
 	if((last_ripped + cooldown) >= world.time)
 		return
 	last_ripped = world.time + cooldown
@@ -48,29 +43,22 @@
 			var/obj/structure/scrap/pile = ripped_item
 			pile.dig_out_lump(loc)
 		else if(istype(ripped_item, /obj/item))
-			ripped_item.loc = loc
-			ripped_item.throw_at(get_edge_target_turf(src,4),rand(1,5),15)
+			ripped_item.forceMove(src.loc)
+			if(prob(20))
+				qdel(ripped_item)
+		else if(istype(ripped_item, /obj/structure/scrap_cube))
+			var/obj/structure/scrap_cube/cube = ripped_item
+			cube.make_pile()
 	for(var/mob/living/poor_soul in ripped_turf)
-		if(emagged)
+		if(emagged || prob(30))
 			spawn()
 				eat(poor_soul)
 		else
 			stop(poor_soul)
 
-/obj/machinery/pile_ripper/attack_hand(mob/user as mob)
-	if(..())
-		return
-	if(active)
-		active = 0
-	else
-		active = 1
-		update_use_power(2)
-		ripped_turf = get_turf(get_step(src,8))
-	update_icon()
-
 /obj/machinery/pile_ripper/RefreshParts()
 	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
-		cooldown = 30 / M.rating
+		cooldown = 10 / M.rating
 
 /obj/machinery/pile_ripper/examine(mob/user)
 	..()
@@ -85,8 +73,6 @@
 /obj/machinery/pile_ripper/proc/stop(mob/living/L)
 	playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, 0)
 	safety_mode = 1
-	active = 0
-	update_use_power(1)
 	update_icon()
 	L.loc = src.loc
 
@@ -96,11 +82,10 @@
 		update_icon()
 
 /obj/machinery/pile_ripper/attackby(obj/item/I, mob/user, params)
+	add_fingerprint(user)
 	if (istype(I, /obj/item/weapon/card/emag))
 		emag_act(user)
 	if(default_deconstruction_screwdriver(user, "grinder-bOpen", "grinder-b0", I))
-		active = 0
-		update_use_power(0)
 		return
 
 	if(exchange_parts(user, I))
@@ -114,7 +99,6 @@
 
 	default_deconstruction_crowbar(I)
 	..()
-	add_fingerprint(user)
 	return
 
 /obj/machinery/pile_ripper/proc/emag_act(mob/user)
@@ -131,13 +115,10 @@
 	var/is_powered = !(stat & (BROKEN|NOPOWER))
 	if(safety_mode)
 		is_powered = 0
-	if(!is_powered)
-		active = 0
-	icon_state = icon_name + "[active]" + "[(blood ? "bld" : "")]" // add the blood tag at the end
+	icon_state = icon_name + "[is_powered]" + "[(blood ? "bld" : "")]" // add the blood tag at the end
 
 
 /obj/machinery/pile_ripper/proc/eat(mob/living/L)
-	L.loc = src.loc
 	if(issilicon(L))
 		playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
 	else
@@ -148,21 +129,26 @@
 	if(iscarbon(L))
 		gib = 0
 		if(L.stat == CONSCIOUS)
-			L.say("응응응응읽촹!")
+			L.emote("scream",,, 1)
 		add_blood(L)
-
 	if(!blood && !issilicon(L))
 		blood = 1
 		update_icon()
-
-
 	if(gib)
 		L.gib()
 
 	// Instantly lie down, also go unconscious from the pain, before you die.
 	L.Paralyse(5)
-	L.anchored = 1
-	var/rip_times = 3
+	// Strip some clothing
+
+	for(var/obj/item/I in L.get_equipped_items())
+		if(L.unEquip(I))
+			I.forceMove(loc)
+			if(prob(15)) //saved by ripped cloth
+				return
+
+	// Start shredding meat
+
 	var/slab_name = L.name
 	var/slab_type = /obj/item/weapon/reagent_containers/food/snacks/meat
 
@@ -171,21 +157,13 @@
 		slab_type = /obj/item/weapon/reagent_containers/food/snacks/meat/human
 	else if(istype(L, /mob/living/carbon/monkey))
 		slab_type = /obj/item/weapon/reagent_containers/food/snacks/meat/monkey
-	for(var/i = 1 to rip_times)
-		sleep(10)
-		var/obj/item/weapon/reagent_containers/food/snacks/meat/new_meat = new slab_type(get_turf(get_step(src, 4)))
-		new_meat.name = "[slab_name] [new_meat.name]"
-		new_meat.reagents.add_reagent("nutriment", L.nutrition / 15)
-		L.adjustBruteLoss(45)
-	for(var/obj/item/I in L.get_equipped_items())
-		if(L.unEquip(I))
-			if(prob(30))
-				qdel(I)
-			else
-				I.loc = loc // Drop it onto the turf for throwing.
-				I.throw_at(get_edge_target_turf(src,4),rand(1,5),15)
-	L.gib()
+	var/obj/item/weapon/reagent_containers/food/snacks/meat/new_meat = new slab_type(get_turf(get_step(src, 4)))
+	new_meat.name = "[slab_name] [new_meat.name]"
 
-/obj/item/weapon/paper/pile_ripper
-	name = "paper - 'garbage duty instructions'"
-	info = "<h2>New Assignment</h2> You have been assigned to collect garbage from trash bins, located around the station. The crewmembers will put their trash into it and you will collect the said trash.<br><br>There is a recycling machine near your closet, inside maintenance; use it to recycle the trash for a small chance to get useful minerals. Then deliver these minerals to cargo or engineering. You are our last hope for a clean station, do not screw this up!"
+	new_meat.reagents.add_reagent("nutriment", 10)
+	L.nutrition -= 100
+	if(L.nutrition > 0)
+		L.adjustBruteLoss(45)
+	else
+		L.gib()
+
