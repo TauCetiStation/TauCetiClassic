@@ -195,7 +195,7 @@
 /obj/screen/pull
 	name = "stop pulling"
 	icon = 'icons/mob/screen1_Midnight.dmi'
-	icon_state = "pull"
+	icon_state = "pull1"
 
 /obj/screen/pull/Click()
 	usr.stop_pulling()
@@ -203,7 +203,7 @@
 /obj/screen/pull/update_icon(mob/mymob)
 	if(!mymob) return
 	if(mymob.pulling)
-		icon_state = "pull"
+		icon_state = "pull1"
 	else
 		icon_state = "pull0"
 
