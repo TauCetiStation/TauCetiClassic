@@ -12,8 +12,6 @@
 
 	votable = 0
 
-	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
-	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
 	var/finished = 0
 
 /datum/game_mode/ninja/announce()
@@ -92,8 +90,6 @@
 		if(N.wear_suit && istype(N.wear_suit,/obj/item/clothing/suit/space/space_ninja))
 			var/obj/item/clothing/suit/space/space_ninja/S = N.wear_suit
 			S:randomize_param()
-	spawn (rand(waittime_l, waittime_h))
-		send_intercept()
 	return ..()
 
 /datum/game_mode/ninja/check_finished()

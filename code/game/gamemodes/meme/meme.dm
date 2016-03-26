@@ -33,9 +33,6 @@
 	var/const/prob_right_objective_l = 25 //lower bound on probability of determining the objective correctly
 	var/const/prob_right_objective_h = 50 //upper bound on probability of determining the objective correctly
 
-	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
-	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
-
 /datum/game_mode/meme/announce()
 	world << "<B>The current game mode is - Meme!</B>"
 	world << "<B>An unknown creature has infested the mind of a crew member. Find and destroy it by any means necessary.</B>"
@@ -151,10 +148,7 @@
 
 	log_admin("Created [memes.len] memes.")
 
-	spawn (rand(waittime_l, waittime_h))
-		send_intercept()
-	..()
-	return
+	return ..()
 
 
 /datum/game_mode/proc/forge_meme_objectives(var/datum/mind/meme, var/datum/mind/first_host)

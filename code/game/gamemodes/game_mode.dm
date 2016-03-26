@@ -34,6 +34,8 @@
 	var/role_type = null
 	var/newscaster_announcements = null
 	var/ert_disabled = 0
+	var/const/waittime_l = 600
+	var/const/waittime_h = 1800 // started at 1800
 	var/uplink_welcome = "Syndicate Uplink Console:"
 	var/uplink_uses = 10
 	var/uplink_items = {"Highly Visible and Dangerous Weapons;
@@ -117,6 +119,8 @@ Implants;
 	if(ticker && ticker.mode)
 		feedback_set_details("game_mode","[ticker.mode]")
 	feedback_set_details("server_ip","[world.internet_address]:[world.port]")
+	spawn(rand(waittime_l, waittime_h))
+		send_intercept()
 	start_state = new /datum/station_state()
 	start_state.count(1)
 	return 1

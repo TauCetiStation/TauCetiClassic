@@ -41,5 +41,4 @@
 		if(!config.objectives_disabled)
 			forge_changeling_objectives(changeling)
 		greet_changeling(changeling)
-	..()
-	return
+	return ..()

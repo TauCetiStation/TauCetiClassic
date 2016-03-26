@@ -72,14 +72,15 @@
 ********************/
 
 /obj/machinery/microwave/attackby(var/obj/item/O as obj, var/mob/user as mob)
-	if(!broken && !dirty && !operating)
+	if(operating)
+		return
+	if(!broken && dirty<100)
 		if(default_deconstruction_screwdriver(user, "mw-o", "mw", O))
 			return
 		if(default_unfasten_wrench(user, O))
 			return
-
-	if(exchange_parts(user, O))
-		return
+		if(exchange_parts(user, O))
+			return
 
 	default_deconstruction_crowbar(O)
 

@@ -87,6 +87,7 @@ Infestation:
 
 		greet_xeno(xeno)
 		qdel(original)
+	return ..()
 
 /datum/game_mode/infestation/proc/greet_xeno(var/datum/mind/xeno)
 	xeno.current << "\green <B>You are a Xenomorph.</b>"

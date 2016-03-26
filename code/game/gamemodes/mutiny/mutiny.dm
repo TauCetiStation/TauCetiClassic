@@ -386,7 +386,7 @@ datum/game_mode/mutiny
 	update_all_icons()
 	spawn(0)
 		reveal_directives()
-	..()
+	return ..()
 
 /mob/living/carbon/human/proc/recruit_loyalist()
 	set name = "Recruit Loyalist"

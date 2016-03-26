@@ -16,9 +16,6 @@ VOX HEIST ROUNDTYPE
 
 	votable = 0
 
-	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
-	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
-
 	var/list/raid_objectives = list()     //Raid objectives.
 	var/list/obj/cortical_stacks = list() //Stacks for 'leave nobody behind' objective.
 
@@ -111,8 +108,7 @@ VOX HEIST ROUNDTYPE
 		raider.objectives = raid_objectives
 		greet_vox(raider)
 
-	spawn (rand(waittime_l, waittime_h))
-		send_intercept()
+	return ..()
 
 /datum/game_mode/heist/proc/is_raider_crew_safe()
 
