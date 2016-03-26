@@ -113,10 +113,10 @@ var/const/SAFETY_COOLDOWN = 100
 			recycle(AM)
 		else // Can't recycle
 			playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, 0)
-			AM.loc = src.loc
+			AM.forceMove(src.loc)
 
 /obj/machinery/recycler/proc/recycle(obj/item/I, sound = 1)
-	I.loc = src.loc
+	I.forceMove(src.loc)
 	if(!istype(I))
 		return
 
