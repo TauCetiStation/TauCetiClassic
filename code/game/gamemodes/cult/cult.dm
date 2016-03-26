@@ -35,8 +35,6 @@
 
 	var/datum/mind/sacrifice_target = null
 	var/finished = 0
-	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
-	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
 
 	var/list/startwords = list("blood","join","self","hell")
 
@@ -108,9 +106,7 @@
 			cult_mind.current << "<span class ='blue'>Within the rules,</span> try to act as an opposing force to the crew. Further RP and try to make sure other players have </i>fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>"
 		cult_mind.special_role = "Cultist"
 
-	spawn (rand(waittime_l, waittime_h))
-		send_intercept()
-	..()
+	return ..()
 
 
 /datum/game_mode/cult/proc/memoize_cult_objectives(var/datum/mind/cult_mind)
