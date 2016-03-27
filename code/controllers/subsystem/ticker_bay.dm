@@ -206,6 +206,7 @@ var/datum/subsystem/ticker/ticker
 	var/can_continue = src.mode.pre_setup()//Setup special modes
 	if(!can_continue)
 		qdel(mode)
+		mode = null
 		current_state = GAME_STATE_PREGAME
 		world << "<B>Error setting up [master_mode].</B> Reverting to pre-game lobby."
 		SSjob.ResetOccupations()
