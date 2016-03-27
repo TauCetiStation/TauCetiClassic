@@ -5,7 +5,6 @@ var/const/SAFETY_COOLDOWN = 100
 	board_type = "machine"
 	build_path = "/obj/machinery/recycler"
 	origin_tech = "engineering = 3"
-	frame_desc = "Requires 1 Manipulator"
 	req_components = list("/obj/item/weapon/stock_parts/manipulator" = 1)
 
 
@@ -105,8 +104,7 @@ var/const/SAFETY_COOLDOWN = 100
 	if(move_dir == eat_dir)
 		if(isliving(AM))
 			if(emagged)
-				spawn()
-					eat(AM)
+				eat(AM)
 			else
 				stop(AM)
 		else if(istype(AM, /obj/item))
@@ -136,10 +134,10 @@ var/const/SAFETY_COOLDOWN = 100
 	update_icon()
 	L.forceMove(src.loc)
 
-	spawn(SAFETY_COOLDOWN)
-		playsound(src.loc, 'sound/machines/ping.ogg', 50, 0)
-		safety_mode = 0
-		update_icon()
+	sleep(SAFETY_COOLDOWN)
+	playsound(src.loc, 'sound/machines/ping.ogg', 50, 0)
+	safety_mode = 0
+	update_icon()
 
 /obj/machinery/recycler/proc/eat(mob/living/L)
 

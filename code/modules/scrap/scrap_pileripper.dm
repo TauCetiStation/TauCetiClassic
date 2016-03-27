@@ -3,7 +3,6 @@
 	board_type = "machine"
 	build_path = "/obj/machinery/recycler"
 	origin_tech = "engineering = 3"
-	frame_desc = "Requires 1 Manipulator"
 	req_components = list("/obj/item/weapon/stock_parts/manipulator" = 1)
 
 /obj/machinery/pile_ripper
@@ -33,10 +32,12 @@
 	update_icon()
 
 /obj/machinery/pile_ripper/process()
-
 	var/turf/ripped_turf = get_turf(get_step(src, 8))
 	if((last_ripped + cooldown) >= world.time)
 		return
+	if(safety_mode)
+		playsound(src.loc, 'sound/machines/ping.ogg', 50, 0)
+		safety_mode = 0
 	last_ripped = world.time + cooldown
 	for(var/obj/ripped_item in ripped_turf)
 		if(istype(ripped_item, /obj/structure/scrap))
@@ -51,8 +52,7 @@
 			cube.make_pile()
 	for(var/mob/living/poor_soul in ripped_turf)
 		if(emagged || prob(30))
-			spawn()
-				eat(poor_soul)
+			eat(poor_soul)
 		else
 			stop(poor_soul)
 
@@ -76,10 +76,8 @@
 	update_icon()
 	L.forceMove(src.loc)
 
-	spawn(SAFETY_COOLDOWN)
-		playsound(src.loc, 'sound/machines/ping.ogg', 50, 0)
-		safety_mode = 0
-		update_icon()
+	last_ripped += SAFETY_COOLDOWN
+	update_icon()
 
 /obj/machinery/pile_ripper/attackby(obj/item/I, mob/user, params)
 	add_fingerprint(user)

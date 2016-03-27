@@ -115,6 +115,7 @@
 
 /mob/proc/reset_view(atom/A)
 	if (client)
+		animate(client, pixel_x = 0, pixel_y = 0, time = 10)
 		if (istype(A, /atom/movable))
 			client.perspective = EYE_PERSPECTIVE
 			client.eye = A
@@ -388,7 +389,6 @@
 		var/mob/living/M = src
 		if(M.cameraFollow)
 			M.cameraFollow = null
-		animate(M.client, pixel_x = 0, pixel_y = 0, time = 0)
 
 /mob/Topic(href, href_list)
 	if(href_list["mach_close"])

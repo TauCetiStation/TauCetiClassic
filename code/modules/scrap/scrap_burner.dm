@@ -16,7 +16,7 @@ datum/design/pacman/scrap
 	req_tech = list("programming" = 2, "phorontech" = 3, "powerstorage" = 2, "engineering" = 4)
 	build_type = IMPRINTER
 	reliability = 79
-	materials = list("$glass" = 2000, "sacid" = 20) //TODO: Fix name of glass
+	materials = list(MAT_GLASS = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/pacman/scrap
 
 /obj/machinery/power/port_gen/pacman/scrap
