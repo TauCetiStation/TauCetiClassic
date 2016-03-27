@@ -53,7 +53,10 @@
 	dropped.loc = newloc
 	dropped.pixel_x = rand(-400, 400)
 	dropped.pixel_z = 1000
+	var/original_density = dropped.density
+	var/original_opacity = dropped.opacity
 	dropped.density = 0
+	dropped.opacity = 0
 	animate(dropped, pixel_z = 0, pixel_x = 0 , time = 15)
 	sleep(15)
 	dropped.density = 1
@@ -65,3 +68,5 @@
 	for(var/mob/living/M in oviewers(5, dropped))
 		shake_camera(M, 8, 3)
 	playsound(dropped.loc, 'sound/effects/meteorimpact.ogg', 50, 1)
+	dropped.density = original_density
+	dropped.opacity = original_opacity

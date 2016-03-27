@@ -115,7 +115,6 @@
 
 /mob/proc/reset_view(atom/A)
 	if (client)
-		animate(client, pixel_x = 0, pixel_y = 0, time = 10)
 		if (istype(A, /atom/movable))
 			client.perspective = EYE_PERSPECTIVE
 			client.eye = A
