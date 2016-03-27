@@ -53,8 +53,8 @@
 		last_move = 0
 		return
 
-	src.move_speed = world.timeofday - src.l_move_time
-	src.l_move_time = world.timeofday
+	src.move_speed = world.time - src.l_move_time
+	src.l_move_time = world.time
 
 	last_move = direct
 
