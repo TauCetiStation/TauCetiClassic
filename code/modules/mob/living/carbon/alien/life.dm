@@ -301,11 +301,6 @@
 		handle_vision()
 		handle_hud_icons()
 
-		//if(pullin)	pullin.icon_state = "pull[pulling ? 1 : 0]"
-		if(pullin)
-			if(pulling)								pullin.icon_state = "pull"
-			else									pullin.icon_state = "pull0"
-
 		if(stat != DEAD)
 			if(loc && !isturf(loc) && !is_type_in_list(loc, ignore_vision_inside))
 				overlay_fullscreen("blind", /obj/screen/fullscreen/blind)

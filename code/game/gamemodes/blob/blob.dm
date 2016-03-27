@@ -19,9 +19,6 @@ var/list/blob_nodes = list()
 
 	restricted_jobs = list("Cyborg", "AI")
 
-	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
-	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
-
 	var/declared = 0
 
 	var/cores_to_spawn = 1
@@ -110,11 +107,6 @@ var/list/blob_nodes = list()
 	if(SSshuttle)
 		SSshuttle.always_fake_recall = 1
 
-
-	spawn(10)
-		start_state = new /datum/station_state()
-		start_state.count()
-
 	spawn(0)
 
 		var/wait_time = rand(waittime_l, waittime_h)
@@ -143,7 +135,7 @@ var/list/blob_nodes = list()
 		sleep(2000)
 		stage(1)
 
-	..()
+	return ..()
 
 /datum/game_mode/blob/proc/stage(var/stage)
 
