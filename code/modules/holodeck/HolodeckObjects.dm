@@ -100,18 +100,18 @@
 				if(1)
 					M.visible_message("<span class='warning'>[user] slams [M] against \the [src]!</span>")
 					M.apply_damage(7)
-					hit(10)
+					take_damage(10)
 				if(2)
 					M.visible_message("<span class='danger'>[user] bashes [M] against \the [src]!</span>")
 					if (prob(50))
 						M.Weaken(1)
 					M.apply_damage(10)
-					hit(25)
+					take_damage(25)
 				if(3)
 					M.visible_message("<span class='danger'><big>[user] crushes [M] against \the [src]!</big></span>")
 					M.Weaken(5)
 					M.apply_damage(20)
-					hit(50)
+					take_damage(50)
 			return
 
 	if(W.flags & NOBLUDGEON) return
@@ -124,7 +124,7 @@
 		user << ("<span class='notice'>It's a holowindow, you can't dismantle it!</span>")
 	else
 		if(W.damtype == BRUTE || W.damtype == BURN)
-			hit(W.force)
+			take_damage(W.force)
 			if(health <= 7)
 				anchored = 0
 				update_nearby_icons()
