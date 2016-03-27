@@ -32,12 +32,13 @@
 	update_icon()
 
 /obj/machinery/pile_ripper/process()
-	var/turf/ripped_turf = get_turf(get_step(src, 8))
 	if((last_ripped + cooldown) >= world.time)
 		return
 	if(safety_mode)
 		playsound(src.loc, 'sound/machines/ping.ogg', 50, 0)
 		safety_mode = 0
+		update_icon()
+	var/turf/ripped_turf = get_turf(get_step(src, 8))
 	last_ripped = world.time + cooldown
 	for(var/obj/ripped_item in ripped_turf)
 		if(istype(ripped_item, /obj/structure/scrap))
