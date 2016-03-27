@@ -196,6 +196,7 @@ var/datum/subsystem/ticker/ticker
 	if (!src.mode.can_start())
 		world << "<B>Unable to start [mode.name].</B> Not enough players, [mode.required_players] players needed. Reverting to pre-game lobby."
 		qdel(mode)
+		mode = null
 		current_state = GAME_STATE_PREGAME
 		SSjob.ResetOccupations()
 		return 0
