@@ -20,6 +20,7 @@
 /datum/game_mode/cult
 	name = "cult"
 	config_tag = "cult"
+	role_type = ROLE_CULTIST
 	restricted_jobs = list("Chaplain","AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain")
 	protected_jobs = list()
 	required_players = 5
@@ -44,8 +45,6 @@
 	var/eldertry = 0
 
 	var/const/acolytes_needed = 5 //for the survive objective
-	var/const/min_cultists_to_start = 3
-	var/const/max_cultists_to_start = 4
 	var/acolytes_survived = 0
 
 
@@ -66,20 +65,19 @@
 	if(config.protect_roles_from_antagonist)
 		restricted_jobs += protected_jobs
 
-	var/list/cultists_possible = get_players_for_role(BE_CULTIST)
-	for(var/datum/mind/player in cultists_possible)
+	for(var/datum/mind/player in antag_candidates)
 		for(var/job in restricted_jobs)//Removing heads and such from the list
 			if(player.assigned_role == job)
-				cultists_possible -= player
+				antag_candidates -= player
 
-	for(var/cultists_number = 1 to max_cultists_to_start)
-		if(!cultists_possible.len)
+	for(var/cultists_number = 1 to recommended_enemies)
+		if(!antag_candidates.len)
 			break
-		var/datum/mind/cultist = pick(cultists_possible)
-		cultists_possible -= cultist
+		var/datum/mind/cultist = pick(antag_candidates)
+		antag_candidates -= cultist
 		cult += cultist
 
-	return (cult.len>0)
+	return (cult.len >= required_enemies)
 
 
 /datum/game_mode/cult/post_setup()

@@ -21,7 +21,7 @@
 /datum/game_mode/gang
 	name = "gang war"
 	config_tag = "gang"
-	//antag_flag = BE_GANG
+	role_type = ROLE_REV
 	restricted_jobs = list("Security Officer", "Warden", "Detective", "AI", "Cyborg","Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer")
 	required_players = 15
 	required_players_secret = 15
@@ -48,8 +48,6 @@
 //Gets the round setup, cancelling if there's not enough players at the start//
 ///////////////////////////////////////////////////////////////////////////////
 /datum/game_mode/gang/pre_setup()
-
-	var/list/antag_candidates = get_players_for_role(BE_REV)
 
 	if(config.protect_roles_from_antagonist)
 		restricted_jobs += protected_jobs

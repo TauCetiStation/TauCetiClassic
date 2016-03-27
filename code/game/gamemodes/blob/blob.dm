@@ -9,6 +9,7 @@ var/list/blob_nodes = list()
 /datum/game_mode/blob
 	name = "blob"
 	config_tag = "blob"
+	role_type = ROLE_BLOB
 
 	required_players = 30
 	required_players_secret = 25
@@ -31,8 +32,6 @@ var/list/blob_nodes = list()
 	var/list/infected_crew = list()
 
 /datum/game_mode/blob/pre_setup()
-	var/list/datum/mind/antag_candidates = get_players_for_role(BE_ALIEN)
-
 	cores_to_spawn = max(round(num_players()/players_per_core, 1), 1)
 
 	blobwincount = initial(blobwincount) * cores_to_spawn

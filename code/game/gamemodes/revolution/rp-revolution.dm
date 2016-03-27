@@ -12,6 +12,7 @@
 /datum/game_mode/rp_revolution
 	name = "rp-revolution"
 	config_tag = "rp-revolution"
+	role_type = ROLE_REV
 
 	var/finished = 0
 
@@ -179,7 +180,7 @@
 
 	for(var/mob/living/carbon/human/player in world)
 		if(player.client)
-			if(player.client.be_syndicate & BE_REV)
+			if(ROLE_REV in player.client.be_syndicate)
 				candidates += player.mind
 
 	if(candidates.len < 1)
