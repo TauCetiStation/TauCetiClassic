@@ -174,6 +174,8 @@
 
 	screen += void
 
+	if(!geoip)
+		geoip = new(src, address)
 
 	//////////////
 	//DISCONNECT//

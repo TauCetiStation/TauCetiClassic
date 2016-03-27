@@ -38,8 +38,9 @@ var/datum/subsystem/shuttle/SSshuttle
 	var/points_per_decisecond = 0.005	//points gained every decisecond
 	var/points_per_slip = 2
 	var/points_per_crate = 5
-	var/points_per_platinum = 5	// 5 points per sheet
-	var/points_per_phoron = 5
+	var/points_per_platinum = 10
+	var/points_per_phoron = 3
+	var/points_per_scrap = 3
 		//control
 	var/ordernum
 	var/list/shoppinglist = list()
@@ -474,7 +475,7 @@ var/datum/subsystem/shuttle/SSshuttle
 
 	var/phoron_count = 0
 	var/plat_count = 0
-
+	var/scrap_count = 0
 	for(var/atom/movable/MA in shuttle)
 		if(MA.anchored)	continue
 
@@ -506,15 +507,17 @@ var/datum/subsystem/shuttle/SSshuttle
 				if(istype(A, /obj/item/stack/sheet/mineral/platinum))
 					var/obj/item/stack/sheet/mineral/platinum/P = A
 					plat_count += P.amount
+				// Sell scrap
+				if(istype(A, /obj/item/stack/sheet/refined_scrap))
+					var/obj/item/stack/sheet/refined_scrap/P = A
+					scrap_count += P.amount
 
 		qdel(MA)
 		CHECK_TICK
 
-	if(phoron_count)
-		points += phoron_count * points_per_phoron
-
-	if(plat_count)
-		points += plat_count * points_per_platinum
+	points += phoron_count * points_per_phoron
+	points += plat_count * points_per_platinum
+	points += scrap_count * points_per_scrap
 
 //Buyin
 /datum/subsystem/shuttle/proc/buy()

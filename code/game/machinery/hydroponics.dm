@@ -1,4 +1,4 @@
-#define HYDRO_RATING_MULTIPLIER 0.50
+#define HYDRO_RATING_MULTIPLIER 0.35
 
 /obj/machinery/hydroponics
 	name = "hydroponics tray"
@@ -49,7 +49,7 @@
 	for (var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
 		tmp_capacity += M.rating
 	for (var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
-		rating = HYDRO_RATING_MULTIPLIER * M.rating
+		rating = M.rating
 	maxwater = tmp_capacity * 50 // Up to 300
 	maxnutri = tmp_capacity * 5 // Up to 30
 	waterlevel = maxwater
@@ -117,52 +117,52 @@
 		lastcycle = world.time
 		if(planted && !dead)
 			// Advance age
-			age++
+			age += 1 * HYDRO_SPEED_MULTIPLIER
 			needs_update = 1
 
 //Nutrients//////////////////////////////////////////////////////////////
 			// Nutrients deplete slowly
 			if(prob(50))
-				adjustNutri(-1 / rating)
+				adjustNutri(-1 / rating * HYDRO_SPEED_MULTIPLIER)
 
 			// Lack of nutrients hurts non-weeds
 			if(nutrilevel <= 0 && myseed.plant_type != 1)
-				adjustHealth(-rand(1,3))
+				adjustHealth(-rand(1,3) * HYDRO_SPEED_MULTIPLIER)
 
 //Water//////////////////////////////////////////////////////////////////
 			// Drink random amount of water
-			adjustWater(-rand(1,6) / rating)
+			adjustWater(-rand(1,6) / rating * HYDRO_SPEED_MULTIPLIER)
 
 			// If the plant is dry, it loses health pretty fast, unless mushroom
 			if(waterlevel <= 10 && myseed.plant_type != 2)
-				adjustHealth(-rand(0,1) / rating)
+				adjustHealth(-rand(0,1) / rating * HYDRO_SPEED_MULTIPLIER)
 				if(waterlevel <= 0)
-					adjustHealth(-rand(0,2) / rating)
+					adjustHealth(-rand(0,2) / rating * HYDRO_SPEED_MULTIPLIER)
 
 			// Sufficient water level and nutrient level = plant healthy
 			else if(waterlevel > 10 && nutrilevel > 0)
-				adjustHealth(rand(1,2) / rating)
+				adjustHealth(rand(1,2) / rating * HYDRO_SPEED_MULTIPLIER)
 				if(prob(5))  //5 percent chance the weed population will increase
-					adjustWeeds(1 / rating)
+					adjustWeeds(1 / rating * HYDRO_SPEED_MULTIPLIER)
 
 //Toxins/////////////////////////////////////////////////////////////////
 
 			// Too much toxins cause harm, but when the plant drinks the contaiminated water, the toxins disappear slowly
 			if(toxic >= 40 && toxic < 80)
-				adjustHealth(-1 / rating)
-				adjustToxic(-rand(1,10) / rating)
+				adjustHealth(-1 / rating * HYDRO_SPEED_MULTIPLIER)
+				adjustToxic(-rand(1,10) / rating * HYDRO_SPEED_MULTIPLIER)
 			else if(toxic >= 80) // I don't think it ever gets here tbh unless above is commented out
 				adjustHealth(-3)
-				adjustToxic(-rand(1,10) / rating)
+				adjustToxic(-rand(1,10) / rating * HYDRO_SPEED_MULTIPLIER)
 
 //Pests & Weeds//////////////////////////////////////////////////////////
 
 			else if(pestlevel >= 5)
-				adjustHealth(-1 / rating)
+				adjustHealth(-1 / rating * HYDRO_SPEED_MULTIPLIER)
 
 			// If it's a weed, it doesn't stunt the growth
 			if(weedlevel >= 5 && myseed.plant_type != 1 )
-				adjustHealth(-1 / rating)
+				adjustHealth(-1 / rating * HYDRO_SPEED_MULTIPLIER)
 
 
 //Health & Age///////////////////////////////////////////////////////////
@@ -170,11 +170,11 @@
 			// Plant dies if health <= 0
 			if(health <= 0)
 				plantdies()
-				adjustWeeds(1 / rating) // Weeds flourish
+				adjustWeeds(1 / rating * HYDRO_SPEED_MULTIPLIER) // Weeds flourish
 
 			// If the plant is too old, lose health fast
 			if(age > myseed.lifespan)
-				adjustHealth(-rand(1,5) / rating)
+				adjustHealth(-rand(1,5) / rating * HYDRO_SPEED_MULTIPLIER)
 
 			// Harvest code
 			if(age > myseed.production && (age - lastproduce) > myseed.production && (!harvest && !dead))
@@ -184,10 +184,10 @@
 				else
 					lastproduce = age
 			if(prob(5))  // On each tick, there's a 5 percent chance the pest population will increase
-				adjustPests(1 / rating)
+				adjustPests(1 / rating * HYDRO_SPEED_MULTIPLIER)
 		else
 			if(waterlevel > 10 && nutrilevel > 0 && prob(10))  // If there's no plant, the percentage chance is 10%
-				adjustWeeds(1 / rating)
+				adjustWeeds(1 / rating * HYDRO_SPEED_MULTIPLIER)
 
 		// Weeeeeeeeeeeeeeedddssss
 

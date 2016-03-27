@@ -15,6 +15,7 @@
 
 	var/list/affecting	// the list of all items that will be moved this ptick
 	var/id = ""			// the control ID	- must match controller ID
+	var/verted = 1		// set to -1 to have the conveyour belt be inverted, so you can use the other corner icons
 
 // Auto conveyour is always on unless unpowered
 
@@ -34,7 +35,7 @@
 		operating = 0
 	else
 		operating = 1
-	icon_state = "conveyor[operating]"
+	icon_state = "conveyor[operating * verted]"
 
 // create a conveyor
 /obj/machinery/conveyor/New(loc, newdir)
@@ -69,10 +70,16 @@
 		if(SOUTHWEST)
 			forwards = WEST
 			backwards = NORTH
+	if(verted == -1)
+		var/temp = forwards
+		forwards = backwards
+		backwards = temp
 	if(operating == 1)
 		movedir = forwards
-	else
+	else if(operating == -1)
 		movedir = backwards
+	else
+		operating = 0
 	update()
 
 /obj/machinery/conveyor/proc/update()
@@ -84,7 +91,7 @@
 		operating = 0
 	if(stat & NOPOWER)
 		operating = 0
-	icon_state = "conveyor[operating]"
+	icon_state = "conveyor[operating * verted]"
 
 	// machine process
 	// move items to the target location
@@ -96,18 +103,18 @@
 	use_power(100)
 
 	affecting = loc.contents - src		// moved items will be all in loc
-	spawn(1)	// slight delay to prevent infinite propagation due to map order	//TODO: please no spawn() in process(). It's a very bad idea
-		var/items_moved = 0
-		for(var/atom/movable/A in affecting)
-			if(!A.anchored)
-				if(A.loc == src.loc) // prevents the object from being affected if it's not currently here.
-					step(A,movedir)
-					items_moved++
-			if(items_moved >= 10)
-				break
+	sleep(1)	// slight delay to prevent infinite propagation due to map order
+	var/items_moved = 0
+	for(var/atom/movable/A in affecting)
+		if(!A.anchored)
+			if(A.loc == src.loc) // prevents the object from being affected if it's not currently here.
+				step(A,movedir)
+				items_moved++
+		if(items_moved >= 10)
+			break
 
 // attack with item, place item on conveyor
-/obj/machinery/conveyor/attackby(var/obj/item/I, mob/user)
+/obj/machinery/conveyor/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/crowbar))
 		if(!(stat & BROKEN))
 			var/obj/item/conveyor_construct/C = new/obj/item/conveyor_construct(src.loc)
@@ -123,28 +130,18 @@
 			update_move_direction()
 			user << "<span class='notice'>You rotate [src].</span>"
 			return
-	if(isrobot(user))	return //Carn: fix for borgs dropping their modules on conveyor belts
-	user.drop_item()
-	if(I && I.loc)	I.loc = src.loc
+	if(isrobot(user))
+		return //Carn: fix for borgs dropping their modules on conveyor belts
+	if(!user.drop_item())
+		user << "<span class='warning'>\The [I] is stuck to your hand, you cannot place it on the conveyor!</span>"
+		return
+	if(I && I.loc)
+		I.loc = src.loc
 	return
 
 // attack with hand, move pulled object onto conveyor
 /obj/machinery/conveyor/attack_hand(mob/user as mob)
-	if ((!( user.canmove ) || user.restrained() || !( user.pulling )))
-		return
-	if (user.pulling.anchored)
-		return
-	if ((user.pulling.loc != user.loc && get_dist(user, user.pulling) > 1))
-		return
-	if (ismob(user.pulling))
-		var/mob/M = user.pulling
-		M.stop_pulling()
-		step(user.pulling, get_dir(user.pulling.loc, src))
-		user.stop_pulling()
-	else
-		step(user.pulling, get_dir(user.pulling.loc, src))
-		user.stop_pulling()
-	return
+	user.Move_Pulled(src)
 
 
 // make the conveyor broken
@@ -215,7 +212,7 @@
 
 	spawn(5)		// allow map load
 		conveyors = list()
-		for(var/obj/machinery/conveyor/C in world)
+		for(var/obj/machinery/conveyor/C in machines)
 			if(C.id == id)
 				conveyors += C
 
@@ -268,12 +265,12 @@
 	update()
 
 	// find any switches with same id as this one, and set their positions to match us
-	for(var/obj/machinery/conveyor_switch/S in world)
+	for(var/obj/machinery/conveyor_switch/S in machines)
 		if(S.id == src.id)
 			S.position = position
 			S.update()
 
-/obj/machinery/conveyor_switch/attackby(var/obj/item/I, mob/user)
+/obj/machinery/conveyor_switch/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/crowbar))
 		var/obj/item/conveyor_switch_construct/C = new/obj/item/conveyor_switch_construct(src.loc)
 		C.id = id

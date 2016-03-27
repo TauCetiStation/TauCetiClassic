@@ -14,6 +14,7 @@
 /datum/game_mode/revolution
 	name = "revolution"
 	config_tag = "revolution"
+	role_type = ROLE_REV
 	restricted_jobs = list("Security Officer", "Warden", "Detective", "AI", "Cyborg","Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer")
 	required_players = 4
 	required_players_secret = 15
@@ -29,8 +30,7 @@
 	var/finished = 0
 	var/checkwin_counter = 0
 	var/max_headrevs = 3
-	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
-	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
+
 ///////////////////////////
 //Announces the game type//
 ///////////////////////////
@@ -47,24 +47,22 @@
 	if(config.protect_roles_from_antagonist)
 		restricted_jobs += protected_jobs
 
-	var/list/datum/mind/possible_headrevs = get_players_for_role(BE_REV)
-
 	var/head_check = 0
 	for(var/mob/new_player/player in player_list)
 		if(player.mind.assigned_role in command_positions)
 			head_check = 1
 			break
 
-	for(var/datum/mind/player in possible_headrevs)
+	for(var/datum/mind/player in antag_candidates)
 		for(var/job in restricted_jobs)//Removing heads and such from the list
 			if(player.assigned_role == job)
-				possible_headrevs -= player
+				antag_candidates -= player
 
 	for (var/i=1 to max_headrevs)
-		if (possible_headrevs.len==0)
+		if (antag_candidates.len==0)
 			break
-		var/datum/mind/lenin = pick(possible_headrevs)
-		possible_headrevs -= lenin
+		var/datum/mind/lenin = pick(antag_candidates)
+		antag_candidates -= lenin
 		head_revolutionaries += lenin
 
 	if((head_revolutionaries.len==0)||(!head_check))
@@ -95,9 +93,7 @@
 	modePlayer += head_revolutionaries
 	if(SSshuttle)
 		SSshuttle.always_fake_recall = 1
-	spawn (rand(waittime_l, waittime_h))
-		send_intercept()
-	..()
+	return ..()
 
 
 /datum/game_mode/revolution/process()

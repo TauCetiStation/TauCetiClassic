@@ -4,8 +4,6 @@
 	required_players = 1
 	required_players_secret = 15
 
-	var/const/waittime_l = 300 //lower bound on time before intercept arrives (in tenths of seconds)
-	var/const/waittime_h = 600 //upper bound on time before intercept arrives (in tenths of seconds)
 	var/checkwin_counter =0
 	var/finished = 0
 
@@ -137,11 +135,7 @@
 	cruiser_arrival = world.time + (10 * 90 * 60)
 	stage = 1
 
-	spawn (rand(waittime_l, waittime_h))
-		send_intercept()
-
-
-	..()
+	return ..()
 
 
 /datum/game_mode/epidemic/process()

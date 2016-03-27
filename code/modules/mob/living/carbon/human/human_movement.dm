@@ -64,6 +64,9 @@
 	if(shock_stage >= 10)
 		tally += 3
 
+	if(pull_debuff)
+		tally += pull_debuff
+
 	if(FAT in src.mutations)
 		tally += 1.5
 	if (bodytemperature < 283.222)

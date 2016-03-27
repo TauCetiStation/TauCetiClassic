@@ -9,6 +9,7 @@ var/list/blob_nodes = list()
 /datum/game_mode/blob
 	name = "blob"
 	config_tag = "blob"
+	role_type = ROLE_BLOB
 
 	required_players = 30
 	required_players_secret = 25
@@ -18,9 +19,6 @@ var/list/blob_nodes = list()
 	votable = 0
 
 	restricted_jobs = list("Cyborg", "AI")
-
-	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
-	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
 
 	var/declared = 0
 
@@ -34,8 +32,6 @@ var/list/blob_nodes = list()
 	var/list/infected_crew = list()
 
 /datum/game_mode/blob/pre_setup()
-	var/list/datum/mind/antag_candidates = get_players_for_role(BE_ALIEN)
-
 	cores_to_spawn = max(round(num_players()/players_per_core, 1), 1)
 
 	blobwincount = initial(blobwincount) * cores_to_spawn
@@ -110,11 +106,6 @@ var/list/blob_nodes = list()
 	if(SSshuttle)
 		SSshuttle.always_fake_recall = 1
 
-
-	spawn(10)
-		start_state = new /datum/station_state()
-		start_state.count()
-
 	spawn(0)
 
 		var/wait_time = rand(waittime_l, waittime_h)
@@ -143,7 +134,7 @@ var/list/blob_nodes = list()
 		sleep(2000)
 		stage(1)
 
-	..()
+	return ..()
 
 /datum/game_mode/blob/proc/stage(var/stage)
 

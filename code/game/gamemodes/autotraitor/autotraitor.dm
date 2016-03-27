@@ -6,6 +6,7 @@
 	name = "AutoTraitor"
 	//config_tag = "extend-a-traitormongous"
 	config_tag = "autotraitor"
+	role_type = ROLE_TRAITOR
 
 	votable = 0
 
@@ -21,12 +22,10 @@
 	if(config.protect_roles_from_antagonist)
 		restricted_jobs += protected_jobs
 
-	possible_traitors = get_players_for_role(BE_TRAITOR)
-
-	for(var/datum/mind/player in possible_traitors)
+	for(var/datum/mind/player in antag_candidates)
 		for(var/job in restricted_jobs)
 			if(player.assigned_role == job)
-				possible_traitors -= player
+				antag_candidates -= player
 
 
 	for(var/mob/new_player/P in world)
@@ -41,7 +40,7 @@
 	traitor_prob = (num_players - (max_traitors - 1) * 10) * 10
 
 	// Stop setup if no possible traitors
-	if(!possible_traitors.len)
+	if(!antag_candidates.len)
 		return 0
 
 	if(config.traitor_scaling)
@@ -53,9 +52,9 @@
 
 
 	for(var/i = 0, i < num_traitors, i++)
-		var/datum/mind/traitor = pick(possible_traitors)
+		var/datum/mind/traitor = pick(antag_candidates)
 		traitors += traitor
-		possible_traitors.Remove(traitor)
+		antag_candidates.Remove(traitor)
 
 	for(var/datum/mind/traitor in traitors)
 		if(!traitor || !istype(traitor))
@@ -90,7 +89,7 @@
 				playercount += 1
 			if (player.client && player.mind && player.mind.special_role && player.stat != DEAD)
 				traitorcount += 1
-			if (player.client && player.mind && !player.mind.special_role && player.stat != DEAD && (player.client && player.client.prefs.be_special & BE_TRAITOR) && !jobban_isbanned(player, "Syndicate"))
+			if (player.client && player.mind && !player.mind.special_role && player.stat != DEAD && (player.client && (ROLE_TRAITOR in player.client.prefs.be_role)) && !jobban_isbanned(player, "Syndicate"))
 				possible_traitors += player
 		for(var/datum/mind/player in possible_traitors)
 			for(var/job in restricted_jobs)
@@ -161,7 +160,7 @@
 	if(SSshuttle.departed)
 		return
 	//message_admins("Late Join Check")
-	if((character.client && character.client.prefs.be_special & BE_TRAITOR) && !jobban_isbanned(character, "Syndicate"))
+	if((character.client && (ROLE_TRAITOR in character.client.prefs.be_role)) && !jobban_isbanned(character, "Syndicate"))
 		//message_admins("Late Joiner has Be Syndicate")
 		//message_admins("Checking number of players")
 		var/playercount = 0
@@ -209,5 +208,3 @@
 				//message_admins("New traitor roll failed.  No new traitor.")
 	//else
 		//message_admins("Late Joiner does not have Be Syndicate")
-
-

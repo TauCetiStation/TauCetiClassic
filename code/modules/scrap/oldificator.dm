@@ -1,10 +1,7 @@
 /obj/item/proc/make_old()
-	color = list(0.393,0.349,0.272,
-				 0.769,0.686,0.534,
-				 0.189,0.168,0.131,
-				 0,0,0) //sepia matrix
-	name = "old " + name
-	desc += " Warranty has expired."
+	color = pick("#996633", "#663300", "#666666")
+	name = pick("old ", "expired ", "dirty ") + name
+	desc += pick(" Warranty has expired.", " The inscriptions on this thing were erased by time.", " Looks completely wasted.")
 	for(var/obj/item/sub_item in contents)
 		sub_item.make_old()
 	update_icon()
@@ -41,6 +38,9 @@
 	if(prob(25))
 		rigged = 1
 	..()
-
+/obj/item/stack/sheet/make_old()
+	return
+/obj/item/stack/rods/make_old()
+	return
 /obj/item/weapon/shard/make_old()
 	return

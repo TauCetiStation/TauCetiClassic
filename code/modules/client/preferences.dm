@@ -2,26 +2,6 @@
 
 var/list/preferences_datums = list()
 
-var/global/list/special_roles = list( //keep synced with the defines BE_* in setup.dm --rastaf
-//some autodetection here.
-	"Traitor" = IS_MODE_COMPILED("traitor"),             // 0
-	"Operative" = IS_MODE_COMPILED("nuclear"),           // 1
-	"Changeling" = IS_MODE_COMPILED("changeling"),       // 2
-	"Wizard" = IS_MODE_COMPILED("wizard"),               // 3
-	"Malf AI" = IS_MODE_COMPILED("malfunction"),         // 4
-	"Revolutionary" = IS_MODE_COMPILED("revolution"),    // 5
-	"Alien candidate" = 1, //always show                 // 6
-	"pAI candidate" = 1, // -- TLE                       // 7
-	"Cultist" = IS_MODE_COMPILED("cult"),                // 8
-	"Ninja" = "true",									 // 9
-	"Raider" = IS_MODE_COMPILED("heist"),			 	 // 10
-	"Diona" = 1,                                         // 11
-	"Meme" = IS_MODE_COMPILED("meme"),				 	 // 12
-	"Mutineer" = IS_MODE_COMPILED("mutiny"),			 // 13
-	"Shadowling" = IS_MODE_COMPILED("shadowling"),		 // 14
-	"Abductor" = IS_MODE_COMPILED("abduction"),			 // 15
-)
-
 var/const/MAX_SAVE_SLOTS = 10
 
 //used for alternate_option
@@ -43,16 +23,20 @@ var/const/MAX_SAVE_SLOTS = 10
 	var/last_id
 	var/menu_type = "general"
 	var/submenu_type = "body"
+	var/list/ignore_question = list()		//For roles which getting player_saves with question system
 
 	//game-preferences
 	var/UI_style = "White"
 	var/UI_style_color = "#ffffff"
 	var/UI_style_alpha = 255
 	var/ooccolor = "#b82e00"
-	var/be_special = 0					//Special role selection
 	var/toggles = TOGGLES_DEFAULT
 	var/chat_toggles = TOGGLES_DEFAULT_CHAT
 	var/ghost_orbit = GHOST_ORBIT_CIRCLE
+
+	//antag preferences
+	var/list/be_role = list()
+	var/uplinklocation = "PDA"
 
 	//character preferences
 	var/real_name						//our character's name
@@ -86,6 +70,7 @@ var/const/MAX_SAVE_SLOTS = 10
 	var/citizenship = "None"            //Current home system.
 	var/faction = "None"                //Antag faction/general associated faction.
 	var/religion = "None"               //Religious association.
+	var/nanotrasen_relation = "Neutral"
 
 	//Mob preview
 	var/icon/preview_icon = null
@@ -117,10 +102,6 @@ var/const/MAX_SAVE_SLOTS = 10
 	var/sec_record = ""
 	var/gen_record = ""
 	var/disabilities = 0
-
-	var/nanotrasen_relation = "Neutral"
-
-	var/uplinklocation = "PDA"
 
 	// OOC Metadata:
 	var/metadata = ""

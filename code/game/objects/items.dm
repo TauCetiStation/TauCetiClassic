@@ -13,6 +13,7 @@
 	var/hitsound = null
 	var/wet = 0
 	var/w_class = 3.0
+	var/can_embed = 1
 	flags = FPRINT | TABLEPASS
 	var/slot_flags = 0		//This is used to determine on which slots an item can fit.
 	pass_flags = PASSTABLE
@@ -40,6 +41,7 @@
 	var/slowdown = 0 // How much clothing is slowing you down. Negative values speeds you up
 	var/canremove = 1 //Mostly for Ninja code at this point but basically will not allow the item to be removed if set to 0. /N
 	var/armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+	var/list/materials = list()
 	var/list/allowed = null //suit storage stuff.
 	var/list/can_be_placed_into = list(
 		/obj/structure/table,
