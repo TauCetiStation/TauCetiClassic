@@ -5,6 +5,7 @@
 /datum/game_mode/wizard
 	name = "wizard"
 	config_tag = "wizard"
+	role_type = ROLE_WIZARD
 	required_players = 2
 	required_players_secret = 10
 	required_enemies = 1
@@ -17,10 +18,6 @@
 
 	var/finished = 0
 
-	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
-	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
-
-
 /datum/game_mode/wizard/announce()
 	world << "<B>The current game mode is - Wizard!</B>"
 	world << "<B>There is a \red SPACE WIZARD\black on the station. You can't let him achieve his objective!</B>"
@@ -29,10 +26,7 @@
 /datum/game_mode/wizard/can_start()//This could be better, will likely have to recode it later
 	if(!..())
 		return 0
-	var/list/datum/mind/possible_wizards = get_players_for_role(BE_WIZARD)
-	if(possible_wizards.len==0)
-		return 0
-	var/datum/mind/wizard = pick(possible_wizards)
+	var/datum/mind/wizard = pick(antag_candidates)
 	wizards += wizard
 	modePlayer += wizard
 	wizard.assigned_role = "MODE" //So they aren't chosen for other jobs.
@@ -59,10 +53,7 @@
 		name_wizard(wizard.current)
 		greet_wizard(wizard)
 
-	spawn (rand(waittime_l, waittime_h))
-		send_intercept()
-	..()
-	return
+	return ..()
 
 
 /datum/game_mode/proc/forge_wizard_objectives(var/datum/mind/wizard)

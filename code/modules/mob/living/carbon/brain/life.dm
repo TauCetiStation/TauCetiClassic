@@ -238,8 +238,6 @@
 			else
 				healths.icon_state = "health7"
 
-		if(pullin)	pullin.icon_state = "pull[pulling ? 1 : 0]"
-
 		if(stat != DEAD)
 			if(loc && !isturf(loc) && !is_type_in_list(loc, ignore_vision_inside))
 				overlay_fullscreen("blind", /obj/screen/fullscreen/blind)

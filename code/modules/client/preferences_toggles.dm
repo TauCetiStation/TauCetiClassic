@@ -134,16 +134,18 @@
 		src << sound(null, repeat = 0, wait = 0, volume = 0, channel = 2)
 	feedback_add_details("admin_verb","TAmbi") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-//be special
-/client/verb/toggle_be_special(role in be_special_flags)
+/client/verb/toggle_be_role(role in special_roles)
 	set name = "Toggle SpecialRole Candidacy"
 	set category = "Preferences"
 	set desc = "Toggles which special roles you would like to be a candidate for, during events."
-	var/role_flag = be_special_flags[role]
-	if(!role_flag)	return
-	prefs.be_special ^= role_flag
+	var/role_type = role
+	if(!role_type)	return
+	if(role_type in prefs.be_role)
+		prefs.be_role -= role_type
+	else
+		prefs.be_role += role_type
 	prefs.save_preferences()
-	src << "You will [(prefs.be_special & role_flag) ? "now" : "no longer"] be considered for [role] events (where possible)."
+	src << "You will [(role_type in prefs.be_role) ? "now" : "no longer"] be considered for [role] events (where possible)."
 	feedback_add_details("admin_verb","TBeSpecial") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/verb/change_ui()

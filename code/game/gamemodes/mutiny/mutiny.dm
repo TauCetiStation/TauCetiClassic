@@ -16,6 +16,7 @@ datum/game_mode/mutiny
 
 	name = "mutiny"
 	config_tag = "mutiny"
+	role_type = ROLE_MUTINEER
 	required_players = 7
 	recommended_enemies = 2
 	required_players_secret = 10
@@ -85,7 +86,7 @@ datum/game_mode/mutiny
 	proc/get_head_mutineer_candidates()
 		var/list/candidates[0]
 		for(var/mob/mutineer in player_list)
-			if(mutineer.client.prefs.be_special & BE_MUTINEER)
+			if(ROLE_MUTINEER in mutineer.client.prefs.be_role)
 				for(var/job in command_positions - "Captain")
 					if(mutineer.mind && mutineer.mind.assigned_role == job)
 						candidates.Add(mutineer.mind)
@@ -385,7 +386,7 @@ datum/game_mode/mutiny
 	update_all_icons()
 	spawn(0)
 		reveal_directives()
-	..()
+	return ..()
 
 /mob/living/carbon/human/proc/recruit_loyalist()
 	set name = "Recruit Loyalist"

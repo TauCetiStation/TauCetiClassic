@@ -7,6 +7,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 /datum/game_mode/changeling
 	name = "changeling"
 	config_tag = "changeling"
+	role_type = ROLE_CHANGELING
 	restricted_jobs = list("AI", "Cyborg")
 	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain")
 	required_players = 2
@@ -36,9 +37,6 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	var/const/prob_right_objective_l = 25 //lower bound on probability of determining the objective correctly
 	var/const/prob_right_objective_h = 50 //upper bound on probability of determining the objective correctly
 
-	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
-	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
-
 	var/changeling_amount = 4
 
 /datum/game_mode/changeling/announce()
@@ -50,20 +48,18 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	if(config.protect_roles_from_antagonist)
 		restricted_jobs += protected_jobs
 
-	var/list/datum/mind/possible_changelings = get_players_for_role(BE_CHANGELING)
-
-	for(var/datum/mind/player in possible_changelings)
+	for(var/datum/mind/player in antag_candidates)
 		for(var/job in restricted_jobs)//Removing robots from the list
 			if(player.assigned_role == job)
-				possible_changelings -= player
+				antag_candidates -= player
 
 	changeling_amount = 1 + round(num_players() / 10)
 
-	if(possible_changelings.len>0)
+	if(antag_candidates.len>0)
 		for(var/i = 0, i < changeling_amount, i++)
-			if(!possible_changelings.len) break
-			var/datum/mind/changeling = pick(possible_changelings)
-			possible_changelings -= changeling
+			if(!antag_candidates.len) break
+			var/datum/mind/changeling = pick(antag_candidates)
+			antag_candidates -= changeling
 			changelings += changeling
 			modePlayer += changelings
 		return 1
@@ -78,10 +74,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 			forge_changeling_objectives(changeling)
 		greet_changeling(changeling)
 
-	spawn (rand(waittime_l, waittime_h))
-		send_intercept()
-	..()
-	return
+	return ..()
 
 
 /datum/game_mode/proc/forge_changeling_objectives(var/datum/mind/changeling)

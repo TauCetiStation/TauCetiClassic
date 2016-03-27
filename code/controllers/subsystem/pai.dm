@@ -193,7 +193,7 @@ var/datum/subsystem/pai/SSpai
 			for(var/datum/paiCandidate/c in SSpai.candidates)
 				if(c.key == O.key)
 					hasSubmitted = 1
-			if(!hasSubmitted && (ROLE_PAI in O.client.prefs.be_special))
+			if(!hasSubmitted && (ROLE_PAI in O.client.prefs.be_role))
 				question(O.client)
 
 /datum/subsystem/pai/proc/question(client/C)

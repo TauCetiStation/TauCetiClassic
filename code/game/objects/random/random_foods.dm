@@ -21,13 +21,15 @@
 	icon = 'icons/obj/drinks.dmi'
 	icon_state = "grapesoda"
 /obj/random/foods/food_snack/item_to_spawn()
-		return pick(prob(2);/obj/item/weapon/reagent_containers/food/snacks/candy,\
-					prob(2);/obj/item/weapon/reagent_containers/food/drinks/dry_ramen,\
-					prob(2);/obj/item/weapon/reagent_containers/food/snacks/chips,\
-					prob(2);/obj/item/weapon/reagent_containers/food/snacks/sosjerky,\
-					prob(2);/obj/item/weapon/reagent_containers/food/snacks/no_raisin,\
-					prob(2);/obj/item/weapon/reagent_containers/food/snacks/spacetwinkie,\
-					prob(2);/obj/item/weapon/reagent_containers/food/snacks/cheesiehonkers)
+		return pick(\
+						prob(2);/obj/item/weapon/reagent_containers/food/snacks/candy,\
+						prob(2);/obj/item/weapon/reagent_containers/food/drinks/dry_ramen,\
+						prob(2);/obj/item/weapon/reagent_containers/food/snacks/chips,\
+						prob(2);/obj/item/weapon/reagent_containers/food/snacks/sosjerky,\
+						prob(2);/obj/item/weapon/reagent_containers/food/snacks/no_raisin,\
+						prob(2);/obj/item/weapon/reagent_containers/food/snacks/spacetwinkie,\
+						prob(2);/obj/item/weapon/reagent_containers/food/snacks/cheesiehonkers\
+					)
 
 /obj/random/foods/drink_bottle
 	name = "Random Snack Food Pile"
@@ -43,9 +45,11 @@
 	icon = 'icons/obj/food.dmi'
 	icon_state = "mysterysoup"
 /obj/random/foods/food_without_garbage/item_to_spawn()
-		return pick(prob(5);/obj/random/foods/food_snack,\
-					prob(1);/obj/random/foods/drink_bottle,\
-					prob(2);/obj/random/foods/drink_can)
+		return pick(\
+						prob(5);/obj/random/foods/food_snack,\
+						prob(1);/obj/random/foods/drink_bottle,\
+						prob(2);/obj/random/foods/drink_can\
+					)
 
 /obj/random/foods/food_with_garbage
 	name = "Random Food Supply with Garbage"
@@ -53,7 +57,9 @@
 	icon = 'icons/obj/food.dmi'
 	icon_state = "mysterysoup"
 /obj/random/foods/food_with_garbage/item_to_spawn()
-		return pick(prob(5);/obj/random/foods/food_snack,\
-					prob(1);/obj/random/foods/drink_bottle,\
-					prob(2);/obj/random/foods/drink_can,\
-					prob(16);/obj/random/foods/food_trash)
+		return pick(\
+						prob(5);/obj/random/foods/food_snack,\
+						prob(1);/obj/random/foods/drink_bottle,\
+						prob(2);/obj/random/foods/drink_can,\
+						prob(16);/obj/random/foods/food_trash\
+					)

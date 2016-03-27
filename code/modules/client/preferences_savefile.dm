@@ -47,10 +47,9 @@
 			save_character()
 			return 0
 
-	//general preferences
+	//General preferences
 	S["ooccolor"]			>> ooccolor
 	S["UI_style"]			>> UI_style
-	S["be_special"]			>> be_special
 	S["default_slot"]		>> default_slot
 	S["chat_toggles"]		>> chat_toggles
 	S["toggles"]			>> toggles
@@ -61,12 +60,14 @@
 	S["UI_style_color"]		>> UI_style_color
 	S["UI_style_alpha"]		>> UI_style_alpha
 
+	//Antag preferences
+	S["be_role"]			>> be_role
+
 	//Sanitize
 	ooccolor		= sanitize_hexcolor(ooccolor, initial(ooccolor))
 	UI_style		= sanitize_inlist(UI_style, list("White", "Midnight","Orange","old"), initial(UI_style))
-	be_special		= sanitize_integer(be_special, 0, 65535, initial(be_special))
 	default_slot	= sanitize_integer(default_slot, 1, MAX_SAVE_SLOTS, initial(default_slot))
-	toggles			= sanitize_integer(toggles, 0, 65535, initial(toggles))
+	toggles		= sanitize_integer(toggles, 0, 65535, initial(toggles))
 	chat_toggles	= sanitize_integer(chat_toggles, 0, 65535, initial(chat_toggles))
 	ghost_orbit 	= sanitize_inlist(ghost_orbit, ghost_orbits, initial(ghost_orbit))
 	randomslot		= sanitize_integer(randomslot, 0, 1, initial(randomslot))
@@ -85,7 +86,7 @@
 	//general preferences
 	S["ooccolor"]			<< ooccolor
 	S["UI_style"]			<< UI_style
-	S["be_special"]			<< be_special
+	S["be_role"]			<< be_role
 	S["default_slot"]		<< default_slot
 	S["toggles"]			<< toggles
 	S["chat_toggles"]		<< chat_toggles
@@ -147,7 +148,7 @@
 	S["med_record"]			>> med_record
 	S["sec_record"]			>> sec_record
 	S["gen_record"]			>> gen_record
-	S["be_special"]			>> be_special
+	S["be_role"]			>> be_role
 	S["disabilities"]		>> disabilities
 	S["player_alt_titles"]	>> player_alt_titles
 	S["organ_data"]			>> organ_data
@@ -207,6 +208,7 @@
 	if(isnull(disabilities)) disabilities = 0
 	if(!player_alt_titles) player_alt_titles = new()
 	if(!organ_data) src.organ_data = list()
+	if(!be_role) src.be_role = list()
 
 	if(!home_system) home_system = "None"
 	if(!citizenship) citizenship = "None"
@@ -301,7 +303,7 @@
 	S["sec_record"]			<< sec_record
 	S["gen_record"]			<< gen_record
 	S["player_alt_titles"]		<< player_alt_titles
-	S["be_special"]			<< be_special
+	S["be_role"]			<< be_role
 	S["disabilities"]		<< disabilities
 	S["organ_data"]			<< organ_data
 
