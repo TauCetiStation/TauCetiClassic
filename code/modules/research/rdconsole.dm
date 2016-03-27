@@ -363,19 +363,19 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 							g2g = 0
 							break
 						switch(M)
-							if("$metal")
+							if(MAT_METAL)
 								linked_lathe.m_amount = max(0, (linked_lathe.m_amount-(being_built.materials[M]/coeff)))
-							if("$glass")
+							if(MAT_GLASS)
 								linked_lathe.g_amount = max(0, (linked_lathe.g_amount-(being_built.materials[M]/coeff)))
-							if("$gold")
+							if(MAT_GOLD)
 								linked_lathe.gold_amount = max(0, (linked_lathe.gold_amount-(being_built.materials[M]/coeff)))
-							if("$silver")
+							if(MAT_SILVER)
 								linked_lathe.silver_amount = max(0, (linked_lathe.silver_amount-(being_built.materials[M]/coeff)))
-							if("$phoron")
+							if(MAT_PHORON)
 								linked_lathe.phoron_amount = max(0, (linked_lathe.phoron_amount-(being_built.materials[M]/coeff)))
-							if("$uranium")
+							if(MAT_URANIUM)
 								linked_lathe.uranium_amount = max(0, (linked_lathe.uranium_amount-(being_built.materials[M]/coeff)))
-							if("$diamond")
+							if(MAT_DIAMOND)
 								linked_lathe.diamond_amount = max(0, (linked_lathe.diamond_amount-(being_built.materials[M]/coeff)))
 							if("$clown")
 								linked_lathe.clown_amount = max(0, (linked_lathe.clown_amount-(being_built.materials[M]/coeff)))
@@ -384,7 +384,6 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 					var/P = being_built.build_path //lets save these values before the spawn() just in case. Nobody likes runtimes.
 					var/R = being_built.reliability
-					var/O = being_built.locked
 					spawn(32)
 						if(g2g) //And if we only fail the material requirements, we still spend time and power
 							var/obj/new_item = new P(src)
@@ -395,12 +394,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 							new_item.g_amt /= coeff
 							if(linked_lathe.hacked)
 								R = max((reliability / 2), 0)
-							if(O)
-								var/obj/item/weapon/storage/lockbox/L = new/obj/item/weapon/storage/lockbox(linked_lathe.loc)
-								new_item.loc = L
-								L.name += " ([new_item.name])"
-							else
-								new_item.loc = linked_lathe.loc
+							new_item.loc = linked_lathe.loc
 						linked_lathe.busy = 0
 						screen = 3.1
 						updateUsrDialog()
@@ -437,11 +431,11 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 							g2g = 0
 							break
 						switch(M)
-							if("$glass")
+							if(MAT_GLASS)
 								linked_imprinter.g_amount = max(0, (linked_imprinter.g_amount-being_built.materials[M]/coeff))
-							if("$gold")
+							if(MAT_GOLD)
 								linked_imprinter.gold_amount = max(0, (linked_imprinter.gold_amount-being_built.materials[M]/coeff))
-							if("$diamond")
+							if(MAT_DIAMOND)
 								linked_imprinter.diamond_amount = max(0, (linked_imprinter.diamond_amount-being_built.materials[M]/coeff))
 							else
 								linked_imprinter.reagents.remove_reagent(M, being_built.materials[M]/coeff)

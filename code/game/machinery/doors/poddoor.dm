@@ -10,7 +10,7 @@
 /obj/machinery/door/poddoor/New()
 	. = ..()
 	if(density)
-		layer = 3.3		//to override door.New() proc
+		layer = 3.3
 	else
 		layer = initial(layer)
 	return
@@ -63,7 +63,7 @@
 	if (src.operating)
 		return
 	src.operating = 1
-	layer = 2.8
+	layer = 4.1		//Above everything except firedoors
 	flick("pdoorc1", src)
 	src.icon_state = "pdoor1"
 	src.density = 1
