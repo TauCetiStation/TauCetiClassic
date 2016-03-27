@@ -118,7 +118,7 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 	if(orbiting_balls.len)
 		for(var/obj/machinery/field_generator/FG in oview(src))
 			if(FG.active == 2)
-				FG.power -= max(0, orbiting_balls.len * 3)//10 balls is a limit in standard setup.
+				FG.power = max(-200, FG.power - orbiting_balls.len * 3)//10 balls is a limit in standard setup.
 
 /obj/singularity/energy_ball/Bump(atom/A)
 	dust_mobs(A)
