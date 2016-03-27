@@ -17,7 +17,7 @@
 		/obj/random/materials/plasteel_scrap,
 		/obj/random/materials/wood_scrap,
 		/obj/item/weapon/shard
-		)
+	)
 	var/dig_amount = 7
 	var/parts_icon = 'icons/obj/structures/scrap/trash.dmi'
 	var/base_min = 4	//min and max number of random pieces of base icon
@@ -178,7 +178,7 @@
 		/obj/random/meds/medical_supply/,
 		/obj/random/materials/rods_scrap,
 		/obj/item/weapon/shard
-		)
+	)
 
 /obj/structure/scrap/vehicle
 	name = "industrial debris pile"
@@ -193,7 +193,7 @@
 		/obj/random/materials/rods_scrap,
 		/obj/random/materials/metal_scrap,
 		/obj/item/weapon/shard
-		)
+	)
 
 /obj/structure/scrap/food
 	name = "food trash pile"
@@ -206,8 +206,8 @@
 		/obj/random/foods/food_without_garbage,
 		/obj/random/foods/food_without_garbage,
 		/obj/item/weapon/shard,
-		/obj/random/materials/rods_scrap,
-		)
+		/obj/random/materials/rods_scrap
+	)
 
 /obj/structure/scrap/guns
 	name = "gun refuse pile"
@@ -222,8 +222,8 @@
 		/obj/item/toy/crossbow,
 		/obj/item/weapon/shard,
 		/obj/random/materials/metal_scrap,
-		/obj/random/materials/rods_scrap,
-		)
+		/obj/random/materials/rods_scrap
+	)
 
 /obj/structure/scrap/poor
 	name = "mixed rubbish"
@@ -236,7 +236,7 @@
 		/obj/random/misc/all,
 		/obj/item/weapon/shard,
 		/obj/random/materials/rods_scrap
-		)
+	)
 
 /obj/structure/scrap/poor/large
 	name = "large mixed rubbish"
