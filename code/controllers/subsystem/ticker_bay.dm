@@ -159,7 +159,6 @@ var/datum/subsystem/ticker/ticker
 		runnable_modes = config.get_runnable_modes()
 
 		if (runnable_modes.len==0)
-			current_state = GAME_STATE_PREGAME
 			world << "<B>Unable to choose playable game mode.</B> Reverting to pre-game lobby."
 			return 0
 
@@ -170,7 +169,6 @@ var/datum/subsystem/ticker/ticker
 			else
 				mode = smode
 
-		SSjob.ResetOccupations()
 		if(!src.mode)
 			src.mode = pickweight(runnable_modes)
 		if(src.mode)
@@ -180,10 +178,9 @@ var/datum/subsystem/ticker/ticker
 	else if(master_mode=="bs12" || master_mode=="tau classic")
 		runnable_modes = config.get_custom_modes(master_mode)
 		if (runnable_modes.len==0)
-			current_state = GAME_STATE_PREGAME
 			world << "<B>Unable to choose playable game mode.</B> Reverting to pre-game lobby."
 			return 0
-		SSjob.ResetOccupations()
+
 		if(!src.mode)
 			src.mode = pick(runnable_modes)
 		if(src.mode)
@@ -192,20 +189,21 @@ var/datum/subsystem/ticker/ticker
 
 	else
 		src.mode = config.pick_mode(master_mode)
-
-	if (!src.mode.can_start())
-		world << "<B>Unable to start [mode.name].</B> Not enough players, [mode.required_players] players needed. Reverting to pre-game lobby."
-		qdel(mode)
-		current_state = GAME_STATE_PREGAME
-		SSjob.ResetOccupations()
-		return 0
+		if(!src.mode.can_start())
+			world << "<B>Unable to start [mode.name].</B> Not enough players, [mode.required_players] players needed. Reverting to pre-game lobby."
+			qdel(mode)
+			mode = null
+			SSjob.ResetOccupations()
+			return 0
 
 	//Configure mode and assign player to special mode stuff
-	SSjob.DivideOccupations() //Distribute jobs
-	var/can_continue = src.mode.pre_setup()//Setup special modes
+	var/can_continue = 0
+	can_continue = src.mode.pre_setup()		//Setup special modes
+	SSjob.DivideOccupations()				//Distribute jobs
+
 	if(!can_continue)
 		qdel(mode)
-		current_state = GAME_STATE_PREGAME
+		mode = null
 		world << "<B>Error setting up [master_mode].</B> Reverting to pre-game lobby."
 		SSjob.ResetOccupations()
 		return 0

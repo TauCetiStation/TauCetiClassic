@@ -425,50 +425,54 @@
 	if(istype(M,/mob/living/silicon/ai)) return
 	show_inv(usr)
 
+//this and stop_pulling really ought to be /mob/living procs
+/mob/proc/start_pulling(atom/movable/AM)
+	if ( !AM || !src || src==AM || !isturf(AM.loc) )	//if there's no person pulling OR the person is pulling themself OR the object being pulled is inside something: abort!
+		return
+	if (!( AM.anchored ))
+		AM.add_fingerprint(src)
+
+		// If we're pulling something then drop what we're currently pulling and pull this instead.
+		if(pulling)
+			// Are we trying to pull something we are already pulling? Then just stop here, no need to continue.
+			if(AM == pulling)
+				return
+			stop_pulling()
+
+		src.pulling = AM
+		AM.pulledby = src
+		if(pullin)
+			pullin.update_icon(src)
+		if(ismob(AM))
+			var/mob/M = AM
+			if(!iscarbon(src))
+				M.LAssailant = null
+			else
+				M.LAssailant = usr
+
+		src.pulling = AM
+		AM.pulledby = src
+
+		if(ishuman(AM))
+			var/mob/living/carbon/human/H = AM
+			if(H.pull_damage())
+				src << "<span class='danger'>Pulling \the [H] in their current condition would probably be a bad idea.</span>"
+
+		count_pull_debuff()
 
 /mob/verb/stop_pulling()
-
 	set name = "Stop Pulling"
 	set category = "IC"
 
 	if(pulling)
 		pulling.pulledby = null
 		pulling = null
+		if(pullin)
+			pullin.update_icon(src)
+		count_pull_debuff()
 
-/mob/proc/start_pulling(var/atom/movable/AM)
-
-	if ( !AM || !usr || src==AM || !isturf(src.loc) )	//if there's no person pulling OR the person is pulling themself OR the object being pulled is inside something: abort!
-		return
-
-	if (AM.anchored)
-		return
-
-	var/mob/M = AM
-	if(ismob(AM))
-		if(!iscarbon(src))
-			M.LAssailant = null
-		else
-			M.LAssailant = usr
-
-	if(pulling)
-		var/pulling_old = pulling
-		stop_pulling()
-		// Are we pulling the same thing twice? Just stop pulling.
-		if(pulling_old == AM)
-			return
-
-	src.pulling = AM
-	AM.pulledby = src
-
-	if(ishuman(AM))
-		var/mob/living/carbon/human/H = AM
-		if(H.pull_damage())
-			src << "\red <B>Pulling \the [H] in their current condition would probably be a bad idea.</B>"
-
-	//Attempted fix for people flying away through space when cuffed and dragged.
-	if(ismob(AM))
-		var/mob/pulled = AM
-		pulled.inertia_dir = 0
+/mob/proc/count_pull_debuff()
+	return
 
 /mob/proc/can_use_hands()
 	return

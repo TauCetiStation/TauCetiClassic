@@ -50,6 +50,7 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 /obj/singularity/energy_ball/process()
 	if(!orbiting)
 		handle_energy()
+		eat_shield()
 
 		move_the_basket_ball(4 + orbiting_balls.len * 2)
 
@@ -112,6 +113,12 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 
 	else if(orbiting_balls.len)
 		energy -= orbiting_balls.len * 0.5
+
+/obj/singularity/energy_ball/proc/eat_shield()
+	if(orbiting_balls.len)
+		for(var/obj/machinery/field_generator/FG in oview(src))
+			if(FG.active == 2)
+				FG.power = max(-200, FG.power - orbiting_balls.len * 3)//10 balls is a safe limit in standard setup. 11 - 50/50, but probably will end up bad. And 12 - release of tesla.
 
 /obj/singularity/energy_ball/Bump(atom/A)
 	dust_mobs(A)
