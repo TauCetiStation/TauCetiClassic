@@ -14,6 +14,8 @@
 	var/agent = 0
 	var/team = 0
 
+	throw_range = 2
+
 /mob/living/carbon/human/dummy
 	real_name = "Test Dummy"
 	status_flags = GODMODE|CANPUSH
