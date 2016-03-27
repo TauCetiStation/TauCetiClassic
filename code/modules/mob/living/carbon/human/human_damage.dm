@@ -295,9 +295,11 @@ This function restores all organs.
 
 	//Embedded object code.
 	if(!organ) return
-	if(istype(used_weapon,/obj/item))
+	if(istype(used_weapon, /obj/item))
 		var/obj/item/W = used_weapon
-		if (!W.is_robot_module())
+		if(!W.can_embed)
+			return
+		if(!W.is_robot_module())
 			//blunt objects should really not be embedding in things unless a huge amount of force is involved
 			var/embed_chance = sharp? damage/W.w_class : damage/(W.w_class*3)
 			var/embed_threshold = sharp? 5*W.w_class : 15*W.w_class

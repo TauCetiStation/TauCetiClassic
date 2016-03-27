@@ -182,7 +182,8 @@
 /obj/machinery/power/proc/get_indirect_connections()
 	. = list()
 	for(var/obj/structure/cable/C in loc)
-		if(C.powernet)	continue
+		if(C.powernet)
+			continue
 		if(C.d1 == 0) // the cable is a node cable
 			. += C
 	return .
@@ -200,11 +201,13 @@
 	var/fdir = (!d)? 0 : turn(d, 180)			// the opposite direction to d (or 0 if d==0)
 //	world.log << "d=[d] fdir=[fdir]"
 	for(var/AM in T)
-		if(AM == source)	continue			//we don't want to return source
+		if(AM == source)
+			continue			//we don't want to return source
 
 		if(!cable_only && istype(AM,/obj/machinery/power))
 			var/obj/machinery/power/P = AM
-			if(P.powernet == 0)	continue		// exclude APCs which have powernet=0
+			if(P.powernet == 0)
+				continue		// exclude APCs which have powernet=0
 
 			if(!unmarked || !P.powernet)		//if unmarked=1 we only return things with no powernet
 				if(d == 0)
@@ -266,21 +269,13 @@
 		net1 = net2
 		net2 = temp
 
-	//we don't use add_cable and add_machine here, because that could
-	//change the size of net2.nodes or net2.cables while in the loop (runtime galore)
-	for(var/i=1,i<=net2.nodes.len,i++)		//merge net2 into net1
-		var/obj/machinery/power/Node = net2.nodes[i] //merge power machines
-		if(Node)
-			Node.powernet = net1
-			net1.nodes[Node] = Node
+	//merge net2 into net1
+	for(var/obj/structure/cable/Cable in net2.cables) //merge cables
+		net1.add_cable(Cable)
 
-	for(var/i=1,i<=net2.cables.len,i++)
-		var/obj/structure/cable/Cable = net2.cables[i] //merge cables
-		if(Cable)
-			Cable.powernet = net1
-			net1.cables += Cable
-
-	qdel(net2) //garbage collect the now empty powernet
+	for(var/obj/machinery/power/Node in net2.nodes) //merge power machines
+		if(!Node.connect_to_network())
+			Node.disconnect_from_network() //if somehow we can't connect the machine to the new powernet, disconnect it from the old nonetheless
 
 	return net1
 

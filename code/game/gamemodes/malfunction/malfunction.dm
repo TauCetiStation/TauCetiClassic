@@ -4,6 +4,7 @@
 /datum/game_mode/malfunction
 	name = "AI malfunction"
 	config_tag = "malfunction"
+	role_type = ROLE_MALF
 	required_players = 2
 	required_players_secret = 15
 	required_enemies = 1
@@ -13,9 +14,6 @@
 
 	uplink_welcome = "Crazy AI Uplink Console:"
 	uplink_uses = 10
-
-	var/const/waittime_l = 600
-	var/const/waittime_h = 1800 // started at 1800
 
 	var/AI_win_timeleft = 1800 //started at 1800, in case I change this for testing round end.
 	var/malf_mode_declared = 0
@@ -32,7 +30,7 @@
 
 /datum/game_mode/malfunction/pre_setup()
 	for(var/mob/new_player/player in player_list)
-		if(player.mind && player.mind.assigned_role == "AI" && (player.client.prefs.be_special & BE_MALF))
+		if(player.mind && player.mind.assigned_role == "AI" && (ROLE_MALF in player.client.prefs.be_role))
 			malf_ai+=player.mind
 	if(malf_ai.len)
 		return 1
@@ -70,9 +68,7 @@
 */
 	if(SSshuttle)
 		SSshuttle.always_fake_recall = 1
-	spawn (rand(waittime_l, waittime_h))
-		send_intercept()
-	..()
+	return ..()
 
 
 /datum/game_mode/proc/greet_malf(var/datum/mind/malf)

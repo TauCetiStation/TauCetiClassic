@@ -66,7 +66,7 @@ Made by Xhuis
 /datum/game_mode/shadowling
 	name = "shadowling"
 	config_tag = "shadowling"
-	//antag_flag = BE_SHADOWLING
+	role_type = ROLE_SHADOWLING
 	required_players = 30
 	required_players_secret = 15
 	required_enemies = 2
@@ -76,9 +76,6 @@ Made by Xhuis
 
 	restricted_jobs = list("AI", "Cyborg")
 	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain")
-
-	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
-	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
 
 /datum/game_mode/shadowling/announce()
 	world << "<b>The current game mode is - Shadowling!</b>"
@@ -91,8 +88,6 @@ Made by Xhuis
 
 	//if(config.protect_assistant_from_antagonist)//TG feature?
 		//restricted_jobs += "Assistant"
-
-	var/list/datum/mind/antag_candidates = get_players_for_role(BE_SHADOWLING)
 
 	for(var/datum/mind/player in antag_candidates)
 		for(var/job in restricted_jobs)
@@ -123,11 +118,7 @@ Made by Xhuis
 		update_shadows_icons_added(shadow)
 		//give_shadowling_abilities(shadow)
 
-	spawn (rand(waittime_l, waittime_h))
-		send_intercept()
-
-	..()
-	return
+	return ..()
 
 /datum/game_mode/proc/greet_shadow(var/datum/mind/shadow)
 	shadow.current << "<b>Currently, you are disguised as an employee aboard [world.name].</b>"
