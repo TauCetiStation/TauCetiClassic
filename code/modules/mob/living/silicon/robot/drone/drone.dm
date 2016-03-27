@@ -283,8 +283,9 @@
 		if(jobban_isbanned(O, "Cyborg"))
 			continue
 		if(O.client)
-			if(O.client.prefs.be_special & BE_PAI)
-				question(O.client)
+			var/client/C = O.client
+			if(!C.prefs.ignore_question.Find("drone") && (ROLE_PAI in C.prefs.be_role))
+				question(C)
 
 /mob/living/silicon/robot/drone/proc/question(var/client/C)
 	spawn(0)
@@ -295,7 +296,7 @@
 		if(response == "Yes")
 			transfer_personality(C)
 		else if (response == "Never for this round")
-			C.prefs.be_special ^= BE_PAI
+			C.prefs.ignore_question += "drone"
 
 /mob/living/silicon/robot/drone/proc/transfer_personality(var/client/player)
 

@@ -13,12 +13,14 @@
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "firstaid"
 /obj/random/meds/medkit/item_to_spawn()
-		return pick(prob(5);/obj/item/weapon/storage/firstaid/regular,\
-					prob(3);/obj/item/weapon/storage/firstaid/fire,\
-					prob(3);/obj/item/weapon/storage/firstaid/toxin,\
-					prob(3);/obj/item/weapon/storage/firstaid/o2,\
-					prob(2);/obj/item/weapon/storage/firstaid/adv,\
-					prob(1);/obj/item/weapon/storage/firstaid/tactical)
+		return pick(\
+						prob(5);/obj/item/weapon/storage/firstaid/regular,\
+						prob(3);/obj/item/weapon/storage/firstaid/fire,\
+						prob(3);/obj/item/weapon/storage/firstaid/toxin,\
+						prob(3);/obj/item/weapon/storage/firstaid/o2,\
+						prob(2);/obj/item/weapon/storage/firstaid/adv,\
+						prob(1);/obj/item/weapon/storage/firstaid/tactical\
+					)
 
 /obj/random/meds/syringe
 	name = "Random Syringe"
@@ -26,10 +28,12 @@
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "firstaid"
 /obj/random/meds/syringe/item_to_spawn()
-		return pick(prob(2);/obj/item/weapon/reagent_containers/syringe/inaprovaline,\
-					prob(2);/obj/item/weapon/reagent_containers/syringe/antitoxin,\
-					prob(2);/obj/item/weapon/reagent_containers/syringe/antiviral,\
-					prob(10);/obj/item/weapon/reagent_containers/syringe)
+		return pick(\
+						prob(2);/obj/item/weapon/reagent_containers/syringe/inaprovaline,\
+						prob(2);/obj/item/weapon/reagent_containers/syringe/antitoxin,\
+						prob(2);/obj/item/weapon/reagent_containers/syringe/antiviral,\
+						prob(10);/obj/item/weapon/reagent_containers/syringe\
+					)
 
 /obj/random/meds/medical_tool
 	name = "Random Surgery Equipment"
@@ -37,19 +41,21 @@
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "saw3"
 /obj/random/meds/medical_tool/item_to_spawn()
-		return pick(prob(1);/obj/item/weapon/circular_saw,\
-					prob(1);/obj/item/weapon/scalpel,\
-					prob(1);/obj/item/weapon/bonesetter,\
-					prob(1);/obj/item/weapon/FixOVein,\
-					prob(1);/obj/item/weapon/bonegel,\
-					prob(1);/obj/item/weapon/cautery,\
-					prob(1);/obj/item/weapon/surgicaldrill,\
-					prob(1);/obj/item/weapon/retractor,\
-					prob(1);/obj/item/weapon/tank/anesthetic,\
-					prob(1);/obj/item/clothing/mask/breath/medical,\
-					prob(1);/obj/item/weapon/reagent_containers/spray/cleaner,\
-					prob(1);/obj/item/weapon/storage/box/gloves,\
-					prob(1);/obj/item/weapon/storage/box/masks)
+		return pick(\
+						/obj/item/weapon/circular_saw,\
+						/obj/item/weapon/scalpel,\
+						/obj/item/weapon/bonesetter,\
+						/obj/item/weapon/FixOVein,\
+						/obj/item/weapon/bonegel,\
+						/obj/item/weapon/cautery,\
+						/obj/item/weapon/surgicaldrill,\
+						/obj/item/weapon/retractor,\
+						/obj/item/weapon/tank/anesthetic,\
+						/obj/item/clothing/mask/breath/medical,\
+						/obj/item/weapon/reagent_containers/spray/cleaner,\
+						/obj/item/weapon/storage/box/gloves,\
+						/obj/item/weapon/storage/box/masks\
+					)
 
 /obj/random/meds/dna_injector
 	name = "Random DNA injector"
@@ -73,15 +79,17 @@
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "saw3"
 /obj/random/meds/chemical_bottle/item_to_spawn()
-		return pick(prob(5);/obj/item/weapon/reagent_containers/glass/bottle/ammonia,\
-					prob(5);/obj/item/weapon/reagent_containers/glass/bottle/diethylamine,\
-					prob(5);/obj/item/weapon/reagent_containers/glass/bottle/inaprovaline,\
-					prob(5);/obj/item/weapon/reagent_containers/glass/bottle/toxin,\
-					prob(5);/obj/item/weapon/reagent_containers/glass/bottle/stoxin,\
-					prob(5);/obj/item/weapon/reagent_containers/glass/bottle/antitoxin,\
-					prob(3);/obj/item/weapon/reagent_containers/glass/bottle/mutagen,\
-					prob(3);/obj/item/weapon/reagent_containers/glass/bottle/chloralhydrate,\
-					prob(1);/obj/item/weapon/reagent_containers/glass/bottle/random)
+		return pick(\
+						prob(5);/obj/item/weapon/reagent_containers/glass/bottle/ammonia,\
+						prob(5);/obj/item/weapon/reagent_containers/glass/bottle/diethylamine,\
+						prob(5);/obj/item/weapon/reagent_containers/glass/bottle/inaprovaline,\
+						prob(5);/obj/item/weapon/reagent_containers/glass/bottle/toxin,\
+						prob(5);/obj/item/weapon/reagent_containers/glass/bottle/stoxin,\
+						prob(5);/obj/item/weapon/reagent_containers/glass/bottle/antitoxin,\
+						prob(3);/obj/item/weapon/reagent_containers/glass/bottle/mutagen,\
+						prob(3);/obj/item/weapon/reagent_containers/glass/bottle/chloralhydrate,\
+						prob(1);/obj/item/weapon/reagent_containers/glass/bottle/random\
+					)
 
 /obj/random/meds/medical_supply
 	name = "Random medical supply"
@@ -89,10 +97,12 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "traumakit"
 /obj/random/meds/medical_supply/item_to_spawn()
-		return pick(prob(20);/obj/random/meds/medical_single_item,\
-					prob(15);/obj/random/meds/syringe,\
-					prob(10);/obj/random/meds/chemical_bottle,\
-					prob(8);/obj/random/meds/medkit,\
-					prob(8);/obj/random/meds/medical_tool,\
-					prob(6);/obj/random/meds/pills,\
-					prob(1);/obj/random/meds/dna_injector)
+		return pick(\
+						prob(20);/obj/random/meds/medical_single_item,\
+						prob(15);/obj/random/meds/syringe,\
+						prob(10);/obj/random/meds/chemical_bottle,\
+						prob(8);/obj/random/meds/medkit,\
+						prob(8);/obj/random/meds/medical_tool,\
+						prob(6);/obj/random/meds/pills,\
+						prob(1);/obj/random/meds/dna_injector\
+					)

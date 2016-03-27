@@ -21,7 +21,7 @@
 	if(used)
 		user << "The teleporter is out of power."
 		return
-	var/list/borg_candicates = get_candidates(BE_OPERATIVE)
+	var/list/borg_candicates = get_candidates(ROLE_OPERATIVE)
 	if(borg_candicates.len > 0)
 		used = 1
 		var/client/C = pick(borg_candicates)
