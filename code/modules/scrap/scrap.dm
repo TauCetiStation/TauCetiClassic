@@ -10,20 +10,24 @@
 	var/loot_min = 3
 	var/loot_max = 5
 	var/list/loot_list = list(
-		/obj/item/stack/rods/scrap,
-		/obj/item/stack/sheet/mineral/plastic/scrap,
-		/obj/item/stack/sheet/metal/scrap,
-		/obj/item/stack/sheet/glass/scrap,
-		/obj/item/stack/sheet/plasteel/scrap,
-		/obj/item/stack/sheet/wood/scrap,
+		/obj/random/materials/rods_scrap,
+		/obj/random/materials/plastic_scrap,
+		/obj/random/materials/metal_scrap,
+		/obj/random/materials/glass_scrap,
+		/obj/random/materials/plasteel_scrap,
+		/obj/random/materials/wood_scrap,
 		/obj/item/weapon/shard
-		)
+	)
 	var/dig_amount = 7
 	var/parts_icon = 'icons/obj/structures/scrap/trash.dmi'
 	var/base_min = 4	//min and max number of random pieces of base icon
 	var/base_max = 7
 	var/base_spread = 8 //limits on pixel offsets of base pieces
 	var/list/ways = list("pokes around", "digs through", "rummages through", "goes through","picks through")
+
+/obj/structure/scrap/proc/make_cube()
+	var/obj/container = new /obj/structure/scrap_cube(src.loc, loot_max)
+	src.forceMove(container)
 
 /obj/structure/scrap/New()
 	var/amt = rand(loot_min, loot_max)
@@ -135,15 +139,21 @@
 /obj/structure/scrap/MouseDrop(obj/over_object)
 	..(over_object)
 
+/obj/structure/scrap/proc/dig_out_lump(newloc = loc)
+	src.dig_amount--
+	if(src.dig_amount <= 0)
+		visible_message("<span class='notice'>\The [src] is cleared out!</span>")
+		qdel(src)
+	else
+		new /obj/item/weapon/scrap_lump(newloc)
+
 /obj/structure/scrap/attackby(obj/item/W, mob/user)
 	if(istype(W,/obj/item/weapon/shovel))
 		user.do_attack_animation(src)
-		visible_message("<span class='notice'>\The [user] [pick(ways)] \the [src].</span>")
-		if(--dig_amount <= 0)
-			user << "<span class='notice'>You cleared out  \the [src]...</span>"
-			qdel(src)
-			return
-		shuffle_loot()
+		if(do_after(user, 30, target = src))
+			visible_message("<span class='notice'>\The [user] [pick(ways)] \the [src].</span>")
+			shuffle_loot()
+			dig_out_lump(user.loc)
 
 /obj/structure/scrap/large
 	name = "large scrap pile"
@@ -159,32 +169,35 @@
 
 /obj/structure/scrap/medical
 	name = "medical refuse pile"
+	desc = "Pile of medical refuse. They sure don't cut expenses on these. "
 	parts_icon = 'icons/obj/structures/scrap/medical_trash.dmi'
 	loot_list = list(
 		/obj/random/meds/medical_supply/,
 		/obj/random/meds/medical_supply/,
 		/obj/random/meds/medical_supply/,
 		/obj/random/meds/medical_supply/,
-		/obj/item/stack/rods/scrap,
-		/obj/item/stack/sheet/mineral/plastic/scrap,
+		/obj/random/materials/rods_scrap,
 		/obj/item/weapon/shard
-		)
+	)
 
 /obj/structure/scrap/vehicle
 	name = "industrial debris pile"
+	desc = "Pile of used machinery. You could use tools from this to build something."
 	parts_icon = 'icons/obj/structures/scrap/vehicle.dmi'
 	loot_list = list(
 		/obj/random/tools/tech_supply/guaranteed,
 		/obj/random/tools/tech_supply/guaranteed,
 		/obj/random/tools/tech_supply/guaranteed,
 		/obj/random/tools/tech_supply/guaranteed,
-		/obj/item/stack/rods/scrap,
-		/obj/item/stack/sheet/metal/scrap,
+		/obj/random/tools/tech_supply/guaranteed,
+		/obj/random/materials/rods_scrap,
+		/obj/random/materials/metal_scrap,
 		/obj/item/weapon/shard
-		)
+	)
 
 /obj/structure/scrap/food
 	name = "food trash pile"
+	desc = "Pile of thrown away food. Someone sure have lots of spare food while children on Mars are starving."
 	parts_icon = 'icons/obj/structures/scrap/food_trash.dmi'
 	loot_list = list(
 		/obj/random/foods/food_without_garbage,
@@ -192,15 +205,13 @@
 		/obj/random/foods/food_without_garbage,
 		/obj/random/foods/food_without_garbage,
 		/obj/random/foods/food_without_garbage,
-		/obj/random/foods/food_without_garbage,
-		/obj/random/foods/food_without_garbage,
 		/obj/item/weapon/shard,
-		/obj/item/stack/rods/scrap,
-		/obj/item/stack/sheet/mineral/plastic/scrap
-		)
+		/obj/random/materials/rods_scrap
+	)
 
 /obj/structure/scrap/guns
 	name = "gun refuse pile"
+	desc = "Pile of military supply refuse. Who thought it was a clever idea to throw that out?"
 	parts_icon = 'icons/obj/structures/scrap/guns_trash.dmi'
 	loot_list = list(
 		/obj/preset/storage/weapons/random/,
@@ -209,11 +220,35 @@
 		/obj/random/guns/energy_weapon,
 		/obj/item/toy/gun,
 		/obj/item/toy/crossbow,
-		/obj/item/weapon/crossbowframe,
-		/obj/item/stack/sheet/mineral/plastic/scrap,
 		/obj/item/weapon/shard,
-		/obj/item/stack/rods/scrap,
-		)
+		/obj/random/materials/metal_scrap,
+		/obj/random/materials/rods_scrap
+	)
+
+/obj/structure/scrap/poor
+	name = "mixed rubbish"
+	desc = "Pile of mixed rubbish. Useless and rotten, mostly."
+	parts_icon = 'icons/obj/structures/scrap/all_mixed.dmi'
+	loot_list = list(
+		/obj/random/misc/all,
+		/obj/random/misc/all,
+		/obj/random/misc/all,
+		/obj/random/misc/all,
+		/obj/item/weapon/shard,
+		/obj/random/materials/rods_scrap
+	)
+
+/obj/structure/scrap/poor/large
+	name = "large mixed rubbish"
+	opacity = 1
+	density = 1
+	icon_state = "big"
+	loot_min = 10
+	loot_max = 20
+	dig_amount = 15
+	base_min = 9
+	base_max = 14
+
 /obj/structure/scrap/vehicle/large
 	name = "large industrial debris pile"
 	opacity = 1
