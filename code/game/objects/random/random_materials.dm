@@ -12,7 +12,7 @@
 /obj/random/materials/plastic_scrap/New(var/newloc)
 	new /obj/item/stack/sheet/mineral/plastic(newloc, rand(5,10))
 	qdel(src)
-	
+
 /obj/random/materials/metal_scrap/New(var/newloc)
 	new /obj/item/stack/sheet/metal(newloc, rand(8,12))
 	qdel(src)
