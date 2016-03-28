@@ -49,9 +49,8 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 		restricted_jobs += protected_jobs
 
 	for(var/datum/mind/player in antag_candidates)
-		for(var/job in restricted_jobs)//Removing robots from the list
-			if(player.assigned_role == job)
-				antag_candidates -= player
+		if(player.assigned_role in restricted_jobs)	//Removing robots from the list
+			antag_candidates -= player
 
 	changeling_amount = 1 + round(num_players() / 10)
 

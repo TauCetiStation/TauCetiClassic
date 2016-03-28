@@ -66,9 +66,8 @@
 		restricted_jobs += protected_jobs
 
 	for(var/datum/mind/player in antag_candidates)
-		for(var/job in restricted_jobs)//Removing heads and such from the list
-			if(player.assigned_role == job)
-				antag_candidates -= player
+		if(player.assigned_role in restricted_jobs)	//Removing heads and such from the list
+			antag_candidates -= player
 
 	for(var/cultists_number = 1 to recommended_enemies)
 		if(!antag_candidates.len)
