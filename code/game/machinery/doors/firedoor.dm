@@ -291,8 +291,8 @@
 
 /obj/machinery/door/firedoor/close()
 	..()
-	latetoggle()
 	layer = base_layer + FIREDOOR_CLOSED_MOD
+	latetoggle()
 
 /obj/machinery/door/firedoor/open()
 	..()
@@ -300,10 +300,8 @@
 		hatch_open = 0
 		visible_message("The maintenance hatch of \the [src] closes.")
 		update_icon()
-
-	latetoggle()
 	layer = base_layer
-
+	latetoggle()
 
 /obj/machinery/door/firedoor/do_animate(animation)
 	switch(animation)
