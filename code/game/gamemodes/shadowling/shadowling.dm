@@ -66,7 +66,7 @@ Made by Xhuis
 /datum/game_mode/shadowling
 	name = "shadowling"
 	config_tag = "shadowling"
-	//antag_flag = BE_SHADOWLING
+	role_type = ROLE_SHADOWLING
 	required_players = 30
 	required_players_secret = 15
 	required_enemies = 2
@@ -88,8 +88,6 @@ Made by Xhuis
 
 	//if(config.protect_assistant_from_antagonist)//TG feature?
 		//restricted_jobs += "Assistant"
-
-	var/list/datum/mind/antag_candidates = get_players_for_role(BE_SHADOWLING)
 
 	for(var/datum/mind/player in antag_candidates)
 		for(var/job in restricted_jobs)

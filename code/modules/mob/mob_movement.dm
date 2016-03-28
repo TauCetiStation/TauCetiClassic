@@ -168,8 +168,17 @@
 					if(s.zoom)
 						s.zoom()
 
-	if(Process_Grab())	return
+	if(Process_Grab())
+		return
 
+	if(istype(mob.buckled, /obj/vehicle))
+		//manually set move_delay for vehicles so we don't inherit any mob movement penalties
+		//specific vehicle move delays are set in code\modules\vehicles\vehicle.dm
+		move_delay = world.time
+		//drunk driving
+		if(mob.confused)
+			direct = pick(cardinal)
+		return mob.buckled.relaymove(mob,direct)
 
 	if(!mob.canmove)
 		return
@@ -177,12 +186,12 @@
 	if(!mob.lastarea)
 		mob.lastarea = get_area(mob.loc)
 
-	if(!mob.Process_Spacemove(direct))
-		return 0
-
 	if(isobj(mob.loc) || ismob(mob.loc))//Inside an object, tell it we moved
 		var/atom/O = mob.loc
 		return O.relaymove(mob, direct)
+
+	if(!mob.Process_Spacemove(direct))
+		return 0
 
 	if(isturf(mob.loc))
 
@@ -209,15 +218,6 @@
 			if("walk")
 				move_delay += 7+config.walk_speed
 		move_delay += mob.movement_delay()
-
-		if(istype(mob.buckled, /obj/vehicle))
-			//manually set move_delay for vehicles so we don't inherit any mob movement penalties
-			//specific vehicle move delays are set in code\modules\vehicles\vehicle.dm
-			move_delay = world.time
-			//drunk driving
-			if(mob.confused)
-				direct = pick(cardinal)
-			return mob.buckled.relaymove(mob,direct)
 
 		if(mob.pulledby || mob.buckled) // Wheelchair driving!
 			if(istype(mob.loc, /turf/space))
@@ -410,4 +410,26 @@
 	return 0
 
 /mob/proc/update_gravity()
+	return
+
+/mob/proc/Move_Pulled(atom/A)
+	if (!canmove || restrained() || !pulling)
+		return
+	if (pulling.anchored)
+		return
+	if (!pulling.Adjacent(src))
+		return
+	if (A == loc && pulling.density)
+		return
+	if (!Process_Spacemove(get_dir(pulling.loc, A)))
+		return
+	if (ismob(pulling))
+		var/mob/M = pulling
+		var/atom/movable/t = M.pulling
+		M.stop_pulling()
+		step(pulling, get_dir(pulling.loc, A))
+		if(M)
+			M.start_pulling(t)
+	else
+		step(pulling, get_dir(pulling.loc, A))
 	return

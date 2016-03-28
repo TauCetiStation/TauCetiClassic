@@ -338,7 +338,7 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 		for(var/mob/dead/observer/O in player_list)
 			if(O.has_enabled_antagHUD == 1 && config.antag_hud_restricted)
 				continue
-			if(jobban_isbanned(O, "pAI"))
+			if(jobban_isbanned(O, ROLE_PAI))
 				continue
 			if(asked.Find(O.key))
 				if(world.time < asked[O.key] + askDelay)
@@ -350,7 +350,7 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 				for(var/datum/paiCandidate/c in paiController.pai_candidates)
 					if(c.key == O.key)
 						hasSubmitted = 1
-				if(!hasSubmitted && (O.client.prefs.be_special & BE_PAI))
+				if(!hasSubmitted && (ROLE_PAI in O.client.prefs.be_role))
 					question(O.client)
 
 	proc/question(var/client/C)

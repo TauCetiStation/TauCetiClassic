@@ -98,8 +98,6 @@
 			suffix = "#[count]"
 		name = "Mulebot ([suffix])"
 
-	verbs -= /atom/movable/verb/pull
-
 /obj/machinery/bot/mulebot/Destroy()
 	if(radio_controller)
 		radio_controller.remove_object(src,beacon_freq)

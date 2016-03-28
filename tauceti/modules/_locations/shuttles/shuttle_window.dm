@@ -1,6 +1,7 @@
 /obj/structure/window/reinforced/shuttle
 	icon = 'tauceti/modules/_locations/shuttles/shuttle.dmi'
 	dir = SOUTHWEST
+	can_merge = 0
 
 /obj/structure/window/reinforced/shuttle/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(!istype(W)) return//I really wish I did not need this
@@ -18,23 +19,23 @@
 			switch (state)
 				if(1)
 					M.apply_damage(7)
-					hit(10)
+					take_damage(7)
 					visible_message("\red [user] slams [M] against \the [src]!")
 				if(2)
 					if (prob(50))
 						M.Weaken(1)
 					M.apply_damage(10)
-					hit(25)
+					take_damage(9)
 					visible_message("\red <b>[user] bashes [M] against \the [src]!</b>")
 				if(3)
 					M.Weaken(5)
 					M.apply_damage(20)
-					hit(50)
+					take_damage(12)
 					visible_message("\red <big><b>[user] crushes [M] against \the [src]!</b></big>")
 			return
 	else
 		if(W.damtype == BRUTE || W.damtype == BURN)
-			hit(W.force)
+			take_damage(W.force)
 			if(health <= 7)
 				anchored = 0
 				update_nearby_icons()

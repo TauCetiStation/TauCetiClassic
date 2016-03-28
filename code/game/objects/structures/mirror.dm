@@ -9,60 +9,33 @@
 	var/shattered = 0
 
 
-/obj/structure/mirror/attack_hand(mob/user as mob)
-	if(shattered)	return
-
+/obj/structure/mirror/attack_hand(mob/user)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-
-		var/userloc = H.loc
-
-		//see code/modules/mob/new_player/preferences.dm at approx line 545 for comments!
-		//this is largely copypasted from there.
-
-		//handle facial hair (if necessary)
-		if(H.gender == MALE)
-			var/list/species_facial_hair = list()
-			if(H.species)
-				for(var/i in facial_hair_styles_list)
-					var/datum/sprite_accessory/facial_hair/tmp_facial = facial_hair_styles_list[i]
-					if(H.species.name in tmp_facial.species_allowed)
-						species_facial_hair += i
+		if(H.a_intent == "hurt")
+			H.do_attack_animation(src)
+			if(!H.gloves)
+				var/organ = (H.hand ? "l_" : "r_") + "hand"
+				var/datum/organ/external/affecting = H.get_organ(organ)
+				affecting.take_damage(rand(0,4))
+			if(!shattered && prob(20))
+				shatter()
 			else
-				species_facial_hair = facial_hair_styles_list
-
-			var/new_style = input(user, "Select a facial hair style", "Grooming")  as null|anything in species_facial_hair
-			if(userloc != H.loc) return	//no tele-grooming
-			if(new_style)
-				H.f_style = new_style
-
-		//handle normal hair
-		var/list/species_hair = list()
-		if(H.species)
-			for(var/i in hair_styles_list)
-				var/datum/sprite_accessory/hair/tmp_hair = hair_styles_list[i]
-				if(H.species.name in tmp_hair.species_allowed)
-					species_hair += i
+				playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
 		else
-			species_hair = hair_styles_list
-
-		var/new_style = input(user, "Select a hair style", "Grooming")  as null|anything in species_hair
-		if(userloc != H.loc) return	//no tele-grooming
-		if(new_style)
-			H.h_style = new_style
-
-		H.update_hair()
-
+			H.visible_message("[user] stares into \the [src].")
+	..()
 
 /obj/structure/mirror/proc/shatter()
-	if(shattered)	return
+	if(shattered)
+		return
 	shattered = 1
 	icon_state = "mirror_broke"
 	playsound(src, "shatter", 70, 1)
 	desc = "Oh no, seven years of bad luck!"
 
 
-/obj/structure/mirror/bullet_act(var/obj/item/projectile/Proj)
+/obj/structure/mirror/bullet_act(obj/item/projectile/Proj)
 	if(prob(Proj.damage * 2))
 		if(!shattered)
 			shatter()
@@ -71,7 +44,7 @@
 	..()
 
 
-/obj/structure/mirror/attackby(obj/item/I as obj, mob/user as mob)
+/obj/structure/mirror/attackby(obj/item/I, mob/user)
 	user.do_attack_animation(src)
 	if(shattered)
 		playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
@@ -85,9 +58,10 @@
 		playsound(src.loc, 'sound/effects/Glasshit.ogg', 70, 1)
 
 
-/obj/structure/mirror/attack_alien(mob/user as mob)
+/obj/structure/mirror/attack_alien(mob/user)
 	user.do_attack_animation(src)
-	if(islarva(user) || isfacehugger(user)) return
+	if(islarva(user) || isfacehugger(user))
+		return
 	if(shattered)
 		playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
 		return
@@ -95,10 +69,12 @@
 	shatter()
 
 
-/obj/structure/mirror/attack_animal(mob/user as mob)
-	if(!isanimal(user)) return
+/obj/structure/mirror/attack_animal(mob/user)
+	if(!isanimal(user))
+		return
 	var/mob/living/simple_animal/M = user
-	if(M.melee_damage_upper <= 0) return
+	if(M.melee_damage_upper <= 0)
+		return
 	M.do_attack_animation(src)
 	if(shattered)
 		playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
@@ -107,8 +83,9 @@
 	shatter()
 
 
-/obj/structure/mirror/attack_slime(mob/user as mob)
-	if(!isslimeadult(user)) return
+/obj/structure/mirror/attack_slime(mob/user)
+	if(!isslimeadult(user))
+		return
 	user.do_attack_animation(src)
 	if(shattered)
 		playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
