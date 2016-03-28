@@ -53,6 +53,7 @@
 /obj/machinery/embedded_controller/radio/airlock_controller
 	name = "Airlock Controller"
 	tag_secure = 1
+	layer = 3.3	//Above windows
 
 /obj/machinery/embedded_controller/radio/airlock_controller/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
 	var/data[0]
