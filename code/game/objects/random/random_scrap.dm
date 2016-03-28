@@ -20,11 +20,11 @@
 	icon_state = "welder"
 /obj/random/scrap/dense_weighted/item_to_spawn()
 		return pick(\
-						prob(60);/obj/structure/scrap/poor/large,\
+						prob(30);/obj/structure/scrap/poor/large,\
 						prob(6);/obj/structure/scrap/large,\
 						prob(4);/obj/structure/scrap/medical/large,\
 						prob(6);/obj/structure/scrap/vehicle/large,\
-						prob(16);/obj/structure/scrap/food/large,\
+						prob(12);/obj/structure/scrap/food/large,\
 						prob(1);/obj/structure/scrap/guns/large\
 					)
 
@@ -49,11 +49,11 @@
 	icon_state = "welder"
 /obj/random/scrap/sparse_weighted/item_to_spawn()
 		return pick(\
-						prob(60);/obj/structure/scrap/poor,\
+						prob(30);/obj/structure/scrap/poor,\
 						prob(6);/obj/structure/scrap,\
 						prob(4);/obj/structure/scrap/medical,\
 						prob(6);/obj/structure/scrap/vehicle,\
-						prob(16);/obj/structure/scrap/food,\
+						prob(12);/obj/structure/scrap/food,\
 						prob(1);/obj/structure/scrap/guns\
 					)
 

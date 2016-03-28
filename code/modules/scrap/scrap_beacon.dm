@@ -66,7 +66,7 @@
 	for(var/mob/living/T in newloc)
 		T.ex_act(1)
 	for(var/mob/living/M in oviewers(5, dropped))
-		shake_camera(M, 8, 3)
+		shake_camera(M, 4, 3)
 	playsound(dropped.loc, 'sound/effects/meteorimpact.ogg', 50, 1)
 	dropped.density = original_density
 	dropped.opacity = original_opacity
