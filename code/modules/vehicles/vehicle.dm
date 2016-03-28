@@ -10,7 +10,7 @@
 	layer = MOB_LAYER + 0.1 //so it sits above objects including mobs
 	density = 1
 	anchored = 1
-	animate_movement=1
+	animate_movement = 1
 	light_range = 3
 
 	can_buckle = 1
@@ -19,19 +19,13 @@
 
 	var/attack_log = null
 	var/on = 0
+	var/open = 0
 	var/health = 0	//do not forget to set health for your vehicle!
 	var/maxhealth = 0
 	var/fire_dam_coeff = 1.0
 	var/brute_dam_coeff = 1.0
-	var/open = 0	//Maint panel
-	var/locked = 1
 	var/stat = 0
-	var/emagged = 0
-	var/powered = 0		//set if vehicle is powered and should use fuel when moving
 	var/move_delay = 1	//set this to limit the speed of the vehicle
-
-	var/obj/item/weapon/stock_parts/cell/cell
-	var/charge_use = 5	//set this to adjust the amount of power the vehicle uses per move
 
 	var/atom/movable/load		//all vehicles can take a load, since they should all be a least drivable
 	var/load_item_visible = 1	//set if the loaded item should be overlayed on the vehicle sprite
@@ -44,13 +38,10 @@
 //-------------------------------------------
 /obj/vehicle/New()
 	..()
-	//spawn the cell you want in each vehicle
 
 /obj/vehicle/Move()
-	if(world.time > l_move_time + move_delay)
+	if(can_move())
 		var/old_loc = get_turf(src)
-		if(on && powered && cell.charge < charge_use)
-			turn_off()
 
 		var/init_anc = anchored
 		anchored = 0
@@ -60,9 +51,6 @@
 
 		set_dir(get_dir(old_loc, loc))
 		anchored = init_anc
-
-		if(on && powered)
-			cell.use(charge_use)
 
 		//Dummy loads do not have to be moved as they are just an overlay
 		//See load_object() proc in cargo_trains.dm for an example
@@ -74,34 +62,39 @@
 	else
 		return 0
 
+/obj/vehicle/proc/can_move()
+	if(world.time <= l_move_time + move_delay)
+		return 0
+	if(!on)
+		return 0
+	if(istype(loc, /turf/space) && !istype(src, /obj/vehicle/space))
+		return 0
+	return 1
+
 /obj/vehicle/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/hand_labeler))
 		return
-	if(istype(W, /obj/item/weapon/screwdriver))
-		if(!locked)
-			open = !open
-			update_icon()
-			user << "<span class='notice'>Maintenance panel is now [open ? "opened" : "closed"].</span>"
-	else if(istype(W, /obj/item/weapon/crowbar) && cell && open)
-		remove_cell(user)
-
-	else if(istype(W, /obj/item/weapon/stock_parts/cell) && !cell && open)
-		insert_cell(W, user)
+	else if(istype(W, /obj/item/weapon/screwdriver))
+		open = !open
+		playsound(loc, 'sound/items/Screwdriver.ogg', 50, 1)
+		if(on && open)
+			turn_off()
+		update_icon()
+		user << "<span class='notice'>Maintenance panel is now [open ? "opened" : "closed"].</span>"
 	else if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/T = W
 		if(T.welding)
 			if(health < maxhealth)
 				if(open)
 					health = min(maxhealth, health+10)
-					user.visible_message("\red [user] repairs [src]!","\blue You repair [src]!")
+					playsound(src.loc, 'sound/items/welder.ogg', 50, 1)
+					user.visible_message("<span class='red'>[user] repairs \the [src]!</span>","<span class='notice'>You repair \the [src]!</span>")
 				else
-					user << "<span class='notice'>Unable to repair with the maintenance panel closed.</span>"
+					user << "<span class='notice'>Unable to repair \the [src] with the maintenance panel closed.</span>"
 			else
 				user << "<span class='notice'>[src] does not need a repair.</span>"
 		else
 			user << "<span class='notice'>Unable to repair while [src] is off.</span>"
-	else if(istype(W, /obj/item/weapon/card/emag) && !emagged)
-		Emag(user)
 	else if(hasvar(W,"force") && hasvar(W,"damtype"))
 		switch(W.damtype)
 			if("fire")
@@ -145,35 +138,25 @@
 				return
 	return
 
-/obj/vehicle/emp_act(severity)
-	var/was_on = on
-	stat |= EMPED
-	var/obj/effect/overlay/pulse2 = new/obj/effect/overlay ( src.loc )
-	pulse2.icon = 'icons/effects/effects.dmi'
-	pulse2.icon_state = "empdisable"
-	pulse2.name = "emp sparks"
-	pulse2.anchored = 1
-	pulse2.set_dir(pick(cardinal))
-
-	spawn(10)
-		qdel(pulse2)
-	if(on)
-		turn_off()
-	spawn(severity*300)
-		stat &= ~EMPED
-		if(was_on)
-			turn_on()
-
 /obj/vehicle/attack_ai(mob/user as mob)
 	return
 
+/obj/vehicle/Process_Spacemove(direction)
+	if(has_gravity(src))
+		return 1
+
+	if(pulledby)
+		return 1
+
+	return 0
+
+/obj/vehicle/space/Process_Spacemove(direction)
+	return 1
 //-------------------------------------------
 // Vehicle procs
 //-------------------------------------------
 /obj/vehicle/proc/turn_on()
 	if(stat)
-		return 0
-	if(powered && cell.charge < charge_use)
 		return 0
 	on = 1
 	luminosity = initial(luminosity)
@@ -185,25 +168,13 @@
 	luminosity = 0
 	update_icon()
 
-/obj/vehicle/proc/Emag(mob/user as mob)
-	emagged = 1
-
-	if(locked)
-		locked = 0
-		user << "<span class='warning'>You bypass [src]'s controls.</span>"
-
 /obj/vehicle/proc/explode()
-	src.visible_message("\red <B>[src] blows apart!</B>", 1)
+	src.visible_message("<span class='danger'>[src] blows apart!</span>", 1)
 	var/turf/Tsec = get_turf(src)
 
 	new /obj/item/stack/rods(Tsec)
 	new /obj/item/stack/rods(Tsec)
 	new /obj/item/weapon/cable_coil/cut(Tsec)
-
-	if(cell)
-		cell.forceMove(Tsec)
-		cell.update_icon()
-		cell = null
 
 	//stuns people who are thrown off a train that has been blown up
 	if(istype(load, /mob/living))
@@ -220,44 +191,6 @@
 /obj/vehicle/proc/healthcheck()
 	if(health <= 0)
 		explode()
-
-/obj/vehicle/proc/powercheck()
-	if(!cell && !powered)
-		return
-
-	if(!cell && powered)
-		turn_off()
-		return
-
-	if(cell.charge < charge_use)
-		turn_off()
-		return
-
-	if(cell && powered)
-		turn_on()
-		return
-
-/obj/vehicle/proc/insert_cell(var/obj/item/weapon/stock_parts/cell/C, var/mob/living/carbon/human/H)
-	if(cell)
-		return
-	if(!istype(C))
-		return
-
-	H.drop_from_inventory(C)
-	C.forceMove(src)
-	cell = C
-	powercheck()
-	usr << "<span class='notice'>You install [C] in [src].</span>"
-
-/obj/vehicle/proc/remove_cell(var/mob/living/carbon/human/H)
-	if(!cell)
-		return
-
-	usr << "<span class='notice'>You remove [cell] from [src].</span>"
-	cell.forceMove(get_turf(H))
-	H.put_in_hands(cell)
-	cell = null
-	powercheck()
 
 /obj/vehicle/proc/RunOver(var/mob/living/carbon/human/H)
 	return		//write specifics for different vehicles
