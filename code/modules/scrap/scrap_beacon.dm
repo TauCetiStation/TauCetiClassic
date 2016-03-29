@@ -48,9 +48,7 @@
 	return
 
 /obj/structure/scrap_beacon/proc/summon_scrap_pile(newloc)
-	new /obj/random/scrap/moderate_weighted(src)
-	var/obj/structure/scrap/dropped = pick(src.contents)
-	dropped.loc = newloc
+	new /obj/random/scrap/moderate_weighted(newloc)
 	var/datum/effect/effect/system/spark_spread/s = PoolOrNew(/datum/effect/effect/system/spark_spread)
 	s.set_up(3, 1, newloc)
 	s.start()
