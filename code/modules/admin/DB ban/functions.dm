@@ -467,3 +467,80 @@
 			output += "</table></div>"
 
 	usr << browse(output,"window=lookupbans;size=900x700")
+
+//Version of DB_ban_record that can be used without holder.
+/proc/DB_ban_record_2(var/bantype, var/mob/banned_mob, var/duration = -1, var/reason, var/job = "", var/rounds = 0, var/banckey = null, var/banip = null, var/bancid = null)
+	establish_db_connection()
+	if(!dbcon.IsConnected())
+		return
+
+	var/serverip = "[world.internet_address]:[world.port]"
+	var/bantype_pass = 0
+	var/bantype_str
+	switch(bantype)
+		if(BANTYPE_PERMA)
+			bantype_str = "PERMABAN"
+			duration = -1
+			bantype_pass = 1
+		if(BANTYPE_TEMP)
+			bantype_str = "TEMPBAN"
+			bantype_pass = 1
+		if(BANTYPE_JOB_PERMA)
+			bantype_str = "JOB_PERMABAN"
+			duration = -1
+			bantype_pass = 1
+		if(BANTYPE_JOB_TEMP)
+			bantype_str = "JOB_TEMPBAN"
+			bantype_pass = 1
+	if( !bantype_pass ) return
+	if( !istext(reason) ) return
+	if( !isnum(duration) ) return
+
+	var/ckey
+	var/computerid
+	var/ip
+
+	if(ismob(banned_mob))
+		ckey = banned_mob.ckey
+		if(banned_mob.client)
+			computerid = banned_mob.client.computer_id
+			ip = banned_mob.client.address
+	else if(banckey)
+		ckey = ckey(banckey)
+		computerid = bancid
+		ip = banip
+
+	var/DBQuery/query = dbcon.NewQuery("SELECT id FROM erro_player WHERE ckey = '[ckey]'")
+	query.Execute()
+	var/validckey = 0
+	if(query.NextRow())
+		validckey = 1
+	if(!validckey)
+		if(!banned_mob || (banned_mob && !IsGuestKey(banned_mob.key)))
+			message_admins("<font color='red'>Tau Kitty attempted to ban [ckey], but [ckey] has not been seen yet. Please only ban actual players.</font>",1)
+			return
+
+	var/a_ckey = "taukitty"
+	var/a_computerid = "0000000000"
+	var/a_ip = "127.0.0.1"
+
+	var/who
+	for(var/client/C in clients)
+		if(!who)
+			who = "[C]"
+		else
+			who += ", [C]"
+
+	var/adminwho
+	for(var/client/C in admins)
+		if(!adminwho)
+			adminwho = "[C]"
+		else
+			adminwho += ", [C]"
+
+	reason = sql_sanitize_text(reason)
+
+	var/sql = "INSERT INTO erro_ban (`id`,`bantime`,`serverip`,`bantype`,`reason`,`job`,`duration`,`rounds`,`expiration_time`,`ckey`,`computerid`,`ip`,`a_ckey`,`a_computerid`,`a_ip`,`who`,`adminwho`,`edits`,`unbanned`,`unbanned_datetime`,`unbanned_ckey`,`unbanned_computerid`,`unbanned_ip`) VALUES (null, Now(), '[serverip]', '[bantype_str]', '[reason]', '[job]', [(duration)?"[duration]":"0"], [(rounds)?"[rounds]":"0"], Now() + INTERVAL [(duration>0) ? duration : 0] MINUTE, '[ckey]', '[computerid]', '[ip]', '[a_ckey]', '[a_computerid]', '[a_ip]', '[who]', '[adminwho]', '', null, null, null, null, null)"
+	var/DBQuery/query_insert = dbcon.NewQuery(sql)
+	query_insert.Execute()
+	message_admins("Tau Kitty has added a [bantype_str] for [ckey] [(job)?"([job])":""] [(duration > 0)?"([duration] minutes)":""] with the reason: \"[reason]\" to the ban database.",1)
