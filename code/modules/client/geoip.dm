@@ -27,7 +27,7 @@ var/global/list/geoip_ckey_updated = list()
 	if(status == "updated")
 		if(proxy == "true")
 			var/reason = "No proxy allowed"
-			AddBan(C.ckey, C.computer_id, reason, "taukitty", 0, 0, C.lastKnownIP)
+			AddBan(C.ckey, C.computer_id, reason, "taukitty", 0, 0, C.mob.lastKnownIP)
 			C << "<span class='danger'><BIG><B>You have been banned by Tau Kitty.\nReason: [reason].</B></BIG></span>"
 			C << "<span class='red'>This is a permanent ban.</span>"
 			if(config.banappeals)
@@ -38,7 +38,7 @@ var/global/list/geoip_ckey_updated = list()
 			log_admin("Tau Kitty has banned [C.ckey].\nReason: [reason]\nThis is a permanent ban.")
 			message_admins("Tau Kitty has banned [C.ckey].\nReason: [reason]\nThis is a permanent ban.")
 			feedback_inc("ban_perma",1)
-			DB_ban_record(BANTYPE_PERMA, C.mob, -1, reason)
+			DB_ban_record_2(BANTYPE_PERMA, C.mob, -1, reason)
 			del(C)
 		else
 			var/msg = "[holder] connected from ([country], [regionName], [city]) using ISP: ([isp]) with IP: ([ip]) Proxy: ([proxy])"
