@@ -38,7 +38,7 @@ var/global/list/geoip_ckey_updated = list()
 			log_admin("Tau Kitty has banned [C.ckey].\nReason: [reason]\nThis is a permanent ban.")
 			message_admins("Tau Kitty has banned [C.ckey].\nReason: [reason]\nThis is a permanent ban.")
 			feedback_inc("ban_perma",1)
-			DB_ban_record(BANTYPE_PERMA, C, -1, reason)
+			DB_ban_record(BANTYPE_PERMA, C.mob, -1, reason)
 			del(C)
 		else
 			var/msg = "[holder] connected from ([country], [regionName], [city]) using ISP: ([isp]) with IP: ([ip]) Proxy: ([proxy])"
