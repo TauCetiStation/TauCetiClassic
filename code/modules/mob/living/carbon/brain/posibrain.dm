@@ -6,8 +6,6 @@
 	w_class = 3
 	origin_tech = "engineering=4;materials=4;bluespace=2;programming=4"
 
-	construction_cost = list("metal"=500,"glass"=500,"silver"=200,"gold"=200,"phoron"=100,"diamond"=10)
-	construction_time = 75
 	var/searching = 0
 	var/askDelay = 10 * 60 * 1
 	mob/living/carbon/brain/brainmob = null
@@ -34,8 +32,9 @@
 			if(jobban_isbanned(O, "pAI"))
 				continue
 			if(O.client)
-				if(O.client.prefs.be_special & BE_PAI)
-					question(O.client)
+				var/client/C = O.client
+				if(!C.prefs.ignore_question.Find("posibrain") && (ROLE_PAI in C.prefs.be_role))
+					question(C)
 
 	proc/question(var/client/C)
 		spawn(0)
@@ -45,7 +44,7 @@
 			if(response == "Yes")
 				transfer_personality(C.mob)
 			else if (response == "Never for this round")
-				C.prefs.be_special ^= BE_PAI
+				C.prefs.ignore_question += "posibrain"
 
 
 	transfer_identity(var/mob/living/carbon/H)

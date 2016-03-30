@@ -232,7 +232,7 @@
 		var/list/candidates = list()
 		for(var/mob/M in player_list)
 			if(M.stat != DEAD)		continue	//we are not dead!
-			if(!M.client.prefs.be_special & BE_ALIEN)	continue	//we don't want to be an alium
+			if(!(ROLE_ALIEN in M.client.prefs.be_role))	continue	//we don't want to be an alium
 			if(M.client.is_afk())	continue	//we are afk
 			if(M.mind && M.mind.current && M.mind.current.stat != DEAD)	continue	//we have a live body we are tied to
 			candidates += M.ckey
@@ -1043,6 +1043,3 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	feedback_add_details("admin_verb","FAXMESS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 	SendFax(sent, sentname, Sender, dpt, stamp, stamps)
-
-
-

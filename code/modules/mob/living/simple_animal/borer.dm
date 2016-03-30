@@ -432,8 +432,9 @@ mob/living/simple_animal/borer/proc/request_player()
 		if(jobban_isbanned(O, "Syndicate"))
 			continue
 		if(O.client)
-			if(O.client.prefs.be_special & BE_ALIEN)
-				question(O.client)
+			var/client/C = O.client
+			if(!C.prefs.ignore_question.Find("borer") && (ROLE_ALIEN in C.prefs.be_role))
+				question(C)
 
 mob/living/simple_animal/borer/proc/question(var/client/C)
 	spawn(0)
@@ -444,7 +445,7 @@ mob/living/simple_animal/borer/proc/question(var/client/C)
 		if(response == "Yes")
 			transfer_personality(C)
 		else if (response == "Never for this round")
-			C.prefs.be_special ^= BE_ALIEN
+			C.prefs.ignore_question += "borer"
 
 mob/living/simple_animal/borer/proc/transfer_personality(var/client/candidate)
 

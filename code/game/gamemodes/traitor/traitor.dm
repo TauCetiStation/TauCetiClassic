@@ -5,6 +5,7 @@
 /datum/game_mode/traitor
 	name = "traitor"
 	config_tag = "traitor"
+	role_type = ROLE_TRAITOR
 	restricted_jobs = list("Cyborg")//They are part of the AI if he is traitor so are they, they use to get double chances
 	protected_jobs = list("Internal Affairs Agent", "Security Officer", "Warden", "Detective", "Head of Security", "Captain")//AI", Currently out of the list as malf does not work for shit
 	required_players = 1
@@ -17,9 +18,6 @@
 
 	uplink_welcome = "AntagCorp Portable Teleportation Relay:"
 	uplink_uses = 10
-
-	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
-	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
 
 	var/traitors_possible = 4 //hard limit on traitors if scaling is turned off
 	var/const/traitor_scaling_coeff = 7.0 //how much does the amount of players get divided by to determine traitors
@@ -35,12 +33,6 @@
 	if(config.protect_roles_from_antagonist)
 		restricted_jobs += protected_jobs
 
-	var/list/possible_traitors = get_players_for_role(BE_TRAITOR)
-
-	// stop setup if no possible traitors
-	if(!possible_traitors.len)
-		return 0
-
 	var/num_traitors = 1
 
 	if(config.traitor_scaling)
@@ -48,18 +40,18 @@
 	else
 		num_traitors = max(1, min(num_players(), traitors_possible))
 
-	for(var/datum/mind/player in possible_traitors)
+	for(var/datum/mind/player in antag_candidates)
 		for(var/job in restricted_jobs)
 			if(player.assigned_role == job)
-				possible_traitors -= player
+				antag_candidates -= player
 
 	for(var/j = 0, j < num_traitors, j++)
-		if (!possible_traitors.len)
+		if (!antag_candidates.len)
 			break
-		var/datum/mind/traitor = pick(possible_traitors)
+		var/datum/mind/traitor = pick(antag_candidates)
 		traitors += traitor
 		traitor.special_role = "traitor"
-		possible_traitors.Remove(traitor)
+		antag_candidates.Remove(traitor)
 
 	if(!traitors.len)
 		return 0
@@ -74,10 +66,7 @@
 			finalize_traitor(traitor)
 			greet_traitor(traitor)
 	modePlayer += traitors
-	spawn (rand(waittime_l, waittime_h))
-		send_intercept()
-	..()
-	return 1
+	return ..()
 
 
 /datum/game_mode/proc/forge_traitor_objectives(var/datum/mind/traitor)

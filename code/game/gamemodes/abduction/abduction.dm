@@ -7,8 +7,7 @@
 /datum/game_mode/abduction
 	name = "abduction"
 	config_tag = "abduction"
-//	antag_flag = BE_ABDUCTOR
-//	pre_setup_before_jobs = 1
+	role_type = ROLE_ABDUCTOR
 	required_enemies = 2
 	recommended_enemies = 2
 	required_players = 15
@@ -19,14 +18,10 @@
 	var/list/datum/mind/agents = list()
 	var/list/datum/objective/team_objectives = list()
 	var/list/team_names = list()
-	var/list/datum/mind/antag_candidates = list()
 
 	votable = 0
 
 	var/finished = 0
-
-	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
-	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
 
 /datum/game_mode/abduction/announce()
 	world << "<B>The current game mode is - Abduction!</B>"
@@ -36,7 +31,6 @@
 
 /datum/game_mode/abduction/pre_setup()
 	var/abductor_scaling_coeff = 15	////how many players per abductor team
-	antag_candidates = get_players_for_role(BE_ABDUCTOR)
 
 	abductor_teams = max(1, min(max_teams,round(num_players()/abductor_scaling_coeff)))
 	var/possible_teams = max(1,round(antag_candidates.len / 2))
@@ -55,8 +49,6 @@
 	return 1
 
 /datum/game_mode/abduction/proc/make_abductor_team(var/team_number,var/preset_agent=null,var/preset_scientist=null)
-	if(!antag_candidates.len)
-		antag_candidates = get_players_for_role(BE_ABDUCTOR)
 	//Team Name
 	team_names[team_number] = "Mothership [pick(possible_changeling_IDs)]" //TODO Ensure unique and actual alieny names
 	abduction_teams += team_names[team_number]
@@ -65,7 +57,7 @@
 	team_objective.team = team_number
 	team_objectives[team_number] = team_objective
 	//Team Members
-	if(antag_candidates.len >=2)
+	if(antag_candidates.len >= 2)
 		var/datum/mind/scientist = pick(antag_candidates)
 		antag_candidates -= scientist
 		var/datum/mind/agent = pick(antag_candidates)
@@ -135,9 +127,6 @@
 		equip_scientist(H,team_number)
 		greet_scientist(scientist,team_number)
 		H.regenerate_icons()
-
-	spawn (rand(waittime_l, waittime_h))
-		send_intercept()
 
 	return ..()
 

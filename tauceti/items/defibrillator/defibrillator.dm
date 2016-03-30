@@ -113,5 +113,5 @@ datum/design/defibrillators
 	id = "defibrillators"
 	req_tech = list("combat" = 2,"biotech" = 2)
 	build_type = 2 //PROTOLATHE
-	materials = list("$metal" = 2000, "$glass" = 50)
+	materials = list(MAT_METAL = 2000, MAT_GLASS = 50)
 	build_path = "/obj/item/weapon/defibrillator"
