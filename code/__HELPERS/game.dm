@@ -344,20 +344,20 @@ proc/isInSight(var/atom/A, var/atom/B)
 	var/i = 0
 	while(candidates.len <= 0 && i < 5)
 		for(var/mob/dead/observer/G in player_list)
-			if(G.client.prefs.be_special & BE_ALIEN)
+			if(ROLE_ALIEN in G.client.prefs.be_role)
 				if(((G.client.inactivity/10)/60) <= ALIEN_SELECT_AFK_BUFFER + i) // the most active players are more likely to become an alien
 					if(!(G.mind && G.mind.current && G.mind.current.stat != DEAD))
 						candidates += G.key
 		i++
 	return candidates
 
-/proc/get_candidates(be_special_flag=0, afk_bracket=3000) //Get candidates for Blob
+/proc/get_candidates(be_role_type, afk_bracket=3000) //Get candidates for Blob
 	var/list/candidates = list()
 	// Keep looping until we find a non-afk candidate within the time bracket (we limit the bracket to 10 minutes (6000))
 	while(!candidates.len && afk_bracket < 6000)
 		for(var/mob/dead/observer/G in player_list)
 			if(!(G.mind && G.mind.current && G.mind.current.stat != DEAD))
-				if(!G.client.is_afk(afk_bracket) && (G.client.prefs.be_special & be_special_flag))
+				if(!G.client.is_afk(afk_bracket) && (be_role_type in G.client.prefs.be_role))
 					candidates += G.client
 		afk_bracket += 600 // Add a minute to the bracket, for every attempt
 	return candidates

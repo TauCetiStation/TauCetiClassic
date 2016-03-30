@@ -1,36 +1,46 @@
-//Roles preferences
-#define BE_TRAITOR		1
-#define BE_OPERATIVE	2
-#define BE_CHANGELING	4
-#define BE_WIZARD		8
-#define BE_MALF			16
-#define BE_REV			32
-#define BE_ALIEN		64
-#define BE_PAI			128
-#define BE_CULTIST		256
-#define BE_NINJA		512
-#define BE_RAIDER		1024
-#define BE_PLANT		2045
-#define BE_MEME			4096
-#define BE_MUTINEER   	8192
-#define BE_SHADOWLING	16384
-#define BE_ABDUCTOR		32768
+//Values for antag preferences, event roles, etc. unified here
 
-var/list/be_special_flags = list(
-	"Traitor" = BE_TRAITOR,
-	"Operative" = BE_OPERATIVE,
-	"Changeling" = BE_CHANGELING,
-	"Wizard" = BE_WIZARD,
-	"Malf AI" = BE_MALF,
-	"Revolutionary" = BE_REV,
-	"Xenomorph" = BE_ALIEN,
-	"pAI" = BE_PAI,
-	"Cultist" = BE_CULTIST,
-	"Ninja" = BE_NINJA,
-	"Raider" = BE_RAIDER,
-	"Diona" = BE_PLANT,
-	"Meme" = BE_MEME,
-	"Mutineer" = BE_MUTINEER,
-	"Shadowling" = BE_SHADOWLING,
-	"Abductor" = BE_ABDUCTOR
-	)
+//Any number of preferences could be.
+//These are synced with the Database, if you change the values of the defines
+//then you MUST update the database!
+#define ROLE_TRAITOR           "Traitor"
+#define ROLE_OPERATIVE         "Operative"
+#define ROLE_CHANGELING        "Changeling"
+#define ROLE_WIZARD            "Wizard"
+#define ROLE_MALF              "Malf AI"
+#define ROLE_REV               "Revolutionary"
+#define ROLE_ALIEN             "Xenomorph"
+#define ROLE_PAI               "pAI"
+#define ROLE_CULTIST           "Cultist"
+#define ROLE_BLOB              "Blob"
+#define ROLE_NINJA             "Ninja"
+#define ROLE_RAIDER            "Raider"
+#define ROLE_PLANT             "Diona"
+#define ROLE_MEME              "Meme"
+#define ROLE_MUTINEER          "Mutineer"
+#define ROLE_SHADOWLING        "Shadowling"
+#define ROLE_ABDUCTOR          "Abductor"
+
+
+//Equating to one means that it's not gamemode prefs, so it should be visible always.
+//Pay attention to 'IS_MODE_COMPILED' parametr.
+//If there will be link to non-existent mode or any typo mistake, mode wouldn't be visible in prefs.
+var/global/list/special_roles = list(
+	ROLE_TRAITOR = IS_MODE_COMPILED("traitor"),          //0
+	ROLE_OPERATIVE = IS_MODE_COMPILED("nuclear"),        //1
+	ROLE_CHANGELING = IS_MODE_COMPILED("changeling"),    //2
+	ROLE_WIZARD = IS_MODE_COMPILED("wizard"),            //3
+	ROLE_MALF = IS_MODE_COMPILED("malfunction"),         //4
+	ROLE_REV = IS_MODE_COMPILED("revolution"),           //5
+	ROLE_ALIEN = 1,                                      //6
+	ROLE_PAI = 1,                                        //7
+	ROLE_CULTIST = IS_MODE_COMPILED("cult"),             //8
+	ROLE_BLOB =  IS_MODE_COMPILED("blob"),               //9
+	ROLE_NINJA = 1,                                      //10
+	ROLE_RAIDER = IS_MODE_COMPILED("heist"),             //11
+	ROLE_PLANT = 1,                                      //12
+	ROLE_MEME = IS_MODE_COMPILED("meme"),                //13
+	ROLE_MUTINEER = IS_MODE_COMPILED("mutiny"),          //14
+	ROLE_SHADOWLING = IS_MODE_COMPILED("shadowling"),    //15
+	ROLE_ABDUCTOR = IS_MODE_COMPILED("abduction")        //16
+)

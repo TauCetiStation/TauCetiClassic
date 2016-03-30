@@ -45,8 +45,6 @@
 
 /mob/living/silicon/robot/death(gibbed)
 	if(stat == DEAD)	return
-	if(typing)	//turn off typing indicator
-		qdel(typing_indicator)
 	if(!gibbed)
 		emote("deathgasp")
 	stat = DEAD

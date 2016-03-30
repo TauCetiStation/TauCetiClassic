@@ -6,9 +6,8 @@
 	. += 				"<tr><td colspan='2'><b>Special Role Preference:</b></td></tr>"
 	if(jobban_isbanned(user, "Syndicate"))
 		. += 			"<tr><td><font color='red'><b>You are banned from antagonist roles.</b></font></td></tr>"
-		src.be_special = 0
+		src.be_role = list()
 	else
-		var/n = 0
 		for (var/i in special_roles)
 			if(special_roles[i]) //if mode is available on the server
 				if(jobban_isbanned(user, i))
@@ -17,11 +16,10 @@
 					if(jobban_isbanned(user, "pAI"))
 						. +="<tr><td width='45%'>[i]: </td><td><font color=red><b> \[BANNED]</b></font><br></td></tr>"
 				else
-					if(src.be_special&(1<<n))
-						. +="<tr><td width='45%'>[i]: </td><td><b>Yes</b> / <a href='?_src_=prefs;preference=be_special;num=[n]'>No</a></td></tr>"
+					if(i in be_role)
+						. +="<tr><td width='45%'>[i]: </td><td><b>Yes</b> / <a href='?_src_=prefs;preference=be_role;be_role_type=[i]'>No</a></td></tr>"
 					else
-						. +="<tr><td width='45%'>[i]: </td><td><a href='?_src_=prefs;preference=be_special;num=[n]'>Yes</a> / <b>No</b></td></tr>"
-			n++
+						. +="<tr><td width='45%'>[i]: </td><td><a href='?_src_=prefs;preference=be_role;be_role_type=[i]'>Yes</a> / <b>No</b></td></tr>"
 
 	. += 			"</table>"
 	. += 		"</td>"
@@ -50,6 +48,9 @@
 				if(!isnull(uplink_type))
 					uplinklocation = uplink_type
 
-		if("be_special")
-			var/num = text2num(href_list["num"])
-			be_special ^= (1<<num)
+		if("be_role")
+			var/be_role_type = href_list["be_role_type"]
+			if(be_role_type in be_role)
+				be_role -= be_role_type
+			else
+				be_role += be_role_type
