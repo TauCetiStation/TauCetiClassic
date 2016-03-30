@@ -53,7 +53,7 @@ var/bomb_set
 /obj/machinery/nuclearbomb/process()
 	if (src.timing)
 		bomb_set = 1 //So long as there is one nuke timing, it means one nuke is armed.
-		src.timeleft--
+		timeleft = max(timeleft - 2, 0) // 2 seconds per process()
 		playsound(loc, 'sound/items/timer.ogg', 30, 0)
 		if (src.timeleft <= 0)
 			explode()

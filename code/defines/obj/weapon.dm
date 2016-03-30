@@ -237,6 +237,26 @@
 	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
 	return ..()
 
+/obj/item/weapon/shard/afterattack(atom/A as mob|obj, mob/user, proximity)
+	if(!proximity || !(src in user))
+		return
+	if(isturf(A))
+		return
+	if(istype(A, /obj/item/weapon/storage))
+		return
+
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(!H.gloves && !(H.dna && H.dna.mutantrace == "adamantine")) //specflags please..
+			H << "<span class='warning'>[src] cuts into your hand!</span>"
+			var/organ = (H.hand ? "l_" : "r_") + "hand"
+			var/datum/organ/external/affecting = H.get_organ(organ)
+			affecting.take_damage(force / 2)
+	else if(ismonkey(user))
+		var/mob/living/carbon/monkey/M = user
+		M << "<span class='warning'>[src] cuts into your hand!</span>"
+		M.adjustBruteLoss(force / 2)
+
 /*/obj/item/weapon/syndicate_uplink
 	name = "station bounced radio"
 	desc = "Remain silent about this..."
@@ -864,4 +884,4 @@
 	icon = 'icons/obj/stock_parts.dmi'
 	icon_state = "capacitor"
 	desc = "A debug item for research."
-	origin_tech = "materials=8;programming=8;magnets=8;powerstorage=8;bluespace=8;combat=8;biotech=8;syndicate=8"
+	origin_tech = "materials=8;engineering=8;phorontech=8;powerstorage=8;bluespace=8;biotech=8;combat=8;magnets=8;programming=8;syndicate=8"

@@ -39,6 +39,7 @@
 	var/tod = null // Time of death
 	var/update_slimes = 1
 	var/silent = null 		//Can't talk. Value goes down every life proc.
+	var/pull_debuff = 0		//Movement debuff when pulling
 
 //TG stuff
 	var/on_fire = 0 //The "Are we on fire?" var
@@ -47,4 +48,3 @@
 	var/ventcrawler = 0 //0 No vent crawling, 1 vent crawling in the nude, 2 vent crawling always
 	var/list/pipes_shown = list()
 	var/last_played_vent
-

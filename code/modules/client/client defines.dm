@@ -56,3 +56,5 @@
 		// /vg/: MEDIAAAAAAAA
 	// Set on login.
 	var/datum/media_manager/media = null
+
+	var/datum/geoip_data/geoip = null

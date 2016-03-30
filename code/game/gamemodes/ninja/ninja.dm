@@ -3,6 +3,7 @@
 /datum/game_mode/ninja
 	name = "ninja"
 	config_tag = "ninja"
+	role_type = ROLE_NINJA
 	restricted_jobs = list("Cyborg", "AI")
 	required_players = 10 //Can be adjusted later, should suffice for now.
 	required_players_secret = 15
@@ -11,8 +12,6 @@
 
 	votable = 0
 
-	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
-	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
 	var/finished = 0
 
 /datum/game_mode/ninja/announce()
@@ -21,19 +20,15 @@
 /datum/game_mode/ninja/can_start()
 	if(!..())
 		return 0
-	var/list/datum/mind/possible_ninjas = get_players_for_role(BE_NINJA)
 	var/ninja_number = 2
 
-	for(var/datum/mind/player in possible_ninjas)
+	for(var/datum/mind/player in antag_candidates)
 		for(var/job in restricted_jobs)
 			if(player.assigned_role == job)
-				possible_ninjas -= player
-
-	if(possible_ninjas.len < ninja_number)
-		return 0
+				antag_candidates -= player
 
 	while(ninja_number > 0)
-		var/datum/mind/ninja = pick(possible_ninjas)
+		var/datum/mind/ninja = pick(antag_candidates)
 		if(ninja_number == 1)
 			ninja.protector_role = 1
 		ninjas += ninja
@@ -41,7 +36,7 @@
 		ninja.assigned_role = "MODE" //So they aren't chosen for other jobs.
 		ninja.special_role = "Ninja"
 		ninja.original = ninja.current
-		possible_ninjas -= ninja //So it doesn't pick the same guy each time.
+		antag_candidates -= ninja //So it doesn't pick the same guy each time.
 		ninja_number--
 
 	/*var/datum/mind/ninja = pick(possible_ninjas)
@@ -95,8 +90,6 @@
 		if(N.wear_suit && istype(N.wear_suit,/obj/item/clothing/suit/space/space_ninja))
 			var/obj/item/clothing/suit/space/space_ninja/S = N.wear_suit
 			S:randomize_param()
-	spawn (rand(waittime_l, waittime_h))
-		send_intercept()
 	return ..()
 
 /datum/game_mode/ninja/check_finished()
@@ -273,4 +266,3 @@
 				text += "<BR>"
 		text += "<HR>"
 	return text
-

@@ -196,7 +196,7 @@
 			text += "head|loyal|<a href='?src=\ref[src];revolution=clear'>employee</a>|<a href='?src=\ref[src];revolution=headrev'>headrev</a>|<b>REV</b>"
 		else
 			text += "head|loyal|<b>EMPLOYEE</b>|<a href='?src=\ref[src];revolution=headrev'>headrev</a>|<a href='?src=\ref[src];revolution=rev'>rev</a>"
-		if(current && current.client && current.client.prefs.be_special & BE_REV)
+		if(current && current.client && (ROLE_REV in current.client.prefs.be_role))
 			text += "|Enabled in Prefs"
 		else
 			text += "|Disabled in Prefs"
@@ -255,7 +255,7 @@
 */
 		else
 			text += "<b>EMPLOYEE</b>|<a href='?src=\ref[src];cult=cultist'>cultist</a>"
-		if(current && current.client && current.client.prefs.be_special & BE_CULTIST)
+		if(current && current.client && (ROLE_CULTIST in current.client.prefs.be_role))
 			text += "|Enabled in Prefs"
 		else
 			text += "|Disabled in Prefs"
@@ -273,7 +273,7 @@
 				text += "<br>Objectives are empty! <a href='?src=\ref[src];wizard=autoobjectives'>Randomize!</a>"
 		else
 			text += "<a href='?src=\ref[src];wizard=wizard'>yes</a>|<b>NO</b>"
-		if(current && current.client && current.client.prefs.be_special & BE_WIZARD)
+		if(current && current.client && (ROLE_WIZARD in current.client.prefs.be_role))
 			text += "|Enabled in Prefs"
 		else
 			text += "|Disabled in Prefs"
@@ -295,7 +295,7 @@
 //			var/datum/game_mode/changeling/changeling = ticker.mode
 //			if (istype(changeling) && changeling.changelingdeath)
 //				text += "<br>All the changelings are dead! Restart in [round((changeling.TIME_TO_GET_REVIVED-(world.time-changeling.changelingdeathtime))/10)] seconds."
-		if(current && current.client && current.client.prefs.be_special & BE_CHANGELING)
+		if(current && current.client && (ROLE_CHANGELING in current.client.prefs.be_role))
 			text += "|Enabled in Prefs"
 		else
 			text += "|Disabled in Prefs"
@@ -318,7 +318,7 @@
 				text += " Code is [code]. <a href='?src=\ref[src];nuclear=tellcode'>tell the code.</a>"
 		else
 			text += "<a href='?src=\ref[src];nuclear=nuclear'>operative</a>|<b>NANOTRASEN</b>"
-		if(current && current.client && current.client.prefs.be_special & BE_OPERATIVE)
+		if(current && current.client && (ROLE_OPERATIVE in current.client.prefs.be_role))
 			text += "|Enabled in Prefs"
 		else
 			text += "|Disabled in Prefs"
@@ -336,7 +336,7 @@
 		else
 			text += "<a href='?src=\ref[src];shadowling=shadowling'>shadowling</a>|<a href='?src=\ref[src];shadowling=thrall'>thrall</a>|<b>HUMAN</b>"
 
-		if(current && current.client && current.client.prefs.be_special & BE_SHADOWLING)
+		if(current && current.client && (ROLE_SHADOWLING in current.client.prefs.be_role))
 			text += "|Enabled in Prefs"
 		else
 			text += "|Disabled in Prefs"
@@ -353,7 +353,7 @@
 			text += "|<a href='?src=\ref[src];common=undress'>undress</a>|<a href='?src=\ref[src];abductor=equip'>equip</a>"
 		else
 			text += "<a href='?src=\ref[src];abductor=abductor'>abductor</a>|<b>human</b>"
-		if(current && current.client && current.client.prefs.be_special & BE_ABDUCTOR)
+		if(current && current.client && (ROLE_ABDUCTOR in current.client.prefs.be_role))
 			text += "|Enabled in Prefs"
 		else
 			text += "|Disabled in Prefs"
@@ -374,7 +374,7 @@
 					text += "<br>Objectives are empty! <a href='?src=\ref[src];traitor=autoobjectives'>Randomize</a>!"
 			else
 				text += "<a href='?src=\ref[src];traitor=traitor'>traitor</a>|<b>Employee</b>"
-	if(current && current.client && current.client.prefs.be_special & BE_TRAITOR)
+	if(current && current.client && (ROLE_TRAITOR in current.client.prefs.be_role))
 		text += "|Enabled in Prefs"
 	else
 		text += "|Disabled in Prefs"
@@ -425,6 +425,10 @@
 				if (R.emagged)
 					n_e_robots++
 			text += "<br>[n_e_robots] of [ai.connected_robots.len] slaved cyborgs are emagged. <a href='?src=\ref[src];silicon=unemagcyborgs'>Unemag</a>"
+		if(current && current.client && (ROLE_MALF in current.client.prefs.be_role))
+			text += "|Enabled in Prefs"
+		else
+			text += "|Disabled in Prefs"
 		sections["malfunction"] = text
 
 	if (ticker.mode.config_tag == "traitorchan")

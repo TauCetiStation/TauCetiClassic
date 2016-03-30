@@ -368,10 +368,9 @@
 	mymob.healthdoll.name = "health doll"
 	mymob.healthdoll.screen_loc = ui_healthdoll
 
-	mymob.pullin = new /obj/screen()
+	mymob.pullin = new /obj/screen/pull()
 	mymob.pullin.icon = ui_style
-	mymob.pullin.icon_state = "pull0"
-	mymob.pullin.name = "pull"
+	mymob.pullin.update_icon(mymob)
 	mymob.pullin.screen_loc = ui_pull_resist
 	src.hotkeybuttons += mymob.pullin
 

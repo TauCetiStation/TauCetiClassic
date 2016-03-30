@@ -217,6 +217,7 @@ obj/machinery/access_button
 	icon_state = "access_button_standby"
 	name = "access button"
 
+	layer = 3.3	//Above windows
 	anchored = 1
 	power_channel = ENVIRON
 

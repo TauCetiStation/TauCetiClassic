@@ -5,12 +5,14 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "welder"
 /obj/random/tools/tool/item_to_spawn()
-		return pick(/obj/item/weapon/screwdriver,\
-					/obj/item/weapon/wirecutters,\
-					/obj/item/weapon/weldingtool,\
-					/obj/item/weapon/crowbar,\
-					/obj/item/weapon/wrench,\
-					/obj/item/device/flashlight)
+		return pick(\
+						/obj/item/weapon/screwdriver,\
+						/obj/item/weapon/wirecutters,\
+						/obj/item/weapon/weldingtool,\
+						/obj/item/weapon/crowbar,\
+						/obj/item/weapon/wrench,\
+						/obj/item/device/flashlight\
+					)
 
 
 /obj/random/tools/technology_scanner
@@ -19,9 +21,11 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "atmos"
 /obj/random/tools/technology_scanner/item_to_spawn()
-		return pick(prob(5);/obj/item/device/t_scanner,\
-					prob(2);/obj/item/device/radio,\
-					prob(5);/obj/item/device/analyzer)
+		return pick(\
+						prob(5);/obj/item/device/t_scanner,\
+						prob(2);/obj/item/device/radio,\
+						prob(5);/obj/item/device/analyzer\
+					)
 
 
 /obj/random/tools/powercell
@@ -30,11 +34,13 @@
 	icon = 'icons/obj/power.dmi'
 	icon_state = "cell"
 /obj/random/tools/powercell/item_to_spawn()
-		return pick(prob(10);/obj/item/weapon/stock_parts/cell/crap,\
-					prob(40);/obj/item/weapon/stock_parts/cell,\
-					prob(40);/obj/item/weapon/stock_parts/cell/high,\
-					prob(9);/obj/item/weapon/stock_parts/cell/super,\
-					prob(1);/obj/item/weapon/stock_parts/cell/hyper)
+		return pick(\
+						prob(10);/obj/item/weapon/stock_parts/cell/crap,\
+						prob(40);/obj/item/weapon/stock_parts/cell,\
+						prob(40);/obj/item/weapon/stock_parts/cell/high,\
+						prob(9);/obj/item/weapon/stock_parts/cell/super,\
+						prob(1);/obj/item/weapon/stock_parts/cell/hyper\
+					)
 
 
 /obj/random/tools/bomb_supply
@@ -43,10 +49,12 @@
 	icon = 'icons/obj/assemblies/new_assemblies.dmi'
 	icon_state = "signaller"
 /obj/random/tools/bomb_supply/item_to_spawn()
-		return pick(/obj/item/device/assembly/igniter,\
-					/obj/item/device/assembly/prox_sensor,\
-					/obj/item/device/assembly/signaler,\
-					/obj/item/device/multitool)
+		return pick(\
+						/obj/item/device/assembly/igniter,\
+						/obj/item/device/assembly/prox_sensor,\
+						/obj/item/device/assembly/signaler,\
+						/obj/item/device/multitool\
+					)
 
 
 /obj/random/tools/toolbox
@@ -55,9 +63,11 @@
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "red"
 /obj/random/tools/toolbox/item_to_spawn()
-		return pick(prob(3);/obj/item/weapon/storage/toolbox/mechanical,\
-					prob(2);/obj/item/weapon/storage/toolbox/electrical,\
-					prob(1);/obj/item/weapon/storage/toolbox/emergency)
+		return pick(\
+						prob(3);/obj/item/weapon/storage/toolbox/mechanical,\
+						prob(2);/obj/item/weapon/storage/toolbox/electrical,\
+						prob(1);/obj/item/weapon/storage/toolbox/emergency\
+					)
 
 
 /obj/random/tools/tech_supply
@@ -67,15 +77,17 @@
 	icon_state = "cell"
 	spawn_nothing_percentage = 50
 /obj/random/tools/tech_supply/item_to_spawn()
-		return pick(prob(3);/obj/random/tools/powercell,\
-					prob(2);/obj/random/tools/technology_scanner,\
-					prob(1);/obj/item/weapon/packageWrap,\
-					prob(2);/obj/random/tools/bomb_supply,\
-					prob(1);/obj/item/weapon/extinguisher,\
-					prob(1);/obj/item/clothing/gloves/fyellow,\
-					prob(3);/obj/item/weapon/cable_coil,\
-					prob(2);/obj/random/tools/toolbox,\
-					prob(2);/obj/item/weapon/storage/belt/utility,\
-					prob(5);/obj/random/tools/tool)
+		return pick(\
+						prob(3);/obj/random/tools/powercell,\
+						prob(2);/obj/random/tools/technology_scanner,\
+						prob(1);/obj/item/weapon/packageWrap,\
+						prob(2);/obj/random/tools/bomb_supply,\
+						prob(1);/obj/item/weapon/extinguisher,\
+						prob(1);/obj/item/clothing/gloves/fyellow,\
+						prob(3);/obj/item/weapon/cable_coil,\
+						prob(2);/obj/random/tools/toolbox,\
+						prob(2);/obj/item/weapon/storage/belt/utility,\
+						prob(5);/obj/random/tools/tool\
+					)
 /obj/random/tools/tech_supply/guaranteed
 	spawn_nothing_percentage = 0

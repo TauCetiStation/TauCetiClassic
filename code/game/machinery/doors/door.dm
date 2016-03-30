@@ -1,7 +1,7 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
 #define DOOR_LAYER		2.7
-#define DOOR_CLOSED_MOD	0.4 //how much the layer is increased when the door is closed
+#define DOOR_CLOSED_MOD		0.4 //how much the layer is increased when the door is closed
 
 /obj/machinery/door
 	name = "Door"

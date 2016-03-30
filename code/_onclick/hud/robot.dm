@@ -100,10 +100,9 @@ var/obj/screen/robot_inventory
 	robot_inventory.icon_state = "inventory"
 	robot_inventory.screen_loc = ui_borg_inventory
 
-	mymob.pullin = new /obj/screen()
+	mymob.pullin = new /obj/screen/pull()
 	mymob.pullin.icon = 'icons/mob/screen1_robot.dmi'
-	mymob.pullin.icon_state = "pull0"
-	mymob.pullin.name = "pull"
+	mymob.pullin.update_icon(mymob)
 	mymob.pullin.screen_loc = ui_borg_pull
 
 	mymob.zone_sel = new /obj/screen/zone_sel()

@@ -11,6 +11,9 @@
 		handle_actions()
 		add_ingame_age()
 
+	if(pull_debuff && !pulling)	//For cases when pulling was stopped by 'pulling = null'
+		pull_debuff = 0
+
 	update_gravity(mob_has_gravity())
 
 	handle_actions()
@@ -56,6 +59,21 @@
 		else
 			clear_alert("blind")
 			clear_fullscreen("blind", 0)
+
+			if(disabilities & NEARSIGHTED)
+				overlay_fullscreen("impaired", /obj/screen/fullscreen/impaired, 1)
+			else
+				clear_fullscreen("impaired")
+
+			if(eye_blurry)
+				overlay_fullscreen("blurry", /obj/screen/fullscreen/blurry)
+			else
+				clear_fullscreen("blurry")
+
+			if(druggy)
+				overlay_fullscreen("high", /obj/screen/fullscreen/high)
+			else
+				clear_fullscreen("high")
 
 		if(machine)
 			if (!( machine.check_eye(src) ))

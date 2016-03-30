@@ -6,6 +6,7 @@
 /datum/game_mode/nuclear
 	name = "nuclear emergency"
 	config_tag = "nuclear"
+	role_type = ROLE_OPERATIVE
 	required_players = 15
 	required_players_secret = 15
 	required_enemies = 1
@@ -17,8 +18,6 @@
 	uplink_uses = 10
 
 	var/const/agents_possible = 5 //If we ever need more syndicate agents.
-	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
-	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
 
 	var/nukes_left = 1 // Call 3714-PRAY right now and order more nukes! Limited offer!
 	var/nuke_off_station = 0 //Used for tracking if the syndies actually haul the nuke to the station
@@ -34,33 +33,29 @@
 	if(!..())
 		return 0
 
-	var/list/possible_syndicates = get_players_for_role(BE_OPERATIVE)
 	var/agent_number = 0
 
     /*
-	 * if(possible_syndicates.len > agents_possible)
+	 * if(antag_candidates.len > agents_possible)
 	 * 	agent_number = agents_possible
 	 * else
-	 * 	agent_number = possible_syndicates.len
+	 * 	agent_number = antag_candidates.len
 	 *
 	 * if(agent_number > n_players)
 	 *	agent_number = n_players/2
 	 */
 
-	if(possible_syndicates.len < 1)
-		return 0
-
 	//Antag number should scale to active crew.
 	var/n_players = num_players()
 	agent_number = Clamp((n_players/5), 2, 6)
 
-	if(possible_syndicates.len < agent_number)
-		agent_number = possible_syndicates.len
+	if(antag_candidates.len < agent_number)
+		agent_number = antag_candidates.len
 
 	while(agent_number > 0)
-		var/datum/mind/new_syndicate = pick(possible_syndicates)
+		var/datum/mind/new_syndicate = pick(antag_candidates)
 		syndicates += new_syndicate
-		possible_syndicates -= new_syndicate //So it doesn't pick the same guy each time.
+		antag_candidates -= new_syndicate //So it doesn't pick the same guy each time.
 		agent_number--
 
 	for(var/datum/mind/synd_mind in syndicates)
@@ -191,9 +186,6 @@
 	if(nuke_spawn)
 		var/obj/machinery/nuclearbomb/the_bomb = new /obj/machinery/nuclearbomb(nuke_spawn.loc)
 		the_bomb.r_code = nuke_code
-
-	spawn (rand(waittime_l, waittime_h))
-		send_intercept()
 
 	return ..()
 

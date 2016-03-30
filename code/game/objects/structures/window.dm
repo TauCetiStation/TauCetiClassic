@@ -1,7 +1,7 @@
 /obj/structure/window
 	name = "window"
 	desc = "A window."
-	icon = 'icons/obj/structures.dmi'
+	icon = 'icons/obj/window.dmi'
 	density = 1
 	layer = 3.2//Just above doors
 	pressure_resistance = 4*ONE_ATMOSPHERE
@@ -13,15 +13,36 @@
 	var/state = 2
 	var/reinf = 0
 	var/basestate
+	var/can_merge = 1	//Sometimes it's needed
 	var/shardtype = /obj/item/weapon/shard
+	var/image/crack_overlay
+	var/damage_threshold = 5	//This will be deducted from any physical damage source.
 //	var/silicate = 0 // number of units of silicate
 //	var/icon/silicateIcon = null // the silicated icon
 
-/obj/structure/window/proc/take_damage(var/damage = 0,  var/sound_effect = 1)
+/obj/structure/window/proc/take_damage(damage = 0, damage_type = BRUTE, sound_effect = 1)
 	var/initialhealth = health
+	var/message = 1
+	var/fulltile = 0
 
 	//if(silicate)
 	//	damage = damage * (1 - silicate / 200)
+
+	if(is_fulltile())
+		message = 0
+		fulltile = 1
+
+	if(fulltile && damage_threshold)
+		switch(damage_type)
+			if(BRUTE)
+				damage = max(0, damage - damage_threshold)
+			if(BURN)
+				damage *= 0.3
+			if("generic")
+				damage *= 0.5
+
+	if(!damage)
+		return
 
 	health = max(0, health - damage)
 
@@ -30,13 +51,14 @@
 	else
 		if(sound_effect)
 			playsound(loc, 'sound/effects/Glasshit.ogg', 100, 1)
-		if(health < maxhealth / 4 && initialhealth >= maxhealth / 4)
-			visible_message("[src] looks like it's about to shatter!" )
-		else if(health < maxhealth / 2 && initialhealth >= maxhealth / 2)
-			visible_message("[src] looks seriously damaged!" )
-		else if(health < maxhealth * 3/4 && initialhealth >= maxhealth * 3/4)
-			visible_message("Cracks begin to appear in [src]!" )
-	return
+		if(message)
+			if(health < maxhealth / 4 && initialhealth >= maxhealth / 4)
+				visible_message("[src] looks like it's about to shatter!" )
+			else if(health < maxhealth / 2 && initialhealth >= maxhealth / 2)
+				visible_message("[src] looks seriously damaged!" )
+			else if(health < maxhealth * 3/4 && initialhealth >= maxhealth * 3/4)
+				visible_message("Cracks begin to appear in [src]!" )
+	update_icon()
 
 /obj/structure/window/proc/shatter(var/display_message = 1)
 	playsound(src, "shatter", 70, 1)
@@ -56,13 +78,15 @@
 	return
 
 /obj/structure/window/bullet_act(var/obj/item/projectile/Proj)
+	if(Proj.pass_flags & PASSGLASS)	//Lasers mostly use this flag.. Why should they able to focus damage with direct click...
+		return -1
 
 	//Tasers and the like should not damage windows.
 	if(!(Proj.damage_type == BRUTE || Proj.damage_type == BURN))
 		return
 
 	..()
-	take_damage(Proj.damage)
+	take_damage(Proj.damage, Proj.damage_type)
 	return
 
 
@@ -116,7 +140,8 @@
 	else if(isobj(AM))
 		var/obj/item/I = AM
 		tforce = I.throwforce
-	if(reinf) tforce *= 0.25
+	if(reinf)
+		tforce *= 0.25
 	if(health - tforce <= 7 && !reinf)
 		anchored = 0
 		update_nearby_icons()
@@ -127,20 +152,18 @@
 	user.visible_message("<span class='notice'>Something knocks on [src].</span>")
 	playsound(loc, 'sound/effects/Glasshit.ogg', 50, 1)
 
-/obj/structure/window/attack_hand(mob/user as mob)
+/obj/structure/window/attack_hand(mob/user as mob)	//specflags please!!
 	if(HULK in user.mutations)
 		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!"))
-		user.visible_message("<span class='danger'>[user] smashes through [src]!</span>")
 		user.do_attack_animation(src)
-		shatter()
+		take_damage(rand(15,25), "generic")
 	else if(user.dna && user.dna.mutantrace == "adamantine")
-		user.visible_message("<span class='danger'>[user] smashes through [src]!</span>")
 		user.do_attack_animation(src)
-		shatter()
+		take_damage(rand(15,25), "generic")
 	else if (usr.a_intent == "hurt")
 		playsound(src.loc, 'sound/effects/glassknock.ogg', 80, 1)
-		usr.visible_message("\red [usr.name] bangs against the [src.name]!", \
-							"\red You bang against the [src.name]!", \
+		usr.visible_message("<span class='danger'>[usr.name] bangs against the [src.name]!</span>", \
+							"<span class='danger'>You bang against the [src.name]!</span>", \
 							"You hear a banging sound.")
 	else
 		playsound(src.loc, 'sound/effects/glassknock.ogg', 80, 1)
@@ -159,7 +182,7 @@
 		return
 	if(damage >= 10)
 		visible_message("<span class='danger'>[user] smashes into [src]!</span>")
-		take_damage(damage)
+		take_damage(damage, "generic")
 	else
 		visible_message("<span class='notice'>\The [user] bonks \the [src] harmlessly.</span>")
 	user.do_attack_animation(src)
@@ -168,25 +191,30 @@
 
 /obj/structure/window/attack_alien(mob/user as mob)
 	user.do_attack_animation(src)
-	if(islarva(user) || isfacehugger(user)) return
+	if(islarva(user) || isfacehugger(user))
+		return
 	attack_generic(user, 15)
 
 /obj/structure/window/attack_animal(mob/user as mob)
-	if(!isanimal(user)) return
+	if(!isanimal(user))
+		return
 	var/mob/living/simple_animal/M = user
 	M.do_attack_animation(src)
-	if(M.melee_damage_upper <= 0) return
+	if(M.melee_damage_upper <= 0)
+		return
 	attack_generic(M, M.melee_damage_upper)
 
 
 /obj/structure/window/attack_slime(mob/user as mob)
 	user.do_attack_animation(src)
-	if(!isslimeadult(user)) return
+	if(!isslimeadult(user))
+		return
 	attack_generic(user, rand(10, 15))
 
 
 /obj/structure/window/attackby(obj/item/W as obj, mob/user as mob)
-	if(!istype(W)) return//I really wish I did not need this
+	if(!istype(W))
+		return//I really wish I did not need this
 
 	if(istype(W, /obj/item/weapon/airlock_painter))
 		change_paintjob(W, user)
@@ -202,7 +230,7 @@
 			switch (state)
 				if(1)
 					M.apply_damage(7)
-					hit(10)
+					take_damage(7)
 					visible_message("<span class='danger'>[user] slams [M] against \the [src]!</span>")
 					M.attack_log += "\[[time_stamp()]\] <font color='orange'>Slammed by [A.name] against \the [src]([A.ckey])</font>"
 					A.attack_log += "\[[time_stamp()]\] <font color='red'>Slams [M.name] against \the [src]([M.ckey])</font>"
@@ -210,8 +238,8 @@
 				if(2)
 					if (prob(50))
 						M.Weaken(1)
-					M.apply_damage(10)
-					hit(25)
+					M.apply_damage(8)
+					take_damage(9)
 					visible_message("<span class='danger'>[user] bashes [M] against \the [src]!</span>")
 					M.attack_log += "\[[time_stamp()]\] <font color='orange'>Bashed by [A.name] against \the [src]([A.ckey])</font>"
 					A.attack_log += "\[[time_stamp()]\] <font color='red'>Bashes [M.name] against \the [src]([M.ckey])</font>"
@@ -219,7 +247,7 @@
 				if(3)
 					M.Weaken(5)
 					M.apply_damage(20)
-					hit(50)
+					take_damage(12)
 					visible_message("<span class='danger'><big>[user] crushes [M] against \the [src]!</big></span>")
 					M.attack_log += "\[[time_stamp()]\] <font color='orange'>Crushed by [A.name] against \the [src]([A.ckey])</font>"
 					A.attack_log += "\[[time_stamp()]\] <font color='red'>Crushes [M.name] against \the [src]([M.ckey])</font>"
@@ -246,7 +274,7 @@
 		user << (state ? "<span class='notice'>You have pried the window into the frame.</span>" : "<span class='notice'>You have pried the window out of the frame.</span>")
 	else
 		if(W.damtype == BRUTE || W.damtype == BURN)
-			hit(W.force)
+			take_damage(W.force)
 			if(health <= 7)
 				anchored = 0
 				update_nearby_icons()
@@ -274,12 +302,6 @@
 		return
 	else
 		color = new_color
-
-/obj/structure/window/proc/hit(var/damage, var/sound_effect = 1)
-	if(reinf) damage *= 0.5
-	take_damage(damage)
-	return
-
 
 /obj/structure/window/verb/rotate()
 	set name = "Rotate Window Counter-Clockwise"
@@ -351,8 +373,6 @@
 	update_nearby_tiles(need_rebuild=1)
 	update_nearby_icons()
 
-	return
-
 
 /obj/structure/window/Destroy()
 	density = 0
@@ -396,29 +416,32 @@
 	//this way it will only update full-tile ones
 	//This spawn is here so windows get properly updated when one gets deleted.
 	spawn(2)
-		if(!src) return
+		if(!src)
+			return
 		if(!is_fulltile())
 			icon_state = "[basestate]"
 			return
+
 		var/junction = 0 //will be used to determine from which side the window is connected to other windows
 		if(anchored)
 			for(var/obj/structure/window/W in orange(src,1))
-				if(W.anchored && W.density	&& W.is_fulltile()) //Only counts anchored, not-destroyed fill-tile windows.
+				if(W.anchored && W.density && W.is_fulltile() && W.can_merge) //Only counts anchored, not-destroyed fill-tile windows.
 					if(abs(x-W.x)-abs(y-W.y) ) 		//doesn't count windows, placed diagonally to src
 						junction |= get_dir(src,W)
-		if(opacity)
-			icon_state = "[basestate][junction]"
-		else
-			if(reinf)
-				icon_state = "[basestate][junction]"
-			else
-				icon_state = "[basestate][junction]"
+		icon_state = "[basestate][junction]"
 
-		return
+		var/ratio = health / maxhealth
+		ratio = Ceiling(ratio*4) * 25
+
+		overlays -= crack_overlay
+		if(ratio > 75)
+			return
+		crack_overlay = image('icons/obj/window.dmi',"damage[ratio]",-(layer+0.1))
+		overlays += crack_overlay
 
 /obj/structure/window/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > T0C + 800)
-		hit(round(exposed_volume / 100), 0)
+		take_damage(round(exposed_volume / 100), BURN, 0)
 	..()
 
 
@@ -438,7 +461,7 @@
 
 /obj/structure/window/phoronbasic/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > T0C + 32000)
-		hit(round(exposed_volume / 1000), 0)
+		take_damage(round(exposed_volume / 1000), BURN, 0)
 	..()
 
 /obj/structure/window/phoronreinforced
@@ -458,8 +481,9 @@
 	desc = "It looks rather strong. Might take a few good hits to shatter it."
 	icon_state = "rwindow"
 	basestate = "rwindow"
-	maxhealth = 80.0
+	maxhealth = 100.0
 	reinf = 1
+	damage_threshold = 15
 
 /obj/structure/window/reinforced/tinted
 	name = "tinted window"
@@ -468,12 +492,13 @@
 	basestate = "twindow"
 	opacity = 1
 
-/obj/structure/window/reinforced/tinted/frosted
+/obj/structure/window/reinforced/tinted/frosted //Actually, there is no icon for this!!
 	name = "frosted window"
 	desc = "It looks rather strong and frosted over. Looks like it might take a few less hits then a normal reinforced window."
 	icon_state = "fwindow"
 	basestate = "fwindow"
 	maxhealth = 30.0
+	damage_threshold = 0
 
 /obj/structure/window/shuttle
 	name = "shuttle window"
@@ -484,6 +509,7 @@
 	maxhealth = 150.0
 	reinf = 1
 	dir = 5
+	damage_threshold = 30
 
-	update_icon() //icon_state has to be set manually
-		return
+/obj/structure/window/shuttle/update_icon() //icon_state has to be set manually
+	return
