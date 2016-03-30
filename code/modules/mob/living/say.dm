@@ -174,13 +174,18 @@ var/list/department_radio_keys = list(
 			if(M.loc && M.locs[1] in hearturfs)
 				listening |= M
 
+	//speech bubble
+	var/list/speech_bubble_recipients = list()
+	for(var/mob/M in listening)
+		if(M.client)
+			speech_bubble_recipients.Add(M.client)
 	var/speech_bubble_test = say_test(message)
-	var/image/speech_bubble = image('icons/mob/talk.dmi',src,"h[speech_bubble_test]")
-
-	speech_bubble_animation(speech_bubble)
+	var/image/I = image('icons/mob/talk.dmi', src, "h[speech_bubble_test]", MOB_LAYER+1)
+	I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
+	spawn(0)
+		flick_overlay(I, speech_bubble_recipients, 30)
 
 	for(var/mob/M in listening)
-		M << speech_bubble
 		M.hear_say(message, verb, speaking, alt_name, italics, src, speech_sound, sound_vol)
 
 	for(var/obj/O in listening_obj)
@@ -200,16 +205,3 @@ var/list/department_radio_keys = list(
 
 /mob/living/proc/GetVoice()
 	return name
-
-/mob/living/proc/speech_bubble_animation(var/image/speech_bubble)
-	if(!typing_shown && !typing)
-		speech_bubble.alpha = 0
-		speech_bubble.transform = matrix()*0.5
-		animate(speech_bubble, transform = matrix(), alpha = 255, time = 2, easing = CUBIC_EASING)
-	typing_shown = 1
-	spawn(30)
-		animate(speech_bubble, alpha = 0, time = 2, easing = CUBIC_EASING)
-		spawn(2)
-			qdel(speech_bubble)
-			typing_shown = 0
-	return speech_bubble

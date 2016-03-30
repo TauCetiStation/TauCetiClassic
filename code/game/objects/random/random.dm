@@ -23,3 +23,7 @@
 /obj/random/proc/spawn_item()
 	var/build_path = item_to_spawn()
 	return (new build_path(src.loc))
+
+/obj/random/Destroy()
+	..()
+	return QDEL_HINT_QUEUE

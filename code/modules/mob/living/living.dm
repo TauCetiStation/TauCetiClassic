@@ -7,6 +7,10 @@
 	if(pull_debuff && !pulling)	//For cases when pulling was stopped by 'pulling = null'
 		pull_debuff = 0
 
+	if(stat && typing)
+		overlays -= typing_indicator
+		typing = 0
+
 	update_gravity(mob_has_gravity())
 
 /mob/living/Destroy()
