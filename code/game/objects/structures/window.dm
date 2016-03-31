@@ -13,6 +13,7 @@
 	var/state = 2
 	var/reinf = 0
 	var/basestate
+	var/can_merge = 1	//Sometimes it's needed
 	var/shardtype = /obj/item/weapon/shard
 	var/image/crack_overlay
 	var/damage_threshold = 5	//This will be deducted from any physical damage source.
@@ -424,7 +425,7 @@
 		var/junction = 0 //will be used to determine from which side the window is connected to other windows
 		if(anchored)
 			for(var/obj/structure/window/W in orange(src,1))
-				if(W.anchored && W.density	&& W.is_fulltile()) //Only counts anchored, not-destroyed fill-tile windows.
+				if(W.anchored && W.density && W.is_fulltile() && W.can_merge) //Only counts anchored, not-destroyed fill-tile windows.
 					if(abs(x-W.x)-abs(y-W.y) ) 		//doesn't count windows, placed diagonally to src
 						junction |= get_dir(src,W)
 		icon_state = "[basestate][junction]"

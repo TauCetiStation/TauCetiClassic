@@ -45,6 +45,7 @@ display round(lastgen) and phorontank amount
 	name = "Placeholder Generator"	//seriously, don't use this. It can't be anchored without VV magic.
 	desc = "A portable generator for emergency backup power."
 	icon = 'icons/obj/power.dmi'
+	var/icon_state_on = "portgen1"
 	icon_state = "portgen0"
 	density = 1
 	anchored = 0
@@ -288,12 +289,12 @@ display round(lastgen) and phorontank amount
 		if(href_list["action"] == "enable")
 			if(!active && HasFuel() && !crit_fail)
 				active = 1
-				icon_state = "portgen1"
+				icon_state = icon_state_on
 				src.updateUsrDialog()
 		if(href_list["action"] == "disable")
 			if (active)
 				active = 0
-				icon_state = "portgen0"
+				icon_state = initial(icon_state)
 				src.updateUsrDialog()
 		if(href_list["action"] == "eject")
 			if(!active)
@@ -314,6 +315,7 @@ display round(lastgen) and phorontank amount
 /obj/machinery/power/port_gen/pacman/super
 	name = "S.U.P.E.R.P.A.C.M.A.N.-type Portable Generator"
 	icon_state = "portgen1"
+	icon_state_on = "portgen1"
 	sheet_name = "uranium"
 	sheet_path = /obj/item/stack/sheet/mineral/uranium
 	power_gen = 15000
@@ -325,6 +327,7 @@ display round(lastgen) and phorontank amount
 /obj/machinery/power/port_gen/pacman/mrs
 	name = "M.R.S.P.A.C.M.A.N.-type Portable Generator"
 	icon_state = "portgen2"
+	icon_state_on = "portgen2"
 	sheet_name = "tritium"
 	sheet_path = /obj/item/stack/sheet/mineral/tritium
 	power_gen = 40000

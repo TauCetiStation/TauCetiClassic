@@ -45,7 +45,9 @@
 
 		if(istype(M, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = M
-			if(istype(H:shoes, /obj/item/clothing/shoes))
+
+			//Footstep sound
+			if(istype(H:shoes, /obj/item/clothing/shoes) && !H.buckled)
 				var/obj/item/clothing/shoes/O = H.shoes
 
 				var/footstepsound = "footsteps"

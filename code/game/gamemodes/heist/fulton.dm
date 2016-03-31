@@ -66,6 +66,18 @@ var/list/extraction_appends = list("AAAAAAAAAAAAAAAAAUGH", "AAAAAAAAAAAHHHHHHHHH
 			animate(holder_obj, pixel_z = 15, time = 10)
 			sleep(10)
 			animate(holder_obj, pixel_z = 10, time = 10)
+			var/obj/effect/BPs = new /obj/effect(get_turf(A))
+			BPs.icon = 'tauceti/modules/_anomaly/anomalies.dmi'
+			BPs.icon_state = "bluespace"
+			BPs.mouse_opacity = 0
+			var/list/flooring_near_beacon = list()
+			for(var/turf/T in RANGE_TURFS(1, fulton_mark))
+				flooring_near_beacon += T
+			var/turf/teleport_loc = pick(flooring_near_beacon)
+			var/obj/effect/BPe = new /obj/effect(teleport_loc)
+			BPe.icon = 'tauceti/modules/_anomaly/anomalies.dmi'
+			BPe.icon_state = "bluespace"
+			BPe.mouse_opacity = 0
 			sleep(10)
 			animate(holder_obj, pixel_z = 15, time = 10)
 			sleep(10)
@@ -74,7 +86,10 @@ var/list/extraction_appends = list("AAAAAAAAAAAAAAAAAUGH", "AAAAAAAAAAAHHHHHHHHH
 			if(!A)
 				return
 			playsound(holder_obj.loc, 'sound/effects/fultext_launch.ogg', 50, 1, -3)
-			animate(holder_obj, pixel_z = 1000, time = 30)
+			//animate(holder_obj, pixel_z = 1000, time = 30)
+			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+			s.set_up(5, 1, holder_obj.loc)
+			s.start()
 			if(istype(A, /mob/living/carbon/human))
 				var/mob/living/carbon/human/H = A
 				H.say(pick(extraction_appends))
@@ -82,11 +97,11 @@ var/list/extraction_appends = list("AAAAAAAAAAAAAAAAAUGH", "AAAAAAAAAAAHHHHHHHHH
 				H.SetParalysis(0) // wakey wakey
 				H.drowsyness = 0
 				H.sleeping = 0
-			sleep(30)
-			var/list/flooring_near_beacon = list()
-			for(var/turf/T in RANGE_TURFS(1, fulton_mark))
-				flooring_near_beacon += T
-			holder_obj.loc = pick(flooring_near_beacon)
+			//sleep(30)
+			holder_obj.loc = teleport_loc
+			s = new /datum/effect/effect/system/spark_spread
+			s.set_up(5, 1, holder_obj.loc)
+			s.start()
 			animate(holder_obj, pixel_z = 10, time = 50)
 			sleep(50)
 			animate(holder_obj, pixel_z = 15, time = 10)
@@ -102,6 +117,8 @@ var/list/extraction_appends = list("AAAAAAAAAAAAAAAAAUGH", "AAAAAAAAAAAHHHHHHHHH
 			sleep(5)
 			A.forceMove(holder_obj.loc)
 			qdel(holder_obj)
+			qdel(BPs)
+			qdel(BPe)
 		else
 			is_extracting = 0
 
