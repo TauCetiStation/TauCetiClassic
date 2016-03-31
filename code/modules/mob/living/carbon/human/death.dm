@@ -53,8 +53,6 @@
 /mob/living/carbon/human/death(gibbed)
 	if(stat == DEAD)	return
 	if(healths)		healths.icon_state = "health5"
-	if(typing)	//turn off typing indicator
-		qdel(typing_indicator)
 
 	stat = DEAD
 	dizziness = 0

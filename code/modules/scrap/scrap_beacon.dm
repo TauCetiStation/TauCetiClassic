@@ -48,25 +48,7 @@
 	return
 
 /obj/structure/scrap_beacon/proc/summon_scrap_pile(newloc)
-	new /obj/random/scrap/moderate_weighted(src)
-	var/obj/structure/scrap/dropped = pick(src.contents)
-	dropped.loc = newloc
-	dropped.pixel_x = rand(-400, 400)
-	dropped.pixel_z = 1000
-	var/original_density = dropped.density
-	var/original_opacity = dropped.opacity
-	dropped.density = 0
-	dropped.opacity = 0
-	animate(dropped, pixel_z = 0, pixel_x = 0 , time = 15)
-	sleep(15)
-	dropped.density = 1
-	for(var/obj/T in newloc)
-		if(!istype(T, /obj/structure/scrap))
-			T.ex_act(1)
-	for(var/mob/living/T in newloc)
-		T.ex_act(1)
-	for(var/mob/living/M in oviewers(5, dropped))
-		shake_camera(M, 8, 3)
-	playsound(dropped.loc, 'sound/effects/meteorimpact.ogg', 50, 1)
-	dropped.density = original_density
-	dropped.opacity = original_opacity
+	new /obj/random/scrap/moderate_weighted(newloc)
+	var/datum/effect/effect/system/spark_spread/s = PoolOrNew(/datum/effect/effect/system/spark_spread)
+	s.set_up(3, 1, newloc)
+	s.start()

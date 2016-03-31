@@ -1,6 +1,7 @@
 /obj/structure/window/reinforced/shuttle
 	icon = 'tauceti/modules/_locations/shuttles/shuttle.dmi'
 	dir = SOUTHWEST
+	can_merge = 0
 
 /obj/structure/window/reinforced/shuttle/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(!istype(W)) return//I really wish I did not need this

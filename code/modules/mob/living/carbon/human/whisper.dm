@@ -130,19 +130,26 @@
 	watching  -= eavesdropping
 
 	//now mobs
+	//speech bubble
+	var/list/speech_bubble_recipients = list()
+	for(var/mob/M in listening)	//TODO Refactor speech pls, it's disgusting
+		if(M.client)
+			speech_bubble_recipients.Add(M.client)
+	for(var/mob/M in eavesdropping)
+		if(M.client)
+			speech_bubble_recipients.Add(M.client)
 	var/speech_bubble_test = say_test(message)
-	var/image/speech_bubble = image('icons/mob/talk.dmi',src,"h[speech_bubble_test]")
-
-	speech_bubble_animation(speech_bubble)
+	var/image/I = image('icons/mob/talk.dmi', src, "h[speech_bubble_test]", MOB_LAYER+1)
+	I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
+	spawn(0)
+		flick_overlay(I, speech_bubble_recipients, 30)
 
 	for(var/mob/M in listening)
-		M << speech_bubble
 		M.hear_say(message, verb, speaking, alt_name, italics, src)
 
 	if(eavesdropping.len)
 		var/new_message = stars(message)	//hopefully passing the message twice through stars() won't hurt... I guess if you already don't understand the language, when they speak it too quietly to hear normally you would be able to catch even less.
 		for(var/mob/M in eavesdropping)
-			M << speech_bubble
 			M.hear_say(new_message, verb, speaking, alt_name, italics, src)
 
 	if(watching.len)

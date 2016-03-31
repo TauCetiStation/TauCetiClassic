@@ -6,7 +6,9 @@
 	icon_state = "gift"
 	spawn_nothing_percentage = 85
 /obj/random/misc/all/item_to_spawn()
-		return pick(prob(10);/obj/random/meds/medical_supply,\
-					prob(30);/obj/random/tools/tech_supply/guaranteed,\
-					prob(50);/obj/random/foods/food_without_garbage,\
-					prob(2);/obj/preset/storage/weapons/random)
+		return pick(\
+						prob(10);/obj/random/meds/medical_supply,\
+						prob(30);/obj/random/tools/tech_supply/guaranteed,\
+						prob(50);/obj/random/foods/food_without_garbage,\
+						prob(2);/obj/preset/storage/weapons/random\
+					)

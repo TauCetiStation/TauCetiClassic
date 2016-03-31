@@ -26,7 +26,7 @@ var/datum/subsystem/job/SSjob
 
 /datum/subsystem/job/proc/SetupOccupations(faction = "Station")
 	occupations = list()
-	var/list/all_jobs = subtypesof(/datum/job)
+	var/list/all_jobs = typesof(/datum/job)
 	if(!all_jobs.len)
 		world << "<span class='boldannounce'>Error setting up jobs, no job datums found</span>"
 		return 0
@@ -220,6 +220,7 @@ var/datum/subsystem/job/SSjob
 /datum/subsystem/job/proc/DivideOccupations()
 	//Setup new player list and get the jobs list
 	Debug("Running DO")
+	SetupOccupations()
 
 	//Holder for Triumvirate is stored in the ticker, this just processes it
 	if(ticker)
@@ -232,10 +233,8 @@ var/datum/subsystem/job/SSjob
 		if(player.ready && player.mind && !player.mind.assigned_role)
 			unassigned += player
 			if(player.client.prefs.randomslot) player.client.prefs.random_character()
-
 	Debug("DO, Len: [unassigned.len]")
-	if(unassigned.len == 0)
-		return 0
+	if(unassigned.len == 0)	return 0
 
 	//Shuffle players and jobs
 	unassigned = shuffle(unassigned)
@@ -328,9 +327,7 @@ var/datum/subsystem/job/SSjob
 
 //Gives the player the stuff he should have with his rank
 /datum/subsystem/job/proc/EquipRank(mob/living/carbon/human/H, rank, joined_late=0)
-	if(!H)
-		return 0
-
+	if(!H)	return 0
 	var/datum/job/job = GetJob(rank)
 	if(job)
 		job.equip(H)
@@ -343,10 +340,8 @@ var/datum/subsystem/job/SSjob
 	if(!joined_late)
 		var/obj/S = null
 		for(var/obj/effect/landmark/start/sloc in landmarks_list)
-			if(sloc.name != rank)
-				continue
-			if(locate(/mob/living) in sloc.loc)
-				continue
+			if(sloc.name != rank)	continue
+			if(locate(/mob/living) in sloc.loc)	continue
 			S = sloc
 			break
 		if(!S)

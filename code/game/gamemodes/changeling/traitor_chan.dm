@@ -21,9 +21,8 @@
 		restricted_jobs += protected_jobs
 
 	for(var/datum/mind/player in antag_candidates)
-		for(var/job in restricted_jobs)//Removing robots from the list
-			if(player.assigned_role == job)
-				antag_candidates -= player
+		if(player.assigned_role in restricted_jobs)	//Removing robots from the list
+			antag_candidates -= player
 
 	if(antag_candidates.len>0)
 		var/datum/mind/changeling = pick(antag_candidates)
