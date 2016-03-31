@@ -1,9 +1,9 @@
 // BIOMASS (Note that this code is very similar to Space Vine code)
-/obj/effect/cellular_biomass
-	name = "The Goo"
-	desc = "Space barf from another dimension. It just keeps spreading!"
-	icon = 'tauceti/icons/mob/alien.dmi'
-	icon_state = "resin"
+/obj/structure/cellular_biomass
+	name = "Cellular horror"
+	desc = "Monstrum from another dimension. It just keeps spreading!"
+	icon = 'tauceti/datums/gamemodes/events/meatland_cellular.dmi'
+	icon_state = "bloodwall_1"
 
 	anchored = 1
 	density = 1
@@ -15,34 +15,32 @@
 
 	var/obj/effect/cellular_biomass_controller/master = null
 
-	New()
-		..()
-		var/turf/T = get_turf(src)
-		T.thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
+/obj/structure/cellular_biomass/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+	return 0
 
+/obj/structure/cellular_biomass/New()
+	icon_state = "bloodwall_[pick(1,1,2,2,3,4)]"
 
-	Destroy()
-		density = 0
-		var/turf/T = get_turf(src)
-		T.thermal_conductivity = initial(T.thermal_conductivity)
-		if(master)
-			master.biomass_cells -= src
-			master.growth_queue -= src
-		..()
+/obj/structure/cellular_biomass/Destroy()
+	if(master)
+		master.biomass_cells -= src
+		master.growth_queue -= src
+	master = null
+	..()
+	return QDEL_HINT_QUEUE
 
-/obj/effect/cellular_biomass/proc/healthcheck()
+/obj/structure/cellular_biomass/proc/healthcheck()
 	if(health <=0)
-		density = 0
-		Destroy(src)
+		qdel(src)
 	return
 
-/obj/effect/cellular_biomass/bullet_act(var/obj/item/projectile/Proj)
+/obj/structure/cellular_biomass/bullet_act(var/obj/item/projectile/Proj)
 	health -= Proj.damage
 	..()
 	healthcheck()
 	return
 
-/obj/effect/cellular_biomass/ex_act(severity)
+/obj/structure/cellular_biomass/ex_act(severity)
 	switch(severity)
 		if(1.0)
 			health-=100
@@ -56,238 +54,174 @@
 	healthcheck()
 	return
 
-/obj/effect/cellular_biomass/blob_act()
+/obj/structure/cellular_biomass/blob_act()
 	health-=50
 	healthcheck()
 	return
 
-/obj/effect/cellular_biomass/meteorhit()
+/obj/structure/cellular_biomass/meteorhit()
 	health-=100
 	healthcheck()
 	return
 
-/obj/effect/cellular_biomass/hitby(AM as mob|obj)
+/obj/structure/cellular_biomass/attack_hand()
 	..()
-	for(var/mob/O in viewers(src, null))
-		O.show_message("\red <B>[src] was hit by [AM].</B>", 1)
-	var/tforce = 0
-	if(ismob(AM))
-		tforce = 10
-	else
-		tforce = AM:throwforce
 	playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
-	health = max(0, health - tforce)
-	healthcheck()
-	..()
 	return
 
-/obj/effect/cellular_biomass/attack_hand()
-	if (HULK in usr.mutations)
-		usr << "\blue You easily destroy the [name]."
-		for(var/mob/O in oviewers(src))
-			O.show_message("\red [usr] destroys the [name]!", 1)
-		health = 0
-	else
-		usr << "\blue You claw at the [name]."
-		for(var/mob/O in oviewers(src))
-			O.show_message("\red [usr] claws at the [name]!", 1)
-		health -= rand(5,10)
-	healthcheck()
-	return
-
-/obj/effect/cellular_biomass/attack_paw()
+/obj/structure/cellular_biomass/attack_paw()
 	return attack_hand()
 
-/obj/effect/cellular_biomass/attack_alien()
-	if (islarva(usr))//Safety check for larva. /N
-		return
-	usr << "\green You claw at the [name]."
-	for(var/mob/O in oviewers(src))
-		O.show_message("\red [usr] claws at the resin!", 1)
-	playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
-	health -= rand(40, 60)
-	if(health <= 0)
-		usr << "\green You slice the [name] to pieces."
-		for(var/mob/O in oviewers(src))
-			O.show_message("\red [usr] slices the [name] apart!", 1)
-	healthcheck()
-	return
+/obj/structure/cellular_biomass/attack_alien()
+	return attack_hand()
 
-/obj/effect/cellular_biomass/attackby(obj/item/weapon/W as obj, mob/user as mob)
-
-	var/aforce = W.force
-	health = max(0, health - aforce)
-	playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
-	healthcheck()
+/obj/structure/cellular_biomass/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
+	health -= W.force
+	playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
+	healthcheck()
 	return
 
 
-/obj/effect/cellular_biomass/grass
+/obj/structure/cellular_biomass/grass
+	icon_state = "weed_1"
+	color = "#ff8888"
 	density = 0
 	opacity = 0
 	health = 20
 	layer = 2
 	energy = 4
 
-/obj/effect/cellular_biomass/grass/light
+/obj/structure/cellular_biomass/grass/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+	return 1
+
+/obj/structure/cellular_biomass/grass/New()
+	icon_state = "bloodfloor_[pick(1,2,3)]"
+
+/obj/structure/cellular_biomass/grass/light
+	density = 1
+	layer = 3
+	health = 60
 	luminosity = 3
-	icon_state = "weednode"
+	light_color = "#710F8C"
+	icon_state = "light_1"
+
+/obj/structure/cellular_biomass/grass/light/New()
+	icon_state = "light_[pick(1,2)]"
+	set_light(luminosity)
 
 /obj/effect/cellular_biomass_controller
-	var/list/obj/effect/cellular_biomass/biomass_cells = list()
+	var/list/obj/structure/cellular_biomass/biomass_cells = list()
 	var/list/growth_queue = list()
 	var/reached_collapse_size
 	var/reached_slowdown_size
 	//What this does is that instead of having the grow minimum of 1, required to start growing, the minimum will be 0,
 	//meaning if you get the cellular_biomasssss..s' size to something less than 20 plots, it won't grow anymore.
 
-	New()
-		if(!istype(src.loc,/turf/simulated/floor))
-			qdel(src)
-			return
+/obj/effect/cellular_biomass_controller/New()
+	if(!istype(src.loc,/turf/simulated/floor))
+		qdel(src)
+		return
+	spawn_cellular_biomass_piece(src.loc)
+	SSobj.processing |= src
 
-		spawn_cellular_biomass_piece(src.loc)
-		SSobj.processing |= src
+/obj/effect/cellular_biomass_controller/Destroy()
+	growth_queue.Cut()
+	for(var/obj/structure/cellular_biomass/str in biomass_cells)
+		str.master = null
+	SSobj.processing.Remove(src)
+	return ..()
 
-	Destroy()
-		SSobj.processing.Remove(src)
-		return ..()
+/obj/effect/cellular_biomass_controller/proc/spawn_cellular_biomass_piece(var/turf/location, var/obj/structure/cellular_biomass/parent)
+	var/newgrip = 0
+	if (parent)
+		if(istype(location,/turf/simulated))
+			newgrip = 5
+		else
+			newgrip = parent.grip - 1
+	if(!parent || newgrip > 0)
+		var/obj/structure/cellular_biomass/BM = new(location)
+		if (istype(location,/turf/space))
+			location:ChangeTurf(/turf/simulated/floor/plating)
+		var/random = pick(1,1,1,2,2,3)
+		location.icon_state = "bloodfloor_[random]"
+		BM.grip = newgrip
+		growth_queue += BM
+		biomass_cells += BM
+		BM.master = src
 
-	proc/spawn_cellular_biomass_piece(var/turf/location, var/obj/effect/cellular_biomass/parent)
-		var/newgrip = 0
-		if (parent)
-			if(istype(location,/turf/simulated))
-				newgrip = 4
-			else
-				newgrip = parent.grip - 1
-		if(!parent || newgrip > 0)
-			if (istype(location,/turf/space))
-				location:ChangeTurf(/turf/simulated/floor/plating/airless)
-			var/random = rand(1,15)
-			location.icon_state = "ironsand[random]"
-			location.color = "gray"
+/obj/effect/cellular_biomass_controller/process()
+	if(!biomass_cells)
+		qdel(src) //space  biomass_cells exterminated. Remove the controller
+		return
+	if(!growth_queue)
+		qdel(src)
+		return
 
-			var/obj/effect/cellular_biomass/BM = new(location)
+	var/length = min(5, max(50, biomass_cells.len / 5))
+	var/list/obj/structure/cellular_biomass/queue_end = list()
 
-			BM.grip = newgrip
-			growth_queue += BM
-			biomass_cells += BM
-			BM.master = src
+	var/i = 0
+	for(var/obj/structure/cellular_biomass/BM in growth_queue)
+		i++
+		growth_queue -= BM
+		BM.grow()
+		if(BM)
+			if(BM.energy < 4)
+				queue_end += BM
+			BM.spread()
+		if(i >= length)
+			break
 
-	process()
-		if(!biomass_cells)
-			Destroy(src) //space  biomass_cells exterminated. Remove the controller
-			return
-		if(!growth_queue)
-			Destroy(src) //Sanity check
-			return
+	growth_queue = growth_queue + queue_end
 
-		var/length = min(5, max(50, biomass_cells.len / 5))
-
-		var/list/obj/effect/cellular_biomass/queue_end = list()
-
-		var/i = 0
-		for( var/obj/effect/cellular_biomass/BM in growth_queue )
-			i++
-			growth_queue -= BM
-			BM.grow()
-			if(BM)
-				if(BM.energy < 4)
-					queue_end += BM
-				BM.spread()
-			if(i >= length)
-				break
-
-		growth_queue = growth_queue + queue_end
-
-/obj/effect/cellular_biomass/proc/grow()
+/obj/structure/cellular_biomass/proc/grow()
 	energy = calcEnergy(src.loc)
 	if(energy >= 4)
-		if(prob(6))
-			new /obj/effect/cellular_biomass/grass/light(src.loc)
+		if(prob(5))
+			new /obj/structure/cellular_biomass/grass/light(src.loc)
 		else
-			if(prob(4))
-				var/list/critters = typesof(/mob/living/simple_animal/hostile/asteroid)
-				var/chosen = pick(critters)
-				var/mob/living/simple_animal/hostile/C = new chosen
-				C.loc = src.loc
+			if(prob(30))
+				new /obj/effect/decal/cleanable/cellular(src.loc)
+		if(prob(8))
+			var/list/critters = subtypesof(/mob/living/simple_animal/hostile/cellular)
+			var/chosen = pick(critters)
+			var/mob/living/simple_animal/hostile/C = new chosen
+			C.loc = src.loc
+		new /obj/structure/cellular_biomass/grass(src.loc)
+		qdel(src)
 
-			var/obj/effect/cellular_biomass/grass/BM = new(src.loc)
-			BM.icon_state = pick("weeds","weeds1","weeds2")
-
-		//if(air_master)
-		//		air_master.mark_for_update(get_turf(src))
-		Destroy(src)
-
-
-/obj/effect/cellular_biomass/proc/spread()
+/obj/structure/cellular_biomass/proc/spread(src.loc)
+	if(qdeleted(src))
+		return
 	var/turf/T = src.loc
-	//var/turfs[4]
-	//turfs.Add(get_step(T, 1),get_step(T, 2),get_step(T, 4),get_step(T, 8))
 	var/turf/S = get_step(T,pick(1,2,4,8))
+	if(locate(/obj/structure/cellular_biomass, S))
+		return
 	if(istype(S,/turf/simulated/wall))
 		if(calcEnergy(S)==3)
 			S.blob_act()
-	else
-		if(!locate(/obj/effect/cellular_biomass,S))
-			if(S.Enter(src,src.loc))
-				if(master)
-					for(var/atom/A in S)//Hit everything in the turf
-						A.blob_act()
-					for(var/atom/A in S)//Hit everything in the turf
-						A.ex_act(2)
-					master.spawn_cellular_biomass_piece(S, src)
-			else
-				if((locate(/obj/machinery/door, S) || locate(/obj/structure/window, S)) && prob(10))
-					for(var/atom/A in S)//Hit everything in the turf
-						A.ex_act(2)
-					for(var/atom/A in S)//Hit everything in the turf one more time
-						A.blob_act()
-				else
-					for(var/atom/A in S)//Hit everything in the turf
-						A.ex_act(2)
-					for(var/atom/A in S)//Hit everything in the turf one more time
-						A.blob_act()
+		return
+	if ((locate(/obj/machinery/door, S) || locate(/obj/structure/window, S)) && prob(90))
+		return
+	for(var/atom/A in S)//Hit everything in the turf
+		A.blob_act()
+	if(T.CanPass(src,S) && master)
+		for(var/obj/A in S)//Del everything.
+			qdel(A)
+		master.spawn_cellular_biomass_piece(S, src)
 
+
+/obj/structure/cellular_biomass/proc/calcEnergy(var/turf/S)
+	return (getEnergy(S, 1) + getEnergy(S, 2) + getEnergy(S, 4) + getEnergy(S, 8))
+
+/obj/structure/cellular_biomass/proc/getEnergy(var/turf/S, var/side)
+	var/turf/T = get_step(S, side)
+	if(locate(/obj/structure/cellular_biomass) in T)
+		return 1
 	return 0
 
-/obj/effect/cellular_biomass/proc/calcEnergy(var/turf/S)
-	var/cellular_biomass = 0
-	cellular_biomass += getEnergy(S, 1)
-	cellular_biomass += getEnergy(S, 2)
-	cellular_biomass += getEnergy(S, 4)
-	cellular_biomass += getEnergy(S, 8)
-	return cellular_biomass
-
-/obj/effect/cellular_biomass/proc/getEnergy(var/turf/S, var/NSEW)
-	var/turf/T = get_step(S, NSEW)
-	if(locate(/obj/effect/cellular_biomass) in T)
-		return 1
-
-
-/obj/effect/cellular_biomass/ex_act(severity)
-	switch(severity)
-		if(1.0)
-			Destroy(src)
-			return
-		if(2.0)
-			if (prob(90))
-				Destroy(src)
-				return
-		if(3.0)
-			if (prob(50))
-				Destroy(src)
-				return
-	return
-
-/obj/effect/cellular_biomass/temperature_expose(null, temp, volume) //hotspots kill cellular_biomass
-	Destroy(src)
-
-
-
 /proc/cellular_biomass_infestation()
-
 	spawn() //to stop the secrets panel hanging
 		var/list/turf/simulated/floor/turfs = list() //list of all the empty floor turfs in the hallway areas
 		for(var/areapath in typesof(/area/hallway))
@@ -301,3 +235,70 @@
 			var/turf/simulated/floor/T = pick(turfs)
 			new/obj/effect/cellular_biomass_controller(T) //spawn a controller at turf
 			message_admins("\blue Event: Cellular spawned at [T.loc.loc] ([T.x],[T.y],[T.z])")
+
+/mob/living/simple_animal/hostile/cellular/creep_standing
+	name = "insane creature"
+	desc = "A sanity-destroying otherthing."
+	icon = 'tauceti/datums/gamemodes/events/meatland_cellular.dmi'
+	speak_emote = list("gibbers")
+	icon_state = "light"
+	icon_living = "light"
+	icon_dead = "light-dead"
+	health = 160
+	maxHealth = 160
+	melee_damage_lower = 25
+	melee_damage_upper = 50
+	attacktext = "brutally chomps"
+	attack_sound = 'sound/weapons/bite.ogg'
+	faction = "creature"
+	speed = 2
+
+/mob/living/simple_animal/hostile/cellular/maniac
+	name = "insane creature"
+	desc = "A sanity-destroying otherthing."
+	icon = 'tauceti/datums/gamemodes/events/meatland_cellular.dmi'
+	speak_emote = list("gibbers")
+	icon_state = "sovmeat"
+	icon_living = "sovmeat"
+	icon_dead = "sovmeat-dead"
+	health = 50
+	maxHealth = 50
+	melee_damage_lower = 10
+	melee_damage_upper = 18
+	attacktext = "slaps"
+	attack_sound = 'sound/weapons/bite.ogg'
+	faction = "creature"
+	speed = 5
+
+//stupid copy
+/mob/living/simple_animal/hostile/cellular/creature
+	name = "insane creature"
+	desc = "A sanity-destroying otherthing."
+	speak_emote = list("gibbers")
+	icon_state = "horrormeat"
+	icon_living = "horrormeat"
+	icon_dead = "horrormeat-dead"
+	health = 80
+	maxHealth = 80
+	melee_damage_lower = 20
+	melee_damage_upper = 30
+	attacktext = "chomps"
+	attack_sound = 'sound/weapons/bite.ogg'
+	faction = "creature"
+	speed = 3
+
+/mob/living/simple_animal/hostile/cellular/death()
+	..()
+	if(prob(80))
+		visible_message("<b>[src]</b> blows apart!")
+		new /obj/effect/gibspawner/generic(src.loc)
+		new /obj/effect/gibspawner/generic(src.loc)
+	qdel(src)
+	return
+
+/obj/effect/decal/cleanable/cellular
+	name = "horror"
+	desc = "You don't whant to know what is this..."
+	icon = 'tauceti/datums/gamemodes/events/meatland_cellular.dmi'
+	icon_state = "creep_1"
+	random_icon_states = list("creep_1", "creep_2", "creep_3", "creep_4", "creep_5", "creep_6", "creep_7", "creep_8", "creep_9")
