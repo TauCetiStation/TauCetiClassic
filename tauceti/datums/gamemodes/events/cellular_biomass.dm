@@ -226,11 +226,16 @@
 		return 1
 	return 0
 
-/mob/living/simple_animal/hostile/cellular/creep_standing
+/mob/living/simple_animal/hostile/cellular
 	name = "insane creature"
 	desc = "A sanity-destroying otherthing."
 	icon = 'tauceti/datums/gamemodes/events/meatland_cellular.dmi'
 	speak_emote = list("gibbers")
+	attacktext = "slaps"
+	attack_sound = 'sound/weapons/bite.ogg'
+	faction = "creature"
+
+/mob/living/simple_animal/hostile/cellular/creep_standing
 	icon_state = "light"
 	icon_living = "light"
 	icon_dead = "light-dead"
@@ -244,9 +249,6 @@
 	speed = 8
 
 /mob/living/simple_animal/hostile/cellular/maniac
-	name = "insane creature"
-	desc = "A sanity-destroying otherthing."
-	icon = 'tauceti/datums/gamemodes/events/meatland_cellular.dmi'
 	speak_emote = list("gibbers")
 	icon_state = "sovmeat"
 	icon_living = "sovmeat"
@@ -255,16 +257,10 @@
 	maxHealth = 50
 	melee_damage_lower = 10
 	melee_damage_upper = 18
-	attacktext = "slaps"
-	attack_sound = 'sound/weapons/bite.ogg'
-	faction = "creature"
 	speed = 0
 
 //stupid copy
 /mob/living/simple_animal/hostile/cellular/creature
-	name = "insane creature"
-	desc = "A sanity-destroying otherthing."
-	speak_emote = list("gibbers")
 	icon_state = "horrormeat"
 	icon_living = "horrormeat"
 	icon_dead = "horrormeat-dead"
@@ -272,15 +268,9 @@
 	maxHealth = 80
 	melee_damage_lower = 20
 	melee_damage_upper = 30
-	attacktext = "chomps"
-	attack_sound = 'sound/weapons/bite.ogg'
-	faction = "creature"
 	speed = 3
 
-/mob/living/simple_animal/hostile/cellular/meat/changeling
-	name = "insane creature"
-	desc = "A sanity-destroying otherthing."
-	speak_emote = list("gibbers")
+/mob/living/simple_animal/hostile/cellular/changeling
 	icon_state = "livingflesh"
 	icon_living = "livingflesh"
 	icon_dead = "livingflesh-dead"
@@ -288,9 +278,6 @@
 	maxHealth = 80
 	melee_damage_lower = 20
 	melee_damage_upper = 30
-	attacktext = "chomps"
-	attack_sound = 'sound/weapons/bite.ogg'
-	faction = "creature"
 	speed = 3
 
 /mob/living/simple_animal/hostile/cellular/death()

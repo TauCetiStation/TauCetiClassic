@@ -42,26 +42,17 @@
 	return
 
 /obj/structure/cellular_biomass_blue/ex_act(severity)
-	switch(severity)
-		if(1.0)
-			health-=100
-		if(2.0)
-			health-=50
-		if(3.0)
-			if (prob(50))
-				health-=50
-			else
-				health-=25
+	health -= 100 / (severity * 2)
 	healthcheck()
 	return
 
 /obj/structure/cellular_biomass_blue/blob_act()
-	health-=50
+	health -= 50
 	healthcheck()
 	return
 
 /obj/structure/cellular_biomass_blue/meteorhit()
-	health-=100
+	health -= 100
 	healthcheck()
 	return
 
@@ -172,7 +163,7 @@
 		if(prob(5))
 			new /obj/structure/cellular_biomass_blue/grass/light(src.loc)
 		else
-			if(prob(30))
+			if(prob(24))
 				new /obj/effect/decal/cleanable/bluespace(src.loc)
 		if(prob(8))
 			var/list/critters = subtypesof(/mob/living/simple_animal/hostile/bluespace)

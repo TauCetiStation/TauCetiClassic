@@ -18,6 +18,9 @@
 /obj/structure/cellular_biomass_black/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 		return 0
 
+/obj/structure/cellular_biomass_black/grass/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+		return 1
+
 /obj/structure/cellular_biomass_black/New()
 		..()
 
@@ -188,9 +191,10 @@
 	var/turf/S = get_step(T,pick(1,2,4,8))
 	if(locate(/obj/structure/cellular_biomass_black, S))
 		return
+	if(istype(S,/turf/simulated/wall))
+		if(calcEnergy(S)==3)
+			S.blob_act()
 	if(S.Enter(src) && master)
-		for(var/obj/A in S)//Del everything.
-			qdel(A)
 		master.spawn_cellular_biomass_black_piece(S, src)
 	if ((locate(/obj/machinery/door, S) || locate(/obj/structure/window, S)) && prob(90))
 		return
