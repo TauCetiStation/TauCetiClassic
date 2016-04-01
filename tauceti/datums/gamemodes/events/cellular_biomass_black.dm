@@ -17,7 +17,7 @@
 
 /obj/structure/cellular_biomass_black/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 		return 0
-	
+
 /obj/structure/cellular_biomass_black/New()
 		..()
 
@@ -80,7 +80,7 @@
 	health -= W.force
 	playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
 	healthcheck()
-	return 
+	return
 
 
 /obj/structure/cellular_biomass_black/grass
@@ -188,16 +188,14 @@
 	var/turf/S = get_step(T,pick(1,2,4,8))
 	if(locate(/obj/structure/cellular_biomass_black, S))
 		return
-	if(istype(S,/turf/simulated/wall))
-		if(calcEnergy(S)==3)
-			S.blob_act()
-			return 
+	if(S.Enter(src) && master)
+		for(var/obj/A in S)//Del everything.
+			qdel(A)
+		master.spawn_cellular_biomass_black_piece(S, src)
 	if ((locate(/obj/machinery/door, S) || locate(/obj/structure/window, S)) && prob(90))
 		return
 	for(var/atom/A in S)//Hit everything in the turf
 		A.blob_act()
-	if(T.CanPass(src,S) && master)
-		master.spawn_cellular_biomass_black_piece(S, src)
 
 /obj/structure/cellular_biomass_black/proc/calcEnergy(var/turf/S)
 	return (getEnergy(S, 1) + getEnergy(S, 2) + getEnergy(S, 4) + getEnergy(S, 8))
@@ -207,21 +205,6 @@
 	if(locate(/obj/structure/cellular_biomass_black) in T)
 		return 1
 	return 0
-
-/proc/cellular_biomass_black_infestation()
-	spawn() //to stop the secrets panel hanging
-		var/list/turf/simulated/floor/turfs = list() //list of all the empty floor turfs in the hallway areas
-		for(var/areapath in typesof(/area/hallway))
-			var/area/A = locate(areapath)
-			for(var/area/B in A.related)
-				for(var/turf/simulated/floor/F in B.contents)
-					if(!F.contents.len)
-						turfs += F
-
-		if(turfs.len) //Pick a turf to spawn at if we can
-			var/turf/simulated/floor/T = pick(turfs)
-			new/obj/effect/cellular_biomass_black_controller(T) //spawn a controller at turf
-			message_admins("\blue Event: Cellular spawned at [T.loc.loc] ([T.x],[T.y],[T.z])")
 
 /mob/living/simple_animal/hostile/creature
 	name = "creature"

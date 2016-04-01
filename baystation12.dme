@@ -1575,6 +1575,7 @@
 #include "tauceti\datums\gamemodes\antagspawner.dm"
 #include "tauceti\datums\gamemodes\events\cellular_biomass.dm"
 #include "tauceti\datums\gamemodes\events\cellular_biomass_black.dm"
+#include "tauceti\datums\gamemodes\events\cellular_biomass_bluespace.dm"
 #include "tauceti\datums\gamemodes\nuclear\syndiborg.dm"
 #include "tauceti\datums\wires\syndicatebomb.dm"
 #include "tauceti\datums\wires\wires.dm"

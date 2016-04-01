@@ -29,6 +29,11 @@
 	..()
 	return QDEL_HINT_QUEUE
 
+/obj/structure/cellular_biomass/grass/Destroy()
+	for(var/obj/effect/decal/cleanable/bluespace/clean in src.loc)
+		qdel(clean)
+	..()
+	return QDEL_HINT_QUEUE
 /obj/structure/cellular_biomass/proc/healthcheck()
 	if(health <=0)
 		qdel(src)
@@ -202,14 +207,14 @@
 		if(calcEnergy(S)==3)
 			S.blob_act()
 		return
+	if(S.Enter(src) && master)
+		for(var/obj/A in S)//Del everything.
+			qdel(A)
+		master.spawn_cellular_biomass_piece(S, src)
 	if ((locate(/obj/machinery/door, S) || locate(/obj/structure/window, S)) && prob(90))
 		return
 	for(var/atom/A in S)//Hit everything in the turf
 		A.blob_act()
-	if(T.CanPass(src,S) && master)
-		for(var/obj/A in S)//Del everything.
-			qdel(A)
-		master.spawn_cellular_biomass_piece(S, src)
 
 
 /obj/structure/cellular_biomass/proc/calcEnergy(var/turf/S)
@@ -220,21 +225,6 @@
 	if(locate(/obj/structure/cellular_biomass) in T)
 		return 1
 	return 0
-
-/proc/cellular_biomass_infestation()
-	spawn() //to stop the secrets panel hanging
-		var/list/turf/simulated/floor/turfs = list() //list of all the empty floor turfs in the hallway areas
-		for(var/areapath in typesof(/area/hallway))
-			var/area/A = locate(areapath)
-			for(var/area/B in A.related)
-				for(var/turf/simulated/floor/F in B.contents)
-					if(!F.contents.len)
-						turfs += F
-
-		if(turfs.len) //Pick a turf to spawn at if we can
-			var/turf/simulated/floor/T = pick(turfs)
-			new/obj/effect/cellular_biomass_controller(T) //spawn a controller at turf
-			message_admins("\blue Event: Cellular spawned at [T.loc.loc] ([T.x],[T.y],[T.z])")
 
 /mob/living/simple_animal/hostile/cellular/creep_standing
 	name = "insane creature"
@@ -251,7 +241,7 @@
 	attacktext = "brutally chomps"
 	attack_sound = 'sound/weapons/bite.ogg'
 	faction = "creature"
-	speed = 2
+	speed = 8
 
 /mob/living/simple_animal/hostile/cellular/maniac
 	name = "insane creature"
@@ -268,7 +258,7 @@
 	attacktext = "slaps"
 	attack_sound = 'sound/weapons/bite.ogg'
 	faction = "creature"
-	speed = 5
+	speed = 0
 
 //stupid copy
 /mob/living/simple_animal/hostile/cellular/creature
@@ -278,6 +268,22 @@
 	icon_state = "horrormeat"
 	icon_living = "horrormeat"
 	icon_dead = "horrormeat-dead"
+	health = 80
+	maxHealth = 80
+	melee_damage_lower = 20
+	melee_damage_upper = 30
+	attacktext = "chomps"
+	attack_sound = 'sound/weapons/bite.ogg'
+	faction = "creature"
+	speed = 3
+
+/mob/living/simple_animal/hostile/cellular/meat/changeling
+	name = "insane creature"
+	desc = "A sanity-destroying otherthing."
+	speak_emote = list("gibbers")
+	icon_state = "livingflesh"
+	icon_living = "livingflesh"
+	icon_dead = "livingflesh-dead"
 	health = 80
 	maxHealth = 80
 	melee_damage_lower = 20
