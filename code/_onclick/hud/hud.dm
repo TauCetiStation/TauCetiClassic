@@ -2,6 +2,7 @@
 	The global hud:
 	Uses the same visual objects for all players.
 */
+
 /datum/hud/var/obj/screen/grab_intent
 /datum/hud/var/obj/screen/hurt_intent
 /datum/hud/var/obj/screen/disarm_intent
@@ -17,6 +18,7 @@
 	var/mob/mymob
 
 	var/hud_shown = 1			//Used for the HUD toggle (F12)
+	var/hud_version = 1			//Current displayed version of the HUD
 	var/inventory_shown = 1		//the inventory
 	var/show_intent_icons = 0
 	var/hotkey_ui_hidden = 0	//This is to hide the buttons that can be used via hotkeys. (hotkeybuttons list of buttons)
@@ -63,9 +65,13 @@
 	mymob = null
 
 /datum/hud/proc/hidden_inventory_update()
-	if(!mymob) return
+	if(!mymob)
+		return
+
 	if(ishuman(mymob))
 		var/mob/living/carbon/human/H = mymob
+		if(H.handcuffed)
+			H.handcuffed.screen_loc = null	//no handcuffs in my UI!
 		if(inventory_shown && hud_shown)
 			if(H.shoes)		H.shoes.screen_loc = ui_shoes
 			if(H.gloves)	H.gloves.screen_loc = ui_gloves
@@ -111,8 +117,11 @@
 
 
 /datum/hud/proc/instantiate()
-	if(!ismob(mymob)) return 0
-	if(!mymob.client) return 0
+	if(!ismob(mymob))
+		return 0
+	if(!mymob.client)
+		return 0
+
 	var/ui_style = ui_style2icon(mymob.client.prefs.UI_style)
 	var/ui_color = mymob.client.prefs.UI_style_color
 	var/ui_alpha = mymob.client.prefs.UI_style_alpha
@@ -138,63 +147,102 @@
 	else if(isovermind(mymob))
 		blob_hud()
 
+	if(istype(mymob.loc,/obj/mecha))
+		show_hud(HUD_STYLE_REDUCED)
+
+//Version denotes which style should be displayed. blank or 0 means "next version"
+/datum/hud/proc/show_hud(var/version = 0)
+	if(!ismob(mymob))
+		return 0
+	if(!mymob.client)
+		return 0
+	var/display_hud_version = version
+	if(!display_hud_version)	//If 0 or blank, display the next hud version
+		display_hud_version = hud_version + 1
+	if(display_hud_version > HUD_VERSIONS)	//If the requested version number is greater than the available versions, reset back to the first version
+		display_hud_version = 1
+
+	switch(display_hud_version)
+		if(HUD_STYLE_STANDARD)	//Default HUD
+			hud_shown = 1	//Governs behavior of other procs
+			if(adding)
+				mymob.client.screen += adding
+			if(other && inventory_shown)
+				mymob.client.screen += other
+			if(hotkeybuttons && !hotkey_ui_hidden)
+				mymob.client.screen += hotkeybuttons
+
+			action_intent.screen_loc = ui_acti //Restore intent selection to the original position
+			mymob.client.screen += mymob.zone_sel				//This one is a special snowflake
+			mymob.client.screen += mymob.healths				//As are the rest of these.
+			mymob.client.screen += mymob.healthdoll
+			mymob.client.screen += mymob.internals
+			mymob.client.screen += lingstingdisplay
+			mymob.client.screen += lingchemdisplay
+			mymob.client.screen += mymob.gun_setting_icon
+
+			hidden_inventory_update()
+			persistant_inventory_update()
+			mymob.update_action_buttons()
+			reorganize_alerts()
+		if(HUD_STYLE_REDUCED)	//Reduced HUD
+			hud_shown = 0	//Governs behavior of other procs
+			if(adding)
+				mymob.client.screen -= adding
+			if(other)
+				mymob.client.screen -= other
+			if(hotkeybuttons)
+				mymob.client.screen -= hotkeybuttons
+
+			//These ones are not a part of 'adding', 'other' or 'hotkeybuttons' but we want them gone.
+			mymob.client.screen -= mymob.zone_sel	//zone_sel is a mob variable for some reason.
+			mymob.client.screen -= lingstingdisplay
+			mymob.client.screen -= lingchemdisplay
+
+			//These ones are a part of 'adding', 'other' or 'hotkeybuttons' but we want them to stay
+			mymob.client.screen += l_hand_hud_object	//we want the hands to be visible
+			mymob.client.screen += r_hand_hud_object	//we want the hands to be visible
+			mymob.client.screen += action_intent		//we want the intent swticher visible
+			action_intent.screen_loc = ui_acti_alt	//move this to the alternative position, where zone_select usually is.
+
+			hidden_inventory_update()
+			persistant_inventory_update()
+			mymob.update_action_buttons()
+			reorganize_alerts()
+		if(HUD_STYLE_NOHUD)	//No HUD
+			hud_shown = 0	//Governs behavior of other procs
+			if(adding)
+				mymob.client.screen -= adding
+			if(other)
+				mymob.client.screen -= other
+			if(hotkeybuttons)
+				mymob.client.screen -= hotkeybuttons
+
+			//These ones are not a part of 'adding', 'other' or 'hotkeybuttons' but we want them gone.
+			mymob.client.screen -= mymob.zone_sel	//zone_sel is a mob variable for some reason.
+			mymob.client.screen -= mymob.healths
+			mymob.client.screen -= mymob.healthdoll
+			mymob.client.screen -= mymob.internals
+			mymob.client.screen -= lingstingdisplay
+			mymob.client.screen -= lingchemdisplay
+			mymob.client.screen -= mymob.gun_setting_icon
+
+			hidden_inventory_update()
+			persistant_inventory_update()
+			mymob.update_action_buttons()
+			reorganize_alerts()
+	hud_version = display_hud_version
 
 //Triggered when F12 is pressed (Unless someone changed something in the DMF)
 /mob/verb/button_pressed_F12(var/full = 0 as null)
 	set name = "F12"
 	set hidden = 1
 
-	if(hud_used)
+	if(hud_used && client)
 		if(ishuman(src))
-			if(!client) return
-			if(client.view != world.view)
-				return
-			if(hud_used.hud_shown)
-				hud_used.hud_shown = 0
-				if(src.hud_used.adding)
-					src.client.screen -= src.hud_used.adding
-				if(src.hud_used.other)
-					src.client.screen -= src.hud_used.other
-				if(src.hud_used.hotkeybuttons)
-					src.client.screen -= src.hud_used.hotkeybuttons
-
-				//Due to some poor coding some things need special treatment:
-				//These ones are a part of 'adding', 'other' or 'hotkeybuttons' but we want them to stay
-				if(!full)
-					src.client.screen += src.hud_used.l_hand_hud_object	//we want the hands to be visible
-					src.client.screen += src.hud_used.r_hand_hud_object	//we want the hands to be visible
-					src.client.screen += src.hud_used.action_intent		//we want the intent swticher visible
-					src.hud_used.action_intent.screen_loc = ui_acti_alt	//move this to the alternative position, where zone_select usually is.
-				else
-					src.client.screen -= src.healths
-					src.client.screen -= src.internals
-					src.client.screen -= src.gun_setting_icon
-
-				//These ones are not a part of 'adding', 'other' or 'hotkeybuttons' but we want them gone.
-				src.client.screen -= src.zone_sel	//zone_sel is a mob variable for some reason.
-
-			else
-				hud_used.hud_shown = 1
-				if(src.hud_used.adding)
-					src.client.screen += src.hud_used.adding
-				if(src.hud_used.other && src.hud_used.inventory_shown)
-					src.client.screen += src.hud_used.other
-				if(src.hud_used.hotkeybuttons && !src.hud_used.hotkey_ui_hidden)
-					src.client.screen += src.hud_used.hotkeybuttons
-				if(src.healths)
-					src.client.screen |= src.healths
-				if(src.internals)
-					src.client.screen |= src.internals
-				if(src.gun_setting_icon)
-					src.client.screen |= src.gun_setting_icon
-
-				src.hud_used.action_intent.screen_loc = ui_acti //Restore intent selection to the original position
-				src.client.screen += src.zone_sel				//This one is a special snowflake
-
-			hud_used.hidden_inventory_update()
-			hud_used.persistant_inventory_update()
-			update_action_buttons()
+			hud_used.show_hud() //Shows the next hud preset
+			usr << "<span class ='info'>Switched HUD mode. Press F12 to toggle.</span>"
 		else
-			usr << "\red Inventory hiding is currently only supported for human mobs, sorry."
+			usr << "<span class ='warning'>Inventory hiding is currently only supported for human mobs, sorry.</span>"
 	else
-		usr << "\red This mob type does not use a HUD."
+		usr << "<span class ='warning'>This mob type does not use a HUD.</span>"
