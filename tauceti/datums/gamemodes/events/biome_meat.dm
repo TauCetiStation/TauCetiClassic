@@ -1,7 +1,7 @@
 /obj/effect/cellular_biomass_controller/meat
 	walls_type =     /obj/structure/cellular_biomass/wall/meat
 	insides_type =   /obj/structure/cellular_biomass/grass/meat
-	lairs_type =     /obj/structure/cellular_biomass/lair/meat
+	living_type =     /obj/structure/cellular_biomass/lair/meat
 	landmarks_type = /obj/effect/decal/cleanable/cellular/meat
 	cores_type =     /obj/structure/cellular_biomass/core/meat
 
@@ -40,6 +40,10 @@
 	icon_state = "light_[pick(1,2)]"
 	set_light(luminosity)
 
+/obj/structure/cellular_biomass/lair/meat/New()
+	icon_state = "lair"
+	..(pick(subtypesof(/mob/living/simple_animal/hostile/cellular/meat/)))
+
 /mob/living/simple_animal/hostile/cellular/meat/
 	name = "insane creature"
 	desc = "A sanity-destroying otherthing."
@@ -57,7 +61,7 @@
 	maxHealth = 160
 	melee_damage_lower = 25
 	melee_damage_upper = 50
-	speed = 2
+	move_speed = 20
 
 /mob/living/simple_animal/hostile/cellular/meat/maniac
 	icon_state = "sovmeat"
@@ -67,7 +71,7 @@
 	maxHealth = 50
 	melee_damage_lower = 10
 	melee_damage_upper = 18
-	speed = 5
+	move_speed = 4
 
 /mob/living/simple_animal/hostile/cellular/meat/changeling
 	icon_state = "horrormeat"
@@ -77,9 +81,9 @@
 	maxHealth = 80
 	melee_damage_lower = 20
 	melee_damage_upper = 30
-	speed = 3
+	move_speed = 15
 
-/mob/living/simple_animal/hostile/cellular/meat/changeling
+/mob/living/simple_animal/hostile/cellular/meat/flesh
 	icon_state = "livingflesh"
 	icon_living = "livingflesh"
 	icon_dead = "livingflesh-dead"
@@ -87,7 +91,7 @@
 	maxHealth = 80
 	melee_damage_lower = 20
 	melee_damage_upper = 30
-	speed = 3
+	move_speed = 15
 
 /mob/living/simple_animal/hostile/cellular/meat/death()
 	..()
