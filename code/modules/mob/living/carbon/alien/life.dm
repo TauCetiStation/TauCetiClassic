@@ -295,37 +295,19 @@
 		return 1
 
 
-	proc/handle_regular_hud_updates()
-		if(!client)	return 0
+	handle_regular_hud_updates()
+		if(!client)
+			return 0
 
-		handle_vision()
 		handle_hud_icons()
 
-		if(stat != DEAD)
-			if(loc && !isturf(loc) && !is_type_in_list(loc, ignore_vision_inside))
-				overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
-			else if(blinded)
-				overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
+		if(pullin)
+			if(pulling)
+				pullin.icon_state = "pull"
 			else
-				clear_fullscreen("blind")
-				if(disabilities & NEARSIGHTED)
-					overlay_fullscreen("impaired", /obj/screen/fullscreen/impaired, 1)
-				else
-					clear_fullscreen("impaired")
-				if(eye_blurry)
-					overlay_fullscreen("blurry", /obj/screen/fullscreen/blurry)
-				else
-					clear_fullscreen("blurry")
-				if(druggy)
-					overlay_fullscreen("high", /obj/screen/fullscreen/high)
-				else
-					clear_fullscreen("high")
-			if(machine)
-				if (!( machine.check_eye(src) ))
-					reset_view(null)
-			else
-				if(client && !client.adminobs)
-					reset_view(null)
+				pullin.icon_state = "pull0"
+
+		..()
 
 		return 1
 
@@ -336,7 +318,7 @@
 
 		return 1
 
-	proc/handle_vision()
+	handle_vision()
 
 		if(stat == DEAD)
 			sight |= SEE_TURFS
@@ -354,6 +336,7 @@
 			else if(!nightvision)
 				see_in_dark = 4
 				see_invisible = 45
+		..()
 
 	proc/handle_hud_icons_health()
 		return

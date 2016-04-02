@@ -203,7 +203,9 @@
 		return 1
 
 
-	proc/handle_regular_hud_updates()
+	handle_regular_hud_updates()
+		if(!client)
+			return 0
 
 		if (stat == DEAD || (XRAY in src.mutations))
 			sight |= SEE_TURFS
@@ -238,31 +240,10 @@
 			else
 				healths.icon_state = "health7"
 
-		if(stat != DEAD)
-			if(loc && !isturf(loc) && !is_type_in_list(loc, ignore_vision_inside))
-				overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
-			else if(blinded)
-				overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
-			else
-				clear_fullscreen("blind")
-				if(disabilities & NEARSIGHTED)
-					overlay_fullscreen("impaired", /obj/screen/fullscreen/impaired, 1)
-				else
-					clear_fullscreen("impaired")
-				if(eye_blurry)
-					overlay_fullscreen("blurry", /obj/screen/fullscreen/blurry)
-				else
-					clear_fullscreen("blurry")
-				if(druggy)
-					overlay_fullscreen("high", /obj/screen/fullscreen/high)
-				else
-					clear_fullscreen("high")
-			if(machine)
-				if (!( machine.check_eye(src) ))
-					reset_view(null)
-			else
-				if(client && !client.adminobs)
-					reset_view(null)
+		if(pullin)
+			pullin.icon_state = "pull[pulling ? 1 : 0]"
+
+		..()
 
 		return 1
 

@@ -43,25 +43,6 @@
 	return 1
 
 
-/obj/screen/item_action
-	var/obj/item/owner
-
-/obj/screen/item_action/Click()
-	if(!usr || !owner)
-		return 1
-	if(usr.next_move >= world.time)
-		return
-	usr.next_move = world.time + 6
-
-	if(usr.stat || usr.restrained() || usr.stunned || usr.lying)
-		return 1
-
-	if(!(owner in usr))
-		return 1
-
-	owner.ui_action_click()
-	return 1
-
 /obj/screen/grab
 	name = "grab"
 

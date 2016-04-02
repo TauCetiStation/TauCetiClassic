@@ -116,7 +116,6 @@
 					apply_damage(HEAT_DAMAGE_LEVEL_2, BURN)
 	else
 		clear_alert("alien_fire")
-	return
 
 /mob/living/carbon/alien/proc/handle_mutations_and_radiation()
 

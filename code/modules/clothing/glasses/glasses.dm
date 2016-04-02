@@ -51,7 +51,7 @@
 		on = !on
 		if(on)
 			playsound(src.loc, 'sound/effects/nvg_on.ogg', 50, 1)
-		H.handle_vision()
+		H.update_sight()
 
 /obj/item/clothing/glasses/eyepatch
 	name = "eyepatch"

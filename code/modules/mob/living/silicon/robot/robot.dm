@@ -22,7 +22,6 @@ var/list/robot_verbs_default = list(
 
 //Hud stuff
 
-	var/obj/screen/cells = null
 	var/obj/screen/inv1 = null
 	var/obj/screen/inv2 = null
 	var/obj/screen/inv3 = null
@@ -807,6 +806,7 @@ var/list/robot_verbs_default = list(
 			else
 				sleep(6)
 				if(prob(50))
+					throw_alert("hacked")
 					emagged = 1
 					lawupdate = 0
 					connected_ai = null

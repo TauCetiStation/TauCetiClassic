@@ -158,5 +158,6 @@
 	if(R.emagged == 1)
 		return 0
 
+	R.throw_alert("hacked")
 	R.emagged = 1
 	return 1
