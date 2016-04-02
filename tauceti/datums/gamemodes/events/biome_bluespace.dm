@@ -43,6 +43,8 @@
 /obj/effect/cellular_biomass_controller/bluespace/alive()
 	if(!growth_queue)
 		return 0
+	if(!growth_queue.len
+		return 0
 	return 1
 
 /obj/structure/cellular_biomass/wall/bluespace/New()

@@ -26,6 +26,8 @@
 /obj/effect/cellular_biomass_controller/mine/alive()
 	if(!growth_queue)
 		return 0
+	if(!growth_queue.len
+		return 0
 	return 1
 
 /obj/effect/decal/cleanable/cellular/mine

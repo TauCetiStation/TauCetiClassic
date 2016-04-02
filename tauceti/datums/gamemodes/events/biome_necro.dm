@@ -30,11 +30,6 @@
 	icon = 'tauceti/datums/gamemodes/events/necromorphs.dmi'
 	light_color = "#996600"
 
-/obj/effect/cellular_biomass_controller/necro/alive()
-	if(!growth_queue)
-		return 0
-	return 1
-
 /obj/effect/decal/cleanable/cellular/necro
 	name = "horror"
 	desc = "You don't whant to know what is this..."
@@ -72,6 +67,6 @@
 	icon_state = "enemy[type]"
 	icon_living = "enemy[type]"
 	icon_dead = "enemy[type]-dead"
-	..()
+
 
 

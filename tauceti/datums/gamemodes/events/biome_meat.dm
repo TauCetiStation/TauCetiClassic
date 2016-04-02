@@ -7,19 +7,23 @@
 
 /obj/structure/cellular_biomass/wall/meat
 	name = "Cellular horror"
+	desc = "You don't whant to know what is this..."
 	desc = "Monstrum from another dimension. It just keeps spreading!"
 	icon = 'tauceti/datums/gamemodes/events/meatland_cellular.dmi'
 
 /obj/structure/cellular_biomass/grass/meat
+	name = "Cellular horror surface"
+	desc = "You don't whant to know what is this..."
 	icon = 'tauceti/datums/gamemodes/events/meatland_cellular.dmi'
 
 /obj/structure/cellular_biomass/lair/meat
-	icon = 'tauceti/datums/gamemodes/events/meatland_cellular.dmi'
-
-/obj/effect/decal/cleanable/cellular/meat
+	name = "Cellular horror lair"
+	desc = "You don't whant to know what is this..."
 	icon = 'tauceti/datums/gamemodes/events/meatland_cellular.dmi'
 
 /obj/structure/cellular_biomass/core/meat
+	name = "Cellular horror"
+	desc = "You don't whant to know what is this..."
 	icon = 'tauceti/datums/gamemodes/events/meatland_cellular.dmi'
 	light_color = "#710F8C"
 

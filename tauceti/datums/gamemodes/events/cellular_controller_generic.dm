@@ -5,7 +5,7 @@
 
 	var/grip_streingth = 5       //range for turfs to expand in space.
 	var/grow_speed = 5           //lower this value to speed up growth. 1 will process without cooldown.
-	var/core_grow_chance = 5     //chance to spawn light core 
+	var/core_grow_chance = 5     //chance to spawn light core
 	var/living_grow_chance = 5   //chance to spawn lair or mob
 	var/mark_grow_chance = 25    //chance to spawn decoration
 	var/faction = "generic"      //currentrly unused. Will be used to merge/battle biomes
@@ -58,6 +58,10 @@
 	if(!growth_queue)
 		return 0
 	if(!biomass_cores)
+		return 0
+	if(!growth_queue.len)
+		return 0
+	if(!biomass_cores.len)
 		return 0
 	return 1
 
