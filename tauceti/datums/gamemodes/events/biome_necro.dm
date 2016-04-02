@@ -72,6 +72,6 @@
 	icon_state = "enemy[type]"
 	icon_living = "enemy[type]"
 	icon_dead = "enemy[type]-dead"
-
+	..()
 
 
