@@ -43,7 +43,7 @@
 /obj/effect/cellular_biomass_controller/bluespace/alive()
 	if(!growth_queue)
 		return 0
-	if(!growth_queue.len
+	if(!growth_queue.len)
 		return 0
 	return 1
 
