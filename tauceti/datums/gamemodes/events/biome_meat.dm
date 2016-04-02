@@ -4,6 +4,7 @@
 	living_type =     /obj/structure/cellular_biomass/lair/meat
 	landmarks_type = /obj/effect/decal/cleanable/cellular/meat
 	cores_type =     /obj/structure/cellular_biomass/core/meat
+	faction = "meat"
 
 /obj/structure/cellular_biomass/wall/meat
 	name = "Cellular horror"
@@ -65,7 +66,7 @@
 	maxHealth = 160
 	melee_damage_lower = 25
 	melee_damage_upper = 50
-	move_speed = 20
+	move_speed = 25
 
 /mob/living/simple_animal/hostile/cellular/meat/maniac
 	icon_state = "sovmeat"

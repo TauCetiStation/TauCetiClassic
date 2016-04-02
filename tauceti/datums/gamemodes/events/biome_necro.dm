@@ -1,6 +1,6 @@
 /obj/effect/cellular_biomass_controller/necro
 	grow_speed = 4           //lower this value to speed up growth. 1 will process without cooldown.
-	core_grow_chance = 6     //chance to spawn light core
+	core_grow_chance = 5     //chance to spawn light core
 	living_grow_chance = 25   //chance to spawn lair or mob
 	mark_grow_chance = 0    //chance to spawn decoration
 	walls_type =     /obj/structure/cellular_biomass/wall/necro
@@ -8,25 +8,31 @@
 	living_type =     /obj/structure/cellular_biomass/lair/necro
 	landmarks_type = /obj/effect/decal/cleanable/cellular/necro
 	cores_type =     /obj/structure/cellular_biomass/core/necro
+	faction = "necro"
 
 /obj/structure/cellular_biomass/wall/necro
 	name = "Living mass"
-	desc = "Monstrum from another dimension. It just keeps spreading!"
+	desc = "Smells like rotten flesh. Disgusting!"
 	icon = 'tauceti/datums/gamemodes/events/necromorphs.dmi'
 
 /obj/structure/cellular_biomass/grass/necro
 	name = "Living mass"
+	desc = "Smells like rotten flesh. Disgusting!"
 	icon = 'tauceti/datums/gamemodes/events/necromorphs.dmi'
 
 /obj/structure/cellular_biomass/lair/necro
 	name = "Living mass"
+	desc = "Smells like rotten flesh. Disgusting!"
 	icon = 'tauceti/datums/gamemodes/events/necromorphs.dmi'
 
 /obj/effect/decal/cleanable/cellular/necro
 	name = "Living mass"
+	desc = "Smells like rotten flesh. Disgusting!"
 	icon = 'tauceti/datums/gamemodes/events/necromorphs.dmi'
 
 /obj/structure/cellular_biomass/core/necro
+	name = "Living mass"
+	desc = "Smells like rotten flesh. Disgusting!"
 	icon = 'tauceti/datums/gamemodes/events/necromorphs.dmi'
 	light_color = "#996600"
 
@@ -58,8 +64,8 @@
 	faction = "necro"
 	health = 60
 	maxHealth = 60
-	melee_damage_lower = 5
-	melee_damage_upper = 15
+	melee_damage_lower = 10
+	melee_damage_upper = 20
 	move_speed = 0
 
 /mob/living/simple_animal/hostile/cellular/necro/New()
@@ -67,6 +73,6 @@
 	icon_state = "enemy[type]"
 	icon_living = "enemy[type]"
 	icon_dead = "enemy[type]-dead"
-
+	..()
 
 
