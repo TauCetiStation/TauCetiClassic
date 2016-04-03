@@ -149,6 +149,18 @@
 	prefs.last_ip = address				//these are gonna be used for banning
 	prefs.last_id = computer_id			//these are gonna be used for banning
 
+	var/cur_date = time2text(world.realtime, "YYYY/MM/DD hh:mm:ss")
+	if("[computer_id]" in prefs.cid_list)
+		prefs.cid_list["[computer_id]"]["last_seen"] = cur_date
+	else
+		prefs.cid_list["[computer_id]"] = list("first_seen"=cur_date, "last_seen"=cur_date)
+
+	if(prefs.cid_list.len > 2)
+		log_admin("[ckey] has [prefs.cid_list.len] different computer_id.")
+		message_admins("[ckey] has <span class='red'>[prefs.cid_list.len]</span> different computer_id.")
+
+	prefs.save_preferences()
+
 	. = ..()	//calls mob.Login()
 
 	if(custom_event_msg && custom_event_msg != "")

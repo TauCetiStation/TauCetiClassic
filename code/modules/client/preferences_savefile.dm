@@ -47,6 +47,10 @@
 			save_character()
 			return 0
 
+	//Account data
+	S["cid_list"]			>> cid_list
+	S["ignore_cid_warning"]	>> ignore_cid_warning
+
 	//General preferences
 	S["ooccolor"]			>> ooccolor
 	S["UI_style"]			>> UI_style
@@ -73,6 +77,9 @@
 	randomslot		= sanitize_integer(randomslot, 0, 1, initial(randomslot))
 	UI_style_color	= sanitize_hexcolor(UI_style_color, initial(UI_style_color))
 	UI_style_alpha	= sanitize_integer(UI_style_alpha, 0, 255, initial(UI_style_alpha))
+	if(!cid_list)
+		cid_list = list()
+	ignore_cid_warning = sanitize_integer(ignore_cid_warning, 0, 1, initial(ignore_cid_warning))
 	return 1
 
 /datum/preferences/proc/save_preferences()
@@ -82,6 +89,10 @@
 	S.cd = "/"
 
 	S["version"] << savefile_version
+
+	//Account data
+	S["cid_list"]			<< cid_list
+	S["ignore_cid_warning"]	<< ignore_cid_warning
 
 	//general preferences
 	S["ooccolor"]			<< ooccolor

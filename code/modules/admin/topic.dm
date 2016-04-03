@@ -940,6 +940,28 @@
 			dat += "<hr><b>Status:</b> [C.geoip.status]"
 			usr << browse(dat, "window=geoip")
 
+	else if(href_list["cid_list"])
+		var/mob/M = locate(href_list["cid_list"])
+		if (ismob(M))
+			if(!M.client)
+				return
+			var/client/C = M.client
+			var/dat = "<html><head><title>[C.ckey] cid list</title></head>"
+			dat += "<center><b>Ckey:</b> [C.ckey] | <b>Ignore warning:</b> [C.prefs.ignore_cid_warning ? "yes" : "no"]</center>"
+			for(var/x in C.prefs.cid_list)
+				dat += "<b>computer_id:</b> [x] - <b>first seen:</b> [C.prefs.cid_list[x]["first_seen"]] - <b>last seen:</b> [C.prefs.cid_list[x]["last_seen"]]<br>"
+			usr << browse(dat, "window=[C.ckey]_cid_list")
+
+	else if(href_list["cid_ignore"])
+		var/mob/M = locate(href_list["cid_ignore"])
+		if (ismob(M))
+			if(!M.client)
+				return
+			var/client/C = M.client
+			C.prefs.ignore_cid_warning = !(C.prefs.ignore_cid_warning)
+			log_admin("[key_name(usr)] has [C.prefs.ignore_cid_warning ? "disabled" : "enabled"] multiple cid notice for [C.ckey].")
+			message_admins("[key_name_admin(usr)] has [C.prefs.ignore_cid_warning ? "disabled" : "enabled"] multiple cid notice for [C.ckey].")
+
 	else if(href_list["boot2"])
 		var/mob/M = locate(href_list["boot2"])
 		if (ismob(M))
