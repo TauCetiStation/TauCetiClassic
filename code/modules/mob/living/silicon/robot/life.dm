@@ -151,7 +151,9 @@
 
 	return 1
 
-/mob/living/silicon/robot/proc/handle_regular_hud_updates()
+/mob/living/silicon/robot/handle_regular_hud_updates()
+	if(!client)
+		return 0
 
 	if (src.stat == DEAD || XRAY in mutations || src.sight_mode & BORGXRAY)
 		src.sight |= SEE_TURFS
@@ -242,67 +244,29 @@
 				src.mind.special_role = "traitor"
 				ticker.mode.traitors += src.mind
 
-	if (src.cells)
-		if (src.cell)
-			var/cellcharge = src.cell.charge/src.cell.maxcharge
-			switch(cellcharge)
-				if(0.75 to INFINITY)
-					src.cells.icon_state = "charge4"
-				if(0.5 to 0.75)
-					src.cells.icon_state = "charge3"
-				if(0.25 to 0.5)
-					src.cells.icon_state = "charge2"
-				if(0 to 0.25)
-					src.cells.icon_state = "charge1"
-				else
-					src.cells.icon_state = "charge0"
+	if (src.cell)
+		var/cellcharge = src.cell.charge/src.cell.maxcharge
+		switch(cellcharge)
+			if(0.75 to INFINITY)
+				clear_alert("charge")
+			if(0.5 to 0.75)
+				throw_alert("charge","lowcell",1)
+			if(0.25 to 0.5)
+				throw_alert("charge","lowcell",2)
+			if(0.01 to 0.25)
+				throw_alert("charge","lowcell",3)
+			else
+				throw_alert("charge","emptycell")
+	else
+		throw_alert("charge","nocell")
+
+	if(pullin)
+		if(pulling)
+			pullin.icon_state = "pull"
 		else
-			src.cells.icon_state = "charge-empty"
+			pullin.icon_state = "pull0"
 
-	if(bodytemp)
-		switch(src.bodytemperature) //310.055 optimal body temp
-			if(335 to INFINITY)
-				src.bodytemp.icon_state = "temp2"
-			if(320 to 335)
-				src.bodytemp.icon_state = "temp1"
-			if(300 to 320)
-				src.bodytemp.icon_state = "temp0"
-			if(260 to 300)
-				src.bodytemp.icon_state = "temp-1"
-			else
-				src.bodytemp.icon_state = "temp-2"
-
-
-//Oxygen and fire does nothing yet!!
-//	if (src.oxygen) src.oxygen.icon_state = "oxy[src.oxygen_alert ? 1 : 0]"
-//	if (src.fire) src.fire.icon_state = "fire[src.fire_alert ? 1 : 0]"
-
-	if(src.stat != DEAD)
-		if(loc && !isturf(loc) && !is_type_in_list(loc, ignore_vision_inside))
-			overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
-		else if(blinded)
-			overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
-		else
-			clear_fullscreen("blind")
-			if(disabilities & NEARSIGHTED)
-				overlay_fullscreen("impaired", /obj/screen/fullscreen/impaired, 1)
-			else
-				clear_fullscreen("impaired")
-			if(eye_blurry)
-				overlay_fullscreen("blurry", /obj/screen/fullscreen/blurry)
-			else
-				clear_fullscreen("blurry")
-			if(druggy)
-				overlay_fullscreen("high", /obj/screen/fullscreen/high)
-			else
-				clear_fullscreen("high")
-
-		if (src.machine)
-			if (!( src.machine.check_eye(src) ))
-				src.reset_view(null)
-		else
-			if(client && !client.adminobs)
-				reset_view(null)
+	..()
 
 	return 1
 

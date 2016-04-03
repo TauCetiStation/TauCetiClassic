@@ -110,18 +110,6 @@
 	using.layer = 19
 	src.adding += using
 
-//equippable shit
-	//suit
-	/*inv_box = new /obj/screen/inventory()
-	inv_box.name = "o_clothing"
-	inv_box.dir = SOUTH
-	inv_box.icon = 'icons/mob/screen1_xeno.dmi'
-	inv_box.icon_state = "suit"
-	inv_box.screen_loc = ui_alien_oclothing
-	inv_box.slot_id = slot_wear_suit
-	inv_box.layer = 19
-	src.adding += inv_box*/
-
 	inv_box = new /obj/screen/inventory()
 	inv_box.name = "r_hand"
 	inv_box.dir = WEST
@@ -166,37 +154,6 @@
 	using.layer = 19
 	src.adding += using
 
-	/*//pocket 1
-	inv_box = new /obj/screen/inventory()
-	inv_box.name = "storage1"
-	inv_box.icon = 'icons/mob/screen1_xeno.dmi'
-	inv_box.icon_state = "pocket"
-	inv_box.screen_loc = ui_storage1
-	inv_box.slot_id = slot_l_store
-	inv_box.layer = 19
-	src.adding += inv_box
-
-	//pocket 2
-	inv_box = new /obj/screen/inventory()
-	inv_box.name = "storage2"
-	inv_box.icon = 'icons/mob/screen1_xeno.dmi'
-	inv_box.icon_state = "pocket"
-	inv_box.screen_loc = ui_storage2
-	inv_box.slot_id = slot_r_store
-	inv_box.layer = 19
-	src.adding += inv_box*/
-
-	//head
-	/*inv_box = new /obj/screen/inventory()
-	inv_box.name = "head"
-	inv_box.icon = 'icons/mob/screen1_xeno.dmi'
-	inv_box.icon_state = "head"
-	inv_box.screen_loc = ui_alien_head
-	inv_box.slot_id = slot_head
-	inv_box.layer = 19
-	src.adding += inv_box*/
-//end of equippable shit
-
 	mymob.nightvisionicon = new /obj/screen/alien/nightvision()
 	mymob.nightvisionicon.screen_loc = ui_alien_nightvision
 	src.adding += mymob.nightvisionicon
@@ -220,25 +177,6 @@
 	mymob.throw_icon.name = "throw"
 	mymob.throw_icon.screen_loc = ui_drop_throw
 
-	/*mymob.oxygen = new /obj/screen()
-	mymob.oxygen.icon = 'icons/mob/screen1_xeno.dmi'
-	mymob.oxygen.icon_state = "oxy0"
-	mymob.oxygen.name = "oxygen"
-	mymob.oxygen.screen_loc = ui_alien_oxygen*/
-
-	/*mymob.toxin = new /obj/screen()
-	mymob.toxin.icon = 'icons/mob/screen1_xeno.dmi'
-	mymob.toxin.icon_state = "tox0"
-	mymob.toxin.name = "toxin"
-	mymob.toxin.screen_loc = ui_alien_toxin*/
-
-	/*mymob.fire = new /obj/screen()
-	mymob.fire.icon = 'icons/mob/screen1_xeno.dmi'
-	mymob.fire.icon_state = "fire0"
-	mymob.fire.name = "fire"
-	mymob.fire.screen_loc = ui_alien_fire*/
-
-	//Freezes byond client
 	mymob.alien_plasma_display = new /obj/screen()
 	mymob.alien_plasma_display.icon = 'icons/mob/screen1_xeno.dmi'
 	mymob.alien_plasma_display.icon_state = "power_display3"

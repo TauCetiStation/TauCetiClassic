@@ -9,70 +9,65 @@
 	"1:2,3:4" is the square (1,3) with pixel offsets (+2, +4); slightly right and slightly above the turf grid.
 	Pixel offsets are used so you don't perfectly hide the turf under them, that would be crappy.
 
+	In addition, the keywords NORTH, SOUTH, EAST, WEST and CENTER can be used to represent their respective
+	screen borders. NORTH-1, for example, is the row just below the upper edge. Useful if you want your
+	UI to scale with screen size.
+
 	The size of the user's screen is defined by client.view (indirectly by world.view), in our case "15x15".
 	Therefore, the top right corner (except during admin shenanigans) is at "15,15"
 */
 
-//Middle left indicators с ТГ, для чейнджей
+//Lower left, persistant menu
+#define ui_inventory "WEST:6,SOUTH:5"
+
+//Middle left indicators
 #define ui_lingchemdisplay "WEST:6,CENTER-1:15"
 #define ui_lingstingdisplay "WEST:6,CENTER-3:11"
 
-//Lower left, persistant menu
-#define ui_inventory "1:6,1:5"
-
 //Lower center, persistant menu
-#define ui_sstore1 "3:10,1:5"
-#define ui_id "4:12,1:5"
-#define ui_belt "5:14,1:5"
-#define ui_back "6:14,1:5"
-#define ui_rhand "7:16,1:5"
-#define ui_lhand "8:16,1:5"
-#define ui_equip "7:16,2:5"
-#define ui_swaphand1 "7:16,2:5"
-#define ui_swaphand2 "8:16,2:5"
-#define ui_storage1 "9:18,1:5"
-#define ui_storage2 "10:20,1:5"
+#define ui_sstore1 "CENTER-5:10,SOUTH:5"
+#define ui_id "CENTER-4:12,SOUTH:5"
+#define ui_belt "CENTER-3:14,SOUTH:5"
+#define ui_back "CENTER-2:14,SOUTH:5"
+#define ui_rhand "CENTER:-16,SOUTH:5"
+#define ui_lhand "CENTER: 16,SOUTH:5"
+#define ui_equip "CENTER:-16,SOUTH+1:5"
+#define ui_swaphand1 "CENTER:-16,SOUTH+1:5"
+#define ui_swaphand2 "CENTER: 16,SOUTH+1:5"
+#define ui_storage1 "CENTER+1:18,SOUTH:5"
+#define ui_storage2 "CENTER+2:20,SOUTH:5"
 
-#define ui_alien_head "4:12,1:5"	//aliens
-#define ui_alien_oclothing "5:14,1:5"	//aliens
+#define ui_inv1 "CENTER-2:16,SOUTH:5"			//borgs
+#define ui_inv2 "CENTER-1:16,SOUTH:5"			//borgs
+#define ui_inv3 "CENTER  :16,SOUTH:5"			//borgs
+#define ui_borg_store "CENTER+2:16,SOUTH:5"		//borgs
+#define ui_borg_inventory "CENTER-3:16,SOUTH:5"	//borgs
+#define ui_borg_pull "EAST-2:26,SOUTH+1:7"
+#define ui_borg_module "EAST-1:28,SOUTH+1:7"
+#define ui_borg_panel "EAST-2:26,SOUTH:5"
+#define ui_borg_health "EAST-1:28,CENTER-1:15"	//borgs have the health display where humans have the pressure damage indicator.
 
-#define ui_inv1 "7,1:5"			//borgs
-#define ui_inv2 "8,1:5"			//borgs
-#define ui_inv3 "9,1:5"			//borgs
-#define ui_borg_store "10,1:5"	//borgs
-#define ui_borg_inventory "6,1:5"//borgs
+#define ui_monkey_mask "CENTER-3:14,SOUTH:5"	//monkey
+#define ui_monkey_back "CENTER-2:14,SOUTH:5"	//monkey
 
-#define ui_monkey_mask "5:14,1:5"	//monkey
-#define ui_monkey_back "6:14,1:5"	//monkey
+#define ui_alien_head "CENTER-4:12,SOUTH:5"
+#define ui_alien_oclothing "CENTER-3:14,SOUTH:5"
 
 //Lower right, persistant menu
-#define ui_dropbutton "11:22,1:5"
-#define ui_drop_throw "14:28,2:7"
-#define ui_pull_resist "13:26,2:7"
-#define ui_acti "13:26,1:5"
-#define ui_movi "12:24,1:5"
-#define ui_zonesel "14:28,1:5"
-#define ui_acti_alt "14:28,1:5" //alternative intent switcher for when the interface is hidden (F12)
-
-#define ui_borg_pull "12:24,2:7"
-#define ui_borg_module "13:26,2:7"
-#define ui_borg_panel "14:28,2:7"
+#define ui_dropbutton "EAST-4:22,SOUTH:5"
+#define ui_drop_throw "EAST-1:28,SOUTH+1:7"
+#define ui_pull_resist "EAST-2:26,SOUTH+1:7"
+#define ui_movi "EAST-2:26,SOUTH:5"
+#define ui_acti "EAST-3:24,SOUTH:5"
+#define ui_zonesel "EAST-1:28,SOUTH:5"
+#define ui_acti_alt "EAST-1:28,SOUTH:5" 		//alternative intent switcher for when the interface is hidden (F12)
 
 //Gun buttons
-#define ui_gun1 "13:26,3:7"
-#define ui_gun2 "14:28, 4:7"
-#define ui_gun3 "13:26,4:7"
-#define ui_gun_select "14:28,3:7"
+#define ui_gun1 "EAST-2:26,SOUTH+2:7"
+#define ui_gun2 "EAST-1:28, SOUTH+3:7"
+#define ui_gun3 "EAST-2:26,SOUTH+3:7"
+#define ui_gun_select "EAST-1:28,SOUTH+2:7"
 
-//Upper-middle right (damage indicators)
-#define ui_toxin "14:28,13:27"
-#define ui_fire "14:28,12:25"
-#define ui_oxygen "14:28,11:23"
-#define ui_pressure "14:28,10:21"
-
-#define ui_alien_toxin "14:28,13:25"
-#define ui_alien_fire "14:28,12:25"
-#define ui_alien_oxygen "14:28,11:25"
 
 //Upper-middle right (alerts)
 #define ui_alert1 "EAST-1:28,CENTER+5:27"
@@ -81,16 +76,15 @@
 #define ui_alert4 "EAST-1:28,CENTER+2:21"
 #define ui_alert5 "EAST-1:28,CENTER+1:19"
 
-//Middle right (status indicators)
-#define ui_nutrition "14:28,5:11"
-#define ui_temp "14:28,6:13"
-#define ui_health "14:28,7:15"
-#define ui_internal "14:28,8:17"
 
-//borgs and aliens
+//Middle right (status indicators)
+#define ui_healthdoll "EAST-1:28,CENTER-1:15"
+#define ui_health "EAST-1:28,CENTER:17"
+#define ui_internal "EAST-1:28,CENTER+1:19"
+
+//aliens
 #define ui_alien_nightvision "EAST-1:28,CENTER:17"
-#define ui_borg_health "14:28,6:13" //borgs have the health display where humans have the pressure damage indicator.
-#define ui_alien_health "EAST-1:28,CENTER-1:15" //aliens have the health display where humans have the pressure damage indicator.
+#define ui_alien_health "EAST-1:28,CENTER-1:15"			//aliens have the health display where humans have the pressure damage indicator.
 #define ui_alienplasmadisplay "EAST-1:28,CENTER-2:15"
 
 
@@ -113,34 +107,16 @@
 
 
 //Pop-up inventory
-#define ui_shoes "2:8,1:5"
+#define ui_shoes "WEST+1:8,SOUTH:5"
+#define ui_iclothing "WEST:6,SOUTH+1:7"
+#define ui_oclothing "WEST+1:8,SOUTH+1:7"
+#define ui_gloves "WEST+2:10,SOUTH+1:7"
+#define ui_glasses "WEST:6,SOUTH+2:9"
+#define ui_mask "WEST+1:8,SOUTH+2:9"
+#define ui_l_ear "WEST+2:10,SOUTH+2:9"
+#define ui_r_ear "WEST+2:10,SOUTH+3:11"
+#define ui_head "WEST+1:8,SOUTH+3:11"
 
-#define ui_iclothing "1:6,2:7"
-#define ui_oclothing "2:8,2:7"
-#define ui_gloves "3:10,2:7"
-
-#define ui_glasses "1:6,3:9"
-#define ui_mask "2:8,3:9"
-#define ui_l_ear "3:10,3:9"
-#define ui_r_ear "3:10,4:11"
-
-#define ui_head "2:8,4:11"
-
-//Intent small buttons
-#define ui_help_small "12:8,1:1"
-#define ui_disarm_small "12:15,1:18"
-#define ui_grab_small "12:32,1:18"
-#define ui_harm_small "12:39,1:1"
-
-//#define ui_swapbutton "6:-16,1:5" //Unused
-
-//#define ui_headset "SOUTH,8"
-#define ui_hand "6:14,1:5"
-#define ui_hstore1 "5,5"
-//#define ui_resist "EAST+1,SOUTH-1"
-#define ui_sleep "EAST+1, NORTH-13"
-#define ui_rest "EAST+1, NORTH-14"
-
-
-#define ui_iarrowleft "SOUTH-1,11"
-#define ui_iarrowright "SOUTH-1,13"
+//Mecha
+#define ui_iarrowleft "SOUTH-1,EAST-3"
+#define ui_iarrowright "SOUTH-1,EAST-1"

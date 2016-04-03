@@ -35,6 +35,7 @@
 	M.update_canmove()
 	buckled_mob = M
 	post_buckle_mob(M)
+	M.throw_alert("buckled", new_master = src)
 	correct_pixel_shift(M)
 	return 1
 
@@ -44,6 +45,7 @@
 		buckled_mob.buckled = null
 		buckled_mob.anchored = initial(buckled_mob.anchored)
 		buckled_mob.update_canmove()
+		buckled_mob.clear_alert("buckled")
 		correct_pixel_shift(buckled_mob)
 		buckled_mob = null
 

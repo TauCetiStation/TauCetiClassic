@@ -861,6 +861,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 /datum/organ/external/proc/embed(var/obj/item/weapon/W, var/silent = 0)
 	if(!silent)
 		owner.visible_message("<span class='danger'>\The [W] sticks in the wound!</span>")
+	owner.throw_alert("embeddedobject")
 	implants += W
 	owner.embedded_flag = 1
 	owner.verbs += /mob/proc/yank_out_object
