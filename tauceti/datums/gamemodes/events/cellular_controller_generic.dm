@@ -77,7 +77,7 @@
 		process_dying()
 
 /obj/effect/cellular_biomass_controller/proc/process_walls()
-	var/length = min(5,  growth_queue.len / grow_speed)
+	var/length = max(5,  growth_queue.len / grow_speed)
 	var/list/queue_end = list()
 	var/i = 0
 	for(var/obj/structure/cellular_biomass/wall/BM in growth_queue)
