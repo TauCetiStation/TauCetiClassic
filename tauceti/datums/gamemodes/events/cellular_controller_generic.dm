@@ -1,13 +1,14 @@
 /obj/effect/cellular_biomass_controller
+	var/list/biomass = list()
 	var/list/biomass_cores = list()
 	var/list/growth_queue = list()
-
-	var/grip_streingth = 5       //range for turfs to expand in space.
-	var/grow_speed = 5           //lower this value to speed up growth. 1 will process without cooldown.
-	var/core_grow_chance = 5     //chance to spawn light core
-	var/living_grow_chance = 5   //chance to spawn lair or mob
-	var/mark_grow_chance = 25    //chance to spawn decoration
-	var/faction = "generic"      //currentrly unused. Will be used to merge/battle biomes
+	var/state = 1                // 1 = growing 0 = dying
+	var/grip_streingth = 5       // range for turfs to expand in space.
+	var/grow_speed = 5           // lower this value to speed up growth. 1 will process without cooldown.
+	var/core_grow_chance = 5     // chance to spawn light core
+	var/living_grow_chance = 6   // chance to spawn lair or mob
+	var/mark_grow_chance = 25    // chance to spawn decoration
+	var/faction = "generic"      // currentrly unused. Will be used to merge/battle biomes
 
 	var/walls_type =     /obj/structure/cellular_biomass/wall
 	var/insides_type =   /obj/structure/cellular_biomass/grass
@@ -28,30 +29,17 @@
 		growth_queue -= removed
 	if(istype(removed, /obj/structure/cellular_biomass/core))
 		biomass_cores -= removed
+	biomass -= removed
 	removed.master = null
 
 /obj/effect/cellular_biomass_controller/Destroy()
-	death()
 	growth_queue.Cut()
 	for(var/obj/structure/cellular_biomass/str in growth_queue)
 		str.master = null
 	SSobj.processing.Remove(src)
 	return ..()
 
-/obj/effect/cellular_biomass_controller/proc/spawn_cellular_biomass_piece(var/turf/location, var/obj/structure/cellular_biomass/parent)
-	var/newgrip = 0
-	if (parent)
-		if(istype(location,/turf/simulated))
-			newgrip = grip_streingth
-		else
-			newgrip = parent.grip - 1
-	if(!parent || newgrip > 0)
-		var/obj/structure/cellular_biomass/BM = new walls_type(location)
-		if (istype(location,/turf/space))
-			location:ChangeTurf(/turf/simulated/floor/plating)
-		BM.grip = newgrip
-		growth_queue += BM
-		BM.master = src
+
 
 /obj/effect/cellular_biomass_controller/proc/alive()
 	if(!growth_queue)
@@ -64,15 +52,29 @@
 		return 0
 	return 1
 
-/obj/effect/cellular_biomass_controller/proc/death()
+/obj/effect/cellular_biomass_controller/proc/isdying()
+	if(!biomass)
+		return 0
+	if(!biomass.len)
+		return 0
 	return 1
 
+/obj/effect/cellular_biomass_controller/proc/death()
+	for(var/obj/structure/cellular_biomass/todie in biomass)
+		todie.color = "gray"
+	state = 0
+
 /obj/effect/cellular_biomass_controller/process()
-	if(!alive())
-		qdel(src)
-		return
-	process_walls()
-	process_cores()
+	if(state)
+		if(!alive())
+			death()
+		process_walls()
+		process_cores()
+	else
+		if(!isdying())
+			qdel(src)
+			return
+		process_dying()
 
 /obj/effect/cellular_biomass_controller/proc/process_walls()
 	var/length = min(5,  growth_queue.len / grow_speed)
@@ -87,6 +89,11 @@
 		if(i >= length)
 			break
 	growth_queue = growth_queue + queue_end
+
+/obj/effect/cellular_biomass_controller/proc/process_dying()
+	var/length = max(rand(3)+1,  biomass.len)
+	for(var/i = 0 to length)
+		qdel(pick(biomass))
 
 /obj/effect/cellular_biomass_controller/proc/process_cores()
 	return 1
@@ -140,13 +147,35 @@
 /obj/effect/cellular_biomass_controller/proc/spawn_cellular_biomass_core(loc)
 	var/obj/structure/cellular_biomass/core/ncore = new cores_type(loc)
 	biomass_cores += ncore
-	ncore.master = src
+	biomass += ncore
+	ncore.set_master(src)
 
 /obj/effect/cellular_biomass_controller/proc/spawn_cellular_biomass_living(loc)
-	new living_type(loc)
+	var/obj/structure/cellular_biomass/living = new living_type(loc)
+	if(!qdeleted(living))
+		biomass += living
+		living.set_master(src)
 
 /obj/effect/cellular_biomass_controller/proc/spawn_cellular_biomass_mark(loc)
 	new landmarks_type(loc)
 
 /obj/effect/cellular_biomass_controller/proc/spawn_cellular_biomass_inside(loc)
-	new insides_type(loc)
+	var/obj/structure/cellular_biomass/newinside = new insides_type(loc)
+	biomass += newinside
+	newinside.set_master(src)
+
+/obj/effect/cellular_biomass_controller/proc/spawn_cellular_biomass_piece(var/turf/location, var/obj/structure/cellular_biomass/parent)
+	var/newgrip = 0
+	if (parent)
+		if(istype(location,/turf/simulated))
+			newgrip = grip_streingth
+		else
+			newgrip = parent.grip - 1
+	if(!parent || newgrip > 0)
+		var/obj/structure/cellular_biomass/BM = new walls_type(location)
+		if (istype(location,/turf/space))
+			location:ChangeTurf(/turf/simulated/floor/plating/ironsand)
+		BM.grip = newgrip
+		growth_queue += BM
+		biomass += BM
+		BM.set_master(src)

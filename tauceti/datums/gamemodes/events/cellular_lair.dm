@@ -19,7 +19,7 @@
 	if(!active)
 		return
 	if(life_monitor)
-		life_monitor.check_health()
+		life_monitor.check()
 	else
 		if(prob(spawn_chance))
 			spawn_mob()
@@ -44,10 +44,12 @@
 	src.loc = my_mob
 	lair_to_report = lair
 
-/obj/lair_life_monitor/proc/check_health()
+/obj/lair_life_monitor/proc/check()
 	if(!ismob(src.loc))
 		return
 	var/mob/living/my_mob = src.loc
+	if(get_dist(my_mob,lair_to_report) > 30 || my_mob.z != lair_to_report.z)
+		qdel(src)
 	if(!(my_mob && my_mob.health > 0))
 		qdel(src)
 
