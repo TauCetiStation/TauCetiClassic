@@ -2,6 +2,14 @@
 //Все еще не решенные проблемы искать по TODO:CYRILLIC
 
 /*
+	UPD: На случай, если вы ищите варианты пофиксить "я"!
+	Это старый фикс, с тех пор мы немного отрефакторили оригинальный бэй и 
+	создали RuBaystation, тамошний фикс "я" более правильный и актуальный.
+	https://github.com/TauCetiStation/RuBaystation12
+	В ожидании чуда: http://www.byond.com/forum/?post=1768158
+*/
+
+/*
 *	Part I: Борьба за "я"
 *
 *	Пачка костылей, что помогает нам донести "я" до пользователя.
@@ -20,10 +28,7 @@ var/letter_255_ascii = text2ascii(LETTER_255)
 		params += " [html_decode(a)] replaced by [html_decode(repl_chars[a])]\n"
 	world << "<i>Params:\n[params]</i>"
 	#endif
-
-	if(length(t) > MAX_MESSAGE_LEN*2)													// Если "проблем" не обнаружится,
-		world.log << "ERROR_SS_long_string ([src]): [copytext(t, 1, MAX_MESSAGE_LEN)]"	// можно будет этот кусок закомментить.
-
+	
 	for(var/char in repl_chars)
 		var/len_rchar = length(repl_chars[char])
 		var/len_char = length(char)

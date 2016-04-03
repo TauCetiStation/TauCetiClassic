@@ -1667,7 +1667,6 @@
 #include "tauceti\modules\_anomaly\anomaly_vortex.dm"
 #include "tauceti\modules\_antigrief\alarms.dm"
 #include "tauceti\modules\_areas\areas.dm"
-#include "tauceti\modules\_donatpanel\donatpanel.dm"
 #include "tauceti\modules\_floor\floor.dm"
 #include "tauceti\modules\_holidays\new_year\clothing.dm"
 #include "tauceti\modules\_holidays\new_year\decorations.dm"
