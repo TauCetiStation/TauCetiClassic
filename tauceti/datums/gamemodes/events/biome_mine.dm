@@ -4,6 +4,7 @@
 	living_type =     /obj/structure/cellular_biomass/lair/mine
 	landmarks_type = /obj/effect/decal/cleanable/cellular/mine
 	cores_type =     /obj/structure/cellular_biomass/core/mine
+	faction = "mine"
 
 /obj/structure/cellular_biomass/wall/mine
 	name = "Cellular horror"

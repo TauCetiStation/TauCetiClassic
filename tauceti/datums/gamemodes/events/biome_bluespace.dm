@@ -1,5 +1,6 @@
 /obj/effect/cellular_biomass_controller/bluespace
-	living_grow_chance = 8 //more then average enemies amount
+	living_grow_chance = 10 //more then average enemies amount
+	core_grow_chance = 4
 	walls_type =     /obj/structure/cellular_biomass/wall/bluespace
 	insides_type =   /obj/structure/cellular_biomass/grass/bluespace
 	living_type =     /obj/structure/cellular_biomass/lair/bluespace
@@ -40,13 +41,6 @@
 	icon_state = "decal_1"
 	random_icon_states = list("decal_1", "decal_2", "decal_3", "decal_4", "decal_5")
 
-/obj/effect/cellular_biomass_controller/bluespace/alive()
-	if(!growth_queue)
-		return 0
-	if(!growth_queue.len)
-		return 0
-	return 1
-
 /obj/structure/cellular_biomass/wall/bluespace/New()
 	icon_state = "bluewall_1"
 	desc = get_bluespace_scramble()
@@ -80,8 +74,8 @@
 	attacktext = "discarges"
 	attack_sound = 'sound/weapons/blaster.ogg'
 	faction = "bluespace"
-	health = 25
-	maxHealth = 25
+	health = 32
+	maxHealth = 32
 	melee_damage_lower = 1
 	melee_damage_upper = 15
 	speed = 1
@@ -103,12 +97,18 @@
 	return
 
 /mob/living/simple_animal/hostile/cellular/bluespace/meelee/bullet_act()
-	visible_message("<b>[src]</b> duplicates!")
-	new /mob/living/simple_animal/hostile/cellular/bluespace/meelee(src.loc)
+	if(health>2)
+		visible_message("<b>[src]</b> duplicates!")
+		var/mob/living/simple_animal/newglitch = new /mob/living/simple_animal/hostile/cellular/bluespace/meelee(src.loc)
+		health = health / 2
+		newglitch.health = health
 	return
 
 /mob/living/simple_animal/hostile/cellular/bluespace/ranged/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	visible_message("<b>[src]</b> duplicates!")
-	new /mob/living/simple_animal/hostile/cellular/bluespace/ranged(src.loc)
+	if(health>2)
+		visible_message("<b>[src]</b> duplicates!")
+		var/mob/living/simple_animal/newglitch = new /mob/living/simple_animal/hostile/cellular/bluespace/ranged(src.loc)
+		health = health / 2
+		newglitch.health = health
 	return
 
