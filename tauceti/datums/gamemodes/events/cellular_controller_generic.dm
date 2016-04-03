@@ -91,7 +91,7 @@
 	growth_queue = growth_queue + queue_end
 
 /obj/effect/cellular_biomass_controller/proc/process_dying()
-	var/length = max(rand(3)+1,  biomass.len)
+	var/length = min(rand(3)+1,  biomass.len)
 	for(var/i = 0 to length)
 		qdel(pick(biomass))
 
