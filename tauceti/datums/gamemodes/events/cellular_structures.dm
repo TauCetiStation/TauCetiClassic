@@ -17,10 +17,16 @@
 	var/obj/effect/cellular_biomass_controller/master = null
 
 /obj/structure/cellular_biomass/Destroy()
+	if(density)
+		SSair.mark_for_update(get_turf(src))
 	if(master)
 		master.remove_biomass(src)
 	..()
 	return QDEL_HINT_QUEUE
+
+/obj/structure/cellular_biomass/proc/set_master(var/obj/effect/cellular_biomass_controller/newmaster)
+	master = newmaster
+	return
 
 /obj/structure/cellular_biomass/proc/healthcheck()
 	if(health <=0)
@@ -75,6 +81,7 @@
 	density = 1
 	opacity = 1
 	layer = 4
+
 /obj/structure/cellular_biomass/wall/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	return 0
 
@@ -84,11 +91,12 @@
 
 /obj/structure/cellular_biomass/grass/New()
 	icon_state = "bloodfloor_[pick(1,2,3)]"
+	
 
 /obj/structure/cellular_biomass/grass/Destroy()
 	for(var/obj/effect/decal/cleanable/cellular/clean in src.loc)
 		qdel(clean)
-
+	..()
 
 /obj/structure/cellular_biomass/core
 	layer = 3
