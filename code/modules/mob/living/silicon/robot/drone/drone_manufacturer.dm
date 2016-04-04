@@ -102,7 +102,7 @@
 
 	if(config.use_ingame_minutes_restriction_for_jobs)
 		if(client && isnum(client.player_ingame_age))
-			var/available_in_minutes = max(0, 480 - client.player_ingame_age)
+			var/available_in_minutes = max(0, 960 - client.player_ingame_age)
 			if(available_in_minutes > 0)
 				usr << "<span class='notice'>You cannot spawn as a drone. Will be unlocked in [available_in_minutes] in-game minutes (e.g.: you gain this time while you play as a human).</span>"
 				return
