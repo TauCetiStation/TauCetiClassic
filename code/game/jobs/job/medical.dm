@@ -16,6 +16,7 @@
 			access_chemistry, access_virology, access_cmo, access_surgery, access_RC_announce,
 			access_keycard_auth, access_sec_doors, access_psychiatrist)
 	minimal_player_age = 10
+	minimal_player_ingame_minutes = 2400
 
 /datum/job/cmo/equip(var/mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
@@ -54,6 +55,7 @@
 	access = list(access_medical, access_morgue, access_surgery, access_chemistry, access_virology, access_genetics)
 	minimal_access = list(access_medical, access_morgue, access_surgery)
 	alt_titles = list("Surgeon","Emergency Physician","Nurse")
+	minimal_player_ingame_minutes = 960
 
 /datum/job/doctor/equip(var/mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
@@ -127,6 +129,7 @@
 	access = list(access_medical, access_morgue, access_surgery, access_chemistry, access_virology, access_genetics)
 	minimal_access = list(access_medical, access_chemistry)
 	alt_titles = list("Pharmacist")
+	minimal_player_ingame_minutes = 960
 
 /datum/job/chemist/equip(var/mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
@@ -160,6 +163,7 @@
 	selection_color = "#ffeef0"
 	access = list(access_medical, access_morgue, access_surgery, access_chemistry, access_virology, access_genetics, access_research)
 	minimal_access = list(access_medical, access_morgue, access_genetics, access_research)
+	minimal_player_ingame_minutes = 960
 
 /datum/job/geneticist/equip(var/mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
@@ -195,6 +199,7 @@
 	access = list(access_medical, access_morgue, access_surgery, access_chemistry, access_virology, access_genetics)
 	minimal_access = list(access_medical, access_virology)
 	alt_titles = list("Pathologist","Microbiologist")
+	minimal_player_ingame_minutes = 960
 
 /datum/job/virologist/equip(var/mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
@@ -233,6 +238,7 @@
 	access = list(access_medical, access_morgue, access_surgery, access_chemistry, access_virology, access_genetics, access_psychiatrist)
 	minimal_access = list(access_medical, access_psychiatrist)
 	alt_titles = list("Psychologist")
+	minimal_player_ingame_minutes = 960
 
 /datum/job/psychiatrist/equip(var/mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0

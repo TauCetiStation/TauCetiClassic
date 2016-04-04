@@ -41,6 +41,9 @@
 	//If you have use_age_restriction_for_jobs config option enabled and the database set up, this option will add a requirement for players to be at least minimal_player_age days old. (meaning they first signed in at least that many days before.)
 	var/minimal_player_age = 0
 
+	//If you have use_age_restriction_for_jobs config option enabled and the database set up, this option will add a requirement for players to be at least minimal_player_ingame_minutes ingame minutes old. (meaning they must play a game.)
+	var/minimal_player_ingame_minutes = 0
+
 /datum/job/proc/equip(var/mob/living/carbon/human/H, visualsOnly = FALSE)
 	return 1
 
@@ -55,10 +58,13 @@
 
 //If the configuration option is set to require players to be logged as old enough to play certain jobs, then this proc checks that they are, otherwise it just returns 1
 /datum/job/proc/player_old_enough(client/C)
-	if(available_in_days(C) == 0)
-		return 1	//Available in 0 days = available right now = player is old enough to play.
+	if(config.use_ingame_minutes_restriction_for_jobs)
+		if(available_in_real_minutes(C) == 0)
+			return 1	//Available in 0 minutes = available right now = player is old enough to play.
+	else
+		if(available_in_days(C) == 0)
+			return 1	//Available in 0 days = available right now = player is old enough to play.
 	return 0
-
 
 /datum/job/proc/available_in_days(client/C)
 	if(!C)
@@ -71,6 +77,20 @@
 		return 0
 
 	return max(0, minimal_player_age - C.player_age)
+
+/datum/job/proc/available_in_real_minutes(client/C)
+	if(!C)
+		return 0
+	if(C.holder)
+		return 0
+	if(!config.use_age_restriction_for_jobs)
+		return 0
+	if(!isnum(C.player_ingame_age))
+		return 0
+	if(!isnum(minimal_player_ingame_minutes))
+		return 0
+
+	return max(0, minimal_player_ingame_minutes - C.player_ingame_age)
 
 /datum/job/proc/apply_fingerprints(var/mob/living/carbon/human/H)
 	if(!istype(H))

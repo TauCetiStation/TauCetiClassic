@@ -11,6 +11,7 @@
 	access = list(access_morgue, access_chapel_office, access_crematorium, access_maint_tunnels)
 	minimal_access = list(access_morgue, access_chapel_office, access_crematorium)
 	alt_titles = list("Counselor")
+	minimal_player_ingame_minutes = 480
 
 /datum/job/chaplain/equip(var/mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0

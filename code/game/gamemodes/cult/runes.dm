@@ -107,7 +107,7 @@ var/list/sacrificed = list()
 				M.visible_message("<span class='red'>[M] writhes in pain as the markings below him glow a bloody red.</span>", \
 				"<span class='red'>AAAAAAHHHH!.</span>", \
 				"<span class='red'>You hear an anguished scream.</span>")
-				if(is_convertable_to_cult(M.mind) && !jobban_isbanned(M, "cultist"))//putting jobban check here because is_convertable uses mind as argument
+				if(is_convertable_to_cult(M.mind) && !jobban_isbanned(M, ROLE_CULTIST) && !jobban_isbanned(M, "Syndicate"))//putting jobban check here because is_convertable uses mind as argument
 					ticker.mode.add_cultist(M.mind)
 					M.mind.special_role = "Cultist"
 					M << "<span class='cult'>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible truth. The veil of reality has been ripped away and in the festering wound left behind something sinister takes root.</span>"
@@ -404,7 +404,7 @@ var/list/sacrificed = list()
 				break
 			if(!ghost)
 				return this_rune.fizzle()
-			if(jobban_isbanned(ghost, "cultist"))
+			if(jobban_isbanned(ghost, ROLE_CULTIST) || jobban_isbanned(ghost, "Syndicate"))
 				return this_rune.fizzle()
 
 			usr.say("Gal'h'rfikk harfrandid mud[pick("'","`")]gib!")

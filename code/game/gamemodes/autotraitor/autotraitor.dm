@@ -160,7 +160,7 @@
 	if(SSshuttle.departed)
 		return
 	//message_admins("Late Join Check")
-	if((character.client && (ROLE_TRAITOR in character.client.prefs.be_role)) && !jobban_isbanned(character, "Syndicate"))
+	if((character.client && (ROLE_TRAITOR in character.client.prefs.be_role)) && !jobban_isbanned(character, "Syndicate") && !jobban_isbanned(character, ROLE_TRAITOR))
 		//message_admins("Late Joiner has Be Syndicate")
 		//message_admins("Checking number of players")
 		var/playercount = 0

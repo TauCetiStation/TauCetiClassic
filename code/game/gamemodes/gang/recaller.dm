@@ -301,7 +301,7 @@
 			user << "<span class='warning'>\icon[src] Error: All positions filled.</span>"
 			return
 
-	if(jobban_isbanned(user, "revolutionary") || jobban_isbanned(user, "Syndicate"))
+	if(jobban_isbanned(user, ROLE_REV) || jobban_isbanned(user, "Syndicate"))
 		user << "<span class='warning'>\icon[src] ACCESS DENIED: Blacklisted user.</span>"
 		return 0
 

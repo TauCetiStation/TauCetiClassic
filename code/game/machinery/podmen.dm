@@ -92,7 +92,7 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 
 /obj/item/seeds/replicapod/proc/request_player()
 	for(var/mob/dead/observer/O in player_list)
-		if(jobban_isbanned(O, "Dionaea") || (!is_alien_whitelisted(src, "Diona") && config.usealienwhitelist))
+		if(jobban_isbanned(O, ROLE_PLANT))
 			continue
 		if(O.client)
 			var/client/C = O.client

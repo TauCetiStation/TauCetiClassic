@@ -73,12 +73,12 @@
 
 			if(ishuman(M) && ishuman(user) && M.stat!=DEAD)
 
-				if(user.mind && (user.mind in ticker.mode.head_revolutionaries))
+				if(user.mind && (user.mind in ticker.mode.head_revolutionaries) && ticker.mode.name == "revolution")
 					if(M.client)
 						if(M.stat == CONSCIOUS)
 							M.mind_initialize()		//give them a mind datum if they don't have one.
 							var/resisted
-							if(!isloyal(M))
+							if(!isloyal(M) && !jobban_isbanned(M, ROLE_REV) && !jobban_isbanned(M, "Syndicate"))
 								if(user.mind in ticker.mode.head_revolutionaries)
 									M.mind.has_been_rev = 1
 									if(!ticker.mode.add_revolutionary(M.mind))

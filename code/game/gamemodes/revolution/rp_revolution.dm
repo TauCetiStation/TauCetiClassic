@@ -180,6 +180,8 @@
 			src << "\red <b>[M] is already be a revolutionary!</b>"
 		else if(!ticker.mode:is_convertible(M))
 			src << "\red <b>[M] is implanted with a loyalty implant - Remove it first!</b>"
+		else if(jobban_isbanned(M, ROLE_REV) || jobban_isbanned(M, "Syndicate"))
+			src << "\red <b>[M] is a blacklisted player!</b>"
 		else
 			if(world.time < M.mind.rev_cooldown)
 				src << "\red Wait five seconds before reconversion attempt."
