@@ -94,6 +94,8 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 	for(var/mob/dead/observer/O in player_list)
 		if(jobban_isbanned(O, ROLE_PLANT))
 			continue
+		if(role_available_in_minutes(O, ROLE_PLANT))
+			continue
 		if(O.client)
 			var/client/C = O.client
 			if(!C.prefs.ignore_question.Find("diona") && (ROLE_PLANT in C.prefs.be_role))

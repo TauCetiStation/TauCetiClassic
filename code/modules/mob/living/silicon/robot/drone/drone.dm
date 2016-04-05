@@ -282,6 +282,8 @@
 	for(var/mob/dead/observer/O in player_list)
 		if(jobban_isbanned(O, ROLE_DRONE))
 			continue
+		if(role_available_in_minutes(O, ROLE_DRONE))
+			continue
 		if(O.client)
 			var/client/C = O.client
 			if(!C.prefs.ignore_question.Find("drone") && (ROLE_PAI in C.prefs.be_role))
@@ -289,7 +291,8 @@
 
 /mob/living/silicon/robot/drone/proc/question(var/client/C)
 	spawn(0)
-		if(!C || jobban_isbanned(C, ROLE_DRONE))	return
+		if(!C || !C.mob || jobban_isbanned(C.mob, ROLE_DRONE) || role_available_in_minutes(C.mob, ROLE_DRONE))//Not sure if we need jobban check, since proc from above do that too.
+			return
 		var/response = alert(C, "Someone is attempting to reboot a maintenance drone. Would you like to play as one?", "Maintenance drone reboot", "Yes", "No", "Never for this round.")
 		if(!C || ckey)
 			return

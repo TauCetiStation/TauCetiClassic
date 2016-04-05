@@ -10,11 +10,14 @@
 	else
 		for (var/i in special_roles)
 			if(special_roles[i]) //if mode is available on the server
+				var/available_in_minutes = role_available_in_minutes(user, i)
 				if(jobban_isbanned(user, i))
 					. += 	"<tr><td width='45%'>[i]: </td><td><font color=red><b> \[BANNED]</b></font></td></tr>"
 				else if(i == "pai candidate")
 					if(jobban_isbanned(user, "pAI"))
 						. +="<tr><td width='45%'>[i]: </td><td><font color=red><b> \[BANNED]</b></font><br></td></tr>"
+				else if(available_in_minutes)
+					. += "<tr><td width='45%'><del>[i]</del>: </td><td> \[IN [(available_in_minutes)] MINUTES]</td></tr>"
 				else
 					if(i in be_role)
 						. +="<tr><td width='45%'>[i]: </td><td><b>Yes</b> / <a href='?_src_=prefs;preference=be_role;be_role_type=[i]'>No</a></td></tr>"

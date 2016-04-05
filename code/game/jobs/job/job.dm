@@ -81,7 +81,7 @@
 /datum/job/proc/available_in_real_minutes(client/C)
 	if(!C)
 		return 0
-	if(C.holder)
+	if(C.holder || C.deadmin_holder)
 		return 0
 	if(!config.use_age_restriction_for_jobs)
 		return 0
@@ -91,6 +91,26 @@
 		return 0
 
 	return max(0, minimal_player_ingame_minutes - C.player_ingame_age)
+
+//Not sure where to put this proc, lets leave it here for now.
+/proc/role_available_in_minutes(mob/M, role)
+	if(!M || !istype(M) || !M.ckey)
+		return 0
+	var/client/C = M.client
+	if(!C)
+		return 0
+	if(C.holder || C.deadmin_holder)
+		return 0
+	if(!config.use_age_restriction_for_jobs)
+		return 0
+	if(!config.use_ingame_minutes_restriction_for_jobs)
+		return 0
+	if(!isnum(C.player_ingame_age))
+		return 0
+	if(!(role in roles_ingame_minute_unlock))
+		return 0
+
+	return max(0, roles_ingame_minute_unlock[role] - C.player_ingame_age)
 
 /datum/job/proc/apply_fingerprints(var/mob/living/carbon/human/H)
 	if(!istype(H))

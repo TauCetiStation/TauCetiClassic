@@ -70,7 +70,7 @@ client/proc/one_click_antag()
 			if(!applicant.stat)
 				if(applicant.mind)
 					if (!applicant.mind.special_role)
-						if(!jobban_isbanned(applicant, ROLE_TRAITOR) && !jobban_isbanned(applicant, "Syndicate"))
+						if(!jobban_isbanned(applicant, ROLE_TRAITOR) && !jobban_isbanned(applicant, "Syndicate") && !role_available_in_minutes(applicant, ROLE_TRAITOR))
 							if(!(applicant.job in temp.restricted_jobs))
 								candidates += applicant
 
@@ -102,7 +102,7 @@ client/proc/one_click_antag()
 			if(!applicant.stat)
 				if(applicant.mind)
 					if (!applicant.mind.special_role)
-						if(!jobban_isbanned(applicant, ROLE_CHANGELING) && !jobban_isbanned(applicant, "Syndicate"))
+						if(!jobban_isbanned(applicant, ROLE_CHANGELING) && !jobban_isbanned(applicant, "Syndicate") && !role_available_in_minutes(applicant, ROLE_CHANGELING))
 							if(!(applicant.job in temp.restricted_jobs))
 								candidates += applicant
 
@@ -132,7 +132,7 @@ client/proc/one_click_antag()
 			if(applicant.stat == CONSCIOUS)
 				if(applicant.mind)
 					if(!applicant.mind.special_role)
-						if(!jobban_isbanned(applicant, ROLE_REV) && !jobban_isbanned(applicant, "Syndicate"))
+						if(!jobban_isbanned(applicant, ROLE_REV) && !jobban_isbanned(applicant, "Syndicate") && !role_available_in_minutes(applicant, ROLE_REV))
 							if(!(applicant.job in temp.restricted_jobs))
 								candidates += applicant
 
@@ -153,7 +153,7 @@ client/proc/one_click_antag()
 	var/time_passed = world.time
 
 	for(var/mob/dead/observer/G in player_list)
-		if(!jobban_isbanned(G, ROLE_WIZARD) && !jobban_isbanned(G, "Syndicate"))
+		if(!jobban_isbanned(G, ROLE_WIZARD) && !jobban_isbanned(G, "Syndicate") && !role_available_in_minutes(G, ROLE_WIZARD))
 			spawn(0)
 				switch(alert(G, "Do you wish to be considered for the position of Space Wizard Foundation 'diplomat'?","Please answer in 30 seconds!","Yes","No"))
 					if("Yes")
@@ -197,7 +197,7 @@ client/proc/one_click_antag()
 			if(applicant.stat == CONSCIOUS)
 				if(applicant.mind)
 					if(!applicant.mind.special_role)
-						if(!jobban_isbanned(applicant, ROLE_CULTIST) && !jobban_isbanned(applicant, "Syndicate"))
+						if(!jobban_isbanned(applicant, ROLE_CULTIST) && !jobban_isbanned(applicant, "Syndicate") && !role_available_in_minutes(applicant, ROLE_CULTIST))
 							if(!(applicant.job in temp.restricted_jobs))
 								candidates += applicant
 
@@ -223,7 +223,7 @@ client/proc/one_click_antag()
 	var/time_passed = world.time
 
 	for(var/mob/dead/observer/G in player_list)
-		if(!jobban_isbanned(G, ROLE_OPERATIVE) && !jobban_isbanned(G, "Syndicate"))
+		if(!jobban_isbanned(G, ROLE_OPERATIVE) && !jobban_isbanned(G, "Syndicate") && !role_available_in_minutes(G, ROLE_OPERATIVE))
 			spawn(0)
 				switch(alert(G,"Do you wish to be considered for a nuke team being sent in?","Please answer in 30 seconds!","Yes","No"))
 					if("Yes")
@@ -398,7 +398,7 @@ client/proc/one_click_antag()
 			if(!applicant.stat)
 				if(applicant.mind)
 					if(!applicant.mind.special_role)
-						if(!jobban_isbanned(applicant, ROLE_REV) && !jobban_isbanned(applicant, "Syndicate"))
+						if(!jobban_isbanned(applicant, ROLE_REV) && !jobban_isbanned(applicant, "Syndicate") && !role_available_in_minutes(applicant, ROLE_REV))
 							if(!(applicant.job in temp.restricted_jobs))
 								candidates += applicant
 

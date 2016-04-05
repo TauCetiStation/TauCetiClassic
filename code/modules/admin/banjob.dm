@@ -21,22 +21,6 @@
 		var/reason = M.client.jobbancache[rank]
 		return (reason) ? reason : 1 //see above for why we need to do this
 
-	if(config.use_ingame_minutes_restriction_for_jobs)
-		if(M.client && !M.client.holder && !M.client.deadmin_holder && isnum(M.client.player_ingame_age))
-			switch(rank)
-				if(ROLE_TRAITOR,ROLE_CHANGELING,ROLE_OPERATIVE,ROLE_RAIDER,ROLE_ALIEN)
-					var/available_in_minutes = max(0, 480 - M.client.player_ingame_age)
-					if(available_in_minutes > 0)
-						return "Not enough playtime. Available in [available_in_minutes] minutes."
-				if(ROLE_CULTIST,ROLE_WIZARD,ROLE_ERT,ROLE_MEME,ROLE_REV,ROLE_BLOB,ROLE_DRONE)
-					var/available_in_minutes = max(0, 960 - M.client.player_ingame_age)
-					if(available_in_minutes > 0)
-						return "Not enough playtime. Available in [available_in_minutes] minutes."
-				if(ROLE_MUTINEER,ROLE_SHADOWLING,ROLE_ABDUCTOR,ROLE_MALF,ROLE_NINJA)
-					var/available_in_minutes = max(0, 1200 - M.client.player_ingame_age)
-					if(available_in_minutes > 0)
-						return "Not enough playtime. Available in [available_in_minutes] minutes."
-
 	return 0
 
 /proc/jobban_buildcache(client/C)

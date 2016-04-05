@@ -31,6 +31,8 @@
 				continue
 			if(jobban_isbanned(O, ROLE_PAI))
 				continue
+			if(role_available_in_minutes(O, ROLE_PAI))
+				continue
 			if(O.client)
 				var/client/C = O.client
 				if(!C.prefs.ignore_question.Find("posibrain") && (ROLE_PAI in C.prefs.be_role))

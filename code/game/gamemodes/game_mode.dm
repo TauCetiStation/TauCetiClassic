@@ -296,7 +296,7 @@ Implants;
 	for(var/mob/new_player/player in player_list)
 		if(player.client && player.ready)
 			if(role in player.client.prefs.be_role)
-				if(!jobban_isbanned(player, "Syndicate") && !jobban_isbanned(player, role))
+				if(!jobban_isbanned(player, "Syndicate") && !jobban_isbanned(player, role) && !role_available_in_minutes(player, role))
 					players += player
 
 	// Shuffle the players list so that it becomes ping-independent.
