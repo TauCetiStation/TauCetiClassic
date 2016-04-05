@@ -5,15 +5,16 @@ var/global/list/geoip_ckey_updated = list()
 /datum/geoip_data
 	var/holder = null
 	var/status = null
-	var/city = null
 	var/country = null
 	var/countryCode = null
-	var/isp = null
-	var/proxy = null
-	var/ip = null
 	var/region = null
 	var/regionName = null
+	var/city = null
 	var/timezone = null
+	var/isp = null
+	var/mobile = null
+	var/proxy = null
+	var/ip = null
 
 /datum/geoip_data/New(client/C, addr)
 	set background = BACKGROUND_ENABLED
@@ -65,24 +66,26 @@ var/global/list/geoip_ckey_updated = list()
 
 		for(var/data in msg)
 			switch(data)
-				if("city")
-					city = msg[data]
 				if("country")
 					country = msg[data]
 				if("countryCode")
 					countryCode = msg[data]
-				if("isp")
-					isp = msg[data]
-				if("proxy")
-					proxy = msg[data] ? "true" : "false"
-				if("query")
-					ip = msg[data]
 				if("region")
 					region = msg[data]
 				if("regionName")
 					regionName = msg[data]
+				if("city")
+					city = msg[data]
 				if("timezone")
 					timezone = msg[data]
+				if("isp")
+					isp = msg[data]
+				if("mobile")
+					mobile = msg[data] ? "true" : "false"
+				if("proxy")
+					proxy = msg[data] ? "true" : "false"
+				if("query")
+					ip = msg[data]
 		status = "updated"
 	return 1
 
@@ -95,7 +98,7 @@ var/global/list/geoip_ckey_updated = list()
 	if(geoip_query_counter > 130)
 		return "limit reached"
 
-	var/list/vl = world.Export("http://ip-api.com/json/[addr]?fields=156447")
+	var/list/vl = world.Export("http://ip-api.com/json/[addr]?fields=205599")
 	if (!("CONTENT" in vl) || vl["STATUS"] != "200 OK")
 		return "export fail"
 
