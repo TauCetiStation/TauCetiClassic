@@ -59,13 +59,6 @@ var/datum/subsystem/ticker/ticker
 	'tauceti/sounds/lobby/hanging_masses.ogg',\
 	'tauceti/sounds/lobby/admiral-station-13.ogg',\
 	'tauceti/sounds/lobby/robocop_gb_intro.ogg')
-	/*
-	//New year part
-	'tauceti/modules/_holidays/new_year/music/Carol_of_the_Bells.ogg',\
-	'tauceti/modules/_holidays/new_year/music/Last_Christmas.ogg',\
-	'tauceti/modules/_holidays/new_year/music/Pop_Culture.ogg',\
-	'tauceti/modules/_holidays/new_year/music/Zov_Ktulhu.ogg')
-	*/
 
 
 /datum/subsystem/ticker/Initialize(timeofday, zlevel)

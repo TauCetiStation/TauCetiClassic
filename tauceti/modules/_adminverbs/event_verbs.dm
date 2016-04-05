@@ -119,15 +119,15 @@ var/centcom_barriers_stat = 1
 
 /obj/effect/landmark/trololo
 	name = "Rickroll"
-	var/melody = 'tauceti/sounds/Never_Gonna_Give_You_Up.ogg'
+	//var/melody = 'tauceti/sounds/Never_Gonna_Give_You_Up.ogg'	//NOPE
 	var/message = "<i>\blue It's not the door you're looking for...</i>"
 	var/active = 1
 	var/lchannel = 999
 
 	Crossed(M as mob)
 		if(!active) return
-		if(istype(M, /mob/living/carbon))
-			M << sound(melody,0,1,lchannel,20)
+		/*if(istype(M, /mob/living/carbon))
+			M << sound(melody,0,1,lchannel,20)*/
 
 /obj/structure/centcom_barrier
 	name = "Invisible wall"

@@ -1,4 +1,5 @@
 /obj/effect/cellular_biomass_controller/mine
+	living_grow_chance = 8
 	walls_type =     /obj/structure/cellular_biomass/wall/mine
 	insides_type =   /obj/structure/cellular_biomass/grass/mine
 	living_type =     /obj/structure/cellular_biomass/lair/mine
@@ -24,7 +25,7 @@
 	icon = 'tauceti/datums/gamemodes/events/alien.dmi'
 	light_color = "#710F8C"
 
-/obj/effect/cellular_biomass_controller/mine/alive()
+/obj/effect/cellular_biomass_controller/mine/alive() //die only if all walls are removed
 	if(!growth_queue)
 		return 0
 	if(!growth_queue.len)

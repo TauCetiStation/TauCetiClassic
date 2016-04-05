@@ -25,6 +25,10 @@ var/const/MAX_SAVE_SLOTS = 10
 	var/submenu_type = "body"
 	var/list/ignore_question = list()		//For roles which getting player_saves with question system
 
+	//account data
+	var/list/cid_list = list()
+	var/ignore_cid_warning = 0
+
 	//game-preferences
 	var/UI_style = "White"
 	var/UI_style_color = "#ffffff"
