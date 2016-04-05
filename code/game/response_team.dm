@@ -49,8 +49,13 @@ var/can_call_ert
 	/*	if(admin_emergency_team)
 			usr << "An emergency response team has already been sent."
 			return */
-		if(jobban_isbanned(usr, "Syndicate") || jobban_isbanned(usr, "Emergency Response Team") || jobban_isbanned(usr, "Security Officer"))
+		if(jobban_isbanned(usr, "Syndicate") || jobban_isbanned(usr, ROLE_ERT) || jobban_isbanned(usr, "Security Officer"))
 			usr << "<font color=red><b>You are jobbanned from the emergency reponse team!"
+			return
+
+		var/available_in_minutes = role_available_in_minutes(usr, ROLE_ERT)
+		if(available_in_minutes)
+			usr << "<span class='notice'>This role will be unlocked in [available_in_minutes] minutes (e.g.: you gain minutes while playing).</span>"
 			return
 
 		if(response_team_members.len > 5) usr << "The emergency response team is already full!"

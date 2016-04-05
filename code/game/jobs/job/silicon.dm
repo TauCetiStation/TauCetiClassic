@@ -9,6 +9,7 @@
 	supervisors = "your laws"
 	req_admin_notify = 1
 	minimal_player_age = 7
+	minimal_player_ingame_minutes = 2400
 
 /datum/job/ai/equip(var/mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
@@ -33,6 +34,7 @@
 	selection_color = "#ddffdd"
 	minimal_player_age = 1
 	alt_titles = list("Android", "Robot")
+	minimal_player_ingame_minutes = 1800
 
 /datum/job/cyborg/equip(var/mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0

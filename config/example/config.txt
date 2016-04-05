@@ -34,6 +34,9 @@ JOBS_HAVE_MINIMAL_ACCESS
 ## you have noone older than 0 days, since noone has been logged yet. Only turn this on once you have had the database up for 30 days.
 #USE_AGE_RESTRICTION_FOR_JOBS
 
+##Unhash this to use real in-game minutes for certain jobs (USE_AGE_RESTRICTION_FOR_JOBS must be enabled too)
+#USE_INGAME_MINUTES_RESTRICTION_FOR_JOBS
+
 ## log OOC channel
 LOG_OOC
 

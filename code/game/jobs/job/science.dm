@@ -18,6 +18,7 @@
 			            access_research, access_robotics, access_xenobiology, access_ai_upload,
 			            access_RC_announce, access_keycard_auth, access_tcomsat, access_gateway, access_xenoarch)
 	minimal_player_age = 7
+	minimal_player_ingame_minutes = 2400
 
 /datum/job/rd/equip(var/mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
@@ -52,6 +53,7 @@
 	access = list(access_robotics, access_tox, access_tox_storage, access_research, access_xenobiology, access_xenoarch)
 	minimal_access = list(access_tox, access_tox_storage, access_research, access_xenoarch)
 	alt_titles = list("Xenoarcheologist", "Anomalist", "Phoron Researcher")
+	minimal_player_ingame_minutes = 1560
 
 /datum/job/scientist/equip(var/mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
@@ -95,6 +97,7 @@
 	selection_color = "#ffeeff"
 	access = list(access_robotics, access_tox, access_tox_storage, access_research, access_xenobiology)
 	minimal_access = list(access_research, access_xenobiology)
+	minimal_player_ingame_minutes = 1560
 
 /datum/job/xenobiologist/equip(var/mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H) return 0
@@ -129,6 +132,7 @@
 	access = list(access_robotics, access_tox, access_tox_storage, access_tech_storage, access_morgue, access_research) //As a job that handles so many corpses, it makes sense for them to have morgue access.
 	minimal_access = list(access_robotics, access_tech_storage, access_morgue, access_research) //As a job that handles so many corpses, it makes sense for them to have morgue access.
 	alt_titles = list("Biomechanical Engineer","Mechatronic Engineer")
+	minimal_player_ingame_minutes = 1560
 
 /datum/job/roboticist/equip(var/mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0

@@ -2,7 +2,7 @@
 
 //Any number of preferences could be.
 //These are synced with the Database, if you change the values of the defines
-//then you MUST update the database!
+//then you MUST update the database! Jobbans also uses those defines!!
 #define ROLE_TRAITOR           "Traitor"
 #define ROLE_OPERATIVE         "Operative"
 #define ROLE_CHANGELING        "Changeling"
@@ -20,6 +20,9 @@
 #define ROLE_MUTINEER          "Mutineer"
 #define ROLE_SHADOWLING        "Shadowling"
 #define ROLE_ABDUCTOR          "Abductor"
+
+#define ROLE_ERT               "Emergency Response Team"
+#define ROLE_DRONE             "Maintenance Drone"
 
 
 //Equating to one means that it's not gamemode prefs, so it should be visible always.

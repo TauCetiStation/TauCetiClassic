@@ -18,6 +18,7 @@
 			            access_research, access_engine, access_mining, access_medical, access_construction, access_mailsorting,
 			            access_heads, access_hos, access_RC_announce, access_keycard_auth, access_gateway)
 	minimal_player_age = 14
+	minimal_player_ingame_minutes = 2400
 
 /datum/job/hos/equip(var/mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
@@ -66,6 +67,7 @@
 	access = list(access_security, access_sec_doors, access_brig, access_armory, access_court, access_maint_tunnels, access_morgue)
 	minimal_access = list(access_security, access_sec_doors, access_brig, access_armory, access_court, access_maint_tunnels)
 	minimal_player_age = 5
+	minimal_player_ingame_minutes = 1800
 
 /datum/job/warden/equip(var/mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
@@ -109,6 +111,7 @@
 	access = list(access_security, access_sec_doors, access_forensics_lockers, access_morgue, access_maint_tunnels, access_court)
 	minimal_access = list(access_security, access_sec_doors, access_forensics_lockers, access_morgue, access_maint_tunnels, access_court)
 	minimal_player_age = 3
+	minimal_player_ingame_minutes = 1560
 
 /datum/job/detective/equip(var/mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
@@ -152,6 +155,7 @@
 	access = list(access_security, access_sec_doors, access_brig, access_court, access_maint_tunnels, access_morgue)
 	minimal_access = list(access_security, access_sec_doors, access_brig, access_court, access_maint_tunnels)
 	minimal_player_age = 3
+	minimal_player_ingame_minutes = 1560
 
 /datum/job/officer/equip(var/mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
@@ -190,6 +194,7 @@
 	access = list(access_security, access_sec_doors, access_forensics_lockers, access_morgue, access_maint_tunnels, access_court)
 	minimal_access = list(access_sec_doors, access_forensics_lockers, access_morgue, access_maint_tunnels, access_court)
 	minimal_player_age = 3
+	minimal_player_ingame_minutes = 1560
 
 /datum/job/forensic/equip(var/mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0

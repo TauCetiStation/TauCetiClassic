@@ -43,8 +43,12 @@
 			. += "<del>[rank]</del></td><td><b> \[BANNED]</b></td></tr>"
 			continue
 		if(!job.player_old_enough(user.client))
-			var/available_in_days = job.available_in_days(user.client)
-			. += "<del>[rank]</del></td><td> \[IN [(available_in_days)] DAYS]</td></tr>"
+			if(config.use_ingame_minutes_restriction_for_jobs)
+				var/available_in_minutes = job.available_in_real_minutes(user.client)
+				. += "<del>[rank]</del></td><td> \[IN [(available_in_minutes)] MINUTES]</td></tr>"
+			else
+				var/available_in_days = job.available_in_days(user.client)
+				. += "<del>[rank]</del></td><td> \[IN [(available_in_days)] DAYS]</td></tr>"
 			continue
 		if((job_civilian_low & ASSISTANT) && (rank != "Assistant"))
 			. += "<font color=orange>[rank]</font></td><td></td></tr>"

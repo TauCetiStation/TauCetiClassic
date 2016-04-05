@@ -183,6 +183,8 @@ var/datum/subsystem/pai/SSpai
 	for(var/mob/dead/observer/O in player_list)
 		if(jobban_isbanned(O, ROLE_PAI))
 			continue
+		if(role_available_in_minutes(O, ROLE_PAI))
+			continue
 		if(asked[O.ckey])
 			if(world.time < asked[O.ckey] + askDelay || asked[O.ckey] == NEVER_FOR_THIS_ROUND)
 				continue

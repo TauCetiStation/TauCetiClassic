@@ -20,6 +20,7 @@
 	if(rank in M.client.jobbancache)
 		var/reason = M.client.jobbancache[rank]
 		return (reason) ? reason : 1 //see above for why we need to do this
+
 	return 0
 
 /proc/jobban_buildcache(client/C)
