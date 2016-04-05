@@ -9,7 +9,7 @@
 	var/list/stack_storage[0]
 	var/list/stack_paths[0]
 	var/scrap_amount = 0
-	var/stack_amt = 20; // Amount to stack before releassing
+	var/stack_amt = 20 // Amount to stack before releassing
 
 /obj/machinery/scrap/stacking_machine/Bumped(atom/movable/AM)
 	if(stat & (BROKEN|NOPOWER))

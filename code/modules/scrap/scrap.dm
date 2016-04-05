@@ -24,6 +24,7 @@
 	var/base_max = 8
 	var/base_spread = 12 //limits on pixel offsets of base pieces
 	var/list/ways = list("pokes around", "digs through", "rummages through", "goes through","picks through")
+	var/list/diggers = list()
 
 /obj/structure/scrap/proc/make_cube()
 	var/obj/container = new /obj/structure/scrap_cube(src.loc, loot_max)
@@ -42,6 +43,7 @@
 	update_icon(1)
 	..()
 /obj/structure/scrap/Destroy()
+	diggers.Cut()
 	for (var/obj/item in loot)
 		qdel(item)
 	return ..()
@@ -148,12 +150,15 @@
 		new /obj/item/weapon/scrap_lump(newloc)
 
 /obj/structure/scrap/attackby(obj/item/W, mob/user)
-	if(istype(W,/obj/item/weapon/shovel))
+	if(istype(W,/obj/item/weapon/shovel) && !(user in diggers))
 		user.do_attack_animation(src)
+		diggers += user
 		if(do_after(user, 30, target = src))
 			visible_message("<span class='notice'>\The [user] [pick(ways)] \the [src].</span>")
 			shuffle_loot()
 			dig_out_lump(user.loc)
+		diggers -= user
+			
 
 /obj/structure/scrap/large
 	name = "large scrap pile"
