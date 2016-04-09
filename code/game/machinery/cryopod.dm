@@ -103,7 +103,7 @@ obj/machinery/computer/cryopod/Topic(href, href_list)
 
 /obj/item/weapon/circuitboard/cryopodcontrol
 	name = "Circuit board (Cryogenic Oversight Console)"
-	build_path = "/obj/machinery/computer/cryopod"
+	build_path = /obj/machinery/computer/cryopod
 	origin_tech = "programming=3"
 
 //Decorative structures to go alongside cryopods.

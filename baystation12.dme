@@ -715,6 +715,7 @@
 #include "code\game\objects\random\random_guns.dm"
 #include "code\game\objects\random\random_materials.dm"
 #include "code\game\objects\random\random_meds.dm"
+#include "code\game\objects\random\random_science.dm"
 #include "code\game\objects\random\random_scrap.dm"
 #include "code\game\objects\random\random_tools.dm"
 #include "code\game\objects\structures\barsign.dm"

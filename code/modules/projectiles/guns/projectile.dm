@@ -21,6 +21,9 @@
 /obj/item/weapon/gun/projectile/process_chamber(var/eject_casing = 1, var/empty_chamber = 1, var/no_casing = 0)
 //	if(chambered)
 //		return 1
+	if(crit_fail && prob(50))  // IT JAMMED GODDAMIT
+		last_fired += pick(20,40,60)
+		return
 	var/obj/item/ammo_casing/AC = chambered //Find chambered round
 	if(isnull(AC) || !istype(AC))
 		chamber_round()
@@ -82,7 +85,10 @@
 	update_icon()
 	return
 
-
+/obj/item/weapon/gun/projectile/Destroy()
+	qdel(magazine)
+	magazine = null
+	..()
 /obj/item/weapon/gun/projectile/examine()
 	..()
 	if(!energy_gun)

@@ -1,9 +1,9 @@
 /obj/item/weapon/circuitboard/pile_ripper
 	name = "Circuit board (Pile Ripper)"
 	board_type = "machine"
-	build_path = "/obj/machinery/recycler"
+	build_path = /obj/machinery/pile_ripper
 	origin_tech = "engineering = 3"
-	req_components = list("/obj/item/weapon/stock_parts/manipulator" = 1)
+	req_components = list(/obj/item/weapon/stock_parts/manipulator = 1)
 
 /obj/machinery/pile_ripper
 	name = "pile ripper"
@@ -19,7 +19,8 @@
 	var/safety_mode = 0 // Temporality stops the machine if it detects a mob
 	var/icon_name = "grinder-b"
 	var/blood = 0
-	var/cooldown = 10
+	var/cooldown = 5
+	var/rating = 1
 	var/last_ripped = 0
 
 /obj/machinery/pile_ripper/New()
@@ -40,26 +41,33 @@
 		update_icon()
 	var/turf/ripped_turf = get_turf(get_step(src, 8))
 	last_ripped = world.time + cooldown
-	for(var/obj/ripped_item in ripped_turf)
-		if(istype(ripped_item, /obj/structure/scrap))
-			var/obj/structure/scrap/pile = ripped_item
-			pile.dig_out_lump(loc)
-		else if(istype(ripped_item, /obj/item))
-			ripped_item.forceMove(src.loc)
-			if(prob(20))
-				qdel(ripped_item)
-		else if(istype(ripped_item, /obj/structure/scrap_cube))
-			var/obj/structure/scrap_cube/cube = ripped_item
-			cube.make_pile()
 	for(var/mob/living/poor_soul in ripped_turf)
 		if(emagged || prob(30))
 			eat(poor_soul)
 		else
 			stop(poor_soul)
+	var/count = 0
+	for(var/obj/ripped_item in ripped_turf)
+		if (count >= rating)
+			break
+		if(istype(ripped_item, /obj/structure/scrap))
+			var/obj/structure/scrap/pile = ripped_item
+			pile.dig_out_lump(loc)
+			count++
+		else if(istype(ripped_item, /obj/item))
+			ripped_item.forceMove(src.loc)
+			if(prob(20))
+				qdel(ripped_item)
+			count++
+		else if(istype(ripped_item, /obj/structure/scrap_cube))
+			var/obj/structure/scrap_cube/cube = ripped_item
+			cube.make_pile()
+			count++
 
 /obj/machinery/pile_ripper/RefreshParts()
 	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
-		cooldown = 10 / M.rating
+		cooldown = 5 / M.rating
+		rating = M.rating
 
 /obj/machinery/pile_ripper/examine(mob/user)
 	..()
