@@ -62,6 +62,7 @@
 		G.moles *= new_vol
 	volume *= new_vol
 	air_contents.update_values()
+	..()
 
 /obj/item/weapon/circuitboard/make_old()
 	build_path = pick(/obj/machinery/washing_machine, /obj/machinery/broken, /obj/machinery/shower)
