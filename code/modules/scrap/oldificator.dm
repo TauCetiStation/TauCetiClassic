@@ -65,7 +65,8 @@
 	..()
 
 /obj/item/weapon/circuitboard/make_old()
-	build_path = pick(/obj/machinery/washing_machine, /obj/machinery/broken, /obj/machinery/shower)
+	if(prob(75))
+		build_path = pick(/obj/machinery/washing_machine, /obj/machinery/broken, /obj/machinery/shower)
 	..()
 /obj/item/weapon/aiModule/make_old()
 	if(prob(75) && !istype(src, /obj/item/weapon/aiModule/broken))
