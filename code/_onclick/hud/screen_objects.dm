@@ -17,7 +17,7 @@
 
 /obj/screen/Destroy()
 	master = null
-	..()
+	return ..()
 
 /obj/screen/text
 	icon = null

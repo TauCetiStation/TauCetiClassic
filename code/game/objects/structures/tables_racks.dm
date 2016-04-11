@@ -41,7 +41,7 @@
 
 /obj/structure/table/Destroy()
 	update_adjacent()
-	..()
+	return ..()
 
 /obj/structure/table/proc/destroy()
 	new parts(loc)

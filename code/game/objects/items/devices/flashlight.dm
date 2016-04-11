@@ -42,7 +42,7 @@
 /obj/item/device/flashlight/Destroy()
 	if(on)
 		set_light(0)
-	..()
+	return ..()
 
 
 /obj/item/device/flashlight/attack(mob/living/M as mob, mob/living/user as mob)
