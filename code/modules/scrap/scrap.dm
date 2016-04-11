@@ -158,7 +158,7 @@
 			shuffle_loot()
 			dig_out_lump(user.loc)
 		diggers -= user
-			
+
 
 /obj/structure/scrap/large
 	name = "large scrap pile"
@@ -230,6 +230,17 @@
 		/obj/random/materials/rods_scrap
 	)
 
+/obj/structure/scrap/science
+	name = "scientific trash pile"
+	desc = "Pile of refuse from research department."
+	parts_icon = 'icons/obj/structures/scrap/science.dmi'
+	loot_list = list(
+		/obj/random/science/science_supply,
+		/obj/random/science/science_supply,
+		/obj/random/science/science_supply,
+		/obj/random/science/science_supply,
+	)
+
 /obj/structure/scrap/poor
 	name = "mixed rubbish"
 	desc = "Pile of mixed rubbish. Useless and rotten, mostly."
@@ -292,6 +303,18 @@
 
 /obj/structure/scrap/guns/large
 	name = "large gun refuse pile"
+	opacity = 1
+	density = 1
+	icon_state = "big"
+	loot_min = 10
+	loot_max = 20
+	dig_amount = 15
+	base_min = 9
+	base_max = 14
+	base_spread = 16
+
+/obj/structure/scrap/science/large
+	name = "large scientific trash pile"
 	opacity = 1
 	density = 1
 	icon_state = "big"

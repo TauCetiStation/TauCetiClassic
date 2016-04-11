@@ -19,21 +19,21 @@
 		possibleNets["Medbay"] = access_cmo
 
 	proc/updateBuildPath()
-		build_path = ""
+		build_path = null
 		if(authorised && secured)
 			switch(network)
 				if("SS13")
-					build_path = "/obj/machinery/computer/security"
+					build_path = /obj/machinery/computer/security
 				if("Engineering")
-					build_path = "/obj/machinery/computer/security/engineering"
+					build_path = /obj/machinery/computer/security/engineering
 				if("Mining")
-					build_path = "/obj/machinery/computer/security/mining"
+					build_path = /obj/machinery/computer/security/mining
 				if("Research")
-					build_path = "/obj/machinery/computer/security/research"
+					build_path = /obj/machinery/computer/security/research
 				if("Medbay")
-					build_path = "/obj/machinery/computer/security/medbay"
+					build_path = /obj/machinery/computer/security/medbay
 				if("Cargo")
-					build_path = "/obj/machinery/computer/security/cargo"
+					build_path = /obj/machinery/computer/security/cargo
 
 	attackby(var/obj/item/I, var/mob/user)//if(health > 50)
 		..()

@@ -10,5 +10,6 @@
 						prob(10);/obj/random/meds/medical_supply,\
 						prob(30);/obj/random/tools/tech_supply/guaranteed,\
 						prob(50);/obj/random/foods/food_without_garbage,\
+						prob(10);/obj/random/science/science_supply,\
 						prob(2);/obj/preset/storage/weapons/random\
 					)

@@ -40,7 +40,7 @@ datum/design						//Datum for object designs, used in construction
 	var/build_type = null			//Flag as to what kind machine the design is built in. See defines.
 	var/list/materials = list()		//List of materials. Format: "id" = amount.
 	var/construction_time			//Amount of time required for building the object
-	var/build_path = ""				//The file path of the object that gets created
+	var/build_path = null			//The file path of the object that gets created
 	var/list/category = null		//Primarily used for Mech Fabricators, but can be used for anything
 
 //A proc to calculate the reliability of a design based on tech levels and innate modifiers.

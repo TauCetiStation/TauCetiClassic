@@ -67,6 +67,10 @@
 	for(var/obj/O in contents)
 		O.emp_act(severity)
 
+/obj/item/weapon/gun/Destroy()
+	qdel(chambered)
+	chambered = null
+	..()
 
 /obj/item/weapon/gun/afterattack(atom/A as mob|obj|turf|area, mob/living/user as mob|obj, flag, params)
 	if(flag)	return //It's adjacent, is the user, or is on the user's person
@@ -78,16 +82,6 @@
 
 /obj/item/weapon/gun/proc/Fire(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, params, reflex = 0)//TODO: go over this
 	//Exclude lasertag guns from the CLUMSY check.
-	if(clumsy_check)
-		if(istype(user, /mob/living))
-			var/mob/living/M = user
-			if ((CLUMSY in M.mutations) && prob(50))
-				M << "<span class='danger'>[src] blows up in your face.</span>"
-				M.take_organ_damage(0,20)
-				M.drop_item()
-				qdel(src)
-				return
-
 	if (!user.IsAdvancedToolUser())
 		user << "<span class='red'>You don't have the dexterity to do this!</span>"
 		return
@@ -110,6 +104,20 @@
 			for(var/obj/item/clothing/suit/armor/abductor/vest/V in list(H.wear_suit))
 				if(V.stealth_active)
 					V.DeactivateStealth()
+
+		if(clumsy_check) //it should be AFTER hulk or monkey check.
+			var/going_to_explode = 0
+			if ((CLUMSY in H.mutations) && prob(50))
+				going_to_explode = 1
+			if(chambered && chambered.crit_fail && prob(10))
+				going_to_explode = 1
+			if(going_to_explode)
+				explosion(user.loc, 0, 0, 1, 1)
+				H << "<span class='danger'>[src] blows up in your face.</span>"
+				H.take_organ_damage(0,20)
+				H.drop_item()
+				qdel(src)
+				return
 
 	add_fingerprint(user)
 

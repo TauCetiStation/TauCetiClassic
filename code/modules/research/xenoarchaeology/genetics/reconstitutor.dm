@@ -298,22 +298,22 @@ datum/genesequence
 
 /obj/item/weapon/circuitboard/reconstitutor
 	name = "Circuit board (Flora Reconstitution Console)"
-	build_path = "/obj/machinery/computer/reconstitutor"
+	build_path = /obj/machinery/computer/reconstitutor
 	origin_tech = "programming=2;biotech=4;materials=6"
 	frame_desc = "Requires 2 Advanced Scanning Module, 1 Nano Manipulator, 1 Matter Bin and 1 Advanced Capacitor."
 	req_components = list(
-							"/obj/item/weapon/stock_parts/scanning_module/adv" = 2,
-							"/obj/item/weapon/stock_parts/manipulator/nano" = 1,
-							"/obj/item/weapon/stock_parts/matter_bin" = 1,
-							"/obj/item/weapon/stock_parts/capacitor/adv" = 1)
+							/obj/item/weapon/stock_parts/scanning_module/adv = 2,
+							/obj/item/weapon/stock_parts/manipulator/nano = 1,
+							/obj/item/weapon/stock_parts/matter_bin = 1,
+							/obj/item/weapon/stock_parts/capacitor/adv = 1)
 
 /obj/item/weapon/circuitboard/reconstitutor/animal
 	name = "Circuit board (Fauna Reconstitution Console)"
-	build_path = "/obj/machinery/computer/reconstitutor/animal"
+	build_path = /obj/machinery/computer/reconstitutor/animal
 	origin_tech = "programming=2;biotech=4;materials=6"
 	frame_desc = "Requires 2 Advanced Scanning Module, 1 Nano Manipulator, 1 Matter Bin and 1 Advanced Capacitor."
 	req_components = list(
-							"/obj/item/weapon/stock_parts/scanning_module/adv" = 2,
-							"/obj/item/weapon/stock_parts/manipulator/nano" = 1,
-							"/obj/item/weapon/stock_parts/matter_bin" = 1,
-							"/obj/item/weapon/stock_parts/capacitor/adv" = 1)
+							/obj/item/weapon/stock_parts/scanning_module/adv = 2,
+							/obj/item/weapon/stock_parts/manipulator/nano = 1,
+							/obj/item/weapon/stock_parts/matter_bin = 1,
+							/obj/item/weapon/stock_parts/capacitor/adv = 1)
