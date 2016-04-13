@@ -46,7 +46,6 @@
 	..()
 
 /datum/hud/Destroy()
-	..()
 	grab_intent = null
 	hurt_intent = null
 	disarm_intent = null
@@ -63,6 +62,7 @@
 	hotkeybuttons = null
 	hide_actions_toggle = null
 	mymob = null
+	return ..()
 
 /datum/hud/proc/hidden_inventory_update()
 	if(!mymob)

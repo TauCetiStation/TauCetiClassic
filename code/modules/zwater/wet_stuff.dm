@@ -31,7 +31,7 @@
 
 /obj/item/Destroy()
 	SSobj.drying -= src
-	..()
+	return ..()
 
 /obj/item/proc/dry_process()
 	if(!src) return

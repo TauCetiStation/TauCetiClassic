@@ -577,7 +577,7 @@ var/const/INGEST = 2
 	return trans_data
 
 datum/reagents/Destroy()
-	..()
+	. = ..()
 	for(var/datum/reagent/R in reagent_list)
 		qdel(R)
 	reagent_list.Cut()
