@@ -55,10 +55,36 @@
 		ShiftClickOn(A)
 		return
 	if(modifiers["alt"]) // alt and alt-gr (rightalt)
-		AltClickOn(A)
+		var/obj/item/W = get_active_hand()
+		if(!W || W != A)
+			W = get_inactive_hand()
+		if(W == A)
+			next_move = world.time + 6
+			if(W.flags&USEDELAY)
+				next_move += 5
+			W.attack_self_alt(src)
+			if(hand)
+				update_inv_l_hand()
+			else
+				update_inv_r_hand()
+		else
+			AltClickOn(A)
 		return
 	if(modifiers["ctrl"])
-		CtrlClickOn(A)
+		var/obj/item/W = get_active_hand()
+		if(!W || W != A)
+			W = get_inactive_hand()
+		if(W == A)
+			next_move = world.time + 6
+			if(W.flags&USEDELAY)
+				next_move += 5
+			W.attack_self_ctrl(src)
+			if(hand)
+				update_inv_l_hand()
+			else
+				update_inv_r_hand()
+		else
+			CtrlClickOn(A)
 		return
 
 	if(stat || paralysis || stunned || weakened)

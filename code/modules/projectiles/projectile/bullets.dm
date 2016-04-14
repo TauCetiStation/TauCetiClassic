@@ -1,22 +1,3 @@
-/obj/item/projectile/bullet
-	icon = 'tauceti/icons/obj/projectiles.dmi'
-	name = "bullet"
-	icon_state = "bullet"
-	damage = 60
-	damage_type = BRUTE
-	nodamage = 0
-	flag = "bullet"
-	embed = 1
-	sharp = 1
-	var/stoping_power = 0
-
-	muzzle_type = /obj/effect/projectile/bullet/muzzle
-
-	on_hit(var/atom/target, var/blocked = 0)
-		if (..(target, blocked))
-			var/mob/living/L = target
-			shake_camera(L, 3, 2)
-
 /obj/item/projectile/bullet/weakbullet // "rubber" bullets
 	damage = 10
 	stun = 0

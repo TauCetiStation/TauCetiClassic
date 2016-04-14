@@ -38,7 +38,7 @@
 	w_class = 3.0
 	origin_tech = "combat=5;materials=2;syndicate=8"
 	mag_type = /obj/item/ammo_box/magazine/m12mm
-	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
+	s_fire = 'sound/weapons/Gunshot_smg.ogg'
 
 
 /obj/item/weapon/gun/projectile/automatic/c20r/New()
@@ -86,7 +86,7 @@
 	slot_flags = 0
 	origin_tech = "combat=5;materials=1;syndicate=2"
 	mag_type = /obj/item/ammo_box/magazine/m762
-	fire_sound = 'tauceti/sounds/weapon/gunshot3.wav'
+	s_fire = 'tauceti/sounds/weapon/gunshot3.wav'
 	var/cover_open = 0
 	var/wielded = 0
 
@@ -206,7 +206,7 @@
 	slot_flags = 0
 	origin_tech = "combat=5;materials=1;syndicate=2"
 	mag_type = /obj/item/ammo_box/magazine/tommygunm45
-	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
+	s_fire = 'sound/weapons/Gunshot_smg.ogg'
 	//can_suppress = 0
  	//burst_size = 4
  	//fire_delay = 1
@@ -230,9 +230,8 @@
 	w_class = 4.0
 	origin_tech = "combat=3;magnets=2"
 	mag_type = /obj/item/ammo_box/magazine/l10mag
-	fire_sound = 'sound/weapons/guns/l10c-shot.ogg'
+	s_fire = 'sound/weapons/guns/l10c-shot.ogg'
 	recoil = 0
-	energy_gun = 1
 
 /obj/item/weapon/gun/projectile/automatic/l10c/New()
 	..()

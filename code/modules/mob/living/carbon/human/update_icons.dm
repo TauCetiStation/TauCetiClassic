@@ -746,9 +746,12 @@ Please contact me on #coderbus IRC. ~Carn x
 			client.screen += belt
 
 		var/t_state = belt.item_state
-		if(!t_state)	t_state = belt.icon_state
+		if(!t_state)
+			t_state = belt.icon_state
 
-		if(!belt:tc_custom || belt.icon_override || species.sprite_sheets["belt"])
+		if(belt.united_dmi)
+			overlays_standing[BELT_LAYER] = image("icon"=belt.icon, "icon_state"="[t_state]" + "-belt", "layer"=-BELT_LAYER)
+		else if(!belt:tc_custom || belt.icon_override || species.sprite_sheets["belt"])
 			overlays_standing[BELT_LAYER] = image("icon"=((belt.icon_override) ? belt.icon_override : (species.sprite_sheets["belt"] ? species.sprite_sheets["belt"] : 'icons/mob/belt.dmi')), "icon_state"="[t_state]", "layer"=-BELT_LAYER)
 		else
 			overlays_standing[BELT_LAYER] = image("icon"=belt:tc_custom, "icon_state"="[belt.icon_state]_mob", "layer"=-BELT_LAYER)
@@ -846,7 +849,13 @@ Please contact me on #coderbus IRC. ~Carn x
 		if(client && hud_used && hud_used.hud_shown)
 			client.screen += back
 
-		if(!back:tc_custom || back.icon_override || species.sprite_sheets["back"])
+		var/t_state = back.item_state
+		if(!t_state)
+			t_state = back.icon_state
+
+		if(back.united_dmi)
+			overlays_standing[BACK_LAYER] = image("icon"=back.icon, "icon_state"="[t_state]" + "-back", "layer"=-BACK_LAYER)
+		else if(!back:tc_custom || back.icon_override || species.sprite_sheets["back"])
 			overlays_standing[BACK_LAYER]	= image("icon"=((back.icon_override) ? back.icon_override : (species.sprite_sheets["back"] ? species.sprite_sheets["back"] : 'icons/mob/back.dmi')), "icon_state"="[back.icon_state]", "layer"=-BACK_LAYER)
 		else
 			overlays_standing[BACK_LAYER]	= image("icon"=back:tc_custom, "icon_state"="[back.icon_state]_mob", "layer"=-BACK_LAYER)
@@ -899,7 +908,9 @@ Please contact me on #coderbus IRC. ~Carn x
 		if(!t_state)
 			t_state = r_hand.icon_state
 
-		if(!r_hand:tc_custom || r_hand.icon_override || species.sprite_sheets["held"])
+		if(r_hand.united_dmi)
+			overlays_standing[R_HAND_LAYER] = image("icon"=r_hand.icon, "icon_state"="[t_state]" + "-r_hand", "layer"=-R_HAND_LAYER)
+		else if(!r_hand:tc_custom || r_hand.icon_override || species.sprite_sheets["held"])
 			if(r_hand.icon_override || species.sprite_sheets["held"]) t_state = "[t_state]_r"
 			overlays_standing[R_HAND_LAYER] = image("icon"=((r_hand.icon_override) ? r_hand.icon_override : (species.sprite_sheets["held"] ? species.sprite_sheets["held"] : r_hand.righthand_file)), "icon_state"="[t_state]", "layer"=-R_HAND_LAYER)
 		else
@@ -923,7 +934,9 @@ Please contact me on #coderbus IRC. ~Carn x
 		if(!t_state)
 			t_state = l_hand.icon_state
 
-		if(!l_hand:tc_custom || l_hand.icon_override || species.sprite_sheets["held"])
+		if(l_hand.united_dmi)
+			overlays_standing[L_HAND_LAYER] = image("icon"=l_hand.icon, "icon_state"="[t_state]" + "-l_hand", "layer"=-L_HAND_LAYER)
+		else if(!l_hand:tc_custom || l_hand.icon_override || species.sprite_sheets["held"])
 			if(l_hand.icon_override || species.sprite_sheets["held"]) t_state = "[t_state]_l"
 			overlays_standing[L_HAND_LAYER] = image("icon"=((l_hand.icon_override) ? l_hand.icon_override : (species.sprite_sheets["held"] ? species.sprite_sheets["held"] : l_hand.lefthand_file)), "icon_state"="[t_state]", "layer"=-L_HAND_LAYER)
 		else

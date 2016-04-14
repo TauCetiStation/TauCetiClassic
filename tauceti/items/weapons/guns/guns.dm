@@ -8,7 +8,7 @@
 	slot_flags = 0
 	origin_tech = "combat=5;materials=1;syndicate=2"
 	mag_type = /obj/item/ammo_box/magazine/tommygunm45
-	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
+	s_fire = 'sound/weapons/Gunshot_smg.ogg'
 
 /obj/item/weapon/gun/projectile/automatic/tommygun/isHandgun()
 	return 0
@@ -138,7 +138,7 @@ obj/item/ammo_box/magazine/tommygunm45
 	w_class = 5.0
 	origin_tech = "combat=5;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/m3006
-	fire_sound = 'tauceti/sounds/weapon/gunshot3.wav'
+	s_fire = 'tauceti/sounds/weapon/gunshot3.wav'
 
 /obj/item/ammo_box/magazine/m3006
 	name = "magazine (.30-06)"

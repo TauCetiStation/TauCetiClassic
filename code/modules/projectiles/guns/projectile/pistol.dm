@@ -7,7 +7,7 @@
 	silenced = 1
 	origin_tech = "combat=2;materials=2;syndicate=8"
 	mag_type = /obj/item/ammo_box/magazine/sm45
-	fire_sound = 'tauceti/sounds/weapon/Gunshot_silenced.ogg'
+	s_fire = 'tauceti/sounds/weapon/Gunshot_silenced.ogg'
 
 /obj/item/weapon/gun/projectile/sigi
 	name = "\improper pistol"
@@ -18,7 +18,7 @@
 	origin_tech = "combat=2;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/m9mmr_2
 	var/mag_type2 = /obj/item/ammo_box/magazine/m9mm_2
-	fire_sound = 'sound/weapons/Gunshot.ogg'
+	s_fire = 'sound/weapons/Gunshot.ogg'
 
 	var/mag = null
 
@@ -93,7 +93,7 @@
 	item_state = "deagle"
 	force = 14.0
 	mag_type = /obj/item/ammo_box/magazine/m50
-	fire_sound = 'sound/weapons/guns/deagle_shot.ogg'
+	s_fire = 'sound/weapons/guns/deagle_shot.ogg'
 
 /obj/item/weapon/gun/projectile/automatic/deagle/isHandgun()
 	return 1
@@ -137,7 +137,7 @@
 	desc = "A bulky pistol designed to fire self propelled rounds."
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "gyropistol"
-	fire_sound = 'sound/effects/Explosion1.ogg'
+	s_fire = 'sound/effects/Explosion1.ogg'
 	origin_tech = "combat=3"
 	mag_type = /obj/item/ammo_box/magazine/m75
 
@@ -195,7 +195,7 @@
 	w_class = 2
 	mag_type = /obj/item/ammo_box/magazine/c45r
 	var/mag_type2 = /obj/item/ammo_box/magazine/c45m
-	fire_sound = 'sound/weapons/guns/colt1911_shot.ogg'
+	s_fire = 'sound/weapons/guns/colt1911_shot.ogg'
 
 /obj/item/weapon/gun/projectile/automatic/colt1911/isHandgun()
 	return 1

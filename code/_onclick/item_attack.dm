@@ -3,6 +3,12 @@
 /obj/item/proc/attack_self(mob/user)
 	return
 
+/obj/item/proc/attack_self_alt(mob/user)
+	return
+
+/obj/item/proc/attack_self_ctrl(mob/user)
+	return
+
 // No comment
 /atom/proc/attackby(obj/item/W, mob/user, params)
 	return

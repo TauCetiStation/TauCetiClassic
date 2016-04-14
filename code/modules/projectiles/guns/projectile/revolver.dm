@@ -3,7 +3,7 @@
 	name = "revolver"
 	icon_state = "revolver"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder
-	fire_sound = 'sound/weapons/guns/revolver_shot.ogg'
+	s_fire = 'sound/weapons/guns/revolver_shot.ogg'
 
 /obj/item/weapon/gun/projectile/revolver/chamber_round()
 	if (chambered || !magazine)
@@ -195,7 +195,7 @@
 				var/obj/item/ammo_casing/AC = chambered
 				if(AC.fire(user, user))
 					user.apply_damage(300, BRUTE, affecting, sharp=1)
-					playsound(user, fire_sound, 50, 1)
+					playsound(user, s_fire, 50, 1)
 					user.visible_message("<span class='danger'>[user.name] fires [src] at \his head!</span>", "<span class='danger'>You fire [src] at your head!</span>", "You hear a [istype(AC.BB, /obj/item/projectile/beam) ? "laser blast" : "gunshot"]!")
 					return
 				else

@@ -10,7 +10,7 @@
 	origin_tech = "combat=5;materials=3"
 	recoil = 0 //extra kickback
 	mag_type = /obj/item/ammo_box/magazine/internal/m79
-	fire_sound = 'sound/weapons/guns/m79_shot.ogg'
+	s_fire = 'sound/weapons/guns/m79_shot.ogg'
 	var/open = 0
 
 /obj/item/weapon/gun/projectile/m79/isHandgun()

@@ -488,7 +488,7 @@ proc/move_mining_shuttle()
 	projectile_type = /obj/item/projectile/kinetic
 	select_name = "kinetic"
 	e_cost = 500
-	fire_sound = 'sound/weapons/Kenetic_accel.ogg'
+	s_fire = 'sound/weapons/Kenetic_accel.ogg'
 
 /obj/item/projectile/kinetic
 	name = "kinetic force"
