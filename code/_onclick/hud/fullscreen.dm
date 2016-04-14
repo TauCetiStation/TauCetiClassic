@@ -20,6 +20,7 @@
 
 	screen.icon_state = "[initial(screen.icon_state)][severity]"
 	screen.severity = severity
+	screen.invisibility = initial(screen.invisibility)
 
 	screens[category] = screen
 	if(client)

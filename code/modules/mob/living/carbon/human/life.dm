@@ -1520,16 +1520,30 @@
 					pullin.icon_state = "pull1"
 				else
 					pullin.icon_state = "pull0"
+			//OH cmon...
+			var/nearsighted = 0
+			var/impaired    = 0
+			
+			if(disabilities & NEARSIGHTED)
+				nearsighted = 1
 
-			if(disabilities & NEARSIGHTED)	//this looks meh but saves a lot of memory by not requiring to add var/prescription
-				if(glasses)					//to every /obj/item
-					var/obj/item/clothing/glasses/G = glasses
-					if(!G.prescription)
-						overlay_fullscreen("nearsighted", /obj/screen/fullscreen/impaired, 1)
-				else
-					overlay_fullscreen("nearsighted", /obj/screen/fullscreen/impaired, 1)
-			else
-				clear_fullscreen("nearsighted")
+			if(glasses)
+				var/obj/item/clothing/glasses/G = glasses
+				if(G.prescription)
+					nearsighted = 0
+
+			if(istype(head, /obj/item/clothing/head/welding) || istype(head, /obj/item/clothing/head/helmet/space/unathi))
+				var/obj/item/clothing/head/welding/O = head
+				if(!O.up && tinted_weldhelh)
+					impaired = 2
+			if(istype(wear_mask, /obj/item/clothing/mask/gas/welding) )
+				var/obj/item/clothing/mask/gas/welding/O = wear_mask
+				if(!O.up && tinted_weldhelh)
+					impaired = 2 
+			if(istype(glasses, /obj/item/clothing/glasses/welding) )
+				var/obj/item/clothing/glasses/welding/O = glasses
+				if(!O.up && tinted_weldhelh)
+					impaired = max(impaired, 1)
 
 			if(eye_blurry)
 				overlay_fullscreen("blurry", /obj/screen/fullscreen/blurry)
@@ -1540,29 +1554,16 @@
 				overlay_fullscreen("high", /obj/screen/fullscreen/high)
 			else
 				clear_fullscreen("high")
+			if(nearsighted)
+				overlay_fullscreen("nearsighted", /obj/screen/fullscreen/impaired, 1)
+			else
+				clear_fullscreen("nearsighted")
 
-			//OH cmon...
-			var/masked = 0
-			if(istype(head, /obj/item/clothing/head/welding) || istype(head, /obj/item/clothing/head/helmet/space/unathi))
-				var/obj/item/clothing/head/welding/O = head
-				if(!O.up && tinted_weldhelh)
-					overlay_fullscreen("impaired", /obj/screen/fullscreen/impaired, 2)
-					masked = 1
-				else
-					clear_fullscreen("impaired")
-			if(istype(wear_mask, /obj/item/clothing/mask/gas/welding) )
-				var/obj/item/clothing/mask/gas/welding/O = wear_mask
-				if(!O.up && tinted_weldhelh)
-					overlay_fullscreen("impaired", /obj/screen/fullscreen/impaired, 2)
-				else
-					clear_fullscreen("impaired")
-			if(!masked && istype(glasses, /obj/item/clothing/glasses/welding) )
-				var/obj/item/clothing/glasses/welding/O = glasses
-				if(!O.up && tinted_weldhelh)
-					overlay_fullscreen("impaired", /obj/screen/fullscreen/impaired, 1)
-				else
-					clear_fullscreen("impaired")
-
+			if(impaired)
+				overlay_fullscreen("impaired", /obj/screen/fullscreen/impaired, impaired)
+			else
+				clear_fullscreen("impaired")
+			
 			if(!machine)
 				var/isRemoteObserve = 0
 				if((REMOTE_VIEW in mutations) && remoteview_target)

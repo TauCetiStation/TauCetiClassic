@@ -59,21 +59,21 @@
 		else
 			clear_alert("blind")
 			clear_fullscreen("blind", 0)
+			if(!ishuman(src))
+				if(disabilities & NEARSIGHTED)
+					overlay_fullscreen("impaired", /obj/screen/fullscreen/impaired, 1)
+				else
+					clear_fullscreen("impaired")
 
-			if(disabilities & NEARSIGHTED)
-				overlay_fullscreen("impaired", /obj/screen/fullscreen/impaired, 1)
-			else
-				clear_fullscreen("impaired")
+				if(eye_blurry)
+					overlay_fullscreen("blurry", /obj/screen/fullscreen/blurry)
+				else
+					clear_fullscreen("blurry")
 
-			if(eye_blurry)
-				overlay_fullscreen("blurry", /obj/screen/fullscreen/blurry)
-			else
-				clear_fullscreen("blurry")
-
-			if(druggy)
-				overlay_fullscreen("high", /obj/screen/fullscreen/high)
-			else
-				clear_fullscreen("high")
+				if(druggy)
+					overlay_fullscreen("high", /obj/screen/fullscreen/high)
+				else
+					clear_fullscreen("high")
 
 		if(machine)
 			if (!( machine.check_eye(src) ))
