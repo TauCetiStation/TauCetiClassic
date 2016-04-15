@@ -17,7 +17,80 @@
 	reagents.add_reagent("oxycodone", 15)
 	reagents.add_reagent("anti_toxin", 25)
 
+//AUTOINJECTOR
+/obj/item/weapon/reagent_containers/hypospray/autoinjector/combat
+	name = "combat autoinjector"
+	desc = "Younger brother of combat autoinjector."
+	icon_state = "stimpen"
+	volume = 10
+	amount_per_transfer_from_this = 10
 
+	New()
+		..()
+		reagents.add_reagent("synaptizine", 1)
+		reagents.add_reagent("hyperzine", 2.5)
+		reagents.add_reagent("oxycodone", 2.5)
+		reagents.add_reagent("anti_toxin", 5)
+		update_icon()
+		return
+
+/obj/item/weapon/reagent_containers/hypospray/autoinjector/bicaridine
+	name = "Bicaridine autoinjector"
+	desc = "For physical injures."
+	icon_state = "autobrut"
+	volume = 20
+	amount_per_transfer_from_this = 20
+
+	New()
+		..()
+		reagents.clear_reagents()
+		reagents.add_reagent("bicaridine", 20)
+		update_icon()
+		return
+
+/obj/item/weapon/reagent_containers/hypospray/autoinjector/dermaline
+	name = "Dermaline autoinjector"
+	desc = "For burns."
+	icon_state = "autoburn"
+	volume = 15
+	amount_per_transfer_from_this = 15
+
+	New()
+		..()
+		reagents.clear_reagents()
+		reagents.add_reagent("dermaline", 15)
+		update_icon()
+		return
+
+/obj/item/weapon/reagent_containers/hypospray/autoinjector/tramadol
+	name = "Tramadol autoinjector"
+	desc = "Piankiller."
+	icon_state = "autopainkiller"
+	volume = 15
+	amount_per_transfer_from_this = 15
+
+	New()
+		..()
+		reagents.clear_reagents()
+		reagents.add_reagent("tramadol", 15)
+		update_icon()
+		return
+
+/obj/item/weapon/reagent_containers/hypospray/autoinjector/antitox
+	name = "Anti-toxins autoinjector"
+	desc = "Neutralizes many common toxins."
+	icon_state = "autoantitox"
+	volume = 20
+	amount_per_transfer_from_this = 20
+
+	New()
+		..()
+		reagents.clear_reagents()
+		reagents.add_reagent("anti_toxin", 20)
+		update_icon()
+		return
+
+//PILL
 /obj/item/weapon/reagent_containers/pill/dermaline
 	name = "Dermaline pill"
 	desc = "Used to treat burns."
@@ -54,6 +127,7 @@
 		new /obj/item/weapon/reagent_containers/pill/bicaridine( src )
 		new /obj/item/weapon/reagent_containers/pill/bicaridine( src )
 
+//FIRST-AID KIT
 /obj/item/weapon/storage/firstaid/tactical
 	name = "first-aid kit"
 	icon_state = "bezerk"
@@ -71,5 +145,44 @@
 		new /obj/item/weapon/reagent_containers/hypospray/autoinjector( src )
 		new /obj/item/device/healthanalyzer(src)
 		return
+
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/combat
+	name = "Combat first-aid small kit"
+	icon_state = "medbriefcase"
+	desc = "I hope you've got insurance."
+	max_w_class = 2
+	w_class = 2
+
+	New()
+		..()
+		if (empty) return
+		new /obj/item/weapon/reagent_containers/hypospray/autoinjector/combat( src )
+		new /obj/item/weapon/reagent_containers/hypospray/autoinjector/bicaridine( src )
+		new /obj/item/weapon/reagent_containers/hypospray/autoinjector/dermaline( src )
+		new /obj/item/weapon/reagent_containers/hypospray/autoinjector/antitox( src )
+		new /obj/item/weapon/reagent_containers/hypospray/autoinjector/tramadol(src)
+		new /obj/item/weapon/reagent_containers/hypospray/autoinjector( src )
+		new /obj/item/device/healthanalyzer(src)
+		return
+
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/space
+	name = "Space first-aid small kit"
+	icon_state = "medbriefcase"
+	desc = "Med kit. For space..."
+	max_w_class = 2
+	w_class = 2
+
+	New()
+		..()
+		if (empty) return
+		new /obj/item/weapon/patcher( src )
+		new /obj/item/weapon/reagent_containers/hypospray/autoinjector/bicaridine( src )
+		new /obj/item/weapon/reagent_containers/hypospray/autoinjector/dermaline( src )
+		new /obj/item/weapon/reagent_containers/hypospray/autoinjector/antitox( src )
+		new /obj/item/weapon/reagent_containers/hypospray/autoinjector/tramadol(src)
+		new /obj/item/weapon/reagent_containers/hypospray/autoinjector( src )
+		new /obj/item/device/healthanalyzer(src)
+		return
+
 
 
