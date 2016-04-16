@@ -30,6 +30,7 @@
 	circ1 = null
 	circ2 = null
 	if(src.loc && anchored)
+		power_change()
 		if(src.dir & (EAST|WEST))
 			circ1 = locate(/obj/machinery/atmospherics/binary/circulator) in get_step(src,EAST)
 			circ2 = locate(/obj/machinery/atmospherics/binary/circulator) in get_step(src,WEST)
