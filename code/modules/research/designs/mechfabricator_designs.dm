@@ -407,7 +407,7 @@
 	name = "Exosuit Chassis (\"Vindicator\")"
 	id = "vindicator_chassis"
 	build_type = MECHFAB
-	build_path = /obj/item/mecha_parts/chassis/phazon
+	build_path = /obj/item/mecha_parts/chassis/vindicator
 	materials = list(MAT_METAL=28000)
 	construction_time = 100
 	category = list("Vindicator")
