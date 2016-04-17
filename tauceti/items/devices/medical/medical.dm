@@ -147,15 +147,17 @@
 
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/combat
 	name = "Combat first-aid small kit"
-	icon_state = "medbriefcase"
+	icon_state = "first_aid_kit_com"
 	desc = "A small kit of auto injectors with drugs placed in his pocket. It`s combat version"
 	max_w_class = 2
 	w_class = 2
 
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/combat/New()
 	..()
+
 	if (empty)
 		return
+
 	new /obj/item/weapon/reagent_containers/hypospray/autoinjector/combat( src )
 	new /obj/item/weapon/reagent_containers/hypospray/autoinjector/bicaridine( src )
 	new /obj/item/weapon/reagent_containers/hypospray/autoinjector/dermaline( src )
@@ -166,15 +168,17 @@
 
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/space
 	name = "Space first-aid small kit"
-	icon_state = "medbriefcase"
+	icon_state = "first_aid_kit_sp"
 	desc = "A small kit of auto injectors with drugs placed in his pocket. It`s space version"
 	max_w_class = 2
 	w_class = 2
 
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/space/New()
 	..()
+
 	if (empty)
 		return
+
 	new /obj/item/weapon/patcher( src )
 	new /obj/item/weapon/reagent_containers/hypospray/autoinjector/bicaridine( src )
 	new /obj/item/weapon/reagent_containers/hypospray/autoinjector/dermaline( src )
@@ -183,5 +187,22 @@
 	new /obj/item/weapon/reagent_containers/hypospray/autoinjector( src )
 	new /obj/item/device/healthanalyzer(src)
 
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/civilian
+	name = "Civilan first-aid small kit"
+	icon_state = "first_aid_kit_civilan"
+	desc = "A small cheap kit with medical items."
+	max_w_class = 2
+	w_class = 2
 
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/civilian/New()
+	..()
 
+	if (empty)
+		return
+
+	new /obj/item/stack/medical/ointment( src )
+	new /obj/item/stack/medical/bruise_pack( src )
+	new /obj/item/weapon/reagent_containers/pill/antitox( src )
+	new /obj/item/weapon/reagent_containers/pill/dexalin( src )
+	new /obj/item/weapon/reagent_containers/hypospray/autoinjector( src )
+	new /obj/item/device/healthanalyzer(src)
