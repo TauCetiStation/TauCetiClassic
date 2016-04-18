@@ -80,6 +80,8 @@ var/global/datum/controller/master/Master = new()
 	SetupXenoarch()
 	// Generate mining.
 	make_mining_asteroid_secrets()
+	var/datum/ore_distribution/distro = new()
+	distro.populate_distribution_map()
 
 	// Set up Z-level transistions.
 	//setup_map_transitions()

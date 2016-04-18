@@ -73,7 +73,7 @@ Deep minerals:
 /datum/ore_distribution/proc/populate_distribution_map()
 
 	//Announce it!
-	world << "<b><font color='red'>Generating resource distribution map.</b></font>"
+	world.log << "<b><font color='red'>Generating resource distribution map.</b></font>"
 
 	//Seed beginning values.
 	var/x = 1
@@ -92,7 +92,7 @@ Deep minerals:
 	while(attempts < ITERATE_BEFORE_FAIL && !map_is_sane())
 
 	if(attempts >= ITERATE_BEFORE_FAIL)
-		world << "<b><font color='red'>Could not generate a sane distribution map. Aborting.</font></b>"
+		world.log << "<b><font color='red'>Could not generate a sane distribution map. Aborting.</font></b>"
 		map = null
 		return
 	else
@@ -108,7 +108,7 @@ Deep minerals:
 	for(var/x = 1, x <= real_size, x++)
 		for(var/y = 1, y <= real_size, y++)
 			line += num2text(round(map[MAP_CELL]/25.5))
-		world << line
+		world.log << line
 		line = ""
 
 /datum/ore_distribution/proc/generate_distribution_map(var/x,var/y,var/input_size)
@@ -201,7 +201,7 @@ Deep minerals:
 		tx = origin_x
 		ty += chunk_size
 
-	world << "<b><font color='red'>Resource map generation complete.</font></b>"
+	world.log << "<b><font color='red'>Resource map generation complete.</font></b>"
 	return
 
 #undef MAP_CELL
