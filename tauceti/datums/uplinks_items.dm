@@ -480,6 +480,12 @@
 	gamemodes = list(/datum/game_mode/nuclear)
 	uplink_types = list("nuclear")
 
+/datum/uplink_item/device_tools/medkit_small
+	name = "Syndicate Medical Small Kit"
+	desc = "The syndicate medkit. Included is a combat stimulant injector for rapid healing."
+	item = /obj/item/weapon/storage/firstaid/small_firstaid_kit/combat
+	cost = 2
+
 /datum/uplink_item/device_tools/space_suit
 	name = "Syndicate Space Suit"
 	desc = "The red syndicate space suit is less encumbering than Nanotrasen variants, fits inside bags, and has a weapon slot. Nanotrasen crewmembers are trained to report red space suit sightings."
