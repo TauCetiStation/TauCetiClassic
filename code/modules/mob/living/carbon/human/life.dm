@@ -676,7 +676,8 @@
 				loc_temp = environment.temperature
 
 			if(adjusted_pressure < species.warning_high_pressure && adjusted_pressure > species.warning_low_pressure && abs(loc_temp - bodytemperature) < 20 && bodytemperature < species.heat_level_1 && bodytemperature > species.cold_level_1 && environment.phoron < MOLES_PHORON_VISIBLE)
-				pressure_alert = 0
+				clear_alert("pressure")
+				clear_alert("temp")
 				return // Temperatures are within normal ranges, fuck all this processing. ~Ccomp
 
 			//Body temperature adjusts depending on surrounding atmosphere based on your thermal protection
@@ -711,38 +712,36 @@
 			if(!protected && radiation < 100)
 				apply_effect(5, IRRADIATE)
 
+		if(status_flags & GODMODE)
+			return 1	//godmode
+
 		// +/- 50 degrees from 310.15K is the 'safe' zone, where no damage is dealt.
 		if(bodytemperature > species.heat_level_1)
 			//Body temperature is too hot.
-			if(status_flags & GODMODE)	return 1	//godmode
-			switch(bodytemperature)
-				if(species.heat_level_1 to species.heat_level_2)
-					throw_alert("temp","hot",1)
-					take_overall_damage(burn=HEAT_DAMAGE_LEVEL_1, used_weapon = "High Body Temperature")
-				if(species.heat_level_2 to species.heat_level_3)
-					if(on_fire)
-						throw_alert("temp","hot",3)
-						take_overall_damage(burn=HEAT_DAMAGE_LEVEL_3, used_weapon = "High Body Temperature")
-					else
-						throw_alert("temp","hot",2)
-						take_overall_damage(burn=HEAT_DAMAGE_LEVEL_2, used_weapon = "High Body Temperature")
-				if(species.heat_level_3 to INFINITY)
+			if(bodytemperature > species.heat_level_3)
+				throw_alert("temp","hot",3)
+				take_overall_damage(burn=HEAT_DAMAGE_LEVEL_3, used_weapon = "High Body Temperature")
+			else if(bodytemperature > species.heat_level_2)
+				if(on_fire)
 					throw_alert("temp","hot",3)
 					take_overall_damage(burn=HEAT_DAMAGE_LEVEL_3, used_weapon = "High Body Temperature")
-
+				else
+					throw_alert("temp","hot",2)
+					take_overall_damage(burn=HEAT_DAMAGE_LEVEL_2, used_weapon = "High Body Temperature")
+			else
+				throw_alert("temp","hot",1)
+				take_overall_damage(burn=HEAT_DAMAGE_LEVEL_1, used_weapon = "High Body Temperature")
 		else if(bodytemperature < species.cold_level_1)
-			if(status_flags & GODMODE)	return 1	//godmode
 			if(!istype(loc, /obj/machinery/atmospherics/unary/cryo_cell))
-				switch(bodytemperature)
-					if(species.cold_level_2 to species.cold_level_1)
-						throw_alert("temp","cold",1)
-						take_overall_damage(burn=COLD_DAMAGE_LEVEL_1, used_weapon = "High Body Temperature")
-					if(species.cold_level_3 to species.cold_level_2)
-						throw_alert("temp","cold",2)
-						take_overall_damage(burn=COLD_DAMAGE_LEVEL_2, used_weapon = "High Body Temperature")
-					if(-INFINITY to species.cold_level_3)
-						throw_alert("temp","cold",3)
-						take_overall_damage(burn=COLD_DAMAGE_LEVEL_3, used_weapon = "High Body Temperature")
+				if(bodytemperature < species.cold_level_3)
+					throw_alert("temp","cold",3)
+					take_overall_damage(burn=COLD_DAMAGE_LEVEL_3, used_weapon = "Low Body Temperature")
+				else if(bodytemperature < species.cold_level_2)
+					throw_alert("temp","cold",2)
+					take_overall_damage(burn=COLD_DAMAGE_LEVEL_2, used_weapon = "Low Body Temperature")
+				else
+					throw_alert("temp","cold",1)
+					take_overall_damage(burn=COLD_DAMAGE_LEVEL_1, used_weapon = "Low Body Temperature")
 			else
 				clear_alert("temp")
 		else
@@ -750,7 +749,6 @@
 
 		// Account for massive pressure differences.  Done by Polymorph
 		// Made it possible to actually have something that can protect against high pressure... Done by Errorage. Polymorph now has an axe sticking from his head for his previous hardcoded nonsense!
-		if(status_flags & GODMODE)	return 1	//godmode
 
 		if(adjusted_pressure >= species.hazard_high_pressure)
 			var/pressure_damage = min( ( (adjusted_pressure / species.hazard_high_pressure) -1 )*PRESSURE_DAMAGE_COEFFICIENT , MAX_HIGH_PRESSURE_DAMAGE)
