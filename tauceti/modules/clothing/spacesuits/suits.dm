@@ -80,3 +80,15 @@
 	icon_state = "glob0_mining"
 	mode = "mining"
 	armor = list(melee = 50, bullet = 5, laser = 10,energy = 5, bomb = 55, bio = 100, rad = 20)
+
+/obj/item/clothing/suit/space/recycler
+	name = "Recycler space suit"
+	desc = "Recycler space helmet that protects against low pressure environments"
+	icon_state = "recycler_space"
+	armor = list(melee = 40, bullet = 5, laser = 10,energy = 5, bomb = 55, bio = 100, rad = 40)
+
+/obj/item/clothing/head/helmet/space/recycler
+	name = "Recycler space helmet"
+	desc = "Recycler space helmet that protects against low pressure environments. Has reinforced plating."
+	icon_state = "recycler_helmet"
+	armor = list(melee = 40, bullet = 5, laser = 10,energy = 5, bomb = 55, bio = 100, rad = 20)

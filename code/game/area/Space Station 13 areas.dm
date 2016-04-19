@@ -1373,6 +1373,22 @@ var/list/ghostteleportlocs = list()
 	name = "\improper Mining Dock"
 	icon_state = "mining"
 
+/area/quartermaster/recycler
+	name = "\improper Recycler"
+	icon_state = "recycler"
+
+/area/quartermaster/miningbreaktime
+	name = "\improper Breaktime room"
+	icon_state = "miningbreaktime"
+
+/area/quartermaster/miningoffice
+	name = "\improper Mining office"
+	icon_state = "miningoffice"
+
+/area/quartermaster/recycleroffice
+	name = "\improper Recycleroffice"
+	icon_state = "recycleroffice"
+
 /area/quartermaster/miningstorage
 	name = "\improper Mining Storage"
 	icon_state = "green"
