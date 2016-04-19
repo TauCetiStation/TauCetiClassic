@@ -69,15 +69,15 @@
 	icon_off = "securecargooff"
 
 obj/structure/closet/secure_closet/recycler/New()
-		new /obj/item/weapon/shovel(src)
-		new /obj/item/weapon/storage/bag/trash/miners(src)
-		new /obj/item/clothing/under/rank/recycler(src)
-		new /obj/item/clothing/under/rank/recyclercasual(src)
-		new /obj/item/clothing/shoes/black(src)
-		new /obj/item/device/radio/headset/headset_cargo(src)
-		new /obj/item/clothing/gloves/black(src)
-		new /obj/item/clothing/head/helmet/space/recycler(src)
-		new /obj/item/clothing/suit/space/recycler(src)
-		new /obj/item/clothing/head/soft/trash(src)
-		new /obj/item/clothing/suit/recyclervest(src)
-		return
+	new /obj/item/weapon/shovel(src)
+	new /obj/item/weapon/storage/bag/trash/miners(src)
+	new /obj/item/clothing/under/rank/recycler(src)
+	new /obj/item/clothing/under/rank/recyclercasual(src)
+	new /obj/item/clothing/shoes/black(src)
+	new /obj/item/device/radio/headset/headset_cargo(src)
+	new /obj/item/clothing/gloves/black(src)
+	new /obj/item/clothing/head/helmet/space/recycler(src)
+	new /obj/item/clothing/suit/space/recycler(src)
+	new /obj/item/clothing/head/soft/trash(src)
+	new /obj/item/clothing/suit/recyclervest(src)
+	return
