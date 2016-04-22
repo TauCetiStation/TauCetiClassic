@@ -291,6 +291,9 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 		user << "<span class='red'> You can't shoot while charging!</span>"
 		return
 
+	if(!los_check(user,pbtarget))
+		return
+
 	var/mob/living/carbon/human/H = user
 	if ((CLUMSY in H.mutations) && prob(50))
 		H << "<span class='danger'>[src] zaps you!</span>"
