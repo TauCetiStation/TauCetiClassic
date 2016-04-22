@@ -254,7 +254,7 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 		else
 			charging=0
 	else
-		user << "\red \italic Generator is too difficult to spin while moving! Charging aborted"
+		user << "<span class='danger'> Generator is too difficult to spin while moving! Charging aborted</span>"
 		charging=0
 
 
@@ -262,14 +262,14 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 /obj/item/weapon/gun/energy/tesla/attack_self(mob/living/user)
 	if(charging==1)
 		charging=0
-		user << "\blue You stop charging Tesla Cannon..."
+		user << "<span class='red' You stop charging Tesla Cannon...</span>"
 		cooldown = 1
 		spawn(50)		cooldown = 0
 		return
 	if(cooldown)		return
 	if(charge == 3)		return
 	user.visible_message("<span class='danger'>[user] starts spinning generator on Tesla Cannon!</span>")
-	user << "\blue You start charging Tesla Cannon..."
+	user << "<span class='red' You start charging Tesla Cannon...</span>"
 	charging=1
 	charge(user)
 
