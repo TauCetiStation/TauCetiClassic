@@ -1743,15 +1743,6 @@ datum/design/temp_gun
 	materials = list(MAT_METAL = 5000, MAT_GLASS = 500, MAT_SILVER = 3000)
 	build_path = /obj/item/weapon/gun/energy/temperature
 
-datum/design/tesla_gun
-	name = "Tesla Cannon"
-	desc = "A gun which uses electrical discharges to hit multiple targets"
-	id = "tesla_gun"
-	req_tech = list("combat" = 4, "materials" = 4, "powerstorage" = 5, "magnets" = 4, "engineering" = 4)
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 10000, MAT_GOLD = 1000, MAT_SILVER = 4000)
-	build_path = /obj/item/weapon/gun/energy/tesla
-
 datum/design/flora_gun
 	name = "Floral Somatoray"
 	desc = "A tool that discharges controlled radiation which induces mutation in plant cells. Harmless to other organic life."
