@@ -1,6 +1,11 @@
 // BEGIN_INTERNALS
 /*
-MAP_ICON_TYPE: 0
+LAST_COMPILE_TIME: 1461346265
+DIR: code code\defines code\defines\obj code\game code\game\machinery code\game\mecha code\game\mecha\equipment code\game\mecha\equipment\tools code\game\mecha\equipment\weapons code\game\objects code\game\objects\items code\game\objects\items\devices code\game\objects\items\weapons code\modules code\modules\mob code\modules\mob\living code\modules\mob\living\carbon code\modules\mob\living\carbon\human code\modules\paperwork code\modules\power code\modules\power\antimatter code\modules\projectiles code\modules\projectiles\guns code\modules\projectiles\guns\energy code\modules\research code\modules\research\designs tauceti tauceti\items tauceti\items\musical_instruments tauceti\items\weapons tauceti\items\weapons\guns 
 AUTO_FILE_DIR: OFF
+MAP_ICON_TYPE: 0
+LAST_COMPILE_VERSION: 510.1338
+WINDOW: code\modules\research\designs.dm;code\game\mecha\equipment\tools\tools.dm;code\game\mecha\equipment\weapons\weapons.dm;code\game\mecha\equipment\mecha_equipment.dm;code\game\mecha\mecha.dm;code\modules\research\designs\mechfabricator_designs.dm;code\modules\mob\living\carbon\human\human.dm;code\modules\paperwork\clipboard.dm;code\modules\projectiles\guns\energy\tesla.dm
+FILE: code\modules\projectiles\guns\energy\tesla.dm
 */
 // END_INTERNALS
