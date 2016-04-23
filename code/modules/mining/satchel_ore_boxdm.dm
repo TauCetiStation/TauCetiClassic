@@ -47,6 +47,7 @@
 	var/amt_clown = 0
 	var/amt_strange = 0
 	var/amt_osmium = 0
+	var/amt_coal = 0
 
 
 	for (var/obj/item/weapon/ore/C in contents)
@@ -68,6 +69,8 @@
 			amt_clown++;
 		if (istype(C,/obj/item/weapon/ore/osmium))
 			amt_osmium++;
+		if (istype(C,/obj/item/weapon/ore/coal))
+			amt_coal++;
 		if (istype(C,/obj/item/weapon/ore/strangerock))
 			amt_strange++;
 
@@ -90,6 +93,8 @@
 		dat += text("Bananium ore: [amt_clown]<br>")
 	if (amt_osmium)
 		dat += text("Osmium ore: [amt_osmium]<br>")
+	if (amt_coal)
+		dat += text("Coal ore: [amt_coal]<br>")
 	if (amt_strange)
 		dat += text("Strange rocks: [amt_strange]<br>")
 
