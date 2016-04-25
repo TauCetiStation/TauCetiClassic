@@ -44,12 +44,14 @@
 	icon_state = "rig0-ert_commander"
 	item_state = "helm-command"
 	item_color = "ert_commander"
+	armor = list(melee = 60, bullet = 65, laser = 55, energy = 45, bomb = 50, bio = 100, rad = 60)
 
 /obj/item/clothing/suit/space/rig/ert/commander
 	name = "emergency response team commander suit"
 	desc = "A suit worn by the commander of a NanoTrasen Emergency Response Team. Has blue highlights. Armoured, space ready, and fire resistant."
 	icon_state = "ert_commander"
 	item_state = "suit-command"
+	armor = list(melee = 60, bullet = 65, laser = 55, energy = 55, bomb = 50, bio = 100, rad = 60)
 
 //Security
 /obj/item/clothing/head/helmet/space/rig/ert/security
@@ -58,13 +60,16 @@
 	icon_state = "rig0-ert_security"
 	item_state = "syndicate-helm-black-red"
 	item_color = "ert_security"
+	armor = list(melee = 60, bullet = 60, laser = 60, energy = 30, bomb = 65, bio = 100, rad = 10)
+
 
 /obj/item/clothing/suit/space/rig/ert/security
 	name = "emergency response team security suit"
 	desc = "A suit worn by security members of a NanoTrasen Emergency Response Team. Has red highlights. Armoured, space ready, and fire resistant."
 	icon_state = "ert_security"
 	item_state = "syndicate-black-red"
-
+	armor = list(melee = 60, bullet = 60, laser = 60, energy = 30, bomb = 65, bio = 100, rad = 10)
+	slowdown = 1.4
 //Engineer
 /obj/item/clothing/head/helmet/space/rig/ert/engineer
 	name = "emergency response team engineer helmet"
@@ -72,12 +77,14 @@
 	icon_state = "rig0-ert_engineer"
 	item_color = "ert_engineer"
 	siemens_coefficient = 0
+	armor = list(melee = 60, bullet = 35, laser = 30,energy = 15, bomb = 30, bio = 100, rad = 75)
 
 /obj/item/clothing/suit/space/rig/ert/engineer
 	name = "emergency response team engineer suit"
 	desc = "A suit worn by the engineering of a NanoTrasen Emergency Response Team. Has orange highlights. Armoured, space ready, and fire resistant."
 	icon_state = "ert_engineer"
 	siemens_coefficient = 0
+	armor = list(melee = 60, bullet = 35, laser = 30,energy = 15, bomb = 30, bio = 100, rad = 75)
 
 //Medical
 /obj/item/clothing/head/helmet/space/rig/ert/medical
@@ -90,3 +97,4 @@
 	name = "emergency response team medical suit"
 	desc = "A suit worn by medical members of a NanoTrasen Emergency Response Team. Has white highlights. Armoured and space ready."
 	icon_state = "ert_medical"
+	slowdown = 0.8
