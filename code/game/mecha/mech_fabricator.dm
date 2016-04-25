@@ -42,6 +42,7 @@
 								"Vindicator",
 								"Exosuit Equipment",
 								"Cyborg Upgrade Modules",
+								"Cyborg Components",
 								"Misc"
 								)
 
