@@ -261,9 +261,6 @@ REQ_CULT_GHOSTWRITER 6
 
 #SLACK_TEAM tauceti
 
-## Ask me about it
-#SLACK_BOT_TOKEN abrakadabra
-
 ## Media base URL - determines where to pull the jukebox playlist from.
 # MEDIA_BASE_URL http://game2.tauceti.ru/media
 

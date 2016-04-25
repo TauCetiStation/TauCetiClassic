@@ -23,7 +23,6 @@ proc/admin_call_cooldown(var/value1)
 	admin_call_cooldown(key_name(src))
 
 	var/output_text = {"<font color='red'>============ADMINCALL============</font><BR>
-<font color='red' size='6'>[sanitize_alt("0) Сообщение писать на !!!translite!!!, поддержки кириллицы пока нет.")]</font><BR>
 <font color='red'>[sanitize_alt("1) Сообщение длинной не более 140 символов.")]</font><BR>
 <font color='red'>[sanitize_alt("2) Описать коротко и внятно причину по которой нужен админ.")]</font><BR>
 <font color='red'>[sanitize_alt("3) Ожидать.")]</font><BR>
@@ -41,12 +40,13 @@ proc/admin_call_cooldown(var/value1)
 		return
 	//clean the input msg
 	if(!msg)	return
-
-	var/check_answer = alert(src, sanitize("Send?"),,"Yes","No")
+	
+	var/check_answer = alert(src, "Are you sure?","Yes","No")
 	if(check_answer == "No")
 		return
-
+		
 	msg = sanitize(copytext(msg,1,140))
+
 	if(!msg)	return
 	var/original_msg = msg
 
@@ -76,9 +76,9 @@ proc/admin_call_cooldown(var/value1)
 	log_admin("ADMINCALL: [key_name(src)]: [original_msg] - heard by [admin_number_present] non-AFK admins.")
 	if(admin_number_present <= 0)
 		if(!admin_number_afk)
-			send2slack_admincall("ADMINCALL from [key_name(src)]: [original_msg] - !!No admins online!!")
+			send2slack_admincall("@here ADMINCALL from *[key_name(src)]*, !!No admins online!!", original_msg)
 		else
-			send2slack_admincall("ADMINCALL from [key_name(src)]: [original_msg] - !!All admins AFK ([admin_number_afk])!!")
+			send2slack_admincall("@here ADMINCALL from *[key_name(src)]*, !!All admins AFK ([admin_number_afk])!!", original_msg)
 	//else
 	//	send2slack_admincall("ADMINCALL from [key_name(src)]: [original_msg]")
 	feedback_add_details("admin_verb","ASC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
