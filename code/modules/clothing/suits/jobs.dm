@@ -194,3 +194,30 @@
 	icon_state = "suspenders"
 	blood_overlay_type = "armor" //it's the less thing that I can put here
 	body_parts_covered = 0
+
+//Recycler
+/obj/item/clothing/suit/recyclervest
+    name = "Recycler vest"
+    desc = "This is Recycler vest."
+    icon = 'icons/obj/clothing/suits.dmi'
+    icon_state = "recycler_vest_open"
+    item_state = "recycler_vest"
+    blood_overlay_type = "coat" //it's the less thing that I can put here
+    body_parts_covered = 0
+    action_button_name = "Toggle vest buttons"
+
+/obj/item/clothing/suit/recyclervest/ui_action_click()
+    toggle()
+
+/obj/item/clothing/suit/recyclervest/proc/toggle()
+    switch(icon_state)
+        if("recycler_vest_open")
+            src.icon_state = "recycler_vest"
+            usr << "You button up the vest."
+        if("recycler_vest")
+            src.icon_state = "recycler_vest_open"
+            usr << "You unbutton the jacket."
+        else
+            usr << "You attempt to button-up the velcro on your [src], before promptly realising how retarded you are."
+            return
+    usr.update_inv_wear_suit()    //so our overlays update

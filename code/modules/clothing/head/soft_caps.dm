@@ -93,3 +93,9 @@
 	desc = "It's baseball hat in corporate colors."
 	icon_state = "corpsoft"
 	item_color = "corp"
+
+/obj/item/clothing/head/soft/trash
+	name = "trash cap"
+	desc = "It's baseball hat."
+	icon_state = "trashsoft"
+	item_color = "trash"
