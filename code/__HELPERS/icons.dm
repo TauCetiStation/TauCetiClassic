@@ -128,13 +128,13 @@ mob
 	Login()
 		// Testing image underlays
 		underlays += image(icon='old_or_unused.dmi',icon_state="red")
-		underlays += image(icon='old_or_unused.dmi',icon_state="red", pixel_x = 32)
-		underlays += image(icon='old_or_unused.dmi',icon_state="red", pixel_x = -32)
+		underlays += image(icon='old_or_unused.dmi',icon_state="red", pixel_x = 64)
+		underlays += image(icon='old_or_unused.dmi',icon_state="red", pixel_x = -64)
 
 		// Testing image overlays
-		overlays += image(icon='old_or_unused.dmi',icon_state="green", pixel_x = 32, pixel_y = -32)
-		overlays += image(icon='old_or_unused.dmi',icon_state="green", pixel_x = 32, pixel_y = 32)
-		overlays += image(icon='old_or_unused.dmi',icon_state="green", pixel_x = -32, pixel_y = -32)
+		overlays += image(icon='old_or_unused.dmi',icon_state="green", pixel_x = 64, pixel_y = -64)
+		overlays += image(icon='old_or_unused.dmi',icon_state="green", pixel_x = 64, pixel_y = 64)
+		overlays += image(icon='old_or_unused.dmi',icon_state="green", pixel_x = -64, pixel_y = -64)
 
 		// Testing icon file overlays (defaults to mob's state)
 		overlays += '_flat_demoIcons2.dmi'
@@ -148,7 +148,7 @@ mob
 		overlays+=I
 
 		// Testing dynamic image overlays
-		I=image(icon=I,pixel_x = -32, pixel_y = 32)
+		I=image(icon=I,pixel_x = -64, pixel_y = 64)
 		overlays+=I
 
 		// Testing object types (and layers)
@@ -182,7 +182,7 @@ mob
 
 		Add_Overlay()
 			set name = "4. Add Overlay"
-			overlays += image(icon='old_or_unused.dmi',icon_state="yellow",pixel_x = rand(-64,32), pixel_y = rand(-64,32))
+			overlays += image(icon='old_or_unused.dmi',icon_state="yellow",pixel_x = rand(-128,64), pixel_y = rand(-128,64))
 
 		Stress_Test()
 			set name = "5. Stress Test"
@@ -202,8 +202,8 @@ mob
 obj/effect/overlayTest
 	icon = 'old_or_unused.dmi'
 	icon_state = "blue"
-	pixel_x = -24
-	pixel_y = 24
+	pixel_x = -48
+	pixel_y = 48
 	layer = TURF_LAYER // Should appear below the rest of the overlays
 
 world

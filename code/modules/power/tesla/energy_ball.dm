@@ -22,8 +22,8 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 	icon = 'icons/obj/tesla_engine/energy_ball.dmi'
 	icon_state = "energy_ball"
 	layer = LIGHTING_LAYER+1
-	pixel_x = -32
-	pixel_y = -32
+	pixel_x = -64
+	pixel_y = -64
 	current_size = STAGE_TWO
 	move_self = 1
 	grav_pull = 0
@@ -61,8 +61,8 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 
 		dir = tesla_zap(src, 7, TESLA_DEFAULT_POWER)
 
-		pixel_x = -32
-		pixel_y = -32
+		pixel_x = -64
+		pixel_y = -64
 		for(var/ball in orbiting_balls)
 			tesla_zap(ball, rand(1, Clamp(orbiting_balls.len, 3, 7)), TESLA_MINI_POWER)
 	else

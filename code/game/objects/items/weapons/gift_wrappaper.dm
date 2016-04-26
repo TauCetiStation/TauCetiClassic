@@ -16,8 +16,8 @@
 
 /obj/item/weapon/a_gift/New()
 	..()
-	pixel_x = rand(-10,10)
-	pixel_y = rand(-10,10)
+	pixel_x = rand(-20,20)
+	pixel_y = rand(-20,20)
 	if(w_class > 0 && w_class < 4)
 		icon_state = "gift[w_class]"
 	else

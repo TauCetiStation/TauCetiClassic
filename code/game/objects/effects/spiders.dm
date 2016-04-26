@@ -76,8 +76,8 @@
 	icon_state = "eggs"
 	var/amount_grown = 0
 	New()
-		pixel_x = rand(3,-3)
-		pixel_y = rand(3,-3)
+		pixel_x = rand(6,-6)
+		pixel_y = rand(6,-6)
 		SSobj.processing |= src
 
 /obj/effect/spider/eggcluster/process()

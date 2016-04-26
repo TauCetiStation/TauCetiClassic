@@ -80,7 +80,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	if(powernet)
 		cut_cable_from_powernet()				// update the powernets
 	cable_list -= src							//remove it from global cable list
-	return ..()	
+	return ..()
 
 ///////////////////////////////////
 // General procedures
@@ -435,8 +435,8 @@ By design, d1 is the smallest direction and d2 is the highest
 	src.amount = amount
 	if (param_color)
 		item_color = param_color
-	pixel_x = rand(-2,2)
-	pixel_y = rand(-2,2)
+	pixel_x = rand(-4,4)
+	pixel_y = rand(-4,4)
 	update_icon()
 	update_wclass()
 
@@ -797,8 +797,8 @@ By design, d1 is the smallest direction and d2 is the highest
 /obj/item/weapon/cable_coil/cut/New(loc)
 	..()
 	src.amount = rand(1,2)
-	pixel_x = rand(-2,2)
-	pixel_y = rand(-2,2)
+	pixel_x = rand(-4,4)
+	pixel_y = rand(-4,4)
 	update_icon()
 	update_wclass()
 

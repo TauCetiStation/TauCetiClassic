@@ -194,8 +194,8 @@
 							say("[pick("SHIT", "PISS", "FUCK", "CUNT", "COCKSUCKER", "MOTHERFUCKER", "TITS")]")
 					var/old_x = pixel_x
 					var/old_y = pixel_y
-					pixel_x += rand(-2,2)
-					pixel_y += rand(-1,1)
+					pixel_x += rand(-4,4)
+					pixel_y += rand(-2,2)
 					sleep(2)
 					pixel_x = old_x
 					pixel_y = old_y
@@ -1521,7 +1521,7 @@
 			//OH cmon...
 			var/nearsighted = 0
 			var/impaired    = 0
-			
+
 			if(disabilities & NEARSIGHTED)
 				nearsighted = 1
 
@@ -1537,7 +1537,7 @@
 			if(istype(wear_mask, /obj/item/clothing/mask/gas/welding) )
 				var/obj/item/clothing/mask/gas/welding/O = wear_mask
 				if(!O.up && tinted_weldhelh)
-					impaired = 2 
+					impaired = 2
 			if(istype(glasses, /obj/item/clothing/glasses/welding) )
 				var/obj/item/clothing/glasses/welding/O = glasses
 				if(!O.up && tinted_weldhelh)
@@ -1561,7 +1561,7 @@
 				overlay_fullscreen("impaired", /obj/screen/fullscreen/impaired, impaired)
 			else
 				clear_fullscreen("impaired")
-			
+
 			if(!machine)
 				var/isRemoteObserve = 0
 				if((REMOTE_VIEW in mutations) && remoteview_target)

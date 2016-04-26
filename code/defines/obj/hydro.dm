@@ -1301,8 +1301,8 @@
 	var/PestKillStr = 0
 
 /obj/item/pestkiller/New()
-	src.pixel_x = rand(-5.0, 5)
-	src.pixel_y = rand(-5.0, 5)
+	src.pixel_x = rand(-10, 10)
+	src.pixel_y = rand(-10, 10)
 
 /obj/item/pestkiller/carbaryl
 	name = "bottle of carbaryl"
@@ -1313,8 +1313,8 @@
 	PestKillStr = 2
 
 /obj/item/pestkiller/carbaryl/New()
-	src.pixel_x = rand(-5.0, 5)
-	src.pixel_y = rand(-5.0, 5)
+	src.pixel_x = rand(-10, 10)
+	src.pixel_y = rand(-10, 10)
 
 /obj/item/pestkiller/lindane
 	name = "bottle of lindane"
@@ -1325,8 +1325,8 @@
 	PestKillStr = 4
 
 /obj/item/pestkiller/lindane/New()
-	src.pixel_x = rand(-5.0, 5)
-	src.pixel_y = rand(-5.0, 5)
+	src.pixel_x = rand(-10, 10)
+	src.pixel_y = rand(-10, 10)
 
 /obj/item/pestkiller/phosmet
 	name = "bottle of phosmet"
@@ -1337,8 +1337,8 @@
 	PestKillStr = 7
 
 /obj/item/pestkiller/phosmet/New()
-	src.pixel_x = rand(-5.0, 5)
-	src.pixel_y = rand(-5.0, 5)
+	src.pixel_x = rand(-10, 10)
+	src.pixel_y = rand(-10, 10)
 
 // *************************************
 // Hydroponics Tools
@@ -1445,8 +1445,8 @@
 	var/yieldmod = 0
 
 /obj/item/nutrient/New()
-	src.pixel_x = rand(-5.0, 5)
-	src.pixel_y = rand(-5.0, 5)
+	src.pixel_x = rand(-10, 10)
+	src.pixel_y = rand(-10, 10)
 
 /obj/item/nutrient/ez
 	name = "bottle of E-Z-Nutrient"
@@ -1457,8 +1457,8 @@
 	yieldmod = 1
 
 /obj/item/nutrient/ez/New()
-	src.pixel_x = rand(-5.0, 5)
-	src.pixel_y = rand(-5.0, 5)
+	src.pixel_x = rand(-10, 10)
+	src.pixel_y = rand(-10, 10)
 
 /obj/item/nutrient/l4z
 	name = "bottle of Left 4 Zed"
@@ -1469,8 +1469,8 @@
 	yieldmod = 0
 
 /obj/item/nutrient/l4z/New()
-	src.pixel_x = rand(-5.0, 5)
-	src.pixel_y = rand(-5.0, 5)
+	src.pixel_x = rand(-10, 10)
+	src.pixel_y = rand(-10, 10)
 
 /obj/item/nutrient/rh
 	name = "bottle of Robust Harvest"
@@ -1481,7 +1481,5 @@
 	yieldmod = 2
 
 /obj/item/nutrient/rh/New()
-	src.pixel_x = rand(-5.0, 5)
-	src.pixel_y = rand(-5.0, 5)
-
-
+	src.pixel_x = rand(-10, 10)
+	src.pixel_y = rand(-10, 10)

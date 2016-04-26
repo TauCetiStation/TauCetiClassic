@@ -74,8 +74,8 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		usr << "<span class='alert'>There is another newscaster here.</span>"
 		return
 	var/obj/machinery/newscaster/N = new(loc)
-	N.pixel_y -= (loc.y - on_wall.y) * 32
-	N.pixel_x -= (loc.x - on_wall.x) * 32
+	N.pixel_y -= (loc.y - on_wall.y) * 64
+	N.pixel_x -= (loc.x - on_wall.x) * 64
 	qdel(src)
 
 
@@ -801,7 +801,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 	else if(istype(user,/mob/living/silicon))
 		var/mob/living/silicon/tempAI = user
 		var/obj/item/device/camera/siliconcam/camera = tempAI.aiCamera
- 
+
 		if(!camera)
 			return
 		var/datum/picture/selection = camera.selectpicture()

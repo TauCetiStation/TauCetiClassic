@@ -171,8 +171,8 @@
 
 /mob/living/simple_animal/chick/New()
 	..()
-	pixel_x = rand(-6, 6)
-	pixel_y = rand(0, 10)
+	pixel_x = rand(-12, 12)
+	pixel_y = rand(0, 20)
 
 /mob/living/simple_animal/chick/Life()
 	. =..()
@@ -218,8 +218,8 @@ var/global/chicken_count = 0
 	icon_state = "chicken_[body_color]"
 	icon_living = "chicken_[body_color]"
 	icon_dead = "chicken_[body_color]_dead"
-	pixel_x = rand(-6, 6)
-	pixel_y = rand(0, 10)
+	pixel_x = rand(-12, 12)
+	pixel_y = rand(0, 20)
 	chicken_count += 1
 
 /mob/living/simple_animal/chicken/death()
@@ -247,8 +247,8 @@ var/global/chicken_count = 0
 		visible_message("[src] [pick("lays an egg.","squats down and croons.","begins making a huge racket.","begins clucking raucously.")]")
 		eggsleft--
 		var/obj/item/weapon/reagent_containers/food/snacks/egg/E = new(get_turf(src))
-		E.pixel_x = rand(-6,6)
-		E.pixel_y = rand(-6,6)
+		E.pixel_x = rand(-12,12)
+		E.pixel_y = rand(-12,12)
 		if(chicken_count < MAX_CHICKENS && prob(10))
 			SSobj.processing |= E
 

@@ -275,14 +275,14 @@
 	src.icon_state = pick("large", "medium", "small")
 	switch(src.icon_state)
 		if("small")
-			src.pixel_x = rand(-12, 12)
-			src.pixel_y = rand(-12, 12)
+			src.pixel_x = rand(-24, 24)
+			src.pixel_y = rand(-24, 24)
 		if("medium")
-			src.pixel_x = rand(-8, 8)
-			src.pixel_y = rand(-8, 8)
+			src.pixel_x = rand(-16, 16)
+			src.pixel_y = rand(-16, 16)
 		if("large")
-			src.pixel_x = rand(-5, 5)
-			src.pixel_y = rand(-5, 5)
+			src.pixel_x = rand(-10, 10)
+			src.pixel_y = rand(-10, 10)
 		else
 	return
 

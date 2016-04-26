@@ -50,13 +50,13 @@
 		var/obj/structure/sign/S = new(user.loc)
 		switch(direction)
 			if("North")
-				S.pixel_y = 32
+				S.pixel_y = 64
 			if("East")
-				S.pixel_x = 32
+				S.pixel_x = 64
 			if("South")
-				S.pixel_y = -32
+				S.pixel_y = -64
 			if("West")
-				S.pixel_x = -32
+				S.pixel_x = -64
 			else return
 		S.name = name
 		S.desc = desc

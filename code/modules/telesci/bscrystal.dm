@@ -11,8 +11,8 @@
 
 /obj/item/bluespace_crystal/New()
 	..()
-	pixel_x = rand(-5, 5)
-	pixel_y = rand(-5, 5)
+	pixel_x = rand(-10, 10)
+	pixel_y = rand(-10, 10)
 
 /obj/item/bluespace_crystal/attack_self(var/mob/user)
 	blink_mob(user)

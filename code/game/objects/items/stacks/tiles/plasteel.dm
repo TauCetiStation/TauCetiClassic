@@ -14,8 +14,8 @@
 
 /obj/item/stack/tile/plasteel/New(var/loc, var/amount=null)
 	..()
-	src.pixel_x = rand(1, 14)
-	src.pixel_y = rand(1, 14)
+	src.pixel_x = rand(2, 28)
+	src.pixel_y = rand(2, 28)
 	return
 
 /*

@@ -10,8 +10,8 @@
 
 /obj/item/ashtray/New()
 	..()
-	src.pixel_y = rand(-5, 5)
-	src.pixel_x = rand(-6, 6)
+	src.pixel_y = rand(-10, 10)
+	src.pixel_x = rand(-12, 12)
 	return
 
 /obj/item/ashtray/attackby(obj/item/weapon/W as obj, mob/user as mob)

@@ -115,8 +115,8 @@ Buildable meters
 		src.dir = dir
 	//src.pipe_dir = get_pipe_dir()
 	update()
-	src.pixel_x = rand(-5, 5)
-	src.pixel_y = rand(-5, 5)
+	src.pixel_x = rand(-10, 10)
+	src.pixel_y = rand(-10, 10)
 
 //update the name and icon of the pipe item depending on the type
 

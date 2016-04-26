@@ -13,14 +13,14 @@
 	src.icon_state = pick("phoronlarge", "phoronmedium", "phoronsmall")
 	switch(src.icon_state)
 		if("phoronsmall")
-			src.pixel_x = rand(-12, 12)
-			src.pixel_y = rand(-12, 12)
+			src.pixel_x = rand(-24, 24)
+			src.pixel_y = rand(-24, 24)
 		if("phoronmedium")
-			src.pixel_x = rand(-8, 8)
-			src.pixel_y = rand(-8, 8)
+			src.pixel_x = rand(-16, 16)
+			src.pixel_y = rand(-16, 16)
 		if("phoronlarge")
-			src.pixel_x = rand(-5, 5)
-			src.pixel_y = rand(-5, 5)
+			src.pixel_x = rand(-10, 10)
+			src.pixel_y = rand(-10, 10)
 		else
 	return
 
