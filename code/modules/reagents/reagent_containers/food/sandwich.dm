@@ -60,13 +60,13 @@
 
 		var/image/I = new(src.icon, "sandwich_filling")
 		I.color = O.filling_color
-		I.pixel_x = pick(list(-1,0,1))
-		I.pixel_y = (i*2)+1
+		I.pixel_x = pick(list(-2,0,2))
+		I.pixel_y = (i*2)+2
 		overlays += I
 
 	var/image/T = new(src.icon, "sandwich_top")
-	T.pixel_x = pick(list(-1,0,1))
-	T.pixel_y = (ingredients.len * 2)+1
+	T.pixel_x = pick(list(-2,0,2))
+	T.pixel_y = (ingredients.len * 2)+2
 	overlays += T
 
 	name = lowertext("[fullname] sandwich")
@@ -84,8 +84,8 @@
 	usr << "\blue You think you can see [O.name] in there."
 
 /obj/item/weapon/reagent_containers/food/snacks/csandwich/attack(mob/M as mob, mob/user as mob, def_zone)
-	
-	if(!CanEat(user, M, src, "eat")) return	
+
+	if(!CanEat(user, M, src, "eat")) return
 	var/obj/item/shard
 	for(var/obj/item/O in contents)
 		if(istype(O,/obj/item/weapon/shard))

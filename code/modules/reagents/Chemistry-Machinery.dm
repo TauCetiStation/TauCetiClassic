@@ -496,8 +496,8 @@
 				return
 			var/obj/item/weapon/reagent_containers/glass/bottle/P = new/obj/item/weapon/reagent_containers/glass/bottle(src.loc)
 			P.name = trim("[name] bottle")
-			P.pixel_x = rand(-7, 7) //random position
-			P.pixel_y = rand(-7, 7)
+			P.pixel_x = rand(-14, 14) //random position
+			P.pixel_y = rand(-14, 14)
 			reagents.trans_to(P, 30)
 		else
 			var/obj/item/weapon/reagent_containers/food/condiment/P = new/obj/item/weapon/reagent_containers/food/condiment(src.loc)
@@ -616,8 +616,8 @@
 					else
 						P = new/obj/item/weapon/reagent_containers/pill(src.loc)
 					P.name = trim("[name] pill")
-					P.pixel_x = rand(-7, 7) //random position
-					P.pixel_y = rand(-7, 7)
+					P.pixel_x = rand(-14, 14) //random position
+					P.pixel_y = rand(-14, 14)
 					reagents.trans_to(P,vol_each)
 			//else
 			//	var/name = stripped_input(usr, "Name:", "Name your pack!", reagents.get_master_reagent_name(), MAX_NAME_LEN)
@@ -726,7 +726,7 @@
 /obj/machinery/chem_master/constructable
 	name = "ChemMaster 2999"
 	desc = "Used to seperate chemicals and distribute them in a variety of forms."
-	
+
 /obj/machinery/chem_master/constructable/New()
 	..()
 	component_parts = list()
@@ -735,7 +735,7 @@
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
 	component_parts += new /obj/item/weapon/reagent_containers/glass/beaker(null)
 	component_parts += new /obj/item/weapon/reagent_containers/glass/beaker(null)
-	
+
 /obj/machinery/chem_master/constructable/attackby(var/obj/item/B as obj, var/mob/user as mob, params)
 
 	if(default_deconstruction_screwdriver(user, "mixer0_nopower", "mixer0_", B))
@@ -1312,7 +1312,7 @@
 	if (!beaker || (beaker && beaker.reagents.total_volume >= beaker.reagents.maximum_volume))
 		return
 	playsound(src.loc, 'sound/machines/juicer.ogg', 20, 1)
-	var/offset = prob(50) ? -2 : 2
+	var/offset = prob(50) ? -4 : 4
 	animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = 200) //start shaking
 	inuse = 1
 	spawn(50)
@@ -1348,7 +1348,7 @@
 	if (!beaker || (beaker && beaker.reagents.total_volume >= beaker.reagents.maximum_volume))
 		return
 	playsound(src.loc, 'sound/machines/blender.ogg', 50, 1)
-	var/offset = prob(50) ? -2 : 2
+	var/offset = prob(50) ? -4 : 4
 	animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = 200) //start shaking
 	inuse = 1
 	spawn(60)

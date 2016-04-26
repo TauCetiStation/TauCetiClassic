@@ -191,11 +191,11 @@
 		M.TurnTo(0,new_angle)
 		flip_angle = new_angle	//save our angle for future flip
 		if(new_angle==90)
-			offset_y = -4
-			offset_x = 2
+			offset_y = -8
+			offset_x = 4
 		else
-			offset_y = -4
-			offset_x = -2
+			offset_y = -8
+			offset_x = -4
 		flipped = 1
 		anchored = 0		//can be pulled
 		buckle_movable = 0

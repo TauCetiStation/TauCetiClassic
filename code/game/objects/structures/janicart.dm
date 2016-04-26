@@ -259,16 +259,16 @@
 		switch(dir)
 			if(SOUTH)
 				buckled_mob.pixel_x = 0
-				buckled_mob.pixel_y = 7
+				buckled_mob.pixel_y = 14
 			if(WEST)
-				buckled_mob.pixel_x = 13
-				buckled_mob.pixel_y = 7
+				buckled_mob.pixel_x = 26
+				buckled_mob.pixel_y = 14
 			if(NORTH)
 				buckled_mob.pixel_x = 0
-				buckled_mob.pixel_y = 4
+				buckled_mob.pixel_y = 8
 			if(EAST)
-				buckled_mob.pixel_x = -13
-				buckled_mob.pixel_y = 7
+				buckled_mob.pixel_x = -26
+				buckled_mob.pixel_y = 14
 
 
 /obj/structure/stool/bed/chair/janicart/bullet_act(var/obj/item/projectile/Proj)

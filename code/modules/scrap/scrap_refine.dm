@@ -31,8 +31,8 @@
 	icon_state = "unrefined"
 	w_class = 4
 /obj/item/weapon/scrap_lump/New()
-	pixel_x = rand(0,16)-8
-	pixel_y = rand(0,8)-8
+	pixel_x = rand(0,32)-16
+	pixel_y = rand(0,16)-16
 
 var/global/list/datum/stack_recipe/scrap_recipes = list ( \
 	new/datum/stack_recipe("cardborg suit", /obj/item/clothing/suit/cardborg, 3), \

@@ -198,7 +198,7 @@
 	visible_message("<span class='danger'>You hear a loud squelchy grinding sound.</span>")
 	src.operating = 1
 	update_icon()
-	var/offset = prob(50) ? -2 : 2
+	var/offset = prob(50) ? -4 : 4
 	animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = 200) //start shaking
 
 	var/slab_name = occupant.name
@@ -252,5 +252,3 @@
 
 		pixel_x = initial(pixel_x) //return to it's spot after shaking
 		update_icon()
-
-

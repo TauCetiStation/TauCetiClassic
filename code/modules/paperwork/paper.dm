@@ -38,8 +38,8 @@
 
 /obj/item/weapon/paper/New()
 	..()
-	pixel_y = rand(-8, 8)
-	pixel_x = rand(-9, 9)
+	pixel_y = rand(-16, 16)
+	pixel_x = rand(-18, 18)
 	stamps = ""
 	spawn(2)
 		update_icon()

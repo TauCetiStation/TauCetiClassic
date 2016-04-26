@@ -67,8 +67,8 @@
 	icon_state = "bottle17"
 	flags = FPRINT |  TABLEPASS
 	New()
-		src.pixel_x = rand(-5.0, 5)
-		src.pixel_y = rand(-5.0, 5)
+		src.pixel_x = rand(-10, 10)
+		src.pixel_y = rand(-10, 10)
 
 /obj/item/weapon/reagent_containers/food/snacks/honeycomb
 	name = "honeycomb"

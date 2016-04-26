@@ -130,8 +130,8 @@
 
 		buildstage = 0
 		wiresexposed = 1
-		pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)
-		pixel_y = (dir & 3)? (dir ==1 ? -24 : 24) : 0
+		pixel_x = (dir & 3)? 0 : (dir == 4 ? -48 : 48)
+		pixel_y = (dir & 3)? (dir ==1 ? -48 : 48) : 0
 		update_icon()
 		if(ticker && ticker.current_state == 3)//if the game is running
 			src.initialize()
@@ -1526,8 +1526,8 @@ FIRE ALARM
 	if(building)
 		buildstage = 0
 		wiresexposed = 1
-		pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)
-		pixel_y = (dir & 3)? (dir ==1 ? -24 : 24) : 0
+		pixel_x = (dir & 3)? 0 : (dir == 4 ? -48 : 48)
+		pixel_y = (dir & 3)? (dir ==1 ? -48 : 48) : 0
 
 	if(z == ZLEVEL_STATION || z == ZLEVEL_ASTEROID)
 		if(security_level)

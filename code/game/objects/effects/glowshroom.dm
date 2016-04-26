@@ -31,13 +31,13 @@
 	if(!floor)
 		switch(dir) //offset to make it be on the wall rather than on the floor
 			if(NORTH)
-				pixel_y = 32
+				pixel_y = 64
 			if(SOUTH)
-				pixel_y = -32
+				pixel_y = -64
 			if(EAST)
-				pixel_x = 32
+				pixel_x = 64
 			if(WEST)
-				pixel_x = -32
+				pixel_x = -64
 		icon_state = "glowshroom[rand(1,3)]"
 	else //if on the floor, glowshroom on-floor sprite
 		icon_state = "glowshroomf"

@@ -20,14 +20,14 @@
 	name = "Emergency Locker"
 	spawnitems = list(/obj/item/weapon/tank/emergency_oxygen,/obj/item/clothing/mask/breath,/obj/item/weapon/crowbar)
 /obj/structure/walllocker/emerglocker/north
-	pixel_y = 32
+	pixel_y = 64
 	dir = SOUTH
 /obj/structure/walllocker/emerglocker/south
-	pixel_y = -32
+	pixel_y = -64
 	dir = NORTH
 /obj/structure/walllocker/emerglocker/west
-	pixel_x = -32
+	pixel_x = -64
 	dir = WEST
 /obj/structure/walllocker/emerglocker/east
-	pixel_x = 32
+	pixel_x = 64
 	dir = EAST

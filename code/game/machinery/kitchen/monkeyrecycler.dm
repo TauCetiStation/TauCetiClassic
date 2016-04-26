@@ -62,7 +62,7 @@
 				qdel(target)
 				user << "\blue You stuff the monkey in the machine."
 				playsound(src.loc, 'sound/machines/juicer.ogg', 50, 1)
-				var/offset = prob(50) ? -2 : 2
+				var/offset = prob(50) ? -4 : 4
 				animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = 200) //start shaking
 				use_power(500)
 				src.grinded++

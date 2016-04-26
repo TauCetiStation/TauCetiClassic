@@ -169,8 +169,8 @@
 	desc = "You're not the first."
 	icon = 'icons/obj/gravestone.dmi'
 	icon_state = "wood"
-	pixel_x = 15
-	pixel_y = 8
+	pixel_x = 30
+	pixel_y = 16
 	anchored = 1
 	var/message = "Unknown."
 
@@ -253,4 +253,3 @@ obj/item/weapon/gun/energy/laser/retro/jetsons/update_icon()
 	desc = "Jetson is coming appart"
 	icon_state = "jetsons_f"
 	item_color = "jetsons_f"
-

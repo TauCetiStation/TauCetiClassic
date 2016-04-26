@@ -13,7 +13,7 @@
 	name = "tree"
 	anchored = 1
 	density = 1
-	pixel_x = -16
+	pixel_x = -32
 	layer = 9
 
 /obj/structure/flora/tree/pine

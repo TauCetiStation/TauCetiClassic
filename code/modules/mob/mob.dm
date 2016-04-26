@@ -667,7 +667,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 		if(incapacitated())
 			lying = 1
 			canmove = 0
-			pixel_y = V.mob_offset_y - 5
+			pixel_y = V.mob_offset_y - 10
 		else
 			if(buckled.buckle_lying != -1)
 				lying = buckled.buckle_lying
@@ -1000,7 +1000,7 @@ mob/proc/yank_out_object()
 //Default buckling shift visual for mobs
 /mob/post_buckle_mob(mob/living/M)
 	if(M == buckled_mob) //post buckling
-		M.pixel_y = initial(M.pixel_y) + 9
+		M.pixel_y = initial(M.pixel_y) + 18
 		if(M.layer < layer)
 			M.layer = layer + 0.1
 	else //post unbuckling

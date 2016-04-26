@@ -270,7 +270,7 @@
 	if(occupant)
 		var/image/pickle = image(occupant.icon, occupant.icon_state)
 		pickle.overlays = occupant.overlays
-		pickle.pixel_y = 20
+		pickle.pixel_y = 40
 		overlays += pickle
 	if(panel_open)
 		icon_state = "pod-o"
@@ -329,4 +329,3 @@
 
 /obj/machinery/atmospherics/unary/cryo_cell/can_crawl_through()
 	return //can't ventcrawl in or out of cryo.
-

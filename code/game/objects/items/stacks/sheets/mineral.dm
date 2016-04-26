@@ -61,8 +61,8 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 
 /obj/item/stack/sheet/mineral/sandstone/New(var/loc, var/amount=null)
 	recipes = sandstone_recipes
-	pixel_x = rand(0,4)-4
-	pixel_y = rand(0,4)-4
+	pixel_x = rand(0,8)-8
+	pixel_y = rand(0,8)-8
 	..()
 
 /obj/item/stack/sheet/mineral
@@ -74,8 +74,8 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 
 /obj/item/stack/sheet/mineral/New()
 	..()
-	pixel_x = rand(0,4)-4
-	pixel_y = rand(0,4)-4
+	pixel_x = rand(0,8)-8
+	pixel_y = rand(0,8)-8
 
 
 /*
