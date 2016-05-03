@@ -1032,6 +1032,7 @@
 #include "code\modules\mining\ore_datum.dm"
 #include "code\modules\mining\satchel_ore_boxdm.dm"
 #include "code\modules\mining\scanners.dm"
+#include "code\modules\mining\drilling\circuitboard.dm"
 #include "code\modules\mining\drilling\drill.dm"
 #include "code\modules\mining\drilling\scanner.dm"
 #include "code\modules\mob\abilities.dm"

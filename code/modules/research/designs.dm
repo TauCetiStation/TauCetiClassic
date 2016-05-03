@@ -1866,6 +1866,24 @@ datum/design/mesons
 	materials = list(MAT_METAL = 50, MAT_GLASS = 50)
 	build_path = /obj/item/clothing/glasses/meson
 
+datum/design/scaner_imp
+	name = "Improved ore scaner"
+	desc = "A complex device used to locate ore deep underground."
+	id = "scaner_imp"
+	req_tech = list("magnets" = 2, "engineering" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 500, MAT_GLASS = 2000)
+	build_path = /obj/item/weapon/mining_scanner/improved
+
+datum/design/scaner_adv
+	name = "Advanced ore scaner"
+	desc = "A complex device used to locate ore deep underground."
+	id = "scaner_adv"
+	req_tech = list("magnets" = 4, "engineering" = 5)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 8000, MAT_SILVER = 200, MAT_DIAMOND = 100)
+	build_path = /obj/item/weapon/mining_scanner/improved/adv
+
 /////////////////////////////////////////
 //////////////Blue Space/////////////////
 /////////////////////////////////////////
