@@ -1,6 +1,6 @@
 
 
-/obj/machinery/power/port_gen/ERT
+/obj/machinery/power/port_gen/riteg
 	name = "C.H.E.R.N.O.B.Y.L-type Portable Emergency Generator"
 	icon_state = "portgen1"
 	icon_state_on = "portgen1"
@@ -29,20 +29,20 @@
 
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 
-/obj/machinery/power/port_gen/ERT/attack_hand(mob/user as mob)
+/obj/machinery/power/port_gen/riteg/attack_hand(mob/user as mob)
 	..()
 	if (!anchored)
 		return
 
 	interact(user)
 
-/obj/machinery/power/port_gen/ERT/attack_ai(mob/user as mob)
+/obj/machinery/power/port_gen/riteg/attack_ai(mob/user as mob)
 	interact(user)
 
-/obj/machinery/power/port_gen/ERT/attack_paw(mob/user as mob)
+/obj/machinery/power/port_gen/riteg/attack_paw(mob/user as mob)
 	interact(user)
 
-/obj/machinery/power/port_gen/ERT/interact(mob/user)
+/obj/machinery/power/port_gen/riteg/interact(mob/user)
 	if (get_dist(src, user) > 1 )
 		if (!istype(user, /mob/living/silicon/ai))
 			user.unset_machine()
@@ -62,7 +62,7 @@
 	user << browse("[dat]", "window=port_gen")
 	onclose(user, "port_gen")
 
-/obj/machinery/power/port_gen/ERT/Topic(href, href_list)
+/obj/machinery/power/port_gen/riteg/Topic(href, href_list)
 	if(..())
 		return
 
@@ -82,13 +82,13 @@
 			usr << browse(null, "window=port_gen")
 			usr.unset_machine()
 
-obj/machinery/power/port_gen/ERT/proc/Pulse_radiation()
+obj/machinery/power/port_gen/riteg/proc/Pulse_radiation()
 	for(var/mob/living/l in range(rad_range,src))
 		l.show_message("<span class=\"warning\">You feel warm</span>", 2)
 		var/rads = rad_cooef * sqrt( 1 / (get_dist(l, src) + 1) )
 		l.apply_effect(rads, IRRADIATE)
 
-/obj/machinery/power/port_gen/ERT/process()
+/obj/machinery/power/port_gen/riteg/process()
 
 	if(active  && !crit_fail && anchored && powernet)
 		add_avail(power_gen * power_output)
