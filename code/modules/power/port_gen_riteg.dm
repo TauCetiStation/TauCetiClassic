@@ -8,7 +8,7 @@
 	var/rad_cooef = 40
 	var/rad_range = 1
 
-/obj/machinery/power/port_gen/ERT/attackby(obj/item/O, mob/user, params)
+/obj/machinery/power/port_gen/riteg/attackby(obj/item/O, mob/user, params)
 
 	if (istype(O, /obj/item/weapon/card/emag))
 		emagged = 1

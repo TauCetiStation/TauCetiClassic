@@ -27,6 +27,7 @@
 
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/combat/New()
 	..()
+	reagents.clear_reagents()
 	reagents.add_reagent("synaptizine", 1)
 	reagents.add_reagent("hyperzine", 2.5)
 	reagents.add_reagent("oxycodone", 2.5)
