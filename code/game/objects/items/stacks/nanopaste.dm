@@ -37,8 +37,9 @@
 			else
 				user << "<span class='notice'>Nothing to fix here.</span>"
 
-		if (can_operate(H))
-			if (do_surgery(H,user,src))
-				return
 		else
-			user << "<span class='notice'>Nothing to fix in here.</span>"
+			if (can_operate(H))
+				if (do_surgery(H,user,src))
+					return
+			else
+				user << "<span class='notice'>Nothing to fix in here.</span>"
