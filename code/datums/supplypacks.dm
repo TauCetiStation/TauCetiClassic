@@ -1186,9 +1186,8 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	group = "Hydroponics"
 
 /datum/supply_packs/mining
-	name = "Mining Equipment Crate"
-	contains = list(/obj/item/weapon/pickaxe/drill,
-					/obj/item/weapon/pickaxe/drill,
+	name = "Mining Explosives Crate"
+	contains = list(/obj/item/weapon/mining_charge,
 					/obj/item/weapon/mining_charge,
 					/obj/item/weapon/mining_charge,
 					/obj/item/weapon/mining_charge,
@@ -1198,8 +1197,41 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 					/obj/item/weapon/mining_charge,
 					/obj/item/weapon/mining_charge,
 					/obj/item/weapon/mining_charge,)
-	cost = 40
+	cost = 15
 	containertype = /obj/structure/closet/crate/secure/gear
-	containername = "Mining equipment crate"
+	containername = "Mining Explosives Crate"
+	access = access_mining
+	group = "Mining"
+
+/datum/supply_packs/mining_drill
+	name = "Drill Crate"
+	contains = list(/obj/machinery/mining/drill)
+	cost = 30
+	containertype = /obj/structure/closet/crate/secure/large
+	containername = "Drill Crate"
+	access = access_mining
+	group = "Mining"
+
+/datum/supply_packs/mining_brace
+	name = "Brace Crate"
+	contains = list(/obj/machinery/mining/brace)
+	cost = 15
+	containertype = /obj/structure/closet/crate/secure/large
+	containername = "Brace Crate"
+	access = access_mining
+	group = "Mining"
+
+/datum/supply_packs/mining_supply
+	name = "Mining Supply Crate"
+	contains = list(/obj/item/weapon/mining_scanner/improved,
+					/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
+					/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
+					/obj/item/weapon/reagent_containers/spray/cleaner,
+					/obj/item/weapon/storage/box/autoinjector/stimpack,
+					/obj/item/device/flashlight/lantern,
+					/obj/item/weapon/pickaxe/drill/jackhammer)
+	cost = 30
+	containertype = /obj/structure/closet/crate/secure/gear
+	containername = "Mining Supply Crate"
 	access = access_mining
 	group = "Mining"

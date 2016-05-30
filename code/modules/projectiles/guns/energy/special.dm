@@ -221,3 +221,107 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 		zoom = 0
 	usr << "<font color='[zoom?"blue":"red"]'>Zoom mode [zoom?"en":"dis"]abled.</font>"
 	return
+
+//Tesla Cannon
+/obj/item/weapon/gun/tesla
+	name = "Tesla Cannon"
+	desc = "Cannon which uses electrical charge to damage multiple targets. Spin the generator handle to charge it up"
+	icon = 'icons/obj/gun.dmi'
+	icon_state = "tesla"
+	w_class = 4.0
+	origin_tech = "combat = 5;materials = 5;powerstorage = 5;magnets = 5;engineering = 5"
+	var/charge = 0
+	var/charging = FALSE
+	var/cooldown = FALSE
+
+/obj/item/weapon/gun/tesla/New()
+	..()
+	update_icon()
+
+/obj/item/weapon/gun/tesla/proc/charge(mob/living/user)
+	set waitfor = FALSE
+	if(do_after(user, 40, target = src))
+		if(charging && charge < 3)
+			charge++
+			playsound(loc, "sparks", 75, 1, -1)
+			if(charge < 3)
+				charge(user)
+			else
+				charging = FALSE
+		else
+			charging = FALSE
+	else
+		user << "<span class='danger'>Generator is too difficult to spin while moving! Charging aborted.</span>"
+		charging = FALSE
+	update_icon()
+
+/obj/item/weapon/gun/tesla/attack_self(mob/living/user)
+	if(charging)
+		charging = FALSE
+		user.visible_message("<span class='danger'>[user] stops spinning generator on Tesla Cannon!</span>",\
+		                     "<span class='red'>You stop charging Tesla Cannon...</span>")
+		cooldown = TRUE
+		spawn(50)
+			cooldown = FALSE
+		return
+	if(cooldown || charge == 3)
+		return
+	user.visible_message("<span class='danger'>[user] starts spinning generator on Tesla Cannon!</span>",\
+	                     "<span class='red'>You start charging Tesla Cannon...</span>")
+	charging = TRUE
+	charge(user)
+
+/obj/item/weapon/gun/tesla/special_check(mob/user, atom/target)
+	if(!charge)
+		user << "<span class='red'>Tesla Cannon is not charged!</span>"
+	else if(!istype(target, /mob/living))
+		user << "<span class='red'>Tesla Cannon needs to be aimed directly at living target.</span>"
+	else if(charging)
+		user << "<span class='red'>You can't shoot while charging!</span>"
+	else if(!los_check(user, target))
+		user << "<span class='red'>Something is blocking our line of shot!</span>"
+	else
+		Bolt(user, target, user, charge)
+		charge = 0
+
+	update_icon()
+
+	/*if(user.hand) with custom inhand sprites - yes, without - no.
+		user.update_inv_l_hand()
+	else
+		user.update_inv_r_hand()*/
+
+	return 0
+
+/obj/item/weapon/gun/tesla/proc/los_check(mob/A, mob/B)
+	for(var/X in getline(A,B))
+		var/turf/T = X
+		if(T.density)
+			return 0
+	return 1
+
+/obj/item/weapon/gun/tesla/proc/Bolt(mob/origin, mob/living/target, mob/user, jumps)
+	origin.Beam(target, "lightning[rand(1,12)]", 'icons/effects/effects.dmi', time = 5)
+	target.electrocute_act(15 * (jumps + 1), src, , , 1)
+	playsound(target, 'sound/machines/defib_zap.ogg', 50, 1, -1)
+	var/list/possible_targets = new
+	for(var/mob/living/M in range(2, target))
+		if(user == M || !los_check(target, M) || origin == M || target == M)
+			continue
+		possible_targets += M
+	if(!possible_targets.len)
+		return
+	var/mob/living/next = pick(possible_targets)
+	if(next && jumps > 0)
+		Bolt(target, next, user, --jumps)
+
+/obj/item/weapon/gun/tesla/update_icon()
+	icon_state = "[initial(icon_state)][charge]"
+
+/obj/item/weapon/gun/tesla/emp_act(severity)
+	if(charge)
+		if(istype(loc, /mob/living/carbon))
+			var/mob/living/carbon/M = loc
+			M.electrocute_act(5 * (4 - severity) * charge, src, , , 1)
+		charge = 0
+		update_icon()

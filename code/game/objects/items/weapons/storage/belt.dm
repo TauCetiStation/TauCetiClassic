@@ -71,7 +71,48 @@
 		"/obj/item/clothing/gloves/latex",
 	        "/obj/item/weapon/reagent_containers/hypospray"
 	)
-
+/obj/item/weapon/storage/belt/medical/surg
+	name = "Surgery belt"
+	desc = "Can hold various medical equipment."
+	icon_state = "medicalbelt"
+	item_state = "medical"
+	storage_slots = 9
+	max_w_class = 3
+	max_combined_w_class = 21
+	can_hold = list(
+		"/obj/item/device/healthanalyzer",
+		"/obj/item/weapon/reagent_containers/glass/beaker",
+		"/obj/item/weapon/reagent_containers/glass/bottle",
+		"/obj/item/weapon/reagent_containers/pill",
+		"/obj/item/weapon/reagent_containers/syringe",
+		"/obj/item/weapon/storage/fancy/cigarettes",
+		"/obj/item/weapon/storage/pill_bottle",
+		"/obj/item/stack/medical",
+		"/obj/item/device/flashlight/pen",
+		"/obj/item/clothing/mask/surgical",
+		"/obj/item/clothing/gloves/latex",
+	    "/obj/item/weapon/reagent_containers/hypospray",
+	    "/obj/item/weapon/retractor",
+	    "/obj/item/weapon/hemostat",
+	    "/obj/item/weapon/cautery",
+	    "/obj/item/weapon/surgicaldrill",
+	    "/obj/item/weapon/scalpel",
+	    "/obj/item/weapon/circular_saw",
+	    "/obj/item/weapon/bonegel",
+	    "/obj/item/weapon/FixOVein",
+	    "/obj/item/weapon/bonesetter"
+	)
+/obj/item/weapon/storage/belt/medical/surg/full/New()
+	..()
+	new /obj/item/weapon/retractor(src)
+	new /obj/item/weapon/hemostat(src)
+	new /obj/item/weapon/cautery(src)
+	new /obj/item/weapon/surgicaldrill(src)
+	new /obj/item/weapon/scalpel(src)
+	new /obj/item/weapon/circular_saw(src)
+	new /obj/item/weapon/bonegel(src)
+	new /obj/item/weapon/FixOVein(src)
+	new /obj/item/weapon/bonesetter(src)
 
 /obj/item/weapon/storage/belt/security
 	name = "security belt"

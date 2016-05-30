@@ -1743,6 +1743,15 @@ datum/design/temp_gun
 	materials = list(MAT_METAL = 5000, MAT_GLASS = 500, MAT_SILVER = 3000)
 	build_path = /obj/item/weapon/gun/energy/temperature
 
+datum/design/tesla_gun
+	name = "Tesla Cannon"
+	desc = "A gun which uses electrical discharges to hit multiple targets"
+	id = "tesla_gun"
+	req_tech = list("combat" = 4, "materials" = 4, "powerstorage" = 5, "magnets" = 4, "engineering" = 4)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 10000, MAT_GOLD = 1000, MAT_SILVER = 4000)
+	build_path = /obj/item/weapon/gun/tesla
+
 datum/design/flora_gun
 	name = "Floral Somatoray"
 	desc = "A tool that discharges controlled radiation which induces mutation in plant cells. Harmless to other organic life."
@@ -1856,6 +1865,24 @@ datum/design/mesons
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 50, MAT_GLASS = 50)
 	build_path = /obj/item/clothing/glasses/meson
+
+datum/design/scaner_imp
+	name = "Improved ore scaner"
+	desc = "A complex device used to locate ore deep underground."
+	id = "scaner_imp"
+	req_tech = list("magnets" = 2, "engineering" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 500, MAT_GLASS = 2000)
+	build_path = /obj/item/weapon/mining_scanner/improved
+
+datum/design/scaner_adv
+	name = "Advanced ore scaner"
+	desc = "A complex device used to locate ore deep underground."
+	id = "scaner_adv"
+	req_tech = list("magnets" = 4, "engineering" = 5)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 8000, MAT_SILVER = 200, MAT_DIAMOND = 100)
+	build_path = /obj/item/weapon/mining_scanner/improved/adv
 
 /////////////////////////////////////////
 //////////////Blue Space/////////////////

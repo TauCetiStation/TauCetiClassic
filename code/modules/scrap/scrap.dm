@@ -146,8 +146,10 @@
 	if(src.dig_amount <= 0)
 		visible_message("<span class='notice'>\The [src] is cleared out!</span>")
 		qdel(src)
+		return 0 
 	else
 		new /obj/item/weapon/scrap_lump(newloc)
+		return 1
 
 /obj/structure/scrap/attackby(obj/item/W, mob/user)
 	if(istype(W,/obj/item/weapon/shovel) && !(user in diggers))

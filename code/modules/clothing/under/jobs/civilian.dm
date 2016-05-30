@@ -36,6 +36,24 @@
 	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
 
+/obj/item/clothing/under/rank/recycler
+	name = "recycler's jumpsuit"
+	desc = "Stinks."
+	icon_state = "recycler"
+	item_state = "lb_suit"
+	item_color = "recycler"
+	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
+
+/obj/item/clothing/under/rank/recyclercasual
+	name = "recycler's casual jumpsuit"
+	desc = "Stinks."
+	icon_state = "recyclercasual"
+	item_state = "lb_suit"
+	item_color = "recyclercasual"
+	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO
+
 /obj/item/clothing/under/rank/chaplain
 	desc = "It's a black jumpsuit, often worn by religious folk."
 	name = "chaplain's jumpsuit"

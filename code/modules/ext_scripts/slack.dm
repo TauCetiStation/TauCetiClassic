@@ -1,15 +1,22 @@
-/proc/send2slack(var/channel, var/msg)
-	if(!config.use_slack_bot || !config.slack_bot_token || !config.slack_team || !channel || !msg)
+/proc/send2slack(var/channel, var/msg, var/attachment_msg, var/name, var/icon)
+	if(!config.use_slack_bot || !config.slack_team || !channel || !msg)
 		return 0
 
 	//more info here: https://api.slack.com/docs/formatting
-	//msg = html_decode(msg)
-	msg = sanitize_plus_popup(html_decode(revert_ja(msg)))
-
-	var/formatted_command = "curl --data \"[msg]\" 'https://[config.slack_team].slack.com/services/hooks/slackbot?token=[config.slack_bot_token]&channel=%23[channel]'"
-
-	//world.log << formatted_command
-	shell(formatted_command)
+	msg = html_decode(revert_ja(msg))
+	
+	var/script_args = "\"[channel]\" \"[msg]\""
+	
+	if(attachment_msg)
+		script_args += " --attachment_message \"[attachment_msg]\""
+	if(name)
+		script_args += " --name \"[name]\""
+	if(icon)
+		script_args += " --icon \"[icon]\""
+	
+	//required positional args: channel, text
+	//optional: --attachment_message TEXT, --name NAME, --icon EMOJI
+	ext_python("slackbot_message.py", script_args)
 
 /proc/send2slack_service(var/msg)
 	if(!msg)
@@ -19,13 +26,19 @@
 
 	send2slack("service", msg)
 
-/proc/send2slack_admincall(var/msg)
-	if(!msg)
+/proc/send2slack_admincall(var/msg, var/amsg)
+	if(!amsg)
 		return
+	
+	/* to prevent abuse @mentions */
+	amsg = replacetext(amsg, "@channel", "_channel")
+	amsg = replacetext(amsg, "@group", "_group")
+	amsg = replacetext(amsg, "@everyone", "_everyone")
+	
 	var/server_name = config.server_name ? config.server_name : "Noname server"
-	msg = server_name + " reports: " + msg
+	var/name = server_name + " player report"
 
-	send2slack("everything-talks", msg)
+	send2slack("modcomm", msg, amsg, name, ":scream_cat:")
 
 /proc/slack_startup()
 	send2slack_service("server starting up")

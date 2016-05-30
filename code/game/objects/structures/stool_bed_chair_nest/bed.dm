@@ -61,14 +61,15 @@
 	icon = 'icons/obj/rollerbed.dmi'
 	icon_state = "down"
 	anchored = 0
+	var/type_roller = /obj/item/roller
 
 /obj/structure/stool/bed/roller/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W,/obj/item/roller_holder))
+	if(istype(W,src))
 		if(buckled_mob)
 			user_unbuckle_mob()
 		else
 			visible_message("[user] collapses \the [src.name].")
-			new/obj/item/roller(get_turf(src))
+			new type_roller(get_turf(src))
 			spawn(0)
 				qdel(src)
 		return
@@ -85,14 +86,17 @@
 	icon = 'icons/obj/rollerbed.dmi'
 	icon_state = "folded"
 	w_class = 4 // Can't be put in backpacks. Oh well.
+	var/type_bed = /obj/structure/stool/bed/roller
+	var/type_holder = /obj/item/roller_holder
+
 
 /obj/item/roller/attack_self(mob/user)
-	var/obj/structure/stool/bed/roller/R = new /obj/structure/stool/bed/roller(user.loc)
+	var/obj/structure/stool/bed/roller/R = new type_bed(user.loc)
 	R.add_fingerprint(user)
 	qdel(src)
 
 /obj/item/roller/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W,/obj/item/roller_holder))
+	if(istype(W,src))
 		var/obj/item/roller_holder/RH = W
 		if(!RH.held)
 			user << "<span class='notice'>You collect the roller bed.</span>"
@@ -106,11 +110,12 @@
 	desc = "A rack for carrying a collapsed roller bed."
 	icon = 'icons/obj/rollerbed.dmi'
 	icon_state = "folded"
-	var/obj/item/roller/held
+	var/held = /obj/item/roller
+	var/type_bed = /obj/structure/stool/bed/roller
 
 /obj/item/roller_holder/New()
 	..()
-	held = new /obj/item/roller(src)
+	held = new held(src)
 
 /obj/item/roller_holder/attack_self(mob/user as mob)
 
@@ -119,7 +124,7 @@
 		return
 
 	user << "<span class='notice'>You deploy the roller bed.</span>"
-	var/obj/structure/stool/bed/roller/R = new /obj/structure/stool/bed/roller(user.loc)
+	var/obj/structure/stool/bed/roller/R = new type_bed(user.loc)
 	R.add_fingerprint(user)
 	qdel(held)
 	held = null
@@ -141,7 +146,7 @@
 		if(buckled_mob)
 			return 0
 		visible_message("[usr] collapses \the [src.name].")
-		new/obj/item/roller(get_turf(src))
+		new type_roller(get_turf(src))
 		qdel(src)
 		return
 
@@ -157,3 +162,4 @@
 					"<span class='danger'>You are buckled to [src] by [user.name]!</span>",\
 					"<span class='notice'>You hear metal clanking.</span>")
 	return
+

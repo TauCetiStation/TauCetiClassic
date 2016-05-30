@@ -44,7 +44,7 @@
 /obj/item/weapon/gun/proc/process_chamber()
 	return 0
 
-/obj/item/weapon/gun/proc/special_check(var/mob/M) //Placeholder for any special checks, like detective's revolver.
+/obj/item/weapon/gun/proc/special_check(mob/M, atom/target) //Placeholder for any special checks, like detective's revolver.
 	return 1
 
 /obj/item/weapon/gun/proc/shoot_with_empty_chamber(mob/living/user as mob|obj)
@@ -121,7 +121,7 @@
 
 	add_fingerprint(user)
 
-	if(!special_check(user))
+	if(!special_check(user, target))
 		return
 
 	if (!ready_to_fire())
