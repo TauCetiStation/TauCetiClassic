@@ -363,7 +363,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 					use_power(power)
 
 					for(var/M in being_built.materials)
-						if(linked_lathe.check_mat(being_built, M)<amount)
+						if(linked_lathe.check_mat(being_built, M) < amount)
 							src.visible_message("<font color='blue'>The [src.name] beeps, \"Not enough materials to complete prototype.\"</font>")
 							g2g = 0
 							break
@@ -391,7 +391,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 					var/R = being_built.reliability
 					spawn(32*amount/coeff)
 						if(g2g) //And if we only fail the material requirements, we still spend time and power
-							for(var/i = 0, i<amount, i++)
+							for(var/i = 0 to amount)
 								var/obj/new_item = new P(src)
 								if( new_item.type == /obj/item/weapon/storage/backpack/holding )
 									new_item.investigate_log("built by [key]","singulo")
@@ -777,7 +777,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				var/t
 				for(var/M in D.materials)
 					t = linked_lathe.check_mat(D, M)
-					if(t<1)
+					if(t < 1)
 						temp_material += " <span style=\"color:red\">[D.materials[M]/coeff] [CallMaterialName(M)]</span>"
 					else
 						temp_material += " [D.materials[M]/coeff] [CallMaterialName(M)]"
