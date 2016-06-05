@@ -8,6 +8,7 @@
 	var/overmind_get_delay = 0 // we don't want to constantly try to find an overmind, do it every 30 seconds
 	var/resource_delay = 0
 	var/point_rate = 2
+	var/last_resource_collection
 
 /obj/effect/blob/core/New(loc, var/h = 200, var/client/new_overmind = null, var/new_rate = 2)
 	blob_cores += src
@@ -15,6 +16,7 @@
 	if(!overmind)
 		create_overmind(new_overmind)
 	point_rate = new_rate
+	last_resource_collection = world.time
 	..(loc, h)
 
 
@@ -43,9 +45,10 @@
 	if(!overmind)
 		create_overmind()
 	else
-		if(resource_delay <= world.time)
-			resource_delay = world.time + 10 // 1 second
-			overmind.add_points(point_rate)
+		var/points_to_collect = point_rate*round((world.time-last_resource_collection)/10)
+		overmind.add_points(points_to_collect)
+		last_resource_collection = world.time
+
 	health = min(initial(health), health + 1)
 	for(var/i = 1; i < 8; i += i)
 		Pulse(0, i)
