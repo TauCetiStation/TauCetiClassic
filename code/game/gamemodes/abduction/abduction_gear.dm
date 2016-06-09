@@ -259,6 +259,9 @@
 		return
 	if(!AbductorCheck(user))
 		return
+	if(!target.speech_allowed)
+		user << "<span class='warning'>That target is already silenced!</span>"
+		return
 	user << "You silence [target]"
 	target.speech_allowed=0
 	spawn(300)		target.speech_allowed=1
