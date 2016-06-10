@@ -250,9 +250,6 @@
 	item_state = "silencer"
 	origin_tech = "materials=5;programming=5"
 
-/obj/item/device/abductor/silencer/attack(mob/living/M, mob/user)
-	if(!AbductorCheck(user))
-		return
 
 /obj/item/device/abductor/silencer/afterattack(var/atom/target, var/mob/living/user, flag, params)
 	if(flag)
