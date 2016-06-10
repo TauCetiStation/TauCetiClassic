@@ -260,12 +260,14 @@
 	if(!AbductorCheck(user))
 		return
 	if(istype(target,/mob/living/carbon/human))
-		if(!target.speech_allowed)
+		var/mob/living/carbon/human/Z = target
+		if(!Z.speech_allowed)
 			user << "<span class='warning'>That target is already silenced!</span>"
 			return
-		user << "<span class='notice'>You silence [target]</span>"
-		target.speech_allowed = 0
-		spawn(300)		target.speech_allowed = 1
+		user << "<span class='notice'>You silence [Z]</span>"
+		Z.speech_allowed = 0
+		spawn(300)	
+			Z.speech_allowed = 1
 
 
 //RECALL IMPLANT
