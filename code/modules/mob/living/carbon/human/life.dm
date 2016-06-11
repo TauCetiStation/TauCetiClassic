@@ -733,7 +733,7 @@
 				take_overall_damage(burn=HEAT_DAMAGE_LEVEL_1, used_weapon = "High Body Temperature")
 			else
 				if(prob(20))
-					src << "\blue You feel warm."
+					src << "\red You feel warm."
 		else if(bodytemperature < species.cold_level_0)
 			if(!istype(loc, /obj/machinery/atmospherics/unary/cryo_cell))
 				if(bodytemperature < species.cold_level_3)
