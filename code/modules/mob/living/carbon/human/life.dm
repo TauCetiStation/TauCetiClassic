@@ -716,7 +716,7 @@
 			return 1	//godmode
 
 		// +/- 50 degrees from 310.15K is the 'safe' zone, where no damage is dealt.
-		if(bodytemperature > species.heat_level_1)
+		if(bodytemperature > species.heat_level_0)
 			//Body temperature is too hot.
 			if(bodytemperature > species.heat_level_3)
 				throw_alert("temp","hot",3)
@@ -728,10 +728,13 @@
 				else
 					throw_alert("temp","hot",2)
 					take_overall_damage(burn=HEAT_DAMAGE_LEVEL_2, used_weapon = "High Body Temperature")
-			else
+			else if(bodytemperature > species.heat_level_1)
 				throw_alert("temp","hot",1)
 				take_overall_damage(burn=HEAT_DAMAGE_LEVEL_1, used_weapon = "High Body Temperature")
-		else if(bodytemperature < species.cold_level_1)
+			else
+				if(prob(20))
+					src << "\blue You feel warm."
+		else if(bodytemperature < species.cold_level_0)
 			if(!istype(loc, /obj/machinery/atmospherics/unary/cryo_cell))
 				if(bodytemperature < species.cold_level_3)
 					throw_alert("temp","cold",3)
@@ -739,9 +742,12 @@
 				else if(bodytemperature < species.cold_level_2)
 					throw_alert("temp","cold",2)
 					take_overall_damage(burn=COLD_DAMAGE_LEVEL_2, used_weapon = "Low Body Temperature")
-				else
+				else if(bodytemperature < species.cold_level_1)
 					throw_alert("temp","cold",1)
 					take_overall_damage(burn=COLD_DAMAGE_LEVEL_1, used_weapon = "Low Body Temperature")
+				else
+					if(prob(20))
+						src << "\red You feel cold."
 			else
 				clear_alert("temp")
 		else
@@ -1521,7 +1527,7 @@
 			//OH cmon...
 			var/nearsighted = 0
 			var/impaired    = 0
-			
+
 			if(disabilities & NEARSIGHTED)
 				nearsighted = 1
 
@@ -1537,7 +1543,7 @@
 			if(istype(wear_mask, /obj/item/clothing/mask/gas/welding) )
 				var/obj/item/clothing/mask/gas/welding/O = wear_mask
 				if(!O.up && tinted_weldhelh)
-					impaired = 2 
+					impaired = 2
 			if(istype(glasses, /obj/item/clothing/glasses/welding) )
 				var/obj/item/clothing/glasses/welding/O = glasses
 				if(!O.up && tinted_weldhelh)
@@ -1561,7 +1567,7 @@
 				overlay_fullscreen("impaired", /obj/screen/fullscreen/impaired, impaired)
 			else
 				clear_fullscreen("impaired")
-			
+
 			if(!machine)
 				var/isRemoteObserve = 0
 				if((REMOTE_VIEW in mutations) && remoteview_target)
