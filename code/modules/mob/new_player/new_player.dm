@@ -98,6 +98,9 @@
 
 	if(href_list["observe"])
 
+		if(jobban_isbanned(src, "Observer"))
+			src << "\red You have been banned from observing. Declare yourself."
+			return 0
 		if(alert(src,"Are you sure you wish to observe? You will have to wait 30 minutes before being able to respawn!","Player Setup","Yes","No") == "Yes")
 			if(!client)	return 1
 			var/mob/dead/observer/observer = new()

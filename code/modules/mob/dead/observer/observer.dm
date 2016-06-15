@@ -195,6 +195,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set name = "Ghost"
 	set desc = "Relinquish your life and enter the land of the dead."
 
+	if(jobban_isbanned(src, "Observer"))
+		src << "\red You have been banned from observing."
+		return
 	if(stat == DEAD)
 		if(fake_death)
 			var/response = alert(src, "Are you -sure- you want to ghost?\n(You are alive. If you ghost, you won't be able to play this round for another 30 minutes! You can't change your mind so choose wisely!)","Are you sure you want to ghost?","Ghost","Stay in body")
