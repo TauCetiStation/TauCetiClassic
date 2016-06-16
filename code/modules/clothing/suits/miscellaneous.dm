@@ -393,19 +393,3 @@
 	icon_state = "swim_red"
 	item_color = "swim_red"
 	siemens_coefficient = 1
-
-/obj/item/clothing/suit/batman
-	name = "Batman costume"
-	desc = "My parents are dead"
-	icon_state = "batman"
-	item_state = "batman"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS
-	flags_inv = HIDESHOES|HIDEJUMPSUIT
-
-/obj/item/clothing/suit/superman
-	name = "Superman costume"
-	desc = "Is it a bird? Is it a plane?"
-	icon_state = "superman"
-	item_state = "superman"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS
-	flags_inv = HIDESHOES|HIDEJUMPSUIT

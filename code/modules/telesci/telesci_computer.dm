@@ -116,13 +116,16 @@
 			t += "<span class='linkOff'>Set GPS memory</span>"
 		t += "<div class='statusDisplay'>[temp_msg]</div><BR>"
 		t += "<A href='?src=\ref[src];setrotation=1'>Set Bearing</A>"
-		t += "<div class='statusDisplay'>[rotation]Â°</div>"
+		t += "<div class='statusDisplay'>[rotation]°</div>"
 		t += "<A href='?src=\ref[src];setangle=1'>Set Elevation</A>"
-		t += "<div class='statusDisplay'>[angle]Â°</div>"
+		t += "<div class='statusDisplay'>[angle]°</div>"
 		t += "<span class='linkOn'>Set Power</span>"
 		t += "<div class='statusDisplay'>"
 
 		for(var/i = 1; i <= power_options.len; i++)
+			if(crystals.len + telepad.efficiency  < i)
+				t += "<span class='linkOff'>[power_options[i]]</span>"
+				continue
 			if(power == power_options[i])
 				t += "<span class='linkOn'>[power_options[i]]</span>"
 				continue
@@ -307,7 +310,8 @@
 		var/index = href_list["setpower"]
 		index = text2num(index)
 		if(index != null && power_options[index])
-			power = power_options[index]
+			if(crystals.len + telepad.efficiency >= index)
+				power = power_options[index]
 
 	if(href_list["setz"])
 		var/new_z = input("Please input desired sector.", name, z_co) as num
@@ -347,10 +351,7 @@
 	return 1
 
 /obj/machinery/computer/telescience/proc/recalibrate()
-	if(telepad)
-		teles_left = Clamp(crystals.len * telepad.efficiency * 4 + rand(-5, 0), 0, 65)
-	else
-		teles_left = 0
+	teles_left = rand(30, 40)
 	angle_off = rand(-25, 25)
 	power_off = rand(-4, 0)
 	rotation_off = rand(-10, 10)

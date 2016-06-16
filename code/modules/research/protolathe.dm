@@ -54,29 +54,25 @@ Note: Must be placed west/left of and R&D console to function.
 	efficiency_coeff = max(T, 1)
 
 /obj/machinery/r_n_d/protolathe/proc/check_mat(datum/design/being_built, var/M)
-	var/A = 0
 	switch(M)
 		if(MAT_METAL)
-			A = m_amount
+			return (m_amount - (being_built.materials[M]/efficiency_coeff) >= 0) ? 1 : 0
 		if(MAT_GLASS)
-			A = g_amount
+			return (g_amount - (being_built.materials[M]/efficiency_coeff) >= 0) ? 1 : 0
 		if(MAT_GOLD)
-			A = gold_amount
+			return (gold_amount - (being_built.materials[M]/efficiency_coeff) >= 0) ? 1 : 0
 		if(MAT_SILVER)
-			A = silver_amount
+			return (silver_amount - (being_built.materials[M]/efficiency_coeff) >= 0) ? 1 : 0
 		if(MAT_PHORON)
-			A = phoron_amount
+			return (phoron_amount - (being_built.materials[M]/efficiency_coeff) >= 0) ? 1 : 0
 		if(MAT_URANIUM)
-			A = uranium_amount
+			return (uranium_amount - (being_built.materials[M]/efficiency_coeff) >= 0) ? 1 : 0
 		if(MAT_DIAMOND)
-			A = diamond_amount
+			return (diamond_amount - (being_built.materials[M]/efficiency_coeff) >= 0) ? 1 : 0
 		if("$clown")
-			A = clown_amount
+			return (clown_amount - (being_built.materials[M]/efficiency_coeff) >= 0) ? 1 : 0
 		else
-			A = reagents.has_reagent(M, (being_built.materials[M]/efficiency_coeff))
-			//return reagents.has_reagent(M, (being_built.materials[M]/efficiency_coeff))
-	A = A / max(1 , (being_built.materials[M]/efficiency_coeff))
-	return A
+			return (reagents.has_reagent(M, (being_built.materials[M]/efficiency_coeff)) != 0) ? 1 : 0
 
 
 /obj/machinery/r_n_d/protolathe/attackby(var/obj/item/I as obj, var/mob/user as mob)
