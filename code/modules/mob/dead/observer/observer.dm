@@ -196,7 +196,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set desc = "Relinquish your life and enter the land of the dead."
 
 	if(jobban_isbanned(src, "Observer"))
-		src << "\red You have been banned from observing."
+		src << "<span class='red'>You have been banned from observing.</span>"
 		return
 	if(stat == DEAD)
 		if(fake_death)
