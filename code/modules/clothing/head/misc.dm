@@ -268,12 +268,3 @@
 	set src in usr
 
 	fedoraproc(usr)
-
-/obj/item/clothing/head/batman_helmet
-	name = "batman helmet"
-	desc = "It's not who you are underneath, it's what you do that defines you."
-	icon_state = "batman_helmet"
-	item_state = "batman_helmet"
-	flags = FPRINT | TABLEPASS | HEADCOVERSEYES | HEADCOVERSMOUTH | BLOCKHAIR
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
-	body_parts_covered = HEAD|FACE|EYES

@@ -149,14 +149,11 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			user << "A disk is already loaded into the machine."
 			return
 
-		if(istype(D, /obj/item/weapon/disk/tech_disk))
-			t_disk = D
+		if(istype(D, /obj/item/weapon/disk/tech_disk)) t_disk = D
+		else if (istype(D, /obj/item/weapon/disk/design_disk)) d_disk = D
 		else
-			if (istype(D, /obj/item/weapon/disk/design_disk))
-				d_disk = D
-			else
-				user << "\red Machine cannot accept disks in that format."
-				return
+			user << "\red Machine cannot accept disks in that format."
+			return
 		user.drop_item()
 		D.loc = src
 		user << "\blue You add the disk to the machine!"
@@ -344,10 +341,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 					break
 			if(being_built)
 				var/power = 2000
-				var/amount=text2num(href_list["amount"])
-				amount = max(1, min(10, amount))
 				for(var/M in being_built.materials)
-					power += round(being_built.materials[M] * amount/ 5)
+					power += round(being_built.materials[M] / 5)
 				power = max(2000, power)
 				screen = 0.3
 				if(linked_lathe.busy)
@@ -363,44 +358,43 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 					use_power(power)
 
 					for(var/M in being_built.materials)
-						if(linked_lathe.check_mat(being_built, M) < amount)
+						if(!linked_lathe.check_mat(being_built, M))
 							src.visible_message("<font color='blue'>The [src.name] beeps, \"Not enough materials to complete prototype.\"</font>")
 							g2g = 0
 							break
 						switch(M)
 							if(MAT_METAL)
-								linked_lathe.m_amount = max(0, (linked_lathe.m_amount-(being_built.materials[M]/coeff*amount)))
+								linked_lathe.m_amount = max(0, (linked_lathe.m_amount-(being_built.materials[M]/coeff)))
 							if(MAT_GLASS)
-								linked_lathe.g_amount = max(0, (linked_lathe.g_amount-(being_built.materials[M]/coeff*amount)))
+								linked_lathe.g_amount = max(0, (linked_lathe.g_amount-(being_built.materials[M]/coeff)))
 							if(MAT_GOLD)
-								linked_lathe.gold_amount = max(0, (linked_lathe.gold_amount-(being_built.materials[M]/coeff*amount)))
+								linked_lathe.gold_amount = max(0, (linked_lathe.gold_amount-(being_built.materials[M]/coeff)))
 							if(MAT_SILVER)
-								linked_lathe.silver_amount = max(0, (linked_lathe.silver_amount-(being_built.materials[M]/coeff*amount)))
+								linked_lathe.silver_amount = max(0, (linked_lathe.silver_amount-(being_built.materials[M]/coeff)))
 							if(MAT_PHORON)
-								linked_lathe.phoron_amount = max(0, (linked_lathe.phoron_amount-(being_built.materials[M]/coeff*amount)))
+								linked_lathe.phoron_amount = max(0, (linked_lathe.phoron_amount-(being_built.materials[M]/coeff)))
 							if(MAT_URANIUM)
-								linked_lathe.uranium_amount = max(0, (linked_lathe.uranium_amount-(being_built.materials[M]/coeff*amount)))
+								linked_lathe.uranium_amount = max(0, (linked_lathe.uranium_amount-(being_built.materials[M]/coeff)))
 							if(MAT_DIAMOND)
-								linked_lathe.diamond_amount = max(0, (linked_lathe.diamond_amount-(being_built.materials[M]/coeff*amount)))
+								linked_lathe.diamond_amount = max(0, (linked_lathe.diamond_amount-(being_built.materials[M]/coeff)))
 							if("$clown")
-								linked_lathe.clown_amount = max(0, (linked_lathe.clown_amount-(being_built.materials[M]/coeff*amount)))
+								linked_lathe.clown_amount = max(0, (linked_lathe.clown_amount-(being_built.materials[M]/coeff)))
 							else
-								linked_lathe.reagents.remove_reagent(M, being_built.materials[M]/coeff*amount)
+								linked_lathe.reagents.remove_reagent(M, being_built.materials[M]/coeff)
 
 					var/P = being_built.build_path //lets save these values before the spawn() just in case. Nobody likes runtimes.
 					var/R = being_built.reliability
-					spawn(32*amount/coeff)
+					spawn(32)
 						if(g2g) //And if we only fail the material requirements, we still spend time and power
-							for(var/i = 0 to amount)
-								var/obj/new_item = new P(src)
-								if( new_item.type == /obj/item/weapon/storage/backpack/holding )
-									new_item.investigate_log("built by [key]","singulo")
-								new_item.reliability = R
-								new_item.m_amt /= coeff
-								new_item.g_amt /= coeff
-								if(linked_lathe.hacked)
-									R = max((reliability / 2), 0)
-								new_item.loc = linked_lathe.loc
+							var/obj/new_item = new P(src)
+							if( new_item.type == /obj/item/weapon/storage/backpack/holding )
+								new_item.investigate_log("built by [key]","singulo")
+							new_item.reliability = R
+							new_item.m_amt /= coeff
+							new_item.g_amt /= coeff
+							if(linked_lathe.hacked)
+								R = max((reliability / 2), 0)
+							new_item.loc = linked_lathe.loc
 						linked_lathe.busy = 0
 						screen = 3.1
 						updateUsrDialog()
@@ -773,27 +767,17 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 					continue
 				var/temp_dat = "[D.name]"
 				var/temp_material
-				var/c = 50
-				var/t
+				var/check_materials = 1
 				for(var/M in D.materials)
-					t = linked_lathe.check_mat(D, M)
-					if(t < 1)
+					if (!linked_lathe.check_mat(D, M))
+						check_materials = 0
 						temp_material += " <span style=\"color:red\">[D.materials[M]/coeff] [CallMaterialName(M)]</span>"
 					else
 						temp_material += " [D.materials[M]/coeff] [CallMaterialName(M)]"
-					c = min(t,c)
-
-				if (c >= 1)
-
-					dat += "* <A href='?src=\ref[src];build=[D.id];amount=1'>[temp_dat]</A>"
-					if(c >= 5)
-						dat += "<A href='?src=\ref[src];build=[D.id];amount=5'>x5</A>"
-					if(c >= 10)
-						dat += "<A href='?src=\ref[src];build=[D.id];amount=10'>x10</A>"
-					dat += "[temp_material]"
+				if (check_materials)
+					dat += "* <A href='?src=\ref[src];build=[D.id]'>[temp_dat]</A>[temp_material]<BR>"
 				else
-					dat += "* <span class='linkOff'>[temp_dat]</span>[temp_material]"
-				dat += "<BR>"
+					dat += "* <span class='linkOff'>[temp_dat]</span>[temp_material]<BR>"
 			dat += "</div>"
 
 		if(3.2) //Protolathe Material Storage Sub-menu
