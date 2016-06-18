@@ -117,6 +117,9 @@
 
 	if (user)
 		if (istype(M, /mob/living/carbon/human))
+			if(M.get_species() == "Machine")
+				user << "Nope."
+				return
 			if(!inuse)
 				var/obj/effect/equip_e/human/O = new /obj/effect/equip_e/human(  )
 				O.source = user

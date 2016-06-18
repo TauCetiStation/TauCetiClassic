@@ -110,6 +110,9 @@
 		open = 0
 		density = 1
 		for(var/mob/living/carbon/C in loc)
+			if(istype(C, /mob/living/carbon/human))
+				var/mob/living/carbon/human/R = C
+				if(R.get_species() == "Machine") continue
 			if(C.buckled)	continue
 			if(C.client)
 				C.client.perspective = EYE_PERSPECTIVE
@@ -133,9 +136,9 @@
 							if(ghost.can_reenter_corpse)
 								ghost << "<b><font color = #330033><font size = 3>Your corpse has been placed into a cloning scanner. Return to your body if you want to be resurrected/cloned!</b> (Verbs -> Ghost -> Re-enter corpse)</font color>"
 							break
-		
+
 		return 1
-		
+
 /obj/machinery/dna_scannernew/proc/open(mob/user)
 	if(!open)
 		if(panel_open)
