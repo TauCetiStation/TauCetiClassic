@@ -61,7 +61,7 @@
 		return
 
 	//var/message_a = say_quote(message)
-	//проблемка как и у алиенов, мержить/обновлять
+	//ГЇГ°Г®ГЎГ«ГҐГ¬ГЄГ  ГЄГ ГЄ ГЁ Гі Г Г«ГЁГҐГ­Г®Гў, Г¬ГҐГ°Г¦ГЁГІГј/Г®ГЎГ­Г®ГўГ«ГїГІГј
 	var/message_a = "<span class='say_quote'>says,</span> \"<span class='body'>[message]</span>\""
 	var/rendered = "<font color=\"#EE4000\"><i><span class='game say'>Blob Telepathy, <span class='name'>[name]</span> <span class='message'>[message_a]</span></span></i></font>"
 
@@ -84,7 +84,7 @@
 
 /mob/camera/blob/Move(var/NewLoc, var/Dir = 0)
 	var/obj/effect/blob/B = locate() in range("3x3", NewLoc)
-	if(B)
+	if(NewLoc && B)
 		loc = NewLoc
 	else
 		return 0
