@@ -107,7 +107,8 @@
 		open_machine()
 		add_fingerprint(usr)
 	else
-		if(istype(usr, /mob/dead/observer/)) return
+		if(isobserver(usr))
+			return
 		open_machine()
 
 /obj/machinery/atmospherics/unary/cryo_cell/examine()

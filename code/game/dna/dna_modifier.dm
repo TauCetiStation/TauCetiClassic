@@ -112,7 +112,8 @@
 		for(var/mob/living/carbon/C in loc)
 			if(istype(C, /mob/living/carbon/human))
 				var/mob/living/carbon/human/R = C
-				if(R.get_species() == "Machine") continue
+				if(R.get_species() == "Machine")
+					continue
 			if(C.buckled)	continue
 			if(C.client)
 				C.client.perspective = EYE_PERSPECTIVE
