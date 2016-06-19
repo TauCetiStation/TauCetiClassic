@@ -10,7 +10,8 @@
 	if(ishuman(src) && hasorgans(src))
 		var/mob/living/carbon/human/U = src
 		var/datum/organ/external/temp = U.organs_by_name["r_hand"]
-		if (U.hand) temp = U.organs_by_name["l_hand"]
+		if (U.hand)
+			temp = U.organs_by_name["l_hand"]
 		if(temp && !temp.is_usable())
 			return
 	var/obj/item/I
