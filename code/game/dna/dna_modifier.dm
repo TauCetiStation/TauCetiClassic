@@ -152,6 +152,8 @@
 		if(T)
 			open = 1
 			density = 0
+			if(beaker)
+				beaker = 0
 			T.contents += contents
 			if(occupant)
 				if(occupant.client)
