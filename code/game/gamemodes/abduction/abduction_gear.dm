@@ -262,6 +262,7 @@
 			user << "<span class='warning'>That target is already silenced!</span>"
 			return
 		user << "<span class='notice'>You silence [Z]</span>"
+		Z << "<span class='warning'>Your vocal chords became paralyzed!</span>"
 		Z.speech_allowed = 0
 		spawn(300)	
 			Z.speech_allowed = 1
