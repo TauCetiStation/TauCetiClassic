@@ -243,47 +243,29 @@
 //SILENCER
 /obj/item/device/abductor/silencer
 	name = "abductor silencer"
-	desc = "A compact device used to shut down communications equipment."
+	desc = "A compact device used to block all sound coming from victim."
 	icon = 'icons/obj/abductor.dmi'
 	tc_custom = 'tauceti/icons/mob/abduction/silencer.dmi'
 	icon_state = "silencer"
 	item_state = "silencer"
 	origin_tech = "materials=5;programming=5"
 
-/obj/item/device/abductor/silencer/attack(mob/living/M, mob/user)
-	if(!AbductorCheck(user))
-		return
-	radio_off(M, user)
 
 /obj/item/device/abductor/silencer/afterattack(var/atom/target, var/mob/living/user, flag, params)
 	if(flag)
 		return
 	if(!AbductorCheck(user))
 		return
-	radio_off(target, user)
-
-/obj/item/device/abductor/silencer/proc/radio_off(var/atom/target, var/mob/living/user)
-	if( !(user in (viewers(7,target))) )
-		return
-
-	var/turf/targloc = get_turf(target)
-
-	var/mob/living/carbon/human/M
-	for(M in view(2,targloc))
-		if(M == user)
-			continue
-		user << "<span class='notice'>You silence [M]'s radio devices.</span>"
-		radio_off_mob(M)
-
-/obj/item/device/abductor/silencer/proc/radio_off_mob(var/mob/living/carbon/human/M)
-	var/list/all_items = M.GetAllContents()
-
-	for(var/obj/I in all_items)
-		if(istype(I,/obj/item/device/radio/))
-			var/obj/item/device/radio/r = I
-			r.listening = 0
-			if(!istype(I,/obj/item/device/radio/headset))
-				r.broadcasting = 0 //goddamned headset hacks
+	if(istype(target,/mob/living/carbon/human))
+		var/mob/living/carbon/human/Z = target
+		if(!Z.speech_allowed)
+			user << "<span class='warning'>That target is already silenced!</span>"
+			return
+		user << "<span class='notice'>You silence [Z]</span>"
+		Z << "<span class='warning'>Your vocal chords became paralyzed!</span>"
+		Z.speech_allowed = 0
+		spawn(300)	
+			Z.speech_allowed = 1
 
 
 //RECALL IMPLANT
