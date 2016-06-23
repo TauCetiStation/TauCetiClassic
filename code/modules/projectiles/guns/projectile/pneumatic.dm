@@ -132,7 +132,8 @@
 	user.visible_message("<span class='danger'>[user] fires [src] and launches [object] at [target]!</span>","<span class='danger'>You fire [src] and launch [object] at [target]!</span>")
 
 	src.remove_from_storage(object,user.loc)
-	object.throw_at(target,10,speed,user)
+	object.throwforce = object.throwforce*speed/5 //REMOVE THIS IF YOU CAN FIX THROWING WITH SPEED THAT ALWAYS = 5 (oh my bad English)
+	object.throw_at(target,81,speed,user)         //81 because speed must be < than distance
 
 	var/lost_gas_amount = tank.air_contents.total_moles*(pressure_setting/100)
 	var/datum/gas_mixture/removed = tank.air_contents.remove(lost_gas_amount)
