@@ -281,10 +281,7 @@
 	for(var/obj/I in all_items)
 		if(istype(I,/obj/item/device/radio/))
 			var/obj/item/device/radio/r = I
-			r.listening = 0
-			r.broadcasting = 0
-			for(var/chan in r.channels)
-				r.channels[chan] &= ~r.FREQ_LISTENING
+			r.on = 0
 
 
 //RECALL IMPLANT
