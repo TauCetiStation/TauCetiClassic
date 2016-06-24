@@ -191,7 +191,6 @@
 
 	var/obj/item/weapon/arrow/A = arrow
 	A.loc = get_turf(user)
-	A.throwforce *= tension //REMOVE THIS IF YOU CAN FIX THROWING WITH SPEED THAT ALWAYS = 5 (oh my bad English)
 	A.throw_at(target,26,tension*release_speed,user) //26 because speed must be < than distance
 	arrow = null
 	tension = 0
