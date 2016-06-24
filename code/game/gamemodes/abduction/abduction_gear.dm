@@ -282,8 +282,9 @@
 		if(istype(I,/obj/item/device/radio/))
 			var/obj/item/device/radio/r = I
 			r.listening = 0
-			if(!istype(I,/obj/item/device/radio/headset))
-				r.broadcasting = 0 //goddamned headset hacks
+			r.broadcasting = 0
+			for(var/chan in r.channels)
+				r.channels[chan] &= ~r.FREQ_LISTENING
 
 
 //RECALL IMPLANT
