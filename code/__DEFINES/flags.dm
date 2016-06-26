@@ -52,6 +52,10 @@
 #define RAD_IMMUNE		16384
 #define VIRUS_IMMUNE	32768
 
+//Species movespeed flags.
+#define IS_TAJARA		1
+#define IS_UNATHI		2
+
 //bitflags for door switches.
 #define OPEN	1
 #define IDSCAN	2
