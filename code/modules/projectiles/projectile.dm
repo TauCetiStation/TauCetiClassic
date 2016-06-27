@@ -65,6 +65,7 @@
 	var/datum/vector_loc/location		// current location of the projectile in pixel space
 	var/matrix/effect_transform			// matrix to rotate and scale projectile effects - putting it here so it doesn't
 										//  have to be recreated multiple times
+	var/list/beakers					// for grenade
 
 /obj/item/projectile/New()
 	..()
@@ -179,6 +180,13 @@
 				O.bullet_act(src)
 			for(var/mob/M in A)
 				M.bullet_act(src, def_zone)
+
+		if(beakers != null)
+			var/obj/item/weapon/reagent_containers/glass/beaker/bluespace/Big = new /obj/item/weapon/reagent_containers/glass/beaker/bluespace(src)
+			for(var/obj/item/weapon/reagent_containers/glass/G in beakers)
+				G.reagents.trans_to(Big, G.reagents.total_volume)
+			//spawn(50)
+
 		//stop flying
 		on_impact(A)
 

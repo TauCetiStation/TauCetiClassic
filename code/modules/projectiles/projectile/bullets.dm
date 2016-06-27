@@ -70,6 +70,56 @@
 	embed = 0
 	sharp = 0
 
+/obj/item/projectile/bullet/chem
+	damage = 5
+	stun = 2
+
+/obj/item/projectile/bullet/chem/teargas
+
+/obj/item/projectile/bullet/chem/teargas/New()
+	..()
+	var/obj/item/weapon/reagent_containers/glass/beaker/B1 = new(src)
+	var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
+	B1.reagents.add_reagent("condensedcapsaicin", 15)
+	B1.reagents.add_reagent("potassium", 15)
+	B2.reagents.add_reagent("phosphorus", 15)
+	B2.reagents.add_reagent("sugar", 15)
+
+	beakers = list()
+	beakers += B1
+	beakers += B2
+
+
+/obj/item/projectile/bullet/chem/EMP
+
+/obj/item/projectile/bullet/chem/EMP/New()
+	..()
+	var/obj/item/weapon/reagent_containers/glass/beaker/B1 = new(src)
+	var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
+	B1.reagents.add_reagent("uranium", 15)
+	B2.reagents.add_reagent("iron", 15)
+
+	beakers = list()
+	beakers += B1
+	beakers += B2
+
+/obj/item/projectile/bullet/chem/Exp
+	damage = 20
+	stun = 5
+
+/obj/item/projectile/bullet/chem/Exp/New()
+	..()
+	var/obj/item/weapon/reagent_containers/glass/beaker/B1 = new(src)
+	var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
+	B1.reagents.add_reagent("glycerol", 15)
+	B1.reagents.add_reagent("pacid", 15)
+	B2.reagents.add_reagent("sacid", 15)
+
+	beakers = list()
+	beakers += B1
+	beakers += B2
+
+
 /obj/item/projectile/bullet/suffocationbullet//How does this even work?
 	name = "co bullet"
 	damage = 20
