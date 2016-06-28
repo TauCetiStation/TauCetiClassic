@@ -73,6 +73,13 @@
 /obj/item/projectile/bullet/chem
 	damage = 5
 	stun = 2
+	var/list/beakers					// for grenade
+
+/obj/item/projectile/bullet/chem/After_hit()
+	if(beakers != null)
+		var/obj/item/weapon/reagent_containers/glass/beaker/bluespace/Big = new /obj/item/weapon/reagent_containers/glass/beaker/bluespace(src)
+		for(var/obj/item/weapon/reagent_containers/glass/G in beakers)
+			G.reagents.trans_to(Big, G.reagents.total_volume)
 
 /obj/item/projectile/bullet/chem/teargas
 
