@@ -229,7 +229,7 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "tesla"
 	w_class = 4.0
-#264	origin_tech = "combat=5;materials=5;powerstorage=5;magnets=5;engineering=5"
+	origin_tech = "combat=5;materials=5;powerstorage=5;magnets=5;engineering=5"
 	var/charge = 0
 	var/charging = FALSE
 	var/cooldown = FALSE
