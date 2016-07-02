@@ -65,7 +65,7 @@
 	if(!produce_drones || !config.allow_drone_spawn || count_drones() >= config.max_maint_drones)
 		return
 
-	if(!player || !istype(player.mob,/mob/dead))
+	if(!player) //|| !istype(player.mob,/mob/dead))
 		return
 
 	visible_message("\The [src] churns and grinds as it lurches into motion, disgorging a shiny new drone after a few moments.")
@@ -78,27 +78,25 @@
 	drone_progress = 0
 
 
-
 /mob/dead/verb/join_as_drone()
 
 	set category = "Ghost"
 	set name = "Join As Drone"
 	set desc = "If there is a powered, enabled fabricator in the game world with a prepared chassis, join as a maintenance drone."
 
-
 	if(ticker.current_state < GAME_STATE_PLAYING)
 		src << "\red The game hasn't started yet!"
+		return
+
+	if (usr != src)
+		return 0 //something is terribly wrong
+
+	if (!src.stat)
 		return
 
 	if(!(config.allow_drone_spawn))
 		src << "\red That verb is not currently permitted."
 		return
-
-	if (!src.stat)
-		return
-
-	if (usr != src)
-		return 0 //something is terribly wrong
 
 	if(jobban_isbanned(src, ROLE_DRONE))
 		usr << "\red You are banned from playing synthetics and cannot spawn as a drone."
@@ -132,7 +130,12 @@
 		return
 
 	var/response = alert(src, "Are you -sure- you want to become a maintenance drone?","Are you sure you want to beep?","Beep!","Nope!")
-	if(response != "Beep!") return  //Hit the wrong key...again.
+	if(response != "Beep!")
+		return  //Hit the wrong key...again.
+
+	dronize()
+
+/mob/proc/dronize()
 
 	for(var/obj/machinery/drone_fabricator/DF in world)
 		if(DF.stat & NOPOWER || !DF.produce_drones)
