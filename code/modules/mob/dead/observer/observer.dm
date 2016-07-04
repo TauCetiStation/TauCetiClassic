@@ -177,15 +177,16 @@ Works together with spawning an observer, noted above.
 */
 	return 1
 
-/mob/proc/ghostize(var/can_reenter_corpse = 1, var/bancheck = 0)
+/mob/proc/ghostize(var/can_reenter_corpse = TRUE, var/bancheck = FALSE)
 	if(key)
-		if(bancheck == 1 && jobban_isbanned(src, "Observer") && !(src.client.holder.rights & (R_ADMIN|R_MOD))) // We have ghostbans now and we need to understand when to check for them or gnore it so spells, runes and other in-game things won't break
-			var/mob/M = mousize()
-			if((config.allow_drone_spawn) || !jobban_isbanned(src, ROLE_DRONE))
-				var/response = alert(M, "Do you want to become a maintenance drone?","Are you sure you want to beep?","Beep!","Nope!")
-				if(response == "Beep!")
-					M.dronize()
-					qdel(M)
+		if(!(src.client.holder && src.client.holder.rights & (R_ADMIN|R_MOD)))
+			if(bancheck == TRUE && jobban_isbanned(src, "Observer")) // We have ghostbans now and we need to understand when to check for them or gnore it so spells, runes and other in-game things won't break
+				var/mob/M = mousize()
+				if((config.allow_drone_spawn) || !jobban_isbanned(src, ROLE_DRONE))
+					var/response = alert(M, "Do you want to become a maintenance drone?","Are you sure you want to beep?","Beep!","Nope!")
+					if(response == "Beep!")
+						M.dronize()
+						qdel(M)
 			return
 		var/mob/dead/observer/ghost = new(src)	//Transfer safety to observer spawning proc.
 		ghost.can_reenter_corpse = can_reenter_corpse
@@ -203,22 +204,25 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set name = "Ghost"
 	set desc = "Relinquish your life and enter the land of the dead."
 
-	if(jobban_isbanned(src, "Observer") && !(src.client.holder.rights & (R_ADMIN|R_MOD)))
-		src << "<span class='red'>You have been banned from observing.</span>"
-		return
+	if(!(src.client.holder && src.client.holder.rights & (R_ADMIN|R_MOD)))
+		if(jobban_isbanned(src, "Observer"))
+			src << "<span class='red'>You have been banned from observing. Declare yourself.</span>"
+			return
 	if(stat == DEAD)
 		if(fake_death)
 			var/response = alert(src, "Are you -sure- you want to ghost?\n(You are alive. If you ghost, you won't be able to play this round for another 30 minutes! You can't change your mind so choose wisely!)","Are you sure you want to ghost?","Ghost","Stay in body")
-			if(response != "Ghost")	return	//didn't want to ghost after-all
-			var/mob/dead/observer/ghost = ghostize(0,)
+			if(response != "Ghost")
+				return	//didn't want to ghost after-all
+			var/mob/dead/observer/ghost = ghostize(can_reenter_corpse = FALSE)
 			ghost.timeofdeath = world.time // Because the living mob won't have a time of death and we want the respawn timer to work properly.
 		else
-			ghostize(1,)
+			ghostize(can_reenter_corpse = TRUE)
 	else
 		var/response = alert(src, "Are you -sure- you want to ghost?\n(You are alive. If you ghost, you won't be able to play this round for another 30 minutes! You can't change your mind so choose wisely!)","Are you sure you want to ghost?","Ghost","Stay in body")
-		if(response != "Ghost")	return	//didn't want to ghost after-all
+		if(response != "Ghost")
+			return	//didn't want to ghost after-all
 		resting = 1
-		var/mob/dead/observer/ghost = ghostize(0,)						//0 parameter is so we can never re-enter our body, "Charlie, you can never come baaaack~" :3
+		var/mob/dead/observer/ghost = ghostize(can_reenter_corpse = FALSE)						//0 parameter is so we can never re-enter our body, "Charlie, you can never come baaaack~" :3
 		ghost.timeofdeath = world.time // Because the living mob won't have a time of death and we want the respawn timer to work properly.
 	return
 
