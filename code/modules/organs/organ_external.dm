@@ -566,6 +566,10 @@ Note that amputating the affected organ does in fact remove the infection from t
 	if(destspawn) return
 	if(override)
 		status |= ORGAN_DESTROYED
+	for(var/datum/wound/W in wounds)
+		if(W.internal)
+			wounds -= W
+			update_damages()
 	if(status & ORGAN_DESTROYED)
 		if(body_part == UPPER_TORSO)
 			return
