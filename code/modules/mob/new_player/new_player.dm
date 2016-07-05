@@ -98,7 +98,7 @@
 		new_player_panel_proc()
 
 	if(href_list["observe"])
-		if(!(src.client.holder && src.client.holder.rights & (R_ADMIN|R_MOD)))
+		if(!(src.client.holder && (src.client.holder.rights & (R_ADMIN|R_MOD))))
 			if(jobban_isbanned(src, "Observer"))
 				src << "<span class='red'>You have been banned from observing. Declare yourself.</span>"
 				return 0
