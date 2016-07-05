@@ -182,8 +182,6 @@
 				O.bullet_act(src)
 			for(var/mob/M in A)
 				M.bullet_act(src, def_zone)
-			//spawn(50)
-		After_hit()
 
 		//stop flying
 		on_impact(A)
