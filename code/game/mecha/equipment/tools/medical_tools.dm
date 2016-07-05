@@ -10,7 +10,7 @@
 	equip_cooldown = 20
 	var/mob/living/carbon/occupant = null
 	var/datum/global_iterator/pr_mech_sleeper
-	var/inject_amount = 10
+	var/inject_amount = 5
 	salvageable = 0
 
 /obj/item/mecha_parts/mecha_equipment/tool/sleeper/can_attach(obj/mecha/medical/M)
@@ -191,7 +191,7 @@
 	if(!R || !occupant || !SG || !(SG in chassis.equipment))
 		return 0
 	var/to_inject = min(R.volume, inject_amount)
-	if(to_inject && occupant.reagents.get_reagent_amount(R.id) + to_inject <= inject_amount*2)
+	if(to_inject && occupant.reagents.get_reagent_amount(R.id) + to_inject <= inject_amount*4)
 		occupant_message("Injecting [occupant] with [to_inject] units of [R.name].")
 		log_message("Injecting [occupant] with [to_inject] units of [R.name].")
 		SG.reagents.trans_id_to(occupant,R.id,to_inject)
@@ -390,6 +390,7 @@
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "syringegun"
 	var/list/syringes
+	var/list/accessible_reagents
 	var/list/known_reagents
 	var/list/processed_reagents
 	var/max_syringes = 10
@@ -406,6 +407,10 @@
 	..()
 	flags |= NOREACT
 	syringes = new
+	accessible_reagents = list("inaprovaline","anti_toxin", "alkysine", "arithrazine", "bicaridine", "citalopram", "dermaline",
+	"dexalin", "dexalinp", "ethylredoxrazine", "hyperzine", "hyronalin", "imidazoline", "kelotane", "leporazine", "methylphenidate",
+	"oxycodone", "paracetamol", "paroxetine", "peridaxon", "rezadone", "ryetalyn", "spaceacillin", "sterilizine", "synaptizine",
+	"tramadol", "tricordrazine", "doctorsdelight")
 	known_reagents = list("inaprovaline"="Inaprovaline","anti_toxin"="Anti-Toxin (Dylovene)")
 	processed_reagents = new
 	create_reagents(max_volume)
@@ -620,7 +625,7 @@
 		return 0
 	occupant_message("Analyzing reagents...")
 	for(var/datum/reagent/R in A.reagents.reagent_list)
-		if(R.reagent_state == 2 && add_known_reagent(R.id,R.name))
+		if(accessible_reagents.Find(R.id) != 0 && add_known_reagent(R.id,R.name))
 			occupant_message("Reagent analyzed, identified as [R.name] and added to database.")
 			send_byjax(chassis.occupant,"msyringegun.browser","reagents_form",get_reagents_form())
 	occupant_message("Analyzis complete.")
