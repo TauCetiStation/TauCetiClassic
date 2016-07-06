@@ -249,6 +249,8 @@
 			if(AM.loc.x != src.loc.x-1) return
 
 	if(istype(AM, /obj))
+		if(istype(AM, /obj/mecha/))
+			return
 		var/obj/O = AM
 		O.loc = src
 	else if(istype(AM, /mob))

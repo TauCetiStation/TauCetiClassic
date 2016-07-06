@@ -116,7 +116,9 @@
 	log_attack("[user.name] ([user.ckey]) used the [name] to inject [M.name] ([M.ckey])")
 
 	if (user)
-		if (istype(M, /mob/living/carbon/human))
+		if (ishuman(M))
+			if(M.get_species() == "Machine")
+				return
 			if(!inuse)
 				var/obj/effect/equip_e/human/O = new /obj/effect/equip_e/human(  )
 				O.source = user
