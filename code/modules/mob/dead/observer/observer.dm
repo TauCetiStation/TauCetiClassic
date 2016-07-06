@@ -206,7 +206,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	if(!(src.client.holder && (src.client.holder.rights & (R_ADMIN|R_MOD))))
 		if(jobban_isbanned(src, "Observer"))
-			src << "<span class='red'>You have been banned from observing. Declare yourself.</span>"
+			src << "<span class='red'>You have been banned from observing.</span>"
 			return
 	if(stat == DEAD)
 		if(fake_death)
