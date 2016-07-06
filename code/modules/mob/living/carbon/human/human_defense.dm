@@ -321,14 +321,14 @@
 	return 1
 
 //this proc handles being hit by a thrown atom
-/mob/living/carbon/human/hitby(atom/movable/AM as mob|obj,var/speed = 5)
+/mob/living/carbon/human/hitby(atom/movable/AM as mob|obj)
 	if(istype(AM,/obj/))
 		var/obj/O = AM
 		var/dtype = BRUTE
 		if(istype(O,/obj/item/weapon))
 			var/obj/item/weapon/W = O
 			dtype = W.damtype
-		var/throw_damage = O.throwforce*(speed/5)
+		var/throw_damage = O.throwforce*(AM.fly_speed/5)
 
 		var/zone
 		if (istype(O.thrower, /mob/living))
@@ -372,9 +372,9 @@
 					msg_admin_attack("[src.name] ([src.ckey]) was hit by a [O], thrown by [M.name] ([assailant.ckey]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[src.x];Y=[src.y];Z=[src.z]'>JMP</a>)")
 
 		// Begin BS12 momentum-transfer code.
-		if(O.throw_source && speed >= 15)
+		if(O.throw_source && AM.fly_speed >= 15)
 			var/obj/item/weapon/W = O
-			var/momentum = speed/2
+			var/momentum = AM.fly_speed/2
 			var/dir = get_dir(O.throw_source, src)
 
 			visible_message("\red [src] staggers under the impact!","\red You stagger under the impact!")
@@ -390,6 +390,7 @@
 					visible_message("<span class='warning'>[src] is pinned to the wall by [O]!</span>","<span class='warning'>You are pinned to the wall by [O]!</span>")
 					src.anchored = 1
 					src.pinned += O
+		AM.fly_speed = 0
 
 /mob/living/carbon/human/proc/bloody_hands(var/mob/living/source, var/amount = 2)
 	if (gloves)
