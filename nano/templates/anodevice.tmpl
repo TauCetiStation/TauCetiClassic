@@ -1,0 +1,88 @@
+<div class="item">
+	<div class="itemLabel">
+		Status:
+	</div>
+	<div class="itemContent">		
+			{{if data.status == 1}}
+				Active
+			{{else}}
+				Inactive
+			{{/if}}
+	</div>
+</div>
+
+<div class="item">
+	<div class="itemLabel">
+		Battery
+	</div>
+	<div class="itemContent">		
+		{{if data.is_battery}}
+			Iserted, anomaly ID: {{:data.ano_id}}
+		{{else}}
+			Missing, please insert battery
+		{{/if}}
+	</div>
+</div>
+		
+{{if data.is_battery}}
+	<div class="item">
+		<div class="itemLabel">
+			Battery charge:
+		</div>
+		<div class="itemContent">		
+			{{:data.charge}} / {{:data.capacity}} {{:helper.link('Eject', 'eject', {'ejectbattery' : 1})}}
+		</div>
+	</div>
+	
+	<div class="item">
+		<div class="itemLabel">
+			Time left activated:
+		</div>
+		<div class="itemContent">		
+			{{:data.times_left}}
+		</div>
+	</div>
+	
+	<div class="item">
+		<div class="itemLabel">
+		Activate duration (sec):
+		</div>
+		<div class="itemContent">
+			<div style="clear: both;">
+				{{:helper.link('-', null, {'change_duration' : -100})}}
+				{{:helper.link('-', null, {'change_duration' : -10})}}
+				<div style="float: left; width: 80px; text-align: center;">&nbsp;{{:data.duration / 10}}&nbsp;</div>
+				{{:helper.link('+', null, {'change_duration' : 10})}}
+				{{:helper.link('+', null, {'change_duration' : 100})}}
+			</div>
+		</div>
+	</div>
+	
+	<div class="item">
+		<div class="itemLabel">
+		Activate interval (sec):
+		</div>
+		<div class="itemContent">
+			<div style="clear: both;">
+				{{:helper.link('-', null, {'change_interval' : -100})}}
+				{{:helper.link('-', null, {'change_interval' : -10})}}
+				<div style="float: left; width: 80px; text-align: center;">&nbsp;{{:data.interval / 10}}&nbsp;</div>
+				{{:helper.link('+', null, {'change_interval' : 10})}}
+				{{:helper.link('+', null, {'change_interval' : 100})}}
+			</div>
+		</div>
+	</div>
+
+{{/if}}
+	
+<div>
+	{{if data.is_battery}}
+		{{if data.status == 1}}
+			{{:helper.link('Shutdown', 'power', {'shutdown' : 1})}}
+		{{else}}
+			{{:helper.link('Start', 'power', {'startup' : 1})}}
+		{{/if}}
+	{{/if}}
+	{{:helper.link('Refresh', 'refresh', {'refresh' : 1})}}
+	{{:helper.link('Close', 'close', {'close' : 1})}}
+</div>
