@@ -36,38 +36,39 @@
 
 /obj/machinery/artifact_harvester/attack_hand(var/mob/user as mob)
 	src.add_fingerprint(user)
-	ui_interact(user)
+	interact(user)
 
-/obj/machinery/artifact_harvester/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
+/obj/machinery/artifact_harvester/interact(var/mob/user as mob)
+	if(stat & (NOPOWER|BROKEN))
+		return
 	user.set_machine(src)
-
-	var/data[0]
+	var/dat = "<B>Artifact Power Harvester</B><BR>"
+	dat += "<HR><BR>"
+	//
 	if(owned_scanner)
-		data["has_scanner"] = 1
 		if(harvesting)
-			data["battery_charge_level"] = round((inserted_battery.stored_charge/inserted_battery.capacity)*100)
 			if(harvesting > 0)
-				data["harvesting"] = 1
+				dat += "Please wait. Harvesting in progress ([round((inserted_battery.stored_charge/inserted_battery.capacity)*100)]%).<br>"
 			else
-				data["harvesting"] = -1
+				dat += "Please wait. Energy dump in progress ([round((inserted_battery.stored_charge/inserted_battery.capacity)*100)]%).<br>"
+			dat += "<A href='?src=\ref[src];stopharvest=1'>Halt early</A><BR>"
 		else
 			if(inserted_battery)
-				data["has_battery"] = 1
-				data["battery_name"] = inserted_battery.name
-				data["battery_charge"] = round(inserted_battery.stored_charge,1)
-				data["battery_capacity"] = inserted_battery.capacity
-				data["battery_charge_level"] = round((inserted_battery.stored_charge/inserted_battery.capacity)*100)
-				data["energy_signature"] = inserted_battery.battery_effect ? (inserted_battery.battery_effect.artifact_id == "" ? "???" : "[inserted_battery.battery_effect.artifact_id]") : "NA"
-			else
-				data["has_battery"] = 0
-	else
-		data["has_scanner"] = 0
+				dat += "<b>[inserted_battery.name]</b> inserted, charge level: [inserted_battery.stored_charge]/[inserted_battery.capacity] ([(inserted_battery.stored_charge/inserted_battery.capacity)*100]%)<BR>"
+				dat += "<b>Energy signature ID:</b>[inserted_battery.battery_effect ? (inserted_battery.battery_effect.artifact_id == "" ? "???" : "[inserted_battery.battery_effect.artifact_id]") : "NA"]<BR>"
+				dat += "<A href='?src=\ref[src];ejectbattery=1'>Eject battery</a><BR>"
+				dat += "<A href='?src=\ref[src];drainbattery=1'>Drain battery of all charge</a><BR>"
+				dat += "<A href='?src=\ref[src];harvest=1'>Begin harvesting</a><BR>"
 
-	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)
-	if (!ui)
-		ui = new(user, src, ui_key, "artifact_harvester.tmpl", "Artifact Power Harvester", 550, 350)
-		ui.set_initial_data(data)
-		ui.open()
+			else
+				dat += "No battery inserted.<BR>"
+	else
+		dat += "<B><font color=red>Unable to locate analysis pad.</font><BR></b>"
+	//
+	dat += "<HR>"
+	dat += "<A href='?src=\ref[src];refresh=1'>Refresh</A> <A href='?src=\ref[src];close=1'>Close<BR>"
+	user << browse(dat, "window=artharvester;size=450x500")
+	onclose(user, "artharvester")
 
 /obj/machinery/artifact_harvester/process()
 	if(stat & (NOPOWER|BROKEN))
@@ -114,12 +115,6 @@
 			icon_state = "incubator"
 
 /obj/machinery/artifact_harvester/Topic(href, href_list)
-	if (..()) return 0
-
-	var/mob/user = usr
-	var/datum/nanoui/ui = nanomanager.get_open_ui(user, src, "main")
-
-	src.add_fingerprint(user)
 
 	if (href_list["harvest"])
 		if(!inserted_battery)
@@ -129,6 +124,7 @@
 			src.visible_message("<b>[src]</b> states, \"Cannot harvest. battery is full.\"")
 
 		else
+
 			//locate artifact on analysis pad
 			cur_artifact = null
 			var/articount = 0
@@ -147,13 +143,12 @@
 			else
 				if(articount > 1)
 					state("Cannot harvest. Too many artifacts on the pad.")
-
 				else if(analysed)
 					cur_artifact = analysed
+
 					//if both effects are active, we can't harvest either
 					if(cur_artifact.my_effect && cur_artifact.my_effect.activated && cur_artifact.secondary_effect.activated)
 						src.visible_message("<b>[src]</b> states, \"Cannot harvest. Source is emitting conflicting energy signatures.\"")
-
 					else if(!cur_artifact.my_effect.activated && !cur_artifact.secondary_effect.activated)
 						src.visible_message("<b>[src]</b> states, \"Cannot harvest. No energy emitting from source.\"")
 
@@ -161,9 +156,7 @@
 						//see if we can clear out an old effect
 						//delete it when the ids match to account for duplicate ids having different effects
 						if(inserted_battery.battery_effect && inserted_battery.stored_charge <= 0)
-							var/datum/artifact_effect/TD = inserted_battery.battery_effect
-							inserted_battery.battery_effect = null
-							qdel(TD)	//Because this effect must be deleted NOW!
+							qdel(inserted_battery.battery_effect)
 
 						//
 						var/datum/artifact_effect/source_effect
@@ -219,7 +212,6 @@
 								//copy the new datum into the battery
 								inserted_battery.battery_effect = E
 								inserted_battery.stored_charge = 0
-		return 1
 
 	if (href_list["stopharvest"])
 		if(harvesting)
@@ -231,12 +223,10 @@
 			cur_artifact = null
 			src.visible_message("<b>[name]</b> states, \"Energy harvesting interrupted.\"")
 			icon_state = "incubator"
-		return 1
 
 	if (href_list["ejectbattery"])
 		src.inserted_battery.loc = src.loc
 		src.inserted_battery = null
-		return 1
 
 	if (href_list["drainbattery"])
 		if(inserted_battery)
@@ -256,15 +246,9 @@
 		else
 			var/message = "<b>[src]</b> states, \"Cannot dump energy. No battery inserted.\""
 			src.visible_message(message)
-		return 1
-
-	if(href_list["refresh"])
-		ui_interact(user)
-		return 1
 
 	if(href_list["close"])
-		user.unset_machine()
-		ui.close()
-		return 0
+		usr << browse(null, "window=artharvester")
+		usr.unset_machine(src)
 
-	return 0
+	updateDialog()
