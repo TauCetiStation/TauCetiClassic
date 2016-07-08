@@ -51,9 +51,11 @@
 	dat += "<br>"
 	dat += "<hr>"
 	dat += "<a href='?src=\ref[src]'>Refresh</a> <a href='?src=\ref[src];close=1'>Close</a>"
-	user << browse(dat, "window=artanalyser;size=450x500")
 	user.set_machine(src)
-	onclose(user, "artanalyser")
+	var/datum/browser/popup = new(user, "artanalyser", name, 450, 500)
+	popup.set_content(dat)
+	popup.open()
+
 
 /obj/machinery/artifact_analyser/process()
 	if(scan_in_progress && world.time > scan_completion_time)

@@ -51,28 +51,36 @@
 		return ..()
 
 /obj/item/weapon/anodevice/attack_self(var/mob/user as mob)
-	ui_interact(user)
+	return src.interact(user)
 
-/obj/item/weapon/anodevice/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null, var/force_open = 1)
-	var/data[0]
-
-	data["status"] = activated
+/obj/item/weapon/anodevice/interact(var/mob/user)
+	var/dat = "<b>Anomalous Materials Energy Utiliser</b><br>"
 	if(inserted_battery)
-		data["is_battery"] = 1
-		data["ano_id"] = inserted_battery.battery_effect ? (inserted_battery.battery_effect.artifact_id == "" ? "???" : "[inserted_battery.battery_effect.artifact_id]") : "NA" //inserted_battery.battery_effect.artifact_id ? inserted_battery.battery_effect.artifact_id : "NA"
-		data["charge"] = round(inserted_battery.stored_charge,1)
-		data["capacity"] = inserted_battery.capacity
-		data["times_left"] = round(max((time_end - last_process) / 10, 0))
-		data["duration"] = duration
-		data["interval"] = interval
-	else
-		data["is_battery"] = 0
+		if(activated)
+			dat += "Device active.<br>"
 
-	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data, force_open)
-	if (!ui)
-		ui = new(user, src, ui_key, "anodevice.tmpl", "Anomalous Materials Energy Utiliser", 550, 350)
-		ui.set_initial_data(data)
-		ui.open()
+		dat += "[inserted_battery] inserted, anomaly ID: [inserted_battery.battery_effect ? (inserted_battery.battery_effect.artifact_id == "" ? "???" : "[inserted_battery.battery_effect.artifact_id]") : "NA"]<BR>"
+		dat += "<b>Charge:</b> [round(inserted_battery.stored_charge,1)] / [inserted_battery.capacity]<BR>"
+		dat += "<b>Time left activated:</b> [round(max((time_end - last_process) / 10, 0))]<BR>"
+		if(activated)
+			dat += "<a href='?src=\ref[src];shutdown=1'>Shutdown</a><br>"
+		else
+			dat += "<A href='?src=\ref[src];startup=1'>Start</a><BR>"
+		dat += "<BR>"
+
+		dat += "<b>Activate duration (sec):</b> <A href='?src=\ref[src];changetime=-100;duration=1'>--</a> <A href='?src=\ref[src];changetime=-10;duration=1'>-</a> [duration/10] <A href='?src=\ref[src];changetime=10;duration=1'>+</a> <A href='?src=\ref[src];changetime=100;duration=1'>++</a><BR>"
+		dat += "<b>Activate interval (sec):</b> <A href='?src=\ref[src];changetime=-100;interval=1'>--</a> <A href='?src=\ref[src];changetime=-10;interval=1'>-</a> [interval/10] <A href='?src=\ref[src];changetime=10;interval=1'>+</a> <A href='?src=\ref[src];changetime=100;interval=1'>++</a><BR>"
+		dat += "<br>"
+		dat += "<A href='?src=\ref[src];ejectbattery=1'>Eject battery</a><BR>"
+	else
+		dat += "Please insert battery<br>"
+
+	dat += "<hr>"
+	dat += "<a href='?src=\ref[src];refresh=1'>Refresh</a> <a href='?src=\ref[src];close=1'>Close</a>"
+
+	var/datum/browser/popup = new(user, "anodevice", name, 450, 500)
+	popup.set_content(dat)
+	popup.open()
 
 /obj/item/weapon/anodevice/process()
 	if(activated)
@@ -136,27 +144,26 @@
 			shutdown_emission()
 		last_process = world.time
 
+/obj/item/weapon/anodevice/proc/shutdown_emission()
+	if(activated)
+		activated = 0
+		if(inserted_battery.battery_effect.activated)
+			inserted_battery.battery_effect.ToggleActivate(1)
 
 /obj/item/weapon/anodevice/Topic(href, href_list)
-	if(..()) return 0
 
-	var/mob/user = usr
-	var/datum/nanoui/ui = nanomanager.get_open_ui(user, src, "main")
-
-	if(href_list["change_duration"])
-		var/timedif = text2num(href_list["change_duration"])
-		duration += timedif
-		duration = min(max(duration, 0), duration_max)
-		if(activated)
-			time_end += timedif
-		return 1
-
-	if(href_list["change_interval"])
-		var/timedif = text2num(href_list["change_interval"])
-		interval += timedif
-		interval = min(max(interval, 0), interval_max)
-		return 1
-
+	if(href_list["changetime"])
+		var/timedif = text2num(href_list["changetime"])
+		if(href_list["duration"])
+			duration += timedif
+			//max 30 sec duration
+			duration = min(max(duration, 0), duration_max)
+			if(activated)
+				time_end += timedif
+		else if(href_list["interval"])
+			interval += timedif
+			//max 10 sec interval
+			interval = min(max(interval, 0), interval_max)
 	if(href_list["startup"])
 		if(inserted_battery && inserted_battery.battery_effect && (inserted_battery.stored_charge > 0) )
 			activated = 1
@@ -164,35 +171,19 @@
 			if(!inserted_battery.battery_effect.activated)
 				inserted_battery.battery_effect.ToggleActivate(1)
 			time_end = world.time + duration
-		return 1
-
 	if(href_list["shutdown"])
 		activated = 0
-		return 1
-
 	if(href_list["ejectbattery"])
-		if(inserted_battery)
-			shutdown_emission()
-			inserted_battery.loc = get_turf(src)
-			inserted_battery = null
-			UpdateSprite()
-		return 1
-
-	if(href_list["refresh"])
-		ui_interact(user)
-		return 1
-
+		shutdown_emission()
+		inserted_battery.loc = get_turf(src)
+		inserted_battery = null
+		UpdateSprite()
 	if(href_list["close"])
-		ui.close()
-		return 0
-
-	return 0
-
-/obj/item/weapon/anodevice/proc/shutdown_emission()
-	if(activated)
-		activated = 0
-		if(inserted_battery.battery_effect.activated)
-			inserted_battery.battery_effect.ToggleActivate(1)
+		usr << browse(null, "window=anodevice")
+	else if(ismob(src.loc))
+		var/mob/M = src.loc
+		src.interact(M)
+	..()
 
 /obj/item/weapon/anodevice/proc/UpdateSprite()
 	if(!inserted_battery)
