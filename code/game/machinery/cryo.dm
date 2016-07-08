@@ -108,7 +108,7 @@
 		add_fingerprint(usr)
 	else
 		if(isobserver(usr))
-			 return
+			return
 		open_machine()
 
 /obj/machinery/atmospherics/unary/cryo_cell/examine()
