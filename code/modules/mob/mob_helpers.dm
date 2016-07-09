@@ -326,7 +326,7 @@ var/list/intents = list("help","disarm","grab","hurt")
 
 
 /proc/broadcast_security_hud_message(var/message, var/broadcast_source)
-	broadcast_hud_message(message, broadcast_source, sec_hud_users, /obj/item/clothing/glasses/hud/security)
+	broadcast_hud_message(message, broadcast_source, sec_hud_users, /obj/item/clothing/glasses/sunglasses/sechud)
 
 /proc/broadcast_medical_hud_message(var/message, var/broadcast_source)
 	broadcast_hud_message(message, broadcast_source, med_hud_users, /obj/item/clothing/glasses/hud/health)

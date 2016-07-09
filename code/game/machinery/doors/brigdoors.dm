@@ -27,7 +27,7 @@
 	var/picture_state		// icon_state of alert picture, if not displaying text/numbers
 	var/list/obj/machinery/targets = list()
 	var/timetoset = 0		// Used to set releasetime upon starting the timer
-
+	var/timer_activator		//Mob.name who activate timer
 	maptext_height = 26
 	maptext_width = 32
 
@@ -71,10 +71,13 @@
 		if(timeleft > 1e5)
 			src.releasetime = 0
 
+		if(world.timeofday > src.releasetime - 310 && world.timeofday <= src.releasetime - 290) //approx 30 sec before release send notification
+			broadcast_security_hud_message("<b>[src.name]</b> prisoner's sentence is ending in 30 seconds.", src)
 
 		if(world.timeofday > src.releasetime)
 			src.timer_end() // open doors, reset timer, clear status screen
 			src.timing = 0
+			broadcast_security_hud_message("<b>[src.name]</b> prisoner has served issued sentence. <b>[timer_activator]</b> is requested for the release procedure.", src)
 
 		src.updateUsrDialog()
 		src.update_icon()
@@ -101,6 +104,7 @@
 
 	// Set releasetime
 	releasetime = world.timeofday + timetoset
+	timer_activator = usr.name
 
 	for(var/obj/machinery/door/window/brigdoor/door in targets)
 		if(door.density)	continue
