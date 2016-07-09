@@ -83,6 +83,9 @@ var/global/datum/controller/master/Master = new()
 	var/datum/ore_distribution/distro = new()
 	distro.populate_distribution_map()
 
+	//load templates
+	preloadTemplates()
+
 	// Set up Z-level transistions.
 	//setup_map_transitions()
 
