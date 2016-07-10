@@ -389,6 +389,15 @@
 	The concussive effect from the explosion will knock the recipient out for a short period, and deafen them for longer. It has a chance to detonate your PDA."
 	item = /obj/item/weapon/cartridge/syndicate
 	cost = 3
+
+/datum/uplink_item/stealthy_weapons/dehy_carp
+	name = "Dehydrated Space Carp"
+	desc = "Just add water to make your very own hostile to everything space carp. It looks just like a plushie."
+	item = /obj/item/toy/carpplushie/dehy_carp
+	cost = 2
+	gamemodes = list(/datum/game_mode/nuclear)
+	uplink_types = list("nuclear")
+
 /*
 /datum/uplink_item/stealthy_weapons/silencer
 	name = "Stetchkin Silencer"
@@ -453,6 +462,7 @@
 	desc = "A universal small-arms silencer favored by stealth operatives, this will make shots quieter when equipped onto any low-caliber weapon."
 	item = /obj/item/weapon/silencer
 	cost = 2
+
 
 // DEVICE AND TOOLS
 
@@ -617,6 +627,13 @@
 	desc = "A useless red balloon with the syndicate logo on it, which can blow the deepest of covers."
 	item = /obj/item/toy/syndicateballoon
 	cost = 10
+
+/datum/uplink_item/badass/syndiecash
+	name = "Syndicate Briefcase Full of Cash"
+	desc = "A secure briefcase containing 5000 space credits. Useful for bribing personnel, or purchasing goods and services at lucrative prices. \
+	The briefcase also feels a little heavier to hold; it has been manufactured to pack a little bit more of a punch if your client needs some convincing."
+	item = /obj/item/weapon/storage/secure/briefcase/syndie
+	cost = 1
 
 /datum/uplink_item/badass/random
 	name = "Random Item"

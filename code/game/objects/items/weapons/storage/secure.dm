@@ -5,6 +5,7 @@
  *	Contains:
  *		Secure Briefcase
  *		Wall Safe
+ *      Syndie Briefcase
  */
 
 // -----------------------------
@@ -211,6 +212,16 @@
 					H.eye_blurry += 3
 
 		return*/
+
+//Syndie variant of Secure Briefcase. Contains space cash, slightly more robust.
+/obj/item/weapon/storage/secure/briefcase/syndie
+	force = 15.0
+
+/obj/item/weapon/storage/secure/briefcase/syndie/New()
+	for(var/i = 0, i < storage_slots - 2, i++)
+		new /obj/item/weapon/spacecash/c1000(src)
+	return ..()
+
 
 // -----------------------------
 //        Secure Safe
