@@ -629,12 +629,43 @@ obj/item/projectile/kinetic/New()
 */
 
 //Walls
-/turf/simulated/wall/survival
+
+/obj/item/inflatable/survival
+	name = "inflatable pod wall"
+	desc = "A folded membrane which rapidly expands into a large cubical shape on activation."
+	w_class = 3.0
+
+/obj/structure/inflatable/survival
 	name = "pod wall"
 	desc = "An easily-compressable wall used for temporary shelter."
 	icon_state = "surv_wall0"
-	walltype = "surv_wall"
-	damage_cap = 50
+	var/basestate = "surv_wall"
+
+/obj/structure/inflatable/survival/New()
+	..()
+	update_nearby_icons()
+
+/obj/structure/inflatable/survival/Destroy()
+	update_nearby_tiles()
+	..()
+
+/obj/structure/inflatable/survival/proc/update_nearby_icons()
+	update_icon()
+	for(var/direction in cardinal)
+		for(var/obj/structure/inflatable/survival/W in get_step(src,direction) )
+			W.update_icon()
+
+/obj/structure/inflatable/survival/update_icon()
+	spawn(2)
+		if(!src)
+			return
+
+		var/junction = 0
+		if(anchored)
+			for(var/obj/structure/inflatable/survival/W in orange(src,1))
+				if(abs(x-W.x)-abs(y-W.y) )
+					junction |= get_dir(src,W)
+		icon_state = "[basestate][junction]"
 
 //Window
 /obj/structure/window/shuttle/survival_pod
@@ -650,13 +681,14 @@ obj/item/projectile/kinetic/New()
 	airlock_type = "/survival_pod"
 	anchored = 1
 
-/obj/machinery/door/airlock/survival_pod
-	name = "airlock"
-	icon = 'icons/obj/doors/Doorsurv.dmi'
-	opacity = 0
-	assembly_type = /obj/structure/door_assembly/door_assembly_pod
-	glass = 1
-	block_air_zones = 1
+/obj/structure/inflatable/door/survival_pod
+	name = "inflatable airlock"
+	icon = 'icons/obj/inflatable.dmi'
+	icon_state = "door_surv_closed"
+	opening_state = "door_surv_opening"
+	closing_state = "door_surv_closing"
+	open_state = "door_surv_open"
+	closed_state = "door_surv_closed"
 
 //Table
 /obj/structure/table/survival_pod
