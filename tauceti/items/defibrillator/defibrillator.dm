@@ -73,13 +73,13 @@
 						C.updatehealth()
 						if(C.stat == DEAD && C.health>config.health_threshold_dead)
 							C.stat = UNCONSCIOUS
+							return_to_life(C)
 					else
 						C.adjustFireLoss(5)
 						if(C.stat == DEAD && C.health>config.health_threshold_dead)
 							C.stat = CONSCIOUS
-					C.tod = null
-					C.timeofdeath = 0
-					dead_mob_list -= C
+							return_to_life(C)
+
 
 				if(wet)
 					var/turf/T = get_turf(src)
@@ -106,6 +106,24 @@
 			s.set_up(3, 1, C)
 			s.start()
 		else return ..(M,user)
+
+	proc/return_to_life(mob/living/carbon/returnable as mob)
+		if (returnable.key)
+			if ((world.time - returnable.timeofdeath) > 600)
+				returnable.client << 'sound/misc/mario_1up.ogg'
+
+		else if(returnable.mind)
+			for(var/mob/dead/observer/ghost in player_list)
+				if(ghost.mind == returnable.mind && ghost.can_reenter_corpse)
+					ghost.client << 'sound/misc/mario_1up.ogg'
+					ghost.reenter_corpse()
+					break
+
+		returnable.tod = null
+		returnable.timeofdeath = 0
+		dead_mob_list -= returnable
+		return
+
 
 datum/design/defibrillators
 	name = "Defibrillators"
