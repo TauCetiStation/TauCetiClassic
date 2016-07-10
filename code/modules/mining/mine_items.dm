@@ -706,6 +706,7 @@ obj/item/projectile/kinetic/New()
 	luminosity = 5
 	max_n_of_items = 10
 	pixel_y = -4
+	var/forbidden_tools = list()
 
 /obj/machinery/smartfridge/survival_pod/empty
 	name = "dusty survival pod storage"
@@ -738,6 +739,31 @@ obj/item/projectile/kinetic/New()
 		var/obj/item/device/guitar/G = new /obj/item/device/guitar(src)
 		G.loc = src
 		item_quants[G.name] = 1
+
+	forbidden_tools = typecacheof(/obj/item/weapon/crowbar)
+	forbidden_tools += typecacheof(/obj/item/weapon/screwdriver)
+	forbidden_tools += typecacheof(/obj/item/weapon/wrench)
+	forbidden_tools += typecacheof(/obj/item/weapon/wirecutters)
+
+/obj/machinery/smartfridge/survival_pod/attackby(var/obj/item/O as obj, var/mob/user as mob)
+	if(is_type_in_typecache(O,forbidden_tools))
+		if(accept_check(O))
+			if(contents.len >= max_n_of_items)
+				user << "<span class='notice'>\The [src] is full.</span>"
+				return 1
+			else
+				user.remove_from_mob(O)
+				O.loc = src
+				if(item_quants[O.name])
+					item_quants[O.name]++
+				else
+					item_quants[O.name] = 1
+				user.visible_message("<span class='notice'>[user] has added \the [O] to \the [src].", \
+									 "<span class='notice'>You add \the [O] to \the [src].")
+				nanomanager.update_uis(src)
+				return
+
+	..()
 
 //Fans
 /obj/structure/fans
