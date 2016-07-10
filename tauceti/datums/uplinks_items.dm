@@ -394,7 +394,7 @@
 	name = "Dehydrated Space Carp"
 	desc = "Just add water to make your very own hostile to everything space carp. It looks just like a plushie."
 	item = /obj/item/toy/carpplushie/dehy_carp
-	cost = 4
+	cost = 2
 	gamemodes = list(/datum/game_mode/nuclear)
 	uplink_types = list("nuclear")
 
@@ -633,7 +633,7 @@
 	desc = "A secure briefcase containing 5000 space credits. Useful for bribing personnel, or purchasing goods and services at lucrative prices. \
 	The briefcase also feels a little heavier to hold; it has been manufactured to pack a little bit more of a punch if your client needs some convincing."
 	item = /obj/item/weapon/storage/secure/briefcase/syndie
-	cost = 2
+	cost = 1
 
 /datum/uplink_item/badass/random
 	name = "Random Item"
