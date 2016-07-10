@@ -36,7 +36,7 @@
 			for(var/mob/M in viewers(src, null))
 				if((M.client && !( M.blinded )))
 					M.show_message("\red [src] lets out a contented sigh as their form unwinds. ")
-					ghostize()
+					ghostize(bancheck = TRUE)
 			qdel(src)
 			return
 

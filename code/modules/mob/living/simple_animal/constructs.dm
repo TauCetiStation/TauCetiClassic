@@ -37,7 +37,7 @@
 	..()
 	new /obj/item/weapon/ectoplasm (src.loc)
 	visible_message("<span class='red'>[src] collapses in a shattered heap.</span>")
-	ghostize()
+	ghostize(bancheck = TRUE)
 	qdel(src)
 	return
 
