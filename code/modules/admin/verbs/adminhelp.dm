@@ -108,6 +108,7 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","
 
 	var/admin_number_present = admins.len - admin_number_afk
 	log_admin("HELP: [key_name(src)]: [original_msg] - heard by [admin_number_present] non-AFK admins.")
+	send2slack_logs(key_name(src), original_msg, "(HELP)")
 	if(admin_number_present <= 0)
 		if(!admin_number_afk)
 			send2adminirc("ADMINHELP from [key_name(src)]: [html_decode(original_msg)] - !!No admins online!!")
