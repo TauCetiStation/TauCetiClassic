@@ -42,7 +42,7 @@ var/can_call_ert
 /client/verb/JoinResponseTeam()
 	set category = "IC"
 
-	if(isobserver(usr) || isnewplayer(usr) || ismouse(usr) || isbrain(usr))
+	if(isobserver(usr) || isnewplayer(usr) || ismouse(usr) || isbrain(usr) || usr.is_dead())
 		if(!send_emergency_team)
 			usr << "No emergency response team is currently being sent."
 			return
