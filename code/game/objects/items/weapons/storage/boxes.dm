@@ -25,6 +25,7 @@
  *		 -Mixed replacement lights -Body bags
  *		 -Holobadge -Evidence bag
  *		 -Solution tray -Spare PDAs
+ *		 -Shotgun ammo
  *
  *		For syndicate call-ins see uplink_kits.dm
  */
@@ -543,3 +544,44 @@
 	new /obj/item/weapon/cartridge/head(src)
 	for(var/i in 1 to 4)
 		new /obj/item/device/pda(src)
+
+//Shotgun ammo
+
+/obj/item/weapon/storage/box/shotgun
+	name = "box of shotgun shell"
+	icon = 'icons/obj/storage.dmi'
+	icon_state = "shotgun_ammo_slug"
+	foldable = /obj/item/stack/sheet/cardboard
+	storage_slots = 16
+	can_hold = list("/obj/item/ammo_casing/shotgun")
+	max_combined_w_class = 16
+
+
+/obj/item/weapon/storage/box/shotgun/slug
+	name = "box of shotgun shell (slug)"
+	icon_state = "shotgun_ammo_slug"
+
+/obj/item/weapon/storage/box/shotgun/slug/New()
+	..()
+	for(var/i in 1 to 16)
+		new /obj/item/ammo_casing/shotgun(src)
+
+
+/obj/item/weapon/storage/box/shotgun/buckshot
+	name = "box of shotgun shell (buckshot)"
+	icon_state = "shotgun_ammo_buckshot"
+
+/obj/item/weapon/storage/box/shotgun/buckshot/New()
+	..()
+	for(var/i in 1 to 16)
+		new /obj/item/ammo_casing/shotgun/buckshot(src)
+
+
+/obj/item/weapon/storage/box/shotgun/beanbag
+	name = "box of shotgun shell (beanbag)"
+	icon_state = "shotgun_ammo_beanbag"
+
+/obj/item/weapon/storage/box/shotgun/beanbag/New()
+	..()
+	for(var/i in 1 to 16)
+		new /obj/item/ammo_casing/shotgun/beanbag(src)

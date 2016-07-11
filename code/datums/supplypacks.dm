@@ -803,7 +803,7 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 
 /datum/supply_packs/shotgunammo_beanbag
 	name = "Shotgun shells (Beanbag)"
-	contains = list(/obj/item/ammo_box/shotgun/beanbag)
+	contains = list(/obj/item/weapon/storage/box/shotgun/beanbag)
 	cost = 10
 	containertype = /obj/structure/closet/crate
 	containername = "Shotgun shells (Beanbag)"
@@ -811,7 +811,7 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 
 /datum/supply_packs/shotgunammo_slug
 	name = "Shotgun shells (slug)"
-	contains = list(/obj/item/ammo_box/shotgun/slug)
+	contains = list(/obj/item/weapon/storage/box/shotgun/slug)
 	cost = 20
 	containertype = /obj/structure/closet/crate/secure
 	containername = "Shotgun shells (slug)"
@@ -820,7 +820,7 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 
 /datum/supply_packs/shotgunammo_buckshot
 	name = "Shotgun shells (buckshot)"
-	contains = list(/obj/item/ammo_box/shotgun)
+	contains = list(/obj/item/weapon/storage/box/shotgun/buckshot)
 	cost = 25
 	containertype = /obj/structure/closet/crate/secure
 	containername = "Shotgun shells (buckshot)"
