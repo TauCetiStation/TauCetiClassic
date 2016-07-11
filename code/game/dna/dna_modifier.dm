@@ -126,7 +126,7 @@
 				|| locate(/obj/machinery/computer/cloning, get_step(src, SOUTH)) \
 				|| locate(/obj/machinery/computer/cloning, get_step(src, EAST)) \
 				|| locate(/obj/machinery/computer/cloning, get_step(src, WEST)))
-				if(occupant.mind && occupant.stat == DEAD)
+				if(occupant.client && occupant.stat == DEAD)
 					if (occupant.key)
 						occupant.client << 'sound/misc/mario_1up.ogg'
 					else
