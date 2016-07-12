@@ -351,7 +351,7 @@
 
 	if(client.holder && (client.holder.rights & R_ADMIN))
 		is_admin = 1
-	else if(stat != DEAD || istype(src, /mob/new_player))
+	else if(stat != DEAD || istype(src, /mob/new_player) || jobban_isbanned(src, "Observer"))
 		usr << "\blue You must be observing to use this!"
 		return
 

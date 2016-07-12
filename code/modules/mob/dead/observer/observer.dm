@@ -187,7 +187,7 @@ Works together with spawning an observer, noted above.
 					if(response == "Beep!")
 						M.dronize()
 						qdel(M)
-			return
+				return
 		var/mob/dead/observer/ghost = new(src)	//Transfer safety to observer spawning proc.
 		ghost.can_reenter_corpse = can_reenter_corpse
 		ghost.timeofdeath = src.timeofdeath //BS12 EDIT
