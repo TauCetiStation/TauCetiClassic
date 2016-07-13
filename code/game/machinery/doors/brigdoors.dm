@@ -27,7 +27,7 @@
 	var/picture_state		// icon_state of alert picture, if not displaying text/numbers
 	var/list/obj/machinery/targets = list()
 	var/timetoset = 0		// Used to set releasetime upon starting the timer
-	var/timer_activator = "Unknown"	 //Mob.name who activate timer
+	var/timer_activator     //Mob.name who activate timer
 	maptext_height = 26
 	maptext_width = 32
 
@@ -99,13 +99,15 @@
 // linked door is open/closed (by density) then opens it/closes it.
 
 // Closes and locks doors, power check
-/obj/machinery/door_timer/proc/timer_start(activator as text)
+/obj/machinery/door_timer/proc/timer_start(activator)
 	if(stat & (NOPOWER|BROKEN))	return 0
 
 	// Set releasetime
 	releasetime = world.timeofday + timetoset
 	if (activator)
 		timer_activator = activator
+	else
+		timer_activator = "Unknown"
 
 	for(var/obj/machinery/door/window/brigdoor/door in targets)
 		if(door.density)	continue
@@ -126,7 +128,6 @@
 
 	// Reset releasetime
 	releasetime = 0
-	timer_activator="Unknown"
 
 	for(var/obj/machinery/door/window/brigdoor/door in targets)
 		if(!door.density)	continue
