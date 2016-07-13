@@ -84,6 +84,7 @@
 	query_insert.Execute()
 	usr << "\blue Ban saved to database."
 	message_admins("[key_name_admin(usr)] has added a [bantype_str] for [ckey] [(job)?"([job])":""] [(duration > 0)?"([duration] minutes)":""] with the reason: \"[reason]\" to the ban database.",1)
+	send2slack_logs(key_name(usr), "has added a [bantype_str] for [ckey] [(job)?"([job])":""] [(duration > 0)?"([duration] minutes)":""] with the reason: \"[reason]\" to the ban database.", "(BAN)")
 
 
 
@@ -195,6 +196,7 @@
 			var/DBQuery/update_query = dbcon.NewQuery("UPDATE erro_ban SET reason = '[value]', edits = CONCAT(edits,'- [eckey] changed ban reason from <cite><b>\\\"[reason]\\\"</b></cite> to <cite><b>\\\"[value]\\\"</b></cite><BR>') WHERE id = [banid]")
 			update_query.Execute()
 			message_admins("[key_name_admin(usr)] has edited a ban for [pckey]'s reason from [reason] to [value]",1)
+			send2slack_logs(key_name(usr), "has edited a ban for [pckey]'s reason from [reason] to [value]", "(BANEDIT)")
 		if("duration")
 			if(!value)
 				value = input("Insert the new duration (in minutes) for [pckey]'s ban", "New Duration", "[duration]", null) as null|num
@@ -204,6 +206,7 @@
 
 			var/DBQuery/update_query = dbcon.NewQuery("UPDATE erro_ban SET duration = [value], edits = CONCAT(edits,'- [eckey] changed ban duration from [duration] to [value]<br>'), expiration_time = DATE_ADD(bantime, INTERVAL [value] MINUTE) WHERE id = [banid]")
 			message_admins("[key_name_admin(usr)] has edited a ban for [pckey]'s duration from [duration] to [value]",1)
+			send2slack_logs(key_name(usr), "has edited a ban for [pckey]'s duration from [duration] to [value]", "(BANEDIT)")
 			update_query.Execute()
 		if("unban")
 			if(alert("Unban [pckey]?", "Unban?", "Yes", "No") == "Yes")
@@ -252,6 +255,7 @@
 
 	var/sql_update = "UPDATE erro_ban SET unbanned = 1, unbanned_datetime = Now(), unbanned_ckey = '[unban_ckey]', unbanned_computerid = '[unban_computerid]', unbanned_ip = '[unban_ip]' WHERE id = [id]"
 	message_admins("[key_name_admin(usr)] has lifted [pckey]'s ban.",1)
+	send2slack_logs(key_name(usr), "has lifted [pckey]'s ban.", "(UNBAN)")
 
 	var/DBQuery/query_update = dbcon.NewQuery(sql_update)
 	query_update.Execute()
@@ -544,3 +548,4 @@
 	var/DBQuery/query_insert = dbcon.NewQuery(sql)
 	query_insert.Execute()
 	message_admins("Tau Kitty has added a [bantype_str] for [ckey] [(job)?"([job])":""] [(duration > 0)?"([duration] minutes)":""] with the reason: \"[reason]\" to the ban database.",1)
+	send2slack_logs("Tau Kitty", "has added a [bantype_str] for [ckey] [(job)?"([job])":""] [(duration > 0)?"([duration] minutes)":""] with the reason: \"[reason]\" to the ban database.", "(BOTBAN)")

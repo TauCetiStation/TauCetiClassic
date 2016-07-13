@@ -153,7 +153,7 @@
 		if(T)
 			open = 1
 			density = 0
-			T.contents += contents
+			T.contents += (contents - beaker)
 			if(occupant)
 				if(occupant.client)
 					occupant.client.eye = occupant

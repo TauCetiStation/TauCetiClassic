@@ -7,6 +7,13 @@
 	if(src == usr)
 		usr << "\red I feel stupider, suddenly."
 		return
+	if(ishuman(src) && hasorgans(src))
+		var/mob/living/carbon/human/U = src
+		var/datum/organ/external/temp = U.organs_by_name["r_hand"]
+		if (U.hand)
+			temp = U.organs_by_name["l_hand"]
+		if(temp && !temp.is_usable())
+			return
 	var/obj/item/I
 	if(!usr.hand && usr.r_hand == null)
 		usr << "\red You don't have anything in your right hand to give to [src.name]"

@@ -42,4 +42,5 @@ var/global/list/empty_playable_ai_cores = list()
 			current_mode.possible_traitors.Remove(src)
 
 	src.timeofdeath = world.time
+	ghostize(can_reenter_corpse = FALSE)
 	qdel(src)

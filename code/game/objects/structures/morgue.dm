@@ -347,7 +347,7 @@
 			//user.attack_log +="\[[time_stamp()]\] Cremated <b>[M]/[M.ckey]</b>"
 			//log_attack("\[[time_stamp()]\] <b>[user]/[user.ckey]</b> cremated <b>[M]/[M.ckey]</b>")
 			M.death(1)
-			M.ghostize()
+			M.ghostize(bancheck = TRUE)
 			qdel(M)
 
 		for(var/obj/O in contents) //obj instead of obj/item so that bodybags and ashes get destroyed. We dont want tons and tons of ash piling up
