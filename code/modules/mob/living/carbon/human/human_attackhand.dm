@@ -34,9 +34,9 @@
 					G.cell.use(5500)
 					var/mob/living/carbon/human/target = src
 					if(prob(35) && !istype(G, /obj/item/clothing/gloves/yellow))
-						visible_message("\red <B>[M] accidentally touched himself with the stun gloves!</B>")
-						M.attack_log += text("\[[time_stamp()]\] <font color='red'>Try to stungloved [src.name] ([src.ckey])</font>")
-						src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been try to stungloved by [M.name] ([M.ckey])</font>")
+						visible_message("\red <B>[M] accidentally touched yourself with the stun gloves!</B>")
+						M.attack_log += text("\[[time_stamp()]\] <font color='red'>Tried to stungloved [src.name] ([src.ckey])</font>")
+						src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been stungloved by [M.name] ([M.ckey])</font>")
 						msg_admin_attack("[M.name] ([M.ckey]) failed to stungloved [src.name] ([src.ckey]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[M.x];Y=[M.y];Z=[M.z]'>JMP</a>)")
 						target = M
 					else
