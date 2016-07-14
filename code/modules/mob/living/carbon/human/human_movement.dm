@@ -3,6 +3,10 @@
 
 	if(species && species.flags & IS_PLANT)
 		tally = 7
+	if(species && species.flags & IS_TAJARA)
+		tally = -0.7
+	if(species && species.flags & IS_UNATHI)
+		tally = 0.7
 
 	if(crawling)
 		tally += 7
