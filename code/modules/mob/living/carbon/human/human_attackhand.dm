@@ -30,14 +30,14 @@
 		var/obj/item/clothing/gloves/G = M.gloves
 		if(G.cell)
 			if(M.a_intent == "hurt")//Stungloves. Any contact will stun the alien.
-				if(G.cell.charge >= 5500)
-					G.cell.use(5500)
+				if(G.cell.charge >= 2500)
+					G.cell.use(2500)
 					var/mob/living/carbon/human/target = src
 					if(prob(35) && !istype(G, /obj/item/clothing/gloves/yellow))
-						visible_message("\red <B>[M] accidentally touched yourself with the stun gloves!</B>")
-						M.attack_log += text("\[[time_stamp()]\] <font color='red'>Tried to stungloved [src.name] ([src.ckey])</font>")
-						src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been stungloved by [M.name] ([M.ckey])</font>")
-						msg_admin_attack("[M.name] ([M.ckey]) failed to stungloved [src.name] ([src.ckey]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[M.x];Y=[M.y];Z=[M.z]'>JMP</a>)")
+						visible_message("\red <B>[M] accidentally touched \himself with the stun gloves!</B>")
+						M.attack_log += text("\[[time_stamp()]\] <font color='red'>Attempted to touch [src.name] ([src.ckey]) with stungloves</font>")
+						src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been unsuccessfully touched with stungloves by [M.name] ([M.ckey])</font>")
+						msg_admin_attack("[M.name] ([M.ckey]) failed to stun [src.name] ([src.ckey]) with stungloves (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[M.x];Y=[M.y];Z=[M.z]'>JMP</a>)")
 						target = M
 					else
 						visible_message("\red <B>[src] has been touched with the stun gloves by [M]!</B>")

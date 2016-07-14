@@ -82,6 +82,13 @@
 	..()
 	overlays.Cut()
 	if(wired)
-		overlays += "gloves_wire"
+		overlays += image(icon = icon, icon_state = "gloves_wire")
 	if(cell)
-		overlays += "gloves_cell"
+		overlays += image(icon = icon, icon_state = "gloves_cell")
+	if(wired && cell)
+		item_state = "stungloves"
+	else
+		item_state = initial(item_state)
+	if(ishuman(src.loc)) // Update item_state if src in gloves slot
+		var/mob/living/carbon/human/H = src.loc
+		H.update_inv_gloves()
