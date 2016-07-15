@@ -166,3 +166,146 @@
 	materials = list(MAT_METAL=8000,MAT_GLASS=4000,MAT_PLASTIC=2000,MAT_GOLD=4000,MAT_DIAMOND=2000,MAT_URANIUM=4000)
 	construction_time = 1600
 	category = list("Spacesuit")
+
+//------------TOOLS------------
+//other in rnd
+//pickaxe
+/datum/design/pickaxe
+	name = "pickaxe"
+	id = "pickaxe"
+	build_type = MINEFAB
+	build_path = /obj/item/weapon/pickaxe
+	materials = list(MAT_METAL=8000)
+	construction_time = 100
+	category = list("Tools")
+
+//shovel
+/datum/design/shovel
+	name = "shovel"
+	id = "shovel"
+	build_type = MINEFAB
+	build_path = /obj/item/weapon/shovel
+	materials = list(MAT_METAL=4000)
+	construction_time = 50
+	category = list("Tools")
+
+//geo_hud
+/datum/design/geo_hud
+	name = "Geological Optical Scanner"
+	id = "geo_hud"
+	build_type = MINEFAB
+	build_path = /obj/item/clothing/glasses/hud/mining
+	materials = list(MAT_METAL=50,MAT_GLASS=40)
+	construction_time = 50
+	category = list("Tools")
+
+//mine_flashlight
+/datum/design/mine_flashlight
+	name = "mine_flashlight"
+	id = "mine_flashlight"
+	build_type = MINEFAB
+	build_path = /obj/item/device/flashlight/lantern
+	materials = list(MAT_METAL=120,MAT_GLASS=40)
+	construction_time = 50
+	category = list("Tools")
+
+/datum/design/resonator
+	name = "Resonator"
+	id = "resonator"
+	build_type = MINEFAB
+	req_tech = list("combat" = 2, "materials" = 3, "engineering" = 2)
+	build_path = /obj/item/weapon/resonator
+	materials = list(MAT_METAL=3000,MAT_GLASS=2000,MAT_PLASTIC=1000,MAT_SILVER=500)
+	construction_time = 600
+	category = list("Tools")
+
+/datum/design/kinetic_accelerator
+	name = "Kinetic accelerator"
+	id = "kinetic_accelerator"
+	build_type = MINEFAB
+	req_tech = list("combat" = 2, "materials" = 3, "engineering" = 2)
+	build_path = /obj/item/weapon/gun/energy/kinetic_accelerator
+	materials = list(MAT_METAL=3000,MAT_GLASS=2000,MAT_PLASTIC=1000,MAT_GOLD=500)
+	construction_time = 600
+	category = list("Tools")
+
+/datum/design/mining_drone
+	name = "Mining drone"
+	id = "mining_drone"
+	build_type = MINEFAB
+	req_tech = list("combat" = 3, "materials" = 4, "engineering" = 2,"programming" = 3)
+	build_path = /mob/living/simple_animal/hostile/mining_drone
+	materials = list(MAT_METAL=6000,MAT_GLASS=2000,MAT_PLASTIC=1000,MAT_GOLD=500,MAT_URANIUM=2000)
+	construction_time = 1200
+	category = list("Tools")
+
+/datum/design/mining_jetpack
+	name = "Jetpack"
+	id = "mining_jetpack"
+	build_type = MINEFAB
+	req_tech = list("combat" = 3, "materials" = 4, "engineering" = 4,"programming" = 2)
+	build_path = /obj/item/weapon/tank/jetpack/carbondioxide
+	materials = list(MAT_METAL=6000,MAT_GLASS=2000,MAT_PLASTIC=1000,MAT_GOLD=500,MAT_URANIUM=2000)
+	construction_time = 1200
+	category = list("Tools")
+
+
+//------------SUPPORT------------Support
+
+/datum/design/mine_radio
+	name = "The supply radio headset"
+	id = "mine_mine_radio"
+	build_type = MINEFAB
+	build_path = /obj/item/device/radio/headset/headset_cargo
+	materials = list(MAT_METAL=50,MAT_GLASS=25)
+	construction_time = 50
+	category = list("Support")
+
+/datum/design/glowsticks
+	name = "The box of glowsticks"
+	id = "glowsticks"
+	build_type = MINEFAB
+	build_path = /obj/item/weapon/storage/fancy/glowsticks
+	materials = list(MAT_GLASS=250,MAT_PLASTIC=100,MAT_PHORON=150)
+	construction_time = 50
+	category = list("Support")
+
+/datum/design/stimpack
+	name = "Stimpack"
+	id = "stimpack"
+	build_type = MINEFAB
+	req_tech = list("biotech"=2)
+	build_path = /obj/item/weapon/storage/fancy/glowsticks
+	materials = list(MAT_GLASS=250,MAT_PLASTIC=500,MAT_PHORON=150)
+	construction_time = 50
+	category = list("Support")
+
+/datum/design/patcher
+	name = "Suit patcher"
+	id = "patcher"
+	build_type = MINEFAB
+	build_path = /obj/item/weapon/patcher
+	materials = list(MAT_METAL=200,MAT_GLASS=250,MAT_PLASTIC=100,MAT_PHORON=150)
+	construction_time = 100
+	category = list("Support")
+
+/datum/design/lazarus
+	name = "Lazarus injector"
+	id = "lazarus"
+	build_type = MINEFAB
+	req_tech = list("biotech"=4)
+	build_path = /obj/item/weapon/lazarus_injector
+	materials = list(MAT_METAL=2000,MAT_GLASS=250,MAT_PLASTIC=1000,MAT_PHORON=3000)
+	construction_time = 1800
+	category = list("Support")
+
+/datum/design/jaunter
+	name = "Wormhole jaunter"
+	id = "jaunter"
+	build_type = MINEFAB
+	req_tech = list("magnets" = 3,"bluespace" = 2)
+	build_path = /obj/item/device/wormhole_jaunter
+	materials = list(MAT_METAL=2000,MAT_GLASS=250,MAT_PLASTIC=1000,MAT_PHORON=3000)
+	construction_time = 600
+	category = list("Support")
+
