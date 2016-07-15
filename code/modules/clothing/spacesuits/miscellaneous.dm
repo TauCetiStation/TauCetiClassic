@@ -51,3 +51,14 @@
 	slowdown = 0
 	armor = list(melee = 60, bullet = 35, laser = 60,energy = 60, bomb = 30, bio = 30, rad = 30)
 	breach_threshold = 25
+
+//Buget suit
+
+/obj/item/clothing/suit/space/cheap
+	name = "Budget spacesuit"
+	desc = "It was an attempt to force the assistants to work in space.The label on the side reads: Not for atheists"
+	resilience = 0.6
+
+/obj/item/clothing/head/helmet/space/cheap
+	name = "Budget spacesuit helmet"
+	desc = "It was an attempt to force the assistants to work in space. At least 60% of them survived in the spacesuit."

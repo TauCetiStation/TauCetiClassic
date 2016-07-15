@@ -932,3 +932,15 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 /obj/machinery/computer/rdconsole/core
 	name = "Core R&D Console"
 	id = 1
+
+/obj/machinery/computer/rdconsole/mining
+	name = "Mining R&D Console"
+	id = 3
+	req_access = null
+	req_access_txt = "28"
+
+/obj/machinery/computer/rdconsole/mining/New()
+	..()
+	if(circuit)
+		circuit.name = "circuit board (RD Console - Mining)"
+		circuit.build_path = /obj/machinery/computer/rdconsole/mining
