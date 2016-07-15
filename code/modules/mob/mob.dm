@@ -2,7 +2,7 @@
 	mob_list -= src
 	dead_mob_list -= src
 	living_mob_list -= src
-	ghostize()
+	ghostize(bancheck = TRUE)
 	return ..()
 /*
 /mob/Destroy()//This makes sure that mobs with clients/keys are not just deleted from the game.
@@ -351,7 +351,7 @@
 
 	if(client.holder && (client.holder.rights & R_ADMIN))
 		is_admin = 1
-	else if(stat != DEAD || istype(src, /mob/new_player))
+	else if(stat != DEAD || istype(src, /mob/new_player) || jobban_isbanned(src, "Observer"))
 		usr << "\blue You must be observing to use this!"
 		return
 

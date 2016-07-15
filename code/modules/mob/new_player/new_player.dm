@@ -79,7 +79,8 @@
 	if(src != usr)
 		return 0
 
-	if(!client)	return 0
+	if(!client)
+		return 0
 
 	if(href_list["show_preferences"])
 		client.prefs.ShowChoices(src)
@@ -97,9 +98,13 @@
 		new_player_panel_proc()
 
 	if(href_list["observe"])
-
+		if(!(src.client.holder && (src.client.holder.rights & (R_ADMIN|R_MOD))))
+			if(jobban_isbanned(src, "Observer"))
+				src << "<span class='red'>You have been banned from observing. Declare yourself.</span>"
+				return 0
 		if(alert(src,"Are you sure you wish to observe? You will have to wait 30 minutes before being able to respawn!","Player Setup","Yes","No") == "Yes")
-			if(!client)	return 1
+			if(!client)
+				return 1
 			var/mob/dead/observer/observer = new()
 
 			spawning = 1

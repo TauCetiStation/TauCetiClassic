@@ -641,9 +641,17 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 	ranged_cooldown_cap = 3
 	projectiletype = /obj/item/projectile/kinetic
 	projectilesound = 'tauceti/sounds/weapon/Gunshot4.ogg'
-	wanted_objects = list(/obj/item/weapon/ore/diamond, /obj/item/weapon/ore/gold, /obj/item/weapon/ore/silver,
-						  /obj/item/weapon/ore/phoron,  /obj/item/weapon/ore/uranium,    /obj/item/weapon/ore/iron,
-						  /obj/item/weapon/ore/coal)
+	wanted_objects = list(/obj/item/weapon/ore/diamond,
+						  /obj/item/weapon/ore/glass,
+						  /obj/item/weapon/ore/gold,
+						  /obj/item/weapon/ore/iron,
+						  /obj/item/weapon/ore/phoron,
+						  /obj/item/weapon/ore/silver,
+						  /obj/item/weapon/ore/uranium,
+						  /obj/item/weapon/ore/coal,
+						  /obj/item/weapon/ore/osmium,
+						  /obj/item/weapon/ore/hydrogen,
+						  /obj/item/weapon/ore/clown)
 
 /mob/living/simple_animal/hostile/mining_drone/attackby(obj/item/I as obj, mob/user as mob)
 	if(istype(I, /obj/item/weapon/weldingtool))

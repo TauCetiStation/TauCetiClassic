@@ -322,6 +322,8 @@
 		if(throwing)
 			..()
 			return
+		if(istype(obstacle, /obj/machinery/disposal/deliveryChute/))
+			return
 		obstacle.Bumped(src)
 		if(istype(obstacle, /obj))
 			var/obj/O = obstacle

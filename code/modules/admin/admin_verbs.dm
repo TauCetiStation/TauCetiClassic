@@ -380,7 +380,7 @@ var/list/admin_verbs_mentor = list(
 		//re-enter
 		var/mob/dead/observer/ghost = mob
 		if(!is_mentor(usr.client))
-			ghost.can_reenter_corpse = 1
+			ghost.can_reenter_corpse = TRUE
 		if(ghost.can_reenter_corpse)
 			ghost.reenter_corpse()
 		else
@@ -394,7 +394,7 @@ var/list/admin_verbs_mentor = list(
 	else
 		//ghostize
 		var/mob/body = mob
-		body.ghostize(1)
+		body.ghostize(can_reenter_corpse = TRUE)
 		if(body && !body.key)
 			body.key = "@[key]"	//Haaaaaaaack. But the people have spoken. If it breaks; blame adminbus
 		feedback_add_details("admin_verb","O") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -528,10 +528,12 @@ var/list/admin_verbs_mentor = list(
 		if(C)
 			log_admin("[src.key] has warned [C.key] resulting in a [bantime] minute ban.")
 			message_admins("[key_name_admin(src)] has warned [key_name_admin(C)] resulting in a [bantime] minute ban.")
+			send2slack_logs(key_name(src),  "has warned [key_name_admin(C)] resulting in a [bantime] minute ban.", "(WARNBAN)")
 			C << "<font color='red'><BIG><B>You have been autobanned due to a warning by [ckey].</B></BIG><br>This is a temporary ban, it will be removed in [bantime] minutes."
 		else
 			log_admin("[src.key] has warned [warned_ckey] resulting in a [bantime] minute ban.")
 			message_admins("[key_name_admin(src)] has warned [warned_ckey] resulting in a [bantime] minute ban.")
+			send2slack_logs(key_name(src),  "has warned [warned_ckey] resulting in a [bantime] minute ban.", "(WARNBAN)")
 		AddBan(warned_ckey, D.last_id, "Autobanning due to too many formal warnings", ckey, 1, bantime)
 		holder.DB_ban_record(BANTYPE_TEMP, null, bantime, reason, , ,warned_ckey)
 		feedback_inc("ban_warn",1)
