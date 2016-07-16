@@ -33,7 +33,7 @@
 				if(G.cell.charge >= 2500)
 					G.cell.use(2500)
 					var/mob/living/carbon/human/target = src
-					if(prob(35) && !istype(G, /obj/item/clothing/gloves/yellow))
+					if((prob(25) && !istype(G, /obj/item/clothing/gloves/yellow)) && (target == M))
 						visible_message("\red <B>[M] accidentally touched \himself with the stun gloves!</B>")
 						M.attack_log += text("\[[time_stamp()]\] <font color='red'>Attempted to touch [src.name] ([src.ckey]) with stungloves</font>")
 						src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been unsuccessfully touched with stungloves by [M.name] ([M.ckey])</font>")
@@ -45,8 +45,8 @@
 						src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been stungloved by [M.name] ([M.ckey])</font>")
 						msg_admin_attack("[M.name] ([M.ckey]) stungloved [src.name] ([src.ckey]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[M.x];Y=[M.y];Z=[M.z]'>JMP</a>)")
 					var/datum/organ/external/select_area = get_organ(M.zone_sel.selecting) // We're checking the outside, buddy!
-					var/calc_power = 150 * get_siemens_coefficient_organ(select_area)
-					target.apply_effects(0,0,0,0,5,0,0,calc_power)
+					var/calc_power = 100 * get_siemens_coefficient_organ(select_area)
+					target.apply_effects(0,0,0,0,2,0,0,calc_power)
 					var/datum/effect/effect/system/spark_spread/s = PoolOrNew(/datum/effect/effect/system/spark_spread)
 					s.set_up(3, 1, target)
 					s.start()
