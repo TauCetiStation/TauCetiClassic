@@ -110,7 +110,7 @@
 	id = "space_suit_atmospherics"
 	build_type = MINEFAB
 	req_tech = list("biotech"=3, "materials" = 4, "engineering" = 3)
-	build_path = /obj/item/clothing/suit/space/rig/atmos
+	build_path = /obj/item/clothing/suit/space/rig/medical
 	materials = list(MAT_METAL=45000,MAT_GLASS=2000,MAT_PLASTIC=5000,MAT_SILVER=3000)
 	construction_time = 1400
 	category = list("Spacesuit")
@@ -120,7 +120,7 @@
 	id = "space_suit_hlemet_medical"
 	build_type = MINEFAB
 	req_tech = list("biotech"=3, "materials" = 4, "engineering" = 3)
-	build_path = /obj/item/clothing/head/helmet/space/rig/atmos
+	build_path = /obj/item/clothing/head/helmet/space/rig/medical
 	materials = list(MAT_METAL=5000,MAT_GLASS=3000,MAT_SILVER=1500)
 	construction_time = 400
 	category = list("Spacesuit")
@@ -131,7 +131,7 @@
 	id = "space_suit_mining_rig"
 	build_type = MINEFAB
 	req_tech = list("combat" = 3, "biotech"=2, "materials" = 4, "engineering" = 3)
-	build_path = /obj/item/clothing/suit/space/rig/security
+	build_path = /obj/item/clothing/suit/space/rig/mining
 	materials = list(MAT_METAL=75000,MAT_GLASS=6000,MAT_PLASTIC=8000,MAT_GOLD=4000,MAT_DIAMOND=4000,MAT_URANIUM=6000)
 	construction_time = 1800
 	category = list("Spacesuit")
@@ -141,14 +141,14 @@
 	id = "space_suit_hlemet_mining_rig"
 	build_type = MINEFAB
 	req_tech = list("combat" = 3, "biotech"=2, "materials" = 4, "engineering" = 3)
-	build_path = /obj/item/clothing/head/helmet/space/rig/security
+	build_path = /obj/item/clothing/head/helmet/space/rig/mining
 	materials = list(MAT_METAL=6000,MAT_GLASS=3000,MAT_PLASTIC=2000,MAT_GOLD=1000,MAT_DIAMOND=500,MAT_URANIUM=1000)
 	construction_time = 600
 	category = list("Spacesuit")
 
 //Security rig
 /datum/design/space_suit_security
-	name = "medical hardsuit"
+	name = "security hardsuit"
 	id = "space_suit_security"
 	build_type = MINEFAB
 	req_tech = list("combat" = 5, "biotech"=3, "materials" = 5, "engineering" = 4)
@@ -275,7 +275,7 @@
 	id = "stimpack"
 	build_type = MINEFAB
 	req_tech = list("biotech"=2)
-	build_path = /obj/item/weapon/storage/fancy/glowsticks
+	build_path = /obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack
 	materials = list(MAT_GLASS=250,MAT_PLASTIC=500,MAT_PHORON=150)
 	construction_time = 50
 	category = list("Support")
