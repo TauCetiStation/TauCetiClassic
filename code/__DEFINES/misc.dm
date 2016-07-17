@@ -115,7 +115,9 @@
 #define MAT_DIAMOND		"$diamond"
 #define MAT_URANIUM		"$uranium"
 #define MAT_PHORON		"$phoron"
+#define MAT_PLASTIC		"$plastic"
 #define MAT_BANANIUM	"$bananium"
+
 
 #define MINERAL_MATERIAL_AMOUNT 2000
 //The amount of materials you get from a sheet of mineral like iron/diamond/glass etc
