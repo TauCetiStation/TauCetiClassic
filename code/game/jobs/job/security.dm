@@ -108,8 +108,8 @@
 	spawn_positions = 1
 	supervisors = "the head of security"
 	selection_color = "#ffeeee"
-	access = list(access_security, access_sec_doors, access_detective, access_morgue, access_maint_tunnels, access_court)
-	minimal_access = list(access_security, access_sec_doors, access_detective, access_morgue, access_maint_tunnels, access_court)
+	access = list(access_security, access_sec_doors, access_detective, access_maint_tunnels, access_court)
+	minimal_access = list(access_security, access_sec_doors, access_detective, access_maint_tunnels, access_court)
 	minimal_player_age = 3
 	minimal_player_ingame_minutes = 1560
 

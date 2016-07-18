@@ -1190,7 +1190,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 			var/obj/item/weapon/card/id/W = new(M)
 			W.name = "[M.real_name]'s ID Card"
-			W.access = list(access_security, access_sec_doors, access_detective, access_morgue, access_maint_tunnels, access_court)
+			W.access = list(access_security, access_sec_doors, access_detective, access_maint_tunnels, access_court)
 			W.assignment = "Detective"
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
