@@ -47,6 +47,7 @@
 	name = "Bald"
 	icon_state = "bald"
 	gender = MALE
+	species_allowed = list("Human","Unathi")
 
 /datum/sprite_accessory/hair/short
 	name = "Short Hair"	  // try to capatilize the names please~
@@ -160,6 +161,7 @@
 	name = "Pompadour"
 	icon_state = "hair_pompadour"
 	gender = MALE
+	species_allowed = list("Human","Unathi")
 
 /datum/sprite_accessory/hair/bigpompadour
 	name = "Big Pompadour"
@@ -191,6 +193,7 @@
 	name = "Beehive"
 	icon_state = "hair_beehive"
 	gender = FEMALE
+	species_allowed = list("Human","Unathi")
 
 /datum/sprite_accessory/hair/beehive2
 	name = "Beehive 2"
@@ -201,11 +204,13 @@
 	name = "Bobcurl"
 	icon_state = "hair_bobcurl"
 	gender = FEMALE
+	species_allowed = list("Human","Unathi")
 
 /datum/sprite_accessory/hair/bob
 	name = "Bob"
 	icon_state = "hair_bobcut"
 	gender = FEMALE
+	species_allowed = list("Human","Unathi")
 
 /datum/sprite_accessory/hair/bowl
 	name = "Bowl"
@@ -281,6 +286,7 @@
 /datum/sprite_accessory/hair/mohawk
 	name = "Mohawk"
 	icon_state = "hair_d"
+	species_allowed = list("Human","Unathi")
 
 /datum/sprite_accessory/hair/reversemohawk
 	name = "Reverse Mohawk"
@@ -299,6 +305,7 @@
 /datum/sprite_accessory/hair/spiky
 	name = "Spiky"
 	icon_state = "hair_spikey"
+	species_allowed = list("Human","Unathi")
 
 /datum/sprite_accessory/hair/spiky2
 	name = "Spiky 2"
