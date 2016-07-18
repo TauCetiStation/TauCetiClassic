@@ -675,12 +675,6 @@ obj/item/projectile/kinetic/New()
 	basestate = "window"
 
 //Door
-/obj/structure/door_assembly/door_assembly_pod
-	base_icon_state = "surv"
-	base_name = "pod airlock assembly"
-	airlock_type = "/survival_pod"
-	anchored = 1
-
 /obj/structure/inflatable/door/survival_pod
 	name = "inflatable airlock"
 	icon = 'icons/obj/inflatable.dmi'
@@ -779,6 +773,13 @@ obj/item/projectile/kinetic/New()
 
 /obj/machinery/smartfridge/survival_pod/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(is_type_in_typecache(O,forbidden_tools))
+		if(istype(O,/obj/item/weapon/wrench))
+			user << "\blue You start to disassemble the storage unit..."
+			if(do_after(user,20,target = src))
+				if(!src)
+					return
+				qdel(src)
+			return
 		if(accept_check(O))
 			if(contents.len >= max_n_of_items)
 				user << "<span class='notice'>\The [src] is full.</span>"
