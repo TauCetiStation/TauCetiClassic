@@ -13,6 +13,10 @@
 	blacklisted_turfs += typecacheof(/turf/simulated/wall)
 	whitelisted_turfs = list()
 	banned_areas = typecacheof(/area/shuttle)
+	banned_areas += typecacheof(/area/holodeck)
+	banned_areas += typecacheof(/area/vox_station)
+	banned_areas += typecacheof(/area/syndicate_station)
+	banned_areas += typecacheof(/area/supply)
 
 /datum/map_template/shelter/proc/id()
 	if(shelter_id)
