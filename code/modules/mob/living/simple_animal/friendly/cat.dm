@@ -22,6 +22,7 @@
 	minbodytemp = 223		//Below -50 Degrees Celcius
 	maxbodytemp = 323	//Above 50 Degrees Celcius
 	holder_type = /obj/item/weapon/holder/cat
+	var/obj/item/inventory_mouth
 
 /mob/living/simple_animal/cat/Life()
 	//MICE!
@@ -61,11 +62,18 @@
 				stop_automated_movement = 1
 				walk_to(src,movement_target,0,3)
 
+/mob/living/simple_animal/cat/death()
+	if(inventory_mouth)
+		inventory_mouth.loc = src.loc
+		inventory_mouth = null
+		regenerate_icons()
+	return ..()
 
 /mob/living/simple_animal/cat/MouseDrop(atom/over_object)
 
 	var/mob/living/carbon/H = over_object
-	if(!istype(H) || !Adjacent(H)) return ..()
+	if(!istype(H) || !Adjacent(H))
+		return ..()
 
 	//This REALLY needs to be moved to a general mob proc somewhere.
 	if(H.a_intent == "help")
@@ -73,6 +81,57 @@
 		return
 	else
 		return ..()
+
+/mob/living/simple_animal/cat/show_inv(mob/user)
+	if(user.stat)
+		return
+
+	user.set_machine(src)
+
+	var/dat
+	if(inventory_mouth)
+		dat = "<br><b>Mouth:</b><a href='?src=\ref[src];remove_inv=mouth'>Remove</a>"
+	else
+		dat = "<br><b>Mouth:</b><a href='?src=\ref[src];add_inv=mouth'>Nothing</a>"
+
+	//dat += "<br><a href='?src=\ref[user];mach_close=mob[type]'>Close</a>"
+
+	var/datum/browser/popup = new(user, "mob[type]", "Inventory of [name]", 325, 500)
+	popup.set_content(dat)
+	popup.open()
+
+/mob/living/simple_animal/cat/Topic(href, href_list)
+	if(usr.stat || stat || !Adjacent(usr) || !(ishuman(usr) || ismonkey(usr)))
+		return
+
+	//Removing from inventory
+	if(href_list["remove_inv"])
+		if(inventory_mouth)
+			inventory_mouth.loc = src.loc
+			inventory_mouth = null
+			regenerate_icons()
+			show_inv(usr)
+		else
+			return
+
+	else if(href_list["add_inv"])
+		var/obj/item/item_to_add = usr.get_active_hand()
+		if(!item_to_add || inventory_mouth)
+			return
+		else if(item_to_add.type == /obj/item/clothing/mask/cigarette)
+			usr.drop_item()
+			item_to_add.loc = src
+			src.inventory_mouth = item_to_add
+			regenerate_icons()
+			show_inv(usr)
+	else
+		..()
+
+/mob/living/simple_animal/cat/regenerate_icons()
+	overlays.Cut()
+
+	if(inventory_mouth)
+		overlays += image('icons/mob/animal.dmi',inventory_mouth.icon_state)
 
 //RUNTIME IS ALIVE! SQUEEEEEEEE~
 /mob/living/simple_animal/cat/Runtime
