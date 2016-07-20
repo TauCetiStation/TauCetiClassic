@@ -982,7 +982,7 @@
 "sT" = (/obj/machinery/mineral/processing_unit_console{machinedir = 5},/turf/simulated/wall/r_wall,/area/mine/dwarf)
 "sU" = (/obj/machinery/conveyor{dir = 2; id = "dw_c"},/obj/machinery/light_construct/small{dir = 4},/turf/simulated/floor/plating,/area/mine/dwarf)
 "sV" = (/obj/structure/sign/securearea{name = "HIGH VOLTAGE"; desc = "A warning sign which reads 'HIGH VOLTAGE'"; icon_state = "shock"},/turf/simulated/wall/r_wall,/area/mine/dwarf)
-"sW" = (/obj/structure/rack,/obj/item/clothing/mask/breath,/obj/item/clothing/suit/space/rig/wizard,/obj/item/clothing/head/helmet/space/rig/wizard,/turf/simulated/floor/plating,/area/mine/dwarf)
+"sW" = (/obj/structure/rack,/obj/item/clothing/mask/breath,/obj/item/clothing/suit/space/rig/wizard{armor = list("melee" = 40, "bullet" = 5, "laser" = 10, "energy" = 5, "bomb" = 55, "bio" = 100, "rad" = 20); desc = "Old bizarre gem-encrusted suit that radiates magical energies."},/obj/item/clothing/head/helmet/space/rig/wizard{armor = list("melee" = 40, "bullet" = 5, "laser" = 10, "energy" = 5, "bomb" = 55, "bio" = 100, "rad" = 20); desc = "Old bizarre gem-encrusted helmet that radiates magical energies."},/turf/simulated/floor/plating,/area/mine/dwarf)
 "sX" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0},/turf/simulated/floor/plating,/area/mine/dwarf)
 "sY" = (/obj/machinery/atmospherics/pipe/simple/hidden/supply,/turf/simulated/floor/plating,/area/mine/dwarf)
 "sZ" = (/obj/structure/reagent_dispensers/watertank,/turf/simulated/floor/plating,/area/mine/dwarf)
