@@ -115,25 +115,19 @@
 	action_button_name = "Adjust Bandana"
 	icon_state = "bandbotany"
 	body_parts_covered = 0
-	var/hanging = 0
 
 /obj/item/clothing/mask/bandana/verb/adjustmask()
 	set category = "Object"
 	set name = "Adjust bandana"
 	set src in usr
-
 	if(usr.canmove && !usr.stat && !usr.restrained())
-		if(!src.hanging)
-			src.hanging = !src.hanging
-			flags &= ~(MASKCOVERSMOUTH)
+		flags ^= MASKCOVERSMOUTH
+		if(flags & MASKCOVERSMOUTH)
 			src.icon_state = initial(icon_state)
-			usr << "Your mask is now hanging on your neck."
-
+			usr << "Your bandana is now covering your face."
 		else
-			src.hanging = !src.hanging
-			flags |= MASKCOVERSMOUTH
 			src.icon_state += "_up"
-			usr << "You pull the mask up to cover your face."
+			usr << "You tie the bandana around your head."
 		usr.update_inv_wear_mask()
 
 /obj/item/clothing/mask/bandana/attack_self(var/mob/user)
