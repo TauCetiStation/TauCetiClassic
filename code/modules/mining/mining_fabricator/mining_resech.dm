@@ -280,6 +280,26 @@
 	construction_time = 50
 	category = list("Support")
 
+/datum/design/stimpack_imp
+	name = "Improved stimpack"
+	id = "stimpack_imp"
+	build_type = MINEFAB
+	req_tech = list("biotech"=3,"phorontech" = 2)
+	build_path = /obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack_imp
+	materials = list(MAT_GLASS=250,MAT_PLASTIC=500,MAT_PHORON=500)
+	construction_time = 50
+	category = list("Support")
+
+/datum/design/stimpack_adv
+	name = "Advanced stimpack"
+	id = "stimpack"
+	build_type = MINEFAB
+	req_tech = list("biotech"=4,"phorontech" = 3)
+	build_path = /obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack_adv
+	materials = list(MAT_GLASS=250,MAT_PLASTIC=500,MAT_PHORON=1000,MAT_URANIUM=500)
+	construction_time = 50
+	category = list("Support")
+
 /datum/design/patcher
 	name = "Suit patcher"
 	id = "patcher"
@@ -295,7 +315,7 @@
 	build_type = MINEFAB
 	req_tech = list("biotech"=4)
 	build_path = /obj/item/weapon/lazarus_injector
-	materials = list(MAT_METAL=2000,MAT_GLASS=250,MAT_PLASTIC=1000,MAT_PHORON=3000)
+	materials = list(MAT_METAL=2000,MAT_GLASS=250,MAT_PLASTIC=1000,MAT_PHORON=3000,MAT_URANIUM=500)
 	construction_time = 1800
 	category = list("Support")
 
@@ -305,7 +325,7 @@
 	build_type = MINEFAB
 	req_tech = list("magnets" = 3,"bluespace" = 2)
 	build_path = /obj/item/device/wormhole_jaunter
-	materials = list(MAT_METAL=2000,MAT_GLASS=250,MAT_PLASTIC=1000,MAT_PHORON=3000)
+	materials = list(MAT_METAL=2000,MAT_GLASS=250,MAT_PLASTIC=1000,MAT_URANIUM=500,MAT_GOLD=500)
 	construction_time = 600
 	category = list("Support")
 
