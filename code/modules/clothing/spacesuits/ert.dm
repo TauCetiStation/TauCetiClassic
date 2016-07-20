@@ -52,6 +52,7 @@
 	icon_state = "ert_commander"
 	item_state = "suit-command"
 	armor = list(melee = 60, bullet = 65, laser = 55, energy = 55, bomb = 50, bio = 100, rad = 60)
+	breach_threshold = 28
 
 //Security
 /obj/item/clothing/head/helmet/space/rig/ert/security
@@ -62,14 +63,15 @@
 	item_color = "ert_security"
 	armor = list(melee = 60, bullet = 60, laser = 60, energy = 30, bomb = 65, bio = 100, rad = 10)
 
-
 /obj/item/clothing/suit/space/rig/ert/security
 	name = "emergency response team security suit"
 	desc = "A suit worn by security members of a NanoTrasen Emergency Response Team. Has red highlights. Armoured, space ready, and fire resistant."
 	icon_state = "ert_security"
 	item_state = "syndicate-black-red"
 	armor = list(melee = 60, bullet = 60, laser = 60, energy = 30, bomb = 65, bio = 100, rad = 10)
+	breach_threshold = 25
 	slowdown = 1.4
+
 //Engineer
 /obj/item/clothing/head/helmet/space/rig/ert/engineer
 	name = "emergency response team engineer helmet"

@@ -429,6 +429,6 @@
 
 	var/obj/item/clothing/suit/space/SS = wear_suit
 	var/reduction_dam = (100 - SS.breach_threshold) / 100
-	var/penetrated_dam = max(0, min(50, (damage * reduction_dam) / 4)) // - SS.damage)) - Consider uncommenting this if suits seem too hardy on dev.
+	var/penetrated_dam = max(0, min(50, (damage * reduction_dam) / 1.5)) // - SS.damage)) - Consider uncommenting this if suits seem too hardy on dev.
 
 	if(penetrated_dam) SS.create_breaches(damtype, penetrated_dam)
