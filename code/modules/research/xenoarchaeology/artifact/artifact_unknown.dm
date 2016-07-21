@@ -17,7 +17,8 @@
 #define TRIGGER_OXY 10
 #define TRIGGER_CO2 11
 #define TRIGGER_NITRO 12
-#define MAX_TRIGGER 12
+#define TRIGGER_VIEW 13
+#define MAX_TRIGGER 13
 /*
 //sleeping gas appears to be bugged, currently
 var/list/valid_primary_effect_types = list(\
@@ -67,46 +68,49 @@ var/list/valid_secondary_effect_types = list(\
 	var/datum/artifact_effect/my_effect
 	var/datum/artifact_effect/secondary_effect
 	var/being_used = 0
+	var/need_inicial = 1
+	var/scan_radius = 3
 
 /obj/machinery/artifact/New()
 	..()
 
 	//setup primary effect - these are the main ones (mixed)
-	var/effecttype = pick(typesof(/datum/artifact_effect) - /datum/artifact_effect)
-	my_effect = new effecttype(src)
+	if(need_inicial == 1)
+		var/effecttype = pick(typesof(/datum/artifact_effect) - /datum/artifact_effect)
+		my_effect = new effecttype(src)
 
-	//75% chance to have a secondary stealthy (and mostly bad) effect
-	if(prob(75))
-		effecttype = pick(typesof(/datum/artifact_effect) - /datum/artifact_effect)
-		secondary_effect = new effecttype(src)
+		//75% chance to have a secondary stealthy (and mostly bad) effect
 		if(prob(75))
-			secondary_effect.ToggleActivate(0)
+			effecttype = pick(typesof(/datum/artifact_effect) - /datum/artifact_effect)
+			secondary_effect = new effecttype(src)
+			if(prob(75))
+				secondary_effect.ToggleActivate(0)
 
-	icon_num = rand(0,11)
-	icon_state = "ano[icon_num]0"
-	if(icon_num == 7 || icon_num == 8)
-		name = "large crystal"
-		desc = pick("It shines faintly as it catches the light.",\
-		"It appears to have a faint inner glow.",\
-		"It seems to draw you inward as you look it at.",\
-		"Something twinkles faintly as you look at it.",\
-		"It's mesmerizing to behold.")
-		if(prob(50))
-			my_effect.trigger = TRIGGER_ENERGY
-	else if(icon_num == 9)
-		name = "alien computer"
-		desc = "It is covered in strange markings."
-		if(prob(75))
-			my_effect.trigger = TRIGGER_TOUCH
-	else if(icon_num == 10)
-		desc = "A large alien device, there appear to be some kind of vents in the side."
-		if(prob(50))
-			my_effect.trigger = rand(6,12)
-	else if(icon_num == 11)
-		name = "sealed alien pod"
-		desc = "A strange alien device."
-		if(prob(25))
-			my_effect.trigger = rand(1,4)
+		icon_num = rand(0,11)
+		icon_state = "ano[icon_num]0"
+		if(icon_num == 7 || icon_num == 8)
+			name = "large crystal"
+			desc = pick("It shines faintly as it catches the light.",\
+			"It appears to have a faint inner glow.",\
+			"It seems to draw you inward as you look it at.",\
+			"Something twinkles faintly as you look at it.",\
+			"It's mesmerizing to behold.")
+			if(prob(50))
+				my_effect.trigger = TRIGGER_ENERGY
+		else if(icon_num == 9)
+			name = "alien computer"
+			desc = "It is covered in strange markings."
+			if(prob(75))
+				my_effect.trigger = TRIGGER_TOUCH
+		else if(icon_num == 10)
+			desc = "A large alien device, there appear to be some kind of vents in the side."
+			if(prob(50))
+				my_effect.trigger = rand(6,MAX_TRIGGER)
+		else if(icon_num == 11)
+			name = "sealed alien pod"
+			desc = "A strange alien device."
+			if(prob(25))
+				my_effect.trigger = rand(1,4)
 
 #define TRIGGER_PHORON 9
 #define TRIGGER_OXY 10
@@ -223,6 +227,30 @@ var/list/valid_secondary_effect_types = list(\
 			my_effect.ToggleActivate()
 		if(secondary_effect && secondary_effect.trigger == TRIGGER_NITRO && !secondary_effect.activated)
 			secondary_effect.ToggleActivate(0)
+
+	//TRIGGER_PROXY ACTIVATION
+	if(my_effect.trigger == TRIGGER_VIEW)
+		var/trigger_near = 0
+		var/turf/mainloc = get_turf(src)
+		for(var/mob/living/A in view(scan_radius,mainloc))
+			if ((A)&&(A.stat != DEAD))
+				trigger_near = 1
+				break
+			else
+				trigger_near = 0
+
+		if(trigger_near)
+			if(my_effect.trigger == TRIGGER_VIEW && !my_effect.activated)
+				my_effect.ToggleActivate()
+			if(secondary_effect && secondary_effect.trigger == TRIGGER_VIEW && !secondary_effect.activated)
+				secondary_effect.ToggleActivate(0)
+		else
+			if(my_effect.trigger == TRIGGER_VIEW && my_effect.activated)
+				my_effect.ToggleActivate()
+			if(secondary_effect && secondary_effect.trigger == TRIGGER_VIEW && !secondary_effect.activated)
+				secondary_effect.ToggleActivate(0)
+
+
 
 /obj/machinery/artifact/attack_hand(var/mob/user as mob)
 	if (get_dist(user, src) > 1)
