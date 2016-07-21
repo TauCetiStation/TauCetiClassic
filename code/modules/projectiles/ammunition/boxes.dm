@@ -187,3 +187,21 @@
 	max_ammo = 30
 	multiple_sprites = 1
 
+/obj/item/ammo_box/shotgun
+	name = "shotgun shells box (buckshot)"
+	icon = 'icons/obj/ammo.dmi'
+	icon_state = "10mm"
+	w_class = 3
+	origin_tech = "combat=2"
+	ammo_type = /obj/item/ammo_casing/shotgun/buckshot
+	max_ammo = 20
+
+/obj/item/ammo_box/shotgun/slug
+	name = "shotgun shells box  (slug)"
+	icon_state = "45box"
+	ammo_type = /obj/item/ammo_casing/shotgun
+
+/obj/item/ammo_box/shotgun/beanbag
+	name = "shotgun shells box (beanbag)"
+	icon_state = "9mm"
+	ammo_type = /obj/item/ammo_casing/shotgun/beanbag

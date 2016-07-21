@@ -7,7 +7,7 @@
 
 	if(!(P.original == src && P.firer == src)) //can't block or reflect when shooting yourself
 		if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam))
-			if(check_reflect(def_zone)) // Checks if you've passed a reflection% check
+			if(check_reflect(def_zone, dir, P.dir)) // Checks if you've passed a reflection% check
 				visible_message("<span class='danger'>The [P.name] gets reflected by [src]!</span>", \
 								"<span class='userdanger'>The [P.name] gets reflected by [src]!</span>")
 				// Find a turf near or on the original location to bounce to
@@ -104,17 +104,14 @@
 
 	return (..(P , def_zone))
 
-/mob/living/carbon/human/proc/check_reflect(def_zone) //Reflection checks for anything in your l_hand, r_hand, or wear_suit based on the reflection chance of the object
+/mob/living/carbon/human/proc/check_reflect(def_zone, hol_dir, hit_dir) //Reflection checks for anything in your l_hand, r_hand, or wear_suit based on the reflection chance of the object
 	if(wear_suit)
-		if(wear_suit.IsReflect(def_zone) == 1)
-			return 1
+		return wear_suit.IsReflect(def_zone, hol_dir, hit_dir)
 	if(l_hand)
-		if(l_hand.IsReflect(def_zone) == 1)
-			return 1
+		return l_hand.IsReflect(def_zone, hol_dir, hit_dir)
 	if(r_hand)
-		if(r_hand.IsReflect(def_zone) == 1)
-			return 1
-	return 0
+		return r_hand.IsReflect(def_zone, hol_dir, hit_dir)
+	return FALSE
 
 /mob/living/carbon/human/getarmor(var/def_zone, var/type)
 	var/armorval = 0
@@ -432,6 +429,6 @@
 
 	var/obj/item/clothing/suit/space/SS = wear_suit
 	var/reduction_dam = (100 - SS.breach_threshold) / 100
-	var/penetrated_dam = max(0, min(50, (damage * reduction_dam) / 4)) // - SS.damage)) - Consider uncommenting this if suits seem too hardy on dev.
+	var/penetrated_dam = max(0, min(50, (damage * reduction_dam) / 1.5)) // - SS.damage)) - Consider uncommenting this if suits seem too hardy on dev.
 
 	if(penetrated_dam) SS.create_breaches(damtype, penetrated_dam)

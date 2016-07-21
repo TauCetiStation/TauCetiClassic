@@ -25,7 +25,9 @@
 	icon_state = "anodev"
 	var/activated = 0
 	var/duration = 0
+	var/duration_max = 300 //30 sec max duration
 	var/interval = 0
+	var/interval_max = 100 //10 sec max interval
 	var/time_end = 0
 	var/last_activation = 0
 	var/last_process = 0
@@ -57,8 +59,8 @@
 		if(activated)
 			dat += "Device active.<br>"
 
-		dat += "[inserted_battery] inserted, anomaly ID: [inserted_battery.battery_effect.artifact_id ? inserted_battery.battery_effect.artifact_id : "NA"]<BR>"
-		dat += "<b>Charge:</b> [inserted_battery.stored_charge] / [inserted_battery.capacity]<BR>"
+		dat += "[inserted_battery] inserted, anomaly ID: [inserted_battery.battery_effect ? (inserted_battery.battery_effect.artifact_id == "" ? "???" : "[inserted_battery.battery_effect.artifact_id]") : "NA"]<BR>"
+		dat += "<b>Charge:</b> [round(inserted_battery.stored_charge,1)] / [inserted_battery.capacity]<BR>"
 		dat += "<b>Time left activated:</b> [round(max((time_end - last_process) / 10, 0))]<BR>"
 		if(activated)
 			dat += "<a href='?src=\ref[src];shutdown=1'>Shutdown</a><br>"
@@ -76,8 +78,9 @@
 	dat += "<hr>"
 	dat += "<a href='?src=\ref[src];refresh=1'>Refresh</a> <a href='?src=\ref[src];close=1'>Close</a>"
 
-	user << browse(dat, "window=anodevice;size=400x500")
-	onclose(user, "anodevice")
+	var/datum/browser/popup = new(user, "anodevice", name, 450, 500)
+	popup.set_content(dat)
+	popup.open()
 
 /obj/item/weapon/anodevice/process()
 	if(activated)
@@ -154,13 +157,13 @@
 		if(href_list["duration"])
 			duration += timedif
 			//max 30 sec duration
-			duration = min(max(duration, 0), 300)
+			duration = min(max(duration, 0), duration_max)
 			if(activated)
 				time_end += timedif
 		else if(href_list["interval"])
 			interval += timedif
 			//max 10 sec interval
-			interval = min(max(interval, 0), 100)
+			interval = min(max(interval, 0), interval_max)
 	if(href_list["startup"])
 		if(inserted_battery && inserted_battery.battery_effect && (inserted_battery.stored_charge > 0) )
 			activated = 1

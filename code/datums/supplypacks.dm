@@ -142,22 +142,6 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	containername = "Stok crate"
 	group = "Hydroponics"
 
-/datum/supply_packs/beanbagammo
-	name = "Beanbag shells"
-	contains = list(/obj/item/ammo_casing/shotgun/beanbag,
-					/obj/item/ammo_casing/shotgun/beanbag,
-					/obj/item/ammo_casing/shotgun/beanbag,
-					/obj/item/ammo_casing/shotgun/beanbag,
-					/obj/item/ammo_casing/shotgun/beanbag,
-					/obj/item/ammo_casing/shotgun/beanbag,
-					/obj/item/ammo_casing/shotgun/beanbag,
-					/obj/item/ammo_casing/shotgun/beanbag,
-					/obj/item/ammo_casing/shotgun/beanbag,
-					/obj/item/ammo_casing/shotgun/beanbag)
-	cost = 10
-	containertype = /obj/structure/closet/crate
-	containername = "Beanbag shells"
-	group = "Security"
 
 /datum/supply_packs/toner
 	name = "Toner cartridges"
@@ -170,6 +154,16 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	cost = 10
 	containertype = /obj/structure/closet/crate
 	containername = "Toner cartridges"
+	group = "Supply"
+
+/datum/supply_packs/vest
+	name = "Vest Crate"
+	contains = list(/obj/item/clothing/tie/storage/brown_vest,
+					/obj/item/clothing/tie/storage/brown_vest,
+					/obj/item/clothing/tie/storage/black_vest)
+	cost = 40
+	containertype = /obj/structure/closet/crate
+	containername = "Vest Crate"
 	group = "Supply"
 
 /datum/supply_packs/misc/posters
@@ -807,23 +801,52 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	access = access_armory
 	group = "Security"
 
-/datum/supply_packs/shotgunammo
-	name = "Shotgun shells"
-	contains = list(/obj/item/ammo_casing/shotgun,
-					/obj/item/ammo_casing/shotgun,
-					/obj/item/ammo_casing/shotgun,
-					/obj/item/ammo_casing/shotgun,
-					/obj/item/ammo_casing/shotgun,
-					/obj/item/ammo_casing/shotgun,
-					/obj/item/ammo_casing/shotgun,
-					/obj/item/ammo_casing/shotgun,
-					/obj/item/ammo_casing/shotgun,
-					/obj/item/ammo_casing/shotgun)
+/datum/supply_packs/shotgunammo_beanbag
+	name = "Shotgun shells (Beanbag)"
+	contains = list(/obj/item/weapon/storage/box/shotgun/beanbag)
+	cost = 10
+	containertype = /obj/structure/closet/crate
+	containername = "Shotgun shells (Beanbag)"
+	group = "Security"
+
+/datum/supply_packs/shotgunammo_slug
+	name = "Shotgun shells (slug)"
+	contains = list(/obj/item/weapon/storage/box/shotgun/slug)
 	cost = 20
 	containertype = /obj/structure/closet/crate/secure
-	containername = "Shotgun shells"
+	containername = "Shotgun shells (slug)"
 	access = access_armory
 	group = "Security"
+
+/datum/supply_packs/shotgunammo_buckshot
+	name = "Shotgun shells (buckshot)"
+	contains = list(/obj/item/weapon/storage/box/shotgun/buckshot)
+	cost = 25
+	containertype = /obj/structure/closet/crate/secure
+	containername = "Shotgun shells (buckshot)"
+	access = access_armory
+	group = "Security"
+
+/datum/supply_packs/r4046
+	name = "40x46mm rubber grenades"
+	contains = list(/obj/item/weapon/storage/box/r4046,
+					/obj/item/weapon/storage/box/r4046)
+	cost = 20
+	containertype = /obj/structure/closet/crate/secure
+	containername = "40x46mm rubber grenades"
+	access = access_armory
+	group = "Security"
+
+/datum/supply_packs/m79
+	name = "m79 grenade launcher"
+	contains = list(/obj/item/weapon/gun/projectile/m79,
+					/obj/item/weapon/storage/box/r4046)
+	cost = 30
+	containertype = /obj/structure/closet/crate/secure
+	containername = "m79 grenade launcher"
+	access = access_armory
+	group = "Security"
+
 
 /datum/supply_packs/expenergy
 	name = "Experimental energy gear crate"

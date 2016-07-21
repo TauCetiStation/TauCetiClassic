@@ -83,7 +83,7 @@
 
 /obj/item/clothing/suit/space/recycler
 	name = "Recycler space suit"
-	desc = "Recycler space helmet that protects against low pressure environments"
+	desc = "Recycler space suit that protects against low pressure environments."
 	icon_state = "recycler_space"
 	armor = list(melee = 40, bullet = 5, laser = 10,energy = 5, bomb = 55, bio = 100, rad = 40)
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/device/suit_cooling_unit,/obj/item/weapon/storage/bag/trash/miners,/obj/item/weapon/shovel)

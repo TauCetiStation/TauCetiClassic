@@ -143,16 +143,14 @@
 	else
 		return ..()
 
-
-/obj/machinery/iv_drip/verb/toggle_mode(mob/living/user as mob)
+/obj/machinery/iv_drip/verb/toggle_mode()
 	set name = "Toggle Mode"
 	set category = "Object"
 	set src in oview(1)
 
-	if(isliving(user))
-
+	if(isliving(usr) && usr.stat != DEAD)
 		mode = !mode
-		user << "The IV drip is now [mode ? "injecting" : "taking blood"]."
+		usr << "The IV drip is now [mode ? "injecting" : "taking blood"]."
 
 /obj/machinery/iv_drip/examine()
 	set src in view()
