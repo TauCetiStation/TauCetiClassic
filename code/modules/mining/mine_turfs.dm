@@ -130,7 +130,8 @@
 		for(var/trydir in cardinal)
 			var/turf/simulated/mineral/random/target_turf = get_step(src, trydir)
 			if(istype(target_turf, /turf/simulated/mineral/random/caves))
-				if(prob(2))	new/turf/simulated/floor/plating/airless/asteroid/cave(src)
+				if(prob(2))
+					new/turf/simulated/floor/plating/airless/asteroid/cave(src)
 
 //Not even going to touch this pile of spaghetti
 /turf/simulated/mineral/attackby(obj/item/weapon/W as obj, mob/user as mob)
@@ -557,6 +558,8 @@
 				new /mob/living/simple_animal/hostile/asteroid/basilisk(T)
 			if("Hivelord")
 				new /mob/living/simple_animal/hostile/asteroid/hivelord(T)
+		if(prob(20))
+		 new /obj/machinery/artifact/bluespace_crystal(T)
 	return
 
 /**********************Asteroid**************************/
