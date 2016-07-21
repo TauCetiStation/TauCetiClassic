@@ -86,7 +86,11 @@
 	if(cell)
 		overlays += image(icon = icon, icon_state = "gloves_cell")
 	if(wired && cell)
-		item_state = "stungloves"
+		var/obj/item/weapon/stock_parts/cell/C = cell
+		if(!C.charge)
+			item_state = "stungloves_charge"
+		else
+			item_state = "stungloves"
 	else
 		item_state = initial(item_state)
 	if(ishuman(src.loc)) // Update item_state if src in gloves slot

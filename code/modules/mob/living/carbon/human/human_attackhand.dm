@@ -32,6 +32,7 @@
 			if(M.a_intent == "hurt")//Stungloves. Any contact will stun the alien.
 				if(G.cell.charge >= 2500)
 					G.cell.use(2500)
+					G.update_icon()
 					var/mob/living/carbon/human/target = src
 					if((prob(25) && !istype(G, /obj/item/clothing/gloves/yellow)) && (target == M))
 						visible_message("\red <B>[M] accidentally touched \himself with the stun gloves!</B>")
