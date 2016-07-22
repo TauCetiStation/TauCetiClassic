@@ -29,7 +29,7 @@
 			H.host = null
 		else
 			warriors.Remove(H)
-			qdel(H)
+			H.dust()
 			world << "Oops, error"
 		return
 
@@ -77,7 +77,7 @@
 		mind.active = 0
 		mind.transfer_to(host)
 		host.key = key
-	qdel(src)
+	dust()
 
 	//slot_wear_suit
 

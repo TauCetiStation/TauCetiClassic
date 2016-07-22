@@ -51,6 +51,7 @@ var/datum/subsystem/vote/SSvote
 	//get the highest number of votes
 	var/greatest_votes = 0
 	var/total_votes = 0
+	world << "Checking war"
 	if(!config.holy_war_vote_mode)
 		for(var/option in choices)
 			var/votes = choices[option]
@@ -58,14 +59,13 @@ var/datum/subsystem/vote/SSvote
 			if(votes > greatest_votes)
 				greatest_votes = votes
 	else
-		var/votes = list()
+		world << "Checked"
+		var/votes = list(0,0)
 		for(var/mob/living/carbon/human/holo_warrior/H in requester.warriors)
-			if(!H || !H.stat || !H.side)
+			world << "Processing [H]"
+			if(!H || H.stat || !H.side)
 				continue
-			if(!votes[H.side])
-				votes[H.side] = 0
-			else
-				votes[H.side]++
+			votes[H.side]++
 			total_votes++
 			H.return_to_host()
 		qdel(requester)
