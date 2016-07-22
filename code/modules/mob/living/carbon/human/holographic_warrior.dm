@@ -45,7 +45,7 @@
 	else
 		H = new /mob/living/carbon/human/holo_warrior(pick(tdome2))
 	H.equip_warrior(side)
-	H.name = "[H.name] ([rand(1, 1000)])"
+	H.name = "Warrior ([rand(1, 1000)])"
 	H.real_name = H.name
 	H.side = side
 	return H
@@ -58,28 +58,29 @@
 	var/side = 0
 
 /mob/living/carbon/human/holo_warrior/New(var/new_loc)
+	verbs -= /mob/living/verb/ghost
 	..(new_loc, "Holographic Warrior")
 
 /mob/living/carbon/human/holo_warrior/verb/return_to_host()
 	set name = "Return to host"
 	set category = "IC"
 
-	if( stat || weakened || paralysis || resting || sleeping || (status_flags & FAKEDEATH) || buckled)
+	if (!src)
 		return
 
-	if (!mind || !key)
-		return
-
-	if (!host)
+	if (!mind || !key || !host)
+		qdel(src)
 		return
 
 	if(host)
 		mind.active = 0
 		mind.transfer_to(host)
 		host.key = key
-	dust()
+	qdel(src)
 
-	//slot_wear_suit
+/mob/living/carbon/human/holo_warrior/death(gibbed)
+	..(gibbed)
+	return_to_host()
 
 /mob/living/carbon/human/holo_warrior/proc/equip_warrior(var/side = 0)
 	if(side == SIDE_CALL)

@@ -63,7 +63,10 @@ var/datum/subsystem/vote/SSvote
 		var/votes = list(0,0)
 		for(var/mob/living/carbon/human/holo_warrior/H in requester.warriors)
 			world << "Processing [H]"
-			if(!H || H.stat || !H.side)
+			if(!H)
+				continue
+			if(H.stat || !H.side)
+				H.return_to_host()
 				continue
 			votes[H.side]++
 			total_votes++
