@@ -15,6 +15,7 @@ var/datum/subsystem/vote/SSvote
 	var/list/choices = list()
 	var/list/voted = list()
 	var/list/voting = list()
+	var/datum/holy_war/requester
 
 /datum/subsystem/vote/New()
 	NEW_SS_GLOBAL(SSvote)
@@ -50,11 +51,38 @@ var/datum/subsystem/vote/SSvote
 	//get the highest number of votes
 	var/greatest_votes = 0
 	var/total_votes = 0
-	for(var/option in choices)
-		var/votes = choices[option]
-		total_votes += votes
-		if(votes > greatest_votes)
-			greatest_votes = votes
+	if(!config.holy_war_vote_mode)
+		for(var/option in choices)
+			var/votes = choices[option]
+			total_votes += votes
+			if(votes > greatest_votes)
+				greatest_votes = votes
+	else
+		var/votes = list()
+		for(var/mob/living/carbon/human/holo_warrior/H in requester.warriors)
+			if(!H || !H.stat || !H.side)
+				continue
+			if(!votes[H.side])
+				votes[H.side] = 0
+			else
+				votes[H.side]++
+			total_votes++
+			H.return_to_host()
+		qdel(requester)
+		. = list()
+		if(!total_votes)
+			return .
+		if(votes[SIDE_CALL] > votes[SIDE_STATION])
+			. += "End Shift"
+		else if(votes[SIDE_CALL] == votes[SIDE_STATION])
+			if(prob(50))
+				. += "End Shift"
+			else
+				. += "Continue Playing"
+		else
+			. += "Continue Playing"
+		return .
+
 	//default-vote for everyone who didn't vote
 	if(!config.vote_no_default && choices.len)
 		var/non_voters = (clients.len - total_votes)
@@ -222,6 +250,34 @@ var/datum/subsystem/vote/SSvote
 		return 1
 	return 0
 
+/datum/subsystem/vote/proc/start_holy_war(vote_type, initiator_key)
+	var/is_admin = 0
+	if(check_rights(R_ADMIN))
+		is_admin = 1
+	if(!mode)
+		if(started_time != null && !is_admin)
+			var/next_allowed_time = (started_time + config.vote_delay)
+			if(next_allowed_time > world.time)
+				return 0
+
+		reset()
+		switch(vote_type)
+			if("crew_transfer")
+				if(!is_admin)
+					if(get_security_level() == "red" || get_security_level() == "delta")
+						return 0
+			else
+				return 0
+		requester = new /datum/holy_war()
+		mode = vote_type
+		initiator = initiator_key
+		voting_started_time = world.time
+
+		for(var/mob/M in player_list)
+			requester.request_client_to_war(M)
+		return 1
+	return 0
+
 /datum/subsystem/vote/proc/interface(client/C)
 	if(!C)
 		return
@@ -309,7 +365,13 @@ var/datum/subsystem/vote/SSvote
 		if("crew_transfer")
 			if(config.allow_vote_mode || usr.client.holder)
 				if((ticker.current_state > GAME_STATE_SETTING_UP) && !SSshuttle.online && SSshuttle.location == 0)
-					initiate_vote("crew_transfer",usr.key)
+					if(!config.holy_war_vote_mode)
+						initiate_vote("crew_transfer",usr.key)
+					else
+						start_holy_war("crew_transfer",usr.key)
+						voting -= usr.client
+						usr << browse(null, "window=vote")
+						return
 		if("gamemode")
 			if(config.allow_vote_mode || usr.client.holder)
 				if(ticker.current_state <= GAME_STATE_SETTING_UP)

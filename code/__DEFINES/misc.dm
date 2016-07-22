@@ -119,3 +119,7 @@
 
 #define MINERAL_MATERIAL_AMOUNT 2000
 //The amount of materials you get from a sheet of mineral like iron/diamond/glass etc
+
+//Holy War defines
+#define SIDE_CALL		1
+#define SIDE_STATION	2
