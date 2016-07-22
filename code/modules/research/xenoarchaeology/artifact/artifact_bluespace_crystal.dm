@@ -41,7 +41,7 @@
 		if("bluespace anomaly")
 			anom.origin_tech = "bluespace=8;magnets=5;powerstorage=3"
 		if("pyroclastic anomaly")
-			anom.origin_tech = "plasmatech=8;powerstorage=4;biotech=6"
+			anom.origin_tech = "phorontech=8;powerstorage=4;biotech=6"
 		if("vortex anomaly")
 			anom.origin_tech = "materials=8;combat=4;engineering=4"
 
