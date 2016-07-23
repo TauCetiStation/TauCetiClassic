@@ -1,13 +1,13 @@
 /mob/living/carbon/human/movement_delay()
 	var/tally = 0
 
+	if(species)
+		tally = species.speed_mod
+
 	if(crawling)
 		tally += 7
 	else if((reagents.has_reagent("hyperzine") || reagents.has_reagent("nuka_cola")) && species && !(species.flags & NO_BLOOD))
 		return -1
-
-	if(species)
-		tally = species.speed_mod
 
 	if(istype(l_hand, /obj/item/weapon/gun))
 		if(l_hand.w_class > 3)
