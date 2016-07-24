@@ -24,8 +24,7 @@
 		return
 	var/list/borg_candicates = get_candidates(ROLE_OPERATIVE)
 	if(borg_candicates.len > 0)
-		if(requested_candidates.len > 0)
-			requested_candidates.Cut()
+		requested_candidates.Cut()
 		used = TRUE
 		user << "<span class='notice'>Seatching for available borg personality. Please wait 30 seconds...</span>"
 		for(var/client/C in borg_candicates)
@@ -52,8 +51,7 @@ obj/item/weapon/antag_spawner/borg_tele/proc/request_player(var/client/C)
 	else
 		used = FALSE
 		var/turf/T = get_turf_or_move(src.loc)
-		for (var/mob/M in viewers(T))
-			M.show_message("\blue Unable to connect to Syndicate Command. Please wait and try again later or use the teleporter on your uplink to get your points refunded.")
+		visible_message("\blue Unable to connect to Syndicate Command. Please wait and try again later or use the teleporter on your uplink to get your points refunded.")
 
 /obj/item/weapon/antag_spawner/borg_tele/spawn_antag(var/client/C, var/turf/T, var/type = "")
 	var/datum/effect/effect/system/spark_spread/S = new /datum/effect/effect/system/spark_spread
