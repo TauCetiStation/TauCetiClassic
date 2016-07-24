@@ -1,12 +1,8 @@
-#define ANTAG_SPAWNER_NOT_USED 0
-#define ANTAG_SPAWNER_ACTIVATED 1
-#define ANTAG_SPAWNER_SPAWNED 2
-
 /obj/item/weapon/antag_spawner
 	throw_speed = 1
 	throw_range = 5
 	w_class = 1.0
-	var/used = ANTAG_SPAWNER_NOT_USED
+	var/used = FALSE
 
 /obj/item/weapon/antag_spawner/proc/spawn_antag(var/client/C, var/turf/T, var/type = "")
 	return
@@ -28,7 +24,9 @@
 		return
 	var/list/borg_candicates = get_candidates(ROLE_OPERATIVE)
 	if(borg_candicates.len > 0)
-		used = ANTAG_SPAWNER_ACTIVATED
+		if(requested_candidates.len > 0)
+			requested_candidates.Cut()
+		used = TRUE
 		user << "<span class='notice'>Seatching for available borg personality. Please wait 30 seconds...</span>"
 		for(var/client/C in borg_candicates)
 			request_player(C)
@@ -42,18 +40,17 @@ obj/item/weapon/antag_spawner/borg_tele/proc/request_player(var/client/C)
 		if(!C)
 			return
 		var/response = alert(C, "Syndicate requesting a personality for a syndicate borg. Would you like to play as one?", "Positronic brain request", "Yes", "No")
-		if(!C || used != ANTAG_SPAWNER_ACTIVATED)
-			return		//handle logouts that happen whilst the alert is waiting for a response, and responses issued after a borg candidate has been located.
+		if(!C)
+			return		//handle logouts that happen whilst the alert is waiting for a respons.
 		if(response == "Yes")
-			requested_candidates.Add(C)
+			requested_candidates += C
 
 /obj/item/weapon/antag_spawner/borg_tele/proc/stop_search()
 	if(requested_candidates.len > 0)
-		used = ANTAG_SPAWNER_SPAWNED
 		var/client/C = pick(requested_candidates)
 		spawn_antag(C, get_turf(src.loc), "syndieborg")
 	else
-		used = ANTAG_SPAWNER_NOT_USED
+		used = FALSE
 		var/turf/T = get_turf_or_move(src.loc)
 		for (var/mob/M in viewers(T))
 			M.show_message("\blue Unable to connect to Syndicate Command. Please wait and try again later or use the teleporter on your uplink to get your points refunded.")
