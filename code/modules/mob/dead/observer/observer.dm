@@ -180,7 +180,7 @@ Works together with spawning an observer, noted above.
 /mob/proc/ghostize(var/can_reenter_corpse = TRUE, var/bancheck = FALSE)
 	if(key)
 		if(!(src.client.holder && (src.client.holder.rights & (R_ADMIN|R_MOD))))
-			if(bancheck == TRUE && jobban_isbanned(src, "Observer")) // We have ghostbans now and we need to understand when to check for them or gnore it so spells, runes and other in-game things won't break
+			if(bancheck == TRUE && jobban_isbanned(src, "Observer"))
 				var/mob/M = mousize()
 				if((config.allow_drone_spawn) || !jobban_isbanned(src, ROLE_DRONE))
 					var/response = alert(M, "Do you want to become a maintenance drone?","Are you sure you want to beep?","Beep!","Nope!")
