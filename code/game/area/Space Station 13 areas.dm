@@ -1283,6 +1283,10 @@ var/list/ghostteleportlocs = list()
 	name = "\improper Detective's Office"
 	icon_state = "detective"
 
+/area/security/forensic_office
+	name = "\improper Forensic's Office"
+	icon_state = "detective"
+
 /area/security/range
 	name = "\improper Firing Range"
 	icon_state = "firingrange"

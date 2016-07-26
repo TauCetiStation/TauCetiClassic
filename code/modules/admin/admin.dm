@@ -1178,7 +1178,7 @@ var/global/floorIsLava = 0
 /datum/admins/proc/cmd_ghost_drag(var/mob/dead/observer/frommob, var/mob/living/tomob)
 
 	//this is the exact two check rights checks required to edit a ckey with vv.
-	if (!check_rights(R_VAREDIT,0) || !check_rights(R_SPAWN|R_DEBUG,0))
+	if (!check_rights(R_ADMIN,0))
 		return 0
 
 	if (!frommob.ckey)

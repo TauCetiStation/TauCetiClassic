@@ -1370,9 +1370,10 @@ datum
 			custom_metabolism = 0.03
 			overdose = REAGENTS_OVERDOSE/2
 
-			on_mob_life(var/mob/living/M as mob)
+			on_mob_life(var/mob/living/M as mob, var/alien)
 				if(!M) M = holder.my_atom
-				if(prob(5)) M.emote(pick("twitch","blink_r","shiver"))
+				if(alien != IS_DIONA)
+					if(prob(5)) M.emote(pick("twitch","blink_r","shiver"))
 				..()
 				return
 

@@ -252,13 +252,6 @@ obj/item/ammo_box/magazine/tommygunm45
 	max_ammo = 6
 	multiple_sprites = 1
 
-/obj/item/ammo_box/shotgun
-	name = "shotgun shells box"
-	icon = 'icons/obj/ammo.dmi'
-	icon_state = "9mm"
-	origin_tech = "combat=2"
-	ammo_type = /obj/item/ammo_casing/shotgun/buckshot
-	max_ammo = 20
 
 /obj/item/weapon/gun/projectile/automatic/colt1911/dungeon
 	desc = "A single-action, semi-automatic, magazine-fed, recoil-operated pistol chambered for the .45 ACP cartridge."

@@ -930,7 +930,7 @@ body
 			href_list["datumrefresh"] = href_list["mobToDamage"]
 
 	else if(href_list["setckey"])
-		if(!check_rights(R_FUN))	return
+		if(!check_rights(R_ADMIN))	return
 
 		var/mob/C = locate(href_list["setckey"])
 		if(C.ckey)

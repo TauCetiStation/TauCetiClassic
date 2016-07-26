@@ -6,7 +6,7 @@
 
 	if(crawling)
 		tally += 7
-	else if(reagents.has_reagent("hyperzine"))
+	else if((reagents.has_reagent("hyperzine")) && (src.get_species() != "Diona"))
 		return -1
 
 	if(istype(l_hand, /obj/item/weapon/gun))
