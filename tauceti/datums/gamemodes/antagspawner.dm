@@ -38,7 +38,7 @@ obj/item/weapon/antag_spawner/borg_tele/proc/request_player(var/client/C)
 	spawn(0)
 		if(!C)
 			return
-		var/response = alert(C, "Syndicate requesting a personality for a syndicate borg. Would you like to play as one?", "Positronic brain request", "Yes", "No")
+		var/response = alert(C, "Syndicate requesting a personality for a syndicate borg. Would you like to play as one?", "Syndicate borg request", "Yes", "No")
 		if(!C)
 			return		//handle logouts that happen whilst the alert is waiting for a respons.
 		if(response == "Yes")
@@ -50,7 +50,6 @@ obj/item/weapon/antag_spawner/borg_tele/proc/request_player(var/client/C)
 		spawn_antag(C, get_turf(src.loc), "syndieborg")
 	else
 		used = FALSE
-		var/turf/T = get_turf_or_move(src.loc)
 		visible_message("\blue Unable to connect to Syndicate Command. Please wait and try again later or use the teleporter on your uplink to get your points refunded.")
 
 /obj/item/weapon/antag_spawner/borg_tele/spawn_antag(var/client/C, var/turf/T, var/type = "")
