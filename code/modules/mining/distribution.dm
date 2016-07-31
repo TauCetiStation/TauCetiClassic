@@ -169,32 +169,32 @@ Deep minerals:
 						target_turf.resources["carbonaceous rock"] = rand(RESOURCE_HIGH_MIN,RESOURCE_HIGH_MAX)
 
 						switch(map[MAP_CELL])
-							if(0 to 100)
+							if(0 to 130) 	// ~50% chance
 								target_turf.resources["iron"] =       rand(RESOURCE_HIGH_MIN,RESOURCE_HIGH_MAX)
-								target_turf.resources["gold"] =       0
+								//target_turf.resources["gold"] =       0
 								target_turf.resources["silver"] =     rand(RESOURCE_MID_MIN,RESOURCE_MID_MAX)
-								target_turf.resources["uranium"] =    0
+								//target_turf.resources["uranium"] =    0
 								//target_turf.resources["diamond"] =    0
 								target_turf.resources["phoron"] =     rand(RESOURCE_MID_MIN,RESOURCE_MID_MAX)
 								//target_turf.resources["osmium"] =     0
-								target_turf.resources["hydrogen"] =   0
-							if(100 to 124)
+								//target_turf.resources["hydrogen"] =   0
+							if(131 to 200) // ~27% chance
 								target_turf.resources["iron"] =       rand(RESOURCE_MID_MIN,RESOURCE_MID_MAX)
-								target_turf.resources["gold"] =       rand(RESOURCE_LOW_MIN,RESOURCE_LOW_MAX)
+								target_turf.resources["gold"] =       rand(RESOURCE_LOW_MIN,RESOURCE_MID_MAX)
 								target_turf.resources["silver"] =     rand(RESOURCE_LOW_MIN,RESOURCE_LOW_MAX)
-								target_turf.resources["uranium"] =    rand(RESOURCE_LOW_MIN,RESOURCE_LOW_MAX)
+								target_turf.resources["uranium"] =    rand(RESOURCE_LOW_MIN,RESOURCE_MID_MAX)
 								//target_turf.resources["diamond"] =    rand(RESOURCE_LOW_MIN,RESOURCE_LOW_MAX)
 								target_turf.resources["phoron"] =     rand(RESOURCE_LOW_MIN,RESOURCE_LOW_MAX)
 								//target_turf.resources["osmium"] =     0
-								target_turf.resources["hydrogen"] =   0
-							if(125 to 255)
-								target_turf.resources["iron"] =       0
-								target_turf.resources["gold"] =       0
-								target_turf.resources["silver"] =     0
-								target_turf.resources["uranium"] =    0
-								//target_turf.resources["diamond"] =    0
+								//target_turf.resources["hydrogen"] =   0
+							if(201 to 255)// ~21 % chanse
+								//target_turf.resources["iron"] =       0
+								//target_turf.resources["gold"] =       0
+								//target_turf.resources["silver"] =     0
+								//target_turf.resources["uranium"] =    0
+								target_turf.resources["diamond"] =    rand(RESOURCE_LOW_MIN,RESOURCE_LOW_MAX)
 								target_turf.resources["phoron"] =     rand(RESOURCE_MID_MIN,RESOURCE_MID_MAX)
-								//target_turf.resources["osmium"] =     rand(RESOURCE_LOW_MIN,RESOURCE_LOW_MAX)
+								target_turf.resources["osmium"] =     rand(RESOURCE_LOW_MIN,RESOURCE_MID_MIN)
 								target_turf.resources["hydrogen"] =   rand(RESOURCE_MID_MIN,RESOURCE_MID_MAX)
 
 			tx += chunk_size

@@ -81,7 +81,7 @@
 	..()
 	reagents.clear_reagents()
 	reagents.add_reagent("hyperzine", 3)
-	reagents.add_reagent("tramadol", 10)
+	reagents.add_reagent("paracetamol", 10)
 	reagents.add_reagent("tricordrazine", 7)
 	update_icon()
 	return
@@ -90,15 +90,15 @@
 	name = "Advanced stimpack"
 	desc = "Even more ore mined"
 	icon_state = "auto_minig_t3"
-	volume = 20
-	amount_per_transfer_from_this = 20
+	volume = 25
+	amount_per_transfer_from_this = 25
 
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack_adv/New()
 	..()
 	reagents.clear_reagents()
 	reagents.add_reagent("hyperzine", 5)
-	reagents.add_reagent("oxycodone", 2.5)
-	reagents.add_reagent("dexalinp", 2.5)
+	reagents.add_reagent("tramadol", 9)
+	reagents.add_reagent("dexalinp", 1)
 	reagents.add_reagent("tricordrazine", 10)
 	update_icon()
 	return
