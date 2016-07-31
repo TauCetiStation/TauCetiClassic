@@ -70,6 +70,8 @@ var/list/valid_secondary_effect_types = list(\
 	var/being_used = 0
 	var/need_inicial = 1
 	var/scan_radius = 3
+	var/last_scan = 0
+	var/scan_delay = 20
 
 /obj/machinery/artifact/New()
 	..()
@@ -230,25 +232,27 @@ var/list/valid_secondary_effect_types = list(\
 
 	//TRIGGER_PROXY ACTIVATION
 	if(my_effect.trigger == TRIGGER_VIEW)
-		var/trigger_near = 0
-		var/turf/mainloc = get_turf(src)
-		for(var/mob/living/A in view(scan_radius,mainloc))
-			if ((A)&&(A.stat != DEAD))
-				trigger_near = 1
-				break
-			else
-				trigger_near = 0
+		if(world.time >= last_scan + scan_delay)
+			last_scan = world.time
+			var/trigger_near = 0
+			var/turf/mainloc = get_turf(src)
+			for(var/mob/living/A in view(scan_radius,mainloc))
+				if ((A)&&(A.stat != DEAD))
+					trigger_near = 1
+					break
+				else
+					trigger_near = 0
 
-		if(trigger_near)
-			if(my_effect.trigger == TRIGGER_VIEW && !my_effect.activated)
-				my_effect.ToggleActivate()
-			if(secondary_effect && secondary_effect.trigger == TRIGGER_VIEW && !secondary_effect.activated)
-				secondary_effect.ToggleActivate(0)
-		else
-			if(my_effect.trigger == TRIGGER_VIEW && my_effect.activated)
-				my_effect.ToggleActivate()
-			if(secondary_effect && secondary_effect.trigger == TRIGGER_VIEW && !secondary_effect.activated)
-				secondary_effect.ToggleActivate(0)
+			if(trigger_near)
+				if(my_effect.trigger == TRIGGER_VIEW && !my_effect.activated)
+					my_effect.ToggleActivate()
+				if(secondary_effect && secondary_effect.trigger == TRIGGER_VIEW && !secondary_effect.activated)
+					secondary_effect.ToggleActivate(0)
+			else
+				if(my_effect.trigger == TRIGGER_VIEW && my_effect.activated)
+					my_effect.ToggleActivate()
+				if(secondary_effect && secondary_effect.trigger == TRIGGER_VIEW && !secondary_effect.activated)
+					secondary_effect.ToggleActivate(0)
 
 
 
