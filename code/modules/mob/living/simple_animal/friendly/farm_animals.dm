@@ -128,6 +128,12 @@
 	if(stat == CONSCIOUS)
 		if(udder && prob(5))
 			udder.add_reagent("milk", rand(5, 10))
+		else if(prob(15))
+			playsound(src, 'sound/voice/cowmoos.ogg', 50, 1, -3)
+
+/mob/living/simple_animal/cow/Move()
+	if(..() && prob(55))
+		playsound(src, 'sound/misc/cowbell.ogg', 50, 1, -3)
 
 /mob/living/simple_animal/cow/attack_hand(mob/living/carbon/M as mob)
 	if(!stat && M.a_intent == "disarm" && icon_state != icon_dead)
