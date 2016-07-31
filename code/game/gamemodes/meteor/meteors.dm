@@ -21,7 +21,6 @@
 			spawn_meteor()
 
 /proc/spawn_meteor()
-
 	var/startx
 	var/starty
 	var/endx
