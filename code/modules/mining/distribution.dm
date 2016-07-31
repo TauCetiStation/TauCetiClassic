@@ -183,8 +183,8 @@ Deep minerals:
 								target_turf.resources["gold"] =       rand(RESOURCE_LOW_MIN,RESOURCE_MID_MAX)
 								target_turf.resources["silver"] =     rand(RESOURCE_LOW_MIN,RESOURCE_LOW_MAX)
 								target_turf.resources["uranium"] =    rand(RESOURCE_LOW_MIN,RESOURCE_MID_MAX)
-								//target_turf.resources["diamond"] =    rand(RESOURCE_LOW_MIN,RESOURCE_LOW_MAX)
-								target_turf.resources["phoron"] =     rand(RESOURCE_LOW_MIN,RESOURCE_LOW_MAX)
+								//target_turf.resources["diamond"] =    0
+								//target_turf.resources["phoron"] =     o
 								//target_turf.resources["osmium"] =     0
 								//target_turf.resources["hydrogen"] =   0
 							if(201 to 255)// ~21 % chanse
