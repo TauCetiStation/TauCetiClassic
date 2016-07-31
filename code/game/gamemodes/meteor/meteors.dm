@@ -30,7 +30,6 @@
 	var/turf/pickedgoal
 	var/max_i = 10//number of tries to spawn meteor.
 
-
 	do
 		switch(pick(1,2,3,4))
 			if(1) //NORTH
@@ -54,13 +53,13 @@
 				endy = rand(TRANSITIONEDGE,world.maxy-TRANSITIONEDGE)
 				endx = world.maxx-TRANSITIONEDGE
 
-		pickedstart = locate(startx, starty, 1)
-		pickedgoal = locate(endx, endy, 1)
+		pickedstart = locate(startx, starty, ZLEVEL_STATION)
+		pickedgoal = locate(endx, endy, ZLEVEL_STATION)
 		max_i--
-		if(max_i<=0) return
+		if(max_i<=0)
+			return
 
-	while (!istype(pickedstart, /turf/space) || pickedstart.loc.name != "Space" ) //FUUUCK, should never happen.
-
+	while (!istype(pickedstart, /turf/space) || !istype(pickedstart.loc, /area/space))
 
 	var/obj/effect/meteor/M
 	switch(rand(1, 100))
