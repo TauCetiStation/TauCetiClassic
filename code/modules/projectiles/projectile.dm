@@ -106,6 +106,9 @@
 	xo = new_x - starting_loc.x
 	setup_trajectory()
 
+/obj/item/projectile/proc/After_hit()
+	return
+
 /obj/item/projectile/Bump(atom/A as mob|obj|turf|area, forced=0)
 	if(A == src)
 		return 0 //no
@@ -179,6 +182,7 @@
 				O.bullet_act(src)
 			for(var/mob/M in A)
 				M.bullet_act(src, def_zone)
+
 		//stop flying
 		on_impact(A)
 
