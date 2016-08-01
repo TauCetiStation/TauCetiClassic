@@ -298,9 +298,26 @@
 /obj/machinery/mecha_part_fabricator/proc/get_construction_time_w_coeff(datum/design/D, roundto = 1) //aran
 	return round(initial(D.construction_time)*time_coeff*time_coeff_tech, roundto)
 
+/obj/machinery/mecha_part_fabricator/proc/operation_allowed(mob/M)
+	if(isrobot(M) || isAI(M))
+		return 1
+	if(!istype(req_access) || !req_access.len)
+		return 1
+	else if(istype(M, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = M
+		for(var/ID in list(H.get_active_hand(), H.wear_id, H.belt))
+			if(src.check_access(ID))
+				return 1
+	visible_message("\icon[src] <b>\The [src]</b> beeps: \"Access denied.\"")
+	//M << "<font color='red'>You don't have required permissions to use [src]</font>"
+	return 0
+
 /obj/machinery/mecha_part_fabricator/attack_hand(mob/user)
 	if(!(..()))
-		return interact(user)
+		if(!operation_allowed(user))
+			return
+		else
+			return interact(user)
 
 /obj/machinery/mecha_part_fabricator/interact(mob/user as mob)
 	var/dat, left_part
@@ -487,6 +504,11 @@
 
 
 /obj/machinery/mecha_part_fabricator/attackby(obj/W, mob/user, params)
+
+	if(istype(W, /obj/item/weapon/card/emag))
+		emag()
+		return
+
 	if(default_deconstruction_screwdriver(user, "fab-o", "fab-idle", W))
 		return
 
