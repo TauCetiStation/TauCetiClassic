@@ -46,6 +46,7 @@
 
 	var/brute_mod = null    // Physical damage reduction/malus.
 	var/burn_mod = null     // Burn damage reduction/malus.
+	var/speed_mod = 0		//How fast or slow specific specie.
 
 	var/flags = 0       // Various specific features.
 
@@ -160,6 +161,10 @@
 	heat_level_2 = 480 //Default 400
 	heat_level_3 = 1100 //Default 1000
 
+	brute_mod = 0.80
+	burn_mod = 0.90
+	speed_mod = 0.7
+
 	flags = IS_WHITELISTED | HAS_LIPS | HAS_UNDERWEAR | HAS_TAIL | HAS_SKIN_COLOR
 
 	flesh_color = "#34AF10"
@@ -187,6 +192,10 @@
 	heat_level_3 = 800 //Default 1000
 
 	primitive = /mob/living/carbon/monkey/tajara
+
+	brute_mod = 1.20
+	burn_mod = 1.20
+	speed_mod = -0.7
 
 	flags = IS_WHITELISTED | HAS_LIPS | HAS_UNDERWEAR | HAS_TAIL | HAS_SKIN_COLOR
 
@@ -312,6 +321,8 @@
 	heat_level_2 = 3000
 	heat_level_3 = 4000
 
+	speed_mod = 7
+
 	body_temperature = T0C + 15		//make the plant people have a bit lower body temperature, why not
 
 	flags = IS_WHITELISTED | NO_BREATHE | REQUIRE_LIGHT | NO_SCAN | IS_PLANT | RAD_ABSORB | NO_BLOOD | NO_PAIN
@@ -349,8 +360,6 @@
 	unarmed_type = /datum/unarmed_attack/punch
 
 	eyes = "blank_eyes"
-	brute_mod = 0.5
-	burn_mod = 1
 
 	warning_low_pressure = 50
 	hazard_low_pressure = 0
@@ -364,6 +373,8 @@
 	heat_level_3 = 2000
 
 	synth_temp_gain = 10 //this should cause IPCs to stabilize at ~80 C in a 20 C environment.
+
+	brute_mod = 1.5
 
 	flags = IS_WHITELISTED | NO_BREATHE | NO_SCAN | NO_BLOOD | NO_PAIN | IS_SYNTHETIC | VIRUS_IMMUNE
 
