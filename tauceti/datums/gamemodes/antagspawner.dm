@@ -2,7 +2,7 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = 1.0
-	var/used = 0
+	var/used = FALSE
 
 /obj/item/weapon/antag_spawner/proc/spawn_antag(var/client/C, var/turf/T, var/type = "")
 	return
@@ -16,6 +16,7 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "locator"
 	var/TC_cost = 0
+	var/list/requested_candidates = list()
 
 /obj/item/weapon/antag_spawner/borg_tele/attack_self(mob/user as mob)
 	if(used)
@@ -23,11 +24,33 @@
 		return
 	var/list/borg_candicates = get_candidates(ROLE_OPERATIVE)
 	if(borg_candicates.len > 0)
-		used = 1
-		var/client/C = pick(borg_candicates)
-		spawn_antag(C, get_turf(src.loc), "syndieborg")
+		requested_candidates.Cut()
+		used = TRUE
+		user << "<span class='notice'>Seatching for available borg personality. Please wait 30 seconds...</span>"
+		for(var/client/C in borg_candicates)
+			request_player(C)
+		spawn(300)
+			stop_search()
 	else
 		user << "<span class='notice'>Unable to connect to Syndicate Command. Please wait and try again later or use the teleporter on your uplink to get your points refunded.</span>"
+
+obj/item/weapon/antag_spawner/borg_tele/proc/request_player(var/client/C)
+	spawn(0)
+		if(!C)
+			return
+		var/response = alert(C, "Syndicate requesting a personality for a syndicate borg. Would you like to play as one?", "Syndicate borg request", "Yes", "No")
+		if(!C)
+			return		//handle logouts that happen whilst the alert is waiting for a respons.
+		if(response == "Yes")
+			requested_candidates += C
+
+/obj/item/weapon/antag_spawner/borg_tele/proc/stop_search()
+	if(requested_candidates.len > 0)
+		var/client/C = pick(requested_candidates)
+		spawn_antag(C, get_turf(src.loc), "syndieborg")
+	else
+		used = FALSE
+		visible_message("\blue Unable to connect to Syndicate Command. Please wait and try again later or use the teleporter on your uplink to get your points refunded.")
 
 /obj/item/weapon/antag_spawner/borg_tele/spawn_antag(var/client/C, var/turf/T, var/type = "")
 	var/datum/effect/effect/system/spark_spread/S = new /datum/effect/effect/system/spark_spread

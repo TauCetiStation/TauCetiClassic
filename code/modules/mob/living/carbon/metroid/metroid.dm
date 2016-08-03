@@ -77,10 +77,11 @@
 	var/datum/reagents/R = new/datum/reagents(100)
 	reagents = R
 	R.my_atom = src
+	number = rand(1, 1000)
 	if(name == "baby slime")
-		name = text("[colour] baby slime ([rand(1, 1000)])")
+		name = text("[colour] baby slime ([number])")
 	else
-		name = text("[colour] adult slime ([rand(1,1000)])")
+		name = text("[colour] adult slime ([number])")
 	real_name = name
 	spawn (1)
 		regenerate_icons()

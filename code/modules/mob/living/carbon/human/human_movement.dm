@@ -1,12 +1,12 @@
 /mob/living/carbon/human/movement_delay()
 	var/tally = 0
 
-	if(species && species.flags & IS_PLANT)
-		tally = 7
+	if(species)
+		tally = species.speed_mod
 
 	if(crawling)
 		tally += 7
-	else if((reagents.has_reagent("hyperzine")) && (src.get_species() != "Diona"))
+	else if((reagents.has_reagent("hyperzine") || reagents.has_reagent("nuka_cola")) && species && !(species.flags & NO_BLOOD))
 		return -1
 
 	if(istype(l_hand, /obj/item/weapon/gun))
@@ -21,9 +21,6 @@
 
 	if(embedded_flag)
 		handle_embedded_objects() //Moving with objects stuck in you can cause bad times.
-
-	if(reagents.has_reagent("nuka_cola"))
-		return -1
 
 	var/health_deficiency = (100 - health + halloss)
 	if(health_deficiency >= 40)
