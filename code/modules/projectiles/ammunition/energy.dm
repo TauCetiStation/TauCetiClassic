@@ -12,6 +12,12 @@
 	projectile_type = /obj/item/projectile/beam
 	select_name = "kill"
 
+/obj/item/ammo_casing/energy/laser_pulse
+	projectile_type = /obj/item/projectile/energy/laser
+	select_name = "kill"
+	e_cost = 50
+	fire_sound = 'sound/weapons/guns/laser3.ogg'
+
 /obj/item/ammo_casing/energy/laser/practice
 	projectile_type = /obj/item/projectile/beam/practice
 	select_name = "practice"
@@ -59,6 +65,12 @@
 	projectile_type = /obj/item/projectile/energy/electrode
 	select_name = "stun - electrode"
 	fire_sound = 'sound/weapons/taser.ogg'
+
+/obj/item/ammo_casing/energy/electrode/cheap
+	e_cost = 75
+
+/obj/item/ammo_casing/energy/stun/cheap
+	e_cost = 75
 
 /obj/item/ammo_casing/energy/stun
 	projectile_type = /obj/item/projectile/beam/stun

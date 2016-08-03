@@ -303,3 +303,46 @@
 		H.update_inv_r_hand()
 		H.update_inv_belt()
 	return
+
+
+/obj/item/weapon/gun/projectile/automatic/c5
+	name = "security submachine gun"
+	desc = "C-5 submachine gun - cheap and light. Uses 9mm ammo."
+	icon = 'icons/obj/gun.dmi'
+	icon_state = "c5"
+	item_state = "c5"
+	w_class = 3.0
+	origin_tech = "combat=4;materials=2"
+	mag_type = /obj/item/ammo_box/magazine/c5_9mm
+	fire_sound = 'sound/weapons/guns/c5_shot.wav'
+
+/obj/item/weapon/gun/projectile/automatic/c5/update_icon(var/mob/M)
+	icon_state = "c5[magazine ? "" : "-e"]"
+	item_state = "c5[magazine ? "" : "-e"]"
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		H.update_inv_l_hand()
+		H.update_inv_r_hand()
+		H.update_inv_belt()
+	return
+
+/obj/item/weapon/gun/projectile/automatic/l13
+	name = "security submachine gun"
+	desc = "L13 personal defense weapon - for combat security operations. Uses .38 ammo."
+	icon = 'icons/obj/gun.dmi'
+	icon_state = "l13"
+	item_state = "l13"
+	w_class = 3.0
+	origin_tech = "combat=4;materials=2"
+	mag_type = /obj/item/ammo_box/magazine/l13_38
+	fire_sound = 'sound/weapons/guns/l13_shot.ogg'
+
+/obj/item/weapon/gun/projectile/automatic/l13/update_icon(var/mob/M)
+	icon_state = "l13[magazine ? "" : "-e"]"
+	item_state = "l13[magazine ? "" : "-e"]"
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		H.update_inv_l_hand()
+		H.update_inv_r_hand()
+		H.update_inv_belt()
+	return

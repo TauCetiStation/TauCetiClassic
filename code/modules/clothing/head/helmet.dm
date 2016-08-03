@@ -13,6 +13,18 @@
 	siemens_coefficient = 0.3
 	w_class = 3
 
+/obj/item/clothing/head/helmet/tactifool
+	icon_state = "helmettg"
+
+/obj/item/clothing/head/helmet/wj
+	icon_state = "helmetwj"
+
+/obj/item/clothing/head/helmet/wj/warden
+	icon_state = "helmet_warden"
+
+/obj/item/clothing/head/helmet/wj/hos
+	icon_state = "helmet_hos"
+
 /obj/item/clothing/head/helmet/warden
 	name = "warden's hat"
 	desc = "It's a special helmet issued to the Warden of a securiy force. Protects the head from impacts."
@@ -20,15 +32,100 @@
 	flags_inv = 0
 	body_parts_covered = 0
 
+/obj/item/clothing/head/helmet/warden/tactifool
+	icon_state = "warden_tf"
+
+/obj/item/clothing/head/helmet/warden/wj
+	name = "warden's beret"
+	desc = "It's a special beret issued to the Warden of a securiy force. Protects the head from impacts."
+	icon_state = "warden_wj"
+
+/obj/item/clothing/head/helmet/HoS
+	name = "Head of Security Hat"
+	desc = "The hat of the Head of Security. For showing the officers who's in charge."
+	icon_state = "hoscap"
+	flags = FPRINT | TABLEPASS | HEADCOVERSEYES
+	armor = list(melee = 80, bullet = 60, laser = 50,energy = 10, bomb = 25, bio = 10, rad = 0)
+	flags_inv = HIDEEARS
+	body_parts_covered = 0
+	siemens_coefficient = 0.8
+
+/obj/item/clothing/head/helmet/HoS/dermal
+	name = "Dermal Armour Patch"
+	desc = "You're not quite sure how you manage to take it on and off, but it implants nicely in your head."
+	icon_state = "dermal"
+	item_state = "dermal"
+	siemens_coefficient = 0.6
+	body_parts_covered = 1
+
+/obj/item/clothing/head/helmet/HoS/tactifool
+	icon_state = "hos_fancy"
+
+/obj/item/clothing/head/helmet/HoS/wj
+	icon_state = "hos_wj"
+
 /obj/item/clothing/head/helmet/riot
 	name = "riot helmet"
 	desc = "It's a helmet specifically designed to protect against close range attacks."
 	icon_state = "riot"
 	item_state = "helmet"
-	flags = FPRINT|TABLEPASS|HEADCOVERSEYES | THICKMATERIAL
-	armor = list(melee = 82, bullet = 15, laser = 5,energy = 5, bomb = 5, bio = 2, rad = 0)
+	flags = FPRINT|TABLEPASS|HEADCOVERSEYES | THICKMATERIAL | HEADCOVERSMOUTH
+	armor = list(melee = 70, bullet = 15, laser = 5,energy = 5, bomb = 5, bio = 2, rad = 0)
 	flags_inv = HIDEEARS
 	siemens_coefficient = 0.3
+	action_button_name = "Adjust helmet visor"
+	var/up = 0
+
+/obj/item/clothing/head/helmet/riot/attack_self()
+	toggle()
+
+/obj/item/clothing/head/helmet/riot/verb/toggle()
+	set category = "Object"
+	set name = "Adjust helmet visor"
+	set src in usr
+
+	if(usr.canmove && !usr.stat && !usr.restrained())
+		if(src.up)
+			src.up = !src.up
+			src.flags |= (HEADCOVERSEYES | HEADCOVERSMOUTH)
+			icon_state = initial(icon_state)
+			usr << "You pull the visor down on"
+		else
+			src.up = !src.up
+			src.flags &= ~(HEADCOVERSEYES | HEADCOVERSMOUTH)
+			icon_state = "[initial(icon_state)]up"
+			usr << "You push the visor up on"
+		usr.update_inv_head()	//so our mob-overlays update
+
+/obj/item/clothing/head/helmet/riot/tactifool
+	icon_state = "riottg"
+
+/obj/item/clothing/head/helmet/riot/wj
+	icon_state = "riotwj"
+
+/obj/item/clothing/head/helmet/bulletproof
+	name = "bulletproof helmet"
+	desc = "A bulletproof security helmet that excels in protecting the wearer against traditional projectile weaponry and explosives to a minor extent."
+	icon_state = "bulletproof"
+
+/obj/item/clothing/head/helmet/bulletproof/wj
+	icon_state = "bulletproof_wj"
+
+/obj/item/clothing/head/helmet/bulletproof/tactifool
+	icon_state = "bulletproof_tg"
+
+/obj/item/clothing/head/helmet/laserproof
+	name = "ablative helmet"
+	desc = "A ablative security helmet that excels in protecting the wearer against energy and laser projectiles."
+	icon_state = "laserproof"
+	armor = list(melee = 10, bullet = 10, laser = 60,energy = 70, bomb = 0, bio = 0, rad = 0)
+	siemens_coefficient = 0
+
+/obj/item/clothing/head/helmet/laserproof/wj
+	icon_state = "laserproof_wj"
+
+/obj/item/clothing/head/helmet/laserproof/tactifool
+	icon_state = "laserproof_tg"
 
 /obj/item/clothing/head/helmet/swat
 	name = "\improper SWAT helmet"

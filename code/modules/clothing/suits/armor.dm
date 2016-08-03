@@ -17,12 +17,22 @@
 	item_state = "armor"
 	blood_overlay_type = "armor"
 	flags = FPRINT | TABLEPASS | THICKMATERIAL
-	armor = list(melee = 50, bullet = 55, laser = 25, energy = 20, bomb = 35, bio = 0, rad = 0)
+	armor = list(melee = 50, bullet = 45, laser = 23, energy = 25, bomb = 35, bio = 0, rad = 0)
 
 /obj/item/clothing/suit/armor/vest/security
 	name = "security armor"
 	desc = "An armored vest that protects against some damage. This one has NanoTrasen corporate badge."
 	icon_state = "armorsec"
+	item_state = "armor"
+
+/obj/item/clothing/suit/armor/vest/tactifool
+	name = "security armor"
+	icon_state = "armor_tg"
+	item_state = "armor"
+
+/obj/item/clothing/suit/armor/vest/wj
+	name = "security armor"
+	icon_state = "armor_wj"
 	item_state = "armor"
 
 /obj/item/clothing/suit/armor/vest/warden
@@ -31,6 +41,14 @@
 	icon_state = "warden_jacket"
 	item_state = "armor"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
+
+/obj/item/clothing/suit/armor/vest/warden/tactifool
+	icon_state = "warden_tf"
+	item_state = "armor"
+
+/obj/item/clothing/suit/armor/vest/warden/wj
+	icon_state = "warden_wj"
+	item_state = "armor"
 
 /obj/item/clothing/suit/armor/vest/leather
 	name = "security overcoat"
@@ -41,17 +59,42 @@
 	cold_protection = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	heat_protection = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 
+/obj/item/clothing/suit/armor/hos
+	name = "armored coat"
+	desc = "A greatcoat enhanced with a special alloy for some protection and style."
+	icon_state = "hos"
+	item_state = "hos"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
+	armor = list(melee = 80, bullet = 60, laser = 55, energy = 35, bomb = 50, bio = 0, rad = 0)
+	flags_inv = HIDEJUMPSUIT
+	siemens_coefficient = 0.6
+
+/obj/item/clothing/suit/armor/hos/coat
+	name = "armored coat"
+	desc = "A coat enchanced with a special lightweight kevlar. The epitome of tactical plainclothes."
+	icon_state = "hos_coat"
+	item_state = "jensencoat"
+
+/obj/item/clothing/suit/armor/hos/wj
+	name = "armored coat"
+	icon_state = "hos_wj"
+	item_state = "jensencoat"
+
 /obj/item/clothing/suit/armor/riot
-	name = "Riot Suit"
+	name = "riot suit"
 	desc = "A suit of armor with heavy padding to protect against melee attacks. Looks like it might impair movement."
-	icon = 'tauceti/items/clothing/suits/riotTG.dmi'
 	icon_state = "riot"
-	item_state = "riot_suit"
-	tc_custom = 'tauceti/items/clothing/suits/riotTG.dmi'
+	item_state = "swat_suit"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	slowdown = 1
-	armor = list(melee = 80, bullet = 10, laser = 5, energy = 10, bomb = 0, bio = 0, rad = 0)
+	armor = list(melee = 70, bullet = 10, laser = 5, energy = 10, bomb = 0, bio = 0, rad = 0)
 	flags_inv = HIDEJUMPSUIT
+
+/obj/item/clothing/suit/armor/riot/tactifool
+	icon_state = "riottg"
+
+/obj/item/clothing/suit/armor/riot/wj
+	icon_state = "riot_wj"
 
 /obj/item/clothing/suit/armor/bulletproof
 	name = "Bulletproof Vest"
@@ -60,6 +103,12 @@
 	item_state = "armor"
 	blood_overlay_type = "armor"
 	armor = list(melee = 10, bullet = 80, laser = 25, energy = 20, bomb = 35, bio = 0, rad = 0)
+
+/obj/item/clothing/suit/armor/bulletproof/wj
+	icon_state = "bulletproof_wj"
+
+/obj/item/clothing/suit/armor/bulletproof/tactifool
+	icon_state = "bulletproof_tg"
 
 /obj/item/clothing/suit/armor/laserproof
 	name = "Ablative Armor Vest"
@@ -76,6 +125,12 @@
 		return 0
 	if (prob(hit_reflect_chance))
 		return 1
+
+/obj/item/clothing/suit/armor/laserproof/wj
+	icon_state = "laserproof_wj"
+
+/obj/item/clothing/suit/armor/laserproof/tactifool
+	icon_state = "laserproof_tf"
 
 /obj/item/clothing/suit/armor/swat
 	name = "swat suit"
