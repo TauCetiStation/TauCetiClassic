@@ -70,7 +70,7 @@
 	icon_state = "riot"
 	item_state = "helmet"
 	flags = FPRINT|TABLEPASS|HEADCOVERSEYES | THICKMATERIAL | HEADCOVERSMOUTH
-	armor = list(melee = 70, bullet = 15, laser = 5,energy = 5, bomb = 5, bio = 2, rad = 0)
+	armor = list(melee = 82, bullet = 15, laser = 5,energy = 5, bomb = 5, bio = 2, rad = 0)
 	flags_inv = HIDEEARS
 	siemens_coefficient = 0.3
 	action_button_name = "Adjust helmet visor"
