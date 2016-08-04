@@ -417,7 +417,6 @@
 	item_state = "miljacket_army"
 	var/can_button_up = 1
 	var/is_button_up = 1
-	armor = list(melee = 5, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	cold_protection = UPPER_TORSO|LOWER_TORSO|ARMS
 
 /obj/item/clothing/suit/storage/miljacket_army/verb/toggle()
