@@ -272,6 +272,9 @@
 				speech_problem_flag = 1
 				gene.OnMobLife(src)
 
+		if(dna_inject_count > 0 && prob(2))
+			dna_inject_count--
+
 		if (radiation)
 			if(species.flags & RAD_IMMUNE)
 				return
@@ -312,6 +315,11 @@
 						radiation -= 2
 						damage = 1
 						adjustToxLoss(1)
+						if(prob(2) && h_style != "Skinhead" && f_style != "Shaved")
+							h_style = "Skinhead"
+							f_style = "Shaved"
+							update_hair()
+							src << "<span class='notice'>Suddenly you lost your hair!</span>"
 						if(prob(5))
 							radiation -= 5
 							Weaken(3)
@@ -324,6 +332,11 @@
 						radiation -= 3
 						adjustToxLoss(3)
 						damage = 1
+						if(prob(5) && h_style != "Skinhead" && f_style != "Shaved")
+							h_style = "Skinhead"
+							f_style = "Shaved"
+							update_hair()
+							src << "<span class='notice'>Suddenly you lost your hair!</span>"
 						if(prob(1))
 							src << "\red You mutate!"
 							randmutb(src)
@@ -1521,7 +1534,7 @@
 			//OH cmon...
 			var/nearsighted = 0
 			var/impaired    = 0
-			
+
 			if(disabilities & NEARSIGHTED)
 				nearsighted = 1
 
@@ -1537,7 +1550,7 @@
 			if(istype(wear_mask, /obj/item/clothing/mask/gas/welding) )
 				var/obj/item/clothing/mask/gas/welding/O = wear_mask
 				if(!O.up && tinted_weldhelh)
-					impaired = 2 
+					impaired = 2
 			if(istype(glasses, /obj/item/clothing/glasses/welding) )
 				var/obj/item/clothing/glasses/welding/O = glasses
 				if(!O.up && tinted_weldhelh)
@@ -1561,7 +1574,7 @@
 				overlay_fullscreen("impaired", /obj/screen/fullscreen/impaired, impaired)
 			else
 				clear_fullscreen("impaired")
-			
+
 			if(!machine)
 				var/isRemoteObserve = 0
 				if((REMOTE_VIEW in mutations) && remoteview_target)
