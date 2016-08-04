@@ -33,7 +33,9 @@
 		"/obj/item/device/radio/headset",
 		"/obj/item/weapon/melee",
 		"/obj/item/taperoll/police",
-		"/obj/item/weapon/shield/riot/tele"
+		"/obj/item/weapon/shield/riot/tele",
+		"/obj/item/weapon/gun/energy/taser",
+		"/obj/item/weapon/melee/baton"
 		)
 
 /obj/item/weapon/storage/belt/security/improved/New()
@@ -124,7 +126,10 @@
 
 	holstered = I
 	user.drop_from_inventory(holstered)
-	holstered.loc = src
+//	holstered.loc = src
+	holstered.x = 1
+	holstered.y = 171
+	holstered.z = 2
 	holstered.add_fingerprint(user)
 	user.visible_message("\blue [user] holsters the [holstered].", "You holster the [holstered].")
 	updateicon(user)
