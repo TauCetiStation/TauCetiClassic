@@ -409,3 +409,46 @@
 	item_state = "superman"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS
 	flags_inv = HIDESHOES|HIDEJUMPSUIT
+
+/obj/item/clothing/suit/storage/miljacket_army
+	name = "Field jacket olive"
+	desc = "Initially designed for the US military under the MIL-DTL-43455K standard, it is now also worn as a civilian item of clothing. Classic olive."
+	icon_state = "miljacket_army"
+	item_state = "miljacket_army"
+	var/can_button_up = 1
+	var/is_button_up = 1
+	armor = list(melee = 5, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+	cold_protection = UPPER_TORSO|LOWER_TORSO|ARMS
+
+/obj/item/clothing/suit/storage/miljacket_army/verb/toggle()
+	set name = "Toggle Jacket Buttons"
+	set category = "Object"
+	set src in usr
+
+	if(!usr.canmove || usr.stat || usr.restrained())
+		return 0
+	if(!can_button_up)
+		usr << "You attempt to button-up the velcro on your [src], before promptly realising how silly you are."
+		return 0
+
+	if(!src.is_button_up)
+		src.icon_state = initial(icon_state)
+		usr << "You button up your jacket."
+		src.is_button_up = 1
+	else
+		src.icon_state += "_open"
+		usr << "You unbutton your jacket."
+		src.is_button_up = 0
+	usr.update_inv_wear_suit()	//so our overlays update
+
+/obj/item/clothing/suit/storage/miljacket_army/miljacket_ranger
+	name = "Field jacket desert"
+	desc = "Initially designed for the US military under the MIL-DTL-43455K standard, it is now also worn as a civilian item of clothing. Marine cold desert."
+	icon_state = "miljacket_ranger"
+	item_state = "miljacket_ranger"
+
+/obj/item/clothing/suit/storage/miljacket_army/miljacket_navy
+	name = "Field jacket navy"
+	desc = "Initially designed for the US military under the MIL-DTL-43455K standard, it is now also worn as a civilian item of clothing. Like a navy seal,"
+	icon_state = "miljacket_navy"
+	item_state = "miljacket_navy"
