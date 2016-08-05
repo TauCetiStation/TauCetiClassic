@@ -400,9 +400,9 @@
 		if("classic")
 			new /obj/structure/closet/secure_closet/hos(src.loc)
 		if("tactifool")
-			new /obj/structure/closet/secure_closet/hos/tactifool(src.loc)
+			new /obj/structure/closet/secure_closet/hos_tactifool(src.loc)
 		if("milizei")
-			new /obj/structure/closet/secure_closet/hos/wj(src.loc)
+			new /obj/structure/closet/secure_closet/hos_wj(src.loc)
 	qdel(src)
 
 /obj/effect/landmark/sec_equip/warden
@@ -413,9 +413,9 @@
 		if("classic")
 			new /obj/structure/closet/secure_closet/warden(src.loc)
 		if("tactifool")
-			new /obj/structure/closet/secure_closet/warden/tactifool(src.loc)
+			new /obj/structure/closet/secure_closet/warden_tactifool(src.loc)
 		if("milizei")
-			new /obj/structure/closet/secure_closet/warden/wj(src.loc)
+			new /obj/structure/closet/secure_closet/warden_wj(src.loc)
 	qdel(src)
 
 /obj/effect/landmark/sec_equip/officer
@@ -426,7 +426,7 @@
 		if("classic")
 			new /obj/structure/closet/secure_closet/security(src.loc)
 		if("tactifool")
-			new /obj/structure/closet/secure_closet/security/tactifool(src.loc)
+			new /obj/structure/closet/secure_closet/security_tactifool(src.loc)
 		if("milizei")
-			new /obj/structure/closet/secure_closet/security/wj(src.loc)
+			new /obj/structure/closet/secure_closet/security_wj(src.loc)
 	qdel(src)

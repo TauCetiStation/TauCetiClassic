@@ -139,7 +139,7 @@
 		*/
 		return
 
-/obj/structure/closet/secure_closet/hos/tactifool
+/obj/structure/closet/secure_closet/hos_tactifool
 	name = "Head of Security's Locker"
 	req_access = list(access_hos)
 	icon_state = "hossecure1"
@@ -186,7 +186,7 @@
 		*/
 		return
 
-/obj/structure/closet/secure_closet/hos/wj
+/obj/structure/closet/secure_closet/hos_wj
 	name = "Head of Security's Locker"
 	req_access = list(access_hos)
 	icon_state = "hossecure1"
@@ -275,7 +275,7 @@
 		*/
 		return
 
-/obj/structure/closet/secure_closet/warden/tactifool
+/obj/structure/closet/secure_closet/warden_tactifool
 	name = "Warden's Locker"
 	req_access = list(access_armory)
 	icon_state = "wardensecure1"
@@ -316,7 +316,7 @@
 		*/
 		return
 
-/obj/structure/closet/secure_closet/warden/wj
+/obj/structure/closet/secure_closet/warden_wj
 	name = "Warden's Locker"
 	req_access = list(access_armory)
 	icon_state = "wardensecure1"
@@ -398,7 +398,7 @@
 		*/
 		return
 
-/obj/structure/closet/secure_closet/security/tactifool
+/obj/structure/closet/secure_closet/security_tactifool
 	name = "Security Officer's Locker"
 	req_access = list(access_brig)
 	icon_state = "sec1"
@@ -438,7 +438,7 @@
 		*/
 		return
 
-/obj/structure/closet/secure_closet/security/wj
+/obj/structure/closet/secure_closet/security_wj
 	name = "Security Officer's Locker"
 	req_access = list(access_brig)
 	icon_state = "sec1"
