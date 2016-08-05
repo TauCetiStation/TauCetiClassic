@@ -2,6 +2,8 @@
 	if(!ticker.sec_equip_preset)
 		ticker.sec_equip_preset = pick("classic","tactifool","milizei")
 	message_admins("\blue Security equipment preset - [ticker.sec_equip_preset]")
+	for(var/obj/effect/landmark/sec_equip/E in world)
+		E.gimme_it_now()
 
 /obj/effect/landmark/sec_equip
 	name = "riot equip spawn"
