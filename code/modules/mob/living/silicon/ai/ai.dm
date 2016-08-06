@@ -286,7 +286,7 @@ var/list/ai_verbs_default = list(
 		for (var/datum/mind/malfai in malf.malf_ai)
 			if (mind == malfai) // are we the evil one?
 				if (malf.apcs >= 3)
-					stat(null, "Time until station control secured: [max(malf.AI_win_timeleft/(malf.apcs/3), 0)] seconds")
+					stat(null, "Time until station control secured: [max(malf.AI_win_timeleft/(malf.apcs/APC_MIN_TO_MALDF_DECLARE), 0)] seconds")
 
 
 /mob/living/silicon/ai/proc/ai_alerts()
