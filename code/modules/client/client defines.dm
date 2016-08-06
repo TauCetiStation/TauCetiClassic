@@ -58,3 +58,5 @@
 	var/datum/media_manager/media = null
 
 	var/datum/geoip_data/geoip = null
+
+	var/last_dir = null

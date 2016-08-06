@@ -1033,3 +1033,12 @@
 	animate(src, pixel_y = old_y, time = 5, easing = SINE_EASING | EASE_IN) //halt animation
 	//reset the pixel offsets to zero
 	floating = 0
+
+/mob/living/proc/get_view_rotation_mode()
+	switch(ticker.random_dir_mode)
+		if(RDM_RANDOM_EXCL_NORTH)
+			return pick(SOUTH, EAST, WEST)
+		if(RDM_RANDOM)
+			return pick(cardinal)
+		else
+			return ticker.random_dir_mode
