@@ -8,6 +8,7 @@
 	maxHealth = 200
 	health = 200
 	immune_to_ssd = 1
+	anchored = 1
 
 	speak_emote = list("roars")
 	emote_hear = list("roars")
@@ -157,6 +158,13 @@
 		original_body.attack_log = attack_log
 		original_body.attack_log += "\[[time_stamp()]\]<font color='blue'> ======HUMAN LIFE======</font>"
 	qdel(src)
+
+/mob/living/simple_animal/hulk/MobBump(mob/M)
+	if(isliving(M) && !(istype(M, /mob/living/simple_animal/hulk) || issilicon(M)))
+		var/mob/living/L = M
+		L.Weaken(3)
+		L.take_overall_damage(rand(4,12), 0)
+	return 0
 
 /mob/living/simple_animal/hulk/examine()
 	set src in oview()
