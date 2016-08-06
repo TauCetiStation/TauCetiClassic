@@ -156,7 +156,6 @@ var/list/forbidden_varedit_object_types = list(
 	else if(isnum(variable))
 		usr << "Variable appears to be <b>NUM</b>."
 		default = "num"
-		dir = 1
 
 	else if(istext(variable))
 		usr << "Variable appears to be <b>TEXT</b>."
@@ -309,7 +308,6 @@ var/list/forbidden_varedit_object_types = list(
 			else if(isnum(var_value))
 				usr << "Variable appears to be <b>NUM</b>."
 				class = "num"
-				dir = 1
 
 			else if(istext(var_value))
 				usr << "Variable appears to be <b>TEXT</b>."
@@ -365,7 +363,6 @@ var/list/forbidden_varedit_object_types = list(
 		else if(isnum(var_value))
 			usr << "Variable appears to be <b>NUM</b>."
 			default = "num"
-			dir = 1
 
 		else if(istext(var_value))
 			usr << "Variable appears to be <b>TEXT</b>."
