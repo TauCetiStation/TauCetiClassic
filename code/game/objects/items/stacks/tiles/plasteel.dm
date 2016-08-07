@@ -6,9 +6,9 @@
 	w_class = 3.0
 	force = 6.0
 	m_amt = 937.5
-	throwforce = 1.0
+	throwforce = 5.0
 	throw_speed = 5
-	throw_range = 20
+	throw_range = 3
 	flags = FPRINT | TABLEPASS | CONDUCT
 	max_amount = 60
 
