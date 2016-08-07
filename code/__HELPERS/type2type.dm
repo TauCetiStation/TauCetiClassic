@@ -202,8 +202,6 @@
 	if(rights & R_VAREDIT)		. += "[seperator]+VAREDIT"
 	if(rights & R_SOUNDS)		. += "[seperator]+SOUND"
 	if(rights & R_SPAWN)		. += "[seperator]+SPAWN"
-	if(rights & R_MOD)			. += "[seperator]+MODERATOR"
-	if(rights & R_MENTOR)		. += "[seperator]+MENTOR"
 	return .
 
 /proc/ui_style2icon(ui_style)
@@ -240,7 +238,7 @@
 		if(temp <= 16)
 			. = 0
 		else
-			. = max(0, min(255, 138.5177312231 * log(temp - 10) - 305.0447927307)) 
+			. = max(0, min(255, 138.5177312231 * log(temp - 10) - 305.0447927307))
 
 //Converts a positive interger to its roman numeral equivilent. Ignores any decimals.
 //Numbers over 3999 will display with extra "M"s (don't tell the Romans) and can get comically long, so be careful.

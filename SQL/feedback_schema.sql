@@ -16,6 +16,12 @@ CREATE TABLE `erro_admin_log` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 ;
 
+CREATE TABLE `erro_mentor` (
+	`id` int(11) NOT NULL AUTO_INCREMENT,
+	`ckey` varchar(32) NOT NULL,
+	PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 ;
+
 CREATE TABLE `erro_ban` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `bantime` datetime NOT NULL,
