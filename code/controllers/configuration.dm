@@ -27,6 +27,7 @@
 	var/allow_vote_restart = 0 			// allow votes to restart
 	var/ert_admin_call_only = 0
 	var/allow_vote_mode = 0				// allow votes to change mode
+	var/holy_war_vote_mode = 0			// if true, crew transfer vote will start holy war (not standart vote)
 	var/allow_admin_jump = 1			// allows admin jumping
 	var/allow_admin_spawning = 1		// allows admin item spawning
 	var/allow_admin_rev = 1				// allows admin revives
@@ -291,6 +292,9 @@
 
 				if ("allow_vote_mode")
 					config.allow_vote_mode = 1
+
+				if ("holy_war_vote_mode")
+					config.holy_war_vote_mode = 1
 
 				if ("allow_admin_jump")
 					config.allow_admin_jump = 1
