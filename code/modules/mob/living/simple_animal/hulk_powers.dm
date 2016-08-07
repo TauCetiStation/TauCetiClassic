@@ -2,7 +2,7 @@
 	name = "Leap"
 	desc = ""
 	panel = "Hulk"
-	charge_max = 150
+	charge_max = 130
 	clothes_req = 0
 	range = 5
 
@@ -122,7 +122,7 @@
 	name = "Dash"
 	desc = ""
 	panel = "Hulk"
-	charge_max = 150
+	charge_max = 130
 	clothes_req = 0
 	range = 5
 
@@ -297,7 +297,7 @@
 	name = "Smash"
 	desc = ""
 	panel = "Hulk"
-	charge_max = 150
+	charge_max = 130
 	clothes_req = 0
 	range = 5
 
@@ -442,7 +442,7 @@
 	usr.attack_log += "\[[time_stamp()]\]<font color='red'> Uses hulk_mill</font>"
 	msg_admin_attack("[key_name(usr)] uses hulk_mill")
 
-	for(var/i=0, i<30, i++)
+	for(var/i in 1 to 45)
 		if(usr.dir == 1)
 			usr.dir = 2
 		else if(usr.dir == 2)
@@ -452,26 +452,24 @@
 		else if(usr.dir == 8)
 			usr.dir = 1
 
-		for(var/mob/living/M in range(2, usr))
-			if(M != usr)
+		for(var/mob/living/M in view(2, usr) - usr - usr.contents)
+			if(istype(M, /mob/living/carbon/human))
 				var/mob/living/carbon/human/H = M
-				if(istype(H,/mob/living/carbon/human/))
-					playsound(H.loc, 'sound/weapons/tablehit1.ogg', 50, 1)
-					var/organ_name = pick("chest","l_arm","r_arm","r_leg","l_leg","head","groin")
-					var/datum/organ/external/E = H.get_organ(organ_name)
-					E.take_damage(2, 0, 0, 0, "Tail")
-				else
-					playsound(M.loc, 'sound/weapons/tablehit1.ogg', 50, 1)
-					M.take_overall_damage(2, used_weapon = "Tail")
-				if(prob(3))
-					M.Weaken(2)
+				var/organ_name = pick("chest","l_arm","r_arm","r_leg","l_leg","head","groin")
+				var/datum/organ/external/E = H.get_organ(organ_name)
+				E.take_damage(1.5, 0, 0, 0, "Tail")
+			else
+				M.take_overall_damage(1.5, used_weapon = "Tail")
+			playsound(M.loc, 'sound/weapons/tablehit1.ogg', 50, 1)
+			if(prob(3))
+				M.Weaken(2)
 		sleep(1)
 
 /obj/effect/proc_holder/spell/aoe_turf/hulk_gas
 	name = "Gas"
 	desc = ""
 	panel = "Hulk"
-	charge_max = 450
+	charge_max = 400
 	clothes_req = 0
 	range = 2
 
@@ -537,7 +535,7 @@
 	name = "Tear or Swallow"
 	desc = ""
 	panel = "Hulk"
-	charge_max = 120
+	charge_max = 100
 	clothes_req = 0
 	range = 2
 
@@ -607,7 +605,7 @@
 	name = "LazorZ"
 	desc = ""
 	panel = "Hulk"
-	charge_max = 350
+	charge_max = 250
 	clothes_req = 0
 	range = 2
 

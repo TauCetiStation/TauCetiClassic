@@ -88,6 +88,18 @@
 	icon_state = "secsoft"
 	item_color = "sec"
 
+/obj/item/clothing/head/soft/sec/tactifool
+	name = "security cap"
+	desc = "It's baseball hat in tasteful red color."
+	icon_state = "tfsoft"
+	item_color = "tf"
+
+/obj/item/clothing/head/soft/sec/wj
+	name = "security cap"
+	desc = "It's baseball hat in tasteful red color."
+	icon_state = "wjsoft"
+	item_color = "wj"
+
 /obj/item/clothing/head/soft/sec/corp
 	name = "corporate security cap"
 	desc = "It's baseball hat in corporate colors."

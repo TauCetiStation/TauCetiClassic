@@ -18,6 +18,14 @@
 	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
 	siemens_coefficient = 0.9
 
+/obj/item/clothing/under/rank/warden/tactifool
+	icon_state = "warden_tg"
+	item_color = "warden_tg"
+
+/obj/item/clothing/under/rank/warden/wj
+	icon_state = "warden_wj"
+	item_color = "warden_wj"
+
 /obj/item/clothing/under/rank/security
 	name = "security officer's jumpsuit"
 	desc = "It's made of a slightly sturdier material than standard jumpsuits, to allow for robust protection."
@@ -54,6 +62,18 @@
 	item_state = "sec_corporate"
 	item_color = "sec_corporate"
 	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
+
+/obj/item/clothing/under/rank/security/tactifool
+	icon_state = "sec_tg"
+	item_state = "r_suit"
+	item_color = "sec_tg"
+	flags = FPRINT | TABLEPASS
+
+/obj/item/clothing/under/rank/security/wj
+	icon_state = "sec_wj"
+	item_state = "r_suit"
+	item_color = "sec_wj"
+	flags = FPRINT | TABLEPASS
 
 /obj/item/clothing/under/rank/warden/corp
 	icon_state = "warden_corporate"
@@ -129,40 +149,28 @@
 	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
 	siemens_coefficient = 0.8
 
+/obj/item/clothing/under/rank/head_of_security/tactifool
+	icon_state = "hos_tg"
+	item_color = "hos_tg"
+	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+	flags = FPRINT | TABLEPASS
+
+/obj/item/clothing/under/rank/head_of_security/tactifool/fancy
+	icon_state = "hos_fancy"
+	item_state = "jensensuit"
+	item_color = "hos_fancy"
+
+/obj/item/clothing/under/rank/head_of_security/wj
+	icon_state = "hos_wj"
+	item_color = "hos_wj"
+	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+	flags = FPRINT | TABLEPASS
+
 /obj/item/clothing/under/rank/head_of_security/corp
 	icon_state = "hos_corporate"
 	item_state = "hos_corporate"
 	item_color = "hos_corporate"
 	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
-
-/obj/item/clothing/head/helmet/HoS
-	name = "Head of Security Hat"
-	desc = "The hat of the Head of Security. For showing the officers who's in charge."
-	icon_state = "hoscap"
-	flags = FPRINT | TABLEPASS | HEADCOVERSEYES
-	armor = list(melee = 80, bullet = 60, laser = 50,energy = 10, bomb = 25, bio = 10, rad = 0)
-	flags_inv = HIDEEARS
-	body_parts_covered = 0
-	siemens_coefficient = 0.8
-
-/obj/item/clothing/suit/armor/hos
-	name = "armored coat"
-	desc = "A greatcoat enhanced with a special alloy for some protection and style."
-	icon_state = "hos"
-	item_state = "hos"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
-	armor = list(melee = 80, bullet = 60, laser = 55, energy = 35, bomb = 50, bio = 0, rad = 0)
-	flags_inv = HIDEJUMPSUIT
-	siemens_coefficient = 0.6
-
-
-/obj/item/clothing/head/helmet/HoS/dermal
-	name = "Dermal Armour Patch"
-	desc = "You're not quite sure how you manage to take it on and off, but it implants nicely in your head."
-	icon_state = "dermal"
-	item_state = "dermal"
-	siemens_coefficient = 0.6
-	body_parts_covered = 1
 
 //Jensen cosplay gear
 /obj/item/clothing/under/rank/head_of_security/jensen

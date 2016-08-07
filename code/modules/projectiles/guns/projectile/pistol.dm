@@ -228,3 +228,64 @@
 		else if (magazine)
 			user << "<span class='notice'>There's already a magazine in \the [src].</span>"
 	return 0
+
+/obj/item/weapon/gun/projectile/sec_pistol
+	name = "\improper pistol"
+	desc = "AT-7 .45 caliber pistol."
+	icon_state = "at7"
+	fire_sound = 'sound/weapons/guns/at7_shot.wav'
+	mag_type = /obj/item/ammo_box/magazine/at7_45
+
+/obj/item/weapon/gun/projectile/sec_pistol/New()
+	..()
+	update_icon()
+	return
+
+/obj/item/weapon/gun/projectile/sec_pistol/isHandgun()
+	return 1
+
+/obj/item/weapon/gun/projectile/sec_pistol/proc/update_magazine()
+	if(magazine)
+		src.overlays = 0
+		overlays += image('icons/obj/gun.dmi', "at7-mag")
+		return
+
+/obj/item/weapon/gun/projectile/sec_pistol/update_icon(var/load = 0)
+	src.overlays = 0
+	update_magazine()
+	if(load)
+		icon_state = "[initial(icon_state)]"
+		return
+	icon_state = "[initial(icon_state)][(!chambered && !get_ammo()) ? "-e" : ""]"
+	return
+
+/obj/item/weapon/gun/projectile/sec_pistol/attackby(var/obj/item/A as obj, mob/user as mob)
+	if (istype(A, /obj/item/ammo_box/magazine))
+		var/obj/item/ammo_box/magazine/AM = A
+		if (!magazine && istype(AM, mag_type))
+			user.remove_from_mob(AM)
+			magazine = AM
+			magazine.loc = src
+			user << "<span class='notice'>You load a new magazine into \the [src].</span>"
+			chamber_round()
+			A.update_icon()
+			update_icon(1)
+			return 1
+		else if (magazine)
+			user << "<span class='notice'>There's already a magazine in \the [src].</span>"
+	return 0
+
+/obj/item/weapon/gun/projectile/sec_pistol/acm38
+	name = "\improper pistol"
+	desc = "Seegert ACM38 pistol - when you need be TACTICOOL."
+	icon_state = "acm38"
+	item_state = "colt"
+	fire_sound = 'sound/weapons/guns/acm38_shot.ogg'
+	mag_type = /obj/item/ammo_box/magazine/acm38_38
+
+/obj/item/weapon/gun/projectile/sec_pistol/update_icon(var/load = 0)
+	if(load)
+		icon_state = "[initial(icon_state)]"
+		return
+	icon_state = "[initial(icon_state)][(!chambered && !get_ammo()) ? "-e" : ""]"
+	return
