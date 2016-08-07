@@ -201,7 +201,7 @@
 
 //mine_flashlight
 /datum/design/mine_flashlight
-	name = "mine_flashlight"
+	name = "Mining flashlight"
 	id = "mine_flashlight"
 	build_type = MINEFAB
 	build_path = /obj/item/device/flashlight/lantern
