@@ -65,9 +65,10 @@
 	else
 		return buf.dna.SetUIValue(real_block,val)
 
-/obj/item/weapon/dnainjector/proc/inject(mob/M as mob, mob/user as mob)
+/obj/item/weapon/dnainjector/proc/inject(mob/M, mob/user)
 	if(istype(M,/mob/living))
-		M.radiation += rand(5,20)
+		M.radiation += rand(15,45)
+		M.dna_inject_count += rand(1,3)
 
 	if (!(NOCLONE in M.mutations)) // prevents drained people from having their DNA changed
 		if (buf.types & DNA2_BUF_UI)
@@ -89,7 +90,9 @@
 				M.dna.SetSEValue(block,src.GetValue())
 			domutcheck(M, null, block!=null, 0) //#Z2 We go thru chance check
 			uses--
-			if(prob(5))
+
+			if(prob(5 + M.dna_inject_count))
+				M.dna_inject_count = 0
 				trigger_side_effect(M)
 
 	spawn(0)//this prevents the collapse of space-time continuum

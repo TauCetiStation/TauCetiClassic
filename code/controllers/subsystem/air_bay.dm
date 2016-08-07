@@ -267,3 +267,21 @@ var/datum/subsystem/air/SSair
 			var/obj/machinery/atmospherics/unary/vent_scrubber/T = AM
 			T.broadcast_status()
 		CHECK_TICK
+
+//from /tg/ SSair for templates
+/datum/subsystem/air/proc/setup_template_machinery(list/atmos_machines)
+	for(var/A in atmos_machines)
+		if(!istype(A,/obj/machinery/atmospherics/unary))
+			continue
+		if(istype(A, /obj/machinery/atmospherics/unary/vent_pump))
+			var/obj/machinery/atmospherics/unary/vent_pump/T = A
+			T.broadcast_status()
+		else if(istype(A, /obj/machinery/atmospherics/unary/vent_scrubber))
+			var/obj/machinery/atmospherics/unary/vent_scrubber/T = A
+			T.broadcast_status()
+		CHECK_TICK
+
+	for(var/A in atmos_machines)
+		var/obj/machinery/atmospherics/AM = A
+		AM.build_network()
+		CHECK_TICK

@@ -76,6 +76,7 @@
 	icon_state = "shepherd"
 	maxHealth = 9001
 	health = 9001
+	a_intent = "harm"
 
 	turns_per_move = 5
 	speed = -15
@@ -95,9 +96,10 @@
 	icon_state = "husky"
 
 /mob/living/simple_animal/hostile/carp/dog/Life()
-	..()
+	. = ..()
+	if(!.)
+		return 0
 
-	if(!client)
-		if(rand(0,100) < idle_snd_chance)
-			var/list/idle_snd = list('tauceti/sounds/voice/polkan/idle1.ogg','tauceti/sounds/voice/polkan/idle2.ogg')
-			playsound(src, pick(idle_snd), 50, 1, -3)
+	if(rand(0,100) < idle_snd_chance)
+		var/list/idle_snd = list('tauceti/sounds/voice/polkan/idle1.ogg','tauceti/sounds/voice/polkan/idle2.ogg')
+		playsound(src, pick(idle_snd), 50, 1, -3)

@@ -41,3 +41,14 @@ var/list/accessable_z_levels = list("1" = 5, "3" = 10, "4" = 15, "5" = 10, "6" =
 //Was list("3" = 30, "4" = 70).
 //Spacing should be a reliable method of getting rid of a body -- Urist.
 //Go away Urist, I'm restoring this to the longer list. ~Errorage
+
+
+//List of preloaded templates
+var/list/datum/map_template/map_templates = list()
+
+//var/list/datum/map_template/ruins_templates = list()
+//var/list/datum/map_template/space_ruins_templates = list()
+//var/list/datum/map_template/lava_ruins_templates = list()
+
+//var/list/datum/map_template/shuttle_templates = list()
+var/list/datum/map_template/shelter_templates = list()

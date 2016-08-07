@@ -577,6 +577,18 @@ obj/item/weapon/circuitboard/biogenerator
 							/obj/item/weapon/stock_parts/micro_laser = 1,
 							/obj/item/weapon/stock_parts/console_screen = 1)
 
+/obj/item/weapon/circuitboard/minefab
+	name = "Circuit board (Mining Fabricator)"
+	build_path = /obj/machinery/mecha_part_fabricator/mining_fabricator
+	board_type = "machine"
+	origin_tech = "programming=3;engineering=3"
+	req_components = list(
+							/obj/item/weapon/stock_parts/matter_bin = 2,
+							/obj/item/weapon/stock_parts/manipulator = 1,
+							/obj/item/weapon/stock_parts/micro_laser = 1,
+							/obj/item/weapon/stock_parts/console_screen = 1)
+
+
 /obj/item/weapon/circuitboard/clonepod
 	name = "Circuit board (Clone Pod)"
 	build_path = /obj/machinery/clonepod

@@ -173,6 +173,10 @@
 
 	icon = 'icons/obj/inflatable.dmi'
 	icon_state = "door_closed"
+	var/opening_state = "door_opening"
+	var/closing_state = "door_closing"
+	var/open_state = "door_open"
+	var/closed_state = "door_closed"
 
 	var/state = 0 //closed, 1 == open
 	var/isSwitchingStates = 0
@@ -228,7 +232,7 @@
 	proc/Open()
 		isSwitchingStates = 1
 		//playsound(loc, 'sound/effects/stonedoor_openclose.ogg', 100, 1)
-		flick("door_opening",src)
+		flick(opening_state,src)
 		sleep(10)
 		density = 0
 		opacity = 0
@@ -239,7 +243,7 @@
 	proc/Close()
 		isSwitchingStates = 1
 		//playsound(loc, 'sound/effects/stonedoor_openclose.ogg', 100, 1)
-		flick("door_closing",src)
+		flick(closing_state,src)
 		sleep(10)
 		density = 1
 		opacity = 0
@@ -249,9 +253,9 @@
 
 	update_icon()
 		if(state)
-			icon_state = "door_open"
+			icon_state = open_state
 		else
-			icon_state = "door_closed"
+			icon_state = closed_state
 
 	deflate(var/violent=0)
 		playsound(loc, 'sound/machines/hiss.ogg', 75, 1)
