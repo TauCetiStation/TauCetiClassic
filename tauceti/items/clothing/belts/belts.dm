@@ -7,7 +7,7 @@
 	can_hold = list()
 
 /obj/item/weapon/storage/belt/security/improved
-	name = "security belt with drop leg holster"
+	name = "security belt"
 	desc = "Can hold security gear like handcuffs and flashes. Also can hold a weapon in drop leg holster attachment. Press alt-click to holster a weapon."
 	icon = 'tauceti/items/clothing/belts/secbelt.dmi'
 	tc_custom = 'tauceti/items/clothing/belts/secbelt.dmi'
