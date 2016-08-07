@@ -31,6 +31,12 @@
 		else
 			..()
 
+/obj/item/weapon/shield/riot/tactifool
+	icon_state = "tactifoolriot"
+
+/obj/item/weapon/shield/riot/wj
+	icon_state = "wjriot"
+
 /obj/item/weapon/shield/energy
 	name = "energy combat shield"
 	desc = "A shield capable of stopping most projectile and melee attacks. It can be retracted, expanded, and stored anywhere."
@@ -46,8 +52,58 @@
 	attack_verb = list("shoved", "bashed")
 	var/active = 0
 
-/obj/item/weapon/shield/energy/IsReflect()
-	return (active)
+/obj/item/weapon/shield/energy/IsReflect(def_zone, hol_dir, hit_dir)
+	if(active)
+		if(hol_dir == NORTH && (hit_dir in list(SOUTH, SOUTHEAST, SOUTHWEST)))
+			return TRUE
+		else if(hol_dir == SOUTH && (hit_dir in list(NORTH, NORTHEAST, NORTHWEST)))
+			return TRUE
+		else if(hol_dir == EAST && (hit_dir in list(WEST, NORTHWEST, SOUTHWEST)))
+			return TRUE
+		else if(hol_dir == WEST && (hit_dir in list(EAST, NORTHEAST, SOUTHEAST)))
+			return TRUE
+	return FALSE
+
+
+/obj/item/weapon/shield/riot/tele
+	name = "telescopic shield"
+	desc = "An advanced riot shield made of lightweight materials that collapses for easy storage."
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "teleriot0"
+	origin_tech = "materials=3;combat=4;engineering=4"
+	slot_flags = null
+	force = 3
+	throwforce = 3
+	throw_speed = 3
+	throw_range = 4
+	w_class = 3
+	var/active = 0
+
+/obj/item/weapon/shield/riot/tele/IsShield()
+	if(active)
+		return 1
+	return 0
+
+/obj/item/weapon/shield/riot/tele/attack_self(mob/living/user)
+	active = !active
+	icon_state = "teleriot[active]"
+	playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, 1)
+
+	if(active)
+		force = 8
+		throwforce = 5
+		throw_speed = 2
+		w_class = 4
+		slot_flags = SLOT_BACK
+		user << "<span class='notice'>You extend \the [src].</span>"
+	else
+		force = 3
+		throwforce = 3
+		throw_speed = 3
+		w_class = 3
+		slot_flags = null
+		user << "<span class='notice'>[src] can now be concealed.</span>"
+	add_fingerprint(user)
 
 /*
 /obj/item/weapon/cloaking_device

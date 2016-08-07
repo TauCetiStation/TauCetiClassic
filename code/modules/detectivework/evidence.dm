@@ -23,6 +23,9 @@
 	if(istype(I, /obj/item/weapon/storage/box/evidence))
 		return
 
+	if(istype(I, /obj/item/device/core_sampler)) //core sampler interacts with evidence bags in another way
+		return
+
 	if(I.w_class > 3)
 		user << "<span class='notice'>[I] won't fit in [src].</span>"
 		return

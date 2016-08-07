@@ -193,7 +193,7 @@ This is chestburster mechanic for damaging
 			chestburster << sound('sound/voice/hiss5.ogg',0,0,0,100)
 			if(H.key)
 				H.death()
-				H.ghostize(0)
+				H.ghostize(can_reenter_corpse = FALSE, bancheck = TRUE)
 				C.open = 1
 			else
 				H.gib()
@@ -315,7 +315,7 @@ This is emryo growth procs
 			baby << "\red Your host died, so and you."
 			baby.death()
 			if(baby.key)
-				baby.ghostize(0)
+				baby.ghostize(can_reenter_corpse = FALSE, bancheck = TRUE)
 			qdel(src)
 		else if(prob(4))
 			stage++

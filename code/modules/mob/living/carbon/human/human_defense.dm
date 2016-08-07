@@ -7,7 +7,7 @@
 
 	if(!(P.original == src && P.firer == src)) //can't block or reflect when shooting yourself
 		if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam))
-			if(check_reflect(def_zone)) // Checks if you've passed a reflection% check
+			if(check_reflect(def_zone, dir, P.dir)) // Checks if you've passed a reflection% check
 				visible_message("<span class='danger'>The [P.name] gets reflected by [src]!</span>", \
 								"<span class='userdanger'>The [P.name] gets reflected by [src]!</span>")
 				// Find a turf near or on the original location to bounce to
@@ -104,17 +104,14 @@
 
 	return (..(P , def_zone))
 
-/mob/living/carbon/human/proc/check_reflect(def_zone) //Reflection checks for anything in your l_hand, r_hand, or wear_suit based on the reflection chance of the object
+/mob/living/carbon/human/proc/check_reflect(def_zone, hol_dir, hit_dir) //Reflection checks for anything in your l_hand, r_hand, or wear_suit based on the reflection chance of the object
 	if(wear_suit)
-		if(wear_suit.IsReflect(def_zone) == 1)
-			return 1
+		return wear_suit.IsReflect(def_zone, hol_dir, hit_dir)
 	if(l_hand)
-		if(l_hand.IsReflect(def_zone) == 1)
-			return 1
+		return l_hand.IsReflect(def_zone, hol_dir, hit_dir)
 	if(r_hand)
-		if(r_hand.IsReflect(def_zone) == 1)
-			return 1
-	return 0
+		return r_hand.IsReflect(def_zone, hol_dir, hit_dir)
+	return FALSE
 
 /mob/living/carbon/human/getarmor(var/def_zone, var/type)
 	var/armorval = 0
@@ -321,14 +318,14 @@
 	return 1
 
 //this proc handles being hit by a thrown atom
-/mob/living/carbon/human/hitby(atom/movable/AM as mob|obj,var/speed = 5)
+/mob/living/carbon/human/hitby(atom/movable/AM as mob|obj)
 	if(istype(AM,/obj/))
 		var/obj/O = AM
 		var/dtype = BRUTE
 		if(istype(O,/obj/item/weapon))
 			var/obj/item/weapon/W = O
 			dtype = W.damtype
-		var/throw_damage = O.throwforce*(speed/5)
+		var/throw_damage = O.throwforce*(AM.fly_speed/5)
 
 		var/zone
 		if (istype(O.thrower, /mob/living))
@@ -372,9 +369,9 @@
 					msg_admin_attack("[src.name] ([src.ckey]) was hit by a [O], thrown by [M.name] ([assailant.ckey]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[src.x];Y=[src.y];Z=[src.z]'>JMP</a>)")
 
 		// Begin BS12 momentum-transfer code.
-		if(O.throw_source && speed >= 15)
+		if(O.throw_source && AM.fly_speed >= 15)
 			var/obj/item/weapon/W = O
-			var/momentum = speed/2
+			var/momentum = AM.fly_speed/2
 			var/dir = get_dir(O.throw_source, src)
 
 			visible_message("\red [src] staggers under the impact!","\red You stagger under the impact!")
@@ -390,6 +387,7 @@
 					visible_message("<span class='warning'>[src] is pinned to the wall by [O]!</span>","<span class='warning'>You are pinned to the wall by [O]!</span>")
 					src.anchored = 1
 					src.pinned += O
+		AM.fly_speed = 0
 
 /mob/living/carbon/human/proc/bloody_hands(var/mob/living/source, var/amount = 2)
 	if (gloves)
@@ -431,6 +429,6 @@
 
 	var/obj/item/clothing/suit/space/SS = wear_suit
 	var/reduction_dam = (100 - SS.breach_threshold) / 100
-	var/penetrated_dam = max(0, min(50, (damage * reduction_dam) / 4)) // - SS.damage)) - Consider uncommenting this if suits seem too hardy on dev.
+	var/penetrated_dam = max(0, min(50, (damage * reduction_dam) / 1.5)) // - SS.damage)) - Consider uncommenting this if suits seem too hardy on dev.
 
 	if(penetrated_dam) SS.create_breaches(damtype, penetrated_dam)

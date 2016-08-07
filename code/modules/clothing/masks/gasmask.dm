@@ -168,3 +168,18 @@
 	name = "owl mask"
 	desc = "Twoooo!"
 	icon_state = "owl"
+
+/obj/item/clothing/mask/gas/sechailer/wj
+	name = "security gas mask"
+	desc = "A standard issue Security gas mask with integrated 'Compli-o-nator 3000' device, plays over a dozen pre-recorded compliance phrases designed to get scumbags to stand still whilst you taze them. Do not tamper with the device."
+	icon = 'icons/obj/clothing/masks.dmi'
+	icon_state = "wjsec"
+	tc_custom = null
+
+/obj/item/clothing/mask/gas/sechailer/tactifool
+	name = "security gas mask"
+	desc = "A standard issue Security gas mask with integrated 'Compli-o-nator 3000' device, plays over a dozen pre-recorded compliance phrases designed to get scumbags to stand still whilst you taze them. Do not tamper with the device."
+	icon = 'icons/obj/clothing/masks.dmi'
+	icon_state = "hailer"
+	tc_custom = null
+	flags = FPRINT | TABLEPASS | MASKCOVERSMOUTH | BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS

@@ -1178,7 +1178,7 @@ var/global/floorIsLava = 0
 /datum/admins/proc/cmd_ghost_drag(var/mob/dead/observer/frommob, var/mob/living/tomob)
 
 	//this is the exact two check rights checks required to edit a ckey with vv.
-	if (!check_rights(R_VAREDIT,0) || !check_rights(R_SPAWN|R_DEBUG,0))
+	if (!check_rights(R_ADMIN,0))
 		return 0
 
 	if (!frommob.ckey)
@@ -1196,7 +1196,7 @@ var/global/floorIsLava = 0
 	if (!frommob || !tomob) //make sure the mobs don't go away while we waited for a response
 		return 1
 
-	tomob.ghostize(0)
+	tomob.ghostize(can_reenter_corpse = FALSE)
 
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] has put [frommob.ckey] in control of [tomob.name].</span>")
 	log_admin("[key_name(usr)] stuffed [frommob.ckey] into [tomob.name].")
