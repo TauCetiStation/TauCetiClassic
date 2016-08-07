@@ -252,6 +252,7 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 //		new /datum/data/mining_equipment("Suit patcher",        /obj/item/weapon/patcher,										    300),
 //		new /datum/data/mining_equipment("Stimpack Bundle",		/obj/item/weapon/storage/box/autoinjector/stimpack,				    400),
 //		new /datum/data/mining_equipment("Laser pointer",       /obj/item/device/laser_pointer, 				                    250),
+		new /datum/data/mining_equipment("Shelter capsule",		/obj/item/weapon/survivalcapsule,								    500),
 		new /datum/data/mining_equipment("Point card",    		/obj/item/weapon/card/mining_point_card,               			    500),
 //		new /datum/data/mining_equipment("Sonic jackhammer",    /obj/item/weapon/pickaxe/drill/jackhammer,                          500),
 //		new /datum/data/mining_equipment("Mining drone",        /mob/living/simple_animal/hostile/mining_drone/,                    700),
