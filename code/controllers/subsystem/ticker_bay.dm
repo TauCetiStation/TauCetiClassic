@@ -42,6 +42,8 @@ var/datum/subsystem/ticker/ticker
 
 	var/obj/screen/cinematic = null
 
+	var/random_dir_mode = null
+
 
 /datum/subsystem/ticker/New()
 	NEW_SS_GLOBAL(ticker)

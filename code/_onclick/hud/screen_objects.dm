@@ -79,7 +79,6 @@
 	name = "gun"
 	icon = 'icons/mob/screen1.dmi'
 	master = null
-	dir = 2
 
 	move
 		name = "Allow Walking"
