@@ -190,7 +190,7 @@
 /obj/item/ammo_box/shotgun
 	name = "shotgun shells box (buckshot)"
 	icon = 'icons/obj/ammo.dmi'
-	icon_state = "10mm"
+	icon_state = "12gbuckshot"
 	w_class = 3
 	origin_tech = "combat=2"
 	ammo_type = /obj/item/ammo_casing/shotgun/buckshot
@@ -203,5 +203,5 @@
 
 /obj/item/ammo_box/shotgun/beanbag
 	name = "shotgun shells box (beanbag)"
-	icon_state = "9mm"
+	icon_state = "12gbeanbang"
 	ammo_type = /obj/item/ammo_casing/shotgun/beanbag
