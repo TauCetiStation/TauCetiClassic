@@ -34,6 +34,7 @@
 	new /obj/item/weapon/shovel(src)
 //	new /obj/item/weapon/pickaxe(src)
 	new /obj/item/clothing/glasses/hud/mining(src)
+	new /obj/item/weapon/survivalcapsule(src)
 	/*/New year part
 	new /obj/item/clothing/suit/wintercoat/cargo
 	new /obj/item/clothing/head/santa(src)
@@ -533,3 +534,339 @@ obj/item/projectile/kinetic/New()
 /obj/item/effect/kinetic_blast/New()
 	spawn(4)
 		qdel(src)
+
+
+/*****************************Survival Pod********************************/
+
+
+/area/survivalpod
+	name = "\improper Emergency Shelter"
+	icon_state = "away"
+	requires_power = 0
+	has_gravity = 1
+
+/obj/item/weapon/survivalcapsule
+	name = "bluespace shelter capsule"
+	desc = "An emergency shelter stored within a pocket of bluespace."
+	icon_state = "capsule"
+	icon = 'icons/obj/mining.dmi'
+	w_class = 1
+	origin_tech = "engineering=3;bluespace=3"
+	var/template_id = "shelter_alpha"
+	var/datum/map_template/shelter/template
+	var/used = FALSE
+
+/obj/item/weapon/survivalcapsule/proc/get_template()
+	if(template)
+		return
+	template = shelter_templates[template_id]
+	if(!template)
+		qdel(src)
+
+/obj/item/weapon/survivalcapsule/Destroy()
+	template = null // without this, capsules would be one use. per round.
+	. = ..()
+
+/obj/item/weapon/survivalcapsule/examine(mob/user)
+	. = ..()
+	get_template()
+	user << "This capsule has the [template.name] stored."
+	user << template.description
+
+/obj/item/weapon/survivalcapsule/attack_self()
+	// Can't grab when capsule is New() because templates aren't loaded then
+	get_template()
+	if(used == FALSE)
+		src.loc.visible_message("<span class='warning'>\The [src] begins \
+			to shake. Stand back!</span>")
+		used = TRUE
+		sleep(50)
+		var/turf/deploy_location = get_turf(src)
+		var/status = template.check_deploy(deploy_location)
+		switch(status)
+			if(SHELTER_DEPLOY_BAD_AREA)
+				src.loc.visible_message("<span class='warning'>\The [src] \
+				will not function in this area.</span>")
+			if(SHELTER_DEPLOY_BAD_TURFS, SHELTER_DEPLOY_ANCHORED_OBJECTS)
+				var/width = template.width
+				var/height = template.height
+				src.loc.visible_message("<span class='warning'>\The [src] \
+				doesn't have room to deploy! You need to clear a \
+				[width]x[height] area!</span>")
+
+		if(status != SHELTER_DEPLOY_ALLOWED)
+			used = FALSE
+			return
+
+		playsound(get_turf(src), 'sound/effects/phasein.ogg', 100, 1)
+
+		var/turf/T = deploy_location
+		if(T.z != ZLEVEL_ASTEROID)//only report capsules away from the mining/lavaland level
+			message_admins("[key_name_admin(usr)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) activated a bluespace capsule away from the mining level! (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>)")
+			log_admin("[key_name(usr)] activated a bluespace capsule away from the mining level at [T.x], [T.y], [T.z]")
+		template.load(deploy_location, centered = TRUE)
+		PoolOrNew(/datum/effect/effect/system/smoke_spread, get_turf(src))
+		qdel(src)
+
+//Pod turfs and objects
+
+
+//Floors
+/turf/simulated/floor/pod
+	name = "pod floor"
+	icon_state = "podfloor"
+
+/*
+/turf/simulated/floor/pod/light
+	icon_state = "podfloor_light"
+	icon_regular_floor = "podfloor_light"
+	floor_tile = /obj/item/stack/tile/pod/light
+
+/turf/simulated/floor/pod/dark
+	icon_state = "podfloor_dark"
+	icon_regular_floor = "podfloor_dark"
+	floor_tile = /obj/item/stack/tile/pod/dark
+*/
+
+//Walls
+
+/obj/item/inflatable/survival
+	name = "inflatable pod wall"
+	desc = "A folded membrane which rapidly expands into a large cubical shape on activation."
+	w_class = 3.0
+
+/obj/structure/inflatable/survival
+	name = "pod wall"
+	desc = "An easily-compressable wall used for temporary shelter."
+	icon_state = "surv_wall0"
+	var/basestate = "surv_wall"
+
+/obj/structure/inflatable/survival/New()
+	..()
+	update_nearby_icons()
+
+/obj/structure/inflatable/survival/Destroy()
+	update_nearby_tiles()
+	..()
+
+/obj/structure/inflatable/survival/proc/update_nearby_icons()
+	update_icon()
+	for(var/direction in cardinal)
+		for(var/obj/structure/inflatable/survival/W in get_step(src,direction) )
+			W.update_icon()
+
+/obj/structure/inflatable/survival/update_icon()
+	spawn(2)
+		if(!src)
+			return
+
+		var/junction = 0
+		if(anchored)
+			for(var/obj/structure/inflatable/survival/W in orange(src,1))
+				if(abs(x-W.x)-abs(y-W.y) )
+					junction |= get_dir(src,W)
+		icon_state = "[basestate][junction]"
+
+//Window
+/obj/structure/window/shuttle/survival_pod
+	name = "pod window"
+	icon = 'icons/obj/survwindows.dmi'
+	icon_state = "window"
+	basestate = "window"
+
+//Door
+/obj/structure/inflatable/door/survival_pod
+	name = "inflatable airlock"
+	icon = 'icons/obj/inflatable.dmi'
+	icon_state = "door_surv_closed"
+	opening_state = "door_surv_opening"
+	closing_state = "door_surv_closing"
+	open_state = "door_surv_open"
+	closed_state = "door_surv_closed"
+
+//Table
+/obj/structure/table/survival_pod
+	icon = 'icons/obj/survival_pod.dmi'
+	icon_state = "table"
+
+//Sleeper
+/obj/machinery/sleeper/survival_pod
+	icon = 'icons/obj/survival_pod.dmi'
+
+//Computer
+/obj/item/device/gps/computer
+	name = "pod computer"
+	icon_state = "pod_computer"
+	icon = 'icons/obj/survival_pod_computer.dmi'
+	anchored = 1
+	density = 1
+	pixel_y = -32
+
+/obj/item/device/gps/computer/attackby(obj/item/weapon/W, mob/user, params)
+	if(istype(W, /obj/item/weapon/wrench) && !(flags&NODECONSTRUCT))
+		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+		user.visible_message("<span class='warning'>[user] disassembles the gps.</span>", \
+						"<span class='notice'>You start to disassemble the gps...</span>", "You hear clanking and banging noises.")
+		if(do_after(user, 20/W.toolspeed, target = src))
+			new /obj/item/device/gps(src.loc)
+			qdel(src)
+			return ..()
+
+/obj/item/device/gps/computer/attack_hand(mob/user)
+	attack_self(user)
+
+//Bed
+/obj/structure/stool/bed/pod
+	icon = 'icons/obj/survival_pod.dmi'
+	icon_state = "bed"
+
+//Survival Storage Unit
+/obj/machinery/smartfridge/survival_pod
+	name = "survival pod storage"
+	desc = "A heated storage unit."
+	icon_state = "donkvendor"
+	icon = 'icons/obj/survival_pod_vendor.dmi'
+	icon_on = "donkvendor"
+	icon_off = "donkvendor"
+	icon_panel = "donkvendor-panel"
+	luminosity = 5
+	max_n_of_items = 10
+	pixel_y = -4
+	active_power_usage = 0
+	idle_power_usage = 0
+	var/forbidden_tools = list()
+
+/obj/machinery/smartfridge/survival_pod/empty
+	name = "dusty survival pod storage"
+	desc = "A heated storage unit. This one's seen better days."
+
+/obj/machinery/smartfridge/survival_pod/empty/New()
+	return()
+
+/obj/machinery/smartfridge/survival_pod/accept_check(obj/item/O)
+	if(istype(O, /obj/item))
+		return 1
+	return 0
+
+/obj/machinery/smartfridge/survival_pod/New()
+	..()
+	set_light(luminosity)
+	for(var/i in 1 to 5)
+		var/obj/item/weapon/reagent_containers/food/snacks/donkpocket/W = new /obj/item/weapon/reagent_containers/food/snacks/donkpocket(src)
+		W.warm = 1
+		W.loc = src
+		if(item_quants[W.name])
+			item_quants[W.name]++
+		else
+			item_quants[W.name] = 1
+	if(prob(50))
+		var/obj/item/weapon/storage/pill_bottle/dice/D = new /obj/item/weapon/storage/pill_bottle/dice(src)
+		D.loc = src
+		item_quants[D.name] = 1
+	else
+		var/obj/item/device/guitar/G = new /obj/item/device/guitar(src)
+		G.loc = src
+		item_quants[G.name] = 1
+	forbidden_tools = typecacheof(/obj/item/weapon/crowbar)
+	forbidden_tools += typecacheof(/obj/item/weapon/screwdriver)
+	forbidden_tools += typecacheof(/obj/item/weapon/wrench)
+	forbidden_tools += typecacheof(/obj/item/weapon/wirecutters)
+	spawn(20)
+		stat = 0
+		ispowered = 1
+
+/obj/machinery/smartfridge/survival_pod/attackby(var/obj/item/O as obj, var/mob/user as mob)
+	if(is_type_in_typecache(O,forbidden_tools))
+		if(istype(O,/obj/item/weapon/wrench))
+			user << "\blue You start to disassemble the storage unit..."
+			if(do_after(user,20,target = src))
+				if(!src)
+					return
+				qdel(src)
+			return
+		if(accept_check(O))
+			if(contents.len >= max_n_of_items)
+				user << "<span class='notice'>\The [src] is full.</span>"
+				return 1
+			else
+				user.remove_from_mob(O)
+				O.loc = src
+				if(item_quants[O.name])
+					item_quants[O.name]++
+				else
+					item_quants[O.name] = 1
+				user.visible_message("<span class='notice'>[user] has added \the [O] to \the [src].", \
+									 "<span class='notice'>You add \the [O] to \the [src].")
+				nanomanager.update_uis(src)
+				return
+
+	..()
+
+//Fans
+/obj/structure/fans
+	icon = 'icons/obj/survival_pod.dmi'
+	icon_state = "fans"
+	name = "environmental regulation system"
+	desc = "A large machine releasing a constant gust of air."
+	anchored = 1
+	density = 1
+
+/obj/structure/fans/attackby(obj/item/weapon/W, mob/user, params)
+	if(istype(W, /obj/item/weapon/wrench) && !(flags&NODECONSTRUCT))
+		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+		user.visible_message("<span class='warning'>[user] disassembles the fan.</span>", \
+						"<span class='notice'>You start to disassemble the fan...</span>", "You hear clanking and banging noises.")
+		if(do_after(user, 20/W.toolspeed, target = src))
+			if(src.name == "environmental regulation system")
+				new /obj/item/weapon/tank/air(src.loc)
+			qdel(src)
+			return ..()
+
+/obj/structure/fans/tiny
+	name = "tiny fan"
+	desc = "A tiny fan, releasing a thin gust of air."
+	layer = ABOVE_NORMAL_TURF_LAYER
+	density = 0
+	icon_state = "fan_tiny"
+
+/obj/structure/fans/tiny/New()
+	var/turf/T = get_turf(loc)
+	if(T)
+		T.blocks_air = 1
+	..()
+
+/obj/structure/fans/tiny/Destroy()
+	var/turf/T = get_turf(loc)
+	if(T)
+		T.blocks_air = 0
+		if(SSair)
+			SSair.mark_for_update(get_turf(loc))
+	return ..()
+
+/obj/structure/fans/New(loc)
+	..()
+
+/obj/structure/fans/Destroy()
+	return ..()
+
+//Signs
+/obj/structure/sign/mining
+	name = "nanotrasen mining corps sign"
+	desc = "A sign of relief for weary miners, and a warning for would-be competitors to Nanotrasen's mining claims."
+	icon = 'icons/turf/walls.dmi'
+	icon_state = "ntpod"
+
+/obj/structure/sign/mining/survival
+	name = "shelter sign"
+	desc = "A high visibility sign designating a safe shelter."
+	icon = 'icons/turf/walls.dmi'
+	icon_state = "survival"
+
+//Fluff
+/obj/structure/tubes
+	icon_state = "tubes"
+	icon = 'icons/obj/survival_pod.dmi'
+	name = "tubes"
+	anchored = 1
+	layer = BELOW_MOB_LAYER
+	density = 0

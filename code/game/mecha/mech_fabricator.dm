@@ -22,6 +22,7 @@
 								MAT_SILVER=0,
 								MAT_URANIUM=0
 								)
+	var/build_type = MECHFAB
 	var/res_max_amount = 200000
 	var/datum/research/files
 	var/id
@@ -48,6 +49,10 @@
 
 /obj/machinery/mecha_part_fabricator/New()
 	..()
+	New_parts()
+	files = new /datum/research(src) //Setup the research data holder.
+
+/obj/machinery/mecha_part_fabricator/proc/New_parts()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/mechfab(null)
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
@@ -56,7 +61,6 @@
 	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
 	RefreshParts()
-	files = new /datum/research(src) //Setup the research data holder.
 
 /obj/machinery/mecha_part_fabricator/RefreshParts()
 	var/T = 0
@@ -111,7 +115,7 @@
 /obj/machinery/mecha_part_fabricator/proc/output_parts_list(set_name)
 	var/output = ""
 	for(var/datum/design/D in files.known_designs)
-		if(D.build_type & MECHFAB)
+		if(D.build_type & build_type)
 			if(!(set_name in D.category))
 				continue
 			var/resources_available = check_resources(D)
@@ -184,7 +188,7 @@
 /obj/machinery/mecha_part_fabricator/proc/add_part_set_to_queue(set_name)
 	if(set_name in part_sets)
 		for(var/datum/design/D in files.known_designs)
-			if(D.build_type & MECHFAB)
+			if(D.build_type & build_type)
 				if(set_name in D.category)
 					add_to_queue(D)
 
@@ -294,9 +298,26 @@
 /obj/machinery/mecha_part_fabricator/proc/get_construction_time_w_coeff(datum/design/D, roundto = 1) //aran
 	return round(initial(D.construction_time)*time_coeff*time_coeff_tech, roundto)
 
+/obj/machinery/mecha_part_fabricator/proc/operation_allowed(mob/M)
+	if(isrobot(M) || isAI(M))
+		return 1
+	if(!istype(req_access) || !req_access.len)
+		return 1
+	else if(istype(M, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = M
+		for(var/ID in list(H.get_active_hand(), H.wear_id, H.belt))
+			if(src.check_access(ID))
+				return 1
+	visible_message("\icon[src] <b>\The [src]</b> beeps: \"Access denied.\"")
+	//M << "<font color='red'>You don't have required permissions to use [src]</font>"
+	return 0
+
 /obj/machinery/mecha_part_fabricator/attack_hand(mob/user)
 	if(!(..()))
-		return interact(user)
+		if(!operation_allowed(user))
+			return
+		else
+			return interact(user)
 
 /obj/machinery/mecha_part_fabricator/interact(mob/user as mob)
 	var/dat, left_part
@@ -372,7 +393,7 @@
 	if(href_list["part"])
 		var/T = filter.getStr("part")
 		for(var/datum/design/D in files.known_designs)
-			if(D.build_type & MECHFAB)
+			if(D.build_type & build_type)
 				if(D.id == T)
 					if(!processing_queue)
 						build_part(D)
@@ -382,7 +403,7 @@
 	if(href_list["add_to_queue"])
 		var/T = filter.getStr("add_to_queue")
 		for(var/datum/design/D in files.known_designs)
-			if(D.build_type & MECHFAB)
+			if(D.build_type & build_type)
 				if(D.id == T)
 					add_to_queue(D)
 					break
@@ -419,7 +440,7 @@
 	if(href_list["part_desc"])
 		var/T = filter.getStr("part_desc")
 		for(var/datum/design/D in files.known_designs)
-			if(D.build_type & MECHFAB)
+			if(D.build_type & build_type)
 				if(D.id == T)
 					var/obj/part = D.build_path
 					temp = {"<h1>[initial(part.name)] description:</h1>
@@ -483,6 +504,11 @@
 
 
 /obj/machinery/mecha_part_fabricator/attackby(obj/W, mob/user, params)
+
+	if(istype(W, /obj/item/weapon/card/emag))
+		emag()
+		return
+
 	if(default_deconstruction_screwdriver(user, "fab-o", "fab-idle", W))
 		return
 

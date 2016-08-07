@@ -107,6 +107,13 @@
 	icon_state = "securitypack"
 	item_state = "securitypack"
 
+/obj/item/weapon/storage/backpack/security/wj
+	icon_state = "wjsecpack"
+
+/obj/item/weapon/storage/backpack/security/tactifool
+	icon_state = "tfsecpack"
+	item_state = "tfsecpack"
+
 /obj/item/weapon/storage/backpack/captain
 	name = "captain's backpack"
 	desc = "It's a special backpack made exclusively for Nanotrasen officers."
@@ -175,6 +182,13 @@
 	desc = "A robust satchel for security related needs."
 	icon_state = "satchel-sec"
 	item_state = "securitypack"
+
+/obj/item/weapon/storage/backpack/satchel_sec/wj
+	icon_state = "wjsecsatch"
+
+/obj/item/weapon/storage/backpack/satchel_sec/tactifool
+	icon_state = "tfsecsatch"
+	item_state = "tfsecsatch"
 
 /obj/item/weapon/storage/backpack/satchel_hyd
 	name = "hydroponics satchel"

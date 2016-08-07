@@ -11,7 +11,7 @@
 #define IMPRINTER	1	//For circuits. Uses glass/chemicals.
 #define PROTOLATHE	2	//New stuff. Uses glass/metal/chemicals
 #define AUTOLATHE	4	//Uses glass/metal only.
-#define CRAFTLATHE	8	//Uses fuck if I know. For use eventually.
+#define MINEFAB		8	//Uses for mining fabrricator
 #define MECHFAB		16 //Remember, objects utilising this flag should have construction_time and construction_cost vars.
 //Note: More then one of these can be added to a design but imprinter and lathe designs are incompatable.
 

@@ -8,6 +8,7 @@
 	maxHealth = 200
 	health = 200
 	immune_to_ssd = 1
+	anchored = 1
 
 	speak_emote = list("roars")
 	emote_hear = list("roars")
@@ -158,6 +159,13 @@
 		original_body.attack_log += "\[[time_stamp()]\]<font color='blue'> ======HUMAN LIFE======</font>"
 	qdel(src)
 
+/mob/living/simple_animal/hulk/MobBump(mob/M)
+	if(isliving(M) && !(istype(M, /mob/living/simple_animal/hulk) || issilicon(M)))
+		var/mob/living/L = M
+		L.Weaken(3)
+		L.take_overall_damage(rand(4,12), 0)
+	return 0
+
 /mob/living/simple_animal/hulk/examine()
 	set src in oview()
 
@@ -175,6 +183,8 @@
 	return
 
 /mob/living/simple_animal/hulk/attack_animal(mob/living/simple_animal/M as mob)
+	if(M == src) //No punching myself to avoid hulk transformation!
+		return
 	if(M.melee_damage_upper <= 0)
 		M.emote("[M.friendly] \the <EM>[src]</EM>")
 	else
