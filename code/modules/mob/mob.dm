@@ -581,7 +581,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 		if(client && client.holder)
 			if(ticker && ticker.mode && ticker.mode.name == "AI malfunction")
 				if(ticker.mode:malf_mode_declared)
-					stat(null, "Time left: [max(ticker.mode:AI_win_timeleft/(ticker.mode:apcs/3), 0)]")
+					stat(null, "Time left: [max(ticker.mode:AI_win_timeleft/(ticker.mode:apcs/APC_MIN_TO_MALDF_DECLARE), 0)]")
 			if(SSshuttle)
 				if(SSshuttle.online && SSshuttle.location < 2)
 					var/timeleft = SSshuttle.timeleft()
