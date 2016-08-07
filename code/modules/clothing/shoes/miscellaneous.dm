@@ -91,6 +91,17 @@
 	item_color = "hosred"
 	siemens_coefficient = 0.7
 
+/obj/item/clothing/shoes/jackboots/secshoes
+	name = "security shoes"
+	desc = "Security shoes for style."
+	icon_state = "secshoes"
+	item_state = "secshoes"
+
+/obj/item/clothing/shoes/jackboots/wj
+	name = "security boots"
+	icon_state = "wjboots"
+	item_state = "wjboots"
+
 /obj/item/clothing/shoes/cult
 	name = "boots"
 	desc = "A pair of boots worn by the followers of Nar-Sie."

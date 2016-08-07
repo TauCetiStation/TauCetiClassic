@@ -1354,8 +1354,7 @@
 		crawl_getup = 1
 		if(do_after(src, 10 , target = src))
 			crawl_getup = 0
-			T = get_turf(src)
-			if( (locate(/obj/structure/table) in T) || (locate(/obj/structure/stool/bed) in T) )
+			if(!crawl_can_stand())
 				playsound(loc, 'sound/weapons/tablehit1.ogg', 50, 1)
 				var/datum/organ/external/E = get_organ("head")
 				E.take_damage(5, 0, 0, 0, "Table")

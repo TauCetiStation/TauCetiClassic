@@ -37,6 +37,11 @@
 		recentpump = 0
 	return
 
+/obj/item/weapon/gun/projectile/shotgun/classic
+	icon_state = "oldshotgun"
+
+/obj/item/weapon/gun/projectile/shotgun/tactifool
+	icon_state = "shotgun_tg"
 
 /obj/item/weapon/gun/projectile/shotgun/proc/pump(mob/M)
 	playsound(M, 'sound/weapons/shotgunpump.ogg', 60, 1)

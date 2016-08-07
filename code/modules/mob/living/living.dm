@@ -59,20 +59,27 @@
 	//switch our position with M
 	//BubbleWrap: people in handcuffs are always switched around as if they were on 'help' intent to prevent a person being pulled from being seperated from their puller
 	if((M.a_intent == "help" || M.restrained()) && (a_intent == "help" || restrained()) && M.canmove && canmove && !M.buckled && !M.buckled_mob) // mutual brohugs all around!
-		now_pushing = 1
-		//TODO: Make this use Move(). we're pretty much recreating it here.
-		//it could be done by setting one of the locs to null to make Move() work, then setting it back and Move() the other mob
-		var/oldloc = loc
-		loc = M.loc
-		M.loc = oldloc
-		M.LAssailant = src
+		var/can_switch = TRUE
+		var/turf/T = get_turf(src)
+		for(var/atom/A in T.contents - src)
+			if(A.density)
+				can_switch = FALSE
+				break
+		if(can_switch)
+			now_pushing = 1
+			//TODO: Make this use Move(). we're pretty much recreating it here.
+			//it could be done by setting one of the locs to null to make Move() work, then setting it back and Move() the other mob
+			var/oldloc = loc
+			forceMove(M.loc)
+			M.forceMove(oldloc)
+			M.LAssailant = src
 
-		for(var/mob/living/carbon/slime/slime in view(1,M))
-			if(slime.Victim == M)
-				slime.UpdateFeed()
+			for(var/mob/living/carbon/slime/slime in view(1,M))
+				if(slime.Victim == M)
+					slime.UpdateFeed()
 
-		now_pushing = 0
-		return 1
+			now_pushing = 0
+			return 1
 
 	//okay, so we didn't switch. but should we push?
 	//not if he's not CANPUSH of course
