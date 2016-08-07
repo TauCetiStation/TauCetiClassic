@@ -173,7 +173,7 @@ macro "macro"
 		is-disabled = false
 	elem 
 		name = "F9"
-		command = "msay"
+		command = "mentorhelp"
 		is-disabled = false
 	elem 
 		name = "F12"
@@ -431,7 +431,7 @@ macro "hotkeymode"
 		is-disabled = false
 	elem 
 		name = "F9"
-		command = "msay"
+		command = "mentorhelp"
 		is-disabled = false
 	elem 
 		name = "F12"

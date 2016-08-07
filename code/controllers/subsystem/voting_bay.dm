@@ -176,7 +176,7 @@ var/datum/subsystem/vote/SSvote
 				if(!is_admin)
 					var/num_admins_online = 0
 					for(var/client/C in admins)
-						if(R_ADMIN & C.holder.rights || !(R_MOD & C.holder.rights))
+						if(C.holder.rights & R_ADMIN)
 							if(!C.holder.fakekey && !C.is_afk())
 								num_admins_online++
 					if(num_admins_online)
@@ -226,11 +226,8 @@ var/datum/subsystem/vote/SSvote
 	if(!C)
 		return
 	var/admin = 0
-	var/trialmin = 0
-	if(C.holder)
+	if(C.holder && (C.holder.rights & R_ADMIN))
 		admin = 1
-		if(R_ADMIN & C.holder.rights)
-			trialmin = 1
 	voting |= C
 
 	if(mode)
@@ -250,32 +247,32 @@ var/datum/subsystem/vote/SSvote
 	else
 		. += "<h2>Start a vote:</h2><hr><ul><li>"
 		//restart
-		if(trialmin || config.allow_vote_restart)
+		if(admin || config.allow_vote_restart)
 			. += "<a href='?src=\ref[src];vote=restart'>Restart</a>"
 		else
 			. += "<font color='grey'>Restart (Disallowed)</font>"
-		if(trialmin)
+		if(admin)
 			. += "\t(<a href='?src=\ref[src];vote=toggle_restart'>[config.allow_vote_restart?"Allowed":"Disallowed"]</a>)"
 		. += "</li><li>"
 		//crew transfer
-		if(trialmin || config.allow_vote_mode)
+		if(admin || config.allow_vote_mode)
 			. += "<a href='?src=\ref[src];vote=crew_transfer'>Crew Transfer</a>"
 		else
 			. += "<font color='grey'>Crew Transfer (Disallowed)</font>"
-		if(trialmin)
+		if(admin)
 			. += "\t(<a href='?src=\ref[src];vote=toggle_crew'>[config.allow_vote_mode?"Allowed":"Disallowed"]</a>)"
 		. += "</li><li>"
 		//gamemode
-		if(trialmin || config.allow_vote_mode)
+		if(admin || config.allow_vote_mode)
 			. += "<a href='?src=\ref[src];vote=gamemode'>GameMode</a>"
 		else
 			. += "<font color='grey'>GameMode (Disallowed)</font>"
-		if(trialmin)
+		if(admin)
 			. += "\t(<a href='?src=\ref[src];vote=toggle_gamemode'>[config.allow_vote_mode?"Allowed":"Disallowed"]</a>)"
 
 		. += "</li>"
 		//custom
-		if(trialmin)
+		if(admin)
 			. += "<li><a href='?src=\ref[src];vote=custom'>Custom</a></li>"
 		. += "</ul><hr>"
 	. += "<a href='?src=\ref[src];vote=close' style='position:absolute;right:50px'>Close</a>"
