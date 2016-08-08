@@ -9,7 +9,6 @@
 
 	using = new /obj/screen()
 	using.name = "act_intent"
-	using.dir = SOUTHWEST
 	using.icon = ui_style
 	using.icon_state = "intent_"+mymob.a_intent
 	using.screen_loc = ui_acti
@@ -68,7 +67,6 @@
 
 	using = new /obj/screen()
 	using.name = "mov_intent"
-	using.dir = SOUTHWEST
 	using.icon = ui_style
 	using.icon_state = (mymob.m_intent == "run" ? "running" : "walking")
 	using.screen_loc = ui_movi
@@ -90,7 +88,6 @@
 
 	inv_box = new /obj/screen/inventory()
 	inv_box.name = "i_clothing"
-	inv_box.dir = SOUTH
 	inv_box.icon = ui_style
 	inv_box.slot_id = slot_w_uniform
 	inv_box.icon_state = "center"
@@ -102,10 +99,9 @@
 
 	inv_box = new /obj/screen/inventory()
 	inv_box.name = "o_clothing"
-	inv_box.dir = SOUTH
 	inv_box.icon = ui_style
 	inv_box.slot_id = slot_wear_suit
-	inv_box.icon_state = "equip"
+	inv_box.icon_state = "suit"
 	inv_box.screen_loc = ui_oclothing
 	inv_box.layer = 19
 	inv_box.color = ui_color
@@ -114,11 +110,10 @@
 
 	inv_box = new /obj/screen/inventory()
 	inv_box.name = "r_hand"
-	inv_box.dir = WEST
 	inv_box.icon = ui_style
-	inv_box.icon_state = "hand_inactive"
+	inv_box.icon_state = "hand_r_inactive"
 	if(mymob && !mymob.hand)	//This being 0 or null means the right hand is in use
-		inv_box.icon_state = "hand_active"
+		inv_box.icon_state = "hand_r_active"
 	inv_box.screen_loc = ui_rhand
 	inv_box.slot_id = slot_r_hand
 	inv_box.layer = 19
@@ -130,11 +125,10 @@
 
 	inv_box = new /obj/screen/inventory()
 	inv_box.name = "l_hand"
-	inv_box.dir = EAST
 	inv_box.icon = ui_style
-	inv_box.icon_state = "hand_inactive"
+	inv_box.icon_state = "hand_l_inactive"
 	if(mymob && mymob.hand)	//This being 1 means the left hand is in use
-		inv_box.icon_state = "hand_active"
+		inv_box.icon_state = "hand_l_active"
 	inv_box.screen_loc = ui_lhand
 	inv_box.slot_id = slot_l_hand
 	inv_box.layer = 19
@@ -145,7 +139,6 @@
 
 	using = new /obj/screen/inventory()
 	using.name = "hand"
-	using.dir = SOUTH
 	using.icon = ui_style
 	using.icon_state = "hand1"
 	using.screen_loc = ui_swaphand1
@@ -156,7 +149,6 @@
 
 	using = new /obj/screen/inventory()
 	using.name = "hand"
-	using.dir = SOUTH
 	using.icon = ui_style
 	using.icon_state = "hand2"
 	using.screen_loc = ui_swaphand2
@@ -167,7 +159,6 @@
 
 	inv_box = new /obj/screen/inventory()
 	inv_box.name = "id"
-	inv_box.dir = NORTH
 	inv_box.icon = ui_style
 	inv_box.icon_state = "id"
 	inv_box.screen_loc = ui_id
@@ -179,9 +170,8 @@
 
 	inv_box = new /obj/screen/inventory()
 	inv_box.name = "mask"
-	inv_box.dir = NORTH
 	inv_box.icon = ui_style
-	inv_box.icon_state = "equip"
+	inv_box.icon_state = "mask"
 	inv_box.screen_loc = ui_mask
 	inv_box.slot_id = slot_wear_mask
 	inv_box.layer = 19
@@ -191,7 +181,6 @@
 
 	inv_box = new /obj/screen/inventory()
 	inv_box.name = "back"
-	inv_box.dir = NORTH
 	inv_box.icon = ui_style
 	inv_box.icon_state = "back"
 	inv_box.screen_loc = ui_back
@@ -226,8 +215,7 @@
 	inv_box = new /obj/screen/inventory()
 	inv_box.name = "suit storage"
 	inv_box.icon = ui_style
-	inv_box.dir = 8 //The sprite at dir=8 has the background whereas the others don't.
-	inv_box.icon_state = "belt"
+	inv_box.icon_state = "suitstorage"
 	inv_box.screen_loc = ui_sstore1
 	inv_box.slot_id = slot_s_store
 	inv_box.layer = 19
@@ -402,19 +390,19 @@
 	mymob.gun_setting_icon = new /obj/screen/gun/mode(null)
 	if (mymob.client)
 		if (mymob.client.gun_mode) // If in aim mode, correct the sprite
-			mymob.gun_setting_icon.dir = 2
+			mymob.gun_setting_icon.icon_state = "gun1"
 	for(var/obj/item/weapon/gun/G in mymob) // If targeting someone, display other buttons
 		if (G.target)
 			mymob.item_use_icon = new /obj/screen/gun/item(null)
 			if (mymob.client.target_can_click)
-				mymob.item_use_icon.dir = 1
+				mymob.item_use_icon.icon_state = "gun0"
 			src.adding += mymob.item_use_icon
 			mymob.gun_move_icon = new /obj/screen/gun/move(null)
 			if (mymob.client.target_can_move)
-				mymob.gun_move_icon.dir = 1
+				mymob.gun_move_icon.icon_state = "gun0"
 				mymob.gun_run_icon = new /obj/screen/gun/run(null)
 				if (mymob.client.target_can_run)
-					mymob.gun_run_icon.dir = 1
+					mymob.gun_run_icon.icon_state = "gun0"
 				src.adding += mymob.gun_run_icon
 			src.adding += mymob.gun_move_icon
 

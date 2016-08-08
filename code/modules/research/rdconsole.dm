@@ -937,7 +937,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	name = "Mining R&D Console"
 	id = 3
 	req_access = null
-	req_access_txt = "28"
+	req_access_txt = "48"
 
 /obj/machinery/computer/rdconsole/mining/New()
 	..()
