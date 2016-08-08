@@ -14,6 +14,11 @@
 		/obj/item/clothing/suit/space/rig
 		)
 
+	var/list/forbidden_type = list(
+		/obj/item/clothing/head/helmet/space/rig/engineering/chief,
+		/obj/item/clothing/suit/space/rig/engineering/chief
+	)
+
 /obj/item/device/modkit/afterattack(obj/O, mob/user as mob)
 	if(get_dist(src,O)>1)
 		return
@@ -28,7 +33,7 @@
 
 	var/allowed = 0
 	for (var/permitted_type in permitted_types)
-		if(istype(O, permitted_type))
+		if(istype(O, permitted_type) && !(O.type in forbidden_type))
 			allowed = 1
 
 	var/obj/item/clothing/I = O

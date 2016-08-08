@@ -1,7 +1,7 @@
 /atom/movable/lighting_overlay
 	name             = ""
 
-	icon             = 'icons/effects/icon.png'
+	icon             = 'icons/effects/icon.dmi'
 	color            = LIGHTING_BASE_MATRIX
 
 	mouse_opacity    = 0
