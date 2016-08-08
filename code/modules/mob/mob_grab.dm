@@ -304,6 +304,8 @@
 					if(force_down)
 						assailant << "<span class='warning'>You are no longer pinning [affecting] to the ground.</span>"
 						force_down = 0
+					else
+						inspect_organ(affecting, assailant, hit_zone)
 						return
 				if("grab")
 					if(state < GRAB_AGGRESSIVE)
@@ -444,3 +446,45 @@
 	hud = null
 	destroying = 1 // stops us calling qdel(src) on dropped()
 	..()
+
+/obj/item/weapon/grab/proc/inspect_organ(mob/living/carbon/human/H, mob/user, var/target_zone)
+
+	var/datum/organ/external/E = H.get_organ(target_zone)
+
+	if(!E || E.status & ORGAN_DESTROYED)
+		user << "<span class='notice'>[H] is missing that bodypart.</span>"
+		return
+
+	user.visible_message("<span class='notice'>[user] starts inspecting [affecting]'s [E.display_name] carefully.</span>")
+	if(!do_mob(user,H, 30))
+		user << "<span class='notice'>You must stand still to inspect [E] for wounds.</span>"
+	else if(E.wounds.len)
+		user << "<span class='warning'>You find [E.get_wounds_desc()]</span>"
+	else
+		user << "<span class='notice'>You find no visible wounds.</span>"
+
+	user << "<span class='notice'>Checking bones now...</span>"
+	if(!do_mob(user, H, 60))
+		user << "<span class='notice'>You must stand still to feel [E] for fractures.</span>"
+	else if(E.status & ORGAN_BROKEN)
+		user << "<span class='warning'>The bone in the [E.display_name] moves slightly when you poke it!</span>"
+		H.custom_pain("Your [E.display_name] hurts where it's poked.")
+	else
+		user << "<span class='notice'>The bones in the [E.display_name] seem to be fine.</span>"
+
+	user << "<span class='notice'>Checking skin now...</span>"
+	if(!do_mob(user, H, 30))
+		user << "<span class='notice'>You must stand still to check [H]'s skin for abnormalities.</span>"
+	else
+		var/bad = 0
+		if(H.getToxLoss() >= 40)
+			user << "<span class='warning'>[H] has an unhealthy skin discoloration.</span>"
+			bad = 1
+		if(H.getOxyLoss() >= 20)
+			user << "<span class='warning'>[H]'s skin is unusaly pale.</span>"
+			bad = 1
+		if(E.status & ORGAN_DEAD)
+			user << "<span class='warning'>[E] is decaying!</span>"
+			bad = 1
+		if(!bad)
+			user << "<span class='notice'>[H]'s skin is normal.</span>"
