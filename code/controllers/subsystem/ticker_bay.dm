@@ -241,6 +241,10 @@ var/datum/subsystem/ticker/ticker
 			if (S.name != "AI")
 				qdel(S)
 
+		if(random_dir_mode in cardinal) //fixing chair layer display for non standard screen rotation.
+			for(var/obj/structure/stool/bed/chair/C in chairs_list)
+				C.handle_rotation()
+
 		SSvote.started_time = world.time
 
 		/*var/admins_number = 0 //For slack maybe?
