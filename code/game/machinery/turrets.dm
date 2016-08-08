@@ -4,7 +4,7 @@
 
 /area/turret_protected/proc/subjectDied(target)
 	if( isliving(target) )
-		if(!issilicon(target) || isrobot(target))
+		if( !issilicon(target) )
 			var/mob/living/L = target
 			if( L.stat )
 				if( L in turretTargets )
@@ -22,9 +22,7 @@
 		var/obj/mecha/Mech = O
 		if( Mech.occupant )
 			turretTargets |= Mech
-	else if( istype(O,/mob/living/simple_animal) )
-		turretTargets |= O
-	else if( isrobot(O) )
+	else if(istype(O,/mob/living/simple_animal))
 		turretTargets |= O
 	return 1
 
@@ -32,7 +30,7 @@
 	if( master && master != src )
 		return master.Exited(O)
 
-	if( ismob(O) )
+	if( ismob(O) && !issilicon(O) )
 		turretTargets -= O
 	else if( istype(O, /obj/mecha) )
 		turretTargets -= O
@@ -64,7 +62,6 @@
 	var/wasvalid = 0
 	var/lastfired = 0
 	var/shot_delay = 30 //3 seconds between shots
-	var/silic_targets = 0 //shooting robots
 	var/datum/effect/effect/system/spark_spread/spark_system
 	use_power = 1
 	idle_power_usage = 50
@@ -121,10 +118,9 @@
 				src.icon_state = "grey_target_prism"
 				stat |= NOPOWER
 
-/obj/machinery/turret/proc/setState(var/enabled, var/lethal, var/silicon)
+/obj/machinery/turret/proc/setState(var/enabled, var/lethal)
 	src.enabled = enabled
 	src.lasers = lethal
-	src.silic_targets = silicon
 	src.power_change()
 
 
@@ -151,15 +147,11 @@
 			var/obj/mecha/ME = T
 			if( ME.occupant )
 				return 1
-		else if( istype(T,/mob/living/simple_animal) )
+		else if(istype(T,/mob/living/simple_animal))
 			var/mob/living/simple_animal/A = T
 			if( !A.stat )
-				if( lasers)
+				if(lasers)
 					return 1
-		else if( silic_targets && isrobot(T) )
-			var/mob/living/silicon/robot/MS = T
-			if( !MS.stat && lasers )
-				return 1
 	return 0
 
 /obj/machinery/turret/proc/get_new_target()
@@ -175,10 +167,6 @@
 	for(var/mob/living/simple_animal/M in protected_area.turretTargets)
 		if(!M.stat)
 			new_targets += M
-	if(silic_targets)
-		for(var/mob/living/silicon/robot/M in protected_area.turretTargets)
-			if(!M.stat && lasers)
-				new_targets += M
 	if(new_targets.len)
 		new_target = pick(new_targets)
 	return new_target
@@ -341,8 +329,6 @@
 	var/enabled = 1
 	var/lethal = 0
 	var/locked = 1
-	var/silicon = 0
-	var/special_control = 0 //turrets can shoot robots only at AI Sattelite
 	var/control_area //can be area name, path or nothing.
 	var/ailock = 0 // AI cannot use this
 	req_access = list(access_ai_upload)
@@ -424,8 +410,6 @@
 	else
 		t += text("Turrets [] - <A href='?src=\ref[];toggleOn=1'>[]?</a><br>\n", src.enabled?"activated":"deactivated", src, src.enabled?"Disable":"Enable")
 		t += text("Currently set for [] - <A href='?src=\ref[];toggleLethal=1'>Change to []?</a><br>\n", src.lethal?"lethal":"stun repeatedly", src,  src.lethal?"Stun repeatedly":"Lethal")
-		if(special_control && isAI(user))
-			t += text("Currently [] - <A href='?src=\ref[];toggleSilicon=1'>Change to []?</a><br>\n", src.silicon?"shooting robots":"do not shooting robots", src,  src.silicon?"do not shooting robots":"shooting robots")
 
 	user << browse(t, "window=turretid")
 	onclose(user, "turretid")
@@ -475,15 +459,12 @@
 		else if (href_list["toggleLethal"])
 			src.lethal = !src.lethal
 			src.updateTurrets()
-		else if (href_list["toggleSilicon"])
-			src.silicon = !src.silicon
-			src.updateTurrets()
 	src.attack_hand(usr)
 
 /obj/machinery/turretid/proc/updateTurrets()
 	if(control_area)
 		for (var/obj/machinery/turret/aTurret in get_area_all_atoms(control_area))
-			aTurret.setState(enabled, lethal, silicon)
+			aTurret.setState(enabled, lethal)
 	src.update_icons()
 
 /obj/machinery/turretid/proc/update_icons()
