@@ -16,6 +16,10 @@
 
 /obj/machinery/atmospherics/unary/cryo_cell/New()
 	..()
+
+	icon = 'icons/obj/cryogenics_split.dmi'
+	update_icon()
+
 	initialize_directions = dir
 	initialize()
 	component_parts = list()
@@ -269,22 +273,74 @@
 
 /obj/machinery/atmospherics/unary/cryo_cell/update_icon()
 	overlays.Cut()
+	var/image/I
+
 	if(occupant)
 		var/image/pickle = image(occupant.icon, occupant.icon_state)
 		pickle.overlays = occupant.overlays
-		pickle.pixel_y = 20
+		pickle.pixel_y = 18
 		overlays += pickle
 	if(panel_open)
 		icon_state = "pod-o"
-		overlays += "lid-off"
+
+		I = image(icon, "pod-o_top")
+		I.layer = 5 // this needs to be fairly high so it displays over most things, but it needs to be under lighting (at 10)
+		I.pixel_z = 32
+		overlays += I
+
+		I = image(icon, "lid-[on]")
+		I.layer = 5
+		overlays += I
+
+		I = image(icon, "lid-[on]_top")
+		I.layer = 5
+		I.pixel_z = 32
+		overlays += I
+
+		//overlays += "lid-off"
 	else if(state_open)
 		icon_state = "pod-open"
+
+		I = image(icon, "pod-open_top")
+		I.layer = 5 // this needs to be fairly high so it displays over most things, but it needs to be under lighting (at 10)
+		I.pixel_z = 32
+		overlays += I
 	else if(on && is_operational())
-		icon_state = "pod-on"
-		overlays += "lid-on"
+		icon_state = "pod-[on]"
+
+		I = image(icon, "pod-[on]_top")
+		I.layer = 5 // this needs to be fairly high so it displays over most things, but it needs to be under lighting (at 10)
+		I.pixel_z = 32
+		overlays += I
+
+		I = image(icon, "lid-[on]")
+		I.layer = 5
+		overlays += I
+
+		I = image(icon, "lid-[on]_top")
+		I.layer = 5
+		I.pixel_z = 32
+		overlays += I
+
+		//overlays += "lid-on"
 	else
-		icon_state = "pod-off"
-		overlays += "lid-off"
+		icon_state = "pod-[on]"
+
+		I = image(icon, "pod-[on]_top")
+		I.layer = 5 // this needs to be fairly high so it displays over most things, but it needs to be under lighting (at 10)
+		I.pixel_z = 32
+		overlays += I
+
+		I = image(icon, "lid-[on]")
+		I.layer = 5
+		overlays += I
+
+		I = image(icon, "lid-[on]_top")
+		I.layer = 5
+		I.pixel_z = 32
+		overlays += I
+
+		//overlays += "lid-off"
 
 /obj/machinery/atmospherics/unary/cryo_cell/proc/process_occupant()
 	if(air_contents.total_moles() < 10)

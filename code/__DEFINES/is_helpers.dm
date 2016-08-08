@@ -4,6 +4,8 @@
 
 #define ishuman(A) (istype(A, /mob/living/carbon/human))
 
+#define isabductor(A) (istype(A, /mob/living/carbon/human/abductor))
+
 #define ismonkey(A) (istype(A, /mob/living/carbon/monkey))
 
 #define isbrain(A) (istype(A, /mob/living/carbon/brain))

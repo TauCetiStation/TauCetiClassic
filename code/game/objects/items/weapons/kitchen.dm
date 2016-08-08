@@ -17,9 +17,9 @@
  * Utensils
  */
 /obj/item/weapon/kitchen/utensil
-	force = 5.0
+	force = 0
 	w_class = 1.0
-	throwforce = 5.0
+	throwforce = 0
 	throw_speed = 3
 	throw_range = 5
 	flags = FPRINT | TABLEPASS | CONDUCT
@@ -52,8 +52,8 @@
 /obj/item/weapon/kitchen/utensil/fork
 	name = "fork"
 	desc = "Pointy."
+	force = 3
 	icon_state = "fork"
-	sharp = 1
 
 /obj/item/weapon/kitchen/utensil/fork/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 	if(!istype(M))
@@ -95,6 +95,7 @@
 	name = "plastic fork"
 	desc = "Yay, no washing up to do."
 	icon_state = "pfork"
+	force = 0
 
 /obj/item/weapon/kitchen/utensil/pfork/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 	if(!istype(M))
@@ -128,7 +129,7 @@
 	icon_state = "knife"
 	force = 10.0
 	throwforce = 10.0
-	sharp = 1
+	sharp = 0
 	edge = 1
 
 	suicide_act(mob/user)
@@ -149,8 +150,8 @@
 	name = "plastic knife"
 	desc = "The bluntest of blades."
 	icon_state = "pknife"
-	force = 10.0
-	throwforce = 10.0
+	force = 0
+	throwforce = 0
 
 /obj/item/weapon/kitchen/utensil/knife/attack(target as mob, mob/living/user as mob)
 	if ((CLUMSY in user.mutations) && prob(50))
