@@ -152,7 +152,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		T.visible_message(flavor_text)
 		SSobj.processing |= src
 		if(ismob(loc))
-			var/mob/living/M = loc
+			var/mob/M = loc
 			M.update_inv_wear_mask()
 
 
@@ -282,7 +282,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	else if(istype(W, /obj/item/device/assembly/igniter))
 		light("<span class='notice'>[user] fiddles with [W], and manages to light their [name] with the power of science.</span>")
 
-
 /////////////////
 //SMOKING PIPES//
 /////////////////
@@ -305,7 +304,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		T.visible_message(flavor_text)
 		SSobj.processing |= src
 		if(ismob(loc))
-			var/mob/living/M = loc
+			var/mob/M = loc
 			M.update_inv_wear_mask()
 
 /obj/item/clothing/mask/cigarette/pipe/process()
