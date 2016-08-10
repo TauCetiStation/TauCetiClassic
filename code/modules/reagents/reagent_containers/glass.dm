@@ -143,7 +143,7 @@
 		log_game("[usr.ckey]([usr]) splashed [src.reagents.get_reagents()] on [target], location ([T.x],[T.y],[T.z])")
 		return
 
-/obj/item/weapon/reagent_containers/glass/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/weapon/reagent_containers/glass/attackby(obj/item/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/pen) || istype(W, /obj/item/device/flashlight/pen))
 		var/tmp_label = sanitize(copytext(input(user, "Enter a label for [src.name]","Label",src.label_text), 1, MAX_NAME_LEN))
 		if(length(tmp_label) > 10)
@@ -152,7 +152,15 @@
 			user << "<span class = 'notice'>You set the label to \"[tmp_label]\".</span>"
 			src.label_text = tmp_label
 			src.update_name_label()
+	if (istype(W, /obj/item/stack/nanopaste))    
+		var/obj/item/stack/nanopaste/N = W
+		if(src.is_open_container() && src.reagents) 
+			if(src.reagents.total_volume >= src.reagents.maximum_volume)
+				user << "<span class = 'rose'>[src] is full.</span>"
+				return
 
+			src.reagents.add_reagent("nanites2", 1)
+			N.use(1)
 /obj/item/weapon/reagent_containers/glass/proc/update_name_label()
 	if(src.label_text == "")
 		src.name = src.base_name
