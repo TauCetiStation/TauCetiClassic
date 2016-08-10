@@ -96,7 +96,7 @@
 
 /obj/item/clothing/head/helmet/space/vox
 	armor = list(melee = 60, bullet = 30, laser = 30, energy = 15, bomb = 30, bio = 30, rad = 30)
-	flags = HEADCOVERSEYES|STOPSPRESSUREDMAGE
+	flags = HEADCOVERSEYES
 	species_restricted = list("Vox","Vox Armalis")
 	sprite_sheets = list(
 		"Vox" = 'icons/mob/species/vox/head.dmi',
