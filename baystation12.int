@@ -1,9 +1,6 @@
 // BEGIN_INTERNALS
 /*
-DIR: code code\modules code\modules\mob code\modules\mob\living code\modules\mob\living\simple_animal code\modules\mob\living\simple_animal\hostile code\modules\reagents icons\mob 
-AUTO_FILE_DIR: OFF
 MAP_ICON_TYPE: 0
-WINDOW: code\modules\reagents\Chemistry-Reagents.dm;code\modules\reagents\Chemistry-Recipes.dm;code\modules\mob\living\simple_animal\hostile\monster.dm
-FILE: code\modules\reagents\Chemistry-Reagents.dm
+AUTO_FILE_DIR: OFF
 */
 // END_INTERNALS
