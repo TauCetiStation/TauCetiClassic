@@ -3819,6 +3819,167 @@ datum
 				..()
 				return
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////// Nanobots /////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+/datum/reagent/nanites2
+	name = "Friendly Nanites"
+	id = "nanites2"
+	description = "Friendly microscopic construction robots."
+	reagent_state = LIQUID
+	color = "#535E66" //rgb: 83, 94, 102
+				
+/datum/reagent/nanobots
+	name = "Nanobots"
+	id = "nanobots"
+	description = "Microscopic robots intended for use in humans. Must be loaded with further chemicals to be useful."
+	reagent_state = LIQUID
+	color = "#3E3959" //rgb: 62, 57, 89
+
+//Great healing powers. Metabolizes extremely slowly, but gets used up when it heals damage.
+//Dangerous in amounts over 5 units, healing that occurs while over 5 units adds to a counter. That counter affects gib chance. Guaranteed gib over 20 units.
+/datum/reagent/mednanobots
+	name = "Medical Nanobots"
+	id = "mednanobots"
+	description = "Microscopic robots intended for use in humans. Configured for rapid healing upon infiltration into the body."
+	reagent_state = LIQUID
+	color = "#593948" //rgb: 89, 57, 72
+	custom_metabolism = 0.005
+	var/spawning_horror = 0
+	var/percent_machine = 0
+
+/datum/reagent/mednanobots/on_mob_life(var/mob/living/M)
+
+	if(..()) return 1
+
+	switch(volume)
+		if(1 to 5)
+			if(ishuman(M))
+				var/mob/living/carbon/human/H = M
+				if(H.species.name != "Dionae")
+					var/datum/organ/external/affecting = H.get_organ()
+					for(var/datum/wound/W in affecting.wounds)
+						spawn(1)
+							affecting.wounds -= W
+							H.visible_message("<span class='warning'>[H]'s wounds close up in the blink of an eye!</span>")
+					if(H.getOxyLoss()>0 && prob(90))
+						if(holder.has_reagent("mednanobots"))
+							H.adjustOxyLoss(-4)
+							holder.remove_reagent("mednanobots", 4/40)  //The number/40 means that every time it heals, it uses up number/40ths of a unit, meaning each unit heals 40 damage
+						else
+					if(H.getBruteLoss()>0 && prob(90))
+						if(holder.has_reagent("mednanobots"))
+							H.heal_organ_damage(5, 0)
+							holder.remove_reagent("mednanobots", 5/40)
+						else
+					if(H.getFireLoss()>0 && prob(90))
+						if(holder.has_reagent("mednanobots"))
+							H.heal_organ_damage(0, 5)
+							holder.remove_reagent("mednanobots", 5/40)
+						else
+					if(H.getToxLoss()>0 && prob(50))
+						if(holder.has_reagent("mednanobots"))
+							H.adjustToxLoss(-2)
+							holder.remove_reagent("mednanobots", 2/40)
+						else
+					if(H.getCloneLoss()>0 && prob(60))
+						if(holder.has_reagent("mednanobots"))
+							H.adjustCloneLoss(-2)
+							holder.remove_reagent("mednanobots", 2/40)
+					if(percent_machine>5)
+						if(holder.has_reagent("mednanobots"))
+							percent_machine-=1
+							if(prob(20))
+								M << pick("You feel more like yourself again.")
+					if(H.dizziness != 0)
+						H.dizziness = max(0, H.dizziness - 15)
+					if(H.confused != 0)
+						H.confused = max(0, H.confused - 5)
+					for(var/datum/disease/D in M.viruses)
+						D.spread = "Remissive"
+						D.stage--
+						if(D.stage < 1)
+							D.cure()
+		if(5 to 20)		//Danger zone healing. Adds to a human mob's "percent machine" var, which is directly translated into the chance that it will turn horror each tick that the reagent is above 5u.
+			if(ishuman(M))
+				var/mob/living/carbon/human/H = M
+				if(H.species.name != "Dionae")
+					var/datum/organ/external/affecting = H.get_organ()
+					for(var/datum/wound/W in affecting.wounds)
+						spawn(1)
+							affecting.wounds -= W
+							H.visible_message("<span class='warning'>[H]'s wounds close up in the blink of an eye!</span>")
+					if(H.getOxyLoss()>0 && prob(90))
+						if(holder.has_reagent("mednanobots"))
+							H.adjustOxyLoss(-4)
+							holder.remove_reagent("mednanobots", 4/40)  //The number/40 means that every time it heals, it uses up number/40ths of a unit, meaning each unit heals 40 damage
+							percent_machine +=1/2
+							if(prob(20))
+								M << pick("<span class='warning'>Something shifts inside you...</span>", "<span class='warning'>You feel different, somehow...</span>")
+							else
+						else
+					if(H.getBruteLoss()>0 && prob(90))
+						if(holder.has_reagent("mednanobots"))
+							H.heal_organ_damage(5, 0)
+							holder.remove_reagent("mednanobots", 5/40)
+							percent_machine +=1/2
+							if(prob(20))
+								M << pick("<span class='warning'> Something shifts inside you...</span>", "<span class='warning'>You feel different, somehow...</span>")
+							else
+						else
+					if(H.getFireLoss()>0 && prob(90))
+						if(holder.has_reagent("mednanobots"))
+							H.heal_organ_damage(0, 5)
+							holder.remove_reagent("mednanobots", 5/40)
+							percent_machine +=1/2
+							if(prob(20))
+								M << pick("<span class='warning'>Something shifts inside you...</span>", "<span class='warning'>You feel different, somehow...</span>")
+							else
+						else
+					if(H.getToxLoss()>0 && prob(50))
+						if(holder.has_reagent("mednanobots"))
+							H.adjustToxLoss(-2)
+							holder.remove_reagent("mednanobots", 2/40)
+							percent_machine +=1/2
+							if(prob(20))
+								M << pick("<span class='warning'>Something shifts inside you...</span>", "<span class='warning'>You feel different, somehow...</span>")
+							else
+						else
+					if(H.getCloneLoss()>0 && prob(60))
+						if(holder.has_reagent("mednanobots"))
+							H.adjustCloneLoss(-2)
+							holder.remove_reagent("mednanobots", 2/40)
+							percent_machine +=1/2
+							if(prob(20))
+								M << pick("<span class='warning'>Something shifts inside you...</span>", "<span class='warning'>You feel different, somehow...</span>")
+							else
+						else
+					if(H.dizziness != 0)
+						H.dizziness = max(0, H.dizziness - 15)
+					if(H.confused != 0)
+						H.confused = max(0, H.confused - 5)
+					for(var/datum/disease/D in M.viruses)
+						D.spread = "Remissive"
+						D.stage--
+						if(D.stage < 1)
+							D.cure()
+					if(prob(percent_machine))
+						holder.add_reagent("mednanobots", 20)
+						M << pick("<b><span class='warning'>Your body lurches!</b></span>")
+		if(20 to INFINITY)
+			if(ishuman(M))
+				spawning_horror = 1
+				var/mob/living/carbon/human/H = M
+				M << pick("<b><span class='warning'>Something doesn't feel right...</span></b>", "<b><span class='warning'>Something is growing inside you!</span></b>", "<b><span class='warning'>You feel your insides rearrange!</span></b>")
+				spawn(60)
+					if(spawning_horror == 1)
+						M << pick( "<b><span class='warning'>Something bursts out from inside you!</span></b>")
+						message_admins("[key_name(H)] has gibbed and spawned a new cyber horror due to nanobots. (<A HREF='?_src_=holder;adminmoreinfo=\ref[H]'>?</A>)")
+						log_game("[key_name(H)] has gibbed and spawned a new cyber horror due to nanobots")
+						new /mob/living/simple_animal/hostile/monster/cyber_horror(H.loc)
+						spawning_horror = 0
+						H.gib()	
+
 /datum/reagent/Destroy() // This should only be called by the holder, so it's already handled clearing its references
 	. = ..()
 	holder = null
