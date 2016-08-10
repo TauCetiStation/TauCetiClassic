@@ -634,7 +634,7 @@ var/list/ghostteleportlocs = list()
 	icon_state = "fsmaint"
 
 /area/maintenance/fsmaint2
-	name = "\improper Bar Maintenance"
+	name = "\improper Chapel Maintenance"
 	icon_state = "fsmaint"
 
 /area/maintenance/asmaint
@@ -684,6 +684,10 @@ var/list/ghostteleportlocs = list()
 /area/maintenance/evahallway
 	name = "\improper EVA Hallway"
 	icon_state = "eva"
+
+/area/maintenance/oldescape
+	name = "\improper Old Escape"
+	icon_state = "amaint"
 
 //Hallway
 
