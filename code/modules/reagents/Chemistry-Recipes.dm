@@ -2140,3 +2140,24 @@ datum
 			result = "suidream"
 			required_reagents = list("space_up" = 2, "bluecuracao" = 1, "melonliquor" = 1)
 			result_amount = 4
+
+/datum/chemical_reaction/nanobots
+	name = "Nanobots"
+	id = "nanobots"
+	result = "nanobots"
+	required_reagents = list("nanites2" = 1, "uranium" = 10, "gold" = 10, "nutriment" = 10, "silicon" = 10)
+	result_amount = 1
+
+/datum/chemical_reaction/nanobots2
+	name = "Nanobots2"
+	id = "nanobots2"
+	result = "nanobots"
+	required_reagents = list("mednanobots" = 1, "cryoxadone" = 2)
+	result_amount = 1
+
+/datum/chemical_reaction/mednanobots
+	name = "Medical Nanobots"
+	id = "mednanobots"
+	result = "mednanobots"
+	required_reagents = list("nanobots" = 1, "doctorsdelight" = 5)
+	result_amount = 1
