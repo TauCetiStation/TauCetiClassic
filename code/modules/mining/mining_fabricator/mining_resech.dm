@@ -53,7 +53,7 @@
 	category = list("Spacesuit")
 
 /datum/design/space_suit_hlemet_mining
-	name = "Space suit hlemet"
+	name = "Mining space suit hlemet"
 	id = "space_suit_hlemet_mining"
 	build_type = MINEFAB
 	req_tech = list("combat" = 2, "materials" = 3, "engineering" = 2)

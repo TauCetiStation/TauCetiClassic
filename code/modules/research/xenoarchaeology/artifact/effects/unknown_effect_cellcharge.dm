@@ -21,7 +21,7 @@
 				B.charge += 25
 		for (var/obj/machinery/power/smes/S in range (src.effectrange,src))
 			S.charge += 25
-		for (var/mob/living/silicon/robot/M in mob_list)
+		for (var/mob/living/silicon/robot/M in range(src.effectrange,T))
 			for (var/obj/item/weapon/stock_parts/cell/D in M.contents)
 				D.charge += 25
 				M << "\blue SYSTEM ALERT: Energy boost detected!"
@@ -35,7 +35,7 @@
 				B.charge += rand() * 100
 		for (var/obj/machinery/power/smes/S in range (src.effectrange,src))
 			S.charge += 250
-		for (var/mob/living/silicon/robot/M in mob_list)
+		for (var/mob/living/silicon/robot/M in range(src.effectrange,T))
 			for (var/obj/item/weapon/stock_parts/cell/D in M.contents)
 				D.charge += rand() * 100
 				M << "\blue SYSTEM ALERT: Energy boost detected!"

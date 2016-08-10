@@ -109,7 +109,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		light("<span class='notice'>[user] fiddles with [W], and manages to light their [name].</span>")
 
 	//can't think of any other way to update the overlays :<
-	user.update_inv_wear_mask()
 	user.update_inv_l_hand()
 	user.update_inv_r_hand()
 	return
@@ -152,6 +151,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		var/turf/T = get_turf(src)
 		T.visible_message(flavor_text)
 		SSobj.processing |= src
+		if(ismob(loc))
+			var/mob/M = loc
+			M.update_inv_wear_mask()
 
 
 /obj/item/clothing/mask/cigarette/process()
@@ -301,6 +303,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		var/turf/T = get_turf(src)
 		T.visible_message(flavor_text)
 		SSobj.processing |= src
+		if(ismob(loc))
+			var/mob/M = loc
+			M.update_inv_wear_mask()
 
 /obj/item/clothing/mask/cigarette/pipe/process()
 	var/turf/location = get_turf(src)
