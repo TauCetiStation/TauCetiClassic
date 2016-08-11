@@ -696,9 +696,10 @@ obj/item/projectile/kinetic/New()
 	closed_state = "door_surv_closed"
 
 //Table
+/*
 /obj/structure/table/survival_pod
 	icon = 'icons/obj/survival_pod.dmi'
-	icon_state = "table"
+	icon_state = "table"*/
 
 //Sleeper
 /obj/machinery/sleeper/survival_pod
@@ -873,10 +874,10 @@ obj/item/projectile/kinetic/New()
 	icon = 'icons/turf/walls.dmi'
 	icon_state = "survival"
 
-/obj/structure/sign/mining/attack_hand(user as mob)
+/obj/structure/sign/mining/attack_hand(mob/user)
 	if(..(user))
 		return
-	user.visible_message("[user] removes [src].", "You remove [src].")
+	user.visible_message("[user] removes the sign.", "You remove the sign.")
 	qdel(src)
 
 /obj/structure/sign/mining/Destroy()
