@@ -292,7 +292,7 @@
 
 /datum/design/stimpack_adv
 	name = "Advanced stimpack"
-	id = "stimpack"
+	id = "stimpack_adv"
 	build_type = MINEFAB
 	req_tech = list("biotech"=4,"phorontech" = 3)
 	build_path = /obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack_adv
