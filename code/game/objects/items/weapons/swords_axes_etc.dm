@@ -116,7 +116,7 @@
 	desc = "A compact yet rebalanced personal defense weapon. Can be concealed when folded."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "telebaton_0"
-	item_state = "telebaton_0"
+	item_state = null
 	flags = FPRINT | TABLEPASS
 	slot_flags = SLOT_BELT
 	w_class = 2
@@ -131,7 +131,7 @@
 		"\red You extend the baton.",\
 		"You hear an ominous click.")
 		icon_state = "telebaton_1"
-		item_state = "telebaton_1"
+		item_state = "nullrod"
 		w_class = 3
 		force = 15//quite robust
 		attack_verb = list("smacked", "struck", "slapped")
@@ -140,7 +140,7 @@
 		"\blue You collapse the baton.",\
 		"You hear a click.")
 		icon_state = "telebaton_0"
-		item_state = "telebaton_0"
+		item_state = null
 		w_class = 2
 		force = 3//not so robust now
 		attack_verb = list("hit", "punched")

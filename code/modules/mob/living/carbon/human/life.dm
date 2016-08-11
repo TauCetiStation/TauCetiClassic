@@ -136,19 +136,30 @@
 
 
 //Much like get_heat_protection(), this returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
-/mob/living/carbon/human/proc/get_pressure_protection()
+/mob/living/carbon/human/proc/get_pressure_protection(pressure_check = STOPS_PRESSUREDMAGE)
 	var/pressure_adjustment_coefficient = 1	//Determins how much the clothing you are wearing protects you in percent.
 
-	if((head && (head.flags & STOPSPRESSUREDMAGE))&&(wear_suit && (wear_suit.flags & STOPSPRESSUREDMAGE)))
+	if((head && (head.flags_pressure & STOPS_PRESSUREDMAGE))&&(wear_suit && (wear_suit.flags_pressure & STOPS_PRESSUREDMAGE)))
 		pressure_adjustment_coefficient = 0
 
-	//Handles breaches in your space suit. 10 suit damage equals a 100% loss of pressure reduction.
-	if(wear_suit && (wear_suit.flags & STOPSPRESSUREDMAGE))
-		if(istype(wear_suit,/obj/item/clothing/suit/space))
-			var/obj/item/clothing/suit/space/S = wear_suit
-			if(S.can_breach && S.damage)
-				var/pressure_loss = S.damage * 0.1
-				pressure_adjustment_coefficient += pressure_loss
+		//Handles breaches in your space suit. 10 suit damage equals a 100% loss of pressure reduction.
+		if(wear_suit && (wear_suit.flags_pressure & STOPS_PRESSUREDMAGE))
+			if(istype(wear_suit,/obj/item/clothing/suit/space))
+				var/obj/item/clothing/suit/space/S = wear_suit
+				if(S.can_breach && S.damage)
+					var/pressure_loss = S.damage * 0.1
+					pressure_adjustment_coefficient += pressure_loss
+	else
+		if((head && (head.flags_pressure & pressure_check))&&(wear_suit && (wear_suit.flags_pressure & pressure_check)))
+			pressure_adjustment_coefficient = 0
+
+		//Handles breaches in your space suit. 10 suit damage equals a 100% loss of pressure reduction.
+		if(wear_suit && (wear_suit.flags_pressure & pressure_check))
+			if(istype(wear_suit,/obj/item/clothing/suit/space))
+				var/obj/item/clothing/suit/space/S = wear_suit
+				if(S.can_breach && S.damage)
+					var/pressure_loss = S.damage * 0.1
+					pressure_adjustment_coefficient += pressure_loss
 
 	pressure_adjustment_coefficient = min(1,max(pressure_adjustment_coefficient,0)) //So it isn't less than 0 or larger than 1.
 
@@ -158,11 +169,11 @@
 	..()
 	var/pressure_difference = abs( pressure - ONE_ATMOSPHERE )
 
-	pressure_difference = pressure_difference * (1 - get_pressure_protection())
-
 	if(pressure > ONE_ATMOSPHERE)
+		pressure_difference = pressure_difference * (1 - get_pressure_protection(STOPS_HIGHPRESSUREDMAGE))
 		return ONE_ATMOSPHERE + pressure_difference
 	else
+		pressure_difference = pressure_difference * (1 - get_pressure_protection(STOPS_LOWPRESSUREDMAGE))
 		return ONE_ATMOSPHERE - pressure_difference
 
 /mob/living/carbon/human
