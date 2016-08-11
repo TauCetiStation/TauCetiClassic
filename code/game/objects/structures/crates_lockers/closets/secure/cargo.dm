@@ -51,7 +51,6 @@
 		new /obj/item/clothing/glasses/meson(src)
 		new /obj/item/clothing/head/soft(src)
 		new /obj/item/weapon/mining_voucher(src)
-		new /obj/item/weapon/survivalcapsule(src)
 		/*/New year part
 		new /obj/item/clothing/suit/wintercoat/cargo(src)
 		new /obj/item/clothing/shoes/winterboots(src)

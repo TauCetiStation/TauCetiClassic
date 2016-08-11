@@ -34,7 +34,6 @@
 	new /obj/item/weapon/shovel(src)
 //	new /obj/item/weapon/pickaxe(src)
 	new /obj/item/clothing/glasses/hud/mining(src)
-	new /obj/item/weapon/survivalcapsule(src)
 	/*/New year part
 	new /obj/item/clothing/suit/wintercoat/cargo
 	new /obj/item/clothing/head/santa(src)
@@ -551,7 +550,7 @@ obj/item/projectile/kinetic/New()
 	icon_state = "capsule"
 	icon = 'icons/obj/mining.dmi'
 	w_class = 1
-	origin_tech = "engineering=3;bluespace=3"
+	origin_tech = "engineering=3;bluespace=2"
 	var/template_id = "shelter_alpha"
 	var/datum/map_template/shelter/template
 	var/used = FALSE
@@ -604,7 +603,19 @@ obj/item/projectile/kinetic/New()
 		if(T.z != ZLEVEL_ASTEROID)//only report capsules away from the mining/lavaland level
 			message_admins("[key_name_admin(usr)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) activated a bluespace capsule away from the mining level! (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>)")
 			log_admin("[key_name(usr)] activated a bluespace capsule away from the mining level at [T.x], [T.y], [T.z]")
-		template.load(deploy_location, centered = TRUE)
+			if(!istype(T.loc, /area/space))
+				src.loc.visible_message("<span class='warning'>You must use shelter at asteroid or in space! Grab this shit\
+				and shut up!</span>")
+				new /obj/item/clothing/mask/breath(T)
+				new /obj/item/weapon/tank/air(T)
+				new /obj/item/weapon/storage/firstaid/small_firstaid_kit/civilian(T)
+				new /obj/item/clothing/suit/space/cheap(T)
+				new /obj/item/clothing/head/helmet/space/cheap(T)
+			else
+				template.load(deploy_location, centered = TRUE)
+		else
+			template.load(deploy_location, centered = TRUE)
+
 		PoolOrNew(/datum/effect/effect/system/smoke_spread, get_turf(src))
 		qdel(src)
 
@@ -861,6 +872,15 @@ obj/item/projectile/kinetic/New()
 	desc = "A high visibility sign designating a safe shelter."
 	icon = 'icons/turf/walls.dmi'
 	icon_state = "survival"
+
+/obj/structure/sign/mining/attack_hand(user as mob)
+	if(..(user))
+		return
+	user.visible_message("[user] removes [src].", "You remove [src].")
+	qdel(src)
+
+/obj/structure/sign/mining/Destroy()
+	return ..()
 
 //Fluff
 /obj/structure/tubes
