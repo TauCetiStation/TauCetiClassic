@@ -397,13 +397,6 @@
 	cost = 2
 	gamemodes = list(/datum/game_mode/nuclear)
 	uplink_types = list("nuclear")
-
-/datum/uplink_item/stealthy_weapons/poisons_kit
-	name = "Poisons kit"
-	desc = "1000 and 1 way to poison the target. Includes: syringe, bottle of zombiepowder, bottle of carpotoxin, bottle of alpha-amanitin, bottle of Chef's Special, bottle of Choral Hydrate and a bottle of cyanide."
-	item = /obj/item/weapon/storage/box/syndie_kit/poisons
-	cost = 3
-
 /*
 /datum/uplink_item/stealthy_weapons/silencer
 	name = "Stetchkin Silencer"

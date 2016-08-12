@@ -323,7 +323,7 @@
 
 	New()
 		..()
-		reagents.add_reagent("chefspecial", 30)
+		reagents.add_reagent("chefspecial", 5)
 
 /obj/item/weapon/reagent_containers/glass/bottle/alphaamanitin
 	name = "alphaamanitin bottle"
