@@ -63,6 +63,3 @@
 
 /obj/structure/shuttle/window/new_shuttle
 	icon = 'tauceti/modules/_locations/shuttles/shuttle.dmi'
-
-/obj/structure/window/reinforced/shuttle/pod
-	icon = 'tauceti/modules/_locations/shuttles/pod.dmi'
