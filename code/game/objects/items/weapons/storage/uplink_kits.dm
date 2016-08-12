@@ -128,3 +128,18 @@
 	new /obj/item/clothing/glasses/chameleon(src)
 	new /obj/item/weapon/gun/projectile/chameleon(src)
 	new /obj/item/ammo_box/magazine/chameleon(src)
+
+/obj/item/weapon/storage/box/syndie_kit/poisons
+	name = "boxed poisons set"
+
+/obj/item/weapon/storage/box/syndie_kit/poisons/New()
+	..()
+	new /obj/item/weapon/reagent_containers/glass/bottle/zombiepowder(src)
+	new /obj/item/weapon/reagent_containers/glass/bottle/carpotoxin(src)
+	new /obj/item/weapon/reagent_containers/glass/bottle/alphaamanitin(src)
+	new /obj/item/weapon/reagent_containers/glass/bottle/chefspecial(src)
+	new /obj/item/weapon/reagent_containers/glass/bottle/cyanide(src)
+	new /obj/item/weapon/reagent_containers/glass/bottle/chloralhydrate(src)
+	new /obj/item/weapon/reagent_containers/syringe(src)
+	return
+
