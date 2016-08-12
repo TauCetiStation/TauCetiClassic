@@ -57,6 +57,7 @@
 		damage =0
 	health = health - damage
 	tesla_zap(src,round(damage/10),round(damage/5)*25000)
+	empulse(src, round(damage/10),round(damage/5))
 	if(health < 0)
 		Destroy()
 
