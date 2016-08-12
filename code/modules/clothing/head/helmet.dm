@@ -121,6 +121,12 @@
 	armor = list(melee = 10, bullet = 10, laser = 60,energy = 70, bomb = 0, bio = 0, rad = 0)
 	siemens_coefficient = 0
 
+	var/hit_reflect_chance = 40
+
+/obj/item/clothing/head/helmet/laserproof/IsReflect(def_zone)
+	if(prob(hit_reflect_chance))
+		return TRUE
+
 /obj/item/clothing/head/helmet/laserproof/wj
 	icon_state = "laserproof_wj"
 

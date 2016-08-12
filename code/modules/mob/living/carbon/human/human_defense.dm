@@ -105,12 +105,14 @@
 	return (..(P , def_zone))
 
 /mob/living/carbon/human/proc/check_reflect(def_zone, hol_dir, hit_dir) //Reflection checks for anything in your l_hand, r_hand, or wear_suit based on the reflection chance of the object
-	if(wear_suit)
-		return wear_suit.IsReflect(def_zone, hol_dir, hit_dir)
-	if(l_hand)
-		return l_hand.IsReflect(def_zone, hol_dir, hit_dir)
-	if(r_hand)
-		return r_hand.IsReflect(def_zone, hol_dir, hit_dir)
+	if(head && head.IsReflect(def_zone, hol_dir, hit_dir))
+		return TRUE
+	if(wear_suit && wear_suit.IsReflect(def_zone, hol_dir, hit_dir))
+		return TRUE
+	if(l_hand && l_hand.IsReflect(def_zone, hol_dir, hit_dir))
+		return TRUE
+	if(r_hand && r_hand.IsReflect(def_zone, hol_dir, hit_dir))
+		return TRUE
 	return FALSE
 
 /mob/living/carbon/human/getarmor(var/def_zone, var/type)
