@@ -5,6 +5,7 @@
 	var/mappath = null
 	var/mapfile = null
 	var/loaded = 0 // Times loaded this round
+	var/list/loaded_stuff = list()
 
 /datum/map_template/New(path = null, map = null, rename = null)
 	if(path)
@@ -17,11 +18,18 @@
 		name = rename
 
 /datum/map_template/proc/preload_size(path)
-	var/bounds = maploader.load_map(file(path), 1, 1, 1, cropMap=FALSE, measureOnly=TRUE)
-	if(bounds)
-		width = bounds[MAP_MAXX] // Assumes all templates are rectangular, have a single Z level, and begin at 1,1,1
-		height = bounds[MAP_MAXY]
-	return bounds
+	loaded_stuff = maploader.load_map(file(path), 1, 1, 1, cropMap=FALSE, measureOnly=TRUE)
+	if(loaded_stuff && loaded_stuff.len)
+		var/list/bounds = loaded_stuff["bounds"]
+		if(bounds && bounds.len)
+			width = bounds[MAP_MAXX] // Assumes all templates are rectangular, have a single Z level, and begin at 1,1,1
+			height = bounds[MAP_MAXY]
+			. = bounds
+			loaded_stuff.Cut()
+		else
+			. = null
+	else
+		. = null
 
 /proc/initTemplateBounds(var/list/bounds)
 	var/list/obj/machinery/atmospherics/atmos_machines = list()
@@ -54,15 +62,21 @@
 	if(T.y+height > world.maxy)
 		return
 
-	var/list/bounds = maploader.load_map(get_file(), T.x, T.y, T.z, cropMap=TRUE)
-	if(!bounds)
+	loaded_stuff = maploader.load_map(get_file(), T.x, T.y, T.z, cropMap=TRUE)
+	if(!loaded_stuff || !loaded_stuff.len)
 		return 0
 
+	var/list/bounds = loaded_stuff["bounds"]
+	if(!bounds || !bounds.len)
+		return 0
+
+	var/list/stuff = loaded_stuff["stuff"]
+	. = stuff
 	//initialize things that are normally initialized after map load
 	initTemplateBounds(bounds)
 
 	log_game("[name] loaded at at [T.x],[T.y],[T.z]")
-	return 1
+	loaded_stuff.Cut()
 
 /datum/map_template/proc/get_file()
 	if(mapfile)
@@ -89,6 +103,7 @@
 		map_templates[T.name] = T
 
 	preloadShelterTemplates()
+	preloadHolodeckTemplates()
 	//preloadRuinTemplates()		//This all can be usefull, but not now
 	//preloadShuttleTemplates()
 
@@ -129,6 +144,16 @@
 		shuttle_templates[S.shuttle_id] = S
 		map_templates[S.shuttle_id] = S
 */
+
+/proc/preloadHolodeckTemplates()
+	for(var/item in subtypesof(/datum/map_template/holoscene))
+		var/datum/map_template/holoscene/holoscene_type = item
+		if(!(initial(holoscene_type.mappath)))
+			continue
+		var/datum/map_template/holoscene/S = new holoscene_type()
+		holoscene_templates[S.id()] = S
+		map_templates[S.id()] = S
+
 
 /proc/preloadShelterTemplates()
 	for(var/item in subtypesof(/datum/map_template/shelter))

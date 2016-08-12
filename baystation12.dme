@@ -994,6 +994,7 @@
 #include "code\modules\genetics\side_effects.dm"
 #include "code\modules\holodeck\HolodeckControl.dm"
 #include "code\modules\holodeck\HolodeckObjects.dm"
+#include "code\modules\holodeck\HolodeckTemplate.dm"
 #include "code\modules\library\lib_items.dm"
 #include "code\modules\library\lib_machines.dm"
 #include "code\modules\library\lib_readme.dm"
