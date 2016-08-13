@@ -1705,6 +1705,7 @@
 #include "tauceti\modules\_locations\shuttles\computer.dm"
 #include "tauceti\modules\_locations\shuttles\floor.dm"
 #include "tauceti\modules\_locations\shuttles\Intercom.dm"
+#include "tauceti\modules\_locations\shuttles\mine_sci_shuttle.dm"
 #include "tauceti\modules\_locations\shuttles\object_wall.dm"
 #include "tauceti\modules\_locations\shuttles\officer_shuttle.dm"
 #include "tauceti\modules\_locations\shuttles\shuttle_doors.dm"
