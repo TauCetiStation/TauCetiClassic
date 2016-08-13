@@ -443,6 +443,8 @@
 	captain_announce("The emergency shuttle has been called. It will arrive in [round(SSshuttle.timeleft()/60)] minutes.")
 	world << sound('sound/AI/shuttlecalled.ogg')
 
+	make_maint_all_access(FALSE)
+
 	return
 
 /proc/init_shift_change(var/mob/user, var/force = 0)
@@ -497,6 +499,9 @@
 		SSshuttle.recall()
 		log_game("[key_name(user)] has recalled the shuttle.")
 		message_admins("[key_name_admin(user)] has recalled the shuttle.", 1)
+
+		revoke_maint_all_access(FALSE)
+
 		return 1
 	return
 
