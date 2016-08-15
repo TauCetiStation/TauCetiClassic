@@ -9,3 +9,10 @@
 	opacity = 0
 	glass = 1
 	assembly_type = "obj/structure/door_assembly/multi_tile"
+
+/obj/machinery/door/airlock/multi_tile/attackby(C as obj, mob/user as mob)
+	if(istype(C, /obj/item/weapon/airlock_painter))
+		user << "\red This airlock cannot be painted." //because we don't have sprites
+	else
+		..()
+	return
