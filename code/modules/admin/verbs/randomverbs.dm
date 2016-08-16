@@ -935,7 +935,8 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	log_admin("[key_name(usr)] admin-recalled the emergency shuttle.")
 	message_admins("\blue [key_name_admin(usr)] admin-recalled the emergency shuttle.", 1)
 
-	revoke_maint_all_access(FALSE)
+	spawn(600)
+		revoke_maint_all_access(FALSE)
 
 	return
 

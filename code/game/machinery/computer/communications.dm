@@ -500,7 +500,8 @@
 		log_game("[key_name(user)] has recalled the shuttle.")
 		message_admins("[key_name_admin(user)] has recalled the shuttle.", 1)
 
-		revoke_maint_all_access(FALSE)
+		spawn(600)
+			revoke_maint_all_access(FALSE)
 
 		return 1
 	return

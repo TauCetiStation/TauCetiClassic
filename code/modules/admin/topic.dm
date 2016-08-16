@@ -263,7 +263,8 @@
 						SSshuttle.recall()
 						log_admin("[key_name(usr)] sent the Emergency Shuttle back")
 						message_admins("\blue [key_name_admin(usr)] sent the Emergency Shuttle back", 1)
-						revoke_maint_all_access(FALSE)
+						spawn(600)
+							revoke_maint_all_access(FALSE)
 
 		href_list["secretsadmin"] = "check_antagonist"
 
