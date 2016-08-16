@@ -222,7 +222,6 @@
 	tc_custom = 'tauceti/icons/mob/mutant_stuff.dmi'
 	icon_state = "lingspacesuit"
 	desc = "A huge, bulky mass of pressure and temperature-resistant organic tissue, evolved to facilitate space travel."
-	flags = STOPSPRESSUREDMAGE //Not THICKMATERIAL because it's organic tissue, so if somebody tries to inject something into it, it still ends up in your blood. (also balance but muh fluff)
 	canremove = 0
 	allowed = list(/obj/item/device/flashlight, /obj/item/weapon/tank/emergency_oxygen, /obj/item/weapon/tank/oxygen)
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0) //No armor at all.
@@ -250,7 +249,7 @@
 	tc_custom = 'tauceti/icons/mob/mutant_stuff.dmi'
 	icon_state = "lingspacehelmet"
 	desc = "A covering of pressure and temperature-resistant organic tissue with a glass-like chitin front."
-	flags = HEADCOVERSEYES | BLOCKHAIR | HEADCOVERSMOUTH | STOPSPRESSUREDMAGE
+	flags = HEADCOVERSEYES | BLOCKHAIR | HEADCOVERSMOUTH
 	canremove = 0
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 

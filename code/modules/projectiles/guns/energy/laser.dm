@@ -33,6 +33,7 @@
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "lasor"
 	tc_custom = null
+	fire_delay = 0
 	ammo_type = list(/obj/item/ammo_casing/energy/laser_pulse)
 
 
