@@ -329,3 +329,12 @@
 	construction_time = 600
 	category = list("Support")
 
+/datum/design/survivalcapsule
+	name = "Bluespace shelter capsule"
+	id = "survivalcapsule"
+	build_type = MINEFAB
+	req_tech = list("engineering" = 4,"bluespace" = 3)
+	build_path = /obj/item/weapon/survivalcapsule
+	materials = list(MAT_METAL=2000,MAT_PLASTIC=1000,MAT_DIAMOND=500,MAT_URANIUM=500)
+	construction_time = 800
+	category = list("Support")
