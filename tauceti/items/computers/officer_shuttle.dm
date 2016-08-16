@@ -6,12 +6,12 @@
 	name = "Shuttle Console"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "shuttle"
-	var/arrival_note = "" //сообщение по прибытию на станцию
-	var/department_note = "" //сообщение по отлёту от станции
+	var/arrival_note = "" //arriving message
+	var/department_note = "" //departing message
 	var/obj/item/device/radio/intercom/radio
-//	var/location = 0 // 0 - Велосити (исходная позиция) 1 - транзитная зона 2 - Исход 3 - ЦК
-	var/moving = 0 //в движении или нет
-	var/area/curr_location //текущая локация
+//	var/location = 0 // 0 - Velocity 1 - transit 2 - Exodus 3 - Centcomm
+	var/moving = 0 //moving or not
+	var/area/curr_location //current location
 	var/area/from_area
 	var/lastMove = 0
 
@@ -30,7 +30,7 @@
 	moving = 1
 	lastMove = world.time
 	if(curr_location == locate(/area/shuttle/officer/station))
-		radio.autosay(department_note, "Arrivals Alert System") //вывод сообщения об отбытии щаттла
+		radio.autosay(department_note, "Arrivals Alert System")
 	var/area/transit_location = locate(/area/shuttle/officer/transit)
 	curr_location.move_contents_to(transit_location, null, EAST)
 	curr_location = transit_location
@@ -49,7 +49,7 @@
 
 	curr_location.move_contents_to(dest_location)
 	if(dest_location == locate(/area/shuttle/officer/station))
-		radio.autosay(arrival_note, "Arrivals Alert System") //вывод сообщения об отбытии щаттла
+		radio.autosay(arrival_note, "Arrivals Alert System")
 	curr_location = dest_location
 
 	moving = 0

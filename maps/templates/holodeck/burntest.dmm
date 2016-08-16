@@ -1,0 +1,15 @@
+"a" = (/turf/simulated/floor/holofloor{icon_state = "engine"; name = "Holodeck Projector Floor"; nitrogen = 0.01; phoron = 82.1472},/area/holodeck/source_burntest)
+"b" = (/obj/effect/landmark{name = "Atmospheric Test Start"},/turf/simulated/floor/holofloor{icon_state = "engine"; name = "Holodeck Projector Floor"; nitrogen = 0.01; phoron = 82.1472},/area/holodeck/source_burntest)
+
+(1,1,1) = {"
+aaaaaaaaaa
+aaaaaaaaaa
+aabaaaabaa
+aaaaaaaaaa
+aaaaaaaaaa
+aaaaaaaaaa
+aaaaaaaaaa
+aabaaaabaa
+aaaaaaaaaa
+aaaaaaaaaa
+"}

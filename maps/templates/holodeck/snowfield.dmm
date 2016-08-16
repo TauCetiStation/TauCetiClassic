@@ -1,0 +1,19 @@
+"a" = (/turf/simulated/floor/holofloor{icon_state = "snow"},/area/holodeck/source_snowfield)
+"b" = (/obj/structure/flora/grass/both,/turf/simulated/floor/holofloor{icon_state = "snow"},/area/holodeck/source_snowfield)
+"c" = (/obj/structure/flora/tree/pine,/turf/simulated/floor/holofloor{icon_state = "snow"},/area/holodeck/source_snowfield)
+"d" = (/obj/structure/flora/tree/dead,/turf/simulated/floor/holofloor{icon_state = "snow"},/area/holodeck/source_snowfield)
+"e" = (/obj/structure/flora/grass/green,/turf/simulated/floor/holofloor{icon_state = "snow"},/area/holodeck/source_snowfield)
+"f" = (/obj/structure/flora/grass/brown,/turf/simulated/floor/holofloor{icon_state = "snow"},/area/holodeck/source_snowfield)
+
+(1,1,1) = {"
+aaaaaaaaaa
+abaaaabaaa
+aaaaaaaaca
+aadacaaaaa
+aaaeaaaaea
+aaaaaadaaa
+aaaabaaaab
+faaaafaaaa
+aedaaaeada
+aaaafaaaaf
+"}

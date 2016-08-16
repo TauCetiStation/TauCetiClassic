@@ -36,3 +36,11 @@
 
 /obj/structure/object_wall/pod
 	icon = 'tauceti/modules/_locations/shuttles/pod.dmi'
+
+/obj/structure/object_wall/wagon
+	icon = 'tauceti/modules/_locations/shuttles/wagon.dmi'
+	icon_state = "3,1"
+
+/obj/structure/object_wall/erokez
+	icon = 'tauceti/modules/_locations/shuttles/erokez.dmi'
+	icon_state = "18,2"

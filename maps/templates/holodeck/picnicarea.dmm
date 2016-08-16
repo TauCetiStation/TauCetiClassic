@@ -1,0 +1,19 @@
+"a" = (/obj/structure/flora/ausbushes/fullgrass,/turf/simulated/floor/holofloor/grass,/area/holodeck/source_picnicarea)
+"b" = (/obj/structure/flora/ausbushes/ywflowers,/turf/simulated/floor/holofloor/grass,/area/holodeck/source_picnicarea)
+"c" = (/obj/structure/flora/ausbushes/brflowers,/turf/simulated/floor/holofloor/grass,/area/holodeck/source_picnicarea)
+"d" = (/turf/simulated/floor/holofloor{icon_state = "asteroid"},/area/holodeck/source_picnicarea)
+"e" = (/obj/structure/holostool,/turf/simulated/floor/holofloor{icon_state = "asteroid"},/area/holodeck/source_picnicarea)
+"f" = (/obj/structure/table/woodentable/holotable,/turf/simulated/floor/holofloor{icon_state = "asteroid"},/area/holodeck/source_picnicarea)
+
+(1,1,1) = {"
+aaaaaaaaaa
+bcbcbcbcbc
+cbcbcbcbcb
+bcbdeedcbc
+ddddffdbcb
+ddddffdbcb
+bcbdeedcbc
+cbcbcbcbcb
+bcbcbcbccb
+aaaaaaaaaa
+"}
