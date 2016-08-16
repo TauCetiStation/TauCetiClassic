@@ -260,6 +260,12 @@ var/can_call_ert
 		W.icon_state = "ert"
 		equip_to_slot_or_del(W, slot_wear_id)
 
+	var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(src)
+	L.imp_in = src
+	L.implanted = 1
+	var/datum/organ/external/affected = src.organs_by_name["head"]
+	affected.implants += L
+	L.part = affected
 	return 1
 
 /obj/item/weapon/card/id/ert

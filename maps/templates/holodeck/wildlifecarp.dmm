@@ -1,0 +1,15 @@
+"a" = (/turf/simulated/floor/holofloor{icon_state = "engine"; name = "Holodeck Projector Floor"},/area/holodeck/source_wildlife)
+"b" = (/obj/effect/landmark{name = "Holocarp Spawn"},/turf/simulated/floor/holofloor{icon_state = "engine"; name = "Holodeck Projector Floor"},/area/holodeck/source_wildlife)
+
+(1,1,1) = {"
+aaaaaaaaaa
+abaaaaaaba
+aaaaaaaaaa
+aaabaabaaa
+aaaaaaaaaa
+aaaaaaaaaa
+aaabaabaaa
+aaaaaaaaaa
+abaaaaaaba
+aaaaaaaaaa
+"}
