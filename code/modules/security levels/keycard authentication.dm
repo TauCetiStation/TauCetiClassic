@@ -166,7 +166,7 @@
 	return ticker.mode && ticker.mode.ert_disabled
 
 var/global/maint_all_access_priority = FALSE	// Set only by keycard auth. If true, maint
-																							// access can be revoked only by calling revoke_maint_all_access(TRUE) (this doing keycard auth)
+																							// access  can be revoked only by calling revoke_maint_all_access(TRUE) (this doing keycard auth)
 var/global/maint_all_access = FALSE
 
 /proc/make_maint_all_access(var/priority = FALSE)
