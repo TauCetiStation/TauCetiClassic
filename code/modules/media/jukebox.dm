@@ -290,6 +290,7 @@ var/global/loopModeNames=list(
 		"club" = "Club Mix",
 		"customs" = "Customs Music",
 		"japan" = "Banzai Radio",
+		"govnar" = "Soviet Radio",
 		"classic" = "Classical Music",
 	)
 
@@ -308,6 +309,7 @@ var/global/loopModeNames=list(
 		"club" = "Club Mix",
 		"customs" = "Customs Music",
 		"japan" = "Banzai Radio",
+		"govnar" = "Soviet Radio",
 		"classic" = "Classical Music",
 	)
 
