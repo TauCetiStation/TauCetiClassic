@@ -255,5 +255,4 @@
 	if(initial_loc)
 		initial_loc.air_scrub_info -= id_tag
 		initial_loc.air_scrub_names -= id_tag
-	..()
-	return
+	return ..()

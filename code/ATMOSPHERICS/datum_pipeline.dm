@@ -18,7 +18,7 @@
 		temporarily_store_air()
 		qdel(air)
 
-	..()
+	return ..()
 
 /datum/pipeline/process()//This use to be called called from the pipe networks
 

@@ -105,11 +105,8 @@
 	Destroy()
 		for(var/datum/disease/D in viruses)
 			D.cure(0)
-		..()
-
-	Destroy()
 		set_light(0)
-		..()
+		return ..()
 
 	proc/stop_light()
 		sleep(rand(150,300))
