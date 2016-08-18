@@ -87,7 +87,7 @@
 		if(T.welding)
 			if(health < maxhealth)
 				if(open)
-					health = min(maxhealth, health+20)
+					health = min(maxhealth, health + 20)
 					playsound(src.loc, 'sound/items/welder.ogg', 50, 1)
 					user.visible_message("<span class='red'>[user] repairs \the [src]!</span>","<span class='notice'>You repair \the [src]!</span>")
 					check_move_delay()
@@ -283,7 +283,7 @@
 	return 1
 
 /obj/vehicle/proc/check_move_delay()
-	var/health_procent = (health/maxhealth)*100
+	var/health_procent = (health / maxhealth) * 100
 	if(health_procent >= 66)
 		slow_cooef = 0
 		return
