@@ -96,7 +96,6 @@
 		return
 	..()
 
-
 /obj/vehicle/space/spacebike/Bump(atom/A)
 	if(istype(loc, /turf/space) && isliving(load) && isliving(A))
 		var/mob/living/L = A
@@ -160,8 +159,6 @@
 					last_check = world.time
 					unload(load)
 					return 0
-
-
 
 /obj/vehicle/space/spacebike/turn_on()
 	ion.start()

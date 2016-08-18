@@ -283,9 +283,6 @@
 	return 1
 
 /obj/vehicle/proc/check_move_delay()
-	if(health <= 0)
-		slow_cooef = 0
-		return
 	var/health_procent = (health/maxhealth)*100
 	if(health_procent >= 66)
 		slow_cooef = 0
