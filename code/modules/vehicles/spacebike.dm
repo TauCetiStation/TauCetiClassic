@@ -148,7 +148,7 @@
 	return ..()
 
 /obj/vehicle/space/spacebike/can_move()
-	. =..()
+	. = ..()
 	if(kickstand)
 		return 0
 	if(world.time <= last_check + 10)
