@@ -137,15 +137,21 @@
 	if(istype(destination,/turf/space) || pulledby)
 		if(!space_speed)
 			return 0
-		move_delay = space_speed
+		move_delay = space_speed + slow_cooef
 	else
 		if(!land_speed)
 			return 0
-		move_delay = land_speed
+		move_delay = land_speed + slow_cooef
 	return ..()
 
 /obj/vehicle/space/spacebike/can_move()
-	. = ..()
+	. =..()
+	if(load)
+		if(istype(load, /mob/living/carbon/human))
+			var/mob/living/carbon/human/h = load
+			if(h.canmove == 0)
+				unload(load)
+				return 0
 	if(kickstand)
 		return 0
 
