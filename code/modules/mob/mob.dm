@@ -665,9 +665,9 @@ note dizziness decrements automatically in the mob's Life() proc.
 	if(istype(buckled, /obj/vehicle))
 		var/obj/vehicle/V = buckled
 		if(incapacitated())
+			V.unload(src)
 			lying = 1
 			canmove = 0
-			pixel_y = V.mob_offset_y - 5
 		else
 			if(buckled.buckle_lying != -1)
 				lying = buckled.buckle_lying

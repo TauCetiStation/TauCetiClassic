@@ -22,8 +22,6 @@
 	var/datum/effect/effect/system/ion_trail_follow/ion
 	var/kickstand = 1
 
-	var/last_check = 0
-
 /obj/item/weapon/key/spacebike
 	name = "key"
 	desc = "A keyring with a small steel key."
@@ -151,14 +149,6 @@
 	. = ..()
 	if(kickstand)
 		return 0
-	if(world.time <= last_check + 10)
-		if(load)
-			if(istype(load, /mob/living/carbon/human))
-				var/mob/living/carbon/human/h = load
-				if(h.canmove == 0)
-					last_check = world.time
-					unload(load)
-					return 0
 
 /obj/vehicle/space/spacebike/turn_on()
 	ion.start()
