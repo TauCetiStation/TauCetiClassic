@@ -22,6 +22,8 @@
 	var/datum/effect/effect/system/ion_trail_follow/ion
 	var/kickstand = 1
 
+	var/last_check = 0
+
 /obj/item/weapon/key/spacebike
 	name = "key"
 	desc = "A keyring with a small steel key."
@@ -94,6 +96,7 @@
 		return
 	..()
 
+
 /obj/vehicle/space/spacebike/Bump(atom/A)
 	if(istype(loc, /turf/space) && isliving(load) && isliving(A))
 		var/mob/living/L = A
@@ -132,6 +135,7 @@
 /obj/vehicle/space/spacebike/relaymove(mob/user, direction)
 	return Move(get_step(src, direction))
 
+
 /obj/vehicle/space/spacebike/Move(var/turf/destination)
 	//these things like space, not turf. Dragging shouldn't weigh you down.
 	if(istype(destination,/turf/space) || pulledby)
@@ -146,14 +150,18 @@
 
 /obj/vehicle/space/spacebike/can_move()
 	. =..()
-	if(load)
-		if(istype(load, /mob/living/carbon/human))
-			var/mob/living/carbon/human/h = load
-			if(h.canmove == 0)
-				unload(load)
-				return 0
 	if(kickstand)
 		return 0
+	if(world.time <= last_check + 10)
+		if(load)
+			if(istype(load, /mob/living/carbon/human))
+				var/mob/living/carbon/human/h = load
+				if(h.canmove == 0)
+					last_check = world.time
+					unload(load)
+					return 0
+
+
 
 /obj/vehicle/space/spacebike/turn_on()
 	ion.start()
@@ -259,3 +267,4 @@
 /obj/vehicle/space/spacebike/Destroy()
 	qdel(ion)
 	..()
+
