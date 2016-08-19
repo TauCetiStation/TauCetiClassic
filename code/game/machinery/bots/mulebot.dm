@@ -292,152 +292,132 @@
 	return t
 
 /obj/machinery/bot/mulebot/Topic(href, href_list)
-	if(..())
+	. = ..()
+	if(!.)
 		return
-	if (usr.stat)
-		return
-	if ((in_range(src, usr) && istype(src.loc, /turf)) || (istype(usr, /mob/living/silicon)))
-		usr.set_machine(src)
 
-		switch(href_list["op"])
-			if("lock", "unlock")
-				if(src.allowed(usr))
-					locked = !locked
-					updateDialog()
+	switch(href_list["op"])
+		if("lock", "unlock")
+			if(src.allowed(usr))
+				locked = !locked
+			else
+				usr << "\red Access denied."
+				return FALSE
+		if("power")
+			if (src.on)
+				turn_off()
+			else if (cell && !open)
+				if (!turn_on())
+					usr << "\red You can't switch on [src]."
+					return FALSE
+			else
+				return FALSE
+			visible_message("[usr] switches [on ? "on" : "off"] [src].")
+
+
+		if("cellremove")
+			if(open && cell && !usr.get_active_hand())
+				cell.updateicon()
+				usr.put_in_active_hand(cell)
+				cell.add_fingerprint(usr)
+				cell = null
+
+				usr.visible_message("\blue [usr] removes the power cell from [src].", "\blue You remove the power cell from [src].")
+
+		if("cellinsert")
+			if(open && !cell)
+				var/obj/item/weapon/stock_parts/cell/C = usr.get_active_hand()
+				if(istype(C))
+					usr.drop_item()
+					cell = C
+					C.loc = src
+					C.add_fingerprint(usr)
+
+					usr.visible_message("\blue [usr] inserts a power cell into [src].", "\blue You insert the power cell into [src].")
+
+
+		if("stop")
+			if(mode >=2)
+				mode = 0
+
+		if("go")
+			if(mode == 0)
+				start()
+
+		if("home")
+			if(mode == 0 || mode == 2)
+				start_home()
+
+		if("destination")
+			refresh=0
+			var/new_dest = input("Enter new destination tag", "Mulebot [suffix ? "([suffix])" : ""]", destination) as text|null
+			refresh=1
+			if(new_dest)
+				set_destination(new_dest)
+
+
+		if("setid")
+			refresh=0
+			var/new_id = sanitize(copytext(input("Enter new bot ID", "Mulebot [suffix ? "([suffix])" : ""]", suffix) as text|null,1,MAX_NAME_LEN))
+			refresh=1
+			if(new_id)
+				suffix = new_id
+				name = "Mulebot ([suffix])"
+
+		if("sethome")
+			refresh=0
+			var/new_home = input("Enter new home tag", "Mulebot [suffix ? "([suffix])" : ""]", home_destination) as text|null
+			refresh=1
+			if(new_home)
+				home_destination = new_home
+
+		if("unload")
+			if(load && mode !=1)
+				if(loc == target)
+					unload(loaddir)
 				else
-					usr << "\red Access denied."
-					return
-			if("power")
-				if (src.on)
-					turn_off()
-				else if (cell && !open)
-					if (!turn_on())
-						usr << "\red You can't switch on [src]."
-						return
-				else
-					return
-				visible_message("[usr] switches [on ? "on" : "off"] [src].")
-				updateDialog()
+					unload(0)
+
+		if("autoret")
+			auto_return = !auto_return
+
+		if("autopick")
+			auto_pickup = !auto_pickup
+
+		if("close")
+			usr.unset_machine()
+			usr << browse(null,"window=mulebot")
 
 
-			if("cellremove")
-				if(open && cell && !usr.get_active_hand())
-					cell.updateicon()
-					usr.put_in_active_hand(cell)
-					cell.add_fingerprint(usr)
-					cell = null
+		if("wirecut")
+			if(istype(usr.get_active_hand(), /obj/item/weapon/wirecutters))
+				var/wirebit = text2num(href_list["wire"])
+				wires &= ~wirebit
+			else
+				usr << "\blue You need wirecutters!"
+		if("wiremend")
+			if(istype(usr.get_active_hand(), /obj/item/weapon/wirecutters))
+				var/wirebit = text2num(href_list["wire"])
+				wires |= wirebit
+			else
+				usr << "\blue You need wirecutters!"
 
-					usr.visible_message("\blue [usr] removes the power cell from [src].", "\blue You remove the power cell from [src].")
-					updateDialog()
-
-			if("cellinsert")
-				if(open && !cell)
-					var/obj/item/weapon/stock_parts/cell/C = usr.get_active_hand()
-					if(istype(C))
-						usr.drop_item()
-						cell = C
-						C.loc = src
-						C.add_fingerprint(usr)
-
-						usr.visible_message("\blue [usr] inserts a power cell into [src].", "\blue You insert the power cell into [src].")
-						updateDialog()
-
-
-			if("stop")
-				if(mode >=2)
-					mode = 0
-					updateDialog()
-
-			if("go")
-				if(mode == 0)
-					start()
-					updateDialog()
-
-			if("home")
-				if(mode == 0 || mode == 2)
-					start_home()
-					updateDialog()
-
-			if("destination")
-				refresh=0
-				var/new_dest = input("Enter new destination tag", "Mulebot [suffix ? "([suffix])" : ""]", destination) as text|null
-				refresh=1
-				if(new_dest)
-					set_destination(new_dest)
-
-
-			if("setid")
-				refresh=0
-				var/new_id = sanitize(copytext(input("Enter new bot ID", "Mulebot [suffix ? "([suffix])" : ""]", suffix) as text|null,1,MAX_NAME_LEN))
-				refresh=1
-				if(new_id)
-					suffix = new_id
-					name = "Mulebot ([suffix])"
-					updateDialog()
-
-			if("sethome")
-				refresh=0
-				var/new_home = input("Enter new home tag", "Mulebot [suffix ? "([suffix])" : ""]", home_destination) as text|null
-				refresh=1
-				if(new_home)
-					home_destination = new_home
-					updateDialog()
-
-			if("unload")
-				if(load && mode !=1)
-					if(loc == target)
-						unload(loaddir)
+		if("wirepulse")
+			if(istype(usr.get_active_hand(), /obj/item/device/multitool))
+				switch(href_list["wire"])
+					if("1","2")
+						usr << "\blue \icon[src] The charge light flickers."
+					if("4")
+						usr << "\blue \icon[src] The external warning lights flash briefly."
+					if("8")
+						usr << "\blue \icon[src] The load platform clunks."
+					if("16", "32")
+						usr << "\blue \icon[src] The drive motor whines briefly."
 					else
-						unload(0)
-
-			if("autoret")
-				auto_return = !auto_return
-
-			if("autopick")
-				auto_pickup = !auto_pickup
-
-			if("close")
-				usr.unset_machine()
-				usr << browse(null,"window=mulebot")
-
-
-			if("wirecut")
-				if(istype(usr.get_active_hand(), /obj/item/weapon/wirecutters))
-					var/wirebit = text2num(href_list["wire"])
-					wires &= ~wirebit
-				else
-					usr << "\blue You need wirecutters!"
-			if("wiremend")
-				if(istype(usr.get_active_hand(), /obj/item/weapon/wirecutters))
-					var/wirebit = text2num(href_list["wire"])
-					wires |= wirebit
-				else
-					usr << "\blue You need wirecutters!"
-
-			if("wirepulse")
-				if(istype(usr.get_active_hand(), /obj/item/device/multitool))
-					switch(href_list["wire"])
-						if("1","2")
-							usr << "\blue \icon[src] The charge light flickers."
-						if("4")
-							usr << "\blue \icon[src] The external warning lights flash briefly."
-						if("8")
-							usr << "\blue \icon[src] The load platform clunks."
-						if("16", "32")
-							usr << "\blue \icon[src] The drive motor whines briefly."
-						else
-							usr << "\blue \icon[src] You hear a radio crackle."
-				else
-					usr << "\blue You need a multitool!"
-
-
-
-		updateDialog()
-		//src.updateUsrDialog()
-	else
-		usr << browse(null, "window=mulebot")
-		usr.unset_machine()
-	return
+						usr << "\blue \icon[src] You hear a radio crackle."
+			else
+				usr << "\blue You need a multitool!"
+	updateDialog()
 
 // returns true if the bot has power
 /obj/machinery/bot/mulebot/proc/has_power()

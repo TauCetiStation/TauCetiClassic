@@ -49,13 +49,11 @@ obj/machinery/computer/cryopod/attack_hand(mob/user = usr)
 	onclose(user, "cryopod_console")
 
 obj/machinery/computer/cryopod/Topic(href, href_list)
-
-	if(..())
+	. = ..()
+	if(!.)
 		return
 
 	var/mob/user = usr
-
-	src.add_fingerprint(user)
 
 	if(href_list["log"])
 
@@ -99,7 +97,6 @@ obj/machinery/computer/cryopod/Topic(href, href_list)
 		user << "\red Functionality unavailable at this time."
 
 	src.updateUsrDialog()
-	return
 
 /obj/item/weapon/circuitboard/cryopodcontrol
 	name = "Circuit board (Cryogenic Oversight Console)"

@@ -76,10 +76,14 @@ proc/move_research_shuttle()
 	user << browse("[dat]", "window=researchshuttle;size=200x100")
 
 /obj/machinery/computer/research_shuttle/Topic(href, href_list)
-	if(..())
+	. = ..()
+	if(!.)
 		return
-	usr.machine = src
-	src.add_fingerprint(usr)
+
+	if(!src.allowed(usr) && !emagged)
+		usr << "\red You do not have the required access level"
+		return FALSE
+
 	if(href_list["move"])
 		//if(ticker.mode.name == "blob")
 		//	if(ticker.mode:declared)
@@ -91,6 +95,8 @@ proc/move_research_shuttle()
 			move_research_shuttle()
 		else
 			usr << "\blue Shuttle is already moving."
+
+	updateUsrDialog()
 
 /obj/machinery/computer/research_shuttle/attackby(obj/item/weapon/W as obj, mob/user as mob)
 

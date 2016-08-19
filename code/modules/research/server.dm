@@ -188,14 +188,13 @@
 	var/badmin = 0
 
 /obj/machinery/computer/rdservercontrol/Topic(href, href_list)
-	if(..())
+	. = ..()
+	if(!.)
 		return
 
-	add_fingerprint(usr)
-	usr.set_machine(src)
 	if(!src.allowed(usr) && !emagged)
 		usr << "\red You do not have the required access level"
-		return
+		return FALSE
 
 	if(href_list["main"])
 		screen = 0
@@ -255,7 +254,6 @@
 		temp_server.files.RefreshResearch()
 
 	updateUsrDialog()
-	return
 
 /obj/machinery/computer/rdservercontrol/attack_hand(mob/user as mob)
 	if(..())

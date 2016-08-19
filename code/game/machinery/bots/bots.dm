@@ -157,6 +157,9 @@
 /obj/machinery/bot/attack_ai(mob/user as mob)
 	src.attack_hand(user)
 
+/obj/machinery/bot/is_operational_topic()
+	return TRUE
+
 /******************************************************************/
 // Navigation procs
 // Used for A-star pathfinding

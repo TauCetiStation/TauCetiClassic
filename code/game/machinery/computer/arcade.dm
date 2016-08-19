@@ -130,7 +130,8 @@
 	return
 
 /obj/machinery/computer/arcade/Topic(href, href_list)
-	if(..())
+	. = ..()
+	if(!.)
 		return
 
 	if (!src.blocked && !src.gameover)
@@ -190,9 +191,7 @@
 			src.New()
 			emagged = 0
 
-	src.add_fingerprint(usr)
 	src.updateUsrDialog()
-	return
 
 /obj/machinery/computer/arcade/proc/arcade_action()
 	if ((src.enemy_mp <= 0) || (src.enemy_hp <= 0))

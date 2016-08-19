@@ -220,29 +220,26 @@ var/syndicate_elite_shuttle_timeleft = 0
 	return
 
 /obj/machinery/computer/syndicate_elite_shuttle/Topic(href, href_list)
-	if(..())
+	. = ..()
+	if(!. || !allowed(usr))
 		return
-
-	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(loc, /turf))) || (istype(usr, /mob/living/silicon)))
-		usr.set_machine(src)
 
 	if (href_list["sendtodock"])
 		if(!syndicate_elite_shuttle_at_station|| syndicate_elite_shuttle_moving_to_station || syndicate_elite_shuttle_moving_to_mothership) return
 
 		usr << "\blue The Syndicate will not allow the Elite Squad shuttle to return."
-		return
+		return FALSE
 
 	else if (href_list["sendtostation"])
 		if(syndicate_elite_shuttle_at_station || syndicate_elite_shuttle_moving_to_station || syndicate_elite_shuttle_moving_to_mothership) return
 
 		if (!specops_can_move())
 			usr << "\red The Syndicate Elite shuttle is unable to leave."
-			return
+			return FALSE
 
 		usr << "\blue The Syndicate Elite shuttle will arrive on [station_name] in [(SYNDICATE_ELITE_MOVETIME/10)] seconds."
 
 		temp  = "Shuttle departing.<BR><BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
-		updateUsrDialog()
 
 		var/area/syndicate_mothership/elite_squad/elite_squad = locate()
 		if(elite_squad)
@@ -257,6 +254,4 @@ var/syndicate_elite_shuttle_timeleft = 0
 	else if (href_list["mainmenu"])
 		temp = null
 
-	add_fingerprint(usr)
 	updateUsrDialog()
-	return

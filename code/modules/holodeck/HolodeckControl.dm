@@ -88,38 +88,35 @@
 
 
 /obj/machinery/computer/HolodeckControl/Topic(href, href_list)
-	if(..())
-		return 1
-	if((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon)))
-		usr.set_machine(src)
+	. = ..()
+	if(!.)
+		return
 
-		if(href_list["program"])
-			var/prog = href_list["program"]
-			if(holoscene_templates.Find(prog))
-				loadIdProgram(prog)
+	if(href_list["program"])
+		var/prog = href_list["program"]
+		if(holoscene_templates.Find(prog))
+			loadIdProgram(prog)
 
-		else if(href_list["AIoverride"])
-			if(!issilicon(usr))
-				return
+	else if(href_list["AIoverride"])
+		if(!issilicon_allowed(usr))
+			return FALSE
 
-			if(safety_disabled && emagged)
-				return //if a traitor has gone through the trouble to emag the thing, let them keep it.
+		if(safety_disabled && emagged)
+			return FALSE//if a traitor has gone through the trouble to emag the thing, let them keep it.
 
-			safety_disabled = !safety_disabled
-			update_projections()
-			if(safety_disabled)
-				message_admins("[key_name_admin(usr)] overrode the holodeck's safeties")
-				log_game("[key_name(usr)] overrided the holodeck's safeties")
-			else
-				message_admins("[key_name_admin(usr)] restored the holodeck's safeties")
-				log_game("[key_name(usr)] restored the holodeck's safeties")
+		safety_disabled = !safety_disabled
+		update_projections()
+		if(safety_disabled)
+			message_admins("[key_name_admin(usr)] overrode the holodeck's safeties")
+			log_game("[key_name(usr)] overrided the holodeck's safeties")
+		else
+			message_admins("[key_name_admin(usr)] restored the holodeck's safeties")
+			log_game("[key_name(usr)] restored the holodeck's safeties")
 
-		else if(href_list["gravity"])
-			toggleGravity(linkedholodeck)
+	else if(href_list["gravity"])
+		toggleGravity(linkedholodeck)
 
-		src.add_fingerprint(usr)
 	src.updateUsrDialog()
-	return
 
 /obj/machinery/computer/HolodeckControl/attackby(var/obj/item/weapon/D as obj, var/mob/user as mob)
 	if(istype(D, /obj/item/weapon/card/emag))

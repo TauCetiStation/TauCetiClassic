@@ -41,7 +41,9 @@
 		disconnect_frequency()
 
 /obj/machinery/media/receiver/boombox/Topic(href,href_list)
-	..()
+	. = ..()
+	if(!.)
+		return
 	if("power" in href_list)
 		on = !on
 		update_on()

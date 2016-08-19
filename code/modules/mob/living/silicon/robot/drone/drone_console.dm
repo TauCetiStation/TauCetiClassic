@@ -48,15 +48,13 @@
 
 
 /obj/machinery/computer/drone_control/Topic(href, href_list)
-	if(..())
+	. = ..()
+	if(!.)
 		return
 
 	if(!allowed(usr))
 		usr << "\red Access denied."
-		return
-
-	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon)))
-		usr.set_machine(src)
+		return FALSE
 
 	if (href_list["setarea"])
 
@@ -64,7 +62,7 @@
 		var/t_area = input("Select the area to ping.", "Set Target Area", null) as null|anything in tagger_locations
 
 		if(!t_area)
-			return
+			return FALSE
 
 		drone_call_area = t_area
 		usr << "\blue You set the area selector to [drone_call_area]."
@@ -112,7 +110,7 @@
 	else if (href_list["toggle_fab"])
 
 		if(!dronefab)
-			return
+			return FALSE
 
 		if(get_dist(src,dronefab) > 3)
 			dronefab = null
