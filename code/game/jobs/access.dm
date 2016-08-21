@@ -120,7 +120,7 @@
 	return get_all_accesses()
 
 /mob/living/silicon/robot/syndicate/GetAccess()
-	return get_all_syndicate_access()
+	return list(access_maint_tunnels, access_syndicate, access_external_airlocks) //syndicate basic access
 
 /obj/item/proc/GetID()
 	return null
