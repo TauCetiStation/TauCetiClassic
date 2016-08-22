@@ -118,7 +118,7 @@
 	name = "ablative helmet"
 	desc = "A ablative security helmet that excels in protecting the wearer against energy and laser projectiles."
 	icon_state = "laserproof"
-	armor = list(melee = 10, bullet = 10, laser = 35,energy = 45, bomb = 0, bio = 0, rad = 0)
+	armor = list(melee = 10, bullet = 10, laser = 45,energy = 55, bomb = 0, bio = 0, rad = 0)
 	siemens_coefficient = 0
 
 	var/hit_reflect_chance = 40
