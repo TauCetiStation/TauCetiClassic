@@ -1349,21 +1349,22 @@
 	if(crawl_getup)
 		return
 
-	var/T = get_turf(src)
 	if(crawling)
 		crawl_getup = 1
-		if(do_after(src, 10 , target = src))
+		if(do_after(src, 10, target = src))
 			crawl_getup = 0
-			if(!crawl_can_stand())
+			if(!crawl_can_use())
 				playsound(loc, 'sound/weapons/tablehit1.ogg', 50, 1)
 				var/datum/organ/external/E = get_organ("head")
 				E.take_damage(5, 0, 0, 0, "Table")
 				src << "<span class='danger'>Ouch!</span>"
 				return
 			layer = 4.0
-		crawl_getup = 0
+		else
+			crawl_getup = 0
+			return
 	else
-		if( (locate(/obj/structure/table) in T) || (locate(/obj/structure/stool/bed) in T) )
+		if(!crawl_can_use())
 			src << "<span class='notice'>You can't crawl here!</span>"
 			return
 		layer = 3.9
