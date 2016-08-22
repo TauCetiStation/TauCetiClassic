@@ -967,6 +967,60 @@ var/heist_rob_total = 0
 	if(heist_rob_total >= target_amount) return 1
 	return 0
 
+/datum/objective/heist/race_loot
+	var/current_amount = 0
+
+/datum/objective/heist/race_loot/choose_target(choice)
+	var/loot = "an object"
+	switch(choice)
+		if("Skrell")
+			target = /obj/structure/reagent_dispensers/watertank
+			target_amount = 10
+			loot = "ten watertanks."
+		if("Tajaran")
+			target = /mob/living/simple_animal/cow
+			target_amount = 10
+			loot = "dozen of cows"
+		if("Unathi")
+			target = /obj/item/weapon/organ
+			target_amount = 40
+			loot = "fourty limbs (of your choice)"
+		if("Diona")
+			target = /obj/item/device/flashlight/lamp
+			target_amount = 20
+			loot = "twenty lamps"
+		//if("Human") - nothing for humans :(
+
+	explanation_text = "We are lacking in [loot]. Get that!"
+
+/datum/objective/heist/race_loot/check_completion()
+	current_amount = 0
+
+	var/area/A = get_area(locate(/obj/effect/landmark/heist/aurora))
+	if(A)
+		for(var/mob/M in A)
+			if(istype(M, target))
+				current_amount++
+
+		for(var/obj/O in A)
+			if(istype(O, target))
+				current_amount++
+			if(O.contents && O.contents.len)
+				for(var/obj/I in O.contents)
+					if(istype(I, target))
+						current_amount++
+
+		var/datum/game_mode/heist/H = ticker.mode
+		for(var/datum/mind/raider in H.raiders)
+			if(raider.current && get_area(raider.current) == A)
+				for(var/obj/O in raider.current.get_contents())
+					if(istype(O, target))
+						current_amount++
+
+	if(current_amount >= target_amount)
+		return 1
+	return 0
+
 datum/objective/heist/inviolate_crew
 	explanation_text = "Do not leave any Vox behind, alive or dead."
 

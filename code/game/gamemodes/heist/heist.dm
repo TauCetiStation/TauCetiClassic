@@ -10,7 +10,7 @@
 	name = "obj loot"
 	icon_state = "x3"
 
-/datum/game_mode/
+/datum/game_mode
 	var/list/datum/mind/raiders = list()  //Antags.
 
 /datum/game_mode/heist
@@ -20,7 +20,6 @@
 	required_players = 15
 	required_players_secret = 15
 	required_enemies = 4
-	recommended_enemies = 6
 
 	votable = 0
 
@@ -44,10 +43,8 @@
 	//Check that we have enough vox.
 	if(antag_candidates.len < required_enemies)
 		return 0
-	else if(antag_candidates.len < recommended_enemies)
-		raider_num = antag_candidates.len
 	else
-		raider_num = recommended_enemies
+		raider_num = required_enemies
 
 	//Grab candidates randomly until we have enough.
 	while(raider_num > 0)
@@ -75,9 +72,11 @@
 			qdel(L)
 			continue
 
+	var/random_race_choice = pick("Skrell", "Tajaran", "Unathi", "Diona", "Human")
+
 	//Generate objectives for the group.
 	if(!config.objectives_disabled)
-		raid_objectives = forge_vox_objectives()
+		raid_objectives = forge_vox_objectives(random_race_choice)
 
 	var/index = 1
 	var/captain = 1
@@ -111,23 +110,30 @@
 			"Kidd","O`Malley","Barnacle","Holystone","Hornswaggle","McStinky","Swashbuckler","Space Wolf","Beard",
 			"Chumbucket","Rivers","Morgan","Tuna Breath","Three Gates","Bailey","Of Atlantis","Of Dark Space"))
 
-		var/mob/living/carbon/human/vox = raider.current
+		var/mob/living/carbon/human/looter = raider.current
+		looter.real_name = newname
+		looter.name = looter.real_name
+		raider.name = looter.name
+		looter.age = rand(17,85)
+		//looter.dna.mutantrace = "vox"
+		looter.set_species(random_race_choice)
+		looter.languages = list() // Removing language from chargen.
+		looter.flavor_text = ""
 
-		vox.real_name = newname
-		vox.name = vox.real_name
-		raider.name = vox.name
-		vox.age = rand(17,85)
-		//vox.dna.mutantrace = "vox"
-		//vox.set_species("Vox")
-		vox.languages = list() // Removing language from chargen.
-		vox.flavor_text = ""
-		vox.add_language("Gutter")
-		vox.h_style = "Skinhead"
-		vox.f_style = "Shaved"
-		//for(var/datum/organ/external/limb in vox.organs)
+		switch(random_race_choice)
+			if("Skrell")
+				looter.h_style = "Skrell Male Tentacles"
+			if("Tajaran")
+				looter.h_style = "Tajaran Ears"
+			if("Unathi")
+				looter.h_style = "Unathi Horns"
+			else
+				looter.h_style = "Skinhead"
+				looter.f_style = "Shaved"
+		//for(var/datum/organ/external/limb in looter.organs)
 		//	limb.status &= ~(ORGAN_DESTROYED | ORGAN_ROBOT)
-		vox.equip_raider()
-		vox.regenerate_icons()
+		looter.equip_raider()
+		looter.regenerate_icons()
 
 		raider.objectives = raid_objectives
 		greet_vox(raider)
@@ -153,11 +159,16 @@
 				return 1
 	return 0
 
-/datum/game_mode/heist/proc/forge_vox_objectives()
+/datum/game_mode/heist/proc/forge_vox_objectives(random_race_choice)
 	var/list/objs = list()
 	var/datum/objective/heist/O = new /datum/objective/heist/robbery()
 	O.choose_target()
 	objs += O
+
+	if(random_race_choice != "Human")
+		O = new /datum/objective/heist/race_loot()
+		O.choose_target(random_race_choice)
+		objs += O
 
 	return objs
 

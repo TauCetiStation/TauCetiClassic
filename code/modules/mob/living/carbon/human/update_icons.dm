@@ -795,8 +795,8 @@ Please contact me on #coderbus IRC. ~Carn x
 				overlays_standing[HAIR_LAYER]   = null
 				overlays_standing[HEAD_LAYER]	= null
 
-		update_inv_shoes()
-		update_tail_showing()
+	update_inv_shoes()
+	update_tail_showing()
 
 	update_collar()
 
