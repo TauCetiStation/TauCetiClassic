@@ -370,6 +370,7 @@
 
 	New()
 		src.modules += new /obj/item/device/flash(src)
+		src.modules += new /obj/item/borg/sight/night(src)
 		src.modules += new /obj/item/weapon/melee/energy/sword/cyborg(src)
 		src.modules += new /obj/item/weapon/gun/energy/crossbow/cyborg(src)
 		src.modules += new /obj/item/weapon/card/emag(src)
