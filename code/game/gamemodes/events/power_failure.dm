@@ -12,7 +12,7 @@ var/power_fail_event = 0
 				sleep(600)
 				M << sound('tauceti/sounds/ambience/hullcreak.ogg')
 
-	var/list/skipped_areas = list(/area/turret_protected/ai)
+	var/list/skipped_areas = list(/area/turret_protected/ai, /area/tcommsat/chamber)
 
 	for(var/obj/machinery/power/smes/S in world)
 		var/area/current_area = get_area(S)

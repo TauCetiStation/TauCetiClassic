@@ -417,7 +417,7 @@
 		src.modules += new /obj/item/weapon/scalpel(src)
 		src.modules += new /obj/item/weapon/extinguisher/mini(src) //To unfuck xenobiology up
 
-		src.modules += new /obj/item/weapon/crowbar/red
+		src.modules += new /obj/item/weapon/crowbar/red(src)
 		src.modules += new /obj/item/weapon/wrench(src)
 		src.modules += new /obj/item/weapon/screwdriver(src)
 		src.modules += new /obj/item/weapon/wirecutters(src)
@@ -458,9 +458,14 @@
 		src.emag.name = "Plasma Cutter"
 
 		for(var/T in stacktypes)
-			var/obj/item/stack/sheet/W = new T(src)
-			W.amount = stacktypes[T]
-			src.modules += W
+			if(!iscoil(T))
+				var/obj/item/stack/W = new T(src)
+				W.amount = stacktypes[T]
+				src.modules += W
+			else
+				var/obj/item/weapon/cable_coil/C = new T(src)
+				C.amount = stacktypes[T]
+				src.modules += C
 
 		return
 
