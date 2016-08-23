@@ -231,21 +231,21 @@
 	if(istype(W, /obj/item/weapon/screwdriver))
 		var/turf/T = get_turf(src)
 		user.visible_message("[user] tightens some bolts on the r wall.", "You tighten the bolts on the wall.")
-		T.ChangeTurf(/turf/simulated/wall) //Intentionally makes a regular wall instead of an r-wall (no cheap r-walls for you).
+		T.ChangeTurf(/turf/simulated/wall/r_wall)
 		qdel(src)
 
-	if( istype(W, /obj/item/weapon/weldingtool) )
+	if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 		if( WT.remove_fuel(0,user) )
 			var/turf/T = get_turf(src)
-			T.ChangeTurf(/turf/simulated/wall)
+			T.ChangeTurf(/turf/simulated/wall/r_wall)
 			T = get_turf(src)
 			T.attackby(W,user)
 			qdel(src)
 
-	else if( istype(W, /obj/item/weapon/pickaxe/plasmacutter) )
+	else if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
 		var/turf/T = get_turf(src)
-		T.ChangeTurf(/turf/simulated/wall)
+		T.ChangeTurf(/turf/simulated/wall/r_wall)
 		T = get_turf(src)
 		T.attackby(W,user)
 		qdel(src)
@@ -253,14 +253,14 @@
 	//DRILLING
 	else if (istype(W, /obj/item/weapon/pickaxe/drill/diamond_drill))
 		var/turf/T = get_turf(src)
-		T.ChangeTurf(/turf/simulated/wall)
+		T.ChangeTurf(/turf/simulated/wall/r_wall)
 		T = get_turf(src)
 		T.attackby(W,user)
 		qdel(src)
 
 	else if( istype(W, /obj/item/weapon/melee/energy/blade) )
 		var/turf/T = get_turf(src)
-		T.ChangeTurf(/turf/simulated/wall)
+		T.ChangeTurf(/turf/simulated/wall/r_wall)
 		T = get_turf(src)
 		T.attackby(W,user)
 		qdel(src)
