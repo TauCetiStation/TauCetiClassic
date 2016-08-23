@@ -151,6 +151,9 @@
 			make_maint_all_access(TRUE)
 			feedback_inc("alert_keycard_auth_maintGrant",1)
 		if("Revoke Emergency Maintenance Access")
+			if(timer_maint_revoke_id)
+				deltimer(timer_maint_revoke_id)
+				timer_maint_revoke_id = 0
 			revoke_maint_all_access(TRUE)
 			feedback_inc("alert_keycard_auth_maintRevoke",1)
 		if("Emergency Response Team")
