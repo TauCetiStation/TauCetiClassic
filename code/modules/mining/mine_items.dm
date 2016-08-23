@@ -34,7 +34,6 @@
 	new /obj/item/weapon/shovel(src)
 //	new /obj/item/weapon/pickaxe(src)
 	new /obj/item/clothing/glasses/hud/mining(src)
-	new /obj/item/weapon/survivalcapsule(src)
 	/*/New year part
 	new /obj/item/clothing/suit/wintercoat/cargo
 	new /obj/item/clothing/head/santa(src)
@@ -42,7 +41,7 @@
 	*/
 
 /**********************Shuttle Computer**************************/
-var/mining_shuttle_tickstomove = 10
+/*var/mining_shuttle_tickstomove = 10
 var/mining_shuttle_moving = 0
 var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 
@@ -163,7 +162,7 @@ proc/move_mining_shuttle()
 		usr << "<span class='notice'>You fried the consoles ID checking system. It's now available to everyone!</span>"
 	else
 		..()
-
+*/
 /******************************Lantern*******************************/
 /obj/item/device/flashlight/lantern
 	name = "lantern"
@@ -551,7 +550,7 @@ obj/item/projectile/kinetic/New()
 	icon_state = "capsule"
 	icon = 'icons/obj/mining.dmi'
 	w_class = 1
-	origin_tech = "engineering=3;bluespace=3"
+	origin_tech = "engineering=3;bluespace=2"
 	var/template_id = "shelter_alpha"
 	var/datum/map_template/shelter/template
 	var/used = FALSE
@@ -576,36 +575,49 @@ obj/item/projectile/kinetic/New()
 /obj/item/weapon/survivalcapsule/attack_self()
 	// Can't grab when capsule is New() because templates aren't loaded then
 	get_template()
-	if(used == FALSE)
-		src.loc.visible_message("<span class='warning'>\The [src] begins \
-			to shake. Stand back!</span>")
-		used = TRUE
-		sleep(50)
-		var/turf/deploy_location = get_turf(src)
-		var/status = template.check_deploy(deploy_location)
-		switch(status)
-			if(SHELTER_DEPLOY_BAD_AREA)
-				src.loc.visible_message("<span class='warning'>\The [src] \
-				will not function in this area.</span>")
-			if(SHELTER_DEPLOY_BAD_TURFS, SHELTER_DEPLOY_ANCHORED_OBJECTS)
-				var/width = template.width
-				var/height = template.height
-				src.loc.visible_message("<span class='warning'>\The [src] \
-				doesn't have room to deploy! You need to clear a \
-				[width]x[height] area!</span>")
+	if(!used)
+		var/turf/T = get_turf(src)
+		if((T.z != ZLEVEL_ASTEROID) && !istype(T.loc, /area/space)) //we don't need complete all checks
+			src.loc.visible_message("<span class='warning'>You must use shelter at asteroid or in space! Grab this shit\
+			and shut up!</span>")
+			used = TRUE
+			new /obj/item/clothing/mask/breath(T)
+			new /obj/item/weapon/tank/air(T)
+			new /obj/item/weapon/storage/firstaid/small_firstaid_kit/civilian(T)
+			new /obj/item/clothing/suit/space/cheap(T)
+			new /obj/item/clothing/head/helmet/space/cheap(T)
+			playsound(T, 'sound/effects/sparks2.ogg', 100, 1)
+		else
+			src.loc.visible_message("<span class='warning'>\The [src] begins \
+				to shake. Stand back!</span>")
+			used = TRUE
+			sleep(50)
 
-		if(status != SHELTER_DEPLOY_ALLOWED)
-			used = FALSE
-			return
+			T = get_turf(src) //update location
+			var/status = template.check_deploy(T)
+			switch(status)
+				if(SHELTER_DEPLOY_BAD_AREA)
+					src.loc.visible_message("<span class='warning'>\The [src] \
+					will not function in this area.</span>")
+				if(SHELTER_DEPLOY_BAD_TURFS, SHELTER_DEPLOY_ANCHORED_OBJECTS)
+					var/width = template.width
+					var/height = template.height
+					src.loc.visible_message("<span class='warning'>\The [src] \
+					doesn't have room to deploy! You need to clear a \
+					[width]x[height] area!</span>")
 
-		playsound(get_turf(src), 'sound/effects/phasein.ogg', 100, 1)
+			if(status != SHELTER_DEPLOY_ALLOWED)
+				used = FALSE
+				return
 
-		var/turf/T = deploy_location
-		if(T.z != ZLEVEL_ASTEROID)//only report capsules away from the mining/lavaland level
-			message_admins("[key_name_admin(usr)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) activated a bluespace capsule away from the mining level! (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>)")
-			log_admin("[key_name(usr)] activated a bluespace capsule away from the mining level at [T.x], [T.y], [T.z]")
-		template.load(deploy_location, centered = TRUE)
-		PoolOrNew(/datum/effect/effect/system/smoke_spread, get_turf(src))
+			playsound(T, 'sound/effects/phasein.ogg', 100, 1)
+
+			if(T.z != ZLEVEL_ASTEROID)//only report capsules away from the mining level
+				message_admins("[key_name_admin(usr)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) activated a bluespace capsule away from the mining level! (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>)")
+				log_admin("[key_name(usr)] activated a bluespace capsule away from the mining level at [T.x], [T.y], [T.z]")
+			template.load(T, centered = TRUE)
+
+		PoolOrNew(/datum/effect/effect/system/smoke_spread, T)
 		qdel(src)
 
 //Pod turfs and objects
@@ -685,9 +697,10 @@ obj/item/projectile/kinetic/New()
 	closed_state = "door_surv_closed"
 
 //Table
+/*
 /obj/structure/table/survival_pod
 	icon = 'icons/obj/survival_pod.dmi'
-	icon_state = "table"
+	icon_state = "table"*/
 
 //Sleeper
 /obj/machinery/sleeper/survival_pod
@@ -861,6 +874,15 @@ obj/item/projectile/kinetic/New()
 	desc = "A high visibility sign designating a safe shelter."
 	icon = 'icons/turf/walls.dmi'
 	icon_state = "survival"
+
+/obj/structure/sign/mining/attack_hand(mob/user)
+	if(..(user))
+		return
+	user.visible_message("[user] removes the sign.", "You remove the sign.")
+	qdel(src)
+
+/obj/structure/sign/mining/Destroy()
+	return ..()
 
 //Fluff
 /obj/structure/tubes

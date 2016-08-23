@@ -37,7 +37,7 @@
 		if("gravitational anomaly")
 			anom.origin_tech = "magnets=8;powerstorage=4"
 		if("flux wave anomaly")
-			anom.origin_tech = "powerstorage=8;programming=4;plasmatech=4"
+			anom.origin_tech = "powerstorage=8;programming=4;phorontech=4"
 		if("bluespace anomaly")
 			anom.origin_tech = "bluespace=8;magnets=5;powerstorage=3"
 		if("pyroclastic anomaly")

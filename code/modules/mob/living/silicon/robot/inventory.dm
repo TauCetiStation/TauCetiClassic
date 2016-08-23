@@ -7,6 +7,12 @@
 
 /*-------TODOOOOOOOOOO--------*/
 
+/mob/living/silicon/robot/u_equip(obj/W as obj)
+	if(!W)
+		return 0
+	uneq_active()
+	return 1
+
 /mob/living/silicon/robot/proc/uneq_active()
 	if(isnull(module_active))
 		return

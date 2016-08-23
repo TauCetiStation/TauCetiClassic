@@ -142,3 +142,6 @@
 // from /tg/
 #define ABOVE_NORMAL_TURF_LAYER 2.08
 #define BELOW_MOB_LAYER 3.7
+
+//Timing subsystem
+#define GLOBAL_PROC	"some_magic_bullshit"
