@@ -187,7 +187,6 @@ var/global/timer_maint_revoke_id = 0
 	if(maint_all_access_priority)	// We must use keycard auth
 		return
 	maint_all_access = FALSE
-	timer_maint_revoke_id = 0
 	world << "<font size=4 color='red'>Attention!</font>"
 	world << "<font color='red'>The maintenance access requirement has been readded on all maintenance airlocks.</font>"
 
