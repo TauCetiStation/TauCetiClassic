@@ -30,7 +30,6 @@
 		..()
 		if(air_contents.oxygen < 10)
 			usr << text("\red <B>The meter on the [src.name] indicates you are almost out of air!</B>")
-			playsound(usr, 'sound/effects/alert.ogg', 50, 1)
 		return
 
 
