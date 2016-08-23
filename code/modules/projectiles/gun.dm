@@ -1,25 +1,18 @@
 /obj/item/weapon/gun
 	name = "gun"
 	desc = "It's a gun. It's pretty terrible, though."
-	icon = 'icons/obj/gun.dmi'
-	icon_state = "detective"
-	item_state = "gun"
+
 	flags =  FPRINT | TABLEPASS | CONDUCT
-	slot_flags = SLOT_BELT
 	m_amt = 2000
-	w_class = 3.0
 	throwforce = 5
 	throw_speed = 4
 	throw_range = 5
-	force = 5.0
+
 	origin_tech = "combat=1"
 	attack_verb = list("struck", "hit", "bashed")
 	action_button_name = "Switch Gun"
-	var/obj/item/ammo_casing/chambered = null
-	var/fire_sound = 'sound/weapons/Gunshot.ogg'
-	var/silenced = 0
-	var/recoil = 0
-	var/clumsy_check = 1
+
+	//Targeting
 	var/tmp/list/mob/living/target //List of who yer targeting.
 	var/tmp/lock_time = -100
 	var/tmp/mouthshoot = 0 ///To stop people from suiciding twice... >.>
@@ -28,11 +21,78 @@
 	var/tmp/told_cant_shoot = 0 //So that it doesn't spam them with the fact they cannot hit them.
 	var/firerate = 0 	//0 for keep shooting until aim is lowered
 						// 1 for one bullet after tarrget moves and aim is lowered
+
+	//Icons
+	icon = 'icons/obj/gun.dmi'
+	icon_state = "detective"
+	item_state = "gun"
+	lefthand_file = 'icons/mob/inhands/guns_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/guns_righthand.dmi'
+
+	//Inventory
+	w_class = 3
+	slot_flags = 0
+
+	//Chamber
+	var/obj/item/ammo_casing/chambered = null
+
+	//Misc
+	var/silenced = 0
+	var/recoil = 0
+	var/clumsy_check = 1
+	var/gas_firearm = 0 //if next round should only load after successfull shot.
+
+	//Firemode & modificators
+	var/datum/firemode/firemode
+	var/datum/w_modificator/w_mod = new()
+
+	//Sounds
+	var/s_fire = 'sound/weapons/Gunshot.ogg'
+	var/fire_volume = 100
+	var/s_magazine_in = 'sound/weapons/guns/generic_mag_in.ogg'
+	var/s_magazine_out = 'sound/weapons/guns/generic_mag_out.ogg'
+	var/s_ammo_in = 'sound/weapons/guns/generic_bullet_in.ogg'
+	var/s_slide_in = 'sound/weapons/guns/generic_slide_in.ogg'
+	var/s_slide_out = 'sound/weapons/guns/generic_slide_out.ogg'
+	var/action_volume = 100
+
 	var/fire_delay = 6
 	var/last_fired = 0
 
-	lefthand_file = 'icons/mob/inhands/guns_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/guns_righthand.dmi'
+	//Stock
+	force = 5
+
+	//Mods/accessory
+	var/list/acceptable_mods = list()
+	var/list/installed_mods = list()
+
+/obj/item/weapon/gun/proc/can_mod_with(obj/item/weapon_parts/WP)
+	if(istype(WP) && (WP.type in acceptable_mods) && !(WP in installed_mods))
+		return 1
+	return 0
+
+/obj/item/weapon/gun/attackby(obj/item/A, mob/user)
+	if(istype(A, /obj/item/weapon_parts) && can_mod_with(A))
+		var/obj/item/weapon_parts/WP = A
+		playsound(user, WP.s_add, action_volume, 1)
+		if(do_after_in_action(user,WP.add_delay,src,A))
+			WP.add_modification(src,user)
+			return 1
+	if(istype(A, /obj/item/weapon/screwdriver) && installed_mods.len)
+		if(installed_mods.len > 1)
+			var/obj/item/weapon_parts/WP = input("Select a mod to remove", "Remove a mod", null) as obj in installed_mods
+			if(WP)
+				playsound(user, WP.s_remove, action_volume, 1)
+				if(do_after_in_action(user,WP.remove_delay,src,A))
+					WP.remove_modification(src,user)
+					return 1
+		else
+			var/obj/item/weapon_parts/WP = installed_mods[1]
+			playsound(user, WP.s_remove, action_volume, 1)
+			if(do_after_in_action(user,WP.remove_delay,src,A))
+				WP.remove_modification(src,user)
+				return 1
+	return 0
 
 /obj/item/weapon/gun/proc/ready_to_fire()
 	if(world.time >= last_fired + fire_delay)
@@ -47,20 +107,22 @@
 /obj/item/weapon/gun/proc/special_check(mob/M, atom/target) //Placeholder for any special checks, like detective's revolver.
 	return 1
 
-/obj/item/weapon/gun/proc/shoot_with_empty_chamber(mob/living/user as mob|obj)
+/obj/item/weapon/gun/proc/shoot_with_empty_chamber(mob/living/user)
+	if(!gas_firearm)
+		process_chamber()
 	user << "<span class='warning'>*click*</span>"
-	playsound(user, 'sound/weapons/empty.ogg', 100, 1)
-	return
+	playsound(user, 'sound/weapons/guns/generic_click.ogg', action_volume, 1)
 
 /obj/item/weapon/gun/proc/shoot_live_shot(mob/living/user as mob|obj)
-	if(recoil)
-		spawn()
-			shake_camera(user, recoil + 1, recoil)
+	//if(recoil)
+	//	spawn()
+	//		shake_camera(user, recoil + 1, recoil)
+	process_chamber()
 
 	if(silenced)
-		playsound(user, fire_sound, 10, 1)
+		playsound(user, s_fire, fire_volume/10, 1)
 	else
-		playsound(user, fire_sound, 50, 0)
+		playsound(user, s_fire, fire_volume, 0)
 		user.visible_message("<span class='danger'>[user] fires [src]!</span>", "<span class='danger'>You fire [src]!</span>", "You hear a [istype(src, /obj/item/weapon/gun/energy) ? "laser blast" : "gunshot"]!")
 
 /obj/item/weapon/gun/emp_act(severity)
@@ -72,15 +134,20 @@
 	chambered = null
 	..()
 
-/obj/item/weapon/gun/afterattack(atom/A as mob|obj|turf|area, mob/living/user as mob|obj, flag, params)
+/obj/item/weapon/gun/afterattack(atom/A, mob/living/user, flag, params)
 	if(flag)	return //It's adjacent, is the user, or is on the user's person
 	if(istype(target, /obj/machinery/recharger) && istype(src, /obj/item/weapon/gun/energy))	return//Shouldnt flag take care of this?
+
 	if(user && user.client && user.client.gun_mode && !(A in target))
 		PreFire(A,user,params) //They're using the new gun system, locate what they're aiming at.
+		return
+
+	if(user && user.a_intent == I_HELP)
+		user << "<span class='warning'>You refrain from firing your [src] as your intent is set to help.</span>"
 	else
 		Fire(A,user,params) //Otherwise, fire normally.
 
-/obj/item/weapon/gun/proc/Fire(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, params, reflex = 0)//TODO: go over this
+/obj/item/weapon/gun/proc/Fire(atom/target, mob/living/user, params, reflex = 0)//TODO: go over this
 	//Exclude lasertag guns from the CLUMSY check.
 	if (!user.IsAdvancedToolUser())
 		user << "<span class='red'>You don't have the dexterity to do this!</span>"
@@ -128,21 +195,39 @@
 		if (world.time % 3) //to prevent spam
 			user << "<span class='warning'>[src] is not ready to fire again!</span>"
 		return
+
 	if(chambered)
-		if(!chambered.fire(target, user, params, , silenced))
-			shoot_with_empty_chamber(user)
+		if(firemode && firemode.burst_fire)
+			for(var/i=1 to firemode.burst_this_many)
+				if(!user)
+					break
+				if(src != user.get_active_hand())
+					break
+				if(!chambered)
+					break
+				if(!chambered.fire(target, user, params, silenced, src))
+					shoot_with_empty_chamber(user)
+					break
+				else
+					user.next_move = world.time + (firemode.burst_delay * 2)
+					shoot_live_shot(user)
+				sleep(firemode.burst_delay)
 		else
-			shoot_live_shot(user)
+			if(!chambered.fire(target, user, params, silenced, src))
+				shoot_with_empty_chamber(user)
+			else
+				user.next_move = world.time + fire_delay
+				shoot_live_shot(user)
 	else
 		shoot_with_empty_chamber(user)
-	process_chamber()
-	user.newtonian_move(get_dir(target, user))
+
 	update_icon()
 
-	if(user.hand)
-		user.update_inv_l_hand()
-	else
-		user.update_inv_r_hand()
+	if(user)
+		if(user.hand)
+			user.update_inv_l_hand()
+		else
+			user.update_inv_r_hand()
 
 
 /obj/item/weapon/gun/proc/can_fire()
@@ -154,13 +239,17 @@
 /obj/item/weapon/gun/proc/click_empty(mob/user = null)
 	if (user)
 		user.visible_message("*click click*", "<span class='red'><b>*click*</b></span>")
-		playsound(user, 'sound/weapons/empty.ogg', 100, 1)
+		playsound(user, 'sound/weapons/guns/generic_click.ogg', 100, 1)
 	else
 		src.visible_message("*click click*")
-		playsound(src.loc, 'sound/weapons/empty.ogg', 100, 1)
+		playsound(src.loc, 'sound/weapons/guns/generic_click.ogg', 100, 1)
 
 /obj/item/weapon/gun/proc/isHandgun()
 	return 1
+
+/obj/item/weapon/gun/attack_self_alt(mob/user)
+	if(firemode)
+		firemode.switch_firemode(user)
 
 /obj/item/weapon/gun/attack(mob/living/M as mob, mob/living/user as mob, def_zone)
 	//Suicide handling.
@@ -174,9 +263,9 @@
 		if (can_fire())
 			user.visible_message("<span class = 'warning'>[user] pulls the trigger.</span>")
 			if(silenced)
-				playsound(user, fire_sound, 10, 1)
+				playsound(user, s_fire, fire_volume/10, 1)
 			else
-				playsound(user, fire_sound, 50, 1)
+				playsound(user, s_fire, fire_volume, 1)
 			if(istype(chambered.BB, /obj/item/projectile/beam/lastertag) || istype(chambered.BB, /obj/item/projectile/beam/practice))
 				user.visible_message("<span class = 'notice'>Nothing happens.</span>",\
 									"<span class = 'notice'>You feel rather silly, trying to commit suicide with a toy.</span>")

@@ -183,3 +183,63 @@ proc/RoundHealth(health)
 				break
 	if (progress)
 		qdel(progbar)
+
+//First of all, this proc was made for weapon actions like reloading while moving or smth like that.
+/proc/do_after_in_action(mob/user, delay, atom/target = null, atom/target2 = null, progress = 1)
+	if (!user)
+		return 0
+
+	if (user.do_after_in_progress)
+		return 0
+
+	var/atom/target_loc = null
+	var/atom/target2_loc = null
+	var/atom/user_loc = null
+
+	var/must_stay = 0
+
+	if (target && !ismob(target.loc))
+		target_loc = target.loc
+		must_stay = 1
+	if (target2 && !ismob(target2.loc))
+		target2_loc = target2.loc
+		must_stay = 1
+	if (must_stay)
+		user_loc = user.loc
+
+	user.do_after_in_progress = 1
+
+	var/holding = user.get_active_hand()
+	var/holding2 = user.get_inactive_hand()
+
+	var/datum/progressbar/progbar
+	if (progress)
+		if (user.client && (user.client.prefs.toggles & SHOW_PROGBAR))
+			progbar = new(user, delay, user)
+		else
+			progress = 0
+
+	var/endtime = world.time + delay
+	var/starttime = world.time
+	. = 1
+	while (world.time < endtime)
+		sleep(1)
+		if (progress)
+			progbar.update(world.time - starttime)
+
+		if (!user)
+			. = 0
+			break
+
+		if (must_stay && (user_loc != user.loc || target_loc && target_loc != target.loc || target2_loc && target2.loc != target2_loc))
+			. = 0
+			break
+
+		if (user.get_active_hand() != holding || user.get_inactive_hand() != holding2 || user.incapacitated() || user.lying )
+			. = 0
+			break
+
+	if (progress)
+		qdel(progbar)
+
+	user.do_after_in_progress = 0

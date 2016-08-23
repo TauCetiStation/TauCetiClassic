@@ -10,7 +10,7 @@
 	origin_tech = "combat=8;materials=2;syndicate=8"
 	recoil = 3 //extra kickback
 	mag_type = /obj/item/ammo_box/magazine/internal/heavyrifle
-	fire_sound = 'sound/weapons/heavysniper_shot.ogg'
+	s_fire = 'sound/weapons/heavysniper_shot.ogg'
 	var/bolt_open = 0
 
 /obj/item/weapon/gun/projectile/heavyrifle/isHandgun()

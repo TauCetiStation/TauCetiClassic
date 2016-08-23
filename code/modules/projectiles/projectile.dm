@@ -52,6 +52,7 @@
 	var/agony = 0
 	var/embed = 0 // whether or not the projectile can embed itself in the mob
 	var/impact_force = 0
+	var/dispersion = 0.0
 
 	var/hitscan = 0	// whether the projectile should be hitscan
 	var/step_delay = 1	// the delay between iterations if not a hitscan projectile
@@ -191,32 +192,6 @@
 		qdel(src)
 	return 1
 
-//	else
-//		spawn(0)
-//			if(A)
-//						// We get the location before running A.bullet_act, incase the proc deletes A and makes it null
-//				var/turf/new_loc = null
-//				if(istype(A, /turf))
-//					new_loc = A
-//				else
-//					new_loc = A.loc
-//
-//				if (!forcedodge)
-//					forcedodge = A.bullet_act(src, def_zone) // searches for return value
-//				if(forcedodge == -1) // the bullet passes through a dense object!
-//					bumped = 0 // reset bumped variable!
-//					loc = new_loc
-//					permutated.Add(A)
-//					return 0
-//				//stop flying
-//				on_impact(A)
-//
-//				density = 0
-//				invisibility = 101
-//				qdel(src)
-//				return 0
-//		return 1	//с ТГ, работает лучше
-
 
 
 /obj/item/projectile/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
@@ -272,11 +247,17 @@
 		if(!hitscan)
 			sleep(step_delay)	//add delay between movement iterations if it's not a hitscan weapon
 
+/obj/item/projectile/proc/on_fire()
+	return
+
 /obj/item/projectile/proc/before_move()
 	return
 
 /obj/item/projectile/proc/setup_trajectory()
 	var/offset = 0
+	if(dispersion)
+		var/radius = round(dispersion*9, 1)
+		offset = rand(-radius, radius)
 
 	// plot the initial trajectory
 	trajectory = new()

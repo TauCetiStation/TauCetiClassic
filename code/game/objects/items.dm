@@ -60,6 +60,9 @@
 
 	var/obj/item/device/uplink/hidden/hidden_uplink = null // All items can have an uplink hidden inside, just remember to add the triggers.
 
+	//if all sprites in one exact dmi (for guns only at the moment (back, hands, belt).
+	var/united_dmi = 0
+
 	/* Species-specific sprites, concept stolen from Paradise//vg/.
 	ex:
 	sprite_sheets = list(

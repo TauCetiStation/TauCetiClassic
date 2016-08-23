@@ -1,18 +1,24 @@
-//TG-stuff
 /obj/item/ammo_casing
 	name = "bullet casing"
 	desc = "A bullet casing."
-	icon = 'tauceti/icons/obj/ammo.dmi'
-	icon_state = "s-casing"
+
 	flags = FPRINT | TABLEPASS | CONDUCT
-	slot_flags = SLOT_BELT
 	throwforce = 1
-	w_class = 1.0
-	var/caliber = null							//Which kind of guns it can be loaded into
+
+	var/caliber = "9mm"							//Which kind of guns it can be loaded into
 	var/projectile_type = null					//The bullet type to create when New() is called
 	var/obj/item/projectile/BB = null 			//The loaded bullet
+
 	var/pellets = 0								//Pellets for spreadshot
 	var/variance = 0							//Variance for inaccuracy fundamental to the casing
+
+	//Icons
+	icon = 'code/modules/projectiles/guns/base.dmi'
+	icon_state = "casing"
+
+	//Inventory
+	w_class = 1
+	slot_flags = 0
 
 /obj/item/ammo_casing/New()
 	..()
@@ -33,7 +39,7 @@
 		BB = new projectile_type(src)
 	return
 
-/obj/item/ammo_casing/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/ammo_casing/attackby(obj/item/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/screwdriver))
 		if(BB)
 			if(initial(BB.name) == "bullet")
@@ -52,6 +58,16 @@
 				user << "\blue You can only inscribe a metal bullet."	//because inscribing beanbags is silly
 		else
 			user << "\blue There is no bullet in the casing to inscribe anything into."
+	else if(istype(W, /obj/item/ammo_casing))
+		var/obj/item/ammo_casing/AC = W
+		user.remove_from_mob(AC)
+		user.remove_from_mob(src)
+		var/obj/item/ammo_container/casing_holder/CH = new(get_turf(loc),AC,src)
+		user.put_in_hands(CH)
+	else if(istype(W, /obj/item/ammo_container/casing_holder))
+		var/obj/item/ammo_container/casing_holder/CH = W
+		user.remove_from_mob(src)
+		CH.give_round(src)
 
 //Boxes of ammo
 /obj/item/ammo_box
@@ -62,7 +78,7 @@
 	flags = FPRINT | TABLEPASS | CONDUCT
 	slot_flags = SLOT_BELT
 	item_state = "syringe_kit"
-	m_amt = 50000
+	m_amt = 2000
 	throwforce = 2
 	w_class = 2.0
 	throw_speed = 4
@@ -89,16 +105,15 @@
 			stored_ammo.Insert(1,b)
 		return b
 
-/obj/item/ammo_box/proc/give_round(var/obj/item/ammo_casing/r)
-	var/obj/item/ammo_casing/rb = r
-	if (rb)
-		if (stored_ammo.len < max_ammo && rb.caliber == caliber)
-			stored_ammo += rb
-			rb.loc = src
+/obj/item/ammo_box/proc/give_round(obj/item/ammo_casing/AC)
+	if (AC)
+		if (stored_ammo.len < max_ammo && AC.caliber == caliber)
+			stored_ammo += AC
+			AC.loc = src
 			return 1
 	return 0
 
-/obj/item/ammo_box/attackby(var/obj/item/A as obj, mob/user as mob, var/silent = 0)
+/obj/item/ammo_box/attackby(obj/item/A, mob/user, silent = 0)
 	var/num_loaded = 0
 	if(istype(A, /obj/item/ammo_box))
 		var/obj/item/ammo_box/AM = A

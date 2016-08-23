@@ -63,7 +63,7 @@
 	w_class = 3.0
 	origin_tech = "combat=5;materials=4;syndicate=6"
 	mag_type = /obj/item/ammo_box/magazine/m12g
-	fire_sound = 'sound/weapons/Gunshot.ogg'
+	s_fire = 'sound/weapons/Gunshot.ogg'
 
 /obj/item/weapon/gun/projectile/automatic/bulldog/New()
 	..()
@@ -130,7 +130,7 @@
 	w_class = 3.0
 	origin_tech = "combat=5;materials=4;syndicate=6"
 	mag_type = /obj/item/ammo_box/magazine/m556
-	fire_sound = 'sound/weapons/Gunshot.ogg'
+	s_fire = 'sound/weapons/Gunshot.ogg'
 
 /obj/item/weapon/gun/projectile/automatic/a28/New()
 	..()

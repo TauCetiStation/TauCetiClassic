@@ -155,7 +155,7 @@
 	projectile_type = /obj/item/projectile/energy/sonic
 	select_name = "distortion"
 	e_cost = 0
-	fire_sound = 'sound/effects/basscannon.ogg'
+	s_fire = 'sound/effects/basscannon.ogg'
 
 /obj/item/projectile/energy/sonic
 	name = "distortion"

@@ -4,7 +4,7 @@
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "staff"
 	item_state = "staff"
-	fire_sound = 'sound/weapons/emitter.ogg'
+	s_fire = 'sound/weapons/emitter.ogg'
 	flags =  CONDUCT
 	w_class = 5
 	var/max_charges = 6

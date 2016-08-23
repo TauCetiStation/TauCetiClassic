@@ -20,8 +20,8 @@ Usage: Place the proc within the proc it shares it's name with, silencer_attackb
 		user << "<span class='notice'>You screw [I] onto [src].</span>"
 		silenced = I
 		var/obj/item/weapon/silencer/S = I
-		S.oldsound = fire_sound
-		fire_sound = 'tauceti/sounds/weapon/Gunshot_silenced.ogg'
+		S.oldsound = s_fire
+		s_fire = 'tauceti/sounds/weapon/Gunshot_silenced.ogg'
 		w_class = 3
 		I.loc = src
 		update_icon()
@@ -37,7 +37,7 @@ Usage: Place the proc within the proc it shares it's name with, silencer_attackb
 			user << "<span class='notice'>You unscrew [silenced] from [src].</span>"
 			user.put_in_hands(silenced)
 			var/obj/item/weapon/silencer/S = silenced
-			fire_sound = S.oldsound
+			s_fire = S.oldsound
 			silenced = 0
 			w_class = 2
 			update_icon()

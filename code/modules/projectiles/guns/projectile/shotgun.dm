@@ -11,7 +11,7 @@
 	mag_type = /obj/item/ammo_box/magazine/internal/shot
 	var/recentpump = 0 // to prevent spammage
 	var/pumped = 0
-	fire_sound = 'sound/weapons/guns/shotgun_shot.ogg'
+	s_fire = 'sound/weapons/guns/shotgun_shot.ogg'
 
 /obj/item/weapon/gun/projectile/shotgun/isHandgun()
 	return 0
@@ -81,7 +81,7 @@
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/dualshot
 	var/open = 0
 	var/short = 0
-	fire_sound = 'sound/weapons/guns/shotgun_shot.ogg'
+	s_fire = 'sound/weapons/guns/shotgun_shot.ogg'
 
 /obj/item/weapon/gun/projectile/revolver/doublebarrel/isHandgun()
 	return 0
@@ -105,7 +105,7 @@
 		if(get_ammo())
 			afterattack(user, user)	//will this work?
 			afterattack(user, user)	//it will. we call it twice, for twice the FUN
-			playsound(user, fire_sound, 50, 1)
+			playsound(user, s_fire, 50, 1)
 			user.visible_message("<span class='danger'>The shotgun goes off!</span>", "<span class='danger'>The shotgun goes off in your face!</span>")
 			return
 		if(do_after(user, 30, target = src))	//SHIT IS STEALTHY EYYYYY

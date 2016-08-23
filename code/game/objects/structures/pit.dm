@@ -229,7 +229,7 @@ obj/item/weapon/gun/energy/laser/retro/jetsons/update_icon()
 /obj/item/ammo_casing/energy/laser/practice/jetsons
 	projectile_type = /obj/item/projectile/beam/practice/jetsons
 	select_name = "practice_jetsons"
-	fire_sound = 'sound/weapons/Laser2.ogg'
+	s_fire = 'sound/weapons/Laser2.ogg'
 
 /obj/item/projectile/beam/practice/jetsons
 	name = "laser"

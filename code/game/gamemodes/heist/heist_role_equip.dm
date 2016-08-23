@@ -48,7 +48,7 @@ var/global/raider_tick = 1
 	item_state = "a28w"
 	silenced = 1
 	mag_type = /obj/item/ammo_box/magazine/m556/nonlethal
-	fire_sound = 'tauceti/sounds/weapon/Gunshot_silenced.ogg'
+	s_fire = 'tauceti/sounds/weapon/Gunshot_silenced.ogg'
 
 /obj/item/weapon/gun/projectile/automatic/silenced/nonlethal
 	name = "Silenced pistol NL"
