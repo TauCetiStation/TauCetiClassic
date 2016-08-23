@@ -500,8 +500,10 @@
 		log_game("[key_name(user)] has recalled the shuttle.")
 		message_admins("[key_name_admin(user)] has recalled the shuttle.", 1)
 
-		spawn(600)
-			revoke_maint_all_access(FALSE)
+		if(timer_maint_revoke_id)
+			deltimer(timer_maint_revoke_id)
+			timer_maint_revoke_id = 0
+		timer_maint_revoke_id = addtimer(GLOBAL_PROC, "revoke_maint_all_access", 600, TRUE, FALSE) // Want to give them time to get out of maintenance.
 
 		return 1
 	return

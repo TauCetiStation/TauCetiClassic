@@ -168,6 +168,7 @@
 var/global/maint_all_access_priority = FALSE	// Set only by keycard auth. If true, maint
 																							// access  can be revoked only by calling revoke_maint_all_access(TRUE) (this doing keycard auth)
 var/global/maint_all_access = FALSE
+var/global/timer_maint_revoke_id = 0
 
 /proc/make_maint_all_access(var/priority = FALSE)
 	if(priority)

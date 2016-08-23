@@ -52,8 +52,7 @@
 
 		command_alert("The station has passed the radiation belt. Please report to medbay if you experience any unusual symptoms. Maintenance will lose all access again shortly.", "Anomaly Alert")
 
-
-		sleep(600) // Want to give them time to get out of maintenance.
-
-
-		revoke_maint_all_access(FALSE)
+		if(timer_maint_revoke_id)
+			deltimer(timer_maint_revoke_id)
+			timer_maint_revoke_id = 0
+		timer_maint_revoke_id = addtimer(GLOBAL_PROC, "revoke_maint_all_access", 600, TRUE, FALSE) // Want to give them time to get out of maintenance.
