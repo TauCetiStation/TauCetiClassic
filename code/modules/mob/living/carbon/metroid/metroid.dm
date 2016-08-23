@@ -38,8 +38,6 @@
 	var/rabid = 0 // if set to 1, the slime will attack and eat anything it comes in contact with
 
 	var/list/Friends = list() // A list of potential friends
-	var/list/FriendsWeight = list() // A list containing values respective to Friends. This determines how many times a slime "likes" something. If the slime likes it more than 2 times, it becomes a friend
-
 	// slimes pass on genetic data, so all their offspring have the same "Friends",
 
 	var/mood = "" // To show its face

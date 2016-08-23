@@ -554,6 +554,8 @@
 							to_say = "Grrr..." // I'm angry but I do it
 						else
 							to_say = "Fine..."
+					else
+						to_say = "No..."
 				else if (Target) // We are asked to stop chasing
 					if (Friends[who] > 3)
 						Target = null
