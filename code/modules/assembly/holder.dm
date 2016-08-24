@@ -118,7 +118,7 @@
 		a_right.holder_movement()
 	return
 
-/obj/item/device/assembly_holder/hear_talk(mob/living/M as mob, msg)	//Called when attack_self is called
+/obj/item/device/assembly_holder/hear_talk(mob/living/M as mob, msg)
 	if(a_left)
 		a_left.hear_talk(M,msg)
 	if(a_right)

@@ -14,15 +14,13 @@
 /obj/item/device/assembly/voice/hear_talk(mob/living/M as mob, msg)
 
 
-	//if(listening && !radio_freq)
 	if(listening)
-		recorded = msg
+		recorded = sanitize(msg)
 		listening = 0
 		for(var/mob/O in hearers(1, src.loc))
 			O.show_message(text("Activation message is '[recorded]'."),1)
-	//	say("Activation message is '[recorded]'.")
 	else
-		if(findtext(msg, recorded))
+		if(findtext(sanitize(msg), recorded))
 			for(var/mob/O in hearers(1, src.loc))
 				O.show_message(text("Beeeep"),1)
 			spawn(10)
@@ -34,7 +32,6 @@
 			listening = !listening
 			for(var/mob/O in hearers(1, src.loc))
 				O.show_message(text("[listening ? "Now" : "No longer"] recording input."),1)
-		//	say("[listening ? "Now" : "No longer"] recording input.")
 
 /obj/item/device/assembly/voice/attack_self(mob/user)
 	if(!user)
