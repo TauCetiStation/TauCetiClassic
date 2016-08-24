@@ -109,6 +109,7 @@
 		else
 			new /obj/item/weapon/storage/backpack/satchel_sec(src)
 		new /obj/item/clothing/head/helmet/HoS(src)
+		new /obj/item/clothing/head/helmet/HoS/dermal(src)
 		new /obj/item/clothing/suit/armor/hos(src)
 		new /obj/item/clothing/under/rank/head_of_security/corp(src)
 		new /obj/item/clothing/under/rank/head_of_security(src)
@@ -157,6 +158,7 @@
 			new /obj/item/weapon/storage/backpack/satchel_sec/tactifool(src)
 		new /obj/item/clothing/shoes/jackboots/secshoes(src)
 		new /obj/item/clothing/head/helmet/HoS/tactifool(src)
+		new /obj/item/clothing/head/helmet/HoS/dermal(src)
 		new /obj/item/clothing/suit/armor/hos/coat(src)
 		new /obj/item/clothing/under/rank/head_of_security/tactifool/fancy(src)
 		new /obj/item/clothing/under/rank/head_of_security/tactifool(src)
@@ -204,6 +206,7 @@
 			new /obj/item/weapon/storage/backpack/satchel_sec/wj(src)
 		new /obj/item/clothing/head/helmet/HoS/wj(src)
 		new /obj/item/clothing/head/helmet/wj/hos(src)
+		new /obj/item/clothing/head/helmet/HoS/dermal(src)
 		new /obj/item/clothing/suit/armor/hos/wj(src)
 		new /obj/item/clothing/under/rank/head_of_security/wj(src)
 		new /obj/item/weapon/storage/belt/security/wj(src)
