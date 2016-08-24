@@ -132,16 +132,17 @@
 /obj/vehicle/space/spacebike/relaymove(mob/user, direction)
 	return Move(get_step(src, direction))
 
+
 /obj/vehicle/space/spacebike/Move(var/turf/destination)
 	//these things like space, not turf. Dragging shouldn't weigh you down.
 	if(istype(destination,/turf/space) || pulledby)
 		if(!space_speed)
 			return 0
-		move_delay = space_speed
+		move_delay = space_speed + slow_cooef
 	else
 		if(!land_speed)
 			return 0
-		move_delay = land_speed
+		move_delay = land_speed + slow_cooef
 	return ..()
 
 /obj/vehicle/space/spacebike/can_move()
@@ -253,3 +254,4 @@
 /obj/vehicle/space/spacebike/Destroy()
 	qdel(ion)
 	..()
+
