@@ -662,7 +662,7 @@ var/list/ghostteleportlocs = list()
 	icon_state = "smaint"
 
 /area/maintenance/port
-	name = "\improper Locker Room Maintenance"
+	name = "\improper Cargo Maintenance"
 	icon_state = "pmaint"
 
 /area/maintenance/aft

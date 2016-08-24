@@ -26,6 +26,7 @@
 	var/brute_dam_coeff = 1.0
 	var/stat = 0
 	var/move_delay = 1	//set this to limit the speed of the vehicle
+	var/slow_cooef = 0
 
 	var/atom/movable/load		//all vehicles can take a load, since they should all be a least drivable
 	var/load_item_visible = 1	//set if the loaded item should be overlayed on the vehicle sprite
@@ -86,9 +87,10 @@
 		if(T.welding)
 			if(health < maxhealth)
 				if(open)
-					health = min(maxhealth, health+10)
+					health = min(maxhealth, health + 20)
 					playsound(src.loc, 'sound/items/welder.ogg', 50, 1)
 					user.visible_message("<span class='red'>[user] repairs \the [src]!</span>","<span class='notice'>You repair \the [src]!</span>")
+					check_move_delay()
 				else
 					user << "<span class='notice'>Unable to repair \the [src] with the maintenance panel closed.</span>"
 			else
@@ -189,6 +191,7 @@
 	qdel(src)
 
 /obj/vehicle/proc/healthcheck()
+	check_move_delay()
 	if(health <= 0)
 		explode()
 
@@ -278,6 +281,17 @@
 	load = null
 
 	return 1
+
+/obj/vehicle/proc/check_move_delay()
+	var/health_procent = (health / maxhealth) * 100
+	if(health_procent >= 66)
+		slow_cooef = 0
+		return
+	if(health_procent >= 33)
+		slow_cooef = 1
+		return
+	slow_cooef = 2
+	return
 
 
 //-------------------------------------------------------
