@@ -203,12 +203,12 @@ var/const/INGEST = 2
 	//src.handle_reactions() Don't need to handle reactions on the source since you're (presumably isolating and) transferring a specific reagent.
 	return amount
 
-/datum/reagents/proc/metabolize(var/mob/M,var/alien)
-
+/datum/reagents/proc/metabolize(var/mob/M, var/alien)
 	for(var/A in reagent_list)
 		var/datum/reagent/R = A
 		if(M && R)
-			R.on_mob_life(M,alien)
+			R.on_mob_life(M, alien)
+			remove_reagent(R.id, R.custom_metabolism)
 	update_total()
 
 /datum/reagents/proc/conditional_update_move(var/atom/A, var/Running = 0)
@@ -576,7 +576,7 @@ var/const/INGEST = 2
 
 	return trans_data
 
-datum/reagents/Destroy()
+/datum/reagents/Destroy()
 	. = ..()
 	for(var/datum/reagent/R in reagent_list)
 		qdel(R)
@@ -590,14 +590,14 @@ datum/reagents/Destroy()
 
 // Convenience proc to create a reagents holder for an atom
 // Max vol is maximum volume of holder
-atom/proc/create_reagents(var/max_vol)
+/atom/proc/create_reagents(var/max_vol)
 	reagents = new/datum/reagents(max_vol)
 	reagents.my_atom = src
 
 // Временное (а может и постоянное) решение бага с проком, который симулирует поедание еды/таблеток и передает с задержкой реагенты из временного контейнера...
 //... по какой-то причине, кудел прерывает spawn который был вызван объектом(еда/таблетка)...
 //... быстрое решение нашел только такое - отвязать проблемный блок в проке от регов. ~Zve
-proc/digest_delay(var/datum/reagents/BR, var/obj/target, var/obj/item/weapon/reagent_containers/glass/beaker/noreact/B)
+/proc/digest_delay(var/datum/reagents/BR, var/obj/target, var/obj/item/weapon/reagent_containers/glass/beaker/noreact/B)
 	spawn(95)
 		BR.reaction(target, INGEST)
 		spawn(5)

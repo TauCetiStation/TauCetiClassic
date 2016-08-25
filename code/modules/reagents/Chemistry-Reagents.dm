@@ -71,15 +71,12 @@ datum
 				return
 
 			on_mob_life(mob/living/M, alien)
-				if(!M)
+				if(!M || !holder)
 					return
-				if(!istype(M, /mob/living))
+				if(!isliving(M))
 					return //Noticed runtime errors from pacid trying to damage ghosts, this should fix. --NEO
-				if( (overdose > 0) && (volume >= overdose))//Overdosing, wooo
+				if((overdose > 0) && (volume >= overdose))//Overdosing, wooo
 					M.adjustToxLoss(overdose_dam)
-				holder.remove_reagent(src.id, custom_metabolism) //By default it slowly disappears.
-				if(!holder)
-					return
 				return TRUE
 
 			on_move(var/mob/M)
@@ -1565,10 +1562,6 @@ datum
 			on_mob_life(mob/living/M)
 				if(!..())
 					return
-				if(!istype(M))
-					return
-				if(!M)
-					M = holder.my_atom
 				M.apply_effect(10, IRRADIATE, 0)
 
 		toxin/phoron
