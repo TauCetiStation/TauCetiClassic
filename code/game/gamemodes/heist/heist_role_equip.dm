@@ -1,6 +1,6 @@
 var/global/raider_tick = 1
 
-/mob/living/carbon/human/proc/equip_raider()
+/mob/living/carbon/human/proc/equip_raider(race_choice)
 
 	var/obj/item/device/radio/R = new /obj/item/device/radio/headset/syndicate(src)
 	R.set_frequency(SYND_FREQ) //Same frequency as the syndicate team in Nuke mode.
@@ -8,19 +8,23 @@ var/global/raider_tick = 1
 
 	switch(raider_tick)
 		if(1) // Aye Cap'n!
-			equip_to_slot_or_del(new /obj/item/clothing/under/pirate(src), slot_w_uniform)
-			equip_to_slot_or_del(new /obj/item/clothing/shoes/brown(src), slot_shoes)
-			equip_to_slot_or_del(new /obj/item/clothing/suit/space/pirate(src), slot_wear_suit)
-			equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/pirate(src), slot_head)
-			equip_to_slot_or_del(new /obj/item/clothing/glasses/thermal/eyepatch(src), slot_glasses)
-			equip_to_slot_or_del(new /obj/item/weapon/melee/energy/sword/pirate(src), slot_r_hand)
-			equip_to_slot_or_del(new /obj/item/weapon/extraction_pack(src), slot_l_hand)
+			switch(race_choice)
+				if("Human")
+					equip_to_slot_or_del(new /obj/item/clothing/under/pirate(src), slot_w_uniform)
+					equip_to_slot_or_del(new /obj/item/clothing/shoes/brown(src), slot_shoes)
+					equip_to_slot_or_del(new /obj/item/clothing/suit/space/pirate(src), slot_wear_suit)
+					equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/pirate(src), slot_head)
+					equip_to_slot_or_del(new /obj/item/clothing/glasses/eyepatch(src), slot_glasses)
+					//equip_to_slot_or_del(new /obj/item/weapon/melee/energy/sword/pirate(src), slot_r_hand)
+					//equip_to_slot_or_del(new /obj/item/weapon/extraction_pack(src), slot_l_hand)
 		if(2) // Piretezzz
-			equip_to_slot_or_del(new /obj/item/clothing/under/pirate(src), slot_w_uniform)
-			equip_to_slot_or_del(new /obj/item/clothing/shoes/brown(src), slot_shoes)
-			equip_to_slot_or_del(new /obj/item/clothing/head/bandana(src), slot_head)
-			//equip_to_slot_or_del(new /obj/item/clothing/glasses/eyepatch(src), slot_glasses)
-			equip_to_slot_or_del(new /obj/item/weapon/melee/energy/sword/pirate(src), slot_r_hand)
+			switch(race_choice)
+				if("Human")
+					equip_to_slot_or_del(new /obj/item/clothing/under/pirate(src), slot_w_uniform)
+					equip_to_slot_or_del(new /obj/item/clothing/shoes/brown(src), slot_shoes)
+					equip_to_slot_or_del(new /obj/item/clothing/head/bandana(src), slot_head)
+					//equip_to_slot_or_del(new /obj/item/clothing/glasses/eyepatch(src), slot_glasses)
+					//equip_to_slot_or_del(new /obj/item/weapon/melee/energy/sword/pirate(src), slot_r_hand)
 
 	equip_to_slot_or_del(new /obj/item/device/price_tool(src), slot_l_store)
 	equip_to_slot_or_del(new /obj/item/device/flashlight(src), slot_r_store)
@@ -87,27 +91,25 @@ var/global/raider_tick = 1
 
 /obj/item/projectile/bullet/weakbullet/nl_rifle
 	stutter = 10
-	agony = 55
+	agony = 40
 
-/obj/item/projectile/bullet/weakbullet/nl_rifle/on_hit(var/atom/target, var/blocked = 0)
+/obj/item/projectile/bullet/weakbullet/nl_rifle/on_hit(atom/target, blocked = 0)
 	if(issilicon(target))
 		var/mob/living/silicon/S = target
-		S.take_organ_damage(20)//+10=30
-		S.emp_act(2)
-	else if(istype(target,/obj/mecha))
+		S.take_organ_damage(20)
+	else if(istype(target, /obj/mecha))
 		var/obj/mecha/M = target
 		M.take_damage(25)
 	..()
 
 /obj/item/projectile/bullet/weakbullet/nl_pistol
 	stutter = 10
-	agony = 30
+	agony = 20
 
-/obj/item/projectile/bullet/weakbullet/nl_pistol/on_hit(var/atom/target, var/blocked = 0)
+/obj/item/projectile/bullet/weakbullet/nl_pistol/on_hit(atom/target, blocked = 0)
 	if(issilicon(target))
 		var/mob/living/silicon/S = target
-		S.take_organ_damage(10)//+10=20
-		S.emp_act(2)
+		S.take_organ_damage(10)
 	else if(istype(target,/obj/mecha))
 		var/obj/mecha/M = target
 		M.take_damage(15)
@@ -127,22 +129,24 @@ var/global/raider_tick = 1
 
 /obj/item/weapon/grenade/monsternade/prime()
 	..()
-	playsound(src.loc, 'sound/effects/bang.ogg', 50, 1, 5)
+	var/spawn_location = loc
+	if(ismob(loc))
+		spawn_location = loc.loc
+	playsound(spawn_location, 'sound/effects/bang.ogg', 50, 1, 5)
 	switch(rand(1,4))
 		if(1)
-			for(var/i=0,i<2,i++)
-				new /mob/living/simple_animal/hostile/samak(loc)
+			for(var/i = 1 to 3)
+				new /mob/living/simple_animal/hostile/samak(spawn_location)
 		if(2)
-			for(var/i=0, i<7, i++)
-				new /mob/living/simple_animal/hostile/diyaab(loc)
+			for(var/i = 1 to 8)
+				new /mob/living/simple_animal/hostile/diyaab(spawn_location)
 		if(3)
-			for(var/i=0, i<4, i++)
-				new /mob/living/simple_animal/hostile/shantak(loc)
+			for(var/i = 1 to 5)
+				new /mob/living/simple_animal/hostile/shantak(spawn_location)
 		if(4)
-			for(var/i=0, i<3, i++)
-				new /mob/living/simple_animal/hostile/clown(loc)
+			for(var/i = 1 to 4)
+				new /mob/living/simple_animal/hostile/clown(spawn_location)
 	qdel(src)
-	return
 
 /obj/item/device/price_tool
 	icon = 'icons/obj/hacktool.dmi'
@@ -175,3 +179,133 @@ var/global/raider_tick = 1
 		return
 	user << "<span class='notice'>This object will bring us approximately $[num2text(O.get_price(),9)]$</span>"
 	return
+
+/obj/effect/landmark/heist/item_spawner
+	name = "heist_equip_spawner"
+
+/obj/effect/landmark/heist/item_spawner/proc/spawn_items()
+	. = loc
+	var/obj/structure/closet/C = locate(/obj/structure/closet/syndicate) in loc
+	if(C)
+		. = C
+	return .
+
+/obj/effect/landmark/heist/item_spawner/closet_1/spawn_items(race_choice)
+	var/target = ..()
+
+	switch(race_choice)
+		//DLC content
+		//if("Skrell")
+		//if("Tajaran")
+		//if("Unathi")
+		//if("Diona")
+		if("Human")
+			for(var/i = 1 to 6)
+				new /obj/item/weapon/gun/projectile/automatic/a28/nonlethal(target)
+				new /obj/item/weapon/gun/projectile/automatic/silenced/nonlethal(target)
+			for(var/i = 1 to 12)
+				new /obj/item/ammo_box/magazine/m556/nonlethal(target)
+				new /obj/item/ammo_box/magazine/sm45/nonlethal(target)
+	qdel(src)
+
+/*
+/obj/effect/landmark/heist/item_spawner/closet_2/spawn_items(race_choice)
+	var/target = ..()
+
+	switch(race_choice)
+		if("Human")
+			*/
+
+/obj/effect/landmark/heist/item_spawner/closet_3/spawn_items(race_choice)
+	var/target = ..()
+
+	switch(race_choice)
+		if("Human")
+			for(var/i = 1 to 6)
+				new /obj/item/device/debugger(target)
+	qdel(src)
+
+/obj/effect/landmark/heist/item_spawner/closet_4/spawn_items(race_choice)
+	var/target = ..()
+
+	switch(race_choice)
+		if("Human")
+			for(var/i = 1 to 5)
+				new /obj/item/weapon/storage/box/smokegrenades(target)
+				new /obj/item/weapon/grenade/monsternade(target)
+	qdel(src)
+
+/obj/effect/landmark/heist/item_spawner/closet_5/spawn_items(race_choice)
+	var/target = ..()
+
+	switch(race_choice)
+		if("Human")
+			for(var/i = 1 to 10)
+				new /obj/item/seeds/kudzuseed(target)
+	qdel(src)
+
+/obj/effect/landmark/heist/item_spawner/table_1/spawn_items(race_choice)
+	var/target = ..()
+
+	switch(race_choice)
+		if("Human")
+			for(var/i = 1 to 4)
+				new /obj/item/weapon/storage/toolbox/syndicate(target)
+	qdel(src)
+
+/obj/effect/landmark/heist/item_spawner/table_2/spawn_items(race_choice)
+	var/target = ..()
+
+	switch(race_choice)
+		if("Human")
+			for(var/i = 1 to 4)
+				new /obj/item/weapon/storage/box/handcuffs(target)
+			for(var/i = 1 to 10)
+				new /obj/item/weapon/melee/baton(target)
+	qdel(src)
+
+/obj/effect/landmark/heist/item_spawner/table_3/spawn_items(race_choice)
+	var/target = ..()
+
+	switch(race_choice)
+		if("Human")
+			for(var/i = 1 to 4)
+				new /obj/item/weapon/storage/box/handcuffs(target)
+			for(var/i = 1 to 10)
+				new /obj/item/weapon/melee/baton(target)
+	qdel(src)
+
+/*
+/obj/effect/landmark/heist/item_spawner/table_4/spawn_items(race_choice)
+	var/target = ..()
+
+	switch(race_choice)
+		if("Human")
+	qdel(src)*/
+
+/obj/effect/landmark/heist/item_spawner/rig_rack/spawn_items(race_choice)
+	var/target = ..()
+
+	switch(race_choice)
+		if("Human")
+			for(var/i = 1 to 3) //2 + 1 spare per spawn.
+				new /obj/item/clothing/suit/space/globose/black/pirate(target)
+				new /obj/item/clothing/head/helmet/space/globose/black/pirate(target)
+				var/obj/O = new /obj/item/clothing/shoes/magboots/syndie(target)
+				O.name = "pirate stickboots"
+				O = new /obj/item/clothing/tie/storage/black_vest(target)
+				O.name = "pirate webbing vest"
+				new /obj/item/clothing/glasses/night(target)
+				new /obj/item/clothing/mask/breath(target)
+				new /obj/item/weapon/storage/belt/military(target)
+				new /obj/item/weapon/storage/backpack/santabag/pirate(target)
+	qdel(src)
+
+/obj/effect/landmark/heist/item_spawner/rack_4/spawn_items(race_choice)
+	var/target = ..()
+
+	switch(race_choice)
+		if("Human")
+			for(var/i = 1 to 10)
+				new /obj/item/weapon/tank/emergency_oxygen/double(target)
+	qdel(src)

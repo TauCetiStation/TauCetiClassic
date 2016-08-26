@@ -1,3 +1,6 @@
+/obj/effect/landmark/heist
+	icon_state = "x4"
+
 /obj/effect/landmark/heist/aurora //used to locate shuttle.
 	name = "Aurora"
 	icon_state = "x3"
@@ -17,9 +20,11 @@
 	name = "heist"
 	config_tag = "heist"
 	role_type = ROLE_RAIDER
+	restricted_jobs = list("Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain")
 	required_players = 15
 	required_players_secret = 15
 	required_enemies = 4
+	recommended_enemies = 4
 
 	votable = 0
 
@@ -38,13 +43,25 @@
 	if(!..())
 		return 0
 
-	var/raider_num = 0
+	switch(ticker.totalPlayersReady)
+		if(25 to 29)
+			recommended_enemies = 5
+		if(30 to INFINITY)
+			recommended_enemies = 6
 
-	//Check that we have enough vox.
+	for(var/datum/mind/player in antag_candidates)
+		for(var/job in restricted_jobs)
+			if(player.assigned_role == job)
+				antag_candidates -= player
+
+	var/raider_num = 0
+	//Check that we have enough antags.
 	if(antag_candidates.len < required_enemies)
 		return 0
+	else if(antag_candidates.len < recommended_enemies)
+		raider_num = antag_candidates.len
 	else
-		raider_num = required_enemies
+		raider_num = recommended_enemies
 
 	//Grab candidates randomly until we have enough.
 	while(raider_num > 0)
@@ -66,13 +83,16 @@
 	//Build a list of spawn points.
 	var/list/turf/raider_spawn = list()
 
+	//Humans only for now.
+	var/random_race_choice = "Human" //pick("Skrell", "Tajaran", "Unathi", "Diona", "Human")
+
 	for(var/obj/effect/landmark/L in landmarks_list)
 		if(L.name == "voxstart")
 			raider_spawn += get_turf(L)
 			qdel(L)
-			continue
-
-	var/random_race_choice = pick("Skrell", "Tajaran", "Unathi", "Diona", "Human")
+		else if(L.name == "heist_equip_spawner")
+			var/obj/effect/landmark/heist/item_spawner/IS = L //No need in istype() check, we know what's under this name.
+			IS.spawn_items(random_race_choice)
 
 	//Generate objectives for the group.
 	if(!config.objectives_disabled)
@@ -132,7 +152,7 @@
 				looter.f_style = "Shaved"
 		//for(var/datum/organ/external/limb in looter.organs)
 		//	limb.status &= ~(ORGAN_DESTROYED | ORGAN_ROBOT)
-		looter.equip_raider()
+		looter.equip_raider(random_race_choice)
 		looter.regenerate_icons()
 
 		raider.objectives = raid_objectives
@@ -173,17 +193,8 @@
 	return objs
 
 /datum/game_mode/heist/proc/greet_vox(var/datum/mind/raider)
-	var/msg = ""
 	raider.current << "<span class='info'><B>You are a <font color='red'>Pirate</font>....ARGH!</B></span>"
 	raider.current << "<span class='info'>Use :3 to guttertalk, :H to talk on your encrypted channel!</span>"
-	msg = "” вашего капитана имеетс€ fulton recovery pack! »спользуйте его, чтобы быстро доставить все что угодно на ваш корабль (если цель жива€ - попадет в комнату удержани€ на шаттле)."
-	raider.current << "[sanitize(msg)]"
-	msg = "Ќа вашем корабле лежат семена кудзу и эксклюзивные кубические гранаты! »спользуйте их на станции, чтобы се€ть хаос (осторожно, гранаты содержат агрессивную живность котора€ с удовольствием перекусит даже вами, а семена можно сажать пр€мо на пол станции)."
-	raider.current << "<span class='info'>[sanitize(msg)]</span>"
-	msg = "¬аша винтовка и пистолет модифицированы дл€ использовани€ специальных сверхзвуковых снар€дов нового поколени€, они не нанос€т вреда обычным живым существам но имеют огромную силу удара, что позвол€ет вывести из бо€ человека нацепившего на себ€ много брони, а синтетам и мехам наносит колоссальный вред."
-	raider.current << "[sanitize(msg)]"
-	msg = "Debugger который вы найдете на корабле - поможет вам со взломом APC и дверей. ”чтите что такой метод наносит вред программному обеспечению и в случае с дверьми - попросту сжигает плату. Ќе используйте его на двер€х с опущенными болтами, конечно если ваша цель не €вл€етс€ полностью заблокировать дверь."
-	raider.current << "<span class='info'>[sanitize(msg)]</span>"
 	var/obj_count = 1
 	if(!config.objectives_disabled)
 		for(var/datum/objective/objective in raider.objectives)
