@@ -935,14 +935,9 @@ table tr:first-child th:first-child { border: none;}
 	return output
 
 /obj/machinery/alarm/Topic(href, href_list)
-	if(..() || !( Adjacent(usr) || istype(usr, /mob/living/silicon)) ) // dont forget calling super in machine Topics -walter0o
-		usr.machine = null
-		usr << browse(null, "window=air_alarm")
-		usr << browse(null, "window=AAlarmwires")
+	. = ..()
+	if(!.) // dont forget calling super in machine Topics -walter0o
 		return
-
-	add_fingerprint(usr)
-	usr.set_machine(src)
 
 	// hrefs that can always be called -walter0o
 	if(href_list["rcon"])
@@ -956,7 +951,7 @@ table tr:first-child th:first-child { border: none;}
 			if(RCON_YES)
 				rcon_setting = RCON_YES
 			else
-				return
+				return FALSE
 
 	if(href_list["temperature"])
 		var/list/selected = TLV["temperature"]
@@ -967,12 +962,12 @@ table tr:first-child th:first-child { border: none;}
 			usr << "Temperature must be between [min_temperature]C and [max_temperature]C"
 		else
 			target_temperature = input_temperature + T0C
-	//Включение регулятора
+
 	if(href_list["allow_regulate"])
 		allow_regulate = !allow_regulate
 
 	// hrefs that need the AA unlocked -walter0o
-	if(!locked || istype(usr, /mob/living/silicon))
+	if(!locked || issilicon_allowed(usr))
 
 		if(href_list["command"])
 			var/device_id = href_list["id_tag"]
@@ -1001,9 +996,9 @@ table tr:first-child th:first-child { border: none;}
 					var/list/thresholds = list("lower bound", "low warning", "high warning", "upper bound")
 					var/newval = input("Enter [thresholds[threshold]] for [env]", "Alarm triggers", selected[threshold]) as null|num
 					if (isnull(newval) || ..())
-						return
+						return FALSE
 					if(ishuman(usr) && locked)
-						return
+						return FALSE
 					if (newval<0)
 						selected[threshold] = -1.0
 					else if (env=="temperature" && newval>5000)
@@ -1077,7 +1072,7 @@ table tr:first-child th:first-child { border: none;}
 			var/t1 = text2num(href_list["AAlarmwires"])
 			if (!( istype(usr.get_active_hand(), /obj/item/weapon/wirecutters) ))
 				usr << "You need wirecutters!"
-				return
+				return FALSE
 			if (isWireColorCut(t1))
 				mend(t1)
 			else
@@ -1086,16 +1081,16 @@ table tr:first-child th:first-child { border: none;}
 					usr << "<span class='notice'>You cut last of wires inside [src]</span>"
 					update_icon()
 					buildstage = 1
-				return
+				return FALSE
 
 		else if (href_list["pulse"])
 			var/t1 = text2num(href_list["pulse"])
 			if (!istype(usr.get_active_hand(), /obj/item/device/multitool))
 				usr << "You need a multitool!"
-				return
+				return FALSE
 			if (isWireColorCut(t1))
 				usr << "You can't pulse a cut wire."
-				return
+				return FALSE
 			else
 				pulse(t1)
 
@@ -1459,35 +1454,27 @@ FIRE ALARM
 	return
 
 /obj/machinery/firealarm/Topic(href, href_list)
-	..()
-	if (usr.stat || stat & (BROKEN|NOPOWER))
+	. = ..()
+	if(!.)
 		return
 
 	if (buildstage != 2)
-		return
+		return FALSE
 
-	if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon)))
-		usr.set_machine(src)
-		if (href_list["reset"])
-			src.reset()
-		else if (href_list["alarm"])
-			src.alarm()
-		else if (href_list["time"])
-			src.timing = text2num(href_list["time"])
-			last_process = world.timeofday
-			SSobj.processing |= src
-		else if (href_list["tp"])
-			var/tp = text2num(href_list["tp"])
-			src.time += tp
-			src.time = min(max(round(src.time), 0), 120)
+	if (href_list["reset"])
+		src.reset()
+	else if (href_list["alarm"])
+		src.alarm()
+	else if (href_list["time"])
+		src.timing = text2num(href_list["time"])
+		last_process = world.timeofday
+		SSobj.processing |= src
+	else if (href_list["tp"])
+		var/tp = text2num(href_list["tp"])
+		src.time += tp
+		src.time = min(max(round(src.time), 0), 120)
 
-		src.updateUsrDialog()
-
-		src.add_fingerprint(usr)
-	else
-		usr << browse(null, "window=firealarm")
-		return
-	return
+	src.updateUsrDialog()
 
 /obj/machinery/firealarm/proc/reset()
 	if (!( src.working ))
@@ -1677,28 +1664,20 @@ Code shamelessly copied from apc_frame
 	return
 
 /obj/machinery/partyalarm/Topic(href, href_list)
-	..()
-	if (usr.stat || stat & (BROKEN|NOPOWER))
+	. = ..()
+	if(!.)
 		return
-	if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && istype(loc, /turf))) || (istype(usr, /mob/living/silicon/ai)))
-		usr.machine = src
-		if (href_list["reset"])
-			reset()
-		else
-			if (href_list["alarm"])
-				alarm()
-			else
-				if (href_list["time"])
-					timing = text2num(href_list["time"])
-				else
-					if (href_list["tp"])
-						var/tp = text2num(href_list["tp"])
-						time += tp
-						time = min(max(round(time), 0), 120)
-		updateUsrDialog()
-
-		add_fingerprint(usr)
+	if (href_list["reset"])
+		reset()
 	else
-		usr << browse(null, "window=partyalarm")
-		return
-	return
+		if (href_list["alarm"])
+			alarm()
+		else
+			if (href_list["time"])
+				timing = text2num(href_list["time"])
+			else
+				if (href_list["tp"])
+					var/tp = text2num(href_list["tp"])
+					time += tp
+					time = min(max(round(time), 0), 120)
+	updateUsrDialog()

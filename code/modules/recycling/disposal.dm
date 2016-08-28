@@ -293,7 +293,7 @@
 
 	var/per
 	if(need_env_pressure)
-		per = 100* air_contents.return_pressure() / (SEND_PRESSURE)
+		per = 100 * air_contents.return_pressure() / (SEND_PRESSURE)
 
 	dat += "Pressure: [need_env_pressure ? round(per, 1):"100"]%<BR></body>"
 
@@ -304,47 +304,45 @@
 
 // handle machine interaction
 
+/obj/machinery/disposal/is_operational_topic()
+	return !(stat & BROKEN)
+
 /obj/machinery/disposal/Topic(href, href_list)
+	if(href_list["close"])
+		usr.unset_machine(src)
+		usr << browse(null, "window=disposal")
+		return FALSE
+
+	. = ..()
+	if(!.)
+		return
+
 	if(usr.loc == src)
 		usr << "<span class='red'>You cannot reach the controls from inside.</span>"
-		return
+		return FALSE
 
-	if(mode==-1 && !href_list["eject"]) // only allow ejecting if mode is -1
+	if(mode == -1 && !href_list["eject"]) // only allow ejecting if mode is -1
 		usr << "<span class='red'>The disposal units power is disabled.</span>"
-		return
-	..()
-	src.add_fingerprint(usr)
-	if(stat & BROKEN)
-		return
-	if(usr.stat || usr.restrained() || src.flushing)
-		return
+		return FALSE
 
-	if (in_range(src, usr) && istype(src.loc, /turf))
-		usr.set_machine(src)
+	if(src.flushing)
+		return FALSE
 
-		if(href_list["close"])
-			usr.unset_machine()
-			usr << browse(null, "window=disposal")
-			return
+	if(href_list["pump"])
+		if(text2num(href_list["pump"]))
+			mode = 1
+		else
+			mode = 0
+		update()
 
-		if(href_list["pump"])
-			if(text2num(href_list["pump"]))
-				mode = 1
-			else
-				mode = 0
-			update()
+	if(href_list["handle"])
+		flush = text2num(href_list["handle"])
+		update()
 
-		if(href_list["handle"])
-			flush = text2num(href_list["handle"])
-			update()
+	if(href_list["eject"])
+		eject()
 
-		if(href_list["eject"])
-			eject()
-	else
-		usr << browse(null, "window=disposal")
-		usr.unset_machine()
-		return
-	return
+	updateUsrDialog()
 
 // eject the contents of the disposal unit
 /obj/machinery/disposal/proc/eject()

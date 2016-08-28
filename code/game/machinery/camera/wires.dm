@@ -134,32 +134,35 @@
 
 
 /obj/machinery/camera/Topic(href, href_list)
-	..()
-	if (in_range(src, usr) && istype(src.loc, /turf))
-		usr.set_machine(src)
-		if (href_list["wires"])
-			var/t1 = text2num(href_list["wires"])
-			if (!( istype(usr.get_active_hand(), /obj/item/weapon/wirecutters) ))
-				usr << "You need wirecutters!"
-				return
-			if (src.isWireColorCut(t1))
-				src.mend(t1)
-			else
-				src.cut(t1)
-		else if (href_list["pulse"])
-			var/t1 = text2num(href_list["pulse"])
-			if (!istype(usr.get_active_hand(), /obj/item/device/multitool))
-				usr << "You need a multitool!"
-				return
-			if (src.isWireColorCut(t1))
-				usr << "You can't pulse a cut wire."
-				return
-			else
-				src.pulse(t1)
-		else if (href_list["close2"])
-			usr << browse(null, "window=wires")
-			usr.unset_machine()
-			return
+	. = ..()
+	if(!.)
+		return
+
+	if (href_list["wires"])
+		var/t1 = text2num(href_list["wires"])
+		if (!( istype(usr.get_active_hand(), /obj/item/weapon/wirecutters) ))
+			usr << "You need wirecutters!"
+			return FALSE
+		if (src.isWireColorCut(t1))
+			src.mend(t1)
+		else
+			src.cut(t1)
+	else if (href_list["pulse"])
+		var/t1 = text2num(href_list["pulse"])
+		if (!istype(usr.get_active_hand(), /obj/item/device/multitool))
+			usr << "You need a multitool!"
+			return FALSE
+		if (src.isWireColorCut(t1))
+			usr << "You can't pulse a cut wire."
+			return FALSE
+		else
+			src.pulse(t1)
+	else if (href_list["close2"])
+		usr << browse(null, "window=wires")
+		usr.unset_machine(src)
+		return FALSE
+
+	updateUsrDialog()
 
 
 #undef CAMERA_WIRE_FOCUS

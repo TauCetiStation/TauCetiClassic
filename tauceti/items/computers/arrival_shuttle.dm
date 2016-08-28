@@ -245,14 +245,11 @@ var/lastMove = 0
 	user << browse("[dat]", "window=researchshuttle;size=200x100")
 
 /obj/machinery/computer/arrival_shuttle/Topic(href, href_list)
-	if(..())
+	. = ..()
+	if(!.)
 		return
-	usr.machine = src
-	src.add_fingerprint(usr)
+
 	if(href_list["move"])
-		if(!in_range(src, usr))
-			usr << "\red Too far."
-			return
 		if (!moving)
 			usr << "\blue Shuttle recieved message and will be sent shortly."
 			arrival_shuttle_move()
@@ -271,14 +268,11 @@ var/lastMove = 0
 	user << browse("[dat1]", "window=researchshuttle;size=200x100")
 
 /obj/machinery/computer/arrival_shuttle/dock/Topic(href, href_list)
-	if(..())
+	. = ..()
+	if(!.)
 		return
-	usr.machine = src
-	src.add_fingerprint(usr)
+
 	if(href_list["back"])
-		if(!in_range(src, usr))
-			usr << "\red Too far."
-			return
 		if (!moving && location == 2)
 			usr << "\blue Shuttle recieved message and will be sent shortly."
 			arrival_shuttle_move()

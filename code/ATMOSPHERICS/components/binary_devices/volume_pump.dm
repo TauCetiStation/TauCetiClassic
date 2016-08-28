@@ -150,16 +150,16 @@ Thus, the two variables affect pump operation are set in New():
 	return
 
 /obj/machinery/atmospherics/binary/volume_pump/Topic(href,href_list)
-	if(..()) return
+	. = ..()
+	if(!.)
+		return
 	if(href_list["power"])
 		on = !on
-	if(href_list["set_transfer_rate"])
+	else if(href_list["set_transfer_rate"])
 		var/new_transfer_rate = input(usr,"Enter new output volume (0-200l/s)","Flow control",src.transfer_rate) as num
 		src.transfer_rate = max(0, min(200, new_transfer_rate))
-	usr.set_machine(src)
 	src.update_icon()
 	src.updateUsrDialog()
-	return
 
 /obj/machinery/atmospherics/binary/volume_pump/power_change()
 	..()

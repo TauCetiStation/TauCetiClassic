@@ -105,13 +105,14 @@
 	return
 
 /obj/machinery/mineral/processing_unit_console/Topic(href, href_list)
-	if(..())
+	. = ..()
+	if(!.)
 		return
-	usr.set_machine(src)
-	src.add_fingerprint(usr)
+
 	if(href_list["toggle_smelting"])
 		var/choice = input("What setting do you wish to use for processing [href_list["toggle_smelting"]]?") as null|anything in list("Smelting","Compressing","Alloying","Drop","Nothing")
-		if(!choice) return
+		if(!choice)
+			return FALSE
 		switch(choice)
 			if("Nothing") choice = 0
 			if("Smelting") choice = 1
@@ -134,14 +135,14 @@
 		var/obj/item/weapon/card/id/I = usr.get_active_hand()
 		if(istype(I))
 			if(!usr.drop_item())
-				return
+				return FALSE
 			I.loc = src
 			inserted_id = I
 		else usr << "<span class='warning'>No valid ID.</span>"
 	if(href_list["show_values"])
 		show_value_list = !show_value_list
+
 	src.updateUsrDialog()
-	return
 
 /obj/machinery/mineral/processing_unit_console/proc/get_ore_values()
 	var/dat = "<table border='0' width='300'>"

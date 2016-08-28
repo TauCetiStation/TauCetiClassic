@@ -120,38 +120,39 @@
 			update_icon()
 
 /obj/machinery/disease2/isolator/Topic(href, href_list)
-	if (..()) return 0
-
 	var/mob/user = usr
 	var/datum/nanoui/ui = nanomanager.get_open_ui(user, src, "main")
 
-	src.add_fingerprint(user)
-
 	if (href_list["close"])
-		user.unset_machine()
+		user.unset_machine(src)
 		ui.close()
-		return 0
+		return FALSE
+
+	. = ..()
+	if(!.)
+		return
 
 	if (href_list[HOME])
 		state = HOME
-		return 1
+		return TRUE
 
 	if (href_list[LIST])
 		state = LIST
-		return 1
+		return TRUE
 
 	if (href_list[ENTRY])
 		if (istype(locate(href_list["view"]), /datum/data/record))
 			entry = locate(href_list["view"])
 
 		state = ENTRY
-		return 1
+		return TRUE
 
 	if (href_list["print"])
 		print(user)
-		return 1
+		return TRUE
 
-	if(!sample) return 1
+	if (!sample)
+		return TRUE
 
 	if (href_list["isolate"])
 		var/datum/disease2/disease/V = locate(href_list["isolate"])
@@ -159,13 +160,13 @@
 			virus2 = V
 			isolating = 20
 			update_icon()
-		return 1
+		return TRUE
 
 	if (href_list["eject"])
 		sample.loc = src.loc
 		sample = null
 		update_icon()
-		return 1
+		return TRUE
 
 /obj/machinery/disease2/isolator/proc/print(var/mob/user)
 	var/obj/item/weapon/paper/P = new /obj/item/weapon/paper(loc)

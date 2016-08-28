@@ -57,6 +57,12 @@
 	icon_state = "meson"
 	icon = 'icons/obj/clothing/glasses.dmi'
 
+/obj/item/borg/sight/night
+	name = "\proper night vision"
+	sight_mode = BORGNIGHT
+	icon_state = "night"
+	icon = 'icons/obj/clothing/glasses.dmi'
+
 /obj/item/borg/sight/hud
 	name = "hud"
 	var/obj/item/clothing/glasses/hud/hud = null

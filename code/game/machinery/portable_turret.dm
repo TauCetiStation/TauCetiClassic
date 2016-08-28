@@ -232,18 +232,16 @@ Status: []<BR>"},
 	return
 
 /obj/machinery/porta_turret/Topic(href, href_list)
-	if (..())
+	. = ..()
+	if(!.)
 		return
-	usr.set_machine(src)
-	src.add_fingerprint(usr)
+
 	if ((href_list["power"]) && (src.allowed(usr)))
 		if(anchored) // you can't turn a turret on/off if it's not anchored/secured
 			on = !on // toggle on/off
 		else
 			usr << "\red It has to be secured first!"
-
-		updateUsrDialog()
-		return
+			return FALSE
 
 	switch(href_list["operation"])
 		// toggles customizable behavioural protocols
@@ -970,11 +968,11 @@ Status: []<BR>"},
 	return
 
 /obj/machinery/porta_turret_cover/Topic(href, href_list)
-	if (..())
+	. = ..()
+	if(!.)
 		return
-	usr.set_machine(src)
+
 	Parent_Turret.add_fingerprint(usr)
-	src.add_fingerprint(usr)
 	if ((href_list["power"]) && (Parent_Turret.allowed(usr)))
 		if(Parent_Turret.anchored)
 			if (Parent_Turret.on)
@@ -983,9 +981,7 @@ Status: []<BR>"},
 				Parent_Turret.on=1
 		else
 			usr << "\red It has to be secured first!"
-
-		updateUsrDialog()
-		return
+			return FALSE
 
 	switch(href_list["operation"])
 		if ("authweapon")

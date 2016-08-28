@@ -110,9 +110,18 @@
 	user << browse(dat, "window=suspension;size=500x400")
 	onclose(user, "suspension")
 
+/obj/machinery/suspension_gen/is_operational_topic()
+	return TRUE
+
 /obj/machinery/suspension_gen/Topic(href, href_list)
-	..()
-	usr.set_machine(src)
+	if(href_list["close"])
+		usr.unset_machine()
+		usr << browse(null, "window=suspension")
+		return FALSE
+
+	. = ..()
+	if(!.)
+		return
 
 	if(href_list["toggle_field"])
 		if(!suspension_field)
@@ -147,9 +156,6 @@
 				auth_card = null
 	else if(href_list["lock"])
 		locked = 1
-	else if(href_list["close"])
-		usr.unset_machine()
-		usr << browse(null, "window=suspension")
 
 	updateUsrDialog()
 

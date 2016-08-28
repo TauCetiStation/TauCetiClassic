@@ -140,10 +140,10 @@
 	return
 
 /obj/machinery/bot/medbot/Topic(href, href_list)
-	if(..())
+	. = ..()
+	if(!.)
 		return
-	usr.set_machine(src)
-	src.add_fingerprint(usr)
+
 	if ((href_list["power"]) && (src.allowed(usr)))
 		if (src.on)
 			turn_off()
@@ -183,7 +183,6 @@
 		src.declare_treatment = !src.declare_treatment
 
 	src.updateUsrDialog()
-	return
 
 /obj/machinery/bot/medbot/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))

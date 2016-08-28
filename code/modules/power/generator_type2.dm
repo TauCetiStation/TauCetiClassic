@@ -101,7 +101,7 @@
 
 /obj/machinery/power/generator_type2/interact(mob/user)
 	if ( (get_dist(src, user) > 1 ) && (!istype(user, /mob/living/silicon/ai)))
-		user.unset_machine()
+		user.unset_machine(src)
 		user << browse(null, "window=teg")
 		return
 
@@ -128,15 +128,16 @@
 
 
 /obj/machinery/power/generator_type2/Topic(href, href_list)
-	..()
+	. = ..()
+	if(!.)
+		return
 
 	if( href_list["close"] )
 		usr << browse(null, "window=teg")
 		usr.unset_machine()
-		return 0
+		return FALSE
 
-	return 1
-
+	updateUsrDialog()
 
 /obj/machinery/power/generator_type2/power_change()
 	..()

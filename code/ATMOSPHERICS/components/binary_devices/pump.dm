@@ -161,16 +161,16 @@ Thus, the two variables affect pump operation are set in New():
 	return
 
 /obj/machinery/atmospherics/binary/pump/Topic(href,href_list)
-	if(..()) return
+	. = ..()
+	if(!.)
+		return
 	if(href_list["power"])
 		on = !on
-	if(href_list["set_press"])
+	else if(href_list["set_press"])
 		var/new_pressure = input(usr,"Enter new output pressure (0-4500kPa)","Pressure control",src.target_pressure) as num
 		src.target_pressure = max(0, min(4500, new_pressure))
-	usr.set_machine(src)
 	src.update_icon()
 	src.updateUsrDialog()
-	return
 
 /obj/machinery/atmospherics/binary/pump/power_change()
 	..()

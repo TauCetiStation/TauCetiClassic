@@ -172,14 +172,23 @@ var/list/ingredients_source = list(
 				user << "<span class='notice'>You require milk and ice to make vanilla icecream.</span>"
 	updateDialog()
 
+/obj/machinery/icecream_vat/is_operational_topic()
+	return TRUE
+
 /obj/machinery/icecream_vat/Topic(href, href_list)
-	if(..())
+	if(href_list["close"])
+		usr.unset_machine(src)
+		usr << browse(null,"window=icecreamvat")
+		return FALSE
+
+	. = ..()
+	if(!.)
 		return
+
 	if(href_list["dispense"])
 		dispense_flavour = text2num(href_list["dispense"])
 		src.visible_message("\blue[usr] sets [src] to dispense [get_icecream_flavour_string(dispense_flavour)] flavoured icecream.")
-
-	if(href_list["cone"])
+	else if(href_list["cone"])
 		var/dispense_cone = text2num(href_list["cone"])
 		if(ingredients[dispense_cone] <= ingredients.len)
 			var/cone_name = get_icecream_flavour_string(dispense_cone)
@@ -192,25 +201,14 @@ var/list/ingredients_source = list(
 				src.visible_message("<span class='info'>[usr] dispenses a crunchy [cone_name] cone from [src].</span>")
 			else
 				usr << "<span class='warning'>There are no [cone_name] cones left!</span>"
-		updateDialog()
-
-	if(href_list["make"])
+	else if(href_list["make"])
 		make( usr, text2num(href_list["make"]) )
-		updateDialog()
-
-	if(href_list["eject"])
+	else if(href_list["eject"])
 		if(held_container)
 			held_container.loc = src.loc
 			held_container = null
-		updateDialog()
 
-	if(href_list["refresh"])
-		updateDialog()
-
-	if(href_list["close"])
-		usr.unset_machine()
-		usr << browse(null,"window=icecreamvat")
-	return
+	updateDialog()
 
 /obj/item/weapon/reagent_containers/food/snacks/icecream
 	name = "ice cream cone"

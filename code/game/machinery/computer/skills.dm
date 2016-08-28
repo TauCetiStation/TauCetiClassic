@@ -155,241 +155,240 @@
 I can't be bothered to look more of the actual code outside of switch but that probably needs revising too.
 What a mess.*/
 /obj/machinery/computer/skills/Topic(href, href_list)
-	if(..())
+	. = ..()
+	if(!.)
 		return
+
 	if (!( data_core.general.Find(active1) ))
 		active1 = null
-	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(loc, /turf))) || (istype(usr, /mob/living/silicon)))
-		usr.set_machine(src)
-		switch(href_list["choice"])
+
+	switch(href_list["choice"])
 // SORTING!
-			if("Sorting")
-				// Reverse the order if clicked twice
-				if(sortBy == href_list["sort"])
-					if(order == 1)
-						order = -1
-					else
-						order = 1
+		if("Sorting")
+			// Reverse the order if clicked twice
+			if(sortBy == href_list["sort"])
+				if(order == 1)
+					order = -1
 				else
-				// New sorting order!
-					sortBy = href_list["sort"]
-					order = initial(order)
+					order = 1
+			else
+			// New sorting order!
+				sortBy = href_list["sort"]
+				order = initial(order)
 //BASIC FUNCTIONS
-			if("Clear Screen")
-				temp = null
+		if("Clear Screen")
+			temp = null
 
-			if ("Return")
-				screen = 1
-				active1 = null
+		if ("Return")
+			screen = 1
+			active1 = null
 
-			if("Confirm Identity")
-				if (scan)
-					if(istype(usr,/mob/living/carbon/human) && !usr.get_active_hand())
-						usr.put_in_hands(scan)
-					else
-						scan.loc = get_turf(src)
-					scan = null
+		if("Confirm Identity")
+			if (scan)
+				if(istype(usr,/mob/living/carbon/human) && !usr.get_active_hand())
+					usr.put_in_hands(scan)
 				else
-					var/obj/item/I = usr.get_active_hand()
-					if (istype(I, /obj/item/weapon/card/id))
-						usr.drop_item()
-						I.loc = src
-						scan = I
+					scan.loc = get_turf(src)
+				scan = null
+			else
+				var/obj/item/I = usr.get_active_hand()
+				if (istype(I, /obj/item/weapon/card/id))
+					usr.drop_item()
+					I.loc = src
+					scan = I
 
-			if("Log Out")
-				authenticated = null
-				screen = null
+		if("Log Out")
+			authenticated = null
+			screen = null
+			active1 = null
+
+		if("Log In")
+			if (istype(usr, /mob/living/silicon/ai))
+				src.active1 = null
+				src.authenticated = usr.name
+				src.rank = "AI"
+				src.screen = 1
+			else if (istype(usr, /mob/living/silicon/robot))
+				src.active1 = null
+				src.authenticated = usr.name
+				var/mob/living/silicon/robot/R = usr
+				src.rank = R.braintype
+				src.screen = 1
+			else if (istype(scan, /obj/item/weapon/card/id))
 				active1 = null
-
-			if("Log In")
-				if (istype(usr, /mob/living/silicon/ai))
-					src.active1 = null
-					src.authenticated = usr.name
-					src.rank = "AI"
-					src.screen = 1
-				else if (istype(usr, /mob/living/silicon/robot))
-					src.active1 = null
-					src.authenticated = usr.name
-					var/mob/living/silicon/robot/R = usr
-					src.rank = R.braintype
-					src.screen = 1
-				else if (istype(scan, /obj/item/weapon/card/id))
-					active1 = null
-					if(check_access(scan))
-						authenticated = scan.registered_name
-						rank = scan.assignment
-						screen = 1
+				if(check_access(scan))
+					authenticated = scan.registered_name
+					rank = scan.assignment
+					screen = 1
 //RECORD FUNCTIONS
-			if("Search Records")
-				var/t1 = input("Search String: (Partial Name or ID or Fingerprints or Rank)", "Secure. records", null, null)  as text
-				if ((!( t1 ) || usr.stat || !( authenticated ) || usr.restrained() || !in_range(src, usr)))
-					return
-				Perp = new/list()
-				t1 = lowertext(t1)
-				var/list/components = splittext(t1, " ")
-				if(components.len > 5)
-					return //Lets not let them search too greedily.
-				for(var/datum/data/record/R in data_core.general)
-					var/temptext = R.fields["name"] + " " + R.fields["id"] + " " + R.fields["fingerprint"] + " " + R.fields["rank"]
-					for(var/i = 1, i<=components.len, i++)
-						if(findtext(temptext,components[i]))
-							var/prelist = new/list(2)
-							prelist[1] = R
-							Perp += prelist
-				for(var/i = 1, i<=Perp.len, i+=2)
-					for(var/datum/data/record/E in data_core.security)
-						var/datum/data/record/R = Perp[i]
-						if ((E.fields["name"] == R.fields["name"] && E.fields["id"] == R.fields["id"]))
-							Perp[i+1] = E
-				tempname = t1
-				screen = 4
+		if("Search Records")
+			var/t1 = input("Search String: (Partial Name or ID or Fingerprints or Rank)", "Secure. records", null, null)  as text
+			if ((!( t1 ) || usr.stat || !( authenticated ) || usr.restrained() || !in_range(src, usr)))
+				return FALSE
+			Perp = new/list()
+			t1 = lowertext(t1)
+			var/list/components = splittext(t1, " ")
+			if(components.len > 5)
+				return //Lets not let them search too greedily.
+			for(var/datum/data/record/R in data_core.general)
+				var/temptext = R.fields["name"] + " " + R.fields["id"] + " " + R.fields["fingerprint"] + " " + R.fields["rank"]
+				for(var/i = 1, i<=components.len, i++)
+					if(findtext(temptext,components[i]))
+						var/prelist = new/list(2)
+						prelist[1] = R
+						Perp += prelist
+			for(var/i = 1, i<=Perp.len, i+=2)
+				for(var/datum/data/record/E in data_core.security)
+					var/datum/data/record/R = Perp[i]
+					if ((E.fields["name"] == R.fields["name"] && E.fields["id"] == R.fields["id"]))
+						Perp[i+1] = E
+			tempname = t1
+			screen = 4
 
-			if("Record Maintenance")
-				screen = 2
-				active1 = null
+		if("Record Maintenance")
+			screen = 2
+			active1 = null
 
-			if ("Browse Record")
-				var/datum/data/record/R = locate(href_list["d_rec"])
-				if (!( data_core.general.Find(R) ))
-					temp = "Record Not Found!"
-				else
-					for(var/datum/data/record/E in data_core.security)
-					active1 = R
-					screen = 3
+		if ("Browse Record")
+			var/datum/data/record/R = locate(href_list["d_rec"])
+			if (!( data_core.general.Find(R) ))
+				temp = "Record Not Found!"
+			else
+				for(var/datum/data/record/E in data_core.security)
+				active1 = R
+				screen = 3
 
 /*			if ("Search Fingerprints")
-				var/t1 = input("Search String: (Fingerprint)", "Secure. records", null, null)  as text
-				if ((!( t1 ) || usr.stat || !( authenticated ) || usr.restrained() || (!in_range(src, usr)) && (!istype(usr, /mob/living/silicon))))
-					return
-				active1 = null
-				t1 = lowertext(t1)
-				for(var/datum/data/record/R in data_core.general)
-					if (lowertext(R.fields["fingerprint"]) == t1)
-						active1 = R
-				if (!( active1 ))
-					temp = text("Could not locate record [].", t1)
+			var/t1 = input("Search String: (Fingerprint)", "Secure. records", null, null)  as text
+			if ((!( t1 ) || usr.stat || !( authenticated ) || usr.restrained() || (!in_range(src, usr)) && (!istype(usr, /mob/living/silicon))))
+				return
+			active1 = null
+			t1 = lowertext(t1)
+			for(var/datum/data/record/R in data_core.general)
+				if (lowertext(R.fields["fingerprint"]) == t1)
+					active1 = R
+			if (!( active1 ))
+				temp = text("Could not locate record [].", t1)
+			else
+				for(var/datum/data/record/E in data_core.security)
+					if ((E.fields["name"] == active1.fields["name"] || E.fields["id"] == active1.fields["id"]))
+				screen = 3	*/
+
+		if ("Print Record")
+			if (!( printing ))
+				printing = 1
+				sleep(50)
+				var/obj/item/weapon/paper/P = new /obj/item/weapon/paper( loc )
+				P.info = "<CENTER><B>Employment Record</B></CENTER><BR>"
+				if ((istype(active1, /datum/data/record) && data_core.general.Find(active1)))
+					P.info += text("Name: [] ID: []<BR>\nSex: []<BR>\nAge: []<BR>\nFingerprint: []<BR>\nPhysical Status: []<BR>\nMental Status: []<BR>\nEmployment/Skills Summary:<BR>\n[]<BR>", active1.fields["name"], active1.fields["id"], active1.fields["sex"], active1.fields["age"], active1.fields["fingerprint"], active1.fields["p_stat"], active1.fields["m_stat"], decode(active1.fields["notes"]))
 				else
-					for(var/datum/data/record/E in data_core.security)
-						if ((E.fields["name"] == active1.fields["name"] || E.fields["id"] == active1.fields["id"]))
-					screen = 3	*/
-
-			if ("Print Record")
-				if (!( printing ))
-					printing = 1
-					sleep(50)
-					var/obj/item/weapon/paper/P = new /obj/item/weapon/paper( loc )
-					P.info = "<CENTER><B>Employment Record</B></CENTER><BR>"
-					if ((istype(active1, /datum/data/record) && data_core.general.Find(active1)))
-						P.info += text("Name: [] ID: []<BR>\nSex: []<BR>\nAge: []<BR>\nFingerprint: []<BR>\nPhysical Status: []<BR>\nMental Status: []<BR>\nEmployment/Skills Summary:<BR>\n[]<BR>", active1.fields["name"], active1.fields["id"], active1.fields["sex"], active1.fields["age"], active1.fields["fingerprint"], active1.fields["p_stat"], active1.fields["m_stat"], decode(active1.fields["notes"]))
-					else
-						P.info += "<B>General Record Lost!</B><BR>"
-					P.info += "</TT>"
-					P.name = "Employment Record ([active1.fields["name"]])"
-					printing = null
+					P.info += "<B>General Record Lost!</B><BR>"
+				P.info += "</TT>"
+				P.name = "Employment Record ([active1.fields["name"]])"
+				printing = null
 //RECORD DELETE
-			if ("Delete All Records")
-				temp = ""
-				temp += "Are you sure you wish to delete all Employment records?<br>"
-				temp += "<a href='?src=\ref[src];choice=Purge All Records'>Yes</a><br>"
+		if ("Delete All Records")
+			temp = ""
+			temp += "Are you sure you wish to delete all Employment records?<br>"
+			temp += "<a href='?src=\ref[src];choice=Purge All Records'>Yes</a><br>"
+			temp += "<a href='?src=\ref[src];choice=Clear Screen'>No</a>"
+
+		if ("Purge All Records")
+			if(PDA_Manifest.len)
+				PDA_Manifest.Cut()
+			for(var/datum/data/record/R in data_core.security)
+				qdel(R)
+			temp = "All Employment records deleted."
+
+		if ("Delete Record (ALL)")
+			if (active1)
+				temp = "<h5>Are you sure you wish to delete the record (ALL)?</h5>"
+				temp += "<a href='?src=\ref[src];choice=Delete Record (ALL) Execute'>Yes</a><br>"
 				temp += "<a href='?src=\ref[src];choice=Clear Screen'>No</a>"
-
-			if ("Purge All Records")
-				if(PDA_Manifest.len)
-					PDA_Manifest.Cut()
-				for(var/datum/data/record/R in data_core.security)
-					qdel(R)
-				temp = "All Employment records deleted."
-
-			if ("Delete Record (ALL)")
-				if (active1)
-					temp = "<h5>Are you sure you wish to delete the record (ALL)?</h5>"
-					temp += "<a href='?src=\ref[src];choice=Delete Record (ALL) Execute'>Yes</a><br>"
-					temp += "<a href='?src=\ref[src];choice=Clear Screen'>No</a>"
 //RECORD CREATE
-			if ("New Record (General)")
-				if(PDA_Manifest.len)
-					PDA_Manifest.Cut()
-				active1 = CreateGeneralRecord()
+		if ("New Record (General)")
+			if(PDA_Manifest.len)
+				PDA_Manifest.Cut()
+			active1 = CreateGeneralRecord()
 
 //FIELD FUNCTIONS
-			if ("Edit Field")
-				var/a1 = active1
-				switch(href_list["field"])
-					if("name")
-						if (istype(active1, /datum/data/record))
-							var/t1 = copytext(input("Please input name:", "Secure. records", active1.fields["name"], null)  as text, 1, MAX_NAME_LEN)
-							if ((!( t1 ) || !length(trim(t1)) || !( authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!istype(usr, /mob/living/silicon)))) || active1 != a1)
-								return
-							active1.fields["name"] = t1
-					if("id")
-						if (istype(active1, /datum/data/record))
-							var/t1 = sanitize(copytext(input("Please input id:", "Secure. records", active1.fields["id"], null)  as text,1,MAX_MESSAGE_LEN))
-							if ((!( t1 ) || !( authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!istype(usr, /mob/living/silicon))) || active1 != a1))
-								return
-							active1.fields["id"] = t1
-					if("fingerprint")
-						if (istype(active1, /datum/data/record))
-							var/t1 = sanitize(copytext(input("Please input fingerprint hash:", "Secure. records", active1.fields["fingerprint"], null)  as text,1,MAX_MESSAGE_LEN))
-							if ((!( t1 ) || !( authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!istype(usr, /mob/living/silicon))) || active1 != a1))
-								return
-							active1.fields["fingerprint"] = t1
-					if("sex")
-						if (istype(active1, /datum/data/record))
-							if (active1.fields["sex"] == "Male")
-								active1.fields["sex"] = "Female"
-							else
-								active1.fields["sex"] = "Male"
-					if("age")
-						if (istype(active1, /datum/data/record))
-							var/t1 = input("Please input age:", "Secure. records", active1.fields["age"], null)  as num
-							if ((!( t1 ) || !( authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!istype(usr, /mob/living/silicon))) || active1 != a1))
-								return
-							active1.fields["age"] = t1
-					if("rank")
-						var/list/L = list( "Head of Personnel", "Captain", "AI" )
-						//This was so silly before the change. Now it actually works without beating your head against the keyboard. /N
-						if ((istype(active1, /datum/data/record) && L.Find(rank)))
-							temp = "<h5>Rank:</h5>"
-							temp += "<ul>"
-							for(var/rank in joblist)
-								temp += "<li><a href='?src=\ref[src];choice=Change Rank;rank=[rank]'>[rank]</a></li>"
-							temp += "</ul>"
+		if ("Edit Field")
+			var/a1 = active1
+			switch(href_list["field"])
+				if("name")
+					if (istype(active1, /datum/data/record))
+						var/t1 = copytext(input("Please input name:", "Secure. records", active1.fields["name"], null)  as text, 1, MAX_NAME_LEN)
+						if ((!( t1 ) || !length(trim(t1)) || !( authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!istype(usr, /mob/living/silicon)))) || active1 != a1)
+							return FALSE
+						active1.fields["name"] = t1
+				if("id")
+					if (istype(active1, /datum/data/record))
+						var/t1 = sanitize(copytext(input("Please input id:", "Secure. records", active1.fields["id"], null)  as text,1,MAX_MESSAGE_LEN))
+						if ((!( t1 ) || !( authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!istype(usr, /mob/living/silicon))) || active1 != a1))
+							return FALSE
+						active1.fields["id"] = t1
+				if("fingerprint")
+					if (istype(active1, /datum/data/record))
+						var/t1 = sanitize(copytext(input("Please input fingerprint hash:", "Secure. records", active1.fields["fingerprint"], null)  as text,1,MAX_MESSAGE_LEN))
+						if ((!( t1 ) || !( authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!istype(usr, /mob/living/silicon))) || active1 != a1))
+							return FALSE
+						active1.fields["fingerprint"] = t1
+				if("sex")
+					if (istype(active1, /datum/data/record))
+						if (active1.fields["sex"] == "Male")
+							active1.fields["sex"] = "Female"
 						else
-							alert(usr, "You do not have the required rank to do this!")
-					if("species")
-						if (istype(active1, /datum/data/record))
-							var/t1 = sanitize(copytext(input("Please enter race:", "General records", active1.fields["species"], null)  as message,1,MAX_MESSAGE_LEN))
-							if ((!( t1 ) || !( authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!istype(usr, /mob/living/silicon))) || active1 != a1))
-								return
-							active1.fields["species"] = t1
+							active1.fields["sex"] = "Male"
+				if("age")
+					if (istype(active1, /datum/data/record))
+						var/t1 = input("Please input age:", "Secure. records", active1.fields["age"], null)  as num
+						if ((!( t1 ) || !( authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!istype(usr, /mob/living/silicon))) || active1 != a1))
+							return FALSE
+						active1.fields["age"] = t1
+				if("rank")
+					var/list/L = list( "Head of Personnel", "Captain", "AI" )
+					//This was so silly before the change. Now it actually works without beating your head against the keyboard. /N
+					if ((istype(active1, /datum/data/record) && L.Find(rank)))
+						temp = "<h5>Rank:</h5>"
+						temp += "<ul>"
+						for(var/rank in joblist)
+							temp += "<li><a href='?src=\ref[src];choice=Change Rank;rank=[rank]'>[rank]</a></li>"
+						temp += "</ul>"
+					else
+						alert(usr, "You do not have the required rank to do this!")
+				if("species")
+					if (istype(active1, /datum/data/record))
+						var/t1 = sanitize(copytext(input("Please enter race:", "General records", active1.fields["species"], null)  as message,1,MAX_MESSAGE_LEN))
+						if ((!( t1 ) || !( authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!istype(usr, /mob/living/silicon))) || active1 != a1))
+							return FALSE
+						active1.fields["species"] = t1
 
 //TEMPORARY MENU FUNCTIONS
-			else//To properly clear as per clear screen.
-				temp=null
-				switch(href_list["choice"])
-					if ("Change Rank")
-						if (active1)
-							if(PDA_Manifest.len)
-								PDA_Manifest.Cut()
-							active1.fields["rank"] = href_list["rank"]
-							if(href_list["rank"] in joblist)
-								active1.fields["real_rank"] = href_list["real_rank"]
+		else//To properly clear as per clear screen.
+			temp=null
+			switch(href_list["choice"])
+				if ("Change Rank")
+					if (active1)
+						if(PDA_Manifest.len)
+							PDA_Manifest.Cut()
+						active1.fields["rank"] = href_list["rank"]
+						if(href_list["rank"] in joblist)
+							active1.fields["real_rank"] = href_list["real_rank"]
 
-					if ("Delete Record (ALL) Execute")
-						if (active1)
-							if(PDA_Manifest.len)
-								PDA_Manifest.Cut()
-							for(var/datum/data/record/R in data_core.medical)
-								if ((R.fields["name"] == active1.fields["name"] || R.fields["id"] == active1.fields["id"]))
-									qdel(R)
-								else
-							qdel(active1)
-					else
-						temp = "This function does not appear to be working at the moment. Our apologies."
+				if ("Delete Record (ALL) Execute")
+					if (active1)
+						if(PDA_Manifest.len)
+							PDA_Manifest.Cut()
+						for(var/datum/data/record/R in data_core.medical)
+							if ((R.fields["name"] == active1.fields["name"] || R.fields["id"] == active1.fields["id"]))
+								qdel(R)
+							else
+						qdel(active1)
+				else
+					temp = "This function does not appear to be working at the moment. Our apologies."
 
-	add_fingerprint(usr)
 	updateUsrDialog()
-	return
 
 /obj/machinery/computer/skills/emp_act(severity)
 	if(stat & (BROKEN|NOPOWER))
