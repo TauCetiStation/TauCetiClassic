@@ -8,7 +8,7 @@
 /*-------TODOOOOOOOOOO--------*/
 
 /mob/living/silicon/robot/u_equip(obj/W as obj)
-	if(!W)
+	if(!W || (W != get_active_hand()))
 		return 0
 	uneq_active()
 	return 1
