@@ -31,6 +31,10 @@ datum/game_mode/mutiny
 	New()
 		fluff = new(src)
 
+	Destroy()
+		qdel(fluff)
+		return ..()
+
 	proc/reveal_directives()
 		spawn(rand(1 MINUTE, 3 MINUTES))
 			command_alert("Incoming emergency directive: Captain's office fax machine, [station_name()].","Emergency Transmission")

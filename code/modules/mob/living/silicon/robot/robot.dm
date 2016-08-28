@@ -175,7 +175,7 @@ var/list/robot_verbs_default = list(
 		if(T)	mmi.loc = T
 		if(mind)	mind.transfer_to(mmi.brainmob)
 		mmi = null
-	..()
+	return ..()
 
 /mob/living/silicon/robot/proc/pick_module()
 	if(module)
