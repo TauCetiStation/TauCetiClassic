@@ -1,6 +1,11 @@
 // BEGIN_INTERNALS
 /*
-MAP_ICON_TYPE: 0
+LAST_COMPILE_TIME: 1461603771
+DIR: code code\__HELPERS code\datums code\game code\modules code\modules\projectiles code\modules\projectiles\guns code\modules\projectiles\guns\energy code\modules\reagents code\modules\recycling 
 AUTO_FILE_DIR: OFF
+MAP_ICON_TYPE: 0
+LAST_COMPILE_VERSION: 510.1338
+WINDOW: code\game\atoms.dm;code\modules\reagents\Chemistry-Machinery.dm;code\modules\reagents\Chemistry-Colours.dm
+FILE: code\modules\reagents\Chemistry-Colours.dm
 */
 // END_INTERNALS
