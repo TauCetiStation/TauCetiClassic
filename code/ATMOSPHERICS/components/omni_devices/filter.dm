@@ -15,7 +15,7 @@
 	input = null
 	output = null
 	filters.Cut()
-	..()
+	return ..()
 
 /obj/machinery/atmospherics/omni/filter/sort_ports()
 	for(var/datum/omni_port/P in ports)
@@ -183,7 +183,9 @@
 			return null
 
 /obj/machinery/atmospherics/omni/filter/Topic(href, href_list)
-	if(..()) return 1
+	. = ..()
+	if(!.)
+		return
 	switch(href_list["command"])
 		if("power")
 			if(!configuring)
@@ -209,7 +211,6 @@
 
 	update_icon()
 	nanomanager.update_uis(src)
-	return
 
 /obj/machinery/atmospherics/omni/filter/proc/mode_return_switch(var/mode)
 	switch(mode)

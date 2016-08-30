@@ -403,27 +403,26 @@
 	return
 
 /obj/machinery/body_scanconsole/Topic(href, href_list)
-	if(..())
+	. = ..()
+	if(!.)
 		return
-	if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon/ai)))
-		usr.set_machine(src)
-		if (href_list["print"])
-			if (!src.printing)
-				src.printing = 1
-				usr << "\red Printing... Please wait."
-				spawn(50)
-					src.printing = 0
-					var/obj/item/weapon/paper/P = new(loc)
-					var/mob/living/carbon/human/occupant = src.connected.occupant
-					var/t1 = "<B>[occupant ? occupant.name : "Unknown"]'s</B> advanced scanner report.<BR>"
-					t1 += "Station Time: <B>[worldtime2text()]</B><BR>"
-					switch(occupant.stat) // obvious, see what their status is
-						if(0)
-							t1 += "Status: <B>Conscious</B>"
-						if(1)
-							t1 += "Status: <B>Unconscious</B>"
-						else
-							t1 += "Status: <B>\red*dead*</B>"
-					t1 += storedinfo
-					P.info = t1
-					P.name = "[occupant.name]'s scanner report"
+	if (href_list["print"])
+		if (!src.printing)
+			src.printing = 1
+			usr << "\red Printing... Please wait."
+			spawn(50)
+				src.printing = 0
+				var/obj/item/weapon/paper/P = new(loc)
+				var/mob/living/carbon/human/occupant = src.connected.occupant
+				var/t1 = "<B>[occupant ? occupant.name : "Unknown"]'s</B> advanced scanner report.<BR>"
+				t1 += "Station Time: <B>[worldtime2text()]</B><BR>"
+				switch(occupant.stat) // obvious, see what their status is
+					if(0)
+						t1 += "Status: <B>Conscious</B>"
+					if(1)
+						t1 += "Status: <B>Unconscious</B>"
+					else
+						t1 += "Status: <B>\red*dead*</B>"
+				t1 += storedinfo
+				P.info = t1
+				P.name = "[occupant.name]'s scanner report"

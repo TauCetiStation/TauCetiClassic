@@ -158,6 +158,7 @@
 /atom/proc/hitby(atom/movable/AM as mob|obj)
 	if(density)
 		AM.throwing = 0
+		AM.fly_speed = 0
 	return
 
 /atom/proc/add_hiddenprint(mob/living/M as mob)

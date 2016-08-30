@@ -10,7 +10,7 @@
 			return
 
 	//Meme stuff
-	if(!speech_allowed && usr == src)
+	if((!speech_allowed && usr == src) || (src.miming))
 		usr << "\red You can't speak."
 		return
 

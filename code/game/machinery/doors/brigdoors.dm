@@ -222,12 +222,12 @@
 // 	"change" resets the timer to the timetoset amount while the timer is counting down
 // Also updates dialog window and timer icon
 /obj/machinery/door_timer/Topic(href, href_list)
-	if(..())
-		return
-	if(!src.allowed(usr))
+	. = ..()
+	if(!.)
 		return
 
-	usr.set_machine(src)
+	if(!src.allowed(usr))
+		return
 
 	if(href_list["timing"])
 		src.timing = text2num(href_list["timing"])
@@ -236,7 +236,6 @@
 			src.timer_start()
 		else
 			src.timer_end()
-
 	else
 		if(href_list["tp"])  //adjust timer, close door if not already closed
 			var/tp = text2num(href_list["tp"])
@@ -253,7 +252,6 @@
 		if(href_list["change"])
 			src.timer_start()
 
-	src.add_fingerprint(usr)
 	src.updateUsrDialog()
 	src.update_icon()
 
@@ -262,8 +260,6 @@
 
 	else
 		src.timer_end() */
-
-	return
 
 
 //icon update function

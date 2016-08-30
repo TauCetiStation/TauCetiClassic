@@ -4,6 +4,10 @@
 	New(datum/game_mode/mutiny/M)
 		mode = M
 
+	Destroy()
+		mode = null
+		return ..()
+
 	proc/announce_directives()
 		for (var/obj/machinery/faxmachine/fax in world)
 			if (fax.department == "Captain's Office")

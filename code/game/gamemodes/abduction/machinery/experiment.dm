@@ -140,23 +140,17 @@
 	popup.open()
 
 /obj/machinery/abductor/experiment/Topic(href, href_list)
-	if(..() || usr == occupant)
-		return
-	usr.set_machine(src)
-	if(href_list["refresh"])
-		updateUsrDialog()
-		return
+	. = ..()
+	if(!. || usr == occupant)
+		return FALSE
 	if(href_list["open"])
 		open_machine()
-		return
-	if(href_list["close"])
+	else if(href_list["close"])
 		close_machine()
-		return
-	if(occupant && occupant.stat != DEAD)
+	else if(occupant && occupant.stat != DEAD)
 		if(href_list["experiment"])
 			flash = Experiment(occupant,href_list["experiment"])
 	updateUsrDialog()
-	add_fingerprint(usr)
 
 /obj/machinery/abductor/experiment/proc/Experiment(var/mob/occupant,var/type)
 	var/mob/living/carbon/human/H = occupant

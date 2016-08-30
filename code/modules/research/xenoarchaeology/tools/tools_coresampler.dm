@@ -38,7 +38,9 @@
 
 /obj/item/device/core_sampler/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W,/obj/item/weapon/evidencebag))
-		if(num_stored_bags < 10)
+		if(W.contents.len)
+			user << "\red This bag has something inside it!"
+		else if(num_stored_bags < 10)
 			qdel(W)
 			num_stored_bags += 1
 			user << "\blue You insert the [W] into the core sampler."

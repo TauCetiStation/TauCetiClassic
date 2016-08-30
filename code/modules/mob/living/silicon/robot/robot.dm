@@ -175,7 +175,7 @@ var/list/robot_verbs_default = list(
 		if(T)	mmi.loc = T
 		if(mind)	mind.transfer_to(mmi.brainmob)
 		mmi = null
-	..()
+	return ..()
 
 /mob/living/silicon/robot/proc/pick_module()
 	if(module)
@@ -518,7 +518,7 @@ var/list/robot_verbs_default = list(
 					if(malf.apcs >= 3)
 						stat(null, "Time until station control secured: [max(malf.AI_win_timeleft/(malf.apcs/3), 0)] seconds")
 			else if(ticker.mode:malf_mode_declared)
-				stat(null, "Time left: [max(ticker.mode:AI_win_timeleft/(ticker.mode:apcs/3), 0)]")
+				stat(null, "Time left: [max(ticker.mode:AI_win_timeleft/(ticker.mode:apcs/APC_MIN_TO_MALDF_DECLARE), 0)]")
 	return 0
 
 

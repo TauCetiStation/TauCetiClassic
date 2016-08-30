@@ -23,6 +23,7 @@ var/datum/subsystem/ticker/ticker
 	var/Bible_item_state					//item_state the chaplain has chosen for his bible
 	var/Bible_name							//name of the bible
 	var/Bible_deity_name					//name of chaplin's deity
+	var/sec_equip_preset
 
 	var/random_players = 0					// if set to nonzero, ALL players who latejoin or declare-ready join will have random appearances/genders
 
@@ -40,6 +41,8 @@ var/datum/subsystem/ticker/ticker
 	var/totalPlayersReady = 0				//used for pregame stats on statpanel
 
 	var/obj/screen/cinematic = null
+
+	var/random_dir_mode = null
 
 
 /datum/subsystem/ticker/New()
@@ -218,6 +221,7 @@ var/datum/subsystem/ticker/ticker
 
 	spawn_empty_ai()
 	setup_economy()
+	spawn_sec_equip()
 
 	Master.RoundStart()
 
@@ -236,6 +240,10 @@ var/datum/subsystem/ticker/ticker
 			//Deleting Startpoints but we need the ai point to AI-ize people later
 			if (S.name != "AI")
 				qdel(S)
+
+		if(random_dir_mode in cardinal) //fixing chair layer display for non standard screen rotation.
+			for(var/obj/structure/stool/bed/chair/C in chairs_list)
+				C.handle_rotation()
 
 		SSvote.started_time = world.time
 

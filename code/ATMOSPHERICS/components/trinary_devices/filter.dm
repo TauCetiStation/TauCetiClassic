@@ -211,27 +211,20 @@ Filter types:
 	return
 
 /obj/machinery/atmospherics/trinary/filter/Topic(href, href_list) // -- TLE
-	if(..())
+	. = ..()
+	if(!.)
 		return
-	usr.set_machine(src)
-	src.add_fingerprint(usr)
 	if(href_list["filterset"])
 		src.filter_type = text2num(href_list["filterset"])
-	if (href_list["temp"])
+	else if(href_list["temp"])
 		src.temp = null
-	if(href_list["set_press"])
+	else if(href_list["set_press"])
 		var/new_pressure = input(usr,"Enter new output pressure (0-4500kPa)","Pressure control",src.target_pressure) as num
 		src.target_pressure = max(0, min(4500, new_pressure))
-	if(href_list["power"])
+	else if(href_list["power"])
 		on=!on
 	src.update_icon()
 	src.updateUsrDialog()
-/*
-	for(var/mob/M in viewers(1, src))
-		if ((M.client && M.machine == src))
-			src.attack_hand(M)
-*/
-	return
 
 /obj/machinery/atmospherics/trinary/filter/m_filter
 	icon = 'icons/obj/atmospherics/m_filter.dmi'

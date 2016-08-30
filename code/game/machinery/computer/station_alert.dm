@@ -39,13 +39,6 @@
 		user << browse(dat, "window=alerts")
 		onclose(user, "alerts")
 
-
-	Topic(href, href_list)
-		if(..())
-			return
-		return
-
-
 	proc/triggerAlarm(var/class, area/A, var/O, var/alarmsource)
 		if(stat & (BROKEN))
 			return

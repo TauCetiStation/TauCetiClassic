@@ -18,6 +18,12 @@
 					var/turf/simulated/floor/FF = get_step(src,direction)
 					FF.update_icon() //so siding get updated properly
 
+turf/simulated/floor/holofloor/update_icon()
+	if(icon_state in icons_to_ignore_at_floor_init)
+		return
+	else
+		..()
+
 /turf/simulated/floor/holofloor/space
 	icon = 'icons/turf/space.dmi'
 	name = "\proper space"
@@ -43,7 +49,7 @@
 /obj/structure/table/holotable
 	name = "table"
 	desc = "A square piece of metal standing on four metal legs. It can not move."
-	icon = 'icons/obj/structures.dmi'
+	icon = 'icons/obj/tables.dmi'
 	icon_state = "table"
 	density = 1
 	anchored = 1.0
@@ -67,7 +73,7 @@
 /obj/structure/table/woodentable/holotable
 	name = "table"
 	desc = "A square piece of wood standing on four wooden legs. It can not move."
-	icon = 'icons/obj/structures.dmi'
+	icon = 'icons/obj/tables.dmi'
 	icon_state = "woodtable"
 
 /obj/structure/holostool
@@ -84,9 +90,6 @@
 	desc = "Because you really needed another excuse to punch your crewmates."
 	icon_state = "boxing"
 	item_state = "boxing"
-
-/obj/structure/window/reinforced/holowindow/Destroy()
-	..()
 
 /obj/structure/window/reinforced/holowindow/attackby(obj/item/W as obj, mob/user as mob)
 	if(!istype(W)) return//I really wish I did not need this
@@ -141,12 +144,6 @@
 	qdel(src)
 	return
 
-/obj/structure/window/reinforced/holowindow/disappearing/Destroy()
-	..()
-
-/obj/machinery/door/window/holowindoor/Destroy()
-	..()
-
 /obj/machinery/door/window/holowindoor/attackby(obj/item/weapon/I as obj, mob/user as mob)
 
 	if (src.operating == 1)
@@ -184,9 +181,6 @@
 
 obj/structure/stool/bed/chair/holochair
 	icon_state = "chair_g"
-
-/obj/structure/stool/bed/chair/holochair/Destroy()
-	..()
 
 /obj/structure/stool/bed/chair/holochair/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/wrench))
@@ -280,7 +274,7 @@ obj/structure/stool/bed/chair/holochair
 		qdel(W)
 		return
 	else if (istype(W, /obj/item) && get_dist(src,user)<2)
-		user.drop_item(src)
+		user.drop_item(src.loc)
 		visible_message("<span class='notice'>[user] dunks [W] into the [src]!</span>", 3)
 		return
 
@@ -366,24 +360,23 @@ obj/structure/stool/bed/chair/holochair
 
 	eventstarted = 1
 
-	for(var/obj/structure/window/reinforced/holowindow/disappearing/W in currentarea)
+	for(var/obj/structure/window/reinforced/holowindow/W in currentarea)
 		qdel(W)
 
 	for(var/mob/M in currentarea)
 		M << "FIGHT!"
 
 //Holorack
-
-/obj/structure/table/rack/holorack
+/obj/structure/rack/holorack
 	name = "rack"
 	desc = "Different from the Middle Ages version."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "rack"
 
-/obj/structure/table/rack/holorack/attack_hand(mob/user as mob)
+/obj/structure/rack/holorack/attack_hand(mob/user as mob)
 	return
 
-/obj/structure/table/rack/holorack/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/structure/rack/holorack/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/wrench))
 		user << "It's a holorack!  You can't unwrench it!"
 		return

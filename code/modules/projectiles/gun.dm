@@ -70,7 +70,7 @@
 /obj/item/weapon/gun/Destroy()
 	qdel(chambered)
 	chambered = null
-	..()
+	return ..()
 
 /obj/item/weapon/gun/afterattack(atom/A as mob|obj|turf|area, mob/living/user as mob|obj, flag, params)
 	if(flag)	return //It's adjacent, is the user, or is on the user's person

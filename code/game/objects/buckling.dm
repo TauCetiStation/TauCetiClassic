@@ -7,17 +7,13 @@
 
 /atom/movable/attack_hand(mob/living/user)
 	. = ..()
-	if(can_buckle && buckled_mob)
+	if(can_buckle && buckled_mob && istype(user))
 		user_unbuckle_mob(user)
 
 /atom/movable/MouseDrop_T(mob/living/M, mob/living/user)
 	. = ..()
-	if(can_buckle && istype(M) && !buckled_mob)
+	if(can_buckle && istype(M) && !buckled_mob && istype(user))
 		user_buckle_mob(M, user)
-
-/atom/movable/Destroy()
-	unbuckle_mob()
-	return ..()
 
 /atom/movable/proc/buckle_mob(mob/living/M)
 	if(!can_buckle || !istype(M) || (M.loc != loc) || M.buckled || M.buckled_mob || M.pinned.len || (buckle_require_restraints && !M.restrained()) || M == src)

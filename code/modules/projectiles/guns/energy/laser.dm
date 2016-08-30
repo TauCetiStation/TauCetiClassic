@@ -1,5 +1,5 @@
 /obj/item/weapon/gun/energy/laser
-	name = "laser gun"
+	name = "laser rifle"
 	desc = "a basic weapon designed kill with concentrated energy bolts."
 	icon = 'tauceti/icons/obj/guns.dmi'
 	tc_custom = 'tauceti/icons/obj/guns.dmi'
@@ -18,6 +18,34 @@
 	desc = "A modified version of the basic laser gun, this one fires less concentrated energy bolts designed for target practice."
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/practice)
 	clumsy_check = 0
+
+/obj/item/weapon/gun/energy/laser/classic
+	name = "laser carbine"
+	desc = "J10 carbine, pretty old model of corporate security laser weaponry with constant cooling issues. Faster firerate but reduced damage."
+	icon = 'icons/obj/gun.dmi'
+	icon_state = "oldlaser"
+	tc_custom = null
+	fire_delay = 5
+
+/obj/item/weapon/gun/energy/laser/tactifool
+	name = "laser rifle"
+	desc = "T6 impulse laser rifle"
+	icon = 'icons/obj/gun.dmi'
+	icon_state = "lasor"
+	tc_custom = null
+	fire_delay = 0
+	ammo_type = list(/obj/item/ammo_casing/energy/laser_pulse)
+
+
+/obj/item/weapon/gun/energy/laser/classic/newshot()
+	if (!ammo_type || !power_supply)	return
+	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
+	if (!power_supply.use(shot.e_cost))	return
+	chambered = shot
+	if(chambered && chambered.BB)
+		chambered.BB.damage -= 10
+	chambered.newshot()
+	return
 
 obj/item/weapon/gun/energy/laser/retro
 	name ="retro laser"

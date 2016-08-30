@@ -161,11 +161,11 @@
 	src.hand = !( src.hand )
 	if(hud_used.l_hand_hud_object && hud_used.r_hand_hud_object)
 		if(hand)	//This being 1 means the left hand is in use
-			hud_used.l_hand_hud_object.icon_state = "hand_active"
-			hud_used.r_hand_hud_object.icon_state = "hand_inactive"
+			hud_used.l_hand_hud_object.icon_state = "hand_l_active"
+			hud_used.r_hand_hud_object.icon_state = "hand_r_inactive"
 		else
-			hud_used.l_hand_hud_object.icon_state = "hand_inactive"
-			hud_used.r_hand_hud_object.icon_state = "hand_active"
+			hud_used.l_hand_hud_object.icon_state = "hand_l_inactive"
+			hud_used.r_hand_hud_object.icon_state = "hand_r_active"
 	/*if (!( src.hand ))
 		src.hands.dir = NORTH
 	else
@@ -243,9 +243,9 @@
 				if(!src.sleeping)
 					src.resting = 0
 				if(src.crawling)
-					if(src.pass_flags & PASSCRAWL)
+					if(crawl_can_use() && src.pass_flags & PASSCRAWL)
 						src.pass_flags ^= PASSCRAWL
-					src.crawling = 0
+						src.crawling = 0
 				M.visible_message("<span class='notice'>[M] shakes [src] trying to wake [t_him] up!</span>", \
 									"<span class='notice'>You shake [src] trying to wake [t_him] up!</span>")
 			else
@@ -257,6 +257,12 @@
 			AdjustWeakened(-3)
 
 			playsound(src.loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
+
+/mob/living/carbon/proc/crawl_can_use()
+	var/turf/T = get_turf(src)
+	if( (locate(/obj/structure/table) in T) || (locate(/obj/structure/stool/bed) in T) || (locate(/obj/structure/plasticflaps) in T))
+		return 0
+	return 1
 
 /mob/living/carbon/proc/eyecheck()
 	return 0

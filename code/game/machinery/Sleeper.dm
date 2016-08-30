@@ -270,30 +270,21 @@
 	popup.open()
 
 /obj/machinery/sleeper/Topic(href, href_list)
-	if(..() || usr == occupant)
-		return
-
-	usr.set_machine(src)
-	add_fingerprint(usr)
+	. = ..()
+	if(!. || usr == occupant)
+		return FALSE
 
 	if(href_list["refresh"])
 		updateUsrDialog()
-		return
-	if(href_list["open"])
+	else if(href_list["open"])
 		open_machine()
-		return
-	if(href_list["close"])
+	else if(href_list["close"])
 		close_machine()
-		return
-	if(href_list["removebeaker"])
+	else if(href_list["removebeaker"])
 		remove_beaker()
-		updateUsrDialog()
-		return
-	if(href_list["togglefilter"])
+	else if(href_list["togglefilter"])
 		toggle_filter()
-		updateUsrDialog()
-		return
-	if(occupant && occupant.stat != DEAD && is_operational())
+	else if(occupant && occupant.stat != DEAD && is_operational())
 		if(href_list["inject"] == "inaprovaline" || occupant.health > min_health)
 			inject_chem(usr, href_list["inject"])
 		else
@@ -321,8 +312,8 @@
 
 /obj/machinery/sleeper/proc/inject_chem(mob/user, chem)
 	if(occupant && occupant.reagents)
-		if(occupant.reagents.get_reagent_amount(chem) + 10 <= 20 * efficiency)
-			occupant.reagents.add_reagent(chem, 10)
+		if(occupant.reagents.get_reagent_amount(chem) + 5 <= 20 * efficiency)
+			occupant.reagents.add_reagent(chem, 5)
 		var/units = round(occupant.reagents.get_reagent_amount(chem))
 		user << "<span class='notice'>Occupant now has [units] unit\s of [chem] in their bloodstream.</span>"
 

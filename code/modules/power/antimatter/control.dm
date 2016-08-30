@@ -297,40 +297,36 @@
 
 
 /obj/machinery/power/am_control_unit/Topic(href, href_list)
-	..()
-	//Ignore input if we are broken or guy is not touching us, AI can control from a ways away
-	if(stat & (BROKEN|NOPOWER) || (get_dist(src, usr) > 1 && !istype(usr, /mob/living/silicon/ai)))
-		usr.unset_machine()
-		usr << browse(null, "window=AMcontrol")
-		return
-
 	if(href_list["close"])
+		usr.unset_machine(src)
 		usr << browse(null, "window=AMcontrol")
-		usr.unset_machine()
+		return FALSE
+
+	. = ..()
+	if(!.)
 		return
 
 	if(href_list["togglestatus"])
 		toggle_power()
 
-	if(href_list["refreshicons"])
+	else if(href_list["refreshicons"])
 		update_shield_icons = 1
 
-	if(href_list["ejectjar"])
+	else if(href_list["ejectjar"])
 		if(fueljar)
 			fueljar.loc = src.loc
 			fueljar = null
 			//fueljar.control_unit = null currently it does not care where it is
 			//update_icon() when we have the icon for it
 
-	if(href_list["strengthup"])
+	else if(href_list["strengthup"])
 		fuel_injection++
 
-	if(href_list["strengthdown"])
+	else if(href_list["strengthdown"])
 		fuel_injection--
 		if(fuel_injection < 0) fuel_injection = 0
 
-	if(href_list["refreshstability"])
+	else if(href_list["refreshstability"])
 		check_core_stability()
 
 	updateDialog()
-	return

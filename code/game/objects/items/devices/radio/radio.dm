@@ -699,10 +699,11 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	else return
 
 /obj/item/device/radio/emp_act(severity)
-	broadcasting = 0
+	on = 0
+/*	broadcasting = 0
 	listening = 0
 	for (var/ch_name in channels)
-		channels[ch_name] = 0
+	channels[ch_name] = 0 */
 	..()
 
 

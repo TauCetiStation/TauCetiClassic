@@ -178,40 +178,39 @@ var/global/loopModeNames=list(
 			update_icon()
 
 /obj/machinery/media/jukebox/Topic(href, href_list)
-	..()
-	if(stat & (NOPOWER|BROKEN)) return
-	if(usr.stat || usr.restrained()) return
-	if(!in_range(src, usr)) return
+	. = ..()
+	if(!.)
+		return
 
 	if(emagged)
 		usr << "\red You touch the bluescreened menu. Nothing happens. You feel dumber."
-		return
+		return FALSE
 
 	if (href_list["power"])
-		playing=!playing
+		playing = !playing
 		update_music()
 		update_icon()
 
 	if (href_list["playlist"])
 		if(!check_reload())
 			usr << "\red You must wait 60 seconds between playlist reloads."
-			return
-		playlist_id=href_list["playlist"]
-		last_reload=world.time
-		playlist=null
-		current_song=0
+			return FALSE
+		playlist_id = href_list["playlist"]
+		last_reload = world.time
+		playlist = null
+		current_song = 0
 		update_music()
 		update_icon()
 
 	if (href_list["song"])
-		current_song=Clamp(text2num(href_list["song"]),1,playlist.len)
+		current_song=Clamp(text2num(href_list["song"]), 1, playlist.len)
 		update_music()
 		update_icon()
 
 	if (href_list["mode"])
 		loop_mode = (loop_mode % JUKEMODE_COUNT) + 1
 
-	return attack_hand(usr)
+	updateUsrDialog()
 
 /obj/machinery/media/jukebox/process()
 	if(!playlist)
@@ -248,7 +247,7 @@ var/global/loopModeNames=list(
 			return
 	if(playing)
 		var/datum/song_info/song
-		if(current_song && current_song < playlist.len)
+		if(current_song && current_song <= playlist.len)
 			song = playlist[current_song]
 		if(!current_song || (song && world.time >= media_start_time + song.length))
 			current_song=1
@@ -264,7 +263,7 @@ var/global/loopModeNames=list(
 			update_music()
 
 /obj/machinery/media/jukebox/update_music()
-	if(current_song && current_song < playlist.len && playing )
+	if(current_song && current_song <= playlist.len && playing )
 		var/datum/song_info/song = playlist[current_song]
 		media_url = song.url
 		media_start_time = world.time
@@ -290,6 +289,7 @@ var/global/loopModeNames=list(
 		"club" = "Club Mix",
 		"customs" = "Customs Music",
 		"japan" = "Banzai Radio",
+		"govnar" = "Soviet Radio",
 		"classic" = "Classical Music",
 	)
 
@@ -308,6 +308,7 @@ var/global/loopModeNames=list(
 		"club" = "Club Mix",
 		"customs" = "Customs Music",
 		"japan" = "Banzai Radio",
+		"govnar" = "Soviet Radio",
 		"classic" = "Classical Music",
 	)
 

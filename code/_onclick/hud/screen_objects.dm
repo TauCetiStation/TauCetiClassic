@@ -47,8 +47,9 @@
 	name = "grab"
 
 /obj/screen/grab/Click()
-	var/obj/item/weapon/grab/G = master
-	G.s_click(src)
+	if(master)
+		var/obj/item/weapon/grab/G = master
+		G.s_click(src)
 	return 1
 
 /obj/screen/grab/attack_hand()
@@ -79,7 +80,6 @@
 	name = "gun"
 	icon = 'icons/mob/screen1.dmi'
 	master = null
-	dir = 2
 
 	move
 		name = "Allow Walking"

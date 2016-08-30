@@ -88,7 +88,8 @@
 	return
 
 /obj/machinery/computer/teleporter/Topic(href, href_list)
-	if(..())
+	. = ..()
+	if(!.)
 		return
 
 	if(href_list["eject"])
@@ -98,10 +99,10 @@
 
 	if(!check_hub_connection())
 		usr << "<span class='warning'>Error: Unable to detect hub.</span>"
-		return
+		return FALSE
 	if(calibrating)
 		usr << "<span class='warning'>Error: Calibration in progress. Stand by.</span>"
-		return
+		return FALSE
 
 	if(href_list["regimeset"])
 		power_station.engaged = 0
@@ -121,10 +122,10 @@
 	if(href_list["calibrate"])
 		if(!target)
 			usr << "<span class='danger'>Error: No target set to calibrate to.</span>"
-			return
+			return FALSE
 		if(power_station.teleporter_hub.calibrated || power_station.teleporter_hub.accurate >= 3)
 			usr << "<span class='warning'>Hub is already calibrated!</span>"
-			return
+			return FALSE
 		usr << "<span class='notice'>Processing hub calibration to target...</span>"
 
 		calibrating = 1
@@ -135,7 +136,6 @@
 				usr << "<span class='notice'>Calibration complete.</span>"
 			else
 				usr << "<span class='danger'>Error: Unable to detect hub.</span>"
-			updateDialog()
 
 	updateDialog()
 

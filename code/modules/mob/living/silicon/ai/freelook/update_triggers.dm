@@ -100,6 +100,6 @@
 	var/list/open_networks = difflist(network,RESTRICTED_CAMERA_NETWORKS)
 	if(open_networks.len)
 		cameranet.removeCamera(src)
-	..()
+	return ..()
 
 #undef BORG_CAMERA_BUFFER

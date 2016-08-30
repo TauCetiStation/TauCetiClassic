@@ -608,6 +608,13 @@
 		else
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_PAI];jobban4=\ref[M]'>[ROLE_PAI]</a></td>"
 
+		//Observer is no job and probably not at all human still there's no better place.
+
+		if(jobban_isbanned(M, "Observer"))
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Observer;jobban4=\ref[M]'><font color=red>Observer</font></a></td>"
+		else
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Observer;jobban4=\ref[M]'>Observer</a></td>"
+
 		if(jobban_isbanned(M, "AntagHUD"))
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=AntagHUD;jobban4=\ref[M]'><font color=red>AntagHUD</font></a></td>"
 		else
@@ -1090,6 +1097,40 @@
 		dat += {"<A href='?src=\ref[src];c_mode2=random'>Random</A><br>"}
 		dat += {"Now: [master_mode]"}
 		usr << browse(dat, "window=c_mode")
+
+	else if(href_list["c_dir"])
+		if(!check_rights(R_ADMIN))
+			return
+
+		if(ticker && ticker.mode)
+			return alert(usr, "The game has already started.", null, null, null, null)
+		var/dat = {"<B>What mode do you wish to set? (players view screen will be rotated for this round)</B><HR>"}
+		dat += {"<A href='?src=\ref[src];c_dir2=[RDM_RANDOM_EXCL_NORTH]'>Random excluding NORTH</A><br>"}
+		dat += {"<A href='?src=\ref[src];c_dir2=[RDM_RANDOM]'>All random</A><br>"}
+		dat += {"<A href='?src=\ref[src];c_dir2=2'>Force SOUTH for everyone (Best looking)</A><br>"}
+		dat += {"<A href='?src=\ref[src];c_dir2=4'>Force EAST for everyone</A><br>"}
+		dat += {"<A href='?src=\ref[src];c_dir2=8'>Force WEST for everyone</A><br>"}
+		dat += {"<A href='?src=\ref[src];c_dir2=0'>Reset to default (NORTH)</A><br>"}
+
+		dat += {"Now: [get_current_view_mode()]"}
+		usr << browse(dat, "window=c_dir")
+
+	else if(href_list["c_dir2"])
+		if(!check_rights(R_ADMIN))
+			return
+
+		if (ticker && ticker.mode)
+			return alert(usr, "The game has already started.", null, null, null, null)
+
+		var/choice = text2num(href_list["c_dir2"])
+		if(!choice)
+			ticker.random_dir_mode = null
+		else
+			ticker.random_dir_mode = choice
+
+		log_admin("[key_name(usr)] forced players view direction as [get_current_view_mode()].")
+		message_admins("\blue [key_name_admin(usr)] forced players view direction as [get_current_view_mode()] for this round.", 1)
+		.(href, list("c_dir"=1))
 
 	else if(href_list["f_secret"])
 		if(!check_rights(R_ADMIN))	return
@@ -2088,14 +2129,9 @@
 					ticker.mode.finalize_traitor(A.mind)
 				message_admins("\blue [key_name_admin(usr)] used everyone is a traitor secret. Objective is [objective]", 1)
 				log_admin("[key_name(usr)] used everyone is a traitor secret. Objective is [objective]")
-			if("moveminingshuttle")
-				if(mining_shuttle_moving)
-					return
+
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","ShM")
-				move_mining_shuttle()
-				message_admins("\blue [key_name_admin(usr)] moved mining shuttle", 1)
-				log_admin("[key_name(usr)] moved the mining shuttle")
 			if("moveadminshuttle")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","ShA")

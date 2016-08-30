@@ -106,16 +106,17 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 	return
 
 /obj/machinery/computer/telecrystals/uplinker/Topic(href, href_list)
-	if(..())
+	. = ..()
+	if(!.)
 		return
 
 	if(href_list["donate1"])
 		donateTC(1)
 
-	if(href_list["donate5"])
+	else if(href_list["donate5"])
 		donateTC(5)
 
-	if(href_list["eject"])
+	else if(href_list["eject"])
 		ejectuplink()
 
 	src.updateUsrDialog()
@@ -195,21 +196,22 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 	return
 
 /obj/machinery/computer/telecrystals/boss/Topic(href, href_list)
-	if(..())
+	. = ..()
+	if(!.)
 		return
 
 	if(href_list["scan"])
 		scanUplinkers()
 
-	if(href_list["give1"])
+	else if(href_list["give1"])
 		var/obj/machinery/computer/telecrystals/uplinker/A = locate(href_list["give1"])
 		A.giveTC(1)
 
-	if(href_list["give5"])
+	else if(href_list["give5"])
 		var/obj/machinery/computer/telecrystals/uplinker/A = locate(href_list["give5"])
 		A.giveTC(5)
 
-	if(href_list["distrib"])
+	else if(href_list["distrib"])
 		var/sanity = 0
 		while(storedcrystals && sanity < 100)
 			for(var/obj/machinery/computer/telecrystals/uplinker/A in TCstations)
@@ -218,6 +220,5 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 		logTransfer("[src] evenly distributed telecrystals.")
 
 	src.updateUsrDialog()
-	return
 
 #undef NUKESCALINGMODIFIER

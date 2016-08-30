@@ -237,7 +237,7 @@
 		user.attack_log += "\[[time_stamp()]\] Gibbed <b>[src.occupant]/[src.occupant.ckey]</b>"
 		msg_admin_attack("[user.name] ([user.ckey]) gibbed [src.occupant] ([src.occupant.ckey]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 
-		src.occupant.ghostize()
+		src.occupant.ghostize(bancheck = TRUE)
 
 		src.operating = 0
 		src.occupant.gib()

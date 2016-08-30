@@ -146,11 +146,9 @@ var/list/mechtoys = list(
 	return
 
 /obj/machinery/computer/ordercomp/Topic(href, href_list)
-	if(..())
+	. = ..()
+	if(!.)
 		return
-
-	if( isturf(loc) && (in_range(src, usr) || istype(usr, /mob/living/silicon)) )
-		usr.set_machine(src)
 
 	if(href_list["order"])
 		if(href_list["order"] == "categories")
@@ -169,23 +167,27 @@ var/list/mechtoys = list(
 			temp += "<b>Request from: [last_viewed_group]</b><BR><BR>"
 			for(var/supply_name in SSshuttle.supply_packs )
 				var/datum/supply_packs/N = SSshuttle.supply_packs[supply_name]
-				if(N.hidden || N.contraband || N.group != last_viewed_group) continue								//Have to send the type instead of a reference to
+				if(N.hidden || N.contraband || N.group != last_viewed_group)
+					continue	//Have to send the type instead of a reference to
 				temp += "<A href='?src=\ref[src];doorder=[supply_name]'>[supply_name]</A> Cost: [N.cost]<BR>"		//the obj because it would get caught by the garbage
 
 	else if (href_list["doorder"])
 		if(world.time < reqtime)
 			for(var/mob/V in hearers(src))
 				V.show_message("<b>[src]</b>'s monitor flashes, \"[world.time - reqtime] seconds remaining until another requisition form may be printed.\"")
-			return
+			return FALSE
 
 		//Find the correct supply_pack datum
 		var/datum/supply_packs/P = SSshuttle.supply_packs[href_list["doorder"]]
-		if(!istype(P))	return
+		if(!istype(P))
+			return FALSE
 
 		var/timeout = world.time + 600
 		var/reason = sanitize_alt(copytext(input(usr,"Reason:","Why do you require this item?","") as null|text,1,MAX_MESSAGE_LEN))
-		if(world.time > timeout)	return
-		if(!reason)	return
+		if(world.time > timeout)
+			return FALSE
+		if(!reason)
+			return FALSE
 
 		var/idname = "*None Provided*"
 		var/idrank = "*None Provided*"
@@ -241,9 +243,7 @@ var/list/mechtoys = list(
 	else if (href_list["mainmenu"])
 		temp = null
 
-	add_fingerprint(usr)
 	updateUsrDialog()
-	return
 
 /obj/machinery/computer/supplycomp/attack_hand(var/mob/user as mob)
 	if(!allowed(user))
@@ -281,14 +281,9 @@ var/list/mechtoys = list(
 	return
 
 /obj/machinery/computer/supplycomp/Topic(href, href_list)
-	if(!SSshuttle)
-		world.log << "## ERROR: Eek. The SSshuttle controller datum is missing somehow."
+	. = ..()
+	if(!.)
 		return
-	if(..())
-		return
-
-	if(isturf(loc) && ( in_range(src, usr) || istype(usr, /mob/living/silicon) ) )
-		usr.set_machine(src)
 
 	//Calling the shuttle
 	if(href_list["send"])
@@ -341,16 +336,19 @@ var/list/mechtoys = list(
 		if(world.time < reqtime)
 			for(var/mob/V in hearers(src))
 				V.show_message("<b>[src]</b>'s monitor flashes, \"[world.time - reqtime] seconds remaining until another requisition form may be printed.\"")
-			return
+			return FALSE
 
 		//Find the correct supply_pack datum
 		var/datum/supply_packs/P = SSshuttle.supply_packs[href_list["doorder"]]
-		if(!istype(P))	return
+		if(!istype(P))
+			return FALSE
 
 		var/timeout = world.time + 600
 		var/reason = sanitize_alt(copytext(input(usr,"Reason:","Why do you require this item?","") as null|text,1,MAX_MESSAGE_LEN))
-		if(world.time > timeout)	return
-		if(!reason)	return
+		if(world.time > timeout)
+			return FALSE
+		if(!reason)
+			return FALSE
 
 		var/idname = "*None Provided*"
 		var/idrank = "*None Provided*"
@@ -395,7 +393,7 @@ var/list/mechtoys = list(
 		var/datum/supply_order/O
 		var/datum/supply_packs/P
 		temp = "Invalid Request"
-		for(var/i=1, i<=SSshuttle.requestlist.len, i++)
+		for(var/i = 1 to SSshuttle.requestlist.len)
 			var/datum/supply_order/SO = SSshuttle.requestlist[i]
 			if(SO.ordernum == ordernum)
 				O = SO
@@ -441,7 +439,7 @@ var/list/mechtoys = list(
 	else if (href_list["rreq"])
 		var/ordernum = text2num(href_list["rreq"])
 		temp = "Invalid Request.<BR>"
-		for(var/i=1, i<=SSshuttle.requestlist.len, i++)
+		for(var/i = 1 to SSshuttle.requestlist.len)
 			var/datum/supply_order/SO = SSshuttle.requestlist[i]
 			if(SO.ordernum == ordernum)
 				SSshuttle.requestlist.Cut(i,i+1)
@@ -457,9 +455,7 @@ var/list/mechtoys = list(
 	else if (href_list["mainmenu"])
 		temp = null
 
-	add_fingerprint(usr)
 	updateUsrDialog()
-	return
 
 /obj/machinery/computer/supplycomp/proc/post_signal(var/command)
 

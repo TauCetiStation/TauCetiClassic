@@ -165,10 +165,10 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 	return dat
 
 /obj/machinery/mineral/ore_redemption/Topic(href, href_list)
-	if(..())
+	. = ..()
+	if(!.)
 		return
-	usr.set_machine(src)
-	src.add_fingerprint(usr)
+
 	if(href_list["choice"])
 		if(istype(inserted_id))
 			if(href_list["choice"] == "eject")
@@ -189,6 +189,7 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 				I.loc = src
 				inserted_id = I
 			else usr << "<span class='warning'>No valid ID.</span>"
+
 	if(href_list["release"])
 		if(check_access(inserted_id) || allowed(usr)) //Check the ID inside, otherwise check the user.
 			if(!(text2path(href_list["release"]) in stack_list)) return
@@ -203,8 +204,9 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 				stack_list -= text2path(href_list["release"])
 		else
 			usr << "<span class='warning'>Required access not found.</span>"
+
 	src.updateUsrDialog()
-	return
+
 
 /obj/machinery/mineral/ore_redemption/ex_act(severity, target)
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
@@ -243,24 +245,25 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 	anchored = 1.0
 	var/obj/item/weapon/card/id/inserted_id
 	var/list/prize_list = list(
-		new /datum/data/mining_equipment("Stimpack",			/obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack,100),
+//		new /datum/data/mining_equipment("Stimpack",			/obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack,100),
 		new /datum/data/mining_equipment("Chili",               /obj/item/weapon/reagent_containers/food/snacks/hotchili,           100),
 		new /datum/data/mining_equipment("Cigar",               /obj/item/clothing/mask/cigarette/cigar/havana,                     100),
 		new /datum/data/mining_equipment("Whiskey",             /obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey,     150),
 		new /datum/data/mining_equipment("Soap",                /obj/item/weapon/soap/nanotrasen, 						            150),
 		new /datum/data/mining_equipment("Alien toy",           /obj/item/clothing/mask/facehugger/toy, 		                    250),
-		new /datum/data/mining_equipment("Suit patcher",        /obj/item/weapon/patcher,										    300),
-		new /datum/data/mining_equipment("Stimpack Bundle",		/obj/item/weapon/storage/box/autoinjector/stimpack,				    400),
+//		new /datum/data/mining_equipment("Suit patcher",        /obj/item/weapon/patcher,										    300),
+//		new /datum/data/mining_equipment("Stimpack Bundle",		/obj/item/weapon/storage/box/autoinjector/stimpack,				    400),
 //		new /datum/data/mining_equipment("Laser pointer",       /obj/item/device/laser_pointer, 				                    250),
+//		new /datum/data/mining_equipment("Shelter capsule",		/obj/item/weapon/survivalcapsule,								    500),
 		new /datum/data/mining_equipment("Point card",    		/obj/item/weapon/card/mining_point_card,               			    500),
-		new /datum/data/mining_equipment("Sonic jackhammer",    /obj/item/weapon/pickaxe/drill/jackhammer,                          500),
-		new /datum/data/mining_equipment("Mining drone",        /mob/living/simple_animal/hostile/mining_drone/,                    700),
-		new /datum/data/mining_equipment("Resonator",           /obj/item/weapon/resonator,                                         800),
-		new /datum/data/mining_equipment("Kinetic accelerator", /obj/item/weapon/gun/energy/kinetic_accelerator,                   1000),
-		new /datum/data/mining_equipment("Jaunter",             /obj/item/device/wormhole_jaunter,                                 1100),
-		new /datum/data/mining_equipment("Special mining rig",  /obj/item/mining_rig_pack,										   1500),
-		new /datum/data/mining_equipment("Lazarus injector",    /obj/item/weapon/lazarus_injector,                                 1500),
-		new /datum/data/mining_equipment("Jetpack",             /obj/item/weapon/tank/jetpack/carbondioxide,                       2000),
+//		new /datum/data/mining_equipment("Sonic jackhammer",    /obj/item/weapon/pickaxe/drill/jackhammer,                          500),
+//		new /datum/data/mining_equipment("Mining drone",        /mob/living/simple_animal/hostile/mining_drone/,                    700),
+//		new /datum/data/mining_equipment("Resonator",           /obj/item/weapon/resonator,                                         800),
+//		new /datum/data/mining_equipment("Kinetic accelerator", /obj/item/weapon/gun/energy/kinetic_accelerator,                   1000),
+//		new /datum/data/mining_equipment("Jaunter",             /obj/item/device/wormhole_jaunter,                                 1100),
+//		new /datum/data/mining_equipment("Special mining rig",  /obj/item/mining_rig_pack,										   1500),
+//		new /datum/data/mining_equipment("Lazarus injector",    /obj/item/weapon/lazarus_injector,                                 1500),
+//		new /datum/data/mining_equipment("Jetpack",             /obj/item/weapon/tank/jetpack/carbondioxide,                       2000),
 		new /datum/data/mining_equipment("Space cash",    		/obj/item/weapon/spacecash/c1000,                    			   5000)
 		)
 
@@ -319,10 +322,10 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 	return
 
 /obj/machinery/mineral/equipment_locker/Topic(href, href_list)
-	if(..())
+	. = ..()
+	if(!.)
 		return
-	usr.set_machine(src)
-	src.add_fingerprint(usr)
+
 	if(href_list["choice"])
 		if(istype(inserted_id))
 			if(href_list["choice"] == "eject")
@@ -346,8 +349,8 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 			else
 				inserted_id.mining_points -= prize.cost
 				new prize.equipment_path(src.loc)
+
 	src.updateUsrDialog()
-	return
 
 /obj/machinery/mineral/equipment_locker/attackby(obj/item/I as obj, mob/user as mob)
 	if(istype(I, /obj/item/weapon/mining_voucher))
@@ -641,9 +644,17 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 	ranged_cooldown_cap = 3
 	projectiletype = /obj/item/projectile/kinetic
 	projectilesound = 'tauceti/sounds/weapon/Gunshot4.ogg'
-	wanted_objects = list(/obj/item/weapon/ore/diamond, /obj/item/weapon/ore/gold, /obj/item/weapon/ore/silver,
-						  /obj/item/weapon/ore/phoron,  /obj/item/weapon/ore/uranium,    /obj/item/weapon/ore/iron,
-						  /obj/item/weapon/ore/coal)
+	wanted_objects = list(/obj/item/weapon/ore/diamond,
+						  /obj/item/weapon/ore/glass,
+						  /obj/item/weapon/ore/gold,
+						  /obj/item/weapon/ore/iron,
+						  /obj/item/weapon/ore/phoron,
+						  /obj/item/weapon/ore/silver,
+						  /obj/item/weapon/ore/uranium,
+						  /obj/item/weapon/ore/coal,
+						  /obj/item/weapon/ore/osmium,
+						  /obj/item/weapon/ore/hydrogen,
+						  /obj/item/weapon/ore/clown)
 
 /mob/living/simple_animal/hostile/mining_drone/attackby(obj/item/I as obj, mob/user as mob)
 	if(istype(I, /obj/item/weapon/weldingtool))

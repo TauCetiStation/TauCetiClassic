@@ -291,106 +291,109 @@ var/global/list/autolathe_recipes_hidden = list( \
 	interact(user)
 
 /obj/machinery/autolathe/Topic(href, href_list)
-	if(..())
+	. = ..()
+	if(!.)
 		return
-	if(!busy)
-		if(href_list["make"])
-			var/coeff = 2 ** prod_coeff
-			var/turf/T = get_step(src.loc, get_dir(src,usr))
 
-			// critical exploit fix start -walter0o
-			var/obj/item/template = null
-			var/attempting_to_build = locate(href_list["make"])
+	if(busy)
+		usr << "\red The autolathe is busy. Please wait for completion of previous operation."
+		return FALSE
 
-			if(!attempting_to_build)
-				return
+	if(href_list["make"])
+		var/coeff = 2 ** prod_coeff
+		var/turf/T = get_step(src.loc, get_dir(src,usr))
 
-			if(locate(attempting_to_build, src.L) || locate(attempting_to_build, src.LL)) // see if the requested object is in one of the construction lists, if so, it is legit -walter0o
-				template = attempting_to_build
+		// critical exploit fix start -walter0o
+		var/obj/item/template = null
+		var/attempting_to_build = locate(href_list["make"])
 
-			else // somebody is trying to exploit, alert admins -walter0o
+		if(!attempting_to_build)
+			return FALSE
 
-				var/turf/LOC = get_turf(usr)
-				message_admins("[key_name_admin(usr)] tried to exploit an autolathe to duplicate <a href='?_src_=vars;Vars=\ref[attempting_to_build]'>[attempting_to_build]</a> ! ([LOC ? "<a href='?_src_=holder;adminplayerobservecoodjump=1;X=[LOC.x];Y=[LOC.y];Z=[LOC.z]'>JMP</a>" : "null"])", 0)
-				log_admin("EXPLOIT : [key_name(usr)] tried to exploit an autolathe to duplicate [attempting_to_build] !")
-				return
+		if(locate(attempting_to_build, src.L) || locate(attempting_to_build, src.LL)) // see if the requested object is in one of the construction lists, if so, it is legit -walter0o
+			template = attempting_to_build
 
-			// now check for legit multiplier, also only stacks should pass with one to prevent raw-materials-manipulation -walter0o
+		else // somebody is trying to exploit, alert admins -walter0o
 
-			var/multiplier = text2num(href_list["multiplier"])
+			var/turf/LOC = get_turf(usr)
+			message_admins("[key_name_admin(usr)] tried to exploit an autolathe to duplicate <a href='?_src_=vars;Vars=\ref[attempting_to_build]'>[attempting_to_build]</a> ! ([LOC ? "<a href='?_src_=holder;adminplayerobservecoodjump=1;X=[LOC.x];Y=[LOC.y];Z=[LOC.z]'>JMP</a>" : "null"])", 0)
+			log_admin("EXPLOIT : [key_name(usr)] tried to exploit an autolathe to duplicate [attempting_to_build] !")
+			return FALSE
 
-			if (!multiplier) multiplier = 1
-			var/max_multiplier = 1
+		// now check for legit multiplier, also only stacks should pass with one to prevent raw-materials-manipulation -walter0o
 
-			if(istype(template, /obj/item/stack)) // stacks are the only items which can have a multiplier higher than 1 -walter0o
-				var/obj/item/stack/S = template
-				max_multiplier = min(S.max_amount, S.m_amt?round(m_amount/S.m_amt):INFINITY, S.g_amt?round(g_amount/S.g_amt):INFINITY)  // pasta from regular_win() to make sure the numbers match -walter0o
+		var/multiplier = text2num(href_list["multiplier"])
 
-			if( (multiplier > max_multiplier) || (multiplier <= 0) ) // somebody is trying to exploit, alert admins-walter0o
+		if (!multiplier) multiplier = 1
+		var/max_multiplier = 1
 
-				var/turf/LOC = get_turf(usr)
-				message_admins("[key_name_admin(usr)] tried to exploit an autolathe with multiplier set to <u>[multiplier]</u> on <u>[template]</u>  ! ([LOC ? "<a href='?_src_=holder;adminplayerobservecoodjump=1;X=[LOC.x];Y=[LOC.y];Z=[LOC.z]'>JMP</a>" : "null"])" , 0)
-				log_admin("EXPLOIT : [key_name(usr)] tried to exploit an autolathe with multiplier set to [multiplier] on [template]  !")
-				return
+		if(istype(template, /obj/item/stack)) // stacks are the only items which can have a multiplier higher than 1 -walter0o
+			var/obj/item/stack/S = template
+			max_multiplier = min(S.max_amount, S.m_amt?round(m_amount/S.m_amt):INFINITY, S.g_amt?round(g_amount/S.g_amt):INFINITY)  // pasta from regular_win() to make sure the numbers match -walter0o
 
-			var/power = max(2000, (template.m_amt+template.g_amt)*multiplier/5)
-			if(src.m_amount >= template.m_amt*multiplier/coeff && src.g_amount >= template.g_amt*multiplier/coeff)
-				busy = 1
-				use_power(power)
-				icon_state = "autolathe"
-				flick("autolathe_n",src)
-				spawn(32/coeff)
-					if(istype(template, /obj/item/stack))
-						src.m_amount -= template.m_amt*multiplier
-						src.g_amount -= template.g_amt*multiplier
-						var/obj/new_item = new template.type(T)
-						var/obj/item/stack/S = new_item
-						S.amount = multiplier
-					else
-						src.m_amount -= template.m_amt/coeff
-						src.g_amount -= template.g_amt/coeff
-						var/obj/new_item = new template.type(T)
-						new_item.m_amt /= coeff
-						new_item.g_amt /= coeff
-					if(src.m_amount < 0)
-						src.m_amount = 0
-					if(src.g_amount < 0)
-						src.g_amount = 0
-					busy = 0
-		if(href_list["act"])
-			var/temp_wire = href_list["wire"]
-			if(href_list["act"] == "pulse")
-				if (!istype(usr.get_active_hand(), /obj/item/device/multitool))
-					usr << "You need a multitool!"
+		if( (multiplier > max_multiplier) || (multiplier <= 0) ) // somebody is trying to exploit, alert admins-walter0o
+
+			var/turf/LOC = get_turf(usr)
+			message_admins("[key_name_admin(usr)] tried to exploit an autolathe with multiplier set to <u>[multiplier]</u> on <u>[template]</u>  ! ([LOC ? "<a href='?_src_=holder;adminplayerobservecoodjump=1;X=[LOC.x];Y=[LOC.y];Z=[LOC.z]'>JMP</a>" : "null"])" , 0)
+			log_admin("EXPLOIT : [key_name(usr)] tried to exploit an autolathe with multiplier set to [multiplier] on [template]  !")
+			return FALSE
+
+		var/power = max(2000, (template.m_amt+template.g_amt)*multiplier/5)
+		if(src.m_amount >= template.m_amt*multiplier/coeff && src.g_amount >= template.g_amt*multiplier/coeff)
+			busy = 1
+			use_power(power)
+			icon_state = "autolathe"
+			flick("autolathe_n",src)
+			spawn(32/coeff)
+				if(istype(template, /obj/item/stack))
+					src.m_amount -= template.m_amt*multiplier
+					src.g_amount -= template.g_amt*multiplier
+					var/obj/new_item = new template.type(T)
+					var/obj/item/stack/S = new_item
+					S.amount = multiplier
 				else
-					if(src.wires[temp_wire])
-						usr << "You can't pulse a cut wire."
-					else
-						if(src.hack_wire == temp_wire)
-							src.hacked = !src.hacked
-							spawn(100) src.hacked = !src.hacked
-						if(src.disable_wire == temp_wire)
-							src.disabled = !src.disabled
-							src.shock(usr,50)
-							spawn(100) src.disabled = !src.disabled
-						if(src.shock_wire == temp_wire)
-							src.shocked = !src.shocked
-							src.shock(usr,50)
-							spawn(100) src.shocked = !src.shocked
-			if(href_list["act"] == "wire")
-				if (!istype(usr.get_active_hand(), /obj/item/weapon/wirecutters))
-					usr << "You need wirecutters!"
+					src.m_amount -= template.m_amt/coeff
+					src.g_amount -= template.g_amt/coeff
+					var/obj/new_item = new template.type(T)
+					new_item.m_amt /= coeff
+					new_item.g_amt /= coeff
+				if(src.m_amount < 0)
+					src.m_amount = 0
+				if(src.g_amount < 0)
+					src.g_amount = 0
+				busy = 0
+	if(href_list["act"])
+		var/temp_wire = href_list["wire"]
+		if(href_list["act"] == "pulse")
+			if (!istype(usr.get_active_hand(), /obj/item/device/multitool))
+				usr << "You need a multitool!"
+			else
+				if(src.wires[temp_wire])
+					usr << "You can't pulse a cut wire."
 				else
-					wires[temp_wire] = !wires[temp_wire]
 					if(src.hack_wire == temp_wire)
 						src.hacked = !src.hacked
+						spawn(100) src.hacked = !src.hacked
 					if(src.disable_wire == temp_wire)
 						src.disabled = !src.disabled
 						src.shock(usr,50)
+						spawn(100) src.disabled = !src.disabled
 					if(src.shock_wire == temp_wire)
 						src.shocked = !src.shocked
 						src.shock(usr,50)
-	else
-		usr << "\red The autolathe is busy. Please wait for completion of previous operation."
-	src.updateUsrDialog()
-	return
+						spawn(100) src.shocked = !src.shocked
+		if(href_list["act"] == "wire")
+			if (!istype(usr.get_active_hand(), /obj/item/weapon/wirecutters))
+				usr << "You need wirecutters!"
+			else
+				wires[temp_wire] = !wires[temp_wire]
+				if(src.hack_wire == temp_wire)
+					src.hacked = !src.hacked
+				if(src.disable_wire == temp_wire)
+					src.disabled = !src.disabled
+					src.shock(usr,50)
+				if(src.shock_wire == temp_wire)
+					src.shocked = !src.shocked
+					src.shock(usr,50)
+
+	updateUsrDialog()

@@ -1,0 +1,24 @@
+"a" = (/turf/simulated/floor/holofloor{icon_state = "asteroid"; dir = 2},/area/holodeck/source_desert)
+"b" = (/turf/simulated/floor/holofloor{icon_state = "asteroid6"; dir = 2},/area/holodeck/source_desert)
+"c" = (/turf/simulated/floor/holofloor{icon_state = "asteroid2"; dir = 4},/area/holodeck/source_desert)
+"d" = (/obj/structure/flora/ausbushes/fullgrass,/turf/simulated/floor/holofloor{icon_state = "asteroid"; dir = 2},/area/holodeck/source_desert)
+"e" = (/turf/simulated/floor/holofloor{icon_state = "asteroid8"; dir = 4},/area/holodeck/source_desert)
+"f" = (/obj/structure/flora/ausbushes/sparsegrass,/turf/simulated/floor/holofloor{icon_state = "asteroid"; dir = 2},/area/holodeck/source_desert)
+"g" = (/turf/simulated/floor/holofloor{icon_state = "asteroid11"; dir = 4},/area/holodeck/source_desert)
+"h" = (/turf/simulated/floor/holofloor{icon_state = "asteroid7"; dir = 2},/area/holodeck/source_desert)
+"i" = (/turf/simulated/floor/holofloor{icon_state = "asteroid5"; dir = 2},/area/holodeck/source_desert)
+"j" = (/turf/simulated/floor/holofloor{icon_state = "asteroid1"; dir = 4},/area/holodeck/source_desert)
+"k" = (/turf/simulated/floor/holofloor{icon_state = "asteroid3"; dir = 4},/area/holodeck/source_desert)
+
+(1,1,1) = {"
+aaaaaaabaa
+aacaaadaae
+aadcaacaaa
+aacaaaafga
+aaaaahaaaa
+acfaaahaai
+aacaaadhaf
+aacaaaaaha
+adaaaajaah
+aaaaafakad
+"}

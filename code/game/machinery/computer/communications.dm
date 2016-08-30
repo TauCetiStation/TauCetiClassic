@@ -41,15 +41,16 @@
 
 
 /obj/machinery/computer/communications/Topic(href, href_list)
-	if(..())
+	. = ..()
+	if(!.)
 		return
+
 	if (src.z > ZLEVEL_STATION)
 		usr << "\red <b>Unable to establish a connection</b>: \black You're too far away from the station!"
-		return
-	usr.set_machine(src)
-
+		return FALSE
 	if(!href_list["operation"])
-		return
+		return FALSE
+
 	var/obj/item/weapon/circuitboard/communications/CM = circuit
 	switch(href_list["operation"])
 		// main interface
@@ -252,9 +253,6 @@
 
 		if("changeseclevel")
 			state = STATE_ALERT_LEVEL
-
-
-
 	src.updateUsrDialog()
 
 /obj/machinery/computer/communications/attackby(var/obj/I as obj, var/mob/user as mob)

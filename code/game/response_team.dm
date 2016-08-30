@@ -42,7 +42,7 @@ var/can_call_ert
 /client/verb/JoinResponseTeam()
 	set category = "IC"
 
-	if(isobserver(usr) || isnewplayer(usr))
+	if(isobserver(usr) || isnewplayer(usr) || ismouse(usr) || isbrain(usr) || usr.is_dead())
 		if(!send_emergency_team)
 			usr << "No emergency response team is currently being sent."
 			return
@@ -82,7 +82,7 @@ var/can_call_ert
 			return
 
 	else
-		usr << "You need to be an observer or new player to use this."
+		usr << "You need to be an observer, mouse, brain or new player to use this."
 
 // returns a number of dead players in %
 /proc/percentage_dead()
@@ -260,6 +260,12 @@ var/can_call_ert
 		W.icon_state = "ert"
 		equip_to_slot_or_del(W, slot_wear_id)
 
+	var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(src)
+	L.imp_in = src
+	L.implanted = 1
+	var/datum/organ/external/affected = src.organs_by_name["head"]
+	affected.implants += L
+	L.part = affected
 	return 1
 
 /obj/item/weapon/card/id/ert

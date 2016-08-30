@@ -51,7 +51,7 @@ var/list/admin_verbs_event = list(
 
 	var/file = file(choice)
 	if(isfile(file))
-		maploader.load_map(file, load_speed = 100)
+		maploader.load_map(file)//, load_speed = 100)
 
 	message_admins("[key_name_admin(src)] loaded event-map [choice], zlevel [world.maxz]", 1)
 	log_admin("[key_name_admin(src)] loaded event-map [choice], zlevel [world.maxz]", 1)

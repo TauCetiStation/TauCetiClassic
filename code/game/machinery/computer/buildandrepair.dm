@@ -179,10 +179,10 @@
 	build_path = /obj/machinery/computer/supplycomp
 	origin_tech = "programming=3"
 	var/contraband_enabled = 0
-/obj/item/weapon/circuitboard/research_shuttle
+/*/obj/item/weapon/circuitboard/research_shuttle
 	name = "Circuit board (Research Shuttle)"
 	build_path = /obj/machinery/computer/research_shuttle
-	origin_tech = "programming=2"
+	origin_tech = "programming=2"*/
 /obj/item/weapon/circuitboard/operating
 	name = "Circuit board (Operating Computer)"
 	build_path = /obj/machinery/computer/operating
@@ -207,14 +207,16 @@
 	name = "Circuit board (Disease Splicer)"
 	build_path = /obj/machinery/computer/diseasesplicer
 
-/obj/item/weapon/circuitboard/mining_shuttle
+/*/obj/item/weapon/circuitboard/mining_shuttle
 	name = "Circuit board (Mining Shuttle)"
 	build_path = /obj/machinery/computer/mining_shuttle
+	origin_tech = "programming=2"*/
+
+/obj/item/weapon/circuitboard/mine_sci_shuttle
+	name = "Circuit board (Mining Shuttle)"
+	build_path = /obj/machinery/computer/mine_sci_shuttle
 	origin_tech = "programming=2"
-/obj/item/weapon/circuitboard/research_shuttle
-	name = "Circuit board (Research Shuttle)"
-	build_path = /obj/machinery/computer/research_shuttle
-	origin_tech = "programming=2"
+
 /obj/item/weapon/circuitboard/HolodeckControl // Not going to let people get this, but it's just here for future
 	name = "Circuit board (Holodeck Control)"
 	build_path = /obj/machinery/computer/HolodeckControl
@@ -308,14 +310,31 @@
 /obj/item/weapon/circuitboard/rdconsole/attackby(obj/item/I as obj, mob/user as mob)
 	if(istype(I,/obj/item/weapon/screwdriver))
 		user.visible_message("\blue \the [user] adjusts the jumper on the [src]'s access protocol pins.", "\blue You adjust the jumper on the access protocol pins.")
-		if(src.build_path == /obj/machinery/computer/rdconsole/core)
+		switch(src.build_path)
+
+			if(/obj/machinery/computer/rdconsole/core)
+				src.name = "Circuit Board (RD Console - Robotics)"
+				src.build_path = /obj/machinery/computer/rdconsole/robotics
+				user << "\blue Access protocols set to robotics."
+
+			if(/obj/machinery/computer/rdconsole/robotics)
+				src.name = "Circuit Board (RD Console - Mining)"
+				src.build_path = /obj/machinery/computer/rdconsole/mining
+				user << "\blue Access protocols set to mining."
+
+			if(/obj/machinery/computer/rdconsole/mining)
+				src.name = "Circuit Board (RD Console)"
+				src.build_path = /obj/machinery/computer/rdconsole/core
+				user << "\blue Access protocols set to default."
+
+		/*if(src.build_path == /obj/machinery/computer/rdconsole/core)
 			src.name = "Circuit Board (RD Console - Robotics)"
 			src.build_path = /obj/machinery/computer/rdconsole/robotics
 			user << "\blue Access protocols set to robotics."
 		else
 			src.name = "Circuit Board (RD Console)"
 			src.build_path = /obj/machinery/computer/rdconsole/core
-			user << "\blue Access protocols set to default."
+			user << "\blue Access protocols set to default."*/
 	return
 
 /obj/structure/computerframe/attackby(obj/item/P as obj, mob/user as mob)

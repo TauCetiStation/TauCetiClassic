@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
-
 /var/const/access_security = 1 // Security equipment
 /var/const/access_brig = 2 // Brig timers and permabrig
 /var/const/access_armory = 3
@@ -67,6 +65,7 @@
 /var/const/access_xenoarch = 65
 /var/const/access_minisat = 66
 /var/const/access_recycler = 67
+/var/const/access_detective = 68
 
 	//BEGIN CENTCOM ACCESS
 	/*Should leave plenty of room if we need to add more access levels.
@@ -97,29 +96,41 @@
 /obj/proc/allowed(mob/M)
 	//check if it doesn't require any access at all
 	if(src.check_access(null))
-		return 1
-	if(istype(M, /mob/living/silicon))
-		//AI can do whatever he wants
-		return 1
+		return TRUE
+	if(issilicon(M))
+		var/mob/living/silicon/S = M
+		if(src.check_access(S))
+			return TRUE
 	else if(istype(M, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = M
 		//if they are holding or wearing a card that has access, that works
 		if(src.check_access(H.get_active_hand()) || src.check_access(H.wear_id))
-			return 1
+			return TRUE
 	else if(istype(M, /mob/living/carbon/monkey) || istype(M, /mob/living/carbon/alien/humanoid))
 		var/mob/living/carbon/george = M
 		//they can only hold things :(
 		if(src.check_access(george.get_active_hand()))
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
-/obj/item/proc/GetAccess()
+/atom/movable/proc/GetAccess()
 	return list()
+
+/mob/living/silicon/GetAccess()
+	return get_all_accesses()
+
+/mob/living/silicon/robot/syndicate/GetAccess()
+	return list(access_maint_tunnels, access_syndicate, access_external_airlocks) //syndicate basic access
 
 /obj/item/proc/GetID()
 	return null
 
-/obj/proc/check_access(obj/item/I)
+/obj/proc/check_access(atom/movable/AM)
+	if(istype(src, /obj/machinery))
+		var/obj/machinery/Machine = src
+		if(Machine.emagged)
+			return TRUE
+
 	//These generations have been moved out of /obj/New() because they were slowing down the creation of objects that never even used the access system.
 	if(!src.req_access)
 		src.req_access = list()
@@ -140,23 +151,22 @@
 					req_one_access += n
 
 	if(!istype(src.req_access, /list)) //something's very wrong
-		return 1
+		return TRUE
 
 	var/list/L = src.req_access
 	if(!L.len && (!src.req_one_access || !src.req_one_access.len)) //no requirements
-		return 1
-	if(!I)
-		return 0
+		return TRUE
+	if(!AM)
+		return FALSE
 	for(var/req in src.req_access)
-		if(!(req in I.GetAccess())) //doesn't have this access
-			return 0
+		if(!(req in AM.GetAccess())) //doesn't have this access
+			return FALSE
 	if(src.req_one_access && src.req_one_access.len)
 		for(var/req in src.req_one_access)
-			if(req in I.GetAccess()) //has an access from the single access list
-				return 1
-		return 0
-	return 1
-
+			if(req in AM.GetAccess()) //has an access from the single access list
+				return TRUE
+		return FALSE
+	return TRUE
 
 /obj/proc/check_access_list(var/list/L)
 	if(!src.req_access  && !src.req_one_access)	return 1
@@ -206,7 +216,7 @@
 	            access_hydroponics, access_library, access_lawyer, access_virology, access_psychiatrist, access_cmo, access_qm, access_clown, access_mime, access_surgery,
 	            access_theatre, access_research, access_mining, access_mailsorting,
 	            access_heads_vault, access_mining_station, access_xenobiology, access_ce, access_hop, access_hos, access_RC_announce,
-	            access_keycard_auth, access_tcomsat, access_gateway, access_xenoarch, access_minisat, access_recycler)
+	            access_keycard_auth, access_tcomsat, access_gateway, access_xenoarch, access_minisat, access_recycler, access_detective)
 
 /proc/get_all_centcom_access()
 	return list(access_cent_general, access_cent_thunder, access_cent_specops, access_cent_medical, access_cent_living, access_cent_storage, access_cent_teleporter, access_cent_creed, access_cent_captain)
@@ -219,7 +229,7 @@
 		if(0)
 			return get_all_accesses()
 		if(1) //security
-			return list(access_sec_doors, access_security, access_brig, access_armory, access_forensics_lockers, access_court, access_hos)
+			return list(access_sec_doors, access_security, access_brig, access_armory, access_forensics_lockers, access_court, access_hos, access_detective)
 		if(2) //medbay
 			return list(access_medical, access_genetics, access_morgue, access_chemistry, access_psychiatrist, access_virology, access_surgery, access_cmo)
 		if(3) //research
@@ -259,6 +269,8 @@
 			return "Cargo Bay"
 		if(access_recycler)
 			return "Recycler"
+		if(access_detective)
+			return "Detective"
 		if(access_cargo_bot)
 			return "Cargo Bot Delivery"
 		if(access_security)

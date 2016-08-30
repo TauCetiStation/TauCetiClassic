@@ -32,6 +32,17 @@
 	else
 		return
 
+/obj/item/weapon/gun/energy/ionrifle/classic
+	name = "ion rifle"
+	desc = "A man portable anti-armor weapon designed to disable mechanical threats."
+	icon_state = "oldion"
+	item_state = "oldion"
+	slot_flags = null
+
+/obj/item/weapon/gun/energy/ionrifle/tactifool
+	icon_state = "tfionrifle"
+	item_state = "tfionrifle"
+
 /obj/item/weapon/gun/energy/decloner
 	name = "biological demolecularisor"
 	desc = "A gun that discharges high amounts of controlled radiation to slowly break a target into component elements."
@@ -229,7 +240,7 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "tesla"
 	w_class = 4.0
-	origin_tech = "combat = 5;materials = 5;powerstorage = 5;magnets = 5;engineering = 5"
+	origin_tech = "combat=5;materials=5;powerstorage=5;magnets=5;engineering=5"
 	var/charge = 0
 	var/charging = FALSE
 	var/cooldown = FALSE

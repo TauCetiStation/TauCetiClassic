@@ -566,6 +566,10 @@ Note that amputating the affected organ does in fact remove the infection from t
 	if(destspawn) return
 	if(override)
 		status |= ORGAN_DESTROYED
+	for(var/datum/wound/W in wounds)
+		if(W.internal)
+			wounds -= W
+			update_damages()
 	if(status & ORGAN_DESTROYED)
 		if(body_part == UPPER_TORSO)
 			return
@@ -1210,3 +1214,67 @@ Note that amputating the affected organ does in fact remove the infection from t
 				..()
 	else
 		..()
+
+/datum/organ/external/proc/get_wounds_desc()
+	if(status == ORGAN_ROBOT)
+		var/list/descriptors = list()
+		if(brute_dam)
+			switch(brute_dam)
+				if(0 to 20)
+					descriptors += "some dents"
+				if(21 to INFINITY)
+					descriptors += pick("a lot of dents","severe denting")
+		if(burn_dam)
+			switch(burn_dam)
+				if(0 to 20)
+					descriptors += "some burns"
+				if(21 to INFINITY)
+					descriptors += pick("a lot of burns","severe melting")
+		if(open)
+			descriptors += "an open panel"
+
+		return english_list(descriptors)
+
+	var/list/flavor_text = list()
+	if(status & ORGAN_DESTROYED)
+		flavor_text += "a tear and hangs by a scrap of flesh" // TODO ZAKONCHIT'
+
+	var/list/wound_descriptors = list()
+	if(open > 1)
+		wound_descriptors["an open incision"] = 1
+	else if (open)
+		wound_descriptors["an incision"] = 1
+	for(var/datum/wound/W in wounds)
+		if(W.internal && !open) continue // can't see internal wounds
+		var/this_wound_desc = W.desc
+
+		if(W.damage_type == BURN && W.salved)
+			this_wound_desc = "salved [this_wound_desc]"
+
+		if(W.bleeding())
+			this_wound_desc = "bleeding [this_wound_desc]"
+		else if(W.bandaged)
+			this_wound_desc = "bandaged [this_wound_desc]"
+
+		if(W.germ_level > 600)
+			this_wound_desc = "badly infected [this_wound_desc]"
+		else if(W.germ_level > 330)
+			this_wound_desc = "lightly infected [this_wound_desc]"
+
+		if(wound_descriptors[this_wound_desc])
+			wound_descriptors[this_wound_desc] += W.amount
+		else
+			wound_descriptors[this_wound_desc] = W.amount
+
+	for(var/wound in wound_descriptors)
+		switch(wound_descriptors[wound])
+			if(1)
+				flavor_text += "a [wound]"
+			if(2)
+				flavor_text += "a pair of [wound]s"
+			if(3 to 5)
+				flavor_text += "several [wound]s"
+			if(6 to INFINITY)
+				flavor_text += "a ton of [wound]\s"
+
+	return english_list(flavor_text)

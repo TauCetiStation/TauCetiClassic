@@ -1815,28 +1815,37 @@ datum/design/jackhammer
 	desc = "Cracks rocks with sonic blasts, perfect for killing cave lizards."
 	id = "jackhammer"
 	req_tech = list("materials" = 3, "powerstorage" = 2, "engineering" = 2)
-	build_type = PROTOLATHE
+	build_type = PROTOLATHE | MINEFAB
 	materials = list(MAT_METAL = 2000, MAT_GLASS = 500, MAT_SILVER = 500)
 	build_path = /obj/item/weapon/pickaxe/drill/jackhammer
+	construction_time=100
+	category = list("Tools")
+
 
 datum/design/drill
 	name = "Mining Drill"
 	desc = "Yours is the drill that will pierce through the rock walls."
 	id = "drill"
 	req_tech = list("materials" = 2, "powerstorage" = 3, "engineering" = 2)
-	build_type = PROTOLATHE
+	build_type = PROTOLATHE | MINEFAB
 	materials = list(MAT_METAL = 6000, MAT_GLASS = 1000) //expensive, but no need for miners.
 	build_path = /obj/item/weapon/pickaxe/drill
+	construction_time=100
+	category = list("Tools")
+
 
 datum/design/plasmacutter
 	name = "Plasma Cutter"
 	desc = "You could use it to cut limbs off of xenos! Or, you know, mine stuff."
 	id = "plasmacutter"
 	req_tech = list("materials" = 4, "phorontech" = 3, "engineering" = 3)
-	build_type = PROTOLATHE
+	build_type = PROTOLATHE | MINEFAB
 	materials = list(MAT_METAL = 1500, MAT_GLASS = 500, MAT_GOLD = 500, MAT_PHORON = 500)
 	reliability = 79
 	build_path = /obj/item/weapon/pickaxe/plasmacutter
+	construction_time=300
+	category = list("Tools")
+
 
 datum/design/pick_diamond
 	name = "Diamond Pickaxe"
@@ -1852,37 +1861,46 @@ datum/design/drill_diamond
 	desc = "Yours is the drill that will pierce the heavens!"
 	id = "drill_diamond"
 	req_tech = list("materials" = 6, "powerstorage" = 4, "engineering" = 4)
-	build_type = PROTOLATHE
+	build_type = PROTOLATHE | MINEFAB
 	materials = list(MAT_METAL = 3000, MAT_GLASS = 1000, MAT_DIAMOND = 3750) //Yes, a whole diamond is needed.
 	reliability = 79
 	build_path = /obj/item/weapon/pickaxe/drill/diamond_drill
+	construction_time=100
+	category = list("Tools")
+
 
 datum/design/mesons
 	name = "Optical Meson Scanners"
 	desc = "Used for seeing walls, floors, and stuff through anything."
 	id = "mesons"
 	req_tech = list("magnets" = 2, "engineering" = 2)
-	build_type = PROTOLATHE
+	build_type = PROTOLATHE | MINEFAB
 	materials = list(MAT_METAL = 50, MAT_GLASS = 50)
 	build_path = /obj/item/clothing/glasses/meson
+	construction_time=100
+	category = list("Tools")
 
 datum/design/scaner_imp
 	name = "Improved ore scaner"
 	desc = "A complex device used to locate ore deep underground."
 	id = "scaner_imp"
 	req_tech = list("magnets" = 2, "engineering" = 3)
-	build_type = PROTOLATHE
+	build_type = PROTOLATHE | MINEFAB
 	materials = list(MAT_METAL = 500, MAT_GLASS = 2000)
 	build_path = /obj/item/weapon/mining_scanner/improved
+	construction_time=300
+	category = list("Tools")
 
 datum/design/scaner_adv
 	name = "Advanced ore scaner"
 	desc = "A complex device used to locate ore deep underground."
 	id = "scaner_adv"
 	req_tech = list("magnets" = 4, "engineering" = 5)
-	build_type = PROTOLATHE
+	build_type = PROTOLATHE | MINEFAB
 	materials = list(MAT_METAL = 8000, MAT_SILVER = 200, MAT_DIAMOND = 100)
 	build_path = /obj/item/weapon/mining_scanner/improved/adv
+	construction_time=450
+	category = list("Tools")
 
 /////////////////////////////////////////
 //////////////Blue Space/////////////////
@@ -2179,9 +2197,11 @@ datum/design/body_warp
 	desc = "A device used for teleporting injured or dead people."
 	id = "body_warp"
 	req_tech = list("materials" = 2)
-	build_type = PROTOLATHE
+	build_type = PROTOLATHE | MINEFAB
 	materials = list(MAT_METAL = 3500, MAT_GLASS = 3500)
 	build_path = /obj/item/weapon/medical/teleporter
+	construction_time=100
+	category = list("Support")
 
 datum/design/spraycan
 	name = "Spraycan"

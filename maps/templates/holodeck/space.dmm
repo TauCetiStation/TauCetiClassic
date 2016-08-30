@@ -1,0 +1,15 @@
+"a" = (/turf/simulated/floor/holofloor/space,/area/holodeck/source_space)
+"b" = (/obj/effect/landmark{name = "Holocarp Spawn Random"},/turf/simulated/floor/holofloor/space,/area/holodeck/source_space)
+
+(1,1,1) = {"
+aaaaaaaaaa
+aaabaaaaba
+aaaaaaaaaa
+abaaaabaaa
+aaaaaaaaaa
+aaaaaaaaaa
+aaabaaaaba
+aaaaaaaaaa
+abaaaabaaa
+aaaaaaaaaa
+"}

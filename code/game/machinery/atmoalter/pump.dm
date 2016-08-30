@@ -123,32 +123,21 @@ Target Pressure: <A href='?src=\ref[src];pressure_adj=-1000'>-</A> <A href='?src
 	return
 
 /obj/machinery/portable_atmospherics/pump/Topic(href, href_list)
-	..()
-	if (usr.stat || usr.restrained())
+	. = ..()
+	if(!.)
 		return
 
-	if (((get_dist(src, usr) <= 1) && istype(src.loc, /turf)))
-		usr.set_machine(src)
+	if(href_list["power"])
+		on = !on
+	else if(href_list["direction"])
+		direction_out = !direction_out
+	else if (href_list["remove_tank"])
+		if(holding)
+			holding.loc = loc
+			holding = null
+	else if (href_list["pressure_adj"])
+		var/diff = text2num(href_list["pressure_adj"])
+		target_pressure = min(10 * ONE_ATMOSPHERE, max(0, target_pressure + diff))
 
-		if(href_list["power"])
-			on = !on
-
-		if(href_list["direction"])
-			direction_out = !direction_out
-
-		if (href_list["remove_tank"])
-			if(holding)
-				holding.loc = loc
-				holding = null
-
-		if (href_list["pressure_adj"])
-			var/diff = text2num(href_list["pressure_adj"])
-			target_pressure = min(10*ONE_ATMOSPHERE, max(0, target_pressure+diff))
-
-		src.updateUsrDialog()
-		src.add_fingerprint(usr)
-		update_icon()
-	else
-		usr << browse(null, "window=pump")
-		return
-	return
+	updateUsrDialog()
+	update_icon()

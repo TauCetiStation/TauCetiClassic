@@ -188,14 +188,13 @@
 	var/badmin = 0
 
 /obj/machinery/computer/rdservercontrol/Topic(href, href_list)
-	if(..())
+	. = ..()
+	if(!.)
 		return
 
-	add_fingerprint(usr)
-	usr.set_machine(src)
 	if(!src.allowed(usr) && !emagged)
 		usr << "\red You do not have the required access level"
-		return
+		return FALSE
 
 	if(href_list["main"])
 		screen = 0
@@ -255,7 +254,6 @@
 		temp_server.files.RefreshResearch()
 
 	updateUsrDialog()
-	return
 
 /obj/machinery/computer/rdservercontrol/attack_hand(mob/user as mob)
 	if(..())
@@ -341,3 +339,9 @@
 	id_with_upload_string = "1"
 	id_with_download_string = "1"
 	server_id = 1
+
+/obj/machinery/r_n_d/server/mining
+	name = "Mining R&D Server"
+	id_with_upload_string = "1;3"
+	id_with_download_string = "1;3"
+	server_id = 3

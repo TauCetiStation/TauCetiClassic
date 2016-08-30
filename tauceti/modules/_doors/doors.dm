@@ -9,3 +9,13 @@
 	base_name = "Airlock"
 	airlock_type = "/neutral"
 	glass = -1
+
+/obj/machinery/door/airlock/wagon
+	name = "Airlock"
+	icon = 'icons/obj/doors/wagon.dmi'
+	assembly_type = /obj/structure/door_assembly/door_assembly_neutral
+
+/obj/machinery/door/airlock/erokez
+	name = "Airlock"
+	icon = 'icons/obj/doors/erokez.dmi'
+	assembly_type = /obj/structure/door_assembly/door_assembly_neutral

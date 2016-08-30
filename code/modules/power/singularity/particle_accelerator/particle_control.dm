@@ -71,17 +71,15 @@
 	return
 
 /obj/machinery/particle_accelerator/control_box/Topic(href, href_list)
-	..()
-	//Ignore input if we are broken, !silicon guy cant touch us, or nonai controlling from super far away
-	if(stat & (BROKEN|NOPOWER) || (get_dist(src, usr) > 1 && !istype(usr, /mob/living/silicon)) || (get_dist(src, usr) > 8 && !istype(usr, /mob/living/silicon/ai)))
-		usr.unset_machine()
+	if(href_list["close"])
+		usr.unset_machine(src)
 		usr << browse(null, "window=pacontrol")
+		return FALSE
+
+	. = ..()
+	if(!.)
 		return
 
-	if( href_list["close"] )
-		usr << browse(null, "window=pacontrol")
-		usr.unset_machine()
-		return
 	if(href_list["togglep"])
 		src.toggle_power()
 		investigate_log("turned [active?"<font color='red'>ON</font>":"<font color='green'>OFF</font>"] by [usr.key]","singulo")
@@ -111,9 +109,9 @@
 		for(var/obj/structure/particle_accelerator/part in connected_parts)
 			part.strength = strength
 			part.update_icon()
+
 	src.updateDialog()
 	src.update_icon()
-	return
 
 
 /obj/machinery/particle_accelerator/control_box/power_change()

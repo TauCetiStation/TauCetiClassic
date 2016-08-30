@@ -136,19 +136,30 @@
 
 
 //Much like get_heat_protection(), this returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
-/mob/living/carbon/human/proc/get_pressure_protection()
+/mob/living/carbon/human/proc/get_pressure_protection(pressure_check = STOPS_PRESSUREDMAGE)
 	var/pressure_adjustment_coefficient = 1	//Determins how much the clothing you are wearing protects you in percent.
 
-	if((head && (head.flags & STOPSPRESSUREDMAGE))&&(wear_suit && (wear_suit.flags & STOPSPRESSUREDMAGE)))
+	if((head && (head.flags_pressure & STOPS_PRESSUREDMAGE))&&(wear_suit && (wear_suit.flags_pressure & STOPS_PRESSUREDMAGE)))
 		pressure_adjustment_coefficient = 0
 
-	//Handles breaches in your space suit. 10 suit damage equals a 100% loss of pressure reduction.
-	if(wear_suit && (wear_suit.flags & STOPSPRESSUREDMAGE))
-		if(istype(wear_suit,/obj/item/clothing/suit/space))
-			var/obj/item/clothing/suit/space/S = wear_suit
-			if(S.can_breach && S.damage)
-				var/pressure_loss = S.damage * 0.1
-				pressure_adjustment_coefficient += pressure_loss
+		//Handles breaches in your space suit. 10 suit damage equals a 100% loss of pressure reduction.
+		if(wear_suit && (wear_suit.flags_pressure & STOPS_PRESSUREDMAGE))
+			if(istype(wear_suit,/obj/item/clothing/suit/space))
+				var/obj/item/clothing/suit/space/S = wear_suit
+				if(S.can_breach && S.damage)
+					var/pressure_loss = S.damage * 0.1
+					pressure_adjustment_coefficient += pressure_loss
+	else
+		if((head && (head.flags_pressure & pressure_check))&&(wear_suit && (wear_suit.flags_pressure & pressure_check)))
+			pressure_adjustment_coefficient = 0
+
+		//Handles breaches in your space suit. 10 suit damage equals a 100% loss of pressure reduction.
+		if(wear_suit && (wear_suit.flags_pressure & pressure_check))
+			if(istype(wear_suit,/obj/item/clothing/suit/space))
+				var/obj/item/clothing/suit/space/S = wear_suit
+				if(S.can_breach && S.damage)
+					var/pressure_loss = S.damage * 0.1
+					pressure_adjustment_coefficient += pressure_loss
 
 	pressure_adjustment_coefficient = min(1,max(pressure_adjustment_coefficient,0)) //So it isn't less than 0 or larger than 1.
 
@@ -158,11 +169,11 @@
 	..()
 	var/pressure_difference = abs( pressure - ONE_ATMOSPHERE )
 
-	pressure_difference = pressure_difference * (1 - get_pressure_protection())
-
 	if(pressure > ONE_ATMOSPHERE)
+		pressure_difference = pressure_difference * (1 - get_pressure_protection(STOPS_HIGHPRESSUREDMAGE))
 		return ONE_ATMOSPHERE + pressure_difference
 	else
+		pressure_difference = pressure_difference * (1 - get_pressure_protection(STOPS_LOWPRESSUREDMAGE))
 		return ONE_ATMOSPHERE - pressure_difference
 
 /mob/living/carbon/human
@@ -272,6 +283,9 @@
 				speech_problem_flag = 1
 				gene.OnMobLife(src)
 
+		if(dna_inject_count > 0 && prob(2))
+			dna_inject_count--
+
 		if (radiation)
 			if(species.flags & RAD_IMMUNE)
 				return
@@ -312,6 +326,11 @@
 						radiation -= 2
 						damage = 1
 						adjustToxLoss(1)
+						if(prob(2) && h_style != "Skinhead" && f_style != "Shaved")
+							h_style = "Skinhead"
+							f_style = "Shaved"
+							update_hair()
+							src << "<span class='notice'>Suddenly you lost your hair!</span>"
 						if(prob(5))
 							radiation -= 5
 							Weaken(3)
@@ -324,6 +343,11 @@
 						radiation -= 3
 						adjustToxLoss(3)
 						damage = 1
+						if(prob(5) && h_style != "Skinhead" && f_style != "Shaved")
+							h_style = "Skinhead"
+							f_style = "Shaved"
+							update_hair()
+							src << "<span class='notice'>Suddenly you lost your hair!</span>"
 						if(prob(1))
 							src << "\red You mutate!"
 							randmutb(src)
@@ -1521,7 +1545,7 @@
 			//OH cmon...
 			var/nearsighted = 0
 			var/impaired    = 0
-			
+
 			if(disabilities & NEARSIGHTED)
 				nearsighted = 1
 
@@ -1537,7 +1561,7 @@
 			if(istype(wear_mask, /obj/item/clothing/mask/gas/welding) )
 				var/obj/item/clothing/mask/gas/welding/O = wear_mask
 				if(!O.up && tinted_weldhelh)
-					impaired = 2 
+					impaired = 2
 			if(istype(glasses, /obj/item/clothing/glasses/welding) )
 				var/obj/item/clothing/glasses/welding/O = glasses
 				if(!O.up && tinted_weldhelh)
@@ -1561,7 +1585,7 @@
 				overlay_fullscreen("impaired", /obj/screen/fullscreen/impaired, impaired)
 			else
 				clear_fullscreen("impaired")
-			
+
 			if(!machine)
 				var/isRemoteObserve = 0
 				if((REMOTE_VIEW in mutations) && remoteview_target)
@@ -1602,6 +1626,8 @@
 					species.sightglassesmod = 2
 			else if(istype(glasses, /obj/item/clothing/glasses/thermal) )
 				species.sightglassesmod = 3
+			else if(istype(glasses, /obj/item/clothing/glasses/science) )
+				species.sightglassesmod = 4
 
 		if(stat == DEAD)
 			set_EyesVision(transition_time = 0)
@@ -1627,6 +1653,8 @@
 						set_EyesVision("nvg")
 					if(3)
 						set_EyesVision("thermal")
+					if(4)
+						set_EyesVision("sci")
 
 
 	proc/handle_random_events()

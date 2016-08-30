@@ -144,6 +144,9 @@
 			if (W.dir == SOUTHWEST)
 				new /obj/item/weapon/shard( W.loc )
 				if(W.reinf) new /obj/item/stack/rods( W.loc)
+		else if(istype(A,/obj/structure/grille))
+			var/obj/structure/grille/G = A
+			new /obj/item/stack/rods(G.loc)
 		qdel(A)
 
 

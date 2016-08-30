@@ -255,14 +255,13 @@ var/global/datum/controller/radio/radio_controller
 	//log_admin("DEBUG: devices(filter_str).len=[l]")
 
 /datum/radio_frequency/proc/remove_listener(obj/device)
-	for (var/devices_filter in devices)
+	for(var/devices_filter in devices)
 		var/list/devices_line = devices[devices_filter]
-		devices_line-=device
-		while (null in devices_line)
-			devices_line -= null
-		if (devices_line.len==0)
+		if(!devices_line)
 			devices -= devices_filter
-			qdel(devices_line)
+		devices_line -= device
+		if(!devices_line.len)
+			devices -= devices_filter
 
 
 /obj/proc/receive_signal(datum/signal/signal, receive_method, receive_param)

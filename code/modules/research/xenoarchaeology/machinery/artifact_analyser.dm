@@ -51,9 +51,11 @@
 	dat += "<br>"
 	dat += "<hr>"
 	dat += "<a href='?src=\ref[src]'>Refresh</a> <a href='?src=\ref[src];close=1'>Close</a>"
-	user << browse(dat, "window=artanalyser;size=450x500")
 	user.set_machine(src)
-	onclose(user, "artanalyser")
+	var/datum/browser/popup = new(user, "artanalyser", name, 450, 500)
+	popup.set_content(dat)
+	popup.open()
+
 
 /obj/machinery/artifact_analyser/process()
 	if(scan_in_progress && world.time > scan_completion_time)
@@ -87,6 +89,15 @@
 			A.being_used = 0
 
 /obj/machinery/artifact_analyser/Topic(href, href_list)
+	if(href_list["close"])
+		usr.unset_machine(src)
+		usr << browse(null, "window=artanalyser")
+		return FALSE
+
+	. = ..()
+	if(!.)
+		return
+
 	if(href_list["begin_scan"])
 		if(!owned_scanner)
 			reconnect_scanner()
@@ -119,11 +130,6 @@
 		scan_in_progress = 0
 		src.visible_message("<b>[name]</b> states, \"Scanning halted.\"")
 
-	if(href_list["close"])
-		usr.unset_machine(src)
-		usr << browse(null, "window=artanalyser")
-
-	..()
 	updateDialog()
 
 //hardcoded responses, oh well
@@ -183,7 +189,7 @@
 				out += " have been detected "
 
 				//how the artifact does it's effect
-				switch(A.my_effect.effect_type)
+				switch(A.my_effect.effect)
 					if(1)
 						out += " emitting in an ambient energy field."
 					if(2)
@@ -226,7 +232,7 @@
 						out += "low level radiation"
 
 				//how the artifact does it's effect
-				switch(A.secondary_effect.effect_type)
+				switch(A.secondary_effect.effect)
 					if(1)
 						out += " emitting in an ambient energy field."
 					if(2)

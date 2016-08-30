@@ -330,17 +330,17 @@
 		ui.open()
 
 /obj/machinery/smartfridge/Topic(href, href_list)
-	if (..()) return 0
+	. = ..()
+	if(!.)
+		return
 
 	var/mob/user = usr
 	var/datum/nanoui/ui = nanomanager.get_open_ui(user, src, "main")
 
-	src.add_fingerprint(user)
-
 	if (href_list["close"])
 		user.unset_machine()
 		ui.close()
-		return 0
+		return FALSE
 
 	if (href_list["vend"])
 		var/index = text2num(href_list["vend"])
@@ -358,37 +358,35 @@
 					O.loc = loc
 					i--
 					if (i <= 0)
-						return 1
+						return TRUE
 
-		return 1
+		return TRUE
 
 	if (panel_open)
 		if (href_list["cutwire"])
 			if (!( istype(usr.get_active_hand(), /obj/item/weapon/wirecutters) ))
 				user << "You need wirecutters!"
-				return 1
+				return FALSE
 
 			var/wire_index = text2num(href_list["cutwire"])
 			if (isWireColorCut(wire_index))
 				mend(wire_index)
 			else
 				cut(wire_index)
-			return 1
+			return TRUE
 
 		if (href_list["pulsewire"])
 			if (!istype(usr.get_active_hand(), /obj/item/device/multitool))
 				usr << "You need a multitool!"
-				return 1
+				return FALSE
 
 			var/wire_index = text2num(href_list["pulsewire"])
 			if (isWireColorCut(wire_index))
 				usr << "You can't pulse a cut wire."
-				return 1
+				return FALSE
 
 			pulse(wire_index)
-			return 1
-
-	return 0
+			return TRUE
 
 /*************
 *	Hacking
@@ -476,9 +474,9 @@
 *************************/
 
 /obj/machinery/smartfridge/secure/Topic(href, href_list)
-	if(!ispowered) return 0
-	if (usr.contents.Find(src) || (in_range(src, usr) && istype(loc, /turf)))
-		if (!allowed(usr) && !emagged && locked != -1 && href_list["vend"])
-			usr << "\red Access denied."
-			return 0
-	return ..()
+	. = ..()
+	if(!.)
+		return
+	if (!allowed(usr) && !emagged && locked != -1 && href_list["vend"])
+		usr << "\red Access denied."
+		return FALSE

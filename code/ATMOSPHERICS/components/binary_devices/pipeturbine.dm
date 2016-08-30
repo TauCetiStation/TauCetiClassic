@@ -39,8 +39,6 @@
 			initialize_directions = NORTH|SOUTH
 
 /obj/machinery/atmospherics/pipeturbine/Destroy()
-	loc = null
-
 	if(node1)
 		node1.disconnect(src)
 		qdel(network1)
@@ -51,7 +49,7 @@
 	node1 = null
 	node2 = null
 
-	..()
+	return ..()
 
 /obj/machinery/atmospherics/pipeturbine/process()
 	..()

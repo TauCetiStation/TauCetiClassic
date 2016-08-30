@@ -143,23 +143,24 @@
 	return
 
 /obj/machinery/atmospherics/trinary/mixer/Topic(href,href_list)
-	if(..()) return
+	. = ..()
+	if(!.)
+		return
 	if(href_list["power"])
 		on = !on
-	if(href_list["set_press"])
+	else if(href_list["set_press"])
 		var/new_pressure = input(usr,"Enter new output pressure (0-4500kPa)","Pressure control",src.target_pressure) as num
 		src.target_pressure = max(0, min(4500, new_pressure))
-	if(href_list["node1_c"])
+	else if(href_list["node1_c"])
 		var/value = text2num(href_list["node1_c"])
 		src.node1_concentration = max(0, min(1, src.node1_concentration + value))
 		src.node2_concentration = max(0, min(1, src.node2_concentration - value))
-	if(href_list["node2_c"])
+	else if(href_list["node2_c"])
 		var/value = text2num(href_list["node2_c"])
 		src.node2_concentration = max(0, min(1, src.node2_concentration + value))
 		src.node1_concentration = max(0, min(1, src.node1_concentration - value))
 	src.update_icon()
 	src.updateUsrDialog()
-	return
 
 /obj/machinery/atmospherics/trinary/mixer/t_mixer
 	icon = 'icons/obj/atmospherics/t_mixer.dmi'

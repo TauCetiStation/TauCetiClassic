@@ -124,12 +124,10 @@
 
 
 	Topic(href, href_list)
-		if(..())
+		. = ..()
+		if(!.)
 			return
 
-
-		add_fingerprint(usr)
-		usr.set_machine(src)
 		if(!src.allowed(usr) && !emagged)
 			usr << "\red ACCESS DENIED."
 			return

@@ -552,6 +552,23 @@ var/global/floorIsLava = 0
 	usr << browse(dat, "window=admincaster_main;size=400x600")
 	onclose(usr, "admincaster_main")
 
+//RANDOM DIR MODE
+#define RDM_RANDOM_EXCL_NORTH 10
+#define RDM_RANDOM 20
+
+/datum/admins/proc/get_current_view_mode()
+	if(!ticker.random_dir_mode)
+		return "Default (North)"
+	else if(ticker.random_dir_mode == RDM_RANDOM_EXCL_NORTH)
+		return "Random excl NORTH"
+	else if(ticker.random_dir_mode == RDM_RANDOM)
+		return "Random"
+	else if(ticker.random_dir_mode == SOUTH)
+		return "Forced SOUTH"
+	else if(ticker.random_dir_mode == EAST)
+		return "Forced EAST"
+	else if(ticker.random_dir_mode == WEST)
+		return "Forced WEST"
 
 /datum/admins/proc/Game()
 	if(!check_rights(0))	return
@@ -562,6 +579,13 @@ var/global/floorIsLava = 0
 		"}
 	if(master_mode == "secret")
 		dat += "<A href='?src=\ref[src];f_secret=1'>(Force Secret Mode)</A><br>"
+
+	
+	dat += {"
+		<BR>
+		<A href='?src=\ref[src];c_dir=1'>Change View Mode</A><br>
+		<B>([get_current_view_mode()])</B><br>
+		"}
 
 	dat += {"
 		<BR>
@@ -1178,7 +1202,7 @@ var/global/floorIsLava = 0
 /datum/admins/proc/cmd_ghost_drag(var/mob/dead/observer/frommob, var/mob/living/tomob)
 
 	//this is the exact two check rights checks required to edit a ckey with vv.
-	if (!check_rights(R_VAREDIT,0) || !check_rights(R_SPAWN|R_DEBUG,0))
+	if (!check_rights(R_ADMIN,0))
 		return 0
 
 	if (!frommob.ckey)
@@ -1196,7 +1220,7 @@ var/global/floorIsLava = 0
 	if (!frommob || !tomob) //make sure the mobs don't go away while we waited for a response
 		return 1
 
-	tomob.ghostize(0)
+	tomob.ghostize(can_reenter_corpse = FALSE)
 
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] has put [frommob.ckey] in control of [tomob.name].</span>")
 	log_admin("[key_name(usr)] stuffed [frommob.ckey] into [tomob.name].")

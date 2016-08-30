@@ -770,6 +770,8 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 		result.Add(t_prod) // User gets a consumable
 		if(!t_prod)
 			return
+		t_prod.seed = mypath
+		t_prod.species = species
 		t_prod.lifespan = lifespan
 		t_prod.endurance = endurance
 		t_prod.maturation = maturation

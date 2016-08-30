@@ -49,13 +49,11 @@ obj/machinery/computer/cryopod/attack_hand(mob/user = usr)
 	onclose(user, "cryopod_console")
 
 obj/machinery/computer/cryopod/Topic(href, href_list)
-
-	if(..())
+	. = ..()
+	if(!.)
 		return
 
 	var/mob/user = usr
-
-	src.add_fingerprint(user)
 
 	if(href_list["log"])
 
@@ -99,7 +97,6 @@ obj/machinery/computer/cryopod/Topic(href, href_list)
 		user << "\red Functionality unavailable at this time."
 
 	src.updateUsrDialog()
-	return
 
 /obj/item/weapon/circuitboard/cryopodcontrol
 	name = "Circuit board (Cryogenic Oversight Console)"
@@ -244,7 +241,8 @@ obj/machinery/computer/cryopod/Topic(href, href_list)
 					current_mode.possible_traitors.Remove(occupant)*/
 			if(!occupant.mind.objectives.len && ticker.mode.name == "AutoTraitor")
 				var/datum/game_mode/traitor/autotraitor/current_mode = ticker.mode
-				current_mode.possible_traitors.Remove(occupant)
+				if(current_mode.possible_traitors && current_mode.possible_traitors.len)
+					current_mode.possible_traitors -= occupant
 
 			// Delete them from datacore.
 
@@ -319,22 +317,22 @@ obj/machinery/computer/cryopod/Topic(href, href_list)
 					M.client.perspective = EYE_PERSPECTIVE
 					M.client.eye = src
 
-			if(orient_right)
-				icon_state = "cryosleeper_right_cl"
-			else
-				icon_state = "cryosleeper_left_cl"
+				if(orient_right)
+					icon_state = "cryosleeper_right_cl"
+				else
+					icon_state = "cryosleeper_left_cl"
 
-			M << "\blue You feel cool air surround you. You go numb as your senses turn inward."
-			M << "\blue <b>If you ghost, log out or close your client now, your character will shortly be permanently removed from the round.</b>"
-			occupant = M
-			time_entered = world.time
+				M << "\blue You feel cool air surround you. You go numb as your senses turn inward."
+				M << "\blue <b>If you ghost, log out or close your client now, your character will shortly be permanently removed from the round.</b>"
+				occupant = M
+				time_entered = world.time
 
-			// Book keeping!
-			log_admin("[key_name_admin(M)] has entered a stasis pod.")
-			message_admins("\blue [key_name_admin(M)] has entered a stasis pod.")
+				// Book keeping!
+				log_admin("[key_name_admin(M)] has entered a stasis pod.")
+				message_admins("\blue [key_name_admin(M)] has entered a stasis pod.")
 
-			//Despawning occurs when process() is called with an occupant without a client.
-			src.add_fingerprint(M)
+				//Despawning occurs when process() is called with an occupant without a client.
+				src.add_fingerprint(M)
 
 /obj/machinery/cryopod/verb/eject()
 	set name = "Eject Pod"

@@ -142,8 +142,15 @@
 		"/obj/item/device/radio/headset",
 		"/obj/item/weapon/melee",
 		"/obj/item/taperoll/police",
-		"/obj/item/weapon/gun/energy/taser"
+		"/obj/item/weapon/gun/energy/taser",
+		"/obj/item/weapon/shield/riot/tele"
 		)
+
+/obj/item/weapon/storage/belt/security/wj
+	name = "security belt"
+	desc = "Can hold security gear like handcuffs and flashes."
+	icon_state = "wjbelt"
+	item_state = "wjbelt"//Could likely use a better one.
 
 /obj/item/weapon/storage/belt/soulstone
 	name = "soul stone belt"

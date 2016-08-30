@@ -9,7 +9,7 @@ var/lastMove = 0
 /obj/machinery/computer/arrival_shuttle
 	name = "Arrival Shuttle Console"
 	icon = 'icons/obj/computer.dmi'
-	icon_state = "shuttle"
+	icon_state = "wagon"
 	var/arrival_note = "Arrival shuttle docked with the NSS Exodus."
 	var/department_note = "Arrival shuttle left the NSS Exodus."
 	var/obj/item/device/radio/intercom/radio
@@ -173,7 +173,7 @@ var/lastMove = 0
 					D.locked = 1
 					D.update_icon()
 
-	for(var/obj/machinery/door/unpowered/shuttle/D in A)
+	for(var/obj/machinery/door/unpowered/shuttle/wagon/D in A)
 		spawn(0)
 			D.close()
 			D.locked = 1
@@ -187,7 +187,7 @@ var/lastMove = 0
 					D.locked = 0
 					D.update_icon()
 
-			for(var/obj/machinery/door/unpowered/shuttle/D in A)
+			for(var/obj/machinery/door/unpowered/shuttle/wagon/D in A)
 				spawn(0)
 					D.locked = 0
 					D.open()
@@ -198,7 +198,7 @@ var/lastMove = 0
 					D.locked = 0
 					D.update_icon()
 
-			for(var/obj/machinery/door/unpowered/shuttle/D in A)
+			for(var/obj/machinery/door/unpowered/shuttle/wagon/D in A)
 				spawn(0)
 					D.locked = 0
 					D.open()
@@ -245,14 +245,11 @@ var/lastMove = 0
 	user << browse("[dat]", "window=researchshuttle;size=200x100")
 
 /obj/machinery/computer/arrival_shuttle/Topic(href, href_list)
-	if(..())
+	. = ..()
+	if(!.)
 		return
-	usr.machine = src
-	src.add_fingerprint(usr)
+
 	if(href_list["move"])
-		if(!in_range(src, usr))
-			usr << "\red Too far."
-			return
 		if (!moving)
 			usr << "\blue Shuttle recieved message and will be sent shortly."
 			arrival_shuttle_move()
@@ -262,7 +259,7 @@ var/lastMove = 0
 /obj/machinery/computer/arrival_shuttle/dock
 	name = "Arrival Shuttle Communication Console"
 	icon = 'icons/obj/computer.dmi'
-	icon_state = "shuttle"
+	icon_state = "wagon"
 
 /obj/machinery/computer/arrival_shuttle/dock/attack_hand(user as mob)
 	src.add_fingerprint(usr)
@@ -271,14 +268,11 @@ var/lastMove = 0
 	user << browse("[dat1]", "window=researchshuttle;size=200x100")
 
 /obj/machinery/computer/arrival_shuttle/dock/Topic(href, href_list)
-	if(..())
+	. = ..()
+	if(!.)
 		return
-	usr.machine = src
-	src.add_fingerprint(usr)
+
 	if(href_list["back"])
-		if(!in_range(src, usr))
-			usr << "\red Too far."
-			return
 		if (!moving && location == 2)
 			usr << "\blue Shuttle recieved message and will be sent shortly."
 			arrival_shuttle_move()

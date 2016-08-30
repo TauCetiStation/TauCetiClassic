@@ -259,7 +259,7 @@ display round(lastgen) and phorontank amount
 /obj/machinery/power/port_gen/pacman/interact(mob/user)
 	if (get_dist(src, user) > 1 )
 		if (!istype(user, /mob/living/silicon/ai))
-			user.unset_machine()
+			user.unset_machine(src)
 			user << browse(null, "window=port_gen")
 			return
 
@@ -280,37 +280,40 @@ display round(lastgen) and phorontank amount
 	user << browse("[dat]", "window=port_gen")
 	onclose(user, "port_gen")
 
+/obj/machinery/power/port_gen/pacman/is_operational_topic()
+	return TRUE
+
 /obj/machinery/power/port_gen/pacman/Topic(href, href_list)
-	if(..())
+	if (href_list["action"] == "close")
+		usr << browse(null, "window=port_gen")
+		usr.unset_machine(src)
+		return FALSE
+
+	. = ..()
+	if(!.)
 		return
 
-	src.add_fingerprint(usr)
 	if(href_list["action"])
 		if(href_list["action"] == "enable")
 			if(!active && HasFuel() && !crit_fail)
 				active = 1
 				icon_state = icon_state_on
-				src.updateUsrDialog()
 		if(href_list["action"] == "disable")
 			if (active)
 				active = 0
 				icon_state = initial(icon_state)
-				src.updateUsrDialog()
 		if(href_list["action"] == "eject")
 			if(!active)
 				DropFuel()
-				src.updateUsrDialog()
 		if(href_list["action"] == "lower_power")
 			if (power_output > 1)
 				power_output--
-				src.updateUsrDialog()
 		if (href_list["action"] == "higher_power")
 			if (power_output < 4 || emagged)
 				power_output++
-				src.updateUsrDialog()
-		if (href_list["action"] == "close")
-			usr << browse(null, "window=port_gen")
-			usr.unset_machine()
+
+	src.updateUsrDialog()
+
 
 /obj/machinery/power/port_gen/pacman/super
 	name = "S.U.P.E.R.P.A.C.M.A.N.-type Portable Generator"

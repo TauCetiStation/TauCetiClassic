@@ -206,7 +206,10 @@
 	return
 
 /obj/machinery/zero_point_emitter/Topic(href, href_list)
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	if( href_list["input"] )
 		var/i = text2num(href_list["input"])
 		var/d = i
@@ -214,13 +217,13 @@
 		new_power = max(new_power,0.0001)	//lowest possible value
 		new_power = min(new_power,0.01)		//highest possible value
 		energy = new_power
-		//
+
 		for(var/obj/machinery/computer/lasercon/comp in world)
 			if(comp.id == src.id)
 				comp.updateDialog()
 	else if( href_list["online"] )
 		active = !active
-		//
+
 		for(var/obj/machinery/computer/lasercon/comp in world)
 			if(comp.id == src.id)
 				comp.updateDialog()
@@ -230,7 +233,9 @@
 		new_freq = max(new_freq,1)		//lowest possible value
 		new_freq = min(new_freq,20000)	//highest possible value
 		frequency = new_freq
-		//
+
 		for(var/obj/machinery/computer/lasercon/comp in world)
 			if(comp.id == src.id)
 				comp.updateDialog()
+
+	updateUsrDialog()
