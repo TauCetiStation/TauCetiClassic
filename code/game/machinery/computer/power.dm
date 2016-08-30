@@ -88,11 +88,15 @@
 
 
 /obj/machinery/computer/monitor/Topic(href, href_list)
-	..()
-	if( href_list["close"] )
+	if(href_list["close"])
 		usr << browse(null, "window=powcomp")
-		usr.unset_machine()
+		usr.unset_machine(src)
+		return FALSE
+
+	. = ..()
+	if(!.)
 		return
+
 	if( href_list["update"] )
 		src.updateDialog()
 		return

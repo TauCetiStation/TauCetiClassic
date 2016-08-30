@@ -72,7 +72,15 @@
 	loc = T
 
 /atom/movable/Destroy()
-	. = ..()
+	//If we have opacity, make sure to tell (potentially) affected light sources.
+	var/turf/T = loc
+	if(opacity && istype(T))
+		opacity = 0
+		T.recalc_atom_opacity()
+		T.reconsider_lights()
+
+	unbuckle_mob()
+
 	if(loc)
 		loc.handle_atom_del(src)
 	if(reagents)
@@ -85,6 +93,7 @@
 		if (pulledby.pulling == src)
 			pulledby.pulling = null
 		pulledby = null
+	return ..()
 
 /atom/movable/Bump(var/atom/A as mob|obj|turf|area, yes, var/speed = 5)
 	if(src.throwing)

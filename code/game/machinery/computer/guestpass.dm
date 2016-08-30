@@ -109,9 +109,10 @@
 
 
 /obj/machinery/computer/guestpass/Topic(href, href_list)
-	if(..())
+	. = ..()
+	if(!.)
 		return
-	usr.set_machine(src)
+
 	if (href_list["mode"])
 		mode = text2num(href_list["mode"])
 
@@ -189,5 +190,5 @@
 					pass.name = "guest pass #[number]"
 				else
 					usr << "\red Cannot issue pass without issuing ID."
+
 	updateUsrDialog()
-	return

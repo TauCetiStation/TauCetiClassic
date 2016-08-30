@@ -152,40 +152,35 @@ Auto Patrol: []"},
 	return
 
 /obj/machinery/bot/ed209/Topic(href, href_list)
-	if (..())
+	. = ..()
+	if(!.)
 		return
-	usr.set_machine(src)
-	src.add_fingerprint(usr)
-	if(lasercolor && (istype(usr,/mob/living/carbon/human)))
+
+	if(lasercolor && ishuman(usr))
 		var/mob/living/carbon/human/H = usr
 		if((lasercolor == "b") && (istype(H.wear_suit, /obj/item/clothing/suit/redtag)))//Opposing team cannot operate it
-			return
+			return FALSE
 		else if((lasercolor == "r") && (istype(H.wear_suit, /obj/item/clothing/suit/bluetag)))
-			return
+			return FALSE
 	if ((href_list["power"]) && (src.allowed(usr)))
 		if (src.on)
 			turn_off()
 		else
 			turn_on()
-		return
 
 	switch(href_list["operation"])
 		if ("idcheck")
 			src.idcheck = !src.idcheck
-			src.updateUsrDialog()
 		if ("ignorerec")
 			src.check_records = !src.check_records
-			src.updateUsrDialog()
 		if ("switchmode")
 			src.arrest_type = !src.arrest_type
-			src.updateUsrDialog()
 		if("patrol")
 			auto_patrol = !auto_patrol
 			mode = SECBOT_IDLE
-			updateUsrDialog()
 		if("declarearrests")
 			src.declare_arrests = !src.declare_arrests
-			src.updateUsrDialog()
+	src.updateUsrDialog()
 
 /obj/machinery/bot/ed209/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))

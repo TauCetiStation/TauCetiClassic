@@ -110,17 +110,15 @@ var/global/announce_vox_departure = 0 //Stealth systems - give an announcement o
 
 
 /obj/machinery/computer/vox_station/Topic(href, href_list)
-	if(!isliving(usr))	return
-	var/mob/living/user = usr
-
-	if(in_range(src, user) || istype(user, /mob/living/silicon))
-		user.set_machine(src)
+	. = ..()
+	if(!. || !allowed(usr))
+		return
 
 	vox_shuttle_location = "station"
 	if(href_list["start"])
 		if(ticker && (istype(ticker.mode,/datum/game_mode/heist)))
 			if(!warning)
-				user << "<span class='red'>Returning to dark space will end your raid and report your success or failure. If you are sure, press the button again.</span>"
+				usr << "<span class='red'>Returning to dark space will end your raid and report your success or failure. If you are sure, press the button again.</span>"
 				warning = 1
 				return
 		vox_move_to(/area/shuttle/vox/station)
@@ -135,9 +133,7 @@ var/global/announce_vox_departure = 0 //Stealth systems - give an announcement o
 	else if(href_list["mining"])
 		vox_move_to(/area/vox_station/mining)
 
-	add_fingerprint(usr)
 	updateUsrDialog()
-	return
 
 /obj/machinery/computer/vox_station/bullet_act(var/obj/item/projectile/Proj)
 	visible_message("[Proj] ricochets off [src]!")

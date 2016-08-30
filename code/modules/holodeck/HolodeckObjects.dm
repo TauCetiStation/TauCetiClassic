@@ -91,9 +91,6 @@ turf/simulated/floor/holofloor/update_icon()
 	icon_state = "boxing"
 	item_state = "boxing"
 
-/obj/structure/window/reinforced/holowindow/Destroy()
-	..()
-
 /obj/structure/window/reinforced/holowindow/attackby(obj/item/W as obj, mob/user as mob)
 	if(!istype(W)) return//I really wish I did not need this
 	if (istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
@@ -147,12 +144,6 @@ turf/simulated/floor/holofloor/update_icon()
 	qdel(src)
 	return
 
-/obj/structure/window/reinforced/holowindow/disappearing/Destroy()
-	..()
-
-/obj/machinery/door/window/holowindoor/Destroy()
-	..()
-
 /obj/machinery/door/window/holowindoor/attackby(obj/item/weapon/I as obj, mob/user as mob)
 
 	if (src.operating == 1)
@@ -190,9 +181,6 @@ turf/simulated/floor/holofloor/update_icon()
 
 obj/structure/stool/bed/chair/holochair
 	icon_state = "chair_g"
-
-/obj/structure/stool/bed/chair/holochair/Destroy()
-	..()
 
 /obj/structure/stool/bed/chair/holochair/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/wrench))
@@ -286,7 +274,7 @@ obj/structure/stool/bed/chair/holochair
 		qdel(W)
 		return
 	else if (istype(W, /obj/item) && get_dist(src,user)<2)
-		user.drop_item(src)
+		user.drop_item(src.loc)
 		visible_message("<span class='notice'>[user] dunks [W] into the [src]!</span>", 3)
 		return
 
@@ -372,7 +360,7 @@ obj/structure/stool/bed/chair/holochair
 
 	eventstarted = 1
 
-	for(var/obj/structure/window/reinforced/holowindow/disappearing/W in currentarea)
+	for(var/obj/structure/window/reinforced/holowindow/W in currentarea)
 		qdel(W)
 
 	for(var/mob/M in currentarea)

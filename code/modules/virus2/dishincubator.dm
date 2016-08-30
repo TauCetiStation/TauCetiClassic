@@ -138,61 +138,61 @@
 			nanomanager.update_uis(src)
 
 /obj/machinery/disease2/incubator/Topic(href, href_list)
-	if (..()) return 0
-
 	var/mob/user = usr
 	var/datum/nanoui/ui = nanomanager.get_open_ui(user, src, "main")
 
-	src.add_fingerprint(user)
-
 	if (href_list["close"])
-		user.unset_machine()
+		user.unset_machine(src)
 		ui.close()
-		return 0
+		return FALSE
+
+	. = ..()
+	if(!.)
+		return
 
 	if (href_list["ejectchem"])
-		if(beaker)
+		if (beaker)
 			beaker.loc = src.loc
 			beaker = null
-		return 1
+		return TRUE
 
 	if (href_list["power"])
 		if (dish)
 			on = !on
 			icon_state = on ? "incubator_on" : "incubator"
-		return 1
+		return TRUE
 
 	if (href_list["ejectdish"])
-		if(dish)
+		if (dish)
 			dish.loc = src.loc
 			dish = null
-		return 1
+		return TRUE
 
 	if (href_list["rad"])
 		radiation += 10
-		return 1
+		return TRUE
 
 	if (href_list["flush"])
 		radiation = 0
 		toxins = 0
 		foodsupply = 0
-		return 1
+		return TRUE
 
-	if(href_list["virus"])
-		if (!dish)
-			return 1
+	if (href_list["virus"])
+		if(!dish)
+			return TRUE
 
 		var/datum/reagent/blood/B = locate(/datum/reagent/blood) in beaker.reagents.reagent_list
-		if (!B)
-			return 1
+		if(!B)
+			return TRUE
 
-		if (!B.data["virus2"])
+		if(!B.data["virus2"])
 			B.data["virus2"] = list()
 
 		var/list/virus = list("[dish.virus2.uniqueID]" = dish.virus2.getcopy())
 		B.data["virus2"] += virus
 
 		ping("\The [src] pings, \"Injection complete.\"")
-		return 1
+		return TRUE
 
-	return 0
+	return FALSE

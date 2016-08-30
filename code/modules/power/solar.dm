@@ -439,13 +439,13 @@
 
 
 /obj/machinery/power/solar_control/Topic(href, href_list)
-	if(..())
+	if(href_list["close"])
 		usr << browse(null, "window=solcon")
-		usr.unset_machine()
-		return
-	if(href_list["close"] )
-		usr << browse(null, "window=solcon")
-		usr.unset_machine()
+		usr.unset_machine(src)
+		return FALSE
+
+	. = ..()
+	if(!.)
 		return
 
 	if(href_list["dir"])
@@ -453,18 +453,20 @@
 		set_panels(cdir)
 		update_icon()
 
-	if(href_list["rate control"])
+	else if(href_list["rate control"])
 		if(href_list["cdir"])
-			src.cdir = dd_range(0,359,(360+src.cdir+text2num(href_list["cdir"]))%360)
+			src.cdir = dd_range(0, 359, (360 + src.cdir + text2num(href_list["cdir"])) % 360)
 			spawn(1)
 				set_panels(cdir)
 				update_icon()
 		if(href_list["tdir"])
-			src.trackrate = dd_range(0,360,src.trackrate+text2num(href_list["tdir"]))
-			if(src.trackrate) nexttime = world.time + 6000/trackrate
+			src.trackrate = dd_range(0, 360, src.trackrate + text2num(href_list["tdir"]))
+			if(src.trackrate)
+				nexttime = world.time + 6000 / trackrate
 
-	if(href_list["track"])
-		if(src.trackrate) nexttime = world.time + 6000/trackrate
+	else if(href_list["track"])
+		if(src.trackrate) 
+			nexttime = world.time + 6000 / trackrate
 		track = text2num(href_list["track"])
 		if(powernet && (track == 2))
 			if(!SSsun.solars.Find(src,1,0))
@@ -474,13 +476,12 @@
 					cdir = T.sun_angle
 					break
 
-	if(href_list["trackdir"])
+	else if(href_list["trackdir"])
 		trackdir = text2num(href_list["trackdir"])
 
 	set_panels(cdir)
 	update_icon()
 	src.updateUsrDialog()
-	return
 
 
 /obj/machinery/power/solar_control/proc/set_panels(var/cdir)

@@ -354,5 +354,4 @@
 	if(initial_loc)
 		initial_loc.air_vent_info -= id_tag
 		initial_loc.air_vent_names -= id_tag
-	..()
-	return
+	return ..()

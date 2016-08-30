@@ -69,13 +69,12 @@
 				amounts[i]++
 
 /obj/machinery/abductor/gland_dispenser/Topic(href, href_list)
-	if(..())
+	. = ..()
+	if(!.)
 		return
-	if((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon)))
-		usr.set_machine(src)
-		if(href_list["dispense"])
-			Dispense(text2num(href_list["dispense"]))
-		src.updateUsrDialog()
+	if(href_list["dispense"])
+		Dispense(text2num(href_list["dispense"]))
+	src.updateUsrDialog()
 
 /obj/machinery/abductor/gland_dispenser/proc/Dispense(var/count)
 	if(amounts[count]>0)

@@ -49,7 +49,7 @@
 /obj/machinery/atmospherics/omni/mixer/Destroy()
 	inputs.Cut()
 	output = null
-	..()
+	return ..()
 
 /obj/machinery/atmospherics/omni/mixer/sort_ports()
 	for(var/datum/omni_port/P in ports)
@@ -187,7 +187,9 @@
 	return data
 
 /obj/machinery/atmospherics/omni/mixer/Topic(href, href_list)
-	if(..()) return 1
+	. = ..()
+	if(!.)
+		return
 
 	switch(href_list["command"])
 		if("power")
@@ -215,7 +217,6 @@
 
 	update_icon()
 	nanomanager.update_uis(src)
-	return
 
 /obj/machinery/atmospherics/omni/mixer/proc/switch_mode(var/port = NORTH, var/mode = ATM_NONE)
 	if(mode != ATM_INPUT && mode != ATM_OUTPUT)

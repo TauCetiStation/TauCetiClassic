@@ -112,10 +112,10 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 	return
 
 /obj/machinery/bot/cleanbot/Topic(href, href_list)
-	if(..())
+	. = ..()
+	if(!.)
 		return
-	usr.set_machine(src)
-	src.add_fingerprint(usr)
+
 	switch(href_list["operation"])
 		if("start")
 			if (src.on)
@@ -125,24 +125,20 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 		if("blood")
 			src.blood =!src.blood
 			src.get_targets()
-			src.updateUsrDialog()
 		if("patrol")
 			src.should_patrol =!src.should_patrol
 			src.patrol_path = null
-			src.updateUsrDialog()
 		if("freq")
 			var/freq = text2num(input("Select frequency for  navigation beacons", "Frequnecy", num2text(beacon_freq / 10))) * 10
 			if (freq > 0)
 				src.beacon_freq = freq
-			src.updateUsrDialog()
 		if("screw")
 			src.screwloose = !src.screwloose
 			usr << "<span class='notice>You twiddle the screw.</span>"
-			src.updateUsrDialog()
 		if("oddbutton")
 			src.oddbutton = !src.oddbutton
 			usr << "<span class='notice'>You press the weird button.</span>"
-			src.updateUsrDialog()
+	src.updateUsrDialog()
 
 /obj/machinery/bot/cleanbot/attackby(obj/item/weapon/W, mob/user as mob)
 	if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))

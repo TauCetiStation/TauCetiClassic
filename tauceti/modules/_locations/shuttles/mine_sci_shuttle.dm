@@ -40,21 +40,16 @@ var/obj/machinery/computer/mine_sci_shuttle/flight_comp/autopilot
 	return
 
 /obj/machinery/computer/mine_sci_shuttle/Topic(href, href_list)
-	if(..())
+	. = ..()
+	if(!.)
 		return
 
-	usr.machine = src
-	src.add_fingerprint(usr)
-
-	if(!in_range(src, usr))
-		usr << "\red Too far."
-		return
 	if(!autopilot)
 		usr << "\red Shuttle not found!"
-		return
+		return FALSE
 	if(autopilot.moving)
 		usr << "\blue Shuttle is already moving."
-		return
+		return FALSE
 
 	var/result = FALSE
 	if(href_list["mine"])
@@ -67,7 +62,6 @@ var/obj/machinery/computer/mine_sci_shuttle/flight_comp/autopilot
 		usr << "\blue Shuttle recieved message and will be sent shortly."
 
 	updateUsrDialog()
-	return
 
 //-------------------------------------------
 //------------FLIGHT COMPUTER----------------

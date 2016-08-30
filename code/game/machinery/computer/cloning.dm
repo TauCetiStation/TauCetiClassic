@@ -209,7 +209,8 @@
 	return
 
 /obj/machinery/computer/cloning/Topic(href, href_list)
-	if(..())
+	. = ..()
+	if(!.)
 		return
 
 	if(loading)
@@ -354,9 +355,7 @@
 	else if (href_list["menu"])
 		src.menu = text2num(href_list["menu"])
 
-	src.add_fingerprint(usr)
 	src.updateUsrDialog()
-	return
 
 /obj/machinery/computer/cloning/proc/scan_mob(mob/living/carbon/human/subject as mob)
 	if ((isnull(subject)) || (!(ishuman(subject))) || (!subject.dna))

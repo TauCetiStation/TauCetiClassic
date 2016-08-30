@@ -125,17 +125,17 @@
 			nanomanager.update_uis(src)
 
 /obj/machinery/computer/diseasesplicer/Topic(href, href_list)
-	if(..()) return 0
-
 	var/mob/user = usr
 	var/datum/nanoui/ui = nanomanager.get_open_ui(user, src, "main")
 
-	src.add_fingerprint(user)
-
 	if (href_list["close"])
-		user.unset_machine()
+		user.unset_machine(src)
 		ui.close()
-		return 0
+		return FALSE
+
+	. = ..()
+	if(!.)
+		return
 
 	if (href_list["grab"])
 		if (dish)
@@ -144,7 +144,7 @@
 			analysed = dish.analysed
 			dish = null
 			scanning = 10
-		return 1
+		return TRUE
 
 	if (href_list["affected_species"])
 		if (dish)
@@ -153,16 +153,16 @@
 			analysed = dish.analysed
 			dish = null
 			scanning = 10
-		return 1
+		return TRUE
 
-	if(href_list["eject"])
+	if (href_list["eject"])
 		if (dish)
 			dish.loc = src.loc
 			dish = null
-		return 1
+		return TRUE
 
-	if(href_list["splice"])
-		if(dish)
+	if (href_list["splice"])
+		if (dish)
 			if (memorybank)
 				for(var/datum/disease2/effectholder/e in dish.virus2.effects)
 					if(e.stage == memorybank.stage)
@@ -173,10 +173,10 @@
 
 			splicing = 10
 			dish.virus2.uniqueID = rand(0,10000)
-		return 1
+		return TRUE
 
-	if(href_list["disk"])
+	if (href_list["disk"])
 		burning = 10
-		return 1
+		return TRUE
 
-	return 0
+	return FALSE

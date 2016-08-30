@@ -177,11 +177,13 @@
 		ui.push_data(data)
 		return
 
-/obj/machinery/space_heater/Topic(href, href_list)
-	if((stat & BROKEN) || ..())
-		return
+/obj/machinery/space_heater/is_operational_topic()
+	return !(stat & BROKEN)
 
-	add_fingerprint(usr)
+/obj/machinery/space_heater/Topic(href, href_list)
+	. = ..()
+	if(!.)
+		return
 
 	if(href_list["power"])
 		on = !!text2num(href_list["power"])

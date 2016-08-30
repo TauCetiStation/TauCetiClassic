@@ -249,7 +249,7 @@
 	name = "Syndicate Robot"
 	desc = "A robot designed for extermination and slaved to syndicate agents. Delivered through a single-use bluespace hand teleporter and comes pre-equipped with various weapons and equipment."
 	item = /obj/item/weapon/antag_spawner/borg_tele
-	cost = 25
+	cost = 18
 	gamemodes = list(/datum/game_mode/nuclear)
 
 //for refunding the syndieborg teleporter
@@ -263,6 +263,12 @@
 
 /datum/uplink_item/ammo
 	category = "Ammunition"
+
+/datum/uplink_item/ammo/borg
+	name = "Robot Ammo Box"
+	desc = "A 40-round .45 magazine for use in Robot submachine gun."
+	item = /obj/item/ammo_box/magazine/borg45
+	cost = 2
 
 /datum/uplink_item/ammo/revolver
 	name = "Ammo-357"

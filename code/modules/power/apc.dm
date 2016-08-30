@@ -914,26 +914,10 @@
 				src.updateDialog()
 
 /obj/machinery/power/apc/proc/can_use(mob/user as mob, var/loud = 0) //used by attack_hand() and Topic()
-	if (user.stat)
-		user << "\red You must be conscious to use this [src]!"
-		return 0
 	if(!user.client)
 		return 0
-	if ( ! (istype(user, /mob/living/carbon/human) || \
-			istype(user, /mob/living/silicon) || \
-			istype(user, /mob/living/carbon/monkey)) )
-		user << "\red You don't have the dexterity to use this [src]!"
-		nanomanager.close_user_uis(user, src)
-
-		return 0
-	if(user.restrained())
-		user << "\red You must have free hands to use this [src]"
-		return 0
-	if(user.lying)
-		user << "\red You must stand to use this [src]!"
-		return 0
 	autoflag = 5
-	if (istype(user, /mob/living/silicon))
+	if(issilicon(user))
 		var/mob/living/silicon/ai/AI = user
 		var/mob/living/silicon/robot/robot = user
 		if (                                                             \
@@ -955,28 +939,24 @@
 
 			return 0
 
-	var/mob/living/carbon/human/H = user
-	if (istype(H))
-		if(H.getBrainLoss() >= 60)
-			for(var/mob/M in viewers(src, null))
-				M << "\red [H] stares cluelessly at [src] and drools."
-			return 0
-		else if(prob(H.getBrainLoss()))
-			user << "\red You momentarily forget how to use [src]."
-			return 0
 	return 1
 
-/obj/machinery/power/apc/Topic(href, href_list, var/usingUI = 1)
-	if(!(isrobot(usr) && (href_list["apcwires"] || href_list["pulse"])))
-		if(!can_use(usr, 1))
-			return
-	src.add_fingerprint(usr)
+/obj/machinery/power/apc/is_operational_topic()
+	return !(stat & (BROKEN|MAINT|EMPED))
 
+/obj/machinery/power/apc/Topic(href, href_list, var/usingUI = 1)
+	. = ..(href, href_list)
+	if(!.)
+		return
+
+	if(!(href_list["apcwires"] || href_list["pulse"]))
+		if(!can_use(usr, 1))
+			return FALSE
 	if (href_list["apcwires"])
 		var/t1 = text2num(href_list["apcwires"])
 		if (!( istype(usr.get_active_hand(), /obj/item/weapon/wirecutters) ))
 			usr << "You need wirecutters!"
-			return
+			return FALSE
 		if (src.isWireColorCut(t1))
 			src.mend(t1)
 		else
@@ -985,10 +965,10 @@
 		var/t1 = text2num(href_list["pulse"])
 		if (!istype(usr.get_active_hand(), /obj/item/device/multitool))
 			usr << "You need a multitool!"
-			return
+			return FALSE
 		if (src.isWireColorCut(t1))
 			usr << "You can't pulse a cut wire."
-			return
+			return FALSE
 		else
 			src.pulse(t1)
 	else if (href_list["lock"])
@@ -1034,12 +1014,10 @@
 		update()
 	else if( href_list["close"] )
 		nanomanager.close_user_uis(usr, src)
-
-		return
+		return FALSE
 	else if (href_list["close2"])
 		usr << browse(null, "window=apcwires")
-
-		return
+		return FALSE
 
 	else if (href_list["overload"])
 		if( istype(usr, /mob/living/silicon) && !src.aidisabled )
@@ -1050,7 +1028,7 @@
 		if( istype(malfai, /mob/living/silicon/ai) && !src.aidisabled )
 			if (malfai.malfhacking)
 				malfai << "You are already hacking an APC."
-				return
+				return FALSE
 			malfai << "Beginning override of APC systems. This takes some time, and you cannot perform other actions during the process."
 			malfai.malfhack = src
 			malfai.malfhacking = 1
@@ -1078,8 +1056,6 @@
 
 	if(usingUI)
 		src.updateDialog()
-
-	return
 
 /*/obj/machinery/power/apc/proc/malfoccupy(var/mob/living/silicon/ai/malf)
 	if(!istype(malf))
