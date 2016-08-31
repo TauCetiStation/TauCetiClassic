@@ -73,6 +73,21 @@
 
 /obj/machinery/artifact/bluespace_crystal/proc/teleport()
 	var/turf/T = get_turf(src)
+
+	var/list/Next = list()
+
+	var/radius = 25
+	var/tx = T.x - radius
+	var/ty = T.y - radius
+
+	var/turf/simulated/curret
+	for(var/iy = 0,iy < (1 + (radius * 2)), iy++)
+		for(var/ix = 0, ix < (1 + (radius * 2)), ix++)
+			curret = locate(tx + ix, ty + iy, T.z)
+			if(curret)
+				Next += curret
+
+
 	for (var/mob/living/M in range(7,T))
 		M << "\red You are displaced by a strange force!"
 		if(M.buckled)
@@ -82,7 +97,8 @@
 		sparks.set_up(3, 0, get_turf(M))
 		sparks.start()
 				//
-		var/turf/N = pick(orange(get_turf(T), 50))
+		//var/turf/N = pick(orange(T, 50))
+		var/turf/N = pick(Next)
 		do_teleport(M, N, 4)
 		sparks = new /datum/effect/effect/system/spark_spread()
 		sparks.set_up(3, 0, get_turf(M))
