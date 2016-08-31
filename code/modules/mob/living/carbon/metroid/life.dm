@@ -525,11 +525,18 @@
 	var/to_say
 	if (speech_buffer.len > 0)
 		var/who = speech_buffer[1] // Who said it?
-		var/phrase = speech_buffer[2] // What did they say?
-		if ((findtext(phrase, num2text(number)) || findtext(phrase, "slimes"))) // Talking to us
-			if (findtext(phrase, "hello") || findtext(phrase, "hi"))
+		var/phrase = lowertext_plus(speech_buffer[2]) // What did they say?
+		if ((findtext(phrase, num2text(number)) || findtext(phrase, "slimes") || findtext(phrase, "слаймы"))) // Talking to us
+			if (                                                                  \
+				findtext(phrase, "hello") || findtext(phrase, "hi") ||            \
+				findtext(phrase, "здравствуйте") || findtext(phrase, "привет") || \
+				findtext(phrase, "здарова")                                       \
+			)
 				to_say = pick("Hello...", "Hi...")
-			else if (findtext(phrase, "follow"))
+			else if (                                                             \
+				findtext(phrase, "follow") || findtext(phrase, "следуйте") ||     \
+				findtext(phrase, "за мной")                                       \
+			)
 				if (Leader)
 					if (Leader == who) // Already following him
 						to_say = pick("Yes...", "Lead...", "Following...")
@@ -544,7 +551,10 @@
 						to_say = "I follow..."
 					else // Not friendly enough
 						to_say = pick("No...", "I won't follow...")
-			else if (findtext(phrase, "stop"))
+			else if (                                                            \
+				findtext(phrase, "stop") || findtext(phrase, "перестань") ||     \
+				findtext(phrase, "хватит")                                       \
+			)
 				if (Victim) // We are asked to stop feeding
 					if (Friends[who] > 4)
 						Victim = null
@@ -554,6 +564,8 @@
 							to_say = "Grrr..." // I'm angry but I do it
 						else
 							to_say = "Fine..."
+					else
+						to_say = "No..."
 				else if (Target) // We are asked to stop chasing
 					if (Friends[who] > 3)
 						Target = null
@@ -572,7 +584,10 @@
 							to_say = "Yes... I'll stop..."
 						else
 							to_say = "No... I'll keep following..."
-			else if (findtext(phrase, "stay"))
+			else if (                                                           \
+				findtext(phrase, "stay") || findtext(phrase, "остановитесь") || \
+				findtext(phrase, "стой") || findtext(phrase, "не двигайся")     \
+			)
 				if (Leader)
 					if (Leader == who)
 						holding_still = Friends[who] * 10
