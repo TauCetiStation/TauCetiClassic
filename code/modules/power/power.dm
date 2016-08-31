@@ -48,6 +48,9 @@
 /obj/machinery/power/proc/disconnect_terminal() // machines without a terminal will just return, no harm no fowl.
 	return
 
+/obj/machinery/power/proc/make_terminal()
+	return
+
 // returns true if the area has power on given channel (or doesn't require power).
 // defaults to power_channel
 

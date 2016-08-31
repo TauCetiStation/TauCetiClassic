@@ -16,7 +16,7 @@
 	var/charging = 0
 	var/chargemode = 0
 	var/chargecount = 0
-	var/chargelevel = 50000
+	var/chargelevel = 0
 	var/online = 1
 	var/name_tag = null
 	var/obj/machinery/power/terminal/terminal = null
@@ -51,8 +51,19 @@
 			stat |= BROKEN
 			return
 		terminal.master = src
+		if(!powernet)
+			connect_to_network()
 		update_icon()
 	return
+
+/obj/machinery/power/smes/proc/update_cells()
+	for(var/obj/item/weapon/stock_parts/cell/cell in component_parts)
+		cell.charge = cell.maxcharge * charge / capacity
+		cell.updateicon()
+
+/obj/machinery/power/smes/exchange_parts()
+	update_cells()
+	..()
 
 /obj/machinery/power/smes/RefreshParts()
 	if(power_fail_event)
@@ -61,13 +72,16 @@
 	else
 		var/IO = 0
 		var/C = 0
+		var/c = 0
 		for(var/obj/item/weapon/stock_parts/capacitor/CP in component_parts)
 			IO += CP.rating
 		max_input = 200000 * IO
 		max_output = 200000 * IO
 		for(var/obj/item/weapon/stock_parts/cell/PC in component_parts)
 			C += PC.maxcharge
-		capacity = C / (15000) * 1e6
+			c += PC.charge
+		capacity = C * 100
+		charge = c
 
 /obj/machinery/power/smes/attackby(obj/item/I, mob/user)
 	//opening using screwdriver
@@ -155,8 +169,7 @@
 		investigate_log("SMES deconstructed by [key_name(user)]","singulo")
 
 /obj/machinery/power/smes/deconstruction()
-	for(var/obj/item/weapon/stock_parts/cell/cell in component_parts)
-		cell.charge = (charge / capacity) * cell.maxcharge
+	update_cells()
 
 /obj/machinery/power/smes/Destroy()
 	if(ticker && ticker.current_state == GAME_STATE_PLAYING)
@@ -170,7 +183,7 @@
 
 // create a terminal object pointing towards the SMES
 // wires will attach to this
-/obj/machinery/power/smes/proc/make_terminal(turf/T)
+/obj/machinery/power/smes/make_terminal(turf/T)
 	terminal = new/obj/machinery/power/terminal(T)
 	terminal.dir = get_dir(T,src)
 	terminal.master = src
@@ -255,7 +268,8 @@
 		add_avail(lastout)				// add output to powernet (smes side)
 
 		if(charge < 0.0001)
-			online = 0					// stop output if charge falls to zero
+			online = 0
+			loaddemand = 0					// stop output if charge falls to zero
 
 	// only update icon if state changed
 	if(last_disp != chargedisplay() || last_chrg != charging || last_onln != online)
@@ -341,18 +355,25 @@
 		// auto update every Master Controller tick
 		ui.set_auto_update(1)
 
-/obj/machinery/power/smes/is_operational_topic()
-	return !(stat & (BROKEN|EMPED))
 
 /obj/machinery/power/smes/Topic(href, href_list)
-	. = ..()
-	if(!.)
-		return
+	..()
 
-	//world << "[href] ; [href_list[href]]"
+	if (usr.stat || usr.restrained() )
+		return
+	if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
+		if(!istype(usr, /mob/living/silicon/ai))
+			usr << "\red You don't have the dexterity to do this!"
+			return
+
+//world << "[href] ; [href_list[href]]"
+
+	if (!istype(src.loc, /turf) && !istype(usr, /mob/living/silicon/))
+		return 0 // Do not update ui
 
 	for(var/area/A in active_areas)
 		A.master.powerupdate = 3
+
 
 	if( href_list["cmode"] )
 		chargemode = !chargemode
@@ -384,6 +405,8 @@
 		output = max(0, min(max_output, output))	// clamp to range
 
 	investigate_log("input/output; [chargelevel>output?"<font color='green'>":"<font color='red'>"][chargelevel]/[output]</font> | Output-mode: [online?"<font color='green'>on</font>":"<font color='red'>off</font>"] | Input-mode: [chargemode?"<font color='green'>auto</font>":"<font color='red'>off</font>"] by [usr.key]","singulo")
+
+	return 1
 
 
 /obj/machinery/power/smes/proc/ion_act()
