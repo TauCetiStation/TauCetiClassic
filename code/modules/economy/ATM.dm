@@ -216,7 +216,14 @@ log transactions
 	else
 		user << browse(null,"window=atm")
 
+/obj/machinery/atm/is_operational_topic()
+	return TRUE
+
 /obj/machinery/atm/Topic(var/href, var/href_list)
+	. = ..()
+	if(!.)
+		return
+
 	if(href_list["choice"])
 		switch(href_list["choice"])
 			if("transfer")
@@ -414,7 +421,7 @@ log transactions
 				authenticated_account = null
 				//usr << browse(null,"window=atm")
 
-	src.attack_hand(usr)
+	updateUsrDialog()
 
 //stolen wholesale and then edited a bit from newscasters, which are awesome and by Agouri
 /obj/machinery/atm/proc/scan_user(mob/living/carbon/human/human_user as mob)

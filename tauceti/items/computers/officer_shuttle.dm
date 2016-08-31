@@ -79,11 +79,9 @@
 	return
 
 /obj/machinery/computer/officer_shuttle/Topic(href, href_list)
-	if(!isliving(usr))	return
-	var/mob/living/user = usr
-
-	if(in_range(src, user) || istype(user, /mob/living/silicon))
-		user.set_machine(src)
+	. = ..()
+	if(!.)
+		return
 
 	if(href_list["velocity"])
 		officer_move_to(/area/shuttle/officer/velocity)
@@ -92,9 +90,7 @@
 	else if(href_list["centcomm"])
 		officer_move_to(/area/shuttle/officer/centcomm)
 
-	add_fingerprint(usr)
 	updateUsrDialog()
-	return
 
 
 /area/shuttle/officer

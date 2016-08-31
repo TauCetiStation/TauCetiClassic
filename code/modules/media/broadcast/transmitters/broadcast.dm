@@ -114,7 +114,8 @@
 	update_icon()
 
 /obj/machinery/media/transmitter/broadcast/Topic(href,href_list)
-	if(..(href, href_list))
+	. = ..()
+	if(!.)
 		return
 
 	if("power" in href_list)
@@ -136,6 +137,8 @@
 				connect_frequency()
 			else
 				usr << "\red Invalid FM frequency. (90.0, 200.0)"
+
+	updateUsrDialog()
 
 /obj/machinery/media/transmitter/broadcast/process()
 	if(stat & (NOPOWER|BROKEN))

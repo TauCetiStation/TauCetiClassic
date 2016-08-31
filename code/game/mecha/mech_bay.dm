@@ -131,7 +131,8 @@
 	return
 
 /obj/machinery/computer/mech_bay_power_console/Topic(href, href_list)
-	if(..())
+	. = ..()
+	if(!.)
 		return
 	if(href_list["reconnect"])
 		reconnect()

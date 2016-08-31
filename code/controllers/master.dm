@@ -72,7 +72,7 @@ var/global/datum/controller/master/Master = new()
 			SS.Initialize(world.timeofday, zlevel)
 			CHECK_TICK
 		return
-	world.log << "<span class='boldannounce'>Initializing subsystems...</span>"
+	world.log << "Initializing subsystems..."
 
 	//preloadTemplates()
 	// Pick a random away mission.

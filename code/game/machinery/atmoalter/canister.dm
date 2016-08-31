@@ -273,15 +273,12 @@ update_flag
 		// auto update every Master Controller tick
 		ui.set_auto_update(1)
 
+/obj/machinery/portable_atmospherics/canister/is_operational_topic()
+	return TRUE
+
 /obj/machinery/portable_atmospherics/canister/Topic(href, href_list)
-
-	//Do not use "if(..()) return" here, canisters will stop working in unpowered areas like space or on the derelict. // yeah but without SOME sort of Topic check any dick can mess with them via exploits as he pleases -walter0o
-	if (!istype(src.loc, /turf))
-		return 0
-
-	if(!usr.canmove || usr.stat || usr.restrained() || !in_range(loc, usr)) // exploit protection -walter0o
-		usr << browse(null, "window=canister")
-		onclose(usr, "canister")
+	. = ..()
+	if(!. || issilicon(usr))
 		return
 
 	if(href_list["toggle"])
@@ -327,11 +324,7 @@ update_flag
 				src.canister_color = colors[label]
 				src.icon_state = colors[label]
 				src.name = "Canister: [label]"
-	
-	src.add_fingerprint(usr)
 	update_icon()
-	
-	return 1
 
 /obj/machinery/portable_atmospherics/canister/phoron/New()
 

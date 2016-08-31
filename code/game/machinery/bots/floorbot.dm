@@ -129,10 +129,9 @@
 		if(user) user << "<span class='notice'>The [src] buzzes and beeps.</span>"
 
 /obj/machinery/bot/floorbot/Topic(href, href_list)
-	if(..())
+	. = ..()
+	if(!.)
 		return
-	usr.set_machine(src)
-	src.add_fingerprint(usr)
 	switch(href_list["operation"])
 		if("start")
 			if (src.on)
@@ -141,13 +140,10 @@
 				turn_on()
 		if("improve")
 			src.improvefloors = !src.improvefloors
-			src.updateUsrDialog()
 		if("tiles")
 			src.eattiles = !src.eattiles
-			src.updateUsrDialog()
 		if("make")
 			src.maketiles = !src.maketiles
-			src.updateUsrDialog()
 		if("bridgemode")
 			switch(src.targetdirection)
 				if(null)
@@ -162,7 +158,7 @@
 					targetdirection = null
 				else
 					targetdirection = null
-			src.updateUsrDialog()
+	src.updateUsrDialog()
 
 /obj/machinery/bot/floorbot/process()
 	//set background = 1

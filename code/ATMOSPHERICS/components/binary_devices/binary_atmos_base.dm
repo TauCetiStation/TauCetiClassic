@@ -45,8 +45,6 @@
 	return null
 
 /obj/machinery/atmospherics/binary/Destroy()
-	loc = null
-
 	if(node1)
 		node1.disconnect(src)
 		qdel(network1)
@@ -57,7 +55,7 @@
 	node1 = null
 	node2 = null
 
-	..()
+	return ..()
 
 /obj/machinery/atmospherics/binary/initialize()
 	if(node1 && node2) return

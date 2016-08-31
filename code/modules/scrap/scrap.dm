@@ -328,4 +328,5 @@
 	base_spread = 16
 
 /obj/item/weapon/storage/internal/updating/update_icon()
-	master_item.update_icon()
+	if(master_item)
+		master_item.update_icon()

@@ -246,39 +246,19 @@
 	return
 
 /obj/machinery/power/turbine/Topic(href, href_list)
-	..()
-	if(stat & BROKEN)
-		return
-	if (usr.stat || usr.restrained() )
-		return
-	if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
-		if(!istype(usr, /mob/living/silicon/ai))
-			usr << "\red You don't have the dexterity to do this!"
-			return
-
-	if (( usr.machine==src && ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon/ai)))
-
-
-		if( href_list["close"] )
-			usr << browse(null, "window=turbine")
-			usr.machine = null
-			return
-
-		else if( href_list["str"] )
-			compressor.starter = !compressor.starter
-
-		spawn(0)
-			for(var/mob/M in viewers(1, src))
-				if ((M.client && M.machine == src))
-					src.interact(M)
-
-	else
+	if(href_list["close"])
 		usr << browse(null, "window=turbine")
-		usr.machine = null
+		usr.unset_machine(src)
+		return FALSE
 
-	return
+	. = ..()
+	if(!.)
+		return
 
+	if(href_list["str"])
+		compressor.starter = !compressor.starter
 
+	updateUsrDialog()
 
 
 
@@ -331,35 +311,33 @@
 
 
 /obj/machinery/computer/turbine_computer/Topic(href, href_list)
-	if(..())
+	. = ..()
+	if(!.)
 		return
-	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon)))
-		usr.machine = src
 
-		if( href_list["view"] )
-			usr.client.eye = src.compressor
-		else if( href_list["str"] )
-			src.compressor.starter = !src.compressor.starter
-		else if (href_list["doors"])
-			for(var/obj/machinery/door/poddoor/D in src.doors)
-				if (door_status == 0)
-					spawn( 0 )
-						D.open()
-						door_status = 1
-				else
-					spawn( 0 )
-						D.close()
-						door_status = 0
-		else if( href_list["close"] )
-			usr << browse(null, "window=computer")
-			usr.machine = null
-			return
-		else if(href_list["search"])
-			search_turbine()
+	if( href_list["view"] )
+		usr.client.eye = src.compressor
+	else if( href_list["str"] )
+		src.compressor.starter = !src.compressor.starter
+	else if (href_list["doors"])
+		for(var/obj/machinery/door/poddoor/D in src.doors)
+			if (door_status == 0)
+				spawn( 0 )
+					D.open()
+					door_status = 1
+			else
+				spawn( 0 )
+					D.close()
+					door_status = 0
+	else if( href_list["close"] )
+		usr << browse(null, "window=computer")
+		usr.machine = null
+		return FALSE
+	else if(href_list["search"])
+		search_turbine()
 
-		src.add_fingerprint(usr)
 	src.updateUsrDialog()
-	return
+
 
 /obj/machinery/computer/turbine_computer/process()
 	src.updateDialog()

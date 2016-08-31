@@ -176,6 +176,10 @@ datum/genesequence
 	onclose(user, "reconstitutor")
 
 /obj/machinery/computer/reconstitutor/animal/Topic(href, href_list)
+	. = ..()
+	if(!.)
+		return
+
 	if(href_list["clone"])
 		var/sequence_num = text2num(href_list["sequence_num"])
 		var/datum/genesequence/cloned_genesequence = completed_genesequences[sequence_num]
@@ -196,10 +200,19 @@ datum/genesequence
 				pod1.biomass -= CLONE_BIOMASS
 		else
 			usr << "\red \icon[src] Unable to locate cloning pod!"
-	else
-		..()
+
+	updateUsrDialog()
 
 /obj/machinery/computer/reconstitutor/Topic(href, href_list)
+	if(href_list["close"])
+		usr.unset_machine(src)
+		usr << browse(null, "window=reconstitutor")
+		return FALSE
+
+	. = ..()
+	if(!.)
+		return
+
 	if(href_list["insertpos"])
 		//world << "inserting gene for genesequence [href_list["insertgenome"]] at pos [text2num(href_list["insertpos"])]"
 		var/sequence_num = text2num(href_list["sequence_num"])
@@ -215,7 +228,6 @@ datum/genesequence
 			discovered_genomes.Remove(new_genome)
 		if(old_genome)
 			discovered_genomes.Add(old_genome)
-		updateDialog()
 
 	else if(href_list["reset"])
 		var/sequence_num = text2num(href_list["sequence_num"])
@@ -224,17 +236,14 @@ datum/genesequence
 			manually_placed_genomes[sequence_num][curindex] = null
 			if(old_genome)
 				discovered_genomes.Add(old_genome)
-		updateDialog()
 
 	else if(href_list["wipe"])
 		var/sequence_num = text2num(href_list["sequence_num"])
 		var/datum/genesequence/wiped_genesequence = completed_genesequences[sequence_num]
 		completed_genesequences.Remove(wiped_genesequence)
 		discovered_genesequences.Add(wiped_genesequence)
-
 		discovered_genomes.Add(wiped_genesequence.full_genome_sequence)
 		discovered_genomes = sortList(discovered_genomes)
-		updateDialog()
 
 	else if(href_list["clone"])
 		var/sequence_num = text2num(href_list["sequence_num"])
@@ -243,12 +252,8 @@ datum/genesequence
 		playsound(src.loc, 'sound/effects/screech.ogg', 50, 1, -3)
 		new cloned_genesequence.spawned_type(src.loc)
 
-	else if(href_list["close"])
-		usr.unset_machine(src)
-		usr << browse(null, "window=reconstitutor")
+	updateDialog()
 
-	else
-		..()
 
 /obj/machinery/computer/reconstitutor/proc/scan_fossil(var/obj/item/weapon/fossil/scan_fossil)
 	//see whether we accept these kind of fossils

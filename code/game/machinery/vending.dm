@@ -425,15 +425,14 @@
 	return
 
 /obj/machinery/vending/Topic(href, href_list)
-	if(stat & (BROKEN|NOPOWER))
-		return
-	if(usr.stat || usr.restrained())
+	. = ..()
+	if(!.)
 		return
 
 	if(href_list["remove_coin"] && !istype(usr,/mob/living/silicon))
 		if(!coin)
 			usr << "There is no coin in this machine."
-			return
+			return FALSE
 
 		coin.loc = src.loc
 		if(!usr.get_active_hand())
@@ -441,7 +440,7 @@
 		usr << "\blue You remove the [coin] from the [src]"
 		coin = null
 
-	if(href_list["remove_ewallet"] && !istype(usr,/mob/living/silicon))
+	else if(href_list["remove_ewallet"] && !istype(usr,/mob/living/silicon))
 		if (!ewallet)
 			usr << "There is no charge card in this machine."
 			return
@@ -451,80 +450,73 @@
 		usr << "\blue You remove the [ewallet] from the [src]"
 		ewallet = null
 
-	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))))
-		usr.set_machine(src)
-		if ((href_list["vend"]) && (src.vend_ready) && (!currently_vending))
+	else if ((href_list["vend"]) && (src.vend_ready) && (!currently_vending))
 
-			if(istype(usr,/mob/living/silicon))
-				if(istype(usr,/mob/living/silicon/robot))
-					var/mob/living/silicon/robot/R = usr
-					if(!(R.module && istype(R.module,/obj/item/weapon/robot_module/butler) ))
-						usr << "\red The vending machine refuses to interface with you, as you are not in its target demographic!"
-						return
-				else
+		if(istype(usr,/mob/living/silicon))
+			if(istype(usr,/mob/living/silicon/robot))
+				var/mob/living/silicon/robot/R = usr
+				if(!(R.module && istype(R.module,/obj/item/weapon/robot_module/butler) ))
 					usr << "\red The vending machine refuses to interface with you, as you are not in its target demographic!"
-					return
-
-			if ((!src.allowed(usr)) && (!src.emagged) && (src.wires & WIRE_SCANID)) //For SECURE VENDING MACHINES YEAH
-				usr << "\red Access denied." //Unless emagged of course
-				flick(src.icon_deny,src)
-				return
-
-			var/datum/data/vending_product/R = locate(href_list["vend"])
-			if (!R || !istype(R) || !R.product_path || R.amount <= 0)
-				return
-
-			if(R.price == null)
-				src.vend(R, usr)
+					return FALSE
 			else
-				if (ewallet)
-					if (R.price <= ewallet.worth)
-						ewallet.worth -= R.price
-						src.vend(R, usr)
-					else
-						usr << "\red The ewallet doesn't have enough money to pay for that."
-						src.currently_vending = R
-						src.updateUsrDialog()
+				usr << "\red The vending machine refuses to interface with you, as you are not in its target demographic!"
+				return FALSE
+
+		if ((!src.allowed(usr)) && (!src.emagged) && (src.wires & WIRE_SCANID)) //For SECURE VENDING MACHINES YEAH
+			usr << "\red Access denied." //Unless emagged of course
+			flick(src.icon_deny,src)
+			return FALSE
+
+		var/datum/data/vending_product/R = locate(href_list["vend"])
+		if (!R || !istype(R) || !R.product_path || R.amount <= 0)
+			return FALSE
+
+		if(R.price == null)
+			src.vend(R, usr)
+		else
+			if (ewallet)
+				if (R.price <= ewallet.worth)
+					ewallet.worth -= R.price
+					src.vend(R, usr)
 				else
+					usr << "\red The ewallet doesn't have enough money to pay for that."
 					src.currently_vending = R
 					src.updateUsrDialog()
-			return
-
-		else if (href_list["cancel_buying"])
-			src.currently_vending = null
-			src.updateUsrDialog()
-			return
-
-		else if ((href_list["cutwire"]) && (src.panel_open))
-			var/twire = text2num(href_list["cutwire"])
-			if (!( istype(usr.get_active_hand(), /obj/item/weapon/wirecutters) ))
-				usr << "You need wirecutters!"
-				return
-			if (src.isWireColorCut(twire))
-				src.mend(twire)
 			else
-				src.cut(twire)
-
-		else if ((href_list["pulsewire"]) && (src.panel_open))
-			var/twire = text2num(href_list["pulsewire"])
-			if (!istype(usr.get_active_hand(), /obj/item/device/multitool))
-				usr << "You need a multitool!"
-				return
-			if (src.isWireColorCut(twire))
-				usr << "You can't pulse a cut wire."
-				return
-			else
-				src.pulse(twire)
-
-		else if ((href_list["togglevoice"]) && (src.panel_open))
-			src.shut_up = !src.shut_up
-
-		src.add_fingerprint(usr)
-		src.updateUsrDialog()
-	else
-		usr << browse(null, "window=vending")
+				src.currently_vending = R
+				src.updateUsrDialog()
 		return
-	return
+
+	else if (href_list["cancel_buying"])
+		src.currently_vending = null
+		src.updateUsrDialog()
+		return
+
+	else if ((href_list["cutwire"]) && (src.panel_open))
+		var/twire = text2num(href_list["cutwire"])
+		if (!( istype(usr.get_active_hand(), /obj/item/weapon/wirecutters) ))
+			usr << "You need wirecutters!"
+			return FALSE
+		if (src.isWireColorCut(twire))
+			src.mend(twire)
+		else
+			src.cut(twire)
+
+	else if ((href_list["pulsewire"]) && (src.panel_open))
+		var/twire = text2num(href_list["pulsewire"])
+		if (!istype(usr.get_active_hand(), /obj/item/device/multitool))
+			usr << "You need a multitool!"
+			return FALSE
+		if (src.isWireColorCut(twire))
+			usr << "You can't pulse a cut wire."
+			return FALSE
+		else
+			src.pulse(twire)
+
+	else if ((href_list["togglevoice"]) && (src.panel_open))
+		src.shut_up = !src.shut_up
+
+	src.updateUsrDialog()
 
 /obj/machinery/vending/proc/vend(datum/data/vending_product/R, mob/user)
 	if ((!src.allowed(user)) && (!src.emagged) && (src.wires & WIRE_SCANID)) //For SECURE VENDING MACHINES YEAH

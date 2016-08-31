@@ -282,11 +282,14 @@
 	power = 0
 
 /obj/machinery/computer/telescience/Topic(href, href_list)
-	if(..())
+	. = ..()
+	if(!.)
 		return
+
 	if(!telepad)
 		updateDialog()
-		return
+		return FALSE
+
 	if(telepad.panel_open)
 		temp_msg = "Telepad undergoing physical maintenance operations."
 
@@ -344,7 +347,6 @@
 		temp_msg = "NOTICE:<BR>Bluespace crystals ejected."
 
 	updateDialog()
-	return 1
 
 /obj/machinery/computer/telescience/proc/recalibrate()
 	if(telepad)

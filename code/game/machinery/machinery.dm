@@ -231,40 +231,42 @@ Class Procs:
 		use_power(active_power_usage,power_channel, 1)
 	return 1
 
+//By default, we check everything.
+//But sometimes, we need to override this check.
+/obj/machinery/proc/is_operational_topic()
+	return !(stat & (NOPOWER|BROKEN|MAINT|EMPED))
+
 /obj/machinery/Topic(href, href_list)
 	..()
-	if(stat & (NOPOWER|BROKEN))
-		return 1
-	if(usr.restrained() || usr.lying || usr.stat)
-		return 1
-	if ( ! (istype(usr, /mob/living/carbon/human) || \
-			istype(usr, /mob/living/silicon) || \
-			istype(usr, /mob/living/carbon/monkey)) )
-		usr << "<span class='danger'>You don't have the dexterity to do this!</span>"
-		return 1
 
-	var/norange = 0
-	if(istype(usr, /mob/living/carbon/human))
+	if(usr.can_use_topic(src) != STATUS_INTERACTIVE || !is_operational_topic())
+		usr.unset_machine(src)
+		return FALSE
+
+	if(ishuman(usr))
 		var/mob/living/carbon/human/H = usr
-		if(istype(H.l_hand, /obj/item/tk_grab))
-			norange = 1
-		else if(istype(H.r_hand, /obj/item/tk_grab))
-			norange = 1
+		if(H.getBrainLoss() >= 60)
+			H.visible_message("<span class='warning'>[H] stares cluelessly at [src] and drools.</span>")
+			return FALSE
+		else if(prob(H.getBrainLoss()))
+			H << "<span class='warning'>You momentarily forget how to use [src].</span>"
+			return FALSE
 
-	if(!norange)
-		if ((!in_range(src, usr) || !istype(src.loc, /turf)) && !istype(usr, /mob/living/silicon))
-			return 1
-
+	usr.set_machine(src)
 	src.add_fingerprint(usr)
 
 	var/area/A = get_area(src)
 	A.master.powerupdate = 1
 
-	return 0
+	return TRUE
 
 /obj/machinery/proc/is_operational()
 	return !(stat & (NOPOWER|BROKEN|MAINT))
 
+/obj/machinery/proc/issilicon_allowed(mob/living/silicon/S)
+	if(istype(S) && allowed(S))
+		return TRUE
+	return FALSE
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 

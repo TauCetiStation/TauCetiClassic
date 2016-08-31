@@ -1016,25 +1016,22 @@ About the new airlock wires panel:
 	return
 
 
-/obj/machinery/door/airlock/Topic(href, href_list, var/nowindow = 0)
-	if(!nowindow)
-		..()
-	if(usr.stat || usr.restrained()|| usr.small)
-		return
-	add_fingerprint(usr)
+/obj/machinery/door/airlock/Topic(href, href_list, var/no_window = 0)
 	if(href_list["close"])
 		usr << browse(null, "window=airlock")
-		if(usr.machine==src)
-			usr.unset_machine()
-			return
+		usr.unset_machine(src)
+		return FALSE
 
-	if((in_range(src, usr) && istype(src.loc, /turf)) && src.p_open)
-		usr.set_machine(src)
+	. = ..(href, href_list)
+	if(!. && !(href_list["wires"] || href_list["pulse"] || href_list["signaler"] || href_list["remove-signaler"]))
+		return FALSE
+
+	if(src.p_open)
 		if(href_list["wires"])
 			var/t1 = text2num(href_list["wires"])
 			if(!( istype(usr.get_active_hand(), /obj/item/weapon/wirecutters) ))
 				usr << "You need wirecutters!"
-				return
+				return FALSE
 			if(src.isWireColorCut(t1))
 				src.mend(t1)
 			else
@@ -1043,24 +1040,24 @@ About the new airlock wires panel:
 			var/t1 = text2num(href_list["pulse"])
 			if(!istype(usr.get_active_hand(), /obj/item/device/multitool))
 				usr << "You need a multitool!"
-				return
+				return FALSE
 			if(src.isWireColorCut(t1))
 				usr << "You can't pulse a cut wire."
-				return
+				return FALSE
 			else
 				src.pulse(t1)
 		else if(href_list["signaler"])
 			var/wirenum = text2num(href_list["signaler"])
 			if(!istype(usr.get_active_hand(), /obj/item/device/assembly/signaler))
 				usr << "You need a signaller!"
-				return
+				return FALSE
 			if(src.isWireColorCut(wirenum))
 				usr << "You can't attach a signaller to a cut wire."
-				return
+				return FALSE
 			var/obj/item/device/assembly/signaler/R = usr.get_active_hand()
 			if(R.secured)
 				usr << "This radio can't be attached!"
-				return
+				return FALSE
 			var/mob/M = usr
 			M.drop_item()
 			R.loc = src
@@ -1070,14 +1067,13 @@ About the new airlock wires panel:
 			var/wirenum = text2num(href_list["remove-signaler"])
 			if(!(src.signalers[wirenum]))
 				usr << "There's no signaller attached to that wire!"
-				return
+				return FALSE
 			var/obj/item/device/assembly/signaler/R = src.signalers[wirenum]
 			R.loc = usr.loc
 			R.airlock_wire = null
 			src.signalers[wirenum] = null
 
-
-	if(istype(usr, /mob/living/silicon) && src.canAIControl())
+	if(issilicon(usr) && src.canAIControl())
 		//AI
 		//aiDisable - 1 idscan, 2 disrupt main power, 3 disrupt backup power, 4 drop door bolts, 5 un-electrify door, 7 close door, 8 door safties, 9 door speed
 		//aiEnable - 1 idscan, 4 raise door bolts, 5 electrify door for 30 seconds, 6 electrify door indefinitely, 7 open door,  8 door safties, 9 door speed
@@ -1159,8 +1155,6 @@ About the new airlock wires panel:
 						lights = 0
 					else
 						usr << text("Door bolt lights are already disabled!")
-
-
 
 		else if(href_list["aiEnable"])
 			var/code = text2num(href_list["aiEnable"])
@@ -1259,11 +1253,9 @@ About the new airlock wires panel:
 					else
 						usr << text("Door bolt lights are already enabled!")
 
-	add_fingerprint(usr)
 	update_icon()
-	if(!nowindow)
+	if(!no_window)
 		updateUsrDialog()
-	return
 
 /obj/machinery/door/airlock/attackby(C as obj, mob/user as mob)
 	//world << text("airlock attackby src [] obj [] mob []", src, C, user)

@@ -23,8 +23,6 @@
 <A href='?src=\ref[src];make=20;dir=1'>Pipe Cap</A><BR>
 <A href='?src=\ref[src];make=19;dir=1'>4-Way Manifold</A><BR>
 <A href='?src=\ref[src];make=18;dir=1'>Manual T-Valve</A><BR>
-<A href='?src=\ref[src];make=21;dir=1'>upward Pipe</A><BR>
-<A href='?src=\ref[src];make=22;dir=1'>downward Pipe</A><BR>
 <b>Devices:</b><BR>
 <A href='?src=\ref[src];make=4;dir=1'>Connector</A><BR>
 <A href='?src=\ref[src];make=7;dir=1'>Unary Vent</A><BR>
@@ -57,19 +55,23 @@
 	onclose(user, "pipedispenser")
 	return
 
+/obj/machinery/pipedispenser/is_operational_topic()
+	return TRUE
+
 /obj/machinery/pipedispenser/Topic(href, href_list)
-	if(..())
+	. = ..()
+	if(!.)
 		return
-	if(unwrenched || !usr.canmove || usr.stat || usr.restrained() || !in_range(loc, usr))
+
+	if(unwrenched)
 		usr << browse(null, "window=pipedispenser")
-		return
-	usr.set_machine(src)
-	src.add_fingerprint(usr)
+		return FALSE
+
 	if(href_list["make"])
 		if(!wait)
 			var/p_type = text2num(href_list["make"])
 			var/p_dir = text2num(href_list["dir"])
-			var/obj/item/pipe/P = new (/*usr.loc*/ src.loc, pipe_type=p_type, dir=p_dir)
+			var/obj/item/pipe/P = new (src.loc, pipe_type = p_type, dir = p_dir)
 			P.update()
 			P.add_fingerprint(usr)
 			wait = 1
@@ -77,11 +79,10 @@
 				wait = 0
 	if(href_list["makemeter"])
 		if(!wait)
-			new /obj/item/pipe_meter(/*usr.loc*/ src.loc)
+			new /obj/item/pipe_meter(src.loc)
 			wait = 1
 			spawn(15)
 				wait = 0
-	return
 
 /obj/machinery/pipedispenser/attackby(var/obj/item/W as obj, var/mob/user as mob)
 	src.add_fingerprint(usr)
@@ -162,8 +163,6 @@ Nah
 <A href='?src=\ref[src];dmake=5'>Bin</A><BR>
 <A href='?src=\ref[src];dmake=6'>Outlet</A><BR>
 <A href='?src=\ref[src];dmake=7'>Chute</A><BR>
-<A href='?src=\ref[src];dmake=21'>Upwards</A><BR>
-<A href='?src=\ref[src];dmake=22'>Downwards</A><BR>
 "}
 ///// Z-Level stuff
 
@@ -174,14 +173,14 @@ Nah
 
 
 /obj/machinery/pipedispenser/disposal/Topic(href, href_list)
-	if(..())
+	. = ..()
+	if(!.)
 		return
-	usr.set_machine(src)
-	src.add_fingerprint(usr)
+
 	if(href_list["dmake"])
-		if(unwrenched || !usr.canmove || usr.stat || usr.restrained() || !in_range(loc, usr))
+		if(unwrenched)
 			usr << browse(null, "window=pipedispenser")
-			return
+			return FALSE
 		if(!wait)
 			var/p_type = text2num(href_list["dmake"])
 			var/obj/structure/disposalconstruct/C = new (src.loc)
@@ -205,18 +204,11 @@ Nah
 				if(7)
 					C.ptype = 8
 					C.density = 1
-///// Z-Level stuff
-				if(21)
-					C.ptype = 11
-				if(22)
-					C.ptype = 12
-///// Z-Level stuff
 			C.add_fingerprint(usr)
 			C.update()
 			wait = 1
 			spawn(15)
 				wait = 0
-	return
 
 // adding a pipe dispensers that spawn unhooked from the ground
 /obj/machinery/pipedispenser/orderable

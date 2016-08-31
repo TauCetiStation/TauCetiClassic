@@ -165,10 +165,10 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 	return dat
 
 /obj/machinery/mineral/ore_redemption/Topic(href, href_list)
-	if(..())
+	. = ..()
+	if(!.)
 		return
-	usr.set_machine(src)
-	src.add_fingerprint(usr)
+
 	if(href_list["choice"])
 		if(istype(inserted_id))
 			if(href_list["choice"] == "eject")
@@ -189,6 +189,7 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 				I.loc = src
 				inserted_id = I
 			else usr << "<span class='warning'>No valid ID.</span>"
+
 	if(href_list["release"])
 		if(check_access(inserted_id) || allowed(usr)) //Check the ID inside, otherwise check the user.
 			if(!(text2path(href_list["release"]) in stack_list)) return
@@ -203,8 +204,9 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 				stack_list -= text2path(href_list["release"])
 		else
 			usr << "<span class='warning'>Required access not found.</span>"
+
 	src.updateUsrDialog()
-	return
+
 
 /obj/machinery/mineral/ore_redemption/ex_act(severity, target)
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
@@ -320,10 +322,10 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 	return
 
 /obj/machinery/mineral/equipment_locker/Topic(href, href_list)
-	if(..())
+	. = ..()
+	if(!.)
 		return
-	usr.set_machine(src)
-	src.add_fingerprint(usr)
+
 	if(href_list["choice"])
 		if(istype(inserted_id))
 			if(href_list["choice"] == "eject")
@@ -347,8 +349,8 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 			else
 				inserted_id.mining_points -= prize.cost
 				new prize.equipment_path(src.loc)
+
 	src.updateUsrDialog()
-	return
 
 /obj/machinery/mineral/equipment_locker/attackby(obj/item/I as obj, mob/user as mob)
 	if(istype(I, /obj/item/weapon/mining_voucher))

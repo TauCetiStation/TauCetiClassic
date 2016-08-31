@@ -112,8 +112,9 @@
 		ui.open()
 
 /obj/machinery/account_database/Topic(href, href_list)
-	if(..())
-		return 1
+	. = ..()
+	if(!.)
+		return
 
 	var/datum/nanoui/ui = nanomanager.get_open_ui(usr, src, "main")
 
@@ -271,5 +272,3 @@
 
 				P.info = text
 				state("The terminal prints out a report.")
-
-	return 1

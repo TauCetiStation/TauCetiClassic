@@ -195,11 +195,9 @@
 		return
 
 /obj/machinery/atmospherics/unary/cryo_cell/Topic(href, href_list)
-	if(usr == occupant || panel_open)
-		return 0 // don't update UIs attached to this object
-
-	if(..())
-		return 0 // don't update UIs attached to this object
+	. = ..()
+	if(!. || usr == occupant || panel_open)
+		return FALSE // don't update UIs attached to this object
 
 	if(href_list["switchOn"])
 		if(!state_open)
@@ -223,8 +221,6 @@
 			beaker = null
 
 	update_icon()
-	add_fingerprint(usr)
-	return 1 // update UIs attached to this object
 
 /obj/machinery/atmospherics/unary/cryo_cell/attackby(var/obj/item/weapon/G as obj, var/mob/user as mob)
 	if(istype(G, /obj/item/weapon/reagent_containers/glass))
