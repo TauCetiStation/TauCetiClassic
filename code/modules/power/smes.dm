@@ -355,25 +355,18 @@
 		// auto update every Master Controller tick
 		ui.set_auto_update(1)
 
+/obj/machinery/power/smes/is_operational_topic()
+	return !(stat & (BROKEN|EMPED))
 
 /obj/machinery/power/smes/Topic(href, href_list)
-	..()
-
-	if (usr.stat || usr.restrained() )
+	. = ..()
+	if(!.)
 		return
-	if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
-		if(!istype(usr, /mob/living/silicon/ai))
-			usr << "\red You don't have the dexterity to do this!"
-			return
 
-//world << "[href] ; [href_list[href]]"
-
-	if (!istype(src.loc, /turf) && !istype(usr, /mob/living/silicon/))
-		return 0 // Do not update ui
+	//world << "[href] ; [href_list[href]]"
 
 	for(var/area/A in active_areas)
 		A.master.powerupdate = 3
-
 
 	if( href_list["cmode"] )
 		chargemode = !chargemode
@@ -405,8 +398,6 @@
 		output = max(0, min(max_output, output))	// clamp to range
 
 	investigate_log("input/output; [chargelevel>output?"<font color='green'>":"<font color='red'>"][chargelevel]/[output]</font> | Output-mode: [online?"<font color='green'>on</font>":"<font color='red'>off</font>"] | Input-mode: [chargemode?"<font color='green'>auto</font>":"<font color='red'>off</font>"] by [usr.key]","singulo")
-
-	return 1
 
 
 /obj/machinery/power/smes/proc/ion_act()
