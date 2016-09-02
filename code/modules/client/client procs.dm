@@ -42,6 +42,9 @@
 		if(ismob(C)) 		//Old stuff can feed-in mobs instead of clients
 			var/mob/M = C
 			C = M.client
+		if(href_list["ahelp_reply"])
+			cmd_ahelp_reply(C)
+			return
 		cmd_admin_pm(C,null)
 		return
 
@@ -141,6 +144,9 @@
 		admins += src
 		holder.owner = src
 
+	if(ckey in mentor_ckeys)
+		mentors += src
+
 	//preferences datum - also holds some persistant data for the client (because we may as well keep these datums to a minimum)
 	prefs = preferences_datums[ckey]
 	if(!prefs)
@@ -198,6 +204,7 @@
 		holder.owner = null
 		admins -= src
 	directory -= ckey
+	mentors -= src
 	clients -= src
 	return ..()
 
