@@ -13,14 +13,15 @@
 
 /obj/item/device/assembly/voice/hear_talk(mob/living/M as mob, msg)
 
-
+	msg = lowertext_plus(sanitize(msg))
+	
 	if(listening)
-		recorded = sanitize(msg)
+		recorded = msg
 		listening = 0
 		for(var/mob/O in hearers(1, src.loc))
 			O.show_message(text("Activation message is '[recorded]'."),1)
 	else
-		if(findtext(sanitize(msg), recorded))
+		if(findtext(msg, recorded))
 			for(var/mob/O in hearers(1, src.loc))
 				O.show_message(text("Beeeep"),1)
 			spawn(10)
