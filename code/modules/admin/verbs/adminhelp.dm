@@ -16,6 +16,4 @@
 	if(src.handle_spam_prevention(msg,MUTE_ADMINHELP))
 		return
 
-	adminhelped = 1 //Determines if they get the message to reply by clicking the name.
-
 	staffhelp(msg, help_type = "AH")

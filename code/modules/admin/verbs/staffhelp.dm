@@ -35,7 +35,8 @@ client/proc/staffhelp(msg as text, var/help_type = null)
 	var/list/ckeys = list()
 	for(var/mob/M in mob_list)
 		var/list/indexing = list(M.real_name, M.name)
-		if(M.mind)	indexing += M.mind.name
+		if(M.mind)
+			indexing += M.mind.name
 
 		for(var/string in indexing)
 			var/list/L = splittext(string, " ")
@@ -101,7 +102,9 @@ client/proc/staffhelp(msg as text, var/help_type = null)
 			if(isobserver(X.mob))
 				jump = "(<A HREF='?src=\ref[X.mob];ghostplayerobservejump=[ref_mob]'>JMP</A>) "
 			X << 'sound/effects/adminhelp.ogg'
-			X << "<font color=blue><b><font color=[colour]>[prefix]: </font>[key_name(src, 1, 0,, TRUE)][jump]:</b> [original_msg]</font>"
+			X << "<font color=blue><b><font color=[colour]>[prefix]: </font>[key_name(src, 1, 0, 0, TRUE)][jump]:</b> [original_msg]</font>"
+
+	adminhelped = 1 //Determines if they get the message to reply by clicking the name.
 
 	//show it to the person adminhelping too
 	src << "<font color='blue'>PM to-<b>[target_group]</b>: [original_msg]</font>"

@@ -194,7 +194,8 @@
 		return
 	if(ment_ckey in admin_datums)
 		remove_admin(ment_ckey)
-	mentor_ckeys |= ment_ckey
+	mentor_ckeys += ment_ckey
+	mentors += directory[ment_ckey]
 	message_admins("[key_name_admin(usr)] added [ment_ckey] to the mentors list")
 	log_admin("[key_name(usr)] added [ment_ckey] to the mentors list")
 
@@ -220,6 +221,7 @@
 		return
 	if(alert("Are you sure you want to remove [ment_ckey] from mentors?","Message","Yes","Cancel") == "Yes")
 		mentor_ckeys -= ment_ckey
+		mentors -= directory[ment_ckey]
 		message_admins("[key_name_admin(usr)] removed [ment_ckey] from the mentors list")
 		log_admin("[key_name(usr)] removed [ment_ckey] from the mentors list")
 
