@@ -33,7 +33,7 @@
 	feedback_add_details("admin_verb","APM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_ahelp_reply(whom)
-	if(prefs.muted & MUTE_ADMINHELP)
+	if(prefs.muted & MUTE_ADMINHELP || ((src in mentors) && (prefs.muted & MUTE_MENTORHELP)))
 		src << "<font color='red'>Error: Admin-PM: You are unable to use admin PM-s (muted).</font>"
 		return
 	var/client/C
@@ -59,7 +59,7 @@
 //Fetching a message if needed. src is the sender and C is the target client
 
 /client/proc/cmd_admin_pm(var/client/C, var/msg = null)
-	if(!usr.client.holder && (prefs.muted & MUTE_ADMINHELP))
+	if(prefs.muted & MUTE_ADMINHELP || ((src in mentors) && (prefs.muted & MUTE_MENTORHELP)))
 		src << "<font color='red'>Error: Private-Message: You are unable to use PM-s (muted).</font>"
 		return
 
