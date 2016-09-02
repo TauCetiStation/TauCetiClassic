@@ -2,10 +2,15 @@
 	set category = "Special Verbs"
 	set name = "Asay" //Gave this shit a shorter name so you only have to time out "asay" rather than "admin say" to use it --NeoFite
 	set hidden = 1
-	if(!check_rights(R_ADMIN))	return
+	if(!check_rights(R_ADMIN))
+		return
+	if(prefs.muted & MUTE_ADMINHELP)
+		src << "<font color='red'>Error: ASAY: You cannot use asay (Muted).</font>"
+		return
 
 	msg = sanitize(copytext(msg, 1, MAX_MESSAGE_LEN))
-	if(!msg)	return
+	if(!msg)
+		return
 
 	log_admin("[key_name(src)] : [msg]")
 
