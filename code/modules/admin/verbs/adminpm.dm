@@ -33,7 +33,7 @@
 	feedback_add_details("admin_verb","APM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_ahelp_reply(whom)
-	if(prefs.muted & MUTE_ADMINHELP)
+	if(prefs.muted & MUTE_ADMINHELP || ((src in mentors) && (prefs.muted & MUTE_MENTORHELP)))
 		src << "<font color='red'>Error: Admin-PM: You are unable to use admin PM-s (muted).</font>"
 		return
 	var/client/C
@@ -43,22 +43,23 @@
 			src << "<font color='red'>Error: Admin-PM: Client not found.</font>"
 		return
 	if(usr.client in mentors)
-		message_mentors("[key_name_admin(src)] has started replying to [key_name(C, 0, 0)]'s help request.")
+		message_mentors("[key_name(src, 0, 0, 0)] has started replying to [key_name(C, 0, 0, 0)]'s help request.")
 //	if(usr in mentors)
 	message_admins("[key_name_admin(src)] has started replying to [key_name(C, 0, 0)]'s help request.")
 	var/msg = input(src,"Message:", "Private message to [key_name(C, 0, 0)]") as text|null
 	if (!msg)
 		message_admins("[key_name_admin(src)] has cancelled their reply to [key_name(C, 0, 0)]'s help request.")
 		if(usr.client in mentors)
-			message_mentors("[key_name_admin(src)] has cancelled their reply to [key_name(C, 0, 0)]'s help request.")
+			message_mentors("[key_name(src, 0, 0, 0)] has cancelled their reply to [key_name(C, 0, 0, 0)]'s help request.")
 		return
+	msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
 	cmd_admin_pm(whom, msg)
 
 //takes input from cmd_admin_pm_context, cmd_admin_pm_panel or /client/Topic and sends them a PM.
 //Fetching a message if needed. src is the sender and C is the target client
 
 /client/proc/cmd_admin_pm(var/client/C, var/msg = null)
-	if(!usr.client.holder && (prefs.muted & MUTE_ADMINHELP))
+	if(prefs.muted & MUTE_ADMINHELP || ((src in mentors) && (prefs.muted & MUTE_MENTORHELP)))
 		src << "<font color='red'>Error: Private-Message: You are unable to use PM-s (muted).</font>"
 		return
 
@@ -71,7 +72,7 @@
 
 	//get message text, limit it's length.and clean/escape html
 	if(!msg)
-		msg = input(src,"Message:", "Private message to [key_name(C, 0, holder ? 1 : 0)]") as text|null
+		msg = input(src,"Message:", "Private message to [key_name(C, 0, holder ? 1 : 0, holder ? 1 : 0)]") as text|null
 
 		msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
 
@@ -99,8 +100,8 @@
 
 
 	if(holder)
-		//mod PMs are maroon
-		//PMs sent from admins and mods display their rank
+		//mentor PMs are maroon
+		//PMs sent from admins display their rank
 		if(C.holder && (holder.rights & R_ADMIN))
 			recieve_color = "red"
 		else
@@ -120,7 +121,7 @@
 
 	var/recieve_message = ""
 
-	if(holder && !C.holder)
+	if(((src in mentors) || holder) && !C.holder)
 		recieve_message = "<font color='[recieve_color]' size='3'><b>-- Click the [recieve_pm_type]'s name to reply --</b></font>\n"
 		if(C.adminhelped)
 			C << recieve_message
@@ -162,7 +163,7 @@
 		if(X == C || X == src)
 			continue
 		if(X.key!=key && X.key!=C.key && !C.holder && !src.holder)
-			X << "<B><font color='blue'>PM: [key_name(src, X, 0)]-&gt;[key_name(C, X, 0)]:</B> \blue [msg]</font>" //inform X
+			X << "<B><font color='blue'>PM: [key_name(src, X, 0, 0)]-&gt;[key_name(C, X, 0, 0)]:</B> \blue [msg]</font>" //inform X
 
 /client/proc/cmd_admin_irc_pm()
 	if(prefs.muted & MUTE_ADMINHELP)

@@ -449,7 +449,7 @@
 				output += "</tr>"
 				output += "<tr bgcolor='[dcolor]'>"
 				output += "<td align='center' colspan='2' bgcolor=''><b>IP:</b> [ip]</td>"
-				output += "<td align='center' colspan='3' bgcolor=''><b>CIP:</b> [cid]</td>"
+				output += "<td align='center' colspan='3' bgcolor=''><b>CID:</b> [cid]</td>"
 				output += "</tr>"
 				output += "<tr bgcolor='[lcolor]'>"
 				output += "<td align='center' colspan='5'><b>Reason: [(unbanned) ? "" : "(<a href=\"byond://?src=\ref[src];dbbanedit=reason;dbbanid=[banid]\">Edit</a>)"]</b> <cite>\"[reason]\"</cite></td>"

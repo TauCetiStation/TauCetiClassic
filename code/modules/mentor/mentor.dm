@@ -29,7 +29,7 @@
 		var/DBQuery/query = dbcon.NewQuery("SELECT ckey FROM erro_mentor")
 		query.Execute()
 		while(query.NextRow())
-			var/ckey = query.item
+			var/ckey = query.item[1]
 			mentor_ckeys += ckey
 			mentors += directory[ckey]
 

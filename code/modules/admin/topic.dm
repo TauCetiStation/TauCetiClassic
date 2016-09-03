@@ -1008,20 +1008,26 @@
 				return
 
 	else if(href_list["mute"])
-		if(!check_rights(R_ADMIN))  return
+		if(!check_rights(R_ADMIN))
+			return
 
 		var/mob/M = locate(href_list["mute"])
-		if(!ismob(M))	return
-		if(!M.client)	return
+		if(!ismob(M))
+			return
+		if(!M.client)
+			return
 
 		var/mute_type = href_list["mute_type"]
-		if(istext(mute_type))	mute_type = text2num(mute_type)
-		if(!isnum(mute_type))	return
+		if(istext(mute_type))
+			mute_type = text2num(mute_type)
+		if(!isnum(mute_type))
+			return
 
 		cmd_admin_mute(M, mute_type)
 
 	else if(href_list["c_mode"])
-		if(!check_rights(R_ADMIN))	return
+		if(!check_rights(R_ADMIN))
+			return
 
 		if(ticker && ticker.mode)
 			return alert(usr, "The game has already started.", null, null, null, null)
