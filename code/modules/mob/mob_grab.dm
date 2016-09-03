@@ -126,17 +126,19 @@
 			announce = 1
 		last_hit_zone = hit_zone
 		if(ishuman(affecting))
-			switch(hit_zone)
-				if("mouth")
-					if(announce)
-						assailant.visible_message("<span class='warning'>[assailant] covers [affecting]'s mouth!</span>")
-					if(affecting:silent < 3)
-						affecting:silent = 3
-				if("eyes")
-					if(announce)
-						assailant.visible_message("<span class='warning'>[assailant] covers [affecting]'s eyes!</span>")
-					if(affecting:eye_blind < 3)
-						affecting:eye_blind = 3
+			var/mob/living/carbon/human/AH = affecting
+			if(!AH.head || !istype(AH.head, /obj/item/clothing/head/helmet/space))
+				switch(hit_zone)
+					if("mouth")
+						if(announce)
+							assailant.visible_message("<span class='warning'>[assailant] covers [AH]'s mouth!</span>")
+						if(AH.silent < 3)
+							AH.silent = 3
+					if("eyes")
+						if(announce)
+							assailant.visible_message("<span class='warning'>[assailant] covers [AH]'s eyes!</span>")
+						if(AH.eye_blind < 3)
+							AH.eye_blind = 3
 		if(force_down)
 			if(affecting.loc != assailant.loc)
 				force_down = 0
@@ -258,6 +260,11 @@
 		affecting.Stun(10) //10 ticks of ensured grab
 
 	else if(state < GRAB_UPGRADING)
+		if(ishuman(affecting))
+			var/mob/living/carbon/human/AH = affecting
+			if(AH.head && istype(AH.head, /obj/item/clothing/head/helmet/space))
+				assailant << "<span class='notice'>You can't strangle him, because space helmet covers [affecting]'s neck.</span>"
+				return
 		assailant.visible_message("<span class='danger'>[assailant] starts to tighten \his grip on [affecting]'s neck!</span>")
 		hud.icon_state = "kill1"
 
