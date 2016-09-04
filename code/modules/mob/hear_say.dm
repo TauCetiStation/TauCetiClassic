@@ -1,13 +1,9 @@
 // At minimum every mob has a hear_say proc.
 
-/mob/proc/hear_say(var/message, var/verb = "says", var/datum/language/language = null, var/alt_name = "",var/italics = 0, var/mob/speaker = null, var/sound/speech_sound, var/sound_vol)
+/mob/proc/hear_say(var/message, var/verb = "says", var/datum/language/language = null, var/alt_name = "",var/italics = 0, var/mob/speaker = null, var/used_radio, var/sound/speech_sound, var/sound_vol)
 	if(!client)
 		return
 
-	if(speaker && !speaker.client && istype(src,/mob/dead/observer) && client.prefs.chat_toggles & CHAT_GHOSTEARS && !speaker in view(src))
-			//Does the speaker have a client?  It's either random stuff that observers won't care about (Experiment 97B says, 'EHEHEHEHEHEHEHE')
-			//Or someone snoring.  So we make it where they won't hear it.
-		return
 
 	if(sleeping || stat == 1)
 		hear_sleep(message)
@@ -43,12 +39,14 @@
 
 	var/track = null
 	if(istype(src, /mob/dead/observer))
-		if(italics && client.prefs.chat_toggles & CHAT_GHOSTRADIO)
+		if(speaker && !speaker.client && !(client.prefs.chat_toggles & CHAT_GHOSTNPC) && !(speaker in view(src)))
+			return
+		if(used_radio && (client.prefs.chat_toggles & CHAT_GHOSTRADIO))
 			return
 		if(speaker_name != speaker.real_name && speaker.real_name)
 			speaker_name = "[speaker.real_name] ([speaker_name])"
 		track = "<a href='byond://?src=\ref[src];track=\ref[speaker]'>(F)</a> "
-		if(client.prefs.chat_toggles & CHAT_GHOSTEARS && speaker in view(src))
+		if((client.prefs.chat_toggles & CHAT_GHOSTEARS) && speaker in view(src))
 			message = "<b>[message]</b>"
 
 	if(sdisabilities & DEAF || ear_deaf)

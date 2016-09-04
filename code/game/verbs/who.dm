@@ -120,5 +120,5 @@
 		for(var/client/C in mentors)
 			mentmsg += "\t[C] is a Mentor\n"
 			num_mentors_online++
-	msg = "<b>Current Admins ([num_admins_online]):</b>\n" + msg + "\n<b> Current Mentors ([num_mentors_online]):</b>\n" + mentmsg
+	msg = "<b>Current Admins ([num_admins_online]):</b>\n" + msg + "\n<b>Current Mentors ([num_mentors_online]):</b>\n" + mentmsg
 	src << msg
