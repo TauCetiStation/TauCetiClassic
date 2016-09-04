@@ -37,7 +37,16 @@
 	component_parts += new /obj/item/weapon/stock_parts/cell/high(null)
 	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
 	component_parts += new /obj/item/weapon/cable_coil(null, 5)
+
+	var/map_capacity = capacity
+	var/map_charge = charge
+	var/map_max_input = max_input
+	var/map_max_output = max_output
 	RefreshParts()
+	if(map_capacity > capacity) capacity = map_capacity
+	if(map_charge > charge) charge = map_charge
+	if(map_max_input > max_input) max_input = map_max_input
+	if(map_max_output > max_output) max_output = map_max_output
 	spawn(5)
 		dir_loop:
 			for(var/d in cardinal)
