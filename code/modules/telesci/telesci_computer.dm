@@ -314,7 +314,7 @@
 
 	if(href_list["setz"])
 		var/new_z = input("Please input desired sector.", name, z_co) as num
-		if(..())
+		if(!..())
 			return
 		z_co = Clamp(round(new_z), 1, 10)
 
