@@ -66,6 +66,15 @@ datum/design/seccamera
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/security
 
+datum/design/telepad_concole
+	name = " Circuit Design (Telescience Console) "
+	desc = "Allows for the construction of circuit boards used to build telescience computers."
+	id = "telepad_concole"
+	req_tech = list("programming" = 4, "bluespace" = 3, "engineering" = 3)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/telesci_console
+
 datum/design/aicore
 	name = "Circuit Design (AI Core)"
 	desc = "Allows for the construction of circuit boards used to build new AI cores."
@@ -2042,132 +2051,6 @@ datum/design/standart_encrypt
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 300, MAT_GLASS = 600)
 	build_path = /obj/item/device/encryptionkey
-
-datum/design/engi_encrypt
-	name = "Engineering Encryption Key"
-	desc = "An encyption key for a radio headset.  Contains cypherkeys."
-	id = "engi_encrypt"
-	req_tech = list("materials" = 2, "engineering" = 2)
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 300, MAT_GLASS = 600, MAT_GOLD = 300, MAT_SILVER = 400)
-	build_path = /obj/item/device/encryptionkey/headset_eng
-
-datum/design/sec_encrypt
-	name = "Security Encryption Key"
-	desc = "An encyption key for a radio headset.  Contains cypherkeys."
-	id = "sec_encrypt"
-	req_tech = list("materials" = 2, "engineering" = 2)
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 300, MAT_GLASS = 600, MAT_GOLD = 300, MAT_SILVER = 400)
-	build_path = /obj/item/device/encryptionkey/headset_sec
-
-datum/design/med_encrypt
-	name = "Medical Encryption Key"
-	desc = "An encyption key for a radio headset.  Contains cypherkeys."
-	id = "med_encrypt"
-	req_tech = list("materials" = 2, "engineering" = 2)
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 300, MAT_GLASS = 600, MAT_GOLD = 300, MAT_SILVER = 400)
-	build_path = /obj/item/device/encryptionkey/headset_med
-
-datum/design/sci_encrypt
-	name = "Science Encryption Key"
-	desc = "An encyption key for a radio headset.  Contains cypherkeys."
-	id = "sci_encrypt"
-	req_tech = list("materials" = 2, "engineering" = 2)
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 300, MAT_GLASS = 600, MAT_GOLD = 300, MAT_SILVER = 400)
-	build_path = /obj/item/device/encryptionkey/headset_sci
-
-datum/design/supply_encrypt
-	name = "Supply Encryption Key"
-	desc = "An encyption key for a radio headset.  Contains cypherkeys."
-	id = "supply_encrypt"
-	req_tech = list("materials" = 2, "engineering" = 2)
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 300, MAT_GLASS = 600, MAT_GOLD = 300, MAT_SILVER = 400)
-	build_path = /obj/item/device/encryptionkey/headset_cargo
-
-datum/design/medsci_encrypt
-	name = "Medical Research Encryption Key"
-	desc = "An encyption key for a radio headset.  Contains cypherkeys."
-	id = "medsci_encrypt"
-	req_tech = list("materials" = 2, "engineering" = 2)
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 300, MAT_GLASS = 600, MAT_GOLD = 300, MAT_SILVER = 400)
-	build_path = /obj/item/device/encryptionkey/headset_medsci
-
-datum/design/robotics_encrypt
-	name = "Robotics Encryption Key"
-	desc = "An encyption key for a radio headset.  Contains cypherkeys."
-	id = "robotics_encrypt"
-	req_tech = list("materials" = 2, "engineering" = 2)
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 300, MAT_GLASS = 600, MAT_GOLD = 300, MAT_SILVER = 400)
-	build_path = /obj/item/device/encryptionkey/headset_rob
-	/*
-datum/design/command_encrypt
-	name = "Command Encryption Key"
-	desc = "An encyption key for a radio headset.  Contains cypherkeys."
-	id = "command_encrypt"
-	req_tech = list("materials" = 2, "engineering" = 2)
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 300, MAT_GLASS = 600)
-	build_path = /obj/item/device/encryptionkey/headset_com
-	*/
-datum/design/rd_encrypt
-	name = "Research Director's Encryption Key"
-	desc = "An encyption key for a radio headset.  Contains cypherkeys."
-	id = "rd_encrypt"
-	req_tech = list("materials" = 2, "engineering" = 2)
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 300, MAT_GLASS = 600, MAT_GOLD = 300, MAT_SILVER = 400)
-	build_path = /obj/item/device/encryptionkey/heads/rd
-
-datum/design/cmo_encrypt
-	name = "Chief Medical Officer's Encryption Key"
-	desc = "An encyption key for a radio headset.  Contains cypherkeys."
-	id = "cmo_encrypt"
-	req_tech = list("materials" = 2, "engineering" = 2)
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 300, MAT_GLASS = 600, MAT_GOLD = 300, MAT_SILVER = 400)
-	build_path = /obj/item/device/encryptionkey/heads/cmo
-
-datum/design/ce_encrypt
-	name = "Chief Engineer's Encryption Key"
-	desc = "An encyption key for a radio headset.  Contains cypherkeys."
-	id = "ce_encrypt"
-	req_tech = list("materials" = 2, "engineering" = 2)
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 300, MAT_GLASS = 600, MAT_GOLD = 300, MAT_SILVER = 400)
-	build_path = /obj/item/device/encryptionkey/heads/ce
-
-datum/design/hos_encrypt
-	name = "Head of Security's Encryption Key"
-	desc = "An encyption key for a radio headset.  Contains cypherkeys."
-	id = "hos_encrypt"
-	req_tech = list("materials" = 2, "engineering" = 2)
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 300, MAT_GLASS = 600, MAT_GOLD = 300, MAT_SILVER = 400)
-	build_path = /obj/item/device/encryptionkey/heads/hos
-
-datum/design/hop_encrypt
-	name = "Head of Personnel's Encryption Key"
-	desc = "An encyption key for a radio headset.  Contains cypherkeys."
-	id = "hop_encrypt"
-	req_tech = list("materials" = 2, "engineering" = 2)
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 300, MAT_GLASS = 600, MAT_GOLD = 300, MAT_SILVER = 400)
-	build_path = /obj/item/device/encryptionkey/heads/hop
-
-datum/design/cap_encrypt
-	name = "Captain's Encryption Key"
-	desc = "An encyption key for a radio headset.  Contains cypherkeys."
-	id = "cap_encrypt"
-	req_tech = list("materials" = 2, "engineering" = 2)
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 300, MAT_GLASS = 600, MAT_GOLD = 300, MAT_SILVER = 400)
-	build_path = /obj/item/device/encryptionkey/heads/captain
 
 datum/design/binaryencrypt
 	name = "Binary Encrpytion Key"
