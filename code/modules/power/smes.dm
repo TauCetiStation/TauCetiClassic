@@ -11,8 +11,8 @@
 	var/output = 50000
 	var/lastout = 0
 	var/loaddemand = 0
-	var/capacity = 5e6
-	var/charge = 1e6
+	var/capacity = 0
+	var/charge = 0
 	var/charging = 0
 	var/chargemode = 0
 	var/chargecount = 0
@@ -20,8 +20,8 @@
 	var/online = 1
 	var/name_tag = null
 	var/obj/machinery/power/terminal/terminal = null
-	var/max_input = 200000
-	var/max_output = 200000
+	var/max_input = 0
+	var/max_output = 0
 	var/last_charge = 0
 	var/last_output = 0
 	var/last_online = 0
@@ -37,7 +37,19 @@
 	component_parts += new /obj/item/weapon/stock_parts/cell/high(null)
 	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
 	component_parts += new /obj/item/weapon/cable_coil(null, 5)
+	var/map_capacity = capacity
+	var/map_charge = charge
+	var/map_max_input = max_input
+	var/map_max_output = max_output
 	RefreshParts()
+	if(map_capacity)
+		capacity = map_capacity
+	if(map_charge)
+		charge = map_charge
+	if(map_max_input)
+		max_input = map_max_input
+	if(map_max_output)
+		max_output = map_max_output
 	spawn(5)
 		dir_loop:
 			for(var/d in cardinal)
@@ -450,8 +462,7 @@
 	name = "magical power storage unit"
 	desc = "A high-capacity superconducting magnetic energy storage (SMES) unit. Magically produces power."
 	process()
-		capacity = INFINITY
-		charge = INFINITY
+		charge = capacity
 		..()
 
 
