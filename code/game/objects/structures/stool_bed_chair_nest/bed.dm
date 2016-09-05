@@ -64,7 +64,7 @@
 	var/type_roller = /obj/item/roller
 
 /obj/structure/stool/bed/roller/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W,src))
+	if(istype(W,src) || istype(W, /obj/item/roller_holder))
 		if(buckled_mob)
 			user_unbuckle_mob()
 		else
@@ -96,7 +96,7 @@
 	qdel(src)
 
 /obj/item/roller/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W,src))
+	if(istype(W, /obj/item/roller_holder))
 		var/obj/item/roller_holder/RH = W
 		if(!RH.held)
 			user << "<span class='notice'>You collect the roller bed.</span>"
@@ -162,4 +162,3 @@
 					"<span class='danger'>You are buckled to [src] by [user.name]!</span>",\
 					"<span class='notice'>You hear metal clanking.</span>")
 	return
-
