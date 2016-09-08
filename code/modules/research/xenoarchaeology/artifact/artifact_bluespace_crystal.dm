@@ -46,7 +46,7 @@
 			anom.origin_tech = "materials=8;combat=4;engineering=4"
 
 	tesla_zap(src,7,2500000)
-	..()
+	return ..()
 
 /obj/machinery/artifact/bluespace_crystal/proc/get_damage(var/damage)
 	if(damage < 0)

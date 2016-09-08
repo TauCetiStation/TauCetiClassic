@@ -25,10 +25,10 @@
 
 /obj/effect/decal/cleanable/greenglow
 
-	New()
-		..()
-		spawn(1200)// 2 minutes
-			qdel(src)
+/obj/effect/decal/cleanable/greenglow/New()
+	..()
+	spawn(1200)// 2 minutes
+		qdel(src)
 
 /obj/effect/decal/cleanable/dirt
 	name = "dirt"
@@ -102,13 +102,13 @@
 	random_icon_states = list("vomit_1", "vomit_2", "vomit_3", "vomit_4")
 	var/list/viruses = list()
 
-	Destroy()
-		for(var/datum/disease/D in viruses)
-			D.cure(0)
-		set_light(0)
-		return ..()
+/obj/effect/decal/cleanable/vomit/Destroy()
+	for(var/datum/disease/D in viruses)
+		D.cure(0)
+	set_light(0)
+	return ..()
 
-	proc/stop_light()
+/obj/effect/decal/cleanable/vomit/proc/stop_light()
 		sleep(rand(150,300))
 		if(!src) return
 		set_light(0)
@@ -176,7 +176,7 @@
 
 /obj/effect/decal/cleanable/water/Destroy()
 	SSobj.processing.Remove(src)
-	..()
+	return ..()
 
 /obj/effect/decal/cleanable/water/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(ishuman(mover) && mover.checkpass(PASSCRAWL))

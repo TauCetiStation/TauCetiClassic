@@ -16,7 +16,7 @@
 	for(var/mob/living/simple_animal/hostile/blobspore/spore in spores)
 		if(spore.factory == src)
 			spore.factory = null
-	..()
+	return ..()
 
 /obj/effect/blob/factory/PulseAnimation(var/activate = 0)
 	if(activate)
@@ -131,7 +131,7 @@
 	if(contents)
 		for(var/mob/M in contents)
 			M.loc = src.loc
-	..()
+	return ..()
 
 /datum/reagent/toxin/spore
 	name = "Spore Toxin"

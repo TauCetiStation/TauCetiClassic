@@ -659,7 +659,7 @@ obj/item/projectile/kinetic/New()
 
 /obj/structure/inflatable/survival/Destroy()
 	update_nearby_tiles()
-	..()
+	return ..()
 
 /obj/structure/inflatable/survival/proc/update_nearby_icons()
 	update_icon()
@@ -880,9 +880,6 @@ obj/item/projectile/kinetic/New()
 		return
 	user.visible_message("[user] removes the sign.", "You remove the sign.")
 	qdel(src)
-
-/obj/structure/sign/mining/Destroy()
-	return ..()
 
 //Fluff
 /obj/structure/tubes
