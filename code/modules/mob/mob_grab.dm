@@ -127,7 +127,7 @@
 		last_hit_zone = hit_zone
 		if(ishuman(affecting))
 			var/mob/living/carbon/human/AH = affecting
-			if(!AH.head || !istype(AH.head, /obj/item/clothing/head/helmet/space))
+			if(!AH.is_in_space_suit(only_helmet = TRUE))
 				switch(hit_zone)
 					if("mouth")
 						if(announce)
@@ -262,7 +262,7 @@
 	else if(state < GRAB_UPGRADING)
 		if(ishuman(affecting))
 			var/mob/living/carbon/human/AH = affecting
-			if(AH.head && istype(AH.head, /obj/item/clothing/head/helmet/space))
+			if(AH.is_in_space_suit())
 				assailant << "<span class='notice'>You can't strangle him, because space helmet covers [affecting]'s neck.</span>"
 				return
 		assailant.visible_message("<span class='danger'>[assailant] starts to tighten \his grip on [affecting]'s neck!</span>")

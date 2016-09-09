@@ -44,7 +44,7 @@
 				var/protected = 0
 				if(ishuman(M))
 					var/mob/living/carbon/human/AH = M
-					if(AH.head && istype(AH.head, /obj/item/clothing/head/helmet/space))
+					if(AH.is_in_space_suit())
 						protected = 1
 				if(!protected)
 					//TODO: better alternative for applying damage multiple times? Nice knifing sound?
