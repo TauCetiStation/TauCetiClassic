@@ -190,7 +190,7 @@
 "adH" = (/obj/effect/decal/remains/human,/obj/item/clothing/suit/ianshirt,/obj/item/weapon/ectoplasm,/obj/item/clothing/glasses/gglasses,/turf/simulated/floor/plating,/area/maintenance/fsmaint)
 "adI" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 5},/obj/machinery/atmospherics/pipe/simple/visible{icon_state = "intact"; dir = 6},/turf/simulated/floor/plating/airless,/area/maintenance/auxsolarport)
 "adJ" = (/turf/simulated/wall/r_wall,/area/security/brig)
-"adK" = (/obj/machinery/power/terminal{dir = 4},/turf/simulated/floor/plating,/area/maintenance/auxsolarport)
+"adK" = (/obj/machinery/power/terminal{dir = 4},/obj/structure/cable{d2 = 2; icon_state = "0-2"; pixel_y = 0},/turf/simulated/floor/plating,/area/maintenance/auxsolarport)
 "adL" = (/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/obj/machinery/light{dir = 1},/turf/simulated/floor{icon_state = "red"; dir = 5},/area/security/brig)
 "adM" = (/turf/simulated/wall,/area/security/brig)
 "adN" = (/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/turf/simulated/wall/r_wall,/area/security/armoury)
