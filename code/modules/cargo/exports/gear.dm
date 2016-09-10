@@ -5,13 +5,19 @@
 // Security gear
 /datum/export/gear/sec_helmet
 	cost = 100
+	include_subtypes = FALSE
 	unit_name = "helmet"
-	export_types = list(/obj/item/clothing/head/helmet/sec)
+	export_types = list(/obj/item/clothing/head/helmet,
+									/obj/item/clothing/head/helmet/wj,
+									/obj/item/clothing/head/helmet/tactifool)
 
 /datum/export/gear/sec_armor
 	cost = 100
+	include_subtypes = FALSE
 	unit_name = "armor vest"
-	export_types = list(/obj/item/clothing/suit/armor/vest)
+	export_types = list(/obj/item/clothing/suit/armor/vest,
+									/obj/item/clothing/suit/armor/vest/wj,
+									/obj/item/clothing/suit/armor/vest/tactifool)
 	include_subtypes = FALSE
 
 
@@ -25,10 +31,20 @@
 	unit_name = "riot armor suit"
 	export_types = list(/obj/item/clothing/suit/armor/riot)
 
+/datum/export/gear/bulletproof_helmet
+	cost = 250
+	unit_name = "bulletproof helmet"
+	export_types = list(/obj/item/clothing/head/helmet/bulletproof)
+
 /datum/export/gear/bulletproof_armor
 	cost = 250
 	unit_name = "bulletproof armor vest"
 	export_types = list(/obj/item/clothing/suit/armor/bulletproof)
+
+/datum/export/gear/reflector_helmet
+	cost = 650
+	unit_name = "reflector helmet"
+	export_types = list(/obj/item/clothing/head/helmet/laserproof)
 
 /datum/export/gear/reflector_armor
 	cost = 650
@@ -63,12 +79,12 @@
 /datum/export/gear/space/helmet
 	cost = 500
 	unit_name = "space helmet"
-	export_types = list(/obj/item/clothing/head/helmet/space, /obj/item/clothing/head/helmet/space/eva)
+	export_types = list(/obj/item/clothing/head/helmet/space/globose)
 
 /datum/export/gear/space/suit
 	cost = 600
 	unit_name = "space suit"
-	export_types = list(/obj/item/clothing/suit/space, /obj/item/clothing/suit/space/eva)
+	export_types = list(/obj/item/clothing/suit/space/globose)
 
 
 /datum/export/gear/space/voidhelmet

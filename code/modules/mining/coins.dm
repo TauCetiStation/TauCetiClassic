@@ -1,6 +1,6 @@
 /obj/item/weapon/coin
 	icon = 'icons/obj/items.dmi'
-	name = "Coin"
+	name = COIN_STANDARD
 	icon_state = "coin"
 	flags = FPRINT | TABLEPASS| CONDUCT
 	force = 0.0
@@ -14,35 +14,35 @@
 	pixel_y = rand(0,8)-8
 
 /obj/item/weapon/coin/gold
-	name = "gold coin"
+	name = COIN_GOLD
 	icon_state = "coin_gold"
 
 /obj/item/weapon/coin/silver
-	name = "silver coin"
+	name = COIN_SILVER
 	icon_state = "coin_silver"
 
 /obj/item/weapon/coin/diamond
-	name = "diamond coin"
+	name = COIN_DIAMOND
 	icon_state = "coin_diamond"
 
 /obj/item/weapon/coin/iron
-	name = "iron coin"
+	name = COIN_IRON
 	icon_state = "coin_iron"
 
 /obj/item/weapon/coin/phoron
-	name = "solid phoron coin"
+	name = COIN_PHORON
 	icon_state = "coin_phoron"
 
 /obj/item/weapon/coin/uranium
-	name = "uranium coin"
+	name = COIN_URANIUM
 	icon_state = "coin_uranium"
 
 /obj/item/weapon/coin/clown
-	name = "bananaium coin"
+	name = COIN_BANANIUM
 	icon_state = "coin_clown"
 
 /obj/item/weapon/coin/platinum
-	name = "platinum coin"
+	name = COIN_PLATINUM
 	icon_state = "coin_adamantine"
 
 /obj/item/weapon/coin/attackby(obj/item/weapon/W as obj, mob/user as mob)

@@ -1,6 +1,9 @@
 // Drop the dox!
 
 // Selling Syndicate docs to NT
+
+//THIS CODE IS GOOD, BUT FOR US THIS IS USELESS!!!
+
 /datum/export/intel
 	cost = 25000
 	unit_name = "original article"

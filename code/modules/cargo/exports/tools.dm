@@ -41,11 +41,6 @@
 	export_types = list(/obj/item/weapon/weldingtool)
 	include_subtypes = FALSE
 
-/datum/export/weldingtool/emergency
-	cost = 2
-	unit_name = "emergency welding tool"
-	export_types = list(/obj/item/weapon/weldingtool/mini)
-
 /datum/export/weldingtool/industrial
 	cost = 10
 	unit_name = "industrial welding tool"
@@ -77,11 +72,6 @@
 	unit_name = "flare"
 	export_types = list(/obj/item/device/flashlight/flare)
 
-/datum/export/flashlight/seclite
-	cost = 10
-	unit_name = "seclite"
-	export_types = list(/obj/item/device/flashlight/seclite)
-
 
 // Analyzers and Scanners
 /datum/export/analyzer
@@ -110,9 +100,4 @@
 /datum/export/rcd_ammo
 	cost = 15 // 1.5 metal, 1 glass -> 12.5 credits, +2.5 credits
 	unit_name = "compressed matter cardridge"
-	export_types = list(/datum/design/rcd_ammo)
-
-/datum/export/rpd
-	cost = 350 // 37.5 metal, 18.75 glass -> 281.25 credits, + some
-	unit_name = "rapid piping device"
-	export_types = list(/obj/item/weapon/pipe_dispenser)
+	export_types = list(/obj/item/weapon/rcd_ammo)

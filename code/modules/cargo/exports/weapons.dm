@@ -7,45 +7,43 @@
 	cost = 100
 	unit_name = "stun baton"
 	export_types = list(/obj/item/weapon/melee/baton)
-	exclude_types = list(/obj/item/weapon/melee/baton/cattleprod)
-	include_subtypes = TRUE
 
 /datum/export/weapon/knife
 	cost = 750
 	unit_name = "combat knife"
-	export_types = list(/obj/item/weapon/kitchen/knife/combat)
+	export_types = list(/obj/item/weapon/kitchenknife)
 
 
 /datum/export/weapon/taser
 	cost = 250
 	unit_name = "advanced taser"
-	export_types = list(/obj/item/weapon/gun/energy/gun/advtaser)
+	export_types = list(/obj/item/weapon/gun/energy/taser,
+										/obj/item/weapon/gun/energy/taser/wj,
+										/obj/item/weapon/gun/energy/taser/tactifool)
 
 /datum/export/weapon/laser
 	cost = 250
 	unit_name = "laser gun"
-	export_types = list(/obj/item/weapon/gun/energy/laser)
-
-/datum/export/weapon/disabler
-	cost = 100
-	unit_name = "disabler"
-	export_types = list(/obj/item/weapon/gun/energy/disabler)
+	export_types = list(/obj/item/weapon/gun/energy/laser,
+										/obj/item/weapon/gun/energy/laser/tactifool)
 
 /datum/export/weapon/energy_gun
 	cost = 900
 	unit_name = "energy gun"
-	export_types = list(/obj/item/weapon/gun/energy/gun)
+	export_types = list(/obj/item/weapon/gun/energy/gun,
+										/obj/item/weapon/gun/energy/gun/carbine,
+										/obj/item/weapon/gun/energy)
 
 
-/datum/export/weapon/wt550
+/datum/export/weapon/c5
 	cost = 1400
 	unit_name = "WT-550 automatic rifle"
-	export_types = list(/obj/item/weapon/gun/projectile/automatic/wt550)
+	export_types = list(/obj/item/weapon/gun/projectile/automatic/c5)
 
 /datum/export/weapon/shotgun
 	cost = 350
 	unit_name = "combat shotgun"
-	export_types = list(/obj/item/weapon/gun/projectile/shotgun/automatic/combat)
+	export_types = list(/obj/item/weapon/gun/projectile/shotgun/combat)
 
 
 /datum/export/weapon/flashbang
@@ -62,11 +60,11 @@
 /datum/export/weapon/flash
 	cost = 10
 	unit_name = "handheld flash"
-	export_types = list(/obj/item/device/assembly/flash)
+	export_types = list(/obj/item/device/flash)
 	include_subtypes = TRUE
 
 /datum/export/weapon/handcuffs
 	cost = 3
 	unit_name = "pair"
 	message = "of handcuffs"
-	export_types = list(/obj/item/weapon/restraints/handcuffs)
+	export_types = list(/obj/item/weapon/handcuffs)

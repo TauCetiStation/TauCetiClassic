@@ -35,7 +35,7 @@
 /datum/export/stack/skin/goliath_hide
 	cost = 2500
 	unit_name = "goliath hide"
-	export_types = list(/obj/item/stack/sheet/animalhide/goliath_hide)
+	export_types = list(/obj/item/asteroid/goliath_hide)
 
 // Cat hide. Just in case Runtime is catsploding again.
 /datum/export/stack/skin/cat
@@ -65,7 +65,18 @@
 
 
 // Common materials.
-// For base materials, see materials.dm
+
+// Metal. Common building material.
+/datum/export/stack/metal
+	cost = 5
+	message = "of metal"
+	export_types = list(/obj/item/stack/sheet/metal)
+
+// Glass. Common building material.
+/datum/export/stack/glass
+	cost = 5
+	message = "of glass"
+	export_types = list(/obj/item/stack/sheet/glass)
 
 // Plasteel. Lightweight, strong and contains some plasma too.
 /datum/export/stack/plasteel
@@ -83,7 +94,7 @@
 /datum/export/stack/wood
 	cost = 25
 	unit_name = "wood plank"
-	export_types = list(/obj/item/stack/sheet/mineral/wood)
+	export_types = list(/obj/item/stack/sheet/wood)
 
 // Cardboard. Cheap.
 /datum/export/stack/cardboard
@@ -102,31 +113,71 @@
 /datum/export/stack/cable
 	cost = 0.2
 	unit_name = "cable piece"
-	export_types = list(/obj/item/stack/cable_coil)
+	export_types = list(/obj/item/weapon/cable_coil)
 
 /datum/export/stack/cable/get_cost(O)
 	return round(..())
 
+/datum/export/stack/cable/get_amount(obj/O)
+	var/obj/item/weapon/cable_coil/S = O
+	if(istype(S))
+		return S.amount
+	return 0
 
-// Weird Stuff
+/datum/export/stack/bananium
+	cost = 5000
+	export_types = list(/obj/item/stack/sheet/mineral/clown)
+	message = "of bananium"
 
-// Alien Alloy. Like plasteel, but better.
-// Major players would pay a lot to get some, so you can get a lot of money from producing and selling those.
-// Just don't forget to fire all your production staff before the end of month.
-/datum/export/stack/abductor
-	cost = 10000
-	message = "of alien alloy"
-	export_types = list(/obj/item/stack/sheet/mineral/abductor)
+// Diamonds. Rare and expensive.
+/datum/export/stack/diamond
+	cost = 2500
+	export_types = list(/obj/item/stack/sheet/mineral/diamond)
+	message = "of diamonds"
 
-// Adamantine. Does not occur naurally.
-/datum/export/stack/adamantine
-	unit_name = "bar"
-	cost = 7500
-	message = "of adamantine"
-	export_types = list(/obj/item/stack/sheet/mineral/adamantine)
+// Phoron. The oil of 26 century. The reason why you are here.
+/datum/export/stack/phoron
+	cost = 300
+	export_types = list(/obj/item/stack/sheet/mineral/phoron)
+	message = "of phoron"
 
-// Mythril. Does not occur naurally.
-/datum/export/stack/mythril
-	cost = 15000
-	message = "of mythril"
-	export_types = list(/obj/item/stack/sheet/mineral/mythril)
+/datum/export/stack/phoron/get_cost(obj/O, contr = 0, emag = 0)
+	. = ..()
+	if(emag) // Syndicate pays you more for the plasma.
+		. = round(. * 1.5)
+
+// Refined scrap. The coal of 26 century. The reason why you are here.
+/datum/export/stack/phoron
+	cost = 300
+	export_types = list(/obj/item/stack/sheet/refined_scrap)
+	message = "of scrap"
+
+// Uranium. Still useful for both power generation and nuclear annihilation.
+/datum/export/stack/uranium
+	cost = 400
+	export_types = list(/obj/item/stack/sheet/mineral/uranium)
+	message = "of uranium"
+
+// Gold. Used in electronics and corrosion-resistant plating.
+/datum/export/stack/gold
+	cost = 250
+	export_types = list(/obj/item/stack/sheet/mineral/gold)
+	message = "of gold"
+
+// Silver.
+/datum/export/stack/silver
+	cost = 100
+	export_types = list(/obj/item/stack/sheet/mineral/silver)
+	message = "of silver"
+
+// Plastic.
+/datum/export/stack/plastic
+	cost = 20
+	export_types = list(/obj/item/stack/sheet/mineral/plastic)
+	message = "of plastic"
+
+// Platinum.
+/datum/export/stack/platinum
+	cost = 1000
+	message = "of platinum"
+	export_types = list(/obj/item/stack/sheet/mineral/platinum)
