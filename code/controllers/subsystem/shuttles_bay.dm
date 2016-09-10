@@ -9,12 +9,6 @@ var/datum/subsystem/shuttle/SSshuttle
 #define SUPPLY_STATION_AREATYPE /area/supply/station //Type of the supply shuttle area for station
 #define SUPPLY_DOCK_AREATYPE /area/supply/dock	//Type of the supply shuttle area for dock
 
-/datum/supply_order
-	var/ordernum
-	var/datum/supply_packs/object = null
-	var/orderedby = null
-	var/comment = null
-
 /datum/subsystem/shuttle
 	name = "Shuttles"
 	wait = 10
@@ -34,13 +28,15 @@ var/datum/subsystem/shuttle/SSshuttle
 	var/departed = 0
 
 		//supply shuttle stuff
-	var/points = 50
-	var/points_per_decisecond = 0.005	//points gained every decisecond
-	var/points_per_slip = 2
-	var/points_per_crate = 5
-	var/points_per_platinum = 10
-	var/points_per_phoron = 3
-	var/points_per_scrap = 3
+	var/points = 5000
+	var/points_per_slip = 200
+	var/points_per_crate = 500
+	var/points_per_platinum = 1000
+	var/points_per_phoron = 300
+	var/points_per_scrap = 300
+	// When TRUE, these vars allow exporting emagged/contraband items, and add some special interactions to existing exports.
+	var/contraband = FALSE
+	var/hacked = FALSE
 		//control
 	var/ordernum
 	var/list/shoppinglist = list()
@@ -63,14 +59,13 @@ var/datum/subsystem/shuttle/SSshuttle
 		return ..()
 	ordernum = rand(1, 9000)
 
-	for(var/typepath in subtypesof(/datum/supply_packs))
-		var/datum/supply_packs/P = new typepath()
+	for(var/typepath in subtypesof(/datum/supply_pack))
+		var/datum/supply_pack/P = new typepath()
 		supply_packs[P.name] = P
 
 	..()
 
 /datum/subsystem/shuttle/fire()
-	points += points_per_decisecond * wait
 	if(moving == 1)
 		var/ticksleft = (eta_timeofday - world.timeofday)
 		if(ticksleft > 0)
@@ -467,73 +462,108 @@ var/datum/subsystem/shuttle/SSshuttle
 	//Sellin
 /datum/subsystem/shuttle/proc/sell()
 	var/shuttle_at
-	if(at_station)	shuttle_at = SUPPLY_STATION_AREATYPE
-	else			shuttle_at = SUPPLY_DOCK_AREATYPE
+	if(at_station)
+		shuttle_at = SUPPLY_STATION_AREATYPE
+	else
+		shuttle_at = SUPPLY_DOCK_AREATYPE
 
 	var/area/shuttle = locate(shuttle_at)
-	if(!shuttle)	return
+	if(!shuttle)
+		return
 
-	var/phoron_count = 0
-	var/plat_count = 0
-	var/scrap_count = 0
-	for(var/atom/movable/MA in shuttle)
-		if(MA.anchored)	continue
+	if(!exports_list.len) // No exports list? Generate it!
+		setupExports()
 
-		// Must be in a crate (or a critter crate)!
-		if(istype(MA,/obj/structure/closet/crate) || istype(MA,/obj/structure/closet/critter))
-			var/datum/game_mode/mutiny/mode = get_mutiny_mode()
-			if(mode)
-				mode.deliver_materials(MA, shuttle)
+	var/msg = ""
+	var/sold_atoms = ""
 
-			points += points_per_crate
-			var/find_slip = 1
+	for(var/atom/movable/AM in shuttle)
+		if(AM.anchored)
+			continue
+		sold_atoms += export_item_and_contents(AM, contraband, hacked, dry_run = FALSE)
 
-			for(var/atom in MA)
-				// Sell manifests
-				var/atom/A = atom
-				if(find_slip && istype(A,/obj/item/weapon/paper/manifest))
-					var/obj/item/weapon/paper/slip = A
-					if(slip.stamped && slip.stamped.len) //yes, the clown stamp will work. clown is the highest authority on the station, it makes sense
-						points += points_per_slip
-						find_slip = 0
-					continue
+	if(sold_atoms)
+		sold_atoms += "."
 
-				// Sell phoron
-				if(istype(A, /obj/item/stack/sheet/mineral/phoron))
-					var/obj/item/stack/sheet/mineral/phoron/P = A
-					phoron_count += P.amount
+	for(var/a in exports_list)
+		var/datum/export/E = a
+		var/export_text = E.total_printout()
+		if(!export_text)
+			continue
 
-				// Sell platinum
-				if(istype(A, /obj/item/stack/sheet/mineral/platinum))
-					var/obj/item/stack/sheet/mineral/platinum/P = A
-					plat_count += P.amount
-				// Sell scrap
-				if(istype(A, /obj/item/stack/sheet/refined_scrap))
-					var/obj/item/stack/sheet/refined_scrap/P = A
-					scrap_count += P.amount
+		msg += export_text + "\n"
+		SSshuttle.points += E.total_cost
+		E.export_end()
 
-		qdel(MA)
-		CHECK_TICK
+	//SSshuttle.centcom_message = msg
+	//investigate_log("Shuttle contents sold for [SSshuttle.points - presale_points] credits. Contents: [sold_atoms || "none."] Message: [SSshuttle.centcom_message || "none."]", "cargo")
 
-	points += phoron_count * points_per_phoron
-	points += plat_count * points_per_platinum
-	points += scrap_count * points_per_scrap
+	// var/phoron_count = 0
+	// var/plat_count = 0
+	// var/scrap_count = 0
+	// for(var/atom/movable/MA in shuttle)
+	// 	if(MA.anchored)	continue
+	//
+	// 	// Must be in a crate (or a critter crate)!
+	// 	if(istype(MA,/obj/structure/closet/crate) || istype(MA,/obj/structure/closet/critter))
+	// 		var/datum/game_mode/mutiny/mode = get_mutiny_mode()
+	// 		if(mode)
+	// 			mode.deliver_materials(MA, shuttle)
+	//
+	// 		points += points_per_crate
+	// 		var/find_slip = 1
+	//
+	// 		for(var/atom in MA)
+	// 			// Sell manifests
+	// 			var/atom/A = atom
+	// 			if(find_slip && istype(A,/obj/item/weapon/paper/manifest))
+	// 				var/obj/item/weapon/paper/slip = A
+	// 				if(slip.stamped && slip.stamped.len) //yes, the clown stamp will work. clown is the highest authority on the station, it makes sense
+	// 					points += points_per_slip
+	// 					find_slip = 0
+	// 				continue
+	//
+	// 			// Sell phoron
+	// 			if(istype(A, /obj/item/stack/sheet/mineral/phoron))
+	// 				var/obj/item/stack/sheet/mineral/phoron/P = A
+	// 				phoron_count += P.amount
+	//
+	// 			// Sell platinum
+	// 			if(istype(A, /obj/item/stack/sheet/mineral/platinum))
+	// 				var/obj/item/stack/sheet/mineral/platinum/P = A
+	// 				plat_count += P.amount
+	// 			// Sell scrap
+	// 			if(istype(A, /obj/item/stack/sheet/refined_scrap))
+	// 				var/obj/item/stack/sheet/refined_scrap/P = A
+	// 				scrap_count += P.amount
+	//
+	// 	qdel(MA)
+	// 	CHECK_TICK
+	//
+	// points += phoron_count * points_per_phoron
+	// points += plat_count * points_per_platinum
+	// points += scrap_count * points_per_scrap
 
 //Buyin
 /datum/subsystem/shuttle/proc/buy()
-	if(!shoppinglist.len) return
+	if(!shoppinglist.len)
+		return
 
 	var/shuttle_at
-	if(at_station)	shuttle_at = SUPPLY_STATION_AREATYPE
-	else			shuttle_at = SUPPLY_DOCK_AREATYPE
+	if(at_station)
+		shuttle_at = SUPPLY_STATION_AREATYPE
+	else
+		shuttle_at = SUPPLY_DOCK_AREATYPE
 
 	var/area/shuttle = locate(shuttle_at)
-	if(!shuttle)	return
+	if(!shuttle)
+		return
 
 	var/list/clear_turfs = list()
 
 	for(var/turf/T in shuttle)
-		if(T.density)	continue
+		if(T.density)
+			continue
 		var/contcount
 		for(var/atom/A in T.contents)
 			if(istype(A,/atom/movable/lighting_overlay))
@@ -541,56 +571,60 @@ var/datum/subsystem/shuttle/SSshuttle
 			if(istype(A,/obj/machinery/light))
 				continue
 			contcount++
-		if(contcount)	continue
+		if(contcount)
+			continue
 		clear_turfs += T
 		CHECK_TICK
 
 	for(var/S in shoppinglist)
-		if(!clear_turfs.len)	break
+		if(!clear_turfs.len)
+			break
 		var/i = rand(1,clear_turfs.len)
 		var/turf/pickedloc = clear_turfs[i]
 		clear_turfs.Cut(i,i+1)
 
 		var/datum/supply_order/SO = S
-		var/datum/supply_packs/SP = SO.object
 
-		var/atom/A = new SP.containertype(pickedloc)
-		A.name = "[SP.containername] [SO.comment ? "([SO.comment])":"" ]"
-
-		//supply manifest generation begin
-
-		var/obj/item/weapon/paper/manifest/slip = new /obj/item/weapon/paper/manifest(A)
-		slip.info = "<h3>[command_name()] Shipping Manifest</h3><hr><br>"
-		slip.info +="Order #[SO.ordernum]<br>"
-		slip.info +="Destination: [station_name]<br>"
-		slip.info +="[SSshuttle.shoppinglist.len] PACKAGES IN THIS SHIPMENT<br>"
-		slip.info +="CONTENTS:<br><ul>"
-
-		//spawn the stuff, finish generating the manifest while you're at it
-		if(SP.access)
-			A:req_access = list()
-			A:req_access += text2num(SP.access)
-
-		var/list/contains
-		if(istype(SP,/datum/supply_packs/randomised))
-			var/datum/supply_packs/randomised/SPR = SP
-			contains = list()
-			if(SPR.contains.len)
-				for(var/j=1,j<=SPR.num_contained,j++)
-					contains += pick(SPR.contains)
-		else
-			contains = SP.contains
-
-		for(var/typepath in contains)
-			if(!typepath)	continue
-			var/atom/B2 = new typepath(A)
-			if(SP.amount && B2:amount) B2:amount = SP.amount
-			slip.info += "<li>[B2.name]</li>" //add the item to the manifest
-
-		//manifest finalisation
-		slip.info += "</ul><br>"
-		slip.info += "CHECK CONTENTS AND STAMP BELOW THE LINE TO CONFIRM RECEIPT OF GOODS<hr>"
-		if (SP.contraband) slip.loc = null	//we are out of blanks for Form #44-D Ordering Illicit Drugs.
+		SO.generate(pickedloc)
+		if(SO.object.dangerous)
+			message_admins("[SO.object.name] ordered by [key_name_admin(SO.orderer_ckey)] has shipped.")
+		// var/atom/A = new SP.containertype(pickedloc)
+		// A.name = "[SP.containername] [SO.reason ? "([SO.reason])":"" ]"
+		//
+		// //supply manifest generation begin
+		//
+		// var/obj/item/weapon/paper/manifest/slip = new /obj/item/weapon/paper/manifest(A)
+		// slip.info = "<h3>[command_name()] Shipping Manifest</h3><hr><br>"
+		// slip.info +="Order #[SO.id]<br>"
+		// slip.info +="Destination: [station_name()]<br>"
+		// slip.info +="[SSshuttle.shoppinglist.len] PACKAGES IN THIS SHIPMENT<br>"
+		// slip.info +="CONTENTS:<br><ul>"
+		//
+		// //spawn the stuff, finish generating the manifest while you're at it
+		// if(SP.access)
+		// 	A:req_access = list()
+		// 	A:req_access += text2num(SP.access)
+		//
+		// var/list/contains
+		// if(istype(SP,/datum/supply_pack/randomised))
+		// 	var/datum/supply_pack/randomised/SPR = SP
+		// 	contains = list()
+		// 	if(SPR.contains.len)
+		// 		for(var/j=1,j<=SPR.num_contained,j++)
+		// 			contains += pick(SPR.contains)
+		// else
+		// 	contains = SP.contains
+		//
+		// for(var/typepath in contains)
+		// 	if(!typepath)	continue
+		// 	var/atom/B2 = new typepath(A)
+		// 	if(SP.amount && B2:amount) B2:amount = SP.amount
+		// 	slip.info += "<li>[B2.name]</li>" //add the item to the manifest
+		//
+		// //manifest finalisation
+		// slip.info += "</ul><br>"
+		// slip.info += "CHECK CONTENTS AND STAMP BELOW THE LINE TO CONFIRM RECEIPT OF GOODS<hr>"
+		// if (SP.contraband) slip.loc = null	//we are out of blanks for Form #44-D Ordering Illicit Drugs.
 		score["stuffshipped"]++
 		CHECK_TICK
 
