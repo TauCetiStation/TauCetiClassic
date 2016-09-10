@@ -115,19 +115,16 @@
 			for(var/mob/V in hearers(src))
 				V.show_message("<b>[src]</b>'s monitor flashes, \"[world.time - reqtime] seconds remaining until another requisition form may be printed.\"")
 			return FALSE
-		world << "start making order"
 		//Find the correct supply_pack datum
 		var/datum/supply_pack/P = SSshuttle.supply_packs[href_list["doorder"]]
 		if(!istype(P))
 			return FALSE
-		world << "inputing"
 		var/timeout = world.time + 600
 		var/reason = sanitize_alt(copytext(input(usr,"Reason:","Why do you require this item?","") as null|text,1,MAX_MESSAGE_LEN))
 		if(world.time > timeout)
 			return FALSE
 		if(!reason)
 			return FALSE
-		world << "input done"
 		var/idname = "*None Provided*"
 		var/idrank = "*None Provided*"
 		if(ishuman(usr))
