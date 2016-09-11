@@ -26,27 +26,27 @@
 	var/list/company = list("Investments", "Securities", "Corporation", "Bank", "Brokerage", "& Co.", "Brothers", "& Sons", "Investement Firm", "Union", "Partners", "Capital", "Trade", "Holdings")
 	for(var/i in 1 to 5)
 		var/pname = ""
-		switch (rand(1,5))
-			if (1)
+		switch(rand(1,5))
+			if(1)
 				pname = "[prob(10) ? pick(first) + " " : null][pick(names)] [pick(company)]"
-			if (2)
+			if(2)
 				pname = "[pick(names)] & [pick(names)][prob(25) ? " " + pick(company) : null]"
-			if (3)
+			if(3)
 				pname = "[prob(45) ? pick(first) + " " : null][pick(locations)] [pick(company)]"
-			if (4)
+			if(4)
 				pname = "[prob(10) ? "The " : null][pick(names)] [pick(locations)] [pick(company)]"
-			if (5)
+			if(5)
 				pname = "[prob(10) ? "The " : null][pick(fnames)] [pick(names)][prob(10) ? " " + pick(company) : null]"
-		if (pname in stockBrokers)
+		if(pname in stockBrokers)
 			i--
 			continue
 		stockBrokers += pname
 
 /datum/stockMarket/proc/generateDesignation(var/name)
-	if (length(name) <= 4)
+	if(length(name) <= 4)
 		return uppertext(name)
 	var/list/w = splittext(name, " ")
-	if (w.len >= 2)
+	if(w.len >= 2)
 		var/d = ""
 		for(var/i in 1 to min(5, w.len))
 			d += uppertext(ascii2text(text2ascii(w[i], 1)))
@@ -54,7 +54,7 @@
 	else
 		var/d = uppertext(ascii2text(text2ascii(name, 1)))
 		for(var/i in 2 to length(name))
-			if (prob(100 / i))
+			if(prob(100 / i))
 				d += uppertext(ascii2text(text2ascii(name, i)))
 		return d
 
@@ -67,25 +67,25 @@
 	for (var/i = 1, i <= amt, i++)
 		var/datum/stock/S = new
 		var/sname = ""
-		switch (rand(1,6))
+		switch(rand(1,6))
 			if(1)
-				while (sname == "" || sname == "FAG") // honestly it's a 0.6% chance per round this happens - or once in 166 rounds - so i'm accounting for it before someone yells at me
+				while(sname == "" || sname == "FAG") // honestly it's a 0.6% chance per round this happens - or once in 166 rounds - so i'm accounting for it before someone yells at me
 					sname = "[consonant()][vowel()][consonant()]"
-			if (2)
+			if(2)
 				sname = "[pick(tech_prefix)][pick(tech_short)][prob(20) ? " " + pick(company) : null]"
-			if (3 to 4)
+			if(3 to 4)
 				var/fruit = pick(fruits)
 				fruits -= fruit
 				sname = "[prob(10) ? "The " : null][fruit][prob(40) ? " " + pick(company): null]"
-			if (5 to 6)
+			if(5 to 6)
 				var/pname = pick(random_nouns)
 				random_nouns -= pname
 				switch (rand(1,3))
-					if (1)
+					if(1)
 						sname = "[pname] & [pname]"
-					if (2)
+					if(2)
 						sname = "[pname] [pick(company)]"
-					if (3)
+					if(3)
 						sname = "[pname]"
 		S.name = sname
 		S.short_name = generateDesignation(S.name)
@@ -108,7 +108,7 @@
 		last_read[S] = list()
 
 /datum/stockMarket/process()
-	for (var/stock in stocks)
+	for(var/stock in stocks)
 		var/datum/stock/S = stock
 		S.process()
 
@@ -126,7 +126,7 @@ var/global/datum/stockMarket/stockExchange = new
 
 /proc/plotBarGraph(var/list/points, var/base_text, var/width=400, var/height=400)
 	var/output = "<table style='border:1px solid black; border-collapse: collapse; width: [width]px; height: [height]px'>"
-	if (points.len && height > 20 && width > 20)
+	if(points.len && height > 20 && width > 20)
 		var/min = points[1]
 		var/max = points[1]
 		for (var/v in points)

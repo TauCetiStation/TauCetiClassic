@@ -62,9 +62,9 @@ proc/list_frozen()
 
 /datum/article/New()
 	..()
-	if ((outlets.len && !prob(100 / (outlets.len + 1))) || !outlets.len)
+	if((outlets.len && !prob(100 / (outlets.len + 1))) || !outlets.len)
 		var/ON = generateOutletName()
-		if (!(ON in outlets))
+		if(!(ON in outlets))
 			outlets[ON] = list()
 		outlet = ON
 	else

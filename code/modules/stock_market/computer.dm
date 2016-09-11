@@ -1,6 +1,5 @@
 /obj/machinery/computer/stockexchange
-	name = "stock exchange computer"
-	icon = 'icons/obj/computer.dmi'
+	name = "Stock exchange computer"
 	icon_state = "oldcomp"
 	var/logged_in = "Cargo Department"
 	var/vmode = 1
@@ -10,9 +9,12 @@
 	logged_in = "[world.name] Cargo Department"
 
 /obj/machinery/computer/stockexchange/proc/balance()
-	if (!logged_in)
+	if(!logged_in)
 		return 0
 	return SSshuttle.points
+
+/obj/machinery/computer/cargo/attack_ai(var/mob/user as mob)
+	return attack_hand(user)
 
 /obj/machinery/computer/stockexchange/attack_hand(var/mob/user)
 	if(..())
@@ -51,10 +53,12 @@ a.updated {
 </style>"}
 	var/dat = "<html><head><title>[station_name()] Stock Exchange</title>[css]</head><body>"
 
-	dat += "<span class='user'>Welcome, <b>[logged_in]</b></span><br><span class='balance'><b>Credits:</b> [balance()] </span><br>"
+	dat += "<span>Welcome, <b>[logged_in]</b></span><br>"
+	dat += "<span><b>Credits:</b> [balance()]</span><br>"
+	dat += "<span><b>Spacetime:</b> [round(world.time / 36000)]:[add_zero("[world.time / 600 % 60]", 2)]:[add_zero("[world.time / 10 % 60]", 2)]</span><br>"
 	for (var/datum/stock/S in stockExchange.last_read)
 		var/list/LR = stockExchange.last_read[S]
-		if (!(logged_in in LR))
+		if(!(logged_in in LR))
 			LR[logged_in] = 0
 	dat += "<b>View mode:</b> <a href='?src=\ref[src];cycleview=1'>[vmode ? "Compact" : "Full"]</a> "
 	dat += "<b>Stock Transaction Log:</b> <a href='?src=\ref[src];show_logs=1'>Check</a><br>"
@@ -63,25 +67,25 @@ a.updated {
 
 	dat += "<h3>Listed stocks</h3>"
 
-	if (vmode == 0)
-		for (var/datum/stock/S in stockExchange.stocks)
+	if(vmode == 0)
+		for(var/datum/stock/S in stockExchange.stocks)
 			var/mystocks = 0
-			if (logged_in && (logged_in in S.shareholders))
+			if(logged_in && (logged_in in S.shareholders))
 				mystocks = S.shareholders[logged_in]
 			dat += "<hr /><div class='stock'><span class='company'>[S.name]</span> <span class='s_company'>([S.short_name])</span>[S.bankrupt ? " <b style='color:red'>BANKRUPT</b>" : null]<br>"
-			if (S.last_unification)
+			if(S.last_unification)
 				dat += "<b>Unified shares</b> [(world.time - S.last_unification) / 600] minutes ago.<br>"
 			dat += "<b>Current value per share:</b> [S.current_value] | <a href='?src=\ref[src];viewhistory=\ref[S]'>View history</a><br><br>"
 			dat += "You currently own <b>[mystocks]</b> shares in this company. There are [S.available_shares] purchasable shares on the market currently.<br>"
-			if (S.bankrupt)
+			if(S.bankrupt)
 				dat += "You cannot buy or sell shares in a bankrupt company!<br><br>"
 			else
 				dat += "<a href='?src=\ref[src];buyshares=\ref[S]'>Buy shares</a> | <a href='?src=\ref[src];sellshares=\ref[S]'>Sell shares</a><br><br>"
 			dat += "<b>Prominent products:</b><br>"
-			for (var/prod in S.products)
+			for(var/prod in S.products)
 				dat += "<i>[prod]</i><br>"
 			dat += "<br><b>Borrow options:</b><br>"
-			if (S.borrow_brokers.len)
+			if(S.borrow_brokers.len)
 				for (var/datum/borrow/B in S.borrow_brokers)
 					dat += "<b>[B.broker]</b> offers <i>[B.share_amount] shares</i> for borrowing, for a deposit of <i>[B.deposit * 100]%</i> of the shares' value.<br>"
 					dat += "The broker expects the return of the shares after <i>[B.lease_time / 600] minutes</i>, with a grace period of <i>[B.grace_time / 600]</i> minute(s).<br>"
@@ -91,7 +95,7 @@ a.updated {
 					dat += "<a href='?src=\ref[src];take=\ref[B]'>Take offer</a> (Estimated deposit: [B.deposit * S.current_value * B.share_amount] credits)<br><br>"
 			else
 				dat += "<i>No borrow options available</i><br><br>"
-			for (var/datum/borrow/B in S.borrows)
+			for(var/datum/borrow/B in S.borrows)
 				if (B.borrower == logged_in)
 					dat += "You are borrowing <i>[B.share_amount] shares</i> from <b>[B.broker]</b>.<br>"
 					dat += "Your deposit riding on the deal is <i>[B.deposit] credits</i>.<br>"
@@ -100,27 +104,27 @@ a.updated {
 					else
 						dat += "The brokering agency is collecting. You still owe them <i>[B.share_debt]</i> shares, which you have [(B.grace_expires - world.time) / 600] minutes to present.<br><br>"
 			var/news = 0
-			if (logged_in)
+			if(logged_in)
 				var/list/LR = stockExchange.last_read[S]
 				var/lrt = LR[logged_in]
-				for (var/datum/article/A in S.articles)
-					if (A.ticks > lrt)
+				for(var/datum/article/A in S.articles)
+					if(A.ticks > lrt)
 						news = 1
 						break
-				if (!news)
-					for (var/datum/stockEvent/E in S.events)
-						if (E.last_change > lrt && !E.hidden)
+				if(!news)
+					for(var/datum/stockEvent/E in S.events)
+						if(E.last_change > lrt && !E.hidden)
 							news = 1
 							break
 			dat += "<a href='?src=\ref[src];archive=\ref[S]'>View news archives</a>[news ? " <span style='color:red'>(updated)</span>" : null]</div>"
-	else if (vmode == 1)
+	else if(vmode == 1)
 		dat += "<b>Actions:</b> + Buy, - Sell, (A)rchives, (H)istory<br><br>"
 		dat += "<table class='stable'>"
 		dat += "<tr><th>&nbsp;</th><th>ID</th><th>Name</th><th>Value</th><th>Owned</th><th>Avail</th><th>Actions</th></tr>"
 
-		for (var/datum/stock/S in stockExchange.stocks)
+		for(var/datum/stock/S in stockExchange.stocks)
 			var/mystocks = 0
-			if (logged_in && (logged_in in S.shareholders))
+			if(logged_in && (logged_in in S.shareholders))
 				mystocks = S.shareholders[logged_in]
 
 			if(S.bankrupt)
@@ -150,20 +154,20 @@ a.updated {
 
 			dat += "<td>[S.available_shares]</td>"
 			var/news = 0
-			if (logged_in)
+			if(logged_in)
 				var/list/LR = stockExchange.last_read[S]
 				var/lrt = LR[logged_in]
 				for (var/datum/article/A in S.articles)
 					if (A.ticks > lrt)
 						news = 1
 						break
-				if (!news)
+				if(!news)
 					for (var/datum/stockEvent/E in S.events)
 						if (E.last_change > lrt && !E.hidden)
 							news = 1
 							break
 			dat += "<td>"
-			if (S.bankrupt)
+			if(S.bankrupt)
 				dat += "<span class='linkOff'>+</span> <span class='linkOff'>-</span> "
 			else
 				dat += "<a href='?src=\ref[src];buyshares=\ref[S]'>+</a> <a href='?src=\ref[src];sellshares=\ref[S]'>-</a> "
@@ -181,29 +185,29 @@ a.updated {
 	return
 
 /obj/machinery/computer/stockexchange/proc/sell_some_shares(var/datum/stock/S, var/mob/user)
-	if (!user || !S)
+	if(!user || !S)
 		return
 	var/li = logged_in
-	if (!li)
+	if(!li)
 		user << "<span class='danger'>No active account on the console!</span>"
 		return
 	var/b = SSshuttle.points
 	var/avail = S.shareholders[logged_in]
-	if (!avail)
+	if(!avail)
 		user << "<span class='danger'>This account does not own any shares of [S.name]!</span>"
 		return
 	var/price = S.current_value
 	var/amt = round(input(user, "How many shares? \n(Have: [avail], unit price: [price])", "Sell shares in [S.name]", 0) as num|null)
 	amt = min(amt, S.shareholders[logged_in])
 
-	if (!user || !(user in range(1, src)))
+	if(!user || !(user in range(1, src)))
 		return
-	if (!amt)
+	if(!amt)
 		return
-	if (li != logged_in)
+	if(li != logged_in)
 		return
 	b = SSshuttle.points
-	if (!isnum(b))
+	if(!isnum(b))
 		user << "<span class='danger'>No active account on the console!</span>"
 		return
 
@@ -215,33 +219,33 @@ a.updated {
 	stockExchange.add_log(/datum/stock_log/sell, user.name, S.name, amt, S.current_value, total)
 
 /obj/machinery/computer/stockexchange/proc/buy_some_shares(var/datum/stock/S, var/mob/user)
-	if (!user || !S)
+	if(!user || !S)
 		return
 	var/li = logged_in
-	if (!li)
+	if(!li)
 		user << "<span class='danger'>No active account on the console!</span>"
 		return
 	var/b = balance()
-	if (!isnum(b))
+	if(!isnum(b))
 		user << "<span class='danger'>No active account on the console!</span>"
 		return
 	var/avail = S.available_shares
 	var/price = S.current_value
 	var/canbuy = round(b / price)
 	var/amt = round(input(user, "How many shares? \n(Available: [avail], unit price: [price], can buy: [canbuy])", "Buy shares in [S.name]", 0) as num|null)
-	if (!user || !(user in range(1, src)))
+	if(!user || !(user in range(1, src)))
 		return
-	if (li != logged_in)
+	if(li != logged_in)
 		return
 	b = balance()
-	if (!isnum(b))
+	if(!isnum(b))
 		user << "<span class='danger'>No active account on the console!</span>"
 		return
 
 	amt = min(amt, S.available_shares, round(b / S.current_value))
-	if (!amt)
+	if(!amt)
 		return
-	if (!S.buyShares(logged_in, amt))
+	if(!S.buyShares(logged_in, amt))
 		user << "<<span class='danger'>Could not complete transaction.</span>"
 		return
 

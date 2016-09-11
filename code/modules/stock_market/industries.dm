@@ -36,10 +36,10 @@
 
 	A.subtitle = A.detokenize(pick(subtitle_templates), tokens, add_tokens)
 	var/article = {"%company_name% %expand_influence% %industry%. [ucfirst(product_name)] %hit_shelves% %this_time% "}
-	if (A.opinion > 0)
+	if(A.opinion > 0)
 		A.headline = A.detokenize(pick(title_templates), tokens, add_tokens)
 		article += "but %positive_outcome%, %signifying% the %resounding% %success% the product is. The %stock_market% is %excited% over this %development%, and %stockholder% optimism is expected to %rise% as well as the stock value. Our advice: %buy%."
-	else if (A.opinion == 0)
+	else if(A.opinion == 0)
 		A.headline = A.detokenize(pick(title_templates_neutral), tokens, add_tokens)
 		article += "but %neutral_outcome%. For the average %stockholder%, no significant change on the market will be apparent over this %development%. Our advice is to continue investing as if this product was never released."
 	else
@@ -49,7 +49,7 @@
 	return A
 
 /datum/industry/proc/detokenize(var/str)
-	for (var/T in tokens)
+	for(var/T in tokens)
 		str = replacetext(str, "%[T]%", pick(tokens[T]))
 	return str
 
@@ -82,8 +82,7 @@
 	var/list/prefix = list("[company_name]'s ", "the [company_name] ", "the fully automatic ", "the full-duplex ", "the semi-automatic ", "the drone-mounted ", "the industry-leading ", "the world-class ")
 	var/list/suffix = list(" of farming", " multiplex", " +[rand(1,15)]", " [consonant()][rand(1000, 9999)]", " hybrid", " maximus", " extreme")
 	return "[pick(prefix)][pick(products)][pick(suffix)]"
-
-
+	
 
 /datum/industry/it
 		name = "Information Technology"
@@ -94,7 +93,7 @@
 		)
 
 /datum/industry/it/proc/latin_number(n)
-	if (n < 20 || !(n % 10))
+	if(n < 20 || !(n % 10))
 		switch(n)
 			if (0) return "Nihil"
 			if (1) return "Unus"
@@ -131,7 +130,7 @@
 	var/list/products = list("generator", "laptop", "keyboard", "memory card", "display", "operating system", "processor", "graphics card", "nanobots", "power supply", "pAI", "mech", "capacitor", "cell")
 	var/list/prefix = list("the [company_name] ", "the high performance ", "the mobile ", "the portable ", "the professional ", "the extreme ", "the incredible ", "the blazing fast ", "the bleeding edge ", "the bluespace-powered ", null)
 	var/L = pick(consonant(), "Seed ", "Radiant ", "Robust ", "Pentathon ", "Athlete ", "Phantom ", "Semper Fi ")
-	var/N = rand(0,99)
+	var/N = rand(0, 99)
 	var/prefix2 = "[L][N][prob(5) ? " " + latin_number(N) : null]"
 	return "[pick(prefix)][prefix2] [pick(products)]"
 
@@ -147,7 +146,7 @@
 	var/list/products = list("mobile phone", "PDA", "tablet computer", "newscaster", "social network")
 	var/list/prefix = list("the [company_name] ", "the high performance ", "the mobile ", "the portable ", "the professional ", "the extreme ", "the incredible ", "the blazing fast ", "the bleeding edge ", null)
 	var/L = pick("[lowertext(consonant())]Phone ", "Universe ", "Xperience ", "Next ", "Engin Y ", "Cyborg ", "[consonant()]")
-	var/N = rand(1,99)
+	var/N = rand(1, 99)
 	var/prefix2 = "[L][N][prob(25) ? pick(" Tiny", " Mini", " Micro", " Slim", " Water", " Air", " Fire", " Earth", " Nano", " Pico", " Femto", " Planck") : null]"
 	return "[pick(prefix)][prefix2] [pick(products)]"
 
