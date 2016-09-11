@@ -1591,7 +1591,7 @@ datum
 						if(I.damage > 0)
 							I.damage -= 0.05
 				else
-					M.adjustToxLoss(-1 * REM)
+					M.adjustToxLoss(1 * REM)
 
 		ultraglue
 			name = "Ultra Glue"
@@ -1621,7 +1621,7 @@ datum
 						if(I.damage > 0)
 							I.damage -= 0.1
 				else
-					M.adjustToxLoss(-1 * REM)
+					M.adjustToxLoss(1 * REM)
 
 		ethylredoxrazine	// FUCK YOU, ALCOHOL
 			name = "Ethylredoxrazine"
