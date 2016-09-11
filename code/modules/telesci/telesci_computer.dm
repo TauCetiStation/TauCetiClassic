@@ -5,7 +5,8 @@
 	icon_state = "teleport"
 	circuit = /obj/item/weapon/circuitboard/telesci_console
 	light_color = "#315ab4"
-	var/sending = 1
+	idle_power_usage = 250
+	active_power_usage = 75000
 	var/obj/machinery/telepad/telepad = null
 	var/temp_msg = "Telescience control console initialized.<BR>Welcome."
 
@@ -30,6 +31,7 @@
 	var/max_crystals = 4
 	var/list/crystals = list()
 	var/obj/item/device/gps/inserted_gps
+	var/obj/effect/portal/tsci_wormhole/active_wormhole = null
 
 /obj/machinery/computer/telescience/New()
 	..()
@@ -68,6 +70,11 @@
 			icon_state = initial(icon_state)
 			stat &= ~NOPOWER
 			set_light(light_range_on, light_power_on)
+
+/obj/machinery/computer/telescience/power_change()
+	..()
+	if(stat & NOPOWER)
+		close_wormhole()
 
 /obj/machinery/computer/telescience/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/bluespace_crystal))
@@ -132,8 +139,10 @@
 		t += "<A href='?src=\ref[src];setz=1'>Set Sector</A>"
 		t += "<div class='statusDisplay'>[z_co ? z_co : "NULL"]</div>"
 
-		t += "<BR><A href='?src=\ref[src];send=1'>Send</A>"
-		t += " <A href='?src=\ref[src];receive=1'>Receive</A>"
+		if(active_wormhole)
+			t += "<BR><span class='linkOff'>Open Wormhole</span><A href='?src=\ref[src];close_teleport=1'>Close Wormhole</A>"
+		else
+			t += "<BR><A href='?src=\ref[src];open_teleport=1'>Open Wormhole</A><span class='linkOff'>Close Wormhole</span>"
 		t += "<BR><A href='?src=\ref[src];recal=1'>Recalibrate Crystals</A> <A href='?src=\ref[src];eject=1'>Eject Crystals</A>"
 
 		// Information about the last teleport
@@ -146,10 +155,23 @@
 			t += "Time: [round(last_tele_data.time, 0.1)] secs<BR>"
 		t += "</div>"
 
-	var/datum/browser/popup = new(user, "telesci", name, 300, 500)
+	var/datum/browser/popup = new(user, "telesci", name, 300, 550)
 	popup.set_content(t)
 	popup.open()
 	return
+
+/obj/machinery/computer/telescience/proc/create_wormhole(turf/exit)
+	if(exit.density)
+		return FALSE
+	if(istype(exit, /turf/space))
+		if(exit.x <= TRANSITIONEDGE || exit.x >= (world.maxx - TRANSITIONEDGE - 1) || exit.y <= TRANSITIONEDGE || exit.y >= (world.maxy - TRANSITIONEDGE - 1))
+			return FALSE
+	for(var/X in exit.contents)
+		var/atom/A = X
+		if(A.density)
+			return FALSE
+	active_wormhole = new (telepad.loc, exit)
+	return active_wormhole
 
 /obj/machinery/computer/telescience/proc/sparks()
 	if(telepad)
@@ -164,7 +186,15 @@
 	visible_message("<span class='warning'>The telepad weakly fizzles.</span>")
 	return
 
-/obj/machinery/computer/telescience/proc/doteleport(mob/user)
+/obj/machinery/computer/telescience/proc/close_wormhole()
+	if(active_wormhole)
+		use_power = 1
+		qdel(active_wormhole)
+		active_wormhole = null
+
+/obj/machinery/computer/telescience/proc/open_wormhole(mob/user)
+	if(active_wormhole)
+		return
 
 	if(teleport_cooldown > world.time)
 		temp_msg = "Telepad is recharging power.<BR>Please wait [round((teleport_cooldown - world.time) / 10)] seconds."
@@ -175,7 +205,6 @@
 		return
 
 	if(telepad)
-
 		var/truePower = Clamp(power + power_off, 1, 1000)
 		var/trueRotation = rotation + rotation_off
 		var/trueAngle = Clamp(angle + angle_off, 1, 90)
@@ -200,58 +229,49 @@
 
 
 		spawn(round(proj_data.time) * 10) // in seconds
+			teleporting = 0
 			if(!telepad)
 				return
 			if(telepad.stat & NOPOWER)
 				return
-			teleporting = 0
-			teleport_cooldown = world.time + (power * 2)
-			teles_left -= 1
+			if(create_wormhole(target))
+				teleport_cooldown = world.time + (power * 2)
+				teles_left -= 1
 
-			// use a lot of power
-			use_power(power * 10)
+				// use a lot of power
+				use_power(power * 1500)
+				use_power = 2
 
-			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-			s.set_up(5, 1, get_turf(telepad))
-			s.start()
+				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+				s.set_up(5, 1, get_turf(telepad))
+				s.start()
 
-			temp_msg = "Teleport successful.<BR>"
-			if(teles_left < 10)
-				temp_msg += "<BR>Calibration required soon."
+				temp_msg = "Teleport successful."
+				if(teles_left < 10)
+					temp_msg += "<BR>Calibration required soon."
+				else
+					temp_msg += "<BR>Data printed below."
+				investigate_log("[key_name(usr)]/[user] has teleported with Telescience at [trueX],[trueY],[z_co], in [A ? A.name : "null area"].","telesci")
+
+				var/datum/effect/effect/system/spark_spread/SS = new /datum/effect/effect/system/spark_spread
+				SS.set_up(5, 1, target)
+				SS.start()
+
+				flick("pad-beam", telepad)
+				playsound(telepad.loc, 'sound/weapons/emitter2.ogg', 25, 1)
+
 			else
-				temp_msg += "Data printed below."
-			investigate_log("[key_name(usr)]/[user] has teleported with Telescience at [trueX],[trueY],[z_co], in [A ? A.name : "null area"].","telesci")
+				use_power(power * 1500)
+				var/datum/effect/effect/system/spark_spread/SS = new /datum/effect/effect/system/spark_spread
+				SS.set_up(5, 1, get_turf(telepad))
+				SS.start()
 
-			var/sparks = get_turf(target)
-			var/datum/effect/effect/system/spark_spread/y = new /datum/effect/effect/system/spark_spread
-			y.set_up(5, 1, sparks)
-			y.start()
-
-			var/turf/source = target
-			var/turf/dest = get_turf(telepad)
-			if(sending)
-				source = dest
-				dest = target
-
-			flick("pad-beam", telepad)
-			playsound(telepad.loc, 'sound/weapons/emitter2.ogg', 25, 1)
-			for(var/atom/movable/ROI in source)
-				// if is anchored, don't let through
-				if(ROI.anchored)
-					if(isliving(ROI))
-						var/mob/living/L = ROI
-						if(L.buckled)
-							// TP people on office chairs
-							if(L.buckled.anchored)
-								continue
-						else
-							continue
-					else if(!isobserver(ROI))
-						continue
-				do_teleport(ROI, dest)
+				flick("pad-beam", telepad)
+				playsound(telepad.loc, 'sound/weapons/emitter2.ogg', 25, 1)
+				temp_msg = "Error!<BR>Something wrong with the navigation data."
 			updateDialog()
 
-/obj/machinery/computer/telescience/proc/teleport(mob/user)
+/obj/machinery/computer/telescience/proc/prepare_wormhole(mob/user)
 	if(rotation == null || angle == null || z_co == null)
 		temp_msg = "ERROR!<BR>Set a angle, rotation and sector."
 		return
@@ -268,7 +288,7 @@
 		temp_msg = "ERROR! Sector is less than 1, <BR>greater than 6, or equal to 2."
 		return
 	if(teles_left > 0)
-		doteleport(user)
+		open_wormhole(user)
 	else
 		telefail()
 		temp_msg = "ERROR!<BR>Calibration required."
@@ -314,7 +334,7 @@
 
 	if(href_list["setz"])
 		var/new_z = input("Please input desired sector.", name, z_co) as num
-		if(..())
+		if(!..())
 			return
 		z_co = Clamp(round(new_z), 1, 10)
 
@@ -329,13 +349,11 @@
 		else
 			temp_msg = "ERROR!<BR>No data stored."
 
-	if(href_list["send"])
-		sending = 1
-		teleport(usr)
+	if(href_list["open_teleport"])
+		prepare_wormhole(usr)
 
-	if(href_list["receive"])
-		sending = 0
-		teleport(usr)
+	if(href_list["close_teleport"])
+		close_wormhole(usr)
 
 	if(href_list["recal"])
 		recalibrate()
