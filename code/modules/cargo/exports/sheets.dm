@@ -116,7 +116,7 @@
 	export_types = list(/obj/item/weapon/cable_coil)
 
 /datum/export/stack/cable/get_cost(O)
-	return round(..())
+	return round(..(O))
 
 /datum/export/stack/cable/get_amount(obj/O)
 	var/obj/item/weapon/cable_coil/S = O
@@ -142,12 +142,12 @@
 	message = "of phoron"
 
 /datum/export/stack/phoron/get_cost(obj/O, contr = 0, emag = 0)
-	. = ..()
+	. = ..(O)
 	if(emag) // Syndicate pays you more for the plasma.
 		. = round(. * 1.5)
 
 // Refined scrap. The coal of 26 century. The reason why you are here.
-/datum/export/stack/phoron
+/datum/export/stack/scrap
 	cost = 300
 	export_types = list(/obj/item/stack/sheet/refined_scrap)
 	message = "of scrap"

@@ -16,7 +16,7 @@
 
 /datum/export/weapon/taser
 	cost = 250
-	unit_name = "advanced taser"
+	unit_name = "taser"
 	export_types = list(/obj/item/weapon/gun/energy/taser,
 										/obj/item/weapon/gun/energy/taser/wj,
 										/obj/item/weapon/gun/energy/taser/tactifool)

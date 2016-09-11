@@ -74,7 +74,7 @@
 
 // EVA gear
 /datum/export/gear/space
-	include_subtypes = FALSE
+	include_subtypes = TRUE
 
 /datum/export/gear/space/helmet
 	cost = 500

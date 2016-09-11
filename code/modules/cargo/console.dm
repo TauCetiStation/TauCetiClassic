@@ -51,13 +51,16 @@
 		Location: [SSshuttle.moving ? "Moving to station ([SSshuttle.eta] Mins.)":SSshuttle.at_station ? "Station":"Dock"]<BR>
 		<HR>Supply points: [SSshuttle.points]<BR>\n<BR>"}
 		if(requestonly)
-			dat += {"\n<A href='?src=\ref[src];order=categories'>Request items</A><BR><BR>"}
+			dat += "\n<A href='?src=\ref[src];order=categories'>Request items</A><BR><BR>"
 		else
 			dat += {"[SSshuttle.moving ? "\n*Must be away to order items*<BR>\n<BR>":SSshuttle.at_station ? "\n*Must be away to order items*<BR>\n<BR>":"\n<A href='?src=\ref[src];order=categories'>Order items</A><BR>\n<BR>"]
 			[SSshuttle.moving ? "\n*Shuttle already called*<BR>\n<BR>":SSshuttle.at_station ? "\n<A href='?src=\ref[src];send=1'>Send away</A><BR>\n<BR>":"\n<A href='?src=\ref[src];send=1'>Send to station</A><BR>\n<BR>"]"}
 		dat += {"<A href='?src=\ref[src];viewrequests=1'>View requests</A><BR><BR>
-		<A href='?src=\ref[src];vieworders=1'>View approved orders</A><BR><BR>
-		<A href='?src=\ref[user];mach_close=computer'>Close</A>"}
+		<A href='?src=\ref[src];vieworders=1'>View approved orders</A><BR><BR>"}
+		if(!requestonly)
+			dat += "<A href='?src=\ref[src];viewcentcom=1'>View Centcom message</A><BR><BR>"
+		dat += "<A href='?src=\ref[user];mach_close=computer'>Close</A>"
+
 
 	var/datum/browser/popup = new(user, "computer", name, 575, 450)
 	popup.set_content(dat)
@@ -110,7 +113,7 @@
 					continue
 				temp += "<A href='?src=\ref[src];doorder=[supply_name]'>[supply_name]</A> Cost: [N.cost]<BR>"		//the obj because it would get caught by the garbage
 
-	if (href_list["doorder"])
+	if(href_list["doorder"])
 		if(world.time < reqtime)
 			for(var/mob/V in hearers(src))
 				V.show_message("<b>[src]</b>'s monitor flashes, \"[world.time - reqtime] seconds remaining until another requisition form may be printed.\"")
@@ -172,7 +175,7 @@
 					temp += "<BR><A href='?src=\ref[src];viewrequests=1'>Back</A> <A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
 				break
 
-	if (href_list["vieworders"])
+	if(href_list["vieworders"])
 		temp = "Current approved orders: <BR><BR>"
 		for(var/S in SSshuttle.shoppinglist)
 			var/datum/supply_order/SO = S
@@ -182,7 +185,7 @@
 				temp += "#[SO.id] - [SO.object.name] approved by [SO.orderer][SO.reason ? " ([SO.reason])":""]<BR>"
 		temp += "<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
 
-	if (href_list["viewrequests"])
+	if(href_list["viewrequests"])
 		temp = "Current requests: <BR><BR>"
 		for(var/S in SSshuttle.requestlist)
 			var/datum/supply_order/SO = S
@@ -194,7 +197,16 @@
 			temp += "<BR><A href='?src=\ref[src];clearreq=1'>Clear list</A>"
 		temp += "<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
 
-	if (href_list["mainmenu"])
+	if(href_list["viewcentcom"])
+		if(SSshuttle && SSshuttle.centcom_message)
+			temp += "Latest Centcom message: <BR><BR>"
+			temp += SSshuttle.centcom_message
+			temp += "<BR><BR>"
+		else
+			temp += "Can not find any messages from Centcom. <BR><BR>"
+		temp += "<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
+
+	if(href_list["mainmenu"])
 		temp = null
 
 	updateUsrDialog()

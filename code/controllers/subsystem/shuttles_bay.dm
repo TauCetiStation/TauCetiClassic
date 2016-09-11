@@ -37,6 +37,7 @@ var/datum/subsystem/shuttle/SSshuttle
 	// When TRUE, these vars allow exporting emagged/contraband items, and add some special interactions to existing exports.
 	var/contraband = FALSE
 	var/hacked = FALSE
+	var/centcom_message = ""
 		//control
 	var/ordernum
 	var/list/shoppinglist = list()
@@ -443,7 +444,7 @@ var/datum/subsystem/shuttle/SSshuttle
 
 	return 1
 
-//To stop things being sent to centcomm which should not be sent to centcomm. Recursively checks for these types.
+//To stop things being sent to centcom which should not be sent to centcom. Recursively checks for these types.
 /datum/subsystem/shuttle/proc/forbidden_atoms_check(atom/A)
 	if(istype(A,/mob/living))
 		return 1
@@ -495,54 +496,9 @@ var/datum/subsystem/shuttle/SSshuttle
 		SSshuttle.points += E.total_cost
 		E.export_end()
 
-	//SSshuttle.centcom_message = msg
+	centcom_message = msg
 	//investigate_log("Shuttle contents sold for [SSshuttle.points - presale_points] credits. Contents: [sold_atoms || "none."] Message: [SSshuttle.centcom_message || "none."]", "cargo")
 
-	// var/phoron_count = 0
-	// var/plat_count = 0
-	// var/scrap_count = 0
-	// for(var/atom/movable/MA in shuttle)
-	// 	if(MA.anchored)	continue
-	//
-	// 	// Must be in a crate (or a critter crate)!
-	// 	if(istype(MA,/obj/structure/closet/crate) || istype(MA,/obj/structure/closet/critter))
-	// 		var/datum/game_mode/mutiny/mode = get_mutiny_mode()
-	// 		if(mode)
-	// 			mode.deliver_materials(MA, shuttle)
-	//
-	// 		points += points_per_crate
-	// 		var/find_slip = 1
-	//
-	// 		for(var/atom in MA)
-	// 			// Sell manifests
-	// 			var/atom/A = atom
-	// 			if(find_slip && istype(A,/obj/item/weapon/paper/manifest))
-	// 				var/obj/item/weapon/paper/slip = A
-	// 				if(slip.stamped && slip.stamped.len) //yes, the clown stamp will work. clown is the highest authority on the station, it makes sense
-	// 					points += points_per_slip
-	// 					find_slip = 0
-	// 				continue
-	//
-	// 			// Sell phoron
-	// 			if(istype(A, /obj/item/stack/sheet/mineral/phoron))
-	// 				var/obj/item/stack/sheet/mineral/phoron/P = A
-	// 				phoron_count += P.amount
-	//
-	// 			// Sell platinum
-	// 			if(istype(A, /obj/item/stack/sheet/mineral/platinum))
-	// 				var/obj/item/stack/sheet/mineral/platinum/P = A
-	// 				plat_count += P.amount
-	// 			// Sell scrap
-	// 			if(istype(A, /obj/item/stack/sheet/refined_scrap))
-	// 				var/obj/item/stack/sheet/refined_scrap/P = A
-	// 				scrap_count += P.amount
-	//
-	// 	qdel(MA)
-	// 	CHECK_TICK
-	//
-	// points += phoron_count * points_per_phoron
-	// points += plat_count * points_per_platinum
-	// points += scrap_count * points_per_scrap
 
 //Buyin
 /datum/subsystem/shuttle/proc/buy()
@@ -588,43 +544,7 @@ var/datum/subsystem/shuttle/SSshuttle
 		SO.generate(pickedloc)
 		if(SO.object.dangerous)
 			message_admins("[SO.object.name] ordered by [key_name_admin(SO.orderer_ckey)] has shipped.")
-		// var/atom/A = new SP.containertype(pickedloc)
-		// A.name = "[SP.containername] [SO.reason ? "([SO.reason])":"" ]"
-		//
-		// //supply manifest generation begin
-		//
-		// var/obj/item/weapon/paper/manifest/slip = new /obj/item/weapon/paper/manifest(A)
-		// slip.info = "<h3>[command_name()] Shipping Manifest</h3><hr><br>"
-		// slip.info +="Order #[SO.id]<br>"
-		// slip.info +="Destination: [station_name()]<br>"
-		// slip.info +="[SSshuttle.shoppinglist.len] PACKAGES IN THIS SHIPMENT<br>"
-		// slip.info +="CONTENTS:<br><ul>"
-		//
-		// //spawn the stuff, finish generating the manifest while you're at it
-		// if(SP.access)
-		// 	A:req_access = list()
-		// 	A:req_access += text2num(SP.access)
-		//
-		// var/list/contains
-		// if(istype(SP,/datum/supply_pack/randomised))
-		// 	var/datum/supply_pack/randomised/SPR = SP
-		// 	contains = list()
-		// 	if(SPR.contains.len)
-		// 		for(var/j=1,j<=SPR.num_contained,j++)
-		// 			contains += pick(SPR.contains)
-		// else
-		// 	contains = SP.contains
-		//
-		// for(var/typepath in contains)
-		// 	if(!typepath)	continue
-		// 	var/atom/B2 = new typepath(A)
-		// 	if(SP.amount && B2:amount) B2:amount = SP.amount
-		// 	slip.info += "<li>[B2.name]</li>" //add the item to the manifest
-		//
-		// //manifest finalisation
-		// slip.info += "</ul><br>"
-		// slip.info += "CHECK CONTENTS AND STAMP BELOW THE LINE TO CONFIRM RECEIPT OF GOODS<hr>"
-		// if (SP.contraband) slip.loc = null	//we are out of blanks for Form #44-D Ordering Illicit Drugs.
+
 		score["stuffshipped"]++
 		CHECK_TICK
 
