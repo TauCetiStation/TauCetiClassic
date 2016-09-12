@@ -148,15 +148,15 @@
 #define SHELTER_DEPLOY_BAD_AREA "bad area"
 #define SHELTER_DEPLOY_ANCHORED_OBJECTS "anchored objects"
 
+// Cargo-related stuff.
+#define MANIFEST_ERROR_CHANCE		5
+#define MANIFEST_ERROR_NAME			1
+#define MANIFEST_ERROR_CONTENTS		2
+#define MANIFEST_ERROR_ITEM			4
+
 // from /tg/
 #define ABOVE_NORMAL_TURF_LAYER 2.08
 #define BELOW_MOB_LAYER 3.7
 
 //Timing subsystem
 #define GLOBAL_PROC	"some_magic_bullshit"
-
-// Cargo-related stuff.
-#define MANIFEST_ERROR_CHANCE		5
-#define MANIFEST_ERROR_NAME			1
-#define MANIFEST_ERROR_CONTENTS		2
-#define MANIFEST_ERROR_ITEM			4
