@@ -18,6 +18,7 @@
 		if (!ckey)
 			handle_mood()
 			handle_speech()
+			handle_attack()
 
 
 	var/datum/gas_mixture/environment // Added to prevent null location errors-- TLE
@@ -51,6 +52,19 @@
 	var/Tempstun = 0 // temporary temperature stuns
 	var/Discipline = 0 // if a slime has been hit with a freeze gun, or wrestled/attacked off a human, they become disciplined and don't attack anymore for a while
 	var/SStun = 0 // stun variable
+
+/mob/living/carbon/slime/proc/AttackTarget(var/mob/living/E)
+	if(E.stat == DEAD)
+		E = null
+	else if(E in view(1, src))
+		E.attack_slime(src)
+	else if(E in view(7, src))
+		if(!E.Adjacent(src))
+			step_to(src, E)
+	else
+		E = null
+	return
+
 
 /mob/living/carbon/slime/proc/AIprocess()  // the master AI process
 
@@ -295,7 +309,14 @@
 
 	return 1
 
-
+/mob/living/carbon/slime/proc/handle_attack()
+	if(!AttackTarget)
+		return
+	if(Target)
+		Target = null
+	var/mob/living/T = AttackTarget
+	AttackTarget(T)
+	return
 /mob/living/carbon/slime/proc/handle_nutrition()
 
 	if(prob(20))
@@ -534,6 +555,15 @@
 			)
 				to_say = pick("Hello...", "Hi...")
 			else if (                                                             \
+				findtext(phrase, "attack")                                        \
+			)
+				if(last_pointed)
+					to_say = "I attacking [last_pointed]!"
+					AttackTarget = last_pointed
+					last_pointed = null
+				else
+					to_say = "No target"
+			else if (                                                             \
 				findtext(phrase, "follow") || findtext(phrase, "следуйте") ||     \
 				findtext(phrase, "за мной")                                       \
 			)
@@ -584,6 +614,7 @@
 							to_say = "Yes... I'll stop..."
 						else
 							to_say = "No... I'll keep following..."
+
 			else if (                                                           \
 				findtext(phrase, "stay") || findtext(phrase, "остановитесь") || \
 				findtext(phrase, "стой") || findtext(phrase, "не двигайс€")     \
