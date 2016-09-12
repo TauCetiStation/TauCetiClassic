@@ -145,3 +145,8 @@
 
 //Timing subsystem
 #define GLOBAL_PROC	"some_magic_bullshit"
+
+//teleport checks
+#define TELE_CHECK_NONE 0
+#define TELE_CHECK_TURFS 1
+#define TELE_CHECK_ALL 2
