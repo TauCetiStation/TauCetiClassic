@@ -144,6 +144,8 @@ turf/simulated/floor/holofloor/update_icon()
 	qdel(src)
 	return
 
+/obj/structure/window/reinforced/holowindow/disappearing
+
 /obj/machinery/door/window/holowindoor/attackby(obj/item/weapon/I as obj, mob/user as mob)
 
 	if (src.operating == 1)
@@ -360,7 +362,7 @@ obj/structure/stool/bed/chair/holochair
 
 	eventstarted = 1
 
-	for(var/obj/structure/window/reinforced/holowindow/W in currentarea)
+	for(var/obj/structure/window/reinforced/holowindow/disappearing/W in currentarea)
 		qdel(W)
 
 	for(var/mob/M in currentarea)
