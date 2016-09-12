@@ -164,7 +164,7 @@
 			return
 		if(!M.client)
 			usr << "<font color='red'>Error: cmd_admin_mute: This mob doesn't have a client tied to it.</font>"
-		if(!check_rights(R_PERMISSIONS) && M.client.holder && (M.client.holder.rights & R_ADMIN))
+		if(!check_rights(R_PERMISSIONS, 0) && M.client.holder && (M.client.holder.rights & R_ADMIN))
 			usr << "<font color='red'>Error: cmd_admin_mute: You cannot mute an admin.</font>"
 			return
 		if(M.client.holder && (M.client.holder.rights & R_PERMISSIONS))
