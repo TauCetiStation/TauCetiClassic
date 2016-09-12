@@ -243,7 +243,8 @@
 	var/verb = "says"
 	var/handled = 0
 	if(silent)
-		message = ""
+		if(message_mode != "changeling")
+			message = ""
 		handled = 1
 	if(sdisabilities & MUTE)
 		message = ""
