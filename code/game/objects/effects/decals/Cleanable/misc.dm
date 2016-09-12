@@ -109,9 +109,9 @@
 	return ..()
 
 /obj/effect/decal/cleanable/vomit/proc/stop_light()
-		sleep(rand(150,300))
-		if(!src) return
-		set_light(0)
+	sleep(rand(150,300))
+	if(!src) return
+	set_light(0)
 
 /obj/effect/decal/cleanable/tomato_smudge
 	name = "tomato smudge"
