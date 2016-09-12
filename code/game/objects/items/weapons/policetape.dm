@@ -124,7 +124,7 @@
 		return 0
 
 /obj/item/tape/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	breaktape(W, user)
+	breaktape(W, user, FALSE)
 
 /obj/item/tape/attack_hand(mob/user as mob)
 	if (user.a_intent == "help" && src.allowed(user))
@@ -133,16 +133,23 @@
 		spawn(200)
 			src.density = 1
 	else
-		breaktape(null, user)
+		breaktape(null, user, FALSE)
 
 /obj/item/tape/attack_paw(mob/user as mob)
-	breaktape(/obj/item/weapon/wirecutters,user)
+	breaktape(null, user, FALSE)
 
-/obj/item/tape/proc/breaktape(obj/item/weapon/W as obj, mob/user as mob)
-	if(user.a_intent == "help" && ((!can_puncture(W) && src.allowed(user))))
+/obj/item/tape/blob_act()
+	breaktape(W = null, user = null, forced = TRUE)
+
+/obj/item/tape/ex_act()
+	breaktape(W = null, user = null, forced = TRUE)
+
+/obj/item/tape/proc/breaktape(obj/item/weapon/W as obj, mob/user as mob, var/forced = FALSE)
+	if((user && user.a_intent == "help") && (W && !can_puncture(W) && src.allowed(user)) && !forced)
 		user << "You can't break the [src] with that!"
 		return
-	user.show_viewers("\blue [user] breaks the [src]!")
+	if(user)
+		user.show_viewers("\blue [user] breaks the [src]!")
 
 	var/dir[2]
 	var/icon_dir = src.icon_state
@@ -153,7 +160,7 @@
 		dir[1] = NORTH
 		dir[2] = SOUTH
 
-	for(var/i=1;i<3;i++)
+	for(var/i = 1 to 2)
 		var/N = 0
 		var/turf/cur = get_step(src,dir[i])
 		while(N != 1)
@@ -166,5 +173,3 @@
 
 	qdel(src)
 	return
-
-
