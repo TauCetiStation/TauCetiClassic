@@ -85,7 +85,7 @@ Admin:
 \tF6 = player-panel-new
 \tF7 = admin-pm
 \tF8 = Invisimin
-\tF9 = Msay
+\tF9 = Mentorhelp
 </font>"}
 
 	src << hotkey_mode

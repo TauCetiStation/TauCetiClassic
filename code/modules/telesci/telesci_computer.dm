@@ -295,14 +295,14 @@
 
 	if(href_list["setrotation"])
 		var/new_rot = input("Please input desired bearing in degrees.", name, rotation) as num
-		if(..()) // Check after we input a value, as they could've moved after they entered something
+		if(!..()) // Check after we input a value, as they could've moved after they entered something
 			return
 		rotation = Clamp(new_rot, -900, 900)
 		rotation = round(rotation, 0.01)
 
 	if(href_list["setangle"])
 		var/new_angle = input("Please input desired elevation in degrees.", name, angle) as num
-		if(..())
+		if(!..())
 			return
 		angle = Clamp(round(new_angle, 0.1), 1, 9999)
 
@@ -314,7 +314,7 @@
 
 	if(href_list["setz"])
 		var/new_z = input("Please input desired sector.", name, z_co) as num
-		if(..())
+		if(!..())
 			return
 		z_co = Clamp(round(new_z), 1, 10)
 

@@ -4,9 +4,7 @@ var/list/admin_verbs_default = list(
 	/client/proc/deadmin_self,			/*destroys our own admin datum so we can play as a regular player*/
 	/client/proc/hide_verbs,			/*hides all our adminverbs*/
 	/client/proc/hide_most_verbs,		/*hides all our hideable adminverbs*/
-	/client/proc/cmd_mentor_check_new_players
-	)
-var/list/admin_verbs_default_high = list(
+	/client/proc/cmd_mentor_check_new_players,
 	/datum/admins/proc/show_player_panel,	/*shows an interface for individual players, with various links (links require additional flags*/
 	/client/proc/player_panel,
 	/client/proc/debug_variables		/*allows us to -see- the variables of any instance in the game. +VAREDIT needed to modify*/
@@ -65,7 +63,6 @@ var/list/admin_verbs_admin = list(
 	/client/proc/game_panel,			/*game panel, allows to change game-mode etc*/
 	/client/proc/cmd_admin_say,			/*admin-only ooc chat*/
 	/datum/admins/proc/PlayerNotes,
-	/client/proc/cmd_mod_say,
 	/datum/admins/proc/show_player_info,
 	/client/proc/free_slot,			/*frees slot for chosen job*/
 	/client/proc/cmd_admin_change_custom_event,
@@ -253,56 +250,43 @@ var/list/admin_verbs_hideable = list(
 	/proc/possess,
 	/proc/release
 	)
-var/list/admin_verbs_mod = list(
-	/client/proc/cmd_admin_pm_context,	/*right-click adminPM interface*/
-	/client/proc/cmd_admin_pm_panel,	/*admin-pm list*/
-	/client/proc/debug_variables,		/*allows us to -see- the variables of any instance in the game.*/
-	/client/proc/toggledebuglogs,
-	/datum/admins/proc/PlayerNotes,
-	/client/proc/admin_ghost,			/*allows us to ghost/reenter body at will*/
-	/client/proc/cmd_mod_say,
-	/datum/admins/proc/show_player_info,
-	/client/proc/player_panel_new,
-	/client/proc/dsay,
-	/datum/admins/proc/show_player_panel,
-	/client/proc/check_antagonists,
-	/client/proc/cmd_admin_subtle_message 	/*send an message to somebody as a 'voice in their head'*/
-)
-
-var/list/admin_verbs_mentor = list(
-	/client/proc/cmd_admin_pm_context,
-	/client/proc/cmd_admin_pm_panel,
-	/datum/admins/proc/PlayerNotes,
-	/client/proc/cmd_mod_say,
-	/datum/admins/proc/show_player_info
-)
 
 /client/proc/add_admin_verbs()
 	if(holder)
 		verbs += admin_verbs_default
-		if(holder.rights &~R_MENTOR)		verbs += admin_verbs_default_high
-		if(holder.rights & R_BUILDMODE)		verbs += /client/proc/togglebuildmodeself
-		if(holder.rights & R_ADMIN)			verbs += admin_verbs_admin
-		if(holder.rights & R_BAN)			verbs += admin_verbs_ban
-		if(holder.rights & R_FUN)			verbs += admin_verbs_fun
-		if(holder.rights & R_SERVER)		verbs += admin_verbs_server
-		if(holder.rights & R_DEBUG)			verbs += admin_verbs_debug
-		if(holder.rights & R_POSSESS)		verbs += admin_verbs_possess
-		if(holder.rights & R_PERMISSIONS)	verbs += admin_verbs_permissions
-		if(holder.rights & R_STEALTH)		verbs += /client/proc/stealth
-		if(holder.rights & R_REJUVINATE)	verbs += admin_verbs_rejuv
-		if(holder.rights & R_SOUNDS)		verbs += admin_verbs_sounds
-		if(holder.rights & R_SPAWN)			verbs += admin_verbs_spawn
-		if(holder.rights & R_MOD)			verbs += admin_verbs_mod
-		if(holder.rights & R_MENTOR)		verbs += admin_verbs_mentor
+		if(holder.rights & R_BUILDMODE)
+			verbs += /client/proc/togglebuildmodeself
+		if(holder.rights & R_ADMIN)
+			verbs += admin_verbs_admin
+		if(holder.rights & R_BAN)
+			verbs += admin_verbs_ban
+		if(holder.rights & R_FUN)
+			verbs += admin_verbs_fun
+		if(holder.rights & R_SERVER)
+			verbs += admin_verbs_server
+		if(holder.rights & R_DEBUG)
+			verbs += admin_verbs_debug
+		if(holder.rights & R_POSSESS)
+			verbs += admin_verbs_possess
+		if(holder.rights & R_PERMISSIONS)
+			verbs += admin_verbs_permissions
+		if(holder.rights & R_STEALTH)
+			verbs += /client/proc/stealth
+		if(holder.rights & R_REJUVINATE)
+			verbs += admin_verbs_rejuv
+		if(holder.rights & R_SOUNDS)
+			verbs += admin_verbs_sounds
+		if(holder.rights & R_SPAWN)
+			verbs += admin_verbs_spawn
 
-		if(holder.rights & R_ADMIN)			control_freak = CONTROL_FREAK_SKIN | CONTROL_FREAK_MACROS
-		if(holder.rights & R_FUN)			verbs += admin_verbs_event
+		if(holder.rights & R_ADMIN)
+			control_freak = CONTROL_FREAK_SKIN | CONTROL_FREAK_MACROS
+		if(holder.rights & R_FUN)
+			verbs += admin_verbs_event
 
 /client/proc/remove_admin_verbs()
 	verbs.Remove(
 		admin_verbs_default,
-		admin_verbs_default_high,
 		/client/proc/togglebuildmodeself,
 		admin_verbs_admin,
 		admin_verbs_ban,
@@ -377,13 +361,8 @@ var/list/admin_verbs_mentor = list(
 	if(istype(mob,/mob/dead/observer))
 		//re-enter
 		var/mob/dead/observer/ghost = mob
-		if(!is_mentor(usr.client))
-			ghost.can_reenter_corpse = TRUE
-		if(ghost.can_reenter_corpse)
-			ghost.reenter_corpse()
-		else
-			ghost << "<font color='red'>Error:  Aghost:  Can't reenter corpse, mentors that use adminHUD while aghosting are not permitted to enter their corpse again</font>"
-			return
+		ghost.can_reenter_corpse = TRUE
+		ghost.reenter_corpse()
 
 		feedback_add_details("admin_verb","P") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
@@ -503,7 +482,8 @@ var/list/admin_verbs_mentor = list(
 
 /client/proc/warn(warned_ckey)
 	var/reason = "Autobanning due to too many formal warnings"
-	if(!check_rights(R_ADMIN|R_MOD))	return
+	if(!check_rights(R_ADMIN))
+		return
 
 	if(!warned_ckey || !istext(warned_ckey))	return
 	/*if(warned_ckey in admin_datums)
@@ -549,7 +529,8 @@ var/list/admin_verbs_mentor = list(
 	feedback_add_details("admin_verb","WARN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/unwarn(warned_ckey)
-	if(!check_rights(R_ADMIN|R_MOD))	return
+	if(!check_rights(R_ADMIN))
+		return
 
 	if(!warned_ckey || !istext(warned_ckey))	return
 	/*if(warned_ckey in admin_datums)

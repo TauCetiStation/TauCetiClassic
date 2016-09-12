@@ -487,12 +487,13 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		return -M
 
 
-/proc/key_name(var/whom, var/include_link = null, var/include_name = 1, var/highlight_special_characters = 1)
+/proc/key_name(var/whom, var/include_link = null, var/include_name = 1, var/highlight_special_characters = 1, var/reply = null)
 	var/mob/M
 	var/client/C
 	var/key
 
-	if(!whom)	return "*null*"
+	if(!whom)
+		return "*null*"
 	if(istype(whom, /client))
 		C = whom
 		M = C.mob
@@ -511,7 +512,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 	if(key)
 		if(include_link && C)
-			. += "<a href='?priv_msg=\ref[C]'>"
+			. += "<a href='?priv_msg=\ref[C];ahelp_reply=[reply]'>"
 
 		if(C && C.holder && C.holder.fakekey && !include_name)
 			. += "Administrator"
@@ -519,8 +520,10 @@ Turf and target are seperate in case you want to teleport some distance from a t
 			. += key
 
 		if(include_link)
-			if(C)	. += "</a>"
-			else	. += " (DC)"
+			if(C)
+				. += "</a>"
+			else
+				. += " (DC)"
 	else
 		. += "*no key*"
 

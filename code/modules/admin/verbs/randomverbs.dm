@@ -40,14 +40,15 @@
 		spawn(50)
 			M << "\red You have been sent to the prison station!"
 		log_admin("[key_name(usr)] sent [key_name(M)] to the prison station.")
-		message_admins("\blue [key_name_admin(usr)] sent [key_name_admin(M)] to the prison station.", 1)
+		message_admins("\blue [key_name_admin(usr)] sent [key_name_admin(M)] to the prison station.")
 		feedback_add_details("admin_verb","PRISON") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_admin_subtle_message(mob/M as mob in mob_list)
 	set category = "Special Verbs"
 	set name = "Subtle Message"
 
-	if(!ismob(M))	return
+	if(!ismob(M))
+		return
 	if (!holder)
 		src << "Only administrators may use this command."
 		return
@@ -81,16 +82,12 @@
 	var/missing_ages = 0
 	var/msg = ""
 
-	var/highlight_special_characters = 1
-	if(is_mentor(usr.client))
-		highlight_special_characters = 0
-
 	for(var/client/C in clients)
 		if(C.player_age == "Requires database")
 			missing_ages = 1
 			continue
 		if(C.player_age < age)
-			msg += "[key_name(C, 1, 1, highlight_special_characters)]: account is [C.player_age] days and [C.player_ingame_age] in-game minutes old.<br>"
+			msg += "[key_name(C, 1)]: account is [C.player_age] days and [C.player_ingame_age] in-game minutes old.<br>"
 
 	if(missing_ages)
 		src << "Some accounts did not have proper ages set in their clients.  This function requires database to be present"
@@ -167,22 +164,36 @@
 			return
 		if(!M.client)
 			usr << "<font color='red'>Error: cmd_admin_mute: This mob doesn't have a client tied to it.</font>"
-		if(M.client.holder)
-			usr << "<font color='red'>Error: cmd_admin_mute: You cannot mute an admin/mod.</font>"
-	if(!M.client)		return
-	if(M.client.holder)	return
+		if(!check_rights(R_PERMISSIONS, 0) && M.client.holder && (M.client.holder.rights & R_ADMIN))
+			usr << "<font color='red'>Error: cmd_admin_mute: You cannot mute an admin.</font>"
+			return
+		if(M.client.holder && (M.client.holder.rights & R_PERMISSIONS))
+			usr << "<font color='red'>Error: cmd_admin_mute: You cannot mute an admin with permissions rights.</font>"
+			return
+	if(!M.client)
+		return
+
 
 	var/muteunmute
 	var/mute_string
 
 	switch(mute_type)
-		if(MUTE_IC)			mute_string = "IC (say and emote)"
-		if(MUTE_OOC)		mute_string = "OOC"
-		if(MUTE_PRAY)		mute_string = "pray"
-		if(MUTE_ADMINHELP)	mute_string = "adminhelp, admin PM and ASAY"
-		if(MUTE_DEADCHAT)	mute_string = "deadchat and DSAY"
-		if(MUTE_ALL)		mute_string = "everything"
-		else				return
+		if(MUTE_IC)
+			mute_string = "IC (say and emote)"
+		if(MUTE_OOC)
+			mute_string = "OOC"
+		if(MUTE_PRAY)
+			mute_string = "pray"
+		if(MUTE_ADMINHELP)
+			mute_string = "adminhelp, admin PM and ASAY"
+		if(MUTE_MENTORHELP)
+			mute_string = "mentorhelp and mentor PM"
+		if(MUTE_DEADCHAT)
+			mute_string = "deadchat and DSAY"
+		if(MUTE_ALL)
+			mute_string = "everything"
+		else
+			return
 
 	if(automute)
 		muteunmute = "auto-muted"
