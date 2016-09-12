@@ -84,12 +84,16 @@ var/list/department_radio_keys = list(
 			dongle = H.l_ear
 		else
 			dongle = H.r_ear
-		if(!istype(dongle)) return
-		if(dongle.translate_binary) return 1
+		if(!istype(dongle))
+			return
+		if(dongle.translate_binary)
+			return 1
 
 /mob/living/proc/hivecheck()
-	if (isalien(src)) return 1
-	if (!ishuman(src)) return
+	if (isalien(src))
+		return 1
+	if (!ishuman(src))
+		return
 	var/mob/living/carbon/human/H = src
 	if (H.l_ear || H.r_ear)
 		var/obj/item/device/radio/headset/dongle
@@ -97,8 +101,10 @@ var/list/department_radio_keys = list(
 			dongle = H.l_ear
 		else
 			dongle = H.r_ear
-		if(!istype(dongle)) return
-		if(dongle.translate_binary) return 1
+		if(!istype(dongle))
+			return
+		if(dongle.translate_binary)
+			return 1
 
 /mob/living/say(var/message, var/datum/language/speaking = null, var/verb="says", var/alt_name="", var/italics=0, var/message_range = world.view, var/list/used_radios = list(), var/sound/speech_sound, var/sound_vol, var/sanitize = 1)
 	if (src.client)
@@ -186,7 +192,7 @@ var/list/department_radio_keys = list(
 		flick_overlay(I, speech_bubble_recipients, 30)
 
 	for(var/mob/M in listening)
-		M.hear_say(message, verb, speaking, alt_name, italics, src, speech_sound, sound_vol)
+		M.hear_say(message, verb, speaking, alt_name, italics, src, used_radios.len, speech_sound, sound_vol)
 
 	for(var/obj/O in listening_obj)
 		spawn(0)

@@ -17,6 +17,15 @@
 	prefs.save_preferences()
 	feedback_add_details("admin_verb","TGS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/client/verb/toggle_ghost_npc()
+	set name = "Show/Hide GhostNPCsSpeech"
+	set category = "Preferences"
+	set desc = ".Toggle Between seeing all non-player mobs speech, and only speech of nearby non-player mobs."
+	prefs.chat_toggles ^= CHAT_GHOSTNPC
+	src << "As a ghost, you will now [(prefs.chat_toggles & CHAT_GHOSTNPC) ? "see all non-player mobs speech in the world" : "only see speech from nearby non-player mobs"]."
+	prefs.save_preferences()
+	feedback_add_details("admin_verb","TGN")
+
 /client/verb/toggle_ghost_radio()
 	set name = "Enable/Disable GhostRadio"
 	set category = "Preferences"
