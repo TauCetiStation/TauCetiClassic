@@ -1,5 +1,5 @@
 //wrapper
-/proc/do_teleport(ateleatom, adestination, aprecision=0, afteleport=1, aeffectin=null, aeffectout=null, asoundin=null, asoundout=null, adest_checkdensity=null)
+/proc/do_teleport(ateleatom, adestination, aprecision=0, afteleport=1, aeffectin=null, aeffectout=null, asoundin=null, asoundout=null, adest_checkdensity=null, arespect_entrydir=null)
 	var/datum/teleport/instant/science/D = new
 	if(D.start(arglist(args)))
 		return 1
@@ -16,15 +16,15 @@
 	var/force_teleport = 1 //if false, teleport will use Move() proc (dense objects will prevent teleportation)
 	var/dest_checkdensity = TELE_CHECK_NONE //if we can't teleport onto dense atoms (more advanced method of the above).
 	                                        //NONE means - yes, we can! TURFS - yes, if no dense turfs. ALL - no, we can't at all.
-	                                        //Also, cannot teleport onto slim windows.
+	var/respect_entrydir = FALSE            //respects atom entry dir (if we enter from north, then we can exit only from south).
 
 
-/datum/teleport/proc/start(ateleatom, adestination, aprecision=0, afteleport=1, aeffectin=null, aeffectout=null, asoundin=null, asoundout=null, adest_checkdensity=null)
+/datum/teleport/proc/start(ateleatom, adestination, aprecision=0, afteleport=1, aeffectin=null, aeffectout=null, asoundin=null, asoundout=null, adest_checkdensity=null, arespect_entrydir=null)
 	if(!initTeleport(arglist(args)))
 		return 0
 	return 1
 
-/datum/teleport/proc/initTeleport(ateleatom,adestination,aprecision,afteleport,aeffectin,aeffectout,asoundin,asoundout,adest_checkdensity)
+/datum/teleport/proc/initTeleport(ateleatom,adestination,aprecision,afteleport,aeffectin,aeffectout,asoundin,asoundout,adest_checkdensity,arespect_entrydir)
 	if(!setTeleatom(ateleatom))
 		return 0
 	if(!setDestination(adestination))
@@ -33,6 +33,8 @@
 		return 0
 	if(adest_checkdensity)
 		dest_checkdensity = adest_checkdensity
+	if(arespect_entrydir)
+		respect_entrydir = arespect_entrydir
 	setEffects(aeffectin,aeffectout)
 	setForceTeleport(afteleport)
 	setSounds(asoundin,asoundout)
@@ -106,22 +108,16 @@
 		var/turf/center = get_turf(destination)
 		if(!center)
 			return 0
-		for(var/turf/T in RANGE_TURFS(precision,center))
-			if(T == center)
-				continue
-			if(get_dir(T, center) in list(NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST)) //No diagonal teleports!
-				continue
-			if(istype(T, /turf/space) && (T.x <= TRANSITIONEDGE || T.x >= (world.maxx - TRANSITIONEDGE - 1) || T.y <= TRANSITIONEDGE || T.y >= (world.maxy - TRANSITIONEDGE - 1)))
-				continue //No teleports into the void, dunno how to fix that with another method.
-			if(dest_checkdensity)
-				if(T.density)
-					continue
-				if(dest_checkdensity == TELE_CHECK_ALL)
-					for(var/get in T.contents)
-						var/atom/A = get
-						if(A.density)
-							continue
+		if(respect_entrydir)
+			var/turf/T = get_step(destination, teleatom.dir)
+			if(!density_checks(T))
+				return 0
 			posturfs += T
+		else
+			for(var/turf/T in RANGE_TURFS(precision,center))
+				if(!density_checks(T))
+					continue
+				posturfs += T
 		destturf = safepick(posturfs - center)
 	else
 		destturf = get_turf(destination)
@@ -151,6 +147,22 @@
 	if(teleportChecks())
 		return doTeleport()
 	return 0
+
+/datum/teleport/proc/density_checks(turf/T)
+	var/turf/center = get_turf(destination)
+	if(T == center)
+		return FALSE
+	if(get_dir(T, center) in list(NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST)) //No diagonal teleports!
+		return FALSE
+	if(istype(T, /turf/space) && (T.x <= TRANSITIONEDGE || T.x >= (world.maxx - TRANSITIONEDGE - 1) || T.y <= TRANSITIONEDGE || T.y >= (world.maxy - TRANSITIONEDGE - 1)))
+		return FALSE //No teleports into the void, dunno how to fix that with another method.
+	if(dest_checkdensity)
+		if(T.density)
+			return FALSE
+		if(dest_checkdensity == TELE_CHECK_ALL)
+			if(!T.Enter(teleatom))
+				return FALSE
+	return TRUE
 
 /datum/teleport/instant //teleports when datum is created
 
