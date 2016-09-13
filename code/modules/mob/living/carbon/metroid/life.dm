@@ -57,7 +57,7 @@
 	if(!isliving(E))
 		return
 	var/mob/living/T = E
-	if(!ATarget || ATarget != T)
+	if(!ATarget || ATarget != T || Victim != ATarget)
 		return
 	if(T.stat == DEAD || T.health <= 0)
 		ATarget = null
@@ -65,7 +65,12 @@
 			last_pointed = null
 		return
 	else if(T in view(1, src))
-		T.attack_slime(src)
+		if(prob(75) && !iscarbon(T))
+			T.attack_slime(src)
+		else
+			if(iscarbon(T))
+				var/mob/living/carbon/C = T
+				src.Feedon(C)
 	else if(E in view(7, src))
 		if(!E.Adjacent(src))
 			step_to(src, T)
@@ -321,8 +326,9 @@
 	if(!ATarget)
 		return
 	if(Victim)
-		src.Feedstop()
-		return
+		if(Victim != ATarget)
+			Feedstop()
+			return
 	if(Target)
 		Target = null
 	var/mob/living/T = ATarget
@@ -558,7 +564,7 @@
 	if (speech_buffer.len > 0)
 		var/who = speech_buffer[1] // Who said it?
 		var/phrase = lowertext_plus(speech_buffer[2]) // What did they say?
-		if ((findtext(phrase, num2text(number)) || findtext(phrase, "slimes") || findtext(phrase, "слаймы") || findtext(phrase, "легионеры"))) // Talking to us
+		if ((findtext(phrase, num2text(number)) || findtext(phrase, "slimes") || findtext(phrase, "слаймы"))) // Talking to us
 			if (                                                                  \
 				findtext(phrase, "hello") || findtext(phrase, "hi") ||            \
 				findtext(phrase, "здравствуйте") || findtext(phrase, "привет") || \
@@ -571,7 +577,7 @@
 				findtext(phrase, "kill")                                          \
 			)
 				if(last_pointed)
-					to_say = "I will destroy [last_pointed]\him..."
+					to_say = "I will destroy [last_pointed]..."
 					ATarget = last_pointed
 					last_pointed = null
 				else
