@@ -52,7 +52,7 @@
 	if(disguise == null)
 		return
 	stealth_active = 1
-	if(istype(src.loc, /mob/living/carbon/human))
+	if(ishuman(src.loc))
 		var/mob/living/carbon/human/M = src.loc
 		spawn(0)
 			anim(M.loc,M,'icons/mob/mob.dmi',,"cloak",,M.dir)
@@ -68,7 +68,7 @@
 	if(!stealth_active)
 		return
 	stealth_active = 0
-	if(istype(src.loc, /mob/living/carbon/human))
+	if(ishuman(src.loc))
 		var/mob/living/carbon/human/M = src.loc
 		spawn(0)
 			anim(M.loc,M,'icons/mob/mob.dmi',,"uncloak",,M.dir)
@@ -119,7 +119,7 @@
 				ActivateStealth()
 
 /obj/item/clothing/suit/armor/abductor/vest/proc/Adrenaline()
-	if(istype(src.loc, /mob/living/carbon/human))
+	if(ishuman(src.loc))
 		if(combat_cooldown != initial(combat_cooldown))
 			src.loc << "<span class='warning'>Combat injection is still recharging.</span>"
 		var/mob/living/carbon/human/M = src.loc
@@ -135,7 +135,7 @@
 
 /obj/item/clothing/suit/armor/abductor/vest/process()
 	combat_cooldown++
-	if(combat_cooldown==initial(combat_cooldown))
+	if(combat_cooldown == initial(combat_cooldown))
 		SSobj.processing.Remove(src)
 
 
@@ -212,8 +212,8 @@
 			mark(target, user)
 
 /obj/item/device/abductor/gizmo/proc/scan(var/atom/target, var/mob/living/user)
-	if(istype(target,/mob/living/carbon/human))
-		if(console!=null)
+	if(ishuman(target))
+		if(console != null)
 			console.AddSnapshot(target)
 			user << "<span class='notice'>You scan [target] and add them to the database.</span>"
 
@@ -221,17 +221,17 @@
 	if(marked == target)
 		user << "<span class='notice'>This specimen is already marked.</span>"
 		return
-	if(istype(target,/mob/living/carbon/human))
+	if(ishuman(target))
 		if(IsAbductor(target))
 			marked = target
 			user << "<span class='notice'>You mark [target] for future retrieval.</span>"
 		else
-			prepare(target,user)
+			prepare(target, user)
 	else
-		prepare(target,user)
+		prepare(target, user)
 
 /obj/item/device/abductor/gizmo/proc/prepare(var/atom/target, var/mob/living/user)
-	if(get_dist(target,user)>1)
+	if(get_dist(target,user) > 1)
 		user << "<span class='warning'>You need to be next to the specimen to prepare it for transport.</span>"
 		return
 	user << "<span class='notice'>You begin preparing [target] for transport...</span>"
@@ -263,13 +263,13 @@
 	radio_off(target, user)
 
 /obj/item/device/abductor/silencer/proc/radio_off(var/atom/target, var/mob/living/user)
-	if( !(user in (viewers(7,target))) )
+	if(!(user in (viewers(7, target))))
 		return
 
 	var/turf/targloc = get_turf(target)
 
 	var/mob/living/carbon/human/M
-	for(M in view(2,targloc))
+	for(M in view(2, targloc))
 		if(M == user)
 			continue
 		user << "<span class='notice'>You silence [M]'s radio devices.</span>"
@@ -299,7 +299,9 @@
 
 /obj/item/weapon/implant/abductor/attack_self()
 	if(cooldown == initial(cooldown))
-		home.Retrieve(imp_in,1)
+		if(imp_in.buckled)
+			imp_in.buckled.unbuckle_mob()
+		home.Retrieve(imp_in)
 		cooldown = 0
 		SSobj.processing |= src
 	else
@@ -407,7 +409,7 @@
 	if(!AgentCheck(user))
 		user << "<span class='notice'>You're not trained to use this</span>"
 		return
-	mode = (mode+1)%BATON_MODES
+	mode = (mode + 1) % BATON_MODES
 	var/txt
 	switch(mode)
 		if(BATON_STUN)
@@ -625,7 +627,7 @@
 
 	holding = !holding
 
-	var/atom/movable/overlay/animation = new /atom/movable/overlay( src.loc )
+	var/atom/movable/overlay/animation = new /atom/movable/overlay(src.loc)
 	animation.icon_state = "blank"
 	animation.icon = 'icons/obj/abductor.dmi'
 	animation.layer = FLY_LAYER

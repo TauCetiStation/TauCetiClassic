@@ -40,14 +40,15 @@
 		spawn(50)
 			M << "\red You have been sent to the prison station!"
 		log_admin("[key_name(usr)] sent [key_name(M)] to the prison station.")
-		message_admins("\blue [key_name_admin(usr)] sent [key_name_admin(M)] to the prison station.", 1)
+		message_admins("\blue [key_name_admin(usr)] sent [key_name_admin(M)] to the prison station.")
 		feedback_add_details("admin_verb","PRISON") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_admin_subtle_message(mob/M as mob in mob_list)
 	set category = "Special Verbs"
 	set name = "Subtle Message"
 
-	if(!ismob(M))	return
+	if(!ismob(M))
+		return
 	if (!holder)
 		src << "Only administrators may use this command."
 		return
@@ -163,7 +164,7 @@
 			return
 		if(!M.client)
 			usr << "<font color='red'>Error: cmd_admin_mute: This mob doesn't have a client tied to it.</font>"
-		if(!check_rights(R_PERMISSIONS) && M.client.holder && (M.client.holder.rights & R_ADMIN))
+		if(!check_rights(R_PERMISSIONS, 0) && M.client.holder && (M.client.holder.rights & R_ADMIN))
 			usr << "<font color='red'>Error: cmd_admin_mute: You cannot mute an admin.</font>"
 			return
 		if(M.client.holder && (M.client.holder.rights & R_PERMISSIONS))

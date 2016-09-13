@@ -285,7 +285,7 @@
 					A.attack_animal(src)
 				if(istype(A, /obj/item/tape))
 					var/obj/item/tape/Tp = A
-					Tp.breaktape(null, src)
+					Tp.breaktape(null, src, TRUE)
 	return
 
 
