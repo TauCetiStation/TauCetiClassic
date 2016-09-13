@@ -32,7 +32,7 @@
 
 	var/mob/living/Victim = null // the person the slime is currently feeding on
 	var/mob/living/Target = null // AI variable - tells the slime to hunt this down
-	var/mob/living/AttackTarget = null
+	var/mob/living/ATarget = null
 
 	var/attacked = 0 // determines if it's been attacked recently. Can be any number, is a cooloff-ish variable
 	var/tame = 0 // if set to 1, the slime will not eat humans ever, or attack them

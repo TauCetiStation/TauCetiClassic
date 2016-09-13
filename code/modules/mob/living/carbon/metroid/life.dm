@@ -53,16 +53,24 @@
 	var/Discipline = 0 // if a slime has been hit with a freeze gun, or wrestled/attacked off a human, they become disciplined and don't attack anymore for a while
 	var/SStun = 0 // stun variable
 
-/mob/living/carbon/slime/proc/AttackTarget(var/mob/living/E)
-	if(E.stat == DEAD)
-		E = null
-	else if(E in view(1, src))
-		E.attack_slime(src)
+/mob/living/carbon/slime/proc/TargetAttack(var/mob/living/E)
+	if(!isliving(E))
+		return
+	var/mob/living/T = E
+	if(!ATarget || ATarget != T)
+		return
+	if(T.stat == DEAD || T.health <= 0)
+		ATarget = null
+		if(ATarget == last_pointed)
+			last_pointed = null
+		return
+	else if(T in view(1, src))
+		T.attack_slime(src)
 	else if(E in view(7, src))
 		if(!E.Adjacent(src))
-			step_to(src, E)
+			step_to(src, T)
 	else
-		E = null
+		ATarget = null
 	return
 
 
@@ -310,12 +318,15 @@
 	return 1
 
 /mob/living/carbon/slime/proc/handle_attack()
-	if(!AttackTarget)
+	if(!ATarget)
+		return
+	if(Victim)
+		src.Feedstop()
 		return
 	if(Target)
 		Target = null
-	var/mob/living/T = AttackTarget
-	AttackTarget(T)
+	var/mob/living/T = ATarget
+	TargetAttack(T)
 	return
 /mob/living/carbon/slime/proc/handle_nutrition()
 
@@ -547,7 +558,7 @@
 	if (speech_buffer.len > 0)
 		var/who = speech_buffer[1] // Who said it?
 		var/phrase = lowertext_plus(speech_buffer[2]) // What did they say?
-		if ((findtext(phrase, num2text(number)) || findtext(phrase, "slimes") || findtext(phrase, "слаймы"))) // Talking to us
+		if ((findtext(phrase, num2text(number)) || findtext(phrase, "slimes") || findtext(phrase, "слаймы") || findtext(phrase, "легионеры"))) // Talking to us
 			if (                                                                  \
 				findtext(phrase, "hello") || findtext(phrase, "hi") ||            \
 				findtext(phrase, "здравствуйте") || findtext(phrase, "привет") || \
@@ -555,14 +566,16 @@
 			)
 				to_say = pick("Hello...", "Hi...")
 			else if (                                                             \
-				findtext(phrase, "attack")                                        \
+				findtext(phrase, "attack") || findtext(phrase, "атакуй") ||       \
+				findtext(phrase, "убить") || findtext(phrase, "уничтожить") ||    \
+				findtext(phrase, "kill")                                          \
 			)
 				if(last_pointed)
-					to_say = "I attacking [last_pointed]!"
-					AttackTarget = last_pointed
+					to_say = "I will destroy [last_pointed]\him..."
+					ATarget = last_pointed
 					last_pointed = null
 				else
-					to_say = "No target"
+					to_say = "Whom..."
 			else if (                                                             \
 				findtext(phrase, "follow") || findtext(phrase, "следуйте") ||     \
 				findtext(phrase, "за мной")                                       \
