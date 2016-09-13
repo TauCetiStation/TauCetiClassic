@@ -28,7 +28,7 @@
 		return
 	return
 
-/obj/effect/portal/proc/teleport(atom/movable/M, density_check = TELE_CHECK_NONE)
+/obj/effect/portal/proc/teleport(atom/movable/M, density_check = TELE_CHECK_NONE, respect_entrydir = FALSE)
 	if (istype(M, /obj/effect)) //sparks don't teleport
 		return FALSE
 	if (M.anchored && istype(M, /obj/mecha))
@@ -41,9 +41,9 @@
 	if (istype(M, /atom/movable))
 		if(prob(failchance)) //oh dear a problem, put em in deep space
 			src.icon_state = "portal1"
-			return do_teleport(M, locate(rand(5, world.maxx - 5), rand(5, world.maxy -5), 3), 0, adest_checkdensity = density_check)
+			return do_teleport(M, locate(rand(5, world.maxx - 5), rand(5, world.maxy -5), 3), 0, adest_checkdensity = density_check, arespect_entrydir = respect_entrydir)
 		else
-			return do_teleport(M, target, 1, adest_checkdensity = density_check) ///You will appear adjacent to the beacon
+			return do_teleport(M, target, 1, adest_checkdensity = density_check, arespect_entrydir = respect_entrydir) ///You will appear adjacent to the beacon
 
 //Telescience wormhole
 /obj/effect/portal/tsci_wormhole
@@ -72,20 +72,25 @@
 
 /obj/effect/portal/tsci_wormhole/Bumped(mob/M)
 	set waitfor = 0
-	if(teleport(M, TELE_CHECK_ALL))
+	if(teleport(M, TELE_CHECK_ALL, TRUE))
 		handle_special_effects(M)
 
 /obj/effect/portal/tsci_wormhole/Crossed(AM)
 	set waitfor = 0
-	if(teleport(AM, TELE_CHECK_ALL))
+	if(teleport(AM, TELE_CHECK_ALL, TRUE))
 		handle_special_effects(AM)
 
 /obj/effect/portal/tsci_wormhole/proc/handle_special_effects(AM)
 	if(ishuman(AM))
 		var/mob/living/carbon/human/H = AM
+		var/bad_effects = 0
 		if(prob(20))
+			bad_effects += 1
 			H.confused += 3
 			var/msg = pick("You feel dizzy.", "Your head starts spinning.")
 			H << "<span class='warning'>[msg]</span>"
 		if(prob(20))
+			bad_effects += 1
 			H.vomit() //No msg required, since vomit() will handle this.
+		if(bad_effects == 2)
+			H.Paralyse(3)
