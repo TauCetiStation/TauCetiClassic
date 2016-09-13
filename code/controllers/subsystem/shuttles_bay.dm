@@ -29,11 +29,6 @@ var/datum/subsystem/shuttle/SSshuttle
 
 		//supply shuttle stuff
 	var/points = 5000
-	var/points_per_slip = 200
-	var/points_per_crate = 500
-	var/points_per_platinum = 1000
-	var/points_per_phoron = 300
-	var/points_per_scrap = 300
 	// When TRUE, these vars allow exporting emagged/contraband items, and add some special interactions to existing exports.
 	var/contraband = FALSE
 	var/hacked = FALSE
