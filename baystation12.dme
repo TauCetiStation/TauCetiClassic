@@ -1613,6 +1613,7 @@
 #include "tauceti\items\clothing\masks\masks.dm"
 #include "tauceti\items\clothing\shoes\shoes.dm"
 #include "tauceti\items\clothing\spacesuits\spacesuits.dm"
+#include "tauceti\items\clothing\suits\new_hazmat.dm"
 #include "tauceti\items\clothing\suits\old_hazmat.dm"
 #include "tauceti\items\clothing\suits\suits.dm"
 #include "tauceti\items\clothing\ties\ties.dm"
