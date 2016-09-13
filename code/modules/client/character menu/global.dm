@@ -43,6 +43,10 @@
 	. += 					"<td width='45%'>Ghost ears:</td>"
 	. += 					"<td><a href='?_src_=prefs;preference=ghost_ears'><b>[(chat_toggles & CHAT_GHOSTEARS) ? "All Speech" : "Nearest Creatures"]</b></a></td>"
 	. += 				"</tr>"
+	. +=				"<tr>"
+	. += 					"<td width='45%'>Ghost hear NPCs:</td>"
+	. += 					"<td><a href='?_src_=prefs;preference=npc_ghost_ears'><b>[(chat_toggles & CHAT_GHOSTNPC) ? "All Speech" : "Nearest Creatures"]</b></a></td>"
+	. += 				"</tr>"
 	. += 				"<tr>"
 	. += 					"<td width='45%'>Ghost sight:</td>"
 	. += 					"<td><a href='?_src_=prefs;preference=ghost_sight'><b>[(chat_toggles & CHAT_GHOSTSIGHT) ? "All Emotes" : "Nearest Creatures"]</b></a></td>"
@@ -130,6 +134,9 @@
 
 		if("ghost_ears")
 			chat_toggles ^= CHAT_GHOSTEARS
+
+		if("npc_ghost_ears")
+			chat_toggles ^= CHAT_GHOSTNPC
 
 		if("ghost_sight")
 			chat_toggles ^= CHAT_GHOSTSIGHT

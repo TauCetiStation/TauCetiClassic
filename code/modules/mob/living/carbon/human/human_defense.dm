@@ -115,6 +115,13 @@
 		return TRUE
 	return FALSE
 
+/mob/living/carbon/human/proc/is_in_space_suit(var/only_helmet = FALSE) //Wearing human full space suit (or only space helmet)?
+	if(!head || !(only_helmet || wear_suit))
+		return FALSE
+	if(istype(head, /obj/item/clothing/head/helmet/space) && (only_helmet || istype(wear_suit, /obj/item/clothing/suit/space)))
+		return TRUE
+	return FALSE
+
 /mob/living/carbon/human/getarmor(var/def_zone, var/type)
 	var/armorval = 0
 	var/organnum = 0

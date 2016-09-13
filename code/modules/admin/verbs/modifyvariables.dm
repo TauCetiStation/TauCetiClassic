@@ -283,7 +283,7 @@ var/list/forbidden_varedit_object_types = list(
 	var/var_value
 
 	if(param_var_name)
-		if(!param_var_name in O.vars)
+		if(!(param_var_name in O.vars))
 			src << "A variable with this name ([param_var_name]) doesn't exist in this atom ([O])"
 			return
 
