@@ -65,7 +65,7 @@
 			last_pointed = null
 		return
 	else if(T in view(1, src))
-		if(prob(75) && !iscarbon(T))
+		if(prob(75) || !iscarbon(T))
 			T.attack_slime(src)
 		else
 			if(iscarbon(T))
