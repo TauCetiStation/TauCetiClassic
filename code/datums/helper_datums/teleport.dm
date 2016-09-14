@@ -1,5 +1,5 @@
 //wrapper
-/proc/do_teleport(ateleatom, adestination, aprecision=0, afteleport=1, aeffectin=null, aeffectout=null, asoundin=null, asoundout=null, adest_checkdensity=null, arespect_entrydir=null)
+/proc/do_teleport(ateleatom, adestination, aprecision=0, afteleport=1, aeffectin=null, aeffectout=null, asoundin=null, asoundout=null, adest_checkdensity=null, arespect_entrydir=null, aentrydir=null)
 	var/datum/teleport/instant/science/D = new
 	if(D.start(arglist(args)))
 		return 1
@@ -17,14 +17,15 @@
 	var/dest_checkdensity = TELE_CHECK_NONE //if we can't teleport onto dense atoms (more advanced method of the above).
 	                                        //NONE means - yes, we can! TURFS - yes, if no dense turfs. ALL - no, we can't at all.
 	var/respect_entrydir = FALSE            //respects atom entry dir (if we enter from north, then we can exit only from south).
+	var/entrydir = SOUTH
 
 
-/datum/teleport/proc/start(ateleatom, adestination, aprecision=0, afteleport=1, aeffectin=null, aeffectout=null, asoundin=null, asoundout=null, adest_checkdensity=null, arespect_entrydir=null)
+/datum/teleport/proc/start(ateleatom, adestination, aprecision=0, afteleport=1, aeffectin=null, aeffectout=null, asoundin=null, asoundout=null, adest_checkdensity=null, arespect_entrydir=null, aentrydir=null)
 	if(!initTeleport(arglist(args)))
 		return 0
 	return 1
 
-/datum/teleport/proc/initTeleport(ateleatom,adestination,aprecision,afteleport,aeffectin,aeffectout,asoundin,asoundout,adest_checkdensity,arespect_entrydir)
+/datum/teleport/proc/initTeleport(ateleatom,adestination,aprecision,afteleport,aeffectin,aeffectout,asoundin,asoundout,adest_checkdensity,arespect_entrydir,aentrydir)
 	if(!setTeleatom(ateleatom))
 		return 0
 	if(!setDestination(adestination))
@@ -35,6 +36,8 @@
 		dest_checkdensity = adest_checkdensity
 	if(arespect_entrydir)
 		respect_entrydir = arespect_entrydir
+	if(aentrydir)
+		entrydir = aentrydir
 	setEffects(aeffectin,aeffectout)
 	setForceTeleport(afteleport)
 	setSounds(asoundin,asoundout)
@@ -109,7 +112,7 @@
 		if(!center)
 			return 0
 		if(respect_entrydir)
-			var/turf/T = get_step(destination, teleatom.dir)
+			var/turf/T = get_step(destination, entrydir)
 			if(!density_checks(T))
 				return 0
 			posturfs += T
@@ -141,6 +144,7 @@
 		if(L.buckled)
 			L.buckled.unbuckle_mob()
 
+	teleatom.newtonian_move(entrydir)
 	return 1
 
 /datum/teleport/proc/teleport()
@@ -160,8 +164,13 @@
 		if(T.density)
 			return FALSE
 		if(dest_checkdensity == TELE_CHECK_ALL)
-			if(!T.Enter(teleatom))
+			T.Enter(teleatom)                   //We want do normal bumping/checks with teleatom first (maybe we got access to that door or to push the atom on the other side),
+			var/obj/effect/E = new(center)      //then we do the real check (if we can enter from destination turf onto target turf).
+			E.invisibility = 101                //Because, checking this with teleatom - won't give us accurate data, since teleatom is far away at this time.
+			if(!T.Enter(E))                     //That's why we test this with the "fake dummy".
+				qdel(E)
 				return FALSE
+			qdel(E)
 	return TRUE
 
 /datum/teleport/instant //teleports when datum is created
