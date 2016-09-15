@@ -105,7 +105,6 @@
 					stockExchange.balanceLog(X, -amt * company.current_value)
 				company.shareholders = list()
 				company.current_value = 0
-				company.borrow_brokers = list()
 				stockExchange.generateStocks(1)
 
 			var/bailout = (effect > 0 && prob(80)) || (effect < 0 && prob(20))

@@ -84,25 +84,6 @@ a.updated {
 			dat += "<b>Prominent products:</b><br>"
 			for(var/prod in S.products)
 				dat += "<i>[prod]</i><br>"
-			dat += "<br><b>Borrow options:</b><br>"
-			if(S.borrow_brokers.len)
-				for (var/datum/borrow/B in S.borrow_brokers)
-					dat += "<b>[B.broker]</b> offers <i>[B.share_amount] shares</i> for borrowing, for a deposit of <i>[B.deposit * 100]%</i> of the shares' value.<br>"
-					dat += "The broker expects the return of the shares after <i>[B.lease_time / 600] minutes</i>, with a grace period of <i>[B.grace_time / 600]</i> minute(s).<br>"
-					dat += "<i>This offer expires in [(B.offer_expires - world.time) / 600] minutes.</i><br>"
-					dat += "<b>Note:</b> If you do not return all shares by the end of the grace period, you will lose your deposit and the value of all unreturned shares at current value from your account!<br>"
-					dat += "<b>Note:</b> You cannot withdraw or transfer money off your account while a borrow is active.<br>"
-					dat += "<a href='?src=\ref[src];take=\ref[B]'>Take offer</a> (Estimated deposit: [B.deposit * S.current_value * B.share_amount] credits)<br><br>"
-			else
-				dat += "<i>No borrow options available</i><br><br>"
-			for(var/datum/borrow/B in S.borrows)
-				if (B.borrower == logged_in)
-					dat += "You are borrowing <i>[B.share_amount] shares</i> from <b>[B.broker]</b>.<br>"
-					dat += "Your deposit riding on the deal is <i>[B.deposit] credits</i>.<br>"
-					if (world.time < B.lease_expires)
-						dat += "You are expected to return the borrowed shares in [(B.lease_expires - world.time) / 600] minutes.<br><br>"
-					else
-						dat += "The brokering agency is collecting. You still owe them <i>[B.share_debt]</i> shares, which you have [(B.grace_expires - world.time) / 600] minutes to present.<br><br>"
 			var/news = 0
 			if(logged_in)
 				var/list/LR = stockExchange.last_read[S]
@@ -253,13 +234,6 @@ a.updated {
 	user << "<span class='notice'>Bought [amt] shares of [S.name] at [S.current_value] a share for [total] credits.</span>"
 	stockExchange.add_log(/datum/stock_log/buy, user.name, S.name, amt, S.current_value,  total)
 
-/obj/machinery/computer/stockexchange/proc/do_borrowing_deal(var/datum/borrow/B, var/mob/user)
-	if (B.stock.borrow(B, logged_in))
-		user << "<span class='notice'>You successfully borrowed [B.share_amount] shares. Deposit: [B.deposit].</span>"
-		stockExchange.add_log(/datum/stock_log/borrow, user.name, B.stock.name, B.share_amount, B.deposit)
-	else
-		user << "<span class='danger'>Could not complete transaction. Check your account balance.</span>"
-
 /obj/machinery/computer/stockexchange/Topic(href, href_list)
 	. = ..()
 	if(!.)
@@ -279,10 +253,6 @@ a.updated {
 		var/datum/stock/S = locate(href_list["sellshares"])
 		if (S)
 			sell_some_shares(S, usr)
-	else if (href_list["take"])
-		var/datum/borrow/B = locate(href_list["take"])
-		if (B && !B.lease_expires)
-			do_borrowing_deal(B, usr)
 	else if (href_list["show_logs"])
 		var/dat = "<html><head><title>Stock Transaction Logs</title></head><body><h2>Stock Transaction Logs</h2><div><a href='?src=\ref[src];show_logs=1'>Refresh</a></div><br>"
 		for(var/D in stockExchange.logs)
@@ -292,9 +262,6 @@ a.updated {
 				continue
 			if(istype(L, /datum/stock_log/sell))
 				dat += "[L.time] | <b>[L.user_name]</b> sold <b>[L.stocks]</b> stocks at [L.shareprice] a share for <b>[L.money]</b> total credits from <b>[L.company_name]</b>.<br>"
-				continue
-			if(istype(L, /datum/stock_log/borrow))
-				dat += "[L.time] | <b>[L.user_name]</b> borrowed <b>[L.stocks]</b> stocks with a deposit of <b>[L.money]</b> credits in <b>[L.company_name]</b>.<br>"
 				continue
 		var/datum/browser/popup = new(usr, "stock_logs", "Stock Transaction Logs", 600, 400)
 		popup.set_content(dat)

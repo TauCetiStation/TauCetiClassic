@@ -2,12 +2,10 @@
 	var/list/stocks = list()
 	var/list/balances = list()
 	var/list/last_read = list()
-	var/list/stockBrokers = list()
 	var/list/logs = list()
 
 /datum/stockMarket/New()
 		..()
-		generateBrokers()
 		generateStocks()
 		SSobj.processing |= src
 
@@ -16,31 +14,6 @@
 		balances[whose] = net
 	else
 		balances[whose] += net
-
-/datum/stockMarket/proc/generateBrokers()
-	stockBrokers = list()
-	var/list/fnames = list("Goldman", "Edward", "James", "Luis", "Alexander", "Walter", "Eugene", "Mary", "Morgan", "Jane", "Elizabeth", "Xavier", "Hayden", "Samuel", "Lee")
-	var/list/names = list("Johnson", "Rothschild", "Sachs", "Stanley", "Hepburn", "Brown", "McColl", "Fischer", "Edwards", "Becker", "Witter", "Walker", "Lambert", "Smith", "Montgomery", "Lynch", "Roosevelt", "Lehman")
-	var/list/locations = list("Earth", "Luna", "Mars", "Saturn", "Jupiter", "Uranus", "Pluto", "Europa", "Io", "Phobos", "Deimos", "Space", "Venus", "Neptune", "Mercury", "Kalliope", "Ganymede", "Callisto", "Amalthea", "Himalia", "Sybil", "Basil", "Badger", "Terry", "Artyom")
-	var/list/first = list("The", "First", "Premier", "Finest", "Prime")
-	var/list/company = list("Investments", "Securities", "Corporation", "Bank", "Brokerage", "& Co.", "Brothers", "& Sons", "Investement Firm", "Union", "Partners", "Capital", "Trade", "Holdings")
-	for(var/i in 1 to 5)
-		var/pname = ""
-		switch(rand(1,5))
-			if(1)
-				pname = "[prob(10) ? pick(first) + " " : null][pick(names)] [pick(company)]"
-			if(2)
-				pname = "[pick(names)] & [pick(names)][prob(25) ? " " + pick(company) : null]"
-			if(3)
-				pname = "[prob(45) ? pick(first) + " " : null][pick(locations)] [pick(company)]"
-			if(4)
-				pname = "[prob(10) ? "The " : null][pick(names)] [pick(locations)] [pick(company)]"
-			if(5)
-				pname = "[prob(10) ? "The " : null][pick(fnames)] [pick(names)][prob(10) ? " " + pick(company) : null]"
-		if(pname in stockBrokers)
-			i--
-			continue
-		stockBrokers += pname
 
 /datum/stockMarket/proc/generateDesignation(var/name)
 	if(length(name) <= 4)

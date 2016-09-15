@@ -1,16 +1,3 @@
-/datum/borrow
-	var/broker = ""
-	var/borrower = ""
-	var/datum/stock/stock = null
-	var/lease_expires = 0
-	var/lease_time = 0
-	var/grace_time = 0
-	var/grace_expires = 0
-	var/share_amount = 0
-	var/share_debt = 0
-	var/deposit = 0
-	var/offer_expires = 0
-
 /datum/stock
 	var/name = "Stock"
 	var/short_name = "STK"
@@ -37,9 +24,7 @@
 	var/outside_shareholders = 10000		// The amount of offstation people holding shares in this company. The higher it is, the more fluctuation it causes.
 	var/available_shares = 500000
 
-	var/list/borrow_brokers = list()
 	var/list/shareholders = list()
-	var/list/borrows = list()
 	var/list/events = list()
 	var/list/articles = list()
 	var/fluctuation_rate = 15
@@ -173,51 +158,14 @@
 		shareholders[I] /= 2
 		if (!shareholders[I])
 			shareholders -= I
-	for (var/datum/borrow/B in borrow_brokers)
-		B.share_amount = round(B.share_amount / 2)
-		B.share_debt = round(B.share_debt / 2)
-	for (var/datum/borrow/B in borrows)
-		B.share_amount = round(B.share_amount / 2)
-		B.share_debt = round(B.share_debt / 2)
 	average_shares /= 2
 	available_shares /= 2
 	current_value *= 2
 	last_unification = world.time
 
 /datum/stock/process()
-	for (var/B in borrows)
-		var/datum/borrow/borrow = B
-		if (world.time > borrow.grace_expires)
-			modifyAccount(borrow.borrower, -max(current_value * borrow.share_debt, 0), 1)
-			borrows -= borrow
-			if (borrow.borrower in FrozenAccounts)
-				FrozenAccounts[borrow.borrower] -= borrow
-				if (length(FrozenAccounts[borrow.borrower]) == 0)
-					FrozenAccounts -= borrow.borrower
-			qdel(borrow)
-		else if (world.time > borrow.lease_expires)
-			if (borrow.borrower in shareholders)
-				var/amt = shareholders[borrow.borrower]
-				if (amt > borrow.share_debt)
-					shareholders[borrow.borrower] -= borrow.share_debt
-					borrows -= borrow
-					if (borrow.borrower in FrozenAccounts)
-						FrozenAccounts[borrow.borrower] -= borrow
-					if (length(FrozenAccounts[borrow.borrower]) == 0)
-						FrozenAccounts -= borrow.borrower
-					qdel(borrow)
-				else
-					shareholders -= borrow.borrower
-					borrow.share_debt -= amt
 	if (bankrupt)
 		return
-	for (var/B in borrow_brokers)
-		var/datum/borrow/borrow = B
-		if (borrow.offer_expires < world.time)
-			borrow_brokers -= borrow
-			qdel(borrow)
-	if (prob(5))
-		generateBrokers()
 	fluctuation_counter++
 	if (fluctuation_counter >= fluctuation_rate)
 		for (var/E in events)
@@ -225,23 +173,6 @@
 			EV.process()
 		fluctuation_counter = 0
 		fluctuate()
-
-/datum/stock/proc/generateBrokers()
-	if (borrow_brokers.len > 2)
-		return
-	if (!stockExchange.stockBrokers.len)
-		stockExchange.generateBrokers()
-	var/broker = pick(stockExchange.stockBrokers)
-	var/datum/borrow/B = new
-	B.broker = broker
-	B.stock = src
-	B.lease_time = rand(4, 7) * 600
-	B.grace_time = rand(1, 3) * 600
-	B.share_amount = rand(1, 10) * 100
-	B.deposit = rand(20, 70) / 100
-	B.share_debt = B.share_amount
-	B.offer_expires = rand(5, 10) * 600 + world.time
-	borrow_brokers += B
 
 /datum/stock/proc/modifyAccount(whose, by, force = 0)
 	if (SSshuttle.points)
@@ -251,31 +182,6 @@
 		stockExchange.balanceLog(whose, by)
 		return 1
 	return 0
-
-/datum/stock/proc/borrow(var/datum/borrow/B, var/who)
-	if (B.lease_expires)
-		return 0
-	B.lease_expires = world.time + B.lease_time
-	var/old_d = B.deposit
-	var/d_amt = B.deposit * current_value * B.share_amount
-	if (!modifyAccount(who, -d_amt))
-		B.lease_expires = 0
-		B.deposit = old_d
-		return 0
-	B.deposit = d_amt
-	if (!(who in shareholders))
-		shareholders[who] = B.share_amount
-	else
-		shareholders[who] += B.share_amount
-	borrow_brokers -= B
-	borrows += B
-	B.borrower = who
-	B.grace_expires = B.lease_expires + B.grace_time
-	if (!(who in FrozenAccounts))
-		FrozenAccounts[who] = list(B)
-	else
-		FrozenAccounts[who] += B
-	return 1
 
 /datum/stock/proc/buyShares(var/who, var/howmany)
 	if (howmany <= 0)
