@@ -57,7 +57,7 @@
 	if(!isliving(E))
 		return
 	var/mob/living/T = E
-	if(!ATarget || ATarget != T || Victim != ATarget)
+	if(!ATarget || ATarget != T || Victim == ATarget)
 		return
 	if(T.stat == DEAD || T.health <= 0)
 		ATarget = null
@@ -576,12 +576,19 @@
 				findtext(phrase, "убить") || findtext(phrase, "уничтожить") ||    \
 				findtext(phrase, "kill")                                          \
 			)
-				if(last_pointed)
-					to_say = "I will destroy [last_pointed]..."
-					ATarget = last_pointed
-					last_pointed = null
+				if(Friends[who] > 4)
+					if(last_pointed)
+						if(!(Friends[last_pointed] >=2))
+							to_say = "I will destroy [last_pointed]..."
+							ATarget = last_pointed
+							last_pointed = null
+						else
+							to_say = "I don't kill my friends...."
+							last_pointed = null
+					else
+						to_say = "Whom...."
 				else
-					to_say = "Whom..."
+					to_say = "I don't do it..."
 			else if (                                                             \
 				findtext(phrase, "follow") || findtext(phrase, "следуйте") ||     \
 				findtext(phrase, "за мной")                                       \
