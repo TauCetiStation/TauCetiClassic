@@ -152,10 +152,19 @@
 		return 1
 
 /obj/structure/scrap/attackby(obj/item/W, mob/user)
-	if(istype(W,/obj/item/weapon/shovel) && !(user in diggers))
+	if(user in diggers)
+		return
+	var/digtime = 0
+	if(istype(W,/obj/item/weapon/shovel))
+		digtime = 30
+	if(istype(W,/obj/item/weapon/crowbar))
+		digtime = 60
+	if(istype(W,/obj/item/stack/rods))
+		digtime = 120
+	if(digtime)
 		user.do_attack_animation(src)
 		diggers += user
-		if(do_after(user, 30, target = src))
+		if(do_after(user, digtime, target = src))
 			visible_message("<span class='notice'>\The [user] [pick(ways)] \the [src].</span>")
 			shuffle_loot()
 			dig_out_lump(user.loc)
