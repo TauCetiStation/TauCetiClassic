@@ -40,6 +40,18 @@
 
 	send2slack("modcomm", msg, amsg, name, ":scream_cat:")
 
+/proc/send2slack_custommsg(msg, amsg, icon)
+	if(!amsg)
+		return
+
+	/* no point in any mentions here */
+	amsg = replacetext(amsg, "@", "_")
+
+	var/server_name = config.server_name ? config.server_name : "Noname server"
+	var/name = server_name + " player message"
+
+	send2slack("modcomm", msg, amsg, name, icon)
+
 /proc/send2slack_logs(msg, amsg, type)
 	if(!msg || !amsg || !type)
 		return
