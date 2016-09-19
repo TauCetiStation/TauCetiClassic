@@ -53,27 +53,26 @@
 	var/Discipline = 0 // if a slime has been hit with a freeze gun, or wrestled/attacked off a human, they become disciplined and don't attack anymore for a while
 	var/SStun = 0 // stun variable
 
-/mob/living/carbon/slime/proc/TargetAttack(var/mob/living/E)
-	if(!isliving(E))
+/mob/living/carbon/slime/proc/TargetAttack(var/mob/living/L)
+	if(!isliving(L))
 		return
-	var/mob/living/T = E
-	if(!ATarget || ATarget != T || Victim == ATarget)
+	if(!ATarget || ATarget != L || Victim == ATarget)
 		return
-	if(T.stat == DEAD || T.health <= 0)
+	if(L.stat == DEAD || L.health <= 0)
 		ATarget = null
 		if(ATarget == last_pointed)
 			last_pointed = null
 		return
-	else if(T in view(1, src))
+	else if(L in view(1, src))
 		if(prob(75) || !iscarbon(T))
-			T.attack_slime(src)
+			L.attack_slime(src)
 		else
-			if(iscarbon(T))
-				var/mob/living/carbon/C = T
+			if(iscarbon(L))
+				var/mob/living/carbon/C = L
 				src.Feedon(C)
-	else if(E in view(7, src))
-		if(!E.Adjacent(src))
-			step_to(src, T)
+	else if(L in view(7, src))
+		if(!L.Adjacent(src))
+			step_to(src, L)
 	else
 		ATarget = null
 	return
