@@ -152,14 +152,14 @@
 
 /obj/structure/stool/bed/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
-	if(istype(W, /obj/item/weapon/grab) && !buckled_mob)
+	if(istype(W, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = W
-		var/mob/living/AM = G.affecting
-		user.visible_message("<span class='notice'>[user] attempts to buckle [AM] into \the [src]!</span>")
+		var/mob/living/L = G.affecting
+		user.visible_message("<span class='notice'>[user] attempts to buckle [L] into \the [src]!</span>")
 		if(do_after(user, 20, target = src))
-			AM.loc = loc
-			if(buckle_mob(AM))
-				AM.visible_message(\
+			L.loc = loc
+			if(buckle_mob(L)))
+				L.visible_message(\
 					"<span class='danger'>[AM.name] is buckled to [src] by [user.name]!</span>",\
 					"<span class='danger'>You are buckled to [src] by [user.name]!</span>",\
 					"<span class='notice'>You hear metal clanking.</span>")
