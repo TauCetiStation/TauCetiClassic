@@ -162,7 +162,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 
 /obj/machinery/telecomms/Destroy()
 	telecomms_list -= src
-	..()
+	return ..()
 
 // Used in auto linking
 /obj/machinery/telecomms/proc/add_link(var/obj/machinery/telecomms/T)
@@ -635,10 +635,3 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	var/name = "data packet (#)"
 	var/garbage_collector = 1 // if set to 0, will not be garbage collected
 	var/input_type = "Speech File"
-
-
-
-
-
-
-

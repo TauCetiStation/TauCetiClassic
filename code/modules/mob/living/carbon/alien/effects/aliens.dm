@@ -60,7 +60,7 @@
 /obj/effect/alien/resin/Destroy()
 	var/turf/T = get_turf(src)
 	T.thermal_conductivity = initial(T.thermal_conductivity)
-	..()
+	return ..()
 
 /obj/effect/alien/resin/proc/healthcheck()
 	if(health <=0)
@@ -495,4 +495,3 @@ Alien plants should do something if theres a lot of poison
 	if(exposed_temperature > 500)
 		health -= 5
 		healthcheck()
-

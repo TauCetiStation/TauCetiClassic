@@ -91,12 +91,12 @@
 
 /obj/structure/cellular_biomass/grass/New()
 	icon_state = "bloodfloor_[pick(1,2,3)]"
-	
+
 
 /obj/structure/cellular_biomass/grass/Destroy()
 	for(var/obj/effect/decal/cleanable/cellular/clean in src.loc)
 		qdel(clean)
-	..()
+	return ..()
 
 /obj/structure/cellular_biomass/core
 	layer = 3
