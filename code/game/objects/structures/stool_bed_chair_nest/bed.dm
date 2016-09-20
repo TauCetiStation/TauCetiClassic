@@ -158,9 +158,9 @@
 		user.visible_message("<span class='notice'>[user] attempts to buckle [L] into \the [src]!</span>")
 		if(do_after(user, 20, target = src))
 			L.loc = loc
-			if(buckle_mob(L)))
+			if(buckle_mob(L))
 				L.visible_message(\
-					"<span class='danger'>[AM.name] is buckled to [src] by [user.name]!</span>",\
+					"<span class='danger'>[L.name] is buckled to [src] by [user.name]!</span>",\
 					"<span class='danger'>You are buckled to [src] by [user.name]!</span>",\
 					"<span class='notice'>You hear metal clanking.</span>")
 	return
