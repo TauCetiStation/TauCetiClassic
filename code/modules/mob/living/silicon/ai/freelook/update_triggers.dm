@@ -13,7 +13,7 @@
 
 /turf/simulated/Destroy()
 	visibilityChanged()
-	..()
+	return ..()
 
 /turf/simulated/New()
 	..()

@@ -15,7 +15,7 @@ datum/objective
 
 	Destroy()
 		all_objectives -= src
-		..()
+		return ..()
 
 	proc/check_completion()
 		return completed

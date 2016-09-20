@@ -195,6 +195,7 @@ var/list/alldepartments = list("Central Command")
 	log_fax("[Sender] sending [sentname] : [sent]")
 	for(var/client/C in admins)
 		C << msg
+	send2slack_custommsg("[key_name(Sender)] sent fax to Cetcomm", sent, ":fax:")
 
 
 proc/SendFax(var/sent, var/sentname, var/mob/Sender, var/dpt, var/stamp, var/stamps)

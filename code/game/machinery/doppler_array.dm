@@ -11,7 +11,7 @@ var/list/doppler_arrays = list()
 
 /obj/machinery/doppler_array/Destroy()
 	doppler_arrays -= src
-	..()
+	return ..()
 
 /obj/machinery/doppler_array/process()
 	return PROCESS_KILL

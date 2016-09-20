@@ -257,7 +257,7 @@ This is chestburster mechanic for damaging
 
 /obj/item/weapon/larva_bite/Destroy()
 	qdel(hud)
-	..()
+	return ..()
 
 /*----------------------------------------
 This is emryo growth procs
@@ -287,7 +287,7 @@ This is emryo growth procs
 		SSobj.processing.Remove(src)
 		spawn(0)
 			RemoveInfectionImages(affected_mob)
-	..()
+	return ..()
 
 /obj/item/alien_embryo/proc/show_message(var/message, var/m_type)
 	for(var/mob/living/M in contents)
@@ -748,4 +748,4 @@ When we finish, facehugger's player will be transfered inside embryo.
 
 /obj/item/weapon/fh_grab/Destroy()
 	qdel(hud)
-	..()
+	return ..()

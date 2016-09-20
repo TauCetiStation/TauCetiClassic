@@ -89,6 +89,7 @@
 	qdel(magazine)
 	magazine = null
 	return ..()
+
 /obj/item/weapon/gun/projectile/examine()
 	..()
 	if(!energy_gun)

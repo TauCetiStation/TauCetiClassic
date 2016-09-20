@@ -26,7 +26,7 @@
 
 		for(var/obj/structure/falserwall/W in range(temploc,1))
 			W.relativewall()
-	..()
+	return ..()
 
 
 /obj/structure/falsewall/relativewall()

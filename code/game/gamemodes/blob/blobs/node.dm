@@ -17,8 +17,7 @@
 /obj/effect/blob/node/Destroy()
 	blob_nodes -= src
 	SSobj.processing.Remove(src)
-	..()
-	return
+	return ..()
 
 /obj/effect/blob/node/Life()
 	for(var/i = 1; i < 8; i += i)

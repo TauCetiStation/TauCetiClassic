@@ -292,6 +292,15 @@ datum/design/mechacontrol
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/mecha_control
 
+datum/design/mechrecharger
+	name = "circuit board (Mechbay Recharger)"
+	desc = "Allows for the construction of circuit boards used to build a mechbay recharger."
+	id = "mechrecharger"
+	req_tech = list("programming" = 4, "powerstorage" = 4, "engineering" = 3)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/mech_recharger
+
 datum/design/mechapower
 	name = "Circuit Design (Mech Bay Power Control Console)"
 	desc = "Allows for the construction of circuit boards used to build a mech bay power control console."

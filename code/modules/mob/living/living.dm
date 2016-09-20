@@ -65,7 +65,7 @@
 			if(A.density)
 				can_switch = FALSE
 				break
-		if(can_switch)
+		if(can_switch && get_dist(M, src) <= 1)
 			now_pushing = 1
 			//TODO: Make this use Move(). we're pretty much recreating it here.
 			//it could be done by setting one of the locs to null to make Move() work, then setting it back and Move() the other mob

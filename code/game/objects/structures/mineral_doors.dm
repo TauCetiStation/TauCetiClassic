@@ -25,7 +25,7 @@
 
 /obj/structure/mineral_door/Destroy()
 	update_nearby_tiles()
-	..()
+	return ..()
 
 /obj/structure/mineral_door/Bumped(atom/user)
 	..()
@@ -329,4 +329,3 @@
 /obj/structure/mineral_door/resin/CheckHealth()
 	playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
 	..()
-

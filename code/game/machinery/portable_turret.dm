@@ -179,7 +179,7 @@
 	Destroy()
 		// deletes its own cover with it
 		qdel(cover)
-		..()
+		return ..()
 
 
 /obj/machinery/porta_turret/attack_ai(mob/user as mob)

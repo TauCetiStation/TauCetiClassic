@@ -86,7 +86,7 @@ var/list/mechtoys = list(
 		if(T)
 			if(istype(T, /turf/simulated/floor))
 				T.blocks_air = 0
-		..()
+		return ..()
 
 /obj/machinery/computer/supplycomp
 	name = "Supply shuttle console"
@@ -732,7 +732,3 @@ var/list/mechtoys = list(
 	status_signal.data["command"] = command
 
 	frequency.post_signal(src, status_signal)
-
-
-
-

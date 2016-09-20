@@ -1531,6 +1531,7 @@ datum
 					return
 				if(toxpwr)
 					M.adjustToxLoss(toxpwr * REM)
+				return TRUE //toxin has many subclasses, so we need return TRUE for them.
 
 		toxin/amatoxin
 			name = "Amatoxin"
@@ -2471,6 +2472,7 @@ datum
 				if(adj_temp)
 					if(M.bodytemperature < 310)//310 is the normal bodytemp. 310.055
 						M.bodytemperature = min(310, M.bodytemperature + (25 * TEMPERATURE_DAMAGE_COEFFICIENT))
+				return TRUE
 
 		drink/orangejuice
 			name = "Orange juice"
@@ -2644,6 +2646,7 @@ datum
 				M.make_jittery(5)
 				if(adj_temp > 0 && holder.has_reagent("frostoil"))
 					holder.remove_reagent("frostoil", 10 * REAGENTS_METABOLISM)
+				return TRUE
 
 		drink/coffee/icecoffee
 			name = "Iced Coffee"
@@ -3073,6 +3076,7 @@ datum
 						if(istype(L))
 							L.take_damage(0.1, 1)
 						H.adjustToxLoss(0.1)
+				return TRUE
 
 			reaction_obj(var/obj/O, var/volume)
 				if(istype(O,/obj/item/weapon/paper))

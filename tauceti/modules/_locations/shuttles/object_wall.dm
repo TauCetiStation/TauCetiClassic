@@ -19,7 +19,7 @@
 
 	Destroy()
 		update_nearby_tiles()
-		..()
+		return ..()
 
 	proc/update_nearby_tiles(need_rebuild) //Copypasta from airlock code
 		if(!SSair)

@@ -102,7 +102,7 @@
 			C += PC.maxcharge
 			c += PC.charge
 		capacity = C * 100
-		charge = min(charge,(c * 100))
+		charge = c * 100
 
 /obj/machinery/power/smes/attackby(obj/item/I, mob/user)
 	//opening using screwdriver

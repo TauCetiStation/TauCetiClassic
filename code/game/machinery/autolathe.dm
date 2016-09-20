@@ -8,6 +8,9 @@ var/global/list/autolathe_recipes = list( \
 		new /obj/item/weapon/extinguisher(), \
 		new /obj/item/device/multitool(), \
 		new /obj/item/device/t_scanner(), \
+		new /obj/item/device/analyzer(), \
+		new /obj/item/device/analyzer/plant_analyzer(), \
+		new /obj/item/device/healthanalyzer(), \
 		new /obj/item/weapon/weldingtool(), \
 		new /obj/item/weapon/screwdriver(), \
 		new /obj/item/weapon/wirecutters(), \

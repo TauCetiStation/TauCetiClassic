@@ -19,7 +19,7 @@
 	opacity = 0
 	density = 0
 	update_nearby_tiles()
-	..()
+	return ..()
 
 /obj/machinery/shield/CanPass(atom/movable/mover, turf/target, height, air_group)
 	if(!height || air_group) return 0
