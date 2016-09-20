@@ -12,7 +12,6 @@
 	circuit = "/obj/item/weapon/circuitboard/atmoscontrol"
 	var/obj/machinery/alarm/current
 	var/overridden = 0 //not set yet, can't think of a good way to do it
-	var/list/blacklist = list(/area/mine/dwarf)
 	req_access = list(access_ce)
 
 
@@ -38,7 +37,7 @@
 		dat += specific()
 	else
 		for(var/obj/machinery/alarm/alarm in machines)
-			if(alarm.alarm_area.type in blacklist)
+			if(alarm.hidden_from_console)
 				continue
 			dat += "<a href='?src=\ref[src]&alarm=\ref[alarm]'>"
 			switch(max(alarm.danger_level, alarm.alarm_area.atmosalm))
