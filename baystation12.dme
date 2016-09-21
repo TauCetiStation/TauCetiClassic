@@ -1587,6 +1587,7 @@
 #include "maps\z6.dmm"
 #include "maps\RandomZLevels\Academy.dm"
 #include "maps\RandomZLevels\challenge.dm"
+#include "maps\RandomZLevels\stationCollision.dm"
 #include "maps\RandomZLevels\wildwest.dm"
 #include "tauceti\datums\uplinks_items.dm"
 #include "tauceti\datums\gamemodes\antagspawner.dm"
