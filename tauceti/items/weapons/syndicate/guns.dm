@@ -1,8 +1,8 @@
 /obj/item/weapon/gun/projectile/revolver/syndie
 	name = "revolver"
 	desc = "A powerful revolver, very popular among mercenaries and pirates. Uses .357 ammo."
-	icon = 'tauceti/items/weapons/syndicate/syndicate_guns.dmi'
-	icon_state = "synd_revolver"
+	icon = 'icons/obj/gun.dmi'
+	icon_state = "revolver"
 	item_state = "gun"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder
 
