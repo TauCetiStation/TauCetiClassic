@@ -1602,6 +1602,7 @@
 		src.owner << "You sent [input] to [H] via a secure channel."
 		log_admin("[src.owner] replied to [key_name(H)]'s Centcomm message with the message [input].")
 		message_admins("[src.owner] replied to [key_name(H)]'s Centcom message with: \"[input]\"")
+		send2slack_custommsg("[key_name(src.owner)] replied to [key_name(H)]'s Centcom message", input, ":job-cap:")
 		H << "You hear something crackle in your headset for a moment before a voice speaks.  \"Please stand by for a message from Central Command.  Message as follows. <b>\"[input]\"</b>  Message ends.\""
 
 	else if(href_list["SyndicateReply"])
@@ -1618,6 +1619,8 @@
 
 		src.owner << "You sent [input] to [H] via a secure channel."
 		log_admin("[src.owner] replied to [key_name(H)]'s Syndicate message with the message [input].")
+		message_admins("[src.owner] replied to [key_name(H)]'s Syndicate message with: \"[input]\"")
+		send2slack_custommsg("[key_name(src.owner)] replied to [key_name(H)]'s Syndicate message", input, ":job-nuke:")
 		H << "You hear something crackle in your headset for a moment before a voice speaks.  \"Please stand by for a message from your benefactor.  Message as follows, agent. <b>\"[input]\"</b>  Message ends.\""
 
 	else if(href_list["CentcommFaxView"])
@@ -1660,6 +1663,7 @@
 		src.owner << "Message reply to transmitted successfully."
 		log_admin("[key_name(src.owner)] replied to a fax message from [key_name(H)]: [input]")
 		message_admins("[key_name_admin(src.owner)] replied to a fax message from [key_name_admin(H)]", 1)
+		send2slack_custommsg("[key_name(src.owner)] replied to a fax message from [key_name(H)]", input, ":fax:")
 
 
 	else if(href_list["jumpto"])
