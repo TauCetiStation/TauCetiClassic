@@ -69,7 +69,14 @@
 		probability = 1
 		damage = 3
 	if(prob(probability))
-		droplimb(1)
+		var/mob/living/carbon/human/H = owner
+		H.apply_effect(4, STUN, 1)
+		H.apply_effect(4, WEAKEN, 1)
+		H.apply_effect(4, STUTTER, 1)
+		H.make_jittery(50)
+		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+		s.set_up(3, 1, H)
+		s.start()
 	else
 		take_damage(damage, 0, 1, 1, used_weapon = "EMP")
 
