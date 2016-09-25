@@ -129,6 +129,9 @@
 		return -1 //Transciever Disabled.
 	return ..(freq, level, 1)
 
+/obj/item/device/radio/headset/heads/ai_integrated/emp_act()
+	return
+
 /obj/item/device/radio/headset/heads/rd
 	name = "Research Director's headset"
 	desc = "Headset of the researching God. To access the science channel, use :n. For command, use :c."
