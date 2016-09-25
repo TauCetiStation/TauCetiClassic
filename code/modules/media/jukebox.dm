@@ -285,6 +285,7 @@ var/global/loopModeNames=list(
 	// Must be defined on your server.
 	playlists=list(
 		"bar"  = "Bar Mix",
+		"mogesfm84"  = "Moges FM-84",
 		"moges" = "Moges Club Music",
 		"club" = "Club Mix",
 		"customs" = "Customs Music",
@@ -304,6 +305,7 @@ var/global/loopModeNames=list(
 	// Must be defined on your server.
 	playlists=list(
 		"bar"  = "Bar Mix",
+		"mogesfm84"  = "Moges FM-84",
 		"moges" = "Moges Club Music",
 		"club" = "Club Mix",
 		"customs" = "Customs Music",
