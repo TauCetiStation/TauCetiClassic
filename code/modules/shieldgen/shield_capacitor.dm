@@ -125,11 +125,15 @@
 		time_since_fail = 0
 
 /obj/machinery/shield_capacitor/Topic(href, href_list[])
-	..()
-	if( href_list["close"] )
+	if(href_list["close"])
 		usr << browse(null, "window=shield_capacitor")
-		usr.unset_machine()
+		usr.unset_machine(src)
+		return FALSE
+
+	. = ..()
+	if(!.)
 		return
+
 	if( href_list["toggle"] )
 		active = !active
 		if(active)
@@ -142,7 +146,7 @@
 			charge_rate = charge_limit
 		else if(charge_rate < 0)
 			charge_rate = 0
-	//
+
 	updateDialog()
 
 /obj/machinery/shield_capacitor/power_change()

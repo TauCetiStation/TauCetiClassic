@@ -59,7 +59,7 @@ Pipelines + Other Objects -> Pipe network
 	for(var/mob/living/L in src)
 		L.remove_ventcrawl()
 		L.forceMove(get_turf(src))
-	..()
+	return ..()
 
 /obj/machinery/atmospherics/proc/getpipeimage(var/iconset, var/iconstate, var/direction, var/col=rgb(255,255,255))
 

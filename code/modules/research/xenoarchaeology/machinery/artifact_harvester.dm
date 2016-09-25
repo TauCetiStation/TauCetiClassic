@@ -118,6 +118,14 @@
 			icon_state = "incubator"
 
 /obj/machinery/artifact_harvester/Topic(href, href_list)
+	if(href_list["close"])
+		usr.unset_machine(src)
+		usr << browse(null, "window=artharvester")
+		return FALSE
+
+	. = ..()
+	if(!.)
+		return
 
 	if (href_list["harvest"])
 		if(!inserted_battery)
@@ -251,9 +259,5 @@
 		else
 			var/message = "<b>[src]</b> states, \"Cannot dump energy. No battery inserted.\""
 			src.visible_message(message)
-
-	if(href_list["close"])
-		usr.unset_machine(src)
-		usr << browse(null, "window=artharvester")
 
 	updateDialog()

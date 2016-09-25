@@ -381,7 +381,7 @@
 	playsound(src, "shatter", 70, 1)
 	update_nearby_tiles()
 	update_nearby_icons()
-	..()
+	return ..()
 
 
 /obj/structure/window/Move()

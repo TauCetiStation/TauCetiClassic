@@ -293,10 +293,9 @@
 	return 1
 
 /obj/machinery/biogenerator/Topic(href, href_list)
-	if(..() || panel_open)
+	. = ..()
+	if(!. || panel_open)
 		return
-
-	usr.set_machine(src)
 
 	switch(href_list["action"])
 		if("activate")
@@ -310,4 +309,5 @@
 			create_product(href_list["item"])
 		if("menu")
 			menustat = "menu"
+
 	updateUsrDialog()

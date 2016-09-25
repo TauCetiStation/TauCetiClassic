@@ -72,11 +72,9 @@ Please wait until completion...</TT><BR>
 	return
 
 /obj/machinery/robotic_fabricator/Topic(href, href_list)
-	if (..())
+	. = ..()
+	if(!.)
 		return
-
-	usr.set_machine(src)
-	src.add_fingerprint(usr)
 
 	if (href_list["make"])
 		if (!src.operating)
@@ -133,7 +131,6 @@ Please wait until completion...</TT><BR>
 					src.being_built = new building(src)
 
 					src.overlays += "fab-active"
-					src.updateUsrDialog()
 
 					spawn (build_time)
 						if (!isnull(src.being_built))
@@ -142,8 +139,5 @@ Please wait until completion...</TT><BR>
 						src.use_power = 1
 						src.operating = 0
 						src.overlays -= "fab-active"
-		return
 
-	for (var/mob/M in viewers(1, src))
-		if (M.client && M.machine == src)
-			src.attack_hand(M)
+	updateUsrDialog()

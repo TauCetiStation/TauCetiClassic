@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
-
 /var/const/access_security = 1 // Security equipment
 /var/const/access_brig = 2 // Brig timers and permabrig
 /var/const/access_armory = 3
@@ -98,29 +96,41 @@
 /obj/proc/allowed(mob/M)
 	//check if it doesn't require any access at all
 	if(src.check_access(null))
-		return 1
-	if(istype(M, /mob/living/silicon))
-		//AI can do whatever he wants
-		return 1
+		return TRUE
+	if(issilicon(M))
+		var/mob/living/silicon/S = M
+		if(src.check_access(S))
+			return TRUE
 	else if(istype(M, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = M
 		//if they are holding or wearing a card that has access, that works
 		if(src.check_access(H.get_active_hand()) || src.check_access(H.wear_id))
-			return 1
+			return TRUE
 	else if(istype(M, /mob/living/carbon/monkey) || istype(M, /mob/living/carbon/alien/humanoid))
 		var/mob/living/carbon/george = M
 		//they can only hold things :(
 		if(src.check_access(george.get_active_hand()))
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
-/obj/item/proc/GetAccess()
+/atom/movable/proc/GetAccess()
 	return list()
+
+/mob/living/silicon/GetAccess()
+	return get_all_accesses()
+
+/mob/living/silicon/robot/syndicate/GetAccess()
+	return list(access_maint_tunnels, access_syndicate, access_external_airlocks) //syndicate basic access
 
 /obj/item/proc/GetID()
 	return null
 
-/obj/proc/check_access(obj/item/I)
+/obj/proc/check_access(atom/movable/AM)
+	if(istype(src, /obj/machinery))
+		var/obj/machinery/Machine = src
+		if(Machine.emagged)
+			return TRUE
+
 	//These generations have been moved out of /obj/New() because they were slowing down the creation of objects that never even used the access system.
 	if(!src.req_access)
 		src.req_access = list()
@@ -141,23 +151,22 @@
 					req_one_access += n
 
 	if(!istype(src.req_access, /list)) //something's very wrong
-		return 1
+		return TRUE
 
 	var/list/L = src.req_access
 	if(!L.len && (!src.req_one_access || !src.req_one_access.len)) //no requirements
-		return 1
-	if(!I)
-		return 0
+		return TRUE
+	if(!AM)
+		return FALSE
 	for(var/req in src.req_access)
-		if(!(req in I.GetAccess())) //doesn't have this access
-			return 0
+		if(!(req in AM.GetAccess())) //doesn't have this access
+			return FALSE
 	if(src.req_one_access && src.req_one_access.len)
 		for(var/req in src.req_one_access)
-			if(req in I.GetAccess()) //has an access from the single access list
-				return 1
-		return 0
-	return 1
-
+			if(req in AM.GetAccess()) //has an access from the single access list
+				return TRUE
+		return FALSE
+	return TRUE
 
 /obj/proc/check_access_list(var/list/L)
 	if(!src.req_access  && !src.req_one_access)	return 1

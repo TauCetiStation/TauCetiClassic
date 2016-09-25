@@ -179,7 +179,7 @@ Works together with spawning an observer, noted above.
 
 /mob/proc/ghostize(var/can_reenter_corpse = TRUE, var/bancheck = FALSE)
 	if(key)
-		if(!(src.client.holder && (src.client.holder.rights & (R_ADMIN|R_MOD))))
+		if(client && !(src.client.holder && (src.client.holder.rights & (R_ADMIN|R_MOD)))) //and if there is no client, this will simply fail :D (fix it!)
 			if(bancheck == TRUE && jobban_isbanned(src, "Observer"))
 				var/mob/M = mousize()
 				if((config.allow_drone_spawn) || !jobban_isbanned(src, ROLE_DRONE))

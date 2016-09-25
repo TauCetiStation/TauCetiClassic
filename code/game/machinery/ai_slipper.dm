@@ -72,7 +72,7 @@
 	var/area/area = loc
 	var/t = "<TT><B>AI Liquid Dispenser</B> ([area.name])<HR>"
 
-	if(src.locked && (!istype(user, /mob/living/silicon)))
+	if(src.locked && !issilicon_allowed(user))
 		t += "<I>(Swipe ID card to unlock control panel.)</I><BR>"
 	else
 		t += text("Dispenser [] - <A href='?src=\ref[];toggleOn=1'>[]?</a><br>\n", src.disabled?"deactivated":"activated", src, src.disabled?"Enable":"Disable")
@@ -83,27 +83,25 @@
 	return
 
 /obj/machinery/ai_slipper/Topic(href, href_list)
-	..()
-	if (src.locked)
-		if (!istype(usr, /mob/living/silicon))
-			usr << "Control panel is locked!"
-			return
+	. = ..()
+	if(!.)
+		return
+	if (src.locked && !issilicon_allowed(usr))
+		usr << "Control panel is locked!"
+		return FALSE
 	if (href_list["toggleOn"])
 		src.disabled = !src.disabled
 		icon_state = src.disabled? "motion0":"motion3"
-	if (href_list["toggleUse"])
+	else if (href_list["toggleUse"])
 		if(cooldown_on || disabled)
-			return
+			return FALSE
 		else
 			new /obj/effect/effect/foam(src.loc)
 			src.uses--
 			cooldown_on = 1
 			cooldown_time = world.timeofday + 100
 			slip_process()
-			return
-
-	src.attack_hand(usr)
-	return
+	updateUsrDialog()
 
 /obj/machinery/ai_slipper/proc/slip_process()
 	while(cooldown_time - world.timeofday > 0)

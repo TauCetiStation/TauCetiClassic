@@ -69,8 +69,10 @@
 
 //a bunch of this is copied from atmos alarms
 /obj/machinery/computer/atmoscontrol/Topic(href, href_list)
-	if(..())
+	. = ..()
+	if(!.)
 		return
+
 	if(href_list["reset"])
 		current = null
 	if(href_list["alarm"])
@@ -99,7 +101,7 @@
 					var/list/thresholds = list("lower bound", "low warning", "high warning", "upper bound")
 					var/newval = input("Enter [thresholds[threshold]] for [env]", "Alarm triggers", selected[threshold]) as num|null
 					if (isnull(newval) || ..() || (current.locked && issilicon(usr)))
-						return
+						return FALSE
 					if (newval<0)
 						selected[threshold] = -1.0
 					else if (env=="temperature" && newval>5000)

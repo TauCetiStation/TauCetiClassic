@@ -270,30 +270,21 @@
 	popup.open()
 
 /obj/machinery/sleeper/Topic(href, href_list)
-	if(..() || usr == occupant)
-		return
-
-	usr.set_machine(src)
-	add_fingerprint(usr)
+	. = ..()
+	if(!. || usr == occupant)
+		return FALSE
 
 	if(href_list["refresh"])
 		updateUsrDialog()
-		return
-	if(href_list["open"])
+	else if(href_list["open"])
 		open_machine()
-		return
-	if(href_list["close"])
+	else if(href_list["close"])
 		close_machine()
-		return
-	if(href_list["removebeaker"])
+	else if(href_list["removebeaker"])
 		remove_beaker()
-		updateUsrDialog()
-		return
-	if(href_list["togglefilter"])
+	else if(href_list["togglefilter"])
 		toggle_filter()
-		updateUsrDialog()
-		return
-	if(occupant && occupant.stat != DEAD && is_operational())
+	else if(occupant && occupant.stat != DEAD && is_operational())
 		if(href_list["inject"] == "inaprovaline" || occupant.health > min_health)
 			inject_chem(usr, href_list["inject"])
 		else

@@ -93,7 +93,8 @@
 
 
 /obj/machinery/computer/atmos_alert/Topic(href, href_list)
-	if(..())
+	. = ..()
+	if(!.)
 		return
 
 	if(href_list["priority_clear"])
@@ -107,5 +108,5 @@
 		for(var/zone in minor_alarms)
 			if(ckey(zone) == removing_zone)
 				minor_alarms -= zone
+
 	update_icon()
-	return

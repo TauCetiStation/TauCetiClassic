@@ -75,9 +75,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 
 /obj/machinery/computer/libraryconsole/Topic(href, href_list)
 	. = ..()
-	if(..())
-		usr << browse(null, "window=publiclibrary")
-		onclose(usr, "publiclibrary")
+	if(!.)
 		return
 
 	if(href_list["settitle"])
@@ -112,10 +110,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 	if(href_list["back"])
 		screenstate = 0
 
-	src.add_fingerprint(usr)
 	src.updateUsrDialog()
-	return
-
 
 /*
  * Library Computer
@@ -260,9 +255,8 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 		..()
 
 /obj/machinery/computer/libraryconsole/bookmanagement/Topic(href, href_list)
-	if(..())
-		usr << browse(null, "window=library")
-		onclose(usr, "library")
+	. = ..()
+	if(!.)
 		return
 
 	if(href_list["switchscreen"])
@@ -396,9 +390,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 			if(isnum(orderid))
 				var/nhref = "src=\ref[src];targetid=[orderid]"
 				spawn() src.Topic(nhref, params2list(nhref), src)
-	src.add_fingerprint(usr)
 	src.updateUsrDialog()
-	return
 
 /*
  * Library Scanner
@@ -432,9 +424,8 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 	onclose(user, "scanner")
 
 /obj/machinery/libraryscanner/Topic(href, href_list)
-	if(..())
-		usr << browse(null, "window=scanner")
-		onclose(usr, "scanner")
+	. = ..()
+	if(!.)
 		return
 
 	if(href_list["scan"])
@@ -446,10 +437,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 	if(href_list["eject"])
 		for(var/obj/item/weapon/book/B in contents)
 			B.loc = src.loc
-	src.add_fingerprint(usr)
 	src.updateUsrDialog()
-	return
-
 
 /*
  * Book binder

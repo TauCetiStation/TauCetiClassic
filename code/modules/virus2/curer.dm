@@ -86,9 +86,9 @@
 	return
 
 /obj/machinery/computer/curer/Topic(href, href_list)
-	if(..())
+	. = ..()
+	if(!.)
 		return
-	usr.machine = src
 
 	if (href_list["antibody"])
 		curing = 10
@@ -96,9 +96,7 @@
 		container.loc = src.loc
 		container = null
 
-	src.add_fingerprint(usr)
 	src.updateUsrDialog()
-	return
 
 
 /obj/machinery/computer/curer/proc/createcure(var/obj/item/weapon/reagent_containers/container)

@@ -134,7 +134,13 @@
 	stored_materials.Add(W)
 	src.visible_message("\blue [user] inserts [W] into [src].")
 
+/obj/machinery/replicator/is_operational_topic()
+	return TRUE
+
 /obj/machinery/replicator/Topic(href, href_list)
+	. = ..()
+	if(!.)
+		return
 
 	if(href_list["activate"])
 		var/index = text2num(href_list["activate"])
@@ -151,3 +157,5 @@
 				icon_state = "borgcharger1(old)"
 			else
 				src.visible_message(fail_message)
+
+	updateUsrDialog()

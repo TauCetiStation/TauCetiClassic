@@ -141,8 +141,10 @@ Auto Patrol: []"},
 	return
 
 /obj/machinery/bot/secbot/Topic(href, href_list)
-	usr.set_machine(src)
-	src.add_fingerprint(usr)
+	. = ..()
+	if(!.)
+		return
+
 	if((href_list["power"]) && (src.allowed(usr)))
 		if(src.on)
 			turn_off()
@@ -153,20 +155,17 @@ Auto Patrol: []"},
 	switch(href_list["operation"])
 		if("idcheck")
 			src.idcheck = !src.idcheck
-			src.updateUsrDialog()
 		if("ignorerec")
 			src.check_records = !src.check_records
-			src.updateUsrDialog()
 		if("switchmode")
 			src.arrest_type = !src.arrest_type
-			src.updateUsrDialog()
 		if("patrol")
 			auto_patrol = !auto_patrol
 			mode = SECBOT_IDLE
-			updateUsrDialog()
 		if("declarearrests")
 			src.declare_arrests = !src.declare_arrests
-			src.updateUsrDialog()
+
+	src.updateUsrDialog()
 
 /obj/machinery/bot/secbot/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))

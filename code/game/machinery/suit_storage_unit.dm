@@ -160,50 +160,31 @@
 
 
 /obj/machinery/suit_storage_unit/Topic(href, href_list) //I fucking HATE this proc
-	if(..())
+	. = ..()
+	if(!.)
 		return
-	if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon/ai)))
-		usr.set_machine(src)
-		if (href_list["toggleUV"])
-			src.toggleUV(usr)
-			src.updateUsrDialog()
-			src.update_icon()
-		if (href_list["togglesafeties"])
-			src.togglesafeties(usr)
-			src.updateUsrDialog()
-			src.update_icon()
-		if (href_list["dispense_helmet"])
-			src.dispense_helmet(usr)
-			src.updateUsrDialog()
-			src.update_icon()
-		if (href_list["dispense_suit"])
-			src.dispense_suit(usr)
-			src.updateUsrDialog()
-			src.update_icon()
-		if (href_list["dispense_mask"])
-			src.dispense_mask(usr)
-			src.updateUsrDialog()
-			src.update_icon()
-		if (href_list["toggle_open"])
-			src.toggle_open(usr)
-			src.updateUsrDialog()
-			src.update_icon()
-		if (href_list["toggle_lock"])
-			src.toggle_lock(usr)
-			src.updateUsrDialog()
-			src.update_icon()
-		if (href_list["start_UV"])
-			src.start_UV(usr)
-			src.updateUsrDialog()
-			src.update_icon()
-		if (href_list["eject_guy"])
-			src.eject_occupant(usr)
-			src.updateUsrDialog()
-			src.update_icon()
-	/*if (href_list["refresh"])
-		src.updateUsrDialog()*/
-	src.add_fingerprint(usr)
-	return
+
+	if (href_list["toggleUV"])
+		src.toggleUV(usr)
+	else if (href_list["togglesafeties"])
+		src.togglesafeties(usr)
+	else if (href_list["dispense_helmet"])
+		src.dispense_helmet(usr)
+	else if (href_list["dispense_suit"])
+		src.dispense_suit(usr)
+	else if (href_list["dispense_mask"])
+		src.dispense_mask(usr)
+	else if (href_list["toggle_open"])
+		src.toggle_open(usr)
+	else if (href_list["toggle_lock"])
+		src.toggle_lock(usr)
+	else if (href_list["start_UV"])
+		src.start_UV(usr)
+	else if (href_list["eject_guy"])
+		src.eject_occupant(usr)
+
+	src.updateUsrDialog()
+	src.update_icon()
 
 
 /obj/machinery/suit_storage_unit/proc/toggleUV(mob/user as mob)
@@ -834,12 +815,18 @@
 	return
 
 /obj/machinery/suit_cycler/Topic(href, href_list)
+	. = ..()
+	if(!.)
+		return
+
 	if(href_list["eject_suit"])
-		if(!suit) return
+		if(!suit)
+			return FALSE
 		suit.loc = get_turf(src)
 		suit = null
 	else if(href_list["eject_helmet"])
-		if(!helmet) return
+		if(!helmet)
+			return FALSE
 		helmet.loc = get_turf(src)
 		helmet = null
 	else if(href_list["select_department"])
@@ -852,8 +839,8 @@
 			choices = list(1,2,3,4,5)
 		radiation_level = input("Please select the desired radiation level.","Suit cycler",null) as null|anything in choices
 	else if(href_list["repair_suit"])
-
-		if(!suit) return
+		if(!suit)
+			return FALSE
 		active = 1
 		spawn(100)
 			repair_suit()
@@ -861,7 +848,8 @@
 
 	else if(href_list["apply_paintjob"])
 
-		if(!suit && !helmet) return
+		if(!suit && !helmet)
+			return FALSE
 		active = 1
 		spawn(100)
 			apply_paintjob()
@@ -886,7 +874,6 @@
 
 		active = 1
 		irradiating = 10
-		src.updateUsrDialog()
 
 		sleep(10)
 
@@ -906,7 +893,7 @@
 		var/twire = text2num(href_list["cutwire"])
 		if (!( istype(usr.get_active_hand(), /obj/item/weapon/wirecutters) ))
 			usr << "You need wirecutters!"
-			return
+			return FALSE
 		if (src.isWireColorCut(twire))
 			src.mend(twire)
 		else
@@ -916,15 +903,14 @@
 		var/twire = text2num(href_list["pulsewire"])
 		if (!istype(usr.get_active_hand(), /obj/item/device/multitool))
 			usr << "You need a multitool!"
-			return
+			return FALSE
 		if (src.isWireColorCut(twire))
 			usr << "You can't pulse a cut wire."
-			return
+			return FALSE
 		else
 			src.pulse(twire)
 
 	src.updateUsrDialog()
-	return
 
 /obj/machinery/suit_cycler/process()
 

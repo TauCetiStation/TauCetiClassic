@@ -107,17 +107,17 @@
 
 
 /obj/machinery/juicer/Topic(href, href_list)
-	if(..())
+	. = ..()
+	if(!.)
 		return
-	usr.set_machine(src)
+
 	switch(href_list["action"])
 		if ("juice")
 			juice()
-
 		if ("detach")
 			detach()
+
 	src.updateUsrDialog()
-	return
 
 /obj/machinery/juicer/verb/detach()
 	set category = "Object"

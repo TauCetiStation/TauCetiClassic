@@ -121,12 +121,15 @@
 /obj/proc/update_icon()
 	return
 
-/mob/proc/unset_machine()
-	src.machine = null
+/mob/proc/unset_machine(obj/O)
+	if(O && O == src.machine)
+		src.machine = null
+	else
+		src.machine = null
 
 /mob/proc/set_machine(var/obj/O)
 	if(src.machine)
-		unset_machine()
+		unset_machine(src.machine)
 	src.machine = O
 	if(istype(O))
 		O.in_use = 1

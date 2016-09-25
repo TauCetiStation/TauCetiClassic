@@ -411,10 +411,10 @@
 	return ffuu
 
 /obj/machinery/microwave/Topic(href, href_list)
-	if(..() || panel_open)
-		return
+	. = ..()
+	if(!. || panel_open)
+		return FALSE
 
-	usr.set_machine(src)
 	if(src.operating)
 		updateUsrDialog()
 		return
@@ -426,4 +426,3 @@
 		if ("dispose")
 			dispose()
 	updateUsrDialog()
-	return
