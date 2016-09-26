@@ -107,12 +107,12 @@ var/list/alldepartments = list("Central Command")
 		if(tofax)
 
 			if(dpt == "Central Command")
-				Centcomm_fax(tofax.info, tofax.name, usr)
 				sendcooldown = 1800
+				Centcomm_fax(tofax.info, tofax.name, usr)
 
 			else
-				SendFax(tofax.info, tofax.name, usr, dpt)
 				sendcooldown = 600
+				SendFax(tofax.info, tofax.name, usr, dpt)
 
 			usr << "Message transmitted successfully."
 
@@ -195,7 +195,7 @@ var/list/alldepartments = list("Central Command")
 	log_fax("[Sender] sending [sentname] : [sent]")
 	for(var/client/C in admins)
 		C << msg
-	send2slack_custommsg("[key_name(Sender)] sent fax to Cetcomm", sent, ":fax:")
+	send2slack_custommsg("[key_name(Sender)] sent fax to Centcomm", sent, ":fax:")
 
 
 proc/SendFax(var/sent, var/sentname, var/mob/Sender, var/dpt, var/stamp, var/stamps)

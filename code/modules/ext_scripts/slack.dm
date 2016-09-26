@@ -47,6 +47,12 @@
 	/* no point in any mentions here */
 	amsg = replacetext(amsg, "@", "_")
 
+	var/regex/break_line = new("<BR>", "g")
+	var/regex/clear_tags = new("<.*?>", "g")
+
+	amsg = break_line.Replace(amsg, "\n")
+	amsg = clear_tags.Replace(amsg, "")
+
 	var/server_name = config.server_name ? config.server_name : "Noname server"
 	var/name = server_name + " player message"
 
