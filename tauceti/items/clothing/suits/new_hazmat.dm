@@ -13,27 +13,27 @@
 	name = "Hazmat suit"
 	desc = "White colored and from brand new collection. Unisex!"
 
-/obj/item/clothing/suit/bio_suit/new_hazmat/sec
+/obj/item/clothing/suit/bio_suit/new_hazmat/security
 	icon_state = "hazmat_sec"
 	item_state = "hazmat_sec"
 	desc = "Red colored and from brand new collection. For law enforcement organizations."
-/obj/item/clothing/head/bio_hood/new_hazmat/sec
+/obj/item/clothing/head/bio_hood/new_hazmat/security
 	icon_state = "hazmat_sec_head"
 	desc = "Red colored and from brand new collection. For law enforcement organizations."
 
-/obj/item/clothing/suit/bio_suit/new_hazmat/common
+/obj/item/clothing/suit/bio_suit/new_hazmat/general
 	icon_state = "hazmat_yellow"
 	item_state = "hazmat_yellow"
 	desc = "Yellow colored and from brand new collection. Basic design."
-/obj/item/clothing/head/bio_hood/new_hazmat/common
+/obj/item/clothing/head/bio_hood/new_hazmat/general
 	icon_state = "hazmat_yellow_head"
 	desc = "Yellow colored and from brand new collection. Basic design."
 
-/obj/item/clothing/suit/bio_suit/new_hazmat/virologist
+/obj/item/clothing/suit/bio_suit/new_hazmat/virology
 	icon_state = "hazmat_green"
 	item_state = "hazmat_green"
 	desc = "Green colored and from brand new collection. Virologist style."
-/obj/item/clothing/head/bio_hood/new_hazmat/green
+/obj/item/clothing/head/bio_hood/new_hazmat/virology
 	icon_state = "hazmat_green_head"
 	desc = "Green colored and from brand new collection. Virologist style."
 
