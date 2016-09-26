@@ -63,22 +63,16 @@
 /datum/organ/external/proc/emp_act(severity)
 	if(!(status & ORGAN_ROBOT))	//meatbags do not care about EMP
 		return
-	var/probability = 30
 	var/damage = 15
-	if(severity == 2)
-		probability = 1
-		damage = 3
-	if(prob(probability))
-		var/mob/living/carbon/human/H = owner
-		H.apply_effect(4, STUN, 1)
-		H.apply_effect(4, WEAKEN, 1)
-		H.apply_effect(4, STUTTER, 1)
-		H.make_jittery(50)
-		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-		s.set_up(3, 1, H)
-		s.start()
-	else
-		take_damage(damage, 0, 1, 1, used_weapon = "EMP")
+	var/mob/living/carbon/human/H = owner
+	H.apply_effect(4, STUN, 1)
+	H.apply_effect(4, WEAKEN, 1)
+	H.apply_effect(4, STUTTER, 1)
+	H.make_jittery(50)
+	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+	s.set_up(3, 1, H)
+	s.start()
+	take_damage(damage, 0, 1, 1, used_weapon = "EMP")
 
 /datum/organ/external/proc/take_damage(brute, burn, sharp, edge, used_weapon = null, list/forbidden_limbs = list())
 	if((brute <= 0) && (burn <= 0))
