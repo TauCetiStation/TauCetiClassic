@@ -37,6 +37,8 @@
 		dat += specific()
 	else
 		for(var/obj/machinery/alarm/alarm in machines)
+			if(alarm.hidden_from_console)
+				continue
 			dat += "<a href='?src=\ref[src]&alarm=\ref[alarm]'>"
 			switch(max(alarm.danger_level, alarm.alarm_area.atmosalm))
 				if (0)

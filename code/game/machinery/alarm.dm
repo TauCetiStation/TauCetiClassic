@@ -65,24 +65,25 @@
 	name = "alarm"
 	icon = 'tauceti/icons/obj/wall_monitors.dmi'
 	icon_state = "alarm0"
-	anchored = 1
-	use_power = 1
+	anchored = TRUE
+	use_power = TRUE
 	idle_power_usage = 4
 	active_power_usage = 8
 	power_channel = ENVIRON
 	req_one_access = list(access_atmospherics, access_engine_equip)
-	var/breach_detection = 1 // Whether to use automatic breach detection or not
+	var/breach_detection = TRUE // Whether to use automatic breach detection or not
 	var/frequency = 1439
 	//var/skipprocess = 0 //Experimenting
 	var/alarm_frequency = 1437
-	var/remote_control = 0
+	var/remote_control = FALSE
 	var/rcon_setting = 2
 	var/rcon_time = 0
-	var/locked = 1
-	var/wiresexposed = 0 // If it's been screwdrivered open.
-	var/aidisabled = 0
+	var/locked = TRUE
+	var/wiresexposed = FALSE // If it's been screwdrivered open.
+	var/aidisabled = FALSE
 	var/AAlarmwires = 31
-	var/shorted = 0
+	var/shorted = FALSE
+	var/hidden_from_console = FALSE
 
 	var/mode = AALARM_MODE_SCRUBBING
 	var/screen = AALARM_SCREEN_MAIN
@@ -92,7 +93,7 @@
 
 	var/target_temperature = T0C+20
 	var/regulating_temperature = 0
-	var/allow_regulate = 0 //Включена ли терморегуляция
+	var/allow_regulate = 0 //Is thermoregulation enabled?
 
 	var/datum/radio_frequency/radio_connection
 
@@ -958,7 +959,7 @@ table tr:first-child th:first-child { border: none;}
 		var/max_temperature = min(selected[3] - T0C, MAX_TEMPERATURE)
 		var/min_temperature = max(selected[2] - T0C, MIN_TEMPERATURE)
 		var/input_temperature = input("What temperature would you like the system to mantain? (Capped between [min_temperature]C and [max_temperature]C)", "Thermostat Controls") as num|null
-		if(!input_temperature || input_temperature > max_temperature || input_temperature < min_temperature)
+		if(isnull(input_temperature) || (input_temperature >= max_temperature) || (input_temperature <= min_temperature))
 			usr << "Temperature must be between [min_temperature]C and [max_temperature]C"
 		else
 			target_temperature = input_temperature + T0C
@@ -995,17 +996,15 @@ table tr:first-child th:first-child { border: none;}
 					var/list/selected = TLV[env]
 					var/list/thresholds = list("lower bound", "low warning", "high warning", "upper bound")
 					var/newval = input("Enter [thresholds[threshold]] for [env]", "Alarm triggers", selected[threshold]) as null|num
-					if (isnull(newval) || ..())
+					if(isnull(newval) || (locked && ishuman(usr)))
 						return FALSE
-					if(ishuman(usr) && locked)
-						return FALSE
-					if (newval<0)
+					if(newval<0)
 						selected[threshold] = -1.0
-					else if (env=="temperature" && newval>5000)
+					else if((env == "temperature") && (newval > 5000))
 						selected[threshold] = 5000
-					else if (env=="pressure" && newval>50*ONE_ATMOSPHERE)
+					else if((env == "pressure") && (newval > 50*ONE_ATMOSPHERE))
 						selected[threshold] = 50*ONE_ATMOSPHERE
-					else if (env!="temperature" && env!="pressure" && newval>200)
+					else if((env != "temperature") && (env != "pressure") && (newval > 200))
 						selected[threshold] = 200
 					else
 						newval = round(newval,0.01)

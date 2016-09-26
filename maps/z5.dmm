@@ -974,7 +974,7 @@
 "sL" = (/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_x = 0},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 6},/turf/simulated/floor/plating,/area/mine/dwarf)
 "sM" = (/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_x = 0},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/turf/simulated/floor/plating,/area/mine/dwarf)
 "sN" = (/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_x = 0},/obj/machinery/door/airlock/maintenance,/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/turf/simulated/floor/plating,/area/mine/dwarf)
-"sO" = (/obj/structure/cable{d1 = 2; d2 = 8; icon_state = "2-8"},/obj/machinery/alarm{frequency = 1600; pixel_y = 26},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/turf/simulated/floor{icon_state = "floorgrime"},/area/mine/dwarf)
+"sO" = (/obj/structure/cable{d1 = 2; d2 = 8; icon_state = "2-8"},/obj/machinery/alarm{frequency = 1600; hidden_from_console = 1; pixel_y = 26},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/turf/simulated/floor{icon_state = "floorgrime"},/area/mine/dwarf)
 "sP" = (/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/turf/simulated/floor{icon_state = "floorgrime"},/area/mine/dwarf)
 "sQ" = (/obj/machinery/atmospherics/pipe/manifold/hidden/supply,/turf/simulated/floor{icon_state = "floorgrime"},/area/mine/dwarf)
 "sR" = (/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 10},/turf/simulated/floor{icon_state = "floorgrime"},/area/mine/dwarf)
