@@ -63,7 +63,7 @@
 	if(target.mind && target.mind.changeling)
 		target << "<span class='warning'>You feel a tiny prick.</span>"
 	//	add_logs(user, target, "unsuccessfully stung")
-	msg_admin_attack("[key_name(user)] used [src] on [key_name(target)] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)")
+	msg_admin_attack("[key_name(user)] used [src] on [key_name(target)] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 	return 1
 
 /obj/effect/proc_holder/changeling/sting/proc/sting_fail(var/mob/user, var/mob/target)
