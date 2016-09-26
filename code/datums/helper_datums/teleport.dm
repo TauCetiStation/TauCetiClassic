@@ -160,6 +160,15 @@
 		return FALSE
 	if(istype(T, /turf/space) && (T.x <= TRANSITIONEDGE || T.x >= (world.maxx - TRANSITIONEDGE - 1) || T.y <= TRANSITIONEDGE || T.y >= (world.maxy - TRANSITIONEDGE - 1)))
 		return FALSE //No teleports into the void, dunno how to fix that with another method.
+	if(locate(/obj/effect/portal) in T)
+		//for(var/mob/living/carbon/human/H in world)
+		//	H.gender = FEMALE
+		//	H.h_style = "Bald"
+		//	H.f_style = "Dwarf Beard"
+		//	H.put_in_hands(new/obj/item/weapon/pickaxe/gold)
+		//	H.age = "Dwarf"
+		//world.Reboot("Critical Error! Recovery process initiated.<BR>Reason: too many dwarfs in memory.")
+		return FALSE
 	if(dest_checkdensity)
 		if(T.density)
 			return FALSE

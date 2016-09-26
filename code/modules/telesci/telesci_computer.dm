@@ -171,6 +171,7 @@
 		if(A.density)
 			return FALSE
 	active_wormhole = new (telepad.loc, exit)
+	active_wormhole.linked_console = src
 	return active_wormhole
 
 /obj/machinery/computer/telescience/proc/sparks()
