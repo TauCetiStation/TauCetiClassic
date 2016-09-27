@@ -138,7 +138,6 @@
 			idname = usr.real_name
 			idrank = "Silicon"
 
-		SSshuttle.ordernum++
 		reqtime = (world.time + 5) % 1e5
 
 		//make our supply_order datum
@@ -195,6 +194,22 @@
 				temp += "#[SO.id] - [SO.object.name] requested by [SO.orderer]  [SSshuttle.moving ? "":SSshuttle.at_station ? "":"<A href='?src=\ref[src];confirmorder=[SO.id]'>Approve</A> <A href='?src=\ref[src];rreq=[SO.id]'>Remove</A>"]<BR>"
 		if(!requestonly)
 			temp += "<BR><A href='?src=\ref[src];clearreq=1'>Clear list</A>"
+		temp += "<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
+
+	else if (href_list["rreq"])
+		var/ordernum = text2num(href_list["rreq"])
+		temp = "Invalid Request.<BR>"
+		for(var/i = 1 to SSshuttle.requestlist.len)
+			var/datum/supply_order/SO = SSshuttle.requestlist[i]
+			if(SO.id == ordernum)
+				SSshuttle.requestlist.Cut(i,i+1)
+				temp = "Request removed.<BR>"
+				break
+		temp += "<BR><A href='?src=\ref[src];viewrequests=1'>Back</A> <A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
+
+	else if (href_list["clearreq"])
+		SSshuttle.requestlist.Cut()
+		temp = "List cleared.<BR>"
 		temp += "<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
 
 	if(href_list["viewcentcom"])
