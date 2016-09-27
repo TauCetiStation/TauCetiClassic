@@ -1,3 +1,6 @@
+#define MAX_DELTA_UP 500
+#define MAX_DELTA_DOWN 500
+
 /datum/stock
 	var/name = "Stock"
 	var/short_name = "STK"
@@ -124,11 +127,11 @@
 			speculation += rand(-400, 0) / 1000 * speculation
 			if (prob(1) && prob(5)) // pop that bubble
 				speculation += rand(-4000, 0) / 1000 * speculation
-	var/fucking_stock_spikes = current_value + 500
-	var/piece_of_shit_fuck = current_value - 500
-	var/i_hate_this_code = (speculation / rand(25000, 50000) + performance / rand(100, 800)) * current_value
-	if(i_hate_this_code < fucking_stock_spikes || i_hate_this_code > piece_of_shit_fuck)
-		current_value += i_hate_this_code
+	var/prevent_spikes = current_value + MAX_DELTA_UP
+	var/prevent_bankrupt = current_value - MAX_DELTA_DOWN
+	var/delta_value = (speculation / rand(25000, 50000) + performance / rand(100, 800)) * current_value
+	delta_value = Clamp(delta_value, prevent_bankrupt, prevent_spikes)
+	current_value += delta_value
 	if (current_value < 5)
 		current_value = 5
 
@@ -216,3 +219,6 @@
 
 /datum/stock/proc/displayValues(var/mob/user)
 	user << browse(plotBarGraph(values, "[name] share value per share"), "window=stock_[name];size=450x450")
+
+#undef MAX_DELTA_UP
+#undef MAX_DELTA_DOWN
