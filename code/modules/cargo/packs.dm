@@ -84,6 +84,14 @@ datum/supply_pack/New()
 	crate_name = "Arts and Crafts crate"
 	group = "Operations"
 
+/datum/supply_pack/price_scanner
+	name = "Export scanners"
+	contains = list(/obj/item/device/export_scanner,
+					/obj/item/device/export_scanner)
+	cost = 1000
+	crate_name = "Export scanners crate"
+	group = "Operations"
+
 //----------------------------------------------
 //-----------------SECURITY---------------------
 //----------------------------------------------
