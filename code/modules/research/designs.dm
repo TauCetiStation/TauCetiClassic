@@ -326,7 +326,7 @@ datum/design/ordercomp
 	req_tech = list("programming" = 2)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
-	build_path = /obj/item/weapon/circuitboard/ordercomp
+	build_path = /obj/item/weapon/circuitboard/computer/cargo/request
 
 datum/design/supplycomp
 	name = "Circuit Design (Supply shuttle console)"
@@ -335,7 +335,7 @@ datum/design/supplycomp
 	req_tech = list("programming" = 3)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
-	build_path = /obj/item/weapon/circuitboard/supplycomp
+	build_path = /obj/item/weapon/circuitboard/computer/cargo
 
 datum/design/comm_monitor
 	name = "Circuit Design (Telecommunications Monitoring Console)"
