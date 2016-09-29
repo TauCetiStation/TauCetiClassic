@@ -91,7 +91,13 @@
 /mob/living/carbon/slime/adult/New()
 	//verbs.Remove(/mob/living/carbon/slime/verb/ventcrawl)
 	..()
-
+/mob/living/carbon/slime/Destroy()
+	Victim = null
+	Target = null
+	ATarget = null
+	last_pointed = null
+	Leader = null
+	..()
 /mob/living/carbon/slime/regenerate_icons()
 	overlays.len = 0
 	//var/icon_text = "[colour] [is_adult ? "adult" : "baby"] slime"
