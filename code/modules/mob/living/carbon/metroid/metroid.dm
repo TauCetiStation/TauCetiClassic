@@ -97,7 +97,9 @@
 	ATarget = null
 	last_pointed = null
 	Leader = null
-	..()
+	if(Friends.len)
+		Friends.Cut()
+	return ..()
 /mob/living/carbon/slime/regenerate_icons()
 	overlays.len = 0
 	//var/icon_text = "[colour] [is_adult ? "adult" : "baby"] slime"

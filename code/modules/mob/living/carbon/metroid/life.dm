@@ -324,14 +324,11 @@
 /mob/living/carbon/slime/proc/handle_attack()
 	if(!ATarget)
 		return
-	if(Victim)
-		if(Victim != ATarget)
-			Feedstop()
-			return
-	TargetAttack(ATarget)
+	if(Victim && Victim != ATarget)
+		Feedstop()
+	TargetAttack()
 	return
 /mob/living/carbon/slime/proc/handle_nutrition()
-
 	if(prob(20))
 		if(istype(src, /mob/living/carbon/slime/adult)) nutrition-=rand(4,6)
 		else nutrition-=rand(2,3)
