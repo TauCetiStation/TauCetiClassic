@@ -143,3 +143,67 @@
 	cost = 300
 	unit_name = "bomb suit"
 	export_types = list(/obj/item/clothing/suit/bomb_suit)
+
+//--------------------------------------------
+//---------------GLASSES----------------------
+//--------------------------------------------
+
+/datum/export/gear/glasses
+	cost = 150
+	include_subtypes = FALSE
+	unit_name = "glasses"
+	export_types = list(/obj/item/clothing/glasses)
+
+/datum/export/gear/glasses/hud
+	cost = 200
+	include_subtypes = TRUE
+	unit_name = "hud glasses"
+	export_types = list(/obj/item/clothing/glasses/hud)
+
+/datum/export/gear/glasses/meson
+	cost = 350
+	unit_name = "meson glasses"
+	export_types = list(/obj/item/clothing/glasses/meson)
+
+/datum/export/gear/glasses/night
+	cost = 2700
+	unit_name = "night vision glasses"
+	export_types = list(/obj/item/clothing/glasses/night)
+
+/datum/export/gear/glasses/thermal
+	cost = 6000
+	include_subtypes = TRUE
+	unit_name = "thermal vision glasses"
+	export_types = list(/obj/item/clothing/glasses/thermal)
+
+/datum/export/gear/glasses/welding
+	cost = 200
+	include_subtypes = TRUE
+	unit_name = "welding glasses"
+	export_types = list(/obj/item/clothing/glasses/welding)
+
+
+//--------------------------------------------
+//----------------SHOES-----------------------
+//--------------------------------------------
+
+/datum/export/gear/shoes/combat
+	cost = 1000
+	unit_name = "combat boots"
+	export_types = list(/obj/item/clothing/shoes/combat,
+									/obj/item/clothing/shoes/swat)
+
+/datum/export/gear/shoes/jackboots
+	cost = 200
+	unit_name = "jackboots"
+	export_types = list(/obj/item/clothing/shoes/jackboots)
+
+/datum/export/gear/shoes/magboots
+	cost = 3000
+	unit_name = "magboots"
+	export_types = list(/obj/item/clothing/shoes/magboots)
+
+/datum/export/gear/shoes/rainbow
+	cost = 150
+	unit_name = "rainbow shoes"
+	export_types = list(/obj/item/clothing/shoes/rainbow)

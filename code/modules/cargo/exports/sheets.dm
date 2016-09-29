@@ -181,3 +181,8 @@
 	cost = 1000
 	message = "of platinum"
 	export_types = list(/obj/item/stack/sheet/mineral/platinum)
+
+/datum/export/stack/nanopaste
+	cost = 80
+	message = "of nanopaste"
+	export_types = list(/obj/item/stack/nanopaste)
