@@ -22,6 +22,15 @@
 					if(V.stealth_active)
 						V.DeactivateStealth()
 
+		if(butcher_results && stat == DEAD)
+			if(buckled && istype(buckled, /obj/structure/kitchenspike))
+				var/sharpness = is_sharp(I)
+				if(sharpness)
+					user << "<span class='notice'>You begin to butcher [src]...</span>"
+					playsound(loc, 'sound/weapons/slice.ogg', 50, 1, -1)
+					if(do_mob(user, src, 80/sharpness))
+						harvest(user)
+
 // Proximity_flag is 1 if this afterattack was called on something adjacent, in your square, or on your person.
 // Click parameters is the params string from byond Click() code, see that documentation.
 /obj/item/proc/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
