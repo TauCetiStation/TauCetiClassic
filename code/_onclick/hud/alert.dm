@@ -261,5 +261,12 @@
 	if(master)
 		return usr.client.Click(master, location, control, params)
 
+/obj/screen/alert/MouseEntered(location,control,params)
+	openToolTip(usr,src,params,title = name,content = desc)
+
+
+/obj/screen/alert/MouseExited()
+	closeToolTip(usr)
+
 /obj/screen/alert/Destroy()
 	return QDEL_HINT_PUTINPOOL //Don't destroy me, I have a family!
