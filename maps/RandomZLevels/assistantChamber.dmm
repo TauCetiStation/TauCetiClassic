@@ -7,7 +7,7 @@
 "g" = (/turf/simulated/floor{icon_state = "white"},/area/awaymission)
 "h" = (/obj/item/weapon/gun/energy/gun/nuclear,/turf/simulated/floor{icon_state = "white"},/area/awaymission)
 "i" = (/obj/item/device/soulstone,/turf/simulated/floor{icon_state = "white"},/area/awaymission)
-"j" = (/obj/item/ammo_box/magazine/m50,/turf/simulated/floor{icon_state = "white"},/area/awaymission)
+"j" = (/obj/item/weapon/gun/projectile/automatic/deagle/gold,/turf/simulated/floor{icon_state = "white"},/area/awaymission)
 "k" = (/obj/effect/rune,/turf/simulated/floor{icon_state = "white"},/area/awaymission)
 "l" = (/obj/machinery/turret{dir = 8; lasers = 1; name = "Angry Turret"},/obj/machinery/light{icon_state = "tube1"; dir = 4},/turf/simulated/floor{icon_state = "white"},/area/awaymission)
 "m" = (/obj/item/device/assembly/mousetrap/armed,/turf/simulated/floor{icon_state = "white"},/area/awaymission)
@@ -19,7 +19,7 @@
 "s" = (/obj/item/device/radio/beacon,/obj/item/weapon/caution,/turf/simulated/floor{icon_state = "white"},/area/awaymission)
 "t" = (/obj/item/brain,/turf/simulated/floor{icon_state = "white"},/area/awaymission)
 "u" = (/obj/item/weapon/gun/energy/laser/captain,/turf/simulated/floor{icon_state = "white"},/area/awaymission)
-"v" = (/obj/item/weapon/gun/projectile/automatic/deagle/gold,/turf/simulated/floor{icon_state = "white"},/area/awaymission)
+"v" = (/obj/item/ammo_box/magazine/m50,/turf/simulated/floor{icon_state = "white"},/area/awaymission)
 "w" = (/obj/item/weapon/sord,/turf/simulated/floor{icon_state = "white"},/area/awaymission)
 "x" = (/obj/item/weapon/gun/energy/lasercannon,/turf/simulated/floor{icon_state = "white"},/area/awaymission)
 "y" = (/obj/item/weapon/gun/energy/crossbow/largecrossbow,/turf/simulated/floor{icon_state = "white"},/area/awaymission)
@@ -42,10 +42,10 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaabbbbbbbbbbbbaaaaaaaaa
 aaaaaaaaabccccccccccbaaaaaaaaa
 aaaaaaaaabccddddddccbaaaaaaaaa
-aaaaaaaaabcefghijklcbaaaaaaaaa
+aaaaaaaaabcefghivklcbaaaaaaaaa
 aaaaaaaaabcemnopgqlcbaaaaaaaaa
 aaaaaaaaabcegrgstglcbaaaaaaaaa
-aaaaaaaaabceuggvgwlcbaaaaaaaaa
+aaaaaaaaabceuggjgwlcbaaaaaaaaa
 aaaaaaaaabcegxygzglcbaaaaaaaaa
 aaaaaaaaabceAgBgCglcbaaaaaaaaa
 aaaaaaaaabccDDDDDDccbaaaaaaaaa
@@ -61,3 +61,4 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 "}
+
