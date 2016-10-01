@@ -39,6 +39,7 @@ var/const/HOLOPAD_MODE = 0
 	var/mob/living/silicon/ai/master//Which AI, if any, is controlling the object? Only one AI may control a hologram at any time.
 	var/last_request = 0 //to prevent request spam. ~Carn
 	var/holo_range = 5 // Change to change how far the AI can move away from the holopad before deactivating.
+	//var/
 
 /obj/machinery/hologram/holopad/New()
 	..()
@@ -100,8 +101,17 @@ var/const/HOLOPAD_MODE = 0
 /obj/machinery/hologram/holopad/proc/activate_holo(mob/living/silicon/ai/user)
 	if(!(stat & NOPOWER) && user.eyeobj.loc == src.loc)//If the projector has power and client eye is on it.
 		if(!hologram)//If there is not already a hologram.
-			create_holo(user)//Create one.
-			src.visible_message("A holographic image of [user] flicks to life right before your eyes!")
+			var/malfhack = 0
+			if(ticker.mode.name == "AI malfunction")
+				var/datum/game_mode/malfunction/malf = ticker.mode
+				if (malf.holhack == 1)
+					malfhack = 1
+			if(malfhack == 1)
+				create_holocarp(user)
+				src.visible_message("A holographic image of space carp flicks to life right before your eyes!")
+			else
+				create_holo(user)//Create one.
+				src.visible_message("A holographic image of [user] flicks to life right before your eyes!")
 		else
 			user << "\red ERROR: \black Image feed in progress."
 	else
@@ -135,6 +145,22 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	use_power = 2//Active power usage.
 	return 1
 
+/obj/machinery/hologram/holopad/proc/create_holocarp(mob/living/silicon/ai/A, turf/T = loc)
+	hologram = new(T)//Spawn a blank effect at the location.
+	hologram.icon = getHologramIcon(icon('icons/mob/AI.dmi',"holo4"))
+	hologram.mouse_opacity = 0//So you can't click on it.
+	hologram.layer = FLY_LAYER//Above all the other objects/mobs. Or the vast majority of them.
+	hologram.anchored = 1//So space wind cannot drag it.
+	hologram.name = "space carp"//If someone decides to right click.
+	hologram.set_light(2)	//hologram lighting
+	set_light(2)			//pad lighting
+	icon_state = "holopad1"
+	A.holo = src
+	A.hcarp = 1
+	master = A//AI is the master.
+	use_power = 2//Active power usage.
+	return 1
+
 /obj/machinery/hologram/holopad/proc/clear_holo()
 //	hologram.set_light(0)//Clear lighting.	//handled by the lighting controller when its ower is deleted
 	qdel(hologram)//Get rid of hologram.
@@ -158,6 +184,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 
 					var/area/holo_area = get_area(src)
 					var/area/eye_area = get_area(master.eyeobj)
+					master.hcarp = 0
 
 					if(eye_area in holo_area.master.related)
 						return 1
@@ -213,7 +240,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 /obj/machinery/hologram/Destroy()
 	if(hologram)
 		src:clear_holo()
-	return ..()
+	..()
 
 /*
 Holographic project of everything else.
