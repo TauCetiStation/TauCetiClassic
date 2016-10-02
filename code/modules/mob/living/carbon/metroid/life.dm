@@ -571,7 +571,7 @@
 			)
 				if(Friends[who] > 4)
 					if(last_pointed)
-						if(!(Friends[last_pointed] >=2) && (isslime(last_pointed) && Friends[who] > 6))
+						if(!(Friends[last_pointed] >=2) && !(isslime(last_pointed) && Friends[who] > 6))
 							if(last_pointed != src)
 								to_say = "I will destroy [last_pointed]..."
 								ATarget = last_pointed
