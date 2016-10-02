@@ -1192,9 +1192,15 @@ datum/supply_pack/New()
 
 /datum/supply_pack/randomised/fill(obj/structure/closet/crate/C)
 	var/list/L = contains.Copy()
-	for(var/i in 1 to num_contained)
-		var/item = pick_n_take(L)
-		new item(C)
+	var/item
+	if(num_contained <= L.len)
+		for(var/i in 1 to num_contained)
+			item = pick_n_take(L)
+			new item(C)
+	else
+		for(var/i in 1 to num_contained)
+			item = pick(L)
+			new item(C)
 
 /datum/supply_pack/randomised/contraband
 	num_contained = 5
