@@ -1563,6 +1563,7 @@
 #include "code\modules\telesci\gps.dm"
 #include "code\modules\telesci\telepad.dm"
 #include "code\modules\telesci\telesci_computer.dm"
+#include "code\modules\tooltip\tooltip.dm"
 #include "code\modules\vehicles\spacebike.dm"
 #include "code\modules\vehicles\vehicle.dm"
 #include "code\modules\virus2\analyser.dm"
