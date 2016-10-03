@@ -27,7 +27,6 @@
 	desc = "A rare Chef's Hat meant for hat collectors!"
 	icon_state = "chef"
 	item_state = "chefhat"
-	body_parts_covered = 0
 
 /obj/item/clothing/head/collectable/paper
 	name = "collectable paper hat"
