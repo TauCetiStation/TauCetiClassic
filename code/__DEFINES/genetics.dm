@@ -5,6 +5,7 @@
 #define DISABILITY_EPILEPTIC 		4
 #define DISABILITY_TOURETTES 		8
 #define DISABILITY_NERVOUS			16
+#define DISABILITY_FATNESS			32
 
 // mob/var/list/mutations
 //"#49e46e
