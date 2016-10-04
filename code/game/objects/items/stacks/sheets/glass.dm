@@ -92,7 +92,7 @@
 					dir_to_set = direction
 					break
 			var/obj/structure/window/W
-			W = new created_window( user.loc, 0 )
+			W = new created_window(user.loc)
 			W.dir = dir_to_set
 			W.ini_dir = W.dir
 			W.anchored = 0
@@ -107,9 +107,7 @@
 				user << "\red There is a window in the way."
 				return 1
 			var/obj/structure/window/W
-			W = new created_window( user.loc, 0 )
-			W.dir = SOUTHWEST
-			W.ini_dir = SOUTHWEST
+			W = new created_window(user.loc, 1)
 			W.anchored = 0
 			src.use(2)
 	return 0
@@ -193,7 +191,7 @@
 					break
 
 			var/obj/structure/window/W
-			W = new /obj/structure/window/reinforced( user.loc, 1 )
+			W = new /obj/structure/window/reinforced(user.loc)
 			W.state = 0
 			W.dir = dir_to_set
 			W.ini_dir = W.dir
@@ -210,10 +208,8 @@
 				user << "\red There is a window in the way."
 				return 1
 			var/obj/structure/window/W
-			W = new /obj/structure/window/reinforced( user.loc, 1 )
+			W = new /obj/structure/window/reinforced(user.loc, 1)
 			W.state = 0
-			W.dir = SOUTHWEST
-			W.ini_dir = SOUTHWEST
 			W.anchored = 0
 			src.use(2)
 
