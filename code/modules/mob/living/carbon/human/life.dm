@@ -1618,16 +1618,12 @@
 	update_sight()
 		species.sightglassesmod = 0
 		if(glasses)
-			if(istype(glasses, /obj/item/clothing/glasses/meson))
+			if(istype(glasses, /obj/item/clothing/glasses/meson) && glasses:active)
 				species.sightglassesmod = 1
-			else if(istype(glasses, /obj/item/clothing/glasses/night) && !istype(glasses, /obj/item/clothing/glasses/night/shadowling))
-				var/obj/item/clothing/glasses/night/nvg = glasses
-				if(nvg.on)
-					species.sightglassesmod = 2
-			else if(istype(glasses, /obj/item/clothing/glasses/thermal) )
+			else if(istype(glasses, /obj/item/clothing/glasses/night) && !istype(glasses, /obj/item/clothing/glasses/night/shadowling) && glasses:active)
+				species.sightglassesmod = 2
+			else if(istype(glasses, /obj/item/clothing/glasses/thermal) && glasses:active)
 				species.sightglassesmod = 3
-			else if(istype(glasses, /obj/item/clothing/glasses/science) )
-				species.sightglassesmod = 4
 
 		if(stat == DEAD)
 			set_EyesVision(transition_time = 0)
@@ -1653,9 +1649,6 @@
 						set_EyesVision("nvg")
 					if(3)
 						set_EyesVision("thermal")
-					if(4)
-						set_EyesVision("sci")
-
 
 	proc/handle_random_events()
 		// Puke if toxloss is too high

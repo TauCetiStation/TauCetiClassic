@@ -5,6 +5,7 @@
 	tc_custom = 'tauceti/items/clothing/glasses/hostermal.dmi'
 	icon_state = "hos_shades"
 	item_state = "hos_shades"
+	toggleable = 0
 
 /obj/item/clothing/glasses/rosas_eyepatch
 	name = "WhiteEyepatch"

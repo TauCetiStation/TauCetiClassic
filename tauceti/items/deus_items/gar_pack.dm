@@ -27,6 +27,7 @@
 	tc_custom = 'tauceti/items/deus_items/garglasses.dmi'
 	icon_state = "garm"
 	item_state = "garm"
+	toggleable = 0
 
 /obj/item/clothing/glasses/sunglasses/sechud/gar
 	name = "Gar HUDSunglasses"
