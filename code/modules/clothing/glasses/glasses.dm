@@ -21,11 +21,13 @@
 			active = 0
 			icon_state = off_state
 			user.update_inv_glasses()
+			vision_flags = null
 			usr << "You deactivate the optical matrix on the [src]."
 		else
 			active = 1
 			icon_state = initial(icon_state)
 			user.update_inv_glasses()
+			vision_flags = initial(vision_flags)
 			usr << "You activate the optical matrix on the [src]."
 		user.update_action_buttons()
 		user.update_inv_glasses()
@@ -50,6 +52,7 @@
 	desc = "The goggles do nothing!"
 	icon_state = "purple"
 	item_state = "glasses"
+	action_button_name = "Toggle Goggles"
 	toggleable = 1
 
 /obj/item/clothing/glasses/night
@@ -64,6 +67,7 @@
 	toggleable = 1
 	action_button_name = "Toggle Goggles"
 	active = 1
+	off_state = "night"
 
 /obj/item/clothing/glasses/eyepatch
 	name = "eyepatch"

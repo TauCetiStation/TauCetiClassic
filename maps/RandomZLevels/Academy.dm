@@ -41,3 +41,4 @@
 	desc = "I can see forever!"
 	icon_state = "monocle"
 	item_state = "headset"
+	toggleable = 0
