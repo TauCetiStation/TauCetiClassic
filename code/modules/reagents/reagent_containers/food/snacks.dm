@@ -269,6 +269,28 @@
 		reagents.add_reagent("tricordrazine", 8)
 		bitesize = 3
 
+/obj/item/weapon/reagent_containers/food/snacks/lasagna
+	name = "lasagna"
+	desc = "Tasty meat with a sauce"
+	icon_state = "lasagna"
+
+	New()
+		..()
+		reagents.add_reagent("nutriment", 8)
+		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/flakes
+	name = "flakes"
+	desc = "It smells like a dog?!"
+	icon_state = "flakes"
+	trash = /obj/item/trash/snack_bowl
+
+	New()
+		..()
+		reagents.add_reagent("nutriment", 6)
+		bitesize = 2
+
+
 /obj/item/weapon/reagent_containers/food/snacks/candy
 	name = "candy"
 	desc = "Nougat, love it or hate it."
@@ -2833,6 +2855,41 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 3)
+
+// Meatball + doughslice = Pelmen
+/obj/item/weapon/reagent_containers/food/snacks/doughslice/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if(istype(W,/obj/item/weapon/reagent_containers/food/snacks/meatball))
+		new /obj/item/weapon/reagent_containers/food/snacks/rawpelmen(src)
+		user << "<span class='notice'>You have wrapped a pelmen.</span>"
+		qdel(W)
+		qdel(src)
+
+/obj/item/weapon/reagent_containers/food/snacks/rawpelmen
+	name = "raw pelmen"
+	desc = "Some traditional food."
+	icon_state = "pelmen"
+	bitesize = 1
+	New()
+		..()
+		reagents.add_reagent("nutriment", 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/pelmen
+	name = "pelmen"
+	desc = "Some traditional food."
+	icon_state = "pelmen"
+	bitesize = 3
+	New()
+		..()
+		reagents.add_reagent("nutriment", 3)
+
+/obj/item/weapon/reagent_containers/food/snacks/friedpelmen
+	name = "fried pelmen"
+	desc = "Better then boiled."
+	icon_state = "friedpelmen"
+	bitesize = 4
+	New()
+		..()
+		reagents.add_reagent("nutriment", 4)
 
 // Dough + rolling pin = flat dough
 /obj/item/weapon/reagent_containers/food/snacks/dough/attackby(obj/item/weapon/W as obj, mob/user as mob)
