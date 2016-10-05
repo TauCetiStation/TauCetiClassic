@@ -1624,6 +1624,8 @@
 				species.sightglassesmod = 2
 			else if(istype(glasses, /obj/item/clothing/glasses/thermal) && glasses:active)
 				species.sightglassesmod = 3
+			else if(istype(glasses, /obj/item/clothing/glasses/science) && glasses:active)
+				species.sightglassesmod = 4
 
 		if(stat == DEAD)
 			set_EyesVision(transition_time = 0)
@@ -1649,6 +1651,8 @@
 						set_EyesVision("nvg")
 					if(3)
 						set_EyesVision("thermal")
+					if(4)
+						set_EyesVision("sci")
 
 	proc/handle_random_events()
 		// Puke if toxloss is too high

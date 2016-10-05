@@ -50,6 +50,7 @@
 	desc = "The goggles do nothing!"
 	icon_state = "purple"
 	item_state = "glasses"
+	toggleable = 1
 
 /obj/item/clothing/glasses/night
 	name = "Night Vision Goggles"
