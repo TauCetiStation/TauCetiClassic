@@ -52,6 +52,21 @@ I said no!
 	result = /obj/item/weapon/reagent_containers/food/snacks/bananaphone
 */
 
+/datum/recipe/lasagna
+	reagents = list("tomatojuice" = 10, "carrotjuice" = 5)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/meat,
+		/obj/item/weapon/reagent_containers/food/snacks/bun
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/lasagna
+
+/datum/recipe/flakes
+	reagents = list("milk" = 15, "sugar" = 5)
+	items = list(
+		/obj/item/weapon/paper
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/flakes
+
 /datum/recipe/jellydonut
 	reagents = list("berryjuice" = 5, "sugar" = 5)
 	items = list(
@@ -79,6 +94,19 @@ I said no!
 		/obj/item/weapon/reagent_containers/food/snacks/dough
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/donut/normal
+
+/datum/recipe/pelmen
+	reagents = list("water" = 5)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/rawpelmen
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/pelmen
+
+/datum/recipe/friedpelmen
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/pelmen
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/friedpelmen
 
 /* what is this
 /datum/recipe/human
