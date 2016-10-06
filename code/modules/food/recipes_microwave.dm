@@ -95,18 +95,18 @@ I said no!
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/donut/normal
 
-/datum/recipe/pelmen
+/datum/recipe/dumpling
 	reagents = list("water" = 5)
 	items = list(
-		/obj/item/weapon/reagent_containers/food/snacks/rawpelmen
+		/obj/item/weapon/reagent_containers/food/snacks/rawdumpling
 	)
-	result = /obj/item/weapon/reagent_containers/food/snacks/pelmen
+	result = /obj/item/weapon/reagent_containers/food/snacks/dumpling
 
-/datum/recipe/friedpelmen
+/datum/recipe/frieddumpling
 	items = list(
-		/obj/item/weapon/reagent_containers/food/snacks/pelmen
+		/obj/item/weapon/reagent_containers/food/snacks/dumpling
 	)
-	result = /obj/item/weapon/reagent_containers/food/snacks/friedpelmen
+	result = /obj/item/weapon/reagent_containers/food/snacks/frieddumpling
 
 /* what is this
 /datum/recipe/human
@@ -235,7 +235,7 @@ I said no!
 /datum/recipe/donkpocket
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/dough,
-		/obj/item/weapon/reagent_containers/food/snacks/meatball
+		/obj/item/weapon/reagent_containers/food/snacks/smallmeatball
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/donkpocket //SPECIAL
 	proc/warm_up(var/obj/item/weapon/reagent_containers/food/snacks/donkpocket/being_cooked)
@@ -647,7 +647,9 @@ I said no!
 /datum/recipe/meatballsoup
 	reagents = list("water" = 10)
 	items = list(
-		/obj/item/weapon/reagent_containers/food/snacks/meatball ,
+		/obj/item/weapon/reagent_containers/food/snacks/smallmeatball ,
+		/obj/item/weapon/reagent_containers/food/snacks/smallmeatball ,
+		/obj/item/weapon/reagent_containers/food/snacks/smallmeatball ,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/carrot,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/potato,
 	)
@@ -915,8 +917,9 @@ I said no!
 	reagents = list("water" = 5)
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/spagetti,
-		/obj/item/weapon/reagent_containers/food/snacks/meatball,
-		/obj/item/weapon/reagent_containers/food/snacks/meatball,
+		/obj/item/weapon/reagent_containers/food/snacks/smallmeatball,
+		/obj/item/weapon/reagent_containers/food/snacks/smallmeatball,
+		/obj/item/weapon/reagent_containers/food/snacks/smallmeatball,
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/meatballspagetti
 
@@ -924,10 +927,12 @@ I said no!
 	reagents = list("water" = 5)
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/spagetti,
-		/obj/item/weapon/reagent_containers/food/snacks/meatball,
-		/obj/item/weapon/reagent_containers/food/snacks/meatball,
-		/obj/item/weapon/reagent_containers/food/snacks/meatball,
-		/obj/item/weapon/reagent_containers/food/snacks/meatball,
+		/obj/item/weapon/reagent_containers/food/snacks/smallmeatball,
+		/obj/item/weapon/reagent_containers/food/snacks/smallmeatball,
+		/obj/item/weapon/reagent_containers/food/snacks/smallmeatball,
+		/obj/item/weapon/reagent_containers/food/snacks/smallmeatball,
+		/obj/item/weapon/reagent_containers/food/snacks/smallmeatball,
+		/obj/item/weapon/reagent_containers/food/snacks/smallmeatball,
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/spesslaw
 
@@ -1213,7 +1218,8 @@ I said no!
 		/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiavulgaris,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiavulgaris,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/potato,
-		/obj/item/weapon/reagent_containers/food/snacks/meatball,
+		/obj/item/weapon/reagent_containers/food/snacks/smallmeatball,
+		/obj/item/weapon/reagent_containers/food/snacks/smallmeatball,
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/validsalad
 	make_food(var/obj/container as obj)
