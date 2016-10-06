@@ -1617,14 +1617,15 @@
 
 	update_sight()
 		species.sightglassesmod = 0
-		if(glasses)
-			if(istype(glasses, /obj/item/clothing/glasses/meson) && glasses:active)
+		var/obj/item/clothing/glasses/G = glasses
+		if(istype(G) && G.active)
+			if(istype(glasses, /obj/item/clothing/glasses/meson))
 				species.sightglassesmod = 1
-			else if(istype(glasses, /obj/item/clothing/glasses/night) && !istype(glasses, /obj/item/clothing/glasses/night/shadowling) && glasses:active)
+			else if(istype(glasses, /obj/item/clothing/glasses/night) && !istype(glasses, /obj/item/clothing/glasses/night/shadowling))
 				species.sightglassesmod = 2
-			else if(istype(glasses, /obj/item/clothing/glasses/thermal) && glasses:active)
+			else if(istype(glasses, /obj/item/clothing/glasses/thermal))
 				species.sightglassesmod = 3
-			else if(istype(glasses, /obj/item/clothing/glasses/science) && glasses:active)
+			else if(istype(glasses, /obj/item/clothing/glasses/science))
 				species.sightglassesmod = 4
 
 		if(stat == DEAD)

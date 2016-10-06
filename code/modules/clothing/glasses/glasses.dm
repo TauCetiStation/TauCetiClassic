@@ -13,24 +13,25 @@
 	var/toggleable = 0
 	var/off_state = "degoggles"
 	var/active = 1
-	var/activation_sound = 'sound/effects/glasses_on.ogg'
+	var/activation_sound = 'sound/effects/glasses_switch.ogg'
 
 /obj/item/clothing/glasses/attack_self(mob/user)
 	if(toggleable)
-		if(active)
-			active = 0
-			icon_state = off_state
-			user.update_inv_glasses()
-			vision_flags = null
-			usr << "You deactivate the optical matrix on the [src]."
-		else
-			active = 1
-			icon_state = initial(icon_state)
-			user.update_inv_glasses()
-			vision_flags = initial(vision_flags)
-			usr << "You activate the optical matrix on the [src]."
-		user.update_action_buttons()
-		user.update_inv_glasses()
+		if(ishuman(usr))
+			var/mob/living/carbon/human/H = usr
+			if(active)
+				active = 0
+				icon_state = off_state
+				vision_flags = 0
+				usr << "You deactivate the optical matrix on the [src]."
+			else
+				active = 1
+				icon_state = initial(icon_state)
+				vision_flags = initial(vision_flags)
+				usr << "You activate the optical matrix on the [src]."
+			playsound(src.loc, activation_sound, 10, 0)
+			H.update_inv_glasses()
+			H.update_sight()
 
 /obj/item/clothing/glasses/meson
 	name = "Optical Meson Scanner"
@@ -68,6 +69,7 @@
 	action_button_name = "Toggle Goggles"
 	active = 1
 	off_state = "night"
+	activation_sound = 'sound/effects/glasses_on.ogg'
 
 /obj/item/clothing/glasses/eyepatch
 	name = "eyepatch"
