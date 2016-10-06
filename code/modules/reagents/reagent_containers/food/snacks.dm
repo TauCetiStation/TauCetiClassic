@@ -2856,36 +2856,36 @@
 		..()
 		reagents.add_reagent("nutriment", 3)
 
-// Meatball + doughslice = Pelmen
+// Meatball + doughslice = Dumpling
 /obj/item/weapon/reagent_containers/food/snacks/doughslice/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W,/obj/item/weapon/reagent_containers/food/snacks/meatball))
-		new /obj/item/weapon/reagent_containers/food/snacks/rawpelmen(src)
-		user << "<span class='notice'>You have wrapped a pelmen.</span>"
+	if(istype(W,/obj/item/weapon/reagent_containers/food/snacks/smallmeatball))
+		new /obj/item/weapon/reagent_containers/food/snacks/rawdumpling(src)
+		user << "<span class='notice'>You have wrapped a dumpling.</span>"
 		qdel(W)
 		qdel(src)
 
-/obj/item/weapon/reagent_containers/food/snacks/rawpelmen
-	name = "raw pelmen"
+/obj/item/weapon/reagent_containers/food/snacks/rawdumpling
+	name = "raw dumpling"
 	desc = "Some traditional food."
-	icon_state = "pelmen"
+	icon_state = "dumpling"
 	bitesize = 1
 	New()
 		..()
 		reagents.add_reagent("nutriment", 1)
 
-/obj/item/weapon/reagent_containers/food/snacks/pelmen
-	name = "pelmen"
+/obj/item/weapon/reagent_containers/food/snacks/dumpling
+	name = "dumpling"
 	desc = "Some traditional food."
-	icon_state = "pelmen"
+	icon_state = "dumpling"
 	bitesize = 3
 	New()
 		..()
 		reagents.add_reagent("nutriment", 3)
 
-/obj/item/weapon/reagent_containers/food/snacks/friedpelmen
-	name = "fried pelmen"
+/obj/item/weapon/reagent_containers/food/snacks/frieddumpling
+	name = "fried dumpling"
 	desc = "Better then boiled."
-	icon_state = "friedpelmen"
+	icon_state = "frieddumpling"
 	bitesize = 4
 	New()
 		..()
@@ -2897,6 +2897,25 @@
 		new /obj/item/weapon/reagent_containers/food/snacks/sliceable/flatdough(src)
 		user << "<span class='notice'>You flatten the dough.</span>"
 		qdel(src)
+
+// Meatball + Ymelie ryki = Small Meatballs
+/obj/item/weapon/reagent_containers/food/snacks/meatball/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if(istype(W,/obj/item/weapon/kitchenknife))
+		new /obj/item/weapon/reagent_containers/food/snacks/smallmeatball(src)
+		new /obj/item/weapon/reagent_containers/food/snacks/smallmeatball(src)
+		new /obj/item/weapon/reagent_containers/food/snacks/smallmeatball(src)
+		user << "<span class='notice'>You cut out small balls, then have given everyone the correct form.</span>"
+		qdel(src)
+
+/obj/item/weapon/reagent_containers/food/snacks/smallmeatball
+	name = "small meat ball"
+	desc = "It is a food ingredient."
+	icon = 'icons/obj/food_ingredients.dmi'
+	icon_state = "smeatball"
+	bitesize = 1
+	New()
+		..()
+		reagents.add_reagent("nutriment", 1)
 
 // slicable into 3xdoughslices
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/flatdough
