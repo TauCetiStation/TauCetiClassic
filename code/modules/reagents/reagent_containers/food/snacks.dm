@@ -580,6 +580,27 @@
 		..()
 		reagents.add_reagent("nutriment", 1)
 
+/obj/item/weapon/reagent_containers/food/snacks/pancake
+	name = "Pancake"
+	desc = "Blinchek."
+	icon_state = "pancake"
+	trash = /obj/item/trash/plate
+	bitesize = 1
+	New()
+		..()
+		reagents.add_reagent("nutriment", 2)
+
+/obj/item/weapon/reagent_containers/food/snacks/spancake
+	name = "Sugared Pancake"
+	desc = "Now with a sirup"
+	icon_state = "s_pancake"
+	trash = /obj/item/trash/plate
+	bitesize = 1
+	New()
+		..()
+		reagents.add_reagent("nutriment", 2)
+		reagents.add_reagent("sugar", 1)
+
 /obj/item/weapon/reagent_containers/food/snacks/appendix
 //yes, this is the same as meat. I might do something different in future
 	name = "appendix"
@@ -2891,12 +2912,102 @@
 		..()
 		reagents.add_reagent("nutriment", 4)
 
+/obj/item/weapon/reagent_containers/food/snacks/cake
+	name = "Cake"
+	desc = "Lovely dessert of chlidrens."
+	icon_state = "cake"
+	bitesize = 1
+	New()
+		..()
+		reagents.add_reagent("nutriment", 2)
+
 // Dough + rolling pin = flat dough
 /obj/item/weapon/reagent_containers/food/snacks/dough/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W,/obj/item/weapon/kitchen/rollingpin))
 		new /obj/item/weapon/reagent_containers/food/snacks/sliceable/flatdough(src)
 		user << "<span class='notice'>You flatten the dough.</span>"
 		qdel(src)
+// Khinkali
+	if(istype(W,/obj/item/weapon/reagent_containers/food/snacks/meatball))
+		new /obj/item/weapon/reagent_containers/food/snacks/rawkhinkali(src)
+		user << "<span class='notice'> You have wrapped a khinkali.</span>"
+		qdel(W)
+		qdel(src)
+
+/obj/item/weapon/reagent_containers/food/snacks/rawkhinkali
+	name = "raw khinkali"
+	desc = "Parody of dumpling."
+	icon_state = "khinkali"
+	bitesize = 1
+	New()
+		..()
+		reagents.add_reagent("nutriment", 2)
+
+/obj/item/weapon/reagent_containers/food/snacks/khinkali
+	name = "khinkali"
+	desc = "Big ball with meat."
+	icon_state = "khinkali"
+	bitesize = 3
+	New()
+		..()
+		reagents.add_reagent("nutriment", 6)
+
+/obj/item/weapon/reagent_containers/food/snacks/khachapuri
+	name = "Khachapuri"
+	desc = "Cheese flat cake... and egg."
+	icon_state = "khachapuri"
+	bitesize = 1
+	New()
+		..()
+		reagents.add_reagent("nutriment", 5)
+
+/obj/item/weapon/reagent_containers/food/snacks/tortilla
+	name = "Tortilla"
+	desc = "Edible disk! Yay!"
+	icon = 'icons/obj/food_ingredients.dmi'
+	icon_state = "tortilla"
+	bitesize = 1
+	New()
+		..()
+		reagents.add_reagent("nutriment", 2)
+
+/obj/item/weapon/reagent_containers/food/snacks/nachos
+	name = "Nachos"
+	desc = "Mexiko! Space Mexiko."
+	icon_state = "nachos"
+	trash = /obj/item/trash/plate
+	bitesize = 1
+	New()
+		..()
+		reagents.add_reagent("nutriment", 3)
+
+/obj/item/weapon/reagent_containers/food/snacks/cheesynachos
+	name = "Cheesy Nachos"
+	desc = "So cheezy, so fantastic."
+	icon_state = "cheesynachos"
+	trash = /obj/item/trash/plate
+	bitesize = 1
+	New()
+		..()
+		reagents.add_reagent("nutriment", 4)
+
+/obj/item/weapon/reagent_containers/food/snacks/burrito
+	name = "Burrito"
+	desc = "I will eat it con mucho gusto!"
+	icon_state = "burrito"
+	bitesize = 2
+	New()
+		..()
+		reagents.add_reagent("nutriment", 6)
+
+/obj/item/weapon/reagent_containers/food/snacks/cheesyburrito
+	name = "Cheesy Burrito"
+	desc = "Cheesy gusto!"
+	icon_state = "cheesyburrito"
+	bitesize = 2
+	New()
+		..()
+		reagents.add_reagent("nutriment", 7)
 
 // Meatball + Ymelie ryki = Small Meatballs
 /obj/item/weapon/reagent_containers/food/snacks/meatball/attackby(obj/item/weapon/W as obj, mob/user as mob)
