@@ -19,6 +19,14 @@ I said no!
 	result = /obj/item/weapon/reagent_containers/food/snacks/telebacon
 */
 
+/datum/recipe/cake
+	reagents = list("sugar" = 5)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/dough,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/cherries
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/cake
+
 /datum/recipe/friedegg
 	reagents = list("sodiumchloride" = 1, "blackpepper" = 1)
 	items = list(
@@ -51,6 +59,71 @@ I said no!
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/bananaphone
 */
+
+/datum/recipe/pancake
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/flour,
+		/obj/item/weapon/reagent_containers/food/snacks/egg,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/pancake
+
+/datum/recipe/spancake
+	reagents = list("water" = 5, "sugar" = 5)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/flour,
+		/obj/item/weapon/reagent_containers/food/snacks/egg,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/spancake
+
+/datum/recipe/tortilla
+	reagents = list("water" = 5, "sodiumchloride" = 2)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/sliceable/flatdough
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/tortilla
+
+/datum/recipe/nachos
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/tortilla,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/nachos
+
+/datum/recipe/cheesynachos
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/tortilla,
+		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/cheesynachos
+
+/datum/recipe/burrito
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/meatball,
+		/obj/item/weapon/reagent_containers/food/snacks/tortilla
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/burrito
+
+/datum/recipe/burrito
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/meatball,
+		/obj/item/weapon/reagent_containers/food/snacks/tortilla,
+		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/cheesyburrito
+
+/datum/recipe/khachapuri
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/egg,
+		/obj/item/weapon/reagent_containers/food/snacks/sliceable/flatdough,
+		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/khachapuri
+
+/datum/recipe/khinkali
+	reagents = list("water" = 5)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/rawkhinkali
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/khinkali
 
 /datum/recipe/lasagna
 	reagents = list("tomatojuice" = 10, "carrotjuice" = 5)
