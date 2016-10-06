@@ -1,6 +1,7 @@
 /obj/machinery/computer/stockexchange
 	name = "Stock exchange computer"
 	icon_state = "oldcomp"
+	circuit = /obj/item/weapon/circuitboard/computer/stockexchange
 	var/logged_in = "Cargo Department"
 	var/vmode = 1
 

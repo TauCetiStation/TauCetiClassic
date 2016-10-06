@@ -4,16 +4,34 @@
 #define MINE_DOCK /area/shuttle/mining/outpost
 #define SCI_DOCK /area/shuttle/research/outpost
 
-var/obj/machinery/computer/mine_sci_shuttle/flight_comp/autopilot
+var/obj/machinery/computer/mine_sci_shuttle/autopilot = null
 
 /obj/machinery/computer/mine_sci_shuttle
 	name = "Mine-Science Shuttle Console"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "shuttle"
-	circuit = "/obj/item/weapon/circuitboard/mine_sci_shuttle"
+	circuit = /obj/item/weapon/circuitboard/mine_sci_shuttle
+	var/area/mine_sci_curr_location = null
+	var/moving = 0
+	var/lastMove = 0
 
-/obj/machinery/computer/mine_sci_shuttle/attackby(obj/item/I as obj, mob/user as mob)
-	return attack_hand(user)
+/obj/machinery/computer/mine_sci_shuttle/New()
+	..()
+	if(!autopilot)
+		var/area/my_area = src.loc.loc
+		//testing("[src.x] [src.y] [src.z] : [my_area]")
+		if(is_type_in_list(my_area, list(STATION_DOCK, MINE_DOCK, SCI_DOCK)))
+			mine_sci_curr_location = my_area
+			autopilot = src
+			name = "Shuttle Console"
+			icon = 'tauceti/modules/_locations/shuttles/computer_shuttle_mining.dmi'
+			dir = WEST
+
+/obj/machinery/computer/mine_sci_shuttle/Destroy()
+	if(autopilot == src)
+		autopilot = null
+
+	return ..()
 
 /obj/machinery/computer/mine_sci_shuttle/attack_ai(mob/user as mob)
 	return attack_hand(user)
@@ -22,6 +40,8 @@ var/obj/machinery/computer/mine_sci_shuttle/flight_comp/autopilot
 	return attack_hand(user)
 
 /obj/machinery/computer/mine_sci_shuttle/attack_hand(mob/user as mob)
+	if(..())
+		return
 	user.set_machine(src)
 
 	var/dat
@@ -67,21 +87,10 @@ var/obj/machinery/computer/mine_sci_shuttle/flight_comp/autopilot
 //------------FLIGHT COMPUTER----------------
 //-------------------------------------------
 
-/obj/machinery/computer/mine_sci_shuttle/flight_comp
-	name = "Shuttle Console"
-	icon = 'tauceti/modules/_locations/shuttles/computer_shuttle_mining.dmi'
-	var/area/mine_sci_curr_location
-	var/moving = 0
-	var/lastMove = 0
-
-/obj/machinery/computer/mine_sci_shuttle/flight_comp/New()
-	mine_sci_curr_location = locate(STATION_DOCK)
-	autopilot = src
-
-/obj/machinery/computer/mine_sci_shuttle/flight_comp/proc/mine_sci_move_to(area/destination as area)
+/obj/machinery/computer/mine_sci_shuttle/proc/mine_sci_move_to(area/destination as area)
 	if(moving)
 		return FALSE
-	if(lastMove + MINE_SCI_SHUTTLE_COOLDOWN > world.time)
+	if((lastMove + MINE_SCI_SHUTTLE_COOLDOWN) > world.time)
 		return FALSE
 	var/area/dest_location = locate(destination)
 	if(mine_sci_curr_location == dest_location)
@@ -92,7 +101,7 @@ var/obj/machinery/computer/mine_sci_shuttle/flight_comp/autopilot
 	addtimer(src, "mine_sci_do_move", MINE_SCI_SHUTTLE_COOLDOWN, TRUE, dest_location)
 	return TRUE
 
-/obj/machinery/computer/mine_sci_shuttle/flight_comp/proc/mine_sci_do_move(area/destination as area)
+/obj/machinery/computer/mine_sci_shuttle/proc/mine_sci_do_move(area/destination as area)
 	if(moving)
 		var/list/dstturfs = list()
 		var/throwx = world.maxx
