@@ -18,7 +18,7 @@ var/obj/machinery/computer/mine_sci_shuttle/autopilot = null
 /obj/machinery/computer/mine_sci_shuttle/New()
 	..()
 	if(!autopilot)
-		var/area/my_area = src.loc.loc
+		var/area/my_area = get_area(src)
 		//testing("[src.x] [src.y] [src.z] : [my_area]")
 		if(is_type_in_list(my_area, list(STATION_DOCK, MINE_DOCK, SCI_DOCK)))
 			mine_sci_curr_location = my_area
@@ -30,6 +30,7 @@ var/obj/machinery/computer/mine_sci_shuttle/autopilot = null
 /obj/machinery/computer/mine_sci_shuttle/Destroy()
 	if(autopilot == src)
 		autopilot = null
+		mine_sci_curr_location = null
 
 	return ..()
 
