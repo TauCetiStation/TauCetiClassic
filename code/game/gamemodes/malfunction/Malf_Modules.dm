@@ -14,6 +14,8 @@ rcd light flash thingy on matter drain
 
 */
 
+
+
 /datum/AI_Module
 	var/uses = 0
 	var/module_name
@@ -60,7 +62,8 @@ rcd light flash thingy on matter drain
 /client/proc/disable_rcd()
 	set category = "Malfunction"
 	set name = "Disable RCDs"
-	for(var/datum/AI_Module/large/disable_rcd/rcdmod in usr:current_modules)
+	var/mob/living/silicon/ai/A = usr
+	for(var/datum/AI_Module/large/disable_rcd/rcdmod in A.current_modules)
 		if(rcdmod.uses > 0)
 			rcdmod.uses --
 			for(var/obj/item/weapon/rcd/rcd in world)
@@ -75,11 +78,21 @@ rcd light flash thingy on matter drain
 	mod_pick_name = "overload"
 	uses = 2
 
-/client/proc/overload_machine(obj/machinery/M as obj in world)
+/datum/AI_Module/small/nanject
+	module_name = "Nanites injector"
+	mod_pick_name = "nanjector"
+	uses = 1
+
+/client/proc/overload_machine()
 	set name = "Overload Machine"
 	set category = "Malfunction"
+	var/mob/living/silicon/ai/A = usr
+	var/list/OS = list()
+	for (var/obj/machinery/LM in view(1,A.eyeobj))
+		OS.Add(LM)
+	var/obj/machinery/M = input(usr, "Overload Machine","Choose Object") as null|obj in OS
 	if (istype(M, /obj/machinery))
-		for(var/datum/AI_Module/small/overload_machine/overload in usr:current_modules)
+		for(var/datum/AI_Module/small/overload_machine/overload in A.current_modules)
 			if(overload.uses > 0)
 				overload.uses --
 				for(var/mob/V in hearers(M, null))
@@ -87,8 +100,30 @@ rcd light flash thingy on matter drain
 				spawn(50)
 					explosion(get_turf(M), 0,1,2,3)
 					qdel(M)
-			else usr << "Out of uses."
-	else usr << "That's not a machine."
+			else
+				usr << "Out of uses."
+	else
+		usr << "That's not a machine."
+
+/client/proc/nanject()
+	set name = "Add nanobot injector"
+	set category = "Malfunction"
+	var/mob/living/silicon/ai/A = usr
+	var/obj/machinery/M = input(usr, "Add nanobot injector","Choose Machine") as obj in view(1,A.eyeobj)
+	if (istype(M, /obj/machinery))
+		for(var/datum/AI_Module/small/nanject/nanjector in A.current_modules)
+			if(nanjector.uses > 0)
+				nanjector.uses --
+				for(var/mob/V in hearers(M, null))
+					V.show_message("\blue You hear a quiet click.", 2)
+					if(M.nanjector == 0)
+						M.nanjector = 1
+					else
+						usr << "This machine already upgraded."
+			else
+				usr << "Out of uses."
+	else
+		usr << "That's not a machine."
 
 /datum/AI_Module/small/blackout
 	module_name = "Blackout"
@@ -98,7 +133,8 @@ rcd light flash thingy on matter drain
 /client/proc/blackout()
 	set category = "Malfunction"
 	set name = "Blackout"
-	for(var/datum/AI_Module/small/blackout/blackout in usr:current_modules)
+	var/mob/living/silicon/ai/A = usr
+	for(var/datum/AI_Module/small/blackout/blackout in A.current_modules)
 		if(blackout.uses > 0)
 			blackout.uses --
 			for(var/obj/machinery/power/apc/apc in world)
@@ -111,22 +147,34 @@ rcd light flash thingy on matter drain
 	module_name = "Hack intercept"
 	mod_pick_name = "interhack"
 
+/datum/AI_Module/large/holohack
+	module_name = "Hacked hologram"
+	mod_pick_name = "holohack"
+
 /client/proc/interhack()
 	set category = "Malfunction"
 	set name = "Hack intercept"
 	usr.verbs -= /client/proc/interhack
 	ticker.mode:hack_intercept()
 
+/client/proc/holohack()
+	set category = "Malfunction"
+	set name = "Hacked hologram"
+	usr.verbs -= /client/proc/holohack
+	ticker.mode:hack_holopads()
+
 /datum/AI_Module/small/reactivate_camera
 	module_name = "Reactivate camera"
 	mod_pick_name = "recam"
 	uses = 10
 
-/client/proc/reactivate_camera(obj/machinery/camera/C as obj in cameranet.cameras)
+/client/proc/reactivate_camera()
 	set name = "Reactivate Camera"
 	set category = "Malfunction"
+	var/mob/living/silicon/ai/A = usr
+	var/obj/machinery/camera/C = input(usr, "Reactivate Camera","Choose Object") as obj in view(1,A.eyeobj)
 	if (istype (C, /obj/machinery/camera))
-		for(var/datum/AI_Module/small/reactivate_camera/camera in usr:current_modules)
+		for(var/datum/AI_Module/small/reactivate_camera/camera in A.current_modules)
 			if(camera.uses > 0)
 				if(!C.status)
 					C.status = !C.status
@@ -135,19 +183,23 @@ rcd light flash thingy on matter drain
 						V.show_message(text("\blue You hear a quiet click."))
 				else
 					usr << "This camera is either active, or not repairable."
-			else usr << "Out of uses."
-	else usr << "That's not a camera."
+			else
+				usr << "Out of uses."
+	else
+		usr << "That's not a camera."
 
 /datum/AI_Module/small/upgrade_camera
 	module_name = "Upgrade Camera"
 	mod_pick_name = "upgradecam"
 	uses = 10
 
-/client/proc/upgrade_camera(obj/machinery/camera/C as obj in cameranet.cameras)
+/client/proc/upgrade_camera()
 	set name = "Upgrade Camera"
 	set category = "Malfunction"
+	var/mob/living/silicon/ai/A = usr
+	var/obj/machinery/camera/C = input(usr, "Upgrade Camera","Choose Object") as obj in view(1,A.eyeobj)
 	if(istype(C))
-		var/datum/AI_Module/small/upgrade_camera/UC = locate(/datum/AI_Module/small/upgrade_camera) in usr:current_modules
+		var/datum/AI_Module/small/upgrade_camera/UC = locate(/datum/AI_Module/small/upgrade_camera) in A.current_modules
 		if(UC)
 			if(UC.uses > 0)
 				if(C.assembly)
@@ -189,7 +241,9 @@ rcd light flash thingy on matter drain
 	src.possible_modules += new /datum/AI_Module/large/upgrade_turrets
 	src.possible_modules += new /datum/AI_Module/large/disable_rcd
 	src.possible_modules += new /datum/AI_Module/small/overload_machine
+	src.possible_modules += new /datum/AI_Module/small/nanject
 	src.possible_modules += new /datum/AI_Module/small/interhack
+	src.possible_modules += new /datum/AI_Module/large/holohack
 	src.possible_modules += new /datum/AI_Module/small/blackout
 	src.possible_modules += new /datum/AI_Module/small/reactivate_camera
 	src.possible_modules += new /datum/AI_Module/small/upgrade_camera
@@ -217,9 +271,10 @@ rcd light flash thingy on matter drain
 
 /datum/AI_Module/module_picker/Topic(href, href_list)
 	..()
+	var/mob/living/silicon/ai/A = usr
 	if (href_list["coreup"])
 		var/already
-		for (var/datum/AI_Module/mod in usr:current_modules)
+		for (var/datum/AI_Module/mod in A.current_modules)
 			if(istype(mod, /datum/AI_Module/large/fireproof_core))
 				already = 1
 		if (!already)
@@ -227,11 +282,12 @@ rcd light flash thingy on matter drain
 			usr:current_modules += new /datum/AI_Module/large/fireproof_core
 			src.temp = "An upgrade to improve core resistance, making it immune to fire and heat. This effect is permanent."
 			src.processing_time -= 50
-		else src.temp = "This module is only needed once."
+		else
+			src.temp = "This module is only needed once."
 
 	else if (href_list["turret"])
 		var/already
-		for (var/datum/AI_Module/mod in usr:current_modules)
+		for (var/datum/AI_Module/mod in A.current_modules)
 			if(istype(mod, /datum/AI_Module/large/upgrade_turrets))
 				already = 1
 		if (!already)
@@ -239,11 +295,12 @@ rcd light flash thingy on matter drain
 			usr:current_modules += new /datum/AI_Module/large/upgrade_turrets
 			src.temp = "Improves the firing speed and health of all AI turrets. This effect is permanent."
 			src.processing_time -= 50
-		else src.temp = "This module is only needed once."
+		else
+			src.temp = "This module is only needed once."
 
 	else if (href_list["rcd"])
 		var/already
-		for (var/datum/AI_Module/mod in usr:current_modules)
+		for (var/datum/AI_Module/mod in A.current_modules)
 			if(istype(mod, /datum/AI_Module/large/disable_rcd))
 				mod:uses += 1
 				already = 1
@@ -251,12 +308,13 @@ rcd light flash thingy on matter drain
 			usr:current_modules += new /datum/AI_Module/large/disable_rcd
 			usr.verbs += /client/proc/disable_rcd
 			src.temp = 	"Send a specialised pulse to break all RCD devices on the station."
-		else src.temp = "Additional use added to RCD disabler."
+		else
+			src.temp = "Additional use added to RCD disabler."
 		src.processing_time -= 50
 
 	else if (href_list["overload"])
 		var/already
-		for (var/datum/AI_Module/mod in usr:current_modules)
+		for (var/datum/AI_Module/mod in A.current_modules)
 			if(istype(mod, /datum/AI_Module/small/overload_machine))
 				mod:uses += 2
 				already = 1
@@ -264,12 +322,27 @@ rcd light flash thingy on matter drain
 			usr.verbs += /client/proc/overload_machine
 			usr:current_modules += new /datum/AI_Module/small/overload_machine
 			src.temp = "Overloads an electrical machine, causing a small explosion. 2 uses."
-		else src.temp = "Two additional uses added to Overload module."
+		else
+			src.temp = "Two additional uses added to Overload module."
+		src.processing_time -= 15
+
+	else if (href_list["nanjector"])
+		var/already
+		for (var/datum/AI_Module/mod in A.current_modules)
+			if(istype(mod, /datum/AI_Module/small/nanject))
+				mod:uses += 1
+				already = 1
+		if (!already)
+			usr.verbs += /client/proc/nanject
+			usr:current_modules += new /datum/AI_Module/small/nanject
+			src.temp = "Upgrades an electrical machine with nanobot injector. 1 use."
+		else
+			src.temp = "Additional use added to Overload module."
 		src.processing_time -= 15
 
 	else if (href_list["blackout"])
 		var/already
-		for (var/datum/AI_Module/mod in usr:current_modules)
+		for (var/datum/AI_Module/mod in A.current_modules)
 			if(istype(mod, /datum/AI_Module/small/blackout))
 				mod:uses += 3
 				already = 1
@@ -277,12 +350,13 @@ rcd light flash thingy on matter drain
 			usr.verbs += /client/proc/blackout
 			src.temp = "Attempts to overload the lighting circuits on the station, destroying some bulbs. 3 uses."
 			usr:current_modules += new /datum/AI_Module/small/blackout
-		else src.temp = "Three additional uses added to Blackout module."
+		else
+			src.temp = "Three additional uses added to Blackout module."
 		src.processing_time -= 15
 
 	else if (href_list["interhack"])
 		var/already
-		for (var/datum/AI_Module/mod in usr:current_modules)
+		for (var/datum/AI_Module/mod in A.current_modules)
 			if(istype(mod, /datum/AI_Module/small/interhack))
 				already = 1
 		if (!already)
@@ -290,11 +364,25 @@ rcd light flash thingy on matter drain
 			src.temp = "Hacks the status upgrade from Cent. Com, removing any information about malfunctioning electrical systems."
 			usr:current_modules += new /datum/AI_Module/small/interhack
 			src.processing_time -= 15
-		else src.temp = "This module is only needed once."
+		else
+			src.temp = "This module is only needed once."
+
+	else if (href_list["holohack"])
+		var/already
+		for (var/datum/AI_Module/mod in A.current_modules)
+			if(istype(mod, /datum/AI_Module/large/holohack))
+				already = 1
+		if (!already)
+			usr.verbs += /client/proc/holohack
+			src.temp = "Hacks holopads to project much more useful hologram."
+			usr:current_modules += new /datum/AI_Module/large/holohack
+			src.processing_time -= 50
+		else
+			src.temp = "This module is only needed once."
 
 	else if (href_list["recam"])
 		var/already
-		for (var/datum/AI_Module/mod in usr:current_modules)
+		for (var/datum/AI_Module/mod in A.current_modules)
 			if(istype(mod, /datum/AI_Module/small/reactivate_camera))
 				mod:uses += 10
 				already = 1
@@ -302,12 +390,13 @@ rcd light flash thingy on matter drain
 			usr.verbs += /client/proc/reactivate_camera
 			src.temp = "Reactivates a currently disabled camera. 10 uses."
 			usr:current_modules += new /datum/AI_Module/small/reactivate_camera
-		else src.temp = "Ten additional uses added to ReCam module."
+		else
+			src.temp = "Ten additional uses added to ReCam module."
 		src.processing_time -= 15
 
 	else if(href_list["upgradecam"])
 		var/already
-		for (var/datum/AI_Module/mod in usr:current_modules)
+		for (var/datum/AI_Module/mod in A.current_modules)
 			if(istype(mod, /datum/AI_Module/small/upgrade_camera))
 				mod:uses += 10
 				already = 1
@@ -315,7 +404,8 @@ rcd light flash thingy on matter drain
 			usr.verbs += /client/proc/upgrade_camera
 			src.temp = "Upgrades a camera to have X-Ray vision, Motion and be EMP-Proof. 10 uses."
 			usr:current_modules += new /datum/AI_Module/small/upgrade_camera
-		else src.temp = "Ten additional uses added to ReCam module."
+		else
+			src.temp = "Ten additional uses added to ReCam module."
 		src.processing_time -= 15
 
 	else

@@ -100,8 +100,18 @@ var/const/HOLOPAD_MODE = 0
 /obj/machinery/hologram/holopad/proc/activate_holo(mob/living/silicon/ai/user)
 	if(!(stat & NOPOWER) && user.eyeobj.loc == src.loc)//If the projector has power and client eye is on it.
 		if(!hologram)//If there is not already a hologram.
-			create_holo(user)//Create one.
-			src.visible_message("A holographic image of [user] flicks to life right before your eyes!")
+			var/malfhack = 0
+			if(ticker.mode.name == "AI malfunction")
+				var/datum/game_mode/malfunction/malf = ticker.mode
+				if (malf.holhack == 1)
+					malfhack = 1
+			if(malfhack == 1)
+				create_holo(user)
+				src.visible_message("A holographic image of space carp flicks to life right before your eyes!")
+				make_danger(user)
+			else
+				create_holo(user)//Create one.
+				src.visible_message("A holographic image of [user] flicks to life right before your eyes!")
 		else
 			user << "\red ERROR: \black Image feed in progress."
 	else
@@ -133,7 +143,13 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	A.holo = src
 	master = A//AI is the master.
 	use_power = 2//Active power usage.
-	return 1
+	return
+
+/obj/machinery/hologram/holopad/proc/make_danger(mob/living/silicon/ai/A, turf/T = loc)
+	hologram.icon = getHologramIcon(icon('icons/mob/AI.dmi',"holo4"))
+	hologram.name = "space carp"
+	A.hcarp = 1
+	return
 
 /obj/machinery/hologram/holopad/proc/clear_holo()
 //	hologram.set_light(0)//Clear lighting.	//handled by the lighting controller when its ower is deleted
@@ -155,12 +171,15 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 					return 1
 
 				else if (HOLOPAD_MODE == 1)
-
 					var/area/holo_area = get_area(src)
 					var/area/eye_area = get_area(master.eyeobj)
-
 					if(eye_area in holo_area.master.related)
 						return 1
+				else
+					master.hcarp = 0
+
+			else
+				master.hcarp = 0
 
 		clear_holo()//If not, we want to get rid of the hologram.
 	return 1
@@ -214,7 +233,6 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	if(hologram)
 		src:clear_holo()
 	return ..()
-
 /*
 Holographic project of everything else.
 
