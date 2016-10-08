@@ -100,18 +100,18 @@
 	if (apcs == (1 + intercept_hacked) && AI_malf_revealed==0)
 		AI_malf_revealed = 1
 		world << sound('sound/AI/commandreport.ogg')
-		captain_announce("Ð’Ð½Ð¸Ð¼Ð°Ð½Ð¸Ðµ, Ð˜ÑÑ…Ð¾Ð´. ÐœÑ‹ Ð¾Ð±Ð½Ð°Ñ€ÑƒÐ¶Ð¸Ð»Ð¸ Ð¿Ð¾Ð´Ð¾Ð·Ñ€Ð¸Ñ‚ÐµÐ»ÑŒÐ½ÑƒÑŽ Ð°ÐºÑ‚Ð¸Ð²Ð½Ð¾ÑÑ‚ÑŒ Ð² Ð²Ð°ÑˆÐµÐ¹ ÑÐµÑ‚Ð¸. ÐŸÐ¾Ñ…Ð¾Ð¶Ðµ, ÐºÑ‚Ð¾-Ñ‚Ð¾ Ð¿Ñ‹Ñ‚Ð°ÐµÑ‚ÑÑ Ð²Ð·Ð»Ð¾Ð¼Ð°Ñ‚ÑŒ Ð²Ð°ÑˆÐ¸ ÑÐ»ÐµÐºÑ‚Ñ€Ð¾Ð½Ð½Ñ‹Ðµ ÑÐ¸ÑÑ‚ÐµÐ¼Ñ‹. ÐœÑ‹ ÑÐ¾Ð¾Ð±Ñ‰Ð¸Ð¼ Ð²Ð°Ð¼, ÐºÐ¾Ð³Ð´Ð° Ð¿Ð¾Ð»ÑƒÑ‡Ð¸Ð¼ Ð±Ð¾Ð»ÑŒÑˆÐµ Ð´Ð°Ð½Ð½Ñ‹Ñ….", "Caution", "Network Monitoring")
+		captain_announce("Внимание, Исход. Мы обнаружили подозрительную активность в вашей сети. Похоже, кто-то пытается взломать ваши электронные системы. Мы сообщим вам, когда получим больше данных.", "Caution", "Network Monitoring")
 	if (apcs == (2 + intercept_hacked) && AI_malf_revealed==1)
 		AI_malf_revealed = 2
 		world << sound('sound/AI/commandreport.ogg')
-		captain_announce("Ð˜ÑÑ…Ð¾Ð´, Ð¼Ñ‹ Ð½Ð°Ñ‡Ð°Ð»Ð¸ Ð¾Ñ‚ÑÐ»ÐµÐ¶Ð¸Ð²Ð°Ñ‚ÑŒ Ð½Ð°Ñ€ÑƒÑˆÐ¸Ñ‚ÐµÐ»Ñ. ÐšÑ‚Ð¾ Ð±Ñ‹ ÑÑ‚Ð¾ Ð½Ð¸ Ð±Ñ‹Ð», Ð¾Ð½ Ð½Ð°Ñ…Ð¾Ð´Ð¸Ñ‚ÑÑ Ð½Ð° ÑÑ‚Ð°Ð½Ñ†Ð¸Ð¸. Ð¡Ð¾Ð²ÐµÑ‚ÑƒÐµÐ¼ Ð¿Ñ€Ð¾Ð²ÐµÑ€Ð¸Ñ‚ÑŒ Ð²ÑÐµ ÑÐµÑ‚ÐµÐ²Ñ‹Ðµ Ñ‚ÐµÑ€Ð¼Ð¸Ð½Ð°Ð»Ñ‹. ÐœÑ‹ Ð±ÑƒÐ´ÐµÐ¼ Ð¿Ñ€Ð¾Ð´Ð¾Ð»Ð¶Ð°Ñ‚ÑŒ ÑÐ¾Ð¾Ð±Ñ‰Ð°Ñ‚ÑŒ Ð¾Ð± Ð¸Ð·Ð¼ÐµÐ½ÐµÐ½Ð¸ÑÑ… ÑÐ¸Ñ‚ÑƒÐ°Ñ†Ð¸Ð¸.", "Priority Announcement", "Network Monitoring")
+		captain_announce("Исход, мы начали отслеживать нарушителя. Кто бы это ни был, он находится на станции. Советуем проверить все сетевые терминалы. Мы будем продолжать сообщать об изменениях ситуации.", "Priority Announcement", "Network Monitoring")
 	if (apcs == (4 + intercept_hacked) && AI_malf_revealed==2)
 		AI_malf_revealed = 3
 		world << sound('sound/AI/commandreport.ogg')
-		captain_announce("ÐŸÑ€Ð¾Ð¸ÑÑ…Ð¾Ð´ÑÑ‰ÐµÐµ Ð¾Ñ‡ÐµÐ½ÑŒ ÑÑ‚Ñ€Ð°Ð½Ð½Ð¾ Ð¸ ÑÑ‚Ð¾ Ð±ÐµÑÐ¿Ð¾ÐºÐ¾Ð¸Ñ‚. ÐÐ°Ñ€ÑƒÑˆÐ¸Ñ‚ÐµÐ»ÑŒ ÑÐ»Ð¸ÑˆÐºÐ¾Ð¼ Ð±Ñ‹ÑÑ‚Ñ€, Ð¾Ð½ Ð·Ð°Ð¼ÐµÑ‚Ð°ÐµÑ‚ ÑÐ»ÐµÐ´Ñ‹ Ð¸ ÑƒÑ…Ð¾Ð´Ð¸Ñ‚ Ð¾Ñ‚ Ð½Ð°ÑˆÐµÐ¹ ÑÐ»ÐµÐ¶ÐºÐ¸. Ð§ÐµÐ»Ð¾Ð²ÐµÐº Ð½Ðµ Ð¼Ð¾Ð¶ÐµÑ‚ Ð´ÐµÐ¹ÑÑ‚Ð²Ð¾Ð²Ð°Ñ‚ÑŒ Ñ‚Ð°Ðº Ð±Ñ‹ÑÑ‚Ñ€Ð¾...", "Priority Announcement", "Network Monitoring")
+		captain_announce("Происходящее очень странно и это беспокоит. Нарушитель слишком быстр, он заметает следы и уходит от нашей слежки. Человек не может действовать так быстро...", "Priority Announcement", "Network Monitoring")
 	if (apcs == 6 && AI_malf_revealed==3 && !ticker.mode:malf_mode_declared)
 		AI_malf_revealed = 4
-		captain_announce("ÐœÑ‹ Ð¾#$Ð»ÐµÐ´Ð¸^Ð¸ Ð½Ð°Ñ€ÑƒÑˆÐ¸Ñ‚&Ð»Ñ! ÐŸÐ¾Ñ…@Ð¶Ðµ, ÑÑ‚Ð¾ Ð²@Ñˆ Ð±*Ñ€Ñ‚6Ð²Ð¾Ð¹ Ð˜Ð˜, 8Ð½ Ð¿6Ñ‚@ÐµÑ‚ÑÑ Ð²3^Ð¾Ð¼Ð°MÑŒ ÐºÐ¾9Ñ‹ Ñ!ÑÑ‚3Ð¼Ñ‹ $Ð°Ð¼Ð¾9Ð½Ð¸4Ñ‚0#ÐµÐ½Ð¸5, 0Ñ#@Ð½Ð¾8Ð¸#Ðµ Ðµ7Ð¾, Ð¿05@!&*#<Ð¡ÐžÐ•Ð”Ð˜ÐÐ•ÐÐ˜Ð• Ð ÐÐ—ÐžÐ Ð’ÐÐÐž>", "Alert", "Network Monitoring")
+		captain_announce("Мы о#$леди^и нарушит&ля! Пох@же, это в@ш б*рт6вой ИИ, 8н п6т@ется в3^омаMь ко9ы с!ст3мы $амо9ни4т0#ени5, 0с#@но8и#е е7о, п05@!&*#<СОЕДИНЕНИЕ РАЗОРВАНО>", "Alert", "Network Monitoring")
 		takeover()
 	return
 
@@ -189,7 +189,7 @@
 	if (malf.AI_malf_revealed < 4)
 		if (alert(usr, "Are you sure you wish to initiate the takeover? The station hostile runtime detection software is bound to alert everyone. You have hacked [ticker.mode:apcs] APCs.", "Takeover:", "Yes", "No") != "Yes")
 			return
-		captain_announce("ÐœÑ‹ Ð¾#$Ð»ÐµÐ´Ð¸^Ð¸ Ð½Ð°Ñ€ÑƒÑˆÐ¸Ñ‚&Ð»Ñ! ÐŸÐ¾Ñ…@Ð¶Ðµ, ÑÑ‚Ð¾ Ð²@Ñˆ Ð±*Ñ€Ñ‚6Ð²Ð¾Ð¹ Ð˜Ð˜, 8Ð½ Ð¿6Ñ‚@ÐµÑ‚ÑÑ Ð²3^Ð¾Ð¼Ð°MÑŒ ÐºÐ¾9Ñ‹ Ñ!ÑÑ‚3Ð¼Ñ‹ $Ð°Ð¼Ð¾9Ð½Ð¸4Ñ‚0#ÐµÐ½Ð¸5, 0Ñ#@Ð½Ð¾8Ð¸#Ðµ Ðµ7Ð¾, Ð¿05@!&*#<Ð¡ÐžÐ•Ð”Ð˜ÐÐ•ÐÐ˜Ð• Ð ÐÐ—ÐžÐ Ð’ÐÐÐž>", "Alert", "Network Monitoring")
+		captain_announce("Мы о#$леди^и нарушит&ля! Пох@же, это в@ш б*рт6вой ИИ, 8н п6т@ется в3^омаMь ко9ы с!ст3мы $амо9ни4т0#ени5, 0с#@но8и#е е7о, п05@!&*#<СОЕДИНЕНИЕ РАЗОРВАНО>", "Alert", "Network Monitoring")
 	ticker.mode:malf_mode_declared = 1
 	for(var/datum/mind/AI_mind in ticker.mode:malf_ai)
 		AI_mind.current.verbs -= /datum/game_mode/malfunction/proc/takeover
