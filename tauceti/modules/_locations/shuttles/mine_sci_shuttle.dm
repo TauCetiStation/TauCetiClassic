@@ -4,35 +4,14 @@
 #define MINE_DOCK /area/shuttle/mining/outpost
 #define SCI_DOCK /area/shuttle/research/outpost
 
-var/obj/machinery/computer/mine_sci_shuttle/autopilot = null
+var/global/obj/machinery/computer/mine_sci_shuttle/flight_comp/autopilot = null
+var/global/area/mine_sci_curr_location = null
 
 /obj/machinery/computer/mine_sci_shuttle
 	name = "Mine-Science Shuttle Console"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "shuttle"
 	circuit = /obj/item/weapon/circuitboard/mine_sci_shuttle
-	var/area/mine_sci_curr_location = null
-	var/moving = 0
-	var/lastMove = 0
-
-/obj/machinery/computer/mine_sci_shuttle/New()
-	..()
-	if(!autopilot)
-		var/area/my_area = get_area(src)
-		//testing("[src.x] [src.y] [src.z] : [my_area]")
-		if(is_type_in_list(my_area, list(STATION_DOCK, MINE_DOCK, SCI_DOCK)))
-			mine_sci_curr_location = my_area
-			autopilot = src
-			name = "Shuttle Console"
-			icon = 'tauceti/modules/_locations/shuttles/computer_shuttle_mining.dmi'
-			dir = WEST
-
-/obj/machinery/computer/mine_sci_shuttle/Destroy()
-	if(autopilot == src)
-		autopilot = null
-		mine_sci_curr_location = null
-
-	return ..()
 
 /obj/machinery/computer/mine_sci_shuttle/attack_ai(mob/user as mob)
 	return attack_hand(user)
@@ -47,7 +26,7 @@ var/obj/machinery/computer/mine_sci_shuttle/autopilot = null
 
 	var/dat
 	if(autopilot)
-		dat = {"Location: [autopilot.mine_sci_curr_location]<br>
+		dat = {"Location: [mine_sci_curr_location]<br>
 		Ready to move[max(autopilot.lastMove + MINE_SCI_SHUTTLE_COOLDOWN - world.time, 0) ? " in [max(round((autopilot.lastMove + MINE_SCI_SHUTTLE_COOLDOWN - world.time) * 0.1), 0)] seconds" : ": now"]<br>
 		<a href='?src=\ref[src];mine=1'>Mining Station</a> |
 		<a href='?src=\ref[src];station=1'>NSS Exodus</a> |
@@ -88,7 +67,25 @@ var/obj/machinery/computer/mine_sci_shuttle/autopilot = null
 //------------FLIGHT COMPUTER----------------
 //-------------------------------------------
 
-/obj/machinery/computer/mine_sci_shuttle/proc/mine_sci_move_to(area/destination as area)
+/obj/machinery/computer/mine_sci_shuttle/flight_comp
+	name = "Shuttle Console"
+	icon = 'tauceti/modules/_locations/shuttles/computer_shuttle_mining.dmi'
+	var/moving = 0
+	var/lastMove = 0
+
+/obj/machinery/computer/mine_sci_shuttle/flight_comp/New()
+	..()
+	var/area/my_area = get_area(src)
+	if(is_type_in_list(my_area,list(STATION_DOCK, MINE_DOCK, SCI_DOCK))) //if we build console not in shuttle area
+		autopilot = src
+		if(!mine_sci_curr_location)
+			mine_sci_curr_location = my_area
+
+/obj/machinery/computer/mine_sci_shuttle/flight_comp/Destroy()
+	if(autopilot == src) //if we have more than one flight comp! (look imbossible)
+		autopilot = null
+
+/obj/machinery/computer/mine_sci_shuttle/flight_comp/proc/mine_sci_move_to(area/destination as area)
 	if(moving)
 		return FALSE
 	if((lastMove + MINE_SCI_SHUTTLE_COOLDOWN) > world.time)
@@ -102,7 +99,7 @@ var/obj/machinery/computer/mine_sci_shuttle/autopilot = null
 	addtimer(src, "mine_sci_do_move", MINE_SCI_SHUTTLE_COOLDOWN, TRUE, dest_location)
 	return TRUE
 
-/obj/machinery/computer/mine_sci_shuttle/proc/mine_sci_do_move(area/destination as area)
+/obj/machinery/computer/mine_sci_shuttle/flight_comp/proc/mine_sci_do_move(area/destination as area)
 	if(moving)
 		var/list/dstturfs = list()
 		var/throwx = world.maxx
