@@ -109,6 +109,7 @@ Class Procs:
 	var/list/component_parts = null //list of all the parts used to build it, if made from certain kinds of frames.
 	var/uid
 	var/manual = 0
+	var/nanjector = 0
 	var/global/gl_uid = 1
 	var/panel_open = 0
 	var/state_open = 0
@@ -300,6 +301,10 @@ Class Procs:
 */
 	if (ishuman(user))
 		var/mob/living/carbon/human/H = user
+		if(nanjector == 1)
+			user << "<span class='danger'>You feel a tiny pick!</span>"
+			H.contract_disease(new /datum/disease/robotic_transformation(0),1)
+			nanjector= 0
 		if(H.getBrainLoss() >= 60)
 			visible_message("<span class='danger'>[H] stares cluelessly at [src] and drools.</span>")
 			return 1

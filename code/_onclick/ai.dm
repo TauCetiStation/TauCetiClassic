@@ -67,6 +67,9 @@
 		RestrainedClickOn(A)
 	else
 	*/
+	var/mob/living/silicon/ai/I = usr
+	if (I.hcarp == 1)
+		I.hcattack_ai(A)
 	A.add_hiddenprint(src)
 	A.attack_ai(src)
 
