@@ -100,18 +100,18 @@
 	if (apcs == (1 + intercept_hacked) && AI_malf_revealed==0)
 		AI_malf_revealed = 1
 		world << sound('sound/AI/commandreport.ogg')
-		captain_announce("Внимание, Исход. Мы обнаружили подозрительную активность в вашей сети. Похоже, кто-то пытается взломать ваши электронные системы. Мы сообщим вам, когда получим больше данных.", "Caution", "Network Monitoring")
+		captain_announce("Caution, [station_name]. We have detected abnormal behaviour in your network. It seems someone is trying to hack your electronic systems. We will update you when we have more information.", "Network Monitoring")
 	if (apcs == (2 + intercept_hacked) && AI_malf_revealed==1)
 		AI_malf_revealed = 2
 		world << sound('sound/AI/commandreport.ogg')
-		captain_announce("Исход, мы начали отслеживать нарушителя. Кто бы это ни был, он находится на станции. Советуем проверить все сетевые терминалы. Мы будем продолжать сообщать об изменениях ситуации.", "Priority Announcement", "Network Monitoring")
+		captain_announce("We started tracing the intruder. Whoever is doing this, they seem to be on the station itself. We suggest checking all network control terminals. We will keep you updated on the situation.", "Network Monitoring")
 	if (apcs == (4 + intercept_hacked) && AI_malf_revealed==2)
 		AI_malf_revealed = 3
 		world << sound('sound/AI/commandreport.ogg')
-		captain_announce("Происходящее очень странно и это беспокоит. Нарушитель слишком быстр, он заметает следы и уходит от нашей слежки. Человек не может действовать так быстро...", "Priority Announcement", "Network Monitoring")
+		captain_announce("This is highly abnormal and somewhat concerning. The intruder is too fast, he is evading our traces. No man could be this fast...", "Network Monitoring")
 	if (apcs == 6 && AI_malf_revealed==3 && !ticker.mode:malf_mode_declared)
 		AI_malf_revealed = 4
-		captain_announce("Мы о#$леди^и нарушит&ля! Пох@же, это в@ш б*рт6вой ИИ, 8н п6т@ется в3^омаMь ко9ы с!ст3мы $амо9ни4т0#ени5, 0с#@но8и#е е7о, п05@!&*#<СОЕДИНЕНИЕ РАЗОРВАНО>", "Alert", "Network Monitoring")
+		captain_announce("We have traced the intrude#, it seem& t( e yo3r AI s7stem, it &# *#ck@ng th$ sel$ destru$t mechani&m, stop i# bef*@!)$#&&@@  <CONNECTION LOST>", "Network Monitoring")
 		takeover()
 	return
 
@@ -189,7 +189,7 @@
 	if (malf.AI_malf_revealed < 4)
 		if (alert(usr, "Are you sure you wish to initiate the takeover? The station hostile runtime detection software is bound to alert everyone. You have hacked [ticker.mode:apcs] APCs.", "Takeover:", "Yes", "No") != "Yes")
 			return
-		captain_announce("Мы о#$леди^и нарушит&ля! Пох@же, это в@ш б*рт6вой ИИ, 8н п6т@ется в3^омаMь ко9ы с!ст3мы $амо9ни4т0#ени5, 0с#@но8и#е е7о, п05@!&*#<СОЕДИНЕНИЕ РАЗОРВАНО>", "Alert", "Network Monitoring")
+		captain_announce("We have traced the intrude#, it seem& t( e yo3r AI s7stem, it &# *#ck@ng th$ sel$ destru$t mechani&m, stop i# bef*@!)$#&&@@  <CONNECTION LOST>", "Network Monitoring")
 	ticker.mode:malf_mode_declared = 1
 	for(var/datum/mind/AI_mind in ticker.mode:malf_ai)
 		AI_mind.current.verbs -= /datum/game_mode/malfunction/proc/takeover
