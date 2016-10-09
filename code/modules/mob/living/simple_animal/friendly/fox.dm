@@ -21,6 +21,6 @@
 	maxbodytemp = 323	//Above 50 Degrees Celcius
 
 //Captain fox
-/mob/living/simple_animal/fox
+/mob/living/simple_animal/fox/Renault
 	name = "Renault"
 	desc = "Renault, the Captain's trustworthy fox. I wonder what it says?"
