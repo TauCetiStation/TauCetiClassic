@@ -1,5 +1,5 @@
 //Wall-E
-/mob/living/simple_animal/pet/walle
+/mob/living/simple_animal/walle
 	name = "Wall-E"
 	desc = "The robot which looks for EVA."
 	icon_state = "walle"

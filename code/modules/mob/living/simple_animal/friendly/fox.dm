@@ -1,5 +1,5 @@
 //Foxxy
-/mob/living/simple_animal/pet/fox
+/mob/living/simple_animal/fox
 	name = "fox"
 	desc = "It's a fox. I wonder what it says?"
 	icon_state = "fox"
@@ -21,6 +21,6 @@
 	maxbodytemp = 323	//Above 50 Degrees Celcius
 
 //Captain fox
-/mob/living/simple_animal/pet/fox/Renault
+/mob/living/simple_animal/fox
 	name = "Renault"
 	desc = "Renault, the Captain's trustworthy fox. I wonder what it says?"
