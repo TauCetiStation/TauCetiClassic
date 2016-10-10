@@ -18,6 +18,7 @@
 		if (!ckey)
 			handle_mood()
 			handle_speech()
+			handle_attack()
 
 
 	var/datum/gas_mixture/environment // Added to prevent null location errors-- TLE
@@ -51,6 +52,31 @@
 	var/Tempstun = 0 // temporary temperature stuns
 	var/Discipline = 0 // if a slime has been hit with a freeze gun, or wrestled/attacked off a human, they become disciplined and don't attack anymore for a while
 	var/SStun = 0 // stun variable
+
+/mob/living/carbon/slime/proc/TargetAttack()
+	if(!isliving(ATarget))
+		return
+	if(!ATarget || Victim == ATarget)
+		return
+	if(ATarget.stat == DEAD || ATarget.stat == UNCONSCIOUS)
+		if(ATarget == last_pointed)
+			last_pointed = null
+			ATarget = null
+		return
+	else if(ATarget in view(1, src))
+		if(prob(75) || !iscarbon(ATarget))
+			ATarget.attack_slime(src)
+		else
+			if(iscarbon(ATarget))
+				var/mob/living/carbon/C = ATarget
+				Feedon(C)
+	else if(ATarget in view(7, src))
+		if(!ATarget.Adjacent(src))
+			step_to(src, ATarget)
+	else
+		ATarget = null
+	return
+
 
 /mob/living/carbon/slime/proc/AIprocess()  // the master AI process
 
@@ -295,9 +321,14 @@
 
 	return 1
 
-
+/mob/living/carbon/slime/proc/handle_attack()
+	if(!ATarget)
+		return
+	if(Victim && Victim != ATarget)
+		Feedstop()
+	TargetAttack()
+	return
 /mob/living/carbon/slime/proc/handle_nutrition()
-
 	if(prob(20))
 		if(istype(src, /mob/living/carbon/slime/adult)) nutrition-=rand(4,6)
 		else nutrition-=rand(2,3)
@@ -534,6 +565,28 @@
 			)
 				to_say = pick("Hello...", "Hi...")
 			else if (                                                             \
+				findtext(phrase, "attack") || findtext(phrase, "атакуй") ||       \
+				findtext(phrase, "убить") || findtext(phrase, "уничтожить") ||    \
+				findtext(phrase, "kill")                                          \
+			)
+				if(Friends[who] > 4)
+					if(last_pointed)
+						if(!(Friends[last_pointed] >=2) && !(isslime(last_pointed) && Friends[who] > 6))
+							if(last_pointed != src)
+								to_say = "I will destroy [last_pointed]..."
+								ATarget = last_pointed
+								last_pointed = null
+							else
+								to_say = "Please... No...." // Argh!!!!
+								last_pointed = null
+						else
+							to_say = "I don't kill my friends...."
+							last_pointed = null
+					else
+						to_say = "Whom...."
+				else
+					to_say = "I won't do it..."
+			else if (                                                             \
 				findtext(phrase, "follow") || findtext(phrase, "следуйте") ||     \
 				findtext(phrase, "за мной")                                       \
 			)
@@ -584,6 +637,14 @@
 							to_say = "Yes... I'll stop..."
 						else
 							to_say = "No... I'll keep following..."
+				else if (ATarget)
+					if(Friends[who] > 4)
+						last_pointed = null
+						ATarget = null
+						to_say = "Fine..."
+					else
+						to_say = "No..."
+
 			else if (                                                           \
 				findtext(phrase, "stay") || findtext(phrase, "остановитесь") || \
 				findtext(phrase, "стой") || findtext(phrase, "не двигайся")     \

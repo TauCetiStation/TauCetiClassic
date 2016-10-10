@@ -32,6 +32,7 @@
 
 	var/mob/living/Victim = null // the person the slime is currently feeding on
 	var/mob/living/Target = null // AI variable - tells the slime to hunt this down
+	var/mob/living/ATarget = null
 
 	var/attacked = 0 // determines if it's been attacked recently. Can be any number, is a cooloff-ish variable
 	var/tame = 0 // if set to 1, the slime will not eat humans ever, or attack them
@@ -57,6 +58,7 @@
 	var/mutationfour = /mob/living/carbon/slime/purple
 	var/adulttype = /mob/living/carbon/slime/adult
 	var/coretype = /obj/item/slime_extract/grey
+	var/mob/living/last_pointed = null
 
 /mob/living/carbon/slime/adult
 	name = "adult slime"
@@ -89,7 +91,15 @@
 /mob/living/carbon/slime/adult/New()
 	//verbs.Remove(/mob/living/carbon/slime/verb/ventcrawl)
 	..()
-
+/mob/living/carbon/slime/Destroy()
+	Victim = null
+	Target = null
+	ATarget = null
+	last_pointed = null
+	Leader = null
+	if(Friends.len)
+		Friends.Cut()
+	return ..()
 /mob/living/carbon/slime/regenerate_icons()
 	overlays.len = 0
 	//var/icon_text = "[colour] [is_adult ? "adult" : "baby"] slime"
