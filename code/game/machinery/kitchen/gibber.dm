@@ -9,7 +9,7 @@
 	var/operating = 0 //Is it on?
 	var/dirty = 0 // Does it need cleaning?
 
-	var/gibtime = 40 // Time from starting until meat appears
+	var/gibtime = 80 // Time from starting until meat appears
 	var/gib_throw_dir // Direction to spit meat and gibs in.
 	var/meat_produced = 0
 	var/ignore_clothing = 0
@@ -42,8 +42,7 @@
 	if(ismob(A))
 		var/mob/M = A
 
-		if(M.loc == input_plate
-		)
+		if(M.loc == input_plate)
 			M.loc = src
 			M.gib()
 
@@ -58,7 +57,7 @@
 	RefreshParts()
 
 /obj/machinery/gibber/RefreshParts()
-	var/gib_time = 40
+	var/gib_time = initial(gibtime)
 	for(var/obj/item/weapon/stock_parts/matter_bin/B in component_parts)
 		meat_produced += 3 * B.rating
 	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
@@ -98,19 +97,11 @@
 
 /obj/machinery/gibber/attackby(var/obj/item/W, var/mob/user)
 
-	if(istype(W,/obj/item/weapon/card/emag))
-		if(emagged)
-			user << "The gibber safety guard is already disabled."
-			return
-		user << "<span class='danger'>You disable the gibber safety guard.</span>"
-		emagged = 1
-		return
-
 	if (istype(W, /obj/item/weapon/grab))
 		src.add_fingerprint(user)
 		var/obj/item/weapon/grab/G = W
-		move_into_gibber(user,G)
-		update_icon()
+		move_into_gibber(user, G.affecting)
+		qdel(G)
 
 	if(default_deconstruction_screwdriver(user, "grinder_open", "grinder", W))
 		return
@@ -140,12 +131,8 @@
 		user << "<span class='danger'>The gibber is locked and running, wait for it to finish.</span>"
 		return
 
-	if(!(istype(victim, /mob/living/carbon)) && !(istype(victim, /mob/living/simple_animal)) )
+	if(!(iscarbon(victim)) && !(istype(victim, /mob/living/simple_animal)) )
 		user << "<span class='danger'>This is not suitable for the gibber!</span>"
-		return
-
-	if(istype(victim,/mob/living/carbon/human) && !emagged)
-		user << "<span class='danger'>The gibber safety guard is engaged!</span>"
 		return
 
 	if(victim.abiotic(1) && !ignore_clothing)
@@ -199,7 +186,8 @@
 	src.operating = 1
 	update_icon()
 	var/offset = prob(50) ? -2 : 2
-	animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = 200) //start shaking
+	animate(src, pixel_x = pixel_x + offset, time = gibtime / 100, loop = gibtime) //start shaking
+	playsound(src.loc, 'sound/effects/gibber.ogg', 100, 1)
 
 	var/slab_name = occupant.name
 	var/slab_count = 3
