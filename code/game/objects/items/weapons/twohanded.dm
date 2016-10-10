@@ -154,6 +154,7 @@
  * Double-Bladed Energy Swords - Cheridan
  */
 /obj/item/weapon/twohanded/dualsaber
+	var/reflect_chance = 0
 	icon_state = "dualsaber0"
 	name = "double-bladed energy sword"
 	desc = "Handle with care."
@@ -193,3 +194,15 @@
 		return 1
 	else
 		return 0
+
+/obj/item/weapon/twohanded/dualsaber/IsReflect(def_zone, hol_dir, hit_dir)
+	if(wielded && prob(reflect_chance))
+		if(hol_dir == NORTH && (hit_dir in list(SOUTH, SOUTHEAST, SOUTHWEST)))
+			return TRUE
+		else if(hol_dir == SOUTH && (hit_dir in list(NORTH, NORTHEAST, NORTHWEST)))
+			return TRUE
+		else if(hol_dir == EAST && (hit_dir in list(WEST, NORTHWEST, SOUTHWEST)))
+			return TRUE
+		else if(hol_dir == WEST && (hit_dir in list(EAST, NORTHEAST, SOUTHEAST)))
+			return TRUE
+	return FALSE
