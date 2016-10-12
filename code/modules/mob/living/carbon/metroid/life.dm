@@ -355,7 +355,7 @@
 					if(prob(70))
 						var/mob/living/carbon/slime/M = new primarytype(loc)
 						M.powerlevel = round(powerlevel/4)
-						M.Friends = Friends
+						M.Friends = Friends.Copy()
 						M.tame = tame
 						M.rabid = rabid
 						M.Discipline = Discipline
@@ -366,7 +366,7 @@
 							if("one")
 								var/mob/living/carbon/slime/M = new mutationone(loc)
 								M.powerlevel = round(powerlevel/4)
-								M.Friends = Friends
+								M.Friends = Friends.Copy()
 								M.tame = tame
 								M.rabid = rabid
 								M.Discipline = Discipline
@@ -374,7 +374,7 @@
 							if("two")
 								var/mob/living/carbon/slime/M = new mutationtwo(loc)
 								M.powerlevel = round(powerlevel/4)
-								M.Friends = Friends
+								M.Friends = Friends.Copy()
 								M.tame = tame
 								M.rabid = rabid
 								M.Discipline = Discipline
@@ -382,7 +382,7 @@
 							if("three")
 								var/mob/living/carbon/slime/M = new mutationthree(loc)
 								M.powerlevel = round(powerlevel/4)
-								M.Friends = Friends
+								M.Friends = Friends.Copy()
 								M.tame = tame
 								M.rabid = rabid
 								M.Discipline = Discipline
@@ -390,7 +390,7 @@
 							if("four")
 								var/mob/living/carbon/slime/M = new mutationfour(loc)
 								M.powerlevel = round(powerlevel/4)
-								M.Friends = Friends
+								M.Friends = Friends.Copy()
 								M.tame = tame
 								M.rabid = rabid
 								M.Discipline = Discipline
@@ -404,7 +404,7 @@
 				A.nutrition = nutrition
 //				A.nutrition += 100
 				A.powerlevel = max(0, powerlevel-1)
-				A.Friends = Friends
+				A.Friends = Friends.Copy()
 				A.tame = tame
 				A.rabid = rabid
 				qdel(src)
@@ -557,7 +557,7 @@
 	if (speech_buffer.len > 0)
 		var/who = speech_buffer[1] // Who said it?
 		var/phrase = lowertext_plus(speech_buffer[2]) // What did they say?
-		if ((findtext(phrase, num2text(number)) || findtext(phrase, "slimes") || findtext(phrase, "слаймы"))) // Talking to us
+		if ((findtext(phrase, num2text(number)) || findtext(phrase, "slimes") || findtext(phrase, "слаймы") || findtext(phrase, "легион"))) // Talking to us
 			if (                                                                  \
 				findtext(phrase, "hello") || findtext(phrase, "hi") ||            \
 				findtext(phrase, "здравствуйте") || findtext(phrase, "привет") || \
