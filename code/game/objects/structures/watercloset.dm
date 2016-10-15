@@ -116,7 +116,7 @@
 /obj/structure/dryer
 	name = "hand dryer"
 	desc = "The Breath Of Lizads-3000, an experimental dryer."
-	icon = 'tauceti/icons/obj/dryer.dmi'
+	icon = 'icons/obj/objects.dmi'
 	icon_state = "dryer"
 	density = 0
 	anchored = 1
@@ -136,7 +136,7 @@
 		return
 
 	usr << "\blue You start drying your hands."
-	playsound(src, 'tauceti/sounds/items/drying.ogg', 30, 1, 1)
+	playsound(src, 'sound/items/drying.ogg', 30, 1, 1)
 	add_fingerprint(user)
 	busy = 1
 	sleep(60)
@@ -212,7 +212,7 @@
 						return
 					busy = 1
 					user.visible_message("<span class='danger'>[user] hold [GM.name] under the [src]!</span>", "<span class='notice'>You hold [GM.name] under the [src]!</span>")
-					playsound(src, 'tauceti/sounds/items/drying.ogg', 30, 1, 1)
+					playsound(src, 'sound/items/drying.ogg', 30, 1, 1)
 					GM.adjustFireLoss(10)
 					sleep(60)
 					busy = 0
@@ -226,7 +226,7 @@
 
 		busy = 1
 		usr << "\blue You start drying \the [I]."
-		playsound(src, 'tauceti/sounds/items/drying.ogg', 30, 1, 1)
+		playsound(src, 'sound/items/drying.ogg', 30, 1, 1)
 		sleep(60)
 		var/mob/living/carbon/C = user
 		if(C.r_hand)
@@ -241,7 +241,7 @@
 
 	busy = 1
 	usr << "\blue You start drying \the [I]."
-	playsound(src, 'tauceti/sounds/items/drying.ogg', 30, 1, 1)
+	playsound(src, 'sound/items/drying.ogg', 30, 1, 1)
 	sleep(60)
 	busy = 0
 
@@ -564,7 +564,7 @@
 		user << "\red Someone's already washing here."
 		return
 
-	playsound(src, 'tauceti/sounds/items/wash.ogg', 50, 1, 1)
+	playsound(src, 'sound/items/wash.ogg', 50, 1, 1)
 
 	usr << "\blue You start washing your hands."
 
@@ -616,7 +616,7 @@
 
 	usr << "\blue You start washing \the [I]."
 
-	playsound(src, 'tauceti/sounds/items/wash.ogg', 50, 1, 1)
+	playsound(src, 'sound/items/wash.ogg', 50, 1, 1)
 	busy = 1
 	sleep(40)
 	busy = 0

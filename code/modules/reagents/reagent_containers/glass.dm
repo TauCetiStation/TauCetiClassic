@@ -267,8 +267,7 @@
 /obj/item/weapon/reagent_containers/glass/bucket
 	desc = "It's a bucket."
 	name = "bucket"
-	icon = 'tauceti/items/makeshift_items_TG/makeshift_tg.dmi'
-	tc_custom = 'tauceti/items/makeshift_items_TG/makeshift_tg.dmi'
+	icon = 'icons/obj/makeshift.dmi'
 	icon_state = "bucket"
 	item_state = "bucket"
 	m_amt = 200

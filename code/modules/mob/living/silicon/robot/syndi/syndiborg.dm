@@ -1,5 +1,4 @@
 /mob/living/silicon/robot/syndicate
-	icon = 'tauceti/icons/mob/robot.dmi'
 	icon_state = "syndie_bloodhound"
 	lawupdate = 0
 	scrambledcodes = 1

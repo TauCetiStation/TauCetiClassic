@@ -1,7 +1,7 @@
 /mob/camera/blob
 	name = "Blob Overmind"
 	real_name = "Blob Overmind"
-	icon = 'tauceti/icons/mob/blob.dmi'
+	icon = 'icons/mob/blob.dmi'
 	icon_state = "marker"
 
 	see_in_dark = 8

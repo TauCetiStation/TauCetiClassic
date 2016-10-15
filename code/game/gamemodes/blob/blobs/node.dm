@@ -1,6 +1,6 @@
 /obj/effect/blob/node
 	name = "blob node"
-	icon = 'tauceti/icons/mob/blob.dmi'
+	icon = 'icons/mob/blob.dmi'
 	icon_state = "blob_node"
 	health = 100
 	fire_resist = 2

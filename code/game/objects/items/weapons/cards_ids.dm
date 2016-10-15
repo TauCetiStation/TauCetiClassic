@@ -277,6 +277,15 @@
 	assignment = "Syndicate Overlord"
 	access = list(access_syndicate, access_external_airlocks)
 
+/obj/item/weapon/card/id/syndicate/commander
+	name = "syndicate commander ID card"
+	assignment = "Syndicate Commander"
+	icon_state = "syndicate-command"
+	access = list(access_maint_tunnels, access_syndicate, access_syndicate_commander, access_external_airlocks)
+
+/obj/item/weapon/card/id/syndicate/nuker
+	icon_state = "syndicate"
+
 /obj/item/weapon/card/id/captains_spare
 	name = "captain's spare ID"
 	desc = "The spare ID of the High Lord himself."
@@ -284,10 +293,11 @@
 	item_state = "gold_id"
 	registered_name = "Captain"
 	assignment = "Captain"
-	New()
-		var/datum/job/captain/J = new/datum/job/captain
-		access = J.get_access()
-		..()
+
+/obj/item/weapon/card/id/captains_spare/New()
+	var/datum/job/captain/J = new/datum/job/captain
+	access = J.get_access()
+	..()
 
 /obj/item/weapon/card/id/centcom
 	name = "\improper CentCom. ID"
@@ -295,6 +305,18 @@
 	icon_state = "centcom"
 	registered_name = "Central Command"
 	assignment = "General"
-	New()
-		access = get_all_centcom_access()
-		..()
+
+/obj/item/weapon/card/id/centcom/New()
+	access = get_all_centcom_access()
+	..()
+
+/obj/item/weapon/card/id/ert
+	name = "\improper CentCom. ID"
+	icon_state = "ert"
+	registered_name = "Central Command"
+	assignment = "Emergency Response Team"
+
+/obj/item/weapon/card/id/ert/New()
+	access = get_all_accesses()
+	access += get_all_centcom_access()
+	..()

@@ -47,7 +47,7 @@
 /obj/machinery/telepad_cargo
 	name = "cargo telepad"
 	desc = "A telepad used by the Rapid Crate Sender."
-	icon = 'tauceti/icons/obj/telescience.dmi'
+	icon = 'icons/obj/telescience.dmi'
 	icon_state = "pad-idle"
 	anchored = 1
 	use_power = 1

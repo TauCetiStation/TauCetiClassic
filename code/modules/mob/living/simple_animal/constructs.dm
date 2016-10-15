@@ -238,7 +238,7 @@
 	name = "Harvester"
 	real_name = "Harvester"
 	desc = "A harbinger of Nar-Sie's enlightenment. It'll be all over soon."
-	icon = 'tauceti/icons/mob/harvester.dmi'
+	icon = 'icons/mob/harvester.dmi'
 	icon_state = "harvester"
 	icon_living = "harvester"
 	maxHealth = 60

@@ -1093,7 +1093,7 @@
 			if(light_amount > LIGHT_DAM_THRESHOLD)
 				take_overall_damage(0,LIGHT_DAMAGE_TAKEN)
 				src << "<span class='userdanger'>The light burns you!</span>"
-				src << 'tauceti/sounds/weapon/sear.ogg'
+				src << 'sound/weapons/sear.ogg'
 			else if (light_amount < LIGHT_HEAL_THRESHOLD) //heal in the dark
 				heal_overall_damage(5,5)
 				adjustToxLoss(-3)
@@ -1781,6 +1781,20 @@
 
 		if(shock_stage >= 150)
 			Weaken(20)
+
+	proc/handle_heart_beat()
+
+		if(pulse == PULSE_NONE) return
+
+		if(pulse == PULSE_2FAST || shock_stage >= 10 || istype(get_turf(src), /turf/space))
+
+			var/temp = (5 - pulse)/2
+
+			if(heart_beat >= temp)
+				heart_beat = 0
+				src << sound('sound/effects/singlebeat.ogg',0,0,0,50)
+			else if(temp != 0)
+				heart_beat++
 
 	proc/handle_pulse()
 

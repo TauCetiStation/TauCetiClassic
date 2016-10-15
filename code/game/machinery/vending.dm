@@ -552,7 +552,7 @@
 		flick(src.icon_vend,src)
 	spawn(src.vend_delay)
 		new R.product_path(get_turf(src))
-		playsound(src, 'tauceti/sounds/items/vending.ogg', 50, 1, 1)
+		playsound(src, 'sound/items/vending.ogg', 50, 1, 1)
 		src.vend_ready = 1
 		return
 
@@ -1072,7 +1072,6 @@
 /obj/machinery/vending/blood
 	name = "Blood'O'Matic"
 	desc = "Human blood dispenser. With internal freezer. Brought to you by EmpireV corp."
-	icon = 'tauceti/items/vendomats/vendings.dmi'
 	icon_state = "blood2"
 	light_color = "#ffc0c0"
 	icon_deny = "blood2deny"
@@ -1082,3 +1081,72 @@
 					/obj/item/weapon/reagent_containers/blood/BPlus = 4, /obj/item/weapon/reagent_containers/blood/BMinus = 2,
 					/obj/item/weapon/reagent_containers/blood/OPlus = 7, /obj/item/weapon/reagent_containers/blood/OMinus = 4)
 	contraband = list(/obj/item/weapon/reagent_containers/pill/stox = 10, /obj/item/weapon/reagent_containers/blood/empty = 10)
+
+//from old nanotrasen
+/obj/machinery/vending/holy
+	name = "HolyVend"
+	desc = "Special items to prayers, sacrifices, rites and other methods to tell your God: I remember you!"
+	icon_state = "holy"
+	product_slogans = "HolyVend: Select your Religion today"
+	product_ads = "Pray now!;Atheists are heretic;Everything 100% Holy;Thirsty? Wanna pray? Why without candles?"
+	products = list(/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater = 10, /obj/item/weapon/storage/fancy/candle_box = 25)
+	contraband = list(/obj/item/weapon/nullrod = 2)
+	prices = list(/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater = 30, /obj/item/weapon/storage/fancy/candle_box = 50, /obj/item/weapon/nullrod = 100)
+
+/obj/machinery/vending/eva
+	name = "Hardsuit Kits"
+	desc = "Conversion kits for your alien hardsuit needs."
+	products = list(/obj/item/device/modkit/tajaran/engineering = 5, /obj/item/device/modkit/tajaran/atmos = 5, /obj/item/device/modkit/tajaran/med = 5, /obj/item/device/modkit/tajaran/sec = 5, /obj/item/device/modkit/tajaran/mining = 5, /obj/item/device/modkit/unathi/engineering = 5, /obj/item/device/modkit/unathi/atmos = 5, /obj/item/device/modkit/unathi/med = 5, /obj/item/device/modkit/unathi/sec = 5, /obj/item/device/modkit/unathi/mining = 5, /obj/item/device/modkit/skrell/engineering = 5, /obj/item/device/modkit/skrell/atmos = 5, /obj/item/device/modkit/skrell/med = 5, /obj/item/device/modkit/skrell/sec = 5, /obj/item/device/modkit/skrell/mining = 5, /obj/item/device/modkit/human = 10)
+
+//from old nanotrasen
+//i deleted all drugs here, now it's just a joke
+/obj/machinery/vending/omskvend
+	name = "Omsk-o-mat"
+	desc = "Drug dispenser."
+	icon_state = "omskvend"
+	product_ads = "NORKOMAN SUKA SHTOLE?;STOP NARTCOTICS!; so i heard u liek mudkipz; METRO ZATOPEELO"
+	products = list(/obj/item/device/healthanalyzer = 5)
+	contraband = list(/obj/item/weapon/reagent_containers/glass/bottle/antitoxin = 4)
+
+/obj/item/weapon/reagent_containers/pill/LSD
+	name = "LSD"
+	desc = "Ahaha oh wow."
+	icon_state = "pill9"
+	New()
+		..()
+		reagents.add_reagent("mindbreaker", 0)
+
+/obj/item/weapon/reagent_containers/glass/beaker/LSD
+	name = "LSD IV"
+	desc = "Ahaha oh wow."
+	New()
+		..()
+		reagents.add_reagent("mindbreaker", 0)
+		update_icon()
+
+/obj/machinery/vending/sustenance
+	name = "\improper Sustenance Vendor"
+	desc = "A vending machine which vends food, as required by section 47-C of the NT's Prisoner Ethical Treatment Agreement."
+	product_slogans = "Enjoy your meal.;Enough calories to support strenuous labor."
+	product_ads = "Sufficiently healthy.;Efficiently produced tofu!;Mmm! So good!;Have a meal.;You need food to live!;Have some more candy corn!;Try our new ice cups!"
+	icon_state = "sustenance"
+	products = list(/obj/item/weapon/reagent_containers/food/snacks/tofu = 20,
+					/obj/item/weapon/reagent_containers/food/drinks/ice = 12,
+					/obj/item/weapon/reagent_containers/food/snacks/candy_corn = 6,
+					/obj/item/weapon/reagent_containers/food/snacks/cracker = 20,
+					/obj/item/weapon/reagent_containers/food/drinks/cans/waterbottle = 12)
+	contraband = list(/obj/item/weapon/kitchen/utensil/knife = 6)
+
+//from old nanotrasen
+/obj/machinery/vending/theater
+	name = "Theater-o-mat"
+	desc = "Special costume pack to add randomness in boring life."
+	icon_state = "Theater"
+	products = list(/obj/item/clothing/head/xenos = 5, /obj/item/clothing/suit/xenos = 5, /obj/item/clothing/suit/monkeysuit = 5, /obj/item/clothing/suit/syndicatefake = 5, /obj/item/clothing/head/syndicatefake = 5,
+					/obj/item/clothing/head/collectable/slime = 5, /obj/item/clothing/head/collectable/xenom = 5, /obj/item/clothing/head/collectable/petehat = 5, /obj/item/clothing/head/kitty = 5,
+					/obj/item/clothing/head/pumpkinhead = 5, /obj/item/clothing/head/ushanka = 5, /obj/item/clothing/head/cardborg = 5, /obj/item/clothing/suit/cardborg = 5, /obj/item/clothing/head/bearpelt = 5,
+					/obj/item/clothing/suit/space/santa = 5, /obj/item/clothing/head/helmet/space/santahat = 5, /obj/item/weapon/storage/backpack/santabag = 5, /obj/item/clothing/mask/fakemoustache = 5,
+					/obj/item/clothing/mask/gas/sexyclown = 5, /obj/item/clothing/mask/gas/sexymime = 5, /obj/item/clothing/mask/horsehead = 5, /obj/item/clothing/suit/apron = 5, /obj/item/clothing/suit/apron/overalls = 5,
+					/obj/item/clothing/suit/chickensuit = 5, /obj/item/clothing/head/chicken = 5, /obj/item/clothing/under/fluff/tian_dress = 5, /obj/item/clothing/under/fluff/wyatt_1 = 5,
+					/obj/item/clothing/under/fluff/olddressuniform = 5, /obj/item/clothing/under/fluff/jumpsuitdown = 5, /obj/item/clothing/under/fluff/jane_sidsuit = 5, /obj/item/clothing/under/sundress = 5)
+	prices = list(/obj/item/clothing/head/xenos = 100, /obj/item/clothing/suit/xenos = 200, /obj/item/clothing/suit/monkeysuit = 200)

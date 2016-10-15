@@ -616,7 +616,7 @@
 			return
 
 		user << "<span class='warning'>You start digging.</span>"
-		playsound(user.loc, 'tauceti/sounds/effects/digging.ogg', 50, 1)
+		playsound(user.loc, 'sound/effects/digging.ogg', 50, 1)
 
 		if(do_after(user,40,target = src))
 			if((user.loc == T && user.get_active_hand() == W))

@@ -1,6 +1,6 @@
 /obj/item/device/geoscanner
 	name = "Geological Analyzer"
-	icon = 'tauceti/modules/_mining/geoscanner.dmi'
+	icon = 'icons/obj/mining/geoscanner.dmi'
 	icon_state = "geoscanner"
 	item_state = "analyzer"
 	w_class = 2.0
@@ -38,8 +38,8 @@
 /obj/item/clothing/glasses/hud/mining
 	name = "Geological Optical Scanner"
 	desc = "A heads-up display that scans the rocks in view and provides some data about their composition."
-	tc_custom = 'tauceti/modules/_mining/geoscanner.dmi'
-	icon = 'tauceti/modules/_mining/geoscanner.dmi'
+	tc_custom = 'icons/obj/mining/geoscanner.dmi'
+	icon = 'icons/obj/mining/geoscanner.dmi'
 	icon_state = "mininghud"
 	item_state = "mininghud"
 //	vision_flags = SEE_TURFS
@@ -54,7 +54,7 @@
 	if(!M)	return
 	if(!M.client)	return
 	var/client/C = M.client
-	var/icon/hudMineral = 'tauceti/modules/_mining/geoscanner.dmi'
+	var/icon/hudMineral = 'icons/obj/mining/geoscanner.dmi'
 	for(var/turf/simulated/mineral/rock in view(get_turf(M)))
 		if(!C) return
 

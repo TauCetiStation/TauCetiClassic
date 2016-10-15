@@ -1,18 +1,16 @@
 /obj/item/weapon/gun/projectile/automatic/silenced
 	name = "silenced pistol"
 	desc = "A small, quiet,  easily concealable gun. Uses .45 rounds."
-	icon = 'icons/obj/gun.dmi'
 	icon_state = "silenced_pistol"
 	w_class = 3.0
 	silenced = 1
 	origin_tech = "combat=2;materials=2;syndicate=8"
 	mag_type = /obj/item/ammo_box/magazine/sm45
-	fire_sound = 'tauceti/sounds/weapon/Gunshot_silenced.ogg'
+	fire_sound = 'sound/weapons/Gunshot_silenced.ogg'
 
 /obj/item/weapon/gun/projectile/sigi
 	name = "\improper pistol"
 	desc = "A W&J Company designed SIGI p250, found pretty much everywhere humans are. Looks like SIG 250, but it's not. Uses 9mm rounds."
-	tc_custom = 'tauceti/icons/mob/guns.dmi'
 	icon_state = "sigi250"
 	item_state = "sigi250"
 	origin_tech = "combat=2;materials=2"
@@ -31,7 +29,6 @@
 /obj/item/weapon/gun/projectile/sigi/spec
 	name = "\improper pistol"
 	desc = "A W&J Company designed Special SIGI p250, this one has a military coloring. Looks like SIG 250, but it's not. Uses 9mm rounds."
-	tc_custom = 'tauceti/icons/mob/guns.dmi'
 	icon_state = "sigi250special"
 	item_state = "sigi250special"
 
@@ -54,7 +51,7 @@
 		magazine = null
 		overlays -= mag
 		user << "<span class='notice'>You pull the magazine out of \the [src]!</span>"
-		playsound(src.loc, 'tauceti/sounds/weapon/pistol_reload.ogg', 50, 1, 1)
+		playsound(src.loc, 'sound/weapons/pistol_reload.ogg', 50, 1, 1)
 	else
 		user << "<span class='notice'>There's no magazine in \the [src].</span>"
 	return
@@ -71,7 +68,7 @@
 			chamber_round()
 			A.update_icon()
 			update_icon()
-			playsound(src.loc, 'tauceti/sounds/weapon/pistol_reload.ogg', 50, 1, 1)
+			playsound(src.loc, 'sound/weapons/pistol_reload.ogg', 50, 1, 1)
 			return 1
 		else if (magazine)
 			user << "<span class='notice'>There's already a magazine in \the [src].</span>"
@@ -88,7 +85,6 @@
 /obj/item/weapon/gun/projectile/automatic/deagle
 	name = "desert eagle"
 	desc = "A robust handgun that uses .50 AE ammo."
-	icon = 'icons/obj/gun.dmi'
 	icon_state = "deagle"
 	item_state = "deagle"
 	force = 14.0
@@ -135,7 +131,6 @@
 /obj/item/weapon/gun/projectile/automatic/gyropistol
 	name = "gyrojet pistol"
 	desc = "A bulky pistol designed to fire self propelled rounds."
-	icon = 'icons/obj/gun.dmi'
 	icon_state = "gyropistol"
 	fire_sound = 'sound/effects/Explosion1.ogg'
 	origin_tech = "combat=3"
@@ -160,7 +155,6 @@
 /obj/item/weapon/gun/projectile/automatic/pistol
 	name = "\improper Stechkin pistol"
 	desc = "A small, easily concealable gun. Uses 9mm rounds."
-	icon = 'tauceti/icons/obj/guns.dmi'
 	icon_state = "pistol"
 	w_class = 2
 	silenced = 0
@@ -189,7 +183,6 @@
 /obj/item/weapon/gun/projectile/automatic/colt1911
 	desc = "A cheap Martian knock-off of a Colt M1911. Uses less-than-lethal .45 rounds."
 	name = "\improper Colt M1911"
-	icon = 'icons/obj/gun.dmi'
 	icon_state = "colt"
 	item_state = "colt"
 	w_class = 2

@@ -25,6 +25,3 @@
 		if(P)	qdel(P)
 
 	usr.visible_message("<b>[usr]</b> points to [this]")
-
-	for(var/mob/living/simple_animal/smart_animal/SA in view(7))
-		SA.target_point(this, usr)

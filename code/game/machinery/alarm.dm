@@ -63,7 +63,7 @@
 
 /obj/machinery/alarm
 	name = "alarm"
-	icon = 'tauceti/icons/obj/wall_monitors.dmi'
+	icon = 'icons/obj/monitors.dmi'
 	icon_state = "alarm0"
 	anchored = TRUE
 	use_power = TRUE
@@ -1217,7 +1217,7 @@ Code shamelessly copied from apc_frame
 /obj/item/alarm_frame
 	name = "air alarm frame"
 	desc = "Used for building Air Alarms"
-	icon = 'tauceti/icons/obj/wall_monitors.dmi'
+	icon = 'icons/obj/monitors.dmi'
 	icon_state = "alarm_bitem"
 	flags = FPRINT | TABLEPASS| CONDUCT
 
@@ -1258,7 +1258,7 @@ FIRE ALARM
 /obj/machinery/firealarm
 	name = "fire alarm"
 	desc = "<i>\"Pull this in case of emergency\"</i>. Thus, keep pulling it forever."
-	icon = 'tauceti/icons/obj/wall_monitors.dmi'
+	icon = 'icons/obj/monitors.dmi'
 	icon_state = "fire0"
 	var/detecting = 1.0
 	var/working = 1.0
@@ -1517,9 +1517,9 @@ FIRE ALARM
 
 	if(z == ZLEVEL_STATION || z == ZLEVEL_ASTEROID)
 		if(security_level)
-			src.overlays += image('tauceti/icons/obj/wall_monitors.dmi', "overlay_[get_security_level()]")
+			src.overlays += image('icons/obj/monitors.dmi', "overlay_[get_security_level()]")
 		else
-			src.overlays += image('tauceti/icons/obj/wall_monitors.dmi', "overlay_green")
+			src.overlays += image('icons/obj/monitors.dmi', "overlay_green")
 
 	update_icon()
 
@@ -1545,7 +1545,7 @@ Code shamelessly copied from apc_frame
 /obj/item/firealarm_frame
 	name = "fire alarm frame"
 	desc = "Used for building Fire Alarms."
-	icon = 'tauceti/icons/obj/wall_monitors.dmi'
+	icon = 'icons/obj/monitors.dmi'
 	icon_state = "fire_bitem"
 	flags = FPRINT | TABLEPASS| CONDUCT
 

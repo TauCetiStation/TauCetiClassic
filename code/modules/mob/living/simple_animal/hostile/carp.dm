@@ -55,7 +55,7 @@
 			L.visible_message("<span class='danger'>\the [src] knocks down \the [L]!</span>")
 
 /mob/living/simple_animal/hostile/carp/megacarp
-	icon = 'tauceti/icons/mob/megacarp.dmi'
+	icon = 'icons/mob/megacarp.dmi'
 	name = "Mega Space Carp"
 	desc = "A ferocious, fang bearing creature that resembles a shark. This one seems especially ticked off."
 	icon_state = "megacarp"
@@ -72,7 +72,7 @@
 /mob/living/simple_animal/hostile/carp/dog
 	name = "REX"
 	desc = "That's a cute little doge... WAIT, WHAT???!!"
-	icon = 'tauceti/mobs/smart_animal/dogs/doge.dmi'
+	icon = 'icons/mob/doge.dmi'
 	icon_state = "shepherd"
 	maxHealth = 9001
 	health = 9001
@@ -89,7 +89,7 @@
 
 	var/idle_snd_chance = 5
 
-	attack_sound = 'tauceti/sounds/weapon/polkan_atk.ogg'
+	attack_sound = 'sound/weapons/polkan_atk.ogg'
 
 /mob/living/simple_animal/hostile/carp/dog/polkan
 	name = "POLKAN"
@@ -101,5 +101,5 @@
 		return 0
 
 	if(rand(0,100) < idle_snd_chance)
-		var/list/idle_snd = list('tauceti/sounds/voice/polkan/idle1.ogg','tauceti/sounds/voice/polkan/idle2.ogg')
+		var/list/idle_snd = list('sound/voice/polkan/idle1.ogg','sound/voice/polkan/idle2.ogg')
 		playsound(src, pick(idle_snd), 50, 1, -3)

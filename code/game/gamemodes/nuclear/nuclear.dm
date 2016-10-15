@@ -409,14 +409,3 @@
 		synd_mind.current.name = choose_name
 		synd_mind.current.real_name = choose_name
 		return
-
-/obj/item/weapon/card/id/syndicate/commander
-	name = "syndicate commander ID card"
-	assignment = "Syndicate Commander"
-	icon = 'tauceti/icons/obj/objects.dmi'
-	icon_state = "syndicate-command"
-	access = list(access_maint_tunnels, access_syndicate, access_syndicate_commander, access_external_airlocks)
-
-/obj/item/weapon/card/id/syndicate/nuker
-	icon = 'tauceti/icons/obj/objects.dmi'
-	icon_state = "syndicate"

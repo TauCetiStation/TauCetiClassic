@@ -18,7 +18,6 @@ var/list/robot_verbs_default = list(
 	var/custom_name = ""
 	var/custom_sprite = 0 //Due to all the sprites involved, a var for our custom borgs may be best
 	var/crisis //Admin-settable for combat module use.
-	var/tc_borg = 0 //for Tau Ceti custom borgs
 
 //Hud stuff
 
@@ -193,7 +192,6 @@ var/list/robot_verbs_default = list(
 
 	switch(modtype)
 		if("Standard")
-			tc_borg = 0
 			module = new /obj/item/weapon/robot_module/standard(src)
 			module_sprites["Basic"] = "robot_old"
 			module_sprites["Android"] = "droid"
@@ -202,7 +200,6 @@ var/list/robot_verbs_default = list(
 			module_sprites["Acheron"] = "mechoid-Standard"
 
 		if("Service")
-			tc_borg = 0
 			module = new /obj/item/weapon/robot_module/butler(src)
 			module_sprites["Waitress"] = "Service"
 			module_sprites["Kent"] = "toiletbot"
@@ -223,7 +220,6 @@ var/list/robot_verbs_default = list(
 			module_sprites["Acheron"] = "mechoid-Service"
 
 		if("Science")
-			tc_borg = 1
 			module = new /obj/item/weapon/robot_module/science(src)
 			module.channels = list("Science" = 1)
 			if(camera && "Robots" in camera.network)
@@ -233,7 +229,6 @@ var/list/robot_verbs_default = list(
 			module_sprites["Acheron"] = "mechoid-Science"
 
 		if("Miner")
-			tc_borg = 0
 			module = new /obj/item/weapon/robot_module/miner(src)
 			module.channels = list("Supply" = 1)
 			if(camera && "Robots" in camera.network)
@@ -245,7 +240,6 @@ var/list/robot_verbs_default = list(
 			module_sprites["Acheron"] = "mechoid-Miner"
 
 		if("Crisis")
-			tc_borg = 0
 			module = new /obj/item/weapon/robot_module/crisis(src)
 			module.channels = list("Medical" = 1)
 			if(camera && "Robots" in camera.network)
@@ -270,7 +264,6 @@ var/list/robot_verbs_default = list(
 			module_sprites["Acheron"] = "mechoid-Medical"
 
 		if("Security")
-			tc_borg = 0
 			module = new /obj/item/weapon/robot_module/security(src)
 			module.channels = list("Security" = 1)
 			module_sprites["Basic"] = "secborg"
@@ -282,7 +275,6 @@ var/list/robot_verbs_default = list(
 			module_sprites["Acheron"] = "mechoid-Security"
 
 		if("Engineering")
-			tc_borg = 0
 			module = new /obj/item/weapon/robot_module/engineering(src)
 			module.channels = list("Engineering" = 1)
 			if(camera && "Robots" in camera.network)
@@ -309,7 +301,6 @@ var/list/robot_verbs_default = list(
 			module_sprites["Acheron"] = "mechoid-Engineering"
 
 		if("Janitor")
-			tc_borg = 0
 			module = new /obj/item/weapon/robot_module/janitor(src)
 			module_sprites["Basic"] = "JanBot2"
 			module_sprites["Mopbot"]  = "janitorrobot"
@@ -318,18 +309,10 @@ var/list/robot_verbs_default = list(
 			module_sprites["Acheron"] = "mechoid-Janitor"
 
 		if("Combat")
-			tc_borg = 0
 			module = new /obj/item/weapon/robot_module/combat(src)
 			module_sprites["Combat Android"] = "droid-combat"
 			module_sprites["Acheron"] = "mechoid-Combat"
 			module.channels = list("Security" = 1)
-
-
-
-	if(tc_borg)
-		icon = 'tauceti/icons/mob/robot.dmi'
-	else
-		icon = 'icons/mob/robots.dmi'
 
 	//languages
 	module.add_languages(src)
@@ -1373,11 +1356,6 @@ var/list/robot_verbs_default = list(
 		src << "Something is badly wrong with the sprite selection. Harass a coder."
 		icon_state = module_sprites[1]
 		return
-
-	if(icontype == "Custom" || tc_borg)
-		icon = 'tauceti/icons/mob/robot.dmi'
-	else
-		icon = 'icons/mob/robots.dmi'
 
 	overlays -= "eyes"
 	updateicon()

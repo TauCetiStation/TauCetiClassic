@@ -1,6 +1,6 @@
 /obj/machinery/atmospherics/unary/cold_sink/freezer
 	name = "gas cooling system"
-	icon = 'icons/obj/Cryogenic2.dmi'
+	icon = 'icons/obj/Cryogenic3.dmi'
 	icon_state = "freezer_0"
 	density = 1
 	anchored = 1
@@ -82,7 +82,7 @@
 	data["minGasTemperature"] = round(T0C - 200)
 	data["maxGasTemperature"] = round(T20C)
 	data["targetGasTemperature"] = round(current_temperature)
-	
+
 	var/temp_class = "good"
 	if (air_contents.temperature > (T0C - 20))
 		temp_class = "bad"
@@ -128,7 +128,7 @@
 
 /obj/machinery/atmospherics/unary/heat_reservoir/heater
 	name = "gas heating system"
-	icon = 'icons/obj/Cryogenic2.dmi'
+	icon = 'icons/obj/Cryogenic3.dmi'
 	icon_state = "freezer_0"
 	density = 1
 	var/max_temperature = 0
@@ -209,7 +209,7 @@
 	data["minGasTemperature"] = round(T20C)
 	data["maxGasTemperature"] = round(T20C+280)
 	data["targetGasTemperature"] = round(current_temperature)
-	
+
 	var/temp_class = "normal"
 	if (air_contents.temperature > (T20C+40))
 		temp_class = "bad"

@@ -15,7 +15,7 @@
 				M.confused += 20
 				M.make_jittery(500)
 			else
-				M << sound('tauceti/sounds/effects/screech.ogg')
+				M << sound('sound/effects/screech.ogg')
 
 		if(issilicon(M))
 			M << sound('sound/weapons/flash.ogg')

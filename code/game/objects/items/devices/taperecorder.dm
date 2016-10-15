@@ -1,7 +1,7 @@
 /obj/item/device/taperecorder
 	desc = "A device that can record up to an hour of dialogue and play it back. It automatically translates the content in playback."
 	name = "universal recorder"
-	icon = 'tauceti/icons/obj/devices.dmi'
+	icon = 'icons/obj/device.dmi'
 	icon_state = "taperecorderidle"
 	item_state = "analyzer"
 	w_class = 2.0

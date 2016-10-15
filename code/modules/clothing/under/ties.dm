@@ -461,3 +461,9 @@
 
 	new /obj/item/weapon/hatchet/unathiknife(hold)
 	new /obj/item/weapon/hatchet/unathiknife(hold)
+
+/obj/item/clothing/tie/holster/mafia
+	name = "gun holster"
+	desc = "When you just HAVE to show off your guns."
+	icon_state = "mafia_holster"
+	item_color = "mafia_holster"

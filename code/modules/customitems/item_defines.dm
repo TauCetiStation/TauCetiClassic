@@ -526,8 +526,6 @@
 /obj/item/clothing/head/secsoft/fluff/swatcap //deusdactyl: James Girard
 	name = "\improper SWAT hat"
 	desc = "A black hat.  The inside has the words, \"Lieutenant James Girard, LPD SWAT Team Four.\""
-	icon = 'tauceti/items/clothing/hats/hats.dmi'
-	tc_custom = 'tauceti/items/clothing/hats/hats.dmi'
 	icon_state = "swatcap"
 	body_parts_covered = 0
 
@@ -723,6 +721,47 @@
 	item_state = "solara_dress"
 	item_color = "solara_dress"
 
+/obj/item/clothing/under/fluff/terezi_suit
+	name = "legislacerator suit"
+	desc = "A very classy coat. Perhaps the only non-crappy attire of this person."
+	icon_state = "terezi"
+	item_state = "terezi"
+	item_color = "terezi"
+	flags = FPRINT | TABLEPASS
+
+/obj/item/clothing/under/fluff/indiana
+	name = "leather suit"
+	icon_state = "indiana"
+	item_state = "indiana"
+	item_color = "indiana"
+	flags = FPRINT | TABLEPASS
+
+/obj/item/clothing/under/fluff/cowboy
+	name = "western suit"
+	desc = "Revolver is your best friend."
+	icon_state = "cowboy"
+	item_state = "cowboy"
+	item_color = "cowboy"
+	flags = FPRINT | TABLEPASS
+
+/obj/item/clothing/under/fluff/cowboy/brown
+	icon_state = "cowboy_brown"
+	item_state = "cowboy_brown"
+	item_color = "cowboy_brown"
+
+/obj/item/clothing/under/fluff/cowboy/grey
+	icon_state = "cowboy_grey"
+	item_state = "cowboy_grey"
+	item_color = "cowboy_grey"
+
+/obj/item/clothing/under/fluff/maid_suit
+	name = "maid suit"
+	desc = "For your dirty ERP needs."
+	icon_state = "maid"
+	item_state = "maid"
+	item_color = "maid"
+	flags = FPRINT | TABLEPASS
+
 /////// NT-SID Suit //Zuhayr: Jane Doe
 
 /obj/item/clothing/under/fluff/jane_sidsuit
@@ -917,8 +956,6 @@
 /obj/item/clothing/suit/storage/det_suit/fluff/retpolcoat
 	name = "retired colony patrolman's coat"
 	desc = "A clean, black nylon windbreaker with the words \"OUTER LIGHT POLICE\" embroidered in gold-dyed thread on the back. \"RETIRED\" is tastefully embroidered below in a smaller font."
-	icon = 'tauceti/items/clothing/suits/suits.dmi'
-	tc_custom = 'tauceti/items/clothing/suits/suits.dmi'
 	icon_state = "retpolcoat"
 	item_state = "retpolcoat"
 	item_color = "retpolcoat"
@@ -926,8 +963,6 @@
 /obj/item/clothing/head/det_hat/fluff/retpolcap
 	name = "retired colony patrolman's cap"
 	desc = "A clean and properly creased colony police cap. The badge is shined and polished, the word \"RETIRED\" engraved professionally under the words \"OUTER LIGHT POLICE.\""
-	icon = 'tauceti/items/clothing/hats/hats.dmi'
-	tc_custom = 'tauceti/items/clothing/hats/hats.dmi'
 	icon_state = "retpolcap"
 
 /obj/item/clothing/under/det/fluff/retpoluniform

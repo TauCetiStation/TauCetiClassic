@@ -93,7 +93,7 @@
 /obj/item/weapon/razor
 	name = "electric razor"
 	desc = "The latest and greatest power razor born from the science of shaving."
-	icon = 'tauceti/icons/obj/items.dmi'
+	icon = 'icons/obj/items.dmi'
 	icon_state = "razor"
 	flags = CONDUCT
 	w_class = 1

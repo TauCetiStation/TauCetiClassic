@@ -357,8 +357,6 @@
 
 /obj/item/clothing/mask/chameleon
 	name = "gas mask"
-	icon = 'tauceti/items/clothing/masks/gas_tc.dmi'
-	tc_custom = 'tauceti/items/clothing/masks/gas_tc.dmi'
 	icon_state = "gas_mask_tc"
 	item_state = "gas_mask_tc"
 	desc = "It looks like a plain gask mask, but on closer inspection, it seems to have a small dial inside."
@@ -377,8 +375,6 @@
 /obj/item/clothing/mask/chameleon/emp_act(severity) //Because we don't have psych for all slots right now but still want a downside to EMP.  In this case your cover's blown.
 	name = "gas mask"
 	desc = "It's a gas mask."
-	icon = 'tauceti/items/clothing/masks/gas_tc.dmi'
-	tc_custom = 'tauceti/items/clothing/masks/gas_tc.dmi'
 	item_state = "gas_mask_tc"
 	icon_state = "gas_mask_tc"
 	update_icon()

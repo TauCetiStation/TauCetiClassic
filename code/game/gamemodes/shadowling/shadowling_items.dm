@@ -94,7 +94,7 @@
 	flags = ABSTRACT
 	canremove = 0
 	action_button_name = "Toggle Vision"
-	icon = 'tauceti/icons/obj/clothing/hud_custom.dmi'
+	icon = 'icons/mob/shadowling_hud.dmi'
 	icon_state = "ling_vision_off"
 
 
@@ -128,7 +128,7 @@
 
 /obj/structure/shadow_vortex/New()
 	//src.audible_message("<span class='warning'><b>\The [src] lets out a dismaying screech as dimensional barriers are torn apart!</span>")
-	playsound(loc, 'tauceti/sounds/effects/supermatter.ogg', 100, 1)
+	playsound(loc, 'sound/effects/supermatter.ogg', 100, 1)
 	sleep(100)
 	qdel(src)
 

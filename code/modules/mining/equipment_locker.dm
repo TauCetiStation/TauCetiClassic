@@ -643,7 +643,7 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 	ranged_message = "shoots"
 	ranged_cooldown_cap = 3
 	projectiletype = /obj/item/projectile/kinetic
-	projectilesound = 'tauceti/sounds/weapon/Gunshot4.ogg'
+	projectilesound = 'sound/weapons/Gunshot4.ogg'
 	wanted_objects = list(/obj/item/weapon/ore/diamond,
 						  /obj/item/weapon/ore/glass,
 						  /obj/item/weapon/ore/gold,
@@ -801,10 +801,9 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 /obj/item/weapon/patcher
 	name = "suit patcher"
 	desc = "Suit patcher will recover your space rig from breaches. It is for one use only."
-	icon = 'tauceti/icons/obj/patcher.dmi'
+	icon = 'icons/obj/weapons.dmi'
 	icon_state = "patcher"
 	item_state = "patcher"
-	tc_custom = 'tauceti/icons/obj/patcher.dmi'
 	throwforce = 0
 	w_class = 2.0
 	throw_speed = 3

@@ -1,7 +1,6 @@
 /obj/item/weapon/gun/projectile/automatic //Hopefully someone will find a way to make these fire in bursts or something. --Superxpdude
 	name = "submachine gun"
 	desc = "A lightweight, fast firing gun. Uses 9mm rounds."
-	icon = 'tauceti/icons/obj/guns.dmi'
 	icon_state = "saber"	//ugly
 	w_class = 3.0
 	origin_tech = "combat=4;materials=2"
@@ -32,7 +31,6 @@
 /obj/item/weapon/gun/projectile/automatic/c20r
 	name = "C-20r SMG"
 	desc = "A lightweight, compact bullpup SMG. Uses .45 ACP rounds in medium-capacity magazines and has a threaded barrel for silencers. Has a 'Scarborough Arms - Per falcis, per pravitas' buttstamp."
-	icon = 'tauceti/items/weapons/syndicate/syndicate_guns.dmi'
 	icon_state = "c20r"
 	item_state = "c20r"
 	w_class = 3.0
@@ -79,14 +77,13 @@
 /obj/item/weapon/gun/projectile/automatic/l6_saw
 	name = "\improper L6 SAW"
 	desc = "A heavily modified light machine gun with a tactical plasteel frame resting on a rather traditionally-made ballistic weapon. Has 'Aussec Armoury - 2531' engraved on the reciever, as well as '7.62x51mm'."
-	icon = 'tauceti/items/weapons/syndicate/syndicate_guns.dmi'
 	icon_state = "l6closed100"
 	item_state = "l6closedmag"
 	w_class = 5
 	slot_flags = 0
 	origin_tech = "combat=5;materials=1;syndicate=2"
 	mag_type = /obj/item/ammo_box/magazine/m762
-	fire_sound = 'tauceti/sounds/weapon/gunshot3.wav'
+	fire_sound = 'sound/weapons/gunshot3.wav'
 	var/cover_open = 0
 	var/wielded = 0
 
@@ -221,10 +218,10 @@
 /* Where Ausops failed, I have not. -SirBayer */
 
 //=================NEW GUNS=================\\
+
 /obj/item/weapon/gun/projectile/automatic/l10c
 	name = "L10-c"
 	desc = "A basic energy-based carbine with fast rate of fire."
-	icon = 'icons/obj/gun.dmi'
 	icon_state = "l10-car"
 	item_state = "l10-car"
 	w_class = 4.0
@@ -308,7 +305,6 @@
 /obj/item/weapon/gun/projectile/automatic/c5
 	name = "security submachine gun"
 	desc = "C-5 submachine gun - cheap and light. Uses 9mm ammo."
-	icon = 'icons/obj/gun.dmi'
 	icon_state = "c5"
 	item_state = "c5"
 	w_class = 3.0
@@ -329,7 +325,6 @@
 /obj/item/weapon/gun/projectile/automatic/l13
 	name = "security submachine gun"
 	desc = "L13 personal defense weapon - for combat security operations. Uses .38 ammo."
-	icon = 'icons/obj/gun.dmi'
 	icon_state = "l13"
 	item_state = "l13"
 	w_class = 3.0
@@ -345,4 +340,128 @@
 		H.update_inv_l_hand()
 		H.update_inv_r_hand()
 		H.update_inv_belt()
+	return
+
+/obj/item/weapon/gun/projectile/automatic/tommygun
+	name = "tommy gun"
+	desc = "A genuine Chicago Typewriter."
+	icon_state = "tommygun"
+	item_state = "tommygun"
+	slot_flags = 0
+	origin_tech = "combat=5;materials=1;syndicate=2"
+	mag_type = /obj/item/ammo_box/magazine/tommygunm45
+	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
+
+/obj/item/weapon/gun/projectile/automatic/tommygun/isHandgun()
+	return 0
+
+/obj/item/weapon/gun/projectile/automatic/bar
+	name = "Browning M1918"
+	desc = "Browning Automatic Rifle."
+	icon_state = "bar"
+	item_state = "bar"
+	w_class = 5.0
+	origin_tech = "combat=5;materials=2"
+	mag_type = /obj/item/ammo_box/magazine/m3006
+	fire_sound = 'sound/weapons/gunshot3.wav'
+
+/obj/item/weapon/gun/projectile/automatic/luger
+	name = "Luger P08"
+	desc = "A small, easily concealable gun. Uses 9mm rounds."
+	icon_state = "p08"
+	w_class = 2
+	origin_tech = "combat=2;materials=2;syndicate=2"
+	mag_type = /obj/item/ammo_box/magazine/m9pmm
+
+/obj/item/weapon/gun/projectile/automatic/luger/update_icon()
+	..()
+	icon_state = "[initial(icon_state)][magazine ? "" : "-e"]"
+
+/obj/item/weapon/gun/projectile/automatic/luger/isHandgun()
+	return 1
+
+/obj/item/weapon/gun/projectile/automatic/colt1911/dungeon
+	desc = "A single-action, semi-automatic, magazine-fed, recoil-operated pistol chambered for the .45 ACP cartridge."
+	name = "\improper Colt M1911"
+	mag_type = /obj/item/ammo_box/magazine/c45m
+	mag_type2 = /obj/item/ammo_box/magazine/c45r
+
+/obj/item/weapon/gun/projectile/automatic/borg
+	name = "Robot SMG"
+	icon_state = "borg_smg"
+	mag_type = /obj/item/ammo_box/magazine/borg45
+
+/obj/item/weapon/gun/projectile/automatic/borg/update_icon()
+	return
+
+/obj/item/weapon/gun/projectile/automatic/borg/attack_self(mob/user as mob)
+	if (magazine)
+		magazine.loc = get_turf(src.loc)
+		magazine.update_icon()
+		magazine = null
+		user << "<span class='notice'>You pull the magazine out of \the [src]!</span>"
+	else
+		user << "<span class='notice'>There's no magazine in \the [src].</span>"
+	return
+
+/obj/item/weapon/gun/projectile/automatic/bulldog
+	name = "V15 Bulldog shotgun"
+	desc = "A compact, mag-fed semi-automatic shotgun for combat in narrow corridors. Compatible only with specialized magazines."
+	icon_state = "bulldog"
+	item_state = "bulldog"
+	w_class = 3.0
+	origin_tech = "combat=5;materials=4;syndicate=6"
+	mag_type = /obj/item/ammo_box/magazine/m12g
+	fire_sound = 'sound/weapons/Gunshot.ogg'
+
+/obj/item/weapon/gun/projectile/automatic/bulldog/New()
+	..()
+	update_icon()
+	return
+
+/obj/item/weapon/gun/projectile/automatic/bulldog/proc/update_magazine()
+	if(magazine)
+		src.overlays = 0
+		overlays += "[magazine.icon_state]_o"
+		return
+
+/obj/item/weapon/gun/projectile/automatic/bulldog/update_icon()
+	src.overlays = 0
+	update_magazine()
+	icon_state = "bulldog[chambered ? "" : "-e"]"
+	return
+
+/obj/item/weapon/gun/projectile/automatic/bulldog/afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, flag)
+	..()
+	if(!chambered && !get_ammo() && !alarmed)
+		playsound(user, 'sound/weapons/smg_empty_alarm.ogg', 40, 1)
+		update_icon()
+		alarmed = 1
+	return
+
+/obj/item/weapon/gun/projectile/automatic/a28
+	name = "A28 assault rifle"
+	desc = ""
+	icon_state = "a28"
+	item_state = "a28"
+	w_class = 3.0
+	origin_tech = "combat=5;materials=4;syndicate=6"
+	mag_type = /obj/item/ammo_box/magazine/m556
+	fire_sound = 'sound/weapons/Gunshot.ogg'
+
+/obj/item/weapon/gun/projectile/automatic/a28/New()
+	..()
+	update_icon()
+	return
+
+/obj/item/weapon/gun/projectile/automatic/a28/proc/update_magazine()
+	if(magazine)
+		src.overlays = 0
+		overlays += "[magazine.icon_state]-o"
+		return
+
+/obj/item/weapon/gun/projectile/automatic/a28/update_icon()
+	src.overlays = 0
+	update_magazine()
+	icon_state = "a28[chambered ? "" : "-e"]"
 	return

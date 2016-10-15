@@ -984,7 +984,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	else
 		SSobj.processing |= src
 		last_ghost_click = world.time + 50
-		var/image/I = image('tauceti/icons/mob/hud_mob.dmi', src, "agolem_master") //If there is alot activated rune close by, we can see which is ours.
+		var/image/I = image('icons/mob/hud.dmi', src, "agolem_master") //If there is alot activated rune close by, we can see which is ours.
 		user.client.images += I
 		spirit = user
 		user.golem_rune = src
@@ -1044,12 +1044,12 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	if(client)
 		if(dna && (dna.mutantrace == "adamantine"))
 			if(my_master)
-				var/I = image('tauceti/icons/mob/hud_mob.dmi', loc = my_master, icon_state = "agolem_master")
+				var/I = image('icons/mob/hud.dmi', loc = my_master, icon_state = "agolem_master")
 				client.images += I
 		else
 			if(my_golems)
 				for(var/mob/living/carbon/human/G in my_golems)
-					var/I = image('tauceti/icons/mob/hud_mob.dmi', loc = G, icon_state = "agolem_master")
+					var/I = image('icons/mob/hud.dmi', loc = G, icon_state = "agolem_master")
 					client.images += I
 
 

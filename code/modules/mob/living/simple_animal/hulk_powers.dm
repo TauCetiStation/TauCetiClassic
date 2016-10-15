@@ -487,7 +487,7 @@
 
 /obj/item/projectile/energy/hulkspit
 	name = "spit"
-	icon = 'tauceti/icons/obj/projectiles.dmi'
+	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "neurotoxin"
 	damage = 5
 	damage_type = TOX

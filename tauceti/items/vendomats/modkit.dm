@@ -1,4 +1,0 @@
-/obj/machinery/vending/eva
-	name = "Hardsuit Kits"
-	desc = "Conversion kits for your alien hardsuit needs."
-	products = list(/obj/item/device/modkit/tajaran/engineering = 5, /obj/item/device/modkit/tajaran/atmos = 5, /obj/item/device/modkit/tajaran/med = 5, /obj/item/device/modkit/tajaran/sec = 5, /obj/item/device/modkit/tajaran/mining = 5, /obj/item/device/modkit/unathi/engineering = 5, /obj/item/device/modkit/unathi/atmos = 5, /obj/item/device/modkit/unathi/med = 5, /obj/item/device/modkit/unathi/sec = 5, /obj/item/device/modkit/unathi/mining = 5, /obj/item/device/modkit/skrell/engineering = 5, /obj/item/device/modkit/skrell/atmos = 5, /obj/item/device/modkit/skrell/med = 5, /obj/item/device/modkit/skrell/sec = 5, /obj/item/device/modkit/skrell/mining = 5, /obj/item/device/modkit/human = 10)

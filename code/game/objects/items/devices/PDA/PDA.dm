@@ -185,7 +185,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 /obj/item/device/pda/forensic
 	default_cartridge = /obj/item/weapon/cartridge/detective
-	icon = 'tauceti/icons/obj/devices.dmi'
+	icon = 'icons/obj/pda.dmi'
 	icon_state = "pda-forensic"
 
 /obj/item/device/pda/clear
@@ -1072,7 +1072,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				if(M.get_active_hand() == null)
 					M.put_in_hands(O)
 					usr << "<span class='notice'>You remove \the [O] from \the [src].</span>"
-					playsound(src, 'tauceti/sounds/items/penclick.ogg', 20, 1, 1)
+					playsound(src, 'sound/items/penclick.ogg', 20, 1, 1)
 					return
 			O.loc = get_turf(src)
 		else
