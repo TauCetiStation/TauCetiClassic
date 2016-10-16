@@ -3841,6 +3841,99 @@ datum
 					H.vomit()
 					H.apply_effect(1, IRRADIATE, 0)
 
+//////////////////////////////////////////////
+//////////////New poisons/////////////////////
+//////////////////////////////////////////////
+
+/datum/reagent/alphaamanitin
+	name = "Alpha-amanitin"
+	id = "alphaamanitin"
+	description = "Deadly rapidly degrading toxin derived from certain species of mushrooms."
+	color = "#792300" //rgb: 121, 35, 0
+	custom_metabolism = 0.5
+
+/datum/reagent/alphaamanitin/on_mob_life(var/mob/living/M)
+
+	if(..())
+		return 1
+	M.adjustToxLoss(6)
+	M.adjustOxyLoss(2)
+	M.adjustBrainLoss(2)
+
+/datum/reagent/aflatoxin
+	name = "Aflatoxin"
+	id = "aflatoxin"
+	description = "Deadly toxin delayed action. Causes general poisoning and damage the structure of DNA."
+	reagent_state = LIQUID
+	color = "#792300" //rgb: 59, 8, 5
+	custom_metabolism = 0.05
+
+/datum/reagent/aflatoxin/on_mob_life(var/mob/living/M)
+
+	if(..())
+		return 1
+	if(data >= 165)
+		M.adjustToxLoss(4)
+		M.apply_effect(5*REM,IRRADIATE,0)
+	data++
+
+/datum/reagent/chefspecial			//Сперто с ВГ. Простым смертным недоступен. Только в наборе ядов у трейтора.
+	name = "Chef's Special"
+	id = "chefspecial"
+	description = "An extremely toxic chemical that will surely end in death."
+	reagent_state = LIQUID
+	color = "#792300" //rgb: 207, 54, 0
+	custom_metabolism = 0.01
+	data = 1 //Used as a tally
+
+/datum/reagent/chefspecial/on_mob_life(var/mob/living/M)
+
+	if(..()) return 1
+
+	if(data >= 165)
+		M.death(0)
+		M.attack_log += "\[[time_stamp()]\]<font color='red'>Died a quick and painless death by <font color='green'>Chef Excellence's Special Sauce</font>.</font>"
+	data++
+
+/datum/reagent/dioxin
+	name = "Dioxin"
+	id = "dioxin"
+	description = "A powerful poison with a cumulative effect."
+	reagent_state = LIQUID
+	color = "#792300" //rgb: 207, 54, 0
+	custom_metabolism = 0 //не выводится сам по себе
+
+/datum/reagent/dioxin/on_mob_life(var/mob/living/M)
+	if(..())
+		return 1
+	if(data >= 130)
+		switch (volume)
+			if (10 to 20)
+				M.make_jittery(2)
+				M.make_dizzy(2)
+				if (prob(5)) M.emote(pick("twitch","giggle"))
+				if (data >=180)
+					M.adjustToxLoss(1)
+			if (20 to 30)
+				M.make_jittery(2)
+				M.make_dizzy(2)
+				if (prob(10)) M.emote(pick("twitch","giggle"))
+				M.adjustToxLoss(3)
+				M.adjustBrainLoss(2)
+			if (30 to INFINITY)
+				M.make_jittery(2)
+				M.make_dizzy(2)
+				if (prob(20)) M.emote(pick("twitch","giggle"))
+				M.adjustToxLoss(3)
+				M.adjustBrainLoss(2)
+				if (prob(5))
+					if(ishuman(M))
+						var/mob/living/carbon/human/H = M
+						var/datum/organ/internal/heart/L = H.internal_organs_by_name["heart"]
+						if (istype(L))
+							L.take_damage(10, 0)
+	data++
+
 /datum/reagent/Destroy() // This should only be called by the holder, so it's already handled clearing its references
 	. = ..()
 	holder = null
