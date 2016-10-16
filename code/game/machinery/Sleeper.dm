@@ -4,7 +4,7 @@
 
 /obj/machinery/sleep_console
 	name = "Sleeper Console"
-	icon = 'icons/obj/Cryogenic2.dmi'
+	icon = 'icons/obj/Cryogenic3.dmi'
 	icon_state = "sleeperconsole"
 	anchored = 1 //About time someone fixed this.
 	density = 0
@@ -12,7 +12,7 @@
 
 /obj/machinery/sleeper
 	name = "Sleeper"
-	icon = 'icons/obj/Cryogenic2.dmi'
+	icon = 'icons/obj/Cryogenic3.dmi'
 	icon_state = "sleeper-open"
 	density = 0
 	anchored = 1

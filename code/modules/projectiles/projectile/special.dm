@@ -166,7 +166,6 @@
 
 /obj/item/projectile/missile
 	name ="rocket"
-	icon = 'tauceti/icons/obj/projectiles.dmi'
 	icon_state= "rocket"
 	light_color = "#ffffff"
 	light_power = 2

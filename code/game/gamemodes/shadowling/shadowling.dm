@@ -262,11 +262,11 @@ Made by Xhuis
 				if(shadowling.current.client)
 					for(var/datum/mind/thrall in thralls)
 						if(thrall.current)
-							var/I = image('tauceti/icons/mob/shadow_ling.dmi', loc = thrall.current, icon_state = "thrall")
+							var/I = image('icons/mob/shadowling.dmi', loc = thrall.current, icon_state = "thrall")
 							shadowling.current.client.images += I
 					for(var/datum/mind/shadowling_1 in shadows)
 						if(shadowling_1.current)
-							var/I = image('tauceti/icons/mob/shadow_ling.dmi', loc = shadowling_1.current, icon_state = "shadowling")
+							var/I = image('icons/mob/shadowling.dmi', loc = shadowling_1.current, icon_state = "shadowling")
 							shadowling.current.client.images += I
 
 		for(var/datum/mind/thrall in thralls)
@@ -274,11 +274,11 @@ Made by Xhuis
 				if(thrall.current.client)
 					for(var/datum/mind/shadowling in shadows)
 						if(shadowling.current)
-							var/I = image('tauceti/icons/mob/shadow_ling.dmi', loc = shadowling.current, icon_state = "shadowling")
+							var/I = image('icons/mob/shadowling.dmi', loc = shadowling.current, icon_state = "shadowling")
 							thrall.current.client.images += I
 					for(var/datum/mind/thrall_1 in thralls)
 						if(thrall_1.current)
-							var/I = image('tauceti/icons/mob/shadow_ling.dmi', loc = thrall_1.current, icon_state = "thrall")
+							var/I = image('icons/mob/shadowling.dmi', loc = thrall_1.current, icon_state = "thrall")
 							thrall.current.client.images += I
 
 
@@ -288,21 +288,21 @@ Made by Xhuis
 		for(var/datum/mind/shadowling_mind in shadows)
 			if(shadowling_mind.current)
 				if(shadowling_mind.current.client)
-					var/I = image('tauceti/icons/mob/shadow_ling.dmi', loc = thrall.current, icon_state = "thrall")
+					var/I = image('icons/mob/shadowling.dmi', loc = thrall.current, icon_state = "thrall")
 					shadowling_mind.current.client.images += I
 			if(thrall.current)
 				if(thrall.current.client)
-					var/image/J = image('tauceti/icons/mob/shadow_ling.dmi', loc = shadowling_mind.current, icon_state = "shadowling")
+					var/image/J = image('icons/mob/shadowling.dmi', loc = shadowling_mind.current, icon_state = "shadowling")
 					thrall.current.client.images += J
 
 		for(var/datum/mind/thrall_1 in thralls)
 			if(thrall_1.current)
 				if(thrall_1.current.client)
-					var/I = image('tauceti/icons/mob/shadow_ling.dmi', loc = thrall.current, icon_state = "thrall")
+					var/I = image('icons/mob/shadowling.dmi', loc = thrall.current, icon_state = "thrall")
 					thrall_1.current.client.images += I
 			if(thrall.current)
 				if(thrall.current.client)
-					var/image/J = image('tauceti/icons/mob/shadow_ling.dmi', loc = thrall_1.current, icon_state = "thrall")
+					var/image/J = image('icons/mob/shadowling.dmi', loc = thrall_1.current, icon_state = "thrall")
 					thrall.current.client.images += J
 
 

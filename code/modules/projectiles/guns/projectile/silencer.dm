@@ -21,7 +21,7 @@ Usage: Place the proc within the proc it shares it's name with, silencer_attackb
 		silenced = I
 		var/obj/item/weapon/silencer/S = I
 		S.oldsound = fire_sound
-		fire_sound = 'tauceti/sounds/weapon/Gunshot_silenced.ogg'
+		fire_sound = 'sound/weapons/Gunshot_silenced.ogg'
 		w_class = 3
 		I.loc = src
 		update_icon()

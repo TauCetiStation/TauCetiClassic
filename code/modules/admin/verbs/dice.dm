@@ -15,8 +15,6 @@
 	if(alert("Do you want to inform the world about your game?",,"Yes", "No") == "Yes")
 		world << "<h2 style='text-color:#A50400'>The dice have been rolled by Gods!</h2>"
 
-
-
 	var/result = roll(dice)
 
 	if(alert("Do you want to inform the world about the result?",,"Yes", "No") == "Yes")

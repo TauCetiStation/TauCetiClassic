@@ -253,4 +253,57 @@
 	desc = "A set of implantable lenses designed to augment your vision."
 	icon_state = "thermalimplants"
 	item_state = "syringe_kit"
+
+/obj/item/clothing/glasses/thermal/hos_thermals
+	name = "Augmented shades"
+	desc = "Polarized bioneural eyewear, designed to augment your vision."
+	icon_state = "hos_shades"
+	item_state = "hos_shades"
+	toggleable = 0
+
+/obj/item/clothing/glasses/rosas_eyepatch
+	name = "WhiteEyepatch"
+	icon_state = "rosas_eye"
+
+/obj/item/clothing/glasses/hud/health/night
+	name = "Night Vision Health Scanner HUD"
+	desc = "An advanced medical head-up display that allows doctors to find patients in complete darkness."
+	icon_state = "healthhudnight"
+	darkness_view = 7
+
+/obj/item/clothing/glasses/gar
+	name = "gar glasses"
+	icon_state = "gar"
+	item_state = "gar"
+
+/obj/item/clothing/glasses/sunglasses/gar
+	name = "gar sunglasses"
+	icon_state = "garb"
+	item_state = "garb"
+
+/obj/item/clothing/glasses/meson/gar
+	name = "Gar Meson Scanner"
+	icon_state = "garm"
+	item_state = "garm"
+	toggleable = 0
+
+/obj/item/clothing/glasses/sunglasses/sechud/gar
+	name = "Gar HUDSunglasses"
+	icon_state = "gars"
+	item_state = "gars"
+
+/obj/item/clothing/glasses/sunglasses/gar/super
+	name = "supergar sunglasses"
+	icon_state = "supergarb"
+	item_state = "supergarb"
+
+/obj/item/clothing/glasses/sunglasses/sechud/gar/super
+	name = "supergar HUDSunglasses"
+	icon_state = "supergars"
+	item_state = "supergars"
+
+/obj/item/clothing/glasses/gar/super
+	name = "supergar glasses"
+	icon_state = "supergar"
+	item_state = "supergar"
 	toggleable = 0

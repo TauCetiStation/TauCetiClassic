@@ -32,7 +32,7 @@ var/power_fail_event = 0
 			C.cell.charge = 0
 
 /proc/play_ambience()
-	player_list << sound('tauceti/sounds/ambience/hullcreak.ogg')
+	player_list << sound('sound/ambience/hullcreak.ogg')
 
 /proc/power_restore(var/announce = 1, var/badminery = 0)
 	power_fail_event = 0

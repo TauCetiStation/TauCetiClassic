@@ -380,7 +380,7 @@ proc/isInSight(var/atom/A, var/atom/B)
 			for(var/client/C in group)
 				C.screen -= O
 
-datum/projectile_data
+/datum/projectile_data
 	var/src_x
 	var/src_y
 	var/time
@@ -451,6 +451,23 @@ datum/projectile_data
 	var/b = mixOneColor(weights, blues)
 	return rgb(r,g,b)
 
+/proc/random_color()
+	var/list/rand = list("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f")
+	return "#" + pick(rand) + pick(rand) + pick(rand) + pick(rand) + pick(rand) + pick(rand)
+
+/proc/noob_notify(var/mob/M)
+	//todo: check db before
+	if(!M.client)
+		return
+	if(M.client.holder)
+		return
+	if(M.client.player_age == 0)
+		for(var/client/C in clients)
+			if(C.holder)
+				C << "<span class=\"admin\"><span class=\"prefix\">New player notify:</span> <span class=\"message\">[M.ckey] join to the game as [M.mind.name] [M.mind.assigned_role ? "([M.mind.assigned_role])" : ""] - <a href='http://www.byond.com/members/[M.ckey]'>Byond Profile</a> (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[M.x];Y=[M.y];Z=[M.z]'>JMP</a>)</span></span>"
+
+				if(R_ADMIN & C.holder.rights)
+					C << "<span class=\"admin\"><span class=\"prefix\">New player notify:</span> <span class=\"message\">[M.ckey] ip: [M.lastKnownIP]</span></span>"
 
 //============VG PORTS============
 /proc/recursive_type_check(atom/O, type = /atom)

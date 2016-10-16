@@ -54,9 +54,6 @@
 			update_icon()
 		return
 
-	for(var/mob/living/simple_animal/smart_animal/SA in view(7))
-		SA.fight(user, M)
-
 	var/mob/living/carbon/human/H = M
 	if(isrobot(M))
 		..()

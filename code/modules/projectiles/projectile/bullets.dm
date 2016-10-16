@@ -1,5 +1,4 @@
 /obj/item/projectile/bullet
-	icon = 'tauceti/icons/obj/projectiles.dmi'
 	name = "bullet"
 	icon_state = "bullet"
 	damage = 60
@@ -176,7 +175,6 @@
 	embed = 0 // nope
 	fake = 1
 
-//=================NEW PROJECTILES=================\\
 /obj/item/projectile/l10
 	name ="projectile"
 	icon = 'icons/obj/projectiles.dmi'
@@ -193,3 +191,18 @@
 	edge = 0
 
 	muzzle_type = /obj/effect/projectile/energy/muzzle
+
+/obj/item/projectile/bullet/midbullet3
+	damage = 35
+
+/obj/item/projectile/bullet/flare
+	name = "flare"
+	icon_state= "bolter"
+	damage = 5
+	luminosity = 8
+
+/obj/item/projectile/bullet/flare/on_hit(var/atom/target, var/blocked = 0)
+	if(istype(target, /mob/living/carbon))
+		var/mob/living/carbon/M = target
+		M.adjust_fire_stacks(1)
+		M.IgniteMob()

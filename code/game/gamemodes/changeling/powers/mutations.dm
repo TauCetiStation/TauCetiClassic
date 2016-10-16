@@ -105,8 +105,7 @@
 /obj/item/weapon/melee/arm_blade
 	name = "arm blade"
 	desc = "A grotesque blade made out of bone and flesh that cleaves through people as a hot knife through butter."
-	icon = 'tauceti/icons/mob/mutant_stuff.dmi'
-	tc_custom = 'tauceti/icons/mob/mutant_stuff.dmi'
+	icon = 'icons/obj/weapons.dmi'
 	icon_state = "arm_blade"
 	item_state = "arm_blade"
 	flags = ABSTRACT
@@ -173,9 +172,9 @@
 	name = "shield-like mass"
 	desc = "A mass of tough, boney tissue. You can still see the fingers as a twisted pattern in the shield."
 	canremove = 0
-	icon = 'tauceti/icons/mob/mutant_stuff.dmi'
-	tc_custom = 'tauceti/icons/mob/mutant_stuff.dmi'
+	icon = 'icons/obj/weapons.dmi'
 	icon_state = "ling_shield"
+	item_state = "ling_shield"
 	var/remaining_uses = 0//Set by the changeling ability.
 
 /obj/item/weapon/shield/changeling/New()
@@ -218,8 +217,7 @@
 
 /obj/item/clothing/suit/space/changeling
 	name = "flesh mass"
-	icon = 'tauceti/icons/mob/mutant_stuff.dmi'
-	tc_custom = 'tauceti/icons/mob/mutant_stuff.dmi'
+	icon = 'icons/mob/suit.dmi'
 	icon_state = "lingspacesuit"
 	desc = "A huge, bulky mass of pressure and temperature-resistant organic tissue, evolved to facilitate space travel."
 	canremove = 0
@@ -245,8 +243,7 @@
 
 /obj/item/clothing/head/helmet/space/changeling
 	name = "flesh mass"
-	icon = 'tauceti/icons/mob/mutant_stuff.dmi'
-	tc_custom = 'tauceti/icons/mob/mutant_stuff.dmi'
+	icon = 'icons/mob/head.dmi'
 	icon_state = "lingspacehelmet"
 	desc = "A covering of pressure and temperature-resistant organic tissue with a glass-like chitin front."
 	flags = HEADCOVERSEYES | BLOCKHAIR | HEADCOVERSMOUTH
@@ -275,8 +272,7 @@
 /obj/item/clothing/suit/armor/changeling
 	name = "chitinous mass"
 	desc = "A tough, hard covering of black chitin."
-	icon = 'tauceti/icons/mob/mutant_stuff.dmi'
-	tc_custom = 'tauceti/icons/mob/mutant_stuff.dmi'
+	icon = 'icons/mob/suit.dmi'
 	icon_state = "lingarmor"
 	canremove = 0
 	flags = THICKMATERIAL
@@ -299,8 +295,7 @@
 /obj/item/clothing/head/helmet/changeling
 	name = "chitinous mass"
 	desc = "A tough, hard covering of black chitin with transparent chitin in front."
-	icon = 'tauceti/icons/mob/mutant_stuff.dmi'
-	tc_custom = 'tauceti/icons/mob/mutant_stuff.dmi'
+	icon = 'icons/mob/head.dmi'
 	icon_state = "lingarmorhelmet"
 	flags = HEADCOVERSEYES | BLOCKHAIR | THICKMATERIAL
 	canremove = 0

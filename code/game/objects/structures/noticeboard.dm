@@ -1,7 +1,7 @@
 /obj/structure/noticeboard
 	name = "notice board"
 	desc = "A board for pinning important notices upon."
-	icon = 'tauceti/icons/obj/objects.dmi'
+	icon = 'icons/obj/objects.dmi'
 	icon_state = "nboard00"
 	flags = FPRINT
 	density = 0

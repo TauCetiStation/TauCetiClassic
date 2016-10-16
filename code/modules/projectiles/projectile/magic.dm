@@ -125,7 +125,6 @@
 
 /obj/item/projectile/magic/animate
 	name = "bolt of animation"
-	icon = 'tauceti/icons/obj/projectiles.dmi'
 	icon_state = "red_1"
 	light_color = "#ff0000"
 	light_power = 2

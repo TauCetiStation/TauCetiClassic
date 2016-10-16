@@ -161,9 +161,6 @@
 				if(!fake)
 					msg_admin_attack("UNKNOWN shot [M] ([M.ckey]) with a [src] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[firer.x];Y=[firer.y];Z=[firer.z]'>JMP</a>)") //BS12 EDIT ALG
 
-		for(var/mob/living/simple_animal/smart_animal/SA in view(7))
-			SA.fight(firer , M)
-
 //	if(istype(src, /obj/item/projectile/beam))
 
 	if(A)

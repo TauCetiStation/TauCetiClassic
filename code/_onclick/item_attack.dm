@@ -61,7 +61,7 @@
 					M.apply_damage(20, BRUTE, "head", 0, sharp=sharp, edge=edge)
 					M.apply_damage(20, BRUTE, "head", 0, sharp=sharp, edge=edge)
 					M.adjustOxyLoss(60) // Brain lacks oxygen immediately, pass out
-					playsound(loc, 'tauceti/sounds/effects/throat_cutting.ogg', 50, 1, 1)
+					playsound(loc, 'sound/effects/throat_cutting.ogg', 50, 1, 1)
 					flick(G.hud.icon_state, G.hud)
 					G.last_action = world.time
 					user.visible_message("<span class='danger'>[user] slit [M]'s throat open with \the [name]!</span>")
@@ -82,9 +82,6 @@
 	user.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [M.name] ([M.ckey]) with [name] (INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(damtype)])</font>"
 	M.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [user.name] ([user.ckey]) with [name] (INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(damtype)])</font>"
 	msg_admin_attack("[key_name(user)] attacked [key_name(M)] with [name] (INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(damtype)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)" )
-
-	for(var/mob/living/simple_animal/smart_animal/SA in view(7))
-		SA.fight(user, M)
 
 	//spawn(1800)            // this wont work right
 	//	M.lastattacker = null

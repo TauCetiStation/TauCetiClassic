@@ -230,7 +230,7 @@ proc/SendFax(var/sent, var/sentname, var/mob/Sender, var/dpt, var/stamp, var/sta
 							P.stamps += "<HR><i>[stamps]</i>"
 						P.overlays += stampoverlay
 					if (stamp == "Syndicate")
-						var/image/stampoverlay = image('tauceti/icons/obj/bureaucracy.dmi')
+						var/image/stampoverlay = image('icons/obj/bureaucracy.dmi')
 						stampoverlay.icon_state = "paper_stamp-syndicate"
 						if(!stamps)
 							P.stamps += "<HR><i>This paper has been stamped by the Syndicate Command Interception Relay.</i>"
@@ -238,7 +238,7 @@ proc/SendFax(var/sent, var/sentname, var/mob/Sender, var/dpt, var/stamp, var/sta
 							P.stamps += "<HR><i>[stamps]</i>"
 						P.overlays += stampoverlay
 					if (stamp == "FakeCentCom")
-						var/image/stampoverlay = image('tauceti/icons/obj/bureaucracy.dmi')
+						var/image/stampoverlay = image('icons/obj/bureaucracy.dmi')
 						stampoverlay.icon_state = "paper_stamp-fakecentcom"
 						if(!stamps)
 							P.stamps += "<HR><i>This paper has been stamped by the Central Compound Quantum Relay.</i>"
@@ -275,7 +275,7 @@ proc/SendFax(var/sent, var/sentname, var/mob/Sender, var/dpt, var/stamp, var/sta
 							P.stamps += "<HR><i>[stamps]</i>"
 						P.overlays += stampoverlay
 					if (stamp == "Syndicate")
-						var/image/stampoverlay = image('tauceti/icons/obj/bureaucracy.dmi')
+						var/image/stampoverlay = image('icons/obj/bureaucracy.dmi')
 						stampoverlay.icon_state = "paper_stamp-syndicate"
 						if(!stamps)
 							P.stamps += "<HR><i>This paper has been stamped by the Syndicate Command Interception Relay.</i>"
@@ -283,7 +283,7 @@ proc/SendFax(var/sent, var/sentname, var/mob/Sender, var/dpt, var/stamp, var/sta
 							P.stamps += "<HR><i>[stamps]</i>"
 						P.overlays += stampoverlay
 					if (stamp == "FakeCentCom")
-						var/image/stampoverlay = image('tauceti/icons/obj/bureaucracy.dmi')
+						var/image/stampoverlay = image('icons/obj/bureaucracy.dmi')
 						stampoverlay.icon_state = "paper_stamp-fakecentcom"
 						if(!stamps)
 							P.stamps += "<HR><i>This paper has been stamped by the Central Compound Quantum Relay.</i>"

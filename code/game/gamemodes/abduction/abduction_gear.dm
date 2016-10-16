@@ -162,7 +162,6 @@
 	name = "science tool"
 	desc = "A dual-mode tool for retrieving specimens and scanning appearances. Scanning can be done through cameras."
 	icon = 'icons/obj/abductor.dmi'
-	tc_custom = 'tauceti/icons/mob/abduction/gizmo.dmi'
 	icon_state = "gizmo_scan"
 	item_state = "gizmo"
 	origin_tech = "materials=5;programming=5;bluespace=6"
@@ -245,7 +244,6 @@
 	name = "abductor silencer"
 	desc = "A compact device used to shut down communications equipment."
 	icon = 'icons/obj/abductor.dmi'
-	tc_custom = 'tauceti/icons/mob/abduction/silencer.dmi'
 	icon_state = "silencer"
 	item_state = "silencer"
 	origin_tech = "materials=5;programming=5"
@@ -320,7 +318,6 @@
 	name = "alien weapon"
 	desc = "An odd device that resembles human weapon."
 	origin_tech = "materials=6;biotech=4;combat=5"
-	tc_custom = 'tauceti/icons/mob/guns.dmi'
 	icon_state = "alienpistol"
 	item_state = "alienpistol"
 
@@ -394,7 +391,6 @@
 	desc = "A quad-mode baton used for incapacitation and restraining of specimens."
 	var/mode = BATON_STUN
 	icon = 'icons/obj/abductor.dmi'
-	tc_custom = 'tauceti/icons/mob/abduction/wonderprod.dmi'
 	icon_state = "wonderprodStun"
 	item_state = "wonderprod"
 	origin_tech = "materials=6;combat=5;biotech=7"

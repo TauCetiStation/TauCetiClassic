@@ -267,14 +267,3 @@ var/can_call_ert
 	affected.implants += L
 	L.part = affected
 	return 1
-
-/obj/item/weapon/card/id/ert
-	name = "\improper CentCom. ID"
-	icon = 'tauceti/icons/obj/objects.dmi'
-	icon_state = "ert"
-	registered_name = "Central Command"
-	assignment = "Emergency Response Team"
-	New()
-		access = get_all_accesses()
-		access += get_all_centcom_access()
-		..()

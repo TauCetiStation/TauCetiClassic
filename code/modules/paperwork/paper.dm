@@ -106,7 +106,7 @@
 		icon_state = "scrap"
 		throw_range = 1
 
-	playsound(src, 'tauceti/sounds/items/crumple.ogg', 15, 1, 1)
+	playsound(src, 'sound/items/crumple.ogg', 15, 1, 1)
 	add_fingerprint(usr)
 	return
 

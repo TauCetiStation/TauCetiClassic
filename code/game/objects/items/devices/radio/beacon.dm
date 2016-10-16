@@ -103,7 +103,7 @@
 		loc = null
 		//var/location
 		H.attack_log += "\[[time_stamp()]\]<font color='blue'> Had the [name] planted on them by [user.real_name] ([user.ckey])</font>"
-		playsound(H.loc, 'tauceti/sounds/items/timer.ogg', 5, 0)
+		playsound(H.loc, 'sound/items/timer.ogg', 5, 0)
 		user.visible_message("\red [user.name] finished planting an [name] on [H.name]!")
 
 		H.overlays += image('icons/obj/device.dmi', "medicon")

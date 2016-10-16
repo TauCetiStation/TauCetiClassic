@@ -10,7 +10,7 @@
 /obj/structure/stool/bed
 	name = "bed"
 	desc = "This is used to lie in, sleep in or strap on."
-	icon = 'tauceti/icons/obj/objects.dmi'
+	icon = 'icons/obj/objects.dmi'
 	icon_state = "bed"
 	can_buckle = 1
 	buckle_lying = 1

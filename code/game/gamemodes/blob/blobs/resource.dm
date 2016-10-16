@@ -1,6 +1,6 @@
 /obj/effect/blob/resource
 	name = "resource blob"
-	icon = 'tauceti/icons/mob/blob.dmi'
+	icon = 'icons/mob/blob.dmi'
 	icon_state = "blob_resource"
 	health = 30
 	fire_resist = 2

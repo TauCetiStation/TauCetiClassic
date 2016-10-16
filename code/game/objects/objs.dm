@@ -16,7 +16,7 @@
 
 	var/damtype = "brute"
 	var/force = 0
-	var/tc_custom = null //Default Bay12 sprite or not
+	var/icon_custom = null //Default Bay12 sprite or not
 
 	var/being_shocked = 0
 
@@ -167,3 +167,28 @@
 
 /obj/proc/reset_shocked()
 	being_shocked = 0
+
+//mob - who is being feed
+//user - who is feeding
+//food - whai is feeded
+//eatverb - take/drink/eat method
+/proc/CanEat(user, mob, food, eatverb = "consume")
+	if(ishuman(mob))
+		var/mob/living/carbon/human/Feeded = mob
+		if(Feeded.head)
+			var/obj/item/Head = Feeded.head
+			if(Head.flags & HEADCOVERSMOUTH)
+				if (Feeded == user)
+					user<<"You can't [eatverb] [food] through [Head]"
+				else
+					user<<"You can't feed [Feeded] with [food] through [Head]"
+				return 0
+		if(Feeded.wear_mask)
+			var/obj/item/Mask = Feeded.wear_mask
+			if(Mask.flags & MASKCOVERSMOUTH)
+				if (Feeded == user)
+					user<<"You can't [eatverb] [food] through [Mask]"
+				else
+					user<<"You can't feed [Feeded] with [food] through [Mask]"
+				return 0
+		return 1

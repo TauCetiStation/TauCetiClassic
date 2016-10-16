@@ -284,3 +284,5 @@
 
 	is_catwalk()
 		return 1
+
+/turf/simulated/floor/exodus

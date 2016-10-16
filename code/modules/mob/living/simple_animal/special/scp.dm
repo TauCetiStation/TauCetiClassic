@@ -3,7 +3,7 @@
 	name = "friend"
 	real_name = "friend"
 	desc = "It's some kind of human sized, doll-like sculpture, with weird discolourations on some parts of it. It appears to be quite solid."
-	icon = 'tauceti/icons/mob/scp.dmi'
+	icon = 'icons/mob/scp.dmi'
 	icon_state = "scp_173"
 	icon_living = "scp_173"
 	maxHealth = INFINITY
@@ -154,7 +154,7 @@
 			target_turf.scp_was_here = 1
 			loc = target_turf
 			dir = pick(cardinal)
-			playsound(src, 'tauceti/sounds/effects/scp_move.ogg', 100, 1)
+			playsound(src, 'sound/effects/scp_move.ogg', 100, 1)
 
 /mob/living/simple_animal/special/scp173/death()
 	return

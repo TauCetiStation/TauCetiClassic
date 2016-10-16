@@ -13,6 +13,7 @@
 	var/scientist = 0	//Vars used in abductors checks and etc. Should be here because in species datums it changes globaly.
 	var/agent = 0
 	var/team = 0
+	var/metadata
 
 	throw_range = 2
 
@@ -1375,6 +1376,19 @@
 
 	src << "<span class='notice'>You are now [crawling ? "crawling" : "getting up"].</span>"
 	update_canmove()
+
+/mob/living/carbon/human/verb/examine_ooc()
+	set name = "Examine OOC"
+	set category = "OOC"
+	set src in oview()
+
+	if(!usr || !src)	return
+
+	usr << "<font color='purple'>OOC-info: [src]</font>"
+	if(metadata)
+		usr << "<font color='purple'>[metadata]</font>"
+	else
+		usr << "<font color='purple'>Nothing of interest...</font>"
 
 /mob/living/carbon/human/can_inject(var/mob/user, var/error_msg, var/target_zone)
 	. = 1

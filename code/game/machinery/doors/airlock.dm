@@ -206,6 +206,11 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	icon = 'icons/obj/doors/Dooratmo.dmi'
 	assembly_type = /obj/structure/door_assembly/door_assembly_atmo
 
+/obj/machinery/door/airlock/neutral
+	name = "Airlock"
+	icon = 'icons/obj/doors/door_neutral.dmi'
+	assembly_type = /obj/structure/door_assembly/door_assembly_neutral
+
 /obj/machinery/door/airlock/research
 	name = "Airlock"
 	icon = 'icons/obj/doors/Doorresearch.dmi'
@@ -233,6 +238,16 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	assembly_type = /obj/structure/door_assembly/door_assembly_atmo
 	glass = 1
 
+/obj/machinery/door/airlock/wagon
+	name = "Airlock"
+	icon = 'icons/obj/doors/wagon.dmi'
+	assembly_type = /obj/structure/door_assembly/door_assembly_neutral
+
+/obj/machinery/door/airlock/erokez
+	name = "Airlock"
+	icon = 'icons/obj/doors/erokez.dmi'
+	assembly_type = /obj/structure/door_assembly/door_assembly_neutral
+
 /obj/machinery/door/airlock/gold
 	name = "Gold Airlock"
 	icon = 'icons/obj/doors/Doorgold.dmi'
@@ -254,6 +269,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	icon = 'icons/obj/doors/Dooruranium.dmi'
 	mineral = "uranium"
 	var/last_event = 0
+
 
 /obj/machinery/door/airlock/uranium/process()
 	if(world.time > last_event+20)

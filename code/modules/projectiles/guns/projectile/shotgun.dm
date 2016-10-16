@@ -161,3 +161,79 @@
 		user << "<span class='warning'>You can't fire [src] while its open!</span>"
 		return 0
 	return ..()
+
+/obj/item/weapon/gun/projectile/shotgun/repeater
+	name = "repeater rifle"
+	desc = "Winchester Model 1894."
+	icon_state = "repeater"
+	item_state = "repeater"
+	origin_tech = "combat=5;materials=2"
+	mag_type = /obj/item/ammo_box/magazine/internal/repeater
+	w_class = 5
+	slot_flags = 0
+
+/obj/item/weapon/gun/projectile/shotgun/repeater/attack_self(mob/living/user)
+	if(recentpump)	return
+	pump(user)
+	recentpump = 1
+	spawn(6)
+		recentpump = 0
+	return
+
+/obj/item/weapon/gun/projectile/shotgun/repeater/pump(mob/M)
+	playsound(M, 'sound/weapons/repeater_reload.wav', 60, 0)
+	pumped = 0
+	if(chambered)
+		chambered.loc = get_turf(src)
+		chambered = null
+	if(!magazine.ammo_count())	return 0
+	var/obj/item/ammo_casing/AC = magazine.get_round()
+	chambered = AC
+	update_icon()
+	return 1
+
+/obj/item/weapon/gun/projectile/shotgun/bolt_action
+	name = "bolt-action rifle"
+	desc = "Springfield M1903."
+	icon_state = "bolt-action"
+	item_state = "bolt-action"
+	origin_tech = "combat=5;materials=2"
+	mag_type = /obj/item/ammo_box/magazine/a3006_clip
+	w_class = 5
+	slot_flags = 0
+
+/obj/item/weapon/gun/projectile/shotgun/bolt_action/pump(mob/M)
+	playsound(M, 'sound/weapons/bolt_reload.ogg', 60, 0)
+	pumped = 0
+	if(chambered)//We have a shell in the chamber
+		chambered.loc = get_turf(src)//Eject casing
+		chambered = null
+	if(magazine && !magazine.ammo_count())
+		magazine.loc = get_turf(src.loc)
+		magazine.update_icon()
+		magazine = null
+		return 0
+	if(magazine && magazine.ammo_count())
+		var/obj/item/ammo_casing/AC = magazine.get_round() //load next casing.
+		chambered = AC
+		update_icon()	//I.E. fix the desc
+		return 1
+
+/obj/item/weapon/gun/projectile/shotgun/bolt_action/attackby(var/obj/item/A as obj, mob/user as mob)
+	if (istype(A, /obj/item/ammo_box/magazine))
+		var/obj/item/ammo_box/magazine/AM = A
+		if (!magazine && istype(AM, mag_type))
+			user.remove_from_mob(AM)
+			magazine = AM
+			magazine.loc = src
+			user << "<span class='notice'>You load a new clip into \the [src].</span>"
+			chamber_round()
+			A.update_icon()
+			update_icon()
+			return 1
+		else if (magazine)
+			user << "<span class='notice'>There's already a clip in \the [src].</span>"
+	return 0
+
+/obj/item/weapon/gun/projectile/shotgun/dungeon
+	mag_type = /obj/item/ammo_box/magazine/internal/shot/dungeon

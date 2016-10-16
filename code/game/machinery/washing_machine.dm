@@ -39,7 +39,7 @@
 	else
 		state = 5
 	update_icon()
-	playsound(src, 'tauceti/sounds/items/washingmachine.ogg', 100, 1, 1)
+	playsound(src, 'sound/items/washingmachine.ogg', 100, 1, 1)
 	sleep(210)
 	for(var/atom/A in contents)
 		A.clean_blood()

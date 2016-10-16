@@ -16,10 +16,6 @@
 		visible_message("\red <B>[M] attempted to touch [src]!</B>")
 		return 0
 
-	if(M.a_intent == "hurt" || M.a_intent == "disarm")
-		for(var/mob/living/simple_animal/smart_animal/SA in view(7))
-			SA.fight(M, src)
-
 	if(M.wear_suit && istype(M.wear_suit, /obj/item/clothing/suit/armor/abductor/vest))	//When abductor will hit someone from stelth he will reveal himself
 		for(var/obj/item/clothing/suit/armor/abductor/vest/V in list(M.wear_suit))
 			if(V.stealth_active)

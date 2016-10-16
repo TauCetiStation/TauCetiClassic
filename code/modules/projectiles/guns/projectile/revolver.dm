@@ -202,3 +202,54 @@
 					user.visible_message("\red *click*", "\red *click*")
 					return
 	..()
+
+/obj/item/weapon/gun/projectile/revolver/peacemaker
+	name = "Colt SAA"
+	desc = "A legend of Wild West."
+	icon_state = "peacemaker"
+	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rev45
+
+/obj/item/weapon/gun/projectile/revolver/peacemaker/isHandgun()
+	return 1
+
+/obj/item/weapon/gun/projectile/revolver/peacemaker/attack_self(mob/living/user as mob)
+	var/num_unloaded = 0
+	if (get_ammo() > 0)
+		var/obj/item/ammo_casing/CB
+		CB = magazine.get_round(0)
+		chambered = null
+		CB.loc = get_turf(src.loc)
+		CB.update_icon()
+		num_unloaded++
+	if (num_unloaded)
+		user << "<span class = 'notice'>You unload [num_unloaded] shell\s from [src].</span>"
+	else
+		user << "<span class='notice'>[src] is empty.</span>"
+
+/obj/item/weapon/gun/projectile/revolver/flare
+	name = "flare gun"
+	desc = "Fires flares."
+	icon_state = "flaregun"
+	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/flaregun
+
+/obj/item/weapon/gun/projectile/revolver/detective/dungeon
+	desc = "A a six-shot double-action revolver."
+	name = "Smith & Wesson Model 10"
+	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rev38/dungeon
+
+/obj/item/weapon/gun/projectile/revolver/doublebarrel/dungeon
+	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/dualshot/dungeon
+
+/obj/item/weapon/gun/projectile/revolver/doublebarrel/dungeon/sawn_off
+	icon_state = "sawnshotgun"
+	w_class = 3.0
+	slot_flags = SLOT_BELT
+	name = "sawn-off shotgun"
+	desc = "Omar's coming!"
+	short = 1
+
+/obj/item/weapon/gun/projectile/revolver/syndie
+	name = "revolver"
+	desc = "A powerful revolver, very popular among mercenaries and pirates. Uses .357 ammo."
+	icon_state = "synd_revolver"
+	mag_type = /obj/item/ammo_box/magazine/internal/cylinder

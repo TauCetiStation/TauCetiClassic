@@ -1,7 +1,7 @@
 /mob/living/simple_animal/ascendant_shadowling
 	name = "ascendant shadowling"
 	desc = "A large, floating eldritch horror. It has pulsing markings all about its body and large horns. It seems to be floating without any form of support."
-	icon = 'tauceti/icons/mob/shadow_ling.dmi'
+	icon = 'icons/mob/shadowling.dmi'
 	icon_state = "shadowling_ascended"
 	icon_living = "shadowling_ascended"
 	speak_emote = list("telepathically thunders", "telepathically booms")
@@ -40,7 +40,7 @@
 
 /mob/living/simple_animal/ascendant_shadowling/New()
 	..()
-	overlays += image("icon" = 'tauceti/icons/mob/shadow_ling.dmi', "icon_state" = "shadowling_ascended_ms", "layer" = 11)
+	overlays += image("icon" = 'icons/mob/shadowling.dmi', "icon_state" = "shadowling_ascended_ms", "layer" = 11)
 
 /mob/living/simple_animal/ascendant_shadowling/Life()
 	..()

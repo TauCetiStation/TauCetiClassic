@@ -2,7 +2,7 @@
 /obj/item/ammo_casing
 	name = "bullet casing"
 	desc = "A bullet casing."
-	icon = 'tauceti/icons/obj/ammo.dmi'
+	icon = 'icons/obj/ammo.dmi'
 	icon_state = "s-casing"
 	flags = FPRINT | TABLEPASS | CONDUCT
 	slot_flags = SLOT_BELT

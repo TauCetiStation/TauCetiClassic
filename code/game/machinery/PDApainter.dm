@@ -1,12 +1,13 @@
 /obj/machinery/pdapainter
 	name = "PDA painter"
 	desc = "A PDA painting machine. To use, simply insert your PDA and choose the desired preset paint scheme."
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/machines/pdapainter.dmi'
 	icon_state = "pdapainter"
 	density = 1
 	anchored = 1
 	var/obj/item/device/pda/storedpda = null
 	var/list/colorlist = list()
+	var/list/tc_pda_list = list(/obj/item/device/pda/forensic)
 
 
 /obj/machinery/pdapainter/update_icon()
@@ -28,8 +29,8 @@
 
 /obj/machinery/pdapainter/New()
 	..()
-	var/blocked = list(/obj/item/device/pda/ai/pai, /obj/item/device/pda/ai, /obj/item/device/pda/heads,
-						/obj/item/device/pda/clear, /obj/item/device/pda/syndicate)
+	var/blocked = list(/obj/item/device/pda/ai/pai, /obj/item/device/pda/ai, /obj/item/device/pda/ai/robot,
+						/obj/item/device/pda/heads, /obj/item/device/pda/clear, /obj/item/device/pda/syndicate)
 
 	for(var/P in typesof(/obj/item/device/pda)-blocked)
 		var/obj/item/device/pda/D = new P
@@ -73,6 +74,7 @@
 		if(!in_range(src, user))
 			return
 
+		storedpda.icon = 'icons/obj/pda.dmi'
 		storedpda.icon_state = P.icon_state
 		storedpda.desc = P.desc
 

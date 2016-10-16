@@ -75,12 +75,12 @@
 /obj/structure/stool/bed/chair/schair
 	name = "shuttle chair"
 	desc = "You sit in this. Either by will or force."
-	icon = 'tauceti/icons/obj/objects.dmi'
+	icon = 'icons/obj/objects.dmi'
 	icon_state = "schair"
 	var/sarmrest = null
 
 /obj/structure/stool/bed/chair/schair/New()
-	sarmrest = image("tauceti/icons/obj/objects.dmi", "schair_armrest", layer = FLY_LAYER)
+	sarmrest = image("icons/obj/objects.dmi", "schair_armrest", layer = FLY_LAYER)
 	return ..()
 
 /obj/structure/stool/bed/chair/schair/post_buckle_mob(mob/living/M)

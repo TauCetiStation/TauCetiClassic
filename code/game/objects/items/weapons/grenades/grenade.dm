@@ -115,3 +115,14 @@
 
 /obj/item/weapon/grenade/attack_paw(mob/user as mob)
 	return attack_hand(user)
+
+/obj/item/weapon/grenade/syndieminibomb
+	desc = "A syndicate manufactured explosive used to sow destruction and chaos."
+	name = "syndicate minibomb"
+	icon_state = "syndicate"
+	item_state = "flashbang"
+	origin_tech = "materials=3;magnets=4;syndicate=4"
+
+/obj/item/weapon/grenade/syndieminibomb/prime()
+	explosion(src.loc,1,2,4,5)
+	qdel(src)

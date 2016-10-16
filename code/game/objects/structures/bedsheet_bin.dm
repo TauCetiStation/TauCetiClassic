@@ -7,11 +7,10 @@ LINEN BINS
 /obj/item/weapon/bedsheet
 	name = "bedsheet"
 	desc = "A surprisingly soft linen bedsheet."
-	icon = 'tauceti/icons/obj/bedsheets.dmi'
+	icon = 'icons/obj/bedsheets.dmi'
 	icon_state = "sheet"
 	item_state = "bedsheet"
-	slot_flags = SLOT_BACK //tg
-	tc_custom = 'tauceti/icons/mob/back.dmi'
+	slot_flags = SLOT_BACK
 	layer = 4.0
 	throwforce = 1
 	throw_speed = 1
@@ -141,6 +140,12 @@ LINEN BINS
 	icon_state = "sheetwiz"
 	item_color = "wiz"
 
+/obj/item/weapon/bedsheet/gar
+	name = "gar bedsheet"
+	desc = "A surprisingly soft gar bedsheet."
+	icon_state = "sheetgurren"
+	item_state = "bedsheet"
+	item_color = "gurren"
 
 
 /obj/structure/bedsheetbin

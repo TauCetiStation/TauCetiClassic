@@ -294,7 +294,7 @@
 
 
 /obj/singularity/narsie/proc/narsie_spawn_animation()
-	icon = 'tauceti/icons/obj/narsie_spawn_anim.dmi'
+	icon = 'icons/effects/narsie_spawn_anim.dmi'
 	dir = SOUTH
 	move_self = 0
 	flick("narsie_spawn_anim",src)
@@ -307,7 +307,7 @@
 	grav_pull = 0
 
 /obj/singularity/narsie/wizard/eat()
-	for(var/atom/X in orange(consume_range,src))
-		if(isturf(X) || istype(X, /atom/movable))
-			consume(X)
+	for(var/atom/A in orange(consume_range,src))
+		if(isturf(A) || istype(A, /atom/movable))
+			consume(A)
 	return

@@ -274,8 +274,8 @@ proc/move_mining_shuttle()
 /obj/item/weapon/pickaxe/drill
 	name = "mining drill" // Can dig sand as well!
 	desc = "Yours is the drill that will pierce through the rock walls."
-	icon = 'tauceti/modules/_mining/hand_tools.dmi'
-	tc_custom = 'tauceti/modules/_mining/hand_tools.dmi'
+	icon = 'icons/obj/mining/hand_tools.dmi'
+	icon_custom = 'icons/obj/mining/hand_tools.dmi'
 	icon_state = "hand_drill"
 	item_state = "drill"
 	origin_tech = "materials=2;powerstorage=3;engineering=2"
@@ -286,7 +286,7 @@ proc/move_mining_shuttle()
 	w_class = 4.0
 	m_amt = 3750
 	attack_verb = list("hit", "pierced", "sliced", "attacked")
-	drill_sound = 'tauceti/sounds/items/drill.ogg'
+	drill_sound = 'sound/items/drill.ogg'
 	drill_verb = "drill"
 	digspeed = 30
 	var/drill_cost = 15
@@ -401,7 +401,7 @@ proc/move_mining_shuttle()
 	name = "mining explosives"
 	desc = "Used for mining."
 	gender = PLURAL
-	icon = 'tauceti/modules/_mining/explosives.dmi'
+	icon = 'icons/obj/mining/explosives.dmi'
 	icon_state = "charge_basic"
 	item_state = "flashbang"
 	flags = FPRINT | TABLEPASS | NOBLUDGEON
@@ -433,7 +433,7 @@ proc/move_mining_shuttle()
 		loc = null
 		var/location
 		location = target
-		target.overlays += image('tauceti/modules/_mining/explosives.dmi', "charge_basic_armed")
+		target.overlays += image('icons/obj/mining/explosives.dmi', "charge_basic_armed")
 		user << "<span class='notice'>Charge has been planted. Timer counting down from </span>[timer]"
 		spawn(timer*10)
 			for(var/turf/simulated/mineral/M in view(get_turf(target), blast_range))
@@ -452,8 +452,8 @@ proc/move_mining_shuttle()
 /obj/item/weapon/gun/energy/kinetic_accelerator
 	name = "proto-kinetic accelerator"
 	desc = "According to Nanotrasen accounting, this is mining equipment. It's been modified for extreme power output to crush rocks, but often serves as a miner's first defense against hostile alien life; it's not very powerful unless used in a low pressure environment."
-	icon = 'tauceti/modules/_mining/hand_tools.dmi'
-	tc_custom = 'tauceti/modules/_mining/hand_tools.dmi'
+	icon = 'icons/obj/mining/hand_tools.dmi'
+	icon_custom = 'icons/obj/mining/hand_tools.dmi'
 	icon_state = "kineticgun"
 	item_state = "kineticgun"
 	ammo_type = list(/obj/item/ammo_casing/energy/kinetic)
@@ -526,7 +526,7 @@ obj/item/projectile/kinetic/New()
 
 /obj/item/effect/kinetic_blast
 	name = "kinetic explosion"
-	icon = 'tauceti/icons/obj/projectiles.dmi'
+	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "kinetic_blast"
 	layer = 4.1
 

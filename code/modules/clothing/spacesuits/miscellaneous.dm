@@ -62,3 +62,30 @@
 /obj/item/clothing/head/helmet/space/cheap
 	name = "Budget spacesuit helmet"
 	desc = "It was an attempt to force the assistants to work in space. At least 60% of them survived in the spacesuit."
+
+//Mime's Hardsuit
+/obj/item/clothing/head/helmet/space/mime
+	name = "mime hardsuit helmet"
+	desc = "A hardsuit helmet specifically designed for the mime."
+	icon_state = "mim"
+	item_state = "mim"
+
+obj/item/clothing/suit/space/mime
+	name = "mime hardsuit"
+	desc = "A hardsuit specifically designed for the mime."
+	icon_state = "mime"
+	item_state = "mime"
+	allowed = list(/obj/item/weapon/tank)
+
+/obj/item/clothing/head/helmet/space/clown
+	name = "clown hardsuit helmet"
+	desc = "A hardsuit helmet specifically designed for the clown. SPESSHONK!"
+	icon_state = "kluwne"
+	item_state = "kluwne"
+
+obj/item/clothing/suit/space/clown
+	name = "clown hardsuit"
+	desc = "A hardsuit specifically designed for the clown. SPESSHONK!"
+	icon_state = "clowan"
+	item_state = "clowan"
+	allowed = list(/obj/item/weapon/tank)

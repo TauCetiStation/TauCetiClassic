@@ -42,13 +42,11 @@ var/global/raider_tick = 1
 
 /obj/item/weapon/gun/projectile/automatic/a28/nonlethal
 	name = "A28 assault rifle NL"
-	icon = 'tauceti/items/weapons/syndicate/syndicate_guns.dmi'
-	tc_custom = 'tauceti/items/weapons/syndicate/syndicate_guns.dmi'
 	icon_state = "a28w"
 	item_state = "a28w"
 	silenced = 1
 	mag_type = /obj/item/ammo_box/magazine/m556/nonlethal
-	fire_sound = 'tauceti/sounds/weapon/Gunshot_silenced.ogg'
+	fire_sound = 'sound/weapons/Gunshot_silenced.ogg'
 
 /obj/item/weapon/gun/projectile/automatic/silenced/nonlethal
 	name = "Silenced pistol NL"
@@ -64,7 +62,6 @@ var/global/raider_tick = 1
 
 /obj/item/ammo_box/magazine/m556/nonlethal
 	name = "A28 magazine (.556NL)"
-	icon = 'tauceti/items/weapons/syndicate/syndicate_guns.dmi'
 	ammo_type = /obj/item/ammo_casing/a556/nonlethal
 	caliber = "5.56mm"
 	max_ammo = 30
