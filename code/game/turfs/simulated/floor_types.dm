@@ -33,6 +33,10 @@
 	icon_state = "wood"
 	floor_type = /obj/item/stack/tile/wood
 
+/turf/unsimulated/desert
+	name = "sand"
+	icon_state = "asteroid"
+
 /turf/simulated/floor/vault
 	icon_state = "rockvault"
 

@@ -25,3 +25,7 @@
 		if(P)	qdel(P)
 
 	usr.visible_message("<b>[usr]</b> points to [this]")
+
+	if(isliving(this))
+		for(var/mob/living/carbon/slime/S in view(7))
+			S.last_pointed = this

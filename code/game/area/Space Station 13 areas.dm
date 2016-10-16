@@ -1855,6 +1855,37 @@ var/list/ghostteleportlocs = list()
 /area/awaymission/spacebattle/secret
 	name = "\improper Hidden Chamber"
 
+/area/awaymission/labs/gateway
+	name = "\improper Labs Gateway"
+
+/area/awaymission/labs/militarydivision
+	name = "\improper Military Division"
+
+/area/awaymission/labs/researchdivision
+	name = "\improper Labs RnD"
+
+/area/awaymission/labs/cave
+	name = "\improper Labs cave"
+
+/area/awaymission/labs/solars
+	name = "\improper Labs solars"
+
+/area/awaymission/labs/command
+	name = "\improper labs command"
+
+/area/awaymission/labs/cargo
+	name = "\improper Labs cargo"
+
+/area/awaymission/labs/civilian
+	name = "\improper Labs civilian"
+
+/area/awaymission/labs/security
+	name = "\improper Labs security"
+
+/area/awaymission/labs/medical
+	name = "\improper Labs medical"
+
+
 /area/awaymission/listeningpost
 	name = "\improper Listening Post"
 	icon_state = "away"

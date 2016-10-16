@@ -25,6 +25,8 @@
 /obj/item/stack/Destroy()
 	if (src && usr && usr.machine==src)
 		usr << browse(null, "window=stack")
+	if(recipes)
+		recipes = null
 	return ..()
 
 /obj/item/stack/examine()

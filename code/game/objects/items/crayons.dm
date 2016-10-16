@@ -40,7 +40,6 @@
 	colour = "#FFFFFF"
 	shadeColour = "#000000"
 	colourName = "mime"
-	uses = 0
 
 /obj/item/toy/crayon/mime/attack_self(mob/living/user as mob) //inversion
 	if(colour != "#FFFFFF" && shadeColour != "#000000")
@@ -58,7 +57,6 @@
 	colour = "#FFF000"
 	shadeColour = "#000FFF"
 	colourName = "rainbow"
-	uses = 0
 
 /obj/item/toy/crayon/rainbow/attack_self(mob/living/user as mob)
 	colour = input(user, "Please select the main colour.", "Crayon colour") as color

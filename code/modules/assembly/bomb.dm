@@ -73,6 +73,10 @@
 	if(bombassembly)
 		bombassembly.HasProximity(AM)
 
+/obj/item/device/onetankbomb/hear_talk(mob/living/M as mob, msg)
+	if(bombassembly)
+		bombassembly.hear_talk(M, msg)
+
 // ---------- Procs below are for tanks that are used exclusively in 1-tank bombs ----------
 
 /obj/item/weapon/tank/proc/bomb_assemble(W,user)	//Bomb assembly proc. This turns assembly+tank into a bomb

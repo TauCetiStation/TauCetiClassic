@@ -357,13 +357,11 @@
 */
 
 
-/obj/structure/window/New(Loc,re=0)
+/obj/structure/window/New(Loc, fulltile = FALSE)
 	..()
 
-//	if(re)	reinf = re
-
-	if(dir & (dir - 1))
-		fulltile = TRUE
+	if(dir & (dir - 1) || fulltile)
+		src.fulltile = TRUE
 		dir = 2
 
 	ini_dir = dir

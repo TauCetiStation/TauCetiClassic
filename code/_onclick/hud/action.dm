@@ -88,6 +88,12 @@
 /datum/action/proc/IsAvailable()
 	return Checks()
 
+/obj/screen/movable/action_button/MouseEntered(location,control,params)
+	openToolTip(usr, src, params, title = name, content = desc)
+
+/obj/screen/movable/action_button/MouseExited()
+	closeToolTip(usr)
+
 /datum/action/proc/Checks()// returns 1 if all checks pass
 	if(!owner)
 		return 0
@@ -164,7 +170,6 @@
 		name = "Hide Buttons"
 	UpdateIcon()
 	usr.update_action_buttons()
-
 
 /obj/screen/movable/action_button/hide_toggle/proc/InitialiseIcon(var/mob/living/user)
 	if(isalien(user))

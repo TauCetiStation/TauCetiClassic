@@ -913,6 +913,7 @@
 #include "code\modules\assembly\shock_kit.dm"
 #include "code\modules\assembly\signaler.dm"
 #include "code\modules\assembly\timer.dm"
+#include "code\modules\assembly\voice.dm"
 #include "code\modules\awaymissions\bluespaceartillery.dm"
 #include "code\modules\awaymissions\corpse.dm"
 #include "code\modules\awaymissions\exile.dm"
@@ -1653,6 +1654,7 @@
 #include "code\modules\telesci\gps.dm"
 #include "code\modules\telesci\telepad.dm"
 #include "code\modules\telesci\telesci_computer.dm"
+#include "code\modules\tooltip\tooltip.dm"
 #include "code\modules\vehicles\spacebike.dm"
 #include "code\modules\vehicles\vehicle.dm"
 #include "code\modules\virus2\analyser.dm"
@@ -1698,5 +1700,6 @@
 #include "maps\z6.dmm"
 #include "maps\RandomZLevels\Academy.dm"
 #include "maps\RandomZLevels\challenge.dm"
+#include "maps\RandomZLevels\stationCollision.dm"
 #include "maps\RandomZLevels\wildwest.dm"
 // END_INCLUDE

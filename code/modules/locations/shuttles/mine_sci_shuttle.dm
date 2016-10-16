@@ -4,16 +4,16 @@
 #define MINE_DOCK /area/shuttle/mining/outpost
 #define SCI_DOCK /area/shuttle/research/outpost
 
-var/obj/machinery/computer/mine_sci_shuttle/flight_comp/autopilot
+#define M_S_SHUTTLE_FLOOR /turf/simulated/shuttle/floor/mining
+
+var/global/obj/machinery/computer/mine_sci_shuttle/flight_comp/autopilot = null
+var/global/area/mine_sci_curr_location = null
 
 /obj/machinery/computer/mine_sci_shuttle
 	name = "Mine-Science Shuttle Console"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "shuttle"
-	circuit = "/obj/item/weapon/circuitboard/mine_sci_shuttle"
-
-/obj/machinery/computer/mine_sci_shuttle/attackby(obj/item/I as obj, mob/user as mob)
-	return attack_hand(user)
+	circuit = /obj/item/weapon/circuitboard/mine_sci_shuttle
 
 /obj/machinery/computer/mine_sci_shuttle/attack_ai(mob/user as mob)
 	return attack_hand(user)
@@ -22,11 +22,13 @@ var/obj/machinery/computer/mine_sci_shuttle/flight_comp/autopilot
 	return attack_hand(user)
 
 /obj/machinery/computer/mine_sci_shuttle/attack_hand(mob/user as mob)
+	if(..())
+		return
 	user.set_machine(src)
 
 	var/dat
 	if(autopilot)
-		dat = {"Location: [autopilot.mine_sci_curr_location]<br>
+		dat = {"Location: [mine_sci_curr_location]<br>
 		Ready to move[max(autopilot.lastMove + MINE_SCI_SHUTTLE_COOLDOWN - world.time, 0) ? " in [max(round((autopilot.lastMove + MINE_SCI_SHUTTLE_COOLDOWN - world.time) * 0.1), 0)] seconds" : ": now"]<br>
 		<a href='?src=\ref[src];mine=1'>Mining Station</a> |
 		<a href='?src=\ref[src];station=1'>NSS Exodus</a> |
@@ -75,13 +77,24 @@ var/obj/machinery/computer/mine_sci_shuttle/flight_comp/autopilot
 	var/lastMove = 0
 
 /obj/machinery/computer/mine_sci_shuttle/flight_comp/New()
-	mine_sci_curr_location = locate(STATION_DOCK)
-	autopilot = src
+	..()
+	var/area/my_area = get_area(src)
+	if(istype(get_turf(src),M_S_SHUTTLE_FLOOR) &&\
+		   is_type_in_list(my_area,list(STATION_DOCK, MINE_DOCK, SCI_DOCK))) //if we build console not in shuttle area
+		autopilot = src
+		dir = WEST
+		if(!mine_sci_curr_location)
+			mine_sci_curr_location = my_area
+
+/obj/machinery/computer/mine_sci_shuttle/flight_comp/Destroy()
+	if(autopilot == src) //if we have more than one flight comp! (look imbossible)
+		autopilot = null
+	return ..()
 
 /obj/machinery/computer/mine_sci_shuttle/flight_comp/proc/mine_sci_move_to(area/destination as area)
 	if(moving)
 		return FALSE
-	if(lastMove + MINE_SCI_SHUTTLE_COOLDOWN > world.time)
+	if((lastMove + MINE_SCI_SHUTTLE_COOLDOWN) > world.time)
 		return FALSE
 	var/area/dest_location = locate(destination)
 	if(mine_sci_curr_location == dest_location)
@@ -133,6 +146,8 @@ var/obj/machinery/computer/mine_sci_shuttle/flight_comp/autopilot
 
 		mine_sci_curr_location = destination
 		moving = FALSE
+
+#undef M_S_SHUTTLE_FLOOR
 
 #undef MINE_SCI_SHUTTLE_COOLDOWN
 

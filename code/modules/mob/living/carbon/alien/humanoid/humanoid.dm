@@ -16,6 +16,7 @@
 	var/leap_on_click = 0
 	var/pounce_cooldown = 0
 	var/pounce_cooldown_time = 30
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/xenomeat = 5)
 
 
 //This is fine right now, if we're adding organ specific damage this needs to be updated

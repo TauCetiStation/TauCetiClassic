@@ -6,7 +6,7 @@
 		return 1
 	if(T.z == ZLEVEL_CENTCOMM)
 		return 1
-	if(T.z > ZLEVEL_DERELICT)
+	if(T.z > ZLEVEL_EMPTY)
 		return 1
 	return 0
 

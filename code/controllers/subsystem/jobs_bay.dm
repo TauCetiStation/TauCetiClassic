@@ -439,6 +439,7 @@ var/datum/subsystem/job/SSjob
 		var/equipped = H.equip_to_slot_or_del(new /obj/item/clothing/glasses/regular(H), slot_glasses)
 		if(equipped != 1)
 			var/obj/item/clothing/glasses/G = H.glasses
+			G.name = "prescription " + G.name
 			G.prescription = 1
 //		H.update_icons()
 
