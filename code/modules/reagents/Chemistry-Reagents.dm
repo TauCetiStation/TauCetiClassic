@@ -1146,7 +1146,7 @@ datum
 					if(M.getBruteLoss() && prob(80))
 						M.heal_organ_damage(1 * REM, 0)
 					if(M.getFireLoss() && prob(80))
-						M.heal_organ_damage(0, 0,1 * REM)
+						M.heal_organ_damage(0, 1 * REM)
 					if(M.getToxLoss() && prob(80))
 						M.adjustToxLoss(-1 * REM)
 
