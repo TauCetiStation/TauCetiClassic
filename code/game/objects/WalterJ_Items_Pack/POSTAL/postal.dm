@@ -2,7 +2,7 @@
 	name = "black trenchcoat"
 	desc = "A black trenchcoat."
 	icon = 'code/game/objects/WalterJ_Items_Pack/POSTAL/postal.dmi'
-	tc_custom = 'code/game/objects/WalterJ_Items_Pack/POSTAL/postal.dmi'
+	icon_custom = 'code/game/objects/WalterJ_Items_Pack/POSTAL/postal.dmi'
 	icon_state = "dude_coat"
 	item_state = "dude_coat"
 
@@ -10,7 +10,7 @@
 	name = "blue shirt"
 	desc = "A blue shirt with image of alien in front."
 	icon = 'code/game/objects/WalterJ_Items_Pack/POSTAL/postal.dmi'
-	tc_custom = 'code/game/objects/WalterJ_Items_Pack/POSTAL/postal.dmi'
+	icon_custom = 'code/game/objects/WalterJ_Items_Pack/POSTAL/postal.dmi'
 	icon_state = "dude_shirt"
 	item_state = "dude_shirt"
 	item_color = "dude_shirt"

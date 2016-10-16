@@ -44,12 +44,12 @@
 	permeability_coefficient = 0.90
 
 
-	if(A.tc_custom)  //Фикс для нашей одежды
-		icon = A.tc_custom
-		tc_custom = A.tc_custom
+	if(A.icon_custom)  //Фикс для нашей одежды
+		icon = A.icon_custom
+		icon_custom = A.icon_custom
 	else
 		icon = A.icon
-		tc_custom = null
+		icon_custom = null
 	desc = A.desc
 	name = A.name
 	icon_state = A.icon_state
@@ -104,12 +104,12 @@
 	desc = null
 	permeability_coefficient = 0.90
 
-	if(A.tc_custom)
-		icon = A.tc_custom
-		tc_custom = A.tc_custom
+	if(A.icon_custom)
+		icon = A.icon_custom
+		icon_custom = A.icon_custom
 	else
 		icon = A.icon
-		tc_custom = null
+		icon_custom = null
 	desc = A.desc
 	name = A.name
 	icon_state = A.icon_state
@@ -164,12 +164,12 @@
 	desc = null
 	permeability_coefficient = 0.90
 
-	if(A.tc_custom)
-		icon = A.tc_custom
-		tc_custom = A.tc_custom
+	if(A.icon_custom)
+		icon = A.icon_custom
+		icon_custom = A.icon_custom
 	else
 		icon = A.icon
-		tc_custom = null
+		icon_custom = null
 	desc = A.desc
 	name = A.name
 	icon_state = A.icon_state
@@ -224,12 +224,12 @@
 	desc = null
 	permeability_coefficient = 0.90
 
-	if(A.tc_custom)
-		icon = A.tc_custom
-		tc_custom = A.tc_custom
+	if(A.icon_custom)
+		icon = A.icon_custom
+		icon_custom = A.icon_custom
 	else
 		icon = A.icon
-		tc_custom = null
+		icon_custom = null
 	desc = A.desc
 	name = A.name
 	icon_state = A.icon_state
@@ -279,12 +279,12 @@
 	desc = null
 	permeability_coefficient = 0.90
 
-	if(A.tc_custom)
-		icon = A.tc_custom
-		tc_custom = A.tc_custom
+	if(A.icon_custom)
+		icon = A.icon_custom
+		icon_custom = A.icon_custom
 	else
 		icon = A.icon
-		tc_custom = null
+		icon_custom = null
 	desc = A.desc
 	name = A.name
 	icon_state = A.icon_state
@@ -336,12 +336,12 @@
 	desc = null
 	permeability_coefficient = 0.90
 
-	if(A.tc_custom)
-		icon = A.tc_custom
-		tc_custom = A.tc_custom
+	if(A.icon_custom)
+		icon = A.icon_custom
+		icon_custom = A.icon_custom
 	else
 		icon = A.icon
-		tc_custom = null
+		icon_custom = null
 	desc = A.desc
 	name = A.name
 	icon_state = A.icon_state
@@ -394,12 +394,12 @@
 	desc = null
 	permeability_coefficient = 0.90
 
-	if(A.tc_custom)
-		icon = A.tc_custom
-		tc_custom = A.tc_custom
+	if(A.icon_custom)
+		icon = A.icon_custom
+		icon_custom = A.icon_custom
 	else
 		icon = A.icon
-		tc_custom = null
+		icon_custom = null
 	desc = A.desc
 	name = A.name
 	icon_state = A.icon_state
@@ -450,12 +450,12 @@
 	desc = null
 	permeability_coefficient = 0.90
 
-	if(A.tc_custom)
-		icon = A.tc_custom
-		tc_custom = A.tc_custom
+	if(A.icon_custom)
+		icon = A.icon_custom
+		icon_custom = A.icon_custom
 	else
 		icon = A.icon
-		tc_custom = null
+		icon_custom = null
 	desc = A.desc
 	name = A.name
 	icon_state = A.icon_state
@@ -506,12 +506,12 @@
 	desc = null
 	permeability_coefficient = 0.90
 
-	if(A.tc_custom)
-		icon = A.tc_custom
-		tc_custom = A.tc_custom
+	if(A.icon_custom)
+		icon = A.icon_custom
+		icon_custom = A.icon_custom
 	else
 		icon = A.icon
-		tc_custom = null
+		icon_custom = null
 	desc = A.desc
 	name = A.name
 	icon_state = A.icon_state

@@ -275,7 +275,7 @@ proc/move_mining_shuttle()
 	name = "mining drill" // Can dig sand as well!
 	desc = "Yours is the drill that will pierce through the rock walls."
 	icon = 'icons/obj/mining/hand_tools.dmi'
-	tc_custom = 'icons/obj/mining/hand_tools.dmi'
+	icon_custom = 'icons/obj/mining/hand_tools.dmi'
 	icon_state = "hand_drill"
 	item_state = "drill"
 	origin_tech = "materials=2;powerstorage=3;engineering=2"
@@ -453,7 +453,7 @@ proc/move_mining_shuttle()
 	name = "proto-kinetic accelerator"
 	desc = "According to Nanotrasen accounting, this is mining equipment. It's been modified for extreme power output to crush rocks, but often serves as a miner's first defense against hostile alien life; it's not very powerful unless used in a low pressure environment."
 	icon = 'icons/obj/mining/hand_tools.dmi'
-	tc_custom = 'icons/obj/mining/hand_tools.dmi'
+	icon_custom = 'icons/obj/mining/hand_tools.dmi'
 	icon_state = "kineticgun"
 	item_state = "kineticgun"
 	ammo_type = list(/obj/item/ammo_casing/energy/kinetic)

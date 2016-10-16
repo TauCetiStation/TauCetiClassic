@@ -2,7 +2,7 @@
 	name = "white shirt"
 	desc = "VOTE FOR PEDRO."
 	icon = 'code/game/objects/WalterJ_Items_Pack/Napoleon Dynamite/Napoleon Dynamite.dmi'
-	tc_custom = 'code/game/objects/WalterJ_Items_Pack/Napoleon Dynamite/Napoleon Dynamite.dmi'
+	icon_custom = 'code/game/objects/WalterJ_Items_Pack/Napoleon Dynamite/Napoleon Dynamite.dmi'
 	icon_state = "NapoleonTshirt"
 	item_color = "NapoleonTshirt"
 
@@ -10,5 +10,5 @@
 	name = "Moonboots"
 	desc = "I command you to dance!"
 	icon = 'code/game/objects/WalterJ_Items_Pack/Napoleon Dynamite/Napoleon Dynamite.dmi'
-	tc_custom = 'code/game/objects/WalterJ_Items_Pack/Napoleon Dynamite/Napoleon Dynamite.dmi'
+	icon_custom = 'code/game/objects/WalterJ_Items_Pack/Napoleon Dynamite/Napoleon Dynamite.dmi'
 	icon_state = "Moonboots"

@@ -22,14 +22,14 @@
 	name = "laser carbine"
 	desc = "J10 carbine, pretty old model of corporate security laser weaponry with constant cooling issues. Faster firerate but reduced damage."
 	icon_state = "oldlaser"
-	tc_custom = null
+	icon_custom = null
 	fire_delay = 5
 
 /obj/item/weapon/gun/energy/laser/tactifool
 	name = "laser rifle"
 	desc = "T6 impulse laser rifle"
 	icon_state = "lasor"
-	tc_custom = null
+	icon_custom = null
 	fire_delay = 0
 	ammo_type = list(/obj/item/ammo_casing/energy/laser_pulse)
 

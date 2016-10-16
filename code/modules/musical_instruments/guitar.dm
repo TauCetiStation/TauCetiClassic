@@ -6,7 +6,7 @@
 	icon = 'code/modules/musical_instruments/guitar.dmi'
 	icon_state = "guitar"
 	item_state = "guitar"
-	tc_custom = 'code/modules/musical_instruments/guitar.dmi'
+	icon_custom = 'code/modules/musical_instruments/guitar.dmi'
 	hitsound = 'code/modules/musical_instruments/sound/guitar/1hit.ogg'
 	force = 10
 	attack_verb = list("played metal", "made concert", "crashed", "smashed")

@@ -26,7 +26,7 @@
 
 	spam_flag = 1
 
-	var/melody = file("tauceti/items/musical_instruments/sound/harmonica/fharp[rand(1,8)].ogg")
+	var/melody = file("code/modules/musical_instruments/sound/harmonica/fharp[rand(1,8)].ogg")
 
 	var/turf/source = get_turf(src)
 	for(var/mob/M in hearers(15, source))

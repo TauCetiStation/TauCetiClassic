@@ -4,7 +4,7 @@
 	slot_flags = SLOT_BACK
 
 	icon = 'code/game/objects/WalterJ_Items_Pack/M2 FLAMETHROWER/WJ_M2_Flamethrower.dmi'
-	tc_custom = 'code/game/objects/WalterJ_Items_Pack/M2 FLAMETHROWER/WJ_M2_Flamethrower.dmi'
+	icon_custom = 'code/game/objects/WalterJ_Items_Pack/M2 FLAMETHROWER/WJ_M2_Flamethrower.dmi'
 	icon_state = "M2_Tank"
 	item_state = "M2_Tank"
 
@@ -65,7 +65,7 @@
 	desc = "Best tool for starting a fire since 1943."
 
 	icon = 'code/game/objects/WalterJ_Items_Pack/M2 FLAMETHROWER/WJ_M2_Flamethrower.dmi'
-	tc_custom = 'code/game/objects/WalterJ_Items_Pack/M2 FLAMETHROWER/WJ_M2_Flamethrower.dmi'
+	icon_custom = 'code/game/objects/WalterJ_Items_Pack/M2 FLAMETHROWER/WJ_M2_Flamethrower.dmi'
 	icon_state = "M2_Flamethrower"
 	item_state = "M2_Flamethrower"
 

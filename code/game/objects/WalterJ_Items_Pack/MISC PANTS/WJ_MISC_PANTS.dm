@@ -1,6 +1,6 @@
 /obj/item/clothing/under/pants
 	icon = 'code/game/objects/WalterJ_Items_Pack/MISC PANTS/WJ_MISC_PANTS.dmi'
-	tc_custom = 'code/game/objects/WalterJ_Items_Pack/MISC PANTS/WJ_MISC_PANTS.dmi'
+	icon_custom = 'code/game/objects/WalterJ_Items_Pack/MISC PANTS/WJ_MISC_PANTS.dmi'
 
 	gender = PLURAL
 	flags = FPRINT | TABLEPASS

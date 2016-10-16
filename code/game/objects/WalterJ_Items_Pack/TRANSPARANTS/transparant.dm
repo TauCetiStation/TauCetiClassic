@@ -1,6 +1,6 @@
 /obj/item/weapon/transparant
 	icon = 'code/game/objects/WalterJ_Items_Pack/TRANSPARANTS/transparant.dmi'
-	tc_custom = 'code/game/objects/WalterJ_Items_Pack/TRANSPARANTS/transparant.dmi'
+	icon_custom = 'code/game/objects/WalterJ_Items_Pack/TRANSPARANTS/transparant.dmi'
 	icon_state = "blank"
 
 	name = "blank sign"

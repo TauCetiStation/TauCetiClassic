@@ -16,7 +16,7 @@
 
 	var/damtype = "brute"
 	var/force = 0
-	var/tc_custom = null //Default Bay12 sprite or not
+	var/icon_custom = null //Default Bay12 sprite or not
 
 	var/being_shocked = 0
 

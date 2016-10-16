@@ -1,6 +1,6 @@
 /obj/item/clothing/suit/armor/m66_kevlarvest
 	icon = 'code/game/objects/WalterJ_Items_Pack/NT PMC/WJ_NT_PMC.dmi'
-	tc_custom = 'code/game/objects/WalterJ_Items_Pack/NT PMC/WJ_NT_PMC.dmi'
+	icon_custom = 'code/game/objects/WalterJ_Items_Pack/NT PMC/WJ_NT_PMC.dmi'
 	name = "M66 Tactical Vest"
 	desc = "Black tactical kevlar vest, used by private security coropation. So tactics."
 
@@ -15,7 +15,7 @@
 
 /obj/item/clothing/under/nt_pmc_uniform
 	icon = 'code/game/objects/WalterJ_Items_Pack/NT PMC/WJ_NT_PMC.dmi'
-	tc_custom = 'code/game/objects/WalterJ_Items_Pack/NT PMC/WJ_NT_PMC.dmi'
+	icon_custom = 'code/game/objects/WalterJ_Items_Pack/NT PMC/WJ_NT_PMC.dmi'
 	name = "NT PCM Uniform"
 	desc = "Uniform used by the private security corporation."
 
@@ -27,7 +27,7 @@
 
 /obj/item/clothing/under/nt_pmc_uniform_light
 	icon = 'code/game/objects/WalterJ_Items_Pack/NT PMC/WJ_NT_PMC.dmi'
-	tc_custom = 'code/game/objects/WalterJ_Items_Pack/NT PMC/WJ_NT_PMC.dmi'
+	icon_custom = 'code/game/objects/WalterJ_Items_Pack/NT PMC/WJ_NT_PMC.dmi'
 	name = "NT PCM Light Uniform"
 	desc = "Uniform used by the private security corporation. This one without sleeves."
 
@@ -39,7 +39,7 @@
 
 /obj/item/clothing/head/helmet/M89_Helmet
 	icon = 'code/game/objects/WalterJ_Items_Pack/NT PMC/WJ_NT_PMC.dmi'
-	tc_custom = 'code/game/objects/WalterJ_Items_Pack/NT PMC/WJ_NT_PMC.dmi'
+	icon_custom = 'code/game/objects/WalterJ_Items_Pack/NT PMC/WJ_NT_PMC.dmi'
 	name = "M89 Helmet"
 	desc = "Combat helmet used by the private security corporation."
 
@@ -49,7 +49,7 @@
 
 /obj/item/clothing/shoes/boots/nt_pmc_boots
 	icon = 'code/game/objects/WalterJ_Items_Pack/NT PMC/WJ_NT_PMC.dmi'
-	tc_custom = 'code/game/objects/WalterJ_Items_Pack/NT PMC/WJ_NT_PMC.dmi'
+	icon_custom = 'code/game/objects/WalterJ_Items_Pack/NT PMC/WJ_NT_PMC.dmi'
 	name = "NT PMC Boots"
 	desc = "Private security boots. Now with extra grip."
 
@@ -60,7 +60,7 @@
 
 /obj/item/clothing/shoes/boots/lizard_boots
 	icon = 'code/game/objects/WalterJ_Items_Pack/NT PMC/WJ_NT_PMC.dmi'
-	tc_custom = 'code/game/objects/WalterJ_Items_Pack/NT PMC/WJ_NT_PMC.dmi'
+	icon_custom = 'code/game/objects/WalterJ_Items_Pack/NT PMC/WJ_NT_PMC.dmi'
 
 	name = "Lizard Boots"
 	desc = "Private security boots for Unathi."
@@ -73,7 +73,7 @@
 
 /obj/item/clothing/head/soft/nt_pmc_cap
 	icon = 'code/game/objects/WalterJ_Items_Pack/NT PMC/WJ_NT_PMC.dmi'
-	tc_custom = 'code/game/objects/WalterJ_Items_Pack/NT PMC/WJ_NT_PMC.dmi'
+	icon_custom = 'code/game/objects/WalterJ_Items_Pack/NT PMC/WJ_NT_PMC.dmi'
 	name = "NT PMC Cap"
 	desc = "Dark cap used by the private security corporation. This one looks good."
 
@@ -83,7 +83,7 @@
 
 /obj/item/device/radio/headset/headset_sec/nt_pmc
 	icon = 'code/game/objects/WalterJ_Items_Pack/NT PMC/WJ_NT_PMC.dmi'
-	tc_custom = 'code/game/objects/WalterJ_Items_Pack/NT PMC/WJ_NT_PMC.dmi'
+	icon_custom = 'code/game/objects/WalterJ_Items_Pack/NT PMC/WJ_NT_PMC.dmi'
 	name = "NT PMC Radio Headset. Works with default security frequency."
 
 	icon_state = "earset"

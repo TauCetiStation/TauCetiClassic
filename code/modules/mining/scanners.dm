@@ -38,7 +38,7 @@
 /obj/item/clothing/glasses/hud/mining
 	name = "Geological Optical Scanner"
 	desc = "A heads-up display that scans the rocks in view and provides some data about their composition."
-	tc_custom = 'icons/obj/mining/geoscanner.dmi'
+	icon_custom = 'icons/obj/mining/geoscanner.dmi'
 	icon = 'icons/obj/mining/geoscanner.dmi'
 	icon_state = "mininghud"
 	item_state = "mininghud"

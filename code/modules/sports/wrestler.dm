@@ -2,7 +2,7 @@
 	name = "Black fighting outfit"
 	desc = "Let's kick some asses!"
 	icon = 'code/modules/sports/wrestling.dmi'
-	tc_custom = 'code/modules/sports/wrestling.dmi'
+	icon_custom = 'code/modules/sports/wrestling.dmi'
 	icon_state = "robust-black"
 	item_state = "robust-black"
 	item_color = "robust-black"
@@ -12,7 +12,7 @@
 	name = "Black fighting boots"
 	desc = "I'm here to kick ass and chew bubblegum and I'm all out of bubblegum."
 	icon = 'code/modules/sports/wrestling.dmi'
-	tc_custom = 'code/modules/sports/wrestling.dmi'
+	icon_custom = 'code/modules/sports/wrestling.dmi'
 	icon_state = "boots-black"
 	item_state = "boots-black"
 	item_color = "boots-black"
@@ -21,7 +21,7 @@
 	name = "Gray-green fighting outfit"
 	desc = "Let's kick some asses!"
 	icon = 'code/modules/sports/wrestling.dmi'
-	tc_custom = 'code/modules/sports/wrestling.dmi'
+	icon_custom = 'code/modules/sports/wrestling.dmi'
 	icon_state = "robust-green"
 	item_state = "robust-green"
 	item_color = "robust-green"
@@ -31,7 +31,7 @@
 	name = "Gray fighting boots"
 	desc = "I'm here to kick ass and chew bubblegum and I'm all out of bubblegum."
 	icon = 'code/modules/sports/wrestling.dmi'
-	tc_custom = 'code/modules/sports/wrestling.dmi'
+	icon_custom = 'code/modules/sports/wrestling.dmi'
 	icon_state = "boots-green"
 	item_state = "boots-black"
 	item_color = "boots-green"
@@ -40,7 +40,7 @@
 	name = "Gray-green gloves"
 	desc = "A pair of gloves, they don't look special in any way."
 	icon = 'code/modules/sports/wrestling.dmi'
-	tc_custom = 'code/modules/sports/wrestling.dmi'
+	icon_custom = 'code/modules/sports/wrestling.dmi'
 	icon_state = "gloves-green"
 	item_color="gloves-green"
 
@@ -48,7 +48,7 @@
 	name = "Red fighting outfit"
 	desc = "Let's kick some asses!"
 	icon = 'code/modules/sports/wrestling.dmi'
-	tc_custom = 'code/modules/sports/wrestling.dmi'
+	icon_custom = 'code/modules/sports/wrestling.dmi'
 	icon_state = "robust-red"
 	item_state = "robust-red"
 	item_color = "robust-red"
@@ -58,7 +58,7 @@
 	name = "Red fighting boots"
 	desc = "I'm here to kick ass and chew bubblegum and I'm all out of bubblegum."
 	icon = 'code/modules/sports/wrestling.dmi'
-	tc_custom = 'code/modules/sports/wrestling.dmi'
+	icon_custom = 'code/modules/sports/wrestling.dmi'
 	icon_state = "boots-red"
 	item_state = "boots-black"
 	item_color = "boots-red"
@@ -67,7 +67,7 @@
 	name = "White fighting outfit"
 	desc = "Let's kick some asses!"
 	icon = 'code/modules/sports/wrestling.dmi'
-	tc_custom = 'code/modules/sports/wrestling.dmi'
+	icon_custom = 'code/modules/sports/wrestling.dmi'
 	icon_state = "robust-white"
 	item_state = "robust-white"
 	item_color = "robust-white"
@@ -77,7 +77,7 @@
 	name = "White fighting boots"
 	desc = "I'm here to kick ass and chew bubblegum and I'm all out of bubblegum."
 	icon = 'code/modules/sports/wrestling.dmi'
-	tc_custom = 'code/modules/sports/wrestling.dmi'
+	icon_custom = 'code/modules/sports/wrestling.dmi'
 	icon_state = "boots-white"
 	item_state = "boots-black"
 	item_color = "boots-white"
@@ -86,7 +86,7 @@
 	name = "White fighting mask"
 	desc = "Worn by robust fighters who are willing to do anything to win."
 	icon = 'code/modules/sports/wrestling.dmi'
-	tc_custom = 'code/modules/sports/wrestling.dmi'
+	icon_custom = 'code/modules/sports/wrestling.dmi'
 	icon_state = "mask-white"
 	item_state = "mask-white"
 
@@ -94,7 +94,7 @@
 	name = "Pink fighting outfit"
 	desc = "Let's kick some asses!"
 	icon = 'code/modules/sports/wrestling.dmi'
-	tc_custom = 'code/modules/sports/wrestling.dmi'
+	icon_custom = 'code/modules/sports/wrestling.dmi'
 	icon_state = "robust-pink"
 	item_state = "robust-pink"
 	item_color = "robust-pink"
@@ -104,7 +104,7 @@
 	name = "Pink fighting boots"
 	desc = "I'm here to kick ass and chew bubblegum and I'm all out of bubblegum."
 	icon = 'code/modules/sports/wrestling.dmi'
-	tc_custom = 'code/modules/sports/wrestling.dmi'
+	icon_custom = 'code/modules/sports/wrestling.dmi'
 	icon_state = "boots-pink"
 	item_state = "boots-black"
 	item_color = "boots-pink"
@@ -113,7 +113,7 @@
 	name = "Pink gloves"
 	desc = "A pair of gloves, they don't look special in any way."
 	icon = 'code/modules/sports/wrestling.dmi'
-	tc_custom = 'code/modules/sports/wrestling.dmi'
+	icon_custom = 'code/modules/sports/wrestling.dmi'
 	icon_state = "gloves-pink"
 	item_color="gloves-pink"
 
@@ -121,12 +121,12 @@
 	name = "Pink fighting mask"
 	desc = "Worn by robust fighters who are willing to do anything to win."
 	icon = 'code/modules/sports/wrestling.dmi'
-	tc_custom = 'code/modules/sports/wrestling.dmi'
+	icon_custom = 'code/modules/sports/wrestling.dmi'
 	icon_state = "mask-pink"
 	item_state = "mask-pink"
 
 /obj/item/weapon/storage/belt/champion/alt
 	icon = 'code/modules/sports/wrestling.dmi'
-	tc_custom = 'code/modules/sports/wrestling.dmi'
+	icon_custom = 'code/modules/sports/wrestling.dmi'
 	icon_state = "champ"
 	item_state = "champ"

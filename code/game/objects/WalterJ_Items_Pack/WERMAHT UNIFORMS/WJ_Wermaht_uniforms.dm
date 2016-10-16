@@ -1,7 +1,7 @@
 
 /obj/item/clothing/under/M35_Jacket
 	icon = 'code/game/objects/WalterJ_Items_Pack/WERMAHT UNIFORMS/WJ_Wermaht_uniforms.dmi'
-	tc_custom = 'code/game/objects/WalterJ_Items_Pack/WERMAHT UNIFORMS/WJ_Wermaht_uniforms.dmi'
+	icon_custom = 'code/game/objects/WalterJ_Items_Pack/WERMAHT UNIFORMS/WJ_Wermaht_uniforms.dmi'
 	name = "M35 Filde Jacket"
 	desc = "Standart wehrmacht field uniform."
 
@@ -13,7 +13,7 @@
 
 /obj/item/clothing/under/M35_Jacket_Oficer
 	icon = 'code/game/objects/WalterJ_Items_Pack/WERMAHT UNIFORMS/WJ_Wermaht_uniforms.dmi'
-	tc_custom = 'code/game/objects/WalterJ_Items_Pack/WERMAHT UNIFORMS/WJ_Wermaht_uniforms.dmi'
+	icon_custom = 'code/game/objects/WalterJ_Items_Pack/WERMAHT UNIFORMS/WJ_Wermaht_uniforms.dmi'
 	name = "M35 Filde Oficer Jacket"
 	desc = "Werhmacht officer jacket uniform."
 
@@ -25,7 +25,7 @@
 
 /obj/item/clothing/under/Waffen_SS_Form
 	icon = 'code/game/objects/WalterJ_Items_Pack/WERMAHT UNIFORMS/WJ_Wermaht_uniforms.dmi'
-	tc_custom = 'code/game/objects/WalterJ_Items_Pack/WERMAHT UNIFORMS/WJ_Wermaht_uniforms.dmi'
+	icon_custom = 'code/game/objects/WalterJ_Items_Pack/WERMAHT UNIFORMS/WJ_Wermaht_uniforms.dmi'
 	name = "Waffen SS Form"
 	desc = "A special uniform for the SS."
 
@@ -40,7 +40,7 @@
 	desc = "A gun holster."
 
 	icon = 'code/game/objects/WalterJ_Items_Pack/WERMAHT UNIFORMS/WJ_Wermaht_uniforms.dmi'
-	tc_custom = 'code/game/objects/WalterJ_Items_Pack/WERMAHT UNIFORMS/WJ_Wermaht_uniforms.dmi'
+	icon_custom = 'code/game/objects/WalterJ_Items_Pack/WERMAHT UNIFORMS/WJ_Wermaht_uniforms.dmi'
 
 	icon_state = "Leather_belt_Mauser"
 	item_state = "Leather_belt_Mauser"
@@ -52,7 +52,7 @@
 
 /obj/item/clothing/head/helmet/M35_Helmet
 	icon = 'code/game/objects/WalterJ_Items_Pack/WERMAHT UNIFORMS/WJ_Wermaht_uniforms.dmi'
-	tc_custom = 'code/game/objects/WalterJ_Items_Pack/WERMAHT UNIFORMS/WJ_Wermaht_uniforms.dmi'
+	icon_custom = 'code/game/objects/WalterJ_Items_Pack/WERMAHT UNIFORMS/WJ_Wermaht_uniforms.dmi'
 	name = "M35 Helmet"
 	desc = "The Basic werhmacht army helmet."
 
@@ -61,7 +61,7 @@
 
 /obj/item/clothing/head/helmet/Waffen_SS_Helmet
 	icon = 'code/game/objects/WalterJ_Items_Pack/WERMAHT UNIFORMS/WJ_Wermaht_uniforms.dmi'
-	tc_custom = 'code/game/objects/WalterJ_Items_Pack/WERMAHT UNIFORMS/WJ_Wermaht_uniforms.dmi'
+	icon_custom = 'code/game/objects/WalterJ_Items_Pack/WERMAHT UNIFORMS/WJ_Wermaht_uniforms.dmi'
 	name = "Waffen SS Helmet"
 	desc = "A helmet from SS uniform set."
 
@@ -71,7 +71,7 @@
 
 /obj/item/clothing/head/WAFFEN_SS_Cap
 	icon = 'code/game/objects/WalterJ_Items_Pack/WERMAHT UNIFORMS/WJ_Wermaht_uniforms.dmi'
-	tc_custom = 'code/game/objects/WalterJ_Items_Pack/WERMAHT UNIFORMS/WJ_Wermaht_uniforms.dmi'
+	icon_custom = 'code/game/objects/WalterJ_Items_Pack/WERMAHT UNIFORMS/WJ_Wermaht_uniforms.dmi'
 	name = "Waffen SS Cap"
 	desc = "An officer's SS cap."
 
@@ -80,7 +80,7 @@
 
 /obj/item/clothing/head/Nazi_Officer_Cap
 	icon = 'code/game/objects/WalterJ_Items_Pack/WERMAHT UNIFORMS/WJ_Wermaht_uniforms.dmi'
-	tc_custom = 'code/game/objects/WalterJ_Items_Pack/WERMAHT UNIFORMS/WJ_Wermaht_uniforms.dmi'
+	icon_custom = 'code/game/objects/WalterJ_Items_Pack/WERMAHT UNIFORMS/WJ_Wermaht_uniforms.dmi'
 	name = "Nazi Officer Cap"
 	desc = "A nazi officer's cap."
 
@@ -90,7 +90,7 @@
 
 /obj/item/clothing/shoes/boots/German
 	icon = 'code/game/objects/WalterJ_Items_Pack/WERMAHT UNIFORMS/WJ_Wermaht_uniforms.dmi'
-	tc_custom = 'code/game/objects/WalterJ_Items_Pack/WERMAHT UNIFORMS/WJ_Wermaht_uniforms.dmi'
+	icon_custom = 'code/game/objects/WalterJ_Items_Pack/WERMAHT UNIFORMS/WJ_Wermaht_uniforms.dmi'
 	name = "Black Boots"
 	desc = "Deutschland army boots."
 
@@ -99,7 +99,7 @@
 
 /obj/item/clothing/mask/gas/German
 	icon = 'code/game/objects/WalterJ_Items_Pack/WERMAHT UNIFORMS/WJ_Wermaht_uniforms.dmi'
-	tc_custom = 'code/game/objects/WalterJ_Items_Pack/WERMAHT UNIFORMS/WJ_Wermaht_uniforms.dmi'
+	icon_custom = 'code/game/objects/WalterJ_Items_Pack/WERMAHT UNIFORMS/WJ_Wermaht_uniforms.dmi'
 	name = "German Gas Mask"
 	desc = "Soldier's black gas mask."
 
@@ -108,7 +108,7 @@
 
 /obj/item/weapon/storage/belt/security/German
 	icon = 'code/game/objects/WalterJ_Items_Pack/WERMAHT UNIFORMS/WJ_Wermaht_uniforms.dmi'
-	tc_custom = 'code/game/objects/WalterJ_Items_Pack/WERMAHT UNIFORMS/WJ_Wermaht_uniforms.dmi'
+	icon_custom = 'code/game/objects/WalterJ_Items_Pack/WERMAHT UNIFORMS/WJ_Wermaht_uniforms.dmi'
 	name = "German Belt"
 	desc = "A belt from military soldier set."
 

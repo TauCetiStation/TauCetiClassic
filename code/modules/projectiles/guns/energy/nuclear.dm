@@ -20,7 +20,7 @@
 	desc = "A basic energy-based carbine with two settings: Stun and kill."
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "ecar"
-	tc_custom = null
+	icon_custom = null
 
 /obj/item/weapon/gun/energy/gun/carbine/New()
 	..()
@@ -31,7 +31,7 @@
 /obj/item/weapon/gun/energy/gun/pistol
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "egun"
-	tc_custom = null
+	icon_custom = null
 	fire_delay = 0
 	ammo_type = list(/obj/item/ammo_casing/energy/stun, /obj/item/ammo_casing/energy/laser_pulse)
 

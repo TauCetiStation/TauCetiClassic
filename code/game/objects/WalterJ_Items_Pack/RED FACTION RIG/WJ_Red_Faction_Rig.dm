@@ -1,6 +1,6 @@
 /obj/item/clothing/head/helmet/space/rig/RF_mining
 	icon = 'code/game/objects/WalterJ_Items_Pack/RED FACTION RIG/WJ_Red_Faction_Rig.dmi'
-	tc_custom = 'code/game/objects/WalterJ_Items_Pack/RED FACTION RIG/WJ_Red_Faction_Rig.dmi'
+	icon_custom = 'code/game/objects/WalterJ_Items_Pack/RED FACTION RIG/WJ_Red_Faction_Rig.dmi'
 	name = "Red mining helmet"
 	desc = "A special mining helmet designed for work in a hazardous, low pressure environment."
 
@@ -12,7 +12,7 @@
 
 /obj/item/clothing/suit/space/rig/RF_mining
 	icon = 'code/game/objects/WalterJ_Items_Pack/RED FACTION RIG/WJ_Red_Faction_Rig.dmi'
-	tc_custom = 'code/game/objects/WalterJ_Items_Pack/RED FACTION RIG/WJ_Red_Faction_Rig.dmi'
+	icon_custom = 'code/game/objects/WalterJ_Items_Pack/RED FACTION RIG/WJ_Red_Faction_Rig.dmi'
 	name = "Red mining hardsuit"
 	desc = "A special suit that protects against hazardous, has reinforced plating."
 

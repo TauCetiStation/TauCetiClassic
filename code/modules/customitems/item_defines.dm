@@ -762,6 +762,13 @@
 	item_color = "maid"
 	flags = FPRINT | TABLEPASS
 
+/obj/item/clothing/under/rank/medical/fluff/rosa
+	name = "short sleeve medical dress"
+	desc = "Made of a special fiber that gives special protection against biohazards. Has a cross on the chest denoting that the wearer is trained medical personnel and short sleeves."
+	icon_state = "rosa"
+	item_state = "rosa"
+	item_color = "rosa"
+
 /////// NT-SID Suit //Zuhayr: Jane Doe
 
 /obj/item/clothing/under/fluff/jane_sidsuit

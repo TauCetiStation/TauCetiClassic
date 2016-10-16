@@ -16,7 +16,7 @@ var/list/admin_verbs_event = list(
 
 	var/list/AllowedMaps = list()
 
-	var/list/Lines = file2list("tauceti/maps/event_maps/event_map_list.txt")
+	var/list/Lines = file2list("maps/event_map_list.txt")
 	if(!Lines.len)	return
 	for (var/t in Lines)
 		if (!t)

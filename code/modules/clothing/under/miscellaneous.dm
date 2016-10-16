@@ -479,14 +479,14 @@
 	desc = "It's a jumpsuit worn by the quartermaster. It's specially designed to prevent back injuries caused by pushing paper."
 	icon_state = "qm_f"
 	item_state = "lb_suit"
-	item_color = "qm"
+	item_color = "qm_f"
 
 /obj/item/clothing/under/rank/head_of_security_fem
 	desc = "It's a jumpsuit worn by those few with the dedication to achieve the position of \"Head of Security\". It has additional armor to protect the wearer."
 	name = "head of security's dress"
 	icon_state = "hos_f"
 	item_state = "r_suit"
-	item_color = "hos"
+	item_color = "hos_f"
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	flags = FPRINT | TABLEPASS
 	siemens_coefficient = 0.8
@@ -496,7 +496,7 @@
 	name = "warden's dress"
 	icon_state = "warden_f"
 	item_state = "r_suit"
-	item_color = "warden"
+	item_color = "warden_f"
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	flags = FPRINT | TABLEPASS
 	siemens_coefficient = 0.9
@@ -504,16 +504,16 @@
 /obj/item/clothing/under/rank/roboticist_fem
 	desc = "It's a slimming black with reinforced seams; great for industrial work."
 	name = "roboticist's female jumpsuit"
-	icon_state = "robo_f"
+	icon_state = "roboticist_f"
 	item_state = "robo"
-	item_color = "robo"
+	item_color = "roboticist_f"
 
 /obj/item/clothing/under/rank/hydroponics_fem
 	desc = "It's a jumpsuit designed to protect against minor plant-related hazards."
 	name = "botanist's female jumpsuit"
-	icon_state = "bot_f"
+	icon_state = "hydroponics_f"
 	item_state = "g_suit"
-	item_color = "bot"
+	item_color = "hydroponics_f"
 	permeability_coefficient = 0.50
 	flags = FPRINT | TABLEPASS
 
@@ -522,7 +522,7 @@
 	name = "bartender's female uniform"
 	icon_state = "bar_f"
 	item_state = "ba_suit"
-	item_color = "bar"
+	item_color = "bar_f"
 	flags = FPRINT | TABLEPASS
 
 /obj/item/clothing/under/kimono
@@ -531,13 +531,6 @@
 	item_state = "kimono"
 	item_color = "kimono"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
-
-/obj/item/clothing/under/rank/medical/fluff/rosa
-	name = "short sleeve medical dress"
-	desc = "Made of a special fiber that gives special protection against biohazards. Has a cross on the chest denoting that the wearer is trained medical personnel and short sleeves."
-	icon_state = "rosa"
-	item_state = "rosa"
-	item_color = "rosa"
 
 /obj/item/clothing/under/blacktango
 	name = "black tango dress"

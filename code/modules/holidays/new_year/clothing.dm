@@ -52,7 +52,7 @@
 	name = "winter coat"
 	desc = "A heavy jacket made from 'synthetic' animal furs."
 	icon = 'code/modules/holidays/new_year/winter_suits.dmi'
-	tc_custom = 'code/modules/holidays/new_year/winter_suits.dmi'
+	icon_custom = 'code/modules/holidays/new_year/winter_suits.dmi'
 	flags = FPRINT|TABLEPASS
 	icon_state = "coatwinter"
 	item_state = "coatwinter"
@@ -118,7 +118,7 @@
 	name = "winter boots"
 	desc = "Boots lined with 'synthetic' animal fur."
 	icon = 'code/modules/holidays/new_year/winter_suits.dmi'
-	tc_custom = 'code/modules/holidays/new_year/winter_suits.dmi'
+	icon_custom = 'code/modules/holidays/new_year/winter_suits.dmi'
 	icon_state = "winterboots"
 	item_state = "winterboots"
 	cold_protection = FEET|LEGS
@@ -131,7 +131,7 @@
 	desc = "A heavy jacket made from 'synthetic' animal furs."
 	flags = FPRINT | TABLEPASS
 	icon = 'code/modules/holidays/new_year/winter_suits.dmi'
-	tc_custom = 'code/modules/holidays/new_year/winter_suits.dmi'
+	icon_custom = 'code/modules/holidays/new_year/winter_suits.dmi'
 	icon_state = "labcoat_emt"
 	item_state = "labcoat_emt"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
@@ -144,7 +144,7 @@
 	name = "ushanka"
 	desc = "Perfect for winter in Siberia, da?"
 	icon = 'code/modules/holidays/new_year/winter_suits.dmi'
-	tc_custom = 'code/modules/holidays/new_year/winter_suits.dmi'
+	icon_custom = 'code/modules/holidays/new_year/winter_suits.dmi'
 	icon_state = "ushankadown"
 	item_state = "ushankadown"
 	cold_protection = HEAD
@@ -163,7 +163,7 @@
 	name = "Ded moroz hat"
 	desc = "Perfect for hot winter in Siberia, da?"
 	icon = 'code/modules/holidays/new_year/winter_suits.dmi'
-	tc_custom = 'code/modules/holidays/new_year/winter_suits.dmi'
+	icon_custom = 'code/modules/holidays/new_year/winter_suits.dmi'
 	icon_state = "santa"
 	item_state = "santa"
 	flags_inv = HIDEEARS

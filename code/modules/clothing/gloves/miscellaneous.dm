@@ -63,13 +63,13 @@
 
 /obj/item/clothing/gloves/security/fight
 	icon = 'icons/obj/clothing/gloves.dmi'
-	tc_custom = null
+	icon_custom = null
 	icon_state = "secfight"
 	item_state = "secfight"
 
 /obj/item/clothing/gloves/security/wj
 	icon = 'icons/obj/clothing/gloves.dmi'
-	tc_custom = null
+	icon_custom = null
 	icon_state = "wjgloves"
 	item_state = "wjgloves"
 
