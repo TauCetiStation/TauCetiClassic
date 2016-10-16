@@ -180,6 +180,10 @@
 	origin_tech = "programming=3"
 	var/contraband_enabled = FALSE
 	var/hacked = FALSE
+/obj/item/weapon/circuitboard/computer/stockexchange
+	name = "Circuit board (Stock exchange computer)"
+	build_path = /obj/machinery/computer/stockexchange
+	origin_tech = "programming=3"
 /*/obj/item/weapon/circuitboard/research_shuttle
 	name = "Circuit board (Research Shuttle)"
 	build_path = /obj/machinery/computer/research_shuttle
@@ -216,6 +220,11 @@
 /obj/item/weapon/circuitboard/mine_sci_shuttle
 	name = "Circuit board (Mining Shuttle)"
 	build_path = /obj/machinery/computer/mine_sci_shuttle
+	origin_tech = "programming=2"
+
+/obj/item/weapon/circuitboard/mine_sci_shuttle/flight_comp
+	name = "Circuit board (Mining Shuttle flight computer)"
+	build_path = /obj/machinery/computer/mine_sci_shuttle/flight_comp
 	origin_tech = "programming=2"
 
 /obj/item/weapon/circuitboard/HolodeckControl // Not going to let people get this, but it's just here for future
