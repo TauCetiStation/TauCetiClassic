@@ -128,6 +128,7 @@
 	desc = "Can cut through any food."
 	icon_state = "knife"
 	force = 10.0
+	w_class = 2.0
 	throwforce = 10.0
 	sharp = 0
 	edge = 1
@@ -151,9 +152,10 @@
 	desc = "The bluntest of blades."
 	icon_state = "pknife"
 	force = 0
+	w_class = 2.0
 	throwforce = 0
 
-/obj/item/weapon/kitchen/utensil/knife/attack(target as mob, mob/living/user as mob)
+/obj/item/weapon/kitchen/utensil/pknife/attack(target as mob, mob/living/user as mob)
 	if ((CLUMSY in user.mutations) && prob(50))
 		user << "\red You somehow managed to cut yourself with the [src]."
 		user.take_organ_damage(20)
@@ -203,7 +205,7 @@
 	desc = "A huge thing used for chopping and chopping up meat. This includes clowns and clown-by-products."
 	flags = FPRINT | TABLEPASS | CONDUCT
 	force = 15.0
-	w_class = 2.0
+	w_class = 3.0
 	throwforce = 8.0
 	throw_speed = 3
 	throw_range = 6
@@ -274,8 +276,6 @@
 	icon_state = "tray"
 	desc = "A metal tray to lay food on."
 	throwforce = 12.0
-	throwforce = 10.0
-	throw_speed = 1
 	throw_range = 5
 	w_class = 3.0
 	flags = FPRINT | TABLEPASS | CONDUCT
