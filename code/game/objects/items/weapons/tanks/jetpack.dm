@@ -124,3 +124,12 @@
 			usr << text("\red <B>The meter on the [src.name] indicates you are almost out of air!</B>")
 			playsound(usr, 'sound/effects/alert.ogg', 50, 1)
 		return
+
+/obj/item/weapon/tank/jetpack/oxygen/harness //TG-nuke jetpack
+	name = "jet harness (oxygen)"
+	desc = "A lightweight tactical harness, used by those who don't want to be weighed down by traditional jetpacks."
+	icon_state = "jetpack-mini"
+	item_state = "jetpack-mini"
+	volume = 40
+	throw_range = 7
+	w_class = 3
