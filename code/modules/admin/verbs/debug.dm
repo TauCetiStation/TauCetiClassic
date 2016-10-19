@@ -1115,7 +1115,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(W, slot_wear_id)
 		if("ce")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/chief_engineer(M), slot_w_uniform)
-			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/brown(M), slot_shoes)
+			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/workboots(M), slot_shoes)
 			M.equip_to_slot_or_del(new /obj/item/clothing/head/hardhat/white(M), slot_head)
 			M.equip_to_slot_or_del(new /obj/item/weapon/storage/belt/utility/full(M), slot_belt)
 			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/black(M), slot_gloves)
@@ -1270,9 +1270,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		if("engineer")
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_eng(M), slot_l_ear)
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/engineer(M), slot_w_uniform)
-			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/orange(M), slot_shoes)
+			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/workboots(M), slot_shoes)
 			M.equip_to_slot_or_del(new /obj/item/weapon/storage/belt/utility/full(M), slot_belt)
-			M.equip_to_slot_or_del(new /obj/item/clothing/head/hardhat(M), slot_head)
+			M.equip_to_slot_or_del(new /obj/item/clothing/head/hardhat/yellow(M), slot_head)
 
 			var/obj/item/device/pda/engineering/pda = new(M)
 			pda.owner = M.real_name
@@ -1289,7 +1289,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		if("atmos-tech")
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_eng(M), slot_l_ear)
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/atmospheric_technician(M), slot_w_uniform)
-			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(M), slot_shoes)
+			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/workboots(M), slot_shoes)
 			M.equip_to_slot_or_del(new /obj/item/weapon/storage/belt/utility/atmostech/(M), slot_belt)
 
 			var/obj/item/device/pda/atmos/pda = new(M)

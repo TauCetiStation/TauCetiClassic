@@ -157,7 +157,7 @@
 						/obj/item/clothing/head/wizard/fake,
 						/obj/item/clothing/head/wizard,
 						/obj/item/clothing/head/collectable/wizard,
-						/obj/item/clothing/head/hardhat,
+						/obj/item/clothing/head/hardhat/yellow,
 						/obj/item/clothing/head/collectable/hardhat,
 						/obj/item/clothing/head/hardhat/white,
 						/obj/item/weapon/bedsheet,
