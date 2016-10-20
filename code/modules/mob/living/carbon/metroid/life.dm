@@ -578,7 +578,7 @@
 								last_pointed = null
 							else
 								to_say = "Please... No...."
-								Friends.Cut() // TRAITOR!
+								Friends.Remove(who) // TRAITOR!
 								last_pointed = null
 						else
 							to_say = "I don't kill my friends...."
