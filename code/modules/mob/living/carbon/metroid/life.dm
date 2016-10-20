@@ -64,12 +64,11 @@
 			ATarget = null
 		return
 	else if(ATarget in view(1, src))
-		if(prob(75) || !iscarbon(ATarget))
-			ATarget.attack_slime(src)
+		if(prob(25) && (iscarbon(ATarget) && !isslime(ATarget)))
+			var/mob/living/carbon/C = ATarget
+			Feedon(C)
 		else
-			if(iscarbon(ATarget))
-				var/mob/living/carbon/C = ATarget
-				Feedon(C)
+			ATarget.attack_slime(src)
 	else if(ATarget in view(7, src))
 		if(!ATarget.Adjacent(src))
 			step_to(src, ATarget)
@@ -557,27 +556,29 @@
 	if (speech_buffer.len > 0)
 		var/who = speech_buffer[1] // Who said it?
 		var/phrase = lowertext_plus(speech_buffer[2]) // What did they say?
-		if ((findtext(phrase, num2text(number)) || findtext(phrase, "slimes") || findtext(phrase, "слаймы") || findtext(phrase, "легион"))) // Talking to us
+		if ((findtext(phrase, num2text(number)) || findtext(phrase, "slime") || findtext(phrase, "слайм") || findtext(phrase, "легион"))) // Talking to us
 			if (                                                                  \
 				findtext(phrase, "hello") || findtext(phrase, "hi") ||            \
-				findtext(phrase, "здравствуйте") || findtext(phrase, "привет") || \
-				findtext(phrase, "здарова")                                       \
+				findtext(phrase, "здравствуйте") || findtext(phrase, "привет")    \
 			)
 				to_say = pick("Hello...", "Hi...")
 			else if (                                                             \
-				findtext(phrase, "attack") || findtext(phrase, "атакуй") ||       \
+				findtext(phrase, "attack") || findtext(phrase, "kill") ||         \
 				findtext(phrase, "убить") || findtext(phrase, "уничтожить") ||    \
-				findtext(phrase, "kill")                                          \
+				findtext(phrase, "атаковать")                                     \
 			)
 				if(Friends[who] > 4)
 					if(last_pointed)
 						if(!(Friends[last_pointed] >=2) && !(isslime(last_pointed) && Friends[who] > 6))
+							if(holding_still)
+								holding_still = 0
 							if(last_pointed != src)
 								to_say = "I will destroy [last_pointed]..."
 								ATarget = last_pointed
 								last_pointed = null
 							else
-								to_say = "Please... No...." // Argh!!!!
+								to_say = "Please... No...."
+								Friends.Cut() // TRAITOR!
 								last_pointed = null
 						else
 							to_say = "I don't kill my friends...."
@@ -587,10 +588,12 @@
 				else
 					to_say = "I won't do it..."
 			else if (                                                             \
-				findtext(phrase, "follow") || findtext(phrase, "следуйте") ||     \
+				findtext(phrase, "follow") || findtext(phrase, "ко мне") ||       \
 				findtext(phrase, "за мной")                                       \
 			)
 				if (Leader)
+					if (holding_still)
+						holding_still = 0
 					if (Leader == who) // Already following him
 						to_say = pick("Yes...", "Lead...", "Following...")
 					else if (Friends[who] > Friends[Leader]) // VIVA
@@ -600,22 +603,26 @@
 						to_say = "No... I follow [Leader]..."
 				else
 					if (Friends[who] > 2)
+						if (holding_still)
+							holding_still = 0
 						Leader = who
 						to_say = "I follow..."
 					else // Not friendly enough
 						to_say = pick("No...", "I won't follow...")
 			else if (                                                            \
 				findtext(phrase, "stop") || findtext(phrase, "перестань") ||     \
-				findtext(phrase, "хватит")                                       \
+				findtext(phrase, "хватит") || findtext(phrase, "стоп")           \
 			)
 				if (Victim) // We are asked to stop feeding
 					if (Friends[who] > 4)
 						Victim = null
 						Target = null
-						if (Friends[who] < 7)
+						if (Friends[who] < 7 && (Victim != ATarget))
 							--Friends[who]
 							to_say = "Grrr..." // I'm angry but I do it
 						else
+							if(Victim == ATarget)
+								ATarget = null
 							to_say = "Fine..."
 					else
 						to_say = "No..."
@@ -637,6 +644,12 @@
 							to_say = "Yes... I'll stop..."
 						else
 							to_say = "No... I'll keep following..."
+				else if (holding_still)
+					if(Friends[who] > 2)
+						to_say = "Fine..."
+						holding_still = 0
+					else
+						to_say = "No..."
 				else if (ATarget)
 					if(Friends[who] > 4)
 						last_pointed = null
@@ -651,9 +664,11 @@
 			)
 				if (Leader)
 					if (Leader == who)
+						Leader = null
 						holding_still = Friends[who] * 10
 						to_say = "Yes... Staying..."
 					else if (Friends[who] > Friends[Leader])
+						Leader = null
 						holding_still = (Friends[who] - Friends[Leader]) * 10
 						to_say = "Yes... Staying..."
 					else
