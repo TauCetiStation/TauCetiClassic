@@ -8,6 +8,7 @@ obj/item/weapon/gun/magic/staff/change
 	ammo_type = /obj/item/ammo_casing/magic/change
 	icon_state = "staffofchange"
 	item_state = "staffofchange"
+	fire_delay = 30
 
 obj/item/weapon/gun/magic/staff/animate
 	name = "staff of animation"
