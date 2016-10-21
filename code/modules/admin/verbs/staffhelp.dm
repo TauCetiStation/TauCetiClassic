@@ -115,6 +115,7 @@ client/proc/staffhelp(msg as text, var/help_type = null)
 	switch(help_type)
 		if("MH")
 			log_msg = "[prefix]: [key_name(src)]: [original_msg] - heard by [mentor_number_present] non-AFK mentors and [admin_number_present] non-AFK admins."
+			send2slack_logs(key_name(src), original_msg, "(MHELP)")
 		if("AH")
 			log_msg = "[prefix]: [key_name(src)]: [original_msg] - heard by [admin_number_present] non-AFK admins."
 			//clean the input msg
