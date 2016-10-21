@@ -69,7 +69,7 @@
 	return ..()
 
 
-/datum/game_mode/proc/forge_traitor_objectives(var/datum/mind/traitor)
+/datum/game_mode/proc/forge_traitor_objectives(datum/mind/traitor)
 	if (config.objectives_disabled)
 		return
 
@@ -114,7 +114,7 @@
 					traitor.objectives += hijack_objective
 	return
 
-/datum/game_mode/proc/add_one_objective(var/datum/mind/traitor)
+/datum/game_mode/proc/add_one_objective(datum/mind/traitor)
 	switch(rand(1,120))
 		if(1 to 20)
 			var/datum/objective/assassinate/kill_objective = new
@@ -133,7 +133,7 @@
 			traitor.objectives += steal_objective
 
 
-/datum/game_mode/proc/greet_traitor(var/datum/mind/traitor)
+/datum/game_mode/proc/greet_traitor(datum/mind/traitor)
 	traitor.current << "<B><font size=3 color=red>You are the traitor.</font></B>"
 	if (!config.objectives_disabled)
 		var/obj_count = 1
@@ -145,7 +145,7 @@
 	return
 
 
-/datum/game_mode/proc/finalize_traitor(var/datum/mind/traitor)
+/datum/game_mode/proc/finalize_traitor(datum/mind/traitor)
 	if (istype(traitor.current, /mob/living/silicon))
 		add_law_zero(traitor.current)
 	else
@@ -235,7 +235,7 @@
 	return text
 
 
-/datum/game_mode/proc/equip_traitor(mob/living/carbon/human/traitor_mob, var/safety = 0)
+/datum/game_mode/proc/equip_traitor(mob/living/carbon/human/traitor_mob, safety = 0)
 
 	if (!istype(traitor_mob))
 		return

@@ -19,16 +19,16 @@
 	SSobj.processing.Remove(src)
 	return ..()
 
-/obj/item/device/radio/intercom/attack_ai(mob/user as mob)
+/obj/item/device/radio/intercom/attack_ai(mob/user)
 	src.add_fingerprint(user)
 	spawn (0)
 		attack_self(user)
 
-/obj/item/device/radio/intercom/attack_paw(mob/user as mob)
+/obj/item/device/radio/intercom/attack_paw(mob/user)
 	return src.attack_hand(user)
 
 
-/obj/item/device/radio/intercom/attack_hand(mob/user as mob)
+/obj/item/device/radio/intercom/attack_hand(mob/user)
 	src.add_fingerprint(user)
 	spawn (0)
 		attack_self(user)
@@ -51,7 +51,7 @@
 	return canhear_range
 
 
-/obj/item/device/radio/intercom/hear_talk(mob/M as mob, msg)
+/obj/item/device/radio/intercom/hear_talk(mob/M, msg)
 	if(!src.anyai && !(M in src.ai))
 		return
 	..()

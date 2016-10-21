@@ -55,7 +55,7 @@
 		for(var/obj/structure/bush/B in src)
 			qdel(B)
 
-/turf/unsimulated/jungle/proc/Spread(var/probability, var/prob_loss = 50)
+/turf/unsimulated/jungle/proc/Spread(probability, prob_loss = 50)
 	if(probability <= 0)
 		return
 

@@ -89,7 +89,7 @@ Infestation:
 		qdel(original)
 	return ..()
 
-/datum/game_mode/infestation/proc/greet_xeno(var/datum/mind/xeno)
+/datum/game_mode/infestation/proc/greet_xeno(datum/mind/xeno)
 	xeno.current << "\green <B>You are a Xenomorph.</b>"
 	xeno.current << "\green <B>Your current alien form is a facehugger.</b>"
 	xeno.current << "\green <B>Go find some monkeys, corgi or a sleeping human.</b>"

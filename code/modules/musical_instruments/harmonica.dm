@@ -10,7 +10,7 @@
 	var/spam_flag = 0
 	var/cooldown = 70
 
-/obj/item/device/harmonica/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+/obj/item/device/harmonica/attack(mob/living/carbon/M, mob/living/carbon/user)
 	if(!istype(M) || M != user)
 		return ..()
 
@@ -21,7 +21,7 @@
 /obj/item/device/harmonica/New()
 	harmonica_channel = rand(1000, 1024)
 
-/obj/item/device/harmonica/proc/play(mob/living/carbon/user as mob)
+/obj/item/device/harmonica/proc/play(mob/living/carbon/user)
 	if(spam_flag) return
 
 	spam_flag = 1

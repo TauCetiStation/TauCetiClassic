@@ -23,7 +23,7 @@
 	wielded = 1
 	update_icon()
 
-/obj/item/weapon/gun/projectile/revolver/rocketlauncher/mob_can_equip(M as mob, slot)
+/obj/item/weapon/gun/projectile/revolver/rocketlauncher/mob_can_equip(M, slot)
 	//Cannot equip wielded items.
 	if(wielded)
 		M << "<span class='warning'>Unwield the [initial(name)] first!</span>"
@@ -34,7 +34,7 @@
 /obj/item/weapon/gun/projectile/revolver/rocketlauncher/process_chamber()
 	return ..(1, 1)
 
-/obj/item/weapon/gun/projectile/revolver/rocketlauncher/dropped(mob/user as mob)
+/obj/item/weapon/gun/projectile/revolver/rocketlauncher/dropped(mob/user)
 	//handles unwielding a twohanded weapon when dropped as well as clearing up the offhand
 	if(user)
 		var/obj/item/weapon/gun/projectile/revolver/rocketlauncher/O = user.get_inactive_hand()
@@ -45,7 +45,7 @@
 /obj/item/weapon/gun/projectile/revolver/rocketlauncher/pickup(mob/user)
 	unwield()
 
-/obj/item/weapon/gun/projectile/revolver/rocketlauncher/attack_self(mob/user as mob)
+/obj/item/weapon/gun/projectile/revolver/rocketlauncher/attack_self(mob/user)
 	if(wielded) //Trying to unwield it
 		unwield()
 		user << "<span class='notice'>You are now carrying the [name] with one hand.</span>"
@@ -77,7 +77,7 @@
 		user.put_in_inactive_hand(O)
 		return
 
-/obj/item/weapon/gun/projectile/revolver/rocketlauncher/attack_hand(mob/user as mob)
+/obj/item/weapon/gun/projectile/revolver/rocketlauncher/attack_hand(mob/user)
 	if(loc != user)
 		..()
 		return	//let them pick it up
@@ -95,7 +95,7 @@
 	else
 		user << "<span class='notice'>[src] is empty.</span>"
 
-/obj/item/weapon/gun/projectile/revolver/rocketlauncher/afterattack(atom/target as mob|obj|turf, mob/living/user as mob|obj, flag, params) //what I tried to do here is just add a check to see if the cover is open or not and add an icon_state change because I can't figure out how c-20rs do it with overlays
+/obj/item/weapon/gun/projectile/revolver/rocketlauncher/afterattack(atom/target, mob/living/user, flag, params) //what I tried to do here is just add a check to see if the cover is open or not and add an icon_state change because I can't figure out how c-20rs do it with overlays
 	if(!wielded)
 		user << "<span class='notice'>You need wield [src] in both hands before firing!</span>"
 		return

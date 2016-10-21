@@ -76,7 +76,7 @@
 		L += S.return_inv()
 	return L
 
-/obj/item/weapon/storage/proc/show_to(mob/user as mob)
+/obj/item/weapon/storage/proc/show_to(mob/user)
 	if(user.s_active != src && (user.stat == CONSCIOUS))
 		for(var/obj/item/I in src)
 			if(I.on_found(user))
@@ -96,7 +96,7 @@
 	close_all()
 	return ..()
 
-/obj/item/weapon/storage/proc/hide_from(mob/user as mob)
+/obj/item/weapon/storage/proc/hide_from(mob/user)
 	if(!user.client)
 		return
 	user.client.screen -= src.boxes
@@ -106,7 +106,7 @@
 		user.s_active = null
 	is_seeing -= user
 
-/obj/item/weapon/storage/proc/open(mob/user as mob)
+/obj/item/weapon/storage/proc/open(mob/user)
 	if (src.use_sound)
 		playsound(src.loc, src.use_sound, 50, 1, -5)
 
@@ -115,7 +115,7 @@
 		user.s_active.close(user)
 	show_to(user)
 
-/obj/item/weapon/storage/proc/close(mob/user as mob)
+/obj/item/weapon/storage/proc/close(mob/user)
 	hide_from(user)
 	user.s_active = null
 
@@ -268,7 +268,7 @@
 //This proc handles items being inserted. It does not perform any checks of whether an item can or can't be inserted. That's done by can_be_inserted()
 //The stop_warning parameter will stop the insertion message from being displayed. It is intended for cases where you are inserting multiple items at once,
 //such as when picking up all the items on a tile with one click.
-/obj/item/weapon/storage/proc/handle_item_insertion(obj/item/W as obj, prevent_warning = 0)
+/obj/item/weapon/storage/proc/handle_item_insertion(obj/item/W, prevent_warning = 0)
 	if(!istype(W)) return 0
 	if(usr)
 		usr.remove_from_mob(W)
@@ -331,7 +331,7 @@
 	return 1
 
 //This proc is called when you want to place an item into the storage item.
-/obj/item/weapon/storage/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/weapon/storage/attackby(obj/item/W, mob/user)
 	..()
 
 	if(isrobot(user))
@@ -361,10 +361,10 @@
 	handle_item_insertion(W)
 	return
 
-/obj/item/weapon/storage/dropped(mob/user as mob)
+/obj/item/weapon/storage/dropped(mob/user)
 	return
 
-/obj/item/weapon/storage/attack_hand(mob/user as mob)
+/obj/item/weapon/storage/attack_hand(mob/user)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(H.l_store == src && !H.get_active_hand())	//Prevents opening if it's in a pocket.
@@ -440,7 +440,7 @@
 	..()
 
 // BubbleWrap - A box can be folded up to make card
-/obj/item/weapon/storage/attack_self(mob/user as mob)
+/obj/item/weapon/storage/attack_self(mob/user)
 
 	//Clicking on itself will empty it, if it has the verb to do that.
 	if(user.get_active_hand() == src)
@@ -469,7 +469,7 @@
 	qdel(src)
 //BubbleWrap END
 
-/obj/item/weapon/storage/hear_talk(mob/M as mob, text)
+/obj/item/weapon/storage/hear_talk(mob/M, text)
 	for (var/atom/A in src)
 		if(istype(A,/obj/))
 			var/obj/O = A

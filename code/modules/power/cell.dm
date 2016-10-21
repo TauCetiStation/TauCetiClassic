@@ -22,7 +22,7 @@
 	return 100.0*charge/maxcharge
 
 // use power from a cell
-/obj/item/weapon/stock_parts/cell/proc/use(var/amount)
+/obj/item/weapon/stock_parts/cell/proc/use(amount)
 	if(rigged && amount > 0)
 		explode()
 		return 0
@@ -32,7 +32,7 @@
 	return 1
 
 // recharge the cell
-/obj/item/weapon/stock_parts/cell/proc/give(var/amount)
+/obj/item/weapon/stock_parts/cell/proc/give(amount)
 	if(rigged && amount > 0)
 		explode()
 		return 0
@@ -59,7 +59,7 @@
 	if(crit_fail)
 		usr << "\red This power cell seems to be faulty."
 
-/obj/item/weapon/stock_parts/cell/attack_self(mob/user as mob)
+/obj/item/weapon/stock_parts/cell/attack_self(mob/user)
 	src.add_fingerprint(user)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user

@@ -109,7 +109,7 @@
 		return
 	interact(user)
 
-/obj/machinery/computer/mech_bay_power_console/interact(mob/user as mob)
+/obj/machinery/computer/mech_bay_power_console/interact(mob/user)
 	var/data
 	if(!recharge_port)
 		data += "<div class='statusDisplay'>No recharging port detected.</div><BR>"

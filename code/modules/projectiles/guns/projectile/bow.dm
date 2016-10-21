@@ -56,7 +56,7 @@
 	var/obj/item/weapon/arrow = null      // Nocked arrow.
 	var/obj/item/weapon/stock_parts/cell/cell = null  // Used for firing special projectiles like rods.
 
-/obj/item/weapon/crossbow/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/weapon/crossbow/attackby(obj/item/W, mob/user)
 	if(!arrow)
 		if (istype(W,/obj/item/weapon/arrow))
 			user.drop_item()
@@ -108,7 +108,7 @@
 	else
 		..()
 
-/obj/item/weapon/crossbow/attack_self(mob/living/user as mob)
+/obj/item/weapon/crossbow/attack_self(mob/living/user)
 	if(tension)
 		if(arrow)
 			user.visible_message("[user] relaxes the tension on [src]'s string and removes [arrow].","You relax the tension on [src]'s string and remove [arrow].")
@@ -123,7 +123,7 @@
 	else
 		draw(user)
 
-/obj/item/weapon/crossbow/proc/draw(var/mob/user as mob)
+/obj/item/weapon/crossbow/proc/draw(mob/user)
 
 	if(!arrow)
 		user << "You don't have anything nocked to [src]."
@@ -138,7 +138,7 @@
 	tension = 1
 	spawn(25) increase_tension(user)
 
-/obj/item/weapon/crossbow/proc/increase_tension(var/mob/user as mob)
+/obj/item/weapon/crossbow/proc/increase_tension(mob/user)
 
 	if(!arrow || !tension || current_user != user) //Arrow has been fired, bow has been relaxed or user has changed.
 		return
@@ -153,7 +153,7 @@
 		user.visible_message("[usr] draws back the string of [src]!","You continue drawing back the string of [src]!")
 		spawn(25) increase_tension(user)
 
-/obj/item/weapon/crossbow/afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, flag, params)
+/obj/item/weapon/crossbow/afterattack(atom/target, mob/living/user, flag, params)
 
 	if (istype(target, /obj/item/weapon/storage/backpack ))
 		src.dropped()
@@ -178,7 +178,7 @@
 	else
 		spawn(0) Fire(target,user,params)
 
-/obj/item/weapon/crossbow/proc/Fire(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, params, reflex = 0)
+/obj/item/weapon/crossbow/proc/Fire(atom/target, mob/living/user, params, reflex = 0)
 
 	add_fingerprint(user)
 
@@ -227,7 +227,7 @@
 		if(4) usr << "It has a steel backbone, plastic lath and a cell mount installed."
 		if(5) usr << "It has a steel cable loosely strung across the lath."
 
-/obj/item/weapon/crossbowframe/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/weapon/crossbowframe/attackby(obj/item/W, mob/user)
 	if(istype(user, /mob/living/silicon/robot)) return
 	if(istype(W,/obj/item/stack/rods))
 		if(buildstate == 0)

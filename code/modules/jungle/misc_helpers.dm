@@ -1,7 +1,7 @@
 //put this here because i needed specific functionality, and i wanted to avoid the hassle of getting it onto svn
 
 
-/area/proc/copy_turfs_to(var/area/A , var/platingRequired = 0 )
+/area/proc/copy_turfs_to(area/A , platingRequired = 0 )
 	//Takes: Area. Optional: If it should copy to areas that don't have plating
 	//Returns: Nothing.
 	//Notes: Attempts to move the contents of one area to another area.

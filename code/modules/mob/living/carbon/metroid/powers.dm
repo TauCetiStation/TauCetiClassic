@@ -42,7 +42,7 @@
 
 
 
-/mob/living/carbon/slime/proc/Feedon(var/mob/living/carbon/M)
+/mob/living/carbon/slime/proc/Feedon(mob/living/carbon/M)
 	Victim = M
 	src.loc = M.loc
 	canmove = 0
@@ -161,7 +161,7 @@
 		if(Victim.client) Victim << "[src] has let go of your head!"
 		Victim = null
 
-/mob/living/carbon/slime/proc/UpdateFeed(var/mob/M)
+/mob/living/carbon/slime/proc/UpdateFeed(mob/M)
 	if(Victim)
 		if(Victim == M)
 			loc = M.loc // simple "attach to head" effect!

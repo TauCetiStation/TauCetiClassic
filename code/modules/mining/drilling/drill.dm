@@ -139,10 +139,10 @@
 		need_player_check = 1
 		update_icon()
 
-/obj/machinery/mining/drill/attack_ai(var/mob/user as mob)
+/obj/machinery/mining/drill/attack_ai(mob/user)
 	return src.attack_hand(user)
 
-/obj/machinery/mining/drill/attackby(obj/item/O as obj, mob/user as mob)
+/obj/machinery/mining/drill/attackby(obj/item/O, mob/user)
 	if(!active)
 		if(default_deconstruction_screwdriver(user,"mining_drill","mining_drill", O))
 			return
@@ -164,7 +164,7 @@
 		return
 	..()
 
-/obj/machinery/mining/drill/attack_hand(mob/user as mob)
+/obj/machinery/mining/drill/attack_hand(mob/user)
 	check_supports()
 
 	if (panel_open && cell)
@@ -240,7 +240,7 @@
 
 	update_icon()
 
-/obj/machinery/mining/drill/proc/system_error(var/error)
+/obj/machinery/mining/drill/proc/system_error(error)
 
 	if(error)
 		src.visible_message("<span class='notice'>\The [src] flashes a '[error]' warning.</span>")
@@ -303,7 +303,7 @@
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/miningdrillbrace(src)
 
-/obj/machinery/mining/brace/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/machinery/mining/brace/attackby(obj/item/weapon/W, mob/user)
 	if(connected && connected.active)
 		user << "<span class='notice'>You can't work with the brace of a running drill!</span>"
 		return

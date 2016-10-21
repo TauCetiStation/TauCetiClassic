@@ -1,4 +1,4 @@
-/mob/living/carbon/alien/say(var/message)
+/mob/living/carbon/alien/say(message)
 
 	if (silent)
 		return
@@ -18,7 +18,7 @@
 				playsound(loc, "hiss", 25, 1, 1)//So aliens can hiss while they hiss yo/N
 			return ..(message, sanitize = 0)
 
-/mob/living/carbon/alien/facehugger/say(var/message)
+/mob/living/carbon/alien/facehugger/say(message)
 
 	if (silent)
 		return
@@ -34,7 +34,7 @@
 			else
 				alien_talk(message)
 
-/mob/living/carbon/alien/larva/say(var/message)
+/mob/living/carbon/alien/larva/say(message)
 
 	if (silent)
 		return
@@ -50,7 +50,7 @@
 			else
 				alien_talk(message)
 
-/mob/living/proc/alien_talk(var/message)
+/mob/living/proc/alien_talk(message)
 
 	log_say("[key_name(src)] : [message]")
 	message = trim(message)

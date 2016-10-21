@@ -40,7 +40,7 @@
 	desc = "A label on it reads: <i>Activate to have a singularity beacon teleported to your location</i>."
 	origin_tech = "bluespace=1;syndicate=7"
 
-/obj/item/device/radio/beacon/syndicate/attack_self(mob/user as mob)
+/obj/item/device/radio/beacon/syndicate/attack_self(mob/user)
 	if(user)
 		user << "\blue Locked In"
 		new /obj/machinery/singularity_beacon/syndicate( user.loc )
@@ -69,7 +69,7 @@
 	var/timer = 10
 	var/atom/target = null
 
-/obj/item/weapon/medical/teleporter/afterattack(atom/target as obj|turf, mob/user as mob, flag)
+/obj/item/weapon/medical/teleporter/afterattack(atom/target, mob/user, flag)
 	if (!flag)
 		return
 	if (!ishuman(target))
@@ -121,5 +121,5 @@
 				if (src)
 					qdel(src)
 
-/obj/item/weapon/medical/teleporter/attack(mob/M as mob, mob/user as mob, def_zone)
+/obj/item/weapon/medical/teleporter/attack(mob/M, mob/user, def_zone)
 	return

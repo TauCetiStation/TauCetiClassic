@@ -30,7 +30,7 @@
 		density = 1
 		icon_state = "[mineral][closed_wall_dir]"
 
-/obj/structure/temple_falsewall/attack_hand(mob/user as mob)
+/obj/structure/temple_falsewall/attack_hand(mob/user)
 	if(opening)
 		return
 

@@ -27,7 +27,7 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "abed"
 
-/obj/structure/stool/bed/attack_paw(mob/user as mob)
+/obj/structure/stool/bed/attack_paw(mob/user)
 	return src.attack_hand(user)
 
 /obj/structure/stool/bed/CanPass(atom/movable/mover)
@@ -63,7 +63,7 @@
 	anchored = 0
 	var/type_roller = /obj/item/roller
 
-/obj/structure/stool/bed/roller/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/structure/stool/bed/roller/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W,src) || istype(W, /obj/item/roller_holder))
 		if(buckled_mob)
 			user_unbuckle_mob()
@@ -95,7 +95,7 @@
 	R.add_fingerprint(user)
 	qdel(src)
 
-/obj/item/roller/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/roller/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/roller_holder))
 		var/obj/item/roller_holder/RH = W
 		if(!RH.held)
@@ -117,7 +117,7 @@
 	..()
 	held = new held(src)
 
-/obj/item/roller_holder/attack_self(mob/user as mob)
+/obj/item/roller_holder/attack_self(mob/user)
 
 	if(!held)
 		user << "<span class='notice'>The rack is empty.</span>"
@@ -150,7 +150,7 @@
 		qdel(src)
 		return
 
-/obj/structure/stool/bed/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/structure/stool/bed/attackby(obj/item/weapon/W, mob/user)
 	..()
 	if(istype(W, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = W

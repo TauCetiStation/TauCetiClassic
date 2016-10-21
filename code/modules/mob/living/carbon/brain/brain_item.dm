@@ -23,7 +23,7 @@
 				brainmob.client.screen.len = null //clear the hud
 
 	proc
-		transfer_identity(var/mob/living/carbon/H)
+		transfer_identity(mob/living/carbon/H)
 			name = "[H]'s brain"
 			brainmob = new(src)
 			brainmob.name = H.real_name
@@ -49,7 +49,7 @@
 	else
 		usr << "This one seems particularly lifeless. Perhaps it will regain some of its luster later.."
 
-/obj/item/brain/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+/obj/item/brain/attack(mob/living/carbon/M, mob/living/carbon/user)
 	if(!istype(M, /mob))
 		return
 

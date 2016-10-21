@@ -57,7 +57,7 @@
 	thermal_conductivity = 0.025
 	heat_capacity = 325000
 
-/turf/simulated/floor/engine/attackby(obj/item/weapon/C as obj, mob/user as mob)
+/turf/simulated/floor/engine/attackby(obj/item/weapon/C, mob/user)
 	if(!C)
 		return
 	if(!user)
@@ -255,7 +255,7 @@
 		update_icon(1)
 		set_light(1.5)
 
-	update_icon(var/propogate=1)
+	update_icon(propogate=1)
 		underlays.Cut()
 		underlays += new /icon('icons/turf/space.dmi',"[((x + y) ^ ~(x * y) + z) % 25]")
 
@@ -270,7 +270,7 @@
 		icon_state="catwalk[dirs]"
 
 
-	attackby(obj/item/C as obj, mob/user as mob)
+	attackby(obj/item/C, mob/user)
 		if(!C || !user)
 			return 0
 		if(istype(C, /obj/item/weapon/screwdriver))

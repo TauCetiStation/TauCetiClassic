@@ -1,6 +1,6 @@
 //var/list/uplink_items = list()
 
-/proc/get_uplink_items(var/obj/item/device/uplink/uplink)
+/proc/get_uplink_items(obj/item/device/uplink/uplink)
 	// If not already initialized..
 	if(!uplink.uplink_items.len)
 
@@ -55,13 +55,13 @@
 	var/list/excludefrom_uplinks = list() //Empty list does nothing. Alias you will need to state the type of uplink, where the object won't be available.
 
 
-/datum/uplink_item/proc/spawn_item(var/turf/loc, var/obj/item/device/uplink/U)
+/datum/uplink_item/proc/spawn_item(turf/loc, obj/item/device/uplink/U)
 	if(item)
 		U.uses -= max(cost, 0)
 		feedback_add_details("traitor_uplink_items_bought", "[item]")
 		return new item(loc)
 
-/datum/uplink_item/proc/buy(var/obj/item/device/uplink/U, var/mob/user)
+/datum/uplink_item/proc/buy(obj/item/device/uplink/U, mob/user)
 
 	..()
 	if(!istype(U))
@@ -647,7 +647,7 @@
 	item = /obj/item/weapon/storage/box/syndicate
 	cost = 0
 
-/datum/uplink_item/badass/random/spawn_item(var/turf/loc, var/obj/item/device/uplink/U)
+/datum/uplink_item/badass/random/spawn_item(turf/loc, obj/item/device/uplink/U)
 
 	var/list/buyable_items = get_uplink_items()
 	var/list/possible_items = list()

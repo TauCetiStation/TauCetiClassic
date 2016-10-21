@@ -7,7 +7,7 @@ var/list/extraction_appends = list("AAAAAAAAAAAAAAAAAUGH", "AAAAAAAAAAAHHHHHHHHH
 	icon_state = "extraction_pack"
 	var/is_extracting = 0
 
-/obj/item/weapon/extraction_pack/afterattack(atom/movable/A, mob/user as mob, proximity)
+/obj/item/weapon/extraction_pack/afterattack(atom/movable/A, mob/user, proximity)
 	var/extract_time = 70
 	if(!proximity)
 		return

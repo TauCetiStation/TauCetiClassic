@@ -7,7 +7,7 @@
 	var/active = 0 //Whether or not vision is enhanced
 	req_stat = UNCONSCIOUS
 
-/obj/effect/proc_holder/changeling/augmented_eyesight/sting_action(var/mob/living/user)
+/obj/effect/proc_holder/changeling/augmented_eyesight/sting_action(mob/living/user)
 	active = !active
 	user.changeling_aug = !user.changeling_aug
 	if(active)

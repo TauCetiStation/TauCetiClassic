@@ -93,7 +93,7 @@
 	item_state = "o_shoes"
 	var/obj/item/weapon/handcuffs/chained = null
 
-/obj/item/clothing/shoes/orange/proc/attach_cuffs(var/obj/item/weapon/handcuffs/cuffs)
+/obj/item/clothing/shoes/orange/proc/attach_cuffs(obj/item/weapon/handcuffs/cuffs)
 	if (src.chained) return
 
 	cuffs.loc = src
@@ -111,11 +111,11 @@
 	src.item_state = "o_shoes"
 	src.chained = null
 
-/obj/item/clothing/shoes/orange/attack_self(mob/user as mob)
+/obj/item/clothing/shoes/orange/attack_self(mob/user)
 	..()
 	remove_cuffs()
 
-/obj/item/clothing/shoes/orange/attackby(H as obj, mob/user as mob)
+/obj/item/clothing/shoes/orange/attackby(H, mob/user)
 	..()
 	if (istype(H, /obj/item/weapon/handcuffs))
 		attach_cuffs(H)

@@ -23,19 +23,19 @@ var/prison_shuttle_timeleft = 0
 	var/prison_break = 0
 
 
-/obj/machinery/computer/prison_shuttle/attackby(I as obj, user as mob)
+/obj/machinery/computer/prison_shuttle/attackby(I, user)
 	return src.attack_hand(user)
 
 
-/obj/machinery/computer/prison_shuttle/attack_ai(var/mob/user as mob)
+/obj/machinery/computer/prison_shuttle/attack_ai(mob/user)
 	return src.attack_hand(user)
 
 
-/obj/machinery/computer/prison_shuttle/attack_paw(var/mob/user as mob)
+/obj/machinery/computer/prison_shuttle/attack_paw(mob/user)
 	return src.attack_hand(user)
 
 
-/obj/machinery/computer/prison_shuttle/attackby(I as obj, user as mob)
+/obj/machinery/computer/prison_shuttle/attackby(I, user)
 	if(istype(I, /obj/item/weapon/screwdriver))
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		if(do_after(user, 20, target = src))
@@ -64,7 +64,7 @@ var/prison_shuttle_timeleft = 0
 		return src.attack_hand(user)
 
 
-/obj/machinery/computer/prison_shuttle/attack_hand(var/mob/user as mob)
+/obj/machinery/computer/prison_shuttle/attack_hand(mob/user)
 	if(!src.allowed(user) && (!hacked))
 		user << "\red Access Denied."
 		return
@@ -154,7 +154,7 @@ var/prison_shuttle_timeleft = 0
 			prison_break = 0
 
 
-/obj/machinery/computer/prison_shuttle/proc/post_signal(var/command)
+/obj/machinery/computer/prison_shuttle/proc/post_signal(command)
 	var/datum/radio_frequency/frequency = radio_controller.return_frequency(1311)
 	if(!frequency)
 		return

@@ -10,7 +10,7 @@
 
 	var/obj/item/weapon/flamethrower_M2/Connected_Flamethrower = null
 
-/obj/item/weapon/weldpack/M2_fuelback/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/weapon/weldpack/M2_fuelback/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/T = W
 		if(T.welding)
@@ -53,7 +53,7 @@
 		Connected_Flamethrower = time
 		time.equip(user, src)
 
-/obj/item/weapon/weldpack/M2_fuelback/dropped(mob/user as mob)
+/obj/item/weapon/weldpack/M2_fuelback/dropped(mob/user)
 	if(user)
 		if(Connected_Flamethrower)
 			Connected_Flamethrower.unequip(user)
@@ -88,7 +88,7 @@
 	var/turf/previousturf = null
 	var/obj/item/weapon/weldpack/M2_fuelback/Connected_tank = null
 
-/obj/item/weapon/flamethrower_M2/dropped(mob/user as mob)
+/obj/item/weapon/flamethrower_M2/dropped(mob/user)
 	if(user)
 		Connected_tank.unequip(user)
 		Connected_tank = null
@@ -135,12 +135,12 @@
 			var/turflist = getline(user, target_turf)
 			flame_turf(turflist)
 
-/obj/item/weapon/flamethrower_M2/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/weapon/flamethrower_M2/attackby(obj/item/W, mob/user)
 	..()
 	return
 
 
-/obj/item/weapon/flamethrower_M2/attack_self(mob/user as mob)
+/obj/item/weapon/flamethrower_M2/attack_self(mob/user)
 	if(user.stat || user.restrained() || user.lying)	return
 	if(!Connected_tank)
 		usr << "M2 Flamethrower needs to be connected to fuel backpack first."

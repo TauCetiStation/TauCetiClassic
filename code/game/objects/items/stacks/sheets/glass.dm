@@ -27,7 +27,7 @@
 	g_amt = 0
 	created_window = /obj/structure/window/basic
 
-/obj/item/stack/sheet/glass/attack_self(mob/user as mob)
+/obj/item/stack/sheet/glass/attack_self(mob/user)
 	construct_window(user)
 
 /obj/item/stack/sheet/glass/attackby(obj/item/W, mob/user)
@@ -56,7 +56,7 @@
 	else
 		return ..()
 
-/obj/item/stack/sheet/glass/proc/construct_window(mob/user as mob)
+/obj/item/stack/sheet/glass/proc/construct_window(mob/user)
 	if(!user || !src)	return 0
 	if(!istype(user.loc,/turf)) return 0
 	if(!user.IsAdvancedToolUser())
@@ -112,7 +112,7 @@
 			src.use(2)
 	return 0
 
-/obj/item/stack/sheet/glass/throw_at(atom/target, range, speed, mob/user as mob)
+/obj/item/stack/sheet/glass/throw_at(atom/target, range, speed, mob/user)
 	..()
 	playsound(src, "shatter", 70, 1)
 	new /obj/item/weapon/shard(loc)
@@ -122,7 +122,7 @@
 	else
 		qdel(src)
 
-/obj/item/stack/sheet/rglass/throw_at(atom/target, range, speed, mob/user as mob)
+/obj/item/stack/sheet/rglass/throw_at(atom/target, range, speed, mob/user)
 	..()
 	playsound(src, "shatter", 70, 1)
 	new /obj/item/weapon/shard(loc)
@@ -152,10 +152,10 @@
 	g_amt = 0
 	m_amt = 0
 
-/obj/item/stack/sheet/rglass/attack_self(mob/user as mob)
+/obj/item/stack/sheet/rglass/attack_self(mob/user)
 	construct_window(user)
 
-/obj/item/stack/sheet/rglass/proc/construct_window(mob/user as mob)
+/obj/item/stack/sheet/rglass/proc/construct_window(mob/user)
 	if(!user || !src)	return 0
 	if(!istype(user.loc,/turf)) return 0
 	if(!user.IsAdvancedToolUser())
@@ -282,7 +282,7 @@
 		else
 	return
 
-/obj/item/weapon/shard/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/weapon/shard/attackby(obj/item/weapon/W, mob/user)
 	..()
 	if ( istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
@@ -335,7 +335,7 @@
 	origin_tech = "materials=3;phoron=2"
 	created_window = /obj/structure/window/phoronbasic
 
-/obj/item/stack/sheet/glass/phoronglass/attack_self(mob/user as mob)
+/obj/item/stack/sheet/glass/phoronglass/attack_self(mob/user)
 	construct_window(user)
 
 /obj/item/stack/sheet/glass/phoronglass/attackby(obj/item/W, mob/user)
@@ -368,5 +368,5 @@
 	origin_tech = "materials=4;phoron=2"
 	created_window = /obj/structure/window/phoronreinforced
 
-/obj/item/stack/sheet/glass/phoronrglass/attack_self(mob/user as mob)
+/obj/item/stack/sheet/glass/phoronrglass/attack_self(mob/user)
 	construct_window(user)

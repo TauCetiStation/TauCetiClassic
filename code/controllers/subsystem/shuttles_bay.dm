@@ -571,7 +571,7 @@ var/datum/subsystem/shuttle/SSshuttle
 
 	return SHUTTLEARRIVETIME
 
-/datum/subsystem/shuttle/proc/shuttlealert(var/X)
+/datum/subsystem/shuttle/proc/shuttlealert(X)
 	alert = X
 
 /datum/subsystem/shuttle/proc/recall()
@@ -609,13 +609,13 @@ var/datum/subsystem/shuttle/SSshuttle
 		return get_shuttle_arrive_time()
 
 	// sets the time left to a given delay (in seconds)
-/datum/subsystem/shuttle/proc/settimeleft(var/delay)
+/datum/subsystem/shuttle/proc/settimeleft(delay)
 	endtime = world.timeofday + delay * 10
 	timelimit = delay
 
 	// sets the shuttle direction
 	// 1 = towards SS13, -1 = back to centcom
-/datum/subsystem/shuttle/proc/setdirection(var/dirn)
+/datum/subsystem/shuttle/proc/setdirection(dirn)
 	if(direction == dirn)
 		return
 	direction = dirn

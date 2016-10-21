@@ -45,7 +45,7 @@
 	if(prob(75))
 		qdel(src)
 
-/obj/machinery/optable/attack_paw(mob/user as mob)
+/obj/machinery/optable/attack_paw(mob/user)
 	if ((HULK in usr.mutations))
 		usr << text("<span class='notice'>You destroy the operating table.</span>")
 		visible_message("<span class='danger'>[usr] destroys the operating table!</span>")
@@ -58,7 +58,7 @@
 			visible_message("<span class='notice'>The monkey hides under the table!</span>")
 	return
 
-/obj/machinery/optable/attack_hand(mob/user as mob)
+/obj/machinery/optable/attack_hand(mob/user)
 	if (HULK in usr.mutations)
 		usr << text("<span class='notice'>You destroy the table.</span>")
 		visible_message("<span class='danger'>[usr] destroys the operating table!</span>")
@@ -75,7 +75,7 @@
 		return 0
 
 
-/obj/machinery/optable/MouseDrop_T(obj/O as obj, mob/user as mob)
+/obj/machinery/optable/MouseDrop_T(obj/O, mob/user)
 	if(isrobot(user))
 		return
 
@@ -100,7 +100,7 @@
 /obj/machinery/optable/process()
 	check_victim()
 
-/obj/machinery/optable/proc/take_victim(mob/living/carbon/C, mob/living/carbon/user as mob)
+/obj/machinery/optable/proc/take_victim(mob/living/carbon/C, mob/living/carbon/user)
 	if (C == user)
 		user.visible_message("<span class='rose'>[user] climbs on the operating table.</span>","<span class='notice'>You climb on the operating table.</span>")
 	else
@@ -134,7 +134,7 @@
 
 	take_victim(usr,usr)
 
-/obj/machinery/optable/attackby(obj/item/weapon/W as obj, mob/living/carbon/user as mob)
+/obj/machinery/optable/attackby(obj/item/weapon/W, mob/living/carbon/user)
 	if(isrobot(user))
 		return
 

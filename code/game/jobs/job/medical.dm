@@ -18,7 +18,7 @@
 	minimal_player_age = 10
 	minimal_player_ingame_minutes = 2400
 
-/datum/job/cmo/equip(var/mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/job/cmo/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
 	switch(H.backbag)
 		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/medic(H), slot_back)
@@ -57,7 +57,7 @@
 	alt_titles = list("Surgeon","Emergency Physician","Nurse")
 	minimal_player_ingame_minutes = 960
 
-/datum/job/doctor/equip(var/mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/job/doctor/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
 	switch(H.backbag)
 		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/medic(H), slot_back)
@@ -122,7 +122,7 @@
 	alt_titles = list("Pharmacist")
 	minimal_player_ingame_minutes = 960
 
-/datum/job/chemist/equip(var/mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/job/chemist/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/chemist(H), slot_w_uniform)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/white(H), slot_shoes)
@@ -156,7 +156,7 @@
 	minimal_access = list(access_medical, access_morgue, access_genetics, access_research)
 	minimal_player_ingame_minutes = 960
 
-/datum/job/geneticist/equip(var/mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/job/geneticist/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/geneticist(H), slot_w_uniform)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/white(H), slot_shoes)
@@ -192,7 +192,7 @@
 	alt_titles = list("Pathologist","Microbiologist")
 	minimal_player_ingame_minutes = 960
 
-/datum/job/virologist/equip(var/mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/job/virologist/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/virologist(H), slot_w_uniform)
 	H.equip_to_slot_or_del(new /obj/item/clothing/mask/surgical(H), slot_wear_mask)
@@ -231,7 +231,7 @@
 	alt_titles = list("Psychologist")
 	minimal_player_ingame_minutes = 960
 
-/datum/job/psychiatrist/equip(var/mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/job/psychiatrist/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
 	switch(H.backbag)
 		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(H), slot_back)

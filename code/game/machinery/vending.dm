@@ -113,7 +113,7 @@
 
 	return
 
-/obj/machinery/vending/proc/build_inventory(var/list/productlist,hidden=0,req_coin=0)
+/obj/machinery/vending/proc/build_inventory(list/productlist,hidden=0,req_coin=0)
 	for(var/typepath in productlist)
 		var/amount = productlist[typepath]
 		var/price = prices[typepath]
@@ -252,7 +252,7 @@
 	else
 		..()
 
-/obj/machinery/vending/default_deconstruction_crowbar(var/obj/item/O)
+/obj/machinery/vending/default_deconstruction_crowbar(obj/item/O)
 	var/list/all_products = product_records + hidden_records + coin_records
 	for(var/datum/data/vending_product/machine_content in all_products)
 		while(machine_content.amount !=0)
@@ -270,7 +270,7 @@
 				break
 	..()
 
-/obj/machinery/vending/proc/scan_card(var/obj/item/weapon/card/I)
+/obj/machinery/vending/proc/scan_card(obj/item/weapon/card/I)
 	if(!currently_vending) return
 	if (istype(I, /obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/C = I
@@ -329,13 +329,13 @@
 	else
 		usr << "\icon[src]<span class='warning'>Unable to access vendor account. Please record the machine ID and call CentComm Support.</span>"
 
-/obj/machinery/vending/attack_paw(mob/user as mob)
+/obj/machinery/vending/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/machinery/vending/attack_ai(mob/user as mob)
+/obj/machinery/vending/attack_ai(mob/user)
 	return attack_hand(user)
 
-/obj/machinery/vending/attack_hand(mob/user as mob)
+/obj/machinery/vending/attack_hand(mob/user)
 	if(stat & (BROKEN|NOPOWER))
 		return
 	user.set_machine(src)
@@ -558,7 +558,7 @@
 
 	src.updateUsrDialog()
 
-/obj/machinery/vending/proc/stock(var/datum/data/vending_product/R, var/mob/user)
+/obj/machinery/vending/proc/stock(datum/data/vending_product/R, mob/user)
 	if(src.panel_open)
 		user << "\blue You stock the [src] with \a [R.product_name]"
 		R.amount++
@@ -586,7 +586,7 @@
 
 	return
 
-/obj/machinery/vending/proc/speak(var/message)
+/obj/machinery/vending/proc/speak(message)
 	if(stat & NOPOWER)
 		return
 
@@ -654,15 +654,15 @@
 	src.visible_message("\red <b>[src] launches [throw_item.name] at [target.name]!</b>")
 	return 1
 
-/obj/machinery/vending/proc/isWireColorCut(var/wireColor)
+/obj/machinery/vending/proc/isWireColorCut(wireColor)
 	var/wireFlag = APCWireColorToFlag[wireColor]
 	return ((src.wires & wireFlag) == 0)
 
-/obj/machinery/vending/proc/isWireCut(var/wireIndex)
+/obj/machinery/vending/proc/isWireCut(wireIndex)
 	var/wireFlag = APCIndexToFlag[wireIndex]
 	return ((src.wires & wireFlag) == 0)
 
-/obj/machinery/vending/proc/cut(var/wireColor)
+/obj/machinery/vending/proc/cut(wireColor)
 	var/wireFlag = APCWireColorToFlag[wireColor]
 	var/wireIndex = APCWireColorToIndex[wireColor]
 	src.wires &= ~wireFlag
@@ -676,7 +676,7 @@
 				src.shoot_inventory = 1
 
 
-/obj/machinery/vending/proc/mend(var/wireColor)
+/obj/machinery/vending/proc/mend(wireColor)
 	var/wireFlag = APCWireColorToFlag[wireColor]
 	var/wireIndex = APCWireColorToIndex[wireColor] //not used in this function
 	src.wires |= wireFlag
@@ -687,7 +687,7 @@
 		if (WIRE_SHOOTINV)
 			src.shoot_inventory = 0
 
-/obj/machinery/vending/proc/pulse(var/wireColor)
+/obj/machinery/vending/proc/pulse(wireColor)
 	var/wireIndex = APCWireColorToIndex[wireColor]
 	switch(wireIndex)
 		if(WIRE_EXTEND)

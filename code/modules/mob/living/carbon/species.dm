@@ -83,7 +83,7 @@
 /datum/species/New()
 	unarmed = new unarmed_type()
 
-/datum/species/proc/create_organs(var/mob/living/carbon/human/H) //Handles creation of mob organs.
+/datum/species/proc/create_organs(mob/living/carbon/human/H) //Handles creation of mob organs.
 	//This is a basic humanoid limb setup.
 	H.organs = list()
 	H.organs_by_name["chest"] = new/datum/organ/external/chest()
@@ -119,10 +119,10 @@
 		for(var/datum/organ/internal/I in H.internal_organs)
 			I.mechanize()
 
-/datum/species/proc/handle_post_spawn(var/mob/living/carbon/human/H) //Handles anything not already covered by basic species assignment.
+/datum/species/proc/handle_post_spawn(mob/living/carbon/human/H) //Handles anything not already covered by basic species assignment.
 	return
 
-/datum/species/proc/handle_death(var/mob/living/carbon/human/H) //Handles any species-specific death events (such as dionaea nymph spawns).
+/datum/species/proc/handle_death(mob/living/carbon/human/H) //Handles any species-specific death events (such nymph spawns).
 	if(flags & IS_SYNTHETIC)
  //H.make_jittery(200) //S-s-s-s-sytem f-f-ai-i-i-i-i-lure-ure-ure-ure
 		H.h_style = ""
@@ -250,12 +250,12 @@
 		"gloves" = 'icons/mob/species/vox/gloves.dmi'
 		)
 
-/datum/species/vox/handle_post_spawn(var/mob/living/carbon/human/H)
+/datum/species/vox/handle_post_spawn(mob/living/carbon/human/H)
 
 	H.verbs += /mob/living/carbon/human/proc/leap
 	..()
 
-/datum/species/vox/armalis/handle_post_spawn(var/mob/living/carbon/human/H)
+/datum/species/vox/armalis/handle_post_spawn(mob/living/carbon/human/H)
 
 	H.verbs += /mob/living/carbon/human/proc/gut
 	..()
@@ -332,12 +332,12 @@
 
 	reagent_tag = IS_DIONA
 
-/datum/species/diona/handle_post_spawn(var/mob/living/carbon/human/H)
+/datum/species/diona/handle_post_spawn(mob/living/carbon/human/H)
 	H.gender = NEUTER
 
 	return ..()
 
-/datum/species/diona/handle_death(var/mob/living/carbon/human/H)
+/datum/species/diona/handle_death(mob/living/carbon/human/H)
 
 	var/mob/living/carbon/monkey/diona/S = new(get_turf(H))
 
@@ -393,7 +393,7 @@
 
 	blood_color = "#BCBCBC"
 
-/datum/species/abductor/handle_post_spawn(var/mob/living/carbon/human/H)
+/datum/species/abductor/handle_post_spawn(mob/living/carbon/human/H)
 	H.gender = NEUTER
 
 	return ..()
@@ -407,7 +407,7 @@
 
 	flags = NO_BREATHE | NO_BLOOD | NO_SCAN | VIRUS_IMMUNE
 
-/datum/species/skeleton/handle_post_spawn(var/mob/living/carbon/human/H)
+/datum/species/skeleton/handle_post_spawn(mob/living/carbon/human/H)
 	H.gender = NEUTER
 
 	return ..()

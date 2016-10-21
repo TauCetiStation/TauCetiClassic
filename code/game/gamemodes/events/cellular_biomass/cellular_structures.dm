@@ -24,7 +24,7 @@
 	..()
 	return QDEL_HINT_QUEUE
 
-/obj/structure/cellular_biomass/proc/set_master(var/obj/effect/cellular_biomass_controller/newmaster)
+/obj/structure/cellular_biomass/proc/set_master(obj/effect/cellular_biomass_controller/newmaster)
 	master = newmaster
 	return
 
@@ -33,7 +33,7 @@
 		qdel(src)
 	return
 
-/obj/structure/cellular_biomass/bullet_act(var/obj/item/projectile/Proj)
+/obj/structure/cellular_biomass/bullet_act(obj/item/projectile/Proj)
 	health -= Proj.damage
 	..()
 	healthcheck()
@@ -65,7 +65,7 @@
 /obj/structure/cellular_biomass/attack_alien()
 	return attack_hand()
 
-/obj/structure/cellular_biomass/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/structure/cellular_biomass/attackby(obj/item/weapon/W, mob/user)
 	..()
 	health -= W.force
 	playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)

@@ -15,7 +15,7 @@
 /obj/item/weapon/gun/projectile/revolver/process_chamber()
 	return ..(0, 1)
 
-/obj/item/weapon/gun/projectile/revolver/attackby(var/obj/item/A as obj, mob/user as mob)
+/obj/item/weapon/gun/projectile/revolver/attackby(obj/item/A, mob/user)
 	var/num_loaded = magazine.attackby(A, user, 1)
 	if(num_loaded)
 		user << "<span class='notice'>You load [num_loaded] shell\s into \the [src].</span>"
@@ -23,7 +23,7 @@
 		update_icon()
 		chamber_round()
 
-/obj/item/weapon/gun/projectile/revolver/attack_self(mob/living/user as mob)
+/obj/item/weapon/gun/projectile/revolver/attack_self(mob/living/user)
 	var/num_unloaded = 0
 	while (get_ammo() > 0)
 		var/obj/item/ammo_casing/CB
@@ -38,7 +38,7 @@
 	else
 		user << "<span class='notice'>[src] is empty.</span>"
 
-/obj/item/weapon/gun/projectile/revolver/get_ammo(var/countchambered = 0, var/countempties = 1)
+/obj/item/weapon/gun/projectile/revolver/get_ammo(countchambered = 0, countempties = 1)
 	var/boolets = 0 //mature var names for mature people
 	if (chambered && countchambered)
 		boolets++
@@ -58,7 +58,7 @@
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rev38
 
 
-/obj/item/weapon/gun/projectile/revolver/detective/special_check(var/mob/living/carbon/human/M)
+/obj/item/weapon/gun/projectile/revolver/detective/special_check(mob/living/carbon/human/M)
 	if(magazine.caliber == initial(magazine.caliber))
 		return 1
 	if(prob(70 - (magazine.ammo_count() * 10)))	//minimum probability of 10, maximum of 60
@@ -82,7 +82,7 @@
 		M << "You name the gun [input]. Say hello to your new friend."
 		return 1
 
-/obj/item/weapon/gun/projectile/revolver/detective/attackby(var/obj/item/A as obj, mob/user as mob)
+/obj/item/weapon/gun/projectile/revolver/detective/attackby(obj/item/A, mob/user)
 	..()
 	if(istype(A, /obj/item/weapon/screwdriver))
 		if(magazine.caliber == "38")
@@ -140,7 +140,7 @@
 		chamber_round()
 	spun = 1
 
-/obj/item/weapon/gun/projectile/revolver/russian/attackby(var/obj/item/A as obj, mob/user as mob)
+/obj/item/weapon/gun/projectile/revolver/russian/attackby(obj/item/A, mob/user)
 	var/num_loaded = ..()
 	if(num_loaded)
 		user.visible_message("<span class='warning'>[user] loads a single bullet into the revolver and spins the chamber.</span>", "<span class='warning'>You load a single bullet into the chamber and spin it.</span>")
@@ -152,7 +152,7 @@
 	A.update_icon()
 	return
 
-/obj/item/weapon/gun/projectile/revolver/russian/attack_self(mob/user as mob)
+/obj/item/weapon/gun/projectile/revolver/russian/attack_self(mob/user)
 	if(!spun && get_ammo(0,0))
 		user.visible_message("<span class='warning'>[user] spins the chamber of the revolver.</span>", "<span class='warning'>You spin the revolver's chamber.</span>")
 		Spin()
@@ -170,14 +170,14 @@
 		else
 			user << "<span class='notice'>[src] is empty.</span>"
 
-/obj/item/weapon/gun/projectile/revolver/russian/afterattack(atom/target as mob|obj|turf, mob/living/user as mob|obj, flag, params)
+/obj/item/weapon/gun/projectile/revolver/russian/afterattack(atom/target, mob/living/user, flag, params)
 	if(!spun && get_ammo(0,0))
 		user.visible_message("<span class='warning'>[user] spins the chamber of the revolver.</span>", "<span class='warning'>You spin the revolver's chamber.</span>")
 		Spin()
 	..()
 	spun = 0
 
-/obj/item/weapon/gun/projectile/revolver/russian/attack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj)
+/obj/item/weapon/gun/projectile/revolver/russian/attack(atom/target, mob/living/user)
 	if(!spun && get_ammo(0,0))
 		user.visible_message("<span class='warning'>[user] spins the chamber of the revolver.</span>", "<span class='warning'>You spin the revolver's chamber.</span>")
 		Spin()
@@ -212,7 +212,7 @@
 /obj/item/weapon/gun/projectile/revolver/peacemaker/isHandgun()
 	return 1
 
-/obj/item/weapon/gun/projectile/revolver/peacemaker/attack_self(mob/living/user as mob)
+/obj/item/weapon/gun/projectile/revolver/peacemaker/attack_self(mob/living/user)
 	var/num_unloaded = 0
 	if (get_ammo() > 0)
 		var/obj/item/ammo_casing/CB

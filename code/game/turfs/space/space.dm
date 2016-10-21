@@ -23,10 +23,10 @@
 		return
 	set_light(0)
 
-/turf/space/attack_paw(mob/user as mob)
+/turf/space/attack_paw(mob/user)
 	return src.attack_hand(user)
 
-/turf/space/attackby(obj/item/C as obj, mob/user as mob)
+/turf/space/attackby(obj/item/C, mob/user)
 
 	if (istype(C, /obj/item/stack/rods))
 		var/obj/item/stack/rods/R = C
@@ -144,7 +144,7 @@
 			sleep(0)//Let a diagonal move finish, if necessary
 			A.newtonian_move(A.inertia_dir)
 
-/turf/space/proc/Sandbox_Spacemove(atom/movable/A as mob|obj)
+/turf/space/proc/Sandbox_Spacemove(atom/movable/A)
 	var/cur_x
 	var/cur_y
 	var/next_x
@@ -253,7 +253,7 @@
 					A.loc.Entered(A)
 	return
 
-/turf/space/ChangeTurf(var/turf/N, var/force_lighting_update = 0)
+/turf/space/ChangeTurf(turf/N, force_lighting_update = 0)
 	return ..(N, 1)
 
 /turf/space/singularity_act()

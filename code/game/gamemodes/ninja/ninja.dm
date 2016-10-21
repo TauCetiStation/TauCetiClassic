@@ -108,7 +108,7 @@
 		finished = 1
 		return 1
 
-/datum/game_mode/ninja/proc/forge_ninja_objectives(var/datum/mind/ninja)
+/datum/game_mode/ninja/proc/forge_ninja_objectives(datum/mind/ninja)
 	if (config.objectives_disabled)
 		return
 

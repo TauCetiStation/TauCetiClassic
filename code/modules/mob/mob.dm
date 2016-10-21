@@ -80,7 +80,7 @@
 // self_message (optional) is what the src mob sees  e.g. "You do something!"
 // blind_message (optional) is what blind people will hear e.g. "You hear something!"
 
-/mob/visible_message(var/message, var/self_message, var/blind_message)
+/mob/visible_message(message, self_message, blind_message)
 	for(var/mob/M in viewers(src))
 		var/msg = message
 		if(self_message && M == src)
@@ -91,7 +91,7 @@
 // Use for objects performing visible actions
 // message is output to anyone who can see, e.g. "The [src] does something!"
 // blind_message (optional) is what blind people will hear e.g. "You hear something!"
-/atom/proc/visible_message(var/message, var/blind_message)
+/atom/proc/visible_message(message, blind_message)
 	for(var/mob/M in viewers(src))
 		M.show_message(message, 1, blind_message, 2)
 
@@ -130,7 +130,7 @@
 	return
 
 
-/mob/proc/show_inv(mob/user as mob)
+/mob/proc/show_inv(mob/user)
 	user.set_machine(src)
 	var/dat = {"
 	<B><HR><FONT size=3>[name]</FONT></B>
@@ -148,7 +148,7 @@
 	onclose(user, "mob[name]")
 	return
 
-/mob/proc/ret_grab(obj/effect/list_container/mobl/L as obj, flag)
+/mob/proc/ret_grab(obj/effect/list_container/mobl/L, flag)
 	if(!(istype(l_hand, /obj/item/weapon/grab) || istype(r_hand, /obj/item/weapon/grab)))
 		if(!L)
 			return null
@@ -235,7 +235,7 @@
 	else
 		src << "The game appears to have misplaced your mind datum, so we can't show you your notes."
 
-/mob/proc/store_memory(msg as message, popup, sane = 1)
+/mob/proc/store_memory(msg, popup, sane = 1)
 	msg = copytext(msg, 1, MAX_MESSAGE_LEN)
 
 	if(sane)
@@ -515,7 +515,7 @@ currently only humans get dizzy
 value of dizziness ranges from 0 to 1000
 below 100 is not dizzy
 */
-/mob/proc/make_dizzy(var/amount)
+/mob/proc/make_dizzy(amount)
 	if(!istype(src, /mob/living/carbon/human)) // for the moment, only humans get dizzy
 		return
 
@@ -548,7 +548,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 // jitteriness - copy+paste of dizziness
 
-/mob/proc/make_jittery(var/amount)
+/mob/proc/make_jittery(amount)
 	if(!istype(src, /mob/living/carbon/human)) // for the moment, only humans get dizzy
 		return
 
@@ -643,7 +643,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 				if("holdervar")
 					statpanel(S.panel,"[S.holder_var_type] [S.holder_var_amount]",S)
 
-/mob/proc/add_stings_to_statpanel(var/list/stings)
+/mob/proc/add_stings_to_statpanel(list/stings)
 	for(var/obj/effect/proc_holder/changeling/S in stings)
 		if(S.chemical_cost >=0 && S.can_be_used_by(src))
 			statpanel("[S.panel]",((S.chemical_cost > 0) ? "[S.chemical_cost]" : ""),S)
@@ -731,7 +731,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 	return canmove
 
 
-/mob/proc/facedir(var/ndir)
+/mob/proc/facedir(ndir)
 	if(!canface())
 		return 0
 	dir = ndir
@@ -844,7 +844,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 /mob/proc/flash_weak_pain()
 	flick("weak_pain",pain)
 
-/mob/proc/get_visible_implants(var/class = 0)
+/mob/proc/get_visible_implants(class = 0)
 	var/list/visible_implants = list()
 	for(var/obj/item/O in embedded)
 		if(O.w_class > class)
@@ -942,7 +942,7 @@ mob/proc/yank_out_object()
 					return G
 				break
 
-/mob/proc/AddSpell(var/obj/effect/proc_holder/spell/spell)
+/mob/proc/AddSpell(obj/effect/proc_holder/spell/spell)
 	spell_list += spell
 	mind.spell_list += spell	//Connect spell to the mind for transfering action buttons between mobs
 	if(!spell.action)

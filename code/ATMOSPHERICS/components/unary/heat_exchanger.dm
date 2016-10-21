@@ -64,7 +64,7 @@
 
 	return 1
 
-/obj/machinery/atmospherics/unary/heat_exchanger/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+/obj/machinery/atmospherics/unary/heat_exchanger/attackby(obj/item/weapon/W, mob/user)
 	if (!istype(W, /obj/item/weapon/wrench))
 		return ..()
 	var/turf/T = src.loc

@@ -15,13 +15,13 @@ var/global/area/mine_sci_curr_location = null
 	icon_state = "shuttle"
 	circuit = /obj/item/weapon/circuitboard/mine_sci_shuttle
 
-/obj/machinery/computer/mine_sci_shuttle/attack_ai(mob/user as mob)
+/obj/machinery/computer/mine_sci_shuttle/attack_ai(mob/user)
 	return attack_hand(user)
 
-/obj/machinery/computer/mine_sci_shuttle/attack_paw(mob/user as mob)
+/obj/machinery/computer/mine_sci_shuttle/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/machinery/computer/mine_sci_shuttle/attack_hand(mob/user as mob)
+/obj/machinery/computer/mine_sci_shuttle/attack_hand(mob/user)
 	if(..())
 		return
 	user.set_machine(src)
@@ -91,7 +91,7 @@ var/global/area/mine_sci_curr_location = null
 		autopilot = null
 	return ..()
 
-/obj/machinery/computer/mine_sci_shuttle/flight_comp/proc/mine_sci_move_to(area/destination as area)
+/obj/machinery/computer/mine_sci_shuttle/flight_comp/proc/mine_sci_move_to(area/destination)
 	if(moving)
 		return FALSE
 	if((lastMove + MINE_SCI_SHUTTLE_COOLDOWN) > world.time)
@@ -105,7 +105,7 @@ var/global/area/mine_sci_curr_location = null
 	addtimer(src, "mine_sci_do_move", MINE_SCI_SHUTTLE_COOLDOWN, TRUE, dest_location)
 	return TRUE
 
-/obj/machinery/computer/mine_sci_shuttle/flight_comp/proc/mine_sci_do_move(area/destination as area)
+/obj/machinery/computer/mine_sci_shuttle/flight_comp/proc/mine_sci_do_move(area/destination)
 	if(moving)
 		var/list/dstturfs = list()
 		var/throwx = world.maxx

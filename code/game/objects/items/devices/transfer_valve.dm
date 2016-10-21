@@ -11,7 +11,7 @@
 	var/valve_open = 0
 	var/toggle = 1
 
-/obj/item/device/transfer_valve/proc/process_activation(var/obj/item/device/D)
+/obj/item/device/transfer_valve/proc/process_activation(obj/item/device/D)
 
 /obj/item/device/transfer_valve/IsAssemblyHolder()
 	return 1
@@ -59,20 +59,20 @@
 	return
 
 
-/obj/item/device/transfer_valve/HasProximity(atom/movable/AM as mob|obj)
+/obj/item/device/transfer_valve/HasProximity(atom/movable/AM)
 	if(!attached_device)	return
 	attached_device.HasProximity(AM)
 	return
 
-/obj/item/device/transfer_valve/hear_talk(mob/living/M as mob, msg)
+/obj/item/device/transfer_valve/hear_talk(mob/living/M, msg)
 	if(!attached_device)	return
 	attached_device.hear_talk(M,msg)
 	return
 
-/obj/item/device/transfer_valve/attack_self(mob/user as mob)
+/obj/item/device/transfer_valve/attack_self(mob/user)
 	ui_interact(user)
 
-/obj/item/device/transfer_valve/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
+/obj/item/device/transfer_valve/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
 
 	// this is the data which will be sent to the ui
 	var/data[0]
@@ -125,7 +125,7 @@
 	src.add_fingerprint(usr)
 	return 1 // Returning 1 sends an update to attached UIs
 
-/obj/item/device/transfer_valve/process_activation(var/obj/item/device/D)
+/obj/item/device/transfer_valve/process_activation(obj/item/device/D)
 	if(toggle)
 		toggle = 0
 		toggle_valve()

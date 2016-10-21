@@ -127,7 +127,7 @@
 	else
 		src.machine = null
 
-/mob/proc/set_machine(var/obj/O)
+/mob/proc/set_machine(obj/O)
 	if(src.machine)
 		unset_machine(src.machine)
 	src.machine = O
@@ -147,7 +147,7 @@
 	return
 
 
-/obj/proc/hear_talk(mob/M as mob, text)
+/obj/proc/hear_talk(mob/M, text)
 	if(talking_atom)
 		talking_atom.catchMessage(text, M)
 /*
@@ -158,7 +158,7 @@
 		*/
 	return
 
-/obj/proc/tesla_act(var/power)
+/obj/proc/tesla_act(power)
 	being_shocked = 1
 	var/power_bounced = power / 2
 	tesla_zap(src, 3, power_bounced)

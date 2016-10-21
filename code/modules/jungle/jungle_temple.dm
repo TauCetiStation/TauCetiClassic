@@ -294,7 +294,7 @@
 			var/turf/T = get_turf(src)
 			T.desc = pick("There is a faint sheen of moisture over the top.","It looks a little unstable.","Something doesn't seem right.")
 
-/obj/effect/step_trigger/trap/Trigger(var/atom/A)
+/obj/effect/step_trigger/trap/Trigger(atom/A)
 	var/mob/living/M = A
 	if(!istype(M))
 		return

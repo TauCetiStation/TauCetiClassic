@@ -32,7 +32,7 @@
 		new /obj/item/stack/sheet/metal(src.loc)
 		qdel(src)
 
-/obj/structure/stool/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/structure/stool/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/wrench) && !(flags&NODECONSTRUCT))
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		new /obj/item/stack/sheet/metal(src.loc)
@@ -74,7 +74,7 @@
 	w_class = 5.0
 	var/obj/structure/stool/origin = null
 
-/obj/item/weapon/stool/attack_self(mob/user as mob)
+/obj/item/weapon/stool/attack_self(mob/user)
 	..()
 	if(!user) return
 	user.drop_from_inventory(src.origin)
@@ -84,7 +84,7 @@
 /obj/item/weapon/stool/dropped()
 	attack_self(usr)
 
-/obj/item/weapon/stool/attack(mob/M as mob, mob/user as mob)
+/obj/item/weapon/stool/attack(mob/M, mob/user)
 	if (prob(5) && istype(M,/mob/living))
 		user.visible_message("\red [user] breaks [src] over [M]'s back!.")
 		user.remove_from_mob(src)

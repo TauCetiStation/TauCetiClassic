@@ -17,7 +17,7 @@
 /*----------------------------------------
 This is modified grab mechanic for facehugger
 ----------------------------------------*/
-/mob/living/carbon/human/attack_facehugger(mob/living/carbon/alien/facehugger/FH as mob)
+/mob/living/carbon/human/attack_facehugger(mob/living/carbon/alien/facehugger/FH)
 	switch(FH.a_intent)
 		if("grab")
 			if(istype(src, /mob/living/carbon/human/machine))
@@ -39,7 +39,7 @@ This is modified grab mechanic for facehugger
 			else
 				FH << "\red looks dead."
 
-/mob/living/carbon/monkey/attack_facehugger(mob/living/carbon/alien/facehugger/FH as mob)
+/mob/living/carbon/monkey/attack_facehugger(mob/living/carbon/alien/facehugger/FH)
 	switch(FH.a_intent)
 		if("grab")
 			if(src.stat != DEAD)
@@ -58,7 +58,7 @@ This is modified grab mechanic for facehugger
 			else
 				FH << "\red looks dead."
 
-/mob/living/simple_animal/corgi/attack_facehugger(mob/living/carbon/alien/facehugger/FH as mob)
+/mob/living/simple_animal/corgi/attack_facehugger(mob/living/carbon/alien/facehugger/FH)
 	switch(FH.a_intent)
 		if("grab")
 			if(src.stat != DEAD)
@@ -82,7 +82,7 @@ This is called when facehugger has grabbed(left click) and then
  used leap from hud action menu(the one that has left and right hand for anyone else).
 ----------------------------------------*/
 
-/mob/living/carbon/alien/facehugger/proc/leap_at_face(mob/living/L as mob)
+/mob/living/carbon/alien/facehugger/proc/leap_at_face(mob/living/L)
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
 		var/obj/item/clothing/mask/facehugger/FH = new(loc)
@@ -289,7 +289,7 @@ This is emryo growth procs
 			RemoveInfectionImages(affected_mob)
 	return ..()
 
-/obj/item/alien_embryo/proc/show_message(var/message, var/m_type)
+/obj/item/alien_embryo/proc/show_message(message, m_type)
 	for(var/mob/living/M in contents)
 		M.show_message(message,m_type)
 
@@ -411,7 +411,7 @@ This is facehugger Attach procs
 		FH.reset_view()
 		qdel(src)
 
-/obj/item/clothing/mask/facehugger/proc/show_message(var/message, var/m_type)
+/obj/item/clothing/mask/facehugger/proc/show_message(message, m_type)
 	if(current_hugger)
 		var/mob/living/carbon/alien/facehugger/FH = current_hugger
 		FH.show_message(message,m_type)
@@ -442,7 +442,7 @@ This is facehugger Attach procs
 		Die()
 	return
 
-/obj/item/clothing/mask/facehugger/proc/Attach(M as mob)
+/obj/item/clothing/mask/facehugger/proc/Attach(M)
 	if( (!iscorgi(M) && !iscarbon(M)) || isalien(M))
 		return
 
@@ -467,7 +467,7 @@ This is facehugger Attach procs
 
 	return
 
-/obj/item/clothing/mask/facehugger/proc/Impregnate(mob/living/target as mob, mob/living/FH as mob)
+/obj/item/clothing/mask/facehugger/proc/Impregnate(mob/living/target, mob/living/FH)
 	if(!target || target.wear_mask != src || target.stat == DEAD) //was taken off or something
 		return
 

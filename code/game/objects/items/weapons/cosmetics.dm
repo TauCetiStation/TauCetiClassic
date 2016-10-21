@@ -31,7 +31,7 @@
 	name = "[colour] lipstick"
 
 
-/obj/item/weapon/lipstick/attack_self(mob/user as mob)
+/obj/item/weapon/lipstick/attack_self(mob/user)
 	user << "<span class='notice'>You twist \the [src] [open ? "closed" : "open"].</span>"
 	open = !open
 	if(open)
@@ -39,7 +39,7 @@
 	else
 		icon_state = initial(icon_state)
 
-/obj/item/weapon/lipstick/attack(mob/M as mob, mob/user as mob)
+/obj/item/weapon/lipstick/attack(mob/M, mob/user)
 	if(!open)	return
 
 	if(!istype(M, /mob))	return
@@ -68,7 +68,7 @@
 		user << "<span class='notice'>Where are the lips on that?</span>"
 
 //you can wipe off lipstick with paper!
-/obj/item/weapon/paper/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+/obj/item/weapon/paper/attack(mob/living/carbon/M, mob/living/carbon/user)
 	if(user.zone_sel.selecting == "mouth")
 		if(!istype(M, /mob))	return
 
@@ -99,7 +99,7 @@
 	w_class = 1
 
 
-/obj/item/weapon/razor/proc/shave(mob/living/carbon/human/H, location = "mouth", var/mob/living/carbon/human/AH = null)
+/obj/item/weapon/razor/proc/shave(mob/living/carbon/human/H, location = "mouth", mob/living/carbon/human/AH = null)
 	if(location == "mouth")
 		H.f_style = "Shaved"
 	else

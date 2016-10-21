@@ -10,7 +10,7 @@
 	else
 		src << "\blue You will no longer examine things you click on."
 
-/mob/dead/observer/DblClickOn(var/atom/A, var/params)
+/mob/dead/observer/DblClickOn(atom/A, params)
 	if(client.buildmode)
 		build_click(src, client.buildmode, params, A)
 		return
@@ -27,7 +27,7 @@
 	else
 		loc = get_turf(A)
 
-/mob/dead/observer/ClickOn(var/atom/A, var/params)
+/mob/dead/observer/ClickOn(atom/A, params)
 	if(client.buildmode)
 		build_click(src, client.buildmode, params, A)
 		return
@@ -38,7 +38,7 @@
 	A.attack_ghost(src)
 
 // Oh by the way this didn't work with old click code which is why clicking shit didn't spam you
-/atom/proc/attack_ghost(mob/dead/observer/user as mob)
+/atom/proc/attack_ghost(mob/dead/observer/user)
 	if(user.client && user.client.inquisitive_ghost)
 		examine()
 	return
@@ -47,23 +47,23 @@
 // And here are some good things for free:
 // Now you can click through portals, wormholes, gateways, and teleporters while observing. -Sayu
 
-/obj/machinery/teleport/hub/attack_ghost(mob/user as mob)
+/obj/machinery/teleport/hub/attack_ghost(mob/user)
 	var/atom/l = loc
 	var/obj/machinery/computer/teleporter/com = locate(/obj/machinery/computer/teleporter, locate(l.x - 2, l.y, l.z))
 	if(com.locked)
 		user.loc = get_turf(com.locked)
 
-/obj/effect/portal/attack_ghost(mob/user as mob)
+/obj/effect/portal/attack_ghost(mob/user)
 	if(target)
 		user.loc = get_turf(target)
 
-/obj/machinery/gateway/centerstation/attack_ghost(mob/user as mob)
+/obj/machinery/gateway/centerstation/attack_ghost(mob/user)
 	if(awaygate)
 		user.loc = awaygate.loc
 	else
 		user << "[src] has no destination."
 
-/obj/machinery/gateway/centeraway/attack_ghost(mob/user as mob)
+/obj/machinery/gateway/centeraway/attack_ghost(mob/user)
 	if(stationgate)
 		user.loc = stationgate.loc
 	else
@@ -75,7 +75,7 @@
 // but I'm leaving it here anyway
 // commented out, of course.
 /*
-/atom/proc/attack_admin(mob/user as mob)
+/atom/proc/attack_admin(mob/user)
 	if(!user || !user.client || !user.client.holder)
 		return
 	attack_hand(user)

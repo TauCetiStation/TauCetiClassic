@@ -25,7 +25,7 @@
 	item_state = "bucket"
 	armor = list(melee = 20, bullet = 5, laser = 5,energy = 3, bomb = 5, bio = 0, rad = 0)
 
-/obj/item/weapon/handcuffs/cable/attackby(var/obj/item/I, mob/user as mob)
+/obj/item/weapon/handcuffs/cable/attackby(obj/item/I, mob/user)
 	..()
 	if(istype(I, /obj/item/stack/rods))
 		var/obj/item/stack/rods/R = I
@@ -82,7 +82,7 @@
 	add_fingerprint(user)
 
 
-/obj/item/weapon/melee/cattleprod/proc/deductcharge(var/chrgdeductamt)
+/obj/item/weapon/melee/cattleprod/proc/deductcharge(chrgdeductamt)
 	if(bcell)
 		if(bcell.charge < (hitcost+chrgdeductamt)) // If after the deduction the baton doesn't have enough charge for a stun hit it turns off.
 			status = 0
@@ -195,7 +195,7 @@
 		attack_verb = list("hit", "bludgeoned", "whacked", "bonked")
 
 
-/obj/item/weapon/wirerod/attackby(var/obj/item/I, mob/user as mob)
+/obj/item/weapon/wirerod/attackby(obj/item/I, mob/user)
 	..()
 	if(istype(I, /obj/item/weapon/shard))
 		var/obj/item/weapon/twohanded/spear/S = new /obj/item/weapon/twohanded/spear

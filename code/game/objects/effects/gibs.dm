@@ -1,13 +1,13 @@
-/proc/gibs(atom/location, var/list/viruses, var/datum/dna/MobDNA)		//CARN MARKER
+/proc/gibs(atom/location, list/viruses, datum/dna/MobDNA)		//CARN MARKER
 	new /obj/effect/gibspawner/generic(get_turf(location),viruses,MobDNA)
 
-/proc/hgibs(atom/location, var/list/viruses, var/datum/dna/MobDNA, var/fleshcolor, var/bloodcolor)
+/proc/hgibs(atom/location, list/viruses, datum/dna/MobDNA, fleshcolor, bloodcolor)
 	new /obj/effect/gibspawner/human(get_turf(location),viruses,MobDNA,fleshcolor,bloodcolor)
 
-/proc/xgibs(atom/location, var/list/viruses)
+/proc/xgibs(atom/location, list/viruses)
 	new /obj/effect/gibspawner/xeno(get_turf(location),viruses)
 
-/proc/robogibs(atom/location, var/list/viruses)
+/proc/robogibs(atom/location, list/viruses)
 	new /obj/effect/gibspawner/robot(get_turf(location),viruses)
 
 /obj/effect/gibspawner
@@ -28,7 +28,7 @@
 		if(istype(loc,/turf)) //basically if a badmin spawns it
 			Gib(loc,viruses,MobDNA)
 
-	proc/Gib(atom/location, var/list/viruses = list(), var/datum/dna/MobDNA = null)
+	proc/Gib(atom/location, list/viruses = list(), datum/dna/MobDNA = null)
 		if(gibtypes.len != gibamounts.len || gibamounts.len != gibdirections.len)
 			world << "\red Gib list length mismatch!"
 			return

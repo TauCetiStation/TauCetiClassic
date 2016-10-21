@@ -249,7 +249,7 @@
 	origin_tech = "programming=1"
 
 
-/obj/item/weapon/circuitboard/computer/cargo/attackby(obj/item/I as obj, mob/user as mob)
+/obj/item/weapon/circuitboard/computer/cargo/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/card/emag) && !hacked)
 		user << "\blue Special supplies unlocked."
 		hacked = TRUE
@@ -276,7 +276,7 @@
 				user << "DERP! BUG! Report this (And what you were doing to cause it) to Agouri"
 	return
 
-/obj/item/weapon/circuitboard/libraryconsole/attackby(obj/item/I as obj, mob/user as mob)
+/obj/item/weapon/circuitboard/libraryconsole/attackby(obj/item/I, mob/user)
 	if(istype(I,/obj/item/weapon/screwdriver))
 		if(build_path == /obj/machinery/computer/libraryconsole/bookmanagement)
 			name = "circuit board (Library Visitor Console)"
@@ -288,7 +288,7 @@
 			user << "<span class='notice'>Access protocols successfully updated.</span>"
 	return
 
-/obj/item/weapon/circuitboard/security/attackby(obj/item/I as obj, mob/user as mob)
+/obj/item/weapon/circuitboard/security/attackby(obj/item/I, mob/user)
 	if(istype(I,/obj/item/weapon/card/emag))
 		if(emagged)
 			user << "Circuit lock is already removed."
@@ -322,7 +322,7 @@
 		network = tempnetwork
 	return
 
-/obj/item/weapon/circuitboard/rdconsole/attackby(obj/item/I as obj, mob/user as mob)
+/obj/item/weapon/circuitboard/rdconsole/attackby(obj/item/I, mob/user)
 	if(istype(I,/obj/item/weapon/screwdriver))
 		user.visible_message("\blue \the [user] adjusts the jumper on the [src]'s access protocol pins.", "\blue You adjust the jumper on the access protocol pins.")
 		switch(src.build_path)
@@ -352,7 +352,7 @@
 			user << "\blue Access protocols set to default."*/
 	return
 
-/obj/structure/computerframe/attackby(obj/item/P as obj, mob/user as mob)
+/obj/structure/computerframe/attackby(obj/item/P, mob/user)
 	switch(state)
 		if(0)
 			if(istype(P, /obj/item/weapon/wrench))

@@ -1,4 +1,4 @@
-/mob/living/silicon/say_quote(var/text)
+/mob/living/silicon/say_quote(text)
 	var/ending = copytext(text, length(text))
 
 	if (ending == "?")
@@ -12,7 +12,7 @@
 #define IS_ROBOT 2
 #define IS_PAI 3
 
-/mob/living/silicon/say_understands(var/other,var/datum/language/speaking = null)
+/mob/living/silicon/say_understands(other,datum/language/speaking = null)
 	//These only pertain to common. Languages are handled by mob/say_understands()
 	if (!speaking)
 		if (istype(other, /mob/living/carbon))
@@ -151,7 +151,7 @@
 	return ..(html_decode(message),speaking,verb)
 
 //For holopads only. Usable by AI.
-/mob/living/silicon/ai/proc/holopad_talk(var/message)
+/mob/living/silicon/ai/proc/holopad_talk(message)
 
 	log_say("[key_name(src)] : [message]")
 
@@ -184,7 +184,7 @@
 		return
 	return 1
 
-/mob/living/proc/robot_talk(var/message)
+/mob/living/proc/robot_talk(message)
 
 	log_say("[key_name(src)] : [message]")
 

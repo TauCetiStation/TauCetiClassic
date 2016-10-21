@@ -19,7 +19,7 @@
 	..()
 	not_bloody_state = icon_state
 
-/obj/item/weapon/transparant/attackby(var/obj/item/I, mob/user as mob)
+/obj/item/weapon/transparant/attackby(obj/item/I, mob/user)
 	..()
 	if(icon_state!="blank")
 		user << "<span class='notice'>Something allready written on this sign.</span>"
@@ -47,11 +47,11 @@
 		qdel(src)
 		user << "<span class='notice'>You painted your blank sign as [W.name].</span>"
 
-/obj/item/weapon/transparant/attack_self(mob/user as mob)
+/obj/item/weapon/transparant/attack_self(mob/user)
 	for(var/mob/O in viewers(user, null))
 		O.show_message(text("[] shows you: \icon[] [src.blood_DNA ? "bloody " : ""][]: it says: []", user, src, src.name, src.desc), 1)
 
-/obj/item/weapon/transparant/attack(mob/M as mob, mob/user as mob)
+/obj/item/weapon/transparant/attack(mob/M, mob/user)
 	..()
 	M.show_message("<span class='attack'>\The <EM>[src.blood_DNA ? "bloody " : ""]\icon[src][src.name]</EM> says: <EM>[src.desc]</EM></span>", 2)
 
@@ -103,7 +103,7 @@
 
 
 
-/obj/item/stack/sheet/cardboard/attackby(var/obj/item/I, mob/user as mob)
+/obj/item/stack/sheet/cardboard/attackby(obj/item/I, mob/user)
 	..()
 	if(istype(I, /obj/item/stack/rods))
 		var/obj/item/stack/rods/R = I

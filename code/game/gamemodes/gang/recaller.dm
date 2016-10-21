@@ -270,7 +270,7 @@
 	attack_self(usr)
 
 
-/obj/item/device/gangtool/proc/ping_gang(var/mob/user)
+/obj/item/device/gangtool/proc/ping_gang(mob/user)
 	if(!user)
 		return
 	var/message = stripped_input(user,"Discreetly send a gang-wide message.","Send Message") as null|text
@@ -294,7 +294,7 @@
 		log_game("[key_name(user)] Messaged [gang_name(gang)] Gang ([gang]): [sanitize(message)].")
 
 
-/obj/item/device/gangtool/proc/register_device(var/mob/user)
+/obj/item/device/gangtool/proc/register_device(mob/user)
 	if(!(user.mind in (ticker.mode.A_bosses|ticker.mode.B_bosses)))
 		var/gang_bosses = ((gang == "A")? ticker.mode.A_bosses.len : ticker.mode.B_bosses.len)
 		if(gang_bosses >= 3)

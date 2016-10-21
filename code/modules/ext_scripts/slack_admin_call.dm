@@ -1,4 +1,4 @@
-proc/admin_call_cooldown(var/value1)
+proc/admin_call_cooldown(value1)
 	ac_nameholder.Add(value1)
 	spawn(3000)
 		ac_nameholder.Remove(value1)
@@ -40,11 +40,11 @@ proc/admin_call_cooldown(var/value1)
 		return
 	//clean the input msg
 	if(!msg)	return
-	
+
 	var/check_answer = alert(src, "Are you sure?","Yes","No")
 	if(check_answer == "No")
 		return
-		
+
 	msg = sanitize(copytext(msg,1,140))
 
 	if(!msg)	return

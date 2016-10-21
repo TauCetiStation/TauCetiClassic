@@ -19,7 +19,7 @@
 
 	var/camera_cache = null
 
-/obj/machinery/computer/security/check_eye(var/mob/user as mob)
+/obj/machinery/computer/security/check_eye(mob/user)
 	if (user.stat || ((get_dist(user, src) > 1 || !( user.canmove ) || user.blinded) && !istype(user, /mob/living/silicon))) //user can't see - not sure why canmove is here.
 		return null
 	if ( !current || !current.can_use() ) //camera doesn't work
@@ -100,7 +100,7 @@
 		usr.check_eye(current)
 
 
-/obj/machinery/computer/security/attack_hand(var/mob/user as mob)
+/obj/machinery/computer/security/attack_hand(mob/user)
 	if (src.z > ZLEVEL_EMPTY)
 		user << "\red <b>Unable to establish a connection</b>: \black You're too far away from the station!"
 		return
@@ -116,13 +116,13 @@
 
 	ui_interact(user)
 
-/obj/machinery/computer/security/proc/can_access_camera(var/obj/machinery/camera/C)
+/obj/machinery/computer/security/proc/can_access_camera(obj/machinery/camera/C)
 	var/list/shared_networks = src.network & C.network
 	if(shared_networks.len)
 		return 1
 	return 0
 
-/obj/machinery/computer/security/proc/switch_to_camera(var/mob/user, var/obj/machinery/camera/C)
+/obj/machinery/computer/security/proc/switch_to_camera(mob/user, obj/machinery/camera/C)
 	//don't need to check if the camera works for AI because the AI jumps to the camera location and doesn't actually look through cameras.
 	if(isAI(user))
 		var/mob/living/silicon/ai/A = user
@@ -142,7 +142,7 @@
 	return 1
 
 //Camera control: moving.
-/obj/machinery/computer/security/proc/jump_on_click(var/mob/user,var/A)
+/obj/machinery/computer/security/proc/jump_on_click(mob/user,A)
 	if(user.machine != src)
 		return
 	var/obj/machinery/camera/jump_to
@@ -171,7 +171,7 @@
 	if(can_access_camera(jump_to))
 		switch_to_camera(user,jump_to)
 
-/obj/machinery/computer/security/proc/set_current(var/obj/machinery/camera/C)
+/obj/machinery/computer/security/proc/set_current(obj/machinery/camera/C)
 	if(current == C)
 		return
 
@@ -265,7 +265,7 @@
 	network = list()
 	var/team
 
-/obj/machinery/computer/security/abductor_ag/attack_hand(mob/user as mob)
+/obj/machinery/computer/security/abductor_ag/attack_hand(mob/user)
 	if(network.len < 1)
 		user << "<span class='notice'>Monitor network doesn't established. Activate helmet at first.</span>"
 		return

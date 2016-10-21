@@ -3,7 +3,7 @@
 	dir = EAST
 	width = 2
 
-/obj/machinery/door/airlock/multi_tile/attackby(C as obj, mob/user as mob)
+/obj/machinery/door/airlock/multi_tile/attackby(C, mob/user)
 	if(istype(C, /obj/item/weapon/airlock_painter))
 		user << "\red This airlock cannot be painted." //because we don't have sprites
 	else

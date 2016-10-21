@@ -21,7 +21,7 @@
 
 	var/obj/structure/cable/attached		// the attached cable
 
-	attackby(var/obj/item/I, var/mob/user)
+	attackby(obj/item/I, mob/user)
 		if(istype(I, /obj/item/weapon/screwdriver))
 			if(mode == 0)
 				var/turf/T = loc
@@ -65,7 +65,7 @@
 	attack_ai()
 		return
 
-	attack_hand(var/mob/user)
+	attack_hand(mob/user)
 		switch(mode)
 			if(0)
 				..()

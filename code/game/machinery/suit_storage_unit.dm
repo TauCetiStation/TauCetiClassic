@@ -98,7 +98,7 @@
 	return
 
 
-/obj/machinery/suit_storage_unit/attack_hand(mob/user as mob)
+/obj/machinery/suit_storage_unit/attack_hand(mob/user)
 	var/dat
 	if(..())
 		return
@@ -187,7 +187,7 @@
 	src.update_icon()
 
 
-/obj/machinery/suit_storage_unit/proc/toggleUV(mob/user as mob)
+/obj/machinery/suit_storage_unit/proc/toggleUV(mob/user)
 //	var/protected = 0
 //	var/mob/living/carbon/human/H = user
 	if(!src.panelopen)
@@ -213,7 +213,7 @@
 		return
 
 
-/obj/machinery/suit_storage_unit/proc/togglesafeties(mob/user as mob)
+/obj/machinery/suit_storage_unit/proc/togglesafeties(mob/user)
 //	var/protected = 0
 //	var/mob/living/carbon/human/H = user
 	if(!src.panelopen) //Needed check due to bugs
@@ -234,7 +234,7 @@
 		src.safetieson = !src.safetieson
 
 
-/obj/machinery/suit_storage_unit/proc/dispense_helmet(mob/user as mob)
+/obj/machinery/suit_storage_unit/proc/dispense_helmet(mob/user)
 	if(!src.HELMET)
 		return //Do I even need this sanity check? Nyoro~n
 	else
@@ -243,7 +243,7 @@
 		return
 
 
-/obj/machinery/suit_storage_unit/proc/dispense_suit(mob/user as mob)
+/obj/machinery/suit_storage_unit/proc/dispense_suit(mob/user)
 	if(!src.SUIT)
 		return
 	else
@@ -252,7 +252,7 @@
 		return
 
 
-/obj/machinery/suit_storage_unit/proc/dispense_mask(mob/user as mob)
+/obj/machinery/suit_storage_unit/proc/dispense_mask(mob/user)
 	if(!src.MASK)
 		return
 	else
@@ -277,7 +277,7 @@
 	return
 
 
-/obj/machinery/suit_storage_unit/proc/toggle_open(mob/user as mob)
+/obj/machinery/suit_storage_unit/proc/toggle_open(mob/user)
 	if(src.islocked || src.isUV)
 		user << "<font color='red'>Unable to open unit.</font>"
 		return
@@ -288,7 +288,7 @@
 	return
 
 
-/obj/machinery/suit_storage_unit/proc/toggle_lock(mob/user as mob)
+/obj/machinery/suit_storage_unit/proc/toggle_lock(mob/user)
 	if(src.OCCUPANT && src.safetieson)
 		user << "<font color='red'>The Unit's safety protocols disallow locking when a biological form is detected inside its compartments.</font>"
 		return
@@ -298,7 +298,7 @@
 	return
 
 
-/obj/machinery/suit_storage_unit/proc/start_UV(mob/user as mob)
+/obj/machinery/suit_storage_unit/proc/start_UV(mob/user)
 	if(src.isUV || src.isopen) //I'm bored of all these sanity checks
 		return
 	if(src.OCCUPANT && src.safetieson)
@@ -382,7 +382,7 @@
 	return src.cycletime_left
 
 
-/obj/machinery/suit_storage_unit/proc/eject_occupant(mob/user as mob)
+/obj/machinery/suit_storage_unit/proc/eject_occupant(mob/user)
 	if (src.islocked)
 		return
 
@@ -469,7 +469,7 @@
 	return
 
 
-/obj/machinery/suit_storage_unit/attackby(obj/item/I as obj, mob/user as mob)
+/obj/machinery/suit_storage_unit/attackby(obj/item/I, mob/user)
 	if(!src.ispowered)
 		return
 	if(istype(I, /obj/item/weapon/screwdriver))
@@ -557,11 +557,11 @@
 	return
 
 
-/obj/machinery/suit_storage_unit/attack_ai(mob/user as mob)
+/obj/machinery/suit_storage_unit/attack_ai(mob/user)
 	return src.attack_hand(user)
 
 
-/obj/machinery/suit_storage_unit/attack_paw(mob/user as mob)
+/obj/machinery/suit_storage_unit/attack_paw(mob/user)
 	user << "<font color='blue'>The console controls are far too complicated for your tiny brain!</font>"
 	return
 
@@ -622,14 +622,14 @@
 	departments = list("Mining")
 	species = list("Human","Unathi","Tajaran")
 
-/obj/machinery/suit_cycler/attack_ai(mob/user as mob)
+/obj/machinery/suit_cycler/attack_ai(mob/user)
 	return src.attack_hand(user)
 
-/obj/machinery/suit_cycler/attack_paw(mob/user as mob)
+/obj/machinery/suit_cycler/attack_paw(mob/user)
 	user << "\blue The console controls are far too complicated for your tiny brain!"
 	return
 
-/obj/machinery/suit_cycler/attackby(obj/item/I as obj, mob/user as mob)
+/obj/machinery/suit_cycler/attackby(obj/item/I, mob/user)
 
 	if(electrified != 0)
 		if(src.shock(user, 100))
@@ -747,7 +747,7 @@
 
 	..()
 
-/obj/machinery/suit_cycler/attack_hand(mob/user as mob)
+/obj/machinery/suit_cycler/attack_hand(mob/user)
 
 	add_fingerprint(user)
 
@@ -967,7 +967,7 @@
 
 	eject_occupant(usr)
 
-/obj/machinery/suit_cycler/proc/eject_occupant(mob/user as mob)
+/obj/machinery/suit_cycler/proc/eject_occupant(mob/user)
 
 	if(locked || active)
 		user << "\red The cycler is locked."
@@ -990,15 +990,15 @@
 	return
 
 //HACKING PROCS, MOSTLY COPIED FROM VENDING MACHINES
-/obj/machinery/suit_cycler/proc/isWireColorCut(var/wireColor)
+/obj/machinery/suit_cycler/proc/isWireColorCut(wireColor)
 	var/wireFlag = APCWireColorToFlag[wireColor]
 	return ((src.wires & wireFlag) == 0)
 
-/obj/machinery/suit_cycler/proc/isWireCut(var/wireIndex)
+/obj/machinery/suit_cycler/proc/isWireCut(wireIndex)
 	var/wireFlag = APCIndexToFlag[wireIndex]
 	return ((src.wires & wireFlag) == 0)
 
-/obj/machinery/suit_cycler/proc/cut(var/wireColor)
+/obj/machinery/suit_cycler/proc/cut(wireColor)
 	var/wireFlag = APCWireColorToFlag[wireColor]
 	var/wireIndex = APCWireColorToIndex[wireColor]
 	src.wires &= ~wireFlag
@@ -1011,7 +1011,7 @@
 		if (WIRE_SCANID)
 			locked = 0
 
-/obj/machinery/suit_cycler/proc/mend(var/wireColor)
+/obj/machinery/suit_cycler/proc/mend(wireColor)
 	var/wireFlag = APCWireColorToFlag[wireColor]
 	var/wireIndex = APCWireColorToIndex[wireColor] //not used in this function
 	src.wires |= wireFlag
@@ -1019,7 +1019,7 @@
 		if(WIRE_SHOCK)
 			src.electrified = 0
 
-/obj/machinery/suit_cycler/proc/pulse(var/wireColor)
+/obj/machinery/suit_cycler/proc/pulse(wireColor)
 	var/wireIndex = APCWireColorToIndex[wireColor]
 	switch(wireIndex)
 		if(WIRE_EXTEND)

@@ -64,7 +64,7 @@
 	var/num_territories = 1//Number of total valid territories for gang mode
 
 
-	proc/count(var/count_territories)
+	proc/count(count_territories)
 		for(var/turf/T in world)
 			if(T.z != ZLEVEL_STATION)
 				continue
@@ -111,7 +111,7 @@
 			else
 				world << "ERROR: NO VALID TERRITORIES"
 
-	proc/score(var/datum/station_state/result)
+	proc/score(datum/station_state/result)
 		if(!result)	return 0
 		var/output = 0
 		output += (result.floor / max(floor,1))

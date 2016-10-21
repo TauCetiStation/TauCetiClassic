@@ -16,9 +16,9 @@
 	if(!icon_state)
 		icon_state = "pill[rand(1,20)]"
 
-/obj/item/weapon/reagent_containers/pill/attack_self(mob/user as mob)
+/obj/item/weapon/reagent_containers/pill/attack_self(mob/user)
 	return
-/obj/item/weapon/reagent_containers/pill/attack(mob/M as mob, mob/user as mob, def_zone)
+/obj/item/weapon/reagent_containers/pill/attack(mob/M, mob/user, def_zone)
 	if(!CanEat(user, M, src, "take")) return
 	if(M == user)
 

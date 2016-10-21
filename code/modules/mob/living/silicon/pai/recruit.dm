@@ -89,7 +89,7 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 					return
 			recruitWindow(usr)
 
-	proc/recruitWindow(var/mob/M as mob)
+	proc/recruitWindow(mob/M)
 		var/datum/paiCandidate/candidate
 		for(var/datum/paiCandidate/c in pai_candidates)
 			if(!istype(c) || !istype(M))
@@ -218,7 +218,7 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 
 		M << browse(dat, "window=paiRecruit;size=580x580;")
 
-	proc/findPAI(var/obj/item/device/paicard/p, var/mob/user)
+	proc/findPAI(obj/item/device/paicard/p, mob/user)
 		requestRecruits()
 		var/list/available = list()
 		for(var/datum/paiCandidate/c in paiController.pai_candidates)
@@ -355,7 +355,7 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 				if(!hasSubmitted && (ROLE_PAI in O.client.prefs.be_role))
 					question(O.client)
 
-	proc/question(var/client/C)
+	proc/question(client/C)
 		spawn(0)
 			if(!C)	return
 			asked.Add(C.key)

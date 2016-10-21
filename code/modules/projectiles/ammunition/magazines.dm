@@ -6,7 +6,7 @@
 	caliber = "357"
 	max_ammo = 7
 
-/obj/item/ammo_box/magazine/internal/cylinder/ammo_count(var/countempties = 1)
+/obj/item/ammo_box/magazine/internal/cylinder/ammo_count(countempties = 1)
 	if (!countempties)
 		var/boolets = 0
 		for (var/i = 1, i <= stored_ammo.len, i++)
@@ -293,7 +293,7 @@
 	..()
 	usr << "\blue You see a charge meter, it reads: [round(ammo_count() * 100 / max_ammo)]%."
 
-/obj/item/ammo_box/magazine/l10mag/attack_self(mob/user as mob)
+/obj/item/ammo_box/magazine/l10mag/attack_self(mob/user)
 	return
 
 /obj/item/ammo_box/magazine/l10mag/update_icon()
@@ -420,7 +420,7 @@
 	..()
 	icon_state = "[initial(icon_state)]-[round(ammo_count(),10)]"
 
-/obj/item/ammo_box/magazine/borg45/attackby(var/obj/item/A as obj, mob/user as mob)
+/obj/item/ammo_box/magazine/borg45/attackby(obj/item/A, mob/user)
 	if (istype(A, /obj/item/weapon/gun/projectile/automatic/borg))
 		var/obj/item/weapon/gun/projectile/automatic/borg/SMG = A
 		if (!SMG.magazine)

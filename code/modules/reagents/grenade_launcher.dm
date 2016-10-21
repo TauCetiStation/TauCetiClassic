@@ -18,7 +18,7 @@
 	usr << "\icon [src] Grenade launcher:"
 	usr << "\blue [grenades.len] / [max_grenades] Grenades."
 
-/obj/item/weapon/gun/grenadelauncher/attackby(obj/item/I as obj, mob/user as mob)
+/obj/item/weapon/gun/grenadelauncher/attackby(obj/item/I, mob/user)
 
 	if((istype(I, /obj/item/weapon/grenade)))
 		if(grenades.len < max_grenades)

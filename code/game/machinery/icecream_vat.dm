@@ -21,7 +21,7 @@ var/list/ingredients_source = list(
 "sugar" = INGR_SUGAR,\
 )
 
-/proc/get_icecream_flavour_string(var/flavour_type)
+/proc/get_icecream_flavour_string(flavour_type)
 	switch(flavour_type)
 		if(FLAVOUR_CHOCOLATE)
 			return "chocolate"
@@ -63,11 +63,11 @@ var/list/ingredients_source = list(
 	while(ingredients.len < 11)
 		ingredients.Add(5)
 
-/obj/machinery/icecream_vat/attack_hand(mob/user as mob)
+/obj/machinery/icecream_vat/attack_hand(mob/user)
 	user.set_machine(src)
 	interact(user)
 
-/obj/machinery/icecream_vat/interact(mob/user as mob)
+/obj/machinery/icecream_vat/interact(mob/user)
 	var/dat
 	dat += "<a href='?src=\ref[src];dispense=[ICECREAM_VANILLA]'><b>Dispense vanilla icecream</b></a> There is [ingredients[ICECREAM_VANILLA]] scoops of vanilla icecream left (made from milk and ice).<br>"
 	dat += "<a href='?src=\ref[src];dispense=[FLAVOUR_STRAWBERRY]'><b>Dispense strawberry icecream</b></a> There is [ingredients[FLAVOUR_STRAWBERRY]] dollops of strawberry flavouring left (obtained from berry juice.<br>"
@@ -91,7 +91,7 @@ var/list/ingredients_source = list(
 	popup.set_content(dat)
 	popup.open()
 
-/obj/machinery/icecream_vat/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/obj/machinery/icecream_vat/attackby(obj/item/O, mob/user)
 	if(istype(O, /obj/item/weapon/reagent_containers))
 		if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/icecream))
 			var/obj/item/weapon/reagent_containers/food/snacks/icecream/I = O
@@ -136,12 +136,12 @@ var/list/ingredients_source = list(
 	else
 		..()
 
-/obj/machinery/icecream_vat/proc/add(var/add_type, var/amount)
+/obj/machinery/icecream_vat/proc/add(add_type, amount)
 	if(add_type <= ingredients.len)
 		ingredients[add_type] += amount
 		updateDialog()
 
-/obj/machinery/icecream_vat/proc/make(var/mob/user, var/make_type)
+/obj/machinery/icecream_vat/proc/make(mob/user, make_type)
 	switch(make_type)
 		if(CONE_WAFFLE)
 			if(ingredients[INGR_FLOUR] > 0 && ingredients[INGR_SUGAR] > 0)
@@ -224,7 +224,7 @@ var/list/ingredients_source = list(
 	create_reagents(20)
 	reagents.add_reagent("nutriment", 5)
 
-/obj/item/weapon/reagent_containers/food/snacks/icecream/proc/add_ice_cream(var/flavour)
+/obj/item/weapon/reagent_containers/food/snacks/icecream/proc/add_ice_cream(flavour)
 	var/flavour_name = get_icecream_flavour_string(flavour)
 	name = "[flavour_name] icecream"
 	src.overlays += "icecream_[flavour_name]"

@@ -16,7 +16,7 @@
 	var/screen = 0
 
 
-/obj/item/weapon/paper_bundle/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/weapon/paper_bundle/attackby(obj/item/weapon/W, mob/user)
 	..()
 	var/obj/item/weapon/paper/P
 	if(istype(W, /obj/item/weapon/paper))
@@ -108,7 +108,7 @@
 	return
 
 
-/obj/item/weapon/paper_bundle/attack_self(mob/user as mob)
+/obj/item/weapon/paper_bundle/attack_self(mob/user)
 	if(ishuman(user))
 		var/mob/living/carbon/human/human_user = user
 		var/dat

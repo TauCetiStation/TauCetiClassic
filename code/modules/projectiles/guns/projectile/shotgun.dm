@@ -16,7 +16,7 @@
 /obj/item/weapon/gun/projectile/shotgun/isHandgun()
 	return 0
 
-/obj/item/weapon/gun/projectile/shotgun/attackby(var/obj/item/A as obj, mob/user as mob)
+/obj/item/weapon/gun/projectile/shotgun/attackby(obj/item/A, mob/user)
 	var/num_loaded = magazine.attackby(A, user, 1)
 	if(num_loaded)
 		user << "<span class='notice'>You load [num_loaded] shell\s into \the [src]!</span>"
@@ -92,7 +92,7 @@
 	else
 		icon_state = "dshotgun[open ? "-o" : ""]"
 
-/obj/item/weapon/gun/projectile/revolver/doublebarrel/attackby(var/obj/item/A as obj, mob/user as mob)
+/obj/item/weapon/gun/projectile/revolver/doublebarrel/attackby(obj/item/A, mob/user)
 	..()
 	if (istype(A,/obj/item/ammo_box) || istype(A,/obj/item/ammo_casing))
 		if(open)
@@ -119,7 +119,7 @@
 			desc = "Omar's coming!"
 			short = 1
 
-/obj/item/weapon/gun/projectile/revolver/doublebarrel/attack_self(mob/living/user as mob)
+/obj/item/weapon/gun/projectile/revolver/doublebarrel/attack_self(mob/living/user)
 	add_fingerprint(user)
 	open = !open
 	if(open)
@@ -219,7 +219,7 @@
 		update_icon()	//I.E. fix the desc
 		return 1
 
-/obj/item/weapon/gun/projectile/shotgun/bolt_action/attackby(var/obj/item/A as obj, mob/user as mob)
+/obj/item/weapon/gun/projectile/shotgun/bolt_action/attackby(obj/item/A, mob/user)
 	if (istype(A, /obj/item/ammo_box/magazine))
 		var/obj/item/ammo_box/magazine/AM = A
 		if (!magazine && istype(AM, mag_type))
