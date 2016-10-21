@@ -451,8 +451,13 @@
 
 		if(hungry == 2 && !client) // if a slime is starving, it starts losing its friends
 			if(Friends.len > 0 && prob(1))
-				var/mob/nofriend = pick(Friends)
-				--Friends[nofriend]
+				var/list/BFriends = list()
+				for(var/mob/M in Friends)
+					if(Friends[M] < 10)
+						BFriends.Add(M)
+				if(BFriends.len > 0)
+					var/mob/nofriend = pick(BFriends)
+					--Friends[nofriend]
 
 		if(!Target)
 			if(will_hunt() && hungry || attacked || rabid) // Only add to the list if we need to
