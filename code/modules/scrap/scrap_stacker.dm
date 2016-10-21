@@ -27,7 +27,7 @@
 	else
 		AM.forceMove(src.loc)
 
-/obj/machinery/scrap/stacking_machine/attack_hand(mob/user as mob)
+/obj/machinery/scrap/stacking_machine/attack_hand(mob/user)
 	if(scrap_amount < 1)
 		return
 	visible_message("<span class='notice'>\The [src] was forced to release everything inside.</span>")

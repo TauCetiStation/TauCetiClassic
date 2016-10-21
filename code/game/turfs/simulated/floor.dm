@@ -242,10 +242,10 @@ turf/simulated/floor/proc/update_icon()
 			return 0
 
 
-/turf/simulated/floor/attack_paw(mob/user as mob)
+/turf/simulated/floor/attack_paw(mob/user)
 	return src.attack_hand(user)
 
-/turf/simulated/floor/attack_hand(mob/user as mob)
+/turf/simulated/floor/attack_hand(mob/user)
 	if (is_light_floor())
 		toggle_lightfloor_on()
 		update_icon()
@@ -385,7 +385,7 @@ turf/simulated/floor/proc/update_icon()
 //This proc will make the turf a plasteel floor tile. The expected argument is the tile to make the turf with
 //If none is given it will make a new object. dropping or unequipping must be handled before or after calling
 //this proc.
-/turf/simulated/floor/proc/make_plasteel_floor(var/obj/item/stack/tile/plasteel/T = null)
+/turf/simulated/floor/proc/make_plasteel_floor(obj/item/stack/tile/plasteel/T = null)
 	broken = 0
 	burnt = 0
 	intact = 1
@@ -412,7 +412,7 @@ turf/simulated/floor/proc/update_icon()
 //This proc will make the turf a light floor tile. The expected argument is the tile to make the turf with
 //If none is given it will make a new object. dropping or unequipping must be handled before or after calling
 //this proc.
-/turf/simulated/floor/proc/make_light_floor(var/obj/item/stack/tile/light/T = null)
+/turf/simulated/floor/proc/make_light_floor(obj/item/stack/tile/light/T = null)
 	broken = 0
 	burnt = 0
 	intact = 1
@@ -430,7 +430,7 @@ turf/simulated/floor/proc/update_icon()
 
 //This proc will make a turf into a grass patch. Fun eh? Insert the grass tile to be used as the argument
 //If no argument is given a new one will be made.
-/turf/simulated/floor/proc/make_grass_floor(var/obj/item/stack/tile/grass/T = null)
+/turf/simulated/floor/proc/make_grass_floor(obj/item/stack/tile/grass/T = null)
 	broken = 0
 	burnt = 0
 	intact = 1
@@ -448,7 +448,7 @@ turf/simulated/floor/proc/update_icon()
 
 //This proc will make a turf into a wood floor. Fun eh? Insert the wood tile to be used as the argument
 //If no argument is given a new one will be made.
-/turf/simulated/floor/proc/make_wood_floor(var/obj/item/stack/tile/wood/T = null)
+/turf/simulated/floor/proc/make_wood_floor(obj/item/stack/tile/wood/T = null)
 	broken = 0
 	burnt = 0
 	intact = 1
@@ -466,7 +466,7 @@ turf/simulated/floor/proc/update_icon()
 
 //This proc will make a turf into a carpet floor. Fun eh? Insert the carpet tile to be used as the argument
 //If no argument is given a new one will be made.
-/turf/simulated/floor/proc/make_carpet_floor(var/obj/item/stack/tile/carpet/T = null)
+/turf/simulated/floor/proc/make_carpet_floor(obj/item/stack/tile/carpet/T = null)
 	broken = 0
 	burnt = 0
 	intact = 1
@@ -482,7 +482,7 @@ turf/simulated/floor/proc/update_icon()
 	update_icon()
 	levelupdate()
 
-/turf/simulated/floor/attackby(obj/item/C as obj, mob/user as mob)
+/turf/simulated/floor/attackby(obj/item/C, mob/user)
 
 	if(!C || !user)
 		return 0

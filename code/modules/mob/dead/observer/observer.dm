@@ -154,7 +154,7 @@ Works together with spawning an observer, noted above.
 		process_medHUD(src)
 
 
-/mob/dead/proc/process_medHUD(var/mob/M)
+/mob/dead/proc/process_medHUD(mob/M)
 	var/client/C = M.client
 	for(var/mob/living/carbon/human/patient in oview(M, 14))
 		C.images += patient.hud_list[HEALTH_HUD]
@@ -177,7 +177,7 @@ Works together with spawning an observer, noted above.
 */
 	return 1
 
-/mob/proc/ghostize(var/can_reenter_corpse = TRUE, var/bancheck = FALSE)
+/mob/proc/ghostize(can_reenter_corpse = TRUE, bancheck = FALSE)
 	if(key)
 		if(!(ckey in admin_datums) && bancheck == TRUE && jobban_isbanned(src, "Observer"))
 			var/mob/M = mousize()
@@ -367,7 +367,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	ManualFollow(target)
 
 // This is the ghost's follow verb with an argument
-/mob/dead/observer/proc/ManualFollow(var/atom/movable/target)
+/mob/dead/observer/proc/ManualFollow(atom/movable/target)
 	if (!istype(target))
 		return
 

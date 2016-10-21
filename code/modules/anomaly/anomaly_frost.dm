@@ -6,7 +6,7 @@
 	var/Time = 110
 	var/Speed = 1
 
-/datum/anomaly_frost/proc/set_params(var/user)
+/datum/anomaly_frost/proc/set_params(user)
 	Zlevel = input(user, "Choose Z level to freeze.", "Z level number: ", 1) as num
 	Temperature = input(user, "Choose target temperature in kelvins", "Temp: ", 170) as num
 	Speed = input(user, "Choose freeze speed. 1 - slow, 100 - fast", "Speed: ", 2) as num

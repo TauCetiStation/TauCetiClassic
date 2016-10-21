@@ -13,7 +13,7 @@
 	g_amt = 20
 	origin_tech = "magnets=1;engineering=2"
 
-/obj/item/device/geoscanner/afterattack(atom/A, mob/user as mob)
+/obj/item/device/geoscanner/afterattack(atom/A, mob/user)
 	if(!istype(A,/turf/simulated/mineral))
 		return
 	if(!in_range(user, A))
@@ -50,7 +50,7 @@
 	..()
 	error = pick(-1,1)
 
-/obj/item/clothing/glasses/hud/mining/process_hud(var/mob/M)
+/obj/item/clothing/glasses/hud/mining/process_hud(mob/M)
 	if(!M)	return
 	if(!M.client)	return
 	var/client/C = M.client

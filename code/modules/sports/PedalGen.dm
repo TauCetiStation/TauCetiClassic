@@ -149,7 +149,7 @@
 	else
 		animate(M, pixel_x = 0, pixel_y = 0, 2, 1, LINEAR_EASING)
 
-/obj/structure/stool/bed/chair/pedalgen/bullet_act(var/obj/item/projectile/Proj)
+/obj/structure/stool/bed/chair/pedalgen/bullet_act(obj/item/projectile/Proj)
 	if(buckled_mob)
 		if(prob(85))
 			return buckled_mob.bullet_act(Proj)

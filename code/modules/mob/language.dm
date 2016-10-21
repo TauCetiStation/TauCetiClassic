@@ -87,7 +87,7 @@
 	key = "3"
 
 // Language handling.
-/mob/proc/add_language(var/language)
+/mob/proc/add_language(language)
 
 	var/datum/language/new_language = all_languages[language]
 
@@ -97,7 +97,7 @@
 	languages.Add(new_language)
 	return 1
 
-/mob/proc/remove_language(var/rem_language)
+/mob/proc/remove_language(rem_language)
 
 	languages.Remove(all_languages[rem_language])
 

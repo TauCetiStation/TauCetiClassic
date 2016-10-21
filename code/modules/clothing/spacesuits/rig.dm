@@ -177,7 +177,7 @@
 		magpulse = 1
 		H << "You enable the mag-pulse traction system."
 
-/obj/item/clothing/suit/space/rig/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/clothing/suit/space/rig/attackby(obj/item/W, mob/user)
 
 	if(!istype(user,/mob/living)) return
 

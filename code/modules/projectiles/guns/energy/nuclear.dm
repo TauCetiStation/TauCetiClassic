@@ -7,7 +7,7 @@
 	origin_tech = "combat=3;magnets=2"
 	modifystate = 2
 
-/obj/item/weapon/gun/energy/gun/attack_self(mob/living/user as mob)
+/obj/item/weapon/gun/energy/gun/attack_self(mob/living/user)
 	select_fire(user)
 	update_icon()
 	if(user.hand)

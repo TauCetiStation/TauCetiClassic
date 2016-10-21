@@ -29,7 +29,7 @@
 	..()
 	overlays += image('icons/obj/apiary_bees_etc.dmi', icon_state="apiary")
 
-/obj/machinery/apiary/bullet_act(var/obj/item/projectile/Proj) //Works with the Somatoray to modify plant variables.
+/obj/machinery/apiary/bullet_act(obj/item/projectile/Proj) //Works with the Somatoray to modify plant variables.
 	if(istype(Proj ,/obj/item/projectile/energy/floramut))
 		mut++
 	else if(istype(Proj ,/obj/item/projectile/energy/florayield))
@@ -43,7 +43,7 @@
 		..()
 		return
 
-/obj/machinery/apiary/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/obj/machinery/apiary/attackby(obj/item/O, mob/user)
 	if(istype(O, /obj/item/queen_bee))
 		if(health > 0)
 			user << "\red There is already a queen in there."
@@ -207,7 +207,7 @@
 	bees_in_hive = 0
 	health = 0
 
-/obj/machinery/apiary/proc/angry_swarm(var/mob/M)
+/obj/machinery/apiary/proc/angry_swarm(mob/M)
 	for(var/mob/living/simple_animal/bee/B in owned_bee_swarms)
 		B.feral = 25
 		B.target_mob = M

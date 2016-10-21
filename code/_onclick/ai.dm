@@ -9,7 +9,7 @@
 
 	Note that AI have no need for the adjacency proc, and so this proc is a lot cleaner.
 */
-/mob/living/silicon/ai/DblClickOn(var/atom/A, params)
+/mob/living/silicon/ai/DblClickOn(atom/A, params)
 	if(client.buildmode) // comes after object.Click to allow buildmode gui objects to be clicked
 		build_click(src, client.buildmode, params, A)
 		return
@@ -23,7 +23,7 @@
 		A.move_camera_by_click()
 
 
-/mob/living/silicon/ai/ClickOn(var/atom/A, params)
+/mob/living/silicon/ai/ClickOn(atom/A, params)
 	if(world.time <= next_click)
 		return
 	next_click = world.time + 1
@@ -81,7 +81,7 @@
 /mob/living/silicon/ai/RangedAttack(atom/A)
 	A.attack_ai(src)
 
-/atom/proc/attack_ai(mob/user as mob)
+/atom/proc/attack_ai(mob/user)
 	return
 
 /*
@@ -89,11 +89,11 @@
 	than anything else in the game, atoms have separate procs
 	for AI shift, ctrl, and alt clicking.
 */
-/mob/living/silicon/ai/ShiftClickOn(var/atom/A)
+/mob/living/silicon/ai/ShiftClickOn(atom/A)
 	A.AIShiftClick(src)
-/mob/living/silicon/ai/CtrlClickOn(var/atom/A)
+/mob/living/silicon/ai/CtrlClickOn(atom/A)
 	A.AICtrlClick(src)
-/mob/living/silicon/ai/AltClickOn(var/atom/A)
+/mob/living/silicon/ai/AltClickOn(atom/A)
 	A.AIAltClick(src)
 
 /*
@@ -149,5 +149,5 @@
 // Override AdjacentQuick for AltClicking
 //
 
-/mob/living/silicon/ai/TurfAdjacent(var/turf/T)
+/mob/living/silicon/ai/TurfAdjacent(turf/T)
 	return (cameranet && cameranet.checkTurfVis(T))

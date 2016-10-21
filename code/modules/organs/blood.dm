@@ -135,7 +135,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 		drip(blood_max)
 
 //Makes a blood drop, leaking certain amount of blood from the mob
-/mob/living/carbon/human/proc/drip(var/amt as num)
+/mob/living/carbon/human/proc/drip(amt)
 
 	if(!isturf(loc))	//No drips, if we are in closet, or disposal pipe or anywhere else, but not on the floor
 		return
@@ -181,7 +181,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 ****************************************************/
 
 //Gets blood from mob to the container, preserving all data in it.
-/mob/living/carbon/proc/take_blood(obj/item/weapon/reagent_containers/container, var/amount)
+/mob/living/carbon/proc/take_blood(obj/item/weapon/reagent_containers/container, amount)
 
 	var/datum/reagent/B = get_blood(container.reagents)
 	if(!B) B = new /datum/reagent/blood
@@ -210,7 +210,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 	return B
 
 //For humans, blood does not appear from blue, it comes from vessels.
-/mob/living/carbon/human/take_blood(obj/item/weapon/reagent_containers/container, var/amount)
+/mob/living/carbon/human/take_blood(obj/item/weapon/reagent_containers/container, amount)
 
 	if(species && species.flags & NO_BLOOD)
 		return null
@@ -222,7 +222,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 	vessel.remove_reagent("blood",amount) // Removes blood if human
 
 //Transfers blood from container ot vessels
-/mob/living/carbon/proc/inject_blood(obj/item/weapon/reagent_containers/container, var/amount)
+/mob/living/carbon/proc/inject_blood(obj/item/weapon/reagent_containers/container, amount)
 	var/datum/reagent/blood/injected = get_blood(container.reagents)
 	if (!injected)
 		return
@@ -241,7 +241,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 	container.reagents.remove_reagent("blood", amount)
 
 //Transfers blood from container ot vessels, respecting blood types compatability.
-/mob/living/carbon/human/inject_blood(obj/item/weapon/reagent_containers/container, var/amount)
+/mob/living/carbon/human/inject_blood(obj/item/weapon/reagent_containers/container, amount)
 
 	var/datum/reagent/blood/injected = get_blood(container.reagents)
 

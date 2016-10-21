@@ -8,7 +8,7 @@
 	light_color = "#7BF9FF"
 
 
-	attackby(var/obj/item/weapon/card/W as obj, var/mob/user as mob)
+	attackby(obj/item/weapon/card/W, mob/user)
 		if(stat & (BROKEN|NOPOWER))	return
 		if ((!( istype(W, /obj/item/weapon/card) ) || !( ticker ) || SSshuttle.location != 1 || !( user )))	return
 		if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))

@@ -11,7 +11,7 @@
 	flags = FPRINT | TABLEPASS | CONDUCT
 	max_amount = 60
 
-/obj/item/stack/light_w/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/obj/item/stack/light_w/attackby(obj/item/O, mob/user)
 	..()
 	if(istype(O,/obj/item/weapon/wirecutters))
 		var/obj/item/weapon/cable_coil/CC = new/obj/item/weapon/cable_coil(user.loc)

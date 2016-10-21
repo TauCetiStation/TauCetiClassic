@@ -13,7 +13,7 @@
 	target_temp = rand(300,600)
 	effect = pick(EFFECT_TOUCH, EFFECT_AURA)
 
-/datum/artifact_effect/heat/DoEffectTouch(var/mob/user)
+/datum/artifact_effect/heat/DoEffectTouch(mob/user)
 	if(holder)
 		user << "\red You feel a wave of heat travel up your spine!"
 		var/datum/gas_mixture/env = holder.loc.return_air()

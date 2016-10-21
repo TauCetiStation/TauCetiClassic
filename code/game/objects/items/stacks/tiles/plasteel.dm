@@ -19,7 +19,7 @@
 	return
 
 /*
-/obj/item/stack/tile/plasteel/attack_self(mob/user as mob)
+/obj/item/stack/tile/plasteel/attack_self(mob/user)
 	if (usr.stat)
 		return
 	var/T = user.loc
@@ -35,7 +35,7 @@
 	return
 */
 
-/obj/item/stack/tile/plasteel/proc/build(turf/S as turf)
+/obj/item/stack/tile/plasteel/proc/build(turf/S)
 	if (istype(S,/turf/space))
 		S.ChangeTurf(/turf/simulated/floor/plating/airless)
 	else

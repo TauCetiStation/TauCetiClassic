@@ -81,7 +81,7 @@ display round(lastgen) and phorontank amount
 		icon_state = initial(icon_state)
 		handleInactive()
 
-/obj/machinery/power/port_gen/attack_hand(mob/user as mob)
+/obj/machinery/power/port_gen/attack_hand(mob/user)
 	if(..())
 		return
 	if(!anchored)
@@ -243,17 +243,17 @@ display round(lastgen) and phorontank amount
 		else if(istype(O, /obj/item/weapon/crowbar) && panel_open)
 			default_deconstruction_crowbar(O)
 
-/obj/machinery/power/port_gen/pacman/attack_hand(mob/user as mob)
+/obj/machinery/power/port_gen/pacman/attack_hand(mob/user)
 	..()
 	if (!anchored)
 		return
 
 	interact(user)
 
-/obj/machinery/power/port_gen/pacman/attack_ai(mob/user as mob)
+/obj/machinery/power/port_gen/pacman/attack_ai(mob/user)
 	interact(user)
 
-/obj/machinery/power/port_gen/pacman/attack_paw(mob/user as mob)
+/obj/machinery/power/port_gen/pacman/attack_paw(mob/user)
 	interact(user)
 
 /obj/machinery/power/port_gen/pacman/interact(mob/user)

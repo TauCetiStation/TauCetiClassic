@@ -17,7 +17,7 @@
 	area_name = A.name
 	return
 
-/obj/effect/landmark/antigrief_alarm/HasProximity(var/atom/A)
+/obj/effect/landmark/antigrief_alarm/HasProximity(atom/A)
 	if(!isliving(A))
 		return
 

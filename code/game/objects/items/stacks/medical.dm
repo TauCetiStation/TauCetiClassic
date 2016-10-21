@@ -10,7 +10,7 @@
 	var/heal_brute = 0
 	var/heal_burn = 0
 
-/obj/item/stack/medical/attack(mob/living/carbon/M as mob, mob/user as mob)
+/obj/item/stack/medical/attack(mob/living/carbon/M, mob/user)
 	if(!istype(M))
 		user << "<span class='warning'>\The [src] cannot be applied to [M]!</span>"
 		return 1
@@ -51,7 +51,7 @@
 	icon_state = "brutepack"
 	origin_tech = "biotech=1"
 
-/obj/item/stack/medical/bruise_pack/attack(mob/living/carbon/M as mob, mob/user as mob)
+/obj/item/stack/medical/bruise_pack/attack(mob/living/carbon/M, mob/user)
 	if(..())
 		return 1
 
@@ -113,7 +113,7 @@
 	heal_burn = 1
 	origin_tech = "biotech=1"
 
-/obj/item/stack/medical/ointment/attack(mob/living/carbon/M as mob, mob/user as mob)
+/obj/item/stack/medical/ointment/attack(mob/living/carbon/M, mob/user)
 	if(..())
 		return 1
 
@@ -166,7 +166,7 @@
 	heal_brute = 12
 	origin_tech = "biotech=1"
 
-/obj/item/stack/medical/advanced/bruise_pack/attack(mob/living/carbon/M as mob, mob/user as mob)
+/obj/item/stack/medical/advanced/bruise_pack/attack(mob/living/carbon/M, mob/user)
 	if(..())
 		return 1
 
@@ -228,7 +228,7 @@
 	heal_burn = 12
 	origin_tech = "biotech=1"
 
-/obj/item/stack/medical/advanced/ointment/attack(mob/living/carbon/M as mob, mob/user as mob)
+/obj/item/stack/medical/advanced/ointment/attack(mob/living/carbon/M, mob/user)
 	if(..())
 		return 1
 
@@ -265,7 +265,7 @@
 	amount = 5
 	max_amount = 5
 
-/obj/item/stack/medical/splint/attack(mob/living/carbon/M as mob, mob/user as mob)
+/obj/item/stack/medical/splint/attack(mob/living/carbon/M, mob/user)
 	if(..())
 		return 1
 

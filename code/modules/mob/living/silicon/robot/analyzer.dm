@@ -16,7 +16,7 @@
 	origin_tech = "magnets=1;biotech=1"
 	var/mode = 1;
 
-/obj/item/device/robotanalyzer/attack(mob/living/M as mob, mob/living/user as mob)
+/obj/item/device/robotanalyzer/attack(mob/living/M, mob/living/user)
 	if(( (CLUMSY in user.mutations) || user.getBrainLoss() >= 60) && prob(50))
 		user << text("\red You try to analyze the floor's vitals!")
 		for(var/mob/O in viewers(M, null))

@@ -65,7 +65,7 @@
 		if(30)
 			new/obj/item/weapon/melee/baton(src)
 
-/obj/structure/closet/crate/secure/loot/togglelock(mob/user as mob)
+/obj/structure/closet/crate/secure/loot/togglelock(mob/user)
 	if(locked)
 		user << "<span class='notice'>The crate is locked with a Deca-code lock.</span>"
 		var/input = input(usr, "Enter digit from [min] to [max].", "Deca-Code Lock", "") as num
@@ -94,7 +94,7 @@
 	else
 		return ..()
 
-/obj/structure/closet/crate/secure/loot/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/structure/closet/crate/secure/loot/attackby(obj/item/weapon/W, mob/user)
 	if(locked)
 		if (istype(W, /obj/item/weapon/card/emag))
 			user << "<span class='notice'>The crate unlocks!</span>"

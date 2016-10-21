@@ -419,7 +419,7 @@
 	for(var/i in 1 to storage_slots)
 		new /obj/item/weapon/match(src)
 
-/obj/item/weapon/storage/box/matches/attackby(obj/item/weapon/match/W as obj, mob/user as mob)
+/obj/item/weapon/storage/box/matches/attackby(obj/item/weapon/match/W, mob/user)
 	if(istype(W) && !W.lit && !W.burnt)
 		if (prob (20))
 			playsound(src, 'sound/items/matchstick_hit.ogg', 20, 1, 1)

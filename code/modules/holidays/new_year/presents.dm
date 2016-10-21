@@ -98,7 +98,7 @@
 	pixel_x = rand(-6,6)
 	pixel_y = rand(-6,6)
 
-/obj/item/weapon/present/attack_self(mob/user, var/key as text)
+/obj/item/weapon/present/attack_self(mob/user, key)
 	var/p_warns							//player warns
 	var/giftselect = pickweight(gifts)	//almost random pick from gift list
 	var/present
@@ -138,7 +138,7 @@
 /obj/item/weapon/present/special
 	desc = "Gift wrapping of this is extraordinarily beautiful."
 
-/obj/item/weapon/present/special/attack_self(mob/user, var/key as text)
+/obj/item/weapon/present/special/attack_self(mob/user, key)
 	. = ..()
 	//Free whitelist adding. It could be OP, but it's fucking New Year, why not?
 	var/client/C = user.client

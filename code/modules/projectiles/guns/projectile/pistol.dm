@@ -35,7 +35,7 @@
 /obj/item/weapon/gun/projectile/sigi/isHandgun()
 	return 1
 
-/obj/item/weapon/gun/projectile/sigi/update_icon(var/load = 0)
+/obj/item/weapon/gun/projectile/sigi/update_icon(load = 0)
 	..()
 	if(load)
 		icon_state = "[initial(icon_state)]"
@@ -43,7 +43,7 @@
 	icon_state = "[initial(icon_state)][(!chambered && !get_ammo()) ? "-e" : ""]"
 	return
 
-/obj/item/weapon/gun/projectile/sigi/attack_self(mob/user as mob)
+/obj/item/weapon/gun/projectile/sigi/attack_self(mob/user)
 	if (magazine)
 		magazine.loc = get_turf(src.loc)
 		user.put_in_hands(magazine)
@@ -56,7 +56,7 @@
 		user << "<span class='notice'>There's no magazine in \the [src].</span>"
 	return
 
-/obj/item/weapon/gun/projectile/sigi/attackby(var/obj/item/A as obj, mob/user as mob)
+/obj/item/weapon/gun/projectile/sigi/attackby(obj/item/A, mob/user)
 	if (istype(A, /obj/item/ammo_box/magazine))
 		var/obj/item/ammo_box/magazine/AM = A
 		if ((!magazine && istype(AM, mag_type) || istype(AM, mag_type2)))
@@ -94,12 +94,12 @@
 /obj/item/weapon/gun/projectile/automatic/deagle/isHandgun()
 	return 1
 
-/obj/item/weapon/gun/projectile/automatic/deagle/afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, flag)
+/obj/item/weapon/gun/projectile/automatic/deagle/afterattack(atom/target, mob/living/user, flag)
 	..()
 	update_icon()
 	return
 
-/obj/item/weapon/gun/projectile/automatic/deagle/update_icon(var/load = 0)
+/obj/item/weapon/gun/projectile/automatic/deagle/update_icon(load = 0)
 	..()
 	if(load)
 		icon_state = "[initial(icon_state)]"
@@ -107,7 +107,7 @@
 	icon_state = "[initial(icon_state)][(!chambered && !get_ammo()) ? "-e" : ""]"
 	return
 
-/obj/item/weapon/gun/projectile/automatic/deagle/attackby(var/obj/item/A as obj, mob/user as mob)
+/obj/item/weapon/gun/projectile/automatic/deagle/attackby(obj/item/A, mob/user)
 	if (istype(A, /obj/item/ammo_box/magazine))
 		var/obj/item/ammo_box/magazine/AM = A
 		if (!magazine && istype(AM, mag_type))
@@ -139,7 +139,7 @@
 /obj/item/weapon/gun/projectile/automatic/gyropistol/process_chamber(var/eject_casing = 0, var/empty_chamber = 1)
 	..()
 
-/obj/item/weapon/gun/projectile/automatic/gyropistol/afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, flag)
+/obj/item/weapon/gun/projectile/automatic/gyropistol/afterattack(atom/target, mob/living/user, flag)
 	..()
 	if(!chambered && !get_ammo() && !alarmed)
 		playsound(user, 'sound/weapons/smg_empty_alarm.ogg', 40, 1)
@@ -164,13 +164,13 @@
 /obj/item/weapon/gun/projectile/automatic/pistol/isHandgun()
 	return 1
 
-/obj/item/weapon/gun/projectile/automatic/pistol/attack_hand(mob/user as mob)
+/obj/item/weapon/gun/projectile/automatic/pistol/attack_hand(mob/user)
 	if(loc == user)
 		if(silenced)
 			silencer_attack_hand(user)
 	..()
 
-/obj/item/weapon/gun/projectile/automatic/pistol/attackby(obj/item/I as obj, mob/user as mob)
+/obj/item/weapon/gun/projectile/automatic/pistol/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/silencer))
 		silencer_attackby(I,user)
 	..()
@@ -193,12 +193,12 @@
 /obj/item/weapon/gun/projectile/automatic/colt1911/isHandgun()
 	return 1
 
-/obj/item/weapon/gun/projectile/automatic/colt1911/afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, flag)
+/obj/item/weapon/gun/projectile/automatic/colt1911/afterattack(atom/target, mob/living/user, flag)
 	..()
 	update_icon()
 	return
 
-/obj/item/weapon/gun/projectile/automatic/colt1911/update_icon(var/load = 0)
+/obj/item/weapon/gun/projectile/automatic/colt1911/update_icon(load = 0)
 	..()
 	if(load)
 		icon_state = "[initial(icon_state)]"
@@ -206,7 +206,7 @@
 	icon_state = "[initial(icon_state)][(!chambered && !get_ammo()) ? "-e" : ""]"
 	return
 
-/obj/item/weapon/gun/projectile/automatic/colt1911/attackby(var/obj/item/A as obj, mob/user as mob)
+/obj/item/weapon/gun/projectile/automatic/colt1911/attackby(obj/item/A, mob/user)
 	if (istype(A, /obj/item/ammo_box/magazine))
 		var/obj/item/ammo_box/magazine/AM = A
 		if (!magazine && (istype(AM, mag_type) || istype(AM, mag_type2)))
@@ -243,7 +243,7 @@
 		overlays += image('icons/obj/gun.dmi', "at7-mag")
 		return
 
-/obj/item/weapon/gun/projectile/sec_pistol/update_icon(var/load = 0)
+/obj/item/weapon/gun/projectile/sec_pistol/update_icon(load = 0)
 	src.overlays = 0
 	update_magazine()
 	if(load)
@@ -252,7 +252,7 @@
 	icon_state = "[initial(icon_state)][(!chambered && !get_ammo()) ? "-e" : ""]"
 	return
 
-/obj/item/weapon/gun/projectile/sec_pistol/attackby(var/obj/item/A as obj, mob/user as mob)
+/obj/item/weapon/gun/projectile/sec_pistol/attackby(obj/item/A, mob/user)
 	if (istype(A, /obj/item/ammo_box/magazine))
 		var/obj/item/ammo_box/magazine/AM = A
 		if (!magazine && istype(AM, mag_type))
@@ -276,7 +276,7 @@
 	fire_sound = 'sound/weapons/guns/acm38_shot.ogg'
 	mag_type = /obj/item/ammo_box/magazine/acm38_38
 
-/obj/item/weapon/gun/projectile/sec_pistol/update_icon(var/load = 0)
+/obj/item/weapon/gun/projectile/sec_pistol/update_icon(load = 0)
 	if(load)
 		icon_state = "[initial(icon_state)]"
 		return

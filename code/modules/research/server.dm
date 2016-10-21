@@ -71,7 +71,7 @@
 		produce_heat(heat_gen)
 		delay = initial(delay)
 
-/obj/machinery/r_n_d/server/meteorhit(var/obj/O as obj)
+/obj/machinery/r_n_d/server/meteorhit(obj/O)
 	griefProtection()
 	..()
 
@@ -121,7 +121,7 @@
 
 				env.merge(removed)
 
-/obj/machinery/r_n_d/server/attackby(var/obj/item/I as obj, var/mob/user as mob)
+/obj/machinery/r_n_d/server/attackby(obj/item/I, mob/user)
 	if (disabled)
 		return
 	if (shocked)
@@ -136,7 +136,7 @@
 			default_deconstruction_crowbar(I)
 			return 1
 
-/obj/machinery/r_n_d/server/attack_hand(mob/user as mob)
+/obj/machinery/r_n_d/server/attack_hand(mob/user)
 	if (disabled)
 		return
 	if (shocked)
@@ -255,7 +255,7 @@
 
 	updateUsrDialog()
 
-/obj/machinery/computer/rdservercontrol/attack_hand(mob/user as mob)
+/obj/machinery/computer/rdservercontrol/attack_hand(mob/user)
 	if(..())
 		return
 	user.set_machine(src)
@@ -316,7 +316,7 @@
 	onclose(user, "server_control")
 	return
 
-/obj/machinery/computer/rdservercontrol/attackby(var/obj/item/weapon/D as obj, var/mob/user as mob)
+/obj/machinery/computer/rdservercontrol/attackby(obj/item/weapon/D, mob/user)
 	if(istype(D, /obj/item/weapon/card/emag) && !emagged)
 		playsound(src.loc, 'sound/effects/sparks4.ogg', 75, 1)
 		emagged = 1

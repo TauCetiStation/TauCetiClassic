@@ -15,7 +15,7 @@
 	var/screen = 0 // 0 - No Access Denied, 1 - Access allowed
 	light_color = "#B40000"
 
-/obj/machinery/computer/prisoner/attack_hand(var/mob/user as mob)
+/obj/machinery/computer/prisoner/attack_hand(mob/user)
 	if(..())
 		return
 	user.set_machine(src)

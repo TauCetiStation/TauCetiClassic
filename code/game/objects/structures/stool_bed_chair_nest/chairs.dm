@@ -100,7 +100,7 @@
 	chairs_list -= src
 	return ..()
 
-/obj/structure/stool/bed/chair/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/structure/stool/bed/chair/attackby(obj/item/weapon/W, mob/user)
 	..()
 	if(istype(W, /obj/item/assembly/shock_kit))
 		var/obj/item/assembly/shock_kit/SK = W
@@ -143,7 +143,7 @@
 	else
 		..()
 
-/obj/structure/stool/bed/chair/attack_tk(mob/user as mob)
+/obj/structure/stool/bed/chair/attack_tk(mob/user)
 	if(buckled_mob)
 		..()
 	else
@@ -231,7 +231,7 @@
 	name = "wooden chair"
 	desc = "Old is never too old to not be in fashion."
 
-/obj/structure/stool/bed/chair/wood/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/structure/stool/bed/chair/wood/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/wrench))
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		new /obj/item/stack/sheet/wood(src.loc)

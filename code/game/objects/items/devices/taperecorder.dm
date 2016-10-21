@@ -22,7 +22,7 @@
 
 	action_button_name = "Toggle Recorder"
 
-/obj/item/device/taperecorder/hear_talk(mob/living/M as mob, msg, var/verb="says")
+/obj/item/device/taperecorder/hear_talk(mob/living/M, msg, verb="says")
 	if(recording)
 		//var/ending = copytext(msg, length(msg))
 		timestamp+= timerecorded
@@ -43,7 +43,7 @@
 		storedinfo += "\[[time2text(timerecorded*10,"mm:ss")]\] [M.name] [verb], \"[sanitize_plus_popup(msg)]\""//фиксим "я" сразу для принта, да. Записи могут быть большими.
 		return
 
-/obj/item/device/taperecorder/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/device/taperecorder/attackby(obj/item/weapon/W, mob/user)
 	..()
 	if(istype(W, /obj/item/weapon/card/emag))
 		if(emagged == 0)

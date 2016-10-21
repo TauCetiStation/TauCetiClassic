@@ -106,7 +106,7 @@
 		stat |= NOPOWER
 	return
 
-/obj/machinery/door/firedoor/attack_paw(mob/user as mob)
+/obj/machinery/door/firedoor/attack_paw(mob/user)
 	if(istype(user, /mob/living/carbon/alien/humanoid))
 		if(blocked)
 			user << "\red The door is sealed, it cannot be pried open."
@@ -121,7 +121,7 @@
 				open(1)
 	return
 
-/obj/machinery/door/firedoor/attack_animal(mob/user as mob)
+/obj/machinery/door/firedoor/attack_animal(mob/user)
 	if(istype(user, /mob/living/simple_animal/hulk))
 		if(blocked)
 			if(prob(75))
@@ -148,7 +148,7 @@
 				open(1)
 	return
 
-/obj/machinery/door/firedoor/attack_hand(mob/user as mob)
+/obj/machinery/door/firedoor/attack_hand(mob/user)
 	add_fingerprint(user)
 	if(operating)
 		return//Already doing something.
@@ -196,7 +196,7 @@
 				nextstate = CLOSED
 				close()
 
-/obj/machinery/door/firedoor/attackby(obj/item/weapon/C as obj, mob/user as mob)
+/obj/machinery/door/firedoor/attackby(obj/item/weapon/C, mob/user)
 	add_fingerprint(user)
 	if(operating)
 		return//Already doing something.

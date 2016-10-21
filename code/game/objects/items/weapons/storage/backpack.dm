@@ -14,18 +14,18 @@
 	max_w_class = 3
 	max_combined_w_class = 21
 
-/obj/item/weapon/storage/backpack/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/weapon/storage/backpack/attackby(obj/item/weapon/W, mob/user)
 	if (src.use_sound)
 		playsound(src.loc, src.use_sound, 50, 1, -5)
 	..()
 
-/obj/item/weapon/storage/backpack/equipped(var/mob/user, var/slot)
+/obj/item/weapon/storage/backpack/equipped(mob/user, slot)
 	if (slot == slot_back && src.use_sound)
 		playsound(src.loc, src.use_sound, 50, 1, -5)
 	..(user, slot)
 
 /*
-/obj/item/weapon/storage/backpack/dropped(mob/user as mob)
+/obj/item/weapon/storage/backpack/dropped(mob/user)
 	if (loc == user && src.use_sound)
 		playsound(src.loc, src.use_sound, 50, 1, -5)
 	..(user)
@@ -47,7 +47,7 @@
 	..()
 	return
 
-/obj/item/weapon/storage/backpack/holding/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/weapon/storage/backpack/holding/attackby(obj/item/weapon/W, mob/user)
 	if(crit_fail)
 		user << "<spam class='red'>The Bluespace generator isn't working.</span>"
 		return
@@ -57,7 +57,7 @@
 		return
 	..()
 
-/obj/item/weapon/storage/backpack/holding/proc/failcheck(mob/user as mob)
+/obj/item/weapon/storage/backpack/holding/proc/failcheck(mob/user)
 	if (prob(src.reliability))
 		return 1 //No failure
 	if (prob(src.reliability))

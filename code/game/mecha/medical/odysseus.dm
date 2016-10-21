@@ -17,7 +17,7 @@
 		hud = new /obj/item/clothing/glasses/hud/health/mech(src)
 		return
 
-	moved_inside(var/mob/living/carbon/human/H as mob)
+	moved_inside(mob/living/carbon/human/H)
 		if(..())
 			if(H.glasses)
 				occupant_message("<font color='red'>[H.glasses] prevent you from using [src] [hud]</font>")
@@ -63,7 +63,7 @@
 	name = "Integrated Medical Hud"
 
 
-	process_hud(var/mob/M)
+	process_hud(mob/M)
 /*
 		world<< "view(M)"
 		for(var/mob/mob in view(M))

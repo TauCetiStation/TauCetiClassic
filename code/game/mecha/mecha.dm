@@ -109,7 +109,7 @@
 	internal_tank = new /obj/machinery/portable_atmospherics/canister/air(src)
 	return internal_tank
 
-/obj/mecha/proc/add_cell(var/obj/item/weapon/stock_parts/cell/C=null)
+/obj/mecha/proc/add_cell(obj/item/weapon/stock_parts/cell/C=null)
 	if(C)
 		C.forceMove(src)
 		cell = C
@@ -138,13 +138,13 @@
 	pr_give_air = new /datum/global_iterator/mecha_tank_give_air(list(src))
 	pr_internal_damage = new /datum/global_iterator/mecha_internal_damage(list(src),0)
 
-/obj/mecha/proc/do_after(delay as num)
+/obj/mecha/proc/do_after(delay)
 	sleep(delay)
 	if(src)
 		return 1
 	return 0
 
-/obj/mecha/proc/enter_after(delay as num, var/mob/user as mob, var/numticks = 5)
+/obj/mecha/proc/enter_after(delay, mob/user, numticks = 5)
 	var/delayfraction = delay/numticks
 
 	var/turf/T = user.loc
@@ -181,7 +181,7 @@
 /obj/mecha/proc/drop_item()//Derpfix, but may be useful in future for engineering exosuits.
 	return
 
-/obj/mecha/hear_talk(mob/M as mob, text)
+/obj/mecha/hear_talk(mob/M, text)
 	if(M==occupant && radio.broadcasting)
 		radio.talk_into(M, text)
 	return
@@ -253,7 +253,7 @@
 	if(.)
 		events.fireEvent("onMove",get_turf(src))
 
-/obj/mecha/Process_Spacemove(var/movement_dir = 0)
+/obj/mecha/Process_Spacemove(movement_dir = 0)
 	if(occupant)
 		return occupant.Process_Spacemove(movement_dir) //We'll just say you used the clamp to grab the wall
 	return ..()
@@ -334,7 +334,7 @@
 ////////  Internal damage  ////////
 ///////////////////////////////////
 
-/obj/mecha/proc/check_for_internal_damage(var/list/possible_int_damage,var/ignore_threshold=null)
+/obj/mecha/proc/check_for_internal_damage(list/possible_int_damage,ignore_threshold=null)
 	if(!islist(possible_int_damage) || isemptylist(possible_int_damage)) return
 	if(prob(20))
 		if(ignore_threshold || src.health*100/initial(src.health)<src.internal_damage_threshold)
@@ -401,7 +401,7 @@
 		src.destroy()
 	return
 
-/obj/mecha/attack_hand(mob/user as mob)
+/obj/mecha/attack_hand(mob/user)
 	src.log_message("Attack by hand/paw. Attacker - [user].",1)
 	user.do_attack_animation(src)
 
@@ -414,11 +414,11 @@
 		src.log_append_to_last("Armor saved.")
 	return
 
-/obj/mecha/attack_paw(mob/user as mob)
+/obj/mecha/attack_paw(mob/user)
 	return src.attack_hand(user)
 
 
-/obj/mecha/attack_alien(mob/user as mob)
+/obj/mecha/attack_alien(mob/user)
 	src.log_message("Attack by alien. Attacker - [user].",1)
 	user.do_attack_animation(src)
 	if(!prob(src.deflect_chance))
@@ -436,7 +436,7 @@
 	return
 
 
-/obj/mecha/attack_animal(mob/living/simple_animal/user as mob)
+/obj/mecha/attack_animal(mob/living/simple_animal/user)
 	src.log_message("Attack by simple animal. Attacker - [user].",1)
 	if(user.melee_damage_upper == 0)
 		user.emote("[user.friendly] [src]")
@@ -456,7 +456,7 @@
 			user.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name]</font>")
 	return
 
-/obj/mecha/hitby(atom/movable/A as mob|obj) //wrapper
+/obj/mecha/hitby(atom/movable/A) //wrapper
 	..()
 	src.log_message("Hit by [A].",1)
 	call((proc_res["dynhitby"]||src), "dynhitby")(A)
@@ -482,13 +482,13 @@
 	return
 
 
-/obj/mecha/bullet_act(var/obj/item/projectile/Proj) //wrapper
+/obj/mecha/bullet_act(obj/item/projectile/Proj) //wrapper
 	src.log_message("Hit by projectile. Type: [Proj.name]([Proj.flag]).",1)
 	call((proc_res["dynbulletdamage"]||src), "dynbulletdamage")(Proj) //calls equipment
 	..()
 	return
 
-/obj/mecha/proc/dynbulletdamage(var/obj/item/projectile/Proj)
+/obj/mecha/proc/dynbulletdamage(obj/item/projectile/Proj)
 	if(prob(src.deflect_chance))
 		src.occupant_message("\blue The armor deflects incoming projectile.")
 		src.visible_message("The [src.name] armor deflects the projectile")
@@ -619,7 +619,7 @@
 		src.check_for_internal_damage(list(MECHA_INT_FIRE, MECHA_INT_TEMP_CONTROL))
 	return
 
-/obj/mecha/proc/dynattackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/mecha/proc/dynattackby(obj/item/weapon/W, mob/user)
 	user.do_attack_animation(src)
 	src.log_message("Attacked by [W]. Attacker - [user]")
 	if(prob(src.deflect_chance))
@@ -641,7 +641,7 @@
 ////// AttackBy //////
 //////////////////////
 
-/obj/mecha/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/mecha/attackby(obj/item/weapon/W, mob/user)
 
 
 	if(istype(W, /obj/item/device/mmi) || istype(W, /obj/item/device/mmi/posibrain))
@@ -801,7 +801,7 @@
 
 
 /*
-/obj/mecha/attack_ai(var/mob/living/silicon/ai/user as mob)
+/obj/mecha/attack_ai(mob/living/silicon/ai/user)
 	if(!istype(user, /mob/living/silicon/ai))
 		return
 	var/output = {"<b>Assume direct control over [src]?</b>
@@ -1009,7 +1009,7 @@
 		usr << "You stop entering the exosuit."
 	return
 
-/obj/mecha/proc/moved_inside(var/mob/living/carbon/human/H as mob)
+/obj/mecha/proc/moved_inside(mob/living/carbon/human/H)
 	if(H && H.client && H in range(1))
 		H.reset_view(src)
 		/*
@@ -1036,7 +1036,7 @@
 	else
 		return 0
 
-/obj/mecha/proc/mmi_move_inside(var/obj/item/device/mmi/mmi_as_oc as obj,mob/user as mob)
+/obj/mecha/proc/mmi_move_inside(obj/item/device/mmi/mmi_as_oc,mob/user)
 	if(!mmi_as_oc.brainmob || !mmi_as_oc.brainmob.client)
 		user << "Consciousness matrix not detected."
 		return 0
@@ -1063,7 +1063,7 @@
 		user << "You stop inserting the MMI."
 	return 0
 
-/obj/mecha/proc/mmi_moved_inside(var/obj/item/device/mmi/mmi_as_oc as obj,mob/user as mob)
+/obj/mecha/proc/mmi_moved_inside(obj/item/device/mmi/mmi_as_oc,mob/user)
 	if(mmi_as_oc && user in range(1))
 		if(!mmi_as_oc.brainmob || !mmi_as_oc.brainmob.client)
 			user << "Consciousness matrix not detected."
@@ -1438,18 +1438,18 @@
 /////// Messages and Log ///////
 ////////////////////////////////
 
-/obj/mecha/proc/occupant_message(message as text)
+/obj/mecha/proc/occupant_message(message)
 	if(message)
 		if(src.occupant && src.occupant.client)
 			src.occupant << "\icon[src] [message]"
 	return
 
-/obj/mecha/proc/log_message(message as text,red=null)
+/obj/mecha/proc/log_message(message,red=null)
 	log.len++
 	log[log.len] = list("time"=world.timeofday,"message"="[red?"<font color='red'>":null][message][red?"</font>":null]")
 	return log.len
 
-/obj/mecha/proc/log_append_to_last(message as text,red=null)
+/obj/mecha/proc/log_append_to_last(message,red=null)
 	var/list/last_entry = src.log[src.log.len]
 	last_entry["message"] += "<br>[red?"<font color='red'>":null][message][red?"</font>":null]"
 	return

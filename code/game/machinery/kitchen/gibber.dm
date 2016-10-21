@@ -36,7 +36,7 @@
 			log_misc("a [src] didn't find an input plate.")
 			return
 
-/obj/machinery/gibber/autogibber/Bumped(var/atom/A)
+/obj/machinery/gibber/autogibber/Bumped(atom/A)
 	if(!input_plate) return
 
 	if(ismob(A))
@@ -79,14 +79,14 @@
 	else
 		src.overlays += image('icons/obj/kitchen.dmi', "gridle")
 
-/obj/machinery/gibber/attack_paw(mob/user as mob)
+/obj/machinery/gibber/attack_paw(mob/user)
 	return src.attack_hand(user)
 
 /obj/machinery/gibber/container_resist()
 	go_out()
 	return
 
-/obj/machinery/gibber/attack_hand(mob/user as mob)
+/obj/machinery/gibber/attack_hand(mob/user)
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if(operating)
@@ -95,7 +95,7 @@
 	else
 		src.startgibbing(user)
 
-/obj/machinery/gibber/attackby(var/obj/item/W, var/mob/user)
+/obj/machinery/gibber/attackby(obj/item/W, mob/user)
 
 	if (istype(W, /obj/item/weapon/grab))
 		src.add_fingerprint(user)
@@ -121,7 +121,7 @@
 		return
 	move_into_gibber(user,target)
 
-/obj/machinery/gibber/proc/move_into_gibber(var/mob/user,var/mob/living/victim)
+/obj/machinery/gibber/proc/move_into_gibber(mob/user,mob/living/victim)
 
 	if(src.occupant)
 		user << "<span class='danger'>The gibber is full, empty it first!</span>"
@@ -175,7 +175,7 @@
 	return
 
 
-/obj/machinery/gibber/proc/startgibbing(mob/user as mob)
+/obj/machinery/gibber/proc/startgibbing(mob/user)
 	if(src.operating)
 		return
 	if(!src.occupant)

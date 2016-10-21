@@ -35,7 +35,7 @@
 			src.icon_state = "glowstick_[colourName]-over"
 		SSobj.processing.Remove(src)
 
-/obj/item/weapon/reagent_containers/food/snacks/glowstick/proc/update_brightness(var/mob/user = null)
+/obj/item/weapon/reagent_containers/food/snacks/glowstick/proc/update_brightness(mob/user = null)
 	if(on)
 		icon_state = "glowstick_[colourName]-on"
 		set_light(4)
@@ -52,7 +52,7 @@
 		update_brightness(null)
 
 	//Placeholder for effect that trigger on eating that aren't tied to reagents.
-/obj/item/weapon/reagent_containers/food/snacks/glowstick/On_Consume(var/mob/M)
+/obj/item/weapon/reagent_containers/food/snacks/glowstick/On_Consume(mob/M)
 	if(!usr)	return
 	if(!reagents.total_volume)
 		if(M == usr)
@@ -62,7 +62,7 @@
 		qdel(src)
 	return
 
-/obj/item/weapon/reagent_containers/food/snacks/glowstick/attack_self(mob/user as mob)
+/obj/item/weapon/reagent_containers/food/snacks/glowstick/attack_self(mob/user)
 	// Usual checks
 	if(!liquid_fuel)	//it shouldn't happen but if it will we have save from runtime errors
 		user << "<span class='info'>[src] is defective.</span>"
@@ -83,7 +83,7 @@
 	user.visible_message("<span class='notice'>[user] bends the [name].</span>", "<span class='notice'>You bend the [name]!</span>")
 	SSobj.processing |= src
 
-/obj/item/weapon/reagent_containers/food/snacks/glowstick/attack(mob/M as mob, mob/user as mob, def_zone)
+/obj/item/weapon/reagent_containers/food/snacks/glowstick/attack(mob/M, mob/user, def_zone)
 	var/datum/reagent/luminophore = locate(/datum/reagent/luminophore) in reagents.reagent_list
 	if(!luminophore)	//it shouldn't happen but if it will we have save from runtime errors
 		user << "<span class='info'>[src] is defective.</span>"
@@ -154,7 +154,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/afterattack(obj/target, mob/user, proximity)
 	return
 
-/obj/item/weapon/reagent_containers/food/snacks/glowstick/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/weapon/reagent_containers/food/snacks/glowstick/attackby(obj/item/weapon/W, mob/user)
 	return
 
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/Destroy()
@@ -164,7 +164,7 @@
 	SSobj.processing.Remove(src)
 	return ..()
 
-/obj/item/weapon/reagent_containers/food/snacks/glowstick/attack_animal(var/mob/M)
+/obj/item/weapon/reagent_containers/food/snacks/glowstick/attack_animal(mob/M)
 	return
 
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/proc/add_fuel()

@@ -24,7 +24,7 @@
 	..()
 	src.verbs -= /obj/item/weapon/reagent_containers/verb/set_APTFT
 
-/obj/item/weapon/reagent_containers/spray/afterattack(atom/A as mob|obj, mob/user as mob)
+/obj/item/weapon/reagent_containers/spray/afterattack(atom/A, mob/user)
 	if(istype(A, /obj/item/weapon/storage) || istype(A, /obj/structure/table) || istype(A, /obj/structure/rack) || istype(A, /obj/structure/closet) \
 	|| istype(A, /obj/item/weapon/reagent_containers) || istype(A, /obj/structure/sink) || istype(A, /obj/structure/janitorialcart))
 		return
@@ -68,7 +68,7 @@
 		log_game("[key_name(user)] fired Space lube from \a [src].")
 	return
 
-/obj/item/weapon/reagent_containers/spray/proc/Spray_at(atom/A as mob|obj)
+/obj/item/weapon/reagent_containers/spray/proc/Spray_at(atom/A)
 	var/obj/effect/decal/chempuff/D = new/obj/effect/decal/chempuff(get_turf(src))
 	D.create_reagents(amount_per_transfer_from_this)
 	reagents.trans_to(D, amount_per_transfer_from_this, 1/spray_size)
@@ -93,7 +93,7 @@
 
 	return
 
-/obj/item/weapon/reagent_containers/spray/attack_self(var/mob/user)
+/obj/item/weapon/reagent_containers/spray/attack_self(mob/user)
 	if(!possible_transfer_amounts)
 		return
 	amount_per_transfer_from_this = next_in_list(amount_per_transfer_from_this, possible_transfer_amounts)
@@ -154,11 +154,11 @@
 	if(get_dist(usr,src) <= 1)
 		usr << "The safety is [safety ? "on" : "off"]."
 
-/obj/item/weapon/reagent_containers/spray/pepper/attack_self(var/mob/user)
+/obj/item/weapon/reagent_containers/spray/pepper/attack_self(mob/user)
 	safety = !safety
 	usr << "<span class = 'notice'>You switch the safety [safety ? "on" : "off"].</span>"
 
-/obj/item/weapon/reagent_containers/spray/pepper/Spray_at(atom/A as mob|obj)
+/obj/item/weapon/reagent_containers/spray/pepper/Spray_at(atom/A)
 	..()
 
 //water flower
@@ -191,7 +191,7 @@
 
 
 //this is a big copypasta clusterfuck, but it's still better than it used to be!
-/obj/item/weapon/reagent_containers/spray/chemsprayer/Spray_at(atom/A as mob|obj)
+/obj/item/weapon/reagent_containers/spray/chemsprayer/Spray_at(atom/A)
 	var/Sprays[3]
 	for(var/i=1, i<=3, i++) // intialize sprays
 		if(src.reagents.total_volume < 1) break

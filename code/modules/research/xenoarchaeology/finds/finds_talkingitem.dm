@@ -25,7 +25,7 @@
 	else if(heard_words.len >= 1 && world.time > last_talk_time + talk_interval && prob(talk_chance))
 		SaySomething()
 
-/datum/talking_atom/proc/catchMessage(var/msg, var/mob/source)
+/datum/talking_atom/proc/catchMessage(msg, mob/source)
 	if(!holder_atom)
 		return
 
@@ -72,7 +72,7 @@
 			world << "[X]"*/
 
 // TODO:CYRILLIC
-/datum/talking_atom/proc/SaySomething(var/word = null)
+/datum/talking_atom/proc/SaySomething(word = null)
 	if(!holder_atom)
 		return
 

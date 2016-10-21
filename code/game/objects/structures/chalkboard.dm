@@ -135,7 +135,7 @@
 			icon_state = "board_honk[rand(1, 5)]"
 			content = "HONK"
 
-/obj/structure/chalkboard/proc/parsepencode(var/t)
+/obj/structure/chalkboard/proc/parsepencode(t)
 
 	t = replacetext(t, "\[center\]", "<center>")
 	t = replacetext(t, "\[/center\]", "</center>")

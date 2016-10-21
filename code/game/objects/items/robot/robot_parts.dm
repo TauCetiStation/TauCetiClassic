@@ -85,7 +85,7 @@
 				return 1
 	return 0
 
-/obj/item/robot_parts/robot_suit/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/robot_parts/robot_suit/attackby(obj/item/W, mob/user)
 	..()
 	if(istype(W, /obj/item/stack/sheet/metal) && !l_arm && !r_arm && !l_leg && !r_leg && !chest && !head)
 		var/obj/item/weapon/ed209_assembly/B = new /obj/item/weapon/ed209_assembly
@@ -226,7 +226,7 @@
 
 	return
 
-/obj/item/robot_parts/chest/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/robot_parts/chest/attackby(obj/item/W, mob/user)
 	..()
 	if(istype(W, /obj/item/weapon/stock_parts/cell))
 		if(src.cell)
@@ -248,7 +248,7 @@
 			user << "\blue You insert the wire!"
 	return
 
-/obj/item/robot_parts/head/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/robot_parts/head/attackby(obj/item/W, mob/user)
 	..()
 	if(istype(W, /obj/item/device/flash))
 		if(istype(user,/mob/living/silicon/robot))
@@ -276,7 +276,7 @@
 		return
 	return
 
-/obj/item/robot_parts/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/robot_parts/attackby(obj/item/W, mob/user)
 	if(istype(W,/obj/item/weapon/card/emag))
 		if(sabotaged)
 			user << "\red [src] is already sabotaged!"

@@ -41,7 +41,7 @@
 	shadeColour = "#000000"
 	colourName = "mime"
 
-/obj/item/toy/crayon/mime/attack_self(mob/living/user as mob) //inversion
+/obj/item/toy/crayon/mime/attack_self(mob/living/user) //inversion
 	if(colour != "#FFFFFF" && shadeColour != "#000000")
 		colour = "#FFFFFF"
 		shadeColour = "#000000"
@@ -58,12 +58,12 @@
 	shadeColour = "#000FFF"
 	colourName = "rainbow"
 
-/obj/item/toy/crayon/rainbow/attack_self(mob/living/user as mob)
+/obj/item/toy/crayon/rainbow/attack_self(mob/living/user)
 	colour = input(user, "Please select the main colour.", "Crayon colour") as color
 	shadeColour = input(user, "Please select the shade colour.", "Crayon colour") as color
 	return
 
-/obj/item/toy/crayon/afterattack(atom/target, mob/user as mob, proximity)
+/obj/item/toy/crayon/afterattack(atom/target, mob/user, proximity)
 	if(!proximity) return
 	if(!uses)
 		user << "<span class='warning'>There is no more of [src.name] left!</span>"
@@ -149,7 +149,7 @@
 					qdel(src)
 	return
 
-/obj/item/toy/crayon/attack(mob/M as mob, mob/user as mob)
+/obj/item/toy/crayon/attack(mob/M, mob/user)
 	if(edible && (M == user))
 		user << "You take a bite of the [src.name]. Delicious!"
 		user.nutrition += 5
@@ -160,7 +160,7 @@
 	else
 		..()
 
-/obj/item/toy/crayon/proc/territory_claimed(var/area/territory,mob/user)
+/obj/item/toy/crayon/proc/territory_claimed(area/territory,mob/user)
 	var/occupying_gang
 	if(territory.type in (ticker.mode.A_territory | ticker.mode.A_territory_new))
 		occupying_gang = gang_name("A")
@@ -194,7 +194,7 @@
 	else
 		user << "It is empty."
 
-/obj/item/toy/crayon/spraycan/attack_self(mob/living/user as mob)
+/obj/item/toy/crayon/spraycan/attack_self(mob/living/user)
 	var/choice = input(user,"Spraycan options") as null|anything in list("Toggle Cap","Change Drawing","Change Color")
 	switch(choice)
 		if("Toggle Cap")
@@ -208,7 +208,7 @@
 			colour = input(user,"Choose Color") as color
 			update_icon()
 
-/obj/item/toy/crayon/spraycan/afterattack(atom/target, mob/user as mob, proximity)
+/obj/item/toy/crayon/spraycan/afterattack(atom/target, mob/user, proximity)
 	if(!proximity)
 		return
 	if(capped)

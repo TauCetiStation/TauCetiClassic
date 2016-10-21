@@ -11,7 +11,7 @@
 	var/charges = 1
 	var/insisting = 0
 
-/obj/machinery/wish_granter/attack_hand(var/mob/user as mob)
+/obj/machinery/wish_granter/attack_hand(mob/user)
 	usr.set_machine(src)
 
 	if(charges <= 0)

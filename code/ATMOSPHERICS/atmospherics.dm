@@ -61,7 +61,7 @@ Pipelines + Other Objects -> Pipe network
 		L.forceMove(get_turf(src))
 	return ..()
 
-/obj/machinery/atmospherics/proc/getpipeimage(var/iconset, var/iconstate, var/direction, var/col=rgb(255,255,255))
+/obj/machinery/atmospherics/proc/getpipeimage(iconset, iconstate, direction, col=rgb(255,255,255))
 
 	//Add identifiers for the iconset
 	if(iconsetids[iconset] == null)
@@ -84,7 +84,7 @@ Pipelines + Other Objects -> Pipe network
 
 #define VENT_SOUND_DELAY 30
 
-/obj/machinery/atmospherics/relaymove(var/mob/living/user, var/direction)
+/obj/machinery/atmospherics/relaymove(mob/living/user, direction)
 	if(!(direction & initialize_directions)) //cant go this way.
 		return
 
@@ -109,7 +109,7 @@ Pipelines + Other Objects -> Pipe network
 	spawn(1)
 		user.canmove = 1
 
-/obj/machinery/atmospherics/AltClick(var/mob/living/L)
+/obj/machinery/atmospherics/AltClick(mob/living/L)
 	if(is_type_in_list(src, ventcrawl_machinery))
 		L.handle_ventcrawl(src)
 		return
@@ -127,7 +127,7 @@ Pipelines + Other Objects -> Pipe network
 /obj/machinery/atmospherics/var/pipe_color
 
 //Find a connecting /obj/machinery/atmospherics in specified direction
-/obj/machinery/atmospherics/proc/findConnecting(var/direction)
+/obj/machinery/atmospherics/proc/findConnecting(direction)
 	for(var/obj/machinery/atmospherics/target in get_step(src, direction))
 		if(target.initialize_directions & get_dir(target,src))
 			return target

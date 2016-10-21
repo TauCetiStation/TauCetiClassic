@@ -90,7 +90,7 @@
 	contents.Cut()
 	return ..()
 
-/obj/item/weapon/aiModule/broken/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
+/obj/item/weapon/aiModule/broken/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
 	..()
 	IonStorm(0)
 	explosion(sender.loc, 1, 1, 1, 3)

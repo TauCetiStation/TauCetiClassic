@@ -35,7 +35,7 @@
 	name = "[initial(name)] (Wielded)"
 	update_icon()
 
-/obj/item/weapon/twohanded/mob_can_equip(M as mob, slot)
+/obj/item/weapon/twohanded/mob_can_equip(M, slot)
 	//Cannot equip wielded items.
 	if(wielded)
 		M << "<span class='warning'>Unwield the [initial(name)] first!</span>"
@@ -43,7 +43,7 @@
 
 	return ..()
 
-/obj/item/weapon/twohanded/dropped(mob/user as mob)
+/obj/item/weapon/twohanded/dropped(mob/user)
 	//handles unwielding a twohanded weapon when dropped as well as clearing up the offhand
 	if(user)
 		var/obj/item/weapon/twohanded/O = user.get_inactive_hand()
@@ -57,7 +57,7 @@
 /obj/item/weapon/twohanded/pickup(mob/user)
 	unwield()
 
-/obj/item/weapon/twohanded/attack_self(mob/user as mob)
+/obj/item/weapon/twohanded/attack_self(mob/user)
 	if( istype(user,/mob/living/carbon/monkey) )
 		user << "<span class='warning'>It's too heavy for you to wield fully.</span>"
 		return
@@ -131,7 +131,7 @@
 	icon_state = "fireaxe[wielded]"
 	return
 
-/obj/item/weapon/twohanded/fireaxe/afterattack(atom/A as mob|obj|turf|area, mob/user as mob, proximity)
+/obj/item/weapon/twohanded/fireaxe/afterattack(atom/A, mob/user, proximity)
 	if(!proximity) return
 	..()
 	if(A && wielded && (istype(A,/obj/structure/window) || istype(A,/obj/structure/grille))) //destroys windows and grilles in one hit
@@ -177,7 +177,7 @@
 	icon_state = "dualsaber[wielded]"
 	return
 
-/obj/item/weapon/twohanded/dualsaber/attack(target as mob, mob/living/user as mob)
+/obj/item/weapon/twohanded/dualsaber/attack(target, mob/living/user)
 	..()
 	if((CLUMSY in user.mutations) && (wielded) &&prob(40))
 		user << "\red You twirl around a bit before losing your balance and impaling yourself on the [src]."

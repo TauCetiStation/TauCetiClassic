@@ -105,7 +105,7 @@
   *
   * @return nothing
   */
-/obj/machinery/chem_dispenser/ui_interact(mob/user, ui_key = "main",var/datum/nanoui/ui = null)
+/obj/machinery/chem_dispenser/ui_interact(mob/user, ui_key = "main",datum/nanoui/ui = null)
 	if(broken_requirements.len)
 		user << "<span class='warning'>[src] is broken. [broken_requirements[broken_requirements[1]]]</span>"
 		return
@@ -176,7 +176,7 @@
 			beaker = null
 
 
-/obj/machinery/chem_dispenser/attackby(var/obj/item/weapon/reagent_containers/B as obj, var/mob/user as mob)
+/obj/machinery/chem_dispenser/attackby(obj/item/weapon/reagent_containers/B, mob/user)
 //	if(isrobot(user))
 //		return
 
@@ -211,13 +211,13 @@
 		nanomanager.update_uis(src) // update all UIs attached to src
 		return
 
-/obj/machinery/chem_dispenser/attack_ai(mob/user as mob)
+/obj/machinery/chem_dispenser/attack_ai(mob/user)
 	return src.attack_hand(user)
 
-/obj/machinery/chem_dispenser/attack_paw(mob/user as mob)
+/obj/machinery/chem_dispenser/attack_paw(mob/user)
 	return src.attack_hand(user)
 
-/obj/machinery/chem_dispenser/attack_hand(mob/user as mob)
+/obj/machinery/chem_dispenser/attack_hand(mob/user)
 	if(stat & BROKEN)
 		return
 
@@ -300,7 +300,7 @@
 			dispensable_reagents |= dispensable_reagent_tiers[i]
 	dispensable_reagents = sortList(dispensable_reagents)
 
-/obj/machinery/chem_dispenser/constructable/attackby(var/obj/item/I, var/mob/user)
+/obj/machinery/chem_dispenser/constructable/attackby(obj/item/I, mob/user)
 	..()
 	if(default_deconstruction_screwdriver(user, "minidispenser-o", "minidispenser", I))
 		return
@@ -329,7 +329,7 @@
 	max_energy = 100
 	dispensable_reagents = list("water","ice","coffee","cream","tea","icetea","cola","spacemountainwind","dr_gibb","space_up","tonic","sodawater","lemon_lime","sugar","orangejuice","limejuice","watermelonjuice")
 
-	/obj/machinery/chem_dispenser/soda/attackby(var/obj/item/weapon/B as obj, var/mob/user as mob)
+	/obj/machinery/chem_dispenser/soda/attackby(obj/item/weapon/B, mob/user)
 		..()
 		if(istype(B, /obj/item/device/multitool))
 			if(hackedcheck == 0)
@@ -359,7 +359,7 @@
 	desc = "A technological marvel, supposedly able to mix just the mixture you'd like to drink the moment you ask for one."
 	dispensable_reagents = list("lemon_lime","sugar","orangejuice","limejuice","sodawater","tonic","beer","kahlua","whiskey","wine","vodka","gin","rum","tequilla","vermouth","cognac","ale","mead")
 
-	/obj/machinery/chem_dispenser/beer/attackby(var/obj/item/weapon/B as obj, var/mob/user as mob)
+	/obj/machinery/chem_dispenser/beer/attackby(obj/item/weapon/B, mob/user)
 		..()
 
 		if(istype(B, /obj/item/device/multitool))
@@ -434,7 +434,7 @@
 		spawn(rand(0, 15))
 			stat |= NOPOWER
 
-/obj/machinery/chem_master/attackby(var/obj/item/B as obj, var/mob/user as mob)
+/obj/machinery/chem_master/attackby(obj/item/B, mob/user)
 
 	if(default_unfasten_wrench(user, B))
 		return
@@ -617,13 +617,13 @@
 
 	src.updateUsrDialog()
 
-/obj/machinery/chem_master/attack_ai(mob/user as mob)
+/obj/machinery/chem_master/attack_ai(mob/user)
 	return src.attack_hand(user)
 
-/obj/machinery/chem_master/attack_paw(mob/user as mob)
+/obj/machinery/chem_master/attack_paw(mob/user)
 	return src.attack_hand(user)
 
-/obj/machinery/chem_master/attack_hand(mob/user as mob)
+/obj/machinery/chem_master/attack_hand(mob/user)
 	if(stat & BROKEN)
 		return
 
@@ -694,7 +694,7 @@
 	popup.open(1)
 	return
 
-/obj/machinery/chem_master/proc/isgoodnumber(var/num)
+/obj/machinery/chem_master/proc/isgoodnumber(num)
 	if(isnum(num))
 		return Clamp(round(num), 0, 200)
 	else
@@ -710,7 +710,7 @@
 /obj/machinery/chem_master/constructable
 	name = "ChemMaster 2999"
 	desc = "Used to seperate chemicals and distribute them in a variety of forms."
-	
+
 /obj/machinery/chem_master/constructable/New()
 	..()
 	component_parts = list()
@@ -719,8 +719,8 @@
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
 	component_parts += new /obj/item/weapon/reagent_containers/glass/beaker(null)
 	component_parts += new /obj/item/weapon/reagent_containers/glass/beaker(null)
-	
-/obj/machinery/chem_master/constructable/attackby(var/obj/item/B as obj, var/mob/user as mob, params)
+
+/obj/machinery/chem_master/constructable/attackby(obj/item/B, mob/user, params)
 
 	if(default_deconstruction_screwdriver(user, "mixer0_nopower", "mixer0_", B))
 		if(beaker)
@@ -895,7 +895,7 @@
 	src.updateUsrDialog()
 
 
-/obj/machinery/computer/pandemic/attack_hand(mob/user as mob)
+/obj/machinery/computer/pandemic/attack_hand(mob/user)
 	if(stat & (NOPOWER|BROKEN))
 		return
 	user.set_machine(src)
@@ -988,7 +988,7 @@
 	return
 
 
-/obj/machinery/computer/pandemic/attackby(var/obj/I as obj, var/mob/user as mob)
+/obj/machinery/computer/pandemic/attackby(obj/I, mob/user)
 	if(istype(I, /obj/item/weapon/reagent_containers/glass))
 		if(stat & (NOPOWER|BROKEN)) return
 		if(src.beaker)
@@ -1087,7 +1087,7 @@
 	return
 
 
-/obj/machinery/reagentgrinder/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/obj/machinery/reagentgrinder/attackby(obj/item/O, mob/user)
 
 	if(default_unfasten_wrench(user, O))
 		return
@@ -1143,17 +1143,17 @@
 	src.updateUsrDialog()
 	return 0
 
-/obj/machinery/reagentgrinder/attack_paw(mob/user as mob)
+/obj/machinery/reagentgrinder/attack_paw(mob/user)
 	return src.attack_hand(user)
 
-/obj/machinery/reagentgrinder/attack_ai(mob/user as mob)
+/obj/machinery/reagentgrinder/attack_ai(mob/user)
 	return 0
 
-/obj/machinery/reagentgrinder/attack_hand(mob/user as mob)
+/obj/machinery/reagentgrinder/attack_hand(mob/user)
 	user.set_machine(src)
 	interact(user)
 
-/obj/machinery/reagentgrinder/interact(mob/user as mob) // The microwave Menu
+/obj/machinery/reagentgrinder/interact(mob/user) // The microwave Menu
 	var/is_chamber_empty = 0
 	var/is_beaker_ready = 0
 	var/processing_chamber = ""
@@ -1238,28 +1238,28 @@
 		holdingitems -= O
 	holdingitems = list()
 
-/obj/machinery/reagentgrinder/proc/is_allowed(var/obj/item/weapon/reagent_containers/O)
+/obj/machinery/reagentgrinder/proc/is_allowed(obj/item/weapon/reagent_containers/O)
 	for (var/i in blend_items)
 		if(istype(O, i))
 			return 1
 	return 0
 
-/obj/machinery/reagentgrinder/proc/get_allowed_by_id(var/obj/item/weapon/grown/O)
+/obj/machinery/reagentgrinder/proc/get_allowed_by_id(obj/item/weapon/grown/O)
 	for (var/i in blend_items)
 		if (istype(O, i))
 			return blend_items[i]
 
-/obj/machinery/reagentgrinder/proc/get_allowed_snack_by_id(var/obj/item/weapon/reagent_containers/food/snacks/O)
+/obj/machinery/reagentgrinder/proc/get_allowed_snack_by_id(obj/item/weapon/reagent_containers/food/snacks/O)
 	for(var/i in blend_items)
 		if(istype(O, i))
 			return blend_items[i]
 
-/obj/machinery/reagentgrinder/proc/get_allowed_juice_by_id(var/obj/item/weapon/reagent_containers/food/snacks/O)
+/obj/machinery/reagentgrinder/proc/get_allowed_juice_by_id(obj/item/weapon/reagent_containers/food/snacks/O)
 	for(var/i in juice_items)
 		if(istype(O, i))
 			return juice_items[i]
 
-/obj/machinery/reagentgrinder/proc/get_grownweapon_amount(var/obj/item/weapon/grown/O)
+/obj/machinery/reagentgrinder/proc/get_grownweapon_amount(obj/item/weapon/grown/O)
 	if (!istype(O))
 		return 5
 	else if (O.potency == -1)
@@ -1267,7 +1267,7 @@
 	else
 		return round(O.potency)
 
-/obj/machinery/reagentgrinder/proc/get_juice_amount(var/obj/item/weapon/reagent_containers/food/snacks/grown/O)
+/obj/machinery/reagentgrinder/proc/get_juice_amount(obj/item/weapon/reagent_containers/food/snacks/grown/O)
 	if (!istype(O))
 		return 5
 	else if (O.potency == -1)
@@ -1275,7 +1275,7 @@
 	else
 		return round(5*sqrt(O.potency))
 
-/obj/machinery/reagentgrinder/proc/remove_object(var/obj/item/O)
+/obj/machinery/reagentgrinder/proc/remove_object(obj/item/O)
 	holdingitems -= O
 	qdel(O)
 

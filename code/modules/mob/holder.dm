@@ -26,18 +26,18 @@
 
 		qdel(src)
 
-/obj/item/weapon/holder/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/weapon/holder/attackby(obj/item/weapon/W, mob/user)
 	for(var/mob/M in src.contents)
 		M.attackby(W,user)
 
-/obj/item/weapon/holder/proc/show_message(var/message, var/m_type)
+/obj/item/weapon/holder/proc/show_message(message, m_type)
 	for(var/mob/living/M in contents)
 		M.show_message(message,m_type)
 
 //Mob procs and vars for scooping up
 /mob/living/var/holder_type
 
-/mob/living/proc/get_scooped(var/mob/living/carbon/grabber)
+/mob/living/proc/get_scooped(mob/living/carbon/grabber)
 	if(!holder_type || buckled || pinned.len)
 		return
 	var/obj/item/weapon/holder/H = new holder_type(loc)

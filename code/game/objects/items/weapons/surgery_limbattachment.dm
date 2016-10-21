@@ -1,4 +1,4 @@
-/obj/item/robot_parts/attack(mob/living/carbon/human/M as mob, mob/living/carbon/user as mob)
+/obj/item/robot_parts/attack(mob/living/carbon/human/M, mob/living/carbon/user)
 	var/limbloc = null
 
 	if(!istype(M))

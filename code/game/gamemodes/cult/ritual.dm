@@ -90,7 +90,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 		return
 
 
-	attackby(I as obj, user as mob)
+	attackby(I, user)
 		if(istype(I, /obj/item/weapon/book/tome) && iscultist(user))
 			user << "You retrace your steps, carefully undoing the lines of the rune."
 			qdel(src)
@@ -102,7 +102,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 		return
 
 
-	attack_hand(mob/living/user as mob)
+	attack_hand(mob/living/user)
 		if(!iscultist(user))
 			user << "You can't mouth the arcane scratchings without fumbling over them."
 			return
@@ -345,7 +345,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 //		usr << "whatev"
 //		usr << browse(null, "window=tank")
 
-	attack(mob/living/M as mob, mob/living/user as mob)
+	attack(mob/living/M, mob/living/user)
 
 		M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has had the [name] used on him by [user.name] ([user.ckey])</font>")
 		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used [name] on [M.name] ([M.ckey])</font>")
@@ -370,7 +370,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 		M << "\red You feel searing heat inside!"
 
 
-	attack_self(mob/living/user as mob)
+	attack_self(mob/living/user)
 		usr = user
 		if(!usr.canmove || usr.stat || usr.restrained())
 			return
@@ -469,7 +469,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 			user << "This book is completely blank!"
 			return
 
-	attackby(obj/item/weapon/book/tome/T as obj, mob/living/user as mob)
+	attackby(obj/item/weapon/book/tome/T, mob/living/user)
 		if(istype(T, /obj/item/weapon/book/tome)) // sanity check to prevent a runtime error
 			switch(alert("Copy the runes from your tome?",,"Copy", "Cancel"))
 				if("cancel")
@@ -500,7 +500,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 /obj/item/weapon/book/tome/imbued //admin tome, spawns working runes without waiting
 	w_class = 2.0
 	var/cultistsonly = 1
-	attack_self(mob/user as mob)
+	attack_self(mob/user)
 		if(src.cultistsonly && !iscultist(usr))
 			return
 		if(!cultwords["travel"])

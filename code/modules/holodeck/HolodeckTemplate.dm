@@ -14,7 +14,7 @@
 	else
 		return null
 
-/datum/map_template/holoscene/proc/set_air_change(var/turf/simulated/T, var/datum/gas_mixture/env)
+/datum/map_template/holoscene/proc/set_air_change(turf/simulated/T, datum/gas_mixture/env)
 	var/turf/simulated/TT
 	if(!special_atmo)
 		for(var/i = 0 to HOLO_SIZE_X - 1)

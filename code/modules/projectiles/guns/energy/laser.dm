@@ -96,7 +96,7 @@ obj/item/weapon/gun/energy/laser/retro
 	desc = "A laser gun equipped with a refraction kit that spreads bolts."
 	ammo_type = list(/obj/item/ammo_casing/energy/laser, /obj/item/ammo_casing/energy/laser/scatter)
 
-	attack_self(mob/living/user as mob)
+	attack_self(mob/living/user)
 		select_fire(user)
 		update_icon()
 
@@ -140,7 +140,7 @@ obj/item/weapon/gun/energy/laser/retro
 	clumsy_check = 0
 	var/charge_tick = 0
 
-/obj/item/weapon/gun/energy/laser/bluetag/special_check(var/mob/living/carbon/human/M)
+/obj/item/weapon/gun/energy/laser/bluetag/special_check(mob/living/carbon/human/M)
 	if(ishuman(M))
 		if(istype(M.wear_suit, /obj/item/clothing/suit/bluetag))
 			return 1
@@ -175,7 +175,7 @@ obj/item/weapon/gun/energy/laser/retro
 	clumsy_check = 0
 	var/charge_tick = 0
 
-/obj/item/weapon/gun/energy/laser/redtag/special_check(var/mob/living/carbon/human/M)
+/obj/item/weapon/gun/energy/laser/redtag/special_check(mob/living/carbon/human/M)
 	if(ishuman(M))
 		if(istype(M.wear_suit, /obj/item/clothing/suit/redtag))
 			return 1

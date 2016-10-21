@@ -87,7 +87,7 @@
 	updatehealth()
 
 
-/mob/living/carbon/monkey/calculate_affecting_pressure(var/pressure)
+/mob/living/carbon/monkey/calculate_affecting_pressure(pressure)
 	..()
 	return pressure
 

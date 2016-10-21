@@ -116,7 +116,7 @@
 /*
  * Inventory
  */
-/mob/living/simple_animal/parrot/show_inv(mob/user as mob)
+/mob/living/simple_animal/parrot/show_inv(mob/user)
 	user.set_machine(src)
 	if(user.stat) return
 
@@ -213,7 +213,7 @@
  * Attack responces
  */
 //Humans, monkeys, aliens
-/mob/living/simple_animal/parrot/attack_hand(mob/living/carbon/M as mob)
+/mob/living/simple_animal/parrot/attack_hand(mob/living/carbon/M)
 	..()
 	if(client) return
 	if(!stat && M.a_intent == "hurt")
@@ -233,14 +233,14 @@
 			drop_held_item(0)
 	return
 
-/mob/living/simple_animal/parrot/attack_paw(mob/living/carbon/monkey/M as mob)
+/mob/living/simple_animal/parrot/attack_paw(mob/living/carbon/monkey/M)
 	attack_hand(M)
 
-/mob/living/simple_animal/parrot/attack_alien(mob/living/carbon/monkey/M as mob)
+/mob/living/simple_animal/parrot/attack_alien(mob/living/carbon/monkey/M)
 	attack_hand(M)
 
 //Simple animals
-/mob/living/simple_animal/parrot/attack_animal(mob/living/simple_animal/M as mob)
+/mob/living/simple_animal/parrot/attack_animal(mob/living/simple_animal/M)
 	if(client) return
 
 
@@ -253,7 +253,7 @@
 		icon_state = "parrot_fly"
 
 //Mobs with objects
-/mob/living/simple_animal/parrot/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/mob/living/simple_animal/parrot/attackby(obj/item/O, mob/user)
 	..()
 	if(!stat && !client && !istype(O, /obj/item/stack/medical))
 		if(O.force)
@@ -267,7 +267,7 @@
 	return
 
 //Bullets
-/mob/living/simple_animal/parrot/bullet_act(var/obj/item/projectile/Proj)
+/mob/living/simple_animal/parrot/bullet_act(obj/item/projectile/Proj)
 	..()
 	if(!stat && !client)
 		if(parrot_state == PARROT_PERCH)
@@ -648,7 +648,7 @@
 
 	return
 
-/mob/living/simple_animal/parrot/proc/drop_held_item(var/drop_gently = 1)
+/mob/living/simple_animal/parrot/proc/drop_held_item(drop_gently = 1)
 	set name = "Drop held item"
 	set category = "Parrot"
 	set desc = "Drop the item you're holding."
@@ -819,20 +819,20 @@
 	..(message)
 
 
-/mob/living/simple_animal/parrot/hear_say(var/message, var/verb = "says", var/datum/language/language = null, var/alt_name = "",var/italics = 0, var/mob/speaker = null)
+/mob/living/simple_animal/parrot/hear_say(message, verb = "says", datum/language/language = null, alt_name = "",italics = 0, mob/speaker = null)
 	if(speaker != src)
 		parrot_hear(message)
 	..(message,verb,language,alt_name,italics,speaker)
 
 
 
-/mob/living/simple_animal/parrot/hear_radio(var/message, var/verb="says", var/datum/language/language=null, var/part_a, var/part_b, var/mob/speaker = null, var/hard_to_hear = 0)
+/mob/living/simple_animal/parrot/hear_radio(message, verb="says", datum/language/language=null, part_a, part_b, mob/speaker = null, hard_to_hear = 0)
 	if(speaker != src)
 		parrot_hear("[pick(available_channels)] [message]")
 	..(message,verb,language,part_a,part_b,speaker,hard_to_hear)
 
 
-/mob/living/simple_animal/parrot/proc/parrot_hear(var/message="")
+/mob/living/simple_animal/parrot/proc/parrot_hear(message="")
 	if(!message || stat)
 		return
 	speech_buffer.Add(message)

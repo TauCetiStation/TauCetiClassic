@@ -157,7 +157,7 @@
 			icon_state = "[initial(icon_state)]_open"
 		return 1
 
-/obj/machinery/dna_scannernew/relaymove(mob/user as mob)
+/obj/machinery/dna_scannernew/relaymove(mob/user)
 	if(user.stat)
 		return
 	open(user)
@@ -268,7 +268,7 @@
 	active_power_usage = 400
 	var/waiting_for_user_input=0 // Fix for #274 (Mash create block injector without answering dialog to make unlimited injectors) - N3X
 
-/obj/machinery/computer/scan_consolenew/attackby(obj/item/I as obj, mob/user as mob)
+/obj/machinery/computer/scan_consolenew/attackby(obj/item/I, mob/user)
 	if (istype(I, /obj/item/weapon/disk/data)) //INSERT SOME diskS
 		if (!src.disk)
 			user.drop_item()
@@ -295,13 +295,13 @@
 		return
 	return
 
-/obj/machinery/computer/scan_consolenew/proc/all_dna_blocks(var/list/buffer)
+/obj/machinery/computer/scan_consolenew/proc/all_dna_blocks(list/buffer)
 	var/list/arr = list()
 	for(var/i = 1, i <= buffer.len, i++)
 		arr += "[i]:[EncodeDNABlock(buffer[i])]"
 	return arr
 
-/obj/machinery/computer/scan_consolenew/proc/setInjectorBlock(var/obj/item/weapon/dnainjector/I, var/blk, var/datum/dna2/record/buffer)
+/obj/machinery/computer/scan_consolenew/proc/setInjectorBlock(obj/item/weapon/dnainjector/I, blk, datum/dna2/record/buffer)
 	var/pos = findtext(blk,":")
 	if(!pos) return 0
 	var/id = text2num(copytext(blk,1,pos))
@@ -310,7 +310,7 @@
 	I.buf = buffer
 	return 1
 
-/obj/machinery/computer/scan_consolenew/attack_hand(user as mob)
+/obj/machinery/computer/scan_consolenew/attack_hand(user)
 	if(..())
 		return
 	if(ishuman(user)) //#Z2 Hulk </3 computers
@@ -338,7 +338,7 @@
   *
   * @return nothing
   */
-/obj/machinery/computer/scan_consolenew/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
+/obj/machinery/computer/scan_consolenew/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
 	if(connected && connected.is_operational())
 		if(user == connected.occupant || user.stat)
 			return

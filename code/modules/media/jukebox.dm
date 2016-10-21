@@ -84,7 +84,7 @@ var/global/loopModeNames=list(
 	var/state_base = "jukebox2"
 
 
-/obj/machinery/media/jukebox/attack_ai(var/mob/user)
+/obj/machinery/media/jukebox/attack_ai(mob/user)
 	attack_hand(user)
 
 
@@ -113,7 +113,7 @@ var/global/loopModeNames=list(
 /obj/machinery/media/jukebox/proc/check_reload()
 	return world.time > last_reload + JUKEBOX_RELOAD_COOLDOWN
 
-/obj/machinery/media/jukebox/attack_hand(var/mob/user)
+/obj/machinery/media/jukebox/attack_hand(mob/user)
 	if(stat & NOPOWER)
 		usr << "\red You don't see anything to mess with."
 		return

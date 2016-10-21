@@ -1,4 +1,4 @@
-/datum/subsystem/ticker/proc/scoreboard(var/completions)
+/datum/subsystem/ticker/proc/scoreboard(completions)
 	if(achievements.len)
 		completions += "<br>[achievement_declare_completion()]"
 
@@ -227,7 +227,7 @@
 
 
 
-/mob/proc/scorestats(var/completions)
+/mob/proc/scorestats(completions)
 	var/dat = completions
 	dat += {"<BR><h2>Round Statistics and Score</h2>"}
 	if (ticker.mode.name == "nuclear emergency")

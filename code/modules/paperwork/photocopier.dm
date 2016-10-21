@@ -15,13 +15,13 @@
 	var/toner = 30 //how much toner is left! woooooo~
 	var/maxcopies = 10	//how many copies can be copied at once- idea shamelessly stolen from bs12's copier!
 
-/obj/machinery/photocopier/attack_ai(mob/user as mob)
+/obj/machinery/photocopier/attack_ai(mob/user)
 	return attack_hand(user)
 
-/obj/machinery/photocopier/attack_paw(mob/user as mob)
+/obj/machinery/photocopier/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/machinery/photocopier/attack_hand(mob/user as mob)
+/obj/machinery/photocopier/attack_hand(mob/user)
 	user.set_machine(src)
 
 	var/dat = "Photocopier<BR><BR>"
@@ -137,7 +137,7 @@
 
 	updateUsrDialog()
 
-/obj/machinery/photocopier/attackby(obj/item/O as obj, mob/user as mob)
+/obj/machinery/photocopier/attackby(obj/item/O, mob/user)
 	if(istype(O, /obj/item/weapon/paper))
 		if(!copy && !photocopy && !bundle)
 			user.drop_item()
@@ -209,7 +209,7 @@
 	return
 
 
-/obj/machinery/photocopier/proc/copy(var/obj/item/weapon/paper/copy)
+/obj/machinery/photocopier/proc/copy(obj/item/weapon/paper/copy)
 	var/obj/item/weapon/paper/c = new /obj/item/weapon/paper (loc)
 	if(toner > 10)	//lots of toner, make it dark
 		c.info = "<font color = #101010>"
@@ -244,7 +244,7 @@
 	return c
 
 
-/obj/machinery/photocopier/proc/photocopy(var/obj/item/weapon/photo/photocopy)
+/obj/machinery/photocopier/proc/photocopy(obj/item/weapon/photo/photocopy)
 	var/obj/item/weapon/photo/p = new /obj/item/weapon/photo (src.loc)
 	var/icon/I = icon(photocopy.icon, photocopy.icon_state)
 	var/icon/img = icon(photocopy.img)

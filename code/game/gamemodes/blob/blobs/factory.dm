@@ -88,7 +88,7 @@
 				break
 	..()
 
-/mob/living/simple_animal/hostile/blobspore/proc/Zombify(var/mob/living/carbon/human/H)
+/mob/living/simple_animal/hostile/blobspore/proc/Zombify(mob/living/carbon/human/H)
 	if(H.wear_suit)
 		var/obj/item/clothing/suit/armor/A = H.wear_suit
 		if(A.armor && A.armor["melee"])

@@ -30,7 +30,7 @@
 	..()
 	update_icon()
 
-/obj/item/weapon/reagent_containers/syringe/attack_self(mob/user as mob)
+/obj/item/weapon/reagent_containers/syringe/attack_self(mob/user)
 
 	switch(mode)
 		if(SYRINGE_DRAW)
@@ -48,7 +48,7 @@
 /obj/item/weapon/reagent_containers/syringe/attack_paw()
 	return attack_hand()
 
-/obj/item/weapon/reagent_containers/syringe/attackby(obj/item/I as obj, mob/user as mob)
+/obj/item/weapon/reagent_containers/syringe/attackby(obj/item/I, mob/user)
 	return
 
 /obj/item/weapon/reagent_containers/syringe/afterattack(obj/target, mob/user, proximity)
@@ -231,7 +231,7 @@
 		overlays += filling
 
 
-/obj/item/weapon/reagent_containers/syringe/proc/syringestab(mob/living/carbon/target as mob, mob/living/carbon/user as mob)
+/obj/item/weapon/reagent_containers/syringe/proc/syringestab(mob/living/carbon/target, mob/living/carbon/user)
 
 	user.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [target.name] ([target.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>"
 	target.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [user.name] ([user.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>"
@@ -302,7 +302,7 @@
 	..()
 	update_icon()
 
-/obj/item/weapon/reagent_containers/ld50_syringe/attack_self(mob/user as mob)
+/obj/item/weapon/reagent_containers/ld50_syringe/attack_self(mob/user)
 	mode = !mode
 	update_icon()
 
@@ -313,7 +313,7 @@
 /obj/item/weapon/reagent_containers/ld50_syringe/attack_paw()
 	return attack_hand()
 
-/obj/item/weapon/reagent_containers/ld50_syringe/attackby(obj/item/I as obj, mob/user as mob)
+/obj/item/weapon/reagent_containers/ld50_syringe/attackby(obj/item/I, mob/user)
 	return
 
 /obj/item/weapon/reagent_containers/ld50_syringe/afterattack(obj/target, mob/user , flag)

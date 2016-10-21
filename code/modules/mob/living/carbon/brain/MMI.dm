@@ -17,7 +17,7 @@
 	var/mob/living/silicon/robot = null//Appears unused.
 	var/obj/mecha = null//This does not appear to be used outside of reference in mecha.dm.
 
-	attackby(var/obj/item/O as obj, var/mob/user as mob)
+	attackby(obj/item/O, mob/user)
 		if(istype(O,/obj/item/brain) && !brainmob) //Time to stick a brain in it --NEO
 			if(!O:brainmob)
 				user << "\red You aren't sure where this brain came from, but you're pretty sure it's a useless brain."
@@ -57,7 +57,7 @@
 			return
 		..()
 
-	attack_self(mob/user as mob)
+	attack_self(mob/user)
 		if(!brainmob)
 			user << "\red You upend the MMI, but there's nothing in it."
 		else if(locked)
@@ -75,7 +75,7 @@
 			name = "Man-Machine Interface"
 
 	proc
-		transfer_identity(var/mob/living/carbon/human/H)//Same deal as the regular brain proc. Used for human-->robot people.
+		transfer_identity(mob/living/carbon/human/H)//Same deal as the regular brain proc. Used for human-->robot people.
 			brainmob = new(src)
 			brainmob.name = H.real_name
 			brainmob.real_name = H.real_name

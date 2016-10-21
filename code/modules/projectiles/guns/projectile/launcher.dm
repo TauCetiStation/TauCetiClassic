@@ -25,7 +25,7 @@
 /obj/item/weapon/gun/projectile/m79/process_chamber()
 	return ..(0, 0)
 
-/obj/item/weapon/gun/projectile/m79/attackby(var/obj/item/A as obj, mob/user as mob)
+/obj/item/weapon/gun/projectile/m79/attackby(obj/item/A, mob/user)
 	if(!open)
 		return
 	if(chambered)
@@ -40,7 +40,7 @@
 		update_icon()	//I.E. fix the desc
 		A.update_icon()
 
-/obj/item/weapon/gun/projectile/m79/attack_self(mob/user as mob)
+/obj/item/weapon/gun/projectile/m79/attack_self(mob/user)
 	open = !open
 	if(open)
 		playsound(src.loc, 'sound/weapons/guns/m79_out.ogg', 50, 1)

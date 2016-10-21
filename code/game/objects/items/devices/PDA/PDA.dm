@@ -219,7 +219,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	detonate = 0
 
 
-/obj/item/device/pda/ai/proc/set_name_and_job(newname as text, newjob as text, newrank as null|text)
+/obj/item/device/pda/ai/proc/set_name_and_job(newname, newjob, newrank)
 	owner = newname
 	ownjob = newjob
 	if(newrank)
@@ -291,7 +291,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	return 1
 
 
-/obj/item/device/pda/ai/attack_self(mob/user as mob)
+/obj/item/device/pda/ai/attack_self(mob/user)
 	if ((honkamt > 0) && (prob(60)))//For clown virus.
 		honkamt--
 		playsound(loc, 'sound/items/bikehorn.ogg', 30, 1)
@@ -361,7 +361,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	return
 
 
-/obj/item/device/pda/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null, var/force_open = 1)
+/obj/item/device/pda/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1)
 	ui_tick++
 	var/datum/nanoui/old_ui = nanomanager.get_open_ui(user, src, "main")
 	var/auto_update = 1
@@ -516,7 +516,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	ui.set_auto_update(auto_update)
 
 //NOTE: graphic resources are loaded on client login
-/obj/item/device/pda/attack_self(mob/user as mob)
+/obj/item/device/pda/attack_self(mob/user)
 
 	user.set_machine(src)
 
@@ -849,7 +849,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	if(newmessage)
 		overlays += image('icons/obj/pda.dmi', "pda-r")
 
-/obj/item/device/pda/proc/detonate_act(var/obj/item/device/pda/P)
+/obj/item/device/pda/proc/detonate_act(obj/item/device/pda/P)
 	//TODO: sometimes these attacks show up on the message server
 	var/i = rand(1,100)
 	var/j = rand(0,1) //Possibility of losing the PDA after the detonation
@@ -923,7 +923,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			id.loc = get_turf(src)
 		id = null
 
-/obj/item/device/pda/proc/create_message(var/mob/living/U = usr, var/obj/item/device/pda/P, var/tap = 1)
+/obj/item/device/pda/proc/create_message(mob/living/U = usr, obj/item/device/pda/P, tap = 1)
 	if(tap)
 		U.visible_message("<span class='notice'>[U] taps on \his PDA's screen.</span>")
 	U.last_target_click = world.time
@@ -1081,7 +1081,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		usr << "<span class='notice'>You cannot do this while restrained.</span>"
 
 
-/obj/item/device/pda/proc/id_check(mob/user as mob, choice as num)//To check for IDs; 1 for in-pda use, 2 for out of pda use.
+/obj/item/device/pda/proc/id_check(mob/user, choice)//To check for IDs; 1 for in-pda use, 2 for out of pda use.
 	if(choice == 1)
 		if (id)
 			remove_id()
@@ -1102,7 +1102,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	return
 
 // access to status display signals
-/obj/item/device/pda/attackby(obj/item/C as obj, mob/user as mob)
+/obj/item/device/pda/attackby(obj/item/C, mob/user)
 	..()
 	if(istype(C, /obj/item/weapon/cartridge) && !cartridge)
 		cartridge = C
@@ -1148,7 +1148,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			user << "<span class='notice'>You slide \the [C] into \the [src].</span>"
 	return
 
-/obj/item/device/pda/attack(mob/living/C as mob, mob/living/user as mob)
+/obj/item/device/pda/attack(mob/living/C, mob/living/user)
 	if (istype(C, /mob/living/carbon))
 		switch(scanmode)
 			if(1)
@@ -1205,7 +1205,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				else
 					user.show_message("\blue No radiation detected.")
 
-/obj/item/device/pda/afterattack(atom/A as mob|obj|turf|area, mob/user as mob, proximity)
+/obj/item/device/pda/afterattack(atom/A, mob/user, proximity)
 	if(!proximity) return
 	switch(scanmode)
 

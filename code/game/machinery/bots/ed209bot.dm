@@ -112,7 +112,7 @@
 	src.icon_state = "[lasercolor]ed209[src.on]"
 	src.updateUsrDialog()
 
-/obj/machinery/bot/ed209/attack_hand(mob/user as mob)
+/obj/machinery/bot/ed209/attack_hand(mob/user)
 	. = ..()
 	if (.)
 		return
@@ -182,7 +182,7 @@ Auto Patrol: []"},
 			src.declare_arrests = !src.declare_arrests
 	src.updateUsrDialog()
 
-/obj/machinery/bot/ed209/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/machinery/bot/ed209/attackby(obj/item/weapon/W, mob/user)
 	if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if (src.allowed(user) && !open && !emagged)
 			src.locked = !src.locked
@@ -203,7 +203,7 @@ Auto Patrol: []"},
 					src.shootAt(user)
 				src.mode = SECBOT_HUNT
 
-/obj/machinery/bot/ed209/Emag(mob/user as mob)
+/obj/machinery/bot/ed209/Emag(mob/user)
 	..()
 	if(open && !locked)
 		if(user) user << "<span class='warning'>You short out [src]'s target assessment circuits.</span>"
@@ -494,7 +494,7 @@ Auto Patrol: []"},
 // sets the current destination
 // signals all beacons matching the patrol code
 // beacons will return a signal giving their locations
-/obj/machinery/bot/ed209/proc/set_destination(var/new_dest)
+/obj/machinery/bot/ed209/proc/set_destination(new_dest)
 	new_destination = new_dest
 	post_signal(beacon_freq, "findbeacon", "patrol")
 	awaiting_beacon = 1
@@ -578,11 +578,11 @@ Auto Patrol: []"},
 
 
 // send a radio signal with a single data key/value pair
-/obj/machinery/bot/ed209/proc/post_signal(var/freq, var/key, var/value)
+/obj/machinery/bot/ed209/proc/post_signal(freq, key, value)
 	post_signal_multiple(freq, list("[key]" = value) )
 
 // send a radio signal with multiple data key/values
-/obj/machinery/bot/ed209/proc/post_signal_multiple(var/freq, var/list/keyval)
+/obj/machinery/bot/ed209/proc/post_signal_multiple(freq, list/keyval)
 
 	var/datum/radio_frequency/frequency = radio_controller.return_frequency(freq)
 
@@ -616,7 +616,7 @@ Auto Patrol: []"},
 
 // calculates a path to the current destination
 // given an optional turf to avoid
-/obj/machinery/bot/ed209/proc/calc_path(var/turf/avoid = null)
+/obj/machinery/bot/ed209/proc/calc_path(turf/avoid = null)
 	src.path = AStar(src.loc, patrol_target, /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance, 0, 120, id=botcard, exclude=avoid)
 	if (!src.path) src.path = list()
 
@@ -661,7 +661,7 @@ Auto Patrol: []"},
 
 //If the security records say to arrest them, arrest them
 //Or if they have weapons and aren't security, arrest them.
-/obj/machinery/bot/ed209/proc/assess_perp(mob/living/carbon/human/perp as mob)
+/obj/machinery/bot/ed209/proc/assess_perp(mob/living/carbon/human/perp)
 	var/threatcount = 0
 
 	if(src.emagged == 2) return 10 //Everyone is a criminal!
@@ -745,14 +745,14 @@ Auto Patrol: []"},
 	return
 
 /* terrible
-/obj/machinery/bot/ed209/Bumped(atom/movable/M as mob|obj)
+/obj/machinery/bot/ed209/Bumped(atom/movable/M)
 	spawn(0)
 		if (M)
 			var/turf/T = get_turf(src)
 			M:loc = T
 */
 
-/obj/machinery/bot/ed209/proc/speak(var/message)
+/obj/machinery/bot/ed209/proc/speak(message)
 	for(var/mob/O in hearers(src, null))
 		O.show_message("<span class='game say'><span class='name'>[src]</span> beeps, \"[message]\"",2)
 	return
@@ -801,7 +801,7 @@ Auto Patrol: []"},
 	qdel(src)
 
 
-/obj/machinery/bot/ed209/proc/shootAt(var/mob/target)
+/obj/machinery/bot/ed209/proc/shootAt(mob/target)
 	if(lastfired && world.time - lastfired < shot_delay)
 		return
 	lastfired = world.time
@@ -845,7 +845,7 @@ Auto Patrol: []"},
 		return
 	return
 
-/obj/machinery/bot/ed209/attack_alien(var/mob/living/carbon/alien/user as mob)
+/obj/machinery/bot/ed209/attack_alien(mob/living/carbon/alien/user)
 	..()
 	if (!isalien(target))
 		src.target = user
@@ -890,7 +890,7 @@ Auto Patrol: []"},
 
 
 
-/obj/item/weapon/ed209_assembly/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/weapon/ed209_assembly/attackby(obj/item/weapon/W, mob/user)
 	..()
 
 	if(istype(W, /obj/item/weapon/pen))
@@ -1014,7 +1014,7 @@ Auto Patrol: []"},
 				qdel(src)
 
 
-/obj/machinery/bot/ed209/bullet_act(var/obj/item/projectile/Proj)
+/obj/machinery/bot/ed209/bullet_act(obj/item/projectile/Proj)
 	if((src.lasercolor == "b") && (src.disabled == 0))
 		if(istype(Proj, /obj/item/projectile/beam/lastertag/red))
 			src.disabled = 1

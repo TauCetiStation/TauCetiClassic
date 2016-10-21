@@ -11,7 +11,7 @@
 	var/fire_volume = 50 //How loud it is played.
 	var/auto_rearm = 0 //Does the weapon reload itself after each shot?
 
-/obj/item/mecha_parts/mecha_equipment/weapon/can_attach(var/obj/mecha/combat/M as obj)
+/obj/item/mecha_parts/mecha_equipment/weapon/can_attach(obj/mecha/combat/M)
 	if(!istype(M))
 		return 0
 	return ..()
@@ -128,7 +128,7 @@
 	equip_cooldown = 150
 	range = MELEE|RANGED
 
-	can_attach(obj/mecha/combat/honker/M as obj)
+	can_attach(obj/mecha/combat/honker/M)
 		if(!istype(M))
 			return 0
 		return ..()
@@ -303,7 +303,7 @@
 	projectile_energy_cost = 100
 	equip_cooldown = 20
 
-	can_attach(obj/mecha/combat/honker/M as obj)
+	can_attach(obj/mecha/combat/honker/M)
 		if(!istype(M))
 			return 0
 		return ..()

@@ -36,7 +36,7 @@
 	else
 		return ..()
 
-/obj/item/device/core_sampler/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/device/core_sampler/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W,/obj/item/weapon/evidencebag))
 		if(W.contents.len)
 			user << "\red This bag has something inside it!"
@@ -49,7 +49,7 @@
 	else
 		return ..()
 
-/obj/item/device/core_sampler/proc/sample_item(var/item_to_sample, var/mob/user as mob)
+/obj/item/device/core_sampler/proc/sample_item(item_to_sample, mob/user)
 	var/datum/geosample/geo_data
 	if(istype(item_to_sample, /turf/simulated/mineral))
 		var/turf/simulated/mineral/T = item_to_sample

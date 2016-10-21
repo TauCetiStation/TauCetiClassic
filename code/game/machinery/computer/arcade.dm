@@ -106,7 +106,7 @@
 	src.enemy_name = replacetext((name_part1 + name_part2), "the ", "")
 	src.name = (name_action + name_part1 + name_part2)
 
-/obj/machinery/computer/arcade/attack_hand(mob/user as mob)
+/obj/machinery/computer/arcade/attack_hand(mob/user)
 	if(..())
 		return
 	user.set_machine(src)
@@ -267,7 +267,7 @@
 	return
 
 
-/obj/machinery/computer/arcade/attackby(I as obj, user as mob)
+/obj/machinery/computer/arcade/attackby(I, user)
 	if(istype(I, /obj/item/weapon/card/emag) && !emagged)
 		temp = "If you die in the game, you die for real!"
 		player_hp = 30

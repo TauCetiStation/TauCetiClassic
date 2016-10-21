@@ -98,7 +98,7 @@
 				src.loc = occupant.loc // Failsafe to make sure the wheelchair stays beneath the occupant after driving
 	handle_rotation()
 
-/obj/structure/stool/bed/chair/wheelchair/attack_hand(mob/living/user as mob)
+/obj/structure/stool/bed/chair/wheelchair/attack_hand(mob/living/user)
 	if (pulling)
 		MouseDrop(usr)
 	else

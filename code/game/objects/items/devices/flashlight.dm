@@ -22,7 +22,7 @@
 		icon_state = initial(icon_state)
 		set_light(0)
 
-/obj/item/device/flashlight/proc/update_brightness(var/mob/user = null)
+/obj/item/device/flashlight/proc/update_brightness(mob/user = null)
 	if(on)
 		icon_state = "[initial(icon_state)]-on"
 		set_light(brightness_on)
@@ -45,7 +45,7 @@
 	return ..()
 
 
-/obj/item/device/flashlight/attack(mob/living/M as mob, mob/living/user as mob)
+/obj/item/device/flashlight/attack(mob/living/M, mob/living/user)
 	add_fingerprint(user)
 	if(on && user.zone_sel.selecting == "eyes")
 

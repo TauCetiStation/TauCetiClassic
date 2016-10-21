@@ -74,7 +74,7 @@
 		add_fingerprint(usr)
 		switch_display()
 
-	proc/switch_display(var/new_mode = 0)
+	proc/switch_display(new_mode = 0)
 		switch(new_mode)
 			if(1)//on
 				if(stat & (NOPOWER|BROKEN))		return

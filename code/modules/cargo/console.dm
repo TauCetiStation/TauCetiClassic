@@ -31,13 +31,13 @@
 	contraband = board.contraband_enabled
 	hacked = board.hacked
 
-/obj/machinery/computer/cargo/attack_ai(var/mob/user as mob)
+/obj/machinery/computer/cargo/attack_ai(mob/user)
 	return attack_hand(user)
 
-/obj/machinery/computer/cargo/attack_paw(var/mob/user as mob)
+/obj/machinery/computer/cargo/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/machinery/computer/cargo/attack_hand(var/mob/user as mob)
+/obj/machinery/computer/cargo/attack_hand(mob/user)
 	if(..())
 		return
 	user.set_machine(src)
@@ -226,7 +226,7 @@
 
 	updateUsrDialog()
 
-/obj/machinery/computer/cargo/attackby(obj/item/I as obj, mob/user as mob)
+/obj/machinery/computer/cargo/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/card/emag) && !hacked)
 		user << "\blue Special supplies unlocked."
 		hacked = TRUE
@@ -241,7 +241,7 @@
 	else
 		..()
 
-/obj/machinery/computer/cargo/proc/post_signal(var/command)
+/obj/machinery/computer/cargo/proc/post_signal(command)
 	var/datum/radio_frequency/frequency = radio_controller.return_frequency(1435)
 
 	if(!frequency)

@@ -127,7 +127,7 @@
 /obj/item/ammo_casing/caseless
 	desc = "A caseless bullet casing."
 
-/obj/item/ammo_casing/caseless/fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, params, var/distro, var/quiet)
+/obj/item/ammo_casing/caseless/fire(atom/target, mob/living/user, params, distro, quiet)
 	if (..())
 		loc = null
 		return 1

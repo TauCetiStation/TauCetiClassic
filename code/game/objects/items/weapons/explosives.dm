@@ -1,11 +1,11 @@
-/obj/item/weapon/plastique/attack_self(mob/user as mob)
+/obj/item/weapon/plastique/attack_self(mob/user)
 	var/newtime = input(usr, "Please set the timer.", "Timer", 10) as num
 	if(newtime < 10)
 		newtime = 10
 	timer = newtime
 	user << "Timer set for [timer] seconds."
 
-/obj/item/weapon/plastique/afterattack(atom/target as obj|turf, mob/user as mob, flag)
+/obj/item/weapon/plastique/afterattack(atom/target, mob/user, flag)
 	if (!flag)
 		return
 	if (istype(target, /turf/unsimulated) || istype(target, /turf/simulated/shuttle) || istype(target, /obj/item/weapon/storage/) || istype(target, /obj/machinery/nuclearbomb))
@@ -42,5 +42,5 @@
 				if (src)
 					qdel(src)
 
-/obj/item/weapon/plastique/attack(mob/M as mob, mob/user as mob, def_zone)
+/obj/item/weapon/plastique/attack(mob/M, mob/user, def_zone)
 	return

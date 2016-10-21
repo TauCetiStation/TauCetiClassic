@@ -40,7 +40,7 @@
 	if(state_open && !panel_open)
 		..(target)
 
-/obj/machinery/abductor/experiment/proc/dissection_icon(var/mob/living/carbon/human/H)
+/obj/machinery/abductor/experiment/proc/dissection_icon(mob/living/carbon/human/H)
 	var/icon/preview_icon = null
 
 	var/g = "m"
@@ -152,7 +152,7 @@
 			flash = Experiment(occupant,href_list["experiment"])
 	updateUsrDialog()
 
-/obj/machinery/abductor/experiment/proc/Experiment(var/mob/occupant,var/type)
+/obj/machinery/abductor/experiment/proc/Experiment(mob/occupant,type)
 	var/mob/living/carbon/human/H = occupant
 	var/point_reward = 0
 	if(H in history)
@@ -205,7 +205,7 @@
 		return "<span class='bad'>Specimen braindead - disposed</span>"
 	return "<span class='bad'>ERROR</span>"
 
-/obj/machinery/abductor/experiment/proc/SendBack(var/mob/living/carbon/human/H)
+/obj/machinery/abductor/experiment/proc/SendBack(mob/living/carbon/human/H)
 	H.Sleeping(8)
 	var/area/A
 	if(console && console.pad && console.pad.teleport_target)

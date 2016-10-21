@@ -17,7 +17,7 @@
 	righthand_file = 'icons/mob/inhands/clothing_righthand.dmi'
 
 //BS12: Species-restricted clothing check.
-/obj/item/clothing/mob_can_equip(M as mob, slot)
+/obj/item/clothing/mob_can_equip(M, slot)
 
 	//if we can't equip the item anyway, don't bother with species_restricted (cuts down on spam)
 	if (!..())
@@ -46,7 +46,7 @@
 
 	return 1
 
-/obj/item/clothing/proc/refit_for_species(var/target_species)
+/obj/item/clothing/proc/refit_for_species(target_species)
 	//Set species_restricted list
 	switch(target_species)
 		if("Human", "Skrell")	//humanoid bodytypes
@@ -66,7 +66,7 @@
 	else
 		icon = initial(icon)
 
-/obj/item/clothing/head/helmet/refit_for_species(var/target_species)
+/obj/item/clothing/head/helmet/refit_for_species(target_species)
 	//Set species_restricted list
 	switch(target_species)
 		if("Skrell")
@@ -95,7 +95,7 @@
 	throwforce = 2
 	slot_flags = SLOT_EARS
 
-/obj/item/clothing/ears/attack_hand(mob/user as mob)
+/obj/item/clothing/ears/attack_hand(mob/user)
 	if (!user) return
 
 	if (src.loc != user || !istype(user,/mob/living/carbon/human))
@@ -204,7 +204,7 @@ BLIND     // can't see anything
 	..()
 
 // Called just before an attack_hand(), in mob/UnarmedAttack()
-/obj/item/clothing/gloves/proc/Touch(var/atom/A, var/proximity)
+/obj/item/clothing/gloves/proc/Touch(atom/A, proximity)
 	return 0 // return 1 to cancel attack_hand()
 
 //Head
@@ -373,7 +373,7 @@ BLIND     // can't see anything
 
 	..()
 
-/obj/item/clothing/under/attack_hand(mob/user as mob)
+/obj/item/clothing/under/attack_hand(mob/user)
 	//only forward to the attached accessory if the clothing is equipped (not in a storage)
 	if(hastie && src.loc == user)
 		hastie.attack_hand(user)
@@ -427,7 +427,7 @@ BLIND     // can't see anything
 	if(hastie)
 		usr << "\A [hastie] is clipped to it."
 
-/obj/item/clothing/under/proc/set_sensors(mob/usr as mob)
+/obj/item/clothing/under/proc/set_sensors(mob/usr)
 	var/mob/M = usr
 	if (istype(M, /mob/dead/)) return
 	if (usr.stat || usr.restrained()) return
@@ -492,7 +492,7 @@ BLIND     // can't see anything
 	else
 		usr << "<span class='notice'>You cannot roll down the uniform!</span>"
 
-/obj/item/clothing/under/proc/remove_accessory(mob/user as mob)
+/obj/item/clothing/under/proc/remove_accessory(mob/user)
 	if(!hastie)
 		return
 

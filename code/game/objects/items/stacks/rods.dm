@@ -13,7 +13,7 @@
 	max_amount = 60
 	attack_verb = list("hit", "bludgeoned", "whacked")
 
-/obj/item/stack/rods/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/stack/rods/attackby(obj/item/W, mob/user)
 	..()
 	if (istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
@@ -35,7 +35,7 @@
 				user.put_in_hands(new_item)
 		return
 
-/obj/item/stack/rods/attack_self(mob/user as mob)
+/obj/item/stack/rods/attack_self(mob/user)
 	src.add_fingerprint(user)
 
 	if(!istype(user.loc,/turf)) return 0

@@ -17,7 +17,7 @@
 	if(prob(20))
 		opacity = 1
 
-/obj/structure/bush/Bumped(M as mob)
+/obj/structure/bush/Bumped(M)
 	if (istype(M, /mob/living/simple_animal))
 		var/mob/living/simple_animal/A = M
 		A.loc = get_turf(src)
@@ -25,7 +25,7 @@
 		var/mob/living/carbon/monkey/A = M
 		A.loc = get_turf(src)
 
-/obj/structure/bush/attackby(var/obj/I as obj, var/mob/user as mob)
+/obj/structure/bush/attackby(obj/I, mob/user)
 	//hatchets can clear away undergrowth
 	if(istype(I, /obj/item/weapon/hatchet) && !stump)
 		if(indestructable)
@@ -100,7 +100,7 @@ var/jungle_plants_init = 0
 	overlays += fruit_overlay
 	plant_strength = rand(20,200)
 
-/obj/structure/jungle_plant/attack_hand(var/mob/user as mob)
+/obj/structure/jungle_plant/attack_hand(mob/user)
 	if(fruits_left > 0)
 		fruits_left--
 		user << "\blue You pick a fruit off [src]."

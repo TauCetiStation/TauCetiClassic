@@ -84,7 +84,7 @@
 	diary << "\[[time_stamp()]]MISC: [text][log_end]"
 
 //pretty print a direction bitflag, can be useful for debugging.
-/proc/print_dir(var/dir)
+/proc/print_dir(dir)
 	var/list/comps = list()
 	if(dir & NORTH) comps += "NORTH"
 	if(dir & SOUTH) comps += "SOUTH"

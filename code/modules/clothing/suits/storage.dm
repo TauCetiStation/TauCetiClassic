@@ -13,7 +13,7 @@
 	pockets = null
 	return ..()
 
-/obj/item/clothing/suit/storage/attack_hand(mob/user as mob)
+/obj/item/clothing/suit/storage/attack_hand(mob/user)
 	if (pockets && pockets.handle_attack_hand(user))
 		..(user)
 
@@ -21,7 +21,7 @@
 	if (pockets && pockets.handle_mousedrop(usr, over_object))
 		..(over_object)
 
-/obj/item/clothing/suit/storage/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/clothing/suit/storage/attackby(obj/item/W, mob/user)
 	..()
 	if(pockets)
 		pockets.attackby(W, user)
@@ -31,7 +31,7 @@
 		pockets.emp_act(severity)
 	..()
 
-/obj/item/clothing/suit/storage/hear_talk(mob/M, var/msg)
+/obj/item/clothing/suit/storage/hear_talk(mob/M, msg)
 	if(pockets)
 		pockets.hear_talk(M, msg)
 	..()

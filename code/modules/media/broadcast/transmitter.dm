@@ -12,7 +12,7 @@ var/global/media_transmitters=list()
 	..()
 	connect_frequency()
 
-/obj/machinery/media/transmitter/proc/broadcast(var/url="", var/start_time=0)
+/obj/machinery/media/transmitter/proc/broadcast(url="", start_time=0)
 	media_url = url
 	media_start_time = start_time
 	update_music()

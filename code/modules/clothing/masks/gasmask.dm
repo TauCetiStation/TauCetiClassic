@@ -73,7 +73,7 @@
 /obj/item/clothing/mask/gas/sechailer/hos
 	icon_state = "hosmask"
 
-/obj/item/clothing/mask/gas/sechailer/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/clothing/mask/gas/sechailer/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/screwdriver))
 		switch(aggressiveness)
 			if(1)

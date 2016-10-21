@@ -131,7 +131,7 @@
 	desc = "NanoTrasen Security Department detective's badge, made from gold. Badge number is 564."
 	icon_state = "victor_kaminsky_1"
 
-/obj/item/fluff/victor_kaminsky_1/attack_self(mob/user as mob)
+/obj/item/fluff/victor_kaminsky_1/attack_self(mob/user)
 	for(var/mob/O in viewers(user, null))
 		O.show_message(text("[] shows you: \icon[] [].", user, src, src.name), 1)
 	src.add_fingerprint(user)
@@ -143,7 +143,7 @@
 	item_state = "ana_badge"
 	item_color = "ana_badge"
 
-/obj/item/fluff/ana_issek_2/attack_self(mob/user as mob)
+/obj/item/fluff/ana_issek_2/attack_self(mob/user)
 	if(isliving(user))
 		user.visible_message("\red [user] flashes their golden security badge.\nIt reads: Ana Issek, NT Security.","\red You display the faded bage.\nIt reads: Ana Issek, NT Security.")
 
@@ -373,10 +373,10 @@
 	update_icon()
 	return
 
-/obj/item/weapon/reagent_containers/hypospray/fluff/asher_spock_1/attack_self(mob/user as mob)
+/obj/item/weapon/reagent_containers/hypospray/fluff/asher_spock_1/attack_self(mob/user)
 	user << "\blue You click \the [src] but get no reaction. Must be dead."
 
-/obj/item/weapon/reagent_containers/hypospray/fluff/asher_spock_1/attack(mob/M as mob, mob/user as mob)
+/obj/item/weapon/reagent_containers/hypospray/fluff/asher_spock_1/attack(mob/M, mob/user)
 	if (user.ckey != "nerezza") //Because this can end up in the wrong hands, let's make it useless for them!
 		user << "\blue You click \the [src] but get no reaction. Must be dead."
 		return
@@ -874,13 +874,13 @@
 	slot_flags = SLOT_MASK
 	var/obj/item/held //Item inside locket.
 
-/obj/item/clothing/tie/fluff/konaa_hirano/attack_self(mob/user as mob)
+/obj/item/clothing/tie/fluff/konaa_hirano/attack_self(mob/user)
 	if(held)
 		user << "You open [src] and [held] falls out."
 		held.loc = get_turf(user)
 		src.held = null
 
-/obj/item/clothing/tie/fluff/konaa_hirano/attackby(var/obj/item/O as obj, mob/user as mob)
+/obj/item/clothing/tie/fluff/konaa_hirano/attackby(obj/item/O, mob/user)
 	if(istype(O,/obj/item/weapon/paper))
 		if(held)
 			usr << "[src] already has something inside it."
@@ -1002,7 +1002,7 @@
 	else
 		icon_state = "leamas-empty"
 
-/obj/item/weapon/gun/projectile/attackby(var/obj/item/A as obj, mob/user as mob)
+/obj/item/weapon/gun/projectile/attackby(obj/item/A, mob/user)
 
 	if(istype(A, /obj/item/ammo_magazine))
 		flick("leamas-reloading",src)
@@ -1080,6 +1080,6 @@
 	item_state = "farwaplush"
 	icon_state = "farwaplush"
 
-/obj/item/weapon/fluff/farwadoll/attack_self(mob/user as mob)
+/obj/item/weapon/fluff/farwadoll/attack_self(mob/user)
 	user.visible_message("<span class='notice'>[user] hugs [src]! How cute! </span>", \
 						 "<span class='notice'>You hug [src]. Dawwww... </span>")

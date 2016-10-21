@@ -117,7 +117,7 @@
 		H.viruses += D
 		break
 
-/proc/viral_outbreak(var/virus = null)
+/proc/viral_outbreak(virus = null)
 //	command_alert("Confirmed outbreak of level 7 viral biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert")
 //	world << sound('sound/AI/outbreak7.ogg')
 	var/virus_type
@@ -182,7 +182,7 @@
 		for(var/mob/M in player_list)
 			M << sound('sound/AI/outbreak7.ogg')
 
-/proc/alien_infestation(var/spawncount = 1) // -- TLE
+/proc/alien_infestation(spawncount = 1) // -- TLE
 	//command_alert("Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.", "Lifesign Alert")
 	//world << sound('sound/AI/aliens.ogg')
 	var/list/vents = list()

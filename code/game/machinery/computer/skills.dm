@@ -23,7 +23,7 @@
 	var/order = 1 // -1 = Descending - 1 = Ascending
 
 
-/obj/machinery/computer/skills/attackby(obj/item/O as obj, user as mob)
+/obj/machinery/computer/skills/attackby(obj/item/O, user)
 	if(istype(O, /obj/item/weapon/card/id) && !scan)
 		usr.drop_item()
 		O.loc = src
@@ -31,14 +31,14 @@
 		user << "You insert [O]."
 	..()
 
-/obj/machinery/computer/skills/attack_ai(mob/user as mob)
+/obj/machinery/computer/skills/attack_ai(mob/user)
 	return attack_hand(user)
 
-/obj/machinery/computer/skills/attack_paw(mob/user as mob)
+/obj/machinery/computer/skills/attack_paw(mob/user)
 	return attack_hand(user)
 
 //Someone needs to break down the dat += into chunks instead of long ass lines.
-/obj/machinery/computer/skills/attack_hand(mob/user as mob)
+/obj/machinery/computer/skills/attack_hand(mob/user)
 	if(..())
 		return
 	if (src.z > ZLEVEL_EMPTY)

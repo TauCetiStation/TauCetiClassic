@@ -183,7 +183,7 @@
 	var/obj/machinery/computer/syndicate_station/home = null
 
 
-/obj/item/weapon/pinpointer/nukeop/attack_self(mob/user as mob)
+/obj/item/weapon/pinpointer/nukeop/attack_self(mob/user)
 	if(!active)
 		active = 1
 		if(!mode)

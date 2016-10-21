@@ -14,7 +14,7 @@
 	//color = pick("#aaffaa", "#aaaaff", "#ff3030", "#ff1010", "#ffffff")
 	color = random_color()
 
-/obj/structure/pbag/attack_hand(mob/user as mob)
+/obj/structure/pbag/attack_hand(mob/user)
 	if(!anchored) return
 	user.do_attack_animation(src)
 	hit(user)
@@ -41,7 +41,7 @@
 	update_icon()
 	return
 
-/obj/structure/pbag/proc/hit(mob/user as mob)
+/obj/structure/pbag/proc/hit(mob/user)
 	if(health < 0)
 		down()
 	else
@@ -54,7 +54,7 @@
 
 	return
 
-/obj/structure/pbag/proc/swing(var/time = rand(5, 20))
+/obj/structure/pbag/proc/swing(time = rand(5, 20))
 	icon_state = "pbaghit"
 	spawn(time)
 		icon_state = "pbag"
