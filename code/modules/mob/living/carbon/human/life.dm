@@ -360,12 +360,18 @@
 					if(istype(O)) O.add_autopsy_data("Radiation Poisoning", damage)
 
 	proc/breathe()
-		if(NO_BREATH in src.mutations)	return //#Z2 We need no breath with this mutation
-		if(reagents.has_reagent("lexorin")) return
-		if(istype(loc, /obj/machinery/atmospherics/unary/cryo_cell)) return
-		if(species && (species.flags & NO_BREATHE || species.flags & IS_SYNTHETIC)) return
-		if(dna && dna.mutantrace == "adamantine") return
-		if(ismob(loc)) return
+		if(NO_BREATH in src.mutations)
+			return //#Z2 We need no breath with this mutation
+		if(reagents.has_reagent("lexorin"))
+			return
+		if(istype(loc, /obj/machinery/atmospherics/unary/cryo_cell))
+			return
+		if(species && (species.flags & NO_BREATHE || species.flags & IS_SYNTHETIC))
+			return
+		if(dna && dna.mutantrace == "adamantine")
+			return
+		if(ismob(loc))
+			return
 
 		var/datum/gas_mixture/environment = loc.return_air()
 		var/datum/gas_mixture/breath

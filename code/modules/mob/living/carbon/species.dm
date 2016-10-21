@@ -60,6 +60,8 @@
 	var/race_key = 0
 	var/icon/icon_template
 
+	var/biohazzard_immunity = FALSE //immunity against bioactive gases (phoron)
+
 	/* Species-specific sprites, concept stolen from Paradise//vg/.
 	ex:
 	sprite_sheets = list(
@@ -376,6 +378,8 @@
 
 	brute_mod = 1.5
 	burn_mod = 1
+
+	biohazzard_immunity = TRUE
 
 	flags = IS_WHITELISTED | NO_BREATHE | NO_SCAN | NO_BLOOD | NO_PAIN | IS_SYNTHETIC | VIRUS_IMMUNE
 

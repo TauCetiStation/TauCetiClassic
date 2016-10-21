@@ -78,10 +78,11 @@ var/image/contamination_overlay = image('icons/effects/contamination.dmi')
 	//Handles all the bad things phoron can do.
 
 	//Contamination
-	if(vsc.plc.CLOTH_CONTAMINATION) contaminate()
+	if(vsc.plc.CLOTH_CONTAMINATION)
+		contaminate()
 
 	//Anything else requires them to not be dead.
-	if(stat >= 2)
+	if(stat >= DEAD || (species && species.biohazzard_immunity))
 		return
 
 	//Burn skin if exposed.
