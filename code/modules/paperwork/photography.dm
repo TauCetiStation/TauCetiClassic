@@ -40,6 +40,8 @@
 		//txt = copytext(txt, 1, 128)
 		if(loc == user && user.stat == CONSCIOUS)
 			scribble = txt
+	else if(istype(P, /obj/item/weapon/lighter))
+		burnpaper(P, user)
 	..()
 
 /obj/item/weapon/photo/examine()
