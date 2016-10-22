@@ -200,9 +200,6 @@
 	else
 		return 0
 
-	if(lying)
-		drop_from_inventory(W)
-
 	return 1
 
 
