@@ -306,9 +306,7 @@
 			W.equipped(src, slot)
 			update_inv_head()
 		if(slot_shoes)
-			src.shoes = W			
-			if((head.flags & BLOCKHAIR) || (head.flags & BLOCKHEADHAIR))
-				update_hair()	//rebuild hair
+			src.shoes = W
 			W.equipped(src, slot)
 			update_inv_shoes()
 		if(slot_wear_suit)
