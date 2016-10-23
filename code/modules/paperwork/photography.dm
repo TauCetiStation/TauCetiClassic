@@ -252,14 +252,9 @@
 
 	return mob_detail
 
-<<<<<<< HEAD
-/obj/item/device/camera/afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
+/obj/item/device/camera/afterattack(atom/target, mob/user, flag)
 	if(!on || !pictures_left || ismob(target.loc))
 		return
-=======
-/obj/item/device/camera/afterattack(atom/target, mob/user, flag)
-	if(!on || !pictures_left || ismob(target.loc)) return
->>>>>>> 9eeddb5df2f03a0012ae86804d063df209225fb1
 	captureimage(target, user, flag)
 
 	playsound(loc, pick('sound/items/polaroid1.ogg', 'sound/items/polaroid2.ogg'), 75, 1, -3)
@@ -329,7 +324,6 @@
 		user.put_in_inactive_hand(Photo)
 	Photo.construct(P)
 
-<<<<<<< HEAD
 /obj/item/device/camera/proc/get_base_photo_icon()
 	var/icon/res
 	switch(photo_size)
@@ -375,10 +369,7 @@
 /obj/item/device/camera/huge_photos/set_zoom()
 	return
 
-/obj/item/weapon/photo/proc/construct(var/datum/picture/P)
-=======
 /obj/item/weapon/photo/proc/construct(datum/picture/P)
->>>>>>> 9eeddb5df2f03a0012ae86804d063df209225fb1
 	icon = P.fields["icon"]
 	tiny = P.fields["tiny"]
 	img = P.fields["img"]
