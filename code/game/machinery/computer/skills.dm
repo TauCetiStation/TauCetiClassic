@@ -88,8 +88,8 @@
 				if(3.0)
 					dat += "<CENTER><B>Employment Record</B></CENTER><BR>"
 					if ((istype(active1, /datum/data/record) && data_core.general.Find(active1)))
-						var/icon/front = new(active1.fields["photo"], dir = SOUTH)
-						var/icon/side = new(active1.fields["photo"], dir = WEST)
+						var/icon/front = active1.fields["photo_f"]
+						var/icon/side = active1.fields["photo_s"]
 						user << browse_rsc(front, "front.png")
 						user << browse_rsc(side, "side.png")
 						dat += text("<table><tr><td>	\

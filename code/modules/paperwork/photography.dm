@@ -31,6 +31,12 @@
 	var/scribble	//Scribble on the back.
 	var/icon/tiny
 
+/obj/item/weapon/photo/Destroy()
+	img = null
+	qdel(tiny)
+	tiny = null
+	return ..()
+
 /obj/item/weapon/photo/attack_self(mob/user as mob)
 	examine()
 
