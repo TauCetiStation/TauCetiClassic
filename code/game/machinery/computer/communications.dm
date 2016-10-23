@@ -408,7 +408,7 @@
 	return dat
 
 /proc/enable_prison_shuttle(mob/user)
-	for(var/obj/machinery/computer/prison_shuttle/PS in world)
+	for(var/obj/machinery/computer/prison_shuttle/PS in machines)
 		PS.allowedtocall = !(PS.allowedtocall)
 
 /proc/call_shuttle_proc(mob/user)
@@ -523,11 +523,11 @@
 
 /obj/machinery/computer/communications/Destroy()
 
-	for(var/obj/machinery/computer/communications/commconsole in world)
+	for(var/obj/machinery/computer/communications/commconsole in machines)
 		if(istype(commconsole.loc,/turf) && commconsole != src)
 			return ..()
 
-	for(var/obj/item/weapon/circuitboard/communications/commboard in world)
+	for(var/obj/item/weapon/circuitboard/communications/commboard in machines)
 		if(istype(commboard.loc,/turf) || istype(commboard.loc,/obj/item/weapon/storage))
 			return ..()
 
@@ -548,11 +548,11 @@
 
 /obj/item/weapon/circuitboard/communications/Destroy()
 
-	for(var/obj/machinery/computer/communications/commconsole in world)
+	for(var/obj/machinery/computer/communications/commconsole in machines)
 		if(istype(commconsole.loc,/turf))
 			return ..()
 
-	for(var/obj/item/weapon/circuitboard/communications/commboard in world)
+	for(var/obj/item/weapon/circuitboard/communications/commboard in machines)
 		if((istype(commboard.loc,/turf) || istype(commboard.loc,/obj/item/weapon/storage)) && commboard != src)
 			return ..()
 

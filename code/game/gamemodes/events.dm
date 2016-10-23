@@ -213,13 +213,6 @@
 
 /proc/high_radiation_event()
 
-/* // Haha, this is way too laggy. I'll keep the prison break though.
-	for(var/obj/machinery/light/L in world)
-		if(L.z != ZLEVEL_STATION) continue
-		L.flicker(50)
-
-	sleep(100)
-*/
 	for(var/mob/living/carbon/human/H in living_mob_list)
 		var/turf/T = get_turf(H)
 		if(!T)
@@ -256,7 +249,7 @@
 
 
 	var/list/area/areas = list()
-	for(var/area/A in world)
+	for(var/area/A in all_areas)
 		if(istype(A, /area/security/prison) || istype(A, /area/security/brig))
 			areas += A
 
@@ -439,48 +432,3 @@ Would like to add a law like "Law x is _______" where x = a number, and _____ is
 		for(var/obj/machinery/bot/bot in machines)
 			if(prob(botEmagChance))
 				bot.Emag()
-
-	/*
-
-	var/apcnum = 0
-	var/smesnum = 0
-	var/airlocknum = 0
-	var/firedoornum = 0
-
-	world << "Ion Storm Main Started"
-
-	spawn(0)
-		world << "Started processing APCs"
-		for (var/obj/machinery/power/apc/APC in world)
-			if(APC.z == ZLEVEL_STATION)
-				APC.ion_act()
-				apcnum++
-		world << "Finished processing APCs. Processed: [apcnum]"
-	spawn(0)
-		world << "Started processing SMES"
-		for (var/obj/machinery/power/smes/SMES in world)
-			if(SMES.z == ZLEVEL_STATION)
-				SMES.ion_act()
-				smesnum++
-		world << "Finished processing SMES. Processed: [smesnum]"
-	spawn(0)
-		world << "Started processing AIRLOCKS"
-		for (var/obj/machinery/door/airlock/D in world)
-			if(D.z == ZLEVEL_STATION)
-				//if(length(D.req_access) > 0 && !(12 in D.req_access)) //not counting general access and maintenance airlocks
-				airlocknum++
-				spawn(0)
-					D.ion_act()
-		world << "Finished processing AIRLOCKS. Processed: [airlocknum]"
-	spawn(0)
-		world << "Started processing FIREDOORS"
-		for (var/obj/machinery/door/firedoor/D in world)
-			if(D.z == ZLEVEL_STATION)
-				firedoornum++;
-				spawn(0)
-					D.ion_act()
-		world << "Finished processing FIREDOORS. Processed: [firedoornum]"
-
-	world << "Ion Storm Main Done"
-
-	*/

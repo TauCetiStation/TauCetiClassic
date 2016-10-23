@@ -113,7 +113,7 @@
 						D.safe = 1
 
 	else
-		for(var/obj/machinery/door/poddoor/M in world)
+		for(var/obj/machinery/door/poddoor/M in machines)
 			if (M.id == src.id)
 				if (M.density)
 					spawn( 0 )
@@ -162,7 +162,7 @@
 	active = 1
 	icon_state = "launcheract"
 
-	for(var/obj/machinery/door/poddoor/M in world)
+	for(var/obj/machinery/door/poddoor/M in machines)
 		if (M.id == src.id)
 			spawn( 0 )
 				M.open()
@@ -170,13 +170,13 @@
 
 	sleep(20)
 
-	for(var/obj/machinery/mass_driver/M in world)
+	for(var/obj/machinery/mass_driver/M in machines)
 		if(M.id == src.id)
 			M.drive()
 
 	sleep(50)
 
-	for(var/obj/machinery/door/poddoor/M in world)
+	for(var/obj/machinery/door/poddoor/M in machines)
 		if (M.id == src.id)
 			spawn( 0 )
 				M.close()

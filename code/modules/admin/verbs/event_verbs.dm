@@ -90,7 +90,7 @@ var/list/admin_verbs_event = list(
 
 	if(!check_rights(R_FUN))	return
 
-	for(var/obj/machinery/gateway/G in world)
+	for(var/obj/machinery/gateway/G in machines)
 		G.initialize()
 
 	log_admin("[key_name(src)] connected gates", 1)
@@ -109,7 +109,7 @@ var/centcom_barriers_stat = 1
 
 	if(!check_rights(R_FUN))	return
 
-	for(var/obj/effect/landmark/trololo/L in world)
+	for(var/obj/effect/landmark/trololo/L in landmarks_list)
 		L.active = centcom_barriers_stat
 	for(var/obj/structure/centcom_barrier/B in world)
 		B.density = centcom_barriers_stat

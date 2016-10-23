@@ -55,7 +55,7 @@ var/datum/subsystem/lighting/SSlighting
 //Note: if we get additional z-levels at runtime (e.g. if the gateway thin ever gets finished) we can initialize specific
 //z-levels with the z_level argument
 /datum/subsystem/lighting/Initialize(timeofday, z_level)
-	for(var/area/A in world)
+	for(var/area/A in all_areas)
 		if (A.lighting_use_dynamic == DYNAMIC_LIGHTING_IFSTARLIGHT)
 			if (config.starlight)
 				A.SetDynamicLighting()
