@@ -303,25 +303,25 @@
 
 /obj/item/weapon/proc/burnpaper(obj/item/weapon/lighter/P, mob/user) //weapon, to use this in paper_bundle and photo
 	var/list/burnable = list(/obj/item/weapon/paper,
-													/obj/item/weapon/paper_bundle,
-													/obj/item/weapon/photo)
+                          /obj/item/weapon/paper_bundle,
+                          /obj/item/weapon/photo)
 
 	if(!is_type_in_list(src, burnable))
 		return
 
 	if(P.lit && !user.restrained())
-		var/class = "<span class='warning'>"
+		var/class = "<span class='red'>"
 		if(istype(P, /obj/item/weapon/lighter/zippo))
 			class = "<span class='rose'>"
 
-		user.visible_message("[class][user] holds \the [P] up to \the [src], it looks like \he's trying to burn it!", \
-		"[class]You hold \the [P] up to \the [src], burning it slowly.")
+		user.visible_message("[class][user] holds \the [P] up to \the [src], it looks like \he's trying to burn it!</span>", \
+		"[class]You hold \the [P] up to \the [src], burning it slowly.</span>")
 
 		if(do_after(user, 20, TRUE, P, TRUE))
 			if((get_dist(src, user) > 1) || !P.lit)
 				return
-			user.visible_message("[class][user] burns right through \the [src], turning it to ash. It flutters through the air before settling on the floor in a heap.", \
-			"[class]You burn right through \the [src], turning it to ash. It flutters through the air before settling on the floor in a heap.")
+			user.visible_message("[class][user] burns right through \the [src], turning it to ash. It flutters through the air before settling on the floor in a heap.</span>", \
+			"[class]You burn right through \the [src], turning it to ash. It flutters through the air before settling on the floor in a heap.</span>")
 
 			if(user.get_inactive_hand() == src)
 				user.drop_from_inventory(src)
@@ -330,7 +330,7 @@
 			qdel(src)
 
 		else
-			user << "\red You must hold \the [P] steady to burn \the [src]."
+			user << "<span class='warning'>You must hold \the [P] steady to burn \the [src].</span>"
 
 
 /obj/item/weapon/paper/Topic(href, href_list)
