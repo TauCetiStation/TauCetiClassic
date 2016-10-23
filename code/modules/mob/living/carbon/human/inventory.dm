@@ -299,7 +299,7 @@
 			update_inv_gloves()
 		if(slot_head)
 			src.head = W
-			if((head.flags & BLOCKHAIR) || (head.flags & BLOCKHEADHAIR))
+			if((W.flags & BLOCKHAIR) || (W.flags & BLOCKHEADHAIR))
 				update_hair()	//rebuild hair
 			if(istype(W,/obj/item/clothing/head/kitty))
 				W.update_icon(src)
@@ -311,7 +311,7 @@
 			update_inv_shoes()
 		if(slot_wear_suit)
 			src.wear_suit = W
-			if((wear_suit.flags & BLOCKHAIR) || (wear_suit.flags & BLOCKHEADHAIR))
+			if((W.flags & BLOCKHAIR) || (W.flags & BLOCKHEADHAIR))
 				update_hair()	//rebuild hair
 			W.equipped(src, slot)
 			update_inv_wear_suit()
