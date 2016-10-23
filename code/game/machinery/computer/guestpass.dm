@@ -69,13 +69,13 @@
 		else
 			user << "<span class='warning'>There is already ID card inside.</span>"
 
-/obj/machinery/computer/guestpass/attack_ai(var/mob/user as mob)
+/obj/machinery/computer/guestpass/attack_ai(mob/user)
 	return attack_hand(user)
 
-/obj/machinery/computer/guestpass/attack_paw(var/mob/user as mob)
+/obj/machinery/computer/guestpass/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/machinery/computer/guestpass/attack_hand(var/mob/user as mob)
+/obj/machinery/computer/guestpass/attack_hand(mob/user)
 	if(..())
 		return
 

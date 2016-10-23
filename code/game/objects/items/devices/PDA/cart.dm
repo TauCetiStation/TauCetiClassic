@@ -208,7 +208,7 @@
 	remote_door_id = "smindicate" //Make sure this matches the syndicate shuttle's shield/door id!!	//don't ask about the name, testing.
 	charges = 4
 
-/obj/item/weapon/cartridge/proc/post_status(var/command, var/data1, var/data2)
+/obj/item/weapon/cartridge/proc/post_status(command, data1, data2)
 
 	var/datum/radio_frequency/frequency = radio_controller.return_frequency(1435)
 	if(!frequency) return
@@ -245,7 +245,7 @@
 */
 
 
-/obj/item/weapon/cartridge/proc/create_NanoUI_values(mob/user as mob)
+/obj/item/weapon/cartridge/proc/create_NanoUI_values(mob/user)
 	var/values[0]
 
 	/*		Signaler (Mode: 40)				*/

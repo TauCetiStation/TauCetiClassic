@@ -283,7 +283,7 @@ obj/machinery/computer/cryopod/Topic(href, href_list)
 	return
 
 
-/obj/machinery/cryopod/attackby(var/obj/item/weapon/G as obj, var/mob/user as mob)
+/obj/machinery/cryopod/attackby(obj/item/weapon/G, mob/user)
 
 	if(istype(G, /obj/item/weapon/grab))
 

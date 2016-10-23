@@ -1,7 +1,7 @@
 //improvised explosives//
 
 //iedcasing assembly crafting//
-/obj/item/weapon/reagent_containers/food/drinks/cans/attackby(var/obj/item/I, mob/user as mob)
+/obj/item/weapon/reagent_containers/food/drinks/cans/attackby(obj/item/I, mob/user)
         if(istype(I, /obj/item/device/assembly/igniter))
                 var/obj/item/device/assembly/igniter/G = I
                 var/obj/item/weapon/grenade/iedcasing/W = new /obj/item/weapon/grenade/iedcasing
@@ -48,7 +48,7 @@
 			return
 
 
-/obj/item/weapon/grenade/iedcasing/attackby(var/obj/item/I, mob/user as mob) //Wiring the can for ignition
+/obj/item/weapon/grenade/iedcasing/attackby(obj/item/I, mob/user) //Wiring the can for ignition
 	if(istype(I, /obj/item/weapon/cable_coil))
 		if(assembled == 1)
 			var/obj/item/weapon/cable_coil/C = I
@@ -61,7 +61,7 @@
 			active = 0
 			det_time = rand(30,80)
 
-/obj/item/weapon/grenade/iedcasing/attack_self(mob/user as mob) //
+/obj/item/weapon/grenade/iedcasing/attack_self(mob/user) //
 	if(!active)
 		if(clown_check(user))
 			user << "<span class='warning'>You light the [name]!</span>"

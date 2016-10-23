@@ -133,7 +133,7 @@ Filter types:
 	set_frequency(frequency)
 	..()
 
-/obj/machinery/atmospherics/trinary/filter/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+/obj/machinery/atmospherics/trinary/filter/attackby(obj/item/weapon/W, mob/user)
 	if (!istype(W, /obj/item/weapon/wrench))
 		return ..()
 	var/turf/T = src.loc
@@ -157,7 +157,7 @@ Filter types:
 		qdel(src)
 
 
-/obj/machinery/atmospherics/trinary/filter/attack_hand(user as mob) // -- TLE
+/obj/machinery/atmospherics/trinary/filter/attack_hand(user) // -- TLE
 	if(..())
 		return
 

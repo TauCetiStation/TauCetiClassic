@@ -23,7 +23,7 @@
 		overlays += bombassembly.overlays
 		overlays += "bomb_assembly"
 
-/obj/item/device/onetankbomb/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/device/onetankbomb/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/device/analyzer))
 		bombtank.attackby(W, user)
 		return
@@ -54,7 +54,7 @@
 	add_fingerprint(user)
 	..()
 
-/obj/item/device/onetankbomb/attack_self(mob/user as mob) //pressing the bomb accesses its assembly
+/obj/item/device/onetankbomb/attack_self(mob/user) //pressing the bomb accesses its assembly
 	bombassembly.attack_self(user, 1)
 	add_fingerprint(user)
 	return
@@ -69,11 +69,11 @@
 	else
 		bombtank.release()
 
-/obj/item/device/onetankbomb/HasProximity(atom/movable/AM as mob|obj)
+/obj/item/device/onetankbomb/HasProximity(atom/movable/AM)
 	if(bombassembly)
 		bombassembly.HasProximity(AM)
 
-/obj/item/device/onetankbomb/hear_talk(mob/living/M as mob, msg)
+/obj/item/device/onetankbomb/hear_talk(mob/living/M, msg)
 	if(bombassembly)
 		bombassembly.hear_talk(M, msg)
 

@@ -10,7 +10,7 @@
 	var/weapon_type
 	var/weapon_name_simple
 
-/obj/effect/proc_holder/changeling/weapon/try_to_sting(var/mob/user, var/mob/target)
+/obj/effect/proc_holder/changeling/weapon/try_to_sting(mob/user, mob/target)
 	if(istype(user.l_hand, weapon_type)) //Not the nicest way to do it, but eh
 		qdel(user.l_hand)
 		user.visible_message("<span class='warning'>With a sickening crunch, [user] reforms his [weapon_name_simple] into an arm!</span>", "<span class='notice'>We assimilate the [weapon_name_simple] back into our body.</span>", "<span class='warning>You hear organic matter ripping and tearing!</span>")
@@ -23,7 +23,7 @@
 		return
 	..(user, target)
 
-/obj/effect/proc_holder/changeling/weapon/sting_action(var/mob/user)
+/obj/effect/proc_holder/changeling/weapon/sting_action(mob/user)
 	if(!user.unEquip(user.get_active_hand()))
 		user << "The [user.get_active_hand()] is stuck to your hand, you cannot grow a [weapon_name_simple] over it!"
 		return
@@ -47,7 +47,7 @@
 	var/recharge_slowdown = 0
 	var/blood_on_castoff = 0
 
-/obj/effect/proc_holder/changeling/suit/try_to_sting(var/mob/user, var/mob/target)
+/obj/effect/proc_holder/changeling/suit/try_to_sting(mob/user, mob/target)
 	var/datum/changeling/changeling = user.mind.changeling
 	if(!ishuman(user) || !changeling)
 		return
@@ -72,7 +72,7 @@
 		return
 	..(H, target)
 
-/obj/effect/proc_holder/changeling/suit/sting_action(var/mob/living/carbon/human/user)
+/obj/effect/proc_holder/changeling/suit/sting_action(mob/living/carbon/human/user)
 	if(!user.unEquip(user.wear_suit))
 		user << "\the [user.wear_suit] is stuck to your body, you cannot grow a [suit_name_simple] over it!"
 		return

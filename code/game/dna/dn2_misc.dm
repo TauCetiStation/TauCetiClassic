@@ -441,10 +441,10 @@
 	return
 
 //Girders!!!!!
-/obj/structure/girder/attack_paw(mob/user as mob)
+/obj/structure/girder/attack_paw(mob/user)
 	return src.attack_hand(user) //#Z2
 
-/obj/structure/girder/attack_hand(mob/user as mob)
+/obj/structure/girder/attack_hand(mob/user)
 	if (HULK in user.mutations)
 		if(user.a_intent == "hurt")
 			playsound(user.loc, 'sound/effects/grillehit.ogg', 50, 1)

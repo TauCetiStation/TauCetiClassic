@@ -492,7 +492,7 @@
 			desc = "Your standard drinking glass"
 			return
 
-	attack(mob/target as mob, mob/user as mob, def_zone)
+	attack(mob/target, mob/user, def_zone)
 		gulp_size = volume
 		if(user.a_intent == "hurt")
 			if(ismob(target) && target.reagents && reagents.total_volume)

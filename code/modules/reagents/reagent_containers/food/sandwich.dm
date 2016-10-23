@@ -1,4 +1,4 @@
-/obj/item/weapon/reagent_containers/food/snacks/breadslice/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/weapon/reagent_containers/food/snacks/breadslice/attackby(obj/item/W, mob/user)
 
 	if(istype(W,/obj/item/weapon/shard) || istype(W,/obj/item/weapon/reagent_containers/food/snacks))
 		var/obj/item/weapon/reagent_containers/food/snacks/csandwich/S = new(get_turf(src))
@@ -15,7 +15,7 @@
 
 	var/list/ingredients = list()
 
-/obj/item/weapon/reagent_containers/food/snacks/csandwich/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/weapon/reagent_containers/food/snacks/csandwich/attackby(obj/item/W, mob/user)
 
 	var/sandwich_limit = 4
 	for(var/obj/item/O in ingredients)
@@ -83,7 +83,7 @@
 	var/obj/item/O = pick(contents)
 	usr << "\blue You think you can see [O.name] in there."
 
-/obj/item/weapon/reagent_containers/food/snacks/csandwich/attack(mob/M as mob, mob/user as mob, def_zone)
+/obj/item/weapon/reagent_containers/food/snacks/csandwich/attack(mob/M, mob/user, def_zone)
 
 	if(!CanEat(user, M, src, "eat")) return
 	var/obj/item/shard

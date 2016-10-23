@@ -152,7 +152,7 @@
 	dat += "</table>"
 	return dat
 
-/obj/machinery/mineral/processing_unit_console/attackby(var/obj/item/weapon/W, var/mob/user, params)
+/obj/machinery/mineral/processing_unit_console/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W,/obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/I = usr.get_active_hand()
 		if(istype(I) && !istype(inserted_id))

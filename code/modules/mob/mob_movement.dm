@@ -366,7 +366,7 @@
 ///Called by /client/Move()
 ///For moving in space
 ///Return 1 for movement 0 for none
-/mob/Process_Spacemove(var/movement_dir = 0)
+/mob/Process_Spacemove(movement_dir = 0)
 
 	if(..())
 		return 1

@@ -141,7 +141,7 @@ nanoui is used to open and update nano browser uis
   *
   * @return nothing
   */
-/datum/nanoui/proc/update_status(var/push_update = 0)
+/datum/nanoui/proc/update_status(push_update = 0)
 	var/atom/movable/host = src_object.nano_host()
 	var/new_status = host.CanUseTopic(user, list(), custom_state)
 	if(master_ui)
@@ -197,7 +197,7 @@ nanoui is used to open and update nano browser uis
   *
   * @return /list data to send to the ui
   */
-/datum/nanoui/proc/get_send_data(var/list/data)
+/datum/nanoui/proc/get_send_data(list/data)
 	var/list/config_data = get_config_data()
 
 	var/list/send_data = list("config" = config_data)
@@ -438,7 +438,7 @@ nanoui is used to open and update nano browser uis
  *
  * @return nothing
  */
-/datum/nanoui/proc/load_cached_data(var/data)
+/datum/nanoui/proc/load_cached_data(data)
 	cached_data = data
 	return
 
@@ -506,5 +506,5 @@ nanoui is used to open and update nano browser uis
   *
   * @return nothing
   */
-/datum/nanoui/proc/update(var/force_open = 0)
+/datum/nanoui/proc/update(force_open = 0)
 	src_object.ui_interact(user, ui_key, src, force_open, master_ui, custom_state)

@@ -331,7 +331,7 @@ var/list/robot_verbs_default = list(
 	choose_icon(6,module_sprites)
 	radio.config(module.channels)
 
-/mob/living/silicon/robot/proc/updatename(var/prefix as text)
+/mob/living/silicon/robot/proc/updatename(prefix)
 	if(prefix)
 		modtype = prefix
 	if(mmi)
@@ -565,7 +565,7 @@ var/list/robot_verbs_default = list(
 	updatehealth()
 
 
-/mob/living/silicon/robot/meteorhit(obj/O as obj)
+/mob/living/silicon/robot/meteorhit(obj/O)
 	for(var/mob/M in viewers(src, null))
 		M.show_message(text("\red [src] has been hit by [O]"), 1)
 		//Foreach goto(19)
@@ -577,20 +577,20 @@ var/list/robot_verbs_default = list(
 	return
 
 
-/mob/living/silicon/robot/bullet_act(var/obj/item/projectile/Proj)
+/mob/living/silicon/robot/bullet_act(obj/item/projectile/Proj)
 	..(Proj)
 	updatehealth()
 	if(prob(75) && Proj.damage > 0) spark_system.start()
 	return 2
 
-/mob/living/silicon/robot/triggerAlarm(var/class, area/A, list/cameralist, var/source)
+/mob/living/silicon/robot/triggerAlarm(class, area/A, list/cameralist, source)
 	if (stat == DEAD)
 		return 1
 	..()
 	queueAlarm(text("--- [class] alarm detected in [A.name]!"), class)
 
 
-/mob/living/silicon/robot/cancelAlarm(var/class, area/A as area, obj/origin)
+/mob/living/silicon/robot/cancelAlarm(class, area/A, obj/origin)
 	var/has_alarm = ..()
 
 	if (!has_alarm)
@@ -599,7 +599,7 @@ var/list/robot_verbs_default = list(
 	return has_alarm
 
 
-/mob/living/silicon/robot/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/mob/living/silicon/robot/attackby(obj/item/weapon/W, mob/user)
 	if (istype(W, /obj/item/weapon/handcuffs)) // fuck i don't even know why isrobot() in handcuff code isn't working so this will have to do
 		return
 
@@ -851,7 +851,7 @@ var/list/robot_verbs_default = list(
 			spark_system.start()
 		return ..()
 
-/mob/living/silicon/robot/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
+/mob/living/silicon/robot/attack_alien(mob/living/carbon/alien/humanoid/M)
 	if (!ticker)
 		M << "You cannot attack people before the game has started."
 		return
@@ -919,7 +919,7 @@ var/list/robot_verbs_default = list(
 
 
 
-/mob/living/silicon/robot/attack_slime(mob/living/carbon/slime/M as mob)
+/mob/living/silicon/robot/attack_slime(mob/living/carbon/slime/M)
 	if (!ticker)
 		M << "You cannot attack people before the game has started."
 		return
@@ -977,7 +977,7 @@ var/list/robot_verbs_default = list(
 
 	return
 
-/mob/living/silicon/robot/attack_animal(mob/living/simple_animal/M as mob)
+/mob/living/silicon/robot/attack_animal(mob/living/simple_animal/M)
 	if(M.melee_damage_upper == 0)
 		M.emote("[M.friendly] [src]")
 	else
@@ -1335,7 +1335,7 @@ var/list/robot_verbs_default = list(
 
 	flavor_text =  copytext(sanitize(input(usr, "Please enter your new flavour text.", "Flavour text", null)  as text), 1)
 
-/mob/living/silicon/robot/proc/choose_icon(var/triesleft, var/list/module_sprites)
+/mob/living/silicon/robot/proc/choose_icon(triesleft, list/module_sprites)
 
 	if(triesleft<1 || !module_sprites.len)
 		return
@@ -1385,7 +1385,7 @@ var/list/robot_verbs_default = list(
 
 // Uses power from cyborg's cell. Returns 1 on success or 0 on failure.
 // Properly converts using CELLRATE now! Amount is in Joules.
-/mob/living/silicon/robot/proc/cell_use_power(var/amount = 0)
+/mob/living/silicon/robot/proc/cell_use_power(amount = 0)
 	// No cell inserted
 	if(!cell)
 		return 0

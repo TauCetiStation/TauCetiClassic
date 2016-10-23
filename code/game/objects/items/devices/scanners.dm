@@ -76,7 +76,7 @@ REAGENT SCANNER
 	var/mode = 1;
 
 
-/obj/item/device/healthanalyzer/attack(mob/living/M as mob, mob/living/user as mob)
+/obj/item/device/healthanalyzer/attack(mob/living/M, mob/living/user)
 	if (( (CLUMSY in user.mutations) || user.getBrainLoss() >= 60) && prob(50))
 		user << text("\red You try to analyze the floor's vitals!")
 		for(var/mob/O in viewers(M, null))
@@ -226,7 +226,7 @@ REAGENT SCANNER
 
 	action_button_name = "Use Analyzer"
 
-/obj/item/device/analyzer/attack_self(mob/user as mob)
+/obj/item/device/analyzer/attack_self(mob/user)
 
 	if (user.stat)
 		return
@@ -310,7 +310,7 @@ REAGENT SCANNER
 	else
 		icon_state = initial(icon_state)
 
-/obj/item/device/mass_spectrometer/attack_self(mob/user as mob)
+/obj/item/device/mass_spectrometer/attack_self(mob/user)
 	if (user.stat)
 		return
 	if (crit_fail)
@@ -371,7 +371,7 @@ REAGENT SCANNER
 	var/details = 0
 	var/recent_fail = 0
 
-/obj/item/device/reagent_scanner/afterattack(obj/O, mob/user as mob)
+/obj/item/device/reagent_scanner/afterattack(obj/O, mob/user)
 	if (user.stat)
 		return
 	if (!(istype(user, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
@@ -468,7 +468,7 @@ REAGENT SCANNER
 	throw_range = 20
 	m_amt = 500
 
-/obj/item/device/occult_scanner/afterattack(mob/M as mob, mob/user as mob)
+/obj/item/device/occult_scanner/afterattack(mob/M, mob/user)
 	if(user && user.client)
 		if(ishuman(M) && M.stat == DEAD)
 			user.visible_message("\blue [user] scans [M], the air around them humming gently.")

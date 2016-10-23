@@ -13,7 +13,7 @@
 	//var/uneatable = list(/turf/space, /obj/effect/overlay, /mob/living/simple_animal/construct)
 
 
-/proc/notify_ghosts(var/message, var/ghost_sound = null) //Easy notification of ghosts.
+/proc/notify_ghosts(message, ghost_sound = null) //Easy notification of ghosts.
 	for(var/mob/dead/observer/O in player_list)
 		if(O.client)
 			O << "<span class='ghostalert'>[message]<span>"
@@ -91,7 +91,7 @@
 		direction = direct
 
 
-/datum/effect/effect/proc/fadeOut2(var/atom/A, var/frames = 16)
+/datum/effect/effect/proc/fadeOut2(atom/A, frames = 16)
 	if(A.alpha == 0) //Handle already transparent case
 		return
 	if(frames == 0)
@@ -160,7 +160,7 @@
 		SSshuttle.incall(0.5)	// Cannot recall
 
 
-/obj/singularity/narsie/large/attack_ghost(mob/living/user as mob)
+/obj/singularity/narsie/large/attack_ghost(mob/living/user)
 	if(!(src in view()))
 		user << "Your soul is too far away."
 		return
@@ -196,7 +196,7 @@
 				M.apply_effect(3, STUN)
 
 
-/obj/singularity/narsie/consume(var/atom/A)
+/obj/singularity/narsie/consume(atom/A)
 	//if(is_type_in_list(A, uneatable))
 	//	return 0
 	if(istype(A, /mob/living))
@@ -284,7 +284,7 @@
 		return
 
 
-/obj/singularity/narsie/proc/acquire(var/mob/food)
+/obj/singularity/narsie/proc/acquire(mob/food)
 	target << "<span class='notice'>NAR-SIE HAS LOST INTEREST IN YOU</span>"
 	target = food
 	if(ishuman(target))

@@ -83,7 +83,7 @@
 			A.blob_act()
 		qdel(src)
 
-/obj/machinery/sleeper/attack_animal(var/mob/living/simple_animal/M)//Stop putting hostile mobs in things guise
+/obj/machinery/sleeper/attack_animal(mob/living/simple_animal/M)//Stop putting hostile mobs in things guise
 	if(M.environment_smash)
 		visible_message("<span class='danger'>[M.name] smashes [src] apart!</span>")
 		qdel(src)
@@ -174,7 +174,7 @@
 /obj/machinery/sleeper/container_resist()
 	open_machine()
 
-/obj/machinery/sleeper/relaymove(var/mob/user)
+/obj/machinery/sleeper/relaymove(mob/user)
 	..()
 	open_machine()
 

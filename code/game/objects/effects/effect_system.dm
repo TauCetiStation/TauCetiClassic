@@ -222,7 +222,7 @@ steam.start() -- spawns the effect
 	if(istype(M))
 		affect(M)
 
-/obj/effect/effect/smoke/proc/affect(var/mob/living/carbon/M)
+/obj/effect/effect/smoke/proc/affect(mob/living/carbon/M)
 	if (istype(M))
 		return 0
 	if (M.internal != null && M.wear_mask && (M.wear_mask.flags & MASKINTERNALS))
@@ -241,7 +241,7 @@ steam.start() -- spawns the effect
 	for(var/mob/living/carbon/M in get_turf(src))
 		affect(M)
 
-/obj/effect/effect/smoke/bad/affect(var/mob/living/carbon/M)
+/obj/effect/effect/smoke/bad/affect(mob/living/carbon/M)
 	if (!..())
 		return 0
 	M.drop_item()
@@ -269,7 +269,7 @@ steam.start() -- spawns the effect
 	for(var/mob/living/carbon/M in get_turf(src))
 		affect(M)
 
-/obj/effect/effect/smoke/sleepy/affect(mob/living/carbon/M as mob )
+/obj/effect/effect/smoke/sleepy/affect(mob/living/carbon/M )
 	if (!..())
 		return 0
 
@@ -294,7 +294,7 @@ steam.start() -- spawns the effect
 	for(var/mob/living/carbon/human/R in get_turf(src))
 		affect(R)
 
-/obj/effect/effect/smoke/mustard/affect(var/mob/living/carbon/human/R)
+/obj/effect/effect/smoke/mustard/affect(mob/living/carbon/human/R)
 	if (!..())
 		return 0
 	if (R.wear_suit != null)
@@ -571,7 +571,7 @@ steam.start() -- spawns the effect
 
 
 
-	set_up(amt=5, loca, var/datum/reagents/carry = null, var/metalfoam = 0)
+	set_up(amt=5, loca, datum/reagents/carry = null, metalfoam = 0)
 		amount = round(sqrt(amt / 3), 1)
 		if(istype(loca, /turf/))
 			location = loca
@@ -651,11 +651,11 @@ steam.start() -- spawns the effect
 		if(metal==1 || prob(50))
 			qdel(src)
 
-	attack_paw(var/mob/user)
+	attack_paw(mob/user)
 		attack_hand(user)
 		return
 
-	attack_hand(var/mob/user)
+	attack_hand(mob/user)
 		if ((HULK in user.mutations) || (prob(75 - metal*25)))
 			user << "\blue You smash through the metal foam wall."
 			for(var/mob/O in oviewers(user))
@@ -668,7 +668,7 @@ steam.start() -- spawns the effect
 		return
 
 
-	attackby(var/obj/item/I, var/mob/user)
+	attackby(obj/item/I, mob/user)
 
 		if (istype(I, /obj/item/weapon/grab))
 			var/obj/item/weapon/grab/G = I
@@ -756,7 +756,7 @@ steam.start() -- spawns the effect
 
 			explosion(location, devastation, heavy, light, flash)
 
-	proc/holder_damage(var/atom/holder)
+	proc/holder_damage(atom/holder)
 		if(holder)
 			var/dmglevel = 4
 

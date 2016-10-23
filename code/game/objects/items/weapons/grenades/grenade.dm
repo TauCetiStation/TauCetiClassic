@@ -14,7 +14,7 @@
 
 	action_button_name = "Activate Grenade"
 
-/obj/item/weapon/grenade/proc/clown_check(var/mob/living/user)
+/obj/item/weapon/grenade/proc/clown_check(mob/living/user)
 	if((CLUMSY in user.mutations) && prob(50))
 		user << "<span class='warning'>Huh? How does this thing work?</span>"
 
@@ -26,7 +26,7 @@
 	return 1
 
 
-/*/obj/item/weapon/grenade/afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
+/*/obj/item/weapon/grenade/afterattack(atom/target, mob/user)
 	if (istype(target, /obj/item/weapon/storage)) return ..() // Trying to put it in a full container
 	if (istype(target, /obj/item/weapon/gun/grenadelauncher)) return ..()
 	if((user.get_active_hand() == src) && (!active) && (clown_check(user)) && target.loc != src.loc)
@@ -53,7 +53,7 @@
 	usr << "\The [src] is set for instant detonation."
 
 
-/obj/item/weapon/grenade/attack_self(mob/user as mob)
+/obj/item/weapon/grenade/attack_self(mob/user)
 	if(!active)
 		if(clown_check(user))
 			user << "<span class='warning'>You prime \the [name]! [det_time/10] seconds!</span>"
@@ -66,7 +66,7 @@
 	return
 
 
-/obj/item/weapon/grenade/proc/activate(mob/user as mob)
+/obj/item/weapon/grenade/proc/activate(mob/user)
 	if(active)
 		return
 
@@ -89,7 +89,7 @@
 		T.hotspot_expose(700,125)
 
 
-/obj/item/weapon/grenade/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/weapon/grenade/attackby(obj/item/weapon/W, mob/user)
 	if(isscrewdriver(W))
 		switch(det_time)
 			if ("1")
@@ -113,7 +113,7 @@
 	..()
 	return
 
-/obj/item/weapon/grenade/attack_paw(mob/user as mob)
+/obj/item/weapon/grenade/attack_paw(mob/user)
 	return attack_hand(user)
 
 /obj/item/weapon/grenade/syndieminibomb

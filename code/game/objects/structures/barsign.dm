@@ -15,6 +15,6 @@ var/bar_sing_global = pick("lv426", "zocalo", "4theemprah", "ishimura",\
 	ChangeSign(bar_sing_global)
 	return
 
-/obj/structure/sign/double/barsign/proc/ChangeSign(var/Text)
+/obj/structure/sign/double/barsign/proc/ChangeSign(Text)
 	src.icon_state = "[Text]"
 	return

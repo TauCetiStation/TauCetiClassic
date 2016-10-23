@@ -14,7 +14,7 @@
 	..()
 	levelupdate()
 
-/turf/simulated/proc/AddTracks(var/typepath,var/bloodDNA,var/comingdir,var/goingdir,var/bloodcolor="#A10808")
+/turf/simulated/proc/AddTracks(typepath,bloodDNA,comingdir,goingdir,bloodcolor="#A10808")
 	var/obj/effect/decal/cleanable/blood/tracks/tracks = locate(typepath) in src
 	if(!tracks)
 		tracks = new typepath(src)
@@ -154,7 +154,7 @@
 	..()
 
 //returns 1 if made bloody, returns 0 otherwise
-/turf/simulated/add_blood(mob/living/carbon/human/M as mob)
+/turf/simulated/add_blood(mob/living/carbon/human/M)
 	if (!..())
 		return 0
 
@@ -183,7 +183,7 @@
 
 
 // Only adds blood on the floor -- Skie
-/turf/simulated/proc/add_blood_floor(mob/living/carbon/M as mob)
+/turf/simulated/proc/add_blood_floor(mob/living/carbon/M)
 	if(istype(M, /mob/living/carbon/monkey))
 
 		var/obj/effect/decal/cleanable/blood/this = new /obj/effect/decal/cleanable/blood(src)

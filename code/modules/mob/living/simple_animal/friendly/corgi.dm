@@ -27,7 +27,7 @@
 	..()
 	regenerate_icons()
 
-/mob/living/simple_animal/corgi/show_inv(mob/user as mob)
+/mob/living/simple_animal/corgi/show_inv(mob/user)
 	user.set_machine(src)
 	if(user.stat) return
 
@@ -66,7 +66,7 @@
 	onclose(user, "mob[type]")
 	return
 
-/mob/living/simple_animal/corgi/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/mob/living/simple_animal/corgi/attackby(obj/item/O, mob/user)
 	if(inventory_head && inventory_back)
 		//helmet and armor = 100% protection
 		if( istype(inventory_head,/obj/item/clothing/head/helmet) && istype(inventory_back,/obj/item/clothing/suit/armor) )
@@ -84,7 +84,7 @@
 			return
 	..()
 
-/mob/living/simple_animal/corgi/attack_hand(mob/living/carbon/human/M as mob)
+/mob/living/simple_animal/corgi/attack_hand(mob/living/carbon/human/M)
 	if(inventory_head && inventory_back)
 		if(health > 0)
 			if( istype(inventory_head,/obj/item/clothing/head/helmet) && istype(inventory_back,/obj/item/clothing/suit/armor) )
@@ -99,7 +99,7 @@
 						return
 	..()
 
-/mob/living/simple_animal/corgi/bullet_act(var/obj/item/projectile/Proj)
+/mob/living/simple_animal/corgi/bullet_act(obj/item/projectile/Proj)
 	if(!Proj)	return
 	if(inventory_head && inventory_back)
 		if(health > 0)
@@ -118,7 +118,7 @@
 					return
 	..()
 
-/mob/living/simple_animal/corgi/hitby(atom/movable/AM as mob|obj)
+/mob/living/simple_animal/corgi/hitby(atom/movable/AM)
 	if(inventory_head && inventory_back)
 		if( istype(inventory_head,/obj/item/clothing/head/helmet) && istype(inventory_back,/obj/item/clothing/suit/armor) )
 			for (var/mob/M in viewers(src, null))
@@ -395,7 +395,7 @@
 
 //PC stuff-Sieve
 
-/mob/living/simple_animal/corgi/attackby(var/obj/item/O as obj, var/mob/user as mob)  //Marker -Agouri
+/mob/living/simple_animal/corgi/attackby(obj/item/O, mob/user)  //Marker -Agouri
 	if(istype(O, /obj/item/weapon/newspaper))
 		if(!stat)
 			for(var/mob/M in viewers(user, null))
@@ -520,13 +520,13 @@
 	meat_type = null
 	var/emagged = 0
 
-/mob/living/simple_animal/corgi/Ian/borgi/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/mob/living/simple_animal/corgi/Ian/borgi/attackby(obj/item/weapon/W, mob/user)
 	if (istype(W, /obj/item/weapon/card/emag) && emagged < 2)
 		Emag(user)
 	else
 		..()
 
-/mob/living/simple_animal/corgi/Ian/borgi/proc/Emag(user as mob)
+/mob/living/simple_animal/corgi/Ian/borgi/proc/Emag(user)
 	if(!emagged)
 		emagged = 1
 		visible_message("<span class='warning'>[user] swipes a card through [src].</span>", "<span class='notice'>You overload [src]s internal reactor.</span>")
@@ -541,7 +541,7 @@
 	explosion(get_turf(src), 0, 1, 4, 7)
 	Die()
 
-/mob/living/simple_animal/corgi/Ian/borgi/proc/shootAt(var/atom/movable/target)
+/mob/living/simple_animal/corgi/Ian/borgi/proc/shootAt(atom/movable/target)
 	var/turf/T = get_turf(src)
 	var/turf/U = get_turf(target)
 	if (!T || !U)

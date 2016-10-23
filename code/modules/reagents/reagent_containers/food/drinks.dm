@@ -15,10 +15,10 @@
 		if (gulp_size < 5) gulp_size = 5
 		else gulp_size = max(round(reagents.total_volume / 5), 5)
 
-	attack_self(mob/user as mob)
+	attack_self(mob/user)
 		return
 
-	attack(mob/M as mob, mob/user as mob, def_zone)
+	attack(mob/M, mob/user, def_zone)
 		var/datum/reagents/R = src.reagents
 		var/fillevel = gulp_size
 

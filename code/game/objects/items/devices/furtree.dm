@@ -10,7 +10,7 @@
 	anchored = 1
 	layer = 4.1
 
-/obj/item/device/flashlight/lamp/fir/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/device/flashlight/lamp/fir/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/wrench))	//unwrenching vendomats
 		var/turf/T = user.loc
 		user << "<span class='notice'>You begin [anchored ? "unwrenching" : "wrenching"] the [src].</span>"
@@ -21,5 +21,5 @@
 			anchored = !anchored
 			user << "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>"
 
-/obj/item/device/flashlight/lamp/fir/attack_hand(mob/user as mob)
+/obj/item/device/flashlight/lamp/fir/attack_hand(mob/user)
 	return

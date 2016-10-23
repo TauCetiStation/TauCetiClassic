@@ -55,7 +55,7 @@
 		if(cell.charge <= 0)
 			deactivate()
 
-/obj/machinery/suspension_gen/interact(mob/user as mob)
+/obj/machinery/suspension_gen/interact(mob/user)
 	var/dat = "<b>Multi-phase mobile suspension field generator MK II \"Steadfast\"</b><br>"
 	if(cell)
 		var/colour = "red"
@@ -159,7 +159,7 @@
 
 	updateUsrDialog()
 
-/obj/machinery/suspension_gen/attack_hand(mob/user as mob)
+/obj/machinery/suspension_gen/attack_hand(mob/user)
 	if(!open)
 		interact(user)
 	else if(cell)
@@ -171,7 +171,7 @@
 		cell = null
 		user << "<span class='info'>You remove the power cell</span>"
 
-/obj/machinery/suspension_gen/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/machinery/suspension_gen/attackby(obj/item/weapon/W, mob/user)
 	if (istype(W, /obj/item/weapon/screwdriver))
 		if(!open)
 			if(screwed)
@@ -228,7 +228,7 @@
 		else
 			user << "<span class='warning'>Remove [auth_card] first.</span>"
 
-/obj/machinery/suspension_gen/proc/attempt_unlock(var/obj/item/weapon/card/C)
+/obj/machinery/suspension_gen/proc/attempt_unlock(obj/item/weapon/card/C)
 	if(!open)
 		if(istype(C, /obj/item/weapon/card/emag) && cell.charge > 0)
 			//put sparks here

@@ -33,7 +33,7 @@
 		BB = new projectile_type(src)
 	return
 
-/obj/item/ammo_casing/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/ammo_casing/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/screwdriver))
 		if(BB)
 			if(initial(BB.name) == "bullet")
@@ -79,7 +79,7 @@
 		stored_ammo += new ammo_type(src)
 	update_icon()
 
-/obj/item/ammo_box/proc/get_round(var/keep = 0)
+/obj/item/ammo_box/proc/get_round(keep = 0)
 	if (!stored_ammo.len)
 		return null
 	else
@@ -89,7 +89,7 @@
 			stored_ammo.Insert(1,b)
 		return b
 
-/obj/item/ammo_box/proc/give_round(var/obj/item/ammo_casing/r)
+/obj/item/ammo_box/proc/give_round(obj/item/ammo_casing/r)
 	var/obj/item/ammo_casing/rb = r
 	if (rb)
 		if (stored_ammo.len < max_ammo && rb.caliber == caliber)
@@ -98,7 +98,7 @@
 			return 1
 	return 0
 
-/obj/item/ammo_box/attackby(var/obj/item/A as obj, mob/user as mob, var/silent = 0)
+/obj/item/ammo_box/attackby(obj/item/A, mob/user, silent = 0)
 	var/num_loaded = 0
 	if(istype(A, /obj/item/ammo_box))
 		var/obj/item/ammo_box/AM = A
@@ -123,7 +123,7 @@
 		return num_loaded
 	return 0
 
-/obj/item/ammo_box/attack_self(mob/user as mob)
+/obj/item/ammo_box/attack_self(mob/user)
 	var/obj/item/ammo_casing/A = get_round()
 	if(A)
 		A.loc = get_turf(src.loc)

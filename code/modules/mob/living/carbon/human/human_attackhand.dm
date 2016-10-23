@@ -1,4 +1,4 @@
-/mob/living/carbon/human/attack_hand(mob/living/carbon/human/M as mob)
+/mob/living/carbon/human/attack_hand(mob/living/carbon/human/M)
 	if (istype(loc, /turf) && istype(loc.loc, /area/start))
 		M << "No attacking people at spawn, you jackass."
 		return
@@ -249,5 +249,5 @@
 			visible_message("\red <B>[M] attempted to disarm [src]!</B>")
 	return
 
-/mob/living/carbon/human/proc/afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, inrange, params)
+/mob/living/carbon/human/proc/afterattack(atom/target, mob/living/user, inrange, params)
 	return

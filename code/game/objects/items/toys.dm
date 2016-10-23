@@ -34,10 +34,10 @@
 	reagents = R
 	R.my_atom = src
 
-/obj/item/toy/balloon/attack(mob/living/carbon/human/M as mob, mob/user as mob)
+/obj/item/toy/balloon/attack(mob/living/carbon/human/M, mob/user)
 	return
 
-/obj/item/toy/balloon/afterattack(atom/A as mob|obj, mob/user as mob, proximity)
+/obj/item/toy/balloon/afterattack(atom/A, mob/user, proximity)
 	if(!proximity) return
 	if (istype(A, /obj/structure/reagent_dispensers/watertank) && get_dist(src,A) <= 1)
 		A.reagents.trans_to(src, 10)
@@ -46,7 +46,7 @@
 		src.update_icon()
 	return
 
-/obj/item/toy/balloon/attackby(obj/O as obj, mob/user as mob)
+/obj/item/toy/balloon/attackby(obj/O, mob/user)
 	if(istype(O, /obj/item/weapon/reagent_containers/glass))
 		if(O.reagents)
 			if(O.reagents.total_volume < 1)
@@ -140,7 +140,7 @@
 		..()
 		return
 
-	attackby(obj/item/toy/ammo/gun/A as obj, mob/user as mob)
+	attackby(obj/item/toy/ammo/gun/A, mob/user)
 
 		if (istype(A, /obj/item/toy/ammo/gun))
 			if (src.bullets >= 7)
@@ -161,7 +161,7 @@
 			return 1
 		return
 
-	afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
+	afterattack(atom/target, mob/user, flag)
 		if (flag)
 			return
 		if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
@@ -216,7 +216,7 @@
 		if (bullets)
 			usr << "\blue It is loaded with [bullets] foam darts!"
 
-	attackby(obj/item/I as obj, mob/user as mob)
+	attackby(obj/item/I, mob/user)
 		if(istype(I, /obj/item/toy/ammo/crossbow))
 			if(bullets <= 4)
 				user.drop_item()
@@ -227,7 +227,7 @@
 				usr << "\red It's already fully loaded."
 
 
-	afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
+	afterattack(atom/target, mob/user, flag)
 		if(!isturf(target.loc) || target == user) return
 		if(flag) return
 
@@ -275,7 +275,7 @@
 				O.show_message(text("\red [] realized they were out of ammo and starting scrounging for some!", user), 1)
 
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		src.add_fingerprint(user)
 
 // ******* Check
@@ -327,7 +327,7 @@
 	flags = FPRINT | TABLEPASS | NOSHIELD
 	attack_verb = list("attacked", "struck", "hit")
 
-	attack_self(mob/user as mob)
+	attack_self(mob/user)
 		src.active = !( src.active )
 		if (src.active)
 			user << "\blue You extend the plastic blade with a quick flick of your wrist."
@@ -439,10 +439,10 @@
 	R.my_atom = src
 	R.add_reagent("water", 10)
 
-/obj/item/toy/waterflower/attack(mob/living/carbon/human/M as mob, mob/user as mob)
+/obj/item/toy/waterflower/attack(mob/living/carbon/human/M, mob/user)
 	return
 
-/obj/item/toy/waterflower/afterattack(atom/A as mob|obj, mob/user as mob)
+/obj/item/toy/waterflower/afterattack(atom/A, mob/user)
 
 	if (istype(A, /obj/item/weapon/storage/backpack ))
 		return
@@ -512,13 +512,13 @@
 	var/cooldown = 0
 
 //all credit to skasi for toy mech fun ideas
-/obj/item/toy/prize/attack_self(mob/user as mob)
+/obj/item/toy/prize/attack_self(mob/user)
 	if(cooldown < world.time - 8)
 		user << "<span class='notice'>You play with [src].</span>"
 		playsound(user, 'sound/mecha/mechstep.ogg', 20, 1)
 		cooldown = world.time
 
-/obj/item/toy/prize/attack_hand(mob/user as mob)
+/obj/item/toy/prize/attack_hand(mob/user)
 	if(loc == user)
 		if(cooldown < world.time - 8)
 			user << "<span class='notice'>You play with [src].</span>"
@@ -630,7 +630,7 @@
 /obj/item/toy/figure/New()
     desc = "A \"Space Life\" brand [src]."
 
-/obj/item/toy/figure/attack_self(mob/user as mob)
+/obj/item/toy/figure/attack_self(mob/user)
 	if(cooldown <= world.time)
 		cooldown = world.time + 50
 		user << "<span class='notice'>The [src] says \"[toysay]\"</span>"
@@ -962,7 +962,7 @@ Owl & Griffin toys
 	cards += "Ace of Diamonds"
 
 
-/obj/item/toy/cards/attack_hand(mob/user as mob)
+/obj/item/toy/cards/attack_hand(mob/user)
 	var/choice = null
 	if(cards.len == 0)
 		src.icon_state = "deck_empty"
@@ -983,7 +983,7 @@ Owl & Griffin toys
 	else if(cards.len > 1)
 		src.icon_state = "deck_low"
 
-/obj/item/toy/cards/attack_self(mob/user as mob)
+/obj/item/toy/cards/attack_self(mob/user)
 	cards = shuffle(cards)
 	playsound(user, 'sound/items/cardshuffle.ogg', 50, 1)
 	user.visible_message("<span class='notice'>[user] shuffles the deck.</span>", "<span class='notice'>You shuffle the deck.</span>")
@@ -1058,7 +1058,7 @@ Owl & Griffin toys
 	var/choice = null
 
 
-/obj/item/toy/cardhand/attack_self(mob/user as mob)
+/obj/item/toy/cardhand/attack_self(mob/user)
 	user.set_machine(src)
 	interact(user)
 
@@ -1222,12 +1222,12 @@ Owl & Griffin toys
 	icon_state = "poly_classic"
 
 //all credit to skasi for toy mech fun ideas
-/obj/item/toy/prize/poly/attack_self(mob/user as mob)
+/obj/item/toy/prize/poly/attack_self(mob/user)
 	if(cooldown < world.time - 8)
 		user << "<span class='notice'>You play with [src].</span>"
 		cooldown = world.time
 
-/obj/item/toy/prize/poly/attack_hand(mob/user as mob)
+/obj/item/toy/prize/poly/attack_hand(mob/user)
 	if(loc == user)
 		if(cooldown < world.time - 8)
 			user << "<span class='notice'>You play with [src].</span>"
@@ -1285,7 +1285,7 @@ Owl & Griffin toys
 	desc = "Mini-Borg action figure! Limited edition! 10/11. He's loves you."
 	icon_state = "poly_companion"
 
-	attack_self(mob/user as mob)
+	attack_self(mob/user)
 		user << "\blue You have clicked a switch behind the toy."
 		src.icon_state = "poly_companion" + pick("1","2","")
 
@@ -1304,7 +1304,7 @@ Owl & Griffin toys
 	desc = "Mini-Borg action figure! Limited edition! 11/11. Fully from gold and platinum."
 	icon_state = "poly_special"
 
-	attack_self(mob/user as mob)
+	attack_self(mob/user)
 		user << "\blue You have clicked a switch behind the toy."
 		src.icon_state = "poly_special" + pick("1","2","")
 		if(istype(user,/mob/living/carbon/human))

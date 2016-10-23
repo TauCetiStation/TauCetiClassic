@@ -11,7 +11,7 @@ Usage: Place the proc within the proc it shares it's name with, silencer_attackb
 	w_class = 2
 	var/oldsound = 0 //Stores the true sound the gun made before it was silenced
 
-/obj/item/weapon/gun/projectile/proc/silencer_attackby(obj/item/I as obj, mob/user as mob)
+/obj/item/weapon/gun/projectile/proc/silencer_attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/silencer))
 		if(user.l_hand != src && user.r_hand != src)
 			user << "<span class='warning'>You'll need [src] in your hands to do that.</span>"
@@ -28,7 +28,7 @@ Usage: Place the proc within the proc it shares it's name with, silencer_attackb
 		return
 	..()
 
-/obj/item/weapon/gun/projectile/proc/silencer_attack_hand(mob/user as mob)
+/obj/item/weapon/gun/projectile/proc/silencer_attack_hand(mob/user)
 	if(loc == user)
 		if(silenced)
 			if(user.l_hand != src && user.r_hand != src)

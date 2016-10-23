@@ -20,7 +20,7 @@
 	name = "donut box"
 	var/icon_type = "donut"
 
-/obj/item/weapon/storage/fancy/update_icon(var/itemremoved = 0)
+/obj/item/weapon/storage/fancy/update_icon(itemremoved = 0)
 	var/total_contents = src.contents.len - itemremoved
 	src.icon_state = "[src.icon_type]box[total_contents]"
 	return
@@ -132,7 +132,7 @@
 	for(var/obj/item/toy/crayon/crayon in contents)
 		overlays += image('icons/obj/crayons.dmi',crayon.colourName)
 
-/obj/item/weapon/storage/fancy/crayons/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/weapon/storage/fancy/crayons/attackby(obj/item/W, mob/user)
 	if(istype(W,/obj/item/toy/crayon))
 		switch(W:colourName)
 			if("mime")
@@ -202,13 +202,13 @@
 	icon_state = "[initial(icon_state)][contents.len]"
 	return
 
-/obj/item/weapon/storage/fancy/cigarettes/remove_from_storage(obj/item/W as obj, atom/new_location)
+/obj/item/weapon/storage/fancy/cigarettes/remove_from_storage(obj/item/W, atom/new_location)
 	if(istype(W, /obj/item/clothing/mask/cigarette))
 		if(reagents)
 			reagents.trans_to(W, (reagents.total_volume/contents.len))
 	..()
 
-/obj/item/weapon/storage/fancy/cigarettes/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+/obj/item/weapon/storage/fancy/cigarettes/attack(mob/living/carbon/M, mob/living/carbon/user)
 	if(!istype(M, /mob))
 		return
 
@@ -270,7 +270,7 @@
 	..()
 	update_icon()
 
-/obj/item/weapon/storage/lockbox/vials/update_icon(var/itemremoved = 0)
+/obj/item/weapon/storage/lockbox/vials/update_icon(itemremoved = 0)
 	var/total_contents = src.contents.len - itemremoved
 	src.icon_state = "vialbox[total_contents]"
 	src.overlays.Cut()
@@ -282,6 +282,6 @@
 		overlays += image(icon, src, "ledb")
 	return
 
-/obj/item/weapon/storage/lockbox/vials/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/weapon/storage/lockbox/vials/attackby(obj/item/weapon/W, mob/user)
 	..()
 	update_icon()

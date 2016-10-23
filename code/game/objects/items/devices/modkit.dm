@@ -19,7 +19,7 @@
 		/obj/item/clothing/suit/space/rig/engineering/chief
 	)
 
-/obj/item/device/modkit/afterattack(obj/O, mob/user as mob)
+/obj/item/device/modkit/afterattack(obj/O, mob/user)
 	if(get_dist(src,O)>1)
 		return
 	if (!target_species)

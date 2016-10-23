@@ -41,7 +41,7 @@
 			qdel(src)
 			F:annihilation(F.fuel)
 
-/obj/item/weapon/fuel/antiH/proc/annihilation(var/mass)
+/obj/item/weapon/fuel/antiH/proc/annihilation(mass)
 
 	var/strength = convert2energy(mass)
 
@@ -72,7 +72,7 @@
 	if(usr && !usr.stat)
 		usr << "A magnetic storage ring, it contains [fuel]kg of [content ? content : "nothing"]."
 
-/obj/item/weapon/fuel/proc/injest(mob/M as mob)
+/obj/item/weapon/fuel/proc/injest(mob/M)
 	switch(content)
 		if("Anti-Hydrogen")
 			M.gib()
@@ -81,7 +81,7 @@
 	qdel(src)
 	return
 
-/obj/item/weapon/fuel/attack(mob/M as mob, mob/user as mob)
+/obj/item/weapon/fuel/attack(mob/M, mob/user)
 	if (user != M)
 		var/obj/effect/equip_e/human/O = new /obj/effect/equip_e/human(  )
 		O.source = user

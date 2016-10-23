@@ -34,7 +34,7 @@
 	update_icon()
 	return secured
 
-/obj/item/device/assembly/prox_sensor/HasProximity(atom/movable/AM as mob|obj)
+/obj/item/device/assembly/prox_sensor/HasProximity(atom/movable/AM)
 	if (istype(AM, /obj/effect/beam))	return
 	if (AM.move_speed < 12)	sense()
 	return
@@ -106,7 +106,7 @@
 	sense()
 	return
 
-/obj/item/device/assembly/prox_sensor/interact(mob/user as mob)//TODO: Change this to the wires thingy
+/obj/item/device/assembly/prox_sensor/interact(mob/user)//TODO: Change this to the wires thingy
 	if(!secured)
 		user.show_message("\red The [name] is unsecured!")
 		return 0

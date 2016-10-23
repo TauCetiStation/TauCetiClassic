@@ -118,7 +118,7 @@ proc/move_mining_shuttle()
 	circuit = "/obj/item/weapon/circuitboard/mining_shuttle"
 	var/location = 0 //0 = station, 1 = mining base
 
-/obj/machinery/computer/mining_shuttle/attack_hand(user as mob)
+/obj/machinery/computer/mining_shuttle/attack_hand(user)
 	if(..(user))
 		return
 	src.add_fingerprint(usr)
@@ -155,7 +155,7 @@ proc/move_mining_shuttle()
 
 	updateUsrDialog()
 
-/obj/machinery/computer/mining_shuttle/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/machinery/computer/mining_shuttle/attackby(obj/item/weapon/W, mob/user)
 	if (istype(W, /obj/item/weapon/card/emag) && !emagged)
 		src.req_access = list()
 		emagged = 1
@@ -313,7 +313,7 @@ proc/move_mining_shuttle()
 		icon_state += "_broken"
 	return
 
-/obj/item/weapon/pickaxe/drill/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/weapon/pickaxe/drill/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/screwdriver))
 		if(state==0)
 			state = 1
@@ -339,7 +339,7 @@ proc/move_mining_shuttle()
 			user <<"<span class='notice'>[src] panel is closed.</span>"
 		return
 
-/obj/item/weapon/pickaxe/drill/attack_hand(mob/user as mob)
+/obj/item/weapon/pickaxe/drill/attack_hand(mob/user)
 	if(loc != user)
 		..()
 		return	//let them pick it up
@@ -354,7 +354,7 @@ proc/move_mining_shuttle()
 			user << "<span class='notice'>You pull the powercell out of \the [src].</span>"
 		return
 
-/obj/item/weapon/pickaxe/drill/attack_self(mob/user as mob)
+/obj/item/weapon/pickaxe/drill/attack_self(mob/user)
 	mode = !mode
 
 	if(mode)
@@ -412,14 +412,14 @@ proc/move_mining_shuttle()
 	var/impact = 2
 	var/power = 5
 
-/obj/item/weapon/mining_charge/attack_self(mob/user as mob)
+/obj/item/weapon/mining_charge/attack_self(mob/user)
 	var/newtime = input(usr, "Please set the timer.", "Timer", 10) as num
 	if(newtime < 5)
 		newtime = 5
 	timer = newtime
 	user << "<span class='notice'>Timer set for </span>[timer]<span class='notice'> seconds.</span>"
 
-/obj/item/weapon/mining_charge/afterattack(turf/simulated/mineral/target as turf, mob/user as mob, flag)
+/obj/item/weapon/mining_charge/afterattack(turf/simulated/mineral/target, mob/user, flag)
 	if (!flag)
 		return
 	if (!istype(target, /turf/simulated/mineral))
@@ -445,7 +445,7 @@ proc/move_mining_shuttle()
 				if(src)
 					qdel(src)
 
-/obj/item/weapon/mining_charge/attack(mob/M as mob, mob/user as mob, def_zone)
+/obj/item/weapon/mining_charge/attack(mob/M, mob/user, def_zone)
 	return
 
 /*****************************Power tools********************************/
@@ -472,7 +472,7 @@ proc/move_mining_shuttle()
 /obj/item/weapon/gun/energy/kinetic_accelerator/emp_act(severity)
 	return
 
-/obj/item/weapon/gun/energy/kinetic_accelerator/attack_self(var/mob/living/user/L)
+/obj/item/weapon/gun/energy/kinetic_accelerator/attack_self(mob/living/user/L)
 	if(overheat || recent_reload)
 		return
 	power_supply.give(500)
@@ -516,7 +516,7 @@ obj/item/projectile/kinetic/New()
 		new /obj/item/effect/kinetic_blast(src.loc)
 		qdel(src)
 
-/obj/item/projectile/kinetic/on_hit(var/atom/target)
+/obj/item/projectile/kinetic/on_hit(atom/target)
 	. = ..()
 	var/turf/target_turf = get_turf(target)
 	if(istype(target_turf, /turf/simulated/mineral))
@@ -788,7 +788,7 @@ obj/item/projectile/kinetic/New()
 		stat = 0
 		ispowered = 1
 
-/obj/machinery/smartfridge/survival_pod/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/obj/machinery/smartfridge/survival_pod/attackby(obj/item/O, mob/user)
 	if(is_type_in_typecache(O,forbidden_tools))
 		if(istype(O,/obj/item/weapon/wrench))
 			user << "\blue You start to disassemble the storage unit..."

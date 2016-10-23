@@ -1,5 +1,5 @@
 var/power_fail_event = 0
-/proc/power_failure(var/announce = 1)
+/proc/power_failure(announce = 1)
 	if(power_fail_event)
 		return
 	power_fail_event = 1
@@ -34,7 +34,7 @@ var/power_fail_event = 0
 /proc/play_ambience()
 	player_list << sound('sound/ambience/hullcreak.ogg')
 
-/proc/power_restore(var/announce = 1, var/badminery = 0)
+/proc/power_restore(announce = 1, badminery = 0)
 	power_fail_event = 0
 	var/list/skipped_areas = list(/area/turret_protected/ai)
 
@@ -58,7 +58,7 @@ var/power_fail_event = 0
 		S.power_change()
 
 //This one can be called only by admin.
-/proc/power_restore_quick(var/announce = 1)
+/proc/power_restore_quick(announce = 1)
 	if(announce)
 		command_alert("All SMESs on [station_name()] have been recharged. We apologize for the inconvenience.", "Power Systems Nominal")
 		player_list << sound('sound/AI/poweron.ogg')

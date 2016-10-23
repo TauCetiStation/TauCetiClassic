@@ -50,7 +50,7 @@
 	return to_return
 
 
-/obj/machinery/power/solar/proc/Make(var/obj/item/solar_assembly/S)
+/obj/machinery/power/solar/proc/Make(obj/item/solar_assembly/S)
 	if(!S)
 		S = new /obj/item/solar_assembly(src)
 		S.glass_type = /obj/item/stack/sheet/glass
@@ -202,7 +202,7 @@
 	var/tracker = 0
 	var/glass_type = null
 
-/obj/item/solar_assembly/attack_hand(var/mob/user)
+/obj/item/solar_assembly/attack_hand(mob/user)
 	if(!anchored && isturf(loc)) // You can't pick it up
 		..()
 
@@ -214,7 +214,7 @@
 		glass_type = null
 
 
-/obj/item/solar_assembly/attackby(var/obj/item/weapon/W, var/mob/user)
+/obj/item/solar_assembly/attackby(obj/item/weapon/W, mob/user)
 
 	if(!anchored && isturf(loc))
 		if(iswrench(W))
@@ -337,7 +337,7 @@
 	interact(user)
 
 
-/obj/machinery/power/solar_control/attackby(I as obj, user as mob)
+/obj/machinery/power/solar_control/attackby(I, user)
 	if(istype(I, /obj/item/weapon/screwdriver))
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		if(do_after(user, 20, target = src))
@@ -389,7 +389,7 @@
 
 
 // called by solar tracker when sun position changes
-/obj/machinery/power/solar_control/proc/tracker_update(var/angle)
+/obj/machinery/power/solar_control/proc/tracker_update(angle)
 	if(track != 2 || stat & (NOPOWER | BROKEN))
 		return
 	cdir = angle
@@ -484,7 +484,7 @@
 	src.updateUsrDialog()
 
 
-/obj/machinery/power/solar_control/proc/set_panels(var/cdir)
+/obj/machinery/power/solar_control/proc/set_panels(cdir)
 	if(!powernet) return
 	for(var/obj/machinery/power/solar/S in get_solars_powernet())
 		if(powernet.nodes[S])

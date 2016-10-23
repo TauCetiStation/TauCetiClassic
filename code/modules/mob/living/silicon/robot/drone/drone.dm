@@ -140,7 +140,7 @@
 					if(M.client) M << "<b>[src]</b> transmits, \"[message]\""
 
 //Drones cannot be upgraded with borg modules so we need to catch some items before they get used in ..().
-/mob/living/silicon/robot/drone/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/mob/living/silicon/robot/drone/attackby(obj/item/weapon/W, mob/user)
 
 	if(istype(W, /obj/item/borg/upgrade/))
 		user << "\red The maintenance drone chassis not compatible with \the [W]."
@@ -289,7 +289,7 @@
 			if(!C.prefs.ignore_question.Find("drone") && (ROLE_PAI in C.prefs.be_role))
 				question(C)
 
-/mob/living/silicon/robot/drone/proc/question(var/client/C)
+/mob/living/silicon/robot/drone/proc/question(client/C)
 	spawn(0)
 		if(!C || !C.mob || jobban_isbanned(C.mob, ROLE_DRONE) || role_available_in_minutes(C.mob, ROLE_DRONE))//Not sure if we need jobban check, since proc from above do that too.
 			return
@@ -301,7 +301,7 @@
 		else if (response == "Never for this round")
 			C.prefs.ignore_question += "drone"
 
-/mob/living/silicon/robot/drone/proc/transfer_personality(var/client/player)
+/mob/living/silicon/robot/drone/proc/transfer_personality(client/player)
 
 	if(!player) return
 
@@ -329,7 +329,7 @@
 	if(!(O in can_bump))
 		return 0
 
-/mob/living/silicon/robot/drone/start_pulling(var/atom/movable/AM)
+/mob/living/silicon/robot/drone/start_pulling(atom/movable/AM)
 
 	if(istype(AM,/obj/item/pipe) || istype(AM,/obj/structure/disposalconstruct))
 		..()

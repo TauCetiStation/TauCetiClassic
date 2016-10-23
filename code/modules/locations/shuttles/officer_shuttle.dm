@@ -20,7 +20,7 @@
 	curr_location= locate(/area/shuttle/officer/velocity)
 	radio = new (src)
 
-/obj/machinery/computer/officer_shuttle/proc/officer_move_to(area/destination as area)
+/obj/machinery/computer/officer_shuttle/proc/officer_move_to(area/destination)
 	if(moving)	return
 	if(lastMove + OFFICER_SHUTTLE_COOLDOWN > world.time)	return
 	var/area/dest_location = locate(destination)
@@ -55,16 +55,16 @@
 	moving = 0
 	return 1
 
-/obj/machinery/computer/officer_shuttle/attackby(obj/item/I as obj, mob/user as mob)
+/obj/machinery/computer/officer_shuttle/attackby(obj/item/I, mob/user)
 	return attack_hand(user)
 
-/obj/machinery/computer/officer_shuttle/attack_ai(mob/user as mob)
+/obj/machinery/computer/officer_shuttle/attack_ai(mob/user)
 	return attack_hand(user)
 
-/obj/machinery/computer/officer_shuttle/attack_paw(mob/user as mob)
+/obj/machinery/computer/officer_shuttle/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/machinery/computer/officer_shuttle/attack_hand(mob/user as mob)
+/obj/machinery/computer/officer_shuttle/attack_hand(mob/user)
 	user.set_machine(src)
 
 	var/dat = {"Location: [curr_location]<br>

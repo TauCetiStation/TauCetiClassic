@@ -1,7 +1,7 @@
 /obj/item/weapon/reagent_containers/food/drinks/cans
 	var/canopened = 0
 
-/obj/item/weapon/reagent_containers/food/drinks/cans/attack_self(mob/user as mob)
+/obj/item/weapon/reagent_containers/food/drinks/cans/attack_self(mob/user)
 	if (!canopened)
 		playsound(src.loc,'sound/effects/canopen.ogg', rand(10,50), 1)
 		user << "<span class='notice'>You open the drink with an audible pop!</span>"
@@ -9,7 +9,7 @@
 	else
 		return
 
-/obj/item/weapon/reagent_containers/food/drinks/cans/attack(mob/M as mob, mob/user as mob, def_zone)
+/obj/item/weapon/reagent_containers/food/drinks/cans/attack(mob/M, mob/user, def_zone)
 
 	if(!CanEat(user, M, src, "drink")) return
 

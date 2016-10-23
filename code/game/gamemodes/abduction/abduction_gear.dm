@@ -45,7 +45,7 @@
 				H.update_inv_wear_suit()
 			return
 
-/obj/item/clothing/suit/armor/abductor/vest/proc/SetDisguise(var/datum/icon_snapshot/entry)
+/obj/item/clothing/suit/armor/abductor/vest/proc/SetDisguise(datum/icon_snapshot/entry)
 	disguise = entry
 
 /obj/item/clothing/suit/armor/abductor/vest/proc/ActivateStealth()
@@ -85,7 +85,7 @@
 	DeactivateStealth()
 	return 0
 
-/obj/item/clothing/suit/armor/abductor/vest/proc/IsAbductor(var/user)
+/obj/item/clothing/suit/armor/abductor/vest/proc/IsAbductor(user)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(H.species.name != "Abductor")
@@ -93,13 +93,13 @@
 		return 1
 	return 0
 
-/obj/item/clothing/suit/armor/abductor/vest/proc/AbductorCheck(var/user)
+/obj/item/clothing/suit/armor/abductor/vest/proc/AbductorCheck(user)
 	if(IsAbductor(user))
 		return 1
 	user << "<span class='notice'>You can't figure how this works.</span>"
 	return 0
 
-/obj/item/clothing/suit/armor/abductor/vest/proc/AgentCheck(var/user)
+/obj/item/clothing/suit/armor/abductor/vest/proc/AgentCheck(user)
 	var/mob/living/carbon/human/H = user
 	return H.agent
 
@@ -140,7 +140,7 @@
 
 
 //SCIENCE TOOL
-/obj/item/device/abductor/proc/IsAbductor(var/user)
+/obj/item/device/abductor/proc/IsAbductor(user)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(H.species.name != "Abductor")
@@ -148,13 +148,13 @@
 		return 1
 	return 0
 
-/obj/item/device/abductor/proc/AbductorCheck(var/user)
+/obj/item/device/abductor/proc/AbductorCheck(user)
 	if(IsAbductor(user))
 		return 1
 	user << "<span class='notice'>You can't figure how this works.</span>"
 	return 0
 
-/obj/item/device/abductor/proc/ScientistCheck(var/user)
+/obj/item/device/abductor/proc/ScientistCheck(user)
 	var/mob/living/carbon/human/H = user
 	return H.scientist
 
@@ -196,7 +196,7 @@
 			mark(M, user)
 
 
-/obj/item/device/abductor/gizmo/afterattack(var/atom/target, var/mob/living/user, flag, params)
+/obj/item/device/abductor/gizmo/afterattack(atom/target, mob/living/user, flag, params)
 	if(flag)
 		return
 	if(!AbductorCheck(user))
@@ -210,13 +210,13 @@
 		if(GIZMO_MARK)
 			mark(target, user)
 
-/obj/item/device/abductor/gizmo/proc/scan(var/atom/target, var/mob/living/user)
+/obj/item/device/abductor/gizmo/proc/scan(atom/target, mob/living/user)
 	if(ishuman(target))
 		if(console != null)
 			console.AddSnapshot(target)
 			user << "<span class='notice'>You scan [target] and add them to the database.</span>"
 
-/obj/item/device/abductor/gizmo/proc/mark(var/atom/target, var/mob/living/user)
+/obj/item/device/abductor/gizmo/proc/mark(atom/target, mob/living/user)
 	if(marked == target)
 		user << "<span class='notice'>This specimen is already marked.</span>"
 		return
@@ -229,7 +229,7 @@
 	else
 		prepare(target, user)
 
-/obj/item/device/abductor/gizmo/proc/prepare(var/atom/target, var/mob/living/user)
+/obj/item/device/abductor/gizmo/proc/prepare(atom/target, mob/living/user)
 	if(get_dist(target,user) > 1)
 		user << "<span class='warning'>You need to be next to the specimen to prepare it for transport.</span>"
 		return
@@ -253,14 +253,14 @@
 		return
 	radio_off(M, user)
 
-/obj/item/device/abductor/silencer/afterattack(var/atom/target, var/mob/living/user, flag, params)
+/obj/item/device/abductor/silencer/afterattack(atom/target, mob/living/user, flag, params)
 	if(flag)
 		return
 	if(!AbductorCheck(user))
 		return
 	radio_off(target, user)
 
-/obj/item/device/abductor/silencer/proc/radio_off(var/atom/target, var/mob/living/user)
+/obj/item/device/abductor/silencer/proc/radio_off(atom/target, mob/living/user)
 	if(!(user in (viewers(7, target))))
 		return
 
@@ -273,7 +273,7 @@
 		user << "<span class='notice'>You silence [M]'s radio devices.</span>"
 		radio_off_mob(M)
 
-/obj/item/device/abductor/silencer/proc/radio_off_mob(var/mob/living/carbon/human/M)
+/obj/item/device/abductor/silencer/proc/radio_off_mob(mob/living/carbon/human/M)
 	var/list/all_items = M.GetAllContents()
 
 	for(var/obj/I in all_items)
@@ -321,7 +321,7 @@
 	icon_state = "alienpistol"
 	item_state = "alienpistol"
 
-/obj/item/weapon/gun/energy/decloner/alien/special_check(var/mob/living/carbon/human/M)
+/obj/item/weapon/gun/energy/decloner/alien/special_check(mob/living/carbon/human/M)
 	if(M.species.name != "Abductor")
 		M << "<span class='notice'>You can't figure how this works.</span>"
 		return 0
@@ -343,7 +343,7 @@
 	var/team
 	var/obj/machinery/camera/helm_cam
 
-/obj/item/clothing/head/helmet/abductor/attack_self(var/mob/living/carbon/human/user)
+/obj/item/clothing/head/helmet/abductor/attack_self(mob/living/carbon/human/user)
 	if(!IsAbductor(user))
 		user << "<span class='notice'>You can't figure how this works.</span>"
 		return
@@ -368,7 +368,7 @@
 		user << "\blue Abductor detected. Camera activated."
 		return
 
-/obj/item/clothing/head/helmet/abductor/proc/IsAbductor(var/mob/living/user)
+/obj/item/clothing/head/helmet/abductor/proc/IsAbductor(mob/living/user)
 	if(!ishuman(user))
 		return 0
 	var/mob/living/carbon/human/H = user
@@ -437,7 +437,7 @@
 			icon_state = "wonderprodProbe"
 			item_state = "wonderprodProbe"
 
-/obj/item/weapon/abductor_baton/proc/IsAbductor(var/mob/living/user)
+/obj/item/weapon/abductor_baton/proc/IsAbductor(mob/living/user)
 	if(!ishuman(user))
 		return 0
 	var/mob/living/carbon/human/H = user
@@ -447,11 +447,11 @@
 		return 0
 	return 1
 
-/obj/item/weapon/abductor_baton/proc/AgentCheck(var/user)
+/obj/item/weapon/abductor_baton/proc/AgentCheck(user)
 	var/mob/living/carbon/human/H = user
 	return H.agent
 
-/obj/item/weapon/abductor_baton/attack(mob/target as mob, mob/living/user as mob)
+/obj/item/weapon/abductor_baton/attack(mob/target, mob/living/user)
 	if(!IsAbductor(user))
 		return
 

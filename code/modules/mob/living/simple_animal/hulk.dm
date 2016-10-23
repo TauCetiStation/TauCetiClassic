@@ -182,7 +182,7 @@
 	usr << msg
 	return
 
-/mob/living/simple_animal/hulk/attack_animal(mob/living/simple_animal/M as mob)
+/mob/living/simple_animal/hulk/attack_animal(mob/living/simple_animal/M)
 	if(M == src) //No punching myself to avoid hulk transformation!
 		return
 	if(M.melee_damage_upper <= 0)
@@ -204,10 +204,10 @@
 /mob/living/simple_animal/hulk/airflow_hit(atom/A)
 	return
 
-//mob/living/simple_animal/hulk/Process_Spacemove(var/movement_dir = 0)
+//mob/living/simple_animal/hulk/Process_Spacemove(movement_dir = 0)
 //	return 1 //copypasta from carp code
 
-/mob/living/simple_animal/hulk/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/mob/living/simple_animal/hulk/attackby(obj/item/O, mob/user)
 	if(O.force)
 		if(O.force >= 10)
 			var/damage = O.force
@@ -227,7 +227,7 @@
 			if ((M.client && !( M.blinded )))
 				M.show_message("\red [user] gently taps [src] with [O]. ")
 
-/mob/living/simple_animal/hulk/bullet_act(var/obj/item/projectile/P)
+/mob/living/simple_animal/hulk/bullet_act(obj/item/projectile/P)
 	..()
 	if(istype(P, /obj/item/projectile/energy/electrode) || istype(P, /obj/item/projectile/beam/stun) || istype(P, /obj/item/projectile/bullet/stunslug) || istype(P, /obj/item/projectile/bullet/weakbullet))
 		health -= P.agony / 10

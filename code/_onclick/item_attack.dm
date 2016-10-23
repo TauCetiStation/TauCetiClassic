@@ -37,7 +37,7 @@
 	return
 
 
-/obj/item/proc/attack(mob/living/M as mob, mob/living/user as mob, def_zone)
+/obj/item/proc/attack(mob/living/M, mob/living/user, def_zone)
 
 	if (!istype(M)) // not sure if this is the right thing...
 		return 0

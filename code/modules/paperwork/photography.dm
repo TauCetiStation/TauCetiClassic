@@ -37,10 +37,10 @@
 	tiny = null
 	return ..()
 
-/obj/item/weapon/photo/attack_self(mob/user as mob)
+/obj/item/weapon/photo/attack_self(mob/user)
 	examine()
 
-/obj/item/weapon/photo/attackby(obj/item/weapon/P as obj, mob/user as mob)
+/obj/item/weapon/photo/attackby(obj/item/weapon/P, mob/user)
 	if(istype(P, /obj/item/weapon/pen) || istype(P, /obj/item/toy/crayon))
 		var/txt = sanitize_alt(copytext(input(user, "What would you like to write on the back?", "Photo Writing", null)  as text, 1, 128))
 		//txt = copytext(txt, 1, 128)
@@ -56,7 +56,7 @@
 	else
 		usr << "<span class='notice'>It is too far away.</span>"
 
-/obj/item/weapon/photo/proc/show(mob/user as mob)
+/obj/item/weapon/photo/proc/show(mob/user)
 	user << browse_rsc(img, "tmp_photo.png")
 	user << browse("<html><head><title>[sanitize_popup(name)]</title></head>" \
 		+ "<body style='overflow:hidden;margin:0;text-align:center'>" \
@@ -146,10 +146,10 @@
 	desc = "A polaroid camera, some say it can see ghosts!"
 	see_ghosts = 1
 
-/obj/item/device/camera/attack(mob/living/carbon/human/M as mob, mob/user as mob)
+/obj/item/device/camera/attack(mob/living/carbon/human/M, mob/user)
 	return
 
-/obj/item/device/camera/attack_self(mob/user as mob)
+/obj/item/device/camera/attack_self(mob/user)
 	on = !on
 	if(on)
 		src.icon_state = icon_on
@@ -158,7 +158,7 @@
 	user << "You switch the camera [on ? "on" : "off"]."
 	return
 
-/obj/item/device/camera/attackby(obj/item/I as obj, mob/user as mob)
+/obj/item/device/camera/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/device/camera_film))
 		if(pictures_left)
 			user << "<span class='notice'>[src] still has some film in it!</span>"
@@ -252,9 +252,14 @@
 
 	return mob_detail
 
+<<<<<<< HEAD
 /obj/item/device/camera/afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
 	if(!on || !pictures_left || ismob(target.loc))
 		return
+=======
+/obj/item/device/camera/afterattack(atom/target, mob/user, flag)
+	if(!on || !pictures_left || ismob(target.loc)) return
+>>>>>>> 9eeddb5df2f03a0012ae86804d063df209225fb1
 	captureimage(target, user, flag)
 
 	playsound(loc, pick('sound/items/polaroid1.ogg', 'sound/items/polaroid2.ogg'), 75, 1, -3)
@@ -317,13 +322,14 @@
 
 	return P
 
-/obj/item/device/camera/proc/printpicture(mob/user, var/datum/picture/P)
+/obj/item/device/camera/proc/printpicture(mob/user, datum/picture/P)
 	var/obj/item/weapon/photo/Photo = new/obj/item/weapon/photo()
 	Photo.loc = user.loc
 	if(!user.get_inactive_hand())
 		user.put_in_inactive_hand(Photo)
 	Photo.construct(P)
 
+<<<<<<< HEAD
 /obj/item/device/camera/proc/get_base_photo_icon()
 	var/icon/res
 	switch(photo_size)
@@ -370,6 +376,9 @@
 	return
 
 /obj/item/weapon/photo/proc/construct(var/datum/picture/P)
+=======
+/obj/item/weapon/photo/proc/construct(datum/picture/P)
+>>>>>>> 9eeddb5df2f03a0012ae86804d063df209225fb1
 	icon = P.fields["icon"]
 	tiny = P.fields["tiny"]
 	img = P.fields["img"]

@@ -4,10 +4,10 @@
 	w_class = 1.0
 	var/used = FALSE
 
-/obj/item/weapon/antag_spawner/proc/spawn_antag(var/client/C, var/turf/T, var/type = "")
+/obj/item/weapon/antag_spawner/proc/spawn_antag(client/C, turf/T, type = "")
 	return
 
-/obj/item/weapon/antag_spawner/proc/equip_antag(mob/target as mob)
+/obj/item/weapon/antag_spawner/proc/equip_antag(mob/target)
 	return
 
 /obj/item/weapon/antag_spawner/borg_tele
@@ -18,7 +18,7 @@
 	var/TC_cost = 0
 	var/list/requested_candidates = list()
 
-/obj/item/weapon/antag_spawner/borg_tele/attack_self(mob/user as mob)
+/obj/item/weapon/antag_spawner/borg_tele/attack_self(mob/user)
 	if(used)
 		user << "The teleporter is out of power."
 		return
@@ -34,7 +34,7 @@
 	else
 		user << "<span class='notice'>Unable to connect to Syndicate Command. Please wait and try again later or use the teleporter on your uplink to get your points refunded.</span>"
 
-obj/item/weapon/antag_spawner/borg_tele/proc/request_player(var/client/C)
+obj/item/weapon/antag_spawner/borg_tele/proc/request_player(client/C)
 	spawn(0)
 		if(!C)
 			return
@@ -52,7 +52,7 @@ obj/item/weapon/antag_spawner/borg_tele/proc/request_player(var/client/C)
 		used = FALSE
 		visible_message("\blue Unable to connect to Syndicate Command. Please wait and try again later or use the teleporter on your uplink to get your points refunded.")
 
-/obj/item/weapon/antag_spawner/borg_tele/spawn_antag(var/client/C, var/turf/T, var/type = "")
+/obj/item/weapon/antag_spawner/borg_tele/spawn_antag(client/C, turf/T, type = "")
 	var/datum/effect/effect/system/spark_spread/S = new /datum/effect/effect/system/spark_spread
 	S.set_up(4, 1, src)
 	S.start()

@@ -19,7 +19,7 @@
 	return
 
 
-/obj/item/weapon/implanter/attack(mob/M as mob, mob/user as mob)
+/obj/item/weapon/implanter/attack(mob/M, mob/user)
 	if (!istype(M, /mob/living/carbon))
 		return
 	if (user && src.imp)
@@ -106,7 +106,7 @@
 		icon_state = "cimplanter0"
 	return
 
-/obj/item/weapon/implanter/compressed/attack(mob/M as mob, mob/user as mob)
+/obj/item/weapon/implanter/compressed/attack(mob/M, mob/user)
 	var/obj/item/weapon/implant/compressed/c = imp
 	if (!c)	return
 	if (c.scanned == null)
@@ -114,7 +114,7 @@
 		return
 	..()
 
-/obj/item/weapon/implanter/compressed/afterattack(atom/A, mob/user as mob)
+/obj/item/weapon/implanter/compressed/afterattack(atom/A, mob/user)
 	if(istype(A,/obj/item) && imp)
 		var/obj/item/weapon/implant/compressed/c = imp
 		if (c.scanned)

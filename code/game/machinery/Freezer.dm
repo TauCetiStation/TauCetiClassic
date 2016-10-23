@@ -64,16 +64,16 @@
 		icon_state = "freezer"
 	return
 
-/obj/machinery/atmospherics/unary/cold_sink/freezer/attack_ai(mob/user as mob)
+/obj/machinery/atmospherics/unary/cold_sink/freezer/attack_ai(mob/user)
 	return src.attack_hand(user)
 
-/obj/machinery/atmospherics/unary/cold_sink/freezer/attack_paw(mob/user as mob)
+/obj/machinery/atmospherics/unary/cold_sink/freezer/attack_paw(mob/user)
 	return src.attack_hand(user)
 
-/obj/machinery/atmospherics/unary/cold_sink/freezer/attack_hand(mob/user as mob)
+/obj/machinery/atmospherics/unary/cold_sink/freezer/attack_hand(mob/user)
 	return ui_interact(user)
 
-/obj/machinery/atmospherics/unary/cold_sink/freezer/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
+/obj/machinery/atmospherics/unary/cold_sink/freezer/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
 	// this is the data which will be sent to the ui
 	var/data[0]
 	data["on"] = on ? 1 : 0
@@ -191,16 +191,16 @@
 		icon_state = "heater"
 	return
 
-/obj/machinery/atmospherics/unary/heat_reservoir/heater/attack_ai(mob/user as mob)
+/obj/machinery/atmospherics/unary/heat_reservoir/heater/attack_ai(mob/user)
 	return src.attack_hand(user)
 
-/obj/machinery/atmospherics/unary/heat_reservoir/heater/attack_paw(mob/user as mob)
+/obj/machinery/atmospherics/unary/heat_reservoir/heater/attack_paw(mob/user)
 	return src.attack_hand(user)
 
-/obj/machinery/atmospherics/unary/heat_reservoir/heater/attack_hand(mob/user as mob)
+/obj/machinery/atmospherics/unary/heat_reservoir/heater/attack_hand(mob/user)
 	return ui_interact(user)
 
-/obj/machinery/atmospherics/unary/heat_reservoir/heater/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
+/obj/machinery/atmospherics/unary/heat_reservoir/heater/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
 	// this is the data which will be sent to the ui
 	var/data[0]
 	data["on"] = on ? 1 : 0

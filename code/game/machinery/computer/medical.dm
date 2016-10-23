@@ -17,7 +17,7 @@
 	var/temp = null
 	var/printing = null
 
-/obj/machinery/computer/med_data/attackby(obj/item/O as obj, user as mob)
+/obj/machinery/computer/med_data/attackby(obj/item/O, user)
 	if(istype(O, /obj/item/weapon/card/id) && !scan)
 		usr.drop_item()
 		O.loc = src
@@ -25,7 +25,7 @@
 		user << "You insert [O]."
 	..()
 
-/obj/machinery/computer/med_data/attack_hand(mob/user as mob)
+/obj/machinery/computer/med_data/attack_hand(mob/user)
 	if(..())
 		return
 	var/dat

@@ -42,7 +42,7 @@
 		P.card_icon = "joker"
 		cards += P
 
-/obj/item/weapon/deck/attackby(obj/O as obj, mob/user as mob)
+/obj/item/weapon/deck/attackby(obj/O, mob/user)
 	if(istype(O,/obj/item/weapon/hand))
 		var/obj/item/weapon/hand/H = O
 		for(var/datum/playingcard/P in H.cards)
@@ -118,7 +118,7 @@
 	usr.visible_message("\The [usr] deals a card to \the [M].")
 	H.throw_at(get_step(M,M.dir),10,1,H)
 
-/obj/item/weapon/hand/attackby(obj/O as obj, mob/user as mob)
+/obj/item/weapon/hand/attackby(obj/O, mob/user)
 	if(istype(O,/obj/item/weapon/hand))
 		var/obj/item/weapon/hand/H = O
 		for(var/datum/playingcard/P in H.cards)
@@ -129,7 +129,7 @@
 		return
 	..()
 
-/obj/item/weapon/deck/attack_self(var/mob/user as mob)
+/obj/item/weapon/deck/attack_self(mob/user)
 
 	var/list/newcards = list()
 	while(cards.len)
@@ -176,7 +176,7 @@
 	if(!cards.len)
 		qdel(src)
 
-/obj/item/weapon/hand/attack_self(var/mob/user as mob)
+/obj/item/weapon/hand/attack_self(mob/user)
 	concealed = !concealed
 	update_icon()
 	user.visible_message("\The [user] [concealed ? "conceals" : "reveals"] their hand.")

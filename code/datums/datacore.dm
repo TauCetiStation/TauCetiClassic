@@ -21,7 +21,7 @@
 	name = "text"
 	var/data = null
 
-/obj/effect/datacore/proc/manifest(var/nosleep = 0)
+/obj/effect/datacore/proc/manifest(nosleep = 0)
 	spawn()
 		if(!nosleep)
 			sleep(40)
@@ -29,7 +29,7 @@
 			manifest_inject(H)
 		return
 
-/obj/effect/datacore/proc/manifest_modify(var/name, var/assignment)
+/obj/effect/datacore/proc/manifest_modify(name, assignment)
 	if(PDA_Manifest.len)
 		PDA_Manifest.Cut()
 	var/datum/data/record/foundrecord
@@ -54,7 +54,7 @@
 		foundrecord.fields["rank"] = assignment
 		foundrecord.fields["real_rank"] = real_title
 
-/obj/effect/datacore/proc/manifest_inject(var/mob/living/carbon/human/H)
+/obj/effect/datacore/proc/manifest_inject(mob/living/carbon/human/H)
 	if(PDA_Manifest.len)
 		PDA_Manifest.Cut()
 

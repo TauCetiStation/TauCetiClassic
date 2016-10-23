@@ -62,7 +62,7 @@
 			if (prob(3))	//about once every 30 seconds
 				take_damage(1,silent=prob(30))
 
-/datum/organ/internal/proc/take_damage(amount, var/silent=0)
+/datum/organ/internal/proc/take_damage(amount, silent=0)
 	if(src.robotic == 2)
 		src.damage += (amount * 0.8)
 	else

@@ -310,7 +310,7 @@
 				return 1
 	return 0
 
-/obj/machinery/alarm/proc/get_danger_level(var/current_value, var/list/danger_levels)
+/obj/machinery/alarm/proc/get_danger_level(current_value, list/danger_levels)
 	if((current_value >= danger_levels[4] && danger_levels[4] > 0) || current_value <= danger_levels[1])
 		return 2
 	if((current_value >= danger_levels[3] && danger_levels[3] > 0) || current_value <= danger_levels[2])
@@ -364,7 +364,7 @@
 	else if(dev_type == "AVP")
 		alarm_area.air_vent_info[id_tag] = signal.data
 
-/obj/machinery/alarm/proc/register_env_machine(var/m_id, var/device_type)
+/obj/machinery/alarm/proc/register_env_machine(m_id, device_type)
 	var/new_name
 	if (device_type=="AVP")
 		new_name = "[alarm_area.name] Vent Pump #[alarm_area.air_vent_names.len+1]"
@@ -394,7 +394,7 @@
 	frequency = new_frequency
 	radio_connection = radio_controller.add_object(src, frequency, RADIO_TO_AIRALARM)
 
-/obj/machinery/alarm/proc/send_signal(var/target, var/list/command)//sends signal 'command' to 'target'. Returns 0 if no radio connection, 1 otherwise
+/obj/machinery/alarm/proc/send_signal(target, list/command)//sends signal 'command' to 'target'. Returns 0 if no radio connection, 1 otherwise
 	if(!radio_connection)
 		return 0
 
@@ -449,7 +449,7 @@
 			for(var/device_id in alarm_area.air_vent_names)
 				send_signal(device_id, list("power"= 0) )
 
-/obj/machinery/alarm/proc/apply_danger_level(var/new_danger_level)
+/obj/machinery/alarm/proc/apply_danger_level(new_danger_level)
 	if (alarm_area.atmosalert(new_danger_level))
 		post_alert(new_danger_level)
 
@@ -479,11 +479,11 @@
 ///////////
 //HACKING//
 ///////////
-/obj/machinery/alarm/proc/isWireColorCut(var/wireColor)
+/obj/machinery/alarm/proc/isWireColorCut(wireColor)
 	var/wireFlag = AAlarmWireColorToFlag[wireColor]
 	return ((AAlarmwires & wireFlag) == 0)
 
-/obj/machinery/alarm/proc/isWireCut(var/wireIndex)
+/obj/machinery/alarm/proc/isWireCut(wireIndex)
 	var/wireFlag = AAlarmIndexToFlag[wireIndex]
 	return ((AAlarmwires & wireFlag) == 0)
 
@@ -495,7 +495,7 @@
 		i++
 	return 1
 
-/obj/machinery/alarm/proc/cut(var/wireColor)
+/obj/machinery/alarm/proc/cut(wireColor)
 	var/wireFlag = AAlarmWireColorToFlag[wireColor]
 	var/wireIndex = AAlarmWireColorToIndex[wireColor]
 	AAlarmwires &= ~wireFlag
@@ -528,7 +528,7 @@
 
 	return
 
-/obj/machinery/alarm/proc/mend(var/wireColor)
+/obj/machinery/alarm/proc/mend(wireColor)
 	var/wireFlag = AAlarmWireColorToFlag[wireColor]
 	var/wireIndex = AAlarmWireColorToIndex[wireColor] //not used in this function
 	AAlarmwires |= wireFlag
@@ -547,7 +547,7 @@
 	updateDialog()
 	return
 
-/obj/machinery/alarm/proc/pulse(var/wireColor)
+/obj/machinery/alarm/proc/pulse(wireColor)
 	//var/wireFlag = AAlarmWireColorToFlag[wireColor] //not used in this function
 	var/wireIndex = AAlarmWireColorToIndex[wireColor]
 	switch(wireIndex)
@@ -1096,7 +1096,7 @@ table tr:first-child th:first-child { border: none;}
 	updateUsrDialog()
 
 
-/obj/machinery/alarm/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/alarm/attackby(obj/item/W, mob/user)
 /*	if (istype(W, /obj/item/weapon/wirecutters))
 		stat ^= BROKEN
 		add_fingerprint(user)
@@ -1221,7 +1221,7 @@ Code shamelessly copied from apc_frame
 	icon_state = "alarm_bitem"
 	flags = FPRINT | TABLEPASS| CONDUCT
 
-/obj/item/alarm_frame/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/alarm_frame/attackby(obj/item/weapon/W, mob/user)
 	if (istype(W, /obj/item/weapon/wrench))
 		new /obj/item/stack/sheet/metal( get_turf(src.loc), 2 )
 		qdel(src)
@@ -1302,20 +1302,20 @@ FIRE ALARM
 			src.alarm()			// added check of detector status here
 	return
 
-/obj/machinery/firealarm/attack_ai(mob/user as mob)
+/obj/machinery/firealarm/attack_ai(mob/user)
 	return src.attack_hand(user)
 
 /obj/machinery/firealarm/bullet_act(BLAH)
 	return src.alarm()
 
-/obj/machinery/firealarm/attack_paw(mob/user as mob)
+/obj/machinery/firealarm/attack_paw(mob/user)
 	return src.attack_hand(user)
 
 /obj/machinery/firealarm/emp_act(severity)
 	if(prob(50/severity)) alarm()
 	..()
 
-/obj/machinery/firealarm/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/firealarm/attackby(obj/item/W, mob/user)
 	src.add_fingerprint(user)
 
 	if (istype(W, /obj/item/weapon/screwdriver) && buildstage == 2)
@@ -1408,7 +1408,7 @@ FIRE ALARM
 			stat |= NOPOWER
 			update_icon()
 
-/obj/machinery/firealarm/attack_hand(mob/user as mob)
+/obj/machinery/firealarm/attack_hand(mob/user)
 	if(user.stat || stat & (NOPOWER|BROKEN))
 		return
 
@@ -1549,7 +1549,7 @@ Code shamelessly copied from apc_frame
 	icon_state = "fire_bitem"
 	flags = FPRINT | TABLEPASS| CONDUCT
 
-/obj/item/firealarm_frame/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/firealarm_frame/attackby(obj/item/weapon/W, mob/user)
 	if (istype(W, /obj/item/weapon/wrench))
 		new /obj/item/stack/sheet/metal( get_turf(src.loc), 2 )
 		qdel(src)
@@ -1597,10 +1597,10 @@ Code shamelessly copied from apc_frame
 	idle_power_usage = 2
 	active_power_usage = 6
 
-/obj/machinery/partyalarm/attack_paw(mob/user as mob)
+/obj/machinery/partyalarm/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/machinery/partyalarm/attack_hand(mob/user as mob)
+/obj/machinery/partyalarm/attack_hand(mob/user)
 	if(user.stat || stat & (NOPOWER|BROKEN))
 		return
 

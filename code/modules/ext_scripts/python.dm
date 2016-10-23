@@ -1,4 +1,4 @@
-/proc/ext_python(var/script, var/args, var/scriptsprefix = 1)
+/proc/ext_python(script, args, scriptsprefix = 1)
 	if(!config.python_path)
 		return
 	

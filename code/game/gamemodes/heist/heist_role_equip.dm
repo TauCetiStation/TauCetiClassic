@@ -86,7 +86,7 @@ var/global/raider_tick = 1
 	stutter = 10
 	agony = 55
 
-/obj/item/projectile/bullet/weakbullet/nl_rifle/on_hit(var/atom/target, var/blocked = 0)
+/obj/item/projectile/bullet/weakbullet/nl_rifle/on_hit(atom/target, blocked = 0)
 	if(issilicon(target))
 		var/mob/living/silicon/S = target
 		S.take_organ_damage(20)//+10=30
@@ -100,7 +100,7 @@ var/global/raider_tick = 1
 	stutter = 10
 	agony = 30
 
-/obj/item/projectile/bullet/weakbullet/nl_pistol/on_hit(var/atom/target, var/blocked = 0)
+/obj/item/projectile/bullet/weakbullet/nl_pistol/on_hit(atom/target, blocked = 0)
 	if(issilicon(target))
 		var/mob/living/silicon/S = target
 		S.take_organ_damage(10)//+10=20
@@ -156,7 +156,7 @@ var/global/raider_tick = 1
 	g_amt = 20
 	origin_tech = "magnets=1;engineering=1"
 
-/obj/item/device/price_tool/attack(mob/living/M as mob, mob/living/user as mob, def_zone)
+/obj/item/device/price_tool/attack(mob/living/M, mob/living/user, def_zone)
 	if(!istype(M))
 		return 0
 	var/price_check = M.get_price()
@@ -166,7 +166,7 @@ var/global/raider_tick = 1
 		user << "<span class='notice'>This [issilicon(M) ? "silicon thing" : "living being"] will bring us approximately <span class='danger'>[issilicon(M) ? "DESTROYED:" : "DEAD:"]</span> $[price_check ? price_check / 50 : 0]$ or <span class='danger'>[issilicon(M) ? "WORKING:" : "ALIVE:"]</span>$[price_check]$</span>"
 	return 1
 
-/obj/item/device/price_tool/afterattack(obj/O as obj, mob/user as mob, proximity)
+/obj/item/device/price_tool/afterattack(obj/O, mob/user, proximity)
 	if(!proximity) return
 	if(!istype(O))
 		return

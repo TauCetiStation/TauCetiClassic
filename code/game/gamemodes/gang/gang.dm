@@ -93,7 +93,7 @@
 
 		check_win()
 
-/datum/game_mode/gang/proc/assign_bosses(var/list/antag_candidates = list())
+/datum/game_mode/gang/proc/assign_bosses(list/antag_candidates = list())
 	var/datum/mind/boss = pick(antag_candidates)
 	A_bosses += boss
 	antag_candidates -= boss
@@ -106,7 +106,7 @@
 	boss.special_role = "[gang_name("B")] Gang (B) Boss"
 	log_game("[boss.key] has been selected as the boss for the [gang_name("B")] Gang (B)")
 
-/datum/game_mode/proc/forge_gang_objectives(var/datum/mind/boss_mind)
+/datum/game_mode/proc/forge_gang_objectives(datum/mind/boss_mind)
 	if(istype(ticker.mode, /datum/game_mode/gang))
 		var/datum/objective/rival_obj = new
 		rival_obj.owner = boss_mind
@@ -114,7 +114,7 @@
 		boss_mind.objectives += rival_obj
 
 
-/datum/game_mode/proc/greet_gang(var/datum/mind/boss_mind, var/you_are=1)
+/datum/game_mode/proc/greet_gang(datum/mind/boss_mind, you_are=1)
 	var/obj_count = 1
 	if (you_are)
 		boss_mind.current << "<FONT size=3 color=red><B>You are the founding member of the [(boss_mind in A_bosses) ? gang_name("A") : gang_name("B")] Gang!</B></FONT>"
@@ -122,7 +122,7 @@
 		boss_mind.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
 		obj_count++
 
-/datum/game_mode/gang/proc/domination(var/gang,var/modifier=1,var/obj/dominator)
+/datum/game_mode/gang/proc/domination(gang,modifier=1,obj/dominator)
 	if(gang=="A")
 		A_timer = max(300,900 - ((round((A_territory.len/start_state.num_territories)*200, 1) - 60) * 15)) * modifier
 	if(gang=="B")
@@ -187,7 +187,7 @@
 
 
 //Used by recallers when purchasing a gang outfit. First time a gang outfit is purchased the buyer decides a gang style which is stored so gang outfits are uniform
-/datum/game_mode/proc/gang_outfit(mob/user,var/obj/item/device/gangtool/gangtool,var/gang)
+/datum/game_mode/proc/gang_outfit(mob/user,obj/item/device/gangtool/gangtool,gang)
 	if(!user || !gangtool || !gang)
 		return 0
 	if(!gangtool.can_use(user))
@@ -281,7 +281,7 @@
 ///////////////////////////////////////////
 //Deals with converting players to a gang//
 ///////////////////////////////////////////
-/datum/game_mode/proc/add_gangster(datum/mind/gangster_mind, var/gang, var/check = 1)
+/datum/game_mode/proc/add_gangster(datum/mind/gangster_mind, gang, check = 1)
 	if(gangster_mind in (A_bosses | A_gang | B_bosses | B_gang))
 		return 0
 	if(check && isloyal(gangster_mind.current)) //Check to see if the potential gangster is implanted
@@ -305,7 +305,7 @@
 ////////////////////////////////////////////////////////////////////
 //Deals with players reverting to neutral (Not a gangster anymore)//
 ////////////////////////////////////////////////////////////////////
-/datum/game_mode/proc/remove_gangster(datum/mind/gangster_mind, var/beingborged, var/silent, var/exclude_bosses=0)
+/datum/game_mode/proc/remove_gangster(datum/mind/gangster_mind, beingborged, silent, exclude_bosses=0)
 	var/gang
 
 	if(!exclude_bosses)
@@ -364,7 +364,7 @@
 		update_gang_icons("A")
 		update_gang_icons("B")
 
-/datum/game_mode/proc/update_gang_icons(var/gang)
+/datum/game_mode/proc/update_gang_icons(gang)
 	var/list/bosses
 	var/list/gangsters
 	if(gang == "A")
@@ -408,7 +408,7 @@
 /////////////////////////////////////////////////
 //Assigns icons when a new gangster is recruited//
 /////////////////////////////////////////////////
-/datum/game_mode/proc/update_gang_icons_added(datum/mind/recruit_mind, var/gang)
+/datum/game_mode/proc/update_gang_icons_added(datum/mind/recruit_mind, gang)
 	var/list/bosses
 	if(gang == "A")
 		bosses = A_bosses
@@ -510,7 +510,7 @@
 		text += "<HR>"
 	return text
 
-/datum/game_mode/proc/gang_membership_report(var/list/membership)
+/datum/game_mode/proc/gang_membership_report(list/membership)
 	var/text = ""
 	var/tempstate = end_icons.len
 	for(var/datum/mind/gangster in membership)
@@ -692,7 +692,7 @@
 //Sends a message to the boss via his gangtool//
 ////////////////////////////////////////////////
 
-/datum/game_mode/proc/message_gangtools(var/list/gangtools,var/message,var/beep=1,var/warning)
+/datum/game_mode/proc/message_gangtools(list/gangtools,message,beep=1,warning)
 	if(!gangtools.len || !message)
 		return
 	for(var/obj/item/device/gangtool/tool in gangtools)

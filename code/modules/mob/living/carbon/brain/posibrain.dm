@@ -16,7 +16,7 @@
 	var/ping_cd = 0//attack_ghost cooldown
 
 
-	attack_self(mob/user as mob)
+	attack_self(mob/user)
 		if(brainmob && !brainmob.key && searching == 0)
 			//Start the process of searching for a new user.
 			user << "\blue You carefully locate the manual activation switch and start the positronic brain's boot process."
@@ -38,7 +38,7 @@
 				if(!C.prefs.ignore_question.Find("posibrain") && (ROLE_PAI in C.prefs.be_role))
 					question(C)
 
-	proc/question(var/client/C)
+	proc/question(client/C)
 		spawn(0)
 			if(!C)	return
 			var/response = alert(C, "Someone is requesting a personality for a positronic brain. Would you like to play as one?", "Positronic brain request", "Yes", "No", "Never for this round")
@@ -49,7 +49,7 @@
 				C.prefs.ignore_question += "posibrain"
 
 
-	transfer_identity(var/mob/living/carbon/H)
+	transfer_identity(mob/living/carbon/H)
 		name = "positronic brain ([H])"
 		brainmob.name = H.real_name
 		brainmob.real_name = H.real_name
@@ -64,7 +64,7 @@
 		icon_state = "posibrain-occupied"
 		return
 
-	proc/transfer_personality(var/mob/candidate)
+	proc/transfer_personality(mob/candidate)
 
 		src.searching = 0
 		src.brainmob.mind = candidate.mind
@@ -131,7 +131,7 @@
 				src.brainmob.emp_damage += rand(0,10)
 	..()
 
-/obj/item/device/mmi/posibrain/attack_ghost(var/mob/dead/observer/O)
+/obj/item/device/mmi/posibrain/attack_ghost(mob/dead/observer/O)
 	if(!ping_cd)
 		ping_cd = 1
 		spawn(50)

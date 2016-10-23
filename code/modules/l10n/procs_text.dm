@@ -3,7 +3,7 @@
 
 /*
 	UPD: На случай, если вы ищите варианты пофиксить "я"!
-	Это старый фикс, с тех пор мы немного отрефакторили оригинальный бэй и 
+	Это старый фикс, с тех пор мы немного отрефакторили оригинальный бэй и
 	создали RuBaystation, тамошний фикс "я" более правильный и актуальный.
 	https://github.com/TauCetiStation/RuBaystation12
 	В ожидании чуда: http://www.byond.com/forum/?post=1768158
@@ -19,7 +19,7 @@
 var/letter_255_ascii = text2ascii(LETTER_255)
 
 //Removes a few problematic characters
-/proc/sanitize_simple(var/t,var/list/repl_chars = list("\n"=" ","\t"=" ","я"=LETTER_255))
+/proc/sanitize_simple(t,list/repl_chars = list("\n"=" ","\t"=" ","я"=LETTER_255))
 
 	#ifdef DEBAG_CYRILLIC
 	world << "\magenta #DEBAG \blue <b>Sanitize_simple, entered. Text:</b> <i>[t]</i>"
@@ -28,7 +28,7 @@ var/letter_255_ascii = text2ascii(LETTER_255)
 		params += " [html_decode(a)] replaced by [html_decode(repl_chars[a])]\n"
 	world << "<i>Params:\n[params]</i>"
 	#endif
-	
+
 	for(var/char in repl_chars)
 		var/len_rchar = length(repl_chars[char])
 		var/len_char = length(char)
@@ -43,7 +43,7 @@ var/letter_255_ascii = text2ascii(LETTER_255)
 
 	return t
 
-/proc/sanitize(var/t,var/list/repl_chars = null)
+/proc/sanitize(t,list/repl_chars = null)
 
 	#ifdef DEBAG_CYRILLIC
 	world << "\magenta #DEBAG \blue <b>Sanitize, entered. Text:</b> <i>[t]</i>"
@@ -66,7 +66,7 @@ var/letter_255_ascii = text2ascii(LETTER_255)
 
 	return t
 
-/proc/sanitize_alt(var/t,var/list/repl_chars = null)
+/proc/sanitize_alt(t,list/repl_chars = null)
 
 	#ifdef DEBAG_CYRILLIC
 	world << "\magenta #DEBAG \blue <b>Sanitize_alt, entered. Text:</b> <i>[t]</i>"
@@ -89,19 +89,19 @@ var/letter_255_ascii = text2ascii(LETTER_255)
 
 	return t
 
-/proc/sanitize_popup(var/t)
+/proc/sanitize_popup(t)
 	#ifdef DEBAG_CYRILLIC
 	world << "\magenta #DEBAG \green <b>Sanitize_popup processed text:</b> <i>[t]</i>"
 	#endif
 	return replacetext(t, "&#255;", "&#1103;")
 
-/proc/sanitize_chat(var/t)
+/proc/sanitize_chat(t)
 	#ifdef DEBAG_CYRILLIC
 	world << "\magenta #DEBAG \green <b>Sanitize_alt_chat processed text:</b> <i>[t]</i>"
 	#endif
 	return replacetext(t, "&#1103;", "&#255;")
 
-/proc/sanitize_plus(var/t,var/list/repl_chars = null)
+/proc/sanitize_plus(t,list/repl_chars = null)
 
 	#ifdef DEBAG_CYRILLIC
 	world << "\magenta #DEBAG \blue <b>Sanitize_plus, entered. Text:</b> <i>[t]</i>"
@@ -119,13 +119,13 @@ var/letter_255_ascii = text2ascii(LETTER_255)
 
 	return t
 
-/proc/sanitize_plus_chat(var/t)
+/proc/sanitize_plus_chat(t)
 	#ifdef DEBAG_CYRILLIC
 	world << "\magenta #DEBAG \green <b>Sanitize_plus_chat processed text:</b> <i>[t]</i>"
 	#endif
 	return replacetext(t, LETTER_255, "&#255;")
 
-/proc/sanitize_plus_popup(var/t)
+/proc/sanitize_plus_popup(t)
 	#ifdef DEBAG_CYRILLIC
 	world << "\magenta #DEBAG \green <b>Sanitize_plus_popup processed text:</b> <i>[t]</i>"
 	#endif
@@ -133,7 +133,7 @@ var/letter_255_ascii = text2ascii(LETTER_255)
 
 
 //TODO: придумать способ вернуть "я" для полей ввода и логов
-/proc/revert_ja(var/t, var/list/repl_chars = list("&#255;", "&#1103;"))
+/proc/revert_ja(t, list/repl_chars = list("&#255;", "&#1103;"))
 	return replacetext(replacetext(t, "&#255;", LETTER_255), "&#1103;", LETTER_255)
 
 /*

@@ -71,7 +71,7 @@
 
 	return podf
 
-/obj/machinery/computer/cloning/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/computer/cloning/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/weapon/disk/data)) //INSERT SOME DISKETTES
 		if (!src.diskette)
 			user.drop_item()
@@ -357,7 +357,7 @@
 
 	src.updateUsrDialog()
 
-/obj/machinery/computer/cloning/proc/scan_mob(mob/living/carbon/human/subject as mob)
+/obj/machinery/computer/cloning/proc/scan_mob(mob/living/carbon/human/subject)
 	if ((isnull(subject)) || (!(ishuman(subject))) || (!subject.dna))
 		scantemp = "Error: Unable to locate valid genetic data."
 		return
@@ -404,7 +404,7 @@
 	scantemp = "Subject successfully scanned."
 
 //Find a specific record by key.
-/obj/machinery/computer/cloning/proc/find_record(var/find_key)
+/obj/machinery/computer/cloning/proc/find_record(find_key)
 	var/selected_record = null
 	for(var/datum/dna2/record/R in src.records)
 		if (R.ckey == find_key)

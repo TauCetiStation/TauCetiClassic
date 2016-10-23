@@ -101,7 +101,7 @@
 	return !density
 
 
-/obj/machinery/door/proc/bumpopen(mob/user as mob)
+/obj/machinery/door/proc/bumpopen(mob/user)
 	if(operating)	return
 	if(user.last_airflow > world.time - vsc.airflow_delay) //Fakkit
 		return
@@ -114,28 +114,28 @@
 		else				flick("door_deny", src)
 	return
 
-/obj/machinery/door/meteorhit(obj/M as obj)
+/obj/machinery/door/meteorhit(obj/M)
 	src.open()
 	return
 
 
-/obj/machinery/door/attack_ai(mob/user as mob)
+/obj/machinery/door/attack_ai(mob/user)
 	return src.attack_hand(user)
 
 
-/obj/machinery/door/attack_paw(mob/user as mob)
+/obj/machinery/door/attack_paw(mob/user)
 	return src.attack_hand(user)
 
 
-/obj/machinery/door/attack_hand(mob/user as mob)
+/obj/machinery/door/attack_hand(mob/user)
 	return src.attackby(user, user)
 
-/obj/machinery/door/attack_tk(mob/user as mob)
+/obj/machinery/door/attack_tk(mob/user)
 	if(requiresID() && !allowed(null))
 		return
 	..()
 
-/obj/machinery/door/attackby(obj/item/I as obj, mob/user as mob)
+/obj/machinery/door/attackby(obj/item/I, mob/user)
 	if(HULK in user.mutations) //#Z2 Hulk can open any door with his power and break any door with harm intent.
 		if(!src.density) return
 		var/cur_loc = user.loc
@@ -398,7 +398,7 @@
 
 	return 1
 
-/obj/machinery/door/proc/update_heat_protection(var/turf/simulated/source)
+/obj/machinery/door/proc/update_heat_protection(turf/simulated/source)
 	if(istype(source))
 		if(src.density && (src.opacity || src.heat_proof))
 			source.thermal_conductivity = DOOR_HEAT_TRANSFER_COEFFICIENT

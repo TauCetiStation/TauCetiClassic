@@ -95,7 +95,7 @@
 
 
 //Find a dead mob with a brain and client.
-/proc/find_dead_player(var/find_key)
+/proc/find_dead_player(find_key)
 	if (isnull(find_key))
 		return
 
@@ -119,7 +119,7 @@
 	var/diskcolor = pick(0,1,2)
 	src.icon_state = "datadisk[diskcolor]"
 
-/obj/item/weapon/disk/data/attack_self(mob/user as mob)
+/obj/item/weapon/disk/data/attack_self(mob/user)
 	src.read_only = !src.read_only
 	user << "You flip the write-protect tab to [src.read_only ? "protected" : "unprotected"]."
 
@@ -146,12 +146,12 @@
 			src.healthstring = "ERROR"
 		return src.healthstring
 
-/obj/machinery/clonepod/attack_ai(mob/user as mob)
+/obj/machinery/clonepod/attack_ai(mob/user)
 	src.add_hiddenprint(user)
 	return attack_hand(user)
-/obj/machinery/clonepod/attack_paw(mob/user as mob)
+/obj/machinery/clonepod/attack_paw(mob/user)
 	return attack_hand(user)
-/obj/machinery/clonepod/attack_hand(mob/user as mob)
+/obj/machinery/clonepod/attack_hand(mob/user)
 	if ((isnull(src.occupant)) || (stat & NOPOWER))
 		return
 	if ((!isnull(src.occupant)) && (src.occupant.stat != DEAD))
@@ -162,7 +162,7 @@
 //Clonepod
 
 //Start growing a human clone in the pod!
-/obj/machinery/clonepod/proc/growclone(var/datum/dna2/record/R)
+/obj/machinery/clonepod/proc/growclone(datum/dna2/record/R)
 	if(panel_open)
 		return 0
 	if(mess || attempting)
@@ -313,7 +313,7 @@
 	return
 
 //Let's unlock this early I guess.  Might be too early, needs tweaking.
-/obj/machinery/clonepod/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/machinery/clonepod/attackby(obj/item/weapon/W, mob/user)
 	if(!(occupant || mess || locked))
 		if(default_deconstruction_screwdriver(user, "[icon_state]_maintenance", "[initial(icon_state)]",W))
 			return
@@ -352,7 +352,7 @@
 		..()
 
 //Put messages in the connected computer's temp var for display.
-/obj/machinery/clonepod/proc/connected_message(var/message)
+/obj/machinery/clonepod/proc/connected_message(message)
 	if ((isnull(src.connected)) || (!istype(src.connected, /obj/machinery/computer/cloning)))
 		return 0
 	if (!message)
@@ -423,7 +423,7 @@
 			src.occupant = null
 	return
 
-/obj/machinery/clonepod/relaymove(mob/user as mob)
+/obj/machinery/clonepod/relaymove(mob/user)
 	if (user.stat)
 		return
 	src.go_out()

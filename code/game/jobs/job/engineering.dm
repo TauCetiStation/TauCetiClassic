@@ -20,7 +20,7 @@
 	minimal_player_age = 7
 	minimal_player_ingame_minutes = 2400
 
-/datum/job/chief_engineer/equip(var/mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/job/chief_engineer/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
 	switch(H.backbag)
 		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/industrial(H), slot_back)
@@ -60,7 +60,7 @@
 	minimal_player_age = 3
 	minimal_player_ingame_minutes = 540
 
-/datum/job/engineer/equip(var/mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/job/engineer/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
 	switch(H.backbag)
 		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/industrial(H), slot_back)
@@ -99,7 +99,7 @@
 	minimal_player_age = 3
 	minimal_player_ingame_minutes = 600
 
-/datum/job/atmos/equip(var/mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/job/atmos/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
 	switch(H.backbag)
 		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(H), slot_back)

@@ -77,7 +77,7 @@
 
 		qdel(src)
 
-/obj/item/weapon/tank/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/weapon/tank/attackby(obj/item/weapon/W, mob/user)
 	..()
 	var/obj/icon = src
 
@@ -120,13 +120,13 @@
 	if(istype(W, /obj/item/device/assembly_holder))
 		bomb_assemble(W,user)
 
-/obj/item/weapon/tank/attack_self(mob/user as mob)
+/obj/item/weapon/tank/attack_self(mob/user)
 	if (!(src.air_contents))
 		return
 
 	ui_interact(user)
 
-/obj/item/weapon/tank/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
+/obj/item/weapon/tank/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
 
 	var/using_internal
 	if(istype(loc,/mob/living/carbon))

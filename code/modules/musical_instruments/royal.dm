@@ -6,7 +6,7 @@
 /obj/structure/device/piano/royal/New()
 	name = "space grand piano"
 
-/obj/structure/device/piano/royal/playnote(var/note as text)
+/obj/structure/device/piano/royal/playnote(note)
 	//world << "Note: [note]"
 	var/soundfile
 	/*BYOND loads resource files at compile time if they are ''. This means you can't really manipulate them dynamically.

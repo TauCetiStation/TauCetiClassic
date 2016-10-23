@@ -19,7 +19,7 @@
 	spawn(10)
 		scanscrubbers()
 
-/obj/machinery/computer/area_atmos/attack_hand(var/mob/user as mob)
+/obj/machinery/computer/area_atmos/attack_hand(mob/user)
 	if(..(user))
 		return
 	src.add_fingerprint(usr)

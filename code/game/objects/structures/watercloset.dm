@@ -16,7 +16,7 @@
 	open = round(rand(0, 1))
 	update_icon()
 
-/obj/structure/toilet/attack_hand(mob/living/user as mob)
+/obj/structure/toilet/attack_hand(mob/living/user)
 	if(swirlie)
 		usr.visible_message("<span class='danger'>[user] slams the toilet seat onto [swirlie.name]'s head!</span>", "<span class='notice'>You slam the toilet seat onto [swirlie.name]'s head!</span>", "You hear reverberating porcelain.")
 		swirlie.adjustBruteLoss(8)
@@ -42,7 +42,7 @@
 /obj/structure/toilet/update_icon()
 	icon_state = "toilet[open][cistern]"
 
-/obj/structure/toilet/attackby(obj/item/I as obj, mob/living/user as mob)
+/obj/structure/toilet/attackby(obj/item/I, mob/living/user)
 	if(istype(I, /obj/item/weapon/crowbar))
 		user << "<span class='notice'>You start to [cistern ? "replace the lid on the cistern" : "lift the lid off the cistern"].</span>"
 		playsound(loc, 'sound/effects/stonedoor_openclose.ogg', 50, 1)
@@ -99,7 +99,7 @@
 	density = 0
 	anchored = 1
 
-/obj/structure/urinal/attackby(obj/item/I as obj, mob/user as mob)
+/obj/structure/urinal/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = I
 		if(isliving(G.affecting))
@@ -123,7 +123,7 @@
 	var/busy = 0
 	var/emagged = 0
 
-/obj/structure/dryer/attack_hand(mob/user as mob)
+/obj/structure/dryer/attack_hand(mob/user)
 
 	if(isrobot(user) || isAI(user))
 		return
@@ -157,7 +157,7 @@
 	for(var/mob/V in viewers(src, null))
 		V.show_message("\blue [user] dried their hands using \the [src].")
 
-/obj/structure/dryer/attackby(obj/item/O as obj, mob/user as mob)
+/obj/structure/dryer/attackby(obj/item/O, mob/user)
 
 	if (istype(O, /obj/item/weapon/card/emag))
 		if (emagged)
@@ -279,7 +279,7 @@
 	anchored = 1
 	mouse_opacity = 0
 
-/obj/machinery/shower/attack_hand(mob/M as mob)
+/obj/machinery/shower/attack_hand(mob/M)
 	if(is_payed)
 		on = !on
 		update_icon()
@@ -294,7 +294,7 @@
 	else
 		M << "You didn't pay for that. Swipe a card against [src]."
 
-/obj/machinery/shower/attackby(obj/item/I as obj, mob/user as mob)
+/obj/machinery/shower/attackby(obj/item/I, mob/user)
 	if(I.type == /obj/item/device/analyzer)
 		user << "<span class='notice'>The water temperature seems to be [watertemp].</span>"
 	else if(istype(I, /obj/item/weapon/wrench))
@@ -395,7 +395,7 @@
 	..()
 
 //Yes, showers are super powerful as far as washing goes.
-/obj/machinery/shower/proc/wash(atom/movable/O as obj|mob)
+/obj/machinery/shower/proc/wash(atom/movable/O)
 	if(!on) return
 
 	if(isliving(O))
@@ -511,7 +511,7 @@
 	for(var/mob/living/carbon/C in loc)
 		check_heat(C)
 
-/obj/machinery/shower/proc/check_heat(mob/M as mob)
+/obj/machinery/shower/proc/check_heat(mob/M)
 	if(!on || watertemp == "normal") return
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
@@ -545,7 +545,7 @@
 	anchored = 1
 	var/busy = 0 	//Something's being washed at the moment
 
-/obj/structure/sink/attack_hand(mob/user as mob)
+/obj/structure/sink/attack_hand(mob/user)
 	if (hasorgans(user))
 		var/datum/organ/external/temp = user:organs_by_name["r_hand"]
 		if (user.hand)
@@ -580,7 +580,7 @@
 	for(var/mob/V in viewers(src, null))
 		V.show_message("\blue [user] washes their hands using \the [src].")
 
-/obj/structure/sink/attackby(obj/item/O as obj, mob/user as mob)
+/obj/structure/sink/attackby(obj/item/O, mob/user)
 	if(busy)
 		user << "\red Someone's already washing here."
 		return
@@ -641,12 +641,12 @@
 	name = "puddle"
 	icon_state = "puddle"
 
-/obj/structure/sink/puddle/attack_hand(mob/M as mob)
+/obj/structure/sink/puddle/attack_hand(mob/M)
 	icon_state = "puddle-splash"
 	..()
 	icon_state = "puddle"
 
-/obj/structure/sink/puddle/attackby(obj/item/O as obj, mob/user as mob)
+/obj/structure/sink/puddle/attackby(obj/item/O, mob/user)
 	icon_state = "puddle-splash"
 	..()
 	icon_state = "puddle"

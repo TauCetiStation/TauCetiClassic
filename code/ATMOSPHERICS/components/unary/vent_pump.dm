@@ -275,7 +275,7 @@
 	update_icon()
 	return
 
-/obj/machinery/atmospherics/unary/vent_pump/hide(var/i) //to make the little pipe section invisible, the icon changes.
+/obj/machinery/atmospherics/unary/vent_pump/hide(i) //to make the little pipe section invisible, the icon changes.
 	if(welded)
 		icon_state = "[i == 1 && istype(loc, /turf/simulated) ? "h" : "" ]weld"
 		return
@@ -324,7 +324,7 @@
 		stat |= NOPOWER
 	update_icon()
 
-/obj/machinery/atmospherics/unary/vent_pump/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+/obj/machinery/atmospherics/unary/vent_pump/attackby(obj/item/weapon/W, mob/user)
 	if (!istype(W, /obj/item/weapon/wrench))
 		return ..()
 	if (!(stat & NOPOWER) && on)

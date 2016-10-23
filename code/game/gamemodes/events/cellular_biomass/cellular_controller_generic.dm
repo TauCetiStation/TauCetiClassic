@@ -24,7 +24,7 @@
 	spawn_cellular_biomass_piece(src.loc)
 	SSobj.processing |= src
 
-/obj/effect/cellular_biomass_controller/proc/remove_biomass(var/obj/structure/cellular_biomass/removed)
+/obj/effect/cellular_biomass_controller/proc/remove_biomass(obj/structure/cellular_biomass/removed)
 	if(istype(removed, /obj/structure/cellular_biomass/wall))
 		growth_queue -= removed
 	if(istype(removed, /obj/structure/cellular_biomass/core))
@@ -98,15 +98,15 @@
 /obj/effect/cellular_biomass_controller/proc/process_cores()
 	return 1
 
-/obj/effect/cellular_biomass_controller/proc/calcEnergy(var/turf/S)
+/obj/effect/cellular_biomass_controller/proc/calcEnergy(turf/S)
 	return (getEnergy(S, 1) + getEnergy(S, 2) + getEnergy(S, 4) + getEnergy(S, 8))
 
-/obj/effect/cellular_biomass_controller/proc/getEnergy(var/turf/S, var/side)
+/obj/effect/cellular_biomass_controller/proc/getEnergy(turf/S, side)
 	if(locate(/obj/structure/cellular_biomass) in get_step(S, side))
 		return 1
 	return 0
 
-/obj/effect/cellular_biomass_controller/proc/spread_wall(var/obj/structure/cellular_biomass/wall/growing)
+/obj/effect/cellular_biomass_controller/proc/spread_wall(obj/structure/cellular_biomass/wall/growing)
 	var/turf/T = growing.loc
 	var/turf/S = get_step(T,pick(1,2,4,8))
 	if(locate(/obj/structure/cellular_biomass, S))
@@ -125,14 +125,14 @@
 		A.blob_act()
 
 
-/obj/effect/cellular_biomass_controller/proc/check_grow_wall(var/obj/structure/cellular_biomass/wall/growing)
+/obj/effect/cellular_biomass_controller/proc/check_grow_wall(obj/structure/cellular_biomass/wall/growing)
 	if(calcEnergy(growing.loc) >= 4)
 		grow_wall(growing)
 		qdel(growing)
 		return 0
 	return 1
 
-/obj/effect/cellular_biomass_controller/proc/grow_wall(var/obj/structure/cellular_biomass/wall/growing)
+/obj/effect/cellular_biomass_controller/proc/grow_wall(obj/structure/cellular_biomass/wall/growing)
 	spawn_cellular_biomass_inside(growing.loc)
 	if(prob(core_grow_chance))
 		spawn_cellular_biomass_core(growing.loc)
@@ -164,7 +164,7 @@
 	biomass += newinside
 	newinside.set_master(src)
 
-/obj/effect/cellular_biomass_controller/proc/spawn_cellular_biomass_piece(var/turf/location, var/obj/structure/cellular_biomass/parent)
+/obj/effect/cellular_biomass_controller/proc/spawn_cellular_biomass_piece(turf/location, obj/structure/cellular_biomass/parent)
 	var/newgrip = 0
 	if (parent)
 		if(istype(location,/turf/simulated))

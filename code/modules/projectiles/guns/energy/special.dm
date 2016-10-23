@@ -79,7 +79,7 @@
 		update_icon()
 		return 1
 
-	attack_self(mob/living/user as mob)
+	attack_self(mob/living/user)
 		select_fire(user)
 		update_icon()
 		return
@@ -139,7 +139,7 @@ obj/item/weapon/gun/energy/staff/focus
 	item_state = "focus"
 	projectile_type = "/obj/item/projectile/forcebolt"
 
-	attack_self(mob/living/user as mob)
+	attack_self(mob/living/user)
 		if(projectile_type == "/obj/item/projectile/forcebolt")
 			charge_cost = 200
 			user << "\red The [src.name] will now strike a small area."

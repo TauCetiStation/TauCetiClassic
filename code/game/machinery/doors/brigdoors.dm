@@ -143,7 +143,7 @@
 		. = 0
 
 // Set timetoset
-/obj/machinery/door_timer/proc/timeset(var/seconds)
+/obj/machinery/door_timer/proc/timeset(seconds)
 	timetoset = seconds * 10
 
 	if(timetoset <= 0)
@@ -152,7 +152,7 @@
 	return
 
 //Allows AIs to use door_timer, see human attack_hand function below
-/obj/machinery/door_timer/attack_ai(var/mob/user as mob)
+/obj/machinery/door_timer/attack_ai(mob/user)
 	return src.attack_hand(user)
 
 
@@ -160,7 +160,7 @@
 //Opens dialog window when someone clicks on door timer
 // Allows altering timer and the timing boolean.
 // Flasher activation limited to 150 seconds
-/obj/machinery/door_timer/attack_hand(var/mob/user as mob)
+/obj/machinery/door_timer/attack_hand(mob/user)
 	if(..())
 		return
 
@@ -286,7 +286,7 @@
 
 
 // Adds an icon in case the screen is broken/off, stolen from status_display.dm
-/obj/machinery/door_timer/proc/set_picture(var/state)
+/obj/machinery/door_timer/proc/set_picture(state)
 	picture_state = state
 	overlays.Cut()
 	overlays += image('icons/obj/status_display.dmi', icon_state=picture_state)
@@ -294,7 +294,7 @@
 
 //Checks to see if there's 1 line or 2, adds text-icons-numbers/letters over display
 // Stolen from status_display
-/obj/machinery/door_timer/proc/update_display(var/line1, var/line2)
+/obj/machinery/door_timer/proc/update_display(line1, line2)
 	var/new_text = {"<div style="font-size:[FONT_SIZE];color:[FONT_COLOR];font:'[FONT_STYLE]';text-align:center;" valign="top">[line1]<br>[line2]</div>"}
 	if(maptext != new_text)
 		maptext = new_text
@@ -302,7 +302,7 @@
 
 //Actual string input to icon display for loop, with 5 pixel x offsets for each letter.
 //Stolen from status_display
-/obj/machinery/door_timer/proc/texticon(var/tn, var/px = 0, var/py = 0)
+/obj/machinery/door_timer/proc/texticon(tn, px = 0, py = 0)
 	var/image/I = image('icons/obj/status_display.dmi', "blank")
 	var/len = lentext(tn)
 

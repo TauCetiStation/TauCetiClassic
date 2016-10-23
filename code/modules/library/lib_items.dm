@@ -25,7 +25,7 @@
 			I.loc = src
 	update_icon()
 
-/obj/structure/bookcase/attackby(obj/O as obj, mob/user as mob)
+/obj/structure/bookcase/attackby(obj/O, mob/user)
 	if(istype(O, /obj/item/weapon/book))
 		user.drop_item()
 		O.loc = src
@@ -39,7 +39,7 @@
 	else
 		..()
 
-/obj/structure/bookcase/attack_hand(var/mob/user as mob)
+/obj/structure/bookcase/attack_hand(mob/user)
 	if(contents.len)
 		var/obj/item/weapon/book/choice = input("Which book would you like to remove from the shelf?") in contents as obj|null
 		if(choice)
@@ -137,7 +137,7 @@
 	var/carved = 0	 // Has the book been hollowed out for use as a secret storage item?
 	var/obj/item/store	//What's in the book?
 
-/obj/item/weapon/book/attack_self(var/mob/user as mob)
+/obj/item/weapon/book/attack_self(mob/user)
 	if(carved)
 		if(store)
 			user << "<span class='notice'>[store] falls out of [title]!</span>"
@@ -154,7 +154,7 @@
 	else
 		user << "This book is completely blank!"
 
-/obj/item/weapon/book/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/weapon/book/attackby(obj/item/weapon/W, mob/user)
 	if(carved)
 		if(!store)
 			if(W.w_class < 3)
@@ -238,7 +238,7 @@
 	else
 		..()
 
-/obj/item/weapon/book/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+/obj/item/weapon/book/attack(mob/living/carbon/M, mob/living/carbon/user)
 	if(user.zone_sel.selecting == "eyes")
 		user.visible_message("<span class='notice'>You open up the book and show it to [M]. </span>", \
 			"<span class='notice'> [user] opens up a book and shows it to [M]. </span>")
@@ -260,7 +260,7 @@
 	var/obj/item/weapon/book/book	 //  Currently scanned book
 	var/mode = 0 					// 0 - Scan only, 1 - Scan and Set Buffer, 2 - Scan and Attempt to Check In, 3 - Scan and Attempt to Add to Inventory
 
-	attack_self(mob/user as mob)
+	attack_self(mob/user)
 		mode += 1
 		if(mode > 3)
 			mode = 0

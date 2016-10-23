@@ -4,14 +4,14 @@ var/global/floorIsLava = 0
 
 
 ////////////////////////////////
-/proc/message_admins(var/msg)
+/proc/message_admins(msg)
 	msg = "<span class=\"admin\"><span class=\"prefix\">ADMIN LOG:</span> <span class=\"message\">[msg]</span></span>"
 	log_adminwarn(msg)
 	for(var/client/C in admins)
 		if(C.holder.rights & R_ADMIN)
 			C << msg
 
-/proc/msg_admin_attack(var/text) //Toggleable Attack Messages
+/proc/msg_admin_attack(text) //Toggleable Attack Messages
 	log_attack(text)
 	var/rendered = "<span class=\"admin\"><span class=\"prefix\">ATTACK:</span> <span class=\"message\">[text]</span></span>"
 	for(var/client/C in admins)
@@ -23,7 +23,7 @@ var/global/floorIsLava = 0
 
 ///////////////////////////////////////////////////////////////////////////////////////////////Panels
 
-/datum/admins/proc/show_player_panel(var/mob/M in mob_list)
+/datum/admins/proc/show_player_panel(mob/M in mob_list)
 	set category = "Admin"
 	set name = "Show Player Panel"
 	set desc="Edit player (respawn, ban, heal, etc)"
@@ -245,7 +245,7 @@ var/global/floorIsLava = 0
 	usr << browse(dat, "window=player_notes;size=400x400")
 
 
-/datum/admins/proc/player_has_info(var/key as text)
+/datum/admins/proc/player_has_info(key)
 	var/savefile/info = new("data/player_saves/[copytext(key, 1, 2)]/[key]/info.sav")
 	var/list/infos
 	info >> infos
@@ -253,7 +253,7 @@ var/global/floorIsLava = 0
 	else return 1
 
 
-/datum/admins/proc/show_player_info(var/key as text)
+/datum/admins/proc/show_player_info(key)
 	set category = "Admin"
 	set name = "Show Player Info"
 	if (!istype(src,/datum/admins))
@@ -966,7 +966,7 @@ var/global/floorIsLava = 0
 
 	world.Reboot()
 
-/datum/admins/proc/unprison(var/mob/M in mob_list)
+/datum/admins/proc/unprison(mob/M in mob_list)
 	set category = "Admin"
 	set name = "Unprison"
 	if (M.z == ZLEVEL_CENTCOMM)
@@ -982,7 +982,7 @@ var/global/floorIsLava = 0
 
 ////////////////////////////////////////////////////////////////////////////////////////////////ADMIN HELPER PROCS
 
-/proc/is_special_character(mob/M as mob) // returns 1 for specail characters and 2 for heroes of gamemode
+/proc/is_special_character(mob/M) // returns 1 for specail characters and 2 for heroes of gamemode
 	if(!ticker || !ticker.mode)
 		return 0
 	if (!istype(M))
@@ -1027,7 +1027,7 @@ var/global/floorIsLava = 0
 	return 0
 
 /*
-/datum/admins/proc/get_sab_desc(var/target)
+/datum/admins/proc/get_sab_desc(target)
 	switch(target)
 		if(1)
 			return "Destroy at least 70% of the phoron canisters on the station"
@@ -1044,7 +1044,7 @@ var/global/floorIsLava = 0
 		else
 			return "Error: Invalid sabotage target: [target]"
 */
-/datum/admins/proc/spawn_atom(var/object as text)
+/datum/admins/proc/spawn_atom(object)
 	set category = "Debug"
 	set desc = "(atom path) Spawn an atom."
 	set name = "Spawn"
@@ -1079,7 +1079,7 @@ var/global/floorIsLava = 0
 	feedback_add_details("admin_verb","SA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
-/datum/admins/proc/show_traitor_panel(var/mob/M in mob_list)
+/datum/admins/proc/show_traitor_panel(mob/M in mob_list)
 	set category = "Admin"
 	set desc = "Edit mobs's memory and role."
 	set name = "Show Traitor Panel"
@@ -1142,7 +1142,7 @@ var/global/floorIsLava = 0
 	if(!ai_number)
 		usr << "<b>No AIs located</b>" //Just so you know the thing is actually working and not just ignoring you.
 
-/client/proc/update_mob_sprite(mob/living/carbon/human/H as mob)
+/client/proc/update_mob_sprite(mob/living/carbon/human/H)
 	set category = "Admin"
 	set name = "Update Mob Sprite"
 	set desc = "Should fix any mob sprite update errors."
@@ -1186,7 +1186,7 @@ var/global/floorIsLava = 0
 //TO-DO:
 //
 //
-/datum/admins/proc/cmd_ghost_drag(var/mob/dead/observer/frommob, var/mob/living/tomob)
+/datum/admins/proc/cmd_ghost_drag(mob/dead/observer/frommob, mob/living/tomob)
 
 	//this is the exact two check rights checks required to edit a ckey with vv.
 	if (!check_rights(R_ADMIN,0))

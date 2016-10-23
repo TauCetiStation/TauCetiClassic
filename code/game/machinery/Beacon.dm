@@ -26,7 +26,7 @@
 		return ..()
 
 	// update the invisibility and icon
-	hide(var/intact)
+	hide(intact)
 		invisibility = intact ? 101 : 0
 		updateicon()
 

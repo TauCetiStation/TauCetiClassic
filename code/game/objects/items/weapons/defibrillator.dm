@@ -17,7 +17,7 @@
 	m_amt = 2000
 	g_amt = 50
 
-	attack_self(mob/user as mob)
+	attack_self(mob/user)
 		if(!charged)
 			if(charges)
 				user.visible_message("[user] charges their [src].", "You charge your [src].</span>", "You hear electrical zap.")
@@ -55,7 +55,7 @@
 		force = initial(force)
 		charges--
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		if(charged == 2 && istype(M,/mob/living/carbon))
 			var/mob/living/carbon/C = M
 			playsound(src, 'sound/items/defib_zap.ogg', 50, 1, 1)

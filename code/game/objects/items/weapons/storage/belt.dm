@@ -259,7 +259,7 @@
 	else
 		holster(user.get_active_hand(),user)
 
-/obj/item/weapon/storage/belt/security/improved/proc/updateicon(mob/user as mob)
+/obj/item/weapon/storage/belt/security/improved/proc/updateicon(mob/user)
 	if(!holstered)
 		icon_state = "[initial(icon_state)]"
 		item_state = "[initial(item_state)]"
@@ -318,7 +318,7 @@
 	if(user)
 		user.update_inv_belt()
 
-/obj/item/weapon/storage/belt/security/improved/proc/holster(obj/item/I, mob/user as mob)
+/obj/item/weapon/storage/belt/security/improved/proc/holster(obj/item/I, mob/user)
 	if(holstered)
 		user << "\red There is already a [holstered] holstered here!"
 		return
@@ -343,7 +343,7 @@
 	user.visible_message("\blue [user] holsters the [holstered].", "You holster the [holstered].")
 	updateicon(user)
 
-/obj/item/weapon/storage/belt/security/improved/proc/unholster(mob/user as mob)
+/obj/item/weapon/storage/belt/security/improved/proc/unholster(mob/user)
 	if(!holstered)
 		return
 

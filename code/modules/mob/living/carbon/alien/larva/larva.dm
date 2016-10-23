@@ -45,7 +45,7 @@
 				amount_grown++
 	return
 
-/mob/living/carbon/alien/larva/start_pulling(var/atom/movable/AM)//Prevents mouse from pulling things
+/mob/living/carbon/alien/larva/start_pulling(atom/movable/AM)//Prevents mouse from pulling things
 	src << "<span class='warning'>You are too small to pull anything.</span>"
 	return
 

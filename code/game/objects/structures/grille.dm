@@ -19,7 +19,7 @@
 /obj/structure/grille/blob_act()
 	qdel(src)
 
-/obj/structure/grille/meteorhit(var/obj/M)
+/obj/structure/grille/meteorhit(obj/M)
 	qdel(src)
 
 
@@ -27,10 +27,10 @@
 	if(ismob(user)) shock(user, 70)
 
 
-/obj/structure/grille/attack_paw(mob/user as mob)
+/obj/structure/grille/attack_paw(mob/user)
 	attack_hand(user)
 
-/obj/structure/grille/attack_hand(mob/user as mob)
+/obj/structure/grille/attack_hand(mob/user)
 	user.do_attack_animation(src)
 	playsound(loc, 'sound/effects/grillehit.ogg', 80, 1)
 	user.visible_message("<span class='warning'>[user] kicks [src].</span>", \
@@ -45,7 +45,7 @@
 		health -= 1
 	healthcheck()
 
-/obj/structure/grille/attack_alien(mob/user as mob)
+/obj/structure/grille/attack_alien(mob/user)
 	user.do_attack_animation(src)
 	if(istype(user, /mob/living/carbon/alien/larva))	return
 
@@ -59,7 +59,7 @@
 		healthcheck()
 		return
 
-/obj/structure/grille/attack_slime(mob/user as mob)
+/obj/structure/grille/attack_slime(mob/user)
 	if(!istype(user, /mob/living/carbon/slime/adult))	return
 	user.do_attack_animation(src)
 
@@ -72,7 +72,7 @@
 	healthcheck()
 	return
 
-/obj/structure/grille/attack_animal(var/mob/living/simple_animal/M as mob)
+/obj/structure/grille/attack_animal(mob/living/simple_animal/M)
 	if(M.melee_damage_upper == 0)	return
 	M.do_attack_animation(src)
 
@@ -96,7 +96,7 @@
 		else
 			return !density
 
-/obj/structure/grille/bullet_act(var/obj/item/projectile/Proj)
+/obj/structure/grille/bullet_act(obj/item/projectile/Proj)
 
 	if(!Proj)	return
 
@@ -108,7 +108,7 @@
 	healthcheck()
 	return 0
 
-/obj/structure/grille/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/structure/grille/attackby(obj/item/weapon/W, mob/user)
 	if(iswirecutter(W))
 		if(!shock(user, 100))
 			playsound(loc, 'sound/items/Wirecutter.ogg', 100, 1)
@@ -201,7 +201,7 @@
 // shock user with probability prb (if all connections & power are working)
 // returns 1 if shocked, 0 otherwise
 
-/obj/structure/grille/proc/shock(mob/user as mob, prb)
+/obj/structure/grille/proc/shock(mob/user, prb)
 	if(!anchored || destroyed)		// anchored/destroyed grilles are never connected
 		return 0
 	if(!prob(prb))

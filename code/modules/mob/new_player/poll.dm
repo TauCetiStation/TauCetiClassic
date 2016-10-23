@@ -79,7 +79,7 @@
 
 
 
-/mob/new_player/proc/poll_player(var/pollid = -1)
+/mob/new_player/proc/poll_player(pollid = -1)
 	if(pollid == -1) return
 	establish_db_connection()
 	if(dbcon.IsConnected())
@@ -336,7 +336,7 @@
 				src << browse(output,"window=playerpoll;size=500x250")
 		return
 
-/mob/new_player/proc/vote_on_poll(var/pollid = -1, var/optionid = -1, var/multichoice = 0)
+/mob/new_player/proc/vote_on_poll(pollid = -1, optionid = -1, multichoice = 0)
 	if(pollid == -1 || optionid == -1)
 		return
 
@@ -406,7 +406,7 @@
 		usr << browse(null,"window=playerpoll")
 
 
-/mob/new_player/proc/log_text_poll_reply(var/pollid = -1, var/replytext = "")
+/mob/new_player/proc/log_text_poll_reply(pollid = -1, replytext = "")
 	if(pollid == -1 || replytext == "")
 		return
 
@@ -464,7 +464,7 @@
 		usr << browse(null,"window=playerpoll")
 
 
-/mob/new_player/proc/vote_on_numval_poll(var/pollid = -1, var/optionid = -1, var/rating = null)
+/mob/new_player/proc/vote_on_numval_poll(pollid = -1, optionid = -1, rating = null)
 	if(pollid == -1 || optionid == -1)
 		return
 

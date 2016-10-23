@@ -64,7 +64,7 @@ var/datum/subsystem/sun/SSsun
 			occlusion(S)
 
 // for a solar panel, trace towards sun to see if we're in shadow
-/datum/subsystem/sun/proc/occlusion(var/obj/machinery/power/solar/S)
+/datum/subsystem/sun/proc/occlusion(obj/machinery/power/solar/S)
 	var/ax = S.x		// start at the solar panel
 	var/ay = S.y
 

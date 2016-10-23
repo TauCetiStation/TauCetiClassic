@@ -15,7 +15,7 @@
 	icon_state = "[initial(icon_state)][magazine ? "-[magazine.max_ammo]" : ""][chambered ? "" : "-e"]"
 	return
 
-/obj/item/weapon/gun/projectile/automatic/attackby(var/obj/item/A as obj, mob/user as mob)
+/obj/item/weapon/gun/projectile/automatic/attackby(obj/item/A, mob/user)
 	if(..() && chambered)
 		alarmed = 0
 
@@ -44,7 +44,7 @@
 	update_icon()
 	return
 
-/obj/item/weapon/gun/projectile/automatic/c20r/afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, flag)
+/obj/item/weapon/gun/projectile/automatic/c20r/afterattack(atom/target, mob/living/user, flag)
 	..()
 	if(!chambered && !get_ammo() && !alarmed)
 		playsound(user, 'sound/weapons/smg_empty_alarm.ogg', 40, 1)
@@ -52,7 +52,7 @@
 		alarmed = 1
 	return
 
-/obj/item/weapon/gun/projectile/automatic/c20r/attack_self(mob/user as mob)
+/obj/item/weapon/gun/projectile/automatic/c20r/attack_self(mob/user)
 	if(silenced)
 		switch(alert("Would you like to unscrew silencer, or extract magazine?","Choose.","Silencer","Magazine"))
 			if("Silencer")
@@ -64,7 +64,7 @@
 	else
 		..()
 
-/obj/item/weapon/gun/projectile/automatic/c20r/attackby(obj/item/I as obj, mob/user as mob)
+/obj/item/weapon/gun/projectile/automatic/c20r/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/silencer))
 		return silencer_attackby(I,user)
 	return ..()
@@ -95,7 +95,7 @@
 	wielded = 1
 	update_icon()
 
-/obj/item/weapon/gun/projectile/automatic/l6_saw/mob_can_equip(M as mob, slot)
+/obj/item/weapon/gun/projectile/automatic/l6_saw/mob_can_equip(M, slot)
 	//Cannot equip wielded items.
 	if(wielded)
 		M << "<span class='warning'>Unwield the [initial(name)] first!</span>"
@@ -103,7 +103,7 @@
 
 	return ..()
 
-/obj/item/weapon/gun/projectile/automatic/l6_saw/dropped(mob/user as mob)
+/obj/item/weapon/gun/projectile/automatic/l6_saw/dropped(mob/user)
 	//handles unwielding a twohanded weapon when dropped as well as clearing up the offhand
 	if(user)
 		var/obj/item/weapon/gun/projectile/automatic/l6_saw/O = user.get_inactive_hand()
@@ -115,7 +115,7 @@
 	unwield()
 
 
-/obj/item/weapon/gun/projectile/automatic/l6_saw/attack_self(mob/user as mob)
+/obj/item/weapon/gun/projectile/automatic/l6_saw/attack_self(mob/user)
 	switch(alert("Would you like to [cover_open ? "open" : "close"], or change grip?","Choose.","Toggle cover","Change grip"))
 		if("Toggle cover")
 			if(wielded)
@@ -162,7 +162,7 @@
 /obj/item/weapon/gun/projectile/automatic/l6_saw/update_icon()
 	icon_state = "l6[cover_open ? "open" : "closed"][magazine ? Ceiling(get_ammo(0)/12.5)*25 : "-empty"]"
 
-/obj/item/weapon/gun/projectile/automatic/l6_saw/afterattack(atom/target as mob|obj|turf, mob/living/user as mob|obj, flag, params) //what I tried to do here is just add a check to see if the cover is open or not and add an icon_state change because I can't figure out how c-20rs do it with overlays
+/obj/item/weapon/gun/projectile/automatic/l6_saw/afterattack(atom/target, mob/living/user, flag, params) //what I tried to do here is just add a check to see if the cover is open or not and add an icon_state change because I can't figure out how c-20rs do it with overlays
 	if(!wielded)
 		user << "<span class='notice'>You need wield [src] in both hands before firing!</span>"
 		return
@@ -172,7 +172,7 @@
 		..()
 		update_icon()
 
-/obj/item/weapon/gun/projectile/automatic/l6_saw/attack_hand(mob/user as mob)
+/obj/item/weapon/gun/projectile/automatic/l6_saw/attack_hand(mob/user)
 	if(loc != user)
 		..()
 		return	//let them pick it up
@@ -188,7 +188,7 @@
 		user << "<span class='notice'>You remove the magazine from [src].</span>"
 
 
-/obj/item/weapon/gun/projectile/automatic/l6_saw/attackby(var/obj/item/A as obj, mob/user as mob)
+/obj/item/weapon/gun/projectile/automatic/l6_saw/attackby(obj/item/A, mob/user)
 	if(!cover_open)
 		user << "<span class='notice'>[src]'s cover is closed! You can't insert a new mag!</span>"
 		return
@@ -239,12 +239,12 @@
 /obj/item/weapon/gun/projectile/automatic/l10c/process_chamber()
 	return ..(0, 1, 1)
 
-/obj/item/weapon/gun/projectile/automatic/l10c/afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, flag)
+/obj/item/weapon/gun/projectile/automatic/l10c/afterattack(atom/target, mob/living/user, flag)
 	..()
 	update_icon(user)
 	return
 
-/obj/item/weapon/gun/projectile/automatic/l10c/attack_self(mob/user as mob)
+/obj/item/weapon/gun/projectile/automatic/l10c/attack_self(mob/user)
 	if(magazine && magazine.ammo_count())
 		playsound(user, 'sound/weapons/guns/l10c-unload.ogg', 70, 1)
 	if(chambered)
@@ -263,7 +263,7 @@
 	update_icon(user)
 	return
 
-/obj/item/weapon/gun/projectile/automatic/l10c/attackby(var/obj/item/A as obj, mob/user as mob)
+/obj/item/weapon/gun/projectile/automatic/l10c/attackby(obj/item/A, mob/user)
 	if (istype(A, /obj/item/ammo_box/magazine))
 		var/obj/item/ammo_box/magazine/AM = A
 		if (!magazine && istype(AM, mag_type))
@@ -281,7 +281,7 @@
 			user << "<span class='notice'>There's already a magazine in \the [src].</span>"
 	return 0
 
-/obj/item/weapon/gun/projectile/automatic/l10c/update_icon(var/mob/M)
+/obj/item/weapon/gun/projectile/automatic/l10c/update_icon(mob/M)
 	if(!magazine)
 		icon_state = "[initial(icon_state)]-e"
 		item_state = "[initial(item_state)]-e"
@@ -312,7 +312,7 @@
 	mag_type = /obj/item/ammo_box/magazine/c5_9mm
 	fire_sound = 'sound/weapons/guns/c5_shot.wav'
 
-/obj/item/weapon/gun/projectile/automatic/c5/update_icon(var/mob/M)
+/obj/item/weapon/gun/projectile/automatic/c5/update_icon(mob/M)
 	icon_state = "c5[magazine ? "" : "-e"]"
 	item_state = "c5[magazine ? "" : "-e"]"
 	if(ishuman(M))
@@ -332,7 +332,7 @@
 	mag_type = /obj/item/ammo_box/magazine/l13_38
 	fire_sound = 'sound/weapons/guns/l13_shot.ogg'
 
-/obj/item/weapon/gun/projectile/automatic/l13/update_icon(var/mob/M)
+/obj/item/weapon/gun/projectile/automatic/l13/update_icon(mob/M)
 	icon_state = "l13[magazine ? "" : "-e"]"
 	item_state = "l13[magazine ? "" : "-e"]"
 	if(ishuman(M))
@@ -394,7 +394,7 @@
 /obj/item/weapon/gun/projectile/automatic/borg/update_icon()
 	return
 
-/obj/item/weapon/gun/projectile/automatic/borg/attack_self(mob/user as mob)
+/obj/item/weapon/gun/projectile/automatic/borg/attack_self(mob/user)
 	if (magazine)
 		magazine.loc = get_turf(src.loc)
 		magazine.update_icon()
@@ -431,7 +431,7 @@
 	icon_state = "bulldog[chambered ? "" : "-e"]"
 	return
 
-/obj/item/weapon/gun/projectile/automatic/bulldog/afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, flag)
+/obj/item/weapon/gun/projectile/automatic/bulldog/afterattack(atom/target, mob/living/user, flag)
 	..()
 	if(!chambered && !get_ammo() && !alarmed)
 		playsound(user, 'sound/weapons/smg_empty_alarm.ogg', 40, 1)

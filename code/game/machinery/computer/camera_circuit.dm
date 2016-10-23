@@ -35,7 +35,7 @@
 				if("Cargo")
 					build_path = /obj/machinery/computer/security/cargo
 
-	attackby(var/obj/item/I, var/mob/user)//if(health > 50)
+	attackby(obj/item/I, mob/user)//if(health > 50)
 		..()
 		if(istype(I,/obj/item/weapon/card/emag))
 			if(network)
@@ -55,12 +55,12 @@
 			updateBuildPath()
 		return
 
-	attack_self(var/mob/user)
+	attack_self(mob/user)
 		if(!secured && ishuman(user))
 			user.machine = src
 			interact(user, 0)
 
-	proc/interact(var/mob/user, var/ai=0)
+	proc/interact(mob/user, ai=0)
 		if(secured)
 			return
 		if (!ishuman(user))

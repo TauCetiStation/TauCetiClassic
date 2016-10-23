@@ -251,7 +251,7 @@ var/list/valid_secondary_effect_types = list(\
 
 
 
-/obj/machinery/artifact/attack_hand(var/mob/user as mob)
+/obj/machinery/artifact/attack_hand(mob/user)
 	if (get_dist(user, src) > 1)
 		user << "\red You can't reach [src] from here."
 		return
@@ -276,7 +276,7 @@ var/list/valid_secondary_effect_types = list(\
 	if(secondary_effect && secondary_effect.effect == EFFECT_TOUCH && secondary_effect.activated)
 		secondary_effect.DoEffectTouch(user)
 
-/obj/machinery/artifact/attackby(obj/item/weapon/W as obj, mob/living/user as mob)
+/obj/machinery/artifact/attackby(obj/item/weapon/W, mob/living/user)
 
 	if (istype(W, /obj/item/weapon/reagent_containers/))
 		if(W.reagents.has_reagent("hydrogen", 1) || W.reagents.has_reagent("water", 1))
@@ -323,7 +323,7 @@ var/list/valid_secondary_effect_types = list(\
 		if(secondary_effect && secondary_effect.trigger == TRIGGER_FORCE && prob(25))
 			secondary_effect.ToggleActivate(0)
 
-/obj/machinery/artifact/Bumped(M as mob|obj)
+/obj/machinery/artifact/Bumped(M)
 	..()
 	if(istype(M,/obj))
 		if(M:throwforce >= 10)
@@ -352,7 +352,7 @@ var/list/valid_secondary_effect_types = list(\
 			M << "<b>You accidentally touch [src].<b>"
 	..()
 
-/obj/machinery/artifact/bullet_act(var/obj/item/projectile/P)
+/obj/machinery/artifact/bullet_act(obj/item/projectile/P)
 	if(istype(P,/obj/item/projectile/bullet) ||\
 		istype(P,/obj/item/projectile/hivebotbullet))
 		if(my_effect.trigger == TRIGGER_FORCE)

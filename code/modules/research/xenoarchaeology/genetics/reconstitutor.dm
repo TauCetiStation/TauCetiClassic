@@ -89,7 +89,7 @@ datum/genesequence
 	else
 		..()
 
-/obj/machinery/computer/reconstitutor/attack_hand(var/mob/user as mob)
+/obj/machinery/computer/reconstitutor/attack_hand(mob/user)
 	src.add_fingerprint(user)
 	interact(user)
 
@@ -255,7 +255,7 @@ datum/genesequence
 	updateDialog()
 
 
-/obj/machinery/computer/reconstitutor/proc/scan_fossil(var/obj/item/weapon/fossil/scan_fossil)
+/obj/machinery/computer/reconstitutor/proc/scan_fossil(obj/item/weapon/fossil/scan_fossil)
 	//see whether we accept these kind of fossils
 	if(accepted_fossil_types.len && !accepted_fossil_types.Find(scan_fossil.type))
 		return SCANFOSSIL_RETVAL_WRONGTYPE

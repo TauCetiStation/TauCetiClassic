@@ -24,7 +24,7 @@
 /obj/item/weapon/gun/projectile/heavyrifle/process_chamber()
 	return ..(0, 0)
 
-/obj/item/weapon/gun/projectile/heavyrifle/attackby(var/obj/item/A as obj, mob/user as mob)
+/obj/item/weapon/gun/projectile/heavyrifle/attackby(obj/item/A, mob/user)
 	if(!bolt_open)
 		return
 	if(chambered)
@@ -39,7 +39,7 @@
 		update_icon()	//I.E. fix the desc
 		A.update_icon()
 
-/obj/item/weapon/gun/projectile/heavyrifle/attack_self(mob/user as mob)
+/obj/item/weapon/gun/projectile/heavyrifle/attack_self(mob/user)
 	bolt_open = !bolt_open
 	if(bolt_open)
 		playsound(src.loc, 'sound/weapons/heavybolt_out.ogg', 50, 1)

@@ -25,7 +25,7 @@ var/command_name = null
 	command_name = name
 	return name
 
-/proc/change_command_name(var/name)
+/proc/change_command_name(name)
 
 	command_name = name
 
@@ -109,7 +109,7 @@ var/religion_name = null
 
 	return return_name
 
-/proc/world_name(var/name)
+/proc/world_name(name)
 
 	station_name = name
 
@@ -153,7 +153,7 @@ var/syndicate_name = null
 var/gang_name_pool = list("Clandestine", "Prima", "Zero-G", "Max", "Blasto", "Waffle", "North", "Omni", "Newton", "Cyber", "Donk", "Gene", "Gib", "Tunnel", "Diablo", "Psyke", "Osiron")
 var/gang_A_name = null
 var/gang_B_name = null
-/proc/gang_name(var/gang)
+/proc/gang_name(gang)
 	if(!gang_A_name || !gang_B_name)
 		gang_A_name = pick(gang_name_pool)
 		gang_name_pool -= gang_A_name

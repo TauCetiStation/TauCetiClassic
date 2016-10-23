@@ -1,7 +1,7 @@
 /mob/living/silicon/ai/var/max_locations = 5
 /mob/living/silicon/ai/var/stored_locations[0]
 
-/mob/living/silicon/ai/proc/InvalidTurf(turf/T as turf)
+/mob/living/silicon/ai/proc/InvalidTurf(turf/T)
 	if(!T)
 		return 1
 	if(T.z == ZLEVEL_CENTCOMM)
@@ -33,7 +33,7 @@
 	return T
 
 
-/mob/living/silicon/ai/proc/ai_camera_list(var/camera in get_camera_list())
+/mob/living/silicon/ai/proc/ai_camera_list(camera in get_camera_list())
 
 	if(src.stat == DEAD)
 		src << "You can't list the cameras because you are dead!"
@@ -48,7 +48,7 @@
 
 	return
 
-/mob/living/silicon/ai/proc/ai_store_location(loc as text)
+/mob/living/silicon/ai/proc/ai_store_location(loc)
 	set category = "AI Commands"
 	set name = "Store Camera Location"
 	set desc = "Stores your current camera location by the given name."
@@ -162,7 +162,7 @@
 	src.track = TB
 	return targets
 
-/mob/living/silicon/ai/proc/ai_camera_track(var/target_name in trackable_mobs())
+/mob/living/silicon/ai/proc/ai_camera_track(target_name in trackable_mobs())
 
 	if(src.stat == DEAD)
 		src << "You can't track with camera because you are dead!"
@@ -177,7 +177,7 @@
 	src.track = null
 	ai_actual_track(target)
 
-/mob/living/silicon/ai/proc/ai_cancel_tracking(var/forced = 0)
+/mob/living/silicon/ai/proc/ai_cancel_tracking(forced = 0)
 	if(!cameraFollow)
 		return
 
@@ -185,7 +185,7 @@
 	cameraFollow.tracking_cancelled()
 	cameraFollow = null
 
-/mob/living/silicon/ai/proc/ai_actual_track(mob/living/target as mob)
+/mob/living/silicon/ai/proc/ai_actual_track(mob/living/target)
 	if(!istype(target))	return
 	var/mob/living/silicon/ai/U = usr
 
@@ -231,7 +231,7 @@
 				return
 			sleep(10)
 
-/proc/near_camera(var/mob/living/M)
+/proc/near_camera(mob/living/M)
 	if (!isturf(M.loc))
 		return 0
 	if(isrobot(M))
@@ -242,7 +242,7 @@
 		return 0
 	return 1
 
-/obj/machinery/camera/attack_ai(var/mob/living/silicon/ai/user as mob)
+/obj/machinery/camera/attack_ai(mob/living/silicon/ai/user)
 	if (!istype(user))
 		return
 	if (!src.can_use())
@@ -250,7 +250,7 @@
 	user.eyeobj.setLoc(get_turf(src))
 
 
-/mob/living/silicon/ai/attack_ai(var/mob/user as mob)
+/mob/living/silicon/ai/attack_ai(mob/user)
 	ai_camera_list()
 
 /proc/camera_sort(list/L)

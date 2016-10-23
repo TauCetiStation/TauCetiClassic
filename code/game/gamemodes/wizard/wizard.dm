@@ -56,7 +56,7 @@
 	return ..()
 
 
-/datum/game_mode/proc/forge_wizard_objectives(var/datum/mind/wizard)
+/datum/game_mode/proc/forge_wizard_objectives(datum/mind/wizard)
 	if (config.objectives_disabled)
 		return
 
@@ -125,7 +125,7 @@
 	return
 
 
-/datum/game_mode/proc/greet_wizard(var/datum/mind/wizard, var/you_are=1)
+/datum/game_mode/proc/greet_wizard(datum/mind/wizard, you_are=1)
 	if (you_are)
 		wizard.current << "<span class='danger'>You are the Space Wizard!</span>"
 	wizard.current << "<B>The Space Wizards Federation has given you the following tasks:</B>"
@@ -275,7 +275,7 @@
 //OTHER PROCS
 
 //To batch-remove wizard spells. Linked to mind.dm.
-/mob/proc/spellremove(var/mob/M as mob)
+/mob/proc/spellremove(mob/M)
 	for(var/obj/effect/proc_holder/spell/spell_to_remove in src.spell_list)
 		qdel(spell_to_remove)
 	spell_list.Cut()

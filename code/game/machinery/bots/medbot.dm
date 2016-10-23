@@ -96,10 +96,10 @@
 	src.icon_state = "medibot[src.on]"
 	src.updateUsrDialog()
 
-/obj/machinery/bot/medbot/attack_paw(mob/user as mob)
+/obj/machinery/bot/medbot/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/machinery/bot/medbot/attack_hand(mob/user as mob)
+/obj/machinery/bot/medbot/attack_hand(mob/user)
 	. = ..()
 	if (.)
 		return
@@ -184,7 +184,7 @@
 
 	src.updateUsrDialog()
 
-/obj/machinery/bot/medbot/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/machinery/bot/medbot/attackby(obj/item/weapon/W, mob/user)
 	if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if (src.allowed(user) && !open && !emagged)
 			src.locked = !src.locked
@@ -218,7 +218,7 @@
 		if (health < maxhealth && !istype(W, /obj/item/weapon/screwdriver) && W.force)
 			step_to(src, (get_step_away(src,user)))
 
-/obj/machinery/bot/medbot/Emag(mob/user as mob)
+/obj/machinery/bot/medbot/Emag(mob/user)
 	..()
 	if(open && !locked)
 		if(user) user << "<span class='warning'>You short out [src]'s reagent synthesis circuits.</span>"
@@ -328,7 +328,7 @@
 
 	return
 
-/obj/machinery/bot/medbot/proc/assess_patient(mob/living/carbon/C as mob)
+/obj/machinery/bot/medbot/proc/assess_patient(mob/living/carbon/C)
 	//Time to see if they need medical help!
 	if(C.stat == DEAD)
 		return 0 //welp too late for them!
@@ -368,7 +368,7 @@
 
 	return 0
 
-/obj/machinery/bot/medbot/proc/medicate_patient(mob/living/carbon/C as mob)
+/obj/machinery/bot/medbot/proc/medicate_patient(mob/living/carbon/C)
 	if(!src.on)
 		return
 
@@ -450,13 +450,13 @@
 	return
 
 
-/obj/machinery/bot/medbot/proc/speak(var/message)
+/obj/machinery/bot/medbot/proc/speak(message)
 	if((!src.on) || (!message))
 		return
 	visible_message("[src] beeps, \"[message]\"")
 	return
 
-/obj/machinery/bot/medbot/bullet_act(var/obj/item/projectile/Proj)
+/obj/machinery/bot/medbot/bullet_act(obj/item/projectile/Proj)
 	if(Proj.flag == "taser")
 		src.stunned = min(stunned+10,20)
 	..()
@@ -497,7 +497,7 @@
 	return
 
 /* terrible
-/obj/machinery/bot/medbot/Bumped(atom/movable/M as mob|obj)
+/obj/machinery/bot/medbot/Bumped(atom/movable/M)
 	spawn(0)
 		if (M)
 			var/turf/T = get_turf(src)
@@ -520,7 +520,7 @@
 
 
 //It isn't blocked if we can open it, man.
-/proc/TurfBlockedNonWindowNonDoor(turf/loc, var/list/access)
+/proc/TurfBlockedNonWindowNonDoor(turf/loc, list/access)
 	for(var/obj/O in loc)
 		if(O.density && !istype(O, /obj/structure/window) && !istype(O, /obj/machinery/door))
 			return 1
@@ -538,7 +538,7 @@
  *	Medbot Assembly -- Can be made out of all three medkits.
  */
 
-/obj/item/weapon/storage/firstaid/attackby(var/obj/item/robot_parts/S, mob/user as mob)
+/obj/item/weapon/storage/firstaid/attackby(obj/item/robot_parts/S, mob/user)
 
 	if ((!istype(S, /obj/item/robot_parts/l_arm)) && (!istype(S, /obj/item/robot_parts/r_arm)))
 		..()
@@ -564,7 +564,7 @@
 	qdel(src)
 
 
-/obj/item/weapon/firstaid_arm_assembly/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/weapon/firstaid_arm_assembly/attackby(obj/item/weapon/W, mob/user)
 	..()
 	if(istype(W, /obj/item/weapon/pen))
 		var/t = copytext(stripped_input(user, "Enter new robot name", src.name, src.created_name),1,MAX_NAME_LEN)

@@ -61,7 +61,7 @@
 	..()
 
 
-/obj/effect/blob/core/proc/create_overmind(var/client/new_overmind, var/override_delay)
+/obj/effect/blob/core/proc/create_overmind(client/new_overmind, override_delay)
 
 	if(overmind_get_delay > world.time && !override_delay)
 		return

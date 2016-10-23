@@ -413,7 +413,7 @@ client/proc/one_click_antag()
 	return 0
 
 
-/datum/admins/proc/makeBody(var/mob/dead/observer/G_found) // Uses stripped down and bastardized code from respawn character
+/datum/admins/proc/makeBody(mob/dead/observer/G_found) // Uses stripped down and bastardized code from respawn character
 	if(!G_found || !G_found.key)	return
 
 	//First we spawn a dude.

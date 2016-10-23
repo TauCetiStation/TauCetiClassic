@@ -3,7 +3,7 @@
 	desc = "A label on it reads: <i>Warning: Activating this device will send a high-ordinance explosive to your location</i>."
 	origin_tech = "bluespace=1;syndicate=7"
 
-/obj/item/device/radio/beacon/syndicate_bomb/attack_self(mob/user as mob)
+/obj/item/device/radio/beacon/syndicate_bomb/attack_self(mob/user)
 	if(user)
 		user << "\blue Locked In"
 		new /obj/machinery/syndicatebomb( user.loc )
@@ -52,7 +52,7 @@
 	..()
 	usr << "A digital display on it reads \"[timer]\"."
 
-/obj/machinery/syndicatebomb/attackby(var/obj/item/I, var/mob/user)
+/obj/machinery/syndicatebomb/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/wrench))
 		if(!anchored)
 			if(!isturf(src.loc) || istype(src.loc, /turf/space))
@@ -107,7 +107,7 @@
 	else
 		..()
 
-/obj/machinery/syndicatebomb/attack_hand(var/mob/user)
+/obj/machinery/syndicatebomb/attack_hand(mob/user)
 	if(degutted)
 		user << "<span class='notice'>The bomb's explosives have been removed, the [open_panel ? "wires" : "buttons"] are useless now.</span>"
 	else if(anchored)
@@ -120,7 +120,7 @@
 	else if(!active)
 		settings()
 
-/obj/machinery/syndicatebomb/proc/settings(var/mob/user)
+/obj/machinery/syndicatebomb/proc/settings(mob/user)
 	var/newtime = input(usr, "Please set the timer.", "Timer", "[timer]") as num
 	newtime = Clamp(newtime, 60, 60000)
 	if(in_range(src, usr) && isliving(usr)) //No running off and setting bombs from across the station
@@ -149,7 +149,7 @@
 			log_game("[key_name(usr)] has primed a [name] for detonation at [A.name]([bombturf.x],[bombturf.y],[bombturf.z])")
 			SSobj.processing |= src //Ticking down
 
-/obj/machinery/syndicatebomb/proc/isWireCut(var/index)
+/obj/machinery/syndicatebomb/proc/isWireCut(index)
 	return wires.IsIndexCut(index)
 
 /obj/item/weapon/syndicatebombcore
@@ -177,7 +177,7 @@
 	var/detonated =	0
 	var/existant =	0
 
-/obj/item/device/syndicatedetonator/attack_self(mob/user as mob)
+/obj/item/device/syndicatedetonator/attack_self(mob/user)
 	if(!cooldown)
 		for(var/obj/machinery/syndicatebomb/B in machines)
 			if(B.active)

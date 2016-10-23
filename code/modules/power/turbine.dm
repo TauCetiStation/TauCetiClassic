@@ -279,7 +279,7 @@
 /obj/machinery/computer/turbine_computer/proc/search_turbine()
 	compressor = locate(/obj/machinery/compressor) in range(5)
 
-/obj/machinery/computer/turbine_computer/attack_hand(var/mob/user as mob)
+/obj/machinery/computer/turbine_computer/attack_hand(mob/user)
 	if(..())
 		return
 

@@ -126,13 +126,13 @@
 	else
 		..()
 
-/obj/machinery/space_heater/attack_hand(mob/user as mob)
+/obj/machinery/space_heater/attack_hand(mob/user)
 	interact(user)
 
 /obj/machinery/space_heater/attack_paw(mob/user)
 	interact(user)
 
-/obj/machinery/space_heater/interact(mob/user as mob)
+/obj/machinery/space_heater/interact(mob/user)
 	ui_interact(user)
 
 /obj/machinery/space_heater/ui_interact(mob/user, ui_key = "main")

@@ -76,7 +76,7 @@
 	modePlayer += head_revolutionaries
 	return ..()
 
-/datum/game_mode/revolution/rp_revolution/greet_revolutionary(var/datum/mind/rev_mind, var/you_are=1)
+/datum/game_mode/revolution/rp_revolution/greet_revolutionary(datum/mind/rev_mind, you_are=1)
 	var/obj_count = 1
 	if (you_are)
 		rev_mind.current << "\blue You are a member of the revolutionaries' leadership!"

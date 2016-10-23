@@ -185,7 +185,7 @@
 			L.scp_mark = 0
 	..()
 
-/mob/living/simple_animal/special/scp173/attack_animal(mob/living/simple_animal/M as mob)
+/mob/living/simple_animal/special/scp173/attack_animal(mob/living/simple_animal/M)
 	M.emote("[M.friendly] \the <EM>[src]</EM>")
 
 /mob/living/simple_animal/special/scp173/airflow_stun()
@@ -194,14 +194,14 @@
 /mob/living/simple_animal/special/scp173/airflow_hit(atom/A)
 	return
 
-/mob/living/simple_animal/special/scp173/Process_Spacemove(var/movement_dir = 0)
+/mob/living/simple_animal/special/scp173/Process_Spacemove(movement_dir = 0)
 	return 1 //copypasta from carp code
 
-/mob/living/simple_animal/special/scp173/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/mob/living/simple_animal/special/scp173/attackby(obj/item/O, mob/user)
 	usr << "<span class='warning'>This weapon is ineffective, it does no damage.</span>"
 	for(var/mob/M in viewers(src, null))
 		if ((M.client && !( M.blinded )))
 			M.show_message("<span class='warning'>[user] gently taps [src] with [O].</span>")
 
-/mob/living/simple_animal/special/scp173/bullet_act(var/obj/item/projectile/Proj)
+/mob/living/simple_animal/special/scp173/bullet_act(obj/item/projectile/Proj)
 	visible_message("[Proj] ricochets off [src]!")

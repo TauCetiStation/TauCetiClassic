@@ -238,7 +238,7 @@ var/lastMove = 0
 						break
 					step(L, EAST)
 
-/obj/machinery/computer/arrival_shuttle/attack_hand(user as mob)
+/obj/machinery/computer/arrival_shuttle/attack_hand(user)
 	src.add_fingerprint(usr)
 	var/dat = "<center>Shuttle location:[curr_location]<br>Ready to move[max(lastMove + ARRIVAL_SHUTTLE_COOLDOWN - world.time, 0) ? " in [max(round((lastMove + ARRIVAL_SHUTTLE_COOLDOWN - world.time) * 0.1), 0)] seconds" : ": now"]<br><b><A href='?src=\ref[src];move=1'>Send</A></b></center><br>"
 
@@ -261,7 +261,7 @@ var/lastMove = 0
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "wagon"
 
-/obj/machinery/computer/arrival_shuttle/dock/attack_hand(user as mob)
+/obj/machinery/computer/arrival_shuttle/dock/attack_hand(user)
 	src.add_fingerprint(usr)
 	var/dat1 = "<center>Shuttle location:[curr_location]<br>Ready to move[max(lastMove + ARRIVAL_SHUTTLE_COOLDOWN - world.time, 0) ? " in [max(round((lastMove + ARRIVAL_SHUTTLE_COOLDOWN - world.time) * 0.1), 0)] seconds" : ": now"]<br><b><A href='?src=\ref[src];back=1'>Send back</A></b></center><br>"
 

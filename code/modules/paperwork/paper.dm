@@ -110,7 +110,7 @@
 	add_fingerprint(usr)
 	return
 
-/obj/item/weapon/paper/afterattack(atom/target, mob/user as mob, proximity)
+/obj/item/weapon/paper/afterattack(atom/target, mob/user, proximity)
 	if(!proximity) return
 	if(istype(src, /obj/item/weapon/paper/talisman)) return
 	if(istype(src, /obj/item/weapon/paper/crumpled/bloody)) return
@@ -127,7 +127,7 @@
 
 	return
 
-/obj/item/weapon/paper/attack_self(mob/living/user as mob)
+/obj/item/weapon/paper/attack_self(mob/living/user)
 	examine()
 	if(rigged && (Holiday == "April Fool's Day"))
 		if(spam_flag == 0)
@@ -137,7 +137,7 @@
 				spam_flag = 0
 	return
 
-/obj/item/weapon/paper/attack_ai(var/mob/living/silicon/ai/user as mob)
+/obj/item/weapon/paper/attack_ai(mob/living/silicon/ai/user)
 	var/dist
 	if(istype(user) && user.camera) //is AI
 		dist = get_dist(src, user.camera)
@@ -153,7 +153,7 @@
 		onclose(usr, "[name]")
 	return
 
-/obj/item/weapon/paper/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+/obj/item/weapon/paper/attack(mob/living/carbon/M, mob/living/carbon/user)
 	if(user.zone_sel.selecting == "eyes")
 		user.visible_message("<span class='notice'>You show the paper to [M]. </span>", \
 			"<span class='notice'> [user] holds up a paper and shows it to [M]. </span>")
@@ -175,7 +175,7 @@
 					H.lip_style = null
 					H.update_body()
 
-/obj/item/weapon/paper/proc/addtofield(var/id, var/text, var/links = 0)
+/obj/item/weapon/paper/proc/addtofield(id, text, links = 0)
 	var/locid = 0
 	var/laststart = 1
 	var/textindex = 1
@@ -229,7 +229,7 @@
 	update_icon()
 
 
-/obj/item/weapon/paper/proc/parsepencode(var/t, var/obj/item/weapon/pen/P, mob/user as mob, var/iscrayon = 0)
+/obj/item/weapon/paper/proc/parsepencode(t, obj/item/weapon/pen/P, mob/user, iscrayon = 0)
 //	t = copytext(sanitize(t),1,MAX_MESSAGE_LEN)
 
 	t = replacetext(t, "\[center\]", "<center>")
@@ -279,7 +279,7 @@
 	return t
 
 
-/obj/item/weapon/paper/proc/openhelp(mob/user as mob)
+/obj/item/weapon/paper/proc/openhelp(mob/user)
 	user << browse({"<HTML><HEAD><TITLE>Pen Help</TITLE></HEAD>
 	<BODY>
 		<b><center>Crayon&Pen commands</center></b><br>
@@ -376,7 +376,7 @@
 		update_icon()
 
 
-/obj/item/weapon/paper/attackby(obj/item/weapon/P as obj, mob/user as mob)
+/obj/item/weapon/paper/attackby(obj/item/weapon/P, mob/user)
 	..()
 	var/clown = 0
 	if(user.mind && (user.mind.assigned_role == "Clown"))

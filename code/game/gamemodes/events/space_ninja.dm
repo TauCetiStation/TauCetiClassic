@@ -97,7 +97,7 @@ var/ninja_selection_id = 1
 var/ninja_selection_active = 0
 var/ninja_confirmed_selection = 0
 
-/proc/space_ninja_arrival(var/assign_key = null, var/assign_mission = null)
+/proc/space_ninja_arrival(assign_key = null, assign_mission = null)
 
 	if(ninja_selection_active)
 		usr << "\red Ninja selection already in progress. Please wait until it ends."
@@ -436,7 +436,7 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 
 //=======//CURRENT PLAYER VERB//=======//
 
-/client/proc/cmd_admin_ninjafy(var/mob/M in player_list)
+/client/proc/cmd_admin_ninjafy(mob/M in player_list)
 	set category = null
 	set name = "Make Space Ninja"
 

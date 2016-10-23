@@ -208,7 +208,7 @@
 		stat |= NOPOWER
 	update_icon()
 
-/obj/machinery/atmospherics/unary/vent_scrubber/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+/obj/machinery/atmospherics/unary/vent_scrubber/attackby(obj/item/weapon/W, mob/user)
 	if (!istype(W, /obj/item/weapon/wrench))
 		return ..()
 	if (!(stat & NOPOWER) && on)

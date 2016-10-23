@@ -11,7 +11,7 @@ var/list/page_sound = list('sound/effects/pageturn1.ogg', 'sound/effects/pagetur
 //var/list/footsteps_sound = list('sound/effects/footsteps.ogg','sound/effects/footsteps2.ogg')
 var/list/footsteps_sound = list('sound/effects/tile1.wav','sound/effects/tile2.wav','sound/effects/tile3.wav','sound/effects/tile4.wav')
 
-/proc/playsound(var/atom/source, soundin, vol as num, vary, extrarange as num, falloff, channel = 0, var/is_global)
+/proc/playsound(atom/source, soundin, vol, vary, extrarange, falloff, channel = 0, is_global)
 
 	soundin = get_sfx(soundin) // same sound for everyone
 
@@ -37,7 +37,7 @@ var/list/footsteps_sound = list('sound/effects/tile1.wav','sound/effects/tile2.w
 
 var/const/FALLOFF_SOUNDS = 0.5
 
-/mob/proc/playsound_local(var/turf/turf_source, soundin, vol as num, vary, frequency, falloff, channel = 0, is_global)
+/mob/proc/playsound_local(turf/turf_source, soundin, vol, vary, frequency, falloff, channel = 0, is_global)
 	if(!src.client || ear_deaf > 0)	return
 	soundin = get_sfx(soundin)
 

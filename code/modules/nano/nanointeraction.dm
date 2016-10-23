@@ -5,11 +5,11 @@
 	return loc
 
 
-/atom/movable/proc/CanUseTopic(var/mob/user, href_list, var/datum/topic_state/custom_state)
+/atom/movable/proc/CanUseTopic(mob/user, href_list, datum/topic_state/custom_state)
 	return user.can_use_topic(nano_host(), custom_state)
 
 
-/mob/proc/can_use_topic(var/mob/user, var/datum/topic_state/custom_state)
+/mob/proc/can_use_topic(mob/user, datum/topic_state/custom_state)
 	return STATUS_CLOSE // By default no mob can do anything with NanoUI
 
 /mob/dead/observer/can_use_topic()
@@ -17,13 +17,13 @@
 		return STATUS_INTERACTIVE				// Admins are more equal
 	return STATUS_UPDATE						// Ghosts can view updates
 
-/mob/living/silicon/pai/can_use_topic(var/src_object)
+/mob/living/silicon/pai/can_use_topic(src_object)
 	if(src_object == src && !stat)
 		return STATUS_INTERACTIVE
 	else
 		return ..()
 
-/mob/living/silicon/robot/can_use_topic(var/src_object, var/datum/topic_state/custom_state)
+/mob/living/silicon/robot/can_use_topic(src_object, datum/topic_state/custom_state)
 	if(stat || !client)
 		return STATUS_CLOSE
 	if(lockcharge || stunned || weakened)
@@ -40,7 +40,7 @@
 	return STATUS_DISABLED			// no updates, completely disabled (red visibility)
 
 //allowed() proc in robot already does everything that block below contains.
-/*/mob/living/silicon/robot/syndicate/can_use_topic(var/src_object)
+/*/mob/living/silicon/robot/syndicate/can_use_topic(src_object)
 	. = ..()
 	if(. != STATUS_INTERACTIVE)
 		return
@@ -54,7 +54,7 @@
 			return STATUS_INTERACTIVE
 	return STATUS_UPDATE*/
 
-/mob/living/silicon/ai/can_use_topic(var/src_object)
+/mob/living/silicon/ai/can_use_topic(src_object)
 	//if(!client || check_unable(1))
 	if(!client)
 		return STATUS_CLOSE
@@ -80,7 +80,7 @@
 
 	return 	STATUS_CLOSE
 
-/mob/living/proc/shared_living_nano_interaction(var/src_object)
+/mob/living/proc/shared_living_nano_interaction(src_object)
 	if (src.stat != CONSCIOUS)
 		return STATUS_CLOSE						// no updates, close the interface
 	else if (restrained() || lying || stat || stunned || weakened)
@@ -88,10 +88,10 @@
 	return STATUS_INTERACTIVE
 
 //Some atoms such as vehicles might have special rules for how mobs inside them interact with NanoUI.
-/atom/proc/contents_nano_distance(var/src_object, var/mob/living/user)
+/atom/proc/contents_nano_distance(src_object, mob/living/user)
 	return user.shared_living_nano_distance(src_object)
 
-/mob/living/proc/shared_living_nano_distance(var/atom/movable/src_object)
+/mob/living/proc/shared_living_nano_distance(atom/movable/src_object)
 	if(!isturf(src_object.loc))
 		if(src_object.loc == src)				// Item in the inventory
 			return STATUS_INTERACTIVE
@@ -110,7 +110,7 @@
 		return STATUS_DISABLED 		// no updates, completely disabled (red visibility)
 	return STATUS_CLOSE
 
-/mob/living/can_use_topic(var/src_object, var/datum/topic_state/custom_state)
+/mob/living/can_use_topic(src_object, datum/topic_state/custom_state)
 	. = shared_living_nano_interaction(src_object)
 	if(. == STATUS_INTERACTIVE && !(custom_state && (custom_state.flags & NANO_IGNORE_DISTANCE)))
 		if(loc)
@@ -120,7 +120,7 @@
 	if(STATUS_INTERACTIVE)
 		return STATUS_UPDATE
 
-/mob/living/carbon/human/can_use_topic(var/src_object, var/datum/topic_state/custom_state)
+/mob/living/carbon/human/can_use_topic(src_object, datum/topic_state/custom_state)
 	. = shared_living_nano_interaction(src_object)
 	if(. == STATUS_INTERACTIVE && !(custom_state && (custom_state.flags & NANO_IGNORE_DISTANCE)))
 		. = shared_living_nano_distance(src_object)
@@ -132,5 +132,5 @@
 /datum/topic_state
 	var/flags = 0
 
-/datum/topic_state/proc/href_list(var/mob/user)
+/datum/topic_state/proc/href_list(mob/user)
 	return list()

@@ -51,7 +51,7 @@
 			O.show_message(text("\red [user] flipped the [src] into the [on ? "on": "off"] position."), 1)
 	busy = 0
 
-/obj/structure/powerswitch/proc/set_state(var/state)
+/obj/structure/powerswitch/proc/set_state(state)
 	on = state
 	if(on)
 		icon_state = icon_state_on

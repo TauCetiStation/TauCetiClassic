@@ -411,7 +411,7 @@
 
 	return
 
-/obj/structure/girder/attack_animal(mob/user as mob)
+/obj/structure/girder/attack_animal(mob/user)
 	if(istype(user, /mob/living/simple_animal/hulk))
 		playsound(user.loc, 'sound/effects/grillehit.ogg', 50, 1)
 		if (prob(75))
@@ -492,7 +492,7 @@
 	damage = 5
 	damage_type = TOX
 
-/obj/item/projectile/energy/hulkspit/on_hit(var/atom/target, var/blocked = 0)
+/obj/item/projectile/energy/hulkspit/on_hit(atom/target, blocked = 0)
 	if(istype(target, /mob/living/carbon))
 		var/mob/living/carbon/M = target
 		M.Weaken(2)
@@ -543,14 +543,14 @@
 	usr << "\blue Target someone, then alt+click."
 	return 0
 
-/mob/living/simple_animal/hulk/unathi/AltClickOn(var/atom/A)
+/mob/living/simple_animal/hulk/unathi/AltClickOn(atom/A)
 	if(!src.stat && src.mind && (src.health > 0) && (istype(A, /mob/living)) && (A != src))
 		src.try_to_eat(A)
 		next_click = world.time + 5
 	else
 		..()
 
-/mob/living/simple_animal/hulk/unathi/proc/try_to_eat(var/mob/living/target)
+/mob/living/simple_animal/hulk/unathi/proc/try_to_eat(mob/living/target)
 	var/obj/effect/proc_holder/spell/aoe_turf/hulk_eat/HE = locate(/obj/effect/proc_holder/spell/aoe_turf/hulk_eat) in spell_list
 	if(istype(HE))
 		if(HE.charge_counter >= HE.charge_max)
@@ -632,7 +632,7 @@
 	usr.attack_log += "\[[time_stamp()]\]<font color='red'> Uses hulk_lazor</font>"
 	msg_admin_attack("[key_name(usr)] uses hulk_lazor")
 
-/obj/item/weapon/organ/attack_animal(mob/user as mob)
+/obj/item/weapon/organ/attack_animal(mob/user)
 	if(istype(user, /mob/living/simple_animal/hulk))
 		if(istype(src, /obj/item/weapon/organ/head))
 			usr << "\blue Head? Ewww.."
