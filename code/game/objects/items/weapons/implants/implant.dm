@@ -335,7 +335,7 @@ the implant may become unstable and either pre-maturely inject the subject or si
 	if(!istype(M, /mob/living/carbon/human))	return 0
 	var/mob/living/carbon/human/H = M
 	if((H.mind in (ticker.mode.head_revolutionaries | ticker.mode.A_bosses | ticker.mode.B_bosses)) || is_shadow_or_thrall(H))
-		H.visible_message("[H] seems to resist the implant!", "You feel the corporate tendrils of Nanotrasen try to invade your mind!")
+		H.visible_message("<span class='warning'><Font size =3>[H] seems to resist the implant!", "You feel the corporate tendrils of Nanotrasen try to invade your mind!</Font></span>")
 		return 0
 
 	if(H.mind in ticker.mode.revolutionaries)
@@ -343,13 +343,13 @@ the implant may become unstable and either pre-maturely inject the subject or si
 
 	if(H.mind in (ticker.mode.A_gang | ticker.mode.B_gang))
 		ticker.mode.remove_gangster(H.mind, exclude_bosses=1)
-		H.visible_message("<span class='warning'>[src] was destroyed in the process!</span>", "<span class='notice'>You feel a surge of loyalty towards Nanotrasen.</span>")
+		H.visible_message("<span class='warning'><Font size =3><b>[src] was destroyed in the process!</span>", "<span class='notice'>You feel a surge of loyalty towards Nanotrasen.</b></Font></span>")
 		return 0
 
 	if(H.mind in ticker.mode.cult)
-		H << "<span class='warning'>You feel the corporate tendrils of Nanotrasen try to invade your mind!</span>"
+		H << "<span class='warning'><Font size =3><b>You feel the corporate tendrils of Nanotrasen try to invade your mind!</b></Font></span>"
 	else
-		H << "<span class='notice'>You feel a surge of loyalty towards Nanotrasen.</span>"
+		H << "<span class='warning'><Font size =3><b>You have been implanted. You feel a surge of loyalty towards Nanotrasen.</b></Font></span>"
 
 	if(prob(50))
 		H.visible_message("[H] suddenly goes very red and starts writhing. There is a strange smell in the air...", \
