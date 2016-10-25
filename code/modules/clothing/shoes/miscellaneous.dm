@@ -171,3 +171,8 @@
 	icon_state = "syndiemag0"
 	magboot_state = "syndiemag"
 	slowdown_off = 1
+
+/obj/item/clothing/shoes/workboots
+	name = "work boots"
+	icon_state = "workboots"
+	item_color = "workboots"
