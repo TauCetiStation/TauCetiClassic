@@ -147,10 +147,13 @@
 			set_security_level(SEC_LEVEL_RED)
 			feedback_inc("alert_keycard_auth_red",1)
 		if("Grant Emergency Maintenance Access")
-			make_maint_all_access()
+			make_maint_all_access(TRUE)
 			feedback_inc("alert_keycard_auth_maintGrant",1)
 		if("Revoke Emergency Maintenance Access")
-			revoke_maint_all_access()
+			if(timer_maint_revoke_id)
+				deltimer(timer_maint_revoke_id)
+				timer_maint_revoke_id = 0
+			revoke_maint_all_access(TRUE)
 			feedback_inc("alert_keycard_auth_maintRevoke",1)
 		if("Emergency Response Team")
 			if(is_ert_blocked())
@@ -164,15 +167,28 @@
 	if(config.ert_admin_call_only) return 1
 	return ticker.mode && ticker.mode.ert_disabled
 
-var/global/maint_all_access = 0
+var/global/maint_all_access_priority = FALSE	// Set only by keycard auth. If true, maint
+																							// access  can be revoked only by calling revoke_maint_all_access(TRUE) (this doing keycard auth)
+var/global/maint_all_access = FALSE
+var/global/timer_maint_revoke_id = 0
 
-/proc/make_maint_all_access()
-	maint_all_access = 1
+/proc/make_maint_all_access(var/priority = FALSE)
+	if(priority)
+		maint_all_access_priority = TRUE
+	if(maint_all_access)
+		return
+	maint_all_access = TRUE
 	world << "<font size=4 color='red'>Attention!</font>"
 	world << "<font color='red'>The maintenance access requirement has been revoked on all airlocks.</font>"
 
-/proc/revoke_maint_all_access()
-	maint_all_access = 0
+/proc/revoke_maint_all_access(var/priority = FALSE)
+	if(priority)
+		maint_all_access_priority = FALSE
+	if(!maint_all_access) // For communication console
+		return
+	if(maint_all_access_priority)	// We must use keycard auth
+		return
+	maint_all_access = FALSE
 	world << "<font size=4 color='red'>Attention!</font>"
 	world << "<font color='red'>The maintenance access requirement has been readded on all maintenance airlocks.</font>"
 
