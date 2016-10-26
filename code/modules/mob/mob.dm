@@ -581,7 +581,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 		if(client && client.holder)
 			if(ticker && ticker.mode && ticker.mode.name == "AI malfunction")
 				if(ticker.mode:malf_mode_declared)
-					stat(null, "Time left: [max(ticker.mode:AI_win_timeleft/(ticker.mode:apcs/3), 0)]")
+					stat(null, "Time left: [max(ticker.mode:AI_win_timeleft/(ticker.mode:apcs/APC_MIN_TO_MALDF_DECLARE), 0)]")
 			if(SSshuttle)
 				if(SSshuttle.online && SSshuttle.location < 2)
 					var/timeleft = SSshuttle.timeleft()
@@ -740,22 +740,22 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 /mob/verb/eastface()
 	set hidden = 1
-	return facedir(EAST)
+	return facedir(client.client_dir(EAST))
 
 
 /mob/verb/westface()
 	set hidden = 1
-	return facedir(WEST)
+	return facedir(client.client_dir(WEST))
 
 
 /mob/verb/northface()
 	set hidden = 1
-	return facedir(NORTH)
+	return facedir(client.client_dir(NORTH))
 
 
 /mob/verb/southface()
 	set hidden = 1
-	return facedir(SOUTH)
+	return facedir(client.client_dir(SOUTH))
 
 
 /mob/proc/IsAdvancedToolUser()//This might need a rename but it should replace the can this mob use things check

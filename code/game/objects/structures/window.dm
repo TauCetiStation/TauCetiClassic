@@ -17,29 +17,27 @@
 	var/shardtype = /obj/item/weapon/shard
 	var/image/crack_overlay
 	var/damage_threshold = 5	//This will be deducted from any physical damage source.
+	var/fulltile = FALSE
 //	var/silicate = 0 // number of units of silicate
 //	var/icon/silicateIcon = null // the silicated icon
 
 /obj/structure/window/proc/take_damage(damage = 0, damage_type = BRUTE, sound_effect = 1)
 	var/initialhealth = health
 	var/message = 1
-	var/fulltile = 0
 
 	//if(silicate)
 	//	damage = damage * (1 - silicate / 200)
 
-	if(is_fulltile())
+	if(fulltile)
 		message = 0
-		fulltile = 1
-
-	if(fulltile && damage_threshold)
-		switch(damage_type)
-			if(BRUTE)
-				damage = max(0, damage - damage_threshold)
-			if(BURN)
-				damage *= 0.3
-			if("generic")
-				damage *= 0.5
+		if(damage_threshold)
+			switch(damage_type)
+				if(BRUTE)
+					damage = max(0, damage - damage_threshold)
+				if(BURN)
+					damage *= 0.3
+				if("generic")
+					damage *= 0.5
 
 	if(!damage)
 		return
@@ -115,7 +113,7 @@
 /obj/structure/window/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return 1
-	if(dir == SOUTHWEST || dir == SOUTHEAST || dir == NORTHWEST || dir == NORTHEAST)
+	if(dir == SOUTHWEST || dir == SOUTHEAST || dir == NORTHWEST || dir == NORTHEAST || fulltile)
 		return 0	//full tile window, you can't move into it!
 	if(get_dir(loc, target) & dir)
 		return !density
@@ -126,7 +124,7 @@
 /obj/structure/window/CheckExit(atom/movable/O as mob|obj, target as turf)
 	if(istype(O) && O.checkpass(PASSGLASS))
 		return 1
-	if(get_dir(O.loc, target) == dir)
+	if(get_dir(O.loc, target) == dir || fulltile)
 		return 0
 	return 1
 
@@ -364,6 +362,10 @@
 
 //	if(re)	reinf = re
 
+	if(dir & (dir - 1))
+		fulltile = TRUE
+		dir = 2
+
 	ini_dir = dir
 
 	health = maxhealth
@@ -399,9 +401,11 @@
 
 //checks if this window is full-tile one
 /obj/structure/window/proc/is_fulltile()
+	return fulltile
+/*
 	if(dir & (dir - 1))
 		return 1
-	return 0
+	return 0*/
 
 //This proc is used to update the icons of nearby windows. It should not be confused with update_nearby_tiles(), which is an atmos proc!
 /obj/structure/window/proc/update_nearby_icons()

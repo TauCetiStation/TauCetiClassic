@@ -73,6 +73,9 @@
 		set_picture("ai_friend")
 		return
 
+	if(mode == 3 && overlays.len)	//Why we must update diplay if picture is already set?
+		return
+
 	if(overlays.len && !friendc || mode == 4)
 		overlays.Cut()
 
@@ -202,7 +205,8 @@
 		if("supply")
 			if(supply_display)
 				mode = 4
-
+				
+	update()
 
 
 /obj/machinery/ai_status_display

@@ -40,6 +40,7 @@ var/global/dmm_suite/preloader/_preloader = new
 	var/list/bounds = list(1.#INF, 1.#INF, 1.#INF, -1.#INF, -1.#INF, -1.#INF)
 	var/list/grid_models = list()
 	var/key_len = 0
+	var/list/loaded_stuff = list("stuff" = list(), "bounds" = list())
 
 	dmmRegex.next = 1
 	while(dmmRegex.Find(tfile, dmmRegex.next))
@@ -120,7 +121,7 @@ var/global/dmm_suite/preloader/_preloader = new
 								var/model_key = copytext(line, tpos, tpos + key_len)
 								if(!grid_models[model_key])
 									return null
-								parse_grid(grid_models[model_key], xcrd, ycrd, zcrd)
+								loaded_stuff["stuff"] += parse_grid(grid_models[model_key], xcrd, ycrd, zcrd)
 								CHECK_TICK
 
 							maxx = max(maxx, xcrd)
@@ -134,7 +135,8 @@ var/global/dmm_suite/preloader/_preloader = new
 	if(bounds[1] == 1.#INF) // Shouldn't need to check every item
 		return null
 	else
-		return bounds
+		loaded_stuff["bounds"] += bounds
+		return loaded_stuff
 
 /**
  * Fill a given tile with its area/turf/objects/mobs
@@ -251,9 +253,15 @@ var/global/dmm_suite/preloader/_preloader = new
 			index++
 
 	//finally instance all remainings objects/mobs
+	var/list/objs = list()
+	var/inst
 	for(index in 1 to first_turf_index-1)
-		instance_atom(members[index],members_attributes[index],xcrd,ycrd,zcrd)
+		inst = instance_atom(members[index],members_attributes[index],xcrd,ycrd,zcrd)
+		if(isobj(inst))
+			objs += inst
 		CHECK_TICK
+
+	return objs
 
 ////////////////
 //Helpers procs

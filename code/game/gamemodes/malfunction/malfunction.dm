@@ -86,8 +86,8 @@
 
 
 /datum/game_mode/malfunction/process(seconds)
-	if (apcs >= 3 && malf_mode_declared)
-		AI_win_timeleft -= apcs * seconds //Victory timer now de-increments based on how many APCs are hacked. --NeoFite
+	if (apcs >= APC_MIN_TO_MALDF_DECLARE && malf_mode_declared)
+		AI_win_timeleft -= (apcs / APC_MIN_TO_MALDF_DECLARE) * seconds //Victory timer now de-increments almost normally
 	..()
 	if (AI_win_timeleft<=0)
 		check_win()
@@ -160,7 +160,7 @@
 	if (ticker.mode:malf_mode_declared)
 		usr << "You've already begun your takeover."
 		return
-	if (ticker.mode:apcs < 3)
+	if (ticker.mode:apcs < APC_MIN_TO_MALDF_DECLARE)
 		usr << "You don't have enough hacked APCs to take over the station yet. You need to hack at least 3, however hacking more will make the takeover faster. You have hacked [ticker.mode:apcs] APCs so far."
 		return
 

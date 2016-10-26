@@ -8,7 +8,7 @@
 /obj/structure/stool/bed/chair/schair/monorail_chair
 	name = "monorail chair"
 	desc = "You sit in this. Either by will or force."
-	icon = 'tauceti/modules/_locations/centcomm/monorailchair.dmi'
+	icon = 'tauceti/modules/_locations/centcomm/monorail_chair.dmi'
 	icon_state = "s01"
 
 /obj/structure/stool/bed/chair/schair/monorail_chair/rotate()
@@ -49,7 +49,7 @@
 /obj/structure/stool/bed/chair/schair/velocity_s_chair
 	name = "monorail chair"
 	desc = "You sit in this. Either by will or force."
-	icon = 'tauceti/modules/_locations/centcomm/monorailchair.dmi'
+	icon = 'tauceti/modules/_locations/centcomm/monorail_chair.dmi'
 	icon_state = "vel_s"
 
 /obj/structure/sign/velocity_overlay

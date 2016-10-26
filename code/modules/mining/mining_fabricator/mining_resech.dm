@@ -53,7 +53,7 @@
 	category = list("Spacesuit")
 
 /datum/design/space_suit_hlemet_mining
-	name = "Space suit hlemet"
+	name = "Mining space suit hlemet"
 	id = "space_suit_hlemet_mining"
 	build_type = MINEFAB
 	req_tech = list("combat" = 2, "materials" = 3, "engineering" = 2)
@@ -201,7 +201,7 @@
 
 //mine_flashlight
 /datum/design/mine_flashlight
-	name = "mine_flashlight"
+	name = "Mining flashlight"
 	id = "mine_flashlight"
 	build_type = MINEFAB
 	build_path = /obj/item/device/flashlight/lantern
@@ -329,3 +329,12 @@
 	construction_time = 600
 	category = list("Support")
 
+/datum/design/survivalcapsule
+	name = "Bluespace shelter capsule"
+	id = "survivalcapsule"
+	build_type = MINEFAB
+	req_tech = list("engineering" = 4,"bluespace" = 3)
+	build_path = /obj/item/weapon/survivalcapsule
+	materials = list(MAT_METAL=2000,MAT_PLASTIC=1000,MAT_DIAMOND=500,MAT_URANIUM=500)
+	construction_time = 800
+	category = list("Support")

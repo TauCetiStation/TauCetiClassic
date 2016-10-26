@@ -634,7 +634,7 @@ var/list/ghostteleportlocs = list()
 	icon_state = "fsmaint"
 
 /area/maintenance/fsmaint2
-	name = "\improper Bar Maintenance"
+	name = "\improper Chapel Maintenance"
 	icon_state = "fsmaint"
 
 /area/maintenance/asmaint
@@ -718,6 +718,10 @@ var/list/ghostteleportlocs = list()
 /area/hallway/secondary/entry
 	name = "\improper Arrival Shuttle Hallway"
 	icon_state = "entry"
+
+/area/hallway/secondary/Podbay
+	name = "\improper Pod bay"
+	icon_state = "escape"
 
 //Command
 
@@ -847,6 +851,10 @@ var/list/ghostteleportlocs = list()
 
 /area/crew_quarters/cafeteria
 	name = "\improper Cafeteria"
+	icon_state = "cafeteria"
+
+/area/crew_quarters/oldcafeteria
+	name = "\improper Old Cafeteria"
 	icon_state = "cafeteria"
 
 /area/crew_quarters/kitchen

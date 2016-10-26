@@ -179,10 +179,10 @@
 	build_path = /obj/machinery/computer/supplycomp
 	origin_tech = "programming=3"
 	var/contraband_enabled = 0
-/obj/item/weapon/circuitboard/research_shuttle
+/*/obj/item/weapon/circuitboard/research_shuttle
 	name = "Circuit board (Research Shuttle)"
 	build_path = /obj/machinery/computer/research_shuttle
-	origin_tech = "programming=2"
+	origin_tech = "programming=2"*/
 /obj/item/weapon/circuitboard/operating
 	name = "Circuit board (Operating Computer)"
 	build_path = /obj/machinery/computer/operating
@@ -207,14 +207,16 @@
 	name = "Circuit board (Disease Splicer)"
 	build_path = /obj/machinery/computer/diseasesplicer
 
-/obj/item/weapon/circuitboard/mining_shuttle
+/*/obj/item/weapon/circuitboard/mining_shuttle
 	name = "Circuit board (Mining Shuttle)"
 	build_path = /obj/machinery/computer/mining_shuttle
+	origin_tech = "programming=2"*/
+
+/obj/item/weapon/circuitboard/mine_sci_shuttle
+	name = "Circuit board (Mining Shuttle)"
+	build_path = /obj/machinery/computer/mine_sci_shuttle
 	origin_tech = "programming=2"
-/obj/item/weapon/circuitboard/research_shuttle
-	name = "Circuit board (Research Shuttle)"
-	build_path = /obj/machinery/computer/research_shuttle
-	origin_tech = "programming=2"
+
 /obj/item/weapon/circuitboard/HolodeckControl // Not going to let people get this, but it's just here for future
 	name = "Circuit board (Holodeck Control)"
 	build_path = /obj/machinery/computer/HolodeckControl
