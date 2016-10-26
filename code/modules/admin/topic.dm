@@ -182,6 +182,7 @@
 				captain_announce("The emergency shuttle has been called. It will arrive in [round(SSshuttle.timeleft()/60)] minutes.")
 				log_admin("[key_name(usr)] called the Emergency Shuttle")
 				message_admins("\blue [key_name_admin(usr)] called the Emergency Shuttle to the station", 1)
+				make_maint_all_access(FALSE)
 
 			if("2")
 				if ((!( ticker ) || SSshuttle.location || SSshuttle.direction == 0))
@@ -192,10 +193,15 @@
 						captain_announce("The emergency shuttle has been called. It will arrive in [round(SSshuttle.timeleft()/60)] minutes.")
 						log_admin("[key_name(usr)] called the Emergency Shuttle")
 						message_admins("\blue [key_name_admin(usr)] called the Emergency Shuttle to the station", 1)
+						make_maint_all_access(FALSE)
 					if(1)
 						SSshuttle.recall()
 						log_admin("[key_name(usr)] sent the Emergency Shuttle back")
 						message_admins("\blue [key_name_admin(usr)] sent the Emergency Shuttle back", 1)
+						if(timer_maint_revoke_id)
+							deltimer(timer_maint_revoke_id)
+							timer_maint_revoke_id = 0
+						timer_maint_revoke_id = addtimer(GLOBAL_PROC, "revoke_maint_all_access", 600, TRUE, FALSE)
 
 		href_list["secretsadmin"] = "check_antagonist"
 

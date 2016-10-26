@@ -7,6 +7,9 @@
 	item_state = "hazmat_white"
 	name = "Hazmat suit"
 	desc = "White colored and from brand new collection. Unisex!"
+	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT|HIDEEARS
+	flags = FPRINT | TABLEPASS | THICKMATERIAL | PHORONGUARD | BLOCKHAIR
+
 
 /obj/item/clothing/suit/bio_suit/new_hazmat/security
 	icon_state = "hazmat_sec"
