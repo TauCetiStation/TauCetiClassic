@@ -45,7 +45,7 @@
 
 /obj/machinery/power/apc
 	name = "area power controller"
-	icon = 'tauceti/icons/obj/power.dmi'
+	icon = 'icons/obj/power.dmi'
 	icon_state = "apc0"
 	anchored = 1
 	use_power = 0
@@ -177,7 +177,7 @@
 		terminal.master = null
 		terminal = null
 
-/obj/machinery/power/apc/proc/make_terminal()
+/obj/machinery/power/apc/make_terminal()
 	// create a terminal object at the same position as original turf loc
 	// wires will attach to this
 	terminal = new/obj/machinery/power/terminal(src.loc)
@@ -749,7 +749,7 @@
 	else
 		return 0 // 0 = User is not a Malf AI
 
-/obj/machinery/power/apc/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
+/obj/machinery/power/apc/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
 	if(!user)
 		return
 
@@ -831,15 +831,15 @@
 //			world << "[area.power_equip]"
 	area.power_change()
 
-/obj/machinery/power/apc/proc/isWireColorCut(var/wireColor)
+/obj/machinery/power/apc/proc/isWireColorCut(wireColor)
 	var/wireFlag = APCWireColorToFlag[wireColor]
 	return ((src.apcwires & wireFlag) == 0)
 
-/obj/machinery/power/apc/proc/isWireCut(var/wireIndex)
+/obj/machinery/power/apc/proc/isWireCut(wireIndex)
 	var/wireFlag = APCIndexToFlag[wireIndex]
 	return ((src.apcwires & wireFlag) == 0)
 
-/obj/machinery/power/apc/proc/cut(var/wireColor)
+/obj/machinery/power/apc/proc/cut(wireColor)
 	var/wireFlag = APCWireColorToFlag[wireColor]
 	var/wireIndex = APCWireColorToIndex[wireColor]
 	apcwires &= ~wireFlag
@@ -858,7 +858,7 @@
 			src.updateDialog()
 //		if(APC_WIRE_IDSCAN)		nothing happens when you cut this wire, add in something if you want whatever
 
-/obj/machinery/power/apc/proc/mend(var/wireColor)
+/obj/machinery/power/apc/proc/mend(wireColor)
 	var/wireFlag = APCWireColorToFlag[wireColor]
 	var/wireIndex = APCWireColorToIndex[wireColor] //not used in this function
 	apcwires |= wireFlag
@@ -881,7 +881,7 @@
 			src.updateDialog()
 //		if(APC_WIRE_IDSCAN)		nothing happens when you cut this wire, add in something if you want whatever
 
-/obj/machinery/power/apc/proc/pulse(var/wireColor)
+/obj/machinery/power/apc/proc/pulse(wireColor)
 	//var/wireFlag = apcWireColorToFlag[wireColor] //not used in this function
 	var/wireIndex = APCWireColorToIndex[wireColor]
 	switch(wireIndex)
@@ -913,27 +913,11 @@
 					src.aidisabled = 0
 				src.updateDialog()
 
-/obj/machinery/power/apc/proc/can_use(mob/user as mob, var/loud = 0) //used by attack_hand() and Topic()
-	if (user.stat)
-		user << "\red You must be conscious to use this [src]!"
-		return 0
+/obj/machinery/power/apc/proc/can_use(mob/user, loud = 0) //used by attack_hand() and Topic()
 	if(!user.client)
 		return 0
-	if ( ! (istype(user, /mob/living/carbon/human) || \
-			istype(user, /mob/living/silicon) || \
-			istype(user, /mob/living/carbon/monkey)) )
-		user << "\red You don't have the dexterity to use this [src]!"
-		nanomanager.close_user_uis(user, src)
-
-		return 0
-	if(user.restrained())
-		user << "\red You must have free hands to use this [src]"
-		return 0
-	if(user.lying)
-		user << "\red You must stand to use this [src]!"
-		return 0
 	autoflag = 5
-	if (istype(user, /mob/living/silicon))
+	if(issilicon(user))
 		var/mob/living/silicon/ai/AI = user
 		var/mob/living/silicon/robot/robot = user
 		if (                                                             \
@@ -955,28 +939,24 @@
 
 			return 0
 
-	var/mob/living/carbon/human/H = user
-	if (istype(H))
-		if(H.getBrainLoss() >= 60)
-			for(var/mob/M in viewers(src, null))
-				M << "\red [H] stares cluelessly at [src] and drools."
-			return 0
-		else if(prob(H.getBrainLoss()))
-			user << "\red You momentarily forget how to use [src]."
-			return 0
 	return 1
 
-/obj/machinery/power/apc/Topic(href, href_list, var/usingUI = 1)
-	if(!(isrobot(usr) && (href_list["apcwires"] || href_list["pulse"])))
-		if(!can_use(usr, 1))
-			return
-	src.add_fingerprint(usr)
+/obj/machinery/power/apc/is_operational_topic()
+	return !(stat & (BROKEN|MAINT|EMPED))
 
+/obj/machinery/power/apc/Topic(href, href_list, var/usingUI = 1)
+	. = ..(href, href_list)
+	if(!.)
+		return
+
+	if(!(href_list["apcwires"] || href_list["pulse"]))
+		if(!can_use(usr, 1))
+			return FALSE
 	if (href_list["apcwires"])
 		var/t1 = text2num(href_list["apcwires"])
 		if (!( istype(usr.get_active_hand(), /obj/item/weapon/wirecutters) ))
 			usr << "You need wirecutters!"
-			return
+			return FALSE
 		if (src.isWireColorCut(t1))
 			src.mend(t1)
 		else
@@ -985,10 +965,10 @@
 		var/t1 = text2num(href_list["pulse"])
 		if (!istype(usr.get_active_hand(), /obj/item/device/multitool))
 			usr << "You need a multitool!"
-			return
+			return FALSE
 		if (src.isWireColorCut(t1))
 			usr << "You can't pulse a cut wire."
-			return
+			return FALSE
 		else
 			src.pulse(t1)
 	else if (href_list["lock"])
@@ -1034,12 +1014,10 @@
 		update()
 	else if( href_list["close"] )
 		nanomanager.close_user_uis(usr, src)
-
-		return
+		return FALSE
 	else if (href_list["close2"])
 		usr << browse(null, "window=apcwires")
-
-		return
+		return FALSE
 
 	else if (href_list["overload"])
 		if( istype(usr, /mob/living/silicon) && !src.aidisabled )
@@ -1050,7 +1028,7 @@
 		if( istype(malfai, /mob/living/silicon/ai) && !src.aidisabled )
 			if (malfai.malfhacking)
 				malfai << "You are already hacking an APC."
-				return
+				return FALSE
 			malfai << "Beginning override of APC systems. This takes some time, and you cannot perform other actions during the process."
 			malfai.malfhack = src
 			malfai.malfhacking = 1
@@ -1079,9 +1057,7 @@
 	if(usingUI)
 		src.updateDialog()
 
-	return
-
-/*/obj/machinery/power/apc/proc/malfoccupy(var/mob/living/silicon/ai/malf)
+/*/obj/machinery/power/apc/proc/malfoccupy(mob/living/silicon/ai/malf)
 	if(!istype(malf))
 		return
 	if(istype(malf.loc, /obj/machinery/power/apc)) // Already in an APC
@@ -1105,7 +1081,7 @@
 	src.occupier.verbs += /datum/game_mode/malfunction/proc/takeover
 	src.occupier.cancel_camera()
 
-/obj/machinery/power/apc/proc/malfvacate(var/forced)
+/obj/machinery/power/apc/proc/malfvacate(forced)
 	if(!src.occupier)
 		return
 	if(src.occupier.parent && src.occupier.parent.stat != DEAD)
@@ -1150,7 +1126,7 @@
 	else
 		return 0
 
-/obj/machinery/power/apc/add_load(var/amount)
+/obj/machinery/power/apc/add_load(amount)
 	if(terminal && terminal.powernet)
 		terminal.powernet.newload += amount
 
@@ -1332,7 +1308,7 @@
 // val 0=off, 1=off(auto) 2=on 3=on(auto)
 // on 0=off, 1=on, 2=autooff
 
-/proc/autoset(var/val, var/on)
+/proc/autoset(val, on)
 
 	if(on==0)
 		if(val==2)			// if on, return off
@@ -1352,7 +1328,7 @@
 
 // damage and destruction acts
 
-/obj/machinery/power/apc/meteorhit(var/obj/O as obj)
+/obj/machinery/power/apc/meteorhit(obj/O)
 
 	set_broken()
 	return
@@ -1415,7 +1391,7 @@
 
 // overload all the lights in this APC area
 
-/obj/machinery/power/apc/proc/overload_lighting(var/skip_sound_and_sparks = 0)
+/obj/machinery/power/apc/proc/overload_lighting(skip_sound_and_sparks = 0)
 	if(/* !get_connection() || */ !operating || shorted)
 		return
 	if( cell && cell.charge>=20)

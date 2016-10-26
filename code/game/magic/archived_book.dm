@@ -59,7 +59,7 @@ datum/book_manager/proc/freeid()
 	log_admin("[usr.key] has deleted the book [isbn]")
 
 // delete a book
-datum/book_manager/proc/remove(var/id)
+datum/book_manager/proc/remove(id)
 	fdel(path(id))
 
 datum/archived_book

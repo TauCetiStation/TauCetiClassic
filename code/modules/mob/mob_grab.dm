@@ -126,17 +126,19 @@
 			announce = 1
 		last_hit_zone = hit_zone
 		if(ishuman(affecting))
-			switch(hit_zone)
-				if("mouth")
-					if(announce)
-						assailant.visible_message("<span class='warning'>[assailant] covers [affecting]'s mouth!</span>")
-					if(affecting:silent < 3)
-						affecting:silent = 3
-				if("eyes")
-					if(announce)
-						assailant.visible_message("<span class='warning'>[assailant] covers [affecting]'s eyes!</span>")
-					if(affecting:eye_blind < 3)
-						affecting:eye_blind = 3
+			var/mob/living/carbon/human/AH = affecting
+			if(!AH.is_in_space_suit(only_helmet = TRUE))
+				switch(hit_zone)
+					if("mouth")
+						if(announce)
+							assailant.visible_message("<span class='warning'>[assailant] covers [AH]'s mouth!</span>")
+						if(AH.silent < 3)
+							AH.silent = 3
+					if("eyes")
+						if(announce)
+							assailant.visible_message("<span class='warning'>[assailant] covers [AH]'s eyes!</span>")
+						if(AH.eye_blind < 3)
+							AH.eye_blind = 3
 		if(force_down)
 			if(affecting.loc != assailant.loc)
 				force_down = 0
@@ -258,6 +260,11 @@
 		affecting.Stun(10) //10 ticks of ensured grab
 
 	else if(state < GRAB_UPGRADING)
+		if(ishuman(affecting))
+			var/mob/living/carbon/human/AH = affecting
+			if(AH.is_in_space_suit())
+				assailant << "<span class='notice'>You can't strangle him, because space helmet covers [affecting]'s neck.</span>"
+				return
 		assailant.visible_message("<span class='danger'>[assailant] starts to tighten \his grip on [affecting]'s neck!</span>")
 		hud.icon_state = "kill1"
 
@@ -304,6 +311,8 @@
 					if(force_down)
 						assailant << "<span class='warning'>You are no longer pinning [affecting] to the ground.</span>"
 						force_down = 0
+					else
+						inspect_organ(affecting, assailant, hit_zone)
 						return
 				if("grab")
 					if(state < GRAB_AGGRESSIVE)
@@ -443,4 +452,46 @@
 	qdel(hud)
 	hud = null
 	destroying = 1 // stops us calling qdel(src) on dropped()
-	..()
+	return ..()
+
+/obj/item/weapon/grab/proc/inspect_organ(mob/living/carbon/human/H, mob/user, target_zone)
+
+	var/datum/organ/external/E = H.get_organ(target_zone)
+
+	if(!E || E.status & ORGAN_DESTROYED)
+		user << "<span class='notice'>[H] is missing that bodypart.</span>"
+		return
+
+	user.visible_message("<span class='notice'>[user] starts inspecting [affecting]'s [E.display_name] carefully.</span>")
+	if(!do_mob(user,H, 30))
+		user << "<span class='notice'>You must stand still to inspect [E] for wounds.</span>"
+	else if(E.wounds.len)
+		user << "<span class='warning'>You find [E.get_wounds_desc()]</span>"
+	else
+		user << "<span class='notice'>You find no visible wounds.</span>"
+
+	user << "<span class='notice'>Checking bones now...</span>"
+	if(!do_mob(user, H, 60))
+		user << "<span class='notice'>You must stand still to feel [E] for fractures.</span>"
+	else if(E.status & ORGAN_BROKEN)
+		user << "<span class='warning'>The bone in the [E.display_name] moves slightly when you poke it!</span>"
+		H.custom_pain("Your [E.display_name] hurts where it's poked.")
+	else
+		user << "<span class='notice'>The bones in the [E.display_name] seem to be fine.</span>"
+
+	user << "<span class='notice'>Checking skin now...</span>"
+	if(!do_mob(user, H, 30))
+		user << "<span class='notice'>You must stand still to check [H]'s skin for abnormalities.</span>"
+	else
+		var/bad = 0
+		if(H.getToxLoss() >= 40)
+			user << "<span class='warning'>[H] has an unhealthy skin discoloration.</span>"
+			bad = 1
+		if(H.getOxyLoss() >= 20)
+			user << "<span class='warning'>[H]'s skin is unusaly pale.</span>"
+			bad = 1
+		if(E.status & ORGAN_DEAD)
+			user << "<span class='warning'>[E] is decaying!</span>"
+			bad = 1
+		if(!bad)
+			user << "<span class='notice'>[H]'s skin is normal.</span>"

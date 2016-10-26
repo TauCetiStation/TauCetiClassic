@@ -67,7 +67,7 @@ log transactions
 			playsound(loc, 'sound/items/polaroid2.ogg', 50, 1)
 		break
 
-/obj/machinery/atm/attackby(obj/item/I as obj, mob/user as mob)
+/obj/machinery/atm/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/card))
 		if(emagged > 0)
 			//prevent inserting id into an emagged ATM
@@ -118,7 +118,7 @@ log transactions
 	else
 		..()
 
-/obj/machinery/atm/attack_hand(mob/user as mob)
+/obj/machinery/atm/attack_hand(mob/user)
 	if(istype(user, /mob/living/silicon))
 		user << "\red \icon[src] Artificial unit recognized. Artificial units do not currently receive monetary compensation, as per NanoTrasen regulation #1005."
 		return
@@ -216,7 +216,14 @@ log transactions
 	else
 		user << browse(null,"window=atm")
 
+/obj/machinery/atm/is_operational_topic()
+	return TRUE
+
 /obj/machinery/atm/Topic(var/href, var/href_list)
+	. = ..()
+	if(!.)
+		return
+
 	if(href_list["choice"])
 		switch(href_list["choice"])
 			if("transfer")
@@ -414,10 +421,10 @@ log transactions
 				authenticated_account = null
 				//usr << browse(null,"window=atm")
 
-	src.attack_hand(usr)
+	updateUsrDialog()
 
 //stolen wholesale and then edited a bit from newscasters, which are awesome and by Agouri
-/obj/machinery/atm/proc/scan_user(mob/living/carbon/human/human_user as mob)
+/obj/machinery/atm/proc/scan_user(mob/living/carbon/human/human_user)
 	if(!authenticated_account)
 		if(human_user.wear_id)
 			var/obj/item/weapon/card/id/I
@@ -443,7 +450,7 @@ log transactions
 					view_screen = NO_SCREEN
 
 // put the currently held id on the ground or in the hand of the user
-/obj/machinery/atm/proc/release_held_id(mob/living/carbon/human/human_user as mob)
+/obj/machinery/atm/proc/release_held_id(mob/living/carbon/human/human_user)
 	if(!held_card)
 		return
 
@@ -455,7 +462,7 @@ log transactions
 	held_card = null
 
 
-/obj/machinery/atm/proc/spawn_ewallet(var/sum, loc)
+/obj/machinery/atm/proc/spawn_ewallet(sum, loc)
 	var/obj/item/weapon/spacecash/ewallet/E = new /obj/item/weapon/spacecash/ewallet(loc)
 	E.worth = sum
 	E.owner_name = authenticated_account.owner_name

@@ -16,7 +16,7 @@
 	icon_state = "ash"
 	anchored = 1
 
-/obj/effect/decal/cleanable/ash/attack_hand(mob/user as mob)
+/obj/effect/decal/cleanable/ash/attack_hand(mob/user)
 	user << "<span class='notice'>[src] sifts through your fingers.</span>"
 	var/turf/simulated/floor/F = get_turf(src)
 	if (istype(F))
@@ -25,10 +25,10 @@
 
 /obj/effect/decal/cleanable/greenglow
 
-	New()
-		..()
-		spawn(1200)// 2 minutes
-			qdel(src)
+/obj/effect/decal/cleanable/greenglow/New()
+	..()
+	spawn(1200)// 2 minutes
+		qdel(src)
 
 /obj/effect/decal/cleanable/dirt
 	name = "dirt"
@@ -102,19 +102,16 @@
 	random_icon_states = list("vomit_1", "vomit_2", "vomit_3", "vomit_4")
 	var/list/viruses = list()
 
-	Destroy()
-		for(var/datum/disease/D in viruses)
-			D.cure(0)
-		..()
+/obj/effect/decal/cleanable/vomit/Destroy()
+	for(var/datum/disease/D in viruses)
+		D.cure(0)
+	set_light(0)
+	return ..()
 
-	Destroy()
-		set_light(0)
-		..()
-
-	proc/stop_light()
-		sleep(rand(150,300))
-		if(!src) return
-		set_light(0)
+/obj/effect/decal/cleanable/vomit/proc/stop_light()
+	sleep(rand(150,300))
+	if(!src) return
+	set_light(0)
 
 /obj/effect/decal/cleanable/tomato_smudge
 	name = "tomato smudge"
@@ -179,7 +176,7 @@
 
 /obj/effect/decal/cleanable/water/Destroy()
 	SSobj.processing.Remove(src)
-	..()
+	return ..()
 
 /obj/effect/decal/cleanable/water/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(ishuman(mover) && mover.checkpass(PASSCRAWL))
@@ -229,7 +226,7 @@
 		overlay_medium = 0
 		overlay_high = 0
 
-/proc/create_water(var/atom/A)
+/proc/create_water(atom/A)
 	if(!A) return
 	var/turf/T = get_turf(A)
 	var/obj/effect/decal/cleanable/water/W = locate(/obj/effect/decal/cleanable/water, T)
@@ -246,7 +243,7 @@
 	if(fuel)
 		qdel(fuel)
 
-/obj/effect/decal/cleanable/water/proc/try_trans_DNA(var/obj/effect/decal/cleanable/water/W)
+/obj/effect/decal/cleanable/water/proc/try_trans_DNA(obj/effect/decal/cleanable/water/W)
 	if(!W) return
 	if(blood_DNA)
 		if(blood_DNA.len)
@@ -373,12 +370,12 @@
 				var/obj/item/clothing/shoes/S = H.shoes
 				S.make_wet()
 
-/obj/effect/decal/cleanable/water/bullet_act(var/obj/item/projectile/Proj)
+/obj/effect/decal/cleanable/water/bullet_act(obj/item/projectile/Proj)
 	if(istype(Proj, /obj/item/projectile/energy/electrode) || istype(Proj, /obj/item/projectile/beam/stun))
 		var/power = Proj.agony * 5
 		electrocute_act(power)
 
-/obj/effect/decal/cleanable/water/attack_hand(mob/user as mob)
+/obj/effect/decal/cleanable/water/attack_hand(mob/user)
 	..()
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
@@ -391,7 +388,7 @@
 					visible_message("<span class='wet'>[src] has been touched with the stun gloves by [H]!</span>")
 					electrocute_act(150)
 
-/obj/effect/decal/cleanable/water/attackby(obj/item/W as obj, mob/user as mob)
+/obj/effect/decal/cleanable/water/attackby(obj/item/W, mob/user)
 	..()
 	var/item_to_discharge = 0
 	var/power = 120
@@ -428,7 +425,7 @@
 		msg_admin_attack("[key_name(user)] <font color='red'>electrified</font> water with [W.name] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)")
 		electrocute_act(power)
 
-/obj/effect/decal/cleanable/water/proc/electrocute_act(var/power, var/range = 0)
+/obj/effect/decal/cleanable/water/proc/electrocute_act(power, range = 0)
 	if(power < 1) return
 	if(electrocuted) return
 	electrocuted = 1
@@ -464,3 +461,23 @@
 		var/obj/effect/decal/cleanable/water/W = locate(/obj/effect/decal/cleanable/water, TS)
 		if(W)
 			W.electrocute_act(power-15)
+
+/obj/effect/decal/cleanable/toilet_paint
+	name = "lettering"
+	desc = "A lettering."
+	layer = 2.1
+	anchored = 1
+
+/obj/effect/decal/cleanable/toilet_paint/New(main = random_color(),shade = random_color())
+	..()
+
+	var/type = pick("amyjon","face","matt","revolution","engie","guy","end","dwarf","uboa")
+
+	var/icon/mainOverlay = new/icon('icons/effects/crayondecal.dmi',"[type]",2.1)
+	var/icon/shadeOverlay = new/icon('icons/effects/crayondecal.dmi',"[type]s",2.1)
+
+	//mainOverlay.Blend(main,ICON_ADD)
+	shadeOverlay.Blend(shade,ICON_ADD)
+
+	overlays += mainOverlay
+	overlays += shadeOverlay

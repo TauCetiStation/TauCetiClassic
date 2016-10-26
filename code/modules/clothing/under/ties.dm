@@ -16,7 +16,7 @@
 	inv_overlay = image("icon" = 'icons/obj/clothing/ties_overlay.dmi', "icon_state" = "[item_color? "[item_color]" : "[icon_state]"]")
 
 //when user attached an accessory to S
-/obj/item/clothing/tie/proc/on_attached(obj/item/clothing/under/S, mob/user as mob)
+/obj/item/clothing/tie/proc/on_attached(obj/item/clothing/under/S, mob/user)
 	if(!istype(S))
 		return
 	has_suit = S
@@ -26,7 +26,7 @@
 	user << "<span class='notice'>You attach [src] to [has_suit].</span>"
 	src.add_fingerprint(user)
 
-/obj/item/clothing/tie/proc/on_removed(mob/user as mob)
+/obj/item/clothing/tie/proc/on_removed(mob/user)
 	if(!has_suit)
 		return
 	has_suit.overlays -= inv_overlay
@@ -39,7 +39,7 @@
 	..()
 
 //default attack_hand behaviour
-/obj/item/clothing/tie/attack_hand(mob/user as mob)
+/obj/item/clothing/tie/attack_hand(mob/user)
 	if(has_suit)
 		has_suit.remove_accessory(user)
 		return	//we aren't an object on the ground so don't call parent
@@ -204,7 +204,7 @@
 /obj/item/clothing/tie/holster/proc/can_holster(obj/item/weapon/gun/W)
 	return W.isHandgun()
 
-/obj/item/clothing/tie/holster/proc/holster(obj/item/I, mob/user as mob)
+/obj/item/clothing/tie/holster/proc/holster(obj/item/I, mob/user)
 	if(holstered)
 		user << "\red There is already a [holstered] holstered here!"
 		return
@@ -224,7 +224,7 @@
 	holstered.add_fingerprint(user)
 	user.visible_message("\blue [user] holsters the [holstered].", "You holster the [holstered].")
 
-/obj/item/clothing/tie/holster/proc/unholster(mob/user as mob)
+/obj/item/clothing/tie/holster/proc/unholster(mob/user)
 	if(!holstered)
 		return
 
@@ -241,7 +241,7 @@
 		holstered.add_fingerprint(user)
 		holstered = null
 
-/obj/item/clothing/tie/holster/attack_hand(mob/user as mob)
+/obj/item/clothing/tie/holster/attack_hand(mob/user)
 	if (has_suit)	//if we are part of a suit
 		if (holstered)
 			unholster(user)
@@ -249,7 +249,7 @@
 
 	..(user)
 
-/obj/item/clothing/tie/holster/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/clothing/tie/holster/attackby(obj/item/W, mob/user)
 	holster(W, user)
 
 /obj/item/clothing/tie/holster/emp_act(severity)
@@ -265,11 +265,11 @@
 	else
 		usr << "It is empty."
 
-/obj/item/clothing/tie/holster/on_attached(obj/item/clothing/under/S, mob/user as mob)
+/obj/item/clothing/tie/holster/on_attached(obj/item/clothing/under/S, mob/user)
 	..()
 	has_suit.verbs += /obj/item/clothing/tie/holster/verb/holster_verb
 
-/obj/item/clothing/tie/holster/on_removed(mob/user as mob)
+/obj/item/clothing/tie/holster/on_removed(mob/user)
 	has_suit.verbs -= /obj/item/clothing/tie/holster/verb/holster_verb
 	..()
 
@@ -326,7 +326,7 @@
 	hold = new/obj/item/weapon/storage/internal(src)
 	hold.storage_slots = slots
 
-/obj/item/clothing/tie/storage/attack_hand(mob/user as mob)
+/obj/item/clothing/tie/storage/attack_hand(mob/user)
 	if (has_suit)	//if we are part of a suit
 		hold.open(user)
 		return
@@ -341,18 +341,18 @@
 	if (hold.handle_mousedrop(usr, over_object))
 		..(over_object)
 
-/obj/item/clothing/tie/storage/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/clothing/tie/storage/attackby(obj/item/W, mob/user)
 	hold.attackby(W, user)
 
 /obj/item/clothing/tie/storage/emp_act(severity)
 	hold.emp_act(severity)
 	..()
 
-/obj/item/clothing/tie/storage/hear_talk(mob/M, var/msg)
+/obj/item/clothing/tie/storage/hear_talk(mob/M, msg)
 	hold.hear_talk(M, msg)
 	..()
 
-/obj/item/clothing/tie/storage/attack_self(mob/user as mob)
+/obj/item/clothing/tie/storage/attack_self(mob/user)
 	user << "<span class='notice'>You empty [src].</span>"
 	var/turf/T = get_turf(src)
 	hold.hide_from(usr)
@@ -401,14 +401,14 @@
 	item_color = "holobadge-cord"
 	slot_flags = SLOT_MASK
 
-/obj/item/clothing/tie/holobadge/attack_self(mob/user as mob)
+/obj/item/clothing/tie/holobadge/attack_self(mob/user)
 	if(!stored_name)
 		user << "Waving around a badge before swiping an ID would be pretty pointless."
 		return
 	if(isliving(user))
 		user.visible_message("\red [user] displays their NanoTrasen Internal Security Legal Authorization Badge.\nIt reads: [stored_name], NT Security.","\red You display your NanoTrasen Internal Security Legal Authorization Badge.\nIt reads: [stored_name], NT Security.")
 
-/obj/item/clothing/tie/holobadge/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/obj/item/clothing/tie/holobadge/attackby(obj/item/O, mob/user)
 
 	if (istype(O, /obj/item/weapon/card/emag))
 		if (emagged)
@@ -461,3 +461,9 @@
 
 	new /obj/item/weapon/hatchet/unathiknife(hold)
 	new /obj/item/weapon/hatchet/unathiknife(hold)
+
+/obj/item/clothing/tie/holster/mafia
+	name = "gun holster"
+	desc = "When you just HAVE to show off your guns."
+	icon_state = "mafia_holster"
+	item_color = "mafia_holster"

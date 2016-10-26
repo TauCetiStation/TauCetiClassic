@@ -13,7 +13,7 @@
 
 /turf/simulated/Destroy()
 	visibilityChanged()
-	..()
+	return ..()
 
 /turf/simulated/New()
 	..()
@@ -80,7 +80,7 @@
 
 // An addition to deactivate which removes/adds the camera from the chunk list based on if it works or not.
 
-/obj/machinery/camera/deactivate(user as mob, var/choice = 1)
+/obj/machinery/camera/deactivate(user, choice = 1)
 	..(user, choice)
 	if(src.can_use())
 		cameranet.addCamera(src)
@@ -100,6 +100,6 @@
 	var/list/open_networks = difflist(network,RESTRICTED_CAMERA_NETWORKS)
 	if(open_networks.len)
 		cameranet.removeCamera(src)
-	..()
+	return ..()
 
 #undef BORG_CAMERA_BUFFER

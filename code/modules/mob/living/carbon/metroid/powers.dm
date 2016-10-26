@@ -42,7 +42,7 @@
 
 
 
-/mob/living/carbon/slime/proc/Feedon(var/mob/living/carbon/M)
+/mob/living/carbon/slime/proc/Feedon(mob/living/carbon/M)
 	Victim = M
 	src.loc = M.loc
 	canmove = 0
@@ -139,8 +139,9 @@
 					if(Victim.LAssailant && Victim.LAssailant != Victim)
 						if(prob(50))
 							if(!(Victim.LAssailant in Friends))
-								Friends.Add(Victim.LAssailant) // no idea why i was using the |= operator
-
+								Friends[Victim.LAssailant] = 1
+							else
+								++Friends[Victim.LAssailant]
 			if(M.client && istype(src, /mob/living/carbon/human))
 				if(prob(85))
 					rabid = 1 // UUUNNBGHHHH GONNA EAT JUUUUUU
@@ -160,7 +161,7 @@
 		if(Victim.client) Victim << "[src] has let go of your head!"
 		Victim = null
 
-/mob/living/carbon/slime/proc/UpdateFeed(var/mob/M)
+/mob/living/carbon/slime/proc/UpdateFeed(mob/M)
 	if(Victim)
 		if(Victim == M)
 			loc = M.loc // simple "attach to head" effect!

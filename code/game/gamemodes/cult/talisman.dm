@@ -10,7 +10,7 @@
 		return
 
 
-	attack_self(mob/living/user as mob)
+	attack_self(mob/living/user)
 		if(iscultist(user))
 			var/delete = 1
 			switch(imbue)
@@ -49,7 +49,7 @@
 			return
 
 
-	attack(mob/living/carbon/T as mob, mob/living/user as mob)
+	attack(mob/living/carbon/T, mob/living/user)
 		if(iscultist(user))
 			if(imbue == "runestun")
 				user.take_organ_damage(5, 0)
@@ -61,7 +61,7 @@
 			..()
 
 
-	proc/supply(var/key)
+	proc/supply(key)
 		if (!src.uses)
 			qdel(src)
 			return

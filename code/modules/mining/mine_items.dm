@@ -118,7 +118,7 @@ proc/move_mining_shuttle()
 	circuit = "/obj/item/weapon/circuitboard/mining_shuttle"
 	var/location = 0 //0 = station, 1 = mining base
 
-/obj/machinery/computer/mining_shuttle/attack_hand(user as mob)
+/obj/machinery/computer/mining_shuttle/attack_hand(user)
 	if(..(user))
 		return
 	src.add_fingerprint(usr)
@@ -137,10 +137,10 @@ proc/move_mining_shuttle()
 	user << browse("[dat]", "window=miningshuttle;size=200x150")
 
 /obj/machinery/computer/mining_shuttle/Topic(href, href_list)
-	if(..())
+	. = ..()
+	if(!.)
 		return
-	usr.set_machine(src)
-	src.add_fingerprint(usr)
+
 	if(href_list["move"])
 		//if(ticker.mode.name == "blob")
 		//	if(ticker.mode:declared)
@@ -155,7 +155,7 @@ proc/move_mining_shuttle()
 
 	updateUsrDialog()
 
-/obj/machinery/computer/mining_shuttle/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/machinery/computer/mining_shuttle/attackby(obj/item/weapon/W, mob/user)
 	if (istype(W, /obj/item/weapon/card/emag) && !emagged)
 		src.req_access = list()
 		emagged = 1
@@ -274,8 +274,8 @@ proc/move_mining_shuttle()
 /obj/item/weapon/pickaxe/drill
 	name = "mining drill" // Can dig sand as well!
 	desc = "Yours is the drill that will pierce through the rock walls."
-	icon = 'tauceti/modules/_mining/hand_tools.dmi'
-	tc_custom = 'tauceti/modules/_mining/hand_tools.dmi'
+	icon = 'icons/obj/mining/hand_tools.dmi'
+	icon_custom = 'icons/obj/mining/hand_tools.dmi'
 	icon_state = "hand_drill"
 	item_state = "drill"
 	origin_tech = "materials=2;powerstorage=3;engineering=2"
@@ -286,7 +286,7 @@ proc/move_mining_shuttle()
 	w_class = 4.0
 	m_amt = 3750
 	attack_verb = list("hit", "pierced", "sliced", "attacked")
-	drill_sound = 'tauceti/sounds/items/drill.ogg'
+	drill_sound = 'sound/items/drill.ogg'
 	drill_verb = "drill"
 	digspeed = 30
 	var/drill_cost = 15
@@ -313,7 +313,7 @@ proc/move_mining_shuttle()
 		icon_state += "_broken"
 	return
 
-/obj/item/weapon/pickaxe/drill/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/weapon/pickaxe/drill/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/screwdriver))
 		if(state==0)
 			state = 1
@@ -339,7 +339,7 @@ proc/move_mining_shuttle()
 			user <<"<span class='notice'>[src] panel is closed.</span>"
 		return
 
-/obj/item/weapon/pickaxe/drill/attack_hand(mob/user as mob)
+/obj/item/weapon/pickaxe/drill/attack_hand(mob/user)
 	if(loc != user)
 		..()
 		return	//let them pick it up
@@ -354,7 +354,7 @@ proc/move_mining_shuttle()
 			user << "<span class='notice'>You pull the powercell out of \the [src].</span>"
 		return
 
-/obj/item/weapon/pickaxe/drill/attack_self(mob/user as mob)
+/obj/item/weapon/pickaxe/drill/attack_self(mob/user)
 	mode = !mode
 
 	if(mode)
@@ -401,7 +401,7 @@ proc/move_mining_shuttle()
 	name = "mining explosives"
 	desc = "Used for mining."
 	gender = PLURAL
-	icon = 'tauceti/modules/_mining/explosives.dmi'
+	icon = 'icons/obj/mining/explosives.dmi'
 	icon_state = "charge_basic"
 	item_state = "flashbang"
 	flags = FPRINT | TABLEPASS | NOBLUDGEON
@@ -412,14 +412,14 @@ proc/move_mining_shuttle()
 	var/impact = 2
 	var/power = 5
 
-/obj/item/weapon/mining_charge/attack_self(mob/user as mob)
+/obj/item/weapon/mining_charge/attack_self(mob/user)
 	var/newtime = input(usr, "Please set the timer.", "Timer", 10) as num
 	if(newtime < 5)
 		newtime = 5
 	timer = newtime
 	user << "<span class='notice'>Timer set for </span>[timer]<span class='notice'> seconds.</span>"
 
-/obj/item/weapon/mining_charge/afterattack(turf/simulated/mineral/target as turf, mob/user as mob, flag)
+/obj/item/weapon/mining_charge/afterattack(turf/simulated/mineral/target, mob/user, flag)
 	if (!flag)
 		return
 	if (!istype(target, /turf/simulated/mineral))
@@ -433,7 +433,7 @@ proc/move_mining_shuttle()
 		loc = null
 		var/location
 		location = target
-		target.overlays += image('tauceti/modules/_mining/explosives.dmi', "charge_basic_armed")
+		target.overlays += image('icons/obj/mining/explosives.dmi', "charge_basic_armed")
 		user << "<span class='notice'>Charge has been planted. Timer counting down from </span>[timer]"
 		spawn(timer*10)
 			for(var/turf/simulated/mineral/M in view(get_turf(target), blast_range))
@@ -445,15 +445,15 @@ proc/move_mining_shuttle()
 				if(src)
 					qdel(src)
 
-/obj/item/weapon/mining_charge/attack(mob/M as mob, mob/user as mob, def_zone)
+/obj/item/weapon/mining_charge/attack(mob/M, mob/user, def_zone)
 	return
 
 /*****************************Power tools********************************/
 /obj/item/weapon/gun/energy/kinetic_accelerator
 	name = "proto-kinetic accelerator"
 	desc = "According to Nanotrasen accounting, this is mining equipment. It's been modified for extreme power output to crush rocks, but often serves as a miner's first defense against hostile alien life; it's not very powerful unless used in a low pressure environment."
-	icon = 'tauceti/modules/_mining/hand_tools.dmi'
-	tc_custom = 'tauceti/modules/_mining/hand_tools.dmi'
+	icon = 'icons/obj/mining/hand_tools.dmi'
+	icon_custom = 'icons/obj/mining/hand_tools.dmi'
 	icon_state = "kineticgun"
 	item_state = "kineticgun"
 	ammo_type = list(/obj/item/ammo_casing/energy/kinetic)
@@ -472,7 +472,7 @@ proc/move_mining_shuttle()
 /obj/item/weapon/gun/energy/kinetic_accelerator/emp_act(severity)
 	return
 
-/obj/item/weapon/gun/energy/kinetic_accelerator/attack_self(var/mob/living/user/L)
+/obj/item/weapon/gun/energy/kinetic_accelerator/attack_self(mob/living/user/L)
 	if(overheat || recent_reload)
 		return
 	power_supply.give(500)
@@ -516,7 +516,7 @@ obj/item/projectile/kinetic/New()
 		new /obj/item/effect/kinetic_blast(src.loc)
 		qdel(src)
 
-/obj/item/projectile/kinetic/on_hit(var/atom/target)
+/obj/item/projectile/kinetic/on_hit(atom/target)
 	. = ..()
 	var/turf/target_turf = get_turf(target)
 	if(istype(target_turf, /turf/simulated/mineral))
@@ -526,7 +526,7 @@ obj/item/projectile/kinetic/New()
 
 /obj/item/effect/kinetic_blast
 	name = "kinetic explosion"
-	icon = 'tauceti/icons/obj/projectiles.dmi'
+	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "kinetic_blast"
 	layer = 4.1
 
@@ -659,7 +659,7 @@ obj/item/projectile/kinetic/New()
 
 /obj/structure/inflatable/survival/Destroy()
 	update_nearby_tiles()
-	..()
+	return ..()
 
 /obj/structure/inflatable/survival/proc/update_nearby_icons()
 	update_icon()
@@ -788,7 +788,7 @@ obj/item/projectile/kinetic/New()
 		stat = 0
 		ispowered = 1
 
-/obj/machinery/smartfridge/survival_pod/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/obj/machinery/smartfridge/survival_pod/attackby(obj/item/O, mob/user)
 	if(is_type_in_typecache(O,forbidden_tools))
 		if(istype(O,/obj/item/weapon/wrench))
 			user << "\blue You start to disassemble the storage unit..."
@@ -880,9 +880,6 @@ obj/item/projectile/kinetic/New()
 		return
 	user.visible_message("[user] removes the sign.", "You remove the sign.")
 	qdel(src)
-
-/obj/structure/sign/mining/Destroy()
-	return ..()
 
 //Fluff
 /obj/structure/tubes

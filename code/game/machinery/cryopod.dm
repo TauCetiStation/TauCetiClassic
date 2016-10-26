@@ -15,7 +15,7 @@ var/global/list/frozen_items = list()
 /obj/machinery/computer/cryopod
 	name = "cryogenic oversight console"
 	desc = "An interface between crew and the cryogenic storage oversight systems."
-	icon = 'tauceti/icons/obj/Cryogenic3.dmi'
+	icon = 'icons/obj/Cryogenic3.dmi'
 	icon_state = "cellconsole"
 	circuit = "/obj/item/weapon/circuitboard/cryopodcontrol"
 	var/mode = null
@@ -49,13 +49,11 @@ obj/machinery/computer/cryopod/attack_hand(mob/user = usr)
 	onclose(user, "cryopod_console")
 
 obj/machinery/computer/cryopod/Topic(href, href_list)
-
-	if(..())
+	. = ..()
+	if(!.)
 		return
 
 	var/mob/user = usr
-
-	src.add_fingerprint(user)
 
 	if(href_list["log"])
 
@@ -99,7 +97,6 @@ obj/machinery/computer/cryopod/Topic(href, href_list)
 		user << "\red Functionality unavailable at this time."
 
 	src.updateUsrDialog()
-	return
 
 /obj/item/weapon/circuitboard/cryopodcontrol
 	name = "Circuit board (Cryogenic Oversight Console)"
@@ -111,7 +108,7 @@ obj/machinery/computer/cryopod/Topic(href, href_list)
 
 	name = "\improper cryogenic feed"
 	desc = "A bewildering tangle of machinery and pipes."
-	icon = 'tauceti/icons/obj/Cryogenic3.dmi'
+	icon = 'icons/obj/Cryogenic3.dmi'
 	icon_state = "cryo_rear"
 	anchored = 1
 	density = 1
@@ -134,7 +131,7 @@ obj/machinery/computer/cryopod/Topic(href, href_list)
 /obj/machinery/cryopod
 	name = "\improper cryogenic freezer"
 	desc = "A man-sized pod for entering suspended animation."
-	icon = 'tauceti/icons/obj/Cryogenic3.dmi'
+	icon = 'icons/obj/Cryogenic3.dmi'
 	icon_state = "cryosleeper_left"
 	density = 1
 	anchored = 1
@@ -244,7 +241,8 @@ obj/machinery/computer/cryopod/Topic(href, href_list)
 					current_mode.possible_traitors.Remove(occupant)*/
 			if(!occupant.mind.objectives.len && ticker.mode.name == "AutoTraitor")
 				var/datum/game_mode/traitor/autotraitor/current_mode = ticker.mode
-				current_mode.possible_traitors.Remove(occupant)
+				if(current_mode.possible_traitors && current_mode.possible_traitors.len)
+					current_mode.possible_traitors -= occupant
 
 			// Delete them from datacore.
 
@@ -285,7 +283,7 @@ obj/machinery/computer/cryopod/Topic(href, href_list)
 	return
 
 
-/obj/machinery/cryopod/attackby(var/obj/item/weapon/G as obj, var/mob/user as mob)
+/obj/machinery/cryopod/attackby(obj/item/weapon/G, mob/user)
 
 	if(istype(G, /obj/item/weapon/grab))
 

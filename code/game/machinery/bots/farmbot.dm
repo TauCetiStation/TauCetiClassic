@@ -85,7 +85,7 @@
 	src.icon_state = "farmbot[src.on]"
 	src.updateUsrDialog()
 
-/obj/machinery/bot/farmbot/attack_paw(mob/user as mob)
+/obj/machinery/bot/farmbot/attack_paw(mob/user)
 	return attack_hand(user)
 
 
@@ -95,7 +95,7 @@
 		total_fert++
 	return total_fert
 
-/obj/machinery/bot/farmbot/attack_hand(mob/user as mob)
+/obj/machinery/bot/farmbot/attack_hand(mob/user)
 	. = ..()
 	if (.)
 		return
@@ -129,16 +129,15 @@
 	return
 
 /obj/machinery/bot/farmbot/Topic(href, href_list)
-	if(..())
+	. = ..()
+	if(!.)
 		return
-	usr.machine = src
-	src.add_fingerprint(usr)
+
 	if ((href_list["power"]) && (src.allowed(usr)))
 		if (src.on)
 			turn_off()
 		else
 			turn_on()
-
 	else if((href_list["water"]) && (!src.locked))
 		setting_water = !setting_water
 	else if((href_list["refill"]) && (!src.locked))
@@ -157,9 +156,8 @@
 			fert.loc = get_turf(src)
 
 	src.updateUsrDialog()
-	return
 
-/obj/machinery/bot/farmbot/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/machinery/bot/farmbot/attackby(obj/item/weapon/W, mob/user)
 	if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if (src.allowed(user))
 			src.locked = !src.locked
@@ -182,7 +180,7 @@
 	else
 		..()
 
-/obj/machinery/bot/farmbot/Emag(mob/user as mob)
+/obj/machinery/bot/farmbot/Emag(mob/user)
 	..()
 	if(user) user << "\red You short out [src]'s plant identifier circuits."
 	spawn(0)
@@ -529,7 +527,7 @@
 				new /obj/structure/reagent_dispensers/watertank(src)
 
 
-/obj/structure/reagent_dispensers/watertank/attackby(var/obj/item/robot_parts/S, mob/user as mob)
+/obj/structure/reagent_dispensers/watertank/attackby(obj/item/robot_parts/S, mob/user)
 
 	if ((!istype(S, /obj/item/robot_parts/l_arm)) && (!istype(S, /obj/item/robot_parts/r_arm)))
 		..()
@@ -545,7 +543,7 @@
 	user.remove_from_mob(S)
 	qdel(S)
 
-/obj/item/weapon/farmbot_arm_assembly/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/weapon/farmbot_arm_assembly/attackby(obj/item/weapon/W, mob/user)
 	..()
 	if((istype(W, /obj/item/device/analyzer/plant_analyzer)) && (!src.build_step))
 		src.build_step++
@@ -591,5 +589,5 @@
 
 		src.created_name = t
 
-/obj/item/weapon/farmbot_arm_assembly/attack_hand(mob/user as mob)
+/obj/item/weapon/farmbot_arm_assembly/attack_hand(mob/user)
 	return //it's a converted watertank, no you cannot pick it up and put it in your backpack

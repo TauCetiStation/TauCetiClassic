@@ -20,9 +20,9 @@
 			if(stat!=DEAD)	//If not dead.
 				death(1)	//Brains can die again. AND THEY SHOULD AHA HA HA HA HA HA
 			ghostize(bancheck = TRUE)		//Ghostize checks for key so nothing else is necessary.
-		..()
+		return ..()
 
-	say_understands(var/other)//Goddamn is this hackish, but this say code is so odd
+	say_understands(other)//Goddamn is this hackish, but this say code is so odd
 		if (istype(other, /mob/living/silicon/ai))
 			if(!(container && istype(container, /obj/item/device/mmi)))
 				return 0

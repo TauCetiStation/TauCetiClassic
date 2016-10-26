@@ -42,6 +42,9 @@
 		if(ismob(C)) 		//Old stuff can feed-in mobs instead of clients
 			var/mob/M = C
 			C = M.client
+		if(href_list["ahelp_reply"])
+			cmd_ahelp_reply(C)
+			return
 		cmd_admin_pm(C,null)
 		return
 
@@ -75,7 +78,7 @@
 //		return 0
 //	return 1
 
-/client/proc/handle_spam_prevention(var/message, var/mute_type)
+/client/proc/handle_spam_prevention(message, mute_type)
 	if(global_message_cooldown && (world.time < last_message_time + 5))
 		return 1
 	if(config.automute_on && !holder && src.last_message == message)
@@ -141,6 +144,9 @@
 		admins += src
 		holder.owner = src
 
+	if(ckey in mentor_ckeys)
+		mentors += src
+
 	//preferences datum - also holds some persistant data for the client (because we may as well keep these datums to a minimum)
 	prefs = preferences_datums[ckey]
 	if(!prefs)
@@ -189,6 +195,10 @@
 	if(!geoip)
 		geoip = new(src, address)
 
+		//This is down here because of the browse() calls in tooltip/New()
+	if(!tooltips)
+		tooltips = new /datum/tooltip(src)
+
 	//////////////
 	//DISCONNECT//
 	//////////////
@@ -198,6 +208,7 @@
 		holder.owner = null
 		admins -= src
 	directory -= ckey
+	mentors -= src
 	clients -= src
 	return ..()
 

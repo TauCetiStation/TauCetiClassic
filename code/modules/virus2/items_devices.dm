@@ -8,7 +8,7 @@
 	item_state = "electronic"
 	flags = FPRINT | TABLEPASS | CONDUCT
 
-/obj/item/device/antibody_scanner/attack(mob/M as mob, mob/user as mob)
+/obj/item/device/antibody_scanner/attack(mob/M, mob/user)
 	if(!istype(M,/mob/living/carbon/))
 		report("Scan aborted: Incompatible target.", user)
 		return
@@ -30,7 +30,7 @@
 	else
 		report("Antibodies detected: [antigens2string(C.antibodies)]", user)
 
-/obj/item/device/antibody_scanner/proc/report(var/text, mob/user as mob)
+/obj/item/device/antibody_scanner/proc/report(text, mob/user)
 	user << "\blue \icon[src] \The [src] beeps, \"[text]\""
 
 ///////////////VIRUS DISH///////////////
@@ -53,7 +53,7 @@
 	src.virus2.makerandom()
 	growth = rand(5, 50)
 
-/obj/item/weapon/virusdish/attackby(var/obj/item/weapon/W as obj,var/mob/living/carbon/user as mob)
+/obj/item/weapon/virusdish/attackby(obj/item/weapon/W,mob/living/carbon/user)
 	if(istype(W,/obj/item/weapon/hand_labeler) || istype(W,/obj/item/weapon/reagent_containers/syringe))
 		return
 	..()
@@ -80,7 +80,7 @@
 	icon_state = "implantcase-b"
 	desc = "The bacteria in the dish are completely dead."
 
-/obj/item/weapon/ruinedvirusdish/attackby(var/obj/item/weapon/W as obj,var/mob/living/carbon/user as mob)
+/obj/item/weapon/ruinedvirusdish/attackby(obj/item/weapon/W,mob/living/carbon/user)
 	if(istype(W,/obj/item/weapon/hand_labeler) || istype(W,/obj/item/weapon/reagent_containers/syringe))
 		return ..()
 

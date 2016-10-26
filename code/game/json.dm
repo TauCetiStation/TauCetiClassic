@@ -91,7 +91,7 @@ proc/GetMapInfo()
 //	Just removing these to try and fix the occasional JSON -> WORLD issue.
 //	world << M.name
 //	world << M.mapname
-client/proc/ChangeMap(var/X as text)
+client/proc/ChangeMap(X)
 	set name = "Change Map"
 	set category  = "Admin"
 	switchmap(X,X)

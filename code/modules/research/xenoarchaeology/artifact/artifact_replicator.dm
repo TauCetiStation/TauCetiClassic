@@ -117,7 +117,7 @@
 
 	last_process_time = world.time
 
-/obj/machinery/replicator/attack_hand(mob/user as mob)
+/obj/machinery/replicator/attack_hand(mob/user)
 	interact(user)
 
 /obj/machinery/replicator/interact(mob/user)
@@ -128,13 +128,19 @@
 
 	user << browse(dat, "window=alien_replicator")
 
-/obj/machinery/replicator/attackby(obj/item/weapon/W as obj, mob/living/user as mob)
+/obj/machinery/replicator/attackby(obj/item/weapon/W, mob/living/user)
 	user.drop_item()
 	W.loc = src
 	stored_materials.Add(W)
 	src.visible_message("\blue [user] inserts [W] into [src].")
 
+/obj/machinery/replicator/is_operational_topic()
+	return TRUE
+
 /obj/machinery/replicator/Topic(href, href_list)
+	. = ..()
+	if(!.)
+		return
 
 	if(href_list["activate"])
 		var/index = text2num(href_list["activate"])
@@ -151,3 +157,5 @@
 				icon_state = "borgcharger1(old)"
 			else
 				src.visible_message(fail_message)
+
+	updateUsrDialog()

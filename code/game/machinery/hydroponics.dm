@@ -81,7 +81,7 @@
 		default_deconstruction_crowbar(I, 1)
 	..()
 
-/obj/machinery/hydroponics/bullet_act(var/obj/item/projectile/Proj) //Works with the Somatoray to modify plant variables.
+/obj/machinery/hydroponics/bullet_act(obj/item/projectile/Proj) //Works with the Somatoray to modify plant variables.
 	if(!planted)
 		..()
 		return
@@ -391,7 +391,7 @@ obj/machinery/hydroponics/proc/mutateweed() // If the weeds gets the mutagent in
 		usr << "The pests seem to behave oddly, but quickly settle down..."
 
 
-obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
+obj/machinery/hydroponics/attackby(obj/item/O, mob/user)
 
 	//Called when mob user "attacks" it with object O
 	if(istype(O, /obj/item/nutrient))
@@ -715,7 +715,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			qdel(src)
 	return
 
-/obj/machinery/hydroponics/attack_tk(mob/user as mob)
+/obj/machinery/hydroponics/attack_tk(mob/user)
 	if(harvest)
 		myseed.harvest(src)
 	else if(dead)
@@ -725,11 +725,11 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 		qdel(myseed)
 		update_icon()
 
-/obj/machinery/hydroponics/attack_hand(mob/user as mob)
+/obj/machinery/hydroponics/attack_hand(mob/user)
 	if(istype(usr,/mob/living/silicon))		//How does AI know what plant is?
 		return
 	if(harvest)
-		if(!user in range(1,src))
+		if(!(user in range(1,src)))
 			return
 		myseed.harvest()
 	else if(dead)
@@ -907,18 +907,18 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	toxic = max(toxic, 0)
 	toxic = min(toxic, 100)
 
-/obj/machinery/hydroponics/proc/adjustPests(var/adjustamt)
+/obj/machinery/hydroponics/proc/adjustPests(adjustamt)
 	pestlevel += adjustamt
 	pestlevel = max(pestlevel, 0)
 	pestlevel = min(pestlevel, 10)
 
-/obj/machinery/hydroponics/proc/adjustWeeds(var/adjustamt)
+/obj/machinery/hydroponics/proc/adjustWeeds(adjustamt)
 	weedlevel += adjustamt
 	weedlevel = max(weedlevel, 0)
 	pestlevel = min(pestlevel, 10)
 
 /// Seed Setters ///
-/obj/machinery/hydroponics/proc/adjustSYield(var/adjustamt)//0,10
+/obj/machinery/hydroponics/proc/adjustSYield(adjustamt)//0,10
 	if(myseed.yield != -1) // Unharvestable shouldn't suddenly turn harvestable
 		myseed.yield += adjustamt
 		myseed.yield = max(myseed.yield, 0)
@@ -926,22 +926,22 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 		if(myseed.yield <= 0 && myseed.plant_type == 2)
 			myseed.yield = 1 // Mushrooms always have a minimum yield of 1.
 
-/obj/machinery/hydroponics/proc/adjustSLife(var/adjustamt)//10,100
+/obj/machinery/hydroponics/proc/adjustSLife(adjustamt)//10,100
 	myseed.lifespan += adjustamt
 	myseed.lifespan = max(myseed.lifespan, 10)
 	myseed.lifespan = min(myseed.lifespan, 100)
 
-/obj/machinery/hydroponics/proc/adjustSEnd(var/adjustamt)//10,100
+/obj/machinery/hydroponics/proc/adjustSEnd(adjustamt)//10,100
 	myseed.endurance += adjustamt
 	myseed.endurance = max(myseed.endurance, 10)
 	myseed.endurance = min(myseed.endurance, 100)
 
-/obj/machinery/hydroponics/proc/adjustSProduct(var/adjustamt)//2,10
+/obj/machinery/hydroponics/proc/adjustSProduct(adjustamt)//2,10
 	myseed.production += adjustamt
 	myseed.production = max(myseed.endurance, 2)
 	myseed.production = min(myseed.endurance, 10)
 
-/obj/machinery/hydroponics/proc/adjustSPot(var/adjustamt)//0,100
+/obj/machinery/hydroponics/proc/adjustSPot(adjustamt)//0,100
 	if(myseed.potency != -1) //Not all plants have a potency
 		myseed.potency += adjustamt
 		myseed.potency = max(myseed.potency, 0)
@@ -983,7 +983,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 		set_light(0)
 	return
 
-/obj/machinery/hydroponics/soil/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/obj/machinery/hydroponics/soil/attackby(obj/item/O, mob/user)
 	..()
 	if(istype(O, /obj/item/weapon/shovel))
 		user << "You clear up [src]!"

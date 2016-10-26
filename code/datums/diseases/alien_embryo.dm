@@ -23,7 +23,7 @@
 		if (affected_mob)
 			AddInfectionImages(affected_mob)
 
-/datum/disease/alien_embryo/cure(var/resistance=1)
+/datum/disease/alien_embryo/cure(resistance=1)
 	..()
 	spawn(0)
 		if (affected_mob)
@@ -128,7 +128,7 @@ Des: Removes all infection images from aliens and places an infection image on a
 Proc: AddInfectionImages(C)
 Des: Checks if the passed mob (C) is infected with the alien egg, then gives each alien client an infected image at C.
 ----------------------------------------*/
-/datum/disease/alien_embryo/proc/AddInfectionImages(var/mob/living/carbon/C)
+/datum/disease/alien_embryo/proc/AddInfectionImages(mob/living/carbon/C)
 	if (C)
 		for (var/mob/living/carbon/alien/alien in player_list)
 			if (alien.client)
@@ -142,7 +142,7 @@ Proc: RemoveInfectionImage(C)
 Des: Removes the alien infection image from all aliens in the world located in passed mob (C).
 ----------------------------------------*/
 
-/datum/disease/alien_embryo/proc/RemoveInfectionImages(var/mob/living/carbon/C)
+/datum/disease/alien_embryo/proc/RemoveInfectionImages(mob/living/carbon/C)
 	if (C)
 		for (var/mob/living/carbon/alien/alien in player_list)
 			if (alien.client)

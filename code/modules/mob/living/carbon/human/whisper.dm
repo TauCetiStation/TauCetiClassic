@@ -106,10 +106,6 @@
 
 	//Pass whispers on to anything inside the immediate listeners.
 	for(var/mob/L in listening)
-		if(istype(L, /mob/living/simple_animal/smart_animal))
-			var/mob/living/simple_animal/smart_animal/D = L
-			spawn(0)
-				D.listen_talks(message, src)
 		for(var/mob/C in L.contents)
 			if(istype(C,/mob/living))
 				listening += C

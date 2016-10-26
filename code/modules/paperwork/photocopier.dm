@@ -15,13 +15,13 @@
 	var/toner = 30 //how much toner is left! woooooo~
 	var/maxcopies = 10	//how many copies can be copied at once- idea shamelessly stolen from bs12's copier!
 
-/obj/machinery/photocopier/attack_ai(mob/user as mob)
+/obj/machinery/photocopier/attack_ai(mob/user)
 	return attack_hand(user)
 
-/obj/machinery/photocopier/attack_paw(mob/user as mob)
+/obj/machinery/photocopier/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/machinery/photocopier/attack_hand(mob/user as mob)
+/obj/machinery/photocopier/attack_hand(mob/user)
 	user.set_machine(src)
 
 	var/dat = "Photocopier<BR><BR>"
@@ -43,10 +43,17 @@
 	onclose(user, "copier")
 	return
 
+/obj/machinery/photocopier/is_operational_topic()
+	return TRUE
+
 /obj/machinery/photocopier/Topic(href, href_list)
+	. = ..()
+	if(!.)
+		return
+
 	if(href_list["copy"])
 		if(copy)
-			for(var/i = 0, i < copies, i++)
+			for(var/i = 1 to copies)
 				if(toner > 0)
 					copy(copy)
 					sleep(15)
@@ -54,15 +61,14 @@
 					break
 			updateUsrDialog()
 		else if(photocopy)
-			for(var/i = 0, i < copies, i++)
+			for(var/i = 1 to copies)
 				if(toner > 0)
 					photocopy(photocopy)
 					sleep(15)
 				else
 					break
-			updateUsrDialog()
 		else if(bundle)
-			for(var/i = 0, i < copies, i++)
+			for(var/i = 1 to copies)
 				if(toner <= 0)
 					break
 				var/obj/item/weapon/paper_bundle/p = new /obj/item/weapon/paper_bundle (src)
@@ -85,35 +91,29 @@
 				p.name = bundle.name
 				p.pixel_y = rand(-8, 8)
 				p.pixel_x = rand(-9, 9)
-				sleep(15*j)
-			updateUsrDialog()
+				sleep(15 * j)
 	else if(href_list["remove"])
 		if(copy)
 			copy.loc = usr.loc
 			usr.put_in_hands(copy)
 			usr << "<span class='notice'>You take the paper out of \the [src].</span>"
 			copy = null
-			updateUsrDialog()
 		else if(photocopy)
 			photocopy.loc = usr.loc
 			usr.put_in_hands(photocopy)
 			usr << "<span class='notice'>You take the photo out of \the [src].</span>"
 			photocopy = null
-			updateUsrDialog()
 		else if(bundle)
 			bundle.loc = usr.loc
 			usr.put_in_hands(bundle)
 			usr << "<span class='notice'>You take the paper bundle out of \the [src].</span>"
 			bundle = null
-			updateUsrDialog()
 	else if(href_list["min"])
 		if(copies > 1)
 			copies--
-			updateUsrDialog()
 	else if(href_list["add"])
 		if(copies < maxcopies)
 			copies++
-			updateUsrDialog()
 	else if(href_list["aipic"])
 		if(!istype(usr,/mob/living/silicon)) return
 		if(toner >= 5)
@@ -134,9 +134,10 @@
 				p.desc += " - Copied by [tempAI.name]"
 			toner -= 5
 			sleep(15)
-		updateUsrDialog()
 
-/obj/machinery/photocopier/attackby(obj/item/O as obj, mob/user as mob)
+	updateUsrDialog()
+
+/obj/machinery/photocopier/attackby(obj/item/O, mob/user)
 	if(istype(O, /obj/item/weapon/paper))
 		if(!copy && !photocopy && !bundle)
 			user.drop_item()
@@ -208,7 +209,7 @@
 	return
 
 
-/obj/machinery/photocopier/proc/copy(var/obj/item/weapon/paper/copy)
+/obj/machinery/photocopier/proc/copy(obj/item/weapon/paper/copy)
 	var/obj/item/weapon/paper/c = new /obj/item/weapon/paper (loc)
 	if(toner > 10)	//lots of toner, make it dark
 		c.info = "<font color = #101010>"
@@ -243,7 +244,7 @@
 	return c
 
 
-/obj/machinery/photocopier/proc/photocopy(var/obj/item/weapon/photo/photocopy)
+/obj/machinery/photocopier/proc/photocopy(obj/item/weapon/photo/photocopy)
 	var/obj/item/weapon/photo/p = new /obj/item/weapon/photo (src.loc)
 	var/icon/I = icon(photocopy.icon, photocopy.icon_state)
 	var/icon/img = icon(photocopy.img)

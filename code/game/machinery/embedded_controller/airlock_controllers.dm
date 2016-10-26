@@ -2,7 +2,7 @@
 /obj/machinery/embedded_controller/radio/advanced_airlock_controller
 	name = "Advanced Airlock Controller"
 
-/obj/machinery/embedded_controller/radio/advanced_airlock_controller/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
+/obj/machinery/embedded_controller/radio/advanced_airlock_controller/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
 	var/data[0]
 
 	data = list(
@@ -55,7 +55,7 @@
 	tag_secure = 1
 	layer = 3.3	//Above windows
 
-/obj/machinery/embedded_controller/radio/airlock_controller/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
+/obj/machinery/embedded_controller/radio/airlock_controller/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
 	var/data[0]
 
 	data = list(
@@ -114,7 +114,7 @@
 	else
 		icon_state = "access_control_off"
 
-/obj/machinery/embedded_controller/radio/access_controller/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
+/obj/machinery/embedded_controller/radio/access_controller/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
 	var/data[0]
 
 	data = list(

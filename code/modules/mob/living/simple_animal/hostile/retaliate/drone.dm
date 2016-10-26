@@ -58,7 +58,7 @@
 	ion_trail.set_up(src)
 	ion_trail.start()
 
-/mob/living/simple_animal/hostile/retaliate/malf_drone/Process_Spacemove(var/movement_dir = 0)
+/mob/living/simple_animal/hostile/retaliate/malf_drone/Process_Spacemove(movement_dir = 0)
 	return 1
 
 /mob/living/simple_animal/hostile/retaliate/malf_drone/ListTargets()
@@ -259,7 +259,7 @@
 		if(spawnees & 128)
 			C = new(src.loc)
 			C.name = "Drone phoron overcharge counter"
-			C.origin_tech = "phoron=[rand(3,6)]"
+			C.origin_tech = "phorontech=[rand(3,6)]"
 
 		if(spawnees & 256)
 			C = new(src.loc)
@@ -269,9 +269,9 @@
 		if(spawnees & 512)
 			C = new(src.loc)
 			C.name = "Corrupted drone morality core"
-			C.origin_tech = "illegal=[rand(3,6)]"
+			C.origin_tech = "syndicate=[rand(3,6)]"
 
-	..()
+	return ..()
 
 /obj/item/projectile/beam/drone
 	damage = 15

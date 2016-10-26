@@ -1,5 +1,5 @@
 /datum/preferences/proc/ShowOccupation(mob/user)
-	var/limit = 18	//The amount of jobs allowed per column. Defaults to 18 to make it look nice.
+	var/limit = 19	//The amount of jobs allowed per column. Defaults to 19 to make it look nice.
 	var/list/splitJobs = list("Chief Medical Officer")	//Allows you split the table by job. You can make different tables for each department by including their heads.
 														//Defaults to CMO to make it look nice.
 	if(!SSjob)
@@ -162,7 +162,7 @@
 	job_engsec_low = 0
 
 
-/datum/preferences/proc/GetJobDepartment(var/datum/job/job, var/level)
+/datum/preferences/proc/GetJobDepartment(datum/job/job, level)
 	if(!job || !level)	return 0
 	switch(job.department_flag)
 		if(CIVILIAN)
@@ -191,7 +191,7 @@
 					return job_engsec_low
 	return 0
 
-/datum/preferences/proc/SetJobDepartment(var/datum/job/job, var/level)
+/datum/preferences/proc/SetJobDepartment(datum/job/job, level)
 	if(!job || !level)	return 0
 	switch(level)
 		if(1)//Only one of these should ever be active at once so clear them all here

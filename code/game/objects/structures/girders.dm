@@ -7,7 +7,7 @@
 	var/health = 200
 
 
-	bullet_act(var/obj/item/projectile/Proj)
+	bullet_act(obj/item/projectile/Proj)
 		if(istype(Proj, /obj/item/projectile/beam))
 			health -= Proj.damage
 			..()
@@ -17,7 +17,7 @@
 
 			return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(istype(W, /obj/item/weapon/wrench) && state == 0)
 			if(anchored && !istype(src,/obj/structure/girder/displaced))
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
@@ -210,7 +210,7 @@
 	layer = 2.9
 	var/health = 250
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(istype(W, /obj/item/weapon/wrench))
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
 			user << "\blue Now disassembling the girder"
@@ -235,7 +235,7 @@
 		if(prob(40))
 			qdel(src)
 
-	bullet_act(var/obj/item/projectile/Proj) //No beam check- How else will you destroy the cult girder with silver bullets?????
+	bullet_act(obj/item/projectile/Proj) //No beam check- How else will you destroy the cult girder with silver bullets?????
 		health -= Proj.damage
 		..()
 		if(health <= 0)

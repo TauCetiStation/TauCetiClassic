@@ -72,7 +72,7 @@
 		bleed_timer += damage
 
 	// returns 1 if there's a next stage, 0 otherwise
-	proc/init_stage(var/initial_damage)
+	proc/init_stage(initial_damage)
 		current_stage = stages.len
 		
 		while(src.current_stage > 1 && src.damage_list[current_stage-1] <= initial_damage / src.amount)
@@ -99,7 +99,7 @@
 			return salved
 	
 	// Checks whether other other can be merged into src.
-	proc/can_merge(var/datum/wound/other)
+	proc/can_merge(datum/wound/other)
 		if (other.type != src.type) return 0
 		if (other.current_stage != src.current_stage) return 0
 		if (other.damage_type != src.damage_type) return 0
@@ -111,7 +111,7 @@
 		//if (other.germ_level != src.germ_level) return 0
 		return 1
 
-	proc/merge_wound(var/datum/wound/other)
+	proc/merge_wound(datum/wound/other)
 		src.damage += other.damage
 		src.amount += other.amount
 		src.bleed_timer += other.bleed_timer
@@ -222,7 +222,7 @@
 //the damage amount for the stage with the same name as the wound.
 //e.g. /datum/wound/cut/deep should only be applied for 15 damage and up, 
 //because in it's stages list, "deep cut" = 15.
-/proc/get_wound_type(var/type = CUT, var/damage)
+/proc/get_wound_type(type = CUT, damage)
 	switch(type)
 		if(CUT)
 			switch(damage)

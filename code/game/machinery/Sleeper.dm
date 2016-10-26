@@ -4,7 +4,7 @@
 
 /obj/machinery/sleep_console
 	name = "Sleeper Console"
-	icon = 'icons/obj/Cryogenic2.dmi'
+	icon = 'icons/obj/Cryogenic3.dmi'
 	icon_state = "sleeperconsole"
 	anchored = 1 //About time someone fixed this.
 	density = 0
@@ -12,7 +12,7 @@
 
 /obj/machinery/sleeper
 	name = "Sleeper"
-	icon = 'icons/obj/Cryogenic2.dmi'
+	icon = 'icons/obj/Cryogenic3.dmi'
 	icon_state = "sleeper-open"
 	density = 0
 	anchored = 1
@@ -83,7 +83,7 @@
 			A.blob_act()
 		qdel(src)
 
-/obj/machinery/sleeper/attack_animal(var/mob/living/simple_animal/M)//Stop putting hostile mobs in things guise
+/obj/machinery/sleeper/attack_animal(mob/living/simple_animal/M)//Stop putting hostile mobs in things guise
 	if(M.environment_smash)
 		visible_message("<span class='danger'>[M.name] smashes [src] apart!</span>")
 		qdel(src)
@@ -174,7 +174,7 @@
 /obj/machinery/sleeper/container_resist()
 	open_machine()
 
-/obj/machinery/sleeper/relaymove(var/mob/user)
+/obj/machinery/sleeper/relaymove(mob/user)
 	..()
 	open_machine()
 
@@ -270,30 +270,21 @@
 	popup.open()
 
 /obj/machinery/sleeper/Topic(href, href_list)
-	if(..() || usr == occupant)
-		return
-
-	usr.set_machine(src)
-	add_fingerprint(usr)
+	. = ..()
+	if(!. || usr == occupant)
+		return FALSE
 
 	if(href_list["refresh"])
 		updateUsrDialog()
-		return
-	if(href_list["open"])
+	else if(href_list["open"])
 		open_machine()
-		return
-	if(href_list["close"])
+	else if(href_list["close"])
 		close_machine()
-		return
-	if(href_list["removebeaker"])
+	else if(href_list["removebeaker"])
 		remove_beaker()
-		updateUsrDialog()
-		return
-	if(href_list["togglefilter"])
+	else if(href_list["togglefilter"])
 		toggle_filter()
-		updateUsrDialog()
-		return
-	if(occupant && occupant.stat != DEAD && is_operational())
+	else if(occupant && occupant.stat != DEAD && is_operational())
 		if(href_list["inject"] == "inaprovaline" || occupant.health > min_health)
 			inject_chem(usr, href_list["inject"])
 		else

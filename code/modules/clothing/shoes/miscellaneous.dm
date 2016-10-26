@@ -153,3 +153,26 @@
 	name = "dress shoes"
 	desc = "They appear impeccably polished."
 	icon_state = "laceups"
+
+/obj/item/clothing/shoes/rosas_shoes
+	name = "white shoes"
+	icon_state = "rosas_shoes"
+	item_color = "rosas_shoes"
+	permeability_coefficient = 0.01
+
+/obj/item/clothing/shoes/western
+	name = "western boots"
+	icon_state = "western_boots"
+	item_color = "western_boots"
+
+/obj/item/clothing/shoes/magboots/syndie
+	desc = "Light-weighted magnetic boots that have a custom syndicate paintjob for use in combat."
+	name = "gorlex magboots"
+	icon_state = "syndiemag0"
+	magboot_state = "syndiemag"
+	slowdown_off = 1
+
+/obj/item/clothing/shoes/workboots
+	name = "work boots"
+	icon_state = "workboots"
+	item_color = "workboots"

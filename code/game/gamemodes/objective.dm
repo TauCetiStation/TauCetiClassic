@@ -15,7 +15,7 @@ datum/objective
 
 	Destroy()
 		all_objectives -= src
-		..()
+		return ..()
 
 	proc/check_completion()
 		return completed
@@ -667,7 +667,7 @@ datum/objective/capture
 
 
 datum/objective/absorb
-	proc/gen_amount_goal(var/lowbound = 4, var/highbound = 6)
+	proc/gen_amount_goal(lowbound = 4, highbound = 6)
 		target_amount = rand (lowbound,highbound)
 		if (ticker)
 			var/n_p = 1 //autowin
@@ -750,7 +750,7 @@ datum/objective/absorb
 */
 //Meme objectives
 datum/objective/meme_attune
-	proc/gen_amount_goal(var/lowbound = 4, var/highbound = 6)
+	proc/gen_amount_goal(lowbound = 4, highbound = 6)
 		target_amount = rand (lowbound,highbound)
 		explanation_text = "Attune [target_amount] humanoid brains."
 		return target_amount

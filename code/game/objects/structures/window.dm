@@ -58,7 +58,7 @@
 				visible_message("Cracks begin to appear in [src]!" )
 	update_icon()
 
-/obj/structure/window/proc/shatter(var/display_message = 1)
+/obj/structure/window/proc/shatter(display_message = 1)
 	playsound(src, "shatter", 70, 1)
 	if(display_message)
 		visible_message("[src] shatters!")
@@ -75,7 +75,7 @@
 	qdel(src)
 	return
 
-/obj/structure/window/bullet_act(var/obj/item/projectile/Proj)
+/obj/structure/window/bullet_act(obj/item/projectile/Proj)
 	if(Proj.pass_flags & PASSGLASS)	//Lasers mostly use this flag.. Why should they able to focus damage with direct click...
 		return -1
 
@@ -129,7 +129,7 @@
 	return 1
 
 
-/obj/structure/window/hitby(AM as mob|obj)
+/obj/structure/window/hitby(AM)
 	..()
 	visible_message("<span class='danger'>[src] was hit by [AM].</span>")
 	var/tforce = 0
@@ -146,11 +146,11 @@
 		step(src, get_dir(AM, src))
 	take_damage(tforce)
 
-/obj/structure/window/attack_tk(mob/user as mob)
+/obj/structure/window/attack_tk(mob/user)
 	user.visible_message("<span class='notice'>Something knocks on [src].</span>")
 	playsound(loc, 'sound/effects/Glasshit.ogg', 50, 1)
 
-/obj/structure/window/attack_hand(mob/user as mob)	//specflags please!!
+/obj/structure/window/attack_hand(mob/user)	//specflags please!!
 	if(HULK in user.mutations)
 		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!"))
 		user.do_attack_animation(src)
@@ -171,11 +171,11 @@
 	return
 
 
-/obj/structure/window/attack_paw(mob/user as mob)
+/obj/structure/window/attack_paw(mob/user)
 	return attack_hand(user)
 
 
-/obj/structure/window/proc/attack_generic(var/mob/user, var/damage)
+/obj/structure/window/proc/attack_generic(mob/user, damage)
 	if(!damage)
 		return
 	if(damage >= 10)
@@ -187,13 +187,13 @@
 	return 1
 
 
-/obj/structure/window/attack_alien(mob/user as mob)
+/obj/structure/window/attack_alien(mob/user)
 	user.do_attack_animation(src)
 	if(islarva(user) || isfacehugger(user))
 		return
 	attack_generic(user, 15)
 
-/obj/structure/window/attack_animal(mob/user as mob)
+/obj/structure/window/attack_animal(mob/user)
 	if(!isanimal(user))
 		return
 	var/mob/living/simple_animal/M = user
@@ -203,14 +203,14 @@
 	attack_generic(M, M.melee_damage_upper)
 
 
-/obj/structure/window/attack_slime(mob/user as mob)
+/obj/structure/window/attack_slime(mob/user)
 	user.do_attack_animation(src)
 	if(!isslimeadult(user))
 		return
 	attack_generic(user, rand(10, 15))
 
 
-/obj/structure/window/attackby(obj/item/W as obj, mob/user as mob)
+/obj/structure/window/attackby(obj/item/W, mob/user)
 	if(!istype(W))
 		return//I really wish I did not need this
 
@@ -283,7 +283,7 @@
 	return
 
 //painter
-/obj/structure/window/proc/change_paintjob(obj/item/C as obj, mob/user as mob)
+/obj/structure/window/proc/change_paintjob(obj/item/C, mob/user)
 	var/obj/item/weapon/airlock_painter/W
 	if(istype(C, /obj/item/weapon/airlock_painter))
 		W = C
@@ -357,13 +357,11 @@
 */
 
 
-/obj/structure/window/New(Loc,re=0)
+/obj/structure/window/New(Loc, fulltile = FALSE)
 	..()
 
-//	if(re)	reinf = re
-
-	if(dir & (dir - 1))
-		fulltile = TRUE
+	if(dir & (dir - 1) || fulltile)
+		src.fulltile = TRUE
 		dir = 2
 
 	ini_dir = dir
@@ -381,7 +379,7 @@
 	playsound(src, "shatter", 70, 1)
 	update_nearby_tiles()
 	update_nearby_icons()
-	..()
+	return ..()
 
 
 /obj/structure/window/Move()

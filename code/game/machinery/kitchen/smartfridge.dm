@@ -45,7 +45,7 @@
 	for(var/obj/item/weapon/stock_parts/matter_bin/B in component_parts)
 		max_n_of_items = 1500 * B.rating
 
-/obj/machinery/smartfridge/proc/accept_check(var/obj/item/O as obj)
+/obj/machinery/smartfridge/proc/accept_check(obj/item/O)
 	if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/grown/) || istype(O,/obj/item/seeds/))
 		return 1
 	return 0
@@ -58,7 +58,7 @@
 	icon_on = "seeds"
 	icon_off = "seeds-off"
 
-/obj/machinery/smartfridge/seeds/accept_check(var/obj/item/O as obj)
+/obj/machinery/smartfridge/seeds/accept_check(obj/item/O)
 	if(istype(O,/obj/item/seeds/))
 		return 1
 	return 0
@@ -67,7 +67,7 @@
 	name = "smart chemical storage"
 	desc = "A refrigerated storage unit for medicine storage."
 
-/obj/machinery/smartfridge/chemistry/accept_check(var/obj/item/O as obj)
+/obj/machinery/smartfridge/chemistry/accept_check(obj/item/O)
 	if(istype(O,/obj/item/weapon/storage/pill_bottle))
 		if(O.contents.len)
 			for(var/obj/item/I in O)
@@ -90,7 +90,7 @@
 	desc = "A refrigerated storage unit for slime extracts."
 	req_access_txt = "47"
 
-/obj/machinery/smartfridge/secure/extract/accept_check(var/obj/item/O as obj)
+/obj/machinery/smartfridge/secure/extract/accept_check(obj/item/O)
 	if(istype(O,/obj/item/slime_extract))
 		return 1
 	return 0
@@ -102,7 +102,7 @@
 	icon_on = "smartfridge_chem"
 	req_one_access_txt = "5;33"
 
-/obj/machinery/smartfridge/secure/medbay/accept_check(var/obj/item/O as obj)
+/obj/machinery/smartfridge/secure/medbay/accept_check(obj/item/O)
 	if(istype(O,/obj/item/weapon/reagent_containers/glass/))
 		return 1
 	if(istype(O,/obj/item/weapon/storage/pill_bottle/))
@@ -119,7 +119,7 @@
 	icon_on = "smartfridge_virology"
 	icon_off = "smartfridge_virology-off"
 
-/obj/machinery/smartfridge/secure/virology/accept_check(var/obj/item/O as obj)
+/obj/machinery/smartfridge/secure/virology/accept_check(obj/item/O)
 	if(istype(O,/obj/item/weapon/reagent_containers/glass/beaker/vial/))
 		return 1
 	if(istype(O,/obj/item/weapon/virusdish/))
@@ -130,7 +130,7 @@
 	name = "\improper Smart Chemical Storage"
 	desc = "A refrigerated storage unit for medicine and chemical storage."
 
-/obj/machinery/smartfridge/chemistry/accept_check(var/obj/item/O as obj)
+/obj/machinery/smartfridge/chemistry/accept_check(obj/item/O)
 	if(istype(O,/obj/item/weapon/storage/pill_bottle) || istype(O,/obj/item/weapon/reagent_containers))
 		return 1
 	return 0
@@ -144,7 +144,7 @@
 	name = "\improper Drink Showcase"
 	desc = "A refrigerated storage unit for tasty tasty alcohol."
 
-/obj/machinery/smartfridge/drinks/accept_check(var/obj/item/O as obj)
+/obj/machinery/smartfridge/drinks/accept_check(obj/item/O)
 	if(istype(O,/obj/item/weapon/reagent_containers/glass) || istype(O,/obj/item/weapon/reagent_containers/food/drinks) || istype(O,/obj/item/weapon/reagent_containers/food/condiment))
 		return 1
 
@@ -173,7 +173,7 @@
 *   Item Adding
 ********************/
 
-/obj/machinery/smartfridge/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/obj/machinery/smartfridge/attackby(obj/item/O, mob/user)
 	if(default_deconstruction_screwdriver(user, "smartfridge_open", "smartfridge", O))
 		return
 
@@ -252,7 +252,7 @@
 		user << "<span class='notice'>\The [src] smartly refuses [O].</span>"
 		return 1
 
-/obj/machinery/smartfridge/secure/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/obj/machinery/smartfridge/secure/attackby(obj/item/O, mob/user)
 	if (istype(O, /obj/item/weapon/card/emag))
 		emagged = 1
 		locked = -1
@@ -261,13 +261,13 @@
 
 	..()
 
-/obj/machinery/smartfridge/attack_paw(mob/user as mob)
+/obj/machinery/smartfridge/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/machinery/smartfridge/attack_ai(mob/user as mob)
+/obj/machinery/smartfridge/attack_ai(mob/user)
 	return 0
 
-/obj/machinery/smartfridge/attack_hand(mob/user as mob)
+/obj/machinery/smartfridge/attack_hand(mob/user)
 	if(!ispowered) return
 	if(seconds_electrified != 0)
 		if(shock(user, 100))
@@ -279,7 +279,7 @@
 *   SmartFridge Menu
 ********************/
 
-/obj/machinery/smartfridge/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
+/obj/machinery/smartfridge/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
 	user.set_machine(src)
 
 	var/is_secure = istype(src,/obj/machinery/smartfridge/secure)
@@ -330,17 +330,17 @@
 		ui.open()
 
 /obj/machinery/smartfridge/Topic(href, href_list)
-	if (..()) return 0
+	. = ..()
+	if(!.)
+		return
 
 	var/mob/user = usr
 	var/datum/nanoui/ui = nanomanager.get_open_ui(user, src, "main")
 
-	src.add_fingerprint(user)
-
 	if (href_list["close"])
 		user.unset_machine()
 		ui.close()
-		return 0
+		return FALSE
 
 	if (href_list["vend"])
 		var/index = text2num(href_list["vend"])
@@ -358,43 +358,41 @@
 					O.loc = loc
 					i--
 					if (i <= 0)
-						return 1
+						return TRUE
 
-		return 1
+		return TRUE
 
 	if (panel_open)
 		if (href_list["cutwire"])
 			if (!( istype(usr.get_active_hand(), /obj/item/weapon/wirecutters) ))
 				user << "You need wirecutters!"
-				return 1
+				return FALSE
 
 			var/wire_index = text2num(href_list["cutwire"])
 			if (isWireColorCut(wire_index))
 				mend(wire_index)
 			else
 				cut(wire_index)
-			return 1
+			return TRUE
 
 		if (href_list["pulsewire"])
 			if (!istype(usr.get_active_hand(), /obj/item/device/multitool))
 				usr << "You need a multitool!"
-				return 1
+				return FALSE
 
 			var/wire_index = text2num(href_list["pulsewire"])
 			if (isWireColorCut(wire_index))
 				usr << "You can't pulse a cut wire."
-				return 1
+				return FALSE
 
 			pulse(wire_index)
-			return 1
-
-	return 0
+			return TRUE
 
 /*************
 *	Hacking
 **************/
 
-/obj/machinery/smartfridge/proc/cut(var/wireColor)
+/obj/machinery/smartfridge/proc/cut(wireColor)
 	var/wireFlag = APCWireColorToFlag[wireColor]
 	var/wireIndex = APCWireColorToIndex[wireColor]
 	src.wires &= ~wireFlag
@@ -407,7 +405,7 @@
 		if(WIRE_SCANID)
 			src.locked = 1
 
-/obj/machinery/smartfridge/proc/mend(var/wireColor)
+/obj/machinery/smartfridge/proc/mend(wireColor)
 	var/wireFlag = APCWireColorToFlag[wireColor]
 	var/wireIndex = APCWireColorToIndex[wireColor]
 	src.wires |= wireFlag
@@ -419,7 +417,7 @@
 		if(WIRE_SCANID)
 			src.locked = 0
 
-/obj/machinery/smartfridge/proc/pulse(var/wireColor)
+/obj/machinery/smartfridge/proc/pulse(wireColor)
 	var/wireIndex = APCWireColorToIndex[wireColor]
 	switch(wireIndex)
 		if(WIRE_SHOCK)
@@ -429,11 +427,11 @@
 		if(WIRE_SCANID)
 			src.locked = -1
 
-/obj/machinery/smartfridge/proc/isWireColorCut(var/wireColor)
+/obj/machinery/smartfridge/proc/isWireColorCut(wireColor)
 	var/wireFlag = APCWireColorToFlag[wireColor]
 	return ((src.wires & wireFlag) == 0)
 
-/obj/machinery/smartfridge/proc/isWireCut(var/wireIndex)
+/obj/machinery/smartfridge/proc/isWireCut(wireIndex)
 	var/wireFlag = APCIndexToFlag[wireIndex]
 	return ((src.wires & wireFlag) == 0)
 
@@ -476,9 +474,9 @@
 *************************/
 
 /obj/machinery/smartfridge/secure/Topic(href, href_list)
-	if(!ispowered) return 0
-	if (usr.contents.Find(src) || (in_range(src, usr) && istype(loc, /turf)))
-		if (!allowed(usr) && !emagged && locked != -1 && href_list["vend"])
-			usr << "\red Access denied."
-			return 0
-	return ..()
+	. = ..()
+	if(!.)
+		return
+	if (!allowed(usr) && !emagged && locked != -1 && href_list["vend"])
+		usr << "\red Access denied."
+		return FALSE

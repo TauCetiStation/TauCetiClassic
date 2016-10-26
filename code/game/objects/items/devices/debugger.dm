@@ -46,7 +46,7 @@
 			user << "\blue The device's software appears to be fine."
 			return 1
 
-/obj/item/device/debugger/afterattack(obj/O as obj, mob/user as mob, proximity)
+/obj/item/device/debugger/afterattack(obj/O, mob/user, proximity)
 	if(!proximity) return
 	if(istype(O, /obj/machinery/power/apc))
 		var/obj/machinery/power/apc/apc = O

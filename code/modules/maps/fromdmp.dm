@@ -5,7 +5,7 @@
 	by Lummox JR
  */
 
-mob/verb/Convert(filename as file)
+mob/verb/Convert(filename)
 	dmp2swapmap(filename)
 
 proc/d2sm_prepmap(filename)

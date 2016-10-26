@@ -9,7 +9,7 @@
 	max_genetic_damage = 100
 
 //Fake our own death and fully heal. You will appear to be dead but regenerate fully after a short delay.
-/obj/effect/proc_holder/changeling/fakedeath/sting_action(var/mob/living/user)
+/obj/effect/proc_holder/changeling/fakedeath/sting_action(mob/living/user)
 
 	if(user.fake_death)
 		var/fake_pick = pick("oxy", "tox", "fire", "clone")
@@ -59,7 +59,7 @@
 	feedback_add_details("changeling_powers","FD")
 	return 1
 
-/obj/effect/proc_holder/changeling/fakedeath/can_sting(var/mob/user)
+/obj/effect/proc_holder/changeling/fakedeath/can_sting(mob/user)
 	//if(user.status_flags & FAKEDEATH)
 	if(user.mind.changeling.instatis) //We already regenerating, no need to start second time in a row.
 		return

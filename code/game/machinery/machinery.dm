@@ -207,7 +207,7 @@ Class Procs:
 		qdel(src)
 
 //sets the use_power var and then forces an area power update @ 7e65984ae2ec4e7eaaecc8da0bfa75642c3489c7 bay12
-/obj/machinery/proc/update_use_power(var/new_use_power, var/force_update = 0)
+/obj/machinery/proc/update_use_power(new_use_power, force_update = 0)
 	if ((new_use_power == use_power) && !force_update)
 		return	//don't need to do anything
 
@@ -231,45 +231,47 @@ Class Procs:
 		use_power(active_power_usage,power_channel, 1)
 	return 1
 
+//By default, we check everything.
+//But sometimes, we need to override this check.
+/obj/machinery/proc/is_operational_topic()
+	return !(stat & (NOPOWER|BROKEN|MAINT|EMPED))
+
 /obj/machinery/Topic(href, href_list)
 	..()
-	if(stat & (NOPOWER|BROKEN))
-		return 1
-	if(usr.restrained() || usr.lying || usr.stat)
-		return 1
-	if ( ! (istype(usr, /mob/living/carbon/human) || \
-			istype(usr, /mob/living/silicon) || \
-			istype(usr, /mob/living/carbon/monkey)) )
-		usr << "<span class='danger'>You don't have the dexterity to do this!</span>"
-		return 1
 
-	var/norange = 0
-	if(istype(usr, /mob/living/carbon/human))
+	if(usr.can_use_topic(src) != STATUS_INTERACTIVE || !is_operational_topic())
+		usr.unset_machine(src)
+		return FALSE
+
+	if(ishuman(usr))
 		var/mob/living/carbon/human/H = usr
-		if(istype(H.l_hand, /obj/item/tk_grab))
-			norange = 1
-		else if(istype(H.r_hand, /obj/item/tk_grab))
-			norange = 1
+		if(H.getBrainLoss() >= 60)
+			H.visible_message("<span class='warning'>[H] stares cluelessly at [src] and drools.</span>")
+			return FALSE
+		else if(prob(H.getBrainLoss()))
+			H << "<span class='warning'>You momentarily forget how to use [src].</span>"
+			return FALSE
 
-	if(!norange)
-		if ((!in_range(src, usr) || !istype(src.loc, /turf)) && !istype(usr, /mob/living/silicon))
-			return 1
-
+	usr.set_machine(src)
 	src.add_fingerprint(usr)
 
 	var/area/A = get_area(src)
 	A.master.powerupdate = 1
 
-	return 0
+	return TRUE
 
 /obj/machinery/proc/is_operational()
 	return !(stat & (NOPOWER|BROKEN|MAINT))
 
+/obj/machinery/proc/issilicon_allowed(mob/living/silicon/S)
+	if(istype(S) && allowed(S))
+		return TRUE
+	return FALSE
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 
 
-/obj/machinery/attack_ai(mob/user as mob)
+/obj/machinery/attack_ai(mob/user)
 	if(isrobot(user))
 		// For some reason attack_robot doesn't work
 		// This is to stop robots from using cameras to remotely control machines.
@@ -278,10 +280,10 @@ Class Procs:
 	else
 		return src.attack_hand(user)
 
-/obj/machinery/attack_paw(mob/user as mob)
+/obj/machinery/attack_paw(mob/user)
 	return src.attack_hand(user)
 
-/obj/machinery/attack_hand(mob/user as mob)
+/obj/machinery/attack_hand(mob/user)
 	if(stat & (NOPOWER|BROKEN|MAINT))
 		return 1
 	if(user.lying || user.stat)
@@ -424,7 +426,7 @@ Class Procs:
 /obj/machinery/proc/deconstruction()
 	return
 
-/obj/machinery/proc/state(var/msg)
+/obj/machinery/proc/state(msg)
 	for(var/mob/O in hearers(src, null))
 		O.show_message("\icon[src] <span class = 'notice'>[msg]</span>", 2)
 
@@ -435,7 +437,7 @@ Class Procs:
 	state(text, "blue")
 	playsound(src.loc, 'sound/machines/ping.ogg', 50, 0)
 
-/obj/machinery/tesla_act(var/power)
+/obj/machinery/tesla_act(power)
 	..()
 	if(prob(85))
 		emp_act(2)

@@ -34,12 +34,12 @@
 		else
 			usr << "It is switched off."
 
-/datum/supply_packs/key_pinpointer
+/datum/supply_pack/key_pinpointer
 	name = "Authentication Key Pinpointer crate"
 	contains = list(/obj/item/weapon/pinpointer/advpinpointer/auth_key)
-	cost = 250
-	containertype = /obj/structure/closet/crate
-	containername = "Authentication Key Pinpointer crate"
+	cost = 25000
+	crate_type = /obj/structure/closet/crate
+	crate_name = "Authentication Key Pinpointer crate"
 	access = access_heads
 	group = "Operations"
 

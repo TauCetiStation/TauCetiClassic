@@ -55,7 +55,7 @@
 		if(cell.charge <= 0)
 			deactivate()
 
-/obj/machinery/suspension_gen/interact(mob/user as mob)
+/obj/machinery/suspension_gen/interact(mob/user)
 	var/dat = "<b>Multi-phase mobile suspension field generator MK II \"Steadfast\"</b><br>"
 	if(cell)
 		var/colour = "red"
@@ -110,9 +110,18 @@
 	user << browse(dat, "window=suspension;size=500x400")
 	onclose(user, "suspension")
 
+/obj/machinery/suspension_gen/is_operational_topic()
+	return TRUE
+
 /obj/machinery/suspension_gen/Topic(href, href_list)
-	..()
-	usr.set_machine(src)
+	if(href_list["close"])
+		usr.unset_machine()
+		usr << browse(null, "window=suspension")
+		return FALSE
+
+	. = ..()
+	if(!.)
+		return
 
 	if(href_list["toggle_field"])
 		if(!suspension_field)
@@ -147,13 +156,10 @@
 				auth_card = null
 	else if(href_list["lock"])
 		locked = 1
-	else if(href_list["close"])
-		usr.unset_machine()
-		usr << browse(null, "window=suspension")
 
 	updateUsrDialog()
 
-/obj/machinery/suspension_gen/attack_hand(mob/user as mob)
+/obj/machinery/suspension_gen/attack_hand(mob/user)
 	if(!open)
 		interact(user)
 	else if(cell)
@@ -165,7 +171,7 @@
 		cell = null
 		user << "<span class='info'>You remove the power cell</span>"
 
-/obj/machinery/suspension_gen/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/machinery/suspension_gen/attackby(obj/item/weapon/W, mob/user)
 	if (istype(W, /obj/item/weapon/screwdriver))
 		if(!open)
 			if(screwed)
@@ -222,7 +228,7 @@
 		else
 			user << "<span class='warning'>Remove [auth_card] first.</span>"
 
-/obj/machinery/suspension_gen/proc/attempt_unlock(var/obj/item/weapon/card/C)
+/obj/machinery/suspension_gen/proc/attempt_unlock(obj/item/weapon/card/C)
 	if(!open)
 		if(istype(C, /obj/item/weapon/card/emag) && cell.charge > 0)
 			//put sparks here
@@ -312,7 +318,7 @@
 /obj/machinery/suspension_gen/Destroy()
 	//safety checks: clear the field and drop anything it's holding
 	deactivate()
-	..()
+	return ..()
 
 /obj/machinery/suspension_gen/verb/rotate_ccw()
 	set src in view(1)
@@ -344,4 +350,4 @@
 /obj/effect/suspension_field/Destroy()
 	for(var/obj/I in src)
 		I.loc = src.loc
-	..()
+	return ..()

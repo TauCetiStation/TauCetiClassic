@@ -40,7 +40,7 @@
 	if(state_open && !panel_open)
 		..(target)
 
-/obj/machinery/abductor/experiment/proc/dissection_icon(var/mob/living/carbon/human/H)
+/obj/machinery/abductor/experiment/proc/dissection_icon(mob/living/carbon/human/H)
 	var/icon/preview_icon = null
 
 	var/g = "m"
@@ -140,25 +140,19 @@
 	popup.open()
 
 /obj/machinery/abductor/experiment/Topic(href, href_list)
-	if(..() || usr == occupant)
-		return
-	usr.set_machine(src)
-	if(href_list["refresh"])
-		updateUsrDialog()
-		return
+	. = ..()
+	if(!. || usr == occupant)
+		return FALSE
 	if(href_list["open"])
 		open_machine()
-		return
-	if(href_list["close"])
+	else if(href_list["close"])
 		close_machine()
-		return
-	if(occupant && occupant.stat != DEAD)
+	else if(occupant && occupant.stat != DEAD)
 		if(href_list["experiment"])
 			flash = Experiment(occupant,href_list["experiment"])
 	updateUsrDialog()
-	add_fingerprint(usr)
 
-/obj/machinery/abductor/experiment/proc/Experiment(var/mob/occupant,var/type)
+/obj/machinery/abductor/experiment/proc/Experiment(mob/occupant,type)
 	var/mob/living/carbon/human/H = occupant
 	var/point_reward = 0
 	if(H in history)
@@ -211,7 +205,7 @@
 		return "<span class='bad'>Specimen braindead - disposed</span>"
 	return "<span class='bad'>ERROR</span>"
 
-/obj/machinery/abductor/experiment/proc/SendBack(var/mob/living/carbon/human/H)
+/obj/machinery/abductor/experiment/proc/SendBack(mob/living/carbon/human/H)
 	H.Sleeping(8)
 	var/area/A
 	if(console && console.pad && console.pad.teleport_target)

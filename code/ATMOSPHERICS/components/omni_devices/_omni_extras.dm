@@ -96,7 +96,7 @@ var/global/list/pipe_colors = list("grey" = null, "red" = PIPE_COLOR_RED, "blue"
 //returns a text string based on the direction flag input
 // if capitalize is true, it will return the string capitalized
 // otherwise it will return the direction string in lower case
-/proc/dir_name(var/dir, var/capitalize = 0)
+/proc/dir_name(dir, capitalize = 0)
 	var/string = null
 	switch(dir)
 		if(NORTH)
@@ -115,7 +115,7 @@ var/global/list/pipe_colors = list("grey" = null, "red" = PIPE_COLOR_RED, "blue"
 
 //returns a direction flag based on the string passed to it
 // case insensitive
-/proc/dir_flag(var/dir)
+/proc/dir_flag(dir)
 	dir = lowertext(dir)
 	switch(dir)
 		if("north")

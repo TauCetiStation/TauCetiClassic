@@ -72,7 +72,7 @@
 	aux.volume = volume
 	aux.nodes.len = nodes.len
 
-/obj/machinery/atmospherics/mains_pipe/hide(var/i)
+/obj/machinery/atmospherics/mains_pipe/hide(i)
 	if(level == 1 && istype(loc, /turf/simulated))
 		invisibility = i ? 101 : 0
 	update_icon()
@@ -104,7 +104,7 @@
 
 /obj/machinery/atmospherics/mains_pipe/Destroy()
 	disconnect()
-	..()
+	return ..()
 
 /obj/machinery/atmospherics/mains_pipe/initialize()
 	for(var/i = 1 to nodes.len)

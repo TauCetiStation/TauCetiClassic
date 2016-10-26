@@ -154,7 +154,7 @@ Works together with spawning an observer, noted above.
 		process_medHUD(src)
 
 
-/mob/dead/proc/process_medHUD(var/mob/M)
+/mob/dead/proc/process_medHUD(mob/M)
 	var/client/C = M.client
 	for(var/mob/living/carbon/human/patient in oview(M, 14))
 		C.images += patient.hud_list[HEALTH_HUD]
@@ -177,17 +177,16 @@ Works together with spawning an observer, noted above.
 */
 	return 1
 
-/mob/proc/ghostize(var/can_reenter_corpse = TRUE, var/bancheck = FALSE)
+/mob/proc/ghostize(can_reenter_corpse = TRUE, bancheck = FALSE)
 	if(key)
-		if(!(src.client.holder && (src.client.holder.rights & (R_ADMIN|R_MOD))))
-			if(bancheck == TRUE && jobban_isbanned(src, "Observer"))
-				var/mob/M = mousize()
-				if((config.allow_drone_spawn) || !jobban_isbanned(src, ROLE_DRONE))
-					var/response = alert(M, "Do you want to become a maintenance drone?","Are you sure you want to beep?","Beep!","Nope!")
-					if(response == "Beep!")
-						M.dronize()
-						qdel(M)
-				return
+		if(!(ckey in admin_datums) && bancheck == TRUE && jobban_isbanned(src, "Observer"))
+			var/mob/M = mousize()
+			if((config.allow_drone_spawn) || !jobban_isbanned(src, ROLE_DRONE))
+				var/response = alert(M, "Do you want to become a maintenance drone?","Are you sure you want to beep?","Beep!","Nope!")
+				if(response == "Beep!")
+					M.dronize()
+					qdel(M)
+			return
 		var/mob/dead/observer/ghost = new(src)	//Transfer safety to observer spawning proc.
 		ghost.can_reenter_corpse = can_reenter_corpse
 		ghost.timeofdeath = src.timeofdeath //BS12 EDIT
@@ -204,10 +203,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set name = "Ghost"
 	set desc = "Relinquish your life and enter the land of the dead."
 
-	if(!(src.client.holder && (src.client.holder.rights & (R_ADMIN|R_MOD))))
-		if(jobban_isbanned(src, "Observer"))
-			src << "<span class='red'>You have been banned from observing.</span>"
-			return
+	if(!(ckey in admin_datums) && jobban_isbanned(src, "Observer"))
+		src << "<span class='red'>You have been banned from observing.</span>"
+		return
 	if(stat == DEAD)
 		if(fake_death)
 			var/response = alert(src, "Are you -sure- you want to ghost?\n(You are alive. If you ghost, you won't be able to play this round for another 30 minutes! You can't change your mind so choose wisely!)","Are you sure you want to ghost?","Ghost","Stay in body")
@@ -312,19 +310,19 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	if(!client)
 		return
-	var/mentor = is_mentor(usr.client)
-	if(!config.antag_hud_allowed && (!client.holder || mentor))
+	if(!config.antag_hud_allowed && !client.holder)
 		src << "<span class='red'>Admins have disabled this for this round.</span>"
 		return
 	var/mob/dead/observer/M = src
 	if(jobban_isbanned(M, "AntagHUD"))
 		src << "<span class='danger'>You have been banned from using this feature.</span>"
 		return
-	if(config.antag_hud_restricted && !M.has_enabled_antagHUD && (!client.holder || mentor))
+	if(config.antag_hud_restricted && !M.has_enabled_antagHUD && !client.holder)
 		var/response = alert(src, "If you turn this on, you will not be able to take any part in the round.","Are you sure you want to turn this feature on?","Yes","No")
-		if(response == "No") return
+		if(response == "No")
+			return
 		M.can_reenter_corpse = 0
-	if(!M.has_enabled_antagHUD && (!client.holder || mentor))
+	if(!M.has_enabled_antagHUD && !client.holder)
 		M.has_enabled_antagHUD = 1
 	if(M.antagHUD)
 		M.antagHUD = 0
@@ -344,7 +342,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	spawn(30)
 		usr.verbs += /mob/dead/observer/proc/dead_tele
 	var/area/thearea = ghostteleportlocs[A]
-	if(!thearea)	return
+	if(!thearea)
+		return
 
 	var/list/L = list()
 	for(var/turf/T in get_area_turfs(thearea.type))
@@ -368,7 +367,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	ManualFollow(target)
 
 // This is the ghost's follow verb with an argument
-/mob/dead/observer/proc/ManualFollow(var/atom/movable/target)
+/mob/dead/observer/proc/ManualFollow(atom/movable/target)
 	if (!istype(target))
 		return
 

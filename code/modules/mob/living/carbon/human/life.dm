@@ -360,12 +360,18 @@
 					if(istype(O)) O.add_autopsy_data("Radiation Poisoning", damage)
 
 	proc/breathe()
-		if(NO_BREATH in src.mutations)	return //#Z2 We need no breath with this mutation
-		if(reagents.has_reagent("lexorin")) return
-		if(istype(loc, /obj/machinery/atmospherics/unary/cryo_cell)) return
-		if(species && (species.flags & NO_BREATHE || species.flags & IS_SYNTHETIC)) return
-		if(dna && dna.mutantrace == "adamantine") return
-		if(ismob(loc)) return
+		if(NO_BREATH in src.mutations)
+			return //#Z2 We need no breath with this mutation
+		if(reagents.has_reagent("lexorin"))
+			return
+		if(istype(loc, /obj/machinery/atmospherics/unary/cryo_cell))
+			return
+		if(species && (species.flags & NO_BREATHE || species.flags & IS_SYNTHETIC))
+			return
+		if(dna && dna.mutantrace == "adamantine")
+			return
+		if(ismob(loc))
+			return
 
 		var/datum/gas_mixture/environment = loc.return_air()
 		var/datum/gas_mixture/breath
@@ -1093,7 +1099,7 @@
 			if(light_amount > LIGHT_DAM_THRESHOLD)
 				take_overall_damage(0,LIGHT_DAMAGE_TAKEN)
 				src << "<span class='userdanger'>The light burns you!</span>"
-				src << 'tauceti/sounds/weapon/sear.ogg'
+				src << 'sound/weapons/sear.ogg'
 			else if (light_amount < LIGHT_HEAL_THRESHOLD) //heal in the dark
 				heal_overall_damage(5,5)
 				adjustToxLoss(-3)
@@ -1617,16 +1623,15 @@
 
 	update_sight()
 		species.sightglassesmod = 0
-		if(glasses)
+		var/obj/item/clothing/glasses/G = glasses
+		if(istype(G) && G.active)
 			if(istype(glasses, /obj/item/clothing/glasses/meson))
 				species.sightglassesmod = 1
 			else if(istype(glasses, /obj/item/clothing/glasses/night) && !istype(glasses, /obj/item/clothing/glasses/night/shadowling))
-				var/obj/item/clothing/glasses/night/nvg = glasses
-				if(nvg.on)
-					species.sightglassesmod = 2
-			else if(istype(glasses, /obj/item/clothing/glasses/thermal) )
+				species.sightglassesmod = 2
+			else if(istype(glasses, /obj/item/clothing/glasses/thermal))
 				species.sightglassesmod = 3
-			else if(istype(glasses, /obj/item/clothing/glasses/science) )
+			else if(istype(glasses, /obj/item/clothing/glasses/science))
 				species.sightglassesmod = 4
 
 		if(stat == DEAD)
@@ -1655,7 +1660,6 @@
 						set_EyesVision("thermal")
 					if(4)
 						set_EyesVision("sci")
-
 
 	proc/handle_random_events()
 		// Puke if toxloss is too high
@@ -1781,6 +1785,20 @@
 
 		if(shock_stage >= 150)
 			Weaken(20)
+
+	proc/handle_heart_beat()
+
+		if(pulse == PULSE_NONE) return
+
+		if(pulse == PULSE_2FAST || shock_stage >= 10 || istype(get_turf(src), /turf/space))
+
+			var/temp = (5 - pulse)/2
+
+			if(heart_beat >= temp)
+				heart_beat = 0
+				src << sound('sound/effects/singlebeat.ogg',0,0,0,50)
+			else if(temp != 0)
+				heart_beat++
 
 	proc/handle_pulse()
 

@@ -60,7 +60,7 @@
 /obj/effect/alien/resin/Destroy()
 	var/turf/T = get_turf(src)
 	T.thermal_conductivity = initial(T.thermal_conductivity)
-	..()
+	return ..()
 
 /obj/effect/alien/resin/proc/healthcheck()
 	if(health <=0)
@@ -68,7 +68,7 @@
 		qdel(src)
 	return
 
-/obj/effect/alien/resin/bullet_act(var/obj/item/projectile/Proj)
+/obj/effect/alien/resin/bullet_act(obj/item/projectile/Proj)
 	health -= Proj.damage
 	..()
 	healthcheck()
@@ -98,7 +98,7 @@
 	healthcheck()
 	return
 
-/obj/effect/alien/resin/hitby(AM as mob|obj)
+/obj/effect/alien/resin/hitby(AM)
 	..()
 	for(var/mob/O in viewers(src, null))
 		O.show_message("\red <B>[src] was hit by [AM].</B>", 1)
@@ -147,7 +147,7 @@
 	healthcheck()
 	return
 
-/obj/effect/alien/resin/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/effect/alien/resin/attackby(obj/item/weapon/W, mob/user)
 	/*if (istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
 		var/obj/item/weapon/grab/G = W
 		if(isalien(user)&&(ishuman(G.affecting)||ismonkey(G.affecting)))
@@ -275,7 +275,7 @@ Alien plants should do something if theres a lot of poison
 				qdel(src)
 	return
 
-/obj/effect/alien/weeds/attackby(var/obj/item/weapon/W, var/mob/user)
+/obj/effect/alien/weeds/attackby(obj/item/weapon/W, mob/user)
 	if(W.attack_verb.len)
 		visible_message("\red <B>\The [src] have been [pick(W.attack_verb)] with \the [W][(user ? " by [user]." : ".")]")
 	else
@@ -411,7 +411,7 @@ Alien plants should do something if theres a lot of poison
 		spawn(rand(MIN_GROWTH_TIME,MAX_GROWTH_TIME))
 			Grow()
 
-	attack_paw(user as mob)
+	attack_paw(user)
 		if(isalien(user))
 			switch(status)
 				if(GROWING)
@@ -420,7 +420,7 @@ Alien plants should do something if theres a lot of poison
 		else
 			return attack_hand(user)
 
-	attack_hand(user as mob)
+	attack_hand(user)
 		user << "It feels slimy."
 		return
 
@@ -438,7 +438,7 @@ Alien plants should do something if theres a lot of poison
 			spawn(15)
 				status = BURST
 
-/obj/effect/alien/egg/attack_ghost(mob/living/user as mob)
+/obj/effect/alien/egg/attack_ghost(mob/living/user)
 	if(!(src in view()))
 		user << "Your soul is too far away."
 		return
@@ -460,14 +460,14 @@ Alien plants should do something if theres a lot of poison
 			spawn(15)
 				status = BURST
 
-/obj/effect/alien/egg/bullet_act(var/obj/item/projectile/Proj)
+/obj/effect/alien/egg/bullet_act(obj/item/projectile/Proj)
 	health -= Proj.damage
 	..()
 	healthcheck()
 	return
 
 
-/obj/effect/alien/egg/attackby(var/obj/item/weapon/W, var/mob/user)
+/obj/effect/alien/egg/attackby(obj/item/weapon/W, mob/user)
 	if(health <= 0)
 		return
 	if(W.attack_verb.len)
@@ -495,4 +495,3 @@ Alien plants should do something if theres a lot of poison
 	if(exposed_temperature > 500)
 		health -= 5
 		healthcheck()
-

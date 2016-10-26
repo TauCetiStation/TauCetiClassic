@@ -9,7 +9,7 @@
 	var/obj/item/weapon/reagent_containers/glass/beaker/vial/sample = null
 	var/datum/disease2/disease/virus2 = null
 
-/obj/machinery/computer/centrifuge/attackby(var/obj/O as obj, var/mob/user as mob)
+/obj/machinery/computer/centrifuge/attackby(obj/O, mob/user)
 	if(istype(O, /obj/item/weapon/screwdriver))
 		return ..(O,user)
 
@@ -32,11 +32,11 @@
 	if(! (stat & (BROKEN|NOPOWER)) && (isolating || curing))
 		icon_state = "centrifuge_moving"
 
-/obj/machinery/computer/centrifuge/attack_hand(var/mob/user as mob)
+/obj/machinery/computer/centrifuge/attack_hand(mob/user)
 	if(..()) return
 	ui_interact(user)
 
-/obj/machinery/computer/centrifuge/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
+/obj/machinery/computer/centrifuge/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
 	user.set_machine(src)
 
 	var/data[0]
@@ -91,21 +91,21 @@
 			isolate()
 
 /obj/machinery/computer/centrifuge/Topic(href, href_list)
-	if (..()) return 0
-
 	var/mob/user = usr
 	var/datum/nanoui/ui = nanomanager.get_open_ui(user, src, "main")
 
-	src.add_fingerprint(user)
-
-	if (href_list["close"])
-		user.unset_machine()
+	if(href_list["close"])
+		user.unset_machine(src)
 		ui.close()
-		return 0
+		return FALSE
 
-	if (href_list["print"])
+	. = ..()
+	if(!.)
+		return
+
+	if(href_list["print"])
 		print(user)
-		return 1
+		return TRUE
 
 	if(href_list["isolate"])
 		var/datum/reagent/blood/B = locate(/datum/reagent/blood) in sample.reagents.reagent_list
@@ -114,7 +114,7 @@
 			virus2 = virus.getcopy()
 			isolating = 40
 			update_icon()
-		return 1
+		return TRUE
 
 	switch(href_list["action"])
 		if ("antibody")
@@ -122,29 +122,29 @@
 			var/datum/reagent/blood/B = locate(/datum/reagent/blood) in sample.reagents.reagent_list
 			if (!B)
 				state("\The [src] buzzes, \"No antibody carrier detected.\"", "blue")
-				return 1
+				return TRUE
 
 			var/has_toxins = locate(/datum/reagent/toxin) in sample.reagents.reagent_list
 			var/has_radium = sample.reagents.has_reagent("radium")
 			if (has_toxins || has_radium)
 				state("\The [src] beeps, \"Pathogen purging speed above nominal.\"", "blue")
 				if (has_toxins)
-					delay = delay/2
+					delay = delay / 2
 				if (has_radium)
-					delay = delay/2
+					delay = delay / 2
 
 			curing = round(delay)
 			playsound(src.loc, 'sound/machines/juicer.ogg', 50, 1)
 			update_icon()
-			return 1
+			return TRUE
 
 		if("sample")
 			if(sample)
 				sample.loc = src.loc
 				sample = null
-			return 1
+			return TRUE
 
-	return 0
+	return FALSE
 
 /obj/machinery/computer/centrifuge/proc/cure()
 	if (!sample) return
@@ -170,7 +170,7 @@
 	update_icon()
 	ping("\The [src] pings, \"Pathogen isolated.\"")
 
-/obj/machinery/computer/centrifuge/proc/print(var/mob/user)
+/obj/machinery/computer/centrifuge/proc/print(mob/user)
 	var/obj/item/weapon/paper/P = new /obj/item/weapon/paper(loc)
 	P.name = "paper - Pathology Report"
 	P.info = {"

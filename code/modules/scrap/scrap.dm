@@ -42,6 +42,7 @@
 	shuffle_loot()
 	update_icon(1)
 	..()
+
 /obj/structure/scrap/Destroy()
 	diggers.Cut()
 	for (var/obj/item in loot)
@@ -84,7 +85,7 @@
 			num--
 	update_icon()
 
-/obj/structure/scrap/proc/randomize_image(var/image/I)
+/obj/structure/scrap/proc/randomize_image(image/I)
 	I.pixel_x = rand(-base_spread,base_spread)
 	I.pixel_y = rand(-base_spread,base_spread)
 	var/matrix/M = matrix()
@@ -92,7 +93,7 @@
 	I.transform = M
 	return I
 
-/obj/structure/scrap/update_icon(var/rebuild_base=0)
+/obj/structure/scrap/update_icon(rebuild_base=0)
 	if(rebuild_base)
 		overlays.Cut()
 		var/num = rand(base_min,base_max)
@@ -328,4 +329,5 @@
 	base_spread = 16
 
 /obj/item/weapon/storage/internal/updating/update_icon()
-	master_item.update_icon()
+	if(master_item)
+		master_item.update_icon()

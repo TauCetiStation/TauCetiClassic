@@ -240,7 +240,7 @@
 	proj_lifespan = 200
 	proj_step_delay = 1
 
-/obj/effect/proc_holder/spell/turf/fireball/cast(var/turf/T)
+/obj/effect/proc_holder/spell/turf/fireball/cast(turf/T)
 	explosion(T, -1, 1, 2, 3)
 
 

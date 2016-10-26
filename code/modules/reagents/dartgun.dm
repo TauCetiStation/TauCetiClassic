@@ -70,7 +70,7 @@
 				for(var/datum/reagent/R in B.reagents.reagent_list)
 					usr << "\blue [R.volume] units of [R.name]"
 
-/obj/item/weapon/gun/dartgun/attackby(obj/item/I as obj, mob/user as mob)
+/obj/item/weapon/gun/dartgun/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/dart_cartridge))
 
 		var/obj/item/weapon/dart_cartridge/D = I
@@ -206,7 +206,7 @@
 	if(!isturf(target.loc) || target == user) return
 	..()
 
-/obj/item/weapon/gun/dartgun/can_hit(var/mob/living/target as mob, var/mob/living/user as mob)
+/obj/item/weapon/gun/dartgun/can_hit(mob/living/target, mob/living/user)
 	return 1
 
 /obj/item/weapon/gun/dartgun/attack_self(mob/user)
@@ -242,7 +242,7 @@
 	user << browse(dat, "window=dartgun")
 	onclose(user, "dartgun", src)
 
-/obj/item/weapon/gun/dartgun/proc/check_beaker_mixing(var/obj/item/B)
+/obj/item/weapon/gun/dartgun/proc/check_beaker_mixing(obj/item/B)
 	if(!mixing || !beakers)
 		return 0
 	for(var/obj/item/M in mixing)
@@ -277,7 +277,7 @@
 	src.updateUsrDialog()
 	return
 
-/obj/item/weapon/gun/dartgun/Fire(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, params, reflex = 0)
+/obj/item/weapon/gun/dartgun/Fire(atom/target, mob/living/user, params, reflex = 0)
 	if(cartridge)
 		spawn(0) fire_dart(target,user)
 	else

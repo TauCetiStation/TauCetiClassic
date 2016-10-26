@@ -79,8 +79,7 @@
 	var/my_master = 0
 	var/my_golems = list()
 
-	//VG stuff
 	var/lastScream = 0 // Prevent scream spam in some situations
-
-	//TG stuff
 	var/name_override //For temporary visible name changes
+
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/human = 5)

@@ -45,7 +45,7 @@ datum/design						//Datum for object designs, used in construction
 
 //A proc to calculate the reliability of a design based on tech levels and innate modifiers.
 //Input: A list of /datum/tech; Output: The new reliabilty.
-datum/design/proc/CalcReliability(var/list/temp_techs)
+datum/design/proc/CalcReliability(list/temp_techs)
 	var/new_reliability
 	for(var/datum/tech/T in temp_techs)
 		if(T.id in req_tech)
@@ -65,6 +65,15 @@ datum/design/seccamera
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/security
+
+datum/design/telepad_concole
+	name = " Circuit Design (Telescience Console) "
+	desc = "Allows for the construction of circuit boards used to build telescience computers."
+	id = "telepad_concole"
+	req_tech = list("programming" = 4, "bluespace" = 3, "engineering" = 3)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/telesci_console
 
 datum/design/aicore
 	name = "Circuit Design (AI Core)"
@@ -283,6 +292,15 @@ datum/design/mechacontrol
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/mecha_control
 
+datum/design/mechrecharger
+	name = "circuit board (Mechbay Recharger)"
+	desc = "Allows for the construction of circuit boards used to build a mechbay recharger."
+	id = "mechrecharger"
+	req_tech = list("programming" = 4, "powerstorage" = 4, "engineering" = 3)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/mech_recharger
+
 datum/design/mechapower
 	name = "Circuit Design (Mech Bay Power Control Console)"
 	desc = "Allows for the construction of circuit boards used to build a mech bay power control console."
@@ -308,7 +326,7 @@ datum/design/ordercomp
 	req_tech = list("programming" = 2)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
-	build_path = /obj/item/weapon/circuitboard/ordercomp
+	build_path = /obj/item/weapon/circuitboard/computer/cargo/request
 
 datum/design/supplycomp
 	name = "Circuit Design (Supply shuttle console)"
@@ -317,7 +335,7 @@ datum/design/supplycomp
 	req_tech = list("programming" = 3)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
-	build_path = /obj/item/weapon/circuitboard/supplycomp
+	build_path = /obj/item/weapon/circuitboard/computer/cargo
 
 datum/design/comm_monitor
 	name = "Circuit Design (Telecommunications Monitoring Console)"
@@ -1561,6 +1579,15 @@ datum/design/synthetic_flash
 	build_path = /obj/item/device/flash/synthetic
 	category = list("Misc")
 
+datum/design/cyborg_analyzer
+	name = "Cyborg Analyzer"
+	desc = "A hand-held scanner able to diagnose robotic injuries."
+	id = "cyborg_analyzer"
+	req_tech = list("materials" = 4, "engineering" = 5, "biotech" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 7000, MAT_GLASS = 7000, MAT_SILVER = 1500, MAT_DIAMOND = 1000)
+	build_path = /obj/item/device/robotanalyzer
+
 datum/design/nanopaste
 	name = "nanopaste"
 	desc = "A tube of paste containing swarms of repair nanites. Very effective in repairing robotic machinery."
@@ -1587,6 +1614,15 @@ datum/design/implant_chem
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 1000, MAT_GLASS = 1000, MAT_SILVER = 100, MAT_GOLD = 100)
 	build_path = /obj/item/weapon/implantcase/chem
+
+datum/design/implant_death
+	name = "Glass Case- 'Death Alarm'"
+	desc = "A case containing a death alarm implant."
+	id = "implant_death"
+	req_tech = list("materials" = 2, "biotech" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 1000, MAT_GLASS = 1000, MAT_SILVER = 100, MAT_GOLD = 100)
+	build_path = /obj/item/weapon/implantcase/death_alarm
 
 datum/design/implant_free
 	name = "boxed freedom implant (with injector)"
@@ -1957,6 +1993,15 @@ datum/design/security_hud
 	materials = list(MAT_METAL = 50, MAT_GLASS = 50)
 	build_path = /obj/item/clothing/glasses/hud/security
 
+datum/design/mining_hud
+	name = "Geological Optical Scanner"
+	desc = "A heads-up display that scans the rocks in view and provides some data about their composition."
+	id = "mining_hud"
+	req_tech = list("materials" = 4, "magnets" = 4)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 50, MAT_GLASS = 50)
+	build_path = /obj/item/clothing/glasses/hud/mining
+
 /////////////////////////////////////////
 //////////////////Test///////////////////
 /////////////////////////////////////////
@@ -2007,13 +2052,22 @@ datum/design/borg_syndicate_module
 /////////////////////////////////////////
 /////////////PDA and Radio stuff/////////
 /////////////////////////////////////////
+datum/design/standart_encrypt
+	name = "Standard Encryption Key"
+	desc = "An encyption key for a radio headset.  Contains cypherkeys."
+	id = "standart_encrypt"
+	req_tech = list("materials" = 2, "engineering" = 2)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 300, MAT_GLASS = 600)
+	build_path = /obj/item/device/encryptionkey
+
 datum/design/binaryencrypt
 	name = "Binary Encrpytion Key"
 	desc = "An encyption key for a radio headset.  Contains cypherkeys."
 	id = "binaryencrypt"
 	req_tech = list("syndicate" = 2)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 300, MAT_GLASS = 300)
+	materials = list(MAT_METAL = 300, MAT_GLASS = 600)
 	build_path = /obj/item/device/encryptionkey/binary
 
 datum/design/pda

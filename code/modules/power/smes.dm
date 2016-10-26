@@ -11,23 +11,25 @@
 	var/output = 50000
 	var/lastout = 0
 	var/loaddemand = 0
-	var/capacity = 5e6
-	var/charge = 1e6
+	var/capacity = 0
+	var/charge = 0
 	var/charging = 0
 	var/chargemode = 0
 	var/chargecount = 0
-	var/chargelevel = 50000
+	var/chargelevel = 0
 	var/online = 1
 	var/name_tag = null
 	var/obj/machinery/power/terminal/terminal = null
-	var/max_input = 200000
-	var/max_output = 200000
+	var/max_input = 0
+	var/max_output = 0
 	var/last_charge = 0
 	var/last_output = 0
 	var/last_online = 0
+	var/constructed = 0
+	var/initialized = 0
 
-/obj/machinery/power/smes/New()
-	..()
+/obj/machinery/power/smes/initialize()
+	initialized = 1
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/smes(null)
 	component_parts += new /obj/item/weapon/stock_parts/cell/high(null)
@@ -37,8 +39,27 @@
 	component_parts += new /obj/item/weapon/stock_parts/cell/high(null)
 	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
 	component_parts += new /obj/item/weapon/cable_coil(null, 5)
+	var/map_capacity = capacity
+	var/map_charge = charge
+	var/map_max_input = max_input
+	var/map_max_output = max_output
 	RefreshParts()
+	if(map_capacity)
+		capacity = map_capacity
+	if(map_charge)
+		charge = map_charge
+	else
+		charge = capacity * 0.2
+	if(map_max_input)
+		max_input = map_max_input
+	if(map_max_output)
+		max_output = map_max_output
+
+/obj/machinery/power/smes/New()
+	..()
 	spawn(5)
+		if(!constructed && !initialized)
+			initialize()
 		dir_loop:
 			for(var/d in cardinal)
 				var/turf/T = get_step(src, d)
@@ -51,8 +72,19 @@
 			stat |= BROKEN
 			return
 		terminal.master = src
+		if(!powernet)
+			connect_to_network()
 		update_icon()
 	return
+
+/obj/machinery/power/smes/proc/update_cells()
+	for(var/obj/item/weapon/stock_parts/cell/cell in component_parts)
+		cell.charge = cell.maxcharge * charge / capacity
+		cell.updateicon()
+
+/obj/machinery/power/smes/exchange_parts()
+	update_cells()
+	..()
 
 /obj/machinery/power/smes/RefreshParts()
 	if(power_fail_event)
@@ -61,13 +93,16 @@
 	else
 		var/IO = 0
 		var/C = 0
+		var/c = 0
 		for(var/obj/item/weapon/stock_parts/capacitor/CP in component_parts)
 			IO += CP.rating
 		max_input = 200000 * IO
 		max_output = 200000 * IO
 		for(var/obj/item/weapon/stock_parts/cell/PC in component_parts)
 			C += PC.maxcharge
-		capacity = C / (15000) * 1e6
+			c += PC.charge
+		capacity = C * 100
+		charge = c * 100
 
 /obj/machinery/power/smes/attackby(obj/item/I, mob/user)
 	//opening using screwdriver
@@ -154,9 +189,12 @@
 		log_game("[src] has been deconstructed by [key_name(user)]")
 		investigate_log("SMES deconstructed by [key_name(user)]","singulo")
 
+/obj/machinery/power/smes/construction()
+	charge = 0
+	constructed = 1
+
 /obj/machinery/power/smes/deconstruction()
-	for(var/obj/item/weapon/stock_parts/cell/cell in component_parts)
-		cell.charge = (charge / capacity) * cell.maxcharge
+	update_cells()
 
 /obj/machinery/power/smes/Destroy()
 	if(ticker && ticker.current_state == GAME_STATE_PLAYING)
@@ -170,7 +208,7 @@
 
 // create a terminal object pointing towards the SMES
 // wires will attach to this
-/obj/machinery/power/smes/proc/make_terminal(turf/T)
+/obj/machinery/power/smes/make_terminal(turf/T)
 	terminal = new/obj/machinery/power/terminal(T)
 	terminal.dir = get_dir(T,src)
 	terminal.master = src
@@ -255,7 +293,8 @@
 		add_avail(lastout)				// add output to powernet (smes side)
 
 		if(charge < 0.0001)
-			online = 0					// stop output if charge falls to zero
+			online = 0
+			loaddemand = 0					// stop output if charge falls to zero
 
 	// only update icon if state changed
 	if(last_disp != chargedisplay() || last_chrg != charging || last_onln != online)
@@ -295,7 +334,7 @@
 	return
 
 
-/obj/machinery/power/smes/add_load(var/amount)
+/obj/machinery/power/smes/add_load(amount)
 	if(terminal && terminal.powernet)
 		terminal.powernet.newload += amount
 
@@ -310,7 +349,7 @@
 	ui_interact(user)
 
 
-/obj/machinery/power/smes/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
+/obj/machinery/power/smes/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
 
 	if(stat & BROKEN)
 		return
@@ -341,25 +380,18 @@
 		// auto update every Master Controller tick
 		ui.set_auto_update(1)
 
+/obj/machinery/power/smes/is_operational_topic()
+	return !(stat & (BROKEN|EMPED))
 
 /obj/machinery/power/smes/Topic(href, href_list)
-	..()
-
-	if (usr.stat || usr.restrained() )
+	. = ..()
+	if(!.)
 		return
-	if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
-		if(!istype(usr, /mob/living/silicon/ai))
-			usr << "\red You don't have the dexterity to do this!"
-			return
 
-//world << "[href] ; [href_list[href]]"
-
-	if (!istype(src.loc, /turf) && !istype(usr, /mob/living/silicon/))
-		return 0 // Do not update ui
+	//world << "[href] ; [href_list[href]]"
 
 	for(var/area/A in active_areas)
 		A.master.powerupdate = 3
-
 
 	if( href_list["cmode"] )
 		chargemode = !chargemode
@@ -391,8 +423,6 @@
 		output = max(0, min(max_output, output))	// clamp to range
 
 	investigate_log("input/output; [chargelevel>output?"<font color='green'>":"<font color='red'>"][chargelevel]/[output]</font> | Output-mode: [online?"<font color='green'>on</font>":"<font color='red'>off</font>"] | Input-mode: [chargemode?"<font color='green'>auto</font>":"<font color='red'>off</font>"] by [usr.key]","singulo")
-
-	return 1
 
 
 /obj/machinery/power/smes/proc/ion_act()
@@ -445,13 +475,12 @@
 	name = "magical power storage unit"
 	desc = "A high-capacity superconducting magnetic energy storage (SMES) unit. Magically produces power."
 	process()
-		capacity = INFINITY
-		charge = INFINITY
+		charge = capacity
 		..()
 
 
 
-/proc/rate_control(var/S, var/V, var/C, var/Min=1, var/Max=5, var/Limit=null)
+/proc/rate_control(S, V, C, Min=1, Max=5, Limit=null)
 	var/href = "<A href='?src=\ref[S];rate control=1;[V]"
 	var/rate = "[href]=-[Max]'>-</A>[href]=-[Min]'>-</A> [(C?C : 0)] [href]=[Min]'>+</A>[href]=[Max]'>+</A>"
 	if(Limit) return "[href]=-[Limit]'>-</A>"+rate+"[href]=[Limit]'>+</A>"

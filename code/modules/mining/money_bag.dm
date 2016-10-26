@@ -9,7 +9,7 @@
 	throwforce = 2.0
 	w_class = 4.0
 
-/obj/item/weapon/moneybag/attack_hand(user as mob)
+/obj/item/weapon/moneybag/attack_hand(user)
 	var/amt_gold = 0
 	var/amt_silver = 0
 	var/amt_diamond = 0
@@ -55,7 +55,7 @@
 		dat += text("Platinum coins: [amt_clown] <A href='?src=\ref[src];remove=platinum'>Remove one</A><br>")
 	user << browse("[dat]", "window=moneybag")
 
-/obj/item/weapon/moneybag/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/weapon/moneybag/attackby(obj/item/weapon/W, mob/user)
 	..()
 	if (istype(W, /obj/item/weapon/coin))
 		var/obj/item/weapon/coin/C = W

@@ -41,7 +41,7 @@
 	productivity = P
 	max_items = max_storage
 
-/obj/machinery/biogenerator/on_reagent_change()	
+/obj/machinery/biogenerator/on_reagent_change()
 	update_icon()
 
 /obj/machinery/biogenerator/update_icon()
@@ -55,7 +55,7 @@
 		icon_state = "biogen-work"
 	return
 
-/obj/machinery/biogenerator/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/obj/machinery/biogenerator/attackby(obj/item/O, mob/user)
 	if(istype(O, /obj/item/weapon/reagent_containers/glass) && !panel_open)
 		if(beaker)
 			user << "<span class='warning'>The biogenerator already occuped.</span>"
@@ -116,7 +116,7 @@
 	update_icon()
 	return
 
-/obj/machinery/biogenerator/interact(mob/user as mob)
+/obj/machinery/biogenerator/interact(mob/user)
 	if(stat & BROKEN || panel_open)
 		return
 	user.set_machine(src)
@@ -170,7 +170,7 @@
 	popup.open()
 	return
 
-/obj/machinery/biogenerator/attack_hand(mob/user as mob)
+/obj/machinery/biogenerator/attack_hand(mob/user)
 	interact(user)
 
 /obj/machinery/biogenerator/proc/activate()
@@ -201,7 +201,7 @@
 		menustat = "void"
 	return
 
-/obj/machinery/biogenerator/proc/check_cost(var/cost)
+/obj/machinery/biogenerator/proc/check_cost(cost)
 	if (cost > points)
 		menustat = "nopoints"
 		return 1
@@ -293,10 +293,9 @@
 	return 1
 
 /obj/machinery/biogenerator/Topic(href, href_list)
-	if(..() || panel_open)
+	. = ..()
+	if(!. || panel_open)
 		return
-
-	usr.set_machine(src)
 
 	switch(href_list["action"])
 		if("activate")
@@ -310,4 +309,5 @@
 			create_product(href_list["item"])
 		if("menu")
 			menustat = "menu"
+
 	updateUsrDialog()

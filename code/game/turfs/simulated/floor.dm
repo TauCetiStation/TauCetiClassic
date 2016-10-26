@@ -220,7 +220,7 @@ turf/simulated/floor/proc/update_icon()
 
 	else if(is_wood_floor())
 		if(!broken && !burnt)
-			if( !(icon_state in wood_icons) )
+			if(!(icon_state in wood_icons))
 				icon_state = "wood"
 				//world << "[icon_state]y's got [icon_state]"
 	/*spawn(1)
@@ -242,10 +242,10 @@ turf/simulated/floor/proc/update_icon()
 			return 0
 
 
-/turf/simulated/floor/attack_paw(mob/user as mob)
+/turf/simulated/floor/attack_paw(mob/user)
 	return src.attack_hand(user)
 
-/turf/simulated/floor/attack_hand(mob/user as mob)
+/turf/simulated/floor/attack_hand(mob/user)
 	if (is_light_floor())
 		toggle_lightfloor_on()
 		update_icon()
@@ -298,10 +298,12 @@ turf/simulated/floor/proc/update_icon()
 	return 0
 
 /turf/simulated/floor/proc/break_tile()
-	if(istype(src,/turf/simulated/floor/engine)) return
+	if(istype(src,/turf/simulated/floor/engine))
+		return
 	if(istype(src,/turf/simulated/floor/mech_bay_recharge_floor))
 		src.ChangeTurf(/turf/simulated/floor/plating)
-	if(broken) return
+	if(broken)
+		return
 	if(is_plasteel_floor())
 		src.icon_state = "damaged[pick(1,2,3,4,5)]"
 		broken = 1
@@ -322,9 +324,12 @@ turf/simulated/floor/proc/update_icon()
 		broken = 1
 
 /turf/simulated/floor/proc/burn_tile()
-	if(istype(src,/turf/simulated/floor/engine)) return
-	if(istype(src,/turf/simulated/floor/plating/airless/asteroid)) return//Asteroid tiles don't burn
-	if(broken || burnt) return
+	if(istype(src,/turf/simulated/floor/engine))
+		return
+	if(istype(src,/turf/simulated/floor/plating/airless/asteroid))
+		return//Asteroid tiles don't burn
+	if(broken || burnt)
+		return
 	if(is_plasteel_floor())
 		src.icon_state = "damaged[pick(1,2,3,4,5)]"
 		burnt = 1
@@ -347,8 +352,10 @@ turf/simulated/floor/proc/update_icon()
 //This proc will set floor_type to null and the update_icon() proc will then change the icon_state of the turf
 //This proc auto corrects the grass tiles' siding.
 /turf/simulated/floor/proc/make_plating()
-	if(istype(src,/turf/simulated/floor/engine)) return
-	if(is_catwalk()) return
+	if(istype(src,/turf/simulated/floor/engine))
+		return
+	if(is_catwalk())
+		return
 
 	if(is_grass_floor())
 		for(var/direction in cardinal)
@@ -363,7 +370,8 @@ turf/simulated/floor/proc/update_icon()
 						var/turf/simulated/floor/FF = get_step(src,direction)
 						FF.update_icon() //so siding get updated properly
 
-	if(!floor_type) return
+	if(!floor_type)
+		return
 	icon_plating = "plating"
 	set_light(0)
 	floor_type = null
@@ -377,7 +385,7 @@ turf/simulated/floor/proc/update_icon()
 //This proc will make the turf a plasteel floor tile. The expected argument is the tile to make the turf with
 //If none is given it will make a new object. dropping or unequipping must be handled before or after calling
 //this proc.
-/turf/simulated/floor/proc/make_plasteel_floor(var/obj/item/stack/tile/plasteel/T = null)
+/turf/simulated/floor/proc/make_plasteel_floor(obj/item/stack/tile/plasteel/T = null)
 	broken = 0
 	burnt = 0
 	intact = 1
@@ -404,7 +412,7 @@ turf/simulated/floor/proc/update_icon()
 //This proc will make the turf a light floor tile. The expected argument is the tile to make the turf with
 //If none is given it will make a new object. dropping or unequipping must be handled before or after calling
 //this proc.
-/turf/simulated/floor/proc/make_light_floor(var/obj/item/stack/tile/light/T = null)
+/turf/simulated/floor/proc/make_light_floor(obj/item/stack/tile/light/T = null)
 	broken = 0
 	burnt = 0
 	intact = 1
@@ -422,7 +430,7 @@ turf/simulated/floor/proc/update_icon()
 
 //This proc will make a turf into a grass patch. Fun eh? Insert the grass tile to be used as the argument
 //If no argument is given a new one will be made.
-/turf/simulated/floor/proc/make_grass_floor(var/obj/item/stack/tile/grass/T = null)
+/turf/simulated/floor/proc/make_grass_floor(obj/item/stack/tile/grass/T = null)
 	broken = 0
 	burnt = 0
 	intact = 1
@@ -440,7 +448,7 @@ turf/simulated/floor/proc/update_icon()
 
 //This proc will make a turf into a wood floor. Fun eh? Insert the wood tile to be used as the argument
 //If no argument is given a new one will be made.
-/turf/simulated/floor/proc/make_wood_floor(var/obj/item/stack/tile/wood/T = null)
+/turf/simulated/floor/proc/make_wood_floor(obj/item/stack/tile/wood/T = null)
 	broken = 0
 	burnt = 0
 	intact = 1
@@ -458,7 +466,7 @@ turf/simulated/floor/proc/update_icon()
 
 //This proc will make a turf into a carpet floor. Fun eh? Insert the carpet tile to be used as the argument
 //If no argument is given a new one will be made.
-/turf/simulated/floor/proc/make_carpet_floor(var/obj/item/stack/tile/carpet/T = null)
+/turf/simulated/floor/proc/make_carpet_floor(obj/item/stack/tile/carpet/T = null)
 	broken = 0
 	burnt = 0
 	intact = 1
@@ -474,7 +482,7 @@ turf/simulated/floor/proc/update_icon()
 	update_icon()
 	levelupdate()
 
-/turf/simulated/floor/attackby(obj/item/C as obj, mob/user as mob)
+/turf/simulated/floor/attackby(obj/item/C, mob/user)
 
 	if(!C || !user)
 		return 0
@@ -522,7 +530,8 @@ turf/simulated/floor/proc/update_icon()
 			make_plating()
 			playsound(src, 'sound/items/Screwdriver.ogg', 80, 1)
 		if(is_catwalk())
-			if(broken) return
+			if(broken)
+				return
 			ReplaceWithLattice()
 			playsound(src, 'sound/items/Screwdriver.ogg', 80, 1)
 		return

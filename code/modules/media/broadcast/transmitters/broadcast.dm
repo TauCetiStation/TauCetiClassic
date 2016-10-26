@@ -48,16 +48,16 @@
 
 	broadcast() // Bzzt
 /*
-/obj/machinery/media/transmitter/broadcast/attackby(var/obj/item/W, mob/user, params)
+/obj/machinery/media/transmitter/broadcast/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/device/multitool))
 		update_multitool_menu(user)
 		return 1
 
-/obj/machinery/media/transmitter/broadcast/attack_ai(var/mob/user as mob)
+/obj/machinery/media/transmitter/broadcast/attack_ai(mob/user)
 	src.add_hiddenprint(user)
 	attack_hand(user)
 
-/obj/machinery/media/transmitter/broadcast/attack_hand(var/mob/user as mob)
+/obj/machinery/media/transmitter/broadcast/attack_hand(mob/user)
 	update_multitool_menu(user)
 
 /obj/machinery/media/transmitter/broadcast/multitool_menu(var/mob/user,var/obj/item/device/multitool/P)
@@ -114,7 +114,8 @@
 	update_icon()
 
 /obj/machinery/media/transmitter/broadcast/Topic(href,href_list)
-	if(..(href, href_list))
+	. = ..()
+	if(!.)
 		return
 
 	if("power" in href_list)
@@ -136,6 +137,8 @@
 				connect_frequency()
 			else
 				usr << "\red Invalid FM frequency. (90.0, 200.0)"
+
+	updateUsrDialog()
 
 /obj/machinery/media/transmitter/broadcast/process()
 	if(stat & (NOPOWER|BROKEN))

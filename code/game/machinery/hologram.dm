@@ -53,7 +53,7 @@ var/const/HOLOPAD_MODE = 0
 		holograph_range += 1 * B.rating
 	holo_range = holograph_range
 
-/obj/machinery/hologram/holopad/attackby(obj/item/P as obj, mob/user as mob, params)
+/obj/machinery/hologram/holopad/attackby(obj/item/P, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "holopad_open", "holopad0", P))
 		return
 
@@ -69,7 +69,7 @@ var/const/HOLOPAD_MODE = 0
 	default_deconstruction_crowbar(P)
 
 
-/obj/machinery/hologram/holopad/attack_hand(var/mob/living/carbon/human/user) //Carn: Hologram requests.
+/obj/machinery/hologram/holopad/attack_hand(mob/living/carbon/human/user) //Carn: Hologram requests.
 	if(!istype(user))
 		return
 	if(alert(user,"Would you like to request an AI's presence?",,"Yes","No") == "Yes")
@@ -213,7 +213,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 /obj/machinery/hologram/Destroy()
 	if(hologram)
 		src:clear_holo()
-	..()
+	return ..()
 
 /*
 Holographic project of everything else.

@@ -15,7 +15,7 @@
 	w_class = 3
 	var/caught_bees = 0
 
-/obj/item/weapon/bee_net/attack_self(mob/user as mob)
+/obj/item/weapon/bee_net/attack_self(mob/user)
 	var/turf/T = get_step(get_turf(user), user.dir)
 	for(var/mob/living/simple_animal/bee/B in T)
 		if(B.feral < 0)

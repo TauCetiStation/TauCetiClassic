@@ -21,14 +21,14 @@
 	lower_aim()
 
 //Removing the lock and the buttons.
-/obj/item/weapon/gun/dropped(mob/user as mob)
+/obj/item/weapon/gun/dropped(mob/user)
 	stop_aim()
 	if (!user) return
 	if (user.client)
 		user.client.remove_gun_icons()
 	return ..()
 
-/obj/item/weapon/gun/equipped(var/mob/user, var/slot)
+/obj/item/weapon/gun/equipped(mob/user, slot)
 	if (slot != slot_l_hand && slot != slot_r_hand)
 		stop_aim()
 		if (user.client)
@@ -44,7 +44,7 @@
 		qdel(target)
 
 //Compute how to fire.....
-/obj/item/weapon/gun/proc/PreFire(atom/A as mob|obj|turf|area, mob/living/user as mob|obj, params)
+/obj/item/weapon/gun/proc/PreFire(atom/A, mob/living/user, params)
 	//Lets not spam it.
 	if(lock_time > world.time - 2) return
 	.
@@ -59,7 +59,7 @@
 	usr.dir = get_cardinal_dir(src, A)
 
 //Aiming at the target mob.
-/obj/item/weapon/gun/proc/Aim(var/mob/living/M)
+/obj/item/weapon/gun/proc/Aim(mob/living/M)
 	if(!target || !(M in target))
 		lock_time = world.time
 		if(target && !automatic) //If they're targeting someone and they have a non automatic weapon.
@@ -73,7 +73,7 @@
 		M.Targeted(src)
 
 //HE MOVED, SHOOT HIM!
-/obj/item/weapon/gun/proc/TargetActed(var/mob/living/T)
+/obj/item/weapon/gun/proc/TargetActed(mob/living/T)
 	var/mob/living/M = loc
 	if(M == T) return
 	if(!istype(M)) return
@@ -148,7 +148,7 @@
 	last_target_click = -5
 	target_locked = null
 
-/mob/living/proc/Targeted(var/obj/item/weapon/gun/I) //Self explanitory.
+/mob/living/proc/Targeted(obj/item/weapon/gun/I) //Self explanitory.
 	if(!I.target)
 		I.target = list(src)
 	else if(I.automatic && I.target.len < 5) //Automatic weapon, they can hold down a room.
@@ -217,7 +217,7 @@
 				I.last_moved_mob = src
 			sleep(1)
 
-/mob/living/proc/NotTargeted(var/obj/item/weapon/gun/I)
+/mob/living/proc/NotTargeted(obj/item/weapon/gun/I)
 	if(!I.silenced)
 		for(var/mob/living/M in viewers(src))
 			M << 'sound/weapons/TargetOff.ogg'
@@ -331,7 +331,7 @@
 				else
 					M << "\red <b>Your character will now be shot if they move.</b>"
 
-/mob/living/proc/set_m_intent(var/intent)
+/mob/living/proc/set_m_intent(intent)
 	if (intent != "walk" && intent != "run")
 		return 0
 	m_intent = intent

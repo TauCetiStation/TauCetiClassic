@@ -93,7 +93,7 @@
 // Proc: GetSMESByTag()
 // Parameters: 1 (tag - RCON tag of SMES we want to look up)
 // Description: Looks up and returns SMES which has matching RCON tag
-/obj/nano_module/rcon/proc/GetSMESByTag(var/tag)
+/obj/nano_module/rcon/proc/GetSMESByTag(tag)
 	if(!tag)
 		return
 

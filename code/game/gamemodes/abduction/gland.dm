@@ -34,7 +34,7 @@
 	next_activation  = world.time + rand(cooldown_low,cooldown_high)
 	SSobj.processing |= src
 
-/obj/item/gland/proc/Inject(var/mob/living/carbon/human/target)
+/obj/item/gland/proc/Inject(mob/living/carbon/human/target)
 	host = target
 	target.internal_organs += src
 	src.loc = target

@@ -13,7 +13,7 @@
 	R.my_atom = src
 	R.add_reagent("fuel", max_fuel)
 
-/obj/item/weapon/weldpack/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/weapon/weldpack/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/T = W
 		if(T.welding & prob(50))
@@ -34,7 +34,7 @@
 	user << "\blue The tank scoffs at your insolence.  It only provides services to welders."
 	return
 
-/obj/item/weapon/weldpack/afterattack(obj/O as obj, mob/user as mob)
+/obj/item/weapon/weldpack/afterattack(obj/O, mob/user)
 	if (istype(O, /obj/structure/reagent_dispensers/fueltank) && get_dist(src,O) <= 1 && src.reagents.total_volume < max_fuel)
 		O.reagents.trans_to(src, max_fuel)
 		user << "\blue You crack the cap off the top of the pack and fill it back up again from the tank."

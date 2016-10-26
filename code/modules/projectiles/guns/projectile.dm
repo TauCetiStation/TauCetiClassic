@@ -53,7 +53,7 @@
 				casting_reagents.delete()
 	return
 
-/obj/item/weapon/gun/projectile/attackby(var/obj/item/A as obj, mob/user as mob)
+/obj/item/weapon/gun/projectile/attackby(obj/item/A, mob/user)
 	if (istype(A, /obj/item/ammo_box/magazine))
 		var/obj/item/ammo_box/magazine/AM = A
 		if (!magazine && istype(AM, mag_type))
@@ -73,7 +73,7 @@
 	if(chambered && chambered.BB)
 		return 1
 
-/obj/item/weapon/gun/projectile/attack_self(mob/living/user as mob)
+/obj/item/weapon/gun/projectile/attack_self(mob/living/user)
 	if (magazine)
 		magazine.loc = get_turf(src.loc)
 		user.put_in_hands(magazine)
@@ -88,14 +88,15 @@
 /obj/item/weapon/gun/projectile/Destroy()
 	qdel(magazine)
 	magazine = null
-	..()
+	return ..()
+
 /obj/item/weapon/gun/projectile/examine()
 	..()
 	if(!energy_gun)
 		usr << "Has [get_ammo()] round\s remaining."
 	return
 
-/obj/item/weapon/gun/projectile/proc/get_ammo(var/countchambered = 1)
+/obj/item/weapon/gun/projectile/proc/get_ammo(countchambered = 1)
 	var/boolets = 0 //mature var names for mature people
 	if (chambered && countchambered)
 		boolets++

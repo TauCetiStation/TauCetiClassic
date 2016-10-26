@@ -156,7 +156,7 @@ VOX HEIST ROUNDTYPE
 
 	return objs
 
-/datum/game_mode/heist/proc/greet_vox(var/datum/mind/raider)
+/datum/game_mode/heist/proc/greet_vox(datum/mind/raider)
 	raider.current << "\blue <B>You are a Vox Raider, fresh from the Shoal!</b>"
 	raider.current << "\blue The Vox are a race of cunning, sharp-eyed nomadic raiders and traders endemic to Tau Ceti and much of the unexplored galaxy. You and the crew have come to the Exodus for plunder, trade or both."
 	raider.current << "\blue Vox are cowardly and will flee from larger groups, but corner one or find them en masse and they are vicious."

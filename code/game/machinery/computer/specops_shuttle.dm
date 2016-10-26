@@ -246,19 +246,19 @@ var/specops_shuttle_timeleft = 0
 			return 0
 	return 1
 
-/obj/machinery/computer/specops_shuttle/attack_ai(var/mob/user as mob)
+/obj/machinery/computer/specops_shuttle/attack_ai(mob/user)
 	return attack_hand(user)
 
-/obj/machinery/computer/specops_shuttle/attack_paw(var/mob/user as mob)
+/obj/machinery/computer/specops_shuttle/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/machinery/computer/specops_shuttle/attackby(I as obj, user as mob)
+/obj/machinery/computer/specops_shuttle/attackby(I, user)
 	if(istype(I,/obj/item/weapon/card/emag))
 		user << "\blue The electronic systems in this console are far too advanced for your primitive hacking peripherals."
 	else
 		return attack_hand(user)
 
-/obj/machinery/computer/specops_shuttle/attack_hand(var/mob/user as mob)
+/obj/machinery/computer/specops_shuttle/attack_hand(mob/user)
 	if(!allowed(user))
 		user << "\red Access Denied."
 		return
@@ -286,27 +286,24 @@ var/specops_shuttle_timeleft = 0
 	return
 
 /obj/machinery/computer/specops_shuttle/Topic(href, href_list)
-	if(..())
+	. = ..()
+	if(!. || !allowed(usr))
 		return
 
-	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(loc, /turf))) || (istype(usr, /mob/living/silicon)))
-		usr.machine = src
-
 	if (href_list["sendtodock"])
-		if(!specops_shuttle_at_station|| specops_shuttle_moving_to_station || specops_shuttle_moving_to_centcom) return
+		if(!specops_shuttle_at_station || specops_shuttle_moving_to_station || specops_shuttle_moving_to_centcom) return
 
 		if (!specops_can_move())
 			usr << "\blue Central Command will not allow the Special Operations shuttle to return yet."
 			if(world.timeofday <= specops_shuttle_timereset)
-				if (((world.timeofday - specops_shuttle_timereset)/10) > 60)
-					usr << "\blue [-((world.timeofday - specops_shuttle_timereset)/10)/60] minutes remain!"
-				usr << "\blue [-(world.timeofday - specops_shuttle_timereset)/10] seconds remain!"
-			return
+				if (((world.timeofday - specops_shuttle_timereset) / 10) > 60)
+					usr << "\blue [-((world.timeofday - specops_shuttle_timereset) / 10) / 60] minutes remain!"
+				usr << "\blue [-(world.timeofday - specops_shuttle_timereset) / 10] seconds remain!"
+			return FALSE
 
-		usr << "\blue The Special Operations shuttle will arrive at Central Command in [(SPECOPS_MOVETIME/10)] seconds."
+		usr << "\blue The Special Operations shuttle will arrive at Central Command in [(SPECOPS_MOVETIME / 10)] seconds."
 
 		temp += "Shuttle departing.<BR><BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
-		updateUsrDialog()
 
 		specops_shuttle_moving_to_centcom = 1
 		specops_shuttle_time = world.timeofday + SPECOPS_MOVETIME
@@ -318,12 +315,11 @@ var/specops_shuttle_timeleft = 0
 
 		if (!specops_can_move())
 			usr << "\red The Special Operations shuttle is unable to leave."
-			return
+			return FALSE
 
 		usr << "\blue The Special Operations shuttle will arrive on [station_name] in [(SPECOPS_MOVETIME/10)] seconds."
 
 		temp += "Shuttle departing.<BR><BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
-		updateUsrDialog()
 
 		var/area/centcom/specops/special_ops = locate()
 		if(special_ops)
@@ -337,9 +333,7 @@ var/specops_shuttle_timeleft = 0
 	else if (href_list["mainmenu"])
 		temp = null
 
-	add_fingerprint(usr)
 	updateUsrDialog()
-	return
 
 /*//Config stuff
 #define SPECOPS_MOVETIME 600	//Time to station is milliseconds. 60 seconds, enough time for everyone to be on the shuttle before it leaves.
@@ -502,22 +496,22 @@ var/specops_shuttle_timeleft = 0
 	if(specops_shuttle_moving_to_station || specops_shuttle_moving_to_centcom) return 0
 	else return 1
 
-/obj/machinery/computer/specops_shuttle/attackby(I as obj, user as mob)
+/obj/machinery/computer/specops_shuttle/attackby(I, user)
 	return attack_hand(user)
 
-/obj/machinery/computer/specops_shuttle/attack_ai(var/mob/user as mob)
+/obj/machinery/computer/specops_shuttle/attack_ai(mob/user)
 	return attack_hand(user)
 
-/obj/machinery/computer/specops_shuttle/attack_paw(var/mob/user as mob)
+/obj/machinery/computer/specops_shuttle/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/machinery/computer/specops_shuttle/attackby(I as obj, user as mob)
+/obj/machinery/computer/specops_shuttle/attackby(I, user)
 	if(istype(I,/obj/item/weapon/card/emag))
 		user << "\blue The electronic systems in this console are far too advanced for your primitive hacking peripherals."
 	else
 		return attack_hand(user)
 
-/obj/machinery/computer/specops_shuttle/attack_hand(var/mob/user as mob)
+/obj/machinery/computer/specops_shuttle/attack_hand(mob/user)
 	if(!allowed(user))
 		user << "\red Access Denied."
 		return

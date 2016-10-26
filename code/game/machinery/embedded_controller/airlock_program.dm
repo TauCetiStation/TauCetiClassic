@@ -219,14 +219,14 @@
 		qdel(signal)
 
 
-/datum/computer/file/embedded_program/proc/signalDoor(var/tag, var/command)
+/datum/computer/file/embedded_program/proc/signalDoor(tag, command)
 	var/datum/signal/signal = new
 	signal.data["tag"] = tag
 	signal.data["command"] = command
 	post_signal(signal)
 
 
-/datum/computer/file/embedded_program/proc/signalPump(var/tag, var/power, var/direction, var/pressure)
+/datum/computer/file/embedded_program/proc/signalPump(tag, power, direction, pressure)
 	var/datum/signal/signal = new
 	signal.data = list(
 		"tag" = tag,
@@ -238,7 +238,7 @@
 	post_signal(signal)
 
 
-/datum/computer/file/embedded_program/proc/cycleDoors(var/target)
+/datum/computer/file/embedded_program/proc/cycleDoors(target)
 	switch(target)
 		if(TARGET_OUTOPEN)
 			toggleDoor(memory["interior_status"], tag_interior_door, memory["secure"], "close")
@@ -267,7 +267,7 @@ Only sends a command if it is needed, i.e. if the door is
 already open, passing an open command to this proc will not
 send an additional command to open the door again.
 ----------------------------------------------------------*/
-/datum/computer/file/embedded_program/proc/toggleDoor(var/list/doorStatus, var/doorTag, var/secure, var/command)
+/datum/computer/file/embedded_program/proc/toggleDoor(list/doorStatus, doorTag, secure, command)
 	var/doorCommand = null
 
 	if(command == "toggle")

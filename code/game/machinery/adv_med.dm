@@ -4,7 +4,7 @@
 /obj/machinery/bodyscanner
 	var/locked
 	name = "Body Scanner"
-	icon = 'icons/obj/Cryogenic2.dmi'
+	icon = 'icons/obj/Cryogenic3.dmi'
 	icon_state = "body_scanner_0"
 	density = 1
 	anchored = 1
@@ -21,7 +21,7 @@
 /*/obj/machinery/bodyscanner/allow_drop()
 	return 0*/
 
-/obj/machinery/bodyscanner/relaymove(mob/user as mob)
+/obj/machinery/bodyscanner/relaymove(mob/user)
 	if (user.stat)
 		return
 	src.go_out()
@@ -78,7 +78,7 @@
 	src.icon_state = "body_scanner_0"
 	return
 
-/obj/machinery/bodyscanner/attackby(obj/item/weapon/grab/G as obj, user as mob)
+/obj/machinery/bodyscanner/attackby(obj/item/weapon/grab/G, user)
 	if ((!( istype(G, /obj/item/weapon/grab) ) || !( ismob(G.affecting) )))
 		return
 	if (src.occupant)
@@ -176,7 +176,7 @@
 	var/delete
 	var/temphtml
 	name = "Body Scanner Console"
-	icon = 'icons/obj/Cryogenic2.dmi'
+	icon = 'icons/obj/Cryogenic3.dmi'
 	icon_state = "body_scannerconsole"
 	anchored = 1
 	var/printing = 0
@@ -214,13 +214,13 @@
 */
 
 
-/obj/machinery/body_scanconsole/attack_paw(mob/user as mob)
+/obj/machinery/body_scanconsole/attack_paw(mob/user)
 	return src.attack_hand(user)
 
-/obj/machinery/body_scanconsole/attack_ai(mob/user as mob)
+/obj/machinery/body_scanconsole/attack_ai(mob/user)
 	return src.attack_hand(user)
 
-/obj/machinery/body_scanconsole/attack_hand(mob/user as mob)
+/obj/machinery/body_scanconsole/attack_hand(mob/user)
 	if(..())
 		return
 	if(!ishuman(connected.occupant))
@@ -403,27 +403,26 @@
 	return
 
 /obj/machinery/body_scanconsole/Topic(href, href_list)
-	if(..())
+	. = ..()
+	if(!.)
 		return
-	if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon/ai)))
-		usr.set_machine(src)
-		if (href_list["print"])
-			if (!src.printing)
-				src.printing = 1
-				usr << "\red Printing... Please wait."
-				spawn(50)
-					src.printing = 0
-					var/obj/item/weapon/paper/P = new(loc)
-					var/mob/living/carbon/human/occupant = src.connected.occupant
-					var/t1 = "<B>[occupant ? occupant.name : "Unknown"]'s</B> advanced scanner report.<BR>"
-					t1 += "Station Time: <B>[worldtime2text()]</B><BR>"
-					switch(occupant.stat) // obvious, see what their status is
-						if(0)
-							t1 += "Status: <B>Conscious</B>"
-						if(1)
-							t1 += "Status: <B>Unconscious</B>"
-						else
-							t1 += "Status: <B>\red*dead*</B>"
-					t1 += storedinfo
-					P.info = t1
-					P.name = "[occupant.name]'s scanner report"
+	if (href_list["print"])
+		if (!src.printing)
+			src.printing = 1
+			usr << "\red Printing... Please wait."
+			spawn(50)
+				src.printing = 0
+				var/obj/item/weapon/paper/P = new(loc)
+				var/mob/living/carbon/human/occupant = src.connected.occupant
+				var/t1 = "<B>[occupant ? occupant.name : "Unknown"]'s</B> advanced scanner report.<BR>"
+				t1 += "Station Time: <B>[worldtime2text()]</B><BR>"
+				switch(occupant.stat) // obvious, see what their status is
+					if(0)
+						t1 += "Status: <B>Conscious</B>"
+					if(1)
+						t1 += "Status: <B>Unconscious</B>"
+					else
+						t1 += "Status: <B>\red*dead*</B>"
+				t1 += storedinfo
+				P.info = t1
+				P.name = "[occupant.name]'s scanner report"

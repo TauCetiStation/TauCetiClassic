@@ -11,16 +11,16 @@ var/global/announce_vox_departure = 0 //Stealth systems - give an announcement o
 	icon_state = "syndishuttle"
 	req_access = list(access_syndicate)
 
-/obj/machinery/computer/vox_stealth/attackby(obj/item/I as obj, mob/user as mob)
+/obj/machinery/computer/vox_stealth/attackby(obj/item/I, mob/user)
 	return attack_hand(user)
 
-/obj/machinery/computer/vox_stealth/attack_ai(mob/user as mob)
+/obj/machinery/computer/vox_stealth/attack_ai(mob/user)
 	return attack_hand(user)
 
-/obj/machinery/computer/vox_stealth/attack_paw(mob/user as mob)
+/obj/machinery/computer/vox_stealth/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/machinery/computer/vox_stealth/attack_hand(mob/user as mob)
+/obj/machinery/computer/vox_stealth/attack_hand(mob/user)
 	if(!allowed(user))
 		user << "\red Access Denied"
 		return
@@ -47,7 +47,7 @@ var/global/announce_vox_departure = 0 //Stealth systems - give an announcement o
 	curr_location= locate(/area/shuttle/vox/station)
 
 
-/obj/machinery/computer/vox_station/proc/vox_move_to(area/destination as area)
+/obj/machinery/computer/vox_station/proc/vox_move_to(area/destination)
 	if(moving)	return
 	if(lastMove + VOX_SHUTTLE_COOLDOWN > world.time)	return
 	var/area/dest_location = locate(destination)
@@ -77,17 +77,17 @@ var/global/announce_vox_departure = 0 //Stealth systems - give an announcement o
 	return 1
 
 
-/obj/machinery/computer/vox_station/attackby(obj/item/I as obj, mob/user as mob)
+/obj/machinery/computer/vox_station/attackby(obj/item/I, mob/user)
 	return attack_hand(user)
 
-/obj/machinery/computer/vox_station/attack_ai(mob/user as mob)
+/obj/machinery/computer/vox_station/attack_ai(mob/user)
 	user << "<span class='red'><b>W�r#nING</b>: #%@!!WȆ|_4�54@ \nUn�B88l3 T� L�-�o-L�CaT2 ##$!�RN�0..%..</span>" //Totally not stolen from ninja.
 	return
 
-/obj/machinery/computer/vox_station/attack_paw(mob/user as mob)
+/obj/machinery/computer/vox_station/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/machinery/computer/vox_station/attack_hand(mob/user as mob)
+/obj/machinery/computer/vox_station/attack_hand(mob/user)
 	if(!allowed(user))
 		user << "<span class='red'>Access Denied.</span>"
 		return
@@ -110,17 +110,15 @@ var/global/announce_vox_departure = 0 //Stealth systems - give an announcement o
 
 
 /obj/machinery/computer/vox_station/Topic(href, href_list)
-	if(!isliving(usr))	return
-	var/mob/living/user = usr
-
-	if(in_range(src, user) || istype(user, /mob/living/silicon))
-		user.set_machine(src)
+	. = ..()
+	if(!. || !allowed(usr))
+		return
 
 	vox_shuttle_location = "station"
 	if(href_list["start"])
 		if(ticker && (istype(ticker.mode,/datum/game_mode/heist)))
 			if(!warning)
-				user << "<span class='red'>Returning to dark space will end your raid and report your success or failure. If you are sure, press the button again.</span>"
+				usr << "<span class='red'>Returning to dark space will end your raid and report your success or failure. If you are sure, press the button again.</span>"
 				warning = 1
 				return
 		vox_move_to(/area/shuttle/vox/station)
@@ -135,9 +133,7 @@ var/global/announce_vox_departure = 0 //Stealth systems - give an announcement o
 	else if(href_list["mining"])
 		vox_move_to(/area/vox_station/mining)
 
-	add_fingerprint(usr)
 	updateUsrDialog()
-	return
 
-/obj/machinery/computer/vox_station/bullet_act(var/obj/item/projectile/Proj)
+/obj/machinery/computer/vox_station/bullet_act(obj/item/projectile/Proj)
 	visible_message("[Proj] ricochets off [src]!")

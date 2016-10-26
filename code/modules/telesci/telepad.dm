@@ -47,14 +47,14 @@
 /obj/machinery/telepad_cargo
 	name = "cargo telepad"
 	desc = "A telepad used by the Rapid Crate Sender."
-	icon = 'tauceti/icons/obj/telescience.dmi'
+	icon = 'icons/obj/telescience.dmi'
 	icon_state = "pad-idle"
 	anchored = 1
 	use_power = 1
 	idle_power_usage = 20
 	active_power_usage = 500
 	var/stage = 0
-/obj/machinery/telepad_cargo/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/machinery/telepad_cargo/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/wrench))
 		anchored = 0
 		playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
@@ -89,7 +89,7 @@
 	item_state = "signaler"
 	origin_tech = "bluespace=3"
 
-/obj/item/device/telepad_beacon/attack_self(mob/user as mob)
+/obj/item/device/telepad_beacon/attack_self(mob/user)
 	if(user)
 		user << "<span class='notice'>Locked In.</span>"
 		new /obj/machinery/telepad_cargo(user.loc)
@@ -128,6 +128,7 @@
 /obj/item/weapon/rcs/Destroy()
 	SSobj.processing.Remove(src)
 	return ..()
+
 /obj/item/weapon/rcs/process()
 	if(rcharges > 10)
 		rcharges = 10

@@ -1133,7 +1133,7 @@
 			return
 		switch(href_list["monkey"])
 			if("healthy")
-				if (usr.client.holder.rights & R_ADMIN)
+				if (usr.client.holder.rights & R_SPAWN)
 					var/mob/living/carbon/human/H = current
 					var/mob/living/carbon/monkey/M = current
 					if (istype(H))
@@ -1148,7 +1148,7 @@
 							D.cure(0)
 						sleep(0) //because deleting of virus is done through spawn(0)
 			if("infected")
-				if (usr.client.holder.rights & R_ADMIN)
+				if (usr.client.holder.rights & R_SPAWN)
 					var/mob/living/carbon/human/H = current
 					var/mob/living/carbon/monkey/M = current
 					if (istype(H))
@@ -1161,21 +1161,22 @@
 					else if (istype(M))
 						current.contract_disease(new /datum/disease/jungle_fever,1,0)
 			if("human")
-				var/mob/living/carbon/monkey/M = current
-				if (istype(M))
-					for(var/datum/disease/D in M.viruses)
-						if (istype(D,/datum/disease/jungle_fever))
-							D.cure(0)
-							sleep(0) //because deleting of virus is doing throught spawn(0)
-					log_admin("[key_name(usr)] attempting to humanize [key_name(current)]")
-					message_admins("\blue [key_name_admin(usr)] attempting to humanize [key_name_admin(current)]")
-					var/obj/item/weapon/dnainjector/m2h/m2h = new
-					var/obj/item/weapon/implant/mobfinder = new(M) //hack because humanizing deletes mind --rastaf0
-					src = null
-					m2h.inject(M)
-					src = mobfinder.loc:mind
-					qdel(mobfinder)
-					current.radiation -= 50
+				if (usr.client.holder.rights & R_SPAWN)
+					var/mob/living/carbon/monkey/M = current
+					if (istype(M))
+						for(var/datum/disease/D in M.viruses)
+							if (istype(D,/datum/disease/jungle_fever))
+								D.cure(0)
+								sleep(0) //because deleting of virus is doing throught spawn(0)
+						log_admin("[key_name(usr)] attempting to humanize [key_name(current)]")
+						message_admins("\blue [key_name_admin(usr)] attempting to humanize [key_name_admin(current)]")
+						var/obj/item/weapon/dnainjector/m2h/m2h = new
+						var/obj/item/weapon/implant/mobfinder = new(M) //hack because humanizing deletes mind --rastaf0
+						src = null
+						m2h.inject(M)
+						src = mobfinder.loc:mind
+						qdel(mobfinder)
+						current.radiation -= 50
 
 	else if (href_list["silicon"])
 		current.hud_updateflag |= (1 << SPECIALROLE_HUD)
@@ -1277,7 +1278,7 @@
 
 	edit_memory()
 /*
-	proc/clear_memory(var/silent = 1)
+	proc/clear_memory(silent = 1)
 		var/datum/game_mode/current_mode = ticker.mode
 
 		// remove traitor uplinks
@@ -1465,7 +1466,7 @@
 //	fail |= !ticker.mode.equip_traitor(current, 1)
 	fail |= !ticker.mode.equip_revolutionary(current)
 
-/datum/mind/proc/make_Gang(var/gang)
+/datum/mind/proc/make_Gang(gang)
 	special_role = "[(gang=="A") ? "[gang_name("A")] Gang (A)" : "[gang_name("B")] Gang (B)"] Boss"
 	ticker.mode.update_gang_icons_added(src, gang)
 	ticker.mode.forge_gang_objectives(src, gang)
@@ -1545,7 +1546,7 @@
 				L = agent_landmarks[team]
 				H.loc = L.loc
 
-/datum/mind/proc/AddSpell(var/obj/effect/proc_holder/spell/spell)
+/datum/mind/proc/AddSpell(obj/effect/proc_holder/spell/spell)
 	spell_list += spell
 	if(!spell.action)
 		spell.action = new/datum/action/spell_action
@@ -1557,13 +1558,13 @@
 	spell.action.Grant(current)
 	return
 
-/datum/mind/proc/transfer_actions(var/mob/living/new_character)
+/datum/mind/proc/transfer_actions(mob/living/new_character)
 	if(current && current.actions)
 		for(var/datum/action/A in current.actions)
 			A.Grant(new_character)
 	transfer_mindbound_actions(new_character)
 
-/datum/mind/proc/transfer_mindbound_actions(var/mob/living/new_character)
+/datum/mind/proc/transfer_mindbound_actions(mob/living/new_character)
 	for(var/obj/effect/proc_holder/spell/spell in spell_list)
 		if(!spell.action) // Unlikely but whatever
 			spell.action = new/datum/action/spell_action

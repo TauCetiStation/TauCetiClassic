@@ -42,7 +42,7 @@ turf/simulated/floor/holofloor/update_icon()
 	if(prob(10))
 		overlays += "asteroid[rand(0,9)]"
 
-/turf/simulated/floor/holofloor/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/turf/simulated/floor/holofloor/attackby(obj/item/weapon/W, mob/user)
 	return
 	// HOLOFLOOR DOES NOT GIVE A FUCK
 
@@ -56,11 +56,11 @@ turf/simulated/floor/holofloor/update_icon()
 	layer = 2.8
 	throwpass = 1	//You can throw objects over this, despite it's density.
 
-/obj/structure/table/holotable/attack_hand(mob/user as mob)
+/obj/structure/table/holotable/attack_hand(mob/user)
 	return // HOLOTABLE DOES NOT GIVE A FUCK
 
 
-/obj/structure/table/holotable/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/structure/table/holotable/attackby(obj/item/weapon/W, mob/user)
 	if (istype(W, /obj/item/weapon/wrench))
 		user << "It's a holotable!  There are no bolts!"
 		return
@@ -91,10 +91,7 @@ turf/simulated/floor/holofloor/update_icon()
 	icon_state = "boxing"
 	item_state = "boxing"
 
-/obj/structure/window/reinforced/holowindow/Destroy()
-	..()
-
-/obj/structure/window/reinforced/holowindow/attackby(obj/item/W as obj, mob/user as mob)
+/obj/structure/window/reinforced/holowindow/attackby(obj/item/W, mob/user)
 	if(!istype(W)) return//I really wish I did not need this
 	if (istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
 		var/obj/item/weapon/grab/G = W
@@ -140,20 +137,16 @@ turf/simulated/floor/holofloor/update_icon()
 		..()
 	return
 
-/obj/structure/window/reinforced/holowindow/shatter(var/display_message = 1)
+/obj/structure/window/reinforced/holowindow/shatter(display_message = 1)
 	playsound(src, "shatter", 70, 1)
 	if(display_message)
 		visible_message("[src] fades away as it shatters!")
 	qdel(src)
 	return
 
-/obj/structure/window/reinforced/holowindow/disappearing/Destroy()
-	..()
+/obj/structure/window/reinforced/holowindow/disappearing
 
-/obj/machinery/door/window/holowindoor/Destroy()
-	..()
-
-/obj/machinery/door/window/holowindoor/attackby(obj/item/weapon/I as obj, mob/user as mob)
+/obj/machinery/door/window/holowindoor/attackby(obj/item/weapon/I, mob/user)
 
 	if (src.operating == 1)
 		return
@@ -181,7 +174,7 @@ turf/simulated/floor/holofloor/update_icon()
 
 	return
 
-/obj/machinery/door/window/holowindoor/shatter(var/display_message = 1)
+/obj/machinery/door/window/holowindoor/shatter(display_message = 1)
 	src.density = 0
 	playsound(src, "shatter", 70, 1)
 	if(display_message)
@@ -191,10 +184,7 @@ turf/simulated/floor/holofloor/update_icon()
 obj/structure/stool/bed/chair/holochair
 	icon_state = "chair_g"
 
-/obj/structure/stool/bed/chair/holochair/Destroy()
-	..()
-
-/obj/structure/stool/bed/chair/holochair/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/structure/stool/bed/chair/holochair/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/wrench))
 		user << ("<span class='notice'>It's a holochair, you can't dismantle it!</span>")
 	return
@@ -226,13 +216,13 @@ obj/structure/stool/bed/chair/holochair
 		return 1
 	return 0
 
-/obj/item/weapon/holo/esword/attack(target as mob, mob/user as mob)
+/obj/item/weapon/holo/esword/attack(target, mob/user)
 	..()
 
 /obj/item/weapon/holo/esword/New()
 	item_color = pick("red","blue","green","purple")
 
-/obj/item/weapon/holo/esword/attack_self(mob/living/user as mob)
+/obj/item/weapon/holo/esword/attack_self(mob/living/user)
 	active = !active
 	if (active)
 		force = 30
@@ -274,7 +264,7 @@ obj/structure/stool/bed/chair/holochair
 	density = 1
 	throwpass = 1
 
-/obj/structure/holohoop/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/structure/holohoop/attackby(obj/item/weapon/W, mob/user)
 	if (istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
 		var/obj/item/weapon/grab/G = W
 		if(G.state<2)
@@ -286,7 +276,7 @@ obj/structure/stool/bed/chair/holochair
 		qdel(W)
 		return
 	else if (istype(W, /obj/item) && get_dist(src,user)<2)
-		user.drop_item(src)
+		user.drop_item(src.loc)
 		visible_message("<span class='notice'>[user] dunks [W] into the [src]!</span>", 3)
 		return
 
@@ -320,7 +310,7 @@ obj/structure/stool/bed/chair/holochair
 	active_power_usage = 6
 	power_channel = ENVIRON
 
-/obj/machinery/readybutton/attack_ai(mob/user as mob)
+/obj/machinery/readybutton/attack_ai(mob/user)
 	user << "The station AI is not to interact with these devices!"
 	return
 
@@ -328,10 +318,10 @@ obj/structure/stool/bed/chair/holochair
 	..()
 
 
-/obj/machinery/readybutton/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/machinery/readybutton/attackby(obj/item/weapon/W, mob/user)
 	user << "The device is a solid button, there's nothing you can do with it!"
 
-/obj/machinery/readybutton/attack_hand(mob/user as mob)
+/obj/machinery/readybutton/attack_hand(mob/user)
 
 	if(user.stat || stat & (NOPOWER|BROKEN))
 		user << "This device is not powered."
@@ -385,10 +375,10 @@ obj/structure/stool/bed/chair/holochair
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "rack"
 
-/obj/structure/rack/holorack/attack_hand(mob/user as mob)
+/obj/structure/rack/holorack/attack_hand(mob/user)
 	return
 
-/obj/structure/rack/holorack/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/structure/rack/holorack/attackby(obj/item/weapon/W, mob/user)
 	if (istype(W, /obj/item/weapon/wrench))
 		user << "It's a holorack!  You can't unwrench it!"
 		return
@@ -409,7 +399,7 @@ obj/structure/stool/bed/chair/holochair
 	..()
 	set_light(2) //hologram lighting
 
-/mob/living/simple_animal/hostile/carp/holodeck/proc/set_safety(var/safe)
+/mob/living/simple_animal/hostile/carp/holodeck/proc/set_safety(safe)
 	if (safe)
 		faction = "neutral"
 		melee_damage_lower = 0

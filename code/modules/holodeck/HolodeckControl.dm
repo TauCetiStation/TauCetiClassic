@@ -33,9 +33,9 @@
 	"Theatre" = "theatre", \
 	"Courtroom" = "courtroom"	\
 	)
-	var/list/restricted_programs = list("Atmospheric Burn Simulation" = "burntest", "Wildlife Simulation" = "wildlifecarp")
+	var/list/restricted_programs = list("Wildlife Simulation" = "wildlifecarp")// "Atmospheric Burn Simulation" = "burntest", - no, Dave
 
-/obj/machinery/computer/HolodeckControl/attack_hand(var/mob/user as mob)
+/obj/machinery/computer/HolodeckControl/attack_hand(mob/user)
 	if(..())
 		return
 
@@ -88,40 +88,37 @@
 
 
 /obj/machinery/computer/HolodeckControl/Topic(href, href_list)
-	if(..())
-		return 1
-	if((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon)))
-		usr.set_machine(src)
+	. = ..()
+	if(!.)
+		return
 
-		if(href_list["program"])
-			var/prog = href_list["program"]
-			if(holoscene_templates.Find(prog))
-				loadIdProgram(prog)
+	if(href_list["program"])
+		var/prog = href_list["program"]
+		if(holoscene_templates.Find(prog))
+			loadIdProgram(prog)
 
-		else if(href_list["AIoverride"])
-			if(!issilicon(usr))
-				return
+	else if(href_list["AIoverride"])
+		if(!issilicon_allowed(usr))
+			return FALSE
 
-			if(safety_disabled && emagged)
-				return //if a traitor has gone through the trouble to emag the thing, let them keep it.
+		if(safety_disabled && emagged)
+			return FALSE//if a traitor has gone through the trouble to emag the thing, let them keep it.
 
-			safety_disabled = !safety_disabled
-			update_projections()
-			if(safety_disabled)
-				message_admins("[key_name_admin(usr)] overrode the holodeck's safeties")
-				log_game("[key_name(usr)] overrided the holodeck's safeties")
-			else
-				message_admins("[key_name_admin(usr)] restored the holodeck's safeties")
-				log_game("[key_name(usr)] restored the holodeck's safeties")
+		safety_disabled = !safety_disabled
+		update_projections()
+		if(safety_disabled)
+			message_admins("[key_name_admin(usr)] overrode the holodeck's safeties")
+			log_game("[key_name(usr)] overrided the holodeck's safeties")
+		else
+			message_admins("[key_name_admin(usr)] restored the holodeck's safeties")
+			log_game("[key_name(usr)] restored the holodeck's safeties")
 
-		else if(href_list["gravity"])
-			toggleGravity(linkedholodeck)
+	else if(href_list["gravity"])
+		toggleGravity(linkedholodeck)
 
-		src.add_fingerprint(usr)
 	src.updateUsrDialog()
-	return
 
-/obj/machinery/computer/HolodeckControl/attackby(var/obj/item/weapon/D as obj, var/mob/user as mob)
+/obj/machinery/computer/HolodeckControl/attackby(obj/item/weapon/D, mob/user)
 	if(istype(D, /obj/item/weapon/card/emag))
 		playsound(src.loc, 'sound/effects/sparks4.ogg', 75, 1)
 		last_to_emag = user //emag again to change the owner
@@ -159,9 +156,9 @@
 //This could all be done better, but it works for now.
 /obj/machinery/computer/HolodeckControl/Destroy()
 	emergencyShutdown()
-	..()
+	return ..()
 
-/obj/machinery/computer/HolodeckControl/meteorhit(var/obj/O as obj)
+/obj/machinery/computer/HolodeckControl/meteorhit(obj/O)
 	emergencyShutdown()
 	..()
 
@@ -220,7 +217,7 @@
 				T.ex_act(3)
 				T.hotspot_expose(1000,500,1)
 
-/obj/machinery/computer/HolodeckControl/proc/derez(var/obj/obj , var/silent = 1)
+/obj/machinery/computer/HolodeckControl/proc/derez(obj/obj , silent = 1)
 	holographic_objs.Remove(obj)
 
 	if(obj == null)
@@ -237,14 +234,14 @@
 		visible_message("The [oldobj.name] fades away!")
 	qdel(obj)
 
-/obj/machinery/computer/HolodeckControl/proc/checkInteg(var/area/A)
+/obj/machinery/computer/HolodeckControl/proc/checkInteg(area/A)
 	for(var/turf/T in A)
 		if(istype(T, /turf/space))
 			return 0
 
 	return 1
 
-/obj/machinery/computer/HolodeckControl/proc/loadIdProgram(var/id = "turnoff")
+/obj/machinery/computer/HolodeckControl/proc/loadIdProgram(id = "turnoff")
 	current_scene = holoscene_templates[id]
 	loadProgram()
 
@@ -307,7 +304,7 @@
 
 	update_projections()
 
-/obj/machinery/computer/HolodeckControl/proc/startFire(var/obj/effect/landmark/L)
+/obj/machinery/computer/HolodeckControl/proc/startFire(obj/effect/landmark/L)
 	var/turf/T = get_turf(L)
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(2, 1, T)
@@ -316,7 +313,7 @@
 		T.temperature = 5000
 		T.hotspot_expose(50000,50000,1)
 
-/obj/machinery/computer/HolodeckControl/proc/toggleGravity(var/area/A)
+/obj/machinery/computer/HolodeckControl/proc/toggleGravity(area/A)
 	if(world.time < (last_gravity_change + 25))
 		if(world.time < (last_gravity_change + 15))//To prevent super-spam clicking
 			return

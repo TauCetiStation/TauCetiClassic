@@ -3,7 +3,7 @@
 	set name = "Show Laws"
 	show_laws()
 
-/mob/living/silicon/robot/show_laws(var/everyone = 0)
+/mob/living/silicon/robot/show_laws(everyone = 0)
 	laws_sanity_check()
 	var/who
 
@@ -76,17 +76,17 @@
 /mob/living/silicon/proc/has_zeroth_law()
 	return laws.zeroth
 
-/mob/living/silicon/robot/proc/set_zeroth_law(var/law)
+/mob/living/silicon/robot/proc/set_zeroth_law(law)
 	throw_alert("newlaw")
 	laws_sanity_check()
 	laws.set_zeroth_law(law)
 
-/mob/living/silicon/robot/set_zeroth_law(var/law, var/law_borg)
+/mob/living/silicon/robot/set_zeroth_law(law, law_borg)
 	..()
 	if(tracking_entities)
 		src << "<span class='warning'>Internal camera is currently being accessed.</span>"
 
-/mob/living/silicon/robot/proc/add_inherent_law(var/law)
+/mob/living/silicon/robot/proc/add_inherent_law(law)
 	throw_alert("newlaw")
 	laws_sanity_check()
 	laws.add_inherent_law(law)
@@ -96,7 +96,7 @@
 	laws_sanity_check()
 	laws.clear_inherent_laws()
 
-/mob/living/silicon/robot/proc/add_supplied_law(var/number, var/law)
+/mob/living/silicon/robot/proc/add_supplied_law(number, law)
 	throw_alert("newlaw")
 	laws_sanity_check()
 	laws.add_supplied_law(number, law)
@@ -106,7 +106,7 @@
 	laws_sanity_check()
 	laws.clear_supplied_laws()
 
-/mob/living/silicon/robot/proc/add_ion_law(var/law)
+/mob/living/silicon/robot/proc/add_ion_law(law)
 	throw_alert("newlaw")
 	laws_sanity_check()
 	laws.add_ion_law(law)

@@ -56,7 +56,7 @@
 /obj/item/weapon/spikethrower/update_icon()
 	icon_state = "spikethrower[spikes]"
 
-/obj/item/weapon/spikethrower/afterattack(atom/A as mob|obj|turf|area, mob/living/user as mob|obj, flag, params)
+/obj/item/weapon/spikethrower/afterattack(atom/A, mob/living/user, flag, params)
 	if(flag) return
 	if(user && user.client && user.client.gun_mode && !(A in target))
 		//TODO: Make this compatible with targetting (prolly have to actually make it a gun subtype, ugh.)
@@ -64,7 +64,7 @@
 	else
 		Fire(A,user,params)
 
-/obj/item/weapon/spikethrower/attack(mob/living/M as mob, mob/living/user as mob, def_zone)
+/obj/item/weapon/spikethrower/attack(mob/living/M, mob/living/user, def_zone)
 
 	if (M == user && user.zone_sel.selecting == "mouth")
 		M.visible_message("\red [user] attempts without success to fit [src] into their mouth.")
@@ -81,7 +81,7 @@
 	else
 		return ..()
 
-/obj/item/weapon/spikethrower/proc/Fire(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, params, reflex = 0)
+/obj/item/weapon/spikethrower/proc/Fire(atom/target, mob/living/user, params, reflex = 0)
 
 	add_fingerprint(user)
 
@@ -133,7 +133,7 @@
 
 	var/mode = 1
 
-/obj/item/weapon/gun/energy/noisecannon/attack_hand(mob/user as mob)
+/obj/item/weapon/gun/energy/noisecannon/attack_hand(mob/user)
 	if(loc != user)
 		var/mob/living/carbon/human/H = user
 		if(istype(H))

@@ -94,7 +94,7 @@ Version 1 changes (from version 0):
 
 /sd_alert/Destroy()
 	target << browse(null,"window=\ref[src]")
-	..()
+	return ..()
 
 /sd_alert/New(who, tag)
 	..()

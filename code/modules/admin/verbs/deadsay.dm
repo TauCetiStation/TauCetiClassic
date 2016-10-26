@@ -1,4 +1,4 @@
-/client/proc/dsay(msg as text)
+/client/proc/dsay(msg)
 	set category = "Special Verbs"
 	set name = "Dsay" //Gave this shit a shorter name so you only have to time out "dsay" rather than "dead say" to use it --NeoFite
 	set hidden = 1
@@ -19,12 +19,6 @@
 		return
 
 	var/stafftype = null
-
-	if (src.holder.rights & R_MOD)
-		stafftype = "MOD"
-
-	if (src.holder.rights & R_MENTOR)
-		stafftype = "MENTOR"
 
 	if (src.holder.rights & R_ADMIN)
 		stafftype = "ADMIN"

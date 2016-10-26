@@ -86,7 +86,7 @@
 /obj/machinery/atmospherics/unary/cryo_cell/allow_drop()
 	return 0
 
-/obj/machinery/atmospherics/unary/cryo_cell/relaymove(var/mob/user)
+/obj/machinery/atmospherics/unary/cryo_cell/relaymove(mob/user)
 	container_resist(user)
 
 /obj/machinery/atmospherics/unary/cryo_cell/container_resist(mob/user)
@@ -195,11 +195,9 @@
 		return
 
 /obj/machinery/atmospherics/unary/cryo_cell/Topic(href, href_list)
-	if(usr == occupant || panel_open)
-		return 0 // don't update UIs attached to this object
-
-	if(..())
-		return 0 // don't update UIs attached to this object
+	. = ..()
+	if(!. || usr == occupant || panel_open)
+		return FALSE // don't update UIs attached to this object
 
 	if(href_list["switchOn"])
 		if(!state_open)
@@ -223,10 +221,8 @@
 			beaker = null
 
 	update_icon()
-	add_fingerprint(usr)
-	return 1 // update UIs attached to this object
 
-/obj/machinery/atmospherics/unary/cryo_cell/attackby(var/obj/item/weapon/G as obj, var/mob/user as mob)
+/obj/machinery/atmospherics/unary/cryo_cell/attackby(obj/item/weapon/G, mob/user)
 	if(istype(G, /obj/item/weapon/reagent_containers/glass))
 		if(beaker)
 			user << "\red A beaker is already loaded into the machine."

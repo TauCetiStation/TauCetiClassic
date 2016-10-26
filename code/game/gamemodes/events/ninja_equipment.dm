@@ -48,8 +48,7 @@ ________________________________________________________________________________
 	if(hologram)//If there is a hologram
 		qdel(hologram.i_attached)//Delete it and the attached image.
 		qdel(hologram)
-	..()
-	return
+	return ..()
 
 //Simply deletes all the attachments and self, killing all related procs.
 /obj/item/clothing/suit/space/space_ninja/proc/terminate()
@@ -744,7 +743,7 @@ ________________________________________________________________________________
 
 //=======//SPECIAL AI FUNCTIONS//=======//
 
-/obj/item/clothing/suit/space/space_ninja/proc/ai_holo(var/turf/T in oview(3,affecting))//To have an internal AI display a hologram to the AI and ninja only.
+/obj/item/clothing/suit/space/space_ninja/proc/ai_holo(turf/T in oview(3,affecting))//To have an internal AI display a hologram to the AI and ninja only.
 	set name = "Display Hologram"
 	set desc = "Channel a holographic image directly to the user's field of vision. Others will not see it."
 	set category = null
@@ -972,7 +971,7 @@ ________________________________________________________________________________
 
 //=======//ENERGY DRAIN PROCS//=======//
 
-/obj/item/clothing/gloves/space_ninja/proc/drain(target_type as text, target, obj/suit)
+/obj/item/clothing/gloves/space_ninja/proc/drain(target_type, target, obj/suit)
 //Var Initialize
 	var/obj/item/clothing/suit/space/space_ninja/S = suit
 	var/mob/living/carbon/human/U = S.affecting
@@ -1440,7 +1439,7 @@ It is possible to destroy the net by the occupant or someone else.
 			M << "\blue You are free of the net!"
 		return*/
 
-	bullet_act(var/obj/item/projectile/Proj)
+	bullet_act(obj/item/projectile/Proj)
 		health -= Proj.damage
 		healthcheck()
 		return 0
@@ -1466,7 +1465,7 @@ It is possible to destroy the net by the occupant or someone else.
 		healthcheck()
 		return
 
-	hitby(AM as mob|obj)
+	hitby(AM)
 		..()
 		for(var/mob/O in viewers(src, null))
 			O.show_message(text("\red <B>[src] was hit by [AM].</B>"), 1)
@@ -1509,7 +1508,7 @@ It is possible to destroy the net by the occupant or someone else.
 		healthcheck()
 		return
 
-	attackby(obj/item/weapon/W as obj, mob/user as mob)
+	attackby(obj/item/weapon/W, mob/user)
 		var/aforce = W.force
 		health = max(0, health - aforce)
 		healthcheck()

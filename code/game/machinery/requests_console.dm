@@ -118,7 +118,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 			req_console_information -= department
 	return ..()
 
-/obj/machinery/requests_console/attack_hand(user as mob)
+/obj/machinery/requests_console/attack_hand(user)
 	if(..(user))
 		return
 	var/dat
@@ -222,9 +222,9 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 	return
 
 /obj/machinery/requests_console/Topic(href, href_list)
-	if(..())	return
-	usr.set_machine(src)
-	add_fingerprint(usr)
+	. = ..()
+	if(!.)
+		return
 
 	if(reject_bad_text(href_list["write"]))
 		dpt = ckey(href_list["write"]) //write contains the string of the receiving department's name
@@ -234,8 +234,10 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 			message = new_message
 			screen = 9
 			switch(href_list["priority"])
-				if("2")	priority = 2
-				else	priority = -1
+				if("2")
+					priority = 2
+				else
+					priority = -1
 		else
 			dpt = "";
 			msgVerified = ""
@@ -248,17 +250,20 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 		if(new_message)
 			message = new_message
 			switch(href_list["priority"])
-				if("2")	priority = 2
-				else	priority = -1
+				if("2")
+					priority = 2
+				else
+					priority = -1
 		else
 			message = ""
 			announceAuth = 0
 			screen = 0
 
 	if(href_list["sendAnnouncement"])
-		if(!announcementConsole)	return
+		if(!announcementConsole)
+			return FALSE
 		for(var/mob/M in player_list)
-			if(!istype(M,/mob/new_player))
+			if(!istype(M, /mob/new_player))
 				M << "<b><font size = 3><font color = red>[department] announcement:</font color> [message]</font size></b>"
 		announceAuth = 0
 		message = ""
@@ -278,7 +283,8 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 		if (sending)
 			var/pass = 0
 			for (var/obj/machinery/message_server/MS in world)
-				if(!MS.active) continue
+				if(!MS.active)
+					continue
 				MS.send_rc_message(href_list["department"],department,log_msg,msgStamped,msgVerified,priority)
 				pass = 1
 
@@ -348,7 +354,8 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 		if(9)		//authentication
 			screen = 9
 		if(10)		//send announcement
-			if(!announcementConsole)	return
+			if(!announcementConsole)
+				return FALSE
 			screen = 10
 		else		//main menu
 			dpt = ""
@@ -361,14 +368,15 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 	//Handle silencing the console
 	switch( href_list["setSilent"] )
 		if(null)	//skip
-		if("1")	silent = 1
-		else	silent = 0
+		if("1")
+			silent = 1
+		else
+			silent = 0
 
 	updateUsrDialog()
-	return
 
 					//err... hacking code, which has no reason for existing... but anyway... it's supposed to unlock priority 3 messanging on that console (EXTREME priority...) the code for that actually exists.
-/obj/machinery/requests_console/attackby(var/obj/item/weapon/O as obj, var/mob/user as mob)
+/obj/machinery/requests_console/attackby(obj/item/weapon/O, mob/user)
 	/*
 	if (istype(O, /obj/item/weapon/crowbar))
 		if(open)

@@ -1,5 +1,5 @@
 //allows right clicking mobs to send an admin PM to their client, forwards the selected mob's client to cmd_admin_pm
-/client/proc/cmd_admin_pm_context(mob/M as mob in mob_list)
+/client/proc/cmd_admin_pm_context(mob/M in mob_list)
 	set category = null
 	set name = "Admin PM Mob"
 	if(!holder)
@@ -32,30 +32,57 @@
 	cmd_admin_pm(targets[target],null)
 	feedback_add_details("admin_verb","APM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/client/proc/cmd_ahelp_reply(whom)
+	if(prefs.muted & MUTE_ADMINHELP || ((src in mentors) && (prefs.muted & MUTE_MENTORHELP)))
+		src << "<font color='red'>Error: Admin-PM: You are unable to use admin PM-s (muted).</font>"
+		return
+	var/client/C
+	C = whom
+	if(!C)
+		if(holder)
+			src << "<font color='red'>Error: Admin-PM: Client not found.</font>"
+		return
+	if(usr.client in mentors)
+		message_mentors("[key_name(src, 0, 0, 0)] has started replying to [key_name(C, 0, 0, 0)]'s help request.")
+//	if(usr in mentors)
+	message_admins("[key_name_admin(src)] has started replying to [key_name(C, 0, 0)]'s help request.")
+	var/msg = input(src,"Message:", "Private message to [key_name(C, 0, 0)]") as text|null
+	if (!msg)
+		message_admins("[key_name_admin(src)] has cancelled their reply to [key_name(C, 0, 0)]'s help request.")
+		if(usr.client in mentors)
+			message_mentors("[key_name(src, 0, 0, 0)] has cancelled their reply to [key_name(C, 0, 0, 0)]'s help request.")
+		return
+	msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
+	cmd_admin_pm(whom, msg)
 
 //takes input from cmd_admin_pm_context, cmd_admin_pm_panel or /client/Topic and sends them a PM.
 //Fetching a message if needed. src is the sender and C is the target client
 
-/client/proc/cmd_admin_pm(var/client/C, var/msg = null)
-	if(prefs.muted & MUTE_ADMINHELP)
+/client/proc/cmd_admin_pm(client/C, msg = null)
+	if(prefs.muted & MUTE_ADMINHELP || ((src in mentors) && (prefs.muted & MUTE_MENTORHELP)))
 		src << "<font color='red'>Error: Private-Message: You are unable to use PM-s (muted).</font>"
 		return
 
 	if(!istype(C,/client))
-		if(holder)	src << "<font color='red'>Error: Private-Message: Client not found.</font>"
-		else		adminhelp(msg)	//admin we are replying to left. adminhelp instead
+		if(holder)
+			src << "<font color='red'>Error: Private-Message: Client not found.</font>"
+		else
+			adminhelp(msg)	//admin we are replying to left. adminhelp instead
 		return
 
 	//get message text, limit it's length.and clean/escape html
 	if(!msg)
-		msg = input(src,"Message:", "Private message to [key_name(C, 0, holder ? 1 : 0)]") as text|null
+		msg = input(src,"Message:", "Private message to [key_name(C, 0, holder ? 1 : 0, holder ? 1 : 0)]") as text|null
 
 		msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
 
-		if(!msg)	return
+		if(!msg)
+			return
 		if(!C)
-			if(holder)	src << "<font color='red'>Error: Admin-PM: Client not found.</font>"
-			else		adminhelp(msg)	//admin we are replying to has vanished, adminhelp instead
+			if(holder)
+				src << "<font color='red'>Error: Admin-PM: Client not found.</font>"
+			else
+				adminhelp(msg)	//admin we are replying to has vanished, adminhelp instead
 			return
 
 	if (src.handle_spam_prevention(msg,MUTE_ADMINHELP))
@@ -64,7 +91,8 @@
 	//clean the message if it's not sent by a high-rank admin
 	if(!check_rights(R_SERVER|R_DEBUG,0))
 		//msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
-		if(!msg)	return
+		if(!msg)
+			return
 
 	var/recieve_color = "purple"
 	var/send_pm_type = " "
@@ -72,26 +100,28 @@
 
 
 	if(holder)
-		//mod PMs are maroon
-		//PMs sent from admins and mods display their rank
-		if(holder)
-			if( holder.rights & R_ADMIN )
-				recieve_color = "red"
-			else
-				recieve_color = "maroon"
-			send_pm_type = holder.rank + " "
-			if(!C.holder && holder && holder.fakekey) 
-				recieve_pm_type = "Admin"
-			else
-				recieve_pm_type = holder.rank
-
-	else if(!C.holder)
+		//mentor PMs are maroon
+		//PMs sent from admins display their rank
+		if(C.holder && (holder.rights & R_ADMIN))
+			recieve_color = "red"
+		else
+			recieve_color = "maroon"
+		send_pm_type = holder.rank + " "
+		if(!C.holder && holder && holder.fakekey)
+			recieve_pm_type = "Admin"
+		else
+			recieve_pm_type = holder.rank
+	else if(src in mentors)
+		recieve_color = "maroon"
+		send_pm_type = "Mentor "
+		recieve_pm_type = "Mentor"
+	else if(!C.holder && !(C in mentors))
 		src << "<font color='red'>Error: Admin-PM: Non-admin to non-admin PM communication is forbidden.</font>"
 		return
 
 	var/recieve_message = ""
 
-	if(holder && !C.holder)
+	if(((src in mentors) || holder) && !C.holder)
 		recieve_message = "<font color='[recieve_color]' size='3'><b>-- Click the [recieve_pm_type]'s name to reply --</b></font>\n"
 		if(C.adminhelped)
 			C << recieve_message
@@ -127,8 +157,13 @@
 		//check client/X is an admin and isn't the sender or recipient
 		if(X == C || X == src)
 			continue
-		if(X.key!=key && X.key!=C.key && (X.holder.rights & R_ADMIN) || (X.holder.rights & (R_MOD|R_MENTOR)) )
+		if(X.key!=key && X.key!=C.key)
 			X << "<B><font color='blue'>PM: [key_name(src, X, 0)]-&gt;[key_name(C, X, 0)]:</B> \blue [msg]</font>" //inform X
+	for(var/client/X in mentors)
+		if(X == C || X == src)
+			continue
+		if(X.key!=key && X.key!=C.key && !C.holder && !src.holder)
+			X << "<B><font color='blue'>PM: [key_name(src, X, 0, 0)]-&gt;[key_name(C, X, 0, 0)]:</B> \blue [msg]</font>" //inform X
 
 /client/proc/cmd_admin_irc_pm()
 	if(prefs.muted & MUTE_ADMINHELP)
@@ -155,6 +190,6 @@
 	for(var/client/X in admins)
 		if(X == src)
 			continue
-		if((X.holder.rights & R_ADMIN) || (X.holder.rights & R_MOD))
+		if(X.holder.rights & R_ADMIN)
 			X << "<B><font color='blue'>PM: [key_name(src, X, 0)]-&gt;IRC-Admins:</B> \blue [msg]</font>"
 

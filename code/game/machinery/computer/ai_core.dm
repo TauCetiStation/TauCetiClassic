@@ -10,7 +10,7 @@
 	var/obj/item/device/mmi/brain = null
 
 
-/obj/structure/AIcore/attackby(obj/item/P as obj, mob/user as mob)
+/obj/structure/AIcore/attackby(obj/item/P, mob/user)
 	switch(state)
 		if(0)
 			if(istype(P, /obj/item/weapon/wrench))
@@ -181,7 +181,7 @@
 	anchored = 1
 	state = 20//So it doesn't interact based on the above. Not really necessary.
 
-/obj/structure/AIcore/deactivated/attackby(var/obj/item/device/aicard/A as obj, var/mob/user as mob)
+/obj/structure/AIcore/deactivated/attackby(obj/item/device/aicard/A, mob/user)
 	if(istype(A, /obj/item/device/aicard))//Is it?
 		A.transfer_ai("INACTIVE","AICARD",src,user)
 	return
@@ -189,7 +189,7 @@
 /obj/structure/AIcore/deactivated/Destroy()
 	if(empty_playable_ai_cores.Find(src))
 		empty_playable_ai_cores -= src
-	..()
+	return ..()
 
 /*
 This is a good place for AI-related object verbs so I'm sticking it here.
@@ -197,7 +197,7 @@ If adding stuff to this, don't forget that an AI need to cancel_camera() wheneve
 That prevents a few funky behaviors.
 */
 //What operation to perform based on target, what ineraction to perform based on object used, target itself, user. The object used is src and calls this proc.
-/obj/item/proc/transfer_ai(var/choice as text, var/interaction as text, var/target, var/mob/U as mob)
+/obj/item/proc/transfer_ai(choice, interaction, target, mob/U)
 	if(!src:flush)
 		switch(choice)
 			if("AICORE")//AI mob.

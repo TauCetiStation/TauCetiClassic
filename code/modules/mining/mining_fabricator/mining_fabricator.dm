@@ -43,7 +43,7 @@
 	return
 
 
-/obj/machinery/mecha_part_fabricator/mining_fabricator/interact(mob/user as mob)
+/obj/machinery/mecha_part_fabricator/mining_fabricator/interact(mob/user)
 	var/dat, left_part
 	user.set_machine(src)
 	var/turf/exit = get_step(src,(dir))

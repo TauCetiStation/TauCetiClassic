@@ -25,7 +25,7 @@
 		qdel(src)
 		return
 
-	proc/bang(var/turf/T , var/mob/living/carbon/M)						// Added a new proc called 'bang' that takes a location and a person to be banged.
+	proc/bang(turf/T , mob/living/carbon/M)						// Added a new proc called 'bang' that takes a location and a person to be banged.
 		M << "\red <B>BANG</B>"
 		playsound(src.loc, 'sound/effects/bang.ogg', 50, 1, 5)
 

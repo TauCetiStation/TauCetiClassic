@@ -22,7 +22,7 @@
 		return//No talking for you
 
 
-	emote(var/act,var/m_type=1,var/message = null)
+	emote(act,m_type=1,message = null)
 		return
 
 

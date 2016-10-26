@@ -26,7 +26,7 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 	var/obj/machinery/hydroponics/parent = null
 	var/found_player = 0
 
-/obj/item/seeds/replicapod/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/seeds/replicapod/attackby(obj/item/weapon/W, mob/user)
 
 	if(istype(W,/obj/item/weapon/reagent_containers))
 
@@ -103,7 +103,7 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 					continue
 				question(C)
 
-/obj/item/seeds/replicapod/proc/question(var/client/C)
+/obj/item/seeds/replicapod/proc/question(client/C)
 	spawn(0)
 		if(!C)	return
 		var/response = alert(C, "Someone is harvesting a diona pod. Would you like to play as a diona?", "Dionaea harvest", "Yes", "No", "Never for this round.")
@@ -114,7 +114,7 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 		else if (response == "Never for this round")
 			C.prefs.ignore_question += "diona"
 
-/obj/item/seeds/replicapod/proc/transfer_personality(var/client/player)
+/obj/item/seeds/replicapod/proc/transfer_personality(client/player)
 
 	if(!player) return
 

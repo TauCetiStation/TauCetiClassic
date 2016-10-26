@@ -98,10 +98,9 @@
 		new_player_panel_proc()
 
 	if(href_list["observe"])
-		if(!(src.client.holder && (src.client.holder.rights & (R_ADMIN|R_MOD))))
-			if(jobban_isbanned(src, "Observer"))
-				src << "<span class='red'>You have been banned from observing. Declare yourself.</span>"
-				return 0
+		if(!(ckey in admin_datums) && jobban_isbanned(src, "Observer"))
+			src << "<span class='red'>You have been banned from observing. Declare yourself.</span>"
+			return 0
 		if(alert(src,"Are you sure you wish to observe? You will have to wait 30 minutes before being able to respawn!","Player Setup","Yes","No") == "Yes")
 			if(!client)
 				return 1
@@ -338,7 +337,7 @@
 
 	qdel(src)
 
-/mob/new_player/proc/AnnounceArrival(var/mob/living/carbon/human/character, var/rank)
+/mob/new_player/proc/AnnounceArrival(mob/living/carbon/human/character, rank)
 	if (ticker.current_state == GAME_STATE_PLAYING)
 		var/obj/item/device/radio/intercom/a = new /obj/item/device/radio/intercom(null)// BS12 EDIT Arrivals Announcement Computer, rather than the AI.
 		if(character.mind.role_alt_title)
@@ -496,8 +495,8 @@
 /mob/new_player/is_ready()
 	return ready && ..()
 
-/mob/new_player/hear_say(var/message, var/verb = "says", var/datum/language/language = null, var/alt_name = "",var/italics = 0, var/mob/speaker = null)
+/mob/new_player/hear_say(message, verb = "says", datum/language/language = null, alt_name = "",italics = 0, mob/speaker = null)
 	return
 
-/mob/new_player/hear_radio(var/message, var/verb="says", var/datum/language/language=null, var/part_a, var/part_b, var/mob/speaker = null, var/hard_to_hear = 0)
+/mob/new_player/hear_radio(message, verb="says", datum/language/language=null, part_a, part_b, mob/speaker = null, hard_to_hear = 0)
 	return

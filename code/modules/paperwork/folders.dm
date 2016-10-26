@@ -28,7 +28,7 @@
 		overlays += "folder_paper"
 	return
 
-/obj/item/weapon/folder/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/weapon/folder/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/paper) || istype(W, /obj/item/weapon/photo) || istype(W, /obj/item/weapon/paper_bundle))
 		user.drop_item()
 		W.loc = src
@@ -40,7 +40,7 @@
 			name = "folder[(n_name ? text("- '[n_name]'") : null)]"
 	return
 
-/obj/item/weapon/folder/attack_self(mob/user as mob)
+/obj/item/weapon/folder/attack_self(mob/user)
 	var/dat = "<title>[name]</title>"
 
 	for(var/obj/item/weapon/paper/P in src)

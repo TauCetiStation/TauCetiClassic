@@ -70,7 +70,7 @@
 	nanomanager.update_uis(src)
 	attack_hand(user)
 
-/obj/machinery/computer/card/attack_hand(mob/user as mob)
+/obj/machinery/computer/card/attack_hand(mob/user)
 	if(..()) return
 	if(stat & (NOPOWER|BROKEN)) return
 	ui_interact(user)
@@ -134,8 +134,9 @@
 		ui.open()
 
 /obj/machinery/computer/card/Topic(href, href_list)
-	if(..())
-		return 1
+	. = ..()
+	if(!.)
+		return
 
 	switch(href_list["choice"])
 		if ("modify")

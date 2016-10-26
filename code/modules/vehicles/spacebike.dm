@@ -49,19 +49,19 @@
 	..()
 	usr << "It has number [id]."
 
-/obj/vehicle/space/spacebike/load(var/atom/movable/C)
+/obj/vehicle/space/spacebike/load(atom/movable/C)
 	var/mob/living/M = C
 	if(!istype(C)) return 0
 	if(M.buckled || M.restrained() || !Adjacent(M) || !M.Adjacent(src))
 		return 0
 	return ..(M)
 
-/obj/vehicle/space/spacebike/MouseDrop_T(var/atom/movable/C, mob/user as mob)
+/obj/vehicle/space/spacebike/MouseDrop_T(atom/movable/C, mob/user)
 	if(!load(C))
 		user << "<span class='warning'>You were unable to load \the [C] onto \the [src].</span>"
 		return
 
-/obj/vehicle/space/spacebike/attack_hand(var/mob/user as mob)
+/obj/vehicle/space/spacebike/attack_hand(mob/user)
 	if(!load)
 		return
 	if(load != user)
@@ -77,7 +77,7 @@
 			"<span class='notice'>You hear metal clanking.</span>")
 	unload(load)
 
-/obj/vehicle/space/spacebike/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/vehicle/space/spacebike/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/key/spacebike))
 		var/obj/item/weapon/key/spacebike/K = W
 		if(!key)
@@ -132,16 +132,17 @@
 /obj/vehicle/space/spacebike/relaymove(mob/user, direction)
 	return Move(get_step(src, direction))
 
+
 /obj/vehicle/space/spacebike/Move(var/turf/destination)
 	//these things like space, not turf. Dragging shouldn't weigh you down.
 	if(istype(destination,/turf/space) || pulledby)
 		if(!space_speed)
 			return 0
-		move_delay = space_speed
+		move_delay = space_speed + slow_cooef
 	else
 		if(!land_speed)
 			return 0
-		move_delay = land_speed
+		move_delay = land_speed + slow_cooef
 	return ..()
 
 /obj/vehicle/space/spacebike/can_move()
@@ -231,7 +232,7 @@
 	kickstand = !kickstand
 	anchored = (kickstand || on)
 
-/obj/vehicle/space/spacebike/bullet_act(var/obj/item/projectile/Proj)
+/obj/vehicle/space/spacebike/bullet_act(obj/item/projectile/Proj)
 	if(isliving(load) && prob(protection_percent))
 		var/mob/living/M = load
 		M.bullet_act(Proj)
@@ -252,4 +253,4 @@
 
 /obj/vehicle/space/spacebike/Destroy()
 	qdel(ion)
-	..()
+	return ..()

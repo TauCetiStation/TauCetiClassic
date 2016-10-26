@@ -39,14 +39,7 @@
 		user << browse(dat, "window=alerts")
 		onclose(user, "alerts")
 
-
-	Topic(href, href_list)
-		if(..())
-			return
-		return
-
-
-	proc/triggerAlarm(var/class, area/A, var/O, var/alarmsource)
+	proc/triggerAlarm(class, area/A, O, alarmsource)
 		if(stat & (BROKEN))
 			return
 		var/list/L = src.alarms[class]
@@ -69,7 +62,7 @@
 		return 1
 
 
-	proc/cancelAlarm(var/class, area/A as area, obj/origin)
+	proc/cancelAlarm(class, area/A, obj/origin)
 		if(stat & (BROKEN))
 			return
 		var/list/L = src.alarms[class]

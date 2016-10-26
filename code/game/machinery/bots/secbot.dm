@@ -103,14 +103,14 @@
 	src.icon_state = "secbot[src.on]"
 	src.updateUsrDialog()
 
-/obj/machinery/bot/secbot/attack_hand(mob/user as mob)
+/obj/machinery/bot/secbot/attack_hand(mob/user)
 	. = ..()
 	if(.)
 		return
 	usr.set_machine(src)
 	interact(user)
 
-/obj/machinery/bot/secbot/interact(mob/user as mob)
+/obj/machinery/bot/secbot/interact(mob/user)
 	var/dat
 
 	dat += text({"
@@ -141,8 +141,10 @@ Auto Patrol: []"},
 	return
 
 /obj/machinery/bot/secbot/Topic(href, href_list)
-	usr.set_machine(src)
-	src.add_fingerprint(usr)
+	. = ..()
+	if(!.)
+		return
+
 	if((href_list["power"]) && (src.allowed(usr)))
 		if(src.on)
 			turn_off()
@@ -153,22 +155,19 @@ Auto Patrol: []"},
 	switch(href_list["operation"])
 		if("idcheck")
 			src.idcheck = !src.idcheck
-			src.updateUsrDialog()
 		if("ignorerec")
 			src.check_records = !src.check_records
-			src.updateUsrDialog()
 		if("switchmode")
 			src.arrest_type = !src.arrest_type
-			src.updateUsrDialog()
 		if("patrol")
 			auto_patrol = !auto_patrol
 			mode = SECBOT_IDLE
-			updateUsrDialog()
 		if("declarearrests")
 			src.declare_arrests = !src.declare_arrests
-			src.updateUsrDialog()
 
-/obj/machinery/bot/secbot/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	src.updateUsrDialog()
+
+/obj/machinery/bot/secbot/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if(src.allowed(user) && !open && !emagged)
 			src.locked = !src.locked
@@ -186,7 +185,7 @@ Auto Patrol: []"},
 			src.target = user
 			src.mode = SECBOT_HUNT
 
-/obj/machinery/bot/secbot/Emag(mob/user as mob)
+/obj/machinery/bot/secbot/Emag(mob/user)
 	..()
 	if(open && !locked)
 		if(user) user << "\red You short out [src]'s target assessment circuits."
@@ -484,7 +483,7 @@ Auto Patrol: []"},
 // sets the current destination
 // signals all beacons matching the patrol code
 // beacons will return a signal giving their locations
-/obj/machinery/bot/secbot/proc/set_destination(var/new_dest)
+/obj/machinery/bot/secbot/proc/set_destination(new_dest)
 	new_destination = new_dest
 	post_signal(beacon_freq, "findbeacon", "patrol")
 	awaiting_beacon = 1
@@ -568,11 +567,11 @@ Auto Patrol: []"},
 
 
 // send a radio signal with a single data key/value pair
-/obj/machinery/bot/secbot/proc/post_signal(var/freq, var/key, var/value)
+/obj/machinery/bot/secbot/proc/post_signal(freq, key, value)
 	post_signal_multiple(freq, list("[key]" = value) )
 
 // send a radio signal with multiple data key/values
-/obj/machinery/bot/secbot/proc/post_signal_multiple(var/freq, var/list/keyval)
+/obj/machinery/bot/secbot/proc/post_signal_multiple(freq, list/keyval)
 
 	var/datum/radio_frequency/frequency = radio_controller.return_frequency(freq)
 
@@ -607,7 +606,7 @@ Auto Patrol: []"},
 
 // calculates a path to the current destination
 // given an optional turf to avoid
-/obj/machinery/bot/secbot/proc/calc_path(var/turf/avoid = null)
+/obj/machinery/bot/secbot/proc/calc_path(turf/avoid = null)
 	src.path = AStar(src.loc, patrol_target, /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance, 0, 120, id=botcard, exclude=avoid)
 	if (!path) path = list()
 
@@ -652,7 +651,7 @@ Auto Patrol: []"},
 
 //If the security records say to arrest them, arrest them
 //Or if they have weapons and aren't security, arrest them.
-/obj/machinery/bot/secbot/proc/assess_perp(mob/living/carbon/human/perp as mob)
+/obj/machinery/bot/secbot/proc/assess_perp(mob/living/carbon/human/perp)
 	var/threatcount = 0
 
 	if(src.emagged == 2) return 10 //Everyone is a criminal!
@@ -715,14 +714,14 @@ Auto Patrol: []"},
 	return
 
 /* terrible
-/obj/machinery/bot/secbot/Bumped(atom/movable/M as mob|obj)
+/obj/machinery/bot/secbot/Bumped(atom/movable/M)
 	spawn(0)
 		if(M)
 			var/turf/T = get_turf(src)
 			M:loc = T
 */
 
-/obj/machinery/bot/secbot/proc/speak(var/message)
+/obj/machinery/bot/secbot/proc/speak(message)
 	for(var/mob/O in hearers(src, null))
 		O.show_message("<span class='game say'><span class='name'>[src]</span> beeps, \"[message]\"",2)
 	return
@@ -753,7 +752,7 @@ Auto Patrol: []"},
 	new /obj/effect/decal/cleanable/blood/oil(src.loc)
 	qdel(src)
 
-/obj/machinery/bot/secbot/attack_alien(var/mob/living/carbon/alien/user as mob)
+/obj/machinery/bot/secbot/attack_alien(mob/living/carbon/alien/user)
 	..()
 	if(!isalien(target))
 		src.target = user
@@ -761,7 +760,7 @@ Auto Patrol: []"},
 
 //Secbot Construction
 
-/obj/item/clothing/head/helmet/attackby(var/obj/item/device/assembly/signaler/S, mob/user as mob)
+/obj/item/clothing/head/helmet/attackby(obj/item/device/assembly/signaler/S, mob/user)
 	..()
 	if(!issignaler(S))
 		..()
@@ -780,7 +779,7 @@ Auto Patrol: []"},
 	else
 		return
 
-/obj/item/weapon/secbot_assembly/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/weapon/secbot_assembly/attackby(obj/item/weapon/W, mob/user)
 	..()
 	if((istype(W, /obj/item/weapon/weldingtool)) && (!src.build_step))
 		var/obj/item/weapon/weldingtool/WT = W

@@ -92,7 +92,7 @@
 	return 0
 
 
-/datum/game_mode/proc/greet_head(var/datum/mind/head_mind, var/you_are=1)
+/datum/game_mode/proc/greet_head(datum/mind/head_mind, you_are=1)
 	var/obj_count = 1
 	if (you_are)
 		head_mind.current << "\blue It looks like this shift CentComm has some special orders for you.. check your objectives."

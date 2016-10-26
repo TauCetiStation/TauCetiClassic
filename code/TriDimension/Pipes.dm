@@ -48,7 +48,7 @@
 	initialize()
 
 
-/obj/machinery/atmospherics/pipe/zpipe/hide(var/i)
+/obj/machinery/atmospherics/pipe/zpipe/hide(i)
 	if(level == 1 && istype(loc, /turf/simulated))
 		invisibility = i ? 101 : 0
 	update_icon()
@@ -93,7 +93,7 @@
 		node1.disconnect(src)
 	if(node2)
 		node2.disconnect(src)
-	..()
+	return ..()
 
 /obj/machinery/atmospherics/pipe/zpipe/pipeline_expansion()
 	return list(node1, node2)

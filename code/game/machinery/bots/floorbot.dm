@@ -68,14 +68,14 @@
 	src.path = new()
 	src.updateUsrDialog()
 
-/obj/machinery/bot/floorbot/attack_hand(mob/user as mob)
+/obj/machinery/bot/floorbot/attack_hand(mob/user)
 	. = ..()
 	if (.)
 		return
 	usr.set_machine(src)
 	interact(user)
 
-/obj/machinery/bot/floorbot/interact(mob/user as mob)
+/obj/machinery/bot/floorbot/interact(mob/user)
 	var/dat
 	dat += "<TT><B>Automatic Station Floor Repairer v1.0</B></TT><BR><BR>"
 	dat += "Status: <A href='?src=\ref[src];operation=start'>[src.on ? "On" : "Off"]</A><BR>"
@@ -98,7 +98,7 @@
 	return
 
 
-/obj/machinery/bot/floorbot/attackby(var/obj/item/W , mob/user as mob)
+/obj/machinery/bot/floorbot/attackby(obj/item/W , mob/user)
 	if(istype(W, /obj/item/stack/tile/plasteel))
 		var/obj/item/stack/tile/plasteel/T = W
 		if(src.amount >= 50)
@@ -123,16 +123,15 @@
 	else
 		..()
 
-/obj/machinery/bot/floorbot/Emag(mob/user as mob)
+/obj/machinery/bot/floorbot/Emag(mob/user)
 	..()
 	if(open && !locked)
 		if(user) user << "<span class='notice'>The [src] buzzes and beeps.</span>"
 
 /obj/machinery/bot/floorbot/Topic(href, href_list)
-	if(..())
+	. = ..()
+	if(!.)
 		return
-	usr.set_machine(src)
-	src.add_fingerprint(usr)
 	switch(href_list["operation"])
 		if("start")
 			if (src.on)
@@ -141,13 +140,10 @@
 				turn_on()
 		if("improve")
 			src.improvefloors = !src.improvefloors
-			src.updateUsrDialog()
 		if("tiles")
 			src.eattiles = !src.eattiles
-			src.updateUsrDialog()
 		if("make")
 			src.maketiles = !src.maketiles
-			src.updateUsrDialog()
 		if("bridgemode")
 			switch(src.targetdirection)
 				if(null)
@@ -162,7 +158,7 @@
 					targetdirection = null
 				else
 					targetdirection = null
-			src.updateUsrDialog()
+	src.updateUsrDialog()
 
 /obj/machinery/bot/floorbot/process()
 	//set background = 1
@@ -283,7 +279,7 @@
 	src.oldloc = src.loc
 
 
-/obj/machinery/bot/floorbot/proc/repair(var/turf/target)
+/obj/machinery/bot/floorbot/proc/repair(turf/target)
 	if(istype(target, /turf/space/))
 		if(target.loc.name == "Space")
 			return
@@ -315,7 +311,7 @@
 			src.anchored = 0
 			src.target = null
 
-/obj/machinery/bot/floorbot/proc/eattile(var/obj/item/stack/tile/plasteel/T)
+/obj/machinery/bot/floorbot/proc/eattile(obj/item/stack/tile/plasteel/T)
 	if(!istype(T, /obj/item/stack/tile/plasteel))
 		return
 	visible_message("\red [src] begins to collect tiles.")
@@ -336,7 +332,7 @@
 		src.target = null
 		src.repairing = 0
 
-/obj/machinery/bot/floorbot/proc/maketile(var/obj/item/stack/sheet/metal/M)
+/obj/machinery/bot/floorbot/proc/maketile(obj/item/stack/sheet/metal/M)
 	if(!istype(M, /obj/item/stack/sheet/metal))
 		return
 	if(M.amount > 1)
@@ -391,7 +387,7 @@
 	return
 
 
-/obj/item/weapon/storage/toolbox/mechanical/attackby(var/obj/item/stack/tile/plasteel/T, mob/user as mob)
+/obj/item/weapon/storage/toolbox/mechanical/attackby(obj/item/stack/tile/plasteel/T, mob/user)
 	if(!istype(T, /obj/item/stack/tile/plasteel))
 		..()
 		return
@@ -407,7 +403,7 @@
 	user.drop_from_inventory(src)
 	qdel(src)
 
-/obj/item/weapon/toolbox_tiles/attackby(var/obj/item/W, mob/user as mob)
+/obj/item/weapon/toolbox_tiles/attackby(obj/item/W, mob/user)
 	..()
 	if(isprox(W))
 		qdel(W)
@@ -427,7 +423,7 @@
 
 		src.created_name = t
 
-/obj/item/weapon/toolbox_tiles_sensor/attackby(var/obj/item/W, mob/user as mob)
+/obj/item/weapon/toolbox_tiles_sensor/attackby(obj/item/W, mob/user)
 	..()
 	if(istype(W, /obj/item/robot_parts/l_arm) || istype(W, /obj/item/robot_parts/r_arm))
 		qdel(W)

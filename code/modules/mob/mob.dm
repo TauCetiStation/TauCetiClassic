@@ -12,8 +12,8 @@
 	qdel(hud_used)
 	if(mind && mind.current == src)
 		spellremove(src)
-/*	for(var/infection in viruses)
-		qdel(infection) */
+	for(var/infection in viruses)
+		qdel(infection)
 	ghostize()
 	..()
 */
@@ -29,9 +29,10 @@
 
 /mob/proc/Cell()
 	set category = "Admin"
-	set hidden = 1
+	set hidden = TRUE
 
-	if(!loc) return 0
+	if(!loc)
+		return 0
 
 	var/datum/gas_mixture/environment = loc.return_air()
 
@@ -48,22 +49,23 @@
 
 /mob/proc/show_message(msg, type, alt, alt_type)//Message, type of message (1 or 2), alternative message, alt message type (1 or 2)
 
-	if(!client)	return
+	if(!client)
+		return
 
-	if (type)
-		if(type & 1 && (sdisabilities & BLIND || blinded || paralysis) )//Vision related
-			if (!( alt ))
+	if(type)
+		if((type & 1) && ((sdisabilities & BLIND) || blinded || paralysis) )//Vision related
+			if(!alt)
 				return
 			else
 				msg = alt
 				type = alt_type
-		if (type & 2 && (sdisabilities & DEAF || ear_deaf))//Hearing related
-			if (!( alt ))
+		if((type & 2) && ((sdisabilities & DEAF) || ear_deaf))//Hearing related
+			if (!alt)
 				return
 			else
 				msg = alt
 				type = alt_type
-				if ((type & 1 && sdisabilities & BLIND))
+				if (((type & 1) && (sdisabilities & BLIND)))
 					return
 	// Added voice muffling for Issue 41.
 	if(stat == UNCONSCIOUS || sleeping > 0)
@@ -78,25 +80,25 @@
 // self_message (optional) is what the src mob sees  e.g. "You do something!"
 // blind_message (optional) is what blind people will hear e.g. "You hear something!"
 
-/mob/visible_message(var/message, var/self_message, var/blind_message)
+/mob/visible_message(message, self_message, blind_message)
 	for(var/mob/M in viewers(src))
 		var/msg = message
-		if(self_message && M==src)
+		if(self_message && M == src)
 			msg = self_message
-		M.show_message( msg, 1, blind_message, 2)
+		M.show_message(msg, 1, blind_message, 2)
 
 // Show a message to all mobs in sight of this atom
 // Use for objects performing visible actions
 // message is output to anyone who can see, e.g. "The [src] does something!"
 // blind_message (optional) is what blind people will hear e.g. "You hear something!"
-/atom/proc/visible_message(var/message, var/blind_message)
+/atom/proc/visible_message(message, blind_message)
 	for(var/mob/M in viewers(src))
-		M.show_message( message, 1, blind_message, 2)
+		M.show_message(message, 1, blind_message, 2)
 
 
 /mob/proc/findname(msg)
 	for(var/mob/M in mob_list)
-		if (M.real_name == text("[]", msg))
+		if(M.real_name == text("[]", msg))
 			return M
 	return 0
 
@@ -114,12 +116,12 @@
 	return
 
 /mob/proc/reset_view(atom/A)
-	if (client)
-		if (istype(A, /atom/movable))
+	if(client)
+		if(istype(A, /atom/movable))
 			client.perspective = EYE_PERSPECTIVE
 			client.eye = A
 		else
-			if (isturf(loc))
+			if(isturf(loc))
 				client.eye = client.mob
 				client.perspective = MOB_PERSPECTIVE
 			else
@@ -128,7 +130,7 @@
 	return
 
 
-/mob/proc/show_inv(mob/user as mob)
+/mob/proc/show_inv(mob/user)
 	user.set_machine(src)
 	var/dat = {"
 	<B><HR><FONT size=3>[name]</FONT></B>
@@ -146,31 +148,31 @@
 	onclose(user, "mob[name]")
 	return
 
-/mob/proc/ret_grab(obj/effect/list_container/mobl/L as obj, flag)
-	if ((!( istype(l_hand, /obj/item/weapon/grab) ) && !( istype(r_hand, /obj/item/weapon/grab) )))
-		if (!( L ))
+/mob/proc/ret_grab(obj/effect/list_container/mobl/L, flag)
+	if(!(istype(l_hand, /obj/item/weapon/grab) || istype(r_hand, /obj/item/weapon/grab)))
+		if(!L)
 			return null
 		else
 			return L.container
 	else
-		if (!( L ))
-			L = new /obj/effect/list_container/mobl( null )
+		if(!L)
+			L = new /obj/effect/list_container/mobl(null)
 			L.container += src
 			L.master = src
-		if (istype(l_hand, /obj/item/weapon/grab))
+		if(istype(l_hand, /obj/item/weapon/grab))
 			var/obj/item/weapon/grab/G = l_hand
-			if (!( L.container.Find(G.affecting) ))
+			if(!L.container.Find(G.affecting))
 				L.container += G.affecting
 				if (G.affecting)
 					G.affecting.ret_grab(L, 1)
-		if (istype(r_hand, /obj/item/weapon/grab))
+		if(istype(r_hand, /obj/item/weapon/grab))
 			var/obj/item/weapon/grab/G = r_hand
-			if (!( L.container.Find(G.affecting) ))
+			if(!L.container.Find(G.affecting))
 				L.container += G.affecting
-				if (G.affecting)
+				if(G.affecting)
 					G.affecting.ret_grab(L, 1)
-		if (!( flag ))
-			if (L.master == src)
+		if(!flag)
+			if(L.master == src)
 				var/list/temp = list(  )
 				temp += L.container
 				//L = null
@@ -185,16 +187,17 @@
 	set category = "Object"
 	set src = usr
 
-	if(istype(loc,/obj/mecha)) return
+	if(istype(loc,/obj/mecha))
+		return
 
 	if(hand)
 		var/obj/item/W = l_hand
-		if (W)
+		if(W)
 			W.attack_self(src)
 			update_inv_l_hand()
 	else
 		var/obj/item/W = r_hand
-		if (W)
+		if(W)
 			W.attack_self(src)
 			update_inv_r_hand()
 	if(next_move < world.time)
@@ -232,18 +235,18 @@
 	else
 		src << "The game appears to have misplaced your mind datum, so we can't show you your notes."
 
-/mob/proc/store_memory(msg as message, popup, sane = 1)
+/mob/proc/store_memory(msg, popup, sane = 1)
 	msg = copytext(msg, 1, MAX_MESSAGE_LEN)
 
-	if (sane)
+	if(sane)
 		msg = sanitize_alt(msg)
 
-	if (length(memory) == 0)
+	if(length(memory) == 0)
 		memory += msg
 	else
 		memory += "<BR>[msg]"
 
-	if (popup)
+	if(popup)
 		memory()
 
 /mob/proc/update_flavor_text()
@@ -264,7 +267,7 @@
 		src << "<span class='alert'>Your flavor text is likely out of date! <a href='byond://?src=\ref[src];flavor_change=1'>Change</a></span>"
 
 /mob/proc/print_flavor_text()
-	if (flavor_text && flavor_text != "")
+	if(flavor_text && flavor_text != "")
 		var/msg = flavor_text
 		if(lentext(msg) <= 40)
 			return "\blue [msg]"
@@ -282,13 +285,13 @@
 	set name = "Respawn"
 	set category = "OOC"
 
-	if (!( abandon_allowed ))
+	if(!abandon_allowed)
 		usr << "\blue Respawn is disabled."
 		return
-	if ((stat != DEAD || !( ticker )))
+	if(stat != DEAD || !ticker)
 		usr << "\blue <B>You must be dead to use this!</B>"
 		return
-	if(ticker && istype(ticker.mode,/datum/game_mode/meteor))
+	if(ticker && istype(ticker.mode, /datum/game_mode/meteor))
 		usr << "\blue Respawn is disabled for this roundtype."
 		return
 	else
@@ -306,7 +309,7 @@
 			pluralcheck = " [deathtimeminutes] minute and"
 		else if(deathtimeminutes > 1)
 			pluralcheck = " [deathtimeminutes] minutes and"
-		var/deathtimeseconds = round((deathtime - deathtimeminutes * 600) / 10,1)
+		var/deathtimeseconds = round((deathtime - deathtimeminutes * 600) / 10, 1)
 
 		if(deathtime < config.deathtime_required && !(client.holder && (client.holder.rights & R_ADMIN)))	//Holders with R_ADMIN can give themselvs respawn, so it doesn't matter
 			usr << "You have been dead for[pluralcheck] [deathtimeseconds] seconds."
@@ -347,16 +350,16 @@
 /mob/verb/observe()
 	set name = "Observe"
 	set category = "OOC"
-	var/is_admin = 0
+	var/is_admin = FALSE
 
 	if(client.holder && (client.holder.rights & R_ADMIN))
-		is_admin = 1
+		is_admin = TRUE
 	else if(stat != DEAD || istype(src, /mob/new_player) || jobban_isbanned(src, "Observer"))
 		usr << "\blue You must be observing to use this!"
 		return
 
 	if(is_admin && stat == DEAD)
-		is_admin = 0
+		is_admin = FALSE
 
 	var/list/creatures = getpois()
 
@@ -367,14 +370,14 @@
 	var/ok = "[is_admin ? "Admin Observe" : "Observe"]"
 	eye_name = input("Please, select a player!", ok, null, null) as null|anything in creatures
 
-	if (!eye_name)
+	if(!eye_name)
 		return
 
 	var/mob/mob_eye = creatures[eye_name]
 
 	if(client && mob_eye)
 		client.eye = mob_eye
-		if (is_admin)
+		if(is_admin)
 			client.adminobs = 1
 			if(mob_eye == client.mob || client.eye == client.mob)
 				client.adminobs = 0
@@ -407,11 +410,11 @@
 /mob/proc/pull_damage()
 	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
-		if(H.health - H.halloss <= config.health_threshold_softcrit)
+		if((H.health - H.halloss) <= config.health_threshold_softcrit)
 			for(var/name in H.organs_by_name)
 				var/datum/organ/external/e = H.organs_by_name[name]
 				if(H.lying)
-					if(((e.status & ORGAN_BROKEN && !(e.status & ORGAN_SPLINTED)) || e.status & ORGAN_BLEEDING) && (H.getBruteLoss() + H.getFireLoss() >= 100))
+					if((((e.status & ORGAN_BROKEN) && !(e.status & ORGAN_SPLINTED)) || (e.status & ORGAN_BLEEDING)) && ((H.getBruteLoss() + H.getFireLoss()) >= 100))
 						return 1
 						break
 		return 0
@@ -421,14 +424,14 @@
 	if(M != usr) return
 	if(usr == src) return
 	if(!Adjacent(usr)) return
-	if(istype(M,/mob/living/silicon/ai)) return
+	if(istype(M, /mob/living/silicon/ai)) return
 	show_inv(usr)
 
 //this and stop_pulling really ought to be /mob/living procs
 /mob/proc/start_pulling(atom/movable/AM)
-	if ( !AM || !src || src==AM || !isturf(AM.loc) )	//if there's no person pulling OR the person is pulling themself OR the object being pulled is inside something: abort!
+	if(!AM || !src || src == AM || !isturf(AM.loc))	//if there's no person pulling OR the person is pulling themself OR the object being pulled is inside something: abort!
 		return
-	if (!( AM.anchored ))
+	if(!AM.anchored)
 		AM.add_fingerprint(src)
 
 		// If we're pulling something then drop what we're currently pulling and pull this instead.
@@ -477,7 +480,7 @@
 	return
 
 /mob/proc/is_active()
-	return (0 >= usr.stat)
+	return (usr.stat <= 0)
 
 /mob/proc/is_dead()
 	return stat == DEAD
@@ -512,7 +515,7 @@ currently only humans get dizzy
 value of dizziness ranges from 0 to 1000
 below 100 is not dizzy
 */
-/mob/proc/make_dizzy(var/amount)
+/mob/proc/make_dizzy(amount)
 	if(!istype(src, /mob/living/carbon/human)) // for the moment, only humans get dizzy
 		return
 
@@ -529,7 +532,7 @@ spawned from make_dizzy(), will terminate automatically when dizziness gets <100
 note dizziness decrements automatically in the mob's Life() proc.
 */
 /mob/proc/dizzy_process()
-	is_dizzy = 1
+	is_dizzy = TRUE
 	while(dizziness > 100)
 		if(client)
 			var/amplitude = dizziness*(sin(dizziness * 0.044 * world.time) + 1) / 70
@@ -538,14 +541,14 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 		sleep(1)
 	//endwhile - reset the pixel offsets to zero
-	is_dizzy = 0
+	is_dizzy = FALSE
 	if(client)
 		client.pixel_x = 0
 		client.pixel_y = 0
 
 // jitteriness - copy+paste of dizziness
 
-/mob/proc/make_jittery(var/amount)
+/mob/proc/make_jittery(amount)
 	if(!istype(src, /mob/living/carbon/human)) // for the moment, only humans get dizzy
 		return
 
@@ -558,7 +561,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 // Typo from the oriignal coder here, below lies the jitteriness process. So make of his code what you will, the previous comment here was just a copypaste of the above.
 /mob/proc/jittery_process()
-	is_jittery = 1
+	is_jittery = TRUE
 	while(jitteriness > 100)
 //		var/amplitude = jitteriness*(sin(jitteriness * 0.044 * world.time) + 1) / 70
 //		pixel_x = amplitude * sin(0.008 * jitteriness * world.time)
@@ -570,7 +573,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 		sleep(1)
 	//endwhile - reset the pixel offsets to zero
-	is_jittery = 0
+	is_jittery = FALSE
 	pixel_x = initial(pixel_x)
 	pixel_y = initial(pixel_y)
 
@@ -640,7 +643,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 				if("holdervar")
 					statpanel(S.panel,"[S.holder_var_type] [S.holder_var_amount]",S)
 
-/mob/proc/add_stings_to_statpanel(var/list/stings)
+/mob/proc/add_stings_to_statpanel(list/stings)
 	for(var/obj/effect/proc_holder/changeling/S in stings)
 		if(S.chemical_cost >=0 && S.can_be_used_by(src))
 			statpanel("[S.panel]",((S.chemical_cost > 0) ? "[S.chemical_cost]" : ""),S)
@@ -665,9 +668,9 @@ note dizziness decrements automatically in the mob's Life() proc.
 	if(istype(buckled, /obj/vehicle))
 		var/obj/vehicle/V = buckled
 		if(incapacitated())
+			V.unload(src)
 			lying = 1
 			canmove = 0
-			pixel_y = V.mob_offset_y - 5
 		else
 			if(buckled.buckle_lying != -1)
 				lying = buckled.buckle_lying
@@ -723,13 +726,14 @@ note dizziness decrements automatically in the mob's Life() proc.
 	if(lying != lying_prev)
 		update_transform()
 	if(update_icon)	//forces a full overlay update
-		update_icon = 0
+		update_icon = FALSE
 		regenerate_icons()
 	return canmove
 
 
-/mob/proc/facedir(var/ndir)
-	if(!canface())	return 0
+/mob/proc/facedir(ndir)
+	if(!canface())
+		return 0
 	dir = ndir
 	if(buckled && buckled.buckle_movable)
 		buckled.dir = ndir
@@ -840,7 +844,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 /mob/proc/flash_weak_pain()
 	flick("weak_pain",pain)
 
-/mob/proc/get_visible_implants(var/class = 0)
+/mob/proc/get_visible_implants(class = 0)
 	var/list/visible_implants = list()
 	for(var/obj/item/O in embedded)
 		if(O.w_class > class)
@@ -857,7 +861,7 @@ mob/proc/yank_out_object()
 		return
 	usr.next_move = world.time + 20
 
-	if(usr.stat == 1)
+	if(usr.stat == UNCONSCIOUS)
 		usr << "You are unconcious and cannot do that!"
 		return
 
@@ -868,10 +872,10 @@ mob/proc/yank_out_object()
 	var/mob/S = src
 	var/mob/U = usr
 	var/list/valid_objects = list()
-	var/self = null
+	var/self = FALSE
 
 	if(S == U)
-		self = 1 // Removing object from yourself.
+		self = TRUE // Removing object from yourself.
 
 	valid_objects = get_visible_implants(1)
 	if(!valid_objects.len)
@@ -902,7 +906,7 @@ mob/proc/yank_out_object()
 		src.verbs -= /mob/proc/yank_out_object
 		clear_alert("embeddedobject")
 
-	if(istype(src,/mob/living/carbon/human))
+	if(istype(src, /mob/living/carbon/human))
 
 		var/mob/living/carbon/human/H = src
 		var/datum/organ/external/affected
@@ -913,7 +917,7 @@ mob/proc/yank_out_object()
 					affected = organ
 
 		affected.implants -= selection
-		H.shock_stage+=10
+		H.shock_stage += 10
 		H.bloody_hands(S)
 
 		if(prob(10)) //I'M SO ANEMIC I COULD JUST -DIE-.
@@ -938,7 +942,7 @@ mob/proc/yank_out_object()
 					return G
 				break
 
-/mob/proc/AddSpell(var/obj/effect/proc_holder/spell/spell)
+/mob/proc/AddSpell(obj/effect/proc_holder/spell/spell)
 	spell_list += spell
 	mind.spell_list += spell	//Connect spell to the mind for transfering action buttons between mobs
 	if(!spell.action)

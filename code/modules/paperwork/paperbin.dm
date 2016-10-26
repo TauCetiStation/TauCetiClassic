@@ -21,11 +21,11 @@
 	return
 
 
-/obj/item/weapon/paper_bin/attack_paw(mob/user as mob)
+/obj/item/weapon/paper_bin/attack_paw(mob/user)
 	return attack_hand(user)
 
 
-/obj/item/weapon/paper_bin/attack_hand(mob/user as mob)
+/obj/item/weapon/paper_bin/attack_hand(mob/user)
 	if (hasorgans(user))
 		var/datum/organ/external/temp = user:organs_by_name["r_hand"]
 		if (user.hand)
@@ -69,7 +69,7 @@
 	return
 
 
-/obj/item/weapon/paper_bin/attackby(obj/item/weapon/paper/i as obj, mob/user as mob)
+/obj/item/weapon/paper_bin/attackby(obj/item/weapon/paper/i, mob/user)
 	if(!istype(i))
 		return
 

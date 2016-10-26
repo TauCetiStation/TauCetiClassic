@@ -31,7 +31,7 @@
 	update_icon()
 	return
 
-/obj/item/weapon/gun/energy/Fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, params, reflex = 0)
+/obj/item/weapon/gun/energy/Fire(atom/target, mob/living/user, params, reflex = 0)
 	newshot()
 	..()
 
@@ -52,7 +52,7 @@
 	if(chambered && chambered.BB)
 		return 1
 
-/obj/item/weapon/gun/energy/proc/select_fire(mob/living/user as mob)
+/obj/item/weapon/gun/energy/proc/select_fire(mob/living/user)
 	select++
 	if (select > ammo_type.len)
 		select = 1

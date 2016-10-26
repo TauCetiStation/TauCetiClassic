@@ -26,5 +26,6 @@
 
 	usr.visible_message("<b>[usr]</b> points to [this]")
 
-	for(var/mob/living/simple_animal/smart_animal/SA in view(7))
-		SA.target_point(this, usr)
+	if(isliving(this))
+		for(var/mob/living/carbon/slime/S in view(7))
+			S.last_pointed = this

@@ -83,7 +83,7 @@ I said no!
 /* what is this
 /datum/recipe/human
 	//invalid recipe
-	make_food(var/obj/container as obj)
+	make_food(obj/container)
 		var/human_name
 		var/human_job
 		for (var/obj/item/weapon/reagent_containers/food/snacks/meat/human/HM in container)
@@ -210,13 +210,13 @@ I said no!
 		/obj/item/weapon/reagent_containers/food/snacks/meatball
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/donkpocket //SPECIAL
-	proc/warm_up(var/obj/item/weapon/reagent_containers/food/snacks/donkpocket/being_cooked)
+	proc/warm_up(obj/item/weapon/reagent_containers/food/snacks/donkpocket/being_cooked)
 		being_cooked.warm = 1
 		being_cooked.reagents.add_reagent("tricordrazine", 5)
 		being_cooked.bitesize = 6
 		being_cooked.name = "Warm " + being_cooked.name
 		being_cooked.cooltime()
-	make_food(var/obj/container as obj)
+	make_food(obj/container)
 		var/obj/item/weapon/reagent_containers/food/snacks/donkpocket/being_cooked = ..(container)
 		warm_up(being_cooked)
 		return being_cooked
@@ -227,7 +227,7 @@ I said no!
 		/obj/item/weapon/reagent_containers/food/snacks/donkpocket
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/donkpocket //SPECIAL
-	make_food(var/obj/container as obj)
+	make_food(obj/container)
 		var/obj/item/weapon/reagent_containers/food/snacks/donkpocket/being_cooked = locate() in container
 		if(being_cooked && !being_cooked.warm)
 			warm_up(being_cooked)
@@ -508,14 +508,14 @@ I said no!
 		/obj/item/weapon/paper,
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/fortunecookie
-	make_food(var/obj/container as obj)
+	make_food(obj/container)
 		var/obj/item/weapon/paper/paper = locate() in container
 		paper.loc = null //prevent deletion
 		var/obj/item/weapon/reagent_containers/food/snacks/fortunecookie/being_cooked = ..(container)
 		paper.loc = being_cooked
 		being_cooked.trash = paper //so the paper is left behind as trash without special-snowflake(TM Nodrak) code ~carn
 		return being_cooked
-	check_items(var/obj/container as obj)
+	check_items(obj/container)
 		. = ..()
 		if (.)
 			var/obj/item/weapon/paper/paper = locate() in container
@@ -611,7 +611,7 @@ I said no!
 		/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/amanita,
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/amanitajelly
-	make_food(var/obj/container as obj)
+	make_food(obj/container)
 		var/obj/item/weapon/reagent_containers/food/snacks/amanitajelly/being_cooked = ..(container)
 		being_cooked.reagents.del_reagent("amatoxin")
 		return being_cooked
@@ -1188,7 +1188,7 @@ I said no!
 		/obj/item/weapon/reagent_containers/food/snacks/meatball,
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/validsalad
-	make_food(var/obj/container as obj)
+	make_food(obj/container)
 		var/obj/item/weapon/reagent_containers/food/snacks/validsalad/being_cooked = ..(container)
 		being_cooked.reagents.del_reagent("toxin")
 		return being_cooked

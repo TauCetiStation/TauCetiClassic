@@ -206,6 +206,11 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	icon = 'icons/obj/doors/Dooratmo.dmi'
 	assembly_type = /obj/structure/door_assembly/door_assembly_atmo
 
+/obj/machinery/door/airlock/neutral
+	name = "Airlock"
+	icon = 'icons/obj/doors/door_neutral.dmi'
+	assembly_type = /obj/structure/door_assembly/door_assembly_neutral
+
 /obj/machinery/door/airlock/research
 	name = "Airlock"
 	icon = 'icons/obj/doors/Doorresearch.dmi'
@@ -233,6 +238,16 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	assembly_type = /obj/structure/door_assembly/door_assembly_atmo
 	glass = 1
 
+/obj/machinery/door/airlock/wagon
+	name = "Airlock"
+	icon = 'icons/obj/doors/wagon.dmi'
+	assembly_type = /obj/structure/door_assembly/door_assembly_neutral
+
+/obj/machinery/door/airlock/erokez
+	name = "Airlock"
+	icon = 'icons/obj/doors/erokez.dmi'
+	assembly_type = /obj/structure/door_assembly/door_assembly_neutral
+
 /obj/machinery/door/airlock/gold
 	name = "Gold Airlock"
 	icon = 'icons/obj/doors/Doorgold.dmi'
@@ -254,6 +269,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	icon = 'icons/obj/doors/Dooruranium.dmi'
 	mineral = "uranium"
 	var/last_event = 0
+
 
 /obj/machinery/door/airlock/uranium/process()
 	if(world.time > last_event+20)
@@ -345,7 +361,7 @@ About the new airlock wires panel:
 
 
 
-/obj/machinery/door/airlock/bumpopen(mob/living/user as mob) //Airlocks now zap you when you 'bump' them open when they're electrified. --NeoFite
+/obj/machinery/door/airlock/bumpopen(mob/living/user) //Airlocks now zap you when you 'bump' them open when they're electrified. --NeoFite
 	if(!issilicon(usr))
 		if(src.isElectrified())
 			if(!src.justzap)
@@ -363,11 +379,11 @@ About the new airlock wires panel:
 			return
 	..(user)
 
-/obj/machinery/door/airlock/bumpopen(mob/living/simple_animal/user as mob)
+/obj/machinery/door/airlock/bumpopen(mob/living/simple_animal/user)
 	..(user)
 
 
-/obj/machinery/door/airlock/proc/pulse(var/wireColor)
+/obj/machinery/door/airlock/proc/pulse(wireColor)
 	//var/wireFlag = airlockWireColorToFlag[wireColor] //not used in this function
 	var/wireIndex = airlockWireColorToIndex[wireColor]
 	switch(wireIndex)
@@ -455,7 +471,7 @@ About the new airlock wires panel:
 			src.updateUsrDialog()
 
 
-/obj/machinery/door/airlock/proc/cut(var/wireColor)
+/obj/machinery/door/airlock/proc/cut(wireColor)
 	var/wireFlag = airlockWireColorToFlag[wireColor]
 	var/wireIndex = airlockWireColorToIndex[wireColor]
 	wires &= ~wireFlag
@@ -509,7 +525,7 @@ About the new airlock wires panel:
 			lights = 0
 			src.updateUsrDialog()
 
-/obj/machinery/door/airlock/proc/mend(var/wireColor)
+/obj/machinery/door/airlock/proc/mend(wireColor)
 	var/wireFlag = airlockWireColorToFlag[wireColor]
 	var/wireIndex = airlockWireColorToIndex[wireColor] //not used in this function
 	wires |= wireFlag
@@ -561,11 +577,11 @@ About the new airlock wires panel:
 		return 1
 	return 0
 
-/obj/machinery/door/airlock/proc/isWireColorCut(var/wireColor)
+/obj/machinery/door/airlock/proc/isWireColorCut(wireColor)
 	var/wireFlag = airlockWireColorToFlag[wireColor]
 	return ((src.wires & wireFlag) == 0)
 
-/obj/machinery/door/airlock/proc/isWireCut(var/wireIndex)
+/obj/machinery/door/airlock/proc/isWireCut(wireIndex)
 	var/wireFlag = airlockIndexToFlag[wireIndex]
 	return ((src.wires & wireFlag) == 0)
 
@@ -687,7 +703,7 @@ About the new airlock wires panel:
 			flick("door_deny", src)
 	return
 
-/obj/machinery/door/airlock/attack_ai(mob/user as mob)
+/obj/machinery/door/airlock/attack_ai(mob/user)
 //#Z1
 	if(src.isWireCut(AIRLOCK_WIRE_AI_CONTROL))
 		user << "Airlock AI control wire is cut. Please call the engineer or engiborg to fix this problem."
@@ -803,7 +819,7 @@ About the new airlock wires panel:
 //aiEnable - 1 idscan, 4 raise door bolts, 5 electrify door for 30 seconds, 6 electrify door indefinitely, 7 open door
 
 
-/obj/machinery/door/airlock/proc/hack(mob/user as mob)
+/obj/machinery/door/airlock/proc/hack(mob/user)
 	if(src.aiHacking==0)
 		src.aiHacking=1
 		spawn(20)
@@ -865,10 +881,10 @@ About the new airlock wires panel:
 				s.start()
 	return ..()
 
-/obj/machinery/door/airlock/attack_paw(mob/user as mob)
+/obj/machinery/door/airlock/attack_paw(mob/user)
 	return src.attack_hand(user)
 
-/obj/machinery/door/airlock/attack_paw(mob/user as mob)
+/obj/machinery/door/airlock/attack_paw(mob/user)
 	if(istype(user, /mob/living/carbon/alien/humanoid))
 		if(welded || locked)
 			user << "\red The door is sealed, it cannot be pried open."
@@ -883,7 +899,7 @@ About the new airlock wires panel:
 				open(1)
 	return
 
-/obj/machinery/door/airlock/attack_animal(mob/user as mob)
+/obj/machinery/door/airlock/attack_animal(mob/user)
 	if(istype(user, /mob/living/simple_animal/hulk))
 		if(welded || locked)
 			var/obj/machinery/door/airlock/A = src
@@ -946,7 +962,7 @@ About the new airlock wires panel:
 				open(1)
 	return
 
-/obj/machinery/door/airlock/attack_hand(mob/user as mob)
+/obj/machinery/door/airlock/attack_hand(mob/user)
 	if(!istype(usr, /mob/living/silicon))
 		if(src.isElectrified())
 			if(src.shock(user, 100))
@@ -1016,25 +1032,22 @@ About the new airlock wires panel:
 	return
 
 
-/obj/machinery/door/airlock/Topic(href, href_list, var/nowindow = 0)
-	if(!nowindow)
-		..()
-	if(usr.stat || usr.restrained()|| usr.small)
-		return
-	add_fingerprint(usr)
+/obj/machinery/door/airlock/Topic(href, href_list, var/no_window = 0)
 	if(href_list["close"])
 		usr << browse(null, "window=airlock")
-		if(usr.machine==src)
-			usr.unset_machine()
-			return
+		usr.unset_machine(src)
+		return FALSE
 
-	if((in_range(src, usr) && istype(src.loc, /turf)) && src.p_open)
-		usr.set_machine(src)
+	. = ..(href, href_list)
+	if(!. && !(href_list["wires"] || href_list["pulse"] || href_list["signaler"] || href_list["remove-signaler"]))
+		return FALSE
+
+	if(src.p_open)
 		if(href_list["wires"])
 			var/t1 = text2num(href_list["wires"])
 			if(!( istype(usr.get_active_hand(), /obj/item/weapon/wirecutters) ))
 				usr << "You need wirecutters!"
-				return
+				return FALSE
 			if(src.isWireColorCut(t1))
 				src.mend(t1)
 			else
@@ -1043,24 +1056,24 @@ About the new airlock wires panel:
 			var/t1 = text2num(href_list["pulse"])
 			if(!istype(usr.get_active_hand(), /obj/item/device/multitool))
 				usr << "You need a multitool!"
-				return
+				return FALSE
 			if(src.isWireColorCut(t1))
 				usr << "You can't pulse a cut wire."
-				return
+				return FALSE
 			else
 				src.pulse(t1)
 		else if(href_list["signaler"])
 			var/wirenum = text2num(href_list["signaler"])
 			if(!istype(usr.get_active_hand(), /obj/item/device/assembly/signaler))
 				usr << "You need a signaller!"
-				return
+				return FALSE
 			if(src.isWireColorCut(wirenum))
 				usr << "You can't attach a signaller to a cut wire."
-				return
+				return FALSE
 			var/obj/item/device/assembly/signaler/R = usr.get_active_hand()
 			if(R.secured)
 				usr << "This radio can't be attached!"
-				return
+				return FALSE
 			var/mob/M = usr
 			M.drop_item()
 			R.loc = src
@@ -1070,14 +1083,13 @@ About the new airlock wires panel:
 			var/wirenum = text2num(href_list["remove-signaler"])
 			if(!(src.signalers[wirenum]))
 				usr << "There's no signaller attached to that wire!"
-				return
+				return FALSE
 			var/obj/item/device/assembly/signaler/R = src.signalers[wirenum]
 			R.loc = usr.loc
 			R.airlock_wire = null
 			src.signalers[wirenum] = null
 
-
-	if(istype(usr, /mob/living/silicon) && src.canAIControl())
+	if(issilicon(usr) && src.canAIControl())
 		//AI
 		//aiDisable - 1 idscan, 2 disrupt main power, 3 disrupt backup power, 4 drop door bolts, 5 un-electrify door, 7 close door, 8 door safties, 9 door speed
 		//aiEnable - 1 idscan, 4 raise door bolts, 5 electrify door for 30 seconds, 6 electrify door indefinitely, 7 open door,  8 door safties, 9 door speed
@@ -1159,8 +1171,6 @@ About the new airlock wires panel:
 						lights = 0
 					else
 						usr << text("Door bolt lights are already disabled!")
-
-
 
 		else if(href_list["aiEnable"])
 			var/code = text2num(href_list["aiEnable"])
@@ -1259,13 +1269,11 @@ About the new airlock wires panel:
 					else
 						usr << text("Door bolt lights are already enabled!")
 
-	add_fingerprint(usr)
 	update_icon()
-	if(!nowindow)
+	if(!no_window)
 		updateUsrDialog()
-	return
 
-/obj/machinery/door/airlock/attackby(C as obj, mob/user as mob)
+/obj/machinery/door/airlock/attackby(C, mob/user)
 	//world << text("airlock attackby src [] obj [] mob []", src, C, user)
 	if(!istype(usr, /mob/living/silicon))
 		if(src.isElectrified())
@@ -1371,12 +1379,12 @@ About the new airlock wires panel:
 		..()
 	return
 
-/obj/machinery/door/airlock/phoron/attackby(C as obj, mob/user as mob)
+/obj/machinery/door/airlock/phoron/attackby(C, mob/user)
 	if(C)
 		ignite(is_hot(C))
 	..()
 
-/obj/machinery/door/airlock/open(var/forced=0)
+/obj/machinery/door/airlock/open(forced=0)
 	if( operating || welded || locked )
 		return 0
 	if(!forced)
@@ -1393,7 +1401,7 @@ About the new airlock wires panel:
 		src.closeOther.close()
 	return ..()
 
-/obj/machinery/door/airlock/close(var/forced=0)
+/obj/machinery/door/airlock/close(forced=0)
 	if(operating || welded || locked)
 		return
 	if(!forced)
@@ -1457,7 +1465,7 @@ About the new airlock wires panel:
 	return
 
 //TG airlock painter stuff
-/obj/machinery/door/airlock/proc/change_paintjob(obj/item/C as obj, mob/user as mob)
+/obj/machinery/door/airlock/proc/change_paintjob(obj/item/C, mob/user)
 	var/obj/item/weapon/airlock_painter/W
 	if(istype(C, /obj/item/weapon/airlock_painter))
 		W = C

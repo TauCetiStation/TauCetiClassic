@@ -22,7 +22,7 @@
 
 	light_color = "#50AB00"
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		return
 /*		if(..())
 			return
@@ -70,12 +70,9 @@
 
 
 	Topic(href, href_list)
-		if(..())
+		. = ..()
+		if(!.)
 			return
-
-
-		add_fingerprint(usr)
-		usr.set_machine(src)
 
 		if(href_list["viewmachine"])
 			screen = 1
@@ -127,7 +124,7 @@
 		updateUsrDialog()
 		return*/
 
-	attackby(var/obj/item/weapon/D as obj, var/mob/user as mob)
+	attackby(obj/item/weapon/D, mob/user)
 		if(istype(D, /obj/item/weapon/card/emag) && !emagged)
 			playsound(src.loc, 'sound/effects/sparks4.ogg', 75, 1)
 			emagged = 1

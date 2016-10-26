@@ -12,14 +12,14 @@
 		update_on()
 	update_icon()
 
-/obj/machinery/media/receiver/boombox/attack_hand(var/mob/user)
+/obj/machinery/media/receiver/boombox/attack_hand(mob/user)
 	if(stat & (NOPOWER|BROKEN))
 		usr << "\red You don't see anything to mess with."
 		return
 	user.set_machine(src)
 	interact(user)
 
-/obj/machinery/media/receiver/boombox/interact(var/mob/user)
+/obj/machinery/media/receiver/boombox/interact(mob/user)
 	var/dat = "<html><head><title>[src]</title></head><body><TT>"
 	dat += {"
 				Power: <a href="?src=\ref[src];power=1">[on ? "On" : "Off"]</a><BR>
@@ -41,7 +41,9 @@
 		disconnect_frequency()
 
 /obj/machinery/media/receiver/boombox/Topic(href,href_list)
-	..()
+	. = ..()
+	if(!.)
+		return
 	if("power" in href_list)
 		on = !on
 		update_on()

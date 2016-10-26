@@ -21,15 +21,16 @@ var/global/normal_ooc_colour = "#002eb8"
 		src << "\red You have OOC muted."
 		return
 
+	if(prefs.muted & MUTE_OOC)
+		src << "\red You cannot use OOC (muted)."
+		return
+
 	if(!holder)
 		if(!ooc_allowed)
 			src << "\red OOC is globally muted"
 			return
 		if(!dooc_allowed && (mob.stat == DEAD))
 			usr << "\red OOC for dead mobs has been turned off."
-			return
-		if(prefs.muted & MUTE_OOC)
-			src << "\red You cannot use OOC (muted)."
 			return
 		if(handle_spam_prevention(msg,MUTE_OOC))
 			return
@@ -43,9 +44,7 @@ var/global/normal_ooc_colour = "#002eb8"
 
 	var/display_colour = normal_ooc_colour
 	if(holder && !holder.fakekey)
-		display_colour = "#704F80"	//
-		if(holder.rights & R_MOD && !(holder.rights & R_ADMIN))
-			display_colour = "#184880"	//dark blue
+		display_colour = "#704F80"
 		if(holder.rights & R_DEBUG && !(holder.rights & R_ADMIN))
 			display_colour = "#1b521f"	//dark green
 		else if(holder.rights & R_ADMIN)
@@ -81,7 +80,7 @@ var/global/normal_ooc_colour = "#002eb8"
 				C << "<font color='[normal_ooc_colour]'><span class='ooc'><span class='prefix'>OOC:</span> <EM>[src.key]:</EM> <span class='message'>[msg]</span></span></font>"
 			*/
 
-/client/proc/set_ooc(newColor as color)
+/client/proc/set_ooc(newColor)
 	set name = "Set Player OOC Colour"
 	set desc = "Set to yellow for eye burning goodness."
 	set category = "Fun"

@@ -15,7 +15,7 @@
 	action_button_name = "Use Spell Book"
 
 
-/obj/item/weapon/spellbook/attack_self(mob/user as mob)
+/obj/item/weapon/spellbook/attack_self(mob/user)
 	user.set_machine(src)
 	var/dat
 	if(temp)

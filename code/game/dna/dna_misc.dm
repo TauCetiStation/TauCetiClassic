@@ -131,7 +131,7 @@
 
 	return output
 
-/proc/isblockon(hnumber, bnumber , var/UI = 0)
+/proc/isblockon(hnumber, bnumber , UI = 0)
 
 	var/temp2
 	temp2 = hex2num(hnumber)
@@ -159,10 +159,10 @@
 	else
 		return 0
 
-/proc/ismuton(var/block,var/mob/M)
+/proc/ismuton(block,mob/M)
 	return isblockon(getblock(M.dna.struc_enzymes, block,3),block)
 
-/proc/randmutb(mob/M as mob)
+/proc/randmutb(mob/M)
 	if(!M)	return
 	var/num
 	var/newdna
@@ -172,7 +172,7 @@
 	M.dna.struc_enzymes = newdna
 	return
 
-/proc/randmutg(mob/M as mob)
+/proc/randmutg(mob/M)
 	if(!M)	return
 	var/num
 	var/newdna
@@ -182,7 +182,7 @@
 	M.dna.struc_enzymes = newdna
 	return
 
-/proc/scramble(var/type, mob/M as mob, var/p)
+/proc/scramble(type, mob/M, p)
 	if(!M)	return
 	M.dna.check_integrity()
 	if(type)
@@ -198,7 +198,7 @@
 		domutcheck(M, null)
 	return
 
-/proc/randmuti(mob/M as mob)
+/proc/randmuti(mob/M)
 	if(!M)	return
 	var/num
 	var/newdna
@@ -221,7 +221,7 @@
 /////////////////////////// DNA HELPER-PROCS
 
 /////////////////////////// DNA MISC-PROCS
-/proc/updateappearance(mob/M as mob , structure)
+/proc/updateappearance(mob/M , structure)
 	if(istype(M, /mob/living/carbon/human))
 		M.dna.check_integrity()
 		var/mob/living/carbon/human/H = M
@@ -260,10 +260,10 @@
 	else
 		return 0
 
-/proc/probinj(var/pr, var/inj)
+/proc/probinj(pr, inj)
 	return prob(pr+inj*pr)
 
-/proc/domutcheck(mob/living/M as mob, connected, inj)
+/proc/domutcheck(mob/living/M, connected, inj)
 	if (!M) return
 
 	M.dna.check_integrity()

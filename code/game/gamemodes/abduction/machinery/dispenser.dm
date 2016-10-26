@@ -24,7 +24,7 @@
 		gland_colors[i] = random_color()
 		amounts[i] = rand(1,5)
 
-/obj/machinery/abductor/gland_dispenser/attack_hand(var/mob/user as mob)
+/obj/machinery/abductor/gland_dispenser/attack_hand(mob/user)
 	if(..())
 		return
 	if(!IsAbductor(user))
@@ -69,15 +69,14 @@
 				amounts[i]++
 
 /obj/machinery/abductor/gland_dispenser/Topic(href, href_list)
-	if(..())
+	. = ..()
+	if(!.)
 		return
-	if((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon)))
-		usr.set_machine(src)
-		if(href_list["dispense"])
-			Dispense(text2num(href_list["dispense"]))
-		src.updateUsrDialog()
+	if(href_list["dispense"])
+		Dispense(text2num(href_list["dispense"]))
+	src.updateUsrDialog()
 
-/obj/machinery/abductor/gland_dispenser/proc/Dispense(var/count)
+/obj/machinery/abductor/gland_dispenser/proc/Dispense(count)
 	if(amounts[count]>0)
 		amounts[count]--
 		var/T = gland_types[count]

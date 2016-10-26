@@ -30,7 +30,7 @@
 		add_implants()
 
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		user.set_machine(src)
 		var/health_text = ""
 		if(src.occupant)
@@ -73,7 +73,7 @@
 			return
 
 
-	attackby(var/obj/item/weapon/G as obj, var/mob/user as mob)
+	attackby(obj/item/weapon/G, mob/user)
 		if(istype(G, /obj/item/weapon/grab))
 			if(!ismob(G:affecting))
 				return
@@ -88,7 +88,7 @@
 		return
 
 
-	go_out(var/mob/M)
+	go_out(mob/M)
 		if(!( src.occupant ))
 			return
 		if(M == occupant) // so that the guy inside can't eject himself -Agouri

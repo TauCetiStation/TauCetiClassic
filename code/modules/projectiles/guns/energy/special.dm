@@ -79,7 +79,7 @@
 		update_icon()
 		return 1
 
-	attack_self(mob/living/user as mob)
+	attack_self(mob/living/user)
 		select_fire(user)
 		update_icon()
 		return
@@ -139,7 +139,7 @@ obj/item/weapon/gun/energy/staff/focus
 	item_state = "focus"
 	projectile_type = "/obj/item/projectile/forcebolt"
 
-	attack_self(mob/living/user as mob)
+	attack_self(mob/living/user)
 		if(projectile_type == "/obj/item/projectile/forcebolt")
 			charge_cost = 200
 			user << "\red The [src.name] will now strike a small area."
@@ -220,15 +220,14 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 		return
 
 	if(usr.client.view == world.view)
-		if(!usr.hud_used.hud_shown)
-			usr.button_pressed_F12(1)	// If the user has already limited their HUD this avoids them having a HUD when they zoom in
-		usr.button_pressed_F12(1)
+		if(usr.hud_used)
+			usr.hud_used.show_hud(HUD_STYLE_REDUCED)
 		usr.client.view = 12
 		zoom = 1
 	else
 		usr.client.view = world.view
-		if(!usr.hud_used.hud_shown)
-			usr.button_pressed_F12(1)
+		if(usr.hud_used)
+			usr.hud_used.show_hud(HUD_STYLE_STANDARD)
 		zoom = 0
 	usr << "<font color='[zoom?"blue":"red"]'>Zoom mode [zoom?"en":"dis"]abled.</font>"
 	return

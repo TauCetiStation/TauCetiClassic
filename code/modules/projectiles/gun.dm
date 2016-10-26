@@ -47,12 +47,12 @@
 /obj/item/weapon/gun/proc/special_check(mob/M, atom/target) //Placeholder for any special checks, like detective's revolver.
 	return 1
 
-/obj/item/weapon/gun/proc/shoot_with_empty_chamber(mob/living/user as mob|obj)
+/obj/item/weapon/gun/proc/shoot_with_empty_chamber(mob/living/user)
 	user << "<span class='warning'>*click*</span>"
 	playsound(user, 'sound/weapons/empty.ogg', 100, 1)
 	return
 
-/obj/item/weapon/gun/proc/shoot_live_shot(mob/living/user as mob|obj)
+/obj/item/weapon/gun/proc/shoot_live_shot(mob/living/user)
 	if(recoil)
 		spawn()
 			shake_camera(user, recoil + 1, recoil)
@@ -70,9 +70,9 @@
 /obj/item/weapon/gun/Destroy()
 	qdel(chambered)
 	chambered = null
-	..()
+	return ..()
 
-/obj/item/weapon/gun/afterattack(atom/A as mob|obj|turf|area, mob/living/user as mob|obj, flag, params)
+/obj/item/weapon/gun/afterattack(atom/A, mob/living/user, flag, params)
 	if(flag)	return //It's adjacent, is the user, or is on the user's person
 	if(istype(target, /obj/machinery/recharger) && istype(src, /obj/item/weapon/gun/energy))	return//Shouldnt flag take care of this?
 	if(user && user.client && user.client.gun_mode && !(A in target))
@@ -80,7 +80,7 @@
 	else
 		Fire(A,user,params) //Otherwise, fire normally.
 
-/obj/item/weapon/gun/proc/Fire(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, params, reflex = 0)//TODO: go over this
+/obj/item/weapon/gun/proc/Fire(atom/target, mob/living/user, params, reflex = 0)//TODO: go over this
 	//Exclude lasertag guns from the CLUMSY check.
 	if (!user.IsAdvancedToolUser())
 		user << "<span class='red'>You don't have the dexterity to do this!</span>"
@@ -148,7 +148,7 @@
 /obj/item/weapon/gun/proc/can_fire()
 	return
 
-/obj/item/weapon/gun/proc/can_hit(var/mob/living/target as mob, var/mob/living/user as mob)
+/obj/item/weapon/gun/proc/can_hit(mob/living/target, mob/living/user)
 	return chambered.BB.check_fire(target,user)
 
 /obj/item/weapon/gun/proc/click_empty(mob/user = null)
@@ -162,7 +162,7 @@
 /obj/item/weapon/gun/proc/isHandgun()
 	return 1
 
-/obj/item/weapon/gun/attack(mob/living/M as mob, mob/living/user as mob, def_zone)
+/obj/item/weapon/gun/attack(mob/living/M, mob/living/user, def_zone)
 	//Suicide handling.
 	if (M == user && user.zone_sel.selecting == "mouth" && !mouthshoot)
 		mouthshoot = 1

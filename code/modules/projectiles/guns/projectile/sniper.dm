@@ -1,7 +1,6 @@
 /obj/item/weapon/gun/projectile/heavyrifle
 	name = "\improper PTR-7 rifle"
 	desc = "A portable anti-armour rifle. Originally designed to used against armoured exosuits, it is capable of punching through windows with ease. Fires armor piercing 14.5mm shells."
-	icon = 'tauceti/icons/obj/guns.dmi'
 	icon_state = "heavyrifle"
 	item_state = "l6closednomag"
 	w_class = 5
@@ -25,7 +24,7 @@
 /obj/item/weapon/gun/projectile/heavyrifle/process_chamber()
 	return ..(0, 0)
 
-/obj/item/weapon/gun/projectile/heavyrifle/attackby(var/obj/item/A as obj, mob/user as mob)
+/obj/item/weapon/gun/projectile/heavyrifle/attackby(obj/item/A, mob/user)
 	if(!bolt_open)
 		return
 	if(chambered)
@@ -40,7 +39,7 @@
 		update_icon()	//I.E. fix the desc
 		A.update_icon()
 
-/obj/item/weapon/gun/projectile/heavyrifle/attack_self(mob/user as mob)
+/obj/item/weapon/gun/projectile/heavyrifle/attack_self(mob/user)
 	bolt_open = !bolt_open
 	if(bolt_open)
 		playsound(src.loc, 'sound/weapons/heavybolt_out.ogg', 50, 1)
@@ -53,7 +52,7 @@
 			chambered = null
 		else
 			user << "<span class='notice'>You work the bolt open.</span>"
-		
+
 	else
 		playsound(src.loc, 'sound/weapons/heavybolt_reload.ogg', 50, 1)
 		user << "<span class='notice'>You work the bolt closed.</span>"

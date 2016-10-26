@@ -20,15 +20,15 @@
 	active_power_usage = 6
 	power_channel = ENVIRON
 
-/obj/machinery/keycard_auth/attack_ai(mob/user as mob)
+/obj/machinery/keycard_auth/attack_ai(mob/user)
 	user << "The station AI is not to interact with these devices."
 	return
 
-/obj/machinery/keycard_auth/attack_paw(mob/user as mob)
+/obj/machinery/keycard_auth/attack_paw(mob/user)
 	user << "You are too primitive to use this device."
 	return
 
-/obj/machinery/keycard_auth/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/machinery/keycard_auth/attackby(obj/item/weapon/W, mob/user)
 	if(stat & (NOPOWER|BROKEN))
 		user << "This device is not powered."
 		return
@@ -51,7 +51,7 @@
 	else
 		stat |= NOPOWER
 
-/obj/machinery/keycard_auth/attack_hand(mob/user as mob)
+/obj/machinery/keycard_auth/attack_hand(mob/user)
 	if(user.stat || stat & (NOPOWER|BROKEN))
 		user << "This device is not powered."
 		return
@@ -84,12 +84,12 @@
 
 
 /obj/machinery/keycard_auth/Topic(href, href_list)
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	if(busy)
 		usr << "This device is busy."
-		return
-	if(usr.stat || stat & (BROKEN|NOPOWER))
-		usr << "This device is without power."
 		return
 	if(href_list["triggerevent"])
 		event = href_list["triggerevent"]
@@ -98,8 +98,7 @@
 		reset()
 
 	updateUsrDialog()
-	add_fingerprint(usr)
-	return
+
 
 /obj/machinery/keycard_auth/proc/reset()
 	active = 0
@@ -127,7 +126,7 @@
 		message_admins("[key_name(event_triggered_by)] triggered and [key_name(event_confirmed_by)] confirmed event [event]", 1)
 	reset()
 
-/obj/machinery/keycard_auth/proc/receive_request(var/obj/machinery/keycard_auth/source)
+/obj/machinery/keycard_auth/proc/receive_request(obj/machinery/keycard_auth/source)
 	if(stat & (BROKEN|NOPOWER))
 		return
 	event_source = source
@@ -148,10 +147,13 @@
 			set_security_level(SEC_LEVEL_RED)
 			feedback_inc("alert_keycard_auth_red",1)
 		if("Grant Emergency Maintenance Access")
-			make_maint_all_access()
+			make_maint_all_access(TRUE)
 			feedback_inc("alert_keycard_auth_maintGrant",1)
 		if("Revoke Emergency Maintenance Access")
-			revoke_maint_all_access()
+			if(timer_maint_revoke_id)
+				deltimer(timer_maint_revoke_id)
+				timer_maint_revoke_id = 0
+			revoke_maint_all_access(TRUE)
 			feedback_inc("alert_keycard_auth_maintRevoke",1)
 		if("Emergency Response Team")
 			if(is_ert_blocked())
@@ -165,15 +167,28 @@
 	if(config.ert_admin_call_only) return 1
 	return ticker.mode && ticker.mode.ert_disabled
 
-var/global/maint_all_access = 0
+var/global/maint_all_access_priority = FALSE	// Set only by keycard auth. If true, maint
+																							// access  can be revoked only by calling revoke_maint_all_access(TRUE) (this doing keycard auth)
+var/global/maint_all_access = FALSE
+var/global/timer_maint_revoke_id = 0
 
-/proc/make_maint_all_access()
-	maint_all_access = 1
+/proc/make_maint_all_access(var/priority = FALSE)
+	if(priority)
+		maint_all_access_priority = TRUE
+	if(maint_all_access)
+		return
+	maint_all_access = TRUE
 	world << "<font size=4 color='red'>Attention!</font>"
 	world << "<font color='red'>The maintenance access requirement has been revoked on all airlocks.</font>"
 
-/proc/revoke_maint_all_access()
-	maint_all_access = 0
+/proc/revoke_maint_all_access(var/priority = FALSE)
+	if(priority)
+		maint_all_access_priority = FALSE
+	if(!maint_all_access) // For communication console
+		return
+	if(maint_all_access_priority)	// We must use keycard auth
+		return
+	maint_all_access = FALSE
 	world << "<font size=4 color='red'>Attention!</font>"
 	world << "<font color='red'>The maintenance access requirement has been readded on all maintenance airlocks.</font>"
 

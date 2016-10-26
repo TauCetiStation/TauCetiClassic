@@ -33,7 +33,7 @@
 	if (src.health <= 0)
 		src.explode()
 
-/obj/machinery/bot/proc/Emag(mob/user as mob)
+/obj/machinery/bot/proc/Emag(mob/user)
 	if(locked)
 		locked = 0
 		emagged = 1
@@ -51,7 +51,7 @@
 			usr << "<span class='danger'>[src]'s parts look very loose!</span>"
 	return
 
-/obj/machinery/bot/attack_alien(var/mob/living/carbon/alien/user as mob)
+/obj/machinery/bot/attack_alien(mob/living/carbon/alien/user)
 	user.do_attack_animation(src)
 	src.health -= rand(15,30)*brute_dam_coeff
 	src.visible_message("\red <B>[user] has slashed [src]!</B>")
@@ -61,7 +61,7 @@
 	healthcheck()
 
 
-/obj/machinery/bot/attack_animal(var/mob/living/simple_animal/M as mob)
+/obj/machinery/bot/attack_animal(mob/living/simple_animal/M)
 	M.do_attack_animation(src)
 	if(M.melee_damage_upper == 0)	return
 	src.health -= M.melee_damage_upper
@@ -74,7 +74,7 @@
 
 
 
-/obj/machinery/bot/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/machinery/bot/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/screwdriver))
 		if(!locked)
 			open = !open
@@ -102,7 +102,7 @@
 		else
 			..()
 
-/obj/machinery/bot/bullet_act(var/obj/item/projectile/Proj)
+/obj/machinery/bot/bullet_act(obj/item/projectile/Proj)
 	health -= Proj.damage
 	..()
 	healthcheck()
@@ -154,8 +154,11 @@
 			turn_on()
 
 
-/obj/machinery/bot/attack_ai(mob/user as mob)
+/obj/machinery/bot/attack_ai(mob/user)
 	src.attack_hand(user)
+
+/obj/machinery/bot/is_operational_topic()
+	return TRUE
 
 /******************************************************************/
 // Navigation procs
@@ -164,7 +167,7 @@
 
 // Returns the surrounding cardinal turfs with open links
 // Including through doors openable with the ID
-/turf/proc/CardinalTurfsWithAccess(var/obj/item/weapon/card/id/ID)
+/turf/proc/CardinalTurfsWithAccess(obj/item/weapon/card/id/ID)
 	var/L[] = new()
 
 	//	for(var/turf/simulated/t in oview(src,1))
@@ -208,7 +211,7 @@
 
 // Returns true if direction is blocked from loc
 // Checks doors against access with given ID
-/proc/DirBlockedWithAccess(turf/loc,var/dir,var/obj/item/weapon/card/id/ID)
+/proc/DirBlockedWithAccess(turf/loc,dir,obj/item/weapon/card/id/ID)
 	for(var/obj/structure/window/D in loc)
 		if(!D.density)			continue
 		if(D.dir == SOUTHWEST)	return 1

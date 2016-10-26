@@ -17,7 +17,7 @@
 	var/stop = 0.0
 	var/screen = 0 // 0 - Main Menu, 1 - Cyborg Status, 2 - Kill 'em All! -- In text
 
-/obj/machinery/computer/robotics/attack_hand(var/mob/user as mob)
+/obj/machinery/computer/robotics/attack_hand(mob/user)
 	if(..())
 		return
 	if (src.z > ZLEVEL_EMPTY)
@@ -95,115 +95,112 @@
 	return
 
 /obj/machinery/computer/robotics/Topic(href, href_list)
-	if(..())
+	. = ..()
+	if(!.)
 		return
-	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon)))
-		usr.set_machine(src)
 
-		if (href_list["eject"])
-			src.temp = {"Destroy Robots?<BR>
-			<BR><B><A href='?src=\ref[src];eject2=1'>\[Swipe ID to initiate destruction sequence\]</A></B><BR>
-			<A href='?src=\ref[src];temp=1'>Cancel</A>"}
+	if (href_list["eject"])
+		src.temp = {"Destroy Robots?<BR>
+		<BR><B><A href='?src=\ref[src];eject2=1'>\[Swipe ID to initiate destruction sequence\]</A></B><BR>
+		<A href='?src=\ref[src];temp=1'>Cancel</A>"}
 
-		else if (href_list["eject2"])
-			var/obj/item/weapon/card/id/I = usr.get_active_hand()
-			if (istype(I, /obj/item/device/pda))
-				var/obj/item/device/pda/pda = I
-				I = pda.id
-			if (istype(I))
-				if(src.check_access(I))
-					if (!status)
-						message_admins("\blue [key_name_admin(usr)] has initiated the global cyborg killswitch!")
-						log_game("\blue [key_name(usr)] has initiated the global cyborg killswitch!")
-						src.status = 1
-						src.start_sequence()
-						src.temp = null
-
-				else
-					usr << "\red Access Denied."
-
-		else if (href_list["stop"])
-			src.temp = {"
-			Stop Robot Destruction Sequence?<BR>
-			<BR><A href='?src=\ref[src];stop2=1'>Yes</A><BR>
-			<A href='?src=\ref[src];temp=1'>No</A>"}
-
-		else if (href_list["stop2"])
-			src.stop = 1
-			src.temp = null
-			src.status = 0
-
-		else if (href_list["reset"])
-			src.timeleft = 60
-
-		else if (href_list["temp"])
-			src.temp = null
-		else if (href_list["screen"])
-			switch(href_list["screen"])
-				if("0")
-					screen = 0
-				if("1")
-					screen = 1
-				if("2")
-					screen = 2
-		else if (href_list["killbot"])
-			if(src.allowed(usr))
-				var/mob/living/silicon/robot/R = locate(href_list["killbot"])
-				if(R)
-					var/choice = input("Are you certain you wish to detonate [R.name]?") in list("Confirm", "Abort")
-					if(choice == "Confirm")
-						if(R && istype(R))
-							if(R.mind && R.mind.special_role && R.emagged)
-								R << "Extreme danger.  Termination codes detected.  Scrambling security codes and automatic AI unlink triggered."
-								R.ResetSecurityCodes()
-
-							else
-								message_admins("\blue [key_name_admin(usr)] detonated [R.name]!")
-								log_game("\blue [key_name_admin(usr)] detonated [R.name]!")
-								R.self_destruct()
-			else
-				usr << "\red Access Denied."
-
-		else if (href_list["stopbot"])
-			if(src.allowed(usr))
-				var/mob/living/silicon/robot/R = locate(href_list["stopbot"])
-				if(R && istype(R)) // Extra sancheck because of input var references
-					var/choice = input("Are you certain you wish to [R.canmove ? "lock down" : "release"] [R.name]?") in list("Confirm", "Abort")
-					if(choice == "Confirm")
-						if(R && istype(R))
-							message_admins("\blue [key_name_admin(usr)] [R.canmove ? "locked down" : "released"] [R.name]!")
-							log_game("[key_name(usr)] [R.canmove ? "locked down" : "released"] [R.name]!")
-							R.canmove = !R.canmove
-							if (R.lockcharge)
-								R.clear_alert("locked")
-							//	R.cell.charge = R.lockcharge
-								R.lockcharge = !R.lockcharge
-								R << "Your lockdown has been lifted!"
-							else
-								R.throw_alert("locked")
-								R.lockcharge = !R.lockcharge
-						//		R.cell.charge = 0
-								R << "You have been locked down!"
+	else if (href_list["eject2"])
+		var/obj/item/weapon/card/id/I = usr.get_active_hand()
+		if (istype(I, /obj/item/device/pda))
+			var/obj/item/device/pda/pda = I
+			I = pda.id
+		if (istype(I))
+			if(src.check_access(I))
+				if (!status)
+					message_admins("\blue [key_name_admin(usr)] has initiated the global cyborg killswitch!")
+					log_game("\blue [key_name(usr)] has initiated the global cyborg killswitch!")
+					src.status = 1
+					src.start_sequence()
+					src.temp = null
 
 			else
 				usr << "\red Access Denied."
 
-		else if (href_list["magbot"])
-			if(src.allowed(usr))
-				var/mob/living/silicon/robot/R = locate(href_list["magbot"])
-				if(R)
-					var/choice = input("Are you certain you wish to hack [R.name]?") in list("Confirm", "Abort")
-					if(choice == "Confirm")
-						if(R && istype(R))
+	else if (href_list["stop"])
+		src.temp = {"
+		Stop Robot Destruction Sequence?<BR>
+		<BR><A href='?src=\ref[src];stop2=1'>Yes</A><BR>
+		<A href='?src=\ref[src];temp=1'>No</A>"}
+
+	else if (href_list["stop2"])
+		src.stop = 1
+		src.temp = null
+		src.status = 0
+
+	else if (href_list["reset"])
+		src.timeleft = 60
+
+	else if (href_list["temp"])
+		src.temp = null
+	else if (href_list["screen"])
+		switch(href_list["screen"])
+			if("0")
+				screen = 0
+			if("1")
+				screen = 1
+			if("2")
+				screen = 2
+	else if (href_list["killbot"])
+		if(src.allowed(usr))
+			var/mob/living/silicon/robot/R = locate(href_list["killbot"])
+			if(R)
+				var/choice = input("Are you certain you wish to detonate [R.name]?") in list("Confirm", "Abort")
+				if(choice == "Confirm")
+					if(R && istype(R))
+						if(R.mind && R.mind.special_role && R.emagged)
+							R << "Extreme danger.  Termination codes detected.  Scrambling security codes and automatic AI unlink triggered."
+							R.ResetSecurityCodes()
+
+						else
+							message_admins("\blue [key_name_admin(usr)] detonated [R.name]!")
+							log_game("\blue [key_name_admin(usr)] detonated [R.name]!")
+							R.self_destruct()
+		else
+			usr << "\red Access Denied."
+
+	else if (href_list["stopbot"])
+		if(src.allowed(usr))
+			var/mob/living/silicon/robot/R = locate(href_list["stopbot"])
+			if(R && istype(R)) // Extra sancheck because of input var references
+				var/choice = input("Are you certain you wish to [R.canmove ? "lock down" : "release"] [R.name]?") in list("Confirm", "Abort")
+				if(choice == "Confirm")
+					if(R && istype(R))
+						message_admins("\blue [key_name_admin(usr)] [R.canmove ? "locked down" : "released"] [R.name]!")
+						log_game("[key_name(usr)] [R.canmove ? "locked down" : "released"] [R.name]!")
+						R.canmove = !R.canmove
+						if (R.lockcharge)
+							R.clear_alert("locked")
+						//	R.cell.charge = R.lockcharge
+							R.lockcharge = !R.lockcharge
+							R << "Your lockdown has been lifted!"
+						else
+							R.throw_alert("locked")
+							R.lockcharge = !R.lockcharge
+					//		R.cell.charge = 0
+							R << "You have been locked down!"
+
+		else
+			usr << "\red Access Denied."
+
+	else if (href_list["magbot"])
+		if(src.allowed(usr))
+			var/mob/living/silicon/robot/R = locate(href_list["magbot"])
+			if(R)
+				var/choice = input("Are you certain you wish to hack [R.name]?") in list("Confirm", "Abort")
+				if(choice == "Confirm")
+					if(R && istype(R))
 //							message_admins("\blue [key_name_admin(usr)] emagged [R.name] using robotic console!")
-							log_game("[key_name(usr)] emagged [R.name] using robotic console!")
-							R.emagged = 1
-							if(R.mind.special_role)
-								R.verbs += /mob/living/silicon/robot/proc/ResetSecurityCodes
+						log_game("[key_name(usr)] emagged [R.name] using robotic console!")
+						R.emagged = 1
+						if(R.mind.special_role)
+							R.verbs += /mob/living/silicon/robot/proc/ResetSecurityCodes
 
-		src.add_fingerprint(usr)
 	src.updateUsrDialog()
-	return
 
 /obj/machinery/computer/robotics/proc/start_sequence()
 

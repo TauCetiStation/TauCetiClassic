@@ -9,7 +9,7 @@
 	icon = 'icons/obj/decals.dmi'
 	icon_state = "shock"
 
-	attack(mob/M as mob, mob/living/silicon/robot/user as mob)
+	attack(mob/M, mob/living/silicon/robot/user)
 		M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been attacked with [src.name] by [user.name] ([user.ckey])</font>")
 		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to attack [M.name] ([M.ckey])</font>")
 		msg_admin_attack("[user.name] ([user.ckey]) used the [src.name] to attack [M.name] ([M.ckey]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
@@ -55,6 +55,12 @@
 	name = "\proper meson vision"
 	sight_mode = BORGMESON
 	icon_state = "meson"
+	icon = 'icons/obj/clothing/glasses.dmi'
+
+/obj/item/borg/sight/night
+	name = "\proper night vision"
+	sight_mode = BORGNIGHT
+	icon_state = "night"
 	icon = 'icons/obj/clothing/glasses.dmi'
 
 /obj/item/borg/sight/hud

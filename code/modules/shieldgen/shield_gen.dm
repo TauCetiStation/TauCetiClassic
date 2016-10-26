@@ -87,10 +87,10 @@
 	else
 		..()
 
-/obj/machinery/shield_gen/attack_paw(user as mob)
+/obj/machinery/shield_gen/attack_paw(user)
 	return src.attack_hand(user)
 
-/obj/machinery/shield_gen/attack_ai(user as mob)
+/obj/machinery/shield_gen/attack_ai(user)
 	return src.attack_hand(user)
 
 /obj/machinery/shield_gen/attack_hand(mob/user)
@@ -176,12 +176,16 @@
 		average_field_strength = 0
 
 /obj/machinery/shield_gen/Topic(href, href_list[])
-	..()
-	if( href_list["close"] )
+	if(href_list["close"])
 		usr << browse(null, "window=shield_generator")
-		usr.unset_machine()
+		usr.unset_machine(src)
+		return FALSE
+
+	. = ..()
+	if(!.)
 		return
-	else if( href_list["toggle"] )
+
+	if( href_list["toggle"] )
 		toggle()
 	else if( href_list["change_radius"] )
 		field_radius += text2num(href_list["change_radius"])
@@ -201,7 +205,7 @@
 			target_field_strength = 1000
 		else if(target_field_strength < 0)
 			target_field_strength = 0
-	//
+
 	updateDialog()
 
 /obj/machinery/shield_gen/power_change()

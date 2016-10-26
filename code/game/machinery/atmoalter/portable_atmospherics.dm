@@ -36,8 +36,7 @@
 
 	Destroy()
 		qdel(air_contents)
-
-		..()
+		return ..()
 
 	update_icon()
 		return null
@@ -82,7 +81,7 @@
 
 			return 1
 
-/obj/machinery/portable_atmospherics/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+/obj/machinery/portable_atmospherics/attackby(obj/item/weapon/W, mob/user)
 	var/obj/icon = src
 	if ((istype(W, /obj/item/weapon/tank) && !( src.destroyed )))
 		if (src.holding)

@@ -5,7 +5,7 @@
   Note that walkie-talkie, intercoms and headsets handle transmission using nonstandard way.
   procs:
 
-    add_object(obj/device as obj, var/new_frequency as num, var/filter as text|null = null)
+    add_object(obj/device, new_frequency, filter = null)
       Adds listening object.
       parameters:
         device - device receiving signals, must have proc receive_signal (see description below).
@@ -23,14 +23,14 @@
       Obliviously, after calling this proc, device will not receive any signals on old_frequency.
       Other frequencies will left unaffected.
 
-   return_frequency(var/frequency as num)
+   return_frequency(frequency)
       returns:
        Reference to frequency object. Use it if you need to send and do not need to listen.
 
   radio_frequency is a global object maintaining list of devices that listening specific frequency.
   procs:
 
-    post_signal(obj/source as obj|null, datum/signal/signal, var/filter as text|null = null, var/range as num|null = null)
+    post_signal(obj/source, datum/signal/signal, filter = null, range = null)
       Sends signal to all devices that wants such signal.
       parameters:
         source - object, emitted signal. Usually, devices will not receive their own signals.
@@ -38,7 +38,7 @@
         filter - described above.
         range - radius of regular byond's square circle on that z-level. null means everywhere, on all z-levels.
 
-  obj/proc/receive_signal(datum/signal/signal, var/receive_method as num, var/receive_param)
+  obj/proc/receive_signal(datum/signal/signal, receive_method, receive_param)
     Handler from received signals. By default does nothing. Define your own for your object.
     Avoid of sending signals directly from this proc, use spawn(-1). Do not use sleep() here please.
       parameters:
@@ -143,7 +143,7 @@ var/global/datum/controller/radio/radio_controller
 /datum/controller/radio
 	var/list/datum/radio_frequency/frequencies = list()
 
-/datum/controller/radio/proc/add_object(obj/device as obj, var/new_frequency as num, var/filter = null as text|null)
+/datum/controller/radio/proc/add_object(obj/device, new_frequency, filter = null)
 	var/f_text = num2text(new_frequency)
 	var/datum/radio_frequency/frequency = frequencies[f_text]
 
@@ -168,7 +168,7 @@ var/global/datum/controller/radio/radio_controller
 
 	return 1
 
-/datum/controller/radio/proc/return_frequency(var/new_frequency as num)
+/datum/controller/radio/proc/return_frequency(new_frequency)
 	var/f_text = num2text(new_frequency)
 	var/datum/radio_frequency/frequency = frequencies[f_text]
 
@@ -183,7 +183,7 @@ var/global/datum/controller/radio/radio_controller
 	var/frequency as num
 	var/list/list/obj/devices = list()
 
-/datum/radio_frequency/proc/post_signal(obj/source as obj|null, datum/signal/signal, var/filter = null as text|null, var/range = null as num|null)
+/datum/radio_frequency/proc/post_signal(obj/source, datum/signal/signal, filter = null, range = null)
 	//log_admin("DEBUG \[[world.timeofday]\]: post_signal {source=\"[source]\", [signal.debug_print()], filter=[filter]}")
 //	var/N_f=0
 //	var/N_nf=0
@@ -240,7 +240,7 @@ var/global/datum/controller/radio/radio_controller
 
 //	qdel(signal)
 
-/datum/radio_frequency/proc/add_listener(obj/device as obj, var/filter as text|null)
+/datum/radio_frequency/proc/add_listener(obj/device, filter)
 	if (!filter)
 		filter = "_default"
 	//log_admin("add_listener(device=[device],filter=[filter]) frequency=[frequency]")
@@ -255,14 +255,13 @@ var/global/datum/controller/radio/radio_controller
 	//log_admin("DEBUG: devices(filter_str).len=[l]")
 
 /datum/radio_frequency/proc/remove_listener(obj/device)
-	for (var/devices_filter in devices)
+	for(var/devices_filter in devices)
 		var/list/devices_line = devices[devices_filter]
-		devices_line-=device
-		while (null in devices_line)
-			devices_line -= null
-		if (devices_line.len==0)
+		if(!devices_line)
 			devices -= devices_filter
-			qdel(devices_line)
+		devices_line -= device
+		if(!devices_line.len)
+			devices -= devices_filter
 
 
 /obj/proc/receive_signal(datum/signal/signal, receive_method, receive_param)

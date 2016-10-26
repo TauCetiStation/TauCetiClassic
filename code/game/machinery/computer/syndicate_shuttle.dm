@@ -16,7 +16,7 @@
 	curr_location= locate(/area/syndicate_station/start)
 
 
-/obj/machinery/computer/syndicate_station/proc/syndicate_move_to(area/destination as area)
+/obj/machinery/computer/syndicate_station/proc/syndicate_move_to(area/destination)
 	if(moving)	return
 	if(lastMove + SYNDICATE_SHUTTLE_COOLDOWN > world.time)	return
 	var/area/dest_location = locate(destination)
@@ -36,7 +36,7 @@
 	moving = 0
 	return 1
 
-/obj/machinery/computer/syndicate_station/attack_hand(mob/user as mob)
+/obj/machinery/computer/syndicate_station/attack_hand(mob/user)
 	if(!allowed(user))
 		user << "\red Access Denied"
 		return
@@ -61,11 +61,9 @@
 
 
 /obj/machinery/computer/syndicate_station/Topic(href, href_list)
-	if(!isliving(usr))	return
-	var/mob/living/user = usr
-
-	if(in_range(src, user) || istype(user, /mob/living/silicon))
-		user.set_machine(src)
+	. = ..()
+	if(!. || !allowed(usr))
+		return
 
 	if(href_list["syndicate"])
 		syndicate_move_to(/area/syndicate_station/start)
@@ -84,6 +82,4 @@
 	else if(href_list["mining"])
 		syndicate_move_to(/area/syndicate_station/mining)
 
-	add_fingerprint(usr)
 	updateUsrDialog()
-	return

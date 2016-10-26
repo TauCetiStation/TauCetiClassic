@@ -229,7 +229,7 @@ This function completely restores a damaged organ to perfect condition.
 	owner.updatehealth()
 
 
-/datum/organ/external/proc/createwound(var/type = CUT, var/damage)
+/datum/organ/external/proc/createwound(type = CUT, damage)
 	if(damage == 0) return
 
 	//moved this before the open_wound check so that having many small wounds for example doesn't somehow protect you from taking internal damage
@@ -562,7 +562,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 		O.setAmputatedTree()
 
 //Handles dismemberment
-/datum/organ/external/proc/droplimb(var/override = 0,var/no_explode = 0)
+/datum/organ/external/proc/droplimb(override = 0,no_explode = 0)
 	if(destspawn) return
 	if(override)
 		status |= ORGAN_DESTROYED
@@ -824,7 +824,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 			return 1
 	return 0
 
-/datum/organ/external/get_icon(var/icon/race_icon, var/icon/deform_icon,gender="",fat="")
+/datum/organ/external/get_icon(icon/race_icon, icon/deform_icon,gender="",fat="")
 	if (status & ORGAN_ROBOT && !(owner.species && owner.species.flags & IS_SYNTHETIC))
 		return new /icon('icons/mob/human_races/robotic.dmi', "[icon_name][gender ? "_[gender]" : ""]")
 
@@ -844,7 +844,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	return ((status & ORGAN_ROBOT) && prob(brute_dam + burn_dam))
 
 //for arms and hands
-/datum/organ/external/proc/process_grasp(var/obj/item/c_hand, var/hand_name)
+/datum/organ/external/proc/process_grasp(obj/item/c_hand, hand_name)
 	if (!c_hand)
 		return
 
@@ -862,7 +862,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 		spawn(10)
 			qdel(spark_system)
 
-/datum/organ/external/proc/embed(var/obj/item/weapon/W, var/silent = 0)
+/datum/organ/external/proc/embed(obj/item/weapon/W, silent = 0)
 	if(!silent)
 		owner.visible_message("<span class='danger'>\The [W] sticks in the wound!</span>")
 	owner.throw_alert("embeddedobject")
@@ -1002,7 +1002,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	var/disfigured = 0
 	vital = 1
 
-/datum/organ/external/head/get_icon(var/icon/race_icon, var/icon/deform_icon)
+/datum/organ/external/head/get_icon(icon/race_icon, icon/deform_icon)
 	if (!owner)
 		return ..()
 	var/g = "m"
@@ -1022,7 +1022,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 		if(burn_dam > 40)
 			disfigure("burn")
 
-/datum/organ/external/head/proc/disfigure(var/type = "brute")
+/datum/organ/external/head/proc/disfigure(type = "brute")
 	if (disfigured)
 		return
 	if(type == "brute")
@@ -1154,7 +1154,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	brainmob.stat = DEAD
 	brainmob.death()
 
-/obj/item/weapon/organ/head/proc/transfer_identity(var/mob/living/carbon/human/H)//Same deal as the regular brain proc. Used for human-->head
+/obj/item/weapon/organ/head/proc/transfer_identity(mob/living/carbon/human/H)//Same deal as the regular brain proc. Used for human-->head
 	brainmob = new(src)
 	brainmob.name = H.real_name
 	brainmob.real_name = H.real_name
@@ -1163,7 +1163,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 		H.mind.transfer_to(brainmob)
 	brainmob.container = src
 
-/obj/item/weapon/organ/head/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/weapon/organ/head/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W,/obj/item/weapon/scalpel))
 		switch(brain_op_stage)
 			if(0)
@@ -1214,3 +1214,67 @@ Note that amputating the affected organ does in fact remove the infection from t
 				..()
 	else
 		..()
+
+/datum/organ/external/proc/get_wounds_desc()
+	if(status == ORGAN_ROBOT)
+		var/list/descriptors = list()
+		if(brute_dam)
+			switch(brute_dam)
+				if(0 to 20)
+					descriptors += "some dents"
+				if(21 to INFINITY)
+					descriptors += pick("a lot of dents","severe denting")
+		if(burn_dam)
+			switch(burn_dam)
+				if(0 to 20)
+					descriptors += "some burns"
+				if(21 to INFINITY)
+					descriptors += pick("a lot of burns","severe melting")
+		if(open)
+			descriptors += "an open panel"
+
+		return english_list(descriptors)
+
+	var/list/flavor_text = list()
+	if(status & ORGAN_DESTROYED)
+		flavor_text += "a tear and hangs by a scrap of flesh" // TODO ZAKONCHIT'
+
+	var/list/wound_descriptors = list()
+	if(open > 1)
+		wound_descriptors["an open incision"] = 1
+	else if (open)
+		wound_descriptors["an incision"] = 1
+	for(var/datum/wound/W in wounds)
+		if(W.internal && !open) continue // can't see internal wounds
+		var/this_wound_desc = W.desc
+
+		if(W.damage_type == BURN && W.salved)
+			this_wound_desc = "salved [this_wound_desc]"
+
+		if(W.bleeding())
+			this_wound_desc = "bleeding [this_wound_desc]"
+		else if(W.bandaged)
+			this_wound_desc = "bandaged [this_wound_desc]"
+
+		if(W.germ_level > 600)
+			this_wound_desc = "badly infected [this_wound_desc]"
+		else if(W.germ_level > 330)
+			this_wound_desc = "lightly infected [this_wound_desc]"
+
+		if(wound_descriptors[this_wound_desc])
+			wound_descriptors[this_wound_desc] += W.amount
+		else
+			wound_descriptors[this_wound_desc] = W.amount
+
+	for(var/wound in wound_descriptors)
+		switch(wound_descriptors[wound])
+			if(1)
+				flavor_text += "a [wound]"
+			if(2)
+				flavor_text += "a pair of [wound]s"
+			if(3 to 5)
+				flavor_text += "several [wound]s"
+			if(6 to INFINITY)
+				flavor_text += "a ton of [wound]\s"
+
+	return english_list(flavor_text)

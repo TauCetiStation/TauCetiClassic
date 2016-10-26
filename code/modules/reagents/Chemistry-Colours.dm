@@ -1,4 +1,4 @@
-/proc/mix_color_from_reagents(var/list/reagent_list)
+/proc/mix_color_from_reagents(list/reagent_list)
 	if(!reagent_list || !length(reagent_list))
 		return 0
 
@@ -37,7 +37,7 @@
 	var/finalcolor = "#[red][green][blue]"
 	return finalcolor
 
-/proc/mixOneColor(var/list/weight, var/list/color)
+/proc/mixOneColor(list/weight, list/color)
 	if (!weight || !color || length(weight)!=length(color))
 		return 0
 
