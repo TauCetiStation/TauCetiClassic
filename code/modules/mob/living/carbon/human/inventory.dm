@@ -113,6 +113,17 @@
 		if(s_store)
 			drop_from_inventory(s_store)
 		wear_suit = null
+		var/update_hair = 0
+		if((W.flags & BLOCKHAIR) || (W.flags & BLOCKHEADHAIR))
+			update_hair = 1
+		else if(istype(W, /obj/item))
+			var/obj/item/I = W
+			if(I.flags_inv & HIDEMASK)
+				update_hair = 1
+		if(update_hair)
+			update_hair()
+			update_inv_ears()
+			update_inv_wear_mask()
 		update_inv_wear_suit()
 	else if (W == w_uniform)
 		if (r_store)
@@ -288,7 +299,7 @@
 			update_inv_gloves()
 		if(slot_head)
 			src.head = W
-			if((head.flags & BLOCKHAIR) || (head.flags & BLOCKHEADHAIR))
+			if((W.flags & BLOCKHAIR) || (W.flags & BLOCKHEADHAIR))
 				update_hair()	//rebuild hair
 			if(istype(W,/obj/item/clothing/head/kitty))
 				W.update_icon(src)
@@ -300,6 +311,8 @@
 			update_inv_shoes()
 		if(slot_wear_suit)
 			src.wear_suit = W
+			if((W.flags & BLOCKHAIR) || (W.flags & BLOCKHEADHAIR))
+				update_hair()	//rebuild hair
 			W.equipped(src, slot)
 			update_inv_wear_suit()
 		if(slot_w_uniform)
