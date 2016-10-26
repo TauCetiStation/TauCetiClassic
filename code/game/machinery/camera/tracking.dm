@@ -48,7 +48,7 @@
 
 	return
 
-/mob/living/silicon/ai/proc/ai_store_location(loc)
+/mob/living/silicon/ai/proc/ai_store_location(loc as text)
 	set category = "AI Commands"
 	set name = "Store Camera Location"
 	set desc = "Stores your current camera location by the given name."
