@@ -52,7 +52,7 @@
 	else
 		alert("Admin jumping disabled")
 
-/client/proc/jumptocoord(tx, ty, tz)
+/client/proc/jumptocoord(tx as num, ty as num, tz as num)
 	set category = "Admin"
 	set name = "Jump to Coordinate"
 
