@@ -124,7 +124,7 @@
 /obj/structure/window/CheckExit(atom/movable/O as mob|obj, target as turf)
 	if(istype(O) && O.checkpass(PASSGLASS))
 		return 1
-	if(get_dir(O.loc, target) == dir || fulltile)
+	if(get_dir(O.loc, target) == dir)
 		return 0
 	return 1
 
