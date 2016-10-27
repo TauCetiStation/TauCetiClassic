@@ -168,7 +168,6 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	if(DirBlocked(B,rdir)) return 1
 	return 0
 
-
 /proc/DirBlocked(turf/loc,dir)
 	for(var/obj/structure/window/D in loc)
 		if(!D.density)			continue
@@ -1107,13 +1106,6 @@ proc/get_mob_with_client_list()
 	else if (zone == "r_foot") return "right foot"
 	else return zone
 
-
-/proc/get_turf(turf/location)
-	while(location)
-		if(isturf(location))
-			return location
-		location = location.loc
-	return null
 
 /proc/get(atom/loc, type)
 	while(loc)

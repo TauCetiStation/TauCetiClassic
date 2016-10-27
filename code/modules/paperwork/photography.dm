@@ -31,6 +31,12 @@
 	var/scribble	//Scribble on the back.
 	var/icon/tiny
 
+/obj/item/weapon/photo/Destroy()
+	img = null
+	qdel(tiny)
+	tiny = null
+	return ..()
+
 /obj/item/weapon/photo/attack_self(mob/user)
 	examine()
 
@@ -40,6 +46,8 @@
 		//txt = copytext(txt, 1, 128)
 		if(loc == user && user.stat == CONSCIOUS)
 			scribble = txt
+	else if(istype(P, /obj/item/weapon/lighter))
+		burnpaper(P, user)
 	..()
 
 /obj/item/weapon/photo/examine()
@@ -133,6 +141,7 @@
 	var/icon_on = "camera"
 	var/icon_off = "camera_off"
 	var/see_ghosts = 0 //for the spoop of it
+	var/photo_size = 3 //Default is 3x3. 1x1, 5x5, 7x7 are also options
 
 /obj/item/device/camera/spooky
 	name = "camera obscura"
@@ -190,15 +199,15 @@
 				break
 		sorted.Insert(j+1, c)
 
-	var/icon/res = icon('icons/effects/96x96.dmi', "")
+	var/icon/res = get_base_photo_icon()
 
 	for(var/atom/A in sorted)
 		var/icon/img = getFlatIcon(A)
 		if(istype(A, /mob/living) && A:lying)
 			img.Turn(A:lying_current)
 
-		var/offX = 32 * (A.x - center.x) + A.pixel_x + 33
-		var/offY = 32 * (A.y - center.y) + A.pixel_y + 33
+		var/offX = 1 + (photo_size-1)*16 + (A.x - center.x) * 32 + A.pixel_x
+		var/offY = 1 + (photo_size-1)*16 + (A.y - center.y) * 32 + A.pixel_y
 		if(istype(A, /atom/movable))
 			offX += A:step_x
 			offY += A:step_y
@@ -246,7 +255,8 @@
 	return mob_detail
 
 /obj/item/device/camera/afterattack(atom/target, mob/user, flag)
-	if(!on || !pictures_left || ismob(target.loc)) return
+	if(!on || !pictures_left || ismob(target.loc))
+		return
 	captureimage(target, user, flag)
 
 	playsound(loc, pick('sound/items/polaroid1.ogg', 'sound/items/polaroid2.ogg'), 75, 1, -3)
@@ -273,7 +283,7 @@
 		seen = hear(world.view, target)
 
 	var/list/turfs = list()
-	for(var/turf/T in range(1, target))
+	for(var/turf/T in range(round(photo_size * 0.5), target))
 		if(T in seen)
 			if(isAi && !cameranet.checkTurfVis(T))
 				continue
@@ -281,7 +291,7 @@
 				turfs += T
 				mobs += camera_get_mobs(T)
 
-	var/icon/temp = icon('icons/effects/96x96.dmi',"")
+	var/icon/temp = get_base_photo_icon()
 	temp.Blend("#000", ICON_OVERLAY)
 	temp.Blend(camera_get_icon(turfs, target), ICON_OVERLAY)
 
@@ -315,6 +325,51 @@
 	if(!user.get_inactive_hand())
 		user.put_in_inactive_hand(Photo)
 	Photo.construct(P)
+
+/obj/item/device/camera/proc/get_base_photo_icon()
+	var/icon/res
+	switch(photo_size)
+		if(1)
+			res = icon('icons/effects/32x32.dmi', "")
+		if(3)
+			res = icon('icons/effects/96x96.dmi', "")
+		if(5)
+			res = icon('icons/effects/160x160.dmi', "")
+		if(7)
+			res = icon('icons/effects/224x224.dmi', "")
+		else
+			res = icon('icons/effects/32x32.dmi', "")
+
+	return res
+
+/obj/item/device/camera/verb/set_zoom()
+	set name = "Set Camera Zoom"
+	set category = "Object"
+
+	if(usr.incapacitated())
+		return
+
+	if(photo_size == 3)
+		photo_size = 1
+		usr << "<span class='info'>You zoom the camera in.</span>"
+	else
+		photo_size = 3
+		usr << "<span class='info'>You zoom the camera out.</span>"
+
+/obj/item/device/camera/AltClick()
+	set_zoom()
+
+/obj/item/device/camera/big_photos
+	photo_size = 5
+
+/obj/item/device/camera/big_photos/set_zoom()
+	return
+
+/obj/item/device/camera/huge_photos
+	photo_size = 7
+
+/obj/item/device/camera/huge_photos/set_zoom()
+	return
 
 /obj/item/weapon/photo/proc/construct(datum/picture/P)
 	icon = P.fields["icon"]

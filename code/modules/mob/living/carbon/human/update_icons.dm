@@ -371,8 +371,8 @@ Please contact me on #coderbus IRC. ~Carn x
 	if(!head_organ || (head_organ.status & ORGAN_DESTROYED))
 		return
 
-	//masks and helmets can obscure our hair.
-	if((HUSK in mutations) || (head && (head.flags & BLOCKHAIR)) || (wear_mask && (wear_mask.flags & BLOCKHAIR)))
+	//masks and helmets can obscure our hair. 
+	if((HUSK in mutations) || (head && (head.flags & BLOCKHAIR)) || (wear_mask && (wear_mask.flags & BLOCKHAIR)) || (wear_suit && (wear_suit.flags & BLOCKHAIR)))
 		return
 
 	//base icons
