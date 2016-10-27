@@ -13,7 +13,8 @@
 /datum/surgery_step/brain/saw_skull
 	allowed_tools = list(
 	/obj/item/weapon/circular_saw = 100, \
-	/obj/item/weapon/hatchet = 75
+	/obj/item/weapon/hatchet = 75,       \
+	/obj/item/weapon/crowbar = 50
 	)
 
 	min_duration = 50
@@ -70,7 +71,8 @@
 /datum/surgery_step/brain/saw_spine
 	allowed_tools = list(
 	/obj/item/weapon/circular_saw = 100, \
-	/obj/item/weapon/hatchet = 75
+	/obj/item/weapon/hatchet = 75,       \
+	/obj/item/weapon/crowbar = 50
 	)
 
 	min_duration = 50
@@ -133,7 +135,7 @@
 	allowed_tools = list(
 	/obj/item/weapon/hemostat = 100, 		\
 	/obj/item/weapon/wirecutters = 75, 		\
-	/obj/item/weapon/kitchen/utensil/fork = 20
+	/obj/item/weapon/kitchen/utensil/fork = 50
 	)
 
 	min_duration = 80
@@ -255,7 +257,8 @@
 /datum/surgery_step/slime/saw_core
 	allowed_tools = list(
 	/obj/item/weapon/circular_saw = 100, \
-	/obj/item/weapon/hatchet = 75
+	/obj/item/weapon/hatchet = 75,       \
+	/obj/item/weapon/crowbar = 50
 	)
 
 	min_duration = 50

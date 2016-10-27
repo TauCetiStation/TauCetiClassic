@@ -48,8 +48,10 @@
 
 /datum/surgery_step/face/mend_vocal
 	allowed_tools = list(
-	/obj/item/weapon/hemostat = 100, 	\
-	/obj/item/weapon/cable_coil = 75, 	\
+	/obj/item/weapon/hemostat = 100,             \
+	/obj/item/weapon/cable_coil = 75,            \
+	/obj/item/weapon/wirecutters = 75,           \
+	/obj/item/weapon/kitchen/utensil/fork = 50,  \
 	/obj/item/device/assembly/mousetrap = 10	//I don't know. Don't ask me. But I'm leaving it because hilarity.
 	)
 
@@ -78,8 +80,8 @@
 /datum/surgery_step/face/fix_face
 	allowed_tools = list(
 	/obj/item/weapon/retractor = 100, 	\
-	/obj/item/weapon/crowbar = 55,	\
-	/obj/item/weapon/kitchen/utensil/fork = 75)
+	/obj/item/weapon/kitchen/utensil/fork = 75,	\
+	/obj/item/weapon/crowbar = 50)
 
 	min_duration = 80
 	max_duration = 100
@@ -109,7 +111,7 @@
 	/obj/item/weapon/cautery = 100,			\
 	/obj/item/clothing/mask/cigarette = 75,	\
 	/obj/item/weapon/lighter = 50,			\
-	/obj/item/weapon/weldingtool = 25
+	/obj/item/weapon/weldingtool = 50
 	)
 
 	min_duration = 70

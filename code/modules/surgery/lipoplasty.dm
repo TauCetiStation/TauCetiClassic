@@ -15,7 +15,8 @@
 /datum/surgery_step/lipoplasty/cut_fat
 	allowed_tools = list(
 	/obj/item/weapon/circular_saw = 100, \
-	/obj/item/weapon/hatchet = 75
+	/obj/item/weapon/hatchet = 75,       \
+	/obj/item/weapon/crowbar = 50
 	)
 
 	min_duration = 110
@@ -53,7 +54,7 @@
 	allowed_tools = list(
 	/obj/item/weapon/retractor = 100, 	\
 	/obj/item/weapon/crowbar = 75,	\
-	/obj/item/weapon/kitchen/utensil/fork = 20
+	/obj/item/weapon/kitchen/utensil/fork = 50
 	)
 
 	min_duration = 50

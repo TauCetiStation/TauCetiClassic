@@ -13,7 +13,8 @@
 /datum/surgery_step/ribcage/saw_ribcage
 	allowed_tools = list(
 	/obj/item/weapon/circular_saw = 100, \
-	/obj/item/weapon/hatchet = 75
+	/obj/item/weapon/hatchet = 75,       \
+	/obj/item/weapon/crowbar = 50
 	)
 
 	min_duration = 50
@@ -48,7 +49,7 @@
 	allowed_tools = list(
 	/obj/item/weapon/retractor = 100, 	\
 	/obj/item/weapon/crowbar = 75,	\
-	/obj/item/weapon/kitchen/utensil/fork = 20
+	/obj/item/weapon/kitchen/utensil/fork = 50
 	)
 
 	min_duration = 30
@@ -88,7 +89,7 @@
 	allowed_tools = list(
 	/obj/item/weapon/retractor = 100, 	\
 	/obj/item/weapon/crowbar = 75,	\
-	/obj/item/weapon/kitchen/utensil/fork = 20
+	/obj/item/weapon/kitchen/utensil/fork = 50
 	)
 
 
@@ -160,7 +161,7 @@
 	allowed_tools = list(
 	/obj/item/weapon/hemostat = 100,	\
 	/obj/item/weapon/wirecutters = 75,	\
-	/obj/item/weapon/kitchen/utensil/fork = 20
+	/obj/item/weapon/kitchen/utensil/fork = 50
 	)
 	blood_level = 2
 
