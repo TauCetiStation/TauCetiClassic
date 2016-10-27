@@ -744,22 +744,22 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 /mob/verb/eastface()
 	set hidden = 1
-	return facedir(client.client_dir(EAST))
+	return facedir(EAST)
 
 
 /mob/verb/westface()
 	set hidden = 1
-	return facedir(client.client_dir(WEST))
+	return facedir(WEST)
 
 
 /mob/verb/northface()
 	set hidden = 1
-	return facedir(client.client_dir(NORTH))
+	return facedir(NORTH)
 
 
 /mob/verb/southface()
 	set hidden = 1
-	return facedir(client.client_dir(SOUTH))
+	return facedir(SOUTH)
 
 
 /mob/proc/IsAdvancedToolUser()//This might need a rename but it should replace the can this mob use things check

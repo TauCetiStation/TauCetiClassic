@@ -553,24 +553,6 @@ var/global/floorIsLava = 0
 	usr << browse(dat, "window=admincaster_main;size=400x600")
 	onclose(usr, "admincaster_main")
 
-//RANDOM DIR MODE
-#define RDM_RANDOM_EXCL_NORTH 10
-#define RDM_RANDOM 20
-
-/datum/admins/proc/get_current_view_mode()
-	if(!ticker.random_dir_mode)
-		return "Default (North)"
-	else if(ticker.random_dir_mode == RDM_RANDOM_EXCL_NORTH)
-		return "Random excl NORTH"
-	else if(ticker.random_dir_mode == RDM_RANDOM)
-		return "Random"
-	else if(ticker.random_dir_mode == SOUTH)
-		return "Forced SOUTH"
-	else if(ticker.random_dir_mode == EAST)
-		return "Forced EAST"
-	else if(ticker.random_dir_mode == WEST)
-		return "Forced WEST"
-
 /datum/admins/proc/Game()
 	if(!check_rights(0))	return
 
@@ -580,13 +562,6 @@ var/global/floorIsLava = 0
 		"}
 	if(master_mode == "secret")
 		dat += "<A href='?src=\ref[src];f_secret=1'>(Force Secret Mode)</A><br>"
-
-
-	dat += {"
-		<BR>
-		<A href='?src=\ref[src];c_dir=1'>Change View Mode</A><br>
-		<B>([get_current_view_mode()])</B><br>
-		"}
 
 	dat += {"
 		<BR>

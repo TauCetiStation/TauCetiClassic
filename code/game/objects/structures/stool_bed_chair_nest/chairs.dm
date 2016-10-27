@@ -91,14 +91,9 @@
 
 /obj/structure/stool/bed/chair/New()
 	..()
-	chairs_list += src
 	spawn(3)	//sorry. i don't think there's a better way to do this.
 		handle_rotation()
 	return
-
-/obj/structure/stool/bed/chair/Destroy()
-	chairs_list -= src
-	return ..()
 
 /obj/structure/stool/bed/chair/attackby(obj/item/weapon/W, mob/user)
 	..()
@@ -151,16 +146,10 @@
 	return
 
 /obj/structure/stool/bed/chair/handle_rotation()	//making this into a seperate proc so office chairs can call it on Move()
-	if(ticker.random_dir_mode in cardinal)
-		if(src.dir == ticker.random_dir_mode)
-			src.layer = FLY_LAYER
-		else
-			src.layer = OBJ_LAYER
+	if(src.dir == NORTH)
+		src.layer = FLY_LAYER
 	else
-		if(src.dir == NORTH)
-			src.layer = FLY_LAYER
-		else
-			src.layer = OBJ_LAYER
+		src.layer = OBJ_LAYER
 
 	if(buckled_mob)
 		buckled_mob.dir = dir
