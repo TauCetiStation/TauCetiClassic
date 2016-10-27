@@ -570,7 +570,7 @@
 			else if (                                                             \
 				findtext(phrase, "attack") || findtext(phrase, "kill") ||         \
 				findtext(phrase, "убить") || findtext(phrase, "уничтожить") ||    \
-				findtext(phrase, "атаковать")                                     \
+				findtext(phrase, "атак")                                     \
 			)
 				if(Friends[who] > 4)
 					if(last_pointed)
