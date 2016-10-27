@@ -37,8 +37,7 @@
 /datum/surgery_step/cavity/make_space
 	allowed_tools = list(
 	/obj/item/weapon/surgicaldrill = 100,	\
-	/obj/item/weapon/pen = 75,	\
-	/obj/item/stack/rods = 50
+	/obj/item/weapon/pen = 75
 	)
 
 	min_duration = 60
