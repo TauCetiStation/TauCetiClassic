@@ -83,7 +83,7 @@
 	var/lying = 0
 	var/lying_prev = 0
 	var/lying_current = 0
-	var/crawling = 0 //Для ползанья
+	var/crawling = 0 //For crawling
 	var/canmove = 1
 	var/lastpuke = 0
 	var/unacidable = 0

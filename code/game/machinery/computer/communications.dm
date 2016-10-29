@@ -441,6 +441,8 @@
 	captain_announce("The emergency shuttle has been called. It will arrive in [round(SSshuttle.timeleft()/60)] minutes.")
 	world << sound('sound/AI/shuttlecalled.ogg')
 
+	make_maint_all_access(FALSE)
+
 	return
 
 /proc/init_shift_change(mob/user, force = 0)
@@ -495,6 +497,12 @@
 		SSshuttle.recall()
 		log_game("[key_name(user)] has recalled the shuttle.")
 		message_admins("[key_name_admin(user)] has recalled the shuttle.", 1)
+
+		if(timer_maint_revoke_id)
+			deltimer(timer_maint_revoke_id)
+			timer_maint_revoke_id = 0
+		timer_maint_revoke_id = addtimer(GLOBAL_PROC, "revoke_maint_all_access", 600, TRUE, FALSE) // Want to give them time to get out of maintenance.
+
 		return 1
 	return
 

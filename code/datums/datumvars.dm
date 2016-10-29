@@ -784,7 +784,7 @@ body
 			usr << "Failed! Something went wrong."
 
 	else if(href_list["addlanguage"])
-		if(!check_rights(R_SPAWN))	return
+		if(!check_rights(R_VAREDIT))	return
 
 		var/mob/H = locate(href_list["addlanguage"])
 		if(!istype(H))
@@ -803,7 +803,7 @@ body
 			usr << "Mob already knows that language."
 
 	else if(href_list["remlanguage"])
-		if(!check_rights(R_SPAWN))	return
+		if(!check_rights(R_VAREDIT))	return
 
 		var/mob/H = locate(href_list["remlanguage"])
 		if(!istype(H))
