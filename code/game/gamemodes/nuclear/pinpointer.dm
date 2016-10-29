@@ -43,7 +43,7 @@
 
 	examine()
 		..()
-		for(var/obj/machinery/nuclearbomb/bomb in world)
+		for(var/obj/machinery/nuclearbomb/bomb in machines)
 			if(bomb.timing)
 				usr << "Extreme danger.  Arming signal detected.   Time remaining: [bomb.timeleft]"
 

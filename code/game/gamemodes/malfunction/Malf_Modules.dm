@@ -75,7 +75,7 @@ rcd light flash thingy on matter drain
 	mod_pick_name = "overload"
 	uses = 2
 
-/client/proc/overload_machine(obj/machinery/M as obj in world)
+/client/proc/overload_machine(obj/machinery/M as obj in machines)
 	set name = "Overload Machine"
 	set category = "Malfunction"
 	if (istype(M, /obj/machinery))
@@ -101,7 +101,7 @@ rcd light flash thingy on matter drain
 	for(var/datum/AI_Module/small/blackout/blackout in usr:current_modules)
 		if(blackout.uses > 0)
 			blackout.uses --
-			for(var/obj/machinery/power/apc/apc in world)
+			for(var/obj/machinery/power/apc/apc in machines)
 				if(prob(30*apc.overload))
 					apc.overload_lighting()
 				else apc.overload++
