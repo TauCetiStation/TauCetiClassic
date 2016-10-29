@@ -75,7 +75,7 @@ rcd light flash thingy on matter drain
 	mod_pick_name = "overload"
 	uses = 2
 
-/client/proc/overload_machine(obj/machinery/M in world)
+/client/proc/overload_machine(obj/machinery/M as obj in world)
 	set name = "Overload Machine"
 	set category = "Malfunction"
 	if (istype(M, /obj/machinery))
@@ -122,7 +122,7 @@ rcd light flash thingy on matter drain
 	mod_pick_name = "recam"
 	uses = 10
 
-/client/proc/reactivate_camera(obj/machinery/camera/C in cameranet.cameras)
+/client/proc/reactivate_camera(obj/machinery/camera/C as obj in cameranet.cameras)
 	set name = "Reactivate Camera"
 	set category = "Malfunction"
 	if (istype (C, /obj/machinery/camera))
@@ -143,7 +143,7 @@ rcd light flash thingy on matter drain
 	mod_pick_name = "upgradecam"
 	uses = 10
 
-/client/proc/upgrade_camera(obj/machinery/camera/C in cameranet.cameras)
+/client/proc/upgrade_camera(obj/machinery/camera/C as obj in cameranet.cameras)
 	set name = "Upgrade Camera"
 	set category = "Malfunction"
 	if(istype(C))
