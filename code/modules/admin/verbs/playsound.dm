@@ -1,6 +1,6 @@
 var/global/list/sounds_cache = list()
 
-/client/proc/play_sound(S)
+/client/proc/play_sound(S as sound)
 	set category = "Fun"
 	set name = "Play Global Sound"
 	if(!check_rights(R_SOUNDS))	return
@@ -26,7 +26,7 @@ var/global/list/sounds_cache = list()
 	feedback_add_details("admin_verb","PGS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
-/client/proc/play_local_sound(S)
+/client/proc/play_local_sound(S as sound)
 	set category = "Fun"
 	set name = "Play Local Sound"
 	if(!check_rights(R_SOUNDS))	return
