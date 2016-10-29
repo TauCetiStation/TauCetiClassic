@@ -235,12 +235,34 @@ BLIND     // can't see anything
 	siemens_coefficient = 0.9
 	body_parts_covered = FEET
 	slot_flags = SLOT_FEET
+	var/clipped = 0
 
 	permeability_coefficient = 0.50
 	slowdown = SHOES_SLOWDOWN
 	species_restricted = list("exclude","Unathi","Tajaran")
 	var/footstep = 1	//used for squeeks whilst walking(tc)
 	sprite_sheets = list("Vox" = 'icons/mob/species/vox/shoes.dmi')
+
+//Cutting shoes
+/obj/item/clothing/shoes/attackby(obj/item/weapon/W, mob/user)
+	if(istype(W, /obj/item/weapon/wirecutters) || istype(W, /obj/item/weapon/scalpel))
+		if(!clipped)
+			playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
+			user.visible_message("\red [user] cuts the toe cap off of the [src].","\red You cut the toe cap off of the [src].")
+
+			clipped = 1
+			name = "mangled [name]"
+			desc = "[desc]<br>They have had the toe caps cut off of them."
+			if("exclude" in species_restricted)
+				species_restricted -= "Unathi"
+				species_restricted -= "Tajaran"
+			src.icon_state += "_cut"
+			user.update_inv_shoes()
+			return
+		else
+			user << "<span class='notice'>The [src] have already been clipped!</span>"
+			update_icon()
+			return
 
 /obj/item/proc/negates_gravity()
 	return 0
