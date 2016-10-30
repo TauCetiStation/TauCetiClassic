@@ -27,6 +27,8 @@
 	var/picture_state		// icon_state of alert picture, if not displaying text/numbers
 	var/list/obj/machinery/targets = list()
 	var/timetoset = 0		// Used to set releasetime upon starting the timer
+	var/timer_activator = "Unknown"	//Mob.name who activate timer
+	var/flag30sec = 0	//30 seconds notification flag
 
 	maptext_height = 26
 	maptext_width = 32
@@ -71,6 +73,10 @@
 		if(timeleft > 1e5)
 			src.releasetime = 0
 
+		if(world.timeofday > (src.releasetime - 300)) //30 sec notification before release
+			if (!flag30sec)
+				flag30sec = 1
+				broadcast_security_hud_message("<b>[src.name]</b> prisoner's sentence is ending in 30 seconds.", src)
 
 		if(world.timeofday > src.releasetime)
 			src.timer_end() // open doors, reset timer, clear status screen
@@ -78,9 +84,6 @@
 
 		src.updateUsrDialog()
 		src.update_icon()
-
-	else
-		timer_end()
 
 	return
 
@@ -96,11 +99,13 @@
 // linked door is open/closed (by density) then opens it/closes it.
 
 // Closes and locks doors, power check
-/obj/machinery/door_timer/proc/timer_start()
+/obj/machinery/door_timer/proc/timer_start(activator)
 	if(stat & (NOPOWER|BROKEN))	return 0
 
 	// Set releasetime
 	releasetime = world.timeofday + timetoset
+	if (activator)
+		timer_activator = activator
 
 	for(var/obj/machinery/door/window/brigdoor/door in targets)
 		if(door.density)	continue
@@ -121,6 +126,9 @@
 
 	// Reset releasetime
 	releasetime = 0
+	broadcast_security_hud_message("<b>[src.name]</b> prisoner has served issued sentence. <b>[timer_activator]</b> is requested for the release procedure.", src)
+	timer_activator = "Unknown"
+	flag30sec = 0
 
 	for(var/obj/machinery/door/window/brigdoor/door in targets)
 		if(!door.density)	continue
@@ -233,7 +241,7 @@
 		src.timing = text2num(href_list["timing"])
 
 		if(src.timing)
-			src.timer_start()
+			src.timer_start(usr.name)
 		else
 			src.timer_end()
 	else
@@ -250,7 +258,7 @@
 				F.flash()
 
 		if(href_list["change"])
-			src.timer_start()
+			src.timer_start(usr.name)
 
 	src.updateUsrDialog()
 	src.update_icon()

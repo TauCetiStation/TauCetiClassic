@@ -42,7 +42,7 @@
 		return
 	var/obj/item/weapon/holder/H = new holder_type(loc)
 	src.loc = H
-	H.name = loc.name
+	H.name = src.name
 	H.attack_hand(grabber)
 
 	grabber << "You scoop up [src]."
