@@ -118,11 +118,11 @@
 		a_right.holder_movement()
 	return
 
-/obj/item/device/assembly_holder/hear_talk(mob/living/M as mob, msg, verb, datum/language/speaking)
+/obj/item/device/assembly_holder/hear_talk(mob/living/M, msg)
 	if(a_left)
-		a_left.hear_talk(M,msg,verb,speaking)
+		a_left.hear_talk(M,msg)
 	if(a_right)
-		a_right.hear_talk(M,msg,verb,speaking)
+		a_right.hear_talk(M,msg)
 
 	return
 

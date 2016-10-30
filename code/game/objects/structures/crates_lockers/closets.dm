@@ -284,11 +284,11 @@
 	else
 		icon_state = icon_opened
 
-/obj/structure/closet/hear_talk(mob/M as mob, text, verb, datum/language/speaking)
+/obj/structure/closet/hear_talk(mob/M, text)
 	for (var/atom/A in src)
 		if(istype(A,/obj/))
 			var/obj/O = A
-			O.hear_talk(M, text, verb, speaking)
+			O.hear_talk(M, text)
 
 /obj/structure/closet/container_resist()
 	var/mob/living/user = usr

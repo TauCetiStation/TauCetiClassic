@@ -36,7 +36,7 @@
 	//parse the language code and consume it
 	var/datum/language/speaking = parse_language(message)
 	if(speaking)
-		message = copytext(message,2+length(speaking.key))
+		message = copytext(message,3)
 
 	whisper_say(message, speaking, alt_name)
 
@@ -114,7 +114,7 @@
 	for(var/obj/O in view(message_range, src))
 		spawn (0)
 			if (O)
-				O.hear_talk(src, message, verb, speaking)
+				O.hear_talk(src, message)	//O.hear_talk(src, message, verb, speaking)
 
 	var/list/eavesdropping = hearers(eavesdropping_range, src)
 	eavesdropping -= src
