@@ -145,8 +145,10 @@
 
 /datum/surgery_step/generic/clamp_bleeders
 	allowed_tools = list(
-	/obj/item/weapon/hemostat = 100,	\
-	/obj/item/weapon/cable_coil = 75, 	\
+	/obj/item/weapon/hemostat = 100,             \
+	/obj/item/weapon/cable_coil = 75,            \
+	/obj/item/weapon/wirecutters = 75,           \
+	/obj/item/weapon/kitchen/utensil/fork = 50,  \
 	/obj/item/device/assembly/mousetrap = 20
 	)
 
@@ -180,9 +182,9 @@
 
 /datum/surgery_step/generic/retract_skin
 	allowed_tools = list(
-	/obj/item/weapon/retractor = 100, 	\
-	/obj/item/weapon/crowbar = 75,	\
-	/obj/item/weapon/kitchen/utensil/fork = 50
+	/obj/item/weapon/retractor = 100,           \
+	/obj/item/weapon/kitchen/utensil/fork = 75,	\
+	/obj/item/weapon/screwdriver = 50
 	)
 
 	min_duration = 30
@@ -238,7 +240,7 @@
 	/obj/item/weapon/cautery = 100,			\
 	/obj/item/clothing/mask/cigarette = 75,	\
 	/obj/item/weapon/lighter = 50,			\
-	/obj/item/weapon/weldingtool = 25
+	/obj/item/weapon/weldingtool = 50
 	)
 
 	min_duration = 70
@@ -273,7 +275,8 @@
 /datum/surgery_step/generic/cut_limb
 	allowed_tools = list(
 	/obj/item/weapon/circular_saw = 100, \
-	/obj/item/weapon/hatchet = 75
+	/obj/item/weapon/hatchet = 75,       \
+	/obj/item/weapon/crowbar = 50
 	)
 
 	min_duration = 110
