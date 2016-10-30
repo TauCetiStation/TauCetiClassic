@@ -17,10 +17,10 @@
 	var/list/space_chance = 55 // Likelihood of getting a space in the random scramble string.
 
 /datum/language/proc/format_message(message, verb)
-	return "[verb], <span class='message'><span class='[colour]'>\"[capitalize(message)]\"</span></span>"
+	return "[verb], <span class='message'><span class='[colour]'>\"[sanitize_plus_chat(capitalize(message))]\"</span></span>"
 
 /datum/language/proc/format_message_radio(message, verb)
-	return "[verb], <span class='[colour]'>\"[capitalize(message)]\"</span>"
+	return "[verb], <span class='[colour]'>\"[sanitize_plus_chat(capitalize(message))]\"</span>"
 
 /datum/language
 	var/list/scramble_cache = list()
