@@ -263,11 +263,9 @@ BLIND     // can't see anything
 			return
 		if(clipped_status == NO_CLIPPING)
 			user << "<span class='notice'>You have no idea of how to clip [src]!</span>"
-			update_icon()
 			return
 		if(clipped_status == CLIPPED)
 			user << "<span class='notice'>The [src] have already been clipped!</span>"
-			update_icon()
 			return
 
 /obj/item/proc/negates_gravity()
