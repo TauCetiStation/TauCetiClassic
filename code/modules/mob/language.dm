@@ -53,9 +53,6 @@
 	if(ending == ".")
 		scrambled_text = copytext(scrambled_text,1,length(scrambled_text)-1)
 	scrambled_text += copytext(input, length(input))
-	var/input_ending = copytext(input, input_size)
-	if(input_ending in list("!","?","."))
-		scrambled_text += input_ending
 
 	// Add it to cache, cutting old entries if the list is too long
 	scramble_cache[input] = scrambled_text
