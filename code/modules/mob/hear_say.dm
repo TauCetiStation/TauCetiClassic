@@ -96,7 +96,7 @@
 				message = pick(S.speak)
 			else
 				if(language)
-					message = language.scramble(language)
+					message = language.scramble(message)
 				else
 					message = stars(message)
 
@@ -104,7 +104,7 @@
 			if(hard_to_hear)
 				message = stars(message)
 
-	var/speaker_name = speaker.name
+	var/speaker_name = speaker ? speaker.name : ""
 
 	if(vname)
 		speaker_name = vname

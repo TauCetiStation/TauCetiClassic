@@ -1,3 +1,5 @@
+#define SCRAMBLE_CACHE_LEN 20
+
 /*
 	Datum based languages. Easily editable and modular.
 */
@@ -15,10 +17,14 @@
 	var/list/space_chance = 55 // Likelihood of getting a space in the random scramble string.
 
 /datum/language/proc/format_message(message, verb)
-	return "[verb], <span class='message'><span class='[colour]'>\"[sanitize_plus_chat(capitalize(message))]\"</span></span>"
+	return "[verb], <span class='message'><span class='[colour]'>\"[capitalize(message)]\"</span></span>"
 
 /datum/language/proc/format_message_radio(message, verb)
-	return "[verb], <span class='[colour]'>\"[sanitize_plus_chat(capitalize(message))]\"</span>"
+	return "[verb], <span class='[colour]'>\"[capitalize(message)]\"</span>"
+
+/datum/language
+	var/list/scramble_cache = list()
+
 
 /datum/language/proc/scramble(input)
 
@@ -47,6 +53,15 @@
 	if(ending == ".")
 		scrambled_text = copytext(scrambled_text,1,length(scrambled_text)-1)
 	scrambled_text += copytext(input, length(input))
+	var/input_ending = copytext(input, input_size)
+	if(input_ending in list("!","?","."))
+		scrambled_text += input_ending
+
+	// Add it to cache, cutting old entries if the list is too long
+	scramble_cache[input] = scrambled_text
+	if(scramble_cache.len > SCRAMBLE_CACHE_LEN)
+		scramble_cache.Cut(1, scramble_cache.len-SCRAMBLE_CACHE_LEN-1)
+
 	return scrambled_text
 
 // Noise "language", for audible emotes.
@@ -188,3 +203,5 @@
 
 	src << browse(dat, "window=checklanguage")
 	return
+
+#undef SCRAMBLE_CACHE_LEN
