@@ -14,6 +14,7 @@
 	name = "mime shoes"
 	icon_state = "mime"
 	item_color = "mime"
+	clipped_status = CLIPPABLE
 
 /obj/item/clothing/shoes/swat
 	name = "\improper SWAT shoes"
@@ -22,6 +23,7 @@
 	armor = list(melee = 80, bullet = 5, laser = 5,energy = 25, bomb = 50, bio = 10, rad = 0)
 	flags = NOSLIP
 	siemens_coefficient = 0.6
+	clipped_status = CLIPPABLE
 
 /obj/item/clothing/shoes/combat //Basically SWAT shoes combined with galoshes.
 	name = "combat boots"
@@ -30,6 +32,7 @@
 	armor = list(melee = 80, bullet = 10, laser = 10,energy = 25, bomb = 50, bio = 10, rad = 0)
 	flags = NOSLIP
 	siemens_coefficient = 0.6
+	clipped_status = CLIPPABLE
 
 	cold_protection = FEET
 	min_cold_protection_temperature = SHOE_MIN_COLD_PROTECTION_TEMPERATURE
@@ -90,17 +93,20 @@
 	item_state = "jackboots"
 	item_color = "hosred"
 	siemens_coefficient = 0.7
+	clipped_status = CLIPPABLE
 
 /obj/item/clothing/shoes/jackboots/secshoes
 	name = "security shoes"
 	desc = "Security shoes for style."
 	icon_state = "secshoes"
 	item_state = "secshoes"
+	clipped_status = CLIPPABLE
 
 /obj/item/clothing/shoes/jackboots/wj
 	name = "security boots"
 	icon_state = "wjboots"
 	item_state = "wjboots"
+	clipped_status = CLIPPABLE
 
 /obj/item/clothing/shoes/cult
 	name = "boots"
@@ -140,7 +146,7 @@
 	name = "laceup shoes"
 	desc = "The height of fashion, and they're pre-polished!"
 	icon_state = "laceups"
-
+	clipped_status = CLIPPABLE
 /obj/item/clothing/shoes/swimmingfins
 	desc = "Help you swim good."
 	name = "swimming fins"
@@ -153,6 +159,7 @@
 	name = "dress shoes"
 	desc = "They appear impeccably polished."
 	icon_state = "laceups"
+	clipped_status = CLIPPABLE
 
 /obj/item/clothing/shoes/rosas_shoes
 	name = "white shoes"
@@ -176,3 +183,4 @@
 	name = "work boots"
 	icon_state = "workboots"
 	item_color = "workboots"
+	clipped_status = CLIPPABLE

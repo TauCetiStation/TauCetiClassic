@@ -1,3 +1,4 @@
+
 /obj/item/clothing
 	name = "clothing"
 	var/list/species_restricted = null //Only these species can wear this kit.
@@ -226,6 +227,7 @@ BLIND     // can't see anything
 	body_parts_covered = FACE|EYES
 	sprite_sheets = list("Vox" = 'icons/mob/species/vox/masks.dmi')
 
+
 //Shoes
 /obj/item/clothing/shoes
 	name = "shoes"
@@ -235,7 +237,7 @@ BLIND     // can't see anything
 	siemens_coefficient = 0.9
 	body_parts_covered = FEET
 	slot_flags = SLOT_FEET
-	var/clipped = 0
+	var/clipped_status = NO_CLIPPING
 
 	permeability_coefficient = 0.50
 	slowdown = SHOES_SLOWDOWN
@@ -246,20 +248,24 @@ BLIND     // can't see anything
 //Cutting shoes
 /obj/item/clothing/shoes/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/wirecutters) || istype(W, /obj/item/weapon/scalpel))
-		if(!clipped)
+		if(clipped_status == CLIPPABLE)
 			playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
-			user.visible_message("\red [user] cuts the toe cap off of the [src].","\red You cut the toe cap off of the [src].")
+			user.visible_message("\red [user] cuts the toe caps off of the [src].","\red You cut the toe cap off of the [src].")
 
-			clipped = 1
 			name = "mangled [name]"
-			desc = "[desc]<br>They have had the toe caps cut off of them."
+			desc = "[desc]<br>They have the toe caps cut off of them."
 			if("exclude" in species_restricted)
 				species_restricted -= "Unathi"
 				species_restricted -= "Tajaran"
 			src.icon_state += "_cut"
 			user.update_inv_shoes()
+			clipped_status = CLIPPED
 			return
-		else
+		if(clipped_status == NO_CLIPPING)
+			user << "<span class='notice'>You have no idea of how to clip [src]!</span>"
+			update_icon()
+			return
+		if(clipped_status == CLIPPED)
 			user << "<span class='notice'>The [src] have already been clipped!</span>"
 			update_icon()
 			return
