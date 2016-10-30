@@ -147,6 +147,7 @@
 	desc = "The height of fashion, and they're pre-polished!"
 	icon_state = "laceups"
 	clipped_status = CLIPPABLE
+
 /obj/item/clothing/shoes/swimmingfins
 	desc = "Help you swim good."
 	name = "swimming fins"
