@@ -122,6 +122,7 @@
 		vox.languages = list() // Removing language from chargen.
 		vox.flavor_text = ""
 		vox.add_language("Gutter")
+		vox.add_language("Noise")
 		vox.h_style = "Skinhead"
 		vox.f_style = "Shaved"
 		//for(var/datum/organ/external/limb in vox.organs)

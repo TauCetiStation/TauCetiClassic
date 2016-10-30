@@ -1,6 +1,11 @@
 // BEGIN_INTERNALS
 /*
-MAP_ICON_TYPE: 0
+LAST_COMPILE_TIME: 1477820245
+DIR: code code\__DEFINES code\__HELPERS code\game code\game\gamemodes code\game\gamemodes\heist code\game\machinery code\game\objects code\game\objects\items code\game\objects\items\weapons code\game\objects\items\weapons\storage code\game\objects\structures code\game\objects\structures\crates_lockers code\modules code\modules\admin code\modules\assembly code\modules\clothing code\modules\clothing\suits code\modules\clothing\under code\modules\mob code\modules\mob\living code\modules\mob\living\carbon code\modules\mob\living\carbon\alien code\modules\mob\living\carbon\alien\effects code\modules\mob\living\carbon\brain code\modules\mob\living\carbon\human code\modules\mob\living\carbon\monkey code\modules\mob\living\parasite code\modules\mob\living\silicon 
 AUTO_FILE_DIR: OFF
+MAP_ICON_TYPE: 0
+LAST_COMPILE_VERSION: 510.1347
+WINDOW: code\__DEFINES\language.dm;code\modules\mob\hear_say.dm;code\modules\mob\living\carbon\human\whisper.dm;code\modules\mob\living\say.dm;code\game\machinery\hologram.dm;code\__HELPERS\global_lists.dm;code\game\objects\items\weapons\storage\storage.dm;code\modules\clothing\under\ties.dm;code\modules\mob\language.dm;code\modules\mob\say.dm;code\modules\mob\living\living.dm;code\modules\mob\living\carbon\alien\effects\aliens.dm;code\modules\mob\living\carbon\human\human_attackhand.dm;code\modules\mob\living\carbon\monkey\monkey.dm;code\modules\mob\living\carbon\alien\say.dm;code\modules\mob\living\parasite\meme.dm
+FILE: code\modules\mob\language.dm
 */
 // END_INTERNALS
