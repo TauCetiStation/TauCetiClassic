@@ -579,7 +579,7 @@ datum/objective/steal
 				for(var/obj/item/clothing/suit/space/space_ninja/S in all_items) //Let an AI downloaded into a space ninja suit count
 					if(S.AI && S.AI.stat != DEAD)
 						return 1
-				for(var/mob/living/silicon/ai/ai in world)
+				for(var/mob/living/silicon/ai/ai in living_mob_list)
 					if(istype(ai.loc, /turf))
 						var/area/check_area = get_area(ai)
 						if(istype(check_area, /area/shuttle/escape/centcom))

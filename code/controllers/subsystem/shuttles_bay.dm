@@ -558,11 +558,6 @@ var/datum/subsystem/shuttle/SSshuttle
 		online = 1
 		if(always_fake_recall)
 			fake_recall = rand(300,500)		//turning on the red lights in hallways
-	/*if(alert == 0)
-		red_alert_evac = 1
-		for(var/area/A in world)
-			if(istype(A, /area/hallway))
-				A.readyalert()*/
 
 /datum/subsystem/shuttle/proc/get_shuttle_arrive_time()
 	// During mutiny rounds, the shuttle takes twice as long.
@@ -584,10 +579,6 @@ var/datum/subsystem/shuttle/SSshuttle
 			world << sound('sound/AI/shuttlerecalled.ogg')
 			setdirection(-1)
 			online = 1
-			/*red_alert_evac = 0
-			for(var/area/A in world)
-				if(istype(A, /area/hallway))
-					A.readyreset()*/
 			return
 		else //makes it possible to send shuttle back.
 			captain_announce("The shuttle has been recalled.")

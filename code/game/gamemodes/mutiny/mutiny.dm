@@ -196,7 +196,7 @@ datum/game_mode/mutiny
 		return 0
 
 	proc/replace_nuke_with_ead()
-		for(var/obj/machinery/nuclearbomb/N in world)
+		for(var/obj/machinery/nuclearbomb/N in machines)
 			ead = new(N.loc, src)
 			qdel(N)
 
