@@ -268,7 +268,7 @@
 	/*		Power Monitor (Mode: 43 / 433)			*/
 	if(mode==43 || mode==433)
 		var/pMonData[0]
-		for(var/obj/machinery/computer/monitor/pMon in world)
+		for(var/obj/machinery/computer/monitor/pMon in machines)
 			if(!(pMon.stat & (NOPOWER|BROKEN)) )
 				pMonData[++pMonData.len] = list ("Name" = pMon.name, "ref" = "\ref[pMon]")
 				if(isnull(powmonitor)) powmonitor = pMon

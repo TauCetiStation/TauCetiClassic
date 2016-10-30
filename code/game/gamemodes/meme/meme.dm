@@ -112,10 +112,6 @@
 	for(var/datum/mind/possible_host in ticker.minds)
 		if(possible_host.assigned_role != "MODE" && ishuman(possible_host.current) && (possible_host.current.stat != DEAD))
 			possible_hosts += possible_host
-	/**for(var/mob/living/carbon/possible_host in world)
-		//if(possible_host.assigned_role != "MODE")
-		if(!(possible_host in memes))
-			possible_hosts += possible_host*/
 	if(!(possible_hosts.len))
 		log_admin("Something went wrong, no possible hosts!")
 		testing("Something went wrong, no possible hosts!")
