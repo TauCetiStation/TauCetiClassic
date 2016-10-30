@@ -469,7 +469,7 @@
 	qdel(src)
 //BubbleWrap END
 
-/obj/item/weapon/storage/hear_talk(mob/M as mob, text, verb, datum/language/speaking)
+/obj/item/weapon/storage/hear_talk(mob/M, text, verb, datum/language/speaking)
 	for (var/atom/A in src)
 		if(istype(A,/obj/))
 			var/obj/O = A
