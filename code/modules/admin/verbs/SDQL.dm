@@ -3,7 +3,7 @@
 
 //Note: For use in BS12, need text_starts_with proc, and to modify the action on select to use BS12's object edit command(s).
 
-/client/proc/SDQL_query(query_text)
+/client/proc/SDQL_query(query_text as message)
 	set category = "Admin"
 	if(!check_rights(R_DEBUG))  //Shouldn't happen... but just to be safe.
 		message_admins("\red ERROR: Non-admin [usr.key] attempted to execute a SDQL query!")
@@ -85,7 +85,7 @@
 			else
 				var/f2 = text2path(f)
 				if(text_starts_with(f, "/mob"))
-					for(var/mob/m in world)
+					for(var/mob/m in mob_list)
 						if(istype(m, f2))
 							from_objs += m
 
@@ -110,7 +110,7 @@
 							from_objs += m
 
 				else if(text_starts_with(f, "/area"))
-					for(var/area/m in world)
+					for(var/area/m in all_areas)
 						if(istype(m, f2))
 							from_objs += m
 
@@ -120,7 +120,7 @@
 							from_objs += m
 
 				else if(text_starts_with(f, "/obj/machinery"))
-					for(var/obj/machinery/m in world)
+					for(var/obj/machinery/m in machines)
 						if(istype(m, f2))
 							from_objs += m
 

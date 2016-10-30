@@ -253,7 +253,7 @@ var/global/floorIsLava = 0
 	else return 1
 
 
-/datum/admins/proc/show_player_info(key)
+/datum/admins/proc/show_player_info(key as text)
 	set category = "Admin"
 	set name = "Show Player Info"
 	if (!istype(src,/datum/admins))
@@ -1019,7 +1019,7 @@ var/global/floorIsLava = 0
 		else
 			return "Error: Invalid sabotage target: [target]"
 */
-/datum/admins/proc/spawn_atom(object)
+/datum/admins/proc/spawn_atom(object as text)
 	set category = "Debug"
 	set desc = "(atom path) Spawn an atom."
 	set name = "Spawn"
@@ -1117,7 +1117,7 @@ var/global/floorIsLava = 0
 	if(!ai_number)
 		usr << "<b>No AIs located</b>" //Just so you know the thing is actually working and not just ignoring you.
 
-/client/proc/update_mob_sprite(mob/living/carbon/human/H)
+/client/proc/update_mob_sprite(mob/living/carbon/human/H as mob)
 	set category = "Admin"
 	set name = "Update Mob Sprite"
 	set desc = "Should fix any mob sprite update errors."

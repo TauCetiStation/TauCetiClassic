@@ -13,7 +13,8 @@
 /datum/surgery_step/ribcage/saw_ribcage
 	allowed_tools = list(
 	/obj/item/weapon/circular_saw = 100, \
-	/obj/item/weapon/hatchet = 75
+	/obj/item/weapon/hatchet = 75,       \
+	/obj/item/weapon/crowbar = 50
 	)
 
 	min_duration = 50
@@ -46,9 +47,9 @@
 
 /datum/surgery_step/ribcage/retract_ribcage
 	allowed_tools = list(
-	/obj/item/weapon/retractor = 100, 	\
-	/obj/item/weapon/crowbar = 75,	\
-	/obj/item/weapon/kitchen/utensil/fork = 20
+	/obj/item/weapon/retractor = 100,           \
+	/obj/item/weapon/kitchen/utensil/fork = 75,	\
+	/obj/item/weapon/screwdriver = 50
 	)
 
 	min_duration = 30
@@ -86,9 +87,9 @@
 
 /datum/surgery_step/ribcage/close_ribcage
 	allowed_tools = list(
-	/obj/item/weapon/retractor = 100, 	\
-	/obj/item/weapon/crowbar = 75,	\
-	/obj/item/weapon/kitchen/utensil/fork = 20
+	/obj/item/weapon/retractor = 100,           \
+	/obj/item/weapon/kitchen/utensil/fork = 75,	\
+	/obj/item/weapon/screwdriver = 50
 	)
 
 
@@ -128,7 +129,7 @@
 /datum/surgery_step/ribcage/mend_ribcage
 	allowed_tools = list(
 	/obj/item/weapon/bonegel = 100,	\
-	/obj/item/weapon/screwdriver = 75
+	/obj/item/stack/rods = 50
 	)
 
 	min_duration = 20
@@ -160,7 +161,7 @@
 	allowed_tools = list(
 	/obj/item/weapon/hemostat = 100,	\
 	/obj/item/weapon/wirecutters = 75,	\
-	/obj/item/weapon/kitchen/utensil/fork = 20
+	/obj/item/weapon/kitchen/utensil/fork = 50
 	)
 	blood_level = 2
 
