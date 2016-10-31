@@ -147,7 +147,7 @@
 	return
 
 
-/obj/proc/hear_talk(mob/M, text, verb, datum/language/speaking)
+/obj/proc/hear_talk(mob/M, text)
 	if(talking_atom)
 		talking_atom.catchMessage(text, M)
 /*

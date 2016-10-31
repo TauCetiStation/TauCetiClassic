@@ -88,16 +88,14 @@
 			return 1
 		if(isAI(src) && ispAI(other))
 			return 1
-		if(istype(other, src.type) || istype(src, other.type))
+		if (istype(other, src.type) || istype(src, other.type))
 			return 1
 		if(src.alien_talk_understand && other.alien_talk_understand)
-			return 1
-		if(speaking.flags & INNATE)
 			return 1
 		return 0
 
 	//Language check.
-	for(var/datum/language/L in languages)
+	for(var/datum/language/L in src.languages)
 		if(speaking.name == L.name)
 			return 1
 
@@ -159,7 +157,6 @@
 //parses the language code (e.g. :j) from text, such as that supplied to say.
 //returns the language object only if the code corresponds to a language that src can speak, otherwise null.
 /mob/proc/parse_language(message)
-
 	if(length(message) >= 2)
 		var/language_prefix = lowertext(copytext(message, 1 ,3))
 		var/datum/language/L = language_keys[language_prefix]

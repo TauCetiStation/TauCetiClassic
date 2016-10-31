@@ -106,7 +106,7 @@ var/list/department_radio_keys = list(
 		if(dongle.translate_binary)
 			return 1
 
-/mob/living/say(message, datum/language/speaking = null, verb="says", alt_name="", italics=0, message_range = world.view, list/used_radios = list(), sound/speech_sound, sound_vol, sanitize = 1)
+/mob/living/say(var/message, var/datum/language/speaking = null, var/verb="says", var/alt_name="", var/italics=0, var/message_range = world.view, var/list/used_radios = list(), var/sound/speech_sound, var/sound_vol, var/sanitize = 1)
 	if (src.client)
 		if(client.prefs.muted & MUTE_IC)
 			src << "You cannot send IC messages (muted)."
@@ -143,21 +143,21 @@ var/list/department_radio_keys = list(
 
 		speech_sound = null	//so we don't play it twice.
 
+	//make sure the air can transmit speech
+	var/datum/gas_mixture/environment = T.return_air()
+	if(environment)
+		var/pressure = environment.return_pressure()
+		if(pressure < SOUND_MINIMUM_PRESSURE)
+			italics = 1
+			message_range = 1
+
+			if (speech_sound)
+				sound_vol *= 0.5	//muffle the sound a bit, so it's like we're actually talking through contact
+
 	var/list/listening = list()
 	var/list/listening_obj = list()
 
 	if(T)
-			//make sure the air can transmit speech - speaker's side
-		var/datum/gas_mixture/environment = T.return_air()
-		var/pressure = (environment)? environment.return_pressure() : 0
-		if(pressure < SOUND_MINIMUM_PRESSURE)
-			message_range = 1
-
-		if (pressure < ONE_ATMOSPHERE*0.4) //sound distortion pressure, to help clue people in that the air is thin, even if it isn't a vacuum yet
-			italics = 1
-			sound_vol *= 0.5 //muffle the sound a bit, so it's like we're actually talking through contact
-
-
 		var/list/hear = hear(message_range, T)
 		var/list/hearturfs = list()
 
