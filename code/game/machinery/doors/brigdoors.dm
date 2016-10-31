@@ -23,7 +23,8 @@
 	density = 0       		// can walk through it.
 	var/id = null     		// id of door it controls.
 	var/releasetime = 0		// when world.timeofday reaches it - release the prisoner
-	var/timing = 1    		// boolean, true/1 timer is on, false/0 means it's not timing
+	var/timing = 0    		// boolean, true/1 timer is on, false/0 means it's not timing
+	var/initialize = 1		// open all the cells when the round starts
 	var/picture_state		// icon_state of alert picture, if not displaying text/numbers
 	var/list/obj/machinery/targets = list()
 	var/timetoset = 0		// Used to set releasetime upon starting the timer
@@ -64,6 +65,11 @@
 // update the door_timer window and the icon
 /obj/machinery/door_timer/process()
 
+	if (initialize)
+		src.timer_end()
+		initialize = 0
+		return
+
 	if(stat & (NOPOWER|BROKEN))	return
 	if(src.timing)
 
@@ -79,6 +85,7 @@
 				broadcast_security_hud_message("<b>[src.name]</b> prisoner's sentence is ending in 30 seconds.", src)
 
 		if(world.timeofday > src.releasetime)
+			broadcast_security_hud_message("<b>[src.name]</b> prisoner has served issued sentence. <b>[timer_activator]</b> is requested for the release procedure.", src)
 			src.timer_end() // open doors, reset timer, clear status screen
 			src.timing = 0
 
@@ -126,7 +133,6 @@
 
 	// Reset releasetime
 	releasetime = 0
-	broadcast_security_hud_message("<b>[src.name]</b> prisoner has served issued sentence. <b>[timer_activator]</b> is requested for the release procedure.", src)
 	timer_activator = "Unknown"
 	flag30sec = 0
 
