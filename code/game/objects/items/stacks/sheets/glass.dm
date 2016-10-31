@@ -115,7 +115,9 @@
 				user << "\red There is something in the way."
 				return 1
 			var/obj/structure/window/W
-			W = new created_window(step, 1)
+			W = new created_window(step)
+			W.dir = SOUTHWEST
+			W.ini_dir = SOUTHWEST
 			W.anchored = 0
 			src.use(2)
 	return 0
@@ -224,7 +226,10 @@
 				user << "\red There is something in the way."
 				return 1
 			var/obj/structure/window/W
-			W = new /obj/structure/window/reinforced(step, 1)
+			W = new /obj/structure/window/reinforced(step)
+			W.state = 0
+			W.dir = SOUTHWEST
+			W.ini_dir = SOUTHWEST
 			W.state = 0
 			W.anchored = 0
 			src.use(2)

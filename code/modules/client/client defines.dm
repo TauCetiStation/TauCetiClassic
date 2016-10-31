@@ -59,6 +59,4 @@
 
 	var/datum/geoip_data/geoip = null
 
-	var/last_dir = null
-	
 	var/datum/tooltip/tooltips
