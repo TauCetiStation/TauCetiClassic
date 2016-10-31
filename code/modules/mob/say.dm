@@ -88,14 +88,16 @@
 			return 1
 		if(isAI(src) && ispAI(other))
 			return 1
-		if (istype(other, src.type) || istype(src, other.type))
+		if(istype(other, src.type) || istype(src, other.type))
 			return 1
 		if(src.alien_talk_understand && other.alien_talk_understand)
+			return 1
+		if(speaking.flags & INNATE)
 			return 1
 		return 0
 
 	//Language check.
-	for(var/datum/language/L in src.languages)
+	for(var/datum/language/L in languages)
 		if(speaking.name == L.name)
 			return 1
 
