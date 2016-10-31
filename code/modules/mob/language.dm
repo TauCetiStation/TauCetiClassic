@@ -61,19 +61,6 @@
 
 	return scrambled_text
 
-// Noise "language", for audible emotes.
-/datum/language/noise
-	name = "Noise"
-	desc = "Noises"
-	key = ""
-	flags = RESTRICTED|NONGLOBAL|INNATE
-
-/datum/language/noise/format_message(message, verb)
-	return "<span class='message'><span class='[colour]'>[sanitize_plus_chat(message)]</span></span>"
-
-/datum/language/noise/format_message_radio(message, verb)
-	return "<span class='[colour]'>[sanitize_plus_chat(message)]</span>"
-
 /datum/language/unathi
 	name = "Sinta'unathi"
 	desc = "The common language of Moghes, composed of sibilant hisses and rattles. Spoken natively by Unathi."
