@@ -251,7 +251,7 @@
 			if(I && I.damage > 0)
 				if(I.robotic < 2)
 					user.visible_message("[user] treats damage to [target]'s [I.name] with [tool_name].", \
-					"You treat damage to [target]'s [I.name] with [tool_name]." )
+					"\blue You treat damage to [target]'s [I.name] with [tool_name]." )
 				else
 					user.visible_message("\blue [user] pokes [target]'s mechanical [I.name] with [tool_name]...", \
 					"\blue You poke [target]'s mechanical [I.name] with [tool_name]... \red For no effect, since it's robotic.")
