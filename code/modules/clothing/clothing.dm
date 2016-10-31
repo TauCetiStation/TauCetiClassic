@@ -251,7 +251,7 @@ BLIND     // can't see anything
 		switch(clipped_status)
 			if(CLIPPABLE)
 				playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
-				user.visible_message("<span class='red'>[user] cuts the toe caps off of the [src].</span>","<span class='red'> You cut the toe caps off of the[src].</span>")
+				user.visible_message("<span class='red'>[user] cuts the toe caps off of [src].</span>","<span class='red'>You cut the toe caps off of [src].</span>")
 
 				name = "mangled [name]"
 				desc = "[desc]<br>They have the toe caps cut off of them."
@@ -264,7 +264,7 @@ BLIND     // can't see anything
 			if(NO_CLIPPING)
 				user << "<span class='notice'>You have no idea of how to clip [src]!</span>"
 			if(CLIPPED)
-				user << "<span class='notice'>The [src] have already been clipped!</span>"
+				user << "<span class='notice'>[src] have already been clipped!</span>"
 
 /obj/item/proc/negates_gravity()
 	return 0
