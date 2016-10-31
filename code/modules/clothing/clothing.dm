@@ -248,25 +248,23 @@ BLIND     // can't see anything
 //Cutting shoes
 /obj/item/clothing/shoes/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/wirecutters) || istype(W, /obj/item/weapon/scalpel))
-		if(clipped_status == CLIPPABLE)
-			playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
-			user.visible_message("\red [user] cuts the toe caps off of the [src].","\red You cut the toe caps off of the [src].")
+		switch(clipped_status)
+			if(clipped_status == CLIPPABLE)
+				playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
+				user.visible_message("<span class='red'>[user] cuts the toe caps off of the [src].</span>","<span class='red'> You cut the toe caps off of the[src].</span>")
 
-			name = "mangled [name]"
-			desc = "[desc]<br>They have the toe caps cut off of them."
-			if("exclude" in species_restricted)
-				species_restricted -= "Unathi"
-				species_restricted -= "Tajaran"
-			src.icon_state += "_cut"
-			user.update_inv_shoes()
-			clipped_status = CLIPPED
-			return
-		if(clipped_status == NO_CLIPPING)
-			user << "<span class='notice'>You have no idea of how to clip [src]!</span>"
-			return
-		if(clipped_status == CLIPPED)
-			user << "<span class='notice'>The [src] have already been clipped!</span>"
-			return
+				name = "mangled [name]"
+				desc = "[desc]<br>They have the toe caps cut off of them."
+				if("exclude" in species_restricted)
+					species_restricted -= "Unathi"
+					species_restricted -= "Tajaran"
+				src.icon_state += "_cut"
+				user.update_inv_shoes()
+				clipped_status = CLIPPED
+			if(clipped_status == NO_CLIPPING)
+				user << "<span class='notice'>You have no idea of how to clip [src]!</span>"
+			if(clipped_status == CLIPPED)
+				user << "<span class='notice'>The [src] have already been clipped!</span>"
 
 /obj/item/proc/negates_gravity()
 	return 0
