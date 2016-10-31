@@ -14,8 +14,6 @@
 	var/charged = 0
 	var/charges = 8
 	origin_tech = "combat=2;biotech=2"
-	m_amt = 2000
-	g_amt = 50
 
 	attack_self(mob/user)
 		if(!charged)
@@ -104,12 +102,3 @@
 			s.set_up(3, 1, C)
 			s.start()
 		else return ..(M,user)
-
-datum/design/defibrillators
-	name = "Defibrillators"
-	desc = "Defibrillators to revive people."
-	id = "defibrillators"
-	req_tech = list("combat" = 2,"biotech" = 2)
-	build_type = 2 //PROTOLATHE
-	materials = list(MAT_METAL = 2000, MAT_GLASS = 50)
-	build_path = /obj/item/weapon/defibrillator
