@@ -115,15 +115,15 @@
 			return
 		open_machine()
 
-/obj/machinery/atmospherics/unary/cryo_cell/examine()
+/obj/machinery/atmospherics/unary/cryo_cell/examine(mob/user)
 	..()
 	if(occupant)
 		if(on)
-			usr << "Someone's inside [src]!"
+			user << "Someone's inside [src]!"
 		else
-			usr << "You can barely make out a form floating in [src]."
+			user << "You can barely make out a form floating in [src]."
 	else
-		usr << "[src] seems empty."
+		user << "[src] seems empty."
 
 /obj/machinery/atmospherics/unary/cryo_cell/attack_hand(mob/user)
 	ui_interact(user)

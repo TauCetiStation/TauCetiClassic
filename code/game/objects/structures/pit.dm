@@ -177,9 +177,9 @@
 /obj/structure/gravemarker/cross
 	icon_state = "cross"
 
-/obj/structure/gravemarker/examine()
+/obj/structure/gravemarker/examine(mob/user)
 	..()
-	usr << message
+	user << message
 
 /obj/structure/gravemarker/random/New()
 	generate()

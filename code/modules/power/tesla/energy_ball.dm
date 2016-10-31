@@ -70,10 +70,10 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 
 	return
 
-/obj/singularity/energy_ball/examine()
+/obj/singularity/energy_ball/examine(mob/user)
 	..()
 	if(orbiting_balls.len)
-		usr << "The amount of orbiting mini-balls is [orbiting_balls.len]."
+		user << "The amount of orbiting mini-balls is [orbiting_balls.len]."
 
 
 /obj/singularity/energy_ball/proc/move_the_basket_ball(move_amount)

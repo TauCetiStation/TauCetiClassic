@@ -567,7 +567,7 @@ obj/item/projectile/kinetic/New()
 	. = ..()
 
 /obj/item/weapon/survivalcapsule/examine(mob/user)
-	. = ..()
+	..()
 	get_template()
 	user << "This capsule has the [template.name] stored."
 	user << template.description

@@ -416,18 +416,17 @@ This is facehugger Attach procs
 		var/mob/living/carbon/alien/facehugger/FH = current_hugger
 		FH.show_message(message,m_type)
 
-/obj/item/clothing/mask/facehugger/examine()
+/obj/item/clothing/mask/facehugger/examine(mob/user)
 	..()
 	if(!real)//So that giant red text about probisci doesn't show up.
 		return
 	switch(stat)
 		if(DEAD,UNCONSCIOUS)
-			usr << "\red \b [src] is not moving."
+			user << "<span class='danger'>[src] is not moving.</span>"
 		if(CONSCIOUS)
-			usr << "\red \b [src] seems to be active."
+			user << "<span class='danger'>[src] seems to be active.</span>"
 	if (sterile)
-		usr << "\red \b It looks like the proboscis has been removed."
-	return
+		user << "<span class='danger'>It looks like the proboscis has been removed.</span>"
 
 /obj/item/clothing/mask/facehugger/attackby()
 	Die()

@@ -40,12 +40,10 @@
 	R.my_atom = src
 	R.add_reagent("water", max_water)
 
-/obj/item/weapon/extinguisher/examine()
-	set src in usr
-
-	usr << text("\icon[] [] contains [] units of water left!", src, src.name, src.reagents.total_volume)
+/obj/item/weapon/extinguisher/examine(mob/user)
 	..()
-	return
+	if(src in user)
+		user << "[reagents.total_volume] units of water left!"
 
 /obj/item/weapon/extinguisher/attack_self(mob/user)
 	safety = !safety

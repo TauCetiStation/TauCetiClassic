@@ -15,11 +15,10 @@
 	var/max_syringes = 1
 	m_amt = 2000
 
-/obj/item/weapon/gun/syringe/examine()
-	set src in view()
+/obj/item/weapon/gun/syringe/examine(mob/user)
 	..()
-	if (!(usr in view(2)) && usr!=src.loc) return
-	usr << "\blue [syringes.len] / [max_syringes] syringes."
+	if(src in view(2, user))
+		user << "<span class='notice'>[syringes.len] / [max_syringes] syringes.</span>"
 
 /obj/item/weapon/gun/syringe/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/reagent_containers/syringe))

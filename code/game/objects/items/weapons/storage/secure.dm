@@ -28,10 +28,10 @@
 	max_w_class = 2
 	max_combined_w_class = 14
 
-	examine()
-		set src in oview(1)
+	examine(mob/user)
 		..()
-		usr << text("The service panel is [src.open ? "open" : "closed"].")
+		if(src in oview(1, user))
+			user << "The service panel is [src.open ? "open" : "closed"]."
 
 	attack_alien(mob/user)
 		return attack_hand(user)

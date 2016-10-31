@@ -38,16 +38,12 @@
 			if(mode)
 				mode.debrain_directive(src)
 
-/obj/item/brain/examine() // -- TLE
-	set src in oview(12)
-	if (!( usr ))
-		return
-	usr << "This is \icon[src] \an [name]."
-
+/obj/item/brain/examine(mob/user) // -- TLE
+	..()
 	if(brainmob && brainmob.client)//if thar be a brain inside... the brain.
-		usr << "You can feel the small spark of life still left in this one."
+		user << "You can feel the small spark of life still left in this one."
 	else
-		usr << "This one seems particularly lifeless. Perhaps it will regain some of its luster later.."
+		user << "This one seems particularly lifeless. Perhaps it will regain some of its luster later.."
 
 /obj/item/brain/attack(mob/living/carbon/M, mob/living/carbon/user)
 	if(!istype(M, /mob))

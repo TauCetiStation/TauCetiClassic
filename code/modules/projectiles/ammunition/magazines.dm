@@ -288,10 +288,10 @@
 	caliber = "energy"
 	max_ammo = 25
 
-/obj/item/ammo_box/magazine/l10mag/examine()
-	set src in view()
+/obj/item/ammo_box/magazine/l10mag/examine(mob/user)
 	..()
-	usr << "\blue You see a charge meter, it reads: [round(ammo_count() * 100 / max_ammo)]%."
+	if(src in view(1, user))
+		user << "<span class='notice'>You see a charge meter, it reads: [round(ammo_count() * 100 / max_ammo)]%.</span>"
 
 /obj/item/ammo_box/magazine/l10mag/attack_self(mob/user)
 	return

@@ -78,10 +78,10 @@
 		qdel(O)
 	return ..()
 
-/obj/item/weapon/reagent_containers/food/snacks/csandwich/examine()
+/obj/item/weapon/reagent_containers/food/snacks/csandwich/examine(mob/user)
 	..()
 	var/obj/item/O = pick(contents)
-	usr << "\blue You think you can see [O.name] in there."
+	user << "<span class='notice'>You think you can see [O.name] in there.</span>"
 
 /obj/item/weapon/reagent_containers/food/snacks/csandwich/attack(mob/M, mob/user, def_zone)
 

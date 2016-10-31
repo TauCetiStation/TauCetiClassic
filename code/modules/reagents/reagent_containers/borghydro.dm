@@ -97,18 +97,15 @@
 	user << "\blue Synthesizer is now producing '[R.name]'."
 	return
 
-/obj/item/weapon/reagent_containers/borghypo/examine()
-	set src in view()
+/obj/item/weapon/reagent_containers/borghypo/examine(mob/user)
 	..()
-	if (!(usr in view(2)) && usr!=src.loc) return
+	if(src in view(2, user))
+		var/empty = 1
 
-	var/empty = 1
-
-	for(var/datum/reagents/RS in reagent_list)
-		var/datum/reagent/R = locate() in RS.reagent_list
-		if(R)
-			usr << "\blue It currently has [R.volume] units of [R.name] stored."
-			empty = 0
-
-	if(empty)
-		usr << "\blue It is currently empty. Allow some time for the internal syntheszier to produce more."
+		for(var/datum/reagents/RS in reagent_list)
+			var/datum/reagent/R = locate() in RS.reagent_list
+			if(R)
+				user << "<span class='notice'>It currently has [R.volume] units of [R.name] stored.</span>"
+				empty = 0
+		if(empty)
+			user << "<span class='notice'>It is currently empty. Allow some time for the internal syntheszier to produce more.</span>"
