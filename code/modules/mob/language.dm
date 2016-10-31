@@ -1,3 +1,5 @@
+#define SCRAMBLE_CACHE_LEN 20
+
 /*
 	Datum based languages. Easily editable and modular.
 */
@@ -11,6 +13,53 @@
 	var/key = "x"                    // Character used to speak in language eg. :o for Unathi.
 	var/flags = 0                    // Various language flags.
 	var/native                       // If set, non-native speakers will have trouble speaking.
+	var/list/syllables               // Used when scrambling text for a non-speaker.
+	var/list/space_chance = 55 // Likelihood of getting a space in the random scramble string.
+
+/datum/language/proc/format_message(message, verb)
+	return "[verb], <span class='message'><span class='[colour]'>\"[sanitize_plus_chat(capitalize(message))]\"</span></span>"
+
+/datum/language/proc/format_message_radio(message, verb)
+	return "[verb], <span class='[colour]'>\"[sanitize_plus_chat(capitalize(message))]\"</span>"
+
+/datum/language
+	var/list/scramble_cache = list()
+
+
+/datum/language/proc/scramble(input)
+
+	if(!syllables || !syllables.len)
+		return stars(input)
+
+	var/input_size = length(input)
+	var/scrambled_text = ""
+	var/capitalize = 1
+
+	while(length(scrambled_text) < input_size)
+		var/next = pick(syllables)
+		if(capitalize)
+			next = capitalize(next)
+			capitalize = 0
+		scrambled_text += next
+		var/chance = rand(100)
+		if(chance <= 5)
+			scrambled_text += ". "
+			capitalize = 1
+		else if(chance > 5 && chance <= space_chance)
+			scrambled_text += " "
+
+	scrambled_text = trim(scrambled_text)
+	var/ending = copytext(scrambled_text, length(scrambled_text))
+	if(ending == ".")
+		scrambled_text = copytext(scrambled_text,1,length(scrambled_text)-1)
+	scrambled_text += copytext(input, length(input))
+
+	// Add it to cache, cutting old entries if the list is too long
+	scramble_cache[input] = scrambled_text
+	if(scramble_cache.len > SCRAMBLE_CACHE_LEN)
+		scramble_cache.Cut(1, scramble_cache.len-SCRAMBLE_CACHE_LEN-1)
+
+	return scrambled_text
 
 /datum/language/unathi
 	name = "Sinta'unathi"
@@ -19,6 +68,7 @@
 	colour = "soghun"
 	key = "o"
 	flags = WHITELISTED
+	syllables = list("ss","ss","ss","ss","skak","seeki","resh","las","esi","kor","sh")
 
 /datum/language/tajaran
 	name = "Siik'maas"
@@ -27,6 +77,10 @@
 	colour = "tajaran"
 	key = "j"
 	flags = WHITELISTED
+	syllables = list("rr","rr","tajr","kir","raj","kii","mir","kra","ahk","nal","vah","khaz","jri","ran","darr", \
+	"mi","jri","dynh","manq","rhe","zar","rrhaz","kal","chur","eech","thaa","dra","jurl","mah","sanu","dra","ii'r", \
+	"ka","aasi","far","wa","baq","ara","qara","zir","sam","mak","hrar","nja","rir","khan","jun","dar","rik","kah", \
+	"hal","ket","jurl","mah","tul","cresh","azu","ragh")
 
 /datum/language/tajaran_sign
 	name = "Siik'tajr"
@@ -34,10 +88,8 @@
 	speech_verb = "mrowls"
 	colour = "tajaran_signlang"
 	key = "y"		//only "dfpqxyz" left.
-
 	//need to find a way to resolve possesive macros
 	signlang_verb = list("flicks their left ear", "flicks their right ear", "swivels their ears", "twitches their tail", "curls the end of their tail", "arches their tail", "wiggles the end of their tail", "waves their tail about", "holds up a claw", "gestures with their left hand", "gestures with their right hand", "gestures with their tail", "gestures with their ears")
-
 	flags = WHITELISTED | NONVERBAL
 
 /datum/language/skrell
@@ -47,6 +99,7 @@
 	colour = "skrell"
 	key = "k"
 	flags = WHITELISTED
+	syllables = list("qr","qrr","xuq","qil","quum","xuqm","vol","xrim","zaoo","qu-uu","qix","qoo","zix","*","!")
 
 /datum/language/vox
 	name = "Vox-pidgin"
@@ -55,14 +108,17 @@
 	colour = "vox"
 	key = "v"
 	flags = RESTRICTED
+	syllables = list("ti","ti","ti","hi","hi","ki","ki","ki","ki","ya","ta","ha","ka","ya","chi","cha","kah", \
+	"SKRE","AHK","EHK","RAWK","KRA","AAA","EEE","KI","II","KRI","KA")
 
 /datum/language/diona
 	name = "Rootspeak"
 	desc = "A creaking, subvocal language spoken instinctively by the Dionaea. Due to the unique makeup of the average Diona, a phrase of Rootspeak can be a combination of anywhere from one to twelve individual voices and notes."
-	speech_verb = "creaks and rustles"
+	speech_verb = "creaks"
 	colour = "soghun"
 	key = "q"
 	flags = RESTRICTED
+	syllables = list("hs","zt","kr","st","sh")
 
 /datum/language/human
 	name = "Sol Common"
@@ -70,6 +126,7 @@
 	colour = "rough"
 	key = "1"
 	flags = RESTRICTED
+	syllables = list("tao","shi","tzu","yi","com","be","is","i","op","vi","ed","lec","mo","cle","te","dis","e")
 
 // Galactic common languages (systemwide accepted standards).
 /datum/language/trader
@@ -78,6 +135,14 @@
 	speech_verb = "enunciates"
 	colour = "say_quote"
 	key = "2"
+	syllables = list("lorem", "ipsum", "dolor", "sit", "amet", "consectetur", "adipiscing", "elit",
+					 "sed", "do", "eiusmod", "tempor", "incididunt", "ut", "labore", "et", "dolore",
+					 "magna", "aliqua", "ut", "enim", "ad", "minim", "veniam", "quis", "nostrud",
+					 "exercitation", "ullamco", "laboris", "nisi", "ut", "aliquip", "ex", "ea", "commodo",
+					 "consequat", "duis", "aute", "irure", "dolor", "in", "reprehenderit", "in",
+					 "voluptate", "velit", "esse", "cillum", "dolore", "eu", "fugiat", "nulla",
+					 "pariatur", "excepteur", "sint", "occaecat", "cupidatat", "non", "proident", "sunt",
+					 "in", "culpa", "qui", "officia", "deserunt", "mollit", "anim", "id", "est", "laborum")
 
 /datum/language/gutter
 	name = "Gutter"
@@ -85,6 +150,7 @@
 	speech_verb = "growls"
 	colour = "rough"
 	key = "3"
+	syllables = list ("gra","ba","ba","breh","bra","rah","dur","ra","ro","gro","go","ber","bar","geh","heh", "gra")
 
 // Language handling.
 /mob/proc/add_language(language)
@@ -106,7 +172,7 @@
 // Can we speak this language, as opposed to just understanding it?
 /mob/proc/can_speak(datum/language/speaking)
 
-	return (universal_speak || speaking in src.languages)
+	return (universal_speak || (speaking && speaking.flags & INNATE) || speaking in src.languages)
 
 //TBD
 /mob/verb/check_languages()
@@ -121,3 +187,5 @@
 
 	src << browse(dat, "window=checklanguage")
 	return
+
+#undef SCRAMBLE_CACHE_LEN
