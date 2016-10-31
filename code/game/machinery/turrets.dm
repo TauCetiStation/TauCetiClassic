@@ -366,7 +366,7 @@
 		else
 			control_area = CA
 	else if(istext(control_area))
-		for(var/area/A in world)
+		for(var/area/A in all_areas)
 			if(A.name && A.name==control_area)
 				control_area = A
 				break
@@ -508,15 +508,6 @@
 			icon_state = "motion3"
 	else
 		icon_state = "motion0"
-																				//CODE FIXED BUT REMOVED
-//	if(control_area)															//USE: updates other controls in the area
-//		for (var/obj/machinery/turretid/Turret_Control in world)				//I'm not sure if this is what it was
-//			if( Turret_Control.control_area != src.control_area )	continue	//supposed to do. Or whether the person
-//			Turret_Control.icon_state = icon_state								//who coded it originally was just tired
-//			Turret_Control.enabled = enabled									//or something. I don't see  any situation
-//			Turret_Control.lethal = lethal										//in which this would be used on the current map.
-																				//If he wants it back he can uncomment it
-
 
 /obj/structure/turret/gun_turret
 	name = "Gun Turret"

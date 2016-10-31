@@ -118,7 +118,7 @@ client/proc/display_admin_reports()
 	usr << browse(output, "window=news;size=600x400")
 
 
-client/proc/Report(mob/M in world)
+client/proc/Report(mob/M as mob in world)
 	set category = "Admin"
 	if(!src.holder)
 		return
@@ -156,7 +156,7 @@ client/proc/mark_report_done(ID)
 	Reports["reports"]   << reports
 
 
-client/proc/edit_report(ID)
+client/proc/edit_report(ID as num)
 	if(!src.holder || src.holder.level < 0)
 		src << "<b>You tried to modify the news, but you're not an admin!"
 		return

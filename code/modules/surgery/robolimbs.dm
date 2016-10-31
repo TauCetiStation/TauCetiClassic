@@ -59,9 +59,10 @@
 
 /datum/surgery_step/limb/mend
 	allowed_tools = list(
-	/obj/item/weapon/retractor = 100, 	\
-	/obj/item/weapon/crowbar = 75,	\
-	/obj/item/weapon/kitchen/utensil/fork = 50)
+	/obj/item/weapon/retractor = 100,           \
+	/obj/item/weapon/kitchen/utensil/fork = 75,	\
+	/obj/item/weapon/screwdriver = 50
+	)
 
 	min_duration = 80
 	max_duration = 100
@@ -97,7 +98,7 @@
 	/obj/item/weapon/cautery = 100,			\
 	/obj/item/clothing/mask/cigarette = 75,	\
 	/obj/item/weapon/lighter = 50,			\
-	/obj/item/weapon/weldingtool = 25
+	/obj/item/weapon/weldingtool = 50
 	)
 
 	min_duration = 60
