@@ -14,15 +14,15 @@
 		if (!speaker || (src.sdisabilities & BLIND || src.blinded) || !(speaker in view(src)))
 			message = stars(message)
 
-		if(!say_understands(speaker,language))
-			if(istype(speaker,/mob/living/simple_animal))
-				var/mob/living/simple_animal/S = speaker
-				message = pick(S.speak)
+	if(!say_understands(speaker,language))
+		if(istype(speaker,/mob/living/simple_animal))
+			var/mob/living/simple_animal/S = speaker
+			message = pick(S.speak)
+		else
+			if(language)
+				message = language.scramble(message)
 			else
-				if(language)
-					message = language.scramble(message)
-				else
-					message = stars(message)
+				message = stars(message)
 
 	var/speaker_name = speaker.name
 	if(istype(speaker, /mob/living/carbon/human))
@@ -58,7 +58,6 @@
 			var/turf/source = speaker? get_turf(speaker) : get_turf(src)
 			src.playsound_local(source, speech_sound, sound_vol, 1)
 
-
 /mob/proc/hear_radio(message, verb="says", datum/language/language=null, part_a, part_b, mob/speaker = null, hard_to_hear = 0, vname ="")
 
 	if(!client)
@@ -75,15 +74,15 @@
 		if (!speaker || (src.sdisabilities & BLIND || src.blinded) || !(speaker in view(src)))
 			message = stars(message)
 
-		if(!say_understands(speaker,language))
-			if(istype(speaker,/mob/living/simple_animal))
-				var/mob/living/simple_animal/S = speaker
-				message = pick(S.speak)
+	if(!say_understands(speaker,language))
+		if(istype(speaker,/mob/living/simple_animal))
+			var/mob/living/simple_animal/S = speaker
+			message = pick(S.speak)
+		else
+			if(language)
+				message = language.scramble(message)
 			else
-				if(language)
-					message = language.scramble(message)
-				else
-					message = stars(message)
+				message = stars(message)
 
 	if(hard_to_hear)
 		message = stars(message)
