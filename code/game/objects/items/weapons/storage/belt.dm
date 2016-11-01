@@ -133,7 +133,6 @@
 		"/obj/item/weapon/reagent_containers/food/snacks/donut/normal",
 		"/obj/item/weapon/reagent_containers/food/snacks/donut/jelly",
 		"/obj/item/weapon/melee/baton",
-		"/obj/item/weapon/gun/energy/taser",
 		"/obj/item/weapon/lighter/zippo",
 		"/obj/item/weapon/cigpacket",
 		"/obj/item/clothing/glasses/hud/security",
@@ -207,6 +206,7 @@
 		"/obj/item/clothing/glasses/hud/security",
 		"/obj/item/device/flashlight",
 		"/obj/item/device/pda",
+		"/obj/item/taperoll/police",
 		"/obj/item/device/radio/headset",
 		"/obj/item/weapon/melee"
 		)
