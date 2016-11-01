@@ -42,6 +42,9 @@
 			t = copytext(t, 1, index) + repl_chars[char] + copytext(t, index+5)
 			index = findtext(t, char)
 	return t
+	
+/proc/sanitize_slack(t)
+	return replacetext(html_decode(revert_ja(t)), "\"", "'")
 
 //Runs sanitize and strip_html_simple
 //I believe strip_html_simple() is required to run first to prevent '<' from displaying as '&lt;' after sanitize() calls byond's html_encode()
