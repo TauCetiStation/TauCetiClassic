@@ -14,7 +14,6 @@
 		if (!speaker || (src.sdisabilities & BLIND || src.blinded) || !(speaker in view(src)))
 			message = stars(message)
 
-	if(!(language && (language.flags & INNATE))) // skip understanding checks for INNATE languages
 		if(!say_understands(speaker,language))
 			if(istype(speaker,/mob/living/simple_animal))
 				var/mob/living/simple_animal/S = speaker
@@ -46,11 +45,10 @@
 			message = "<b>[message]</b>"
 
 	if(sdisabilities & DEAF || ear_deaf)
-		if(!language || !(language.flags & INNATE)) // INNATE is the flag for audible-emote-language, so we don't want to show an "x talks but you cannot hear them" message if it's set
-			if(speaker == src)
-				src << "<span class='warning'>You cannot hear yourself speak!</span>"
-			else
-				src << "<span class='name'>[speaker_name]</span>[alt_name] talks but you cannot hear \him."
+		if(speaker == src)
+			src << "<span class='warning'>You cannot hear yourself speak!</span>"
+		else
+			src << "<span class='name'>[speaker_name]</span>[alt_name] talks but you cannot hear \him."
 	else
 		if(language)
 			src << "<span class='game say'><span class='name'>[speaker_name]</span>[alt_name] [track][language.format_message(message, verb)]</span>"
@@ -77,7 +75,6 @@
 		if (!speaker || (src.sdisabilities & BLIND || src.blinded) || !(speaker in view(src)))
 			message = stars(message)
 
-	if(!(language && (language.flags & INNATE))) // skip understanding checks for INNATE languages
 		if(!say_understands(speaker,language))
 			if(istype(speaker,/mob/living/simple_animal))
 				var/mob/living/simple_animal/S = speaker
@@ -93,8 +90,6 @@
 
 	var/speaker_name = speaker ? speaker.name : ""
 
-	if(vname)
-		speaker_name = vname
 	if(vname)
 		speaker_name = vname
 

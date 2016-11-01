@@ -43,7 +43,7 @@
 	var/datum/language/speaking = parse_language(message)
 	if (speaking)
 		verb = speaking.speech_verb
-		message = copytext(message,2+length(speaking.key))
+		message = copytext(message,3)
 	else
 		switch(species.name)
 			if("Tajaran")

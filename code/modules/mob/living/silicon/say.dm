@@ -82,7 +82,7 @@
 	var/datum/language/speaking = parse_language(message)
 	if (speaking)
 		verb = speaking.speech_verb
-		message = trim(copytext(message,2+length(speaking.key)))
+		message = trim(copytext(message,3))
 
 	switch(message_mode)
 		if("department")
