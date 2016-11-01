@@ -669,7 +669,6 @@ About the new airlock wires panel:
 	if(density)
 		if(locked && lights)
 			icon_state = "door_locked"
-			overlays += image("icon" = 'icons/obj/doors/Doorint.dmi', "icon_state" = "door_locked_ms", "layer" = 11)
 		else
 			icon_state = "door_closed"
 		if(p_open || welded)
@@ -681,7 +680,11 @@ About the new airlock wires panel:
 	else
 		icon_state = "door_open"
 
+	if(locked && lights | src.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS))
+		overlays += image("icon" = 'icons/obj/doors/doorint.dmi', "icon_state" = "door_locked_ms", "layer" = 11)
+
 	return
+
 
 /obj/machinery/door/airlock/do_animate(animation)
 	switch(animation)
