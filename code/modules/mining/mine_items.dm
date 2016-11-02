@@ -216,7 +216,7 @@ proc/move_mining_shuttle()
 /obj/item/weapon/pickaxe/plasmacutter
 	name = "plasma cutter"
 	icon_state = "plasmacutter"
-	item_state = "gun"
+	item_state = "plasmacutter"
 	w_class = 3.0 //it is smaller than the pickaxe
 	damtype = "fire"
 	digspeed = 20 //Can slice though normal walls, all girders, or be used in reinforced wall deconstruction/ light thermite on fire
