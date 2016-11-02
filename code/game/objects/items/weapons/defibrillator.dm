@@ -69,14 +69,13 @@
 						var/suff = min(C.getOxyLoss(), 20)
 						C.adjustOxyLoss(-suff)
 						C.updatehealth()
-						if(C.stat == DEAD && C.health>config.health_threshold_dead)
+						if(C.stat == DEAD && C.health > config.health_threshold_dead)
 							C.stat = UNCONSCIOUS
-							return_to_life(C)
 					else
 						C.adjustFireLoss(5)
-						if(C.stat == DEAD && C.health>config.health_threshold_dead)
+						if(C.stat == DEAD && C.health > config.health_threshold_dead)
 							C.stat = CONSCIOUS
-							return_to_life(C)
+					return_to_life(C)
 
 				if(wet)
 					var/turf/T = get_turf(src)
@@ -104,19 +103,16 @@
 			s.start()
 		else return ..(M,user)
 
-	proc/return_to_life(mob/living/carbon/returnable as mob)
-		if (returnable.key)
-			if ((world.time - returnable.timeofdeath) > 600)
-				returnable.client << 'sound/misc/mario_1up.ogg'
-
+	proc/return_to_life(mob/living/carbon/returnable)
+		if (returnable.key) //in body?
+			returnable << 'sound/misc/mario_1up.ogg'
 		else if(returnable.mind)
 			for(var/mob/dead/observer/ghost in player_list)
-				if(ghost.mind == returnable.mind)
-					if (ghost.can_reenter_corpse)
-						ghost.client << 'sound/misc/mario_1up.ogg'
-						var/answer = alert(ghost,"You have been reanimated. Do you want to return to corpse?","Reanimate","Yes","No")
-						if(answer == "Yes")
-							ghost.reenter_corpse()
+				if(ghost.mind == returnable.mind && ghost.can_reenter_corpse)
+					ghost << 'sound/misc/mario_1up.ogg'
+					var/answer = alert(ghost,"You have been reanimated. Do you want to return to corpse?","Reanimate","Yes","No")
+					if(answer == "Yes")
+						ghost.reenter_corpse()
 					break
 
 		returnable.tod = null
