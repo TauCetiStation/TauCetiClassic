@@ -50,7 +50,6 @@ var/list/admin_verbs_admin = list(
 	/client/proc/check_ai_laws,			/*shows AI and borg laws*/
 	/client/proc/check_antagonists,
 	/client/proc/admin_memo,			/*admin memo system. show/delete/write. +SERVER needed to delete admin memos of others*/
-	/client/proc/dsay,					/*talk in deadchat using our ckey/fakekey*/
 	/client/proc/toggleprayers,			/*toggles prayers on/off*/
 //	/client/proc/toggle_hear_deadcast,	/*toggles whether we hear deadchat*/
 	/client/proc/toggle_hear_radio,		/*toggles whether we hear the radio*/
@@ -172,7 +171,8 @@ var/list/admin_verbs_permissions = list(
 	/client/proc/gsw_add,
 	/client/proc/library_debug_cat,
 	/client/proc/library_debug_remove,
-	/client/proc/library_debug_read
+	/client/proc/library_debug_read,
+	/client/proc/dsay					/*talk in deadchat using our ckey/fakekey*/
 	)
 var/list/admin_verbs_rejuv = list(
 	/client/proc/respawn_character
