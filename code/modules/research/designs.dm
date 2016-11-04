@@ -1669,6 +1669,26 @@ datum/design/noreactbeaker
 	build_path = /obj/item/weapon/reagent_containers/glass/beaker/noreact
 	category = list("Misc")
 
+datum/design/defibrillators
+	name = "Defibrillators"
+	desc = "Defibrillators to revive people."
+	id = "defibrillators"
+	req_tech = list("combat" = 2,"biotech" = 2)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 2000, MAT_GLASS = 50)
+	reliability = 76
+	build_path = /obj/item/weapon/defibrillator
+
+/datum/design/sensor_device
+	name = "Handheld Crew Monitor"
+	desc = "A device for tracking crew members on the station."
+	id = "sensor_device"
+	req_tech = list("biotech" = 4, "magnets" = 4)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 7000, MAT_GLASS = 7000)
+	reliability = 76
+	build_path = /obj/item/device/sensor_device
+
 datum/design/scalpel_laser1
 	name = "Basic Laser Scalpel"
 	desc = "A scalpel augmented with a directed laser, for more precise cutting without blood entering the field.  This one looks basic and could be improved."
