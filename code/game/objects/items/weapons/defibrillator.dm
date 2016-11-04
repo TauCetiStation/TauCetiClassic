@@ -75,7 +75,8 @@
 						C.adjustFireLoss(5)
 						if(C.stat == DEAD && C.health > config.health_threshold_dead)
 							C.stat = CONSCIOUS
-					return_to_life(C)
+					return_to_body_dialog(C)
+					reanimate_body(C)
 
 				if(wet)
 					var/turf/T = get_turf(src)
@@ -103,21 +104,25 @@
 			s.start()
 		else return ..(M,user)
 
-	proc/return_to_life(mob/living/carbon/returnable)
+	proc/return_to_body_dialog(mob/living/carbon/returnable)
 		if (returnable.key) //in body?
 			returnable << 'sound/misc/mario_1up.ogg'
 		else if(returnable.mind)
 			for(var/mob/dead/observer/ghost in player_list)
 				if(ghost.mind == returnable.mind && ghost.can_reenter_corpse)
 					ghost << 'sound/misc/mario_1up.ogg'
-					var/answer = alert(ghost,"You have been reanimated. Do you want to return to corpse?","Reanimate","Yes","No")
+					var/answer = alert(ghost,"You have been reanimated. Do you want to return to body?","Reanimate","Yes","No")
 					if(answer == "Yes")
 						ghost.reenter_corpse()
 					break
 
+		return
+
+	proc/reanimate_body(mob/living/carbon/returnable)
 		returnable.tod = null
 		returnable.timeofdeath = 0
 		dead_mob_list -= returnable
+
 		return
 
 datum/design/defibrillators
