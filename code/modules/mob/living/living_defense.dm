@@ -97,6 +97,7 @@
 					visible_message("<span class='warning'>[src] is pinned to the wall by [O]!</span>","<span class='warning'>You are pinned to the wall by [O]!</span>")
 					src.anchored = 1
 					src.pinned += O
+					src.verbs += /mob/proc/yank_out_object
 		AM.fly_speed = 0
 
 //This is called when the mob is thrown into a dense turf

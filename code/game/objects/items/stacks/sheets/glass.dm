@@ -354,7 +354,7 @@
 	singular_name = "phoron glass sheet"
 	icon_state = "sheet-phoronglass"
 	g_amt = 7500
-	origin_tech = "materials=3;phoron=2"
+	origin_tech = "materials=3;phorontech=2"
 	created_window = /obj/structure/window/phoronbasic
 
 /obj/item/stack/sheet/glass/phoronglass/attack_self(mob/user)
@@ -387,7 +387,7 @@
 	icon_state = "sheet-phoronrglass"
 	g_amt = 7500
 	m_amt = 1875
-	origin_tech = "materials=4;phoron=2"
+	origin_tech = "materials=4;phorontech=2"
 	created_window = /obj/structure/window/phoronreinforced
 
 /obj/item/stack/sheet/glass/phoronrglass/attack_self(mob/user)
