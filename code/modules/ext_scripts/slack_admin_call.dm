@@ -41,7 +41,7 @@ proc/admin_call_cooldown(value1)
 	//clean the input msg
 	if(!msg)	return
 
-	var/check_answer = alert(src, "Are you sure?","Yes","No")
+	var/check_answer = alert(src, "Are you sure?",,"Yes","No")
 	if(check_answer == "No")
 		return
 
