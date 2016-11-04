@@ -109,9 +109,6 @@
 		access += access_maint_tunnels
 		minimal_access += access_maint_tunnels
 
-		access -= access_surgery
-		minimal_access -= access_surgery
-
 	return 1
 
 
