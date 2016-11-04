@@ -849,18 +849,20 @@ datum/design/adv_capacitor
 	desc = "A stock part used in the construction of various devices."
 	id = "adv_capacitor"
 	req_tech = list("powerstorage" = 3)
-	build_type = PROTOLATHE
+	build_type = PROTOLATHE | MECHFAB
 	materials = list(MAT_METAL = 400, MAT_GLASS = 400, MAT_SILVER = 250)
 	build_path = /obj/item/weapon/stock_parts/capacitor/adv
+	category = list("Misc")
 
 datum/design/adv_sensor
 	name = "Advanced Sensor Module"
 	desc = "A stock part used in the construction of various devices."
 	id = "adv_sensor"
 	req_tech = list("magnets" = 3)
-	build_type = PROTOLATHE
+	build_type = PROTOLATHE | MECHFAB
 	materials = list(MAT_METAL = 400, MAT_GLASS = 160, MAT_SILVER = 250)
 	build_path = /obj/item/weapon/stock_parts/scanning_module/adv
+	category = list("Misc")
 
 datum/design/nano_mani
 	name = "Nano Manipulator"
@@ -895,20 +897,22 @@ datum/design/super_capacitor
 	desc = "A stock part used in the construction of various devices."
 	id = "super_capacitor"
 	req_tech = list("powerstorage" = 5, "materials" = 4)
-	build_type = PROTOLATHE
+	build_type = PROTOLATHE  |MECHFAB
 	reliability = 71
 	materials = list(MAT_METAL = 400, MAT_GLASS = 400, MAT_GOLD = 250)
 	build_path = /obj/item/weapon/stock_parts/capacitor/super
+	category = list("Misc")
 
 datum/design/phasic_sensor
 	name = "Phasic Sensor Module"
 	desc = "A stock part used in the construction of various devices."
 	id = "phasic_sensor"
 	req_tech = list("magnets" = 5, "materials" = 3)
-	build_type = PROTOLATHE
+	build_type = PROTOLATHE | MECHFAB
 	materials = list(MAT_METAL = 400, MAT_GLASS = 160, MAT_SILVER = 80, MAT_GOLD = 250)
 	reliability = 72
 	build_path = /obj/item/weapon/stock_parts/scanning_module/phasic
+	category = list("Misc")
 
 datum/design/pico_mani
 	name = "Pico Manipulator"
