@@ -360,6 +360,9 @@
 		while(index)
 			t = copytext(t, 1, index) + "&#1103;" + copytext(t, index+8)
 			index = findtext(t, LETTER_255)*/
+		
+		var last_fields_value = fields
+		
 		t = sanitize_alt(t, list("\n"="\[br\]","ÿ"=LETTER_255))
 
 		// check for exploits
@@ -372,6 +375,11 @@
 
 		//t = replacetext(t, "\n", "<BR>")
 		t = parsepencode(t, i, usr, iscrayon) // Encode everything from pencode to html
+
+		if(fields > 50)
+			usr << "<span class='warning'>Too many fields. Sorry, you can't do this.</span>"
+			fields = last_fields_value
+			return
 
 		if(id!="end")
 			addtofield(text2num(id), t) // He wants to edit a field, let him.
