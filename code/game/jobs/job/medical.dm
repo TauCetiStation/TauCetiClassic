@@ -11,10 +11,10 @@
 	req_admin_notify = 1
 	access = list(access_medical, access_morgue, access_genetics, access_heads,
 			access_chemistry, access_virology, access_cmo, access_surgery, access_RC_announce,
-			access_keycard_auth, access_sec_doors, access_psychiatrist, access_maint_tunnels)
+			access_keycard_auth, access_sec_doors, access_psychiatrist)
 	minimal_access = list(access_medical, access_morgue, access_genetics, access_heads,
 			access_chemistry, access_virology, access_cmo, access_surgery, access_RC_announce,
-			access_keycard_auth, access_sec_doors, access_psychiatrist, access_maint_tunnels)
+			access_keycard_auth, access_sec_doors, access_psychiatrist)
 	minimal_player_age = 10
 	minimal_player_ingame_minutes = 2400
 
@@ -103,11 +103,6 @@
 		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H), slot_r_hand)
 	else
 		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
-
-	//custom access for paramedics
-	if (H.mind.role_alt_title == "Emergency Physician")
-		access += access_maint_tunnels
-		minimal_access += access_maint_tunnels
 
 	return 1
 
