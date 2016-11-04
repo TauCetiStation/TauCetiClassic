@@ -127,13 +127,19 @@
 				|| locate(/obj/machinery/computer/cloning, get_step(src, EAST)) \
 				|| locate(/obj/machinery/computer/cloning, get_step(src, WEST)))
 
-				if(!occupant.key && occupant.mind)
-					for(var/mob/dead/observer/ghost in player_list)
-						if(ghost.mind == occupant.mind)
-							if(ghost.can_reenter_corpse)
-								ghost << "<b><font color = #330033><font size = 3>Your corpse has been placed into a cloning scanner. Return to your body if you want to be resurrected/cloned!</b> (Verbs -> Ghost -> Re-enter corpse)</font color>"
-							break
+				if (occupant.stat == DEAD)
+					if (occupant.client) //Ghost in body?
+						occupant << 'sound/machines/chime.ogg'	//probably not the best sound but I think it's reasonable
+					else
+						for(var/mob/dead/observer/ghost in player_list)
+							if(ghost.mind == occupant.mind)
+								if(ghost.can_reenter_corpse)
+									ghost << 'sound/machines/chime.ogg'	//probably not the best sound but I think it's reasonable
+									var/answer = alert(ghost,"Do you want to return to corpse for cloning?","Cloning","Yes","No")
+									if(answer == "Yes")
+										ghost.reenter_corpse()
 
+								break
 		return 1
 
 /obj/machinery/dna_scannernew/proc/open(mob/user)
