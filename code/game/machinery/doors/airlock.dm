@@ -677,11 +677,10 @@ About the new airlock wires panel:
 				overlays += image(icon, "panel_open")
 			if(welded)
 				overlays += image(icon, "welded")
+		if(locked && lights || src.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS))
+			overlays += image("icon" = 'icons/obj/doors/doorint.dmi', "icon_state" = "door_locked_ms", "layer" = 11)
 	else
 		icon_state = "door_open"
-
-	if(locked && lights || src.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS))
-		overlays += image("icon" = 'icons/obj/doors/doorint.dmi', "icon_state" = "door_locked_ms", "layer" = 11)
 
 	return
 
