@@ -99,7 +99,8 @@
 		return
 	..()
 
-/obj/machinery/emergency_authentication_device/examine()
-	usr << {"
+/obj/machinery/emergency_authentication_device/examine(mob/user)
+	..()
+	user << {"
 This is a specialized communications device that is able to instantly send a message to <b>NanoTrasen High Command</b> via quantum entanglement with a sister device at CentCom.
 The EAD's status is [get_status()]."}

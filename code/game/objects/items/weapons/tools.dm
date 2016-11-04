@@ -166,10 +166,10 @@
 	return
 
 
-/obj/item/weapon/weldingtool/examine()
-	set src in usr
-	usr << text("\icon[] [] contains []/[] units of fuel!", src, src.name, get_fuel(),src.max_fuel )
-	return
+/obj/item/weapon/weldingtool/examine(mob/user)
+	..()
+	if(src in user)
+		user << "[src] contains [get_fuel()]/[max_fuel] units of fuel!"
 
 
 /obj/item/weapon/weldingtool/attackby(obj/item/W, mob/user)
@@ -445,7 +445,7 @@
 	w_class = 3.0
 	m_amt = 70
 	g_amt = 120
-	origin_tech = "engineering=4;phoron=3"
+	origin_tech = "engineering=4;phorontech=3"
 	var/last_gen = 0
 
 

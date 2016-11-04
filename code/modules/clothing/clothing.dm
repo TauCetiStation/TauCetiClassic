@@ -1,3 +1,4 @@
+
 /obj/item/clothing
 	name = "clothing"
 	var/list/species_restricted = null //Only these species can wear this kit.
@@ -188,11 +189,6 @@ BLIND     // can't see anything
 	species_restricted = list("exclude","Unathi","Tajaran")
 	sprite_sheets = list("Vox" = 'icons/mob/species/vox/gloves.dmi')
 
-/obj/item/clothing/gloves/examine()
-	set src in usr
-	..()
-	return
-
 /obj/item/clothing/gloves/emp_act(severity)
 	if(cell)
 		//why is this not part of the powercell code?
@@ -226,6 +222,7 @@ BLIND     // can't see anything
 	body_parts_covered = FACE|EYES
 	sprite_sheets = list("Vox" = 'icons/mob/species/vox/masks.dmi')
 
+
 //Shoes
 /obj/item/clothing/shoes
 	name = "shoes"
@@ -235,12 +232,34 @@ BLIND     // can't see anything
 	siemens_coefficient = 0.9
 	body_parts_covered = FEET
 	slot_flags = SLOT_FEET
+	var/clipped_status = NO_CLIPPING
 
 	permeability_coefficient = 0.50
 	slowdown = SHOES_SLOWDOWN
 	species_restricted = list("exclude","Unathi","Tajaran")
 	var/footstep = 1	//used for squeeks whilst walking(tc)
 	sprite_sheets = list("Vox" = 'icons/mob/species/vox/shoes.dmi')
+
+//Cutting shoes
+/obj/item/clothing/shoes/attackby(obj/item/weapon/W, mob/user)
+	if(istype(W, /obj/item/weapon/wirecutters) || istype(W, /obj/item/weapon/scalpel))
+		switch(clipped_status)
+			if(CLIPPABLE)
+				playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
+				user.visible_message("<span class='red'>[user] cuts the toe caps off of [src].</span>","<span class='red'>You cut the toe caps off of [src].</span>")
+
+				name = "mangled [name]"
+				desc = "[desc]<br>They have the toe caps cut off of them."
+				if("exclude" in species_restricted)
+					species_restricted -= "Unathi"
+					species_restricted -= "Tajaran"
+				src.icon_state += "_cut"
+				user.update_inv_shoes()
+				clipped_status = CLIPPED
+			if(NO_CLIPPING)
+				user << "<span class='notice'>You have no idea of how to clip [src]!</span>"
+			if(CLIPPED)
+				user << "<span class='notice'>[src] have already been clipped!</span>"
 
 /obj/item/proc/negates_gravity()
 	return 0
@@ -412,20 +431,19 @@ BLIND     // can't see anything
 			return
 	return
 
-/obj/item/clothing/under/examine()
-	set src in view()
+/obj/item/clothing/under/examine(mob/user)
 	..()
 	switch(src.sensor_mode)
 		if(0)
-			usr << "Its sensors appear to be disabled."
+			user << "Its sensors appear to be disabled."
 		if(1)
-			usr << "Its binary life sensors appear to be enabled."
+			user << "Its binary life sensors appear to be enabled."
 		if(2)
-			usr << "Its vital tracker appears to be enabled."
+			user << "Its vital tracker appears to be enabled."
 		if(3)
-			usr << "Its vital tracker and tracking beacon appear to be enabled."
+			user << "Its vital tracker and tracking beacon appear to be enabled."
 	if(hastie)
-		usr << "\A [hastie] is clipped to it."
+		user << "\A [hastie] is clipped to it."
 
 /obj/item/clothing/under/proc/set_sensors(mob/usr)
 	var/mob/M = usr

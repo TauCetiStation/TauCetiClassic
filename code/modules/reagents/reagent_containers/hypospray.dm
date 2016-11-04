@@ -90,10 +90,3 @@
 		icon_state = "[initial(icon_state)]1"
 	else
 		icon_state = "[initial(icon_state)]0"
-
-/obj/item/weapon/reagent_containers/hypospray/autoinjector/examine()
-	..()
-	if(reagents && reagents.reagent_list.len)
-		usr << "\blue It is currently loaded."
-	else
-		usr << "\blue It is spent."

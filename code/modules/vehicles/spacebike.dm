@@ -30,9 +30,9 @@
 	w_class = 1
 	var/id = 0
 
-/obj/item/weapon/key/spacebike/examine()
+/obj/item/weapon/key/spacebike/examine(mob/user)
 	..()
-	usr << "There is a small tag reading [id]."
+	user << "There is a small tag reading [id]."
 
 /obj/vehicle/space/spacebike/New()
 	..()
@@ -45,9 +45,9 @@
 	overlays += image('icons/obj/vehicles.dmi', "[icon_state]_off_overlay", MOB_LAYER + 1)
 	icon_state = "[bike_icon]_off"
 
-/obj/vehicle/space/spacebike/examine()
+/obj/vehicle/space/spacebike/examine(mob/user)
 	..()
-	usr << "It has number [id]."
+	user << "It has number [id]."
 
 /obj/vehicle/space/spacebike/load(atom/movable/C)
 	var/mob/living/M = C

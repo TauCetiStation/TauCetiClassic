@@ -68,11 +68,11 @@
 						infect_virus2(target,src.virus2)
 		qdel(src)
 
-/obj/item/weapon/virusdish/examine()
-	usr << "This is a virus containment dish."
-	if(src.info)
-		usr << "It has the following information about its contents:"
-		usr << src.info
+/obj/item/weapon/virusdish/examine(mob/user)
+	..()
+	if(info)
+		user << "It has the following information about its contents:"
+		user << info
 
 /obj/item/weapon/ruinedvirusdish
 	name = "ruined virus sample"

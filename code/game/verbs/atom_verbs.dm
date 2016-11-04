@@ -28,4 +28,5 @@
 
 	if(isliving(this))
 		for(var/mob/living/carbon/slime/S in view(7))
-			S.last_pointed = this
+			if(usr in S.Friends)
+				S.last_pointed = this

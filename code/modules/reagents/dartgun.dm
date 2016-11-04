@@ -57,18 +57,14 @@
 	cartridge = new /obj/item/weapon/dart_cartridge(src)
 	update_icon()
 
-/obj/item/weapon/gun/dartgun/examine()
-	set src in view()
-	update_icon()
+/obj/item/weapon/gun/dartgun/examine(mob/user)
 	..()
-	if (!(usr in view(2)) && usr!=src.loc)
-		return
-	if (beakers.len)
-		usr << "\blue [src] contains:"
+	if (src in view(2, user) && beakers.len)
+		user << "<span class='notice'>[src] contains:</span>"
 		for(var/obj/item/weapon/reagent_containers/glass/beaker/B in beakers)
 			if(B.reagents && B.reagents.reagent_list.len)
 				for(var/datum/reagent/R in B.reagents.reagent_list)
-					usr << "\blue [R.volume] units of [R.name]"
+					user << "<span class='notice'>[R.volume] units of [R.name]</span>"
 
 /obj/item/weapon/gun/dartgun/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/dart_cartridge))

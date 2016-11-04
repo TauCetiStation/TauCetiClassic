@@ -400,14 +400,15 @@
 			user << "\blue [trans] units injected. [reagents.total_volume] units remaining in \the [src]."
 	return
 
-/obj/item/weapon/reagent_containers/hypospray/fluff/asher_spock_1/examine(mob/user as mob)
+/obj/item/weapon/reagent_containers/hypospray/fluff/asher_spock_1/examine(mob/user)
 	..()
-	if(user.ckey != "nerezza") return //Only the owner knows how to examine the contents.
+	if(user.ckey != "nerezza")
+		return //Only the owner knows how to examine the contents.
 	if(reagents && reagents.reagent_list.len)
 		for(var/datum/reagent/R in reagents.reagent_list)
-			usr << "\blue You examine the penlight closely and see that it has [R.volume] units of [R.name] stored."
+			user << "<span class='notice'>You examine the penlight closely and see that it has [R.volume] units of [R.name] stored.</span>"
 	else
-		usr << "\blue You examine the penlight closely and see that it is currently empty."
+		user << "<span class='notice'>You examine the penlight closely and see that it is currently empty.</span>"
 
 //End strange penlight
 

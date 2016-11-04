@@ -121,9 +121,9 @@
 	..()
 	SSobj.processing |= src
 
-/obj/item/weapon/rcs/examine()
-	desc = "Use this to send crates and closets to cargo telepads. There are [rcharges] charges left."
+/obj/item/weapon/rcs/examine(mob/user)
 	..()
+	user << "There are [rcharges] charges left."
 
 /obj/item/weapon/rcs/Destroy()
 	SSobj.processing.Remove(src)

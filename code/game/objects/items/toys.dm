@@ -119,7 +119,7 @@
  */
 /obj/item/toy/gun
 	name = "cap gun"
-	desc = "There are 0 caps left. Looks almost like the real thing! Ages 8 and up. Please recycle in an autolathe when you're out of caps!"
+	desc = "Looks almost like the real thing! Ages 8 and up. Please recycle in an autolathe when you're out of caps!"
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "revolver"
 	item_state = "gun"
@@ -133,12 +133,10 @@
 	attack_verb = list("struck", "pistol whipped", "hit", "bashed")
 	var/bullets = 7.0
 
-	examine()
-		set src in usr
-
-		src.desc = text("There are [] caps\s left. Looks almost like the real thing! Ages 8 and up.", src.bullets)
+	examine(mob/user)
 		..()
-		return
+		if(src in user)
+			user << "<span class='notice'>There are [bullets] caps\s left.</span>"
 
 	attackby(obj/item/toy/ammo/gun/A, mob/user)
 
@@ -210,11 +208,10 @@
 	attack_verb = list("attacked", "struck", "hit")
 	var/bullets = 5
 
-	examine()
-		set src in view(2)
+	examine(mob/user)
 		..()
-		if (bullets)
-			usr << "\blue It is loaded with [bullets] foam darts!"
+		if (bullets && src in view(2, user))
+			user << "<span class='notice'>It is loaded with [bullets] foam darts!</span>"
 
 	attackby(obj/item/I, mob/user)
 		if(istype(I, /obj/item/toy/ammo/crossbow))
@@ -431,7 +428,6 @@
 	icon_state = "sunflower"
 	item_state = "sunflower"
 	var/empty = 0
-	flags
 
 /obj/item/toy/waterflower/New()
 	var/datum/reagents/R = new/datum/reagents(10)
@@ -496,11 +492,10 @@
 
 		return
 
-/obj/item/toy/waterflower/examine()
-        set src in usr
-        usr << text("\icon[] [] units of water left!", src, src.reagents.total_volume)
-        ..()
-        return
+/obj/item/toy/waterflower/examine(mob/user)
+	..()
+	if(src in user)
+		user << "[reagents.total_volume] unit\s of water left!"
 
 
 /*
@@ -1143,10 +1138,10 @@ Owl & Griffin toys
 	var/flipped = 0
 	pixel_x = -5
 
-/obj/item/toy/singlecard/examine()
-	set src in usr.contents
-	if(ishuman(usr))
-		var/mob/living/carbon/human/cardUser = usr
+/obj/item/toy/singlecard/examine(mob/user)
+	..()
+	if(src in user && ishuman(user))
+		var/mob/living/carbon/human/cardUser = user
 		if(cardUser.get_item_by_slot(slot_l_hand) == src || cardUser.get_item_by_slot(slot_r_hand) == src)
 			cardUser.visible_message("<span class='notice'>[cardUser] checks \his card.</span>", "<span class='notice'>The card reads: [src.cardname]</span>")
 		else

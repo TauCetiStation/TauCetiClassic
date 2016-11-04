@@ -238,6 +238,7 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 	desc = "Cannon which uses electrical charge to damage multiple targets. Spin the generator handle to charge it up"
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "tesla"
+	item_state = "tesla"
 	w_class = 4.0
 	origin_tech = "combat=5;materials=5;powerstorage=5;magnets=5;engineering=5"
 	var/charge = 0

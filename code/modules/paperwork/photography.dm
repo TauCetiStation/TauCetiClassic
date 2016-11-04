@@ -38,7 +38,7 @@
 	return ..()
 
 /obj/item/weapon/photo/attack_self(mob/user)
-	examine()
+	user.examinate(src)
 
 /obj/item/weapon/photo/attackby(obj/item/weapon/P, mob/user)
 	if(istype(P, /obj/item/weapon/pen) || istype(P, /obj/item/toy/crayon))

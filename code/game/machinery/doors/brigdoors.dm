@@ -23,7 +23,7 @@
 	density = 0       		// can walk through it.
 	var/id = null     		// id of door it controls.
 	var/releasetime = 0		// when world.timeofday reaches it - release the prisoner
-	var/timing = 1    		// boolean, true/1 timer is on, false/0 means it's not timing
+	var/timing = 0    		// boolean, true/1 timer is on, false/0 means it's not timing
 	var/picture_state		// icon_state of alert picture, if not displaying text/numbers
 	var/list/obj/machinery/targets = list()
 	var/timetoset = 0		// Used to set releasetime upon starting the timer
@@ -58,6 +58,10 @@
 		return
 	return
 
+/obj/machinery/door_timer/initialize()
+	cell_open()
+
+	return
 
 //Main door timer loop, if it's timing and time is >0 reduce time by 1.
 // if it's less than 0, open door, reset timer
@@ -79,8 +83,9 @@
 				broadcast_security_hud_message("<b>[src.name]</b> prisoner's sentence is ending in 30 seconds.", src)
 
 		if(world.timeofday > src.releasetime)
+			broadcast_security_hud_message("<b>[src.name]</b> prisoner has served issued sentence. <b>[timer_activator]</b> is requested for the release procedure.", src)
 			src.timer_end() // open doors, reset timer, clear status screen
-			src.timing = 0
+			cell_open()
 
 		src.updateUsrDialog()
 		src.update_icon()
@@ -98,7 +103,7 @@
 // open/closedoor checks if door_timer has power, if so it checks if the
 // linked door is open/closed (by density) then opens it/closes it.
 
-// Closes and locks doors, power check
+// power check and stop timer
 /obj/machinery/door_timer/proc/timer_start(activator)
 	if(stat & (NOPOWER|BROKEN))	return 0
 
@@ -107,6 +112,10 @@
 	if (activator)
 		timer_activator = activator
 
+	return
+
+// Closes and locks doors
+/obj/machinery/door_timer/proc/cell_close()
 	for(var/obj/machinery/door/window/brigdoor/door in targets)
 		if(door.density)	continue
 		spawn(0)
@@ -117,19 +126,22 @@
 		if(C.opened && !C.close())	continue
 		C.locked = 1
 		C.icon_state = C.icon_locked
-	return 1
 
+	return
 
-// Opens and unlocks doors, power check
+//power check, set vars as default
 /obj/machinery/door_timer/proc/timer_end()
 	if(stat & (NOPOWER|BROKEN))	return 0
 
 	// Reset releasetime
-	releasetime = 0
-	broadcast_security_hud_message("<b>[src.name]</b> prisoner has served issued sentence. <b>[timer_activator]</b> is requested for the release procedure.", src)
-	timer_activator = "Unknown"
+	src.timing = 0
 	flag30sec = 0
+	releasetime = 0
+	timer_activator = "Unknown"
 
+	return
+//Opens and unlocks door, closet
+/obj/machinery/door_timer/proc/cell_open()
 	for(var/obj/machinery/door/window/brigdoor/door in targets)
 		if(!door.density)	continue
 		spawn(0)
@@ -141,8 +153,7 @@
 		C.locked = 0
 		C.icon_state = C.icon_closed
 
-	return 1
-
+	return
 
 // Check for releasetime timeleft
 /obj/machinery/door_timer/proc/timeleft()
@@ -242,8 +253,10 @@
 
 		if(src.timing)
 			src.timer_start(usr.name)
+			cell_close()
 		else
 			src.timer_end()
+			cell_open()
 	else
 		if(href_list["tp"])  //adjust timer, close door if not already closed
 			var/tp = text2num(href_list["tp"])
@@ -259,6 +272,7 @@
 
 		if(href_list["change"])
 			src.timer_start(usr.name)
+			cell_close()
 
 	src.updateUsrDialog()
 	src.update_icon()

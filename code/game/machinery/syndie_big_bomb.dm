@@ -48,9 +48,9 @@
 	wires = new(src)
 	..()
 
-/obj/machinery/syndicatebomb/examine()
+/obj/machinery/syndicatebomb/examine(mob/user)
 	..()
-	usr << "A digital display on it reads \"[timer]\"."
+	user << "A digital display on it reads \"[timer]\"."
 
 /obj/machinery/syndicatebomb/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/wrench))
