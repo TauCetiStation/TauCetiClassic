@@ -44,3 +44,7 @@
 /obj/structure/object_wall/erokez
 	icon = 'code/modules/locations/shuttles/erokez.dmi'
 	icon_state = "18,2"
+
+/turf/simulated/shuttle/wall/cargo
+	icon = 'code/modules/locations/shuttles/cargo.dmi'
+	icon_state = "0,5"
