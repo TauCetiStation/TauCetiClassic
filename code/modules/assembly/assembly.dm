@@ -126,15 +126,13 @@
 	return
 
 
-/obj/item/device/assembly/examine()
-	set src in view()
+/obj/item/device/assembly/examine(mob/user)
 	..()
-	if((in_range(src, usr) || loc == usr))
+	if(src in view(1, user))
 		if(secured)
-			usr << "\The [src] is ready!"
+			user << "\The [src] is ready!"
 		else
-			usr << "\The [src] can be attached!"
-	return
+			user << "\The [src] can be attached!"
 
 
 /obj/item/device/assembly/attack_self(mob/user)

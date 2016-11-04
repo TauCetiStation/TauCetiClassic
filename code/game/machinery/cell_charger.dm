@@ -28,12 +28,11 @@
 					chargelevel = newlevel
 			else
 				overlays.Cut()
-	examine()
-		set src in oview(5)
+	examine(mob/user)
 		..()
-		usr << "There's [charging ? "a" : "no"] cell in the charger."
+		user << "There's [charging ? "a" : "no"] cell in the charger."
 		if(charging)
-			usr << "Current charge: [charging.charge]"
+			user << "Current charge: [charging.charge]"
 
 	attackby(obj/item/weapon/W, mob/user)
 		if(stat & BROKEN)
@@ -92,10 +91,10 @@
 		//world << "ccpt [charging] [stat]"
 		if(!charging || (stat & (BROKEN|NOPOWER)) || !anchored)
 			return
-		
+
 		var/power_used = 100000	//for 200 units of charge. Yes, thats right, 100 kW. Is something wrong with CELLRATE?
-		
+
 		power_used = charging.give(power_used*CELLRATE*efficiency)
 		use_power(power_used)
-		
+
 		updateicon()

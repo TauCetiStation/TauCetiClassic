@@ -181,12 +181,12 @@
 	update_icon()
 	user.visible_message("\The [user] [concealed ? "conceals" : "reveals"] their hand.")
 
-/obj/item/weapon/hand/examine()
+/obj/item/weapon/hand/examine(mob/user)
 	..()
-	if((!concealed || src.loc == usr) && cards.len)
-		usr << "It contains: "
-		for(var/datum/playingcard/P in cards)
-			usr << "The [P.name]."
+	if((src in user || concealed) && cards.len)
+		user << "It contains: "
+			for(var/datum/playingcard/P in cards)
+				user << "The [P.name]."
 
 /obj/item/weapon/hand/update_icon()
 

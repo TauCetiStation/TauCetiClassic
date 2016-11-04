@@ -86,8 +86,7 @@
 	explosion(src.loc,-1,0,6)
 	qdel(src)
 
-/obj/item/weapon/grenade/iedcasing/examine()
-	set src in usr
+/obj/item/weapon/grenade/iedcasing/examine(mob/user)
 	..()
-	if(assembled == 3)
-		usr << "You can't tell when it will explode!"
+	if(src in user && assembled == 3)
+		user << "You can't tell when it will explode!"

@@ -158,7 +158,7 @@
 
 /obj/machinery/dominator/attack_hand(mob/user)
 	if(operating)
-		examine(user)
+		user.examinate(src)
 		return
 
 	var/datum/game_mode/gang/mode = ticker.mode
@@ -176,7 +176,7 @@
 		timer = mode.B_timer
 
 	if(!tempgang)
-		examine(user)
+		user.examinate(src)
 		return
 
 	if(isnum(timer))

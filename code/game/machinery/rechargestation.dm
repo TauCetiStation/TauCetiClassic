@@ -89,8 +89,9 @@
 /obj/machinery/recharge_station/allow_drop()
 	return 0
 
-/obj/machinery/recharge_station/examine()
-	usr << "The charge meter reads: [round(chargepercentage())]%"
+/obj/machinery/recharge_station/examine(mob/user)
+	..()
+	user << "The charge meter reads: [round(chargepercentage())]%."
 
 /obj/machinery/recharge_station/proc/chargepercentage()
 	return ((current_internal_charge / max_internal_charge) * 100)

@@ -90,11 +90,10 @@
 	magazine = null
 	return ..()
 
-/obj/item/weapon/gun/projectile/examine()
+/obj/item/weapon/gun/projectile/examine(mob/user)
 	..()
-	if(!energy_gun)
-		usr << "Has [get_ammo()] round\s remaining."
-	return
+	if(!energy_gun && src in view(1, user))
+		user << "Has [get_ammo()] round\s remaining."
 
 /obj/item/weapon/gun/projectile/proc/get_ammo(countchambered = 1)
 	var/boolets = 0 //mature var names for mature people

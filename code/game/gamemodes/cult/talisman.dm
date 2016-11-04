@@ -4,12 +4,6 @@
 	var/uses = 0
 
 
-	examine()
-		set src in view(2)
-		..()
-		return
-
-
 	attack_self(mob/living/user)
 		if(iscultist(user))
 			var/delete = 1
@@ -44,9 +38,7 @@
 					qdel(src)
 			return
 		else
-			examine()
-			//user << "You see strange symbols on the paper. Are they supposed to mean something?"
-			return
+			user.examinate(src)
 
 
 	attack(mob/living/carbon/T, mob/living/user)

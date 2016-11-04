@@ -101,11 +101,10 @@
 /mob/proc/getWatertankSlot()
 	return slot_back
 
-/obj/item/weapon/watertank/examine()
-	set src in usr
-	usr << text("\icon[] [] units of liquid left!", src, src.reagents.total_volume)
+/obj/item/weapon/watertank/examine(mob/user)
 	..()
-	return
+	if(src in user)
+		user << "[reagents.total_volume] units of liquid left!"
 
 /obj/item/weapon/reagent_containers/spray/mister
 	name = "water mister"

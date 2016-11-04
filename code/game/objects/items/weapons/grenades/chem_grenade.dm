@@ -104,11 +104,10 @@
 			else
 				user << "<span class='red'>\the [W] is empty.</span>"
 
-/obj/item/weapon/grenade/chem_grenade/examine()
-	set src in usr
-	usr << desc
-	if(detonator)
-		usr << "With attached [detonator.name]"
+/obj/item/weapon/grenade/chem_grenade/examine(mob/user)
+	..()
+	if(src in user && detonator)
+		user << "With attached [detonator.name]"
 
 /obj/item/weapon/grenade/chem_grenade/activate(mob/user)
 	if(active) return

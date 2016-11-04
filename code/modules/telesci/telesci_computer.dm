@@ -43,9 +43,9 @@
 		inserted_gps = null
 	return ..()
 
-/obj/machinery/computer/telescience/examine()
+/obj/machinery/computer/telescience/examine(mob/user)
 	..()
-	usr << "There are [crystals.len] bluespace crystals in the crystal ports."
+	user << "There are [crystals.len] bluespace crystals in the crystal ports."
 
 /obj/machinery/computer/telescience/initialize()
 	..()
