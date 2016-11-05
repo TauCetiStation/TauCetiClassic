@@ -3032,12 +3032,10 @@ datum
 					data = 1   //if it doesn't exist we set it.  if it's a list we're going to set it to 1 as well.  This is to
 				src.data += boozepwr						//avoid a runtime error associated with drinking blood mixed in drinks (demon's blood).
 
-				var/d = data
+				var/d = 0
 
 				// make all the beverages work together
 				for(var/datum/reagent/ethanol/A in holder.reagent_list)
-					if(A == src)
-						continue
 					if(isnum(A.data))
 						d += A.data
 
