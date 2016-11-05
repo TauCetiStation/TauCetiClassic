@@ -198,6 +198,8 @@ var/list/robot_verbs_default = list(
 			module_sprites["Default"] = "robot"
 			module_sprites["Drone"] = "drone-standard"
 			module_sprites["Acheron"] = "mechoid-Standard"
+			module_sprites["Spider"] = "spider-standard"
+			module_sprites["Kodiak"] = "kodiak-standard"
 
 		if("Service")
 			module = new /obj/item/weapon/robot_module/butler(src)
@@ -208,6 +210,7 @@ var/list/robot_verbs_default = list(
 			module_sprites["Default"] = "Service2"
 			module_sprites["Drone"] = "drone-service" // How does this even work...? Oh well.
 			module_sprites["Acheron"] = "mechoid-Service"
+			module_sprites["Kodiak"] = "kodiak-service"
 
 		if("Clerical")
 			module = new /obj/item/weapon/robot_module/clerical(src)
@@ -238,6 +241,7 @@ var/list/robot_verbs_default = list(
 			module_sprites["Treadhead"] = "Miner"
 			module_sprites["Drone"] = "drone-miner"
 			module_sprites["Acheron"] = "mechoid-Miner"
+			module_sprites["Kodiak"] = "kodiak-miner"
 
 		if("Crisis")
 			module = new /obj/item/weapon/robot_module/crisis(src)
@@ -273,6 +277,8 @@ var/list/robot_verbs_default = list(
 			module_sprites["Bloodhound - Treaded"] = "secborg+tread"
 			module_sprites["Drone"] = "drone-sec"
 			module_sprites["Acheron"] = "mechoid-Security"
+			module_sprites["Kodiak"] = "kodiak-sec"
+			module_sprites["Securitron"] = "securitron"
 
 		if("Engineering")
 			module = new /obj/item/weapon/robot_module/engineering(src)
@@ -286,6 +292,7 @@ var/list/robot_verbs_default = list(
 			module_sprites["Landmate - Treaded"] = "engiborg+tread"
 			module_sprites["Drone"] = "drone-engineer"
 			module_sprites["Acheron"] = "mechoid-Engineering"
+			module_sprites["Kodiak"] = "kodiak-eng"
 
 		if("Construction")
 			module = new /obj/item/weapon/robot_module/construction(src)
@@ -312,6 +319,7 @@ var/list/robot_verbs_default = list(
 			module = new /obj/item/weapon/robot_module/combat(src)
 			module_sprites["Combat Android"] = "droid-combat"
 			module_sprites["Acheron"] = "mechoid-Combat"
+			module_sprites["Kodiak"] = "kodiak-combat"
 			module.channels = list("Security" = 1)
 
 	//languages
