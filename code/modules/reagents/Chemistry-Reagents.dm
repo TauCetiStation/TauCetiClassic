@@ -3036,6 +3036,8 @@ datum
 
 				// make all the beverages work together
 				for(var/datum/reagent/ethanol/A in holder.reagent_list)
+					if(A == src)
+						continue
 					if(isnum(A.data))
 						d += A.data
 
