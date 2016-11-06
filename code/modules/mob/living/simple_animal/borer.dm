@@ -441,7 +441,7 @@ mob/living/simple_animal/borer/proc/request_player()
 mob/living/simple_animal/borer/proc/question(client/C)
 	spawn(0)
 		if(!C)	return
-		var/response = alert(C, "A cortical borer needs a player. Are you interested?", "Cortical borer request", "Yes", "No", "Never for this round")
+		var/response = alert(C, "A cortical borer needs a player. Are you interested?", "Cortical borer request", "No", "Yes", "Never for this round")
 		if(!C || ckey)
 			return
 		if(response == "Yes")
