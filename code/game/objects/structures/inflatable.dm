@@ -7,7 +7,7 @@
 
 	attack_self(mob/user)
 		playsound(loc, 'sound/items/zip.ogg', 75, 1)
-		user << "\blue You inflate [src]."
+		to_chat(user, "\blue You inflate [src].")
 		var/obj/structure/inflatable/R = new /obj/structure/inflatable(user.loc)
 		src.transfer_fingerprints_to(R)
 		R.add_fingerprint(user)
@@ -72,7 +72,7 @@
 
 
 	meteorhit()
-	//world << "glass at [x],[y],[z] Mhit"
+//	to_chat(world, "glass at [x],[y],[z] Mhit")
 		deflate(1)
 
 	attack_paw(mob/user)
@@ -134,7 +134,7 @@
 			src.transfer_fingerprints_to(R)
 			qdel(src)
 		else
-			//user << "\blue You slowly deflate the inflatable wall."
+//			to_chat(user, "\blue You slowly deflate the inflatable wall.")
 			visible_message("[src] slowly deflates.")
 			spawn(50)
 				var/obj/item/inflatable/R = new /obj/item/inflatable(loc)
@@ -159,7 +159,7 @@
 
 	attack_self(mob/user)
 		playsound(loc, 'sound/items/zip.ogg', 75, 1)
-		user << "\blue You inflate [src]."
+		to_chat(user, "\blue You inflate [src].")
 		var/obj/structure/inflatable/door/R = new /obj/structure/inflatable/door(user.loc)
 		src.transfer_fingerprints_to(R)
 		R.add_fingerprint(user)
@@ -265,7 +265,7 @@
 			src.transfer_fingerprints_to(R)
 			qdel(src)
 		else
-			//user << "\blue You slowly deflate the inflatable wall."
+//			to_chat(user, "\blue You slowly deflate the inflatable wall.")
 			visible_message("[src] slowly deflates.")
 			spawn(50)
 				var/obj/item/inflatable/door/R = new /obj/item/inflatable/door(loc)
@@ -280,7 +280,7 @@
 	icon_state = "folded_wall_torn"
 
 	attack_self(mob/user)
-		user << "\blue The inflatable wall is too torn to be inflated!"
+		to_chat(user, "\blue The inflatable wall is too torn to be inflated!")
 		add_fingerprint(user)
 
 /obj/item/inflatable/door/torn
@@ -290,7 +290,7 @@
 	icon_state = "folded_door_torn"
 
 	attack_self(mob/user)
-		user << "\blue The inflatable door is too torn to be inflated!"
+		to_chat(user, "\blue The inflatable door is too torn to be inflated!")
 		add_fingerprint(user)
 
 /obj/item/weapon/storage/briefcase/inflatable

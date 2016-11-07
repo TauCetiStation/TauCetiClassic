@@ -16,7 +16,7 @@ var/datum/subsystem/minimap/SSminimap
 	if(zlevel)
 		return ..()
 	if(!config.generate_minimaps)
-		world << "Minimap generation disabled... Skipping"
+		to_chat(world, "Minimap generation disabled... Skipping")
 		return
 	var/hash = md5(file2text("_maps/[MAP_PATH]/[MAP_FILE]"))
 	if(hash == trim(file2text(hash_path())))

@@ -99,7 +99,7 @@
 			src.updateUsrDialog()
 			return
 		else
-			user << "\red The sleeper has a beaker already."
+			to_chat(user, "\red The sleeper has a beaker already.")
 			return
 
 	if(!state_open && !occupant)
@@ -288,9 +288,9 @@
 		if(href_list["inject"] == "inaprovaline" || occupant.health > min_health)
 			inject_chem(usr, href_list["inject"])
 		else
-			usr << "<span class='notice'>ERROR: Subject is not in stable condition for auto-injection.</span>"
+			to_chat(usr, "<span class='notice'>ERROR: Subject is not in stable condition for auto-injection.</span>")
 	else
-		usr << "<span class='notice'>ERROR: Subject cannot metabolise chemicals.</span>"
+		to_chat(usr, "<span class='notice'>ERROR: Subject cannot metabolise chemicals.</span>")
 	updateUsrDialog()
 
 /obj/machinery/sleeper/attack_ai(mob/user)
@@ -307,7 +307,7 @@
 
 /obj/machinery/sleeper/close_machine(mob/target)
 	if(state_open && !panel_open)
-		target << "\blue <b>You feel cool air surround you. You go numb as your senses turn inward.</b>"
+		to_chat(target, "\blue <b>You feel cool air surround you. You go numb as your senses turn inward.</b>")
 		..(target)
 
 /obj/machinery/sleeper/proc/inject_chem(mob/user, chem)
@@ -315,7 +315,7 @@
 		if(occupant.reagents.get_reagent_amount(chem) + 5 <= 20 * efficiency)
 			occupant.reagents.add_reagent(chem, 5)
 		var/units = round(occupant.reagents.get_reagent_amount(chem))
-		user << "<span class='notice'>Occupant now has [units] unit\s of [chem] in their bloodstream.</span>"
+		to_chat(user, "<span class='notice'>Occupant now has [units] unit\s of [chem] in their bloodstream.</span>")
 
 /obj/machinery/sleeper/update_icon()
 	if(state_open)

@@ -44,8 +44,8 @@
 	for (var/mob/living/silicon/ai/target in mob_list)
 		if(target.mind.special_role == "traitor")
 			continue
-		target << "\red <b>You have detected a change in your laws information:</b>"
-		target << law
+		to_chat(target, "\red <b>You have detected a change in your laws information:</b>")
+		to_chat(target, law)
 		target.add_ion_law(law)
 
 /datum/event/ionstorm/tick()

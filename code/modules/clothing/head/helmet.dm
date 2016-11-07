@@ -89,12 +89,12 @@
 			src.up = !src.up
 			src.flags |= (HEADCOVERSEYES | HEADCOVERSMOUTH)
 			icon_state = initial(icon_state)
-			usr << "You pull the visor down on"
+			to_chat(usr, "You pull the visor down on")
 		else
 			src.up = !src.up
 			src.flags &= ~(HEADCOVERSEYES | HEADCOVERSMOUTH)
 			icon_state = "[initial(icon_state)]up"
-			usr << "You push the visor up on"
+			to_chat(usr, "You push the visor up on")
 		usr.update_inv_head()	//so our mob-overlays update
 
 /obj/item/clothing/head/helmet/riot/tactifool

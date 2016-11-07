@@ -35,4 +35,4 @@
 
 /proc/message_mentors(msg)
 	for(var/client/C in mentors)
-		C << msg
+		to_chat(C, msg)

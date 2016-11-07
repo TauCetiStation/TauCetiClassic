@@ -142,7 +142,7 @@
 				V.loc = src.loc
 				V.update_canmove()
 				src.buckled_mob = V
-				V << "<span class='danger'>The vines [pick("wind", "tangle", "tighten")] around you!</span>"
+				to_chat(V, "<span class='danger'>The vines [pick("wind", "tangle", "tighten")] around you!</span>")
 				break //only capture one mob at a time.
 
 /obj/effect/spacevine/proc/spread()

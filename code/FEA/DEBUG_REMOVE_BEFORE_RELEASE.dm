@@ -48,7 +48,7 @@ obj/item/weapon/tank
 		adjust_mixture(temperature as num, target_toxin_pressure as num, target_oxygen_pressure as num)
 			set src in world
 			if(!air_contents)
-				usr << "\red ERROR: no gas_mixture associated with this tank"
+				to_chat(usr, "\red ERROR: no gas_mixture associated with this tank")
 				return null
 
 			air_contents.temperature = temperature
@@ -60,21 +60,21 @@ turf/simulated/floor
 		parent_info()
 			set src in world
 			if(parent)
-				usr << "<B>[x],[y] parent:</B> Processing: [parent.group_processing]"
+				to_chat(usr, "<B>[x],[y] parent:</B> Processing: [parent.group_processing]")
 				if(parent.members)
-					usr << "Members: [parent.members.len]"
+					to_chat(usr, "Members: [parent.members.len]")
 				else
-					usr << "Members: None?"
+					to_chat(usr, "Members: None?")
 				if(parent.borders)
-					usr << "Borders: [parent.borders.len]"
+					to_chat(usr, "Borders: [parent.borders.len]")
 				else
-					usr << "Borders: None"
+					to_chat(usr, "Borders: None")
 				if(parent.length_space_border)
-					usr << "Space Borders: [parent.space_borders.len], Space Length: [parent.length_space_border]"
+					to_chat(usr, "Space Borders: [parent.space_borders.len], Space Length: [parent.length_space_border]")
 				else
-					usr << "Space Borders: None"
+					to_chat(usr, "Space Borders: None")
 			else
-				usr << "\blue [x],[y] has no parent air group."
+				to_chat(usr, "\blue [x],[y] has no parent air group.")
 
 	verb
 		create_wall()
@@ -98,7 +98,7 @@ turf/simulated/floor
 			set src in world
 			if(parent)
 				parent.debugging = !parent.debugging
-				usr << "[parent.members.len] set to [parent.debugging]"
+				to_chat(usr, "[parent.members.len] set to [parent.debugging]")
 	verb
 		small_explosion()
 			set src in world
@@ -169,7 +169,7 @@ obj/machinery/atmospherics
 					set src in world
 					set category = "Minor"
 
-					usr << "current settings: PC=[pressure_checks], EB=[external_pressure_bound], IB=[internal_pressure_bound]"
+					to_chat(usr, "current settings: PC=[pressure_checks], EB=[external_pressure_bound], IB=[internal_pressure_bound]")
 
 					var/mode = input(usr, "Select an option:") in list("Bound External", "Bound Internal", "Bound Both")
 
@@ -255,7 +255,7 @@ obj/machinery/atmospherics
 					node2_concentration = 1
 					node1_concentration = 0
 
-				usr << "Node 1: [node1_concentration], Node 2: [node2_concentration]"
+				to_chat(usr, "Node 1: [node1_concentration], Node 2: [node2_concentration]")
 
 
 	filter
@@ -295,12 +295,12 @@ obj/machinery/atmospherics
 				set src in world
 				set category = "Minor"
 
-				world << "Debugging: [x],[y]"
+				to_chat(world, "Debugging: [x],[y]")
 
 				if(node1)
-					world << "Input node: [node1.x],[node1.y] [network1]"
+					to_chat(world, "Input node: [node1.x],[node1.y] [network1]")
 				if(node2)
-					world << "Output node: [node2.x],[node2.y] [network2]"
+					to_chat(world, "Output node: [node2.x],[node2.y] [network2]")
 
 			toggle()
 				set src in world
@@ -329,13 +329,13 @@ obj/machinery/atmospherics
 				set src in world
 				set category = "Minor"
 
-				world << "\blue [x],[y]"
-				world << "network 1: [network_node1.normal_members.len], [network_node1.line_members.len]"
+				to_chat(world, "\blue [x],[y]")
+				to_chat(world, "network 1: [network_node1.normal_members.len], [network_node1.line_members.len]")
 				for(var/obj/O in network_node1.normal_members)
-					world << "member: [O.x], [O.y]"
-				world << "network 2: [network_node2.normal_members.len], [network_node2.line_members.len]"
+					to_chat(world, "member: [O.x], [O.y]")
+				to_chat(world, "network 2: [network_node2.normal_members.len], [network_node2.line_members.len]")
 				for(var/obj/O in network_node2.normal_members)
-					world << "member: [O.x], [O.y]"
+					to_chat(world, "member: [O.x], [O.y]")
 	pipe
 		verb
 			destroy()
@@ -349,9 +349,9 @@ obj/machinery/atmospherics
 				set category = "Minor"
 
 				if(parent)
-					usr << "[x],[y] is in a pipeline with [parent.members.len] members ([parent.edges.len] edges)! Volume: [parent.air.volume]"
-					usr << "Pressure: [parent.air.return_pressure()], Temperature: [parent.air.temperature]"
-					usr << "[parent.air.oxygen], [parent.air.toxins], [parent.air.nitrogen], [parent.air.carbon_dioxide] .. [parent.alert_pressure]"
+					to_chat(usr, "[x],[y] is in a pipeline with [parent.members.len] members ([parent.edges.len] edges)! Volume: [parent.air.volume]")
+					to_chat(usr, "Pressure: [parent.air.return_pressure()], Temperature: [parent.air.temperature]")
+					to_chat(usr, "[parent.air.oxygen], [parent.air.toxins], [parent.air.nitrogen], [parent.air.carbon_dioxide] .. [parent.alert_pressure]")
 */
 mob
 	verb
@@ -374,7 +374,7 @@ mob
 				if(master)
 					P.overlays += icon('icons/Testing/atmos_testing.dmi',"marker[master.marker]")
 				else
-					world << "error"
+					to_chat(world, "error")
 					P.overlays += icon('icons/Testing/atmos_testing.dmi',"marker0")
 
 			for(var/obj/machinery/atmospherics/valve/V in machines)
@@ -406,9 +406,9 @@ turf/simulated
 			set src in world
 			set category = "Minor"
 			var/datum/gas_mixture/GM = return_air()
-			usr << "\blue @[x],[y] ([GM.group_multiplier]): O:[GM.oxygen] T:[GM.toxins] N:[GM.nitrogen] C:[GM.carbon_dioxide] w [GM.temperature] Kelvin, [GM.return_pressure()] kPa [(active_hotspot)?("\red BURNING"):(null)]"
+			to_chat(usr, "\blue @[x],[y] ([GM.group_multiplier]): O:[GM.oxygen] T:[GM.toxins] N:[GM.nitrogen] C:[GM.carbon_dioxide] w [GM.temperature] Kelvin, [GM.return_pressure()] kPa [(active_hotspot)?("\red BURNING"):(null)]")
 			for(var/datum/gas/trace_gas in GM.trace_gases)
-				usr << "[trace_gas.type]: [trace_gas.moles]"
+				to_chat(usr, "[trace_gas.type]: [trace_gas.moles]")
 
 		force_temperature(temp as num)
 			set src in world
@@ -429,7 +429,7 @@ turf/simulated
 			set category = "Minor"
 
 			fire_verbose = !fire_verbose
-			usr << "[x],[y] now [fire_verbose]"
+			to_chat(usr, "[x],[y] now [fire_verbose]")
 
 		add_sleeping_agent(amount as num)
 			set src in world
@@ -496,7 +496,7 @@ mob
 		update_indicators()
 			set category = "Debug"
 			if(!air_master)
-				usr << "Cannot find air_system"
+				to_chat(usr, "Cannot find air_system")
 				return
 
 			for(var/obj/indicator/T in world)
@@ -504,7 +504,7 @@ mob
 		change_indicators()
 			set category = "Debug"
 			if(!air_master)
-				usr << "Cannot find air_system"
+				to_chat(usr, "Cannot find air_system")
 				return
 
 			var/str = input("Select") in list("oxygen", "nitrogen","plasma","all","temperature")
@@ -515,14 +515,14 @@ mob
 
 		fire_report()
 			set category = "Debug"
-			usr << "\b \red Fire Report"
+			to_chat(usr, "\b \red Fire Report")
 			for(var/obj/effect/hotspot/flame in world)
-				usr << "[flame.x],[flame.y]: [flame.temperature]K, [flame.volume] L - [flame.loc:air:temperature]"
+				to_chat(usr, "[flame.x],[flame.y]: [flame.temperature]K, [flame.volume] L - [flame.loc:air:temperature]")
 
 		process_cycle()
 			set category = "Debug"
 			if(!master_controller)
-				usr << "Cannot find master_controller"
+				to_chat(usr, "Cannot find master_controller")
 				return
 
 			master_controller.process()
@@ -531,7 +531,7 @@ mob
 		process_cycles(amount as num)
 			set category = "Debug"
 			if(!master_controller)
-				usr << "Cannot find master_controller"
+				to_chat(usr, "Cannot find master_controller")
 				return
 
 			var/start_time = world.timeofday
@@ -539,14 +539,14 @@ mob
 			for(var/i=1; i<=amount; i++)
 				master_controller.process()
 
-			world << "Ended [amount] cycles in [(world.timeofday-start_time)/10] seconds. [(world.timeofday-start_time)/10-amount] calculation lag"
+			to_chat(world, "Ended [amount] cycles in [(world.timeofday-start_time)/10] seconds. [(world.timeofday-start_time)/10-amount] calculation lag")
 
 			update_indicators()
 
 		process_updates_early()
 			set category = "Debug"
 			if(!air_master)
-				usr << "Cannot find air_system"
+				to_chat(usr, "Cannot find air_system")
 				return
 
 			air_master.process_update_tiles()
@@ -555,7 +555,7 @@ mob
 		mark_group_delay()
 			set category = "Debug"
 			if(!air_master)
-				usr << "Cannot find air_system"
+				to_chat(usr, "Cannot find air_system")
 				return
 
 			for(var/datum/air_group/group in air_master.air_groups)
@@ -601,7 +601,7 @@ mob
 		mark_groups()
 			set category = "Debug"
 			if(!air_master)
-				usr << "Cannot find air_system"
+				to_chat(usr, "Cannot find air_system")
 				return
 
 			for(var/datum/air_group/group in air_master.air_groups)
@@ -634,7 +634,7 @@ mob
 /*		jump_to_dead_group() Currently in the normal admin commands but fits here
 			set category = "Debug"
 			if(!air_master)
-				usr << "Cannot find air_system"
+				to_chat(usr, "Cannot find air_system")
 				return
 
 			var/datum/air_group/dead_groups = list()

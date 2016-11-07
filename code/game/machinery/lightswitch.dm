@@ -40,7 +40,7 @@
 /obj/machinery/light_switch/examine(mob/user)
 	..()
 	if(src in oview(1, user))
-		user << "A light switch. It is [on? "on" : "off"]."
+		to_chat(user, "A light switch. It is [on? "on" : "off"].")
 
 
 /obj/machinery/light_switch/attack_paw(mob/user)

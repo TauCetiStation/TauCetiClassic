@@ -5,7 +5,7 @@
 	if(!check_rights(R_ADMIN))
 		return
 	if(prefs.muted & MUTE_ADMINHELP)
-		src << "<font color='red'>Error: ASAY: You cannot use asay (Muted).</font>"
+		to_chat(src, "<font color='red'>Error: ASAY: You cannot use asay (Muted).</font>")
 		return
 
 	msg = sanitize(copytext(msg, 1, MAX_MESSAGE_LEN))
@@ -18,6 +18,6 @@
 		msg = "<span class='adminsay'><span class='prefix'>ADMIN:</span> <EM>[key_name(usr, 1)]</EM> (<a href='?_src_=holder;adminplayerobservejump=\ref[mob]'>JMP</A>): <span class='message'>[msg]</span></span>"
 		for(var/client/C in admins)
 			if(R_ADMIN & C.holder.rights)
-				C << msg
+				to_chat(C, msg)
 
 	feedback_add_details("admin_verb","M") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

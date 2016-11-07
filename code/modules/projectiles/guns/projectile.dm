@@ -60,13 +60,13 @@
 			user.remove_from_mob(AM)
 			magazine = AM
 			magazine.loc = src
-			user << "<span class='notice'>You load a new magazine into \the [src].</span>"
+			to_chat(user, "<span class='notice'>You load a new magazine into \the [src].</span>")
 			chamber_round()
 			A.update_icon()
 			update_icon()
 			return 1
 		else if (magazine)
-			user << "<span class='notice'>There's already a magazine in \the [src].</span>"
+			to_chat(user, "<span class='notice'>There's already a magazine in \the [src].</span>")
 	return 0
 
 /obj/item/weapon/gun/projectile/can_fire()
@@ -79,9 +79,9 @@
 		user.put_in_hands(magazine)
 		magazine.update_icon()
 		magazine = null
-		user << "<span class='notice'>You pull the magazine out of \the [src]!</span>"
+		to_chat(user, "<span class='notice'>You pull the magazine out of \the [src]!</span>")
 	else
-		user << "<span class='notice'>There's no magazine in \the [src].</span>"
+		to_chat(user, "<span class='notice'>There's no magazine in \the [src].</span>")
 	update_icon()
 	return
 
@@ -93,7 +93,7 @@
 /obj/item/weapon/gun/projectile/examine(mob/user)
 	..()
 	if(!energy_gun && src in view(1, user))
-		user << "Has [get_ammo()] round\s remaining."
+		to_chat(user, "Has [get_ammo()] round\s remaining.")
 
 /obj/item/weapon/gun/projectile/proc/get_ammo(countchambered = 1)
 	var/boolets = 0 //mature var names for mature people

@@ -186,14 +186,14 @@ Auto Patrol: []"},
 	if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if (src.allowed(user) && !open && !emagged)
 			src.locked = !src.locked
-			user << "<span class='notice'>Controls are now [src.locked ? "locked" : "unlocked"].</span>"
+			to_chat(user, "<span class='notice'>Controls are now [src.locked ? "locked" : "unlocked"].</span>")
 		else
 			if(emagged)
-				user << "<span class='warning'>ERROR</span>"
+				to_chat(user, "<span class='warning'>ERROR</span>")
 			if(open)
-				user << "<span class='warning'>Please close the access panel before locking it.</span>"
+				to_chat(user, "<span class='warning'>Please close the access panel before locking it.</span>")
 			else
-				user << "<span class='notice'>Access denied.</span>"
+				to_chat(user, "<span class='notice'>Access denied.</span>")
 	else
 		..()
 		if (!istype(W, /obj/item/weapon/screwdriver) && (!src.target))
@@ -206,7 +206,7 @@ Auto Patrol: []"},
 /obj/machinery/bot/ed209/Emag(mob/user)
 	..()
 	if(open && !locked)
-		if(user) user << "<span class='warning'>You short out [src]'s target assessment circuits.</span>"
+		if(user) to_chat(user, "<span class='warning'>You short out [src]'s target assessment circuits.</span>")
 		spawn(0)
 			for(var/mob/O in hearers(src, null))
 				O.show_message("\red <B>[src] buzzes oddly!</B>", 1)
@@ -262,7 +262,7 @@ Auto Patrol: []"},
 			// if can't reach perp for long enough, go idle
 			if (src.frustration >= 8)
 		//		for(var/mob/O in hearers(src, null))
-		//			O << "<span class='game say'><span class='name'>[src]</span> beeps, \"Backup requested! Suspect has evaded arrest.\""
+//					to_chat(O, "<span class='game say'><span class='name'>[src]</span> beeps, \"Backup requested! Suspect has evaded arrest.\"")
 				src.target = null
 				src.last_found = world.time
 				src.frustration = 0
@@ -509,9 +509,9 @@ Auto Patrol: []"},
 		return
 
 	/*
-	world << "rec signal: [signal.source]"
+	to_chat(world, "rec signal: [signal.source]")
 	for(var/x in signal.data)
-		world << "* [x] = [signal.data[x]]"
+		to_chat(world, "* [x] = [signal.data[x]]")
 	*/
 
 	var/recv = signal.data["command"]
@@ -593,7 +593,7 @@ Auto Patrol: []"},
 	signal.transmission_method = 1
 	//for(var/key in keyval)
 	//	signal.data[key] = keyval[key]
-		//world << "sent [key],[keyval[key]] on [freq]"
+	//	to_chat(world, "sent [key],[keyval[key]] on [freq]")
 	signal.data = keyval
 	if (signal.data["findbeacon"])
 		frequency.post_signal(src, signal, filter = RADIO_NAVBEACONS)
@@ -906,7 +906,7 @@ Auto Patrol: []"},
 				user.drop_item()
 				qdel(W)
 				build_step++
-				user << "<span class='notice'>You add the robot leg to [src].</span>"
+				to_chat(user, "<span class='notice'>You add the robot leg to [src].</span>")
 				name = "legs/frame assembly"
 				if(build_step == 1)
 					item_state = "ed209_leg"
@@ -924,7 +924,7 @@ Auto Patrol: []"},
 				user.drop_item()
 				qdel(W)
 				build_step++
-				user << "<span class='notice'>You add the armor to [src].</span>"
+				to_chat(user, "<span class='notice'>You add the armor to [src].</span>")
 				name = "vest/legs/frame assembly"
 				item_state = "[lasercolor]ed209_shell"
 				icon_state = "[lasercolor]ed209_shell"
@@ -935,13 +935,13 @@ Auto Patrol: []"},
 				if(WT.remove_fuel(0,user))
 					build_step++
 					name = "shielded frame assembly"
-					user << "<span class='notice'>You welded the vest to [src].</span>"
+					to_chat(user, "<span class='notice'>You welded the vest to [src].</span>")
 		if(4)
 			if( istype(W, /obj/item/clothing/head/helmet) )
 				user.drop_item()
 				qdel(W)
 				build_step++
-				user << "<span class='notice'>You add the helmet to [src].</span>"
+				to_chat(user, "<span class='notice'>You add the helmet to [src].</span>")
 				name = "covered and shielded frame assembly"
 				item_state = "[lasercolor]ed209_hat"
 				icon_state = "[lasercolor]ed209_hat"
@@ -951,7 +951,7 @@ Auto Patrol: []"},
 				user.drop_item()
 				qdel(W)
 				build_step++
-				user << "<span class='notice'>You add the prox sensor to [src].</span>"
+				to_chat(user, "<span class='notice'>You add the prox sensor to [src].</span>")
 				name = "covered, shielded and sensored frame assembly"
 				item_state = "[lasercolor]ed209_prox"
 				icon_state = "[lasercolor]ed209_prox"
@@ -960,12 +960,12 @@ Auto Patrol: []"},
 			if( istype(W, /obj/item/weapon/cable_coil) )
 				var/obj/item/weapon/cable_coil/coil = W
 				var/turf/T = get_turf(user)
-				user << "<span class='notice'>You start to wire [src]...</span>"
+				to_chat(user, "<span class='notice'>You start to wire [src]...</span>")
 				sleep(40)
 				if(get_turf(user) == T && build_step == 6)
 					coil.use(1)
 					build_step++
-					user << "<span class='notice'>You wire the ED-209 assembly.</span>"
+					to_chat(user, "<span class='notice'>You wire the ED-209 assembly.</span>")
 					name = "wired ED-209 assembly"
 
 		if(7)
@@ -985,7 +985,7 @@ Auto Patrol: []"},
 				else
 					return
 			build_step++
-			user << "<span class='notice'>You add [W] to [src].</span>"
+			to_chat(user, "<span class='notice'>You add [W] to [src].</span>")
 			src.item_state = "[lasercolor]ed209_taser"
 			src.icon_state = "[lasercolor]ed209_taser"
 			user.drop_item()
@@ -995,17 +995,17 @@ Auto Patrol: []"},
 			if( istype(W, /obj/item/weapon/screwdriver) )
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
 				var/turf/T = get_turf(user)
-				user << "<span class='notice'>Now attaching the gun to the frame...</span>"
+				to_chat(user, "<span class='notice'>Now attaching the gun to the frame...</span>")
 				sleep(40)
 				if(get_turf(user) == T && build_step == 8)
 					build_step++
 					name = "armed [name]"
-					user << "<span class='notice'>Taser gun attached.</span>"
+					to_chat(user, "<span class='notice'>Taser gun attached.</span>")
 
 		if(9)
 			if( istype(W, /obj/item/weapon/stock_parts/cell) )
 				build_step++
-				user << "<span class='notice'>You complete the ED-209.</span>"
+				to_chat(user, "<span class='notice'>You complete the ED-209.</span>")
 				var/turf/T = get_turf(src)
 				new /obj/machinery/bot/ed209(T,created_name,lasercolor)
 				user.drop_item()

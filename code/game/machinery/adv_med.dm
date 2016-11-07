@@ -46,10 +46,10 @@
 	if (usr.stat != CONSCIOUS)
 		return
 	if (src.occupant)
-		usr << "\blue <B>The scanner is already occupied!</B>"
+		to_chat(usr, "\blue <B>The scanner is already occupied!</B>")
 		return
 	if (usr.abiotic())
-		usr << "\blue <B>Subject cannot have abiotic items on.</B>"
+		to_chat(usr, "\blue <B>Subject cannot have abiotic items on.</B>")
 		return
 	usr.pulling = null
 	usr.client.perspective = EYE_PERSPECTIVE
@@ -82,10 +82,10 @@
 	if ((!( istype(G, /obj/item/weapon/grab) ) || !( ismob(G.affecting) )))
 		return
 	if (src.occupant)
-		user << "\blue <B>The scanner is already occupied!</B>"
+		to_chat(user, "\blue <B>The scanner is already occupied!</B>")
 		return
 	if (G.affecting.abiotic())
-		user << "\blue <B>Subject cannot have abiotic items on.</B>"
+		to_chat(user, "\blue <B>Subject cannot have abiotic items on.</B>")
 		return
 	var/mob/M = G.affecting
 	if (M.client)
@@ -224,7 +224,7 @@
 	if(..())
 		return
 	if(!ishuman(connected.occupant))
-		user << "\red This device can only scan compatible lifeforms."
+		to_chat(user, "\red This device can only scan compatible lifeforms.")
 		return
 	var/dat
 	if (src.delete && src.temphtml) //Window in buffer but its just simple message, so nothing
@@ -409,7 +409,7 @@
 	if (href_list["print"])
 		if (!src.printing)
 			src.printing = 1
-			usr << "\red Printing... Please wait."
+			to_chat(usr, "\red Printing... Please wait.")
 			spawn(50)
 				src.printing = 0
 				var/obj/item/weapon/paper/P = new(loc)

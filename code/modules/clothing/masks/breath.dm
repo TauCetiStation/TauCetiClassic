@@ -19,14 +19,14 @@
 			gas_transfer_coefficient = 1 //gas is now escaping to the turf and vice versa
 			flags &= ~(MASKCOVERSMOUTH | MASKINTERNALS)
 			icon_state = "breathdown"
-			usr << "Your mask is now hanging on your neck."
+			to_chat(usr, "Your mask is now hanging on your neck.")
 
 		else
 			src.hanging = !src.hanging
 			gas_transfer_coefficient = 0.10
 			flags |= MASKCOVERSMOUTH | MASKINTERNALS
 			icon_state = "breath"
-			usr << "You pull the mask up to cover your face."
+			to_chat(usr, "You pull the mask up to cover your face.")
 		usr.update_inv_wear_mask()
 
 /obj/item/clothing/mask/breath/medical
@@ -49,5 +49,5 @@
 
 /obj/item/clothing/mask/breath/vox/attack_self()
 
-	usr << "You can't really adjust this mask - it's moulded to your beak!"
+	to_chat(usr, "You can't really adjust this mask - it's moulded to your beak!")
 	return

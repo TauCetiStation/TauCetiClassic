@@ -26,7 +26,7 @@
 		return
 
 	proc/bang(turf/T , mob/living/carbon/M)						// Added a new proc called 'bang' that takes a location and a person to be banged.
-		M << "\red <B>BANG</B>"
+		to_chat(M, "\red <B>BANG</B>")
 		playsound(src.loc, 'sound/effects/bang.ogg', 50, 1, 5)
 
 //Checking for protections
@@ -80,21 +80,21 @@
 			var/mob/living/carbon/human/H = M
 			var/datum/organ/internal/eyes/E = H.internal_organs_by_name["eyes"]
 			if (E.damage >= E.min_bruised_damage)
-				M << "\red Your eyes start to burn badly!"
+				to_chat(M, "\red Your eyes start to burn badly!")
 				if(!banglet && !(istype(src , /obj/item/weapon/grenade/flashbang/clusterbang)))
 					if (E.damage >= E.min_broken_damage)
-						M << "\red You can't see anything!"
+						to_chat(M, "\red You can't see anything!")
 			if(H.species.name == "Shadowling") // BBQ from shadowling ~Zve
 				H.adjustFireLoss(rand(15,25))
 		if (M.ear_damage >= 15)
-			M << "\red Your ears start to ring badly!"
+			to_chat(M, "\red Your ears start to ring badly!")
 			if(!banglet && !(istype(src , /obj/item/weapon/grenade/flashbang/clusterbang)))
 				if (prob(M.ear_damage - 10 + 5))
-					M << "\red You can't hear anything!"
+					to_chat(M, "\red You can't hear anything!")
 					M.sdisabilities |= DEAF
 		else
 			if (M.ear_damage >= 5)
-				M << "\red Your ears start to ring!"
+				to_chat(M, "\red Your ears start to ring!")
 		M.update_icons()
 
 /obj/effect/effect/smoke/flashbang

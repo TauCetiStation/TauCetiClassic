@@ -255,13 +255,13 @@
 	if(src.icon_state == "suitjacket_blue_open")
 		src.icon_state = "suitjacket_blue"
 		src.item_state = "suitjacket_blue"
-		usr << "You button up the suit jacket."
+		to_chat(usr, "You button up the suit jacket.")
 	else if(src.icon_state == "suitjacket_blue")
 		src.icon_state = "suitjacket_blue_open"
 		src.item_state = "suitjacket_blue_open"
-		usr << "You unbutton the suit jacket."
+		to_chat(usr, "You unbutton the suit jacket.")
 	else
-		usr << "You button-up some imaginary buttons on your [src]."
+		to_chat(usr, "You button-up some imaginary buttons on your [src].")
 		return
 	usr.update_inv_wear_suit()
 
@@ -426,16 +426,16 @@
 	if(!usr.canmove || usr.stat || usr.restrained())
 		return 0
 	if(!can_button_up)
-		usr << "You attempt to button-up the velcro on your [src], before promptly realising how silly you are."
+		to_chat(usr, "You attempt to button-up the velcro on your [src], before promptly realising how silly you are.")
 		return 0
 
 	if(!src.is_button_up)
 		src.icon_state = initial(icon_state)
-		usr << "You button up your jacket."
+		to_chat(usr, "You button up your jacket.")
 		src.is_button_up = 1
 	else
 		src.icon_state += "_open"
-		usr << "You unbutton your jacket."
+		to_chat(usr, "You unbutton your jacket.")
 		src.is_button_up = 0
 	usr.update_inv_wear_suit()	//so our overlays update
 
@@ -551,13 +551,13 @@
 	if(src.icon_state == "gmjacket_open")
 		src.icon_state = "gmjacket"
 		src.item_state = "gmjacket"
-		usr << "You button up the suit jacket."
+		to_chat(usr, "You button up the suit jacket.")
 	else if(src.icon_state == "gmjacket")
 		src.icon_state = "gmjacket_open"
 		src.item_state = "gmjacket_open"
-		usr << "You unbutton the suit jacket."
+		to_chat(usr, "You unbutton the suit jacket.")
 	else
-		usr << "You button-up some imaginary buttons on your [src]."
+		to_chat(usr, "You button-up some imaginary buttons on your [src].")
 		return
 	usr.update_inv_wear_suit()
 

@@ -45,7 +45,8 @@
 	set category = "Alien"
 
 	if(!isturf(src.loc))
-		src << "\red You cannot evolve when you are inside something." //Silly aliens!
+		to_chat(src, "\red You cannot evolve when you are inside something.")//Silly aliens!
+
 		return
 
 	if(powerc(500))
@@ -57,17 +58,17 @@
 			no_queen = 0
 
 		if(src.has_brain_worms())
-			src << "<span class='warning'>We cannot perform this ability at the present time!</span>"
+			to_chat(src, "<span class='warning'>We cannot perform this ability at the present time!</span>")
 			return
 
 		if(no_queen)
 			adjustToxLoss(-500)
-			src << "\green You begin to evolve!"
+			to_chat(src, "\green You begin to evolve!")
 			for(var/mob/O in viewers(src, null))
 				O.show_message(text("\green <B>[src] begins to twist and contort!</B>"), 1)
 			var/mob/living/carbon/alien/humanoid/queen/new_xeno = new (loc)
 			mind.transfer_to(new_xeno)
 			qdel(src)
 		else
-			src << "<span class='notice'>We already have an alive queen.</span>"
+			to_chat(src, "<span class='notice'>We already have an alive queen.</span>")
 	return

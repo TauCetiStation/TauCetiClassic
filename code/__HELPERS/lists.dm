@@ -591,9 +591,10 @@ datum/proc/dd_SortValue()
 //Move a single element from position fromIndex within a list, to position toIndex
 //All elements in the range [1,toIndex) before the move will be before the pivot afterwards
 //All elements in the range [toIndex, L.len+1) before the move will be after the pivot afterwards
-//In other words, it's as if the range [fromIndex,toIndex) have been rotated using a <<< operation common to other languages.
+//to_chat(In other words, it's as if the range [fromIndex,toIndex) have been rotated using a, < operation common to other languages.)
 //fromIndex and toIndex must be in the range [1,L.len+1]
 //This will preserve associations ~Carnie
+
 /proc/moveElement(list/L, fromIndex, toIndex)
 	if(fromIndex == toIndex || fromIndex+1 == toIndex)	//no need to move
 		return

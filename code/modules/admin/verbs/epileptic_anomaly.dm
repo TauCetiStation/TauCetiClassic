@@ -12,7 +12,7 @@
 		return
 
 	if(A.type == /area)
-		usr << "<span class='warning'>You can't do it with space!</span>"
+		to_chat(usr, "<span class='warning'>You can't do it with space!</span>")
 		return
 
 	for(var/atom/O in A)
@@ -35,7 +35,7 @@
 		return
 
 	if(A.type == /area)
-		usr << "<span class='warning'>You can't do it with space!</span>"
+		to_chat(usr, "<span class='warning'>You can't do it with space!</span>")
 		return
 
 	for(var/atom/O in A)

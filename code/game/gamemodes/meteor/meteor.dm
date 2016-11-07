@@ -12,8 +12,8 @@
 
 
 /datum/game_mode/meteor/announce()
-	world << "<B>The current game mode is - Meteor!</B>"
-	world << "<B>The space station has been stuck in a major meteor shower. You must escape from the station or at least live.</B>"
+	to_chat(world, "<B>The current game mode is - Meteor!</B>")
+	to_chat(world, "<B>The space station has been stuck in a major meteor shower. You must escape from the station or at least live.</B>")
 
 
 /datum/game_mode/meteor/post_setup()

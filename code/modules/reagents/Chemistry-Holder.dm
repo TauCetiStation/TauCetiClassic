@@ -305,21 +305,21 @@ var/const/INGEST = 2
 
 					var/list/seen = viewers(4, get_turf(my_atom))
 					for(var/mob/M in seen)
-						M << "\blue \icon[my_atom] The solution begins to bubble."
+						to_chat(M, "\blue [bicon(my_atom)] The solution begins to bubble.")
 
 				/*	if(istype(my_atom, /obj/item/slime_core))
 						var/obj/item/slime_core/ME = my_atom
 						ME.Uses--
 						if(ME.Uses <= 0) // give the notification that the slime core is dead
 							for(var/mob/M in viewers(4, get_turf(my_atom)) )
-								M << "\blue \icon[my_atom] The innards begin to boil!"
+								to_chat(M, "\blue [bicon(my_atom)] The innards begin to boil!")
 					*/
 					if(istype(my_atom, /obj/item/slime_extract))
 						var/obj/item/slime_extract/ME2 = my_atom
 						ME2.Uses--
 						if(ME2.Uses <= 0) // give the notification that the slime core is dead
 							for(var/mob/M in seen)
-								M << "\blue \icon[my_atom] The [my_atom]'s power is consumed in the reaction."
+								to_chat(M, "\blue [bicon(my_atom)] The [my_atom]'s power is consumed in the reaction.")
 								ME2.name = "used slime extract"
 								ME2.desc = "This extract has been used up."
 
@@ -453,9 +453,9 @@ var/const/INGEST = 2
 		SetViruses(R, data) // Includes setting data
 
 		//debug
-		//world << "Adding data"
+//		to_chat(world, "Adding data")
 		//for(var/D in R.data)
-		//	world << "Container data: [D] = [R.data[D]]"
+//			to_chat(world, "Container data: [D] = [R.data[D]]")
 		//debug
 		update_total()
 		my_atom.on_reagent_change()
@@ -542,13 +542,13 @@ var/const/INGEST = 2
 /datum/reagents/proc/get_data(reagent_id)
 	for(var/datum/reagent/D in reagent_list)
 		if(D.id == reagent_id)
-			//world << "proffering a data-carrying reagent ([reagent_id])"
+//			to_chat(world, "proffering a data-carrying reagent ([reagent_id])")
 			return D.data
 
 /datum/reagents/proc/set_data(reagent_id, new_data)
 	for(var/datum/reagent/D in reagent_list)
 		if(D.id == reagent_id)
-			//world << "reagent data set ([reagent_id])"
+//			to_chat(world, "reagent data set ([reagent_id])")
 			D.data = new_data
 
 /datum/reagents/proc/delete()

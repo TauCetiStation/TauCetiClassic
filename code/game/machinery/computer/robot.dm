@@ -21,7 +21,7 @@
 	if(..())
 		return
 	if (src.z > ZLEVEL_EMPTY)
-		user << "\red <b>Unable to establish a connection</b>: \black You're too far away from the station!"
+		to_chat(user, "\red <b>Unable to establish a connection</b>: \black You're too far away from the station!")
 		return
 	user.set_machine(src)
 	var/dat
@@ -119,7 +119,7 @@
 					src.temp = null
 
 			else
-				usr << "\red Access Denied."
+				to_chat(usr, "\red Access Denied.")
 
 	else if (href_list["stop"])
 		src.temp = {"
@@ -153,7 +153,7 @@
 				if(choice == "Confirm")
 					if(R && istype(R))
 						if(R.mind && R.mind.special_role && R.emagged)
-							R << "Extreme danger.  Termination codes detected.  Scrambling security codes and automatic AI unlink triggered."
+							to_chat(R, "Extreme danger.  Termination codes detected.  Scrambling security codes and automatic AI unlink triggered.")
 							R.ResetSecurityCodes()
 
 						else
@@ -161,7 +161,7 @@
 							log_game("\blue [key_name_admin(usr)] detonated [R.name]!")
 							R.self_destruct()
 		else
-			usr << "\red Access Denied."
+			to_chat(usr, "\red Access Denied.")
 
 	else if (href_list["stopbot"])
 		if(src.allowed(usr))
@@ -177,15 +177,15 @@
 							R.clear_alert("locked")
 						//	R.cell.charge = R.lockcharge
 							R.lockcharge = !R.lockcharge
-							R << "Your lockdown has been lifted!"
+							to_chat(R, "Your lockdown has been lifted!")
 						else
 							R.throw_alert("locked")
 							R.lockcharge = !R.lockcharge
 					//		R.cell.charge = 0
-							R << "You have been locked down!"
+							to_chat(R, "You have been locked down!")
 
 		else
-			usr << "\red Access Denied."
+			to_chat(usr, "\red Access Denied.")
 
 	else if (href_list["magbot"])
 		if(src.allowed(usr))

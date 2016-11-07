@@ -6,9 +6,9 @@
 	if(!client) return
 	client.inquisitive_ghost = !client.inquisitive_ghost
 	if(client.inquisitive_ghost)
-		src << "\blue You will now examine everything you click on."
+		to_chat(src, "\blue You will now examine everything you click on.")
 	else
-		src << "\blue You will no longer examine things you click on."
+		to_chat(src, "\blue You will no longer examine things you click on.")
 
 /mob/dead/observer/DblClickOn(atom/A, params)
 	if(client.buildmode)
@@ -61,13 +61,13 @@
 	if(awaygate)
 		user.loc = awaygate.loc
 	else
-		user << "[src] has no destination."
+		to_chat(user, "[src] has no destination.")
 
 /obj/machinery/gateway/centeraway/attack_ghost(mob/user)
 	if(stationgate)
 		user.loc = stationgate.loc
 	else
-		user << "[src] has no destination."
+		to_chat(user, "[src] has no destination.")
 
 // -------------------------------------------
 // This was supposed to be used by adminghosts

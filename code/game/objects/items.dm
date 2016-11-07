@@ -153,7 +153,7 @@
 	var/close_span = "[src.wet ? "</span>" : ""]"
 	var/wet_status = "[src.wet ? " wet" : ""]"
 
-	user << "[open_span]It's a[wet_status] [size] item.[close_span]"
+	to_chat(user, "[open_span]It's a[wet_status] [size] item.[close_span]")
 
 /obj/item/attack_hand(mob/user)
 	if (!user) return
@@ -161,25 +161,25 @@
 	if(HULK in user.mutations)//#Z2 Hulk nerfz!
 		if(istype(src, /obj/item/weapon/melee/))
 			if(src.w_class < 4)
-				user << "\red \The [src] is far too small for you to pick up."
+				to_chat(user, "\red \The [src] is far too small for you to pick up.")
 				return
 		else if(istype(src, /obj/item/weapon/gun/))
 			if(prob(20)) user.say(pick(";RAAAAAAAARGH! WEAPON!", ";HNNNNNNNNNGGGGGGH! I HATE WEAPONS!!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGUUUUUNNNNHH!", ";AAAAAAARRRGH!" ))
 			user.visible_message("\blue [user] crushes \a [src] with hands.", "\blue You crush the [src].")
 			qdel(src)
-			//user << "\red \The [src] is far too small for you to pick up."
+//			to_chat(user, "\red \The [src] is far too small for you to pick up.")
 			return
 		else if(istype(src, /obj/item/clothing/))
-			if(prob(20)) user << "\red [pick("You are not interested in [src].", "This is nothing.", "Humans stuff...", "A cat? A scary cat...",
+			if(prob(20)) to_chat(user, "\red [pick("You are not interested in [src].", "This is nothing.", "Humans stuff...", "A cat? A scary cat...",
 			"A Captain? Let's smash his skull! I don't like Captains!",
-			"Awww! Such lovely doggy! BUT I HATE DOGGIES!!", "A woman... A lying woman! I love womans! Fuck womans...")]"
+			"Awww! Such lovely doggy! BUT I HATE DOGGIES!!", "A woman... A lying woman! I love womans! Fuck womans...")]")
 			return
 		else if(istype(src, /obj/item/weapon/book/))
-			user << "\red A book! I LOVE BOOKS!!"
+			to_chat(user, "\red A book! I LOVE BOOKS!!")
 		else if(istype(src, /obj/item/weapon/reagent_containers/food))
-			if(prob(20)) user << "\red I LOVE FOOD!!"
+			if(prob(20)) to_chat(user, "\red I LOVE FOOD!!")
 		else if(src.w_class < 4)
-			user << "\red \The [src] is far too small for you to pick up."
+			to_chat(user, "\red \The [src] is far too small for you to pick up.")
 			return
 
 	if(hasorgans(user))
@@ -187,7 +187,7 @@
 		if (user.hand)
 			temp = user:organs_by_name["l_hand"]
 		if(temp && !temp.is_usable())
-			user << "<span class='notice'>You try to move your [temp.display_name], but cannot!"
+			to_chat(user, "<span class='notice'>You try to move your [temp.display_name], but cannot!")
 			return
 
 	if(istype(src.loc, /obj/item/weapon/storage))
@@ -231,7 +231,7 @@
 		if(!A.has_fine_manipulation || w_class >= 4)
 			if(src in A.contents) // To stop Aliens having items stuck in their pockets
 				A.drop_from_inventory(src)
-			user << "Your claws aren't capable of such fine manipulation."
+			to_chat(user, "Your claws aren't capable of such fine manipulation.")
 			return
 
 	if (istype(src.loc, /obj/item/weapon/storage))
@@ -287,11 +287,11 @@
 						success = 1
 						S.handle_item_insertion(I, 1)	//The 1 stops the "You put the [src] into [S]" insertion message from being displayed.
 					if(success && !failure)
-						user << "<span class='notice'>You put everything in [S].</span>"
+						to_chat(user, "<span class='notice'>You put everything in [S].</span>")
 					else if(success)
-						user << "<span class='notice'>You put some things in [S].</span>"
+						to_chat(user, "<span class='notice'>You put some things in [S].</span>")
 					else
-						user << "<span class='notice'>You fail to pick anything up with [S].</span>"
+						to_chat(user, "<span class='notice'>You fail to pick anything up with [S].</span>")
 
 			else if(S.can_be_inserted(src))
 				S.handle_item_insertion(src)
@@ -348,7 +348,7 @@
 				//testing("[M] TOO FAT TO WEAR [src]!")
 				if(!(flags & ONESIZEFITSALL))
 					if(!disable_warning)
-						H << "\red You're too fat to wear the [name]."
+						to_chat(H, "\red You're too fat to wear the [name].")
 					return 0
 
 		switch(slot)
@@ -395,7 +395,7 @@
 					return 0
 				if(!H.w_uniform)
 					if(!disable_warning)
-						H << "\red You need a jumpsuit before you can attach this [name]."
+						to_chat(H, "\red You need a jumpsuit before you can attach this [name].")
 					return 0
 				if( !(slot_flags & SLOT_BELT) )
 					return
@@ -443,7 +443,7 @@
 					return 0
 				if(!H.w_uniform)
 					if(!disable_warning)
-						H << "\red You need a jumpsuit before you can attach this [name]."
+						to_chat(H, "\red You need a jumpsuit before you can attach this [name].")
 					return 0
 				if( !(slot_flags & SLOT_ID) )
 					return 0
@@ -453,7 +453,7 @@
 					return 0
 				if(!H.w_uniform)
 					if(!disable_warning)
-						H << "\red You need a jumpsuit before you can attach this [name]."
+						to_chat(H, "\red You need a jumpsuit before you can attach this [name].")
 					return 0
 				if(slot_flags & SLOT_DENYPOCKET)
 					return 0
@@ -464,7 +464,7 @@
 					return 0
 				if(!H.w_uniform)
 					if(!disable_warning)
-						H << "\red You need a jumpsuit before you can attach this [name]."
+						to_chat(H, "\red You need a jumpsuit before you can attach this [name].")
 					return 0
 				if(slot_flags & SLOT_DENYPOCKET)
 					return 0
@@ -476,11 +476,11 @@
 					return 0
 				if(!H.wear_suit)
 					if(!disable_warning)
-						H << "\red You need a suit before you can attach this [name]."
+						to_chat(H, "\red You need a suit before you can attach this [name].")
 					return 0
 				if(!H.wear_suit.allowed)
 					if(!disable_warning)
-						usr << "You somehow have a suit with no defined allowed items for suit storage, stop that."
+						to_chat(usr, "You somehow have a suit with no defined allowed items for suit storage, stop that.")
 					return 0
 				if( istype(src, /obj/item/device/pda) || istype(src, /obj/item/weapon/pen) || is_type_in_list(src, H.wear_suit.allowed) )
 					return 1
@@ -545,22 +545,22 @@
 	if(!usr.canmove || usr.stat || usr.restrained() || !Adjacent(usr))
 		return
 	if((!istype(usr, /mob/living/carbon)) || (istype(usr, /mob/living/carbon/brain)))//Is humanoid, and is not a brain
-		usr << "\red You can't pick things up!"
+		to_chat(usr, "\red You can't pick things up!")
 		return
 	if( usr.stat || usr.restrained() )//Is not asleep/dead and is not restrained
-		usr << "\red You can't pick things up!"
+		to_chat(usr, "\red You can't pick things up!")
 		return
 	if(src.anchored) //Object isn't anchored
-		usr << "\red You can't pick that up!"
+		to_chat(usr, "\red You can't pick that up!")
 		return
 	if(!usr.hand && usr.r_hand) //Right hand is not full
-		usr << "\red Your right hand is full."
+		to_chat(usr, "\red Your right hand is full.")
 		return
 	if(usr.hand && usr.l_hand) //Left hand is not full
-		usr << "\red Your left hand is full."
+		to_chat(usr, "\red Your left hand is full.")
 		return
 	if(!istype(src.loc, /turf)) //Object is on a turf
-		usr << "\red You can't pick that up!"
+		to_chat(usr, "\red You can't pick that up!")
 		return
 	//All checks are done, time to pick it up!
 	usr.UnarmedAttack(src)
@@ -591,7 +591,7 @@
 		var/mob/living/carbon/human/H = M
 		if(((H.head && H.head.flags & HEADCOVERSEYES) || (H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) || (H.glasses && H.glasses.flags & GLASSESCOVERSEYES)))
 			// you can't stab someone in the eyes wearing a mask!
-			user << "\red You're going to need to remove the eye covering first."
+			to_chat(user, "\red You're going to need to remove the eye covering first.")
 			return
 
 	var/mob/living/carbon/monkey/Mo = M
@@ -599,11 +599,11 @@
 			(Mo.wear_mask && Mo.wear_mask.flags & MASKCOVERSEYES) \
 		))
 		// you can't stab someone in the eyes wearing a mask!
-		user << "\red You're going to need to remove the eye covering first."
+		to_chat(user, "\red You're going to need to remove the eye covering first.")
 		return
 
 	if(istype(M, /mob/living/carbon/alien) || istype(M, /mob/living/carbon/slime))//Aliens don't have eyes./N     slimes also don't have eyes!
-		user << "\red You cannot locate any eyes on this creature!"
+		to_chat(user, "\red You cannot locate any eyes on this creature!")
 		return
 
 	user.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>"
@@ -614,7 +614,7 @@
 	//if((CLUMSY in user.mutations) && prob(50))
 	//	M = user
 		/*
-		M << "\red You stab yourself in the eye."
+		to_chat(M, "\red You stab yourself in the eye.")
 		M.sdisabilities |= BLIND
 		M.weakened += 4
 		M.adjustBruteLoss(10)
@@ -622,8 +622,8 @@
 	if(M != user)
 		for(var/mob/O in (viewers(M) - user - M))
 			O.show_message("\red [M] has been stabbed in the eye with [src] by [user].", 1)
-		M << "\red [user] stabs you in the eye with [src]!"
-		user << "\red You stab [M] in the eye with [src]!"
+		to_chat(M, "\red [user] stabs you in the eye with [src]!")
+		to_chat(user, "\red You stab [M] in the eye with [src]!")
 	else
 		user.visible_message( \
 			"\red [user] has stabbed themself with [src]!", \
@@ -636,17 +636,17 @@
 		if(eyes.damage >= eyes.min_bruised_damage)
 			if(H.stat != DEAD)
 				if(eyes.robotic <= 1) //robot eyes bleeding might be a bit silly
-					H << "\red Your eyes start to bleed profusely!"
+					to_chat(H, "\red Your eyes start to bleed profusely!")
 			if(prob(50))
 				if(H.stat != DEAD)
-					H << "\red You drop what you're holding and clutch at your eyes!"
+					to_chat(H, "\red You drop what you're holding and clutch at your eyes!")
 					H.drop_item()
 				H.eye_blurry += 10
 				H.Paralyse(1)
 				H.Weaken(4)
 			if (eyes.damage >= eyes.min_broken_damage)
 				if(H.stat != DEAD)
-					H << "\red You go blind!"
+					to_chat(H, "\red You go blind!")
 		var/datum/organ/external/affecting = H.get_organ("head")
 		affecting.take_damage(7)
 	else

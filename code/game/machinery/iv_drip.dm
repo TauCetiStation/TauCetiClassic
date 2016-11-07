@@ -66,13 +66,13 @@
 /obj/machinery/iv_drip/attackby(obj/item/weapon/W, mob/user)
 	if (istype(W, /obj/item/weapon/reagent_containers))
 		if(!isnull(src.beaker))
-			user << "There is already a reagent container loaded!"
+			to_chat(user, "There is already a reagent container loaded!")
 			return
 
 		user.drop_item()
 		W.loc = src
 		src.beaker = W
-		user << "You attach \the [W] to \the [src]."
+		to_chat(user, "You attach \the [W] to \the [src].")
 		src.update_icon()
 		return
 	else
@@ -150,19 +150,19 @@
 
 	if(isliving(usr) && usr.stat != DEAD)
 		mode = !mode
-		usr << "The IV drip is now [mode ? "injecting" : "taking blood"]."
+		to_chat(usr, "The IV drip is now [mode ? "injecting" : "taking blood"].")
 
 /obj/machinery/iv_drip/examine(mob/user)
 	..()
 	if(src in oview(2, user))
-		user << "The IV drip is [mode ? "injecting" : "taking blood"]."
+		to_chat(user, "The IV drip is [mode ? "injecting" : "taking blood"].")
 
 		if(beaker)
 			if(beaker.reagents && beaker.reagents.reagent_list.len)
-				user << "<span class='notice'>Attached is \a [beaker] with [beaker.reagents.total_volume] units of liquid.</span>"
+				to_chat(user, "<span class='notice'>Attached is \a [beaker] with [beaker.reagents.total_volume] units of liquid.</span>")
 			else
-				user << "<span class='notice'>Attached is an empty [beaker].</span>"
+				to_chat(user, "<span class='notice'>Attached is an empty [beaker].</span>")
 		else
-			user << "<span class='notice'>No chemicals are attached.</span>"
+			to_chat(user, "<span class='notice'>No chemicals are attached.</span>")
 
-		user << "<span class='notice'>[attached ? attached : "No one"] is attached.</span>"
+		to_chat(user, "<span class='notice'>[attached ? attached : "No one"] is attached.</span>")

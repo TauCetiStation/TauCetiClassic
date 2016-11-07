@@ -97,19 +97,19 @@
 	switch(emagged)
 		if(0)
 			emagged = 0.5
-			visible_message("\icon[src] <b>\The [src]</b> beeps: \"DB error \[Code 0x00F1\]\"")
+			visible_message("[bicon(src)] <b>\The [src]</b> beeps: \"DB error \[Code 0x00F1\]\"")
 			sleep(10)
-			visible_message("\icon[src] <b>\The [src]</b> beeps: \"Attempting auto-repair\"")
+			visible_message("[bicon(src)] <b>\The [src]</b> beeps: \"Attempting auto-repair\"")
 			sleep(15)
-			visible_message("\icon[src] <b>\The [src]</b> beeps: \"User DB corrupted \[Code 0x00FA\]. Truncating data structure...\"")
+			visible_message("[bicon(src)] <b>\The [src]</b> beeps: \"User DB corrupted \[Code 0x00FA\]. Truncating data structure...\"")
 			sleep(30)
-			visible_message("\icon[src] <b>\The [src]</b> beeps: \"User DB truncated. Please contact your Nanotrasen system operator for future assistance.\"")
+			visible_message("[bicon(src)] <b>\The [src]</b> beeps: \"User DB truncated. Please contact your Nanotrasen system operator for future assistance.\"")
 			req_access = null
 			emagged = 1
 		if(0.5)
-			visible_message("\icon[src] <b>\The [src]</b> beeps: \"DB not responding \[Code 0x0003\]...\"")
+			visible_message("[bicon(src)] <b>\The [src]</b> beeps: \"DB not responding \[Code 0x0003\]...\"")
 		if(1)
-			visible_message("\icon[src] <b>\The [src]</b> beeps: \"No records in User DB\"")
+			visible_message("[bicon(src)] <b>\The [src]</b> beeps: \"No records in User DB\"")
 	return
 
 /obj/machinery/mecha_part_fabricator/proc/output_parts_list(set_name)
@@ -175,7 +175,7 @@
 	var/obj/item/I = new D.build_path(location)
 	I.materials[MAT_METAL] = get_resource_cost_w_coeff(D,MAT_METAL)
 	I.materials[MAT_GLASS] = get_resource_cost_w_coeff(D,MAT_GLASS)
-	visible_message("\icon[src] <b>\The [src]</b> beeps, \"\The [I] is complete.\"")
+	visible_message("[bicon(src)] <b>\The [src]</b> beeps, \"\The [I] is complete.\"")
 	being_built = null
 
 	updateUsrDialog()
@@ -218,14 +218,14 @@
 		if(stat&(NOPOWER|BROKEN))
 			return 0
 		if(!check_resources(D))
-			visible_message("\icon[src] <b>\The [src]</b> beeps, \"Not enough resources. Queue processing stopped.\"")
+			visible_message("[bicon(src)] <b>\The [src]</b> beeps, \"Not enough resources. Queue processing stopped.\"")
 			temp = {"<span class='alert'>Not enough resources to build next part.</span><br>
 						<a href='?src=\ref[src];process_queue=1'>Try again</a> | <a href='?src=\ref[src];clear_temp=1'>Return</a><a>"}
 			return 0
 		remove_from_queue(1)
 		build_part(D)
 		D = listgetindex(queue, 1)
-	visible_message("\icon[src] <b>\The [src]</b> beeps, \"Queue processing finished successfully.\"")
+	visible_message("[bicon(src)] <b>\The [src]</b> beeps, \"Queue processing finished successfully.\"")
 
 /obj/machinery/mecha_part_fabricator/proc/list_queue()
 	var/output = "<b>Queue contains:</b>"
@@ -285,7 +285,7 @@
 		temp += "<a href='?src=\ref[src];clear_temp=1'>Return</a>"
 
 		updateUsrDialog()
-		visible_message("\icon[src] <b>\The [src]</b> beeps, \"Successfully synchronized with R&D server.\"")
+		visible_message("[bicon(src)] <b>\The [src]</b> beeps, \"Successfully synchronized with R&D server.\"")
 		return
 
 	temp = "Unable to connect to local R&D Database.<br>Please check your connections and try again.<br><a href='?src=\ref[src];clear_temp=1'>Return</a>"
@@ -308,8 +308,8 @@
 		for(var/ID in list(H.get_active_hand(), H.wear_id, H.belt))
 			if(src.check_access(ID))
 				return 1
-	visible_message("\icon[src] <b>\The [src]</b> beeps: \"Access denied.\"")
-	//M << "<font color='red'>You don't have required permissions to use [src]</font>"
+	visible_message("[bicon(src)] <b>\The [src]</b> beeps: \"Access denied.\"")
+//	to_chat(M, "<font color='red'>You don't have required permissions to use [src]</font>")
 	return 0
 
 /obj/machinery/mecha_part_fabricator/attack_hand(mob/user)
@@ -326,7 +326,7 @@
 	user.set_machine(src)
 	var/turf/exit = get_step(src,(dir))
 	if(exit.density)
-		visible_message("\icon[src] <b>\The [src]</b> beeps, \"Error! Part outlet is obstructed.\"")
+		visible_message("[bicon(src)] <b>\The [src]</b> beeps, \"Error! Part outlet is obstructed.\"")
 		return
 	if(temp)
 		left_part = temp
@@ -534,7 +534,7 @@
 			default_deconstruction_crowbar(W)
 			return 1
 		else
-			user << "<span class='warning'>You can't load \the [name] while it's opened!</span>"
+			to_chat(user, "<span class='warning'>You can't load \the [name] while it's opened!</span>")
 			return 1
 
 	if(istype(W, /obj/item/stack))
@@ -558,10 +558,10 @@
 				return ..()
 
 		if(being_built)
-			user << "<span class='warning'>\The [src] is currently processing! Please wait until completion.</span>"
+			to_chat(user, "<span class='warning'>\The [src] is currently processing! Please wait until completion.</span>")
 			return
 		if(res_max_amount - resources[material] < MINERAL_MATERIAL_AMOUNT) //overstuffing the fabricator
-			user << "<span class='warning'>\The [src] [material2name(material)] storage is full!</span>"
+			to_chat(user, "<span class='warning'>\The [src] [material2name(material)] storage is full!</span>")
 			return
 		var/obj/item/stack/sheet/stack = W
 		var/sname = "[stack.name]"
@@ -571,12 +571,12 @@
 			var/transfer_amount = min(stack.amount, round((res_max_amount - resources[material])/MINERAL_MATERIAL_AMOUNT,1))
 			resources[material] += transfer_amount * MINERAL_MATERIAL_AMOUNT
 			stack.use(transfer_amount)
-			user << "<span class='notice'>You insert [transfer_amount] [sname] sheet\s into \the [src].</span>"
+			to_chat(user, "<span class='notice'>You insert [transfer_amount] [sname] sheet\s into \the [src].</span>")
 			sleep(10)
 			updateUsrDialog()
 			overlays -= "fab-load-[material2name(material)]" //No matter what the overlay shall still be deleted
 		else
-			user << "<span class='warning'>\The [src] cannot hold any more [sname] sheet\s!</span>"
+			to_chat(user, "<span class='warning'>\The [src] cannot hold any more [sname] sheet\s!</span>")
 		return
 
 /obj/machinery/mecha_part_fabricator/proc/material2name(ID)

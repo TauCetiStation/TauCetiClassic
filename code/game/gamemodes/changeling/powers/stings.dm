@@ -15,13 +15,13 @@
 	return
 
 /obj/effect/proc_holder/changeling/sting/proc/set_sting(mob/user)
-	user << "<span class='notice'>We prepare our sting, use alt+click or middle mouse button on target to sting them.</span>"
+	to_chat(user, "<span class='notice'>We prepare our sting, use alt+click or middle mouse button on target to sting them.</span>")
 	user.mind.changeling.chosen_sting = src
 	user.hud_used.lingstingdisplay.icon_state = sting_icon
 	user.hud_used.lingstingdisplay.invisibility = 0
 
 /obj/effect/proc_holder/changeling/sting/proc/unset_sting(mob/user)
-	user << "<span class='warning'>We retract our sting, we can't sting anyone for now.</span>"
+	to_chat(user, "<span class='warning'>We retract our sting, we can't sting anyone for now.</span>")
 	user.mind.changeling.chosen_sting = null
 	user.hud_used.lingstingdisplay.icon_state = null
 	user.hud_used.lingstingdisplay.invisibility = 101
@@ -36,7 +36,7 @@
 	if(!..())
 		return
 	if(!user.mind.changeling.chosen_sting)
-		user << "We haven't prepared our sting yet!"
+		to_chat(user, "We haven't prepared our sting yet!")
 	if(!iscarbon(target))
 		return
 	if(!isturf(user.loc))
@@ -57,11 +57,11 @@
 	if(!target)
 		return
 	if((get_dist(user, target) <= 1))
-		user << "<span class='notice'>We stealthily sting [target.name].</span>"
+		to_chat(user, "<span class='notice'>We stealthily sting [target.name].</span>")
 	else
-		user << "<span class='notice'>We stealthily shoot [target.name] with sting.</span>"
+		to_chat(user, "<span class='notice'>We stealthily shoot [target.name] with sting.</span>")
 	if(target.mind && target.mind.changeling)
-		target << "<span class='warning'>You feel a tiny prick.</span>"
+		to_chat(target, "<span class='warning'>You feel a tiny prick.</span>")
 	//	add_logs(user, target, "unsuccessfully stung")
 	msg_admin_attack("[key_name(user)] used [src] on [key_name(target)] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 	return 1
@@ -72,8 +72,8 @@
 	if(ishuman(target))
 		var/datum/organ/external/affecting = target:get_organ(user.zone_sel.selecting)
 		if(target:check_thickmaterial(affecting))
-			user << "<span class='warning'>We broke our sting about [target.name]'s [user.zone_sel.selecting]!</span>"
-			target << "<span class='warning'>You feel a tiny push in your [user.zone_sel.selecting]!</span>"
+			to_chat(user, "<span class='warning'>We broke our sting about [target.name]'s [user.zone_sel.selecting]!</span>")
+			to_chat(target, "<span class='warning'>You feel a tiny push in your [user.zone_sel.selecting]!</span>")
 			unset_sting(user)
 			user.mind.changeling.chem_charges -= rand(5,10)
 			if(ishuman(user))
@@ -144,7 +144,7 @@ obj/effect/proc_holder/changeling/sting/LSD
 	if(!..())
 		return
 	if((HUSK in target.mutations) || (NOCLONE in target.mutations))
-		user << "<span class='warning'>Our sting appears ineffective against its DNA.</span>"
+		to_chat(user, "<span class='warning'>Our sting appears ineffective against its DNA.</span>")
 		return 0
 	return 1
 
@@ -152,7 +152,7 @@ obj/effect/proc_holder/changeling/sting/LSD
 	if(sting_fail(user,target))
 		return 0
 	if(ismonkey(target))
-		user << "<span class='notice'>We stealthily sting [target.name].</span>"
+		to_chat(user, "<span class='notice'>We stealthily sting [target.name].</span>")
 	target.visible_message("<span class='warning'>[target] transforms!</span>")
 	target.dna = selected_dna.Clone()
 	target.real_name = selected_dna.real_name
@@ -204,7 +204,7 @@ obj/effect/proc_holder/changeling/sting/silence
 /obj/effect/proc_holder/changeling/sting/silence/sting_action(mob/user, mob/living/carbon/target)
 	if(sting_fail(user,target))
 		return 0
-	target << "<span class='danger'>Your ears pop and begin ringing loudly!</span>"
+	to_chat(target, "<span class='danger'>Your ears pop and begin ringing loudly!</span>")
 	target.sdisabilities |= DEAF
 	spawn(300)	target.sdisabilities &= ~DEAF
 	target.silent += 30
@@ -223,7 +223,7 @@ obj/effect/proc_holder/changeling/sting/blind
 /obj/effect/proc_holder/changeling/sting/blind/sting_action(mob/user, mob/target)
 	if(sting_fail(user,target))
 		return 0
-	target << "<span class='danger'>Your eyes burn horrifically!</span>"
+	to_chat(target, "<span class='danger'>Your eyes burn horrifically!</span>")
 	target.disabilities |= NEARSIGHTED
 	spawn(300)	target.disabilities &= ~NEARSIGHTED
 	target.eye_blind = 20
@@ -242,7 +242,7 @@ obj/effect/proc_holder/changeling/sting/blind
 /obj/effect/proc_holder/changeling/sting/paralysis/sting_action(mob/user, mob/living/carbon/target)
 	if(sting_fail(user,target))
 		return 0
-	target << "<span class='danger'>Your muscles begin to painfully tighten.</span>"
+	to_chat(target, "<span class='danger'>Your muscles begin to painfully tighten.</span>")
 	target.Weaken(20)
 	feedback_add_details("changeling_powers","PS")
 	return 1
@@ -258,7 +258,7 @@ obj/effect/proc_holder/changeling/sting/blind
 /obj/effect/proc_holder/changeling/sting/death/sting_action(mob/user, mob/living/carbon/target)
 	if(sting_fail(user,target))
 		return 0
-	target << "<span class='danger'>You feel a small prick and your chest becomes tight.</span>"
+	to_chat(target, "<span class='danger'>You feel a small prick and your chest becomes tight.</span>")
 	target.silent = 15
 	if(target.reagents)
 		target.reagents.add_reagent("cryptobiolin", 20)
@@ -286,10 +286,10 @@ obj/effect/proc_holder/changeling/sting/unfat
 	if(FAT in target.mutations)
 		target.overeatduration = 0
 		target.nutrition -= 100
-		target << "<span class='danger'>You feel a small prick as stomach churns violently and you become to feel skinnier.</span>"
+		to_chat(target, "<span class='danger'>You feel a small prick as stomach churns violently and you become to feel skinnier.</span>")
 	else
 		target.overeatduration = 600
 		target.nutrition += 100
-		target << "<span class='danger'>You feel a small prick as stomach churns violently and you become to feel blubbery.</span>"
+		to_chat(target, "<span class='danger'>You feel a small prick as stomach churns violently and you become to feel blubbery.</span>")
 	feedback_add_details("changeling_powers","US")
 	return 1

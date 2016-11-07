@@ -33,7 +33,7 @@
 		user.show_message("\red Unidentified signature in [M]. Report to nearby xenoarchaeologist/anomalist.", 1)
 
 //	user.visible_message("<span class='notice'>[user] paints \the [P] [mode].</span>","<span class='notice'>You paint \the [P] [mode].</span>")
-//	user << "[M.mineral], [M.toughness], [M.ore_amount]"
+//	to_chat(user, "[M.mineral], [M.toughness], [M.ore_amount]")
 
 /obj/item/clothing/glasses/hud/mining
 	name = "Geological Optical Scanner"

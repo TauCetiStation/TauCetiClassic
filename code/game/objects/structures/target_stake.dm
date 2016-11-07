@@ -30,7 +30,7 @@
 		W.loc = loc
 		W.layer = 3.1
 		pinned_target = W
-		user << "<span class='notice'>You slide the target into the stake.</span>"
+		to_chat(user, "<span class='notice'>You slide the target into the stake.</span>")
 	return
 
 /obj/structure/target_stake/attack_hand(mob/user)
@@ -44,9 +44,9 @@
 		if(ishuman(user))
 			if(!user.get_active_hand())
 				user.put_in_hands(pinned_target)
-				user << "<span class='notice'>You take the target out of the stake.</span>"
+				to_chat(user, "<span class='notice'>You take the target out of the stake.</span>")
 		else
 			pinned_target.loc = get_turf_loc(user)
-			user << "<span class='notice'>You take the target out of the stake.</span>"
+			to_chat(user, "<span class='notice'>You take the target out of the stake.</span>")
 
 		pinned_target = null

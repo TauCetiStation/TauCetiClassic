@@ -8,4 +8,4 @@
 	command += "<br>"
 	for(var/mob/M in player_list)
 		if(!isnewplayer(M))
-			M << command
+			to_chat(M, command)

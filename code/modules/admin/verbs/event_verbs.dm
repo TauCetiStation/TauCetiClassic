@@ -127,7 +127,7 @@ var/centcom_barriers_stat = 1
 	Crossed(M as mob)
 		if(!active) return
 		/*if(istype(M, /mob/living/carbon))
-			M << sound(melody,0,1,lchannel,20)*/
+			to_chat(M, sound(melody,0,1,lchannel,20)) */
 
 /obj/structure/centcom_barrier
 	name = "Invisible wall"

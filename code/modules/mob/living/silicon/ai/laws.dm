@@ -10,7 +10,7 @@
 		who = world
 	else
 		who = src
-		who << "<b>Obey these laws:</b>"
+		to_chat(who, "<b>Obey these laws:</b>")
 
 	src.laws_sanity_check()
 	src.laws.show_laws(who)
@@ -41,7 +41,7 @@
 	for(var/mob/living/silicon/robot/R in mob_list)
 		if(R.lawupdate && (R.connected_ai == src))
 			R.throw_alert("newlaw")
-			R << "\red " + law + "\red...LAWS UPDATED"
+			to_chat(R, "\red " + law + "\red...LAWS UPDATED")
 
 /mob/living/silicon/ai/proc/clear_ion_laws()
 	throw_alert("newlaw")

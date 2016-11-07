@@ -2,14 +2,14 @@
 	var/armor = getarmor(def_zone, attack_flag)
 	if(armor >= 100)
 		if(absorb_text)
-			src << "<span class='userdanger'>[absorb_text]</span>"
+			to_chat(src, "<span class='userdanger'>[absorb_text]</span>")
 		else
-			src << "<span class='userdanger'>Your armor absorbs the blow!</span>"
+			to_chat(src, "<span class='userdanger'>Your armor absorbs the blow!</span>")
 	else if(armor > 0)
 		if(soften_text)
-			src << "<span class='userdanger'>[soften_text]</span>"
+			to_chat(src, "<span class='userdanger'>[soften_text]</span>")
 		else
-			src << "<span class='userdanger'>Your armor softens the blow!</span>"
+			to_chat(src, "<span class='userdanger'>Your armor softens the blow!</span>")
 	return armor
 
 //if null is passed for def_zone, then this should return something appropriate for all zones (e.g. area effect damage)

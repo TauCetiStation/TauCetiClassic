@@ -496,7 +496,7 @@
 		gulp_size = volume
 		if(user.a_intent == "hurt")
 			if(ismob(target) && target.reagents && reagents.total_volume)
-				user << "\red You splash your drink in the [target] face!"
+				to_chat(user, "\red You splash your drink in the [target] face!")
 				var/mob/living/M = target
 				var/list/injected = list()
 				for(var/datum/reagent/R in src.reagents.reagent_list)

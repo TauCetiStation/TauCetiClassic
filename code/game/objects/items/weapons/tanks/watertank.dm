@@ -28,7 +28,7 @@
 	set category = "Object"
 	var/mob/M = usr
 	if (M.back != src)
-		usr << "<span class='warning'>The watertank must be worn properly to use!</span>"
+		to_chat(usr, "<span class='warning'>The watertank must be worn properly to use!</span>")
 		return
 	on = !on
 
@@ -40,7 +40,7 @@
 		//Detach the nozzle into the user's hands
 		if(!user.put_in_hands(noz))
 			on = 0
-			user << "<span class='warning'>You need a free hand to hold the mister!</span>"
+			to_chat(user, "<span class='warning'>You need a free hand to hold the mister!</span>")
 			return
 		noz.loc = user
 	else
@@ -104,7 +104,7 @@
 /obj/item/weapon/watertank/examine(mob/user)
 	..()
 	if(src in user)
-		user << "[reagents.total_volume] units of liquid left!"
+		to_chat(user, "[reagents.total_volume] units of liquid left!")
 
 /obj/item/weapon/reagent_containers/spray/mister
 	name = "water mister"
@@ -131,7 +131,7 @@
 
 // Here is some magic. Problems with drop, no problems with throw. Too wierd for me - Smalltasty
 /obj/item/weapon/reagent_containers/spray/mister/dropped(mob/user)
-	user << "<span class='notice'>The mister snaps back onto the watertank.</span>"
+	to_chat(user, "<span class='notice'>The mister snaps back onto the watertank.</span>")
 	tank.on = 0
 	spawn(1) loc = tank
 
@@ -179,4 +179,4 @@
 
 /obj/item/weapon/reagent_containers/spray/mister/janitor/attack_self(mob/user)
 	amount_per_transfer_from_this = (amount_per_transfer_from_this == 10 ? 5 : 10)
-	user << "<span class='notice'>You [amount_per_transfer_from_this == 10 ? "remove" : "fix"] the nozzle. You'll now use [amount_per_transfer_from_this] units per spray.</span>"
+	to_chat(user, "<span class='notice'>You [amount_per_transfer_from_this == 10 ? "remove" : "fix"] the nozzle. You'll now use [amount_per_transfer_from_this] units per spray.</span>")

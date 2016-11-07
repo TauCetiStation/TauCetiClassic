@@ -56,7 +56,7 @@
 	if(!usr)	return
 	if(!reagents.total_volume)
 		if(M == usr)
-			usr << "<span class='notice'>You finish eating \the [src].</span>"
+			to_chat(usr, "<span class='notice'>You finish eating \the [src].</span>")
 		M.visible_message("<span class='notice'>[M] finishes eating \the [src].</span>")
 		usr.drop_from_inventory(src)	//so icons update :[
 		qdel(src)
@@ -65,16 +65,17 @@
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/attack_self(mob/user)
 	// Usual checks
 	if(!liquid_fuel)	//it shouldn't happen but if it will we have save from runtime errors
-		user << "<span class='info'>[src] is defective.</span>"
+		to_chat(user, "<span class='info'>[src] is defective.</span>")
 		return
 	if(!liquid_fuel.volume)
-		user << "<span class='notice'>It's out of chemicals.</span>"
+		to_chat(user, "<span class='notice'>It's out of chemicals.</span>")
 		return
 	if(on)
 		return
 
 	if(!isturf(user.loc))
-		user << "<span class='info'>You cannot turn the light on while in this [user.loc].</span>" //To prevent some lighting anomalities.
+		to_chat(user, "<span class='info'>You cannot turn the light on while in this [user.loc].</span>")//To prevent some lighting anomalities.
+
 		return
 	on = !on
 	update_brightness(user)
@@ -86,10 +87,10 @@
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/attack(mob/M, mob/user, def_zone)
 	var/datum/reagent/luminophore = locate(/datum/reagent/luminophore) in reagents.reagent_list
 	if(!luminophore)	//it shouldn't happen but if it will we have save from runtime errors
-		user << "<span class='info'>[src] is defective.</span>"
+		to_chat(user, "<span class='info'>[src] is defective.</span>")
 		return
 	if(!luminophore.volume)
-		user << "<span class='rose'>None of chemicals left in [src]!</span>"
+		to_chat(user, "<span class='rose'>None of chemicals left in [src]!</span>")
 		return 0
 
 	if(!CanEat(user, M, src, "eat")) return	//tc code
@@ -99,13 +100,13 @@
 			if(istype(M,/mob/living/carbon/human))
 				var/mob/living/carbon/human/H = M
 				if(H.species.flags & IS_SYNTHETIC)
-					H << "<span class='rose'>You have a monitor for a head, where do you think you're going to put that?</span>"
+					to_chat(H, "<span class='rose'>You have a monitor for a head, where do you think you're going to put that?</span>")
 					return
 		else
 			if(istype(M,/mob/living/carbon/human))
 				var/mob/living/carbon/human/H = M
 				if(H.species.flags & IS_SYNTHETIC)
-					H << "<span class='rose'>They have a monitor for a head, where do you think you're going to put that?</span>"
+					to_chat(H, "<span class='rose'>They have a monitor for a head, where do you think you're going to put that?</span>")
 					return
 
 			if(!istype(M, /mob/living/carbon/slime))		//If you're feeding it to someone else.
@@ -123,7 +124,7 @@
 					O.show_message("<span class='danger'>[user] feeds [M] [src].</span>", 1)
 
 			else
-				user << "<span class='warning'>This creature does not seem to have a mouth!</span>"
+				to_chat(user, "<span class='warning'>This creature does not seem to have a mouth!</span>")
 				return
 
 		if(reagents)								//Handle ingestion of the reagent.

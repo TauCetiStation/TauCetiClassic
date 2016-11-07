@@ -55,10 +55,10 @@
 	if(active_dummy.current_type != target.type)
 		if(istype(target,/obj/item) && !istype(target, /obj/item/weapon/disk/nuclear))
 			playsound(get_turf(src), 'sound/weapons/flash.ogg', 100, 1, -6)
-			user << "<span class='notice'>\The [target] scanned.</span>"
+			to_chat(user, "<span class='notice'>\The [target] scanned.</span>")
 			copy_item(target)
 	else
-		user << "<span class='notice'>\The [target] already scanned.</span>"
+		to_chat(user, "<span class='notice'>\The [target] already scanned.</span>")
 
 /obj/item/device/chameleon/proc/copy_item(obj/O)
 	var/obj/effect/dummy/chameleon/C = active_dummy
@@ -78,7 +78,7 @@
 		activate(usr)
 
 	play_transform_effect()
-	usr << "<span class='notice'>You [toggled ? "activate" : "deactivate"] the [src].</span>"
+	to_chat(usr, "<span class='notice'>You [toggled ? "activate" : "deactivate"] the [src].</span>")
 
 /obj/item/device/chameleon/proc/play_transform_effect()
 	playsound(get_turf(src), 'sound/effects/pop.ogg', 100, 1, -6)
@@ -107,7 +107,7 @@
 /obj/item/device/chameleon/proc/disrupt()
 	if(toggled)
 		for(var/mob/M in active_dummy)
-			M << "<span class='danger'>Your chameleon-projector deactivates.</span>"
+			to_chat(M, "<span class='danger'>Your chameleon-projector deactivates.</span>")
 		deactivate()
 		var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread
 		spark_system.set_up(5, 0, src)

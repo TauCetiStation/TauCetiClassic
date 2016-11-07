@@ -62,7 +62,7 @@
 // Now you need to be next to the paper in order to read it.
 	if(in_range(usr, src))
 		if(crumpled==1)
-			usr << "<span class='notice'>You can't read anything until it crumpled.</span>"
+			to_chat(usr, "<span class='notice'>You can't read anything until it crumpled.</span>")
 			return
 		if(!(istype(usr, /mob/living/carbon/human) || istype(usr, /mob/dead/observer) || istype(usr, /mob/living/silicon)))
 			usr << browse("<HTML><HEAD><TITLE>[sanitize_popup(name)]</TITLE></HEAD><BODY>[sanitize_plus_popup(stars(revert_ja(info)))][stamps]</BODY></HTML>", "window=[name]")
@@ -71,7 +71,7 @@
 			usr << browse("<HTML><HEAD><TITLE>[sanitize_popup(name)]</TITLE></HEAD><BODY>[info][stamps]</BODY></HTML>", "window=[name]")
 			onclose(usr, "[name]")
 	else
-		usr << "<span class='notice'>It is too far away.</span>"
+		to_chat(usr, "<span class='notice'>It is too far away.</span>")
 	return
 
 /obj/item/weapon/paper/verb/rename()
@@ -80,7 +80,7 @@
 	set src in usr
 
 	if((CLUMSY in usr.mutations) && prob(50))
-		usr << "<span class='warning'>You cut yourself on the paper.</span>"
+		to_chat(usr, "<span class='warning'>You cut yourself on the paper.</span>")
 		return
 	var/n_name = sanitize(copytext(input(usr, "What would you like to label the paper?", "Paper Labelling", null)  as text, 1, MAX_NAME_LEN))
 	if((loc == usr && usr.stat == CONSCIOUS))
@@ -94,7 +94,7 @@
 	set src in usr
 
 	if((CLUMSY in usr.mutations) && prob(50))
-		usr << "<span class='warning'>You cut yourself on the paper.</span>"
+		to_chat(usr, "<span class='warning'>You cut yourself on the paper.</span>")
 		return
 	if(!(crumpled==1))
 		crumpled = 1
@@ -157,13 +157,13 @@
 	if(user.zone_sel.selecting == "eyes")
 		user.visible_message("<span class='notice'>You show the paper to [M]. </span>", \
 			"<span class='notice'> [user] holds up a paper and shows it to [M]. </span>")
-		M << examine()
+		to_chat(M, examine())
 
 	else if(user.zone_sel.selecting == "mouth") // lipstick wiping
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if(H == user)
-				user << "<span class='notice'>You wipe off the lipstick with [src].</span>"
+				to_chat(user, "<span class='notice'>You wipe off the lipstick with [src].</span>")
 				H.lip_style = null
 				H.update_body()
 			else
@@ -330,7 +330,7 @@
 			qdel(src)
 
 		else
-			user << "<span class='warning'>You must hold \the [P] steady to burn \the [src].</span>"
+			to_chat(user, "<span class='warning'>You must hold \the [P] steady to burn \the [src].</span>")
 
 
 /obj/item/weapon/paper/Topic(href, href_list)
@@ -368,7 +368,7 @@
 		// check for exploits
 		for(var/bad in paper_blacklist)
 			if(findtext(t,bad))
-				usr << "\blue You think to yourself, \"Hm.. this is only paper...\""
+				to_chat(usr, "\blue You think to yourself, \"Hm.. this is only paper...\"")
 				log_admin("PAPER: [usr] ([usr.ckey]) tried to use forbidden word in [src]: [bad].")
 				message_admins("PAPER: [usr] ([usr.ckey]) tried to use forbidden word in [src]: [bad].")
 				return
@@ -377,7 +377,7 @@
 		t = parsepencode(t, i, usr, iscrayon) // Encode everything from pencode to html
 
 		if(fields > 50)
-			usr << "<span class='warning'>Too many fields. Sorry, you can't do this.</span>"
+			to_chat(usr, "<span class='warning'>Too many fields. Sorry, you can't do this.</span>")
 			fields = last_fields_value
 			return
 
@@ -400,7 +400,7 @@
 
 	if(crumpled)
 		if(!(istype(P, /obj/item/weapon/lighter)))
-			user << "<span class='notice'>Paper too crumpled for anything.</span>"
+			to_chat(user, "<span class='notice'>Paper too crumpled for anything.</span>")
 			return
 		else
 			burnpaper(P, user)
@@ -409,7 +409,7 @@
 		if (istype(P, /obj/item/weapon/paper/carbon))
 			var/obj/item/weapon/paper/carbon/C = P
 			if (!C.iscopy && !C.copied)
-				user << "<span class='notice'>Take off the carbon copy first.</span>"
+				to_chat(user, "<span class='notice'>Take off the carbon copy first.</span>")
 				add_fingerprint(user)
 				return
 		var/obj/item/weapon/paper_bundle/B = new(src.loc)
@@ -445,7 +445,7 @@
 				src.loc = get_turf(h_user)
 				if(h_user.client)	h_user.client.screen -= src
 				h_user.put_in_hands(B)
-		user << "<span class='notice'>You clip the [P.name] to [(src.name == "paper") ? "the paper" : src.name].</span>"
+		to_chat(user, "<span class='notice'>You clip the [P.name] to [(src.name == "paper") ? "the paper" : src.name].</span>")
 		src.loc = B
 		P.loc = B
 		B.amount++
@@ -481,7 +481,7 @@
 
 		if(istype(P, /obj/item/weapon/stamp/clown))
 			if(!clown)
-				user << "<span class='notice'>You are totally unable to use the stamp. HONK!</span>"
+				to_chat(user, "<span class='notice'>You are totally unable to use the stamp. HONK!</span>")
 				return
 
 		if(!ico)
@@ -494,7 +494,7 @@
 		stamped += P.type
 		overlays += stampoverlay
 
-		user << "<span class='notice'>You stamp the paper with your rubber stamp.</span>"
+		to_chat(user, "<span class='notice'>You stamp the paper with your rubber stamp.</span>")
 
 	else if(istype(P, /obj/item/weapon/lighter))
 		burnpaper(P, user)

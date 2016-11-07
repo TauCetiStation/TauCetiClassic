@@ -32,7 +32,7 @@
 
 
 /obj/item/weapon/lipstick/attack_self(mob/user)
-	user << "<span class='notice'>You twist \the [src] [open ? "closed" : "open"].</span>"
+	to_chat(user, "<span class='notice'>You twist \the [src] [open ? "closed" : "open"].</span>")
 	open = !open
 	if(open)
 		icon_state = "[initial(icon_state)]_[colour]"
@@ -47,7 +47,7 @@
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(H.lip_style)	//if they already have lipstick on
-			user << "<span class='notice'>You need to wipe off the old lipstick first!</span>"
+			to_chat(user, "<span class='notice'>You need to wipe off the old lipstick first!</span>")
 			return
 		if(H == user)
 			user.visible_message("<span class='notice'>[user] does their lips with \the [src].</span>", \
@@ -65,7 +65,7 @@
 				H.lip_color = colour
 				H.update_body()
 	else
-		user << "<span class='notice'>Where are the lips on that?</span>"
+		to_chat(user, "<span class='notice'>Where are the lips on that?</span>")
 
 //you can wipe off lipstick with paper!
 /obj/item/weapon/paper/attack(mob/living/carbon/M, mob/living/carbon/user)
@@ -75,7 +75,7 @@
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if(H == user)
-				user << "<span class='notice'>You wipe off the lipstick with [src].</span>"
+				to_chat(user, "<span class='notice'>You wipe off the lipstick with [src].</span>")
 				H.lip_style = null
 				H.update_body()
 			else
@@ -118,10 +118,10 @@
 		var/location = user.zone_sel.selecting
 		if(location == "mouth")
 			if((H.head && (H.head.flags & HEADCOVERSMOUTH)) || (H.wear_mask && (H.wear_mask.flags & MASKCOVERSMOUTH)))
-				user << "<span class='warning'>The mask is in the way!</span>"
+				to_chat(user, "<span class='warning'>The mask is in the way!</span>")
 				return
 			if(H.f_style == "Shaved")
-				user << "<span class='warning'>Already clean-shaven!</span>"
+				to_chat(user, "<span class='warning'>Already clean-shaven!</span>")
 				return
 
 			if(H == user) //shaving yourself
@@ -143,10 +143,10 @@
 
 		else if(location == "head")
 			if((H.head && (H.head.flags & BLOCKHAIR)) || (H.head && (H.head.flags & HIDEEARS)))
-				user << "<span class='warning'>The headgear is in the way!</span>"
+				to_chat(user, "<span class='warning'>The headgear is in the way!</span>")
 				return
 			if(H.h_style == "Bald" || H.h_style == "Balding Hair" || H.h_style == "Skinhead")
-				user << "<span class='warning'>There is not enough hair left to shave!</span>"
+				to_chat(user, "<span class='warning'>There is not enough hair left to shave!</span>")
 				return
 
 			if(H == user) //shaving yourself

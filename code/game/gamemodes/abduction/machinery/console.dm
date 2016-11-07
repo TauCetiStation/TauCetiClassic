@@ -44,7 +44,7 @@
 	if(..())
 		return
 	if(!IsAbductor(user))
-		user << "<span class='warning'>You start mashing alien buttons at random!</span>"
+		to_chat(user, "<span class='warning'>You start mashing alien buttons at random!</span>")
 		if(do_after(user,100,target = src))
 			TeleporterSend()
 		return
@@ -208,12 +208,12 @@
 /obj/machinery/abductor/console/attackby(O, user, params)
 	if(istype(O, /obj/item/device/abductor/gizmo))
 		var/obj/item/device/abductor/gizmo/G = O
-		user << "<span class='notice'>You link the tool to the console.</span>"
+		to_chat(user, "<span class='notice'>You link the tool to the console.</span>")
 		gizmo = G
 		G.console = src
 	else if(istype(O, /obj/item/clothing/suit/armor/abductor/vest))
 		var/obj/item/clothing/suit/armor/abductor/vest/V = O
-		user << "<span class='notice'>You link the vest to the console.</span>"
+		to_chat(user, "<span class='notice'>You link the vest to the console.</span>")
 		vest = V
 	else
 		..()

@@ -34,8 +34,8 @@
 			src.take_organ_damage(10)
 			Stun(rand(1,5))
 	flash_eyes(affect_silicon = 1)
-	src << "\red <B>*BZZZT*</B>"
-	src << "\red Warning: Electromagnetic pulse detected."
+	to_chat(src, "\red <B>*BZZZT*</B>")
+	to_chat(src, "\red Warning: Electromagnetic pulse detected.")
 	..()
 
 /mob/living/silicon/proc/damage_mob(brute = 0, fire = 0, tox = 0)
@@ -136,7 +136,7 @@
 //can't inject synths
 /mob/living/silicon/can_inject(mob/user, error_msg)
 	if(error_msg)
-		user << "<span class='alert'>The armoured plating is too tough.</span>"
+		to_chat(user, "<span class='alert'>The armoured plating is too tough.</span>")
 	return 0
 
 
@@ -176,13 +176,13 @@
 	switch(sensor_type)
 		if ("Security")
 			sensor_mode = SEC_HUD
-			src << "<span class='notice'>Security records overlay enabled.</span>"
+			to_chat(src, "<span class='notice'>Security records overlay enabled.</span>")
 		if ("Medical")
 			sensor_mode = MED_HUD
-			src << "<span class='notice'>Life signs monitor overlay enabled.</span>"
+			to_chat(src, "<span class='notice'>Life signs monitor overlay enabled.</span>")
 		if ("Disable")
 			sensor_mode = 0
-			src << "Sensor augmentations disabled."
+			to_chat(src, "Sensor augmentations disabled.")
 
 /mob/living/silicon/proc/write_laws()
 	if(laws)

@@ -111,7 +111,7 @@
 				mode = 2
 			else
 				mode = 1
-			user << "Changed printing mode to '[mode == 2 ? "Rename Paper" : "Write Paper"]'"
+			to_chat(user, "Changed printing mode to '[mode == 2 ? "Rename Paper" : "Write Paper"]'")
 
 	return
 
@@ -197,9 +197,10 @@
 			for(var/mob/O in viewers(get_turf_loc(user), null))
 				O.show_message(text("\red The [slime] is driven into a frenzy!."), 1)
 		uses -= 1
-		user << "Bloodlust emitter sends a pulse."
+		to_chat(user, "Bloodlust emitter sends a pulse.")
 	else
-		user << "You have spent device's capabilities." //To limit number of uses.
+		to_chat(user, "You have spent device's capabilities.")//To limit number of uses.
+
 		return 0
 	return 1
 

@@ -20,19 +20,19 @@
 
 /obj/item/weapon/antag_spawner/borg_tele/attack_self(mob/user)
 	if(used)
-		user << "The teleporter is out of power."
+		to_chat(user, "The teleporter is out of power.")
 		return
 	var/list/borg_candicates = get_candidates(ROLE_OPERATIVE)
 	if(borg_candicates.len > 0)
 		requested_candidates.Cut()
 		used = TRUE
-		user << "<span class='notice'>Seatching for available borg personality. Please wait 30 seconds...</span>"
+		to_chat(user, "<span class='notice'>Seatching for available borg personality. Please wait 30 seconds...</span>")
 		for(var/client/C in borg_candicates)
 			request_player(C)
 		spawn(300)
 			stop_search()
 	else
-		user << "<span class='notice'>Unable to connect to Syndicate Command. Please wait and try again later or use the teleporter on your uplink to get your points refunded.</span>"
+		to_chat(user, "<span class='notice'>Unable to connect to Syndicate Command. Please wait and try again later or use the teleporter on your uplink to get your points refunded.</span>")
 
 obj/item/weapon/antag_spawner/borg_tele/proc/request_player(client/C)
 	spawn(0)

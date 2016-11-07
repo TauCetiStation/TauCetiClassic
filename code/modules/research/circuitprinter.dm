@@ -91,26 +91,26 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 			default_deconstruction_crowbar(O)
 			return
 		else
-			user << "\red You can't load the [src.name] while it's opened."
+			to_chat(user, "\red You can't load the [src.name] while it's opened.")
 			return
 	if (disabled)
 		return
 	if (!linked_console)
-		user << "\The [name] must be linked to an R&D console first!"
+		to_chat(user, "\The [name] must be linked to an R&D console first!")
 		return 1
 	if (O.is_open_container())
 		return
 	if (!istype(O, /obj/item/stack/sheet/glass) && !istype(O, /obj/item/stack/sheet/mineral/gold) && !istype(O, /obj/item/stack/sheet/mineral/diamond))
-		user << "\red You cannot insert this item into the [name]!"
+		to_chat(user, "\red You cannot insert this item into the [name]!")
 		return
 	if (stat)
 		return
 	if (busy)
-		user << "\red The [name] is busy. Please wait for completion of previous operation."
+		to_chat(user, "\red The [name] is busy. Please wait for completion of previous operation.")
 		return
 	var/obj/item/stack/sheet/stack = O
 	if ((TotalMaterials() + stack.perunit) > max_material_amount)
-		user << "\red The [name] is full. Please remove glass from the protolathe in order to insert more."
+		to_chat(user, "\red The [name] is full. Please remove glass from the protolathe in order to insert more.")
 		return
 
 	var/amount = round(input("How many sheets do you want to add?") as num)
@@ -124,7 +124,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 	busy = 1
 	use_power(max(1000, (3750*amount/10)))
 	spawn(16)
-		user << "\blue You add [amount] sheets to the [src.name]."
+		to_chat(user, "\blue You add [amount] sheets to the [src.name].")
 		if(istype(stack, /obj/item/stack/sheet/glass))
 			g_amount += amount * 3750
 		else if(istype(stack, /obj/item/stack/sheet/mineral/gold))

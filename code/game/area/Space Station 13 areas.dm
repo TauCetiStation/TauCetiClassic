@@ -1938,14 +1938,14 @@ var/list/ghostteleportlocs = list()
 		if(ismob(Obj))
 			if(Obj:client)
 				mysound.status = SOUND_UPDATE
-				Obj << mysound
+				to_chat(Obj, mysound)
 		return
 
 	Exited(atom/movable/Obj)
 		if(ismob(Obj))
 			if(Obj:client)
 				mysound.status = SOUND_PAUSED | SOUND_UPDATE
-				Obj << mysound
+				to_chat(Obj, mysound)
 
 	process()
 		//set background = 1
@@ -1962,10 +1962,10 @@ var/list/ghostteleportlocs = list()
 				H.update_body()
 			if(H.client)
 				mysound.status = SOUND_UPDATE
-				H << mysound
+				to_chat(H, mysound)
 				if(S)
 					spawn(sound_delay)
-						H << S
+						to_chat(H, S)
 
 		spawn(60) .()
 
@@ -2054,14 +2054,14 @@ var/list/the_station_areas = list (
 		if(ismob(Obj))
 			if(Obj:client)
 				mysound.status = SOUND_UPDATE
-				Obj << mysound
+				to_chat(Obj, mysound)
 		return
 
 	Exited(atom/movable/Obj)
 		if(ismob(Obj))
 			if(Obj:client)
 				mysound.status = SOUND_PAUSED | SOUND_UPDATE
-				Obj << mysound
+				to_chat(Obj, mysound)
 
 	process()
 		//set background = 1
@@ -2078,10 +2078,10 @@ var/list/the_station_areas = list (
 //				H.update_body()
 			if(H.client)
 				mysound.status = SOUND_UPDATE
-				H << mysound
+				to_chat(H, mysound)
 				if(S)
 					spawn(sound_delay)
-						H << S
+						to_chat(H, S)
 
 		spawn(60) .()
 

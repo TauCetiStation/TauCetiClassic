@@ -17,7 +17,7 @@
 	anchored = 1
 
 /obj/effect/decal/cleanable/ash/attack_hand(mob/user)
-	user << "<span class='notice'>[src] sifts through your fingers.</span>"
+	to_chat(user, "<span class='notice'>[src] sifts through your fingers.</span>")
 	var/turf/simulated/floor/F = get_turf(src)
 	if (istype(F))
 		F.dirt += 4
@@ -357,7 +357,7 @@
 						I.make_wet()
 
 			C.stop_pulling()
-			C << "\blue You slipped on the wet floor!"
+			to_chat(C, "\blue You slipped on the wet floor!")
 			playsound(src.loc, 'sound/misc/slip.ogg', 50, 1, -3)
 			C.Stun(5)
 			C.Weaken(2)

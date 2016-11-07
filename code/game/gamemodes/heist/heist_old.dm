@@ -20,11 +20,11 @@ VOX HEIST ROUNDTYPE
 	var/list/obj/cortical_stacks = list() //Stacks for 'leave nobody behind' objective.
 
 /datum/game_mode/heist/announce()
-	world << "<B>The current game mode is - Heist!</B>"
-	world << "<B>An unidentified bluespace signature has slipped past the Icarus and is approaching [station_name()]!</B>"
-	world << "Whoever they are, they're likely up to no good. Protect the crew and station resources against this dastardly threat!"
-	world << "<B>Raiders:</B> Loot [station_name()] for anything and everything you need."
-	world << "<B>Personnel:</B> Repel the raiders and their low, low prices and/or crossbows."
+	to_chat(world, "<B>The current game mode is - Heist!</B>")
+	to_chat(world, "<B>An unidentified bluespace signature has slipped past the Icarus and is approaching [station_name()]!</B>")
+	to_chat(world, "Whoever they are, they're likely up to no good. Protect the crew and station resources against this dastardly threat!")
+	to_chat(world, "<B>Raiders:</B> Loot [station_name()] for anything and everything you need.")
+	to_chat(world, "<B>Personnel:</B> Repel the raiders and their low, low prices and/or crossbows.")
 
 /datum/game_mode/heist/can_start()
 
@@ -157,18 +157,19 @@ VOX HEIST ROUNDTYPE
 	return objs
 
 /datum/game_mode/heist/proc/greet_vox(datum/mind/raider)
-	raider.current << "\blue <B>You are a Vox Raider, fresh from the Shoal!</b>"
-	raider.current << "\blue The Vox are a race of cunning, sharp-eyed nomadic raiders and traders endemic to Tau Ceti and much of the unexplored galaxy. You and the crew have come to the Exodus for plunder, trade or both."
-	raider.current << "\blue Vox are cowardly and will flee from larger groups, but corner one or find them en masse and they are vicious."
-	raider.current << "\blue Use :V to voxtalk, :H to talk on your encrypted channel, and don't forget to turn on your nitrogen internals!"
-	raider.current << "\red IF YOU HAVE NOT PLAYED A VOX BEFORE, REVIEW THIS THREAD: http://baystation12.net/forums/viewtopic.php?f=6&t=8657."
+	to_chat(raider.current, "\blue <B>You are a Vox Raider, fresh from the Shoal!</b>")
+	to_chat(raider.current, "\blue The Vox are a race of cunning, sharp-eyed nomadic raiders and traders endemic to Tau Ceti and much of the unexplored galaxy. You and the crew have come to the Exodus for plunder, trade or both.")
+	to_chat(raider.current, "\blue Vox are cowardly and will flee from larger groups, but corner one or find them en masse and they are vicious.")
+	to_chat(raider.current, "\blue Use :V to voxtalk, :H to talk on your encrypted channel, and don't forget to turn on your nitrogen internals!")
+	to_chat(raider.current, "\red IF YOU HAVE NOT PLAYED A VOX BEFORE, REVIEW THIS THREAD: http:)//baystation12.net/forums/viewtopic.php?f=6&t=8657."
+
 	var/obj_count = 1
 	if(!config.objectives_disabled)
 		for(var/datum/objective/objective in raider.objectives)
-			raider.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
+			to_chat(raider.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 			obj_count++
 	else
-		raider.current << "<font color=blue>Within the rules,</font> try to act as an opposing force to the crew or come up with other fun ideas. Further RP and try to make sure other players have </i>fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>"
+		to_chat(raider.current, "<font color=blue>Within the rules,</font> try to act as an opposing force to the crew or come up with other fun ideas. Further RP and try to make sure other players have </i>fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>")
 
 
 /datum/game_mode/heist/declare_completion()
@@ -222,17 +223,17 @@ VOX HEIST ROUNDTYPE
 		else
 			win_msg += "<B>The Vox Raiders were repelled!</B>"
 
-	world << "\red <FONT size = 3><B>[win_type] [win_group] victory!</B></FONT>"
-	world << "[win_msg]"
+	to_chat(world, "\red <FONT size = 3><B>[win_type] [win_group] victory!</B></FONT>")
+	to_chat(world, "[win_msg]")
 	feedback_set_details("round_end_result","heist - [win_type] [win_group]")
 
 	var/count = 1
 	for(var/datum/objective/objective in raid_objectives)
 		if(objective.check_completion())
-			world << "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font>"
+			to_chat(world, "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font>")
 			feedback_add_details("traitor_objective","[objective.type]|SUCCESS")
 		else
-			world << "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='red'>Fail.</font>"
+			to_chat(world, "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='red'>Fail.</font>")
 			feedback_add_details("traitor_objective","[objective.type]|FAIL")
 		count++
 
@@ -263,7 +264,7 @@ datum/game_mode/proc/auto_declare_completion_heist()
 				text += "body destroyed"
 			text += ")"
 
-		world << text
+		to_chat(world, text)
 	return 1
 
 /datum/game_mode/heist/check_finished()

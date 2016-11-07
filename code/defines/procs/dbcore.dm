@@ -73,6 +73,7 @@ var/DB_PORT = 3306 // This is the port your MySQL server is running on (3306 is 
 /DBConnection/proc/Quote(str) return _dm_db_quote(_db_con,str)
 
 /DBConnection/proc/ErrorMsg() return _dm_db_error_msg(_db_con)
+
 /DBConnection/proc/SelectDB(database_name,dbi)
 	if(IsConnected()) Disconnect()
 	//return Connect("[dbi?"[dbi]":"dbi:mysql:[database_name]:[DB_SERVER]:[DB_PORT]"]",user,password)

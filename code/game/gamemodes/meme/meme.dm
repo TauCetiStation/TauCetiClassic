@@ -34,8 +34,8 @@
 	var/const/prob_right_objective_h = 50 //upper bound on probability of determining the objective correctly
 
 /datum/game_mode/meme/announce()
-	world << "<B>The current game mode is - Meme!</B>"
-	world << "<B>An unknown creature has infested the mind of a crew member. Find and destroy it by any means necessary.</B>"
+	to_chat(world, "<B>The current game mode is - Meme!</B>")
+	to_chat(world, "<B>An unknown creature has infested the mind of a crew member. Find and destroy it by any means necessary.</B>")
 
 /datum/game_mode/meme/can_start()
 	if(!..())
@@ -191,13 +191,13 @@
 			meme_death_explained = "firewater"
 		if (M.meme_death == "burns")
 			meme_death_explained = "fire"
-		meme.current << "<B>You are a <span class = 'red'>meme</span>!</B>"
-		meme.current << "<B>Your death is in <span class = 'red'>[meme_death_explained]</span>!</B>"
+		to_chat(meme.current, "<B>You are a <span class = 'red'>meme</span>!</B>")
+		to_chat(meme.current, "<B>Your death is in <span class = 'red'>[meme_death_explained]</span>!</B>")
 		meme.store_memory("<B>Your death is in [meme_death_explained]!</B>", 0, 0)
 
 	var/obj_count = 1
 	for(var/datum/objective/objective in meme.objectives)
-		meme.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
+		to_chat(meme.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 		obj_count++
 	return
 

@@ -34,7 +34,7 @@
 		return
 
 	if(target == user)
-		user << "<font class='warning'>You don't want to do that.</font>"
+		to_chat(user, "<font class='warning'>You don't want to do that.</font>")
 		return
 
 	user.do_attack_animation(target)

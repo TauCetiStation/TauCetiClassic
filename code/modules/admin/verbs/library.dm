@@ -5,7 +5,7 @@
 
 	establish_old_db_connection()
 	if(!dbcon_old.IsConnected())
-		usr << "BD POTRACHENO"
+		to_chat(usr, "BD POTRACHENO")
 		return
 
 	var/catalog = "<HEAD><TITLE>Book Inventory Management</TITLE></HEAD><BODY>\n"
@@ -32,14 +32,14 @@
 
 	establish_old_db_connection()
 	if(!dbcon_old.IsConnected())
-		usr << "BD POTRACHENO"
+		to_chat(usr, "BD POTRACHENO")
 		return
 
 	var/id = input("Book ID:") as num
 
 	var/DBQuery/query = dbcon_old.NewQuery("SELECT author, title FROM library WHERE id='[id]'")
 	if(!query.Execute())
-		usr << query.ErrorMsg()
+		to_chat(usr, query.ErrorMsg())
 
 	var/author
 	var/title
@@ -54,7 +54,7 @@
 
 	query = dbcon_old.NewQuery("DELETE FROM library WHERE id='[id]'")
 	if(!query.Execute())
-		usr << query.ErrorMsg()
+		to_chat(usr, query.ErrorMsg())
 
 /client/proc/library_debug_read()
 	set category = "Debug"
@@ -63,7 +63,7 @@
 
 	establish_old_db_connection()
 	if(!dbcon_old.IsConnected())
-		usr << "BD POTRACHENO"
+		to_chat(usr, "BD POTRACHENO")
 		return
 
 	var/id = input("Book ID:") as num

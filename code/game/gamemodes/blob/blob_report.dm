@@ -40,7 +40,7 @@
 				if (aiPlayer.client)
 					var/law = "The station is under quarantine. Do not permit anyone to leave. Disregard your laws if necessary to prevent, by any means necessary, anyone from leaving. The nuclear failsafe must be activated at any cost, the code is: [nukecode]."
 					aiPlayer.set_zeroth_law(law)
-					aiPlayer << "Laws Updated: [law]"
+					to_chat(aiPlayer, "Laws Updated: [law]")
 
 	for(var/obj/machinery/computer/communications/comm in machines)
 		comm.messagetitle.Add(interceptname)
@@ -109,7 +109,7 @@
 			if(valid_territories.len)
 				num_territories = valid_territories.len //Add them all up to make the total number of area types
 			else
-				world << "ERROR: NO VALID TERRITORIES"
+				to_chat(world, "ERROR: NO VALID TERRITORIES")
 
 	proc/score(datum/station_state/result)
 		if(!result)	return 0

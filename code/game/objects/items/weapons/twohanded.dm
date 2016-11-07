@@ -38,7 +38,7 @@
 /obj/item/weapon/twohanded/mob_can_equip(M, slot)
 	//Cannot equip wielded items.
 	if(wielded)
-		M << "<span class='warning'>Unwield the [initial(name)] first!</span>"
+		to_chat(M, "<span class='warning'>Unwield the [initial(name)] first!</span>")
 		return 0
 
 	return ..()
@@ -59,13 +59,13 @@
 
 /obj/item/weapon/twohanded/attack_self(mob/user)
 	if( istype(user,/mob/living/carbon/monkey) )
-		user << "<span class='warning'>It's too heavy for you to wield fully.</span>"
+		to_chat(user, "<span class='warning'>It's too heavy for you to wield fully.</span>")
 		return
 
 	..()
 	if(wielded) //Trying to unwield it
 		unwield()
-		user << "<span class='notice'>You are now carrying the [name] with one hand.</span>"
+		to_chat(user, "<span class='notice'>You are now carrying the [name] with one hand.</span>")
 		if(user.hand)
 			user.update_inv_l_hand()
 		else
@@ -81,10 +81,10 @@
 
 	else //Trying to wield it
 		if(user.get_inactive_hand())
-			user << "<span class='warning'>You need your other hand to be empty</span>"
+			to_chat(user, "<span class='warning'>You need your other hand to be empty</span>")
 			return
 		wield()
-		user << "<span class='notice'>You grab the [initial(name)] with both hands.</span>"
+		to_chat(user, "<span class='notice'>You grab the [initial(name)] with both hands.</span>")
 		if (src.wieldsound)
 			playsound(src.loc, wieldsound, 50, 1)
 
@@ -180,7 +180,7 @@
 /obj/item/weapon/twohanded/dualsaber/attack(target, mob/living/user)
 	..()
 	if((CLUMSY in user.mutations) && (wielded) &&prob(40))
-		user << "\red You twirl around a bit before losing your balance and impaling yourself on the [src]."
+		to_chat(user, "\red You twirl around a bit before losing your balance and impaling yourself on the [src].")
 		user.take_organ_damage(20,25)
 		return
 	if((wielded) && prob(50))

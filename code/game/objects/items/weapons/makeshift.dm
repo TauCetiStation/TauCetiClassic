@@ -35,7 +35,7 @@
 		user.remove_from_mob(src)
 
 		user.put_in_hands(W)
-		user << "<span class='notice'>You wrap the cable restraint around the top of the rod.</span>"
+		to_chat(user, "<span class='notice'>You wrap the cable restraint around the top of the rod.</span>")
 
 		qdel(src)
 
@@ -62,14 +62,14 @@
 /obj/item/weapon/melee/cattleprod/attack_self(mob/user)
 	if(bcell && bcell.charge > hitcost)
 		status = !status
-		user << "<span class='notice'>[src] is now [status ? "on" : "off"].</span>"
+		to_chat(user, "<span class='notice'>[src] is now [status ? "on" : "off"].</span>")
 		playsound(loc, "sparks", 75, 1, -1)
 	else
 		status = 0
 		if(!bcell)
-			user << "<span class='warning'>[src] does not have a power source!</span>"
+			to_chat(user, "<span class='warning'>[src] does not have a power source!</span>")
 		else
-			user << "<span class='warning'>[src] is out of charge.</span>"
+			to_chat(user, "<span class='warning'>[src] is out of charge.</span>")
 	if(bcell && bcell.rigged)
 		bcell.explode()
 		if(user.hand)
@@ -107,16 +107,16 @@
 			user.drop_item()
 			W.loc = src
 			bcell = W
-			user << "<span class='notice'>You install a cell in [src].</span>"
+			to_chat(user, "<span class='notice'>You install a cell in [src].</span>")
 			update_icon()
 		else
-			user << "<span class='notice'>[src] already has a cell.</span>"
+			to_chat(user, "<span class='notice'>[src] already has a cell.</span>")
 	else if(istype(W, /obj/item/weapon/screwdriver))
 		if(bcell)
 			bcell.updateicon()
 			bcell.loc = get_turf(src.loc)
 			bcell = null
-			user << "<span class='notice'>You remove the cell from the [src].</span>"
+			to_chat(user, "<span class='notice'>You remove the cell from the [src].</span>")
 			status = 0
 			update_icon()
 			return
@@ -125,7 +125,7 @@
 
 /obj/item/weapon/melee/cattleprod/attack(mob/M, mob/user)
 	if(status && (CLUMSY in user.mutations) && prob(50))
-		user << "<span class='danger'>You accidentally hit yourself with [src]!</span>"
+		to_chat(user, "<span class='danger'>You accidentally hit yourself with [src]!</span>")
 		user.Weaken(stunforce*3)
 		deductcharge(hitcost)
 		return
@@ -204,7 +204,7 @@
 		user.remove_from_mob(src)
 
 		user.put_in_hands(S)
-		user << "<span class='notice'>You fasten the glass shard to the top of the rod with the cable.</span>"
+		to_chat(user, "<span class='notice'>You fasten the glass shard to the top of the rod with the cable.</span>")
 		qdel(I)
 		qdel(src)
 
@@ -216,6 +216,6 @@
 		user.remove_from_mob(src)
 
 		user.put_in_hands(P)
-		user << "<span class='notice'>You fasten the wirecutters to the top of the rod with the cable, prongs outward.</span>"
+		to_chat(user, "<span class='notice'>You fasten the wirecutters to the top of the rod with the cable, prongs outward.</span>")
 		qdel(I)
 		qdel(src)

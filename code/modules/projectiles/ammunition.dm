@@ -40,18 +40,19 @@
 				var/tmp_label = ""
 				var/label_text = sanitize(copytext(input(user, "Inscribe some text into \the [initial(BB.name)]","Inscription",tmp_label), 1, MAX_NAME_LEN))
 				if(length(label_text) > 20)
-					user << "\red The inscription can be at most 20 characters long."
+					to_chat(user, "\red The inscription can be at most 20 characters long.")
 				else
 					if(label_text == "")
-						user << "\blue You scratch the inscription off of [initial(BB)]."
+						to_chat(user, "\blue You scratch the inscription off of [initial(BB)].")
 						BB.name = initial(BB.name)
 					else
-						user << "\blue You inscribe \"[label_text]\" into \the [initial(BB.name)]."
+						to_chat(user, "\blue You inscribe \"[label_text]\" into \the [initial(BB.name)].")
 						BB.name = "[initial(BB.name)] \"[label_text]\""
 			else
-				user << "\blue You can only inscribe a metal bullet."	//because inscribing beanbags is silly
+				to_chat(user, "\blue You can only inscribe a metal bullet.")//because inscribing beanbags is silly
+
 		else
-			user << "\blue There is no bullet in the casing to inscribe anything into."
+			to_chat(user, "\blue There is no bullet in the casing to inscribe anything into.")
 
 //Boxes of ammo
 /obj/item/ammo_box
@@ -117,7 +118,7 @@
 			num_loaded++
 	if(num_loaded)
 		if (!silent)
-			user << "<span class='notice'>You load [num_loaded] shell\s into \the [src]!</span>"
+			to_chat(user, "<span class='notice'>You load [num_loaded] shell\s into \the [src]!</span>")
 		A.update_icon()
 		update_icon()
 		return num_loaded
@@ -128,7 +129,7 @@
 	if(A)
 		A.loc = get_turf(src.loc)
 		user.put_in_hands(A)
-		user << "<span class='notice'>You remove a shell from \the [src]!</span>"
+		to_chat(user, "<span class='notice'>You remove a shell from \the [src]!</span>")
 		update_icon()
 
 /obj/item/ammo_box/update_icon()

@@ -20,11 +20,11 @@
 
 			if(!anchored && !isinspace())
 				connect_to_network()
-				user << "<span class='notice'>You secure the generator to the floor.</span>"
+				to_chat(user, "<span class='notice'>You secure the generator to the floor.</span>")
 				anchored = 1
 			else if(anchored)
 				disconnect_from_network()
-				user << "<span class='notice'>You unsecure the generator from the floor.</span>"
+				to_chat(user, "<span class='notice'>You unsecure the generator from the floor.</span>")
 				anchored = 0
 
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)

@@ -54,9 +54,9 @@
 	set src in oview(1)
 	if(in_range(usr, src))
 		show(usr)
-		usr << desc
+		to_chat(usr, desc)
 	else
-		usr << "<span class='notice'>It is too far away.</span>"
+		to_chat(usr, "<span class='notice'>It is too far away.</span>")
 
 /obj/item/weapon/photo/proc/show(mob/user)
 	user << browse_rsc(img, "tmp_photo.png")
@@ -157,15 +157,15 @@
 		src.icon_state = icon_on
 	else
 		src.icon_state = icon_off
-	user << "You switch the camera [on ? "on" : "off"]."
+	to_chat(user, "You switch the camera [on ? "on" : "off"].")
 	return
 
 /obj/item/device/camera/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/device/camera_film))
 		if(pictures_left)
-			user << "<span class='notice'>[src] still has some film in it!</span>"
+			to_chat(user, "<span class='notice'>[src] still has some film in it!</span>")
 			return
-		user << "<span class='notice'>You insert [I] into [src].</span>"
+		to_chat(user, "<span class='notice'>You insert [I] into [src].</span>")
 		user.drop_item()
 		qdel(I)
 		pictures_left = pictures_max
@@ -263,7 +263,7 @@
 
 	pictures_left--
 	desc = "A polaroid camera. It has [pictures_left] photos left."
-	user << "<span class='notice'>[pictures_left] photos left.</span>"
+	to_chat(user, "<span class='notice'>[pictures_left] photos left.</span>")
 	icon_state = icon_off
 	on = 0
 	spawn(64)
@@ -351,10 +351,10 @@
 
 	if(photo_size == 3)
 		photo_size = 1
-		usr << "<span class='info'>You zoom the camera in.</span>"
+		to_chat(usr, "<span class='info'>You zoom the camera in.</span>")
 	else
 		photo_size = 3
-		usr << "<span class='info'>You zoom the camera out.</span>"
+		to_chat(usr, "<span class='info'>You zoom the camera out.</span>")
 
 /obj/item/device/camera/AltClick()
 	set_zoom()

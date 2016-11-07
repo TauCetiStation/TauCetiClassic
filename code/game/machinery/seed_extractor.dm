@@ -42,7 +42,7 @@ obj/machinery/seed_extractor/attackby(obj/item/O, mob/user)
 	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/))
 		var/obj/item/weapon/reagent_containers/food/snacks/grown/F = O
 		user.drop_item()
-		user << "<span class='notice'>You extract some seeds from the [F.name].</span>"
+		to_chat(user, "<span class='notice'>You extract some seeds from the [F.name].</span>")
 		var/seed = text2path(F.seed)
 		var/t_amount = 0
 		var/t_max = rand(1,4)
@@ -61,7 +61,7 @@ obj/machinery/seed_extractor/attackby(obj/item/O, mob/user)
 	else if(istype(O, /obj/item/weapon/grown/))
 		var/obj/item/weapon/grown/F = O
 		user.drop_item()
-		user << "<span class='notice'>You extract some seeds from the [F.name].</span>"
+		to_chat(user, "<span class='notice'>You extract some seeds from the [F.name].</span>")
 		var/seed = text2path(F.seed)
 		var/t_amount = 0
 		var/t_max = rand(1,4)
@@ -79,7 +79,7 @@ obj/machinery/seed_extractor/attackby(obj/item/O, mob/user)
 
 	else if(istype(O, /obj/item/stack/tile/grass))
 		var/obj/item/stack/tile/grass/S = O
-		user << "<span class='notice'>You extract some seeds from the [S.name].</span>"
+		to_chat(user, "<span class='notice'>You extract some seeds from the [S.name].</span>")
 		S.use(1)
 		new /obj/item/seeds/grassseed(loc)
 

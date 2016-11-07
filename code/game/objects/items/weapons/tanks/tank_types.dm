@@ -27,7 +27,7 @@
 	examine(mob/user)
 		..()
 		if(src in user && air_contents.oxygen < 10)
-			user << "<span class='danger'>The meter on the [src.name] indicates you are almost out of air!</span>"
+			to_chat(user, "<span class='danger'>The meter on the [src.name] indicates you are almost out of air!</span>")
 
 
 /obj/item/weapon/tank/oxygen/yellow
@@ -74,7 +74,7 @@
 	examine(mob/user)
 		..()
 		if(src in user && air_contents.oxygen < 1)
-			user << "<span class='danger'>The meter on the [src.name] indicates you are almost out of air!</span>"
+			to_chat(user, "<span class='danger'>The meter on the [src.name] indicates you are almost out of air!</span>")
 
 /obj/item/weapon/tank/air/New()
 	..()
@@ -146,7 +146,7 @@
 	examine(mob/user)
 		..()
 		if(src in user && air_contents.oxygen < 0.2)
-			user << "<span class='danger'>The meter on the [src.name] indicates you are almost out of air!</span>"
+			to_chat(user, "<span class='danger'>The meter on the [src.name] indicates you are almost out of air!</span>")
 
 /obj/item/weapon/tank/emergency_oxygen/engi
 	name = "extended-capacity emergency oxygen tank"
@@ -179,4 +179,4 @@
 /obj/item/weapon/tank/nitrogen/examine(mob/user)
 	..()
 	if(src in user && air_contents.nitrogen < 10)
-		user << "<span class='danger'>The meter on the [src.name] indicates you are almost out of air!</span>"
+		to_chat(user, "<span class='danger'>The meter on the [src.name] indicates you are almost out of air!</span>")

@@ -201,14 +201,14 @@
 
 	if(!protected)
 		playsound(src.loc, "sparks", 75, 1, -1)
-		user << "<font color='red'>You try to touch the controls but you get zapped. There must be a short circuit somewhere.</font>"
+		to_chat(user, "<font color='red'>You try to touch the controls but you get zapped. There must be a short circuit somewhere.</font>")
 		return*/
 	else  //welp, the guy is protected, we can continue
 		if(src.issuperUV)
-			user << "You slide the dial back towards \"185nm\"."
+			to_chat(user, "You slide the dial back towards \"185nm\".")
 			src.issuperUV = 0
 		else
-			user << "You crank the dial all the way up to \"15nm\"."
+			to_chat(user, "You crank the dial all the way up to \"15nm\".")
 			src.issuperUV = 1
 		return
 
@@ -227,10 +227,10 @@
 
 	if(!protected)
 		playsound(src.loc, "sparks", 75, 1, -1)
-		user << "<font color='red'>You try to touch the controls but you get zapped. There must be a short circuit somewhere.</font>"
+		to_chat(user, "<font color='red'>You try to touch the controls but you get zapped. There must be a short circuit somewhere.</font>")
 		return*/
 	else
-		user << "You push the button. The coloured LED next to it changes."
+		to_chat(user, "You push the button. The coloured LED next to it changes.")
 		src.safetieson = !src.safetieson
 
 
@@ -279,7 +279,7 @@
 
 /obj/machinery/suit_storage_unit/proc/toggle_open(mob/user)
 	if(src.islocked || src.isUV)
-		user << "<font color='red'>Unable to open unit.</font>"
+		to_chat(user, "<font color='red'>Unable to open unit.</font>")
 		return
 	if(src.OCCUPANT)
 		src.eject_occupant(user)
@@ -290,7 +290,7 @@
 
 /obj/machinery/suit_storage_unit/proc/toggle_lock(mob/user)
 	if(src.OCCUPANT && src.safetieson)
-		user << "<font color='red'>The Unit's safety protocols disallow locking when a biological form is detected inside its compartments.</font>"
+		to_chat(user, "<font color='red'>The Unit's safety protocols disallow locking when a biological form is detected inside its compartments.</font>")
 		return
 	if(src.isopen)
 		return
@@ -302,12 +302,12 @@
 	if(src.isUV || src.isopen) //I'm bored of all these sanity checks
 		return
 	if(src.OCCUPANT && src.safetieson)
-		user << "<font color='red'><B>WARNING:</B> Biological entity detected in the confines of the Unit's storage. Cannot initiate cycle.</font>"
+		to_chat(user, "<font color='red'><B>WARNING:</B> Biological entity detected in the confines of the Unit's storage. Cannot initiate cycle.</font>")
 		return
 	if(!src.HELMET && !src.MASK && !src.SUIT && !src.OCCUPANT ) //shit's empty yo
-		user << "<font color='red'>Unit storage bays empty. Nothing to disinfect -- Aborting.</font>"
+		to_chat(user, "<font color='red'>Unit storage bays empty. Nothing to disinfect -- Aborting.</font>")
 		return
-	user << "You start the Unit's cauterisation cycle."
+	to_chat(user, "You start the Unit's cauterisation cycle.")
 	src.cycletime_left = 20
 	src.isUV = 1
 	if(src.OCCUPANT && !src.islocked)
@@ -369,10 +369,10 @@
 			if(src.OCCUPANT)
 				if(src.issuperUV)
 					OCCUPANT.take_organ_damage(0,40)
-					user << "Test. You gave him 40 damage"
+					to_chat(user, "Test. You gave him 40 damage")
 				else
 					OCCUPANT.take_organ_damage(0,8)
-					user << "Test. You gave him 8 damage"
+					to_chat(user, "Test. You gave him 8 damage")
 	return*/
 
 
@@ -393,9 +393,9 @@
 
 	if (src.OCCUPANT.client)
 		if(user != OCCUPANT)
-			OCCUPANT << "<font color='blue'>The machine kicks you out!</font>"
+			to_chat(OCCUPANT, "<font color='blue'>The machine kicks you out!</font>")
 		if(user.loc != src.loc)
-			OCCUPANT << "<font color='blue'>You leave the not-so-cozy confines of the SSU.</font>"
+			to_chat(OCCUPANT, "<font color='blue'>You leave the not-so-cozy confines of the SSU.</font>")
 
 		src.OCCUPANT.client.eye = src.OCCUPANT.client.mob
 		src.OCCUPANT.client.perspective = MOB_PERSPECTIVE
@@ -413,7 +413,7 @@
 		user.next_move = world.time + 100
 		user.last_special = world.time + 100
 		var/breakout_time = 2
-		user << "<span class='notice'>You start kicking against the doors to escape! (This will take about [breakout_time] minutes.)</span>"
+		to_chat(user, "<span class='notice'>You start kicking against the doors to escape! (This will take about [breakout_time] minutes.)</span>")
 		visible_message("You see [user] kicking against the doors of the [src]!")
 		if(do_after(user,(breakout_time*60*10),target=src))
 			if(!user || user.stat != CONSCIOUS || user.loc != src || isopen || !islocked)
@@ -439,13 +439,13 @@
 	if (usr.stat != CONSCIOUS)
 		return
 	if (!src.isopen)
-		usr << "<font color='red'>The unit's doors are shut.</font>"
+		to_chat(usr, "<font color='red'>The unit's doors are shut.</font>")
 		return
 	if (!src.ispowered || src.isbroken)
-		usr << "<font color='red'>The unit is not operational.</font>"
+		to_chat(usr, "<font color='red'>The unit is not operational.</font>")
 		return
 	if ( (src.OCCUPANT) || (src.HELMET) || (src.SUIT) )
-		usr << "<font color='red'>It's too cluttered inside for you to fit in!</font>"
+		to_chat(usr, "<font color='red'>It's too cluttered inside for you to fit in!</font>")
 		return
 	visible_message("[usr] starts squeezing into the suit storage unit!", 3)
 	if(do_after(usr, 10, target = src))
@@ -475,7 +475,7 @@
 	if(istype(I, /obj/item/weapon/screwdriver))
 		src.panelopen = !src.panelopen
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
-		user << text("<font color='blue'>You [] the unit's maintenance panel.</font>",(src.panelopen ? "open up" : "close") )
+		to_chat(user, text("<font color='blue'>You [] the unit's maintenance panel.</font>",(src.panelopen ? "open up" : "close") ))
 		src.updateUsrDialog()
 		return
 	if ( istype(I, /obj/item/weapon/grab) )
@@ -483,13 +483,13 @@
 		if( !(ismob(G.affecting)) )
 			return
 		if (!src.isopen)
-			usr << "<font color='red'>The unit's doors are shut.</font>"
+			to_chat(usr, "<font color='red'>The unit's doors are shut.</font>")
 			return
 		if (!src.ispowered || src.isbroken)
-			usr << "<font color='red'>The unit is not operational.</font>"
+			to_chat(usr, "<font color='red'>The unit is not operational.</font>")
 			return
 		if ( (src.OCCUPANT) || (src.HELMET) || (src.SUIT) ) //Unit needs to be absolutely empty
-			user << "<font color='red'>The unit's storage area is too cluttered.</font>"
+			to_chat(user, "<font color='red'>The unit's storage area is too cluttered.</font>")
 			return
 		visible_message("[user] starts putting [G.affecting.name] into the Suit Storage Unit.", 3)
 		if(do_after(user, 20, target = src))
@@ -515,9 +515,9 @@
 			return
 		var/obj/item/clothing/suit/space/S = I
 		if(src.SUIT)
-			user << "<font color='blue'>The unit already contains a suit.</font>"
+			to_chat(user, "<font color='blue'>The unit already contains a suit.</font>")
 			return
-		user << "You load the [S.name] into the storage compartment."
+		to_chat(user, "You load the [S.name] into the storage compartment.")
 		user.drop_item()
 		S.loc = src
 		src.SUIT = S
@@ -529,9 +529,9 @@
 			return
 		var/obj/item/clothing/head/helmet/H = I
 		if(src.HELMET)
-			user << "<font color='blue'>The unit already contains a helmet.</font>"
+			to_chat(user, "<font color='blue'>The unit already contains a helmet.</font>")
 			return
-		user << "You load the [H.name] into the storage compartment."
+		to_chat(user, "You load the [H.name] into the storage compartment.")
 		user.drop_item()
 		H.loc = src
 		src.HELMET = H
@@ -543,9 +543,9 @@
 			return
 		var/obj/item/clothing/mask/M = I
 		if(src.MASK)
-			user << "<font color='blue'>The unit already contains a mask.</font>"
+			to_chat(user, "<font color='blue'>The unit already contains a mask.</font>")
 			return
-		user << "You load the [M.name] into the storage compartment."
+		to_chat(user, "You load the [M.name] into the storage compartment.")
 		user.drop_item()
 		M.loc = src
 		src.MASK = M
@@ -562,7 +562,7 @@
 
 
 /obj/machinery/suit_storage_unit/attack_paw(mob/user)
-	user << "<font color='blue'>The console controls are far too complicated for your tiny brain!</font>"
+	to_chat(user, "<font color='blue'>The console controls are far too complicated for your tiny brain!</font>")
 	return
 
 
@@ -626,7 +626,7 @@
 	return src.attack_hand(user)
 
 /obj/machinery/suit_cycler/attack_paw(mob/user)
-	user << "\blue The console controls are far too complicated for your tiny brain!"
+	to_chat(user, "\blue The console controls are far too complicated for your tiny brain!")
 	return
 
 /obj/machinery/suit_cycler/attackby(obj/item/I, mob/user)
@@ -648,11 +648,11 @@
 			return
 
 		if(locked)
-			user << "\red The suit cycler is locked."
+			to_chat(user, "\red The suit cycler is locked.")
 			return
 
 		if(src.contents.len > 0)
-			user << "\red There is no room inside the cycler for [G.affecting.name]."
+			to_chat(user, "\red There is no room inside the cycler for [G.affecting.name].")
 			return
 
 		visible_message("[user] starts putting [G.affecting.name] into the suit cycler.", 3)
@@ -675,14 +675,14 @@
 	else if(istype(I,/obj/item/weapon/screwdriver))
 
 		panel_open = !panel_open
-		user << "You [panel_open ?  "open" : "close"] the maintenance panel."
+		to_chat(user, "You [panel_open ?  "open" : "close"] the maintenance panel.")
 		src.updateUsrDialog()
 		return
 
 	else if(istype(I,/obj/item/weapon/card/emag))
 
 		if(emagged)
-			user << "\red The cycler has already been subverted."
+			to_chat(user, "\red The cycler has already been subverted.")
 			return
 
 		var/obj/item/weapon/card/emag/E = I
@@ -690,7 +690,7 @@
 		E.uses--
 
 		//Clear the access reqs, disable the safeties, and open up all paintjobs.
-		user << "\red You run the sequencer across the interface, corrupting the operating protocols."
+		to_chat(user, "\red You run the sequencer across the interface, corrupting the operating protocols.")
 		departments = list("Engineering","Mining","Medical","Security","Atmos","^%###^%$")
 		emagged = 1
 		safeties = 0
@@ -700,14 +700,14 @@
 	else if(istype(I,/obj/item/clothing/head/helmet/space))
 
 		if(locked)
-			user << "\red The suit cycler is locked."
+			to_chat(user, "\red The suit cycler is locked.")
 			return
 
 		if(helmet)
-			user << "The cycler already contains a helmet."
+			to_chat(user, "The cycler already contains a helmet.")
 			return
 
-		user << "You fit \the [I] into the suit cycler."
+		to_chat(user, "You fit \the [I] into the suit cycler.")
 		user.drop_item()
 		I.loc = src
 		helmet = I
@@ -719,24 +719,24 @@
 	else if(istype(I,/obj/item/clothing/suit/space/rig))
 
 		if(locked)
-			user << "\red The suit cycler is locked."
+			to_chat(user, "\red The suit cycler is locked.")
 			return
 
 		if(suit)
-			user << "The cycler already contains a hardsuit."
+			to_chat(user, "The cycler already contains a hardsuit.")
 			return
 
 		var/obj/item/clothing/suit/space/rig/S = I
 
 		if(S.helmet)
-			user << "\The [S] will not fit into the cycler with a helmet attached."
+			to_chat(user, "\The [S] will not fit into the cycler with a helmet attached.")
 			return
 
 		if(S.boots)
-			user << "\The [S] will not fit into the cycler with boots attached."
+			to_chat(user, "\The [S] will not fit into the cycler with boots attached.")
 			return
 
-		user << "You fit \the [I] into the suit cycler."
+		to_chat(user, "You fit \the [I] into the suit cycler.")
 		user.drop_item()
 		I.loc = src
 		suit = I
@@ -862,14 +862,14 @@
 
 		if(src.allowed(usr))
 			locked = !locked
-			usr << "You [locked ? "" : "un"]lock \the [src]."
+			to_chat(usr, "You [locked ? "" : "un"]lock \the [src].")
 		else
-			usr << "\red Access denied."
+			to_chat(usr, "\red Access denied.")
 
 	else if(href_list["begin_decontamination"])
 
 		if(safeties && occupant)
-			usr << "\red The cycler has detected an occupant. Please remove the occupant before commencing the decontamination cycle."
+			to_chat(usr, "\red The cycler has detected an occupant. Please remove the occupant before commencing the decontamination cycle.")
 			return
 
 		active = 1
@@ -892,7 +892,7 @@
 	else if ((href_list["cutwire"]) && (src.panel_open))
 		var/twire = text2num(href_list["cutwire"])
 		if (!( istype(usr.get_active_hand(), /obj/item/weapon/wirecutters) ))
-			usr << "You need wirecutters!"
+			to_chat(usr, "You need wirecutters!")
 			return FALSE
 		if (src.isWireColorCut(twire))
 			src.mend(twire)
@@ -902,10 +902,10 @@
 	else if ((href_list["pulsewire"]) && (src.panel_open))
 		var/twire = text2num(href_list["pulsewire"])
 		if (!istype(usr.get_active_hand(), /obj/item/device/multitool))
-			usr << "You need a multitool!"
+			to_chat(usr, "You need a multitool!")
 			return FALSE
 		if (src.isWireColorCut(twire))
-			usr << "You can't pulse a cut wire."
+			to_chat(usr, "You can't pulse a cut wire.")
 			return FALSE
 		else
 			src.pulse(twire)
@@ -970,7 +970,7 @@
 /obj/machinery/suit_cycler/proc/eject_occupant(mob/user)
 
 	if(locked || active)
-		user << "\red The cycler is locked."
+		to_chat(user, "\red The cycler is locked.")
 		return
 
 	if (!occupant)

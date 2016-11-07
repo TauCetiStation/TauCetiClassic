@@ -46,7 +46,7 @@
 		return
 
 	if (src.z > ZLEVEL_STATION)
-		usr << "\red <b>Unable to establish a connection</b>: \black You're too far away from the station!"
+		to_chat(usr, "\red <b>Unable to establish a connection</b>: \black You're too far away from the station!")
 		return FALSE
 	if(!href_list["operation"])
 		return FALSE
@@ -94,11 +94,11 @@
 								feedback_inc("alert_comms_blue",1)
 					tmp_alertlevel = 0
 				else:
-					usr << "You are not authorized to do this."
+					to_chat(usr, "You are not authorized to do this.")
 					tmp_alertlevel = 0
 				state = STATE_DEFAULT
 			else
-				usr << "You need to swipe your ID."
+				to_chat(usr, "You need to swipe your ID.")
 
 		if("announce")
 			if(src.authenticated==2)
@@ -180,13 +180,13 @@
 		if("MessageCentcomm")
 			if(src.authenticated==2)
 				if(CM.cooldown)
-					usr << "\red Arrays recycling.  Please stand by."
+					to_chat(usr, "\red Arrays recycling.  Please stand by.")
 					return
 				var/input = stripped_input(usr, "Please choose a message to transmit to Centcomm via quantum entanglement.  Please be aware that this process is very expensive, and abuse will lead to... termination.  Transmission does not guarantee a response. There is a 30 second delay before you may send another message, be clear, full and concise.", "To abort, send an empty message.", "")
 				if(!input || !(usr in view(1,src)))
 					return
 				Centcomm_announce(input, usr)
-				usr << "\blue Message transmitted."
+				to_chat(usr, "\blue Message transmitted.")
 				log_say("[key_name(usr)] has made an IA Centcomm announcement: [input]")
 				CM.cooldown = 55
 
@@ -195,18 +195,18 @@
 		if("MessageSyndicate")
 			if((src.authenticated==2) && (src.emagged))
 				if(CM.cooldown)
-					usr << "\red Arrays recycling.  Please stand by."
+					to_chat(usr, "\red Arrays recycling.  Please stand by.")
 					return
 				var/input = stripped_input(usr, "Please choose a message to transmit to \[ABNORMAL ROUTING CORDINATES\] via quantum entanglement.  Please be aware that this process is very expensive, and abuse will lead to... termination. Transmission does not guarantee a response. There is a 30 second delay before you may send another message, be clear, full and concise.", "To abort, send an empty message.", "")
 				if(!input || !(usr in view(1,src)))
 					return
 				Syndicate_announce(input, usr)
-				usr << "\blue Message transmitted."
+				to_chat(usr, "\blue Message transmitted.")
 				log_say("[key_name(usr)] has made a Syndicate announcement: [input]")
 				CM.cooldown = 55 //about one minute
 
 		if("RestoreBackup")
-			usr << "Backup routing data restored!"
+			to_chat(usr, "Backup routing data restored!")
 			src.emagged = 0
 			src.updateDialog()
 
@@ -258,7 +258,7 @@
 /obj/machinery/computer/communications/attackby(obj/I, mob/user)
 	if(istype(I,/obj/item/weapon/card/emag/))
 		src.emagged = 1
-		user << "You scramble the communication routing circuits!"
+		to_chat(user, "You scramble the communication routing circuits!")
 	else
 		..()
 	return
@@ -267,7 +267,7 @@
 	if(..())
 		return
 	if (src.z > ZLEVEL_EMPTY)
-		user << "\red <b>Unable to establish a connection</b>: \black You're too far away from the station!"
+		to_chat(user, "\red <b>Unable to establish a connection</b>: \black You're too far away from the station!")
 		return
 
 	user.set_machine(src)
@@ -416,23 +416,23 @@
 		return
 
 	if(sent_strike_team == 1)
-		user << "Centcom will not allow the shuttle to be called. Consider all contracts terminated."
+		to_chat(user, "Centcom will not allow the shuttle to be called. Consider all contracts terminated.")
 		return
 
 	if(world.time < 6000) // Ten minute grace period to let the game get going without lolmetagaming. -- TLE
-		user << "The emergency shuttle is refueling. Please wait another [round((6000-world.time)/600)] minutes before trying again."
+		to_chat(user, "The emergency shuttle is refueling. Please wait another [round((6000-world.time)/600)] minutes before trying again.")
 		return
 
 	if(SSshuttle.direction == -1)
-		user << "The emergency shuttle may not be called while returning to CentCom."
+		to_chat(user, "The emergency shuttle may not be called while returning to CentCom.")
 		return
 
 	if(SSshuttle.online)
-		user << "The emergency shuttle is already on its way."
+		to_chat(user, "The emergency shuttle is already on its way.")
 		return
 
 	if(ticker.mode.name == "blob")
-		user << "Under directive 7-10, [station_name()] is quarantined until further notice."
+		to_chat(user, "Under directive 7-10, [station_name()] is quarantined until further notice.")
 		return
 
 	SSshuttle.incall()
@@ -450,25 +450,26 @@
 		return
 
 	if(SSshuttle.direction == -1)
-		user << "The shuttle may not be called while returning to CentCom."
+		to_chat(user, "The shuttle may not be called while returning to CentCom.")
 		return
 
 	if(SSshuttle.online)
-		user << "The shuttle is already on its way."
+		to_chat(user, "The shuttle is already on its way.")
 		return
 
 	// if force is 0, some things may stop the shuttle call
 	if(!force)
 		if(SSshuttle.deny_shuttle)
-			user << "Centcom does not currently have a shuttle available in your sector. Please try again later."
+			to_chat(user, "Centcom does not currently have a shuttle available in your sector. Please try again later.")
 			return
 
 		if(sent_strike_team == 1)
-			user << "Centcom will not allow the shuttle to be called. Consider all contracts terminated."
+			to_chat(user, "Centcom will not allow the shuttle to be called. Consider all contracts terminated.")
 			return
 
 		if(world.time < 54000) // 30 minute grace period to let the game get going
-			user << "The shuttle is refueling. Please wait another [round((54000-world.time)/600)] minutes before trying again."//may need to change "/600"
+			to_chat(user, "The shuttle is refueling. Please wait another [round((54000-world.time)/600)] minutes before trying again.")//may need to change "/600"
+
 			return
 
 		if(ticker.mode.name == "revolution" || ticker.mode.name == "AI malfunction" || ticker.mode.name == "sandbox")
@@ -476,7 +477,7 @@
 			SSshuttle.fake_recall = rand(300,500)
 
 		if(ticker.mode.name == "blob" || ticker.mode.name == "epidemic")
-			user << "Under directive 7-10, [station_name()] is quarantined until further notice."
+			to_chat(user, "Under directive 7-10, [station_name()] is quarantined until further notice.")
 			return
 
 	SSshuttle.shuttlealert(1)

@@ -12,7 +12,7 @@ ________________________________________________________________________________
 
 /*
 ===================================================================================
-<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<SPACE NINJA SUIT>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+to_chat(, <<<<<<<<<<<<<<<<<<<<<<<<<<<<<SPACE NINJA SUIT>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>)
 ===================================================================================
 */
 
@@ -59,7 +59,7 @@ ________________________________________________________________________________
 
 /obj/item/clothing/suit/space/space_ninja/proc/killai(mob/living/silicon/ai/A = AI)
 	if(A.client)
-		A << "\red Self-erase protocol dete-- *bzzzzz*"
+		to_chat(A, "\red Self-erase protocol dete-- *bzzzzz*")
 		A << browse(null, "window=hack spideros")
 	AI = null
 	A.death(1)//Kill, deleting mob.
@@ -85,7 +85,7 @@ ________________________________________________________________________________
 	if(s_control&&!s_busy)
 		deinitialize()
 	else
-		affecting << "\red The function did not trigger!"
+		to_chat(affecting, "\red The function did not trigger!")
 	return
 
 /obj/item/clothing/suit/space/space_ninja/proc/spideros()
@@ -96,7 +96,7 @@ ________________________________________________________________________________
 	if(s_control&&!s_busy&&!kamikaze)
 		display_spideros()
 	else
-		affecting << "\red The interface is locked!"
+		to_chat(affecting, "\red The interface is locked!")
 	return
 
 /obj/item/clothing/suit/space/space_ninja/proc/stealth()
@@ -108,7 +108,7 @@ ________________________________________________________________________________
 	if(s_control&&!s_busy)
 		toggle_stealth()
 	else
-		affecting << "\red Stealth does not appear to work!"
+		to_chat(affecting, "\red Stealth does not appear to work!")
 	return
 
 //=======//PROCESS PROCS//=======//
@@ -158,27 +158,27 @@ ________________________________________________________________________________
 		for(var/i,i<7,i++)
 			switch(i)
 				if(0)
-					U << "\blue Now initializing..."
+					to_chat(U, "\blue Now initializing...")
 				if(1)
 					if(!lock_suit(U))//To lock the suit onto wearer.
 						break
-					U << "\blue Securing external locking mechanism...\nNeural-net established."
+					to_chat(U, "\blue Securing external locking mechanism...\nNeural-net established.")
 				if(2)
-					U << "\blue Extending neural-net interface...\nNow monitoring brain wave pattern..."
+					to_chat(U, "\blue Extending neural-net interface...\nNow monitoring brain wave pattern...")
 				if(3)
 					if(U.stat==2||U.health<=0)
-						U << "\red <B>FĆAL �Rr�R</B>: 344--93#�&&21 BR��N |/|/aV� PATT$RN <B>RED</B>\nA-A-aB�rT�NG..."
+						to_chat(U, "\red <B>FĆAL �Rr�R</B>: 344--93#�&&21 BR��N |/|/aV� PATT$RN <B>RED</B>\nA-A-aB�rT�NG...")
 						unlock_suit()
 						break
 					lock_suit(U,1)//Check for icons.
 					U.regenerate_icons()
-					U << "\blue Linking neural-net interface...\nPattern \green <B>GREEN</B>\blue, continuing operation."
+					to_chat(U, "\blue Linking neural-net interface...\nPattern \green <B>GREEN</B>\blue, continuing operation.")
 				if(4)
-					U << "\blue VOID-shift device status: <B>ONLINE</B>.\nCLOAK-tech device status: <B>ONLINE</B>."
+					to_chat(U, "\blue VOID-shift device status: <B>ONLINE</B>.\nCLOAK-tech device status: <B>ONLINE</B>.")
 				if(5)
-					U << "\blue Primary system status: <B>ONLINE</B>.\nBackup system status: <B>ONLINE</B>.\nCurrent energy capacity: <B>[cell.charge]</B>."
+					to_chat(U, "\blue Primary system status: <B>ONLINE</B>.\nBackup system status: <B>ONLINE</B>.\nCurrent energy capacity: <B>[cell.charge]</B>.")
 				if(6)
-					U << "\blue All systems operational. Welcome to <B>SpiderOS</B>, [U.real_name]."
+					to_chat(U, "\blue All systems operational. Welcome to <B>SpiderOS</B>, [U.real_name].")
 					grant_ninja_verbs()
 					grant_equip_verbs()
 					ntick()
@@ -186,11 +186,11 @@ ________________________________________________________________________________
 		s_busy = 0
 	else
 		if(!U.mind||U.mind.assigned_role!="MODE")//Your run of the mill persons shouldn't know what it is. Or how to turn it on.
-			U << "You do not understand how this suit functions. Where the heck did it even come from?"
+			to_chat(U, "You do not understand how this suit functions. Where the heck did it even come from?")
 		else if(s_initialized)
-			U << "\red The suit is already functioning. \black <b>Please report this bug.</b>"
+			to_chat(U, "<font color='red'> The suit is already functioning.</font> <b>Please report this bug.</b>")
 		else
-			U << "\red <B>ERROR</B>: \black You cannot use this function at this time."
+			to_chat(U, "<span class='danger'>ERROR</span>: You cannot use this function at this time.")
 	return
 
 //=======//DEINITIALIZE//=======//
@@ -199,34 +199,34 @@ ________________________________________________________________________________
 	if(affecting==loc&&!s_busy)
 		var/mob/living/carbon/human/U = affecting
 		if(!s_initialized)
-			U << "\red The suit is not initialized. \black <b>Please report this bug.</b>"
+			to_chat(U, "<font color='red'> The suit is not initialized.</font> <b>Please report this bug.</b>")
 			return
 		if(alert("Are you certain you wish to remove the suit? This will take time and remove all abilities.",,"Yes","No")=="No")
 			return
 		if(s_busy||flush)
-			U << "\red <B>ERROR</B>: \black You cannot use this function at this time."
+			to_chat(U, "<span class='danger'>ERROR</span>: You cannot use this function at this time.")
 			return
 		s_busy = 1
 		for(var/i = 0,i<7,i++)
 			switch(i)
 				if(0)
-					U << "\blue Now de-initializing..."
+					to_chat(U, "\blue Now de-initializing...")
 					remove_kamikaze(U)//Shutdowns kamikaze.
 					spideros = 0//Spideros resets.
 				if(1)
-					U << "\blue Logging off, [U:real_name]. Shutting down <B>SpiderOS</B>."
+					to_chat(U, "\blue Logging off, [U:real_name]. Shutting down <B>SpiderOS</B>.")
 					remove_ninja_verbs()
 				if(2)
-					U << "\blue Primary system status: <B>OFFLINE</B>.\nBackup system status: <B>OFFLINE</B>."
+					to_chat(U, "\blue Primary system status: <B>OFFLINE</B>.\nBackup system status: <B>OFFLINE</B>.")
 				if(3)
-					U << "\blue VOID-shift device status: <B>OFFLINE</B>.\nCLOAK-tech device status: <B>OFFLINE</B>."
+					to_chat(U, "\blue VOID-shift device status: <B>OFFLINE</B>.\nCLOAK-tech device status: <B>OFFLINE</B>.")
 					cancel_stealth()//Shutdowns stealth.
 				if(4)
-					U << "\blue Disconnecting neural-net interface...\green<B>Success</B>\blue."
+					to_chat(U, "\blue Disconnecting neural-net interface...\green<B>Success</B>\blue.")
 				if(5)
-					U << "\blue Disengaging neural-net interface...\green<B>Success</B>\blue."
+					to_chat(U, "\blue Disengaging neural-net interface...\green<B>Success</B>\blue.")
 				if(6)
-					U << "\blue Unsecuring external locking mechanism...\nNeural-net abolished.\nOperation status: <B>FINISHED</B>."
+					to_chat(U, "\blue Unsecuring external locking mechanism...\nNeural-net abolished.\nOperation status: <B>FINISHED</B>.")
 					blade_check(U,2)
 					remove_equip_verbs()
 					unlock_suit()
@@ -488,7 +488,7 @@ ________________________________________________________________________________
 
 	if(s_control)
 		if(!affecting||U.stat||!s_initialized)//Check to make sure the guy is wearing the suit after clicking and it's on.
-			U << "\red Your suit must be worn and active to use this function."
+			to_chat(U, "\red Your suit must be worn and active to use this function.")
 			U << browse(null, "window=spideros")//Closes the window.
 			return
 
@@ -497,10 +497,10 @@ ________________________________________________________________________________
 			var/u2=(u1?abs(abs(k_unlock-u1)-2):1)
 			k_unlock=(!u2? k_unlock+1:0)
 			if(k_unlock==7)
-				U << "Anonymous Messenger blinks."
+				to_chat(U, "Anonymous Messenger blinks.")
 	else
 		if(!affecting||A.stat||!s_initialized||A.loc!=src)
-			A << "\red This function is not available at this time."
+			to_chat(A, "\red This function is not available at this time.")
 			A << browse(null, "window=spideros")//Closes the window.
 			return
 
@@ -525,7 +525,7 @@ ________________________________________________________________________________
 				else
 					cell.use(damage)
 			else
-				A << "\red <b>ERROR</b>: \black Not enough energy remaining."
+				to_chat(A, "<span class='danger'>ERROR</span>: Not enough energy remaining.")
 
 		if("Message")
 			var/obj/item/device/pda/P = locate(href_list["target"])
@@ -535,7 +535,7 @@ ________________________________________________________________________________
 				display_to << browse(null, "window=spideros")
 				return
 			if(isnull(P)||P.toff)//So it doesn't freak out if the object no-longer exists.
-				display_to << "\red Error: unable to deliver message."
+				to_chat(display_to, "\red Error: unable to deliver message.")
 				display_spideros()
 				return
 			var/obj/machinery/message_server/useMS = null
@@ -559,7 +559,7 @@ ________________________________________________________________________________
 				if (!P.message_silent)
 					playsound(P.loc, 'sound/machines/twobeep.ogg', 50, 1)
 					for (var/mob/O in hearers(3, P.loc))
-						O.show_message(text("\icon[P] *[P.ttone]*"))
+						O.show_message(text("[bicon(P)] *[P.ttone]*"))
 				P.overlays.Cut()
 				P.overlays += image('icons/obj/pda.dmi', "pda-r")
 				var/mob/living/L = null
@@ -570,18 +570,18 @@ ________________________________________________________________________________
 					L = get(P, /mob/living/silicon)
 
 				if(L)
-					L << "\icon[P] <b>Message from [sender], </b>\"[t]\" (Unable to Reply)"
+					to_chat(L, "[bicon(P)] <b>Message from [sender], </b>\"[t]\" (Unable to Reply)")
 			else
-				U << "<span class='notice'>ERROR: Messaging server is not responding.</span>"
+				to_chat(U, "<span class='notice'>ERROR: Messaging server is not responding.</span>")
 
 		if("Inject")
 			if( (href_list["tag"]=="radium"? (reagents.get_reagent_amount("radium"))<=(a_boost*a_transfer) : !reagents.get_reagent_amount(href_list["tag"])) )//Special case for radium. If there are only a_boost*a_transfer radium units left.
-				display_to << "\red Error: the suit cannot perform this function. Out of [href_list["name"]]."
+				to_chat(display_to, "\red Error: the suit cannot perform this function. Out of [href_list["name"]].")
 			else
 				reagents.reaction(U, 2)
 				reagents.trans_id_to(U, href_list["tag"], href_list["tag"]=="nutriment"?5:a_transfer)//Nutriment is a special case since it's very potent. Shouldn't influence actual refill amounts or anything.
-				display_to << "Injecting..."
-				U << "You feel a tiny prick and a sudden rush of substance in to your veins."
+				to_chat(display_to, "Injecting...")
+				to_chat(U, "You feel a tiny prick and a sudden rush of substance in to your veins.")
 
 		if("Trigger Ability")
 			var/ability_name = href_list["name"]+href_list["cost"]//Adds the name and cost to create the full proc name.
@@ -601,11 +601,11 @@ ________________________________________________________________________________
 				proc_arguments = pick(targets)
 				safety = 0
 			if(!safety)
-				A << "You trigger [href_list["name"]]."
-				U << "[href_list["name"]] suddenly triggered!"
+				to_chat(A, "You trigger [href_list["name"]].")
+				to_chat(U, "[href_list["name"]] suddenly triggered!")
 				call(src,ability_name)(proc_arguments)
 			else
-				A << "There are no potential [href_list["name"]=="Phase Shift"?"destinations" : "targets"] in view."
+				to_chat(A, "There are no potential [href_list["name"]=="Phase Shift"?"destinations" : "targets"] in view.")
 
 		if("Unlock Kamikaze")
 			if(input(U)=="Divine Wind")
@@ -615,11 +615,11 @@ ________________________________________________________________________________
 						for(var/i, i<4, i++)
 							switch(i)
 								if(0)
-									U << "\blue Engaging mode...\n\black<b>CODE NAME</b>: \red <b>KAMIKAZE</b>"
+									to_chat(U, "\blue Engaging mode...\n <b>CODE NAME</b>: \red <b>KAMIKAZE</b>")
 								if(1)
-									U << "\blue Re-routing power nodes... \nUnlocking limiter..."
+									to_chat(U, "\blue Re-routing power nodes... \nUnlocking limiter...")
 								if(2)
-									U << "\blue Power nodes re-routed. \nLimiter unlocked."
+									to_chat(U, "\blue Power nodes re-routed. \nLimiter unlocked.")
 								if(3)
 									grant_kamikaze(U)//Give them verbs and change variables as necessary.
 									U.regenerate_icons()//Update their clothing.
@@ -629,13 +629,13 @@ ________________________________________________________________________________
 									return
 							sleep(s_delay)
 					else
-						U << "\red <b>ERROR<b>: \black Unable to initiate mode."
+						to_chat(U, "\red <b>ERROR<b>: \black Unable to initiate mode.")
 				else
 					U << browse(null, "window=spideros")
 					s_busy = 0
 					return
 			else
-				U << "\red ERROR: WRONG PASSWORD!"
+				to_chat(U, "\red ERROR: WRONG PASSWORD!")
 				k_unlock = 0
 				spideros = 0
 			s_busy = 0
@@ -651,11 +651,11 @@ ________________________________________________________________________________
 					t_disk.loc = T
 					t_disk = null
 				else
-					U << "\red <b>ERROR<b>: \black Could not eject disk."
+					to_chat(U, "\red <b>ERROR<b>: \black Could not eject disk.")
 
 		if("Copy to Disk")
 			var/datum/tech/current_data = locate(href_list["target"])
-			U << "[current_data.name] successfully [(!t_disk.stored) ? "copied" : "overwritten"] to disk."
+			to_chat(U, "[current_data.name] successfully [(!t_disk.stored) ? "copied" : "overwritten"] to disk.")
 			t_disk.stored = current_data
 
 		if("Configure pAI")
@@ -672,14 +672,14 @@ ________________________________________________________________________________
 					pai.loc = T
 					pai = null
 				else
-					U << "\red <b>ERROR<b>: \black Could not eject pAI card."
+					to_chat(U, "\red <b>ERROR<b>: \black Could not eject pAI card.")
 
 		if("Override AI Laws")
 			var/law_zero = A.laws.zeroth//Remembers law zero, if there is one.
 			A.laws = new /datum/ai_laws/ninja_override
 			A.set_zeroth_law(law_zero)//Adds back law zero if there was one.
 			A.show_laws()
-			U << "\blue Law Override: <b>SUCCESS</b>."
+			to_chat(U, "\blue Law Override: <b>SUCCESS</b>.")
 
 		if("Purge AI")
 			var/confirm = alert("Are you sure you want to purge the AI? This cannot be undone once started.", "Confirm purge", "Yes", "No")
@@ -693,35 +693,35 @@ ________________________________________________________________________________
 						if(AI==A)
 							switch(i)
 								if(0)
-									A << "\red <b>WARNING</b>: \black purge procedure detected. \nNow hacking host..."
-									U << "\red <b>WARNING</b>: HACKING AT��TEMP� IN PR0GRESs!"
+									to_chat(A, "\red <b>WARNING</b>: \black purge procedure detected. \nNow hacking host...")
+									to_chat(U, "\red <b>WARNING</b>: HACKING AT��TEMP� IN PR0GRESs!")
 									spideros = 0
 									k_unlock = 0
 									U << browse(null, "window=spideros")
 								if(1)
-									A << "Disconnecting neural interface..."
-									U << "\red <b>WAR�NING</b>: �R�O0�Gr�--S 2&3%"
+									to_chat(A, "Disconnecting neural interface...")
+									to_chat(U, "\red <b>WAR�NING</b>: �R�O0�Gr�--S 2&3%")
 								if(2)
-									A << "Shutting down external protocol..."
-									U << "\red <b>WARNING</b>: P����RֆGr�5S 677^%"
+									to_chat(A, "Shutting down external protocol...")
+									to_chat(U, "\red <b>WARNING</b>: P����RֆGr�5S 677^%")
 									cancel_stealth()
 								if(3)
-									A << "Connecting to kernel..."
-									U << "\red <b>WARNING</b>: �R�r�R_404"
+									to_chat(A, "Connecting to kernel...")
+									to_chat(U, "\red <b>WARNING</b>: �R�r�R_404")
 									A.control_disabled = 0
 								if(4)
-									A << "Connection established and secured. Menu updated."
-									U << "\red <b>W�r#nING</b>: #%@!!WȆ|_4�54@ \nUn�B88l3 T� L�-�o-L�CaT2 ##$!�RN�0..%.."
+									to_chat(A, "Connection established and secured. Menu updated.")
+									to_chat(U, "\red <b>W�r#nING</b>: #%@!!WȆ|_4�54@ \nUn�B88l3 T� L�-�o-L�CaT2 ##$!�RN�0..%..")
 									grant_AI_verbs()
 									return
 							sleep(s_delay)
 						else	break
 					s_busy = 0
-					U << "\blue Hacking attempt disconnected. Resuming normal operation."
+					to_chat(U, "\blue Hacking attempt disconnected. Resuming normal operation.")
 				else
 					flush = 1
 					A.suiciding = 1
-					A << "Your core files are being purged! This is the end..."
+					to_chat(A, "Your core files are being purged! This is the end...")
 					spawn(0)
 						display_spideros()//To refresh the screen and let this finish.
 					while (A.stat != DEAD)
@@ -729,12 +729,12 @@ ________________________________________________________________________________
 						A.updatehealth()
 						sleep(10)
 					killai()
-					U << "Artificial Intelligence was terminated. Rebooting..."
+					to_chat(U, "Artificial Intelligence was terminated. Rebooting...")
 					flush = 0
 
 		if("Wireless AI")
 			A.control_disabled = !A.control_disabled
-			A << "AI wireless has been [A.control_disabled ? "disabled" : "enabled"]."
+			to_chat(A, "AI wireless has been [A.control_disabled ? "disabled" : "enabled"].")
 		else//If it's not a defined function, it's a menu.
 			spideros=text2num(href_list["choice"])
 
@@ -757,17 +757,17 @@ ________________________________________________________________________________
 			hologram.dir = get_dir(T,affecting.loc)
 			var/image/I = image(AI.holo_icon,hologram)//Attach an image to object.
 			hologram.i_attached = I//To attach the image in order to later reference.
-			AI << I
-			affecting << I
-			affecting << "<i>An image flicks to life nearby. It appears visible to you only.</i>"
+			to_chat(AI, I)
+			to_chat(affecting, I)
+			to_chat(affecting, "<i>An image flicks to life nearby. It appears visible to you only.</i>")
 
 			verbs += /obj/item/clothing/suit/space/space_ninja/proc/ai_holo_clear
 
 			ai_holo_process()//Move to initialize
 		else
-			AI << "\red ERROR: \black Image feed in progress."
+			to_chat(AI, "\red ERROR: \black Image feed in progress.")
 	else
-		AI << "\red ERROR: \black Unable to project image."
+		to_chat(AI, "\red ERROR: \black Unable to project image.")
 	return
 
 /obj/item/clothing/suit/space/space_ninja/proc/ai_holo_process()
@@ -788,7 +788,7 @@ ________________________________________________________________________________
 	set category = "AI Ninja Equip"
 	set src = usr.loc
 
-	AI << "The menu you are seeing will contain other commands if they become available.\nRight click a nearby turf to display an AI Hologram. It will only be visible to you and your host. You can move it freely using normal movement keys--it will disappear if placed too far away."
+	to_chat(AI, "The menu you are seeing will contain other commands if they become available.\nRight click a nearby turf to display an AI Hologram. It will only be visible to you and your host. You can move it freely using normal movement keys--it will disappear if placed too far away.")
 
 /obj/item/clothing/suit/space/space_ninja/proc/ai_holo_clear()
 	set name = "Clear Hologram"
@@ -818,8 +818,8 @@ ________________________________________________________________________________
 	set src = usr.loc
 
 	AI << browse(null, "window=spideros")//Close window
-	AI << "You have seized your hacking attempt. [affecting.real_name] has regained control."
-	affecting << "<b>UPDATE</b>: [AI.real_name] has ceased hacking attempt. All systems clear."
+	to_chat(AI, "You have seized your hacking attempt. [affecting.real_name] has regained control.")
+	to_chat(affecting, "<b>UPDATE</b>: [AI.real_name] has ceased hacking attempt. All systems clear.")
 
 	remove_AI_verbs()
 	return
@@ -832,13 +832,13 @@ ________________________________________________________________________________
 			if(s_control)
 				I:transfer_ai("NINJASUIT","AICARD",src,U)
 			else
-				U << "\red <b>ERROR</b>: \black Remote access channel disabled."
+				to_chat(U, "\red <b>ERROR</b>: \black Remote access channel disabled.")
 			return//Return individually so that ..() can run properly at the end of the proc.
 		else if(istype(I, /obj/item/device/paicard) && !pai)//If it's a pai card.
 			U:drop_item()
 			I.loc = src
 			pai = I
-			U << "\blue You slot \the [I] into \the [src]."
+			to_chat(U, "\blue You slot \the [I] into \the [src].")
 			updateUsrDialog()
 			return
 		else if(istype(I, /obj/item/weapon/reagent_containers/glass))//If it's a glass beaker.
@@ -851,14 +851,16 @@ ________________________________________________________________________________
 					R.volume -= amount_to_transfer//Remove from reagent volume. Don't want to delete the reagent now since we need to perserve the name.
 					reagents.add_reagent(reagent_id, amount_to_transfer)//Add to suit. Reactions are not important.
 					total_reagent_transfer += amount_to_transfer//Add to total reagent trans.
-					U << "Added [amount_to_transfer] units of [R.name]."//Reports on the specific reagent added.
+					to_chat(U, "Added [amount_to_transfer] units of [R.name].")//Reports on the specific reagent added.
+
 					I.reagents.update_total()//Now we manually update the total to make sure everything is properly shoved under the rug.
 
-			U << "Replenished a total of [total_reagent_transfer ? total_reagent_transfer : "zero"] chemical units."//Let the player know how much total volume was added.
+			to_chat(U, "Replenished a total of [total_reagent_transfer ? total_reagent_transfer : "zero"] chemical units.")//Let the player know how much total volume was added.
+
 			return
 		else if(istype(I, /obj/item/weapon/stock_parts/cell))
 			if(I:maxcharge>cell.maxcharge&&n_gloves&&n_gloves.candrain)
-				U << "\blue Higher maximum capacity detected.\nUpgrading..."
+				to_chat(U, "\blue Higher maximum capacity detected.\nUpgrading...")
 				if (n_gloves&&n_gloves.candrain&&do_after(U,s_delay, target = U))
 					U.drop_item()
 					I.loc = src
@@ -870,14 +872,14 @@ ________________________________________________________________________________
 					old_cell.corrupt()
 					old_cell.updateicon()
 					cell = I
-					U << "\blue Upgrade complete. Maximum capacity: <b>[round(cell.maxcharge/100)]</b>%"
+					to_chat(U, "\blue Upgrade complete. Maximum capacity: <b>[round(cell.maxcharge/100)]</b>%")
 				else
-					U << "\red Procedure interrupted. Protocol terminated."
+					to_chat(U, "\red Procedure interrupted. Protocol terminated.")
 			return
 		else if(istype(I, /obj/item/weapon/disk/tech_disk))//If it's a data disk, we want to copy the research on to the suit.
 			var/obj/item/weapon/disk/tech_disk/TD = I
 			if(TD.stored)//If it has something on it.
-				U << "Research information detected, processing..."
+				to_chat(U, "Research information detected, processing...")
 				if(do_after(U,s_delay,target = U))
 					for(var/datum/tech/current_data in stored_research)
 						if(current_data.id==TD.stored.id)
@@ -885,13 +887,13 @@ ________________________________________________________________________________
 								current_data.level=TD.stored.level
 							break
 					TD.stored = null
-					U << "\blue Data analyzed and updated. Disk erased."
+					to_chat(U, "\blue Data analyzed and updated. Disk erased.")
 				else
-					U << "\red <b>ERROR</b>: \black Procedure interrupted. Process terminated."
+					to_chat(U, "\red <b>ERROR</b>: \black Procedure interrupted. Process terminated.")
 			else
 				I.loc = src
 				t_disk = I
-				U << "\blue You slot \the [I] into \the [src]."
+				to_chat(U, "\blue You slot \the [I] into \the [src].")
 			return
 	..()
 
@@ -904,7 +906,7 @@ ________________________________________________________________________________
 		s_active=!s_active
 		icon_state = U.gender==FEMALE ? "s-ninjasf" : "s-ninjas"
 		U.regenerate_icons()	//update their icons
-		U << "\blue You are now invisible to normal detection."
+		to_chat(U, "\blue You are now invisible to normal detection.")
 		for(var/mob/O in oviewers(U))
 			O.show_message("[U.name] vanishes into thin air!",1)
 		U.invisibility = INVISIBILITY_LEVEL_TWO
@@ -915,7 +917,7 @@ ________________________________________________________________________________
 	if(s_active)
 		anim(U.loc,U,'icons/mob/mob.dmi',,"uncloak",,U.dir)
 		s_active=!s_active
-		U << "\blue You are now visible."
+		to_chat(U, "\blue You are now visible.")
 		U.invisibility = 0
 		for(var/mob/O in oviewers(U))
 			O.show_message("[U.name] appears from thin air!",1)
@@ -952,19 +954,19 @@ ________________________________________________________________________________
 	if(s_initialized)
 		if(user == affecting)
 			if(s_control)
-				user << "All systems operational. Current energy capacity: <B>[cell.charge]</B>."
+				to_chat(user, "All systems operational. Current energy capacity: <B>[cell.charge]</B>.")
 				if(!kamikaze)
-					user << "The CLOAK-tech device is <B>[s_active ? "active" : "inactive"]</B>."
+					to_chat(user, "The CLOAK-tech device is <B>[s_active ? "active" : "inactive"]</B>.")
 				else
-					user << "<span class='userdanger'>KAMIKAZE MODE ENGAGED!</span>"
-				user << "There are <B>[s_bombs]</B> smoke bomb\s remaining."
-				user << "There are <B>[a_boost]</B> adrenaline booster\s remaining."
+					to_chat(user, "<span class='userdanger'>KAMIKAZE MODE ENGAGED!</span>")
+				to_chat(user, "There are <B>[s_bombs]</B> smoke bomb\s remaining.")
+				to_chat(user, "There are <B>[a_boost]</B> adrenaline booster\s remaining.")
 			else
-				user <<  "ï¿½rrï¿½R ï¿½aï¿½ï¿½aï¿½ï¿½ No-ï¿½-ï¿½ fï¿½ï¿½Nï¿½ 3RRï¿½r"
+				to_chat(user, "ï¿½rrï¿½R ï¿½aï¿½ï¿½aï¿½ï¿½ No-ï¿½-ï¿½ fï¿½ï¿½Nï¿½ 3RRï¿½r")
 
 /*
 ===================================================================================
-<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<SPACE NINJA GLOVES>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+to_chat(, <<<<<<<<<<<<<<<<<<<<<<<<<<<<SPACE NINJA GLOVES>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>)
 ===================================================================================
 */
 
@@ -983,7 +985,7 @@ ________________________________________________________________________________
 	G.draining = 1
 
 	if(target_type!="RESEARCH")//I lumped research downloading here for ease of use.
-		U << "\blue Now charging battery..."
+		to_chat(U, "\blue Now charging battery...")
 
 	switch(target_type)
 
@@ -1006,14 +1008,14 @@ ________________________________________________________________________________
 						S.cell.charge+=drain
 						totaldrain+=drain
 					else	break
-				U << "\blue Gained <B>[totaldrain]</B> energy from the APC."
+				to_chat(U, "\blue Gained <B>[totaldrain]</B> energy from the APC.")
 				if(!A.emagged)
 					flick("apc-spark", src)
 					A.emagged = 1
 					A.locked = 0
 					A.update_icon()
 			else
-				U << "\red This APC has run dry of power. You must find another source."
+				to_chat(U, "\red This APC has run dry of power. You must find another source.")
 
 		if("SMES")
 			var/obj/machinery/power/smes/A = target
@@ -1034,15 +1036,15 @@ ________________________________________________________________________________
 						S.cell.charge+=drain
 						totaldrain+=drain
 					else	break
-				U << "\blue Gained <B>[totaldrain]</B> energy from the SMES cell."
+				to_chat(U, "\blue Gained <B>[totaldrain]</B> energy from the SMES cell.")
 			else
-				U << "\red This SMES cell has run dry of power. You must find another source."
+				to_chat(U, "\red This SMES cell has run dry of power. You must find another source.")
 
 		if("CELL")
 			var/obj/item/weapon/stock_parts/cell/A = target
 			if(A.charge)
 				if (G.candrain&&do_after(U,30,target = A))
-					U << "\blue Gained <B>[A.charge]</B> energy from the cell."
+					to_chat(U, "\blue Gained <B>[A.charge]</B> energy from the cell.")
 					if(S.cell.charge+A.charge>S.cell.maxcharge)
 						S.cell.charge=S.cell.maxcharge
 					else
@@ -1052,9 +1054,9 @@ ________________________________________________________________________________
 					A.corrupt()
 					A.updateicon()
 				else
-					U << "\red Procedure interrupted. Protocol terminated."
+					to_chat(U, "\red Procedure interrupted. Protocol terminated.")
 			else
-				U << "\red This cell is empty and of no use."
+				to_chat(U, "\red This cell is empty and of no use.")
 
 		if("MACHINERY")//Can be applied to generically to all powered machinery. I'm leaving this alone for now.
 			var/obj/machinery/A = target
@@ -1089,31 +1091,31 @@ ________________________________________________________________________________
 							totaldrain += drained
 						spark_system.start()
 						if(drained==0)	break
-					U << "\blue Gained <B>[totaldrain]</B> energy from the power network."
+					to_chat(U, "\blue Gained <B>[totaldrain]</B> energy from the power network.")
 				else
-					U << "\red Power network could not be found. Aborting."
+					to_chat(U, "\red Power network could not be found. Aborting.")
 			else
-				U << "\red This recharger is not providing energy. You must find another source."
+				to_chat(U, "\red This recharger is not providing energy. You must find another source.")
 
 		if("RESEARCH")
 			var/obj/machinery/A = target
-			U << "\blue Hacking \the [A]..."
+			to_chat(U, "\blue Hacking \the [A]...")
 			spawn(0)
 				var/turf/location = get_turf(U)
 				for(var/mob/living/silicon/ai/AI in player_list)
-					AI << "\red <b>Network Alert: Hacking attempt detected[location?" in [location]":". Unable to pinpoint location"]</b>."
+					to_chat(AI, "\red <b>Network Alert: Hacking attempt detected[location?" in [location]":". Unable to pinpoint location"]</b>.")
 			if(A:files&&A:files.known_tech.len)
 				for(var/datum/tech/current_data in S.stored_research)
-					U << "\blue Checking \the [current_data.name] database."
+					to_chat(U, "\blue Checking \the [current_data.name] database.")
 					if(do_after(U, S.s_delay, target = A)&&G.candrain&&!isnull(A))
 						for(var/datum/tech/analyzing_data in A:files.known_tech)
 							if(current_data.id==analyzing_data.id)
 								if(analyzing_data.level>current_data.level)
-									U << "\blue Database: \black <b>UPDATED</b>."
+									to_chat(U, "\blue Database: \black <b>UPDATED</b>.")
 									current_data.level = analyzing_data.level
 								break//Move on to next.
 					else	break//Otherwise, quit processing.
-			U << "\blue Data analyzed. Process finished."
+			to_chat(U, "\blue Data analyzed. Process finished.")
 
 		if("WIRE")
 			var/obj/structure/cable/A = target
@@ -1141,7 +1143,7 @@ ________________________________________________________________________________
 					totaldrain += drained
 				S.spark_system.start()
 				if(drained==0)	break
-			U << "\blue Gained <B>[totaldrain]</B> energy from the power network."
+			to_chat(U, "\blue Gained <B>[totaldrain]</B> energy from the power network.")
 
 		if("MECHA")
 			var/obj/mecha/A = target
@@ -1161,13 +1163,13 @@ ________________________________________________________________________________
 						S.cell.charge+=drain
 						totaldrain+=drain
 					else	break
-				U << "\blue Gained <B>[totaldrain]</B> energy from [src]."
+				to_chat(U, "\blue Gained <B>[totaldrain]</B> energy from [src].")
 			else
-				U << "\red The exosuit's battery has run dry. You must find another source of power."
+				to_chat(U, "\red The exosuit's battery has run dry. You must find another source of power.")
 
 		if("CYBORG")
 			var/mob/living/silicon/robot/A = target
-			A << "\red Warning: Unauthorized access through sub-route 12, block C, detected."
+			to_chat(A, "\red Warning: Unauthorized access through sub-route 12, block C, detected.")
 			G.draining = 1
 			if(A.cell&&A.cell.charge)
 				while(G.candrain&&A.cell.charge>0&&!maxcapacity)
@@ -1184,9 +1186,9 @@ ________________________________________________________________________________
 						S.cell.charge+=drain
 						totaldrain+=drain
 					else	break
-				U << "\blue Gained <B>[totaldrain]</B> energy from [A]."
+				to_chat(U, "\blue Gained <B>[totaldrain]</B> energy from [A].")
 			else
-				U << "\red Their battery has run dry of power. You must find another source."
+				to_chat(U, "\red Their battery has run dry of power. You must find another source.")
 
 		else//Else nothing :<
 
@@ -1202,17 +1204,17 @@ ________________________________________________________________________________
 	set category = "Ninja Equip"
 
 	var/mob/living/carbon/human/U = loc
-	U << "You <b>[candrain?"disable":"enable"]</b> special interaction."
+	to_chat(U, "You <b>[candrain?"disable":"enable"]</b> special interaction.")
 	candrain=!candrain
 
 /obj/item/clothing/gloves/space_ninja/examine(mob/user)
 	..()
 	if(!canremove)
-		user << "The energy drain mechanism is: <B>[candrain ? "active" : "inactive"]</B>."
+		to_chat(user, "The energy drain mechanism is: <B>[candrain ? "active" : "inactive"]</B>.")
 
 /*
 ===================================================================================
-<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<SPACE NINJA MASK>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+to_chat(, <<<<<<<<<<<<<<<<<<<<<<<<<<<<<SPACE NINJA MASK>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>)
 ===================================================================================
 */
 
@@ -1277,9 +1279,9 @@ ________________________________________________________________________________
 					if(M==U||!M.client||!M.real_name)	continue
 					names.Add(M.real_name)
 				voice = !names.len ? "Cuban Pete" : pick(names)
-		U << "You are now mimicking <B>[voice]</B>."
+		to_chat(U, "You are now mimicking <B>[voice]</B>.")
 	else
-		U << "The voice synthesizer is [voice!="Unknown"?"now":"already"] deactivated."
+		to_chat(U, "The voice synthesizer is [voice!="Unknown"?"now":"already"] deactivated.")
 		voice = "Unknown"
 	return
 
@@ -1293,20 +1295,20 @@ ________________________________________________________________________________
 	switch(mode)
 		if(0)
 			mode=1
-			U << "Switching mode to <B>Night Vision</B>."
+			to_chat(U, "Switching mode to <B>Night Vision</B>.")
 		if(1)
 			mode=2
 			U.see_in_dark = 2
-			U << "Switching mode to <B>Thermal Scanner</B>."
+			to_chat(U, "Switching mode to <B>Thermal Scanner</B>.")
 		if(2)
 			mode=3
 			U.see_invisible = SEE_INVISIBLE_LIVING
 			U.sight &= ~SEE_MOBS
-			U << "Switching mode to <B>Meson Scanner</B>."
+			to_chat(U, "Switching mode to <B>Meson Scanner</B>.")
 		if(3)
 			mode=0
 			U.sight &= ~SEE_TURFS
-			U << "Switching mode to <B>Scouter</B>."
+			to_chat(U, "Switching mode to <B>Scouter</B>.")
 
 /obj/item/clothing/mask/gas/voice/space_ninja/examine(mob/user)
 	..()
@@ -1320,12 +1322,12 @@ ________________________________________________________________________________
 			mode = "Thermal Scanner"
 		if(3)
 			mode = "Meson Scanner"
-	user << "<B>[mode]</B> is active."
-	user << "Voice mimicking algorithm is set <B>[vchange ? "active" : "inactive"]</B>."
+	to_chat(user, "<B>[mode]</B> is active.")
+	to_chat(user, "Voice mimicking algorithm is set <B>[vchange ? "active" : "inactive"]</B>.")
 
 /*
 ===================================================================================
-<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<SPACE NINJA NET>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+to_chat(, <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<SPACE NINJA NET>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>)
 ===================================================================================
 */
 
@@ -1360,7 +1362,7 @@ It is possible to destroy the net by the occupant or someone else.
 					for(var/mob/O in viewers(src, 3))
 						O.show_message(text("[] was recovered from the energy net!", M.name), 1, text("You hear a grunt."), 2)
 					//if(!isnull(master))//As long as they still exist.
-					//	master << "\red <b>ERROR</b>: \black unable to initiate transport protocol. Procedure terminated."
+//						to_chat(master, "\red <b>ERROR</b>: \black unable to initiate transport protocol. Procedure terminated.")
 				qdel(src)
 			return
 
@@ -1380,7 +1382,7 @@ It is possible to destroy the net by the occupant or someone else.
 
 		if(isnull(M)||M.loc!=loc)//If mob is gone or not at the location.
 			//if(!isnull(master))//As long as they still exist.
-			//	master << "\red <b>ERROR</b>: \black unable to locate \the [mob_name]. Procedure terminated."
+//				to_chat(master, "\red <b>ERROR</b>: \black unable to locate \the [mob_name]. Procedure terminated.")
 			qdel(src)//Get rid of the net.
 			return
 
@@ -1419,19 +1421,19 @@ It is possible to destroy the net by the occupant or someone else.
 			else
 				M.loc = null
 
-			M << "\red You appear in a strange place!"
+			to_chat(M, "\red You appear in a strange place!")
 
 			for(var/mob/O in viewers(src, 3))
 				O.show_message(text("[] vanished!", M), 1, text("You hear sparks flying!"), 2)
 
 			if(!isnull(master))//As long as they still exist.
-				master << "\blue <b>SUCCESS</b>: \black transport procedure of \the [affecting] complete."
+				to_chat(master, "\blue <b>SUCCESS</b>: \black transport procedure of \the [affecting] complete.")
 
 			M.captured = 0 //Important.
 			M.anchored = initial(M.anchored) //Changes the mob's anchored status to the original one; this is not handled by the can_move proc.
 
 		else//And they are free.
-			M << "\blue You are free of the net!"
+			to_chat(M, "\blue You are free of the net!")
 		return*/
 
 	bullet_act(obj/item/projectile/Proj)
@@ -1477,7 +1479,7 @@ It is possible to destroy the net by the occupant or someone else.
 
 	attack_hand()
 		if (HULK in usr.mutations)
-			usr << text("\blue You easily destroy the energy net.")
+			to_chat(usr, text("\blue You easily destroy the energy net."))
 			for(var/mob/O in oviewers(src))
 				O.show_message(text("\red [] rips the energy net apart!", usr), 1)
 			health-=50
@@ -1491,13 +1493,13 @@ It is possible to destroy the net by the occupant or someone else.
 		usr.do_attack_animation(src)
 		if (islarva(usr) || isfacehugger(usr))
 			return
-		usr << text("\green You claw at the net.")
+		to_chat(usr, text("\green You claw at the net."))
 		for(var/mob/O in oviewers(src))
 			O.show_message(text("\red [] claws at the energy net!", usr), 1)
 		playsound(src.loc, 'sound/weapons/slash.ogg', 80, 1)
 		health -= rand(10, 20)
 		if(health <= 0)
-			usr << text("\green You slice the energy net to pieces.")
+			to_chat(usr, text("\green You slice the energy net to pieces."))
 			for(var/mob/O in oviewers(src))
 				O.show_message(text("\red [] slices the energy net apart!", usr), 1)
 		healthcheck()

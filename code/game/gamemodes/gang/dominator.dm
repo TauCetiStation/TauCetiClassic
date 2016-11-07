@@ -25,7 +25,7 @@
 /obj/machinery/dominator/examine(mob/user)
 	..()
 	if(operating == -1)
-		user << "<span class='danger'>It looks completely busted.</span>"
+		to_chat(user, "<span class='danger'>It looks completely busted.</span>")
 		return
 
 	var/datum/game_mode/gang/mode = ticker.mode
@@ -38,12 +38,12 @@
 			time = max(mode.B_timer, 0)
 	if(isnum(time))
 		if(time > 0)
-			user << "<span class='notice'>Hostile Takeover in progress. Estimated [time] seconds remain.</span>"
+			to_chat(user, "<span class='notice'>Hostile Takeover in progress. Estimated [time] seconds remain.</span>")
 		else
-			user << "<span class='notice'>Hostile Takeover of [station_name()] successful. Have a great day.</span>"
+			to_chat(user, "<span class='notice'>Hostile Takeover of [station_name()] successful. Have a great day.</span>")
 	else
-		user << "<span class='notice'>System on standby.</span>"
-	user << "<span class='danger'>System Integrity: [round((health/maxhealth)*100,1)]%</span>"
+		to_chat(user, "<span class='notice'>System on standby.</span>")
+	to_chat(user, "<span class='danger'>System Integrity: [round((health/maxhealth)*100,1)]%</span>")
 
 /obj/machinery/dominator/process()
 	..()
@@ -101,7 +101,7 @@
 				//SSshuttle.emergency.timer = world.time
 				//priority_announce("Hostile enviroment resolved. You have 3 minutes to board the Emergency Shuttle.", null, 'sound/AI/shuttledock.ogg', "Priority")
 				//captain_announce("Hostile enviroment resolved. You have 3 minutes to board the Emergency Shuttle.")
-				//world << sound('sound/AI/shuttledock.ogg')
+//				to_chat(world, sound('sound/AI/shuttledock.ogg'))
 			//else
 				//priority_announce("All hostile activity within station systems have ceased.","Network Alert")
 				//captain_announce("All hostile activity within station systems have ceased.")
@@ -180,11 +180,11 @@
 		return
 
 	if(isnum(timer))
-		user << "<span class='warning'>Error: Hostile Takeover is already in progress.</span>"
+		to_chat(user, "<span class='warning'>Error: Hostile Takeover is already in progress.</span>")
 		return
 
 	if(tempgang == "A" ? !mode.A_dominations : !mode.B_dominations)
-		user << "<span class='warning'>Error: Unable to breach station network. Firewall has logged our signature and is blocking all further attempts.</span>"
+		to_chat(user, "<span class='warning'>Error: Unable to breach station network. Firewall has logged our signature and is blocking all further attempts.</span>")
 		return
 
 	var/time = max(300,900 - ((round((gang_territory/start_state.num_territories)*200, 1) - 60) * 15))

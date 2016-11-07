@@ -12,7 +12,7 @@
 
 /obj/item/borg/upgrade/proc/action(mob/living/silicon/robot/R)
 	if(R.stat == DEAD)
-		usr << "\red The [src] will not function on a deceased robot."
+		to_chat(usr, "\red The [src] will not function on a deceased robot.")
 		return 1
 	return 0
 
@@ -62,7 +62,7 @@
 
 /obj/item/borg/upgrade/restart/action(mob/living/silicon/robot/R)
 	if(R.health < 0)
-		usr << "You have to repair the robot before using this module!"
+		to_chat(usr, "You have to repair the robot before using this module!")
 		return 0
 
 	if(!R.key)
@@ -101,8 +101,8 @@
 	if(..()) return 0
 
 	if(!istype(R.module, /obj/item/weapon/robot_module/security))
-		R << "Upgrade mounting error!  No suitable hardpoint detected!"
-		usr << "There's no mounting point for the module!"
+		to_chat(R, "Upgrade mounting error!  No suitable hardpoint detected!")
+		to_chat(usr, "There's no mounting point for the module!")
 		return 0
 
 	var/obj/item/weapon/gun/energy/taser/cyborg/T = locate() in R.module
@@ -111,12 +111,12 @@
 	if(!T)
 		T = locate() in R.module.modules
 	if(!T)
-		usr << "This robot has had its taser removed!"
+		to_chat(usr, "This robot has had its taser removed!")
 		return 0
 
 	if(T.recharge_time <= 2)
-		R << "Maximum cooling achieved for this hardpoint!"
-		usr << "There's no room for another cooling unit!"
+		to_chat(R, "Maximum cooling achieved for this hardpoint!")
+		to_chat(usr, "There's no room for another cooling unit!")
 		return 0
 
 	else
@@ -134,12 +134,12 @@
 	if(..()) return 0
 
 	if(!istype(R.module, /obj/item/weapon/robot_module/miner))
-		R << "Upgrade mounting error!  No suitable hardpoint detected!"
-		usr << "There's no mounting point for the module!"
+		to_chat(R, "Upgrade mounting error!  No suitable hardpoint detected!")
+		to_chat(usr, "There's no mounting point for the module!")
 		return 0
 	for(var/obj/item/weapon/tank/jetpack/J in R.module.modules)
 		if(J && istype(J, /obj/item/weapon/tank/jetpack))
-			usr << "There's no room for another jetpack!"
+			to_chat(usr, "There's no room for another jetpack!")
 			return 0
 	var/obj/item/weapon/tank/jetpack/carbondioxide/jet = new(R.module)
 	R.module.modules += jet

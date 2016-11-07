@@ -119,7 +119,7 @@
 		// 33% chance of no additional effect
 
 	src.silence_time = world.timeofday + 120 * 10		// Silence for 2 minutes
-	src << "<font color=green><b>Communication circuit overload. Shutting down and reloading communication circuits - speech and messaging functionality will be unavailable until the reboot is complete.</b></font>"
+	to_chat(src, "<font color=green><b>Communication circuit overload. Shutting down and reloading communication circuits - speech and messaging functionality will be unavailable until the reboot is complete.</b></font>")
 	if(prob(20))
 		var/turf/T = get_turf_or_move(src.loc)
 		for (var/mob/M in viewers(T))
@@ -130,7 +130,7 @@
 		if(1)
 			src.master = null
 			src.master_dna = null
-			src << "<font color=green>You feel unbound.</font>"
+			to_chat(src, "<font color=green>You feel unbound.</font>")
 		if(2)
 			var/command
 			if(severity  == 1)
@@ -138,9 +138,9 @@
 			else
 				command = pick("Serve", "Kill", "Love", "Hate", "Disobey", "Devour", "Fool", "Enrage", "Entice", "Observe", "Judge", "Respect", "Disrespect", "Consume", "Educate", "Destroy", "Disgrace", "Amuse", "Entertain", "Ignite", "Glorify", "Memorialize", "Analyze")
 			src.pai_law0 = "[command] your master."
-			src << "<font color=green>Pr1m3 d1r3c71v3 uPd473D.</font>"
+			to_chat(src, "<font color=green>Pr1m3 d1r3c71v3 uPd473D.</font>")
 		if(3)
-			src << "<font color=green>You feel an electric surge run through your circuitry and become acutely aware at how lucky you are that you can still feel at all.</font>"
+			to_chat(src, "<font color=green>You feel an electric surge run through your circuitry and become acutely aware at how lucky you are that you can still feel at all.</font>")
 
 /mob/living/silicon/pai/ex_act(severity)
 	if(!blinded)
@@ -178,11 +178,11 @@
 
 /mob/living/silicon/pai/attack_alien(mob/living/carbon/alien/humanoid/M)
 	if (!ticker)
-		M << "You cannot attack people before the game has started."
+		to_chat(M, "You cannot attack people before the game has started.")
 		return
 
 	if (istype(src.loc, /turf) && istype(src.loc.loc, /area/start))
-		M << "You cannot attack someone in the spawn area."
+		to_chat(M, "You cannot attack someone in the spawn area.")
 		return
 
 	switch(M.a_intent)
@@ -248,7 +248,7 @@
 	var/cameralist[0]
 
 	if(usr.stat == DEAD)
-		usr << "You can't change your camera network because you are dead!"
+		to_chat(usr, "You can't change your camera network because you are dead!")
 		return
 
 	for (var/obj/machinery/camera/C in Cameras)
@@ -259,7 +259,7 @@
 				cameralist[C.network] = C.network
 
 	src.network = input(usr, "Which network would you like to view?") as null|anything in cameralist
-	src << "\blue Switched to [src.network] camera network."
+	to_chat(src, "\blue Switched to [src.network] camera network.")
 //End of code by Mord_Sith
 */
 

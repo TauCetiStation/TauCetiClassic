@@ -46,16 +46,16 @@
 	if(gibbed)
 		S["ancestor_name"] 		<< null
 		S["ancestor_chain"]		<< 1
-		S["relic_mask"]			<< null
+		S["relic_mask"] 		<< null
 		return
 	if(dead)
 		S["ancestor_name"] 		<< ancestor_name
-		S["ancestor_chain"]		<< ancestor_chain + 1
+		S["ancestor_chain"] 	<< ancestor_chain + 1
 	if(!ancestor_name)	//new monkey name this round
-		S["ancestor_name"] 		<< name
+		S["ancestor_name"] << name
 	if(wear_mask)
-		S["relic_mask"]			<< wear_mask.type
+		S["relic_mask"] << wear_mask.type
 	else
-		S["relic_mask"]			<< null
+		S["relic_mask"] << null
 	if(!dead)
 		memory_saved = 1

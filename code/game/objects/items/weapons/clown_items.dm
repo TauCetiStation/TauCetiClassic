@@ -15,7 +15,7 @@
 			return
 
 		M.stop_pulling()
-		M << "\blue You slipped on the [name]!"
+		to_chat(M, "\blue You slipped on the [name]!")
 		playsound(src.loc, 'sound/misc/slip.ogg', 50, 1, -3)
 		M.Stun(4)
 		M.Weaken(2)
@@ -30,7 +30,7 @@
 			return
 
 		M.stop_pulling()
-		M << "\blue You slipped on the [name]!"
+		to_chat(M, "\blue You slipped on the [name]!")
 		playsound(src.loc, 'sound/misc/slip.ogg', 50, 1, -3)
 		M.Stun(3)
 		M.Weaken(2)
@@ -40,12 +40,12 @@
 	//I couldn't feasibly  fix the overlay bugs caused by cleaning items we are wearing.
 	//So this is a workaround. This also makes more sense from an IC standpoint. ~Carn
 	if(user.client && (target in user.client.screen))
-		user << "<span class='notice'>You need to take that [target.name] off before cleaning it.</span>"
+		to_chat(user, "<span class='notice'>You need to take that [target.name] off before cleaning it.</span>")
 	else if(istype(target,/obj/effect/decal/cleanable))
-		user << "<span class='notice'>You scrub \the [target.name] out.</span>"
+		to_chat(user, "<span class='notice'>You scrub \the [target.name] out.</span>")
 		qdel(target)
 	else
-		user << "<span class='notice'>You clean \the [target.name].</span>"
+		to_chat(user, "<span class='notice'>You clean \the [target.name].</span>")
 		target.clean_blood()
 	return
 

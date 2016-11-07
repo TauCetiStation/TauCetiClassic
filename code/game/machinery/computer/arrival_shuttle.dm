@@ -251,10 +251,10 @@ var/lastMove = 0
 
 	if(href_list["move"])
 		if (!moving)
-			usr << "\blue Shuttle recieved message and will be sent shortly."
+			to_chat(usr, "\blue Shuttle recieved message and will be sent shortly.")
 			arrival_shuttle_move()
 		else
-			usr << "\blue Shuttle is already moving."
+			to_chat(usr, "\blue Shuttle is already moving.")
 
 /obj/machinery/computer/arrival_shuttle/dock
 	name = "Arrival Shuttle Communication Console"
@@ -274,7 +274,7 @@ var/lastMove = 0
 
 	if(href_list["back"])
 		if (!moving && location == 2)
-			usr << "\blue Shuttle recieved message and will be sent shortly."
+			to_chat(usr, "\blue Shuttle recieved message and will be sent shortly.")
 			arrival_shuttle_move()
 		else
-			usr << "\blue Shuttle is already moving or docked with station."
+			to_chat(usr, "\blue Shuttle is already moving or docked with station.")

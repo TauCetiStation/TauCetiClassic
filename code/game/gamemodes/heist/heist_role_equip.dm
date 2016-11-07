@@ -161,14 +161,14 @@ var/global/raider_tick = 1
 		return 0
 	var/price_check = M.get_price()
 	if(M.stat == DEAD)
-		user << "<span class='notice'>This [issilicon(M) ? "destroyed thing" : "dead being"] will bring us approximately $[price_check]$</span>"
+		to_chat(user, "<span class='notice'>This [issilicon(M) ? "destroyed thing" : "dead being"] will bring us approximately $[price_check]$</span>")
 	else
-		user << "<span class='notice'>This [issilicon(M) ? "silicon thing" : "living being"] will bring us approximately <span class='danger'>[issilicon(M) ? "DESTROYED:" : "DEAD:"]</span> $[price_check ? price_check / 50 : 0]$ or <span class='danger'>[issilicon(M) ? "WORKING:" : "ALIVE:"]</span>$[price_check]$</span>"
+		to_chat(user, "<span class='notice'>This [issilicon(M) ? "silicon thing" : "living being"] will bring us approximately <span class='danger'>[issilicon(M) ? "DESTROYED:" : "DEAD:"]</span> $[price_check ? price_check / 50 : 0]$ or <span class='danger'>[issilicon(M) ? "WORKING:" : "ALIVE:"]</span>$[price_check]$</span>")
 	return 1
 
 /obj/item/device/price_tool/afterattack(obj/O, mob/user, proximity)
 	if(!proximity) return
 	if(!istype(O))
 		return
-	user << "<span class='notice'>This object will bring us approximately $[num2text(O.get_price(),9)]$</span>"
+	to_chat(user, "<span class='notice'>This object will bring us approximately $[num2text(O.get_price(),9)]$</span>")
 	return

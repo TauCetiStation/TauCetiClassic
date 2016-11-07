@@ -114,7 +114,7 @@ var/global/list/image/splatter_cache=list()
 			return
 		var/taken = rand(1,amount)
 		amount -= taken
-		user << "<span class='notice'>You get some of \the [src] on your hands.</span>"
+		to_chat(user, "<span class='notice'>You get some of \the [src] on your hands.</span>")
 		if (!user.blood_DNA)
 			user.blood_DNA = list()
 		user.blood_DNA |= blood_DNA.Copy()
@@ -155,7 +155,7 @@ var/global/list/image/splatter_cache=list()
 
 /obj/effect/decal/cleanable/blood/writing/examine(mob/user)
 	..()
-	user << "It reads: <font color='[basecolor]'>\"[message]\"<font>"
+	to_chat(user, "It reads: <font color='[basecolor]'>\"[message]\"<font>")
 
 /obj/effect/decal/cleanable/blood/trail_holder
 	name = "blood"

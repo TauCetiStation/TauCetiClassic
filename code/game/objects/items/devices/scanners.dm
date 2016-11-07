@@ -78,7 +78,7 @@ REAGENT SCANNER
 
 /obj/item/device/healthanalyzer/attack(mob/living/M, mob/living/user)
 	if (( (CLUMSY in user.mutations) || user.getBrainLoss() >= 60) && prob(50))
-		user << text("\red You try to analyze the floor's vitals!")
+		to_chat(user, text("\red You try to analyze the floor's vitals!"))
 		for(var/mob/O in viewers(M, null))
 			O.show_message(text("\red [user] has analyzed the floor's vitals!"), 1)
 		user.show_message(text("\blue Analyzing Results for The floor:\n\t Overall Status: Healthy"), 1)
@@ -87,7 +87,7 @@ REAGENT SCANNER
 		user.show_message("\blue Body Temperature: ???", 1)
 		return
 	if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
-		usr << "\red You don't have the dexterity to do this!"
+		to_chat(usr, "\red You don't have the dexterity to do this!")
 		return
 	user.visible_message("<span class='notice'> [user] has analyzed [M]'s vitals.","<span class='notice'> You have analyzed [M]'s vitals.")
 
@@ -169,9 +169,9 @@ REAGENT SCANNER
 			var/limb = e.display_name
 			if(e.status & ORGAN_BROKEN)
 				if(((e.name == "l_arm") || (e.name == "r_arm") || (e.name == "l_leg") || (e.name == "r_leg")) && (!(e.status & ORGAN_SPLINTED)))
-					user << "\red Unsecured fracture in subject [limb]. Splinting recommended for transport."
+					to_chat(user, "\red Unsecured fracture in subject [limb]. Splinting recommended for transport.")
 			if(e.has_infected_wound())
-				user << "\red Infected wound detected in subject [limb]. Disinfection recommended."
+				to_chat(user, "\red Infected wound detected in subject [limb]. Disinfection recommended.")
 
 		for(var/name in H.organs_by_name)
 			var/datum/organ/external/e = H.organs_by_name[name]
@@ -204,9 +204,9 @@ REAGENT SCANNER
 	mode = !mode
 	switch (mode)
 		if(1)
-			usr << "The scanner now shows specific limb damage."
+			to_chat(usr, "The scanner now shows specific limb damage.")
 		if(0)
-			usr << "The scanner no longer shows limb damage."
+			to_chat(usr, "The scanner no longer shows limb damage.")
 
 
 /obj/item/device/analyzer
@@ -231,7 +231,7 @@ REAGENT SCANNER
 	if (user.stat)
 		return
 	if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
-		usr << "\red You don't have the dexterity to do this!"
+		to_chat(usr, "\red You don't have the dexterity to do this!")
 		return
 
 	var/turf/location = user.loc
@@ -314,17 +314,17 @@ REAGENT SCANNER
 	if (user.stat)
 		return
 	if (crit_fail)
-		user << "\red This device has critically failed and is no longer functional!"
+		to_chat(user, "\red This device has critically failed and is no longer functional!")
 		return
 	if (!(istype(user, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
-		user << "\red You don't have the dexterity to do this!"
+		to_chat(user, "\red You don't have the dexterity to do this!")
 		return
 	if(reagents.total_volume)
 		var/list/blood_traces = list()
 		for(var/datum/reagent/R in reagents.reagent_list)
 			if(R.id != "blood")
 				reagents.clear_reagents()
-				user << "\red The sample was contaminated! Please insert another sample"
+				to_chat(user, "\red The sample was contaminated! Please insert another sample")
 				return
 			else
 				blood_traces = params2list(R.data["trace_chem"])
@@ -344,7 +344,7 @@ REAGENT SCANNER
 					return
 				else
 					recent_fail = 1
-		user << "[dat]"
+		to_chat(user, "[dat]")
 		reagents.clear_reagents()
 	return
 
@@ -375,12 +375,12 @@ REAGENT SCANNER
 	if (user.stat)
 		return
 	if (!(istype(user, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
-		user << "\red You don't have the dexterity to do this!"
+		to_chat(user, "\red You don't have the dexterity to do this!")
 		return
 	if(!istype(O))
 		return
 	if (crit_fail)
-		user << "\red This device has critically failed and is no longer functional!"
+		to_chat(user, "\red This device has critically failed and is no longer functional!")
 		return
 
 	if(!isnull(O.reagents))
@@ -398,11 +398,11 @@ REAGENT SCANNER
 				else
 					recent_fail = 1
 		if(dat)
-			user << "\blue Chemicals found: [dat]"
+			to_chat(user, "\blue Chemicals found: [dat]")
 		else
-			user << "\blue No active chemical agents found in [O]."
+			to_chat(user, "\blue No active chemical agents found in [O].")
 	else
-		user << "\blue No significant chemical agents found in [O]."
+		to_chat(user, "\blue No significant chemical agents found in [O].")
 
 	return
 
@@ -431,11 +431,11 @@ REAGENT SCANNER
 		if(!active)
 			active = 1
 			search()
-			usr << "\blue You activate the [src.name]"
+			to_chat(usr, "\blue You activate the [src.name]")
 		else
 			active = 0
 			icon_state = "locoff"
-			usr << "\blue You deactivate the [src.name]"
+			to_chat(usr, "\blue You deactivate the [src.name]")
 
 	proc/search()
 		if(!active) return

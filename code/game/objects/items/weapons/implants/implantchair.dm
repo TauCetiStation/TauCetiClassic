@@ -79,7 +79,7 @@
 				return
 			for(var/mob/living/carbon/slime/M in range(1,G:affecting))
 				if(M.Victim == G:affecting)
-					usr << "[G:affecting:name] will not fit into the [src.name] because they have a slime latched onto their head."
+					to_chat(usr, "[G:affecting:name] will not fit into the [src.name] because they have a slime latched onto their head.")
 					return
 			var/mob/M = G:affecting
 			if(put_mob(M))
@@ -107,10 +107,10 @@
 
 	put_mob(mob/living/carbon/M as mob)
 		if(!iscarbon(M))
-			usr << "\red <B>The [src.name] cannot hold this!</B>"
+			to_chat(usr, "\red <B>The [src.name] cannot hold this!</B>")
 			return
 		if(src.occupant)
-			usr << "\red <B>The [src.name] is already occupied!</B>"
+			to_chat(usr, "\red <B>The [src.name] is already occupied!</B>")
 			return
 		if(M.client)
 			M.client.perspective = EYE_PERSPECTIVE

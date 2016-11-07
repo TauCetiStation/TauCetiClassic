@@ -34,7 +34,7 @@
 		var/obj/item/weapon/stock_parts/cell/C = R.cell
 		if(active && !(C.use(hitcost)))
 			attack_self(R)
-			R << "<span class='notice'>It's out of charge!</span>"
+			to_chat(R, "<span class='notice'>It's out of charge!</span>")
 			return
 		..()
 	return

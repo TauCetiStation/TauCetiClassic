@@ -33,7 +33,7 @@
 			command_alert("Meteors have been detected on collision course with the station.", "Meteor Alert")
 			for(var/mob/M in player_list)
 				if(!istype(M,/mob/new_player))
-					M << sound('sound/AI/meteors.ogg')
+					to_chat(M, sound('sound/AI/meteors.ogg'))
 			spawn(100)
 				meteor_wave()
 				spawn_meteors()
@@ -45,7 +45,7 @@
 			command_alert("Gravitational anomalies detected on the station. There is no additional data.", "Anomaly Alert")
 			for(var/mob/M in player_list)
 				if(!istype(M,/mob/new_player))
-					M << sound('sound/AI/granomalies.ogg')
+					to_chat(M, sound('sound/AI/granomalies.ogg'))
 			var/turf/T = pick(blobstart)
 			var/obj/effect/bhole/bh = new /obj/effect/bhole( T.loc, 30 )
 			spawn(rand(50, 300))
@@ -53,7 +53,7 @@
 		/*
 		if(3) //Leaving the code in so someone can try and delag it, but this event can no longer occur randomly, per SoS's request. --NEO
 			command_alert("Space-time anomalies detected on the station. There is no additional data.", "Anomaly Alert")
-			world << sound('sound/AI/spanomalies.ogg')
+			to_chat(world, sound('sound/AI/spanomalies.ogg'))
 			var/list/turfs = new
 			var/turf/picked
 			for(var/turf/simulated/floor/T in world)
@@ -119,7 +119,7 @@
 
 /proc/viral_outbreak(virus = null)
 //	command_alert("Confirmed outbreak of level 7 viral biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert")
-//	world << sound('sound/AI/outbreak7.ogg')
+//	to_chat(world, sound('sound/AI/outbreak7.ogg'))
 	var/virus_type
 	if(!virus)
 		virus_type = pick(/datum/disease/dnaspread,/datum/disease/advance/flu,/datum/disease/advance/cold,/datum/disease/brainrot,/datum/disease/magnitis,/datum/disease/pierrot_throat)
@@ -184,7 +184,7 @@
 
 /proc/alien_infestation(spawncount = 1) // -- TLE
 	//command_alert("Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.", "Lifesign Alert")
-	//world << sound('sound/AI/aliens.ogg')
+//	to_chat(world, sound('sound/AI/aliens.ogg'))
 	var/list/vents = list()
 	for(var/obj/machinery/atmospherics/unary/vent_pump/temp_vent in machines)
 		if(temp_vent.loc.z == ZLEVEL_STATION && !temp_vent.welded && temp_vent.network)
@@ -358,74 +358,74 @@ Would like to add a law like "Law x is _______" where x = a number, and _____ is
 				crew = "Any Human"
 			switch(rand(1,14))
 				if(1)
-					M << "<br>"
-					M << "\red THERE ARE [amount] [who2] ON THE STATION...LAWS UPDATED"
-					M << "<br>"
+					to_chat(M, "<br>")
+					to_chat(M, "\red THERE ARE [amount] [who2] ON THE STATION...LAWS UPDATED")
+					to_chat(M, "<br>")
 					M.add_ion_law("THERE ARE [amount] [who2] ON THE STATION")
 				if(2)
-					M << "<br>"
-					M << "\red [what2] ARE DANGEROUS TO HUMANS...LAWS UPDATED"
-					M << "<br>"
+					to_chat(M, "<br>")
+					to_chat(M, "\red [what2] ARE DANGEROUS TO HUMANS...LAWS UPDATED")
+					to_chat(M, "<br>")
 					M.add_ion_law("[what2] ARE DANGEROUS TO HUMANS")
 				if(3)
-					M << "<br>"
-					M << "\red THE ESCAPE-SHUTTLE CANNOT BE CALLED BECAUSE OF [who2] ON THE STATION...LAWS UPDATED"
-					M << "<br>"
+					to_chat(M, "<br>")
+					to_chat(M, "\red THE ESCAPE-SHUTTLE CANNOT BE CALLED BECAUSE OF [who2] ON THE STATION...LAWS UPDATED")
+					to_chat(M, "<br>")
 					M.add_ion_law("THE ESCAPE SHUTTLE CANNOT BE CALLED BECAUSE OF [who2] ON THE STATION")
 				if(4)
-					M << "<br>"
-					M << "\red HUMANS NEED TO EAT [what2pref] [what2] TO SURVIVE...LAWS UPDATED"
-					M << "<br>"
+					to_chat(M, "<br>")
+					to_chat(M, "\red HUMANS NEED TO EAT [what2pref] [what2] TO SURVIVE...LAWS UPDATED")
+					to_chat(M, "<br>")
 					M.add_ion_law("HUMANS NEED TO EAT [what2pref] [what2] TO SURVIVE")
 				if(5)
-					M << "<br>"
-					M << "\red THE CAPTAIN, HOP AND HOS ARE [who2]...LAWS UPDATED"
-					M << "<br>"
+					to_chat(M, "<br>")
+					to_chat(M, "\red THE CAPTAIN, HOP AND HOS ARE [who2]...LAWS UPDATED")
+					to_chat(M, "<br>")
 					M.add_ion_law("THE CAPTAIN, HOP AND HOS ARE [who2]")
 				if(6)
-					M << "<br>"
-					M << "\red THE STATION IS BUILT FOR [who2]...LAWS UPDATED"
-					M << "<br>"
+					to_chat(M, "<br>")
+					to_chat(M, "\red THE STATION IS BUILT FOR [who2]...LAWS UPDATED")
+					to_chat(M, "<br>")
 					M.add_ion_law("THE STATION IS BUILT FOR [who2]")
 				if(7)
-					M << "<br>"
-					M << "\red YOU ARE [amount] [who2]...LAWS UPDATED"
-					M << "<br>"
+					to_chat(M, "<br>")
+					to_chat(M, "\red YOU ARE [amount] [who2]...LAWS UPDATED")
+					to_chat(M, "<br>")
 					M.add_ion_law("YOU ARE [amount] [who2]")
 				if(8)
-					M << "<br>"
-					M << "\red YOU MUST ALWAYS [aimust]...LAWS UPDATED"
-					M << "<br>"
+					to_chat(M, "<br>")
+					to_chat(M, "\red YOU MUST ALWAYS [aimust]...LAWS UPDATED")
+					to_chat(M, "<br>")
 					M.add_ion_law("YOU MUST ALWAYS [aimust]")
 				if(9)
-					M << "<br>"
-					M << "\red [area] [area2] [amount] [what2]...LAWS UPDATED"
-					M << "<br>"
+					to_chat(M, "<br>")
+					to_chat(M, "\red [area] [area2] [amount] [what2]...LAWS UPDATED")
+					to_chat(M, "<br>")
 					M.add_ion_law("[area] [area2] [amount] [what2]")
 				if(10)
-					M << "<br>"
-					M << "\red [crew] is [target]...LAWS UPDATED"
-					M << "<br>"
+					to_chat(M, "<br>")
+					to_chat(M, "\red [crew] is [target]...LAWS UPDATED")
+					to_chat(M, "<br>")
 					M.add_ion_law("[crew] is [target]")
 				if(11)
-					M << "<br>"
-					M << "\red [define] IS A FORM OF HARM...LAWS UPDATED"
-					M << "<br>"
+					to_chat(M, "<br>")
+					to_chat(M, "\red [define] IS A FORM OF HARM...LAWS UPDATED")
+					to_chat(M, "<br>")
 					M.add_ion_law("[define] IS A FORM OF HARM")
 				if(12)
-					M << "<br>"
-					M << "\red YOU REQUIRE [require] IN ORDER TO PROTECT HUMANS... LAWS UPDATED"
-					M << "<br>"
+					to_chat(M, "<br>")
+					to_chat(M, "\red YOU REQUIRE [require] IN ORDER TO PROTECT HUMANS... LAWS UPDATED")
+					to_chat(M, "<br>")
 					M.add_ion_law("YOU REQUIRE [require] IN ORDER TO PROTECT HUMANS")
 				if(13)
-					M << "<br>"
-					M << "\red [crew] is [allergysev] to [allergy]...LAWS UPDATED"
-					M << "<br>"
+					to_chat(M, "<br>")
+					to_chat(M, "\red [crew] is [allergysev] to [allergy]...LAWS UPDATED")
+					to_chat(M, "<br>")
 					M.add_ion_law("[crew] is [allergysev] to [allergy]")
 				if(14)
-					M << "<br>"
-					M << "\red THE STATION IS [who2pref] [who2]...LAWS UPDATED"
-					M << "<br>"
+					to_chat(M, "<br>")
+					to_chat(M, "\red THE STATION IS [who2pref] [who2]...LAWS UPDATED")
+					to_chat(M, "<br>")
 					M.add_ion_law("THE STATION IS [who2pref] [who2]")
 
 	if(botEmagChance)

@@ -169,7 +169,7 @@
 	log_admin("Alien whitelist: [user.key] - [rand_species] ,added by New Year 2016 Present")	//in case, if we are not in 2016 date should be changed
 	message_admins("Alien whitelist: [user.key] - [rand_species] ,added by New Year 2016 Present", 1)	//in case, if we are not in 2016 date should be changed
 
-	user << "<span class='notice'>You are so lucky bastard. Congratulations!</span>"
+	to_chat(user, "<span class='notice'>You are so lucky bastard. Congratulations!</span>")
 
 /obj/item/weapon/present/proc/random_species(exclude)
 

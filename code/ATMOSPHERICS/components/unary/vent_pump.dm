@@ -293,7 +293,7 @@
 	if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 		if (WT.remove_fuel(0,user))
-			user << "<span class='notice'>Now welding the vent.</span>"
+			to_chat(user, "<span class='notice'>Now welding the vent.</span>")
 			if(do_after(user, 20, target = src))
 				if(!src || !WT.isOn()) return
 				playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
@@ -306,15 +306,15 @@
 					welded = 0
 					update_icon()
 			else
-				user << "<span class='notice'>The welding tool needs to be on to start this task.</span>"
+				to_chat(user, "<span class='notice'>The welding tool needs to be on to start this task.</span>")
 		else
-			user << "<span class='notice'>You need more welding fuel to complete this task.</span>"
+			to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
 			return 1
 
 /obj/machinery/atmospherics/unary/vent_pump/examine(mob/user)
 	..()
 	if(src in oview(1, user) && welded)
-		user << "It seems welded shut."
+		to_chat(user, "It seems welded shut.")
 
 /obj/machinery/atmospherics/unary/vent_pump/power_change()
 	if(powered(power_channel))
@@ -327,20 +327,20 @@
 	if (!istype(W, /obj/item/weapon/wrench))
 		return ..()
 	if (!(stat & NOPOWER) && on)
-		user << "<span class='warning'>You cannot unwrench this [src], turn it off first.</span>"
+		to_chat(user, "<span class='warning'>You cannot unwrench this [src], turn it off first.</span>")
 		return 1
 	var/turf/T = src.loc
 	if (level==1 && isturf(T) && T.intact)
-		user << "<span class='warning'>You must remove the plating first.</span>"
+		to_chat(user, "<span class='warning'>You must remove the plating first.</span>")
 		return 1
 	var/datum/gas_mixture/int_air = return_air()
 	var/datum/gas_mixture/env_air = loc.return_air()
 	if ((int_air.return_pressure()-env_air.return_pressure()) > 2*ONE_ATMOSPHERE)
-		user << "<span class='warning'>You cannot unwrench this [src], it too exerted due to internal pressure.</span>"
+		to_chat(user, "<span class='warning'>You cannot unwrench this [src], it too exerted due to internal pressure.</span>")
 		add_fingerprint(user)
 		return 1
 	playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-	user << "<span class='notice'>You begin to unfasten \the [src]...</span>"
+	to_chat(user, "<span class='notice'>You begin to unfasten \the [src]...</span>")
 	if (do_after(user, 40, target = src))
 		user.visible_message( \
 			"[user] unfastens \the [src].", \

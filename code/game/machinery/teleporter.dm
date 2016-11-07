@@ -42,7 +42,7 @@
 			user.drop_from_inventory(L)
 			L.loc = src
 			locked = L
-			user << "<span class='notice'>You insert the GPS device into the [name]'s slot.</span>"
+			to_chat(user, "<span class='notice'>You insert the GPS device into the [name]'s slot.</span>")
 	else
 		..()
 	return
@@ -98,10 +98,10 @@
 		return
 
 	if(!check_hub_connection())
-		usr << "<span class='warning'>Error: Unable to detect hub.</span>"
+		to_chat(usr, "<span class='warning'>Error: Unable to detect hub.</span>")
 		return FALSE
 	if(calibrating)
-		usr << "<span class='warning'>Error: Calibration in progress. Stand by.</span>"
+		to_chat(usr, "<span class='warning'>Error: Calibration in progress. Stand by.</span>")
 		return FALSE
 
 	if(href_list["regimeset"])
@@ -121,21 +121,21 @@
 		target = get_turf(locked.locked_location)
 	if(href_list["calibrate"])
 		if(!target)
-			usr << "<span class='danger'>Error: No target set to calibrate to.</span>"
+			to_chat(usr, "<span class='danger'>Error: No target set to calibrate to.</span>")
 			return FALSE
 		if(power_station.teleporter_hub.calibrated || power_station.teleporter_hub.accurate >= 3)
-			usr << "<span class='warning'>Hub is already calibrated!</span>"
+			to_chat(usr, "<span class='warning'>Hub is already calibrated!</span>")
 			return FALSE
-		usr << "<span class='notice'>Processing hub calibration to target...</span>"
+		to_chat(usr, "<span class='notice'>Processing hub calibration to target...</span>")
 
 		calibrating = 1
 		spawn(50 * (3 - power_station.teleporter_hub.accurate)) //Better parts mean faster calibration
 			calibrating = 0
 			if(check_hub_connection())
 				power_station.teleporter_hub.calibrated = 1
-				usr << "<span class='notice'>Calibration complete.</span>"
+				to_chat(usr, "<span class='notice'>Calibration complete.</span>")
 			else
-				usr << "<span class='danger'>Error: Unable to detect hub.</span>"
+				to_chat(usr, "<span class='danger'>Error: Unable to detect hub.</span>")
 
 	updateDialog()
 
@@ -202,7 +202,7 @@
 		var/list/areaindex = list()
 		var/list/S = power_station.linked_stations
 		if(!S.len)
-			user << "<span class='alert'>No connected stations located.</span>"
+			to_chat(user, "<span class='alert'>No connected stations located.</span>")
 			return
 		for(var/obj/machinery/teleport/station/R in S)
 			var/turf/T = get_turf(R)
@@ -284,7 +284,7 @@
 
 /obj/machinery/teleport/hub/Bumped(M)
 	if(z == ZLEVEL_CENTCOMM)
-		M << "You can't use this here."
+		to_chat(M, "You can't use this here.")
 	if(is_ready())
 		teleport(M)
 		use_power(5000)
@@ -317,7 +317,7 @@
 					domutcheck(human)
 					human.UpdateAppearance()
 			//		if(human.dna && human.dna.species.id == "human")
-			//			M  << "<span class='italics'>You hear a buzzing in your ears.</span>"
+//						to_chat(M, "<span class='italics'>You hear a buzzing in your ears.</span>")
 			//			human.set_species(/datum/species/fly)
 
 					human.apply_effect((rand(120 - accurate * 40, 180 - accurate * 60)), IRRADIATE, 0)
@@ -408,9 +408,9 @@
 			if(linked_stations.len < efficiency)
 				linked_stations.Add(M.buffer)
 				M.buffer = null
-				user << "<span class='notice'>You upload the data from the [W.name]'s buffer.</span>"
+				to_chat(user, "<span class='notice'>You upload the data from the [W.name]'s buffer.</span>")
 			else
-				user << "<span class='alert'>This station cant hold more information, try to use better parts.</span>"
+				to_chat(user, "<span class='alert'>This station cant hold more information, try to use better parts.</span>")
 	if(default_deconstruction_screwdriver(user, "controller-o", "controller", W))
 		update_icon()
 		return
@@ -424,11 +424,11 @@
 		if(istype(W, /obj/item/device/multitool))
 			var/obj/item/device/multitool/M = W
 			M.buffer = src
-			user << "<span class='notice'>You download the data to the [W.name]'s buffer.</span>"
+			to_chat(user, "<span class='notice'>You download the data to the [W.name]'s buffer.</span>")
 			return
 		if(istype(W, /obj/item/weapon/wirecutters))
 			link_console_and_hub()
-			user << "<span class='notice'>You reconnect the station to nearby machinery.</span>"
+			to_chat(user, "<span class='notice'>You reconnect the station to nearby machinery.</span>")
 			return
 
 /obj/machinery/teleport/station/attack_paw()

@@ -24,11 +24,11 @@
 		return
 
 	if(!ishuman(usr))
-		usr << "\red You want, but you don't. You try, but you can't."
+		to_chat(usr, "\red You want, but you don't. You try, but you can't.")
 		return
 
 	if(content)
-		usr << "\blue The board is full! Clean it to write again."
+		to_chat(usr, "\blue The board is full! Clean it to write again.")
 		return
 
 	add_fingerprint(usr)
@@ -46,18 +46,18 @@
 
 
 	if(!ishuman(usr))
-		usr << "\red You want, but you don't. You try, but you can't."
+		to_chat(usr, "\red You want, but you don't. You try, but you can't.")
 		return
 
 	if(content)
-		usr << "\blue The board is full! Clean it to write again."
+		to_chat(usr, "\blue The board is full! Clean it to write again.")
 		return
 
 	//part wrom paper/write
 	var/t =  input("What do you want to write here? 20 lines or 2000 symbols max.", "Write", null, null) as message
 
 	if(length(t) > 2048)
-		usr << "\blue You can't post it all on board!"
+		to_chat(usr, "\blue You can't post it all on board!")
 		return
 
 	//t = checkhtml(t)
@@ -66,7 +66,7 @@
 	// check for exploits
 	for(var/bad in paper_blacklist)
 		if(findtext(t,bad))
-			usr << "\blue You think to yourself, \"Hm.. this is only chalkboard...\""
+			to_chat(usr, "\blue You think to yourself, \"Hm.. this is only chalkboard...\"")
 			log_admin("Chalkboard: [usr] tried to use forbidden word in [src]: [bad].")
 			message_admins("Chalkboard: [usr] tried to use forbidden word in [src]: [bad].")
 			return
@@ -77,7 +77,7 @@
 	if(!t)
 		return
 	if(count_occurrences(t, "<BR>") > 20)
-		usr << "\blue You can't post it all on board!"
+		to_chat(usr, "\blue You can't post it all on board!")
 		return
 
 	content = t
@@ -98,7 +98,7 @@
 		return
 
 	if(!ishuman(usr))
-		usr << "\red You want, but you don't. You try, but you can't."
+		to_chat(usr, "\red You want, but you don't. You try, but you can't.")
 		return
 
 	if(status != CB_WET)

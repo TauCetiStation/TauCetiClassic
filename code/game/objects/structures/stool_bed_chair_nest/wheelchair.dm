@@ -22,7 +22,7 @@
 		if(user==pulling)
 			pulling = null
 			user.pulledby = null
-			user << "<span class='red'>You lost your grip!</span>"
+			to_chat(user, "<span class='red'>You lost your grip!</span>")
 		return
 	if(user.pulling && (user == pulling))
 		pulling = null
@@ -36,10 +36,10 @@
 		if(user==pulling)
 			return
 	if(pulling && (get_dir(src.loc, pulling.loc) == direction))
-		user << "<span class='red'>You cannot go there."
+		to_chat(user, "<span class='red'>You cannot go there.")
 		return
 	if(pulling && buckled_mob && (buckled_mob == user))
-		user << "<span class='red'>You cannot drive while being pushed.</span>"
+		to_chat(user, "<span class='red'>You cannot drive while being pushed.</span>")
 		return
 
 	// Let's roll
@@ -91,7 +91,7 @@
 					unbuckle_mob()
 			if (pulling && (get_dist(src, pulling) > 1))
 				pulling.pulledby = null
-				pulling << "<span class='red'>You lost your grip!</span>"
+				to_chat(pulling, "<span class='red'>You lost your grip!</span>")
 				pulling = null
 		else
 			if (occupant && (src.loc != occupant.loc))
@@ -110,7 +110,7 @@
 	if(over_object == usr && in_range(src, usr))
 		if(!ishuman(usr))	return
 		if(usr == buckled_mob)
-			usr << "<span class='red'>You realize you are unable to push the wheelchair you sit in.</span>"
+			to_chat(usr, "<span class='red'>You realize you are unable to push the wheelchair you sit in.</span>")
 			return
 		if(!pulling)
 			pulling = usr
@@ -118,13 +118,13 @@
 			if(usr.pulling)
 				usr.stop_pulling()
 			usr.dir = get_dir(usr, src)
-			usr << "You grip \the [name]'s handles."
+			to_chat(usr, "You grip \the [name]'s handles.")
 		else
 			if(usr != pulling)
 				for(var/mob/O in viewers(pulling, null))
 					O.show_message("<span class='red'>[usr] breaks [pulling]'s grip on the wheelchair.</span>", 1)
 			else
-				usr << "You let go of \the [name]'s handles."
+				to_chat(usr, "You let go of \the [name]'s handles.")
 			pulling.pulledby = null
 			pulling = null
 		return

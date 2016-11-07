@@ -317,7 +317,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 					break
 			if(newname)
 				break	//That's a suitable name!
-			src << "Sorry, that [role]-name wasn't appropriate, please try another. It's possibly too long/short, has bad characters or is already taken."
+			to_chat(src, "Sorry, that [role]-name wasn't appropriate, please try another. It's possibly too long/short, has bad characters or is already taken.")
 
 		if(!newname)	//we'll stick with the oldname then
 			return
@@ -326,8 +326,8 @@ Turf and target are seperate in case you want to teleport some distance from a t
 			if(isAI(src))
 				var/mob/living/silicon/ai/A = src
 				oldname = null//don't bother with the records update crap
-				//world << "<b>[newname] is the AI!</b>"
-				//world << sound('sound/AI/newAI.ogg')
+//				to_chat(world, "<b>[newname] is the AI!</b>")
+//				to_chat(world, sound('sound/AI/newAI.ogg'))
 				// Set eyeobj name
 				if(A.eyeobj)
 					A.eyeobj.name = "[newname] (AI Eye)"
@@ -1519,10 +1519,10 @@ var/mob/dview/dview_mob = new
 
 				count += 1
 				var/pct = round(100 * count / total)
-				world << "[pct]%"
+				to_chat(world, "[pct]%")
 				sleep(world.tick_lag)
 
-		world << ftp(master, "damage_overlays.dmi")
+		to_chat(world, ftp(master, "damage_overlays.dmi"))
 
 /mob/verb/gen_dam_dmi()
 	generate_damage_overlays_dmi()

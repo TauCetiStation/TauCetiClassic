@@ -70,29 +70,29 @@ var/bomb_set
 			if (src.opened == 0)
 				src.opened = 1
 				overlays += image(icon, "npanel_open")
-				user << "You unscrew the control panel of [src]."
+				to_chat(user, "You unscrew the control panel of [src].")
 
 			else
 				src.opened = 0
 				overlays -= image(icon, "npanel_open")
-				user << "You screw the control panel of [src] back on."
+				to_chat(user, "You screw the control panel of [src] back on.")
 		else if (src.auth)
 			if (src.opened == 0)
 				src.opened = 1
 				overlays += image(icon, "npanel_open")
-				user << "You unscrew the control panel of [src]."
+				to_chat(user, "You unscrew the control panel of [src].")
 
 			else
 				src.opened = 0
 				overlays -= image(icon, "npanel_open")
-				user << "You screw the control panel of [src] back on."
+				to_chat(user, "You screw the control panel of [src] back on.")
 		else
 			if (src.opened == 0)
-				user << "The [src] emits a buzzing noise, the panel staying locked in."
+				to_chat(user, "The [src] emits a buzzing noise, the panel staying locked in.")
 			if (src.opened == 1)
 				src.opened = 0
 				overlays -= image(icon, "npanel_open")
-				user << "You screw the control panel of [src] back on."
+				to_chat(user, "You screw the control panel of [src] back on.")
 			flick("nuclearbombc", src)
 
 		return
@@ -117,7 +117,7 @@ var/bomb_set
 					var/obj/item/weapon/weldingtool/WT = O
 					if(!WT.isOn()) return
 					if (WT.get_fuel() < 5) // uses up 5 fuel.
-						user << "\red You need more fuel to complete this task."
+						to_chat(user, "\red You need more fuel to complete this task.")
 						return
 
 					user.visible_message("[user] starts cutting thru something on [src] like \he knows what to do.", "With [O] you start cutting thru first layer...")
@@ -144,7 +144,7 @@ var/bomb_set
 					var/obj/item/weapon/weldingtool/WT = O
 					if(!WT.isOn()) return
 					if (WT.get_fuel() < 5) // uses up 5 fuel.
-						user << "\red You need more fuel to complete this task."
+						to_chat(user, "\red You need more fuel to complete this task.")
 						return
 
 					user.visible_message("[user] starts cutting something on [src].. Again.", "You start cutting apart the safety plate with [O]...")
@@ -183,7 +183,7 @@ var/bomb_set
 					var/obj/item/weapon/weldingtool/WT = O
 					if(!WT.isOn()) return
 					if (WT.get_fuel() < 5) // uses up 5 fuel.
-						user << "\red You need more fuel to complete this task."
+						to_chat(user, "\red You need more fuel to complete this task.")
 						return
 
 					user.visible_message("[user] starts cutting loose the anchoring bolt covers on [src].", "You start cutting loose the anchoring bolt covers with [O]...")
@@ -210,7 +210,7 @@ var/bomb_set
 					var/obj/item/weapon/weldingtool/WT = O
 					if(!WT.isOn()) return
 					if (WT.get_fuel() < 5) // uses up 5 fuel.
-						user << "\red You need more fuel to complete this task."
+						to_chat(user, "\red You need more fuel to complete this task.")
 						return
 
 					user.visible_message("[user] starts cutting apart the anchoring system sealant on [src].", "You start cutting apart the anchoring system's sealant with [O]...")
@@ -251,11 +251,11 @@ var/bomb_set
 /obj/machinery/nuclearbomb/attack_hand(mob/user)
 	if (src.extended)
 		if (!ishuman(user))
-			usr << "\red You don't have the dexterity to do this!"
+			to_chat(usr, "\red You don't have the dexterity to do this!")
 			return 1
 
 		if (!ishuman(user))
-			usr << "\red You don't have the dexterity to do this!"
+			to_chat(usr, "\red You don't have the dexterity to do this!")
 			return 1
 		user.set_machine(src)
 		var/dat = text("<TT><B>Nuclear Fission Explosive</B><BR>\nAuth. Disk: <A href='?src=\ref[];auth=1'>[]</A><HR>", src, (src.auth ? "++++++++++" : "----------"))
@@ -308,14 +308,14 @@ obj/machinery/nuclearbomb/proc/nukehack_win(mob/user)
 	if (!usr.canmove || usr.stat || usr.restrained())
 		return
 	if (!ishuman(usr))
-		usr << "\red You don't have the dexterity to do this!"
+		to_chat(usr, "\red You don't have the dexterity to do this!")
 		return 1
 
 	if (src.deployable)
-		usr << "\red You close several panels to make [src] undeployable."
+		to_chat(usr, "\red You close several panels to make [src] undeployable.")
 		src.deployable = 0
 	else
-		usr << "\red You adjust some panels to make [src] deployable."
+		to_chat(usr, "\red You adjust some panels to make [src] deployable.")
 		src.deployable = 1
 	return
 
@@ -328,15 +328,15 @@ obj/machinery/nuclearbomb/proc/nukehack_win(mob/user)
 		return
 	if(href_list["act"])
 		if(isdrone(src))
-			usr << "Impossible."
+			to_chat(usr, "Impossible.")
 			return FALSE
 		var/temp_wire = href_list["wire"]
 		if(href_list["act"] == "pulse")
 			if (!istype(usr.get_active_hand(), /obj/item/device/multitool))
-				usr << "You need a multitool!"
+				to_chat(usr, "You need a multitool!")
 			else
 				if(src.wires[temp_wire])
-					usr << "You can't pulse a cut wire."
+					to_chat(usr, "You can't pulse a cut wire.")
 				else
 					if(src.light_wire == temp_wire)
 						src.lighthack = !src.lighthack
@@ -358,7 +358,7 @@ obj/machinery/nuclearbomb/proc/nukehack_win(mob/user)
 							visible_message("\blue The [src] emits a quiet whirling noise!")
 		if(href_list["act"] == "wire")
 			if (!istype(usr.get_active_hand(), /obj/item/weapon/wirecutters))
-				usr << "You need wirecutters!"
+				to_chat(usr, "You need wirecutters!")
 			else
 				wires[temp_wire] = !wires[temp_wire]
 				if(src.safety_wire == temp_wire)
@@ -418,7 +418,7 @@ obj/machinery/nuclearbomb/proc/nukehack_win(mob/user)
 				if (src.timing == -1.0)
 					return FALSE
 				if (src.safety)
-					usr << "\red The safety is still on."
+					to_chat(usr, "\red The safety is still on.")
 					return FALSE
 				src.timing = !( src.timing )
 				if (src.timing)
@@ -508,13 +508,13 @@ obj/machinery/nuclearbomb/proc/nukehack_win(mob/user)
 			if(ticker.mode.name == "nuclear emergency")
 				ticker.mode:nukes_left --
 			else
-				world << "<B>The station was destoyed by the nuclear blast!</B>"
+				to_chat(world, "<B>The station was destoyed by the nuclear blast!</B>")
 
 			ticker.mode.station_was_nuked = (off_station<2)	//offstation==1 is a draw. the station becomes irradiated and needs to be evacuated.
 															//kinda shit but I couldn't  get permission to do what I wanted to do.
 
 			if(!ticker.mode.check_finished())//If the mode does not deal with the nuke going off so just reboot because everyone is stuck as is
-				world << "<B>Resetting in 45 seconds!</B>"
+				to_chat(world, "<B>Resetting in 45 seconds!</B>")
 
 				feedback_set_details("end_error","nuke - unhandled ending")
 
@@ -546,7 +546,9 @@ obj/machinery/nuclearbomb/proc/nukehack_win(mob/user)
 /obj/item/weapon/disk/nuclear/process()
 	var/turf/disk_loc = get_turf(src)
 	if(disk_loc.z > ZLEVEL_CENTCOM)
-		get(src, /mob) << "<span class='danger'>You can't help but feel that you just lost something back there...</span>"
+		var/holder = get(src, /mob)
+		if(holder)
+			to_chat(holder, "<span class='danger'>You can't help but feel that you just lost something back there...</span>")
 		qdel(src)
 
 /obj/item/weapon/disk/nuclear/Destroy()

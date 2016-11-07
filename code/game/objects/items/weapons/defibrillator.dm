@@ -43,7 +43,7 @@
 					damtype = "fire"
 					force = 20
 			else
-				user<<"Internal battery worn out. Recharge needed."
+				to_chat(user, "Internal battery worn out. Recharge needed.")
 
 	proc/discharge()
 		//icon_state = "Defibunit"
@@ -104,11 +104,11 @@
 
 	proc/return_to_body_dialog(mob/living/carbon/returnable)
 		if (returnable.key) //in body?
-			returnable << 'sound/misc/mario_1up.ogg'
+			to_chat(returnable, 'sound/misc/mario_1up.ogg')
 		else if(returnable.mind)
 			for(var/mob/dead/observer/ghost in player_list)
 				if(ghost.mind == returnable.mind && ghost.can_reenter_corpse)
-					ghost << 'sound/misc/mario_1up.ogg'
+					to_chat(ghost, 'sound/misc/mario_1up.ogg')
 					var/answer = alert(ghost,"You have been reanimated. Do you want to return to body?","Reanimate","Yes","No")
 					if(answer == "Yes")
 						ghost.reenter_corpse()

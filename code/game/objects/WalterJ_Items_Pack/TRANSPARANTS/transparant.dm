@@ -22,7 +22,7 @@
 /obj/item/weapon/transparant/attackby(obj/item/I, mob/user)
 	..()
 	if(icon_state!="blank")
-		user << "<span class='notice'>Something allready written on this sign.</span>"
+		to_chat(user, "<span class='notice'>Something allready written on this sign.</span>")
 		return
 	if(istype(I, /obj/item/weapon/pen))
 
@@ -33,7 +33,7 @@
 		user.remove_from_mob(src)
 		user.put_in_hands(W)
 		qdel(src)
-		user << "<span class='notice'>You writed: [targName] on your sign.</span>"
+		to_chat(user, "<span class='notice'>You writed: [targName] on your sign.</span>")
 		return
 
 	if(istype(I, /obj/item/toy/crayon))
@@ -45,15 +45,15 @@
 		user.remove_from_mob(src)
 		user.put_in_hands(W)
 		qdel(src)
-		user << "<span class='notice'>You painted your blank sign as [W.name].</span>"
+		to_chat(user, "<span class='notice'>You painted your blank sign as [W.name].</span>")
 
 /obj/item/weapon/transparant/attack_self(mob/user)
 	for(var/mob/O in viewers(user, null))
-		O.show_message(text("[] shows you: \icon[] [src.blood_DNA ? "bloody " : ""][]: it says: []", user, src, src.name, src.desc), 1)
+		O.show_message("[user] shows you: [bicon(src)] [src.blood_DNA ? "bloody " : ""][src.name]: it says: [src.desc]", 1)
 
 /obj/item/weapon/transparant/attack(mob/M, mob/user)
 	..()
-	M.show_message("<span class='attack'>\The <EM>[src.blood_DNA ? "bloody " : ""]\icon[src][src.name]</EM> says: <EM>[src.desc]</EM></span>", 2)
+	M.show_message("<span class='attack'>\The <EM>[src.blood_DNA ? "bloody " : ""][bicon(src)][src.name]</EM> says: <EM>[src.desc]</EM></span>", 2)
 
 
 /obj/item/weapon/transparant/update_icon()
@@ -115,4 +115,4 @@
 
 		user.put_in_hands(W)
 
-		user << "<span class='notice'>You attached a big cardboard sign to the metal rod, making a blank transparant.</span>"
+		to_chat(user, "<span class='notice'>You attached a big cardboard sign to the metal rod, making a blank transparant.</span>")

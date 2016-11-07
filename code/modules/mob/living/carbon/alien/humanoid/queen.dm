@@ -60,7 +60,7 @@
 	set category = "Alien"
 
 	if(locate(/obj/effect/alien/egg) in get_turf(src))
-		src << "There's already an egg here."
+		to_chat(src, "There's already an egg here.")
 		return
 
 	if(powerc(75,1))//Can't plant eggs on spess tiles. That's silly.

@@ -16,11 +16,11 @@
 
 	var/failure = 0
 	if (istype(usr.loc,/mob/) || usr.lying || usr.stunned || usr.buckled || usr.stat)
-		usr << "\red You can't jump right now!"
+		to_chat(usr, "\red You can't jump right now!")
 		return
 
 	if(usr.hulk_cd)
-		usr << "\red You need a bit of time, before you can use any ability!"
+		to_chat(usr, "\red You need a bit of time, before you can use any ability!")
 		return
 
 	usr.hulk_cd = 1
@@ -112,12 +112,12 @@
 		usr.canmove = 1
 		usr.layer = prevLayer
 	else
-		usr << "\red You need a ground to do this!"
+		to_chat(usr, "\red You need a ground to do this!")
 		return
 
 	if (istype(usr.loc,/obj/))
 		var/obj/container = usr.loc
-		usr << "\red You leap and slam your head against the inside of [container]! Ouch!"
+		to_chat(usr, "\red You leap and slam your head against the inside of [container]! Ouch!")
 		usr.paralysis += 3
 		usr.weakened += 5
 		container.visible_message("\red <b>[usr.loc]</b> emits a loud thump and rattles a bit.")
@@ -143,20 +143,20 @@
 
 	var/turf/T = get_turf(get_step(usr,usr.dir))
 	for(var/mob/living/M in T.contents)
-		usr << "\red Something right in front of you!"
+		to_chat(usr, "\red Something right in front of you!")
 		return
 	T = get_turf(get_step(T,usr.dir))
 	for(var/mob/living/M in T.contents)
-		usr << "\red Something right in front of you!"
+		to_chat(usr, "\red Something right in front of you!")
 		return
 
 	var/failure = 0
 	if (istype(usr.loc,/mob/) || usr.lying || usr.stunned || usr.buckled || usr.stat)
-		usr << "\red You can't dash right now!"
+		to_chat(usr, "\red You can't dash right now!")
 		return
 
 	if(usr.hulk_cd)
-		usr << "\red You need a bit of time, before you can use any ability!"
+		to_chat(usr, "\red You need a bit of time, before you can use any ability!")
 		return
 
 	usr.hulk_cd = 1
@@ -295,12 +295,12 @@
 		usr.canmove = 1
 		usr.layer = prevLayer
 	else
-		usr << "\red You need a ground to do this!"
+		to_chat(usr, "\red You need a ground to do this!")
 		return
 
 	if (istype(usr.loc,/obj/))
 		var/obj/container = usr.loc
-		usr << "\red You dash and slam your head against the inside of [container]! Ouch!"
+		to_chat(usr, "\red You dash and slam your head against the inside of [container]! Ouch!")
 		usr.paralysis += 3
 		usr.weakened += 5
 		container.visible_message("\red <b>[usr.loc]</b> emits a loud thump and rattles a bit.")
@@ -325,11 +325,11 @@
 		return
 
 	if (usr.lying || usr.stunned || usr.stat)
-		usr << "\red You can't smash right now!"
+		to_chat(usr, "\red You can't smash right now!")
 		return
 
 	if(usr.hulk_cd)
-		usr << "\red You need a bit of time, before you can use any ability!"
+		to_chat(usr, "\red You need a bit of time, before you can use any ability!")
 		return
 
 	usr.hulk_cd = 1
@@ -353,7 +353,7 @@
 		if(istype(tile))
 			tile.break_tile()
 		if(istype(W,/turf/simulated/wall/r_wall))
-			usr << "\red <B>Ouch!</B> This wall is too strong."
+			to_chat(usr, "\red <B>Ouch!</B> This wall is too strong.")
 			var/mob/living/carbon/human/H = usr
 			H.take_overall_damage(25, used_weapon = "reinforced wall")
 		else if(istype(W,/turf/simulated/wall))
@@ -418,7 +418,7 @@
 
 	if (istype(usr.loc,/obj/))
 		var/obj/container = usr.loc
-		usr << "\red You smash [container]!"
+		to_chat(usr, "\red You smash [container]!")
 		container.visible_message("\red <b>[usr.loc]</b> emits a loud thump and rattles a bit.")
 		playsound(usr.loc, 'sound/effects/bang.ogg', 50, 1)
 		var/wiggle = 6
@@ -449,12 +449,12 @@
 		if(user.a_intent == "hurt")
 			playsound(user.loc, 'sound/effects/grillehit.ogg', 50, 1)
 			if (prob(75))
-				user << text("\blue You destroy that girder!")
+				to_chat(user, text("\blue You destroy that girder!"))
 				user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 				new /obj/item/stack/sheet/metal(get_turf(src))
 				qdel(src)
 			else
-				user << text("\blue You punch the girder.")
+				to_chat(user, text("\blue You punch the girder."))
 		else
-			user << "\blue You push the girder but nothing happens!"
+			to_chat(user, "\blue You push the girder but nothing happens!")
 		return

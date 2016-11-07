@@ -43,7 +43,7 @@
 	t+= "\blue Phoron : [environment.phoron] \n"
 	t+= "\blue Carbon Dioxide: [environment.carbon_dioxide] \n"
 	for(var/datum/gas/trace_gas in environment.trace_gases)
-		usr << "\blue [trace_gas.type]: [trace_gas.moles] \n"
+		to_chat(usr, "\blue [trace_gas.type]: [trace_gas.moles] \n")
 
 	usr.show_message(t, 1)
 
@@ -69,9 +69,9 @@
 					return
 	// Added voice muffling for Issue 41.
 	if(stat == UNCONSCIOUS || sleeping > 0)
-		src << "<I>... You can almost hear someone talking ...</I>"
+		to_chat(src, "<I>... You can almost hear someone talking ...</I>")
 	else
-		src << msg
+		to_chat(src, msg)
 	return
 
 // Show a message to all mobs in sight of this one
@@ -221,7 +221,7 @@
 	if(mind)
 		mind.show_memory(src)
 	else
-		src << "The game appears to have misplaced your mind datum, so we can't show you your notes."
+		to_chat(src, "The game appears to have misplaced your mind datum, so we can't show you your notes.")
 
 /mob/verb/add_memory(msg as message)
 	set name = "Add Note"
@@ -233,7 +233,7 @@
 	if(mind)
 		mind.store_memory(msg)
 	else
-		src << "The game appears to have misplaced your mind datum, so we can't show you your notes."
+		to_chat(src, "The game appears to have misplaced your mind datum, so we can't show you your notes.")
 
 /mob/proc/store_memory(msg, popup, sane = 1)
 	msg = copytext(msg, 1, MAX_MESSAGE_LEN)
@@ -252,7 +252,7 @@
 /mob/proc/update_flavor_text()
 	set src in usr
 	if(usr != src)
-		usr << "No."
+		to_chat(usr, "No.")
 	var/msg = input(usr,"Set the flavor text in your 'examine' verb. Can also be used for OOC notes about your character.","Flavor Text",html_decode(flavor_text)) as message|null
 
 	if(msg != null)
@@ -263,8 +263,9 @@
 
 /mob/proc/warn_flavor_changed()
 	if(flavor_text && flavor_text != "") // don't spam people that don't use it!
-		src << "<h2 class='alert'>OOC Warning:</h2>"
-		src << "<span class='alert'>Your flavor text is likely out of date! <a href='byond://?src=\ref[src];flavor_change=1'>Change</a></span>"
+		to_chat(src, "<h2 class='alert'>OOC Warning:</h2>")
+		to_chat(src, "<span class='alert'>Your flavor text is likely out of date! <a href='byond://?src=\ref[src];flavor_change=1'>Change</a></span>")
+
 
 /mob/proc/print_flavor_text()
 	if(flavor_text && flavor_text != "")
@@ -280,7 +281,7 @@
 	set category = "IC"
 
 	if(sdisabilities & BLIND || blinded || stat == UNCONSCIOUS)
-		usr << "<span class='notice'>Something is there but you can't see it.</span>"
+		to_chat(usr, "<span class='notice'>Something is there but you can't see it.</span>")
 		return
 
 	face_atom(A)
@@ -291,20 +292,20 @@
 	set category = "OOC"
 
 	if(!abandon_allowed)
-		usr << "\blue Respawn is disabled."
+		to_chat(usr, "\blue Respawn is disabled.")
 		return
 	if(stat != DEAD || !ticker)
-		usr << "\blue <B>You must be dead to use this!</B>"
+		to_chat(usr, "\blue <B>You must be dead to use this!</B>")
 		return
 	if(ticker && istype(ticker.mode, /datum/game_mode/meteor))
-		usr << "\blue Respawn is disabled for this roundtype."
+		to_chat(usr, "\blue Respawn is disabled for this roundtype.")
 		return
 	else
 		var/deathtime = world.time - src.timeofdeath
 		if(istype(src,/mob/dead/observer))
 			var/mob/dead/observer/G = src
 			if(G.has_enabled_antagHUD == 1 && config.antag_hud_restricted)
-				usr << "\blue <B>Upon using the antagHUD you forfeighted the ability to join the round.</B>"
+				to_chat(usr, "\blue <B>Upon using the antagHUD you forfeighted the ability to join the round.</B>")
 				return
 		var/deathtimeminutes = round(deathtime / 600)
 		var/pluralcheck = "minute"
@@ -317,15 +318,15 @@
 		var/deathtimeseconds = round((deathtime - deathtimeminutes * 600) / 10, 1)
 
 		if(deathtime < config.deathtime_required && !(client.holder && (client.holder.rights & R_ADMIN)))	//Holders with R_ADMIN can give themselvs respawn, so it doesn't matter
-			usr << "You have been dead for[pluralcheck] [deathtimeseconds] seconds."
-			usr << "You must wait 30 minutes to respawn!"
+			to_chat(usr, "You have been dead for[pluralcheck] [deathtimeseconds] seconds.")
+			to_chat(usr, "You must wait 30 minutes to respawn!")
 			return
 		else
-			usr << "You can respawn now, enjoy your new life!"
+			to_chat(usr, "You can respawn now, enjoy your new life!")
 
 	log_game("[usr.name]/[usr.key] used abandon mob.")
 
-	usr << "\blue <B>Make sure to play a different character, and please roleplay correctly!</B>"
+	to_chat(usr, "\blue <B>Make sure to play a different character, and please roleplay correctly!</B>")
 
 	if(!client)
 		log_game("[usr.key] AM failed due to disconnect.")
@@ -352,6 +353,7 @@
 
 	usr << link("http://tauceti.ru/forums/index.php?topic=3551")
 
+
 /mob/verb/observe()
 	set name = "Observe"
 	set category = "OOC"
@@ -360,7 +362,7 @@
 	if(client.holder && (client.holder.rights & R_ADMIN))
 		is_admin = TRUE
 	else if(stat != DEAD || istype(src, /mob/new_player) || jobban_isbanned(src, "Observer"))
-		usr << "\blue You must be observing to use this!"
+		to_chat(usr, "\blue You must be observing to use this!")
 		return
 
 	if(is_admin && stat == DEAD)
@@ -463,7 +465,7 @@
 		if(ishuman(AM))
 			var/mob/living/carbon/human/H = AM
 			if(H.pull_damage())
-				src << "<span class='danger'>Pulling \the [H] in their current condition would probably be a bad idea.</span>"
+				to_chat(src, "<span class='danger'>Pulling \the [H] in their current condition would probably be a bad idea.</span>")
 
 		count_pull_debuff()
 
@@ -504,7 +506,7 @@
 /mob/proc/see(message)
 	if(!is_active())
 		return 0
-	src << message
+	to_chat(src, message)
 	return 1
 
 /mob/proc/show_viewers(message)
@@ -867,11 +869,11 @@ mob/proc/yank_out_object()
 	usr.next_move = world.time + 20
 
 	if(usr.stat == UNCONSCIOUS)
-		usr << "You are unconcious and cannot do that!"
+		to_chat(usr, "You are unconcious and cannot do that!")
 		return
 
 	if(usr.restrained())
-		usr << "You are restrained and cannot do that!"
+		to_chat(usr, "You are restrained and cannot do that!")
 		return
 
 	var/mob/S = src
@@ -885,17 +887,17 @@ mob/proc/yank_out_object()
 	valid_objects = get_visible_implants(1)
 	if(!valid_objects.len)
 		if(self)
-			src << "You have nothing stuck in your body that is large enough to remove."
+			to_chat(src, "You have nothing stuck in your body that is large enough to remove.")
 		else
-			U << "[src] has nothing stuck in their wounds that is large enough to remove."
+			to_chat(U, "[src] has nothing stuck in their wounds that is large enough to remove.")
 		return
 
 	var/obj/item/weapon/selection = input("What do you want to yank out?", "Embedded objects") in valid_objects
 
 	if(self)
-		src << "<span class='warning'>You attempt to get a good grip on the [selection] in your body.</span>"
+		to_chat(src, "<span class='warning'>You attempt to get a good grip on the [selection] in your body.</span>")
 	else
-		U << "<span class='warning'>You attempt to get a good grip on the [selection] in [S]'s body.</span>"
+		to_chat(U, "<span class='warning'>You attempt to get a good grip on the [selection] in [S]'s body.</span>")
 
 	if(!do_after(U, 80, target = S))
 		return

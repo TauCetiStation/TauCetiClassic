@@ -4,10 +4,10 @@
 		if(istype(T,/turf/simulated) && T:zone)
 			T:zone:dbg_data(src)
 		else
-			mob << "No zone here."
+			to_chat(mob, "No zone here.")
 			var/datum/gas_mixture/mix = T.return_air()
-			mob << "[mix.return_pressure()] kPa [mix.temperature]C"
-			mob << "O2: [mix.oxygen] N2: [mix.nitrogen] CO2: [mix.carbon_dioxide] TX: [mix.phoron]"
+			to_chat(mob, "[mix.return_pressure()] kPa [mix.temperature]C")
+			to_chat(mob, "O2: [mix.oxygen] N2: [mix.nitrogen] CO2: [mix.carbon_dioxide] TX: [mix.phoron]")
 	else
 		if(zone_debug_images)
 			for(var/zone in  zone_debug_images)
@@ -33,9 +33,9 @@
 
 	if(direction == "N/A")
 		if(!(T.c_airblock(T) & AIR_BLOCKED))
-			mob << "The turf can pass air! :D"
+			to_chat(mob, "The turf can pass air! :D")
 		else
-			mob << "No air passage :x"
+			to_chat(mob, "No air passage :x")
 		return
 
 	var/turf/simulated/other_turf = get_step(T, direction_list[direction])
@@ -47,29 +47,29 @@
 
 	if(o_block & AIR_BLOCKED)
 		if(t_block & AIR_BLOCKED)
-			mob << "Neither turf can connect. :("
+			to_chat(mob, "Neither turf can connect. :(")
 
 		else
-			mob << "The initial turf only can connect. :\\"
+			to_chat(mob, "The initial turf only can connect. :\\")
 	else
 		if(t_block & AIR_BLOCKED)
-			mob << "The other turf can connect, but not the initial turf. :/"
+			to_chat(mob, "The other turf can connect, but not the initial turf. :/")
 
 		else
-			mob << "Both turfs can connect! :)"
+			to_chat(mob, "Both turfs can connect! :)")
 
-	mob << "Additionally, \..."
+	to_chat(mob, "Additionally, \...")
 
 	if(o_block & ZONE_BLOCKED)
 		if(t_block & ZONE_BLOCKED)
-			mob << "neither turf can merge."
+			to_chat(mob, "neither turf can merge.")
 		else
-			mob << "the other turf cannot merge."
+			to_chat(mob, "the other turf cannot merge.")
 	else
 		if(t_block & ZONE_BLOCKED)
-			mob << "the initial turf cannot merge."
+			to_chat(mob, "the initial turf cannot merge.")
 		else
-			mob << "both turfs can merge."
+			to_chat(mob, "both turfs can merge.")
 
 
 /*zone/proc/DebugDisplay(client/client)
@@ -90,34 +90,34 @@
 		for(var/turf/space/S in unsimulated_tiles)
 			current_zone_images += image('icons/misc/debug_space.dmi', S, null, TURF_LAYER)
 
-		client << "<u>Zone Air Contents</u>"
-		client << "Oxygen: [air.oxygen]"
-		client << "Nitrogen: [air.nitrogen]"
-		client << "Phoron: [air.phoron]"
-		client << "Carbon Dioxide: [air.carbon_dioxide]"
-		client << "Temperature: [air.temperature] K"
-		client << "Heat Energy: [air.temperature * air.heat_capacity()] J"
-		client << "Pressure: [air.return_pressure()] KPa"
-		client << ""
-		client << "Space Tiles: [length(unsimulated_tiles)]"
-		client << "Movable Objects: [length(movables())]"
-		client << "<u>Connections: [length(connections)]</u>"
+		to_chat(client, "<u>Zone Air Contents</u>")
+		to_chat(client, "Oxygen: [air.oxygen]")
+		to_chat(client, "Nitrogen: [air.nitrogen]")
+		to_chat(client, "Phoron: [air.phoron]")
+		to_chat(client, "Carbon Dioxide: [air.carbon_dioxide]")
+		to_chat(client, "Temperature: [air.temperature] K")
+		to_chat(client, "Heat Energy: [air.temperature * air.heat_capacity()] J")
+		to_chat(client, "Pressure: [air.return_pressure()] KPa")
+		to_chat(client, "")
+		to_chat(client, "Space Tiles: [length(unsimulated_tiles)]")
+		to_chat(client, "Movable Objects: [length(movables())]")
+		to_chat(client, "<u>Connections: [length(connections)]</u>")
 
 		for(var/connection/C in connections)
-			client << "\ref[C] [C.A] --> [C.B] [(C.indirect?"Open":"Closed")]"
+			to_chat(client, "\ref[C] [C.A] --> [C.B] [(C.indirect?"Open":"Closed")]")
 			current_zone_images += image('icons/misc/debug_connect.dmi', C.A, null, TURF_LAYER)
 			current_zone_images += image('icons/misc/debug_connect.dmi', C.B, null, TURF_LAYER)
 
-		client << "Connected Zones:"
+		to_chat(client, "Connected Zones:")
 		for(var/zone/zone in connected_zones)
-			client << "\ref[zone] [zone] - [connected_zones[zone]] (Connected)"
+			to_chat(client, "\ref[zone] [zone] - [connected_zones[zone]] (Connected)")
 
 		for(var/zone/zone in closed_connection_zones)
-			client << "\ref[zone] [zone] - [closed_connection_zones[zone]] (Unconnected)"
+			to_chat(client, "\ref[zone] [zone] - [closed_connection_zones[zone]] (Unconnected)")
 
 		for(var/C in connections)
 			if(!istype(C,/connection))
-				client << "[C] (Not Connection!)"
+				to_chat(client, "[C] (Not Connection!)")
 
 		if(!client.zone_debug_images)
 			client.zone_debug_images = list()
@@ -135,7 +135,7 @@
 		for(var/zone/Z in SSair.zones)
 			if(Z.air == air && Z != src)
 				var/turf/zloc = pick(Z.contents)
-				client << "\red Illegal air datum shared by: [zloc.loc.name]"*/
+				to_chat(client, "\red Illegal air datum shared by: [zloc.loc.name]") */
 
 
 /*client/proc/TestZASRebuild()
@@ -143,7 +143,7 @@
 //	var/turf/turf = get_turf(mob)
 	var/zone/current_zone = mob.loc:zone
 	if(!current_zone)
-		src << "There is no zone there!"
+		to_chat(src, "There is no zone there!")
 		return
 
 	var/list/current_adjacents = list()
@@ -211,7 +211,7 @@
 	//lazy but fast
 	final_arrangement.Remove(null)
 
-	src << "There are [final_arrangement.len] unique segments."
+	to_chat(src, "There are [final_arrangement.len] unique segments.")
 
 	for(var/turf/current in turfs)
 		current.overlays -= overlays

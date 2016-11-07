@@ -14,6 +14,6 @@
 		src.nightvisionicon.icon_state = "nightvision1"
 
 	if(message)
-		src << "<span class='noticealien'>You adapt your eyes for [nightvision ? "dark":"light"] !</span>"
+		to_chat(src, "<span class='noticealien'>You adapt your eyes for [nightvision ? "dark":"light"] !</span>")
 	else
 		return

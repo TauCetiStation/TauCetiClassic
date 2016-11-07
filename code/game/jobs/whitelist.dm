@@ -57,9 +57,9 @@ client/proc/get_alienwhitelist()
 
 	var/path = "config/alienwhitelist.txt"
 	if( fexists(path) )
-		src << run( file(path) )
+		src << run(file(path))
 	else
-		src << "<font color='red'>Error: get_alienwhitelist(): File not found/Invalid path([path]).</font>"
+		to_chat(src, "<font color='red'>Error: get_alienwhitelist(): File not found/Invalid path([path]).</font>")
 		return
 	return
 
@@ -80,7 +80,7 @@ client/proc/get_alienwhitelist()
 		text2file(player,path)
 		load_alienwhitelist()
 	else
-		src << "<font color='red'>Error: get_alienwhitelist(): File not found/Invalid path([path]).</font>"
+		to_chat(src, "<font color='red'>Error: get_alienwhitelist(): File not found/Invalid path([path]).</font>")
 	log_admin("[log_text]")
 	message_admins("[log_text]", 1)
 	return
@@ -92,9 +92,9 @@ client/proc/get_whitelist()
 
 	var/path = "config/whitelist.txt"
 	if( fexists(path) )
-		src << run( file(path) )
+		src << run(file(path))
 	else
-		src << "<font color='red'>Error: get_whitelist(): File not found/Invalid path([path]).</font>"
+		to_chat(src, "<font color='red'>Error: get_whitelist(): File not found/Invalid path([path]).</font>")
 		return
 	feedback_add_details("admin_verb","GWL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
@@ -114,7 +114,7 @@ client/proc/get_whitelist()
 		text2file(player,path)
 		load_whitelist()
 	else
-		src << "<font color='red'>Error: get_whitelist(): File not found/Invalid path([path]).</font>"
+		to_chat(src, "<font color='red'>Error: get_whitelist(): File not found/Invalid path([path]).</font>")
 	log_admin("Whitelist: [player]")
 	message_admins("Whitelist: [player]", 1)
 	return

@@ -140,10 +140,10 @@ What are the archived variables for?
 
 		fuel_burnt = 0
 		if(temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
-			//world << "pre [temperature], [oxygen], [toxins]"
+//			to_chat(world, "pre [temperature], [oxygen], [toxins]")
 			if(fire() > 0)
 				reacting = 1
-			//world << "post [temperature], [oxygen], [toxins]"
+//			to_chat(world, "post [temperature], [oxygen], [toxins]")
 
 		return reacting
 
@@ -906,7 +906,7 @@ What are the archived variables for?
 		if(total_moles() > MINIMUM_AIR_TO_SUSPEND)
 			if((abs(temperature-sample.temperature) > MINIMUM_TEMPERATURE_DELTA_TO_SUSPEND) && \
 				((temperature < (1-MINIMUM_TEMPERATURE_RATIO_TO_SUSPEND)*sample.temperature) || (temperature > (1+MINIMUM_TEMPERATURE_RATIO_TO_SUSPEND)*sample.temperature)))
-				//world << "temp fail [temperature] & [sample.temperature]"
+//				to_chat(world, "temp fail [temperature] & [sample.temperature]")
 				return 0
 
 		if(sample.trace_gases.len)

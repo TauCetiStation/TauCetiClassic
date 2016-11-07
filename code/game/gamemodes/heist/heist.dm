@@ -28,11 +28,11 @@
 	var/list/obj/cortical_stacks = list() //Stacks for 'leave nobody behind' objective.
 
 /datum/game_mode/heist/announce()
-	world << "<B>The current game mode is - Heist!</B>"
-	world << "<B>An unidentified bluespace signature has slipped past the Icarus and is approaching [station_name()]!</B>"
-	world << "Whoever they are, they're likely up to no good. Protect the crew and station resources against this dastardly threat!"
-	world << "<B>Raiders:</B> Loot [station_name()] for anything and everything you need."
-	world << "<B>Personnel:</B> Repel the raiders and their low, low prices and/or guns."
+	to_chat(world, "<B>The current game mode is - Heist!</B>")
+	to_chat(world, "<B>An unidentified bluespace signature has slipped past the Icarus and is approaching [station_name()]!</B>")
+	to_chat(world, "Whoever they are, they're likely up to no good. Protect the crew and station resources against this dastardly threat!")
+	to_chat(world, "<B>Raiders:</B> Loot [station_name()] for anything and everything you need.")
+	to_chat(world, "<B>Personnel:</B> Repel the raiders and their low, low prices and/or guns.")
 
 /datum/game_mode/heist/can_start()
 
@@ -163,20 +163,20 @@
 
 /datum/game_mode/heist/proc/greet_vox(datum/mind/raider)
 	var/msg = ""
-	raider.current << "<span class='info'><B>You are a <font color='red'>Pirate</font>....ARGH!</B></span>"
-	raider.current << "<span class='info'>Use :3 to guttertalk, :H to talk on your encrypted channel!</span>"
+	to_chat(raider.current, "<span class='info'><B>You are a <font color='red'>Pirate</font>....ARGH!</B></span>")
+	to_chat(raider.current, "<span class='info'>Use :3 to guttertalk, :H to talk on your encrypted channel!</span>")
 	msg = "” вашего капитана имеетс€ fulton recovery pack! »спользуйте его, чтобы быстро доставить все что угодно на ваш корабль (если цель жива€ - попадет в комнату удержани€ на шаттле)."
-	raider.current << "[sanitize(msg)]"
+	to_chat(raider.current, "[sanitize(msg)]")
 	msg = "Ќа вашем корабле лежат семена кудзу и эксклюзивные кубические гранаты! »спользуйте их на станции, чтобы се€ть хаос (осторожно, гранаты содержат агрессивную живность котора€ с удовольствием перекусит даже вами, а семена можно сажать пр€мо на пол станции)."
-	raider.current << "<span class='info'>[sanitize(msg)]</span>"
+	to_chat(raider.current, "<span class='info'>[sanitize(msg)]</span>")
 	msg = "¬аша винтовка и пистолет модифицированы дл€ использовани€ специальных сверхзвуковых снар€дов нового поколени€, они не нанос€т вреда обычным живым существам но имеют огромную силу удара, что позвол€ет вывести из бо€ человека нацепившего на себ€ много брони, а синтетам и мехам наносит колоссальный вред."
-	raider.current << "[sanitize(msg)]"
+	to_chat(raider.current, "[sanitize(msg)]")
 	msg = "Debugger который вы найдете на корабле - поможет вам со взломом APC и дверей. ”чтите что такой метод наносит вред программному обеспечению и в случае с дверьми - попросту сжигает плату. Ќе используйте его на двер€х с опущенными болтами, конечно если ваша цель не €вл€етс€ полностью заблокировать дверь."
-	raider.current << "<span class='info'>[sanitize(msg)]</span>"
+	to_chat(raider.current, "<span class='info'>[sanitize(msg)]</span>")
 	var/obj_count = 1
 	if(!config.objectives_disabled)
 		for(var/datum/objective/objective in raider.objectives)
-			raider.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
+			to_chat(raider.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 			obj_count++
 
 /datum/game_mode/heist/declare_completion()
@@ -263,13 +263,13 @@ datum/game_mode/proc/auto_declare_completion_heist()
 			if(!sav_score)
 				sav_score = 0
 			if(max_score > sav_score)
-				S["HeistMaxScore"] << num2text(heist_rob_total,9)
+				to_chat(S["HeistMaxScore"], num2text(heist_rob_total,9))
 			for(var/atom/movable/AM in locate(/area/shuttle/vox/station))
 				if(AM.get_price())
 					var/count = 0
 					S["[AM.type]"] >> count
 					count++
-					S["[AM.type]"] << count
+					to_chat(S["[AM.type]"], count)
 
 		text += printlogo("raider", "raiders")
 		for(var/datum/mind/raider in raiders)

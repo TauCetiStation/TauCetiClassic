@@ -35,10 +35,10 @@
 	if(istype(W,/obj/item/weapon/cable_coil))
 		var/obj/item/weapon/cable_coil/CC = W
 		if(CC.amount < 5)
-			user << "\b There is not enough wire in this coil. You need 5 lengths."
+			to_chat(user, "\b There is not enough wire in this coil. You need 5 lengths.")
 			return
 		CC.use(5)
-		user << "\blue You attach wire to the [name]."
+		to_chat(user, "\blue You attach wire to the [name].")
 		new /obj/item/stack/light_w(user.loc)
 		src.use(1)
 	else if(istype(W, /obj/item/stack/rods))
@@ -62,7 +62,7 @@
 	if(!istype(user.loc,/turf))
 		return 0
 	if(!user.IsAdvancedToolUser())
-		user << "\red You don't have the dexterity to do this!"
+		to_chat(user, "\red You don't have the dexterity to do this!")
 		return 0
 	var/title = "Sheet-Glass"
 	title += " ([src.amount] sheet\s left)"
@@ -78,11 +78,11 @@
 			for(var/obj/structure/window/win in user.loc)
 				i++
 				if(i >= 4)
-					user << "\red There are too many windows in this location."
+					to_chat(user, "\red There are too many windows in this location.")
 					return 1
 				directions-=win.dir
 				if(!(win.ini_dir in cardinal))
-					user << "\red Can't let you do that."
+					to_chat(user, "\red Can't let you do that.")
 					return 1
 
 			//Determine the direction. It will first check in the direction the person making the window is facing, if it finds an already made window it will try looking at the next cardinal direction, etc.
@@ -107,12 +107,12 @@
 			if(src.loc != user)
 				return 1
 			if(src.amount < 2)
-				user << "\red You need more glass to do that."
+				to_chat(user, "\red You need more glass to do that.")
 				return 1
 			var/step = get_step(user, user.dir)
 			var/turf/T = get_turf(step)
 			if(T.density || (locate(/obj/structure/window) in step))
-				user << "\red There is something in the way."
+				to_chat(user, "\red There is something in the way.")
 				return 1
 			var/obj/structure/window/W
 			W = new created_window(step)
@@ -171,7 +171,7 @@
 	if(!istype(user.loc,/turf))
 		return 0
 	if(!user.IsAdvancedToolUser())
-		user << "\red You don't have the dexterity to do this!"
+		to_chat(user, "\red You don't have the dexterity to do this!")
 		return 0
 	var/title = "Sheet Reinf. Glass"
 	title += " ([src.amount] sheet\s left)"
@@ -186,11 +186,11 @@
 			for (var/obj/structure/window/win in user.loc)
 				i++
 				if(i >= 4)
-					user << "\red There are too many windows in this location."
+					to_chat(user, "\red There are too many windows in this location.")
 					return 1
 				directions-=win.dir
 				if(!(win.ini_dir in cardinal))
-					user << "\red Can't let you do that."
+					to_chat(user, "\red Can't let you do that.")
 					return 1
 
 			//Determine the direction. It will first check in the direction the person making the window is facing, if it finds an already made window it will try looking at the next cardinal direction, etc.
@@ -218,12 +218,12 @@
 			if(src.loc != user)
 				return 1
 			if(src.amount < 2)
-				user << "\red You need more glass to do that."
+				to_chat(user, "\red You need more glass to do that.")
 				return 1
 			var/step = get_step(user, user.dir)
 			var/turf/T = get_turf(step)
 			if(T.density || (locate(/obj/structure/window) in step))
-				user << "\red There is something in the way."
+				to_chat(user, "\red There is something in the way.")
 				return 1
 			var/obj/structure/window/W
 			W = new /obj/structure/window/reinforced(step)
@@ -239,15 +239,15 @@
 				return 1
 
 			if(isturf(user.loc) && locate(/obj/structure/windoor_assembly/, user.loc))
-				user << "\red There is already a windoor assembly in that location."
+				to_chat(user, "\red There is already a windoor assembly in that location.")
 				return 1
 
 			if(isturf(user.loc) && locate(/obj/machinery/door/window/, user.loc))
-				user << "\red There is already a windoor in that location."
+				to_chat(user, "\red There is already a windoor in that location.")
 				return 1
 
 			if(src.amount < 5)
-				user << "\red You need more glass to do that."
+				to_chat(user, "\red You need more glass to do that.")
 				return 1
 
 			var/obj/structure/windoor_assembly/WD
@@ -316,7 +316,7 @@
 				if(G.amount>=G.max_amount)
 					continue
 				G.attackby(NG, user)
-				usr << "You add the newly-formed glass to the stack. It now contains [NG.amount] sheets."
+				to_chat(usr, "You add the newly-formed glass to the stack. It now contains [NG.amount] sheets.")
 			//SN src = null
 			qdel(src)
 			return
@@ -325,7 +325,7 @@
 /obj/item/weapon/shard/Crossed(AM as mob|obj)
 	if(ismob(AM))
 		var/mob/M = AM
-		M << "\red <B>You step in the broken glass!</B>"
+		to_chat(M, "\red <B>You step in the broken glass!</B>")
 		playsound(src.loc, 'sound/effects/glass_step.ogg', 50, 1)
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M

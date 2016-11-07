@@ -12,7 +12,7 @@
 		if ("me")
 			if (src.client)
 				if(client.prefs.muted & MUTE_IC)
-					src << "You cannot send IC messages (muted)."
+					to_chat(src, "You cannot send IC messages (muted).")
 					return
 				if (src.client.handle_spam_prevention(message,MUTE_IC))
 					return
@@ -194,7 +194,7 @@
 				playsound(src.loc, 'sound/voice/biamthelaw.ogg', 50, 0)
 				m_type = 2
 			else
-				src << "You are not THE LAW, pal."
+				to_chat(src, "You are not THE LAW, pal.")
 
 		if("halt")
 			if (istype(module,/obj/item/weapon/robot_module/security))
@@ -203,12 +203,12 @@
 				playsound(src.loc, 'sound/voice/halt.ogg', 50, 0)
 				m_type = 2
 			else
-				src << "You are not security."
+				to_chat(src, "You are not security.")
 
 		if ("help")
-			src << "salute, bow-(none)/mob, clap, flap, aflap, twitch, twitch_s, nod, deathgasp, glare-(none)/mob, stare-(none)/mob, look, beep, ping, \nbuzz, law, halt"
+			to_chat(src, "salute, bow-(none)/mob, clap, flap, aflap, twitch, twitch_s, nod, deathgasp, glare-(none)/mob, stare-(none)/mob, look, beep, ping, \nbuzz, law, halt")
 		else
-			src << "\blue Unusable emote '[act]'. Say *help for a list."
+			to_chat(src, "\blue Unusable emote '[act]'. Say *help for a list.")
 
 	if ((message && src.stat == CONSCIOUS))
 		if (m_type & 1)

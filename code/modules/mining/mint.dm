@@ -137,7 +137,7 @@
 		return
 
 	if(processing == 1)
-		usr << "\blue The machine is processing."
+		to_chat(usr, "\blue The machine is processing.")
 		return FALSE
 	if(href_list["choose"])
 		chosen = href_list["choose"]

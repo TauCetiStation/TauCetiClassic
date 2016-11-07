@@ -13,11 +13,11 @@
 		if(!M) M = holder.my_atom
 		if(src.volume <= 0.1) if(data != -1)
 			data = -1
-			M << "\red You lose focus.."
+			to_chat(M, "\red You lose focus..")
 		else
 			if(world.time > data + ANTIDEPRESSANT_MESSAGE_DELAY)
 				data = world.time
-				M << "\blue Your mind feels focused and undivided."
+				to_chat(M, "\blue Your mind feels focused and undivided.")
 		..()
 		return
 
@@ -41,11 +41,11 @@
 		if(!M) M = holder.my_atom
 		if(src.volume <= 0.1) if(data != -1)
 			data = -1
-			M << "\red Your mind feels a little less stable.."
+			to_chat(M, "\red Your mind feels a little less stable..")
 		else
 			if(world.time > data + ANTIDEPRESSANT_MESSAGE_DELAY)
 				data = world.time
-				M << "\blue Your mind feels stable.. a little stable."
+				to_chat(M, "\blue Your mind feels stable.. a little stable.")
 		..()
 		return
 
@@ -70,14 +70,14 @@
 		if(!M) M = holder.my_atom
 		if(src.volume <= 0.1) if(data != -1)
 			data = -1
-			M << "\red Your mind feels much less stable.."
+			to_chat(M, "\red Your mind feels much less stable..")
 		else
 			if(world.time > data + ANTIDEPRESSANT_MESSAGE_DELAY)
 				data = world.time
 				if(prob(90))
-					M << "\blue Your mind feels much more stable."
+					to_chat(M, "\blue Your mind feels much more stable.")
 				else
-					M << "\red Your mind breaks apart.."
+					to_chat(M, "\red Your mind breaks apart..")
 					M.hallucination += 200
 		..()
 		return

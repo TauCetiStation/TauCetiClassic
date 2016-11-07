@@ -22,22 +22,22 @@
 	var/turf/loc = get_turf(usr)
 	var/area/A = loc.loc
 	if (!istype(loc, /turf/simulated/floor))
-		usr << "\red APC cannot be placed on this spot."
+		to_chat(usr, "\red APC cannot be placed on this spot.")
 		return
 	if (A.requires_power == 0 || A.name == "Space")
-		usr << "\red APC cannot be placed in this area."
+		to_chat(usr, "\red APC cannot be placed in this area.")
 		return
 	if (A.get_apc())
-		usr << "\red This area already has APC."
+		to_chat(usr, "\red This area already has APC.")
 		return //only one APC per area
 	for(var/obj/machinery/power/terminal/T in loc)
 		if (T.master)
-			usr << "\red There is another network terminal here."
+			to_chat(usr, "\red There is another network terminal here.")
 			return
 		else
 			var/obj/item/weapon/cable_coil/C = new /obj/item/weapon/cable_coil(loc)
 			C.amount = 10
-			usr << "You cut the cables and disassemble the unused power terminal."
+			to_chat(usr, "You cut the cables and disassemble the unused power terminal.")
 			qdel(T)
 	new /obj/machinery/power/apc(loc, ndir, 1)
 	qdel(src)

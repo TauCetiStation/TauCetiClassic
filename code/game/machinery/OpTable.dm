@@ -47,7 +47,7 @@
 
 /obj/machinery/optable/attack_paw(mob/user)
 	if ((HULK in usr.mutations))
-		usr << text("<span class='notice'>You destroy the operating table.</span>")
+		to_chat(usr, text("<span class='notice'>You destroy the operating table.</span>"))
 		visible_message("<span class='danger'>[usr] destroys the operating table!</span>")
 		src.density = 0
 		qdel(src)
@@ -60,7 +60,7 @@
 
 /obj/machinery/optable/attack_hand(mob/user)
 	if (HULK in usr.mutations)
-		usr << text("<span class='notice'>You destroy the table.</span>")
+		to_chat(usr, text("<span class='notice'>You destroy the table.</span>"))
 		visible_message("<span class='danger'>[usr] destroys the operating table!</span>")
 		src.density = 0
 		qdel(src)
@@ -129,7 +129,7 @@
 		return
 
 	if(src.victim)
-		usr << "<span class='rose'>The table is already occupied!</span>"
+		to_chat(usr, "<span class='rose'>The table is already occupied!</span>")
 		return
 
 	take_victim(usr,usr)

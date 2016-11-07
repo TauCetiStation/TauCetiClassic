@@ -5,7 +5,7 @@
 	var/flag = 1
 
 /obj/machinery/door/airlock/attackby(C, mob/user)
-	//world << text("airlock attackby src [] obj [] mob []", src, C, user)
+//	to_chat(world, text("airlock attackby src [] obj [] mob []", src, C, user))
 	if(!istype(usr, /mob/living/silicon))
 		if(src.isElectrified())
 			if(src.shock(user, 75))

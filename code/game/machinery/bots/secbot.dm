@@ -171,14 +171,14 @@ Auto Patrol: []"},
 	if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if(src.allowed(user) && !open && !emagged)
 			src.locked = !src.locked
-			user << "Controls are now [src.locked ? "locked." : "unlocked."]"
+			to_chat(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
 		else
 			if(emagged)
-				user << "<span class='warning'>ERROR</span>"
+				to_chat(user, "<span class='warning'>ERROR</span>")
 			if(open)
-				user << "\red Please close the access panel before locking it."
+				to_chat(user, "\red Please close the access panel before locking it.")
 			else
-				user << "\red Access denied."
+				to_chat(user, "\red Access denied.")
 	else
 		..()
 		if(!istype(W, /obj/item/weapon/screwdriver) && (W.force) && (!src.target))
@@ -188,7 +188,7 @@ Auto Patrol: []"},
 /obj/machinery/bot/secbot/Emag(mob/user)
 	..()
 	if(open && !locked)
-		if(user) user << "\red You short out [src]'s target assessment circuits."
+		if(user) to_chat(user, "\red You short out [src]'s target assessment circuits.")
 		spawn(0)
 			for(var/mob/O in hearers(src, null))
 				O.show_message("\red <B>[src] buzzes oddly!</B>", 1)
@@ -231,7 +231,7 @@ Auto Patrol: []"},
 			// if can't reach perp for long enough, go idle
 			if(src.frustration >= 8)
 		//		for(var/mob/O in hearers(src, null))
-		//			O << "<span class='game say'><span class='name'>[src]</span> beeps, \"Backup requested! Suspect has evaded arrest.\""
+//					to_chat(O, "<span class='game say'><span class='name'>[src]</span> beeps, \"Backup requested! Suspect has evaded arrest.\"")
 				src.target = null
 				src.last_found = world.time
 				src.frustration = 0
@@ -498,9 +498,9 @@ Auto Patrol: []"},
 		return
 
 	/*
-	world << "rec signal: [signal.source]"
+	to_chat(world, "rec signal: [signal.source]")
 	for(var/x in signal.data)
-		world << "* [x] = [signal.data[x]]"
+		to_chat(world, "* [x] = [signal.data[x]]")
 	*/
 
 	var/recv = signal.data["command"]
@@ -583,7 +583,7 @@ Auto Patrol: []"},
 	//for(var/key in keyval)
 	//	signal.data[key] = keyval[key]
 	signal.data = keyval
-		//world << "sent [key],[keyval[key]] on [freq]"
+//		to_chat(world, "sent [key],[keyval[key]] on [freq]")
 	if(signal.data["findbeacon"])
 		frequency.post_signal(src, signal, filter = RADIO_NAVBEACONS)
 	else if(signal.data["type"] == "secbot")
@@ -773,7 +773,7 @@ Auto Patrol: []"},
 		qdel(S)
 		var/obj/item/weapon/secbot_assembly/A = new /obj/item/weapon/secbot_assembly
 		user.put_in_hands(A)
-		user << "You add the signaler to the helmet."
+		to_chat(user, "You add the signaler to the helmet.")
 		user.drop_from_inventory(src)
 		qdel(src)
 	else
@@ -786,12 +786,12 @@ Auto Patrol: []"},
 		if(WT.remove_fuel(0,user))
 			src.build_step++
 			src.overlays += image('icons/obj/aibots.dmi', "hs_hole")
-			user << "You weld a hole in [src]!"
+			to_chat(user, "You weld a hole in [src]!")
 
 	else if(isprox(W) && (src.build_step == 1))
 		user.drop_item()
 		src.build_step++
-		user << "You add the prox sensor to [src]!"
+		to_chat(user, "You add the prox sensor to [src]!")
 		src.overlays += image('icons/obj/aibots.dmi', "hs_eye")
 		src.name = "helmet/signaler/prox sensor assembly"
 		qdel(W)
@@ -799,7 +799,7 @@ Auto Patrol: []"},
 	else if(((istype(W, /obj/item/robot_parts/l_arm)) || (istype(W, /obj/item/robot_parts/r_arm))) && (src.build_step == 2))
 		user.drop_item()
 		src.build_step++
-		user << "You add the robot arm to [src]!"
+		to_chat(user, "You add the robot arm to [src]!")
 		src.name = "helmet/signaler/prox sensor/robot arm assembly"
 		src.overlays += image('icons/obj/aibots.dmi', "hs_arm")
 		qdel(W)
@@ -807,7 +807,7 @@ Auto Patrol: []"},
 	else if((istype(W, /obj/item/weapon/melee/baton)) && (src.build_step >= 3))
 		user.drop_item()
 		src.build_step++
-		user << "You complete the Securitron! Beep boop."
+		to_chat(user, "You complete the Securitron! Beep boop.")
 		var/obj/machinery/bot/secbot/S = new /obj/machinery/bot/secbot
 		S.loc = get_turf(src)
 		S.name = src.created_name

@@ -39,11 +39,11 @@
 
 /obj/structure/stool/bed/chair/pedalgen/examine(mob/user)
 	..()
-	user << "This [src] generates power from raw human force!"
+	to_chat(user, "This [src] generates power from raw human force!")
 	if(Generator.raw_power > 0)
-		user << "It has [Generator.raw_power] raw power stored and it generates [Generator.raw_power > 10 ? "20k" : "10k" ] energy!"
+		to_chat(user, "It has [Generator.raw_power] raw power stored and it generates [Generator.raw_power > 10 ? "20k" : "10k" ] energy!")
 	else
-		user << "Generator stands still. Someone need to pedal that thing."
+		to_chat(user, "Generator stands still. Someone need to pedal that thing.")
 
 
 /obj/structure/stool/bed/chair/pedalgen/attackby(obj/item/W, mob/user)
@@ -78,13 +78,13 @@
 				pedaler.nutrition -= 0.5
 				pedaler.apply_effect(1,AGONY,0)
 				if(pedaler.halloss > 80)
-					user << "You pushed yourself too hard."
+					to_chat(user, "You pushed yourself too hard.")
 					pedaler.apply_effect(24,AGONY,0)
 					unbuckle_mob()
 				sleep(5)
 				pedaled = 0
 			else
-				user << "You are too exausted to pedal that thing."
+				to_chat(user, "You are too exausted to pedal that thing.")
 		return 1
 
 /obj/structure/stool/bed/chair/pedalgen/relaymove(mob/user, direction)
@@ -164,7 +164,7 @@
 	set src in view(0)
 
 	if(usr.restrained())
-		usr << "You can't do it until you restrained"
+		to_chat(usr, "You can't do it until you restrained")
 		return
 
 	unbuckle_mob()

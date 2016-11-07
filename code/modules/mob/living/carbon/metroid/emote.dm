@@ -17,7 +17,7 @@
 				return
 			if (src.client)
 				if (client.prefs.muted & MUTE_IC)
-					src << "\red You cannot send IC messages (muted)."
+					to_chat(src, "\red You cannot send IC messages (muted).")
 					return
 				if (src.client.handle_spam_prevention(message,MUTE_IC))
 					return
@@ -86,9 +86,9 @@
 			regenerate_icons = 1
 
 		if ("help") //This is an exception
-			src << "Help for slime emotes. You can use these emotes with say \"*emote\":\n\nbounce, jiggle, light, moan, shiver, sway, twitch, vibrate. \n\nYou may also change your face with: \n\nsmile, :3, pout, frown, scowl, noface"
+			to_chat(src, "Help for slime emotes. You can use these emotes with say \"*emote\":\n\nbounce, jiggle, light, moan, shiver, sway, twitch, vibrate. \n\nYou may also change your face with: \n\nsmile, :3, pout, frown, scowl, noface")
 		else
-			src << "<span class='notice'>Unusable emote '[act]'. Say *help for a list.</span>"
+			to_chat(src, "<span class='notice'>Unusable emote '[act]'. Say *help for a list.</span>")
 	if ((message && src.stat == CONSCIOUS))
 		if (m_type & 1)
 			for(var/mob/O in viewers(src, null))

@@ -170,9 +170,9 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 		if(!S.used)
 			hidden_uplink.uses += S.TC_cost
 			qdel(S)
-			user << "<span class='notice'>Teleporter refunded.</span>"
+			to_chat(user, "<span class='notice'>Teleporter refunded.</span>")
 		else
-			user << "<span class='notice'>This teleporter is already used.</span>"
+			to_chat(user, "<span class='notice'>This teleporter is already used.</span>")
 // PRESET UPLINKS
 // A collection of preset uplinks.
 //

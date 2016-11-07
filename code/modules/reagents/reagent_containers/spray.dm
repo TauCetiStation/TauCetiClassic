@@ -34,23 +34,23 @@
 
 	if(istype(A, /obj/structure/reagent_dispensers) && get_dist(src,A) <= 1) //this block copypasted from reagent_containers/glass, for lack of a better solution
 		if(!A.reagents.total_volume && A.reagents)
-			user << "<span class='notice'>\The [A] is empty.</span>"
+			to_chat(user, "<span class='notice'>\The [A] is empty.</span>")
 			return
 
 		if(reagents.total_volume >= reagents.maximum_volume)
-			user << "<span class='notice'>\The [src] is full.</span>"
+			to_chat(user, "<span class='notice'>\The [src] is full.</span>")
 			return
 
 		var/trans = A.reagents.trans_to(src, A:amount_per_transfer_from_this)
-		user << "<span class='notice'>You fill \the [src] with [trans] units of the contents of \the [A].</span>"
+		to_chat(user, "<span class='notice'>You fill \the [src] with [trans] units of the contents of \the [A].</span>")
 		return
 
 	if(reagents.total_volume < amount_per_transfer_from_this)
-		user << "<span class='notice'>\The [src] is empty!</span>"
+		to_chat(user, "<span class='notice'>\The [src] is empty!</span>")
 		return
 
 	if(safety)
-		usr << "<span class = 'warning'>The safety is on!</span>"
+		to_chat(usr, "<span class = 'warning'>The safety is on!</span>")
 		return
 
 	Spray_at(A)
@@ -98,7 +98,7 @@
 		return
 	amount_per_transfer_from_this = next_in_list(amount_per_transfer_from_this, possible_transfer_amounts)
 	spray_size = next_in_list(spray_size, spray_sizes)
-	user << "<span class='notice'>You adjusted the pressure nozzle. You'll now use [amount_per_transfer_from_this] units per spray.</span>"
+	to_chat(user, "<span class='notice'>You adjusted the pressure nozzle. You'll now use [amount_per_transfer_from_this] units per spray.</span>")
 
 
 /obj/item/weapon/reagent_containers/spray/verb/empty()
@@ -110,7 +110,7 @@
 	if (alert(usr, "Are you sure you want to empty that?", "Empty Bottle:", "Yes", "No") != "Yes")
 		return
 	if(isturf(usr.loc))
-		usr << "<span class='notice'>You empty \the [src] onto the floor.</span>"
+		to_chat(usr, "<span class='notice'>You empty \the [src] onto the floor.</span>")
 		reagents.reaction(usr.loc)
 		spawn(5) src.reagents.clear_reagents()
 
@@ -146,11 +146,11 @@
 /obj/item/weapon/reagent_containers/spray/pepper/examine(mob/user)
 	..()
 	if(src in view(1, user))
-		user << "The safety is [safety ? "on" : "off"]."
+		to_chat(user, "The safety is [safety ? "on" : "off"].")
 
 /obj/item/weapon/reagent_containers/spray/pepper/attack_self(mob/user)
 	safety = !safety
-	usr << "<span class = 'notice'>You switch the safety [safety ? "on" : "off"].</span>"
+	to_chat(usr, "<span class = 'notice'>You switch the safety [safety ? "on" : "off"].</span>")
 
 /obj/item/weapon/reagent_containers/spray/pepper/Spray_at(atom/A)
 	..()

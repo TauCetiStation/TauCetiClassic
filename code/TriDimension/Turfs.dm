@@ -102,7 +102,7 @@
 		if(L)
 			return
 		var/obj/item/stack/rods/R = C
-		user << "\blue Constructing support lattice ..."
+		to_chat(user, "\blue Constructing support lattice ...")
 		playsound(src.loc, 'sound/weapons/Genhit.ogg', 50, 1)
 		ReplaceWithLattice()
 		R.use(1)
@@ -118,5 +118,5 @@
 			S.use(1)
 			return
 		else
-			user << "\red The plating is going to need some support."
+			to_chat(user, "\red The plating is going to need some support.")
 	return

@@ -151,7 +151,7 @@
 				break
 		if(!found) return
 		if(I != user)
-			user << "\red You can't force open door with [I] in hand!"
+			to_chat(user, "\red You can't force open door with [I] in hand!")
 			return
 		var/obj/machinery/door/airlock/A = src
 		if(istype(A,/obj/machinery/door/airlock/))
@@ -204,7 +204,7 @@
 						qdel(A)
 					return
 			else if(A.locked && user.a_intent != "hurt")
-				user << "\red The door is bolted and you need more aggressive force to get thru!"
+				to_chat(user, "\red The door is bolted and you need more aggressive force to get thru!")
 				return
 		user.visible_message("\red \The [user] starts to force \the [src] open with a bare hands!",\
 				"You start forcing \the [src] open with a bare hands!",\

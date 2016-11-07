@@ -136,7 +136,7 @@
 
 		var/atom/temp = typepath
 		R.product_name = initial(temp.name)
-//		world << "Added: [R.product_name]] - [R.amount] - [R.product_path]"
+//		to_chat(world, "Added: [R.product_name]] - [R.amount] - [R.product_path]")
 	return
 
 /obj/machinery/vending/proc/refill_inventory(obj/item/weapon/vending_refill/refill, datum/data/vending_product/machine, mob/user)  //Restocking from TG
@@ -149,7 +149,7 @@
 	if(to_restock <= refill.charges)
 		for(var/datum/data/vending_product/machine_content in machine)
 			if(machine_content.amount != machine_content.max_amount)
-				usr << "<span class='notice'>[machine_content.max_amount - machine_content.amount] of [machine_content.product_name]</span>"
+				to_chat(usr, "<span class='notice'>[machine_content.max_amount - machine_content.amount] of [machine_content.product_name]</span>")
 				machine_content.amount = machine_content.max_amount
 		refill.charges -= to_restock
 		total = to_restock
@@ -163,7 +163,7 @@
 			refill.charges -= restock
 			total += restock
 			if(restock)
-				usr << "<span class='notice'>[restock] of [machine_content.product_name]</span>"
+				to_chat(usr, "<span class='notice'>[restock] of [machine_content.product_name]</span>")
 			if(refill.charges == 0) //due to rounding, we ran out of refill charges, exit.
 				break
 	return total
@@ -178,11 +178,11 @@
 
 	if (istype(W, /obj/item/weapon/card/emag))
 		src.emagged = 1
-		user << "You short out the product lock on [src]"
+		to_chat(user, "You short out the product lock on [src]")
 		return
 	else if(istype(W, /obj/item/weapon/screwdriver) && anchored)
 		src.panel_open = !src.panel_open
-		user << "You [src.panel_open ? "open" : "close"] the maintenance panel."
+		to_chat(user, "You [src.panel_open ? "open" : "close"] the maintenance panel.")
 		src.overlays.Cut()
 		if(src.panel_open)
 			src.overlays += image(src.icon, "[initial(icon_state)]-panel")
@@ -196,17 +196,17 @@
 		user.drop_item()
 		W.loc = src
 		coin = W
-		user << "\blue You insert the [W] into the [src]"
+		to_chat(user, "\blue You insert the [W] into the [src]")
 		return
 	else if(istype(W, /obj/item/weapon/wrench))	//unwrenching vendomats
 		var/turf/T = user.loc
-		user << "<span class='notice'>You begin [anchored ? "unwrenching" : "wrenching"] the [src].</span>"
+		to_chat(user, "<span class='notice'>You begin [anchored ? "unwrenching" : "wrenching"] the [src].</span>")
 		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 		if(do_after(user, 40, target = src))
 			if( !istype(src, /obj/machinery/vending) || !user || !W || !T )	return
 			if( user.loc == T && user.get_active_hand() == W )
 				anchored = !anchored
-				user << "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>"
+				to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>")
 				if (!(src.anchored & powered()))
 					src.icon_state = "[initial(icon_state)]-off"
 					stat |= NOPOWER
@@ -221,27 +221,27 @@
 
 	else if(istype(W, refill_canister) && refill_canister != null)
 		if(stat & (BROKEN|NOPOWER))
-			user << "<span class='notice'>It does nothing.</span>"
+			to_chat(user, "<span class='notice'>It does nothing.</span>")
 		else if(panel_open)
 			//if the panel is open we attempt to refill the machine
 			var/obj/item/weapon/vending_refill/canister = W
 			if(canister.charges == 0)
-				user << "<span class='notice'>This [canister.name] is empty!</span>"
+				to_chat(user, "<span class='notice'>This [canister.name] is empty!</span>")
 			else
 				var/transfered = refill_inventory(canister,product_records,user)
 				if(transfered)
-					user << "<span class='notice'>You loaded [transfered] items in \the [name].</span>"
+					to_chat(user, "<span class='notice'>You loaded [transfered] items in \the [name].</span>")
 				else
-					user << "<span class='notice'>The [name] is fully stocked.</span>"
+					to_chat(user, "<span class='notice'>The [name] is fully stocked.</span>")
 			return;
 		else
-			user << "<span class='notice'>You should probably unscrew the service panel first.</span>"
+			to_chat(user, "<span class='notice'>You should probably unscrew the service panel first.</span>")
 
 	else if (istype(W, /obj/item/weapon/spacecash/ewallet))
 		user.drop_item()
 		W.loc = src
 		ewallet = W
-		user << "\blue You insert the [W] into the [src]"
+		to_chat(user, "\blue You insert the [W] into the [src]")
 
 	else if(src.panel_open)
 
@@ -317,17 +317,17 @@
 						src.vend(src.currently_vending, usr)
 						currently_vending = null
 					else
-						usr << "\icon[src]<span class='warning'>You don't have that much money!</span>"
+						to_chat(usr, "[bicon(src)]<span class='warning'>You don't have that much money!</span>")
 				else
-					usr << "\icon[src]<span class='warning'>You don't have that much money!</span>"
+					to_chat(usr, "[bicon(src)]<span class='warning'>You don't have that much money!</span>")
 			else
-				usr << "\icon[src]<span class='warning'>Unable to access account. Check security settings and try again.</span>"
+				to_chat(usr, "[bicon(src)]<span class='warning'>Unable to access account. Check security settings and try again.</span>")
 		else
 			//Just Vend it.
 			src.vend(src.currently_vending, usr)
 			currently_vending = null
 	else
-		usr << "\icon[src]<span class='warning'>Unable to access vendor account. Please record the machine ID and call CentComm Support.</span>"
+		to_chat(usr, "[bicon(src)]<span class='warning'>Unable to access vendor account. Please record the machine ID and call CentComm Support.</span>")
 
 /obj/machinery/vending/attack_paw(mob/user)
 	return attack_hand(user)
@@ -431,23 +431,23 @@
 
 	if(href_list["remove_coin"] && !istype(usr,/mob/living/silicon))
 		if(!coin)
-			usr << "There is no coin in this machine."
+			to_chat(usr, "There is no coin in this machine.")
 			return FALSE
 
 		coin.loc = src.loc
 		if(!usr.get_active_hand())
 			usr.put_in_hands(coin)
-		usr << "\blue You remove the [coin] from the [src]"
+		to_chat(usr, "\blue You remove the [coin] from the [src]")
 		coin = null
 
 	else if(href_list["remove_ewallet"] && !istype(usr,/mob/living/silicon))
 		if (!ewallet)
-			usr << "There is no charge card in this machine."
+			to_chat(usr, "There is no charge card in this machine.")
 			return
 		ewallet.loc = src.loc
 		if(!usr.get_active_hand())
 			usr.put_in_hands(ewallet)
-		usr << "\blue You remove the [ewallet] from the [src]"
+		to_chat(usr, "\blue You remove the [ewallet] from the [src]")
 		ewallet = null
 
 	else if ((href_list["vend"]) && (src.vend_ready) && (!currently_vending))
@@ -456,14 +456,15 @@
 			if(istype(usr,/mob/living/silicon/robot))
 				var/mob/living/silicon/robot/R = usr
 				if(!(R.module && istype(R.module,/obj/item/weapon/robot_module/butler) ))
-					usr << "\red The vending machine refuses to interface with you, as you are not in its target demographic!"
+					to_chat(usr, "\red The vending machine refuses to interface with you, as you are not in its target demographic!")
 					return FALSE
 			else
-				usr << "\red The vending machine refuses to interface with you, as you are not in its target demographic!"
+				to_chat(usr, "\red The vending machine refuses to interface with you, as you are not in its target demographic!")
 				return FALSE
 
 		if ((!src.allowed(usr)) && (!src.emagged) && (src.wires & WIRE_SCANID)) //For SECURE VENDING MACHINES YEAH
-			usr << "\red Access denied." //Unless emagged of course
+			to_chat(usr, "\red Access denied.")//Unless emagged of course
+
 			flick(src.icon_deny,src)
 			return FALSE
 
@@ -479,7 +480,7 @@
 					ewallet.worth -= R.price
 					src.vend(R, usr)
 				else
-					usr << "\red The ewallet doesn't have enough money to pay for that."
+					to_chat(usr, "\red The ewallet doesn't have enough money to pay for that.")
 					src.currently_vending = R
 					src.updateUsrDialog()
 			else
@@ -495,7 +496,7 @@
 	else if ((href_list["cutwire"]) && (src.panel_open))
 		var/twire = text2num(href_list["cutwire"])
 		if (!( istype(usr.get_active_hand(), /obj/item/weapon/wirecutters) ))
-			usr << "You need wirecutters!"
+			to_chat(usr, "You need wirecutters!")
 			return FALSE
 		if (src.isWireColorCut(twire))
 			src.mend(twire)
@@ -505,10 +506,10 @@
 	else if ((href_list["pulsewire"]) && (src.panel_open))
 		var/twire = text2num(href_list["pulsewire"])
 		if (!istype(usr.get_active_hand(), /obj/item/device/multitool))
-			usr << "You need a multitool!"
+			to_chat(usr, "You need a multitool!")
 			return FALSE
 		if (src.isWireColorCut(twire))
-			usr << "You can't pulse a cut wire."
+			to_chat(usr, "You can't pulse a cut wire.")
 			return FALSE
 		else
 			src.pulse(twire)
@@ -520,20 +521,21 @@
 
 /obj/machinery/vending/proc/vend(datum/data/vending_product/R, mob/user)
 	if ((!src.allowed(user)) && (!src.emagged) && (src.wires & WIRE_SCANID)) //For SECURE VENDING MACHINES YEAH
-		user << "\red Access denied." //Unless emagged of course
+		to_chat(user, "\red Access denied.")//Unless emagged of course
+
 		flick(src.icon_deny,src)
 		return
 	src.vend_ready = 0 //One thing at a time!!
 
 	if (R in coin_records)
 		if(!coin)
-			user << "\blue You need to insert a coin to get this item."
+			to_chat(user, "\blue You need to insert a coin to get this item.")
 			return
 		if(coin.string_attached)
 			if(prob(50))
-				user << "\blue You successfully pull the coin out before the [src] could swallow it."
+				to_chat(user, "\blue You successfully pull the coin out before the [src] could swallow it.")
 			else
-				user << "\blue You weren't able to pull the coin out fast enough, the machine ate it, string and all."
+				to_chat(user, "\blue You weren't able to pull the coin out fast enough, the machine ate it, string and all.")
 				qdel(coin)
 				coin = null
 		else
@@ -560,7 +562,7 @@
 
 /obj/machinery/vending/proc/stock(datum/data/vending_product/R, mob/user)
 	if(src.panel_open)
-		user << "\blue You stock the [src] with \a [R.product_name]"
+		to_chat(user, "\blue You stock the [src] with \a [R.product_name]")
 		R.amount++
 
 	src.updateUsrDialog()

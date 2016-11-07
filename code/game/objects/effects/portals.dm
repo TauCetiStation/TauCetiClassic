@@ -95,7 +95,7 @@
 			bad_effects += 1
 			H.confused += 3
 			var/msg = pick("You feel dizzy.", "Your head starts spinning.")
-			H << "<span class='warning'>[msg]</span>"
+			to_chat(H, "<span class='warning'>[msg]</span>")
 		if(prob(20))
 			bad_effects += 1
 			H.vomit() //No msg required, since vomit() will handle this.

@@ -222,7 +222,7 @@ turf/simulated/floor/proc/update_icon()
 		if(!broken && !burnt)
 			if(!(icon_state in wood_icons))
 				icon_state = "wood"
-				//world << "[icon_state]y's got [icon_state]"
+//				to_chat(world, "[icon_state]y's got [icon_state]")
 	/*spawn(1)
 		if(istype(src,/turf/simulated/floor)) //Was throwing runtime errors due to a chance of it changing to space halfway through.
 			if(air)
@@ -494,23 +494,23 @@ turf/simulated/floor/proc/update_icon()
 				qdel(C)
 				set_lightfloor_state(0) //fixing it by bashing it with a light bulb, fun eh?
 				update_icon()
-				user << "\blue You replace the light bulb."
+				to_chat(user, "\blue You replace the light bulb.")
 			else
-				user << "\blue The lightbulb seems fine, no need to replace it."
+				to_chat(user, "\blue The lightbulb seems fine, no need to replace it.")
 
 	if(istype(C, /obj/item/weapon/crowbar) && (!(is_plating())))
 		if(broken || burnt)
-			user << "\red You remove the broken plating."
+			to_chat(user, "\red You remove the broken plating.")
 		else
 			if(is_wood_floor())
-				user << "\red You forcefully pry off the planks, destroying them in the process."
+				to_chat(user, "\red You forcefully pry off the planks, destroying them in the process.")
 			else
 				var/obj/item/I = new floor_type(src)
 				if(is_light_floor())
 					var/obj/item/stack/tile/light/L = I
 					L.on = get_lightfloor_on()
 					L.state = get_lightfloor_state()
-				user << "\red You remove the [I.name]."
+				to_chat(user, "\red You remove the [I.name].")
 
 		make_plating()
 		// Can't play sounds from areas. - N3X
@@ -524,7 +524,7 @@ turf/simulated/floor/proc/update_icon()
 				return
 			else
 				if(is_wood_floor())
-					user << "\red You unscrew the planks."
+					to_chat(user, "\red You unscrew the planks.")
 					new floor_type(src)
 
 			make_plating()
@@ -540,23 +540,23 @@ turf/simulated/floor/proc/update_icon()
 		var/obj/item/stack/rods/R = C
 		if (is_plating())
 			if (R.amount >= 2)
-				user << "\blue Reinforcing the floor..."
+				to_chat(user, "\blue Reinforcing the floor...")
 				if(do_after(user, 30, target = src) && R && R.amount >= 2 && is_plating())
 					ChangeTurf(/turf/simulated/floor/engine)
 					playsound(src, 'sound/items/Deconstruct.ogg', 80, 1)
 					R.use(2)
 					return
 			else
-				user << "\red You need more rods."
+				to_chat(user, "\red You need more rods.")
 		else if (is_catwalk())
-			user << "\red The entire thing is 100% rods already, it doesn't need any more."
+			to_chat(user, "\red The entire thing is 100% rods already, it doesn't need any more.")
 		else
-			user << "\red You must remove the plating first."
+			to_chat(user, "\red You must remove the plating first.")
 		return
 
 	if(istype(C, /obj/item/stack/tile))
 		if (is_catwalk())
-			user << "\red The catwalk is too primitive to support tiling."
+			to_chat(user, "\red The catwalk is too primitive to support tiling.")
 		if(is_plating())
 			if(!broken && !burnt)
 				var/obj/item/stack/tile/T = C
@@ -581,7 +581,7 @@ turf/simulated/floor/proc/update_icon()
 				levelupdate()
 				playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
 			else
-				user << "\blue This section is too damaged to support a tile. Use a welder to fix the damage."
+				to_chat(user, "\blue This section is too damaged to support a tile. Use a welder to fix the damage.")
 
 
 	if(istype(C, /obj/item/weapon/cable_coil))
@@ -593,29 +593,29 @@ turf/simulated/floor/proc/update_icon()
 					return
 			coil.turf_place(src, user)
 		else
-			user << "\red You must remove the plating first."
+			to_chat(user, "\red You must remove the plating first.")
 
 	if(istype(C, /obj/item/weapon/shovel))
 		if(is_grass_floor())
 			new /obj/item/weapon/ore/glass(src)
 			new /obj/item/weapon/ore/glass(src) //Make some sand if you shovel grass
-			user << "\blue You shovel the grass."
+			to_chat(user, "\blue You shovel the grass.")
 			make_plating()
 		else
-			user << "\red You cannot shovel this."
+			to_chat(user, "\red You cannot shovel this.")
 
 	if(istype(C, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/welder = C
 		if(welder.isOn() && (is_plating()))
 			if(broken || burnt)
 				if(welder.remove_fuel(0,user))
-					user << "\red You fix some dents on the broken plating."
+					to_chat(user, "\red You fix some dents on the broken plating.")
 					playsound(src, 'sound/items/Welder.ogg', 80, 1)
 					icon_state = "plating"
 					burnt = 0
 					broken = 0
 				else
-					user << "\blue You need more welding fuel to complete this task."
+					to_chat(user, "\blue You need more welding fuel to complete this task.")
 
 #undef LIGHTFLOOR_ON_BIT
 

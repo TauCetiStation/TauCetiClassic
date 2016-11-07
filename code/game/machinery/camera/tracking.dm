@@ -36,7 +36,7 @@
 /mob/living/silicon/ai/proc/ai_camera_list(camera in get_camera_list())
 
 	if(src.stat == DEAD)
-		src << "You can't list the cameras because you are dead!"
+		to_chat(src, "You can't list the cameras because you are dead!")
 		return
 
 	if (!camera || camera == "Cancel")
@@ -54,25 +54,25 @@
 	set desc = "Stores your current camera location by the given name."
 
 	if(stored_locations.len >= max_locations)
-		src << "\red Cannot store additional locations. Remove one first"
+		to_chat(src, "\red Cannot store additional locations. Remove one first")
 		return
 
 	loc = trim(loc)
 	if(!loc)
-		src << "\red Must supply a location name"
+		to_chat(src, "\red Must supply a location name")
 		return
 
 	if(loc in stored_locations)
-		src << "\red There is already a stored location by this name"
+		to_chat(src, "\red There is already a stored location by this name")
 		return
 
 	var/L = src.eyeobj.getLoc()
 	if (InvalidTurf(get_turf(L)))
-		src << "\red Unable to store this location"
+		to_chat(src, "\red Unable to store this location")
 		return
 
 	stored_locations[loc] = L
-	src << "Location '[loc]' stored"
+	to_chat(src, "Location '[loc]' stored")
 
 /mob/living/silicon/ai/proc/sorted_stored_locations()
 	return sortList(stored_locations)
@@ -83,7 +83,7 @@
 	set desc = "Returns to the selected camera location."
 
 	if (!(loc in stored_locations))
-		src << "\red Location [loc] not found"
+		to_chat(src, "\red Location [loc] not found")
 		return
 
 	var/L = stored_locations[loc]
@@ -95,11 +95,11 @@
 	set desc = "Deletes the selected camera location."
 
 	if (!(loc in stored_locations))
-		src << "\red Location [loc] not found"
+		to_chat(src, "\red Location [loc] not found")
 		return
 
 	stored_locations.Remove(loc)
-	src << "Location [loc] removed"
+	to_chat(src, "Location [loc] removed")
 
 // Used to allow the AI is write in mob names/camera name from the CMD line.
 /datum/trackable
@@ -165,7 +165,7 @@
 /mob/living/silicon/ai/proc/ai_camera_track(target_name in trackable_mobs())
 
 	if(src.stat == DEAD)
-		src << "You can't track with camera because you are dead!"
+		to_chat(src, "You can't track with camera because you are dead!")
 		return
 	if(target_name == "Cancel")
 		return 0
@@ -181,7 +181,7 @@
 	if(!cameraFollow)
 		return
 
-	src << "Follow camera mode [forced ? "terminated" : "ended"]."
+	to_chat(src, "Follow camera mode [forced ? "terminated" : "ended"].")
 	cameraFollow.tracking_cancelled()
 	cameraFollow = null
 
@@ -190,7 +190,7 @@
 	var/mob/living/silicon/ai/U = usr
 
 	U.cameraFollow = target
-	U << "Now tracking [target.name] on camera."
+	to_chat(U, "Now tracking [target.name] on camera.")
 	target.tracking_initiated()
 
 	spawn (0)
@@ -200,27 +200,27 @@
 			if (istype(target, /mob/living/carbon/human))
 				var/mob/living/carbon/human/H = target
 				if(H.wear_id && istype(H.wear_id.GetID(), /obj/item/weapon/card/id/syndicate))
-					U << "Follow camera mode terminated."
+					to_chat(U, "Follow camera mode terminated.")
 					U.cameraFollow = null
 					return
 				if(istype(H.head, /obj/item/clothing/head))
 					var/obj/item/clothing/head/hat = H.head
 					if(hat.blockTracking)
-						U << "Follow camera mode terminated."
+						to_chat(U, "Follow camera mode terminated.")
 						U.cameraFollow = null
 						return
 				if(H.digitalcamo)
-					U << "Follow camera mode terminated."
+					to_chat(U, "Follow camera mode terminated.")
 					U.cameraFollow = null
 					return
 
 			if(istype(target.loc,/obj/effect/dummy))
-				U << "Follow camera mode ended."
+				to_chat(U, "Follow camera mode ended.")
 				U.cameraFollow = null
 				return
 
 			if (!near_camera(target))
-				U << "Target is not near any active cameras."
+				to_chat(U, "Target is not near any active cameras.")
 				sleep(100)
 				continue
 
@@ -274,11 +274,11 @@ mob/living/proc/tracking_initiated()
 mob/living/silicon/robot/tracking_initiated()
 	tracking_entities++
 	if(tracking_entities == 1 && has_zeroth_law())
-		src << "<span class='warning'>Internal camera is currently being accessed.</span>"
+		to_chat(src, "<span class='warning'>Internal camera is currently being accessed.</span>")
 
 mob/living/proc/tracking_cancelled()
 
 mob/living/silicon/robot/tracking_initiated()
 	tracking_entities--
 	if(!tracking_entities && has_zeroth_law())
-		src << "<span class='notice'>Internal camera is no longer being accessed.</span>"
+		to_chat(src, "<span class='notice'>Internal camera is no longer being accessed.</span>")

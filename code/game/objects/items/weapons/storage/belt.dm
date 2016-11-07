@@ -321,17 +321,17 @@
 
 /obj/item/weapon/storage/belt/security/improved/proc/holster(obj/item/I, mob/user)
 	if(holstered)
-		user << "\red There is already a [holstered] holstered here!"
+		to_chat(user, "\red There is already a [holstered] holstered here!")
 		return
 
 	if (!istype(I, /obj/item/weapon/gun) && !istype(I, /obj/item/weapon/melee/baton))
-		user << "\red Only handguns and stun batons can be holstered!"
+		to_chat(user, "\red Only handguns and stun batons can be holstered!")
 		return
 
 	if(istype(I, /obj/item/weapon/gun))
 		var/obj/item/weapon/gun/W = I
 		if (!W.isHandgun())
-			user << "\red This [W] won't fit in the [src]!"
+			to_chat(user, "\red This [W] won't fit in the [src]!")
 			return
 
 	holstered = I
@@ -349,7 +349,7 @@
 		return
 
 	if(istype(user.get_active_hand(),/obj)) // && istype(user.get_inactive_hand(),/obj))
-		user << "\red You need an empty hand to draw the [holstered]!"
+		to_chat(user, "\red You need an empty hand to draw the [holstered]!")
 	else
 		if(user.a_intent == "hurt")
 			usr.visible_message("\red [user] draws the [holstered], ready to shoot!", \

@@ -25,14 +25,14 @@ var/list/extraction_appends = list("AAAAAAAAAAAAAAAAAUGH", "AAAAAAAAAAAHHHHHHHHH
 		else
 			fulton_mark = locate(/obj/effect/landmark/heist/obj_loot)
 		if(!fulton_mark)
-			user << "<span class='notice'>Error... Aurora beacon not found.</span>"
+			to_chat(user, "<span class='notice'>Error... Aurora beacon not found.</span>")
 			return
 		if(A.loc == user || A == user) // No extracting stuff you're holding in your hands/yourself.
 			return
 		if(A.anchored)
 			return
 		is_extracting = 1
-		user << "<span class='notice'>You start attaching the pack to [A]...</span>"
+		to_chat(user, "<span class='notice'>You start attaching the pack to [A]...</span>")
 		if(istype(A, /obj/item))
 			var/obj/item/I = A
 			if(I.w_class <= 2)
@@ -43,7 +43,7 @@ var/list/extraction_appends = list("AAAAAAAAAAAAAAAAAUGH", "AAAAAAAAAAAHHHHHHHHH
 			is_extracting = 0
 			if(A.anchored)
 				return
-			user << "<span class='notice'>You attach the pack to [A] and activate it.</span>"
+			to_chat(user, "<span class='notice'>You attach the pack to [A] and activate it.</span>")
 			var/image/balloon
 			if(istype(A, /mob/living))
 				var/mob/living/M = A

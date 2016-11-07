@@ -251,7 +251,7 @@
 
 /obj/item/weapon/circuitboard/computer/cargo/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/card/emag) && !hacked)
-		user << "\blue Special supplies unlocked."
+		to_chat(user, "\blue Special supplies unlocked.")
 		hacked = TRUE
 		contraband_enabled = TRUE
 		return
@@ -273,7 +273,7 @@
 			if("Cancel")
 				return
 			else
-				user << "DERP! BUG! Report this (And what you were doing to cause it) to Agouri"
+				to_chat(user, "DERP! BUG! Report this (And what you were doing to cause it) to Agouri")
 	return
 
 /obj/item/weapon/circuitboard/libraryconsole/attackby(obj/item/I, mob/user)
@@ -281,43 +281,43 @@
 		if(build_path == /obj/machinery/computer/libraryconsole/bookmanagement)
 			name = "circuit board (Library Visitor Console)"
 			build_path = /obj/machinery/computer/libraryconsole
-			user << "<span class='notice'>Defaulting access protocols.</span>"
+			to_chat(user, "<span class='notice'>Defaulting access protocols.</span>")
 		else
 			name = "circuit board (Book Inventory Management Console)"
 			build_path = /obj/machinery/computer/libraryconsole/bookmanagement
-			user << "<span class='notice'>Access protocols successfully updated.</span>"
+			to_chat(user, "<span class='notice'>Access protocols successfully updated.</span>")
 	return
 
 /obj/item/weapon/circuitboard/security/attackby(obj/item/I, mob/user)
 	if(istype(I,/obj/item/weapon/card/emag))
 		if(emagged)
-			user << "Circuit lock is already removed."
+			to_chat(user, "Circuit lock is already removed.")
 			return
-		user << "\blue You override the circuit lock and open controls."
+		to_chat(user, "\blue You override the circuit lock and open controls.")
 		emagged = 1
 		locked = 0
 	else if(istype(I,/obj/item/weapon/card/id))
 		if(emagged)
-			user << "\red Circuit lock does not respond."
+			to_chat(user, "\red Circuit lock does not respond.")
 			return
 		if(check_access(I))
 			locked = !locked
-			user << "\blue You [locked ? "" : "un"]lock the circuit controls."
+			to_chat(user, "\blue You [locked ? "" : "un"]lock the circuit controls.")
 		else
-			user << "\red Access denied."
+			to_chat(user, "\red Access denied.")
 	else if(istype(I,/obj/item/device/multitool))
 		if(locked)
-			user << "\red Circuit controls are locked."
+			to_chat(user, "\red Circuit controls are locked.")
 			return
 		var/existing_networks = jointext(network,",")
 		var/input = strip_html(input(usr, "Which networks would you like to connect this camera console circuit to? Seperate networks with a comma. No Spaces!\nFor example: SS13,Security,Secret ", "Multitool-Circuitboard interface", existing_networks))
 		if(!input)
-			usr << "No input found please hang up and try your call again."
+			to_chat(usr, "No input found please hang up and try your call again.")
 			return
 		var/list/tempnetwork = splittext(input, ",")
 		tempnetwork = difflist(tempnetwork,RESTRICTED_CAMERA_NETWORKS,1)
 		if(tempnetwork.len < 1)
-			usr << "No network found please hang up and try your call again."
+			to_chat(usr, "No network found please hang up and try your call again.")
 			return
 		network = tempnetwork
 	return
@@ -330,26 +330,27 @@
 			if(/obj/machinery/computer/rdconsole/core)
 				src.name = "Circuit Board (RD Console - Robotics)"
 				src.build_path = /obj/machinery/computer/rdconsole/robotics
-				user << "\blue Access protocols set to robotics."
+				to_chat(user, "\blue Access protocols set to robotics.")
 
 			if(/obj/machinery/computer/rdconsole/robotics)
 				src.name = "Circuit Board (RD Console - Mining)"
 				src.build_path = /obj/machinery/computer/rdconsole/mining
-				user << "\blue Access protocols set to mining."
+				to_chat(user, "\blue Access protocols set to mining.")
 
 			if(/obj/machinery/computer/rdconsole/mining)
 				src.name = "Circuit Board (RD Console)"
 				src.build_path = /obj/machinery/computer/rdconsole/core
-				user << "\blue Access protocols set to default."
+				to_chat(user, "\blue Access protocols set to default.")
 
 		/*if(src.build_path == /obj/machinery/computer/rdconsole/core)
 			src.name = "Circuit Board (RD Console - Robotics)"
 			src.build_path = /obj/machinery/computer/rdconsole/robotics
-			user << "\blue Access protocols set to robotics."
+			to_chat(user, "\blue Access protocols set to robotics.")
 		else
 			src.name = "Circuit Board (RD Console)"
 			src.build_path = /obj/machinery/computer/rdconsole/core
-			user << "\blue Access protocols set to default."*/
+			to_chat(user, "\blue Access protocols set to default.")
+		*/
 	return
 
 /obj/structure/computerframe/attackby(obj/item/P, mob/user)
@@ -358,47 +359,47 @@
 			if(istype(P, /obj/item/weapon/wrench))
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 				if(do_after(user, 20, target = src))
-					user << "\blue You wrench the frame into place."
+					to_chat(user, "\blue You wrench the frame into place.")
 					src.anchored = 1
 					src.state = 1
 			if(istype(P, /obj/item/weapon/weldingtool))
 				var/obj/item/weapon/weldingtool/WT = P
 				if(!WT.remove_fuel(0, user))
-					user << "The welding tool must be on to complete this task."
+					to_chat(user, "The welding tool must be on to complete this task.")
 					return
 				playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
 				if(do_after(user, 20, target = src))
 					if(!src || !WT.isOn()) return
-					user << "\blue You deconstruct the frame."
+					to_chat(user, "\blue You deconstruct the frame.")
 					new /obj/item/stack/sheet/metal( src.loc, 5 )
 					qdel(src)
 		if(1)
 			if(istype(P, /obj/item/weapon/wrench))
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 				if(do_after(user, 20, target = src))
-					user << "\blue You unfasten the frame."
+					to_chat(user, "\blue You unfasten the frame.")
 					src.anchored = 0
 					src.state = 0
 			if(istype(P, /obj/item/weapon/circuitboard) && !circuit)
 				var/obj/item/weapon/circuitboard/B = P
 				if(B.board_type == "computer")
 					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-					user << "\blue You place the circuit board inside the frame."
+					to_chat(user, "\blue You place the circuit board inside the frame.")
 					icon_state = "1"
 					circuit = P
 					user.drop_item()
 					circuit.add_fingerprint(user)
 					P.loc = null
 				else
-					user << "\red This frame does not accept circuit boards of this type!"
+					to_chat(user, "\red This frame does not accept circuit boards of this type!")
 			if(istype(P, /obj/item/weapon/screwdriver) && circuit)
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-				user << "\blue You screw the circuit board into place."
+				to_chat(user, "\blue You screw the circuit board into place.")
 				src.state = 2
 				src.icon_state = "2"
 			if(istype(P, /obj/item/weapon/crowbar) && circuit)
 				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
-				user << "\blue You remove the circuit board."
+				to_chat(user, "\blue You remove the circuit board.")
 				src.state = 1
 				src.icon_state = "0"
 				circuit.loc = src.loc
@@ -406,7 +407,7 @@
 		if(2)
 			if(istype(P, /obj/item/weapon/screwdriver) && circuit)
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-				user << "\blue You unfasten the circuit board."
+				to_chat(user, "\blue You unfasten the circuit board.")
 				src.state = 1
 				src.icon_state = "1"
 			if(istype(P, /obj/item/weapon/cable_coil))
@@ -416,13 +417,13 @@
 						if(P)
 							P:amount -= 5
 							if(!P:amount) qdel(P)
-							user << "\blue You add cables to the frame."
+							to_chat(user, "\blue You add cables to the frame.")
 							src.state = 3
 							src.icon_state = "3"
 		if(3)
 			if(istype(P, /obj/item/weapon/wirecutters))
 				playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
-				user << "\blue You remove the cables."
+				to_chat(user, "\blue You remove the cables.")
 				src.state = 2
 				src.icon_state = "2"
 				var/obj/item/weapon/cable_coil/A = new /obj/item/weapon/cable_coil( src.loc )
@@ -434,18 +435,18 @@
 					if(do_after(user, 20, target = src))
 						if(P)
 							P:use(2)
-							user << "\blue You put in the glass panel."
+							to_chat(user, "\blue You put in the glass panel.")
 							src.state = 4
 							src.icon_state = "4"
 		if(4)
 			if(istype(P, /obj/item/weapon/crowbar))
 				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
-				user << "\blue You remove the glass panel."
+				to_chat(user, "\blue You remove the glass panel.")
 				src.state = 3
 				src.icon_state = "3"
 				new /obj/item/stack/sheet/glass( src.loc, 2 )
 			if(istype(P, /obj/item/weapon/screwdriver))
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-				user << "\blue You connect the monitor."
+				to_chat(user, "\blue You connect the monitor.")
 				new src.circuit.build_path (src.loc, circuit)
 				qdel(src)

@@ -274,7 +274,7 @@ datum
 					return
 				if(ishuman(M))
 					if((M.mind in ticker.mode.cult) && prob(10))
-						M << "<span class='notice'>A cooling sensation from inside you brings you an untold calmness.</span>"
+						to_chat(M, "<span class='notice'>A cooling sensation from inside you brings you an untold calmness.</span>")
 						ticker.mode.remove_cultist(M.mind)
 						M.visible_message("<span class='notice'>[M]'s eyes blink and become clearer.</span>")
 
@@ -328,7 +328,7 @@ datum
 				if(ishuman(M))
 					var/mob/living/carbon/human/H = M
 					if(H.dna && !H.dna.mutantrace)
-						M << "<span class='warning'>Your flesh rapidly mutates!</span>"
+						to_chat(M, "<span class='warning'>Your flesh rapidly mutates!</span>")
 						H.dna.mutantrace = "slime"
 						H.update_mutantrace()
 
@@ -344,7 +344,7 @@ datum
 				if(!..())
 					return
 				if(istype(M, /mob/living/carbon) && M.stat != DEAD)
-					M << "<span class='warning'>Your flesh rapidly mutates!</span>"
+					to_chat(M, "<span class='warning'>Your flesh rapidly mutates!</span>")
 					if(M.monkeyizing)
 						return
 					M.monkeyizing = 1
@@ -862,7 +862,7 @@ datum
 						if(M.health >= -100 && M.health <= 0)
 							M.crit_op_stage = 0.0
 				if (method==INGEST)
-					usr << "Well, that was stupid."
+					to_chat(usr, "Well, that was stupid.")
 					M.adjustToxLoss(3)
 				return
 			on_mob_life(var/mob/living/M as mob)
@@ -1643,7 +1643,7 @@ datum
 				if(!..())
 					return
 				if(prob(10))
-					M << "\red Your insides are burning!"
+					to_chat(M, "\red Your insides are burning!")
 					M.adjustToxLoss(rand(20,60) * REM)
 				else if(prob(40))
 					M.heal_organ_damage(5 * REM, 0)
@@ -1921,27 +1921,27 @@ datum
 
 						if(H.head)
 							if(prob(meltprob) && !H.head.unacidable)
-								H << "<span class='danger'>Your headgear melts away but protects you from the acid!</span>"
+								to_chat(H, "<span class='danger'>Your headgear melts away but protects you from the acid!</span>")
 								qdel(H.head)
 								H.update_inv_head()
 								H.update_hair()
 							else
-								H << "<span class='warning'>Your headgear protects you from the acid.</span>"
+								to_chat(H, "<span class='warning'>Your headgear protects you from the acid.</span>")
 							return
 
 						if(H.wear_mask)
 							if(prob(meltprob) && !H.wear_mask.unacidable)
-								H << "<span class='danger'>Your mask melts away but protects you from the acid!</span>"
+								to_chat(H, "<span class='danger'>Your mask melts away but protects you from the acid!</span>")
 								qdel(H.wear_mask)
 								H.update_inv_wear_mask()
 								H.update_hair()
 							else
-								H << "<span class='warning'>Your mask protects you from the acid.</span>"
+								to_chat(H, "<span class='warning'>Your mask protects you from the acid.</span>")
 							return
 
 						if(H.glasses) //Doesn't protect you from the acid but can melt anyways!
 							if(prob(meltprob) && !H.glasses.unacidable)
-								H << "<span class='danger'>Your glasses melts away!</span>"
+								to_chat(H, "<span class='danger'>Your glasses melts away!</span>")
 								qdel(H.glasses)
 								H.update_inv_glasses()
 
@@ -1949,11 +1949,11 @@ datum
 						var/mob/living/carbon/monkey/MK = M
 						if(MK.wear_mask)
 							if(!MK.wear_mask.unacidable)
-								MK << "<span class='danger'>Your mask melts away but protects you from the acid!</span>"
+								to_chat(MK, "<span class='danger'>Your mask melts away but protects you from the acid!</span>")
 								qdel(MK.wear_mask)
 								MK.update_inv_wear_mask()
 							else
-								MK << "<span class='warning'>Your mask protects you from the acid.</span>"
+								to_chat(MK, "<span class='warning'>Your mask protects you from the acid.</span>")
 							return
 
 					if(!M.unacidable)
@@ -1977,7 +1977,7 @@ datum
 						var/obj/effect/decal/cleanable/molten_item/I = new/obj/effect/decal/cleanable/molten_item(O.loc)
 						I.desc = "Looks like this was \an [O] some time ago."
 						for(var/mob/M in viewers(5, O))
-							M << "\red \the [O] melts."
+							to_chat(M, "\red \the [O] melts.")
 						qdel(O)
 
 		toxin/acid/polyacid
@@ -2118,10 +2118,10 @@ datum
 							if ( !safe_thing )
 								safe_thing = victim.glasses
 						if ( eyes_covered && mouth_covered )
-							victim << "\red Your [safe_thing] protects you from the pepperspray!"
+							to_chat(victim, "\red Your [safe_thing] protects you from the pepperspray!")
 							return
 						else if ( mouth_covered )	// Reduced effects if partially protected
-							victim << "\red Your [safe_thing] protect you from most of the pepperspray!"
+							to_chat(victim, "\red Your [safe_thing] protect you from most of the pepperspray!")
 							victim.eye_blurry = max(M.eye_blurry, 15)
 							victim.eye_blind = max(M.eye_blind, 5)
 							victim.Stun(5)
@@ -2130,13 +2130,13 @@ datum
 							//victim.drop_item()
 							return
 						else if ( eyes_covered ) // Eye cover is better than mouth cover
-							victim << "\red Your [safe_thing] protects your eyes from the pepperspray!"
+							to_chat(victim, "\red Your [safe_thing] protects your eyes from the pepperspray!")
 							victim.emote("scream",,, 1)
 							victim.eye_blurry = max(M.eye_blurry, 5)
 							return
 						else // Oh dear :D
 							victim.emote("scream",,, 1)
-							victim << "\red You're sprayed directly in the eyes with pepperspray!"
+							to_chat(victim, "\red You're sprayed directly in the eyes with pepperspray!")
 							victim.eye_blurry = max(M.eye_blurry, 25)
 							victim.eye_blind = max(M.eye_blind, 10)
 							victim.Stun(5)
@@ -3069,17 +3069,17 @@ datum
 				if(istype(O,/obj/item/weapon/paper))
 					var/obj/item/weapon/paper/paperaffected = O
 					paperaffected.clearpaper()
-					usr << "The solution dissolves the ink on the paper."
+					to_chat(usr, "The solution dissolves the ink on the paper.")
 				if(istype(O,/obj/item/weapon/book))
 					if(istype(O,/obj/item/weapon/book/tome))
-						usr << "The solution does nothing. Whatever this is, it isn't normal ink."
+						to_chat(usr, "The solution does nothing. Whatever this is, it isn't normal ink.")
 						return
 					if(volume >= 5)
 						var/obj/item/weapon/book/affectedbook = O
 						affectedbook.dat = null
-						usr << "The solution dissolves the ink on the book."
+						to_chat(usr, "The solution dissolves the ink on the book.")
 					else
-						usr << "It wasn't enough..."
+						to_chat(usr, "It wasn't enough...")
 				return
 			reaction_mob(mob/living/M, method=TOUCH, volume)//Splashing people with ethanol isn't quite as good as fuel.
 				if(!istype(M, /mob/living))

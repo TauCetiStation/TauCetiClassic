@@ -85,7 +85,7 @@
 		else
 			new_mob.key = M.key
 
-		new_mob << "<B>Your form morphs into that of a [randomize].</B>"
+		to_chat(new_mob, "<B>Your form morphs into that of a [randomize].</B>")
 
 		qdel(M)
 		return new_mob

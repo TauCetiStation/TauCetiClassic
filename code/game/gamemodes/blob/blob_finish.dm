@@ -31,7 +31,7 @@
 		completion_text += "<B>The alien organism has been eradicated from the station.</B>"
 
 		log_game("Blob mode completed with a crew victory.")
-	world << "<BR><span class='info'>Rebooting in 30s.</span>"
+	to_chat(world, "<BR><span class='info'>Rebooting in 30s.</span>")
 	..()
 	return 1
 

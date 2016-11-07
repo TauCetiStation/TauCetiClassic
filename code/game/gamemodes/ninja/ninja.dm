@@ -15,7 +15,7 @@
 	var/finished = 0
 
 /datum/game_mode/ninja/announce()
-	world << "<B>The current game mode is Ninja!</B>"
+	to_chat(world, "<B>The current game mode is Ninja!</B>")
 
 /datum/game_mode/ninja/can_start()
 	if(!..())
@@ -47,8 +47,8 @@
 	ninja.original = ninja.current*/
 
 	/*if(ninjastart.len == 0)
-		ninja.current << "<B>\red A proper starting location for you could not be found, please report this bug!</B>"
-		ninja.current << "<B>\red Attempting to place at a carpspawn.</B>"*/
+		to_chat(ninja.current, "<B>\red A proper starting location for you could not be found, please report this bug!</B>")
+		to_chat(ninja.current, "<B>\red Attempting to place at a carpspawn.</B>"*/
 
 	//Until such a time as people want to place ninja spawn points, carpspawn will do fine.
 	for(var/obj/effect/landmark/L in landmarks_list)
@@ -56,13 +56,13 @@
 			ninjastart.Add(L)
 
 	if (ninjastart.len == 0)
-		//ninja.current << "<B>\red No spawneable locations could be found. Aborting.</B>"
+//		to_chat(ninja.current, "<B>\red No spawneable locations could be found. Aborting.</B>")
 		return 0
 	/*if(ninjastart.len == 0 && latejoin.len > 0)
-		//ninja.current << "<B>\red No spawneable locations could be found. Defaulting to latejoin.</B>"
+//		to_chat(ninja.current, "<B>\red No spawneable locations could be found. Defaulting to latejoin.</B>")
 		return 1
 	else if (ninjastart.len == 0)
-		//ninja.current << "<B>\red No spawneable locations could be found. Aborting.</B>"
+//		to_chat(ninja.current, "<B>\red No spawneable locations could be found. Aborting.</B>")
 		return 0*/
 
 	return 1
@@ -83,7 +83,7 @@
 		if(!config.objectives_disabled)
 			forge_ninja_objectives(ninja)
 		else
-			ninja.current << "<font color=blue>Within the rules,</font> try to act as an opposing force to the crew. Further RP and try to make sure other players have </i>fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>"
+			to_chat(ninja.current, "<font color=blue>Within the rules,</font> try to act as an opposing force to the crew. Further RP and try to make sure other players have </i>fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>")
 		var/mob/living/carbon/human/N = ninja.current
 		N.internal = N.s_store
 		N.internals.icon_state = "internal1"
@@ -216,16 +216,16 @@
 	ninja.current.mind = ninja
 
 	var/directive = generate_ninja_directive("heel")//Only hired by antags, not NT
-	ninja.current << "<span class = 'info'><B>You are <font color='red'>Ninja</font>!</B></span>"
-	ninja.current << "You are an elite mercenary assassin of the Spider Clan, [ninja.current.real_name]. You have a variety of abilities at your disposal, thanks to your nano-enhanced cyber armor"
-	ninja.current << "Your current directive is: <span class = 'red'><B>[directive]</B></span>"
-	ninja.current << "<span class = 'info'>Try your best to adhere to this.</span>"
+	to_chat(ninja.current, "<span class = 'info'><B>You are <font color='red'>Ninja</font>!</B></span>")
+	to_chat(ninja.current, "You are an elite mercenary assassin of the Spider Clan, [ninja.current.real_name]. You have a variety of abilities at your disposal, thanks to your nano-enhanced cyber armor")
+	to_chat(ninja.current, "Your current directive is: <span class = 'red'><B>[directive]</B></span>")
+	to_chat(ninja.current, "<span class = 'info'>Try your best to adhere to this.</span>")
 	ninja.store_memory("<B>Directive:</B> <span class='red'>[directive]</span><br>")
 
 	var/obj_count = 1
-	ninja.current << "<span class = 'info'><B>Your current objectives:</B></span>"
+	to_chat(ninja.current, "<span class = 'info'><B>Your current objectives:</B></span>")
 	for(var/datum/objective/objective in ninja.objectives)
-		ninja.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
+		to_chat(ninja.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 		obj_count++
 
 /datum/game_mode/proc/auto_declare_completion_ninja()

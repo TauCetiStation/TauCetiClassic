@@ -45,21 +45,21 @@ var/global/list/rad_collectors = list()
 			investigate_log("turned [active?"<font color='green'>on</font>":"<font color='red'>off</font>"] by [user.key]. [P?"Fuel: [round(P.air_contents.phoron/0.29)]%":"<font color='red'>It is empty</font>"].","singulo")
 			return
 		else
-			user << "\red The controls are locked!"
+			to_chat(user, "\red The controls are locked!")
 			return
 ..()
 
 
 /obj/machinery/power/rad_collector/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/device/analyzer))
-		user << "\blue The [W.name] detects that [last_power]W were recently produced."
+		to_chat(user, "\blue The [W.name] detects that [last_power]W were recently produced.")
 		return 1
 	else if(istype(W, /obj/item/weapon/tank/phoron))
 		if(!src.anchored)
-			user << "\red The [src] needs to be secured to the floor first."
+			to_chat(user, "\red The [src] needs to be secured to the floor first.")
 			return 1
 		if(src.P)
-			user << "\red There's already a phoron tank loaded."
+			to_chat(user, "\red There's already a phoron tank loaded.")
 			return 1
 		user.drop_item()
 		src.P = W
@@ -71,7 +71,7 @@ var/global/list/rad_collectors = list()
 			return 1
 	else if(istype(W, /obj/item/weapon/wrench))
 		if(P)
-			user << "\blue Remove the phoron tank first."
+			to_chat(user, "\blue Remove the phoron tank first.")
 			return 1
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 		src.anchored = !src.anchored
@@ -86,12 +86,12 @@ var/global/list/rad_collectors = list()
 		if (src.allowed(user))
 			if(active)
 				src.locked = !src.locked
-				user << "The controls are now [src.locked ? "locked." : "unlocked."]"
+				to_chat(user, "The controls are now [src.locked ? "locked." : "unlocked."]")
 			else
 				src.locked = 0 //just in case it somehow gets locked
-				user << "\red The controls can only be locked when the [src] is active"
+				to_chat(user, "\red The controls can only be locked when the [src] is active")
 		else
-			user << "\red Access denied!"
+			to_chat(user, "\red Access denied!")
 			return 1
 	else
 		..()

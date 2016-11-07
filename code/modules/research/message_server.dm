@@ -94,8 +94,8 @@ var/global/list/obj/machinery/message_server/message_servers = list()
 	rc_msgs += new/datum/data_rc_msg(recipient,sender,message,stamp,id_auth)
 
 /obj/machinery/message_server/attack_hand(user)
-//	user << "\blue There seem to be some parts missing from this server. They should arrive on the station in a few days, give or take a few CentCom delays."
-	user << "You toggle PDA message passing from [active ? "On" : "Off"] to [active ? "Off" : "On"]"
+//	to_chat(user, "\blue There seem to be some parts missing from this server. They should arrive on the station in a few days, give or take a few CentCom delays.")
+	to_chat(user, "You toggle PDA message passing from [active ? "On" : "Off"] to [active ? "Off" : "On"]")
 	active = !active
 	update_icon()
 

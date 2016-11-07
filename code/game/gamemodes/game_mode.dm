@@ -79,7 +79,7 @@ Implants;
 /obj/item/toy/syndicateballoon:10:For showing that You Are The BOSS (Useless Balloon);"}
 
 /datum/game_mode/proc/announce() //to be calles when round starts
-	world << "<B>Notice</B>: [src] did not define announce()"
+	to_chat(world, "<B>Notice</B>: [src] did not define announce()")
 
 
 ///can_start()
@@ -255,10 +255,10 @@ Implants;
 				var/extra = 4
 				suplink.uses += extra
 				if(man.mind) man.mind.total_TC += extra
-				man << "\red We have received notice that enemy intelligence suspects you to be linked with us. We have thus invested significant resources to increase your uplink's capacity."
+				to_chat(man, "\red We have received notice that enemy intelligence suspects you to be linked with us. We have thus invested significant resources to increase your uplink's capacity.")
 			else
 				// Give them a warning!
-				man << "\red They are on to you!"
+				to_chat(man, "\red They are on to you!")
 
 		// Some poor people who were just in the wrong place at the wrong time..
 		else if(prob(10))
@@ -283,7 +283,7 @@ Implants;
 /*	command_alert("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.")
 	for(var/mob/M in player_list)
 		if(!istype(M,/mob/new_player))
-			M << sound('sound/AI/intercept.ogg')
+			to_chat(M, sound('sound/AI/intercept.ogg'))
 	if(security_level < SEC_LEVEL_BLUE)
 		set_security_level(SEC_LEVEL_BLUE)*/
 
@@ -418,7 +418,7 @@ proc/display_roundstart_logout_report()
 
 	for(var/mob/M in mob_list)
 		if(M.client && M.client.holder)
-			M << msg
+			to_chat(M, msg)
 
 
 proc/get_nt_opposed()

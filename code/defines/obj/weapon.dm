@@ -152,7 +152,7 @@
 	var/armed = 0
 
 	suicide_act(mob/user)
-		viewers(user) << "<span class='danger'>[user] is putting the [src.name] on \his head! It looks like \he's trying to commit suicide.</span>"
+		to_chat(viewers(user), "<span class='danger'>[user] is putting the [src.name] on \his head! It looks like \he's trying to commit suicide.</span>")
 		return (BRUTELOSS)
 
 /obj/item/weapon/legcuffs/beartrap/attack_self(mob/user)
@@ -160,7 +160,7 @@
 	if(ishuman(user) && !user.stat && !user.restrained())
 		armed = !armed
 		icon_state = "beartrap[armed]"
-		user << "<span class='notice'>[src] is now [armed ? "armed" : "disarmed"].</span>"
+		to_chat(user, "<span class='notice'>[src] is now [armed ? "armed" : "disarmed"].</span>")
 
 /obj/item/weapon/legcuffs/beartrap/Crossed(AM as mob|obj)
 	if(armed)
@@ -172,7 +172,7 @@
 					H.legcuffed = src
 					src.loc = H
 					H.update_inv_legcuffed()
-					H << "<span class='danger'>You step on \the [src]!</span>"
+					to_chat(H, "<span class='danger'>You step on \the [src]!</span>")
 					feedback_add_details("handcuffs","B") //Yes, I know they're legcuffs. Don't change this, no need for an extra variable. The "B" is used to tell them apart.
 					for(var/mob/O in viewers(H, null))
 						if(O == H)
@@ -229,8 +229,8 @@
 	attack_verb = list("stabbed", "slashed", "sliced", "cut")
 
 	suicide_act(mob/user)
-		viewers(user) << pick("<span class='danger'>[user] is slitting \his wrists with the shard of glass! It looks like \he's trying to commit suicide.</span>", \
-							"<span class='danger'>[user] is slitting \his throat with the shard of glass! It looks like \he's trying to commit suicide.</span>")
+		to_chat(viewers(user), "<span class='danger'>[user] is slitting \his wrists with the shard of glass! It looks like \he's trying to commit suicide.</span>")
+
 		return (BRUTELOSS)
 
 /obj/item/weapon/shard/attack(mob/living/carbon/M, mob/living/carbon/user)
@@ -248,13 +248,13 @@
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(!H.gloves && !(H.dna && H.dna.mutantrace == "adamantine")) //specflags please..
-			H << "<span class='warning'>[src] cuts into your hand!</span>"
+			to_chat(H, "<span class='warning'>[src] cuts into your hand!</span>")
 			var/organ = (H.hand ? "l_" : "r_") + "hand"
 			var/datum/organ/external/affecting = H.get_organ(organ)
 			affecting.take_damage(force / 2)
 	else if(ismonkey(user))
 		var/mob/living/carbon/monkey/M = user
-		M << "<span class='warning'>[src] cuts into your hand!</span>"
+		to_chat(M, "<span class='warning'>[src] cuts into your hand!</span>")
 		M.adjustBruteLoss(force / 2)
 
 /*/obj/item/weapon/syndicate_uplink
@@ -399,7 +399,7 @@
 	attack_verb = list("whipped", "lashed", "disciplined", "tickled")
 
 	suicide_act(mob/user)
-		viewers(user) << "<span class='danger'>[user] is strangling \himself with the [src.name]! It looks like \he's trying to commit suicide.</span>"
+		to_chat(viewers(user), "<span class='danger'>[user] is strangling \himself with the [src.name]! It looks like \he's trying to commit suicide.</span>")
 		return (OXYLOSS)
 
 /obj/item/weapon/module
@@ -453,7 +453,7 @@
 		if (C.bugged && C.status)
 			cameras.Add(C)
 	if (length(cameras) == 0)
-		usr << "<span class='red'>No bugged functioning cameras found.</span>"
+		to_chat(usr, "<span class='red'>No bugged functioning cameras found.</span>")
 		return
 
 	var/list/friendly_cameras = new/list()

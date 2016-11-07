@@ -47,7 +47,7 @@
 	if(mind)
 		mind.transfer_to(O)
 
-	O << "<B>You are now [O]. </B>"
+	to_chat(O, "<B>You are now [O]. </B>")
 
 	spawn(0)//To prevent the proc from returning null.
 		qdel(src)
@@ -80,7 +80,8 @@
 
 /mob/proc/AIize(move=1)
 	if(client)
-		src << sound(null, repeat = 0, wait = 0, volume = 85, channel = 1) // stop the jams for AIs
+		src << sound(null, repeat = 0, wait = 0, volume = 85, channel = 1)// stop the jams for AIs
+
 	var/mob/living/silicon/ai/O = new (loc, base_law_type,,1)//No MMI but safety is in effect.
 	O.invisibility = 0
 	O.aiRestorePowerRoutine = 0
@@ -106,7 +107,7 @@
 						continue
 					loc_landmark = tripai
 		if (!loc_landmark)
-			O << "Oh god sorry we can't find an unoccupied AI spawn location, so we're spawning you on top of someone."
+			to_chat(O, "Oh god sorry we can't find an unoccupied AI spawn location, so we're spawning you on top of someone.")
 			for(var/obj/effect/landmark/start/sloc in landmarks_list)
 				if (sloc.name == "AI")
 					loc_landmark = sloc
@@ -115,14 +116,14 @@
 		for (var/obj/item/device/radio/intercom/comm in O.loc)
 			comm.ai += O
 
-	O << "<B>You are playing the station's AI. The AI cannot move, but can interact with many objects while viewing them (through cameras).</B>"
-	O << "<B>To look at other parts of the station, click on yourself to get a camera menu.</B>"
-	O << "<B>While observing through a camera, you can use most (networked) devices which you can see, such as computers, APCs, intercoms, doors, etc.</B>"
-	O << "To use something, simply click on it."
-	O << {"Use say ":b to speak to your cyborgs through binary."}
+	to_chat(O, "<B>You are playing the station's AI. The AI cannot move, but can interact with many objects while viewing them (through cameras).</B>")
+	to_chat(O, "<B>To look at other parts of the station, click on yourself to get a camera menu.</B>")
+	to_chat(O, "<B>While observing through a camera, you can use most (networked) devices which you can see, such as computers, APCs, intercoms, doors, etc.</B>")
+	to_chat(O, "To use something, simply click on it.")
+	to_chat(O, {"Use say ":b to speak to your cyborgs through binary."})
 	if (!(ticker && ticker.mode && (O.mind in ticker.mode.malf_ai)))
 		O.show_laws()
-		O << "<b>These laws may be changed by other players, or by you being the traitor.</b>"
+		to_chat(O, "<b>These laws may be changed by other players, or by you being the traitor.</b>")
 
 	O.add_ai_verbs()
 	O.job = "AI"
@@ -215,7 +216,7 @@
 	new_xeno.a_intent = "hurt"
 	new_xeno.key = key
 
-	new_xeno << "<B>You are now an alien.</B>"
+	to_chat(new_xeno, "<B>You are now an alien.</B>")
 	spawn(0)//To prevent the proc from returning null.
 		qdel(src)
 	return
@@ -251,7 +252,7 @@
 	new_slime.a_intent = "hurt"
 	new_slime.key = key
 
-	new_slime << "<B>You are now a slime. Skreee!</B>"
+	to_chat(new_slime, "<B>You are now a slime. Skreee!</B>")
 	spawn(0)//To prevent the proc from returning null.
 		qdel(src)
 	return
@@ -273,7 +274,7 @@
 	new_corgi.a_intent = "hurt"
 	new_corgi.key = key
 
-	new_corgi << "<B>You are now a Corgi. Yap Yap!</B>"
+	to_chat(new_corgi, "<B>You are now a Corgi. Yap Yap!</B>")
 	spawn(0)//To prevent the proc from returning null.
 		qdel(src)
 	return
@@ -284,7 +285,7 @@
 	var/mobpath = input("Which type of mob should [src] turn into?", "Choose a type") in mobtypes
 
 	if(!safe_animal(mobpath))
-		usr << "\red Sorry but this mob type is currently unavailable."
+		to_chat(usr, "\red Sorry but this mob type is currently unavailable.")
 		return
 
 	if(monkeyizing)
@@ -307,7 +308,7 @@
 	new_mob.a_intent = "hurt"
 
 
-	new_mob << "You suddenly feel more... animalistic."
+	to_chat(new_mob, "You suddenly feel more... animalistic.")
 	spawn()
 		qdel(src)
 	return
@@ -318,14 +319,14 @@
 	var/mobpath = input("Which type of mob should [src] turn into?", "Choose a type") in mobtypes
 
 	if(!safe_animal(mobpath))
-		usr << "\red Sorry but this mob type is currently unavailable."
+		to_chat(usr, "\red Sorry but this mob type is currently unavailable.")
 		return
 
 	var/mob/new_mob = new mobpath(src.loc)
 
 	new_mob.key = key
 	new_mob.a_intent = "hurt"
-	new_mob << "You feel more... animalistic"
+	to_chat(new_mob, "You feel more... animalistic")
 
 	qdel(src)
 

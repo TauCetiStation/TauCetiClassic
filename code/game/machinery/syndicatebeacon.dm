@@ -91,13 +91,13 @@
 			N.mind.objectives += escape_objective
 
 
-			M << "<B>You have joined the ranks of the Syndicate and become a traitor to the station!</B>"
+			to_chat(M, "<B>You have joined the ranks of the Syndicate and become a traitor to the station!</B>")
 
 			message_admins("[N]/([N.ckey]) has accepted a traitor objective from a syndicate beacon.")
 
 			var/obj_count = 1
 			for(var/datum/objective/OBJ in M.mind.objectives)
-				M << "<B>Objective #[obj_count]</B>: [OBJ.explanation_text]"
+				to_chat(M, "<B>Objective #[obj_count]</B>: [OBJ.explanation_text]")
 				obj_count++
 
 	src.updateUsrDialog()
@@ -129,14 +129,14 @@
 
 /obj/machinery/singularity_beacon/proc/Activate(mob/user = null)
 	if(!checkWirePower())
-		if(user) user << "\blue The connected wire doesn't have enough current."
+		if(user) to_chat(user, "\blue The connected wire doesn't have enough current.")
 		return
 	for(var/obj/singularity/singulo in world)
 		if(singulo.z == z)
 			singulo.target = src
 	icon_state = "[icontype]1"
 	active = 1
-	if(user) user << "\blue You activate the beacon."
+	if(user) to_chat(user, "\blue You activate the beacon.")
 
 
 /obj/machinery/singularity_beacon/proc/Deactivate(mob/user = null)
@@ -145,7 +145,7 @@
 			singulo.target = null
 	icon_state = "[icontype]0"
 	active = 0
-	if(user) user << "\blue You deactivate the beacon."
+	if(user) to_chat(user, "\blue You deactivate the beacon.")
 
 
 /obj/machinery/singularity_beacon/attack_ai(mob/user)
@@ -156,20 +156,20 @@
 	if(stat & SCREWED)
 		return active ? Deactivate(user) : Activate(user)
 	else
-		user << "\red You need to screw the beacon to the floor first!"
+		to_chat(user, "\red You need to screw the beacon to the floor first!")
 		return
 
 
 /obj/machinery/singularity_beacon/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W,/obj/item/weapon/screwdriver))
 		if(active)
-			user << "\red You need to deactivate the beacon first!"
+			to_chat(user, "\red You need to deactivate the beacon first!")
 			return
 
 		if(stat & SCREWED)
 			stat &= ~SCREWED
 			anchored = 0
-			user << "\blue You unscrew the beacon from the floor."
+			to_chat(user, "\blue You unscrew the beacon from the floor.")
 			attached = null
 			return
 		else
@@ -177,11 +177,11 @@
 			if(isturf(T) && !T.intact)
 				attached = locate() in T
 			if(!attached)
-				user << "This device must be placed over an exposed cable."
+				to_chat(user, "This device must be placed over an exposed cable.")
 				return
 			stat |= SCREWED
 			anchored = 1
-			user << "\blue You screw the beacon to the floor and attach the cable."
+			to_chat(user, "\blue You screw the beacon to the floor and attach the cable.")
 			return
 	..()
 	return

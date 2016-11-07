@@ -78,8 +78,8 @@ Made by Xhuis
 	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain")
 
 /datum/game_mode/shadowling/announce()
-	world << "<b>The current game mode is - Shadowling!</b>"
-	world << "<b>There are alien <span class='userdanger'>shadowlings</span> on the station. Crew: Kill the shadowlings before they can eat or enthrall the crew. Shadowlings: Enthrall the crew while remaining in hiding.</b>"
+	to_chat(world, "<b>The current game mode is - Shadowling!</b>")
+	to_chat(world, "<b>There are alien <span class='userdanger'>shadowlings</span> on the station. Crew: Kill the shadowlings before they can eat or enthrall the crew. Shadowlings: Enthrall the crew while remaining in hiding.</b>")
 
 /datum/game_mode/shadowling/pre_setup()
 
@@ -110,8 +110,8 @@ Made by Xhuis
 	for(var/datum/mind/shadow in shadows)
 		log_game("[shadow.key] (ckey) has been selected as a Shadowling.")
 		sleep(10)
-		shadow.current << "<br>"
-		shadow.current << "<span class='deadsay'><b><font size=3>You are a shadowling!</font></b></span>"
+		to_chat(shadow.current, "<br>")
+		to_chat(shadow.current, "<span class='deadsay'><b><font size=3>You are a shadowling!</font></b></span>")
 		greet_shadow(shadow)
 		finalize_shadowling(shadow)
 		process_shadow_objectives(shadow)
@@ -121,10 +121,11 @@ Made by Xhuis
 	return ..()
 
 /datum/game_mode/proc/greet_shadow(datum/mind/shadow)
-	shadow.current << "<b>Currently, you are disguised as an employee aboard [world.name].</b>"
-	shadow.current << "<b>In your limited state, you have three abilities: Enthrall, Hatch, and Hivemind Commune.</b>"
-	shadow.current << "<b>Any other shadowlings are you allies. You must assist them as they shall assist you.</b>"
-	shadow.current << "<b>If you are new to shadowling, or want to read about abilities, check the wiki page at http://tauceti.ru/wiki/Shadowling</b><br>"
+	to_chat(shadow.current, "<b>Currently, you are disguised as an employee aboard [world.name].</b>")
+	to_chat(shadow.current, "<b>In your limited state, you have three abilities: Enthrall, Hatch, and Hivemind Commune.</b>")
+	to_chat(shadow.current, "<b>Any other shadowlings are you allies. You must assist them as they shall assist you.</b>")
+	to_chat(shadow.current, "<b>If you are new to shadowling, or want to read about abilities, check the wiki page at http://tauceti.ru/wiki/Shadowling</b><br>")
+
 
 
 /datum/game_mode/proc/process_shadow_objectives(datum/mind/shadow_mind)
@@ -134,7 +135,7 @@ Made by Xhuis
 		objective_explanation = "Ascend to your true form by use of the Ascendance ability. This may only be used with [required_thralls] collective thralls, while hatched, and is unlocked with the Collective Mind ability."
 		shadow_objectives += "enthrall"
 		shadow_mind.memory += "<b>Objective #1</b>: [objective_explanation]"
-		shadow_mind.current << "<b>Objective #1</b>: [objective_explanation]<br>"
+		to_chat(shadow_mind.current, "<b>Objective #1</b>: [objective_explanation]<br>")
 
 
 /datum/game_mode/proc/finalize_shadowling(datum/mind/shadow_mind)
@@ -144,7 +145,7 @@ Made by Xhuis
 	spawn(0)
 		S.spell_list += new /obj/effect/proc_holder/spell/targeted/shadowling_hivemind
 		if(shadow_mind.assigned_role == "Clown")
-			S << "<span class='notice'>Your alien nature has allowed you to overcome your clownishness.</span>"
+			to_chat(S, "<span class='notice'>Your alien nature has allowed you to overcome your clownishness.</span>")
 			//S.dna.remove_mutation(CLOWNMUT) //TG
 			S.mutations.Remove(CLUMSY) //Bay
 
@@ -157,7 +158,7 @@ Made by Xhuis
 		thralls += new_thrall_mind
 		new_thrall_mind.current.attack_log += "\[[time_stamp()]\] <span class='danger'>Became a thrall</span>"
 		new_thrall_mind.memory += "<b>The Shadowlings' Objectives:</b> [objective_explanation]"
-		new_thrall_mind.current << "<b>The objectives of the shadowlings:</b> [objective_explanation]"
+		to_chat(new_thrall_mind.current, "<b>The objectives of the shadowlings:</b> [objective_explanation]")
 		H.hud_updateflag |= 1 << SPECIALROLE_HUD
 		H.spell_list += new /obj/effect/proc_holder/spell/targeted/shadowling_hivemind
 		return 1

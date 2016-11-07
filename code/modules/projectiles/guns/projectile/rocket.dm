@@ -26,7 +26,7 @@
 /obj/item/weapon/gun/projectile/revolver/rocketlauncher/mob_can_equip(M, slot)
 	//Cannot equip wielded items.
 	if(wielded)
-		M << "<span class='warning'>Unwield the [initial(name)] first!</span>"
+		to_chat(M, "<span class='warning'>Unwield the [initial(name)] first!</span>")
 		return 0
 
 	return ..()
@@ -48,7 +48,7 @@
 /obj/item/weapon/gun/projectile/revolver/rocketlauncher/attack_self(mob/user)
 	if(wielded) //Trying to unwield it
 		unwield()
-		user << "<span class='notice'>You are now carrying the [name] with one hand.</span>"
+		to_chat(user, "<span class='notice'>You are now carrying the [name] with one hand.</span>")
 		if(user.hand)
 			user.update_inv_l_hand()
 		else
@@ -61,10 +61,10 @@
 
 	else //Trying to wield it
 		if(user.get_inactive_hand())
-			user << "<span class='warning'>You need your other hand to be empty</span>"
+			to_chat(user, "<span class='warning'>You need your other hand to be empty</span>")
 			return
 		wield()
-		user << "<span class='notice'>You grab the [initial(name)] with both hands.</span>"
+		to_chat(user, "<span class='notice'>You grab the [initial(name)] with both hands.</span>")
 
 		if(user.hand)
 			user.update_inv_l_hand()
@@ -91,13 +91,13 @@
 		CB.update_icon()
 		num_unloaded++
 	if (num_unloaded)
-		user << "<span class = 'notice'>You unload [num_unloaded] missile\s from [src].</span>"
+		to_chat(user, "<span class = 'notice'>You unload [num_unloaded] missile\s from [src].</span>")
 	else
-		user << "<span class='notice'>[src] is empty.</span>"
+		to_chat(user, "<span class='notice'>[src] is empty.</span>")
 
 /obj/item/weapon/gun/projectile/revolver/rocketlauncher/afterattack(atom/target, mob/living/user, flag, params) //what I tried to do here is just add a check to see if the cover is open or not and add an icon_state change because I can't figure out how c-20rs do it with overlays
 	if(!wielded)
-		user << "<span class='notice'>You need wield [src] in both hands before firing!</span>"
+		to_chat(user, "<span class='notice'>You need wield [src] in both hands before firing!</span>")
 		return
 	else
 		..()

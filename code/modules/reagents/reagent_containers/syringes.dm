@@ -56,7 +56,7 @@
 	if(!target.reagents) return
 
 	if(mode == SYRINGE_BROKEN)
-		user << "\red This syringe is broken!"
+		to_chat(user, "\red This syringe is broken!")
 		return
 
 	if (user.a_intent == "hurt" && ismob(target))
@@ -70,24 +70,24 @@
 		if(SYRINGE_DRAW)
 
 			if(reagents.total_volume >= reagents.maximum_volume)
-				user << "\red The syringe is full."
+				to_chat(user, "\red The syringe is full.")
 				return
 
 			if(ismob(target))//Blood!
 				if(istype(target, /mob/living/carbon/slime))
-					user << "\red You are unable to locate any blood."
+					to_chat(user, "\red You are unable to locate any blood.")
 					return
 				if(src.reagents.has_reagent("blood"))
-					user << "\red There is already a blood sample in this syringe"
+					to_chat(user, "\red There is already a blood sample in this syringe")
 					return
 				if(istype(target, /mob/living/carbon))//maybe just add a blood reagent to all mobs. Then you can suck them dry...With hundreds of syringes. Jolly good idea.
 					var/amount = src.reagents.maximum_volume - src.reagents.total_volume
 					var/mob/living/carbon/T = target
 					if(!T.dna)
-						usr << "You are unable to locate any blood. (To be specific, your target seems to be missing their DNA datum)"
+						to_chat(usr, "You are unable to locate any blood. (To be specific, your target seems to be missing their DNA datum)")
 						return
 					if(NOCLONE in T.mutations) //target done been et, no more blood in him
-						user << "\red You are unable to locate any blood."
+						to_chat(user, "\red You are unable to locate any blood.")
 						return
 
 					var/datum/reagent/B
@@ -105,38 +105,38 @@
 						src.reagents.update_total()
 						src.on_reagent_change()
 						src.reagents.handle_reactions()
-					user << "\blue You take a blood sample from [target]"
+					to_chat(user, "\blue You take a blood sample from [target]")
 					for(var/mob/O in viewers(4, user))
 						O.show_message("\red [user] takes a blood sample from [target].", 1)
 
 			else //if not mob
 				if(!target.reagents.total_volume)
-					user << "\red [target] is empty."
+					to_chat(user, "\red [target] is empty.")
 					return
 
 				if(!target.is_open_container() && !istype(target,/obj/structure/reagent_dispensers) && !istype(target,/obj/item/slime_extract))
-					user << "\red You cannot directly remove reagents from this object."
+					to_chat(user, "\red You cannot directly remove reagents from this object.")
 					return
 
 				var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this) // transfer from, transfer to - who cares?
 
-				user << "\blue You fill the syringe with [trans] units of the solution."
+				to_chat(user, "\blue You fill the syringe with [trans] units of the solution.")
 			if (reagents.total_volume >= reagents.maximum_volume)
 				mode=!mode
 				update_icon()
 
 		if(SYRINGE_INJECT)
 			if(!reagents.total_volume)
-				user << "\red The Syringe is empty."
+				to_chat(user, "\red The Syringe is empty.")
 				return
 			if(istype(target, /obj/item/weapon/implantcase/chem))
 				return
 
 			if(!target.is_open_container() && !ismob(target) && !istype(target, /obj/item/weapon/reagent_containers/food) && !istype(target, /obj/item/slime_extract) && !istype(target, /obj/item/clothing/mask/cigarette) && !istype(target, /obj/item/weapon/storage/fancy/cigarettes))
-				user << "\red You cannot directly fill this object."
+				to_chat(user, "\red You cannot directly fill this object.")
 				return
 			if(target.reagents.total_volume >= target.reagents.maximum_volume)
-				user << "\red [target] is full."
+				to_chat(user, "\red [target] is full.")
 				return
 
 			if(ismob(target) && target != user)
@@ -197,7 +197,7 @@
 					C.inject_blood(src,5)
 				else
 					trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
-				user << "\blue You inject [trans] units of the solution. The syringe now contains [src.reagents.total_volume] units."
+				to_chat(user, "\blue You inject [trans] units of the solution. The syringe now contains [src.reagents.total_volume] units.")
 				if (reagents.total_volume <= 0 && mode==SYRINGE_INJECT)
 					mode = SYRINGE_DRAW
 					update_icon()
@@ -246,7 +246,7 @@
 		if (!affecting)
 			return
 		if(affecting.status & ORGAN_DESTROYED)
-			user << "What [affecting.display_name]?"
+			to_chat(user, "What [affecting.display_name]?")
 			return
 		var/hit_area = affecting.display_name
 
@@ -323,40 +323,40 @@
 		if(SYRINGE_DRAW)
 
 			if(reagents.total_volume >= reagents.maximum_volume)
-				user << "\red The syringe is full."
+				to_chat(user, "\red The syringe is full.")
 				return
 
 			if(ismob(target))
 				if(istype(target, /mob/living/carbon))//I Do not want it to suck 50 units out of people
-					usr << "This needle isn't designed for drawing blood."
+					to_chat(usr, "This needle isn't designed for drawing blood.")
 					return
 			else //if not mob
 				if(!target.reagents.total_volume)
-					user << "\red [target] is empty."
+					to_chat(user, "\red [target] is empty.")
 					return
 
 				if(!target.is_open_container() && !istype(target,/obj/structure/reagent_dispensers))
-					user << "\red You cannot directly remove reagents from this object."
+					to_chat(user, "\red You cannot directly remove reagents from this object.")
 					return
 
 				var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this) // transfer from, transfer to - who cares?
 
-				user << "\blue You fill the syringe with [trans] units of the solution."
+				to_chat(user, "\blue You fill the syringe with [trans] units of the solution.")
 			if (reagents.total_volume >= reagents.maximum_volume)
 				mode=!mode
 				update_icon()
 
 		if(SYRINGE_INJECT)
 			if(!reagents.total_volume)
-				user << "\red The Syringe is empty."
+				to_chat(user, "\red The Syringe is empty.")
 				return
 			if(istype(target, /obj/item/weapon/implantcase/chem))
 				return
 			if(!target.is_open_container() && !ismob(target) && !istype(target, /obj/item/weapon/reagent_containers/food))
-				user << "\red You cannot directly fill this object."
+				to_chat(user, "\red You cannot directly fill this object.")
 				return
 			if(target.reagents.total_volume >= target.reagents.maximum_volume)
-				user << "\red [target] is full."
+				to_chat(user, "\red [target] is full.")
 				return
 
 			if(ismob(target) && target != user)
@@ -370,7 +370,7 @@
 				src.reagents.reaction(target, INGEST)
 			spawn(5)
 				var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
-				user << "\blue You inject [trans] units of the solution. The syringe now contains [src.reagents.total_volume] units."
+				to_chat(user, "\blue You inject [trans] units of the solution. The syringe now contains [src.reagents.total_volume] units.")
 				if (reagents.total_volume >= reagents.maximum_volume && mode==SYRINGE_INJECT)
 					mode = SYRINGE_DRAW
 					update_icon()

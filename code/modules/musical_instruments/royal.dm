@@ -7,7 +7,7 @@
 	name = "space grand piano"
 
 /obj/structure/device/piano/royal/playnote(note)
-	//world << "Note: [note]"
+//	to_chat(world, "Note: [note]")
 	var/soundfile
 	/*BYOND loads resource files at compile time if they are ''. This means you can't really manipulate them dynamically.
 	Tried doing it dynamically at first but its more trouble than its worth. Would have saved many lines tho.*/
@@ -183,7 +183,7 @@
 		if("Cn9")	soundfile = 'code/modules/musical_instruments/sound/royal/Cn9.ogg'
 		else		return
 
-	//hearers(15, src) << sound(soundfile)
+//	hearers(15, src) << sound(soundfile)
 	var/turf/source = get_turf(src)
 	for(var/mob/M in hearers(15, source))
 		M.playsound_local(source, file(soundfile), 100, falloff = 5)

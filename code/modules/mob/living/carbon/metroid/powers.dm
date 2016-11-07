@@ -6,7 +6,7 @@
 		return
 
 	if(stat)
-		src << "<i>I must be conscious to do this...</i>"
+		to_chat(src, "<i>I must be conscious to do this...</i>")
 		return
 
 	var/list/choices = list()
@@ -25,20 +25,20 @@
 
 						for(var/mob/living/carbon/slime/met in view())
 							if(met.Victim == M && met != src)
-								src << "<i>The [met.name] is already feeding on this subject...</i>"
+								to_chat(src, "<i>The [met.name] is already feeding on this subject...</i>")
 								return
-						src << "\blue <i>I have latched onto the subject and begun feeding...</i>"
-						M << "\red <b>The [src.name] has latched onto your head!</b>"
+						to_chat(src, "\blue <i>I have latched onto the subject and begun feeding...</i>")
+						to_chat(M, "\red <b>The [src.name] has latched onto your head!</b>")
 						Feedon(M)
 
 					else
-						src << "<i>This subject does not have a strong enough life energy...</i>"
+						to_chat(src, "<i>This subject does not have a strong enough life energy...</i>")
 				else
-					src << "<i>This subject does not have an edible life energy...</i>"
+					to_chat(src, "<i>This subject does not have an edible life energy...</i>")
 			else
-				src << "<i>I must not feed on my brothers...</i>"
+				to_chat(src, "<i>I must not feed on my brothers...</i>")
 		else
-			src << "<i>This subject does not have an edible life energy...</i>"
+			to_chat(src, "<i>This subject does not have an edible life energy...</i>")
 
 
 
@@ -48,7 +48,7 @@
 	canmove = 0
 	anchored = 1
 	var/lastnut = nutrition
-	//if(M.client) M << "\red You legs become paralyzed!"
+//	to_chat(if(M.client) M, "\red You legs become paralyzed!")
 	if(istype(src, /mob/living/carbon/slime/adult))
 		icon_state = "[colour] adult slime eat"
 	else
@@ -62,13 +62,13 @@
 			loc = M.loc
 
 			if(prob(15) && M.client && istype(M, /mob/living/carbon))
-				M << "\red [pick("You can feel your body becoming weak!", \
+				to_chat(M, "\red [pick("You can feel your body becoming weak!", \
 				"You feel like you're about to die!", \
 				"You feel every part of your body screaming in agony!", \
 				"A low, rolling pain passes through your body!", \
 				"Your body feels as if it's falling apart!", \
 				"You feel extremely weak!", \
-				"A sharp, deep pain bathes every inch of your body!")]"
+				"A sharp, deep pain bathes every inch of your body!")]")
 
 			if(istype(M, /mob/living/carbon))
 				Victim.adjustCloneLoss(rand(1,10))
@@ -108,10 +108,10 @@
 
 			else
 				if(prob(25))
-					src << "\red <i>[pick("This subject is incompatable", \
+					to_chat(src, "\red <i>[pick("This subject is incompatable", \
 					"This subject does not have a life energy", "This subject is empty", \
 					"I am not satisified", "I can not feed from this subject", \
-					"I do not feel nourished", "This subject is not food")]...</i>"
+					"I do not feel nourished", "This subject is not food")]...</i>")
 
 			sleep(rand(15,45))
 
@@ -146,19 +146,19 @@
 				if(prob(85))
 					rabid = 1 // UUUNNBGHHHH GONNA EAT JUUUUUU
 
-			if(client) src << "<i>This subject does not have a strong enough life energy anymore...</i>"
+			if(client) to_chat(src, "<i>This subject does not have a strong enough life energy anymore...</i>")
 		else
 			M.canmove = 1
 
-			if(client) src << "<i>I have stopped feeding...</i>"
+			if(client) to_chat(src, "<i>I have stopped feeding...</i>")
 	else
-		if(client) src << "<i>I have stopped feeding...</i>"
+		if(client) to_chat(src, "<i>I have stopped feeding...</i>")
 
 	Victim = null
 
 /mob/living/carbon/slime/proc/Feedstop()
 	if(Victim)
-		if(Victim.client) Victim << "[src] has let go of your head!"
+		if(Victim.client) to_chat(Victim, "[src] has let go of your head!")
 		Victim = null
 
 /mob/living/carbon/slime/proc/UpdateFeed(mob/M)
@@ -172,7 +172,7 @@
 	set desc = "This will let you evolve from baby to adult slime."
 
 	if(stat)
-		src << "<i>I must be conscious to do this...</i>"
+		to_chat(src, "<i>I must be conscious to do this...</i>")
 		return
 	if(!istype(src, /mob/living/carbon/slime/adult))
 		if(amount_grown >= 10)
@@ -182,26 +182,26 @@
 			new_slime.a_intent = "hurt"
 			new_slime.key = key
 			new_slime.universal_speak = universal_speak
-			new_slime << "<B>You are now an adult slime.</B>"
+			to_chat(new_slime, "<B>You are now an adult slime.</B>")
 			qdel(src)
 		else
-			src << "<i>I am not ready to evolve yet...</i>"
+			to_chat(src, "<i>I am not ready to evolve yet...</i>")
 	else
-		src << "<i>I have already evolved...</i>"
+		to_chat(src, "<i>I have already evolved...</i>")
 
 /mob/living/carbon/slime/verb/Reproduce()
 	set category = "Slime"
 	set desc = "This will make you split into four Slimes. NOTE: this will KILL you, but you will be transferred into one of the babies."
 
 	if(stat)
-		src << "<i>I must be conscious to do this...</i>"
+		to_chat(src, "<i>I must be conscious to do this...</i>")
 		return
 
 	if(istype(src, /mob/living/carbon/slime/adult))
 		if(amount_grown >= 10)
 			//if(input("Are you absolutely sure you want to reproduce? Your current body will cease to be, but your consciousness will be transferred into a produced slime.") in list("Yes","No")=="Yes")
 			if(stat)
-				src << "<i>I must be conscious to do this...</i>"
+				to_chat(src, "<i>I must be conscious to do this...</i>")
 				return
 
 			var/list/babies = list()
@@ -247,9 +247,9 @@
 			new_slime.universal_speak = universal_speak
 			new_slime.key = key
 
-			new_slime << "<B>You are now a slime!</B>"
+			to_chat(new_slime, "<B>You are now a slime!</B>")
 			qdel(src)
 		else
-			src << "<i>I am not ready to reproduce yet...</i>"
+			to_chat(src, "<i>I am not ready to reproduce yet...</i>")
 	else
-		src << "<i>I am not old enough to reproduce yet...</i>"
+		to_chat(src, "<i>I am not old enough to reproduce yet...</i>")

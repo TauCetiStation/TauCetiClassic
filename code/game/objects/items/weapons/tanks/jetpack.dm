@@ -28,14 +28,14 @@
 	examine(mob/user)
 		..()
 		if(src in user && air_contents.oxygen < 10)
-			user << "<span class='danger'>The meter on the [src.name] indicates you are almost out of air!</span>"
+			to_chat(user, "<span class='danger'>The meter on the [src.name] indicates you are almost out of air!</span>")
 
 
 	verb/toggle_rockets()
 		set name = "Toggle Jetpack Stabilization"
 		set category = "Object"
 		src.stabilization_on = !( src.stabilization_on )
-		usr << "You toggle the stabilization [stabilization_on? "on":"off"]."
+		to_chat(usr, "You toggle the stabilization [stabilization_on? "on":"off"].")
 		return
 
 
@@ -118,7 +118,7 @@
 	examine(mob/user)
 		..()
 		if(src in user && air_contents.carbon_dioxide < 10)
-			user << "<span class='danger'>The meter on the [src.name] indicates you are almost out of air!</span>"
+			to_chat(user, "<span class='danger'>The meter on the [src.name] indicates you are almost out of air!</span>")
 
 /obj/item/weapon/tank/jetpack/oxygen/harness //TG-nuke jetpack
 	name = "jet harness (oxygen)"

@@ -18,13 +18,13 @@ obj/structure/firedoor_assembly/attackby(C, mob/user)
 	if(istype(C, /obj/item/weapon/cable_coil) && !wired && anchored)
 		var/obj/item/weapon/cable_coil/cable = C
 		if (cable.amount < 1)
-			user << "<span class='warning'>You need one length of coil to wire \the [src].</span>"
+			to_chat(user, "<span class='warning'>You need one length of coil to wire \the [src].</span>")
 			return
 		user.visible_message("[user] wires \the [src].", "You start to wire \the [src].")
 		if(do_after(user, 40, target = src) && !wired && anchored)
 			if (cable.use(1))
 				wired = 1
-				user << "<span class='notice'>You wire \the [src].</span>"
+				to_chat(user, "<span class='notice'>You wire \the [src].</span>")
 
 	else if(istype(C, /obj/item/weapon/wirecutters) && wired )
 		playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
@@ -32,7 +32,7 @@ obj/structure/firedoor_assembly/attackby(C, mob/user)
 
 		if(do_after(user, 40, target = src))
 			if(!src) return
-			user << "<span class='notice'>You cut the wires!</span>"
+			to_chat(user, "<span class='notice'>You cut the wires!</span>")
 			new/obj/item/weapon/cable_coil(src.loc, 1)
 			wired = 0
 
@@ -45,7 +45,7 @@ obj/structure/firedoor_assembly/attackby(C, mob/user)
 			qdel(C)
 			qdel(src)
 		else
-			user << "<span class='warning'>You must secure \the [src] first!</span>"
+			to_chat(user, "<span class='warning'>You must secure \the [src] first!</span>")
 	else if(istype(C, /obj/item/weapon/wrench))
 		anchored = !anchored
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
@@ -64,6 +64,6 @@ obj/structure/firedoor_assembly/attackby(C, mob/user)
 				new /obj/item/stack/sheet/metal(src.loc, 2)
 				qdel(src)
 		else
-			user << "<span class='notice'>You need more welding fuel.</span>"
+			to_chat(user, "<span class='notice'>You need more welding fuel.</span>")
 	else
 		..(C, user)
