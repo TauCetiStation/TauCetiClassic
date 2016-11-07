@@ -278,7 +278,6 @@ var/list/robot_verbs_default = list(
 			module_sprites["Drone"] = "drone-sec"
 			module_sprites["Acheron"] = "mechoid-Security"
 			module_sprites["Kodiak"] = "kodiak-sec"
-			module_sprites["Securitron"] = "securitron"
 
 		if("Engineering")
 			module = new /obj/item/weapon/robot_module/engineering(src)
