@@ -8,16 +8,16 @@ proc/admin_call_cooldown(value1)
 	set name = "Admin Call"
 
 	if(say_disabled)	//This is here to try to identify lag problems
-		to_chat(usr, "\red Speech is currently admin-disabled.")
+		to_chat(usr, "\red Speech is currently admin-disabled.")
 		return
 
 	//handle muting and automuting
 	if(prefs.muted & MUTE_ADMINHELP)
-		to_chat(src, "<font color='red'>Error: AdminCall: You cannot send admincalls (Muted).</font>")
+		to_chat(src, "<font color='red'>Error: AdminCall: You cannot send admincalls (Muted).</font>")
 		return
 
 	if(key_name(src) in ac_nameholder)
-		to_chat(src, "<font color='blue'>ћожно использовать не чаще 1-го раза в 5 минут.</font>")
+		to_chat(src, "<font color='blue'>ћожно использовать не чаще 1-го раза в 5 минут.</font>")
 		return
 
 	admin_call_cooldown(key_name(src))
@@ -32,7 +32,7 @@ proc/admin_call_cooldown(value1)
 
 	src << browse(output_text, "window=admcl;size=600x300")
 
-	to_chat(src, 'sound/effects/adminhelp.ogg')
+	src << 'sound/effects/adminhelp.ogg'
 
 	var/msg = input(src, "Message:", "Admin Call", ) as text
 
@@ -65,11 +65,11 @@ proc/admin_call_cooldown(value1)
 				if(X.is_afk())
 					admin_number_afk++
 			if(X.prefs.toggles & SOUND_ADMINHELP)
-				to_chat(X, 'sound/effects/adminhelp.ogg')
-			to_chat(X, msg)
+				X << 'sound/effects/adminhelp.ogg'
+			to_chat(X, msg)
 
 	//show it to the person admincalling too
-	to_chat(src, "<font color='blue'><b>AdminCall message</b>: [original_msg]</font>")
+	to_chat(src, "<font color='blue'><b>AdminCall message</b>: [original_msg]</font>")
 
 	//var/admin_number_present = admins.len - admin_number_afk
 	var/admin_number_present = admin_number - admin_number_afk

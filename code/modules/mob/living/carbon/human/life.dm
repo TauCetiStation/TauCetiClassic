@@ -1099,7 +1099,7 @@
 			if(light_amount > LIGHT_DAM_THRESHOLD)
 				take_overall_damage(0,LIGHT_DAMAGE_TAKEN)
 				to_chat(src, "<span class='userdanger'>The light burns you!</span>")
-				to_chat(src, 'sound/weapons/sear.ogg')
+				src << 'sound/weapons/sear.ogg'
 			else if (light_amount < LIGHT_HEAL_THRESHOLD) //heal in the dark
 				heal_overall_damage(5,5)
 				adjustToxLoss(-3)

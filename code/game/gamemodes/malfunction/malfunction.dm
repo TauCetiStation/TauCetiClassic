@@ -194,7 +194,7 @@
 			malf_turf = get_turf(AI)
 	ticker.mode:explosion_in_progress = 1
 	for(var/mob/M in player_list)
-		to_chat(M, 'sound/machines/Alarm.ogg')
+		M << 'sound/machines/Alarm.ogg'
 	to_chat(world, "Self-destructing in 10")
 	for (var/i=9 to 1 step -1)
 		sleep(10)
