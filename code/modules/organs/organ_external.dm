@@ -86,7 +86,7 @@
 
 		if(istype(owner,/mob/living/carbon/human))
 			var/mob/living/carbon/human/H = owner
-			if(H.species && H.species.flags & IS_SYNTHETIC)
+			if(H.species && H.species.flags[IS_SYNTHETIC])
 				brmod = H.species.brute_mod
 				bumod = H.species.burn_mod
 
@@ -347,7 +347,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 */
 /datum/organ/external/proc/update_germs()
 
-	if(status & (ORGAN_ROBOT|ORGAN_DESTROYED) || (owner.species && owner.species.flags & IS_PLANT)) //Robotic limbs shouldn't be infected, nor should nonexistant limbs.
+	if(status & (ORGAN_ROBOT|ORGAN_DESTROYED) || (owner.species && owner.species.flags[IS_PLANT])) //Robotic limbs shouldn't be infected, nor should nonexistant limbs.
 		germ_level = 0
 		return
 
@@ -588,7 +588,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 		var/obj/organ	//Dropped limb object
 		switch(body_part)
 			if(HEAD)
-				if(owner.species.flags & IS_SYNTHETIC)
+				if(owner.species.flags[IS_SYNTHETIC])
 					organ= new /obj/item/weapon/organ/head/posi(owner.loc, owner)
 				else
 					organ= new /obj/item/weapon/organ/head(owner.loc, owner)
@@ -764,7 +764,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 		"\red <b>Something feels like it shattered in your [display_name]!</b>",\
 		"You hear a sickening crack.")
 
-	if(owner.species && !(owner.species.flags & NO_PAIN))
+	if(owner.species && !owner.species.flags[NO_PAIN])
 		owner.emote("scream",,, 1)
 
 	status |= ORGAN_BROKEN
@@ -825,7 +825,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	return 0
 
 /datum/organ/external/get_icon(icon/race_icon, icon/deform_icon,gender="",fat="")
-	if (status & ORGAN_ROBOT && !(owner.species && owner.species.flags & IS_SYNTHETIC))
+	if (status & ORGAN_ROBOT && !(owner.species && owner.species.flags[IS_SYNTHETIC]))
 		return new /icon('icons/mob/human_races/robotic.dmi', "[icon_name][gender ? "_[gender]" : ""]")
 
 	if (status & ORGAN_MUTATED)
@@ -851,7 +851,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	if(is_broken())
 		owner.drop_from_inventory(c_hand)
 		var/emote_scream = pick("screams in pain and", "lets out a sharp cry and", "cries out and")
-		owner.emote("me", 1, "[(owner.species && owner.species.flags & NO_PAIN) ? "" : emote_scream ] drops what they were holding in their [hand_name]!")
+		owner.emote("me", 1, "[(owner.species && owner.species.flags[NO_PAIN]) ? "" : emote_scream ] drops what they were holding in their [hand_name]!")
 	if(is_malfunctioning())
 		owner.drop_from_inventory(c_hand)
 		owner.emote("me", 1, "drops what they were holding, their [hand_name] malfunctioning!")
@@ -1062,7 +1062,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 	if(base)
 		//Changing limb's skin tone to match owner
-		if(!H.species || H.species.flags & HAS_SKIN_TONE)
+		if(!H.species || H.species.flags[HAS_SKIN_TONE])
 			if (H.s_tone >= 0)
 				base.Blend(rgb(H.s_tone, H.s_tone, H.s_tone), ICON_ADD)
 			else
@@ -1070,7 +1070,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 	if(base)
 		//Changing limb's skin color to match owner
-		if(!H.species || H.species.flags & HAS_SKIN_COLOR)
+		if(!H.species || H.species.flags[HAS_SKIN_COLOR])
 			base.Blend(rgb(H.r_skin, H.g_skin, H.b_skin), ICON_ADD)
 
 	icon = base

@@ -634,8 +634,8 @@
 	//Synthetic human mob goes here.
 	if(istype(user,/mob/living/carbon/human))
 		var/mob/living/carbon/human/H = user
-		if(H.species.flags & IS_SYNTHETIC && H.a_intent == "grab")
-			if(emagged || stat & BROKEN)
+		if(H.species.flags[IS_SYNTHETIC] && H.a_intent == "grab")
+			if(emagged || (stat & BROKEN))
 				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 				s.set_up(3, 1, src)
 				s.start()

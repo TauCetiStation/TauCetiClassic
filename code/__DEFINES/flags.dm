@@ -39,22 +39,23 @@
 #define	NOREACT		16384 			//Reagents dont' react inside this container.
 
 //Species flags.
-#define NO_BLOOD		1
-#define NO_BREATHE		2
-#define NO_SCAN			4
-#define NO_PAIN			8
-#define HAS_SKIN_TONE	16
-#define HAS_SKIN_COLOR	32
-#define HAS_LIPS		64
-#define HAS_UNDERWEAR	128
-#define HAS_TAIL		256
-#define IS_PLANT		512
-#define IS_WHITELISTED	1024
-#define RAD_ABSORB		2048
-#define REQUIRE_LIGHT	4096
-#define IS_SYNTHETIC	8192
-#define RAD_IMMUNE		16384
-#define VIRUS_IMMUNE	32768
+#define NO_BLOOD		"no_blood"
+#define NO_BREATHE		"no_breathe"
+#define NO_SCAN			"no_scan"
+#define NO_PAIN			"no_pain"
+#define HAS_SKIN_TONE	"has_skin_tone"
+#define HAS_SKIN_COLOR	"has_skin_color"
+#define HAS_LIPS		"has_lips"
+#define HAS_UNDERWEAR	"has_underwear"
+#define HAS_TAIL		"has_tail"
+#define IS_PLANT		"is_plant"
+#define IS_WHITELISTED	"is_whitelisted"
+#define RAD_ABSORB		"rad_absorb"
+#define REQUIRE_LIGHT	"require_light"
+#define IS_SYNTHETIC	"is_synthetic"
+#define RAD_IMMUNE		"rad_immune"
+#define VIRUS_IMMUNE	"virus_immune"
+#define BIOHAZZARD_IMMUNE "biohazzard_immune"
 
 //bitflags for door switches.
 #define OPEN	1

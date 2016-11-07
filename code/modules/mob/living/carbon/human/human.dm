@@ -851,7 +851,7 @@
 
 /mob/living/carbon/human/proc/vomit()
 
-	if(species.flags & IS_SYNTHETIC)
+	if(species.flags[IS_SYNTHETIC])
 		return //Machines don't throw up.
 
 	if(!lastpuke)
@@ -1091,7 +1091,7 @@
 	var/datum/organ/external/head/h = organs_by_name["head"]
 	h.disfigured = 0
 
-	if(species && !(species.flags & NO_BLOOD))
+	if(species && !species.flags[NO_BLOOD])
 		vessel.add_reagent("blood",560-vessel.total_volume)
 		fixblood()
 

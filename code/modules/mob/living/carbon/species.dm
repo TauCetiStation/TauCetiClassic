@@ -48,7 +48,7 @@
 	var/burn_mod = null     // Burn damage reduction/malus.
 	var/speed_mod = 0		//How fast or slow specific specie.
 
-	var/flags = 0       // Various specific features.
+	var/list/flags = list()       // Various specific features.
 
 	var/list/abilities = list()	// For species-derived or admin-given powers
 
@@ -59,8 +59,6 @@
 	//Used in icon caching.
 	var/race_key = 0
 	var/icon/icon_template
-
-	var/biohazzard_immunity = FALSE //immunity against bioactive gases (phoron)
 
 	/* Species-specific sprites, concept stolen from Paradise//vg/.
 	ex:
@@ -114,7 +112,7 @@
 	for(var/datum/organ/external/O in H.organs)
 		O.owner = H
 
-	if(flags & IS_SYNTHETIC)
+	if(flags[IS_SYNTHETIC])
 		for(var/datum/organ/external/E in H.organs)
 			if(E.status & ORGAN_CUT_AWAY || E.status & ORGAN_DESTROYED) continue
 			E.status |= ORGAN_ROBOT
@@ -125,7 +123,7 @@
 	return
 
 /datum/species/proc/handle_death(mob/living/carbon/human/H) //Handles any species-specific death events (such nymph spawns).
-	if(flags & IS_SYNTHETIC)
+	if(flags[IS_SYNTHETIC])
  //H.make_jittery(200) //S-s-s-s-sytem f-f-ai-i-i-i-i-lure-ure-ure-ure
 		H.h_style = ""
 		spawn(100)
@@ -140,10 +138,14 @@
 	primitive = /mob/living/carbon/monkey
 	unarmed_type = /datum/unarmed_attack/punch
 
-	flags = HAS_SKIN_TONE | HAS_LIPS | HAS_UNDERWEAR
-
 	//If you wanted to add a species-level ability:
 	/*abilities = list(/client/proc/test_ability)*/
+
+/datum/species/human/New()
+	..()
+	flags[HAS_SKIN_TONE] = TRUE
+	flags[HAS_LIPS] = TRUE
+	flags[HAS_UNDERWEAR] = TRUE
 
 /datum/species/unathi
 	name = "Unathi"
@@ -167,12 +169,18 @@
 	burn_mod = 0.90
 	speed_mod = 0.7
 
-	flags = IS_WHITELISTED | HAS_LIPS | HAS_UNDERWEAR | HAS_TAIL | HAS_SKIN_COLOR
-
 	flesh_color = "#34AF10"
 
 	reagent_tag = IS_UNATHI
 	base_color = "#066000"
+
+/datum/species/unathi/New()
+	..()
+	flags[IS_WHITELISTED] = TRUE
+	flags[HAS_LIPS] = TRUE
+	flags[HAS_UNDERWEAR] = TRUE
+	flags[HAS_TAIL] = TRUE
+	flags[HAS_SKIN_COLOR] = TRUE
 
 /datum/species/tajaran
 	name = "Tajaran"
@@ -199,10 +207,16 @@
 	burn_mod = 1.20
 	speed_mod = -0.7
 
-	flags = IS_WHITELISTED | HAS_LIPS | HAS_UNDERWEAR | HAS_TAIL | HAS_SKIN_COLOR
-
 	flesh_color = "#AFA59E"
 	base_color = "#333333"
+
+/datum/species/tajaran/New()
+	..()
+	flags[IS_WHITELISTED] = TRUE
+	flags[HAS_LIPS] = TRUE
+	flags[HAS_UNDERWEAR] = TRUE
+	flags[HAS_TAIL] = TRUE
+	flags[HAS_SKIN_COLOR] = TRUE
 
 /datum/species/skrell
 	name = "Skrell"
@@ -212,12 +226,18 @@
 	primitive = /mob/living/carbon/monkey/skrell
 	unarmed_type = /datum/unarmed_attack/punch
 
-	flags = IS_WHITELISTED | HAS_LIPS | HAS_UNDERWEAR | HAS_SKIN_COLOR
 	eyes = "skrell_eyes_s"
 
 	flesh_color = "#8CD7A3"
 
 	reagent_tag = IS_SKRELL
+
+/datum/species/skrell/New()
+	..()
+	flags[IS_WHITELISTED] = TRUE
+	flags[HAS_LIPS] = TRUE
+	flags[HAS_UNDERWEAR] = TRUE
+	flags[HAS_SKIN_COLOR] = TRUE
 
 /datum/species/vox
 	name = "Vox"
@@ -238,8 +258,6 @@
 	breath_type = "nitrogen"
 	poison_type = "oxygen"
 
-	flags = NO_SCAN | NO_BLOOD
-
 	blood_color = "#2299FC"
 	flesh_color = "#808D11"
 	reagent_tag = IS_VOX
@@ -251,6 +269,11 @@
 		"feet" = 'icons/mob/species/vox/shoes.dmi',
 		"gloves" = 'icons/mob/species/vox/gloves.dmi'
 		)
+
+/datum/species/vox/New()
+	..()
+	flags[NO_SCAN] = TRUE
+	flags[NO_BLOOD] = TRUE
 
 /datum/species/vox/handle_post_spawn(mob/living/carbon/human/H)
 
@@ -288,8 +311,6 @@
 	breath_type = "nitrogen"
 	poison_type = "oxygen"
 
-	flags = NO_SCAN | NO_BLOOD | HAS_TAIL | NO_PAIN
-
 	blood_color = "#2299FC"
 	flesh_color = "#808D11"
 	reagent_tag = IS_VOX
@@ -303,6 +324,11 @@
 		"head" = 'icons/mob/species/armalis/head.dmi',
 		"held" = 'icons/mob/species/armalis/held.dmi'
 		)
+
+/datum/species/vox/armalis/New()
+	..()
+	flags[HAS_TAIL] = TRUE
+	flags[NO_PAIN] = TRUE
 
 /datum/species/diona
 	name = "Diona"
@@ -327,12 +353,21 @@
 
 	body_temperature = T0C + 15		//make the plant people have a bit lower body temperature, why not
 
-	flags = IS_WHITELISTED | NO_BREATHE | REQUIRE_LIGHT | NO_SCAN | IS_PLANT | RAD_ABSORB | NO_BLOOD | NO_PAIN
-
 	blood_color = "#004400"
 	flesh_color = "#907E4A"
 
 	reagent_tag = IS_DIONA
+
+/datum/species/diona/New()
+	..()
+	flags[IS_WHITELISTED] = TRUE
+	flags[NO_BREATHE] = TRUE
+	flags[REQUIRE_LIGHT] = TRUE
+	flags[NO_SCAN] = TRUE
+	flags[IS_PLANT] = TRUE
+	flags[RAD_ABSORB] = TRUE
+	flags[NO_BLOOD] = TRUE
+	flags[NO_PAIN] = TRUE
 
 /datum/species/diona/handle_post_spawn(mob/living/carbon/human/H)
 	H.gender = NEUTER
@@ -379,12 +414,19 @@
 	brute_mod = 1.5
 	burn_mod = 1
 
-	biohazzard_immunity = TRUE
-
-	flags = IS_WHITELISTED | NO_BREATHE | NO_SCAN | NO_BLOOD | NO_PAIN | IS_SYNTHETIC | VIRUS_IMMUNE
-
 	blood_color = "#1F181F"
 	flesh_color = "#575757"
+
+/datum/species/machine/New()
+	..()
+	flags[IS_WHITELISTED] = TRUE
+	flags[NO_BREATHE] = TRUE
+	flags[NO_SCAN] = TRUE
+	flags[NO_BLOOD] = TRUE
+	flags[NO_PAIN] = TRUE
+	flags[IS_SYNTHETIC] = TRUE
+	flags[VIRUS_IMMUNE] = TRUE
+	flags[BIOHAZZARD_IMMUNE] = TRUE
 
 /datum/species/abductor
 	name = "Abductor"
@@ -393,9 +435,14 @@
 	icobase = 'icons/mob/human_races/r_abductor.dmi'
 	deform = 'icons/mob/human_races/r_abductor.dmi'
 
-	flags = NO_BREATHE | NO_BLOOD | NO_SCAN | VIRUS_IMMUNE
-
 	blood_color = "#BCBCBC"
+
+/datum/species/abductor/New()
+	..()
+	flags[NO_BREATHE] = TRUE
+	flags[NO_BLOOD] = TRUE
+	flags[NO_SCAN] = TRUE
+	flags[VIRUS_IMMUNE] = TRUE
 
 /datum/species/abductor/handle_post_spawn(mob/living/carbon/human/H)
 	H.gender = NEUTER
@@ -409,7 +456,12 @@
 	deform = 'icons/mob/human_races/r_skeleton.dmi'
 	damage_mask = FALSE
 
-	flags = NO_BREATHE | NO_BLOOD | NO_SCAN | VIRUS_IMMUNE
+/datum/species/skeleton/New()
+	..()
+	flags[NO_BREATHE] = TRUE
+	flags[NO_BLOOD] = TRUE
+	flags[NO_SCAN] = TRUE
+	flags[VIRUS_IMMUNE] = TRUE
 
 /datum/species/skeleton/handle_post_spawn(mob/living/carbon/human/H)
 	H.gender = NEUTER
