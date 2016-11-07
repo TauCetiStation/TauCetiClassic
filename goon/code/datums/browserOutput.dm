@@ -224,6 +224,7 @@ var/list/chatResources = list(
 		if(findtext(message, "\proper"))
 			message = replacetext(message, "\proper", "")
 
+		message = sanitize_popup(message)
 		var/client/C
 		if(istype(target, /client))
 			C = target
@@ -239,5 +240,4 @@ var/list/chatResources = list(
 				C.chatOutput.messageQueue.Add(message)
 				return
 
-		// url_encode it TWICE, this way any UTF-8 characters are able to be decoded by the Javascript.
 		target << output(url_encode(message), "browseroutput:output")
