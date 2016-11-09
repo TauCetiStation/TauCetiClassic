@@ -7,6 +7,9 @@
 	explosion_resistance = 25
 	block_air_zones = 0
 
+/obj/machinery/door/poddoor/cargo
+	icon = 'code/modules/locations/shuttles/cargo.dmi'
+
 /obj/machinery/door/poddoor/New()
 	. = ..()
 	if(density)

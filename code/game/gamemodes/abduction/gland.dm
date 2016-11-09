@@ -10,19 +10,6 @@
 	var/active = 0
 	var/mob/living/carbon/human/host
 
-/obj/item/gland/examine()
-	if(!ishuman(usr))
-		..()
-	else
-		var/mob/living/carbon/human/H = usr
-		if(H.species)
-			if(H.species.name == "Abductor")
-				..()
-			else
-				H << "You can't understand what is it, but EWW, it's disgusting."
-				return
-		else	..()
-
 /obj/item/gland/proc/HostCheck()
 	if(ishuman(host) && host == src.loc)
 		if(host.stat != DEAD)

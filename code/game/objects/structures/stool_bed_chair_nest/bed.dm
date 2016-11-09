@@ -45,13 +45,12 @@
 		return buckled_mob.Process_Spacemove(movement_dir)
 	return ..()
 
-/obj/structure/stool/bed/examine()
+/obj/structure/stool/bed/examine(mob/user)
 	..()
 	var/T = get_turf(src)
 	var/mob/living/carbon/human/H = locate() in T
 	if(H && H.crawling)
-		usr << "Someone is hiding under [src]"
-	return
+		user << "Someone is hiding under [src]"
 
 /*
  * Roller beds

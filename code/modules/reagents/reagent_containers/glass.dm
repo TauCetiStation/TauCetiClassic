@@ -49,16 +49,10 @@
 	..()
 	base_name = name
 
-/obj/item/weapon/reagent_containers/glass/examine()
-	set src in view()
+/obj/item/weapon/reagent_containers/glass/examine(mob/user)
 	..()
-	if (!(usr in view(2)) && usr!=src.loc) return
-	if(reagents && reagents.reagent_list.len)
-		usr << "<span class = 'info'>It contains [src.reagents.total_volume] units of liquid.</span>"
-	else
-		usr << "<span class = 'info'>It is empty.</span>"
-	if (!is_open_container())
-		usr << "<span class = 'info'>Airtight lid seals it completely.</span>"
+	if(!is_open_container())
+		user << "<span class='info'>Airtight lid seals it completely.</span>"
 
 /obj/item/weapon/reagent_containers/glass/attack_self()
 	..()

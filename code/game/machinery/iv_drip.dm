@@ -152,19 +152,17 @@
 		mode = !mode
 		usr << "The IV drip is now [mode ? "injecting" : "taking blood"]."
 
-/obj/machinery/iv_drip/examine()
-	set src in view()
+/obj/machinery/iv_drip/examine(mob/user)
 	..()
-	if (!(usr in view(2)) && usr!=src.loc) return
+	if(src in oview(2, user))
+		user << "The IV drip is [mode ? "injecting" : "taking blood"]."
 
-	usr << "The IV drip is [mode ? "injecting" : "taking blood"]."
-
-	if(beaker)
-		if(beaker.reagents && beaker.reagents.reagent_list.len)
-			usr << "\blue Attached is \a [beaker] with [beaker.reagents.total_volume] units of liquid."
+		if(beaker)
+			if(beaker.reagents && beaker.reagents.reagent_list.len)
+				user << "<span class='notice'>Attached is \a [beaker] with [beaker.reagents.total_volume] units of liquid.</span>"
+			else
+				user << "<span class='notice'>Attached is an empty [beaker].</span>"
 		else
-			usr << "\blue Attached is an empty [beaker]."
-	else
-		usr << "\blue No chemicals are attached."
+			user << "<span class='notice'>No chemicals are attached.</span>"
 
-	usr << "\blue [attached ? attached : "No one"] is attached."
+		user << "<span class='notice'>[attached ? attached : "No one"] is attached.</span>"

@@ -80,7 +80,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	if(powernet)
 		cut_cable_from_powernet()				// update the powernets
 	cable_list -= src							//remove it from global cable list
-	return ..()	
+	return ..()
 
 ///////////////////////////////////
 // General procedures
@@ -490,15 +490,15 @@ By design, d1 is the smallest direction and d2 is the highest
 		w_class = 2.0
 
 
-/obj/item/weapon/cable_coil/examine()
-	set src in view(1)
-
-	if(amount == 1)
-		usr << "A short piece of power cable."
-	else if(amount == 2)
-		usr << "A piece of power cable."
-	else
-		usr << "A coil of power cable. There are [amount] lengths of cable in the coil."
+/obj/item/weapon/cable_coil/examine(mob/user)
+	..()
+	if(src in view(1, user))
+		if(amount == 1)
+			user << "A short piece of power cable."
+		else if(amount == 2)
+			user << "A piece of power cable."
+		else
+			user << "A coil of power cable. There are [amount] lengths of cable in the coil."
 
 
 /obj/item/weapon/cable_coil/verb/make_restraint()

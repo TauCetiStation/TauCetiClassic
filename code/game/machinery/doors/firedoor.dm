@@ -71,17 +71,16 @@
 	return ..()
 
 
-/obj/machinery/door/firedoor/examine()
-	set src in view()
-	. = ..()
+/obj/machinery/door/firedoor/examine(mob/user)
+	..()
 	if(pdiff >= FIREDOOR_MAX_PRESSURE_DIFF)
-		usr << "<span class='warning'>WARNING: Current pressure differential is [pdiff]kPa! Opening door may result in injury!</span>"
-	if( islist(users_to_open) && users_to_open.len)
+		user << "<span class='warning'>WARNING: Current pressure differential is [pdiff]kPa! Opening door may result in injury!</span>"
+	if(islist(users_to_open) && users_to_open.len)
 		var/users_to_open_string = users_to_open[1]
 		if(users_to_open.len >= 2)
 			for(var/i = 2 to users_to_open.len)
 				users_to_open_string += ", [users_to_open[i]]"
-		usr << "These people have opened \the [src] during an alert: [users_to_open_string]."
+		user << "These people have opened \the [src] during an alert: [users_to_open_string]."
 
 
 /obj/machinery/door/firedoor/Bumped(atom/AM)

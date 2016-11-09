@@ -247,10 +247,9 @@
 
 	..()
 
-/obj/item/clothing/suit/space/rig/examine()
-	set src in view()
+/obj/item/clothing/suit/space/rig/examine(mob/user)
 	..()
-	usr << "Its mag-pulse traction system appears to be [!magpulse ? "disabled" : "enabled"]."
+	user << "Its mag-pulse traction system appears to be [magpulse ? "enabled" : "disabled"]."
 
 //Engineering rig
 /obj/item/clothing/head/helmet/space/rig/engineering
@@ -333,10 +332,10 @@
 		camera.c_tag = user.name
 		user << "\blue User scanned as [camera.c_tag]. Camera activated."
 
-/obj/item/clothing/head/helmet/space/rig/syndi/examine()
+/obj/item/clothing/head/helmet/space/rig/syndi/examine(mob/user)
 	..()
-	if(get_dist(usr,src) <= 1)
-		usr << "This helmet has a built-in camera. It's [camera ? "" : "in"]active."
+	if(src in view(1, user))
+		user << "This helmet has a built-in camera. It's [camera ? "" : "in"]active."
 
 /obj/item/clothing/suit/space/rig/syndi
 	icon_state = "rig-syndie"

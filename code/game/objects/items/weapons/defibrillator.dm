@@ -14,8 +14,6 @@
 	var/charged = 0
 	var/charges = 8
 	origin_tech = "combat=2;biotech=2"
-	m_amt = 2000
-	g_amt = 50
 
 	attack_self(mob/user)
 		if(!charged)
@@ -69,15 +67,14 @@
 						var/suff = min(C.getOxyLoss(), 20)
 						C.adjustOxyLoss(-suff)
 						C.updatehealth()
-						if(C.stat == DEAD && C.health>config.health_threshold_dead)
+						if(C.stat == DEAD && C.health > config.health_threshold_dead)
 							C.stat = UNCONSCIOUS
 					else
 						C.adjustFireLoss(5)
-						if(C.stat == DEAD && C.health>config.health_threshold_dead)
+						if(C.stat == DEAD && C.health > config.health_threshold_dead)
 							C.stat = CONSCIOUS
-					C.tod = null
-					C.timeofdeath = 0
-					dead_mob_list -= C
+					return_to_body_dialog(C)
+					reanimate_body(C)
 
 				if(wet)
 					var/turf/T = get_turf(src)
@@ -105,11 +102,23 @@
 			s.start()
 		else return ..(M,user)
 
-datum/design/defibrillators
-	name = "Defibrillators"
-	desc = "Defibrillators to revive people."
-	id = "defibrillators"
-	req_tech = list("combat" = 2,"biotech" = 2)
-	build_type = 2 //PROTOLATHE
-	materials = list(MAT_METAL = 2000, MAT_GLASS = 50)
-	build_path = /obj/item/weapon/defibrillator
+	proc/return_to_body_dialog(mob/living/carbon/returnable)
+		if (returnable.key) //in body?
+			returnable << 'sound/misc/mario_1up.ogg'
+		else if(returnable.mind)
+			for(var/mob/dead/observer/ghost in player_list)
+				if(ghost.mind == returnable.mind && ghost.can_reenter_corpse)
+					ghost << 'sound/misc/mario_1up.ogg'
+					var/answer = alert(ghost,"You have been reanimated. Do you want to return to body?","Reanimate","Yes","No")
+					if(answer == "Yes")
+						ghost.reenter_corpse()
+					break
+
+		return
+
+	proc/reanimate_body(mob/living/carbon/returnable)
+		returnable.tod = null
+		returnable.timeofdeath = 0
+		dead_mob_list -= returnable
+
+		return

@@ -80,12 +80,11 @@
 		t += "The connect error light is blinking."
 	return t
 
-/obj/machinery/meter/examine()
-	set src in view(3)
-
+/obj/machinery/meter/examine(mob/user)
+	..()
 	var/t = "A gas flow meter. "
 	t += status()
-	usr << t
+	user << t
 
 
 

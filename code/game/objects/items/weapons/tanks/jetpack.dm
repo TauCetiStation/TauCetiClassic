@@ -25,12 +25,10 @@
 		return ..()
 
 
-	examine()
-		set src in usr
+	examine(mob/user)
 		..()
-		if(air_contents.oxygen < 10)
-			usr << text("\red <B>The meter on the [src.name] indicates you are almost out of air!</B>")
-		return
+		if(src in user && air_contents.oxygen < 10)
+			user << "<span class='danger'>The meter on the [src.name] indicates you are almost out of air!</span>"
 
 
 	verb/toggle_rockets()
@@ -117,13 +115,10 @@
 		air_contents.adjust(0,(6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C))
 		return
 
-	examine()
-		set src in usr
+	examine(mob/user)
 		..()
-		if(air_contents.carbon_dioxide < 10)
-			usr << text("\red <B>The meter on the [src.name] indicates you are almost out of air!</B>")
-			playsound(usr, 'sound/effects/alert.ogg', 50, 1)
-		return
+		if(src in user && air_contents.carbon_dioxide < 10)
+			user << "<span class='danger'>The meter on the [src.name] indicates you are almost out of air!</span>"
 
 /obj/item/weapon/tank/jetpack/oxygen/harness //TG-nuke jetpack
 	name = "jet harness (oxygen)"

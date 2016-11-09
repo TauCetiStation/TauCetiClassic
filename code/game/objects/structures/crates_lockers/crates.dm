@@ -260,6 +260,20 @@
 	icon_closed = "crate"
 */
 
+/obj/structure/closet/crate/engi
+	desc = "A engineer crate."
+	name = "Engineer crate"
+	icon_state = "engicrate"
+	icon_opened = "engicrateopen"
+	icon_closed = "engicrate"
+
+/obj/structure/closet/crate/secure/engisec
+	desc = "A crate with a lock on it."
+	name = "Secured engineer crate"
+	icon_state = "engicrateopensec"
+	icon_opened = "engiseccrateopensec"
+	icon_closed = "engicrateopensec"
+
 /obj/structure/closet/crate/medical
 	desc = "A medical crate."
 	name = "Medical crate"

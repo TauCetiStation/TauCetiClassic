@@ -10,7 +10,7 @@ var/power_fail_event = 0
 		if(prob(25))
 			addtimer(GLOBAL_PROC, "play_ambience", 600)
 
-	var/list/skipped_areas = list(/area/turret_protected/ai, /area/tcommsat/chamber, /area/tcommsat/chamber)
+	var/list/skipped_areas = list(/area/turret_protected/ai, /area/tcommsat/computer, /area/tcommsat/chamber)
 
 	for(var/obj/machinery/power/smes/S in machines)
 		var/area/current_area = get_area(S)

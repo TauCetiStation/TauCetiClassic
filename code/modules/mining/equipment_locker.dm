@@ -436,9 +436,9 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 			user << "<span class='info'>There's no points left on [src].</span>"
 	..()
 
-/obj/item/weapon/card/mining_point_card/examine()
+/obj/item/weapon/card/mining_point_card/examine(mob/user)
 	..()
-	usr << "There's [points] points on the card."
+	user << "There's [points] points on the card."
 
 
 /**********************Jaunter**********************/
@@ -595,10 +595,6 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 	throwforce = 0
 	real = 0
 	sterile = 1
-
-/obj/item/clothing/mask/facehugger/toy/examine()//So that giant red text about probisci doesn't show up.
-	if(desc)
-		usr << desc
 
 /obj/item/clothing/mask/facehugger/toy/Die()
 	return
@@ -791,10 +787,10 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 			user << "<span class='info'>[src] is only effective on lesser beings.</span>"
 			return
 
-/obj/item/weapon/lazarus_injector/examine()
+/obj/item/weapon/lazarus_injector/examine(mob/user)
 	..()
 	if(!loaded)
-		usr << "<span class='info'>[src] is empty.</span>"
+		user << "<span class='info'>[src] is empty.</span>"
 
 /**********************Patcher**********************/
 
@@ -832,10 +828,10 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 	else
 		..()
 
-/obj/item/weapon/patcher/examine()
+/obj/item/weapon/patcher/examine(mob/user)
 	..()
 	if(!loaded)
-		usr << "<span class='info'>[src] is already used.</span>"
+		user << "<span class='info'>[src] is already used.</span>"
 
 /**********************Xeno Warning Sign**********************/
 

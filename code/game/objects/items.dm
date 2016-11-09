@@ -133,9 +133,8 @@
 
 	src.loc = T
 
-/obj/item/examine()
-	set src in view()
-
+/obj/item/examine(mob/user)
+	..()
 	var/size
 	switch(src.w_class)
 		if(1.0)
@@ -149,11 +148,12 @@
 		if(5.0)
 			size = "huge"
 		else
-	//if ((CLUMSY in usr.mutations) && prob(50)) t = "funny-looking"
-	usr << "[src.blood_DNA ? "<span class='warning'>" : "[src.wet ? "<span class='wet'>" : ""]"]This is a [blood_DNA ? blood_color != "#030303" ? "bloody " : "oil-stained " : ""][src.wet ? "wet " : ""]\icon[src][src.name]. It is a [size] item."
-	if(src.desc)
-		usr << src.desc
-	return
+
+	var/open_span  = "[src.wet ? "<span class='wet'>" : ""]"
+	var/close_span = "[src.wet ? "</span>" : ""]"
+	var/wet_status = "[src.wet ? " wet" : ""]"
+
+	user << "[open_span]It's a[wet_status] [size] item.[close_span]"
 
 /obj/item/attack_hand(mob/user)
 	if (!user) return

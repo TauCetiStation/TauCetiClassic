@@ -65,9 +65,9 @@
 		user.drop_from_inventory(src)
 		qdel(src)
 
-/obj/item/device/modkit/examine()
+/obj/item/device/modkit/examine(mob/user)
 	..()
-	usr << "It looks as though it modifies hardsuits to fit [target_species] users."
+	user << "It looks as though it modifies hardsuits to fit [target_species] users."
 
 /obj/item/device/modkit/tajaran
 	name = "tajaran hardsuit modification kit"

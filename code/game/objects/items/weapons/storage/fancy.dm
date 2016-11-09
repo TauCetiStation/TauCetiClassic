@@ -25,19 +25,15 @@
 	src.icon_state = "[src.icon_type]box[total_contents]"
 	return
 
-/obj/item/weapon/storage/fancy/examine()
-	set src in oview(1)
-
+/obj/item/weapon/storage/fancy/examine(mob/user)
 	..()
-	if(contents.len <= 0)
-		usr << "There are no [src.icon_type]s left in the box."
-	else if(contents.len == 1)
-		usr << "There is one [src.icon_type] left in the box."
-	else
-		usr << "There are [src.contents.len] [src.icon_type]s in the box."
-
-	return
-
+	if(src in view(1, user))
+		if(contents.len <= 0)
+			user << "There are no [src.icon_type]s left in the box."
+		else if(contents.len == 1)
+			user << "There is one [src.icon_type] left in the box."
+		else
+			user << "There are [src.contents.len] [src.icon_type]s in the box."
 
 
 /*
@@ -69,6 +65,7 @@
 	icon_type = "egg"
 	name = "egg box"
 	storage_slots = 12
+	max_combined_w_class = 24
 	can_hold = list("/obj/item/weapon/reagent_containers/food/snacks/egg")
 
 /obj/item/weapon/storage/fancy/egg_box/New()

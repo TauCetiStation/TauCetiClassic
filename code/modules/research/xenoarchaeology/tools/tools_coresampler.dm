@@ -26,15 +26,10 @@
 	var/num_stored_bags = 10
 	var/obj/item/weapon/evidencebag/filled_bag
 
-/obj/item/device/core_sampler/examine()
-	set src in orange(1)
-	if (!( usr ))
-		return
-	if(get_dist(src, usr) < 2)
-		usr << "That's \a [src]."
-		usr << "\blue Used to extract geological core samples - this one is [sampled_turf ? "full" : "empty"], and has [num_stored_bags] bag[num_stored_bags != 1 ? "s" : ""] remaining."
-	else
-		return ..()
+/obj/item/device/core_sampler/examine(mob/user)
+	..()
+	if(src in view(1, user))
+		user << "<span class='notice'>\The [src] is [sampled_turf ? "full" : "empty"], and has [num_stored_bags] bag\s remaining.</span>"
 
 /obj/item/device/core_sampler/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W,/obj/item/weapon/evidencebag))

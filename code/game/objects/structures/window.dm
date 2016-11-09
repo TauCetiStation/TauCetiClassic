@@ -126,7 +126,7 @@
 /obj/structure/window/CheckExit(atom/movable/O, target)
 	if(istype(O) && O.checkpass(PASSGLASS))
 		return 1
-	if(get_dir(O.loc, target) == dir || is_fulltile())
+	if(get_dir(O.loc, target) == dir)
 		return 0
 	return 1
 

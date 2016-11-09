@@ -71,15 +71,13 @@
 	if(master)
 		master.update_icon()
 
-/obj/item/device/assembly_holder/examine()
-	set src in view()
+/obj/item/device/assembly_holder/examine(mob/user)
 	..()
-	if ((in_range(src, usr) || src.loc == usr))
+	if (src in view(1, user))
 		if (src.secured)
-			usr << "\The [src] is ready!"
+			user << "\The [src] is ready!"
 		else
-			usr << "\The [src] can be attached!"
-	return
+			user << "\The [src] can be attached!"
 
 
 /obj/item/device/assembly_holder/HasProximity(atom/movable/AM)
@@ -118,11 +116,11 @@
 		a_right.holder_movement()
 	return
 
-/obj/item/device/assembly_holder/hear_talk(mob/living/M, msg)
+/obj/item/device/assembly_holder/hear_talk(mob/living/M, msg, verb, datum/language/speaking)
 	if(a_left)
-		a_left.hear_talk(M,msg)
+		a_left.hear_talk(M,msg,verb,speaking)
 	if(a_right)
-		a_right.hear_talk(M,msg)
+		a_right.hear_talk(M,msg,verb,speaking)
 
 	return
 
