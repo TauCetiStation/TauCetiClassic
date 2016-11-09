@@ -124,10 +124,10 @@
 		flags ^= MASKCOVERSMOUTH
 		if(flags & MASKCOVERSMOUTH)
 			src.icon_state = initial(icon_state)
-			usr << "Your bandana is now covering your face."
+			to_chat(usr, "Your bandana is now covering your face.")
 		else
 			src.icon_state += "_up"
-			usr << "You tie the bandana around your head."
+			to_chat(usr, "You tie the bandana around your head.")
 		usr.update_inv_wear_mask()
 
 /obj/item/clothing/mask/bandana/attack_self(mob/user)

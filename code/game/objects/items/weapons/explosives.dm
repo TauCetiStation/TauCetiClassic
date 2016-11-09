@@ -3,14 +3,14 @@
 	if(newtime < 10)
 		newtime = 10
 	timer = newtime
-	user << "Timer set for [timer] seconds."
+	to_chat(user, "Timer set for [timer] seconds.")
 
 /obj/item/weapon/plastique/afterattack(atom/target, mob/user, flag)
 	if (!flag)
 		return
 	if (istype(target, /turf/unsimulated) || istype(target, /turf/simulated/shuttle) || istype(target, /obj/item/weapon/storage/) || istype(target, /obj/machinery/nuclearbomb))
 		return
-	user << "Planting explosives..."
+	to_chat(user, "Planting explosives...")
 	if(ismob(target))
 
 		user.attack_log += "\[[time_stamp()]\] <font color='red'> [user.real_name] tried planting [name] on [target:real_name] ([target:ckey])</font>"
@@ -29,7 +29,7 @@
 			target:attack_log += "\[[time_stamp()]\]<font color='orange'> Had the [name] planted on them by [user.real_name] ([user.ckey])</font>"
 			user.visible_message("\red [user.name] finished planting an explosive on [target.name]!")
 		target.overlays += image('icons/obj/assemblies.dmi', "plastic-explosive2")
-		user << "Bomb has been planted. Timer counting down from [timer]."
+		to_chat(user, "Bomb has been planted. Timer counting down from [timer].")
 		spawn(timer*10)
 			if(target)
 				if(ismob(target)) location = target.loc

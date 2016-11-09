@@ -4,7 +4,7 @@
 /obj/item/weapon/reagent_containers/food/drinks/cans/attack_self(mob/user)
 	if (!canopened)
 		playsound(src.loc,'sound/effects/canopen.ogg', rand(10,50), 1)
-		user << "<span class='notice'>You open the drink with an audible pop!</span>"
+		to_chat(user, "<span class='notice'>You open the drink with an audible pop!</span>")
 		canopened = 1
 	else
 		return
@@ -14,17 +14,17 @@
 	if(!CanEat(user, M, src, "drink")) return
 
 	if (!canopened)
-		user << "<span class='notice'>You need to open the drink!</span>"
+		to_chat(user, "<span class='notice'>You need to open the drink!</span>")
 		return
 	var/datum/reagents/R = src.reagents
 	var/fillevel = gulp_size
 
 	if(!R.total_volume || !R)
-		user << "\red None of [src] left, oh no!"
+		to_chat(user, "\red None of [src] left, oh no!")
 		return 0
 
 	if(M == user)
-		M << "\blue You swallow a gulp of [src]."
+		to_chat(M, "\blue You swallow a gulp of [src].")
 		if(reagents.total_volume)
 			reagents.trans_to_ingest(M, gulp_size)
 			reagents.reaction(M, INGEST)
@@ -35,7 +35,7 @@
 		return 1
 	else if( istype(M, /mob/living/carbon/human) )
 		if (!canopened)
-			user << "<span class='notice'> You need to open the drink!</span>"
+			to_chat(user, "<span class='notice'> You need to open the drink!</span>")
 			return
 
 	else if (canopened)
@@ -71,24 +71,24 @@
 	if(istype(target, /obj/structure/reagent_dispensers)) //A dispenser. Transfer FROM it TO us.
 
 		if(!target.reagents.total_volume)
-			user << "\red [target] is empty."
+			to_chat(user, "\red [target] is empty.")
 			return
 
 		if(reagents.total_volume >= reagents.maximum_volume)
-			user << "\red [src] is full."
+			to_chat(user, "\red [src] is full.")
 			return
 
 			var/trans = target.reagents.trans_to(src, target:amount_per_transfer_from_this)
-			user << "\blue You fill [src] with [trans] units of the contents of [target]."
+			to_chat(user, "\blue You fill [src] with [trans] units of the contents of [target].")
 
 	else if(target.is_open_container()) //Something like a glass. Player probably wants to transfer TO it.
 
 		if(!reagents.total_volume)
-			user << "\red [src] is empty."
+			to_chat(user, "\red [src] is empty.")
 			return
 
 		if(target.reagents.total_volume >= target.reagents.maximum_volume)
-			user << "\red [target] is full."
+			to_chat(user, "\red [target] is full.")
 			return
 
 
@@ -100,18 +100,18 @@
 			refillName = reagents.get_master_reagent_name()
 
 		var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
-		user << "\blue You transfer [trans] units of the solution to [target]."
+		to_chat(user, "\blue You transfer [trans] units of the solution to [target].")
 
 		if(isrobot(user)) //Cyborg modules that include drinks automatically refill themselves, but drain the borg's cell
 			var/mob/living/silicon/robot/bro = user
 			var/chargeAmount = max(30,4*trans)
 			bro.cell.use(chargeAmount)
-			user << "Now synthesizing [trans] units of [refillName]..."
+			to_chat(user, "Now synthesizing [trans] units of [refillName]...")
 
 
 			spawn(300)
 				reagents.add_reagent(refill, trans)
-				user << "Cyborg [src] refilled."
+				to_chat(user, "Cyborg [src] refilled.")
 
 	return
 

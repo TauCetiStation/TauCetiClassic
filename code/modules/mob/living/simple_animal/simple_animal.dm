@@ -151,7 +151,7 @@
 		if( abs(areatemp - bodytemperature) > 40 )
 			var/diff = areatemp - bodytemperature
 			diff = diff / 5
-			//world << "changed from [bodytemperature] by [diff] to [bodytemperature + diff]"
+//			to_chat(world, "changed from [bodytemperature] by [diff] to [bodytemperature + diff]")
 			bodytemperature += diff
 
 		if(istype(T,/turf/simulated))
@@ -322,7 +322,7 @@
 
 /mob/living/simple_animal/attack_slime(mob/living/carbon/slime/M)
 	if (!ticker)
-		M << "You cannot attack people before the game has started."
+		to_chat(M, "You cannot attack people before the game has started.")
 		return
 
 	if(M.Victim) return // can't attack while eating!
@@ -356,7 +356,7 @@
 						if ((M.client && !( M.blinded )))
 							M.show_message("\blue [user] applies the [MED] on [src]")
 		else
-			user << "\blue this [src] is dead, medical items won't bring it back to life."
+			to_chat(user, "\blue this [src] is dead, medical items won't bring it back to life.")
 	if(meat_type && (stat == DEAD))	//if the animal has a meat, and if it is dead.
 		if(istype(O, /obj/item/weapon/kitchenknife) || istype(O, /obj/item/weapon/butch))
 			new meat_type (get_turf(src))
@@ -374,7 +374,7 @@
 				if ((M.client && !( M.blinded )))
 					M.show_message("\red \b [src] has been attacked with the [O] by [user]. ")
 		else
-			usr << "\red This weapon is ineffective, it does no damage."
+			to_chat(usr, "\red This weapon is ineffective, it does no damage.")
 			for(var/mob/M in viewers(src, null))
 				if ((M.client && !( M.blinded )))
 					M.show_message("\red [user] gently taps [src] with the [O]. ")

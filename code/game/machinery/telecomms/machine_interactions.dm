@@ -24,26 +24,26 @@
 	switch(construct_op)
 		if(0)
 			if(istype(P, /obj/item/weapon/screwdriver))
-				user << "<span class='notice'>You unfasten the bolts.</span>"
+				to_chat(user, "<span class='notice'>You unfasten the bolts.</span>")
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				construct_op ++
 		if(1)
 			if(istype(P, /obj/item/weapon/screwdriver))
-				user << "<span class='notice'>You fasten the bolts.</span>"
+				to_chat(user, "<span class='notice'>You fasten the bolts.</span>")
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				construct_op --
 			if(istype(P, /obj/item/weapon/wrench))
-				user << "<span class='notice'>You dislodge the external plating.</span>"
+				to_chat(user, "<span class='notice'>You dislodge the external plating.</span>")
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 				construct_op ++
 		if(2)
 			if(istype(P, /obj/item/weapon/wrench))
-				user << "<span class='notice'>You secure the external plating.</span>"
+				to_chat(user, "<span class='notice'>You secure the external plating.</span>")
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 				construct_op --
 			if(istype(P, /obj/item/weapon/wirecutters))
 				playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
-				user << "<span class='notice'>You remove the cables.</span>"
+				to_chat(user, "<span class='notice'>You remove the cables.</span>")
 				construct_op ++
 				var/obj/item/weapon/cable_coil/A = new /obj/item/weapon/cable_coil( user.loc )
 				A.amount = 5
@@ -52,16 +52,16 @@
 			if(istype(P, /obj/item/weapon/cable_coil))
 				var/obj/item/weapon/cable_coil/A = P
 				if(A.use(5))
-					user << "<span class='notice'>You insert the cables.</span>"
+					to_chat(user, "<span class='notice'>You insert the cables.</span>")
 					construct_op --
 					stat &= ~BROKEN // the machine's not borked anymore!
 				else
-					user << "<span class='danger'>You need more cable to do that.</span>"
+					to_chat(user, "<span class='danger'>You need more cable to do that.</span>")
 			if(istype(P, /obj/item/weapon/crowbar))
-				user << "<span class='notice'>You begin prying out the circuit board and components...</span>"
+				to_chat(user, "<span class='notice'>You begin prying out the circuit board and components...</span>")
 				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 				if(do_after(user,60,target = src))
-					user << "<span class='notice'>You finish prying out the components.</span>"
+					to_chat(user, "<span class='notice'>You finish prying out the components.</span>")
 
 					// Drop all the component stuff
 					if(component_parts)

@@ -126,7 +126,7 @@
 			C.visible_message("[C] shakes [src].","<span class='notice'>You shake [src].</span>")
 
 			if(!C.client.prefs.warnbans)
-				C << "<span class='notice'>You understand that this year you was good boy!</span>"
+				to_chat(C, "<span class='notice'>You understand that this year you was good boy!</span>")
 				C.adjustBruteLoss(-10)
 				C.adjustToxLoss(-10)
 				C.adjustFireLoss(-10)

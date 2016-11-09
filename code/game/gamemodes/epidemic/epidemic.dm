@@ -18,8 +18,8 @@
 //Announces the game type//
 ///////////////////////////
 /datum/game_mode/epidemic/announce()
-	world << "<B>The current game mode is - Epidemic!</B>"
-	world << "<B>A deadly epidemic is spreading on the station. Find a cure as fast as possible, and keep your distance to anyone who speaks in a hoarse voice!</B>"
+	to_chat(world, "<B>The current game mode is - Epidemic!</B>")
+	to_chat(world, "<B>A deadly epidemic is spreading on the station. Find a cure as fast as possible, and keep your distance to anyone who speaks in a hoarse voice!</B>")
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -72,7 +72,7 @@
 	var/extra_law = "Crew authorized to know of pathogen [virus_name]'s existence are: Heads of command, any crew member with loyalty implant. Do not allow unauthorized personnel to gain knowledge of [virus_name]. Aid authorized personnel in quarantining and neutrlizing the outbreak. This law overrides all other laws."
 	for(var/mob/living/silicon/ai/M in living_mob_list)
 		M.add_ion_law(extra_law)
-		M << "\red " + extra_law
+		to_chat(M, "\red " + extra_law)
 
 /datum/game_mode/epidemic/proc/announce_to_kill_crew()
 	var/intercepttext = "<FONT size = 3 color='red'><B>CONFIDENTIAL REPORT</FONT><HR>"
@@ -102,8 +102,8 @@
 		crew += H
 
 	if(crew.len < 2)
-		world << "\red There aren't enough players for this mode!"
-		world << "\red Rebooting world in 5 seconds."
+		to_chat(world, "\red There aren't enough players for this mode!")
+		to_chat(world, "\red Rebooting world in 5 seconds.")
 
 		if(blackbox)
 			blackbox.save_all_data_to_sql()
@@ -189,10 +189,10 @@
 	for(var/mob/M in mob_list)
 		if(M.client)
 			M << 'sound/machines/Alarm.ogg'
-	world << "\blue<b>Incoming missile detected.. Impact in 10..</b>"
+	to_chat(world, "\blue<b>Incoming missile detected.. Impact in 10..</b>")
 	for (var/i=9 to 1 step -1)
 		sleep(10)
-		world << "\blue<b>[i]..</b>"
+		to_chat(world, "\blue<b>[i]..</b>")
 	sleep(10)
 	enter_allowed = 0
 	if(ticker)
@@ -210,9 +210,9 @@
 /datum/game_mode/epidemic/declare_completion()
 	if(finished == 1)
 		feedback_set_details("round_end_result","win - epidemic cured")
-		world << "\red <FONT size = 3><B> The virus outbreak was contained! The crew wins!</B></FONT>"
+		to_chat(world, "\red <FONT size = 3><B> The virus outbreak was contained! The crew wins!</B></FONT>")
 	else if(finished == 2)
 		feedback_set_details("round_end_result","loss - rev heads killed")
-		world << "\red <FONT size = 3><B> The crew succumbed to the epidemic!</B></FONT>"
+		to_chat(world, "\red <FONT size = 3><B> The crew succumbed to the epidemic!</B></FONT>")
 	..()
 	return 1

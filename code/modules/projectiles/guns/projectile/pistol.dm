@@ -50,10 +50,10 @@
 		magazine.update_icon()
 		magazine = null
 		overlays -= mag
-		user << "<span class='notice'>You pull the magazine out of \the [src]!</span>"
+		to_chat(user, "<span class='notice'>You pull the magazine out of \the [src]!</span>")
 		playsound(src.loc, 'sound/weapons/pistol_reload.ogg', 50, 1, 1)
 	else
-		user << "<span class='notice'>There's no magazine in \the [src].</span>"
+		to_chat(user, "<span class='notice'>There's no magazine in \the [src].</span>")
 	return
 
 /obj/item/weapon/gun/projectile/sigi/attackby(obj/item/A, mob/user)
@@ -64,14 +64,14 @@
 			magazine = AM
 			magazine.loc = src
 			overlays += mag
-			user << "<span class='notice'>You load a new magazine into \the [src].</span>"
+			to_chat(user, "<span class='notice'>You load a new magazine into \the [src].</span>")
 			chamber_round()
 			A.update_icon()
 			update_icon()
 			playsound(src.loc, 'sound/weapons/pistol_reload.ogg', 50, 1, 1)
 			return 1
 		else if (magazine)
-			user << "<span class='notice'>There's already a magazine in \the [src].</span>"
+			to_chat(user, "<span class='notice'>There's already a magazine in \the [src].</span>")
 	return 0
 
 /obj/item/weapon/gun/projectile/automatic/silenced/isHandgun()
@@ -114,13 +114,13 @@
 			user.remove_from_mob(AM)
 			magazine = AM
 			magazine.loc = src
-			user << "<span class='notice'>You load a new magazine into \the [src].</span>"
+			to_chat(user, "<span class='notice'>You load a new magazine into \the [src].</span>")
 			chamber_round()
 			A.update_icon()
 			update_icon(1)
 			return 1
 		else if (magazine)
-			user << "<span class='notice'>There's already a magazine in \the [src].</span>"
+			to_chat(user, "<span class='notice'>There's already a magazine in \the [src].</span>")
 	return 0
 
 /obj/item/weapon/gun/projectile/automatic/deagle/gold
@@ -213,13 +213,13 @@
 			user.remove_from_mob(AM)
 			magazine = AM
 			magazine.loc = src
-			user << "<span class='notice'>You load a new magazine into \the [src].</span>"
+			to_chat(user, "<span class='notice'>You load a new magazine into \the [src].</span>")
 			chamber_round()
 			A.update_icon()
 			update_icon(1)
 			return 1
 		else if (magazine)
-			user << "<span class='notice'>There's already a magazine in \the [src].</span>"
+			to_chat(user, "<span class='notice'>There's already a magazine in \the [src].</span>")
 	return 0
 
 /obj/item/weapon/gun/projectile/sec_pistol
@@ -259,13 +259,13 @@
 			user.remove_from_mob(AM)
 			magazine = AM
 			magazine.loc = src
-			user << "<span class='notice'>You load a new magazine into \the [src].</span>"
+			to_chat(user, "<span class='notice'>You load a new magazine into \the [src].</span>")
 			chamber_round()
 			A.update_icon()
 			update_icon(1)
 			return 1
 		else if (magazine)
-			user << "<span class='notice'>There's already a magazine in \the [src].</span>"
+			to_chat(user, "<span class='notice'>There's already a magazine in \the [src].</span>")
 	return 0
 
 /obj/item/weapon/gun/projectile/sec_pistol/acm38

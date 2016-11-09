@@ -9,7 +9,7 @@
 //Heals the things that the other regenerative abilities don't.
 /obj/effect/proc_holder/changeling/panacea/sting_action(mob/living/carbon/user)
 
-	user << "<span class='notice'>We cleanse impurities from our form.</span>"
+	to_chat(user, "<span class='notice'>We cleanse impurities from our form.</span>")
 	user.reagents.add_reagent("ryetalyn", 10)
 	user.reagents.add_reagent("hyronalin", 10)
 	user.reagents.add_reagent("anti_toxin", 20)

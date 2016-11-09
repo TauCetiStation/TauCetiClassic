@@ -53,7 +53,7 @@
 
 /obj/multiz/ladder/attack_hand(mob/M)
 	if(!target || !istype(target.loc, /turf))
-		M << "The ladder is incomplete and can't be climbed."
+		to_chat(M, "The ladder is incomplete and can't be climbed.")
 	else
 		var/turf/T = target.loc
 		var/blocked = 0
@@ -62,7 +62,7 @@
 				blocked = 1
 				break
 		if(blocked || istype(T, /turf/simulated/wall))
-			M << "Something is blocking the ladder."
+			to_chat(M, "Something is blocking the ladder.")
 		else
 			M.visible_message("\blue \The [M] climbs [src.icon_state == "ladderup" ? "up" : "down"] \the [src]!", "You climb [src.icon_state == "ladderup"  ? "up" : "down"] \the [src]!", "You hear some grunting, and clanging of a metal ladder being used.")
 			M.Move(target.loc)

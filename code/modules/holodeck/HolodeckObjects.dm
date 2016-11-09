@@ -62,7 +62,7 @@ turf/simulated/floor/holofloor/update_icon()
 
 /obj/structure/table/holotable/attackby(obj/item/weapon/W, mob/user)
 	if (istype(W, /obj/item/weapon/wrench))
-		user << "It's a holotable!  There are no bolts!"
+		to_chat(user, "It's a holotable!  There are no bolts!")
 		return
 
 	if(isrobot(user))
@@ -120,11 +120,11 @@ turf/simulated/floor/holofloor/update_icon()
 	if(W.flags & NOBLUDGEON) return
 
 	if(istype(W, /obj/item/weapon/screwdriver))
-		user << ("<span class='notice'>It's a holowindow, you can't unfasten it!</span>")
+		to_chat(user, ("<span class='notice'>It's a holowindow, you can't unfasten it!</span>"))
 	else if(istype(W, /obj/item/weapon/crowbar) && reinf && state <= 1)
-		user << ("<span class='notice'>It's a holowindow, you can't pry it!</span>")
+		to_chat(user, ("<span class='notice'>It's a holowindow, you can't pry it!</span>"))
 	else if(istype(W, /obj/item/weapon/wrench) && !anchored && (!state || !reinf))
-		user << ("<span class='notice'>It's a holowindow, you can't dismantle it!</span>")
+		to_chat(user, ("<span class='notice'>It's a holowindow, you can't dismantle it!</span>"))
 	else
 		if(W.damtype == BRUTE || W.damtype == BURN)
 			take_damage(W.force)
@@ -186,7 +186,7 @@ obj/structure/stool/bed/chair/holochair
 
 /obj/structure/stool/bed/chair/holochair/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/wrench))
-		user << ("<span class='notice'>It's a holochair, you can't dismantle it!</span>")
+		to_chat(user, ("<span class='notice'>It's a holochair, you can't dismantle it!</span>"))
 	return
 
 /obj/item/weapon/holo
@@ -229,13 +229,13 @@ obj/structure/stool/bed/chair/holochair
 		icon_state = "sword[item_color]"
 		w_class = 4
 		playsound(user, 'sound/weapons/saberon.ogg', 50, 1)
-		user << "<span class='notice'>[src] is now active.</span>"
+		to_chat(user, "<span class='notice'>[src] is now active.</span>")
 	else
 		force = 3
 		icon_state = "sword0"
 		w_class = 2
 		playsound(user, 'sound/weapons/saberoff.ogg', 50, 1)
-		user << "<span class='notice'>[src] can now be concealed.</span>"
+		to_chat(user, "<span class='notice'>[src] can now be concealed.</span>")
 
 	if(istype(user,/mob/living/carbon/human))
 		var/mob/living/carbon/human/H = user
@@ -268,7 +268,7 @@ obj/structure/stool/bed/chair/holochair
 	if (istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
 		var/obj/item/weapon/grab/G = W
 		if(G.state<2)
-			user << "<span class='warning'>You need a better grip to do that!</span>"
+			to_chat(user, "<span class='warning'>You need a better grip to do that!</span>")
 			return
 		G.affecting.loc = src.loc
 		G.affecting.Weaken(5)
@@ -311,7 +311,7 @@ obj/structure/stool/bed/chair/holochair
 	power_channel = ENVIRON
 
 /obj/machinery/readybutton/attack_ai(mob/user)
-	user << "The station AI is not to interact with these devices!"
+	to_chat(user, "The station AI is not to interact with these devices!")
 	return
 
 /obj/machinery/readybutton/New()
@@ -319,12 +319,12 @@ obj/structure/stool/bed/chair/holochair
 
 
 /obj/machinery/readybutton/attackby(obj/item/weapon/W, mob/user)
-	user << "The device is a solid button, there's nothing you can do with it!"
+	to_chat(user, "The device is a solid button, there's nothing you can do with it!")
 
 /obj/machinery/readybutton/attack_hand(mob/user)
 
 	if(user.stat || stat & (NOPOWER|BROKEN))
-		user << "This device is not powered."
+		to_chat(user, "This device is not powered.")
 		return
 
 	if(!user.IsAdvancedToolUser())
@@ -335,7 +335,7 @@ obj/structure/stool/bed/chair/holochair
 		qdel(src)
 
 	if(eventstarted)
-		usr << "The event has already begun!"
+		to_chat(usr, "The event has already begun!")
 		return
 
 	ready = !ready
@@ -366,7 +366,7 @@ obj/structure/stool/bed/chair/holochair
 		qdel(W)
 
 	for(var/mob/M in currentarea)
-		M << "FIGHT!"
+		to_chat(M, "FIGHT!")
 
 //Holorack
 /obj/structure/rack/holorack
@@ -380,7 +380,7 @@ obj/structure/stool/bed/chair/holochair
 
 /obj/structure/rack/holorack/attackby(obj/item/weapon/W, mob/user)
 	if (istype(W, /obj/item/weapon/wrench))
-		user << "It's a holorack!  You can't unwrench it!"
+		to_chat(user, "It's a holorack!  You can't unwrench it!")
 		return
 
 //Holocarp

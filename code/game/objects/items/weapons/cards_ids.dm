@@ -150,7 +150,7 @@
 
 /obj/item/weapon/card/id/attack_self(mob/user)
 	for(var/mob/O in viewers(user, null))
-		O.show_message(text("[] shows you: \icon[] []: assignment: []", user, src, src.name, src.assignment), 1)
+		O.show_message("[user] shows you: [bicon(src)] [src.name]: assignment: [src.assignment]", 1)
 
 	src.add_fingerprint(user)
 	return
@@ -158,7 +158,7 @@
 /obj/item/weapon/card/id/examine(mob/user)
 	..()
 	if(mining_points)
-		user << "There's [mining_points] mining equipment redemption points loaded onto this card."
+		to_chat(user, "There's [mining_points] mining equipment redemption points loaded onto this card.")
 
 /obj/item/weapon/card/id/GetAccess()
 	return access
@@ -169,7 +169,7 @@
 /obj/item/weapon/card/id/attackby(obj/item/weapon/W, mob/user)
 	..()
 	if(istype(W,/obj/item/weapon/id_wallet))
-		user << "You slip [src] into [W]."
+		to_chat(user, "You slip [src] into [W].")
 		src.name = "[src.registered_name]'s [W.name] ([src.assignment])"
 		src.desc = W.desc
 		src.icon = W.icon
@@ -182,10 +182,10 @@
 	set category = "Object"
 	set src in usr
 
-	usr << text("\icon[] []: The current assignment on the card is [].", src, src.name, src.assignment)
-	usr << "The blood type on the card is [blood_type]."
-	usr << "The DNA hash on the card is [dna_hash]."
-	usr << "The fingerprint hash on the card is [fingerprint_hash]."
+	to_chat(usr, "[bicon(src)] [src.name]: The current assignment on the card is [src.assignment].")
+	to_chat(usr, "The blood type on the card is [blood_type].")
+	to_chat(usr, "The DNA hash on the card is [dna_hash].")
+	to_chat(usr, "The fingerprint hash on the card is [fingerprint_hash].")
 	return
 
 
@@ -223,7 +223,7 @@
 		src.access |= I.access
 		if(istype(user, /mob/living) && user.mind)
 			if(user.mind.special_role)
-				usr << "\blue The card's microscanners activate as you pass it over the ID, copying its access."
+				to_chat(usr, "\blue The card's microscanners activate as you pass it over the ID, copying its access.")
 
 /obj/item/weapon/card/id/syndicate/attack_self(mob/user)
 	if(!src.registered_name)
@@ -241,7 +241,7 @@
 			return
 		src.assignment = u
 		src.name = "[src.registered_name]'s ID Card ([src.assignment])"
-		user << "\blue You successfully forge the ID card."
+		to_chat(user, "\blue You successfully forge the ID card.")
 		registered_user = user
 	else if(!registered_user || registered_user == user)
 
@@ -261,7 +261,7 @@
 					return
 				src.assignment = u
 				src.name = "[src.registered_name]'s ID Card ([src.assignment])"
-				user << "\blue You successfully forge the ID card."
+				to_chat(user, "\blue You successfully forge the ID card.")
 				return
 			if("Show")
 				..()

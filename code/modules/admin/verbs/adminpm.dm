@@ -3,7 +3,7 @@
 	set category = null
 	set name = "Admin PM Mob"
 	if(!holder)
-		src << "<font color='red'>Error: Admin-PM-Context: Only administrators may use this command.</font>"
+		to_chat(src, "<font color='red'>Error: Admin-PM-Context: Only administrators may use this command.</font>")
 		return
 	if( !ismob(M) || !M.client )	return
 	cmd_admin_pm(M.client,null)
@@ -14,7 +14,7 @@
 	set category = "Admin"
 	set name = "Admin PM"
 	if(!holder)
-		src << "<font color='red'>Error: Admin-PM-Panel: Only administrators may use this command.</font>"
+		to_chat(src, "<font color='red'>Error: Admin-PM-Panel: Only administrators may use this command.</font>")
 		return
 	var/list/client/targets[0]
 	for(var/client/T)
@@ -34,13 +34,13 @@
 
 /client/proc/cmd_ahelp_reply(whom)
 	if(prefs.muted & MUTE_ADMINHELP || ((src in mentors) && (prefs.muted & MUTE_MENTORHELP)))
-		src << "<font color='red'>Error: Admin-PM: You are unable to use admin PM-s (muted).</font>"
+		to_chat(src, "<font color='red'>Error: Admin-PM: You are unable to use admin PM-s (muted).</font>")
 		return
 	var/client/C
 	C = whom
 	if(!C)
 		if(holder)
-			src << "<font color='red'>Error: Admin-PM: Client not found.</font>"
+			to_chat(src, "<font color='red'>Error: Admin-PM: Client not found.</font>")
 		return
 	if(usr.client in mentors)
 		message_mentors("[key_name(src, 0, 0, 0)] has started replying to [key_name(C, 0, 0, 0)]'s help request.")
@@ -60,12 +60,12 @@
 
 /client/proc/cmd_admin_pm(client/C, msg = null)
 	if(prefs.muted & MUTE_ADMINHELP || ((src in mentors) && (prefs.muted & MUTE_MENTORHELP)))
-		src << "<font color='red'>Error: Private-Message: You are unable to use PM-s (muted).</font>"
+		to_chat(src, "<font color='red'>Error: Private-Message: You are unable to use PM-s (muted).</font>")
 		return
 
 	if(!istype(C,/client))
 		if(holder)
-			src << "<font color='red'>Error: Private-Message: Client not found.</font>"
+			to_chat(src, "<font color='red'>Error: Private-Message: Client not found.</font>")
 		else
 			adminhelp(msg)	//admin we are replying to left. adminhelp instead
 		return
@@ -80,7 +80,7 @@
 			return
 		if(!C)
 			if(holder)
-				src << "<font color='red'>Error: Admin-PM: Client not found.</font>"
+				to_chat(src, "<font color='red'>Error: Admin-PM: Client not found.</font>")
 			else
 				adminhelp(msg)	//admin we are replying to has vanished, adminhelp instead
 			return
@@ -116,7 +116,7 @@
 		send_pm_type = "Mentor "
 		recieve_pm_type = "Mentor"
 	else if(!C.holder && !(C in mentors))
-		src << "<font color='red'>Error: Admin-PM: Non-admin to non-admin PM communication is forbidden.</font>"
+		to_chat(src, "<font color='red'>Error: Admin-PM: Non-admin to non-admin PM communication is forbidden.</font>")
 		return
 
 	var/recieve_message = ""
@@ -124,7 +124,7 @@
 	if(((src in mentors) || holder) && !C.holder)
 		recieve_message = "<font color='[recieve_color]' size='3'><b>-- Click the [recieve_pm_type]'s name to reply --</b></font>\n"
 		if(C.adminhelped)
-			C << recieve_message
+			to_chat(C, recieve_message)
 			C.adminhelped = 0
 
 		//AdminPM popup for ApocStation and anybody else who wants to use it. Set it with POPUP_ADMIN_PM in config.txt ~Carn
@@ -141,8 +141,8 @@
 				return
 
 	recieve_message = "<font color='[recieve_color]'>[recieve_pm_type] PM from-<b>[get_options_bar(src, C.holder ? 1 : 0, C.holder ? 1 : 0, 1)]</b>: [msg]</font>"
-	C << recieve_message
-	src << "<font color='blue'>[send_pm_type]PM to-<b>[get_options_bar(C, holder ? 1 : 0, holder ? 1 : 0, 1)]</b>: [msg]</font>"
+	to_chat(C, recieve_message)
+	to_chat(src, "<font color='blue'>[send_pm_type]PM to-<b>[get_options_bar(C, holder ? 1 : 0, holder ? 1 : 0, 1)]</b>: [msg]</font>")
 
 	//play the recieving admin the adminhelp sound (if they have them enabled)
 	//non-admins shouldn't be able to disable this
@@ -158,16 +158,18 @@
 		if(X == C || X == src)
 			continue
 		if(X.key!=key && X.key!=C.key)
-			X << "<B><font color='blue'>PM: [key_name(src, X, 0)]-&gt;[key_name(C, X, 0)]:</B> \blue [msg]</font>" //inform X
+			to_chat(X, "<B><font color='blue'>PM: [key_name(src, X, 0)]-&gt;[key_name(C, X, 0)]:</B> \blue [msg]</font>")//inform X
+
 	for(var/client/X in mentors)
 		if(X == C || X == src)
 			continue
 		if(X.key!=key && X.key!=C.key && !C.holder && !src.holder)
-			X << "<B><font color='blue'>PM: [key_name(src, X, 0, 0)]-&gt;[key_name(C, X, 0, 0)]:</B> \blue [msg]</font>" //inform X
+			to_chat(X, "<B><font color='blue'>PM: [key_name(src, X, 0, 0)]-&gt;[key_name(C, X, 0, 0)]:</B> \blue [msg]</font>")//inform X
+
 
 /client/proc/cmd_admin_irc_pm()
 	if(prefs.muted & MUTE_ADMINHELP)
-		src << "<font color='red'>Error: Private-Message: You are unable to use PM-s (muted).</font>"
+		to_chat(src, "<font color='red'>Error: Private-Message: You are unable to use PM-s (muted).</font>")
 		return
 
 	var/msg = input(src,"Message:", "Private message to admins on IRC / 400 character limit") as text|null
@@ -178,18 +180,18 @@
 	sanitize(msg)
 
 	if(length(msg) > 400) // TODO: if message length is over 400, divide it up into seperate messages, the message length restriction is based on IRC limitations.  Probably easier to do this on the bots ends.
-		src << "\red Your message was not sent because it was more then 400 characters find your message below for ease of copy/pasting"
-		src << "\blue [msg]"
+		to_chat(src, "\red Your message was not sent because it was more then 400 characters find your message below for ease of copy/pasting")
+		to_chat(src, "\blue [msg]")
 		return
 
 	send2adminirc("PlayerPM from [key_name(src)]: [html_decode(msg)]")
 
-	src << "<font color='blue'>IRC PM to-<b>IRC-Admins</b>: [msg]</font>"
+	to_chat(src, "<font color='blue'>IRC PM to-<b>IRC-Admins</b>: [msg]</font>")
 
 	log_admin("PM: [key_name(src)]->IRC: [msg]")
 	for(var/client/X in admins)
 		if(X == src)
 			continue
 		if(X.holder.rights & R_ADMIN)
-			X << "<B><font color='blue'>PM: [key_name(src, X, 0)]-&gt;IRC-Admins:</B> \blue [msg]</font>"
+			to_chat(X, "<B><font color='blue'>PM: [key_name(src, X, 0)]-&gt;IRC-Admins:</B> \blue [msg]</font>")
 

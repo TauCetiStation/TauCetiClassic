@@ -45,7 +45,7 @@
 
 /obj/machinery/computer/telescience/examine(mob/user)
 	..()
-	user << "There are [crystals.len] bluespace crystals in the crystal ports."
+	to_chat(user, "There are [crystals.len] bluespace crystals in the crystal ports.")
 
 /obj/machinery/computer/telescience/initialize()
 	..()
@@ -53,7 +53,7 @@
 		crystals += new /obj/item/bluespace_crystal/artificial(null) // starting crystals
 
 /obj/machinery/computer/telescience/attack_paw(mob/user)
-	user << "<span class='warning'>You are too primitive to use this computer!</span>"
+	to_chat(user, "<span class='warning'>You are too primitive to use this computer!</span>")
 	return
 
 /obj/machinery/computer/telescience/update_icon()
@@ -78,7 +78,7 @@
 /obj/machinery/computer/telescience/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/bluespace_crystal))
 		if(crystals.len >= max_crystals)
-			user << "<span class='warning'>There are not enough crystal ports.</span>"
+			to_chat(user, "<span class='warning'>There are not enough crystal ports.</span>")
 			return
 		user.drop_item()
 		crystals += W
@@ -96,7 +96,7 @@
 		if(M.buffer && istype(M.buffer, /obj/machinery/telepad))
 			telepad = M.buffer
 			M.buffer = null
-			user << "<span class='notice'>You upload the data from the [W.name]'s buffer.</span>"
+			to_chat(user, "<span class='notice'>You upload the data from the [W.name]'s buffer.</span>")
 	else
 		..()
 

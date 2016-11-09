@@ -53,7 +53,7 @@
 	if(istype(loc, /turf/simulated))
 		var/turf/simulated/T = loc
 		if(T.intact)
-			user << "<span class='alert'>You must first expose the power terminal!</span>"
+			to_chat(user, "<span class='alert'>You must first expose the power terminal!</span>")
 			return
 
 		if((master && master.can_terminal_dismantle()) || !master)
@@ -69,7 +69,7 @@
 						s.start()
 						return
 					new /obj/item/weapon/cable_coil(loc, 10)
-					user << "<span class='notice'>You cut the cables and dismantle the power terminal.</span>"
+					to_chat(user, "<span class='notice'>You cut the cables and dismantle the power terminal.</span>")
 					qdel(src)
 
 

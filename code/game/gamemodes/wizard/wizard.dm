@@ -19,8 +19,8 @@
 	var/finished = 0
 
 /datum/game_mode/wizard/announce()
-	world << "<B>The current game mode is - Wizard!</B>"
-	world << "<B>There is a \red SPACE WIZARD\black on the station. You can't let him achieve his objective!</B>"
+	to_chat(world, "<B>The current game mode is - Wizard!</B>")
+	to_chat(world, "<B>There is a \red SPACE WIZARD\black on the station. You can't let him achieve his objective!</B>")
 
 
 /datum/game_mode/wizard/can_start()//This could be better, will likely have to recode it later
@@ -33,7 +33,7 @@
 	wizard.special_role = "Wizard"
 	wizard.original = wizard.current
 	if(wizardstart.len == 0)
-		wizard.current << "<span class='danger'>A starting location for you could not be found, please report this bug!</span>"
+		to_chat(wizard.current, "<span class='danger'>A starting location for you could not be found, please report this bug!</span>")
 		return 0
 	return 1
 
@@ -127,15 +127,15 @@
 
 /datum/game_mode/proc/greet_wizard(datum/mind/wizard, you_are=1)
 	if (you_are)
-		wizard.current << "<span class='danger'>You are the Space Wizard!</span>"
-	wizard.current << "<B>The Space Wizards Federation has given you the following tasks:</B>"
+		to_chat(wizard.current, "<span class='danger'>You are the Space Wizard!</span>")
+	to_chat(wizard.current, "<B>The Space Wizards Federation has given you the following tasks:</B>")
 	if(!config.objectives_disabled)
 		var/obj_count = 1
 		for(var/datum/objective/objective in wizard.objectives)
-			wizard.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
+			to_chat(wizard.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 			obj_count++
 	else
-		wizard.current << "<span class='info'>Within the rules,</span> try to act as an opposing force to the crew. Further RP and try to make sure other players have </i>fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>"
+		to_chat(wizard.current, "<span class='info'>Within the rules,</span> try to act as an opposing force to the crew. Further RP and try to make sure other players have </i>fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>")
 	return
 
 
@@ -174,8 +174,8 @@
 	wizard_mob.equip_to_slot_or_del(new /obj/item/weapon/teleportation_scroll(wizard_mob), slot_r_store)
 	wizard_mob.equip_to_slot_or_del(new /obj/item/weapon/spellbook(wizard_mob), slot_r_hand)
 
-	wizard_mob << "You will find a list of available spells in your spell book. Choose your magic arsenal carefully."
-	wizard_mob << "In your pockets you will find a teleport scroll. Use it as needed."
+	to_chat(wizard_mob, "You will find a list of available spells in your spell book. Choose your magic arsenal carefully.")
+	to_chat(wizard_mob, "In your pockets you will find a teleport scroll. Use it as needed.")
 	wizard_mob.mind.store_memory("<B>Remember:</B> do not forget to prepare your spells.")
 	wizard_mob.update_icons()
 	return 1
@@ -286,13 +286,13 @@ Made a proc so this is not repeated 14 (or more) times.*/
 /mob/proc/casting()
 //Removed the stat check because not all spells require clothing now.
 	if(!istype(usr:wear_suit, /obj/item/clothing/suit/wizrobe))
-		usr << "I don't feel strong enough without my robe."
+		to_chat(usr, "I don't feel strong enough without my robe.")
 		return 0
 	if(!istype(usr:shoes, /obj/item/clothing/shoes/sandal))
-		usr << "I don't feel strong enough without my sandals."
+		to_chat(usr, "I don't feel strong enough without my sandals.")
 		return 0
 	if(!istype(usr:head, /obj/item/clothing/head/wizard))
-		usr << "I don't feel strong enough without my hat."
+		to_chat(usr, "I don't feel strong enough without my hat.")
 		return 0
 	else
 		return 1

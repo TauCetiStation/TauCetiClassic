@@ -48,6 +48,6 @@
 /obj/item/weapon/reagent_containers/glass/rag/examine()
 	if (!usr)
 		return
-	usr << "That's \a [src]."
-	usr << desc
+	to_chat(usr, "That's \a [src].")
+	to_chat(usr, desc)
 	return

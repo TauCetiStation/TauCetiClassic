@@ -114,7 +114,7 @@ var/list/alldepartments = list("Central Command")
 				sendcooldown = 600
 				SendFax(tofax.info, tofax.name, usr, dpt)
 
-			usr << "Message transmitted successfully."
+			to_chat(usr, "Message transmitted successfully.")
 
 			spawn(sendcooldown) // cooldown time
 				sendcooldown = 0
@@ -122,11 +122,11 @@ var/list/alldepartments = list("Central Command")
 	if(href_list["remove"])
 		if(tofax)
 			if(!ishuman(usr))
-				usr << "<span class='warning'>You can't do it.</span>"
+				to_chat(usr, "<span class='warning'>You can't do it.</span>")
 			else
 				tofax.loc = usr.loc
 				usr.put_in_hands(tofax)
-				usr << "<span class='notice'>You take the paper out of \the [src].</span>"
+				to_chat(usr, "<span class='notice'>You take the paper out of \the [src].</span>")
 				tofax = null
 
 	if(href_list["scan"])
@@ -169,11 +169,11 @@ var/list/alldepartments = list("Central Command")
 			user.drop_item()
 			tofax = O
 			O.loc = src
-			user << "<span class='notice'>You insert the paper into \the [src].</span>"
+			to_chat(user, "<span class='notice'>You insert the paper into \the [src].</span>")
 			flick("faxsend", src)
 			updateUsrDialog()
 		else
-			user << "<span class='notice'>There is already something in \the [src].</span>"
+			to_chat(user, "<span class='notice'>There is already something in \the [src].</span>")
 
 	else if(istype(O, /obj/item/weapon/card/id))
 
@@ -186,7 +186,7 @@ var/list/alldepartments = list("Central Command")
 	else if(istype(O, /obj/item/weapon/wrench))
 		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 		anchored = !anchored
-		user << "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>"
+		to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>")
 	return
 
 /proc/Centcomm_fax(sent, sentname, mob/Sender)
@@ -194,7 +194,7 @@ var/list/alldepartments = list("Central Command")
 	var/msg = "\blue <b><font color='orange'>CENTCOMM FAX: </font>[key_name(Sender, 1)] (<A HREF='?_src_=holder;adminplayeropts=\ref[Sender]'>PP</A>) (<A HREF='?_src_=vars;Vars=\ref[Sender]'>VV</A>) (<A HREF='?_src_=holder;subtlemessage=\ref[Sender]'>SM</A>) (<A HREF='?_src_=holder;adminplayerobservejump=\ref[Sender]'>JMP</A>) (<A HREF='?_src_=holder;secretsadmin=check_antagonist'>CA</A>) (<a href='?_src_=holder;CentcommFaxReply=\ref[Sender]'>RPLY</a>)</b>: Receiving '[sentname]' via secure connection ... <a href='?_src_=holder;CentcommFaxView=\ref[sent]'>view message</a>"
 	log_fax("[Sender] sending [sentname] : [sent]")
 	for(var/client/C in admins)
-		C << msg
+		to_chat(C, msg)
 	send2slack_custommsg("[key_name(Sender)] sent fax to Centcomm", sent, ":fax:")
 
 

@@ -17,21 +17,22 @@ s_cooldown ticks off each second based on the suit recharge proc, in seconds. De
 /obj/item/clothing/suit/space/space_ninja/proc/ninjacost(C = 0,X = 0)
 	var/mob/living/carbon/human/U = affecting
 	if( (U.stat||U.incorporeal_move)&&X!=3 )//Will not return if user is using an adrenaline booster since you can use them when stat==1.
-		U << "\red You must be conscious and solid to do this."//It's not a problem of stat==2 since the ninja will explode anyway if they die.
+		to_chat(U, "\red You must be conscious and solid to do this.")//It's not a problem of stat==2 since the ninja will explode anyway if they die.
+
 		return 1
 	else if(C&&cell.charge<C*10)
-		U << "\red Not enough energy."
+		to_chat(U, "\red Not enough energy.")
 		return 1
 	switch(X)
 		if(1)
 			cancel_stealth()//Get rid of it.
 		if(2)
 			if(s_bombs<=0)
-				U << "\red There are no more smoke bombs remaining."
+				to_chat(U, "\red There are no more smoke bombs remaining.")
 				return 1
 		if(3)
 			if(a_boost<=0)
-				U << "\red You do not have any more adrenaline boosters."
+				to_chat(U, "\red You do not have any more adrenaline boosters.")
 				return 1
 	return (s_coold)//Returns the value of the variable which counts down to zero.
 
@@ -56,7 +57,7 @@ Not sure why this would be useful (it's not) but whatever. Ninjas need their smo
 
 	if(!ninjacost(,2))
 		var/mob/living/carbon/human/U = affecting
-		U << "\blue There are <B>[s_bombs]</B> smoke bombs remaining."
+		to_chat(U, "\blue There are <B>[s_bombs]</B> smoke bombs remaining.")
 		var/datum/effect/effect/system/smoke_spread/bad/smoke = new /datum/effect/effect/system/smoke_spread/bad()
 		smoke.set_up(10, 0, U.loc)
 		smoke.start()
@@ -93,7 +94,7 @@ Not sure why this would be useful (it's not) but whatever. Ninjas need their smo
 				playsound(U.loc, 'sound/effects/sparks2.ogg', 50, 1)
 				anim(U.loc,U,'icons/mob/mob.dmi',,"phasein",,U.dir)
 		else
-			U << "\red You cannot teleport into solid walls or from solid matter."
+			to_chat(U, "\red You cannot teleport into solid walls or from solid matter.")
 	return
 
 //=======//EM PULSE//=======//
@@ -132,7 +133,7 @@ Not sure why this would be useful (it's not) but whatever. Ninjas need their smo
 				U.put_in_hands(W)
 				cell.use(C*10)
 			else
-				U << "\red You can only summon one blade. Try dropping an item first."
+				to_chat(U, "\red You can only summon one blade. Try dropping an item first.")
 		else//Else you can run around with TWO energy blades. I don't know why you'd want to but cool factor remains.
 			if(!U.get_active_hand())
 				var/obj/item/weapon/melee/energy/blade/W = new()
@@ -178,7 +179,7 @@ This could be a lot better but I'm too tired atm.*/
 			cell.use(C*10)
 			A.process()
 		else
-			U << "\red There are no targets in view."
+			to_chat(U, "\red There are no targets in view.")
 	return
 
 //=======//ENERGY NET//=======//
@@ -199,7 +200,7 @@ Must right click on a mob to activate.*/
 			if(!locate(/obj/effect/energy_net) in M.loc)//Check if they are already being affected by an energy net.
 				for(var/turf/T in getline(U.loc, M.loc))
 					if(T.density)//Don't want them shooting nets through walls. It's kind of cheesy.
-						U << "You may not use an energy net through solid obstacles!"
+						to_chat(U, "You may not use an energy net through solid obstacles!")
 						return
 				spawn(0)
 					U.Beam(M,"n_beam",,15)
@@ -215,9 +216,9 @@ Must right click on a mob to activate.*/
 					E.process(M)
 				cell.use(C*10) // Nets now cost what should be most of a standard battery, since your taking someone out of the round
 			else
-				U << "They are already trapped inside an energy net."
+				to_chat(U, "They are already trapped inside an energy net.")
 		else
-			U << "They will bring no honor to your Clan!"
+			to_chat(U, "They will bring no honor to your Clan!")
 	return
 
 //=======//ADRENALINE BOOST//=======//
@@ -247,14 +248,14 @@ Movement impairing would indicate drugs and the like.*/
 		spawn(70)
 			reagents.reaction(U, 2)
 			reagents.trans_id_to(U, "radium", a_transfer)
-			U << "\red You are beginning to feel the after-effect of the injection."
+			to_chat(U, "\red You are beginning to feel the after-effect of the injection.")
 		a_boost--
 		s_coold = 3
 	return
 
 /*
 ===================================================================================
-<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<KAMIKAZE MODE>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+to_chat(, <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<KAMIKAZE MODE>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>)
 ===================================================================================
 Or otherwise known as anime mode. Which also happens to be ridiculously powerful.
 */
@@ -270,10 +271,10 @@ Or otherwise known as anime mode. Which also happens to be ridiculously powerful
 	var/mob/living/carbon/human/U = affecting
 	if(!U.incorporeal_move)
 		U.incorporeal_move = 2
-		U << "\blue You will now phase through solid matter."
+		to_chat(U, "\blue You will now phase through solid matter.")
 	else
 		U.incorporeal_move = 0
-		U << "\blue You will no-longer phase through solid matter."
+		to_chat(U, "\blue You will no-longer phase through solid matter.")
 	return
 
 //=======//5 TILE TELEPORT/GIB//=======//
@@ -312,7 +313,7 @@ Or otherwise known as anime mode. Which also happens to be ridiculously powerful
 				anim(U.loc,U,'icons/mob/mob.dmi',,"phasein",,U.dir)
 			s_coold = 1
 		else
-			U << "\red The VOID-shift device is malfunctioning, <B>teleportation failed</B>."
+			to_chat(U, "\red The VOID-shift device is malfunctioning, <B>teleportation failed</B>.")
 	return
 
 //=======//TELEPORT BEHIND MOB//=======//
@@ -386,7 +387,7 @@ This is so anime it hurts. But that's the point.*/
 					anim(U.loc,U,'icons/mob/mob.dmi',,"phasein",,U.dir)
 				s_coold = 1
 			else
-				U << "\red The VOID-shift device is malfunctioning, <B>teleportation failed</B>."
+				to_chat(U, "\red The VOID-shift device is malfunctioning, <B>teleportation failed</B>.")
 		else
-			U << "\red There are no targets in view."
+			to_chat(U, "\red There are no targets in view.")
 	return

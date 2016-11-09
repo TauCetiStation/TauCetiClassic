@@ -37,12 +37,12 @@
 				clear_alert(category)
 				return .()
 			else
-	//			src << "threw alert not in need of update [category] [id] [severity]"
+//				to_chat(src, "threw alert not in need of update [category] [id] [severity]")
 				return 0
-//		src << "updating alert [category] [id] [severity]"
+//		to_chat(src, "updating alert [category] [id] [severity]")
 	else
 		alert = PoolOrNew(/obj/screen/alert)
-//		src << "throwing new alert [category] [id] [severity]"
+//		to_chat(src, "throwing new alert [category] [id] [severity]")
 
 	if(new_master)
 		var/old_layer = new_master.layer
@@ -256,7 +256,7 @@
 		return
 	var/paramslist = params2list(params)
 	if(paramslist["shift"]) // screen objects don't do the normal Click() stuff so we'll cheat
-		usr << "<span class='boldnotice'>[name]</span> - <span class='info'>[desc]</span>"
+		to_chat(usr, "<span class='boldnotice'>[name]</span> - <span class='info'>[desc]</span>")
 		return
 	if(master)
 		return usr.client.Click(master, location, control, params)

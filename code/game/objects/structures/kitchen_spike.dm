@@ -16,7 +16,7 @@
 		var/obj/item/stack/rods/R = I
 		if(R.amount >= 4)
 			R.use(4)
-			user << "<span class='notice'>You add spikes to the frame.</span>"
+			to_chat(user, "<span class='notice'>You add spikes to the frame.</span>")
 			var/obj/F = new /obj/structure/kitchenspike(src.loc)
 			transfer_fingerprints_to(F)
 			qdel(src)
@@ -39,13 +39,13 @@
 		if(!src.buckled_mob)
 			playsound(loc, 'sound/items/Crowbar.ogg', 100, 1)
 			if(do_after(user, 20, target = src))
-				user << "<span class='notice'>You pry the spikes out of the frame.</span>"
+				to_chat(user, "<span class='notice'>You pry the spikes out of the frame.</span>")
 				new /obj/item/stack/rods(loc, 4)
 				var/obj/F = new /obj/structure/kitchenspike_frame(src.loc,)
 				transfer_fingerprints_to(F)
 				qdel(src)
 		else
-			user << "<span class='notice'>You can't do that while something's on the spike!</span>"
+			to_chat(user, "<span class='notice'>You can't do that while something's on the spike!</span>")
 	else if(istype(I, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = I
 		if(istype(G.affecting, /mob/living))
@@ -75,7 +75,7 @@
 					H.pixel_y = H.get_standard_pixel_y_offset()
 					qdel(G)
 		else
-			user << "<span class='danger'>You can't use that on the spike!</span>"
+			to_chat(user, "<span class='danger'>You can't use that on the spike!</span>")
 
 /obj/structure/kitchenspike/user_buckle_mob(mob/living/M, mob/living/user) //Don't want them getting put on the rack other than by spiking
 	return
@@ -103,7 +103,7 @@
 			L.adjustBruteLoss(15)
 			if(!do_after(L, 1200, target = src))
 				if(L && L.buckled)
-					L << "<span class='warning'>You fail to free yourself!</span>"
+					to_chat(L, "<span class='warning'>You fail to free yourself!</span>")
 				return
 
 		if(!L.buckled)

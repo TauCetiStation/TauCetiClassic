@@ -30,7 +30,7 @@
 		user.put_in_active_hand(gift)
 		src.gift.add_fingerprint(user)
 	else
-		user << "\blue The gift was empty!"
+		to_chat(user, "\blue The gift was empty!")
 	qdel(src)
 	return
 
@@ -41,16 +41,16 @@
 /obj/effect/spresent/relaymove(mob/user)
 	if (user.stat)
 		return
-	user << "\blue You cant move."
+	to_chat(user, "\blue You cant move.")
 
 /obj/effect/spresent/attackby(obj/item/weapon/W, mob/user)
 	..()
 
 	if (!istype(W, /obj/item/weapon/wirecutters))
-		user << "\blue I need wirecutters for that."
+		to_chat(user, "\blue I need wirecutters for that.")
 		return
 
-	user << "\blue You cut open the present."
+	to_chat(user, "\blue You cut open the present.")
 
 	for(var/mob/M in src) //Should only be one but whatever.
 		M.loc = src.loc
@@ -131,12 +131,12 @@
 /obj/item/weapon/wrapping_paper/attackby(obj/item/weapon/W, mob/user)
 	..()
 	if (!( locate(/obj/structure/table, src.loc) ))
-		user << "\blue You MUST put the paper on a table!"
+		to_chat(user, "\blue You MUST put the paper on a table!")
 	if (W.w_class < 4)
 		if ((istype(user.l_hand, /obj/item/weapon/wirecutters) || istype(user.r_hand, /obj/item/weapon/wirecutters)))
 			var/a_used = 2 ** (src.w_class - 1)
 			if (src.amount < a_used)
-				user << "\blue You need more paper!"
+				to_chat(user, "\blue You need more paper!")
 				return
 			else
 				if(istype(W, /obj/item/smallDelivery) || istype(W, /obj/item/weapon/gift)) //No gift wrapping gifts!
@@ -158,16 +158,16 @@
 				qdel(src)
 				return
 		else
-			user << "\blue You need scissors!"
+			to_chat(user, "\blue You need scissors!")
 	else
-		user << "\blue The object is FAR too large!"
+		to_chat(user, "\blue The object is FAR too large!")
 	return
 
 
 /obj/item/weapon/wrapping_paper/examine(mob/user)
 	..()
 	if(src in view(1, user))
-		user << "<span class='notice'>There is about [amount] square units of paper left!</span>"
+		to_chat(user, "<span class='notice'>There is about [amount] square units of paper left!</span>")
 
 /obj/item/weapon/wrapping_paper/attack(mob/target, mob/user)
 	if (!istype(target, /mob/living/carbon/human)) return
@@ -189,6 +189,6 @@
 			msg_admin_attack("[key_name(user)] used [src] to wrap [key_name(H)]")
 
 		else
-			user << "\blue You need more paper."
+			to_chat(user, "\blue You need more paper.")
 	else
-		user << "They are moving around too much. A straightjacket would help."
+		to_chat(user, "They are moving around too much. A straightjacket would help.")

@@ -92,7 +92,7 @@
 
 	//Account data
 	S["cid_list"]			<< cid_list
-	S["ignore_cid_warning"]	<< ignore_cid_warning
+	S["ignore_cid_warning"] << ignore_cid_warning
 
 	//general preferences
 	S["ooccolor"]			<< ooccolor
@@ -173,7 +173,7 @@
 	S["uplinklocation"] 	>> uplinklocation
 
 	S["UI_style_color"]		<< UI_style_color
-	S["UI_style_alpha"]		<< UI_style_alpha
+	S["UI_style_alpha"] << UI_style_alpha
 
 	//Sanitize
 	metadata		= sanitize_text(metadata, initial(metadata))
@@ -313,7 +313,7 @@
 	S["med_record"]			<< med_record
 	S["sec_record"]			<< sec_record
 	S["gen_record"]			<< gen_record
-	S["player_alt_titles"]		<< player_alt_titles
+	S["player_alt_titles"]	<< player_alt_titles
 	S["be_role"]			<< be_role
 	S["disabilities"]		<< disabilities
 	S["organ_data"]			<< organ_data
@@ -324,7 +324,7 @@
 	S["faction"] 			<< faction
 	S["religion"] 			<< religion
 
-	S["uplinklocation"] << uplinklocation
+	S["uplinklocation"] 	<< uplinklocation
 
 	S["UI_style_color"]		<< UI_style_color
 	S["UI_style_alpha"]		<< UI_style_alpha

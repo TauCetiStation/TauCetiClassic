@@ -30,7 +30,7 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 
 	if(istype(W,/obj/item/weapon/reagent_containers))
 
-		user << "You inject the contents of the syringe into the seeds."
+		to_chat(user, "You inject the contents of the syringe into the seeds.")
 
 		var/datum/reagent/blood/B
 
@@ -41,14 +41,14 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 				break
 		if(B)
 			source = B.data["donor"]
-			user << "The strange, sluglike seeds quiver gently and swell with blood."
+			to_chat(user, "The strange, sluglike seeds quiver gently and swell with blood.")
 			if(!source.client && source.mind)
 				for(var/mob/dead/observer/O in player_list)
 					if(O.mind == source.mind && config.revival_pod_plants)
-						O << "<b><font color = #330033><font size = 3>Your blood has been placed into a replica pod seed. Return to your body if you want to be returned to life as a pod person!</b> (Verbs -> Ghost -> Re-enter corpse)</font color>"
+						to_chat(O, "<b><font color = #330033><font size = 3>Your blood has been placed into a replica pod seed. Return to your body if you want to be returned to life as a pod person!</b> (Verbs -> Ghost -> Re-enter corpse)</font color>")
 						break
 		else
-			user << "Nothing happens."
+			to_chat(user, "Nothing happens.")
 			return
 
 		if (!istype(source))
@@ -151,11 +151,11 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 				ticker.mode:update_all_cult_icons() //So the icon actually appears
 		// -- End mode specific stuff
 
-	podman << "\green <B>You awaken slowly, feeling your sap stir into sluggish motion as the warm air caresses your bark.</B>"
+	to_chat(podman, "\green <B>You awaken slowly, feeling your sap stir into sluggish motion as the warm air caresses your bark.</B>")
 	if(source && ckey && podman.ckey == ckey)
-		podman << "<B>Memories of a life as [source] drift oddly through a mind unsuited for them, like a skin of oil over a fathomless lake.</B>"
-	podman << "<B>You are now one of the Dionaea, a race of drifting interstellar plantlike creatures that sometimes share their seeds with human traders.</B>"
-	podman << "<B>Too much darkness will send you into shock and starve you, but light will help you heal.</B>"
+		to_chat(podman, "<B>Memories of a life as [source] drift oddly through a mind unsuited for them, like a skin of oil over a fathomless lake.</B>")
+	to_chat(podman, "<B>You are now one of the Dionaea, a race of drifting interstellar plantlike creatures that sometimes share their seeds with human traders.</B>")
+	to_chat(podman, "<B>Too much darkness will send you into shock and starve you, but light will help you heal.</B>")
 	if(!realName)
 		var/newname = input(podman,"Enter a name, or leave blank for the default name.", "Name change","") as text
 		if (newname != "")

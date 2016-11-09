@@ -12,7 +12,7 @@
 	attack_verb = list("flogged", "whipped", "lashed", "disciplined")
 
 /obj/item/weapon/melee/chainofcommand/suicide_act(mob/user)
-	viewers(user) << "\red <b>[user] is strangling \himself with the [src.name]! It looks like \he's trying to commit suicide.</b>"
+	to_chat(viewers(user), "\red <b>[user] is strangling \himself with the [src.name]! It looks like \he's trying to commit suicide.</b>")
 	return (OXYLOSS)
 
 /obj/item/weapon/melee/icepick

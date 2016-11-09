@@ -98,7 +98,7 @@
 /obj/item/weapon/gun/projectile/automatic/l6_saw/mob_can_equip(M, slot)
 	//Cannot equip wielded items.
 	if(wielded)
-		M << "<span class='warning'>Unwield the [initial(name)] first!</span>"
+		to_chat(M, "<span class='warning'>Unwield the [initial(name)] first!</span>")
 		return 0
 
 	return ..()
@@ -119,17 +119,17 @@
 	switch(alert("Would you like to [cover_open ? "open" : "close"], or change grip?","Choose.","Toggle cover","Change grip"))
 		if("Toggle cover")
 			if(wielded)
-				user << "<span class='notice'>You need your other hand to be empty.</span>"
+				to_chat(user, "<span class='notice'>You need your other hand to be empty.</span>")
 				return
 			else
 				cover_open = !cover_open
-				user << "<span class='notice'>You [cover_open ? "open" : "close"] [src]'s cover.</span>"
+				to_chat(user, "<span class='notice'>You [cover_open ? "open" : "close"] [src]'s cover.</span>")
 				update_icon()
 				return
 		if("Change grip")
 			if(wielded) //Trying to unwield it
 				unwield()
-				user << "<span class='notice'>You are now carrying the [name] with one hand.</span>"
+				to_chat(user, "<span class='notice'>You are now carrying the [name] with one hand.</span>")
 				if(user.hand)
 					user.update_inv_l_hand()
 				else
@@ -142,10 +142,10 @@
 
 			else //Trying to wield it
 				if(user.get_inactive_hand())
-					user << "<span class='warning'>You need your other hand to be empty</span>"
+					to_chat(user, "<span class='warning'>You need your other hand to be empty</span>")
 					return
 				wield()
-				user << "<span class='notice'>You grab the [initial(name)] with both hands.</span>"
+				to_chat(user, "<span class='notice'>You grab the [initial(name)] with both hands.</span>")
 
 				if(user.hand)
 					user.update_inv_l_hand()
@@ -164,10 +164,10 @@
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/afterattack(atom/target, mob/living/user, flag, params) //what I tried to do here is just add a check to see if the cover is open or not and add an icon_state change because I can't figure out how c-20rs do it with overlays
 	if(!wielded)
-		user << "<span class='notice'>You need wield [src] in both hands before firing!</span>"
+		to_chat(user, "<span class='notice'>You need wield [src] in both hands before firing!</span>")
 		return
 	if(cover_open)
-		user << "<span class='notice'>[src]'s cover is open! Close it before firing!</span>"
+		to_chat(user, "<span class='notice'>[src]'s cover is open! Close it before firing!</span>")
 	else
 		..()
 		update_icon()
@@ -185,12 +185,12 @@
 		user.put_in_hands(magazine)
 		magazine = null
 		update_icon()
-		user << "<span class='notice'>You remove the magazine from [src].</span>"
+		to_chat(user, "<span class='notice'>You remove the magazine from [src].</span>")
 
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/attackby(obj/item/A, mob/user)
 	if(!cover_open)
-		user << "<span class='notice'>[src]'s cover is closed! You can't insert a new mag!</span>"
+		to_chat(user, "<span class='notice'>[src]'s cover is closed! You can't insert a new mag!</span>")
 		return
 	..()
 
@@ -257,9 +257,9 @@
 		user.put_in_hands(magazine)
 		magazine.update_icon()
 		magazine = null
-		user << "<span class='notice'>You pull the magazine out of \the [src]!</span>"
+		to_chat(user, "<span class='notice'>You pull the magazine out of \the [src]!</span>")
 	else
-		user << "<span class='notice'>There's no magazine in \the [src].</span>"
+		to_chat(user, "<span class='notice'>There's no magazine in \the [src].</span>")
 	update_icon(user)
 	return
 
@@ -270,7 +270,7 @@
 			user.remove_from_mob(AM)
 			magazine = AM
 			magazine.loc = src
-			user << "<span class='notice'>You load a new magazine into \the [src].</span>"
+			to_chat(user, "<span class='notice'>You load a new magazine into \the [src].</span>")
 			if(AM.ammo_count())
 				playsound(user, 'sound/weapons/guns/l10c-load.ogg', 70, 1)
 			chamber_round()
@@ -278,7 +278,7 @@
 			update_icon(user)
 			return 1
 		else if (magazine)
-			user << "<span class='notice'>There's already a magazine in \the [src].</span>"
+			to_chat(user, "<span class='notice'>There's already a magazine in \the [src].</span>")
 	return 0
 
 /obj/item/weapon/gun/projectile/automatic/l10c/update_icon(mob/M)
@@ -399,9 +399,9 @@
 		magazine.loc = get_turf(src.loc)
 		magazine.update_icon()
 		magazine = null
-		user << "<span class='notice'>You pull the magazine out of \the [src]!</span>"
+		to_chat(user, "<span class='notice'>You pull the magazine out of \the [src]!</span>")
 	else
-		user << "<span class='notice'>There's no magazine in \the [src].</span>"
+		to_chat(user, "<span class='notice'>There's no magazine in \the [src].</span>")
 	return
 
 /obj/item/weapon/gun/projectile/automatic/bulldog

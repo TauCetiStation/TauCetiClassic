@@ -42,7 +42,7 @@
 
 /obj/item/device/radio/beacon/syndicate/attack_self(mob/user)
 	if(user)
-		user << "\blue Locked In"
+		to_chat(user, "\blue Locked In")
 		new /obj/machinery/singularity_beacon/syndicate( user.loc )
 		playsound(src, 'sound/effects/pop.ogg', 100, 1, 1)
 		qdel(src)
@@ -73,7 +73,7 @@
 	if (!flag)
 		return
 	if (!ishuman(target))
-		user << "\blue Can only be planted on human."
+		to_chat(user, "\blue Can only be planted on human.")
 		return
 	var/found = 0
 	var/target_beacon
@@ -86,14 +86,14 @@
 					found = 1
 					break
 	if(!found)
-		user << "\red No beacon located in medical treatment centre."
+		to_chat(user, "\red No beacon located in medical treatment centre.")
 		return
 
 	var/mob/living/carbon/human/H = target
 	if(H.health >= config.health_threshold_crit)
-		user << "\blue [H.name] is in good condition."
+		to_chat(user, "\blue [H.name] is in good condition.")
 		return
-	user << "Planting..."
+	to_chat(user, "Planting...")
 
 	user.visible_message("\red [user.name] is trying to plant some kind of device on [target.name]!")
 
@@ -107,7 +107,7 @@
 		user.visible_message("\red [user.name] finished planting an [name] on [H.name]!")
 
 		H.overlays += image('icons/obj/device.dmi', "medicon")
-		user << "Device has been planted. Timer counting down from [timer]."
+		to_chat(user, "Device has been planted. Timer counting down from [timer].")
 		spawn(timer*10)
 			if(H)
 				if(target_beacon)

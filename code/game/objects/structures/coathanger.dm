@@ -43,7 +43,7 @@
 			hat.loc = src
 			update_icon()
 		else
-			user << "<span class='notice'>You cannot hang [W] on [src]</span>"
+			to_chat(user, "<span class='notice'>You cannot hang [W] on [src]</span>")
 	return ..()
 
 /obj/structure/coatrack/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)

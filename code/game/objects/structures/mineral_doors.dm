@@ -106,9 +106,9 @@
 /obj/structure/mineral_door/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W,/obj/item/weapon/pickaxe))
 		var/obj/item/weapon/pickaxe/digTool = W
-		user << "You start digging the [name]."
+		to_chat(user, "You start digging the [name].")
 		if(do_after(user,digTool.digspeed, target = src) && src)
-			user << "You finished digging."
+			to_chat(user, "You finished digging.")
 			Dismantle()
 	else if(istype(W, /obj/item/weapon))
 		if (istype(W, /obj/item/weapon/weldingtool))
@@ -123,12 +123,12 @@
 				playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
 				user.visible_message("[user] dissassembles [src].", "You start to dissassemble [src].")
 				if(do_after(user, 60, target = src))
-					user << "\blue You dissasembled [src]!"
+					to_chat(user, "\blue You dissasembled [src]!")
 					Dismantle()
 				else
 					return
 			else
-				user << "\blue You need more welding fuel."
+				to_chat(user, "\blue You need more welding fuel.")
 				return
 		else if (istype(W, /obj/item/weapon/wrench))
 			if(!istype(src, /obj/structure/mineral_door/wood))
@@ -138,7 +138,7 @@
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
 			user.visible_message("[user] dissassembles [src].", "You start to dissassemble [src].")
 			if(do_after(user, 40, target = src))
-				user << "\blue You dissasembled [src]!"
+				to_chat(user, "\blue You dissasembled [src]!")
 				Dismantle()
 			else
 				return

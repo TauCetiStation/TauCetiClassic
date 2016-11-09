@@ -18,10 +18,10 @@
 
 /obj/item/weapon/handcuffs/attack(mob/living/carbon/C, mob/user)
 	if (!istype(user, /mob/living/carbon/human))
-		user << "\red You don't have the dexterity to do this!"
+		to_chat(user, "\red You don't have the dexterity to do this!")
 		return
 	if ((CLUMSY in usr.mutations) && prob(50))
-		user << "\red Uh ... how do those things work?!"
+		to_chat(user, "\red Uh ... how do those things work?!")
 		place_handcuffs(user, user)
 		return
 	if(!C.handcuffed)
@@ -34,7 +34,7 @@
 			if (G.loc == user && G.state >= GRAB_AGGRESSIVE)
 				place_handcuffs(C, user)
 				return
-		user << "\red You need to have a firm grip on [C] before you can put \the [src] on!"
+		to_chat(user, "\red You need to have a firm grip on [C] before you can put \the [src] on!")
 
 /obj/item/weapon/handcuffs/proc/place_handcuffs(mob/living/carbon/target, mob/user)
 	playsound(src.loc, cuff_sound, 30, 1, -2)

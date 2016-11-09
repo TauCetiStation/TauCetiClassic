@@ -18,7 +18,7 @@
 /obj/item/weapon/gun/syringe/examine(mob/user)
 	..()
 	if(src in view(2, user))
-		user << "<span class='notice'>[syringes.len] / [max_syringes] syringes.</span>"
+		to_chat(user, "<span class='notice'>[syringes.len] / [max_syringes] syringes.</span>")
 
 /obj/item/weapon/gun/syringe/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/reagent_containers/syringe))
@@ -28,12 +28,12 @@
 				user.drop_item()
 				I.loc = src
 				syringes += I
-				user << "\blue You put the syringe in [src]."
-				user << "\blue [syringes.len] / [max_syringes] syringes."
+				to_chat(user, "\blue You put the syringe in [src].")
+				to_chat(user, "\blue [syringes.len] / [max_syringes] syringes.")
 			else
-				usr << "\red [src] cannot hold more syringes."
+				to_chat(usr, "\red [src] cannot hold more syringes.")
 		else
-			usr << "\red This syringe is broken!"
+			to_chat(usr, "\red This syringe is broken!")
 
 
 /obj/item/weapon/gun/syringe/afterattack(obj/target, mob/user , flag)
@@ -50,7 +50,7 @@
 	if(syringes.len)
 		spawn(0) fire_syringe(target,user)
 	else
-		usr << "\red [src] is empty."
+		to_chat(usr, "\red [src] is empty.")
 
 /obj/item/weapon/gun/syringe/proc/fire_syringe(atom/target, mob/user)
 	if (locate (/obj/structure/table, src.loc))

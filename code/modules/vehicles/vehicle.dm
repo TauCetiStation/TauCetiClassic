@@ -81,7 +81,7 @@
 		if(on && open)
 			turn_off()
 		update_icon()
-		user << "<span class='notice'>Maintenance panel is now [open ? "opened" : "closed"].</span>"
+		to_chat(user, "<span class='notice'>Maintenance panel is now [open ? "opened" : "closed"].</span>")
 	else if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/T = W
 		if(T.welding)
@@ -92,11 +92,11 @@
 					user.visible_message("<span class='red'>[user] repairs \the [src]!</span>","<span class='notice'>You repair \the [src]!</span>")
 					check_move_delay()
 				else
-					user << "<span class='notice'>Unable to repair \the [src] with the maintenance panel closed.</span>"
+					to_chat(user, "<span class='notice'>Unable to repair \the [src] with the maintenance panel closed.</span>")
 			else
-				user << "<span class='notice'>[src] does not need a repair.</span>"
+				to_chat(user, "<span class='notice'>[src] does not need a repair.</span>")
 		else
-			user << "<span class='notice'>Unable to repair while [src] is off.</span>"
+			to_chat(user, "<span class='notice'>Unable to repair while [src] is off.</span>")
 	else if(hasvar(W,"force") && hasvar(W,"damtype"))
 		switch(W.damtype)
 			if("fire")

@@ -21,16 +21,16 @@
 	power_channel = ENVIRON
 
 /obj/machinery/keycard_auth/attack_ai(mob/user)
-	user << "The station AI is not to interact with these devices."
+	to_chat(user, "The station AI is not to interact with these devices.")
 	return
 
 /obj/machinery/keycard_auth/attack_paw(mob/user)
-	user << "You are too primitive to use this device."
+	to_chat(user, "You are too primitive to use this device.")
 	return
 
 /obj/machinery/keycard_auth/attackby(obj/item/weapon/W, mob/user)
 	if(stat & (NOPOWER|BROKEN))
-		user << "This device is not powered."
+		to_chat(user, "This device is not powered.")
 		return
 	if(istype(W,/obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/ID = W
@@ -53,10 +53,10 @@
 
 /obj/machinery/keycard_auth/attack_hand(mob/user)
 	if(user.stat || stat & (NOPOWER|BROKEN))
-		user << "This device is not powered."
+		to_chat(user, "This device is not powered.")
 		return
 	if(busy)
-		user << "This device is busy."
+		to_chat(user, "This device is busy.")
 		return
 
 	user.set_machine(src)
@@ -89,7 +89,7 @@
 		return
 
 	if(busy)
-		usr << "This device is busy."
+		to_chat(usr, "This device is busy.")
 		return
 	if(href_list["triggerevent"])
 		event = href_list["triggerevent"]
@@ -157,7 +157,7 @@
 			feedback_inc("alert_keycard_auth_maintRevoke",1)
 		if("Emergency Response Team")
 			if(is_ert_blocked())
-				usr << "\red All emergency response teams are dispatched and can not be called at this time."
+				to_chat(usr, "\red All emergency response teams are dispatched and can not be called at this time.")
 				return
 
 			trigger_armed_response_team(1)
@@ -178,8 +178,8 @@ var/global/timer_maint_revoke_id = 0
 	if(maint_all_access)
 		return
 	maint_all_access = TRUE
-	world << "<font size=4 color='red'>Attention!</font>"
-	world << "<font color='red'>The maintenance access requirement has been revoked on all airlocks.</font>"
+	to_chat(world, "<font size=4 color='red'>Attention!</font>")
+	to_chat(world, "<font color='red'>The maintenance access requirement has been revoked on all airlocks.</font>")
 
 /proc/revoke_maint_all_access(var/priority = FALSE)
 	if(priority)
@@ -189,8 +189,8 @@ var/global/timer_maint_revoke_id = 0
 	if(maint_all_access_priority)	// We must use keycard auth
 		return
 	maint_all_access = FALSE
-	world << "<font size=4 color='red'>Attention!</font>"
-	world << "<font color='red'>The maintenance access requirement has been readded on all maintenance airlocks.</font>"
+	to_chat(world, "<font size=4 color='red'>Attention!</font>")
+	to_chat(world, "<font color='red'>The maintenance access requirement has been readded on all maintenance airlocks.</font>")
 
 /obj/machinery/door/airlock/allowed(mob/M)
 	if(maint_all_access && src.check_access_list(list(access_maint_tunnels)))

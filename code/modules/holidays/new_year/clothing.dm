@@ -37,10 +37,10 @@
 
 	if(!src.hooded)
 		src.icon_state = "[initial(icon_state)]"
-		usr << "You toggle off [src]'s hood."
+		to_chat(usr, "You toggle off [src]'s hood.")
 	else
 		src.icon_state = "[initial(icon_state)]_t"
-		usr << "You toggle on [src]'s hood."
+		to_chat(usr, "You toggle on [src]'s hood.")
 
 	if(ishuman(usr))
 		var/mob/living/carbon/human/H = usr
@@ -153,11 +153,11 @@
 	if(src.icon_state == "ushankadown")
 		src.icon_state = "ushankaup"
 		src.item_state = "ushankaup"
-		user << "You raise the ear flaps on the ushanka."
+		to_chat(user, "You raise the ear flaps on the ushanka.")
 	else
 		src.icon_state = "ushankadown"
 		src.item_state = "ushankadown"
-		user << "You lower the ear flaps on the ushanka."
+		to_chat(user, "You lower the ear flaps on the ushanka.")
 
 /obj/item/clothing/head/santa
 	name = "Ded moroz hat"

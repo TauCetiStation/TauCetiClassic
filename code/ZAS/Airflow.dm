@@ -11,13 +11,13 @@ var/tick_multiplier = 2
 	if(last_airflow_stun > world.time - vsc.airflow_stun_cooldown)
 		return 0
 	if(!(status_flags & CANSTUN) && !(status_flags & CANWEAKEN))
-		src << "<span class='notice'>You stay upright as the air rushes past you.</span>"
+		to_chat(src, "<span class='notice'>You stay upright as the air rushes past you.</span>")
 		return 0
 	if(buckled)
-		src << "<span class='notice'>Air suddenly rushes past you!</span>"
+		to_chat(src, "<span class='notice'>Air suddenly rushes past you!</span>")
 		return 0
 	if(weakened <= 0)
-		src << "<span class='red'>The sudden rush of air knocks you over!</span>"
+		to_chat(src, "<span class='red'>The sudden rush of air knocks you over!</span>")
 	weakened = max(weakened,5)
 	last_airflow_stun = world.time
 
@@ -39,7 +39,7 @@ var/tick_multiplier = 2
 		if(wear_suit.flags & NOSLIP)
 			return 0
 	if(!(status_flags & CANSTUN) && !(status_flags & CANWEAKEN))
-		src << "<span class='notice'>You stay upright as the air rushes past you.</span>"
+		to_chat(src, "<span class='notice'>You stay upright as the air rushes past you.</span>")
 		return 0
 	if(FAT in mutations)
 		return 0
@@ -113,7 +113,7 @@ var/tick_multiplier = 2
 				if(istype(src:wear_suit, /obj/item/clothing/suit/space/rig))
 					if(src:wear_suit:magpulse)
 						return
-		src << "<span class='red'>You are sucked away by airflow!</span>"
+		to_chat(src, "<span class='red'>You are sucked away by airflow!</span>")
 	var/airflow_falloff = 9 - ul_FalloffAmount(airflow_dest) //It's a fast falloff calc.  Very useful.
 	if(airflow_falloff < 1)
 		airflow_dest = null
@@ -185,7 +185,7 @@ var/tick_multiplier = 2
 				if(istype(src:wear_suit, /obj/item/clothing/suit/space/rig))
 					if(src:wear_suit.flags & NOSLIP)
 						return
-		src << "<span class='red'>You are pushed away by airflow!</span>"
+		to_chat(src, "<span class='red'>You are pushed away by airflow!</span>")
 		last_airflow = world.time
 	var/airflow_falloff = 9 - ul_FalloffAmount(airflow_dest) //It's a fast falloff calc.  Very useful.
 	if(airflow_falloff < 1)

@@ -16,7 +16,7 @@
 /proc/notify_ghosts(message, ghost_sound = null) //Easy notification of ghosts.
 	for(var/mob/dead/observer/O in player_list)
 		if(O.client)
-			O << "<span class='ghostalert'>[message]<span>"
+			to_chat(O, "<span class='ghostalert'>[message]<span>")
 			if(ghost_sound)
 				O << sound(ghost_sound)
 
@@ -146,8 +146,8 @@
 
 /obj/singularity/narsie/large/New()
 	..()
-	world << "<font size='15' color='red'><b>NAR-SIE HAS RISEN</b></font>"
-	world << pick(sound('sound/hallucinations/im_here1.ogg'), sound('sound/hallucinations/im_here2.ogg'))
+	to_chat(world, "<font size='15' color='red'><b>NAR-SIE HAS RISEN</b></font>")
+	world << sound(pick('sound/hallucinations/im_here1.ogg'), sound('sound/hallucinations/im_here2.ogg'))
 
 	var/area/A = get_area(src)
 	if(A)
@@ -162,15 +162,14 @@
 
 /obj/singularity/narsie/large/attack_ghost(mob/living/user)
 	if(!(src in view()))
-		user << "Your soul is too far away."
+		to_chat(user, "Your soul is too far away.")
 		return
 	new /obj/effect/effect/smoke(user.loc)
 	var/mob/living/simple_animal/construct/harvester/G = new /mob/living/simple_animal/construct/harvester(user.loc)
 	G.real_name = pick("harvester([rand(1, 10)])", "reaper([rand(1, 10)])")
 	G.loc = src.loc
 	G.key = user.key
-	G << "\red You are a Harvester. You are not strong, but your powers of domination will assist you in your role: \
-		Bring those who still cling to this world of illusion back to the Geometer so they may know Truth"
+	to_chat(G, "\red You are a Harvester. You are not strong, but your powers of domination will assist you in your role: \ Bring those who still cling to this world of illusion back to the Geometer so they may know Truth")
 
 
 /obj/singularity/narsie/process()
@@ -192,7 +191,7 @@
 	for(var/mob/living/carbon/M in oviewers(8, src))
 		if(M.stat == CONSCIOUS)
 			if(!iscultist(M))
-				M << "<span class='warning'>You feel your sanity crumble away in an instant as you gaze upon [src.name]...</span>"
+				to_chat(M, "<span class='warning'>You feel your sanity crumble away in an instant as you gaze upon [src.name]...</span>")
 				M.apply_effect(3, STUN)
 
 
@@ -285,12 +284,12 @@
 
 
 /obj/singularity/narsie/proc/acquire(mob/food)
-	target << "<span class='notice'>NAR-SIE HAS LOST INTEREST IN YOU</span>"
+	to_chat(target, "<span class='notice'>NAR-SIE HAS LOST INTEREST IN YOU</span>")
 	target = food
 	if(ishuman(target))
-		target << "<span class ='userdanger'>NAR-SIE HUNGERS FOR YOUR SOUL</span>"
+		to_chat(target, "<span class ='userdanger'>NAR-SIE HUNGERS FOR YOUR SOUL</span>")
 	else
-		target << "<span class ='userdanger'>NAR-SIE HAS CHOSEN YOU TO LEAD HIM TO HIS NEXT MEAL</span>"
+		to_chat(target, "<span class ='userdanger'>NAR-SIE HAS CHOSEN YOU TO LEAD HIM TO HIS NEXT MEAL</span>")
 
 
 /obj/singularity/narsie/proc/narsie_spawn_animation()

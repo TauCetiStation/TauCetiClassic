@@ -22,7 +22,7 @@ dmm_suite
 		else if(!isnum(y_offset))
 			y_offset = 0
 
-		debug_file << "Starting Map Load @ ([x_offset], [y_offset], [z_offset])"
+		to_chat(debug_file, "Starting Map Load @ ([x_offset], [y_offset], [z_offset])")
 
 		//String holding a quotation mark.
 		var/quote = ascii2text(34)
@@ -37,7 +37,7 @@ dmm_suite
 		//The key of the default tile model.  (In SS13 this is: "/turf/space,/area")
 		var/default_key
 
-		debug_file << "	Building turf array."
+			to_chat(debug_file, "	Building turf array.")
 
 		//Iterates through the mapfile to build the model tiles for the map.
 		for(var/line_position = 1; line_position < input_file_len; line_position = findtext(input_file,"\n", line_position) + 1)
@@ -90,7 +90,7 @@ dmm_suite
 					y_depth = length(z_level) / (length(grid_line) + 1)
 					y_depth += y_offset
 					if(y_depth != round(y_depth, 1))
-						debug_file << "	Warning: y_depth is not a round number"
+							to_chat(debug_file, "	Warning: y_depth is not a round number")
 
 					//And update the worlds variables.
 					if(world.maxy < y_depth)
@@ -150,7 +150,7 @@ dmm_suite
 		//	debug_output = 1
 
 		if(debug_output)
-			debug_file << "	Now debugging turf: [model] ([x_coordinate], [y_coordinate], [z_coordinate])"
+				to_chat(debug_file, "	Now debugging turf: [model] ([x_coordinate], [y_coordinate], [z_coordinate])")
 
 		var/next_position = 1
 		for(var/data_position = 1, next_position || data_position != 1, data_position = next_position + 1)
@@ -159,7 +159,7 @@ dmm_suite
 			var/full_def = copytext(model, data_position, next_position)
 
 			if(debug_output)
-				debug_file << "		Current Line: [full_def] -- ([data_position] - [next_position])"
+						to_chat(debug_file, "		Current Line: [full_def] -- ([data_position] - [next_position])")
 
 			/*Loop: Identifies each object's data, instantiates it, and reconstitues it's fields.
 				- Each iteration represents one object's data, including type path and field values.
@@ -173,8 +173,8 @@ dmm_suite
 			if(attribute_position)
 				full_def = copytext(full_def, attribute_position + 1)
 				if(debug_output)
-					debug_file << "		Atom Def: [atom_def]"
-					debug_file << "		Parameters: [full_def]"
+							to_chat(debug_file, "		Atom Def: [atom_def]")
+							to_chat(debug_file, "		Parameters: [full_def]")
 
 				var/next_attribute = 1
 				for(attribute_position = 1, next_attribute || attribute_position != 1, attribute_position = next_attribute + 1)
@@ -213,7 +213,7 @@ dmm_suite
 				var/return_data = "		Debug Fields:"
 				for(var/item in fields)
 					return_data += " [item] = [fields[item]];"
-				debug_file << return_data
+				to_chat(debug_file, return_data)
 
 			//Begin Instanciation
 			var/atom/instance
@@ -234,7 +234,7 @@ dmm_suite
 					var/return_data = "	Failure [atom_def] @ ([x_coordinate], [y_coordinate], [z_coordinate])  fields:"
 					for(var/item in fields)
 						return_data += " [item] = [fields[item]];"
-					debug_file << return_data
+					to_chat(debug_file, return_data)
 
 			sleep(-1)
 		return 1

@@ -48,7 +48,7 @@
 	return 1
 
 /obj/item/weapon/gun/proc/shoot_with_empty_chamber(mob/living/user)
-	user << "<span class='warning'>*click*</span>"
+	to_chat(user, "<span class='warning'>*click*</span>")
 	playsound(user, 'sound/weapons/empty.ogg', 100, 1)
 	return
 
@@ -83,21 +83,21 @@
 /obj/item/weapon/gun/proc/Fire(atom/target, mob/living/user, params, reflex = 0)//TODO: go over this
 	//Exclude lasertag guns from the CLUMSY check.
 	if (!user.IsAdvancedToolUser())
-		user << "<span class='red'>You don't have the dexterity to do this!</span>"
+		to_chat(user, "<span class='red'>You don't have the dexterity to do this!</span>")
 		return
 	if(istype(user, /mob/living))
 		var/mob/living/M = user
 		if (HULK in M.mutations)
-			M << "<span class='red'>Your meaty finger is much too large for the trigger guard!</span>"
+			to_chat(M, "<span class='red'>Your meaty finger is much too large for the trigger guard!</span>")
 			return
 		if(istype(user, /mob/living/carbon/human/))
 			var/mob/living/carbon/human/H = user
 			if(H.species.name == "Shadowling")
-				H << "<span class='notice'>Your fingers don't fit in the trigger guard!</span>"
+				to_chat(H, "<span class='notice'>Your fingers don't fit in the trigger guard!</span>")
 				return
 	if(ishuman(user))
 		if(user.dna && user.dna.mutantrace == "adamantine")
-			user << "<span class='red'>Your metal fingers don't fit in the trigger guard!</span>"
+			to_chat(user, "<span class='red'>Your metal fingers don't fit in the trigger guard!</span>")
 			return
 		var/mob/living/carbon/human/H = user
 		if(H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit/armor/abductor/vest))
@@ -113,7 +113,7 @@
 				going_to_explode = 1
 			if(going_to_explode)
 				explosion(user.loc, 0, 0, 1, 1)
-				H << "<span class='danger'>[src] blows up in your face.</span>"
+				to_chat(H, "<span class='danger'>[src] blows up in your face.</span>")
 				H.take_organ_damage(0,20)
 				H.drop_item()
 				qdel(src)
@@ -126,7 +126,7 @@
 
 	if (!ready_to_fire())
 		if (world.time % 3) //to prevent spam
-			user << "<span class='warning'>[src] is not ready to fire again!</span>"
+			to_chat(user, "<span class='warning'>[src] is not ready to fire again!</span>")
 		return
 	if(chambered)
 		if(!chambered.fire(target, user, params, , silenced))
@@ -194,7 +194,7 @@
 				user.apply_damage(chambered.BB.damage*2.5, chambered.BB.damage_type, "head", used_weapon = "Point blank shot in the mouth with \a [chambered.BB]", sharp=1)
 				user.death()
 			else
-				user << "<span class = 'notice'>Ow...</span>"
+				to_chat(user, "<span class = 'notice'>Ow...</span>")
 				user.apply_effect(110,AGONY,0)
 			chambered.BB = null
 			chambered.update_icon()

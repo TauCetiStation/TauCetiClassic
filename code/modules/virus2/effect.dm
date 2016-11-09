@@ -92,7 +92,7 @@
 	activate(mob/living/carbon/mob,multiplier)
 		mob.suiciding = 1
 		//instead of killing them instantly, just put them at -175 health and let 'em gasp for a while
-		viewers(mob) << "\red <b>[mob.name] is holding \his breath. It looks like \he's trying to commit suicide.</b>"
+		to_chat(viewers(mob), "\red <b>[mob.name] is holding \his breath. It looks like \he's trying to commit suicide.</b>")
 		mob.adjustOxyLoss(175 - mob.getToxLoss() - mob.getFireLoss() - mob.getBruteLoss() - mob.getOxyLoss())
 		mob.updatehealth()
 		spawn(200) //in case they get revived by cryo chamber or something stupid like that, let them suicide again in 20 seconds
@@ -122,7 +122,7 @@
 			var/datum/organ/external/E = H.organs_by_name[organ]
 			if (!(E.status & ORGAN_DEAD))
 				E.status |= ORGAN_DEAD
-				H << "<span class='notice'>You can't feel your [E.display_name] anymore...</span>"
+				to_chat(H, "<span class='notice'>You can't feel your [E.display_name] anymore...</span>")
 				for (var/datum/organ/external/C in E.children)
 					C.status |= ORGAN_DEAD
 			H.update_body()
@@ -152,7 +152,7 @@
 	deactivate(mob/living/carbon/mob,multiplier)
 		if(istype(mob, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = mob
-			H << "<span class='notice'>You suddenly feel hurt and old...</span>"
+			to_chat(H, "<span class='notice'>You suddenly feel hurt and old...</span>")
 			H.age += 8
 		var/backlash_amt = 5*multiplier
 		mob.apply_damages(backlash_amt,backlash_amt,backlash_amt,backlash_amt)
@@ -230,7 +230,7 @@
 	name = "Topographical Cretinism"
 	stage = 3
 	activate(mob/living/carbon/mob,multiplier)
-		mob << "<span class='notice'>You have trouble telling right and left apart all of a sudden.</span>"
+		to_chat(mob, "<span class='notice'>You have trouble telling right and left apart all of a sudden.</span>")
 		mob.confused += 10
 
 /datum/disease2/effect/mutation
@@ -298,7 +298,7 @@
 		if(istype(mob, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = mob
 			if(H.species.name == "Human" && !(H.h_style == "Bald") && !(H.h_style == "Balding Hair"))
-				H << "<span class='danger'>Your hair starts to fall out in clumps...</span>"
+				to_chat(H, "<span class='danger'>Your hair starts to fall out in clumps...</span>")
 				spawn(50)
 					H.h_style = "Balding Hair"
 					H.update_hair()
@@ -307,7 +307,7 @@
 	name = "Adrenaline Extra"
 	stage = 2
 	activate(mob/living/carbon/mob,multiplier)
-		mob << "<span class='notice'>You feel a rush of energy inside you!</span>"
+		to_chat(mob, "<span class='notice'>You feel a rush of energy inside you!</span>")
 		if (mob.reagents.get_reagent_amount("hyperzine") < 10)
 			mob.reagents.add_reagent("hyperzine", 4)
 		if (prob(30))
@@ -333,7 +333,7 @@
 	name = "Flemmingtons"
 	stage = 1
 	activate(mob/living/carbon/mob,multiplier)
-		mob << "\red Mucous runs down the back of your throat."
+		to_chat(mob, "\red Mucous runs down the back of your throat.")
 
 /datum/disease2/effect/drool
 	name = "Saliva Effect"
@@ -351,4 +351,4 @@
 	name = "Headache"
 	stage = 1
 	activate(mob/living/carbon/mob,multiplier)
-		mob << "<span class = 'notice'> Your head hurts a bit</span>"
+		to_chat(mob, "<span class = 'notice'> Your head hurts a bit</span>")

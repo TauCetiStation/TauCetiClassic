@@ -79,7 +79,7 @@
 		if (M.hand)
 			temp = M:organs_by_name["l_hand"]
 		if(temp && !temp.is_usable())
-			M << "<span class='rose'>You can't use your [temp.display_name].</span>"
+			to_chat(M, "<span class='rose'>You can't use your [temp.display_name].</span>")
 			return
 
 	for(var/datum/disease/D in viruses)
@@ -156,7 +156,7 @@
 	if(item_in_hand) //this segment checks if the item in your hand is twohanded.
 		if(istype(item_in_hand, /obj/item/weapon/twohanded) || istype(item_in_hand, /obj/item/weapon/gun/projectile/automatic/l6_saw))	//OOP? Generics? Hue hue hue hue ...
 			if(item_in_hand:wielded)
-				usr << "<span class='warning'>Your other hand is too busy holding the [item_in_hand.name]</span>"
+				to_chat(usr, "<span class='warning'>Your other hand is too busy holding the [item_in_hand.name]</span>")
 				return
 	src.hand = !( src.hand )
 	if(hud_used.l_hand_hud_object && hud_used.r_hand_hud_object)
@@ -436,7 +436,7 @@
 	set category = "IC"
 
 	if(usr.sleeping)
-		usr << "<span class='rose'>You are already sleeping"
+		to_chat(usr, "<span class='rose'>You are already sleeping")
 		return
 	if(alert(src,"You sure you want to sleep for a while?","Sleep","Yes","No") == "Yes")
 		usr.sleeping = 20 //Short nap
@@ -454,8 +454,8 @@
 		return
 
 	if(B.controlling)
-		src << "<span class='danger'>You withdraw your probosci, releasing control of [B.host_brain].</span>"
-		B.host_brain << "<span class='danger'>Your vision swims as the alien parasite releases control of your body.</span>"
+		to_chat(src, "<span class='danger'>You withdraw your probosci, releasing control of [B.host_brain].</span>")
+		to_chat(B.host_brain, "<span class='danger'>Your vision swims as the alien parasite releases control of your body.</span>")
 		B.ckey = ckey
 		B.controlling = 0
 	if(B.host_brain.ckey)
@@ -480,8 +480,8 @@
 		return
 
 	if(B.host_brain.ckey)
-		src << "<span class='danger'>You send a punishing spike of psychic agony lancing into your host's brain.</span>"
-		B.host_brain << "<span class='danger'><FONT size=3>Horrific, burning agony lances through you, ripping a soundless scream from your trapped mind!</FONT></span>"
+		to_chat(src, "<span class='danger'>You send a punishing spike of psychic agony lancing into your host's brain.</span>")
+		to_chat(B.host_brain, "<span class='danger'><FONT size=3>Horrific, burning agony lances through you, ripping a soundless scream from your trapped mind!</FONT></span>")
 
 //Check for brain worms in head.
 /mob/proc/has_brain_worms()
@@ -503,7 +503,7 @@
 		return
 
 	if(B.chemicals >= 100)
-		src << "<span class='danger'>Your host twitches and quivers as you rapdly excrete several larvae from your sluglike body.</span>"
+		to_chat(src, "<span class='danger'>Your host twitches and quivers as you rapdly excrete several larvae from your sluglike body.</span>")
 		visible_message("<span class='danger'>[src] heaves violently, expelling a rush of vomit and a wriggling, sluglike creature!</span>")
 		B.chemicals -= 100
 
@@ -512,7 +512,7 @@
 		new /mob/living/simple_animal/borer(get_turf(src))
 
 	else
-		src << "<span class='info'>You do not have enough chemicals stored to reproduce.</span>"
+		to_chat(src, "<span class='info'>You do not have enough chemicals stored to reproduce.</span>")
 		return
 
 /mob/living/carbon/proc/uncuff()

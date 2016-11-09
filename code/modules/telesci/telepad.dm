@@ -35,7 +35,7 @@
 		if(istype(I, /obj/item/device/multitool))
 			var/obj/item/device/multitool/M = I
 			M.buffer = src
-			user << "<span class='notice'>You save the data in the [I.name]'s buffer.</span>"
+			to_chat(user, "<span class='notice'>You save the data in the [I.name]'s buffer.</span>")
 
 	if(exchange_parts(user, I))
 		return
@@ -60,22 +60,22 @@
 		playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
 		if(anchored)
 			anchored = 0
-			user << "<span class='notice'>The [src] can now be moved.</span>"
+			to_chat(user, "<span class='notice'>The [src] can now be moved.</span>")
 		else if(!anchored)
 			anchored = 1
-			user << "<span class='notice'>The [src] is now secured.</span>"
+			to_chat(user, "<span class='notice'>The [src] is now secured.</span>")
 	if(istype(W, /obj/item/weapon/screwdriver))
 		if(stage == 0)
 			playsound(src, 'sound/items/Screwdriver.ogg', 50, 1)
-			user << "<span class='notice'>You unscrew the telepad's tracking beacon.</span>"
+			to_chat(user, "<span class='notice'>You unscrew the telepad's tracking beacon.</span>")
 			stage = 1
 		else if(stage == 1)
 			playsound(src, 'sound/items/Screwdriver.ogg', 50, 1)
-			user << "<span class='notice'>You screw in the telepad's tracking beacon.</span>"
+			to_chat(user, "<span class='notice'>You screw in the telepad's tracking beacon.</span>")
 			stage = 0
 	if(istype(W, /obj/item/weapon/weldingtool) && stage == 1)
 		playsound(src, 'sound/items/Welder.ogg', 50, 1)
-		user << "<span class='notice'>You disassemble the telepad.</span>"
+		to_chat(user, "<span class='notice'>You disassemble the telepad.</span>")
 		new /obj/item/stack/sheet/metal(get_turf(src))
 		new /obj/item/stack/sheet/glass(get_turf(src))
 		qdel(src)
@@ -91,7 +91,7 @@
 
 /obj/item/device/telepad_beacon/attack_self(mob/user)
 	if(user)
-		user << "<span class='notice'>Locked In.</span>"
+		to_chat(user, "<span class='notice'>Locked In.</span>")
 		new /obj/machinery/telepad_cargo(user.loc)
 		playsound(src, 'sound/effects/pop.ogg', 100, 1, 1)
 		qdel(src)
@@ -123,7 +123,7 @@
 
 /obj/item/weapon/rcs/examine(mob/user)
 	..()
-	user << "There are [rcharges] charges left."
+	to_chat(user, "There are [rcharges] charges left.")
 
 /obj/item/weapon/rcs/Destroy()
 	SSobj.processing.Remove(src)
@@ -143,11 +143,11 @@
 		if(mode == 0)
 			mode = 1
 			playsound(src.loc, 'sound/effects/pop.ogg', 50, 0)
-			user << "<span class='notice'>The telepad locator has become uncalibrated.</span>"
+			to_chat(user, "<span class='notice'>The telepad locator has become uncalibrated.</span>")
 		else
 			mode = 0
 			playsound(src.loc, 'sound/effects/pop.ogg', 50, 0)
-			user << "<span class='notice'>You calibrate the telepad locator.</span>"
+			to_chat(user, "<span class='notice'>You calibrate the telepad locator.</span>")
 
 /obj/item/weapon/rcs/attackby(obj/item/W, mob/user)
 	if(istype(W,  /obj/item/weapon/card/emag) && emagged == 0)
@@ -155,5 +155,5 @@
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 		s.set_up(5, 1, src)
 		s.start()
-		user << "<span class='notice'>You emag the RCS. Click on it to toggle between modes.</span>"
+		to_chat(user, "<span class='notice'>You emag the RCS. Click on it to toggle between modes.</span>")
 		return

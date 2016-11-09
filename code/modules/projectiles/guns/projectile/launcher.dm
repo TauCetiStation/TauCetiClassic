@@ -29,12 +29,12 @@
 	if(!open)
 		return
 	if(chambered)
-		user << "<span class='warning'>There is a shell inside \the [src]!</span>"
+		to_chat(user, "<span class='warning'>There is a shell inside \the [src]!</span>")
 		return
 	var/num_loaded = magazine.attackby(A, user, 1)
 	if(num_loaded)
 		playsound(src.loc, 'sound/weapons/guns/m79_reload.ogg', 50, 1)
-		user << "<span class='notice'>You load [num_loaded] shell\s into \the [src]!</span>"
+		to_chat(user, "<span class='notice'>You load [num_loaded] shell\s into \the [src]!</span>")
 		var/obj/item/ammo_casing/AC = magazine.get_round() //load next casing.
 		chambered = AC
 		update_icon()	//I.E. fix the desc
@@ -59,6 +59,6 @@
 
 /obj/item/weapon/gun/projectile/m79/special_check(mob/user)
 	if(open)
-		user << "<span class='warning'>You can't fire [src] while it is open!</span>"
+		to_chat(user, "<span class='warning'>You can't fire [src] while it is open!</span>")
 		return 0
 	return ..()

@@ -42,7 +42,7 @@
 				drop_item()
 		P.on_hit(src)
 		flash_pain()
-		src <<"\red You have been shot!"
+		to_chat(src, "\red You have been shot!")
 		qdel(P)
 		return
 
@@ -65,7 +65,7 @@
 		apply_damage(P.damage, P.damage_type, organ, armorblock, P, 0, 0)
 		apply_effects(P.stun,P.weaken,0,0,P.stutter,0,0,armorblock)
 		flash_pain()
-		src <<"\red You have been shot!"
+		to_chat(src, "\red You have been shot!")
 		qdel(P)
 		return
 
@@ -241,7 +241,7 @@
 	if (!affecting)
 		return 0
 	if(affecting.status & ORGAN_DESTROYED)
-		user << "What [affecting.display_name]?"
+		to_chat(user, "What [affecting.display_name]?")
 		return 0
 	var/hit_area = affecting.display_name
 
@@ -252,12 +252,12 @@
 
 	if(istype(I,/obj/item/weapon/card/emag))
 		if(!(affecting.status & ORGAN_ROBOT))
-			user << "\red That limb isn't robotic."
+			to_chat(user, "\red That limb isn't robotic.")
 			return
 		if(affecting.sabotaged)
-			user << "\red [src]'s [affecting.display_name] is already sabotaged!"
+			to_chat(user, "\red [src]'s [affecting.display_name] is already sabotaged!")
 		else
-			user << "\red You sneakily slide [I] into the dataport on [src]'s [affecting.display_name] and short out the safeties."
+			to_chat(user, "\red You sneakily slide [I] into the dataport on [src]'s [affecting.display_name] and short out the safeties.")
 			var/obj/item/weapon/card/emag/emag = I
 			emag.uses--
 			affecting.sabotaged = 1

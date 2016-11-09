@@ -116,10 +116,10 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 		if(targetselected)
 			if(!target)
-				usr << "<font color='red'>Error: callproc(): owner of proc no longer exists.</font>"
+				to_chat(usr, "<font color='red'>Error: callproc(): owner of proc no longer exists.</font>")
 				return
 			if(!hascall(target,procname))
-				usr << "<font color='red'>Error: callproc(): target has no such call [procname].</font>"
+				to_chat(usr, "<font color='red'>Error: callproc(): target has no such call [procname].</font>")
 				return
 			log_admin("[key_name(src)] called [target]'s [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"].")
 			returnval = call(target,procname)(arglist(lst)) // Pass the lst as an argument list to the proc
@@ -128,7 +128,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			log_admin("[key_name(src)] called [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"].")
 			returnval = call(procname)(arglist(lst)) // Pass the lst as an argument list to the proc
 
-		usr << "<font color='blue'>[procname] returned: [returnval ? returnval : "null"]</font>"
+		to_chat(usr, "<font color='blue'>[procname] returned: [returnval ? returnval : "null"]</font>")
 		feedback_add_details("admin_verb","APC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/Cell()
@@ -303,7 +303,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	set category = null
 	set name = "Make Abomination"
 
-	usr << "Ruby Mode disabled. Command aborted."
+	to_chat(usr, "Ruby Mode disabled. Command aborted.")
 	return
 	if(!ticker)
 		alert("Wait until the game starts.")
@@ -327,33 +327,33 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			return
 		else
 			if(alert("Spawn that person a tome?",,"Yes","No")=="Yes")
-				M << "\red You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy the world is, you see that it should be open to the knowledge of Nar-Sie. A tome, a message from your new master, appears on the ground."
+				to_chat(M, "\red You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy the world is, you see that it should be open to the knowledge of Nar-Sie. A tome, a message from your new master, appears on the ground.")
 				new /obj/item/weapon/book/tome(M.loc)
 			else
-				M << "\red You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy the world is, you see that it should be open to the knowledge of Nar-Sie."
+				to_chat(M, "\red You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy the world is, you see that it should be open to the knowledge of Nar-Sie.")
 			var/glimpse=pick("1","2","3","4","5","6","7","8")
 			switch(glimpse)
 				if("1")
-					M << "\red You remembered one thing from the glimpse... [cultwords["travel"]] is travel..."
+					to_chat(M, "\red You remembered one thing from the glimpse... [cultwords["travel"]] is travel...")
 				if("2")
-					M << "\red You remembered one thing from the glimpse... [cultwords["blood"]] is blood..."
+					to_chat(M, "\red You remembered one thing from the glimpse... [cultwords["blood"]] is blood...")
 				if("3")
-					M << "\red You remembered one thing from the glimpse... [cultwords["join"]] is join..."
+					to_chat(M, "\red You remembered one thing from the glimpse... [cultwords["join"]] is join...")
 				if("4")
-					M << "\red You remembered one thing from the glimpse... [cultwords["hell"]] is Hell..."
+					to_chat(M, "\red You remembered one thing from the glimpse... [cultwords["hell"]] is Hell...")
 				if("5")
-					M << "\red You remembered one thing from the glimpse... [cultwords["destroy"]] is destroy..."
+					to_chat(M, "\red You remembered one thing from the glimpse... [cultwords["destroy"]] is destroy...")
 				if("6")
-					M << "\red You remembered one thing from the glimpse... [cultwords["technology"]] is technology..."
+					to_chat(M, "\red You remembered one thing from the glimpse... [cultwords["technology"]] is technology...")
 				if("7")
-					M << "\red You remembered one thing from the glimpse... [cultwords["self"]] is self..."
+					to_chat(M, "\red You remembered one thing from the glimpse... [cultwords["self"]] is self...")
 				if("8")
-					M << "\red You remembered one thing from the glimpse... [cultwords["see"]] is see..."
+					to_chat(M, "\red You remembered one thing from the glimpse... [cultwords["see"]] is see...")
 
 			if(M.mind)
 				M.mind.special_role = "Cultist"
 				ticker.mode.cult += M.mind
-			src << "Made [M] a cultist."
+			to_chat(src, "Made [M] a cultist.")
 */
 
 //TODO: merge the vievars version into this or something maybe mayhaps
@@ -533,33 +533,33 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	var/list/areas_without_intercom = areas_all - areas_with_intercom
 	var/list/areas_without_camera = areas_all - areas_with_camera
 
-	world << "<b>AREAS WITHOUT AN APC:</b>"
+	to_chat(world, "<b>AREAS WITHOUT AN APC:</b>")
 	for(var/areatype in areas_without_APC)
-		world << "* [areatype]"
+		to_chat(world, "* [areatype]")
 
-	world << "<b>AREAS WITHOUT AN AIR ALARM:</b>"
+	to_chat(world, "<b>AREAS WITHOUT AN AIR ALARM:</b>")
 	for(var/areatype in areas_without_air_alarm)
-		world << "* [areatype]"
+		to_chat(world, "* [areatype]")
 
-	world << "<b>AREAS WITHOUT A REQUEST CONSOLE:</b>"
+	to_chat(world, "<b>AREAS WITHOUT A REQUEST CONSOLE:</b>")
 	for(var/areatype in areas_without_RC)
-		world << "* [areatype]"
+		to_chat(world, "* [areatype]")
 
-	world << "<b>AREAS WITHOUT ANY LIGHTS:</b>"
+	to_chat(world, "<b>AREAS WITHOUT ANY LIGHTS:</b>")
 	for(var/areatype in areas_without_light)
-		world << "* [areatype]"
+		to_chat(world, "* [areatype]")
 
-	world << "<b>AREAS WITHOUT A LIGHT SWITCH:</b>"
+	to_chat(world, "<b>AREAS WITHOUT A LIGHT SWITCH:</b>")
 	for(var/areatype in areas_without_LS)
-		world << "* [areatype]"
+		to_chat(world, "* [areatype]")
 
-	world << "<b>AREAS WITHOUT ANY INTERCOMS:</b>"
+	to_chat(world, "<b>AREAS WITHOUT ANY INTERCOMS:</b>")
 	for(var/areatype in areas_without_intercom)
-		world << "* [areatype]"
+		to_chat(world, "* [areatype]")
 
-	world << "<b>AREAS WITHOUT ANY CAMERAS:</b>"
+	to_chat(world, "<b>AREAS WITHOUT ANY CAMERAS:</b>")
 	for(var/areatype in areas_without_camera)
-		world << "* [areatype]"
+		to_chat(world, "* [areatype]")
 
 /client/proc/cmd_admin_dress(mob/living/carbon/human/M in mob_list)
 	set category = "Fun"
@@ -1743,7 +1743,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 				SMES.output = 75000
 
 	if(!found_the_pump && response == "Setup Completely")
-		src << "\red Unable to locate air supply to fill up with coolant, adding some coolant around the supermatter"
+		to_chat(src, "\red Unable to locate air supply to fill up with coolant, adding some coolant around the supermatter")
 		var/turf/simulated/T = SM.loc
 		T.zone.air.nitrogen += 450
 		T.zone.air.temperature = 50
@@ -1763,19 +1763,19 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 	switch(input("Which list?") in list("Players","Admins","Mobs","Living Mobs","Dead Mobs", "Clients", "Joined Clients"))
 		if("Players")
-			usr << jointext(player_list,",")
+			to_chat(usr, jointext(player_list,","))
 		if("Admins")
-			usr << jointext(admins,",")
+			to_chat(usr, jointext(admins,","))
 		if("Mobs")
-			usr << jointext(mob_list,",")
+			to_chat(usr, jointext(mob_list,","))
 		if("Living Mobs")
-			usr << jointext(living_mob_list,",")
+			to_chat(usr, jointext(living_mob_list,","))
 		if("Dead Mobs")
-			usr << jointext(dead_mob_list,",")
+			to_chat(usr, jointext(dead_mob_list,","))
 		if("Clients")
-			usr << jointext(clients,",")
+			to_chat(usr, jointext(clients,","))
 		if("Joined Clients")
-			usr << jointext(joined_player_list,",")
+			to_chat(usr, jointext(joined_player_list,","))
 
 // DNA2 - Admin Hax
 /client/proc/cmd_admin_toggle_block(mob/M,block)

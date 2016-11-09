@@ -46,13 +46,13 @@
 /obj/item/taperoll/attack_self(mob/user)
 	if(icon_state == "[icon_base]_start")
 		start = get_turf(src)
-		usr << "\blue You place the first end of the [src]."
+		to_chat(usr, "\blue You place the first end of the [src].")
 		icon_state = "[icon_base]_stop"
 	else
 		icon_state = "[icon_base]_start"
 		end = get_turf(src)
 		if(start.y != end.y && start.x != end.x || start.z != end.z)
-			usr << "\blue [src] can only be laid horizontally or vertically."
+			to_chat(usr, "\blue [src] can only be laid horizontally or vertically.")
 			return
 
 		var/turf/cur = start
@@ -81,7 +81,7 @@
 						break
 			cur = get_step_towards(cur,end)
 		if (!can_place)
-			usr << "\blue You can't run \the [src] through that!"
+			to_chat(usr, "\blue You can't run \the [src] through that!")
 			return
 
 		cur = start
@@ -95,19 +95,20 @@
 				P.icon_state = "[P.icon_base]_[dir]"
 			cur = get_step_towards(cur,end)
 	//is_blocked_turf(turf/T)
-		usr << "\blue You finish placing the [src]."	//Git Test
+			to_chat(usr, "\blue You finish placing the [src].")//Git Test
+
 
 /obj/item/taperoll/afterattack(atom/A, mob/user)
 	if (istype(A, /obj/machinery/door/airlock))
 		if(!user.Adjacent(A))
-			user << "<span class='notice'>You're too far away from \the [A]!</span>"
+			to_chat(user, "<span class='notice'>You're too far away from \the [A]!</span>")
 			return
 		var/turf/T = get_turf(A)
 		var/obj/item/tape/P = new tape_type(T.x,T.y,T.z)
 		P.loc = locate(T.x,T.y,T.z)
 		P.icon_state = "[src.icon_base]_door"
 		P.layer = 3.2
-		user << "\blue You finish placing the [src]."
+		to_chat(user, "\blue You finish placing the [src].")
 
 /obj/item/tape/Bumped(M)
 	if(src.allowed(M))
@@ -146,7 +147,7 @@
 
 /obj/item/tape/proc/breaktape(obj/item/weapon/W, mob/user, forced = FALSE)
 	if((user && user.a_intent == "help") && (W && !can_puncture(W) && src.allowed(user)) && !forced)
-		user << "You can't break the [src] with that!"
+		to_chat(user, "You can't break the [src] with that!")
 		return
 	if(user)
 		user.show_viewers("\blue [user] breaks the [src]!")

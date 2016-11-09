@@ -63,7 +63,7 @@
 	if(!user)
 		return
 	if(istype(C, /obj/item/weapon/wrench))
-		user << "\blue Removing rods..."
+		to_chat(user, "\blue Removing rods...")
 		playsound(src, 'sound/items/Ratchet.ogg', 80, 1)
 		if(do_after(user, 30, target = src))
 			PoolOrNew(/obj/item/stack/rods, list(src, 2))

@@ -5,7 +5,7 @@
 	if(src.stat == DEAD || usr.stat == DEAD || src.client == null)
 		return
 	if(src == usr)
-		usr << "\red I feel stupider, suddenly."
+		to_chat(usr, "\red I feel stupider, suddenly.")
 		return
 	if(ishuman(src) && hasorgans(src))
 		var/mob/living/carbon/human/U = src
@@ -16,10 +16,10 @@
 			return
 	var/obj/item/I
 	if(!usr.hand && usr.r_hand == null)
-		usr << "\red You don't have anything in your right hand to give to [src.name]"
+		to_chat(usr, "\red You don't have anything in your right hand to give to [src.name]")
 		return
 	if(usr.hand && usr.l_hand == null)
-		usr << "\red You don't have anything in your left hand to give to [src.name]"
+		to_chat(usr, "\red You don't have anything in your left hand to give to [src.name]")
 		return
 	if(usr.hand)
 		I = usr.l_hand
@@ -33,16 +33,16 @@
 				if(!I)
 					return
 				if(!Adjacent(usr))
-					usr << "\red You need to stay in reaching distance while giving an object."
-					src << "\red [usr.name] moved too far away."
+					to_chat(usr, "\red You need to stay in reaching distance while giving an object.")
+					to_chat(src, "\red [usr.name] moved too far away.")
 					return
 				if((usr.hand && usr.l_hand != I) || (!usr.hand && usr.r_hand != I))
-					usr << "\red You need to keep the item in your active hand."
-					src << "\red [usr.name] seem to have given up on giving \the [I.name] to you."
+					to_chat(usr, "\red You need to keep the item in your active hand.")
+					to_chat(src, "\red [usr.name] seem to have given up on giving \the [I.name] to you.")
 					return
 				if(src.r_hand != null && src.l_hand != null)
-					src << "\red Your hands are full."
-					usr << "\red Their hands are full."
+					to_chat(src, "\red Your hands are full.")
+					to_chat(usr, "\red Their hands are full.")
 					return
 				else
 					usr.drop_item()
@@ -61,4 +61,4 @@
 			if("No")
 				src.visible_message("\red [usr.name] tried to hand [I.name] to [src.name] but [src.name] didn't want it.")
 	else
-		usr << "\red [src.name]'s hands are full."
+		to_chat(usr, "\red [src.name]'s hands are full.")

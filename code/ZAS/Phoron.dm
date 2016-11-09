@@ -89,7 +89,7 @@ var/image/contamination_overlay = image('icons/effects/contamination.dmi')
 	if(vsc.plc.SKIN_BURNS)
 		if(!pl_head_protected() || !pl_suit_protected())
 			burn_skin(0.25)
-			if(prob(20)) src << "\red Your skin burns!"
+			if(prob(20)) to_chat(src, "\red Your skin burns!")
 			updatehealth()
 
 	//Burn eyes if exposed.
@@ -120,7 +120,7 @@ var/image/contamination_overlay = image('icons/effects/contamination.dmi')
 				if(prob(50))
 					randmuti(src)
 
-				src << "\red High levels of phoron cause you to spontaneously mutate."
+				to_chat(src, "\red High levels of phoron cause you to spontaneously mutate.")
 				domutcheck(src,null)
 
 	//Hallucination
@@ -132,12 +132,12 @@ var/image/contamination_overlay = image('icons/effects/contamination.dmi')
 
 /mob/living/carbon/human/proc/burn_eyes()
 	//The proc that handles eye burning.
-	if(prob(20)) src << "\red Your eyes burn!"
+	if(prob(20)) to_chat(src, "\red Your eyes burn!")
 	var/datum/organ/internal/eyes/E = internal_organs_by_name["eyes"]
 	E.damage += 2.5
 	eye_blurry = min(eye_blurry+1.5,50)
 	if (prob(max(0,E.damage - 15) + 1) &&!eye_blind)
-		src << "\red You are blinded!"
+		to_chat(src, "\red You are blinded!")
 		eye_blind += 20
 
 /mob/living/carbon/human/proc/pl_head_protected()

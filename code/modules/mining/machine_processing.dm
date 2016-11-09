@@ -47,7 +47,7 @@
 		return
 
 	if(!allowed(user))
-		user << "\red Access denied."
+		to_chat(user, "\red Access denied.")
 		return
 
 	user.set_machine(src)
@@ -138,7 +138,7 @@
 				return FALSE
 			I.loc = src
 			inserted_id = I
-		else usr << "<span class='warning'>No valid ID.</span>"
+		else to_chat(usr, "<span class='warning'>No valid ID.</span>")
 	if(href_list["show_values"])
 		show_value_list = !show_value_list
 

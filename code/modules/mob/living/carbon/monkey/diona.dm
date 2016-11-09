@@ -19,8 +19,8 @@
 	//Let people pick the little buggers up.
 	if(M.a_intent == "help")
 		if(M.species && M.species.name == "Diona")
-			M << "You feel your being twine with that of [src] as it merges with your biomass."
-			src << "You feel your being twine with that of [M] as you merge with its biomass."
+			to_chat(M, "You feel your being twine with that of [src] as it merges with your biomass.")
+			to_chat(src, "You feel your being twine with that of [M] as you merge with its biomass.")
 			src.verbs += /mob/living/carbon/monkey/diona/proc/split
 			src.verbs -= /mob/living/carbon/monkey/diona/proc/merge
 			src.loc = M
@@ -63,10 +63,10 @@
 	if(!M || !src || !(src.Adjacent(M))) return
 
 	if(istype(M,/mob/living/carbon/human))
-		M << "You feel your being twine with that of [src] as it merges with your biomass."
+		to_chat(M, "You feel your being twine with that of [src] as it merges with your biomass.")
 		M.status_flags |= PASSEMOTES
 
-		src << "You feel your being twine with that of [M] as you merge with its biomass."
+		to_chat(src, "You feel your being twine with that of [M] as you merge with its biomass.")
 		src.loc = M
 		src.verbs += /mob/living/carbon/monkey/diona/proc/split
 		src.verbs -= /mob/living/carbon/monkey/diona/proc/merge
@@ -83,8 +83,8 @@
 		src.verbs -= /mob/living/carbon/monkey/diona/proc/split
 		return
 
-	src.loc << "You feel a pang of loss as [src] splits away from your biomass."
-	src << "You wiggle out of the depths of [src.loc]'s biomass and plop to the ground."
+	to_chat(src.loc, "You feel a pang of loss as [src] splits away from your biomass.")
+	to_chat(src, "You wiggle out of the depths of [src.loc]'s biomass and plop to the ground.")
 
 	var/mob/living/M = src.loc
 
@@ -143,15 +143,15 @@
 	set desc = "Grow to a more complex form."
 
 	if(!is_alien_whitelisted(src, "Diona") && config.usealienwhitelist)
-		src << alert("You are currently not whitelisted to play as a full diona.")
+		to_chat(src, alert("You are currently not whitelisted to play as a full diona."))
 		return 0
 
 	if(donors.len < 5)
-		src << "You are not yet ready for your growth..."
+		to_chat(src, "You are not yet ready for your growth...")
 		return
 
 	if(nutrition < 400)
-		src << "You have not yet consumed enough to grow..."
+		to_chat(src, "You have not yet consumed enough to grow...")
 		return
 
 	src.split()
@@ -191,11 +191,11 @@
 	if(!M || !src) return
 
 	if(M.species.flags & NO_BLOOD)
-		src << "\red That donor has no blood to take."
+		to_chat(src, "\red That donor has no blood to take.")
 		return
 
 	if(donors.Find(M.real_name))
-		src << "\red That donor offers you nothing new."
+		to_chat(src, "\red That donor offers you nothing new.")
 		return
 
 	src.visible_message("\red [src] flicks out a feeler and neatly steals a sample of [M]'s blood.","\red You flick out a feeler and neatly steal a sample of [M]'s blood.")
@@ -213,12 +213,12 @@
 
 	if(donors.len == 5)
 		ready_evolve = 1
-		src << "\green You feel ready to move on to your next stage of growth."
+		to_chat(src, "\green You feel ready to move on to your next stage of growth.")
 	else if(donors.len == 3)
 		universal_understand = 1
-		src << "\green You feel your awareness expand, and realize you know how to understand the creatures around you."
+		to_chat(src, "\green You feel your awareness expand, and realize you know how to understand the creatures around you.")
 	else
-		src << "\green The blood seeps into your small form, and you draw out the echoes of memories and personality from it, working them into your budding mind."
+		to_chat(src, "\green The blood seeps into your small form, and you draw out the echoes of memories and personality from it, working them into your budding mind.")
 
 
 /mob/living/carbon/monkey/diona/say_understands(mob/other,datum/language/speaking = null)
@@ -234,7 +234,7 @@
 
 	if(client)
 		if(client.prefs.muted & MUTE_IC)
-			src << "\red You cannot speak in IC (Muted)."
+			to_chat(src, "\red You cannot speak in IC (Muted).")
 			return
 
 	message = trim(copytext(message, 1, MAX_MESSAGE_LEN))

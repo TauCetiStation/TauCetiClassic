@@ -42,7 +42,7 @@ var/const/MAX_IMPREGNATION_TIME = 150
 	..(amount)
 
 /mob/living/carbon/alien/facehugger/start_pulling(atom/movable/AM)//Prevents mouse from pulling things
-	src << "<span class='warning'>You are too small to pull anything.</span>"
+	to_chat(src, "<span class='warning'>You are too small to pull anything.</span>")
 	return
 
 /mob/living/carbon/alien/facehugger/swap_hand()

@@ -54,7 +54,7 @@
 
 /obj/item/device/assembly/proc/is_secured(mob/user)
 	if(!secured)
-		user << "<span class='warning'>The [name] is unsecured!</span>"
+		to_chat(user, "<span class='warning'>The [name] is unsecured!</span>")
 		return 0
 	return 1
 
@@ -100,7 +100,7 @@
 /obj/item/device/assembly/attach_assembly(obj/item/device/assembly/A, mob/user)
 	holder = new/obj/item/device/assembly_holder(get_turf(src))
 	if(holder.attach(A,src,user))
-		user << "\blue You attach \the [A] to \the [src]!"
+		to_chat(user, "\blue You attach \the [A] to \the [src]!")
 		return 1
 	return 0
 
@@ -113,9 +113,9 @@
 			return
 	if(isscrewdriver(W))
 		if(toggle_secure())
-			user << "\blue \The [src] is ready!"
+			to_chat(user, "\blue \The [src] is ready!")
 		else
-			user << "\blue \The [src] can now be attached!"
+			to_chat(user, "\blue \The [src] can now be attached!")
 		return
 	..()
 	return
@@ -130,9 +130,9 @@
 	..()
 	if(src in view(1, user))
 		if(secured)
-			user << "\The [src] is ready!"
+			to_chat(user, "\The [src] is ready!")
 		else
-			user << "\The [src] can be attached!"
+			to_chat(user, "\The [src] can be attached!")
 
 
 /obj/item/device/assembly/attack_self(mob/user)

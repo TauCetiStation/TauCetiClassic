@@ -73,10 +73,10 @@
 	if(href_list["pulse"])
 		var/temp_wire = href_list["wire"]
 		if (!istype(usr.get_active_hand(), /obj/item/device/multitool))
-			usr << "You need a multitool!"
+			to_chat(usr, "You need a multitool!")
 		else
 			if(src.wires[temp_wire])
-				usr << "You can't pulse a cut wire."
+				to_chat(usr, "You can't pulse a cut wire.")
 			else
 				if(src.hack_wire == href_list["wire"])
 					src.hacked = !src.hacked
@@ -94,7 +94,7 @@
 						src.shocked = !src.shocked
 	if(href_list["cut"])
 		if (!istype(usr.get_active_hand(), /obj/item/weapon/wirecutters))
-			usr << "You need wirecutters!"
+			to_chat(usr, "You need wirecutters!")
 		else
 			var/temp_wire = href_list["wire"]
 			wires[temp_wire] = !wires[temp_wire]

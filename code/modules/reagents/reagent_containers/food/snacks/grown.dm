@@ -46,7 +46,7 @@
 		msg += "- Endurance: <i>[endurance]</i>\n"
 		msg += "- Healing properties: <i>[reagents.get_reagent_amount("nutriment")]</i>\n"
 		msg += "*---------*</span>"
-		usr << msg
+		to_chat(usr, msg)
 		return
 
 	/*if (istype(O, /obj/item/weapon/storage/bag/plants))
@@ -57,14 +57,14 @@
 					if (S.contents.len < S.capacity)
 						S.contents += G
 					else
-						user << "\blue The plant bag is full."
+						to_chat(user, "\blue The plant bag is full.")
 						return
-			user << "\blue You pick up all the plants and seeds."
+			to_chat(user, "\blue You pick up all the plants and seeds.")
 		else
 			if (S.contents.len < S.capacity)
 				S.contents += src;
 			else
-				user << "\blue The plant bag is full."*/
+				to_chat(user, "\blue The plant bag is full.") */
 	return
 
 /*/obj/item/seeds/attackby(var/obj/item/O as obj, var/mob/user as mob)
@@ -76,14 +76,14 @@
 					if (S.contents.len < S.capacity)
 						S.contents += G
 					else
-						user << "\blue The plant bag is full."
+						to_chat(user, "\blue The plant bag is full.")
 						return
-			user << "\blue You pick up all the plants and seeds."
+			to_chat(user, "\blue You pick up all the plants and seeds.")
 		else
 			if (S.contents.len < S.capacity)
 				S.contents += src;
 			else
-				user << "\blue The plant bag is full."
+				to_chat(user, "\blue The plant bag is full.")
 	return*/
 
 /obj/item/weapon/grown/attackby(obj/item/O, mob/user)
@@ -104,7 +104,7 @@
 		msg += "- Production speed: <i>[production]</i>\n"
 		msg += "- Endurance: <i>[endurance]</i>\n"
 		msg += "*---------*</span>"
-		usr << msg
+		to_chat(usr, msg)
 		return
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/corn
@@ -182,7 +182,7 @@
 		if(W:amount >= 5)
 			W:amount -= 5
 			if(!W:amount) qdel(W)
-			user << "<span class='notice'>You add some cable to the potato and slide it inside the battery encasing.</span>"
+			to_chat(user, "<span class='notice'>You add some cable to the potato and slide it inside the battery encasing.</span>")
 			var/obj/item/weapon/stock_parts/cell/potato/pocell = new /obj/item/weapon/stock_parts/cell/potato(user.loc)
 			pocell.maxcharge = src.potency * 10
 			pocell.charge = pocell.maxcharge
@@ -287,7 +287,7 @@
 	poultice.heal_burn = potency
 	qdel(src)
 
-	user << "<span class='notice'>You mash the petals into a poultice.</span>"
+	to_chat(user, "<span class='notice'>You mash the petals into a poultice.</span>")
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/shand/attack_self(mob/user)
 	if(istype(user.loc,/turf/space))
@@ -297,7 +297,7 @@
 	poultice.heal_brute = potency
 	qdel(src)
 
-	user << "<span class='notice'>You mash the leaves into a poultice.</span>"
+	to_chat(user, "<span class='notice'>You mash the leaves into a poultice.</span>")
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/glowberries
 	seed = "/obj/item/seeds/glowberryseed"
@@ -463,7 +463,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/libertycap/attackby(obj/item/O, mob/user)
 	. = ..()
 	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
-		user << "<span class='info'>- Mineral Content: <i>[reagents.get_reagent_amount("gold")]%</i></span>"
+		to_chat(user, "<span class='info'>- Mineral Content: <i>[reagents.get_reagent_amount("gold")]%</i></span>")
 
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/watermelon
@@ -590,7 +590,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/chili/attackby(obj/item/O, mob/user)
 	. = ..()
 	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
-		user << "<span class='info'>- Capsaicin: <i>[reagents.get_reagent_amount("capsaicin")]%</i></span>"
+		to_chat(user, "<span class='info'>- Capsaicin: <i>[reagents.get_reagent_amount("capsaicin")]%</i></span>")
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/eggplant
 	seed = "/obj/item/seeds/eggplantseed"
@@ -665,7 +665,7 @@
 	new /mob/living/simple_animal/hostile/tomato(user.loc)
 	qdel(src)
 
-	user << "<span class='notice'>You plant the killer-tomato.</span>"
+	to_chat(user, "<span class='notice'>You plant the killer-tomato.</span>")
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/bloodtomato
 	seed = "/obj/item/seeds/bloodtomatoseed"
@@ -722,7 +722,7 @@
 			return
 
 		M.stop_pulling()
-		M << "\blue You slipped on the [name]!"
+		to_chat(M, "\blue You slipped on the [name]!")
 		playsound(src.loc, 'sound/misc/slip.ogg', 50, 1, -3)
 		M.Stun(8)
 		M.Weaken(5)
@@ -783,7 +783,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/icepepper/attackby(obj/item/O, mob/user)
 	. = ..()
 	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
-		user << "<span class='info'>- Frostoil: <i>[reagents.get_reagent_amount("frostoil")]%</i></span>"
+		to_chat(user, "<span class='info'>- Frostoil: <i>[reagents.get_reagent_amount("frostoil")]%</i></span>")
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/carrot
 	seed = "/obj/item/seeds/carrotseed"
@@ -817,8 +817,8 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/reishi/attackby(obj/item/O, mob/user)
 	. = ..()
 	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
-		user << "<span class='info'>- Sleep Toxin: <i>[reagents.get_reagent_amount("stoxin")]%</i></span>"
-		user << "<span class='info'>- Space Drugs: <i>[reagents.get_reagent_amount("space_drugs")]%</i></span>"
+		to_chat(user, "<span class='info'>- Sleep Toxin: <i>[reagents.get_reagent_amount("stoxin")]%</i></span>")
+		to_chat(user, "<span class='info'>- Space Drugs: <i>[reagents.get_reagent_amount("space_drugs")]%</i></span>")
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/amanita
 	seed = "/obj/item/seeds/amanitamycelium"
@@ -838,8 +838,8 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/amanita/attackby(obj/item/O, mob/user)
 	. = ..()
 	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
-		user << "<span class='info'>- Amatoxins: <i>[reagents.get_reagent_amount("amatoxin")]%</i></span>"
-		user << "<span class='info'>- Psilocybin: <i>[reagents.get_reagent_amount("psilocybin")]%</i></span>"
+		to_chat(user, "<span class='info'>- Amatoxins: <i>[reagents.get_reagent_amount("amatoxin")]%</i></span>")
+		to_chat(user, "<span class='info'>- Psilocybin: <i>[reagents.get_reagent_amount("psilocybin")]%</i></span>")
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/angel
 	seed = "/obj/item/seeds/angelmycelium"
@@ -859,8 +859,8 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/angel/attackby(obj/item/O , mob/user)
 	. = ..()
 	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
-		user << "<span class='info'>- Amatoxins: <i>[reagents.get_reagent_amount("amatoxin")]%</i></span>"
-		user << "<span class='info'>- Psilocybin: <i>[reagents.get_reagent_amount("psilocybin")]%</i></span>"
+		to_chat(user, "<span class='info'>- Amatoxins: <i>[reagents.get_reagent_amount("amatoxin")]%</i></span>")
+		to_chat(user, "<span class='info'>- Psilocybin: <i>[reagents.get_reagent_amount("psilocybin")]%</i></span>")
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/libertycap
 	seed = "/obj/item/seeds/libertymycelium"
@@ -879,7 +879,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/libertycap/attackby(obj/item/O, mob/user)
 	. = ..()
 	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
-		user << "<span class='info'>- Psilocybin: <i>[reagents.get_reagent_amount("psilocybin")]%</i></span>"
+		to_chat(user, "<span class='info'>- Psilocybin: <i>[reagents.get_reagent_amount("psilocybin")]%</i></span>")
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/plumphelmet
 	seed = "/obj/item/seeds/plumpmycelium"
@@ -920,7 +920,7 @@
 	new /mob/living/simple_animal/mushroom(user.loc)
 	qdel(src)
 
-	user << "<span class='notice'>You plant the walking mushroom.</span>"
+	to_chat(user, "<span class='notice'>You plant the walking mushroom.</span>")
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/chanterelle
 	seed = "/obj/item/seeds/chantermycelium"
@@ -967,7 +967,7 @@
 	planted.potency = potency
 	qdel(src)
 
-	user << "<span class='notice'>You plant the glowshroom.</span>"
+	to_chat(user, "<span class='notice'>You plant the glowshroom.</span>")
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/Destroy()
 	if(istype(loc,/mob))

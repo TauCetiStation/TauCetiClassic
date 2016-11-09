@@ -100,7 +100,7 @@
 	if(istype(W, /obj/item/assembly/shock_kit))
 		var/obj/item/assembly/shock_kit/SK = W
 		if(!SK.status)
-			user << "<span class='notice'>[SK] is not ready to be attached!</span>"
+			to_chat(user, "<span class='notice'>[SK] is not ready to be attached!</span>")
 			return
 		user.drop_item()
 		var/obj/structure/stool/bed/chair/e_chair/E = new /obj/structure/stool/bed/chair/e_chair(src.loc)
@@ -132,9 +132,9 @@
 
 /obj/structure/stool/bed/chair/user_buckle_mob(mob/living/M, mob/user)
 	if(flipped)
-		usr << "<span class='notice'>You can't do it, while \the [src] is flipped.</span>"
+		to_chat(usr, "<span class='notice'>You can't do it, while \the [src] is flipped.</span>")
 		if(usr != M)
-			M << "<span class='warning'>Tried buckle you to \the [src].</span>"
+			to_chat(M, "<span class='warning'>Tried buckle you to \the [src].</span>")
 	else
 		..()
 

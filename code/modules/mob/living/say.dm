@@ -109,7 +109,7 @@ var/list/department_radio_keys = list(
 /mob/living/say(message, datum/language/speaking = null, verb="says", alt_name="", italics=0, message_range = world.view, list/used_radios = list(), sound/speech_sound, sound_vol, sanitize = 1)
 	if (src.client)
 		if(client.prefs.muted & MUTE_IC)
-			src << "You cannot send IC messages (muted)."
+			to_chat(src, "You cannot send IC messages (muted).")
 			return
 		if (src.client.handle_spam_prevention(message,MUTE_IC))
 			return

@@ -170,21 +170,21 @@
 		sleep(5)
 		switch(text2num(type))
 			if(1)
-				H << "<span class='warning'>You feel violated.</span>"
+				to_chat(H, "<span class='warning'>You feel violated.</span>")
 			if(2)
-				H << "<span class='warning'>You feel yourself being sliced apart and put back together.</span>"
+				to_chat(H, "<span class='warning'>You feel yourself being sliced apart and put back together.</span>")
 			if(3)
-				H << "<span class='warning'>You feel intensely watched.</span>"
+				to_chat(H, "<span class='warning'>You feel intensely watched.</span>")
 		sleep(5)
-		H << "<span class='warning'><b>Your mind snaps!</b></span>"
+		to_chat(H, "<span class='warning'><b>Your mind snaps!</b></span>")
 		var/objtype = pick(typesof(/datum/objective/abductee/) - /datum/objective/abductee/)
 		var/datum/objective/abductee/O = new objtype()
 		ticker.mode.abductees += H.mind
 		H.mind.objectives += O
 		var/obj_count = 1
-		H << "<span class='notice'>Your current objectives:</span>"
+		to_chat(H, "<span class='notice'>Your current objectives:</span>")
 		for(var/datum/objective/objective in H.mind.objectives)
-			H << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
+			to_chat(H, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 			obj_count++
 		for(var/obj/item/gland/G in H)
 			G.Start()

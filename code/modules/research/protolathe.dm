@@ -124,25 +124,25 @@ Note: Must be placed west/left of and R&D console to function.
 			default_deconstruction_crowbar(I)
 			return 1
 		else
-			user << "\red You can't load the [src.name] while it's opened."
+			to_chat(user, "\red You can't load the [src.name] while it's opened.")
 			return 1
 	if (disabled)
 		return
 	if (!linked_console)
-		user << "\The protolathe must be linked to an R&D console first!"
+		to_chat(user, "\The protolathe must be linked to an R&D console first!")
 		return 1
 	if (busy)
-		user << "\red The protolathe is busy. Please wait for completion of previous operation."
+		to_chat(user, "\red The protolathe is busy. Please wait for completion of previous operation.")
 		return 1
 	if (!istype(I, /obj/item/stack/sheet))
-		user << "\red You cannot insert this item into the protolathe!"
+		to_chat(user, "\red You cannot insert this item into the protolathe!")
 		return 1
 	if (stat)
 		return 1
 	if(istype(I,/obj/item/stack/sheet))
 		var/obj/item/stack/sheet/S = I
 		if (TotalMaterials() + S.perunit > max_material_storage)
-			user << "\red The protolathe's material bin is full. Please remove material before adding more."
+			to_chat(user, "\red The protolathe's material bin is full. Please remove material before adding more.")
 			return 1
 
 	var/obj/item/stack/sheet/stack = I
@@ -168,7 +168,7 @@ Note: Must be placed west/left of and R&D console to function.
 	var/stacktype = stack.type
 	stack.use(amount)
 	if (do_after(user, 16, target = src))
-		user << "\blue You add [amount] sheets to the [src.name]."
+		to_chat(user, "\blue You add [amount] sheets to the [src.name].")
 		icon_state = "protolathe"
 		switch(stacktype)
 			if(/obj/item/stack/sheet/metal)

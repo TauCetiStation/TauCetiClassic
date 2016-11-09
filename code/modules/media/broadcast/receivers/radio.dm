@@ -14,7 +14,7 @@
 
 /obj/machinery/media/receiver/boombox/attack_hand(mob/user)
 	if(stat & (NOPOWER|BROKEN))
-		usr << "\red You don't see anything to mess with."
+		to_chat(usr, "\red You don't see anything to mess with.")
 		return
 	user.set_machine(src)
 	interact(user)
@@ -61,7 +61,7 @@
 				media_frequency = newfreq
 				connect_frequency()
 			else
-				usr << "\red Invalid FM frequency. (90.0, 200.0)"
+				to_chat(usr, "\red Invalid FM frequency. (90.0, 200.0)")
 	updateDialog()
 
 

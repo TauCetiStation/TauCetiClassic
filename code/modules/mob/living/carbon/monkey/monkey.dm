@@ -190,11 +190,11 @@
 
 /mob/living/carbon/monkey/attack_hand(mob/living/carbon/human/M)
 	if (!ticker)
-		M << "You cannot attack people before the game has started."
+		to_chat(M, "You cannot attack people before the game has started.")
 		return
 
 	if (istype(loc, /turf) && istype(loc.loc, /area/start))
-		M << "No attacking people at spawn, you jackass."
+		to_chat(M, "No attacking people at spawn, you jackass.")
 		return
 
 	if(M.gloves && istype(M.gloves,/obj/item/clothing/gloves))
@@ -215,7 +215,7 @@
 							O.show_message("\red <B>[src] has been touched with the stun gloves by [M]!</B>", 1, "\red You hear someone fall", 2)
 					return
 				else
-					M << "\red Not enough charge! "
+					to_chat(M, "\red Not enough charge! ")
 					return
 
 	if (M.a_intent == "help")
@@ -282,11 +282,11 @@
 
 /mob/living/carbon/monkey/attack_alien(mob/living/carbon/alien/humanoid/M)
 	if (!ticker)
-		M << "You cannot attack people before the game has started."
+		to_chat(M, "You cannot attack people before the game has started.")
 		return
 
 	if (istype(loc, /turf) && istype(loc.loc, /area/start))
-		M << "No attacking people at spawn, you jackass."
+		to_chat(M, "No attacking people at spawn, you jackass.")
 		return
 
 	switch(M.a_intent)
@@ -368,7 +368,7 @@
 
 /mob/living/carbon/monkey/attack_slime(mob/living/carbon/slime/M)
 	if (!ticker)
-		M << "You cannot attack people before the game has started."
+		to_chat(M, "You cannot attack people before the game has started.")
 		return
 
 	if(M.Victim) return // can't attack while eating!

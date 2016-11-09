@@ -49,8 +49,8 @@
 
 
 /datum/game_mode/cult/announce()
-	world << "<B>The current game mode is - Cult!</B>"
-	world << "<B>Some crewmembers are attempting to start a cult!<BR>\nCultists - complete your objectives. Convert crewmembers to your cause by using the convert rune. Remember - there is no you, there is only the cult.<BR>\nPersonnel - Do not let the cult succeed in its mission. Brainwashing them with the chaplain's bible reverts them to whatever CentCom-allowed faith they had.</B>"
+	to_chat(world, "<B>The current game mode is - Cult!</B>")
+	to_chat(world, "<B>Some crewmembers are attempting to start a cult!<BR>\nCultists - complete your objectives. Convert crewmembers to your cause by using the convert rune. Remember - there is no you, there is only the cult.<BR>\nPersonnel - Do not let the cult succeed in its mission. Brainwashing them with the chaplain's bible reverts them to whatever CentCom-allowed faith they had.</B>")
 
 
 /datum/game_mode/cult/pre_setup()
@@ -95,12 +95,12 @@
 	for(var/datum/mind/cult_mind in cult)
 		equip_cultist(cult_mind.current)
 		update_all_cult_icons()
-		cult_mind.current << "<span class = 'info'><b>You are a member of the <font color='red'>cult</font>!</b></span>"
+		to_chat(cult_mind.current, "<span class = 'info'><b>You are a member of the <font color='red'>cult</font>!</b></span>")
 		grant_runeword(cult_mind.current)
 		if(!config.objectives_disabled)
 			memoize_cult_objectives(cult_mind)
 		else
-			cult_mind.current << "<span class ='blue'>Within the rules,</span> try to act as an opposing force to the crew. Further RP and try to make sure other players have </i>fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>"
+			to_chat(cult_mind.current, "<span class ='blue'>Within the rules,</span> try to act as an opposing force to the crew. Further RP and try to make sure other players have </i>fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>")
 		cult_mind.special_role = "Cultist"
 
 	return ..()
@@ -119,9 +119,9 @@
 					explanation = "Free objective."
 			if("eldergod")
 				explanation = "Summon Nar-Sie via the use of the appropriate rune (Hell join self). It will only work if nine cultists stand on and around it."
-		cult_mind.current << "<B>Objective #[obj_count]</B>: [explanation]"
+		to_chat(cult_mind.current, "<B>Objective #[obj_count]</B>: [explanation]")
 		cult_mind.memory += "<B>Objective #[obj_count]</B>: [explanation]<BR>"
-	cult_mind.current << "The convert rune is join blood self"
+	to_chat(cult_mind.current, "The convert rune is join blood self")
 	cult_mind.memory += "The convert rune is join blood self<BR>"
 
 
@@ -131,7 +131,7 @@
 
 	if (mob.mind)
 		if (mob.mind.assigned_role == "Clown")
-			mob << "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself."
+			to_chat(mob, "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
 			mob.mutations.Remove(CLUMSY)
 
 
@@ -145,9 +145,9 @@
 	)
 	var/where = mob.equip_in_one_of_slots(T, slots)
 	if (!where)
-		mob << "Unfortunately, you weren't able to get a talisman. This is very bad and you should adminhelp immediately."
+		to_chat(mob, "Unfortunately, you weren't able to get a talisman. This is very bad and you should adminhelp immediately.")
 	else
-		mob << "You have a talisman in your [where], one that will help you start the cult on this station. Use it well and remember - there are others."
+		to_chat(mob, "You have a talisman in your [where], one that will help you start the cult on this station. Use it well and remember - there are others.")
 		mob.update_icons()
 		return 1
 
@@ -166,7 +166,7 @@
 	if (!word)
 		word=pick(allwords)
 	var/wordexp = "[cultwords[word]] is [word]..."
-	cult_mob << "<span class = 'red'>You remember one thing from the dark teachings of your master... <b>[wordexp]</b></span>"
+	to_chat(cult_mob, "<span class = 'red'>You remember one thing from the dark teachings of your master... <b>[wordexp]</b></span>")
 	cult_mob.mind.store_memory("<B>You remember that</B> [wordexp]", 0, 0)
 
 
@@ -191,12 +191,12 @@
 	if(cult_mind in cult)
 		cult -= cult_mind
 		cult_mind.current.Paralyse(5)
-		cult_mind.current << "\red <FONT size = 3><B>An unfamiliar white light flashes through your mind, cleansing the taint of the dark-one and the memories of your time as his servant with it.</B></FONT>"
+		to_chat(cult_mind.current, "\red <FONT size = 3><B>An unfamiliar white light flashes through your mind, cleansing the taint of the dark-one and the memories of your time as his servant with it.</B></FONT>")
 		cult_mind.memory = ""
 		update_cult_icons_removed(cult_mind)
 		if(show_message)
 			for(var/mob/M in viewers(cult_mind.current))
-				M << "<FONT size = 3>[cult_mind.current] looks like they just reverted to their old faith!</FONT>"
+				to_chat(M, "<FONT size = 3>[cult_mind.current] looks like they just reverted to their old faith!</FONT>")
 
 /datum/game_mode/proc/update_all_cult_icons()
 	spawn(0)

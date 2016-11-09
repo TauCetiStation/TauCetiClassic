@@ -236,7 +236,7 @@ Please contact me on #coderbus IRC. ~Carn x
 		//Icon is cached, use existing icon.
 		base_icon = human_icon_cache[icon_key]
 
-	//	log_debug("Retrieved cached mob icon ([icon_key] \icon[human_icon_cache[icon_key]]) for [src].")
+	//	log_debug("Retrieved cached mob icon ([icon_key] [bicon(human_icon_cache[icon_key])]) for [src].")
 
 	else
 
@@ -323,7 +323,7 @@ Please contact me on #coderbus IRC. ~Carn x
 
 		human_icon_cache[icon_key] = base_icon
 
-		//log_debug("Generated new cached mob icon ([icon_key] \icon[human_icon_cache[icon_key]]) for [src]. [human_icon_cache.len] cached mob icons.")
+		//log_debug("Generated new cached mob icon ([icon_key] [bicon(human_icon_cache[icon_key])]) for [src]. [human_icon_cache.len] cached mob icons.")
 
 	//END CACHED ICON GENERATION.
 
@@ -371,7 +371,7 @@ Please contact me on #coderbus IRC. ~Carn x
 	if(!head_organ || (head_organ.status & ORGAN_DESTROYED))
 		return
 
-	//masks and helmets can obscure our hair. 
+	//masks and helmets can obscure our hair.
 	if((HUSK in mutations) || (head && (head.flags & BLOCKHAIR)) || (wear_mask && (wear_mask.flags & BLOCKHAIR)) || (wear_suit && (wear_suit.flags & BLOCKHAIR)))
 		return
 
@@ -562,7 +562,7 @@ Please contact me on #coderbus IRC. ~Carn x
 			if(U.flags & ONESIZEFITSALL)
 				standing.icon	= 'icons/mob/uniform_fat.dmi'
 			else
-				src << "\red You burst out of \the [U]!"
+				to_chat(src, "\red You burst out of \the [U]!")
 				drop_from_inventory(U)
 				return
 
@@ -785,7 +785,7 @@ Please contact me on #coderbus IRC. ~Carn x
 
 		if(FAT in mutations)
 			if(!(wear_suit.flags & ONESIZEFITSALL))
-				src << "\red You burst out of \the [wear_suit]!"
+				to_chat(src, "\red You burst out of \the [wear_suit]!")
 				drop_from_inventory(wear_suit)
 				return
 

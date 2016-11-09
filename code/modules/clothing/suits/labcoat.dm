@@ -19,16 +19,16 @@
 	if(!usr.canmove || usr.stat || usr.restrained())
 		return 0
 	if(!can_button_up)
-		usr << "You attempt to button-up the velcro on your [src], before promptly realising how silly you are."
+		to_chat(usr, "You attempt to button-up the velcro on your [src], before promptly realising how silly you are.")
 		return 0
 
 	if(!src.is_button_up)
 		src.icon_state = initial(icon_state)
-		usr << "You button up your labcoat."
+		to_chat(usr, "You button up your labcoat.")
 		src.is_button_up = 1
 	else
 		src.icon_state += "_open"
-		usr << "You unbutton your labcoat."
+		to_chat(usr, "You unbutton your labcoat.")
 		src.is_button_up = 0
 	usr.update_inv_wear_suit()	//so our overlays update
 

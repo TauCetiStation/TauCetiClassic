@@ -16,7 +16,7 @@
 		if(T.welding)
 			message_admins("[key_name_admin(user)] triggered a flamethrower back explosion.")
 			log_game("[key_name(user)] triggered a flamethrower back explosion.")
-			user << "\red That was stupid of you."
+			to_chat(user, "\red That was stupid of you.")
 		if(Connected_Flamethrower)
 			Connected_Flamethrower.unequip(user)
 			//explosion(get_turf(src),-1,0,2)
@@ -31,12 +31,12 @@
 	if(istype(W, /obj/item/weapon/flamethrower_M2))
 		if(src.loc == user)
 			if(!Connected_Flamethrower)
-				user << "You connected your M2 flamethrower to fuel backpack."
+				to_chat(user, "You connected your M2 flamethrower to fuel backpack.")
 				src.equip(user, W)
 			else
-				user << "Flamethrower allready connected."
+				to_chat(user, "Flamethrower allready connected.")
 		else
-			user << "Put on your fuel backpack first."
+			to_chat(user, "Put on your fuel backpack first.")
 
 	return
 
@@ -111,7 +111,7 @@
 	if(Connected_tank)
 		if(lit)
 			lit = 0
-			if(user) user << "Flamethrower flame dies out, it is unlit now."
+			if(user) to_chat(user, "Flamethrower flame dies out, it is unlit now.")
 		Connected_tank = null
 	update_icon()
 
@@ -143,15 +143,15 @@
 /obj/item/weapon/flamethrower_M2/attack_self(mob/user)
 	if(user.stat || user.restrained() || user.lying)	return
 	if(!Connected_tank)
-		usr << "M2 Flamethrower needs to be connected to fuel backpack first."
+		to_chat(usr, "M2 Flamethrower needs to be connected to fuel backpack first.")
 		return
 	if(!lit)
 		lit = 1
 		SSobj.processing |= src
-		usr << "You had opend fuel intake and lit your M2 Flamethrower!"
+		to_chat(usr, "You had opend fuel intake and lit your M2 Flamethrower!")
 	else
 		lit = 0
-		usr << "You had stopped fuel intake and extinguished your M2 Flamethrower."
+		to_chat(usr, "You had stopped fuel intake and extinguished your M2 Flamethrower.")
 	update_icon()
 	return
 
@@ -173,9 +173,9 @@
 		ignite_turf(T)
 		sleep(1)
 	if(Connected_tank.reagents.total_volume < throw_amount)
-		src.loc << "Backpack runs out of juice, you have to refill it."
+		to_chat(src.loc, "Backpack runs out of juice, you have to refill it.")
 		lit = 0
-		if(ismob(src.loc)) src.loc << "Flamethrower flame dies out, it is unlit now."
+		if(ismob(src.loc)) to_chat(src.loc, "Flamethrower flame dies out, it is unlit now.")
 		thrown_amount = Connected_tank.reagents.total_volume
 	else
 		thrown_amount = throw_amount

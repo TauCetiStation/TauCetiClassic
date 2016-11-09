@@ -23,10 +23,10 @@
 	newshot()
 	var/area/A = get_area(user)
 	if(user.mind.special_role != "Wizard")
-		user << "<span class='warning'>You have no idea how to use [src].<span>"
+		to_chat(user, "<span class='warning'>You have no idea how to use [src].<span>")
 		return
 	if(istype(A, /area/wizard_station))
-		user << "<span class='warning'>You know better than to violate the security of The Den, best wait until you leave to use [src].<span>"
+		to_chat(user, "<span class='warning'>You know better than to violate the security of The Den, best wait until you leave to use [src].<span>")
 		return
 	..()
 
@@ -61,5 +61,5 @@
 	return
 
 /obj/item/weapon/gun/magic/shoot_with_empty_chamber(mob/living/user)
-	user << "<span class='warning'>The [name] whizzles quietly.<span>"
+	to_chat(user, "<span class='warning'>The [name] whizzles quietly.<span>")
 	return

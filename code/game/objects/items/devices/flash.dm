@@ -18,7 +18,7 @@
 
 /obj/item/device/flash/proc/clown_check(mob/user)
 	if(user && (CLUMSY in user.mutations) && prob(50))
-		user << "\red \The [src] slips out of your hand."
+		to_chat(user, "\red \The [src] slips out of your hand.")
 		user.drop_item()
 		return 0
 	return 1
@@ -43,7 +43,7 @@
 
 	if(!clown_check(user))	return
 	if(broken)
-		user << "<span class='warning'>\The [src] is broken.</span>"
+		to_chat(user, "<span class='warning'>\The [src] is broken.</span>")
 		return
 
 	flash_recharge()
@@ -55,12 +55,12 @@
 			last_used = world.time
 			if(prob(times_used))	//if you use it 5 times in a minute it has a 10% chance to break!
 				broken = 1
-				user << "<span class='warning'>The bulb has burnt out!</span>"
+				to_chat(user, "<span class='warning'>The bulb has burnt out!</span>")
 				icon_state = "flashburnt"
 				return
 			times_used++
 		else	//can only use it  5 times a minute
-			user << "<span class='warning'>*click* *click*</span>"
+			to_chat(user, "<span class='warning'>*click* *click*</span>")
 			return
 	playsound(src.loc, 'sound/weapons/flash.ogg', 100, 1)
 	var/flashfail = 0
@@ -87,7 +87,7 @@
 								resisted = 1
 
 							if(resisted)
-								user << "<span class='warning'>This mind seems resistant to the flash!</span>"
+								to_chat(user, "<span class='warning'>This mind seems resistant to the flash!</span>")
 		else
 			flashfail = 1
 
@@ -141,7 +141,7 @@
 		if(0 to 5)
 			if(prob(2*times_used))	//if you use it 5 times in a minute it has a 10% chance to break!
 				broken = 1
-				user << "<span class='warning'>The bulb has burnt out!</span>"
+				to_chat(user, "<span class='warning'>The bulb has burnt out!</span>")
 				icon_state = "flashburnt"
 				return
 			times_used++
@@ -199,12 +199,12 @@
 	..()
 	if(!broken)
 		broken = 1
-		user << "\red The bulb has burnt out!"
+		to_chat(user, "\red The bulb has burnt out!")
 		icon_state = "flashburnt"
 
 /obj/item/device/flash/synthetic/attack_self(mob/living/carbon/user, flag = 0, emp = 0)
 	..()
 	if(!broken)
 		broken = 1
-		user << "\red The bulb has burnt out!"
+		to_chat(user, "\red The bulb has burnt out!")
 		icon_state = "flashburnt"

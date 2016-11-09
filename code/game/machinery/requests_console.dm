@@ -264,7 +264,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 			return FALSE
 		for(var/mob/M in player_list)
 			if(!istype(M, /mob/new_player))
-				M << "<b><font size = 3><font color = red>[department] announcement:</font color> [message]</font size></b>"
+				to_chat(M, "<b><font size = 3><font color = red>[department] announcement:</font color> [message]</font size></b>")
 		announceAuth = 0
 		message = ""
 		screen = 0
@@ -301,7 +301,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 								if(!Console.silent)
 									playsound(Console.loc, 'sound/machines/twobeep.ogg', 50, 1)
 									for (var/mob/O in hearers(5, Console.loc))
-										O.show_message(text("\icon[Console] *The Requests Console beeps: 'PRIORITY Alert in [department]'"))
+										O.show_message(text("[bicon(Console)] *The Requests Console beeps: 'PRIORITY Alert in [department]'"))
 								Console.messages += "<B><FONT color='red'>High Priority message from <A href='?src=\ref[Console];write=[ckey(department)]'>[department]</A></FONT></B><BR>[sending]"
 
 		//					if("3")		//Not implemanted, but will be 		//Removed as it doesn't look like anybody intends on implimenting it ~Carn
@@ -311,7 +311,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 		//						if(!Console.silent)
 		//							playsound(Console.loc, 'sound/machines/twobeep.ogg', 50, 1)
 		//							for (var/mob/O in hearers(7, Console.loc))
-		//								O.show_message(text("\icon[Console] *The Requests Console yells: 'EXTREME PRIORITY alert in [department]'"))
+		//								O.show_message(text("[bicon(Console)] *The Requests Console yells: 'EXTREME PRIORITY alert in [department]'"))
 		//						Console.messages += "<B><FONT color='red'>Extreme Priority message from [ckey(department)]</FONT></B><BR>[message]"
 
 							else		// Normal priority
@@ -321,7 +321,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 								if(!Console.silent)
 									playsound(Console.loc, 'sound/machines/twobeep.ogg', 50, 1)
 									for (var/mob/O in hearers(4, Console.loc))
-										O.show_message(text("\icon[Console] *The Requests Console beeps: 'Message from [department]'"))
+										O.show_message(text("[bicon(Console)] *The Requests Console beeps: 'Message from [department]'"))
 								Console.messages += "<B>Message from <A href='?src=\ref[Console];write=[ckey(department)]'>[department]</A></FONT></B><BR>[message]"
 
 						screen = 6
@@ -329,7 +329,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 				messages += "<B>Message sent to [dpt]</B><BR>[message]"
 			else
 				for (var/mob/O in hearers(4, src.loc))
-					O.show_message(text("\icon[src] *The Requests Console beeps: 'NOTICE: No server detected!'"))
+					O.show_message(text("[bicon(src)] *The Requests Console beeps: 'NOTICE: No server detected!'"))
 
 
 	//Handle screen switching
@@ -397,7 +397,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 				hackState = 0
 				icon_state="req_comp_open"
 		else
-			user << "You can't do much with that."*/
+			to_chat(user, "You can't do much with that.") */
 
 	if (istype(O, /obj/item/weapon/card/id))
 		if(screen == 9)
@@ -410,7 +410,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 				announceAuth = 1
 			else
 				announceAuth = 0
-				user << "\red You are not authorized to send announcements."
+				to_chat(user, "\red You are not authorized to send announcements.")
 			updateUsrDialog()
 	if (istype(O, /obj/item/weapon/stamp))
 		if(screen == 9)

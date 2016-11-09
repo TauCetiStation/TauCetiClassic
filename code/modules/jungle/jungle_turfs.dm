@@ -59,7 +59,7 @@
 	if(probability <= 0)
 		return
 
-	//world << "\blue Spread([probability])"
+//	to_chat(world, "\blue Spread([probability])")
 	for(var/turf/unsimulated/jungle/J in orange(1, src))
 		if(!J.bushes_spawn)
 			continue
@@ -131,36 +131,36 @@
 		var/mob/living/M = O
 		//slip in the murky water if we try to run through it
 		if(prob(10 + (M.m_intent == "run" ? 40 : 0)))
-			M << pick("\blue You slip on something slimy.","\blue You fall over into the murk.")
+			to_chat(M, pick("\blue You slip on something slimy.","\blue You fall over into the murk."))
 			M.Stun(2)
 			M.Weaken(1)
 
 		//piranhas - 25% chance to be an omnipresent risk, although they do practically no damage
 		if(prob(25))
-			M << "\blue You feel something slithering around your legs."
+			to_chat(M, "\blue You feel something slithering around your legs.")
 			if(prob(50))
 				spawn(rand(25,50))
 					var/turf/T = get_turf(M)
 					if(istype(T, /turf/unsimulated/jungle/water))
-						M << pick("\red Something sharp bites you!","\red Sharp teeth grab hold of you!","\red You feel something take a chunk out of your leg!")
+						to_chat(M, pick("\red Something sharp bites you!","\red Sharp teeth grab hold of you!","\red You feel something take a chunk out of your leg!"))
 						M.apply_damage(rand(0,1), BRUTE, sharp=1)
 			if(prob(50))
 				spawn(rand(25,50))
 					var/turf/T = get_turf(M)
 					if(istype(T, /turf/unsimulated/jungle/water))
-						M << pick("\red Something sharp bites you!","\red Sharp teeth grab hold of you!","\red You feel something take a chunk out of your leg!")
+						to_chat(M, pick("\red Something sharp bites you!","\red Sharp teeth grab hold of you!","\red You feel something take a chunk out of your leg!"))
 						M.apply_damage(rand(0,1), BRUTE, sharp=1)
 			if(prob(50))
 				spawn(rand(25,50))
 					var/turf/T = get_turf(M)
 					if(istype(T, /turf/unsimulated/jungle/water))
-						M << pick("\red Something sharp bites you!","\red Sharp teeth grab hold of you!","\red You feel something take a chunk out of your leg!")
+						to_chat(M, pick("\red Something sharp bites you!","\red Sharp teeth grab hold of you!","\red You feel something take a chunk out of your leg!"))
 						M.apply_damage(rand(0,1), BRUTE, sharp=1)
 			if(prob(50))
 				spawn(rand(25,50))
 					var/turf/T = get_turf(M)
 					if(istype(T, /turf/unsimulated/jungle/water))
-						M << pick("\red Something sharp bites you!","\red Sharp teeth grab hold of you!","\red You feel something take a chunk out of your leg!")
+						to_chat(M, pick("\red Something sharp bites you!","\red Sharp teeth grab hold of you!","\red You feel something take a chunk out of your leg!"))
 						M.apply_damage(rand(0,1), BRUTE, sharp=1)
 
 /turf/unsimulated/jungle/water/deep

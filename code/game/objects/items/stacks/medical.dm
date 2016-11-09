@@ -12,13 +12,13 @@
 
 /obj/item/stack/medical/attack(mob/living/carbon/M, mob/user)
 	if(!istype(M))
-		user << "<span class='warning'>\The [src] cannot be applied to [M]!</span>"
+		to_chat(user, "<span class='warning'>\The [src] cannot be applied to [M]!</span>")
 		return 1
 
 	if(!(istype(user, /mob/living/carbon/human) || \
 			istype(user, /mob/living/silicon) || \
 			istype(user, /mob/living/carbon/monkey)) )
-		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
+		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return 1
 
 	if(istype(M, /mob/living/carbon/human))
@@ -27,15 +27,15 @@
 
 		if(affecting.display_name == "head")
 			if(H.head && istype(H.head,/obj/item/clothing/head/helmet/space))
-				user << "<span class='warning'>You can't apply [src] through [H.head]!</span>"
+				to_chat(user, "<span class='warning'>You can't apply [src] through [H.head]!</span>")
 				return 1
 		else
 			if(H.wear_suit && istype(H.wear_suit,/obj/item/clothing/suit/space))
-				user << "<span class='warning'>You can't apply [src] through [H.wear_suit]!</span>"
+				to_chat(user, "<span class='warning'>You can't apply [src] through [H.wear_suit]!</span>")
 				return 1
 
 		if(affecting.status & ORGAN_ROBOT)
-			user << "<span class='warning'>This isn't useful at all on a robotic limb..</span>"
+			to_chat(user, "<span class='warning'>This isn't useful at all on a robotic limb..</span>")
 			return 1
 	else
 		M.heal_organ_damage((heal_brute/2), (heal_burn/2))
@@ -61,7 +61,7 @@
 
 		if(affecting.open == 0)
 			if(affecting.is_bandaged())
-				user << "<span class='warning'>The wounds on [M]'s [affecting.display_name] have already been bandaged.</span>"
+				to_chat(user, "<span class='warning'>The wounds on [M]'s [affecting.display_name] have already been bandaged.</span>")
 				return 1
 			else
 				user.visible_message("<span class='notice'>\The [user] starts treating [M]'s [affecting.display_name].</span>", \
@@ -75,7 +75,7 @@
 					if(used == amount)
 						break
 					if(!do_mob(user, M, W.damage))
-						user << "<span class='notice'>You must stand still to bandage wounds.</span>"
+						to_chat(user, "<span class='notice'>You must stand still to bandage wounds.</span>")
 						break
 					if(W.current_stage <= W.max_bleeding_stage)
 						user.visible_message("<span class='notice'>\The [user] bandages [W.desc] on [M]'s [affecting.display_name].</span>", \
@@ -92,9 +92,9 @@
 				affecting.update_damages()
 				if(used == amount)
 					if(affecting.is_bandaged())
-						user << "<span class='warning'>\The [src] is used up.</span>"
+						to_chat(user, "<span class='warning'>\The [src] is used up.</span>")
 					else
-						user << "<span class='warning'>\The [src] is used up, but there are more wounds to treat on \the [affecting.display_name].</span>"
+						to_chat(user, "<span class='warning'>\The [src] is used up, but there are more wounds to treat on \the [affecting.display_name].</span>")
 				H.update_bandage()
 				use(used)
 		else
@@ -102,7 +102,7 @@
 				if(do_surgery(H,user,src))
 					return
 			else
-				user << "<span class='notice'>The [affecting.display_name] is cut open, you'll need more than a bandage!</span>"
+				to_chat(user, "<span class='notice'>The [affecting.display_name] is cut open, you'll need more than a bandage!</span>")
 
 /obj/item/stack/medical/ointment
 	name = "ointment"
@@ -123,13 +123,13 @@
 
 		if(affecting.open == 0)
 			if(affecting.is_salved())
-				user << "<span class='warning'>The wounds on [M]'s [affecting.display_name] have already been salved.</span>"
+				to_chat(user, "<span class='warning'>The wounds on [M]'s [affecting.display_name] have already been salved.</span>")
 				return 1
 			else
 				user.visible_message("<span class='notice'>\The [user] starts salving wounds on [M]'s [affecting.display_name].</span>", \
 									"<span class='notice'>You start salving the wounds on [M]'s [affecting.display_name].</span>")
 				if(!do_mob(user, M, 25))
-					user << "<span class='notice'>You must stand still to salve wounds.</span>"
+					to_chat(user, "<span class='notice'>You must stand still to salve wounds.</span>")
 					return 1
 				user.visible_message("<span class='notice'>\The [user] salves wounds on [M]'s [affecting.display_name].</span>", \
 									"<span class='notice'>You salve wounds on [M]'s [affecting.display_name].</span>")
@@ -140,7 +140,7 @@
 				if(do_surgery(H,user,src))
 					return
 			else
-				user << "<span class='notice'>The [affecting.display_name] is cut open, you'll need more than a bandage!</span>"
+				to_chat(user, "<span class='notice'>The [affecting.display_name] is cut open, you'll need more than a bandage!</span>")
 
 /obj/item/stack/medical/bruise_pack/tajaran
 	name = "\improper S'rendarr's Hand leaf"
@@ -176,7 +176,7 @@
 
 		if(affecting.open == 0)
 			if(affecting.is_bandaged() && affecting.is_disinfected())
-				user << "<span class='warning'>The wounds on [M]'s [affecting.display_name] have already been treated.</span>"
+				to_chat(user, "<span class='warning'>The wounds on [M]'s [affecting.display_name] have already been treated.</span>")
 				return 1
 			else
 				user.visible_message("<span class='notice'>\The [user] starts treating [M]'s [affecting.display_name].</span>", \
@@ -190,7 +190,7 @@
 					if(used == amount)
 						break
 					if(!do_mob(user, M, W.damage))
-						user << "<span class='notice'>You must stand still to bandage wounds.</span>"
+						to_chat(user, "<span class='notice'>You must stand still to bandage wounds.</span>")
 						break
 					if(W.current_stage <= W.max_bleeding_stage)
 						user.visible_message("<span class='notice'>\The [user] cleans [W.desc] on [M]'s [affecting.display_name] and seals edges with bioglue.</span>", \
@@ -208,9 +208,9 @@
 				affecting.update_damages()
 				if(used == amount)
 					if(affecting.is_bandaged())
-						user << "<span class='warning'>\The [src] is used up.</span>"
+						to_chat(user, "<span class='warning'>\The [src] is used up.</span>")
 					else
-						user << "<span class='warning'>\The [src] is used up, but there are more wounds to treat on \the [affecting.display_name].</span>"
+						to_chat(user, "<span class='warning'>\The [src] is used up, but there are more wounds to treat on \the [affecting.display_name].</span>")
 				H.update_bandage()
 				use(used)
 		else
@@ -218,7 +218,7 @@
 				if(do_surgery(H,user,src))
 					return
 			else
-				user << "<span class='notice'>The [affecting.display_name] is cut open, you'll need more than a bandage!</span>"
+				to_chat(user, "<span class='notice'>The [affecting.display_name] is cut open, you'll need more than a bandage!</span>")
 
 /obj/item/stack/medical/advanced/ointment
 	name = "advanced burn kit"
@@ -238,13 +238,13 @@
 
 		if(affecting.open == 0)
 			if(affecting.is_salved())
-				user << "<span class='warning'>The wounds on [M]'s [affecting.display_name] have already been salved.</span>"
+				to_chat(user, "<span class='warning'>The wounds on [M]'s [affecting.display_name] have already been salved.</span>")
 				return 1
 			else
 				user.visible_message("<span class='notice'>\The [user] starts salving wounds on [M]'s [affecting.display_name].</span>", \
 									"<span class='notice'>You start salving the wounds on [M]'s [affecting.display_name].</span>")
 				if(!do_mob(user, M, 25))
-					user << "<span class='notice'>You must stand still to salve wounds.</span>"
+					to_chat(user, "<span class='notice'>You must stand still to salve wounds.</span>")
 					return 1
 				user.visible_message("<span class='notice'>\The [user] covers wounds on [M]'s [affecting.display_name] with regenerative membrane.</span>", \
 									"<span class='notice'>You cover wounds on [M]'s [affecting.display_name] with regenerative membrane.</span>")
@@ -256,7 +256,7 @@
 				if (do_surgery(H,user,src))
 					return
 			else
-				user << "<span class='notice'>The [affecting.display_name] is cut open, you'll need more than a bandage!</span>"
+				to_chat(user, "<span class='notice'>The [affecting.display_name] is cut open, you'll need more than a bandage!</span>")
 
 /obj/item/stack/medical/splint
 	name = "medical splints"
@@ -274,10 +274,10 @@
 		var/datum/organ/external/affecting = H.get_organ(user.zone_sel.selecting)
 		var/limb = affecting.display_name
 		if(!((affecting.name == "l_arm") || (affecting.name == "r_arm") || (affecting.name == "l_leg") || (affecting.name == "r_leg")))
-			user << "<span class='danger'>You can't apply a splint there!</span>"
+			to_chat(user, "<span class='danger'>You can't apply a splint there!</span>")
 			return
 		if(affecting.status & ORGAN_SPLINTED)
-			user << "<span class='danger'>[M]'s [limb] is already splinted!</span>"
+			to_chat(user, "<span class='danger'>[M]'s [limb] is already splinted!</span>")
 			return
 		if(M != user)
 			user.visible_message("<span class='danger'>[user] starts to apply \the [src] to [M]'s [limb]</span>.", \
@@ -285,7 +285,7 @@
 								"<span class='danger'>You hear something being wrapped.</span>")
 		else
 			if((!user.hand && affecting.name == "r_arm") || (user.hand && affecting.name == "l_arm"))
-				user << "<span class='danger'>You can't apply a splint to the arm you're using!</span>"
+				to_chat(user, "<span class='danger'>You can't apply a splint to the arm you're using!</span>")
 				return
 			user.visible_message("<span class='danger'>[user] starts to apply \the [src] to their [limb].</span>", \
 								"<span class='danger'>You start to apply \the [src] to your [limb].</span>", \

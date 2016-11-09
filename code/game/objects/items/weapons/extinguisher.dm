@@ -43,13 +43,13 @@
 /obj/item/weapon/extinguisher/examine(mob/user)
 	..()
 	if(src in user)
-		user << "[reagents.total_volume] units of water left!"
+		to_chat(user, "[reagents.total_volume] units of water left!")
 
 /obj/item/weapon/extinguisher/attack_self(mob/user)
 	safety = !safety
 	src.icon_state = "[sprite_name][!safety]"
 	src.desc = "The safety is [safety ? "on" : "off"]."
-	user << "<span class='notice'>The safety is [safety ? "on" : "off"].</span>"
+	to_chat(user, "<span class='notice'>The safety is [safety ? "on" : "off"].</span>")
 	return
 
 /obj/item/weapon/extinguisher/afterattack(atom/target, mob/user , flag)
@@ -58,13 +58,13 @@
 	if( istype(target, /obj/structure/reagent_dispensers/watertank) && get_dist(src,target) <= 1)
 		var/obj/O = target
 		O.reagents.trans_to(src, 50)
-		user << "<span class='notice'>[src] is now refilled.</span>"
+		to_chat(user, "<span class='notice'>[src] is now refilled.</span>")
 		playsound(src.loc, 'sound/effects/refill.ogg', 50, 1, -6)
 		return
 
 	if (!safety)
 		if (src.reagents.total_volume < 1)
-			usr << "<span class='rose'>[src] is empty.</span>"
+			to_chat(usr, "<span class='rose'>[src] is empty.</span>")
 			return
 
 		if (world.time < src.last_use + 20)

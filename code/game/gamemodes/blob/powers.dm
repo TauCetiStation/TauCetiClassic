@@ -2,7 +2,7 @@
 
 /mob/camera/blob/proc/can_buy(cost = 15)
 	if(blob_points < cost)
-		src << "<span class='warning'>You cannot afford this.</span>"
+		to_chat(src, "<span class='warning'>You cannot afford this.</span>")
 		return 0
 	add_points(-cost)
 	return 1
@@ -44,11 +44,11 @@
 	var/obj/effect/blob/B = (locate(/obj/effect/blob) in T)
 
 	if(!B)//We are on a blob
-		src << "There is no blob here!"
+		to_chat(src, "There is no blob here!")
 		return
 
 	if(!istype(B, /obj/effect/blob/normal))
-		src << "Unable to use this blob, find a normal one."
+		to_chat(src, "Unable to use this blob, find a normal one.")
 		return
 
 	if(!can_buy(10))
@@ -74,15 +74,15 @@
 	var/obj/effect/blob/B = (locate(/obj/effect/blob) in T)
 
 	if(!B)//We are on a blob
-		src << "There is no blob here!"
+		to_chat(src, "There is no blob here!")
 		return
 
 	if(!istype(B, /obj/effect/blob/normal))
-		src << "Unable to use this blob, find a normal one."
+		to_chat(src, "Unable to use this blob, find a normal one.")
 		return
 
 	for(var/obj/effect/blob/resource/blob in orange(4, T))
-		src << "There is a resource blob nearby, move more than 4 tiles away from it!"
+		to_chat(src, "There is a resource blob nearby, move more than 4 tiles away from it!")
 		return
 
 	if(!can_buy(40))
@@ -110,15 +110,15 @@
 	var/obj/effect/blob/B = (locate(/obj/effect/blob) in T)
 
 	if(!B)//We are on a blob
-		src << "There is no blob here!"
+		to_chat(src, "There is no blob here!")
 		return
 
 	if(!istype(B, /obj/effect/blob/normal))
-		src << "Unable to use this blob, find a normal one."
+		to_chat(src, "Unable to use this blob, find a normal one.")
 		return
 
 	for(var/obj/effect/blob/node/blob in orange(5, T))
-		src << "There is another node nearby, move more than 5 tiles away from it!"
+		to_chat(src, "There is another node nearby, move more than 5 tiles away from it!")
 		return
 
 	if(!can_buy(60))
@@ -142,15 +142,15 @@
 
 	var/obj/effect/blob/B = locate(/obj/effect/blob) in T
 	if(!B)
-		src << "You must be on a blob!"
+		to_chat(src, "You must be on a blob!")
 		return
 
 	if(!istype(B, /obj/effect/blob/normal))
-		src << "Unable to use this blob, find a normal one."
+		to_chat(src, "Unable to use this blob, find a normal one.")
 		return
 
 	for(var/obj/effect/blob/factory/blob in orange(7, T))
-		src << "There is a factory blob nearby, move more than 7 tiles away from it!"
+		to_chat(src, "There is a factory blob nearby, move more than 7 tiles away from it!")
 		return
 
 	if(!can_buy(60))
@@ -171,11 +171,11 @@
 
 	var/obj/effect/blob/B = locate(/obj/effect/blob) in T
 	if(!B)
-		src << "You must be on a blob!"
+		to_chat(src, "You must be on a blob!")
 		return
 
 	if(istype(B, /obj/effect/blob/core))
-		src << "Unable to remove this blob."
+		to_chat(src, "Unable to remove this blob.")
 		return
 
 	B.Destroy()
@@ -196,12 +196,12 @@
 
 	var/obj/effect/blob/B = locate() in T
 	if(B)
-		src << "There is a blob here!"
+		to_chat(src, "There is a blob here!")
 		return
 
 	var/obj/effect/blob/OB = locate() in circlerange(T, 1)
 	if(!OB)
-		src << "There is no blob adjacent to you."
+		to_chat(src, "There is no blob adjacent to you.")
 		return
 
 	if(!can_buy(5))
@@ -223,7 +223,7 @@
 	if(!can_buy(5))
 		return
 
-	src << "You rally your spores."
+	to_chat(src, "You rally your spores.")
 
 	var/list/surrounding_turfs = block(locate(T.x - 1, T.y - 1, T.z), locate(T.x + 1, T.y + 1, T.z))
 	if(!surrounding_turfs.len)

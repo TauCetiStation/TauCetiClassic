@@ -22,11 +22,11 @@ var/letter_255_ascii = text2ascii(LETTER_255)
 /proc/sanitize_simple(t,list/repl_chars = list("\n"=" ","\t"=" ","ÿ"=LETTER_255))
 
 	#ifdef DEBAG_CYRILLIC
-	world << "\magenta #DEBAG \blue <b>Sanitize_simple, entered. Text:</b> <i>[t]</i>"
+	to_chat(world, "\magenta #DEBAG \blue <b>Sanitize_simple, entered. Text:</b> <i>[t]</i>")
 	var/params
 	for(var/a in repl_chars)
 		params += " [html_decode(a)] replaced by [html_decode(repl_chars[a])]\n"
-	world << "<i>Params:\n[params]</i>"
+	to_chat(world, "<i>Params:\n[params]</i>")
 	#endif
 
 	for(var/char in repl_chars)
@@ -38,7 +38,7 @@ var/letter_255_ascii = text2ascii(LETTER_255)
 			index = findtext(t, char, index + len_rchar)
 
 	#ifdef DEBAG_CYRILLIC
-	world << "\magenta #DEBAG \red <b>Sanitize_simple, finished. Return text:</b> <i>[t]</i>"
+	to_chat(world, "\magenta #DEBAG \red <b>Sanitize_simple, finished. Return text:</b> <i>[t]</i>")
 	#endif
 
 	return t
@@ -46,11 +46,11 @@ var/letter_255_ascii = text2ascii(LETTER_255)
 /proc/sanitize(t,list/repl_chars = null)
 
 	#ifdef DEBAG_CYRILLIC
-	world << "\magenta #DEBAG \blue <b>Sanitize, entered. Text:</b> <i>[t]</i>"
+	to_chat(world, "\magenta #DEBAG \blue <b>Sanitize, entered. Text:</b> <i>[t]</i>")
 	var/params
 	for(var/a in repl_chars)
 		params += " [html_decode(a)] replaced by [html_decode(repl_chars[a])]\n"
-	world << "<i>Params:\n[params]</i>"
+	to_chat(world, "<i>Params:\n[params]</i>")
 	#endif
 
 	t = html_encode(sanitize_simple(t, repl_chars))
@@ -61,7 +61,7 @@ var/letter_255_ascii = text2ascii(LETTER_255)
 		index = findtext(t, LETTER_255, index + 6)//index+len("&#255;")
 
 	#ifdef DEBAG_CYRILLIC
-	world << "\magenta #DEBAG \red <b>Sanitize, finished. Return text:</b> <i>[t]</i>"
+	to_chat(world, "\magenta #DEBAG \red <b>Sanitize, finished. Return text:</b> <i>[t]</i>")
 	#endif
 
 	return t
@@ -69,11 +69,11 @@ var/letter_255_ascii = text2ascii(LETTER_255)
 /proc/sanitize_alt(t,list/repl_chars = null)
 
 	#ifdef DEBAG_CYRILLIC
-	world << "\magenta #DEBAG \blue <b>Sanitize_alt, entered. Text:</b> <i>[t]</i>"
+	to_chat(world, "\magenta #DEBAG \blue <b>Sanitize_alt, entered. Text:</b> <i>[t]</i>")
 	var/params
 	for(var/a in repl_chars)
 		params += " [html_decode(a)] replaced by [html_decode(repl_chars[a])]\n"
-	world << "<i>Params:\n[params]</i>"
+	to_chat(world, "<i>Params:\n[params]</i>")
 	#endif
 
 	t = html_encode(sanitize_simple(t, repl_chars))
@@ -84,50 +84,50 @@ var/letter_255_ascii = text2ascii(LETTER_255)
 		index = findtext(t, LETTER_255, index + 7)//index+len("&#1103;")
 
 	#ifdef DEBAG_CYRILLIC
-	world << "\magenta #DEBAG \red <b>Sanitize_alt, finished. Return text:</b> <i>[t]</i>"
+	to_chat(world, "\magenta #DEBAG \red <b>Sanitize_alt, finished. Return text:</b> <i>[t]</i>")
 	#endif
 
 	return t
 
 /proc/sanitize_popup(t)
 	#ifdef DEBAG_CYRILLIC
-	world << "\magenta #DEBAG \green <b>Sanitize_popup processed text:</b> <i>[t]</i>"
+	to_chat(world, "\magenta #DEBAG \green <b>Sanitize_popup processed text:</b> <i>[t]</i>")
 	#endif
 	return replacetext(t, "&#255;", "&#1103;")
 
 /proc/sanitize_chat(t)
 	#ifdef DEBAG_CYRILLIC
-	world << "\magenta #DEBAG \green <b>Sanitize_alt_chat processed text:</b> <i>[t]</i>"
+	to_chat(world, "\magenta #DEBAG \green <b>Sanitize_alt_chat processed text:</b> <i>[t]</i>")
 	#endif
 	return replacetext(t, "&#1103;", "&#255;")
 
 /proc/sanitize_plus(t,list/repl_chars = null)
 
 	#ifdef DEBAG_CYRILLIC
-	world << "\magenta #DEBAG \blue <b>Sanitize_plus, entered. Text:</b> <i>[t]</i>"
+	to_chat(world, "\magenta #DEBAG \blue <b>Sanitize_plus, entered. Text:</b> <i>[t]</i>")
 	var/params
 	for(var/a in repl_chars)
 		params += " [html_decode(a)] replaced by [html_decode(repl_chars[a])]\n"
-	world << "<i>Params:\n[params]</i>"
+	to_chat(world, "<i>Params:\n[params]</i>")
 	#endif
 
 	t = html_encode(sanitize_simple(t, repl_chars))
 
 	#ifdef DEBAG_CYRILLIC
-	world << "\magenta #DEBAG \red <b>Sanitize_plus, finished. Return text:</b> <i>[t]</i>"
+	to_chat(world, "\magenta #DEBAG \red <b>Sanitize_plus, finished. Return text:</b> <i>[t]</i>")
 	#endif
 
 	return t
 
 /proc/sanitize_plus_chat(t)
 	#ifdef DEBAG_CYRILLIC
-	world << "\magenta #DEBAG \green <b>Sanitize_plus_chat processed text:</b> <i>[t]</i>"
+	to_chat(world, "\magenta #DEBAG \green <b>Sanitize_plus_chat processed text:</b> <i>[t]</i>")
 	#endif
 	return replacetext(t, LETTER_255, "&#255;")
 
 /proc/sanitize_plus_popup(t)
 	#ifdef DEBAG_CYRILLIC
-	world << "\magenta #DEBAG \green <b>Sanitize_plus_popup processed text:</b> <i>[t]</i>"
+	to_chat(world, "\magenta #DEBAG \green <b>Sanitize_plus_popup processed text:</b> <i>[t]</i>")
 	#endif
 	return replacetext(t, LETTER_255, "&#1103;")
 

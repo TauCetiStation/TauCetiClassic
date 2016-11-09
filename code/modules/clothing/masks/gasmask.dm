@@ -44,14 +44,14 @@
 			flags_inv |= (HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE)
 			body_parts_covered |= EYES
 			icon_state = initial(icon_state)
-			usr << "You adjust \the [src] down to protect your eyes."
+			to_chat(usr, "You adjust \the [src] down to protect your eyes.")
 		else
 			src.up = !src.up
 			src.flags &= ~(HEADCOVERSEYES | HEADCOVERSMOUTH)
 			flags_inv &= ~(HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE)
 			body_parts_covered &= ~EYES
 			icon_state = "[initial(icon_state)]up"
-			usr << "You push \the [src] up out of your face."
+			to_chat(usr, "You push \the [src] up out of your face.")
 
 		usr.update_inv_wear_mask()
 
@@ -77,19 +77,19 @@
 	if(istype(W, /obj/item/weapon/screwdriver))
 		switch(aggressiveness)
 			if(1)
-				user << "\blue You set the restrictor to the middle position."
+				to_chat(user, "\blue You set the restrictor to the middle position.")
 				aggressiveness = 2
 			if(2)
-				user << "\blue You set the restrictor to the last position."
+				to_chat(user, "\blue You set the restrictor to the last position.")
 				aggressiveness = 3
 			if(3)
-				user << "\blue You set the restrictor to the first position."
+				to_chat(user, "\blue You set the restrictor to the first position.")
 				aggressiveness = 1
 			if(4)
-				user << "\red You adjust the restrictor but nothing happens, probably because its broken."
+				to_chat(user, "\red You adjust the restrictor but nothing happens, probably because its broken.")
 	else if(istype(W, /obj/item/weapon/wirecutters))
 		if(aggressiveness != 4)
-			user << "\red You broke it!"
+			to_chat(user, "\red You broke it!")
 			aggressiveness = 4
 	else
 		..()

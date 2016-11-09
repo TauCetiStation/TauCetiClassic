@@ -69,7 +69,7 @@
 		msg += "[line]\n"
 
 	msg += "<b>Total Players: [length(Lines)]</b>"
-	src << msg
+	to_chat(src, msg)
 
 /client/verb/staffwho()
 	set category = "Admin"
@@ -121,4 +121,4 @@
 			mentmsg += "\t[C] is a Mentor\n"
 			num_mentors_online++
 	msg = "<b>Current Admins ([num_admins_online]):</b>\n" + msg + "\n<b>Current Mentors ([num_mentors_online]):</b>\n" + mentmsg
-	src << msg
+	to_chat(src, msg)

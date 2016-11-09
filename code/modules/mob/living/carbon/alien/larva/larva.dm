@@ -46,7 +46,7 @@
 	return
 
 /mob/living/carbon/alien/larva/start_pulling(atom/movable/AM)//Prevents mouse from pulling things
-	src << "<span class='warning'>You are too small to pull anything.</span>"
+	to_chat(src, "<span class='warning'>You are too small to pull anything.</span>")
 	return
 
 /mob/living/carbon/alien/larva/swap_hand()

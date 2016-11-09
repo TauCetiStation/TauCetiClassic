@@ -25,10 +25,10 @@
 		if(istype(M, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = M
 			if(H.species.flags & IS_SYNTHETIC)
-				H << "\red You have a monitor for a head, where do you think you're going to put that?"
+				to_chat(H, "\red You have a monitor for a head, where do you think you're going to put that?")
 				return
 
-		M << "\blue You swallow [src]."
+		to_chat(M, "\blue You swallow [src].")
 		M.drop_from_inventory(src) //icon update
 		if(reagents.total_volume)
 			reagents.trans_to_ingest(M, reagents.total_volume)
@@ -41,7 +41,7 @@
 
 		var/mob/living/carbon/human/H = M
 		if(H.species.flags & IS_SYNTHETIC)
-			H << "\red They have a monitor for a head, where do you think you're going to put that?"
+			to_chat(H, "\red They have a monitor for a head, where do you think you're going to put that?")
 			return
 
 		for(var/mob/O in viewers(world.view, user))
@@ -72,9 +72,9 @@
 
 	if(target.is_open_container() != 0 && target.reagents)
 		if(!target.reagents.total_volume)
-			user << "\red [target] is empty. Cant dissolve pill."
+			to_chat(user, "\red [target] is empty. Cant dissolve pill.")
 			return
-		user << "\blue You dissolve the pill in [target]"
+		to_chat(user, "\blue You dissolve the pill in [target]")
 
 		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Spiked \a [target] with a pill. Reagents: [reagentlist(src)]</font>")
 		msg_admin_attack("[user.name] ([user.ckey]) spiked \a [target] with a pill. Reagents: [reagentlist(src)] (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")

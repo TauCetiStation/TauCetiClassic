@@ -362,7 +362,7 @@
 					A.attack_log += "\[[time_stamp()]\] <font color='red'>Slams face of [M.name] against \the [src]([M.ckey])</font>"
 					msg_admin_attack("[key_name(A)] slams [key_name(M)] face against \the [src]")
 				else
-					user << "<span class='warning'>You need a better grip to do that!</span>"
+					to_chat(user, "<span class='warning'>You need a better grip to do that!</span>")
 					return
 			else
 				G.affecting.loc = src.loc
@@ -374,7 +374,7 @@
 			return
 
 	if (istype(W, /obj/item/weapon/wrench))
-		user << "\blue Now disassembling table"
+		to_chat(user, "\blue Now disassembling table")
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		if(do_after(user,50, target = src))
 			destroy()
@@ -387,7 +387,7 @@
 		if(istype(W, /obj/item/weapon/melee/energy/blade) || (W:active && user.a_intent == "hurt"))
 			if(istype(src, /obj/structure/table/reinforced) && W:active)	//У обычных энергомечей нету 70 force как у ниндзи, поэтому не стоит
 				..()
-				user << "<span class='notice'>You tried to slice through [src] but [W] is too weak.</span>"
+				to_chat(user, "<span class='notice'>You tried to slice through [src] but [W] is too weak.</span>")
 				return
 			user.do_attack_animation(src)
 			var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
@@ -436,7 +436,7 @@
 		return
 
 	if(!flip(get_cardinal_dir(usr,src)))
-		usr << "<span class='notice'>It won't budge.</span>"
+		to_chat(usr, "<span class='notice'>It won't budge.</span>")
 		return
 
 	usr.visible_message("<span class='warning'>[usr] flips \the [src]!</span>")
@@ -474,7 +474,7 @@
 		return
 
 	if (!unflipping_check())
-		usr << "<span class='notice'>It won't budge.</span>"
+		to_chat(usr, "<span class='notice'>It won't budge.</span>")
 		return
 	unflip()
 
@@ -574,18 +574,18 @@
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.remove_fuel(0, user))
 			if(src.status == 2)
-				user << "\blue Now weakening the reinforced table"
+				to_chat(user, "\blue Now weakening the reinforced table")
 				playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
 				if (do_after(user, 50, target = src))
 					if(!src || !WT.isOn()) return
-					user << "\blue Table weakened"
+					to_chat(user, "\blue Table weakened")
 					src.status = 1
 			else
-				user << "\blue Now strengthening the reinforced table"
+				to_chat(user, "\blue Now strengthening the reinforced table")
 				playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
 				if (do_after(user, 50, target = src))
 					if(!src || !WT.isOn()) return
-					user << "\blue Table strengthened"
+					to_chat(user, "\blue Table strengthened")
 					src.status = 2
 			return
 		return

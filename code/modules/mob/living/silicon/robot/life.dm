@@ -54,7 +54,7 @@
 		src.has_power = 1
 	else
 		if (src.has_power)
-			src << "\red You are now running on emergency backup power."
+			to_chat(src, "\red You are now running on emergency backup power.")
 		src.has_power = 0
 		if(lights_on) // Light is on but there is no power!
 			lights_on = 0
@@ -291,7 +291,7 @@
 		killswitch_time --
 		if(killswitch_time <= 0)
 			if(src.client)
-				src << "\red <B>Killswitch Activated"
+				to_chat(src, "\red <B>Killswitch Activated")
 			killswitch = 0
 			spawn(5)
 				gib()
@@ -302,7 +302,7 @@
 		weaponlock_time --
 		if(weaponlock_time <= 0)
 			if(src.client)
-				src << "\red <B>Weapon Lock Timed Out!"
+				to_chat(src, "\red <B>Weapon Lock Timed Out!")
 			weapon_lock = 0
 			weaponlock_time = 120
 

@@ -35,7 +35,7 @@
 	src.ui_interact(user)
 
 /obj/machinery/embedded_controller/attack_paw(mob/user)
-	user << "You do not have the dexterity to use this."
+	to_chat(user, "You do not have the dexterity to use this.")
 	return
 
 /obj/machinery/embedded_controller/attack_hand(mob/user)

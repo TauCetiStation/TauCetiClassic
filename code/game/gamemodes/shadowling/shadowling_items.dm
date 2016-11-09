@@ -110,11 +110,11 @@
 		if(src.vision)
 			src.vision = !src.vision
 			src.icon_state = "ling_vision_on"
-			//usr << ""
+//			to_chat(usr, "")
 		else
 			src.vision = !src.vision
 			src.icon_state = "ling_vision_off"
-			//usr << ""
+//			to_chat(usr, "")
 
 		usr.update_inv_glasses()
 
@@ -135,8 +135,7 @@
 /obj/structure/shadow_vortex/Crossed(var/td)
 	..()
 	if(ismob(td))
-		td << "<span class='userdanger'><font size=3>You enter the rift. Sickening chimes begin to jangle in your ears. \
-		All around you is endless blackness. After you see something moving, you realize it isn't entirely lifeless.</font></span>" //A bit of spooking before they die
+		to_chat(td, "<span class='userdanger'><font size=3>You enter the rift. Sickening chimes begin to jangle in your ears. \ All around you is endless blackness. After you see something moving, you realize it isn't entirely lifeless.</font></span>") //A bit of spooking before they die
 		var/mob/M = td
 		M.ghostize()
 	playsound(loc, 'sound/effects/EMPulse.ogg', 25, 1)

@@ -34,17 +34,17 @@
 		var/obj/item/device/destTagger/O = W
 
 		if(src.sortTag != O.currTag)
-			user << "\blue *[O.currTag]*"
+			to_chat(user, "\blue *[O.currTag]*")
 			src.sortTag = O.currTag
 			playsound(src.loc, 'sound/machines/twobeep.ogg', 100, 1)
 
 	else if(istype(W, /obj/item/weapon/pen))
 		var/str = sanitize(copytext(input(usr,"Label text?","Set label",""),1,MAX_NAME_LEN))
 		if(!str || !length(str))
-			usr << "\red Invalid text."
+			to_chat(usr, "\red Invalid text.")
 			return
 		for(var/mob/M in viewers())
-			M << "\blue [user] labels [src] as [str]."
+			to_chat(M, "\blue [user] labels [src] as [str].")
 		src.name = "[src.name] ([str])"
 	return
 
@@ -74,17 +74,17 @@
 		var/obj/item/device/destTagger/O = W
 
 		if(src.sortTag != O.currTag)
-			user << "\blue *[O.currTag]*"
+			to_chat(user, "\blue *[O.currTag]*")
 			src.sortTag = O.currTag
 			playsound(src.loc, 'sound/machines/twobeep.ogg', 100, 1)
 
 	else if(istype(W, /obj/item/weapon/pen))
 		var/str = sanitize(copytext(input(usr,"Label text?","Set label",""),1,MAX_NAME_LEN))
 		if(!str || !length(str))
-			usr << "\red Invalid text."
+			to_chat(usr, "\red Invalid text.")
 			return
 		for(var/mob/M in viewers())
-			M << "\blue [user] labels [src] as [str]."
+			to_chat(M, "\blue [user] labels [src] as [str].")
 		src.name = "[src.name] ([str])"
 	return
 
@@ -148,7 +148,7 @@
 			O.loc = P
 			src.amount -= 3
 		else if(src.amount < 3)
-			user << "\blue You need more paper."
+			to_chat(user, "\blue You need more paper.")
 	else if (istype (target, /obj/structure/closet))
 		var/obj/structure/closet/O = target
 		if (src.amount > 3 && !O.opened)
@@ -158,9 +158,9 @@
 			O.loc = P
 			src.amount -= 3
 		else if(src.amount < 3)
-			user << "\blue You need more paper."
+			to_chat(user, "\blue You need more paper.")
 	else
-		user << "\blue The object you are trying to wrap is unsuitable for the sorting machinery!"
+		to_chat(user, "\blue The object you are trying to wrap is unsuitable for the sorting machinery!")
 	if (src.amount <= 0)
 		new /obj/item/weapon/c_tube( src.loc )
 		qdel(src)
@@ -170,7 +170,7 @@
 /obj/item/weapon/packageWrap/examine(mob/user)
 	..()
 	if(src in user)
-		user << "<span class='notice'>There are [amount] units of package wrap left!</span>"
+		to_chat(user, "<span class='notice'>There are [amount] units of package wrap left!</span>")
 
 
 /obj/item/device/destTagger
@@ -285,21 +285,21 @@
 		if(c_mode==0)
 			c_mode=1
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-			user << "You remove the screws around the power connection."
+			to_chat(user, "You remove the screws around the power connection.")
 			return
 		else if(c_mode==1)
 			c_mode=0
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-			user << "You attach the screws around the power connection."
+			to_chat(user, "You attach the screws around the power connection.")
 			return
 	else if(istype(I,/obj/item/weapon/weldingtool) && c_mode==1)
 		var/obj/item/weapon/weldingtool/W = I
 		if(W.remove_fuel(0,user))
 			playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
-			user << "You start slicing the floorweld off the delivery chute."
+			to_chat(user, "You start slicing the floorweld off the delivery chute.")
 			if(do_after(user,20,target = src))
 				if(!src || !W.isOn()) return
-				user << "You sliced the floorweld off the delivery chute."
+				to_chat(user, "You sliced the floorweld off the delivery chute.")
 				var/obj/structure/disposalconstruct/C = new (src.loc)
 				C.ptype = 8 // 8 =  Delivery chute
 				C.update()
@@ -308,5 +308,5 @@
 				qdel(src)
 			return
 		else
-			user << "You need more welding fuel to complete this task."
+			to_chat(user, "You need more welding fuel to complete this task.")
 			return

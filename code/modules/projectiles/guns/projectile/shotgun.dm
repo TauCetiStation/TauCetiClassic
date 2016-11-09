@@ -19,7 +19,7 @@
 /obj/item/weapon/gun/projectile/shotgun/attackby(obj/item/A, mob/user)
 	var/num_loaded = magazine.attackby(A, user, 1)
 	if(num_loaded)
-		user << "<span class='notice'>You load [num_loaded] shell\s into \the [src]!</span>"
+		to_chat(user, "<span class='notice'>You load [num_loaded] shell\s into \the [src]!</span>")
 		A.update_icon()
 		update_icon()
 
@@ -59,7 +59,7 @@
 /obj/item/weapon/gun/projectile/shotgun/examine(mob/user)
 	..()
 	if (chambered)
-		user << "A [chambered.BB ? "live" : "spent"] one is in the chamber."
+		to_chat(user, "A [chambered.BB ? "live" : "spent"] one is in the chamber.")
 
 /obj/item/weapon/gun/projectile/shotgun/combat
 	name = "combat shotgun"
@@ -98,10 +98,10 @@
 		if(open)
 			chamber_round()
 		else
-			user << "<span class='notice'>You can't load shell while [src] is closed!</span>"
+			to_chat(user, "<span class='notice'>You can't load shell while [src] is closed!</span>")
 	if(istype(A, /obj/item/weapon/circular_saw) || istype(A, /obj/item/weapon/melee/energy) || istype(A, /obj/item/weapon/pickaxe/plasmacutter))
 		if(short) return
-		user << "<span class='notice'>You begin to shorten the barrel of \the [src].</span>"
+		to_chat(user, "<span class='notice'>You begin to shorten the barrel of \the [src].</span>")
 		if(get_ammo())
 			afterattack(user, user)	//will this work?
 			afterattack(user, user)	//it will. we call it twice, for twice the FUN
@@ -114,7 +114,7 @@
 			item_state = "gun"
 			slot_flags &= ~SLOT_BACK	//you can't sling it on your back
 			slot_flags |= SLOT_BELT		//but you can wear it on your belt (poorly concealed under a trenchcoat, ideally)
-			user << "<span class='warning'>You shorten the barrel of \the [src]!</span>"
+			to_chat(user, "<span class='warning'>You shorten the barrel of \the [src]!</span>")
 			name = "sawn-off shotgun"
 			desc = "Omar's coming!"
 			short = 1
@@ -135,12 +135,12 @@
 			CB.update_icon()
 			num_unloaded++
 		if (num_unloaded)
-			user << "<span class = 'notice'>You break open \the [src] and unload [num_unloaded] shell\s.</span>"
+			to_chat(user, "<span class = 'notice'>You break open \the [src] and unload [num_unloaded] shell\s.</span>")
 			//chambered.loc = get_turf(src)//Eject casing
 			//chambered.SpinAnimation(5, 1)
 			//chambered = null
 		else
-			user << "<span class = 'notice'>You break open \the [src].</span>"
+			to_chat(user, "<span class = 'notice'>You break open \the [src].</span>")
 
 	update_icon()
 //	var/num_unloaded = 0
@@ -152,13 +152,13 @@
 //		CB.update_icon()
 //		num_unloaded++
 //	if (num_unloaded)
-//		user << "<span class = 'notice'>You unload [num_unloaded] shell\s.</span>"
+//		to_chat(user, "<span class = 'notice'>You unload [num_unloaded] shell\s.</span>")
 //	else
-//		user << "<span class='notice'>[src] is empty.</span>"
+//		to_chat(user, "<span class='notice'>[src] is empty.</span>")
 
 /obj/item/weapon/gun/projectile/revolver/doublebarrel/special_check(mob/user)
 	if(open)
-		user << "<span class='warning'>You can't fire [src] while its open!</span>"
+		to_chat(user, "<span class='warning'>You can't fire [src] while its open!</span>")
 		return 0
 	return ..()
 
@@ -226,13 +226,13 @@
 			user.remove_from_mob(AM)
 			magazine = AM
 			magazine.loc = src
-			user << "<span class='notice'>You load a new clip into \the [src].</span>"
+			to_chat(user, "<span class='notice'>You load a new clip into \the [src].</span>")
 			chamber_round()
 			A.update_icon()
 			update_icon()
 			return 1
 		else if (magazine)
-			user << "<span class='notice'>There's already a clip in \the [src].</span>"
+			to_chat(user, "<span class='notice'>There's already a clip in \the [src].</span>")
 	return 0
 
 /obj/item/weapon/gun/projectile/shotgun/dungeon

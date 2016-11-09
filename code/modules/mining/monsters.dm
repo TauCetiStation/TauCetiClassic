@@ -291,16 +291,16 @@
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(inert)
-			user << "<span class='notice'>[src] have become inert, its healing properties are no more.</span>"
+			to_chat(user, "<span class='notice'>[src] have become inert, its healing properties are no more.</span>")
 			return
 		else
 			if(H.stat == DEAD)
-				user << "<span class='notice'>[src] are useless on the dead.</span>"
+				to_chat(user, "<span class='notice'>[src] are useless on the dead.</span>")
 				return
 			if(H != user)
 				H.visible_message("[user] forces [H] to apply [src]... they quickly regenerate all injuries!")
 			else
-				user << "<span class='notice'>You start to smear [src] on yourself. It feels and smells disgusting, but you feel amazingly refreshed in mere moments.</span>"
+				to_chat(user, "<span class='notice'>You start to smear [src] on yourself. It feels and smells disgusting, but you feel amazingly refreshed in mere moments.</span>")
 			H.revive()
 			qdel(src)
 	..()
@@ -464,10 +464,10 @@
 			if(current_armor.["melee"] < 80)
 				current_armor.["melee"] = min(current_armor.["melee"] + 10, 80)
 				C.breach_threshold = min(C.breach_threshold + 2, 24)
-				user << "<span class='info'>You strengthen [target], improving its resistance against melee attacks.</span>"
+				to_chat(user, "<span class='info'>You strengthen [target], improving its resistance against melee attacks.</span>")
 				qdel(src)
 			else
-				user << "<span class='warning'>You can't improve [C] any further!</span>"
+				to_chat(user, "<span class='warning'>You can't improve [C] any further!</span>")
 				return
 		if(istype(target, /obj/mecha/working/ripley))
 			var/obj/mecha/working/ripley/D = target
@@ -478,7 +478,7 @@
 				damage_absorption["bullet"] = damage_absorption["bullet"] - 0.05
 				damage_absorption["fire"] = damage_absorption["fire"] - 0.05
 				damage_absorption["laser"] = damage_absorption["laser"] - 0.025
-				user << "<span class='info'>You strengthen [target], improving its resistance against melee attacks.</span>"
+				to_chat(user, "<span class='info'>You strengthen [target], improving its resistance against melee attacks.</span>")
 				D.update_icon()
 				if(D.hides == 3)
 					D.desc = "Autonomous Power Loader Unit. It's wearing a fearsome carapace entirely composed of goliath hide plates - its pilot must be an experienced monster hunter."
@@ -486,5 +486,5 @@
 					D.desc = "Autonomous Power Loader Unit. Its armour is enhanced with some goliath hide plates."
 				qdel(src)
 			else
-				user << "<span class='warning'>You can't improve [D] any further!</span>"
+				to_chat(user, "<span class='warning'>You can't improve [D] any further!</span>")
 				return

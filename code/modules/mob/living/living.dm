@@ -34,11 +34,11 @@
 		for(var/mob/MM in range(M, 1))
 			if(MM.pinned.len || ((MM.pulling == M && ( M.restrained() && !( MM.restrained() ) && MM.stat == CONSCIOUS)) || locate(/obj/item/weapon/grab, M.grabbed_by.len)) )
 				if ( !(world.time % 5) )
-					src << "<span class='warning'>[M] is restrained, you cannot push past.</span>"
+					to_chat(src, "<span class='warning'>[M] is restrained, you cannot push past.</span>")
 				return 1
 			if( M.pulling == MM && ( MM.restrained() && !( M.restrained() ) && M.stat == CONSCIOUS) )
 				if ( !(world.time % 5) )
-					src << "<span class='warning'>[M] is restraining [MM], you cannot push past.</span>"
+					to_chat(src, "<span class='warning'>[M] is restraining [MM], you cannot push past.</span>")
 				return 1
 
 		//Fat
@@ -47,7 +47,7 @@
 			if(isrobot(src))
 				ran = 20
 			if(prob(ran))
-				src << "<span class='danger'>You fail to push [M]'s fat ass out of the way.</span>"
+				to_chat(src, "<span class='danger'>You fail to push [M]'s fat ass out of the way.</span>")
 			return 1
 
 	//Leaping mobs just land on the tile, no pushing, no anything.
@@ -169,7 +169,7 @@
 	if ((src.health < 0 && src.health > -95.0))
 		src.adjustOxyLoss(src.health + 200)
 		src.health = 100 - src.getOxyLoss() - src.getToxLoss() - src.getFireLoss() - src.getBruteLoss()
-		src << "<span class='notice'>You have given up life and succumbed to death.</span>"
+		to_chat(src, "<span class='notice'>You have given up life and succumbed to death.</span>")
 
 
 /mob/living/proc/updatehealth()
@@ -189,7 +189,7 @@
 //sort of a legacy burn method for /electrocute, /shock, and the e_chair
 /mob/living/proc/burn_skin(burn_amount)
 	if(istype(src, /mob/living/carbon/human))
-		//world << "DEBUG: burn_skin(), mutations=[mutations]"
+//		to_chat(world, "DEBUG: burn_skin(), mutations=[mutations]")
 		if(NO_SHOCK in src.mutations) //shockproof
 			return 0
 		if (COLD_RESISTANCE in src.mutations) //fireproof
@@ -229,7 +229,7 @@
 		if(actual < desired)
 			temperature = desired
 //	if(istype(src, /mob/living/carbon/human))
-//		world << "[src] ~ [src.bodytemperature] ~ [temperature]"
+//		to_chat(world, "[src] ~ [src.bodytemperature] ~ [temperature]")
 	return temperature
 
 
@@ -513,11 +513,11 @@
 
 	if(config.allow_Metadata)
 		if(client)
-			usr << "[src]'s Metainfo:<br>[client.prefs.metadata]"
+			to_chat(usr, "[src]'s Metainfo:<br>[client.prefs.metadata]")
 		else
-			usr << "[src] does not have any stored infomation!"
+			to_chat(usr, "[src] does not have any stored infomation!")
 	else
-		usr << "OOC Metadata is not supported by this server!"
+		to_chat(usr, "OOC Metadata is not supported by this server!")
 
 	return
 
@@ -675,10 +675,10 @@
 
 		if(istype(M))
 			M.drop_from_inventory(H)
-			M << "<span class='notice'>[H] wriggles out of your grip!</span>"
-			src << "<span class='notice'>You wriggle out of [M]'s grip!</span>"
+			to_chat(M, "<span class='notice'>[H] wriggles out of your grip!</span>")
+			to_chat(src, "<span class='notice'>You wriggle out of [M]'s grip!</span>")
 		else if(istype(H.loc,/obj/item))
-			src << "<span class='notice'>You struggle free of [H.loc].</span>"
+			to_chat(src, "<span class='notice'>You struggle free of [H.loc].</span>")
 			H.forceMove(get_turf(H))
 
 		if(istype(M))
@@ -695,8 +695,8 @@
 		var/mob/living/simple_animal/borer/B = src.loc
 		var/mob/living/captive_brain/H = src
 
-		H << "<span class='danger'>You begin doggedly resisting the parasite's control (this will take approximately sixty seconds).</span>"
-		B.host << "<span class='danger'>You feel the captive mind of [src] begin to resist your control.</span>"
+		to_chat(H, "<span class='danger'>You begin doggedly resisting the parasite's control (this will take approximately sixty seconds).</span>")
+		to_chat(B.host, "<span class='danger'>You feel the captive mind of [src] begin to resist your control.</span>")
 
 		spawn(rand(350,450)+B.host.brainloss)
 
@@ -704,8 +704,8 @@
 				return
 
 			B.host.adjustBrainLoss(rand(5,10))
-			H << "<span class='danger'>With an immense exertion of will, you regain control of your body!</span>"
-			B.host << "<span class='danger'>You feel control of the host brain ripped from your grasp, and retract your probosci before the wild neural impulses can damage you.</span>"
+			to_chat(H, "<span class='danger'>With an immense exertion of will, you regain control of your body!</span>")
+			to_chat(B.host, "<span class='danger'>You feel control of the host brain ripped from your grasp, and retract your probosci before the wild neural impulses can damage you.</span>")
 			B.controlling = 0
 
 			B.ckey = B.host.ckey
@@ -757,7 +757,7 @@
 			if( C.handcuffed )
 				C.next_move = world.time + 100
 				C.last_special = world.time + 100
-				C << "<span class='rose'>You attempt to unbuckle yourself. (This will take around 2 minutes and you need to stand still)</span>"
+				to_chat(C, "<span class='rose'>You attempt to unbuckle yourself. (This will take around 2 minutes and you need to stand still)</span>")
 				for(var/mob/O in viewers(L))
 					O.show_message("<span class='danger'>[usr] attempts to unbuckle themself!</span>", 1)
 				spawn(0)
@@ -766,7 +766,7 @@
 							return
 						for(var/mob/O in viewers(C))
 							O.show_message("<span class='danger'>[usr] manages to unbuckle themself!</span>", 1)
-						C << "<span class='notice'>You successfully unbuckle yourself.</span>"
+						to_chat(C, "<span class='notice'>You successfully unbuckle yourself.</span>")
 						C.buckled.user_unbuckle_mob(C)
 		else
 			L.buckled.user_unbuckle_mob(L)
@@ -796,7 +796,7 @@
 			CM.next_move = world.time + 100
 			CM.last_special = world.time + 100
 			if(isalienadult(CM) || (HULK in usr.mutations))//Don't want to do a lot of logic gating here.
-				usr << "<span class='rose'>You attempt to break your handcuffs. (This will take around 5 seconds and you need to stand still)</span>"
+				to_chat(usr, "<span class='rose'>You attempt to break your handcuffs. (This will take around 5 seconds and you need to stand still)</span>")
 				for(var/mob/O in viewers(CM))
 					O.show_message(text("<span class='danger'>[] is trying to break the handcuffs!</span>", CM), 1)
 				spawn(0)
@@ -805,7 +805,7 @@
 							return
 						for(var/mob/O in viewers(CM))
 							O.show_message(text("<span class='danger'>[] manages to break the handcuffs!</span>", CM), 1)
-						CM << "<span class='notice'>You successfully break your handcuffs.</span>"
+						to_chat(CM, "<span class='notice'>You successfully break your handcuffs.</span>")
 						CM.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 						qdel(CM.handcuffed)
 						CM.handcuffed = null
@@ -817,7 +817,7 @@
 				if(istype(HC)) //If you are handcuffed with actual handcuffs... Well what do I know, maybe someone will want to handcuff you with toilet paper in the future...
 					breakouttime = HC.breakouttime
 					displaytime = breakouttime / 600 //Minutes
-				CM << "<span class='notice'>You attempt to remove \the [HC]. (This will take around [displaytime] minutes and you need to stand still)</span>"
+				to_chat(CM, "<span class='notice'>You attempt to remove \the [HC]. (This will take around [displaytime] minutes and you need to stand still)</span>")
 				for(var/mob/O in viewers(CM))
 					O.show_message( "<span class='danger'>[usr] attempts to remove \the [HC]!</span>", 1)
 				spawn(0)
@@ -842,7 +842,7 @@
 			CM.next_move = world.time + 100
 			CM.last_special = world.time + 100
 			if(isalienadult(CM) || (HULK in usr.mutations))//Don't want to do a lot of logic gating here.
-				usr << "<span class='notice'>You attempt to break your legcuffs. (This will take around 5 seconds and you need to stand still)</span>"
+				to_chat(usr, "<span class='notice'>You attempt to break your legcuffs. (This will take around 5 seconds and you need to stand still)</span>")
 				for(var/mob/O in viewers(CM))
 					O.show_message(text("<span class='danger'>[] is trying to break the legcuffs!</span>", CM), 1)
 				spawn(0)
@@ -851,7 +851,7 @@
 							return
 						for(var/mob/O in viewers(CM))
 							O.show_message(text("<span class='danger'>[] manages to break the legcuffs!</span>", CM), 1)
-						CM << "<span class='notice'>You successfully break your legcuffs."
+						to_chat(CM, "<span class='notice'>You successfully break your legcuffs.")
 						CM.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 						qdel(CM.legcuffed)
 						CM.legcuffed = null
@@ -863,7 +863,7 @@
 				if(istype(HC)) //If you are legcuffed with actual legcuffs... Well what do I know, maybe someone will want to legcuff you with toilet paper in the future...
 					breakouttime = HC.breakouttime
 					displaytime = breakouttime / 600 //Minutes
-				CM << "<span class='notice'>You attempt to remove \the [HC]. (This will take around [displaytime] minutes and you need to stand still)</span>"
+				to_chat(CM, "<span class='notice'>You attempt to remove \the [HC]. (This will take around [displaytime] minutes and you need to stand still)</span>")
 				for(var/mob/O in viewers(CM))
 					O.show_message( "<span class='danger'>[usr] attempts to remove \the [HC]!</span>", 1)
 				spawn(0)
@@ -898,28 +898,28 @@
 			var/datum/robot_component/C = R.components[V]
 			if(C.installed)
 				C.toggled = !C.toggled
-		R << "<span class='notice'>You toggle all your components.</span>"
+		to_chat(R, "<span class='notice'>You toggle all your components.</span>")
 		return
 
 //Already resting and have others debuffs
 	if( resting && (sleeping || weakened || paralysis || stunned) )
-		src << "<span class='rose'>You can't wake up.</span>"
+		to_chat(src, "<span class='rose'>You can't wake up.</span>")
 
 //Restrained and some debuffs
 	else if( restrained() && (paralysis || stunned) )
-		src << "<span class='rose'>You can't move.</span>"
+		to_chat(src, "<span class='rose'>You can't move.</span>")
 
 //Restrained and lying on optable or simple table
 	else if( restrained() && can_operate(src) )	//TO DO: Refactor OpTable code to /bed subtype or "Rest" verb
-		src << "<span class='rose'>You can't move.</span>"
+		to_chat(src, "<span class='rose'>You can't move.</span>")
 
 //Debuffs check
 	else if(!resting && (sleeping || weakened || paralysis || stunned) )
-		src << "<span class='rose'>You can't control yourself.</span>"
+		to_chat(src, "<span class='rose'>You can't control yourself.</span>")
 
 	else
 		resting = !resting
-		src << "<span class='notice'>You are now [resting ? "resting" : "getting up"].</span>"
+		to_chat(src, "<span class='notice'>You are now [resting ? "resting" : "getting up"].</span>")
 
 //called when the mob receives a bright flash
 /mob/living/proc/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /obj/screen/fullscreen/flash)

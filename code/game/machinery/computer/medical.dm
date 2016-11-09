@@ -22,7 +22,7 @@
 		usr.drop_item()
 		O.loc = src
 		scan = O
-		user << "You insert [O]."
+		to_chat(user, "You insert [O].")
 	..()
 
 /obj/machinery/computer/med_data/attack_hand(mob/user)

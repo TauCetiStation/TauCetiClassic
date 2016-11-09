@@ -19,7 +19,7 @@
 		return
 	if (istype(W,/obj/item/weapon/cigbutt) || istype(W,/obj/item/clothing/mask/cigarette) || istype(W, /obj/item/weapon/match))
 		if (contents.len >= max_butts)
-			user << "This ashtray is full."
+			to_chat(user, "This ashtray is full.")
 			return
 		user.remove_from_mob(W)
 		W.loc = src
@@ -34,7 +34,7 @@
 				qdel(cig)
 				W = butt
 			else if (cig.lit == 0)
-				user << "You place [cig] in [src] without even smoking it. Why would you do that?"
+				to_chat(user, "You place [cig] in [src] without even smoking it. Why would you do that?")
 
 		src.visible_message("[user] places [W] in [src].")
 		user.update_inv_l_hand()
@@ -48,7 +48,7 @@
 			desc = empty_desc + " It's half-filled."
 	else
 		health = max(0,health - W.force)
-		user << "You hit [src] with [W]."
+		to_chat(user, "You hit [src] with [W].")
 		if (health < 1)
 			die()
 	return

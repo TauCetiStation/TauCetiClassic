@@ -66,7 +66,7 @@
 		else
 			new_group_possible = 1
 
-//	world << "[north_votes], [south_votes], [east_votes]"
+//	to_chat(world, "[north_votes], [south_votes], [east_votes]")
 
 	var/datum/air_group/group_joined = null
 

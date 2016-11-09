@@ -214,14 +214,14 @@ var/global/list/autolathe_recipes_hidden = list( \
 	if (src.shocked)
 		src.shock(user,50)
 	if (src.disabled)
-		user << "\red You press the button, but nothing happens."
+		to_chat(user, "\red You press the button, but nothing happens.")
 		return
 	regular_win(user)
 	return
 
 /obj/machinery/autolathe/attackby(obj/item/I, mob/user)
 	if (busy)
-		user << "\red The autolathe is busy. Please wait for completion of previous operation."
+		to_chat(user, "\red The autolathe is busy. Please wait for completion of previous operation.")
 		return 1
 
 	if(default_deconstruction_screwdriver(user, "autolathe_t", "autolathe", I))
@@ -249,13 +249,13 @@ var/global/list/autolathe_recipes_hidden = list( \
 		return 1
 
 	if (src.m_amount + I.m_amt > max_m_amount)
-		user << "\red The autolathe is full. Please remove metal from the autolathe in order to insert more."
+		to_chat(user, "\red The autolathe is full. Please remove metal from the autolathe in order to insert more.")
 		return 1
 	if (src.g_amount + I.g_amt > max_g_amount)
-		user << "\red The autolathe is full. Please remove glass from the autolathe in order to insert more."
+		to_chat(user, "\red The autolathe is full. Please remove glass from the autolathe in order to insert more.")
 		return 1
 	if (I.m_amt == 0 && I.g_amt == 0)
-		user << "\red This object does not contain significant amounts of metal or glass, or cannot be accepted by the autolathe due to size or hazardous materials."
+		to_chat(user, "\red This object does not contain significant amounts of metal or glass, or cannot be accepted by the autolathe due to size or hazardous materials.")
 		return 1
 
 	var/amount = 1
@@ -280,7 +280,7 @@ var/global/list/autolathe_recipes_hidden = list( \
 	use_power(max(1000, (m_amt+g_amt)*amount/10))
 	src.m_amount += m_amt * amount
 	src.g_amount += g_amt * amount
-	user << "You insert [amount] sheet[amount>1 ? "s" : ""] to the autolathe."
+	to_chat(user, "You insert [amount] sheet[amount>1 ? "s" : ""] to the autolathe.")
 	if (I && I.loc == src)
 		qdel(I)
 	busy = 0
@@ -300,7 +300,7 @@ var/global/list/autolathe_recipes_hidden = list( \
 		return
 
 	if(busy)
-		usr << "\red The autolathe is busy. Please wait for completion of previous operation."
+		to_chat(usr, "\red The autolathe is busy. Please wait for completion of previous operation.")
 		return FALSE
 
 	if(href_list["make"])
@@ -370,10 +370,10 @@ var/global/list/autolathe_recipes_hidden = list( \
 		var/temp_wire = href_list["wire"]
 		if(href_list["act"] == "pulse")
 			if (!istype(usr.get_active_hand(), /obj/item/device/multitool))
-				usr << "You need a multitool!"
+				to_chat(usr, "You need a multitool!")
 			else
 				if(src.wires[temp_wire])
-					usr << "You can't pulse a cut wire."
+					to_chat(usr, "You can't pulse a cut wire.")
 				else
 					if(src.hack_wire == temp_wire)
 						src.hacked = !src.hacked
@@ -388,7 +388,7 @@ var/global/list/autolathe_recipes_hidden = list( \
 						spawn(100) src.shocked = !src.shocked
 		if(href_list["act"] == "wire")
 			if (!istype(usr.get_active_hand(), /obj/item/weapon/wirecutters))
-				usr << "You need wirecutters!"
+				to_chat(usr, "You need wirecutters!")
 			else
 				wires[temp_wire] = !wires[temp_wire]
 				if(src.hack_wire == temp_wire)

@@ -12,7 +12,7 @@
 /obj/effect/proc_holder/changeling/change_species/sting_action(mob/living/carbon/human/user)
 	var/datum/changeling/changeling = user.mind.changeling
 	if(changeling.absorbed_species.len < 2)
-		src << "<span class='warning'>We do not know of any other species genomes to use.</span>"
+		to_chat(src, "<span class='warning'>We do not know of any other species genomes to use.</span>")
 		return
 
 	var/S = input("Select the target species: ", "Target Species", null) as null|anything in changeling.absorbed_species

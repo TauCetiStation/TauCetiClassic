@@ -90,7 +90,7 @@
 	container_resist(user)
 
 /obj/machinery/atmospherics/unary/cryo_cell/container_resist(mob/user)
-	user << "<span class='notice'>You struggle inside the cryotube, kicking the release with your foot... (This will take around 30 seconds.)</span>"
+	to_chat(user, "<span class='notice'>You struggle inside the cryotube, kicking the release with your foot... (This will take around 30 seconds.)</span>")
 	//audible_message("<span class='notice'>You hear a thump from [src].</span>")
 	if(do_after(user, 300, target = src))
 		if(occupant == user) // Check they're still here.
@@ -104,7 +104,7 @@
 	if(usr == occupant || contents.Find(usr))	//If the user is inside the tube...
 		if(usr.stat == DEAD)	//and he's not dead....
 			return
-		usr << "<span class='notice'>Release sequence activated. This will take about a minute.</span>"
+		to_chat(usr, "<span class='notice'>Release sequence activated. This will take about a minute.</span>")
 		sleep(600)
 		if(!src || !usr || (!occupant && !contents.Find(usr)))	//Check if someone's released/replaced/bombed him already
 			return
@@ -119,11 +119,11 @@
 	..()
 	if(occupant)
 		if(on)
-			user << "Someone's inside [src]!"
+			to_chat(user, "Someone's inside [src]!")
 		else
-			user << "You can barely make out a form floating in [src]."
+			to_chat(user, "You can barely make out a form floating in [src].")
 	else
-		user << "[src] seems empty."
+		to_chat(user, "[src] seems empty.")
 
 /obj/machinery/atmospherics/unary/cryo_cell/attack_hand(mob/user)
 	ui_interact(user)
@@ -225,7 +225,7 @@
 /obj/machinery/atmospherics/unary/cryo_cell/attackby(obj/item/weapon/G, mob/user)
 	if(istype(G, /obj/item/weapon/reagent_containers/glass))
 		if(beaker)
-			user << "\red A beaker is already loaded into the machine."
+			to_chat(user, "\red A beaker is already loaded into the machine.")
 			return
 
 		beaker =  G

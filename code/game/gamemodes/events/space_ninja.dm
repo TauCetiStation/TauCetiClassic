@@ -11,13 +11,13 @@ ________________________________________________________________________________
 
 	Data:
 
-	>> space_ninja.dm << is this file. It contains a variety of procs related to either spawning space ninjas,
+	to_chat(>> space_ninja.dm, is this file. It contains a variety of procs related to either spawning space ninjas,)
 	modifying their verbs, various help procs, testing debug-related content, or storing unused procs for later.
 	Similar functions should go into this file, along with anything else that may not have an explicit category.
 	IMPORTANT: actual ninja suit, gloves, etc, are stored under the appropriate clothing files. If you need to change
 	variables or look them up, look there. Easiest way is through the map file browser.
 
-	>> ninja_abilities.dm << contains all the ninja-related powers. Spawning energy swords, teleporting, and the like.
+	to_chat(>> ninja_abilities.dm, contains all the ninja-related powers. Spawning energy swords, teleporting, and the like.)
 	If more powers are added, or perhaps something related to powers, it should go there. Make sure to describe
 	what an ability/power does so it's easier to reference later without looking at the code.
 	IMPORTANT: verbs are still somewhat funky to work with. If an argument is specified but is not referenced in a way
@@ -25,7 +25,7 @@ ________________________________________________________________________________
 	This can be bypassed by either referencing the argument properly, or linking to another proc with the argument
 	attached. The latter is what I like to do for certain cases--sometimes it's necessary to do that regardless.
 
-	>> ninja_equipment.dm << deals with all the equipment-related procs for a ninja. Primarily it has the suit, gloves,
+	to_chat(>> ninja_equipment.dm, deals with all the equipment-related procs for a ninja. Primarily it has the suit, gloves,)
 	and mask. The suit is by far the largest section of code out of the three and includes a lot of code that ties in
 	to other functions. This file has gotten kind of large so breaking it up may be in order. I use section hearders.
 	IMPORTANT: not much to say here. Follow along with the comments and adding new functions should be a breeze. Also
@@ -100,7 +100,7 @@ var/ninja_confirmed_selection = 0
 /proc/space_ninja_arrival(assign_key = null, assign_mission = null)
 
 	if(ninja_selection_active)
-		usr << "\red Ninja selection already in progress. Please wait until it ends."
+		to_chat(usr, "\red Ninja selection already in progress. Please wait until it ends.")
 		return
 
 	var/datum/game_mode/current_mode = ticker.mode
@@ -178,7 +178,7 @@ Malf AIs/silicons aren't added. Monkeys aren't added. Messes with objective comp
 				break
 
 	if(!candidate_mob)
-		usr << "\red The randomly chosen mob was not found in the second check."
+		to_chat(usr, "\red The randomly chosen mob was not found in the second check.")
 		return
 
 	ninja_selection_active = 1
@@ -187,7 +187,7 @@ Malf AIs/silicons aren't added. Monkeys aren't added. Messes with objective comp
 
 	spawn(1)
 		if(alert(candidate_mob, "You have been selected to play as a space ninja. Would you like to play as this role? (You have 30 seconds to accept - You will spawn in 30 seconds if you accept)",,"Yes","No")!="Yes")
-			usr << "\red The selected candidate for space ninja declined."
+			to_chat(usr, "\red The selected candidate for space ninja declined.")
 			return
 
 		ninja_confirmed_selection = this_selection_id
@@ -195,12 +195,12 @@ Malf AIs/silicons aren't added. Monkeys aren't added. Messes with objective comp
 	spawn(300)
 		if(!ninja_selection_active || (this_selection_id != ninja_selection_id ))
 			ninja_selection_active = 0
-			candidate_mob << "\red Sorry, you were too late. You only had 30 seconds to accept."
+			to_chat(candidate_mob, "\red Sorry, you were too late. You only had 30 seconds to accept.")
 			return
 
 		if(ninja_confirmed_selection != ninja_selection_id)
 			ninja_selection_active = 0
-			usr << "\red The ninja did not accept the role in time."
+			to_chat(usr, "\red The ninja did not accept the role in time.")
 			return
 
 		ninja_selection_active = 0
@@ -225,7 +225,7 @@ Malf AIs/silicons aren't added. Monkeys aren't added. Messes with objective comp
 
 		if(assign_mission)
 			new_ninja.mind.store_memory("<B>Mission:</B> \red [assign_mission].<br>")
-			new_ninja << "\blue \nYou are an elite mercenary assassin of the Spider Clan, [new_ninja.real_name]. The dreaded \red <B>SPACE NINJA</B>!\blue You have a variety of abilities at your disposal, thanks to your nano-enhanced cyber armor. Remember your training! \nYour current mission is: \red <B>[assign_mission]</B>"
+			to_chat(new_ninja, "\blue \nYou are an elite mercenary assassin of the Spider Clan, [new_ninja.real_name]. The dreaded \red <B>SPACE NINJA</B>!\blue You have a variety of abilities at your disposal, thanks to your nano-enhanced cyber armor. Remember your training! \nYour current mission is: \red <B>[assign_mission]</B>")
 		else
 			if(xeno_list.len>3)//If there are more than three humanoid xenos on the station, time to get dangerous.
 				//Here we want the ninja to murder all the queens. The other aliens don't really matter.
@@ -373,13 +373,13 @@ Malf AIs/silicons aren't added. Monkeys aren't added. Messes with objective comp
 			ninja_mind.objectives += ninja_objective
 
 			var/directive = generate_ninja_directive(side)
-			new_ninja << "\blue \nYou are an elite mercenary assassin of the Spider Clan, [new_ninja.real_name]. The dreaded \red <B>SPACE NINJA</B>!\blue You have a variety of abilities at your disposal, thanks to your nano-enhanced cyber armor. Remember your training (initialize your suit by right clicking on it)! \nYour current directive is: \red <B>[directive]</B>"
+			to_chat(new_ninja, "\blue \nYou are an elite mercenary assassin of the Spider Clan, [new_ninja.real_name]. The dreaded \red <B>SPACE NINJA</B>!\blue You have a variety of abilities at your disposal, thanks to your nano-enhanced cyber armor. Remember your training (initialize your suit by right clicking on it)! \nYour current directive is: \red <B>[directive]</B>")
 			new_ninja.mind.store_memory("<B>Directive:</B> \red [directive]<br>")
 
 			var/obj_count = 1
-			new_ninja << "\blue Your current objectives:"
+			to_chat(new_ninja, "\blue Your current objectives:")
 			for(var/datum/objective/objective in ninja_mind.objectives)
-				new_ninja << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
+				to_chat(new_ninja, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 				obj_count++
 
 		sent_ninja_to_station = 1//And we're done.
@@ -471,7 +471,7 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 	set popup_menu = 0
 
 	if(!holder)
-		src << "Only administrators may use this command."
+		to_chat(src, "Only administrators may use this command.")
 		return
 	if(!ticker.mode)
 		alert("The game hasn't started yet!")
@@ -575,17 +575,17 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 			U:gloves.item_state = "s-ninjan"
 	else
 		if(U.mind.special_role!="Ninja")
-			U << "\red <B>fÄTaL ÈÈRRoR</B>: 382200-*#00CÖDE <B>RED</B>\nUNAU†HORIZED USÈ DETÈC†††eD\nCoMMÈNCING SUB-R0U†IN3 13...\nTÈRMInATING U-U-USÈR..."
+			to_chat(U, "\red <B>fÄTaL ÈÈRRoR</B>: 382200-*#00CÖDE <B>RED</B>\nUNAU†HORIZED USÈ DETÈC†††eD\nCoMMÈNCING SUB-R0U†IN3 13...\nTÈRMInATING U-U-USÈR...")
 			U.gib()
 			return 0
 		if(!istype(U:head, /obj/item/clothing/head/helmet/space/space_ninja))
-			U << "\red <B>ERROR</B>: 100113 \black UNABLE TO LOCATE HEAD GEAR\nABORTING..."
+			to_chat(U, "\red <B>ERROR</B>: 100113 \black UNABLE TO LOCATE HEAD GEAR\nABORTING...")
 			return 0
 		if(!istype(U:shoes, /obj/item/clothing/shoes/space_ninja))
-			U << "\red <B>ERROR</B>: 122011 \black UNABLE TO LOCATE FOOT GEAR\nABORTING..."
+			to_chat(U, "\red <B>ERROR</B>: 122011 \black UNABLE TO LOCATE FOOT GEAR\nABORTING...")
 			return 0
 		if(!istype(U:gloves, /obj/item/clothing/gloves/space_ninja))
-			U << "\red <B>ERROR</B>: 110223 \black UNABLE TO LOCATE HAND GEAR\nABORTING..."
+			to_chat(U, "\red <B>ERROR</B>: 110223 \black UNABLE TO LOCATE HAND GEAR\nABORTING...")
 			return 0
 
 		affecting = U
@@ -713,7 +713,7 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 	cancel_stealth()
 
 	U << browse(null, "window=spideros")
-	U << "\red Do or Die, <b>LET'S ROCK!!</b>"
+	to_chat(U, "\red Do or Die, <b>LET'S ROCK!!</b>")
 
 /obj/item/clothing/suit/space/space_ninja/proc/remove_kamikaze(mob/living/carbon/U)
 	if(kamikaze)
@@ -731,7 +731,7 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 		U.incorporeal_move = 0
 		kamikaze = 0
 		k_unlock = 0
-		U << "\blue Disengaging mode...\n\black<b>CODE NAME</b>: \red <b>KAMIKAZE</b>"
+		to_chat(U, "\blue Disengaging mode...\n\black<b>CODE NAME</b>: \red <b>KAMIKAZE</b>")
 
 //=======//AI VERBS//=======//
 
@@ -787,13 +787,13 @@ spideros = text2num(return_to)//Maximum length here is 6. Use (return_to, X) to 
 		if(isturf(T) && T.is_plating())
 			attached = locate() in T
 			if(!attached)
-				U << "\red Warning: no exposed cable available."
+				to_chat(U, "\red Warning: no exposed cable available.")
 			else
-				U << "\blue Connecting to wire, stand still..."
+				to_chat(U, "\blue Connecting to wire, stand still...")
 				if(do_after(U,50)&&!isnull(attached))
 					drain("WIRE",attached,U:wear_suit,src)
 				else
-					U << "\red Procedure interrupted. Protocol terminated."
+					to_chat(U, "\red Procedure interrupted. Protocol terminated.")
 	return
 
 I've tried a lot of stuff but adding verbs to the AI while inside an object, inside another object, did not want to work properly.
@@ -854,7 +854,7 @@ BYOND fixed the verb bugs so this is no longer necessary. I prefer verb panels.
 	opacity = 0
 
 /obj/effect/proc_holder/ai_instruction/Click()
-	loc << "The menu you are seeing will contain other commands if they become available.\nRight click a nearby turf to display an AI Hologram. It will only be visible to you and your host. You can move it freely using normal movement keys--it will disappear if placed too far away."
+	to_chat(loc, "The menu you are seeing will contain other commands if they become available.\nRight click a nearby turf to display an AI Hologram. It will only be visible to you and your host. You can move it freely using normal movement keys--it will disappear if placed too far away.")
 
 /obj/effect/proc_holder/ai_hack_ninja//Generic proc holder to make sure the two verbs below work propely.
 	name = "Hack SpiderOS"
@@ -879,8 +879,8 @@ BYOND fixed the verb bugs so this is no longer necessary. I prefer verb panels.
 	var/mob/living/silicon/ai/A = loc
 	var/obj/item/clothing/suit/space/space_ninja/S = A.loc
 	A << browse(null, "window=hack spideros")//Close window
-	A << "You have seized your hacking attempt. [S.affecting] has regained control."
-	S.affecting << "<b>UPDATE</b>: [A.real_name] has ceased hacking attempt. All systems clear."
+	to_chat(A, "You have seized your hacking attempt. [S.affecting] has regained control.")
+	to_chat(S.affecting, "<b>UPDATE</b>: [A.real_name] has ceased hacking attempt. All systems clear.")
 	S.remove_AI_verbs()
 	return
 */
@@ -892,7 +892,7 @@ BYOND fixed the verb bugs so this is no longer necessary. I prefer verb panels.
 //Does nothing at the moment. I am trying to see if it's possible to mess around with verbs as variables.
 	//for(var/P in verbs)
 //		if(P.set.name)
-//			usr << "[P.set.name], path: [P]"
+//			to_chat(usr, "[P.set.name], path: [P]")
 	return
 
 
@@ -945,7 +945,7 @@ mob/verb/remove_object_panel()
 	set name = "Get Direction to Target"
 	set category = "Ninja Debug"
 
-	world << "DIR: [get_dir_to(src.loc,M.loc)]"
+	to_chat(world, "DIR: [get_dir_to(src.loc,M.loc)]")
 	return
 //
 /mob/verb/kill_self_debug()
@@ -987,7 +987,7 @@ mob/verb/remove_object_panel()
 	set category = "Ninja Debug"
 
 	ninja_debug_target = src//The target is you, brohime.
-	world << "Target: [src]"
+	to_chat(world, "Target: [src]")
 
 /mob/verb/hack_spideros_debug()
 	set name = "Debug Hack Spider OS"
@@ -1029,7 +1029,7 @@ That is why you attached them to objects.
 				var/current_clone = image('icons/mob/mob.dmi',T,"s-ninja")
 				safety--
 				spawn(0)
-					src << current_clone
+					to_chat(src, current_clone)
 					spawn(300)
 						qdel(current_clone)
 					spawn while(!isnull(current_clone))

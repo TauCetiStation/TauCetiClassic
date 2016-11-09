@@ -50,7 +50,7 @@
 	var/T = get_turf(src)
 	var/mob/living/carbon/human/H = locate() in T
 	if(H && H.crawling)
-		user << "Someone is hiding under [src]"
+		to_chat(user, "Someone is hiding under [src]")
 
 /*
  * Roller beds
@@ -98,7 +98,7 @@
 	if(istype(W, /obj/item/roller_holder))
 		var/obj/item/roller_holder/RH = W
 		if(!RH.held)
-			user << "<span class='notice'>You collect the roller bed.</span>"
+			to_chat(user, "<span class='notice'>You collect the roller bed.</span>")
 			src.loc = RH
 			RH.held = src
 			return
@@ -119,10 +119,10 @@
 /obj/item/roller_holder/attack_self(mob/user)
 
 	if(!held)
-		user << "<span class='notice'>The rack is empty.</span>"
+		to_chat(user, "<span class='notice'>The rack is empty.</span>")
 		return
 
-	user << "<span class='notice'>You deploy the roller bed.</span>"
+	to_chat(user, "<span class='notice'>You deploy the roller bed.</span>")
 	var/obj/structure/stool/bed/roller/R = new type_bed(user.loc)
 	R.add_fingerprint(user)
 	qdel(held)

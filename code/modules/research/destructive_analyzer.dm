@@ -56,26 +56,26 @@ Note: Must be placed within 3 tiles of the R&D Console
 	if (disabled)
 		return
 	if (!linked_console)
-		user << "<span class='warning'>The protolathe must be linked to an R&D console first!</span>"
+		to_chat(user, "<span class='warning'>The protolathe must be linked to an R&D console first!</span>")
 		return
 	if (busy)
-		user << "<span class='warning'> The protolathe is busy right now.</span>"
+		to_chat(user, "<span class='warning'> The protolathe is busy right now.</span>")
 		return
 	if (istype(O, /obj/item) && !loaded_item)
 		if(isrobot(user)) //Don't put your module items in there!
 			return
 		if(!O.origin_tech)
-			user << "<span class='warning'> This doesn't seem to have a tech origin!</span>"
+			to_chat(user, "<span class='warning'> This doesn't seem to have a tech origin!</span>")
 			return
 		var/list/temp_tech = ConvertReqString2List(O.origin_tech)
 		if (temp_tech.len == 0)
-			user << "<span class='warning'> You cannot deconstruct this item!</span>"
+			to_chat(user, "<span class='warning'> You cannot deconstruct this item!</span>")
 			return
 		busy = 1
 		loaded_item = O
 		user.drop_item()
 		O.loc = src
-		user << "<span class='notice'>You add the [O.name] to the machine!</span>"
+		to_chat(user, "<span class='notice'>You add the [O.name] to the machine!</span>")
 		flick("d_analyzer_la", src)
 		spawn(10)
 			icon_state = "d_analyzer_l"

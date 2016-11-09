@@ -43,7 +43,7 @@
 					damtype = "fire"
 					force = 20
 			else
-				user<<"Internal battery worn out. Recharge needed."
+				to_chat(user, "Internal battery worn out. Recharge needed.")
 
 	proc/discharge()
 		//icon_state = "Defibunit"

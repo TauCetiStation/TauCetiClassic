@@ -126,8 +126,8 @@
 			emagged = 1
 			safety_disabled = 1
 			update_projections()
-			user << "<span class='notice'>You vastly increase projector power and override the safety and security protocols.</span>"
-			user << "Warning.  Automatic shutoff and derezing protocols have been corrupted.  Please call Nanotrasen maintenance and do not use the simulator."
+			to_chat(user, "<span class='notice'>You vastly increase projector power and override the safety and security protocols.</span>")
+			to_chat(user, "Warning.  Automatic shutoff and derezing protocols have been corrupted.  Please call Nanotrasen maintenance and do not use the simulator.")
 			log_game("[key_name(usr)] emagged the Holodeck Control Computer")
 		src.updateUsrDialog()
 	else
@@ -200,7 +200,7 @@
 		use_power(item_power_usage * (holographic_objs.len + holographic_mobs.len))
 
 		if(!checkInteg(linkedholodeck))
-			world << "/blue Integrity fail"
+			to_chat(world, "/blue Integrity fail")
 			damaged = 1
 			loadIdProgram()
 			active = 0

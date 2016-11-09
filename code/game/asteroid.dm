@@ -20,7 +20,7 @@ var/global/max_secret_rooms = 3
 proc/spawn_room(atom/start_loc,x_size,y_size,wall,floor , clean = 0 , name)
 	var/list/room_turfs = list("walls"=list(),"floors"=list())
 
-	//world << "Room spawned at [start_loc.x],[start_loc.y],[start_loc.z]"
+//	to_chat(world, "Room spawned at [start_loc.x],[start_loc.y],[start_loc.z]")
 	if(!wall)
 		wall = pick(/turf/simulated/wall/r_wall,/turf/simulated/wall,/obj/effect/alien/resin/wall)
 	if(!floor)

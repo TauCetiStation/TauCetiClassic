@@ -81,7 +81,7 @@
 				recharge_console = MT.buffer
 				MT.buffer = 0
 				recharge_console.recharge_port = src
-				user << "<span class='notice'>You upload the data from the buffer to [src.name].</span>"
+				to_chat(user, "<span class='notice'>You upload the data from the buffer to [src.name].</span>")
 
 /obj/machinery/computer/mech_bay_power_console
 	name = "mech bay power control console"
@@ -99,7 +99,7 @@
 	if(istype(I, /obj/item/device/multitool))
 		var/obj/item/device/multitool/MT = I
 		MT.buffer = src
-		user << "<span class='notice'>You download data to the buffer.</span>"
+		to_chat(user, "<span class='notice'>You download data to the buffer.</span>")
 
 /obj/machinery/computer/mech_bay_power_console/attack_ai(mob/user)
 	return interact(user)

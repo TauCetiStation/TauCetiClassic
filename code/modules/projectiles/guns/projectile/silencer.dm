@@ -14,10 +14,10 @@ Usage: Place the proc within the proc it shares it's name with, silencer_attackb
 /obj/item/weapon/gun/projectile/proc/silencer_attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/silencer))
 		if(user.l_hand != src && user.r_hand != src)
-			user << "<span class='warning'>You'll need [src] in your hands to do that.</span>"
+			to_chat(user, "<span class='warning'>You'll need [src] in your hands to do that.</span>")
 			return
 		user.drop_item()
-		user << "<span class='notice'>You screw [I] onto [src].</span>"
+		to_chat(user, "<span class='notice'>You screw [I] onto [src].</span>")
 		silenced = I
 		var/obj/item/weapon/silencer/S = I
 		S.oldsound = fire_sound
@@ -34,7 +34,7 @@ Usage: Place the proc within the proc it shares it's name with, silencer_attackb
 			if(user.l_hand != src && user.r_hand != src)
 				..()
 				return
-			user << "<span class='notice'>You unscrew [silenced] from [src].</span>"
+			to_chat(user, "<span class='notice'>You unscrew [silenced] from [src].</span>")
 			user.put_in_hands(silenced)
 			var/obj/item/weapon/silencer/S = silenced
 			fire_sound = S.oldsound

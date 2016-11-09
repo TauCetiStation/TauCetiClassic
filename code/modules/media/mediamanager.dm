@@ -27,9 +27,9 @@ function SetVolume(volume) {
 	</script>"}
 
 /mob/living/proc/update_music()
-	//world << "Update start"
+//	to_chat(world, "Update start")
 	if (client && client.media)
-		//world << "Media Exists"
+//		to_chat(world, "Media Exists")
 		client.media.update_music()
 	//else
 	//	testing("[src] - client: [client?"Y":"N"]; client.media: [client && client.media ? "Y":"N"]")
@@ -39,7 +39,7 @@ function SetVolume(volume) {
 	var/obj/machinery/media/media_source = null
 
 #ifdef DEBUG_MEDIAPLAYER
-#define MP_DEBUG(x) owner << x
+to_chat(#define MP_DEBUG(x) owner, x)
 #warning Please comment out #define DEBUG_MEDIAPLAYER before committing.
 #else
 #define MP_DEBUG(x)
@@ -100,7 +100,7 @@ function SetVolume(volume) {
 	if(M && M.playing)
 		targetURL = M.media_url
 		targetStartTime = M.media_start_time
-		//owner << "Found audio source: [M.media_url] @ [(world.time - start_time) / 10]s."
+//		to_chat(owner, "Found audio source: [M.media_url] @ [(world.time - start_time) / 10]s.")
 	//else
 	//	testing("M is not playing or null.")
 	if (url != targetURL || abs(targetStartTime - start_time) > 1)
@@ -119,7 +119,7 @@ function SetVolume(volume) {
 	set category = "Preferences"
 	set desc = "Set jukebox volume"
 	if(!media || !istype(media))
-		usr << "You have no media datum to change, if you're not in the lobby tell an admin."
+		to_chat(usr, "You have no media datum to change, if you're not in the lobby tell an admin.")
 		return
 	var/value = input("Choose your Jukebox volume.", "Jukebox volume", media.volume)
 	value = round(max(0, min(100, value)))

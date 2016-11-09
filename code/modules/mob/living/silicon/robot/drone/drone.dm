@@ -97,7 +97,7 @@
 
 	if (src.client)
 		if(client.prefs.muted & MUTE_IC)
-			src << "You cannot send IC messages (muted)."
+			to_chat(src, "You cannot send IC messages (muted).")
 			return
 		if (src.client.handle_spam_prevention(message,MUTE_IC))
 			return
@@ -114,16 +114,16 @@
 		if(parse_message_mode(message, "NONE") == "dronechat")
 
 			if(!is_component_functioning("radio"))
-				src << "\red Your radio transmitter isn't functional."
+				to_chat(src, "\red Your radio transmitter isn't functional.")
 				return
 
 			for (var/mob/living/S in living_mob_list)
 				if(isdrone(S))
-					S << "<i><span class='game say'>Drone Talk, <span class='name'>[name]</span><span class='message'> transmits, \"[trim(copytext(message,3))]\"</span></span></i>"
+					to_chat(S, "<i><span class='game say'>Drone Talk, <span class='name'>[name]</span><span class='message'> transmits, \"[trim(copytext(message,3))]\"</span></span></i>")
 
 			for (var/mob/M in dead_mob_list)
 				if(!isnewplayer(M) && !isbrain(M))
-					M << "<i><span class='game say'>Drone Talk, <span class='name'>[name]</span><span class='message'> transmits, \"[trim(copytext(message,3))]\"</span></span></i>"
+					to_chat(M, "<i><span class='game say'>Drone Talk, <span class='name'>[name]</span><span class='message'> transmits, \"[trim(copytext(message,3))]\"</span></span></i>")
 
 		else
 
@@ -131,38 +131,38 @@
 			listeners |= src
 
 			for(var/mob/living/silicon/robot/drone/D in listeners)
-				if(D.client) D << "<b>[src]</b> transmits, \"[message]\""
+				if(D.client) to_chat(D, "<b>[src]</b> transmits, \"[message]\"")
 
 			for (var/mob/M in player_list)
 				if (isnewplayer(M))
 					continue
 				else if(M.stat == DEAD &&  M.client.prefs.chat_toggles & CHAT_GHOSTEARS)
-					if(M.client) M << "<b>[src]</b> transmits, \"[message]\""
+					if(M.client) to_chat(M, "<b>[src]</b> transmits, \"[message]\"")
 
 //Drones cannot be upgraded with borg modules so we need to catch some items before they get used in ..().
 /mob/living/silicon/robot/drone/attackby(obj/item/weapon/W, mob/user)
 
 	if(istype(W, /obj/item/borg/upgrade/))
-		user << "\red The maintenance drone chassis not compatible with \the [W]."
+		to_chat(user, "\red The maintenance drone chassis not compatible with \the [W].")
 		return
 
 	else if (istype(W, /obj/item/weapon/crowbar))
-		user << "The machine is hermetically sealed. You can't open the case."
+		to_chat(user, "The machine is hermetically sealed. You can't open the case.")
 		return
 
 	else if (istype(W, /obj/item/weapon/card/emag))
 
 		if(!client || stat == DEAD)
-			user << "\red There's not much point subverting this heap of junk."
+			to_chat(user, "\red There's not much point subverting this heap of junk.")
 			return
 
 		if(emagged)
-			src << "\red [user] attempts to load subversive software into you, but your hacked subroutined ignore the attempt."
-			user << "\red You attempt to subvert [src], but the sequencer has no effect."
+			to_chat(src, "\red [user] attempts to load subversive software into you, but your hacked subroutined ignore the attempt.")
+			to_chat(user, "\red You attempt to subvert [src], but the sequencer has no effect.")
 			return
 
-		user << "\red You swipe the sequencer across [src]'s interface and watch its eyes flicker."
-		src << "\red You feel a sudden burst of malware loaded into your execute-as-root buffer. Your tiny brain methodically parses, loads and executes the script."
+		to_chat(user, "\red You swipe the sequencer across [src]'s interface and watch its eyes flicker.")
+		to_chat(src, "\red You feel a sudden burst of malware loaded into your execute-as-root buffer. Your tiny brain methodically parses, loads and executes the script.")
 
 		var/obj/item/weapon/card/emag/emag = W
 		emag.uses--
@@ -180,9 +180,9 @@
 		laws = new /datum/ai_laws/syndicate_override
 		set_zeroth_law("Only [user.real_name] and people he designates as being such are Syndicate Agents.")
 
-		src << "<b>Obey these laws:</b>"
+		to_chat(src, "<b>Obey these laws:</b>")
 		laws.show_laws(src)
-		src << "\red \b ALERT: [user.real_name] is your new master. Obey your new laws and his commands."
+		to_chat(src, "\red \b ALERT: [user.real_name] is your new master. Obey your new laws and his commands.")
 		return
 
 	else if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
@@ -190,11 +190,11 @@
 		if(stat == DEAD)
 
 			if(!config.allow_drone_spawn || emagged || health < -35) //It's dead, Dave.
-				user << "\red The interface is fried, and a distressing burned smell wafts from the robot's interior. You're not rebooting this one."
+				to_chat(user, "\red The interface is fried, and a distressing burned smell wafts from the robot's interior. You're not rebooting this one.")
 				return
 
 			if(!allowed(usr))
-				user << "\red Access denied."
+				to_chat(user, "\red Access denied.")
 				return
 
 			user.visible_message("\red \the [user] swipes \his ID card through \the [src], attempting to reboot it.", "\red You swipe your ID card through \the [src], attempting to reboot it.")
@@ -215,7 +215,7 @@
 			if(allowed(usr))
 				shut_down()
 			else
-				user << "\red Access denied."
+				to_chat(user, "\red Access denied.")
 
 		return
 
@@ -256,18 +256,18 @@
 /mob/living/silicon/robot/drone/proc/law_resync()
 	if(stat != DEAD)
 		if(emagged)
-			src << "\red You feel something attempting to modify your programming, but your hacked subroutines are unaffected."
+			to_chat(src, "\red You feel something attempting to modify your programming, but your hacked subroutines are unaffected.")
 		else
-			src << "\red A reset-to-factory directive packet filters through your data connection, and you obediently modify your programming to suit it."
+			to_chat(src, "\red A reset-to-factory directive packet filters through your data connection, and you obediently modify your programming to suit it.")
 			full_law_reset()
 			show_laws()
 
 /mob/living/silicon/robot/drone/proc/shut_down()
 	if(stat != DEAD)
 		if(emagged)
-			src << "\red You feel a system kill order percolate through your tiny brain, but it doesn't seem like a good idea to you."
+			to_chat(src, "\red You feel a system kill order percolate through your tiny brain, but it doesn't seem like a good idea to you.")
 		else
-			src << "\red You feel a system kill order percolate through your tiny brain, and you obediently destroy yourself."
+			to_chat(src, "\red You feel a system kill order percolate through your tiny brain, and you obediently destroy yourself.")
 			death()
 
 /mob/living/silicon/robot/drone/proc/full_law_reset()
@@ -311,14 +311,14 @@
 		player.mob.mind.transfer_to(src)
 
 	lawupdate = 0
-	src << "<b>Systems rebooted</b>. Loading base pattern maintenance protocol... <b>loaded</b>."
+	to_chat(src, "<b>Systems rebooted</b>. Loading base pattern maintenance protocol... <b>loaded</b>.")
 	full_law_reset()
-	src << "<br><b>You are a maintenance drone, a tiny-brained robotic repair machine</b>."
-	src << "You have no individual will, no personality, and no drives or urges other than your laws."
-	src << "Use <b>:d</b> to talk to other drones and <b>say</b> to speak silently to your nearby fellows."
-	src << "Remember,  you are <b>lawed against interference with the crew</b>. Also remember, <b>you DO NOT take orders from the AI.</b>"
-	src << "<b>Don't invade their worksites, don't steal their resources, don't tell them about the changeling in the toilets.</b>"
-	src << "<b>If a crewmember has noticed you, <i>you are probably breaking your third law</i></b>."
+	to_chat(src, "<br><b>You are a maintenance drone, a tiny-brained robotic repair machine</b>.")
+	to_chat(src, "You have no individual will, no personality, and no drives or urges other than your laws.")
+	to_chat(src, "Use <b>:d</b> to talk to other drones and <b>say</b> to speak silently to your nearby fellows.")
+	to_chat(src, "Remember,  you are <b>lawed against interference with the crew</b>. Also remember, <b>you DO NOT take orders from the AI.</b>")
+	to_chat(src, "<b>Don't invade their worksites, don't steal their resources, don't tell them about the changeling in the toilets.</b>")
+	to_chat(src, "<b>If a crewmember has noticed you, <i>you are probably breaking your third law</i></b>.")
 
 /mob/living/silicon/robot/drone/ObjBump(obj/O)
 	var/list/can_bump = list(/obj/machinery/door,
@@ -336,12 +336,12 @@
 	else if(istype(AM,/obj/item))
 		var/obj/item/O = AM
 		if(O.w_class > 2)
-			src << "<span class='warning'>You are too small to pull that.</span>"
+			to_chat(src, "<span class='warning'>You are too small to pull that.</span>")
 			return
 		else
 			..()
 	else
-		src << "<span class='warning'>You are too small to pull that.</span>"
+		to_chat(src, "<span class='warning'>You are too small to pull that.</span>")
 		return
 
 /mob/living/silicon/robot/drone/add_robot_verbs()

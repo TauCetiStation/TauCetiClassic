@@ -41,18 +41,18 @@
 		var/mob/living/carbon/C = usr
 		C.toggle_throw_mode()
 	else
-		usr << "\red This mob type cannot throw items."
+		to_chat(usr, "\red This mob type cannot throw items.")
 	return
 
 /client/Northwest()
 	if(iscarbon(usr))
 		var/mob/living/carbon/C = usr
 		if(!C.get_active_hand())
-			usr << "\red You have nothing to drop in your hand."
+			to_chat(usr, "\red You have nothing to drop in your hand.")
 			return
 		drop_item()
 	else
-		usr << "\red This mob type cannot drop items."
+		to_chat(usr, "\red This mob type cannot drop items.")
 	return
 
 //This gets called when you press the delete button.
@@ -60,7 +60,7 @@
 	set hidden = 1
 
 	if(!usr.pulling)
-		usr << "\blue You are not pulling anything."
+		to_chat(usr, "\blue You are not pulling anything.")
 		return
 	usr.stop_pulling()
 
@@ -192,13 +192,13 @@
 			for(var/mob/M in range(mob, 1))
 				if(M.pulling == mob)
 					if(!M.restrained() && M.stat == CONSCIOUS && M.canmove && mob.Adjacent(M))
-						src << "\blue You're restrained! You can't move!"
+						to_chat(src, "\blue You're restrained! You can't move!")
 						return 0
 					else
 						M.stop_pulling()
 
 		if(mob.pinned.len)
-			src << "\blue You're pinned to a wall by [mob.pinned[1]]!"
+			to_chat(src, "\blue You're pinned to a wall by [mob.pinned[1]]!")
 			return 0
 
 		move_delay = world.time//set move delay
@@ -391,7 +391,7 @@
 
 	if(movement_dir && dense_object_backup)
 		if(dense_object_backup.newtonian_move(turn(movement_dir, 180))) //You're pushing off something movable, so it moves
-			src << "<span class='info'>You push off of [dense_object_backup] to propel yourself.</span>"
+			to_chat(src, "<span class='info'>You push off of [dense_object_backup] to propel yourself.</span>")
 
 		return 1
 	return 0

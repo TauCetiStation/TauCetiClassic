@@ -38,7 +38,7 @@
 
 /obj/machinery/computer/syndicate_station/attack_hand(mob/user)
 	if(!allowed(user))
-		user << "\red Access Denied"
+		to_chat(user, "\red Access Denied")
 		return
 
 	user.set_machine(src)

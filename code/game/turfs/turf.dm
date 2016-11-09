@@ -53,7 +53,8 @@
 
 /turf/Enter(atom/movable/mover as mob|obj, atom/forget as mob|obj|turf|area)
 	if(movement_disabled && usr.ckey != movement_disabled_exception)
-		usr << "\red Movement is admin-disabled." //This is to identify lag problems
+		to_chat(usr, "\red Movement is admin-disabled.")//This is to identify lag problems
+
 		return
 	if (!mover || !isturf(mover.loc))
 		return 1
@@ -184,7 +185,7 @@
 	var/old_lighting_overlay = lighting_overlay // Not even a need to cast this, honestly.
 	var/list/old_lighting_corners = corners
 
-	//world << "Replacing [src.type] with [N]"
+//	to_chat(world, "Replacing [src.type] with [N]")
 
 	if(connections) connections.erase_all()
 

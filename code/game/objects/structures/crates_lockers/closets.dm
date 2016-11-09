@@ -116,7 +116,7 @@
 
 /obj/structure/closet/proc/toggle(mob/user)
 	if(!(src.opened ? src.close() : src.open()))
-		user << "<span class='notice'>It won't budge!</span>"
+		to_chat(user, "<span class='notice'>It won't budge!</span>")
 	return
 
 // this should probably use dump_contents()
@@ -182,7 +182,7 @@
 		if(istype(W, /obj/item/weapon/weldingtool))
 			var/obj/item/weapon/weldingtool/WT = W
 			if(!WT.remove_fuel(0,user))
-				user << "<span class='notice'>You need more welding fuel to complete this task.</span>"
+				to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
 				return
 			new /obj/item/stack/sheet/metal(src.loc)
 			for(var/mob/M in viewers(src))
@@ -201,7 +201,7 @@
 	else if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(!WT.remove_fuel(0,user))
-			user << "<span class='notice'>You need more welding fuel to complete this task.</span>"
+			to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
 			return
 		src.welded = !src.welded
 		src.update_icon()
@@ -239,11 +239,11 @@
 		return
 
 	if(!src.open())
-		user << "<span class='notice'>It won't budge!</span>"
+		to_chat(user, "<span class='notice'>It won't budge!</span>")
 		if(!lastbang)
 			lastbang = 1
 			for (var/mob/M in hearers(src, null))
-				M << text("<FONT size=[]>BANG, bang!</FONT>", max(0, 5 - get_dist(src, M)))
+				to_chat(M, text("<FONT size=[]>BANG, bang!</FONT>", max(0, 5 - get_dist(src, M))))
 			spawn(30)
 				lastbang = 0
 
@@ -259,7 +259,7 @@
 /obj/structure/closet/attack_self_tk(mob/user)
 	src.add_fingerprint(user)
 	if(!src.toggle())
-		usr << "<span class='notice'>It won't budge!</span>"
+		to_chat(usr, "<span class='notice'>It won't budge!</span>")
 
 /obj/structure/closet/verb/verb_toggleopen()
 	set src in oview(1)
@@ -273,7 +273,7 @@
 		src.add_fingerprint(usr)
 		src.toggle(usr)
 	else
-		usr << "<span class='warning'>This mob type can't use this verb.</span>"
+		to_chat(usr, "<span class='warning'>This mob type can't use this verb.</span>")
 
 /obj/structure/closet/update_icon()//Putting the welded stuff in updateicon() so it's easy to overwrite for special cases (Fridges, cabinets, and whatnot)
 	overlays.Cut()
@@ -302,9 +302,9 @@
 	//okay, so the closet is either welded or locked... resist!!!
 	user.next_move = world.time + 100
 	user.last_special = world.time + 100
-	user << "<span class='notice'>You lean on the back of [src] and start pushing the door open. (this will take about [breakout_time] minutes.)</span>"
+	to_chat(user, "<span class='notice'>You lean on the back of [src] and start pushing the door open. (this will take about [breakout_time] minutes.)</span>")
 	for(var/mob/O in viewers(src))
-		O << "<span class='warning'>[src] begins to shake violently!</span>"
+		to_chat(O, "<span class='warning'>[src] begins to shake violently!</span>")
 
 	if(do_after(user,(breakout_time*60*10),target=src)) //minutes * 60seconds * 10deciseconds
 		if(!user || user.stat != CONSCIOUS || user.loc != src || opened || (!locked && !welded))
@@ -315,5 +315,5 @@
 		locked = 0 //applies to critter crates and secure lockers only
 		broken = 1 //applies to secure lockers only
 		visible_message("<span class='danger'>[user] successfully broke out of [src]!</span>")
-		user << "<span class='notice'>You successfully break out of [src]!</span>"
+		to_chat(user, "<span class='notice'>You successfully break out of [src]!</span>")
 		open()

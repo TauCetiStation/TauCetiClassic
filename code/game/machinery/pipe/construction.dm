@@ -320,7 +320,7 @@ Buildable meters
 
 	for(var/obj/machinery/atmospherics/M in src.loc)
 		if(M.initialize_directions & pipe_dir)	// matches at least one direction on either type of pipe
-			user << "<span class='red'>There is already a pipe at that location.</span>"
+			to_chat(user, "<span class='red'>There is already a pipe at that location.</span>")
 			return 1
 	// no conflicts found
 
@@ -336,7 +336,7 @@ Buildable meters
 			P.level = T.intact ? 2 : 1
 			P.initialize()
 			if (qdeleted(P))
-				usr << pipefailtext
+				to_chat(usr, pipefailtext)
 				return 1
 			P.build_network()
 			if (P.node1)
@@ -355,7 +355,7 @@ Buildable meters
 			//P.level = T.intact ? 2 : 1
 			P.initialize()
 			if (qdeleted(P))
-				usr << pipefailtext
+				to_chat(usr, pipefailtext)
 				return 1
 			P.build_network()
 			if (P.node1)
@@ -390,7 +390,7 @@ Buildable meters
 			M.level = T.intact ? 2 : 1
 			M.initialize()
 			if (qdeleted(M))
-				usr << pipefailtext
+				to_chat(usr, pipefailtext)
 				return 1
 			M.build_network()
 			if (M.node1)
@@ -413,7 +413,7 @@ Buildable meters
 			M.level = T.intact ? 2 : 1
 			M.initialize()
 			if (qdeleted(M))
-				usr << pipefailtext
+				to_chat(usr, pipefailtext)
 				return 1
 			M.build_network()
 			if (M.node1)
@@ -438,7 +438,7 @@ Buildable meters
 			//P.level = T.intact ? 2 : 1
 			P.initialize()
 			if (qdeleted(P))
-				usr << pipefailtext
+				to_chat(usr, pipefailtext)
 				return 1
 			P.build_network()
 			if (P.node1)
@@ -474,11 +474,11 @@ Buildable meters
 			V.initialize()
 			V.build_network()
 			if (V.node1)
-//					world << "[V.node1.name] is connected to valve, forcing it to update its nodes."
+//					to_chat(world, "[V.node1.name] is connected to valve, forcing it to update its nodes.")
 				V.node1.initialize()
 				V.node1.build_network()
 			if (V.node2)
-//					world << "[V.node2.name] is connected to valve, forcing it to update its nodes."
+//					to_chat(world, "[V.node2.name] is connected to valve, forcing it to update its nodes.")
 				V.node2.initialize()
 				V.node2.build_network()
 
@@ -621,7 +621,7 @@ Buildable meters
 			P.level = T.intact ? 2 : 1
 			P.initialize()
 			if (qdeleted(P))
-				usr << pipefailtext
+				to_chat(usr, pipefailtext)
 				return 1
 			P.build_network()
 			if (P.node1)
@@ -784,11 +784,11 @@ Buildable meters
 	if (!istype(W, /obj/item/weapon/wrench))
 		return ..()
 	if(!locate(/obj/machinery/atmospherics/pipe, src.loc))
-		user << "<span class='red'>You need to fasten it to a pipe.</span>"
+		to_chat(user, "<span class='red'>You need to fasten it to a pipe.</span>")
 		return 1
 	new/obj/machinery/meter( src.loc )
 	playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-	user << "<span class='notice'>You have fastened the meter to the pipe.</span>"
+	to_chat(user, "<span class='notice'>You have fastened the meter to the pipe.</span>")
 	qdel(src)
 //not sure why these are necessary
 #undef PIPE_SIMPLE_STRAIGHT

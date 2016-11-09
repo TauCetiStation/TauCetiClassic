@@ -12,7 +12,6 @@
 // BEGIN_INCLUDE
 #include "code\_compile_options.dm"
 #include "code\hub.dm"
-#include "code\stylesheet.dm"
 #include "code\world.dm"
 #include "code\__DEFINES\_readme.dm"
 #include "code\__DEFINES\admin.dm"
@@ -1689,6 +1688,7 @@
 #include "code\ZAS\Ultralight_procs.dm"
 #include "code\ZAS\Variable Settings.dm"
 #include "code\ZAS\Zone.dm"
+#include "goon\code\datums\browserOutput.dm"
 #include "interface\interface.dm"
 #include "interface\skin.dmf"
 #include "maps\z1.dmm"

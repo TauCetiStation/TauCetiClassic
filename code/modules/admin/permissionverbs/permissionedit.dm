@@ -59,13 +59,13 @@
 	if(!usr.client)
 		return
 	if(!usr.client.holder || !(usr.client.holder.rights & R_PERMISSIONS))
-		usr << "\red You do not have permission to do this!"
+		to_chat(usr, "\red You do not have permission to do this!")
 		return
 	var/adm_ckey = ckey(input(usr,"New admin's ckey","Admin ckey", null) as text|null)
 	if(!adm_ckey)
 		return
 	if(adm_ckey in admin_datums)
-		usr << "<font color='red'>Error: Topic 'editrights': [adm_ckey] is already an admin</font>"
+		to_chat(usr, "<font color='red'>Error: Topic 'editrights': [adm_ckey] is already an admin</font>")
 		return
 	if(adm_ckey in mentor_ckeys)
 		remove_mentor(adm_ckey)
@@ -75,10 +75,10 @@
 	if(!usr.client)
 		return
 	if(!usr.client.holder || !(usr.client.holder.rights & R_PERMISSIONS))
-		usr << "\red You do not have permission to do this!"
+		to_chat(usr, "\red You do not have permission to do this!")
 		return
 	if(!adm_ckey)
-		usr << "<font color='red'>Error: Topic 'editrights': No valid ckey</font>"
+		to_chat(usr, "<font color='red'>Error: Topic 'editrights': No valid ckey</font>")
 		return
 	var/datum/admins/D = admin_datums[adm_ckey]
 	if(alert("Are you sure you want to remove [adm_ckey] from admins?","Message","Yes","Cancel") == "Yes")
@@ -94,7 +94,7 @@
 	if(!usr.client)
 		return
 	if(!usr.client.holder || !(usr.client.holder.rights & R_PERMISSIONS))
-		usr << "\red You do not have permission to do this!"
+		to_chat(usr, "\red You do not have permission to do this!")
 		return
 	if(!adm_ckey)
 		return
@@ -113,7 +113,7 @@
 		if("*New Rank*")
 			new_rank = input("Please input a new rank", "New custom rank", null, null) as null|text
 			if(!new_rank)
-				usr << "<font color='red'>Error: Topic 'editrights': Invalid rank</font>"
+				to_chat(usr, "<font color='red'>Error: Topic 'editrights': Invalid rank</font>")
 				return
 	if(D)
 		D.disassociate()								//remove adminverbs and unlink from client
@@ -131,7 +131,7 @@
 	if(!usr.client)
 		return
 	if(!usr.client.holder || !(usr.client.holder.rights & R_PERMISSIONS))
-		usr << "\red You do not have permission to do this!"
+		to_chat(usr, "\red You do not have permission to do this!")
 		return
 	if(!adm_ckey)
 		return
@@ -151,7 +151,7 @@
 
 	establish_db_connection()
 	if(!dbcon.IsConnected())
-		usr << "\red Failed to establish database connection"
+		to_chat(usr, "\red Failed to establish database connection")
 		return
 	adm_ckey = ckey(adm_ckey)
 	if(istext(new_permission))
@@ -172,25 +172,25 @@
 		insert_query.Execute()
 		var/DBQuery/log_query = dbcon.NewQuery("INSERT INTO `erro_admin_log` (`id` ,`datetime` ,`adminckey` ,`adminip` ,`log` ) VALUES (NULL , NOW( ) , '[usr.ckey]', '[usr.client.address]', 'Removed permission [rights2text(new_permission)] (flag = [new_permission]) to admin [adm_ckey]');")
 		log_query.Execute()
-		usr << "\blue Permission removed."
+		to_chat(usr, "\blue Permission removed.")
 	else //This admin doesn't have this permission, so we are adding it.
 		var/DBQuery/insert_query = dbcon.NewQuery("UPDATE `erro_admin` SET flags = '[admin_rights | new_permission]' WHERE id = [admin_id]")
 		insert_query.Execute()
 		var/DBQuery/log_query = dbcon.NewQuery("INSERT INTO `erro_admin_log` (`id` ,`datetime` ,`adminckey` ,`adminip` ,`log` ) VALUES (NULL , NOW( ) , '[usr.ckey]', '[usr.client.address]', 'Added permission [rights2text(new_permission)] (flag = [new_permission]) to admin [adm_ckey]')")
 		log_query.Execute()
-		usr << "\blue Permission added."
+		to_chat(usr, "\blue Permission added.")
 
 /datum/admins/proc/add_mentor()
 	if(!usr.client)
 		return
 	if(!usr.client.holder || !(usr.client.holder.rights & R_PERMISSIONS))
-		usr << "\red You do not have permission to do this!"
+		to_chat(usr, "\red You do not have permission to do this!")
 		return
 	var/ment_ckey = ckey(input(usr,"New mentor's ckey","Mentor ckey", null) as text|null)
 	if(!ment_ckey)
 		return
 	if(ment_ckey in mentor_ckeys)
-		usr << "<font color='red'>Error: Topic 'editmentorlist': [ment_ckey] is already a mentor.</font>"
+		to_chat(usr, "<font color='red'>Error: Topic 'editmentorlist': [ment_ckey] is already a mentor.</font>")
 		return
 	if(ment_ckey in admin_datums)
 		remove_admin(ment_ckey)
@@ -201,23 +201,23 @@
 
 	establish_db_connection()
 	if(!dbcon.IsConnected())
-		usr << "\red Failed to establish database connection"
+		to_chat(usr, "\red Failed to establish database connection")
 		return
 	ment_ckey = ckey(ment_ckey)
 	var/DBQuery/insert_query = dbcon.NewQuery("INSERT INTO `erro_mentor` (`id`, `ckey`) VALUES (null, '[ment_ckey]');")
 	insert_query.Execute()
 	var/DBQuery/log_query = dbcon.NewQuery("INSERT INTO `erro_admin_log` (`id` ,`datetime` ,`adminckey` ,`adminip` ,`log` ) VALUES (NULL , NOW( ) , '[usr.ckey]', '[usr.client.address]', 'Added new mentor [ment_ckey].');")
 	log_query.Execute()
-	usr << "<font color='blue'> New mentor added.</font>"
+	to_chat(usr, "<font color='blue'> New mentor added.</font>")
 
 /datum/admins/proc/remove_mentor(ment_ckey)
 	if(!usr.client)
 		return
 	if(!usr.client.holder || !(usr.client.holder.rights & R_PERMISSIONS))
-		usr << "\red You do not have permission to do this!"
+		to_chat(usr, "\red You do not have permission to do this!")
 		return
 	if(!ment_ckey)
-		usr << "<font color='red'>Error: Topic 'editmentorlist': [ment_ckey] is not a valid mentor.</font>"
+		to_chat(usr, "<font color='red'>Error: Topic 'editmentorlist': [ment_ckey] is not a valid mentor.</font>")
 		return
 	if(alert("Are you sure you want to remove [ment_ckey] from mentors?","Message","Yes","Cancel") == "Yes")
 		mentor_ckeys -= ment_ckey
@@ -227,14 +227,14 @@
 
 		establish_db_connection()
 		if(!dbcon.IsConnected())
-			usr << "\red Failed to establish database connection"
+			to_chat(usr, "\red Failed to establish database connection")
 			return
 		ment_ckey = ckey(ment_ckey)
 		var/DBQuery/remove_query = dbcon.NewQuery("DELETE FROM `erro_mentor` WHERE `ckey` = '[ment_ckey]';")
 		remove_query.Execute()
 		var/DBQuery/log_query = dbcon.NewQuery("INSERT INTO `erro_admin_log` (`id` ,`datetime` ,`adminckey` ,`adminip` ,`log` ) VALUES (NULL , NOW( ) , '[usr.ckey]', '[usr.client.address]', 'Removed mentor [ment_ckey].');")
 		log_query.Execute()
-		usr << "<font color='blue'> Mentor removed.</font>"
+		to_chat(usr, "<font color='blue'> Mentor removed.</font>")
 
 
 /datum/admins/proc/db_admin_rank_modification(adm_ckey, new_rank)
@@ -243,11 +243,11 @@
 	if(!usr.client)
 		return
 	if(!usr.client.holder || !(usr.client.holder.rights & R_PERMISSIONS))
-		usr << "\red You do not have permission to do this!"
+		to_chat(usr, "\red You do not have permission to do this!")
 		return
 	establish_db_connection()
 	if(!dbcon.IsConnected())
-		usr << "\red Failed to establish database connection"
+		to_chat(usr, "\red Failed to establish database connection")
 		return
 	if(!adm_ckey || !new_rank)
 		return
@@ -268,11 +268,11 @@
 		insert_query.Execute()
 		var/DBQuery/log_query = dbcon.NewQuery("INSERT INTO `erro_admin_log` (`id` ,`datetime` ,`adminckey` ,`adminip` ,`log` ) VALUES (NULL , NOW( ) , '[usr.ckey]', '[usr.client.address]', 'Added new admin [adm_ckey] to rank [new_rank]');")
 		log_query.Execute()
-		usr << "\blue New admin added."
+		to_chat(usr, "\blue New admin added.")
 	else
 		if(!isnull(admin_id) && isnum(admin_id))
 			var/DBQuery/insert_query = dbcon.NewQuery("UPDATE `erro_admin` SET rank = '[new_rank]' WHERE id = [admin_id]")
 			insert_query.Execute()
 			var/DBQuery/log_query = dbcon.NewQuery("INSERT INTO `erro_admin_log` (`id` ,`datetime` ,`adminckey` ,`adminip` ,`log` ) VALUES (NULL , NOW( ) , '[usr.ckey]', '[usr.client.address]', 'Edited the rank of [adm_ckey] to [new_rank]');")
 			log_query.Execute()
-			usr << "\blue Admin rank changed."
+			to_chat(usr, "\blue Admin rank changed.")

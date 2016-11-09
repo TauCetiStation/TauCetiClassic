@@ -609,16 +609,16 @@ datum
 
 				var/location = get_turf(holder.my_atom)
 				for(var/mob/M in viewers(5, location))
-					M << "\red The solution violently bubbles!"
+					to_chat(M, "\red The solution violently bubbles!")
 
 				location = get_turf(holder.my_atom)
 
 				for(var/mob/M in viewers(5, location))
-					M << "\red The solution spews out foam!"
+					to_chat(M, "\red The solution spews out foam!")
 
-				//world << "Holder volume is [holder.total_volume]"
+//				to_chat(world, "Holder volume is [holder.total_volume]")
 				//for(var/datum/reagent/R in holder.reagent_list)
-				//	world << "[R.name] = [R.volume]"
+//					to_chat(world, "[R.name] = [R.volume]")
 
 				var/datum/effect/effect/system/foam_spread/s = new()
 				s.set_up(created_volume, location, holder, 0)
@@ -639,7 +639,7 @@ datum
 				var/location = get_turf(holder.my_atom)
 
 				for(var/mob/M in viewers(5, location))
-					M << "\red The solution spews out a metalic foam!"
+					to_chat(M, "\red The solution spews out a metalic foam!")
 
 				var/datum/effect/effect/system/foam_spread/s = new()
 				s.set_up(created_volume, location, holder, 1)
@@ -659,7 +659,7 @@ datum
 				var/location = get_turf(holder.my_atom)
 
 				for(var/mob/M in viewers(5, location))
-					M << "\red The solution spews out a metalic foam!"
+					to_chat(M, "\red The solution spews out a metalic foam!")
 
 				var/datum/effect/effect/system/foam_spread/s = new()
 				s.set_up(created_volume, location, holder, 2)
@@ -971,16 +971,16 @@ datum
 
 				var/location = get_turf(holder.my_atom)
 				for(var/mob/M in viewers(5, location))
-					M << "\red The solution violently bubbles!"
+					to_chat(M, "\red The solution violently bubbles!")
 
 				location = get_turf(holder.my_atom)
 
 				for(var/mob/M in viewers(5, location))
-					M << "\red The solution spews out foam!"
+					to_chat(M, "\red The solution spews out foam!")
 
-				//world << "Holder volume is [holder.total_volume]"
+//				to_chat(world, "Holder volume is [holder.total_volume]")
 				//for(var/datum/reagent/R in holder.reagent_list)
-				//	world << "[R.name] = [R.volume]"
+//					to_chat(world, "[R.name] = [R.volume]")
 
 				var/datum/effect/effect/system/foam_spread/s = new()
 				s.set_up(created_volume, location, holder, 0)
@@ -1176,7 +1176,7 @@ datum
 				playsound(get_turf_loc(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
 				for(var/mob/living/M in range (get_turf_loc(holder.my_atom), 7))
 					M.bodytemperature -= 140
-					M << "\blue You feel a chill!"
+					to_chat(M, "\blue You feel a chill!")
 
 //Orange
 		slimecasp

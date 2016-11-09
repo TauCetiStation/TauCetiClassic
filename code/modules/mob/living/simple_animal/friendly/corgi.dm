@@ -71,11 +71,11 @@
 		//helmet and armor = 100% protection
 		if( istype(inventory_head,/obj/item/clothing/head/helmet) && istype(inventory_back,/obj/item/clothing/suit/armor) )
 			if( O.force )
-				usr << "\red This animal is wearing too much armor. You can't cause /him any damage."
+				to_chat(usr, "\red This animal is wearing too much armor. You can't cause /him any damage.")
 				for (var/mob/M in viewers(src, null))
 					M.show_message("\red \b [user] hits [src] with the [O], however [src] is too armored.")
 			else
-				usr << "\red This animal is wearing too much armor. You can't reach its skin."
+				to_chat(usr, "\red This animal is wearing too much armor. You can't reach its skin.")
 				for (var/mob/M in viewers(src, null))
 					M.show_message("\red [user] gently taps [src] with the [O]. ")
 			if(prob(15))
@@ -152,7 +152,7 @@
 					inventory_head = null
 					regenerate_icons()
 				else
-					usr << "\red There is nothing to remove from its [remove_from]."
+					to_chat(usr, "\red There is nothing to remove from its [remove_from].")
 					return
 			if("back")
 				if(inventory_back)
@@ -160,7 +160,7 @@
 					inventory_back = null
 					regenerate_icons()
 				else
-					usr << "\red There is nothing to remove from its [remove_from]."
+					to_chat(usr, "\red There is nothing to remove from its [remove_from].")
 					return
 
 		show_inv(usr) //Commented out because changing Ian's  name and then calling up his inventory opens a new inventory...which is annoying.
@@ -171,12 +171,12 @@
 			return
 		var/add_to = href_list["add_inv"]
 		if(!usr.get_active_hand())
-			usr << "\red You have nothing in your hand to put on its [add_to]."
+			to_chat(usr, "\red You have nothing in your hand to put on its [add_to].")
 			return
 		switch(add_to)
 			if("head")
 				if(inventory_head)
-					usr << "\red It's is already wearing something."
+					to_chat(usr, "\red It's is already wearing something.")
 					return
 				else
 					//Corgis are supposed to be simpler, so only a select few objects can actually be put
@@ -219,7 +219,7 @@
 					if(!item_to_add)
 						return
 					if( ! ( item_to_add.type in allowed_types ) )
-						usr << "\red It doesn't seem too keen on wearing that item."
+						to_chat(usr, "\red It doesn't seem too keen on wearing that item.")
 						return
 					//place_on_head(usr.get_active_hand())
 					usr.drop_item()
@@ -227,7 +227,7 @@
 
 			if("back")
 				if(inventory_back)
-					usr << "\red It's already wearing something."
+					to_chat(usr, "\red It's already wearing something.")
 					return
 				else
 					var/obj/item/item_to_add = usr.get_active_hand()
@@ -244,7 +244,7 @@
 					)
 
 					if( ! ( item_to_add.type in allowed_types ) )
-						usr << "\red This object won't fit."
+						to_chat(usr, "\red This object won't fit.")
 						return
 
 					usr.drop_item()
@@ -449,7 +449,7 @@
 //pupplies cannot wear anything.
 /mob/living/simple_animal/corgi/puppy/Topic(href, href_list)
 	if(href_list["remove_inv"] || href_list["add_inv"])
-		usr << "\red You can't fit this on [src]"
+		to_chat(usr, "\red You can't fit this on [src]")
 		return
 	..()
 
@@ -472,7 +472,7 @@
 //Lisa already has a cute bow!
 /mob/living/simple_animal/corgi/Lisa/Topic(href, href_list)
 	if(href_list["remove_inv"] || href_list["add_inv"])
-		usr << "\red [src] already has a cute bow!"
+		to_chat(usr, "\red [src] already has a cute bow!")
 		return
 	..()
 

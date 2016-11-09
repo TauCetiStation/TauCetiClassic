@@ -429,7 +429,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	if(germ_level >= INFECTION_LEVEL_THREE && antibiotics < 30)	//overdosing is necessary to stop severe infections
 		if (!(status & ORGAN_DEAD))
 			status |= ORGAN_DEAD
-			owner << "<span class='notice'>You can't feel your [display_name] anymore...</span>"
+			to_chat(owner, "<span class='notice'>You can't feel your [display_name] anymore...</span>")
 			owner.update_body()
 
 		germ_level++
@@ -789,7 +789,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 			if(isnull(suit.supporting_limbs))
 				return
 
-			owner << "You feel \the [suit] constrict about your [display_name], supporting it."
+			to_chat(owner, "You feel \the [suit] constrict about your [display_name], supporting it.")
 			status |= ORGAN_SPLINTED
 			suit.supporting_limbs |= src
 	return
@@ -1169,16 +1169,16 @@ Note that amputating the affected organ does in fact remove the infection from t
 			if(0)
 				for(var/mob/O in (oviewers(brainmob) - user))
 					O.show_message("\red [brainmob] is beginning to have \his head cut open with [W] by [user].", 1)
-				brainmob << "\red [user] begins to cut open your head with [W]!"
-				user << "\red You cut [brainmob]'s head open with [W]!"
+				to_chat(brainmob, "\red [user] begins to cut open your head with [W]!")
+				to_chat(user, "\red You cut [brainmob]'s head open with [W]!")
 
 				brain_op_stage = 1
 
 			if(2)
 				for(var/mob/O in (oviewers(brainmob) - user))
 					O.show_message("\red [brainmob] is having \his connections to the brain delicately severed with [W] by [user].", 1)
-				brainmob << "\red [user] begins to cut open your head with [W]!"
-				user << "\red You cut [brainmob]'s head open with [W]!"
+				to_chat(brainmob, "\red [user] begins to cut open your head with [W]!")
+				to_chat(user, "\red You cut [brainmob]'s head open with [W]!")
 
 				brain_op_stage = 3.0
 			else
@@ -1188,15 +1188,15 @@ Note that amputating the affected organ does in fact remove the infection from t
 			if(1)
 				for(var/mob/O in (oviewers(brainmob) - user))
 					O.show_message("\red [brainmob] has \his head sawed open with [W] by [user].", 1)
-				brainmob << "\red [user] begins to saw open your head with [W]!"
-				user << "\red You saw [brainmob]'s head open with [W]!"
+				to_chat(brainmob, "\red [user] begins to saw open your head with [W]!")
+				to_chat(user, "\red You saw [brainmob]'s head open with [W]!")
 
 				brain_op_stage = 2
 			if(3)
 				for(var/mob/O in (oviewers(brainmob) - user))
 					O.show_message("\red [brainmob] has \his spine's connection to the brain severed with [W] by [user].", 1)
-				brainmob << "\red [user] severs your brain's connection to the spine with [W]!"
-				user << "\red You sever [brainmob]'s brain's connection to the spine with [W]!"
+				to_chat(brainmob, "\red [user] severs your brain's connection to the spine with [W]!")
+				to_chat(user, "\red You sever [brainmob]'s brain's connection to the spine with [W]!")
 
 				user.attack_log += "\[[time_stamp()]\]<font color='red'> Debrained [brainmob.name] ([brainmob.ckey]) with [W.name] (INTENT: [uppertext(user.a_intent)])</font>"
 				brainmob.attack_log += "\[[time_stamp()]\]<font color='orange'> Debrained by [user.name] ([user.ckey]) with [W.name] (INTENT: [uppertext(user.a_intent)])</font>"

@@ -23,12 +23,12 @@
 				active = 0
 				icon_state = off_state
 				vision_flags = 0
-				usr << "You deactivate the optical matrix on the [src]."
+				to_chat(usr, "You deactivate the optical matrix on the [src].")
 			else
 				active = 1
 				icon_state = initial(icon_state)
 				vision_flags = initial(vision_flags)
-				usr << "You activate the optical matrix on the [src]."
+				to_chat(usr, "You activate the optical matrix on the [src].")
 			playsound(src.loc, activation_sound, 10, 0)
 			H.update_inv_glasses()
 			H.update_sight()
@@ -154,14 +154,14 @@
 			flags_inv |= HIDEEYES
 			body_parts_covered |= EYES
 			icon_state = initial(icon_state)
-			usr << "You flip \the [src] down to protect your eyes."
+			to_chat(usr, "You flip \the [src] down to protect your eyes.")
 		else
 			src.up = !src.up
 			src.flags &= ~HEADCOVERSEYES
 			flags_inv &= ~HIDEEYES
 			body_parts_covered &= ~EYES
 			icon_state = "[initial(icon_state)]up"
-			usr << "You push \the [src] up out of your face."
+			to_chat(usr, "You push \the [src] up out of your face.")
 
 		usr.update_inv_glasses()
 
@@ -217,7 +217,7 @@
 /obj/item/clothing/glasses/thermal/emp_act(severity)
 	if(istype(src.loc, /mob/living/carbon/human))
 		var/mob/living/carbon/human/M = src.loc
-		M << "\red The Optical Thermal Scanner overloads and blinds you!"
+		to_chat(M, "\red The Optical Thermal Scanner overloads and blinds you!")
 		if(M.glasses == src)
 			M.eye_blind = 3
 			M.eye_blurry = 5

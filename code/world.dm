@@ -82,16 +82,18 @@
 
 	return
 
-//world/Topic(href, href_list[])
-//		world << "Received a Topic() call!"
-//		world << "[href]"
-//		for(var/a in href_list)
-//			world << "[a]"
-//		if(href_list["hello"])
-//			world << "Hello world!"
-//			return "Hello world!"
-//		world << "End of Topic() call."
-//		..()
+/*
+world/Topic(href, href_list[])
+		to_chat(world, "Received a Topic() call!")
+		to_chat(world, "[href]")
+		for(var/a in href_list)
+			to_chat(world, "[a]")
+		if(href_list["hello"])
+			to_chat(world, "Hello world!")
+			return "Hello world!"
+		to_chat(world, "End of Topic() call.")
+		..()
+*/
 
 var/world_topic_spam_protect_ip = "0.0.0.0"
 var/world_topic_spam_protect_time = world.timeofday
@@ -179,12 +181,12 @@ var/world_topic_spam_protect_time = world.timeofday
 		C.irc_admin = input["sender"]
 
 		C << 'sound/effects/adminhelp.ogg'
-		C << message
+		to_chat(C, message)
 
 
 		for(var/client/A in admins)
 			if(A != C)
-				A << amessage
+				to_chat(A, amessage)
 
 		return "Message Successful"
 
@@ -215,7 +217,8 @@ var/world_topic_spam_protect_time = world.timeofday
 
 /world/Reboot(var/reason)
 	/*spawn(0)
-		world << sound(pick('sound/AI/newroundsexy.ogg','sound/misc/apcdestroyed.ogg','sound/misc/bangindonk.ogg')) // random end sounds!! - LastyBatsy
+		to_chat(world, sound(pick('sound/AI/newroundsexy.ogg','sound/misc/apcdestroyed.ogg','sound/misc/bangindonk.ogg')))// random end sounds!! - LastyBatsy
+
 		*/
 
 	for(var/client/C in clients)
@@ -223,6 +226,7 @@ var/world_topic_spam_protect_time = world.timeofday
 			C << link("byond://[config.server]")
 		else
 			C << link("byond://[world.address]:[world.port]")
+
 
 	..(reason)
 
@@ -237,7 +241,7 @@ var/world_topic_spam_protect_time = world.timeofday
 				if(C.is_afk(INACTIVITY_KICK))
 					if(!istype(C.mob, /mob/dead))
 						log_access("AFK: [key_name(C)]")
-						C << "\red You have been inactive for more than 10 minutes and have been disconnected."
+						to_chat(C, "\red You have been inactive for more than 10 minutes and have been disconnected.")
 						qdel(C)
 #undef INACTIVITY_KICK
 
@@ -257,7 +261,7 @@ var/world_topic_spam_protect_time = world.timeofday
 /world/proc/save_mode(the_mode)
 	var/F = file("data/mode.txt")
 	fdel(F)
-	F << the_mode
+	to_chat(F, the_mode)
 
 /world/proc/load_last_mode()
 	var/list/Lines = file2list("data/last_mode.txt")
@@ -269,7 +273,7 @@ var/world_topic_spam_protect_time = world.timeofday
 /world/proc/save_last_mode(the_last_mode)
 	var/F = file("data/last_mode.txt")
 	fdel(F)
-	F << the_last_mode
+	to_chat(F, the_last_mode)
 
 
 /world/proc/load_motd()

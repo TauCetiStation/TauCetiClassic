@@ -29,7 +29,7 @@
 
 	/*if (src.client)
 		if(client.prefs.muted & MUTE_IC)
-			src << "You cannot send IC messages (muted)."
+			to_chat(src, "You cannot send IC messages (muted).")
 			return
 		if (src.client.handle_spam_prevention(message,MUTE_IC))
 			return*/
@@ -70,12 +70,12 @@
 			message = trim(copytext(message,3))
 
 	if(message_mode && bot_type == IS_ROBOT && message_mode != "binary" && !R.is_component_functioning("radio"))
-		src << "\red Your radio isn't functional at this time."
+		to_chat(src, "\red Your radio isn't functional at this time.")
 		return
 	if(bot_type == IS_ROBOT && message_mode != "binary")
 		var/datum/robot_component/radio/RA = R.get_component("radio")
 		if (!R.cell_use_power(RA.active_usage))
-			usr << "\red Not enough power to transmit message."
+			to_chat(usr, "\red Not enough power to transmit message.")
 			return
 
 	//parse language key and consume it
@@ -101,14 +101,14 @@
 			switch(bot_type)
 				if(IS_ROBOT)
 					if(!R.is_component_functioning("comms"))
-						src << "\red Your binary communications component isn't functional."
+						to_chat(src, "\red Your binary communications component isn't functional.")
 						return
 					var/datum/robot_component/binary_communication/B = R.get_component("comms")
 					if(!R.cell_use_power(B.active_usage))
-						src << "\red Not enough power to transmit message."
+						to_chat(src, "\red Not enough power to transmit message.")
 						return
 				if(IS_PAI)
-					src << "You do not appear to have that function"
+					to_chat(src, "You do not appear to have that function")
 					return
 
 			robot_talk(message)
@@ -117,7 +117,7 @@
 			switch(bot_type)
 				if(IS_AI)
 					if (AI.aiRadio.disabledAi)
-						src << "\red System Error - Transceiver Disabled"
+						to_chat(src, "\red System Error - Transceiver Disabled")
 						return
 					else
 						log_say("[key_name(src)] : [message]")
@@ -135,7 +135,7 @@
 				switch(bot_type)
 					if(IS_AI)
 						if (AI.aiRadio.disabledAi)
-							src << "\red System Error - Transceiver Disabled"
+							to_chat(src, "\red System Error - Transceiver Disabled")
 							return
 						else
 							log_say("[key_name(src)] : [message]")
@@ -172,11 +172,13 @@
 		if(speaking)
 			rendered_a = "<span class='game say'><span class='name'>[name]</span> [speaking.format_message(message, verb)]</span>"
 			rendered_b = "<span class='game say'><span class='name'>[voice_name]</span> [speaking.format_message(message_stars, verb)]</span>"
-			src << "<i><span class='game say'>Holopad transmitted, <span class='name'>[real_name]</span> [speaking.format_message(message, verb)]</span></i>"//The AI can "hear" its own message.
+			to_chat(src, "<i><span class='game say'>Holopad transmitted, <span class='name'>[real_name]</span> [speaking.format_message(message, verb)]</span></i>")//The AI can "hear" its own message.
+
 		else
 			rendered_a = "<span class='game say'><span class='name'>[name]</span> [verb], <span class='message'>\"[sanitize_plus_chat(message)]\"</span></span>"
 			rendered_b = "<span class='game say'><span class='name'>[voice_name]</span> [verb], <span class='message'>\"[message_stars]\"</span></span>"
-			src << "<i><span class='game say'>Holopad transmitted, <span class='name'>[real_name]</span> [verb], <span class='message'><span class='body'>\"[sanitize_plus_chat(message)]\"</span></span></span></i>"//The AI can "hear" its own message.
+			to_chat(src, "<i><span class='game say'>Holopad transmitted, <span class='name'>[real_name]</span> [verb], <span class='message'><span class='body'>\"[sanitize_plus_chat(message)]\"</span></span></span></i>")//The AI can "hear" its own message.
+
 
 		for(var/mob/M in hearers(T.loc))//The location is the object, default distance.
 			if(M.say_understands(src))//If they understand AI speak. Humans and the like will be able to.
@@ -186,7 +188,7 @@
 		/*Radios "filter out" this conversation channel so we don't need to account for them.
 		This is another way of saying that we won't bother dealing with them.*/
 	else
-		src << "No holopad connected."
+		to_chat(src, "No holopad connected.")
 		return
 	return 1
 

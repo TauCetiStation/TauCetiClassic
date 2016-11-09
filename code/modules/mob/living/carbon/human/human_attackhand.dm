@@ -1,13 +1,13 @@
 /mob/living/carbon/human/attack_hand(mob/living/carbon/human/M)
 	if (istype(loc, /turf) && istype(loc.loc, /area/start))
-		M << "No attacking people at spawn, you jackass."
+		to_chat(M, "No attacking people at spawn, you jackass.")
 		return
 
 	var/datum/organ/external/temp = M:organs_by_name["r_hand"]
 	if (M.hand)
 		temp = M:organs_by_name["l_hand"]
 	if(temp && !temp.is_usable())
-		M << "\red You can't use your [temp.display_name]."
+		to_chat(M, "\red You can't use your [temp.display_name].")
 		return
 
 	..()
@@ -51,7 +51,7 @@
 					s.start()
 					return 1
 				else
-					M << "\red Not enough charge! "
+					to_chat(M, "\red Not enough charge! ")
 					visible_message("\red <B>[src] has been touched with the stun gloves by [M]!</B>")
 				return
 
@@ -93,10 +93,10 @@
 //			if(M.health < -75)	return 0
 
 			if((M.head && (M.head.flags & HEADCOVERSMOUTH)) || (M.wear_mask && (M.wear_mask.flags & MASKCOVERSMOUTH)))
-				M << "\blue <B>Remove your mask!</B>"
+				to_chat(M, "\blue <B>Remove your mask!</B>")
 				return 0
 			if((head && (head.flags & HEADCOVERSMOUTH)) || (wear_mask && (wear_mask.flags & MASKCOVERSMOUTH)))
-				M << "\blue <B>Remove his mask!</B>"
+				to_chat(M, "\blue <B>Remove his mask!</B>")
 				return 0
 
 			var/obj/effect/equip_e/human/O = new /obj/effect/equip_e/human()
@@ -115,14 +115,14 @@
 				return 0
 			for(var/obj/item/weapon/grab/G in src.grabbed_by)
 				if(G.assailant == M)
-					M << "<span class='notice'>You already grabbed [src].</span>"
+					to_chat(M, "<span class='notice'>You already grabbed [src].</span>")
 					return
 			if(w_uniform)
 				w_uniform.add_fingerprint(M)
 
 			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, src)
 			if(buckled)
-				M << "<span class='notice'>You cannot grab [src], \he is buckled in!</span>"
+				to_chat(M, "<span class='notice'>You cannot grab [src], \he is buckled in!</span>")
 			if(!G)	//the grab will delete itself in New if affecting is anchored
 				return
 			M.put_in_active_hand(G)

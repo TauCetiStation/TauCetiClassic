@@ -31,8 +31,8 @@
 	var/turf/source = get_turf(src)
 	for(var/mob/M in hearers(15, source))
 		M.playsound_local(source, melody, 50, 1, falloff = 5, channel = harmonica_channel)
-		M << pick("[user] plays a bluesy tune with his harmonica!", "[user] plays a warm tune with his harmonica!", \
-		"[user] plays a delightful tune with his harmonica!", "[user] plays a chilling tune with his harmonica!", "[user] plays a upbeat tune with his harmonica!")//Thanks Goonstation.
+		to_chat(M, pick("[user] plays a bluesy tune with his harmonica!", "[user] plays a warm tune with his harmonica!", \
+		"[user] plays a delightful tune with his harmonica!", "[user] plays a chilling tune with his harmonica!", "[user] plays a upbeat tune with his harmonica!"))//Thanks Goonstation.
 
 	spawn(cooldown)
 		spam_flag = 0

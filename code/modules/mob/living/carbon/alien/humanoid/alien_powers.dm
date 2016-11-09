@@ -8,13 +8,13 @@ Doesn't work on other aliens/AI.*/
 
 /mob/living/carbon/alien/proc/powerc(X, Y)//Y is optional, checks for weed planting. X can be null.
 	if(stat)
-		src << "\green You must be conscious to do this."
+		to_chat(src, "\green You must be conscious to do this.")
 		return 0
 	else if(X && getPlasma() < X)
-		src << "\green Not enough plasma stored."
+		to_chat(src, "\green Not enough plasma stored.")
 		return 0
 	else if(Y && (!isturf(src.loc) || istype(src.loc, /turf/space)))
-		src << "\green Bad place for a garden!"
+		to_chat(src, "\green Bad place for a garden!")
 		return 0
 	else	return 1
 
@@ -53,8 +53,8 @@ Doesn't work on other aliens/AI.*/
 		var/msg = sanitize_alt(copytext(input("Message:", "Alien Whisper") as text|null, 1, MAX_MESSAGE_LEN))
 		if(msg)
 			log_say("AlienWhisper: [key_name(src)]->[M.key] : [msg]")
-			M << "\green You hear a strange, alien voice in your head... \italic [msg]"
-			src << {"\green You said: "[msg]" to [M]"}
+			to_chat(M, "\green You hear a strange, alien voice in your head... \italic [msg]")
+			to_chat(src, {"\green You said: "[msg]" to [M]"})
 	return
 
 /mob/living/carbon/alien/humanoid/verb/transfer_plasma(mob/living/carbon/alien/M as mob in oview())
@@ -70,10 +70,10 @@ Doesn't work on other aliens/AI.*/
 				if (get_dist(src,M) <= 1)
 					M.adjustToxLoss(amount)
 					adjustToxLoss(-amount)
-					M << "\green [src] has transfered [amount] plasma to you."
-					src << {"\green You have trasferred [amount] plasma to [M]"}
+					to_chat(M, "\green [src] has transfered [amount] plasma to you.")
+					to_chat(src, {"\green You have trasferred [amount] plasma to [M]"})
 				else
-					src << "\green You need to be closer."
+					to_chat(src, "\green You need to be closer.")
 	return
 
 
@@ -88,18 +88,18 @@ Doesn't work on other aliens/AI.*/
 			if(isobj(O))
 				var/obj/I = O
 				if(I.unacidable)	//So the aliens don't destroy energy fields/singularies/other aliens/etc with their acid.
-					src << "\green You cannot dissolve this object."
+					to_chat(src, "\green You cannot dissolve this object.")
 					return
 			// TURF CHECK
 			else if(istype(O, /turf/simulated))
 				var/turf/T = O
 				// R WALL
 				if(istype(T, /turf/simulated/wall/r_wall))
-					src << "\green You cannot dissolve this object."
+					to_chat(src, "\green You cannot dissolve this object.")
 					return
 				// R FLOOR
 				if(istype(T, /turf/simulated/floor/engine))
-					src << "\green You cannot dissolve this object."
+					to_chat(src, "\green You cannot dissolve this object.")
 					return
 			else// Not a type we can acid.
 				return
@@ -108,7 +108,7 @@ Doesn't work on other aliens/AI.*/
 			new /obj/effect/alien/acid(get_turf(O), O)
 			visible_message("\green <B>[src] vomits globs of vile stuff all over [O]. It begins to sizzle and melt under the bubbling mess of acid!</B>")
 		else
-			src << "\green Target is too far away."
+			to_chat(src, "\green Target is too far away.")
 	return
 
 
@@ -119,13 +119,13 @@ Doesn't work on other aliens/AI.*/
 
 	if(powerc(50))
 		if(isalien(target))
-			src << "\green Your allies are not a valid target."
+			to_chat(src, "\green Your allies are not a valid target.")
 			return
 		adjustToxLoss(-50)
-		src << "\green You spit neurotoxin at [target]."
+		to_chat(src, "\green You spit neurotoxin at [target].")
 		for(var/mob/O in oviewers())
 			if ((O.client && !( O.blinded )))
-				O << "\red [src] spits neurotoxin at [target]!"
+				to_chat(O, "\red [src] spits neurotoxin at [target]!")
 		//I'm not motivated enough to revise this. Prjectile code in general needs update.
 		var/turf/T = loc
 		var/turf/U = (istype(target, /atom/movable) ? target.loc : target)
@@ -158,7 +158,7 @@ Doesn't work on other aliens/AI.*/
 		var/choice = input("Choose what you wish to shape.","Resin building") as null|anything in list("resin door","resin wall","resin membrane","resin nest") //would do it through typesof but then the player choice would have the type path and we don't want the internal workings to be exposed ICly - Urist
 		if(!choice || !powerc(75))	return
 		adjustToxLoss(-75)
-		src << "\green You shape a [choice]."
+		to_chat(src, "\green You shape a [choice].")
 		for(var/mob/O in viewers(src, null))
 			O.show_message(text("\red <B>[src] vomits up a thick purple substance and begins to shape it!</B>"), 1)
 		switch(choice)

@@ -87,14 +87,14 @@
 /obj/machinery/pipedispenser/attackby(obj/item/W, mob/user)
 	src.add_fingerprint(usr)
 	if (istype(W, /obj/item/pipe) || istype(W, /obj/item/pipe_meter))
-		usr << "\blue You put [W] back to [src]."
+		to_chat(usr, "\blue You put [W] back to [src].")
 		user.drop_item()
 		qdel(W)
 		return
 	else if (istype(W, /obj/item/weapon/wrench))
 		if (unwrenched==0)
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-			user << "\blue You begin to unfasten \the [src] from the floor..."
+			to_chat(user, "\blue You begin to unfasten \the [src] from the floor...")
 			if (do_after(user, 40, target = src))
 				user.visible_message( \
 					"[user] unfastens \the [src].", \
@@ -107,7 +107,7 @@
 					usr << browse(null, "window=pipedispenser")
 		else /*if (unwrenched==1)*/
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-			user << "\blue You begin to fasten \the [src] to the floor..."
+			to_chat(user, "\blue You begin to fasten \the [src] to the floor...")
 			if (do_after(user, 20, target = src))
 				user.visible_message( \
 					"[user] fastens \the [src].", \

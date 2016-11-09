@@ -89,7 +89,7 @@
 		return
 	user.next_move = world.time + 100
 	user.last_special = world.time + 100
-	user << "<span class='notice'>You lean on the back of [src] and start pushing the door open. (this will take about [breakout_time] minutes.)</span>"
+	to_chat(user, "<span class='notice'>You lean on the back of [src] and start pushing the door open. (this will take about [breakout_time] minutes.)</span>")
 	user.visible_message("<span class='warning'>You hear a metallic creaking from [src]!</span>")
 
 	if(do_after(user,(breakout_time*60*10),target=src)) //minutes * 60seconds * 10deciseconds
@@ -98,14 +98,14 @@
 
 		locked = 0
 		visible_message("<span class='danger'>[user] successfully broke out of [src]!</span>")
-		user << "<span class='notice'>You successfully break out of [src]!</span>"
+		to_chat(user, "<span class='notice'>You successfully break out of [src]!</span>")
 
 		open(user)
 
 /obj/machinery/dna_scannernew/proc/close(mob/user)
 	if(open)
 		if(panel_open)
-			user << "<span class='notice'>Close the maintenance panel first.</span>"
+			to_chat(user, "<span class='notice'>Close the maintenance panel first.</span>")
 			return 0
 		open = 0
 		density = 1
@@ -129,12 +129,14 @@
 
 				if (occupant.stat == DEAD)
 					if (occupant.client) //Ghost in body?
-						occupant << 'sound/machines/chime.ogg'	//probably not the best sound but I think it's reasonable
+						occupant << 'sound/machines/chime.ogg' //probably not the best sound but I think it's reasonable
+
 					else
 						for(var/mob/dead/observer/ghost in player_list)
 							if(ghost.mind == occupant.mind)
 								if(ghost.can_reenter_corpse)
-									ghost << 'sound/machines/chime.ogg'	//probably not the best sound but I think it's reasonable
+									ghost << 'sound/machines/chime.ogg'//probably not the best sound but I think it's reasonable
+
 									var/answer = alert(ghost,"Do you want to return to corpse for cloning?","Cloning","Yes","No")
 									if(answer == "Yes")
 										ghost.reenter_corpse()
@@ -145,10 +147,10 @@
 /obj/machinery/dna_scannernew/proc/open(mob/user)
 	if(!open)
 		if(panel_open)
-			user << "<span class='notice'>Close the maintenance panel first.</span>"
+			to_chat(user, "<span class='notice'>Close the maintenance panel first.</span>")
 			return
 		if(locked)
-			user << "<span class='notice'>The bolts are locked down, securing the door shut.</span>"
+			to_chat(user, "<span class='notice'>The bolts are locked down, securing the door shut.</span>")
 			return
 		var/turf/T = get_turf(src)
 		if(T)
@@ -186,7 +188,7 @@
 	if(istype(I, /obj/item/weapon/reagent_containers/glass))
 		var/obj/item/weapon/reagent_containers/glass/B = I
 		if(beaker)
-			user << "<span class='red'>A beaker is already loaded into the machine.</span>"
+			to_chat(user, "<span class='red'>A beaker is already loaded into the machine.</span>")
 			return
 
 		beaker = B
@@ -201,7 +203,7 @@
 			return
 
 		if(!open)
-			user << "<span class='notice'>Open the scanner first.</span>"
+			to_chat(user, "<span class='notice'>Open the scanner first.</span>")
 			return
 
 		var/mob/M = G.affecting
@@ -280,7 +282,7 @@
 			user.drop_item()
 			I.loc = src
 			src.disk = I
-			user << "<span class='notice'>You insert [I].</span>"
+			to_chat(user, "<span class='notice'>You insert [I].</span>")
 			nanomanager.update_uis(src) // update all UIs attached to src
 			return
 	else
@@ -437,7 +439,7 @@
 			// auto update every Master Controller tick
 			ui.set_auto_update(1)
 	else
-		user << "<span class='warning'>Error: No scanner detected</span>"
+		to_chat(user, "<span class='warning'>Error: No scanner detected</span>")
 
 /obj/machinery/computer/scan_consolenew/Topic(href, href_list)
 	. = ..()

@@ -55,7 +55,7 @@ turf
 
 	proc/high_pressure_movements()
 		if(reporting_pressure_difference)
-			world << "pressure_difference = [pressure_difference]; pressure_direction = [pressure_direction]"
+			to_chat(world, "pressure_difference = [pressure_difference]; pressure_direction = [pressure_direction]")
 		for(var/atom/movable/in_tile in src)
 			in_tile.experience_pressure_difference(pressure_difference, pressure_direction)
 
@@ -444,7 +444,7 @@ turf/simulated
 
 									else
 										air.temperature_share(modeled_neighbor.air, WINDOW_HEAT_TRANSFER_COEFFICIENT)
-					//			world << "OPEN, OPEN"
+//								to_chat(world, "OPEN, OPEN")
 
 							else //Solid but neighbor is open
 								if(modeled_neighbor.parent && modeled_neighbor.parent.group_processing)
@@ -454,7 +454,7 @@ turf/simulated
 										modeled_neighbor.air.temperature_turf_share(src, modeled_neighbor.thermal_conductivity)
 								else
 									modeled_neighbor.air.temperature_turf_share(src, modeled_neighbor.thermal_conductivity)
-					//			world << "SOLID, OPEN"
+//								to_chat(world, "SOLID, OPEN")
 
 						else
 							if(air) //Open but neighbor is solid
@@ -464,11 +464,11 @@ turf/simulated
 										air.temperature_turf_share(modeled_neighbor, modeled_neighbor.thermal_conductivity)
 								else
 									air.temperature_turf_share(modeled_neighbor, modeled_neighbor.thermal_conductivity)
-					//			world << "OPEN, SOLID"
+//								to_chat(world, "OPEN, SOLID")
 
 							else //Both tiles are solid
 								share_temperature_mutual_solid(modeled_neighbor, modeled_neighbor.thermal_conductivity)
-					//			world << "SOLID, SOLID"
+//								to_chat(world, "SOLID, SOLID")
 
 						modeled_neighbor.consider_superconductivity()
 

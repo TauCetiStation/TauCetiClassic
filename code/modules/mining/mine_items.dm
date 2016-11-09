@@ -144,14 +144,14 @@ proc/move_mining_shuttle()
 	if(href_list["move"])
 		//if(ticker.mode.name == "blob")
 		//	if(ticker.mode:declared)
-		//		usr << "Under directive 7-10, [station_name()] is quarantined until further notice."
+//				to_chat(usr, "Under directive 7-10, [station_name()] is quarantined until further notice.")
 		//		return
 
 		if (!mining_shuttle_moving)
-			usr << "<span class='notice'>Shuttle recieved message and will be sent shortly.</span>"
+			to_chat(usr, "<span class='notice'>Shuttle recieved message and will be sent shortly.</span>")
 			move_mining_shuttle()
 		else
-			usr << "<span class='notice'>Shuttle is already moving.</span>"
+			to_chat(usr, "<span class='notice'>Shuttle is already moving.</span>")
 
 	updateUsrDialog()
 
@@ -159,7 +159,7 @@ proc/move_mining_shuttle()
 	if (istype(W, /obj/item/weapon/card/emag) && !emagged)
 		src.req_access = list()
 		emagged = 1
-		usr << "<span class='notice'>You fried the consoles ID checking system. It's now available to everyone!</span>"
+		to_chat(usr, "<span class='notice'>You fried the consoles ID checking system. It's now available to everyone!</span>")
 	else
 		..()
 */
@@ -317,14 +317,14 @@ proc/move_mining_shuttle()
 	if(istype(W, /obj/item/weapon/screwdriver))
 		if(state==0)
 			state = 1
-			user << "<span class='notice'>You open maintenance panel.</span>"
+			to_chat(user, "<span class='notice'>You open maintenance panel.</span>")
 			update_icon()
 		else if(state==1)
 			state = 0
-			user << "<span class='notice'>You close maintenance panel.</span>"
+			to_chat(user, "<span class='notice'>You close maintenance panel.</span>")
 			update_icon()
 		else if(state == 2)
-			user << "<span class='danger'>[src] is broken!</span>"
+			to_chat(user, "<span class='danger'>[src] is broken!</span>")
 		return
 	else if(istype(W, /obj/item/weapon/stock_parts/cell))
 		if(state == 1 || state == 2)
@@ -332,11 +332,11 @@ proc/move_mining_shuttle()
 				user.remove_from_mob(W)
 				power_supply = W
 				power_supply.loc = src
-				user << "<span class='notice'>You load a powercell into \the [src]!</span>"
+				to_chat(user, "<span class='notice'>You load a powercell into \the [src]!</span>")
 			else
-				user << "<span class='notice'>There's already a powercell in \the [src].</span>"
+				to_chat(user, "<span class='notice'>There's already a powercell in \the [src].</span>")
 		else
-			user <<"<span class='notice'>[src] panel is closed.</span>"
+			to_chat(user, "<span class='notice'>[src] panel is closed.</span>")
 		return
 
 /obj/item/weapon/pickaxe/drill/attack_hand(mob/user)
@@ -345,22 +345,22 @@ proc/move_mining_shuttle()
 		return	//let them pick it up
 	if(state == 1 || state == 2)
 		if(!power_supply)
-			user << "<span class='notice'>There's no powercell in the [src].</span>"
+			to_chat(user, "<span class='notice'>There's no powercell in the [src].</span>")
 		else
 			power_supply.loc = get_turf(src.loc)
 			user.put_in_hands(power_supply)
 			power_supply.updateicon()
 			power_supply = null
-			user << "<span class='notice'>You pull the powercell out of \the [src].</span>"
+			to_chat(user, "<span class='notice'>You pull the powercell out of \the [src].</span>")
 		return
 
 /obj/item/weapon/pickaxe/drill/attack_self(mob/user)
 	mode = !mode
 
 	if(mode)
-		user << "<span class='notice'>[src] is now standard mode.</span>"
+		to_chat(user, "<span class='notice'>[src] is now standard mode.</span>")
 	else
-		user << "<span class='notice'>[src] is now safe mode.</span>"
+		to_chat(user, "<span class='notice'>[src] is now safe mode.</span>")
 
 
 /obj/item/weapon/pickaxe/drill/jackhammer
@@ -417,15 +417,15 @@ proc/move_mining_shuttle()
 	if(newtime < 5)
 		newtime = 5
 	timer = newtime
-	user << "<span class='notice'>Timer set for </span>[timer]<span class='notice'> seconds.</span>"
+	to_chat(user, "<span class='notice'>Timer set for </span>[timer]<span class='notice'> seconds.</span>")
 
 /obj/item/weapon/mining_charge/afterattack(turf/simulated/mineral/target, mob/user, flag)
 	if (!flag)
 		return
 	if (!istype(target, /turf/simulated/mineral))
-		user << "<span class='notice'>You can't plant [src] on [target.name].</span>"
+		to_chat(user, "<span class='notice'>You can't plant [src] on [target.name].</span>")
 		return
-	user << "<span class='notice'>Planting explosives...</span>"
+	to_chat(user, "<span class='notice'>Planting explosives...</span>")
 
 	if(do_after(user, 50, target = target) && in_range(user, target))
 		user.drop_item()
@@ -434,7 +434,7 @@ proc/move_mining_shuttle()
 		var/location
 		location = target
 		target.overlays += image('icons/obj/mining/explosives.dmi', "charge_basic_armed")
-		user << "<span class='notice'>Charge has been planted. Timer counting down from </span>[timer]"
+		to_chat(user, "<span class='notice'>Charge has been planted. Timer counting down from </span>[timer]")
 		spawn(timer*10)
 			for(var/turf/simulated/mineral/M in view(get_turf(target), blast_range))
 				if(!M)	return
@@ -479,7 +479,7 @@ proc/move_mining_shuttle()
 	if(!silenced)
 		playsound(src.loc, 'sound/weapons/kenetic_reload.ogg', 60, 1)
 	else
-		usr << "<span class='warning'>You silently charge [src].<span>"
+		to_chat(usr, "<span class='warning'>You silently charge [src].<span>")
 	recent_reload = 1
 	update_icon()
 	return
@@ -569,8 +569,8 @@ obj/item/projectile/kinetic/New()
 /obj/item/weapon/survivalcapsule/examine(mob/user)
 	..()
 	get_template()
-	user << "This capsule has the [template.name] stored."
-	user << template.description
+	to_chat(user, "This capsule has the [template.name] stored.")
+	to_chat(user, template.description)
 
 /obj/item/weapon/survivalcapsule/attack_self()
 	// Can't grab when capsule is New() because templates aren't loaded then
@@ -791,7 +791,7 @@ obj/item/projectile/kinetic/New()
 /obj/machinery/smartfridge/survival_pod/attackby(obj/item/O, mob/user)
 	if(is_type_in_typecache(O,forbidden_tools))
 		if(istype(O,/obj/item/weapon/wrench))
-			user << "\blue You start to disassemble the storage unit..."
+			to_chat(user, "\blue You start to disassemble the storage unit...")
 			if(do_after(user,20,target = src))
 				if(!src)
 					return
@@ -799,7 +799,7 @@ obj/item/projectile/kinetic/New()
 			return
 		if(accept_check(O))
 			if(contents.len >= max_n_of_items)
-				user << "<span class='notice'>\The [src] is full.</span>"
+				to_chat(user, "<span class='notice'>\The [src] is full.</span>")
 				return 1
 			else
 				user.remove_from_mob(O)

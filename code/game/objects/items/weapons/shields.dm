@@ -95,14 +95,14 @@
 		throw_speed = 2
 		w_class = 4
 		slot_flags = SLOT_BACK
-		user << "<span class='notice'>You extend \the [src].</span>"
+		to_chat(user, "<span class='notice'>You extend \the [src].</span>")
 	else
 		force = 3
 		throwforce = 3
 		throw_speed = 3
 		w_class = 3
 		slot_flags = null
-		user << "<span class='notice'>[src] can now be concealed.</span>"
+		to_chat(user, "<span class='notice'>[src] can now be concealed.</span>")
 	add_fingerprint(user)
 
 /*
@@ -123,10 +123,10 @@
 /obj/item/weapon/cloaking_device/attack_self(mob/user)
 	src.active = !( src.active )
 	if (src.active)
-		user << "\blue The cloaking device is now active."
+		to_chat(user, "\blue The cloaking device is now active.")
 		src.icon_state = "shield1"
 	else
-		user << "\blue The cloaking device is now inactive."
+		to_chat(user, "\blue The cloaking device is now inactive.")
 		src.icon_state = "shield0"
 	src.add_fingerprint(user)
 	return

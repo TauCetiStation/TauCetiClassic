@@ -84,7 +84,7 @@
 
 /mob/living/simple_animal/hulk/unathi/Login()
 	..()
-	src << "\blue Can eat limbs (left mouse button)."
+	to_chat(src, "\blue Can eat limbs (left mouse button).")
 
 /mob/living/simple_animal/hulk/Life()
 	if(health < 1)
@@ -167,7 +167,7 @@
 	return 0
 
 /mob/living/simple_animal/hulk/examine(mob/user)
-	var/msg = "<span cass='info'>*---------*\nThis is \icon[src] \a <EM>[src]</EM>!\n"
+	var/msg = "<span cass='info'>*---------*\nThis is [bicon(src)] \a <EM>[src]</EM>!\n"
 	if (src.health < src.maxHealth)
 		msg += "<span class='warning'>"
 		if (src.health >= src.maxHealth/2)
@@ -177,7 +177,7 @@
 		msg += "</span>"
 	msg += "*---------*</span>"
 
-	user << msg
+	to_chat(user, msg)
 
 /mob/living/simple_animal/hulk/attack_animal(mob/living/simple_animal/M)
 	if(M == src) //No punching myself to avoid hulk transformation!
@@ -219,7 +219,7 @@
 				if ((M.client && !( M.blinded )))
 					M.show_message("\red \b [O] bounces harmlessly off of [src]. ")
 	else
-		usr << "\red This weapon is ineffective, it does no damage."
+		to_chat(usr, "\red This weapon is ineffective, it does no damage.")
 		for(var/mob/M in viewers(src, null))
 			if ((M.client && !( M.blinded )))
 				M.show_message("\red [user] gently taps [src] with [O]. ")

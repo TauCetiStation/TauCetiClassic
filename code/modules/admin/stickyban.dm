@@ -18,7 +18,7 @@
 					return
 				ckey = ckey(ckey)
 			if (ckey in world.GetConfig("ban"))
-				usr << "Can not add a stickyban: User already has a current sticky ban"
+				to_chat(usr, "Can not add a stickyban: User already has a current sticky ban")
 			if (data["reason"])
 				ban["message"] = data["reason"]
 			else

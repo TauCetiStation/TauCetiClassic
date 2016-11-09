@@ -118,10 +118,10 @@
 			if(term && term.dir == turn(dir, 180))
 				terminal = term
 				terminal.master = src
-				user << "<span class='notice'>Terminal found.</span>"
+				to_chat(user, "<span class='notice'>Terminal found.</span>")
 				break
 		if(!terminal)
-			user << "<span class='alert'>No power source found.</span>"
+			to_chat(user, "<span class='alert'>No power source found.</span>")
 			return
 		stat &= ~BROKEN
 		update_icon()
@@ -139,25 +139,25 @@
 			return
 
 		if(terminal) //is there already a terminal ?
-			user << "<span class='warning'>This SMES already have a power terminal!</span>"
+			to_chat(user, "<span class='warning'>This SMES already have a power terminal!</span>")
 			return
 
 		if(!panel_open) //is the panel open ?
-			user << "<span class='warning'>You must open the maintenance panel first!</span>"
+			to_chat(user, "<span class='warning'>You must open the maintenance panel first!</span>")
 			return
 
 		var/turf/T = get_turf(user)
 		if(T.intact) //is the floor plating removed ?
-			user << "<span class='warning'>You must first remove the floor plating!</span>"
+			to_chat(user, "<span class='warning'>You must first remove the floor plating!</span>")
 			return
 
 
 		var/obj/item/weapon/cable_coil/C = I
 		if(C.amount < 10)
-			user << "<span class='warning'>You need more wires!</span>"
+			to_chat(user, "<span class='warning'>You need more wires!</span>")
 			return
 
-		user << "<span class='notice'>You start building the power terminal...</span>"
+		to_chat(user, "<span class='notice'>You start building the power terminal...</span>")
 		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 
 		if(do_after(user, 20, target = src) && C.amount >= 10)
@@ -388,7 +388,7 @@
 	if(!.)
 		return
 
-	//world << "[href] ; [href_list[href]]"
+//	to_chat(world, "[href] ; [href_list[href]]")
 
 	for(var/area/A in all_areas)
 		A.master.powerupdate = 3
@@ -428,7 +428,7 @@
 /obj/machinery/power/smes/proc/ion_act()
 	if(src.z == ZLEVEL_STATION)
 		if(prob(1)) //explosion
-			world << "\red SMES explosion in [src.loc.loc]"
+			to_chat(world, "\red SMES explosion in [src.loc.loc]")
 			for(var/mob/M in viewers(src))
 				M.show_message("\red The [src.name] is making strange noises!", 3, "\red You hear sizzling electronics.", 2)
 			sleep(10*pick(4,5,6,7,10,14))
@@ -440,7 +440,7 @@
 			qdel(src)
 			return
 		if(prob(15)) //Power drain
-			world << "\red SMES power drain in [src.loc.loc]"
+			to_chat(world, "\red SMES power drain in [src.loc.loc]")
 			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 			s.set_up(3, 1, src)
 			s.start()
@@ -449,7 +449,7 @@
 			else
 				emp_act(2)
 		if(prob(5)) //smoke only
-			world << "\red SMES smoke in [src.loc.loc]"
+			to_chat(world, "\red SMES smoke in [src.loc.loc]")
 			var/datum/effect/effect/system/smoke_spread/smoke = new /datum/effect/effect/system/smoke_spread()
 			smoke.set_up(3, 0, src.loc)
 			smoke.attach(src)

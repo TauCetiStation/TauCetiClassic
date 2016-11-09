@@ -142,11 +142,11 @@ obj/item/weapon/gun/energy/staff/focus
 	attack_self(mob/living/user)
 		if(projectile_type == "/obj/item/projectile/forcebolt")
 			charge_cost = 200
-			user << "\red The [src.name] will now strike a small area."
+			to_chat(user, "\red The [src.name] will now strike a small area.")
 			projectile_type = "/obj/item/projectile/forcebolt/strong"
 		else
 			charge_cost = 100
-			user << "\red The [src.name] will now strike only a single person."
+			to_chat(user, "\red The [src.name] will now strike only a single person.")
 			projectile_type = "/obj/item/projectile/forcebolt"
 	*/
 
@@ -210,13 +210,13 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 	set name = "Use Sniper Scope"
 	set popup_menu = 0
 	if(usr.stat || !(istype(usr,/mob/living/carbon/human)))
-		usr << "You are unable to focus down the scope of the rifle."
+		to_chat(usr, "You are unable to focus down the scope of the rifle.")
 		return
 	//if(!zoom && global_hud.darkMask[1] in usr.client.screen)
-	//	usr << "Your welding equipment gets in the way of you looking down the scope"
+//		to_chat(usr, "Your welding equipment gets in the way of you looking down the scope")
 	//	return
 	if(!zoom && usr.get_active_hand() != src)
-		usr << "You are too distracted to look down the scope, perhaps if it was in your active hand this might work better"
+		to_chat(usr, "You are too distracted to look down the scope, perhaps if it was in your active hand this might work better")
 		return
 
 	if(usr.client.view == world.view)
@@ -229,7 +229,7 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 		if(usr.hud_used)
 			usr.hud_used.show_hud(HUD_STYLE_STANDARD)
 		zoom = 0
-	usr << "<font color='[zoom?"blue":"red"]'>Zoom mode [zoom?"en":"dis"]abled.</font>"
+	to_chat(usr, "<font color='[zoom?"blue":"red"]'>Zoom mode [zoom?"en":"dis"]abled.</font>")
 	return
 
 //Tesla Cannon
@@ -262,7 +262,7 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 		else
 			charging = FALSE
 	else
-		user << "<span class='danger'>Generator is too difficult to spin while moving! Charging aborted.</span>"
+		to_chat(user, "<span class='danger'>Generator is too difficult to spin while moving! Charging aborted.</span>")
 		charging = FALSE
 	update_icon()
 
@@ -284,13 +284,13 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 
 /obj/item/weapon/gun/tesla/special_check(mob/user, atom/target)
 	if(!charge)
-		user << "<span class='red'>Tesla Cannon is not charged!</span>"
+		to_chat(user, "<span class='red'>Tesla Cannon is not charged!</span>")
 	else if(!istype(target, /mob/living))
-		user << "<span class='red'>Tesla Cannon needs to be aimed directly at living target.</span>"
+		to_chat(user, "<span class='red'>Tesla Cannon needs to be aimed directly at living target.</span>")
 	else if(charging)
-		user << "<span class='red'>You can't shoot while charging!</span>"
+		to_chat(user, "<span class='red'>You can't shoot while charging!</span>")
 	else if(!los_check(user, target))
-		user << "<span class='red'>Something is blocking our line of shot!</span>"
+		to_chat(user, "<span class='red'>Something is blocking our line of shot!</span>")
 	else
 		Bolt(user, target, user, charge)
 		charge = 0

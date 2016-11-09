@@ -291,7 +291,7 @@
 /obj/item/ammo_box/magazine/l10mag/examine(mob/user)
 	..()
 	if(src in view(1, user))
-		user << "<span class='notice'>You see a charge meter, it reads: [round(ammo_count() * 100 / max_ammo)]%.</span>"
+		to_chat(user, "<span class='notice'>You see a charge meter, it reads: [round(ammo_count() * 100 / max_ammo)]%.</span>")
 
 /obj/item/ammo_box/magazine/l10mag/attack_self(mob/user)
 	return
@@ -426,13 +426,13 @@
 		if (!SMG.magazine)
 			SMG.magazine = src
 			SMG.magazine.loc = SMG
-			user << "<span class='notice'>You load a new magazine into \the [SMG].</span>"
+			to_chat(user, "<span class='notice'>You load a new magazine into \the [SMG].</span>")
 			SMG.chamber_round()
 			A.update_icon()
 			update_icon()
 			return 1
 		else if (SMG.magazine)
-			user << "<span class='notice'>There's already a magazine in \the [src].</span>"
+			to_chat(user, "<span class='notice'>There's already a magazine in \the [src].</span>")
 	return 0
 
 /obj/item/ammo_box/magazine/m12g

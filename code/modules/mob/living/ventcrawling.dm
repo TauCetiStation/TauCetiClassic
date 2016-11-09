@@ -7,16 +7,16 @@ var/list/ventcrawl_machinery = list(/obj/machinery/atmospherics/unary/vent_pump,
 	if(!ventcrawler || !Adjacent(A))
 		return
 	if(stat)
-		src << "You must be conscious to do this!"
+		to_chat(src, "You must be conscious to do this!")
 		return
 	if(lying)
-		src << "You can't vent crawl while you're stunned!"
+		to_chat(src, "You can't vent crawl while you're stunned!")
 		return
 	if(restrained())
-		src << "You can't vent crawl while you're restrained!"
+		to_chat(src, "You can't vent crawl while you're restrained!")
 		return
 	if(buckled_mob)
-		src << "You can't vent crawl with [buckled_mob] on you!"
+		to_chat(src, "You can't vent crawl with [buckled_mob] on you!")
 		return
 
 	var/obj/machinery/atmospherics/unary/vent_found
@@ -59,14 +59,14 @@ var/list/ventcrawl_machinery = list(/obj/machinery/atmospherics/unary/vent_pump,
 						failed++
 
 					if(failed)
-						src << "<span class='warning'>You can't crawl around in the ventilation ducts with items!</span>"
+						to_chat(src, "<span class='warning'>You can't crawl around in the ventilation ducts with items!</span>")
 						return
 
 			visible_message("<span class='notice'>[src] scrambles into the ventilation ducts!</span>","<span class='notice'>You climb into the ventilation ducts.</span>")
 			loc = vent_found
 			add_ventcrawl(vent_found)
 	else
-		src << "<span class='warning'>This ventilation duct is not connected to anything!</span>"
+		to_chat(src, "<span class='warning'>This ventilation duct is not connected to anything!</span>")
 
 
 /mob/living/proc/add_ventcrawl(obj/machinery/atmospherics/unary/starting_machine)

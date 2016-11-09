@@ -84,7 +84,7 @@
 	..()
 	var/t = "A gas flow meter. "
 	t += status()
-	user << t
+	to_chat(user, t)
 
 
 
@@ -97,17 +97,17 @@
 	if (get_dist(usr, src) <= 3 || istype(usr, /mob/living/silicon/ai) || istype(usr, /mob/dead))
 		t += status()
 	else
-		usr << "\blue <B>You are too far away.</B>"
+		to_chat(usr, "\blue <B>You are too far away.</B>")
 		return 1
 
-	usr << t
+	to_chat(usr, t)
 	return 1
 
 /obj/machinery/meter/attackby(obj/item/weapon/W, mob/user)
 	if (!istype(W, /obj/item/weapon/wrench))
 		return ..()
 	playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-	user << "\blue You begin to unfasten \the [src]..."
+	to_chat(user, "\blue You begin to unfasten \the [src]...")
 	if (do_after(user, 40, target = src))
 		user.visible_message( \
 			"[user] unfastens \the [src].", \

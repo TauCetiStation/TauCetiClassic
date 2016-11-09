@@ -182,7 +182,7 @@
 	if (user != O)
 		for(var/mob/B in viewers(user, 3))
 			if ((B.client && !( B.blinded )))
-				B << text("<span class='rose'>[] stuffs [] into []!</span>", user, O, src)
+				to_chat(B, text("<span class='rose'>[] stuffs [] into []!</span>", user, O, src))
 	return
 
 
@@ -251,12 +251,12 @@
 /obj/structure/crematorium/attack_hand(mob/user)
 //	if (cremating) AWW MAN! THIS WOULD BE SO MUCH MORE FUN ... TO WATCH
 //		user.show_message("\red Uh-oh, that was a bad idea.", 1)
-//		//usr << "Uh-oh, that was a bad idea."
+//		to_chat(usr, "Uh-oh, that was a bad idea.")
 //		src:loc:poison += 20000000
 //		src:loc:firelevel = src:loc:poison
 //		return
 	if (cremating)
-		usr << "<span class='rose'>It's locked.</span>"
+		to_chat(usr, "<span class='rose'>It's locked.</span>")
 		return
 	if ((src.connected) && (src.locked == 0))
 		for(var/atom/movable/A as mob|obj in src.connected.loc)
@@ -330,7 +330,7 @@
 
 	else
 		if(!isemptylist(src.search_contents_for(/obj/item/weapon/disk/nuclear)))
-			usr << "<span class='notice'>You get the feeling that you shouldn't cremate one of the items in the cremator.</span>"
+			to_chat(usr, "<span class='notice'>You get the feeling that you shouldn't cremate one of the items in the cremator.</span>")
 			return
 
 		for (var/mob/M in viewers(src))
@@ -403,7 +403,7 @@
 	if (user != O)
 		for(var/mob/B in viewers(user, 3))
 			if ((B.client && !( B.blinded )))
-				B << text("<span class='rose'>[] stuffs [] into []!</span>", user, O, src)
+				to_chat(B, text("<span class='rose'>[] stuffs [] into []!</span>", user, O, src))
 			//Foreach goto(99)
 	return
 
@@ -417,6 +417,6 @@
 						message_admins("[user.name] ([user.ckey]) <font color='red'>Cremating</font> [M.name] ([M.ckey]).")
 					C.cremate(user)
 	else
-		usr << "<span class='rose'>Access denied.</span>"
+		to_chat(usr, "<span class='rose'>Access denied.</span>")
 	return
 

@@ -70,7 +70,7 @@
 /obj/structure/reagent_dispensers/watertank/examine(mob/user)
 	..()
 	if(src in oview(2, user) && modded)
-		user << "\red Water faucet is wrenched open, leaking the water!"
+		to_chat(user, "\red Water faucet is wrenched open, leaking the water!")
 
 /obj/structure/reagent_dispensers/watertank/attackby(obj/item/weapon/W, mob/user)
 	if (istype(W,/obj/item/weapon/wrench))
@@ -128,9 +128,9 @@
 	..()
 	if(src in oview(2, user))
 		if (modded)
-			user << "<span class='red'>Fuel faucet is wrenched open, leaking the fuel!</span>"
+			to_chat(user, "<span class='red'>Fuel faucet is wrenched open, leaking the fuel!</span>")
 		if(rig)
-			user << "<span class='notice'>There is some kind of device rigged to the tank.</span>"
+			to_chat(user, "<span class='notice'>There is some kind of device rigged to the tank.</span>")
 
 /obj/structure/reagent_dispensers/fueltank/attack_hand()
 	if (rig)
@@ -150,7 +150,7 @@
 			leak_fuel(amount_per_transfer_from_this)
 	if (istype(W,/obj/item/device/assembly_holder))
 		if (rig)
-			user << "\red There is another device in the way."
+			to_chat(user, "\red There is another device in the way.")
 			return ..()
 		user.visible_message("[user] begins rigging [W] to \the [src].", "You begin rigging [W] to \the [src]")
 		if(do_after(user, 20, target = src))

@@ -49,8 +49,8 @@
 	attack_verb = list("stabbed")
 
 	suicide_act(mob/user)
-		viewers(user) << pick("<span class='danger'>[user] is stabbing the [src.name] into \his temple! It looks like \he's trying to commit suicide.</span>", \
-							"<span class='danger'>[user] is stabbing the [src.name] into \his heart! It looks like \he's trying to commit suicide.</span>")
+		to_chat(viewers(user), pick("<span class='danger'>[user] is stabbing the [src.name] into \his temple! It looks like \he's trying to commit suicide.</span>", \
+							"<span class='danger'>[user] is stabbing the [src.name] into \his heart! It looks like \he's trying to commit suicide.</span>"))
 		return(BRUTELOSS)
 
 /obj/item/weapon/screwdriver/New()
@@ -169,19 +169,19 @@
 /obj/item/weapon/weldingtool/examine(mob/user)
 	..()
 	if(src in user)
-		user << "[src] contains [get_fuel()]/[max_fuel] units of fuel!"
+		to_chat(user, "[src] contains [get_fuel()]/[max_fuel] units of fuel!")
 
 
 /obj/item/weapon/weldingtool/attackby(obj/item/W, mob/user)
 	if(istype(W,/obj/item/weapon/screwdriver))
 		if(welding)
-			user << "<span class='rose'>Stop welding first!</span>"
+			to_chat(user, "<span class='rose'>Stop welding first!</span>")
 			return
 		status = !status
 		if(status)
-			user << "<span class='notice'>You resecure the welder.</span>"
+			to_chat(user, "<span class='notice'>You resecure the welder.</span>")
 		else
-			user << "<span class='info'>The welder can now be attached and modified.</span>"
+			to_chat(user, "<span class='info'>The welder can now be attached and modified.</span>")
 		src.add_fingerprint(user)
 		return
 
@@ -255,13 +255,13 @@
 	if(!proximity) return
 	if (istype(O, /obj/structure/reagent_dispensers/fueltank) && get_dist(src,O) <= 1 && !src.welding)
 		O.reagents.trans_to(src, max_fuel)
-		user << "<span class='notice'>Welder refueled"
+		to_chat(user, "<span class='notice'>Welder refueled")
 		playsound(src.loc, 'sound/effects/refill.ogg', 50, 1, -6)
 		return
 	else if (istype(O, /obj/structure/reagent_dispensers/fueltank) && get_dist(src,O) <= 1 && src.welding)
 		message_admins("[key_name_admin(user)] triggered a fueltank explosion.")
 		log_game("[key_name(user)] triggered a fueltank explosion.")
-		user << "<span class='rose'>That was stupid of you.</span>"
+		to_chat(user, "<span class='rose'>That was stupid of you.</span>")
 		var/obj/structure/reagent_dispensers/fueltank/tank = O
 		tank.explode()
 		return
@@ -306,7 +306,7 @@
 		return 1
 	else
 		if(M)
-			M << "<span class='notice'>You need more welding fuel to complete this task.</span>"
+			to_chat(M, "<span class='notice'>You need more welding fuel to complete this task.</span>")
 		return 0
 
 //Returns whether or not the welding tool is currently on.
@@ -319,18 +319,18 @@
 	//If we're turning it on
 	if(temp_welding > 0)
 		if (remove_fuel(1))
-			usr << "<span class='info'>The [src] switches on.</span>"
+			to_chat(usr, "<span class='info'>The [src] switches on.</span>")
 			src.force = 15
 			src.damtype = "fire"
 			src.icon_state = initial(src.icon_state) + "1"
 			SSobj.processing |= src
 		else
-			usr << "<span class='info'>Need more fuel!</span>"
+			to_chat(usr, "<span class='info'>Need more fuel!</span>")
 			src.welding = 0
 			return
 	//Otherwise
 	else
-		usr << "<span class='info'>The [src] switches off.</span>"
+		to_chat(usr, "<span class='info'>The [src] switches off.</span>")
 		src.force = 3
 		src.damtype = "brute"
 		src.icon_state = initial(src.icon_state)
@@ -351,20 +351,20 @@
 	src.welding = !( src.welding )
 	if (src.welding)
 		if (remove_fuel(1))
-			usr << "<span class='notice'>You switch the [src] on.</span>"
+			to_chat(usr, "<span class='notice'>You switch the [src] on.</span>")
 			src.force = 15
 			src.damtype = "fire"
 			src.icon_state = initial(src.icon_state) + "1"
 			SSobj.processing |= src
 		else
-			usr << "<span class='info'>Need more fuel!</span>"
+			to_chat(usr, "<span class='info'>Need more fuel!</span>")
 			src.welding = 0
 			return
 	else
 		if(!message)
-			usr << "<span class='notice'>You switch the [src] off.</span>"
+			to_chat(usr, "<span class='notice'>You switch the [src] off.</span>")
 		else
-			usr << "<span class='info'>The [src] shuts off!</span>"
+			to_chat(usr, "<span class='info'>The [src] shuts off!</span>")
 		src.force = 3
 		src.damtype = "brute"
 		src.icon_state = initial(src.icon_state)
@@ -387,29 +387,29 @@
 			return
 		switch(safety)
 			if(1)
-				usr << "<span class='warning'>Your eyes sting a little.</span>"
+				to_chat(usr, "<span class='warning'>Your eyes sting a little.</span>")
 				E.damage += rand(1, 2)
 				if(E.damage > 12)
 					user.eye_blurry += rand(3,6)
 			if(0)
-				usr << "<span class='warning'>Your eyes burn.</span>"
+				to_chat(usr, "<span class='warning'>Your eyes burn.</span>")
 				E.damage += rand(2, 4)
 				if(E.damage > 10)
 					E.damage += rand(4,10)
 			if(-1)
-				usr << "<span class='danger'>Your thermals intensify the welder's glow. Your eyes itch and burn severely.</span>"
+				to_chat(usr, "<span class='danger'>Your thermals intensify the welder's glow. Your eyes itch and burn severely.</span>")
 				user.eye_blurry += rand(12,20)
 				E.damage += rand(12, 16)
 		if(safety<2)
 
 			if(E.damage > 10)
-				user << "<span class='warning'>Your eyes are really starting to hurt. This can't be good for you!</span>"
+				to_chat(user, "<span class='warning'>Your eyes are really starting to hurt. This can't be good for you!</span>")
 
 			if (E.damage >= E.min_broken_damage)
-				user << "<span class='danger'>You go blind!</span>"
+				to_chat(user, "<span class='danger'>You go blind!</span>")
 				user.sdisabilities |= BLIND
 			else if (E.damage >= E.min_bruised_damage)
-				user << "<span class='danger'>You go blind!</span>"
+				to_chat(user, "<span class='danger'>You go blind!</span>")
 				user.eye_blind = 5
 				user.eye_blurry = 5
 				user.disabilities |= NEARSIGHTED
@@ -494,7 +494,7 @@
 			var/mob/living/carbon/human/H = M
 			if(H.species.flags & IS_SYNTHETIC)
 				if(M == user)
-					user << "<span class='rose'>You can't repair damage to your own body - it's against OH&S.</span>"
+					to_chat(user, "<span class='rose'>You can't repair damage to your own body - it's against OH&S.</span>")
 					return
 
 		if(S.brute_dam)
@@ -502,7 +502,7 @@
 			user.visible_message("<span class='rose'>\The [user] patches some dents on \the [M]'s [S.display_name] with \the [src].</span>")
 			return
 		else
-			user << "<span class='info'>Nothing to fix!</span>"
+			to_chat(user, "<span class='info'>Nothing to fix!</span>")
 
 	else
 		return ..()

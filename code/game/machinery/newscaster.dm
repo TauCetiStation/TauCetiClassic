@@ -65,13 +65,13 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 	var/turf/loc = get_turf(usr)
 	var/area/A = loc.loc
 	if (!istype(loc, /turf/simulated/floor))
-		usr << "<span class='alert'>Newscaster cannot be placed on this spot.</span>"
+		to_chat(usr, "<span class='alert'>Newscaster cannot be placed on this spot.</span>")
 		return
 	if (A.requires_power == 0 || A.name == "Space")
-		usr << "<span class='alert'>Newscaster cannot be placed in this area.</span>"
+		to_chat(usr, "<span class='alert'>Newscaster cannot be placed in this area.</span>")
 		return
 	for(var/obj/machinery/newscaster/T in loc)
-		usr << "<span class='alert'>There is another newscaster here.</span>"
+		to_chat(usr, "<span class='alert'>There is another newscaster here.</span>")
 		return
 	var/obj/machinery/newscaster/N = new(loc)
 	N.pixel_y -= (loc.y - on_wall.y) * 32
@@ -602,7 +602,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 					src.screen = 15
 				else
 					if(news_network.wanted_issue.is_admin_message)
-						usr << "The wanted issue has been distributed by a Nanotrasen higherup. You cannot edit it."
+						to_chat(usr, "The wanted issue has been distributed by a Nanotrasen higherup. You cannot edit it.")
 						return FALSE
 					news_network.wanted_issue.author = src.channel_name
 					news_network.wanted_issue.body = src.msg
@@ -613,7 +613,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 
 	else if(href_list["cancel_wanted"])
 		if(news_network.wanted_issue.is_admin_message)
-			usr << "The wanted issue has been distributed by a Nanotrasen higherup. You cannot take it down."
+			to_chat(usr, "The wanted issue has been distributed by a Nanotrasen higherup. You cannot take it down.")
 			return FALSE
 		var/choice = alert("Please confirm Wanted Issue removal","Network Security Handler","Confirm","Cancel")
 		if(choice=="Confirm")
@@ -627,7 +627,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 	else if(href_list["censor_channel_author"])
 		var/datum/feed_channel/FC = locate(href_list["censor_channel_author"])
 		if(FC.is_admin_channel)
-			usr << "This channel was created by a Nanotrasen Officer. You cannot censor it."
+			to_chat(usr, "This channel was created by a Nanotrasen Officer. You cannot censor it.")
 			return FALSE
 		if(FC.author != "<B>\[REDACTED\]</B>")
 			FC.backup_author = FC.author
@@ -638,7 +638,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 	else if(href_list["censor_channel_story_author"])
 		var/datum/feed_message/MSG = locate(href_list["censor_channel_story_author"])
 		if(MSG.is_admin_message)
-			usr << "This message was created by a Nanotrasen Officer. You cannot censor its author."
+			to_chat(usr, "This message was created by a Nanotrasen Officer. You cannot censor its author.")
 			return FALSE
 		if(MSG.author != "<B>\[REDACTED\]</B>")
 			MSG.backup_author = MSG.author
@@ -649,7 +649,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 	else if(href_list["censor_channel_story_body"])
 		var/datum/feed_message/MSG = locate(href_list["censor_channel_story_body"])
 		if(MSG.is_admin_message)
-			usr << "This channel was created by a Nanotrasen Officer. You cannot censor it."
+			to_chat(usr, "This channel was created by a Nanotrasen Officer. You cannot censor it.")
 			return FALSE
 		if(MSG.img != null)
 			MSG.backup_img = MSG.img
@@ -670,7 +670,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 	else if(href_list["toggle_d_notice"])
 		var/datum/feed_channel/FC = locate(href_list["toggle_d_notice"])
 		if(FC.is_admin_channel)
-			usr << "This channel was created by a Nanotrasen Officer. You cannot place a D-Notice upon it."
+			to_chat(usr, "This channel was created by a Nanotrasen Officer. You cannot place a D-Notice upon it.")
 			return FALSE
 		FC.censored = !FC.censored
 
@@ -714,7 +714,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 				src.screen=2*/  //Obsolete after autorecognition
 
 	if(istype(I, /obj/item/weapon/wrench))
-		user << "<span class='notice'>Now [anchored ? "un" : ""]securing [name]</span>"
+		to_chat(user, "<span class='notice'>Now [anchored ? "un" : ""]securing [name]</span>")
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		if(do_after(user, 60, target = src))
 			new /obj/item/newscaster_frame(loc)
@@ -746,7 +746,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 						O.show_message("[user.name] forcefully slams the [src.name] with the [I.name]!" )
 					playsound(src.loc, 'sound/effects/Glasshit.ogg', 100, 1)
 		else
-			user << "<FONT COLOR='blue'>This does nothing.</FONT>"
+			to_chat(user, "<FONT COLOR='blue'>This does nothing.</FONT>")
 	src.update_icon()
 
 /obj/machinery/newscaster/attack_ai(mob/user)
@@ -754,7 +754,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 
 
 /obj/machinery/newscaster/attack_paw(mob/user)
-	user << "<font color='blue'>The newscaster controls are far too complicated for your tiny brain!</font>"
+	to_chat(user, "<font color='blue'>The newscaster controls are far too complicated for your tiny brain!</font>")
 	return
 
 /obj/machinery/newscaster/proc/AttachPhoto(mob/user)
@@ -805,7 +805,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 
 /*obj/item/weapon/newspaper/attack_hand(mob/user as mob)
 	..()
-	world << "derp"*/
+	to_chat(world, "derp") */
 
 obj/item/weapon/newspaper/attack_self(mob/user)
 	if(ishuman(user))
@@ -884,7 +884,7 @@ obj/item/weapon/newspaper/attack_self(mob/user)
 		human_user << browse(dat, "window=newspaper_main;size=300x400")
 		onclose(human_user, "newspaper_main")
 	else
-		user << "The paper is full of intelligible symbols!"
+		to_chat(user, "The paper is full of intelligible symbols!")
 
 
 obj/item/weapon/newspaper/Topic(href, href_list)
@@ -922,7 +922,7 @@ obj/item/weapon/newspaper/Topic(href, href_list)
 obj/item/weapon/newspaper/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/pen))
 		if(src.scribble_page == src.curr_page)
-			user << "<FONT COLOR='blue'>There's already a scribble in this page... You wouldn't want to make things too cluttered, would you?</FONT>"
+			to_chat(user, "<FONT COLOR='blue'>There's already a scribble in this page... You wouldn't want to make things too cluttered, would you?</FONT>")
 		else
 			var/s = sanitize(input(user, "Write something", "Newspaper", ""), 1, MAX_MESSAGE_LEN)
 //			s = copytext(sanitize_u(s), 1, MAX_MESSAGE_LEN)

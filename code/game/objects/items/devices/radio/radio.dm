@@ -153,12 +153,12 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 		if(A && target)
 
 			A:cameraFollow = target
-			A << text("Now tracking [] on camera.", target.name)
+			to_chat(A, text("Now tracking [] on camera.", target.name))
 			if (usr.machine == null)
 				usr.machine = usr
 
 			while (usr:cameraFollow == target)
-				usr << "Target is not on or near any active cameras on the station. We'll check again in 5 seconds (unless you use the cancel-camera verb)."
+				to_chat(usr, "Target is not on or near any active cameras on the station. We'll check again in 5 seconds (unless you use the cancel-camera verb).")
 				sleep(40)
 				continue
 
@@ -209,7 +209,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	var/datum/radio_frequency/connection = null
 	if(channel && channels && channels.len > 0)
 		if (channel == "department")
-			//world << "DEBUG: channel=\"[channel]\" switching to \"[channels[1]]\""
+//			to_chat(world, "DEBUG: channel=\"[channel]\" switching to \"[channels[1]]\"")
 			channel = channels[1]
 		connection = secure_radio_connections[channel]
 	else
@@ -259,7 +259,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 		if(channel) // If a channel is specified, look for it.
 			if(channels && channels.len > 0)
 				if (channel == "department")
-					//world << "DEBUG: channel=\"[channel]\" switching to \"[channels[1]]\""
+//					to_chat(world, "DEBUG: channel=\"[channel]\" switching to \"[channels[1]]\"")
 					channel = channels[1]
 				connection = secure_radio_connections[channel]
 				if (!channels[channel]) // if the channel is turned off, don't broadcast
@@ -446,7 +446,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 		var/datum/radio_frequency/connection = null
 		if(channel && channels && channels.len > 0)
 			if (channel == "department")
-				//world << "DEBUG: channel=\"[channel]\" switching to \"[channels[1]]\""
+//				to_chat(world, "DEBUG: channel=\"[channel]\" switching to \"[channels[1]]\"")
 				channel = channels[1]
 			connection = secure_radio_connections[channel]
 		else
@@ -456,7 +456,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 			return
 		var/display_freq = connection.frequency
 
-		//world << "DEBUG: used channel=\"[channel]\" frequency= \"[display_freq]\" connection.devices.len = [connection.devices.len]"
+//		to_chat(world, "DEBUG: used channel=\"[channel]\" frequency= \"[display_freq]\" connection.devices.len = [connection.devices.len]")
 
 		var/eqjobname
 
@@ -483,7 +483,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 			//if(R.accept_rad(src, message))
 			receive |= R.send_hear(display_freq, 0)
 
-		//world << "DEBUG: receive.len=[receive.len]"
+//		to_chat(world, "DEBUG: receive.len=[receive.len]")
 		var/list/heard_masked = list() // masked name or no real name
 		var/list/heard_normal = list() // normal message
 		var/list/heard_voice = list() // voice message
@@ -502,7 +502,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 		if (length(heard_masked) || length(heard_normal) || length(heard_voice) || length(heard_garbled))
 			var/part_a = "<span class='radio'><span class='name'>"
-			//var/part_b = "</span><b> \icon[src]\[[format_frequency(frequency)]\]</b> <span class='message'>"
+			//var/part_b = "</span><b> [bicon(src)]\[[format_frequency(frequency)]\]</b> <span class='message'>"
 			var/freq_text
 			switch(display_freq)
 				if(SYND_FREQ)
@@ -524,7 +524,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 			if(!freq_text)
 				freq_text = format_frequency(display_freq)
 
-			var/part_b = "</span><b> \icon[src]\[[freq_text]\]</b> <span class='message'>" // Tweaked for security headsets -- TLE
+			var/part_b = "</span><b> [bicon(src)]\[[freq_text]\]</b> <span class='message'>" // Tweaked for security headsets -- TLE
 			var/part_c = "</span></span>"
 
 			if (display_freq==SYND_FREQ)
@@ -673,7 +673,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 /obj/item/device/radio/examine(mob/user)
 	..()
 	if (src in view(1, user))
-		user << "<span class='notice'>\the [src] can[b_stat ? "" : " not"] be attached or modified!</span>"
+		to_chat(user, "<span class='notice'>\the [src] can[b_stat ? "" : " not"] be attached or modified!</span>")
 
 /obj/item/device/radio/attackby(obj/item/weapon/W, mob/user)
 	..()
@@ -735,14 +735,14 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 					keyslot = null
 
 			recalculateChannels()
-			user << "You pop out the encryption key in the radio!"
+			to_chat(user, "You pop out the encryption key in the radio!")
 
 		else
-			user << "This radio doesn't have any encryption keys!"
+			to_chat(user, "This radio doesn't have any encryption keys!")
 
 	if(istype(W, /obj/item/device/encryptionkey/))
 		if(keyslot)
-			user << "The radio can't hold another key!"
+			to_chat(user, "The radio can't hold another key!")
 			return
 
 		if(!keyslot)
@@ -793,10 +793,10 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	if (href_list["mode"])
 		if(subspace_transmission != 1)
 			subspace_transmission = 1
-			usr << "Subspace Transmission is disabled"
+			to_chat(usr, "Subspace Transmission is disabled")
 		else
 			subspace_transmission = 0
-			usr << "Subspace Transmission is enabled"
+			to_chat(usr, "Subspace Transmission is enabled")
 		if(subspace_transmission == 1)//Simple as fuck, clears the channel list to prevent talking/listening over them if subspace transmission is disabled
 			channels = list()
 		else

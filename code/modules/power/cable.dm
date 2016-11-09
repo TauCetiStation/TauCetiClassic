@@ -121,7 +121,7 @@ By design, d1 is the smallest direction and d2 is the highest
 
 ///// Z-Level Stuff
 		if(src.d1 == 12 || src.d2 == 12)
-			user << "<span class='warning'>You must cut this cable from above.</span>"
+			to_chat(user, "<span class='warning'>You must cut this cable from above.</span>")
 			return
 ///// Z-Level Stuff
 
@@ -161,10 +161,10 @@ By design, d1 is the smallest direction and d2 is the highest
 	else if(istype(W, /obj/item/device/multitool))
 
 		if(powernet && (powernet.avail > 0))		// is it powered?
-			user << "\red [powernet.avail]W in power network."
+			to_chat(user, "\red [powernet.avail]W in power network.")
 
 		else
-			user << "<span class='warning'>The cable is not powered.</span>"
+			to_chat(user, "<span class='warning'>The cable is not powered.</span>")
 
 		shock(user, 5, 0.2)
 
@@ -427,7 +427,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	attack_verb = list("whipped", "lashed", "disciplined", "flogged")
 
 	suicide_act(mob/user)
-		viewers(user) << "<span class='warning'><b>[user] is strangling \himself with the [src.name]! It looks like \he's trying to commit suicide.</b></span>"
+		to_chat(viewers(user), "<span class='warning'><b>[user] is strangling \himself with the [src.name]! It looks like \he's trying to commit suicide.</b></span>")
 		return(OXYLOSS)
 
 /obj/item/weapon/cable_coil/New(loc, amount = MAXCOIL, var/param_color = null)
@@ -456,7 +456,7 @@ By design, d1 is the smallest direction and d2 is the highest
 			var/mob/living/carbon/human/H = M
 			if(H.species.flags & IS_SYNTHETIC)
 				if(M == user)
-					user << "\red You can't repair damage to your own body - it's against OH&S."
+					to_chat(user, "\red You can't repair damage to your own body - it's against OH&S.")
 					return
 
 		if(S.burn_dam > 0 && use(1))
@@ -464,7 +464,7 @@ By design, d1 is the smallest direction and d2 is the highest
 			user.visible_message("\red \The [user] repairs some burn damage on \the [M]'s [S.display_name] with \the [src].")
 			return
 		else
-			user << "Nothing to fix!"
+			to_chat(user, "Nothing to fix!")
 
 	else
 		return ..()
@@ -494,11 +494,11 @@ By design, d1 is the smallest direction and d2 is the highest
 	..()
 	if(src in view(1, user))
 		if(amount == 1)
-			user << "A short piece of power cable."
+			to_chat(user, "A short piece of power cable.")
 		else if(amount == 2)
-			user << "A piece of power cable."
+			to_chat(user, "A piece of power cable.")
 		else
-			user << "A coil of power cable. There are [amount] lengths of cable in the coil."
+			to_chat(user, "A coil of power cable. There are [amount] lengths of cable in the coil.")
 
 
 /obj/item/weapon/cable_coil/verb/make_restraint()
@@ -509,14 +509,14 @@ By design, d1 is the smallest direction and d2 is the highest
 	if(ishuman(M) && !M.restrained() && !M.stat && !M.paralysis && ! M.stunned)
 		if(!istype(usr.loc,/turf)) return
 		if(src.amount <= 14)
-			usr << "<span class='warning'>You need at least 15 lengths to make restraints!</span>"
+			to_chat(usr, "<span class='warning'>You need at least 15 lengths to make restraints!</span>")
 			return
 		var/obj/item/weapon/handcuffs/cable/B = new /obj/item/weapon/handcuffs/cable(usr.loc)
 		B.color = item_color
-		usr << "<span class='notice'>You wind some cable together to make some restraints.</span>"
+		to_chat(usr, "<span class='notice'>You wind some cable together to make some restraints.</span>")
 		src.use(15)
 	else
-		usr << "<span class='notice'>\blue You cannot do that.</span>"
+		to_chat(usr, "<span class='notice'>\blue You cannot do that.</span>")
 	..()
 
 // Items usable on a cable coil :
@@ -527,7 +527,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	if( istype(W, /obj/item/weapon/wirecutters) && src.amount > 1)
 		src.amount--
 		new/obj/item/weapon/cable_coil(user.loc, 1,item_color)
-		user << "<span class='notice'>You cut a piece off the cable coil.</span>"
+		to_chat(user, "<span class='notice'>You cut a piece off the cable coil.</span>")
 		src.update_icon()
 		src.update_wclass()
 		return
@@ -535,19 +535,19 @@ By design, d1 is the smallest direction and d2 is the highest
 	else if( istype(W, /obj/item/weapon/cable_coil) )
 		var/obj/item/weapon/cable_coil/C = W
 		if(C.amount == MAXCOIL)
-			user << "<span class='notice'>The coil is too long, you cannot add any more cable to it.</span>"
+			to_chat(user, "<span class='notice'>The coil is too long, you cannot add any more cable to it.</span>")
 			return
 
 		if( (C.amount + src.amount <= MAXCOIL) )
 			C.amount += src.amount
-			user << "<span class='notice'>You join the cable coils together.</span>"
+			to_chat(user, "<span class='notice'>You join the cable coils together.</span>")
 			C.update_icon()
 			C.update_wclass()
 			qdel(src)
 			return
 
 		else
-			user << "<span class='notice'>You transfer [MAXCOIL - C.amount ] length\s of cable from one coil to the other.</span>"
+			to_chat(user, "<span class='notice'>You transfer [MAXCOIL - C.amount ] length\s of cable from one coil to the other.</span>")
 			src.amount -= (MAXCOIL-C.amount)
 			src.update_icon()
 			src.update_wclass()
@@ -588,11 +588,11 @@ By design, d1 is the smallest direction and d2 is the highest
 		return
 
 	if(get_dist(F,user) > 1) //too far
-		user << "<span class='warning'>You can't lay cable at a place that far away.</span>"
+		to_chat(user, "<span class='warning'>You can't lay cable at a place that far away.</span>")
 		return
 
 	if(F.intact)		// if floor is intact, complain
-		user << "<span class='warning'>You can't lay cable there unless the floor tiles are removed.</span>"
+		to_chat(user, "<span class='warning'>You can't lay cable there unless the floor tiles are removed.</span>")
 		return
 
 	else
@@ -605,14 +605,14 @@ By design, d1 is the smallest direction and d2 is the highest
 
 		for(var/obj/structure/cable/LC in F)
 			if((LC.d1 == dirn && LC.d2 == 0 ) || ( LC.d2 == dirn && LC.d1 == 0))
-				user << "<span class='warning'>There's already a cable at that position.</span>"
+				to_chat(user, "<span class='warning'>There's already a cable at that position.</span>")
 				return
 ///// Z-Level Stuff
 		// check if the target is open space
 		if(istype(F, /turf/simulated/floor/open))
 			for(var/obj/structure/cable/LC in F)
 				if((LC.d1 == dirn && LC.d2 == 11 ) || ( LC.d2 == dirn && LC.d1 == 11))
-					user << "<span class='warning'>There's already a cable at that position.</span>"
+					to_chat(user, "<span class='warning'>There's already a cable at that position.</span>")
 					return
 
 			var/turf/simulated/floor/open/temp = F
@@ -651,7 +651,7 @@ By design, d1 is the smallest direction and d2 is the highest
 
 			for(var/obj/structure/cable/LC in F)
 				if((LC.d1 == dirn && LC.d2 == 0 ) || ( LC.d2 == dirn && LC.d1 == 0))
-					user << "There's already a cable at that position."
+					to_chat(user, "There's already a cable at that position.")
 					return
 
 			var/obj/structure/cable/C = new(F)
@@ -693,7 +693,7 @@ By design, d1 is the smallest direction and d2 is the highest
 		return
 
 	if(get_dist(C, user) > 1)		// make sure it's close enough
-		user << "<span class='warning'>You can't lay cable at a place that far away.</span>"
+		to_chat(user, "<span class='warning'>You can't lay cable at a place that far away.</span>")
 		return
 
 
@@ -706,7 +706,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	// one end of the clicked cable is pointing towards us
 	if(C.d1 == dirn || C.d2 == dirn)
 		if(U.intact)						// can't place a cable if the floor is complete
-			user << "<span class='warning'>You can't lay cable there unless the floor tiles are removed.</span>"
+			to_chat(user, "<span class='warning'>You can't lay cable there unless the floor tiles are removed.</span>")
 			return
 		else
 			// cable is pointing at us, we're standing on an open tile
@@ -716,7 +716,7 @@ By design, d1 is the smallest direction and d2 is the highest
 
 			for(var/obj/structure/cable/LC in U)		// check to make sure there's not a cable there already
 				if(LC.d1 == fdirn || LC.d2 == fdirn)
-					user << "<span class='warning'>There's already a cable at that position.</span>"
+					to_chat(user, "<span class='warning'>There's already a cable at that position.</span>")
 					return
 
 			var/obj/structure/cable/NC = new(U)
@@ -759,7 +759,7 @@ By design, d1 is the smallest direction and d2 is the highest
 			if(LC == C)			// skip the cable we're interacting with
 				continue
 			if((LC.d1 == nd1 && LC.d2 == nd2) || (LC.d1 == nd2 && LC.d2 == nd1) )	// make sure no cable matches either direction
-				user << "<span class='warning'>There's already a cable at that position.</span>"
+				to_chat(user, "<span class='warning'>There's already a cable at that position.</span>")
 				return
 
 

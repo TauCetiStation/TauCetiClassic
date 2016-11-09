@@ -105,13 +105,13 @@
 	if (!istype(M, /mob))
 		return
 	if (!(istype(user, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey") //#Z2
-		user << "\red You don't have the dexterity to do this!"
+		to_chat(user, "\red You don't have the dexterity to do this!")
 		return
 	if (!(istype(user, /mob/living/carbon/human/))) //#Z2 If our monkey/whatever not with name monkey.
-		user << "\red You don't have the dexterity to do this!"
+		to_chat(user, "\red You don't have the dexterity to do this!")
 		return
 	if (HULK in user.mutations) //#Z2
-		user << "\red You don't have the dexterity to do this!"
+		to_chat(user, "\red You don't have the dexterity to do this!")
 		return
 
 	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been injected with [name] by [user.name] ([user.ckey])</font>")
@@ -165,7 +165,7 @@
 					O.show_message(text("\red [] has been injected with [] by [].", M, src, user), 1)
 					//Foreach goto(192)
 				if (!(istype(M, /mob/living/carbon/human) || istype(M, /mob/living/carbon/monkey)))
-					user << "\red Apparently it didn't work."
+					to_chat(user, "\red Apparently it didn't work.")
 					return
 
 				if (buf.types & DNA2_BUF_SE)

@@ -9,12 +9,12 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 	usr.verbs -= /mob/living/carbon/human/proc/shadowling_hatch
 	switch(alert("Are you sure you want to hatch? You cannot undo this!",,"Yes","No"))
 		if("No")
-			usr << "<span class='warning'>You decide against hatching for now."
+			to_chat(usr, "<span class='warning'>You decide against hatching for now.")
 			usr.verbs += /mob/living/carbon/human/proc/shadowling_hatch
 			return
 		if("Yes")
 			if(!istype(usr.loc, /turf))
-				usr << "<span class='warning'>You can't hatch here."
+				to_chat(usr, "<span class='warning'>You can't hatch here.")
 				usr.verbs += /mob/living/carbon/human/proc/shadowling_hatch
 				return
 			usr.notransform = 1
@@ -50,20 +50,20 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 
 			sleep(80)
 			playsound(usr.loc, 'sound/weapons/slash.ogg', 25, 1)
-			usr << "<i><b>You rip and slice.</b></i>"
+			to_chat(usr, "<i><b>You rip and slice.</b></i>")
 			sleep(10)
 			playsound(usr.loc, 'sound/weapons/slashmiss.ogg', 25, 1)
-			usr << "<i><b>The chrysalis falls like water before you.</b></i>"
+			to_chat(usr, "<i><b>The chrysalis falls like water before you.</b></i>")
 			sleep(10)
 			playsound(usr.loc, 'sound/weapons/slice.ogg', 25, 1)
-			usr << "<i><b>You are free!</b></i>"
+			to_chat(usr, "<i><b>You are free!</b></i>")
 
 			sleep(10)
 			playsound(usr.loc, 'sound/effects/ghost.ogg', 100, 1)
-			
+
 			usr.notransform = 0
 
-			usr << "<i><b><font size=3>YOU LIVE!!!</i></b></font>"
+			to_chat(usr, "<i><b><font size=3>YOU LIVE!!!</i></b></font>")
 
 			for(var/obj/effect/alien/resin/wall/shadowling/W in orange(usr, 1))
 				playsound(W, 'sound/effects/splat.ogg', 50, 1)
@@ -99,7 +99,7 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 			usr.mind.transfer_to(H)
 			ticker.mode.update_all_shadows_icons()
 
-			H << "<span class='shadowling'><b><i>Your powers are awoken. You may now live to your fullest extent. Remember your goal. Cooperate with your thralls and allies.</b></i></span>"
+			to_chat(H, "<span class='shadowling'><b><i>Your powers are awoken. You may now live to your fullest extent. Remember your goal. Cooperate with your thralls and allies.</b></i></span>")
 			H.spell_list += new /obj/effect/proc_holder/spell/targeted/shadowling_hivemind
 			H.spell_list += new /obj/effect/proc_holder/spell/targeted/enthrall
 			H.spell_list += new /obj/effect/proc_holder/spell/targeted/glare
@@ -122,12 +122,12 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 	usr.verbs -= /mob/living/carbon/human/proc/shadowling_ascendance
 	switch(alert("It is time to ascend. Are you completely sure about this? You cannot undo this!",,"Yes","No"))
 		if("No")
-			usr << "<span class='warning'>You decide against ascending for now."
+			to_chat(usr, "<span class='warning'>You decide against ascending for now.")
 			usr.verbs += /mob/living/carbon/human/proc/shadowling_ascendance
 			return
 		if("Yes")
 			if(!istype(usr.loc, /turf))
-				usr << "<span class='warning'>You can't evolve here."
+				to_chat(usr, "<span class='warning'>You can't evolve here.")
 				usr.verbs += /mob/living/carbon/human/proc/shadowling_ascendance
 				return
 			usr.notransform = 1
@@ -145,9 +145,9 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 
 			sleep(20)
 			if(!ticker.mode.shadowling_ascended)
-				usr << "<span class='shadowling'>It isn't enough. Time to draw upon your thralls.</span>"
+				to_chat(usr, "<span class='shadowling'>It isn't enough. Time to draw upon your thralls.</span>")
 			else
-				usr << "<span class='shadowling'>After some telepathic searching, you find the reservoir of life energy from the thralls and tap into it.</span>"
+				to_chat(usr, "<span class='shadowling'>After some telepathic searching, you find the reservoir of life energy from the thralls and tap into it.</span>")
 
 			sleep(50)
 			for(var/mob/M in mob_list)
@@ -158,19 +158,19 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 					ticker.mode.thralls -= M.mind //To prevent message spam
 					M.death(0)
 
-			usr << "<span class='userdanger'>Drawing upon your thralls, you find the strength needed to finish and rend apart the final barriers to godhood.</b></span>"
+			to_chat(usr, "<span class='userdanger'>Drawing upon your thralls, you find the strength needed to finish and rend apart the final barriers to godhood.</b></span>")
 
 			sleep(20)
-			usr << "<span class='big'><b>Yes!</b></span>"
+			to_chat(usr, "<span class='big'><b>Yes!</b></span>")
 			sleep(10)
-			usr << "<span class='reallybig'><b>YES!</b></span>"
+			to_chat(usr, "<span class='reallybig'><b>YES!</b></span>")
 			sleep(10)
-			usr << "<font size=5><b><i>YE--</b></I></font>"
+			to_chat(usr, "<font size=5><b><i>YE--</b></I></font>")
 			sleep(1)
 			for(var/mob/living/M in orange(7, src))
 				M.Weaken(10)
-				M << "<span class='userdanger'>An immense pressure slams you onto the ground!</span>"
-			world << "<font size=5><span class='shadowling'><b>\"VYSHA NERADA YEKHEZET U'RUU!!\"</font></span>"
+				to_chat(M, "<span class='userdanger'>An immense pressure slams you onto the ground!</span>")
+			to_chat(world, "<font size=5><span class='shadowling'><b>\"VYSHA NERADA YEKHEZET U'RUU!!\"</font></span>")
 			world << 'sound/hallucinations/veryfar_noise.ogg'
 			for(var/obj/machinery/power/apc/A in world)
 				A.overload_lighting()

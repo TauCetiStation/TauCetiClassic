@@ -44,7 +44,7 @@
 /obj/machinery/pdapainter/attackby(obj/item/O, mob/user)
 	if(istype(O, /obj/item/device/pda))
 		if(storedpda)
-			user << "There is already a PDA inside."
+			to_chat(user, "There is already a PDA inside.")
 			return
 		else
 			var/obj/item/device/pda/P = usr.get_active_hand()
@@ -58,7 +58,7 @@
 		if(istype(O, /obj/item/weapon/wrench))
 			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 			anchored = !anchored
-			user << "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>"
+			to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>")
 
 
 /obj/machinery/pdapainter/attack_hand(mob/user)
@@ -79,7 +79,7 @@
 		storedpda.desc = P.desc
 
 	else
-		user << "<span class='notice'>The [src] is empty.</span>"
+		to_chat(user, "<span class='notice'>The [src] is empty.</span>")
 
 
 /obj/machinery/pdapainter/verb/ejectpda()
@@ -92,7 +92,7 @@
 		storedpda = null
 		update_icon()
 	else
-		usr << "<span class='notice'>The [src] is empty.</span>"
+		to_chat(usr, "<span class='notice'>The [src] is empty.</span>")
 
 
 /obj/machinery/pdapainter/power_change()

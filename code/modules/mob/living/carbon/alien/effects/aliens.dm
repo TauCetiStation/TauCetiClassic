@@ -116,12 +116,12 @@
 /obj/effect/alien/resin/attack_hand()
 	usr.do_attack_animation(src)
 	if (HULK in usr.mutations)
-		usr << "\blue You easily destroy the [name]."
+		to_chat(usr, "\blue You easily destroy the [name].")
 		for(var/mob/O in oviewers(src))
 			O.show_message("\red [usr] destroys the [name]!", 1)
 		health = 0
 	else
-		usr << "\blue You claw at the [name]."
+		to_chat(usr, "\blue You claw at the [name].")
 		for(var/mob/O in oviewers(src))
 			O.show_message("\red [usr] claws at the [name]!", 1)
 		health -= rand(5,10)
@@ -135,13 +135,13 @@
 	usr.do_attack_animation(src)
 	if (islarva(usr) || isfacehugger(usr))//Safety check for larva. /N
 		return
-	usr << "\green You claw at the [name]."
+	to_chat(usr, "\green You claw at the [name].")
 	for(var/mob/O in oviewers(src))
 		O.show_message("\red [usr] claws at the resin!", 1)
 	playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
 	health -= rand(40, 60)
 	if(health <= 0)
-		usr << "\green You slice the [name] to pieces."
+		to_chat(usr, "\green You slice the [name] to pieces.")
 		for(var/mob/O in oviewers(src))
 			O.show_message("\red [usr] slices the [name] apart!", 1)
 	healthcheck()
@@ -154,19 +154,19 @@
 		//Only aliens can stick humans and monkeys into resin walls. Also, the wall must not have a person inside already.
 			if(!affecting)
 				if(G.state<2)
-					user << "\red You need a better grip to do that!"
+					to_chat(user, "\red You need a better grip to do that!")
 					return
 				G.affecting.loc = src
 				G.affecting.paralysis = 10
 				for(var/mob/O in viewers(world.view, src))
 					if (O.client)
-						O << text("\green [] places [] in the resin wall!", G.assailant, G.affecting)
+						to_chat(O, text("\green [] places [] in the resin wall!", G.assailant, G.affecting))
 				affecting=G.affecting
 				qdel(W)
 				spawn(0)
 					process()
 			else
-				user << "\red This wall is already occupied."
+				to_chat(user, "\red This wall is already occupied.")
 		return */
 
 	var/aforce = W.force
@@ -415,13 +415,13 @@ Alien plants should do something if theres a lot of poison
 		if(isalien(user))
 			switch(status)
 				if(GROWING)
-					user << "\red The child is not developed yet."
+					to_chat(user, "\red The child is not developed yet.")
 					return
 		else
 			return attack_hand(user)
 
 	attack_hand(user)
-		user << "It feels slimy."
+		to_chat(user, "It feels slimy.")
 		return
 
 	proc/Grow()
@@ -440,20 +440,20 @@ Alien plants should do something if theres a lot of poison
 
 /obj/effect/alien/egg/attack_ghost(mob/living/user)
 	if(!(src in view()))
-		user << "Your soul is too far away."
+		to_chat(user, "Your soul is too far away.")
 		return
 	if(used)
-		user << "Someone else used that egg."
+		to_chat(user, "Someone else used that egg.")
 		return
 	switch(status)
 		if(GROWING)
-			user << "\red The child is not developed yet."
+			to_chat(user, "\red The child is not developed yet.")
 			return
 		if(GROWN)
 			used = 1
 			var/mob/living/carbon/alien/facehugger/FH = new /mob/living/carbon/alien/facehugger(get_turf(src))
 			FH.key = user.key
-			FH << "\green You are now a facehugger, go hug some human faces <3"
+			to_chat(FH, "\green You are now a facehugger, go hug some human faces <3")
 			icon_state = "egg_hatched"
 			flick("egg_opening", src)
 			status = BURSTING

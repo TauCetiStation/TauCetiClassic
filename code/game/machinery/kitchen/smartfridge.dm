@@ -191,7 +191,7 @@
 
 	if(istype(O, /obj/item/weapon/screwdriver))
 		panel_open = !panel_open
-		user << "You [panel_open ? "open" : "close"] the maintenance panel."
+		to_chat(user, "You [panel_open ? "open" : "close"] the maintenance panel.")
 		overlays.Cut()
 		if(panel_open)
 			overlays += image(icon, icon_panel)
@@ -204,12 +204,12 @@
 		return
 
 	if(!src.ispowered)
-		user << "<span class='notice'>\The [src] is unpowered and useless.</span>"
+		to_chat(user, "<span class='notice'>\The [src] is unpowered and useless.</span>")
 		return
 
 	if(accept_check(O))
 		if(contents.len >= max_n_of_items)
-			user << "<span class='notice'>\The [src] is full.</span>"
+			to_chat(user, "<span class='notice'>\The [src] is full.</span>")
 			return 1
 		else
 			user.remove_from_mob(O)
@@ -229,7 +229,7 @@
 		for(var/obj/G in P.contents)
 			if(accept_check(G))
 				if(contents.len >= max_n_of_items)
-					user << "<span class='notice'>\The [src] is full.</span>"
+					to_chat(user, "<span class='notice'>\The [src] is full.</span>")
 					return 1
 				else
 					P.remove_from_storage(G,src)
@@ -244,19 +244,19 @@
 				"<span class='notice'>[user] loads \the [src] with \the [P].</span>", \
 				"<span class='notice'>You load \the [src] with \the [P].</span>")
 			if(P.contents.len > 0)
-				user << "<span class='notice'>Some items are refused.</span>"
+				to_chat(user, "<span class='notice'>Some items are refused.</span>")
 
 		nanomanager.update_uis(src)
 
 	else
-		user << "<span class='notice'>\The [src] smartly refuses [O].</span>"
+		to_chat(user, "<span class='notice'>\The [src] smartly refuses [O].</span>")
 		return 1
 
 /obj/machinery/smartfridge/secure/attackby(obj/item/O, mob/user)
 	if (istype(O, /obj/item/weapon/card/emag))
 		emagged = 1
 		locked = -1
-		user << "You short out the product lock on [src]."
+		to_chat(user, "You short out the product lock on [src].")
 		return
 
 	..()
@@ -365,7 +365,7 @@
 	if (panel_open)
 		if (href_list["cutwire"])
 			if (!( istype(usr.get_active_hand(), /obj/item/weapon/wirecutters) ))
-				user << "You need wirecutters!"
+				to_chat(user, "You need wirecutters!")
 				return FALSE
 
 			var/wire_index = text2num(href_list["cutwire"])
@@ -377,12 +377,12 @@
 
 		if (href_list["pulsewire"])
 			if (!istype(usr.get_active_hand(), /obj/item/device/multitool))
-				usr << "You need a multitool!"
+				to_chat(usr, "You need a multitool!")
 				return FALSE
 
 			var/wire_index = text2num(href_list["pulsewire"])
 			if (isWireColorCut(wire_index))
-				usr << "You can't pulse a cut wire."
+				to_chat(usr, "You can't pulse a cut wire.")
 				return FALSE
 
 			pulse(wire_index)
@@ -478,5 +478,5 @@
 	if(!.)
 		return
 	if (!allowed(usr) && !emagged && locked != -1 && href_list["vend"])
-		usr << "\red Access denied."
+		to_chat(usr, "\red Access denied.")
 		return FALSE

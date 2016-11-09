@@ -18,11 +18,11 @@
 			else
 				open()
 		else
-			user << "<span class='notice'>You stop shoveling.</span>"
+			to_chat(user, "<span class='notice'>You stop shoveling.</span>")
 		return
 	if(!open && istype(W,/obj/item/stack/sheet/wood))
 		if(locate(/obj/structure/gravemarker) in src.loc)
-			user << "<span class='notice'>There's already a grave marker here.</span>"
+			to_chat(user, "<span class='notice'>There's already a grave marker here.</span>")
 		else
 			visible_message("<span class='notice'>\The [user] starts making a grave marker on top of \the [src]</span>")
 			if(do_after(user, 50, target = src))
@@ -31,7 +31,7 @@
 				plank.use(1)
 				new/obj/structure/gravemarker(src.loc)
 			else
-				user << "<span class='notice'>You stop making a grave marker.</span>"
+				to_chat(user, "<span class='notice'>You stop making a grave marker.</span>")
 		return
 	..()
 
@@ -68,14 +68,14 @@
 	if(escapee.stat || escapee.restrained())
 		return
 
-	escapee << "<span class='warning'>You start digging your way out of \the [src] (this will take about [breakout_time] minute\s)</span>"
+	to_chat(escapee, "<span class='warning'>You start digging your way out of \the [src] (this will take about [breakout_time] minute\s)</span>")
 	visible_message("<span class='danger'>Something is scratching its way out of \the [src]!</span>")
 
 	for(var/i in 1 to (6*breakout_time * 2)) //minutes * 6 * 5seconds * 2
 		playsound(src.loc, 'sound/weapons/bite.ogg', 100, 1)
 
 		if(!do_after(escapee, 50, target = src))
-			escapee << "<span class='warning'>You have stopped digging.</span>"
+			to_chat(escapee, "<span class='warning'>You have stopped digging.</span>")
 			return
 		if(!escapee || escapee.stat || escapee.loc != src)
 			return
@@ -83,9 +83,9 @@
 			return
 
 		if(i == 6*breakout_time)
-			escapee << "<span class='warning'>Halfway there...</span>"
+			to_chat(escapee, "<span class='warning'>Halfway there...</span>")
 
-	escapee << "<span class='warning'>You successfuly dig yourself out!</span>"
+	to_chat(escapee, "<span class='warning'>You successfuly dig yourself out!</span>")
 	visible_message("<span class='danger'>\the [escapee] emerges from \the [src]!</span>")
 	playsound(src.loc, 'sound/effects/squelch1.ogg', 100, 1)
 	open()
@@ -179,7 +179,7 @@
 
 /obj/structure/gravemarker/examine(mob/user)
 	..()
-	user << message
+	to_chat(user, message)
 
 /obj/structure/gravemarker/random/New()
 	generate()

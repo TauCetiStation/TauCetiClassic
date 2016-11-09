@@ -52,15 +52,15 @@
 /obj/item/weapon/reagent_containers/glass/examine(mob/user)
 	..()
 	if(!is_open_container())
-		user << "<span class='info'>Airtight lid seals it completely.</span>"
+		to_chat(user, "<span class='info'>Airtight lid seals it completely.</span>")
 
 /obj/item/weapon/reagent_containers/glass/attack_self()
 	..()
 	if (is_open_container())
-		usr << "<span class = 'notice'>You put the lid on \the [src].</span>"
+		to_chat(usr, "<span class = 'notice'>You put the lid on \the [src].</span>")
 		flags ^= OPENCONTAINER
 	else
-		usr << "<span class = 'notice'>You take the lid off \the [src].</span>"
+		to_chat(usr, "<span class = 'notice'>You take the lid off \the [src].</span>")
 		flags |= OPENCONTAINER
 	update_icon()
 
@@ -74,7 +74,7 @@
 			return
 
 	if(ismob(target) && target.reagents && reagents.total_volume)
-		user << "<span class = 'notice'>You splash the solution onto [target].</span>"
+		to_chat(user, "<span class = 'notice'>You splash the solution onto [target].</span>")
 
 		var/mob/living/M = target
 		var/list/injected = list()
@@ -93,27 +93,27 @@
 	else if(istype(target, /obj/structure/reagent_dispensers)) //A dispenser. Transfer FROM it TO us.
 
 		if(!target.reagents.total_volume && target.reagents)
-			user << "<span class = 'rose'>[target] is empty.</span>"
+			to_chat(user, "<span class = 'rose'>[target] is empty.</span>")
 			return
 
 		if(reagents.total_volume >= reagents.maximum_volume)
-			user << "<span class = 'rose'>[src] is full.</span>"
+			to_chat(user, "<span class = 'rose'>[src] is full.</span>")
 			return
 
 		var/trans = target.reagents.trans_to(src, target:amount_per_transfer_from_this)
-		user << "<span class = 'notice'>You fill [src] with [trans] units of the contents of [target].</span>"
+		to_chat(user, "<span class = 'notice'>You fill [src] with [trans] units of the contents of [target].</span>")
 
 	else if(target.is_open_container() && target.reagents) //Something like a glass. Player probably wants to transfer TO it.
 		if(!reagents.total_volume)
-			user << "<span class = 'rose'>[src] is empty.</span>"
+			to_chat(user, "<span class = 'rose'>[src] is empty.</span>")
 			return
 
 		if(target.reagents.total_volume >= target.reagents.maximum_volume)
-			user << "<span class = 'rose'>[target] is full.</span>"
+			to_chat(user, "<span class = 'rose'>[target] is full.</span>")
 			return
 
 		var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
-		user << "<span class = 'notice'>You transfer [trans] units of the solution to [target].</span>"
+		to_chat(user, "<span class = 'notice'>You transfer [trans] units of the solution to [target].</span>")
 
 	//Safety for dumping stuff into a ninja suit. It handles everything through attackby() and this is unnecessary.
 	else if(istype(target, /obj/item/clothing/suit/space/space_ninja))
@@ -129,7 +129,7 @@
 		return
 
 	else if(reagents && reagents.total_volume)
-		user << "<span class = 'notice'>You splash the solution onto [target].</span>"
+		to_chat(user, "<span class = 'notice'>You splash the solution onto [target].</span>")
 		src.reagents.reaction(target, TOUCH)
 		spawn(5) src.reagents.clear_reagents()
 		var/turf/T = get_turf(src)
@@ -141,9 +141,9 @@
 	if(istype(W, /obj/item/weapon/pen) || istype(W, /obj/item/device/flashlight/pen))
 		var/tmp_label = sanitize(copytext(input(user, "Enter a label for [src.name]","Label",src.label_text), 1, MAX_NAME_LEN))
 		if(length(tmp_label) > 10)
-			user << "<span class = 'rose'>The label can be at most 10 characters long.</span>"
+			to_chat(user, "<span class = 'rose'>The label can be at most 10 characters long.</span>")
 		else
-			user << "<span class = 'notice'>You set the label to \"[tmp_label]\".</span>"
+			to_chat(user, "<span class = 'notice'>You set the label to \"[tmp_label]\".</span>")
 			src.label_text = tmp_label
 			src.update_name_label()
 
@@ -276,7 +276,7 @@
 
 /obj/item/weapon/reagent_containers/glass/bucket/attackby(obj/D, mob/user)
 	if(isprox(D))
-		user << "<span class = 'notice'>You add [D] to [src].</span>"
+		to_chat(user, "<span class = 'notice'>You add [D] to [src].</span>")
 		qdel(D)
 		user.put_in_hands(new /obj/item/weapon/bucket_sensor)
 		user.drop_from_inventory(src)

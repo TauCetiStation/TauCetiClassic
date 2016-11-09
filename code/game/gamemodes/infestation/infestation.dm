@@ -23,8 +23,8 @@ Infestation:
 	votable = 0
 
 /datum/game_mode/infestation/announce()
-	world << "<b>The current game mode is - Infestation!</b>"
-	world << "<b>There are <span class='userdanger'>xenomorphs</span> on the station. Crew: Kill the xenomorphs before they infest the station. Xenomorphs: Go catch some living hamburgers.</b>"
+	to_chat(world, "<b>The current game mode is - Infestation!</b>")
+	to_chat(world, "<b>There are <span class='userdanger'>xenomorphs</span> on the station. Crew: Kill the xenomorphs before they infest the station. Xenomorphs: Go catch some living hamburgers.</b>")
 
 /datum/game_mode/infestation/can_start()
 	if(!..())
@@ -90,16 +90,17 @@ Infestation:
 	return ..()
 
 /datum/game_mode/infestation/proc/greet_xeno(datum/mind/xeno)
-	xeno.current << "\green <B>You are a Xenomorph.</b>"
-	xeno.current << "\green <B>Your current alien form is a facehugger.</b>"
-	xeno.current << "\green <B>Go find some monkeys, corgi or a sleeping human.</b>"
-	xeno.current << "\green <B>To leap at someones face, you simply start with left mouse button click.</b>"
-	xeno.current << "\green <B>Then check your tail action button, there will be leap available.</b>"
-	xeno.current << "\green <B>Leap isnt instant, keep that in mind. There is 1-2 seconds delay, before you can actually leap.</b>"
-	xeno.current << "\green <B>You target also must be near, after you prepares to leap.</b>"
-	xeno.current << "\blue Use :A to hivetalk."
-	xeno.current << "\green ------------------"
-	//xeno.current << "\red IF YOU HAVE NOT PLAYED A XENOMORPH, REVIEW THIS THREAD: http://tauceti.ru"
+	to_chat(xeno.current, "\green <B>You are a Xenomorph.</b>")
+	to_chat(xeno.current, "\green <B>Your current alien form is a facehugger.</b>")
+	to_chat(xeno.current, "\green <B>Go find some monkeys, corgi or a sleeping human.</b>")
+	to_chat(xeno.current, "\green <B>To leap at someones face, you simply start with left mouse button click.</b>")
+	to_chat(xeno.current, "\green <B>Then check your tail action button, there will be leap available.</b>")
+	to_chat(xeno.current, "\green <B>Leap isnt instant, keep that in mind. There is 1-2 seconds delay, before you can actually leap.</b>")
+	to_chat(xeno.current, "\green <B>You target also must be near, after you prepares to leap.</b>")
+	to_chat(xeno.current, "\blue Use :A to hivetalk.")
+	to_chat(xeno.current, "\green ------------------")
+//	to_chat(xeno.current, "\red IF YOU HAVE NOT PLAYED A XENOMORPH, REVIEW THIS THREAD: http://tauceti.ru")
+
 
 
 /*

@@ -13,7 +13,7 @@
 
 	var/turf/T = P.loc
 	if (P.level < 2 && T.level==1 && isturf(T) && T.intact)
-		user << "\red You must remove the plating first."
+		to_chat(user, "\red You must remove the plating first.")
 		return
 
 	P.pipe_color = mode
@@ -25,4 +25,4 @@
 
 /obj/item/device/pipe_painter/examine(mob/user)
 	..()
-	user << "It is in [mode] mode."
+	to_chat(user, "It is in [mode] mode.")

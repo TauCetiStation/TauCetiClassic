@@ -86,7 +86,7 @@
 
 	if(isscrewdriver(W) && igniter && !lit)
 		status = !status
-		user << "<span class='notice'>[igniter] is now [status ? "secured" : "unsecured"]!</span>"
+		to_chat(user, "<span class='notice'>[igniter] is now [status ? "secured" : "unsecured"]!</span>")
 		update_icon()
 		return
 
@@ -102,7 +102,7 @@
 
 	if(istype(W,/obj/item/weapon/tank/phoron))
 		if(ptank)
-			user << "<span class='notice'>There appears to already be a phoron tank loaded in [src]!</span>"
+			to_chat(user, "<span class='notice'>There appears to already be a phoron tank loaded in [src]!</span>")
 			return
 		user.drop_item()
 		ptank = W
@@ -112,11 +112,11 @@
 
 	if(istype(W, /obj/item/device/analyzer) && ptank)
 		var/obj/item/weapon/icon = src
-		user.visible_message("<span class='notice'>[user] has used the analyzer on \icon[icon]</span>")
+		user.visible_message("<span class='notice'>[user] has used the analyzer on [bicon(icon)]</span>")
 		var/pressure = ptank.air_contents.return_pressure()
 		var/total_moles = ptank.air_contents.total_moles()
 
-		user << "\blue Results of analysis of \icon[icon]"
+		to_chat(user, "\blue Results of analysis of [bicon(icon)]")
 		if(total_moles>0)
 			var/o2_concentration = ptank.air_contents.oxygen/total_moles
 			var/n2_concentration = ptank.air_contents.nitrogen/total_moles
@@ -125,16 +125,16 @@
 
 			var/unknown_concentration =  1-(o2_concentration+n2_concentration+co2_concentration+phoron_concentration)
 
-			user << "\blue Pressure: [round(pressure,0.1)] kPa"
-			user << "\blue Nitrogen: [round(n2_concentration*100)]%"
-			user << "\blue Oxygen: [round(o2_concentration*100)]%"
-			user << "\blue CO2: [round(co2_concentration*100)]%"
-			user << "\blue Phoron: [round(phoron_concentration*100)]%"
+			to_chat(user, "\blue Pressure: [round(pressure,0.1)] kPa")
+			to_chat(user, "\blue Nitrogen: [round(n2_concentration*100)]%")
+			to_chat(user, "\blue Oxygen: [round(o2_concentration*100)]%")
+			to_chat(user, "\blue CO2: [round(co2_concentration*100)]%")
+			to_chat(user, "\blue Phoron: [round(phoron_concentration*100)]%")
 			if(unknown_concentration>0.01)
-				user << "\red Unknown: [round(unknown_concentration*100)]%"
-			user << "\blue Temperature: [round(ptank.air_contents.temperature-T0C)]&deg;C"
+				to_chat(user, "\red Unknown: [round(unknown_concentration*100)]%")
+			to_chat(user, "\blue Temperature: [round(ptank.air_contents.temperature-T0C)]&deg;C")
 		else
-			user << "\blue Tank is empty!"
+			to_chat(user, "\blue Tank is empty!")
 		return
 	..()
 	return
@@ -144,7 +144,7 @@
 	if(user.stat || user.restrained() || user.lying)	return
 	user.set_machine(src)
 	if(!ptank)
-		user << "<span class='notice'>Attach a phoron tank first!</span>"
+		to_chat(user, "<span class='notice'>Attach a phoron tank first!</span>")
 		return
 	var/dat = text("<TT><B>Flamethrower (<A HREF='?src=\ref[src];light=1'>[lit ? "<font color='red'>Lit</font>" : "Unlit"]</a>)</B><BR>\n Tank Pressure: [ptank.air_contents.return_pressure()]<BR>\nAmount to throw: <A HREF='?src=\ref[src];amount=-100'>-</A> <A HREF='?src=\ref[src];amount=-10'>-</A> <A HREF='?src=\ref[src];amount=-1'>-</A> [throw_amount] <A HREF='?src=\ref[src];amount=1'>+</A> <A HREF='?src=\ref[src];amount=10'>+</A> <A HREF='?src=\ref[src];amount=100'>+</A><BR>\n<A HREF='?src=\ref[src];remove=1'>Remove phorontank</A> - <A HREF='?src=\ref[src];close=1'>Close</A></TT>")
 	user << browse(dat, "window=flamethrower;size=600x300")

@@ -24,8 +24,8 @@
 //Announces the game type//
 ///////////////////////////
 /datum/game_mode/anti_revolution/announce()
-	world << "<B>The current game mode is - Anti-Revolution!</B>"
-	world << "<B>Looks like CentComm has given a few new orders..</B>"
+	to_chat(world, "<B>The current game mode is - Anti-Revolution!</B>")
+	to_chat(world, "<B>Looks like CentComm has given a few new orders..</B>")
 
 ///////////////////////////////////////////////////////////////////////////////
 //Gets the round setup, cancelling if there's not enough players at the start//
@@ -95,10 +95,10 @@
 /datum/game_mode/proc/greet_head(datum/mind/head_mind, you_are=1)
 	var/obj_count = 1
 	if (you_are)
-		head_mind.current << "\blue It looks like this shift CentComm has some special orders for you.. check your objectives."
-		head_mind.current << "\blue Note that you can ignore these objectives, but resisting NT's orders probably means demotion or worse."
+		to_chat(head_mind.current, "\blue It looks like this shift CentComm has some special orders for you.. check your objectives.")
+		to_chat(head_mind.current, "\blue Note that you can ignore these objectives, but resisting NT's orders probably means demotion or worse.")
 	for(var/datum/objective/objective in head_mind.objectives)
-		head_mind.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
+		to_chat(head_mind.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 		head_mind.special_role = "Corrupt Head"
 		obj_count++
 
@@ -151,13 +151,13 @@
 
 	var/text = ""
 	if(finished == 2)
-		world << "\red <FONT size = 3><B> The heads of staff were relieved of their posts! The crew wins!</B></FONT>"
+		to_chat(world, "\red <FONT size = 3><B> The heads of staff were relieved of their posts! The crew wins!</B></FONT>")
 	else if(finished == 1)
-		world << "\red <FONT size = 3><B> The heads of staff managed to meet the goals set for them by CentComm!</B></FONT>"
+		to_chat(world, "\red <FONT size = 3><B> The heads of staff managed to meet the goals set for them by CentComm!</B></FONT>")
 
 
 
-	world << "<FONT size = 2><B>The heads of staff were: </B></FONT>"
+	to_chat(world, "<FONT size = 2><B>The heads of staff were: </B></FONT>")
 	var/list/heads = list()
 	heads = get_all_heads()
 	for(var/datum/mind/head_mind in heads)
@@ -171,10 +171,10 @@
 		else
 			text += "[head_mind.key] (character destroyed)"
 
-		world << text
+		to_chat(world, text)
 
 
-	world << "<FONT size = 2><B>Their objectives were: </B></FONT>"
+	to_chat(world, "<FONT size = 2><B>Their objectives were: </B></FONT>")
 	for(var/datum/mind/head_mind in heads)
 		if(head_mind.objectives.len)//If the traitor had no objectives, don't need to process this.
 			var/count = 1
@@ -215,4 +215,4 @@
 
 	src.verbs -= /mob/proc/ResignFromHeadPosition
 
-	src << "\red You resigned from your position, now you have the consequences."
+	to_chat(src, "\red You resigned from your position, now you have the consequences.")

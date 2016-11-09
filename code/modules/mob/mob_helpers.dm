@@ -336,6 +336,6 @@ var/list/intents = list("help","disarm","grab","hurt")
 	for(var/mob/M in targets)
 		var/turf/targetturf = get_turf(M)
 		if((targetturf.z == sourceturf.z))
-			M.show_message("<span class='info'>\icon[icon] [message]</span>", 1)
+			M.show_message("<span class='info'>[bicon(icon)] [message]</span>", 1)
 	for(var/mob/dead/observer/G in player_list) //Ghosts? Why not.
-		G.show_message("<span class='info'>\icon[icon] [message]</span>", 1)
+		G.show_message("<span class='info'>[bicon(icon)] [message]</span>", 1)

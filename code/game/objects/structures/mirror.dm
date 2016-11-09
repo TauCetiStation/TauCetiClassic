@@ -171,7 +171,7 @@
 						H.dna.features["mcolor"] = sanitize_hexcolor(new_mutantcolor)
 
 					else
-						H << "<span class='notice'>Invalid color. Your color is not bright enough.</span>"
+						to_chat(H, "<span class='notice'>Invalid color. Your color is not bright enough.</span>")
 
 			H.update_body()
 			H.update_hair()
@@ -186,14 +186,14 @@
 			if(H.gender == "male")
 				if(alert(H, "Become a Witch?", "Confirmation", "Yes", "No") == "Yes")
 					H.gender = "female"
-					H << "<span class='notice'>Man, you feel like a woman!</span>"
+					to_chat(H, "<span class='notice'>Man, you feel like a woman!</span>")
 				else
 					return
 
 			else
 				if(alert(H, "Become a Warlock?", "Confirmation", "Yes", "No") == "Yes")
 					H.gender = "male"
-					H << "<span class='notice'>Whoa man, you feel like a man!</span>"
+					to_chat(H, "<span class='notice'>Whoa man, you feel like a man!</span>")
 				else
 					return
 			H.update_hair()

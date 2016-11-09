@@ -47,7 +47,7 @@
 				msg = "<b><font size=3>OH GOD! Your [partname] is hurting terribly!</font></b>"
 	if(msg && (msg != last_pain_message || prob(10)))
 		last_pain_message = msg
-		src << msg
+		to_chat(src, msg)
 	next_pain_time = world.time + (100 - amount)
 
 
@@ -71,7 +71,7 @@
 	// Anti message spam checks
 	if(msg && ((msg != last_pain_message) || (world.time >= next_pain_time)))
 		last_pain_message = msg
-		src << msg
+		to_chat(src, msg)
 	next_pain_time = world.time + 100
 
 /mob/living/carbon/human/proc/handle_pain()

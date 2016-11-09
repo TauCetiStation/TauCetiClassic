@@ -63,7 +63,7 @@
 
 
 	blob_act()
-		src << "The blob attempts to reabsorb you."
+		to_chat(src, "The blob attempts to reabsorb you.")
 		adjustToxLoss(20)
 		return
 
@@ -86,19 +86,19 @@
 		return
 	var/obj/effect/blob/B = (locate(/obj/effect/blob) in T)
 	if(!B)//We are on a blob
-		usr << "There is no blob here!"
+		to_chat(usr, "There is no blob here!")
 		creating_blob = 0
 		return
 	if(istype(B,/obj/effect/blob/node)||istype(B,/obj/effect/blob/core)||istype(B,/obj/effect/blob/factory))
-		usr << "Unable to use this blob, find a normal one."
+		to_chat(usr, "Unable to use this blob, find a normal one.")
 		creating_blob = 0
 		return
 	for(var/obj/effect/blob/node/blob in orange(5))
-		usr << "There is another node nearby, move more than 5 tiles  away from it!"
+		to_chat(usr, "There is another node nearby, move more than 5 tiles  away from it!")
 		creating_blob = 0
 		return
 	for(var/obj/effect/blob/factory/blob in orange(2))
-		usr << "There is a porus blob nearby, move more than 2 tiles away from it!"
+		to_chat(usr, "There is a porus blob nearby, move more than 2 tiles away from it!")
 		creating_blob = 0
 	B.change_to("Node")
 	src.dust()
@@ -117,24 +117,24 @@
 		return
 	var/obj/effect/blob/B = (locate(/obj/effect/blob) in T)
 	if(!B)
-		usr << "You must be on a blob!"
+		to_chat(usr, "You must be on a blob!")
 		creating_blob = 0
 		return
 	if(istype(B,/obj/effect/blob/node)||istype(B,/obj/effect/blob/core)||istype(B,/obj/effect/blob/factory))
-		usr << "Unable to use this blob, find a normal one."
+		to_chat(usr, "Unable to use this blob, find a normal one.")
 		creating_blob = 0
 		return
 	for(var/obj/effect/blob/blob in orange(2))//Not right next to nodes/cores
 		if(istype(B,/obj/effect/blob/node))
-			usr << "There is a node nearby, move away from it!"
+			to_chat(usr, "There is a node nearby, move away from it!")
 			creating_blob = 0
 			return
 		if(istype(B,/obj/effect/blob/core))
-			usr << "There is a core nearby, move away from it!"
+			to_chat(usr, "There is a core nearby, move away from it!")
 			creating_blob = 0
 			return
 		if(istype(B,/obj/effect/blob/factory))
-			usr << "There is another porous blob nearby, move away from it!"
+			to_chat(usr, "There is another porous blob nearby, move away from it!")
 			creating_blob = 0
 			return
 	B.change_to("Factory")
@@ -154,11 +154,11 @@
 		return
 	var/obj/effect/blob/B = (locate(/obj/effect/blob) in T)
 	if(!B)
-		usr << "You must be on a blob!"
+		to_chat(usr, "You must be on a blob!")
 		creating_blob = 0
 		return
 	if(!istype(B,/obj/effect/blob/factory))
-		usr << "Unable to use this blob, find another one."
+		to_chat(usr, "Unable to use this blob, find another one.")
 		creating_blob = 0
 		return
 	B.change_to("Normal")
@@ -178,7 +178,7 @@
 		return
 	var/obj/effect/blob/B = (locate(/obj/effect/blob) in T)
 	if(B)
-		usr << "There is a blob here!"
+		to_chat(usr, "There is a blob here!")
 		creating_blob = 0
 		return
 	new/obj/effect/blob(src.loc)
@@ -194,12 +194,12 @@
 	set hidden = 1
 
 	if(!holder)
-		src << "Only administrators may use this command."
+		to_chat(src, "Only administrators may use this command.")
 		return
 	if(ticker && ticker.mode)
-		src << "blobs: [blobs.len]"
-		src << "cores: [blob_cores.len]"
-		src << "nodes: [blob_nodes.len]"
+		to_chat(src, "blobs: [blobs.len]")
+		to_chat(src, "cores: [blob_cores.len]")
+		to_chat(src, "nodes: [blob_nodes.len]")
 	return
 
 
@@ -210,7 +210,7 @@
 	set hidden = 1
 
 	if(!holder)
-		src << "Only administrators may use this command."
+		to_chat(src, "Only administrators may use this command.")
 		return
 	var/input = input(src, "Please specify which key will be turned into a bloby.", "Key", "")
 
@@ -244,13 +244,13 @@
 		G_found.client.mob = B
 	B.verbs += /mob/living/blob/verb/create_node
 	B.verbs += /mob/living/blob/verb/create_factory
-	B << "<B>You are now a blob fragment.</B>"
-	B << "You are a weak bit that has temporarily broken off of the blob."
-	B << "If you stay on the blob for too long you will likely be reabsorbed."
-	B << "If you stray from the blob you will likely be killed by other organisms."
-	B << "You have the power to create a new blob node that will help expand the blob."
-	B << "To create this node you will have to be on a normal blob tile and far enough away from any other node."
-	B << "Check your Blob verbs and hit Create Node to build a node."
+	to_chat(B, "<B>You are now a blob fragment.</B>")
+	to_chat(B, "You are a weak bit that has temporarily broken off of the blob.")
+	to_chat(B, "If you stay on the blob for too long you will likely be reabsorbed.")
+	to_chat(B, "If you stray from the blob you will likely be killed by other organisms.")
+	to_chat(B, "You have the power to create a new blob node that will help expand the blob.")
+	to_chat(B, "To create this node you will have to be on a normal blob tile and far enough away from any other node.")
+	to_chat(B, "Check your Blob verbs and hit Create Node to build a node.")
 	spawn(10)
 		qdel(G_found)
 

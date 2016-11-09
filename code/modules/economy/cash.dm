@@ -86,4 +86,4 @@ proc/spawn_money(sum, spawnloc)
 /obj/item/weapon/spacecash/ewallet/examine(mob/user)
 	..()
 	if(src in view(1, user))
-		user << "<span class='notice'>Charge card's owner: [src.owner_name]. Credits remaining: [src.worth].</span>"
+		to_chat(user, "<span class='notice'>Charge card's owner: [src.owner_name]. Credits remaining: [src.worth].</span>")
