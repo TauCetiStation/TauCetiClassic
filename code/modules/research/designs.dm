@@ -2333,7 +2333,7 @@ datum/design/holosign
 /////////////////////////////////////////
 
 datum/design/armor
-	name = "Bulletproff Vest"
+	name = "Bulletproof Vest"
 	desc = "A vest that excels in protecting the wearer against high-velocity solid projectiles."
 	id = "armor"
 	req_tech = list("materials" = 3, "combat" = 2)
