@@ -393,6 +393,30 @@ datum/supply_pack/New()
 	crate_name = "Internals crate"
 	group = "Engineering"
 
+/datum/supply_pack/oxygen
+	name = "Canister: \[O2\]"
+	contains = list(/obj/machinery/portable_atmospherics/canister/oxygen)
+	cost = 1500
+	crate_type = /obj/structure/largecrate
+	crate_name = "O2 crate"
+	group = "Engineering"
+
+/datum/supply_pack/nitrogen
+	name = "Canister: \[N2\]"
+	contains = list(/obj/machinery/portable_atmospherics/canister/nitrogen)
+	cost = 2000
+	crate_type = /obj/structure/largecrate
+	crate_name = "N2 crate"
+	group = "Engineering"
+
+/datum/supply_pack/carbon_dioxide
+	name = "Canister: \[CO2\]"
+	contains = list(/obj/machinery/portable_atmospherics/canister/carbon_dioxide)
+	cost = 3000
+	crate_type = /obj/structure/largecrate
+	crate_name = "CO2 crate"
+	group = "Engineering"
+
 /datum/supply_pack/evacuation
 	name = "Emergency equipment"
 	contains = list(/obj/item/weapon/storage/toolbox/emergency,
