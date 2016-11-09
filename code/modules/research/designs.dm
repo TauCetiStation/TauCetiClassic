@@ -2327,3 +2327,25 @@ datum/design/holosign
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 2000, MAT_GLASS = 1000)
 	build_path = /obj/item/weapon/holosign_creator
+
+/////////////////////////////////////////
+///////////RnD - Armor///////////////////
+/////////////////////////////////////////
+
+datum/design/armor
+	name = "Bulletproff Vest"
+	desc = "A vest that excels in protecting the wearer against high-velocity solid projectiles."
+	id = "armor"
+	req_tech = list("materials" = 3, "combat" = 2)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 10000)
+	build_path = /obj/item/clothing/suit/armor/bulletproof
+
+datum/design/larmor
+	name = "Ablative Armor Vest"
+	desc = "A vest that excels in protecting the wearer against energy projectiles."
+	id = "larmor"
+	req_tech = list("combat" = 3, "materials" = 5, "powerstorage" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 15000, MAT_GLASS = 3000, MAT_DIAMOND = 1000)
+	build_path = /obj/item/clothing/suit/armor/laserproof
