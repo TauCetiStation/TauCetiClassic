@@ -1041,15 +1041,6 @@
 	//reset the pixel offsets to zero
 	floating = 0
 
-/mob/living/proc/get_view_rotation_mode()
-	switch(ticker.random_dir_mode)
-		if(RDM_RANDOM_EXCL_NORTH)
-			return pick(SOUTH, EAST, WEST)
-		if(RDM_RANDOM)
-			return pick(cardinal)
-		else
-			return ticker.random_dir_mode
-
 /mob/living/proc/harvest(mob/living/user)
 	if(qdeleted(src))
 		return
