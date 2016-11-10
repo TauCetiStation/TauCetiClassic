@@ -1,6 +1,6 @@
 /proc/spawn_sec_equip()
 	if(!ticker.sec_equip_preset)
-		ticker.sec_equip_preset = pick("classic","tactifool","milizei")
+		ticker.sec_equip_preset = "milizei"
 	message_admins("\blue Security equipment preset - [ticker.sec_equip_preset]")
 	for(var/obj/effect/landmark/sec_equip/E in landmarks_list)
 		E.gimme_it_now()
