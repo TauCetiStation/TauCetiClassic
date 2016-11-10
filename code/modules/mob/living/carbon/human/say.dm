@@ -71,13 +71,6 @@
 
 	message = capitalize(trim(message))
 
-	if(speech_problem_flag)
-		var/list/handle_r = handle_speech_problems(message, message_mode)
-		//var/list/handle_r = handle_speech_problems(message)
-		message = handle_r[1]
-		verb = handle_r[2]
-		speech_problem_flag = handle_r[3]
-
 	var/ending = copytext(message, length(message))
 	if (speaking)
 		//If we've gotten this far, keep going!
@@ -87,6 +80,13 @@
 			verb=pick("exclaims","shouts","yells")
 		if(ending=="?")
 			verb="asks"
+
+	if(speech_problem_flag)
+		var/list/handle_r = handle_speech_problems(message, message_mode)
+		//var/list/handle_r = handle_speech_problems(message)
+		message = handle_r[1]
+		verb = handle_r[2]
+		speech_problem_flag = handle_r[3]
 
 	if(!message || stat)
 		return
