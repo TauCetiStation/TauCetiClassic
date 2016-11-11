@@ -48,6 +48,7 @@
 		on = TRUE
 		user.drop_item()
 		frying = I
+		qdel(I)
 		frying.loc = src
 		icon_state = "fryer_on"
 
