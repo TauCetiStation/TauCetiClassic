@@ -75,6 +75,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	name = "Airlock"
 	icon = 'icons/obj/doors/Doorint.dmi'
 	icon_state = "door_closed"
+	var/locked_lights_state = "door_locked_standard"
 	power_channel = ENVIRON
 
 	var/aiControlDisabled = 0 //If 1, AI control is disabled until the AI hacks back in and disables the lock. If 2, the AI has bypassed the lock. If -1, the control is enabled but the AI had bypassed it earlier, so if it is disabled again the AI would have no trouble getting back in.
@@ -131,6 +132,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 /obj/machinery/door/airlock/external
 	name = "External Airlock"
 	icon = 'icons/obj/doors/Doorext.dmi'
+	locked_lights_state = "door_locked_external"
 	assembly_type = /obj/structure/door_assembly/door_assembly_ext
 
 /obj/machinery/door/airlock/glass
@@ -147,6 +149,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 /obj/machinery/door/airlock/vault
 	name = "Vault"
 	icon = 'icons/obj/doors/vault.dmi'
+	locked_lights_state = "door_locked_vault"
 	opacity = 1
 	assembly_type = /obj/structure/door_assembly/door_assembly_highsecurity //Until somebody makes better sprites.
 
@@ -159,12 +162,14 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 /obj/machinery/door/airlock/hatch
 	name = "Airtight Hatch"
 	icon = 'icons/obj/doors/Doorhatchele.dmi'
+	locked_lights_state = "door_locked_hatch"
 	opacity = 1
 	assembly_type = /obj/structure/door_assembly/door_assembly_hatch
 
 /obj/machinery/door/airlock/maintenance_hatch
 	name = "Maintenance Hatch"
 	icon = 'icons/obj/doors/Doorhatchmaint2.dmi'
+	locked_lights_state = "door_locked_hatch"
 	opacity = 1
 	assembly_type = /obj/structure/door_assembly/door_assembly_mhatch
 
@@ -343,6 +348,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 /obj/machinery/door/airlock/highsecurity
 	name = "High Tech Security Airlock"
 	icon = 'icons/obj/doors/hightechsecurity.dmi'
+	locked_lights_state = "door_locked_hightechsecurity"
 	assembly_type = /obj/structure/door_assembly/door_assembly_highsecurity
 
 /*
@@ -677,8 +683,8 @@ About the new airlock wires panel:
 				overlays += image(icon, "panel_open")
 			if(welded)
 				overlays += image(icon, "welded")
-		if(locked && lights || src.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS))
-			overlays += image("icon" = 'icons/obj/doors/doorint.dmi', "icon_state" = "door_locked_ms", "layer" = 11)
+		if(lights && (locked || src.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS)) && density)
+			overlays += image("icon" = 'icons/obj/doors/doorint.dmi', "icon_state" = locked_lights_state, "layer" = 11)
 	else
 		icon_state = "door_open"
 
@@ -1544,8 +1550,10 @@ About the new airlock wires panel:
 				heat_proof = 0
 			if("External")
 				icon = 'icons/obj/doors/Doorext.dmi'
+				locked_lights_state = "door_locked_external"
 				heat_proof = 0
 			if("High Security")
 				icon = 'icons/obj/doors/hightechsecurity.dmi'
+				locked_lights_state = "door_locked_hightechsecurity"
 				heat_proof = 0
 	update_icon()
