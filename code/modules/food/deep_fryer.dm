@@ -58,26 +58,26 @@
 				if(0 to 15)
 					S.color = rgb(166,103,54)
 					S.name = "lightly-fried [frying.name]"
-					icon_state = "fryer_off"
-					on = FALSE
 				if(16 to 49)
 					S.color = rgb(103,63,24)
 					S.name = "fried [frying.name]"
-					icon_state = "fryer_off"
-					on = FALSE
 				if(50 to 59)
 					S.color = rgb(63, 23, 4)
 					S.name = "deep-fried [frying.name]"
-					icon_state = "fryer_off"
-					on = FALSE
 				if(60 to INFINITY)
 					S.color = rgb(33,19,9)
 					S.name = "the physical manifestation of the very concept of fried foods"
 					S.desc = "A heavily fried...something.  Who can tell anymore?"
-					icon_state = "fryer_off"
-					on = FALSE
 			S.filling_color = S.color
 			if(istype(frying, /obj/item/weapon/reagent_containers/food/snacks/))
 				qdel(frying)
 			else
 				frying.loc = S
+
+			icon_state = "fryer_off"
+			user.put_in_hands(S)
+			S = null
+			frying = null
+			on = FALSE
+			fry_time = 0
+			return
