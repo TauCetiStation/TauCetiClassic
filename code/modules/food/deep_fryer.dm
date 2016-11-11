@@ -24,8 +24,15 @@
 /obj/machinery/deepfryer/examine()
 	..()
 	if(frying)
-		usr << "You can make out [frying] in the oil."
-
+		switch(fry_time)
+			if(0 to 15)
+				usr << "You can make out lightly-fried [frying] in the oil."
+			if(16 to 49)
+				usr << "You can make out fried [frying] in the oil."
+			if(50 to 59)
+				usr << "You can make out deep-fried [frying] in the oil."
+			if(60 to INFINITY)
+				usr << "You fucked up, man."
 
 /obj/machinery/deepfryer/attackby(obj/item/I, mob/user)
 	if(on)
@@ -77,7 +84,7 @@
 					S.name = "deep-fried [frying.name]"
 				if(60 to INFINITY)
 					S.color = rgb(33,19,9)
-					S.name = "the physical manifestation of the very concept of fried foods"
+					S.name = "burned down mess"
 					S.desc = "A heavily fried...something.  Who can tell anymore?"
 			S.filling_color = S.color
 			if(istype(frying, /obj/item/weapon/reagent_containers/food/snacks/))
@@ -87,7 +94,6 @@
 
 			icon_state = "fryer_off"
 			user.put_in_hands(S)
-			S = null
 			frying = null
 			on = FALSE
 			fry_time = 0
