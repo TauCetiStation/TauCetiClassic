@@ -43,7 +43,7 @@
 		user << "<span class='notice'>You cannot doublefry.</span>"
 		return
 
-	else
+	else if (ishuman(usr))
 		user << "<span class='notice'>You put [I] into [src].</span>"
 		on = TRUE
 		user.drop_item()
