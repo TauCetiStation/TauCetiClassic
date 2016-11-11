@@ -456,6 +456,14 @@ obj/item/weapon/circuitboard/biogenerator
 	req_components = list(
 							/obj/item/weapon/stock_parts/matter_bin = 1)
 
+/obj/item/weapon/circuitboard/deep_fryer
+	name = "circuit board (Deep Fryer)"
+	build_path = /obj/machinery/deepfryer
+	board_type = "machine"
+	origin_tech = "programming=1"
+	req_components = list(
+							/obj/item/weapon/stock_parts/micro_laser = 1)
+
 /obj/item/weapon/circuitboard/monkey_recycler
 	name = "circuit board (Monkey Recycler)"
 	build_path = /obj/machinery/monkey_recycler
