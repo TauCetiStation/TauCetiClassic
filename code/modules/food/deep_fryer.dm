@@ -48,7 +48,6 @@
 		on = TRUE
 		user.drop_item()
 		frying = I
-		qdel(I)
 		frying.loc = src
 		icon_state = "fryer_on"
 
@@ -88,9 +87,8 @@
 					S.name = "burned down mess"
 					S.desc = "A heavily fried...something.  Who can tell anymore?"
 			S.filling_color = S.color
-			if(istype(frying, /obj/item/weapon/reagent_containers/food/snacks/))
-				qdel(frying)
-			else
+			qdel(frying)
+			if(!istype(frying))
 				frying.loc = S
 
 			icon_state = "fryer_off"
