@@ -1,4 +1,4 @@
-/mob/living/carbon/human/attack_hand(mob/living/carbon/human/M as mob)
+/mob/living/carbon/human/attack_hand(mob/living/carbon/human/M)
 	if (istype(loc, /turf) && istype(loc.loc, /area/start))
 		M << "No attacking people at spawn, you jackass."
 		return
@@ -15,10 +15,6 @@
 	if((M != src) && check_shields(0, M.name))
 		visible_message("\red <B>[M] attempted to touch [src]!</B>")
 		return 0
-
-	if(M.a_intent == "hurt" || M.a_intent == "disarm")
-		for(var/mob/living/simple_animal/smart_animal/SA in view(7))
-			SA.fight(M, src)
 
 	if(M.wear_suit && istype(M.wear_suit, /obj/item/clothing/suit/armor/abductor/vest))	//When abductor will hit someone from stelth he will reveal himself
 		for(var/obj/item/clothing/suit/armor/abductor/vest/V in list(M.wear_suit))
@@ -253,5 +249,5 @@
 			visible_message("\red <B>[M] attempted to disarm [src]!</B>")
 	return
 
-/mob/living/carbon/human/proc/afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, inrange, params)
+/mob/living/carbon/human/proc/afterattack(atom/target, mob/living/user, inrange, params)
 	return

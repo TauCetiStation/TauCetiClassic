@@ -17,6 +17,7 @@
 	var/update_muts = 1                        // Monkey gene must be set at start.
 	var/alien = 0				   //Used for reagent metabolism.
 	holder_type = /obj/item/weapon/holder/monkey
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/monkey = 5)
 
 /mob/living/carbon/monkey/tajara
 	name = "farwa"
@@ -150,7 +151,7 @@
 	..()
 	return
 
-/mob/living/carbon/monkey/meteorhit(obj/O as obj)
+/mob/living/carbon/monkey/meteorhit(obj/O)
 	for(var/mob/M in viewers(src, null))
 		M.show_message(text("\red [] has been hit by []", src, O), 1)
 	if (health > 0)
@@ -161,10 +162,10 @@
 		health = 100 - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss()
 	return
 
-//mob/living/carbon/monkey/bullet_act(var/obj/item/projectile/Proj)taken care of in living
+//mob/living/carbon/monkey/bullet_act(obj/item/projectile/Proj)taken care of in living
 
 
-/mob/living/carbon/monkey/attack_paw(mob/M as mob)
+/mob/living/carbon/monkey/attack_paw(mob/M)
 	..()
 
 	if (M.a_intent == "help")
@@ -187,7 +188,7 @@
 					O.show_message("\red <B>[M.name] has attempted to bite [name]!</B>", 1)
 	return
 
-/mob/living/carbon/monkey/attack_hand(mob/living/carbon/human/M as mob)
+/mob/living/carbon/monkey/attack_hand(mob/living/carbon/human/M)
 	if (!ticker)
 		M << "You cannot attack people before the game has started."
 		return
@@ -279,7 +280,7 @@
 								O.show_message(text("\red <B>[] has disarmed [name]!</B>", M), 1)
 	return
 
-/mob/living/carbon/monkey/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
+/mob/living/carbon/monkey/attack_alien(mob/living/carbon/alien/humanoid/M)
 	if (!ticker)
 		M << "You cannot attack people before the game has started."
 		return
@@ -350,7 +351,7 @@
 			updatehealth()
 	return
 
-/mob/living/carbon/monkey/attack_animal(mob/living/simple_animal/M as mob)
+/mob/living/carbon/monkey/attack_animal(mob/living/simple_animal/M)
 	if(M.melee_damage_upper == 0)
 		M.emote("[M.friendly] [src]")
 	else
@@ -365,7 +366,7 @@
 		updatehealth()
 
 
-/mob/living/carbon/monkey/attack_slime(mob/living/carbon/slime/M as mob)
+/mob/living/carbon/monkey/attack_slime(mob/living/carbon/slime/M)
 	if (!ticker)
 		M << "You cannot attack people before the game has started."
 		return

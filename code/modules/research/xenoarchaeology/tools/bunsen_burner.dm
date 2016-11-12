@@ -9,7 +9,7 @@
 	var/obj/item/weapon/reagent_containers/held_container
 	var/heat_time = 50
 
-/obj/machinery/bunsen_burner/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/machinery/bunsen_burner/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/reagent_containers))
 		if(held_container)
 			user << "\red You must remove the [held_container] first."
@@ -26,7 +26,7 @@
 	else
 		user << "\red You can't put the [W] onto the [src]."
 
-/obj/machinery/bunsen_burner/attack_hand(mob/user as mob)
+/obj/machinery/bunsen_burner/attack_hand(mob/user)
 	if(held_container)
 		underlays = null
 		user << "\blue You remove the [held_container] from the [src]."

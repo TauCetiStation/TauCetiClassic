@@ -97,7 +97,7 @@ Thus, the two variables affect pump operation are set in New():
 
 	return 1
 
-/obj/machinery/atmospherics/binary/volume_pump/interact(mob/user as mob)
+/obj/machinery/atmospherics/binary/volume_pump/interact(mob/user)
 	var/dat = {"<b>Power: </b><a href='?src=\ref[src];power=1'>[on?"On":"Off"]</a><br>
 				<b>Desirable output flow: </b>
 				[round(transfer_rate,1)]l/s | <a href='?src=\ref[src];set_transfer_rate=1'>Change</a>
@@ -138,7 +138,7 @@ Thus, the two variables affect pump operation are set in New():
 	update_icon()
 
 
-/obj/machinery/atmospherics/binary/volume_pump/attack_hand(user as mob)
+/obj/machinery/atmospherics/binary/volume_pump/attack_hand(user)
 	if(..())
 		return
 	src.add_fingerprint(usr)
@@ -167,7 +167,7 @@ Thus, the two variables affect pump operation are set in New():
 
 
 
-/obj/machinery/atmospherics/binary/volume_pump/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+/obj/machinery/atmospherics/binary/volume_pump/attackby(obj/item/weapon/W, mob/user)
 	if (!istype(W, /obj/item/weapon/wrench))
 		return ..()
 	if (!(stat & NOPOWER) && on)

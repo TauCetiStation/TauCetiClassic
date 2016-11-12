@@ -1,7 +1,7 @@
 /mob/camera/blob
 	name = "Blob Overmind"
 	real_name = "Blob Overmind"
-	icon = 'tauceti/icons/mob/blob.dmi'
+	icon = 'icons/mob/blob.dmi'
 	icon_state = "marker"
 
 	see_in_dark = 8
@@ -33,7 +33,7 @@
 	src << "<b>Factory Blob</b> is a blob which will spawn blob spores which will attack nearby food. Putting this nearby nodes and your core will increase the spawn rate; put it alone and it will not spawn any spores."
 	src << "<b>Shortcuts:</b> CTRL Click = Expand Blob / Middle Mouse Click = Rally Spores / Alt Click = Create Shield"
 
-/mob/camera/blob/proc/add_points(var/points)
+/mob/camera/blob/proc/add_points(points)
 	if(points != 0)
 		blob_points = Clamp(blob_points + points, 0, max_blob_points)
 /mob/camera/blob/say(var/message)
@@ -69,7 +69,7 @@
 		if(isovermind(M) || isobserver(M))
 			M.show_message(rendered, 2)
 
-/mob/camera/blob/emote(var/act,var/m_type=1,var/message = null)
+/mob/camera/blob/emote(act,m_type=1,message = null)
 	return
 
 /mob/camera/blob/blob_act()

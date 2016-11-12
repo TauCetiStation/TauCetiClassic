@@ -45,7 +45,8 @@
 
 /obj/machinery/power/apc
 	name = "area power controller"
-	icon = 'tauceti/icons/obj/power.dmi'
+	desc = "A control terminal for the area electrical systems."
+	icon = 'icons/obj/power.dmi'
 	icon_state = "apc0"
 	anchored = 1
 	use_power = 0
@@ -210,31 +211,28 @@
 	spawn(5)
 		src.update()
 
-/obj/machinery/power/apc/examine()
-	set src in oview(1)
-
-	if(usr /*&& !usr.stat*/)
-		usr << "A control terminal for the area electrical systems."
+/obj/machinery/power/apc/examine(mob/user)
+	..()
+	if(src in oview(1, user))
 		if(stat & BROKEN)
-			usr << "Looks broken."
+			user << "Looks broken."
 			return
 		if(opened)
 			if(has_electronics && terminal)
-				usr << "The cover is [opened==2?"removed":"open"] and the power cell is [ cell ? "installed" : "missing"]."
+				user << "The cover is [opened==2?"removed":"open"] and the power cell is [ cell ? "installed" : "missing"]."
 			else if (!has_electronics && terminal)
-				usr << "There are some wires but no any electronics."
+				user << "There are some wires but no any electronics."
 			else if (has_electronics && !terminal)
-				usr << "Electronics installed but not wired."
+				user << "Electronics installed but not wired."
 			else /* if (!has_electronics && !terminal) */
-				usr << "There is no electronics nor connected wires."
-
+				user << "There is no electronics nor connected wires."
 		else
 			if (stat & MAINT)
-				usr << "The cover is closed. Something wrong with it: it doesn't work."
+				user << "The cover is closed. Something wrong with it: it doesn't work."
 			else if (malfhack)
-				usr << "The cover is broken. It may be hard to force it open."
+				user << "The cover is broken. It may be hard to force it open."
 			else
-				usr << "The cover is closed."
+				user << "The cover is closed."
 
 // update the APC icon to show the three base states
 // also add overlays for indicator lights
@@ -749,7 +747,7 @@
 	else
 		return 0 // 0 = User is not a Malf AI
 
-/obj/machinery/power/apc/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
+/obj/machinery/power/apc/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
 	if(!user)
 		return
 
@@ -831,15 +829,15 @@
 //			world << "[area.power_equip]"
 	area.power_change()
 
-/obj/machinery/power/apc/proc/isWireColorCut(var/wireColor)
+/obj/machinery/power/apc/proc/isWireColorCut(wireColor)
 	var/wireFlag = APCWireColorToFlag[wireColor]
 	return ((src.apcwires & wireFlag) == 0)
 
-/obj/machinery/power/apc/proc/isWireCut(var/wireIndex)
+/obj/machinery/power/apc/proc/isWireCut(wireIndex)
 	var/wireFlag = APCIndexToFlag[wireIndex]
 	return ((src.apcwires & wireFlag) == 0)
 
-/obj/machinery/power/apc/proc/cut(var/wireColor)
+/obj/machinery/power/apc/proc/cut(wireColor)
 	var/wireFlag = APCWireColorToFlag[wireColor]
 	var/wireIndex = APCWireColorToIndex[wireColor]
 	apcwires &= ~wireFlag
@@ -858,7 +856,7 @@
 			src.updateDialog()
 //		if(APC_WIRE_IDSCAN)		nothing happens when you cut this wire, add in something if you want whatever
 
-/obj/machinery/power/apc/proc/mend(var/wireColor)
+/obj/machinery/power/apc/proc/mend(wireColor)
 	var/wireFlag = APCWireColorToFlag[wireColor]
 	var/wireIndex = APCWireColorToIndex[wireColor] //not used in this function
 	apcwires |= wireFlag
@@ -881,7 +879,7 @@
 			src.updateDialog()
 //		if(APC_WIRE_IDSCAN)		nothing happens when you cut this wire, add in something if you want whatever
 
-/obj/machinery/power/apc/proc/pulse(var/wireColor)
+/obj/machinery/power/apc/proc/pulse(wireColor)
 	//var/wireFlag = apcWireColorToFlag[wireColor] //not used in this function
 	var/wireIndex = APCWireColorToIndex[wireColor]
 	switch(wireIndex)
@@ -913,7 +911,7 @@
 					src.aidisabled = 0
 				src.updateDialog()
 
-/obj/machinery/power/apc/proc/can_use(mob/user as mob, var/loud = 0) //used by attack_hand() and Topic()
+/obj/machinery/power/apc/proc/can_use(mob/user, loud = 0) //used by attack_hand() and Topic()
 	if(!user.client)
 		return 0
 	autoflag = 5
@@ -1057,7 +1055,7 @@
 	if(usingUI)
 		src.updateDialog()
 
-/*/obj/machinery/power/apc/proc/malfoccupy(var/mob/living/silicon/ai/malf)
+/*/obj/machinery/power/apc/proc/malfoccupy(mob/living/silicon/ai/malf)
 	if(!istype(malf))
 		return
 	if(istype(malf.loc, /obj/machinery/power/apc)) // Already in an APC
@@ -1081,7 +1079,7 @@
 	src.occupier.verbs += /datum/game_mode/malfunction/proc/takeover
 	src.occupier.cancel_camera()
 
-/obj/machinery/power/apc/proc/malfvacate(var/forced)
+/obj/machinery/power/apc/proc/malfvacate(forced)
 	if(!src.occupier)
 		return
 	if(src.occupier.parent && src.occupier.parent.stat != DEAD)
@@ -1126,7 +1124,7 @@
 	else
 		return 0
 
-/obj/machinery/power/apc/add_load(var/amount)
+/obj/machinery/power/apc/add_load(amount)
 	if(terminal && terminal.powernet)
 		terminal.powernet.newload += amount
 
@@ -1308,7 +1306,7 @@
 // val 0=off, 1=off(auto) 2=on 3=on(auto)
 // on 0=off, 1=on, 2=autooff
 
-/proc/autoset(var/val, var/on)
+/proc/autoset(val, on)
 
 	if(on==0)
 		if(val==2)			// if on, return off
@@ -1328,7 +1326,7 @@
 
 // damage and destruction acts
 
-/obj/machinery/power/apc/meteorhit(var/obj/O as obj)
+/obj/machinery/power/apc/meteorhit(obj/O)
 
 	set_broken()
 	return
@@ -1391,7 +1389,7 @@
 
 // overload all the lights in this APC area
 
-/obj/machinery/power/apc/proc/overload_lighting(var/skip_sound_and_sparks = 0)
+/obj/machinery/power/apc/proc/overload_lighting(skip_sound_and_sparks = 0)
 	if(/* !get_connection() || */ !operating || shorted)
 		return
 	if( cell && cell.charge>=20)

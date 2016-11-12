@@ -10,7 +10,7 @@
 	var/last_update = 0
 	var/list/stored_ore = list()
 
-/obj/structure/ore_box/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/structure/ore_box/attackby(obj/item/weapon/W, mob/user)
 	if (istype(W, /obj/item/weapon/ore))
 		user.remove_from_mob(W)
 		src.contents += W
@@ -36,7 +36,7 @@
 		else
 			stored_ore[O.name] = 1
 
-/obj/structure/ore_box/attack_hand(mob/user as mob)
+/obj/structure/ore_box/attack_hand(mob/user)
 	var/amt_gold = 0
 	var/amt_silver = 0
 	var/amt_diamond = 0
@@ -104,8 +104,6 @@
 
 /obj/structure/ore_box/examine(mob/user)
 	..()
-	user << "That's an [src]."
-	user << desc
 
 	// Borgs can now check contents too.
 	if((!istype(user, /mob/living/carbon/human)) && (!istype(user, /mob/living/silicon/robot)))

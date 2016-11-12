@@ -27,7 +27,7 @@
 	g_amt = 0
 	created_window = /obj/structure/window/basic
 
-/obj/item/stack/sheet/glass/attack_self(mob/user as mob)
+/obj/item/stack/sheet/glass/attack_self(mob/user)
 	construct_window(user)
 
 /obj/item/stack/sheet/glass/attackby(obj/item/W, mob/user)
@@ -41,7 +41,7 @@
 		user << "\blue You attach wire to the [name]."
 		new /obj/item/stack/light_w(user.loc)
 		src.use(1)
-	else if( istype(W, /obj/item/stack/rods) )
+	else if(istype(W, /obj/item/stack/rods))
 		var/obj/item/stack/rods/V  = W
 		var/obj/item/stack/sheet/rglass/RG = new (user.loc)
 		RG.add_fingerprint(user)
@@ -49,16 +49,18 @@
 		V.use(1)
 		var/obj/item/stack/sheet/glass/G = src
 		src = null
-		var/replace = (user.get_inactive_hand()==G)
+		var/replace = (user.get_inactive_hand() == G)
 		G.use(1)
 		if (!G && !RG && replace)
 			user.put_in_hands(RG)
 	else
 		return ..()
 
-/obj/item/stack/sheet/glass/proc/construct_window(mob/user as mob)
-	if(!user || !src)	return 0
-	if(!istype(user.loc,/turf)) return 0
+/obj/item/stack/sheet/glass/proc/construct_window(mob/user)
+	if(!user || !src)
+		return 0
+	if(!istype(user.loc,/turf))
+		return 0
 	if(!user.IsAdvancedToolUser())
 		user << "\red You don't have the dexterity to do this!"
 		return 0
@@ -66,12 +68,14 @@
 	title += " ([src.amount] sheet\s left)"
 	switch(alert(title, "Would you like full tile glass or one direction?", "One Direction", "Full Window", "Cancel", null))
 		if("One Direction")
-			if(!src)	return 1
-			if(src.loc != user)	return 1
+			if(!src)
+				return 1
+			if(src.loc != user)
+				return 1
 
 			var/list/directions = new/list(cardinal)
 			var/i = 0
-			for (var/obj/structure/window/win in user.loc)
+			for(var/obj/structure/window/win in user.loc)
 				i++
 				if(i >= 4)
 					user << "\red There are too many windows in this location."
@@ -83,7 +87,7 @@
 
 			//Determine the direction. It will first check in the direction the person making the window is facing, if it finds an already made window it will try looking at the next cardinal direction, etc.
 			var/dir_to_set = 2
-			for(var/direction in list( user.dir, turn(user.dir,90), turn(user.dir,180), turn(user.dir,270) ))
+			for(var/direction in list(user.dir, turn(user.dir,90), turn(user.dir,180), turn(user.dir,270)))
 				var/found = 0
 				for(var/obj/structure/window/WT in user.loc)
 					if(WT.dir == direction)
@@ -92,29 +96,33 @@
 					dir_to_set = direction
 					break
 			var/obj/structure/window/W
-			W = new created_window( user.loc, 0 )
+			W = new created_window(user.loc)
 			W.dir = dir_to_set
 			W.ini_dir = W.dir
 			W.anchored = 0
 			src.use(1)
 		if("Full Window")
-			if(!src)	return 1
-			if(src.loc != user)	return 1
+			if(!src)
+				return 1
+			if(src.loc != user)
+				return 1
 			if(src.amount < 2)
 				user << "\red You need more glass to do that."
 				return 1
-			if(locate(/obj/structure/window) in user.loc)
-				user << "\red There is a window in the way."
+			var/step = get_step(user, user.dir)
+			var/turf/T = get_turf(step)
+			if(T.density || (locate(/obj/structure/window) in step))
+				user << "\red There is something in the way."
 				return 1
 			var/obj/structure/window/W
-			W = new created_window( user.loc, 0 )
+			W = new created_window(step)
 			W.dir = SOUTHWEST
 			W.ini_dir = SOUTHWEST
 			W.anchored = 0
 			src.use(2)
 	return 0
 
-/obj/item/stack/sheet/glass/throw_at(atom/target, range, speed, mob/user as mob)
+/obj/item/stack/sheet/glass/throw_at(atom/target, range, speed, mob/user)
 	..()
 	playsound(src, "shatter", 70, 1)
 	new /obj/item/weapon/shard(loc)
@@ -124,7 +132,7 @@
 	else
 		qdel(src)
 
-/obj/item/stack/sheet/rglass/throw_at(atom/target, range, speed, mob/user as mob)
+/obj/item/stack/sheet/rglass/throw_at(atom/target, range, speed, mob/user)
 	..()
 	playsound(src, "shatter", 70, 1)
 	new /obj/item/weapon/shard(loc)
@@ -154,12 +162,14 @@
 	g_amt = 0
 	m_amt = 0
 
-/obj/item/stack/sheet/rglass/attack_self(mob/user as mob)
+/obj/item/stack/sheet/rglass/attack_self(mob/user)
 	construct_window(user)
 
-/obj/item/stack/sheet/rglass/proc/construct_window(mob/user as mob)
-	if(!user || !src)	return 0
-	if(!istype(user.loc,/turf)) return 0
+/obj/item/stack/sheet/rglass/proc/construct_window(mob/user)
+	if(!user || !src)
+		return 0
+	if(!istype(user.loc,/turf))
+		return 0
 	if(!user.IsAdvancedToolUser())
 		user << "\red You don't have the dexterity to do this!"
 		return 0
@@ -167,8 +177,10 @@
 	title += " ([src.amount] sheet\s left)"
 	switch(input(title, "Would you like full tile glass a one direction glass pane or a windoor?") in list("One Direction", "Full Window", "Windoor", "Cancel"))
 		if("One Direction")
-			if(!src)	return 1
-			if(src.loc != user)	return 1
+			if(!src)
+				return 1
+			if(src.loc != user)
+				return 1
 			var/list/directions = new/list(cardinal)
 			var/i = 0
 			for (var/obj/structure/window/win in user.loc)
@@ -193,7 +205,7 @@
 					break
 
 			var/obj/structure/window/W
-			W = new /obj/structure/window/reinforced( user.loc, 1 )
+			W = new /obj/structure/window/reinforced(user.loc)
 			W.state = 0
 			W.dir = dir_to_set
 			W.ini_dir = W.dir
@@ -201,24 +213,30 @@
 			src.use(1)
 
 		if("Full Window")
-			if(!src)	return 1
-			if(src.loc != user)	return 1
+			if(!src)
+				return 1
+			if(src.loc != user)
+				return 1
 			if(src.amount < 2)
 				user << "\red You need more glass to do that."
 				return 1
-			if(locate(/obj/structure/window) in user.loc)
-				user << "\red There is a window in the way."
+			var/step = get_step(user, user.dir)
+			var/turf/T = get_turf(step)
+			if(T.density || (locate(/obj/structure/window) in step))
+				user << "\red There is something in the way."
 				return 1
 			var/obj/structure/window/W
-			W = new /obj/structure/window/reinforced( user.loc, 1 )
+			W = new /obj/structure/window/reinforced(step)
 			W.state = 0
 			W.dir = SOUTHWEST
 			W.ini_dir = SOUTHWEST
+			W.state = 0
 			W.anchored = 0
 			src.use(2)
 
 		if("Windoor")
-			if(!src || src.loc != user) return 1
+			if(!src || src.loc != user)
+				return 1
 
 			if(isturf(user.loc) && locate(/obj/structure/windoor_assembly/, user.loc))
 				user << "\red There is already a windoor assembly in that location."
@@ -261,8 +279,8 @@
  */
 /obj/item/weapon/shard/Bump()
 
-	spawn( 0 )
-		if (prob(20))
+	spawn(0)
+		if(prob(20))
 			src.force = 15
 		else
 			src.force = 4
@@ -286,13 +304,13 @@
 		else
 	return
 
-/obj/item/weapon/shard/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/weapon/shard/attackby(obj/item/weapon/W, mob/user)
 	..()
-	if ( istype(W, /obj/item/weapon/weldingtool))
+	if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.remove_fuel(0, user))
 			var/obj/item/stack/sheet/glass/NG = new (user.loc)
-			for (var/obj/item/stack/sheet/glass/G in user.loc)
+			for(var/obj/item/stack/sheet/glass/G in user.loc)
 				if(G==NG)
 					continue
 				if(G.amount>=G.max_amount)
@@ -315,7 +333,7 @@
 			if(H.species.flags & IS_SYNTHETIC)
 				return
 
-			if( !H.shoes && ( !H.wear_suit || !(H.wear_suit.body_parts_covered & FEET) ) )
+			if(!H.shoes && (!H.wear_suit || !(H.wear_suit.body_parts_covered & FEET)))
 				var/datum/organ/external/affecting = H.get_organ(pick("l_foot", "r_foot"))
 				if(affecting.status & ORGAN_ROBOT)
 					return
@@ -336,15 +354,15 @@
 	singular_name = "phoron glass sheet"
 	icon_state = "sheet-phoronglass"
 	g_amt = 7500
-	origin_tech = "materials=3;phoron=2"
+	origin_tech = "materials=3;phorontech=2"
 	created_window = /obj/structure/window/phoronbasic
 
-/obj/item/stack/sheet/glass/phoronglass/attack_self(mob/user as mob)
+/obj/item/stack/sheet/glass/phoronglass/attack_self(mob/user)
 	construct_window(user)
 
 /obj/item/stack/sheet/glass/phoronglass/attackby(obj/item/W, mob/user)
 	..()
-	if( istype(W, /obj/item/stack/rods) )
+	if(istype(W, /obj/item/stack/rods))
 		var/obj/item/stack/rods/V  = W
 		var/obj/item/stack/sheet/glass/phoronrglass/RG = new (user.loc)
 		RG.add_fingerprint(user)
@@ -352,7 +370,7 @@
 		V.use(1)
 		var/obj/item/stack/sheet/glass/G = src
 		src = null
-		var/replace = (user.get_inactive_hand()==G)
+		var/replace = (user.get_inactive_hand() == G)
 		G.use(1)
 		if (!G && !RG && replace)
 			user.put_in_hands(RG)
@@ -369,8 +387,8 @@
 	icon_state = "sheet-phoronrglass"
 	g_amt = 7500
 	m_amt = 1875
-	origin_tech = "materials=4;phoron=2"
+	origin_tech = "materials=4;phorontech=2"
 	created_window = /obj/structure/window/phoronreinforced
 
-/obj/item/stack/sheet/glass/phoronrglass/attack_self(mob/user as mob)
+/obj/item/stack/sheet/glass/phoronrglass/attack_self(mob/user)
 	construct_window(user)

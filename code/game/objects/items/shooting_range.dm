@@ -32,7 +32,7 @@
 
 
 
-/obj/item/target/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/target/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.remove_fuel(0, user))
@@ -41,7 +41,7 @@
 			return
 
 
-/obj/item/target/attack_hand(mob/user as mob)
+/obj/item/target/attack_hand(mob/user)
 	// taking pinned targets off!
 	var/obj/structure/target_stake/stake
 	for(var/obj/structure/target_stake/T in view(3,src))
@@ -80,7 +80,7 @@
 	desc = "A shooting target with a threatening silhouette."
 	hp = 2350 // alium onest too kinda
 
-/obj/item/target/bullet_act(var/obj/item/projectile/Proj)
+/obj/item/target/bullet_act(obj/item/projectile/Proj)
 	var/p_x = Proj.p_x + pick(0,0,0,0,0,-1,1) // really ugly way of coding "sometimes offset Proj.p_x!"
 	var/p_y = Proj.p_y + pick(0,0,0,0,0,-1,1)
 	var/decaltype = 1 // 1 - scorch, 2 - bullet

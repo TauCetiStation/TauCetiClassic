@@ -454,7 +454,7 @@
 	destroying = 1 // stops us calling qdel(src) on dropped()
 	return ..()
 
-/obj/item/weapon/grab/proc/inspect_organ(mob/living/carbon/human/H, mob/user, var/target_zone)
+/obj/item/weapon/grab/proc/inspect_organ(mob/living/carbon/human/H, mob/user, target_zone)
 
 	var/datum/organ/external/E = H.get_organ(target_zone)
 

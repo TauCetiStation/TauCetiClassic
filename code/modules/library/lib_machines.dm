@@ -32,7 +32,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 	var/author
 	var/SQLquery
 
-/obj/machinery/computer/libraryconsole/attack_hand(var/mob/user as mob)
+/obj/machinery/computer/libraryconsole/attack_hand(mob/user)
 	if(..())
 		return
 	interact(user)
@@ -242,7 +242,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
 
-/obj/machinery/computer/libraryconsole/bookmanagement/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/machinery/computer/libraryconsole/bookmanagement/attackby(obj/item/weapon/W, mob/user)
 	if (src.density && istype(W, /obj/item/weapon/card/emag))
 		src.emagged = 1
 	if(istype(W, /obj/item/weapon/barcodescanner))
@@ -403,12 +403,12 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 	density = 1
 	var/obj/item/weapon/book/cache		// Last scanned book
 
-/obj/machinery/libraryscanner/attackby(var/obj/O as obj, var/mob/user as mob)
+/obj/machinery/libraryscanner/attackby(obj/O, mob/user)
 	if(istype(O, /obj/item/weapon/book))
 		user.drop_item()
 		O.loc = src
 
-/obj/machinery/libraryscanner/attack_hand(var/mob/user as mob)
+/obj/machinery/libraryscanner/attack_hand(mob/user)
 	usr.set_machine(src)
 	var/dat = "<HEAD><TITLE>Scanner Control Interface</TITLE></HEAD><BODY>\n" // <META HTTP-EQUIV='Refresh' CONTENT='10'>
 	if(cache)
@@ -449,7 +449,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 	anchored = 1
 	density = 1
 
-/obj/machinery/bookbinder/attackby(var/obj/O as obj, var/mob/user as mob)
+/obj/machinery/bookbinder/attackby(obj/O, mob/user)
 	if(istype(O, /obj/item/weapon/paper))
 		user.drop_item()
 		O.loc = src

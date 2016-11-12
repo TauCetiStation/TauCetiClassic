@@ -47,7 +47,7 @@
 	else
 		icon_state = "laser"//"emitter"
 
-/obj/machinery/zero_point_emitter/attack_hand(mob/user as mob)
+/obj/machinery/zero_point_emitter/attack_hand(mob/user)
 	src.add_fingerprint(user)
 	if(state == 2)
 		if(!src.locked)
@@ -69,7 +69,7 @@
 		return 1
 
 
-/obj/machinery/zero_point_emitter/emp_act(var/severity)//Emitters are hardened but still might have issues
+/obj/machinery/zero_point_emitter/emp_act(severity)//Emitters are hardened but still might have issues
 	use_power(1000)
 /*	if((severity == 1)&&prob(1)&&prob(1))
 		if(src.active)

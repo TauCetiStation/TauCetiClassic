@@ -58,18 +58,13 @@
 	if(panel_open)
 		overlays += "sheater-open"
 
-/obj/machinery/space_heater/examine()
-	set src in oview(12)
-	if (!( usr ))
-		return
-	usr << "This is \icon[src] \an [src.name]."
-	usr << src.desc
-
-	usr << "\The [src] is [on ? "on" : "off"], and the hatch is [panel_open ? "open" : "closed"]."
+/obj/machinery/space_heater/examine(mob/user)
+	..()
+	user << "\The [src] is [on ? "on" : "off"], and the hatch is [panel_open ? "open" : "closed"]."
 	if(cell)
-		usr << "The charge meter reads [cell ? round(cell.percent(), 1) : 0]%."
+		user << "The charge meter reads [cell ? round(cell.percent(), 1) : 0]%."
 	else
-		usr << "There is no power cell installed."
+		user << "There is no power cell installed."
 
 /obj/machinery/space_heater/RefreshParts()
 	var/laser = 0
@@ -126,13 +121,13 @@
 	else
 		..()
 
-/obj/machinery/space_heater/attack_hand(mob/user as mob)
+/obj/machinery/space_heater/attack_hand(mob/user)
 	interact(user)
 
 /obj/machinery/space_heater/attack_paw(mob/user)
 	interact(user)
 
-/obj/machinery/space_heater/interact(mob/user as mob)
+/obj/machinery/space_heater/interact(mob/user)
 	ui_interact(user)
 
 /obj/machinery/space_heater/ui_interact(mob/user, ui_key = "main")
@@ -278,7 +273,7 @@
 			cell.use(requiredPower / efficiency)
 
 		env.merge(removed)
-		
+
 	else
 		on = FALSE
 		update_icon()

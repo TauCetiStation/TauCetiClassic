@@ -30,7 +30,7 @@ turf
 
 		return GM
 
-	remove_air(amount as num)
+	remove_air(amount)
 		var/datum/gas_mixture/GM = new
 
 		var/sum = oxygen + carbon_dioxide + nitrogen + toxins
@@ -208,7 +208,7 @@ turf/simulated
 		else
 			return ..()
 
-	remove_air(amount as num)
+	remove_air(amount)
 		if(air)
 			var/datum/gas_mixture/removed = null
 

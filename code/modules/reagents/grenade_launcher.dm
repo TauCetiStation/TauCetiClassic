@@ -11,14 +11,12 @@
 	var/max_grenades = 3
 	m_amt = 2000
 
-/obj/item/weapon/gun/grenadelauncher/examine()
-	set src in view()
+/obj/item/weapon/gun/grenadelauncher/examine(mob/user)
 	..()
-	if (!(usr in view(2)) && usr!=src.loc) return
-	usr << "\icon [src] Grenade launcher:"
-	usr << "\blue [grenades.len] / [max_grenades] Grenades."
+	if(src in view(2, user))
+		user << "<span class='notice'>[grenades.len] / [max_grenades] Grenades.</span>"
 
-/obj/item/weapon/gun/grenadelauncher/attackby(obj/item/I as obj, mob/user as mob)
+/obj/item/weapon/gun/grenadelauncher/attackby(obj/item/I, mob/user)
 
 	if((istype(I, /obj/item/weapon/grenade)))
 		if(grenades.len < max_grenades)

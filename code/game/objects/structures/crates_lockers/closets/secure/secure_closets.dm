@@ -43,7 +43,7 @@
 				src.req_access += pick(get_all_accesses())
 	..()
 
-/obj/structure/closet/secure_closet/proc/togglelock(mob/user as mob)
+/obj/structure/closet/secure_closet/proc/togglelock(mob/user)
 	if(src.opened)
 		user << "<span class='notice'>Close the locker first.</span>"
 		return
@@ -62,7 +62,7 @@
 	else
 		user << "<span class='notice'>Access Denied</span>"
 
-/obj/structure/closet/secure_closet/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/structure/closet/secure_closet/attackby(obj/item/weapon/W, mob/user)
 	if(src.opened)
 		if(istype(W, /obj/item/weapon/grab))
 			if(src.large)
@@ -96,14 +96,14 @@
 	else
 		togglelock(user)
 
-/obj/structure/closet/secure_closet/attack_hand(mob/user as mob)
+/obj/structure/closet/secure_closet/attack_hand(mob/user)
 	src.add_fingerprint(user)
 	if(src.locked)
 		src.togglelock(user)
 	else
 		src.toggle(user)
 
-/obj/structure/closet/secure_closet/attack_paw(mob/user as mob)
+/obj/structure/closet/secure_closet/attack_paw(mob/user)
 	return src.attack_hand(user)
 
 /obj/structure/closet/secure_closet/verb/verb_togglelock()

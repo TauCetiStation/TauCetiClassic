@@ -9,7 +9,7 @@
 
 /obj/structure/stool/bar
 	name = "bar stool"
-	icon = 'tauceti/icons/obj/objects.dmi'
+	icon = 'icons/obj/objects.dmi'
 	icon_state = "bar_chair"
 
 /obj/structure/stool/ex_act(severity)
@@ -32,7 +32,7 @@
 		new /obj/item/stack/sheet/metal(src.loc)
 		qdel(src)
 
-/obj/structure/stool/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/structure/stool/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/wrench) && !(flags&NODECONSTRUCT))
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		new /obj/item/stack/sheet/metal(src.loc)
@@ -55,9 +55,9 @@
 /obj/structure/stool/MouseDrop(atom/over_object)
 	if(ishuman(over_object) && type == /obj/structure/stool)
 		var/mob/living/carbon/human/H = over_object
-		if(H==usr && !H.restrained() && !H.stat && in_range(src, over_object))
-			var/obj/item/weapon/stool/S = new/obj/item/weapon/stool()
-			S.origin = src
+		if(H == usr && !H.restrained() && !H.stat && in_range(src, over_object))
+			var/obj/item/weapon/stool/S = new
+			S.origin_stool = src
 			src.loc = S
 			H.put_in_hands(S)
 			H.visible_message("<span class='red'>[H] grabs [src] from the floor!</span>", "<span class='red'>You grab [src] from the floor!</span>")
@@ -72,25 +72,32 @@
 	force = 10
 	throwforce = 10
 	w_class = 5.0
-	var/obj/structure/stool/origin = null
+	var/obj/structure/stool/origin_stool = null
 
-/obj/item/weapon/stool/attack_self(mob/user as mob)
-	..()
-	if(!user) return
-	user.drop_from_inventory(src.origin)
-	user.visible_message("[user] puts [src] down.", "<span class='notice'>You put [src] down.</span>")
+/obj/item/weapon/stool/throw_at()
+	return
+
+/obj/item/weapon/stool/Destroy()
+	if(origin_stool)
+		qdel(origin_stool)
+		origin_stool = null
+	return ..()
+
+/obj/item/weapon/stool/attack_self(mob/user)
+	user.drop_from_inventory(src)
+	user.visible_message("<span class='notice'>[user] dropped [src].</span>", "<span class='notice'>You dropped [src].</span>")
+
+/obj/item/weapon/stool/dropped(mob/user)
+	if(origin_stool)
+		origin_stool.loc = src.loc
+		origin_stool = null
 	qdel(src)
 
-/obj/item/weapon/stool/dropped()
-	attack_self(usr)
-
-/obj/item/weapon/stool/attack(mob/M as mob, mob/user as mob)
-	if (prob(5) && istype(M,/mob/living))
-		user.visible_message("\red [user] breaks [src] over [M]'s back!.")
-		user.remove_from_mob(src)
-		var/obj/item/stack/sheet/metal/m = new/obj/item/stack/sheet/metal
-		m.loc = get_turf(src)
-		qdel( src)
+/obj/item/weapon/stool/attack(mob/M, mob/user)
+	if (prob(5) && isliving(M))
+		user.visible_message("<span class='red'>[user] breaks [src] over [M]'s back!</span>")
+		new /obj/item/stack/sheet/metal(get_turf(src))
+		qdel(src)
 		var/mob/living/T = M
 		T.Weaken(10)
 		T.apply_damage(20)

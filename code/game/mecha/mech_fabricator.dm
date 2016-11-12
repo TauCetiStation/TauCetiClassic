@@ -319,7 +319,7 @@
 		else
 			return interact(user)
 
-/obj/machinery/mecha_part_fabricator/interact(mob/user as mob)
+/obj/machinery/mecha_part_fabricator/interact(mob/user)
 	var/dat, left_part
 	if (..())
 		return
@@ -579,5 +579,5 @@
 			user << "<span class='warning'>\The [src] cannot hold any more [sname] sheet\s!</span>"
 		return
 
-/obj/machinery/mecha_part_fabricator/proc/material2name(var/ID)
+/obj/machinery/mecha_part_fabricator/proc/material2name(ID)
 	return copytext(ID,2)

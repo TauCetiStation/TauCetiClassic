@@ -83,7 +83,7 @@ var/const/VOX_PATH = "sound/vox/"
 		play_vox_word(word, src.z, null)
 
 
-/proc/play_vox_word(var/word, var/z_level, var/mob/only_listener)
+/proc/play_vox_word(word, z_level, mob/only_listener)
 
 	word = lowertext(word)
 
@@ -107,10 +107,10 @@ var/const/VOX_PATH = "sound/vox/"
 	return 0
 
 
-/proc/vox_word_exists(var/word)
+/proc/vox_word_exists(word)
 	return fexists("[VOX_PATH][word].wav")
 
-/proc/get_vox_file(var/word)
+/proc/get_vox_file(word)
 	if(vox_word_exists(word))
 		return file("[VOX_PATH][word].wav")
 

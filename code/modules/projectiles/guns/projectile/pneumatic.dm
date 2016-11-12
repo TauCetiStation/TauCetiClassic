@@ -51,7 +51,7 @@
 	else
 		usr << "There's no tank in [src]."
 
-/obj/item/weapon/storage/pneumatic/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/weapon/storage/pneumatic/attackby(obj/item/W, mob/user)
 	if(!tank && istype(W,/obj/item/weapon/tank))
 		user.remove_from_mob(W)
 		tank = W
@@ -63,17 +63,16 @@
 	else
 		..()
 
-/obj/item/weapon/storage/pneumatic/examine()
-	set src in view()
+/obj/item/weapon/storage/pneumatic/examine(mob/user)
 	..()
-	if (!(usr in view(2)) && usr!=src.loc) return
-	usr << "The valve is dialed to [pressure_setting]%."
-	if(tank)
-		usr << "The tank dial reads [tank.air_contents.return_pressure()] kPa."
-	else
-		usr << "Nothing is attached to the tank valve!"
+	if(src in view(2, user))
+		user << "The valve is dialed to [pressure_setting]%."
+		if(tank)
+			user << "The tank dial reads [tank.air_contents.return_pressure()] kPa."
+		else
+			user << "Nothing is attached to the tank valve!"
 
-/obj/item/weapon/storage/pneumatic/afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, flag, params)
+/obj/item/weapon/storage/pneumatic/afterattack(atom/target, mob/living/user, flag, params)
 	if (istype(target, /obj/item/weapon/storage/backpack ))
 		return
 
@@ -92,7 +91,7 @@
 	else
 		spawn(0) Fire(target,user,params)
 
-/obj/item/weapon/storage/pneumatic/attack(mob/living/M as mob, mob/living/user as mob, def_zone)
+/obj/item/weapon/storage/pneumatic/attack(mob/living/M, mob/living/user, def_zone)
 	if (length(contents) > 0)
 		if(user.a_intent == "hurt")
 			user.visible_message("\red <b> \The [user] fires \the [src] point blank at [M]!</b>")
@@ -102,7 +101,7 @@
 			Fire(M,user)
 			return
 
-/obj/item/weapon/storage/pneumatic/proc/Fire(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, params, reflex = 0)
+/obj/item/weapon/storage/pneumatic/proc/Fire(atom/target, mob/living/user, params, reflex = 0)
 
 	if (!tank)
 		user << "There is no gas tank in [src]!"
@@ -156,16 +155,16 @@
 /obj/item/weapon/cannonframe/update_icon()
 	icon_state = "pneumatic[buildstate]"
 
-/obj/item/weapon/cannonframe/examine()
+/obj/item/weapon/cannonframe/examine(mob/user)
 	..()
 	switch(buildstate)
-		if(1) usr << "It has a pipe segment installed."
-		if(2) usr << "It has a pipe segment welded in place."
-		if(3) usr << "It has an outer chassis installed."
-		if(4) usr << "It has an outer chassis welded in place."
-		if(5) usr << "It has a transfer valve installed."
+		if(1) user << "It has a pipe segment installed."
+		if(2) user << "It has a pipe segment welded in place."
+		if(3) user << "It has an outer chassis installed."
+		if(4) user << "It has an outer chassis welded in place."
+		if(5) user << "It has a transfer valve installed."
 
-/obj/item/weapon/cannonframe/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/weapon/cannonframe/attackby(obj/item/W, mob/user)
 	if(istype(W,/obj/item/pipe))
 		if(buildstate == 0)
 			user.drop_item()

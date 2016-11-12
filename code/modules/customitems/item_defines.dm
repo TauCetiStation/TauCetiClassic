@@ -131,7 +131,7 @@
 	desc = "NanoTrasen Security Department detective's badge, made from gold. Badge number is 564."
 	icon_state = "victor_kaminsky_1"
 
-/obj/item/fluff/victor_kaminsky_1/attack_self(mob/user as mob)
+/obj/item/fluff/victor_kaminsky_1/attack_self(mob/user)
 	for(var/mob/O in viewers(user, null))
 		O.show_message(text("[] shows you: \icon[] [].", user, src, src.name), 1)
 	src.add_fingerprint(user)
@@ -143,7 +143,7 @@
 	item_state = "ana_badge"
 	item_color = "ana_badge"
 
-/obj/item/fluff/ana_issek_2/attack_self(mob/user as mob)
+/obj/item/fluff/ana_issek_2/attack_self(mob/user)
 	if(isliving(user))
 		user.visible_message("\red [user] flashes their golden security badge.\nIt reads: Ana Issek, NT Security.","\red You display the faded bage.\nIt reads: Ana Issek, NT Security.")
 
@@ -373,10 +373,10 @@
 	update_icon()
 	return
 
-/obj/item/weapon/reagent_containers/hypospray/fluff/asher_spock_1/attack_self(mob/user as mob)
+/obj/item/weapon/reagent_containers/hypospray/fluff/asher_spock_1/attack_self(mob/user)
 	user << "\blue You click \the [src] but get no reaction. Must be dead."
 
-/obj/item/weapon/reagent_containers/hypospray/fluff/asher_spock_1/attack(mob/M as mob, mob/user as mob)
+/obj/item/weapon/reagent_containers/hypospray/fluff/asher_spock_1/attack(mob/M, mob/user)
 	if (user.ckey != "nerezza") //Because this can end up in the wrong hands, let's make it useless for them!
 		user << "\blue You click \the [src] but get no reaction. Must be dead."
 		return
@@ -400,14 +400,15 @@
 			user << "\blue [trans] units injected. [reagents.total_volume] units remaining in \the [src]."
 	return
 
-/obj/item/weapon/reagent_containers/hypospray/fluff/asher_spock_1/examine(mob/user as mob)
+/obj/item/weapon/reagent_containers/hypospray/fluff/asher_spock_1/examine(mob/user)
 	..()
-	if(user.ckey != "nerezza") return //Only the owner knows how to examine the contents.
+	if(user.ckey != "nerezza")
+		return //Only the owner knows how to examine the contents.
 	if(reagents && reagents.reagent_list.len)
 		for(var/datum/reagent/R in reagents.reagent_list)
-			usr << "\blue You examine the penlight closely and see that it has [R.volume] units of [R.name] stored."
+			user << "<span class='notice'>You examine the penlight closely and see that it has [R.volume] units of [R.name] stored.</span>"
 	else
-		usr << "\blue You examine the penlight closely and see that it is currently empty."
+		user << "<span class='notice'>You examine the penlight closely and see that it is currently empty.</span>"
 
 //End strange penlight
 
@@ -526,8 +527,6 @@
 /obj/item/clothing/head/secsoft/fluff/swatcap //deusdactyl: James Girard
 	name = "\improper SWAT hat"
 	desc = "A black hat.  The inside has the words, \"Lieutenant James Girard, LPD SWAT Team Four.\""
-	icon = 'tauceti/items/clothing/hats/hats.dmi'
-	tc_custom = 'tauceti/items/clothing/hats/hats.dmi'
 	icon_state = "swatcap"
 	body_parts_covered = 0
 
@@ -723,6 +722,54 @@
 	item_state = "solara_dress"
 	item_color = "solara_dress"
 
+/obj/item/clothing/under/fluff/terezi_suit
+	name = "legislacerator suit"
+	desc = "A very classy coat. Perhaps the only non-crappy attire of this person."
+	icon_state = "terezi"
+	item_state = "terezi"
+	item_color = "terezi"
+	flags = FPRINT | TABLEPASS
+
+/obj/item/clothing/under/fluff/indiana
+	name = "leather suit"
+	icon_state = "indiana"
+	item_state = "indiana"
+	item_color = "indiana"
+	flags = FPRINT | TABLEPASS
+
+/obj/item/clothing/under/fluff/cowboy
+	name = "western suit"
+	desc = "Revolver is your best friend."
+	icon_state = "cowboy"
+	item_state = "cowboy"
+	item_color = "cowboy"
+	flags = FPRINT | TABLEPASS
+
+/obj/item/clothing/under/fluff/cowboy/brown
+	icon_state = "cowboy_brown"
+	item_state = "cowboy_brown"
+	item_color = "cowboy_brown"
+
+/obj/item/clothing/under/fluff/cowboy/grey
+	icon_state = "cowboy_grey"
+	item_state = "cowboy_grey"
+	item_color = "cowboy_grey"
+
+/obj/item/clothing/under/fluff/maid_suit
+	name = "maid suit"
+	desc = "For your dirty ERP needs."
+	icon_state = "maid"
+	item_state = "maid"
+	item_color = "maid"
+	flags = FPRINT | TABLEPASS
+
+/obj/item/clothing/under/rank/medical/fluff/rosa
+	name = "short sleeve medical dress"
+	desc = "Made of a special fiber that gives special protection against biohazards. Has a cross on the chest denoting that the wearer is trained medical personnel and short sleeves."
+	icon_state = "rosa"
+	item_state = "rosa"
+	item_color = "rosa"
+
 /////// NT-SID Suit //Zuhayr: Jane Doe
 
 /obj/item/clothing/under/fluff/jane_sidsuit
@@ -828,13 +875,13 @@
 	slot_flags = SLOT_MASK
 	var/obj/item/held //Item inside locket.
 
-/obj/item/clothing/tie/fluff/konaa_hirano/attack_self(mob/user as mob)
+/obj/item/clothing/tie/fluff/konaa_hirano/attack_self(mob/user)
 	if(held)
 		user << "You open [src] and [held] falls out."
 		held.loc = get_turf(user)
 		src.held = null
 
-/obj/item/clothing/tie/fluff/konaa_hirano/attackby(var/obj/item/O as obj, mob/user as mob)
+/obj/item/clothing/tie/fluff/konaa_hirano/attackby(obj/item/O, mob/user)
 	if(istype(O,/obj/item/weapon/paper))
 		if(held)
 			usr << "[src] already has something inside it."
@@ -917,8 +964,6 @@
 /obj/item/clothing/suit/storage/det_suit/fluff/retpolcoat
 	name = "retired colony patrolman's coat"
 	desc = "A clean, black nylon windbreaker with the words \"OUTER LIGHT POLICE\" embroidered in gold-dyed thread on the back. \"RETIRED\" is tastefully embroidered below in a smaller font."
-	icon = 'tauceti/items/clothing/suits/suits.dmi'
-	tc_custom = 'tauceti/items/clothing/suits/suits.dmi'
 	icon_state = "retpolcoat"
 	item_state = "retpolcoat"
 	item_color = "retpolcoat"
@@ -926,8 +971,6 @@
 /obj/item/clothing/head/det_hat/fluff/retpolcap
 	name = "retired colony patrolman's cap"
 	desc = "A clean and properly creased colony police cap. The badge is shined and polished, the word \"RETIRED\" engraved professionally under the words \"OUTER LIGHT POLICE.\""
-	icon = 'tauceti/items/clothing/hats/hats.dmi'
-	tc_custom = 'tauceti/items/clothing/hats/hats.dmi'
 	icon_state = "retpolcap"
 
 /obj/item/clothing/under/det/fluff/retpoluniform
@@ -960,7 +1003,7 @@
 	else
 		icon_state = "leamas-empty"
 
-/obj/item/weapon/gun/projectile/attackby(var/obj/item/A as obj, mob/user as mob)
+/obj/item/weapon/gun/projectile/attackby(obj/item/A, mob/user)
 
 	if(istype(A, /obj/item/ammo_magazine))
 		flick("leamas-reloading",src)
@@ -1038,6 +1081,6 @@
 	item_state = "farwaplush"
 	icon_state = "farwaplush"
 
-/obj/item/weapon/fluff/farwadoll/attack_self(mob/user as mob)
+/obj/item/weapon/fluff/farwadoll/attack_self(mob/user)
 	user.visible_message("<span class='notice'>[user] hugs [src]! How cute! </span>", \
 						 "<span class='notice'>You hug [src]. Dawwww... </span>")

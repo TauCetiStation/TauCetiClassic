@@ -84,7 +84,7 @@ var/datum/subsystem/job/SSjob
 	Debug("AR has failed, Player: [player], Rank: [rank]")
 	return 0
 
-/datum/subsystem/job/proc/FreeRole(var/rank)	//making additional slot on the fly
+/datum/subsystem/job/proc/FreeRole(rank)	//making additional slot on the fly
 	var/datum/job/job = GetJob(rank)
 	if(job && job.current_positions >= job.total_positions && job.total_positions != -1)
 		job.total_positions++
@@ -439,6 +439,7 @@ var/datum/subsystem/job/SSjob
 		var/equipped = H.equip_to_slot_or_del(new /obj/item/clothing/glasses/regular(H), slot_glasses)
 		if(equipped != 1)
 			var/obj/item/clothing/glasses/G = H.glasses
+			G.name = "prescription " + G.name
 			G.prescription = 1
 //		H.update_icons()
 

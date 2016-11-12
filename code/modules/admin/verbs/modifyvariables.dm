@@ -6,15 +6,6 @@ var/list/forbidden_varedit_object_types = list(
 		/datum/timedevent                  //Nope.avi
 	)
 
-/*
-/client/proc/cmd_modify_object_variables(obj/O as obj|mob|turf|area in world)
-	set category = "Debug"
-	set name = "Edit Variables"
-	set desc="(target) Edit a target item's variables"
-	src.modify_variables(O)
-	feedback_add_details("admin_verb","EDITV") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-*/
-
 /client/proc/cmd_modify_ticker_variables()
 	set category = "Debug"
 	set name = "Edit Ticker Variables"
@@ -74,7 +65,7 @@ var/list/forbidden_varedit_object_types = list(
 	return var_value
 
 
-/client/proc/mod_list_add(var/list/L)
+/client/proc/mod_list_add(list/L)
 
 	var/class = "text"
 	if(src.holder && src.holder.marked_datum)
@@ -127,7 +118,7 @@ var/list/forbidden_varedit_object_types = list(
 		if("No")
 			L += var_value
 
-/client/proc/mod_list(var/list/L)
+/client/proc/mod_list(list/L)
 	if(!check_rights(R_VAREDIT))	return
 
 	if(!istype(L,/list)) src << "Not a List."
@@ -266,7 +257,7 @@ var/list/forbidden_varedit_object_types = list(
 			L[L.Find(variable)] = holder.marked_datum
 
 
-/client/proc/modify_variables(var/atom/O, var/param_var_name = null, var/autodetect_class = 0)
+/client/proc/modify_variables(atom/O, param_var_name = null, autodetect_class = 0)
 	if(!check_rights(R_VAREDIT))	return
 
 	var/list/locked = list("vars", "key", "ckey", "client", "virus", "viruses", "mutantrace", "player_ingame_age", "resize", "summon_type")

@@ -107,7 +107,7 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 			return 1
 	return 0
 
-/datum/disease/proc/spread(var/atom/source=null, var/airborne_range = 2,  var/force_spread)
+/datum/disease/proc/spread(atom/source=null, airborne_range = 2,  force_spread)
 	//world << "Disease [src] proc spread was called from holder [source]"
 
 	// If we're overriding how we spread, say so here
@@ -175,7 +175,7 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 				cure(0)
 	return
 
-/datum/disease/proc/cure(var/resistance=1)//if resistance = 0, the mob won't develop resistance to disease
+/datum/disease/proc/cure(resistance=1)//if resistance = 0, the mob won't develop resistance to disease
 	if(affected_mob)
 		if(resistance && !(type in affected_mob.resistances))
 			var/saved_type = "[type]"
@@ -193,12 +193,12 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 		SSdisease.processing += src
 	initial_spread = spread
 
-/datum/disease/proc/IsSame(var/datum/disease/D)
+/datum/disease/proc/IsSame(datum/disease/D)
 	if(istype(src, D.type))
 		return 1
 	return 0
 
-/datum/disease/proc/Copy(var/process = 0)
+/datum/disease/proc/Copy(process = 0)
 	return new type(process, src)
 
 /*

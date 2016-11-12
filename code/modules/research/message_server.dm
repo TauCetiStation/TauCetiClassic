@@ -87,13 +87,13 @@ var/global/list/obj/machinery/message_server/message_servers = list()
 	update_icon()
 	return
 
-/obj/machinery/message_server/proc/send_pda_message(var/recipient = "",var/sender = "",var/message = "")
+/obj/machinery/message_server/proc/send_pda_message(recipient = "",sender = "",message = "")
 	pda_msgs += new/datum/data_pda_msg(recipient,sender,message)
 
-/obj/machinery/message_server/proc/send_rc_message(var/recipient = "",var/sender = "",var/message = "",var/stamp = "", var/id_auth = "", var/priority = 1)
+/obj/machinery/message_server/proc/send_rc_message(recipient = "",sender = "",message = "",stamp = "", id_auth = "", priority = 1)
 	rc_msgs += new/datum/data_rc_msg(recipient,sender,message,stamp,id_auth)
 
-/obj/machinery/message_server/attack_hand(user as mob)
+/obj/machinery/message_server/attack_hand(user)
 //	user << "\blue There seem to be some parts missing from this server. They should arrive on the station in a few days, give or take a few CentCom delays."
 	user << "You toggle PDA message passing from [active ? "On" : "Off"] to [active ? "Off" : "On"]"
 	active = !active
@@ -121,7 +121,7 @@ var/global/list/obj/machinery/message_server/message_servers = list()
 	variable = param_variable
 	value = param_value
 
-/datum/feedback_variable/proc/inc(var/num = 1)
+/datum/feedback_variable/proc/inc(num = 1)
 	if(isnum(value))
 		value += num
 	else
@@ -131,7 +131,7 @@ var/global/list/obj/machinery/message_server/message_servers = list()
 		else
 			value = num
 
-/datum/feedback_variable/proc/dec(var/num = 1)
+/datum/feedback_variable/proc/dec(num = 1)
 	if(isnum(value))
 		value -= num
 	else
@@ -141,7 +141,7 @@ var/global/list/obj/machinery/message_server/message_servers = list()
 		else
 			value = -num
 
-/datum/feedback_variable/proc/set_value(var/num)
+/datum/feedback_variable/proc/set_value(num)
 	if(isnum(num))
 		value = num
 
@@ -151,11 +151,11 @@ var/global/list/obj/machinery/message_server/message_servers = list()
 /datum/feedback_variable/proc/get_variable()
 	return variable
 
-/datum/feedback_variable/proc/set_details(var/text)
+/datum/feedback_variable/proc/set_details(text)
 	if(istext(text))
 		details = text
 
-/datum/feedback_variable/proc/add_details(var/text)
+/datum/feedback_variable/proc/add_details(text)
 	if(istext(text))
 		if(!details)
 			details = text
@@ -224,7 +224,7 @@ var/obj/machinery/blackbox_recorder/blackbox
 			blackbox = BR
 	return ..()
 
-/obj/machinery/blackbox_recorder/proc/find_feedback_datum(var/variable)
+/obj/machinery/blackbox_recorder/proc/find_feedback_datum(variable)
 	for(var/datum/feedback_variable/FV in feedback)
 		if(FV.get_variable() == variable)
 			return FV
@@ -290,13 +290,13 @@ var/obj/machinery/blackbox_recorder/blackbox
 		query_insert.Execute()
 
 // Sanitize inputs to avoid SQL injection attacks
-proc/sql_sanitize_text(var/text)
+proc/sql_sanitize_text(text)
 	text = replacetext(text, "'", "''")
 	text = replacetext(text, ";", "")
 	text = replacetext(text, "&", "")
 	return text
 
-proc/feedback_set(var/variable,var/value)
+proc/feedback_set(variable,value)
 	if(!blackbox) return
 
 	variable = sql_sanitize_text(variable)
@@ -307,7 +307,7 @@ proc/feedback_set(var/variable,var/value)
 
 	FV.set_value(value)
 
-proc/feedback_inc(var/variable,var/value)
+proc/feedback_inc(variable,value)
 	if(!blackbox) return
 
 	variable = sql_sanitize_text(variable)
@@ -318,7 +318,7 @@ proc/feedback_inc(var/variable,var/value)
 
 	FV.inc(value)
 
-proc/feedback_dec(var/variable,var/value)
+proc/feedback_dec(variable,value)
 	if(!blackbox) return
 
 	variable = sql_sanitize_text(variable)
@@ -329,7 +329,7 @@ proc/feedback_dec(var/variable,var/value)
 
 	FV.dec(value)
 
-proc/feedback_set_details(var/variable,var/details)
+proc/feedback_set_details(variable,details)
 	if(!blackbox) return
 
 	variable = sql_sanitize_text(variable)
@@ -341,7 +341,7 @@ proc/feedback_set_details(var/variable,var/details)
 
 	FV.set_details(details)
 
-proc/feedback_add_details(var/variable,var/details)
+proc/feedback_add_details(variable,details)
 	if(!blackbox) return
 
 	variable = sql_sanitize_text(variable)

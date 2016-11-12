@@ -14,7 +14,7 @@
 /obj/item/weapon/storage/briefcase/New()
 	..()
 
-/obj/item/weapon/storage/briefcase/attack(mob/living/M as mob, mob/living/user as mob)
+/obj/item/weapon/storage/briefcase/attack(mob/living/M, mob/living/user)
 	//..()
 
 	if ((CLUMSY in user.mutations) && prob(50))

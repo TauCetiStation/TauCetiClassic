@@ -40,7 +40,7 @@
 
 	default_deconstruction_crowbar(W)
 
-/obj/machinery/power/tesla_coil/tesla_act(var/power)
+/obj/machinery/power/tesla_coil/tesla_act(power)
 	being_shocked = 1
 	var/power_produced = power / power_loss
 	add_avail(power_produced*input_power_multiplier)
@@ -80,5 +80,5 @@
 
 	default_deconstruction_crowbar(W)
 
-/obj/machinery/power/grounding_rod/tesla_act(var/power)
+/obj/machinery/power/grounding_rod/tesla_act(power)
 	flick("coil_shock_1", src)

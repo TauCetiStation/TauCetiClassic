@@ -7,7 +7,7 @@ var/list/datum/dna/hivemind_bank = list()
 	chemical_cost = 10
 	genomecost = 0
 
-/obj/effect/proc_holder/changeling/hivemind_upload/sting_action(var/mob/user)
+/obj/effect/proc_holder/changeling/hivemind_upload/sting_action(mob/user)
 	var/datum/changeling/changeling = user.mind.changeling
 	var/list/names = list()
 	for(var/datum/dna/DNA in changeling.absorbed_dna)
@@ -37,7 +37,7 @@ var/list/datum/dna/hivemind_bank = list()
 	chemical_cost = 20
 	genomecost = 0
 /*
-/obj/effect/proc_holder/changeling/hivemind_download/can_sting(var/mob/living/carbon/user)
+/obj/effect/proc_holder/changeling/hivemind_download/can_sting(mob/living/carbon/user)
 	if(!..())
 		return
 	var/datum/changeling/changeling = user.mind.changeling
@@ -46,7 +46,7 @@ var/list/datum/dna/hivemind_bank = list()
 		return
 	return 1
 */
-/obj/effect/proc_holder/changeling/hivemind_download/sting_action(var/mob/user)
+/obj/effect/proc_holder/changeling/hivemind_download/sting_action(mob/user)
 	var/datum/changeling/changeling = user.mind.changeling
 	var/list/names = list()
 	for(var/datum/dna/DNA in hivemind_bank)

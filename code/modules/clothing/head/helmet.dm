@@ -175,3 +175,22 @@
 	armor = list(melee = 62, bullet = 60, laser = 50,energy = 35, bomb = 10, bio = 2, rad = 0)
 	flags_inv = HIDEEARS
 	siemens_coefficient = 0.7
+
+/obj/item/clothing/head/helmet/helmet_of_justice
+	name = "helmet of justice"
+	desc = "Prepare for Justice!"
+	icon_state = "shitcuritron_0"
+	item_state = "helmet"
+	var/on = 0
+	action_button_name = "Toggle Helmet"
+
+/obj/item/clothing/head/helmet/helmet_of_justice/attack_self(mob/user)
+	on = !on
+	icon_state = "shitcuritron_[on]"
+	user.update_inv_head()
+
+/obj/item/clothing/head/helmet/warden/blue
+	name = "warden's hat"
+	desc = "It's a special helmet issued to the Warden of a securiy force. Protects the head from impacts."
+	icon_state = "oldwardenhelm"
+	item_state = "helmet"

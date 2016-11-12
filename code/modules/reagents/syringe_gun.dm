@@ -15,13 +15,12 @@
 	var/max_syringes = 1
 	m_amt = 2000
 
-/obj/item/weapon/gun/syringe/examine()
-	set src in view()
+/obj/item/weapon/gun/syringe/examine(mob/user)
 	..()
-	if (!(usr in view(2)) && usr!=src.loc) return
-	usr << "\blue [syringes.len] / [max_syringes] syringes."
+	if(src in view(2, user))
+		user << "<span class='notice'>[syringes.len] / [max_syringes] syringes.</span>"
 
-/obj/item/weapon/gun/syringe/attackby(obj/item/I as obj, mob/user as mob)
+/obj/item/weapon/gun/syringe/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/reagent_containers/syringe))
 		var/obj/item/weapon/reagent_containers/syringe/S = I
 		if(S.mode != 2)//SYRINGE_BROKEN in syringes.dm
@@ -44,10 +43,10 @@
 /obj/item/weapon/gun/syringe/can_fire()
 	return syringes.len
 
-/obj/item/weapon/gun/syringe/can_hit(var/mob/living/target as mob, var/mob/living/user as mob)
+/obj/item/weapon/gun/syringe/can_hit(mob/living/target, mob/living/user)
 	return 1		//SHOOT AND LET THE GOD GUIDE IT (probably will hit a wall anyway)
 
-/obj/item/weapon/gun/syringe/Fire(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, params, reflex = 0)
+/obj/item/weapon/gun/syringe/Fire(atom/target, mob/living/user, params, reflex = 0)
 	if(syringes.len)
 		spawn(0) fire_syringe(target,user)
 	else

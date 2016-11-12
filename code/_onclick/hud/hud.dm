@@ -151,7 +151,7 @@
 		show_hud(HUD_STYLE_REDUCED)
 
 //Version denotes which style should be displayed. blank or 0 means "next version"
-/datum/hud/proc/show_hud(var/version = 0)
+/datum/hud/proc/show_hud(version = 0)
 	if(!ismob(mymob))
 		return 0
 	if(!mymob.client)

@@ -226,7 +226,8 @@ Max Output Pressure: [output_pressure] kPa<BR>"}
 	if(href_list["adj_pressure"])
 		var/change = text2num(href_list["adj_pressure"])
 		pressure_setting = between(0, pressure_setting + change, 50 * ONE_ATMOSPHERE)
-		src.updateUsrDialog()
+		spawn(1)
+			src.updateUsrDialog()
 		return
 
 	if(!radio_connection)
@@ -257,7 +258,8 @@ Max Output Pressure: [output_pressure] kPa<BR>"}
 	signal.data["sigtype"]="command"
 	radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
 
-	src.updateUsrDialog()
+	spawn(5)
+		src.updateUsrDialog()
 
 /obj/machinery/computer/general_air_control/fuel_injection
 	icon = 'icons/obj/computer.dmi'

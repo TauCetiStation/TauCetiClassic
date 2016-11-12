@@ -11,10 +11,10 @@
 	process()
 		return 0
 
-	proc/receive_chem(chemical as obj)
+	proc/receive_chem(chemical)
 		return 0
 
-/datum/organ/proc/get_icon(var/icon/race_icon, var/icon/deform_icon)
+/datum/organ/proc/get_icon(icon/race_icon, icon/deform_icon)
 	return icon('icons/mob/human.dmi',"blank")
 
 //Germs
@@ -39,7 +39,7 @@
 		O.trace_chemicals[A.name] = 100
 
 //Adds autopsy data for used_weapon.
-/datum/organ/proc/add_autopsy_data(var/used_weapon, var/damage)
+/datum/organ/proc/add_autopsy_data(used_weapon, damage)
 	var/datum/autopsy_data/W = autopsy_data[used_weapon]
 	if(!W)
 		W = new()

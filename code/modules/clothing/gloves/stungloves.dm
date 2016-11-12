@@ -71,7 +71,6 @@
 			return
 		else
 			user << "<span class='notice'>The [src] have already been clipped!</span>"
-			update_icon()
 			return
 
 		return

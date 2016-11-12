@@ -17,10 +17,10 @@
 	nodamage = 1
 	flag = "magic"
 
-/obj/item/projectile/magic/change/on_hit(var/atom/change)
+/obj/item/projectile/magic/change/on_hit(atom/change)
 	wabbajack(change)
 
-/obj/item/projectile/magic/change/proc/wabbajack (mob/M as mob in living_mob_list)
+/obj/item/projectile/magic/change/proc/wabbajack (mob/M in living_mob_list)
 	if(istype(M, /mob/living) && M.stat != DEAD)
 		if(M.monkeyizing)	return
 		M.monkeyizing = 1
@@ -125,7 +125,6 @@
 
 /obj/item/projectile/magic/animate
 	name = "bolt of animation"
-	icon = 'tauceti/icons/obj/projectiles.dmi'
 	icon_state = "red_1"
 	light_color = "#ff0000"
 	light_power = 2
@@ -163,7 +162,7 @@
 	nodamage = 0
 	flag = "magic"
 
-/obj/item/projectile/magic/fireball/on_hit(var/target)
+/obj/item/projectile/magic/fireball/on_hit(target)
 	var/turf/T = get_turf(target)
 	explosion(T, -1, 0, 2, 3, 0, flame_range = 2)
 
@@ -175,7 +174,7 @@
 	nodamage = 1
 	flag = "magic"
 
-/obj/item/projectile/magic/resurrection/on_hit(var/mob/living/carbon/target)
+/obj/item/projectile/magic/resurrection/on_hit(mob/living/carbon/target)
 
 	if(istype(target,/mob))
 		var/old_stat = target.stat
@@ -201,7 +200,7 @@
 	var/inner_tele_radius = 0
 	var/outer_tele_radius = 6
 
-/obj/item/projectile/magic/teleport/on_hit(var/mob/target)
+/obj/item/projectile/magic/teleport/on_hit(mob/target)
 	var/teleammount = 0
 	var/teleloc = target
 	if(!isturf(target))
@@ -222,7 +221,7 @@
 	nodamage = 1
 	flag = "magic"
 
-/obj/item/projectile/magic/door/on_hit(var/atom/target)
+/obj/item/projectile/magic/door/on_hit(atom/target)
 	var/atom/T = target.loc
 	if(isturf(target))
 		if(target.density)

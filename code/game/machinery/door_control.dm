@@ -31,16 +31,16 @@
 	idle_power_usage = 2
 	active_power_usage = 4
 
-/obj/machinery/door_control/attack_ai(mob/user as mob)
+/obj/machinery/door_control/attack_ai(mob/user)
 	if(wires & 2)
 		return src.attack_hand(user)
 	else
 		user << "Error, no route to host."
 
-/obj/machinery/door_control/attack_paw(mob/user as mob)
+/obj/machinery/door_control/attack_paw(mob/user)
 	return src.attack_hand(user)
 
-/obj/machinery/door_control/attackby(obj/item/weapon/W, mob/user as mob)
+/obj/machinery/door_control/attackby(obj/item/weapon/W, mob/user)
 	/* For later implementation
 	if (istype(W, /obj/item/weapon/screwdriver))
 	{
@@ -63,9 +63,9 @@
 		playsound(src.loc, "sparks", 100, 1)
 	return src.attack_hand(user)
 
-/obj/machinery/door_control/attack_hand(mob/user as mob)
+/obj/machinery/door_control/attack_hand(mob/user)
 	src.add_fingerprint(usr)
-	playsound(src, 'tauceti/sounds/items/buttonswitch.ogg', 20, 1, 1)
+	playsound(src, 'sound/items/buttonswitch.ogg', 20, 1, 1)
 	if(stat & (NOPOWER|BROKEN))
 		return
 
@@ -113,7 +113,7 @@
 						D.safe = 1
 
 	else
-		for(var/obj/machinery/door/poddoor/M in world)
+		for(var/obj/machinery/door/poddoor/M in machines)
 			if (M.id == src.id)
 				if (M.density)
 					spawn( 0 )
@@ -136,19 +136,19 @@
 	else
 		icon_state = "doorctrl0"
 
-/obj/machinery/driver_button/attack_ai(mob/user as mob)
+/obj/machinery/driver_button/attack_ai(mob/user)
 	return src.attack_hand(user)
 
-/obj/machinery/driver_button/attack_paw(mob/user as mob)
+/obj/machinery/driver_button/attack_paw(mob/user)
 	return src.attack_hand(user)
 
-/obj/machinery/driver_button/attackby(obj/item/weapon/W, mob/user as mob)
+/obj/machinery/driver_button/attackby(obj/item/weapon/W, mob/user)
 
 	if(istype(W, /obj/item/device/detective_scanner))
 		return
 	return src.attack_hand(user)
 
-/obj/machinery/driver_button/attack_hand(mob/user as mob)
+/obj/machinery/driver_button/attack_hand(mob/user)
 
 	src.add_fingerprint(usr)
 	if(stat & (NOPOWER|BROKEN))
@@ -162,7 +162,7 @@
 	active = 1
 	icon_state = "launcheract"
 
-	for(var/obj/machinery/door/poddoor/M in world)
+	for(var/obj/machinery/door/poddoor/M in machines)
 		if (M.id == src.id)
 			spawn( 0 )
 				M.open()
@@ -170,13 +170,13 @@
 
 	sleep(20)
 
-	for(var/obj/machinery/mass_driver/M in world)
+	for(var/obj/machinery/mass_driver/M in machines)
 		if(M.id == src.id)
 			M.drive()
 
 	sleep(50)
 
-	for(var/obj/machinery/door/poddoor/M in world)
+	for(var/obj/machinery/door/poddoor/M in machines)
 		if (M.id == src.id)
 			spawn( 0 )
 				M.close()

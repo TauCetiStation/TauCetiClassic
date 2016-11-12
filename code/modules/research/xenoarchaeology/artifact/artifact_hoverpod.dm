@@ -5,7 +5,7 @@
 	desc = "Stubby and round, it has a human sized access hatch on the top."
 	wreckage = /obj/effect/decal/mecha_wreckage/hoverpod
 
-/obj/mecha/working/hoverpod/Process_Spacemove(var/movement_dir = 0)
+/obj/mecha/working/hoverpod/Process_Spacemove(movement_dir = 0)
 	return 1 // puts the hover in hoverpod
 
 //these three procs overriden to play different sounds

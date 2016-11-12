@@ -160,6 +160,8 @@
 		return FALSE
 	if(istype(T, /turf/space) && (T.x <= TRANSITIONEDGE || T.x >= (world.maxx - TRANSITIONEDGE - 1) || T.y <= TRANSITIONEDGE || T.y >= (world.maxy - TRANSITIONEDGE - 1)))
 		return FALSE //No teleports into the void, dunno how to fix that with another method.
+	if(locate(/obj/effect/portal) in T)
+		return FALSE
 	if(dest_checkdensity)
 		if(T.density)
 			return FALSE

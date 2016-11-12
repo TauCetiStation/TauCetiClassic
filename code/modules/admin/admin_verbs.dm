@@ -652,7 +652,7 @@ var/list/admin_verbs_hideable = list(
 	log_admin("[key_name(usr)] gave [key_name(T)] a [(greater)? "greater":"lesser"] disease2 with infection chance [D.infectionchance].")
 	message_admins("\blue [key_name_admin(usr)] gave [key_name(T)] a [(greater)? "greater":"lesser"] disease2 with infection chance [D.infectionchance].", 1)
 
-/client/proc/make_sound(var/obj/O in world) // -- TLE
+/client/proc/make_sound(obj/O in world) // -- TLE
 	set category = "Special Verbs"
 	set name = "Make Sound"
 	set desc = "Display a message to everyone who can hear the target."
@@ -674,7 +674,7 @@ var/list/admin_verbs_hideable = list(
 		togglebuildmode(src.mob)
 	feedback_add_details("admin_verb","TBMS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/object_talk(var/msg as text) // -- TLE
+/client/proc/object_talk(msg as text) // -- TLE
 	set category = "Special Verbs"
 	set name = "oSay"
 	set desc = "Display a message to everyone who can hear the target."
@@ -949,3 +949,22 @@ var/list/admin_verbs_hideable = list(
 	winner << "<span class='danger'>Congratulations!</span>"
 
 	achievements += "<b>[winner.key]</b> as <b>[winner.name]</b> won \"<b>[name]</b>\"! \"[desc]\""
+
+/client/proc/aooc()
+	set category = "Admin"
+	set name = "Antag OOC"
+
+	if(!check_rights(R_ADMIN))	return
+
+	var/msg = sanitize(copytext(input(usr, "", "Antag OOC") as text, 1, MAX_MESSAGE_LEN))
+	if(!msg)	return
+
+	var/display_name = src.key
+	if(holder && holder.fakekey)
+		display_name = holder.fakekey
+
+	for(var/mob/M in mob_list)
+		if((M.mind && M.mind.special_role) || (M.client && M.client.holder))
+			M << "<font color='#960018'><span class='ooc'><span class='prefix'>Antag-OOC:</span> <EM>[display_name]:</EM> <span class='message'>[msg]</span></span></font>"
+
+	log_ooc("Antag-OOC: [key] : [msg]")

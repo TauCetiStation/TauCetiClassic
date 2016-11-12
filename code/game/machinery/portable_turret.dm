@@ -182,10 +182,10 @@
 		return ..()
 
 
-/obj/machinery/porta_turret/attack_ai(mob/user as mob)
+/obj/machinery/porta_turret/attack_ai(mob/user)
 	return attack_hand(user)
 
-/obj/machinery/porta_turret/attack_hand(mob/user as mob)
+/obj/machinery/porta_turret/attack_hand(mob/user)
 	. = ..()
 	if (.)
 		return
@@ -283,7 +283,7 @@ Status: []<BR>"},
 
 
 
-/obj/machinery/porta_turret/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/porta_turret/attackby(obj/item/W, mob/user)
 	if(stat & BROKEN)
 		if(istype(W, /obj/item/weapon/crowbar))
 
@@ -359,7 +359,7 @@ Status: []<BR>"},
 
 
 
-/obj/machinery/porta_turret/bullet_act(var/obj/item/projectile/Proj)
+/obj/machinery/porta_turret/bullet_act(obj/item/projectile/Proj)
 	if(on)
 		if(!attacked && !emagged)
 			attacked = 1
@@ -545,7 +545,7 @@ Status: []<BR>"},
 		icon_state="[lasercolor]grey_target_prism"
 
 
-/obj/machinery/porta_turret/proc/assess_perp(mob/living/carbon/human/perp as mob)
+/obj/machinery/porta_turret/proc/assess_perp(mob/living/carbon/human/perp)
 	var/threatcount = 0 // the integer returned
 
 	if(src.emagged) return 10 // if emagged, always return 10.
@@ -611,7 +611,7 @@ Status: []<BR>"},
 
 
 
-/obj/machinery/porta_turret/proc/shootAt(var/atom/movable/target) // shoots at a target
+/obj/machinery/porta_turret/proc/shootAt(atom/movable/target) // shoots at a target
 	if(disabled)
 		return
 
@@ -685,7 +685,7 @@ Status: []<BR>"},
 
 
 
-/obj/machinery/porta_turret_construct/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/porta_turret_construct/attackby(obj/item/W, mob/user)
 
 	// this is a bit unweildy but self-explanitory
 	switch(build_step)
@@ -843,7 +843,7 @@ Status: []<BR>"},
 
 
 
-/obj/machinery/porta_turret_construct/attack_hand(mob/user as mob)
+/obj/machinery/porta_turret_construct/attack_hand(mob/user)
 	switch(build_step)
 		if(4)
 			if(!installation) return
@@ -885,7 +885,7 @@ Status: []<BR>"},
 
 // The below code is pretty much just recoded from the initial turret object. It's necessary but uncommented because it's exactly the same!
 
-/obj/machinery/porta_turret_cover/attack_ai(mob/user as mob)
+/obj/machinery/porta_turret_cover/attack_ai(mob/user)
 	. = ..()
 	if (.)
 		return
@@ -922,7 +922,7 @@ Status: []<BR>"},
 	onclose(user, "autosec")
 	return
 
-/obj/machinery/porta_turret_cover/attack_hand(mob/user as mob)
+/obj/machinery/porta_turret_cover/attack_hand(mob/user)
 	. = ..()
 	if (.)
 		return
@@ -999,7 +999,7 @@ Status: []<BR>"},
 
 
 
-/obj/machinery/porta_turret_cover/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/porta_turret_cover/attackby(obj/item/W, mob/user)
 
 	if ((istype(W, /obj/item/weapon/card/emag)) && (!Parent_Turret.emagged))
 		user << "\red You short out [Parent_Turret]'s threat assessment circuits."

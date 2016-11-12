@@ -19,7 +19,7 @@
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi' //not really a gun and some toys use these inhands
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 
-/obj/item/weapon/gun/magic/afterattack(atom/target as mob, mob/living/user as mob, flag)
+/obj/item/weapon/gun/magic/afterattack(atom/target, mob/living/user, flag)
 	newshot()
 	var/area/A = get_area(user)
 	if(user.mind.special_role != "Wizard")
@@ -60,6 +60,6 @@
 /obj/item/weapon/gun/magic/update_icon()
 	return
 
-/obj/item/weapon/gun/magic/shoot_with_empty_chamber(mob/living/user as mob|obj)
+/obj/item/weapon/gun/magic/shoot_with_empty_chamber(mob/living/user)
 	user << "<span class='warning'>The [name] whizzles quietly.<span>"
 	return

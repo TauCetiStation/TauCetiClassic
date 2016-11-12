@@ -8,7 +8,7 @@
 	radiation_amount = rand(1, 10)
 	effect_type = pick(4,5)
 
-/datum/artifact_effect/radiate/DoEffectTouch(var/mob/living/user)
+/datum/artifact_effect/radiate/DoEffectTouch(mob/living/user)
 	if(user)
 		user.apply_effect(radiation_amount * 5,IRRADIATE,0)
 		user.updatehealth()

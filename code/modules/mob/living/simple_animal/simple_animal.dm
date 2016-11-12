@@ -205,12 +205,12 @@
 			new meat_type(src.loc)
 	..()
 
-/mob/living/simple_animal/emote(var/act, var/type, var/desc)
+/mob/living/simple_animal/emote(act, type, desc)
 	if(act)
 		if(act == "scream")	act = "whimper" //ugly hack to stop animals screaming when crushed :P
 		..(act, type, desc)
 
-/mob/living/simple_animal/attack_animal(mob/living/simple_animal/M as mob)
+/mob/living/simple_animal/attack_animal(mob/living/simple_animal/M)
 	if(M.melee_damage_upper == 0)
 		M.emote("[M.friendly] [src]")
 	else
@@ -223,12 +223,12 @@
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 		adjustBruteLoss(damage)
 
-/mob/living/simple_animal/bullet_act(var/obj/item/projectile/Proj)
+/mob/living/simple_animal/bullet_act(obj/item/projectile/Proj)
 	if(!Proj)	return
 	adjustBruteLoss(Proj.damage)
 	return 0
 
-/mob/living/simple_animal/attack_hand(mob/living/carbon/human/M as mob)
+/mob/living/simple_animal/attack_hand(mob/living/carbon/human/M)
 	..()
 
 	switch(M.a_intent)
@@ -267,7 +267,7 @@
 
 	return
 
-/mob/living/simple_animal/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
+/mob/living/simple_animal/attack_alien(mob/living/carbon/alien/humanoid/M)
 
 	switch(M.a_intent)
 
@@ -303,7 +303,7 @@
 
 	return
 
-/mob/living/simple_animal/attack_larva(mob/living/carbon/alien/larva/L as mob)
+/mob/living/simple_animal/attack_larva(mob/living/carbon/alien/larva/L)
 
 	switch(L.a_intent)
 		if("help")
@@ -320,7 +320,7 @@
 				L.amount_grown = min(L.amount_grown + damage, L.max_grown)
 
 
-/mob/living/simple_animal/attack_slime(mob/living/carbon/slime/M as mob)
+/mob/living/simple_animal/attack_slime(mob/living/carbon/slime/M)
 	if (!ticker)
 		M << "You cannot attack people before the game has started."
 		return
@@ -342,7 +342,7 @@
 	return
 
 
-/mob/living/simple_animal/attackby(var/obj/item/O as obj, var/mob/user as mob)  //Marker -Agouri
+/mob/living/simple_animal/attackby(obj/item/O, mob/user)  //Marker -Agouri
 	if(istype(O, /obj/item/stack/medical))
 		if(stat != DEAD)
 			var/obj/item/stack/medical/MED = O
@@ -449,7 +449,7 @@
 /mob/living/simple_animal/ExtinguishMob()
 	return
 
-/mob/living/simple_animal/proc/CanAttack(var/atom/the_target)
+/mob/living/simple_animal/proc/CanAttack(atom/the_target)
 	if(see_invisible < the_target.invisibility)
 		return 0
 	if (isliving(the_target))

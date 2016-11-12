@@ -49,16 +49,10 @@
 	..()
 	base_name = name
 
-/obj/item/weapon/reagent_containers/glass/examine()
-	set src in view()
+/obj/item/weapon/reagent_containers/glass/examine(mob/user)
 	..()
-	if (!(usr in view(2)) && usr!=src.loc) return
-	if(reagents && reagents.reagent_list.len)
-		usr << "<span class = 'info'>It contains [src.reagents.total_volume] units of liquid.</span>"
-	else
-		usr << "<span class = 'info'>It is empty.</span>"
-	if (!is_open_container())
-		usr << "<span class = 'info'>Airtight lid seals it completely.</span>"
+	if(!is_open_container())
+		user << "<span class='info'>Airtight lid seals it completely.</span>"
 
 /obj/item/weapon/reagent_containers/glass/attack_self()
 	..()
@@ -143,7 +137,7 @@
 		log_game("[usr.ckey]([usr]) splashed [src.reagents.get_reagents()] on [target], location ([T.x],[T.y],[T.z])")
 		return
 
-/obj/item/weapon/reagent_containers/glass/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/weapon/reagent_containers/glass/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/pen) || istype(W, /obj/item/device/flashlight/pen))
 		var/tmp_label = sanitize(copytext(input(user, "Enter a label for [src.name]","Label",src.label_text), 1, MAX_NAME_LEN))
 		if(length(tmp_label) > 10)
@@ -267,8 +261,7 @@
 /obj/item/weapon/reagent_containers/glass/bucket
 	desc = "It's a bucket."
 	name = "bucket"
-	icon = 'tauceti/items/makeshift_items_TG/makeshift_tg.dmi'
-	tc_custom = 'tauceti/items/makeshift_items_TG/makeshift_tg.dmi'
+	icon = 'icons/obj/makeshift.dmi'
 	icon_state = "bucket"
 	item_state = "bucket"
 	m_amt = 200
@@ -281,7 +274,7 @@
 	body_parts_covered = HEAD
 	slot_flags = SLOT_HEAD
 
-/obj/item/weapon/reagent_containers/glass/bucket/attackby(var/obj/D, mob/user as mob)
+/obj/item/weapon/reagent_containers/glass/bucket/attackby(obj/D, mob/user)
 	if(isprox(D))
 		user << "<span class = 'notice'>You add [D] to [src].</span>"
 		qdel(D)

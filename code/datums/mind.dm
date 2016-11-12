@@ -1278,7 +1278,7 @@
 
 	edit_memory()
 /*
-	proc/clear_memory(var/silent = 1)
+	proc/clear_memory(silent = 1)
 		var/datum/game_mode/current_mode = ticker.mode
 
 		// remove traitor uplinks
@@ -1466,7 +1466,7 @@
 //	fail |= !ticker.mode.equip_traitor(current, 1)
 	fail |= !ticker.mode.equip_revolutionary(current)
 
-/datum/mind/proc/make_Gang(var/gang)
+/datum/mind/proc/make_Gang(gang)
 	special_role = "[(gang=="A") ? "[gang_name("A")] Gang (A)" : "[gang_name("B")] Gang (B)"] Boss"
 	ticker.mode.update_gang_icons_added(src, gang)
 	ticker.mode.forge_gang_objectives(src, gang)
@@ -1546,7 +1546,7 @@
 				L = agent_landmarks[team]
 				H.loc = L.loc
 
-/datum/mind/proc/AddSpell(var/obj/effect/proc_holder/spell/spell)
+/datum/mind/proc/AddSpell(obj/effect/proc_holder/spell/spell)
 	spell_list += spell
 	if(!spell.action)
 		spell.action = new/datum/action/spell_action
@@ -1558,13 +1558,13 @@
 	spell.action.Grant(current)
 	return
 
-/datum/mind/proc/transfer_actions(var/mob/living/new_character)
+/datum/mind/proc/transfer_actions(mob/living/new_character)
 	if(current && current.actions)
 		for(var/datum/action/A in current.actions)
 			A.Grant(new_character)
 	transfer_mindbound_actions(new_character)
 
-/datum/mind/proc/transfer_mindbound_actions(var/mob/living/new_character)
+/datum/mind/proc/transfer_mindbound_actions(mob/living/new_character)
 	for(var/obj/effect/proc_holder/spell/spell in spell_list)
 		if(!spell.action) // Unlikely but whatever
 			spell.action = new/datum/action/spell_action

@@ -13,7 +13,7 @@
 	var/insults = 0
 	var/list/insultmsg = list("FUCK EVERYONE!", "I'M A TATER!", "ALL SECURITY TO SHOOT ME ON SIGHT!", "I HAVE A BOMB!", "CAPTAIN IS A COMDOM!", "FOR THE SYNDICATE!")
 
-/obj/item/device/megaphone/attack_self(mob/living/user as mob)
+/obj/item/device/megaphone/attack_self(mob/living/user)
 	if (user.client)
 		if(user.client.prefs.muted & MUTE_IC)
 			src << "\red You cannot speak in IC (muted)."
@@ -27,7 +27,7 @@
 		user << "\red \The [src] needs to recharge!"
 		return
 
-	playsound(src, 'tauceti/sounds/items/megaphone.ogg', 100, 1, 1)
+	playsound(src, 'sound/items/megaphone.ogg', 100, 1, 1)
 	var/message = sanitize_plus(copytext(input(user, "Shout a message?", "Megaphone", null)  as text,1,MAX_MESSAGE_LEN))
 	if(!message)
 		return

@@ -7,7 +7,7 @@ var/list/extraction_appends = list("AAAAAAAAAAAAAAAAAUGH", "AAAAAAAAAAAHHHHHHHHH
 	icon_state = "extraction_pack"
 	var/is_extracting = 0
 
-/obj/item/weapon/extraction_pack/afterattack(atom/movable/A, mob/user as mob, proximity)
+/obj/item/weapon/extraction_pack/afterattack(atom/movable/A, mob/user, proximity)
 	var/extract_time = 70
 	if(!proximity)
 		return
@@ -67,7 +67,7 @@ var/list/extraction_appends = list("AAAAAAAAAAAAAAAAAUGH", "AAAAAAAAAAAHHHHHHHHH
 			sleep(10)
 			animate(holder_obj, pixel_z = 10, time = 10)
 			var/obj/effect/BPs = new /obj/effect(get_turf(A))
-			BPs.icon = 'tauceti/modules/_anomaly/anomalies.dmi'
+			BPs.icon = 'code/modules/anomaly/anomalies.dmi'
 			BPs.icon_state = "bluespace"
 			BPs.mouse_opacity = 0
 			var/list/flooring_near_beacon = list()
@@ -75,7 +75,7 @@ var/list/extraction_appends = list("AAAAAAAAAAAAAAAAAUGH", "AAAAAAAAAAAHHHHHHHHH
 				flooring_near_beacon += T
 			var/turf/teleport_loc = pick(flooring_near_beacon)
 			var/obj/effect/BPe = new /obj/effect(teleport_loc)
-			BPe.icon = 'tauceti/modules/_anomaly/anomalies.dmi'
+			BPe.icon = 'code/modules/anomaly/anomalies.dmi'
 			BPe.icon_state = "bluespace"
 			BPe.mouse_opacity = 0
 			sleep(10)

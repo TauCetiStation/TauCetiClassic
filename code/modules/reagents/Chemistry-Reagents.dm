@@ -27,7 +27,7 @@ datum
 		var/color = "#000000" // rgb: 0, 0, 0 (does not support alpha channels - yet!)
 
 		proc
-			reaction_mob(var/mob/M, var/method=TOUCH, var/volume) //By default we have a chance to transfer some
+			reaction_mob(mob/M, method=TOUCH, volume) //By default we have a chance to transfer some
 				if(!istype(M, /mob/living))	return 0
 				var/datum/reagent/self = src
 				src = null										  //of the reagent to the mob on TOUCHING it.
@@ -79,7 +79,7 @@ datum
 					M.adjustToxLoss(overdose_dam)
 				return TRUE
 
-			on_move(var/mob/M)
+			on_move(mob/M)
 				return
 
 			// Called after add_reagents creates a new reagent.
@@ -87,10 +87,10 @@ datum
 				return
 
 			// Called when two reagents of the same are mixing.
-			on_merge(var/data)
+			on_merge(data)
 				return
 
-			on_update(var/atom/A)
+			on_update(atom/A)
 				return
 
 
@@ -102,7 +102,7 @@ datum
 			reagent_state = LIQUID
 			color = "#C80000" // rgb: 200, 0, 0
 
-			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+			reaction_mob(mob/M, method=TOUCH, volume)
 				var/datum/reagent/blood/self = src
 				src = null
 				if(self.data && self.data["viruses"])
@@ -189,7 +189,7 @@ datum
 			reagent_state = LIQUID
 			color = "#C81040" // rgb: 200, 16, 64
 
-			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+			reaction_mob(mob/M, method=TOUCH, volume)
 				var/datum/reagent/vaccine/self = src
 				src = null
 				if(self.data&&method == INGEST)
@@ -845,7 +845,7 @@ datum
 			color = "#C8A5DC" // rgb: 200, 165, 220
 
 			//makes you squeaky clean
-			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
+			reaction_mob(mob/living/M, method=TOUCH, volume)
 				if (method == TOUCH)
 					M.germ_level -= min(volume*20, M.germ_level)
 
@@ -855,7 +855,7 @@ datum
 			reaction_turf(var/turf/T, var/volume)
 				T.germ_level -= min(volume*20, T.germ_level)
 
-	/*		reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
+	/*		reaction_mob(mob/living/M, method=TOUCH, volume)
 				src = null
 				if (method==TOUCH)
 					if(istype(M, /mob/living/carbon/human))
@@ -951,7 +951,7 @@ datum
 					return
 				M.adjustToxLoss(1)
 
-			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)//Splashing people with welding fuel to make them easy to ignite!
+			reaction_mob(mob/living/M, method=TOUCH, volume)//Splashing people with welding fuel to make them easy to ignite!
 				if(!istype(M, /mob/living))
 					return
 				if(method == TOUCH)
@@ -986,7 +986,7 @@ datum
 					for(var/mob/living/carbon/slime/M in T)
 						M.adjustToxLoss(rand(5,10))
 
-			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+			reaction_mob(mob/M, method=TOUCH, volume)
 				if(iscarbon(M))
 					var/mob/living/carbon/C = M
 					if(istype(M,/mob/living/carbon/human))
@@ -1146,7 +1146,7 @@ datum
 					if(M.getBruteLoss() && prob(80))
 						M.heal_organ_damage(1 * REM, 0)
 					if(M.getFireLoss() && prob(80))
-						M.heal_organ_damage(0, 0,1 * REM)
+						M.heal_organ_damage(0, 1 * REM)
 					if(M.getToxLoss() && prob(80))
 						M.adjustToxLoss(-1 * REM)
 
@@ -1310,7 +1310,7 @@ datum
 					var/datum/organ/internal/eyes/E = H.internal_organs_by_name["eyes"]
 					if(istype(E))
 						if(E.damage > 0)
-							E.damage -= 1
+							E.damage = max(E.damage - 1, 0)
 
 		peridaxon
 			name = "Peridaxon"
@@ -1329,7 +1329,7 @@ datum
 					//Peridaxon is hard enough to get, it's probably fair to make this all internal organs
 					for(var/datum/organ/internal/I in H.internal_organs)
 						if(I.damage > 0)
-							I.damage -= 0.20
+							I.damage = max(I.damage - 0.20, 0)
 
 		bicaridine
 			name = "Bicaridine"
@@ -1440,7 +1440,7 @@ datum
 			reagent_state = LIQUID
 			color = "#535E66" // rgb: 83, 94, 102
 
-			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+			reaction_mob(mob/M, method=TOUCH, volume)
 				src = null
 				if( (prob(10) && method==TOUCH) || method==INGEST)
 					M.contract_disease(new /datum/disease/robotic_transformation(0),1)
@@ -1452,7 +1452,7 @@ datum
 			reagent_state = LIQUID
 			color = "#535E66" // rgb: 83, 94, 102
 
-			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+			reaction_mob(mob/M, method=TOUCH, volume)
 				src = null
 				if( (prob(10) && method==TOUCH) || method==INGEST)
 					M.contract_disease(new /datum/disease/xeno_transformation(0),1)
@@ -1549,7 +1549,7 @@ datum
 			color = "#13BC5E" // rgb: 19, 188, 94
 			toxpwr = 0
 
-			reaction_mob(var/mob/living/carbon/M, var/method=TOUCH, var/volume)
+			reaction_mob(mob/living/carbon/M, method=TOUCH, volume)
 				if(!..())	return
 				if(!istype(M) || !M.dna)	return  //No robots, AIs, aliens, Ians or other mobs should be affected by this.
 				src = null
@@ -1604,7 +1604,7 @@ datum
 				napalm.trace_gases += fuel
 				T.assume_air(napalm)
 				return
-			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)//Splashing people with plasma is stronger than fuel!
+			reaction_mob(mob/living/M, method=TOUCH, volume)//Splashing people with plasma is stronger than fuel!
 				if(!istype(M, /mob/living))
 					return
 				if(method == TOUCH)
@@ -1753,7 +1753,7 @@ datum
 					if(prob(50)) del(O) //Kills kudzu too.
 				// Damage that is done to growing plants is separately at code/game/machinery/hydroponics at obj/item/hydroponics
 
-			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
+			reaction_mob(mob/living/M, method=TOUCH, volume)
 				src = null
 				if(iscarbon(M))
 					var/mob/living/carbon/C = M
@@ -1912,7 +1912,7 @@ datum
 					return
 				M.take_organ_damage(0, 1 * REM)
 
-			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)//magic numbers everywhere
+			reaction_mob(mob/living/M, method=TOUCH, volume)//magic numbers everywhere
 				if(!istype(M, /mob/living))
 					return
 				if(method == TOUCH)
@@ -2032,7 +2032,7 @@ datum
 			on_mob_life(mob/living/M)
 				if(!..())
 					return
-				M.nutrition -= nutriment_factor
+				M.nutrition = max(M.nutrition - nutriment_factor, 0)
 				M.overeatduration = 0
 				if(M.nutrition < 0)//Prevent from going into negatives.
 					M.nutrition = 0
@@ -2090,7 +2090,7 @@ datum
 			reagent_state = LIQUID
 			color = "#B31008" // rgb: 179, 16, 8
 
-			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
+			reaction_mob(mob/living/M, method=TOUCH, volume)
 				if(!istype(M, /mob/living))
 					return
 				if(method == TOUCH)
@@ -2161,26 +2161,13 @@ datum
 			on_mob_life(mob/living/M)
 				if(!..())
 					return
-				if(!data)
-					data = 1
-				switch(data)
-					if(1 to 15)
-						M.bodytemperature -= 5 * TEMPERATURE_DAMAGE_COEFFICIENT
-						if(holder.has_reagent("capsaicin"))
-							holder.remove_reagent("capsaicin", 5)
-						if(istype(M, /mob/living/carbon/slime))
-							M.bodytemperature -= rand(5,20)
-					if(15 to 25)
-						M.bodytemperature -= 10 * TEMPERATURE_DAMAGE_COEFFICIENT
-						if(istype(M, /mob/living/carbon/slime))
-							M.bodytemperature -= rand(10,20)
-					if(25 to INFINITY)
-						M.bodytemperature -= 15 * TEMPERATURE_DAMAGE_COEFFICIENT
-						if(prob(1))
-							M.emote("shiver")
-						if(istype(M, /mob/living/carbon/slime))
-							M.bodytemperature -= rand(15,20)
-				data++
+				M.bodytemperature = max(M.bodytemperature - 10 * TEMPERATURE_DAMAGE_COEFFICIENT, 0)
+				if(prob(1))
+					M.emote("shiver")
+				if(istype(M, /mob/living/carbon/slime))
+					M.bodytemperature = max(M.bodytemperature - rand(10,20), 0)
+				holder.remove_reagent("capsaicin", 5)
+				holder.remove_reagent(src.id, FOOD_METABOLISM)
 
 			reaction_turf(var/turf/simulated/T, var/volume)
 				for(var/mob/living/carbon/slime/M in T)
@@ -3094,7 +3081,7 @@ datum
 					else
 						usr << "It wasn't enough..."
 				return
-			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)//Splashing people with ethanol isn't quite as good as fuel.
+			reaction_mob(mob/living/M, method=TOUCH, volume)//Splashing people with ethanol isn't quite as good as fuel.
 				if(!istype(M, /mob/living))
 					return
 				if(method == TOUCH)

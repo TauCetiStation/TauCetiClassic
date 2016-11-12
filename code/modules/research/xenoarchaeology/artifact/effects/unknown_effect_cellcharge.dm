@@ -4,7 +4,7 @@
 	effecttype = "cellcharge"
 	effect_type = 3
 
-/datum/artifact_effect/cellcharge/DoEffectTouch(var/mob/user)
+/datum/artifact_effect/cellcharge/DoEffectTouch(mob/user)
 	if(user)
 		if(istype(user, /mob/living/silicon/robot))
 			var/mob/living/silicon/robot/R = user

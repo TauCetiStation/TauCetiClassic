@@ -1,4 +1,4 @@
-/proc/command_alert(var/text, var/title = "")
+/proc/command_alert(text, title = "")
 	var/command
 	command += "<h1 class='alert'>[command_name()] Update</h1>"
 	if (title && length(title) > 0)

@@ -44,7 +44,7 @@
 	response_harm   = "stomps"
 
 //LOOK AT THIS - ..()??
-/*/mob/living/simple_animal/crab/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/*/mob/living/simple_animal/crab/attackby(obj/item/O, mob/user)
 	if(istype(O, /obj/item/weapon/wirecutters))
 		if(prob(50))
 			user << "\red \b This kills the crab."
@@ -157,7 +157,7 @@
 						/obj/item/clothing/head/wizard/fake,
 						/obj/item/clothing/head/wizard,
 						/obj/item/clothing/head/collectable/wizard,
-						/obj/item/clothing/head/hardhat,
+						/obj/item/clothing/head/hardhat/yellow,
 						/obj/item/clothing/head/collectable/hardhat,
 						/obj/item/clothing/head/hardhat/white,
 						/obj/item/weapon/bedsheet,

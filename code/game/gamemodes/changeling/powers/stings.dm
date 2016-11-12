@@ -14,13 +14,13 @@
 		unset_sting(user)
 	return
 
-/obj/effect/proc_holder/changeling/sting/proc/set_sting(var/mob/user)
+/obj/effect/proc_holder/changeling/sting/proc/set_sting(mob/user)
 	user << "<span class='notice'>We prepare our sting, use alt+click or middle mouse button on target to sting them.</span>"
 	user.mind.changeling.chosen_sting = src
 	user.hud_used.lingstingdisplay.icon_state = sting_icon
 	user.hud_used.lingstingdisplay.invisibility = 0
 
-/obj/effect/proc_holder/changeling/sting/proc/unset_sting(var/mob/user)
+/obj/effect/proc_holder/changeling/sting/proc/unset_sting(mob/user)
 	user << "<span class='warning'>We retract our sting, we can't sting anyone for now.</span>"
 	user.mind.changeling.chosen_sting = null
 	user.hud_used.lingstingdisplay.icon_state = null
@@ -30,7 +30,7 @@
 	if(mind && mind.changeling && mind.changeling.chosen_sting)
 		src.mind.changeling.chosen_sting.unset_sting(src)
 
-/obj/effect/proc_holder/changeling/sting/can_sting(var/mob/user, var/mob/target)
+/obj/effect/proc_holder/changeling/sting/can_sting(mob/user, mob/target)
 
 
 	if(!..())
@@ -53,7 +53,7 @@
 		return
 	return 1
 
-/obj/effect/proc_holder/changeling/sting/sting_feedback(var/mob/user, var/mob/target)
+/obj/effect/proc_holder/changeling/sting/sting_feedback(mob/user, mob/target)
 	if(!target)
 		return
 	if((get_dist(user, target) <= 1))
@@ -63,10 +63,10 @@
 	if(target.mind && target.mind.changeling)
 		target << "<span class='warning'>You feel a tiny prick.</span>"
 	//	add_logs(user, target, "unsuccessfully stung")
-	msg_admin_attack("[key_name(user)] used [src] on [key_name(target)] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)")
+	msg_admin_attack("[key_name(user)] used [src] on [key_name(target)] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 	return 1
 
-/obj/effect/proc_holder/changeling/sting/proc/sting_fail(var/mob/user, var/mob/target)
+/obj/effect/proc_holder/changeling/sting/proc/sting_fail(mob/user, mob/target)
 	if(!target)
 		return
 	if(ishuman(target))
@@ -90,7 +90,7 @@ obj/effect/proc_holder/changeling/sting/cryo
 	chemical_cost = 15
 	genomecost = 2
 
-/obj/effect/proc_holder/changeling/sting/cryo/sting_action(var/mob/user, var/mob/target)
+/obj/effect/proc_holder/changeling/sting/cryo/sting_action(mob/user, mob/target)
 	if(sting_fail(user,target))
 		return 0
 	if(target.reagents)
@@ -107,7 +107,7 @@ obj/effect/proc_holder/changeling/sting/LSD
 	chemical_cost = 15
 	genomecost = 3
 
-/obj/effect/proc_holder/changeling/sting/LSD/sting_action(var/mob/user, var/mob/living/carbon/target)
+/obj/effect/proc_holder/changeling/sting/LSD/sting_action(mob/user, mob/living/carbon/target)
 	if(sting_fail(user,target))
 		return 0
 	spawn(rand(300,600))
@@ -140,7 +140,7 @@ obj/effect/proc_holder/changeling/sting/LSD
 		return
 	..()
 
-/obj/effect/proc_holder/changeling/sting/transformation/can_sting(var/mob/user, var/mob/target)
+/obj/effect/proc_holder/changeling/sting/transformation/can_sting(mob/user, mob/target)
 	if(!..())
 		return
 	if((HUSK in target.mutations) || (NOCLONE in target.mutations))
@@ -148,7 +148,7 @@ obj/effect/proc_holder/changeling/sting/LSD
 		return 0
 	return 1
 
-/obj/effect/proc_holder/changeling/sting/transformation/sting_action(var/mob/user, var/mob/target)
+/obj/effect/proc_holder/changeling/sting/transformation/sting_action(mob/user, mob/target)
 	if(sting_fail(user,target))
 		return 0
 	if(ismonkey(target))
@@ -170,11 +170,11 @@ obj/effect/proc_holder/changeling/sting/extract_dna
 	genomecost = 2
 	ranged = 0
 
-/obj/effect/proc_holder/changeling/sting/extract_dna/can_sting(var/mob/user, var/mob/living/carbon/target)
+/obj/effect/proc_holder/changeling/sting/extract_dna/can_sting(mob/user, mob/living/carbon/target)
 	if(..())
 		return user.mind.changeling.can_absorb_dna(user, target)
 
-/obj/effect/proc_holder/changeling/sting/extract_dna/sting_action(var/mob/user, var/mob/living/carbon/human/target)
+/obj/effect/proc_holder/changeling/sting/extract_dna/sting_action(mob/user, mob/living/carbon/human/target)
 	if(sting_fail(user,target))
 		return 0
 	var/datum/changeling/changeling = user.mind.changeling
@@ -201,7 +201,7 @@ obj/effect/proc_holder/changeling/sting/silence
 	chemical_cost = 20
 	genomecost = 4
 
-/obj/effect/proc_holder/changeling/sting/silence/sting_action(var/mob/user, var/mob/living/carbon/target)
+/obj/effect/proc_holder/changeling/sting/silence/sting_action(mob/user, mob/living/carbon/target)
 	if(sting_fail(user,target))
 		return 0
 	target << "<span class='danger'>Your ears pop and begin ringing loudly!</span>"
@@ -220,7 +220,7 @@ obj/effect/proc_holder/changeling/sting/blind
 	chemical_cost = 25
 	genomecost = 2
 
-/obj/effect/proc_holder/changeling/sting/blind/sting_action(var/mob/user, var/mob/target)
+/obj/effect/proc_holder/changeling/sting/blind/sting_action(mob/user, mob/target)
 	if(sting_fail(user,target))
 		return 0
 	target << "<span class='danger'>Your eyes burn horrifically!</span>"
@@ -239,7 +239,7 @@ obj/effect/proc_holder/changeling/sting/blind
 	chemical_cost = 30
 	genomecost = 8
 
-/obj/effect/proc_holder/changeling/sting/paralysis/sting_action(var/mob/user, var/mob/living/carbon/target)
+/obj/effect/proc_holder/changeling/sting/paralysis/sting_action(mob/user, mob/living/carbon/target)
 	if(sting_fail(user,target))
 		return 0
 	target << "<span class='danger'>Your muscles begin to painfully tighten.</span>"
@@ -255,7 +255,7 @@ obj/effect/proc_holder/changeling/sting/blind
 	chemical_cost = 40
 	genomecost = 10
 
-/obj/effect/proc_holder/changeling/sting/death/sting_action(var/mob/user, var/mob/living/carbon/target)
+/obj/effect/proc_holder/changeling/sting/death/sting_action(mob/user, mob/living/carbon/target)
 	if(sting_fail(user,target))
 		return 0
 	target << "<span class='danger'>You feel a small prick and your chest becomes tight.</span>"
@@ -280,7 +280,7 @@ obj/effect/proc_holder/changeling/sting/unfat
 	chemical_cost = 5
 	genomecost = 1
 
-/obj/effect/proc_holder/changeling/sting/unfat/sting_action(var/mob/user, var/mob/living/carbon/target)
+/obj/effect/proc_holder/changeling/sting/unfat/sting_action(mob/user, mob/living/carbon/target)
 	if(sting_fail(user,target))
 		return 0
 	if(FAT in target.mutations)

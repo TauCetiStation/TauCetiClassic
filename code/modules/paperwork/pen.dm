@@ -42,7 +42,7 @@
 	colour = "white"
 
 
-/obj/item/weapon/pen/attack(mob/M as mob, mob/user as mob)
+/obj/item/weapon/pen/attack(mob/M, mob/user)
 	if(!ismob(M))
 		return
 	user << "<span class='warning'>You stab [M] with the pen.</span>"
@@ -72,7 +72,7 @@
 	return
 
 
-/obj/item/weapon/pen/sleepypen/attack(mob/M as mob, mob/user as mob)
+/obj/item/weapon/pen/sleepypen/attack(mob/M, mob/user)
 	if(!(istype(M,/mob)))
 		return
 	..()
@@ -90,7 +90,7 @@
 	origin_tech = "materials=2;syndicate=5"
 
 
-/obj/item/weapon/pen/paralysis/attack(mob/living/M as mob, mob/user as mob)
+/obj/item/weapon/pen/paralysis/attack(mob/living/M, mob/user)
 
 	if(!(istype(M,/mob)))
 		return

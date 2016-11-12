@@ -23,7 +23,7 @@ obj/machinery/recharger
 	for(var/obj/item/weapon/stock_parts/capacitor/C in component_parts)
 		recharge_coeff = C.rating
 
-obj/machinery/recharger/attackby(obj/item/weapon/G as obj, mob/user as mob)
+obj/machinery/recharger/attackby(obj/item/weapon/G, mob/user)
 	if(istype(user,/mob/living/silicon))
 		return
 	if(istype(G, /obj/item/weapon/gun/energy) || istype(G, /obj/item/weapon/melee/baton) || istype(G, /obj/item/weapon/defibrillator) || istype(G, /obj/item/ammo_box/magazine/l10mag))
@@ -64,7 +64,7 @@ obj/machinery/recharger/attackby(obj/item/weapon/G as obj, mob/user as mob)
 			default_deconstruction_crowbar(G)
 			return
 
-obj/machinery/recharger/attack_hand(mob/user as mob)
+obj/machinery/recharger/attack_hand(mob/user)
 	add_fingerprint(user)
 
 	if(charging)
@@ -74,7 +74,7 @@ obj/machinery/recharger/attack_hand(mob/user as mob)
 		use_power = 1
 		update_icon()
 
-obj/machinery/recharger/attack_paw(mob/user as mob)
+obj/machinery/recharger/attack_paw(mob/user)
 	return attack_hand(user)
 
 obj/machinery/recharger/process()

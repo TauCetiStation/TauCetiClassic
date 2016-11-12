@@ -32,16 +32,7 @@
 			if("shadowlings")
 				if((mind in ticker.mode.thralls) || (mind in ticker.mode.shadows))
 					ticker.mode.update_all_shadows_icons()
-	if(ticker && ticker.random_dir_mode)
-		if(!last_dir && !client.last_dir)
-			last_dir = get_view_rotation_mode()
-			client.last_dir = last_dir
-		else if(!last_dir && client.last_dir)
-			last_dir = client.last_dir
-		else if(!client.last_dir && last_dir)
-			client.last_dir = last_dir
 
-		client.dir = last_dir
 	//Vents
 	if(ventcrawler)
 		src << "<span class='notice'>You can ventcrawl! Use alt+click on vents to quickly travel about the station.</span>"

@@ -62,7 +62,7 @@ var/bomb_set
 				src.attack_hand(M)
 	return
 
-/obj/machinery/nuclearbomb/attackby(obj/item/weapon/O as obj, mob/user as mob)
+/obj/machinery/nuclearbomb/attackby(obj/item/weapon/O, mob/user)
 
 	if (istype(O, /obj/item/weapon/screwdriver))
 		src.add_fingerprint(user)
@@ -245,10 +245,10 @@ var/bomb_set
 				return*/
 	..()
 
-/obj/machinery/nuclearbomb/attack_paw(mob/user as mob)
+/obj/machinery/nuclearbomb/attack_paw(mob/user)
 	return src.attack_hand(user)
 
-/obj/machinery/nuclearbomb/attack_hand(mob/user as mob)
+/obj/machinery/nuclearbomb/attack_hand(mob/user)
 	if (src.extended)
 		if (!ishuman(user))
 			usr << "\red You don't have the dexterity to do this!"
@@ -289,7 +289,7 @@ var/bomb_set
 		src.extended = 1
 	return
 
-obj/machinery/nuclearbomb/proc/nukehack_win(mob/user as mob)
+obj/machinery/nuclearbomb/proc/nukehack_win(mob/user)
 	var/dat as text
 	dat += "<TT><B>Nuclear Fission Explosive</B><BR>\nNuclear Device Wires:</A><HR>"
 	for(var/wire in src.wires)

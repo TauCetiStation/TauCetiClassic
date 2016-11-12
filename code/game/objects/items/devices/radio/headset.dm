@@ -56,7 +56,7 @@
 /obj/item/device/radio/headset/headset_sec
 	name = "security radio headset"
 	desc = "This is used by your elite security force. To access the security channel, use :s."
-	icon = 'tauceti/icons/obj/radio.dmi'
+	icon = 'icons/obj/radio.dmi'
 	icon_state = "sec_headset"
 	item_state = "headset"
 	ks2type = /obj/item/device/encryptionkey/headset_sec
@@ -78,7 +78,7 @@
 /obj/item/device/radio/headset/headset_med
 	name = "medical radio headset"
 	desc = "A headset for the trained staff of the medbay. To access the medical channel, use :m."
-	icon = 'tauceti/icons/obj/radio.dmi'
+	icon = 'icons/obj/radio.dmi'
 	icon_state = "med_headset"
 	item_state = "headset"
 	ks2type = /obj/item/device/encryptionkey/headset_med
@@ -86,7 +86,7 @@
 /obj/item/device/radio/headset/headset_sci
 	name = "science radio headset"
 	desc = "A sciency headset. Like usual. To access the science channel, use :n."
-	icon = 'tauceti/icons/obj/radio.dmi'
+	icon = 'icons/obj/radio.dmi'
 	icon_state = "sci_headset"
 	item_state = "headset"
 	ks2type = /obj/item/device/encryptionkey/headset_sci
@@ -94,7 +94,7 @@
 /obj/item/device/radio/headset/headset_medsci
 	name = "medical research radio headset"
 	desc = "A headset that is a result of the mating between medical and science. To access the medical channel, use :m. For science, use :n."
-	icon = 'tauceti/icons/obj/radio.dmi'
+	icon = 'icons/obj/radio.dmi'
 	icon_state = "medsci_headset"
 	item_state = "headset"
 	ks2type = /obj/item/device/encryptionkey/headset_medsci
@@ -109,7 +109,7 @@
 /obj/item/device/radio/headset/heads/captain
 	name = "captain's headset"
 	desc = "The headset of the boss. Channels are as follows: :c - command, :s - security, :e - engineering, :u - supply, :m - medical, :n - science."
-	icon = 'tauceti/icons/obj/radio.dmi'
+	icon = 'icons/obj/radio.dmi'
 	icon_state = "cap_headset"
 	item_state = "headset"
 	ks2type = /obj/item/device/encryptionkey/heads/captain
@@ -129,10 +129,13 @@
 		return -1 //Transciever Disabled.
 	return ..(freq, level, 1)
 
+/obj/item/device/radio/headset/heads/ai_integrated/emp_act()
+	return
+
 /obj/item/device/radio/headset/heads/rd
 	name = "Research Director's headset"
 	desc = "Headset of the researching God. To access the science channel, use :n. For command, use :c."
-	icon = 'tauceti/icons/obj/radio.dmi'
+	icon = 'icons/obj/radio.dmi'
 	icon_state = "rd_headset"
 	item_state = "headset"
 	ks2type = /obj/item/device/encryptionkey/heads/rd
@@ -140,7 +143,7 @@
 /obj/item/device/radio/headset/heads/hos
 	name = "head of security's headset"
 	desc = "The headset of the man who protects your worthless lifes. To access the security channel, use :s. For command, use :c."
-	icon = 'tauceti/icons/obj/radio.dmi'
+	icon = 'icons/obj/radio.dmi'
 	icon_state = "hos_headset"
 	item_state = "headset"
 	ks2type = /obj/item/device/encryptionkey/heads/hos
@@ -148,7 +151,7 @@
 /obj/item/device/radio/headset/heads/ce
 	name = "chief engineer's headset"
 	desc = "The headset of the guy who is in charge of morons. To access the engineering channel, use :e. For command, use :c."
-	icon = 'tauceti/icons/obj/radio.dmi'
+	icon = 'icons/obj/radio.dmi'
 	icon_state = "ce_headset"
 	item_state = "headset"
 	ks2type = /obj/item/device/encryptionkey/heads/ce
@@ -156,7 +159,7 @@
 /obj/item/device/radio/headset/heads/cmo
 	name = "chief medical officer's headset"
 	desc = "The headset of the highly trained medical chief. To access the medical channel, use :m. For command, use :c."
-	icon = 'tauceti/icons/obj/radio.dmi'
+	icon = 'icons/obj/radio.dmi'
 	icon_state = "cmo_headset"
 	item_state = "headset"
 	ks2type = /obj/item/device/encryptionkey/heads/cmo
@@ -164,7 +167,7 @@
 /obj/item/device/radio/headset/heads/hop
 	name = "head of personnel's headset"
 	desc = "The headset of the guy who will one day be captain. Channels are as follows: :u - supply, :c - command, :s - security"
-	icon = 'tauceti/icons/obj/radio.dmi'
+	icon = 'icons/obj/radio.dmi'
 	icon_state = "hop_headset"
 	item_state = "headset"
 	ks2type = /obj/item/device/encryptionkey/heads/hop
@@ -186,7 +189,7 @@
 /obj/item/device/radio/headset/headset_cargo
 	name = "supply radio headset"
 	desc = "A headset used by the QM and his slaves. To access the supply channel, use :u."
-	icon = 'tauceti/icons/obj/radio.dmi'
+	icon = 'icons/obj/radio.dmi'
 	icon_state = "cargo_headset"
 	item_state = "headset"
 	ks2type = /obj/item/device/encryptionkey/headset_cargo
@@ -199,7 +202,7 @@
 	freerange = 1
 	ks2type = /obj/item/device/encryptionkey/ert
 
-/obj/item/device/radio/headset/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/device/radio/headset/attackby(obj/item/weapon/W, mob/user)
 //	..()
 	user.set_machine(src)
 	if (!( istype(W, /obj/item/weapon/screwdriver) || (istype(W, /obj/item/device/encryptionkey/ ))))

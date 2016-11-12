@@ -60,7 +60,7 @@
  * Guns - I'm making these specifically so that I dont spawn a pile of fully loaded weapons on the map.
  */
 //Captain's retro laser - Fires practice laser shots instead.
-obj/item/weapon/gun/energy/laser/retro/sc_retro
+/*obj/item/weapon/gun/energy/laser/retro/sc_retro
 	name ="retro laser"
 	icon_state = "retro"
 	desc = "An older model of the basic lasergun, no longer used by Nanotrasen's security or military forces."
@@ -98,8 +98,7 @@ obj/item/weapon/gun/energy/laser/retro/sc_retro
 	desc = "A once potent weapon, years of dust have collected in the chamber and lens of this weapon, weakening the beam significantly."
 	clumsy_check = 0
 
-/*
- * Safe code hints
+  Safe code hints
  */
 
 //These vars hold the code itself, they'll be generated at round-start
@@ -165,7 +164,7 @@ var/sc_safecode5 = "[rand(0,9)]"
 
 /*
  * Modified Nar-Sie
- */
+
 /obj/singularity/narsie/sc_Narsie
 	desc = "Your body becomes weak and your feel your mind slipping away as you try to comprehend what you know can't be possible."
 	move_self = 0 //Contianed narsie does not move!
@@ -203,3 +202,4 @@ var/sc_safecode5 = "[rand(0,9)]"
 
 /obj/singularity/narsie/sc_Narsie/ex_act()
 	return
+	*/

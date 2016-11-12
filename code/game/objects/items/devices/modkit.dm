@@ -19,7 +19,7 @@
 		/obj/item/clothing/suit/space/rig/engineering/chief
 	)
 
-/obj/item/device/modkit/afterattack(obj/O, mob/user as mob)
+/obj/item/device/modkit/afterattack(obj/O, mob/user)
 	if(get_dist(src,O)>1)
 		return
 	if (!target_species)
@@ -65,9 +65,9 @@
 		user.drop_from_inventory(src)
 		qdel(src)
 
-/obj/item/device/modkit/examine()
+/obj/item/device/modkit/examine(mob/user)
 	..()
-	usr << "It looks as though it modifies hardsuits to fit [target_species] users."
+	user << "It looks as though it modifies hardsuits to fit [target_species] users."
 
 /obj/item/device/modkit/tajaran
 	name = "tajaran hardsuit modification kit"
@@ -223,3 +223,29 @@
 	name = "human hardsuit modification kit"
 	desc = "A kit containing all the needed tools and parts to modify a hardsuit for another user. This one looks like it's meant for Human."
 	target_species = "Human"
+
+/obj/item/device/modkit/syndie_tajaran
+	name = "tajara hardsuit modification kit"
+	desc = "A kit containing all the needed tools and parts to modify a hardsuit for another user. This one looks like it's meant for Tajara."
+	target_species = "Tajaran"
+	permitted_types = list(
+		/obj/item/clothing/head/helmet/space/rig/syndi,
+		/obj/item/clothing/suit/space/rig/syndi
+		)
+
+/obj/item/device/modkit/syndie_skrell
+	name = "skrell hardsuit modification kit"
+	desc = "A kit containing all the needed tools and parts to modify a hardsuit for another user. This one looks like it's meant for Skrell."
+	target_species = "Skrell"
+	permitted_types = list(
+		/obj/item/clothing/head/helmet/space/rig/syndi,
+		/obj/item/clothing/suit/space/rig/syndi
+		)
+/obj/item/device/modkit/syndie_unathi
+	name = "unathi hardsuit modification kit"
+	desc = "A kit containing all the needed tools and parts to modify a hardsuit for another user. This one looks like it's meant for Unathi."
+	target_species = "Unathi"
+	permitted_types = list(
+		/obj/item/clothing/head/helmet/space/rig/syndi,
+		/obj/item/clothing/suit/space/rig/syndi
+		)

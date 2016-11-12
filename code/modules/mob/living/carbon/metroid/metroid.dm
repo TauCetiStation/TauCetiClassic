@@ -32,6 +32,7 @@
 
 	var/mob/living/Victim = null // the person the slime is currently feeding on
 	var/mob/living/Target = null // AI variable - tells the slime to hunt this down
+	var/mob/living/ATarget = null
 
 	var/attacked = 0 // determines if it's been attacked recently. Can be any number, is a cooloff-ish variable
 	var/tame = 0 // if set to 1, the slime will not eat humans ever, or attack them
@@ -57,6 +58,7 @@
 	var/mutationfour = /mob/living/carbon/slime/purple
 	var/adulttype = /mob/living/carbon/slime/adult
 	var/coretype = /obj/item/slime_extract/grey
+	var/mob/living/last_pointed = null
 
 /mob/living/carbon/slime/adult
 	name = "adult slime"
@@ -89,7 +91,15 @@
 /mob/living/carbon/slime/adult/New()
 	//verbs.Remove(/mob/living/carbon/slime/verb/ventcrawl)
 	..()
-
+/mob/living/carbon/slime/Destroy()
+	Victim = null
+	Target = null
+	ATarget = null
+	last_pointed = null
+	Leader = null
+	if(Friends.len)
+		Friends.Cut()
+	return ..()
 /mob/living/carbon/slime/regenerate_icons()
 	overlays.len = 0
 	//var/icon_text = "[colour] [is_adult ? "adult" : "baby"] slime"
@@ -165,7 +175,7 @@
 		else
 			return 1
 
-/mob/living/carbon/slime/Process_Spacemove(var/movement_dir = 0)
+/mob/living/carbon/slime/Process_Spacemove(movement_dir = 0)
 	return 2
 
 /mob/living/carbon/slime/Stat()
@@ -190,7 +200,7 @@
 	..(-abs(amount)) // Heals them
 	return
 
-/mob/living/carbon/slime/bullet_act(var/obj/item/projectile/Proj)
+/mob/living/carbon/slime/bullet_act(obj/item/projectile/Proj)
 	attacked += 10
 	..(Proj)
 	return 0
@@ -253,14 +263,14 @@
 	return
 
 
-/mob/living/carbon/slime/u_equip(obj/item/W as obj)
+/mob/living/carbon/slime/u_equip(obj/item/W)
 	return
 
 
 /mob/living/carbon/slime/attack_ui(slot)
 	return
 
-/mob/living/carbon/slime/meteorhit(O as obj)
+/mob/living/carbon/slime/meteorhit(O)
 	for(var/mob/M in viewers(src, null))
 		if ((M.client && !( M.blinded )))
 			M.show_message(text("\red [] has been hit by []", src, O), 1)
@@ -272,7 +282,7 @@
 	return
 
 
-/mob/living/carbon/slime/attack_slime(mob/living/carbon/slime/M as mob)
+/mob/living/carbon/slime/attack_slime(mob/living/carbon/slime/M)
 	if (!ticker)
 		M << "You cannot attack people before the game has started."
 		return
@@ -301,7 +311,7 @@
 	return
 
 
-/mob/living/carbon/slime/attack_animal(mob/living/simple_animal/M as mob)
+/mob/living/carbon/slime/attack_animal(mob/living/simple_animal/M)
 	if(M.melee_damage_upper == 0)
 		M.emote("[M.friendly] [src]")
 	else
@@ -315,7 +325,7 @@
 		adjustBruteLoss(damage)
 		updatehealth()
 
-/mob/living/carbon/slime/attack_paw(mob/living/carbon/monkey/M as mob)
+/mob/living/carbon/slime/attack_paw(mob/living/carbon/monkey/M)
 	if(!(istype(M, /mob/living/carbon/monkey)))	return//Fix for aliens receiving double messages when attacking other aliens.
 
 	if (!ticker)
@@ -345,7 +355,7 @@
 	return
 
 
-/mob/living/carbon/slime/attack_hand(mob/living/carbon/human/M as mob)
+/mob/living/carbon/slime/attack_hand(mob/living/carbon/human/M)
 	if (!ticker)
 		M << "You cannot attack people before the game has started."
 		return
@@ -493,7 +503,7 @@
 
 
 
-/mob/living/carbon/slime/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
+/mob/living/carbon/slime/attack_alien(mob/living/carbon/alien/humanoid/M)
 	if (!ticker)
 		M << "You cannot attack people before the game has started."
 		return
@@ -595,7 +605,7 @@ mob/living/carbon/slime/var/co2overloadtime = null
 mob/living/carbon/slime/var/temperature_resistance = T0C+75
 
 
-/mob/living/carbon/slime/show_inv(mob/user as mob)
+/mob/living/carbon/slime/show_inv(mob/user)
 
 	user.set_machine(src)
 	var/dat = {"
@@ -636,7 +646,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	origin_tech = "biotech=4"
 	var/Uses = 1 // uses before it goes inert
 	var/enhanced = 0 // has it been enhanced before?
-	attackby(obj/item/weapon/O as obj, mob/user as mob)
+	attackby(obj/item/weapon/O, mob/user)
 		if(istype(O, /obj/item/weapon/slimesteroid2))
 			if(enhanced == 1)
 				user << "\red This extract has already been enhanced!"
@@ -752,7 +762,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle19"
 
-	attack(mob/living/carbon/slime/M as mob, mob/user as mob)
+	attack(mob/living/carbon/slime/M, mob/user)
 		if(!istype(M, /mob/living/carbon/slime))//If target is not a slime.
 			user << "\red The potion only works on baby slimes!"
 			return ..()
@@ -783,7 +793,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle19"
 
-	attack(mob/living/carbon/slime/adult/M as mob, mob/user as mob)
+	attack(mob/living/carbon/slime/adult/M, mob/user)
 		if(!istype(M, /mob/living/carbon/slime/adult))//If target is not a slime.
 			user << "\red The potion only works on adult slimes!"
 			return ..()
@@ -812,7 +822,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle16"
 
-	attack(mob/living/carbon/slime/M as mob, mob/user as mob)
+	attack(mob/living/carbon/slime/M, mob/user)
 		if(!istype(M, /mob/living/carbon/slime))//If target is not a slime.
 			user << "\red The steroid only works on baby slimes!"
 			return ..()
@@ -984,7 +994,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	else
 		SSobj.processing |= src
 		last_ghost_click = world.time + 50
-		var/image/I = image('tauceti/icons/mob/hud_mob.dmi', src, "agolem_master") //If there is alot activated rune close by, we can see which is ours.
+		var/image/I = image('icons/mob/hud.dmi', src, "agolem_master") //If there is alot activated rune close by, we can see which is ours.
 		user.client.images += I
 		spirit = user
 		user.golem_rune = src
@@ -1044,12 +1054,12 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	if(client)
 		if(dna && (dna.mutantrace == "adamantine"))
 			if(my_master)
-				var/I = image('tauceti/icons/mob/hud_mob.dmi', loc = my_master, icon_state = "agolem_master")
+				var/I = image('icons/mob/hud.dmi', loc = my_master, icon_state = "agolem_master")
 				client.images += I
 		else
 			if(my_golems)
 				for(var/mob/living/carbon/human/G in my_golems)
-					var/I = image('tauceti/icons/mob/hud_mob.dmi', loc = G, icon_state = "agolem_master")
+					var/I = image('icons/mob/hud.dmi', loc = G, icon_state = "agolem_master")
 					client.images += I
 
 
@@ -1137,7 +1147,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	if (environment.phoron > MOLES_PHORON_VISIBLE)//phoron exposure causes the egg to hatch
 		src.Hatch()
 
-/obj/item/weapon/reagent_containers/food/snacks/egg/slime/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/weapon/reagent_containers/food/snacks/egg/slime/attackby(obj/item/weapon/W, mob/user)
 	if(istype( W, /obj/item/toy/crayon ))
 		return
 	else

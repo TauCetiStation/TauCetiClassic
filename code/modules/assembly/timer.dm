@@ -74,7 +74,7 @@
 	return
 
 
-/obj/item/device/assembly/timer/interact(mob/user as mob)//TODO: Have this use the wires
+/obj/item/device/assembly/timer/interact(mob/user)//TODO: Have this use the wires
 	if(!secured)
 		user.show_message("\red The [name] is unsecured!")
 		return 0

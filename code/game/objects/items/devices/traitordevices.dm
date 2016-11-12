@@ -30,7 +30,7 @@ effective or pretty fucking useless.
 	var/max_uses = 2
 
 
-/obj/item/device/batterer/attack_self(mob/living/carbon/user as mob, flag = 0, emp = 0)
+/obj/item/device/batterer/attack_self(mob/living/carbon/user, flag = 0, emp = 0)
 	if(!user) 	return
 	if(times_used >= max_uses)
 		user << "\red The mind batterer has been burnt out!"

@@ -3,7 +3,7 @@ var/list/sacrificed = list()
 /obj/effect/rune
 /////////////////////////////////////////FIRST RUNE
 	proc
-		teleport(var/key)
+		teleport(key)
 			var/mob/living/user = usr
 			var/allrunesloc[]
 			allrunesloc = new/list()
@@ -340,7 +340,7 @@ var/list/sacrificed = list()
 
 /////////////////////////////////////////NINETH RUNE
 
-		obscure(var/rad)
+		obscure(rad)
 			var/S=0
 			for(var/obj/effect/rune/R in orange(rad,src))
 				if(R!=src)

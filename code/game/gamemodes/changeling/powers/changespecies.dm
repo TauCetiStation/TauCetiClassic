@@ -9,7 +9,7 @@
 	max_genetic_damage = 30
 
 //Change our DNA to that of somebody we've absorbed.
-/obj/effect/proc_holder/changeling/change_species/sting_action(var/mob/living/carbon/human/user)
+/obj/effect/proc_holder/changeling/change_species/sting_action(mob/living/carbon/human/user)
 	var/datum/changeling/changeling = user.mind.changeling
 	if(changeling.absorbed_species.len < 2)
 		src << "<span class='warning'>We do not know of any other species genomes to use.</span>"

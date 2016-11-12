@@ -15,7 +15,7 @@
 	var/last_configurator = null
 	var/locked = 1
 
-	attack_self(mob/user as mob)
+	attack_self(mob/user)
 		if (!ishuman(user) && !istype(user,/mob/living/silicon/robot/drone))
 			return ..(user)
 
@@ -93,7 +93,7 @@
 		attack_self(usr)
 
 	proc
-		toggle_access(var/acc)
+		toggle_access(acc)
 			if (acc == "all")
 				conf_access = null
 			else

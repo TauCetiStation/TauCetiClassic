@@ -14,13 +14,13 @@
 	var/obj/item/device/assembly/a_right = null
 	var/obj/special_assembly = null
 
-/obj/item/device/assembly_holder/proc/attach(var/obj/item/device/D, var/obj/item/device/D2, var/mob/user)
+/obj/item/device/assembly_holder/proc/attach(obj/item/device/D, obj/item/device/D2, mob/user)
 	return
 
-/obj/item/device/assembly_holder/proc/attach_special(var/obj/O, var/mob/user)
+/obj/item/device/assembly_holder/proc/attach_special(obj/O, mob/user)
 	return
 
-/obj/item/device/assembly_holder/proc/process_activation(var/obj/item/device/D)
+/obj/item/device/assembly_holder/proc/process_activation(obj/item/device/D)
 	return
 
 /obj/item/device/assembly_holder/proc/detached()
@@ -31,7 +31,7 @@
 	return 1
 
 
-/obj/item/device/assembly_holder/attach(var/obj/item/device/D, var/obj/item/device/D2, var/mob/user)
+/obj/item/device/assembly_holder/attach(obj/item/device/D, obj/item/device/D2, mob/user)
 	if((!D)||(!D2))	return 0
 	if((!isassembly(D))||(!isassembly(D2)))	return 0
 	if((D:secured)||(D2:secured))	return 0
@@ -51,7 +51,7 @@
 	return 1
 
 
-/obj/item/device/assembly_holder/attach_special(var/obj/O, var/mob/user)
+/obj/item/device/assembly_holder/attach_special(obj/O, mob/user)
 	if(!O)	return
 	if(!O.IsSpecialAssembly())	return 0
 
@@ -71,18 +71,16 @@
 	if(master)
 		master.update_icon()
 
-/obj/item/device/assembly_holder/examine()
-	set src in view()
+/obj/item/device/assembly_holder/examine(mob/user)
 	..()
-	if ((in_range(src, usr) || src.loc == usr))
+	if (src in view(1, user))
 		if (src.secured)
-			usr << "\The [src] is ready!"
+			user << "\The [src] is ready!"
 		else
-			usr << "\The [src] can be attached!"
-	return
+			user << "\The [src] can be attached!"
 
 
-/obj/item/device/assembly_holder/HasProximity(atom/movable/AM as mob|obj)
+/obj/item/device/assembly_holder/HasProximity(atom/movable/AM)
 	if(a_left)
 		a_left.HasProximity(AM)
 	if(a_right)
@@ -100,7 +98,7 @@
 		special_assembly.Crossed(AM)
 
 
-/obj/item/device/assembly_holder/on_found(mob/finder as mob)
+/obj/item/device/assembly_holder/on_found(mob/finder)
 	if(a_left)
 		a_left.on_found(finder)
 	if(a_right)
@@ -118,6 +116,14 @@
 		a_right.holder_movement()
 	return
 
+/obj/item/device/assembly_holder/hear_talk(mob/living/M, msg, verb, datum/language/speaking)
+	if(a_left)
+		a_left.hear_talk(M,msg,verb,speaking)
+	if(a_right)
+		a_right.hear_talk(M,msg,verb,speaking)
+
+	return
+
 
 /obj/item/device/assembly_holder/attack_hand()//Perhapse this should be a holder_pickup proc instead, can add if needbe I guess
 	if(a_left && a_right)
@@ -127,7 +133,7 @@
 	return
 
 
-/obj/item/device/assembly_holder/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/device/assembly_holder/attackby(obj/item/weapon/W, mob/user)
 	if(isscrewdriver(W))
 		if(!a_left || !a_right)
 			user << "\red BUG:Assembly part missing, please report this!"
@@ -148,7 +154,7 @@
 	return
 
 
-/obj/item/device/assembly_holder/attack_self(mob/user as mob)
+/obj/item/device/assembly_holder/attack_self(mob/user)
 	src.add_fingerprint(user)
 	if(src.secured)
 		if(!a_left || !a_right)
@@ -177,7 +183,7 @@
 	return
 
 
-/obj/item/device/assembly_holder/process_activation(var/obj/D, var/normal = 1, var/special = 1)
+/obj/item/device/assembly_holder/process_activation(obj/D, normal = 1, special = 1)
 	if(!D)	return 0
 	if(!secured)
 		visible_message("\icon[src] *beep* *beep*", "*beep* *beep*")

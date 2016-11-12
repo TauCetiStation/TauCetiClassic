@@ -34,7 +34,7 @@
 		src << text("\blue You have stopped hiding.")
 
 //Actual picking-up event.
-/mob/living/silicon/robot/drone/attack_hand(mob/living/carbon/human/M as mob)
+/mob/living/silicon/robot/drone/attack_hand(mob/living/carbon/human/M)
 
 	if(M.a_intent == "help")
 		get_scooped(M)

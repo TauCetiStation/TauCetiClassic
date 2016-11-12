@@ -12,7 +12,7 @@
 	flags = FPRINT | TABLEPASS | CONDUCT | NOBLUDGEON
 	slot_flags = SLOT_BELT
 
-/obj/item/device/detective_scanner/attackby(obj/item/weapon/f_card/W as obj, mob/user as mob)
+/obj/item/device/detective_scanner/attackby(obj/item/weapon/f_card/W, mob/user)
 	..()
 	if (istype(W, /obj/item/weapon/f_card))
 		if (W.fingerprints)
@@ -31,7 +31,7 @@
 			W.add_fingerprint(user)
 	return
 
-/obj/item/device/detective_scanner/attack(mob/living/carbon/human/M as mob, mob/user as mob)
+/obj/item/device/detective_scanner/attack(mob/living/carbon/human/M, mob/user)
 	if (!ishuman(M))
 		user << "\red [M] is not human and cannot have the fingerprints."
 		flick("forensic0",src)
@@ -64,7 +64,7 @@
 				user << "\blue Blood type: [M.blood_DNA[blood]]\nDNA: [blood]"
 	return
 
-/obj/item/device/detective_scanner/afterattack(atom/A as obj|turf|area, mob/user as mob, proximity)
+/obj/item/device/detective_scanner/afterattack(atom/A, mob/user, proximity)
 	if(!proximity) return
 	if(loc != user)
 		return
@@ -143,7 +143,7 @@
 		return 0
 	return
 
-/obj/item/device/detective_scanner/proc/add_data(atom/A as mob|obj|turf|area)
+/obj/item/device/detective_scanner/proc/add_data(atom/A)
 	//I love associative lists.
 	var/list/data_entry = stored["\ref [A]"]
 	if(islist(data_entry)) //Yay, it was already stored!

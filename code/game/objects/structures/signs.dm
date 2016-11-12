@@ -23,7 +23,7 @@
 	qdel(src)
 	return
 
-/obj/structure/sign/attackby(obj/item/tool as obj, mob/user as mob)	//deconstruction
+/obj/structure/sign/attackby(obj/item/tool, mob/user)	//deconstruction
 	if(istype(tool, /obj/item/weapon/screwdriver) && !istype(src, /obj/structure/sign/double))
 		user << "You unfasten the sign with your [tool]."
 		var/obj/item/sign/S = new(src.loc)
@@ -43,7 +43,7 @@
 	w_class = 3		//big
 	var/sign_state = ""
 
-/obj/item/sign/attackby(obj/item/tool as obj, mob/user as mob)	//construction
+/obj/item/sign/attackby(obj/item/tool, mob/user)	//construction
 	if(istype(tool, /obj/item/weapon/screwdriver) && isturf(user.loc))
 		var/direction = input("In which direction?", "Select direction.") in list("North", "East", "South", "West", "Cancel")
 		if(direction == "Cancel") return
@@ -199,3 +199,22 @@
 	name = "\improper Escape Arm"
 	desc = "A direction sign, pointing out which way the escape shuttle dock is."
 	icon_state = "direction_evac"
+
+/obj/structure/sign/mark
+	layer = 2
+	icon = 'icons/misc/mark.dmi'
+	name = "\improper Symbol"
+	desc = "You look at a symbol."
+	icon_state = "b1"
+
+/obj/structure/sign/marksymbol_b
+	layer = 2
+	icon = 'icons/misc/blue_symbol.dmi'
+	name = "\improper Symbol"
+	desc = "You look at a blue symbol."
+	icon_state = "C"
+
+/obj/structure/sign/morgue_disposal
+	name = "\improper sign TO THE MORGUE"
+	desc = "Current disposal unit leads straight to the morgue. Bring out your dead!"
+	icon_state = "morgue_disposal"

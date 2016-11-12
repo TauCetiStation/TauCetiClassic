@@ -14,7 +14,7 @@
 /obj/item/weapon/retractor
 	name = "retractor"
 	desc = "Retracts stuff."
-	icon = 'tauceti/icons/obj/surgery.dmi'
+	icon = 'icons/obj/surgery.dmi'
 	icon_state = "retractor"
 	m_amt = 10000
 	g_amt = 5000
@@ -28,7 +28,7 @@
 /obj/item/weapon/hemostat
 	name = "hemostat"
 	desc = "You think you have seen this before."
-	icon = 'tauceti/icons/obj/surgery.dmi'
+	icon = 'icons/obj/surgery.dmi'
 	icon_state = "hemostat"
 	m_amt = 5000
 	g_amt = 2500
@@ -43,7 +43,7 @@
 /obj/item/weapon/cautery
 	name = "cautery"
 	desc = "This stops bleeding."
-	icon = 'tauceti/icons/obj/surgery.dmi'
+	icon = 'icons/obj/surgery.dmi'
 	icon_state = "cautery"
 	m_amt = 5000
 	g_amt = 2500

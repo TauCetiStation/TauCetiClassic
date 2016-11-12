@@ -16,7 +16,7 @@
 		user_buckle_mob(M, user)
 
 /atom/movable/proc/buckle_mob(mob/living/M)
-	if(!can_buckle || !istype(M) || (M.loc != loc) || M.buckled || M.buckled_mob || M.pinned.len || (buckle_require_restraints && !M.restrained()) || M == src)
+	if(!can_buckle || !istype(M) || (M.loc != loc) || M.buckled || src.buckled_mob || M.pinned.len || (buckle_require_restraints && !M.restrained()) || M == src)
 		return 0
 
 	//reset pulling

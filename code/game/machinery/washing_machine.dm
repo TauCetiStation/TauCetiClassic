@@ -39,7 +39,7 @@
 	else
 		state = 5
 	update_icon()
-	playsound(src, 'tauceti/sounds/items/washingmachine.ogg', 100, 1, 1)
+	playsound(src, 'sound/items/washingmachine.ogg', 100, 1, 1)
 	sleep(210)
 	for(var/atom/A in contents)
 		A.clean_blood()
@@ -195,7 +195,7 @@
 /obj/machinery/washing_machine/update_icon()
 	icon_state = "wm_[state][panel]"
 
-/obj/machinery/washing_machine/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/machinery/washing_machine/attackby(obj/item/weapon/W, mob/user)
 	/*if(istype(W,/obj/item/weapon/screwdriver))
 		panel = !panel
 		user << "\blue you [panel ? "open" : "close"] the [src]'s maintenance panel"*/
@@ -281,7 +281,7 @@
 		..()
 	update_icon()
 
-/obj/machinery/washing_machine/attack_hand(mob/user as mob)
+/obj/machinery/washing_machine/attack_hand(mob/user)
 	switch(state)
 		if(1)
 			state = 2

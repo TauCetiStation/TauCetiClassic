@@ -5,13 +5,13 @@
 	icon_state = "watertank"
 	density = 1
 	anchored = 0
-	flags = FPRINT
+	flags = FPRINT|OPENCONTAINER
 	pressure_resistance = 2*ONE_ATMOSPHERE
 
 	var/amount_per_transfer_from_this = 10
 	var/possible_transfer_amounts = list(10,25,50,100)
 
-/obj/structure/reagent_dispensers/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/structure/reagent_dispensers/attackby(obj/item/weapon/W, mob/user)
 	return
 
 /obj/structure/reagent_dispensers/New()
@@ -21,17 +21,6 @@
 	if (!possible_transfer_amounts)
 		src.verbs -= /obj/structure/reagent_dispensers/verb/set_APTFT
 	..()
-
-/obj/structure/reagent_dispensers/examine()
-	set src in view()
-	..()
-	if (!(usr in view(2)) && usr!=src.loc) return
-	usr << "\blue It contains:"
-	if(reagents && reagents.reagent_list.len)
-		for(var/datum/reagent/R in reagents.reagent_list)
-			usr << "\blue [R.volume] units of [R.name]"
-	else
-		usr << "\blue Nothing."
 
 /obj/structure/reagent_dispensers/verb/set_APTFT() //set amount_per_transfer_from_this
 	set name = "Set transfer amount"
@@ -78,14 +67,12 @@
 	..()
 	reagents.add_reagent("water",1000)
 
-/obj/structure/reagent_dispensers/watertank/examine()
-	set src in view()
+/obj/structure/reagent_dispensers/watertank/examine(mob/user)
 	..()
-	if (!(usr in view(2)) && usr!=src.loc) return
-	if (modded)
-		usr << "\red Water faucet is wrenched open, leaking the water!"
+	if(src in oview(2, user) && modded)
+		user << "\red Water faucet is wrenched open, leaking the water!"
 
-/obj/structure/reagent_dispensers/watertank/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/structure/reagent_dispensers/watertank/attackby(obj/item/weapon/W, mob/user)
 	if (istype(W,/obj/item/weapon/wrench))
 		user.visible_message("[user] wrenches [src]'s faucet [modded ? "closed" : "open"].", \
 			"You wrench [src]'s faucet [modded ? "closed" : "open"]")
@@ -137,14 +124,13 @@
 		src.verbs -= /obj/structure/reagent_dispensers/verb/set_APTFT
 	reagents.add_reagent("fuel",300)
 
-/obj/structure/reagent_dispensers/fueltank/examine()
-	set src in view()
+/obj/structure/reagent_dispensers/fueltank/examine(mob/user)
 	..()
-	if (!(usr in view(2)) && usr!=src.loc) return
-	if (modded)
-		usr << "\red Fuel faucet is wrenched open, leaking the fuel!"
-	if(rig)
-		usr << "<span class='notice'>There is some kind of device rigged to the tank."
+	if(src in oview(2, user))
+		if (modded)
+			user << "<span class='red'>Fuel faucet is wrenched open, leaking the fuel!</span>"
+		if(rig)
+			user << "<span class='notice'>There is some kind of device rigged to the tank.</span>"
 
 /obj/structure/reagent_dispensers/fueltank/attack_hand()
 	if (rig)
@@ -155,7 +141,7 @@
 			rig = null
 			overlays = new/list()
 
-/obj/structure/reagent_dispensers/fueltank/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/structure/reagent_dispensers/fueltank/attackby(obj/item/weapon/W, mob/user)
 	if (istype(W,/obj/item/weapon/wrench))
 		user.visible_message("[user] wrenches [src]'s faucet [modded ? "closed" : "open"].", \
 			"You wrench [src]'s faucet [modded ? "closed" : "open"]")
@@ -188,7 +174,7 @@
 	return ..()
 
 
-/obj/structure/reagent_dispensers/fueltank/bullet_act(var/obj/item/projectile/Proj)
+/obj/structure/reagent_dispensers/fueltank/bullet_act(obj/item/projectile/Proj)
 	if(istype(Proj ,/obj/item/projectile/beam)||istype(Proj,/obj/item/projectile/bullet))
 		if(!istype(Proj ,/obj/item/projectile/beam/lastertag) && !istype(Proj ,/obj/item/projectile/beam/practice) )
 			explode()

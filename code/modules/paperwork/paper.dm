@@ -106,11 +106,11 @@
 		icon_state = "scrap"
 		throw_range = 1
 
-	playsound(src, 'tauceti/sounds/items/crumple.ogg', 15, 1, 1)
+	playsound(src, 'sound/items/crumple.ogg', 15, 1, 1)
 	add_fingerprint(usr)
 	return
 
-/obj/item/weapon/paper/afterattack(atom/target, mob/user as mob, proximity)
+/obj/item/weapon/paper/afterattack(atom/target, mob/user, proximity)
 	if(!proximity) return
 	if(istype(src, /obj/item/weapon/paper/talisman)) return
 	if(istype(src, /obj/item/weapon/paper/crumpled/bloody)) return
@@ -127,7 +127,7 @@
 
 	return
 
-/obj/item/weapon/paper/attack_self(mob/living/user as mob)
+/obj/item/weapon/paper/attack_self(mob/living/user)
 	examine()
 	if(rigged && (Holiday == "April Fool's Day"))
 		if(spam_flag == 0)
@@ -137,7 +137,7 @@
 				spam_flag = 0
 	return
 
-/obj/item/weapon/paper/attack_ai(var/mob/living/silicon/ai/user as mob)
+/obj/item/weapon/paper/attack_ai(mob/living/silicon/ai/user)
 	var/dist
 	if(istype(user) && user.camera) //is AI
 		dist = get_dist(src, user.camera)
@@ -153,7 +153,7 @@
 		onclose(usr, "[name]")
 	return
 
-/obj/item/weapon/paper/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+/obj/item/weapon/paper/attack(mob/living/carbon/M, mob/living/carbon/user)
 	if(user.zone_sel.selecting == "eyes")
 		user.visible_message("<span class='notice'>You show the paper to [M]. </span>", \
 			"<span class='notice'> [user] holds up a paper and shows it to [M]. </span>")
@@ -175,7 +175,7 @@
 					H.lip_style = null
 					H.update_body()
 
-/obj/item/weapon/paper/proc/addtofield(var/id, var/text, var/links = 0)
+/obj/item/weapon/paper/proc/addtofield(id, text, links = 0)
 	var/locid = 0
 	var/laststart = 1
 	var/textindex = 1
@@ -229,7 +229,7 @@
 	update_icon()
 
 
-/obj/item/weapon/paper/proc/parsepencode(var/t, var/obj/item/weapon/pen/P, mob/user as mob, var/iscrayon = 0)
+/obj/item/weapon/paper/proc/parsepencode(t, obj/item/weapon/pen/P, mob/user, iscrayon = 0)
 //	t = copytext(sanitize(t),1,MAX_MESSAGE_LEN)
 
 	t = replacetext(t, "\[center\]", "<center>")
@@ -279,7 +279,7 @@
 	return t
 
 
-/obj/item/weapon/paper/proc/openhelp(mob/user as mob)
+/obj/item/weapon/paper/proc/openhelp(mob/user)
 	user << browse({"<HTML><HEAD><TITLE>Pen Help</TITLE></HEAD>
 	<BODY>
 		<b><center>Crayon&Pen commands</center></b><br>
@@ -300,29 +300,37 @@
 		\[hr\] : Adds a horizontal rule.
 	</BODY></HTML>"}, "window=paper_help")
 
-/obj/item/weapon/paper/proc/burnpaper(obj/item/weapon/lighter/P, mob/user)
-	var/class = "<span class='warning'>"
+
+/obj/item/weapon/proc/burnpaper(obj/item/weapon/lighter/P, mob/user) //weapon, to use this in paper_bundle and photo
+	var/list/burnable = list(/obj/item/weapon/paper,
+                          /obj/item/weapon/paper_bundle,
+                          /obj/item/weapon/photo)
+
+	if(!is_type_in_list(src, burnable))
+		return
 
 	if(P.lit && !user.restrained())
+		var/class = "<span class='red'>"
 		if(istype(P, /obj/item/weapon/lighter/zippo))
 			class = "<span class='rose'>"
 
-		user.visible_message("[class][user] holds \the [P] up to \the [src], it looks like \he's trying to burn it!", \
-		"[class]You hold \the [P] up to \the [src], burning it slowly.")
+		user.visible_message("[class][user] holds \the [P] up to \the [src], it looks like \he's trying to burn it!</span>", \
+		"[class]You hold \the [P] up to \the [src], burning it slowly.</span>")
 
-		spawn(20)
-			if(get_dist(src, user) < 2 && user.get_active_hand() == P && P.lit)
-				user.visible_message("[class][user] burns right through \the [src], turning it to ash. It flutters through the air before settling on the floor in a heap.", \
-				"[class]You burn right through \the [src], turning it to ash. It flutters through the air before settling on the floor in a heap.")
+		if(do_after(user, 20, TRUE, P, TRUE))
+			if((get_dist(src, user) > 1) || !P.lit)
+				return
+			user.visible_message("[class][user] burns right through \the [src], turning it to ash. It flutters through the air before settling on the floor in a heap.</span>", \
+			"[class]You burn right through \the [src], turning it to ash. It flutters through the air before settling on the floor in a heap.</span>")
 
-				if(user.get_inactive_hand() == src)
-					user.drop_from_inventory(src)
+			if(user.get_inactive_hand() == src)
+				user.drop_from_inventory(src)
 
-				new /obj/effect/decal/cleanable/ash(src.loc)
-				qdel(src)
+			new /obj/effect/decal/cleanable/ash(src.loc)
+			qdel(src)
 
-			else
-				user << "\red You must hold \the [P] steady to burn \the [src]."
+		else
+			user << "<span class='warning'>You must hold \the [P] steady to burn \the [src].</span>"
 
 
 /obj/item/weapon/paper/Topic(href, href_list)
@@ -352,6 +360,9 @@
 		while(index)
 			t = copytext(t, 1, index) + "&#1103;" + copytext(t, index+8)
 			index = findtext(t, LETTER_255)*/
+		
+		var last_fields_value = fields
+		
 		t = sanitize_alt(t, list("\n"="\[br\]","ÿ"=LETTER_255))
 
 		// check for exploits
@@ -365,6 +376,11 @@
 		//t = replacetext(t, "\n", "<BR>")
 		t = parsepencode(t, i, usr, iscrayon) // Encode everything from pencode to html
 
+		if(fields > 50)
+			usr << "<span class='warning'>Too many fields. Sorry, you can't do this.</span>"
+			fields = last_fields_value
+			return
+
 		if(id!="end")
 			addtofield(text2num(id), t) // He wants to edit a field, let him.
 		else
@@ -376,7 +392,7 @@
 		update_icon()
 
 
-/obj/item/weapon/paper/attackby(obj/item/weapon/P as obj, mob/user as mob)
+/obj/item/weapon/paper/attackby(obj/item/weapon/P, mob/user)
 	..()
 	var/clown = 0
 	if(user.mind && (user.mind.assigned_role == "Clown"))

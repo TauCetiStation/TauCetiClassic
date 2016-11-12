@@ -90,7 +90,7 @@
 	storage_slots = 50
 	max_combined_w_class = 200 //Doesn't matter what this is, so long as it's more or equal to storage_slots * ore.w_class
 	max_w_class = 3
-	can_hold = list("/obj/item/weapon/ore")
+	can_hold = list("/obj/item/weapon/ore", "/obj/item/bluespace_crystal")
 
 
 // -----------------------------
@@ -129,7 +129,7 @@
 		//verbs -= /obj/item/weapon/storage/verb/quick_empty
 		//verbs += /obj/item/weapon/storage/bag/sheetsnatcher/quick_empty
 
-	can_be_inserted(obj/item/W as obj, stop_messages = 0)
+	can_be_inserted(obj/item/W, stop_messages = 0)
 		if(!istype(W,/obj/item/stack/sheet) || istype(W,/obj/item/stack/sheet/mineral/sandstone) || istype(W,/obj/item/stack/sheet/wood))
 			if(!stop_messages)
 				usr << "The snatcher does not accept [W]."
@@ -145,7 +145,7 @@
 
 
 // Modified handle_item_insertion.  Would prefer not to, but...
-	handle_item_insertion(obj/item/W as obj, prevent_warning = 0)
+	handle_item_insertion(obj/item/W, prevent_warning = 0)
 		var/obj/item/stack/sheet/S = W
 		if(!istype(S)) return 0
 
@@ -183,7 +183,7 @@
 
 // Sets up numbered display to show the stack size of each stored mineral
 // NOTE: numbered display is turned off currently because it's broken
-	orient2hud(mob/user as mob)
+	orient2hud(mob/user)
 		var/adjusted_contents = contents.len
 
 		//Numbered contents display
@@ -222,7 +222,7 @@
 		update_icon()
 
 // Instead of removing
-	remove_from_storage(obj/item/W as obj, atom/new_location)
+	remove_from_storage(obj/item/W, atom/new_location)
 		var/obj/item/stack/sheet/S = W
 		if(!istype(S)) return 0
 

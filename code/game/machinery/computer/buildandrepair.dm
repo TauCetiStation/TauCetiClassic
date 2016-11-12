@@ -170,15 +170,20 @@
 	name = "Circuit board (Mech Bay Power Control Console)"
 	build_path = /obj/machinery/computer/mech_bay_power_console
 	origin_tech = "programming=2;powerstorage=3"
-/obj/item/weapon/circuitboard/ordercomp
+/obj/item/weapon/circuitboard/computer/cargo/request
 	name = "Circuit board (Supply ordering console)"
-	build_path = /obj/machinery/computer/ordercomp
+	build_path = /obj/machinery/computer/cargo/request
 	origin_tech = "programming=2"
-/obj/item/weapon/circuitboard/supplycomp
+/obj/item/weapon/circuitboard/computer/cargo
 	name = "Circuit board (Supply shuttle console)"
-	build_path = /obj/machinery/computer/supplycomp
+	build_path = /obj/machinery/computer/cargo
 	origin_tech = "programming=3"
-	var/contraband_enabled = 0
+	var/contraband_enabled = FALSE
+	var/hacked = FALSE
+/obj/item/weapon/circuitboard/computer/stockexchange
+	name = "Circuit board (Stock exchange computer)"
+	build_path = /obj/machinery/computer/stockexchange
+	origin_tech = "programming=3"
 /*/obj/item/weapon/circuitboard/research_shuttle
 	name = "Circuit board (Research Shuttle)"
 	build_path = /obj/machinery/computer/research_shuttle
@@ -217,6 +222,11 @@
 	build_path = /obj/machinery/computer/mine_sci_shuttle
 	origin_tech = "programming=2"
 
+/obj/item/weapon/circuitboard/mine_sci_shuttle/flight_comp
+	name = "Circuit board (Mining Shuttle flight computer)"
+	build_path = /obj/machinery/computer/mine_sci_shuttle/flight_comp
+	origin_tech = "programming=2"
+
 /obj/item/weapon/circuitboard/HolodeckControl // Not going to let people get this, but it's just here for future
 	name = "Circuit board (Holodeck Control)"
 	build_path = /obj/machinery/computer/HolodeckControl
@@ -239,8 +249,13 @@
 	origin_tech = "programming=1"
 
 
-/obj/item/weapon/circuitboard/supplycomp/attackby(obj/item/I as obj, mob/user as mob)
-	if(istype(I,/obj/item/device/multitool))
+/obj/item/weapon/circuitboard/computer/cargo/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/weapon/card/emag) && !hacked)
+		user << "\blue Special supplies unlocked."
+		hacked = TRUE
+		contraband_enabled = TRUE
+		return
+	else if(istype(I,/obj/item/device/multitool))
 		var/catastasis = src.contraband_enabled
 		var/opposite_catastasis
 		if(catastasis)
@@ -261,7 +276,7 @@
 				user << "DERP! BUG! Report this (And what you were doing to cause it) to Agouri"
 	return
 
-/obj/item/weapon/circuitboard/libraryconsole/attackby(obj/item/I as obj, mob/user as mob)
+/obj/item/weapon/circuitboard/libraryconsole/attackby(obj/item/I, mob/user)
 	if(istype(I,/obj/item/weapon/screwdriver))
 		if(build_path == /obj/machinery/computer/libraryconsole/bookmanagement)
 			name = "circuit board (Library Visitor Console)"
@@ -273,7 +288,7 @@
 			user << "<span class='notice'>Access protocols successfully updated.</span>"
 	return
 
-/obj/item/weapon/circuitboard/security/attackby(obj/item/I as obj, mob/user as mob)
+/obj/item/weapon/circuitboard/security/attackby(obj/item/I, mob/user)
 	if(istype(I,/obj/item/weapon/card/emag))
 		if(emagged)
 			user << "Circuit lock is already removed."
@@ -307,7 +322,7 @@
 		network = tempnetwork
 	return
 
-/obj/item/weapon/circuitboard/rdconsole/attackby(obj/item/I as obj, mob/user as mob)
+/obj/item/weapon/circuitboard/rdconsole/attackby(obj/item/I, mob/user)
 	if(istype(I,/obj/item/weapon/screwdriver))
 		user.visible_message("\blue \the [user] adjusts the jumper on the [src]'s access protocol pins.", "\blue You adjust the jumper on the access protocol pins.")
 		switch(src.build_path)
@@ -337,7 +352,7 @@
 			user << "\blue Access protocols set to default."*/
 	return
 
-/obj/structure/computerframe/attackby(obj/item/P as obj, mob/user as mob)
+/obj/structure/computerframe/attackby(obj/item/P, mob/user)
 	switch(state)
 		if(0)
 			if(istype(P, /obj/item/weapon/wrench))
