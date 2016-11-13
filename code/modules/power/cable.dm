@@ -454,7 +454,7 @@ By design, d1 is the smallest direction and d2 is the highest
 
 		if(istype(M,/mob/living/carbon/human))
 			var/mob/living/carbon/human/H = M
-			if(H.species.flags & IS_SYNTHETIC)
+			if(H.species.flags[IS_SYNTHETIC])
 				if(M == user)
 					user << "\red You can't repair damage to your own body - it's against OH&S."
 					return

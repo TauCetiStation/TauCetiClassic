@@ -141,7 +141,7 @@
 		src << "<span class='warning'>[T] is not compatible with our biology.</span>"
 		return
 
-	if(T.species.flags & NO_SCAN)
+	if(T.species.flags[NO_SCAN])
 		src << "<span class='warning'>We do not know how to parse this creature's DNA!</span>"
 		return
 

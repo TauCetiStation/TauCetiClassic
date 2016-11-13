@@ -315,7 +315,7 @@ Please contact me on #coderbus IRC. ~Carn x
 
 		//Skin tone.
 		if(!husk && !hulk)
-			if(species.flags & HAS_SKIN_TONE)
+			if(species.flags[HAS_SKIN_TONE])
 				if(s_tone >= 0)
 					base_icon.Blend(rgb(s_tone, s_tone, s_tone), ICON_ADD)
 				else
@@ -330,15 +330,15 @@ Please contact me on #coderbus IRC. ~Carn x
 	stand_icon.Blend(base_icon,ICON_OVERLAY)
 
 	//Skin colour. Not in cache because highly variable (and relatively benign).
-	if (species.flags & HAS_SKIN_COLOR)
+	if (species.flags[HAS_SKIN_COLOR])
 		stand_icon.Blend(rgb(r_skin, g_skin, b_skin), ICON_ADD)
 
 	//Underwear
-	if(underwear >0 && underwear < 12 && species.flags & HAS_UNDERWEAR)
+	if((underwear > 0) && (underwear < 12) && species.flags[HAS_UNDERWEAR])
 		if(!fat)
 			stand_icon.Blend(new /icon('icons/mob/human.dmi', "underwear[underwear]_[g]_s"), ICON_OVERLAY)
 
-	if(undershirt>0 && undershirt < undershirt_t.len && species.flags & HAS_UNDERWEAR)
+	if((undershirt > 0) && (undershirt < undershirt_t.len) && species.flags[HAS_UNDERWEAR])
 		if(!fat)
 			stand_icon.Blend(new /icon('icons/mob/human_undershirt.dmi', "undershirt[undershirt]_s"), ICON_OVERLAY)
 
@@ -351,7 +351,7 @@ Please contact me on #coderbus IRC. ~Carn x
 		standing	+= img_eyes_s
 
 		//Mouth	(lipstick!)
-		if(lip_style && (species && species.flags & HAS_LIPS))	//skeletons are allowed to wear lipstick no matter what you think, agouri.
+		if(lip_style && (species && species.flags[HAS_LIPS]))	//skeletons are allowed to wear lipstick no matter what you think, agouri.
 			var/image/lips = image("icon"='icons/mob/human_face.dmi', "icon_state"="lips_[lip_style]_s", "layer"=-BODY_LAYER)
 			lips.color = lip_color
 			standing	+= lips
@@ -371,7 +371,7 @@ Please contact me on #coderbus IRC. ~Carn x
 	if(!head_organ || (head_organ.status & ORGAN_DESTROYED))
 		return
 
-	//masks and helmets can obscure our hair. 
+	//masks and helmets can obscure our hair.
 	if((HUSK in mutations) || (head && (head.flags & BLOCKHAIR)) || (wear_mask && (wear_mask.flags & BLOCKHAIR)) || (wear_suit && (wear_suit.flags & BLOCKHAIR)))
 		return
 
@@ -938,7 +938,7 @@ Please contact me on #coderbus IRC. ~Carn x
 /mob/living/carbon/human/proc/update_tail_showing()
 	remove_overlay(TAIL_LAYER)
 
-	if(species.tail && species.flags & HAS_TAIL)
+	if(species.tail && species.flags[HAS_TAIL])
 		if(!wear_suit || !(wear_suit.flags_inv & HIDETAIL) && !istype(wear_suit, /obj/item/clothing/suit/space))
 			var/icon/tail_s = new/icon("icon"='icons/effects/species.dmi', "icon_state"="[species.tail]_s")
 			tail_s.Blend(rgb(r_skin, g_skin, b_skin), ICON_ADD)

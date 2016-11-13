@@ -353,7 +353,11 @@ Made by Xhuis
 	//faction = list("faithless")
 	//meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/shadow
 	//specflags = list(NOBREATH,NOBLOOD,RADIMMUNE)
-	flags = NO_BREATHE | NO_BLOOD | RAD_IMMUNE*/
+	flags = list(
+	 NO_BREATHE = TRUE
+	,NO_BLOOD = TRUE
+	,RAD_IMMUNE = TRUE
+	)*/
 
 /datum/species/shadow/ling
 	//Normal shadowpeople but with enhanced effects
@@ -377,7 +381,12 @@ Made by Xhuis
 	blood_color = "#000000"
 	darksight = 8
 
-	flags = NO_BREATHE | NO_BLOOD | RAD_IMMUNE | VIRUS_IMMUNE
+	flags = list(
+	 NO_BREATHE = TRUE
+	,NO_BLOOD = TRUE
+	,RAD_IMMUNE = TRUE
+	,VIRUS_IMMUNE = TRUE
+	)
 	burn_mod = 2 //2x burn damage lel
 
 

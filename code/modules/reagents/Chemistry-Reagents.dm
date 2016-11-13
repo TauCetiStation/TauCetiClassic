@@ -712,7 +712,7 @@ datum
 									var/mob/living/carbon/human/H
 									if(istype(C,/mob/living/carbon/human))
 										H = C
-									if(!H || (H.species && !(H.species.flags & RAD_ABSORB)))
+									if(!H || (H.species && !H.species.flags[RAD_ABSORB]))
 										M.adjustToxLoss(100)
 								M:antibodies |= V.antigen
 
@@ -1762,7 +1762,7 @@ datum
 					if(ishuman(M))
 						var/mob/living/carbon/human/H = M
 						if(H.dna)
-							if(H.species.flags & IS_PLANT) //plantmen take a LOT of damage
+							if(H.species.flags[IS_PLANT]) //plantmen take a LOT of damage
 								H.adjustToxLoss(50)
 
 		toxin/stoxin
