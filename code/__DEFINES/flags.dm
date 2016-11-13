@@ -56,6 +56,7 @@
 #define RAD_IMMUNE		"rad_immune"
 #define VIRUS_IMMUNE	"virus_immune"
 #define BIOHAZZARD_IMMUNE "biohazzard_immune"
+#define HAS_HAIR "has_hair"
 
 //bitflags for door switches.
 #define OPEN	1

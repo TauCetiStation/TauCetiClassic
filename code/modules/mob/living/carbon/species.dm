@@ -142,6 +142,7 @@
 	 HAS_SKIN_TONE = TRUE
 	,HAS_LIPS = TRUE
 	,HAS_UNDERWEAR = TRUE
+	,HAS_HAIR = TRUE
 	)
 
 	//If you wanted to add a species-level ability:
@@ -213,6 +214,7 @@
 	,HAS_UNDERWEAR = TRUE
 	,HAS_TAIL = TRUE
 	,HAS_SKIN_COLOR = TRUE
+	,HAS_HAIR = TRUE
 	)
 
 	flesh_color = "#AFA59E"
