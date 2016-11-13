@@ -6,7 +6,7 @@
 
 	if(crawling)
 		tally += 7
-	else if((reagents.has_reagent("hyperzine") || reagents.has_reagent("nuka_cola")) && species && !(species.flags & NO_BLOOD))
+	else if((reagents.has_reagent("hyperzine") || reagents.has_reagent("nuka_cola")) && species && !(species.flags[NO_BLOOD]))
 		return -1
 
 	if(istype(l_hand, /obj/item/weapon/gun))

@@ -260,7 +260,6 @@
 		var/mob/living/carbon/human/H = usr
 		H.set_species("Shadowling")
 		H.dna.mutantrace = "shadowling"
-		//H.species.flags &= ~(NO_BREATHE|NO_BLOOD|RAD_IMMUNE|NO_GUNS)
 		H.update_mutantrace()
 		H.regenerate_icons()
 

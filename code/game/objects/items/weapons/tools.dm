@@ -383,7 +383,7 @@
 	if(istype(user, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = user
 		var/datum/organ/internal/eyes/E = H.internal_organs_by_name["eyes"]
-		if(H.species.flags & IS_SYNTHETIC)
+		if(H.species.flags[IS_SYNTHETIC])
 			return
 		switch(safety)
 			if(1)
@@ -492,7 +492,7 @@
 
 		if(istype(M,/mob/living/carbon/human))
 			var/mob/living/carbon/human/H = M
-			if(H.species.flags & IS_SYNTHETIC)
+			if(H.species.flags[IS_SYNTHETIC])
 				if(M == user)
 					user << "<span class='rose'>You can't repair damage to your own body - it's against OH&S.</span>"
 					return

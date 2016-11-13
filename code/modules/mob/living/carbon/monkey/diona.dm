@@ -190,7 +190,7 @@
 
 	if(!M || !src) return
 
-	if(M.species.flags & NO_BLOOD)
+	if(M.species.flags[NO_BLOOD])
 		src << "\red That donor has no blood to take."
 		return
 

@@ -82,7 +82,7 @@ var/image/contamination_overlay = image('icons/effects/contamination.dmi')
 		contaminate()
 
 	//Anything else requires them to not be dead.
-	if(stat >= DEAD || (species && species.biohazzard_immunity))
+	if(stat >= DEAD || (species && species.flags[BIOHAZZARD_IMMUNE]))
 		return
 
 	//Burn skin if exposed.

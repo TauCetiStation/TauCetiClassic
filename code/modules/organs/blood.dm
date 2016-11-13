@@ -19,7 +19,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 	vessel = new/datum/reagents(600)
 	vessel.my_atom = src
 
-	if(species && species.flags & NO_BLOOD) //We want the var for safety but we can do without the actual blood.
+	if(species && species.flags[NO_BLOOD]) //We want the var for safety but we can do without the actual blood.
 		return
 
 	vessel.add_reagent("blood",560)
@@ -36,7 +36,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 // Takes care blood loss and regeneration
 /mob/living/carbon/human/proc/handle_blood()
 
-	if(species && species.flags & NO_BLOOD)
+	if(species && species.flags[NO_BLOOD])
 		return
 
 	if(stat != DEAD && bodytemperature >= 170)	//Dead or cryosleep people do not pump the blood.
@@ -143,7 +143,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 	if(istype(loc, /turf/space))	//No drips in space
 		return
 
-	if(species && species.flags & NO_BLOOD) //TODO: Make drips come from the reagents instead.
+	if(species && species.flags[NO_BLOOD]) //TODO: Make drips come from the reagents instead.
 		return
 
 	if(!amt)
@@ -212,7 +212,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 //For humans, blood does not appear from blue, it comes from vessels.
 /mob/living/carbon/human/take_blood(obj/item/weapon/reagent_containers/container, amount)
 
-	if(species && species.flags & NO_BLOOD)
+	if(species && species.flags[NO_BLOOD])
 		return null
 
 	if(vessel.get_reagent_amount("blood") < amount)
@@ -245,7 +245,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 
 	var/datum/reagent/blood/injected = get_blood(container.reagents)
 
-	if(species && species.flags & NO_BLOOD)
+	if(species && species.flags[NO_BLOOD])
 		reagents.add_reagent("blood", amount, injected.data)
 		reagents.update_total()
 		return
