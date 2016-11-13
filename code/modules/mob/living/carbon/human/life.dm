@@ -180,7 +180,7 @@
 	proc/handle_disabilities()
 		if (disabilities & EPILEPSY)
 			if ((prob(1) && paralysis < 1))
-				src << "\red You have a seizure!"
+				to_chat(src, "\red You have a seizure!")
 				for(var/mob/O in viewers(src, null))
 					if(O == src)
 						continue
@@ -222,9 +222,9 @@
 				if(config.rus_language)
 					switch(pick(1,2,3))
 						if(1)
-							say(pick("àçàçàà!", "ß íå ñìàëãåé!", "ÕÎÑ ÕÓÅÑÎÑ!", "[pick("", "åáó÷èé òðåéòîð")] [pick("ìîðãàí", "ìîðãóí", "ìîðãåí", "ìðîãóí")] [pick("äæåìåñ", "äæàìåñ", "äæàåìåñ")] ãðåôîíåò ìèíÿ øïàñèò;å!!!", "òè ìîæûø äàòü ìíå [pick("òèëèïàòèþ","õàëêó","ýïèëëåïñèþ")]?", "ÕÀ÷ó ñòàòü áîðãîì!", "ÏÎÇÎâèòå äåòåêòèâà!", "Õî÷ó ñòàòü ìàðòûøêîé!", "ÕÂÀÒÅÒ ÃÐÈÔÎÍÅÒÜ ÌÈÍß!!!!", "ØÀÒÎË!"))
+							say(pick("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½!", "ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½!", "ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½!", "[pick("", "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½")] [pick("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½")] [pick("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½")] ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½;ï¿½!!!", "ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ [pick("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½","ï¿½ï¿½ï¿½ï¿½ï¿½","ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½")]?", "ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½!", "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½!", "ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½!", "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½!!!!", "ï¿½ï¿½ï¿½ï¿½ï¿½!"))
 						if(2)
-							say(pick("Êàê ìèí[LETTER_255]òü ðóêè?","åáó÷èå ôóððè!", "Ïîäåáèë", "Ïðîêë[LETTER_255]òûå òðàïû!", "ëîëêà!", "âæææææææææ!!!", "äæåô ñêâààààä!", "ÁÐÀÍÄÅÍÁÓÐÃ!", "ÁÓÄÀÏÅØÒ!", "ÏÀÓÓÓÓÓÊ!!!!", "ÏÓÊÀÍ ÁÎÌÁÀÍÓË!", "ÏÓØÊÀ", "ÐÅÂÀ ÏÎÖÎÍÛ", "Ïàòè íà õîïà!"))
+							say(pick("ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½[LETTER_255]ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½?","ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½!", "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", "ï¿½ï¿½ï¿½ï¿½ï¿½[LETTER_255]ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½!", "ï¿½ï¿½ï¿½ï¿½ï¿½!", "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½!!!", "ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½!", "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½!", "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½!", "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½!!!!", "ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½!", "ï¿½ï¿½ï¿½ï¿½ï¿½", "ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", "ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½!"))
 						if(3)
 							emote("drool")
 				else
@@ -243,15 +243,15 @@
 					custom_pain("Your head feels numb and painful.")
 			if(getBrainLoss() >= 15)
 				if(4 <= rn && rn <= 6) if(eye_blurry <= 0)
-					src << "\red It becomes hard to see for some reason."
+					to_chat(src, "\red It becomes hard to see for some reason.")
 					eye_blurry = 10
 			if(getBrainLoss() >= 35)
 				if(7 <= rn && rn <= 9) if(get_active_hand())
-					src << "\red Your hand won't respond properly, you drop what you're holding."
+					to_chat(src, "\red Your hand won't respond properly, you drop what you're holding.")
 					drop_item()
 			if(getBrainLoss() >= 50)
 				if(10 <= rn && rn <= 12) if(!lying)
-					src << "\red Your legs won't respond properly, you fall down."
+					to_chat(src, "\red Your legs won't respond properly, you fall down.")
 					resting = 1
 
 	proc/handle_stasis_bag()
@@ -295,7 +295,7 @@
 				if(!species.flags[RAD_ABSORB])
 					Weaken(10)
 					if(!lying)
-						src << "\red You feel weak."
+						to_chat(src, "\red You feel weak.")
 						emote("collapse")
 
 			if (radiation < 0)
@@ -330,12 +330,12 @@
 							h_style = "Skinhead"
 							f_style = "Shaved"
 							update_hair()
-							src << "<span class='notice'>Suddenly you lost your hair!</span>"
+							to_chat(src, "<span class='notice'>Suddenly you lost your hair!</span>")
 						if(prob(5))
 							radiation -= 5
 							Weaken(3)
 							if(!lying)
-								src << "\red You feel weak."
+								to_chat(src, "\red You feel weak.")
 								emote("collapse")
 						updatehealth()
 
@@ -347,9 +347,9 @@
 							h_style = "Skinhead"
 							f_style = "Shaved"
 							update_hair()
-							src << "<span class='notice'>Suddenly you lost your hair!</span>"
+							to_chat(src, "<span class='notice'>Suddenly you lost your hair!</span>")
 						if(prob(1))
-							src << "\red You mutate!"
+							to_chat(src, "\red You mutate!")
 							randmutb(src)
 							domutcheck(src,null)
 							emote("gasp")
@@ -1098,7 +1098,7 @@
 
 			if(light_amount > LIGHT_DAM_THRESHOLD)
 				take_overall_damage(0,LIGHT_DAMAGE_TAKEN)
-				src << "<span class='userdanger'>The light burns you!</span>"
+				to_chat(src, "<span class='userdanger'>The light burns you!</span>")
 				src << 'sound/weapons/sear.ogg'
 			else if (light_amount < LIGHT_HEAL_THRESHOLD) //heal in the dark
 				heal_overall_damage(5,5)
@@ -1112,7 +1112,7 @@
 		//The fucking FAT mutation is the dumbest shit ever. It makes the code so difficult to work with
 		if(FAT in mutations)
 			if(overeatduration < 100)
-				src << "\blue You feel fit again!"
+				to_chat(src, "\blue You feel fit again!")
 				mutations.Remove(FAT)
 				update_body()
 				update_mutantrace()
@@ -1121,7 +1121,6 @@
 				update_inv_wear_suit()
 		else
 			if(overeatduration > 500 && !species.flags[IS_SYNTHETIC] && !species.flags[IS_PLANT])
-				src << "\red You suddenly feel blubbery!"
 				mutations.Add(FAT)
 				update_body()
 				update_mutantrace()
@@ -1604,7 +1603,7 @@
 							else
 								adjustBrainLoss(1)
 					else
-						src << "Too hard to concentrate..."
+						to_chat(src, "Too hard to concentrate...")
 						remoteview_target = null
 						reset_view(null)//##Z2
 				if(!isRemoteObserve && client && !client.adminobs)
@@ -1754,7 +1753,7 @@
 			return
 
 		if(shock_stage == 10)
-			src << "<font color='red'><b>"+pick("It hurts so much!", "You really need some painkillers..", "Dear god, the pain!")
+			to_chat(src, "<font color='red'><b>"+pick("It hurts so much!", "You really need some painkillers..", "Dear god, the pain!"))
 
 		if(shock_stage >= 30)
 			if(shock_stage == 30) emote("me",1,"is having trouble keeping their eyes open.")
@@ -1762,22 +1761,22 @@
 			stuttering = max(stuttering, 5)
 
 		if(shock_stage == 40)
-			src << "<font color='red'><b>"+pick("The pain is excrutiating!", "Please, just end the pain!", "Your whole body is going numb!")
+			to_chat(src, "<font color='red'><b>"+pick("The pain is excrutiating!", "Please, just end the pain!", "Your whole body is going numb!"))
 
 		if (shock_stage >= 60)
 			if(shock_stage == 60) emote("me",1,"'s body becomes limp.")
 			if (prob(2))
-				src << "<font color='red'><b>"+pick("The pain is excrutiating!", "Please, just end the pain!", "Your whole body is going numb!")
+				to_chat(src, "<font color='red'><b>"+pick("The pain is excrutiating!", "Please, just end the pain!", "Your whole body is going numb!"))
 				Weaken(20)
 
 		if(shock_stage >= 80)
 			if (prob(5))
-				src << "<font color='red'><b>"+pick("The pain is excrutiating!", "Please, just end the pain!", "Your whole body is going numb!")
+				to_chat(src, "<font color='red'><b>"+pick("The pain is excrutiating!", "Please, just end the pain!", "Your whole body is going numb!"))
 				Weaken(20)
 
 		if(shock_stage >= 120)
 			if (prob(2))
-				src << "<font color='red'><b>"+pick("You black out!", "You feel like you could die any moment now.", "You're about to lose consciousness.")
+				to_chat(src, "<font color='red'><b>"+pick("You black out!", "You feel like you could die any moment now.", "You're about to lose consciousness."))
 				Paralyse(5)
 
 		if(shock_stage == 150)

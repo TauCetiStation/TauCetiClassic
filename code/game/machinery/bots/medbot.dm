@@ -174,7 +174,7 @@
 			src.reagent_glass.loc = get_turf(src)
 			src.reagent_glass = null
 		else
-			usr << "<span class='notice'>You cannot eject the beaker because the panel is locked.</span>"
+			to_chat(usr, "<span class='notice'>You cannot eject the beaker because the panel is locked.</span>")
 
 	else if ((href_list["togglevoice"]) && (!src.locked || issilicon(usr)))
 		src.shut_up = !src.shut_up
@@ -188,28 +188,28 @@
 	if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if (src.allowed(user) && !open && !emagged)
 			src.locked = !src.locked
-			user << "<span class='notice'>Controls are now [src.locked ? "locked." : "unlocked."]</span>"
+			to_chat(user, "<span class='notice'>Controls are now [src.locked ? "locked." : "unlocked."]</span>")
 			src.updateUsrDialog()
 		else
 			if(emagged)
-				user << "<span class='warning'>ERROR</span>"
+				to_chat(user, "<span class='warning'>ERROR</span>")
 			if(open)
-				user << "<span class='warning'>Please close the access panel before locking it.</span>"
+				to_chat(user, "<span class='warning'>Please close the access panel before locking it.</span>")
 			else
-				user << "<span class='warning'>Access denied.</span>"
+				to_chat(user, "<span class='warning'>Access denied.</span>")
 
 	else if (istype(W, /obj/item/weapon/reagent_containers/glass))
 		if(src.locked)
-			user << "<span class='notice'>You cannot insert a beaker because the panel is locked.</span>"
+			to_chat(user, "<span class='notice'>You cannot insert a beaker because the panel is locked.</span>")
 			return
 		if(!isnull(src.reagent_glass))
-			user << "<span class='notice'>There is already a beaker loaded.</span>"
+			to_chat(user, "<span class='notice'>There is already a beaker loaded.</span>")
 			return
 
 		user.drop_item()
 		W.loc = src
 		src.reagent_glass = W
-		user << "<span class='notice'>You insert [W].</span>"
+		to_chat(user, "<span class='notice'>You insert [W].</span>")
 		src.updateUsrDialog()
 		return
 
@@ -221,13 +221,15 @@
 /obj/machinery/bot/medbot/Emag(mob/user)
 	..()
 	if(open && !locked)
-		if(user) user << "<span class='warning'>You short out [src]'s reagent synthesis circuits.</span>"
+		if(user)
+			to_chat(user, "<span class='warning'>You short out [src]'s reagent synthesis circuits.</span>")
 		spawn(0)
 			for(var/mob/O in hearers(src, null))
 				O.show_message("\red <B>[src] buzzes oddly!</B>", 1)
 		flick("medibot_spark", src)
 		src.patient = null
-		if(user) src.oldpatient = user
+		if(user)
+			src.oldpatient = user
 		src.currently_healing = 0
 		src.last_found = world.time
 		src.anchored = 0
@@ -546,7 +548,7 @@
 
 	//Making a medibot!
 	if(src.contents.len >= 1)
-		user << "<span class='notice'>You need to empty [src] out first.</span>"
+		to_chat(user, "<span class='notice'>You need to empty [src] out first.</span>")
 		return
 
 	var/obj/item/weapon/firstaid_arm_assembly/A = new /obj/item/weapon/firstaid_arm_assembly
@@ -559,7 +561,7 @@
 
 	qdel(S)
 	user.put_in_hands(A)
-	user << "<span class='notice'>You add the robot arm to the first aid kit.</span>"
+	to_chat(user, "<span class='notice'>You add the robot arm to the first aid kit.</span>")
 	user.drop_from_inventory(src)
 	qdel(src)
 
@@ -580,7 +582,7 @@
 					user.drop_item()
 					qdel(W)
 					src.build_step++
-					user << "<span class='notice'>You add the health sensor to [src].</span>"
+					to_chat(user, "<span class='notice'>You add the health sensor to [src].</span>")
 					src.name = "First aid/robot arm/health analyzer assembly"
 					src.overlays += image('icons/obj/aibots.dmi', "na_scanner")
 
@@ -589,11 +591,10 @@
 					user.drop_item()
 					qdel(W)
 					src.build_step++
-					user << "<span class='notice'>You complete the Medibot! Beep boop.</span>"
+					to_chat(user, "<span class='notice'>You complete the Medibot! Beep boop.</span>")
 					var/turf/T = get_turf(src)
 					var/obj/machinery/bot/medbot/S = new /obj/machinery/bot/medbot(T)
 					S.skin = src.skin
 					S.name = src.created_name
 					user.drop_from_inventory(src)
 					qdel(src)
-

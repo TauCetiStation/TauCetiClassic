@@ -5,7 +5,7 @@
 
 /obj/item/device/radio/beacon/syndicate_bomb/attack_self(mob/user)
 	if(user)
-		user << "\blue Locked In"
+		to_chat(user, "\blue Locked In")
 		new /obj/machinery/syndicatebomb( user.loc )
 		playsound(src, 'sound/effects/pop.ogg', 100, 1, 1)
 		qdel(src)
@@ -50,26 +50,26 @@
 
 /obj/machinery/syndicatebomb/examine(mob/user)
 	..()
-	user << "A digital display on it reads \"[timer]\"."
+	to_chat(user, "A digital display on it reads \"[timer]\".")
 
 /obj/machinery/syndicatebomb/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/wrench))
 		if(!anchored)
 			if(!isturf(src.loc) || istype(src.loc, /turf/space))
-				user << "<span class='notice'>The bomb must be placed on solid ground to attach it</span>"
+				to_chat(user, "<span class='notice'>The bomb must be placed on solid ground to attach it</span>")
 			else
-				user << "<span class='notice'>You firmly wrench the bomb to the floor</span>"
+				to_chat(user, "<span class='notice'>You firmly wrench the bomb to the floor</span>")
 				playsound(loc, 'sound/items/ratchet.ogg', 50, 1)
 				anchored = 1
 				if(active)
-					user << "<span class='notice'>The bolts lock in place</span>"
+					to_chat(user, "<span class='notice'>The bolts lock in place</span>")
 		else
 			if(!active)
-				user << "<span class='notice'>You wrench the bomb from the floor</span>"
+				to_chat(user, "<span class='notice'>You wrench the bomb from the floor</span>")
 				playsound(loc, 'sound/items/ratchet.ogg', 50, 1)
 				anchored = 0
 			else
-				user << "<span class='warning'>The bolts are locked down!</span>"
+				to_chat(user, "<span class='warning'>The bolts are locked down!</span>")
 
 	else if(istype(I, /obj/item/weapon/screwdriver))
 		open_panel = !open_panel
@@ -77,46 +77,46 @@
 			icon_state = "syndicate-bomb-inactive[open_panel ? "-wires" : ""]"
 		else
 			icon_state = "syndicate-bomb-active[open_panel ? "-wires" : ""]"
-		user << "<span class='notice'>You [open_panel ? "open" : "close"] the wire panel.</span>"
+		to_chat(user, "<span class='notice'>You [open_panel ? "open" : "close"] the wire panel.</span>")
 
 	else if(istype(I, /obj/item/weapon/wirecutters) || istype(I, /obj/item/device/multitool) || istype(I, /obj/item/device/assembly/signaler ))
 		if(degutted)
-			user << "<span class='notice'>The wires aren't connected to anything!<span>"
+			to_chat(user, "<span class='notice'>The wires aren't connected to anything!<span>")
 		else if(open_panel)
 			wires.Interact(user)
 
 	else if(istype(I, /obj/item/weapon/crowbar))
 		if(open_panel && !degutted && isWireCut(WIRE_BOOM) && isWireCut(WIRE_UNBOLT) && isWireCut(WIRE_DELAY) && isWireCut(WIRE_PROCEED) && isWireCut(WIRE_ACTIVATE))
-			user << "<span class='notice'>You carefully pry out the bomb's payload.</span>"
+			to_chat(user, "<span class='notice'>You carefully pry out the bomb's payload.</span>")
 			degutted = 1
 			new /obj/item/weapon/syndicatebombcore(user.loc)
 		else if (open_panel)
-			user << "<span class='notice'>The wires conneting the shell to the explosives are holding it down!</span>"
+			to_chat(user, "<span class='notice'>The wires conneting the shell to the explosives are holding it down!</span>")
 		else if (degutted)
-			user << "<span class='notice'>The explosives have already been removed.</span>"
+			to_chat(user, "<span class='notice'>The explosives have already been removed.</span>")
 		else
-			user << "<span class='notice'>The cover is screwed on, it won't pry off!</span>"
+			to_chat(user, "<span class='notice'>The cover is screwed on, it won't pry off!</span>")
 	else if(istype(I, /obj/item/weapon/syndicatebombcore))
 		if(degutted)
-			user << "<span class='notice'>You place the payload into the shell.</span>"
+			to_chat(user, "<span class='notice'>You place the payload into the shell.</span>")
 			degutted = 0
 			user.drop_item()
 			qdel(I)
 		else
-			user << "<span class='notice'>While a double strength bomb would surely be a thing of terrible beauty, there's just no room for it.</span>"
+			to_chat(user, "<span class='notice'>While a double strength bomb would surely be a thing of terrible beauty, there's just no room for it.</span>")
 	else
 		..()
 
 /obj/machinery/syndicatebomb/attack_hand(mob/user)
 	if(degutted)
-		user << "<span class='notice'>The bomb's explosives have been removed, the [open_panel ? "wires" : "buttons"] are useless now.</span>"
+		to_chat(user, "<span class='notice'>The bomb's explosives have been removed, the [open_panel ? "wires" : "buttons"] are useless now.</span>")
 	else if(anchored)
 		if(open_panel)
 			wires.Interact(user)
 		else if(!active)
 			settings()
 		else
-			user << "<span class='notice'>The bomb is bolted to the floor!</span>"
+			to_chat(user, "<span class='notice'>The bomb is bolted to the floor!</span>")
 	else if(!active)
 		settings()
 
@@ -125,16 +125,16 @@
 	newtime = Clamp(newtime, 60, 60000)
 	if(in_range(src, usr) && isliving(usr)) //No running off and setting bombs from across the station
 		timer = newtime
-		src.loc.visible_message("\blue \icon[src] timer set for [timer] seconds.")
+		src.loc.visible_message("\blue [bicon(src)] timer set for [timer] seconds.")
 	if(alert(usr,"Would you like to start the countdown now?",,"Yes","No") == "Yes" && in_range(src, usr) && isliving(usr))
 		if(defused || active || degutted)
 			if(degutted)
-				src.loc.visible_message("\blue \icon[src] Device error: Payload missing")
+				src.loc.visible_message("\blue [bicon(src)] Device error: Payload missing")
 			else if(defused)
-				src.loc.visible_message("\blue \icon[src] Device error: User intervention required")
+				src.loc.visible_message("\blue [bicon(src)] Device error: User intervention required")
 			return
 		else
-			src.loc.visible_message("\red \icon[src] [timer] seconds until detonation, please clear the area.")
+			src.loc.visible_message("\red [bicon(src)] [timer] seconds until detonation, please clear the area.")
 			playsound(loc, 'sound/machines/click.ogg', 30, 1)
 			if(!open_panel)
 				icon_state = "syndicate-bomb-active"
@@ -185,7 +185,7 @@
 				detonated++
 			existant++
 		playsound(user, 'sound/machines/click.ogg', 20, 1)
-		user << "<span class='notice'>[existant] found, [detonated] triggered.</span>"
+		to_chat(user, "<span class='notice'>[existant] found, [detonated] triggered.</span>")
 		if(detonated)
 			var/turf/T = get_turf(src)
 			var/area/A = get_area(T)

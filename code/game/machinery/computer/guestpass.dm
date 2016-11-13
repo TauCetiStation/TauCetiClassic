@@ -20,20 +20,20 @@
 /obj/item/weapon/card/id/guest/examine(mob/user)
 	..()
 	if (world.time < expiration_time)
-		user << "<span class='notice'>This pass expires at [worldtime2text(expiration_time)].</span>"
+		to_chat(user, "<span class='notice'>This pass expires at [worldtime2text(expiration_time)].</span>")
 	else
-		user << "<span class='warning'>It expired at [worldtime2text(expiration_time)].</span>"
+		to_chat(user, "<span class='warning'>It expired at [worldtime2text(expiration_time)].</span>")
 
 /obj/item/weapon/card/id/guest/read()
 	if (world.time > expiration_time)
-		usr << "<span class='notice'>This pass expired at [worldtime2text(expiration_time)].</span>"
+		to_chat(usr, "<span class='notice'>This pass expired at [worldtime2text(expiration_time)].</span>")
 	else
-		usr << "<span class='notice'>This pass expires at [worldtime2text(expiration_time)].</span>"
+		to_chat(usr, "<span class='notice'>This pass expires at [worldtime2text(expiration_time)].</span>")
 
-	usr << "<span class='notice'>It grants access to following areas:</span>"
+	to_chat(usr, "<span class='notice'>It grants access to following areas:</span>")
 	for (var/A in temp_access)
-		usr << "<span class='notice'>[get_access_desc(A)].</span>"
-	usr << "<span class='notice'>Issuing reason: [reason].</span>"
+		to_chat(usr, "<span class='notice'>[get_access_desc(A)].</span>")
+	to_chat(usr, "<span class='notice'>Issuing reason: [reason].</span>")
 	return
 
 /////////////////////////////////////////////
@@ -67,7 +67,7 @@
 			giver = O
 			updateUsrDialog()
 		else
-			user << "<span class='warning'>There is already ID card inside.</span>"
+			to_chat(user, "<span class='warning'>There is already ID card inside.</span>")
 
 /obj/machinery/computer/guestpass/attack_ai(mob/user)
 	return attack_hand(user)
@@ -132,7 +132,7 @@
 					if (dur > 0 && dur <= 10)
 						duration = dur
 					else
-						usr << "<span class='warning'>Invalid duration.</span>"
+						to_chat(usr, "<span class='warning'>Invalid duration.</span>")
 			if ("access")
 				var/A = text2num(href_list["access"])
 				if (A in accesses)
@@ -189,6 +189,6 @@
 					pass.reason = reason
 					pass.name = "guest pass #[number]"
 				else
-					usr << "\red Cannot issue pass without issuing ID."
+					to_chat(usr, "\red Cannot issue pass without issuing ID.")
 
 	updateUsrDialog()

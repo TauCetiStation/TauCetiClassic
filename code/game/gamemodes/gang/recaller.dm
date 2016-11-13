@@ -163,7 +163,7 @@
 	add_fingerprint(usr)
 
 	if(recalling)
-		usr << "<span class='warning'>Device is busy. Shuttle recall in progress.</span>"
+		to_chat(usr, "<span class='warning'>Device is busy. Shuttle recall in progress.</span>")
 		return
 
 	if(href_list["register"])
@@ -229,12 +229,12 @@
 					var/area/usrarea = get_area(usr.loc)
 					var/usrturf = get_turf(usr.loc)
 					if(initial(usrarea.name) == "Space" || istype(usrturf,/turf/space) || usr.z != ZLEVEL_STATION)
-						usr << "<span class='warning'>You can only use this on the station!</span>"
+						to_chat(usr, "<span class='warning'>You can only use this on the station!</span>")
 						return
 
 					for(var/obj/obj in usrturf)
 						if(obj.density)
-							usr << "<span class='warning'>There's not enough room here!</span>"
+							to_chat(usr, "<span class='warning'>There's not enough room here!</span>")
 							return
 
 					if(points >= 30)
@@ -255,7 +255,7 @@
 			log_game("A [href_list["purchase"]] was purchased by [key_name(usr)] for [points] Influence.")
 
 		else
-			usr << "<span class='warning'>Not enough influence.</span>"
+			to_chat(usr, "<span class='warning'>Not enough influence.</span>")
 
 	else if(href_list["choice"])
 		switch(href_list["choice"])
@@ -277,7 +277,7 @@
 	if(!message || (message == "") || !can_use(user))
 		return
 	if(user.z > ZLEVEL_CENTCOMM)
-		user << "<span class='info'>\icon[src]Error: Station out of range.</span>"
+		to_chat(user, "<span class='info'>[bicon(src)]Error: Station out of range.</span>")
 		return
 	var/list/members = list()
 	if(gang == "A")
@@ -288,9 +288,9 @@
 		var/ping = "<span class='danger'><B><i>[gang_name(gang)] [boss ? "Gang Boss" : "Gang Lieutenant"]</i>: [sanitize(message)]</B></span>"
 		for(var/datum/mind/ganger in members)
 			if((ganger.current.z <= 2) && (ganger.current.stat == CONSCIOUS))
-				ganger.current << ping
+				to_chat(ganger.current, ping)
 		for(var/mob/M in dead_mob_list)
-			M << ping
+			to_chat(M, ping)
 		log_game("[key_name(user)] Messaged [gang_name(gang)] Gang ([gang]): [sanitize(message)].")
 
 
@@ -298,11 +298,11 @@
 	if(!(user.mind in (ticker.mode.A_bosses|ticker.mode.B_bosses)))
 		var/gang_bosses = ((gang == "A")? ticker.mode.A_bosses.len : ticker.mode.B_bosses.len)
 		if(gang_bosses >= 3)
-			user << "<span class='warning'>\icon[src] Error: All positions filled.</span>"
+			to_chat(user, "<span class='warning'>[bicon(src)] Error: All positions filled.</span>")
 			return
 
 	if(jobban_isbanned(user, ROLE_REV) || jobban_isbanned(user, "Syndicate") || role_available_in_minutes(user, ROLE_REV))
-		user << "<span class='warning'>\icon[src] ACCESS DENIED: Blacklisted user.</span>"
+		to_chat(user, "<span class='warning'>[bicon(src)] ACCESS DENIED: Blacklisted user.</span>")
 		return 0
 
 	var/promoted
@@ -330,13 +330,13 @@
 			promoted = 1
 	if(promoted)
 		ticker.mode.message_gangtools(((gang=="A")? ticker.mode.A_tools : ticker.mode.B_tools), "[user] has been promoted to Lieutenant.")
-		user << "<FONT size=3 color=red><B>You have been promoted to Lieutenant!</B></FONT>"
+		to_chat(user, "<FONT size=3 color=red><B>You have been promoted to Lieutenant!</B></FONT>")
 		ticker.mode.forge_gang_objectives(user.mind)
 		ticker.mode.greet_gang(user.mind,0)
-		user << "The <b>Gangtool</b> you registered will allow you to purchase items, send messages to your gangsters and to recall the emergency shuttle from anywhere on the station."
-		user << "Unlike regular gangsters, you may use <b>recruitment pens</b> to add recruits to your gang. Use them on unsuspecting crew members to recruit them. Don't forget to get your one free pen from the gangtool."
+		to_chat(user, "The <b>Gangtool</b> you registered will allow you to purchase items, send messages to your gangsters and to recall the emergency shuttle from anywhere on the station.")
+		to_chat(user, "Unlike regular gangsters, you may use <b>recruitment pens</b> to add recruits to your gang. Use them on unsuspecting crew members to recruit them. Don't forget to get your one free pen from the gangtool.")
 	if(!gang)
-		usr << "<span class='warning'>ACCESS DENIED: Unauthorized user.</span>"
+		to_chat(usr, "<span class='warning'>ACCESS DENIED: Unauthorized user.</span>")
 
 /obj/item/device/gangtool/proc/recall(mob/user)
 	if(!can_use(user))
@@ -347,35 +347,35 @@
 
 	var/datum/game_mode/gang/mode = ticker.mode
 	recalling = 1
-	loc << "<span class='info'>\icon[src]Generating shuttle recall order with codes retrieved from last call signal...</span>"
+	to_chat(loc, "<span class='info'>[bicon(src)]Generating shuttle recall order with codes retrieved from last call signal...</span>")
 
 	sleep(rand(100,300))
 
 	if(SSshuttle.location!=0) //Shuttle can only be recalled when it's moving to the station
-		user << "<span class='info'>\icon[src]Emergency shuttle cannot be recalled at this time.</span>"
+		to_chat(user, "<span class='info'>[bicon(src)]Emergency shuttle cannot be recalled at this time.</span>")
 		recalling = 0
 		return 0
-	loc << "<span class='info'>\icon[src]Shuttle recall order generated. Accessing station long-range communication arrays...</span>"
+	to_chat(loc, "<span class='info'>[bicon(src)]Shuttle recall order generated. Accessing station long-range communication arrays...</span>")
 
 	sleep(rand(100,300))
 
 	if(gang == "A" ? !mode.A_dominations : !mode.B_dominations)
-		user << "<span class='info'>\icon[src]Error: Unable to access communication arrays. Firewall has logged our signature and is blocking all further attempts.</span>"
+		to_chat(user, "<span class='info'>[bicon(src)]Error: Unable to access communication arrays. Firewall has logged our signature and is blocking all further attempts.</span>")
 		recalling = 0
 		return 0
 
 	var/turf/userturf = get_turf(user)
 	if(userturf.z != ZLEVEL_STATION) //Shuttle can only be recalled while on station
-		user << "<span class='info'>\icon[src]Error: Device out of range of station communication arrays.</span>"
+		to_chat(user, "<span class='info'>[bicon(src)]Error: Device out of range of station communication arrays.</span>")
 		recalling = 0
 		return 0
 	var/datum/station_state/end_state = new /datum/station_state()
 	end_state.count()
 	if((100 *  start_state.score(end_state)) < 70) //Shuttle cannot be recalled if the station is too damaged
-		user << "<span class='info'>\icon[src]Error: Station communication systems compromised. Unable to establish connection.</span>"
+		to_chat(user, "<span class='info'>[bicon(src)]Error: Station communication systems compromised. Unable to establish connection.</span>")
 		recalling = 0
 		return 0
-	loc << "<span class='info'>\icon[src]Comm arrays accessed. Broadcasting recall signal...</span>"
+	to_chat(loc, "<span class='info'>[bicon(src)]Comm arrays accessed. Broadcasting recall signal...</span>")
 
 	sleep(rand(100,300))
 
@@ -387,7 +387,7 @@
 		if(cancel_call_proc(user))
 			return 1
 
-	loc << "<span class='info'>\icon[src]No response recieved. Emergency shuttle cannot be recalled at this time.</span>"
+	to_chat(loc, "<span class='info'>[bicon(src)]No response recieved. Emergency shuttle cannot be recalled at this time.</span>")
 	return 0
 
 /obj/item/device/gangtool/proc/can_use(mob/living/carbon/human/user)
@@ -409,7 +409,7 @@
 			success = 1
 	if(success)
 		return 1
-	user << "<span class='warning'>\icon[src] ACCESS DENIED: Unauthorized user.</span>"
+	to_chat(user, "<span class='warning'>[bicon(src)] ACCESS DENIED: Unauthorized user.</span>")
 	return 0
 
 /obj/item/device/gangtool/lt

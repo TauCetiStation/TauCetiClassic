@@ -10,7 +10,7 @@
 	var/fps = round(input("Sets game frames-per-second. Can potentially break the game","FPS", config.fps) as num|null)
 
 	if(fps <= 0)
-		src << "<span class='danger'>Error: ticklag(): Invalid world.ticklag value. No changes made.</span>"
+		to_chat(src, "<span class='danger'>Error: ticklag(): Invalid world.ticklag value. No changes made.</span>")
 		return
 	if(fps > config.fps)
 		if(alert(src, "You are setting fps to a high value:\n\t[fps] frames-per-second\n\tconfig.fps = [config.fps]","Warning!","Confirm","ABORT-ABORT-ABORT") != "Confirm")

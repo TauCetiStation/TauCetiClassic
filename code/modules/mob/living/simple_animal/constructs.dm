@@ -42,7 +42,7 @@
 	return
 
 /mob/living/simple_animal/construct/examine(mob/user)
-	var/msg = "<span cass='info'>*---------*\nThis is \icon[src] \a <EM>[src]</EM>!\n"
+	var/msg = "<span cass='info'>*---------*\nThis is [bicon(src)] \a <EM>[src]</EM>!\n"
 	if (src.health < src.maxHealth)
 		msg += "<span class='warning'>"
 		if (src.health >= src.maxHealth/2)
@@ -52,7 +52,7 @@
 		msg += "</span>"
 	msg += "*---------*</span>"
 
-	user << msg
+	to_chat(user, msg)
 
 /mob/living/simple_animal/construct/attack_animal(mob/living/simple_animal/M)
 	if(istype(M, /mob/living/simple_animal/construct/builder))
@@ -79,7 +79,7 @@
 		adjustBruteLoss(damage)
 		visible_message("<span class='danger'>[src] has been attacked with [O] by [user].</span>")
 	else
-		usr << "<span class='red'>This weapon is ineffective, it does no damage.</span>"
+		to_chat(usr, "<span class='red'>This weapon is ineffective, it does no damage.</span>")
 		visible_message("<span class='red'>[user] gently taps [src] with [O].</span>")
 
 /mob/living/simple_animal/construct/airflow_stun()
@@ -121,7 +121,7 @@
 		else
 			visible_message("<span class='danger'>[O] bounces harmlessly off of [src].</span>")
 	else
-		usr << "<span class='red'>This weapon is ineffective, it does no damage.</span>"
+		to_chat(usr, "<span class='red'>This weapon is ineffective, it does no damage.</span>")
 		visible_message("<span class='red'>[user] gently taps [src] with [O].</span>")
 
 /mob/living/simple_animal/construct/armoured/Life()
@@ -226,7 +226,7 @@
 		else
 			visible_message("<span class='danger'>[O] bounces harmlessly off of [src].</span>")
 	else
-		usr << "<span class='red'>This weapon is ineffective, it does no damage.</span>"
+		to_chat(usr, "<span class='red'>This weapon is ineffective, it does no damage.</span>")
 		visible_message("<span class='red'>[user] gently taps [src] with [O].</span>")
 
 
