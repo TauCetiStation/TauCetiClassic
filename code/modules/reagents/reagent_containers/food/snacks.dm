@@ -3741,3 +3741,141 @@
 	desc = "Chocolate-covered nougat, shaped like a wrench. Great for an engineer on the go!"
 	icon_state = "toolerone"
 	filling_color = "#7D5F46"
+
+///////////////////////////////////////////
+// SUCKERS! :3
+///////////////////////////////////////////
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/sucker/red
+	name = "sucker"
+	desc = "For being such a good sport! It's red!"
+	icon_state = "sucker_red"
+	filling_color = "#801E28"
+	bitesize = 3
+	New()
+		..()
+		reagents.add_reagent("cherryjelly", 2)
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/sucker/blue
+	name = "sucker"
+	desc = "For being such a good sport! It's blue!"
+	icon_state = "sucker_blue"
+	filling_color = "#863333"
+	bitesize = 3
+	New()
+		..()
+		reagents.add_reagent("berryjuice", 2)
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/sucker/green
+	name = "sucker"
+	desc = "For being such a good sport! It's green!"
+	icon_state = "sucker_green"
+	filling_color = "#365E30"
+	bitesize = 3
+	New()
+		..()
+		reagents.add_reagent("limejuice", 2)
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/sucker/yellow
+	name = "sucker"
+	desc = "For being such a good sport! It's yellow!"
+	icon_state = "sucker_yellow"
+	filling_color = "#863333"
+	bitesize = 3
+	New()
+		..()
+		reagents.add_reagent("lemonjuice", 2)
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/sucker/orange
+	name = "sucker"
+	desc = "For being such a good sport! It's orange!"
+	icon_state = "sucker_orange"
+	filling_color = "#E78108"
+	bitesize = 3
+	New()
+		..()
+		reagents.add_reagent("orangejuice", 2)
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/sucker/purple
+	name = "sucker"
+	desc = "For being such a good sport! It's purple!"
+	icon_state = "sucker_purple"
+	filling_color = "#993399"
+	bitesize = 3
+	New()
+		..()
+		reagents.add_reagent("grapejuice", 2)
+
+///////////////////////////////////////////
+// WORM GYMS :3
+///////////////////////////////////////////
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/gummyworm/red
+	name = "gummy worm"
+	desc = "An edible worm, made from gelatin. It's red!"
+	icon_state = "gworm_red"
+	filling_color = "#801E28"
+	bitesize = 3
+	New()
+		..()
+		reagents.add_reagent("cherryjelly", 2)
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/gummyworm/blue
+	name = "gummy worm"
+	desc = "An edible worm, made from gelatin. It's blue!"
+	icon_state = "gworm_blue"
+	filling_color = "#863333"
+	bitesize = 3
+	New()
+		..()
+		reagents.add_reagent("berryjuice", 2)
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/gummyworm/green
+	name = "gummy worm"
+	desc = "An edible worm, made from gelatin. It's green!"
+	icon_state = "gworm_green"
+	filling_color = "#365E30"
+	bitesize = 3
+	New()
+		..()
+		reagents.add_reagent("limejuice", 10)
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/gummyworm/yellow
+	name = "gummy worm"
+	desc = "An edible worm, made from gelatin. It's yellow!"
+	icon_state = "gworm_yellow"
+	filling_color = "#863333"
+	bitesize = 3
+	New()
+		..()
+		reagents.add_reagent("lemonjuice", 2)
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/gummyworm/orange
+	name = "gummy worm"
+	desc = "An edible worm, made from gelatin. It's orange!"
+	icon_state = "gworm_orange"
+	filling_color = "#E78108"
+	bitesize = 3
+	New()
+		..()
+		reagents.add_reagent("orangejuice", 2)
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/gummyworm/purple
+	name = "gummy worm"
+	desc = "An edible worm, made from gelatin. It's purple!"
+	icon_state = "gworm_purple"
+	filling_color = "#993399"
+	bitesize = 3
+	New()
+		..()
+		reagents.add_reagent("grapejuice", 2)
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/gummyworm/wtf
+	name = "gummy worm"
+	desc = "An edible worm. Did it just move?"
+	icon_state = "gworm_wtf"
+	filling_color = "#60A584"
+	bitesize = 3
+	New()
+		..()
+		reagents.add_reagent("space_drugs", 2)
