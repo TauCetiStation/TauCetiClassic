@@ -6,7 +6,7 @@
 	density = 1
 	anchored = 1
 
-/obj/structure/stacklifter/attack_hand(mob/user as mob)
+/obj/structure/stacklifter/attack_hand(mob/user)
 	var/mob/living/carbon/human/gymnast = user
 
 	if(in_use)
@@ -51,7 +51,7 @@
 	density = 1
 	anchored = 1
 
-/obj/structure/weightlifter/attack_hand(mob/user as mob)
+/obj/structure/weightlifter/attack_hand(mob/user)
 	var/mob/living/carbon/human/gymnast = user
 
 	if(in_use)
