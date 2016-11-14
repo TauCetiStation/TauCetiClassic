@@ -43,12 +43,6 @@
 		icon_state = "fitnesslifter"
 		user << finishmessage
 
-/obj/structure/stacklifter/bullet_act(obj/item/projectile/Proj)
-	if(buckled_mob)
-		if(prob(85))
-			return buckled_mob.bullet_act(Proj)
-	visible_message("<span class='warning'>[Proj] ricochets off the [src]!</span>")
-
 /obj/structure/weightlifter
 	name = "Weight Machine"
 	desc = "Just looking at this thing makes you feel tired."
@@ -103,9 +97,3 @@
 		overlays -= W
 
 		user << "[finishmessage]"
-
-/obj/structure/weightlifter/bullet_act(obj/item/projectile/Proj)
-	if(buckled_mob)
-		if(prob(85))
-			return buckled_mob.bullet_act(Proj)
-	visible_message("<span class='warning'>[Proj] ricochets off the [src]!</span>")
