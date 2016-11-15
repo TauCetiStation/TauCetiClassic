@@ -32,7 +32,7 @@
 
 			if(istype(M,/mob/living/carbon/human))
 				var/mob/living/carbon/human/H = M
-				if(H.species.flags & IS_SYNTHETIC)
+				if(H.species.flags[IS_SYNTHETIC])
 					H << "\red You have a monitor for a head, where do you think you're going to put that?"
 					return
 
@@ -45,7 +45,7 @@
 		else if( istype(M, /mob/living/carbon/human) )
 
 			var/mob/living/carbon/human/H = M
-			if(H.species.flags & IS_SYNTHETIC)
+			if(H.species.flags[IS_SYNTHETIC])
 				H << "\red They have a monitor for a head, where do you think you're going to put that?"
 				return
 
