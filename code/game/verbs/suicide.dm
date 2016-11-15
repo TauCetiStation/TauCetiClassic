@@ -20,7 +20,7 @@
 			break
 
 	if(!permitted)
-		message_admins("[ckey] has tried to suicide, but they were not permitted due to not being antagonist as human.", 1)
+		message_admins("[ckey] has tried to suicide, but they were not permitted due to not being antagonist as human. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[usr.x];Y=[usr.y];Z=[usr.z]'>JMP</a>)")
 		src << "No. Adminhelp if there is a legitimate reason."
 		return
 
