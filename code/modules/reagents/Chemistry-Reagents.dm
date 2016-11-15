@@ -3005,7 +3005,7 @@ datum
 			reagent_state = LIQUID
 			nutriment_factor = 0 //So alcohol can fill you up! If they want to.
 			color = "#404030" // rgb: 64, 64, 48
-			custom_metabolism = DRINK_METABOLISM * 0.25
+			custom_metabolism = DRINK_METABOLISM * 0.4
 			var/boozepwr = 5 //higher numbers mean the booze will have an effect faster.
 			var/dizzy_adj = 3
 			var/adj_drowsy = 0
@@ -3032,7 +3032,7 @@ datum
 					data = 1   //if it doesn't exist we set it.  if it's a list we're going to set it to 1 as well.  This is to
 				src.data += boozepwr						//avoid a runtime error associated with drinking blood mixed in drinks (demon's blood).
 
-				var/d = data
+				var/d = 0
 
 				// make all the beverages work together
 				for(var/datum/reagent/ethanol/A in holder.reagent_list)
