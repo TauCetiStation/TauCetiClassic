@@ -17,7 +17,7 @@
 			return 0
 		if (affected.status & ORGAN_DESTROYED)
 			return 0
-		if (target_zone == "head" && target.species && (target.species.flags & IS_SYNTHETIC))
+		if (target_zone == "head" && target.species && (target.species.flags[IS_SYNTHETIC]))
 			return 1
 		if (affected.status & ORGAN_ROBOT)
 			return 0
