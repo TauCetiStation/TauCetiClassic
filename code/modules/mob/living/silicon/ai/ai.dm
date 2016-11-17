@@ -339,7 +339,7 @@ var/list/ai_verbs_default = list(
 
 	captain_announce(input, "A.I. Announcement", src.name)
 	log_say("[key_name(usr)] has made an AI announcement: [input]")
-	message_admins("[key_name_admin(usr)] has made an AI announcement.", 1)
+	message_admins("[key_name_admin(usr)] has made an AI announcement.")
 	message_cooldown = 1
 	spawn(600)//One minute cooldown
 		message_cooldown = 0

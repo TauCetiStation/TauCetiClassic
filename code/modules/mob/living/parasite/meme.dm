@@ -441,7 +441,7 @@ mob/living/parasite/meme/verb/SubtleJump(mob/living/carbon/human/target as mob i
 
 	to_chat(usr, "<b>You successfully jumped to [target].")
 	log_admin("[src.key] has jumped to [target]")
-	message_admins("[src.key] has jumped to [target]")
+	message_admins("[src.key] has jumped to [target] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[src.x];Y=[src.y];Z=[src.z]'>JMP</a>)")
 
 // Jump to a distant target through a shout
 mob/living/parasite/meme/verb/ObviousJump(mob/living/carbon/human/target as mob in mob_list)
@@ -481,7 +481,7 @@ mob/living/parasite/meme/verb/ObviousJump(mob/living/carbon/human/target as mob 
 
 	to_chat(usr, "<b>You successfully jumped to [target].")
 	log_admin("[src.key] has jumped to [target]")
-	message_admins("[src.key] has jumped to [target]")
+	message_admins("[src.key] has jumped to [target] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[src.x];Y=[src.y];Z=[src.z]'>JMP</a>)")
 
 // Jump to an attuned mob for free
 mob/living/parasite/meme/verb/AttunedJump(mob/living/carbon/human/target as mob in mob_list)
@@ -509,7 +509,7 @@ mob/living/parasite/meme/verb/AttunedJump(mob/living/carbon/human/target as mob 
 	to_chat(usr, "<b>You successfully jumped to [target].")
 
 	log_admin("[src.key] has jumped to [target]")
-	message_admins("[src.key] has jumped to [target]")
+	message_admins("[src.key] has jumped to [target] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[src.x];Y=[src.y];Z=[src.z]'>JMP</a>)")
 
 // ATTUNE a mob, adding it to the indoctrinated list
 mob/living/parasite/meme/verb/Attune()
@@ -532,7 +532,7 @@ mob/living/parasite/meme/verb/Attune()
 	to_chat(host, "\red Your head feels a bit roomier..")
 
 	log_admin("[src.key] has attuned [host]")
-	message_admins("[src.key] has attuned [host]")
+	message_admins("[src.key] has attuned [host] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[src.x];Y=[src.y];Z=[src.z]'>JMP</a>)")
 
 // Enables the mob to take a lot more damage
 mob/living/parasite/meme/verb/Analgesic()
@@ -593,12 +593,12 @@ mob/living/parasite/meme/verb/Possession()
 		to_chat(dummy, "\blue You feel very drowsy.. Your eyelids become heavy...")
 
 		log_admin("[meme_mind.key] has taken possession of [host]([host_mind.key])")
-		message_admins("[meme_mind.key] has taken possession of [host]([host_mind.key])")
+		message_admins("[meme_mind.key] has taken possession of [host]([host_mind.key]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[src.x];Y=[src.y];Z=[src.z]'>JMP</a>)")
 
 		sleep(600)
 
 		log_admin("[meme_mind.key] has lost possession of [host]([host_mind.key])")
-		message_admins("[meme_mind.key] has lost possession of [host]([host_mind.key])")
+		message_admins("[meme_mind.key] has lost possession of [host]([host_mind.key]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[src.x];Y=[src.y];Z=[src.z]'>JMP</a>)")
 
 		meme_mind.transfer_to(src)
 		host_mind.transfer_to(host)

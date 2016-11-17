@@ -46,15 +46,15 @@ var/list/admin_verbs_event = list(
 	var/choice = input("Select a map", , "CANCEL") in AllowedMaps
 	if(choice == "--CANCEL--") return
 
-	message_admins("[key_name_admin(src)] started loading event-map [choice]", 1)
-	log_admin("[key_name_admin(src)] started loading event-map [choice]", 1)
+	message_admins("[key_name_admin(src)] started loading event-map [choice]")
+	log_admin("[key_name_admin(src)] started loading event-map [choice]")
 
 	var/file = file(choice)
 	if(isfile(file))
 		maploader.load_map(file)//, load_speed = 100)
 
-	message_admins("[key_name_admin(src)] loaded event-map [choice], zlevel [world.maxz]", 1)
-	log_admin("[key_name_admin(src)] loaded event-map [choice], zlevel [world.maxz]", 1)
+	message_admins("[key_name_admin(src)] loaded event-map [choice], zlevel [world.maxz]")
+	log_admin("[key_name_admin(src)] loaded event-map [choice], zlevel [world.maxz]")
 
 //////////////////////////////
 // Noir event
@@ -93,8 +93,8 @@ var/list/admin_verbs_event = list(
 	for(var/obj/machinery/gateway/G in machines)
 		G.initialize()
 
-	log_admin("[key_name(src)] connected gates", 1)
-	message_admins("\blue [key_name_admin(src)] connected gates", 1)
+	log_admin("[key_name(src)] connected gates")
+	message_admins("\blue [key_name_admin(src)] connected gates")
 
 //////////////////////////////
 // Velocity\Centcomm barriers
@@ -114,8 +114,8 @@ var/centcom_barriers_stat = 1
 	for(var/obj/structure/centcom_barrier/B in world)
 		B.density = centcom_barriers_stat
 
-	log_admin("[key_name(src)] switched [centcom_barriers_stat? "on" : "off"] centcomm barriers", 1)
-	message_admins("\blue [key_name_admin(src)] switched [centcom_barriers_stat? "on" : "off"] centcomm barriers", 1)
+	log_admin("[key_name(src)] switched [centcom_barriers_stat? "on" : "off"] centcomm barriers")
+	message_admins("\blue [key_name_admin(src)] switched [centcom_barriers_stat? "on" : "off"] centcomm barriers")
 
 /obj/effect/landmark/trololo
 	name = "Rickroll"

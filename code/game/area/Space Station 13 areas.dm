@@ -853,9 +853,9 @@ var/list/ghostteleportlocs = list()
 	name = "\improper Cafeteria"
 	icon_state = "cafeteria"
 
-/area/crew_quarters/oldcafeteria
-	name = "\improper Old Cafeteria"
-	icon_state = "cafeteria"
+/area/crew_quarters/gym
+	name = "\improper Gym"
+	icon_state = "fitness"
 
 /area/crew_quarters/kitchen
 	name = "\improper Kitchen"

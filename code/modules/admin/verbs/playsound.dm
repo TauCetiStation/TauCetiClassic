@@ -13,13 +13,13 @@ var/global/list/sounds_cache = list()
 	switch(alert("Do you ready?\nSong: [S]",,"Play", "Play forced(don't overuse)", "Cancel"))
 		if("Play")
 			log_admin("[key_name(src)] played sound [S]")
-			message_admins("[key_name_admin(src)] played sound [S]", 1)
+			message_admins("[key_name_admin(src)] played sound [S]")
 			for(var/mob/M in player_list)
 				if(M.client.prefs.toggles & SOUND_MIDI)
 					M << uploaded_sound
 		if("Play forced(don't overuse)")
 			log_admin("[key_name(src)] played sound [S] FORCED")
-			message_admins("[key_name_admin(src)] played sound [S] FORCED", 1)
+			message_admins("[key_name_admin(src)] played sound [S] FORCED")
 			for(var/mob/M in player_list)
 				M << uploaded_sound
 
@@ -32,7 +32,7 @@ var/global/list/sounds_cache = list()
 	if(!check_rights(R_SOUNDS))	return
 
 	log_admin("[key_name(src)] played a local sound [S]")
-	message_admins("[key_name_admin(src)] played a local sound [S]", 1)
+	message_admins("[key_name_admin(src)] played a local sound [S]")
 	playsound(get_turf_loc(src.mob), S, 50, 0, 0)
 	feedback_add_details("admin_verb","PLS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 

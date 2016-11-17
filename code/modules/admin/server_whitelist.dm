@@ -47,5 +47,5 @@ proc/check_if_a_new_player(key)
 		log_game("SQL ERROR, WHITELIST. Error : \[[err]\]\n")
 		return
 
-	message_admins("[key_name_admin(src)] add [ckey] to server whitelist", 1)
-	log_admin("[key_name_admin(src)] add [ckey] to server whitelist", 1)
+	message_admins("[key_name_admin(src)] add [ckey] to server whitelist")
+	log_admin("[key_name_admin(src)] add [ckey] to server whitelist")

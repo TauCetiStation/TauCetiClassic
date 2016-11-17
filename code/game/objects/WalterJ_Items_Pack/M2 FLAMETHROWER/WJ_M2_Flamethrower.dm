@@ -14,7 +14,7 @@
 	if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/T = W
 		if(T.welding)
-			message_admins("[key_name_admin(user)] triggered a flamethrower back explosion.")
+			message_admins("[key_name_admin(user)] triggered a flamethrower back explosion. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 			log_game("[key_name(user)] triggered a flamethrower back explosion.")
 			to_chat(user, "\red That was stupid of you.")
 		if(Connected_Flamethrower)

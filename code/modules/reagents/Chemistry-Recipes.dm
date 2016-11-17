@@ -1209,8 +1209,9 @@ datum
 					napalm.temperature = 1400
 
 					target_tile.assume_air(napalm)
-					spawn (0) target_tile.hotspot_expose(700, 400)
-				message_admins("Orange slime extract activated by [key_name(usr, usr.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>)",0,1)
+					spawn (0)
+						target_tile.hotspot_expose(700, 400)
+				message_admins("Orange slime extract activated by [key_name_admin(usr)](<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>)")
 				log_game("Orange slime extract activated by [usr.ckey]([usr])")
 
 //Yellow
@@ -1224,7 +1225,7 @@ datum
 			required_other = 1
 			on_reaction(datum/reagents/holder, created_volume)
 				empulse(get_turf_loc(holder.my_atom), 3, 7)
-				message_admins("Yellow slime extract activated by [key_name(usr, usr.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>)",0,1)
+				message_admins("Yellow slime extract activated by [key_name_admin(usr)](<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>)")
 				log_game("Yellow slime extract activated by [usr.ckey]([usr])")
 
 		slimecell
@@ -1357,7 +1358,7 @@ datum
 					O.show_message(text("\red The slime extract begins to vibrate violently !"), 1)
 				sleep(50)
 				explosion(get_turf_loc(holder.my_atom), 1 ,3, 6)
-				message_admins("Oil slime extract activated by [key_name(usr, usr.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>)",0,1)
+				message_admins("Oil slime extract activated by [key_name_admin(usr)](<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>)")
 				log_game("Oil slime extract activated by [usr.ckey]([usr])")
 //Light Pink
 		slimepotion2
