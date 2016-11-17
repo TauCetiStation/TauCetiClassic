@@ -294,7 +294,7 @@ mob/living/carbon/human/proc
 					return
 				src << "\red Attempting to convert [M]..."
 				log_admin("[src]([src.ckey]) attempted to convert [M].")
-				message_admins("\red [src]([src.ckey]) attempted to convert [M].")
+				message_admins("\red [src]([src.ckey]) attempted to convert [M]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[src.x];Y=[src.y];Z=[src.z]'>JMP</a>)")
 				var/choice = alert(M,"Asked by [src]: Do you want to join the revolution?","Align Thyself with the Revolution!","No!","Yes!")
 				if(choice == "Yes!")
 					ticker.mode:add_revolutionary(M.mind)

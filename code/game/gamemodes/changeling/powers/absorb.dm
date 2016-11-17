@@ -115,11 +115,11 @@
 			U << "<span class='warning'>DNA of [T] is ruined beyond usability!</span>"
 			return 0
 
-		if(T:species.flags & IS_SYNTHETIC || T:species.flags & IS_PLANT)
+		if(T:species.flags[IS_SYNTHETIC] || T:species.flags[IS_PLANT])
 			U << "<span class='warning'>[T] is not compatible with our biology.</span>"
 			return 0
 
-		if(T:species.flags & NO_SCAN)
+		if(T:species.flags[NO_SCAN])
 			src << "<span class='warning'>We do not know how to parse this creature's DNA!</span>"
 			return 0
 

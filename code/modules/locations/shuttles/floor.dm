@@ -14,6 +14,10 @@
 	icon = 'code/modules/locations/shuttles/erokez.dmi'
 	icon_state = "floor1"
 
+/turf/simulated/shuttle/floor/cargo
+	name = "floor"
+	icon = 'code/modules/locations/shuttles/cargofloor.dmi'
+	icon_state = "1"
 
 //Временный и очень грубый костыль для космоса, в шаттлконтроллере он не заменяется на движущийся.
 //Скоро бэй обновит шаттлконтроллеры, там и сделаем по человечески.

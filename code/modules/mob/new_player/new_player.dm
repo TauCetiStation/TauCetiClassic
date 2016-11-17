@@ -204,7 +204,7 @@
 			usr << "<b>Thank you for your vote!</b>"
 			usr << browse(null,"window=privacypoll")
 
-	if(!ready && href_list["preference"])
+	if(href_list["preference"] && (!ready || (href_list["preference"] == "close")))
 		if(client)
 			client.prefs.process_link(src, href_list)
 	else if(!href_list["late_join"])
@@ -472,8 +472,9 @@
 	return client.holder.rights & R_ADMIN
 
 /mob/new_player/proc/is_species_whitelisted(datum/species/S)
-	if(!S) return 1
-	return is_alien_whitelisted(src, S.name) || !config.usealienwhitelist || !(S.flags & IS_WHITELISTED)
+	if(!S)
+		return 1
+	return is_alien_whitelisted(src, S.name) || !config.usealienwhitelist || !S.flags[IS_WHITELISTED]
 
 /mob/new_player/get_species()
 	var/datum/species/chosen_species

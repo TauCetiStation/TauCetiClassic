@@ -93,7 +93,7 @@ var/global/sent_strike_team = 0
 			new /obj/effect/spawner/newbomb/timer/syndicate(L.loc)
 			qdel(L)
 
-	message_admins("\blue [key_name_admin(usr)] has spawned a CentCom strike squad.", 1)
+	message_admins("\blue [key_name_admin(usr)] has spawned a CentCom strike squad.")
 	log_admin("[key_name(usr)] used Spawn Death Squad.")
 	return 1
 

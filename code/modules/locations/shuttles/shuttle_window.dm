@@ -55,7 +55,7 @@
 	icon = 'icons/obj/podwindows.dmi'
 	//icon_state = "1"
 	basestate = ""
-	dir = SOUTHWEST
+	dir = SOUTH
 
 /obj/structure/window/reinforced/shuttle/update_icon()
 
