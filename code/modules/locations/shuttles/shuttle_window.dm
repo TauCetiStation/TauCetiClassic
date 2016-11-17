@@ -53,12 +53,10 @@
 /obj/structure/window/reinforced/shuttle/default
 	name = "shuttle window"
 	icon = 'icons/obj/podwindows.dmi'
-	//icon_state = "1"
-	basestate = ""
-	dir = SOUTH
+	icon_state = "window"
+	dir = SOUTHWEST
 
 /obj/structure/window/reinforced/shuttle/update_icon()
-
 	return
 
 /obj/structure/shuttle/window/new_shuttle
