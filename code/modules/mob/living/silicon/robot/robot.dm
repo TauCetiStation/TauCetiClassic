@@ -179,7 +179,7 @@ var/list/robot_verbs_default = list(
 /mob/living/silicon/robot/proc/pick_module()
 	if(module)
 		return
-	var/list/modules = list("Standard", "Engineering", "Construction", "Surgeon", "Crisis", "Miner", "Janitor", "Service", "Clerical", "Security", "Science")
+	var/list/modules = list("Standard", "Engineering", "Surgeon", "Crisis", "Miner", "Janitor", "Service", "Security", "Science")
 	if(crisis && security_level == SEC_LEVEL_RED) //Leaving this in until it's balanced appropriately.
 		src << "\red Crisis mode active. Combat module available."
 		modules+="Combat"
@@ -211,16 +211,6 @@ var/list/robot_verbs_default = list(
 			module_sprites["Drone"] = "drone-service" // How does this even work...? Oh well.
 			module_sprites["Acheron"] = "mechoid-Service"
 			module_sprites["Kodiak"] = "kodiak-service"
-
-		if("Clerical")
-			module = new /obj/item/weapon/robot_module/clerical(src)
-			module_sprites["Waitress"] = "Service"
-			module_sprites["Kent"] = "toiletbot"
-			module_sprites["Bro"] = "Brobot"
-			module_sprites["Rich"] = "maximillion"
-			module_sprites["Default"] = "Service2"
-			module_sprites["Drone"] = "drone-service"
-			module_sprites["Acheron"] = "mechoid-Service"
 
 		if("Science")
 			module = new /obj/item/weapon/robot_module/science(src)
@@ -292,19 +282,6 @@ var/list/robot_verbs_default = list(
 			module_sprites["Drone"] = "drone-engineer"
 			module_sprites["Acheron"] = "mechoid-Engineering"
 			module_sprites["Kodiak"] = "kodiak-eng"
-
-		if("Construction")
-			module = new /obj/item/weapon/robot_module/construction(src)
-			module.channels = list("Engineering" = 1)
-			if(camera && "Robots" in camera.network)
-				camera.add_network("Engineering")
-			module_sprites["Basic"] = "Engineering"
-			module_sprites["Antique"] = "engineerrobot"
-			module_sprites["Custom"] = "custom_astra_t3"
-			module_sprites["Landmate"] = "landmate"
-			module_sprites["Landmate - Treaded"] = "engiborg+tread"
-			module_sprites["Drone"] = "drone-engineer"
-			module_sprites["Acheron"] = "mechoid-Engineering"
 
 		if("Janitor")
 			module = new /obj/item/weapon/robot_module/janitor(src)

@@ -164,25 +164,6 @@
 
 	..()
 
-/obj/item/weapon/robot_module/construction
-	name = "construction robot module"
-
-	stacktypes = list(
-		/obj/item/stack/sheet/metal = 50,
-		/obj/item/stack/sheet/plasteel = 10,
-		/obj/item/stack/sheet/rglass = 50
-		)
-
-	New()
-		src.modules += new /obj/item/device/flash(src)
-		src.modules += new /obj/item/borg/sight/meson(src)
-		src.modules += new /obj/item/weapon/extinguisher(src)
-		src.modules += new /obj/item/weapon/rcd/borg(src)
-		src.modules += new /obj/item/weapon/screwdriver(src)
-		src.modules += new /obj/item/weapon/wrench(src)
-		src.modules += new /obj/item/weapon/crowbar(src)
-		src.modules += new /obj/item/weapon/pickaxe/plasmacutter(src)
-
 /obj/item/weapon/robot_module/engineering
 	name = "engineering robot module"
 
@@ -210,6 +191,7 @@
 		src.modules += new /obj/item/weapon/gripper(src)
 		src.modules += new /obj/item/weapon/matter_decompiler(src)
 
+
 		src.emag = new /obj/item/borg/stun(src)
 
 		var/obj/item/stack/sheet/metal/cyborg/M = new /obj/item/stack/sheet/metal/cyborg(src)
@@ -223,6 +205,14 @@
 		var/obj/item/weapon/cable_coil/W = new /obj/item/weapon/cable_coil(src)
 		W.amount = 50
 		src.modules += W
+
+		var/obj/item/stack/rods/Q = new /obj/item/stack/rods(src)
+		Q.amount = 15
+		src.modules += Q
+
+		var/obj/item/stack/tile/plasteel/F = new /obj/item/stack/tile/plasteel(src)
+		F.amount = 15
+		src.modules += F
 
 		return
 
@@ -284,7 +274,6 @@
 
 	New()
 		src.modules += new /obj/item/device/flash(src)
-		src.modules += new /obj/item/weapon/razor(src)
 		src.modules += new /obj/item/weapon/reagent_containers/food/drinks/cans/beer(src)
 		src.modules += new /obj/item/weapon/reagent_containers/food/condiment/enzyme(src)
 
@@ -300,6 +289,9 @@
 
 		src.modules += new /obj/item/weapon/tray/robotray(src)
 		src.modules += new /obj/item/weapon/reagent_containers/food/drinks/shaker(src)
+		src.modules += new /obj/item/weapon/pen/robopen(src)
+		src.modules += new /obj/item/weapon/razor(src)
+
 		src.emag = new /obj/item/weapon/reagent_containers/food/drinks/cans/beer(src)
 
 		var/datum/reagents/R = new/datum/reagents(50)
@@ -311,27 +303,6 @@
 
 	add_languages(mob/living/silicon/robot/R)
 		//full set of languages
-		R.add_language("Sol Common", 1)
-		R.add_language("Sinta'unathi", 1)
-		R.add_language("Siik'maas", 1)
-		R.add_language("Siik'tajr", 0)
-		R.add_language("Skrellian", 1)
-		R.add_language("Rootspeak", 1)
-		R.add_language("Tradeband", 1)
-		R.add_language("Gutter", 1)
-
-/obj/item/weapon/robot_module/clerical
-	name = "clerical robot module"
-
-	New()
-		src.modules += new /obj/item/device/flash(src)
-		src.modules += new /obj/item/weapon/pen/robopen(src)
-		src.modules += new /obj/item/weapon/form_printer(src)
-		src.modules += new /obj/item/weapon/gripper/paperwork(src)
-
-		src.emag = new /obj/item/weapon/stamp/denied(src)
-
-	add_languages(mob/living/silicon/robot/R)
 		R.add_language("Sol Common", 1)
 		R.add_language("Sinta'unathi", 1)
 		R.add_language("Siik'maas", 1)
@@ -362,7 +333,7 @@
 		src.modules += new /obj/item/weapon/storage/bag/sheetsnatcher/borg(src)
 		src.modules += new /obj/item/device/geoscanner(src)
 		src.modules += new /obj/item/weapon/shovel(src)//Need to buff borgdrill, so it can get sand instead shovel
-		src.emag = new /obj/item/weapon/pickaxe/plasmacutter(src)
+		src.emag = new /obj/item/borg/stun(src)
 		return
 
 /obj/item/weapon/robot_module/syndicate
