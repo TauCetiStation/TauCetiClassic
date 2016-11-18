@@ -55,7 +55,7 @@
 					visible_message("\red <B>[src] has been touched with the stun gloves by [M]!</B>")
 				return
 
-		if(istype(M.gloves , /obj/item/clothing/gloves/boxing/hologlove))
+		if(istype(M.gloves , /obj/item/clothing/gloves/boxing))
 
 			var/damage = rand(0, 9)
 			if(!damage)
