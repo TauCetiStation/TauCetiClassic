@@ -24,8 +24,7 @@
 	var/heat_proof = 0 // For glass airlocks/opacity firedoors
 	var/air_properties_vary_with_direction = 0
 	var/block_air_zones = 1 //If set, air zones cannot merge across the door even when it is opened.
-
-	var/width = 1
+	var/emergency = 0 // Emergency access override
 
 /obj/machinery/door/New()
 	. = ..()
@@ -36,15 +35,6 @@
 	else
 		layer = base_layer //Under all objects if opened. 2.7 due to tables being at 2.6
 		explosion_resistance = 0
-
-
-	if(width > 1)
-		if(dir in list(EAST, WEST))
-			bound_width = width * world.icon_size
-			bound_height = world.icon_size
-		else
-			bound_width = world.icon_size
-			bound_height = width * world.icon_size
 
 	update_nearby_tiles(need_rebuild=1)
 	return
@@ -70,7 +60,7 @@
 
 	if(istype(AM, /obj/machinery/bot))
 		var/obj/machinery/bot/bot = AM
-		if(src.check_access(bot.botcard))
+		if(src.check_access(bot.botcard) || emergency)
 			if(density)
 				open()
 		return
@@ -78,18 +68,19 @@
 	if(istype(AM, /obj/mecha))
 		var/obj/mecha/mecha = AM
 		if(density)
-			if(mecha.occupant && (src.allowed(mecha.occupant) || src.check_access_list(mecha.operation_req_access)))
+			if(mecha.occupant && (src.allowed(mecha.occupant) || src.check_access_list(mecha.operation_req_access)) || emergency)
 				open()
 			else
-				flick("door_deny", src)
+				do_animate("deny")
 		return
+
 	if(istype(AM, /obj/structure/stool/bed/chair/wheelchair))
 		var/obj/structure/stool/bed/chair/wheelchair/wheel = AM
 		if(density)
-			if(wheel.pulling && (src.allowed(wheel.pulling)))
+			if((wheel.pulling && src.allowed(wheel.pulling)) || emergency)
 				open()
 			else
-				flick("door_deny", src)
+				do_animate("deny")
 		return
 	return
 
@@ -110,8 +101,10 @@
 		user = null
 
 	if(density)
-		if(allowed(user))	open()
-		else				flick("door_deny", src)
+		if(allowed(user) || emergency)
+			open()
+		else
+			do_animate("deny")
 	return
 
 /obj/machinery/door/meteorhit(obj/M)
@@ -181,11 +174,10 @@
 						da.throw_at(target, 200, 100)
 
 						if(A.mineral)
-							da.glass = A.mineral
-						else if(A.glass && !da.glass)
-							da.glass = 1
-						da.state = 2
-						da.name = "Near finished Airlock Assembly"
+							da.change_mineral_airlock_type(A.mineral)
+						if(A.glass && da.can_insert_glass)
+							da.set_glass(TRUE)
+						da.state = ASSEMBLY_WIRED
 						da.created_name = src.name
 						da.update_state()
 
@@ -258,10 +250,11 @@
 		user = null
 	if(!src.requiresID())
 		user = null
-	if(src.density && (istype(I, /obj/item/weapon/card/emag)||istype(I, /obj/item/weapon/melee/energy/blade)))
-		flick("door_spark", src)
+	if(src.density && hasPower() && (istype(I, /obj/item/weapon/card/emag)||istype(I, /obj/item/weapon/melee/energy/blade)))
+		update_icon(AIRLOCK_EMAG)
 		sleep(6)
-		open()
+		if(!open())
+			update_icon(AIRLOCK_CLOSED)
 		operating = -1
 		return 1
 	if(src.allowed(user))
@@ -271,7 +264,7 @@
 			close()
 		return
 	if(src.density)
-		flick("door_deny", src)
+		do_animate("deny")
 	return
 
 
@@ -343,7 +336,7 @@
 	src.set_opacity(0)
 	sleep(3)
 	src.density = 0
-	sleep(7)
+	sleep(9)
 	src.layer = base_layer
 	explosion_resistance = 0
 	update_icon()
@@ -372,7 +365,7 @@
 	src.density = 1
 	explosion_resistance = initial(explosion_resistance)
 	src.layer = base_layer + DOOR_CLOSED_MOD
-	sleep(7)
+	sleep(9)
 	update_icon()
 	if(visible && !glass)
 		set_opacity(1)	//caaaaarn!
@@ -412,16 +405,7 @@
 	return
 
 /obj/machinery/door/Move(new_loc, new_dir)
-	update_nearby_tiles()
-	. = ..()
-	if(width > 1)
-		if(dir in list(EAST, WEST))
-			bound_width = width * world.icon_size
-			bound_height = world.icon_size
-		else
-			bound_width = world.icon_size
-			bound_height = width * world.icon_size
-
+	..()
 	update_nearby_tiles()
 
 /obj/machinery/door/proc/hasPower()

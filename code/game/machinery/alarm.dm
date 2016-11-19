@@ -1201,7 +1201,7 @@ Just a object used in constructing air alarms
 */
 /obj/item/weapon/airalarm_electronics
 	name = "air alarm electronics"
-	icon = 'icons/obj/doors/door_assembly.dmi'
+	icon = 'icons/obj/doors/door_electronics.dmi'
 	icon_state = "door_electronics"
 	desc = "Looks like a circuit. Probably is."
 	w_class = 2.0
@@ -1529,7 +1529,7 @@ Just a object used in constructing fire alarms
 */
 /obj/item/weapon/firealarm_electronics
 	name = "fire alarm electronics"
-	icon = 'icons/obj/doors/door_assembly.dmi'
+	icon = 'icons/obj/doors/door_electronics.dmi'
 	icon_state = "door_electronics"
 	desc = "A circuit. It has a label on it, it says \"Can handle heat levels up to 40 degrees celsius!\""
 	w_class = 2.0

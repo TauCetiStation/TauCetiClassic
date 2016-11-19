@@ -167,21 +167,23 @@ obj/structure/windoor_assembly/Destroy()
 						src.name = "Anchored Windoor Assembly"
 
 			//Adding airlock electronics for access. Step 6 complete.
-			else if(istype(W, /obj/item/weapon/airlock_electronics) && W:icon_state != "door_electronics_smoked")
-				playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
-				user.visible_message("[user] installs the electronics into the airlock assembly.", "You start to install electronics into the airlock assembly.")
-				user.drop_item()
-				W.loc = src
+			else if(istype(W, /obj/item/weapon/airlock_electronics))
+				var/obj/item/weapon/airlock_electronics/AE = W
+				if(!AE.broken)
+					playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
+					user.visible_message("[user] installs the electronics into the airlock assembly.", "You start to install electronics into the airlock assembly.")
+					user.drop_item()
+					AE.loc = src
 
-				if(do_after(user, 40, target = src))
-					if(!src || src.electronics)
-						W.loc = src.loc
-						return
-					user << "\blue You've installed the airlock electronics!"
-					src.name = "Near finished Windoor Assembly"
-					src.electronics = W
-				else
-					W.loc = src.loc
+					if(do_after(user, 40, target = src))
+						if(!src || src.electronics)
+							AE.loc = src.loc
+							return
+						user << "\blue You've installed the airlock electronics!"
+						src.name = "Near finished Windoor Assembly"
+						src.electronics = AE
+					else
+						AE.loc = src.loc
 
 			//Screwdriver to remove airlock electronics. Step 6 undone.
 			else if(istype(W, /obj/item/weapon/screwdriver))

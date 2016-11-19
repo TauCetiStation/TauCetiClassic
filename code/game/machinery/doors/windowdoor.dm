@@ -73,6 +73,7 @@
 			ae.loc = src.loc
 		if(operating == -1)
 			ae.icon_state = "door_electronics_smoked"
+			ae.broken = TRUE
 			operating = 0
 	src.density = 0
 	playsound(src, "shatter", 70, 1)
