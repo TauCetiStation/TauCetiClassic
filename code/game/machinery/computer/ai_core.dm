@@ -189,7 +189,7 @@
 /obj/structure/AIcore/deactivated/Destroy()
 	if(empty_playable_ai_cores.Find(src))
 		empty_playable_ai_cores -= src
-	..()
+	return ..()
 
 /*
 This is a good place for AI-related object verbs so I'm sticking it here.

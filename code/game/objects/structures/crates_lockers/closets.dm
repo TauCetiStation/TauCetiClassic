@@ -196,7 +196,7 @@
 		usr.drop_item()
 		if(W)
 			W.forceMove(src.loc)
-	else if(istype(W, /obj/item/weapon/packageWrap))
+	else if(istype(W, /obj/item/weapon/packageWrap) || istype(W, /obj/item/weapon/extraction_pack))
 		return
 	else if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W

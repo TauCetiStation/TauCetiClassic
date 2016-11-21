@@ -190,7 +190,7 @@
 
 /mob/living/simple_animal/spiderbot/Destroy()
 	eject_brain()
-	..()
+	return ..()
 
 /mob/living/simple_animal/spiderbot/New()
 

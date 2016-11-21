@@ -120,7 +120,7 @@
 				shroom.pixel_x = 0
 				shroom.pixel_y = 0
 
-	..()
+	return ..()
 
 /turf/simulated/wall/relativewall()
 	if(istype(src,/turf/simulated/wall/vault)) //HACK!!!

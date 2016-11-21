@@ -1049,3 +1049,15 @@
 			return pick(cardinal)
 		else
 			return ticker.random_dir_mode
+
+/mob/living/proc/harvest(mob/living/user)
+	if(qdeleted(src))
+		return
+	if(butcher_results)
+		if(butcher_results.len)
+			for(var/path in butcher_results)
+				for(var/i = 1 to butcher_results[path])
+					new path(src.loc)
+				butcher_results.Remove(path)
+			visible_message("<span class='notice'>[user] butchers [src].</span>")
+			gib()

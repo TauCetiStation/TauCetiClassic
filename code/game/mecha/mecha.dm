@@ -93,8 +93,7 @@
 	go_out()
 	poi_list.Remove(src)
 	mechas_list -= src //global mech list
-	..()
-	return
+	return ..()
 
 ////////////////////////
 ////// Helpers /////////

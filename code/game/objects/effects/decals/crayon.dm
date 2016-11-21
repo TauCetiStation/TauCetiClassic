@@ -79,5 +79,4 @@
 		ticker.mode.B_territory_new -= territory.type
 		ticker.mode.B_territory_lost |= list(territory.type = territory.name)
 
-	..()
-
+	return ..()

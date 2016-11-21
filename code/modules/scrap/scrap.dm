@@ -42,6 +42,7 @@
 	shuffle_loot()
 	update_icon(1)
 	..()
+
 /obj/structure/scrap/Destroy()
 	diggers.Cut()
 	for (var/obj/item in loot)

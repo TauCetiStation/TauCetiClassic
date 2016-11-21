@@ -452,7 +452,7 @@
 	qdel(hud)
 	hud = null
 	destroying = 1 // stops us calling qdel(src) on dropped()
-	..()
+	return ..()
 
 /obj/item/weapon/grab/proc/inspect_organ(mob/living/carbon/human/H, mob/user, var/target_zone)
 

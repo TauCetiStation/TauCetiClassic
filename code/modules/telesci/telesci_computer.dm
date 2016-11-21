@@ -42,7 +42,7 @@
 	if(inserted_gps)
 		inserted_gps.loc = loc
 		inserted_gps = null
-	..()
+	return ..()
 
 /obj/machinery/computer/telescience/examine()
 	..()
@@ -171,6 +171,7 @@
 		if(A.density)
 			return FALSE
 	active_wormhole = new (telepad.loc, exit)
+	active_wormhole.linked_console = src
 	return active_wormhole
 
 /obj/machinery/computer/telescience/proc/sparks()

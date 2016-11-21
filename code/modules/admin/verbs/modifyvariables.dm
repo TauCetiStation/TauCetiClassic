@@ -269,7 +269,7 @@ var/list/forbidden_varedit_object_types = list(
 /client/proc/modify_variables(var/atom/O, var/param_var_name = null, var/autodetect_class = 0)
 	if(!check_rights(R_VAREDIT))	return
 
-	var/list/locked = list("vars", "key", "ckey", "client", "virus", "viruses", "icon", "icon_state", "mutantrace", "player_ingame_age", "resize")
+	var/list/locked = list("vars", "key", "ckey", "client", "virus", "viruses", "mutantrace", "player_ingame_age", "resize", "summon_type")
 	var/list/typechange_locked = list("player_next_age_tick","player_ingame_age")
 	var/list/fully_locked = list("player_next_age_tick", "resize_rev")
 

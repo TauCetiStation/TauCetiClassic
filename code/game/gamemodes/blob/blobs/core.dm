@@ -25,7 +25,7 @@
 	if(overmind)
 		qdel(overmind)
 	SSobj.processing.Remove(src)
-	..()
+	return ..()
 //	return
 
 /obj/effect/blob/core/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)

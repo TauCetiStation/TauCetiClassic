@@ -88,7 +88,7 @@
 
 /obj/machinery/broken/Destroy()
 	contents.Cut()
-	..()
+	return ..()
 
 /obj/item/weapon/aiModule/broken/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
 	..()
@@ -96,4 +96,3 @@
 	explosion(sender.loc, 1, 1, 1, 3)
 	sender.drop_from_inventory(src)
 	qdel(src)
-

@@ -170,15 +170,16 @@
 	name = "Circuit board (Mech Bay Power Control Console)"
 	build_path = /obj/machinery/computer/mech_bay_power_console
 	origin_tech = "programming=2;powerstorage=3"
-/obj/item/weapon/circuitboard/ordercomp
+/obj/item/weapon/circuitboard/computer/cargo/request
 	name = "Circuit board (Supply ordering console)"
-	build_path = /obj/machinery/computer/ordercomp
+	build_path = /obj/machinery/computer/cargo/request
 	origin_tech = "programming=2"
-/obj/item/weapon/circuitboard/supplycomp
+/obj/item/weapon/circuitboard/computer/cargo
 	name = "Circuit board (Supply shuttle console)"
-	build_path = /obj/machinery/computer/supplycomp
+	build_path = /obj/machinery/computer/cargo
 	origin_tech = "programming=3"
-	var/contraband_enabled = 0
+	var/contraband_enabled = FALSE
+	var/hacked = FALSE
 /*/obj/item/weapon/circuitboard/research_shuttle
 	name = "Circuit board (Research Shuttle)"
 	build_path = /obj/machinery/computer/research_shuttle
@@ -239,8 +240,13 @@
 	origin_tech = "programming=1"
 
 
-/obj/item/weapon/circuitboard/supplycomp/attackby(obj/item/I as obj, mob/user as mob)
-	if(istype(I,/obj/item/device/multitool))
+/obj/item/weapon/circuitboard/computer/cargo/attackby(obj/item/I as obj, mob/user as mob)
+	if(istype(I, /obj/item/weapon/card/emag) && !hacked)
+		user << "\blue Special supplies unlocked."
+		hacked = TRUE
+		contraband_enabled = TRUE
+		return
+	else if(istype(I,/obj/item/device/multitool))
 		var/catastasis = src.contraband_enabled
 		var/opposite_catastasis
 		if(catastasis)

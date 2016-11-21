@@ -164,17 +164,8 @@
 	if(signal.data["power_toggle"] != null)
 		on = !on
 
-	if(signal.data["panic_siphon"]) //must be before if("scrubbing" thing
-		panic = text2num(signal.data["panic_siphon"] != null)
-		if(panic)
-			on = 1
-			scrubbing = 0
-			volume_rate = 2000
-		else
-			scrubbing = 1
-			volume_rate = initial(volume_rate)
-	if(signal.data["toggle_panic_siphon"] != null)
-		panic = !panic
+	if(signal.data["panic_siphon"] != null) //must be before if("scrubbing" thing
+		panic = text2num(signal.data["panic_siphon"])
 		if(panic)
 			on = 1
 			scrubbing = 0
@@ -185,23 +176,15 @@
 
 	if(signal.data["scrubbing"] != null)
 		scrubbing = text2num(signal.data["scrubbing"])
-	if(signal.data["toggle_scrubbing"])
-		scrubbing = !scrubbing
 
 	if(signal.data["co2_scrub"] != null)
 		scrub_CO2 = text2num(signal.data["co2_scrub"])
-	if(signal.data["toggle_co2_scrub"])
-		scrub_CO2 = !scrub_CO2
 
 	if(signal.data["tox_scrub"] != null)
 		scrub_Toxins = text2num(signal.data["tox_scrub"])
-	if(signal.data["toggle_tox_scrub"])
-		scrub_Toxins = !scrub_Toxins
 
 	if(signal.data["n2o_scrub"] != null)
 		scrub_N2O = text2num(signal.data["n2o_scrub"])
-	if(signal.data["toggle_n2o_scrub"])
-		scrub_N2O = !scrub_N2O
 
 	if(signal.data["init"] != null)
 		name = signal.data["init"]

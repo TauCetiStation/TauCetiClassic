@@ -114,11 +114,6 @@ var/list/valid_secondary_effect_types = list(\
 			if(prob(25))
 				my_effect.trigger = rand(1,4)
 
-#define TRIGGER_PHORON 9
-#define TRIGGER_OXY 10
-#define TRIGGER_CO2 11
-#define TRIGGER_NITRO 12
-
 /obj/machinery/artifact/process()
 
 	var/turf/L = loc
@@ -140,7 +135,7 @@ var/list/valid_secondary_effect_types = list(\
 	var/trigger_oxy = 0
 	var/trigger_co2 = 0
 	var/trigger_nitro = 0
-	if( (my_effect.trigger >= TRIGGER_HEAT && my_effect.trigger <= TRIGGER_NITRO) || (my_effect.trigger >= TRIGGER_HEAT && my_effect.trigger <= TRIGGER_NITRO) )
+	if( (my_effect.trigger >= TRIGGER_HEAT && my_effect.trigger <= TRIGGER_NITRO) || (secondary_effect && secondary_effect.trigger >= TRIGGER_HEAT && secondary_effect.trigger <= TRIGGER_NITRO) )
 		var/turf/T = get_turf(src)
 		var/datum/gas_mixture/env = T.return_air()
 		if(env)
@@ -167,7 +162,7 @@ var/list/valid_secondary_effect_types = list(\
 	else
 		if(my_effect.trigger == TRIGGER_COLD && my_effect.activated)
 			my_effect.ToggleActivate()
-		if(secondary_effect && secondary_effect.trigger == TRIGGER_COLD && !secondary_effect.activated)
+		if(secondary_effect && secondary_effect.trigger == TRIGGER_COLD && secondary_effect.activated)
 			secondary_effect.ToggleActivate(0)
 
 	//HEAT ACTIVATION
@@ -179,7 +174,7 @@ var/list/valid_secondary_effect_types = list(\
 	else
 		if(my_effect.trigger == TRIGGER_HEAT && my_effect.activated)
 			my_effect.ToggleActivate()
-		if(secondary_effect && secondary_effect.trigger == TRIGGER_HEAT && !secondary_effect.activated)
+		if(secondary_effect && secondary_effect.trigger == TRIGGER_HEAT && secondary_effect.activated)
 			secondary_effect.ToggleActivate(0)
 
 	//PHORON GAS ACTIVATION
@@ -191,7 +186,7 @@ var/list/valid_secondary_effect_types = list(\
 	else
 		if(my_effect.trigger == TRIGGER_PHORON && my_effect.activated)
 			my_effect.ToggleActivate()
-		if(secondary_effect && secondary_effect.trigger == TRIGGER_PHORON && !secondary_effect.activated)
+		if(secondary_effect && secondary_effect.trigger == TRIGGER_PHORON && secondary_effect.activated)
 			secondary_effect.ToggleActivate(0)
 
 	//OXYGEN GAS ACTIVATION
@@ -203,7 +198,7 @@ var/list/valid_secondary_effect_types = list(\
 	else
 		if(my_effect.trigger == TRIGGER_OXY && my_effect.activated)
 			my_effect.ToggleActivate()
-		if(secondary_effect && secondary_effect.trigger == TRIGGER_OXY && !secondary_effect.activated)
+		if(secondary_effect && secondary_effect.trigger == TRIGGER_OXY && secondary_effect.activated)
 			secondary_effect.ToggleActivate(0)
 
 	//CO2 GAS ACTIVATION
@@ -215,7 +210,7 @@ var/list/valid_secondary_effect_types = list(\
 	else
 		if(my_effect.trigger == TRIGGER_CO2 && my_effect.activated)
 			my_effect.ToggleActivate()
-		if(secondary_effect && secondary_effect.trigger == TRIGGER_CO2 && !secondary_effect.activated)
+		if(secondary_effect && secondary_effect.trigger == TRIGGER_CO2 && secondary_effect.activated)
 			secondary_effect.ToggleActivate(0)
 
 	//NITROGEN GAS ACTIVATION
@@ -227,7 +222,7 @@ var/list/valid_secondary_effect_types = list(\
 	else
 		if(my_effect.trigger == TRIGGER_NITRO && my_effect.activated)
 			my_effect.ToggleActivate()
-		if(secondary_effect && secondary_effect.trigger == TRIGGER_NITRO && !secondary_effect.activated)
+		if(secondary_effect && secondary_effect.trigger == TRIGGER_NITRO && secondary_effect.activated)
 			secondary_effect.ToggleActivate(0)
 
 	//TRIGGER_PROXY ACTIVATION
@@ -251,7 +246,7 @@ var/list/valid_secondary_effect_types = list(\
 			else
 				if(my_effect.trigger == TRIGGER_VIEW && my_effect.activated)
 					my_effect.ToggleActivate()
-				if(secondary_effect && secondary_effect.trigger == TRIGGER_VIEW && !secondary_effect.activated)
+				if(secondary_effect && secondary_effect.trigger == TRIGGER_VIEW && secondary_effect.activated)
 					secondary_effect.ToggleActivate(0)
 
 

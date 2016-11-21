@@ -26,8 +26,8 @@
 /client/proc/massmodify_variables(var/atom/O, var/var_name = "", var/method = 0)
 	if(!check_rights(R_VAREDIT))	return
 
-	var/list/locked = list("vars", "key", "ckey", "client", "icon", "icon_state")
-	var/list/fully_locked = list("player_next_age_tick", "player_ingame_age", "resize", "resize_rev")
+	var/list/locked = list("vars", "key", "ckey", "client", "icon", "icon_state", "resize", "resize_rev", "summon_type")
+	var/list/fully_locked = list("player_next_age_tick", "player_ingame_age",)
 
 	for(var/p in forbidden_varedit_object_types)
 		if( istype(O,p) )

@@ -17,6 +17,7 @@
 	var/update_muts = 1                        // Monkey gene must be set at start.
 	var/alien = 0				   //Used for reagent metabolism.
 	holder_type = /obj/item/weapon/holder/monkey
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/monkey = 5)
 
 /mob/living/carbon/monkey/tajara
 	name = "farwa"

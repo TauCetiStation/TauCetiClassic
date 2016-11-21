@@ -253,5 +253,4 @@
 
 /obj/vehicle/space/spacebike/Destroy()
 	qdel(ion)
-	..()
-
+	return ..()

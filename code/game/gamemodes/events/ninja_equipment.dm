@@ -48,8 +48,7 @@ ________________________________________________________________________________
 	if(hologram)//If there is a hologram
 		qdel(hologram.i_attached)//Delete it and the attached image.
 		qdel(hologram)
-	..()
-	return
+	return ..()
 
 //Simply deletes all the attachments and self, killing all related procs.
 /obj/item/clothing/suit/space/space_ninja/proc/terminate()

@@ -128,6 +128,7 @@
 /obj/item/weapon/rcs/Destroy()
 	SSobj.processing.Remove(src)
 	return ..()
+
 /obj/item/weapon/rcs/process()
 	if(rcharges > 10)
 		rcharges = 10

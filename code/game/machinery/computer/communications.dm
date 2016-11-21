@@ -544,7 +544,7 @@
 	captain_announce("The emergency shuttle has been called. It will arrive in [round(SSshuttle.timeleft()/60)] minutes.")
 	world << sound('sound/AI/shuttlecalled.ogg')
 
-	..()
+	return ..()
 
 /obj/item/weapon/circuitboard/communications/Destroy()
 
@@ -569,4 +569,4 @@
 	captain_announce("The emergency shuttle has been called. It will arrive in [round(SSshuttle.timeleft()/60)] minutes.")
 	world << sound('sound/AI/shuttlecalled.ogg')
 
-	..()
+	return ..()
