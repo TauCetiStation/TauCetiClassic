@@ -118,7 +118,7 @@
 		var/location = user.zone_sel.selecting
 		if(location == "mouth")
 			if(!H.species.flags[HAS_HAIR])
-				user << "<span class='warning'>There is no hair!</span>"
+				to_chat(user, "<span class='warning'>There is no hair!</span>")
 				return
 			if((H.head && (H.head.flags & HEADCOVERSMOUTH)) || (H.wear_mask && (H.wear_mask.flags & MASKCOVERSMOUTH)))
 				to_chat(user, "<span class='warning'>The mask is in the way!</span>")
@@ -146,7 +146,7 @@
 
 		else if(location == "head")
 			if(!H.species.flags[HAS_HAIR])
-				user << "<span class='warning'>There is no hair!</span>"
+				to_chat(user, "<span class='warning'>There is no hair!</span>")
 				return
 			if((H.head && (H.head.flags & BLOCKHAIR)) || (H.head && (H.head.flags & HIDEEARS)))
 				to_chat(user, "<span class='warning'>The headgear is in the way!</span>")
