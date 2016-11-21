@@ -117,13 +117,15 @@ rcd light flash thingy on matter drain
 	if (istype(M, /obj/machinery))
 		for(var/datum/AI_Module/small/nanject/nanjector in A.current_modules)
 			if(nanjector.uses > 0)
-				nanjector.uses --
-				for(var/mob/V in hearers(M, null))
-					V.show_message("\blue You hear a quiet click.", 2)
-					if(M.nanjector == 0)
-						M.nanjector = 1
-					else
-						usr << "This machine already upgraded."
+				if(M.nanjector == 0)
+					M.nanjector = 1
+					nanjector.uses --
+					for(var/mob/V in hearers(M, null))
+						V.show_message("\blue You hear a quiet click.", 2)
+				else
+					usr << "This machine already upgraded."
+				
+					
 			else
 				usr << "Out of uses."
 	else
