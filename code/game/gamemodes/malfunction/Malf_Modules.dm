@@ -78,7 +78,6 @@ rcd light flash thingy on matter drain
 	mod_pick_name = "overload"
 	uses = 2
 
-<<<<<<< HEAD
 /datum/AI_Module/small/nanject
 	module_name = "Nanites injector"
 	mod_pick_name = "nanjector"
@@ -87,7 +86,6 @@ rcd light flash thingy on matter drain
 /client/proc/overload_machine()
 =======
 /client/proc/overload_machine(obj/machinery/M as obj in machines)
->>>>>>> d30e2681e552b1660f24d4141a0719b2b729c7df
 	set name = "Overload Machine"
 	set category = "Malfunction"
 	var/mob/living/silicon/ai/A = usr
