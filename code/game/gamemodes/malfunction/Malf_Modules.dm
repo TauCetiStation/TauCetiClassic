@@ -83,7 +83,7 @@ rcd light flash thingy on matter drain
 	mod_pick_name = "nanjector"
 	uses = 1
 
-/client/proc/overload_machine(obj/machinery/M as obj in machines)
+/client/proc/overload_machine()
 	set name = "Overload Machine"
 	set category = "Malfunction"
 	var/mob/living/silicon/ai/A = usr
