@@ -6,7 +6,7 @@
 	var/list/modes = list("grey","red","blue","cyan","green","yellow","purple")
 	var/mode = "grey"
 
-/obj/item/device/pipe_painter/afterattack(atom/A, mob/user as mob)
+/obj/item/device/pipe_painter/afterattack(atom/A, mob/user)
 	if(!istype(A,/obj/machinery/atmospherics/pipe) || istype(A,/obj/machinery/atmospherics/pipe/tank) || istype(A,/obj/machinery/atmospherics/pipe/vent) || istype(A,/obj/machinery/atmospherics/pipe/simple/heat_exchanging) || istype(A,/obj/machinery/atmospherics/pipe/simple/insulated) || !in_range(user, A))
 		return
 	var/obj/machinery/atmospherics/pipe/P = A
@@ -20,9 +20,9 @@
 	user.visible_message("<span class='notice'>[user] paints \the [P] [mode].</span>","<span class='notice'>You paint \the [P] [mode].</span>")
 	P.update_icon()
 
-/obj/item/device/pipe_painter/attack_self(mob/user as mob)
+/obj/item/device/pipe_painter/attack_self(mob/user)
 	mode = input("Which colour do you want to use?","Pipe painter") in modes
 
-/obj/item/device/pipe_painter/examine()
+/obj/item/device/pipe_painter/examine(mob/user)
 	..()
-	usr << "It is in [mode] mode."
+	user << "It is in [mode] mode."

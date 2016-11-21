@@ -9,7 +9,7 @@
 	var/wax = 200
 	var/lit = 0
 	proc
-		light(var/flavor_text = "\red [usr] lights the [name].")
+		light(flavor_text = "\red [usr] lights the [name].")
 
 
 	update_icon()
@@ -22,7 +22,7 @@
 		icon_state = "candle[i][lit ? "_lit" : ""]"
 
 
-	attackby(obj/item/weapon/W as obj, mob/user as mob)
+	attackby(obj/item/weapon/W, mob/user)
 		..()
 		if(istype(W, /obj/item/weapon/weldingtool))
 			var/obj/item/weapon/weldingtool/WT = W
@@ -42,7 +42,7 @@
 				light()
 
 
-	light(var/flavor_text = "\red [usr] lights the [name].")
+	light(flavor_text = "\red [usr] lights the [name].")
 		if(!src.lit)
 			src.lit = 1
 			//src.damtype = "fire"
@@ -67,7 +67,7 @@
 			T.hotspot_expose(700, 5)
 
 
-	attack_self(mob/user as mob)
+	attack_self(mob/user)
 		if(lit)
 			lit = 0
 			update_icon()

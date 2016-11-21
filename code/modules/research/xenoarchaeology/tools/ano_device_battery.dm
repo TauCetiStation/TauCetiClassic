@@ -16,7 +16,7 @@
 	p = min(p, 100)
 	icon_state = "anobattery[round(p,25)]"
 
-/obj/item/weapon/anobattery/proc/use_power(var/amount)
+/obj/item/weapon/anobattery/proc/use_power(amount)
 	stored_charge = max(0, stored_charge - amount)
 
 /obj/item/weapon/anodevice
@@ -39,7 +39,7 @@
 	..()
 	SSobj.processing |= src
 
-/obj/item/weapon/anodevice/attackby(var/obj/I as obj, var/mob/user as mob)
+/obj/item/weapon/anodevice/attackby(obj/I, mob/user)
 	if(istype(I, /obj/item/weapon/anobattery))
 		if(!inserted_battery)
 			user << "\blue You insert the battery."
@@ -50,10 +50,10 @@
 	else
 		return ..()
 
-/obj/item/weapon/anodevice/attack_self(var/mob/user as mob)
+/obj/item/weapon/anodevice/attack_self(mob/user)
 	return src.interact(user)
 
-/obj/item/weapon/anodevice/interact(var/mob/user)
+/obj/item/weapon/anodevice/interact(mob/user)
 	var/dat = "<b>Anomalous Materials Energy Utiliser</b><br>"
 	if(inserted_battery)
 		if(activated)
@@ -197,7 +197,7 @@
 	SSobj.processing.Remove(src)
 	return ..()
 
-/obj/item/weapon/anodevice/attack(mob/living/M as mob, mob/living/user as mob, def_zone)
+/obj/item/weapon/anodevice/attack(mob/living/M, mob/living/user, def_zone)
 	if (!istype(M))
 		return
 

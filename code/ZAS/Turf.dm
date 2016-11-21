@@ -239,7 +239,7 @@
 
 	return GM
 
-/turf/remove_air(amount as num)
+/turf/remove_air(amount)
 	var/datum/gas_mixture/GM = new
 
 	var/sum = oxygen + carbon_dioxide + nitrogen + phoron
@@ -258,7 +258,7 @@
 	var/datum/gas_mixture/my_air = return_air()
 	my_air.merge(giver)
 
-/turf/simulated/remove_air(amount as num)
+/turf/simulated/remove_air(amount)
 	var/datum/gas_mixture/my_air = return_air()
 	return my_air.remove(amount)
 

@@ -51,7 +51,7 @@
 	unacidable = 1
 	anchored = 1.0
 
-/obj/effect/gateway/Bumped(mob/M as mob|obj)
+/obj/effect/gateway/Bumped(mob/M)
 	spawn(0)
 		return
 	return

@@ -4,10 +4,10 @@ proc/consonant()
 proc/vowel()
 	return pick("A", "E", "I", "O", "U")
 
-proc/ucfirst(var/S)
+proc/ucfirst(S)
 	return "[uppertext(ascii2text(text2ascii(S, 1)))][copytext(S, 2)]"
 
-proc/ucfirsts(var/S)
+proc/ucfirsts(S)
 	var/list/L = splittext(S, " ")
 	var/list/M = list()
 	for (var/P in L)
@@ -114,7 +114,7 @@ proc/list_frozen()
 	var/output = "<div class='article'><div class='headline'>[headline]</div><div class='subtitle'>[subtitle]</div><div class='article-body'>[article]</div><div class='author'>[author]</div><div class='timestamp'>[spacetime]</div></div>"
 	return output
 
-/datum/article/proc/detokenize(var/token_string, var/list/industry_tokens, var/list/product_tokens = list())
+/datum/article/proc/detokenize(token_string, list/industry_tokens, list/product_tokens = list())
 	var/list/T_list = default_tokens.Copy()
 	for (var/I in industry_tokens)
 		T_list[I] = industry_tokens[I]

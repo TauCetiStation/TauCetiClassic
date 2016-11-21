@@ -76,7 +76,7 @@
 	modePlayer += head_revolutionaries
 	return ..()
 
-/datum/game_mode/revolution/rp_revolution/greet_revolutionary(var/datum/mind/rev_mind, var/you_are=1)
+/datum/game_mode/revolution/rp_revolution/greet_revolutionary(datum/mind/rev_mind, you_are=1)
 	var/obj_count = 1
 	if (you_are)
 		rev_mind.current << "\blue You are a member of the revolutionaries' leadership!"
@@ -188,7 +188,7 @@
 				return
 			src << "\red Attempting to convert [M]..."
 			log_admin("[src]([src.ckey]) attempted to convert [M].")
-			message_admins("\red [src]([src.ckey]) attempted to convert [M].")
+			message_admins("\red [src]([src.ckey]) attempted to convert [M]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[src.x];Y=[src.y];Z=[src.z]'>JMP</a>)")
 			var/choice = alert(M,"Asked by [src]: Do you want to join the revolution?","Align Thyself with the Revolution!","No!","Yes!")
 			if(choice == "Yes!")
 				ticker.mode:add_revolutionary(M.mind)

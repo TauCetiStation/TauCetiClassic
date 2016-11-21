@@ -254,7 +254,7 @@ var/world_topic_spam_protect_time = world.timeofday
 			master_mode = Lines[1]
 			log_misc("Saved mode is '[master_mode]'")
 
-/world/proc/save_mode(var/the_mode)
+/world/proc/save_mode(the_mode)
 	var/F = file("data/mode.txt")
 	fdel(F)
 	F << the_mode
@@ -266,7 +266,7 @@ var/world_topic_spam_protect_time = world.timeofday
 			master_last_mode = Lines[1]
 			log_misc("Previous round played mode was '[master_last_mode]'")
 
-/world/proc/save_last_mode(var/the_last_mode)
+/world/proc/save_last_mode(the_last_mode)
 	var/F = file("data/last_mode.txt")
 	fdel(F)
 	F << the_last_mode

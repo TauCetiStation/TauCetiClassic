@@ -1,4 +1,4 @@
-/mob/living/silicon/say_quote(var/text)
+/mob/living/silicon/say_quote(text)
 	var/ending = copytext(text, length(text))
 
 	if (ending == "?")
@@ -12,7 +12,7 @@
 #define IS_ROBOT 2
 #define IS_PAI 3
 
-/mob/living/silicon/say_understands(var/other,var/datum/language/speaking = null)
+/mob/living/silicon/say_understands(other,datum/language/speaking = null)
 	//These only pertain to common. Languages are handled by mob/say_understands()
 	if (!speaking)
 		if (istype(other, /mob/living/carbon))
@@ -82,13 +82,13 @@
 	var/datum/language/speaking = parse_language(message)
 	if (speaking)
 		verb = speaking.speech_verb
-		message = copytext(message,3)
+		message = trim(copytext(message,2+length(speaking.key)))
 
 	switch(message_mode)
 		if("department")
 			switch(bot_type)
 				if(IS_AI)
-					return AI.holopad_talk(message)
+					return AI.holopad_talk(message, verb, speaking)
 				if(IS_ROBOT)
 					log_say("[key_name(src)] : [message]")
 					R.radio.talk_into(src,message,message_mode,verb,speaking)
@@ -151,7 +151,7 @@
 	return ..(html_decode(message),speaking,verb)
 
 //For holopads only. Usable by AI.
-/mob/living/silicon/ai/proc/holopad_talk(var/message)
+/mob/living/silicon/ai/proc/holopad_talk(message, verb, datum/language/speaking)
 
 	log_say("[key_name(src)] : [message]")
 
@@ -162,16 +162,22 @@
 
 	var/obj/machinery/hologram/holopad/T = src.holo
 	if(T && T.hologram && T.master == src)//If there is a hologram and its master is the user.
-		var/verb = say_quote(message)
 
 		//Human-like, sorta, heard by those who understand humans.
-		var/rendered_a = "<span class='game say'><span class='name'>[name]</span> [verb], <span class='message'>\"[sanitize_plus_chat(message)]\"</span></span>"
-
+		var/rendered_a
 		//Speach distorted, heard by those who do not understand AIs.
 		var/message_stars = stars(message)
-		var/rendered_b = "<span class='game say'><span class='name'>[voice_name]</span> [verb], <span class='message'>\"[sanitize_plus_chat(message_stars)]\"</span></span>"
+		var/rendered_b
 
-		src << "<i><span class='game say'>Holopad transmitted, <span class='name'>[real_name]</span> [verb], <span class='message'>[sanitize_plus_chat(message)]</span></span></i>"//The AI can "hear" its own message.
+		if(speaking)
+			rendered_a = "<span class='game say'><span class='name'>[name]</span> [speaking.format_message(message, verb)]</span>"
+			rendered_b = "<span class='game say'><span class='name'>[voice_name]</span> [speaking.format_message(message_stars, verb)]</span>"
+			src << "<i><span class='game say'>Holopad transmitted, <span class='name'>[real_name]</span> [speaking.format_message(message, verb)]</span></i>"//The AI can "hear" its own message.
+		else
+			rendered_a = "<span class='game say'><span class='name'>[name]</span> [verb], <span class='message'>\"[sanitize_plus_chat(message)]\"</span></span>"
+			rendered_b = "<span class='game say'><span class='name'>[voice_name]</span> [verb], <span class='message'>\"[message_stars]\"</span></span>"
+			src << "<i><span class='game say'>Holopad transmitted, <span class='name'>[real_name]</span> [verb], <span class='message'><span class='body'>\"[sanitize_plus_chat(message)]\"</span></span></span></i>"//The AI can "hear" its own message.
+
 		for(var/mob/M in hearers(T.loc))//The location is the object, default distance.
 			if(M.say_understands(src))//If they understand AI speak. Humans and the like will be able to.
 				M.show_message(rendered_a, 2)
@@ -184,7 +190,7 @@
 		return
 	return 1
 
-/mob/living/proc/robot_talk(var/message)
+/mob/living/proc/robot_talk(message)
 
 	log_say("[key_name(src)] : [message]")
 

@@ -45,7 +45,7 @@
 	name = COIN_PLATINUM
 	icon_state = "coin_adamantine"
 
-/obj/item/weapon/coin/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/weapon/coin/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W,/obj/item/weapon/cable_coil) )
 		var/obj/item/weapon/cable_coil/CC = W
 		if(string_attached)
@@ -74,7 +74,7 @@
 		user << "\blue You detach the string from the coin."
 	else ..()
 
-/obj/item/weapon/coin/attack_self(mob/user as mob)
+/obj/item/weapon/coin/attack_self(mob/user)
 	var/result = rand(1, sides)
 	var/comment = ""
 	if(result == 1)

@@ -35,7 +35,7 @@
 			break
 	return power_station
 
-/obj/machinery/computer/teleporter/attackby(I as obj, mob/living/user as mob)
+/obj/machinery/computer/teleporter/attackby(I, mob/living/user)
 	if(istype(I, /obj/item/device/gps))
 		var/obj/item/device/gps/L = I
 		if(L.locked_location && !(stat & (NOPOWER|BROKEN)))
@@ -282,7 +282,7 @@
 			break
 	return power_station
 
-/obj/machinery/teleport/hub/Bumped(M as mob|obj)
+/obj/machinery/teleport/hub/Bumped(M)
 	if(z == ZLEVEL_CENTCOMM)
 		M << "You can't use this here."
 	if(is_ready())
@@ -299,7 +299,7 @@
 
 	default_deconstruction_crowbar(W)
 
-/obj/machinery/teleport/hub/proc/teleport(atom/movable/M as mob|obj, turf/T)
+/obj/machinery/teleport/hub/proc/teleport(atom/movable/M, turf/T)
 	var/obj/machinery/computer/teleporter/com = power_station.teleporter_console
 	if (!com)
 		return
@@ -401,7 +401,7 @@
 		teleporter_console = null
 	return ..()
 
-/obj/machinery/teleport/station/attackby(var/obj/item/weapon/W, mob/user)
+/obj/machinery/teleport/station/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/device/multitool) && !panel_open)
 		var/obj/item/device/multitool/M = W
 		if(M.buffer && istype(M.buffer, /obj/machinery/teleport/station) && M.buffer != src)

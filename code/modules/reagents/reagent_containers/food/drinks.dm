@@ -15,10 +15,10 @@
 		if (gulp_size < 5) gulp_size = 5
 		else gulp_size = max(round(reagents.total_volume / 5), 5)
 
-	attack_self(mob/user as mob)
+	attack_self(mob/user)
 		return
 
-	attack(mob/M as mob, mob/user as mob, def_zone)
+	attack(mob/M, mob/user, def_zone)
 		var/datum/reagents/R = src.reagents
 		var/fillevel = gulp_size
 
@@ -32,7 +32,7 @@
 
 			if(istype(M,/mob/living/carbon/human))
 				var/mob/living/carbon/human/H = M
-				if(H.species.flags & IS_SYNTHETIC)
+				if(H.species.flags[IS_SYNTHETIC])
 					H << "\red You have a monitor for a head, where do you think you're going to put that?"
 					return
 
@@ -45,7 +45,7 @@
 		else if( istype(M, /mob/living/carbon/human) )
 
 			var/mob/living/carbon/human/H = M
-			if(H.species.flags & IS_SYNTHETIC)
+			if(H.species.flags[IS_SYNTHETIC])
 				H << "\red They have a monitor for a head, where do you think you're going to put that?"
 				return
 
@@ -124,20 +124,19 @@
 
 		return
 
-	examine()
-		set src in view()
+	examine(mob/user)
 		..()
-		if (!(usr in range(0)) && usr!=src.loc) return
-		if(!reagents || reagents.total_volume==0)
-			usr << "\blue \The [src] is empty!"
-		else if (reagents.total_volume<=src.volume/4)
-			usr << "\blue \The [src] is almost empty!"
-		else if (reagents.total_volume<=src.volume*0.66)
-			usr << "\blue \The [src] is half full!"
-		else if (reagents.total_volume<=src.volume*0.90)
-			usr << "\blue \The [src] is almost full!"
-		else
-			usr << "\blue \The [src] is full!"
+		if(src in user)
+			if(!reagents || reagents.total_volume==0)
+				user << "<span class='notice'>\The [src] is empty!</span>"
+			else if (reagents.total_volume<=src.volume/4)
+				user << "<span class='notice'>\The [src] is almost empty!</span>"
+			else if (reagents.total_volume<=src.volume*0.66)
+				user << "<span class='notice'>\The [src] is half full!</span>"
+			else if (reagents.total_volume<=src.volume*0.90)
+				user << "<span class='notice'>\The [src] is almost full!</span>"
+			else
+				user << "<span class='notice'>\The [src] is full!</span>"
 
 ////////////////////////////////////////////////////////////////////////////////
 /// Drinks. END

@@ -1,7 +1,7 @@
 //I will need to recode parts of this but I am way too tired atm
 /obj/effect/blob
 	name = "blob"
-	icon = 'tauceti/icons/mob/blob.dmi'
+	icon = 'icons/mob/blob.dmi'
 	light_range = 3
 	desc = "Some blob creature thingy."
 	density = 0
@@ -64,7 +64,7 @@
 		health_timestamp = world.time + 10 // 1 seconds
 
 
-/obj/effect/blob/proc/Pulse(var/pulse = 0, var/origin_dir = 0)//Todo: Fix spaceblob expand
+/obj/effect/blob/proc/Pulse(pulse = 0, origin_dir = 0)//Todo: Fix spaceblob expand
 
 	//set background = 1
 
@@ -99,7 +99,7 @@
 	return 0
 
 
-/obj/effect/blob/proc/expand(var/turf/T = null, var/prob = 1)
+/obj/effect/blob/proc/expand(turf/T = null, prob = 1)
 	if(prob && !prob(health))	return
 	if(istype(T, /turf/space) && prob(75)) 	return
 	if(!T)
@@ -133,7 +133,7 @@
 	return
 
 
-/obj/effect/blob/bullet_act(var/obj/item/projectile/Proj)
+/obj/effect/blob/bullet_act(obj/item/projectile/Proj)
 	..()
 	switch(Proj.damage_type)
 	 if(BRUTE)
@@ -149,7 +149,7 @@
 	L.blob_act()
 
 
-/obj/effect/blob/attackby(var/obj/item/weapon/W, var/mob/user)
+/obj/effect/blob/attackby(obj/item/weapon/W, mob/user)
 	user.do_attack_animation(src)
 	playsound(src.loc, 'sound/effects/attackblob.ogg', 50, 1)
 	src.visible_message("\red <B>The [src.name] has been attacked with \the [W][(user ? " by [user]." : ".")]")
@@ -166,7 +166,7 @@
 	update_icon()
 	return
 
-/obj/effect/blob/attack_animal(mob/living/simple_animal/M as mob)
+/obj/effect/blob/attack_animal(mob/living/simple_animal/M)
 	M.do_attack_animation(src)
 	playsound(src.loc, 'sound/effects/attackblob.ogg', 50, 1)
 	src.visible_message("\red <B>The [src.name] has been attacked by \the [M].")
@@ -178,7 +178,7 @@
 	update_icon()
 	return
 
-/obj/effect/blob/proc/change_to(var/type)
+/obj/effect/blob/proc/change_to(type)
 	if(!ispath(type))
 		error("[type] is an invalid type for the blob.")
 	new type(src.loc)

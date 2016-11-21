@@ -97,7 +97,7 @@ var/ninja_selection_id = 1
 var/ninja_selection_active = 0
 var/ninja_confirmed_selection = 0
 
-/proc/space_ninja_arrival(var/assign_key = null, var/assign_mission = null)
+/proc/space_ninja_arrival(assign_key = null, assign_mission = null)
 
 	if(ninja_selection_active)
 		usr << "\red Ninja selection already in progress. Please wait until it ends."
@@ -357,7 +357,7 @@ Malf AIs/silicons aren't added. Monkeys aren't added. Messes with objective comp
 			if(!ninja_mind.objectives.len||!mission_set)//If they somehow did not get an objective at this point, time to destroy the station.
 				var/nuke_code
 				var/temp_code
-				for(var/obj/machinery/nuclearbomb/N in world)
+				for(var/obj/machinery/nuclearbomb/N in machines)
 					temp_code = text2num(N.r_code)
 					if(temp_code)//if it's actually a number. It won't convert any non-numericals.
 						nuke_code = N.r_code
@@ -436,7 +436,7 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 
 //=======//CURRENT PLAYER VERB//=======//
 
-/client/proc/cmd_admin_ninjafy(var/mob/M in player_list)
+/client/proc/cmd_admin_ninjafy(mob/M in player_list)
 	set category = null
 	set name = "Make Space Ninja"
 

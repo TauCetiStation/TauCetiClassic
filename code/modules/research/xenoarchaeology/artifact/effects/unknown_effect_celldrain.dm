@@ -4,7 +4,7 @@
 	effecttype = "celldrain"
 	effect_type = 3
 
-/datum/artifact_effect/celldrain/DoEffectTouch(var/mob/user)
+/datum/artifact_effect/celldrain/DoEffectTouch(mob/user)
 	if(user)
 		if(istype(user, /mob/living/silicon/robot))
 			var/mob/living/silicon/robot/R = user

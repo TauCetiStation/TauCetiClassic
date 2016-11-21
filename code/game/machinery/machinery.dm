@@ -208,7 +208,7 @@ Class Procs:
 		qdel(src)
 
 //sets the use_power var and then forces an area power update @ 7e65984ae2ec4e7eaaecc8da0bfa75642c3489c7 bay12
-/obj/machinery/proc/update_use_power(var/new_use_power, var/force_update = 0)
+/obj/machinery/proc/update_use_power(new_use_power, force_update = 0)
 	if ((new_use_power == use_power) && !force_update)
 		return	//don't need to do anything
 
@@ -272,7 +272,7 @@ Class Procs:
 ////////////////////////////////////////////////////////////////////////////////////////////
 
 
-/obj/machinery/attack_ai(mob/user as mob)
+/obj/machinery/attack_ai(mob/user)
 	if(isrobot(user))
 		// For some reason attack_robot doesn't work
 		// This is to stop robots from using cameras to remotely control machines.
@@ -281,10 +281,10 @@ Class Procs:
 	else
 		return src.attack_hand(user)
 
-/obj/machinery/attack_paw(mob/user as mob)
+/obj/machinery/attack_paw(mob/user)
 	return src.attack_hand(user)
 
-/obj/machinery/attack_hand(mob/user as mob)
+/obj/machinery/attack_hand(mob/user)
 	if(stat & (NOPOWER|BROKEN|MAINT))
 		return 1
 	if(user.lying || user.stat)
@@ -427,7 +427,7 @@ Class Procs:
 /obj/machinery/proc/deconstruction()
 	return
 
-/obj/machinery/proc/state(var/msg)
+/obj/machinery/proc/state(msg)
 	for(var/mob/O in hearers(src, null))
 		O.show_message("\icon[src] <span class = 'notice'>[msg]</span>", 2)
 
@@ -438,7 +438,7 @@ Class Procs:
 	state(text, "blue")
 	playsound(src.loc, 'sound/machines/ping.ogg', 50, 0)
 
-/obj/machinery/tesla_act(var/power)
+/obj/machinery/tesla_act(power)
 	..()
 	if(prob(85))
 		emp_act(2)

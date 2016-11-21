@@ -47,7 +47,7 @@
 		A.forceMove(src.loc)
 	update_icon()
 
-/obj/structure/pit/proc/close(var/user)
+/obj/structure/pit/proc/close(user)
 	name = "mound"
 	desc = "Some things are better left buried."
 	open = 0
@@ -177,9 +177,9 @@
 /obj/structure/gravemarker/cross
 	icon_state = "cross"
 
-/obj/structure/gravemarker/examine()
+/obj/structure/gravemarker/examine(mob/user)
 	..()
-	usr << message
+	user << message
 
 /obj/structure/gravemarker/random/New()
 	generate()
@@ -214,10 +214,8 @@
 
 obj/item/weapon/gun/energy/laser/retro/jetsons
 	name ="unwanted laser"
-	icon = 'tauceti/icons/obj/jetsons.dmi'
-	tc_custom = 'tauceti/icons/obj/jetsons.dmi'
-	icon_state = "jetsons_gun"
-	item_state = "jetsons_gun"
+	icon_state = "jetsons"
+	item_state = "jetsons"
 	desc = "Very unusual version of laser gun, oldschool style"
 	origin_tech = "combat=2;magnets=1"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/practice/jetsons)
@@ -243,8 +241,6 @@ obj/item/weapon/gun/energy/laser/retro/jetsons/update_icon()
 /obj/item/clothing/under/jetsons
 	name = "old overall"
 	desc = "Mr. Spacely's favorite overalls"
-	icon = 'tauceti/icons/obj/jetsons.dmi'
-	tc_custom = 'tauceti/icons/obj/jetsons.dmi'
 	icon_state = "jetsons_s"
 	item_color = "jetsons_s"
 

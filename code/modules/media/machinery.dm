@@ -12,13 +12,13 @@
 	// Media system autolink.
 	var/id_tag = "???"
 
-/obj/machinery/media/proc/hookMediaOutput(var/obj/machinery/media/transmitter/T, exclusive=0)
+/obj/machinery/media/proc/hookMediaOutput(obj/machinery/media/transmitter/T, exclusive=0)
 	if(exclusive)
 		exclusive_hook=T
 	hooked.Add(T)
 	return 1
 
-/obj/machinery/media/proc/unhookMediaOutput(var/obj/machinery/media/transmitter/T)
+/obj/machinery/media/proc/unhookMediaOutput(obj/machinery/media/transmitter/T)
 	if(exclusive_hook==T)
 		exclusive_hook=null
 	hooked.Remove(T)
@@ -87,7 +87,7 @@
 	if(anchored)
 		update_music()
 
-/obj/machinery/media/setLoc(var/turf/T, var/teleported=0)
+/obj/machinery/media/setLoc(turf/T, teleported=0)
 	disconnect_media_source()
 	..(T)
 	if(anchored)

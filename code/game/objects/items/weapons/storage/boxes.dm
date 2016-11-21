@@ -419,12 +419,12 @@
 	for(var/i in 1 to storage_slots)
 		new /obj/item/weapon/match(src)
 
-/obj/item/weapon/storage/box/matches/attackby(obj/item/weapon/match/W as obj, mob/user as mob)
+/obj/item/weapon/storage/box/matches/attackby(obj/item/weapon/match/W, mob/user)
 	if(istype(W) && !W.lit && !W.burnt)
 		if (prob (20))
-			playsound(src, 'tauceti/sounds/items/matchstick_hit.ogg', 20, 1, 1)
+			playsound(src, 'sound/items/matchstick_hit.ogg', 20, 1, 1)
 			return
-		playsound(src, 'tauceti/sounds/items/matchstick_light.ogg', 20, 1, 1)
+		playsound(src, 'sound/items/matchstick_light.ogg', 20, 1, 1)
 		W.lit = 1
 		W.damtype = "burn"
 		W.icon_state = "match_lit"
@@ -585,3 +585,23 @@
 	..()
 	for(var/i in 1 to 16)
 		new /obj/item/ammo_casing/shotgun/beanbag(src)
+
+// Don't know where is original box itself, so just put it here.
+/obj/item/weapon/storage/box/contraband
+	name = "box"
+	desc = "Strange box."
+	icon_state = "box_of_doom"
+
+/obj/item/weapon/storage/box/contraband/New()
+	..()
+	if(prob(30))
+		new /obj/item/weapon/storage/box/matches(src)
+		new /obj/item/clothing/mask/cigarette/cigar/cohiba(src)
+	else if(prob(10))
+		new /obj/item/device/guitar(src)
+		new /obj/item/clothing/head/sombrero(src)
+		new /obj/item/weapon/reagent_containers/food/drinks/bottle/tequilla(src)
+	else
+		new /obj/item/weapon/reagent_containers/food/drinks/bottle/vodka(src)
+		new /obj/item/weapon/storage/fancy/cigarettes(src)
+		new /obj/item/weapon/lighter/random(src)

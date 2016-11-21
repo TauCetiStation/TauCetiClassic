@@ -29,7 +29,7 @@
 	return
 
 
-/obj/item/weapon/veilrender/attack_self(mob/user as mob)
+/obj/item/weapon/veilrender/attack_self(mob/user)
 	if(charged == 1)
 		new /obj/effect/rend(get_turf(usr))
 		charged = 0

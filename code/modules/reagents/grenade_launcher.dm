@@ -11,14 +11,12 @@
 	var/max_grenades = 3
 	m_amt = 2000
 
-/obj/item/weapon/gun/grenadelauncher/examine()
-	set src in view()
+/obj/item/weapon/gun/grenadelauncher/examine(mob/user)
 	..()
-	if (!(usr in view(2)) && usr!=src.loc) return
-	usr << "\icon [src] Grenade launcher:"
-	usr << "\blue [grenades.len] / [max_grenades] Grenades."
+	if(src in view(2, user))
+		user << "<span class='notice'>[grenades.len] / [max_grenades] Grenades.</span>"
 
-/obj/item/weapon/gun/grenadelauncher/attackby(obj/item/I as obj, mob/user as mob)
+/obj/item/weapon/gun/grenadelauncher/attackby(obj/item/I, mob/user)
 
 	if((istype(I, /obj/item/weapon/grenade)))
 		if(grenades.len < max_grenades)
@@ -54,7 +52,7 @@
 	grenades -= F
 	F.loc = user.loc
 	F.throw_at(target, 30, 2, user)
-	message_admins("[key_name_admin(user)] fired a grenade ([F.name]) from a grenade launcher ([src.name]).")
+	message_admins("[key_name_admin(user)] fired a grenade ([F.name]) from a grenade launcher ([src.name]). (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 	log_game("[key_name_admin(user)] used a grenade ([src.name]).")
 	F.active = 1
 	F.icon_state = initial(icon_state) + "_active"

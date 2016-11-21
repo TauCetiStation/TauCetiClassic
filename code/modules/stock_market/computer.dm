@@ -1,6 +1,7 @@
 /obj/machinery/computer/stockexchange
 	name = "Stock exchange computer"
 	icon_state = "oldcomp"
+	circuit = /obj/item/weapon/circuitboard/computer/stockexchange
 	var/logged_in = "Cargo Department"
 	var/vmode = 1
 
@@ -13,10 +14,10 @@
 		return 0
 	return SSshuttle.points
 
-/obj/machinery/computer/cargo/attack_ai(var/mob/user as mob)
+/obj/machinery/computer/cargo/attack_ai(mob/user)
 	return attack_hand(user)
 
-/obj/machinery/computer/stockexchange/attack_hand(var/mob/user)
+/obj/machinery/computer/stockexchange/attack_hand(mob/user)
 	if(..())
 		return
 	user.set_machine(src)
@@ -165,7 +166,7 @@ a.updated {
 	popup.open()
 	return
 
-/obj/machinery/computer/stockexchange/proc/sell_some_shares(var/datum/stock/S, var/mob/user)
+/obj/machinery/computer/stockexchange/proc/sell_some_shares(datum/stock/S, mob/user)
 	if(!user || !S)
 		return
 	var/li = logged_in
@@ -199,7 +200,7 @@ a.updated {
 	user << "<span class='notice'>Sold [amt] shares of [S.name] at [S.current_value] a share for [total] credits.</span>"
 	stockExchange.add_log(/datum/stock_log/sell, user.name, S.name, amt, S.current_value, total)
 
-/obj/machinery/computer/stockexchange/proc/buy_some_shares(var/datum/stock/S, var/mob/user)
+/obj/machinery/computer/stockexchange/proc/buy_some_shares(datum/stock/S, mob/user)
 	if(!user || !S)
 		return
 	var/li = logged_in

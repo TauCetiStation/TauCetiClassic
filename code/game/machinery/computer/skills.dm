@@ -23,7 +23,7 @@
 	var/order = 1 // -1 = Descending - 1 = Ascending
 
 
-/obj/machinery/computer/skills/attackby(obj/item/O as obj, user as mob)
+/obj/machinery/computer/skills/attackby(obj/item/O, user)
 	if(istype(O, /obj/item/weapon/card/id) && !scan)
 		usr.drop_item()
 		O.loc = src
@@ -31,14 +31,14 @@
 		user << "You insert [O]."
 	..()
 
-/obj/machinery/computer/skills/attack_ai(mob/user as mob)
+/obj/machinery/computer/skills/attack_ai(mob/user)
 	return attack_hand(user)
 
-/obj/machinery/computer/skills/attack_paw(mob/user as mob)
+/obj/machinery/computer/skills/attack_paw(mob/user)
 	return attack_hand(user)
 
 //Someone needs to break down the dat += into chunks instead of long ass lines.
-/obj/machinery/computer/skills/attack_hand(mob/user as mob)
+/obj/machinery/computer/skills/attack_hand(mob/user)
 	if(..())
 		return
 	if (src.z > ZLEVEL_EMPTY)
@@ -88,8 +88,8 @@
 				if(3.0)
 					dat += "<CENTER><B>Employment Record</B></CENTER><BR>"
 					if ((istype(active1, /datum/data/record) && data_core.general.Find(active1)))
-						var/icon/front = new(active1.fields["photo"], dir = SOUTH)
-						var/icon/side = new(active1.fields["photo"], dir = WEST)
+						var/icon/front = active1.fields["photo_f"]
+						var/icon/side = active1.fields["photo_s"]
 						user << browse_rsc(front, "front.png")
 						user << browse_rsc(side, "side.png")
 						dat += text("<table><tr><td>	\

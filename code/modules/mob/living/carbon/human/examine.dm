@@ -1,11 +1,4 @@
-/mob/living/carbon/human/examine()
-	set src in view()
-
-	if(!usr || !src)	return
-	if( usr.sdisabilities & BLIND || usr.blinded || usr.stat==UNCONSCIOUS )
-		usr << "<span class='notice'>Something is there but you can't see it.</span>"
-		return
-
+/mob/living/carbon/human/examine(mob/user)
 	var/skipgloves = 0
 	var/skipsuitstorage = 0
 	var/skipjumpsuit = 0
@@ -197,16 +190,6 @@
 
 	//ID
 	if(wear_id)
-		/*var/id
-		if(istype(wear_id, /obj/item/device/pda))
-			var/obj/item/device/pda/pda = wear_id
-			id = pda.owner
-		else if(istype(wear_id, /obj/item/weapon/card/id)) //just in case something other than a PDA/ID card somehow gets in the ID slot :[
-			var/obj/item/weapon/card/id/idcard = wear_id
-			id = idcard.registered_name
-		if(id && (id != real_name) && (get_dist(src, usr) <= 1) && prob(10))
-			msg += "<span class='warning'>[t_He] [t_is] wearing \icon[wear_id] \a [wear_id] yet something doesn't seem right...</span>\n"
-		else*/
 		msg += "[t_He] [t_is] wearing \icon[wear_id] \a [wear_id].\n"
 
 	//Jitters
@@ -230,31 +213,28 @@
 	if(SMALLSIZE in mutations)
 		msg += "[t_He] [t_is] small halfling!\n"
 
-	var/distance = get_dist(usr,src)
-	if(istype(usr, /mob/dead/observer) || usr.stat == DEAD) // ghosts can see anything
+	var/distance = get_dist(user,src)
+	if(istype(user, /mob/dead/observer) || user.stat == DEAD) // ghosts can see anything
 		distance = 1
 	if (src.stat)
 		msg += "<span class='warning'>[t_He] [t_is]n't responding to anything around [t_him] and seems to be asleep.</span>\n"
 		if((stat == DEAD || src.losebreath) && distance <= 3)
 			msg += "<span class='warning'>[t_He] does not appear to be breathing.</span>\n"
-		if(istype(usr, /mob/living/carbon/human) && !usr.stat && distance <= 1)
-			for(var/mob/O in viewers(usr.loc, null))
-				O.show_message("[usr] checks [src]'s pulse.", 1)
+		if(istype(user, /mob/living/carbon/human) && !user.stat && distance <= 1)
+			for(var/mob/O in viewers(user.loc, null))
+				O.show_message("[user] checks [src]'s pulse.", 1)
 		spawn(15)
-			if(distance <= 1 && usr && usr.stat != UNCONSCIOUS)
+			if(distance <= 1 && user && user.stat != UNCONSCIOUS)
 				if(pulse == PULSE_NONE)
-					usr << "<span class='deadsay'>[t_He] has no pulse[src.client ? "" : " and [t_his] soul has departed"]...</span>"
+					user << "<span class='deadsay'>[t_He] has no pulse[src.client ? "" : " and [t_his] soul has departed"]...</span>"
 				else
-					usr << "<span class='deadsay'>[t_He] has a pulse!</span>"
+					user << "<span class='deadsay'>[t_He] has a pulse!</span>"
 
 	msg += "<span class='warning'>"
 
 	if(nutrition < 100)
 		msg += "[t_He] [t_is] severely malnourished.\n"
 	else if(nutrition >= 500)
-		/*if(usr.nutrition < 100)
-			msg += "[t_He] [t_is] plump and delicious looking - Like a fat little piggy. A tasty piggy.\n"
-		else*/
 		msg += "[t_He] [t_is] quite chubby.\n"
 
 	msg += "</span>"
@@ -280,7 +260,7 @@
 				continue
 			if(temp.status & ORGAN_ROBOT)
 				if(!(temp.brute_dam + temp.burn_dam))
-					if(!species.flags & IS_SYNTHETIC)
+					if(!species.flags[IS_SYNTHETIC])
 						wound_flavor_text["[temp.display_name]"] = "<span class='warning'>[t_He] has a robot [temp.display_name]!</span>\n"
 						continue
 				else
@@ -420,7 +400,7 @@
 
 
 
-	if(hasHUD(usr,"security"))
+	if(hasHUD(user,"security"))
 		var/perpname = "wot"
 		var/criminal = "None"
 
@@ -443,7 +423,7 @@
 			msg += "<span class = 'deptradio'>Criminal status:</span> <a href='?src=\ref[src];criminal=1'>\[[criminal]\]</a>\n"
 			msg += "<span class = 'deptradio'>Security records:</span> <a href='?src=\ref[src];secrecord=`'>\[View\]</a>  <a href='?src=\ref[src];secrecordadd=`'>\[Add comment\]</a>\n"
 
-	if(hasHUD(usr,"medical"))
+	if(hasHUD(user,"medical"))
 		var/perpname = "wot"
 		var/medical = "None"
 
@@ -475,17 +455,17 @@
 		msg += "\n[t_He] is [pose]"
 
 	//someone here, but who?
-	if(istype(usr, /mob/living/carbon/human))
-		var/mob/living/carbon/human/H = usr
+	if(istype(user, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = user
 		if(H.species && H.species.name != "Abductor")
 			for(var/obj/item/clothing/suit/armor/abductor/vest/V in list(wear_suit))
 				if(V.stealth_active)
 					H << "<span class='notice'>You can't focus your eyes on [src].</span>"
 					return
-	usr << msg
+	user << msg
 
 //Helper procedure. Called by /mob/living/carbon/human/examine() and /mob/living/carbon/human/Topic() to determine HUD access to security and medical records.
-/proc/hasHUD(mob/M as mob, hudtype)
+/proc/hasHUD(mob/M, hudtype)
 	if(istype(M, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = M
 		switch(hudtype)

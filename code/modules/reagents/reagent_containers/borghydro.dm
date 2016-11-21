@@ -59,7 +59,7 @@
 */
 
 // Use this to add more chemicals for the borghypo to produce.
-/obj/item/weapon/reagent_containers/borghypo/proc/add_reagent(var/reagent)
+/obj/item/weapon/reagent_containers/borghypo/proc/add_reagent(reagent)
 	reagent_ids |= reagent
 	var/datum/reagents/RG = new(30)
 	RG.my_atom = src
@@ -68,7 +68,7 @@
 	var/datum/reagents/R = reagent_list[reagent_list.len]
 	R.add_reagent(reagent, 30)
 
-/obj/item/weapon/reagent_containers/borghypo/attack(mob/living/M as mob, mob/user as mob)
+/obj/item/weapon/reagent_containers/borghypo/attack(mob/living/M, mob/user)
 	var/datum/reagents/R = reagent_list[mode]
 	if(!R.total_volume)
 		user << "\red The injector is empty."
@@ -86,7 +86,7 @@
 			user << "\blue [trans] units injected. [R.total_volume] units remaining."
 	return
 
-/obj/item/weapon/reagent_containers/borghypo/attack_self(mob/user as mob)
+/obj/item/weapon/reagent_containers/borghypo/attack_self(mob/user)
 	playsound(src.loc, 'sound/effects/pop.ogg', 50, 0)		//Change the mode
 	mode++
 	if(mode > reagent_list.len)
@@ -97,18 +97,15 @@
 	user << "\blue Synthesizer is now producing '[R.name]'."
 	return
 
-/obj/item/weapon/reagent_containers/borghypo/examine()
-	set src in view()
+/obj/item/weapon/reagent_containers/borghypo/examine(mob/user)
 	..()
-	if (!(usr in view(2)) && usr!=src.loc) return
+	if(src in view(2, user))
+		var/empty = 1
 
-	var/empty = 1
-
-	for(var/datum/reagents/RS in reagent_list)
-		var/datum/reagent/R = locate() in RS.reagent_list
-		if(R)
-			usr << "\blue It currently has [R.volume] units of [R.name] stored."
-			empty = 0
-
-	if(empty)
-		usr << "\blue It is currently empty. Allow some time for the internal syntheszier to produce more."
+		for(var/datum/reagents/RS in reagent_list)
+			var/datum/reagent/R = locate() in RS.reagent_list
+			if(R)
+				user << "<span class='notice'>It currently has [R.volume] units of [R.name] stored.</span>"
+				empty = 0
+		if(empty)
+			user << "<span class='notice'>It is currently empty. Allow some time for the internal syntheszier to produce more.</span>"

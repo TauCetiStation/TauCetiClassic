@@ -39,7 +39,7 @@
 	anchored = 1
 	layer = 20
 	dir = NORTH
-	icon = 'tauceti/icons/misc/buildmode.dmi'
+	icon = 'icons/misc/buildmode.dmi'
 	var/obj/effect/bmode/buildholder/master = null
 
 /obj/effect/bmode/Destroy()
@@ -183,7 +183,7 @@
 							master.buildmode.valueholder = input(usr,"Enter variable value:" ,"Value") as turf in world
     	return 1
 
-/proc/build_click(var/mob/user, buildmode, params, var/obj/object)
+/proc/build_click(mob/user, buildmode, params, obj/object)
 	var/obj/effect/bmode/buildholder/holder = null
 	for(var/obj/effect/bmode/buildholder/H)
 		if(H.cl == user.client)

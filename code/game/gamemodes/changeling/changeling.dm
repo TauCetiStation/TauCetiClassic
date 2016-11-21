@@ -76,7 +76,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	return ..()
 
 
-/datum/game_mode/proc/forge_changeling_objectives(var/datum/mind/changeling)
+/datum/game_mode/proc/forge_changeling_objectives(datum/mind/changeling)
 	//OBJECTIVES - Always absorb 5 genomes, plus random traitor objectives.
 	//If they have two objectives as well as absorb, they must survive rather than escape
 	//No escape alone because changelings aren't suited for it and it'd probably just lead to rampant robusting
@@ -114,7 +114,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 				changeling.objectives += survive_objective
 	return
 
-/datum/game_mode/proc/greet_changeling(var/datum/mind/changeling, var/you_are=1)
+/datum/game_mode/proc/greet_changeling(datum/mind/changeling, you_are=1)
 	if (you_are)
 		changeling.current << "<B>\red You are a changeling!</B>"
 	changeling.current << "<b>\red Use say \":g message\" to communicate with your fellow changelings. Remember: you get all of their absorbed DNA if you absorb them.</b>"
@@ -298,7 +298,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	geneticdamage = max(0, geneticdamage-1)
 
 
-/datum/changeling/proc/GetDNA(var/dna_owner)
+/datum/changeling/proc/GetDNA(dna_owner)
 	var/datum/dna/chosen_dna
 	for(var/datum/dna/DNA in absorbed_dna)
 		if(dna_owner == DNA.real_name)
@@ -313,11 +313,11 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 			U << "<span class='warning'>DNA of [T] is ruined beyond usability!</span>"
 			return 0
 
-		if(T:species.flags & IS_SYNTHETIC || T:species.flags & IS_PLANT)
+		if(T:species.flags[IS_SYNTHETIC] || T:species.flags[IS_PLANT])
 			U << "<span class='warning'>[T] is not compatible with our biology.</span>"
 			return 0
 
-		if(T:species.flags & NO_SCAN)
+		if(T:species.flags[NO_SCAN])
 			src << "<span class='warning'>We do not know how to parse this creature's DNA!</span>"
 			return 0
 

@@ -208,7 +208,7 @@ var/global/list/autolathe_recipes_hidden = list( \
 	else
 		return 0
 
-/obj/machinery/autolathe/interact(mob/user as mob)
+/obj/machinery/autolathe/interact(mob/user)
 	if(..())
 		return
 	if (src.shocked)
@@ -219,7 +219,7 @@ var/global/list/autolathe_recipes_hidden = list( \
 	regular_win(user)
 	return
 
-/obj/machinery/autolathe/attackby(var/obj/item/I as obj, var/mob/user as mob)
+/obj/machinery/autolathe/attackby(obj/item/I, mob/user)
 	if (busy)
 		user << "\red The autolathe is busy. Please wait for completion of previous operation."
 		return 1
@@ -286,10 +286,10 @@ var/global/list/autolathe_recipes_hidden = list( \
 	busy = 0
 	src.updateUsrDialog()
 
-/obj/machinery/autolathe/attack_paw(mob/user as mob)
+/obj/machinery/autolathe/attack_paw(mob/user)
 	return src.attack_hand(user)
 
-/obj/machinery/autolathe/attack_hand(mob/user as mob)
+/obj/machinery/autolathe/attack_hand(mob/user)
 	if(..())
 		return
 	interact(user)

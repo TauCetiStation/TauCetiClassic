@@ -200,10 +200,10 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			return
 	return
 
-/obj/machinery/newscaster/attack_ai(mob/user as mob)
+/obj/machinery/newscaster/attack_ai(mob/user)
 	return src.attack_hand(user)
 
-/obj/machinery/newscaster/attack_hand(mob/user as mob)            //########### THE MAIN BEEF IS HERE! And in the proc below this...############
+/obj/machinery/newscaster/attack_hand(mob/user)            //########### THE MAIN BEEF IS HERE! And in the proc below this...############
 	if(!src.ispowered || src.isbroken)
 		return
 	if(istype(user, /mob/living/carbon/human) || istype(user,/mob/living/silicon) )
@@ -699,7 +699,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 	src.updateUsrDialog()
 
 
-/obj/machinery/newscaster/attackby(obj/item/I as obj, mob/user as mob)
+/obj/machinery/newscaster/attackby(obj/item/I, mob/user)
 
 /*	if (istype(I, /obj/item/weapon/card/id) || istype(I, /obj/item/device/pda) ) //Name verification for channels or messages
 		if(src.screen == 4 || src.screen == 5)
@@ -749,15 +749,15 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			user << "<FONT COLOR='blue'>This does nothing.</FONT>"
 	src.update_icon()
 
-/obj/machinery/newscaster/attack_ai(mob/user as mob)
+/obj/machinery/newscaster/attack_ai(mob/user)
 	return src.attack_hand(user) //or maybe it'll have some special functions? No idea.
 
 
-/obj/machinery/newscaster/attack_paw(mob/user as mob)
+/obj/machinery/newscaster/attack_paw(mob/user)
 	user << "<font color='blue'>The newscaster controls are far too complicated for your tiny brain!</font>"
 	return
 
-/obj/machinery/newscaster/proc/AttachPhoto(mob/user as mob)
+/obj/machinery/newscaster/proc/AttachPhoto(mob/user)
 	if(photo)
 		if(!issilicon(user))
 			photo.loc = src.loc
@@ -770,7 +770,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 	else if(istype(user,/mob/living/silicon))
 		var/mob/living/silicon/tempAI = user
 		var/obj/item/device/camera/siliconcam/camera = tempAI.aiCamera
- 
+
 		if(!camera)
 			return
 		var/datum/picture/selection = camera.selectpicture()
@@ -807,7 +807,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 	..()
 	world << "derp"*/
 
-obj/item/weapon/newspaper/attack_self(mob/user as mob)
+obj/item/weapon/newspaper/attack_self(mob/user)
 	if(ishuman(user))
 		var/mob/living/carbon/human/human_user = user
 		var/dat
@@ -919,7 +919,7 @@ obj/item/weapon/newspaper/Topic(href, href_list)
 			src.attack_self(src.loc)
 
 
-obj/item/weapon/newspaper/attackby(obj/item/weapon/W as obj, mob/user as mob)
+obj/item/weapon/newspaper/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/pen))
 		if(src.scribble_page == src.curr_page)
 			user << "<FONT COLOR='blue'>There's already a scribble in this page... You wouldn't want to make things too cluttered, would you?</FONT>"
@@ -939,7 +939,7 @@ obj/item/weapon/newspaper/attackby(obj/item/weapon/W as obj, mob/user as mob)
 ////////////////////////////////////helper procs
 
 
-/obj/machinery/newscaster/proc/scan_user(mob/living/user as mob)
+/obj/machinery/newscaster/proc/scan_user(mob/living/user)
 	if(istype(user,/mob/living/carbon/human))                       //User is a human
 		var/mob/living/carbon/human/human_user = user
 		if(human_user.wear_id)                                      //Newscaster scans you

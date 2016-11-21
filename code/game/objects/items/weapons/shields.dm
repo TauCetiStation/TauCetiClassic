@@ -22,7 +22,7 @@
 	IsShield()
 		return 1
 
-	attackby(obj/item/weapon/W as obj, mob/user as mob)
+	attackby(obj/item/weapon/W, mob/user)
 		if(istype(W, /obj/item/weapon/melee/baton))
 			if(cooldown < world.time - 25)
 				user.visible_message("<span class='warning'>[user] bashes [src] with [W]!</span>")
@@ -120,7 +120,7 @@
 	w_class = 2.0
 	origin_tech = "magnets=3;syndicate=4"
 
-/obj/item/weapon/cloaking_device/attack_self(mob/user as mob)
+/obj/item/weapon/cloaking_device/attack_self(mob/user)
 	src.active = !( src.active )
 	if (src.active)
 		user << "\blue The cloaking device is now active."

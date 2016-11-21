@@ -7,7 +7,7 @@
 	req_human = 1
 
 //A flashy ability, good for crowd control and sewing chaos.
-/obj/effect/proc_holder/changeling/resonant_shriek/sting_action(var/mob/user)
+/obj/effect/proc_holder/changeling/resonant_shriek/sting_action(mob/user)
 	for(var/mob/living/M in hearers(4, user))
 		if(iscarbon(M))
 			if(!M.mind || !M.mind.changeling)
@@ -15,7 +15,7 @@
 				M.confused += 20
 				M.make_jittery(500)
 			else
-				M << sound('tauceti/sounds/effects/screech.ogg')
+				M << sound('sound/effects/screech.ogg')
 
 		if(issilicon(M))
 			M << sound('sound/weapons/flash.ogg')

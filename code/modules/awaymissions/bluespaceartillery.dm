@@ -20,7 +20,7 @@
 /obj/structure/artilleryplaceholder/decorative
 	density = 0
 
-/obj/machinery/artillerycontrol/attack_hand(mob/user as mob)
+/obj/machinery/artillerycontrol/attack_hand(mob/user)
 	user.set_machine(src)
 	var/dat = "<B>Bluespace Artillery Control:</B><BR>"
 	dat += "Locked on<BR>"
@@ -41,7 +41,7 @@
 	if(src.reload < 180)
 		return FALSE
 	command_alert("Bluespace artillery fire detected. Brace for impact.")
-	message_admins("[key_name_admin(usr)] has launched an artillery strike.", 1)
+	message_admins("[key_name_admin(usr)] has launched an artillery strike.")
 	var/list/L = list()
 	for(var/turf/T in get_area_turfs(thearea.type))
 		L+=T

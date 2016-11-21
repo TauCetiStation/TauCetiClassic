@@ -16,7 +16,7 @@
 	var/broken = 0     //Is the flash burnt out?
 	var/last_used = 0 //last world.time it was used.
 
-/obj/item/device/flash/proc/clown_check(var/mob/user)
+/obj/item/device/flash/proc/clown_check(mob/user)
 	if(user && (CLUMSY in user.mutations) && prob(50))
 		user << "\red \The [src] slips out of your hand."
 		user.drop_item()
@@ -34,7 +34,7 @@
 	times_used = max(0,round(times_used)) //sanity
 
 
-/obj/item/device/flash/attack(mob/living/M as mob, mob/user as mob)
+/obj/item/device/flash/attack(mob/living/M, mob/user)
 	if(!user || !M)	return	//sanity
 
 	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been flashed (attempt) with [src.name]  by [user.name] ([user.ckey])</font>")
@@ -127,7 +127,7 @@
 
 
 
-/obj/item/device/flash/attack_self(mob/living/carbon/user as mob, flag = 0, emp = 0)
+/obj/item/device/flash/attack_self(mob/living/carbon/user, flag = 0, emp = 0)
 	if(!user || !clown_check(user)) 	return
 	if(broken)
 		user.show_message("<span class='warning'>The [src.name] is broken</span>", 2)
@@ -195,14 +195,14 @@
 	icon_state = "sflash"
 	origin_tech = "magnets=2;combat=1"
 
-/obj/item/device/flash/synthetic/attack(mob/living/M as mob, mob/user as mob)
+/obj/item/device/flash/synthetic/attack(mob/living/M, mob/user)
 	..()
 	if(!broken)
 		broken = 1
 		user << "\red The bulb has burnt out!"
 		icon_state = "flashburnt"
 
-/obj/item/device/flash/synthetic/attack_self(mob/living/carbon/user as mob, flag = 0, emp = 0)
+/obj/item/device/flash/synthetic/attack_self(mob/living/carbon/user, flag = 0, emp = 0)
 	..()
 	if(!broken)
 		broken = 1

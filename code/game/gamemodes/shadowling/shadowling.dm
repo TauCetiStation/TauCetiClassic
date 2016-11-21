@@ -51,15 +51,15 @@ Made by Xhuis
 	var/shadowling_dead = 0 //is shadowling kill
 	var/objective_explanation
 
-/proc/is_thrall(var/mob/living/M)
+/proc/is_thrall(mob/living/M)
 	return istype(M) && M.mind && ticker && ticker.mode && (M.mind in ticker.mode.thralls)
 
 
-/proc/is_shadow_or_thrall(var/mob/living/M)
+/proc/is_shadow_or_thrall(mob/living/M)
 	return istype(M) && M.mind && ticker && ticker.mode && ((M.mind in ticker.mode.thralls) || (M.mind in ticker.mode.shadows))
 
 
-/proc/is_shadow(var/mob/living/M)
+/proc/is_shadow(mob/living/M)
 	return istype(M) && M.mind && ticker && ticker.mode && (M.mind in ticker.mode.shadows)
 
 
@@ -120,14 +120,14 @@ Made by Xhuis
 
 	return ..()
 
-/datum/game_mode/proc/greet_shadow(var/datum/mind/shadow)
+/datum/game_mode/proc/greet_shadow(datum/mind/shadow)
 	shadow.current << "<b>Currently, you are disguised as an employee aboard [world.name].</b>"
 	shadow.current << "<b>In your limited state, you have three abilities: Enthrall, Hatch, and Hivemind Commune.</b>"
 	shadow.current << "<b>Any other shadowlings are you allies. You must assist them as they shall assist you.</b>"
 	shadow.current << "<b>If you are new to shadowling, or want to read about abilities, check the wiki page at http://tauceti.ru/wiki/Shadowling</b><br>"
 
 
-/datum/game_mode/proc/process_shadow_objectives(var/datum/mind/shadow_mind)
+/datum/game_mode/proc/process_shadow_objectives(datum/mind/shadow_mind)
 	var/objective = "enthrall" //may be devour later, but for now it seems murderbone-y
 
 	if(objective == "enthrall")
@@ -137,7 +137,7 @@ Made by Xhuis
 		shadow_mind.current << "<b>Objective #1</b>: [objective_explanation]<br>"
 
 
-/datum/game_mode/proc/finalize_shadowling(var/datum/mind/shadow_mind)
+/datum/game_mode/proc/finalize_shadowling(datum/mind/shadow_mind)
 	var/mob/living/carbon/human/S = shadow_mind.current
 	shadow_mind.current.verbs += /mob/living/carbon/human/proc/shadowling_hatch
 	S.spell_list += new /obj/effect/proc_holder/spell/targeted/enthrall
@@ -262,11 +262,11 @@ Made by Xhuis
 				if(shadowling.current.client)
 					for(var/datum/mind/thrall in thralls)
 						if(thrall.current)
-							var/I = image('tauceti/icons/mob/shadow_ling.dmi', loc = thrall.current, icon_state = "thrall")
+							var/I = image('icons/mob/shadowling.dmi', loc = thrall.current, icon_state = "thrall")
 							shadowling.current.client.images += I
 					for(var/datum/mind/shadowling_1 in shadows)
 						if(shadowling_1.current)
-							var/I = image('tauceti/icons/mob/shadow_ling.dmi', loc = shadowling_1.current, icon_state = "shadowling")
+							var/I = image('icons/mob/shadowling.dmi', loc = shadowling_1.current, icon_state = "shadowling")
 							shadowling.current.client.images += I
 
 		for(var/datum/mind/thrall in thralls)
@@ -274,11 +274,11 @@ Made by Xhuis
 				if(thrall.current.client)
 					for(var/datum/mind/shadowling in shadows)
 						if(shadowling.current)
-							var/I = image('tauceti/icons/mob/shadow_ling.dmi', loc = shadowling.current, icon_state = "shadowling")
+							var/I = image('icons/mob/shadowling.dmi', loc = shadowling.current, icon_state = "shadowling")
 							thrall.current.client.images += I
 					for(var/datum/mind/thrall_1 in thralls)
 						if(thrall_1.current)
-							var/I = image('tauceti/icons/mob/shadow_ling.dmi', loc = thrall_1.current, icon_state = "thrall")
+							var/I = image('icons/mob/shadowling.dmi', loc = thrall_1.current, icon_state = "thrall")
 							thrall.current.client.images += I
 
 
@@ -288,21 +288,21 @@ Made by Xhuis
 		for(var/datum/mind/shadowling_mind in shadows)
 			if(shadowling_mind.current)
 				if(shadowling_mind.current.client)
-					var/I = image('tauceti/icons/mob/shadow_ling.dmi', loc = thrall.current, icon_state = "thrall")
+					var/I = image('icons/mob/shadowling.dmi', loc = thrall.current, icon_state = "thrall")
 					shadowling_mind.current.client.images += I
 			if(thrall.current)
 				if(thrall.current.client)
-					var/image/J = image('tauceti/icons/mob/shadow_ling.dmi', loc = shadowling_mind.current, icon_state = "shadowling")
+					var/image/J = image('icons/mob/shadowling.dmi', loc = shadowling_mind.current, icon_state = "shadowling")
 					thrall.current.client.images += J
 
 		for(var/datum/mind/thrall_1 in thralls)
 			if(thrall_1.current)
 				if(thrall_1.current.client)
-					var/I = image('tauceti/icons/mob/shadow_ling.dmi', loc = thrall.current, icon_state = "thrall")
+					var/I = image('icons/mob/shadowling.dmi', loc = thrall.current, icon_state = "thrall")
 					thrall_1.current.client.images += I
 			if(thrall.current)
 				if(thrall.current.client)
-					var/image/J = image('tauceti/icons/mob/shadow_ling.dmi', loc = thrall_1.current, icon_state = "thrall")
+					var/image/J = image('icons/mob/shadowling.dmi', loc = thrall_1.current, icon_state = "thrall")
 					thrall.current.client.images += J
 
 
@@ -353,7 +353,11 @@ Made by Xhuis
 	//faction = list("faithless")
 	//meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/shadow
 	//specflags = list(NOBREATH,NOBLOOD,RADIMMUNE)
-	flags = NO_BREATHE | NO_BLOOD | RAD_IMMUNE*/
+	flags = list(
+	 NO_BREATHE = TRUE
+	,NO_BLOOD = TRUE
+	,RAD_IMMUNE = TRUE
+	)*/
 
 /datum/species/shadow/ling
 	//Normal shadowpeople but with enhanced effects
@@ -377,11 +381,16 @@ Made by Xhuis
 	blood_color = "#000000"
 	darksight = 8
 
-	flags = NO_BREATHE | NO_BLOOD | RAD_IMMUNE | VIRUS_IMMUNE
+	flags = list(
+	 NO_BREATHE = TRUE
+	,NO_BLOOD = TRUE
+	,RAD_IMMUNE = TRUE
+	,VIRUS_IMMUNE = TRUE
+	)
 	burn_mod = 2 //2x burn damage lel
 
 
-/datum/species/shadow/ling/handle_post_spawn(var/mob/living/carbon/human/H)
+/datum/species/shadow/ling/handle_post_spawn(mob/living/carbon/human/H)
 	H.gender = NEUTER
 
 	return ..()

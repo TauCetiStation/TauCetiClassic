@@ -177,7 +177,7 @@
 		magpulse = 1
 		H << "You enable the mag-pulse traction system."
 
-/obj/item/clothing/suit/space/rig/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/clothing/suit/space/rig/attackby(obj/item/W, mob/user)
 
 	if(!istype(user,/mob/living)) return
 
@@ -247,10 +247,9 @@
 
 	..()
 
-/obj/item/clothing/suit/space/rig/examine()
-	set src in view()
+/obj/item/clothing/suit/space/rig/examine(mob/user)
 	..()
-	usr << "Its mag-pulse traction system appears to be [!magpulse ? "disabled" : "enabled"]."
+	user << "Its mag-pulse traction system appears to be [magpulse ? "enabled" : "disabled"]."
 
 //Engineering rig
 /obj/item/clothing/head/helmet/space/rig/engineering
@@ -333,10 +332,10 @@
 		camera.c_tag = user.name
 		user << "\blue User scanned as [camera.c_tag]. Camera activated."
 
-/obj/item/clothing/head/helmet/space/rig/syndi/examine()
+/obj/item/clothing/head/helmet/space/rig/syndi/examine(mob/user)
 	..()
-	if(get_dist(usr,src) <= 1)
-		usr << "This helmet has a built-in camera. It's [camera ? "" : "in"]active."
+	if(src in view(1, user))
+		user << "This helmet has a built-in camera. It's [camera ? "" : "in"]active."
 
 /obj/item/clothing/suit/space/rig/syndi
 	icon_state = "rig-syndie"
@@ -344,7 +343,6 @@
 	desc = "An advanced suit that protects against injuries during special operations. Property of Gorlex Marauders."
 	item_state = "syndie_hardsuit"
 	slowdown = 1.4
-	w_class = 3
 	armor = list(melee = 60, bullet = 65, laser = 55, energy = 45, bomb = 50, bio = 100, rad = 60)
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/device/suit_cooling_unit,/obj/item/weapon/gun,/obj/item/ammo_box/magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/melee/energy/sword,/obj/item/weapon/handcuffs)
 	species_restricted = list("exclude","Unathi","Tajaran","Skrell","Vox")
@@ -358,7 +356,7 @@
 	item_state = "wiz_helm"
 	item_color = "wiz"
 	unacidable = 1 //No longer shall our kind be foiled by lone chemists with spray bottles!
-	armor = list(melee = 66, bullet = 66, laser = 66,energy = 66, bomb = 66, bio = 100, rad = 60)
+	armor = list(melee = 40, bullet = 33, laser = 33,energy = 33, bomb = 33, bio = 100, rad = 66)
 	sprite_sheets_refit = null
 	sprite_sheets_obj = null
 
@@ -368,9 +366,8 @@
 	desc = "A bizarre gem-encrusted suit that radiates magical energies."
 	item_state = "wiz_hardsuit"
 	slowdown = 1
-	w_class = 3
 	unacidable = 1
-	armor = list(melee = 40, bullet = 66, laser = 66,energy = 66, bomb = 66, bio = 100, rad = 60)
+	armor = list(melee = 40, bullet = 33, laser = 33,energy = 33, bomb = 33, bio = 100, rad = 66)
 	sprite_sheets_refit = null
 	sprite_sheets_obj = null
 

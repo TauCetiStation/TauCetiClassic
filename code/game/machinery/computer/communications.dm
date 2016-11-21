@@ -86,7 +86,7 @@
 					if(security_level != old_level)
 						//Only notify the admins if an actual change happened
 						log_game("[key_name(usr)] has changed the security level to [get_security_level()].")
-						message_admins("[key_name_admin(usr)] has changed the security level to [get_security_level()].")
+						message_admins("[key_name_admin(usr)] has changed the security level to [get_security_level()]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[usr.x];Y=[usr.y];Z=[usr.z]'>JMP</a>)")
 						switch(security_level)
 							if(SEC_LEVEL_GREEN)
 								feedback_inc("alert_comms_green",1)
@@ -108,7 +108,7 @@
 					return
 				captain_announce(input)//This should really tell who is, IE HoP, CE, HoS, RD, Captain
 				log_say("[key_name(usr)] has made a captain announcement: [input]")
-				message_admins("[key_name_admin(usr)] has made a captain announcement.", 1)
+				message_admins("[key_name_admin(usr)] has made a captain announcement. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[usr.x];Y=[usr.y];Z=[usr.z]'>JMP</a>)")
 				message_cooldown = 1
 				spawn(600)//One minute cooldown
 					message_cooldown = 0
@@ -255,7 +255,7 @@
 			state = STATE_ALERT_LEVEL
 	src.updateUsrDialog()
 
-/obj/machinery/computer/communications/attackby(var/obj/I as obj, var/mob/user as mob)
+/obj/machinery/computer/communications/attackby(obj/I, mob/user)
 	if(istype(I,/obj/item/weapon/card/emag/))
 		src.emagged = 1
 		user << "You scramble the communication routing circuits!"
@@ -263,7 +263,7 @@
 		..()
 	return
 
-/obj/machinery/computer/communications/attack_hand(var/mob/user as mob)
+/obj/machinery/computer/communications/attack_hand(mob/user)
 	if(..())
 		return
 	if (src.z > ZLEVEL_EMPTY)
@@ -361,7 +361,7 @@
 
 
 
-/obj/machinery/computer/communications/proc/interact_ai(var/mob/living/silicon/ai/user as mob)
+/obj/machinery/computer/communications/proc/interact_ai(mob/living/silicon/ai/user)
 	var/dat = ""
 	switch(src.aistate)
 		if(STATE_DEFAULT)
@@ -407,11 +407,11 @@
 	dat += "<BR>\[ [(src.aistate != STATE_DEFAULT) ? "<A HREF='?src=\ref[src];operation=ai-main'>Main Menu</A> | " : ""]<A HREF='?src=\ref[user];mach_close=communications'>Close</A> \]"
 	return dat
 
-/proc/enable_prison_shuttle(var/mob/user)
-	for(var/obj/machinery/computer/prison_shuttle/PS in world)
+/proc/enable_prison_shuttle(mob/user)
+	for(var/obj/machinery/computer/prison_shuttle/PS in machines)
 		PS.allowedtocall = !(PS.allowedtocall)
 
-/proc/call_shuttle_proc(var/mob/user)
+/proc/call_shuttle_proc(mob/user)
 	if ((!( ticker ) || SSshuttle.location))
 		return
 
@@ -437,13 +437,15 @@
 
 	SSshuttle.incall()
 	log_game("[key_name(user)] has called the shuttle.")
-	message_admins("[key_name_admin(user)] has called the shuttle.", 1)
+	message_admins("[key_name_admin(user)] has called the shuttle. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 	captain_announce("The emergency shuttle has been called. It will arrive in [round(SSshuttle.timeleft()/60)] minutes.")
 	world << sound('sound/AI/shuttlecalled.ogg')
 
+	make_maint_all_access(FALSE)
+
 	return
 
-/proc/init_shift_change(var/mob/user, var/force = 0)
+/proc/init_shift_change(mob/user, force = 0)
 	if ((!( ticker ) || SSshuttle.location))
 		return
 
@@ -480,12 +482,12 @@
 	SSshuttle.shuttlealert(1)
 	SSshuttle.incall()
 	log_game("[key_name(user)] has called the shuttle.")
-	message_admins("[key_name_admin(user)] has called the shuttle.", 1)
+	message_admins("[key_name_admin(user)] has called the shuttle. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 	captain_announce("A crew transfer has been initiated. The shuttle has been called. It will arrive in [round(SSshuttle.timeleft()/60)] minutes.")
 
 	return
 
-/proc/cancel_call_proc(var/mob/user)
+/proc/cancel_call_proc(mob/user)
 	if ((!( ticker ) || SSshuttle.location || SSshuttle.direction == 0 || SSshuttle.timeleft() < 300))
 		return
 	if((ticker.mode.name == "blob")||(ticker.mode.name == "meteor"))
@@ -494,11 +496,17 @@
 	if(SSshuttle.direction != -1 && SSshuttle.online) //check that shuttle isn't already heading to centcomm
 		SSshuttle.recall()
 		log_game("[key_name(user)] has recalled the shuttle.")
-		message_admins("[key_name_admin(user)] has recalled the shuttle.", 1)
+		message_admins("[key_name_admin(user)] has recalled the shuttle. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+
+		if(timer_maint_revoke_id)
+			deltimer(timer_maint_revoke_id)
+			timer_maint_revoke_id = 0
+		timer_maint_revoke_id = addtimer(GLOBAL_PROC, "revoke_maint_all_access", 600, TRUE, FALSE) // Want to give them time to get out of maintenance.
+
 		return 1
 	return
 
-/obj/machinery/computer/communications/proc/post_status(var/command, var/data1, var/data2)
+/obj/machinery/computer/communications/proc/post_status(command, data1, data2)
 
 	var/datum/radio_frequency/frequency = radio_controller.return_frequency(1435)
 
@@ -523,11 +531,11 @@
 
 /obj/machinery/computer/communications/Destroy()
 
-	for(var/obj/machinery/computer/communications/commconsole in world)
+	for(var/obj/machinery/computer/communications/commconsole in machines)
 		if(istype(commconsole.loc,/turf) && commconsole != src)
 			return ..()
 
-	for(var/obj/item/weapon/circuitboard/communications/commboard in world)
+	for(var/obj/item/weapon/circuitboard/communications/commboard in machines)
 		if(istype(commboard.loc,/turf) || istype(commboard.loc,/obj/item/weapon/storage))
 			return ..()
 
@@ -540,7 +548,7 @@
 
 	SSshuttle.incall(2)
 	log_game("All the AIs, comm consoles and boards are destroyed. Shuttle called.")
-	message_admins("All the AIs, comm consoles and boards are destroyed. Shuttle called.", 1)
+	message_admins("All the AIs, comm consoles and boards are destroyed. Shuttle called.")
 	captain_announce("The emergency shuttle has been called. It will arrive in [round(SSshuttle.timeleft()/60)] minutes.")
 	world << sound('sound/AI/shuttlecalled.ogg')
 
@@ -548,11 +556,11 @@
 
 /obj/item/weapon/circuitboard/communications/Destroy()
 
-	for(var/obj/machinery/computer/communications/commconsole in world)
+	for(var/obj/machinery/computer/communications/commconsole in machines)
 		if(istype(commconsole.loc,/turf))
 			return ..()
 
-	for(var/obj/item/weapon/circuitboard/communications/commboard in world)
+	for(var/obj/item/weapon/circuitboard/communications/commboard in machines)
 		if((istype(commboard.loc,/turf) || istype(commboard.loc,/obj/item/weapon/storage)) && commboard != src)
 			return ..()
 
@@ -565,7 +573,7 @@
 
 	SSshuttle.incall(2)
 	log_game("All the AIs, comm consoles and boards are destroyed. Shuttle called.")
-	message_admins("All the AIs, comm consoles and boards are destroyed. Shuttle called.", 1)
+	message_admins("All the AIs, comm consoles and boards are destroyed. Shuttle called.")
 	captain_announce("The emergency shuttle has been called. It will arrive in [round(SSshuttle.timeleft()/60)] minutes.")
 	world << sound('sound/AI/shuttlecalled.ogg')
 

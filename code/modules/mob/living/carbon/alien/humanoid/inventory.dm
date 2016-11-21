@@ -1,5 +1,5 @@
 //unequip
-/mob/living/carbon/alien/humanoid/u_equip(obj/item/W as obj)
+/mob/living/carbon/alien/humanoid/u_equip(obj/item/W)
 	if (W == wear_suit)
 		wear_suit = null
 		update_inv_wear_suit(0)

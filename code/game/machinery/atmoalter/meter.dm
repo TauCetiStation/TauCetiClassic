@@ -80,12 +80,11 @@
 		t += "The connect error light is blinking."
 	return t
 
-/obj/machinery/meter/examine()
-	set src in view(3)
-
+/obj/machinery/meter/examine(mob/user)
+	..()
 	var/t = "A gas flow meter. "
 	t += status()
-	usr << t
+	user << t
 
 
 
@@ -104,7 +103,7 @@
 	usr << t
 	return 1
 
-/obj/machinery/meter/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+/obj/machinery/meter/attackby(obj/item/weapon/W, mob/user)
 	if (!istype(W, /obj/item/weapon/wrench))
 		return ..()
 	playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
@@ -129,5 +128,5 @@
 	if (!target)
 		src.target = loc
 
-/obj/machinery/meter/turf/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+/obj/machinery/meter/turf/attackby(obj/item/weapon/W, mob/user)
 	return

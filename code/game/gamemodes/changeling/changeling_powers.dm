@@ -44,7 +44,7 @@
 
 
 //Helper proc. Does all the checks and stuff for us to avoid copypasta
-/mob/proc/changeling_power(var/required_chems=0, var/required_dna=0, var/max_genetic_damage=100, var/max_stat=0)
+/mob/proc/changeling_power(required_chems=0, required_dna=0, max_genetic_damage=100, max_stat=0)
 
 	if(!src.mind)		return
 	if(!iscarbon(src))	return
@@ -74,7 +74,7 @@
 
 
 //Used to dump the languages from the changeling datum into the actual mob.
-/mob/proc/changeling_update_languages(var/updated_languages)
+/mob/proc/changeling_update_languages(updated_languages)
 
 	languages = list()
 	for(var/language in updated_languages)
@@ -141,7 +141,7 @@
 		src << "<span class='warning'>[T] is not compatible with our biology.</span>"
 		return
 
-	if(T.species.flags & NO_SCAN)
+	if(T.species.flags[NO_SCAN])
 		src << "<span class='warning'>We do not know how to parse this creature's DNA!</span>"
 		return
 
@@ -678,7 +678,7 @@ var/list/datum/dna/hivemind_bank = list()
 	//STINGS//	//They get a pretty header because there's just so fucking many of them ;_;
 	//////////
 
-/mob/proc/sting_can_reach(mob/M as mob, sting_range = 1)
+/mob/proc/sting_can_reach(mob/M, sting_range = 1)
 	if(M.loc == src.loc) return 1 //target and source are in the same thing
 	if(!isturf(src.loc) || !isturf(M.loc)) return 0 //One is inside, the other is outside something.
 	if(AStar(src.loc, M.loc, /turf/proc/AdjacentTurfs, /turf/proc/Distance, sting_range)) //If a path exists, good!
@@ -686,7 +686,7 @@ var/list/datum/dna/hivemind_bank = list()
 	return 0
 
 //Handles the general sting code to reduce on copypasta (seeming as somebody decided to make SO MANY dumb abilities)
-/mob/proc/changeling_sting(var/required_chems=0, var/verb_path)
+/mob/proc/changeling_sting(required_chems=0, verb_path)
 	var/datum/changeling/changeling = changeling_power(required_chems)
 	if(!changeling)								return
 

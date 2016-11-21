@@ -8,10 +8,10 @@
 	siemens_coefficient = 1
 	var/obj/machinery/computer/cargo/cargo_console = null
 
-/obj/item/device/export_scanner/examine()
+/obj/item/device/export_scanner/examine(mob/user)
 	..()
 	if(!cargo_console)
-		usr << "<span class='notice'>The [src] is currently not linked to a cargo console.</span>"
+		user << "<span class='notice'>The [src] is currently not linked to a cargo console.</span>"
 
 /obj/item/device/export_scanner/afterattack(obj/O, mob/user, proximity)
 	if(!istype(O) || !proximity)

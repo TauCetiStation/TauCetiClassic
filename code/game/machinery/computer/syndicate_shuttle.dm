@@ -16,7 +16,7 @@
 	curr_location= locate(/area/syndicate_station/start)
 
 
-/obj/machinery/computer/syndicate_station/proc/syndicate_move_to(area/destination as area)
+/obj/machinery/computer/syndicate_station/proc/syndicate_move_to(area/destination)
 	if(moving)	return
 	if(lastMove + SYNDICATE_SHUTTLE_COOLDOWN > world.time)	return
 	var/area/dest_location = locate(destination)
@@ -36,7 +36,7 @@
 	moving = 0
 	return 1
 
-/obj/machinery/computer/syndicate_station/attack_hand(mob/user as mob)
+/obj/machinery/computer/syndicate_station/attack_hand(mob/user)
 	if(!allowed(user))
 		user << "\red Access Denied"
 		return

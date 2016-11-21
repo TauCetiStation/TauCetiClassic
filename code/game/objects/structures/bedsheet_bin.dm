@@ -7,11 +7,10 @@ LINEN BINS
 /obj/item/weapon/bedsheet
 	name = "bedsheet"
 	desc = "A surprisingly soft linen bedsheet."
-	icon = 'tauceti/icons/obj/bedsheets.dmi'
+	icon = 'icons/obj/bedsheets.dmi'
 	icon_state = "sheet"
 	item_state = "bedsheet"
-	slot_flags = SLOT_BACK //tg
-	tc_custom = 'tauceti/icons/mob/back.dmi'
+	slot_flags = SLOT_BACK
 	layer = 4.0
 	throwforce = 1
 	throw_speed = 1
@@ -20,7 +19,7 @@ LINEN BINS
 	item_color = "white"
 
 
-/obj/item/weapon/bedsheet/attack_self(mob/user as mob)
+/obj/item/weapon/bedsheet/attack_self(mob/user)
 	user.drop_item()
 	if(layer == initial(layer))
 		layer = 5
@@ -141,6 +140,12 @@ LINEN BINS
 	icon_state = "sheetwiz"
 	item_color = "wiz"
 
+/obj/item/weapon/bedsheet/gar
+	name = "gar bedsheet"
+	desc = "A surprisingly soft gar bedsheet."
+	icon_state = "sheetgurren"
+	item_state = "bedsheet"
+	item_color = "gurren"
 
 
 /obj/structure/bedsheetbin
@@ -154,15 +159,15 @@ LINEN BINS
 	var/obj/item/hidden = null
 
 
-/obj/structure/bedsheetbin/examine()
-	usr << desc
+/obj/structure/bedsheetbin/examine(mob/user)
+	..()
 	if(amount < 1)
-		usr << "There are no bed sheets in the bin."
+		user << "There are no bed sheets in the bin."
 		return
 	if(amount == 1)
-		usr << "There is one bed sheet in the bin."
+		user << "There is one bed sheet in the bin."
 		return
-	usr << "There are [amount] bed sheets in the bin."
+	user << "There are [amount] bed sheets in the bin."
 
 
 /obj/structure/bedsheetbin/update_icon()
@@ -172,7 +177,7 @@ LINEN BINS
 		else				icon_state = "linenbin-full"
 
 
-/obj/structure/bedsheetbin/attackby(obj/item/I as obj, mob/user as mob)
+/obj/structure/bedsheetbin/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/bedsheet))
 		user.drop_item()
 		I.loc = src
@@ -187,11 +192,11 @@ LINEN BINS
 
 
 
-/obj/structure/bedsheetbin/attack_paw(mob/user as mob)
+/obj/structure/bedsheetbin/attack_paw(mob/user)
 	return attack_hand(user)
 
 
-/obj/structure/bedsheetbin/attack_hand(mob/user as mob)
+/obj/structure/bedsheetbin/attack_hand(mob/user)
 	if(amount >= 1)
 		amount--
 
@@ -215,7 +220,7 @@ LINEN BINS
 
 	add_fingerprint(user)
 
-/obj/structure/bedsheetbin/attack_tk(mob/user as mob)
+/obj/structure/bedsheetbin/attack_tk(mob/user)
 	if(amount >= 1)
 		amount--
 

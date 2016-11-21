@@ -23,7 +23,7 @@
 		seed_multiplier = M.rating
 
 
-obj/machinery/seed_extractor/attackby(var/obj/item/O as obj, var/mob/user as mob)
+obj/machinery/seed_extractor/attackby(obj/item/O, mob/user)
 
 	if(default_deconstruction_screwdriver(user, "sextractor_open", "sextractor", O))
 		return

@@ -1,7 +1,7 @@
 /obj/item/brain
 	name = "brain"
 	desc = "A piece of juicy meat found in a persons head."
-	icon = 'tauceti/icons/obj/surgery.dmi'
+	icon = 'icons/obj/surgery.dmi'
 	icon_state = "brain2"
 	flags = TABLEPASS
 	force = 1.0
@@ -23,7 +23,7 @@
 				brainmob.client.screen.len = null //clear the hud
 
 	proc
-		transfer_identity(var/mob/living/carbon/H)
+		transfer_identity(mob/living/carbon/H)
 			name = "[H]'s brain"
 			brainmob = new(src)
 			brainmob.name = H.real_name
@@ -38,18 +38,14 @@
 			if(mode)
 				mode.debrain_directive(src)
 
-/obj/item/brain/examine() // -- TLE
-	set src in oview(12)
-	if (!( usr ))
-		return
-	usr << "This is \icon[src] \an [name]."
-
+/obj/item/brain/examine(mob/user) // -- TLE
+	..()
 	if(brainmob && brainmob.client)//if thar be a brain inside... the brain.
-		usr << "You can feel the small spark of life still left in this one."
+		user << "You can feel the small spark of life still left in this one."
 	else
-		usr << "This one seems particularly lifeless. Perhaps it will regain some of its luster later.."
+		user << "This one seems particularly lifeless. Perhaps it will regain some of its luster later.."
 
-/obj/item/brain/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+/obj/item/brain/attack(mob/living/carbon/M, mob/living/carbon/user)
 	if(!istype(M, /mob))
 		return
 

@@ -13,7 +13,7 @@
 
 	var/d_state = 0
 
-/turf/simulated/wall/r_wall/attack_hand(mob/user as mob)
+/turf/simulated/wall/r_wall/attack_hand(mob/user)
 	if(HULK in user.mutations) //#Z2
 		if(user.a_intent == "hurt")
 			user << text("\blue You punch the wall.")
@@ -46,7 +46,7 @@
 	return
 
 
-/turf/simulated/wall/r_wall/attackby(obj/item/W as obj, mob/user as mob)
+/turf/simulated/wall/r_wall/attackby(obj/item/W, mob/user)
 
 	if (!(istype(user, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
 		user << "<span class='warning'>You don't have the dexterity to do this!</span>"

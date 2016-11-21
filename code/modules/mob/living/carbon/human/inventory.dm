@@ -106,13 +106,24 @@
 		if(slot_in_backpack)
 			return 1
 
-/mob/living/carbon/human/u_equip(obj/W as obj)
+/mob/living/carbon/human/u_equip(obj/W)
 	if(!W)	return 0
 
 	if (W == wear_suit)
 		if(s_store)
 			drop_from_inventory(s_store)
 		wear_suit = null
+		var/update_hair = 0
+		if((W.flags & BLOCKHAIR) || (W.flags & BLOCKHEADHAIR))
+			update_hair = 1
+		else if(istype(W, /obj/item))
+			var/obj/item/I = W
+			if(I.flags_inv & HIDEMASK)
+				update_hair = 1
+		if(update_hair)
+			update_hair()
+			update_inv_ears()
+			update_inv_wear_mask()
 		update_inv_wear_suit()
 	else if (W == w_uniform)
 		if (r_store)
@@ -200,16 +211,13 @@
 	else
 		return 0
 
-	if(lying)
-		drop_from_inventory(W)
-
 	return 1
 
 
 
 //This is an UNSAFE proc. Use mob_can_equip() before calling this one! Or rather use equip_to_slot_if_possible() or advanced_equip_to_slot_if_possible()
 //set redraw_mob to 0 if you don't wish the hud to be updated - if you're doing it manually in your own proc.
-/mob/living/carbon/human/equip_to_slot(obj/item/W as obj, slot, redraw_mob = 1)
+/mob/living/carbon/human/equip_to_slot(obj/item/W, slot, redraw_mob = 1)
 	if(!slot) return
 	if(!istype(W)) return
 	if(!has_organ_for_slot(slot)) return
@@ -288,7 +296,7 @@
 			update_inv_gloves()
 		if(slot_head)
 			src.head = W
-			if((head.flags & BLOCKHAIR) || (head.flags & BLOCKHEADHAIR))
+			if((W.flags & BLOCKHAIR) || (W.flags & BLOCKHEADHAIR))
 				update_hair()	//rebuild hair
 			if(istype(W,/obj/item/clothing/head/kitty))
 				W.update_icon(src)
@@ -300,6 +308,8 @@
 			update_inv_shoes()
 		if(slot_wear_suit)
 			src.wear_suit = W
+			if((W.flags & BLOCKHAIR) || (W.flags & BLOCKHEADHAIR))
+				update_hair()	//rebuild hair
 			W.equipped(src, slot)
 			update_inv_wear_suit()
 		if(slot_w_uniform)

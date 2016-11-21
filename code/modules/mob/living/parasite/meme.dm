@@ -184,7 +184,7 @@ mob/living/parasite/meme/proc/use_points(amount)
 	return 1
 
 // Let the meme choose one of his indoctrinated mobs as target
-mob/living/parasite/meme/proc/select_indoctrinated(var/title, var/message)
+mob/living/parasite/meme/proc/select_indoctrinated(title, message)
 	var/list/candidates
 
 	// Can only affect other mobs thant he host if not blinded
@@ -255,7 +255,7 @@ mob/living/parasite/meme/verb/Thought()
 	//target.show_message(rendered)
 	target << rendered
 	usr << "<i>You make [target] hear:</i> [rendered]"
-	for(var/mob/dead/observer/G in world)
+	for(var/mob/dead/observer/G in mob_list)
 		G.show_message("[usr] makes [target] hear: [rendered]")
 	log_say("Memetic Thought: [key_name(usr)] makes [key_name(target)] hear: [speaker] [message]")
 
@@ -404,7 +404,7 @@ mob/living/parasite/meme/verb/Hallucinate()
 	usr << "<b>You make [target] hallucinate.</b>"
 
 // Jump to a closeby target through a whisper
-mob/living/parasite/meme/verb/SubtleJump(mob/living/carbon/human/target as mob in world)
+mob/living/parasite/meme/verb/SubtleJump(mob/living/carbon/human/target as mob in mob_list)
 	set category = "Meme"
 	set name	 = "Subtle Jump(350)"
 	set desc     = "Move to a closeby human through a whisper."
@@ -441,10 +441,10 @@ mob/living/parasite/meme/verb/SubtleJump(mob/living/carbon/human/target as mob i
 
 	usr << "<b>You successfully jumped to [target]."
 	log_admin("[src.key] has jumped to [target]")
-	message_admins("[src.key] has jumped to [target]")
+	message_admins("[src.key] has jumped to [target] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[src.x];Y=[src.y];Z=[src.z]'>JMP</a>)")
 
 // Jump to a distant target through a shout
-mob/living/parasite/meme/verb/ObviousJump(mob/living/carbon/human/target as mob in world)
+mob/living/parasite/meme/verb/ObviousJump(mob/living/carbon/human/target as mob in mob_list)
 	set category = "Meme"
 	set name	 = "Obvious Jump(750)"
 	set desc     = "Move to any mob in view through a shout."
@@ -481,10 +481,10 @@ mob/living/parasite/meme/verb/ObviousJump(mob/living/carbon/human/target as mob 
 
 	usr << "<b>You successfully jumped to [target]."
 	log_admin("[src.key] has jumped to [target]")
-	message_admins("[src.key] has jumped to [target]")
+	message_admins("[src.key] has jumped to [target] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[src.x];Y=[src.y];Z=[src.z]'>JMP</a>)")
 
 // Jump to an attuned mob for free
-mob/living/parasite/meme/verb/AttunedJump(mob/living/carbon/human/target as mob in world)
+mob/living/parasite/meme/verb/AttunedJump(mob/living/carbon/human/target as mob in mob_list)
 	set category = "Meme"
 	set name	 = "Attuned Jump(0)"
 	set desc     = "Move to a mob in sight that you have already attuned."
@@ -509,7 +509,7 @@ mob/living/parasite/meme/verb/AttunedJump(mob/living/carbon/human/target as mob 
 	usr << "<b>You successfully jumped to [target]."
 
 	log_admin("[src.key] has jumped to [target]")
-	message_admins("[src.key] has jumped to [target]")
+	message_admins("[src.key] has jumped to [target] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[src.x];Y=[src.y];Z=[src.z]'>JMP</a>)")
 
 // ATTUNE a mob, adding it to the indoctrinated list
 mob/living/parasite/meme/verb/Attune()
@@ -532,7 +532,7 @@ mob/living/parasite/meme/verb/Attune()
 	host << "\red Your head feels a bit roomier.."
 
 	log_admin("[src.key] has attuned [host]")
-	message_admins("[src.key] has attuned [host]")
+	message_admins("[src.key] has attuned [host] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[src.x];Y=[src.y];Z=[src.z]'>JMP</a>)")
 
 // Enables the mob to take a lot more damage
 mob/living/parasite/meme/verb/Analgesic()
@@ -593,12 +593,12 @@ mob/living/parasite/meme/verb/Possession()
 		dummy << "\blue You feel very drowsy.. Your eyelids become heavy..."
 
 		log_admin("[meme_mind.key] has taken possession of [host]([host_mind.key])")
-		message_admins("[meme_mind.key] has taken possession of [host]([host_mind.key])")
+		message_admins("[meme_mind.key] has taken possession of [host]([host_mind.key]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[src.x];Y=[src.y];Z=[src.z]'>JMP</a>)")
 
 		sleep(600)
 
 		log_admin("[meme_mind.key] has lost possession of [host]([host_mind.key])")
-		message_admins("[meme_mind.key] has lost possession of [host]([host_mind.key])")
+		message_admins("[meme_mind.key] has lost possession of [host]([host_mind.key]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[src.x];Y=[src.y];Z=[src.z]'>JMP</a>)")
 
 		meme_mind.transfer_to(src)
 		host_mind.transfer_to(host)

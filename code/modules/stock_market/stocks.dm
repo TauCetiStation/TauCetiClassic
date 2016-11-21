@@ -34,10 +34,10 @@
 	var/fluctuation_counter = 0
 	var/datum/industry/industry = null
 
-/datum/stock/proc/addEvent(var/datum/stockEvent/E)
+/datum/stock/proc/addEvent(datum/stockEvent/E)
 	events |= E
 
-/datum/stock/proc/addArticle(var/datum/article/A)
+/datum/stock/proc/addArticle(datum/article/A)
 	if (!(A in articles))
 		articles.Insert(1, A)
 	A.ticks = world.time
@@ -47,11 +47,11 @@
 	for (var/T in types)
 		generateEvent(T)
 
-/datum/stock/proc/generateEvent(var/T)
+/datum/stock/proc/generateEvent(T)
 	var/datum/stockEvent/E = new T(src)
 	addEvent(E)
 
-/datum/stock/proc/affectPublicOpinion(var/boost)
+/datum/stock/proc/affectPublicOpinion(boost)
 	optimism += rand(0, 500) / 500 * boost
 	average_optimism += rand(0, 150) / 5000 * boost
 	speculation += rand(-1, 50) / 10 * boost
@@ -78,7 +78,7 @@
 /datum/stock/proc/frc(amt)
 	var/shares = available_shares + outside_shareholders * average_shares
 	var/fr = amt / 100 / shares * fluctuational_coefficient * fluctuation_rate * max(-(current_trend / 100), 1)
-	if (fr < 0 && speculation < 0 || fr > 0 && speculation > 0)
+	if ((fr < 0 && speculation < 0) || (fr > 0 && speculation > 0))
 		fr *= max(abs(speculation) / 5, 1)
 	else
 		fr /= max(abs(speculation) / 5, 1)
@@ -186,7 +186,7 @@
 		return 1
 	return 0
 
-/datum/stock/proc/buyShares(var/who, var/howmany)
+/datum/stock/proc/buyShares(who, howmany)
 	if (howmany <= 0)
 		return
 	howmany = round(howmany)
@@ -202,7 +202,7 @@
 		return 1
 	return 0
 
-/datum/stock/proc/sellShares(var/whose, var/howmany)
+/datum/stock/proc/sellShares(whose, howmany)
 	if (howmany < 0)
 		return
 	howmany = round(howmany)
@@ -217,7 +217,7 @@
 		return 1
 	return 0
 
-/datum/stock/proc/displayValues(var/mob/user)
+/datum/stock/proc/displayValues(mob/user)
 	user << browse(plotBarGraph(values, "[name] share value per share"), "window=stock_[name];size=450x450")
 
 #undef MAX_DELTA_UP

@@ -1,5 +1,5 @@
 var/power_fail_event = 0
-/proc/power_failure(var/announce = 1)
+/proc/power_failure(announce = 1)
 	if(power_fail_event)
 		return
 	power_fail_event = 1
@@ -10,7 +10,7 @@ var/power_fail_event = 0
 		if(prob(25))
 			addtimer(GLOBAL_PROC, "play_ambience", 600)
 
-	var/list/skipped_areas = list(/area/turret_protected/ai, /area/tcommsat/chamber, /area/tcommsat/chamber)
+	var/list/skipped_areas = list(/area/turret_protected/ai, /area/tcommsat/computer, /area/tcommsat/chamber)
 
 	for(var/obj/machinery/power/smes/S in machines)
 		var/area/current_area = get_area(S)
@@ -32,9 +32,9 @@ var/power_fail_event = 0
 			C.cell.charge = 0
 
 /proc/play_ambience()
-	player_list << sound('tauceti/sounds/ambience/hullcreak.ogg')
+	player_list << sound('sound/ambience/hullcreak.ogg')
 
-/proc/power_restore(var/announce = 1, var/badminery = 0)
+/proc/power_restore(announce = 1, badminery = 0)
 	power_fail_event = 0
 	var/list/skipped_areas = list(/area/turret_protected/ai)
 
@@ -58,7 +58,7 @@ var/power_fail_event = 0
 		S.power_change()
 
 //This one can be called only by admin.
-/proc/power_restore_quick(var/announce = 1)
+/proc/power_restore_quick(announce = 1)
 	if(announce)
 		command_alert("All SMESs on [station_name()] have been recharged. We apologize for the inconvenience.", "Power Systems Nominal")
 		player_list << sound('sound/AI/poweron.ogg')

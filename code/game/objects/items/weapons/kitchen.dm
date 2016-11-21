@@ -55,7 +55,7 @@
 	force = 3
 	icon_state = "fork"
 
-/obj/item/weapon/kitchen/utensil/fork/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+/obj/item/weapon/kitchen/utensil/fork/attack(mob/living/carbon/M, mob/living/carbon/user)
 	if(!istype(M))
 		return ..()
 
@@ -78,7 +78,7 @@
 			M = user
 		return eyestab(M,user)
 
-/obj/item/weapon/kitchen/utensil/fork/afterattack(atom/target, mob/user as mob, proximity)
+/obj/item/weapon/kitchen/utensil/fork/afterattack(atom/target, mob/user, proximity)
 	if(istype(target,/obj/item/weapon/reagent_containers/food/snacks))	return // fork is not only for cleanning
 	if(!proximity) return
 	//I couldn't feasibly  fix the overlay bugs caused by cleaning items we are wearing.
@@ -97,7 +97,7 @@
 	icon_state = "pfork"
 	force = 0
 
-/obj/item/weapon/kitchen/utensil/pfork/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+/obj/item/weapon/kitchen/utensil/pfork/attack(mob/living/carbon/M, mob/living/carbon/user)
 	if(!istype(M))
 		return ..()
 
@@ -128,6 +128,7 @@
 	desc = "Can cut through any food."
 	icon_state = "knife"
 	force = 10.0
+	w_class = 2.0
 	throwforce = 10.0
 	sharp = 0
 	edge = 1
@@ -138,7 +139,7 @@
 							"\red <b>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</b>")
 		return (BRUTELOSS)
 
-/obj/item/weapon/kitchen/utensil/knife/attack(target as mob, mob/living/user as mob)
+/obj/item/weapon/kitchen/utensil/knife/attack(target, mob/living/user)
 	if ((CLUMSY in user.mutations) && prob(50))
 		user << "\red You accidentally cut yourself with the [src]."
 		user.take_organ_damage(20)
@@ -151,9 +152,10 @@
 	desc = "The bluntest of blades."
 	icon_state = "pknife"
 	force = 0
+	w_class = 2.0
 	throwforce = 0
 
-/obj/item/weapon/kitchen/utensil/knife/attack(target as mob, mob/living/user as mob)
+/obj/item/weapon/kitchen/utensil/pknife/attack(target, mob/living/user)
 	if ((CLUMSY in user.mutations) && prob(50))
 		user << "\red You somehow managed to cut yourself with the [src]."
 		user.take_organ_damage(20)
@@ -203,7 +205,7 @@
 	desc = "A huge thing used for chopping and chopping up meat. This includes clowns and clown-by-products."
 	flags = FPRINT | TABLEPASS | CONDUCT
 	force = 15.0
-	w_class = 2.0
+	w_class = 3.0
 	throwforce = 8.0
 	throw_speed = 3
 	throw_range = 6
@@ -213,7 +215,7 @@
 	sharp = 1
 	edge = 1
 
-/obj/item/weapon/butch/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+/obj/item/weapon/butch/attack(mob/living/carbon/M, mob/living/carbon/user)
 	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
 	return ..()
 
@@ -232,7 +234,7 @@
 	w_class = 3.0
 	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "whacked") //I think the rollingpin attackby will end up ignoring this anyway.
 
-/obj/item/weapon/kitchen/rollingpin/attack(mob/living/M as mob, mob/living/user as mob)
+/obj/item/weapon/kitchen/rollingpin/attack(mob/living/M, mob/living/user)
 	if ((CLUMSY in user.mutations) && prob(50))
 		user << "\red The [src] slips out of your hand and hits your head."
 		user.take_organ_damage(10)
@@ -274,8 +276,6 @@
 	icon_state = "tray"
 	desc = "A metal tray to lay food on."
 	throwforce = 12.0
-	throwforce = 10.0
-	throw_speed = 1
 	throw_range = 5
 	w_class = 3.0
 	flags = FPRINT | TABLEPASS | CONDUCT
@@ -300,7 +300,7 @@
 					   // w_class = 2 -- takes up 3
 					   // w_class = 3 -- takes up 5
 
-/obj/item/weapon/tray/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+/obj/item/weapon/tray/attack(mob/living/carbon/M, mob/living/carbon/user)
 
 	// Drop all the things. All of them.
 	overlays.Cut()
@@ -418,7 +418,7 @@
 
 /obj/item/weapon/tray/var/cooldown = 0	//shield bash cooldown. based on world.time
 
-/obj/item/weapon/tray/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/weapon/tray/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/kitchen/rollingpin))
 		if(cooldown < world.time - 25)
 			user.visible_message("<span class='warning'>[user] bashes [src] with [W]!</span>")
@@ -503,7 +503,7 @@
 
 
 
-/*/obj/item/weapon/tray/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/*/obj/item/weapon/tray/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W,/obj/item/weapon/kitchen/utensil/fork))
 		if (W.icon_state == "forkloaded")
 			user << "\red You already have omelette on your fork."

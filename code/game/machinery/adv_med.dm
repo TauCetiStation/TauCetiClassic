@@ -4,7 +4,7 @@
 /obj/machinery/bodyscanner
 	var/locked
 	name = "Body Scanner"
-	icon = 'icons/obj/Cryogenic2.dmi'
+	icon = 'icons/obj/Cryogenic3.dmi'
 	icon_state = "body_scanner_0"
 	density = 1
 	anchored = 1
@@ -21,7 +21,7 @@
 /*/obj/machinery/bodyscanner/allow_drop()
 	return 0*/
 
-/obj/machinery/bodyscanner/relaymove(mob/user as mob)
+/obj/machinery/bodyscanner/relaymove(mob/user)
 	if (user.stat)
 		return
 	src.go_out()
@@ -78,7 +78,7 @@
 	src.icon_state = "body_scanner_0"
 	return
 
-/obj/machinery/bodyscanner/attackby(obj/item/weapon/grab/G as obj, user as mob)
+/obj/machinery/bodyscanner/attackby(obj/item/weapon/grab/G, user)
 	if ((!( istype(G, /obj/item/weapon/grab) ) || !( ismob(G.affecting) )))
 		return
 	if (src.occupant)
@@ -176,7 +176,7 @@
 	var/delete
 	var/temphtml
 	name = "Body Scanner Console"
-	icon = 'icons/obj/Cryogenic2.dmi'
+	icon = 'icons/obj/Cryogenic3.dmi'
 	icon_state = "body_scannerconsole"
 	anchored = 1
 	var/printing = 0
@@ -214,13 +214,13 @@
 */
 
 
-/obj/machinery/body_scanconsole/attack_paw(mob/user as mob)
+/obj/machinery/body_scanconsole/attack_paw(mob/user)
 	return src.attack_hand(user)
 
-/obj/machinery/body_scanconsole/attack_ai(mob/user as mob)
+/obj/machinery/body_scanconsole/attack_ai(mob/user)
 	return src.attack_hand(user)
 
-/obj/machinery/body_scanconsole/attack_hand(mob/user as mob)
+/obj/machinery/body_scanconsole/attack_hand(mob/user)
 	if(..())
 		return
 	if(!ishuman(connected.occupant))

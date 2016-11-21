@@ -1,7 +1,6 @@
 /obj/machinery/computer/telescience
 	name = "\improper Telepad Control Console"
 	desc = "Used to teleport objects to and from the telescience telepad."
-	icon = 'tauceti/icons/obj/computer_telescience.dmi'
 	icon_state = "teleport"
 	circuit = /obj/item/weapon/circuitboard/telesci_console
 	light_color = "#315ab4"
@@ -44,9 +43,9 @@
 		inserted_gps = null
 	return ..()
 
-/obj/machinery/computer/telescience/examine()
+/obj/machinery/computer/telescience/examine(mob/user)
 	..()
-	usr << "There are [crystals.len] bluespace crystals in the crystal ports."
+	user << "There are [crystals.len] bluespace crystals in the crystal ports."
 
 /obj/machinery/computer/telescience/initialize()
 	..()

@@ -45,7 +45,7 @@ datum/design						//Datum for object designs, used in construction
 
 //A proc to calculate the reliability of a design based on tech levels and innate modifiers.
 //Input: A list of /datum/tech; Output: The new reliabilty.
-datum/design/proc/CalcReliability(var/list/temp_techs)
+datum/design/proc/CalcReliability(list/temp_techs)
 	var/new_reliability
 	for(var/datum/tech/T in temp_techs)
 		if(T.id in req_tech)
@@ -849,18 +849,20 @@ datum/design/adv_capacitor
 	desc = "A stock part used in the construction of various devices."
 	id = "adv_capacitor"
 	req_tech = list("powerstorage" = 3)
-	build_type = PROTOLATHE
+	build_type = PROTOLATHE | MECHFAB
 	materials = list(MAT_METAL = 400, MAT_GLASS = 400, MAT_SILVER = 250)
 	build_path = /obj/item/weapon/stock_parts/capacitor/adv
+	category = list("Misc")
 
 datum/design/adv_sensor
 	name = "Advanced Sensor Module"
 	desc = "A stock part used in the construction of various devices."
 	id = "adv_sensor"
 	req_tech = list("magnets" = 3)
-	build_type = PROTOLATHE
+	build_type = PROTOLATHE | MECHFAB
 	materials = list(MAT_METAL = 400, MAT_GLASS = 160, MAT_SILVER = 250)
 	build_path = /obj/item/weapon/stock_parts/scanning_module/adv
+	category = list("Misc")
 
 datum/design/nano_mani
 	name = "Nano Manipulator"
@@ -895,20 +897,22 @@ datum/design/super_capacitor
 	desc = "A stock part used in the construction of various devices."
 	id = "super_capacitor"
 	req_tech = list("powerstorage" = 5, "materials" = 4)
-	build_type = PROTOLATHE
+	build_type = PROTOLATHE  |MECHFAB
 	reliability = 71
 	materials = list(MAT_METAL = 400, MAT_GLASS = 400, MAT_GOLD = 250)
 	build_path = /obj/item/weapon/stock_parts/capacitor/super
+	category = list("Misc")
 
 datum/design/phasic_sensor
 	name = "Phasic Sensor Module"
 	desc = "A stock part used in the construction of various devices."
 	id = "phasic_sensor"
 	req_tech = list("magnets" = 5, "materials" = 3)
-	build_type = PROTOLATHE
+	build_type = PROTOLATHE | MECHFAB
 	materials = list(MAT_METAL = 400, MAT_GLASS = 160, MAT_SILVER = 80, MAT_GOLD = 250)
 	reliability = 72
 	build_path = /obj/item/weapon/stock_parts/scanning_module/phasic
+	category = list("Misc")
 
 datum/design/pico_mani
 	name = "Pico Manipulator"
@@ -1664,6 +1668,26 @@ datum/design/noreactbeaker
 	reliability = 76
 	build_path = /obj/item/weapon/reagent_containers/glass/beaker/noreact
 	category = list("Misc")
+
+datum/design/defibrillators
+	name = "Defibrillators"
+	desc = "Defibrillators to revive people."
+	id = "defibrillators"
+	req_tech = list("combat" = 2,"biotech" = 2)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 2000, MAT_GLASS = 50)
+	reliability = 76
+	build_path = /obj/item/weapon/defibrillator
+
+/datum/design/sensor_device
+	name = "Handheld Crew Monitor"
+	desc = "A device for tracking crew members on the station."
+	id = "sensor_device"
+	req_tech = list("biotech" = 4, "magnets" = 4)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 7000, MAT_GLASS = 7000)
+	reliability = 76
+	build_path = /obj/item/device/sensor_device
 
 datum/design/scalpel_laser1
 	name = "Basic Laser Scalpel"

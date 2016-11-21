@@ -455,7 +455,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 	return
 
 
-/obj/machinery/computer/forensic_scanning/proc/add_data_scanner(var/obj/item/device/W)
+/obj/machinery/computer/forensic_scanning/proc/add_data_scanner(obj/item/device/W)
 	if(istype(W, /obj/item/device/detective_scanner))
 		var/obj/item/device/detective_scanner/D = W
 		if(D.stored)
@@ -471,7 +471,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 		W:cartridge.stored_data = list()
 	return
 
-/obj/machinery/computer/forensic_scanning/proc/add_data(var/atom/scanned_atom)
+/obj/machinery/computer/forensic_scanning/proc/add_data(atom/scanned_atom)
 	return add_data_master("\ref [scanned_atom]", scanned_atom.fingerprints,\
 	scanned_atom.suit_fibers, scanned_atom.blood_DNA, "[scanned_atom.name] (Direct Scan)")
 
@@ -480,7 +480,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 /********************************
 *****DO NOT DIRECTLY CALL ME*****
 ********************************/
-/obj/machinery/computer/forensic_scanning/proc/add_data_master(var/atom_reference, var/list/atom_fingerprints, var/list/atom_suit_fibers, var/list/atom_blood_DNA, var/atom_name)
+/obj/machinery/computer/forensic_scanning/proc/add_data_master(atom_reference, list/atom_fingerprints, list/atom_suit_fibers, list/atom_blood_DNA, atom_name)
 //What follows is massive.  It cross references all stored data in the scanner with the other stored data,
 //and what is already in the computer.  Not sure how bad the lag may/may not be.
 
@@ -580,7 +580,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 ***END DO NOT DIRECTLY CALL ME***
 ********************************/
 
-/obj/machinery/computer/forensic_scanning/proc/update_fingerprints(var/ref_print, var/new_print)
+/obj/machinery/computer/forensic_scanning/proc/update_fingerprints(ref_print, new_print)
 	var/list/master = files[ref_print]
 	if(master)
 		master[1] = stringmerge(master[1],new_print)
@@ -610,12 +610,12 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 		return
 	return
 
-/obj/machinery/computer/forensic_scanning/proc/delete_record(var/atom_ref)	//Deletes an entry in the misc database at the given location
+/obj/machinery/computer/forensic_scanning/proc/delete_record(atom_ref)	//Deletes an entry in the misc database at the given location
 	if(misc && misc.len)
 		misc.Remove(atom_ref)
 	return
 
-/obj/machinery/computer/forensic_scanning/proc/delete_dossier(var/print)	//Deletes a Dossier at a given location.
+/obj/machinery/computer/forensic_scanning/proc/delete_dossier(print)	//Deletes a Dossier at a given location.
 	if(files && files.len)
 		files.Remove(print)
 	return

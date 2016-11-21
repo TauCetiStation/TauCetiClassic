@@ -19,7 +19,7 @@
 	var/selfdestructing = 0
 	var/charges = 1
 
-/obj/machinery/syndicate_beacon/attack_hand(var/mob/user as mob)
+/obj/machinery/syndicate_beacon/attack_hand(mob/user)
 	usr.set_machine(src)
 	var/dat = "<font color=#005500><i>Scanning [pick("retina pattern", "voice print", "fingerprints", "dna sequence")]...<br>Identity confirmed,<br></i></font>"
 	if(istype(user, /mob/living/carbon/human) || istype(user, /mob/living/silicon/ai))
@@ -93,7 +93,7 @@
 
 			M << "<B>You have joined the ranks of the Syndicate and become a traitor to the station!</B>"
 
-			message_admins("[N]/([N.ckey]) has accepted a traitor objective from a syndicate beacon.")
+			message_admins("[N.name] ([N.ckey]) has accepted a traitor objective from a syndicate beacon. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[N.x];Y=[N.y];Z=[N.z]'>JMP</a>)")
 
 			var/obj_count = 1
 			for(var/datum/objective/OBJ in M.mind.objectives)
@@ -148,11 +148,11 @@
 	if(user) user << "\blue You deactivate the beacon."
 
 
-/obj/machinery/singularity_beacon/attack_ai(mob/user as mob)
+/obj/machinery/singularity_beacon/attack_ai(mob/user)
 	return
 
 
-/obj/machinery/singularity_beacon/attack_hand(var/mob/user as mob)
+/obj/machinery/singularity_beacon/attack_hand(mob/user)
 	if(stat & SCREWED)
 		return active ? Deactivate(user) : Activate(user)
 	else
@@ -160,7 +160,7 @@
 		return
 
 
-/obj/machinery/singularity_beacon/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/machinery/singularity_beacon/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W,/obj/item/weapon/screwdriver))
 		if(active)
 			user << "\red You need to deactivate the beacon first!"
@@ -224,4 +224,3 @@
 	icon_state = "beaconsynd0"
 
 #undef SCREWED
-

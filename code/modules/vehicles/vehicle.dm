@@ -72,7 +72,7 @@
 		return 0
 	return 1
 
-/obj/vehicle/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/vehicle/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/hand_labeler))
 		return
 	else if(istype(W, /obj/item/weapon/screwdriver))
@@ -108,7 +108,7 @@
 	else
 		..()
 
-/obj/vehicle/bullet_act(var/obj/item/projectile/Proj)
+/obj/vehicle/bullet_act(obj/item/projectile/Proj)
 	health -= Proj.damage
 	..()
 	healthcheck()
@@ -140,7 +140,7 @@
 				return
 	return
 
-/obj/vehicle/attack_ai(mob/user as mob)
+/obj/vehicle/attack_ai(mob/user)
 	return
 
 /obj/vehicle/Process_Spacemove(direction)
@@ -195,7 +195,7 @@
 	if(health <= 0)
 		explode()
 
-/obj/vehicle/proc/RunOver(var/mob/living/carbon/human/H)
+/obj/vehicle/proc/RunOver(mob/living/carbon/human/H)
 	return		//write specifics for different vehicles
 
 //-------------------------------------------
@@ -205,7 +205,7 @@
 // the vehicle load() definition before
 // calling this parent proc.
 //-------------------------------------------
-/obj/vehicle/proc/load(var/atom/movable/C)
+/obj/vehicle/proc/load(atom/movable/C)
 	//This loads objects onto the vehicle so they can still be interacted with.
 	//Define allowed items for loading in specific vehicle definitions.
 	if(!isturf(C.loc)) //To prevent loading things from someone's inventory, which wouldn't get handled properly.
@@ -238,7 +238,7 @@
 	return 1
 
 
-/obj/vehicle/proc/unload(var/mob/user, var/direction)
+/obj/vehicle/proc/unload(mob/user, direction)
 	if(!load)
 		return
 
@@ -300,7 +300,7 @@
 /obj/vehicle/proc/update_stats()
 	return
 
-/obj/vehicle/attack_hand(var/mob/user, var/damage, var/attack_message)
+/obj/vehicle/attack_hand(mob/user, damage, attack_message)
 	if(!damage)
 		return
 	visible_message("<span class='danger'>[user] [attack_message] the [src]!</span>")

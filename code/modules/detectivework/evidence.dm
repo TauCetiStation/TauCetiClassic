@@ -8,7 +8,7 @@
 	item_state = ""
 	w_class = 2
 
-/obj/item/weapon/evidencebag/afterattack(obj/item/I, mob/user as mob, proximity)
+/obj/item/weapon/evidencebag/afterattack(obj/item/I, mob/user, proximity)
 	if(!proximity) return
 	if(!in_range(I, user))
 		return
@@ -67,7 +67,7 @@
 	return
 
 
-/obj/item/weapon/evidencebag/attack_self(mob/user as mob)
+/obj/item/weapon/evidencebag/attack_self(mob/user)
 	if(contents.len)
 		var/obj/item/I = contents[1]
 		user.visible_message("[user] takes [I] out of [src]", "You take [I] out of [src].",\

@@ -16,15 +16,15 @@
 	if(!icon_state)
 		icon_state = "pill[rand(1,20)]"
 
-/obj/item/weapon/reagent_containers/pill/attack_self(mob/user as mob)
+/obj/item/weapon/reagent_containers/pill/attack_self(mob/user)
 	return
-/obj/item/weapon/reagent_containers/pill/attack(mob/M as mob, mob/user as mob, def_zone)
+/obj/item/weapon/reagent_containers/pill/attack(mob/M, mob/user, def_zone)
 	if(!CanEat(user, M, src, "take")) return
 	if(M == user)
 
 		if(istype(M, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = M
-			if(H.species.flags & IS_SYNTHETIC)
+			if(H.species.flags[IS_SYNTHETIC])
 				H << "\red You have a monitor for a head, where do you think you're going to put that?"
 				return
 
@@ -40,7 +40,7 @@
 	else if(istype(M, /mob/living/carbon/human) )
 
 		var/mob/living/carbon/human/H = M
-		if(H.species.flags & IS_SYNTHETIC)
+		if(H.species.flags[IS_SYNTHETIC])
 			H << "\red They have a monitor for a head, where do you think you're going to put that?"
 			return
 

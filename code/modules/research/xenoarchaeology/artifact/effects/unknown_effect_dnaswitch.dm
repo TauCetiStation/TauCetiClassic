@@ -12,7 +12,7 @@
 	else
 		severity = rand(25,95)
 
-/datum/artifact_effect/dnaswitch/DoEffectTouch(var/mob/toucher)
+/datum/artifact_effect/dnaswitch/DoEffectTouch(mob/toucher)
 	var/weakness = GetAnomalySusceptibility(toucher)
 	if(ishuman(toucher) && prob(weakness * 100))
 		toucher << pick("\green You feel a little different.",\

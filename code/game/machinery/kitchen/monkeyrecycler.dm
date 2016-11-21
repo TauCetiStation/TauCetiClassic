@@ -32,7 +32,7 @@
 	required_grind = req_grind
 	desc = "A machine used for recycling dead monkeys into monkey cubes. It currently produces [cubes_made] cube(s) for every [required_grind] monkey(s) inserted."
 
-/obj/machinery/monkey_recycler/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
+/obj/machinery/monkey_recycler/attackby(obj/item/O, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "grinder_open", "grinder", O))
 		return
 
@@ -73,7 +73,7 @@
 			user << "\red The machine only accepts monkeys!"
 	return
 
-/obj/machinery/monkey_recycler/attack_hand(var/mob/user as mob)
+/obj/machinery/monkey_recycler/attack_hand(mob/user)
 	if (src.stat != CONSCIOUS) //NOPOWER etc
 		return
 	if(grinded >= required_grind)

@@ -80,14 +80,14 @@ By design, d1 is the smallest direction and d2 is the highest
 	if(powernet)
 		cut_cable_from_powernet()				// update the powernets
 	cable_list -= src							//remove it from global cable list
-	return ..()	
+	return ..()
 
 ///////////////////////////////////
 // General procedures
 ///////////////////////////////////
 
 //If underfloor, hide the cable
-/obj/structure/cable/hide(var/i)
+/obj/structure/cable/hide(i)
 
 	if(level == 1 && istype(loc, /turf))
 		invisibility = i ? 101 : 0
@@ -175,7 +175,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	src.add_fingerprint(user)
 
 // shock the user with probability prb
-/obj/structure/cable/proc/shock(mob/user, prb, var/siemens_coeff = 1.0)
+/obj/structure/cable/proc/shock(mob/user, prb, siemens_coeff = 1.0)
 	if(!prob(prb))
 		return 0
 	if (electrocute_mob(user, powernet, src, siemens_coeff))
@@ -202,7 +202,7 @@ By design, d1 is the smallest direction and d2 is the highest
 				qdel(src)
 	return
 
-/obj/structure/cable/proc/cableColor(var/colorC)
+/obj/structure/cable/proc/cableColor(colorC)
 	switch(colorC)
 		if("red")
 			color = COLOR_RED
@@ -225,11 +225,11 @@ By design, d1 is the smallest direction and d2 is the highest
 // Power related
 ///////////////////////////////////////////
 
-/obj/structure/cable/proc/add_avail(var/amount)
+/obj/structure/cable/proc/add_avail(amount)
 	if(powernet)
 		powernet.newavail += amount
 
-/obj/structure/cable/proc/add_load(var/amount)
+/obj/structure/cable/proc/add_load(amount)
 	if(powernet)
 		powernet.newload += amount
 
@@ -250,7 +250,7 @@ By design, d1 is the smallest direction and d2 is the highest
 ////////////////////////////////////////////////
 
 // merge with the powernets of power objects in the given direction
-/obj/structure/cable/proc/mergeConnectedNetworks(var/direction)
+/obj/structure/cable/proc/mergeConnectedNetworks(direction)
 	var/turf/TB
 	var/fdir = (!direction)? 0 : turn(direction, 180) //flip the direction, to match with the source position on its turf
 	if(!(d1 == direction || d2 == direction)) //if the cable is not pointed in this direction, do nothing
@@ -445,7 +445,7 @@ By design, d1 is the smallest direction and d2 is the highest
 ///////////////////////////////////
 
 //you can use wires to heal robotics
-/obj/item/weapon/cable_coil/attack(mob/M as mob, mob/user as mob)
+/obj/item/weapon/cable_coil/attack(mob/M, mob/user)
 	if(hasorgans(M))
 
 		var/datum/organ/external/S = M:get_organ(user.zone_sel.selecting)
@@ -454,7 +454,7 @@ By design, d1 is the smallest direction and d2 is the highest
 
 		if(istype(M,/mob/living/carbon/human))
 			var/mob/living/carbon/human/H = M
-			if(H.species.flags & IS_SYNTHETIC)
+			if(H.species.flags[IS_SYNTHETIC])
 				if(M == user)
 					user << "\red You can't repair damage to your own body - it's against OH&S."
 					return
@@ -490,15 +490,15 @@ By design, d1 is the smallest direction and d2 is the highest
 		w_class = 2.0
 
 
-/obj/item/weapon/cable_coil/examine()
-	set src in view(1)
-
-	if(amount == 1)
-		usr << "A short piece of power cable."
-	else if(amount == 2)
-		usr << "A piece of power cable."
-	else
-		usr << "A coil of power cable. There are [amount] lengths of cable in the coil."
+/obj/item/weapon/cable_coil/examine(mob/user)
+	..()
+	if(src in view(1, user))
+		if(amount == 1)
+			user << "A short piece of power cable."
+		else if(amount == 2)
+			user << "A piece of power cable."
+		else
+			user << "A coil of power cable. There are [amount] lengths of cable in the coil."
 
 
 /obj/item/weapon/cable_coil/verb/make_restraint()
@@ -557,7 +557,7 @@ By design, d1 is the smallest direction and d2 is the highest
 			return
 
 //remove cables from the stack
-/obj/item/weapon/cable_coil/proc/use(var/used)
+/obj/item/weapon/cable_coil/proc/use(used)
 	if(src.amount < used)
 		return 0
 	else if (src.amount == used)
@@ -570,7 +570,7 @@ By design, d1 is the smallest direction and d2 is the highest
 		return 1
 
 //add cables to the stack
-/obj/item/weapon/cable_coil/proc/give(var/extra)
+/obj/item/weapon/cable_coil/proc/give(extra)
 	if(amount + extra > MAXCOIL)
 		amount = MAXCOIL
 	else

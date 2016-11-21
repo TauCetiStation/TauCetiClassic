@@ -288,7 +288,7 @@ Implants;
 		set_security_level(SEC_LEVEL_BLUE)*/
 
 
-/datum/game_mode/proc/get_players_for_role(var/role)
+/datum/game_mode/proc/get_players_for_role(role)
 	var/list/players = list()
 	var/list/candidates = list()
 
@@ -321,10 +321,10 @@ Implants;
 							//			Less if there are not enough valid players in the game entirely to make recommended_enemies.
 
 
-/datum/game_mode/proc/latespawn(var/mob)
+/datum/game_mode/proc/latespawn(mob)
 
 /*
-/datum/game_mode/proc/check_player_role_pref(var/role, var/mob/new_player/player)
+/datum/game_mode/proc/check_player_role_pref(role, mob/new_player/player)
 	if(player.preferences.be_role & role)
 		return 1
 	return 0
@@ -436,7 +436,7 @@ proc/get_nt_opposed()
 //Misc stuff and TG ports//
 ///////////////////////////
 
-/datum/game_mode/proc/printplayer(var/datum/mind/ply)
+/datum/game_mode/proc/printplayer(datum/mind/ply)
 	var/role = "[ply.special_role]"
 	var/text = "<br><b>[ply.name]</b>(<b>[ply.key]</b>) as \a <b>[role]</b> ("
 	if(ply.current)

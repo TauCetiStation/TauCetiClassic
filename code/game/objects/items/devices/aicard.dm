@@ -10,7 +10,7 @@
 	origin_tech = "programming=4;materials=4"
 
 
-	attack(mob/living/silicon/ai/M as mob, mob/user as mob)
+	attack(mob/living/silicon/ai/M, mob/user)
 		if(!istype(M, /mob/living/silicon/ai))//If target is not an AI.
 			return ..()
 
@@ -21,7 +21,7 @@
 		transfer_ai("AICORE", "AICARD", M, user)
 		return
 
-	attack(mob/living/silicon/decoy/M as mob, mob/user as mob)
+	attack(mob/living/silicon/decoy/M, mob/user)
 		if (!istype (M, /mob/living/silicon/decoy))
 			return ..()
 		else

@@ -24,7 +24,7 @@
 			else if(M.stat == DEAD &&  M.client.prefs.chat_toggles & CHAT_GHOSTEARS)
 				M << "The captive mind of [src] whispers, \"[message]\""
 
-/mob/living/captive_brain/emote(var/message)
+/mob/living/captive_brain/emote(message)
 	return
 
 /mob/living/simple_animal/borer
@@ -151,7 +151,7 @@
 
 // VERBS!
 
-/mob/living/simple_animal/borer/proc/borer_speak(var/message)
+/mob/living/simple_animal/borer/proc/borer_speak(message)
 	if(!message)
 		return
 
@@ -438,10 +438,10 @@ mob/living/simple_animal/borer/proc/request_player()
 			if(!C.prefs.ignore_question.Find("borer") && (ROLE_ALIEN in C.prefs.be_role))
 				question(C)
 
-mob/living/simple_animal/borer/proc/question(var/client/C)
+mob/living/simple_animal/borer/proc/question(client/C)
 	spawn(0)
 		if(!C)	return
-		var/response = alert(C, "A cortical borer needs a player. Are you interested?", "Cortical borer request", "Yes", "No", "Never for this round")
+		var/response = alert(C, "A cortical borer needs a player. Are you interested?", "Cortical borer request", "No", "Yes", "Never for this round")
 		if(!C || ckey)
 			return
 		if(response == "Yes")
@@ -449,7 +449,7 @@ mob/living/simple_animal/borer/proc/question(var/client/C)
 		else if (response == "Never for this round")
 			C.prefs.ignore_question += "borer"
 
-mob/living/simple_animal/borer/proc/transfer_personality(var/client/candidate)
+mob/living/simple_animal/borer/proc/transfer_personality(client/candidate)
 
 	if(!candidate)
 		return

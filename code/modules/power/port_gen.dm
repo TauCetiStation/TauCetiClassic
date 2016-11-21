@@ -81,18 +81,15 @@ display round(lastgen) and phorontank amount
 		icon_state = initial(icon_state)
 		handleInactive()
 
-/obj/machinery/power/port_gen/attack_hand(mob/user as mob)
+/obj/machinery/power/port_gen/attack_hand(mob/user)
 	if(..())
 		return
 	if(!anchored)
 		return
 
-/obj/machinery/power/port_gen/examine()
-	set src in oview(1)
-	if(active)
-		usr << "\blue The generator is on."
-	else
-		usr << "\blue The generator is off."
+/obj/machinery/power/port_gen/examine(mob/user)
+	..()
+	user << "<span class='notice'>The generator is [active ? "on" : "off"].</span>"
 
 //A power generator that runs on solid plasma sheets.
 /obj/machinery/power/port_gen/pacman
@@ -139,11 +136,11 @@ display round(lastgen) and phorontank amount
 	power_gen = round(initial(power_gen) * temp_rating * 2)
 	consumption = consumption_coeff
 
-/obj/machinery/power/port_gen/pacman/examine()
+/obj/machinery/power/port_gen/pacman/examine(mob/user)
 	..()
-	usr << "<span class='notice'>The generator has [sheets] units of [sheet_name] fuel left, producing [power_gen] per cycle.</span>"
+	user << "<span class='notice'>The generator has [sheets] units of [sheet_name] fuel left, producing [power_gen] per cycle.</span>"
 	if(crit_fail)
-		usr << "<span class='danger'>The generator seems to have broken down.</span>"
+		user << "<span class='danger'>The generator seems to have broken down.</span>"
 
 /obj/machinery/power/port_gen/pacman/HasFuel()
 	if(sheets >= 1 / (time_per_sheet / power_output) - sheet_left)
@@ -243,17 +240,17 @@ display round(lastgen) and phorontank amount
 		else if(istype(O, /obj/item/weapon/crowbar) && panel_open)
 			default_deconstruction_crowbar(O)
 
-/obj/machinery/power/port_gen/pacman/attack_hand(mob/user as mob)
+/obj/machinery/power/port_gen/pacman/attack_hand(mob/user)
 	..()
 	if (!anchored)
 		return
 
 	interact(user)
 
-/obj/machinery/power/port_gen/pacman/attack_ai(mob/user as mob)
+/obj/machinery/power/port_gen/pacman/attack_ai(mob/user)
 	interact(user)
 
-/obj/machinery/power/port_gen/pacman/attack_paw(mob/user as mob)
+/obj/machinery/power/port_gen/pacman/attack_paw(mob/user)
 	interact(user)
 
 /obj/machinery/power/port_gen/pacman/interact(mob/user)

@@ -76,7 +76,7 @@ REAGENT SCANNER
 	var/mode = 1;
 
 
-/obj/item/device/healthanalyzer/attack(mob/living/M as mob, mob/living/user as mob)
+/obj/item/device/healthanalyzer/attack(mob/living/M, mob/living/user)
 	if (( (CLUMSY in user.mutations) || user.getBrainLoss() >= 60) && prob(50))
 		user << text("\red You try to analyze the floor's vitals!")
 		for(var/mob/O in viewers(M, null))
@@ -91,7 +91,7 @@ REAGENT SCANNER
 		return
 	user.visible_message("<span class='notice'> [user] has analyzed [M]'s vitals.","<span class='notice'> You have analyzed [M]'s vitals.")
 
-	if (!istype(M, /mob/living/carbon) || (ishuman(M) && (M:species.flags & IS_SYNTHETIC)))
+	if (!istype(M, /mob/living/carbon) || (ishuman(M) && (M:species.flags[IS_SYNTHETIC])))
 		//these sensors are designed for organic life
 		user.show_message("\blue Analyzing Results for ERROR:\n\t Overall Status: ERROR")
 		user.show_message("\t Key: <font color='blue'>Suffocation</font>/<font color='green'>Toxin</font>/<font color='#FFA500'>Burns</font>/<font color='red'>Brute</font>", 1)
@@ -226,7 +226,7 @@ REAGENT SCANNER
 
 	action_button_name = "Use Analyzer"
 
-/obj/item/device/analyzer/attack_self(mob/user as mob)
+/obj/item/device/analyzer/attack_self(mob/user)
 
 	if (user.stat)
 		return
@@ -310,7 +310,7 @@ REAGENT SCANNER
 	else
 		icon_state = initial(icon_state)
 
-/obj/item/device/mass_spectrometer/attack_self(mob/user as mob)
+/obj/item/device/mass_spectrometer/attack_self(mob/user)
 	if (user.stat)
 		return
 	if (crit_fail)
@@ -371,7 +371,7 @@ REAGENT SCANNER
 	var/details = 0
 	var/recent_fail = 0
 
-/obj/item/device/reagent_scanner/afterattack(obj/O, mob/user as mob)
+/obj/item/device/reagent_scanner/afterattack(obj/O, mob/user)
 	if (user.stat)
 		return
 	if (!(istype(user, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
@@ -411,3 +411,66 @@ REAGENT SCANNER
 	icon_state = "adv_spectrometer"
 	details = 1
 	origin_tech = "magnets=4;biotech=2"
+
+/obj/item/weapon/occult_pinpointer
+	name = "occult locator"
+	icon = 'icons/obj/device.dmi'
+	icon_state = "locoff"
+	flags = FPRINT | TABLEPASS| CONDUCT
+	slot_flags = SLOT_BELT
+	w_class = 2.0
+	item_state = "electronic"
+	throw_speed = 4
+	throw_range = 20
+	m_amt = 500
+	var/obj/item/weapon/ectoplasm/ectoplasm = null
+	var/active = 0
+
+
+	attack_self()
+		if(!active)
+			active = 1
+			search()
+			usr << "\blue You activate the [src.name]"
+		else
+			active = 0
+			icon_state = "locoff"
+			usr << "\blue You deactivate the [src.name]"
+
+	proc/search()
+		if(!active) return
+		if(!ectoplasm)
+			ectoplasm = locate()
+			if(!ectoplasm)
+				icon_state = "locnull"
+				return
+		dir = get_dir(src,ectoplasm)
+		switch(get_dist(src,ectoplasm))
+			if(0)
+				icon_state = "locon"
+			if(1 to 8)
+				icon_state = "locon"
+			if(9 to 16)
+				icon_state = "locon"
+			if(16 to INFINITY)
+				icon_state = "locon"
+		spawn(5) .()
+
+/obj/item/device/occult_scanner
+	name = "occult scanner"
+	icon = 'icons/obj/device.dmi'
+	icon_state = "occult_scan"
+	flags = FPRINT | TABLEPASS| CONDUCT
+	slot_flags = SLOT_BELT
+	w_class = 2.0
+	item_state = "electronic"
+	throw_speed = 4
+	throw_range = 20
+	m_amt = 500
+
+/obj/item/device/occult_scanner/afterattack(mob/M, mob/user)
+	if(user && user.client)
+		if(ishuman(M) && M.stat == DEAD)
+			user.visible_message("\blue [user] scans [M], the air around them humming gently.")
+			user.show_message("\blue [M] was [pick("possessed", "devoured", "destroyed", "murdered", "captured")] by [pick("Cthulhu", "Mi-Go", "Elder God", "dark spirit", "Outsider", "unknown alien creature")]", 1)
+		else	return

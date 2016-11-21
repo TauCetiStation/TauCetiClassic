@@ -7,7 +7,7 @@
 	..()
 	effect_type = pick(5,2)
 
-/datum/artifact_effect/sleepy/DoEffectTouch(var/mob/toucher)
+/datum/artifact_effect/sleepy/DoEffectTouch(mob/toucher)
 	if(toucher)
 		var/weakness = GetAnomalySusceptibility(toucher)
 		if(ishuman(toucher) && prob(weakness * 100))

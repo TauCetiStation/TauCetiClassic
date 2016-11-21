@@ -118,7 +118,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 			req_console_information -= department
 	return ..()
 
-/obj/machinery/requests_console/attack_hand(user as mob)
+/obj/machinery/requests_console/attack_hand(user)
 	if(..(user))
 		return
 	var/dat
@@ -376,7 +376,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 	updateUsrDialog()
 
 					//err... hacking code, which has no reason for existing... but anyway... it's supposed to unlock priority 3 messanging on that console (EXTREME priority...) the code for that actually exists.
-/obj/machinery/requests_console/attackby(var/obj/item/weapon/O as obj, var/mob/user as mob)
+/obj/machinery/requests_console/attackby(obj/item/weapon/O, mob/user)
 	/*
 	if (istype(O, /obj/item/weapon/crowbar))
 		if(open)

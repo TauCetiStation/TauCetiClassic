@@ -24,7 +24,7 @@
 	var/order = 1 // -1 = Descending - 1 = Ascending
 
 
-/obj/machinery/computer/secure_data/attackby(obj/item/O as obj, user as mob)
+/obj/machinery/computer/secure_data/attackby(obj/item/O, user)
 	if(istype(O, /obj/item/weapon/card/id) && !scan)
 		usr.drop_item()
 		O.loc = src
@@ -34,7 +34,7 @@
 		..()
 
 //Someone needs to break down the dat += into chunks instead of long ass lines.
-/obj/machinery/computer/secure_data/attack_hand(mob/user as mob)
+/obj/machinery/computer/secure_data/attack_hand(mob/user)
 	if(..())
 		return
 	if (src.z > ZLEVEL_EMPTY)
@@ -103,8 +103,8 @@
 				if(3.0)
 					dat += "<CENTER><B>Security Record</B></CENTER><BR>"
 					if ((istype(active1, /datum/data/record) && data_core.general.Find(active1)))
-						var/icon/front = new(active1.fields["photo"], dir = SOUTH)
-						var/icon/side = new(active1.fields["photo"], dir = WEST)
+						var/icon/front = active1.fields["photo_f"]
+						var/icon/side = active1.fields["photo_s"]
 						user << browse_rsc(front, "front.png")
 						user << browse_rsc(side, "side.png")
 						dat += text("<table><tr><td>	\
@@ -121,7 +121,8 @@
 						Physical Status: [active1.fields["p_stat"]]<BR>\n	\
 						Mental Status: [active1.fields["m_stat"]]<BR></td>	\
 						<td align = center valign = top>Photo:<br><img src=front.png height=80 width=80 border=4>	\
-						<img src=side.png height=80 width=80 border=4></td></tr></table>")
+						<img src=side.png height=80 width=80 border=4><BR>\n	\
+						Upload new photo: <A href='?src=\ref[src];choice=Edit Field;field=photo_f'>front</A> <A href='?src=\ref[src];choice=Edit Field;field=photo_s'>side</A></td></tr></table>")
 					else
 						dat += "<B>General Record Lost!</B><BR>"
 					if ((istype(active2, /datum/data/record) && data_core.security.Find(active2)))
@@ -198,9 +199,9 @@ What a mess.*/
 	if(!.)
 		return
 
-	if (!( data_core.general.Find(active1) ))
+	if(!data_core.general.Find(active1))
 		active1 = null
-	if (!( data_core.security.Find(active2) ))
+	if(!data_core.security.Find(active2))
 		active2 = null
 
 	switch(href_list["choice"])
@@ -226,8 +227,8 @@ What a mess.*/
 			active2 = null
 
 		if("Confirm Identity")
-			if (scan)
-				if(istype(usr,/mob/living/carbon/human) && !usr.get_active_hand())
+			if(scan)
+				if(ishuman(usr) && !usr.get_active_hand())
 					usr.put_in_hands(scan)
 				else
 					scan.loc = get_turf(src)
@@ -246,13 +247,13 @@ What a mess.*/
 			active2 = null
 
 		if("Log In")
-			if (istype(usr, /mob/living/silicon/ai))
+			if(isAI(usr))
 				src.active1 = null
 				src.active2 = null
 				src.authenticated = usr.name
 				src.rank = "AI"
 				src.screen = 1
-			else if (istype(usr, /mob/living/silicon/robot))
+			else if(isrobot(usr))
 				src.active1 = null
 				src.active2 = null
 				src.authenticated = usr.name
@@ -269,7 +270,7 @@ What a mess.*/
 //RECORD FUNCTIONS
 		if("Search Records")
 			var/t1 = input("Search String: (Partial Name or ID or Fingerprints or Rank)", "Secure. records", null, null)  as text
-			if ((!( t1 ) || usr.stat || !( authenticated ) || usr.restrained() || !in_range(src, usr)))
+			if(!t1 || is_not_allowed(usr))
 				return
 			Perp = new/list()
 			t1 = lowertext(t1)
@@ -296,10 +297,10 @@ What a mess.*/
 			active1 = null
 			active2 = null
 
-		if ("Browse Record")
+		if("Browse Record")
 			var/datum/data/record/R = locate(href_list["d_rec"])
 			var/S = locate(href_list["d_rec"])
-			if (!( data_core.general.Find(R) ))
+			if(!data_core.general.Find(R))
 				temp = "Record Not Found!"
 			else
 				for(var/datum/data/record/E in data_core.security)
@@ -327,8 +328,8 @@ What a mess.*/
 						active2 = E
 				screen = 3	*/
 
-		if ("Print Record")
-			if (!( printing ))
+		if("Print Record")
+			if(!printing)
 				printing = 1
 				var/datum/data/record/record1 = null
 				var/datum/data/record/record2 = null
@@ -357,19 +358,19 @@ What a mess.*/
 				printing = null
 				updateUsrDialog()
 //RECORD DELETE
-		if ("Delete All Records")
+		if("Delete All Records")
 			temp = ""
 			temp += "Are you sure you wish to delete all Security records?<br>"
 			temp += "<a href='?src=\ref[src];choice=Purge All Records'>Yes</a><br>"
 			temp += "<a href='?src=\ref[src];choice=Clear Screen'>No</a>"
 
-		if ("Purge All Records")
+		if("Purge All Records")
 			for(var/datum/data/record/R in data_core.security)
 				qdel(R)
 			temp = "All Security records deleted."
 
-		if ("Add Entry")
-			if (!( istype(active2, /datum/data/record) ))
+		if("Add Entry")
+			if(!istype(active2, /datum/data/record))
 				return
 			var/a2 = active2
 			var/t1 = sanitize(copytext(input("Add Comment:", "Secure. records", null, null)  as message,1,MAX_MESSAGE_LEN))
@@ -380,82 +381,82 @@ What a mess.*/
 				counter++
 			active2.fields[text("com_[counter]")] = text("Made by [authenticated] ([rank]) on [time2text(world.realtime, "DDD MMM DD hh:mm:ss")], [game_year]<BR>[t1]")
 
-		if ("Delete Record (ALL)")
-			if (active1)
+		if("Delete Record (ALL)")
+			if(active1)
 				temp = "<h5>Are you sure you wish to delete the record (ALL)?</h5>"
 				temp += "<a href='?src=\ref[src];choice=Delete Record (ALL) Execute'>Yes</a><br>"
 				temp += "<a href='?src=\ref[src];choice=Clear Screen'>No</a>"
 
-		if ("Delete Record (Security)")
-			if (active2)
+		if("Delete Record (Security)")
+			if(active2)
 				temp = "<h5>Are you sure you wish to delete the record (Security Portion Only)?</h5>"
 				temp += "<a href='?src=\ref[src];choice=Delete Record (Security) Execute'>Yes</a><br>"
 				temp += "<a href='?src=\ref[src];choice=Clear Screen'>No</a>"
 
-		if ("Delete Entry")
+		if("Delete Entry")
 			if ((istype(active2, /datum/data/record) && active2.fields[text("com_[]", href_list["del_c"])]))
 				active2.fields[text("com_[]", href_list["del_c"])] = "<B>Deleted</B>"
 //RECORD CREATE
-		if ("New Record (Security)")
+		if("New Record (Security)")
 			if ((istype(active1, /datum/data/record) && !( istype(active2, /datum/data/record) )))
 				active2 = CreateSecurityRecord(active1.fields["name"], active1.fields["id"])
 				screen = 3
 
-		if ("New Record (General)")
+		if("New Record (General)")
 			active1 = CreateGeneralRecord()
 			active2 = null
 
 //FIELD FUNCTIONS
-		if ("Edit Field")
-			if (is_not_allowed(usr))
+		if("Edit Field")
+			if(is_not_allowed(usr))
 				return
 			var/a1 = active1
 			var/a2 = active2
 			switch(href_list["field"])
 				if("name")
-					if (istype(active1, /datum/data/record))
+					if(istype(active1, /datum/data/record))
 						var/t1 = input("Please input name:", "Secure. records", active1.fields["name"], null)  as text
-						if (!t1 || active1 != a1)
+						if(!t1 || active1 != a1)
 							return FALSE
 						active1.fields["name"] = t1
 				if("id")
-					if (istype(active2, /datum/data/record))
+					if(istype(active2, /datum/data/record))
 						var/t1 = sanitize(copytext(input("Please input id:", "Secure. records", active1.fields["id"], null)  as text,1,MAX_MESSAGE_LEN))
-						if (!t1 || active1 != a1)
+						if(!t1 || active1 != a1)
 							return FALSE
 						active1.fields["id"] = t1
 				if("fingerprint")
-					if (istype(active1, /datum/data/record))
+					if(istype(active1, /datum/data/record))
 						var/t1 = sanitize(copytext(input("Please input fingerprint hash:", "Secure. records", active1.fields["fingerprint"], null)  as text,1,MAX_MESSAGE_LEN))
-						if (!t1 || active1 != a1)
+						if(!t1 || active1 != a1)
 							return FALSE
 						active1.fields["fingerprint"] = t1
 				if("sex")
-					if (istype(active1, /datum/data/record))
-						if (active1.fields["sex"] == "Male")
+					if(istype(active1, /datum/data/record))
+						if(active1.fields["sex"] == "Male")
 							active1.fields["sex"] = "Female"
 						else
 							active1.fields["sex"] = "Male"
 				if("age")
-					if (istype(active1, /datum/data/record))
+					if(istype(active1, /datum/data/record))
 						var/t1 = input("Please input age:", "Secure. records", active1.fields["age"], null)  as num
-						if (!t1 || active1 != a1)
+						if(!t1 || active1 != a1)
 							return FALSE
 						active1.fields["age"] = t1
 				if("mi_crim")
-					if (istype(active2, /datum/data/record))
+					if(istype(active2, /datum/data/record))
 						var/t1 = sanitize(copytext(input("Please input minor disabilities list:", "Secure. records", active2.fields["mi_crim"], null)  as text,1,MAX_MESSAGE_LEN))
 						if (!t1 || active2 != a2)
 							return FALSE
 						active2.fields["mi_crim"] = t1
 				if("mi_crim_d")
-					if (istype(active2, /datum/data/record))
+					if(istype(active2, /datum/data/record))
 						var/t1 = sanitize(copytext(input("Please summarize minor dis.:", "Secure. records", active2.fields["mi_crim_d"], null)  as message,1,MAX_MESSAGE_LEN))
 						if (!t1 || active2 != a2)
 							return FALSE
 						active2.fields["mi_crim_d"] = t1
 				if("ma_crim")
-					if (istype(active2, /datum/data/record))
+					if(istype(active2, /datum/data/record))
 						var/t1 = sanitize(copytext(input("Please input major diabilities list:", "Secure. records", active2.fields["ma_crim"], null)  as text,1,MAX_MESSAGE_LEN))
 						if (!t1 || active2 != a2)
 							return FALSE
@@ -463,17 +464,17 @@ What a mess.*/
 				if("ma_crim_d")
 					if (istype(active2, /datum/data/record))
 						var/t1 = sanitize(copytext(input("Please summarize major dis.:", "Secure. records", active2.fields["ma_crim_d"], null)  as message,1,MAX_MESSAGE_LEN))
-						if (!t1 || active2 != a2)
+						if(!t1 || active2 != a2)
 							return FALSE
 						active2.fields["ma_crim_d"] = t1
 				if("notes")
-					if (istype(active2, /datum/data/record))
+					if(istype(active2, /datum/data/record))
 						var/t1 = copytext(html_encode(input("Please summarize notes:", "Secure. records", html_decode(active2.fields["notes"]), null)  as message),1,MAX_MESSAGE_LEN)
 						if (!t1 || active2 != a2)
 							return FALSE
 						active2.fields["notes"] = t1
 				if("criminal")
-					if (istype(active2, /datum/data/record))
+					if(istype(active2, /datum/data/record))
 						temp = "<h5>Criminal Status:</h5>"
 						temp += "<ul>"
 						temp += "<li><a href='?src=\ref[src];choice=Change Criminal Status;criminal2=none'>None</a></li>"
@@ -485,7 +486,7 @@ What a mess.*/
 				if("rank")
 					var/list/L = list( "Head of Personnel", "Captain", "AI" )
 					//This was so silly before the change. Now it actually works without beating your head against the keyboard. /N
-					if ((istype(active1, /datum/data/record) && L.Find(rank)))
+					if((istype(active1, /datum/data/record) && L.Find(rank)))
 						temp = "<h5>Rank:</h5>"
 						temp += "<ul>"
 						for(var/rank in joblist)
@@ -496,10 +497,27 @@ What a mess.*/
 				if("species")
 					if (istype(active1, /datum/data/record))
 						var/t1 = sanitize(copytext(input("Please enter race:", "General records", active1.fields["species"], null)  as message,1,MAX_MESSAGE_LEN))
-						if ((!( t1 ) || !( authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!istype(usr, /mob/living/silicon))) || active1 != a1))
+						if(!t1 || is_not_allowed(usr) || (active1 != a1))
 							return FALSE
 						active1.fields["species"] = t1
-
+				if("photo_f")
+					if(istype(active1, /datum/data/record))
+						if(active1 != a1)
+							return FALSE
+						var/icon/photo = get_photo(usr)
+						if(!photo)
+							return FALSE
+						qdel(active1.fields["photo_f"])
+						active1.fields["photo_f"] = photo
+				if("photo_s")
+					if(istype(active1, /datum/data/record))
+						if(active1 != a1)
+							return FALSE
+						var/icon/photo = get_photo(usr)
+						if(!photo)
+							return FALSE
+						qdel(active1.fields["photo_s"])
+						active1.fields["photo_s"] = photo
 //TEMPORARY MENU FUNCTIONS
 		else//To properly clear as per clear screen.
 			temp=null
@@ -544,8 +562,28 @@ What a mess.*/
 
 	updateUsrDialog()
 
-/obj/machinery/computer/secure_data/proc/is_not_allowed(var/mob/user)
+/obj/machinery/computer/secure_data/proc/is_not_allowed(mob/user)
 	return !src.authenticated || user.stat || user.restrained() || (!in_range(src, user) && (!istype(user, /mob/living/silicon)))
+
+/obj/machinery/computer/secure_data/proc/get_photo(var/mob/user)
+	var/icon/I = null
+	var/obj/item/weapon/photo/P = null
+	if(issilicon(user))
+		var/mob/living/silicon/S = user
+		if(!S.aiCamera)
+			return null
+		var/datum/picture/selection = S.aiCamera.selectpicture()
+		if(selection)
+			P = new()
+			P.construct(selection)
+			I = P.img
+			qdel(P)
+	else if(istype(user.get_active_hand(), /obj/item/weapon/photo))
+		P = user.get_active_hand()
+		I = P.img
+		user.drop_from_inventory(P)
+		qdel(P)
+	return I
 
 /obj/machinery/computer/secure_data/emp_act(severity)
 	if(stat & (BROKEN|NOPOWER))

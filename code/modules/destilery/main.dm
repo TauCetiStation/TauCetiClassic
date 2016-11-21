@@ -56,7 +56,7 @@
 	qdel(milled_item)
 	busy = 0
 
-/obj/machinery/mill/attackby(var/obj/item/weapon/W as obj, mob/user as mob)
+/obj/machinery/mill/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W,/obj/item/weapon/reagent_containers/food))
 		user.u_equip(W)
 		W.loc = src
@@ -64,7 +64,7 @@
 	else
 		..()
 
-/obj/machinery/mill/attack_hand(var/mob/user as mob)
+/obj/machinery/mill/attack_hand(mob/user)
 	for(var/obj/item/weapon/reagent_containers/food/F in output)
 		F.loc = src.loc
 		output -= F
@@ -126,7 +126,7 @@
 	qdel(fermenting_item)
 	busy = 0
 
-/obj/machinery/fermenter/attackby(var/obj/item/weapon/W as obj, mob/user as mob)
+/obj/machinery/fermenter/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W,/obj/item/weapon/reagent_containers/food))
 		user.u_equip(W)
 		W.loc = src
@@ -134,7 +134,7 @@
 	else
 		..()
 
-/obj/machinery/fermenter/attack_hand(var/mob/user as mob)
+/obj/machinery/fermenter/attack_hand(mob/user)
 	for(var/obj/item/weapon/reagent_containers/food/F in output)
 		F.loc = src.loc
 		output -= F
@@ -187,7 +187,7 @@
 	qdel(destilling_item)
 	busy = 0
 
-/obj/machinery/still/attackby(var/obj/item/weapon/W as obj, mob/user as mob)
+/obj/machinery/still/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W,/obj/item/weapon/reagent_containers/food))
 		user.u_equip(W)
 		W.loc = src
@@ -195,7 +195,7 @@
 	else
 		..()
 
-/obj/machinery/still/attack_hand(var/mob/user as mob)
+/obj/machinery/still/attack_hand(mob/user)
 	for(var/obj/item/weapon/reagent_containers/food/F in output)
 		F.loc = src.loc
 		output -= F
@@ -272,7 +272,7 @@
 	output += spinning_item
 	busy = 0
 
-/obj/machinery/centrifuge/attackby(var/obj/item/weapon/W as obj, mob/user as mob)
+/obj/machinery/centrifuge/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W,/obj/item/weapon/reagent_containers/food))
 		user.u_equip(W)
 		W.loc = src
@@ -280,7 +280,7 @@
 	else
 		..()
 
-/obj/machinery/centrifuge/attack_hand(var/mob/user as mob)
+/obj/machinery/centrifuge/attack_hand(mob/user)
 	for(var/obj/item/weapon/reagent_containers/food/F in output)
 		F.loc = src.loc
 		output -= F

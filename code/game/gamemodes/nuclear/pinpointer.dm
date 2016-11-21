@@ -1,6 +1,5 @@
 /obj/item/weapon/pinpointer
 	name = "pinpointer"
-	icon = 'tauceti/icons/obj/devices.dmi'
 	icon_state = "pinoff"
 	flags = FPRINT | TABLEPASS| CONDUCT
 	slot_flags = SLOT_BELT
@@ -42,11 +41,11 @@
 				icon_state = "pinonfar"
 		spawn(5) .()
 
-	examine()
+	examine(mob/user)
 		..()
-		for(var/obj/machinery/nuclearbomb/bomb in world)
+		for(var/obj/machinery/nuclearbomb/bomb in machines)
 			if(bomb.timing)
-				usr << "Extreme danger.  Arming signal detected.   Time remaining: [bomb.timeleft]"
+				user << "Extreme danger.  Arming signal detected.   Time remaining: [bomb.timeleft]"
 
 /obj/item/weapon/pinpointer/Destroy()
 	active = 0
@@ -54,7 +53,6 @@
 
 /obj/item/weapon/pinpointer/advpinpointer
 	name = "Advanced Pinpointer"
-	icon = 'tauceti/icons/obj/devices.dmi'
 	desc = "A larger version of the normal pinpointer, this unit features a helpful quantum entanglement detection system to locate various objects that do not broadcast a locator signal."
 	var/mode = 0  // Mode 0 locates disk, mode 1 locates coordinates.
 	var/turf/location = null
@@ -185,7 +183,7 @@
 	var/obj/machinery/computer/syndicate_station/home = null
 
 
-/obj/item/weapon/pinpointer/nukeop/attack_self(mob/user as mob)
+/obj/item/weapon/pinpointer/nukeop/attack_self(mob/user)
 	if(!active)
 		active = 1
 		if(!mode)

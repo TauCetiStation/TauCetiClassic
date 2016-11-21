@@ -4,7 +4,7 @@ var/list/whitelist = list()
 	whitelist = file2list("config/whitelist.txt")
 	if(!whitelist.len)	whitelist = null
 
-/proc/check_whitelist(mob/M /*, var/rank*/)
+/proc/check_whitelist(mob/M /*, rank*/)
 //	if(!whitelist)
 //		return 0
 //	return ("[M.ckey]" in whitelist)
@@ -23,7 +23,7 @@ var/list/whitelist = list()
 		alien_whitelist = splittext(text, "\n")
 
 //todo: admin aliens
-/proc/is_alien_whitelisted(mob/M, var/species)
+/proc/is_alien_whitelisted(mob/M, species)
 	if(!config.usealienwhitelist)
 		return 1
 	if(species == "human" || species == "Human")

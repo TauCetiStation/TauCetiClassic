@@ -69,7 +69,7 @@ proc/move_research_shuttle()
 	var/hacked = 0
 	var/location = 0 //0 = station, 1 = research base
 
-/obj/machinery/computer/research_shuttle/attack_hand(user as mob)
+/obj/machinery/computer/research_shuttle/attack_hand(user)
 	src.add_fingerprint(usr)
 	var/dat = "<center>Research shuttle: <b><A href='?src=\ref[src];move=1'>Send</A></b></center><br>"
 
@@ -98,7 +98,7 @@ proc/move_research_shuttle()
 
 	updateUsrDialog()
 
-/obj/machinery/computer/research_shuttle/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/machinery/computer/research_shuttle/attackby(obj/item/weapon/W, mob/user)
 
 	if (istype(W, /obj/item/weapon/card/emag))
 		var/obj/item/weapon/card/emag/E = W

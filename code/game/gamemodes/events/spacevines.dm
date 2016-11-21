@@ -21,7 +21,7 @@
 		master = null
 	return ..()
 
-/obj/effect/spacevine/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/effect/spacevine/attackby(obj/item/weapon/W, mob/user)
 	if (!W || !user || !W.type) return
 	switch(W.type)
 		if(/obj/item/weapon/circular_saw) qdel(src)
@@ -48,10 +48,10 @@
 		//Plant-b-gone damage is handled in its entry in chemistry-reagents.dm
 	..()
 
-/obj/effect/spacevine/attack_hand(mob/user as mob)
+/obj/effect/spacevine/attack_hand(mob/user)
 	user_unbuckle_mob(user)
 
-/obj/effect/spacevine/attack_paw(mob/user as mob)
+/obj/effect/spacevine/attack_paw(mob/user)
 	user_unbuckle_mob(user)
 
 /obj/effect/spacevine_controller
@@ -73,7 +73,7 @@
 	SSobj.processing.Remove(src)
 	return ..()
 
-/obj/effect/spacevine_controller/proc/spawn_spacevine_piece(var/turf/location)
+/obj/effect/spacevine_controller/proc/spawn_spacevine_piece(turf/location)
 	var/obj/effect/spacevine/SV = new(location)
 	growth_queue += SV
 	vines += SV

@@ -23,7 +23,7 @@ var/inactive_keys = "None<br>"
 
 	usr << browse(dat, "window=inactive_customitems;size=600x480")
 
-/proc/populate_inactive_customitems_list(var/client/C)
+/proc/populate_inactive_customitems_list(client/C)
 	//set background = 1
 
 	if(checked_for_inactives)

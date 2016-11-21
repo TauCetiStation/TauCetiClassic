@@ -208,7 +208,7 @@
 	remote_door_id = "smindicate" //Make sure this matches the syndicate shuttle's shield/door id!!	//don't ask about the name, testing.
 	charges = 4
 
-/obj/item/weapon/cartridge/proc/post_status(var/command, var/data1, var/data2)
+/obj/item/weapon/cartridge/proc/post_status(command, data1, data2)
 
 	var/datum/radio_frequency/frequency = radio_controller.return_frequency(1435)
 	if(!frequency) return
@@ -228,7 +228,7 @@
 				if(istype(PDA.loc,/mob/living))
 					name = PDA.loc
 				log_admin("STATUS: [user] set status screen with [PDA]. Message: [data1] [data2]")
-				message_admins("STATUS: [user] set status screen with [PDA]. Message: [data1] [data2]")
+				message_admins("STATUS: [user] set status screen with [PDA]. Message: [data1] [data2] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 
 		if("alert")
 			status_signal.data["picture_state"] = data1
@@ -245,7 +245,7 @@
 */
 
 
-/obj/item/weapon/cartridge/proc/create_NanoUI_values(mob/user as mob)
+/obj/item/weapon/cartridge/proc/create_NanoUI_values(mob/user)
 	var/values[0]
 
 	/*		Signaler (Mode: 40)				*/
@@ -268,7 +268,7 @@
 	/*		Power Monitor (Mode: 43 / 433)			*/
 	if(mode==43 || mode==433)
 		var/pMonData[0]
-		for(var/obj/machinery/computer/monitor/pMon in world)
+		for(var/obj/machinery/computer/monitor/pMon in machines)
 			if(!(pMon.stat & (NOPOWER|BROKEN)) )
 				pMonData[++pMonData.len] = list ("Name" = pMon.name, "ref" = "\ref[pMon]")
 				if(isnull(powmonitor)) powmonitor = pMon

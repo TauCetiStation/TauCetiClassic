@@ -393,6 +393,38 @@ datum/supply_pack/New()
 	crate_name = "Internals crate"
 	group = "Engineering"
 
+/datum/supply_pack/sleeping_agent
+	name = "Canister: \[N2O\]"
+	contains = list(/obj/machinery/portable_atmospherics/canister/sleeping_agent)
+	cost = 4000
+	crate_type = /obj/structure/largecrate
+	crate_name = "N2O crate"
+	group = "Engineering"
+
+/datum/supply_pack/oxygen
+	name = "Canister: \[O2\]"
+	contains = list(/obj/machinery/portable_atmospherics/canister/oxygen)
+	cost = 3000
+	crate_type = /obj/structure/largecrate
+	crate_name = "O2 crate"
+	group = "Engineering"
+
+/datum/supply_pack/nitrogen
+	name = "Canister: \[N2\]"
+	contains = list(/obj/machinery/portable_atmospherics/canister/nitrogen)
+	cost = 2000
+	crate_type = /obj/structure/largecrate
+	crate_name = "N2 crate"
+	group = "Engineering"
+
+/datum/supply_pack/air
+	name = "Canister \[Air\]"
+	contains = list(/obj/machinery/portable_atmospherics/canister/air)
+	cost = 2000
+	crate_type = /obj/structure/largecrate
+	crate_name = "Air crate"
+	group = "Engineering"
+
 /datum/supply_pack/evacuation
 	name = "Emergency equipment"
 	contains = list(/obj/item/weapon/storage/toolbox/emergency,
@@ -420,7 +452,7 @@ datum/supply_pack/New()
 					/obj/item/weapon/storage/briefcase/inflatable,
 					/obj/item/weapon/storage/briefcase/inflatable)
 	cost = 2000
-	crate_type = /obj/structure/closet/crate
+	crate_type = /obj/structure/closet/crate/engi
 	crate_name = "Inflatable Barrier Crate"
 	group = "Engineering"
 
@@ -439,6 +471,7 @@ datum/supply_pack/New()
 	contains = list(/obj/item/stack/sheet/metal)
 	amount = 50
 	cost = 1000
+	crate_type = /obj/structure/closet/crate/engi
 	crate_name = "Metal sheets crate"
 	group = "Engineering"
 
@@ -447,6 +480,7 @@ datum/supply_pack/New()
 	contains = list(/obj/item/stack/sheet/glass)
 	amount = 50
 	cost = 1000
+	crate_type = /obj/structure/closet/crate/engi
 	crate_name = "Glass sheets crate"
 	group = "Engineering"
 
@@ -455,6 +489,7 @@ datum/supply_pack/New()
 	contains = list(/obj/item/stack/sheet/wood)
 	amount = 50
 	cost = 1000
+	crate_type = /obj/structure/closet/crate/engi
 	crate_name = "Wooden planks crate"
 	group = "Engineering"
 
@@ -469,6 +504,7 @@ datum/supply_pack/New()
 					/obj/item/weapon/stock_parts/cell/high,
 					/obj/item/weapon/stock_parts/cell/high)
 	cost = 1500
+	crate_type = /obj/structure/closet/crate/engi
 	crate_name = "Electrical maintenance crate"
 	group = "Engineering"
 
@@ -482,8 +518,9 @@ datum/supply_pack/New()
 					/obj/item/clothing/suit/storage/hazardvest,
 					/obj/item/clothing/head/welding,
 					/obj/item/clothing/head/welding,
-					/obj/item/clothing/head/hardhat)
+					/obj/item/clothing/head/hardhat/yellow)
 	cost = 1000
+	crate_type = /obj/structure/closet/crate/engi
 	crate_name = "Mechanical maintenance crate"
 	group = "Engineering"
 
@@ -522,6 +559,7 @@ datum/supply_pack/New()
 					/obj/item/weapon/tracker_electronics,
 					/obj/item/weapon/paper/solar)
 	cost = 2000
+	crate_type = /obj/structure/closet/crate/engi
 	crate_name = "Solar pack crate"
 	group = "Engineering"
 
@@ -530,7 +568,7 @@ datum/supply_pack/New()
 	contains = list(/obj/machinery/power/emitter,
 					/obj/machinery/power/emitter)
 	cost = 1000
-	crate_type = /obj/structure/closet/crate/secure
+	crate_type = /obj/structure/closet/crate/secure/engisec
 	crate_name = "Emitter crate"
 	access = access_ce
 	group = "Engineering"
@@ -539,11 +577,13 @@ datum/supply_pack/New()
 	name = "Field Generator crate"
 	contains = list(/obj/machinery/field_generator,
 					/obj/machinery/field_generator)
+	crate_type = /obj/structure/closet/crate/engi
 	crate_name = "Field Generator crate"
 
 /datum/supply_pack/engine/sing_gen
 	name = "Singularity Generator crate"
 	contains = list(/obj/machinery/the_singularitygen)
+	crate_type = /obj/structure/closet/crate/engi
 	crate_name = "Singularity Generator crate"
 
 /datum/supply_pack/engine/collector
@@ -551,6 +591,7 @@ datum/supply_pack/New()
 	contains = list(/obj/machinery/power/rad_collector,
 					/obj/machinery/power/rad_collector,
 					/obj/machinery/power/rad_collector)
+	crate_type = /obj/structure/closet/crate/engi
 	crate_name = "Collector crate"
 
 /datum/supply_pack/engine/PA
@@ -563,6 +604,7 @@ datum/supply_pack/New()
 					/obj/structure/particle_accelerator/particle_emitter/right,
 					/obj/structure/particle_accelerator/power_box,
 					/obj/structure/particle_accelerator/end_cap)
+	crate_type = /obj/structure/closet/crate/engi
 	crate_name = "Particle Accelerator crate"
 
 /datum/supply_pack/mecha_ripley
@@ -571,7 +613,7 @@ datum/supply_pack/New()
 					/obj/item/weapon/circuitboard/mecha/ripley/main, //TEMPORARY due to lack of circuitboard printer
 					/obj/item/weapon/circuitboard/mecha/ripley/peripherals) //TEMPORARY due to lack of circuitboard printer
 	cost = 3000
-	crate_type = /obj/structure/closet/crate/secure
+	crate_type = /obj/structure/closet/crate/secure/engisec
 	crate_name = "APLU \"Ripley\" Circuit Crate"
 	access = access_robotics
 	group = "Engineering"
@@ -581,7 +623,7 @@ datum/supply_pack/New()
 	contains = list(/obj/item/weapon/circuitboard/mecha/odysseus/peripherals, //TEMPORARY due to lack of circuitboard printer
 					/obj/item/weapon/circuitboard/mecha/odysseus/main) //TEMPORARY due to lack of circuitboard printer
 	cost = 2500
-	crate_type = /obj/structure/closet/crate/secure
+	crate_type = /obj/structure/closet/crate/secure/engisec
 	crate_name = "\"Odysseus\" Circuit Crate"
 	access = access_robotics
 	group = "Engineering"
@@ -608,7 +650,7 @@ datum/supply_pack/New()
 	contains = list(/obj/item/weapon/circuitboard/shield_gen)
 	name = "Bubble shield generator circuitry"
 	cost = 5000
-	crate_type = /obj/structure/closet/crate/secure
+	crate_type = /obj/structure/closet/crate/secure/engisec
 	crate_name = "bubble shield generator circuitry crate"
 	group = "Engineering"
 	access = access_ce
@@ -617,7 +659,7 @@ datum/supply_pack/New()
 	contains = list(/obj/item/weapon/circuitboard/shield_gen_ex)
 	name = "Hull shield generator circuitry"
 	cost = 5000
-	crate_type = /obj/structure/closet/crate/secure
+	crate_type = /obj/structure/closet/crate/secure/engisec
 	crate_name = "hull shield generator circuitry crate"
 	group = "Engineering"
 	access = access_ce
@@ -626,7 +668,7 @@ datum/supply_pack/New()
 	contains = list(/obj/item/weapon/circuitboard/shield_cap)
 	name = "Bubble shield capacitor circuitry"
 	cost = 5000
-	crate_type = /obj/structure/closet/crate/secure
+	crate_type = /obj/structure/closet/crate/secure/engisec
 	crate_name = "shield capacitor circuitry crate"
 	group = "Engineering"
 	access = access_ce

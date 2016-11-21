@@ -352,7 +352,7 @@ var/list/ai_verbs_default = list(
 
 	captain_announce(input, "A.I. Announcement", src.name)
 	log_say("[key_name(usr)] has made an AI announcement: [input]")
-	message_admins("[key_name_admin(usr)] has made an AI announcement.", 1)
+	message_admins("[key_name_admin(usr)] has made an AI announcement.")
 	message_cooldown = 1
 	spawn(600)//One minute cooldown
 		message_cooldown = 0
@@ -404,7 +404,7 @@ var/list/ai_verbs_default = list(
 	if(confirm == "Yes")
 		cancel_call_proc(src)
 
-/mob/living/silicon/ai/check_eye(var/mob/user as mob)
+/mob/living/silicon/ai/check_eye(mob/user)
 	if (!camera)
 		return null
 	user.reset_view(camera)
@@ -532,7 +532,7 @@ var/list/ai_verbs_default = list(
 
 	return
 
-/mob/living/silicon/ai/meteorhit(obj/O as obj)
+/mob/living/silicon/ai/meteorhit(obj/O)
 	for(var/mob/M in viewers(src, null))
 		M.show_message(text("\red [] has been hit by []", src, O), 1)
 		//Foreach goto(19)
@@ -543,12 +543,12 @@ var/list/ai_verbs_default = list(
 		updatehealth()
 	return
 
-/mob/living/silicon/ai/bullet_act(var/obj/item/projectile/Proj)
+/mob/living/silicon/ai/bullet_act(obj/item/projectile/Proj)
 	..(Proj)
 	updatehealth()
 	return 2
 
-/mob/living/silicon/ai/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
+/mob/living/silicon/ai/attack_alien(mob/living/carbon/alien/humanoid/M)
 	if (!ticker)
 		M << "You cannot attack people before the game has started."
 		return
@@ -582,7 +582,7 @@ var/list/ai_verbs_default = list(
 						O.show_message(text("\red <B>[] took a swipe at []!</B>", M, src), 1)
 	return
 
-/mob/living/silicon/ai/attack_animal(mob/living/simple_animal/M as mob)
+/mob/living/silicon/ai/attack_animal(mob/living/simple_animal/M)
 	if(M.melee_damage_upper == 0)
 		M.emote("[M.friendly] [src]")
 	else
@@ -607,7 +607,7 @@ var/list/ai_verbs_default = list(
 		else				A.set_light(0)
 
 
-/mob/living/silicon/ai/proc/switchCamera(var/obj/machinery/camera/C)
+/mob/living/silicon/ai/proc/switchCamera(obj/machinery/camera/C)
 
 	src.cameraFollow = null
 
@@ -623,7 +623,7 @@ var/list/ai_verbs_default = list(
 
 	return 1
 
-/mob/living/silicon/ai/triggerAlarm(var/class, area/A, list/cameralist, var/source)
+/mob/living/silicon/ai/triggerAlarm(class, area/A, list/cameralist, source)
 	if (stat == DEAD)
 		return 1
 
@@ -637,7 +637,7 @@ var/list/ai_verbs_default = list(
 
 	if (viewalerts) ai_alerts()
 
-/mob/living/silicon/ai/cancelAlarm(var/class, area/A as area, var/source)
+/mob/living/silicon/ai/cancelAlarm(class, area/A, source)
 	var/has_alarm = ..()
 
 	if (!has_alarm)
@@ -829,7 +829,7 @@ var/list/ai_verbs_default = list(
 		camera_light_on = world.timeofday + 1 * 20 // Update the light every 2 seconds.
 
 
-/mob/living/silicon/ai/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/mob/living/silicon/ai/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/wrench))
 		if(anchored)
 			user.visible_message("\blue \The [user] starts to unbolt \the [src] from the plating...")
@@ -862,7 +862,7 @@ var/list/ai_verbs_default = list(
 /mob/living/silicon/ai/proc/sensor_mode()
 	toggle_sensor_mode()
 
-/mob/living/silicon/ai/proc/check_unable(var/flags = 0)
+/mob/living/silicon/ai/proc/check_unable(flags = 0)
 	if(stat == DEAD)
 		usr << "\red You are dead!"
 		return 1

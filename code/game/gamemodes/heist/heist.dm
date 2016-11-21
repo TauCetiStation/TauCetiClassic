@@ -161,7 +161,7 @@
 
 	return objs
 
-/datum/game_mode/heist/proc/greet_vox(var/datum/mind/raider)
+/datum/game_mode/heist/proc/greet_vox(datum/mind/raider)
 	var/msg = ""
 	raider.current << "<span class='info'><B>You are a <font color='red'>Pirate</font>....ARGH!</B></span>"
 	raider.current << "<span class='info'>Use :3 to guttertalk, :H to talk on your encrypted channel!</span>"
