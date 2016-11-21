@@ -77,7 +77,7 @@ datum/hSB
 						P.wear_mask.loc = P.loc
 						P.wear_mask.layer = initial(P.wear_mask.layer)
 						P.wear_mask = null
-					P.wear_mask = new/obj/item/clothing/mask/gas(P)
+					P.wear_mask = new/obj/item/clothing/mask/gas/coloured(P)
 					P.wear_mask.layer = 20
 					if(P.back)
 						P.back.loc = P.loc
