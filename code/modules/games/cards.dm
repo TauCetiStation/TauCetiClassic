@@ -185,8 +185,8 @@
 	..()
 	if((src in user || concealed) && cards.len)
 		user << "It contains: "
-			for(var/datum/playingcard/P in cards)
-				user << "The [P.name]."
+		for(var/datum/playingcard/P in cards)
+			user << "The [P.name]."
 
 /obj/item/weapon/hand/update_icon()
 

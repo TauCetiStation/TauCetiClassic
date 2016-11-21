@@ -20,7 +20,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 		runewords-=cultwords[word]
 
 /obj/effect/rune
-	desc = "A strange collection of symbols drawn in blood."
+	desc = ""
 	anchored = 1
 	icon = 'icons/obj/rune.dmi'
 	icon_state = "1"
@@ -72,6 +72,8 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 		..()
 		if(iscultist(user))
 			user << "A spell circle drawn in blood. It reads: <i>[word1] [word2] [word3]</i>."
+		else
+			user << "A strange collection of symbols drawn in blood."
 
 
 	attackby(I, user)

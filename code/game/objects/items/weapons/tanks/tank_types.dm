@@ -26,7 +26,7 @@
 
 	examine(mob/user)
 		..()
-		if(src in user && air_contents.oxygen < 10)
+		if((src in user) && (air_contents.oxygen < 10))
 			user << "<span class='danger'>The meter on the [src.name] indicates you are almost out of air!</span>"
 
 
@@ -73,7 +73,7 @@
 
 	examine(mob/user)
 		..()
-		if(src in user && air_contents.oxygen < 1)
+		if((src in user) && (air_contents.oxygen < 1))
 			user << "<span class='danger'>The meter on the [src.name] indicates you are almost out of air!</span>"
 
 /obj/item/weapon/tank/air/New()
@@ -145,7 +145,7 @@
 
 	examine(mob/user)
 		..()
-		if(src in user && air_contents.oxygen < 0.2)
+		if((src in user) && (air_contents.oxygen < 0.2))
 			user << "<span class='danger'>The meter on the [src.name] indicates you are almost out of air!</span>"
 
 /obj/item/weapon/tank/emergency_oxygen/engi
@@ -178,5 +178,5 @@
 
 /obj/item/weapon/tank/nitrogen/examine(mob/user)
 	..()
-	if(src in user && air_contents.nitrogen < 10)
+	if((src in user) && (air_contents.nitrogen < 10))
 		user << "<span class='danger'>The meter on the [src.name] indicates you are almost out of air!</span>"

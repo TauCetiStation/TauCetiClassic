@@ -141,8 +141,11 @@
 	if(reagents && is_open_container()) //is_open_container() isn't really the right proc for this, but w/e
 		user << "It contains:"
 		if(reagents.reagent_list.len)
-			for(var/datum/reagent/R in reagents.reagent_list)
-				user << "[R.volume] units of [R.name]"
+			if(istype(src, /obj/structure/reagent_dispensers)) //watertanks, fueltanks
+				for(var/datum/reagent/R in reagents.reagent_list)
+					user << "[R.volume] units of [R.name]"
+			else
+				user << "<span class='info'>[reagents.total_volume] units of liquid.</span>"
 		else
 			user << "Nothing."
 
