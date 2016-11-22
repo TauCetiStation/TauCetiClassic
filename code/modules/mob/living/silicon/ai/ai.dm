@@ -43,6 +43,8 @@ var/list/ai_verbs_default = list(
 	var/viewalerts = 0
 	var/lawcheck[1]
 	var/hcarp = 0
+	var/active_module
+	var/emag_recharge = 0
 	var/ioncheck[1]
 	var/lawchannel = "Common" // Default channel on which to state laws
 	var/icon/holo_icon//Default is assigned when AI is created.

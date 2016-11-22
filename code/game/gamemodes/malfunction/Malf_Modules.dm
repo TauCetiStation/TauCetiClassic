@@ -87,45 +87,24 @@ rcd light flash thingy on matter drain
 	set name = "Overload Machine"
 	set category = "Malfunction"
 	var/mob/living/silicon/ai/A = usr
-	var/list/OS = list()
-	for (var/obj/machinery/LM in view(1,A.eyeobj))
-		OS.Add(LM)
-	var/obj/machinery/M = input(usr, "Overload Machine","Choose Object") as null|obj in OS
-	if (istype(M, /obj/machinery))
-		for(var/datum/AI_Module/small/overload_machine/overload in A.current_modules)
-			if(overload.uses > 0)
-				overload.uses --
-				for(var/mob/V in hearers(M, null))
-					V.show_message("\blue You hear a loud electrical buzzing sound!", 2)
-				spawn(50)
-					explosion(get_turf(M), 0,1,2,3)
-					qdel(M)
-			else
-				usr << "Out of uses."
-	else
-		usr << "That's not a machine."
+	for(var/datum/AI_Module/small/overload_machine/overload in A.current_modules)
+		if(overload.uses > 0)
+			A.active_module = "overload"
+			usr << "Power hack module active. Alt+click to choose a machine to overload."
+		else
+			usr << "Module activation failed. Out of uses."
+
 
 /client/proc/nanject()
 	set name = "Add nanobot injector"
 	set category = "Malfunction"
 	var/mob/living/silicon/ai/A = usr
-	var/obj/machinery/M = input(usr, "Add nanobot injector","Choose Machine") as obj in view(1,A.eyeobj)
-	if (istype(M, /obj/machinery))
-		for(var/datum/AI_Module/small/nanject/nanjector in A.current_modules)
-			if(nanjector.uses > 0)
-				if(M.nanjector == 0)
-					M.nanjector = 1
-					nanjector.uses --
-					for(var/mob/V in hearers(M, null))
-						V.show_message("\blue You hear a quiet click.", 2)
-				else
-					usr << "This machine already upgraded."
-				
-					
-			else
-				usr << "Out of uses."
-	else
-		usr << "That's not a machine."
+	for(var/datum/AI_Module/small/nanject/nanjector in A.current_modules)
+		if(nanjector.uses > 0)
+			A.active_module = "nanject"
+			usr << "Upgrade module active. Alt+click to choose machine to install nanobot injector."
+		else
+			usr << "Module activation failed. Out of uses."
 
 /datum/AI_Module/small/blackout
 	module_name = "Blackout"
