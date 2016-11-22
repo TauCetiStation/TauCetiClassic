@@ -100,7 +100,7 @@
 	A.AIAltClick(src)
 	actModule_ai(A)
 
-/mob/proc/actModule_ai(atom/A)
+/mob/living/silicon/ai/proc/actModule_ai(atom/A)
 	var/mob/living/silicon/ai/U = usr
 	if (U.active_module)
 		if (U.active_module == "nanject")
