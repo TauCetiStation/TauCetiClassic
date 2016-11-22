@@ -101,58 +101,58 @@
 	actModule_ai(A)
 
 /mob/living/silicon/ai/proc/actModule_ai(atom/A)
-	var/mob/living/silicon/ai/U = usr
-	if (U.active_module)
-		if (U.active_module == "nanject")
+	//var/mob/living/silicon/ai/U = usr
+	if (active_module)
+		if (active_module == "nanject")
 			if (istype(A, /obj/machinery))
 				var/obj/machinery/M = A
-				for(var/datum/AI_Module/small/nanject/nanjector in U.current_modules)
+				for(var/datum/AI_Module/small/nanject/nanjector in current_modules)
 					if(nanjector.uses > 0)
 						if(M.nanjector == 0)
 							nanjector.uses --
-							U << "Nanobot injector installed."
-							U.active_module = null
+							usr << "Nanobot injector installed."
+							active_module = null
 							for(var/mob/V in hearers(M, null))
 								V.show_message("\blue You hear a quiet click.", 2)
 						else
-							U << "This machine already upgraded."
+							usr << "This machine already upgraded."
 					else
-						U << "Module activation failed. Out of uses."
-						U.active_module = null
+						usr << "Module activation failed. Out of uses."
+						active_module = null
 			else
-				U << "That's not a machine."
-		else if (U.active_module == "overload")
+				usr << "That's not a machine."
+		else if (active_module == "overload")
 			if (istype(A, /obj/machinery))
 				var/obj/machinery/M = A
-				for(var/datum/AI_Module/small/overload_machine/overload in U.current_modules)
+				for(var/datum/AI_Module/small/overload_machine/overload in current_modules)
 					if(overload.uses > 0)
 						overload.uses --
 						for(var/mob/V in hearers(M, null))
 							V.show_message("\blue You hear a loud electrical buzzing sound!", 2)
-						U << "Machine overloaded."
-						U.active_module = null
+						usr << "Machine overloaded."
+						active_module = null
 						spawn(50)
 							explosion(get_turf(A), 0,1,2,3)
 							qdel(A)
 					else
-						U << "Module activation failed. Out of uses."
-						U.active_module = null
+						usr << "Module activation failed. Out of uses."
+						active_module = null
 			else
-				U << "That's not a machine."
-		else if (U.active_module == "emag")
+				usr << "That's not a machine."
+		else if (active_module == "emag")
 			if (istype(A, /obj/machinery))
 				var/obj/machinery/M = A
-				if(U.emag_recharge == 0)
+				if(emag_recharge == 0)
 					if (M.emagged == 0)
-						U.emag_recharge = 1200
-						U << "You sequenced electromagnetic pulse to cripple [M.name] circuits."
+						emag_recharge = 1200
+						usr << "You sequenced electromagnetic pulse to cripple [M.name] circuits."
 						M.emagged = 1
 					else
-						U << "[M.name] circuits already affected."
+						usr << "[M.name] circuits already affected."
 				else
-					U << "Electromagnetic sequencer still recharging."
+					usr << "Electromagnetic sequencer still recharging."
 			else
-				U << "That's not a machine."
+				usr << "That's not a machine."
 
 /*
 	The following criminally helpful code is just the previous code cleaned up;
