@@ -14,6 +14,7 @@
 	new /obj/item/clothing/mask/breath(src)
 	new /obj/item/weapon/tank/emergency_oxygen/engi(src)
 	new /obj/item/clothing/mask/breath(src)
+	new /obj/item/weapon/crowbar/red(src)
 
 /obj/structure/closet/medical_wall/erokez //wall mounted medical closet
 	name = "first-aid closet"
