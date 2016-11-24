@@ -42,7 +42,6 @@
 	//parse the language code and consume it
 	var/datum/language/speaking = parse_language(message)
 	if (speaking)
-		verb = speaking.speech_verb
 		message = copytext(message,2+length(speaking.key))
 	else
 		switch(species.name)
@@ -72,6 +71,16 @@
 
 	message = capitalize(trim(message))
 
+	var/ending = copytext(message, length(message))
+	if (speaking)
+		//If we've gotten this far, keep going!
+		verb = speaking.get_spoken_verb(ending)
+	else
+		if(ending=="!")
+			verb=pick("exclaims","shouts","yells")
+		if(ending=="?")
+			verb="asks"
+
 	if(speech_problem_flag)
 		var/list/handle_r = handle_speech_problems(message, message_mode)
 		//var/list/handle_r = handle_speech_problems(message)
@@ -81,13 +90,6 @@
 
 	if(!message || stat)
 		return
-
-	if (!speaking)
-		var/ending = copytext(message, length(message))
-		if(ending=="!")
-			verb=pick("exclaims","shouts","yells")
-		if(ending=="?")
-			verb="asks"
 
 	var/list/obj/item/used_radios = new
 
@@ -227,10 +229,14 @@
 /mob/living/carbon/human/say_quote(message, datum/language/speaking = null)
 	var/verb = "says"
 	var/ending = copytext(message, length(message))
-	if(ending=="!")
-		verb=pick("exclaims","shouts","yells")
-	else if(ending=="?")
-		verb="asks"
+
+	if(speaking)
+		verb = speaking.get_spoken_verb(ending)
+	else
+		if(ending == "!")
+			verb=pick("exclaims","shouts","yells")
+		else if(ending == "?")
+			verb="asks"
 
 	return verb
 
