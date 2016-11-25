@@ -9,7 +9,7 @@
 	var/mode = 2
 	fire_delay = 25
 
-/obj/item/weapon/gun/energy/pulse_rifle/attack_self(mob/living/user as mob)
+/obj/item/weapon/gun/energy/pulse_rifle/attack_self(mob/living/user)
 	select_fire(user)
 
 /obj/item/weapon/gun/energy/pulse_rifle/isHandgun()
@@ -42,7 +42,7 @@
 	cell_type = "/obj/item/weapon/stock_parts/cell/infinite"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/pulse)
 
-	attack_self(mob/living/user as mob)
+	attack_self(mob/living/user)
 		user << "\red [src.name] has three settings, and they are all DESTROY."
 
 /obj/item/weapon/gun/energy/pulse_rifle/M1911

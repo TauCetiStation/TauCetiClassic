@@ -86,7 +86,7 @@
 /obj/machinery/atmospherics/unary/cryo_cell/allow_drop()
 	return 0
 
-/obj/machinery/atmospherics/unary/cryo_cell/relaymove(var/mob/user)
+/obj/machinery/atmospherics/unary/cryo_cell/relaymove(mob/user)
 	container_resist(user)
 
 /obj/machinery/atmospherics/unary/cryo_cell/container_resist(mob/user)
@@ -115,15 +115,15 @@
 			return
 		open_machine()
 
-/obj/machinery/atmospherics/unary/cryo_cell/examine()
+/obj/machinery/atmospherics/unary/cryo_cell/examine(mob/user)
 	..()
 	if(occupant)
 		if(on)
-			usr << "Someone's inside [src]!"
+			user << "Someone's inside [src]!"
 		else
-			usr << "You can barely make out a form floating in [src]."
+			user << "You can barely make out a form floating in [src]."
 	else
-		usr << "[src] seems empty."
+		user << "[src] seems empty."
 
 /obj/machinery/atmospherics/unary/cryo_cell/attack_hand(mob/user)
 	ui_interact(user)
@@ -222,7 +222,7 @@
 
 	update_icon()
 
-/obj/machinery/atmospherics/unary/cryo_cell/attackby(var/obj/item/weapon/G as obj, var/mob/user as mob)
+/obj/machinery/atmospherics/unary/cryo_cell/attackby(obj/item/weapon/G, mob/user)
 	if(istype(G, /obj/item/weapon/reagent_containers/glass))
 		if(beaker)
 			user << "\red A beaker is already loaded into the machine."

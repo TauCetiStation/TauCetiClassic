@@ -13,7 +13,6 @@
 	master = src //moved outside the spawn(1) to avoid runtimes in lighting.dm when it references loc.loc.master ~Carn
 	uid = ++global_uid
 	related = list(src)
-	active_areas += src
 	all_areas += src
 
 	if(!requires_power)
@@ -27,7 +26,7 @@
 	power_change()		// all machines set to current power level, also updates lighting icon
 
 
-/area/proc/poweralert(var/state, var/obj/source as obj)
+/area/proc/poweralert(state, obj/source)
 	if (state != poweralm)
 		poweralm = state
 		if(istype(source))	//Only report power alarms on the z-level where the source is located.
@@ -228,7 +227,7 @@
 #define ENVIRON 3
 */
 
-/area/proc/powered(var/chan)		// return true if the area has power to given channel
+/area/proc/powered(chan)		// return true if the area has power to given channel
 
 	if(!master.requires_power)
 		return 1
@@ -254,7 +253,7 @@
 		if (fire || eject || party)
 			RA.updateicon()
 
-/area/proc/usage(var/chan)
+/area/proc/usage(chan)
 	var/used = 0
 	switch(chan)
 		if(LIGHT)
@@ -334,17 +333,17 @@
 		else if(istype(src, /area/medical/morgue))
 			sound = pick('sound/ambience/ambimo1.ogg','sound/ambience/ambimo2.ogg','sound/music/main.ogg')
 		else if(type == /area)
-			sound = pick('sound/ambience/ambispace.ogg','sound/music/title2.ogg','sound/music/space.ogg','sound/music/main.ogg','sound/music/traitor.ogg','tauceti/sounds/ambience/voidambi.ogg','tauceti/sounds/ambience/timeship_amb1.ogg')
+			sound = pick('sound/ambience/ambispace.ogg','sound/music/title2.ogg','sound/music/space.ogg','sound/music/main.ogg','sound/music/traitor.ogg','sound/ambience/voidambi.ogg','sound/ambience/timeship_amb1.ogg')
 		else if(istype(src, /area/engine))
 			sound = pick('sound/ambience/ambisin1.ogg','sound/ambience/ambisin2.ogg','sound/ambience/ambisin3.ogg','sound/ambience/ambisin4.ogg')
 		else if(istype(src, /area/AIsattele) || istype(src, /area/turret_protected/ai) || istype(src, /area/turret_protected/ai_upload) || istype(src, /area/turret_protected/ai_upload_foyer))
 			sound = pick('sound/ambience/ambimalf.ogg')
 		else if(istype(src, /area/mine/explored) || istype(src, /area/mine/unexplored))
-			sound = pick('sound/ambience/ambimine.ogg', 'sound/ambience/song_game.ogg','tauceti/sounds/ambience/mars.ogg')
+			sound = pick('sound/ambience/ambimine.ogg', 'sound/ambience/song_game.ogg','sound/ambience/mars.ogg')
 		else if(istype(src, /area/tcommsat) || istype(src, /area/turret_protected/tcomwest) || istype(src, /area/turret_protected/tcomeast) || istype(src, /area/turret_protected/tcomfoyer) || istype(src, /area/turret_protected/tcomsat))
 			sound = pick('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg')
 		else if (istype(src, /area/syndicate_station) || istype(src, /area/syndicate_station/start) || istype(src,/area/syndicate_station/transit))
-			sound = pick('tauceti/sounds/omega.ogg')
+			sound = pick('sound/ambience/omega.ogg')
 		else
 			sound = pick('sound/ambience/ambigen1.ogg','sound/ambience/ambigen3.ogg','sound/ambience/ambigen4.ogg','sound/ambience/ambigen5.ogg','sound/ambience/ambigen6.ogg','sound/ambience/ambigen7.ogg','sound/ambience/ambigen8.ogg','sound/ambience/ambigen9.ogg','sound/ambience/ambigen10.ogg','sound/ambience/ambigen11.ogg','sound/ambience/ambigen12.ogg','sound/ambience/ambigen14.ogg')
 
@@ -355,7 +354,7 @@
 				if(L.&& L.client)
 					L.client.played = 0
 
-/area/proc/gravitychange(var/gravitystate = 0, var/area/A)
+/area/proc/gravitychange(gravitystate = 0, area/A)
 
 	A.has_gravity = gravitystate
 
@@ -374,7 +373,7 @@
 		var/mob/living/carbon/human/H = mob
 		if((istype(H.shoes, /obj/item/clothing/shoes/magboots) && (H.shoes.flags & NOSLIP)))
 			return
-		if((istype(H.wear_suit, /obj/item/clothing/suit/space/rig) && (H.wear_suit.flags & NOSLIP))) //Люди в скафандре с включенными магбутами
+		if((istype(H.wear_suit, /obj/item/clothing/suit/space/rig) && (H.wear_suit.flags & NOSLIP))) //Humans in rig with turn on magboots
 			return
 
 		if(H.m_intent == "run")

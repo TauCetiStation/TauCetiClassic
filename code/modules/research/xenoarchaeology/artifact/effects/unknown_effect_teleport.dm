@@ -3,7 +3,7 @@
 	effecttype = "teleport"
 	effect_type = 6
 
-/datum/artifact_effect/teleport/DoEffectTouch(var/mob/user)
+/datum/artifact_effect/teleport/DoEffectTouch(mob/user)
 	var/weakness = GetAnomalySusceptibility(user)
 	if(prob(100 * weakness))
 		user << "\red You are suddenly zapped away elsewhere!"

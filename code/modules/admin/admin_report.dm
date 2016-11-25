@@ -136,7 +136,7 @@ client/proc/Report(mob/M as mob in world)
 	spawn(1)
 		display_admin_reports()
 
-client/proc/mark_report_done(ID as num)
+client/proc/mark_report_done(ID)
 	if(!src.holder || src.holder.level < 0)
 		return
 

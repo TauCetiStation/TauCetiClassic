@@ -70,7 +70,7 @@
 	nanomanager.update_uis(src)
 	attack_hand(user)
 
-/obj/machinery/computer/card/attack_hand(mob/user as mob)
+/obj/machinery/computer/card/attack_hand(mob/user)
 	if(..()) return
 	if(stat & (NOPOWER|BROKEN)) return
 	ui_interact(user)

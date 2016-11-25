@@ -6,7 +6,7 @@
 	req_human = 1
 	max_genetic_damage = 100
 
-/obj/effect/proc_holder/changeling/absorbDNA/can_sting(var/mob/living/carbon/user)
+/obj/effect/proc_holder/changeling/absorbDNA/can_sting(mob/living/carbon/user)
 	if(!..())
 		return
 
@@ -26,7 +26,7 @@
 	var/mob/living/carbon/target = G.affecting
 	return changeling.can_absorb_dna(user,target)
 
-/obj/effect/proc_holder/changeling/absorbDNA/sting_action(var/mob/user)
+/obj/effect/proc_holder/changeling/absorbDNA/sting_action(mob/user)
 	var/datum/changeling/changeling = user.mind.changeling
 	var/obj/item/weapon/grab/G = user.get_active_hand()
 	var/mob/living/carbon/human/target = G.affecting
@@ -115,11 +115,11 @@
 			U << "<span class='warning'>DNA of [T] is ruined beyond usability!</span>"
 			return 0
 
-		if(T:species.flags & IS_SYNTHETIC || T:species.flags & IS_PLANT)
+		if(T:species.flags[IS_SYNTHETIC] || T:species.flags[IS_PLANT])
 			U << "<span class='warning'>[T] is not compatible with our biology.</span>"
 			return 0
 
-		if(T:species.flags & NO_SCAN)
+		if(T:species.flags[NO_SCAN])
 			src << "<span class='warning'>We do not know how to parse this creature's DNA!</span>"
 			return 0
 
@@ -132,7 +132,7 @@
 							return 0
 	return 1
 /*
-/obj/effect/proc_holder/changeling/absorbDNA/can_sting(var/mob/living/carbon/user)
+/obj/effect/proc_holder/changeling/absorbDNA/can_sting(mob/living/carbon/user)
 	if(!..())
 		return
 
@@ -152,7 +152,7 @@
 	var/mob/living/carbon/target = G.affecting
 	return changeling.can_absorb_dna(user,target)
 
-/obj/effect/proc_holder/changeling/absorbDNA/sting_action(var/mob/user)
+/obj/effect/proc_holder/changeling/absorbDNA/sting_action(mob/user)
 	var/datum/changeling/changeling = user.mind.changeling
 	var/obj/item/weapon/grab/G = user.get_active_hand()
 	var/mob/living/carbon/human/target = G.affecting

@@ -112,10 +112,6 @@
 	for(var/datum/mind/possible_host in ticker.minds)
 		if(possible_host.assigned_role != "MODE" && ishuman(possible_host.current) && (possible_host.current.stat != DEAD))
 			possible_hosts += possible_host
-	/**for(var/mob/living/carbon/possible_host in world)
-		//if(possible_host.assigned_role != "MODE")
-		if(!(possible_host in memes))
-			possible_hosts += possible_host*/
 	if(!(possible_hosts.len))
 		log_admin("Something went wrong, no possible hosts!")
 		testing("Something went wrong, no possible hosts!")
@@ -151,7 +147,7 @@
 	return ..()
 
 
-/datum/game_mode/proc/forge_meme_objectives(var/datum/mind/meme, var/datum/mind/first_host)
+/datum/game_mode/proc/forge_meme_objectives(datum/mind/meme, datum/mind/first_host)
 	if (config.objectives_disabled)
 		return
 
@@ -179,7 +175,7 @@
 	greet_meme(meme)
 	return
 
-/datum/game_mode/proc/greet_meme(var/datum/mind/meme, var/you_are=1)
+/datum/game_mode/proc/greet_meme(datum/mind/meme, you_are=1)
 	if (you_are)
 		var/meme_death_explained = "sleep toxin"
 		var/mob/living/parasite/meme/M = meme.current

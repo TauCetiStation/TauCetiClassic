@@ -79,7 +79,7 @@
 			O.hide(0)
 
 //overwrite the attackby of space to transform it to openspace if necessary
-/turf/space/attackby(obj/item/C as obj, mob/user as mob)
+/turf/space/attackby(obj/item/C, mob/user)
 	if (istype(C, /obj/item/weapon/cable_coil) && src.hasbelow())
 		var/turf/simulated/floor/open/W = src.ChangeTurf(/turf/simulated/floor/open)
 		W.attackby(C, user)
@@ -90,7 +90,7 @@
 	// cant destroy empty space with an ordinary bomb
 	return
 
-/turf/simulated/floor/open/attackby(obj/item/C as obj, mob/user as mob)
+/turf/simulated/floor/open/attackby(obj/item/C, mob/user)
 	(..)
 	if (istype(C, /obj/item/weapon/cable_coil))
 		var/obj/item/weapon/cable_coil/cable = C

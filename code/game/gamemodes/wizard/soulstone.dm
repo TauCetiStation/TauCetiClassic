@@ -13,7 +13,7 @@
 
 //////////////////////////////Capturing////////////////////////////////////////////////////////
 
-	attack(mob/living/carbon/human/M as mob, mob/user as mob)
+	attack(mob/living/carbon/human/M, mob/user)
 		if(!istype(M, /mob/living/carbon/human))//If target is not a human.
 			return ..()
 		if(istype(M, /mob/living/carbon/human/dummy))
@@ -30,7 +30,7 @@
 		transfer_soul("VICTIM", M, user)
 		return
 
-	/*attack(mob/living/simple_animal/shade/M as mob, mob/user as mob)//APPARENTLY THEY NEED THEIR OWN SPECIAL SNOWFLAKE CODE IN THE LIVING ANIMAL DEFINES
+	/*attack(mob/living/simple_animal/shade/M, mob/user)//APPARENTLY THEY NEED THEIR OWN SPECIAL SNOWFLAKE CODE IN THE LIVING ANIMAL DEFINES
 		if(!istype(M, /mob/living/simple_animal/shade))//If target is not a shade
 			return ..()
 		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to capture the soul of [M.name] ([M.ckey])</font>")
@@ -90,7 +90,7 @@
 	desc = "A wicked machine used by those skilled in magical arts. It is inactive."
 	flags = FPRINT | TABLEPASS
 
-/obj/structure/constructshell/attackby(obj/item/O as obj, mob/user as mob)
+/obj/structure/constructshell/attackby(obj/item/O, mob/user)
 	if(istype(O, /obj/item/device/soulstone))
 		O.transfer_soul("CONSTRUCT",src,user)
 
@@ -98,7 +98,7 @@
 ////////////////////////////Proc for moving soul in and out off stone//////////////////////////////////////
 
 
-/obj/item/proc/transfer_soul(var/choice as text, var/target, var/mob/U as mob).
+/obj/item/proc/transfer_soul(choice, target, mob/U).
 	switch(choice)
 		if("VICTIM")
 			var/mob/living/carbon/human/T = target

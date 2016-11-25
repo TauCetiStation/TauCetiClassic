@@ -1,15 +1,13 @@
 /obj/item/weapon/gun/energy/gun
 	name = "energy gun"
 	desc = "A basic energy-based gun with two settings: Stun and kill."
-	icon = 'tauceti/icons/obj/guns.dmi'
-	tc_custom = 'tauceti/icons/obj/guns.dmi'
 	icon_state = "energy"
 	item_state = null	//so the human update icon uses the icon_state instead.
 	ammo_type = list(/obj/item/ammo_casing/energy/stun, /obj/item/ammo_casing/energy/laser)
 	origin_tech = "combat=3;magnets=2"
 	modifystate = 2
 
-/obj/item/weapon/gun/energy/gun/attack_self(mob/living/user as mob)
+/obj/item/weapon/gun/energy/gun/attack_self(mob/living/user)
 	select_fire(user)
 	update_icon()
 	if(user.hand)
@@ -22,7 +20,7 @@
 	desc = "A basic energy-based carbine with two settings: Stun and kill."
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "ecar"
-	tc_custom = null
+	icon_custom = null
 
 /obj/item/weapon/gun/energy/gun/carbine/New()
 	..()
@@ -33,7 +31,7 @@
 /obj/item/weapon/gun/energy/gun/pistol
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "egun"
-	tc_custom = null
+	icon_custom = null
 	fire_delay = 0
 	ammo_type = list(/obj/item/ammo_casing/energy/stun, /obj/item/ammo_casing/energy/laser_pulse)
 

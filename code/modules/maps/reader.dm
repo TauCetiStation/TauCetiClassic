@@ -127,7 +127,7 @@ dmm_suite
 				break
 
 
-	proc/parse_grid(var/model as text, var/x_coordinate as num, var/y_coordinate as num, var/z_coordinate as num)
+	proc/parse_grid(model, x_coordinate, y_coordinate, z_coordinate)
 		//Accepts a text string containing a comma separated list of type paths of the
 		//  same construction as those contained in a .dmm file, and instantiates them.
 
@@ -241,7 +241,7 @@ dmm_suite
 
 	var/list/borked_paths = list()
 
-	proc/trim_text(var/what as text)
+	proc/trim_text(what)
 		while(length(what) && findtext(what, " ", 1, 2))
 			what = copytext(what, 2)
 
@@ -250,7 +250,7 @@ dmm_suite
 
 		return what
 
-	proc/get_list(var/text, var/list/text_strings)
+	proc/get_list(text, list/text_strings)
 		//First, trim the data to just the list contents
 		var/list_start = findtext(text, "(") + 1
 		var/list_end = findtext(text, ")", list_start)

@@ -40,7 +40,7 @@
 	if(state_open && !panel_open)
 		..(target)
 
-/obj/machinery/abductor/experiment/proc/dissection_icon(var/mob/living/carbon/human/H)
+/obj/machinery/abductor/experiment/proc/dissection_icon(mob/living/carbon/human/H)
 	var/icon/preview_icon = null
 
 	var/g = "m"
@@ -64,20 +64,20 @@
 		preview_icon.Blend(temp, ICON_OVERLAY)
 
 	//Tail
-	if(H.species.tail && H.species.flags & HAS_TAIL)
+	if(H.species.tail && H.species.flags[HAS_TAIL])
 		temp = new/icon("icon" = 'icons/effects/species.dmi', "icon_state" = "[H.species.tail]_s")
 		preview_icon.Blend(temp, ICON_OVERLAY)
 
 	// Skin tone
-	if(H.species.flags & HAS_SKIN_TONE)
+	if(H.species.flags[HAS_SKIN_TONE])
 		if (H.s_tone >= 0)
 			preview_icon.Blend(rgb(H.s_tone, H.s_tone, H.s_tone), ICON_ADD)
 		else
 			preview_icon.Blend(rgb(-H.s_tone,  -H.s_tone,  -H.s_tone), ICON_SUBTRACT)
 
 	// Skin color
-	if(H.species.flags & HAS_SKIN_TONE)
-		if(!H.species || H.species.flags & HAS_SKIN_COLOR)
+	if(H.species.flags[HAS_SKIN_TONE])
+		if(!H.species || H.species.flags[HAS_SKIN_COLOR])
 			preview_icon.Blend(rgb(H.r_skin, H.g_skin, H.b_skin), ICON_ADD)
 
 	var/icon/eyes_s = new/icon("icon" = 'icons/mob/human_face.dmi', "icon_state" = H.species ? H.species.eyes : "eyes_s")
@@ -152,7 +152,7 @@
 			flash = Experiment(occupant,href_list["experiment"])
 	updateUsrDialog()
 
-/obj/machinery/abductor/experiment/proc/Experiment(var/mob/occupant,var/type)
+/obj/machinery/abductor/experiment/proc/Experiment(mob/occupant,type)
 	var/mob/living/carbon/human/H = occupant
 	var/point_reward = 0
 	if(H in history)
@@ -205,7 +205,7 @@
 		return "<span class='bad'>Specimen braindead - disposed</span>"
 	return "<span class='bad'>ERROR</span>"
 
-/obj/machinery/abductor/experiment/proc/SendBack(var/mob/living/carbon/human/H)
+/obj/machinery/abductor/experiment/proc/SendBack(mob/living/carbon/human/H)
 	H.Sleeping(8)
 	var/area/A
 	if(console && console.pad && console.pad.teleport_target)

@@ -17,7 +17,7 @@
 	var/stop = 0.0
 	var/screen = 0 // 0 - Main Menu, 1 - Cyborg Status, 2 - Kill 'em All! -- In text
 
-/obj/machinery/computer/robotics/attack_hand(var/mob/user as mob)
+/obj/machinery/computer/robotics/attack_hand(mob/user)
 	if(..())
 		return
 	if (src.z > ZLEVEL_EMPTY)
@@ -112,7 +112,7 @@
 		if (istype(I))
 			if(src.check_access(I))
 				if (!status)
-					message_admins("\blue [key_name_admin(usr)] has initiated the global cyborg killswitch!")
+					message_admins("\blue [key_name_admin(usr)] has initiated the global cyborg killswitch! <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[usr.x];Y=[usr.y];Z=[usr.z]'>JMP</a>")
 					log_game("\blue [key_name(usr)] has initiated the global cyborg killswitch!")
 					src.status = 1
 					src.start_sequence()
@@ -157,7 +157,7 @@
 							R.ResetSecurityCodes()
 
 						else
-							message_admins("\blue [key_name_admin(usr)] detonated [R.name]!")
+							message_admins("\blue [key_name_admin(usr)] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[usr.x];Y=[usr.y];Z=[usr.z]'>JMP</a>) detonated [R.name]! (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[R.x];Y=[R.y];Z=[R.z]'>JMP</a>)")
 							log_game("\blue [key_name_admin(usr)] detonated [R.name]!")
 							R.self_destruct()
 		else
@@ -170,7 +170,7 @@
 				var/choice = input("Are you certain you wish to [R.canmove ? "lock down" : "release"] [R.name]?") in list("Confirm", "Abort")
 				if(choice == "Confirm")
 					if(R && istype(R))
-						message_admins("\blue [key_name_admin(usr)] [R.canmove ? "locked down" : "released"] [R.name]!")
+						message_admins("\blue [key_name_admin(usr)] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[usr.x];Y=[usr.y];Z=[usr.z]'>JMP</a>) [R.canmove ? "locked down" : "released"] [R.name]! (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[R.x];Y=[R.y];Z=[R.z]'>JMP</a>)")
 						log_game("[key_name(usr)] [R.canmove ? "locked down" : "released"] [R.name]!")
 						R.canmove = !R.canmove
 						if (R.lockcharge)

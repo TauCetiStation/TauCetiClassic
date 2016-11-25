@@ -150,7 +150,7 @@
 	return
 
 //Converts an angle (degrees) into an ss13 direction
-/proc/angle2dir(var/degree)
+/proc/angle2dir(degree)
 	degree = ((degree+22.5)%365)
 	if(degree < 45)		return NORTH
 	if(degree < 90)		return NORTHEAST
@@ -163,7 +163,7 @@
 
 //returns the north-zero clockwise angle in degrees, given a direction
 
-/proc/dir2angle(var/D)
+/proc/dir2angle(D)
 	switch(D)
 		if(NORTH)		return 0
 		if(SOUTH)		return 180
@@ -176,7 +176,7 @@
 		else			return null
 
 //Returns the angle in english
-/proc/angle2text(var/degree)
+/proc/angle2text(degree)
 	return dir2text(angle2dir(degree))
 
 //Converts a blend_mode constant to one acceptable to icon.Blend()

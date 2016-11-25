@@ -13,7 +13,7 @@
 	effect = pick(EFFECT_TOUCH, EFFECT_AURA)
 	max_pressure = rand(115,1000)
 
-/datum/artifact_effect/gasco2/DoEffectTouch(var/mob/user)
+/datum/artifact_effect/gasco2/DoEffectTouch(mob/user)
 	if(holder)
 		var/datum/gas_mixture/env = holder.loc.return_air()
 		if(env)

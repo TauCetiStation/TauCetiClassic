@@ -25,7 +25,7 @@
 	w_class = 1
 	var/list/item_quants = list()
 
-/obj/item/weapon/seedbag/attack_self(mob/user as mob)
+/obj/item/weapon/seedbag/attack_self(mob/user)
 	user.machine = src
 	interact(user)
 
@@ -40,7 +40,7 @@
 		if(0)
 			usr << "The bag now picks up one seed pouch at a time."
 
-/obj/item/seeds/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/obj/item/seeds/attackby(obj/item/O, mob/user)
 	..()
 	if (istype(O, /obj/item/weapon/seedbag))
 		var/obj/item/weapon/seedbag/S = O
@@ -69,7 +69,7 @@
 		S.updateUsrDialog()
 	return
 
-/obj/item/weapon/seedbag/interact(mob/user as mob)
+/obj/item/weapon/seedbag/interact(mob/user)
 
 	var/dat = "<TT><b>Select an item:</b><br>"
 
@@ -126,7 +126,7 @@
  * Sunflower
  */
 
-/obj/item/weapon/grown/sunflower/attack(mob/M as mob, mob/user as mob)
+/obj/item/weapon/grown/sunflower/attack(mob/M, mob/user)
 	M << "<font color='green'><b> [user] smacks you with a sunflower!</font><font color='yellow'><b>FLOWER POWER<b></font>"
 	user << "<font color='green'> Your sunflower's </font><font color='yellow'><b>FLOWER POWER</b></font><font color='green'> strikes [M]</font>"
 
@@ -134,7 +134,7 @@
 /*
  * Nettle
  */
-/obj/item/weapon/grown/nettle/pickup(mob/living/carbon/human/user as mob)
+/obj/item/weapon/grown/nettle/pickup(mob/living/carbon/human/user)
 	if(!user.gloves)
 		user << "\red The nettle burns your bare hand!"
 		if(istype(user, /mob/living/carbon/human))
@@ -144,7 +144,7 @@
 		else
 			user.take_organ_damage(0,force)
 
-/obj/item/weapon/grown/nettle/afterattack(atom/A as mob|obj, mob/user as mob, proximity)
+/obj/item/weapon/grown/nettle/afterattack(atom/A, mob/user, proximity)
 	if(!proximity) return
 	if(force > 0)
 		force -= rand(1,(force/3)+1) // When you whack someone with it, leaves fall off
@@ -161,7 +161,7 @@
  * Deathnettle
  */
 
-/obj/item/weapon/grown/deathnettle/pickup(mob/living/carbon/human/user as mob)
+/obj/item/weapon/grown/deathnettle/pickup(mob/living/carbon/human/user)
 	if(!user.gloves)
 		if(istype(user, /mob/living/carbon/human))
 			var/organ = ((user.hand ? "l_":"r_") + "arm")
@@ -173,7 +173,7 @@
 			user.Paralyse(5)
 			user << "\red You are stunned by the Deathnettle when you try picking it up!"
 
-/obj/item/weapon/grown/deathnettle/attack(mob/living/carbon/M as mob, mob/user as mob)
+/obj/item/weapon/grown/deathnettle/attack(mob/living/carbon/M, mob/user)
 	if(!..()) return
 	if(istype(M, /mob/living))
 		M << "\red You are stunned by the powerful acid of the Deathnettle!"
@@ -190,7 +190,7 @@
 			M.Weaken(force/15)
 		M.drop_item()
 
-/obj/item/weapon/grown/deathnettle/afterattack(atom/A as mob|obj, mob/user as mob, proximity)
+/obj/item/weapon/grown/deathnettle/afterattack(atom/A, mob/user, proximity)
 	if(!proximity) return
 	if (force > 0)
 		force -= rand(1,(force/3)+1) // When you whack someone with it, leaves fall off
@@ -207,7 +207,7 @@
 /*
  * Corncob
  */
-/obj/item/weapon/corncob/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/weapon/corncob/attackby(obj/item/weapon/W, mob/user)
 	..()
 	if(istype(W, /obj/item/weapon/circular_saw) || istype(W, /obj/item/weapon/hatchet) || istype(W, /obj/item/weapon/kitchen/utensil/knife) || istype(W, /obj/item/weapon/kitchenknife) || istype(W, /obj/item/weapon/kitchenknife/ritual))
 		user << "<span class='notice'>You use [W] to fashion a pipe out of the corn cob!</span>"

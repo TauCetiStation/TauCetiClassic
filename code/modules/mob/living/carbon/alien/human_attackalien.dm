@@ -1,26 +1,26 @@
 /*----------------------------------------
 This is what happens, when alien attack.
 ----------------------------------------*/
-/mob/living/carbon/alien/UnarmedAttack(var/atom/A)
+/mob/living/carbon/alien/UnarmedAttack(atom/A)
 	A.attack_alien(src)
-/atom/proc/attack_alien(mob/user as mob)
+/atom/proc/attack_alien(mob/user)
 	attack_paw(user)
 	return
-/mob/living/carbon/alien/RestrainedClickOn(var/atom/A)
+/mob/living/carbon/alien/RestrainedClickOn(atom/A)
 	return
 
 // Baby aliens
-/mob/living/carbon/alien/facehugger/UnarmedAttack(var/atom/A)
+/mob/living/carbon/alien/facehugger/UnarmedAttack(atom/A)
 	A.attack_facehugger(src)
-/atom/proc/attack_facehugger(mob/user as mob)
+/atom/proc/attack_facehugger(mob/user)
 	return
 
-/mob/living/carbon/alien/larva/UnarmedAttack(var/atom/A)
+/mob/living/carbon/alien/larva/UnarmedAttack(atom/A)
 	A.attack_larva(src)
-/atom/proc/attack_larva(mob/user as mob)
+/atom/proc/attack_larva(mob/user)
 	return
 
-/mob/living/carbon/human/attack_larva(mob/living/carbon/alien/larva/M as mob)
+/mob/living/carbon/human/attack_larva(mob/living/carbon/alien/larva/M)
 	if(check_shields(0, M.name))
 		visible_message("\red <B>[M] attempted to touch [src]!</B>")
 		return 0
@@ -40,7 +40,7 @@ This is what happens, when alien attack.
 			apply_damage(damage, BRUTE, affecting, armor_block)
 			updatehealth()
 
-/mob/living/carbon/human/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
+/mob/living/carbon/human/attack_alien(mob/living/carbon/alien/humanoid/M)
 	if(check_shields(0, M.name))
 		visible_message("\red <B>[M] attempted to touch [src]!</B>")
 		return 0

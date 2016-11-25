@@ -22,7 +22,7 @@
 			ghostize(bancheck = TRUE)		//Ghostize checks for key so nothing else is necessary.
 		return ..()
 
-	say_understands(var/other)//Goddamn is this hackish, but this say code is so odd
+	say_understands(other)//Goddamn is this hackish, but this say code is so odd
 		if (istype(other, /mob/living/silicon/ai))
 			if(!(container && istype(container, /obj/item/device/mmi)))
 				return 0

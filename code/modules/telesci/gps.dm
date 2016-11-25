@@ -31,7 +31,7 @@ var/list/GPS_list = list()
 		overlays -= "emp"
 		overlays += "working"
 
-/obj/item/device/gps/attack_self(mob/user as mob)
+/obj/item/device/gps/attack_self(mob/user)
 
 	var/obj/item/device/gps/t = ""
 	if(emped)

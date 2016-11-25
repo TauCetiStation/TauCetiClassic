@@ -624,7 +624,7 @@ ________________________________________________________________________________
 									grant_kamikaze(U)//Give them verbs and change variables as necessary.
 									U.regenerate_icons()//Update their clothing.
 									ninjablade()//Summon two energy blades.
-									message_admins("\blue [key_name_admin(U)] used KAMIKAZE mode.")//Let the admins know.
+									message_admins("\blue [key_name_admin(U)] used KAMIKAZE mode. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[U.x];Y=[U.y];Z=[U.z]'>JMP</a>)")//Let the admins know.
 									s_busy = 0
 									return
 							sleep(s_delay)
@@ -743,7 +743,7 @@ ________________________________________________________________________________
 
 //=======//SPECIAL AI FUNCTIONS//=======//
 
-/obj/item/clothing/suit/space/space_ninja/proc/ai_holo(var/turf/T in oview(3,affecting))//To have an internal AI display a hologram to the AI and ninja only.
+/obj/item/clothing/suit/space/space_ninja/proc/ai_holo(turf/T in oview(3,affecting))//To have an internal AI display a hologram to the AI and ninja only.
 	set name = "Display Hologram"
 	set desc = "Channel a holographic image directly to the user's field of vision. Others will not see it."
 	set category = null
@@ -947,21 +947,20 @@ ________________________________________________________________________________
 				U.drop_item()
 	return 0
 
-/obj/item/clothing/suit/space/space_ninja/examine()
-	set src in view()
+/obj/item/clothing/suit/space/space_ninja/examine(mob/user)
 	..()
 	if(s_initialized)
-		var/mob/living/carbon/human/U = affecting
-		if(s_control)
-			U << "All systems operational. Current energy capacity: <B>[cell.charge]</B>."
-			if(!kamikaze)
-				U << "The CLOAK-tech device is <B>[s_active?"active":"inactive"]</B>."
+		if(user == affecting)
+			if(s_control)
+				user << "All systems operational. Current energy capacity: <B>[cell.charge]</B>."
+				if(!kamikaze)
+					user << "The CLOAK-tech device is <B>[s_active ? "active" : "inactive"]</B>."
+				else
+					user << "<span class='userdanger'>KAMIKAZE MODE ENGAGED!</span>"
+				user << "There are <B>[s_bombs]</B> smoke bomb\s remaining."
+				user << "There are <B>[a_boost]</B> adrenaline booster\s remaining."
 			else
-				U << "\red KAMIKAZE MODE ENGAGED!"
-			U << "There are <B>[s_bombs]</B> smoke bombs remaining."
-			U << "There are <B>[a_boost]</B> adrenaline boosters remaining."
-		else
-			U <<  "�rr�R �a��a�� No-�-� f��N� 3RR�r"
+				user <<  "ï¿½rrï¿½R ï¿½aï¿½ï¿½aï¿½ï¿½ No-ï¿½-ï¿½ fï¿½ï¿½Nï¿½ 3RRï¿½r"
 
 /*
 ===================================================================================
@@ -971,7 +970,7 @@ ________________________________________________________________________________
 
 //=======//ENERGY DRAIN PROCS//=======//
 
-/obj/item/clothing/gloves/space_ninja/proc/drain(target_type as text, target, obj/suit)
+/obj/item/clothing/gloves/space_ninja/proc/drain(target_type, target, obj/suit)
 //Var Initialize
 	var/obj/item/clothing/suit/space/space_ninja/S = suit
 	var/mob/living/carbon/human/U = S.affecting
@@ -1206,12 +1205,10 @@ ________________________________________________________________________________
 	U << "You <b>[candrain?"disable":"enable"]</b> special interaction."
 	candrain=!candrain
 
-/obj/item/clothing/gloves/space_ninja/examine()
-	set src in view()
+/obj/item/clothing/gloves/space_ninja/examine(mob/user)
 	..()
 	if(!canremove)
-		var/mob/living/carbon/human/U = loc
-		U << "The energy drain mechanism is: <B>[candrain?"active":"inactive"]</B>."
+		user << "The energy drain mechanism is: <B>[candrain ? "active" : "inactive"]</B>."
 
 /*
 ===================================================================================
@@ -1311,10 +1308,8 @@ ________________________________________________________________________________
 			U.sight &= ~SEE_TURFS
 			U << "Switching mode to <B>Scouter</B>."
 
-/obj/item/clothing/mask/gas/voice/space_ninja/examine()
-	set src in view()
+/obj/item/clothing/mask/gas/voice/space_ninja/examine(mob/user)
 	..()
-
 	var/mode
 	switch(mode)
 		if(0)
@@ -1325,8 +1320,8 @@ ________________________________________________________________________________
 			mode = "Thermal Scanner"
 		if(3)
 			mode = "Meson Scanner"
-	usr << "<B>[mode]</B> is active."//Leaving usr here since it may be on the floor or on a person.
-	usr << "Voice mimicking algorithm is set <B>[!vchange?"inactive":"active"]</B>."
+	user << "<B>[mode]</B> is active."
+	user << "Voice mimicking algorithm is set <B>[vchange ? "active" : "inactive"]</B>."
 
 /*
 ===================================================================================
@@ -1439,7 +1434,7 @@ It is possible to destroy the net by the occupant or someone else.
 			M << "\blue You are free of the net!"
 		return*/
 
-	bullet_act(var/obj/item/projectile/Proj)
+	bullet_act(obj/item/projectile/Proj)
 		health -= Proj.damage
 		healthcheck()
 		return 0
@@ -1465,7 +1460,7 @@ It is possible to destroy the net by the occupant or someone else.
 		healthcheck()
 		return
 
-	hitby(AM as mob|obj)
+	hitby(AM)
 		..()
 		for(var/mob/O in viewers(src, null))
 			O.show_message(text("\red <B>[src] was hit by [AM].</B>"), 1)
@@ -1508,7 +1503,7 @@ It is possible to destroy the net by the occupant or someone else.
 		healthcheck()
 		return
 
-	attackby(obj/item/weapon/W as obj, mob/user as mob)
+	attackby(obj/item/weapon/W, mob/user)
 		var/aforce = W.force
 		health = max(0, health - aforce)
 		healthcheck()

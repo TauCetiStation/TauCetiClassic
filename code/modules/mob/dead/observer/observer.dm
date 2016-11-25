@@ -154,7 +154,7 @@ Works together with spawning an observer, noted above.
 		process_medHUD(src)
 
 
-/mob/dead/proc/process_medHUD(var/mob/M)
+/mob/dead/proc/process_medHUD(mob/M)
 	var/client/C = M.client
 	for(var/mob/living/carbon/human/patient in oview(M, 14))
 		C.images += patient.hud_list[HEALTH_HUD]
@@ -177,7 +177,7 @@ Works together with spawning an observer, noted above.
 */
 	return 1
 
-/mob/proc/ghostize(var/can_reenter_corpse = TRUE, var/bancheck = FALSE)
+/mob/proc/ghostize(can_reenter_corpse = TRUE, bancheck = FALSE)
 	if(key)
 		if(!(ckey in admin_datums) && bancheck == TRUE && jobban_isbanned(src, "Observer"))
 			var/mob/M = mousize()
@@ -208,7 +208,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		return
 	if(stat == DEAD)
 		if(fake_death)
-			var/response = alert(src, "Are you -sure- you want to ghost?\n(You are alive. If you ghost, you won't be able to play this round for another 30 minutes! You can't change your mind so choose wisely!)","Are you sure you want to ghost?","Ghost","Stay in body")
+			var/response = alert(src, "Are you -sure- you want to ghost?\n(You are alive. If you ghost, you won't be able to play this round for another 30 minutes! You can't change your mind so choose wisely!)","Are you sure you want to ghost?","Stay in body","Ghost")
 			if(response != "Ghost")
 				return	//didn't want to ghost after-all
 			var/mob/dead/observer/ghost = ghostize(can_reenter_corpse = FALSE)
@@ -216,7 +216,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		else
 			ghostize(can_reenter_corpse = TRUE)
 	else
-		var/response = alert(src, "Are you -sure- you want to ghost?\n(You are alive. If you ghost, you won't be able to play this round for another 30 minutes! You can't change your mind so choose wisely!)","Are you sure you want to ghost?","Ghost","Stay in body")
+		var/response = alert(src, "Are you -sure- you want to ghost?\n(You are alive. If you ghost, you won't be able to play this round for another 30 minutes! You can't change your mind so choose wisely!)","Are you sure you want to ghost?","Stay in body","Ghost")
 		if(response != "Ghost")
 			return	//didn't want to ghost after-all
 		resting = 1
@@ -246,10 +246,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	for(var/obj/effect/step_trigger/S in locate(x, y, z))	//<-- this is dumb
 		S.Crossed(src)
 
-
-/mob/dead/observer/examine()
-	if(usr)
-		usr << desc
 
 /mob/dead/observer/can_use_hands()	return 0
 /mob/dead/observer/is_active()		return 0
@@ -367,7 +363,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	ManualFollow(target)
 
 // This is the ghost's follow verb with an argument
-/mob/dead/observer/proc/ManualFollow(var/atom/movable/target)
+/mob/dead/observer/proc/ManualFollow(atom/movable/target)
 	if (!istype(target))
 		return
 
@@ -535,7 +531,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	var/mob/living/simple_animal/mouse/host
 	var/obj/machinery/atmospherics/unary/vent_pump/vent_found
 	var/list/found_vents = list()
-	for(var/obj/machinery/atmospherics/unary/vent_pump/v in world)
+	for(var/obj/machinery/atmospherics/unary/vent_pump/v in machines)
 		if(!v.welded && v.z == src.z)
 			found_vents.Add(v)
 	if(found_vents.len)

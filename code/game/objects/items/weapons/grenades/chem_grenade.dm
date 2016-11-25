@@ -18,7 +18,7 @@
 	reagents = R
 	R.my_atom = src
 
-/obj/item/weapon/grenade/chem_grenade/attack_self(mob/user as mob)
+/obj/item/weapon/grenade/chem_grenade/attack_self(mob/user)
 	if(!stage || stage==1)
 		if(detonator)
 //				detonator.loc=src.loc
@@ -44,7 +44,7 @@
 			var/mob/living/carbon/C = user
 			C.throw_mode_on()
 
-/obj/item/weapon/grenade/chem_grenade/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/weapon/grenade/chem_grenade/attackby(obj/item/weapon/W, mob/user)
 
 	if(istype(W,/obj/item/device/assembly_holder) && (!stage || stage==1) && path != 2)
 		var/obj/item/device/assembly_holder/det = W
@@ -104,13 +104,12 @@
 			else
 				user << "<span class='red'>\the [W] is empty.</span>"
 
-/obj/item/weapon/grenade/chem_grenade/examine()
-	set src in usr
-	usr << desc
-	if(detonator)
-		usr << "With attached [detonator.name]"
+/obj/item/weapon/grenade/chem_grenade/examine(mob/user)
+	..()
+	if(src in user && detonator)
+		user << "With attached [detonator.name]"
 
-/obj/item/weapon/grenade/chem_grenade/activate(mob/user as mob)
+/obj/item/weapon/grenade/chem_grenade/activate(mob/user)
 	if(active) return
 
 	if(detonator)
@@ -128,7 +127,7 @@
 
 	return
 
-/obj/item/weapon/grenade/chem_grenade/proc/primed(var/primed = 1)
+/obj/item/weapon/grenade/chem_grenade/proc/primed(primed = 1)
 	if(active)
 		icon_state = initial(icon_state) + (primed?"_primed":"_active")
 
@@ -174,11 +173,11 @@
 	if (detonator)
 		detonator.Crossed(AM)
 
-/obj/item/weapon/grenade/chem_grenade/hear_talk(mob/living/M as mob, msg)
+/obj/item/weapon/grenade/chem_grenade/hear_talk(mob/living/M, msg)
 	if (detonator)
 		detonator.hear_talk(M,msg)
 
-/obj/item/weapon/grenade/chem_grenade/on_found(mob/finder as mob)
+/obj/item/weapon/grenade/chem_grenade/on_found(mob/finder)
 	if(detonator)
 		detonator.on_found(finder)
 

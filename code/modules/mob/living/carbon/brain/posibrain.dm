@@ -16,7 +16,7 @@
 	var/ping_cd = 0//attack_ghost cooldown
 
 
-	attack_self(mob/user as mob)
+	attack_self(mob/user)
 		if(brainmob && !brainmob.key && searching == 0)
 			//Start the process of searching for a new user.
 			user << "\blue You carefully locate the manual activation switch and start the positronic brain's boot process."
@@ -38,10 +38,10 @@
 				if(!C.prefs.ignore_question.Find("posibrain") && (ROLE_PAI in C.prefs.be_role))
 					question(C)
 
-	proc/question(var/client/C)
+	proc/question(client/C)
 		spawn(0)
 			if(!C)	return
-			var/response = alert(C, "Someone is requesting a personality for a positronic brain. Would you like to play as one?", "Positronic brain request", "Yes", "No", "Never for this round")
+			var/response = alert(C, "Someone is requesting a personality for a positronic brain. Would you like to play as one?", "Positronic brain request", "No", "Yes", "Never for this round")
 			if(!C || brainmob.key || 0 == searching)	return		//handle logouts that happen whilst the alert is waiting for a response, and responses issued after a brain has been located.
 			if(response == "Yes")
 				transfer_personality(C.mob)
@@ -49,7 +49,7 @@
 				C.prefs.ignore_question += "posibrain"
 
 
-	transfer_identity(var/mob/living/carbon/H)
+	transfer_identity(mob/living/carbon/H)
 		name = "positronic brain ([H])"
 		brainmob.name = H.real_name
 		brainmob.real_name = H.real_name
@@ -64,7 +64,7 @@
 		icon_state = "posibrain-occupied"
 		return
 
-	proc/transfer_personality(var/mob/candidate)
+	proc/transfer_personality(mob/candidate)
 
 		src.searching = 0
 		src.brainmob.mind = candidate.mind
@@ -94,29 +94,23 @@
 		for (var/mob/M in viewers(T))
 			M.show_message("\blue The positronic brain buzzes quietly, and the golden lights fade away. Perhaps you could try again?")
 
-/obj/item/device/mmi/posibrain/examine()
-
-	set src in oview()
-
-	if(!usr || !src)	return
-	if( (usr.sdisabilities & BLIND || usr.blinded || usr.stat) && !istype(usr,/mob/dead/observer) )
-		usr << "<span class='notice'>Something is there but you can't see it.</span>"
-		return
-
+/obj/item/device/mmi/posibrain/examine(mob/user)
 	var/msg = "<span class='info'>*---------*\nThis is \icon[src] \a <EM>[src]</EM>!\n[desc]\n"
 	msg += "<span class='warning'>"
 
 	if(src.brainmob && src.brainmob.key)
 		switch(src.brainmob.stat)
 			if(CONSCIOUS)
-				if(!src.brainmob.client)	msg += "It appears to be in stand-by mode.\n" //afk
-			if(UNCONSCIOUS)		msg += "<span class='warning'>It doesn't seem to be responsive.</span>\n"
-			if(DEAD)			msg += "<span class='deadsay'>It appears to be completely inactive.</span>\n"
+				if(!src.brainmob.client)
+					msg += "It appears to be in stand-by mode.\n" //afk
+			if(UNCONSCIOUS)
+				msg += "<span class='warning'>It doesn't seem to be responsive.</span>\n"
+			if(DEAD)
+				msg += "<span class='deadsay'>It appears to be completely inactive.</span>\n"
 	else
 		msg += "<span class='deadsay'>It appears to be completely inactive.</span>\n"
 	msg += "<span class='info'>*---------*</span>"
-	usr << msg
-	return
+	user << msg
 
 /obj/item/device/mmi/posibrain/emp_act(severity)
 	if(!src.brainmob)
@@ -131,7 +125,7 @@
 				src.brainmob.emp_damage += rand(0,10)
 	..()
 
-/obj/item/device/mmi/posibrain/attack_ghost(var/mob/dead/observer/O)
+/obj/item/device/mmi/posibrain/attack_ghost(mob/dead/observer/O)
 	if(!ping_cd)
 		ping_cd = 1
 		spawn(50)

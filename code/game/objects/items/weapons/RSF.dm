@@ -20,7 +20,7 @@ RSF
 	desc = "A RSF. It currently holds [matter]/30 fabrication-units."
 	return
 
-/obj/item/weapon/rsf/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/weapon/rsf/attackby(obj/item/weapon/W, mob/user)
 	..()
 	if (istype(W, /obj/item/weapon/rcd_ammo))
 		if ((matter + 10) > 30)
@@ -33,7 +33,7 @@ RSF
 		desc = "A RSF. It currently holds [matter]/30 fabrication-units."
 		return
 
-/obj/item/weapon/rsf/attack_self(mob/user as mob)
+/obj/item/weapon/rsf/attack_self(mob/user)
 	playsound(src.loc, 'sound/effects/pop.ogg', 50, 0)
 	if (mode == 1)
 		mode = 2
@@ -61,7 +61,7 @@ RSF
 		return
 	// Change mode
 
-/obj/item/weapon/rsf/afterattack(atom/A, mob/user as mob, proximity)
+/obj/item/weapon/rsf/afterattack(atom/A, mob/user, proximity)
 	if(!proximity) return
 	if (!(istype(A, /obj/structure/table) || istype(A, /turf/simulated/floor)))
 		return

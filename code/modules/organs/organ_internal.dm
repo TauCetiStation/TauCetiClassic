@@ -34,7 +34,7 @@
 /datum/organ/internal/process()
 	//Process infections
 
-	if (robotic >= 2 || (owner.species && owner.species.flags & IS_PLANT))	//TODO make robotic internal and external organs separate types of organ instead of a flag
+	if (robotic >= 2 || (owner.species && owner.species.flags[IS_PLANT]))	//TODO make robotic internal and external organs separate types of organ instead of a flag
 		germ_level = 0
 		return
 
@@ -62,7 +62,7 @@
 			if (prob(3))	//about once every 30 seconds
 				take_damage(1,silent=prob(30))
 
-/datum/organ/internal/proc/take_damage(amount, var/silent=0)
+/datum/organ/internal/proc/take_damage(amount, silent=0)
 	if(src.robotic == 2)
 		src.damage += (amount * 0.8)
 	else

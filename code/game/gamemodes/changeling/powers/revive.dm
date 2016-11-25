@@ -4,7 +4,7 @@
 	req_stat = DEAD
 
 //Revive from regenerative stasis
-/obj/effect/proc_holder/changeling/revive/sting_action(var/mob/living/carbon/user)
+/obj/effect/proc_holder/changeling/revive/sting_action(mob/living/carbon/user)
 	user.mind.changeling.purchasedpowers -= src
 	if(user.stat == DEAD)
 		dead_mob_list -= user
@@ -23,7 +23,7 @@
 	feedback_add_details("changeling_powers","CR")
 	return 1
 
-/obj/effect/proc_holder/changeling/revive/can_sting(var/mob/user)
+/obj/effect/proc_holder/changeling/revive/can_sting(mob/user)
 	if(NOCLONE in user.mutations)
 		user << "<span class='notice'>We could not regenerate. Something wrong with our DNA.</span>"
 		user.fake_death = 0

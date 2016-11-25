@@ -41,7 +41,7 @@ var/const/MAX_IMPREGNATION_TIME = 150
 /mob/living/carbon/alien/facehugger/adjustToxLoss(amount)
 	..(amount)
 
-/mob/living/carbon/alien/facehugger/start_pulling(var/atom/movable/AM)//Prevents mouse from pulling things
+/mob/living/carbon/alien/facehugger/start_pulling(atom/movable/AM)//Prevents mouse from pulling things
 	src << "<span class='warning'>You are too small to pull anything.</span>"
 	return
 

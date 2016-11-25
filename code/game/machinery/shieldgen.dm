@@ -35,7 +35,7 @@
 	return 1
 
 
-/obj/machinery/shield/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/machinery/shield/attackby(obj/item/weapon/W, mob/user)
 	if(!istype(W)) return
 
 	//Calculate damage
@@ -69,7 +69,7 @@
 	spawn(20) if(src) opacity = 0
 	return
 
-/obj/machinery/shield/bullet_act(var/obj/item/projectile/Proj)
+/obj/machinery/shield/bullet_act(obj/item/projectile/Proj)
 	health -= Proj.damage
 	..()
 	if(health <=0)
@@ -104,7 +104,7 @@
 	qdel(src)
 
 
-/obj/machinery/shield/hitby(AM as mob|obj)
+/obj/machinery/shield/hitby(AM)
 	//Let everyone know we've been hit!
 	visible_message("\red <B>[src] was hit by [AM].</B>")
 
@@ -196,7 +196,7 @@
 	update_icon()
 	return
 
-/obj/machinery/shieldgen/meteorhit(obj/O as obj)
+/obj/machinery/shieldgen/meteorhit(obj/O)
 	src.health -= max_health*0.25 //A quarter of the machine's health
 	if (prob(5))
 		src.malfunction = 1
@@ -230,7 +230,7 @@
 				malfunction = 1
 	checkhp()
 
-/obj/machinery/shieldgen/attack_hand(mob/user as mob)
+/obj/machinery/shieldgen/attack_hand(mob/user)
 	if(locked)
 		user << "The machine is locked, you are unable to use it."
 		return
@@ -253,7 +253,7 @@
 			user << "The device must first be secured to the floor."
 	return
 
-/obj/machinery/shieldgen/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/machinery/shieldgen/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/card/emag))
 		malfunction = 1
 		update_icon()
@@ -368,7 +368,7 @@
 //		message_admins("[PN.load]", 1)
 //		use_power(250) //uses APC power
 
-/obj/machinery/shieldwallgen/attack_hand(mob/user as mob)
+/obj/machinery/shieldwallgen/attack_hand(mob/user)
 	if(state != 1)
 		user << "\red The shield generator needs to be firmly secured to the floor first."
 		return 1
@@ -428,7 +428,7 @@
 			src.active = 0
 			for(var/dir in list(1,2,4,8)) src.cleanup(dir)
 
-/obj/machinery/shieldwallgen/proc/setup_field(var/NSEW = 0)
+/obj/machinery/shieldwallgen/proc/setup_field(NSEW = 0)
 	var/turf/T = src.loc
 	var/turf/T2 = src.loc
 	var/obj/machinery/shieldwallgen/G
@@ -504,7 +504,7 @@
 		src.add_fingerprint(user)
 		visible_message("\red The [src.name] has been hit with \the [W.name] by [user.name]!")
 
-/obj/machinery/shieldwallgen/proc/cleanup(var/NSEW)
+/obj/machinery/shieldwallgen/proc/cleanup(NSEW)
 	var/obj/machinery/shieldwall/F
 	var/obj/machinery/shieldwallgen/G
 	var/turf/T = src.loc
@@ -530,7 +530,7 @@
 	attached = null
 	return ..()
 
-/obj/machinery/shieldwallgen/bullet_act(var/obj/item/projectile/Proj)
+/obj/machinery/shieldwallgen/bullet_act(obj/item/projectile/Proj)
 	storedpower -= Proj.damage
 	..()
 	return
@@ -562,7 +562,7 @@
 	if(A && B)
 		needs_power = 1
 
-/obj/machinery/shieldwall/attack_hand(mob/user as mob)
+/obj/machinery/shieldwall/attack_hand(mob/user)
 	return
 
 
@@ -582,7 +582,7 @@
 			gen_secondary.storedpower -=10
 
 
-/obj/machinery/shieldwall/bullet_act(var/obj/item/projectile/Proj)
+/obj/machinery/shieldwall/bullet_act(obj/item/projectile/Proj)
 	if(needs_power)
 		var/obj/machinery/shieldwallgen/G
 		if(prob(50))

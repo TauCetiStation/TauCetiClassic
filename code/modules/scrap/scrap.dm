@@ -56,7 +56,7 @@
 		playsound(src.loc, 'sound/effects/glass_step.ogg', 50, 1)
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
-			if(H.species.flags & IS_SYNTHETIC)
+			if(H.species.flags[IS_SYNTHETIC])
 				return
 			if( !H.shoes && ( !H.wear_suit || !(H.wear_suit.body_parts_covered & FEET) ) )
 				var/datum/organ/external/affecting = H.get_organ(pick("l_foot", "r_foot"))
@@ -85,7 +85,7 @@
 			num--
 	update_icon()
 
-/obj/structure/scrap/proc/randomize_image(var/image/I)
+/obj/structure/scrap/proc/randomize_image(image/I)
 	I.pixel_x = rand(-base_spread,base_spread)
 	I.pixel_y = rand(-base_spread,base_spread)
 	var/matrix/M = matrix()
@@ -93,7 +93,7 @@
 	I.transform = M
 	return I
 
-/obj/structure/scrap/update_icon(var/rebuild_base=0)
+/obj/structure/scrap/update_icon(rebuild_base=0)
 	if(rebuild_base)
 		overlays.Cut()
 		var/num = rand(base_min,base_max)
@@ -113,7 +113,7 @@
 		if(!ishuman(user))
 			return 0
 		var/mob/living/carbon/human/victim = user
-		if(victim.species.flags & IS_SYNTHETIC)
+		if(victim.species.flags[IS_SYNTHETIC])
 			return 0
 		if(victim.gloves)
 			return 0
@@ -147,7 +147,7 @@
 	if(src.dig_amount <= 0)
 		visible_message("<span class='notice'>\The [src] is cleared out!</span>")
 		qdel(src)
-		return 0 
+		return 0
 	else
 		new /obj/item/weapon/scrap_lump(newloc)
 		return 1

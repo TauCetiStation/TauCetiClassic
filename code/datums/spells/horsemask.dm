@@ -42,11 +42,11 @@
 	//flags_inv = null	//so you can still see their face... no. How can you recognize someone when their face is completely different?
 	voicechange = 1		//NEEEEIIGHH
 
-	dropped(mob/user as mob)
+	dropped(mob/user)
 		canremove = 1
 		..()
 
-	equipped(var/mob/user, var/slot)
+	equipped(mob/user, slot)
 		if (slot == slot_wear_mask)
 			canremove = 0		//curses!
 		..()

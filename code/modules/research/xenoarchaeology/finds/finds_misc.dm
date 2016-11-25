@@ -24,7 +24,7 @@
 		else
 	return
 
-/obj/item/weapon/shard/phoron/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/weapon/shard/phoron/attackby(obj/item/weapon/W, mob/user)
 	..()
 	if ( istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W

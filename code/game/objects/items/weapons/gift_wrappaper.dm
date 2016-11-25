@@ -24,7 +24,7 @@
 		icon_state = "gift[pick(1, 2, 3)]"
 	return
 
-/obj/item/weapon/gift/attack_self(mob/user as mob)
+/obj/item/weapon/gift/attack_self(mob/user)
 	user.drop_item()
 	if(src.gift)
 		user.put_in_active_hand(gift)
@@ -38,12 +38,12 @@
 	qdel(src)
 	return
 
-/obj/effect/spresent/relaymove(mob/user as mob)
+/obj/effect/spresent/relaymove(mob/user)
 	if (user.stat)
 		return
 	user << "\blue You cant move."
 
-/obj/effect/spresent/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/effect/spresent/attackby(obj/item/weapon/W, mob/user)
 	..()
 
 	if (!istype(W, /obj/item/weapon/wirecutters))
@@ -60,7 +60,7 @@
 
 	qdel(src)
 
-/obj/item/weapon/a_gift/attack_self(mob/M as mob)
+/obj/item/weapon/a_gift/attack_self(mob/M)
 	var/gift_type = pick(/obj/item/weapon/sord,
 		/obj/item/weapon/storage/wallet,
 		/obj/item/weapon/storage/photo_album,
@@ -128,7 +128,7 @@
 	icon_state = "wrap_paper"
 	var/amount = 20.0
 
-/obj/item/weapon/wrapping_paper/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/weapon/wrapping_paper/attackby(obj/item/weapon/W, mob/user)
 	..()
 	if (!( locate(/obj/structure/table, src.loc) ))
 		user << "\blue You MUST put the paper on a table!"
@@ -164,14 +164,12 @@
 	return
 
 
-/obj/item/weapon/wrapping_paper/examine()
-	set src in oview(1)
-
+/obj/item/weapon/wrapping_paper/examine(mob/user)
 	..()
-	usr << text("There is about [] square units of paper left!", src.amount)
-	return
+	if(src in view(1, user))
+		user << "<span class='notice'>There is about [amount] square units of paper left!</span>"
 
-/obj/item/weapon/wrapping_paper/attack(mob/target as mob, mob/user as mob)
+/obj/item/weapon/wrapping_paper/attack(mob/target, mob/user)
 	if (!istype(target, /mob/living/carbon/human)) return
 	var/mob/living/carbon/human/H = target
 

@@ -8,7 +8,7 @@
 	req_stat = UNCONSCIOUS
 
 //Recover from stuns.
-/obj/effect/proc_holder/changeling/epinephrine/sting_action(var/mob/user)
+/obj/effect/proc_holder/changeling/epinephrine/sting_action(mob/user)
 
 	if(user.lying)
 		user << "<span class='notice'>We arise.</span>"

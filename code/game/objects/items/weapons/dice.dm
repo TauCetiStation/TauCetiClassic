@@ -53,14 +53,14 @@
 	icon_state = "d20"
 	sides = 20
 
-/obj/item/weapon/dice/attack_self(mob/user as mob)
+/obj/item/weapon/dice/attack_self(mob/user)
 	diceroll(user)
 
-/obj/item/weapon/dice/throw_at(atom/target, range, speed, mob/user as mob)
+/obj/item/weapon/dice/throw_at(atom/target, range, speed, mob/user)
 	..()
 	diceroll(user)
 
-/obj/item/weapon/dice/proc/diceroll(mob/user as mob)
+/obj/item/weapon/dice/proc/diceroll(mob/user)
 	var/result = rand(1, sides)
 	var/comment = ""
 	if(sides == 20 && result == 20)

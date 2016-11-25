@@ -16,10 +16,10 @@
 /obj/item/device/ano_scanner/initialize()
 	scan()
 
-/obj/item/device/ano_scanner/attack_self(var/mob/user as mob)
+/obj/item/device/ano_scanner/attack_self(mob/user)
 	return src.interact(user)
 
-/obj/item/device/ano_scanner/interact(var/mob/user as mob)
+/obj/item/device/ano_scanner/interact(mob/user)
 	var/message = "Background radiation levels detected."
 	if(world.time - last_scan_time >= scan_delay)
 		spawn(0)

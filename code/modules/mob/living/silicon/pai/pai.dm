@@ -95,7 +95,7 @@
 			for(var/obj/effect/proc_holder/P in proc_holder_list)
 				statpanel("[P.panel]","",P)
 
-/mob/living/silicon/pai/check_eye(var/mob/user as mob)
+/mob/living/silicon/pai/check_eye(mob/user)
 	if (!src.current)
 		return null
 	user.reset_view(src.current)
@@ -164,7 +164,7 @@
 
 // See software.dm for Topic()
 
-/mob/living/silicon/pai/meteorhit(obj/O as obj)
+/mob/living/silicon/pai/meteorhit(obj/O)
 	for(var/mob/M in viewers(src, null))
 		M.show_message(text("\red [] has been hit by []", src, O), 1)
 	if (src.health > 0)
@@ -174,9 +174,9 @@
 		src.updatehealth()
 	return
 
-//mob/living/silicon/pai/bullet_act(var/obj/item/projectile/Proj)
+//mob/living/silicon/pai/bullet_act(obj/item/projectile/Proj)
 
-/mob/living/silicon/pai/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
+/mob/living/silicon/pai/attack_alien(mob/living/carbon/alien/humanoid/M)
 	if (!ticker)
 		M << "You cannot attack people before the game has started."
 		return
@@ -210,9 +210,9 @@
 						O.show_message(text("\red <B>[] took a swipe at []!</B>", M, src), 1)
 	return
 
-///mob/living/silicon/pai/attack_hand(mob/living/carbon/M as mob)
+///mob/living/silicon/pai/attack_hand(mob/living/carbon/M)
 
-/mob/living/silicon/pai/proc/switchCamera(var/obj/machinery/camera/C)
+/mob/living/silicon/pai/proc/switchCamera(obj/machinery/camera/C)
 	if(istype(usr, /mob/living))
 		var/mob/living/U = usr
 		U.cameraFollow = null

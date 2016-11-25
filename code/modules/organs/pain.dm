@@ -7,7 +7,7 @@
 
 // partname is the name of a body part
 // amount is a num from 1 to 100
-/mob/living/carbon/proc/pain(var/partname, var/amount, var/force, var/burning = 0)
+/mob/living/carbon/proc/pain(partname, amount, force, burning = 0)
 	if(stat >= 2) return
 	if(reagents.has_reagent("paracetamol"))
 		return
@@ -53,10 +53,12 @@
 
 // message is the custom message to be displayed
 // flash_strength is 0 for weak pain flash, 1 for strong pain flash
-/mob/living/carbon/human/proc/custom_pain(var/message, var/flash_strength)
-	if(stat >= 1) return
+/mob/living/carbon/human/proc/custom_pain(message, flash_strength)
+	if(stat >= 1)
+		return
 
-	if(species && species.flags & NO_PAIN) return
+	if(species && species.flags[NO_PAIN])
+		return
 
 	if(reagents.has_reagent("tramadol"))
 		return
@@ -77,9 +79,11 @@
 /mob/living/carbon/human/proc/handle_pain()
 	// not when sleeping
 
-	if(species && species.flags & NO_PAIN) return
+	if(species && species.flags[NO_PAIN])
+		return
 
-	if(stat >= 2) return
+	if(stat >= 2)
+		return
 	if(reagents.has_reagent("tramadol"))
 		return
 	if(reagents.has_reagent("oxycodone"))

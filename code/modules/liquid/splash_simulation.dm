@@ -36,7 +36,7 @@ var/list/datum/puddle/puddles = list()
 	if(!isturf(T)) return
 	trigger_splash(T, volume)
 
-/proc/trigger_splash(turf/epicenter as turf, volume as num)
+/proc/trigger_splash(turf/epicenter, volume)
 	if(!epicenter)
 		return
 	if(volume <= 0)

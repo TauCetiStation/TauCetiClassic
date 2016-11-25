@@ -266,7 +266,7 @@
 
 	proc/handle_mutations_and_radiation()
 
-		if(species.flags & IS_SYNTHETIC) //Robots don't suffer from mutations or radloss.
+		if(species.flags[IS_SYNTHETIC]) //Robots don't suffer from mutations or radloss.
 			return
 //#Z2 healing organs with cold_resist? No, for now!
 		/*if(getFireLoss())
@@ -286,13 +286,13 @@
 		if(dna_inject_count > 0 && prob(2))
 			dna_inject_count--
 
-		if (radiation)
-			if(species.flags & RAD_IMMUNE)
+		if(radiation)
+			if(species.flags[RAD_IMMUNE])
 				return
 
 			if (radiation > 100)
 				radiation = 100
-				if(!(species.flags & RAD_ABSORB))
+				if(!species.flags[RAD_ABSORB])
 					Weaken(10)
 					if(!lying)
 						src << "\red You feel weak."
@@ -303,7 +303,7 @@
 
 			else
 
-				if(species.flags & RAD_ABSORB)
+				if(species.flags[RAD_ABSORB])
 					var/rads = radiation/25
 					radiation -= rads
 					nutrition += rads
@@ -360,12 +360,18 @@
 					if(istype(O)) O.add_autopsy_data("Radiation Poisoning", damage)
 
 	proc/breathe()
-		if(NO_BREATH in src.mutations)	return //#Z2 We need no breath with this mutation
-		if(reagents.has_reagent("lexorin")) return
-		if(istype(loc, /obj/machinery/atmospherics/unary/cryo_cell)) return
-		if(species && (species.flags & NO_BREATHE || species.flags & IS_SYNTHETIC)) return
-		if(dna && dna.mutantrace == "adamantine") return
-		if(ismob(loc)) return
+		if(NO_BREATH in src.mutations)
+			return //#Z2 We need no breath with this mutation
+		if(reagents.has_reagent("lexorin"))
+			return
+		if(istype(loc, /obj/machinery/atmospherics/unary/cryo_cell))
+			return
+		if(species && (species.flags[NO_BREATHE] || species.flags[IS_SYNTHETIC]))
+			return
+		if(dna && dna.mutantrace == "adamantine")
+			return
+		if(ismob(loc))
+			return
 
 		var/datum/gas_mixture/environment = loc.return_air()
 		var/datum/gas_mixture/breath
@@ -725,7 +731,7 @@
 				//world << "Environment: [loc_temp], [src]: [bodytemperature], Adjusting: [temp_adj]"
 				bodytemperature += temp_adj
 
-		else if(istype(get_turf(src), /turf/space) && !(species.flags & IS_SYNTHETIC) && !(species.flags & IS_PLANT))
+		else if(istype(get_turf(src), /turf/space) && !species.flags[IS_SYNTHETIC] && !species.flags[IS_PLANT])
 			if(istype(loc, /obj/mecha))
 				return
 			if(istype(loc, /obj/structure/transit_tube_pod))
@@ -832,7 +838,7 @@
 	*/
 
 	proc/stabilize_body_temperature()
-		if (species.flags & IS_SYNTHETIC)
+		if (species.flags[IS_SYNTHETIC])
 			bodytemperature += species.synth_temp_gain		//just keep putting out heat.
 			return
 
@@ -1040,7 +1046,7 @@
 
 	proc/handle_chemicals_in_body()
 
-		if(reagents && !(species.flags & IS_SYNTHETIC)) //Synths don't process reagents.
+		if(reagents && !species.flags[IS_SYNTHETIC]) //Synths don't process reagents.
 			var/alien = 0
 			if(species && species.reagent_tag)
 				alien = species.reagent_tag
@@ -1054,7 +1060,7 @@
 
 		if(status_flags & GODMODE)	return 0	//godmode
 
-		if(species.flags & REQUIRE_LIGHT)
+		if(species.flags[REQUIRE_LIGHT])
 			var/light_amount = 0 //how much light there is in the place, affects receiving nutrition and healing
 			if(isturf(loc)) //else, there's considered to be no light
 				var/turf/T = loc
@@ -1063,7 +1069,7 @@
 			nutrition += light_amount
 			traumatic_shock -= light_amount
 
-			if(species.flags & IS_PLANT)
+			if(species.flags[IS_PLANT])
 				if(nutrition > 500)
 					nutrition = 500
 				if(light_amount >= 3) //if there's enough light, heal
@@ -1093,7 +1099,7 @@
 			if(light_amount > LIGHT_DAM_THRESHOLD)
 				take_overall_damage(0,LIGHT_DAMAGE_TAKEN)
 				src << "<span class='userdanger'>The light burns you!</span>"
-				src << 'tauceti/sounds/weapon/sear.ogg'
+				src << 'sound/weapons/sear.ogg'
 			else if (light_amount < LIGHT_HEAL_THRESHOLD) //heal in the dark
 				heal_overall_damage(5,5)
 				adjustToxLoss(-3)
@@ -1114,7 +1120,7 @@
 				update_inv_w_uniform()
 				update_inv_wear_suit()
 		else
-			if(overeatduration > 500 && !(species.flags & IS_SYNTHETIC) && !(species.flags & IS_PLANT))
+			if(overeatduration > 500 && !species.flags[IS_SYNTHETIC] && !species.flags[IS_PLANT])
 				src << "\red You suddenly feel blubbery!"
 				mutations.Add(FAT)
 				update_body()
@@ -1135,7 +1141,7 @@
 			if(overeatduration > 1)
 				overeatduration -= 2 //doubled the unfat rate
 
-		if(species.flags & REQUIRE_LIGHT)
+		if(species.flags[REQUIRE_LIGHT])
 			if(nutrition < 200)
 				take_overall_damage(2,0)
 				traumatic_shock++
@@ -1156,7 +1162,8 @@
 			dizziness = max(0, dizziness - 3)
 			jitteriness = max(0, jitteriness - 3)
 
-		if(!(species.flags & IS_SYNTHETIC)) handle_trace_chems()
+		if(!species.flags[IS_SYNTHETIC])
+			handle_trace_chems()
 
 		updatehealth()
 
@@ -1485,7 +1492,7 @@
 							healths.icon_state = "health7"
 						else
 							//switch(health - halloss)
-							switch(100 - ((species && species.flags & NO_PAIN & !IS_SYNTHETIC) ? 0 : traumatic_shock))
+							switch(100 - ((species && species.flags[NO_PAIN] && !species.flags[IS_SYNTHETIC]) ? 0 : traumatic_shock))
 								if(100 to INFINITY)
 									healths.icon_state = "health0"
 								if(80 to 100)
@@ -1617,16 +1624,15 @@
 
 	update_sight()
 		species.sightglassesmod = 0
-		if(glasses)
+		var/obj/item/clothing/glasses/G = glasses
+		if(istype(G) && G.active)
 			if(istype(glasses, /obj/item/clothing/glasses/meson))
 				species.sightglassesmod = 1
 			else if(istype(glasses, /obj/item/clothing/glasses/night) && !istype(glasses, /obj/item/clothing/glasses/night/shadowling))
-				var/obj/item/clothing/glasses/night/nvg = glasses
-				if(nvg.on)
-					species.sightglassesmod = 2
-			else if(istype(glasses, /obj/item/clothing/glasses/thermal) )
+				species.sightglassesmod = 2
+			else if(istype(glasses, /obj/item/clothing/glasses/thermal))
 				species.sightglassesmod = 3
-			else if(istype(glasses, /obj/item/clothing/glasses/science) )
+			else if(istype(glasses, /obj/item/clothing/glasses/science))
 				species.sightglassesmod = 4
 
 		if(stat == DEAD)
@@ -1655,7 +1661,6 @@
 						set_EyesVision("thermal")
 					if(4)
 						set_EyesVision("sci")
-
 
 	proc/handle_random_events()
 		// Puke if toxloss is too high
@@ -1734,7 +1739,7 @@
 	handle_shock()
 		..()
 		if(status_flags & GODMODE)	return 0	//godmode
-		if(analgesic || (species && species.flags & NO_PAIN)) return // analgesic avoids all traumatic shock temporarily
+		if(analgesic || (species && species.flags[NO_PAIN])) return // analgesic avoids all traumatic shock temporarily
 
 		if(health < config.health_threshold_softcrit)// health 0 makes you immediately collapse
 			shock_stage = max(shock_stage, 61)
@@ -1782,11 +1787,27 @@
 		if(shock_stage >= 150)
 			Weaken(20)
 
+	proc/handle_heart_beat()
+
+		if(pulse == PULSE_NONE) return
+
+		if(pulse == PULSE_2FAST || shock_stage >= 10 || istype(get_turf(src), /turf/space))
+
+			var/temp = (5 - pulse)/2
+
+			if(heart_beat >= temp)
+				heart_beat = 0
+				src << sound('sound/effects/singlebeat.ogg',0,0,0,50)
+			else if(temp != 0)
+				heart_beat++
+
 	proc/handle_pulse()
 
-		if(life_tick % 5) return pulse	//update pulse every 5 life ticks (~1 tick/sec, depending on server load)
+		if(life_tick % 5)
+			return pulse	//update pulse every 5 life ticks (~1 tick/sec, depending on server load)
 
-		if(species && species.flags & NO_BLOOD) return PULSE_NONE //No blood, no pulse.
+		if(species && species.flags[NO_BLOOD])
+			return PULSE_NONE //No blood, no pulse.
 
 		if(stat == DEAD)
 			return PULSE_NONE	//that's it, you're dead, nothing can influence your pulse

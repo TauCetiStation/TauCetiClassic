@@ -26,13 +26,12 @@
 	user.update_inv_shoes()	//so our mob-overlays update
 	user.update_gravity(user.mob_has_gravity())
 
-/obj/item/clothing/shoes/magboots/examine()
-	set src in view()
+/obj/item/clothing/shoes/magboots/examine(mob/user)
 	..()
 	var/state = "disabled"
 	if(src.flags & NOSLIP)
 		state = "enabled"
-	usr << "Its mag-pulse traction system appears to be [state]."
+	user << "Its mag-pulse traction system appears to be [state]."
 
 /obj/item/clothing/shoes/magboots/negates_gravity()
 	return flags & NOSLIP

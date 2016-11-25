@@ -71,18 +71,18 @@
 	if(light_color)
 		set_light(light_range,light_power,light_color)
 
-/obj/item/projectile/proc/on_hit(var/atom/target, var/blocked = 0)
+/obj/item/projectile/proc/on_hit(atom/target, blocked = 0)
 	if(!isliving(target))	return 0
 	if(isanimal(target))	return 0
 	var/mob/living/L = target
 	return L.apply_effects(stun, weaken, paralyze, irradiate, stutter, eyeblur, drowsy, agony, blocked) // add in AGONY!
 
 	//called when the projectile stops flying because it collided with something
-/obj/item/projectile/proc/on_impact(var/atom/A)
+/obj/item/projectile/proc/on_impact(atom/A)
 	impact_effect(effect_transform)		// generate impact effect
 	return
 
-/obj/item/projectile/proc/check_fire(var/mob/living/target as mob, var/mob/living/user as mob)  //Checks if you can hit them or not.
+/obj/item/projectile/proc/check_fire(mob/living/target, mob/living/user)  //Checks if you can hit them or not.
 	if(!istype(target) || !istype(user))
 		return 0
 	var/obj/item/projectile/test/in_chamber = new /obj/item/projectile/test(get_step_to(user,target)) //Making the test....
@@ -95,7 +95,7 @@
 	return output //Send it back to the gun!
 
 //Used to change the direction of the projectile in flight.
-/obj/item/projectile/proc/redirect(var/new_x, var/new_y, var/atom/starting_loc, var/mob/new_firer=null)
+/obj/item/projectile/proc/redirect(new_x, new_y, atom/starting_loc, mob/new_firer=null)
 	original = locate(new_x, new_y, src.z)
 	starting = starting_loc
 	current = starting_loc
@@ -109,7 +109,7 @@
 /obj/item/projectile/proc/After_hit()
 	return
 
-/obj/item/projectile/Bump(atom/A as mob|obj|turf|area, forced=0)
+/obj/item/projectile/Bump(atom/A, forced=0)
 	if(A == src)
 		return 0 //no
 
@@ -155,14 +155,11 @@
 				M.attack_log += "\[[time_stamp()]\] <b>[firer]/[firer.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>[src.type]</b>"
 				firer.attack_log += "\[[time_stamp()]\] <b>[firer]/[firer.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>[src.type]</b>"
 				if(!fake)
-					msg_admin_attack("[firer] ([firer.ckey]) shot [M] ([M.ckey]) with a [src] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[firer.x];Y=[firer.y];Z=[firer.z]'>JMP</a>)") //BS12 EDIT ALG
+					msg_admin_attack("[firer.name] ([firer.ckey]) shot [M.name] ([M.ckey]) with a [src] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[firer.x];Y=[firer.y];Z=[firer.z]'>JMP</a>)") //BS12 EDIT ALG
 			else
 				M.attack_log += "\[[time_stamp()]\] <b>UNKNOWN SUBJECT (No longer exists)</b> shot <b>[M]/[M.ckey]</b> with a <b>[src]</b>"
 				if(!fake)
-					msg_admin_attack("UNKNOWN shot [M] ([M.ckey]) with a [src] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[firer.x];Y=[firer.y];Z=[firer.z]'>JMP</a>)") //BS12 EDIT ALG
-
-		for(var/mob/living/simple_animal/smart_animal/SA in view(7))
-			SA.fight(firer , M)
+					msg_admin_attack("UNKNOWN shot [M.name] ([M.ckey]) with a [src] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[firer.x];Y=[firer.y];Z=[firer.z]'>JMP</a>)") //BS12 EDIT ALG
 
 //	if(istype(src, /obj/item/projectile/beam))
 
@@ -300,7 +297,7 @@
 			M.pixel_y = location.pixel_y
 			M.activate()
 
-/obj/item/projectile/proc/tracer_effect(var/matrix/M)
+/obj/item/projectile/proc/tracer_effect(matrix/M)
 	if(ispath(tracer_type))
 		var/obj/effect/projectile/P = new tracer_type(location.loc)
 
@@ -310,7 +307,7 @@
 			P.pixel_y = location.pixel_y
 			P.activate()
 
-/obj/item/projectile/proc/impact_effect(var/matrix/M)
+/obj/item/projectile/proc/impact_effect(matrix/M)
 	if(ispath(tracer_type) && location)
 		var/obj/effect/projectile/P = new impact_type(location.loc)
 
@@ -327,7 +324,7 @@
 	var/target = null
 	var/result = 0 //To pass the message back to the gun.
 
-/obj/item/projectile/test/Bump(atom/A as mob|obj|turf|area)
+/obj/item/projectile/test/Bump(atom/A)
 	if(A == firer)
 		loc = A.loc
 		return //cannot shoot yourself
@@ -375,5 +372,5 @@
 /obj/item/projectile/proc/Range() ///tg/
 	return
 
-/obj/item/projectile/Process_Spacemove(var/movement_dir = 0)
+/obj/item/projectile/Process_Spacemove(movement_dir = 0)
 	return 1 //Bullets don't drift in space

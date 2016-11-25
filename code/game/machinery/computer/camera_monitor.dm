@@ -22,7 +22,7 @@
 				if("CREED")
 					networks = list("CREED")
 
-/obj/machinery/computer/security/attack_hand(var/mob/user as mob)
+/obj/machinery/computer/security/attack_hand(mob/user)
 	if (stat & (NOPOWER|BROKEN))
 		return
 

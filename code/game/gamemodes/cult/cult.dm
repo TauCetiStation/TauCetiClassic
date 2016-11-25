@@ -5,7 +5,7 @@
 	var/list/allwords = list("travel","self","see","hell","blood","join","tech","destroy", "other", "hide")
 
 
-/proc/iscultist(mob/living/M as mob)
+/proc/iscultist(mob/living/M)
 	return istype(M) && M.mind && ticker && ticker.mode && (M.mind in ticker.mode.cult)
 
 /proc/is_convertable_to_cult(datum/mind/mind)
@@ -106,7 +106,7 @@
 	return ..()
 
 
-/datum/game_mode/cult/proc/memoize_cult_objectives(var/datum/mind/cult_mind)
+/datum/game_mode/cult/proc/memoize_cult_objectives(datum/mind/cult_mind)
 	for(var/obj_count = 1,obj_count <= objectives.len,obj_count++)
 		var/explanation
 		switch(objectives[obj_count])
@@ -152,7 +152,7 @@
 		return 1
 
 
-/datum/game_mode/cult/grant_runeword(mob/living/carbon/human/cult_mob, var/word)
+/datum/game_mode/cult/grant_runeword(mob/living/carbon/human/cult_mob, word)
 	if (!word)
 		if(startwords.len > 0)
 			word=pick(startwords)
@@ -160,7 +160,7 @@
 	return ..(cult_mob,word)
 
 
-/datum/game_mode/proc/grant_runeword(mob/living/carbon/human/cult_mob, var/word)
+/datum/game_mode/proc/grant_runeword(mob/living/carbon/human/cult_mob, word)
 	if(!cultwords["travel"])
 		runerandom()
 	if (!word)

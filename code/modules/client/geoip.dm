@@ -89,7 +89,7 @@ var/global/list/geoip_ckey_updated = list()
 		status = "updated"
 	return 1
 
-/proc/geoip_check(var/addr)
+/proc/geoip_check(addr)
 	if(world.time > geoip_next_counter_reset)
 		geoip_next_counter_reset = world.time + 900
 		geoip_query_counter = 0

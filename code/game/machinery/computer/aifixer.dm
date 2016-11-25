@@ -13,7 +13,7 @@
 	src.overlays += image('icons/obj/computer.dmi', "ai-fixer-empty")
 	..()
 
-/obj/machinery/computer/aifixer/attackby(I as obj, user as mob)
+/obj/machinery/computer/aifixer/attackby(I, user)
 	if(istype(I, /obj/item/device/aicard))
 		var/obj/item/device/aicard/AIcard = I
 		if(stat & (NOPOWER|BROKEN))
@@ -24,7 +24,7 @@
 		..()
 	return
 
-/obj/machinery/computer/aifixer/attack_hand(var/mob/user as mob)
+/obj/machinery/computer/aifixer/attack_hand(mob/user)
 	if(..())
 		return
 

@@ -30,9 +30,9 @@
 	w_class = 1
 	var/id = 0
 
-/obj/item/weapon/key/spacebike/examine()
+/obj/item/weapon/key/spacebike/examine(mob/user)
 	..()
-	usr << "There is a small tag reading [id]."
+	user << "There is a small tag reading [id]."
 
 /obj/vehicle/space/spacebike/New()
 	..()
@@ -45,23 +45,23 @@
 	overlays += image('icons/obj/vehicles.dmi', "[icon_state]_off_overlay", MOB_LAYER + 1)
 	icon_state = "[bike_icon]_off"
 
-/obj/vehicle/space/spacebike/examine()
+/obj/vehicle/space/spacebike/examine(mob/user)
 	..()
-	usr << "It has number [id]."
+	user << "It has number [id]."
 
-/obj/vehicle/space/spacebike/load(var/atom/movable/C)
+/obj/vehicle/space/spacebike/load(atom/movable/C)
 	var/mob/living/M = C
 	if(!istype(C)) return 0
 	if(M.buckled || M.restrained() || !Adjacent(M) || !M.Adjacent(src))
 		return 0
 	return ..(M)
 
-/obj/vehicle/space/spacebike/MouseDrop_T(var/atom/movable/C, mob/user as mob)
+/obj/vehicle/space/spacebike/MouseDrop_T(atom/movable/C, mob/user)
 	if(!load(C))
 		user << "<span class='warning'>You were unable to load \the [C] onto \the [src].</span>"
 		return
 
-/obj/vehicle/space/spacebike/attack_hand(var/mob/user as mob)
+/obj/vehicle/space/spacebike/attack_hand(mob/user)
 	if(!load)
 		return
 	if(load != user)
@@ -77,7 +77,7 @@
 			"<span class='notice'>You hear metal clanking.</span>")
 	unload(load)
 
-/obj/vehicle/space/spacebike/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/vehicle/space/spacebike/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/key/spacebike))
 		var/obj/item/weapon/key/spacebike/K = W
 		if(!key)
@@ -232,7 +232,7 @@
 	kickstand = !kickstand
 	anchored = (kickstand || on)
 
-/obj/vehicle/space/spacebike/bullet_act(var/obj/item/projectile/Proj)
+/obj/vehicle/space/spacebike/bullet_act(obj/item/projectile/Proj)
 	if(isliving(load) && prob(protection_percent))
 		var/mob/living/M = load
 		M.bullet_act(Proj)

@@ -260,7 +260,6 @@
 		var/mob/living/carbon/human/H = usr
 		H.set_species("Shadowling")
 		H.dna.mutantrace = "shadowling"
-		//H.species.flags &= ~(NO_BREATHE|NO_BLOOD|RAD_IMMUNE|NO_GUNS)
 		H.update_mutantrace()
 		H.regenerate_icons()
 
@@ -435,7 +434,7 @@ datum/reagent/shadowling_blindness_smoke/on_mob_life(var/mob/living/M as mob)
 	var/targetsDrained
 	var/list/nearbyTargets
 
-/obj/effect/proc_holder/spell/aoe_turf/drainLife/cast(list/targets, var/mob/living/carbon/human/U = usr)
+/obj/effect/proc_holder/spell/aoe_turf/drainLife/cast(list/targets, mob/living/carbon/human/U = usr)
 	targetsDrained = 0
 	nearbyTargets = list()
 	for(var/turf/T in targets)

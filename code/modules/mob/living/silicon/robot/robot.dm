@@ -18,7 +18,6 @@ var/list/robot_verbs_default = list(
 	var/custom_name = ""
 	var/custom_sprite = 0 //Due to all the sprites involved, a var for our custom borgs may be best
 	var/crisis //Admin-settable for combat module use.
-	var/tc_borg = 0 //for Tau Ceti custom borgs
 
 //Hud stuff
 
@@ -193,16 +192,16 @@ var/list/robot_verbs_default = list(
 
 	switch(modtype)
 		if("Standard")
-			tc_borg = 0
 			module = new /obj/item/weapon/robot_module/standard(src)
 			module_sprites["Basic"] = "robot_old"
 			module_sprites["Android"] = "droid"
 			module_sprites["Default"] = "robot"
 			module_sprites["Drone"] = "drone-standard"
 			module_sprites["Acheron"] = "mechoid-Standard"
+			module_sprites["Spider"] = "spider-standard"
+			module_sprites["Kodiak"] = "kodiak-standard"
 
 		if("Service")
-			tc_borg = 0
 			module = new /obj/item/weapon/robot_module/butler(src)
 			module_sprites["Waitress"] = "Service"
 			module_sprites["Kent"] = "toiletbot"
@@ -211,6 +210,7 @@ var/list/robot_verbs_default = list(
 			module_sprites["Default"] = "Service2"
 			module_sprites["Drone"] = "drone-service" // How does this even work...? Oh well.
 			module_sprites["Acheron"] = "mechoid-Service"
+			module_sprites["Kodiak"] = "kodiak-service"
 
 		if("Clerical")
 			module = new /obj/item/weapon/robot_module/clerical(src)
@@ -223,7 +223,6 @@ var/list/robot_verbs_default = list(
 			module_sprites["Acheron"] = "mechoid-Service"
 
 		if("Science")
-			tc_borg = 1
 			module = new /obj/item/weapon/robot_module/science(src)
 			module.channels = list("Science" = 1)
 			if(camera && "Robots" in camera.network)
@@ -233,7 +232,6 @@ var/list/robot_verbs_default = list(
 			module_sprites["Acheron"] = "mechoid-Science"
 
 		if("Miner")
-			tc_borg = 0
 			module = new /obj/item/weapon/robot_module/miner(src)
 			module.channels = list("Supply" = 1)
 			if(camera && "Robots" in camera.network)
@@ -243,9 +241,9 @@ var/list/robot_verbs_default = list(
 			module_sprites["Treadhead"] = "Miner"
 			module_sprites["Drone"] = "drone-miner"
 			module_sprites["Acheron"] = "mechoid-Miner"
+			module_sprites["Kodiak"] = "kodiak-miner"
 
 		if("Crisis")
-			tc_borg = 0
 			module = new /obj/item/weapon/robot_module/crisis(src)
 			module.channels = list("Medical" = 1)
 			if(camera && "Robots" in camera.network)
@@ -270,7 +268,6 @@ var/list/robot_verbs_default = list(
 			module_sprites["Acheron"] = "mechoid-Medical"
 
 		if("Security")
-			tc_borg = 0
 			module = new /obj/item/weapon/robot_module/security(src)
 			module.channels = list("Security" = 1)
 			module_sprites["Basic"] = "secborg"
@@ -280,9 +277,9 @@ var/list/robot_verbs_default = list(
 			module_sprites["Bloodhound - Treaded"] = "secborg+tread"
 			module_sprites["Drone"] = "drone-sec"
 			module_sprites["Acheron"] = "mechoid-Security"
+			module_sprites["Kodiak"] = "kodiak-sec"
 
 		if("Engineering")
-			tc_borg = 0
 			module = new /obj/item/weapon/robot_module/engineering(src)
 			module.channels = list("Engineering" = 1)
 			if(camera && "Robots" in camera.network)
@@ -294,6 +291,7 @@ var/list/robot_verbs_default = list(
 			module_sprites["Landmate - Treaded"] = "engiborg+tread"
 			module_sprites["Drone"] = "drone-engineer"
 			module_sprites["Acheron"] = "mechoid-Engineering"
+			module_sprites["Kodiak"] = "kodiak-eng"
 
 		if("Construction")
 			module = new /obj/item/weapon/robot_module/construction(src)
@@ -309,7 +307,6 @@ var/list/robot_verbs_default = list(
 			module_sprites["Acheron"] = "mechoid-Engineering"
 
 		if("Janitor")
-			tc_borg = 0
 			module = new /obj/item/weapon/robot_module/janitor(src)
 			module_sprites["Basic"] = "JanBot2"
 			module_sprites["Mopbot"]  = "janitorrobot"
@@ -318,18 +315,11 @@ var/list/robot_verbs_default = list(
 			module_sprites["Acheron"] = "mechoid-Janitor"
 
 		if("Combat")
-			tc_borg = 0
 			module = new /obj/item/weapon/robot_module/combat(src)
 			module_sprites["Combat Android"] = "droid-combat"
 			module_sprites["Acheron"] = "mechoid-Combat"
+			module_sprites["Kodiak"] = "kodiak-combat"
 			module.channels = list("Security" = 1)
-
-
-
-	if(tc_borg)
-		icon = 'tauceti/icons/mob/robot.dmi'
-	else
-		icon = 'icons/mob/robots.dmi'
 
 	//languages
 	module.add_languages(src)
@@ -348,7 +338,7 @@ var/list/robot_verbs_default = list(
 	choose_icon(6,module_sprites)
 	radio.config(module.channels)
 
-/mob/living/silicon/robot/proc/updatename(var/prefix as text)
+/mob/living/silicon/robot/proc/updatename(prefix)
 	if(prefix)
 		modtype = prefix
 	if(mmi)
@@ -582,7 +572,7 @@ var/list/robot_verbs_default = list(
 	updatehealth()
 
 
-/mob/living/silicon/robot/meteorhit(obj/O as obj)
+/mob/living/silicon/robot/meteorhit(obj/O)
 	for(var/mob/M in viewers(src, null))
 		M.show_message(text("\red [src] has been hit by [O]"), 1)
 		//Foreach goto(19)
@@ -594,20 +584,20 @@ var/list/robot_verbs_default = list(
 	return
 
 
-/mob/living/silicon/robot/bullet_act(var/obj/item/projectile/Proj)
+/mob/living/silicon/robot/bullet_act(obj/item/projectile/Proj)
 	..(Proj)
 	updatehealth()
 	if(prob(75) && Proj.damage > 0) spark_system.start()
 	return 2
 
-/mob/living/silicon/robot/triggerAlarm(var/class, area/A, list/cameralist, var/source)
+/mob/living/silicon/robot/triggerAlarm(class, area/A, list/cameralist, source)
 	if (stat == DEAD)
 		return 1
 	..()
 	queueAlarm(text("--- [class] alarm detected in [A.name]!"), class)
 
 
-/mob/living/silicon/robot/cancelAlarm(var/class, area/A as area, obj/origin)
+/mob/living/silicon/robot/cancelAlarm(class, area/A, obj/origin)
 	var/has_alarm = ..()
 
 	if (!has_alarm)
@@ -616,7 +606,7 @@ var/list/robot_verbs_default = list(
 	return has_alarm
 
 
-/mob/living/silicon/robot/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/mob/living/silicon/robot/attackby(obj/item/weapon/W, mob/user)
 	if (istype(W, /obj/item/weapon/handcuffs)) // fuck i don't even know why isrobot() in handcuff code isn't working so this will have to do
 		return
 
@@ -868,7 +858,7 @@ var/list/robot_verbs_default = list(
 			spark_system.start()
 		return ..()
 
-/mob/living/silicon/robot/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
+/mob/living/silicon/robot/attack_alien(mob/living/carbon/alien/humanoid/M)
 	if (!ticker)
 		M << "You cannot attack people before the game has started."
 		return
@@ -936,7 +926,7 @@ var/list/robot_verbs_default = list(
 
 
 
-/mob/living/silicon/robot/attack_slime(mob/living/carbon/slime/M as mob)
+/mob/living/silicon/robot/attack_slime(mob/living/carbon/slime/M)
 	if (!ticker)
 		M << "You cannot attack people before the game has started."
 		return
@@ -994,7 +984,7 @@ var/list/robot_verbs_default = list(
 
 	return
 
-/mob/living/silicon/robot/attack_animal(mob/living/simple_animal/M as mob)
+/mob/living/silicon/robot/attack_animal(mob/living/simple_animal/M)
 	if(M.melee_damage_upper == 0)
 		M.emote("[M.friendly] [src]")
 	else
@@ -1352,7 +1342,7 @@ var/list/robot_verbs_default = list(
 
 	flavor_text =  copytext(sanitize(input(usr, "Please enter your new flavour text.", "Flavour text", null)  as text), 1)
 
-/mob/living/silicon/robot/proc/choose_icon(var/triesleft, var/list/module_sprites)
+/mob/living/silicon/robot/proc/choose_icon(triesleft, list/module_sprites)
 
 	if(triesleft<1 || !module_sprites.len)
 		return
@@ -1373,11 +1363,6 @@ var/list/robot_verbs_default = list(
 		src << "Something is badly wrong with the sprite selection. Harass a coder."
 		icon_state = module_sprites[1]
 		return
-
-	if(icontype == "Custom" || tc_borg)
-		icon = 'tauceti/icons/mob/robot.dmi'
-	else
-		icon = 'icons/mob/robots.dmi'
 
 	overlays -= "eyes"
 	updateicon()
@@ -1407,7 +1392,7 @@ var/list/robot_verbs_default = list(
 
 // Uses power from cyborg's cell. Returns 1 on success or 0 on failure.
 // Properly converts using CELLRATE now! Amount is in Joules.
-/mob/living/silicon/robot/proc/cell_use_power(var/amount = 0)
+/mob/living/silicon/robot/proc/cell_use_power(amount = 0)
 	// No cell inserted
 	if(!cell)
 		return 0

@@ -53,7 +53,7 @@ Note: Must be placed west/left of and R&D console to function.
 		T += (M.rating/3)
 	efficiency_coeff = max(T, 1)
 
-/obj/machinery/r_n_d/protolathe/proc/check_mat(datum/design/being_built, var/M)
+/obj/machinery/r_n_d/protolathe/proc/check_mat(datum/design/being_built, M)
 	var/A = 0
 	switch(M)
 		if(MAT_METAL)
@@ -79,7 +79,7 @@ Note: Must be placed west/left of and R&D console to function.
 	return A
 
 
-/obj/machinery/r_n_d/protolathe/attackby(var/obj/item/I as obj, var/mob/user as mob)
+/obj/machinery/r_n_d/protolathe/attackby(obj/item/I, mob/user)
 	if (shocked)
 		shock(user,50)
 	if (I.is_open_container())

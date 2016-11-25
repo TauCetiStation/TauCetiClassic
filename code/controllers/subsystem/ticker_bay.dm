@@ -42,8 +42,6 @@ var/datum/subsystem/ticker/ticker
 
 	var/obj/screen/cinematic = null
 
-	var/random_dir_mode = null
-
 
 /datum/subsystem/ticker/New()
 	NEW_SS_GLOBAL(ticker)
@@ -58,10 +56,10 @@ var/datum/subsystem/ticker/ticker
 	'sound/music/b12_combined_start.ogg',\
 	'sound/music/title2.ogg',\
 	'sound/music/traitor.ogg',\
-	'tauceti/sounds/lobby/sundown.ogg',\
-	'tauceti/sounds/lobby/hanging_masses.ogg',\
-	'tauceti/sounds/lobby/admiral-station-13.ogg',\
-	'tauceti/sounds/lobby/robocop_gb_intro.ogg')
+	'sound/lobby/sundown.ogg',\
+	'sound/lobby/hanging_masses.ogg',\
+	'sound/lobby/admiral-station-13.ogg',\
+	'sound/lobby/robocop_gb_intro.ogg')
 
 
 /datum/subsystem/ticker/Initialize(timeofday, zlevel)
@@ -240,10 +238,6 @@ var/datum/subsystem/ticker/ticker
 			//Deleting Startpoints but we need the ai point to AI-ize people later
 			if (S.name != "AI")
 				qdel(S)
-
-		if(random_dir_mode in cardinal) //fixing chair layer display for non standard screen rotation.
-			for(var/obj/structure/stool/bed/chair/C in chairs_list)
-				C.handle_rotation()
 
 		SSvote.started_time = world.time
 

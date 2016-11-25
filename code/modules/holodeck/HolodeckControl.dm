@@ -35,7 +35,7 @@
 	)
 	var/list/restricted_programs = list("Wildlife Simulation" = "wildlifecarp")// "Atmospheric Burn Simulation" = "burntest", - no, Dave
 
-/obj/machinery/computer/HolodeckControl/attack_hand(var/mob/user as mob)
+/obj/machinery/computer/HolodeckControl/attack_hand(mob/user)
 	if(..())
 		return
 
@@ -118,7 +118,7 @@
 
 	src.updateUsrDialog()
 
-/obj/machinery/computer/HolodeckControl/attackby(var/obj/item/weapon/D as obj, var/mob/user as mob)
+/obj/machinery/computer/HolodeckControl/attackby(obj/item/weapon/D, mob/user)
 	if(istype(D, /obj/item/weapon/card/emag))
 		playsound(src.loc, 'sound/effects/sparks4.ogg', 75, 1)
 		last_to_emag = user //emag again to change the owner
@@ -158,7 +158,7 @@
 	emergencyShutdown()
 	return ..()
 
-/obj/machinery/computer/HolodeckControl/meteorhit(var/obj/O as obj)
+/obj/machinery/computer/HolodeckControl/meteorhit(obj/O)
 	emergencyShutdown()
 	..()
 
@@ -217,7 +217,7 @@
 				T.ex_act(3)
 				T.hotspot_expose(1000,500,1)
 
-/obj/machinery/computer/HolodeckControl/proc/derez(var/obj/obj , var/silent = 1)
+/obj/machinery/computer/HolodeckControl/proc/derez(obj/obj , silent = 1)
 	holographic_objs.Remove(obj)
 
 	if(obj == null)
@@ -234,14 +234,14 @@
 		visible_message("The [oldobj.name] fades away!")
 	qdel(obj)
 
-/obj/machinery/computer/HolodeckControl/proc/checkInteg(var/area/A)
+/obj/machinery/computer/HolodeckControl/proc/checkInteg(area/A)
 	for(var/turf/T in A)
 		if(istype(T, /turf/space))
 			return 0
 
 	return 1
 
-/obj/machinery/computer/HolodeckControl/proc/loadIdProgram(var/id = "turnoff")
+/obj/machinery/computer/HolodeckControl/proc/loadIdProgram(id = "turnoff")
 	current_scene = holoscene_templates[id]
 	loadProgram()
 
@@ -304,7 +304,7 @@
 
 	update_projections()
 
-/obj/machinery/computer/HolodeckControl/proc/startFire(var/obj/effect/landmark/L)
+/obj/machinery/computer/HolodeckControl/proc/startFire(obj/effect/landmark/L)
 	var/turf/T = get_turf(L)
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(2, 1, T)
@@ -313,7 +313,7 @@
 		T.temperature = 5000
 		T.hotspot_expose(50000,50000,1)
 
-/obj/machinery/computer/HolodeckControl/proc/toggleGravity(var/area/A)
+/obj/machinery/computer/HolodeckControl/proc/toggleGravity(area/A)
 	if(world.time < (last_gravity_change + 25))
 		if(world.time < (last_gravity_change + 15))//To prevent super-spam clicking
 			return

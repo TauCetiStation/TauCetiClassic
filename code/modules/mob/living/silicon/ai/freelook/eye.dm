@@ -37,7 +37,7 @@
 	return 0
 
 // Hide popout menu verbs
-/mob/aiEye/examine()
+/mob/aiEye/examinate(atom/A as mob|obj|turf in view())
 	set popup_menu = 0
 	set src = usr.contents
 	return 0
@@ -50,7 +50,7 @@
 // Use this when setting the aiEye's location.
 // It will also stream the chunk that the new loc is in.
 
-/mob/aiEye/setLoc(var/T)
+/mob/aiEye/setLoc(T)
 	if(ai)
 		if(!isturf(ai.loc))
 			return
@@ -106,7 +106,7 @@
 // This will move the AIEye. It will also cause lights near the eye to light up, if toggled.
 // This is handled in the proc below this one.
 
-/client/proc/AIMove(n, direct, var/mob/living/silicon/ai/user)
+/client/proc/AIMove(n, direct, mob/living/silicon/ai/user)
 
 	var/initial = initial(user.sprint)
 	var/max_sprint = 50

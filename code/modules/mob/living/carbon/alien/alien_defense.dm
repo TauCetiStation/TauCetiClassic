@@ -1,7 +1,7 @@
 /*----------------------------------------
 This is what happens, when we attack aliens.
 ----------------------------------------*/
-/mob/living/carbon/alien/attack_hand(mob/living/carbon/human/M as mob)
+/mob/living/carbon/alien/attack_hand(mob/living/carbon/human/M)
 	if (!ticker)
 		M << "You cannot attack people before the game has started."
 		return
@@ -104,7 +104,7 @@ This is what happens, when we attack aliens.
 								O.show_message(text("\red <B>[] has attempted to disarm []!</B>", M, src), 1)
 	return
 
-/mob/living/carbon/alien/attack_paw(mob/living/carbon/monkey/M as mob)
+/mob/living/carbon/alien/attack_paw(mob/living/carbon/monkey/M)
 	if(!ismonkey(M))	return//Fix for aliens receiving double messages when attacking other aliens.
 
 	if (!ticker)
@@ -132,7 +132,7 @@ This is what happens, when we attack aliens.
 				updatehealth()
 	return
 
-/mob/living/carbon/alien/attack_animal(mob/living/simple_animal/M as mob)
+/mob/living/carbon/alien/attack_animal(mob/living/simple_animal/M)
 	if(M.melee_damage_upper == 0)
 		M.emote("[M.friendly] [src]")
 	else
@@ -144,7 +144,7 @@ This is what happens, when we attack aliens.
 		adjustBruteLoss(damage)
 		updatehealth()
 
-/mob/living/carbon/alien/attack_alien(mob/living/carbon/alien/M as mob)
+/mob/living/carbon/alien/attack_alien(mob/living/carbon/alien/M)
 	if (!ticker)
 		M << "You cannot attack people before the game has started."
 		return
@@ -180,7 +180,7 @@ This is what happens, when we attack aliens.
 				M << "\green <B>[name] is too injured for that.</B>"
 	return
 
-/mob/living/carbon/alien/attack_slime(mob/living/carbon/slime/M as mob)
+/mob/living/carbon/alien/attack_slime(mob/living/carbon/slime/M)
 	if (!ticker)
 		M << "You cannot attack people before the game has started."
 		return

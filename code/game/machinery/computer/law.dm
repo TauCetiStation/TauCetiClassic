@@ -26,7 +26,7 @@
 		return
 
 
-	attackby(obj/item/weapon/O as obj, mob/user as mob)
+	attackby(obj/item/weapon/O, mob/user)
 		if (user.z > ZLEVEL_EMPTY)
 			user << "\red <b>Unable to establish a connection</b>: \black You're too far away from the station!"
 			return
@@ -37,7 +37,7 @@
 			..()
 
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(mob/user)
 		if(src.stat & NOPOWER)
 			usr << "The upload computer has no power!"
 			return
@@ -63,14 +63,14 @@
 	var/mob/living/silicon/robot/current = null
 
 
-	attackby(obj/item/weapon/aiModule/module as obj, mob/user as mob)
+	attackby(obj/item/weapon/aiModule/module, mob/user)
 		if(istype(module, /obj/item/weapon/aiModule))
 			module.install(src)
 		else
 			return ..()
 
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(mob/user)
 		if(src.stat & NOPOWER)
 			usr << "The upload computer has no power!"
 			return

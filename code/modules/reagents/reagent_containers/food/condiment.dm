@@ -13,12 +13,12 @@
 	possible_transfer_amounts = list(1,5,10)
 	volume = 50
 
-	attackby(obj/item/weapon/W as obj, mob/user as mob)
+	attackby(obj/item/weapon/W, mob/user)
 
 		return
-	attack_self(mob/user as mob)
+	attack_self(mob/user)
 		return
-	attack(mob/M as mob, mob/user as mob, def_zone)
+	attack(mob/M, mob/user, def_zone)
 		
 		if(!CanEat(user, M, src, "swallow")) return
 		
@@ -54,7 +54,7 @@
 			return 1
 		return 0
 
-	attackby(obj/item/I as obj, mob/user as mob)
+	attackby(obj/item/I, mob/user)
 
 		return
 

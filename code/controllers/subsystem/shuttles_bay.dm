@@ -558,11 +558,6 @@ var/datum/subsystem/shuttle/SSshuttle
 		online = 1
 		if(always_fake_recall)
 			fake_recall = rand(300,500)		//turning on the red lights in hallways
-	/*if(alert == 0)
-		red_alert_evac = 1
-		for(var/area/A in world)
-			if(istype(A, /area/hallway))
-				A.readyalert()*/
 
 /datum/subsystem/shuttle/proc/get_shuttle_arrive_time()
 	// During mutiny rounds, the shuttle takes twice as long.
@@ -571,7 +566,7 @@ var/datum/subsystem/shuttle/SSshuttle
 
 	return SHUTTLEARRIVETIME
 
-/datum/subsystem/shuttle/proc/shuttlealert(var/X)
+/datum/subsystem/shuttle/proc/shuttlealert(X)
 	alert = X
 
 /datum/subsystem/shuttle/proc/recall()
@@ -584,10 +579,6 @@ var/datum/subsystem/shuttle/SSshuttle
 			world << sound('sound/AI/shuttlerecalled.ogg')
 			setdirection(-1)
 			online = 1
-			/*red_alert_evac = 0
-			for(var/area/A in world)
-				if(istype(A, /area/hallway))
-					A.readyreset()*/
 			return
 		else //makes it possible to send shuttle back.
 			captain_announce("The shuttle has been recalled.")
@@ -609,13 +600,13 @@ var/datum/subsystem/shuttle/SSshuttle
 		return get_shuttle_arrive_time()
 
 	// sets the time left to a given delay (in seconds)
-/datum/subsystem/shuttle/proc/settimeleft(var/delay)
+/datum/subsystem/shuttle/proc/settimeleft(delay)
 	endtime = world.timeofday + delay * 10
 	timelimit = delay
 
 	// sets the shuttle direction
 	// 1 = towards SS13, -1 = back to centcom
-/datum/subsystem/shuttle/proc/setdirection(var/dirn)
+/datum/subsystem/shuttle/proc/setdirection(dirn)
 	if(direction == dirn)
 		return
 	direction = dirn

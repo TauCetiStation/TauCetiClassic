@@ -57,7 +57,7 @@
 		S.race_key = rkey //Used in mob icon caching.
 		all_species[S.name] = S
 
-		if(S.flags & IS_WHITELISTED)
+		if(S.flags[IS_WHITELISTED])
 			whitelisted_species += S.name
 
 /* // Uncomment to debug chemical reaction list.

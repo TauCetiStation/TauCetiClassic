@@ -11,7 +11,7 @@
 
 	origin_tech = "magnets=1;engineering=1"
 
-/obj/item/weapon/mining_scanner/attack_self(mob/user as mob)
+/obj/item/weapon/mining_scanner/attack_self(mob/user)
 
 	user << "You begin sweeping \the [src] about, scanning for metal deposits."
 

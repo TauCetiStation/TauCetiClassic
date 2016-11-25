@@ -71,17 +71,16 @@
 	return ..()
 
 
-/obj/machinery/door/firedoor/examine()
-	set src in view()
-	. = ..()
+/obj/machinery/door/firedoor/examine(mob/user)
+	..()
 	if(pdiff >= FIREDOOR_MAX_PRESSURE_DIFF)
-		usr << "<span class='warning'>WARNING: Current pressure differential is [pdiff]kPa! Opening door may result in injury!</span>"
-	if( islist(users_to_open) && users_to_open.len)
+		user << "<span class='warning'>WARNING: Current pressure differential is [pdiff]kPa! Opening door may result in injury!</span>"
+	if(islist(users_to_open) && users_to_open.len)
 		var/users_to_open_string = users_to_open[1]
 		if(users_to_open.len >= 2)
 			for(var/i = 2 to users_to_open.len)
 				users_to_open_string += ", [users_to_open[i]]"
-		usr << "These people have opened \the [src] during an alert: [users_to_open_string]."
+		user << "These people have opened \the [src] during an alert: [users_to_open_string]."
 
 
 /obj/machinery/door/firedoor/Bumped(atom/AM)
@@ -106,7 +105,7 @@
 		stat |= NOPOWER
 	return
 
-/obj/machinery/door/firedoor/attack_paw(mob/user as mob)
+/obj/machinery/door/firedoor/attack_paw(mob/user)
 	if(istype(user, /mob/living/carbon/alien/humanoid))
 		if(blocked)
 			user << "\red The door is sealed, it cannot be pried open."
@@ -121,7 +120,7 @@
 				open(1)
 	return
 
-/obj/machinery/door/firedoor/attack_animal(mob/user as mob)
+/obj/machinery/door/firedoor/attack_animal(mob/user)
 	if(istype(user, /mob/living/simple_animal/hulk))
 		if(blocked)
 			if(prob(75))
@@ -148,7 +147,7 @@
 				open(1)
 	return
 
-/obj/machinery/door/firedoor/attack_hand(mob/user as mob)
+/obj/machinery/door/firedoor/attack_hand(mob/user)
 	add_fingerprint(user)
 	if(operating)
 		return//Already doing something.
@@ -196,7 +195,7 @@
 				nextstate = CLOSED
 				close()
 
-/obj/machinery/door/firedoor/attackby(obj/item/weapon/C as obj, mob/user as mob)
+/obj/machinery/door/firedoor/attackby(obj/item/weapon/C, mob/user)
 	add_fingerprint(user)
 	if(operating)
 		return//Already doing something.

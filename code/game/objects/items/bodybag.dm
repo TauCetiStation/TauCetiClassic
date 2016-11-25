@@ -23,7 +23,7 @@
 	density = 0
 
 
-	attackby(W as obj, mob/user as mob)
+	attackby(W, mob/user)
 		if (istype(W, /obj/item/weapon/pen))
 			var/t = input(user, "What would you like the label to be?", text("[]", src.name), null)  as text
 			if (user.get_active_hand() != W)

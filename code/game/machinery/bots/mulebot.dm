@@ -92,7 +92,7 @@
 			radio_controller.add_object(src, beacon_freq, filter = RADIO_NAVBEACONS)
 
 		var/count = 0
-		for(var/obj/machinery/bot/mulebot/other in world)
+		for(var/obj/machinery/bot/mulebot/other in machines)
 			count++
 		if(!suffix)
 			suffix = "#[count]"
@@ -129,7 +129,7 @@
 // screwdriver: open/close hatch
 // cell: insert it
 // other: chance to knock rider off bot
-/obj/machinery/bot/mulebot/attackby(var/obj/item/I, var/mob/user)
+/obj/machinery/bot/mulebot/attackby(obj/item/I, mob/user)
 	if(istype(I,/obj/item/weapon/card/emag))
 		locked = !locked
 		user << "\blue You [locked ? "lock" : "unlock"] the mulebot's controls!"
@@ -201,18 +201,18 @@
 	..()
 
 
-/obj/machinery/bot/mulebot/attack_ai(var/mob/user)
+/obj/machinery/bot/mulebot/attack_ai(mob/user)
 	user.set_machine(src)
 	interact(user, 1)
 
-/obj/machinery/bot/mulebot/attack_hand(var/mob/user)
+/obj/machinery/bot/mulebot/attack_hand(mob/user)
 	. = ..()
 	if (.)
 		return
 	user.set_machine(src)
 	interact(user, 0)
 
-/obj/machinery/bot/mulebot/interact(var/mob/user, var/ai=0)
+/obj/machinery/bot/mulebot/interact(mob/user, ai=0)
 	var/dat
 	dat += "<TT><B>Multiple Utility Load Effector Mk. III</B></TT><BR><BR>"
 	dat += "ID: [suffix]<BR>"
@@ -435,7 +435,7 @@
 			visible_message("[src] makes a delighted ping!", "<span class='italics'>You hear a ping.</span>")
 			playsound(loc, 'sound/machines/ping.ogg', 50, 0)
 
-/obj/machinery/bot/mulebot/MouseDrop_T(var/atom/movable/AM, mob/user)
+/obj/machinery/bot/mulebot/MouseDrop_T(atom/movable/AM, mob/user)
 
 	if(user.stat)
 		return
@@ -678,7 +678,7 @@
 
 // calculates a path to the current destination
 // given an optional turf to avoid
-/obj/machinery/bot/mulebot/proc/calc_path(var/turf/avoid = null)
+/obj/machinery/bot/mulebot/proc/calc_path(turf/avoid = null)
 	src.path = AStar(src.loc, src.target, /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance, 0, 250, id=botcard, exclude=avoid)
 	if(!src.path)
 		src.path = list()
@@ -687,7 +687,7 @@
 // sets the current destination
 // signals all beacons matching the delivery code
 // beacons will return a signal giving their locations
-/obj/machinery/bot/mulebot/proc/set_destination(var/new_dest)
+/obj/machinery/bot/mulebot/proc/set_destination(new_dest)
 	spawn(0)
 		new_destination = new_dest
 		post_signal(beacon_freq, "findbeacon", "delivery")
@@ -769,7 +769,7 @@
 
 // called from mob/living/carbon/human/Crossed()
 // when mulebot is in the same loc
-/obj/machinery/bot/mulebot/proc/RunOver(var/mob/living/carbon/human/H)
+/obj/machinery/bot/mulebot/proc/RunOver(mob/living/carbon/human/H)
 	src.visible_message("\red [src] drives over [H]!")
 	playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
 
@@ -788,7 +788,7 @@
 	bloodiness += 4
 
 // player on mulebot attempted to move
-/obj/machinery/bot/mulebot/relaymove(var/mob/user)
+/obj/machinery/bot/mulebot/relaymove(mob/user)
 	if(user.incapacitated())
 		return
 	if(load == user)
@@ -869,11 +869,11 @@
 			updateDialog()
 
 // send a radio signal with a single data key/value pair
-/obj/machinery/bot/mulebot/proc/post_signal(var/freq, var/key, var/value)
+/obj/machinery/bot/mulebot/proc/post_signal(freq, key, value)
 	post_signal_multiple(freq, list("[key]" = value) )
 
 // send a radio signal with multiple data key/values
-/obj/machinery/bot/mulebot/proc/post_signal_multiple(var/freq, var/list/keyval)
+/obj/machinery/bot/mulebot/proc/post_signal_multiple(freq, list/keyval)
 
 	if(freq == beacon_freq && !(wires & wire_beacon_tx))
 		return

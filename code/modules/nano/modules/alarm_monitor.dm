@@ -22,11 +22,11 @@
 	..()
 	alarm_handlers = list(camera_alarm, motion_alarm)
 
-/obj/nano_module/alarm_monitor/proc/register(var/object, var/procName)
+/obj/nano_module/alarm_monitor/proc/register(object, procName)
 	for(var/datum/alarm_handler/AH in alarm_handlers)
 		AH.register(object, procName)
 
-/obj/nano_module/alarm_monitor/proc/unregister(var/object)
+/obj/nano_module/alarm_monitor/proc/unregister(object)
 	for(var/datum/alarm_handler/AH in alarm_handlers)
 		AH.unregister(object)
 
@@ -63,7 +63,7 @@
 		usr.switch_to_camera(C)
 		return 1
 
-/obj/nano_module/alarm_monitor/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null, var/force_open = 1)
+/obj/nano_module/alarm_monitor/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1)
 	var/data[0]
 
 	var/categories[0]

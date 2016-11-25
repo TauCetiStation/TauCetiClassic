@@ -34,7 +34,7 @@
 	update_icon()
 	return secured
 
-/obj/item/device/assembly/prox_sensor/HasProximity(atom/movable/AM as mob|obj)
+/obj/item/device/assembly/prox_sensor/HasProximity(atom/movable/AM)
 	if (istype(AM, /obj/effect/beam))	return
 	if (AM.move_speed < 12)	sense()
 	return
@@ -106,7 +106,7 @@
 	sense()
 	return
 
-/obj/item/device/assembly/prox_sensor/interact(mob/user as mob)//TODO: Change this to the wires thingy
+/obj/item/device/assembly/prox_sensor/interact(mob/user)//TODO: Change this to the wires thingy
 	if(!secured)
 		user.show_message("\red The [name] is unsecured!")
 		return 0
@@ -134,11 +134,11 @@
 		var/turf/T = get_turf(src)
 		if(usr)
 			lastsignalers.Add("[time_scan] <B>:</B> [usr.key] used [src] @ location ([T.x],[T.y],[T.z]) <B>:</B> time set: [time]")
-			message_admins("[key_name(usr, usr.client)] used [src] , location ([T.x],[T.y],[T.z]) <B>:</B> time set: [time]",0,1)
+			message_admins("[key_name_admin(usr)] used [src] , location ([T.x],[T.y],[T.z]) <B>:</B> time set: [time] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[usr.x];Y=[usr.y];Z=[usr.z]'>JMP</a>)")
 			log_game("[usr.ckey]([usr]) used [src], location ([T.x],[T.y],[T.z]),time set: [time]")
 		else
 			lastsignalers.Add("[time_scan] <B>:</B> (NO USER FOUND) set [src] @ location ([T.x],[T.y],[T.z]) <B>:</B> time set: [time]")
-			message_admins("( NO USER FOUND) used [src], location ([T.x],[T.y],[T.z]) <B>:</B> time set: [time]",0,1)
+			message_admins("( NO USER FOUND) used [src], location ([T.x],[T.y],[T.z]) <B>:</B> time set: [time]")
 			log_game("(NO USER FOUND) used [src] , location ([T.x],[T.y],[T.z]),time set: [time]")
 
 	if(href_list["time"])
@@ -148,11 +148,11 @@
 		var/turf/T = get_turf(src)
 		if(usr)
 			lastsignalers.Add("[time_start] <B>:</B> [usr.key] set [src] [timing?"On":"Off"] @ location ([T.x],[T.y],[T.z]) <B>:</B> time set: [time]")
-			message_admins("[key_name(usr, usr.client)] set [src] [timing?"On":"Off"], location ([T.x],[T.y],[T.z]) <B>:</B> time set: [time]",0,1)
+			message_admins("[key_name_admin(usr)] set [src] [timing?"On":"Off"], location ([T.x],[T.y],[T.z]) <B>:</B> time set: [time] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[usr.x];Y=[usr.y];Z=[usr.z]'>JMP</a>)")
 			log_game("[usr.ckey]([usr]) set [src] [timing?"On":"Off"], location ([T.x],[T.y],[T.z]),time set: [time]")
 		else
 			lastsignalers.Add("[time_start] <B>:</B> (NO USER FOUND) set [src] [timing?"On":"Off"] @ location ([T.x],[T.y],[T.z]) <B>:</B> time set: [time]")
-			message_admins("( NO USER FOUND) set [src] [timing?"On":"Off"], location ([T.x],[T.y],[T.z]) <B>:</B> time set: [time]",0,1)
+			message_admins("( NO USER FOUND) set [src] [timing?"On":"Off"], location ([T.x],[T.y],[T.z]) <B>:</B> time set: [time]")
 			log_game("(NO USER FOUND) set [src] [timing?"On":"Off"], location ([T.x],[T.y],[T.z]),time set: [time]")
 
 	if(href_list["tp"])

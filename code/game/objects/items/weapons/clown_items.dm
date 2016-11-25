@@ -35,7 +35,7 @@
 		M.Stun(3)
 		M.Weaken(2)
 
-/obj/item/weapon/soap/afterattack(atom/target, mob/user as mob, proximity)
+/obj/item/weapon/soap/afterattack(atom/target, mob/user, proximity)
 	if(!proximity) return
 	//I couldn't feasibly  fix the overlay bugs caused by cleaning items we are wearing.
 	//So this is a workaround. This also makes more sense from an IC standpoint. ~Carn
@@ -49,7 +49,7 @@
 		target.clean_blood()
 	return
 
-/obj/item/weapon/soap/attack(mob/target as mob, mob/user as mob)
+/obj/item/weapon/soap/attack(mob/target, mob/user)
 	if(target && user && ishuman(target) && ishuman(user) && !target.stat && !user.stat && user.zone_sel &&user.zone_sel.selecting == "mouth" )
 		user.visible_message("\red \the [user] washes \the [target]'s mouth out with soap!")
 		return
@@ -58,7 +58,7 @@
 /*
  * Bike Horns
  */
-/obj/item/weapon/bikehorn/attack_self(mob/user as mob)
+/obj/item/weapon/bikehorn/attack_self(mob/user)
 	if (spam_flag == 0)
 		spam_flag = 1
 		playsound(src.loc, 'sound/items/bikehorn.ogg', 50, 1)

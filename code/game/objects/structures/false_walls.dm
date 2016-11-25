@@ -52,7 +52,7 @@
 	icon_state = "[mineral][junction]"
 	return
 
-/obj/structure/falsewall/attack_hand(mob/user as mob)
+/obj/structure/falsewall/attack_hand(mob/user)
 	if(opening)
 		return
 
@@ -82,7 +82,7 @@
 	else
 		icon_state = "[mineral]fwall_open"
 
-/obj/structure/falsewall/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/structure/falsewall/attackby(obj/item/weapon/W, mob/user)
 	if(opening)
 		user << "\red You must wait until the door has stopped moving."
 		return
@@ -175,7 +175,7 @@
 	..()
 
 
-/obj/structure/falserwall/attack_hand(mob/user as mob)
+/obj/structure/falserwall/attack_hand(mob/user)
 	if(opening)
 		return
 
@@ -223,7 +223,7 @@
 
 
 
-/obj/structure/falserwall/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/structure/falserwall/attackby(obj/item/weapon/W, mob/user)
 	if(opening)
 		user << "\red You must wait until the door has stopped moving."
 		return
@@ -278,11 +278,11 @@
 	var/active = null
 	var/last_event = 0
 
-/obj/structure/falsewall/uranium/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/structure/falsewall/uranium/attackby(obj/item/weapon/W, mob/user)
 	radiate()
 	..()
 
-/obj/structure/falsewall/uranium/attack_hand(mob/user as mob)
+/obj/structure/falsewall/uranium/attack_hand(mob/user)
 	radiate()
 	..()
 

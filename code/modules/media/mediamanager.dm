@@ -109,7 +109,7 @@ function SetVolume(volume) {
 		//volume = targetVolume
 		send_update()
 
-/datum/media_manager/proc/update_volume(var/value)
+/datum/media_manager/proc/update_volume(value)
 	volume = value
 	owner << output(list2params(list(volume)), "[window]:SetVolume")
 	//send_update()

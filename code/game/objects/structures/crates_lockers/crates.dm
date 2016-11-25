@@ -67,7 +67,7 @@
 	src.opened = 0
 	return 1
 
-/obj/structure/closet/crate/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/structure/closet/crate/attackby(obj/item/weapon/W, mob/user)
 	if(opened)
 		if(isrobot(user))
 			return
@@ -144,7 +144,7 @@
 /obj/structure/closet/crate/secure/can_open()
 	return !locked
 
-/obj/structure/closet/crate/secure/proc/togglelock(mob/user as mob)
+/obj/structure/closet/crate/secure/proc/togglelock(mob/user)
 	if(src.opened)
 		user << "<span class='notice'>Close the crate first.</span>"
 		return
@@ -175,14 +175,14 @@
 	else
 		usr << "<span class='warning'>This mob type can't use this verb.</span>"
 
-/obj/structure/closet/crate/secure/attack_hand(mob/user as mob)
+/obj/structure/closet/crate/secure/attack_hand(mob/user)
 	src.add_fingerprint(user)
 	if(locked)
 		src.togglelock(user)
 	else
 		src.toggle(user)
 
-/obj/structure/closet/crate/secure/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/structure/closet/crate/secure/attackby(obj/item/weapon/W, mob/user)
 	if(is_type_in_list(W, list(/obj/item/weapon/packageWrap, /obj/item/weapon/cable_coil, /obj/item/device/radio/electropack, /obj/item/weapon/wirecutters)))
 		return ..()
 	if(locked && (istype(W, /obj/item/weapon/card/emag)||istype(W, /obj/item/weapon/melee/energy/blade)))
@@ -259,6 +259,20 @@
 	icon_opened = "crateopen"
 	icon_closed = "crate"
 */
+
+/obj/structure/closet/crate/engi
+	desc = "A engineer crate."
+	name = "Engineer crate"
+	icon_state = "engicrate"
+	icon_opened = "engicrateopen"
+	icon_closed = "engicrate"
+
+/obj/structure/closet/crate/secure/engisec
+	desc = "A crate with a lock on it."
+	name = "Secured engineer crate"
+	icon_state = "engicrateopensec"
+	icon_opened = "engiseccrateopensec"
+	icon_closed = "engicrateopensec"
 
 /obj/structure/closet/crate/medical
 	desc = "A medical crate."

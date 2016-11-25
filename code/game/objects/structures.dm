@@ -19,7 +19,7 @@
 		if(3.0)
 			return
 
-/obj/structure/meteorhit(obj/O as obj)
+/obj/structure/meteorhit(obj/O)
 	qdel(src)
 
 /obj/structure/New()
@@ -43,7 +43,7 @@
 	else
 		return ..()
 
-/obj/structure/proc/can_climb(var/mob/living/user, post_climb_check=0)
+/obj/structure/proc/can_climb(mob/living/user, post_climb_check=0)
 	if (!can_touch(user) || !climbable || (!post_climb_check && (user in climbers)))
 		return 0
 
@@ -69,7 +69,7 @@
 			return O
 	return 0
 
-/obj/structure/proc/do_climb(var/mob/living/user)
+/obj/structure/proc/do_climb(mob/living/user)
 	if (!can_climb(user))
 		return
 
@@ -136,7 +136,7 @@
 			H.updatehealth()
 	return
 
-/obj/structure/proc/can_touch(var/mob/user)
+/obj/structure/proc/can_touch(mob/user)
 	if(!user)
 		return 0
 	if(!Adjacent(user))

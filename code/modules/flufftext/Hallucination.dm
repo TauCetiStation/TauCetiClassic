@@ -201,7 +201,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 
 	var/health = 100
 
-/obj/effect/fake_attacker/attackby(var/obj/item/weapon/P as obj, mob/user as mob)
+/obj/effect/fake_attacker/attackby(obj/item/weapon/P, mob/user)
 	user.do_attack_animation(src)
 	step_away(src,my_target,2)
 	for(var/mob/M in oviewers(world.view,my_target))
@@ -285,7 +285,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	collapse = 1
 	updateimage()
 
-/proc/fake_blood(var/mob/target)
+/proc/fake_blood(mob/target)
 	var/obj/effect/overlay/O = new/obj/effect/overlay(target.loc)
 	O.name = "blood"
 	var/image/I = image('icons/effects/blood.dmi',O,"floor[rand(1,7)]",O.dir,1)
@@ -310,7 +310,7 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/projectile, /obj/ite
 	/obj/item/clothing/shoes/magboots, /obj/item/blueprints, /obj/item/weapon/disk/nuclear,\
 	/obj/item/clothing/suit/space/nasavoid, /obj/item/weapon/tank)
 
-/proc/fake_attack(var/mob/living/target)
+/proc/fake_attack(mob/living/target)
 //	var/list/possible_clones = new/list()
 	var/mob/living/carbon/human/clone = null
 	var/clone_weapon = null

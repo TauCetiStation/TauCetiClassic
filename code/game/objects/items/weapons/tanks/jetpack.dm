@@ -25,12 +25,10 @@
 		return ..()
 
 
-	examine()
-		set src in usr
+	examine(mob/user)
 		..()
-		if(air_contents.oxygen < 10)
-			usr << text("\red <B>The meter on the [src.name] indicates you are almost out of air!</B>")
-		return
+		if(src in user && air_contents.oxygen < 10)
+			user << "<span class='danger'>The meter on the [src.name] indicates you are almost out of air!</span>"
 
 
 	verb/toggle_rockets()
@@ -58,7 +56,7 @@
 		return
 
 
-	proc/allow_thrust(num, mob/living/user as mob)
+	proc/allow_thrust(num, mob/living/user)
 		if(!(src.on))
 			return 0
 		if((num < 0.005 || src.air_contents.total_moles() < num))
@@ -117,10 +115,16 @@
 		air_contents.adjust(0,(6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C))
 		return
 
-	examine()
-		set src in usr
+	examine(mob/user)
 		..()
-		if(air_contents.carbon_dioxide < 10)
-			usr << text("\red <B>The meter on the [src.name] indicates you are almost out of air!</B>")
-			playsound(usr, 'sound/effects/alert.ogg', 50, 1)
-		return
+		if(src in user && air_contents.carbon_dioxide < 10)
+			user << "<span class='danger'>The meter on the [src.name] indicates you are almost out of air!</span>"
+
+/obj/item/weapon/tank/jetpack/oxygen/harness //TG-nuke jetpack
+	name = "jet harness (oxygen)"
+	desc = "A lightweight tactical harness, used by those who don't want to be weighed down by traditional jetpacks."
+	icon_state = "jetpack-mini"
+	item_state = "jetpack-mini"
+	volume = 40
+	throw_range = 7
+	w_class = 3

@@ -13,7 +13,7 @@
 	alt_titles = list("Counselor")
 	minimal_player_ingame_minutes = 480
 
-/datum/job/chaplain/equip(var/mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/job/chaplain/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
 	var/obj/item/weapon/storage/bible/B = new /obj/item/weapon/storage/bible(H) //BS12 EDIT
 	H.equip_to_slot_or_del(B, slot_l_hand)
@@ -85,7 +85,7 @@
 				if("Koran")
 					B.icon_state = "koran"
 					B.item_state = "koran"
-					for(var/area/chapel/main/A in world)
+					for(var/area/chapel/main/A in all_areas)
 						for(var/turf/T in A.contents)
 							if(T.icon_state == "carpetsymbol")
 								T.dir = 4
@@ -104,7 +104,7 @@
 				if("Athiest")
 					B.icon_state = "athiest"
 					B.item_state = "syringe_kit"
-					for(var/area/chapel/main/A in world)
+					for(var/area/chapel/main/A in all_areas)
 						for(var/turf/T in A.contents)
 							if(T.icon_state == "carpetsymbol")
 								T.dir = 10
@@ -120,7 +120,7 @@
 				if("Scientology")
 					B.icon_state = "scientology"
 					B.item_state = "scientology"
-					for(var/area/chapel/main/A in world)
+					for(var/area/chapel/main/A in all_areas)
 						for(var/turf/T in A.contents)
 							if(T.icon_state == "carpetsymbol")
 								T.dir = 8
@@ -134,7 +134,7 @@
 					// if christian bible, revert to default
 					B.icon_state = "bible"
 					B.item_state = "bible"
-					for(var/area/chapel/main/A in world)
+					for(var/area/chapel/main/A in all_areas)
 						for(var/turf/T in A.contents)
 							if(T.icon_state == "carpetsymbol")
 								T.dir = 2

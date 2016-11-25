@@ -123,7 +123,7 @@ var/global/list/cached_icons = list()
 	name = "any color"
 	icon_state = "paint_neutral"
 
-	attack_self(mob/user as mob)
+	attack_self(mob/user)
 		var/t1 = input(user, "Please select a color:", "Locking Computer", null) in list( "red", "blue", "green", "yellow", "black", "white")
 		if ((user.get_active_hand() != src || user.stat || user.restrained()))
 			return
@@ -147,7 +147,7 @@ var/global/list/cached_icons = list()
 		return
 
 
-/obj/item/weapon/paint/afterattack(turf/target, mob/user as mob, proximity)
+/obj/item/weapon/paint/afterattack(turf/target, mob/user, proximity)
 	if(!proximity) return
 	if(!istype(target) || istype(target, /turf/space))
 		return
@@ -167,7 +167,7 @@ var/global/list/cached_icons = list()
 	name = "paint remover"
 	icon_state = "paint_neutral"
 
-	afterattack(turf/target, mob/user as mob)
+	afterattack(turf/target, mob/user)
 		if(istype(target) && target.icon != initial(target.icon))
 			target.icon = initial(target.icon)
 		return

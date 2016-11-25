@@ -7,7 +7,7 @@
 	icon_state = "hydro"
 	item_state = "analyzer"
 
-	attack_self(mob/user as mob)
+	attack_self(mob/user)
 		return 0
 
 // ********************************************************
@@ -35,7 +35,7 @@
 	var/plant_type = 0 // 0 = 'normal plant'; 1 = weed; 2 = shroom
 	var/list/mutatelist = list()
 
-/obj/item/seeds/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/obj/item/seeds/attackby(obj/item/O, mob/user)
 	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
 		user << "*** <B>[plantname]</B> ***"
 		user << "-Plant Endurance: \blue [endurance]"
@@ -1086,7 +1086,7 @@
 	growthstages = 4
 	plant_type = 1
 
-/obj/item/seeds/kudzuseed/attack_self(mob/user as mob)
+/obj/item/seeds/kudzuseed/attack_self(mob/user)
 	if(istype(user.loc,/turf/space) || istype(user.loc,/turf/simulated/shuttle))
 		user << "<span class='notice'>You cannot plant kudzu on a moving shuttle or space.</span>"
 		return
@@ -1182,7 +1182,7 @@
 	seed = "/obj/item/seeds/towermycelium"
 	attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
 
-/obj/item/weapon/grown/log/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/weapon/grown/log/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/circular_saw) || istype(W, /obj/item/weapon/hatchet) || (istype(W, /obj/item/weapon/twohanded/fireaxe) && W:wielded) || istype(W, /obj/item/weapon/melee/energy))
 		user.show_message("<span class='notice'>You make planks out of \the [src]!</span>", 1)
 		for(var/i=0,i<2,i++)

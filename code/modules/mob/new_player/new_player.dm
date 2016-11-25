@@ -204,7 +204,7 @@
 			usr << "<b>Thank you for your vote!</b>"
 			usr << browse(null,"window=privacypoll")
 
-	if(!ready && href_list["preference"])
+	if(href_list["preference"] && (!ready || (href_list["preference"] == "close")))
 		if(client)
 			client.prefs.process_link(src, href_list)
 	else if(!href_list["late_join"])
@@ -337,7 +337,7 @@
 
 	qdel(src)
 
-/mob/new_player/proc/AnnounceArrival(var/mob/living/carbon/human/character, var/rank)
+/mob/new_player/proc/AnnounceArrival(mob/living/carbon/human/character, rank)
 	if (ticker.current_state == GAME_STATE_PLAYING)
 		var/obj/item/device/radio/intercom/a = new /obj/item/device/radio/intercom(null)// BS12 EDIT Arrivals Announcement Computer, rather than the AI.
 		if(character.mind.role_alt_title)
@@ -472,8 +472,9 @@
 	return client.holder.rights & R_ADMIN
 
 /mob/new_player/proc/is_species_whitelisted(datum/species/S)
-	if(!S) return 1
-	return is_alien_whitelisted(src, S.name) || !config.usealienwhitelist || !(S.flags & IS_WHITELISTED)
+	if(!S)
+		return 1
+	return is_alien_whitelisted(src, S.name) || !config.usealienwhitelist || !S.flags[IS_WHITELISTED]
 
 /mob/new_player/get_species()
 	var/datum/species/chosen_species
@@ -495,8 +496,8 @@
 /mob/new_player/is_ready()
 	return ready && ..()
 
-/mob/new_player/hear_say(var/message, var/verb = "says", var/datum/language/language = null, var/alt_name = "",var/italics = 0, var/mob/speaker = null)
+/mob/new_player/hear_say(message, verb = "says", datum/language/language = null, alt_name = "",italics = 0, mob/speaker = null)
 	return
 
-/mob/new_player/hear_radio(var/message, var/verb="says", var/datum/language/language=null, var/part_a, var/part_b, var/mob/speaker = null, var/hard_to_hear = 0)
+/mob/new_player/hear_radio(message, verb="says", datum/language/language=null, part_a, part_b, mob/speaker = null, hard_to_hear = 0)
 	return

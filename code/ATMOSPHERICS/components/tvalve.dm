@@ -143,13 +143,13 @@
 
 	return 1
 
-/obj/machinery/atmospherics/tvalve/attack_ai(mob/user as mob)
+/obj/machinery/atmospherics/tvalve/attack_ai(mob/user)
 	return
 
-/obj/machinery/atmospherics/tvalve/attack_paw(mob/user as mob)
+/obj/machinery/atmospherics/tvalve/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/machinery/atmospherics/tvalve/attack_hand(mob/user as mob)
+/obj/machinery/atmospherics/tvalve/attack_hand(mob/user)
 	src.add_fingerprint(usr)
 	update_icon(1)
 	sleep(10)
@@ -158,7 +158,7 @@
 	else
 		src.go_to_side()
 
-/obj/machinery/atmospherics/tvalve/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+/obj/machinery/atmospherics/tvalve/attackby(obj/item/weapon/W, mob/user)
 	if (!istype(W, /obj/item/weapon/wrench))
 		return ..()
 	if (istype(src, /obj/machinery/atmospherics/tvalve/digital))
@@ -279,10 +279,10 @@
 	var/id = null
 	var/datum/radio_frequency/radio_connection
 
-/obj/machinery/atmospherics/tvalve/digital/attack_ai(mob/user as mob)
+/obj/machinery/atmospherics/tvalve/digital/attack_ai(mob/user)
 	return src.attack_hand(user)
 
-/obj/machinery/atmospherics/tvalve/digital/attack_hand(mob/user as mob)
+/obj/machinery/atmospherics/tvalve/digital/attack_hand(mob/user)
 	if(!src.allowed(user))
 		user << "\red Access denied."
 		return
@@ -371,10 +371,10 @@
 	var/id = null
 	var/datum/radio_frequency/radio_connection
 
-/obj/machinery/atmospherics/tvalve/mirrored/digital/attack_ai(mob/user as mob)
+/obj/machinery/atmospherics/tvalve/mirrored/digital/attack_ai(mob/user)
 		return src.attack_hand(user)
 
-/obj/machinery/atmospherics/tvalve/mirrored/digital/attack_hand(mob/user as mob)
+/obj/machinery/atmospherics/tvalve/mirrored/digital/attack_hand(mob/user)
 	if(!src.allowed(user))
 		user << "\red Access denied."
 		return

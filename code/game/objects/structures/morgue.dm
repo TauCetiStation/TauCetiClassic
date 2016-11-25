@@ -63,10 +63,10 @@
 /obj/structure/morgue/alter_health()
 	return src.loc
 
-/obj/structure/morgue/attack_paw(mob/user as mob)
+/obj/structure/morgue/attack_paw(mob/user)
 	return src.attack_hand(user)
 
-/obj/structure/morgue/attack_hand(mob/user as mob)
+/obj/structure/morgue/attack_hand(mob/user)
 	if (src.connected)
 		for(var/atom/movable/A as mob|obj in src.connected.loc)
 			if (!( A.anchored ))
@@ -100,7 +100,7 @@
 	update()
 	return
 
-/obj/structure/morgue/attackby(P as obj, mob/user as mob)
+/obj/structure/morgue/attackby(P, mob/user)
 	if (istype(P, /obj/item/weapon/pen))
 		var/t = input(user, "What would you like the label to be?", text("[]", src.name), null)  as text
 		if (user.get_active_hand() != P)
@@ -115,7 +115,7 @@
 	src.add_fingerprint(user)
 	return
 
-/obj/structure/morgue/relaymove(mob/user as mob)
+/obj/structure/morgue/relaymove(mob/user)
 	if (user.stat)
 		return
 	src.connected = new /obj/structure/m_tray( src.loc )
@@ -154,10 +154,10 @@
 	connected = null
 	return ..()
 
-/obj/structure/m_tray/attack_paw(mob/user as mob)
+/obj/structure/m_tray/attack_paw(mob/user)
 	return src.attack_hand(user)
 
-/obj/structure/m_tray/attack_hand(mob/user as mob)
+/obj/structure/m_tray/attack_hand(mob/user)
 	if (src.connected)
 		for(var/atom/movable/A as mob|obj in src.loc)
 			if (!( A.anchored ))
@@ -171,7 +171,7 @@
 		return
 	return
 
-/obj/structure/m_tray/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
+/obj/structure/m_tray/MouseDrop_T(atom/movable/O, mob/user)
 	if ((!( istype(O, /atom/movable) ) || O.anchored || get_dist(user, src) > 1 || get_dist(user, O) > 1 || user.contents.Find(src) || user.contents.Find(O)))
 		return
 	if (!ismob(O) && !istype(O, /obj/structure/closet/body_bag))
@@ -245,10 +245,10 @@
 /obj/structure/crematorium/alter_health()
 	return src.loc
 
-/obj/structure/crematorium/attack_paw(mob/user as mob)
+/obj/structure/crematorium/attack_paw(mob/user)
 	return src.attack_hand(user)
 
-/obj/structure/crematorium/attack_hand(mob/user as mob)
+/obj/structure/crematorium/attack_hand(mob/user)
 //	if (cremating) AWW MAN! THIS WOULD BE SO MUCH MORE FUN ... TO WATCH
 //		user.show_message("\red Uh-oh, that was a bad idea.", 1)
 //		//usr << "Uh-oh, that was a bad idea."
@@ -283,7 +283,7 @@
 	src.add_fingerprint(user)
 	update()
 
-/obj/structure/crematorium/attackby(P as obj, mob/user as mob)
+/obj/structure/crematorium/attackby(P, mob/user)
 	if (istype(P, /obj/item/weapon/pen))
 		var/t = input(user, "What would you like the label to be?", text("[]", src.name), null)  as text
 		if (user.get_active_hand() != P)
@@ -298,7 +298,7 @@
 	src.add_fingerprint(user)
 	return
 
-/obj/structure/crematorium/relaymove(mob/user as mob)
+/obj/structure/crematorium/relaymove(mob/user)
 	if (user.stat || locked)
 		return
 	src.connected = new /obj/structure/c_tray( src.loc )
@@ -316,7 +316,7 @@
 		src.connected = null
 	return
 
-/obj/structure/crematorium/proc/cremate(atom/A, mob/user as mob)
+/obj/structure/crematorium/proc/cremate(atom/A, mob/user)
 //	for(var/obj/machinery/crema_switch/O in src) //trying to figure a way to call the switch, too drunk to sort it out atm
 //		if(var/on == 1)
 //		return
@@ -375,10 +375,10 @@
 	anchored = 1
 	throwpass = 1
 
-/obj/structure/c_tray/attack_paw(mob/user as mob)
+/obj/structure/c_tray/attack_paw(mob/user)
 	return src.attack_hand(user)
 
-/obj/structure/c_tray/attack_hand(mob/user as mob)
+/obj/structure/c_tray/attack_hand(mob/user)
 	if (src.connected)
 		for(var/atom/movable/A as mob|obj in src.loc)
 			if (!( A.anchored ))
@@ -392,7 +392,7 @@
 		return
 	return
 
-/obj/structure/c_tray/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
+/obj/structure/c_tray/MouseDrop_T(atom/movable/O, mob/user)
 	if ((!( istype(O, /atom/movable) ) || O.anchored || get_dist(user, src) > 1 || get_dist(user, O) > 1 || user.contents.Find(src) || user.contents.Find(O)))
 		return
 	if (!ismob(O) && !istype(O, /obj/structure/closet/body_bag))
@@ -407,16 +407,15 @@
 			//Foreach goto(99)
 	return
 
-/obj/machinery/crema_switch/attack_hand(mob/user as mob)
+/obj/machinery/crema_switch/attack_hand(mob/user)
 	if(src.allowed(usr))
 		for (var/obj/structure/crematorium/C in world)
 			if (C.id == id)
 				if (!C.cremating)
 					for(var/mob/living/M in C.contents)
 						user.attack_log += "\[[time_stamp()]\]<font color='red'> Cremated [M.name] ([M.ckey])</font>"
-						message_admins("[user.name] ([user.ckey]) <font color='red'>Cremating</font> [M.name] ([M.ckey]).")
+						message_admins("[user.name] ([user.ckey]) <font color='red'>Cremating</font> [M.name] ([M.ckey]). (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 					C.cremate(user)
 	else
 		usr << "<span class='rose'>Access denied.</span>"
 	return
-

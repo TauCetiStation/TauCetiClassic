@@ -33,7 +33,7 @@
 	dismantle_wall()
 	return ..()
 
-/turf/simulated/wall/ChangeTurf(var/newtype)
+/turf/simulated/wall/ChangeTurf(newtype)
 	for(var/obj/effect/E in src)
 		if(E.name == "Wallrot")
 			qdel(E)
@@ -42,22 +42,22 @@
 
 //Appearance
 
-/turf/simulated/wall/examine()
-	. = ..()
+/turf/simulated/wall/examine(mob/user)
+	..()
 
 	if(!damage)
-		usr << "<span class='info'>It looks fully intact.</span>"
+		user << "<span class='info'>It looks fully intact.</span>"
 	else
 		var/dam = damage / damage_cap
 		if(dam <= 0.3)
-			usr << "<span class='warning'>It looks slightly damaged.</span>"
+			user << "<span class='warning'>It looks slightly damaged.</span>"
 		else if(dam <= 0.6)
-			usr << "<span class='warning'>It looks moderately damaged.</span>"
+			user << "<span class='warning'>It looks moderately damaged.</span>"
 		else
-			usr << "<span class='danger'>It looks heavily damaged.</span>"
+			user << "<span class='danger'>It looks heavily damaged.</span>"
 
 	if(rotting)
-		usr << "<span class='warning'>There is fungus growing on [src].</span>"
+		user << "<span class='warning'>There is fungus growing on [src].</span>"
 
 /turf/simulated/wall/proc/update_icon()
 	if(!damage_overlays[1]) //list hasn't been populated
@@ -186,7 +186,7 @@
 			O.layer = 5
 			O.mouse_opacity = 0
 
-/turf/simulated/wall/proc/thermitemelt(mob/user as mob)
+/turf/simulated/wall/proc/thermitemelt(mob/user)
 	if(mineral == "diamond")
 		return
 	var/obj/effect/overlay/O = new/obj/effect/overlay(src)
@@ -210,7 +210,7 @@
 //	F.sd_LumReset()		//TODO: ~Carn
 	return
 
-/turf/simulated/wall/meteorhit(obj/M as obj)
+/turf/simulated/wall/meteorhit(obj/M)
 	if (prob(15) && !rotting)
 		dismantle_wall()
 	else if(prob(70) && !rotting)
@@ -221,11 +221,11 @@
 
 //Interactions
 
-/turf/simulated/wall/attack_paw(mob/user as mob)
+/turf/simulated/wall/attack_paw(mob/user)
 	return src.attack_hand(user) //#Z2
 
 /*
-/turf/simulated/wall/attack_animal(mob/living/simple_animal/M as mob)
+/turf/simulated/wall/attack_animal(mob/living/simple_animal/M)
 	if(M.wall_smash)
 		if (istype(src, /turf/simulated/wall/r_wall) && !rotting)
 			M << text("\blue This wall is far too strong for you to destroy.")
@@ -242,7 +242,7 @@
 	M << "\blue You push the wall but nothing happens!"
 	return */
 
-/turf/simulated/wall/attack_animal(var/mob/living/simple_animal/M)
+/turf/simulated/wall/attack_animal(mob/living/simple_animal/M)
 	M.do_attack_animation(src)
 	if(M.environment_smash >= 2)
 		if(istype(M, /mob/living/simple_animal/hulk))
@@ -266,7 +266,7 @@
 				return
 			return
 
-/turf/simulated/wall/attack_hand(mob/user as mob)
+/turf/simulated/wall/attack_hand(mob/user)
 	if(HULK in user.mutations) //#Z2 No more chances, just randomized damage and hurt intent
 		if(user.a_intent == "hurt")
 			playsound(user.loc, 'sound/effects/grillehit.ogg', 50, 1)
@@ -287,7 +287,7 @@
 	..()
 	return
 
-/turf/simulated/wall/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/turf/simulated/wall/attackby(obj/item/weapon/W, mob/user)
 
 	if (!(istype(user, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
 		user << "<span class='warning'>You don't have the dexterity to do this!</span>"

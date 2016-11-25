@@ -21,7 +21,7 @@
 	var/obj/machinery/light/newlight = null
 	var/sheets_refunded = 2
 
-/obj/item/light_fixture_frame/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/light_fixture_frame/attackby(obj/item/weapon/W, mob/user)
 	if (istype(W, /obj/item/weapon/wrench))
 		new /obj/item/stack/sheet/metal( get_turf(src.loc), sheets_refunded )
 		qdel(src)
@@ -84,22 +84,18 @@
 	if (fixture_type == "bulb")
 		icon_state = "bulb-construct-stage1"
 
-/obj/machinery/light_construct/examine()
-	set src in view()
+/obj/machinery/light_construct/examine(mob/user)
 	..()
-	if (!(usr in view(2))) return
-	switch(src.stage)
-		if(1)
-			usr << "It's an empty frame."
-			return
-		if(2)
-			usr << "It's wired."
-			return
-		if(3)
-			usr << "The casing is closed."
-			return
+	if (src in view(2, user))
+		switch(src.stage)
+			if(1)
+				user << "It's an empty frame."
+			if(2)
+				user << "It's wired."
+			if(3)
+				user << "The casing is closed."
 
-/obj/machinery/light_construct/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/machinery/light_construct/attackby(obj/item/weapon/W, mob/user)
 	src.add_fingerprint(user)
 	if (istype(W, /obj/item/weapon/wrench))
 		if (src.stage == 1)
@@ -288,7 +284,7 @@
 	return
 
 // update the icon_state and luminosity of the light depending on its state
-/obj/machinery/light/proc/update(var/trigger = 1)
+/obj/machinery/light/proc/update(trigger = 1)
 
 	update_icon()
 	if(on)
@@ -327,23 +323,23 @@
 
 // attempt to set the light's on/off status
 // will not switch on if broken/burned/empty
-/obj/machinery/light/proc/seton(var/s)
+/obj/machinery/light/proc/seton(s)
 	on = (s && status == LIGHT_OK)
 	update()
 
 // examine verb
-/obj/machinery/light/examine()
-	set src in oview(1)
-	if(usr && !usr.stat)
+/obj/machinery/light/examine(mob/user)
+	..()
+	if(src in oview(1, user))
 		switch(status)
 			if(LIGHT_OK)
-				usr << "[desc] It is turned [on? "on" : "off"]."
+				user << "[desc] It is turned [on? "on" : "off"]."
 			if(LIGHT_EMPTY)
-				usr << "[desc] The [fitting] has been removed."
+				user << "[desc] The [fitting] has been removed."
 			if(LIGHT_BURNED)
-				usr << "[desc] The [fitting] is burnt out."
+				user << "[desc] The [fitting] is burnt out."
 			if(LIGHT_BROKEN)
-				usr << "[desc] The [fitting] has been smashed."
+				user << "[desc] The [fitting] has been smashed."
 
 
 
@@ -453,7 +449,7 @@
 	var/area/A = src.loc.loc
 	return A.master.lightswitch && A.master.power_light
 
-/obj/machinery/light/proc/flicker(var/amount = rand(10, 20))
+/obj/machinery/light/proc/flicker(amount = rand(10, 20))
 	if(flickering) return
 	flickering = 1
 	spawn(0)
@@ -580,7 +576,7 @@
 
 // break the light and make sparks if was on
 
-/obj/machinery/light/proc/broken(var/skip_sound_and_sparks = 0)
+/obj/machinery/light/proc/broken(skip_sound_and_sparks = 0)
 	if(status == LIGHT_EMPTY)
 		return
 
@@ -737,7 +733,7 @@
 
 // attack bulb/tube with object
 // if a syringe, can inject phoron to make it explode
-/obj/item/weapon/light/attackby(var/obj/item/I, var/mob/user)
+/obj/item/weapon/light/attackby(obj/item/I, mob/user)
 	..()
 	if(istype(I, /obj/item/weapon/reagent_containers/syringe))
 		var/obj/item/weapon/reagent_containers/syringe/S = I
@@ -747,7 +743,7 @@
 		if(S.reagents.has_reagent("phoron", 5))
 
 			log_admin("LOG: [user.name] ([user.ckey]) injected a light with phoron, rigging it to explode.")
-			message_admins("LOG: [user.name] ([user.ckey]) injected a light with phoron, rigging it to explode.")
+			message_admins("LOG: [user.name] ([user.ckey]) injected a light with phoron, rigging it to explode. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 
 			rigged = 1
 

@@ -6,7 +6,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/stun, /obj/item/ammo_casing/energy/electrode)
 	cell_type = "/obj/item/weapon/stock_parts/cell/crap"
 
-/obj/item/weapon/gun/energy/taser/attack_self(mob/living/user as mob)
+/obj/item/weapon/gun/energy/taser/attack_self(mob/living/user)
 	select_fire(user)
 
 /obj/item/weapon/gun/energy/taser/tactifool
@@ -65,7 +65,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/stun/gun, /obj/item/ammo_casing/energy/electrode/gun)
 	cell_type = "/obj/item/weapon/stock_parts/cell"
 
-/obj/item/weapon/gun/energy/stunrevolver/attack_self(mob/living/user as mob)
+/obj/item/weapon/gun/energy/stunrevolver/attack_self(mob/living/user)
 	select_fire(user)
 
 /obj/item/weapon/gun/energy/crossbow

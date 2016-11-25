@@ -38,12 +38,14 @@
 	SSobj.processing.Remove(src)
 	return ..()
 
-/obj/item/weapon/tank/examine()
+/obj/item/weapon/tank/examine(mob/user)
+	..()
 	var/obj/icon = src
 	if (istype(src.loc, /obj/item/assembly))
 		icon = src.loc
 	if (!in_range(src, usr))
-		if (icon == src) usr << "\blue It's \a \icon[icon][src]! If you want any more information you'll need to get closer."
+		if (icon == src)
+			user << "<span class='notice'>If you want any more information you'll need to get closer.</span>"
 		return
 
 	var/celsius_temperature = src.air_contents.temperature-T0C
@@ -62,9 +64,7 @@
 	else
 		descriptive = "furiously hot"
 
-	usr << "\blue \The \icon[icon][src] feels [descriptive]"
-
-	return
+	user << "<span class='notice'>\The [icon][src] feels [descriptive].</span>"
 
 /obj/item/weapon/tank/blob_act()
 	if(prob(50))
@@ -77,7 +77,7 @@
 
 		qdel(src)
 
-/obj/item/weapon/tank/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/weapon/tank/attackby(obj/item/weapon/W, mob/user)
 	..()
 	var/obj/icon = src
 
@@ -120,13 +120,13 @@
 	if(istype(W, /obj/item/device/assembly_holder))
 		bomb_assemble(W,user)
 
-/obj/item/weapon/tank/attack_self(mob/user as mob)
+/obj/item/weapon/tank/attack_self(mob/user)
 	if (!(src.air_contents))
 		return
 
 	ui_interact(user)
 
-/obj/item/weapon/tank/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
+/obj/item/weapon/tank/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
 
 	var/using_internal
 	if(istype(loc,/mob/living/carbon))
@@ -238,7 +238,7 @@
 	var/pressure = air_contents.return_pressure()
 	if(pressure > TANK_FRAGMENT_PRESSURE)
 		if(!istype(src.loc,/obj/item/device/transfer_valve))
-			message_admins("Explosive tank rupture! last key to touch the tank was [src.fingerprintslast].")
+			message_admins("Explosive tank rupture! last key to touch the tank was [src.fingerprintslast]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)")
 			log_game("Explosive tank rupture! last key to touch the tank was [src.fingerprintslast].")
 		//world << "\blue[x],[y] tank is exploding: [pressure] kPa"
 		//Give the gas a chance to build up more pressure through reacting

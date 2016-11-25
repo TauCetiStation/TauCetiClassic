@@ -17,7 +17,7 @@
 	return 1
 
 
-/obj/item/weapon/implant/uplink/trigger(emote, mob/source as mob)
+/obj/item/weapon/implant/uplink/trigger(emote, mob/source)
 	if(hidden_uplink && usr == source) // Let's not have another people activate our uplink
 		hidden_uplink.check_trigger(source, emote, activation_emote)
 	return

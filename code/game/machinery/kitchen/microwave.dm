@@ -71,7 +71,7 @@
 *   Item Adding
 ********************/
 
-/obj/machinery/microwave/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/obj/machinery/microwave/attackby(obj/item/O, mob/user)
 	if(operating)
 		return
 	if(!broken && dirty<100)
@@ -187,13 +187,13 @@
 		return 1
 	src.updateUsrDialog()
 
-/obj/machinery/microwave/attack_paw(mob/user as mob)
+/obj/machinery/microwave/attack_paw(mob/user)
 	return src.attack_hand(user)
 
-/obj/machinery/microwave/attack_ai(mob/user as mob)
+/obj/machinery/microwave/attack_ai(mob/user)
 	return 0
 
-/obj/machinery/microwave/attack_hand(mob/user as mob)
+/obj/machinery/microwave/attack_hand(mob/user)
 	user.set_machine(src)
 	interact(user)
 
@@ -201,7 +201,7 @@
 *   Microwave Menu
 ********************/
 
-/obj/machinery/microwave/interact(mob/user as mob) // The microwave Menu
+/obj/machinery/microwave/interact(mob/user) // The microwave Menu
 	if(panel_open)
 		return
 	var/dat = "<div class='statusDisplay'>"
@@ -328,7 +328,7 @@
 		score["meals"]++
 		return
 
-/obj/machinery/microwave/proc/wzhzhzh(var/seconds as num)
+/obj/machinery/microwave/proc/wzhzhzh(seconds)
 	for (var/i=1 to seconds)
 		if (stat & (NOPOWER|BROKEN))
 			return 0

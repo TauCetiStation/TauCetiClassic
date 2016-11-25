@@ -24,7 +24,7 @@
 	..()
 	src.verbs -= /obj/item/weapon/reagent_containers/verb/set_APTFT
 
-/obj/item/weapon/reagent_containers/spray/afterattack(atom/A as mob|obj, mob/user as mob)
+/obj/item/weapon/reagent_containers/spray/afterattack(atom/A, mob/user)
 	if(istype(A, /obj/item/weapon/storage) || istype(A, /obj/structure/table) || istype(A, /obj/structure/rack) || istype(A, /obj/structure/closet) \
 	|| istype(A, /obj/item/weapon/reagent_containers) || istype(A, /obj/structure/sink) || istype(A, /obj/structure/janitorialcart))
 		return
@@ -58,17 +58,17 @@
 	playsound(src.loc, 'sound/effects/spray2.ogg', 50, 1, -6)
 
 	if(reagents.has_reagent("sacid"))
-		message_admins("[key_name_admin(user)] fired sulphuric acid from \a [src].")
+		message_admins("[key_name_admin(user)] fired sulphuric acid from \a [src]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 		log_game("[key_name(user)] fired sulphuric acid from \a [src].")
 	if(reagents.has_reagent("pacid"))
-		message_admins("[key_name_admin(user)] fired Polyacid from \a [src].")
+		message_admins("[key_name_admin(user)] fired Polyacid from \a [src]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 		log_game("[key_name(user)] fired Polyacid from \a [src].")
 	if(reagents.has_reagent("lube"))
-		message_admins("[key_name_admin(user)] fired Space lube from \a [src].")
+		message_admins("[key_name_admin(user)] fired Space lube from \a [src]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 		log_game("[key_name(user)] fired Space lube from \a [src].")
 	return
 
-/obj/item/weapon/reagent_containers/spray/proc/Spray_at(atom/A as mob|obj)
+/obj/item/weapon/reagent_containers/spray/proc/Spray_at(atom/A)
 	var/obj/effect/decal/chempuff/D = new/obj/effect/decal/chempuff(get_turf(src))
 	D.create_reagents(amount_per_transfer_from_this)
 	reagents.trans_to(D, amount_per_transfer_from_this, 1/spray_size)
@@ -93,19 +93,13 @@
 
 	return
 
-/obj/item/weapon/reagent_containers/spray/attack_self(var/mob/user)
+/obj/item/weapon/reagent_containers/spray/attack_self(mob/user)
 	if(!possible_transfer_amounts)
 		return
 	amount_per_transfer_from_this = next_in_list(amount_per_transfer_from_this, possible_transfer_amounts)
 	spray_size = next_in_list(spray_size, spray_sizes)
 	user << "<span class='notice'>You adjusted the pressure nozzle. You'll now use [amount_per_transfer_from_this] units per spray.</span>"
 
-
-/obj/item/weapon/reagent_containers/spray/examine()
-	set src in usr
-	..()
-	usr << "[round(src.reagents.total_volume)] units left."
-	return
 
 /obj/item/weapon/reagent_containers/spray/verb/empty()
 
@@ -149,16 +143,16 @@
 	..()
 	reagents.add_reagent("condensedcapsaicin", 40)
 
-/obj/item/weapon/reagent_containers/spray/pepper/examine()
+/obj/item/weapon/reagent_containers/spray/pepper/examine(mob/user)
 	..()
-	if(get_dist(usr,src) <= 1)
-		usr << "The safety is [safety ? "on" : "off"]."
+	if(src in view(1, user))
+		user << "The safety is [safety ? "on" : "off"]."
 
-/obj/item/weapon/reagent_containers/spray/pepper/attack_self(var/mob/user)
+/obj/item/weapon/reagent_containers/spray/pepper/attack_self(mob/user)
 	safety = !safety
 	usr << "<span class = 'notice'>You switch the safety [safety ? "on" : "off"].</span>"
 
-/obj/item/weapon/reagent_containers/spray/pepper/Spray_at(atom/A as mob|obj)
+/obj/item/weapon/reagent_containers/spray/pepper/Spray_at(atom/A)
 	..()
 
 //water flower
@@ -191,7 +185,7 @@
 
 
 //this is a big copypasta clusterfuck, but it's still better than it used to be!
-/obj/item/weapon/reagent_containers/spray/chemsprayer/Spray_at(atom/A as mob|obj)
+/obj/item/weapon/reagent_containers/spray/chemsprayer/Spray_at(atom/A)
 	var/Sprays[3]
 	for(var/i=1, i<=3, i++) // intialize sprays
 		if(src.reagents.total_volume < 1) break

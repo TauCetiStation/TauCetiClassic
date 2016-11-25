@@ -11,7 +11,7 @@
 /*
  * Banhammer
  */
-/obj/item/weapon/banhammer/attack(mob/M as mob, mob/user as mob)
+/obj/item/weapon/banhammer/attack(mob/M, mob/user)
 	M << "<font color='red'><b> You have been banned FOR NO REISIN by [user]<b></font>"
 	user << "<font color='red'> You have <b>BANNED</b> [M]</font>"
 
@@ -26,7 +26,7 @@
 /obj/item/weapon/melee/energy/sword/New()
 	item_color = pick("red","blue","green","purple")
 
-/obj/item/weapon/melee/energy/sword/attack_self(mob/living/user as mob)
+/obj/item/weapon/melee/energy/sword/attack_self(mob/living/user)
 	if ((CLUMSY in user.mutations) && prob(50))
 		user << "\red You accidentally cut yourself with [src]."
 		user.take_organ_damage(5,5)
@@ -72,7 +72,7 @@
 	slot_flags = SLOT_BELT
 	force = 10
 
-/obj/item/weapon/melee/classic_baton/attack(mob/M as mob, mob/living/user as mob)
+/obj/item/weapon/melee/classic_baton/attack(mob/M, mob/living/user)
 	if ((CLUMSY in user.mutations) && prob(50))
 		user << "\red You club yourself over the head."
 		user.Weaken(3 * force)
@@ -124,7 +124,7 @@
 	var/on = 0
 
 
-/obj/item/weapon/melee/telebaton/attack_self(mob/user as mob)
+/obj/item/weapon/melee/telebaton/attack_self(mob/user)
 	on = !on
 	if(on)
 		user.visible_message("\red With a flick of their wrist, [user] extends their telescopic baton.",\
@@ -165,7 +165,7 @@
 
 	return
 
-/obj/item/weapon/melee/telebaton/attack(mob/target as mob, mob/living/user as mob)
+/obj/item/weapon/melee/telebaton/attack(mob/target, mob/living/user)
 	if(on)
 		if ((CLUMSY in user.mutations) && prob(50))
 			user << "\red You club yourself over the head."
@@ -214,7 +214,7 @@
  * Energy Axe
  */
 
-/obj/item/weapon/melee/energy/axe/attack_self(mob/user as mob)
+/obj/item/weapon/melee/energy/axe/attack_self(mob/user)
 	src.active = !( src.active )
 	if (src.active)
 		user << "\blue The axe is now energised."
@@ -239,7 +239,7 @@
 	else
 		return 0
 
-/obj/item/weapon/shield/energy/attack_self(mob/living/user as mob)
+/obj/item/weapon/shield/energy/attack_self(mob/living/user)
 	if ((CLUMSY in user.mutations) && prob(50))
 		user << "\red You beat yourself in the head with [src]."
 		user.take_organ_damage(5)

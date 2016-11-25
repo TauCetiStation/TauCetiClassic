@@ -8,7 +8,7 @@
 	..()
 	layer = 3.1
 
-/obj/machinery/door/poddoor/shutters/attackby(obj/item/weapon/C as obj, mob/user as mob)
+/obj/machinery/door/poddoor/shutters/attackby(obj/item/weapon/C, mob/user)
 	add_fingerprint(user)
 	if(!(istype(C, /obj/item/weapon/crowbar) || (istype(C, /obj/item/weapon/twohanded/fireaxe) && C:wielded == 1) ))
 		return

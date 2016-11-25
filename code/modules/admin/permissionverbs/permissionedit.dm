@@ -71,7 +71,7 @@
 		remove_mentor(adm_ckey)
 	edit_rank(adm_ckey)
 
-/datum/admins/proc/remove_admin(var/adm_ckey)
+/datum/admins/proc/remove_admin(adm_ckey)
 	if(!usr.client)
 		return
 	if(!usr.client.holder || !(usr.client.holder.rights & R_PERMISSIONS))
@@ -90,7 +90,7 @@
 		message_admins("[key_name_admin(usr)] removed [adm_ckey] from the admins list")
 		log_admin("[key_name(usr)] removed [adm_ckey] from the admins list")
 
-/datum/admins/proc/edit_rank(var/adm_ckey)
+/datum/admins/proc/edit_rank(adm_ckey)
 	if(!usr.client)
 		return
 	if(!usr.client.holder || !(usr.client.holder.rights & R_PERMISSIONS))
@@ -127,7 +127,7 @@
 	message_admins("[key_name_admin(usr)] edited the admin rank of [adm_ckey] to [new_rank]")
 	log_admin("[key_name(usr)] edited the admin rank of [adm_ckey] to [new_rank]")
 
-/datum/admins/proc/change_permissions(var/adm_ckey)
+/datum/admins/proc/change_permissions(adm_ckey)
 	if(!usr.client)
 		return
 	if(!usr.client.holder || !(usr.client.holder.rights & R_PERMISSIONS))
@@ -210,7 +210,7 @@
 	log_query.Execute()
 	usr << "<font color='blue'> New mentor added.</font>"
 
-/datum/admins/proc/remove_mentor(var/ment_ckey)
+/datum/admins/proc/remove_mentor(ment_ckey)
 	if(!usr.client)
 		return
 	if(!usr.client.holder || !(usr.client.holder.rights & R_PERMISSIONS))
@@ -237,7 +237,7 @@
 		usr << "<font color='blue'> Mentor removed.</font>"
 
 
-/datum/admins/proc/db_admin_rank_modification(var/adm_ckey, var/new_rank)
+/datum/admins/proc/db_admin_rank_modification(adm_ckey, new_rank)
 	if(config.admin_legacy_system)
 		return
 	if(!usr.client)

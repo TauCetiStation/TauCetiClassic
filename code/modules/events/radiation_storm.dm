@@ -10,7 +10,7 @@
 	spawn()
 		world << sound('sound/AI/radiation.ogg')
 		command_alert("High levels of radiation detected near the station. Please evacuate into one of the shielded maintenance tunnels.", "Anomaly Alert")
-		make_maint_all_access()
+		make_maint_all_access(FALSE)
 
 
 		sleep(600)
@@ -52,8 +52,7 @@
 
 		command_alert("The station has passed the radiation belt. Please report to medbay if you experience any unusual symptoms. Maintenance will lose all access again shortly.", "Anomaly Alert")
 
-
-		sleep(600) // Want to give them time to get out of maintenance.
-
-
-		revoke_maint_all_access()
+		if(timer_maint_revoke_id)
+			deltimer(timer_maint_revoke_id)
+			timer_maint_revoke_id = 0
+		timer_maint_revoke_id = addtimer(GLOBAL_PROC, "revoke_maint_all_access", 600, TRUE, FALSE) // Want to give them time to get out of maintenance.

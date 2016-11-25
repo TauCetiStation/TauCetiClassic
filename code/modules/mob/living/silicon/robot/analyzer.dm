@@ -16,7 +16,7 @@
 	origin_tech = "magnets=1;biotech=1"
 	var/mode = 1;
 
-/obj/item/device/robotanalyzer/attack(mob/living/M as mob, mob/living/user as mob)
+/obj/item/device/robotanalyzer/attack(mob/living/M, mob/living/user)
 	if(( (CLUMSY in user.mutations) || user.getBrainLoss() >= 60) && prob(50))
 		user << text("\red You try to analyze the floor's vitals!")
 		for(var/mob/O in viewers(M, null))
@@ -29,7 +29,7 @@
 	if(!(istype(user, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
 		user << "\red You don't have the dexterity to do this!"
 		return
-	if(!istype(M, /mob/living/silicon/robot) && !(ishuman(M) && (M:species.flags & IS_SYNTHETIC)))
+	if(!istype(M, /mob/living/silicon/robot) && !(ishuman(M) && M:species.flags[IS_SYNTHETIC]))
 		user << "\red You can't analyze non-robotic things!"
 		return
 
@@ -60,7 +60,7 @@
 		if(H.emagged && prob(5))
 			user.show_message("\red \t ERROR: INTERNAL SYSTEMS COMPROMISED",1)
 
-	if (ishuman(M) && (M:species.flags & IS_SYNTHETIC))
+	if (ishuman(M) && M:species.flags[IS_SYNTHETIC])
 		var/mob/living/carbon/human/H = M
 		var/list/damaged = H.get_damaged_organs(1,1)
 		user.show_message("\blue Localized Damage, Brute/Electronics:",1)

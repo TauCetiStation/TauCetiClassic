@@ -1,4 +1,4 @@
-// reference: /client/proc/modify_variables(var/atom/O, var/param_var_name = null, var/autodetect_class = 0)
+// reference: /client/proc/modify_variables(atom/O, param_var_name = null, autodetect_class = 0)
 
 datum/proc/on_varedit(modified_var) //called whenever a var is edited
 	return
@@ -342,7 +342,7 @@ body
 
 	return
 
-/client/proc/debug_variable(name, value, level, var/datum/DA = null)
+/client/proc/debug_variable(name, value, level, datum/DA = null)
 	var/html = ""
 
 	if(DA)
@@ -784,7 +784,7 @@ body
 			usr << "Failed! Something went wrong."
 
 	else if(href_list["addlanguage"])
-		if(!check_rights(R_SPAWN))	return
+		if(!check_rights(R_VAREDIT))	return
 
 		var/mob/H = locate(href_list["addlanguage"])
 		if(!istype(H))
@@ -803,7 +803,7 @@ body
 			usr << "Mob already knows that language."
 
 	else if(href_list["remlanguage"])
-		if(!check_rights(R_SPAWN))	return
+		if(!check_rights(R_VAREDIT))	return
 
 		var/mob/H = locate(href_list["remlanguage"])
 		if(!istype(H))

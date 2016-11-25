@@ -1,7 +1,7 @@
 //This is a list of words which are ignored by the parser when comparing message contents for names. MUST BE IN LOWER CASE!
 var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","alien","as")
 
-client/proc/staffhelp(msg as text, var/help_type = null)
+client/proc/staffhelp(msg, help_type = null)
 	if(!help_type)
 		return
 
@@ -115,6 +115,7 @@ client/proc/staffhelp(msg as text, var/help_type = null)
 	switch(help_type)
 		if("MH")
 			log_msg = "[prefix]: [key_name(src)]: [original_msg] - heard by [mentor_number_present] non-AFK mentors and [admin_number_present] non-AFK admins."
+			send2slack_logs(key_name(src), original_msg, "(MHELP)")
 		if("AH")
 			log_msg = "[prefix]: [key_name(src)]: [original_msg] - heard by [admin_number_present] non-AFK admins."
 			//clean the input msg

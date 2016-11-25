@@ -18,7 +18,7 @@
 		..()
 		fireaxe = new /obj/item/weapon/twohanded/fireaxe(src)
 
-	attackby(var/obj/item/O as obj, var/mob/user as mob)  //Marker -Agouri
+	attackby(obj/item/O, mob/user)  //Marker -Agouri
 		//..() //That's very useful, Erro
 
 		var/hasaxe = 0       //gonna come in handy later~
@@ -105,7 +105,7 @@
 
 
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 
 		var/hasaxe = 0
 		if(fireaxe)
@@ -142,7 +142,7 @@
 				src.icon_state = text("fireaxe[][][][]closing",hasaxe,src.localopened,src.hitstaken,src.smashed)
 				spawn(10) update_icon()
 
-	attack_tk(mob/user as mob)
+	attack_tk(mob/user)
 		if(localopened && fireaxe)
 			fireaxe.forceMove(loc)
 			user << "<span class='notice'>You telekinetically remove the fire axe.</span>"
@@ -183,11 +183,11 @@
 			usr << "\blue The [src.name] is closed."
 		update_icon()
 
-	attack_paw(mob/user as mob)
+	attack_paw(mob/user)
 		attack_hand(user)
 		return
 
-	attack_ai(mob/user as mob)
+	attack_ai(mob/user)
 		if(src.smashed)
 			user << "\red The security of the cabinet is compromised."
 			return

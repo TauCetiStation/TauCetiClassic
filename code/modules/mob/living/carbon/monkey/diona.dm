@@ -14,7 +14,7 @@
 	universal_speak = 0      // before becoming an adult. Use *chirp.
 	holder_type = /obj/item/weapon/holder/diona
 
-/mob/living/carbon/monkey/diona/attack_hand(mob/living/carbon/human/M as mob)
+/mob/living/carbon/monkey/diona/attack_hand(mob/living/carbon/human/M)
 
 	//Let people pick the little buggers up.
 	if(M.a_intent == "help")
@@ -190,7 +190,7 @@
 
 	if(!M || !src) return
 
-	if(M.species.flags & NO_BLOOD)
+	if(M.species.flags[NO_BLOOD])
 		src << "\red That donor has no blood to take."
 		return
 
@@ -221,7 +221,7 @@
 		src << "\green The blood seeps into your small form, and you draw out the echoes of memories and personality from it, working them into your budding mind."
 
 
-/mob/living/carbon/monkey/diona/say_understands(var/mob/other,var/datum/language/speaking = null)
+/mob/living/carbon/monkey/diona/say_understands(mob/other,datum/language/speaking = null)
 
 	if (istype(other, /mob/living/carbon/human) && !speaking)
 		if(languages.len >= 2) // They have sucked down some blood.

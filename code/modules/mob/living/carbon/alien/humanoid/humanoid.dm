@@ -41,5 +41,5 @@
 		tally = -1 // hunters go supersuperfast
 	return (tally + move_delay_add + config.alien_delay)
 
-///mob/living/carbon/alien/humanoid/bullet_act(var/obj/item/projectile/Proj) taken care of in living
+///mob/living/carbon/alien/humanoid/bullet_act(obj/item/projectile/Proj) taken care of in living
 

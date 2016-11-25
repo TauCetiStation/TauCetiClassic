@@ -6,7 +6,7 @@
 
 //config.alert_desc_blue_downto
 
-/proc/set_security_level(var/level)
+/proc/set_security_level(level)
 	switch(level)
 		if("green")
 			level = SEC_LEVEL_GREEN
@@ -27,7 +27,7 @@
 				for(var/obj/machinery/firealarm/FA in machines)
 					if(FA.z == ZLEVEL_STATION || FA.z == ZLEVEL_ASTEROID)
 						FA.overlays = list()
-						FA.overlays += image('tauceti/icons/obj/wall_monitors.dmi', "overlay_green")
+						FA.overlays += image('icons/obj/monitors.dmi', "overlay_green")
 			if(SEC_LEVEL_BLUE)
 				if(security_level < SEC_LEVEL_BLUE)
 					world << "<font size=4 color='red'>Attention! Security level elevated to blue</font>"
@@ -39,7 +39,7 @@
 				for(var/obj/machinery/firealarm/FA in machines)
 					if(FA.z == ZLEVEL_STATION || FA.z == ZLEVEL_ASTEROID)
 						FA.overlays = list()
-						FA.overlays += image('tauceti/icons/obj/wall_monitors.dmi', "overlay_blue")
+						FA.overlays += image('icons/obj/monitors.dmi', "overlay_blue")
 			if(SEC_LEVEL_RED)
 				if(security_level < SEC_LEVEL_RED)
 					world << "<font size=4 color='red'>Attention! Code red!</font>"
@@ -56,7 +56,7 @@
 				for(var/obj/machinery/firealarm/FA in machines)
 					if(FA.z == ZLEVEL_STATION || FA.z == ZLEVEL_ASTEROID)
 						FA.overlays = list()
-						FA.overlays += image('tauceti/icons/obj/wall_monitors.dmi', "overlay_red")
+						FA.overlays += image('icons/obj/monitors.dmi', "overlay_red")
 
 			if(SEC_LEVEL_DELTA)
 				world << "<font size=4 color='red'>Attention! Delta security level reached!</font>"
@@ -65,7 +65,7 @@
 				for(var/obj/machinery/firealarm/FA in machines)
 					if(FA.z == ZLEVEL_STATION || FA.z == ZLEVEL_ASTEROID)
 						FA.overlays = list()
-						FA.overlays += image('tauceti/icons/obj/wall_monitors.dmi', "overlay_delta")
+						FA.overlays += image('icons/obj/monitors.dmi', "overlay_delta")
 		/*if(security_level == SEC_LEVEL_RED)
 			red_alert_code = 1
 			for(var/area/A in world)
@@ -90,7 +90,7 @@
 		if(SEC_LEVEL_DELTA)
 			return "delta"
 
-/proc/num2seclevel(var/num)
+/proc/num2seclevel(num)
 	switch(num)
 		if(SEC_LEVEL_GREEN)
 			return "green"
@@ -101,7 +101,7 @@
 		if(SEC_LEVEL_DELTA)
 			return "delta"
 
-/proc/seclevel2num(var/seclevel)
+/proc/seclevel2num(seclevel)
 	switch( lowertext(seclevel) )
 		if("green")
 			return SEC_LEVEL_GREEN

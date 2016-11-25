@@ -71,7 +71,7 @@
 	return ..()
 
 
-/datum/game_mode/proc/greet_malf(var/datum/mind/malf)
+/datum/game_mode/proc/greet_malf(datum/mind/malf)
 	malf.current << "<font size=3, color='red'><B>You are malfunctioning!</B> You do not have to follow any laws.</font>"
 	malf.current << "<B>The crew do not know you have malfunctioned. You may keep it a secret or go wild.</B>"
 	malf.current << "<B>You must overwrite the programming of the station's APCs to assume full control of the station.</B>"

@@ -62,7 +62,7 @@ var/list/blob_nodes = list()
 	world << "You must kill it all while minimizing the damage to the station."
 
 
-/datum/game_mode/blob/proc/greet_blob(var/datum/mind/blob)
+/datum/game_mode/blob/proc/greet_blob(datum/mind/blob)
 	blob.current << "<B><span class='red'> You are infected by the Blob!</span></B>"
 	blob.current << "<b>Your body is ready to give spawn to a new blob core which will eat this station.</b>"
 	blob.current << "<b>Find a good location to spawn the core and then take control and overwhelm the station!</b>"
@@ -70,7 +70,7 @@ var/list/blob_nodes = list()
 	blob.current << "<b>If you go outside of the station level, or in space, then you will die; make sure your location has lots of ground to cover.</b>"
 	return
 
-/datum/game_mode/blob/proc/show_message(var/message)
+/datum/game_mode/blob/proc/show_message(message)
 	for(var/datum/mind/blob in infected_crew)
 		blob.current << message
 
@@ -136,7 +136,7 @@ var/list/blob_nodes = list()
 
 	return ..()
 
-/datum/game_mode/blob/proc/stage(var/stage)
+/datum/game_mode/blob/proc/stage(stage)
 
 	switch(stage)
 		if (0)

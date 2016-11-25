@@ -52,7 +52,7 @@ var/global/list/breach_burn_descriptors = list(
 		descriptor = breach_brute_descriptors[class]
 
 //Repair a certain amount of brute or burn damage to the suit.
-/obj/item/clothing/suit/space/proc/repair_breaches(var/damtype, var/amount, var/mob/user)
+/obj/item/clothing/suit/space/proc/repair_breaches(damtype, amount, mob/user)
 
 	if(!can_breach || !breaches || !breaches.len || !damage)
 		user << "There are no breaches to repair on \the [src]."
@@ -84,7 +84,7 @@ var/global/list/breach_burn_descriptors = list(
 	user.visible_message("<b>[user]</b> patches some of the damage on \the [src].")
 	calc_breach_damage()
 
-/obj/item/clothing/suit/space/proc/create_breaches(var/damtype, var/amount)
+/obj/item/clothing/suit/space/proc/create_breaches(damtype, amount)
 
 	if(!can_breach || !amount)
 		return
@@ -174,7 +174,7 @@ var/global/list/breach_burn_descriptors = list(
 
 //Handles repairs (and also upgrades).
 
-/obj/item/clothing/suit/space/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/clothing/suit/space/attackby(obj/item/W, mob/user)
 	if(istype(W,/obj/item/stack/sheet/mineral/plastic) || istype(W,/obj/item/stack/sheet/metal))
 
 		if(istype(src.loc,/mob/living))
@@ -214,8 +214,8 @@ var/global/list/breach_burn_descriptors = list(
 
 	..()
 
-/obj/item/clothing/suit/space/examine()
+/obj/item/clothing/suit/space/examine(mob/user)
 	..()
 	if(can_breach && breaches && breaches.len)
 		for(var/datum/breach/B in breaches)
-			usr << "\red <B>It has \a [B.descriptor].</B>"
+			user << "<span class='danger'>It has \a [B.descriptor].</span>"

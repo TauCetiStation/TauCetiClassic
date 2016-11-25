@@ -68,7 +68,7 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 	return dat
 
 // Interaction code. Gathers a list of items purchasable from the paren't uplink and displays it. It also adds a lock button.
-/obj/item/device/uplink/interact(mob/user as mob)
+/obj/item/device/uplink/interact(mob/user)
 	var/dat = "<body link='yellow' alink='white' bgcolor='#601414'><font color='white'>"
 	dat += src.generate_menu()
 	dat += "<A href='byond://?src=\ref[src];lock=1'>Lock</a>"
@@ -137,7 +137,7 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 	active = !active
 
 // Directly trigger the uplink. Turn on if it isn't already.
-/obj/item/device/uplink/hidden/proc/trigger(mob/user as mob)
+/obj/item/device/uplink/hidden/proc/trigger(mob/user)
 	if(!active)
 		toggle()
 	interact(user)
@@ -145,7 +145,7 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 // Checks to see if the value meets the target. Like a frequency being a traitor_frequency, in order to unlock a headset.
 // If true, it accesses trigger() and returns 1. If it fails, it returns false. Use this to see if you need to close the
 // current item's menu.
-/obj/item/device/uplink/hidden/proc/check_trigger(mob/user as mob, var/value, var/target)
+/obj/item/device/uplink/hidden/proc/check_trigger(mob/user, value, target)
 	if(value == target)
 		trigger(user)
 		return 1
@@ -164,7 +164,7 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 	return 0
 
 //Refund proc for the borg teleporter (later I'll make a general refund proc if there is demand for it)
-/obj/item/device/radio/uplink/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/device/radio/uplink/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/antag_spawner/borg_tele))
 		var/obj/item/weapon/antag_spawner/borg_tele/S = W
 		if(!S.used)
@@ -184,14 +184,14 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 	icon_state = "radio"
 	hidden_uplink.uplink_type = "nuclear"
 
-/obj/item/device/radio/uplink/attack_self(mob/user as mob)
+/obj/item/device/radio/uplink/attack_self(mob/user)
 	if(hidden_uplink)
 		hidden_uplink.trigger(user)
 
 /obj/item/device/multitool/uplink/New()
 	hidden_uplink = new(src)
 
-/obj/item/device/multitool/uplink/attack_self(mob/user as mob)
+/obj/item/device/multitool/uplink/attack_self(mob/user)
 	if(hidden_uplink)
 		hidden_uplink.trigger(user)
 

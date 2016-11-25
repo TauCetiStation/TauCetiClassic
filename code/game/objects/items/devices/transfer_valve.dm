@@ -11,7 +11,7 @@
 	var/valve_open = 0
 	var/toggle = 1
 
-/obj/item/device/transfer_valve/proc/process_activation(var/obj/item/device/D)
+/obj/item/device/transfer_valve/proc/process_activation(obj/item/device/D)
 
 /obj/item/device/transfer_valve/IsAssemblyHolder()
 	return 1
@@ -52,27 +52,27 @@
 		A.toggle_secure()	//this calls update_icon(), which calls update_icon() on the holder (i.e. the bomb).
 
 		bombers += "[key_name(user)] attached a [item] to a transfer valve."
-		message_admins("[key_name_admin(user)] attached a [item] to a transfer valve.")
+		message_admins("[key_name_admin(user)] attached a [item] to a transfer valve. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 		log_game("[key_name_admin(user)] attached a [item] to a transfer valve.")
 		attacher = user
 		nanomanager.update_uis(src) // update all UIs attached to src
 	return
 
 
-/obj/item/device/transfer_valve/HasProximity(atom/movable/AM as mob|obj)
+/obj/item/device/transfer_valve/HasProximity(atom/movable/AM)
 	if(!attached_device)	return
 	attached_device.HasProximity(AM)
 	return
 
-/obj/item/device/transfer_valve/hear_talk(mob/living/M as mob, msg)
+/obj/item/device/transfer_valve/hear_talk(mob/living/M, msg)
 	if(!attached_device)	return
 	attached_device.hear_talk(M,msg)
 	return
 
-/obj/item/device/transfer_valve/attack_self(mob/user as mob)
+/obj/item/device/transfer_valve/attack_self(mob/user)
 	ui_interact(user)
 
-/obj/item/device/transfer_valve/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
+/obj/item/device/transfer_valve/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
 
 	// this is the data which will be sent to the ui
 	var/data[0]
@@ -125,7 +125,7 @@
 	src.add_fingerprint(usr)
 	return 1 // Returning 1 sends an update to attached UIs
 
-/obj/item/device/transfer_valve/process_activation(var/obj/item/device/D)
+/obj/item/device/transfer_valve/process_activation(obj/item/device/D)
 	if(toggle)
 		toggle = 0
 		toggle_valve()
@@ -195,7 +195,7 @@
 
 		log_str += " Last touched by: [src.fingerprintslast][last_touch_info]"
 		bombers += log_str
-		message_admins(log_str, 0, 1)
+		message_admins(log_str)
 		log_game(log_str)
 		merge_gases()
 		spawn(20) // In case one tank bursts

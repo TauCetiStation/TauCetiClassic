@@ -20,7 +20,7 @@
 /datum/stockEvent/proc/transition()
 	return
 
-/datum/stockEvent/proc/spacetime(var/ticks)
+/datum/stockEvent/proc/spacetime(ticks)
 	var/seconds = round(ticks / 10)
 	var/minutes = round(seconds / 60)
 	seconds -= minutes * 60
