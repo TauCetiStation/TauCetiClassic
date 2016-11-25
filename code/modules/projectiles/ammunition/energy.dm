@@ -76,6 +76,7 @@
 	projectile_type = /obj/item/projectile/beam/stun
 	select_name = "stun"
 	fire_sound = 'sound/weapons/taser.ogg'
+	e_cost = 50
 
 /obj/item/ammo_casing/energy/electrode/gun
 	fire_sound = 'sound/weapons/gunshot.ogg'
