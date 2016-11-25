@@ -215,7 +215,7 @@ a.popt {text-decoration: none;}
 .bold, .name, .prefix, .ooc, .adminooc, .adminlooc, .admin, .adminobserverooc, .adminooc, .adminobserver, .adminsay, .wet {font-weight: bold;}
 
 /* ADD HERE FOR ITALIC */
-.italic, .ghostdronesay.broadcast {font-style: italic;}
+.italic {font-style: italic;}
 
 /* OUTPUT COLORS */
 .highlight {background: yellow;}
@@ -252,6 +252,13 @@ h1.alert, h2.alert		{color: #000000;}
 .medradio				{color: #008160;}
 .sciradio				{color: #993399;}
 .supradio				{color: #5F4519;}
+
+/* Radio: Misc */
+.radio					{color: #008000;}
+.deptradio				{color: #993399;}
+.deadsay				{color: #5c00e6;}
+.newscaster				{color: #800000;}
+
 /* Game Messages */
 .attack					{color: #ff0000;}
 .moderate				{color: #CC0000;}
