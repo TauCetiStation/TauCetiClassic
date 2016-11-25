@@ -9,6 +9,13 @@
 	origin_tech = "combat=3;magnets=2"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser)
 
+/obj/item/weapon/gun/energy/laser/New()
+	..()
+	if(power_supply)
+		power_supply.maxcharge = 1500
+		power_supply.charge = 1500
+
+
 /obj/item/weapon/gun/energy/laser/isHandgun()
 	return 0
 
