@@ -3867,9 +3867,8 @@ datum
 				if(1 to 5)
 					var/datum/organ/external/affecting = H.get_organ()
 					for(var/datum/wound/W in affecting.wounds)
-						spawn(1)
-							affecting.wounds -= W
-							H.visible_message("<span class='warning'>[H]'s wounds close up in the blink of an eye!</span>")
+						affecting.wounds -= W
+						H.visible_message("<span class='warning'>[H]'s wounds close up in the blink of an eye!</span>")
 					if(H.getOxyLoss() > 0 && prob(90))
 						if(holder.has_reagent("mednanobots"))
 							H.adjustOxyLoss(-4)
@@ -3912,9 +3911,8 @@ datum
 				if(5 to 20)		//Danger zone healing. Adds to a human mob's "percent machine" var, which is directly translated into the chance that it will turn horror each tick that the reagent is above 5u.
 					var/datum/organ/external/affecting = H.get_organ()
 					for(var/datum/wound/W in affecting.wounds)
-						spawn(1)
-							affecting.wounds -= W
-							H.visible_message("<span class='warning'>[H]'s wounds close up in the blink of an eye!</span>")
+						affecting.wounds -= W
+						H.visible_message("<span class='warning'>[H]'s wounds close up in the blink of an eye!</span>")
 					if(H.getOxyLoss() > 0 && prob(90))
 						if(holder.has_reagent("mednanobots"))
 							H.adjustOxyLoss(-4)
@@ -3968,17 +3966,16 @@ datum
 						holder.add_reagent("mednanobots", 20)
 						to_chat(M, pick("<b><span class='warning'>Your body lurches!</b></span>"))
 				if(20 to INFINITY)
-					if(ishuman(M))
-						spawning_horror = 1
-						to_chat(M, pick("<b><span class='warning'>Something doesn't feel right...</span></b>", "<b><span class='warning'>Something is growing inside you!</span></b>", "<b><span class='warning'>You feel your insides rearrange!</span></b>"))
-						spawn(60)
-							if(spawning_horror == 1)
-								to_chat(M, pick( "<b><span class='warning'>Something bursts out from inside you!</span></b>"))
-								message_admins("[key_name(H)] has gibbed and spawned a new cyber horror due to nanobots. (<A HREF='?_src_=holder;adminmoreinfo=\ref[H]'>?</A>)")
-								log_game("[key_name(H)] has gibbed and spawned a new cyber horror due to nanobots")
-								new /mob/living/simple_animal/hostile/monster/cyber_horror(H.loc)
-								spawning_horror = 0
-								H.gib()
+					spawning_horror = 1
+					to_chat(M, pick("<b><span class='warning'>Something doesn't feel right...</span></b>", "<b><span class='warning'>Something is growing inside you!</span></b>", "<b><span class='warning'>You feel your insides rearrange!</span></b>"))
+					spawn(60)
+						if(spawning_horror)
+							to_chat(M, pick( "<b><span class='warning'>Something bursts out from inside you!</span></b>"))
+							message_admins("[key_name(H)] has gibbed and spawned a new cyber horror due to nanobots. (<A HREF='?_src_=holder;adminmoreinfo=\ref[H]'>?</A>)")
+							log_game("[key_name(H)] has gibbed and spawned a new cyber horror due to nanobots")
+							new /mob/living/simple_animal/hostile/monster/cyber_horror(H.loc)
+							spawning_horror = 0
+							H.gib()
 	else
 		holder.del_reagent("mednanobots")
 
