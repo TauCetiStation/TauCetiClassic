@@ -1262,6 +1262,7 @@ About the new airlock wires panel:
 				if(glass && da.can_insert_glass)
 					da.set_glass(TRUE)
 				da.state = ASSEMBLY_WIRED
+				da.dir = src.dir
 				da.created_name = src.name
 				da.update_state()
 
