@@ -256,10 +256,17 @@
 		return
 	var/paramslist = params2list(params)
 	if(paramslist["shift"]) // screen objects don't do the normal Click() stuff so we'll cheat
-		usr << "<span class='boldnotice'>[name]</span> - <span class='info'>[desc]</span>"
+		to_chat(usr, "<span class='boldnotice'>[name]</span> - <span class='info'>[desc]</span>")
 		return
 	if(master)
 		return usr.client.Click(master, location, control, params)
+
+/obj/screen/alert/MouseEntered(location,control,params)
+	openToolTip(usr,src,params,title = name,content = desc)
+
+
+/obj/screen/alert/MouseExited()
+	closeToolTip(usr)
 
 /obj/screen/alert/Destroy()
 	return QDEL_HINT_PUTINPOOL //Don't destroy me, I have a family!

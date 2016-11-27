@@ -112,7 +112,7 @@
 	src.icon_state = "[lasercolor]ed209[src.on]"
 	src.updateUsrDialog()
 
-/obj/machinery/bot/ed209/attack_hand(mob/user as mob)
+/obj/machinery/bot/ed209/attack_hand(mob/user)
 	. = ..()
 	if (.)
 		return
@@ -152,53 +152,48 @@ Auto Patrol: []"},
 	return
 
 /obj/machinery/bot/ed209/Topic(href, href_list)
-	if (..())
+	. = ..()
+	if(!.)
 		return
-	usr.set_machine(src)
-	src.add_fingerprint(usr)
-	if(lasercolor && (istype(usr,/mob/living/carbon/human)))
+
+	if(lasercolor && ishuman(usr))
 		var/mob/living/carbon/human/H = usr
 		if((lasercolor == "b") && (istype(H.wear_suit, /obj/item/clothing/suit/redtag)))//Opposing team cannot operate it
-			return
+			return FALSE
 		else if((lasercolor == "r") && (istype(H.wear_suit, /obj/item/clothing/suit/bluetag)))
-			return
+			return FALSE
 	if ((href_list["power"]) && (src.allowed(usr)))
 		if (src.on)
 			turn_off()
 		else
 			turn_on()
-		return
 
 	switch(href_list["operation"])
 		if ("idcheck")
 			src.idcheck = !src.idcheck
-			src.updateUsrDialog()
 		if ("ignorerec")
 			src.check_records = !src.check_records
-			src.updateUsrDialog()
 		if ("switchmode")
 			src.arrest_type = !src.arrest_type
-			src.updateUsrDialog()
 		if("patrol")
 			auto_patrol = !auto_patrol
 			mode = SECBOT_IDLE
-			updateUsrDialog()
 		if("declarearrests")
 			src.declare_arrests = !src.declare_arrests
-			src.updateUsrDialog()
+	src.updateUsrDialog()
 
-/obj/machinery/bot/ed209/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/machinery/bot/ed209/attackby(obj/item/weapon/W, mob/user)
 	if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if (src.allowed(user) && !open && !emagged)
 			src.locked = !src.locked
-			user << "<span class='notice'>Controls are now [src.locked ? "locked" : "unlocked"].</span>"
+			to_chat(user, "<span class='notice'>Controls are now [src.locked ? "locked" : "unlocked"].</span>")
 		else
 			if(emagged)
-				user << "<span class='warning'>ERROR</span>"
+				to_chat(user, "<span class='warning'>ERROR</span>")
 			if(open)
-				user << "<span class='warning'>Please close the access panel before locking it.</span>"
+				to_chat(user, "<span class='warning'>Please close the access panel before locking it.</span>")
 			else
-				user << "<span class='notice'>Access denied.</span>"
+				to_chat(user, "<span class='notice'>Access denied.</span>")
 	else
 		..()
 		if (!istype(W, /obj/item/weapon/screwdriver) && (!src.target))
@@ -208,15 +203,17 @@ Auto Patrol: []"},
 					src.shootAt(user)
 				src.mode = SECBOT_HUNT
 
-/obj/machinery/bot/ed209/Emag(mob/user as mob)
+/obj/machinery/bot/ed209/Emag(mob/user)
 	..()
 	if(open && !locked)
-		if(user) user << "<span class='warning'>You short out [src]'s target assessment circuits.</span>"
+		if(user)
+			to_chat(user, "<span class='warning'>You short out [src]'s target assessment circuits.</span>")
 		spawn(0)
 			for(var/mob/O in hearers(src, null))
 				O.show_message("\red <B>[src] buzzes oddly!</B>", 1)
 		src.target = null
-		if(user) src.oldtarget_name = user.name
+		if(user)
+			src.oldtarget_name = user.name
 		src.last_found = world.time
 		src.anchored = 0
 		src.emagged = 2
@@ -499,7 +496,7 @@ Auto Patrol: []"},
 // sets the current destination
 // signals all beacons matching the patrol code
 // beacons will return a signal giving their locations
-/obj/machinery/bot/ed209/proc/set_destination(var/new_dest)
+/obj/machinery/bot/ed209/proc/set_destination(new_dest)
 	new_destination = new_dest
 	post_signal(beacon_freq, "findbeacon", "patrol")
 	awaiting_beacon = 1
@@ -514,9 +511,9 @@ Auto Patrol: []"},
 		return
 
 	/*
-	world << "rec signal: [signal.source]"
+	to_chat(world, "rec signal: [signal.source]")
 	for(var/x in signal.data)
-		world << "* [x] = [signal.data[x]]"
+		to_chat(world, "* [x] = [signal.data[x]]")
 	*/
 
 	var/recv = signal.data["command"]
@@ -583,11 +580,11 @@ Auto Patrol: []"},
 
 
 // send a radio signal with a single data key/value pair
-/obj/machinery/bot/ed209/proc/post_signal(var/freq, var/key, var/value)
+/obj/machinery/bot/ed209/proc/post_signal(freq, key, value)
 	post_signal_multiple(freq, list("[key]" = value) )
 
 // send a radio signal with multiple data key/values
-/obj/machinery/bot/ed209/proc/post_signal_multiple(var/freq, var/list/keyval)
+/obj/machinery/bot/ed209/proc/post_signal_multiple(freq, list/keyval)
 
 	var/datum/radio_frequency/frequency = radio_controller.return_frequency(freq)
 
@@ -621,7 +618,7 @@ Auto Patrol: []"},
 
 // calculates a path to the current destination
 // given an optional turf to avoid
-/obj/machinery/bot/ed209/proc/calc_path(var/turf/avoid = null)
+/obj/machinery/bot/ed209/proc/calc_path(turf/avoid = null)
 	src.path = AStar(src.loc, patrol_target, /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance, 0, 120, id=botcard, exclude=avoid)
 	if (!src.path) src.path = list()
 
@@ -666,7 +663,7 @@ Auto Patrol: []"},
 
 //If the security records say to arrest them, arrest them
 //Or if they have weapons and aren't security, arrest them.
-/obj/machinery/bot/ed209/proc/assess_perp(mob/living/carbon/human/perp as mob)
+/obj/machinery/bot/ed209/proc/assess_perp(mob/living/carbon/human/perp)
 	var/threatcount = 0
 
 	if(src.emagged == 2) return 10 //Everyone is a criminal!
@@ -750,14 +747,14 @@ Auto Patrol: []"},
 	return
 
 /* terrible
-/obj/machinery/bot/ed209/Bumped(atom/movable/M as mob|obj)
+/obj/machinery/bot/ed209/Bumped(atom/movable/M)
 	spawn(0)
 		if (M)
 			var/turf/T = get_turf(src)
 			M:loc = T
 */
 
-/obj/machinery/bot/ed209/proc/speak(var/message)
+/obj/machinery/bot/ed209/proc/speak(message)
 	for(var/mob/O in hearers(src, null))
 		O.show_message("<span class='game say'><span class='name'>[src]</span> beeps, \"[message]\"",2)
 	return
@@ -806,7 +803,7 @@ Auto Patrol: []"},
 	qdel(src)
 
 
-/obj/machinery/bot/ed209/proc/shootAt(var/mob/target)
+/obj/machinery/bot/ed209/proc/shootAt(mob/target)
 	if(lastfired && world.time - lastfired < shot_delay)
 		return
 	lastfired = world.time
@@ -850,7 +847,7 @@ Auto Patrol: []"},
 		return
 	return
 
-/obj/machinery/bot/ed209/attack_alien(var/mob/living/carbon/alien/user as mob)
+/obj/machinery/bot/ed209/attack_alien(mob/living/carbon/alien/user)
 	..()
 	if (!isalien(target))
 		src.target = user
@@ -895,7 +892,7 @@ Auto Patrol: []"},
 
 
 
-/obj/item/weapon/ed209_assembly/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/weapon/ed209_assembly/attackby(obj/item/weapon/W, mob/user)
 	..()
 
 	if(istype(W, /obj/item/weapon/pen))
@@ -911,7 +908,7 @@ Auto Patrol: []"},
 				user.drop_item()
 				qdel(W)
 				build_step++
-				user << "<span class='notice'>You add the robot leg to [src].</span>"
+				to_chat(user, "<span class='notice'>You add the robot leg to [src].</span>")
 				name = "legs/frame assembly"
 				if(build_step == 1)
 					item_state = "ed209_leg"
@@ -929,7 +926,7 @@ Auto Patrol: []"},
 				user.drop_item()
 				qdel(W)
 				build_step++
-				user << "<span class='notice'>You add the armor to [src].</span>"
+				to_chat(user, "<span class='notice'>You add the armor to [src].</span>")
 				name = "vest/legs/frame assembly"
 				item_state = "[lasercolor]ed209_shell"
 				icon_state = "[lasercolor]ed209_shell"
@@ -940,13 +937,13 @@ Auto Patrol: []"},
 				if(WT.remove_fuel(0,user))
 					build_step++
 					name = "shielded frame assembly"
-					user << "<span class='notice'>You welded the vest to [src].</span>"
+					to_chat(user, "<span class='notice'>You welded the vest to [src].</span>")
 		if(4)
 			if( istype(W, /obj/item/clothing/head/helmet) )
 				user.drop_item()
 				qdel(W)
 				build_step++
-				user << "<span class='notice'>You add the helmet to [src].</span>"
+				to_chat(user, "<span class='notice'>You add the helmet to [src].</span>")
 				name = "covered and shielded frame assembly"
 				item_state = "[lasercolor]ed209_hat"
 				icon_state = "[lasercolor]ed209_hat"
@@ -956,7 +953,7 @@ Auto Patrol: []"},
 				user.drop_item()
 				qdel(W)
 				build_step++
-				user << "<span class='notice'>You add the prox sensor to [src].</span>"
+				to_chat(user, "<span class='notice'>You add the prox sensor to [src].</span>")
 				name = "covered, shielded and sensored frame assembly"
 				item_state = "[lasercolor]ed209_prox"
 				icon_state = "[lasercolor]ed209_prox"
@@ -965,12 +962,12 @@ Auto Patrol: []"},
 			if( istype(W, /obj/item/weapon/cable_coil) )
 				var/obj/item/weapon/cable_coil/coil = W
 				var/turf/T = get_turf(user)
-				user << "<span class='notice'>You start to wire [src]...</span>"
+				to_chat(user, "<span class='notice'>You start to wire [src]...</span>")
 				sleep(40)
 				if(get_turf(user) == T && build_step == 6)
 					coil.use(1)
 					build_step++
-					user << "<span class='notice'>You wire the ED-209 assembly.</span>"
+					to_chat(user, "<span class='notice'>You wire the ED-209 assembly.</span>")
 					name = "wired ED-209 assembly"
 
 		if(7)
@@ -990,7 +987,7 @@ Auto Patrol: []"},
 				else
 					return
 			build_step++
-			user << "<span class='notice'>You add [W] to [src].</span>"
+			to_chat(user, "<span class='notice'>You add [W] to [src].</span>")
 			src.item_state = "[lasercolor]ed209_taser"
 			src.icon_state = "[lasercolor]ed209_taser"
 			user.drop_item()
@@ -1000,17 +997,17 @@ Auto Patrol: []"},
 			if( istype(W, /obj/item/weapon/screwdriver) )
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
 				var/turf/T = get_turf(user)
-				user << "<span class='notice'>Now attaching the gun to the frame...</span>"
+				to_chat(user, "<span class='notice'>Now attaching the gun to the frame...</span>")
 				sleep(40)
 				if(get_turf(user) == T && build_step == 8)
 					build_step++
 					name = "armed [name]"
-					user << "<span class='notice'>Taser gun attached.</span>"
+					to_chat(user, "<span class='notice'>Taser gun attached.</span>")
 
 		if(9)
 			if( istype(W, /obj/item/weapon/stock_parts/cell) )
 				build_step++
-				user << "<span class='notice'>You complete the ED-209.</span>"
+				to_chat(user, "<span class='notice'>You complete the ED-209.</span>")
 				var/turf/T = get_turf(src)
 				new /obj/machinery/bot/ed209(T,created_name,lasercolor)
 				user.drop_item()
@@ -1019,7 +1016,7 @@ Auto Patrol: []"},
 				qdel(src)
 
 
-/obj/machinery/bot/ed209/bullet_act(var/obj/item/projectile/Proj)
+/obj/machinery/bot/ed209/bullet_act(obj/item/projectile/Proj)
 	if((src.lasercolor == "b") && (src.disabled == 0))
 		if(istype(Proj, /obj/item/projectile/beam/lastertag/red))
 			src.disabled = 1

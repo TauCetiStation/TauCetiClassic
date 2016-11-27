@@ -16,12 +16,12 @@
 	var/breakouttime = 1200 //Deciseconds = 120s = 2 minutes
 	var/cuff_sound = 'sound/weapons/handcuffs.ogg'
 
-/obj/item/weapon/handcuffs/attack(mob/living/carbon/C as mob, mob/user as mob)
+/obj/item/weapon/handcuffs/attack(mob/living/carbon/C, mob/user)
 	if (!istype(user, /mob/living/carbon/human))
-		user << "\red You don't have the dexterity to do this!"
+		to_chat(user, "\red You don't have the dexterity to do this!")
 		return
 	if ((CLUMSY in usr.mutations) && prob(50))
-		user << "\red Uh ... how do those things work?!"
+		to_chat(user, "\red Uh ... how do those things work?!")
 		place_handcuffs(user, user)
 		return
 	if(!C.handcuffed)
@@ -34,9 +34,9 @@
 			if (G.loc == user && G.state >= GRAB_AGGRESSIVE)
 				place_handcuffs(C, user)
 				return
-		user << "\red You need to have a firm grip on [C] before you can put \the [src] on!"
+		to_chat(user, "\red You need to have a firm grip on [C] before you can put \the [src] on!")
 
-/obj/item/weapon/handcuffs/proc/place_handcuffs(var/mob/living/carbon/target, var/mob/user)
+/obj/item/weapon/handcuffs/proc/place_handcuffs(mob/living/carbon/target, mob/user)
 	playsound(src.loc, cuff_sound, 30, 1, -2)
 
 	if (ishuman(target))
@@ -73,7 +73,7 @@
 		return
 
 var/last_chew = 0
-/mob/living/carbon/human/RestrainedClickOn(var/atom/A)
+/mob/living/carbon/human/RestrainedClickOn(atom/A)
 	if (A != src) return ..()
 	if (last_chew + 26 > world.time) return
 
@@ -130,7 +130,7 @@ var/last_chew = 0
 /obj/item/weapon/handcuffs/cyborg
 	dispenser = 1
 
-/obj/item/weapon/handcuffs/cyborg/attack(mob/living/carbon/C as mob, mob/user as mob)
+/obj/item/weapon/handcuffs/cyborg/attack(mob/living/carbon/C, mob/user)
 	if(!C.handcuffed)
 		var/turf/p_loc = user.loc
 		var/turf/p_loc_m = C.loc

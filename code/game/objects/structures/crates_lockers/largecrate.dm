@@ -6,11 +6,11 @@
 	density = 1
 	flags = FPRINT
 
-/obj/structure/largecrate/attack_hand(mob/user as mob)
-	user << "<span class='notice'>You need a crowbar to pry this open!</span>"
+/obj/structure/largecrate/attack_hand(mob/user)
+	to_chat(user, "<span class='notice'>You need a crowbar to pry this open!</span>")
 	return
 
-/obj/structure/largecrate/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/structure/largecrate/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/crowbar))
 		new /obj/item/stack/sheet/wood(src)
 		var/turf/T = get_turf(src)

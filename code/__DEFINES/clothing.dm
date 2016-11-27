@@ -79,3 +79,9 @@
 
 #define BLOCKHEADHAIR 4             // temporarily removes the user's hair overlay. Leaves facial hair.
 #define BLOCKHAIR	32768			// temporarily removes the user's hair, facial and otherwise.
+
+// Cutting shoes flags
+
+#define NO_CLIPPING   -1
+#define CLIPPABLE      0
+#define CLIPPED        1

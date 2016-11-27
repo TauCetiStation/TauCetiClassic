@@ -64,13 +64,13 @@
 	return foundgenerator
 
 
-/obj/machinery/computer/gravity_control_computer/attack_paw(mob/user as mob)
+/obj/machinery/computer/gravity_control_computer/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/machinery/computer/gravity_control_computer/attack_ai(mob/user as mob)
+/obj/machinery/computer/gravity_control_computer/attack_ai(mob/user)
 	return attack_hand(user)
 
-/obj/machinery/computer/gravity_control_computer/attack_hand(mob/user as mob)
+/obj/machinery/computer/gravity_control_computer/attack_hand(mob/user)
 	user.set_machine(src)
 	add_fingerprint(user)
 
@@ -113,14 +113,9 @@
 
 
 /obj/machinery/computer/gravity_control_computer/Topic(href, href_list)
-	//set background = 1
-	..()
-
-	if ( (get_dist(src, usr) > 1 ))
-		if (!istype(usr, /mob/living/silicon))
-			usr.unset_machine()
-			usr << browse(null, "window=air_alarm")
-			return
+	. = ..()
+	if(!.)
+		return
 
 	if(href_list["gentoggle"])
 		if(gravity_generator:on)
@@ -140,5 +135,4 @@
 				gravity_generator:on = 1
 				A.gravitychange(1,A)
 
-		src.updateUsrDialog()
-		return
+	src.updateUsrDialog()

@@ -9,7 +9,7 @@
 	gas_transfer_coefficient = 0.90
 
 //Monkeys can not take the muzzle off of themself! Call PETA!
-/obj/item/clothing/mask/muzzle/attack_paw(mob/user as mob)
+/obj/item/clothing/mask/muzzle/attack_paw(mob/user)
 	if (src == user.wear_mask)
 		return
 	else
@@ -124,13 +124,13 @@
 		flags ^= MASKCOVERSMOUTH
 		if(flags & MASKCOVERSMOUTH)
 			src.icon_state = initial(icon_state)
-			usr << "Your bandana is now covering your face."
+			to_chat(usr, "Your bandana is now covering your face.")
 		else
 			src.icon_state += "_up"
-			usr << "You tie the bandana around your head."
+			to_chat(usr, "You tie the bandana around your head.")
 		usr.update_inv_wear_mask()
 
-/obj/item/clothing/mask/bandana/attack_self(var/mob/user)
+/obj/item/clothing/mask/bandana/attack_self(mob/user)
 	adjustmask(user)
 
 /obj/item/clothing/mask/bandana/red

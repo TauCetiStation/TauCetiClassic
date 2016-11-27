@@ -725,7 +725,7 @@
 			//world << "DEBUG: runnable_mode\[[runnable_modes.len]\] = [M.config_tag]"
 	return runnable_modes
 
-/datum/configuration/proc/get_custom_modes(var/type_of_selection)
+/datum/configuration/proc/get_custom_modes(type_of_selection)
 	var/list/datum/game_mode/runnable_modes = new
 	for (var/T in (typesof(/datum/game_mode) - /datum/game_mode))
 		var/datum/game_mode/M = new T()

@@ -24,10 +24,10 @@
 	volume = 5
 	can_be_placed_into = null
 
-/obj/item/weapon/reagent_containers/glass/rag/attack_self(mob/user as mob)
+/obj/item/weapon/reagent_containers/glass/rag/attack_self(mob/user)
 	return
 
-/obj/item/weapon/reagent_containers/glass/rag/attack(atom/target as obj|turf|area, mob/user as mob , flag)
+/obj/item/weapon/reagent_containers/glass/rag/attack(atom/target, mob/user , flag)
 	if(ismob(target) && target.reagents && reagents.total_volume)
 		user.visible_message("\red \The [target] has been smothered with \the [src] by \the [user]!", "\red You smother \the [target] with \the [src]!", "You hear some struggling and muffled cries of surprise")
 		src.reagents.reaction(target, TOUCH)
@@ -36,7 +36,7 @@
 	else
 		..()
 
-/obj/item/weapon/reagent_containers/glass/rag/afterattack(atom/A as obj|turf|area, mob/user as mob, proximity)
+/obj/item/weapon/reagent_containers/glass/rag/afterattack(atom/A, mob/user, proximity)
 	if(!proximity) return
 	if(istype(A) && src in user)
 		user.visible_message("[user] starts to wipe down [A] with [src]!")
@@ -48,6 +48,6 @@
 /obj/item/weapon/reagent_containers/glass/rag/examine()
 	if (!usr)
 		return
-	usr << "That's \a [src]."
-	usr << desc
+	to_chat(usr, "That's \a [src].")
+	to_chat(usr, desc)
 	return

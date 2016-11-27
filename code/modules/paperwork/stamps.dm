@@ -65,5 +65,5 @@
 	item_color = "centcomm"
 
 
-/obj/item/weapon/stamp/attack_paw(mob/user as mob)
+/obj/item/weapon/stamp/attack_paw(mob/user)
 	return attack_hand(user)

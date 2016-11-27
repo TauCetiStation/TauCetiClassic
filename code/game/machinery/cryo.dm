@@ -86,11 +86,11 @@
 /obj/machinery/atmospherics/unary/cryo_cell/allow_drop()
 	return 0
 
-/obj/machinery/atmospherics/unary/cryo_cell/relaymove(var/mob/user)
+/obj/machinery/atmospherics/unary/cryo_cell/relaymove(mob/user)
 	container_resist(user)
 
 /obj/machinery/atmospherics/unary/cryo_cell/container_resist(mob/user)
-	user << "<span class='notice'>You struggle inside the cryotube, kicking the release with your foot... (This will take around 30 seconds.)</span>"
+	to_chat(user, "<span class='notice'>You struggle inside the cryotube, kicking the release with your foot... (This will take around 30 seconds.)</span>")
 	//audible_message("<span class='notice'>You hear a thump from [src].</span>")
 	if(do_after(user, 300, target = src))
 		if(occupant == user) // Check they're still here.
@@ -104,7 +104,7 @@
 	if(usr == occupant || contents.Find(usr))	//If the user is inside the tube...
 		if(usr.stat == DEAD)	//and he's not dead....
 			return
-		usr << "<span class='notice'>Release sequence activated. This will take about a minute.</span>"
+		to_chat(usr, "<span class='notice'>Release sequence activated. This will take about a minute.</span>")
 		sleep(600)
 		if(!src || !usr || (!occupant && !contents.Find(usr)))	//Check if someone's released/replaced/bombed him already
 			return
@@ -115,15 +115,15 @@
 			return
 		open_machine()
 
-/obj/machinery/atmospherics/unary/cryo_cell/examine()
+/obj/machinery/atmospherics/unary/cryo_cell/examine(mob/user)
 	..()
 	if(occupant)
 		if(on)
-			usr << "Someone's inside [src]!"
+			to_chat(user, "Someone's inside [src]!")
 		else
-			usr << "You can barely make out a form floating in [src]."
+			to_chat(user, "You can barely make out a form floating in [src].")
 	else
-		usr << "[src] seems empty."
+		to_chat(user, "[src] seems empty.")
 
 /obj/machinery/atmospherics/unary/cryo_cell/attack_hand(mob/user)
 	ui_interact(user)
@@ -195,11 +195,9 @@
 		return
 
 /obj/machinery/atmospherics/unary/cryo_cell/Topic(href, href_list)
-	if(usr == occupant || panel_open)
-		return 0 // don't update UIs attached to this object
-
-	if(..())
-		return 0 // don't update UIs attached to this object
+	. = ..()
+	if(!. || usr == occupant || panel_open)
+		return FALSE // don't update UIs attached to this object
 
 	if(href_list["switchOn"])
 		if(!state_open)
@@ -223,13 +221,11 @@
 			beaker = null
 
 	update_icon()
-	add_fingerprint(usr)
-	return 1 // update UIs attached to this object
 
-/obj/machinery/atmospherics/unary/cryo_cell/attackby(var/obj/item/weapon/G as obj, var/mob/user as mob)
+/obj/machinery/atmospherics/unary/cryo_cell/attackby(obj/item/weapon/G, mob/user)
 	if(istype(G, /obj/item/weapon/reagent_containers/glass))
 		if(beaker)
-			user << "\red A beaker is already loaded into the machine."
+			to_chat(user, "\red A beaker is already loaded into the machine.")
 			return
 
 		beaker =  G
@@ -238,7 +234,7 @@
 		user.visible_message("[user] adds \a [G] to \the [src]!", "You add \a [G] to \the [src]!")
 
 	if(!(on || occupant || state_open))
-		if(default_deconstruction_screwdriver(user, "pod-o", "pod-off", G))
+		if(default_deconstruction_screwdriver(user, "pod-o", "pod-0", G))
 			return
 
 	if(default_change_direction_wrench(user, G))
@@ -275,11 +271,6 @@
 	overlays.Cut()
 	var/image/I
 
-	if(occupant)
-		var/image/pickle = image(occupant.icon, occupant.icon_state)
-		pickle.overlays = occupant.overlays
-		pickle.pixel_y = 18
-		overlays += pickle
 	if(panel_open)
 		icon_state = "pod-o"
 
@@ -288,48 +279,27 @@
 		I.pixel_z = 32
 		overlays += I
 
-		I = image(icon, "lid-[on]")
-		I.layer = 5
-		overlays += I
-
-		I = image(icon, "lid-[on]_top")
-		I.layer = 5
-		I.pixel_z = 32
-		overlays += I
-
-		//overlays += "lid-off"
 	else if(state_open)
 		icon_state = "pod-open"
 
 		I = image(icon, "pod-open_top")
-		I.layer = 5 // this needs to be fairly high so it displays over most things, but it needs to be under lighting (at 10)
-		I.pixel_z = 32
-		overlays += I
-	else if(on && is_operational())
-		icon_state = "pod-[on]"
-
-		I = image(icon, "pod-[on]_top")
-		I.layer = 5 // this needs to be fairly high so it displays over most things, but it needs to be under lighting (at 10)
-		I.pixel_z = 32
-		overlays += I
-
-		I = image(icon, "lid-[on]")
-		I.layer = 5
-		overlays += I
-
-		I = image(icon, "lid-[on]_top")
 		I.layer = 5
 		I.pixel_z = 32
 		overlays += I
-
-		//overlays += "lid-on"
 	else
 		icon_state = "pod-[on]"
 
 		I = image(icon, "pod-[on]_top")
-		I.layer = 5 // this needs to be fairly high so it displays over most things, but it needs to be under lighting (at 10)
+		I.layer = 5
 		I.pixel_z = 32
 		overlays += I
+
+		if(occupant)
+			var/image/pickle = image(occupant.icon, occupant.icon_state)
+			pickle.overlays = occupant.overlays
+			pickle.pixel_z = 20
+			pickle.layer = 5
+			overlays += pickle
 
 		I = image(icon, "lid-[on]")
 		I.layer = 5
@@ -339,8 +309,6 @@
 		I.layer = 5
 		I.pixel_z = 32
 		overlays += I
-
-		//overlays += "lid-off"
 
 /obj/machinery/atmospherics/unary/cryo_cell/proc/process_occupant()
 	if(air_contents.total_moles() < 10)

@@ -37,7 +37,7 @@ datum/reagent/antibodies
 	reagent_state = LIQUID
 	color = "#0050F0"
 
-	reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+	reaction_mob(mob/M, method=TOUCH, volume)
 		if(istype(M,/mob/living/carbon))
 			if(src.data && method == INGEST)
 				if(M:virus2) if(src.data["antibodies"] & M:virus2.antigen)
@@ -46,7 +46,7 @@ datum/reagent/antibodies
 		return
 
 // iterate over the list of antigens and see what matches
-/proc/antigens2string(var/antigens)
+/proc/antigens2string(antigens)
 	var/code = ""
 	for(var/V in ANTIGENS) if(text2num(V) & antigens) code += ANTIGENS[V]
 	return code

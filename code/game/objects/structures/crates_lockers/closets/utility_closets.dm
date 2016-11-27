@@ -139,7 +139,10 @@
 	if(prob(5))
 		new /obj/item/clothing/gloves/yellow(src)
 	if(prob(40))
-		new /obj/item/clothing/head/hardhat(src)
+		if(prob(75))
+			new /obj/item/clothing/head/hardhat/yellow(src)
+		else
+			new /obj/item/clothing/head/hardhat/yellow/visor(src)
 
 
 /*

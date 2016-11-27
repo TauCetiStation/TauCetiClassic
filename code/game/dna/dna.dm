@@ -7,7 +7,7 @@
 	var/mutantrace = null  //The type of mutant race the player is if applicable (i.e. potato-man)
 	var/real_name //Stores the real name of the person who originally got this dna datum. Used primarely for changelings,
 
-/datum/dna/proc/check_integrity(var/mob/living/carbon/human/character)
+/datum/dna/proc/check_integrity(mob/living/carbon/human/character)
 	if(character)
 		if(length(uni_identity) != 39)
 			//Lazy.

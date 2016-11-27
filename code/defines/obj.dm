@@ -4,10 +4,10 @@
 	anchored = 1
 	density = 1
 
-/obj/structure/signpost/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/structure/signpost/attackby(obj/item/weapon/W, mob/user)
 	return attack_hand(user)
 
-/obj/structure/signpost/attack_hand(mob/user as mob)
+/obj/structure/signpost/attack_hand(mob/user)
 	switch(alert("Travel back to ss13?",,"Yes","No"))
 		if("Yes")
 			if(user.z != src.z)	return
@@ -297,7 +297,7 @@ var/global/ManifestJSON
 	throw_range = 20
 	flags = FPRINT | TABLEPASS | CONDUCT
 
-	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
+	afterattack(atom/target, mob/user)
 		user.drop_item()
 		src.throw_at(target, throw_range, throw_speed, user)
 

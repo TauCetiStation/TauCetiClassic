@@ -179,13 +179,13 @@
 	Destroy()
 		// deletes its own cover with it
 		qdel(cover)
-		..()
+		return ..()
 
 
-/obj/machinery/porta_turret/attack_ai(mob/user as mob)
+/obj/machinery/porta_turret/attack_ai(mob/user)
 	return attack_hand(user)
 
-/obj/machinery/porta_turret/attack_hand(mob/user as mob)
+/obj/machinery/porta_turret/attack_hand(mob/user)
 	. = ..()
 	if (.)
 		return
@@ -232,18 +232,16 @@ Status: []<BR>"},
 	return
 
 /obj/machinery/porta_turret/Topic(href, href_list)
-	if (..())
+	. = ..()
+	if(!.)
 		return
-	usr.set_machine(src)
-	src.add_fingerprint(usr)
+
 	if ((href_list["power"]) && (src.allowed(usr)))
 		if(anchored) // you can't turn a turret on/off if it's not anchored/secured
 			on = !on // toggle on/off
 		else
-			usr << "\red It has to be secured first!"
-
-		updateUsrDialog()
-		return
+			to_chat(usr, "\red It has to be secured first!")
+			return FALSE
 
 	switch(href_list["operation"])
 		// toggles customizable behavioural protocols
@@ -285,16 +283,16 @@ Status: []<BR>"},
 
 
 
-/obj/machinery/porta_turret/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/porta_turret/attackby(obj/item/W, mob/user)
 	if(stat & BROKEN)
 		if(istype(W, /obj/item/weapon/crowbar))
 
 			// If the turret is destroyed, you can remove it with a crowbar to
 			// try and salvage its components
-			user << "You begin prying the metal coverings off."
+			to_chat(user, "You begin prying the metal coverings off.")
 			sleep(20)
 			if(prob(70))
-				user << "You remove the turret and salvage some components."
+				to_chat(user, "You remove the turret and salvage some components.")
 				if(installation)
 					var/obj/item/weapon/gun/energy/Gun = new installation(src.loc)
 					Gun.power_supply.charge=gun_charge
@@ -303,7 +301,7 @@ Status: []<BR>"},
 				if(prob(50)) new /obj/item/stack/sheet/metal( loc, rand(1,4))
 				if(prob(50)) new /obj/item/device/assembly/prox_sensor(locate(x,y,z))
 			else
-				user << "You remove the turret but did not manage to salvage anything."
+				to_chat(user, "You remove the turret but did not manage to salvage anything.")
 			qdel(src)
 
 
@@ -311,7 +309,7 @@ Status: []<BR>"},
 		// Emagging the turret makes it go bonkers and stun everyone. It also makes
 		// the turret shoot much, much faster.
 
-		user << "\red You short out [src]'s threat assessment circuits."
+		to_chat(user, "\red You short out [src]'s threat assessment circuits.")
 		spawn(0)
 			for(var/mob/O in hearers(src, null))
 				O.show_message("\red [src] hums oddly...", 1)
@@ -328,12 +326,12 @@ Status: []<BR>"},
 			anchored = 1
 			invisibility = INVISIBILITY_LEVEL_TWO
 			icon_state = "[lasercolor]grey_target_prism"
-			user << "You secure the exterior bolts on the turret."
+			to_chat(user, "You secure the exterior bolts on the turret.")
 			cover=new/obj/machinery/porta_turret_cover(src.loc) // create a new turret. While this is handled in process(), this is to workaround a bug where the turret becomes invisible for a split second
 			cover.Parent_Turret = src // make the cover's parent src
 		else
 			anchored = 0
-			user << "You unsecure the exterior bolts on the turret."
+			to_chat(user, "You unsecure the exterior bolts on the turret.")
 			icon_state = "turretCover"
 			invisibility = 0
 			qdel(cover) // deletes the cover, and the turret instance itself becomes its own cover.
@@ -342,9 +340,9 @@ Status: []<BR>"},
 		// Behavior lock/unlock mangement
 		if (allowed(user))
 			locked = !src.locked
-			user << "Controls are now [locked ? "locked." : "unlocked."]"
+			to_chat(user, "Controls are now [locked ? "locked." : "unlocked."]")
 		else
-			user << "\red Access denied."
+			to_chat(user, "\red Access denied.")
 
 	else
 		// if the turret was attacked with the intention of harming it:
@@ -361,7 +359,7 @@ Status: []<BR>"},
 
 
 
-/obj/machinery/porta_turret/bullet_act(var/obj/item/projectile/Proj)
+/obj/machinery/porta_turret/bullet_act(obj/item/projectile/Proj)
 	if(on)
 		if(!attacked && !emagged)
 			attacked = 1
@@ -547,7 +545,7 @@ Status: []<BR>"},
 		icon_state="[lasercolor]grey_target_prism"
 
 
-/obj/machinery/porta_turret/proc/assess_perp(mob/living/carbon/human/perp as mob)
+/obj/machinery/porta_turret/proc/assess_perp(mob/living/carbon/human/perp)
 	var/threatcount = 0 // the integer returned
 
 	if(src.emagged) return 10 // if emagged, always return 10.
@@ -613,7 +611,7 @@ Status: []<BR>"},
 
 
 
-/obj/machinery/porta_turret/proc/shootAt(var/atom/movable/target) // shoots at a target
+/obj/machinery/porta_turret/proc/shootAt(atom/movable/target) // shoots at a target
 	if(disabled)
 		return
 
@@ -687,21 +685,21 @@ Status: []<BR>"},
 
 
 
-/obj/machinery/porta_turret_construct/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/porta_turret_construct/attackby(obj/item/W, mob/user)
 
 	// this is a bit unweildy but self-explanitory
 	switch(build_step)
 		if(0) // first step
 			if(istype(W, /obj/item/weapon/wrench) && !anchored)
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
-				user << "\blue You secure the external bolts."
+				to_chat(user, "\blue You secure the external bolts.")
 				anchored = 1
 				build_step = 1
 				return
 
 			else if(istype(W, /obj/item/weapon/crowbar) && !anchored)
 				playsound(src.loc, 'sound/items/Crowbar.ogg', 75, 1)
-				user << "You dismantle the turret construction."
+				to_chat(user, "You dismantle the turret construction.")
 				new /obj/item/stack/sheet/metal( loc, 5)
 				qdel(src)
 				return
@@ -709,7 +707,7 @@ Status: []<BR>"},
 		if(1)
 			if(istype(W, /obj/item/stack/sheet/metal))
 				if(W:amount>=2) // requires 2 metal sheets
-					user << "\blue You add some metal armor to the interior frame."
+					to_chat(user, "\blue You add some metal armor to the interior frame.")
 					build_step = 2
 					W:amount -= 2
 					icon_state = "turret_frame2"
@@ -719,7 +717,7 @@ Status: []<BR>"},
 
 			else if(istype(W, /obj/item/weapon/wrench))
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
-				user << "You unfasten the external bolts."
+				to_chat(user, "You unfasten the external bolts.")
 				anchored = 0
 				build_step = 0
 				return
@@ -728,7 +726,7 @@ Status: []<BR>"},
 		if(2)
 			if(istype(W, /obj/item/weapon/wrench))
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
-				user << "\blue You bolt the metal armor into place."
+				to_chat(user, "\blue You bolt the metal armor into place.")
 				build_step = 3
 				return
 
@@ -736,14 +734,14 @@ Status: []<BR>"},
 				var/obj/item/weapon/weldingtool/WT = W
 				if(!WT.isOn()) return
 				if (WT.get_fuel() < 5) // uses up 5 fuel.
-					user << "\red You need more fuel to complete this task."
+					to_chat(user, "\red You need more fuel to complete this task.")
 					return
 
 				playsound(src.loc, pick('sound/items/Welder.ogg', 'sound/items/Welder2.ogg'), 50, 1)
 				if(do_after(user, 20, target = src))
 					if(!src || !WT.remove_fuel(5, user)) return
 					build_step = 1
-					user << "You remove the turret's interior metal armor."
+					to_chat(user, "You remove the turret's interior metal armor.")
 					new /obj/item/stack/sheet/metal( loc, 2)
 					return
 
@@ -754,21 +752,21 @@ Status: []<BR>"},
 				var/obj/item/weapon/gun/energy/E = W // typecasts the item to an energy gun
 				installation = W.type // installation becomes W.type
 				gun_charge = E.power_supply.charge // the gun's charge is stored in src.gun_charge
-				user << "\blue You add \the [W] to the turret."
+				to_chat(user, "\blue You add \the [W] to the turret.")
 				build_step = 4
 				qdel(W) // delete the gun :(
 				return
 
 			else if(istype(W, /obj/item/weapon/wrench))
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
-				user << "You remove the turret's metal armor bolts."
+				to_chat(user, "You remove the turret's metal armor bolts.")
 				build_step = 2
 				return
 
 		if(4)
 			if(isprox(W))
 				build_step = 5
-				user << "\blue You add the prox sensor to the turret."
+				to_chat(user, "\blue You add the prox sensor to the turret.")
 				qdel(W)
 				return
 
@@ -778,7 +776,7 @@ Status: []<BR>"},
 			if(istype(W, /obj/item/weapon/screwdriver))
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
 				build_step = 6
-				user << "\blue You close the internal access hatch."
+				to_chat(user, "\blue You close the internal access hatch.")
 				return
 
 			// attack_hand() removes the prox sensor
@@ -786,7 +784,7 @@ Status: []<BR>"},
 		if(6)
 			if(istype(W, /obj/item/stack/sheet/metal))
 				if(W:amount>=2)
-					user << "\blue You add some metal armor to the exterior frame."
+					to_chat(user, "\blue You add some metal armor to the exterior frame.")
 					build_step = 7
 					W:amount -= 2
 					if(W:amount <= 0)
@@ -796,7 +794,7 @@ Status: []<BR>"},
 			else if(istype(W, /obj/item/weapon/screwdriver))
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
 				build_step = 5
-				user << "You open the internal access hatch."
+				to_chat(user, "You open the internal access hatch.")
 				return
 
 		if(7)
@@ -804,13 +802,13 @@ Status: []<BR>"},
 				var/obj/item/weapon/weldingtool/WT = W
 				if(!WT.isOn()) return
 				if (WT.get_fuel() < 5)
-					user << "\red You need more fuel to complete this task."
+					to_chat(user, "\red You need more fuel to complete this task.")
 
 				playsound(src.loc, pick('sound/items/Welder.ogg', 'sound/items/Welder2.ogg'), 50, 1)
 				if(do_after(user, 30, target = src))
 					if(!src || !WT.remove_fuel(5, user)) return
 					build_step = 8
-					user << "\blue You weld the turret's armor down."
+					to_chat(user, "\blue You weld the turret's armor down.")
 
 					// The final step: create a full turret
 					var/obj/machinery/porta_turret/Turret = new/obj/machinery/porta_turret(locate(x,y,z))
@@ -826,7 +824,7 @@ Status: []<BR>"},
 
 			else if(istype(W, /obj/item/weapon/crowbar))
 				playsound(src.loc, 'sound/items/Crowbar.ogg', 75, 1)
-				user << "You pry off the turret's exterior armor."
+				to_chat(user, "You pry off the turret's exterior armor.")
 				new /obj/item/stack/sheet/metal( loc, 2)
 				build_step = 6
 				return
@@ -845,7 +843,7 @@ Status: []<BR>"},
 
 
 
-/obj/machinery/porta_turret_construct/attack_hand(mob/user as mob)
+/obj/machinery/porta_turret_construct/attack_hand(mob/user)
 	switch(build_step)
 		if(4)
 			if(!installation) return
@@ -856,10 +854,10 @@ Status: []<BR>"},
 			Gun.update_icon()
 			installation = null
 			gun_charge = 0
-			user << "You remove \the [Gun] from the turret frame."
+			to_chat(user, "You remove \the [Gun] from the turret frame.")
 
 		if(5)
-			user << "You remove the prox sensor from the turret frame."
+			to_chat(user, "You remove the prox sensor from the turret frame.")
 			new/obj/item/device/assembly/prox_sensor(locate(x,y,z))
 			build_step = 4
 
@@ -887,7 +885,7 @@ Status: []<BR>"},
 
 // The below code is pretty much just recoded from the initial turret object. It's necessary but uncommented because it's exactly the same!
 
-/obj/machinery/porta_turret_cover/attack_ai(mob/user as mob)
+/obj/machinery/porta_turret_cover/attack_ai(mob/user)
 	. = ..()
 	if (.)
 		return
@@ -924,7 +922,7 @@ Status: []<BR>"},
 	onclose(user, "autosec")
 	return
 
-/obj/machinery/porta_turret_cover/attack_hand(mob/user as mob)
+/obj/machinery/porta_turret_cover/attack_hand(mob/user)
 	. = ..()
 	if (.)
 		return
@@ -970,11 +968,11 @@ Status: []<BR>"},
 	return
 
 /obj/machinery/porta_turret_cover/Topic(href, href_list)
-	if (..())
+	. = ..()
+	if(!.)
 		return
-	usr.set_machine(src)
+
 	Parent_Turret.add_fingerprint(usr)
-	src.add_fingerprint(usr)
 	if ((href_list["power"]) && (Parent_Turret.allowed(usr)))
 		if(Parent_Turret.anchored)
 			if (Parent_Turret.on)
@@ -982,10 +980,8 @@ Status: []<BR>"},
 			else
 				Parent_Turret.on=1
 		else
-			usr << "\red It has to be secured first!"
-
-		updateUsrDialog()
-		return
+			to_chat(usr, "\red It has to be secured first!")
+			return FALSE
 
 	switch(href_list["operation"])
 		if ("authweapon")
@@ -1003,10 +999,10 @@ Status: []<BR>"},
 
 
 
-/obj/machinery/porta_turret_cover/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/porta_turret_cover/attackby(obj/item/W, mob/user)
 
 	if ((istype(W, /obj/item/weapon/card/emag)) && (!Parent_Turret.emagged))
-		user << "\red You short out [Parent_Turret]'s threat assessment circuits."
+		to_chat(user, "\red You short out [Parent_Turret]'s threat assessment circuits.")
 		spawn(0)
 			for(var/mob/O in hearers(Parent_Turret, null))
 				O.show_message("\red [Parent_Turret] hums oddly...", 1)
@@ -1022,10 +1018,10 @@ Status: []<BR>"},
 			Parent_Turret.anchored = 1
 			Parent_Turret.invisibility = INVISIBILITY_LEVEL_TWO
 			Parent_Turret.icon_state = "grey_target_prism"
-			user << "You secure the exterior bolts on the turret."
+			to_chat(user, "You secure the exterior bolts on the turret.")
 		else
 			Parent_Turret.anchored = 0
-			user << "You unsecure the exterior bolts on the turret."
+			to_chat(user, "You unsecure the exterior bolts on the turret.")
 			Parent_Turret.icon_state = "turretCover"
 			Parent_Turret.invisibility = 0
 			qdel(src)
@@ -1033,10 +1029,10 @@ Status: []<BR>"},
 	else if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if (Parent_Turret.allowed(user))
 			Parent_Turret.locked = !Parent_Turret.locked
-			user << "Controls are now [Parent_Turret.locked ? "locked." : "unlocked."]"
+			to_chat(user, "Controls are now [Parent_Turret.locked ? "locked." : "unlocked."]")
 			updateUsrDialog()
 		else
-			user << "\red Access denied."
+			to_chat(user, "\red Access denied.")
 
 	else
 		Parent_Turret.health -= W.force * 0.5

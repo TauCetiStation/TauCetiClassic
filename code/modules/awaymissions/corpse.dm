@@ -155,7 +155,7 @@
 	corpseshoes = /obj/item/clothing/shoes/orange
 	corpsebelt = /obj/item/weapon/storage/belt/utility/full
 	corpsegloves = /obj/item/clothing/gloves/yellow
-	corpsehelmet = /obj/item/clothing/head/hardhat
+	corpsehelmet = /obj/item/clothing/head/hardhat/yellow
 	corpseid = 1
 	corpseidjob = "Station Engineer"
 	corpseidaccess = "Station Engineer"

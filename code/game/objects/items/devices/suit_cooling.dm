@@ -104,7 +104,7 @@
 	on = 0
 	updateicon()
 
-/obj/item/device/suit_cooling_unit/attack_self(mob/user as mob)
+/obj/item/device/suit_cooling_unit/attack_self(mob/user)
 	if(cover_open && cell)
 		if(ishuman(user))
 			user.put_in_hands(cell)
@@ -114,7 +114,7 @@
 		cell.add_fingerprint(user)
 		cell.updateicon()
 
-		user << "You remove the [src.cell]."
+		to_chat(user, "You remove the [src.cell].")
 		src.cell = null
 		updateicon()
 		return
@@ -125,28 +125,28 @@
 	else
 		turn_on()
 		if (on)
-			user << "You switch on the [src]."
+			to_chat(user, "You switch on the [src].")
 
-/obj/item/device/suit_cooling_unit/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/device/suit_cooling_unit/attackby(obj/item/weapon/W, mob/user)
 	if (istype(W, /obj/item/weapon/screwdriver))
 		if(cover_open)
 			cover_open = 0
-			user << "You screw the panel into place."
+			to_chat(user, "You screw the panel into place.")
 		else
 			cover_open = 1
-			user << "You unscrew the panel."
+			to_chat(user, "You unscrew the panel.")
 		updateicon()
 		return
 
 	if (istype(W, /obj/item/weapon/stock_parts/cell))
 		if(cover_open)
 			if(cell)
-				user << "There is a [cell] already installed here."
+				to_chat(user, "There is a [cell] already installed here.")
 			else
 				user.drop_item()
 				W.loc = src
 				cell = W
-				user << "You insert the [cell]."
+				to_chat(user, "You insert the [cell].")
 		updateicon()
 		return
 
@@ -161,26 +161,24 @@
 	else
 		icon_state = "suitcooler0"
 
-/obj/item/device/suit_cooling_unit/examine()
-	set src in view(1)
-
+/obj/item/device/suit_cooling_unit/examine(mob/user)
 	..()
-
-	if (on)
-		if (attached_to_suit(src.loc))
-			usr << "It's switched on and running."
+	if (src in view(1, user))
+		if (on)
+			if (attached_to_suit(loc))
+				to_chat(user, "It's switched on and running.")
+			else
+				to_chat(user, "It's switched on, but not attached to anything.")
 		else
-			usr << "It's switched on, but not attached to anything."
-	else
-		usr << "It is switched off."
+			to_chat(user, "It is switched off.")
 
-	if (cover_open)
-		if(cell)
-			usr << "The panel is open, exposing the [cell]."
+		if (cover_open)
+			if(cell)
+				to_chat(user, "The panel is open, exposing the [cell].")
+			else
+				to_chat(user, "The panel is open.")
+
+		if (cell)
+			to_chat(user, "The charge meter reads [round(cell.percent())]%.")
 		else
-			usr << "The panel is open."
-
-	if (cell)
-		usr << "The charge meter reads [round(cell.percent())]%."
-	else
-		usr << "It doesn't have a power cell installed."
+			to_chat(user, "It doesn't have a power cell installed.")

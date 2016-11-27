@@ -44,20 +44,20 @@
 	overlays += "clipboard_over"
 	return
 
-/obj/item/weapon/clipboard/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/weapon/clipboard/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/paper) || istype(W, /obj/item/weapon/photo))
 		user.drop_item()
 		W.loc = src
 		if(istype(W, /obj/item/weapon/paper))
 			toppaper = W
-		user << "<span class='notice'>You clip the [W] onto \the [src].</span>"
+		to_chat(user, "<span class='notice'>You clip the [W] onto \the [src].</span>")
 		update_icon()
 	else if(toppaper)
 		toppaper.attackby(usr.get_active_hand(), usr)
 		update_icon()
 	return
 
-/obj/item/weapon/clipboard/attack_self(mob/user as mob)
+/obj/item/weapon/clipboard/attack_self(mob/user)
 	var/dat = "<title>Clipboard</title>"
 	if(haspen)
 		dat += "<A href='?src=\ref[src];pen=1'>Remove Pen</A><BR><HR>"
@@ -101,7 +101,7 @@
 					usr.drop_item()
 					W.loc = src
 					haspen = W
-					usr << "<span class='notice'>You slot the pen into \the [src].</span>"
+					to_chat(usr, "<span class='notice'>You slot the pen into \the [src].</span>")
 
 		if(href_list["write"])
 			var/obj/item/P = locate(href_list["write"])
@@ -141,7 +141,7 @@
 			var/obj/item/P = locate(href_list["top"])
 			if(P)
 				toppaper = P
-				usr << "<span class='notice'>You move [P.name] to the top.</span>"
+				to_chat(usr, "<span class='notice'>You move [P.name] to the top.</span>")
 
 		//Update everything
 		attack_self(usr)

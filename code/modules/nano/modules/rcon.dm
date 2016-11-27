@@ -79,7 +79,7 @@
 				toggle = breaker
 		if(toggle)
 			if(toggle.update_locked)
-				usr << "The breaker box was recently toggled. Please wait before toggling it again."
+				to_chat(usr, "The breaker box was recently toggled. Please wait before toggling it again.")
 			else
 				toggle.auto_toggle()
 	if(href_list["hide_smes"])
@@ -93,7 +93,7 @@
 // Proc: GetSMESByTag()
 // Parameters: 1 (tag - RCON tag of SMES we want to look up)
 // Description: Looks up and returns SMES which has matching RCON tag
-/obj/nano_module/rcon/proc/GetSMESByTag(var/tag)
+/obj/nano_module/rcon/proc/GetSMESByTag(tag)
 	if(!tag)
 		return
 

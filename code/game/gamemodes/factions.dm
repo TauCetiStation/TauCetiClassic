@@ -23,7 +23,7 @@
 
 	var/uplink_contents			// the contents of the uplink
 
-	proc/assign_objectives(var/datum/mind/traitor)
+	proc/assign_objectives(datum/mind/traitor)
 		..()
 
 

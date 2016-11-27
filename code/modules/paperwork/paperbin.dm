@@ -21,17 +21,17 @@
 	return
 
 
-/obj/item/weapon/paper_bin/attack_paw(mob/user as mob)
+/obj/item/weapon/paper_bin/attack_paw(mob/user)
 	return attack_hand(user)
 
 
-/obj/item/weapon/paper_bin/attack_hand(mob/user as mob)
+/obj/item/weapon/paper_bin/attack_hand(mob/user)
 	if (hasorgans(user))
 		var/datum/organ/external/temp = user:organs_by_name["r_hand"]
 		if (user.hand)
 			temp = user:organs_by_name["l_hand"]
 		if(temp && !temp.is_usable())
-			user << "<span class='notice'>You try to move your [temp.display_name], but cannot!"
+			to_chat(user, "<span class='notice'>You try to move your [temp.display_name], but cannot!")
 			return
 	var/response = ""
 	if(!papers.len > 0)
@@ -61,33 +61,32 @@
 
 		P.loc = user.loc
 		user.put_in_hands(P)
-		user << "<span class='notice'>You take [P] out of the [src].</span>"
+		to_chat(user, "<span class='notice'>You take [P] out of the [src].</span>")
 	else
-		user << "<span class='notice'>[src] is empty!</span>"
+		to_chat(user, "<span class='notice'>[src] is empty!</span>")
 
 	add_fingerprint(user)
 	return
 
 
-/obj/item/weapon/paper_bin/attackby(obj/item/weapon/paper/i as obj, mob/user as mob)
+/obj/item/weapon/paper_bin/attackby(obj/item/weapon/paper/i, mob/user)
 	if(!istype(i))
 		return
 
 	user.drop_item()
 	i.loc = src
-	user << "<span class='notice'>You put [i] in [src].</span>"
+	to_chat(user, "<span class='notice'>You put [i] in [src].</span>")
 	papers.Add(i)
 	amount++
 
 
-/obj/item/weapon/paper_bin/examine()
-	set src in oview(1)
-
-	if(amount)
-		usr << "<span class='notice'>There " + (amount > 1 ? "are [amount] papers" : "is one paper") + " in the bin.</span>"
-	else
-		usr << "<span class='notice'>There are no papers in the bin.</span>"
-	return
+/obj/item/weapon/paper_bin/examine(mob/user)
+	..()
+	if(src in view(1, user))
+		if(amount)
+			to_chat(user, "<span class='notice'>There " + (amount > 1 ? "are [amount] papers" : "is one paper") + " in the bin.</span>")
+		else
+			to_chat(user, "<span class='notice'>There are no papers in the bin.</span>")
 
 
 /obj/item/weapon/paper_bin/update_icon()

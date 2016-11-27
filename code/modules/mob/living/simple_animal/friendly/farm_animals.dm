@@ -71,15 +71,15 @@
 			if(prob(10))
 				say("Nom")
 
-/mob/living/simple_animal/hostile/retaliate/goat/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/mob/living/simple_animal/hostile/retaliate/goat/attackby(obj/item/O, mob/user)
 	if(stat == CONSCIOUS && istype(O, /obj/item/weapon/reagent_containers/glass))
 		user.visible_message("<span class='notice'>[user] milks [src] using \the [O].</span>")
 		var/obj/item/weapon/reagent_containers/glass/G = O
 		var/transfered = udder.trans_id_to(G, "milk", rand(5,10))
 		if(G.reagents.total_volume >= G.volume)
-			user << "\red The [O] is full."
+			to_chat(user, "\red The [O] is full.")
 		if(!transfered)
-			user << "\red The udder is dry. Wait a bit longer..."
+			to_chat(user, "\red The udder is dry. Wait a bit longer...")
 	else
 		..()
 //cow
@@ -111,15 +111,15 @@
 	udder.my_atom = src
 	..()
 
-/mob/living/simple_animal/cow/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/mob/living/simple_animal/cow/attackby(obj/item/O, mob/user)
 	if(stat == CONSCIOUS && istype(O, /obj/item/weapon/reagent_containers/glass))
 		user.visible_message("<span class='notice'>[user] milks [src] using \the [O].</span>")
 		var/obj/item/weapon/reagent_containers/glass/G = O
 		var/transfered = udder.trans_id_to(G, "milk", rand(5,10))
 		if(G.reagents.total_volume >= G.volume)
-			user << "\red The [O] is full."
+			to_chat(user, "\red The [O] is full.")
 		if(!transfered)
-			user << "\red The udder is dry. Wait a bit longer..."
+			to_chat(user, "\red The udder is dry. Wait a bit longer...")
 	else
 		..()
 
@@ -135,7 +135,7 @@
 	if(..() && prob(55))
 		playsound(src, 'sound/misc/cowbell.ogg', 50, 1, -3)
 
-/mob/living/simple_animal/cow/attack_hand(mob/living/carbon/M as mob)
+/mob/living/simple_animal/cow/attack_hand(mob/living/carbon/M)
 	if(!stat && M.a_intent == "disarm" && icon_state != icon_dead)
 		M.visible_message("<span class='warning'>[M] tips over [src].</span>","<span class='notice'>You tip over [src].</span>")
 		Weaken(30)
@@ -147,7 +147,7 @@
 											"[src] looks at you pleadingly",
 											"[src] looks at you with a resigned expression.",
 											"[src] seems resigned to its fate.")
-				M << pick(responses)
+				to_chat(M, pick(responses))
 	else
 		..()
 
@@ -232,7 +232,7 @@ var/global/chicken_count = 0
 	..()
 	chicken_count -= 1
 
-/mob/living/simple_animal/chicken/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/mob/living/simple_animal/chicken/attackby(obj/item/O, mob/user)
 	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/wheat)) //feedin' dem chickens
 		if(!stat && eggsleft < 8)
 			user.visible_message("\blue [user] feeds [O] to [name]! It clucks happily.","\blue You feed [O] to [name]! It clucks happily.")
@@ -241,7 +241,7 @@ var/global/chicken_count = 0
 			eggsleft += rand(1, 4)
 			//world << eggsleft
 		else
-			user << "\blue [name] doesn't seem hungry!"
+			to_chat(user, "\blue [name] doesn't seem hungry!")
 	else
 		..()
 

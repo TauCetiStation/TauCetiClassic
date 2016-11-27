@@ -15,12 +15,8 @@
 	if(can_buckle && istype(M) && !buckled_mob && istype(user))
 		user_buckle_mob(M, user)
 
-/atom/movable/Destroy()
-	unbuckle_mob()
-	return ..()
-
 /atom/movable/proc/buckle_mob(mob/living/M)
-	if(!can_buckle || !istype(M) || (M.loc != loc) || M.buckled || M.buckled_mob || M.pinned.len || (buckle_require_restraints && !M.restrained()) || M == src)
+	if(!can_buckle || !istype(M) || (M.loc != loc) || M.buckled || src.buckled_mob || M.pinned.len || (buckle_require_restraints && !M.restrained()) || M == src)
 		return 0
 
 	//reset pulling
@@ -63,17 +59,17 @@
 
 /atom/movable/proc/user_buckle_mob(mob/living/M, mob/user)
 	if(!ticker)
-		user << "<span class='warning'>You can't buckle anyone in before the game starts.</span>"
+		to_chat(user, "<span class='warning'>You can't buckle anyone in before the game starts.</span>")
 
 	if(!user.Adjacent(M) || user.incapacitated() || user.lying || ispAI(user) || ismouse(user))
 		return
 
 	if(istype(M, /mob/living/simple_animal/construct))
-		user << "<span class='warning'>The [M] is floating in the air and can't be buckled.</span>"
+		to_chat(user, "<span class='warning'>The [M] is floating in the air and can't be buckled.</span>")
 		return
 
 	if(isslime(M))
-		user << "<span class='warning'>The [M] is too squishy to buckle in.</span>"
+		to_chat(user, "<span class='warning'>The [M] is too squishy to buckle in.</span>")
 		return
 
 	add_fingerprint(user)

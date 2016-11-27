@@ -8,12 +8,12 @@
 	req_stat = UNCONSCIOUS
 
 //Recover from stuns.
-/obj/effect/proc_holder/changeling/epinephrine/sting_action(var/mob/user)
+/obj/effect/proc_holder/changeling/epinephrine/sting_action(mob/user)
 
 	if(user.lying)
-		user << "<span class='notice'>We arise.</span>"
+		to_chat(user, "<span class='notice'>We arise.</span>")
 	else
-		user << "<span class='notice'>Adrenaline rushes through us.</span>"
+		to_chat(user, "<span class='notice'>Adrenaline rushes through us.</span>")
 	user.stat = CONSCIOUS
 	user.SetParalysis(0)
 	user.SetStunned(0)

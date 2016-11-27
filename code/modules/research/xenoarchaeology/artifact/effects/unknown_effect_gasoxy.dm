@@ -10,7 +10,7 @@
 	effect_type = pick(6,7)
 
 
-/datum/artifact_effect/gasoxy/DoEffectTouch(var/mob/user)
+/datum/artifact_effect/gasoxy/DoEffectTouch(mob/user)
 	if(holder)
 		var/datum/gas_mixture/env = holder.loc.return_air()
 		if(env)

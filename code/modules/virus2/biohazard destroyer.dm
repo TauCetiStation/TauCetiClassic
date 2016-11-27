@@ -6,7 +6,7 @@
 	density = 1
 	anchored = 1
 
-/obj/machinery/disease2/biodestroyer/attackby(var/obj/I as obj, var/mob/user as mob)
+/obj/machinery/disease2/biodestroyer/attackby(obj/I, mob/user)
 	for(var/path in accepts)
 		if(I.type in typesof(path))
 			user.drop_item()
@@ -17,4 +17,4 @@
 	I.loc = src.loc
 
 	for(var/mob/O in hearers(src, null))
-		O.show_message("\icon[src] \blue The [src.name] beeps", 2)
+		O.show_message("[bicon(src)] \blue The [src.name] beeps", 2)

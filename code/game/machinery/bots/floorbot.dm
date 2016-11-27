@@ -68,14 +68,14 @@
 	src.path = new()
 	src.updateUsrDialog()
 
-/obj/machinery/bot/floorbot/attack_hand(mob/user as mob)
+/obj/machinery/bot/floorbot/attack_hand(mob/user)
 	. = ..()
 	if (.)
 		return
 	usr.set_machine(src)
 	interact(user)
 
-/obj/machinery/bot/floorbot/interact(mob/user as mob)
+/obj/machinery/bot/floorbot/interact(mob/user)
 	var/dat
 	dat += "<TT><B>Automatic Station Floor Repairer v1.0</B></TT><BR><BR>"
 	dat += "Status: <A href='?src=\ref[src];operation=start'>[src.on ? "On" : "Off"]</A><BR>"
@@ -98,7 +98,7 @@
 	return
 
 
-/obj/machinery/bot/floorbot/attackby(var/obj/item/W , mob/user as mob)
+/obj/machinery/bot/floorbot/attackby(obj/item/W , mob/user)
 	if(istype(W, /obj/item/stack/tile/plasteel))
 		var/obj/item/stack/tile/plasteel/T = W
 		if(src.amount >= 50)
@@ -106,33 +106,32 @@
 		var/loaded = min(50-src.amount, T.amount)
 		T.use(loaded)
 		src.amount += loaded
-		user << "<span class='notice'>You load [loaded] tiles into the floorbot. He now contains [src.amount] tiles.</span>"
+		to_chat(user, "<span class='notice'>You load [loaded] tiles into the floorbot. He now contains [src.amount] tiles.</span>")
 		src.updateicon()
 	else if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if(src.allowed(usr) && !open && !emagged)
 			src.locked = !src.locked
-			user << "<span class='notice'>You [src.locked ? "lock" : "unlock"] the [src] behaviour controls.</span>"
+			to_chat(user, "<span class='notice'>You [src.locked ? "lock" : "unlock"] the [src] behaviour controls.</span>")
 		else
 			if(emagged)
-				user << "<span class='warning'>ERROR</span>"
+				to_chat(user, "<span class='warning'>ERROR</span>")
 			if(open)
-				user << "<span class='warning'>Please close the access panel before locking it.</span>"
+				to_chat(user, "<span class='warning'>Please close the access panel before locking it.</span>")
 			else
-				user << "<span class='warning'>Access denied.</span>"
+				to_chat(user, "<span class='warning'>Access denied.</span>")
 		src.updateUsrDialog()
 	else
 		..()
 
-/obj/machinery/bot/floorbot/Emag(mob/user as mob)
+/obj/machinery/bot/floorbot/Emag(mob/user)
 	..()
-	if(open && !locked)
-		if(user) user << "<span class='notice'>The [src] buzzes and beeps.</span>"
+	if(open && !locked && user)
+		to_chat(user, "<span class='notice'>The [src] buzzes and beeps.</span>")
 
 /obj/machinery/bot/floorbot/Topic(href, href_list)
-	if(..())
+	. = ..()
+	if(!.)
 		return
-	usr.set_machine(src)
-	src.add_fingerprint(usr)
 	switch(href_list["operation"])
 		if("start")
 			if (src.on)
@@ -141,13 +140,10 @@
 				turn_on()
 		if("improve")
 			src.improvefloors = !src.improvefloors
-			src.updateUsrDialog()
 		if("tiles")
 			src.eattiles = !src.eattiles
-			src.updateUsrDialog()
 		if("make")
 			src.maketiles = !src.maketiles
-			src.updateUsrDialog()
 		if("bridgemode")
 			switch(src.targetdirection)
 				if(null)
@@ -162,7 +158,7 @@
 					targetdirection = null
 				else
 					targetdirection = null
-			src.updateUsrDialog()
+	src.updateUsrDialog()
 
 /obj/machinery/bot/floorbot/process()
 	//set background = 1
@@ -283,7 +279,7 @@
 	src.oldloc = src.loc
 
 
-/obj/machinery/bot/floorbot/proc/repair(var/turf/target)
+/obj/machinery/bot/floorbot/proc/repair(turf/target)
 	if(istype(target, /turf/space/))
 		if(target.loc.name == "Space")
 			return
@@ -315,7 +311,7 @@
 			src.anchored = 0
 			src.target = null
 
-/obj/machinery/bot/floorbot/proc/eattile(var/obj/item/stack/tile/plasteel/T)
+/obj/machinery/bot/floorbot/proc/eattile(obj/item/stack/tile/plasteel/T)
 	if(!istype(T, /obj/item/stack/tile/plasteel))
 		return
 	visible_message("\red [src] begins to collect tiles.")
@@ -336,7 +332,7 @@
 		src.target = null
 		src.repairing = 0
 
-/obj/machinery/bot/floorbot/proc/maketile(var/obj/item/stack/sheet/metal/M)
+/obj/machinery/bot/floorbot/proc/maketile(obj/item/stack/sheet/metal/M)
 	if(!istype(M, /obj/item/stack/sheet/metal))
 		return
 	if(M.amount > 1)
@@ -391,30 +387,30 @@
 	return
 
 
-/obj/item/weapon/storage/toolbox/mechanical/attackby(var/obj/item/stack/tile/plasteel/T, mob/user as mob)
+/obj/item/weapon/storage/toolbox/mechanical/attackby(obj/item/stack/tile/plasteel/T, mob/user)
 	if(!istype(T, /obj/item/stack/tile/plasteel))
 		..()
 		return
 	if(src.contents.len >= 1)
-		user << "<span class='notice'>They wont fit in as there is already stuff inside.</span>"
+		to_chat(user, "<span class='notice'>They wont fit in as there is already stuff inside.</span>")
 		return
 	if(user.s_active)
 		user.s_active.close(user)
 	qdel(T)
 	var/obj/item/weapon/toolbox_tiles/B = new /obj/item/weapon/toolbox_tiles
 	user.put_in_hands(B)
-	user << "<span class='notice'>You add the tiles into the empty toolbox. They protrude from the top.</span>"
+	to_chat(user, "<span class='notice'>You add the tiles into the empty toolbox. They protrude from the top.</span>")
 	user.drop_from_inventory(src)
 	qdel(src)
 
-/obj/item/weapon/toolbox_tiles/attackby(var/obj/item/W, mob/user as mob)
+/obj/item/weapon/toolbox_tiles/attackby(obj/item/W, mob/user)
 	..()
 	if(isprox(W))
 		qdel(W)
 		var/obj/item/weapon/toolbox_tiles_sensor/B = new /obj/item/weapon/toolbox_tiles_sensor()
 		B.created_name = src.created_name
 		user.put_in_hands(B)
-		user << "<span class='notice'>You add the sensor to the toolbox and tiles!</span>"
+		to_chat(user, "<span class='notice'>You add the sensor to the toolbox and tiles!</span>")
 		user.drop_from_inventory(src)
 		qdel(src)
 
@@ -427,14 +423,14 @@
 
 		src.created_name = t
 
-/obj/item/weapon/toolbox_tiles_sensor/attackby(var/obj/item/W, mob/user as mob)
+/obj/item/weapon/toolbox_tiles_sensor/attackby(obj/item/W, mob/user)
 	..()
 	if(istype(W, /obj/item/robot_parts/l_arm) || istype(W, /obj/item/robot_parts/r_arm))
 		qdel(W)
 		var/turf/T = get_turf(user.loc)
 		var/obj/machinery/bot/floorbot/A = new /obj/machinery/bot/floorbot(T)
 		A.name = src.created_name
-		user << "<span class='notice'>You add the robot arm to the odd looking toolbox assembly! Boop beep!</span>"
+		to_chat(user, "<span class='notice'>You add the robot arm to the odd looking toolbox assembly! Boop beep!</span>")
 		user.drop_from_inventory(src)
 		qdel(src)
 	else if (istype(W, /obj/item/weapon/pen))

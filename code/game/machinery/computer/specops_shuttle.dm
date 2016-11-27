@@ -88,7 +88,7 @@ var/specops_shuttle_timeleft = 0
 
 	for(var/turf/T in get_area_turfs(end_location) )
 		var/mob/M = locate(/mob) in T
-		M << "\red You have arrived at Central Command. Operation has ended!"
+		to_chat(M, "\red You have arrived at Central Command. Operation has ended!")
 
 	specops_shuttle_at_station = 0
 
@@ -136,7 +136,7 @@ var/specops_shuttle_timeleft = 0
 	if (specops_shuttle_moving_to_station || specops_shuttle_moving_to_centcom) return
 
 	if (!specops_can_move())
-		usr << "\red The Special Operations shuttle is unable to leave."
+		to_chat(usr, "\red The Special Operations shuttle is unable to leave.")
 		return
 
 	//Begin Marauder launchpad.
@@ -231,7 +231,7 @@ var/specops_shuttle_timeleft = 0
 
 	for(var/turf/T in get_area_turfs(end_location) )
 		var/mob/M = locate(/mob) in T
-		M << "\red You have arrived to [station_name]. Commence operation!"
+		to_chat(M, "\red You have arrived to [station_name]. Commence operation!")
 
 	for(var/obj/machinery/computer/specops_shuttle/S in world)
 		S.specops_shuttle_timereset = world.time + SPECOPS_RETURN_DELAY
@@ -246,21 +246,21 @@ var/specops_shuttle_timeleft = 0
 			return 0
 	return 1
 
-/obj/machinery/computer/specops_shuttle/attack_ai(var/mob/user as mob)
+/obj/machinery/computer/specops_shuttle/attack_ai(mob/user)
 	return attack_hand(user)
 
-/obj/machinery/computer/specops_shuttle/attack_paw(var/mob/user as mob)
+/obj/machinery/computer/specops_shuttle/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/machinery/computer/specops_shuttle/attackby(I as obj, user as mob)
+/obj/machinery/computer/specops_shuttle/attackby(I, user)
 	if(istype(I,/obj/item/weapon/card/emag))
-		user << "\blue The electronic systems in this console are far too advanced for your primitive hacking peripherals."
+		to_chat(user, "\blue The electronic systems in this console are far too advanced for your primitive hacking peripherals.")
 	else
 		return attack_hand(user)
 
-/obj/machinery/computer/specops_shuttle/attack_hand(var/mob/user as mob)
+/obj/machinery/computer/specops_shuttle/attack_hand(mob/user)
 	if(!allowed(user))
-		user << "\red Access Denied."
+		to_chat(user, "\red Access Denied.")
 		return
 
 //Commented out so admins can do shenanigans at their leisure. Also makes the force-spawned admin ERTs able to use the shuttle.
@@ -286,27 +286,24 @@ var/specops_shuttle_timeleft = 0
 	return
 
 /obj/machinery/computer/specops_shuttle/Topic(href, href_list)
-	if(..())
+	. = ..()
+	if(!. || !allowed(usr))
 		return
 
-	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(loc, /turf))) || (istype(usr, /mob/living/silicon)))
-		usr.machine = src
-
 	if (href_list["sendtodock"])
-		if(!specops_shuttle_at_station|| specops_shuttle_moving_to_station || specops_shuttle_moving_to_centcom) return
+		if(!specops_shuttle_at_station || specops_shuttle_moving_to_station || specops_shuttle_moving_to_centcom) return
 
 		if (!specops_can_move())
-			usr << "\blue Central Command will not allow the Special Operations shuttle to return yet."
+			to_chat(usr, "\blue Central Command will not allow the Special Operations shuttle to return yet.")
 			if(world.timeofday <= specops_shuttle_timereset)
-				if (((world.timeofday - specops_shuttle_timereset)/10) > 60)
-					usr << "\blue [-((world.timeofday - specops_shuttle_timereset)/10)/60] minutes remain!"
-				usr << "\blue [-(world.timeofday - specops_shuttle_timereset)/10] seconds remain!"
-			return
+				if (((world.timeofday - specops_shuttle_timereset) / 10) > 60)
+					to_chat(usr, "\blue [-((world.timeofday - specops_shuttle_timereset) / 10) / 60] minutes remain!")
+				to_chat(usr, "\blue [-(world.timeofday - specops_shuttle_timereset) / 10] seconds remain!")
+			return FALSE
 
-		usr << "\blue The Special Operations shuttle will arrive at Central Command in [(SPECOPS_MOVETIME/10)] seconds."
+		to_chat(usr, "\blue The Special Operations shuttle will arrive at Central Command in [(SPECOPS_MOVETIME / 10)] seconds.")
 
 		temp += "Shuttle departing.<BR><BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
-		updateUsrDialog()
 
 		specops_shuttle_moving_to_centcom = 1
 		specops_shuttle_time = world.timeofday + SPECOPS_MOVETIME
@@ -317,13 +314,12 @@ var/specops_shuttle_timeleft = 0
 		if(specops_shuttle_at_station || specops_shuttle_moving_to_station || specops_shuttle_moving_to_centcom) return
 
 		if (!specops_can_move())
-			usr << "\red The Special Operations shuttle is unable to leave."
-			return
+			to_chat(usr, "\red The Special Operations shuttle is unable to leave.")
+			return FALSE
 
-		usr << "\blue The Special Operations shuttle will arrive on [station_name] in [(SPECOPS_MOVETIME/10)] seconds."
+		to_chat(usr, "\blue The Special Operations shuttle will arrive on [station_name] in [(SPECOPS_MOVETIME/10)] seconds.")
 
 		temp += "Shuttle departing.<BR><BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
-		updateUsrDialog()
 
 		var/area/centcom/specops/special_ops = locate()
 		if(special_ops)
@@ -337,9 +333,7 @@ var/specops_shuttle_timeleft = 0
 	else if (href_list["mainmenu"])
 		temp = null
 
-	add_fingerprint(usr)
 	updateUsrDialog()
-	return
 
 /*//Config stuff
 #define SPECOPS_MOVETIME 600	//Time to station is milliseconds. 60 seconds, enough time for everyone to be on the shuttle before it leaves.
@@ -401,7 +395,7 @@ var/specops_shuttle_timeleft = 0
 	if (specops_shuttle_moving_to_station || specops_shuttle_moving_to_centcom) return
 
 	if (!specops_can_move())
-		usr << "\red The Special Operations shuttle is unable to leave."
+		to_chat(usr, "\red The Special Operations shuttle is unable to leave.")
 		return
 
 	//Begin Marauder launchpad.
@@ -496,30 +490,30 @@ var/specops_shuttle_timeleft = 0
 
 	for(var/turf/T in get_area_turfs(end_location) )
 		var/mob/M = locate(/mob) in T
-		M << "\red You have arrived to [station_name]. Commence operation!"
+		to_chat(M, "\red You have arrived to [station_name]. Commence operation!")
 
 /proc/specops_can_move()
 	if(specops_shuttle_moving_to_station || specops_shuttle_moving_to_centcom) return 0
 	else return 1
 
-/obj/machinery/computer/specops_shuttle/attackby(I as obj, user as mob)
+/obj/machinery/computer/specops_shuttle/attackby(I, user)
 	return attack_hand(user)
 
-/obj/machinery/computer/specops_shuttle/attack_ai(var/mob/user as mob)
+/obj/machinery/computer/specops_shuttle/attack_ai(mob/user)
 	return attack_hand(user)
 
-/obj/machinery/computer/specops_shuttle/attack_paw(var/mob/user as mob)
+/obj/machinery/computer/specops_shuttle/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/machinery/computer/specops_shuttle/attackby(I as obj, user as mob)
+/obj/machinery/computer/specops_shuttle/attackby(I, user)
 	if(istype(I,/obj/item/weapon/card/emag))
-		user << "\blue The electronic systems in this console are far too advanced for your primitive hacking peripherals."
+		to_chat(user, "\blue The electronic systems in this console are far too advanced for your primitive hacking peripherals.")
 	else
 		return attack_hand(user)
 
-/obj/machinery/computer/specops_shuttle/attack_hand(var/mob/user as mob)
+/obj/machinery/computer/specops_shuttle/attack_hand(mob/user)
 	if(!allowed(user))
-		user << "\red Access Denied."
+		to_chat(user, "\red Access Denied.")
 		return
 
 //	if (sent_strike_team == 0)
@@ -553,17 +547,17 @@ var/specops_shuttle_timeleft = 0
 	if (href_list["sendtodock"])
 		if(!specops_shuttle_at_station|| specops_shuttle_moving_to_station || specops_shuttle_moving_to_centcom) return
 
-		usr << "\blue Central Command will not allow the Special Operations shuttle to return."
+		to_chat(usr, "\blue Central Command will not allow the Special Operations shuttle to return.")
 		return
 
 	else if (href_list["sendtostation"])
 		if(specops_shuttle_at_station || specops_shuttle_moving_to_station || specops_shuttle_moving_to_centcom) return
 
 		if (!specops_can_move())
-			usr << "\red The Special Operations shuttle is unable to leave."
+			to_chat(usr, "\red The Special Operations shuttle is unable to leave.")
 			return
 
-		usr << "\blue The Special Operations shuttle will arrive on [station_name] in [(SPECOPS_MOVETIME/10)] seconds."
+		to_chat(usr, "\blue The Special Operations shuttle will arrive on [station_name] in [(SPECOPS_MOVETIME/10)] seconds.")
 
 		temp += "Shuttle departing.<BR><BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
 		updateUsrDialog()

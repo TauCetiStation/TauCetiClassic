@@ -55,7 +55,7 @@
 					message = pick("Luxury watches for Blowout sale prices!",\
 					"Watches, Jewelry & Accessories, Bags & Wallets !",\
 					"Deposit 100$ and get 300$ totally free!",\
-					" 100K NT.|WOWGOLD õnly $89            <HOT>",\
+					" 100K NT.|WOWGOLD ï¿½nly $89            <HOT>",\
 					"We have been filed with a complaint from one of your customers in respect of their business relations with you.",\
 					"We kindly ask you to open the COMPLAINT REPORT (attached) to reply on this complaint..")
 				if(4)
@@ -100,7 +100,7 @@
 			if (!P.message_silent)
 				playsound(P.loc, 'sound/machines/twobeep.ogg', 50, 1)
 			for (var/mob/O in hearers(3, P.loc))
-				if(!P.message_silent) O.show_message(text("\icon[P] *[P.ttone]*"))
+				if(!P.message_silent) O.show_message(text("[bicon(P)] *[P.ttone]*"))
 			//Search for holder of the PDA.
 			var/mob/living/L = null
 			if(P.loc && isliving(P.loc))
@@ -110,7 +110,7 @@
 				L = get(P, /mob/living/silicon)
 
 			if(L)
-				L << "\icon[P] <b>Message from [sender] (Unknown / spam?), </b>\"[message]\" (Unable to Reply)"
+				to_chat(L, "[bicon(P)] <b>Message from [sender] (Unknown / spam?), </b>\"[message]\" (Unable to Reply)")
 	else if(world.time > time_failed + 1200)
 		//if there's no server active for two minutes, give up
 		kill()

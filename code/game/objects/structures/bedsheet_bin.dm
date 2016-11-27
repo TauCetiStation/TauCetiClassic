@@ -7,11 +7,10 @@ LINEN BINS
 /obj/item/weapon/bedsheet
 	name = "bedsheet"
 	desc = "A surprisingly soft linen bedsheet."
-	icon = 'tauceti/icons/obj/bedsheets.dmi'
+	icon = 'icons/obj/bedsheets.dmi'
 	icon_state = "sheet"
 	item_state = "bedsheet"
-	slot_flags = SLOT_BACK //tg
-	tc_custom = 'tauceti/icons/mob/back.dmi'
+	slot_flags = SLOT_BACK
 	layer = 4.0
 	throwforce = 1
 	throw_speed = 1
@@ -20,7 +19,7 @@ LINEN BINS
 	item_color = "white"
 
 
-/obj/item/weapon/bedsheet/attack_self(mob/user as mob)
+/obj/item/weapon/bedsheet/attack_self(mob/user)
 	user.drop_item()
 	if(layer == initial(layer))
 		layer = 5
@@ -141,6 +140,12 @@ LINEN BINS
 	icon_state = "sheetwiz"
 	item_color = "wiz"
 
+/obj/item/weapon/bedsheet/gar
+	name = "gar bedsheet"
+	desc = "A surprisingly soft gar bedsheet."
+	icon_state = "sheetgurren"
+	item_state = "bedsheet"
+	item_color = "gurren"
 
 
 /obj/structure/bedsheetbin
@@ -154,15 +159,15 @@ LINEN BINS
 	var/obj/item/hidden = null
 
 
-/obj/structure/bedsheetbin/examine()
-	usr << desc
+/obj/structure/bedsheetbin/examine(mob/user)
+	..()
 	if(amount < 1)
-		usr << "There are no bed sheets in the bin."
+		to_chat(user, "There are no bed sheets in the bin.")
 		return
 	if(amount == 1)
-		usr << "There is one bed sheet in the bin."
+		to_chat(user, "There is one bed sheet in the bin.")
 		return
-	usr << "There are [amount] bed sheets in the bin."
+	to_chat(user, "There are [amount] bed sheets in the bin.")
 
 
 /obj/structure/bedsheetbin/update_icon()
@@ -172,26 +177,26 @@ LINEN BINS
 		else				icon_state = "linenbin-full"
 
 
-/obj/structure/bedsheetbin/attackby(obj/item/I as obj, mob/user as mob)
+/obj/structure/bedsheetbin/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/bedsheet))
 		user.drop_item()
 		I.loc = src
 		sheets.Add(I)
 		amount++
-		user << "<span class='notice'>You put [I] in [src].</span>"
+		to_chat(user, "<span class='notice'>You put [I] in [src].</span>")
 	else if(amount && !hidden && I.w_class < 4)	//make sure there's sheets to hide it among, make sure nothing else is hidden in there.
 		user.drop_item()
 		I.loc = src
 		hidden = I
-		user << "<span class='notice'>You hide [I] among the sheets.</span>"
+		to_chat(user, "<span class='notice'>You hide [I] among the sheets.</span>")
 
 
 
-/obj/structure/bedsheetbin/attack_paw(mob/user as mob)
+/obj/structure/bedsheetbin/attack_paw(mob/user)
 	return attack_hand(user)
 
 
-/obj/structure/bedsheetbin/attack_hand(mob/user as mob)
+/obj/structure/bedsheetbin/attack_hand(mob/user)
 	if(amount >= 1)
 		amount--
 
@@ -205,17 +210,17 @@ LINEN BINS
 
 		B.loc = user.loc
 		user.put_in_hands(B)
-		user << "<span class='notice'>You take [B] out of [src].</span>"
+		to_chat(user, "<span class='notice'>You take [B] out of [src].</span>")
 
 		if(hidden)
 			hidden.loc = user.loc
-			user << "<span class='notice'>[hidden] falls out of [B]!</span>"
+			to_chat(user, "<span class='notice'>[hidden] falls out of [B]!</span>")
 			hidden = null
 
 
 	add_fingerprint(user)
 
-/obj/structure/bedsheetbin/attack_tk(mob/user as mob)
+/obj/structure/bedsheetbin/attack_tk(mob/user)
 	if(amount >= 1)
 		amount--
 
@@ -228,7 +233,7 @@ LINEN BINS
 			B = new /obj/item/weapon/bedsheet(loc)
 
 		B.loc = loc
-		user << "<span class='notice'>You telekinetically remove [B] from [src].</span>"
+		to_chat(user, "<span class='notice'>You telekinetically remove [B] from [src].</span>")
 		update_icon()
 
 		if(hidden)

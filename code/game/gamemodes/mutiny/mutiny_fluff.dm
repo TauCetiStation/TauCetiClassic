@@ -4,8 +4,12 @@
 	New(datum/game_mode/mutiny/M)
 		mode = M
 
+	Destroy()
+		mode = null
+		return ..()
+
 	proc/announce_directives()
-		for (var/obj/machinery/faxmachine/fax in world)
+		for (var/obj/machinery/faxmachine/fax in machines)
 			if (fax.department == "Captain's Office")
 				var/obj/item/weapon/paper/directive_x = new(fax.loc)
 				directive_x.name = "emergency action message"
@@ -72,8 +76,8 @@ They don't care about us they only care about WEALTH and POWER... Share this mes
 Be safe, friend.\" (Unable to Reply)</p>"}
 
 	proc/announce()
-		world << "<B>The current game mode is - Mutiny!</B>"
-		world << {"
+		to_chat(world, "<B>The current game mode is - Mutiny!</B>")
+		to_chat(world, {"
 <p>The crew will be divided by their sense of ethics when a morally turbulent emergency directive arrives with an incomplete command validation code.<br><br>
 The [loyalist_tag("Head Loyalist")] is the Captain, who carries the [loyalist_tag("Captain's Authentication Key")] at all times.<br>
 The [mutineer_tag("Head Mutineer")] is a random Head of Staff who carries the [mutineer_tag("Emergency Secondary Authentication Key")].</p>
@@ -83,7 +87,7 @@ Both keys are required to activate the <b>Emergency Authentication Device (EAD)<
 <b>Loyalists</b> - Follow the Head Loyalist in carrying out [loyalist_tag("NanoTrasen's directives")] then activate the <b>EAD</b>.<br>
 <b>Mutineers</b> - Prevent the completion of the [mutineer_tag("improperly validated directives")] and the activation of the <b>EAD</b>.
 </p>
-		"}
+		"})
 
 	proc/loyalist_tag(text)
 		return "<font color='blue'><b>[text]</b></font>"

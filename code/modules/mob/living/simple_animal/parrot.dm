@@ -116,7 +116,7 @@
 /*
  * Inventory
  */
-/mob/living/simple_animal/parrot/show_inv(mob/user as mob)
+/mob/living/simple_animal/parrot/show_inv(mob/user)
 	user.set_machine(src)
 	if(user.stat) return
 
@@ -155,19 +155,19 @@
 							if(copytext(possible_phrase,1,3) in department_radio_keys)
 								possible_phrase = copytext(possible_phrase,3,length(possible_phrase))
 					else
-						usr << "\red There is nothing to remove from its [remove_from]."
+						to_chat(usr, "\red There is nothing to remove from its [remove_from].")
 						return
 
 		//Adding things to inventory
 		else if(href_list["add_inv"])
 			var/add_to = href_list["add_inv"]
 			if(!usr.get_active_hand())
-				usr << "\red You have nothing in your hand to put on its [add_to]."
+				to_chat(usr, "\red You have nothing in your hand to put on its [add_to].")
 				return
 			switch(add_to)
 				if("ears")
 					if(ears)
-						usr << "\red It's already wearing something."
+						to_chat(usr, "\red It's already wearing something.")
 						return
 					else
 						var/obj/item/item_to_add = usr.get_active_hand()
@@ -175,7 +175,7 @@
 							return
 
 						if( !istype(item_to_add,  /obj/item/device/radio/headset) )
-							usr << "\red This object won't fit."
+							to_chat(usr, "\red This object won't fit.")
 							return
 
 						var/obj/item/device/radio/headset/headset_to_add = item_to_add
@@ -183,7 +183,7 @@
 						usr.drop_item()
 						headset_to_add.loc = src
 						src.ears = headset_to_add
-						usr << "You fit the headset onto [src]."
+						to_chat(usr, "You fit the headset onto [src].")
 
 						clearlist(available_channels)
 						for(var/ch in headset_to_add.channels)
@@ -213,7 +213,7 @@
  * Attack responces
  */
 //Humans, monkeys, aliens
-/mob/living/simple_animal/parrot/attack_hand(mob/living/carbon/M as mob)
+/mob/living/simple_animal/parrot/attack_hand(mob/living/carbon/M)
 	..()
 	if(client) return
 	if(!stat && M.a_intent == "hurt")
@@ -233,14 +233,14 @@
 			drop_held_item(0)
 	return
 
-/mob/living/simple_animal/parrot/attack_paw(mob/living/carbon/monkey/M as mob)
+/mob/living/simple_animal/parrot/attack_paw(mob/living/carbon/monkey/M)
 	attack_hand(M)
 
-/mob/living/simple_animal/parrot/attack_alien(mob/living/carbon/monkey/M as mob)
+/mob/living/simple_animal/parrot/attack_alien(mob/living/carbon/monkey/M)
 	attack_hand(M)
 
 //Simple animals
-/mob/living/simple_animal/parrot/attack_animal(mob/living/simple_animal/M as mob)
+/mob/living/simple_animal/parrot/attack_animal(mob/living/simple_animal/M)
 	if(client) return
 
 
@@ -253,7 +253,7 @@
 		icon_state = "parrot_fly"
 
 //Mobs with objects
-/mob/living/simple_animal/parrot/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/mob/living/simple_animal/parrot/attackby(obj/item/O, mob/user)
 	..()
 	if(!stat && !client && !istype(O, /obj/item/stack/medical))
 		if(O.force)
@@ -267,7 +267,7 @@
 	return
 
 //Bullets
-/mob/living/simple_animal/parrot/bullet_act(var/obj/item/projectile/Proj)
+/mob/living/simple_animal/parrot/bullet_act(obj/item/projectile/Proj)
 	..()
 	if(!stat && !client)
 		if(parrot_state == PARROT_PERCH)
@@ -586,7 +586,7 @@
 		return -1
 
 	if(held_item)
-		src << "\red You are already holding the [held_item]"
+		to_chat(src, "\red You are already holding the [held_item]")
 		return 1
 
 	for(var/obj/item/I in view(1,src))
@@ -602,7 +602,7 @@
 			visible_message("[src] grabs the [held_item]!", "\blue You grab the [held_item]!", "You hear the sounds of wings flapping furiously.")
 			return held_item
 
-	src << "\red There is nothing of interest to take."
+	to_chat(src, "\red There is nothing of interest to take.")
 	return 0
 
 /mob/living/simple_animal/parrot/proc/steal_from_mob()
@@ -614,7 +614,7 @@
 		return -1
 
 	if(held_item)
-		src << "\red You are already holding the [held_item]"
+		to_chat(src, "\red You are already holding the [held_item]")
 		return 1
 
 	var/obj/item/stolen_item = null
@@ -633,7 +633,7 @@
 			visible_message("[src] grabs the [held_item] out of [C]'s hand!", "\blue You snag the [held_item] out of [C]'s hand!", "You hear the sounds of wings flapping furiously.")
 			return held_item
 
-	src << "\red There is nothing of interest to take."
+	to_chat(src, "\red There is nothing of interest to take.")
 	return 0
 
 /mob/living/simple_animal/parrot/verb/drop_held_item_player()
@@ -648,7 +648,7 @@
 
 	return
 
-/mob/living/simple_animal/parrot/proc/drop_held_item(var/drop_gently = 1)
+/mob/living/simple_animal/parrot/proc/drop_held_item(drop_gently = 1)
 	set name = "Drop held item"
 	set category = "Parrot"
 	set desc = "Drop the item you're holding."
@@ -657,7 +657,7 @@
 		return -1
 
 	if(!held_item)
-		usr << "\red You have nothing to drop!"
+		to_chat(usr, "\red You have nothing to drop!")
 		return 0
 
 	if(!drop_gently)
@@ -665,11 +665,11 @@
 			var/obj/item/weapon/grenade/G = held_item
 			G.loc = src.loc
 			G.prime()
-			src << "You let go of the [held_item]!"
+			to_chat(src, "You let go of the [held_item]!")
 			held_item = null
 			return 1
 
-	src << "You drop the [held_item]."
+	to_chat(src, "You drop the [held_item].")
 
 	held_item.loc = src.loc
 	held_item = null
@@ -690,7 +690,7 @@
 					src.loc = AM.loc
 					icon_state = "parrot_sit"
 					return
-	src << "\red There is no perch nearby to sit on."
+	to_chat(src, "\red There is no perch nearby to sit on.")
 	return
 
 /*
@@ -819,20 +819,20 @@
 	..(message)
 
 
-/mob/living/simple_animal/parrot/hear_say(var/message, var/verb = "says", var/datum/language/language = null, var/alt_name = "",var/italics = 0, var/mob/speaker = null)
+/mob/living/simple_animal/parrot/hear_say(message, verb = "says", datum/language/language = null, alt_name = "",italics = 0, mob/speaker = null)
 	if(speaker != src)
 		parrot_hear(message)
 	..(message,verb,language,alt_name,italics,speaker)
 
 
 
-/mob/living/simple_animal/parrot/hear_radio(var/message, var/verb="says", var/datum/language/language=null, var/part_a, var/part_b, var/mob/speaker = null, var/hard_to_hear = 0)
+/mob/living/simple_animal/parrot/hear_radio(message, verb="says", datum/language/language=null, part_a, part_b, mob/speaker = null, hard_to_hear = 0)
 	if(speaker != src)
 		parrot_hear("[pick(available_channels)] [message]")
 	..(message,verb,language,part_a,part_b,speaker,hard_to_hear)
 
 
-/mob/living/simple_animal/parrot/proc/parrot_hear(var/message="")
+/mob/living/simple_animal/parrot/proc/parrot_hear(message="")
 	if(!message || stat)
 		return
 	speech_buffer.Add(message)

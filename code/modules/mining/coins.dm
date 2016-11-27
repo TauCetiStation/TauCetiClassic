@@ -1,6 +1,6 @@
 /obj/item/weapon/coin
 	icon = 'icons/obj/items.dmi'
-	name = "Coin"
+	name = COIN_STANDARD
 	icon_state = "coin"
 	flags = FPRINT | TABLEPASS| CONDUCT
 	force = 0.0
@@ -14,52 +14,52 @@
 	pixel_y = rand(0,8)-8
 
 /obj/item/weapon/coin/gold
-	name = "gold coin"
+	name = COIN_GOLD
 	icon_state = "coin_gold"
 
 /obj/item/weapon/coin/silver
-	name = "silver coin"
+	name = COIN_SILVER
 	icon_state = "coin_silver"
 
 /obj/item/weapon/coin/diamond
-	name = "diamond coin"
+	name = COIN_DIAMOND
 	icon_state = "coin_diamond"
 
 /obj/item/weapon/coin/iron
-	name = "iron coin"
+	name = COIN_IRON
 	icon_state = "coin_iron"
 
 /obj/item/weapon/coin/phoron
-	name = "solid phoron coin"
+	name = COIN_PHORON
 	icon_state = "coin_phoron"
 
 /obj/item/weapon/coin/uranium
-	name = "uranium coin"
+	name = COIN_URANIUM
 	icon_state = "coin_uranium"
 
 /obj/item/weapon/coin/clown
-	name = "bananaium coin"
+	name = COIN_BANANIUM
 	icon_state = "coin_clown"
 
 /obj/item/weapon/coin/platinum
-	name = "platinum coin"
+	name = COIN_PLATINUM
 	icon_state = "coin_adamantine"
 
-/obj/item/weapon/coin/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/weapon/coin/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W,/obj/item/weapon/cable_coil) )
 		var/obj/item/weapon/cable_coil/CC = W
 		if(string_attached)
-			user << "\blue There already is a string attached to this coin."
+			to_chat(user, "\blue There already is a string attached to this coin.")
 			return
 
 		if(CC.amount <= 0)
-			user << "\blue This cable coil appears to be empty."
+			to_chat(user, "\blue This cable coil appears to be empty.")
 			qdel(CC)
 			return
 
 		overlays += image('icons/obj/items.dmi',"coin_string_overlay")
 		string_attached = 1
-		user << "\blue You attach a string to the coin."
+		to_chat(user, "\blue You attach a string to the coin.")
 		CC.use(1)
 	else if(istype(W,/obj/item/weapon/wirecutters) )
 		if(!string_attached)
@@ -71,10 +71,10 @@
 		CC.update_icon()
 		overlays = list()
 		string_attached = null
-		user << "\blue You detach the string from the coin."
+		to_chat(user, "\blue You detach the string from the coin.")
 	else ..()
 
-/obj/item/weapon/coin/attack_self(mob/user as mob)
+/obj/item/weapon/coin/attack_self(mob/user)
 	var/result = rand(1, sides)
 	var/comment = ""
 	if(result == 1)

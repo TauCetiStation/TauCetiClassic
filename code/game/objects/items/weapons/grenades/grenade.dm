@@ -14,9 +14,9 @@
 
 	action_button_name = "Activate Grenade"
 
-/obj/item/weapon/grenade/proc/clown_check(var/mob/living/user)
+/obj/item/weapon/grenade/proc/clown_check(mob/living/user)
 	if((CLUMSY in user.mutations) && prob(50))
-		user << "<span class='warning'>Huh? How does this thing work?</span>"
+		to_chat(user, "<span class='warning'>Huh? How does this thing work?</span>")
 
 		activate(user)
 		add_fingerprint(user)
@@ -26,11 +26,11 @@
 	return 1
 
 
-/*/obj/item/weapon/grenade/afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
+/*/obj/item/weapon/grenade/afterattack(atom/target, mob/user)
 	if (istype(target, /obj/item/weapon/storage)) return ..() // Trying to put it in a full container
 	if (istype(target, /obj/item/weapon/gun/grenadelauncher)) return ..()
 	if((user.get_active_hand() == src) && (!active) && (clown_check(user)) && target.loc != src.loc)
-		user << "<span class='warning'>You prime the [name]! [det_time/10] seconds!</span>"
+		to_chat(user, "<span class='warning'>You prime the [name]! [det_time/10] seconds!</span>")
 		active = 1
 		icon_state = initial(icon_state) + "_active"
 		playsound(loc, 'sound/weapons/armbomb.ogg', 75, 1, -3)
@@ -44,19 +44,19 @@
 	return*/
 
 
-/obj/item/weapon/grenade/examine()
-	set src in usr
-	usr << desc
-	if(det_time > 1)
-		usr << "The timer is set to [det_time/10] seconds."
-		return
-	usr << "\The [src] is set for instant detonation."
+/obj/item/weapon/grenade/examine(mob/user)
+	..()
+	if(src in user)
+		if(det_time > 1)
+			to_chat(user, "The timer is set to [det_time/10] seconds.")
+		else
+			to_chat(user, "\The [src] is set for instant detonation.")
 
 
-/obj/item/weapon/grenade/attack_self(mob/user as mob)
+/obj/item/weapon/grenade/attack_self(mob/user)
 	if(!active)
 		if(clown_check(user))
-			user << "<span class='warning'>You prime \the [name]! [det_time/10] seconds!</span>"
+			to_chat(user, "<span class='warning'>You prime \the [name]! [det_time/10] seconds!</span>")
 
 			activate(user)
 			add_fingerprint(user)
@@ -66,7 +66,7 @@
 	return
 
 
-/obj/item/weapon/grenade/proc/activate(mob/user as mob)
+/obj/item/weapon/grenade/proc/activate(mob/user)
 	if(active)
 		return
 
@@ -89,21 +89,21 @@
 		T.hotspot_expose(700,125)
 
 
-/obj/item/weapon/grenade/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/weapon/grenade/attackby(obj/item/weapon/W, mob/user)
 	if(isscrewdriver(W))
 		switch(det_time)
 			if ("1")
 				det_time = 10
-				user << "<span class='notice'>You set the [name] for 1 second detonation time.</span>"
+				to_chat(user, "<span class='notice'>You set the [name] for 1 second detonation time.</span>")
 			if ("10")
 				det_time = 30
-				user << "<span class='notice'>You set the [name] for 3 second detonation time.</span>"
+				to_chat(user, "<span class='notice'>You set the [name] for 3 second detonation time.</span>")
 			if ("30")
 				det_time = 50
-				user << "<span class='notice'>You set the [name] for 5 second detonation time.</span>"
+				to_chat(user, "<span class='notice'>You set the [name] for 5 second detonation time.</span>")
 			if ("50")
 				det_time = 1
-				user << "<span class='notice'>You set the [name] for instant detonation.</span>"
+				to_chat(user, "<span class='notice'>You set the [name] for instant detonation.</span>")
 		add_fingerprint(user)
 	..()
 	return
@@ -113,5 +113,16 @@
 	..()
 	return
 
-/obj/item/weapon/grenade/attack_paw(mob/user as mob)
+/obj/item/weapon/grenade/attack_paw(mob/user)
 	return attack_hand(user)
+
+/obj/item/weapon/grenade/syndieminibomb
+	desc = "A syndicate manufactured explosive used to sow destruction and chaos."
+	name = "syndicate minibomb"
+	icon_state = "syndicate"
+	item_state = "flashbang"
+	origin_tech = "materials=3;magnets=4;syndicate=4"
+
+/obj/item/weapon/grenade/syndieminibomb/prime()
+	explosion(src.loc,1,2,4,5)
+	qdel(src)

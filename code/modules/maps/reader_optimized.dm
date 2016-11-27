@@ -40,6 +40,7 @@ var/global/dmm_suite/preloader/_preloader = new
 	var/list/bounds = list(1.#INF, 1.#INF, 1.#INF, -1.#INF, -1.#INF, -1.#INF)
 	var/list/grid_models = list()
 	var/key_len = 0
+	var/list/loaded_stuff = list("stuff" = list(), "bounds" = list())
 
 	dmmRegex.next = 1
 	while(dmmRegex.Find(tfile, dmmRegex.next))
@@ -120,7 +121,7 @@ var/global/dmm_suite/preloader/_preloader = new
 								var/model_key = copytext(line, tpos, tpos + key_len)
 								if(!grid_models[model_key])
 									return null
-								parse_grid(grid_models[model_key], xcrd, ycrd, zcrd)
+								loaded_stuff["stuff"] += parse_grid(grid_models[model_key], xcrd, ycrd, zcrd)
 								CHECK_TICK
 
 							maxx = max(maxx, xcrd)
@@ -134,7 +135,8 @@ var/global/dmm_suite/preloader/_preloader = new
 	if(bounds[1] == 1.#INF) // Shouldn't need to check every item
 		return null
 	else
-		return bounds
+		loaded_stuff["bounds"] += bounds
+		return loaded_stuff
 
 /**
  * Fill a given tile with its area/turf/objects/mobs
@@ -153,7 +155,7 @@ var/global/dmm_suite/preloader/_preloader = new
  * 4) Instanciates the atom with its variables
  *
  */
-/dmm_suite/proc/parse_grid(model as text,xcrd as num,ycrd as num,zcrd as num)
+/dmm_suite/proc/parse_grid(model,xcrd,ycrd,zcrd)
 	/*Method parse_grid()
 	- Accepts a text string containing a comma separated list of type paths of the
 		same construction as those contained in a .dmm file, and instantiates them.
@@ -251,9 +253,15 @@ var/global/dmm_suite/preloader/_preloader = new
 			index++
 
 	//finally instance all remainings objects/mobs
+	var/list/objs = list()
+	var/inst
 	for(index in 1 to first_turf_index-1)
-		instance_atom(members[index],members_attributes[index],xcrd,ycrd,zcrd)
+		inst = instance_atom(members[index],members_attributes[index],xcrd,ycrd,zcrd)
+		if(isobj(inst))
+			objs += inst
 		CHECK_TICK
+
+	return objs
 
 ////////////////
 //Helpers procs
@@ -279,7 +287,7 @@ var/global/dmm_suite/preloader/_preloader = new
 
 //text trimming (both directions) helper proc
 //optionally removes quotes before and after the text (for variable name)
-/dmm_suite/proc/trim_text(what as text,trim_quotes=0)
+/dmm_suite/proc/trim_text(what,trim_quotes=0)
 	if(trim_quotes)
 		return trimQuotesRegex.Replace(what, "")
 	else
@@ -288,7 +296,7 @@ var/global/dmm_suite/preloader/_preloader = new
 
 //find the position of the next delimiter,skipping whatever is comprised between opening_escape and closing_escape
 //returns 0 if reached the last delimiter
-/dmm_suite/proc/find_next_delimiter_position(text as text,initial_position as num, delimiter=",",opening_escape=quote,closing_escape=quote)
+/dmm_suite/proc/find_next_delimiter_position(text,initial_position, delimiter=",",opening_escape=quote,closing_escape=quote)
 	var/position = initial_position
 	var/next_delimiter = findtext(text,delimiter,position,0)
 	var/next_opening = findtext(text,opening_escape,position,0)
@@ -303,7 +311,7 @@ var/global/dmm_suite/preloader/_preloader = new
 
 //build a list from variables in text form (e.g {var1="derp"; var2; var3=7} => list(var1="derp", var2, var3=7))
 //return the filled list
-/dmm_suite/proc/readlist(text as text, delimiter=",")
+/dmm_suite/proc/readlist(text, delimiter=",")
 
 	var/list/to_return = list()
 

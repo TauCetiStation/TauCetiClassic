@@ -5,12 +5,6 @@
 	layer = 2.1
 	anchored = 1
 
-	examine()
-		set src in view(2)
-		..()
-		return
-
-
 	New(location,main = "#FFFFFF",shade = "#000000",var/type = "rune", var/e_name = "rune", var/override_color = 0)
 		..()
 		loc = location
@@ -79,5 +73,4 @@
 		ticker.mode.B_territory_new -= territory.type
 		ticker.mode.B_territory_lost |= list(territory.type = territory.name)
 
-	..()
-
+	return ..()

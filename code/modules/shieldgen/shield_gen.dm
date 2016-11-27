@@ -51,14 +51,14 @@
 		var/obj/item/weapon/card/id/C = W
 		if(access_captain in C.access || access_security in C.access || access_engine in C.access)
 			src.locked = !src.locked
-			user << "Controls are now [src.locked ? "locked." : "unlocked."]"
+			to_chat(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
 			updateDialog()
 		else
-			user << "\red Access denied."
+			to_chat(user, "\red Access denied.")
 	else if(istype(W, /obj/item/weapon/card/emag))
 		if(prob(75))
 			src.locked = !src.locked
-			user << "Controls are now [src.locked ? "locked." : "unlocked."]"
+			to_chat(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
 			updateDialog()
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 		s.set_up(5, 1, src)
@@ -66,7 +66,7 @@
 
 	else if(istype(W, /obj/item/weapon/wrench))
 		src.anchored = !src.anchored
-		src.visible_message("\blue \icon[src] [src] has been [anchored?"bolted to the floor":"unbolted from the floor"] by [user].")
+		src.visible_message("\blue [bicon(src)] [src] has been [anchored?"bolted to the floor":"unbolted from the floor"] by [user].")
 
 		if(active)
 			toggle()
@@ -87,10 +87,10 @@
 	else
 		..()
 
-/obj/machinery/shield_gen/attack_paw(user as mob)
+/obj/machinery/shield_gen/attack_paw(user)
 	return src.attack_hand(user)
 
-/obj/machinery/shield_gen/attack_ai(user as mob)
+/obj/machinery/shield_gen/attack_ai(user)
 	return src.attack_hand(user)
 
 /obj/machinery/shield_gen/attack_hand(mob/user)
@@ -176,12 +176,16 @@
 		average_field_strength = 0
 
 /obj/machinery/shield_gen/Topic(href, href_list[])
-	..()
-	if( href_list["close"] )
+	if(href_list["close"])
 		usr << browse(null, "window=shield_generator")
-		usr.unset_machine()
+		usr.unset_machine(src)
+		return FALSE
+
+	. = ..()
+	if(!.)
 		return
-	else if( href_list["toggle"] )
+
+	if( href_list["toggle"] )
 		toggle()
 	else if( href_list["change_radius"] )
 		field_radius += text2num(href_list["change_radius"])
@@ -201,7 +205,7 @@
 			target_field_strength = 1000
 		else if(target_field_strength < 0)
 			target_field_strength = 0
-	//
+
 	updateDialog()
 
 /obj/machinery/shield_gen/power_change()
@@ -274,14 +278,14 @@
 		covered_turfs = null
 
 		for(var/mob/M in view(5,src))
-			M << "\icon[src] You hear heavy droning start up."
+			to_chat(M, "[bicon(src)] You hear heavy droning start up.")
 	else
 		for(var/obj/effect/energy_field/D in field)
 			field.Remove(D)
 			D.loc = null
 
 		for(var/mob/M in view(5,src))
-			M << "\icon[src] You hear heavy droning fade out."
+			to_chat(M, "[bicon(src)] You hear heavy droning fade out.")
 
 //grab the border tiles in a circle around this machine
 /obj/machinery/shield_gen/proc/get_shielded_turfs()

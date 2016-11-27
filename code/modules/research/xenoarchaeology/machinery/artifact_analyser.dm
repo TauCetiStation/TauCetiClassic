@@ -25,7 +25,7 @@
 	if(!owned_scanner)
 		owned_scanner = locate(/obj/machinery/artifact_scanpad) in orange(1, src)
 
-/obj/machinery/artifact_analyser/attack_hand(var/mob/user as mob)
+/obj/machinery/artifact_analyser/attack_hand(mob/user)
 	src.add_fingerprint(user)
 	interact(user)
 
@@ -79,7 +79,7 @@
 		P.name = "[src] report #[++report_num]"
 		P.info = "<b>[src] analysis report #[report_num]</b><br>"
 		P.info += "<br>"
-		P.info += "\icon[scanned_object] [results]"
+		P.info += "[bicon(scanned_object)] [results]"
 		P.stamped = list(/obj/item/weapon/stamp)
 		P.overlays = list("paper_stamped")
 
@@ -89,6 +89,15 @@
 			A.being_used = 0
 
 /obj/machinery/artifact_analyser/Topic(href, href_list)
+	if(href_list["close"])
+		usr.unset_machine(src)
+		usr << browse(null, "window=artanalyser")
+		return FALSE
+
+	. = ..()
+	if(!.)
+		return
+
 	if(href_list["begin_scan"])
 		if(!owned_scanner)
 			reconnect_scanner()
@@ -121,15 +130,10 @@
 		scan_in_progress = 0
 		src.visible_message("<b>[name]</b> states, \"Scanning halted.\"")
 
-	if(href_list["close"])
-		usr.unset_machine(src)
-		usr << browse(null, "window=artanalyser")
-
-	..()
 	updateDialog()
 
 //hardcoded responses, oh well
-/obj/machinery/artifact_analyser/proc/get_scan_info(var/obj/scanned_obj)
+/obj/machinery/artifact_analyser/proc/get_scan_info(obj/scanned_obj)
 	switch(scanned_obj.type)
 		if(/obj/machinery/auto_cloner)
 			return "Automated cloning pod - appears to rely on organic nanomachines with a self perpetuating \

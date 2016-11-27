@@ -26,7 +26,7 @@
 		if(istype(F, /obj/item/weapon/fuel/antiH))
 			src.fuel += F.fuel
 			F.fuel = 0
-			user << "You have added the anti-Hydrogen to the storage ring, it now contains [src.fuel]kg"
+			to_chat(user, "You have added the anti-Hydrogen to the storage ring, it now contains [src.fuel]kg")
 		if(istype(F, /obj/item/weapon/fuel/H))
 			src.fuel += F.fuel
 			qdel(F)
@@ -35,13 +35,13 @@
 		if(istype(F, /obj/item/weapon/fuel/H))
 			src.fuel += F.fuel
 			F.fuel = 0
-			user << "You have added the Hydrogen to the storage ring, it now contains [src.fuel]kg"
+			to_chat(user, "You have added the Hydrogen to the storage ring, it now contains [src.fuel]kg")
 		if(istype(F, /obj/item/weapon/fuel/antiH))
 			src.fuel += F.fuel
 			qdel(src)
 			F:annihilation(F.fuel)
 
-/obj/item/weapon/fuel/antiH/proc/annihilation(var/mass)
+/obj/item/weapon/fuel/antiH/proc/annihilation(mass)
 
 	var/strength = convert2energy(mass)
 
@@ -70,18 +70,18 @@
 /obj/item/weapon/fuel/examine()
 	set src in view(1)
 	if(usr && !usr.stat)
-		usr << "A magnetic storage ring, it contains [fuel]kg of [content ? content : "nothing"]."
+		to_chat(usr, "A magnetic storage ring, it contains [fuel]kg of [content ? content : "nothing"].")
 
-/obj/item/weapon/fuel/proc/injest(mob/M as mob)
+/obj/item/weapon/fuel/proc/injest(mob/M)
 	switch(content)
 		if("Anti-Hydrogen")
 			M.gib()
 		if("Hydrogen")
-			M << "\blue You feel very light, as if you might just float away..."
+			to_chat(M, "\blue You feel very light, as if you might just float away...")
 	qdel(src)
 	return
 
-/obj/item/weapon/fuel/attack(mob/M as mob, mob/user as mob)
+/obj/item/weapon/fuel/attack(mob/M, mob/user)
 	if (user != M)
 		var/obj/effect/equip_e/human/O = new /obj/effect/equip_e/human(  )
 		O.source = user

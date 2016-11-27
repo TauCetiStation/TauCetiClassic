@@ -14,7 +14,7 @@
 	..()
 	levelupdate()
 
-/turf/simulated/proc/AddTracks(var/typepath,var/bloodDNA,var/comingdir,var/goingdir,var/bloodcolor="#A10808")
+/turf/simulated/proc/AddTracks(typepath,bloodDNA,comingdir,goingdir,bloodcolor="#A10808")
 	var/obj/effect/decal/cleanable/blood/tracks/tracks = locate(typepath) in src
 	if(!tracks)
 		tracks = new typepath(src)
@@ -22,7 +22,7 @@
 
 /turf/simulated/Entered(atom/A, atom/OL)
 	if(movement_disabled && usr.ckey != movement_disabled_exception)
-		usr << "\red Movement is admin-disabled." //This is to identify lag problems
+		to_chat(usr, "\red Movement is admin-disabled.")//This is to identify lag problems
 		return
 
 	if (istype(A, /mob/living/simple_animal/hulk))
@@ -96,7 +96,7 @@
 					if ((M.m_intent == "run") && !((istype(M:shoes, /obj/item/clothing/shoes) && M:shoes.flags&NOSLIP) || (istype(M:wear_suit, /obj/item/clothing/suit/space/rig) && M:wear_suit.flags&NOSLIP)))
 						M.stop_pulling()
 						step(M, M.dir)
-						M << "\blue You slipped on the wet floor!"
+						to_chat(M, "\blue You slipped on the wet floor!")
 						playsound(src, 'sound/misc/slip.ogg', 50, 1, -3)
 						M.Stun(5)
 						M.Weaken(3)
@@ -107,7 +107,7 @@
 					if (M.m_intent == "run")
 						M.stop_pulling()
 						step(M, M.dir)
-						M << "\blue You slipped on the wet floor!"
+						to_chat(M, "\blue You slipped on the wet floor!")
 						playsound(src, 'sound/misc/slip.ogg', 50, 1, -3)
 						M.Stun(5)
 						M.Weaken(3)
@@ -124,7 +124,7 @@
 					spawn(3) step(M, M.dir)
 					spawn(4) step(M, M.dir)
 					M.take_organ_damage(2) // Was 5 -- TLE
-					M << "\blue You slipped on the floor!"
+					to_chat(M, "\blue You slipped on the floor!")
 					playsound(src, 'sound/misc/slip.ogg', 50, 1, -3)
 					M.Weaken(10)
 			if(3) // Ice
@@ -132,7 +132,7 @@
 					if ((M.m_intent == "run") && (!(istype(M:shoes, /obj/item/clothing/shoes) && M:shoes.flags&NOSLIP) || !(istype(M:wear_suit, /obj/item/clothing/suit/space/rig) && M:wear_suit.flags&NOSLIP)) && prob(30))
 						M.stop_pulling()
 						step(M, M.dir)
-						M << "\blue You slipped on the icy floor!"
+						to_chat(M, "\blue You slipped on the icy floor!")
 						playsound(src, 'sound/misc/slip.ogg', 50, 1, -3)
 						M.Stun(4)
 						M.Weaken(3)
@@ -143,7 +143,7 @@
 					if (M.m_intent == "run" && prob(30))
 						M.stop_pulling()
 						step(M, M.dir)
-						M << "\blue You slipped on the icy floor!"
+						to_chat(M, "\blue You slipped on the icy floor!")
 						playsound(src, 'sound/misc/slip.ogg', 50, 1, -3)
 						M.Stun(4)
 						M.Weaken(3)
@@ -154,7 +154,7 @@
 	..()
 
 //returns 1 if made bloody, returns 0 otherwise
-/turf/simulated/add_blood(mob/living/carbon/human/M as mob)
+/turf/simulated/add_blood(mob/living/carbon/human/M)
 	if (!..())
 		return 0
 
@@ -183,7 +183,7 @@
 
 
 // Only adds blood on the floor -- Skie
-/turf/simulated/proc/add_blood_floor(mob/living/carbon/M as mob)
+/turf/simulated/proc/add_blood_floor(mob/living/carbon/M)
 	if(istype(M, /mob/living/carbon/monkey))
 
 		var/obj/effect/decal/cleanable/blood/this = new /obj/effect/decal/cleanable/blood(src)

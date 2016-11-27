@@ -10,7 +10,7 @@
 	var/weapon_type
 	var/weapon_name_simple
 
-/obj/effect/proc_holder/changeling/weapon/try_to_sting(var/mob/user, var/mob/target)
+/obj/effect/proc_holder/changeling/weapon/try_to_sting(mob/user, mob/target)
 	if(istype(user.l_hand, weapon_type)) //Not the nicest way to do it, but eh
 		qdel(user.l_hand)
 		user.visible_message("<span class='warning'>With a sickening crunch, [user] reforms his [weapon_name_simple] into an arm!</span>", "<span class='notice'>We assimilate the [weapon_name_simple] back into our body.</span>", "<span class='warning>You hear organic matter ripping and tearing!</span>")
@@ -23,9 +23,9 @@
 		return
 	..(user, target)
 
-/obj/effect/proc_holder/changeling/weapon/sting_action(var/mob/user)
+/obj/effect/proc_holder/changeling/weapon/sting_action(mob/user)
 	if(!user.unEquip(user.get_active_hand()))
-		user << "The [user.get_active_hand()] is stuck to your hand, you cannot grow a [weapon_name_simple] over it!"
+		to_chat(user, "The [user.get_active_hand()] is stuck to your hand, you cannot grow a [weapon_name_simple] over it!")
 		return
 	var/obj/item/W = new weapon_type(user)
 	user.put_in_hands(W)
@@ -47,7 +47,7 @@
 	var/recharge_slowdown = 0
 	var/blood_on_castoff = 0
 
-/obj/effect/proc_holder/changeling/suit/try_to_sting(var/mob/user, var/mob/target)
+/obj/effect/proc_holder/changeling/suit/try_to_sting(mob/user, mob/target)
 	var/datum/changeling/changeling = user.mind.changeling
 	if(!ishuman(user) || !changeling)
 		return
@@ -72,12 +72,12 @@
 		return
 	..(H, target)
 
-/obj/effect/proc_holder/changeling/suit/sting_action(var/mob/living/carbon/human/user)
+/obj/effect/proc_holder/changeling/suit/sting_action(mob/living/carbon/human/user)
 	if(!user.unEquip(user.wear_suit))
-		user << "\the [user.wear_suit] is stuck to your body, you cannot grow a [suit_name_simple] over it!"
+		to_chat(user, "\the [user.wear_suit] is stuck to your body, you cannot grow a [suit_name_simple] over it!")
 		return
 	if(!user.unEquip(user.head))
-		user << "\the [user.head] is stuck on your head, you cannot grow a [helmet_name_simple] over it!"
+		to_chat(user, "\the [user.head] is stuck on your head, you cannot grow a [helmet_name_simple] over it!")
 		return
 
 	user.drop_from_inventory(user.head)
@@ -105,8 +105,7 @@
 /obj/item/weapon/melee/arm_blade
 	name = "arm blade"
 	desc = "A grotesque blade made out of bone and flesh that cleaves through people as a hot knife through butter."
-	icon = 'tauceti/icons/mob/mutant_stuff.dmi'
-	tc_custom = 'tauceti/icons/mob/mutant_stuff.dmi'
+	icon = 'icons/obj/weapons.dmi'
 	icon_state = "arm_blade"
 	item_state = "arm_blade"
 	flags = ABSTRACT
@@ -144,11 +143,11 @@
 			return
 
 		if(A.arePowerSystemsOn() && !(A.stat & NOPOWER))
-			user << "<span class='notice'>The airlock's motors resist our efforts to force it.</span>"
+			to_chat(user, "<span class='notice'>The airlock's motors resist our efforts to force it.</span>")
 			return
 
 		else if(A.locked)
-			user << "<span class='notice'>The airlock's bolts prevent it from being forced.</span>"
+			to_chat(user, "<span class='notice'>The airlock's bolts prevent it from being forced.</span>")
 			return
 
 		else
@@ -173,9 +172,9 @@
 	name = "shield-like mass"
 	desc = "A mass of tough, boney tissue. You can still see the fingers as a twisted pattern in the shield."
 	canremove = 0
-	icon = 'tauceti/icons/mob/mutant_stuff.dmi'
-	tc_custom = 'tauceti/icons/mob/mutant_stuff.dmi'
+	icon = 'icons/obj/weapons.dmi'
 	icon_state = "ling_shield"
+	item_state = "ling_shield"
 	var/remaining_uses = 0//Set by the changeling ability.
 
 /obj/item/weapon/shield/changeling/New()
@@ -218,8 +217,7 @@
 
 /obj/item/clothing/suit/space/changeling
 	name = "flesh mass"
-	icon = 'tauceti/icons/mob/mutant_stuff.dmi'
-	tc_custom = 'tauceti/icons/mob/mutant_stuff.dmi'
+	icon = 'icons/mob/suit.dmi'
 	icon_state = "lingspacesuit"
 	desc = "A huge, bulky mass of pressure and temperature-resistant organic tissue, evolved to facilitate space travel."
 	canremove = 0
@@ -245,8 +243,7 @@
 
 /obj/item/clothing/head/helmet/space/changeling
 	name = "flesh mass"
-	icon = 'tauceti/icons/mob/mutant_stuff.dmi'
-	tc_custom = 'tauceti/icons/mob/mutant_stuff.dmi'
+	icon = 'icons/mob/head.dmi'
 	icon_state = "lingspacehelmet"
 	desc = "A covering of pressure and temperature-resistant organic tissue with a glass-like chitin front."
 	flags = HEADCOVERSEYES | BLOCKHAIR | HEADCOVERSMOUTH
@@ -275,8 +272,7 @@
 /obj/item/clothing/suit/armor/changeling
 	name = "chitinous mass"
 	desc = "A tough, hard covering of black chitin."
-	icon = 'tauceti/icons/mob/mutant_stuff.dmi'
-	tc_custom = 'tauceti/icons/mob/mutant_stuff.dmi'
+	icon = 'icons/mob/suit.dmi'
 	icon_state = "lingarmor"
 	canremove = 0
 	flags = THICKMATERIAL
@@ -299,8 +295,7 @@
 /obj/item/clothing/head/helmet/changeling
 	name = "chitinous mass"
 	desc = "A tough, hard covering of black chitin with transparent chitin in front."
-	icon = 'tauceti/icons/mob/mutant_stuff.dmi'
-	tc_custom = 'tauceti/icons/mob/mutant_stuff.dmi'
+	icon = 'icons/mob/head.dmi'
 	icon_state = "lingarmorhelmet"
 	flags = HEADCOVERSEYES | BLOCKHAIR | THICKMATERIAL
 	canremove = 0

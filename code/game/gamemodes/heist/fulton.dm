@@ -7,7 +7,7 @@ var/list/extraction_appends = list("AAAAAAAAAAAAAAAAAUGH", "AAAAAAAAAAAHHHHHHHHH
 	icon_state = "extraction_pack"
 	var/is_extracting = 0
 
-/obj/item/weapon/extraction_pack/afterattack(atom/movable/A, mob/user as mob, proximity)
+/obj/item/weapon/extraction_pack/afterattack(atom/movable/A, mob/user, proximity)
 	var/extract_time = 70
 	if(!proximity)
 		return
@@ -25,14 +25,14 @@ var/list/extraction_appends = list("AAAAAAAAAAAAAAAAAUGH", "AAAAAAAAAAAHHHHHHHHH
 		else
 			fulton_mark = locate(/obj/effect/landmark/heist/obj_loot)
 		if(!fulton_mark)
-			user << "<span class='notice'>Error... Aurora beacon not found.</span>"
+			to_chat(user, "<span class='notice'>Error... Aurora beacon not found.</span>")
 			return
 		if(A.loc == user || A == user) // No extracting stuff you're holding in your hands/yourself.
 			return
 		if(A.anchored)
 			return
 		is_extracting = 1
-		user << "<span class='notice'>You start attaching the pack to [A]...</span>"
+		to_chat(user, "<span class='notice'>You start attaching the pack to [A]...</span>")
 		if(istype(A, /obj/item))
 			var/obj/item/I = A
 			if(I.w_class <= 2)
@@ -43,7 +43,7 @@ var/list/extraction_appends = list("AAAAAAAAAAAAAAAAAUGH", "AAAAAAAAAAAHHHHHHHHH
 			is_extracting = 0
 			if(A.anchored)
 				return
-			user << "<span class='notice'>You attach the pack to [A] and activate it.</span>"
+			to_chat(user, "<span class='notice'>You attach the pack to [A] and activate it.</span>")
 			var/image/balloon
 			if(istype(A, /mob/living))
 				var/mob/living/M = A
@@ -67,7 +67,7 @@ var/list/extraction_appends = list("AAAAAAAAAAAAAAAAAUGH", "AAAAAAAAAAAHHHHHHHHH
 			sleep(10)
 			animate(holder_obj, pixel_z = 10, time = 10)
 			var/obj/effect/BPs = new /obj/effect(get_turf(A))
-			BPs.icon = 'tauceti/modules/_anomaly/anomalies.dmi'
+			BPs.icon = 'code/modules/anomaly/anomalies.dmi'
 			BPs.icon_state = "bluespace"
 			BPs.mouse_opacity = 0
 			var/list/flooring_near_beacon = list()
@@ -75,7 +75,7 @@ var/list/extraction_appends = list("AAAAAAAAAAAAAAAAAUGH", "AAAAAAAAAAAHHHHHHHHH
 				flooring_near_beacon += T
 			var/turf/teleport_loc = pick(flooring_near_beacon)
 			var/obj/effect/BPe = new /obj/effect(teleport_loc)
-			BPe.icon = 'tauceti/modules/_anomaly/anomalies.dmi'
+			BPe.icon = 'code/modules/anomaly/anomalies.dmi'
 			BPe.icon_state = "bluespace"
 			BPe.mouse_opacity = 0
 			sleep(10)

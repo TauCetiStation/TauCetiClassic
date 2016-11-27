@@ -2,7 +2,7 @@ var/CMinutes = null
 var/savefile/Banlist
 
 
-/proc/CheckBan(var/ckey, var/id, var/address)
+/proc/CheckBan(ckey, id, address)
 	if(!Banlist)		// if Banlist cannot be located for some reason
 		LoadBans()		// try to load the bans
 		if(!Banlist)	// uh oh, can't find bans!
@@ -103,7 +103,7 @@ var/savefile/Banlist
 
 	Banlist.cd = "/base"
 	if ( Banlist.dir.Find("[ckey][computerid]") )
-		usr << text("\red Ban already exists.")
+		to_chat(usr, text("\red Ban already exists."))
 		return 0
 	else
 		Banlist.dir.Add("[ckey][computerid]")
@@ -147,7 +147,7 @@ var/savefile/Banlist
 
 	return 1
 
-/proc/GetExp(minutes as num)
+/proc/GetExp(minutes)
 	UpdateTime()
 	var/exp = minutes - CMinutes
 	if (exp <= 0)

@@ -94,7 +94,7 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 	set src in oview(1)
 
 	if (src.anchored || usr:stat)
-		usr << "It is fastened to the floor!"
+		to_chat(usr, "It is fastened to the floor!")
 		return 0
 	src.dir = turn(src.dir, 270)
 	return 1
@@ -105,25 +105,24 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 	set src in oview(1)
 
 	if (src.anchored || usr:stat)
-		usr << "It is fastened to the floor!"
+		to_chat(usr, "It is fastened to the floor!")
 		return 0
 	src.dir = turn(src.dir, 90)
 	return 1
 
-/obj/structure/particle_accelerator/examine()
+/obj/structure/particle_accelerator/examine(mob/user)
+	..()
 	switch(src.construction_state)
 		if(0)
-			src.desc = text("A [name], looks like it's not attached to the flooring")
+			to_chat(user, "A [name], looks like it's not attached to the flooring.")
 		if(1)
-			src.desc = text("A [name], it is missing some cables")
+			to_chat(user, "A [name], it is missing some cables.")
 		if(2)
-			src.desc = text("A [name], the panel is open")
+			to_chat(user, "A [name], the panel is open.")
 		if(3)
-			src.desc = text("The [name] is assembled")
+			to_chat(user, "The [name] is assembled.")
 			if(powered)
-				src.desc = src.desc_holder
-	..()
-	return
+				to_chat(user, src.desc_holder)
 
 
 /obj/structure/particle_accelerator/attackby(obj/item/W, mob/user)
@@ -187,7 +186,7 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 		return 0
 
 
-/obj/structure/particle_accelerator/proc/report_ready(var/obj/O)
+/obj/structure/particle_accelerator/proc/report_ready(obj/O)
 	if(O && (O == master))
 		if(construction_state >= 3)
 			return 1
@@ -200,7 +199,7 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 	return 0
 
 
-/obj/structure/particle_accelerator/proc/connect_master(var/obj/O)
+/obj/structure/particle_accelerator/proc/connect_master(obj/O)
 	if(O && istype(O,/obj/machinery/particle_accelerator/control_box))
 		if(O.dir == src.dir)
 			master = O
@@ -208,7 +207,7 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 	return 0
 
 
-/obj/structure/particle_accelerator/proc/process_tool_hit(var/obj/O, var/mob/user)
+/obj/structure/particle_accelerator/proc/process_tool_hit(obj/O, mob/user)
 	if(!(O) || !(user))
 		return 0
 	if(!ismob(user) || !isobj(O))
@@ -285,7 +284,7 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 	set src in oview(1)
 
 	if (src.anchored || usr:stat)
-		usr << "It is fastened to the floor!"
+		to_chat(usr, "It is fastened to the floor!")
 		return 0
 	src.dir = turn(src.dir, 270)
 	return 1
@@ -296,7 +295,7 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 	set src in oview(1)
 
 	if (src.anchored || usr:stat)
-		usr << "It is fastened to the floor!"
+		to_chat(usr, "It is fastened to the floor!")
 		return 0
 	src.dir = turn(src.dir, 90)
 	return 1
@@ -304,20 +303,19 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 /obj/machinery/particle_accelerator/update_icon()
 	return
 
-/obj/machinery/particle_accelerator/examine()
+/obj/machinery/particle_accelerator/examine(mob/user)
+	..()
 	switch(src.construction_state)
 		if(0)
-			src.desc = text("A [name], looks like it's not attached to the flooring")
+			to_chat(user, "A [name], looks like it's not attached to the flooring.")
 		if(1)
-			src.desc = text("A [name], it is missing some cables")
+			to_chat(user, "A [name], it is missing some cables.")
 		if(2)
-			src.desc = text("A [name], the panel is open")
+			to_chat(user, "A [name], the panel is open.")
 		if(3)
-			src.desc = text("The [name] is assembled")
+			to_chat(user, "The [name] is assembled.")
 			if(powered)
-				src.desc = src.desc_holder
-	..()
-	return
+				to_chat(user, src.desc_holder)
 
 
 /obj/machinery/particle_accelerator/attackby(obj/item/W, mob/user)
@@ -360,7 +358,7 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 	return 0
 
 
-/obj/machinery/particle_accelerator/proc/process_tool_hit(var/obj/O, var/mob/user)
+/obj/machinery/particle_accelerator/proc/process_tool_hit(obj/O, mob/user)
 	if(!(O) || !(user))
 		return 0
 	if(!ismob(user) || !isobj(O))

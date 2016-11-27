@@ -68,7 +68,7 @@
 	desc = "It's worth 1000 credits."
 	worth = 1000
 
-proc/spawn_money(var/sum, spawnloc)
+proc/spawn_money(sum, spawnloc)
 	var/cash_type
 	for(var/i in list(1000,500,200,100,50,20,10,1))
 		cash_type = text2path("/obj/item/weapon/spacecash/c[i]")
@@ -83,8 +83,7 @@ proc/spawn_money(var/sum, spawnloc)
 	desc = "A card that holds an amount of money."
 	var/owner_name = "" //So the ATM can set it so the EFTPOS can put a valid name on transactions.
 
-/obj/item/weapon/spacecash/ewallet/examine()
-	set src in view()
+/obj/item/weapon/spacecash/ewallet/examine(mob/user)
 	..()
-	if (!(usr in view(2)) && usr!=src.loc) return
-	usr << "\blue Charge card's owner: [src.owner_name]. Credits remaining: [src.worth]."
+	if(src in view(1, user))
+		to_chat(user, "<span class='notice'>Charge card's owner: [src.owner_name]. Credits remaining: [src.worth].</span>")

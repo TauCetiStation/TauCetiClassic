@@ -20,7 +20,7 @@
 		AM.loc = T
 	return ..()
 
-/obj/structure/bigDelivery/attack_hand(mob/user as mob)
+/obj/structure/bigDelivery/attack_hand(mob/user)
 	if(wrapped) //sometimes items can disappear. For example, bombs. --rastaf0
 		wrapped.loc = (get_turf(src.loc))
 		if(istype(wrapped, /obj/structure/closet))
@@ -29,22 +29,22 @@
 	qdel(src)
 	return
 
-/obj/structure/bigDelivery/attackby(obj/item/W as obj, mob/user as mob)
+/obj/structure/bigDelivery/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/device/destTagger))
 		var/obj/item/device/destTagger/O = W
 
 		if(src.sortTag != O.currTag)
-			user << "\blue *[O.currTag]*"
+			to_chat(user, "\blue *[O.currTag]*")
 			src.sortTag = O.currTag
 			playsound(src.loc, 'sound/machines/twobeep.ogg', 100, 1)
 
 	else if(istype(W, /obj/item/weapon/pen))
 		var/str = sanitize(copytext(input(usr,"Label text?","Set label",""),1,MAX_NAME_LEN))
 		if(!str || !length(str))
-			usr << "\red Invalid text."
+			to_chat(usr, "\red Invalid text.")
 			return
 		for(var/mob/M in viewers())
-			M << "\blue [user] labels [src] as [str]."
+			to_chat(M, "\blue [user] labels [src] as [str].")
 		src.name = "[src.name] ([str])"
 	return
 
@@ -58,7 +58,7 @@
 	flags = FPRINT
 
 
-/obj/item/smallDelivery/attack_self(mob/user as mob)
+/obj/item/smallDelivery/attack_self(mob/user)
 	if (src.wrapped) //sometimes items can disappear. For example, bombs. --rastaf0
 		wrapped.loc = user.loc
 		if(ishuman(user))
@@ -69,22 +69,22 @@
 	qdel(src)
 	return
 
-/obj/item/smallDelivery/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/smallDelivery/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/device/destTagger))
 		var/obj/item/device/destTagger/O = W
 
 		if(src.sortTag != O.currTag)
-			user << "\blue *[O.currTag]*"
+			to_chat(user, "\blue *[O.currTag]*")
 			src.sortTag = O.currTag
 			playsound(src.loc, 'sound/machines/twobeep.ogg', 100, 1)
 
 	else if(istype(W, /obj/item/weapon/pen))
 		var/str = sanitize(copytext(input(usr,"Label text?","Set label",""),1,MAX_NAME_LEN))
 		if(!str || !length(str))
-			usr << "\red Invalid text."
+			to_chat(usr, "\red Invalid text.")
 			return
 		for(var/mob/M in viewers())
-			M << "\blue [user] labels [src] as [str]."
+			to_chat(M, "\blue [user] labels [src] as [str].")
 		src.name = "[src.name] ([str])"
 	return
 
@@ -97,7 +97,7 @@
 	var/amount = 25.0
 
 
-/obj/item/weapon/packageWrap/afterattack(var/obj/target as obj, mob/user as mob, proximity)
+/obj/item/weapon/packageWrap/afterattack(obj/target, mob/user, proximity)
 	if(!proximity) return
 	if(!istype(target))	//this really shouldn't be necessary (but it is).	-Pete
 		return
@@ -148,7 +148,7 @@
 			O.loc = P
 			src.amount -= 3
 		else if(src.amount < 3)
-			user << "\blue You need more paper."
+			to_chat(user, "\blue You need more paper.")
 	else if (istype (target, /obj/structure/closet))
 		var/obj/structure/closet/O = target
 		if (src.amount > 3 && !O.opened)
@@ -158,20 +158,19 @@
 			O.loc = P
 			src.amount -= 3
 		else if(src.amount < 3)
-			user << "\blue You need more paper."
+			to_chat(user, "\blue You need more paper.")
 	else
-		user << "\blue The object you are trying to wrap is unsuitable for the sorting machinery!"
+		to_chat(user, "\blue The object you are trying to wrap is unsuitable for the sorting machinery!")
 	if (src.amount <= 0)
 		new /obj/item/weapon/c_tube( src.loc )
 		qdel(src)
 		return
 	return
 
-/obj/item/weapon/packageWrap/examine()
-	if(src in usr)
-		usr << "\blue There are [amount] units of package wrap left!"
+/obj/item/weapon/packageWrap/examine(mob/user)
 	..()
-	return
+	if(src in user)
+		to_chat(user, "<span class='notice'>There are [amount] units of package wrap left!</span>")
 
 
 /obj/item/device/destTagger
@@ -185,7 +184,7 @@
 	flags = FPRINT | TABLEPASS | CONDUCT
 	slot_flags = SLOT_BELT
 
-/obj/item/device/destTagger/proc/openwindow(mob/user as mob)
+/obj/item/device/destTagger/proc/openwindow(mob/user)
 	var/dat = "<tt><center><h1><b>TagMaster 2.3</b></h1></center>"
 
 	dat += "<table style='width:100%; padding:4px;'><tr>"
@@ -200,7 +199,7 @@
 	user << browse(dat, "window=destTagScreen;size=450x350")
 	onclose(user, "destTagScreen")
 
-/obj/item/device/destTagger/attack_self(mob/user as mob)
+/obj/item/device/destTagger/attack_self(mob/user)
 	openwindow(user)
 	return
 
@@ -236,7 +235,7 @@
 /obj/machinery/disposal/deliveryChute/update()
 	return
 
-/obj/machinery/disposal/deliveryChute/Bumped(var/atom/movable/AM) //Go straight into the chute
+/obj/machinery/disposal/deliveryChute/Bumped(atom/movable/AM) //Go straight into the chute
 	if(istype(AM, /obj/item/projectile) || istype(AM, /obj/effect))	return
 	switch(dir)
 		if(NORTH)
@@ -278,7 +277,7 @@
 	update()
 	return
 
-/obj/machinery/disposal/deliveryChute/attackby(var/obj/item/I, var/mob/user)
+/obj/machinery/disposal/deliveryChute/attackby(obj/item/I, mob/user)
 	if(!I || !user)
 		return
 
@@ -286,21 +285,21 @@
 		if(c_mode==0)
 			c_mode=1
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-			user << "You remove the screws around the power connection."
+			to_chat(user, "You remove the screws around the power connection.")
 			return
 		else if(c_mode==1)
 			c_mode=0
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-			user << "You attach the screws around the power connection."
+			to_chat(user, "You attach the screws around the power connection.")
 			return
 	else if(istype(I,/obj/item/weapon/weldingtool) && c_mode==1)
 		var/obj/item/weapon/weldingtool/W = I
 		if(W.remove_fuel(0,user))
 			playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
-			user << "You start slicing the floorweld off the delivery chute."
+			to_chat(user, "You start slicing the floorweld off the delivery chute.")
 			if(do_after(user,20,target = src))
 				if(!src || !W.isOn()) return
-				user << "You sliced the floorweld off the delivery chute."
+				to_chat(user, "You sliced the floorweld off the delivery chute.")
 				var/obj/structure/disposalconstruct/C = new (src.loc)
 				C.ptype = 8 // 8 =  Delivery chute
 				C.update()
@@ -309,5 +308,5 @@
 				qdel(src)
 			return
 		else
-			user << "You need more welding fuel to complete this task."
+			to_chat(user, "You need more welding fuel to complete this task.")
 			return

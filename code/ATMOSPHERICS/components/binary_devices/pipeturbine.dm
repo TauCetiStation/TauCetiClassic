@@ -39,8 +39,6 @@
 			initialize_directions = NORTH|SOUTH
 
 /obj/machinery/atmospherics/pipeturbine/Destroy()
-	loc = null
-
 	if(node1)
 		node1.disconnect(src)
 		qdel(network1)
@@ -51,7 +49,7 @@
 	node1 = null
 	node2 = null
 
-	..()
+	return ..()
 
 /obj/machinery/atmospherics/pipeturbine/process()
 	..()
@@ -88,10 +86,10 @@
 	if (kin_energy > 1000000)
 		overlays += image('icons/obj/pipeturbine.dmi', "hi-turb")
 
-/obj/machinery/atmospherics/pipeturbine/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/machinery/atmospherics/pipeturbine/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/wrench))
 		anchored = !anchored
-		user << "<span class='notice'>You [anchored ? "secure" : "unsecure"] the bolts holding [src] to the floor.</span>"
+		to_chat(user, "<span class='notice'>You [anchored ? "secure" : "unsecure"] the bolts holding [src] to the floor.</span>")
 
 		if(anchored)
 			if(dir & (NORTH|SOUTH))
@@ -259,11 +257,11 @@
 	add_avail(power_generated)
 
 
-/obj/machinery/power/turbinemotor/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/machinery/power/turbinemotor/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/wrench))
 		anchored = !anchored
 		turbine = null
-		user << "<span class='notice'>You [anchored ? "secure" : "unsecure"] the bolts holding [src] to the floor.</span>"
+		to_chat(user, "<span class='notice'>You [anchored ? "secure" : "unsecure"] the bolts holding [src] to the floor.</span>")
 		updateConnection()
 	else
 		..()

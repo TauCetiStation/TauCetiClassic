@@ -118,6 +118,15 @@
 #define MAT_PLASTIC		"$plastic"
 #define MAT_BANANIUM	"$bananium"
 
+#define COIN_STANDARD "Coin"
+#define COIN_GOLD "Gold coin"
+#define COIN_SILVER "Silver coin"
+#define COIN_DIAMOND "Diamond coin"
+#define COIN_IRON "Iron coin"
+#define COIN_PHORON "Solid phoron coin"
+#define COIN_URANIUM "Uranium coin"
+#define COIN_BANANIUM "Bananium coin"
+#define COIN_PLATINUM "Platunum coin"
 
 #define MINERAL_MATERIAL_AMOUNT 2000
 //The amount of materials you get from a sheet of mineral like iron/diamond/glass etc
@@ -139,6 +148,24 @@
 #define SHELTER_DEPLOY_BAD_AREA "bad area"
 #define SHELTER_DEPLOY_ANCHORED_OBJECTS "anchored objects"
 
+// Cargo-related stuff.
+#define MANIFEST_ERROR_CHANCE		5
+#define MANIFEST_ERROR_NAME			1
+#define MANIFEST_ERROR_CONTENTS		2
+#define MANIFEST_ERROR_ITEM			4
+
 // from /tg/
 #define ABOVE_NORMAL_TURF_LAYER 2.08
 #define BELOW_MOB_LAYER 3.7
+
+//Timing subsystem
+#define GLOBAL_PROC	"some_magic_bullshit"
+
+//teleport checks
+#define TELE_CHECK_NONE 0
+#define TELE_CHECK_TURFS 1
+#define TELE_CHECK_ALL 2
+
+//get_turf(): Returns the turf that contains the atom.
+//Example: A fork inside a box inside a locker will return the turf the locker is standing on.
+#define get_turf(A) (get_step(A, 0))

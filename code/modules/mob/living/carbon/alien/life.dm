@@ -201,7 +201,7 @@
 
 		return thermal_protection
 
-	proc/add_fire_protection(var/temp)
+	proc/add_fire_protection(temp)
 		var/fire_prot = 0
 		if(head)
 			if(head.protective_temperature > temp)

@@ -53,5 +53,5 @@
 		name = "\improper \"LiquidFood\" ration"
 		icon_state = "liquidfood"
 
-/obj/item/trash/attack(mob/M as mob, mob/living/user as mob)
+/obj/item/trash/attack(mob/M, mob/living/user)
 	return

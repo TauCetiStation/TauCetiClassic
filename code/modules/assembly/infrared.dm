@@ -100,14 +100,14 @@
 		return 0
 	pulse(0)
 	if(!holder)
-		visible_message("\icon[src] *beep* *beep*")
+		visible_message("[bicon(src)] *beep* *beep*")
 	cooldown = 2
 	spawn(10)
 		process_cooldown()
 	var/time_pulse = time2text(world.realtime,"hh:mm:ss")
 	var/turf/T = get_turf(src)
 	lastsignalers.Add("[time_pulse] <B>:</B> [src] activated  @ location ([T.x],[T.y],[T.z])")
-	message_admins("[src] activated  @ location ([T.x],[T.y],[T.z])",0,1)
+	message_admins("[src] activated  @ location ([T.x],[T.y],[T.z]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>)")
 	log_game("[src] activated  @ location ([T.x],[T.y],[T.z])")
 	return
 
@@ -135,11 +135,11 @@
 		var/turf/T = get_turf(src)
 		if(usr)
 			lastsignalers.Add("[time_start] <B>:</B> [usr.key] set [src] [on?"On":"Off"] @ location ([T.x],[T.y],[T.z])")
-			message_admins("[key_name(usr, usr.client)] set [src] [on?"On":"Off"], location ([T.x],[T.y],[T.z])",0,1)
+			message_admins("[key_name_admin(usr)] set [src] [on?"On":"Off"], location ([T.x],[T.y],[T.z]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[usr.x];Y=[usr.y];Z=[usr.z]'>JMP</a>)")
 			log_game("[usr.ckey]([usr]) set [src] [on?"On":"Off"], location ([T.x],[T.y],[T.z])")
 		else
 			lastsignalers.Add("[time_start] <B>:</B> (NO USER FOUND) set [src] [on?"On":"Off"] @ location ([T.x],[T.y],[T.z])")
-			message_admins("( NO USER FOUND) set [src] [on?"On":"Off"], location ([T.x],[T.y],[T.z])",0,1)
+			message_admins("( NO USER FOUND) set [src] [on?"On":"Off"], location ([T.x],[T.y],[T.z])")
 			log_game("(NO USER FOUND) set [src] [on?"On":"Off"], location ([T.x],[T.y],[T.z])")
 
 	if(href_list["visible"])

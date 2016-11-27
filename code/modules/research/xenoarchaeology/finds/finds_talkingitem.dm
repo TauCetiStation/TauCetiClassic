@@ -25,7 +25,7 @@
 	else if(heard_words.len >= 1 && world.time > last_talk_time + talk_interval && prob(talk_chance))
 		SaySomething()
 
-/datum/talking_atom/proc/catchMessage(var/msg, var/mob/source)
+/datum/talking_atom/proc/catchMessage(msg, mob/source)
 	if(!holder_atom)
 		return
 
@@ -57,7 +57,7 @@
 		var/list/options = list("[holder_atom] seems to be listening intently to [source]...",\
 			"[holder_atom] seems to be focussing on [source]...",\
 			"[holder_atom] seems to turn it's attention to [source]...")
-		holder_atom.loc.visible_message("\blue \icon[holder_atom] [pick(options)]")
+		holder_atom.loc.visible_message("\blue [bicon(holder_atom)] [pick(options)]")
 
 	if(prob(20))
 		spawn(2)
@@ -66,13 +66,13 @@
 /*/obj/item/weapon/talkingcrystal/proc/debug()
 	//set src in view()
 	for(var/v in heard_words)
-		world << "[uppertext(v)]"
+		to_chat(world, "[uppertext(v)]")
 		var/list/d = heard_words["[v]"]
 		for(var/X in d)
-			world << "[X]"*/
+			to_chat(world, "[X]")*/
 
 // TODO:CYRILLIC
-/datum/talking_atom/proc/SaySomething(var/word = null)
+/datum/talking_atom/proc/SaySomething(word = null)
 	if(!holder_atom)
 		return
 
@@ -124,5 +124,5 @@
 
 	msg = sanitize_plus_chat(msg)
 	for(var/mob/M in listening)
-		M << "\icon[holder_atom] <b>[holder_atom]</b> reverberates, \blue\"[msg]\""
+		to_chat(M, "[bicon(holder_atom)] <b>[holder_atom]</b> reverberates, \blue\"[msg]\"")
 	last_talk_time = world.time

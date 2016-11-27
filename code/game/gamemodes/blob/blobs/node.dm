@@ -1,6 +1,6 @@
 /obj/effect/blob/node
 	name = "blob node"
-	icon = 'tauceti/icons/mob/blob.dmi'
+	icon = 'icons/mob/blob.dmi'
 	icon_state = "blob_node"
 	health = 100
 	fire_resist = 2
@@ -17,8 +17,7 @@
 /obj/effect/blob/node/Destroy()
 	blob_nodes -= src
 	SSobj.processing.Remove(src)
-	..()
-	return
+	return ..()
 
 /obj/effect/blob/node/Life()
 	for(var/i = 1; i < 8; i += i)

@@ -81,18 +81,15 @@ display round(lastgen) and phorontank amount
 		icon_state = initial(icon_state)
 		handleInactive()
 
-/obj/machinery/power/port_gen/attack_hand(mob/user as mob)
+/obj/machinery/power/port_gen/attack_hand(mob/user)
 	if(..())
 		return
 	if(!anchored)
 		return
 
-/obj/machinery/power/port_gen/examine()
-	set src in oview(1)
-	if(active)
-		usr << "\blue The generator is on."
-	else
-		usr << "\blue The generator is off."
+/obj/machinery/power/port_gen/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>The generator is [active ? "on" : "off"].</span>")
 
 //A power generator that runs on solid plasma sheets.
 /obj/machinery/power/port_gen/pacman
@@ -139,11 +136,11 @@ display round(lastgen) and phorontank amount
 	power_gen = round(initial(power_gen) * temp_rating * 2)
 	consumption = consumption_coeff
 
-/obj/machinery/power/port_gen/pacman/examine()
+/obj/machinery/power/port_gen/pacman/examine(mob/user)
 	..()
-	usr << "<span class='notice'>The generator has [sheets] units of [sheet_name] fuel left, producing [power_gen] per cycle.</span>"
+	to_chat(user, "<span class='notice'>The generator has [sheets] units of [sheet_name] fuel left, producing [power_gen] per cycle.</span>")
 	if(crit_fail)
-		usr << "<span class='danger'>The generator seems to have broken down.</span>"
+		to_chat(user, "<span class='danger'>The generator seems to have broken down.</span>")
 
 /obj/machinery/power/port_gen/pacman/HasFuel()
 	if(sheets >= 1 / (time_per_sheet / power_output) - sheet_left)
@@ -205,9 +202,9 @@ display round(lastgen) and phorontank amount
 		var/obj/item/stack/addstack = O
 		var/amount = min((max_sheets - sheets), addstack.amount)
 		if(amount < 1)
-			user << "<span class='notice'>The [src.name] is full!</span>"
+			to_chat(user, "<span class='notice'>The [src.name] is full!</span>")
 			return
-		user << "<span class='notice'>You add [amount] sheets to the [src.name].</span>"
+		to_chat(user, "<span class='notice'>You add [amount] sheets to the [src.name].</span>")
 		sheets += amount
 		addstack.use(amount)
 		updateUsrDialog()
@@ -224,11 +221,11 @@ display round(lastgen) and phorontank amount
 
 			if(!anchored && !isinspace())
 				connect_to_network()
-				user << "<span class='notice'>You secure the generator to the floor.</span>"
+				to_chat(user, "<span class='notice'>You secure the generator to the floor.</span>")
 				anchored = 1
 			else if(anchored)
 				disconnect_from_network()
-				user << "<span class='notice'>You unsecure the generator from the floor.</span>"
+				to_chat(user, "<span class='notice'>You unsecure the generator from the floor.</span>")
 				anchored = 0
 
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
@@ -237,29 +234,29 @@ display round(lastgen) and phorontank amount
 			panel_open = !panel_open
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 			if(panel_open)
-				user << "<span class='notice'>You open the access panel.</span>"
+				to_chat(user, "<span class='notice'>You open the access panel.</span>")
 			else
-				user << "<span class='notice'>You close the access panel.</span>"
+				to_chat(user, "<span class='notice'>You close the access panel.</span>")
 		else if(istype(O, /obj/item/weapon/crowbar) && panel_open)
 			default_deconstruction_crowbar(O)
 
-/obj/machinery/power/port_gen/pacman/attack_hand(mob/user as mob)
+/obj/machinery/power/port_gen/pacman/attack_hand(mob/user)
 	..()
 	if (!anchored)
 		return
 
 	interact(user)
 
-/obj/machinery/power/port_gen/pacman/attack_ai(mob/user as mob)
+/obj/machinery/power/port_gen/pacman/attack_ai(mob/user)
 	interact(user)
 
-/obj/machinery/power/port_gen/pacman/attack_paw(mob/user as mob)
+/obj/machinery/power/port_gen/pacman/attack_paw(mob/user)
 	interact(user)
 
 /obj/machinery/power/port_gen/pacman/interact(mob/user)
 	if (get_dist(src, user) > 1 )
 		if (!istype(user, /mob/living/silicon/ai))
-			user.unset_machine()
+			user.unset_machine(src)
 			user << browse(null, "window=port_gen")
 			return
 
@@ -280,37 +277,40 @@ display round(lastgen) and phorontank amount
 	user << browse("[dat]", "window=port_gen")
 	onclose(user, "port_gen")
 
+/obj/machinery/power/port_gen/pacman/is_operational_topic()
+	return TRUE
+
 /obj/machinery/power/port_gen/pacman/Topic(href, href_list)
-	if(..())
+	if (href_list["action"] == "close")
+		usr << browse(null, "window=port_gen")
+		usr.unset_machine(src)
+		return FALSE
+
+	. = ..()
+	if(!.)
 		return
 
-	src.add_fingerprint(usr)
 	if(href_list["action"])
 		if(href_list["action"] == "enable")
 			if(!active && HasFuel() && !crit_fail)
 				active = 1
 				icon_state = icon_state_on
-				src.updateUsrDialog()
 		if(href_list["action"] == "disable")
 			if (active)
 				active = 0
 				icon_state = initial(icon_state)
-				src.updateUsrDialog()
 		if(href_list["action"] == "eject")
 			if(!active)
 				DropFuel()
-				src.updateUsrDialog()
 		if(href_list["action"] == "lower_power")
 			if (power_output > 1)
 				power_output--
-				src.updateUsrDialog()
 		if (href_list["action"] == "higher_power")
 			if (power_output < 4 || emagged)
 				power_output++
-				src.updateUsrDialog()
-		if (href_list["action"] == "close")
-			usr << browse(null, "window=port_gen")
-			usr.unset_machine()
+
+	src.updateUsrDialog()
+
 
 /obj/machinery/power/port_gen/pacman/super
 	name = "S.U.P.E.R.P.A.C.M.A.N.-type Portable Generator"

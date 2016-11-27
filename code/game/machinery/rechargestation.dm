@@ -89,13 +89,14 @@
 /obj/machinery/recharge_station/allow_drop()
 	return 0
 
-/obj/machinery/recharge_station/examine()
-	usr << "The charge meter reads: [round(chargepercentage())]%"
+/obj/machinery/recharge_station/examine(mob/user)
+	..()
+	to_chat(user, "The charge meter reads: [round(chargepercentage())]%.")
 
 /obj/machinery/recharge_station/proc/chargepercentage()
 	return ((current_internal_charge / max_internal_charge) * 100)
 
-/obj/machinery/recharge_station/relaymove(mob/user as mob)
+/obj/machinery/recharge_station/relaymove(mob/user)
 	if(user.stat)
 		return
 	open_machine()
@@ -109,13 +110,13 @@
 	open_machine()
 	..(severity)
 
-/obj/machinery/recharge_station/attack_paw(user as mob)
+/obj/machinery/recharge_station/attack_paw(user)
 	return attack_hand(user)
 
-/obj/machinery/recharge_station/attack_ai(user as mob)
+/obj/machinery/recharge_station/attack_ai(user)
 	return attack_hand(user)
 
-/obj/machinery/recharge_station/attackby(obj/item/P as obj, mob/user as mob)
+/obj/machinery/recharge_station/attackby(obj/item/P, mob/user)
 	if(open)
 		if(default_deconstruction_screwdriver(user, "borgdecon2", "borgcharger0", P))
 			return
@@ -130,7 +131,7 @@
 	if(construct_op == 0)
 		toggle_open()
 	else
-		user << "The recharger can't be closed in this state."
+		to_chat(user, "The recharger can't be closed in this state.")
 	add_fingerprint(user)
 
 /obj/machinery/recharge_station/proc/toggle_open()

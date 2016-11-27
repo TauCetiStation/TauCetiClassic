@@ -20,7 +20,7 @@
 	minimal_player_age = 14
 	minimal_player_ingame_minutes = 2400
 
-/datum/job/hos/equip(var/mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/job/hos/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
 	switch(H.backbag)
 		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/security(H), slot_back)
@@ -69,7 +69,7 @@
 	minimal_player_age = 5
 	minimal_player_ingame_minutes = 1800
 
-/datum/job/warden/equip(var/mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/job/warden/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
 	switch(H.backbag)
 		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/security(H), slot_back)
@@ -113,7 +113,7 @@
 	minimal_player_age = 3
 	minimal_player_ingame_minutes = 1560
 
-/datum/job/detective/equip(var/mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/job/detective/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
 	switch(H.backbag)
 		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(H), slot_back)
@@ -157,7 +157,7 @@
 	minimal_player_age = 3
 	minimal_player_ingame_minutes = 1560
 
-/datum/job/officer/equip(var/mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/job/officer/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
 	switch(H.backbag)
 		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/security(H), slot_back)
@@ -196,7 +196,7 @@
 	minimal_player_age = 3
 	minimal_player_ingame_minutes = 1560
 
-/datum/job/forensic/equip(var/mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/job/forensic/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
 	switch(H.backbag)
 		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(H), slot_back)

@@ -14,7 +14,7 @@
 	minimal_player_age = 14
 	minimal_player_ingame_minutes = 3900
 
-/datum/job/captain/equip(var/mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/job/captain/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
 
 	switch(H.backbag)
@@ -44,7 +44,7 @@
 	var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(H)
 	L.imp_in = H
 	L.implanted = 1
-	world << "<b>[H.real_name] is the captain!</b>"
+	to_chat(world, "<b>[H.real_name] is the captain!</b>")
 	var/datum/organ/external/affected = H.organs_by_name["head"]
 	affected.implants += L
 	L.part = affected
@@ -81,7 +81,7 @@
 			            access_clown, access_mime, access_hop, access_RC_announce, access_keycard_auth, access_gateway, access_recycler, access_detective)
 
 
-/datum/job/hop/equip(var/mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/job/hop/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
 	switch(H.backbag)
 		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(H), slot_back)

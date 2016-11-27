@@ -13,13 +13,13 @@
 	max_amount = 60
 	attack_verb = list("hit", "bludgeoned", "whacked")
 
-/obj/item/stack/rods/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/stack/rods/attackby(obj/item/W, mob/user)
 	..()
 	if (istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 
 		if(amount < 2)
-			user << "\red You need at least two rods to do this."
+			to_chat(user, "\red You need at least two rods to do this.")
 			return
 
 		if(WT.remove_fuel(0,user))
@@ -35,7 +35,7 @@
 				user.put_in_hands(new_item)
 		return
 
-/obj/item/stack/rods/attack_self(mob/user as mob)
+/obj/item/stack/rods/attack_self(mob/user)
 	src.add_fingerprint(user)
 
 	if(!istype(user.loc,/turf)) return 0
@@ -52,13 +52,13 @@
 				return 1
 	else
 		if(amount < 2)
-			user << "\blue You need at least two rods to do this."
+			to_chat(user, "\blue You need at least two rods to do this.")
 			return
-		usr << "\blue Assembling grille..."
+		to_chat(usr, "\blue Assembling grille...")
 		if (!do_after(usr, 10, target = usr))
 			return
 		var/obj/structure/grille/F = new /obj/structure/grille/ ( usr.loc )
-		usr << "\blue You assemble a grille"
+		to_chat(usr, "\blue You assemble a grille")
 		F.add_fingerprint(usr)
 		use(2)
 	return

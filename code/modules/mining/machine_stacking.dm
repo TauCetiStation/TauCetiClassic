@@ -43,11 +43,13 @@
 	return
 
 /obj/machinery/mineral/stacking_unit_console/Topic(href, href_list)
-	if(..())
+	. = ..()
+	if(!.)
 		return
 	if(href_list["change_stack"])
 		var/choice = input("What would you like to set the stack amount to?") as null|anything in list(1,5,10,20,50)
-		if(!choice) return
+		if(!choice)
+			return FALSE
 		machine.stack_amt = choice
 	if(href_list["release_stack"])
 		if(machine.stack_storage[href_list["release_stack"]] > 0)
@@ -55,9 +57,8 @@
 			var/obj/item/stack/sheet/S = new stacktype (get_turf(machine.output))
 			S.amount = machine.stack_storage[href_list["release_stack"]]
 			machine.stack_storage[href_list["release_stack"]] = 0
-	src.add_fingerprint(usr)
+
 	src.updateUsrDialog()
-	return
 
 
 /**********************Mineral stacking unit**************************/

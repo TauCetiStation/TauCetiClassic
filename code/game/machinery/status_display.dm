@@ -73,6 +73,9 @@
 		set_picture("ai_friend")
 		return
 
+	if(mode == 3 && overlays.len)	//Why we must update diplay if picture is already set?
+		return
+
 	if(overlays.len && !friendc || mode == 4)
 		overlays.Cut()
 
@@ -128,12 +131,11 @@
 					line1 = ""
 			update_display(line1, line2)
 
-/obj/machinery/status_display/examine()
-	set src in view()
-	. = ..()
+/obj/machinery/status_display/examine(mob/user)
+	..()
 	switch(mode)
 		if(1,2,4)
-			usr << "The display says:<br>\t<xmp>[message1]</xmp><br>\t<xmp>[message2]</xmp>"
+			to_chat(user, "The display says:<br>\t<xmp>[message1]</xmp><br>\t<xmp>[message2]</xmp>")
 
 
 /obj/machinery/status_display/proc/set_message(m1, m2)
@@ -203,6 +205,7 @@
 			if(supply_display)
 				mode = 4
 
+	update()
 
 
 /obj/machinery/ai_status_display
@@ -277,7 +280,7 @@
 		return
 
 
-/obj/machinery/ai_status_display/proc/set_picture(var/state)
+/obj/machinery/ai_status_display/proc/set_picture(state)
 	picture_state = state
 	if(overlays.len)
 		overlays.Cut()

@@ -51,7 +51,7 @@
 		else
 	return
 
-/obj/structure/lattice/attackby(obj/item/C as obj, mob/user as mob)
+/obj/structure/lattice/attackby(obj/item/C, mob/user)
 
 	if (istype(C, /obj/item/stack/tile/plasteel) || istype(C, /obj/item/stack/rods))
 		var/turf/T = get_turf(src)
@@ -60,7 +60,7 @@
 	if (istype(C, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = C
 		if(WT.remove_fuel(0, user))
-			user << "\blue Slicing lattice joints ..."
+			to_chat(user, "\blue Slicing lattice joints ...")
 		PoolOrNew(/obj/item/stack/rods, src.loc)
 		qdel(src)
 

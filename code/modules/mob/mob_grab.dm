@@ -126,17 +126,19 @@
 			announce = 1
 		last_hit_zone = hit_zone
 		if(ishuman(affecting))
-			switch(hit_zone)
-				if("mouth")
-					if(announce)
-						assailant.visible_message("<span class='warning'>[assailant] covers [affecting]'s mouth!</span>")
-					if(affecting:silent < 3)
-						affecting:silent = 3
-				if("eyes")
-					if(announce)
-						assailant.visible_message("<span class='warning'>[assailant] covers [affecting]'s eyes!</span>")
-					if(affecting:eye_blind < 3)
-						affecting:eye_blind = 3
+			var/mob/living/carbon/human/AH = affecting
+			if(!AH.is_in_space_suit(only_helmet = TRUE))
+				switch(hit_zone)
+					if("mouth")
+						if(announce)
+							assailant.visible_message("<span class='warning'>[assailant] covers [AH]'s mouth!</span>")
+						if(AH.silent < 3)
+							AH.silent = 3
+					if("eyes")
+						if(announce)
+							assailant.visible_message("<span class='warning'>[assailant] covers [AH]'s eyes!</span>")
+						if(AH.eye_blind < 3)
+							AH.eye_blind = 3
 		if(force_down)
 			if(affecting.loc != assailant.loc)
 				force_down = 0
@@ -243,7 +245,7 @@
 
 	else if(state < GRAB_NECK)
 		if(isslime(affecting))
-			assailant << "<span class='notice'>You squeeze [affecting], but nothing interesting happens.</span>"
+			to_chat(assailant, "<span class='notice'>You squeeze [affecting], but nothing interesting happens.</span>")
 			return
 
 		assailant.visible_message("<span class='warning'>[assailant] has reinforced \his grip on [affecting] (now neck)!</span>")
@@ -252,12 +254,17 @@
 		assailant.set_dir(get_dir(assailant, affecting))
 		affecting.attack_log += "\[[time_stamp()]\] <font color='orange'>Has had their neck grabbed by [assailant.name] ([assailant.ckey])</font>"
 		assailant.attack_log += "\[[time_stamp()]\] <font color='red'>Grabbed the neck of [affecting.name] ([affecting.ckey])</font>"
-		msg_admin_attack("[key_name(assailant)] grabbed the neck of [key_name(affecting)]")
+		msg_admin_attack("[key_name(assailant)] grabbed the neck of [key_name(affecting)] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[assailant.x];Y=[assailant.y];Z=[assailant.z]'>JMP</A>)")
 		hud.icon_state = "kill"
 		hud.name = "kill"
 		affecting.Stun(10) //10 ticks of ensured grab
 
 	else if(state < GRAB_UPGRADING)
+		if(ishuman(affecting))
+			var/mob/living/carbon/human/AH = affecting
+			if(AH.is_in_space_suit())
+				to_chat(assailant, "<span class='notice'>You can't strangle him, because space helmet covers [affecting]'s neck.</span>")
+				return
 		assailant.visible_message("<span class='danger'>[assailant] starts to tighten \his grip on [affecting]'s neck!</span>")
 		hud.icon_state = "kill1"
 
@@ -302,12 +309,14 @@
 			switch(assailant.a_intent)
 				if("help")
 					if(force_down)
-						assailant << "<span class='warning'>You are no longer pinning [affecting] to the ground.</span>"
+						to_chat(assailant, "<span class='warning'>You are no longer pinning [affecting] to the ground.</span>")
 						force_down = 0
+					else
+						inspect_organ(affecting, assailant, hit_zone)
 						return
 				if("grab")
 					if(state < GRAB_AGGRESSIVE)
-						assailant << "<span class='warning'>You require a better grab to do this.</span>"
+						to_chat(assailant, "<span class='warning'>You require a better grab to do this.</span>")
 						return
 					var/datum/organ/external/organ = affecting:get_organ(check_zone(hit_zone))
 					if(!organ)
@@ -315,25 +324,25 @@
 					assailant.visible_message("<span class='danger'>[assailant] [pick("bent", "twisted")] [affecting]'s [organ.display_name] into a jointlock!</span>")
 					var/armor = affecting:run_armor_check(affecting, "melee")
 					if(armor < 2)
-						affecting << "<span class='danger'>You feel extreme pain!</span>"
+						to_chat(affecting, "<span class='danger'>You feel extreme pain!</span>")
 						affecting.adjustHalLoss(Clamp(0, 40-affecting.halloss, 40)) //up to 40 halloss
 					return
 				if("hurt")
 
 					if(hit_zone == "eyes")
 						if(state < GRAB_NECK)
-							assailant << "<span class='warning'>You require a better grab to do this.</span>"
+							to_chat(assailant, "<span class='warning'>You require a better grab to do this.</span>")
 							return
 						if((affecting:head && affecting:head.flags & HEADCOVERSEYES) || \
 							(affecting:wear_mask && affecting:wear_mask.flags & MASKCOVERSEYES) || \
 							(affecting:glasses && affecting:glasses.flags & GLASSESCOVERSEYES))
-							assailant << "<span class='danger'>You're going to need to remove the eye covering first.</span>"
+							to_chat(assailant, "<span class='danger'>You're going to need to remove the eye covering first.</span>")
 							return
 						if(!affecting.has_eyes())
-							assailant << "<span class='danger'>You cannot locate any eyes on [affecting]!</span>"
+							to_chat(assailant, "<span class='danger'>You cannot locate any eyes on [affecting]!</span>")
 							return
 						assailant.visible_message("<span class='danger'>[assailant] pressed \his fingers into [affecting]'s eyes!</span>")
-						affecting << "<span class='danger'>You experience immense pain as you feel digits being pressed into your eyes!</span>"
+						to_chat(affecting, "<span class='danger'>You experience immense pain as you feel digits being pressed into your eyes!</span>")
 						assailant.attack_log += text("\[[time_stamp()]\] <font color='red'>Pressed fingers into the eyes of [affecting.name] ([affecting.ckey])</font>")
 						affecting.attack_log += text("\[[time_stamp()]\] <font color='orange'>Had fingers pressed into their eyes by [assailant.name] ([assailant.ckey])</font>")
 						msg_admin_attack("[key_name(assailant)] has pressed his fingers into [key_name(affecting)]'s eyes.")
@@ -341,7 +350,7 @@
 						eyes.damage += rand(3,4)
 						if (eyes.damage >= eyes.min_broken_damage)
 							if(affecting.stat != DEAD)
-								affecting << "\red You go blind!"
+								to_chat(affecting, "\red You go blind!")
 //					else if(hit_zone != "head")
 //						if(state < GRAB_NECK)
 //							assailant << "<span class='warning'>You require a better grab to do this.</span>"
@@ -373,9 +382,9 @@
 						return
 				if("disarm")
 					if(state < GRAB_AGGRESSIVE)
-						assailant << "<span class='warning'>You require a better grab to do this.</span>"
+						to_chat(assailant, "<span class='warning'>You require a better grab to do this.</span>")
 						return
-					assailant << "<span class='warning'>You start forcing [affecting] to the ground.</span>"
+					to_chat(assailant, "<span class='warning'>You start forcing [affecting] to the ground.</span>")
 					if(!force_down)
 						sleep(20)
 						assailant.visible_message("<span class='danger'>[assailant] is forcing [affecting] to the ground!</span>")
@@ -388,7 +397,7 @@
 						affecting.layer = 3.9
 						return
 					else
-						assailant << "<span class='warning'>You are already pinning [affecting] to the ground.</span>"
+						to_chat(assailant, "<span class='warning'>You are already pinning [affecting] to the ground.</span>")
 						return
 
 	if(M == assailant && state >= GRAB_AGGRESSIVE)
@@ -405,13 +414,13 @@
 					affecting.gib()
 					if(attacker.health >= attacker.maxHealth - attacker.getCloneLoss())
 						attacker.adjustToxLoss(100)
-						attacker << "<span class='notice'>You gain some plasma.</span>"
+						to_chat(attacker, "<span class='notice'>You gain some plasma.</span>")
 					else
 						attacker.adjustBruteLoss(-100)
 						attacker.adjustFireLoss(-100)
 						attacker.adjustOxyLoss(-100)
 						attacker.adjustCloneLoss(-100)
-						attacker << "<span class='notice'>You feel better.</span>"
+						to_chat(attacker, "<span class='notice'>You feel better.</span>")
 				else
 					affecting.loc = user
 					attacker.stomach_contents.Add(affecting)
@@ -443,4 +452,46 @@
 	qdel(hud)
 	hud = null
 	destroying = 1 // stops us calling qdel(src) on dropped()
-	..()
+	return ..()
+
+/obj/item/weapon/grab/proc/inspect_organ(mob/living/carbon/human/H, mob/user, target_zone)
+
+	var/datum/organ/external/E = H.get_organ(target_zone)
+
+	if(!E || E.status & ORGAN_DESTROYED)
+		to_chat(user, "<span class='notice'>[H] is missing that bodypart.</span>")
+		return
+
+	user.visible_message("<span class='notice'>[user] starts inspecting [affecting]'s [E.display_name] carefully.</span>")
+	if(!do_mob(user,H, 30))
+		to_chat(user, "<span class='notice'>You must stand still to inspect [E] for wounds.</span>")
+	else if(E.wounds.len)
+		to_chat(user, "<span class='warning'>You find [E.get_wounds_desc()]</span>")
+	else
+		to_chat(user, "<span class='notice'>You find no visible wounds.</span>")
+
+	to_chat(user, "<span class='notice'>Checking bones now...</span>")
+	if(!do_mob(user, H, 60))
+		to_chat(user, "<span class='notice'>You must stand still to feel [E] for fractures.</span>")
+	else if(E.status & ORGAN_BROKEN)
+		to_chat(user, "<span class='warning'>The bone in the [E.display_name] moves slightly when you poke it!</span>")
+		H.custom_pain("Your [E.display_name] hurts where it's poked.")
+	else
+		to_chat(user, "<span class='notice'>The bones in the [E.display_name] seem to be fine.</span>")
+
+	to_chat(user, "<span class='notice'>Checking skin now...</span>")
+	if(!do_mob(user, H, 30))
+		to_chat(user, "<span class='notice'>You must stand still to check [H]'s skin for abnormalities.</span>")
+	else
+		var/bad = 0
+		if(H.getToxLoss() >= 40)
+			to_chat(user, "<span class='warning'>[H] has an unhealthy skin discoloration.</span>")
+			bad = 1
+		if(H.getOxyLoss() >= 20)
+			to_chat(user, "<span class='warning'>[H]'s skin is unusaly pale.</span>")
+			bad = 1
+		if(E.status & ORGAN_DEAD)
+			to_chat(user, "<span class='warning'>[E] is decaying!</span>")
+			bad = 1
+		if(!bad)
+			to_chat(user, "<span class='notice'>[H]'s skin is normal.</span>")
