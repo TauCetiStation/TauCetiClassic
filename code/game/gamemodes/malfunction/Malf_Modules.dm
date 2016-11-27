@@ -41,7 +41,7 @@ rcd light flash thingy on matter drain
 	for(var/mob/living/silicon/ai/ai in player_list)
 		ai.fire_res_on_core = 1
 	usr.verbs -= /client/proc/fireproof_core
-	usr << "\red Core fireproofed."
+	to_chat(usr, "\red Core fireproofed.")
 
 /datum/AI_Module/large/upgrade_turrets
 	module_name = "AI Turret upgrade"
@@ -70,7 +70,6 @@ rcd light flash thingy on matter drain
 			rcd.disabled = 1
 		for(var/obj/item/mecha_parts/mecha_equipment/tool/rcd/rcd in world)
 			rcd.disabled = 1
-		usr << "RCD-disabling pulse emitted."
 		to_chat(usr, "RCD-disabling pulse emitted.")
 	else to_chat(usr, "Out of uses.")
 
@@ -96,9 +95,9 @@ rcd light flash thingy on matter drain
 
 		else
 			A.active_module = null
-			usr << "Power hack module deactivated."
+			to_chat(usr, "Power hack module deactivated.")
 	else
-		usr << "Module activation failed. Out of uses."
+		to_chat(usr, "Module activation failed. Out of uses.")
 
 
 /client/proc/nanject()
@@ -114,7 +113,7 @@ rcd light flash thingy on matter drain
 			A.active_module = null
 			to_chat(usr, "Upgrade module deactivated.")
 	else
-		usr << "Module activation failed. Out of uses."
+		to_chat(usr, "Module activation failed. Out of uses.")
 
 /datum/AI_Module/small/blackout
 	module_name = "Blackout"
@@ -132,7 +131,7 @@ rcd light flash thingy on matter drain
 			if(prob(30*apc.overload))
 				apc.overload_lighting()
 			else apc.overload++
-	else usr << "Out of uses."
+	else to_chat(usr, "Out of uses.")
 
 /datum/AI_Module/small/interhack
 	module_name = "Hack intercept"
@@ -173,11 +172,11 @@ rcd light flash thingy on matter drain
 				for(var/mob/V in viewers(src, null))
 					V.show_message(text("\blue You hear a quiet click."))
 			else
-				usr << "This camera is either active, or not repairable."
+				to_chat(usr, "This camera is either active, or not repairable.")
 		else
-			usr << "Out of uses."
+			to_chat(usr, "Out of uses.")
 	else
-		usr << "That's not a camera."
+		to_chat(usr, "That's not a camera.")
 
 /datum/AI_Module/small/upgrade_camera
 	module_name = "Upgrade Camera"
@@ -215,11 +214,11 @@ rcd light flash thingy on matter drain
 					if(upgraded)
 						UC.uses --
 						C.visible_message("<span class='notice'>\icon[C] *beep*</span>")
-						usr << "Camera successully upgraded!"
+						to_chat(usr, "Camera successully upgraded!")
 					else
-						usr << "This camera is already upgraded!"
+						to_chat(usr, "This camera is already upgraded!")
 			else
-				usr << "Out of uses."
+				to_chat(usr, "Out of uses.")
 
 
 /datum/AI_Module/module_picker
@@ -422,12 +421,12 @@ rcd light flash thingy on matter drain
 	if(!M.nanjector)
 		nanjector.uses--
 		M.nanjector = TRUE
-		src << "Nanobot injector installed."
+		to_chat(usr, "Nanobot injector installed.")
 		active_module = null
 		for(var/mob/V in hearers(M, null))
 			V.show_message("<span class='notice'>You hear a quiet click.</span>", 2)
 	else
-		src << "This machine already upgraded."
+		to_chat(usr, "This machine already upgraded.")
 
 /mob/living/silicon/ai/proc/overload_action(obj/machinery/M)
 	var/datum/AI_Module/small/overload_machine/overload = current_modules["overload"]
@@ -435,7 +434,7 @@ rcd light flash thingy on matter drain
 	overload.uses--
 	for(var/mob/V in hearers(M, null))
 		V.show_message("<span class='notice'>You hear a loud electrical buzzing sound!</span>", 2)
-	src << "Machine overloaded."
+	to_chat(usr, "Machine overloaded.")
 	active_module = null
 	sleep(50)
 	if(M)
@@ -446,10 +445,10 @@ rcd light flash thingy on matter drain
 	if(emag_recharge == 0)
 		if(!M.emagged)
 			emag_recharge = 1200
-			src << "You sequenced electromagnetic pulse to cripple [M.name] circuits."
+			to_chat(usr, "You sequenced electromagnetic pulse to cripple [M.name] circuits.")
 			M.emagged = TRUE
 		else
-			src << "[M.name] circuits already affected."
+			to_chat(usr, "[M.name] circuits already affected.")
 	else
-		src << "Electromagnetic sequencer still recharging."
+		to_chat(usr, "Electromagnetic sequencer still recharging.")
 
