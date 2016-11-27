@@ -66,18 +66,6 @@
 
 #define isclient(A) istype(A, /client)
 
-// GOONCHAT PORT
-
-#define isatom(A) istype(A, /atom)
-
-#define isclient(A) istype(A, /client)
-
-// GOONCHAT PORT
-
-#define isatom(A) istype(A, /atom)
-
-#define isclient(A) istype(A, /client)
-
 
 // ASSEMBLY HELPERS
 
