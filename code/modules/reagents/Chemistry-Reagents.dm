@@ -3973,7 +3973,7 @@ datum
 							to_chat(M, pick( "<b><span class='warning'>Something bursts out from inside you!</span></b>"))
 							message_admins("[key_name(H)] has gibbed and spawned a new cyber horror due to nanobots. (<A HREF='?_src_=holder;adminmoreinfo=\ref[H]'>?</A>)")
 							log_game("[key_name(H)] has gibbed and spawned a new cyber horror due to nanobots")
-							new /mob/living/simple_animal/hostile/monster/cyber_horror(H.loc)
+							new /mob/living/simple_animal/hostile/cyber_horror(H.loc)
 							spawning_horror = 0
 							H.gib()
 	else

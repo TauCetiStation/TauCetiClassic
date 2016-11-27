@@ -1,6 +1,4 @@
-/mob/living/simple_animal/hostile/monster
-
-/mob/living/simple_animal/hostile/monster/cyber_horror
+/mob/living/simple_animal/hostile/cyber_horror
 	name = "cyber horror"
 	desc = "What was once a man, twisted and warped by machine."
 	icon_state = "cyber_horror"
@@ -22,26 +20,25 @@
 	var/emp_damage = 0
 	var/nanobot_chance = 40
 
-/mob/living/simple_animal/hostile/monster/cyber_horror/Life(var/mob/living/simple_animal/hostile/monster/cyber_horror/M)
+/mob/living/simple_animal/hostile/cyber_horror/Life(var/mob/living/simple_animal/hostile/cyber_horror/M)
 	. = ..()
 	if(!.)
 		return 0
-	if(prob(90) && health+emp_damage<maxHealth)
-		health+=4                                                                        //Created by misuse of medical nanobots, so it heals
+	if(prob(90) && ((health + emp_damage) < maxHealth))
+		health += 4                                                                        //Created by misuse of medical nanobots, so it heals
 		if(prob(15))
 			visible_message("<span class='warning'>[src]'s wounds heal slightly!</span>")
 
-/mob/living/simple_animal/hostile/monster/cyber_horror/emp_act(severity)
-	switch (severity)
-		if (1)
+/mob/living/simple_animal/hostile/cyber_horror/emp_act(severity)
+	switch(severity)
+		if(1)
 			adjustBruteLoss(50)
-			emp_damage+=50
-
-		if (2)
+			emp_damage += 50
+		if(2)
 			adjustBruteLoss(25)
-			emp_damage+=25
+			emp_damage += 25
 
-/mob/living/simple_animal/hostile/monster/cyber_horror/AttackingTarget()
+/mob/living/simple_animal/hostile/cyber_horror/AttackingTarget()
 	..()
 	var/mob/living/L = target
 	if(L.reagents)
@@ -49,9 +46,8 @@
 			visible_message("<b><span class='warning'>[src] injects something from its flailing arm!</span>")
 			L.reagents.add_reagent("mednanobots", 3)
 
-/mob/living/simple_animal/hostile/monster/cyber_horror/death()
+/mob/living/simple_animal/hostile/cyber_horror/death()
 	..()
 	visible_message("<b>[src]</b> blows apart!")
 	new /obj/effect/gibspawner/robot(src.loc)
 	qdel(src)
-	return
