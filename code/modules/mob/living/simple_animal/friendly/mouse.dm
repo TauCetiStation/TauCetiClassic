@@ -104,19 +104,19 @@
 
 	if (layer != TURF_LAYER+0.2)
 		layer = TURF_LAYER+0.2
-		src << text("\blue You are now hiding.")
+		to_chat(src, text("\blue You are now hiding."))
 		/*
 		for(var/mob/O in oviewers(src, null))
 			if ((O.client && !( O.blinded )))
-				O << text("<B>[] scurries to the ground!</B>", src)
+				to_chat(O, text("<B>[] scurries to the ground!</B>", src))
 		*/
 	else
 		layer = MOB_LAYER
-		src << text("\blue You have stopped hiding.")
+		to_chat(src, text("\blue You have stopped hiding."))
 		/*
 		for(var/mob/O in oviewers(src, null))
 			if ((O.client && !( O.blinded )))
-				O << text("[] slowly peaks up from the ground...", src)
+				to_chat(O, text("[] slowly peaks up from the ground...", src))
 		*/
 
 //make mice fit under tables etc? this was hacky, and not working
@@ -143,14 +143,14 @@
 //	return 1
 
 /mob/living/simple_animal/mouse/start_pulling(atom/movable/AM)//Prevents mouse from pulling things
-	src << "<span class='warning'>You are too small to pull anything.</span>"
+	to_chat(src, "<span class='warning'>You are too small to pull anything.</span>")
 	return
 
 /mob/living/simple_animal/mouse/Crossed(AM as mob|obj)
 	if( ishuman(AM) )
 		if(!stat)
 			var/mob/M = AM
-			M << "\blue \icon[src] Squeek!"
+			to_chat(M, "\blue [bicon(src)] Squeek!")
 			M << 'sound/effects/mousesqueek.ogg'
 	..()
 

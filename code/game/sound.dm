@@ -93,7 +93,7 @@ var/const/FALLOFF_SOUNDS = 0.5
 		S.falloff = (falloff ? falloff : FALLOFF_SOUNDS)
 	if(!is_global)
 		S.environment = 2
-	src << S
+	to_chat(src, S)
 
 /client/proc/playtitlemusic()
 	if(!ticker || !ticker.login_music)	return

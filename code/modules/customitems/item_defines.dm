@@ -133,7 +133,7 @@
 
 /obj/item/fluff/victor_kaminsky_1/attack_self(mob/user)
 	for(var/mob/O in viewers(user, null))
-		O.show_message(text("[] shows you: \icon[] [].", user, src, src.name), 1)
+		O.show_message("[user] shows you: [bicon(src)] [src.name].", 1)
 	src.add_fingerprint(user)
 
 /obj/item/fluff/ana_issek_2 //suethecake: Ana Issek
@@ -374,14 +374,14 @@
 	return
 
 /obj/item/weapon/reagent_containers/hypospray/fluff/asher_spock_1/attack_self(mob/user)
-	user << "\blue You click \the [src] but get no reaction. Must be dead."
+	to_chat(user, "\blue You click \the [src] but get no reaction. Must be dead.")
 
 /obj/item/weapon/reagent_containers/hypospray/fluff/asher_spock_1/attack(mob/M, mob/user)
 	if (user.ckey != "nerezza") //Because this can end up in the wrong hands, let's make it useless for them!
-		user << "\blue You click \the [src] but get no reaction. Must be dead."
+		to_chat(user, "\blue You click \the [src] but get no reaction. Must be dead.")
 		return
 	if(!reagents.total_volume)
-		user << "\red \The [src] is empty."
+		to_chat(user, "\red \The [src] is empty.")
 		return
 	if (!( istype(M, /mob) ))
 		return
@@ -392,12 +392,12 @@
 				"\blue You press the disguised autoinjector against your skin and click the button. There's a sharp pain at the injection site that rapidly fades.", \
 				"You hear a rustle as someone moves nearby, then a sharp click.")
 		if (M != user && user.ckey == "nerezza") //Woah now, you better be careful partner
-			user << "\blue You don't want to contaminate the autoinjector."
+			to_chat(user, "\blue You don't want to contaminate the autoinjector.")
 			return
 		src.reagents.reaction(M, INGEST)
 		if(M.reagents)
 			var/trans = reagents.trans_to(M, amount_per_transfer_from_this)
-			user << "\blue [trans] units injected. [reagents.total_volume] units remaining in \the [src]."
+			to_chat(user, "\blue [trans] units injected. [reagents.total_volume] units remaining in \the [src].")
 	return
 
 /obj/item/weapon/reagent_containers/hypospray/fluff/asher_spock_1/examine(mob/user)
@@ -406,9 +406,9 @@
 		return //Only the owner knows how to examine the contents.
 	if(reagents && reagents.reagent_list.len)
 		for(var/datum/reagent/R in reagents.reagent_list)
-			user << "<span class='notice'>You examine the penlight closely and see that it has [R.volume] units of [R.name] stored.</span>"
+			to_chat(user, "<span class='notice'>You examine the penlight closely and see that it has [R.volume] units of [R.name] stored.</span>")
 	else
-		user << "<span class='notice'>You examine the penlight closely and see that it is currently empty.</span>"
+		to_chat(user, "<span class='notice'>You examine the penlight closely and see that it is currently empty.</span>")
 
 //End strange penlight
 
@@ -795,10 +795,10 @@
 
 	if(src.icon_state == "jane_sid_suit_down")
 		src.item_color = "jane_sid_suit"
-		usr << "You zip up the [src]."
+		to_chat(usr, "You zip up the [src].")
 	else
 		src.item_color = "jane_sid_suit_down"
-		usr << "You unzip and roll down the [src]."
+		to_chat(usr, "You unzip and roll down the [src].")
 
 	src.icon_state = "[item_color]"
 	src.item_state = "[item_color]"
@@ -877,16 +877,16 @@
 
 /obj/item/clothing/tie/fluff/konaa_hirano/attack_self(mob/user)
 	if(held)
-		user << "You open [src] and [held] falls out."
+		to_chat(user, "You open [src] and [held] falls out.")
 		held.loc = get_turf(user)
 		src.held = null
 
 /obj/item/clothing/tie/fluff/konaa_hirano/attackby(obj/item/O, mob/user)
 	if(istype(O,/obj/item/weapon/paper))
 		if(held)
-			usr << "[src] already has something inside it."
+			to_chat(usr, "[src] already has something inside it.")
 		else
-			usr << "You slip [O] into [src]."
+			to_chat(usr, "You slip [O] into [src].")
 			user.drop_item()
 			O.loc = src
 			src.held = O

@@ -71,7 +71,8 @@ rcd light flash thingy on matter drain
 		for(var/obj/item/mecha_parts/mecha_equipment/tool/rcd/rcd in world)
 			rcd.disabled = 1
 		usr << "RCD-disabling pulse emitted."
-	else usr << "Out of uses."
+		to_chat(usr, "RCD-disabling pulse emitted.")
+	else to_chat(usr, "Out of uses.")
 
 /datum/AI_Module/small/overload_machine
 	module_name = "Machine overload"
@@ -91,7 +92,8 @@ rcd light flash thingy on matter drain
 	if(overload.uses > 0)
 		if(A.active_module != "overload")
 			A.active_module = "overload"
-			usr << "Power hack module active. Alt+click to choose a machine to overload."
+			to_chat(usr, "Power hack module active. Alt+click to choose a machine to overload.")
+
 		else
 			A.active_module = null
 			usr << "Power hack module deactivated."
@@ -107,10 +109,10 @@ rcd light flash thingy on matter drain
 	if(nanjector.uses > 0)
 		if(A.active_module != "overload")
 			A.active_module = "nanject"
-			usr << "Upgrade module active. Alt+click to choose machine to install nanobot injector."
+			to_chat(usr, "Upgrade module active. Alt+click to choose machine to install nanobot injector.")
 		else
 			A.active_module = null
-			usr << "Upgrade module deactivated."
+			to_chat(usr, "Upgrade module deactivated.")
 	else
 		usr << "Module activation failed. Out of uses."
 
