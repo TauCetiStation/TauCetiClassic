@@ -57,22 +57,22 @@ var/list/blob_nodes = list()
 
 
 /datum/game_mode/blob/announce()
-	world << "<B>The current game mode is - <font color='green'>Blob</font>!</B>"
-	world << "<B>A dangerous alien organism is rapidly spreading throughout the station!</B>"
-	world << "You must kill it all while minimizing the damage to the station."
+	to_chat(world, "<B>The current game mode is - <font color='green'>Blob</font>!</B>")
+	to_chat(world, "<B>A dangerous alien organism is rapidly spreading throughout the station!</B>")
+	to_chat(world, "You must kill it all while minimizing the damage to the station.")
 
 
 /datum/game_mode/blob/proc/greet_blob(datum/mind/blob)
-	blob.current << "<B><span class='red'> You are infected by the Blob!</span></B>"
-	blob.current << "<b>Your body is ready to give spawn to a new blob core which will eat this station.</b>"
-	blob.current << "<b>Find a good location to spawn the core and then take control and overwhelm the station!</b>"
-	blob.current << "<b>When you have found a location, wait until you spawn; this will happen automatically and you cannot speed up the process.</b>"
-	blob.current << "<b>If you go outside of the station level, or in space, then you will die; make sure your location has lots of ground to cover.</b>"
+	to_chat(blob.current, "<B><span class='red'> You are infected by the Blob!</span></B>")
+	to_chat(blob.current, "<b>Your body is ready to give spawn to a new blob core which will eat this station.</b>")
+	to_chat(blob.current, "<b>Find a good location to spawn the core and then take control and overwhelm the station!</b>")
+	to_chat(blob.current, "<b>When you have found a location, wait until you spawn; this will happen automatically and you cannot speed up the process.</b>")
+	to_chat(blob.current, "<b>If you go outside of the station level, or in space, then you will die; make sure your location has lots of ground to cover.</b>")
 	return
 
 /datum/game_mode/blob/proc/show_message(message)
 	for(var/datum/mind/blob in infected_crew)
-		blob.current << message
+		to_chat(blob.current, message)
 
 /datum/game_mode/blob/proc/burst_blobs()
 	for(var/datum/mind/blob in infected_crew)

@@ -382,7 +382,7 @@
 		else
 			H.AdjustStunned(1)
 			H.AdjustWeakened(1)
-		mob << "<span class='notice'>The sudden appearance of gravity makes you fall to the floor!</span>"
+		to_chat(mob, "<span class='notice'>The sudden appearance of gravity makes you fall to the floor!</span>")
 
 /proc/has_gravity(atom/AT, turf/T)
 	if(!T)

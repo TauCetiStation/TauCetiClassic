@@ -1,343 +1,343 @@
 macro "macro"
-	elem
+	elem "MACRO-TAB"
 		name = "TAB"
 		command = ".winset \"mainwindow.macro=hotkeymode hotkey_toggle.is-checked=true mapwindow.map.focus=true\""
 		is-disabled = false
-	elem
+	elem "MACRO-CENTER+REP"
 		name = "CENTER+REP"
 		command = ".center"
 		is-disabled = false
-	elem
+	elem "MACRO-NORTHEAST"
 		name = "NORTHEAST"
 		command = ".northeast"
 		is-disabled = false
-	elem
+	elem "MACRO-SOUTHEAST"
 		name = "SOUTHEAST"
 		command = ".southeast"
 		is-disabled = false
-	elem
+	elem "MACRO-SOUTHWEST"
 		name = "SOUTHWEST"
 		command = ".southwest"
 		is-disabled = false
-	elem
+	elem "MACRO-NORTHWEST"
 		name = "NORTHWEST"
 		command = ".northwest"
 		is-disabled = false
-	elem
+	elem "MACRO-CTRL+WEST"
 		name = "CTRL+WEST"
 		command = "westface"
 		is-disabled = false
-	elem
+	elem "MACRO-WEST+REP"
 		name = "WEST+REP"
 		command = ".west"
 		is-disabled = false
-	elem
+	elem "MACRO-CTRL+NORTH"
 		name = "CTRL+NORTH"
 		command = "northface"
 		is-disabled = false
-	elem
+	elem "MACRO-NORTH+REP"
 		name = "NORTH+REP"
 		command = ".north"
 		is-disabled = false
-	elem
+	elem "MACRO-CTRL+EAST"
 		name = "CTRL+EAST"
 		command = "eastface"
 		is-disabled = false
-	elem
+	elem "MACRO-EAST+REP"
 		name = "EAST+REP"
 		command = ".east"
 		is-disabled = false
-	elem
+	elem "MACRO-CTRL+SOUTH"
 		name = "CTRL+SOUTH"
 		command = "southface"
 		is-disabled = false
-	elem
+	elem "MACRO-SOUTH+REP"
 		name = "SOUTH+REP"
 		command = ".south"
 		is-disabled = false
-	elem
+	elem "MACRO-INSERT"
 		name = "INSERT"
 		command = "a-intent right"
 		is-disabled = false
-	elem
+	elem "MACRO-DELETE"
 		name = "DELETE"
 		command = "delete-key-pressed"
 		is-disabled = false
-	elem
+	elem "MACRO-CTRL+1"
 		name = "CTRL+1"
 		command = "a-intent help"
 		is-disabled = false
-	elem
+	elem "MACRO-CTRL+2"
 		name = "CTRL+2"
 		command = "a-intent disarm"
 		is-disabled = false
-	elem
+	elem "MACRO-CTRL+3"
 		name = "CTRL+3"
 		command = "a-intent grab"
 		is-disabled = false
-	elem
+	elem "MACRO-CTRL+4"
 		name = "CTRL+4"
 		command = "a-intent hurt"
 		is-disabled = false
-	elem
+	elem "MACRO-CTRL+A+REP"
 		name = "CTRL+A+REP"
 		command = ".west"
 		is-disabled = false
-	elem
+	elem "MACRO-CTRL+D+REP"
 		name = "CTRL+D+REP"
 		command = ".east"
 		is-disabled = false
-	elem
+	elem "MACRO-CTRL+E"
 		name = "CTRL+E"
 		command = "quick-equip"
 		is-disabled = false
-	elem
+	elem "MACRO-CTRL+F"
 		name = "CTRL+F"
 		command = "a-intent left"
 		is-disabled = false
-	elem
+	elem "MACRO-CTRL+G"
 		name = "CTRL+G"
 		command = "a-intent right"
 		is-disabled = false
-	elem
+	elem "MACRO-CTRL+Q"
 		name = "CTRL+Q"
 		command = ".northwest"
 		is-disabled = false
-	elem
+	elem "MACRO-CTRL+R"
 		name = "CTRL+R"
 		command = ".southwest"
 		is-disabled = false
-	elem
+	elem "MACRO-CTRL+S+REP"
 		name = "CTRL+S+REP"
 		command = ".south"
 		is-disabled = false
-	elem
+	elem "MACRO-CTRL+W+REP"
 		name = "CTRL+W+REP"
 		command = ".north"
 		is-disabled = false
-	elem
+	elem 
 		name = "CTRL+X"
 		command = ".northeast"
 		is-disabled = false
-	elem
+	elem "MACRO-CTRL+Y"
 		name = "CTRL+Y"
 		command = "Activate-Held-Object"
 		is-disabled = false
-	elem
+	elem "MACRO-CTRL+Z"
 		name = "CTRL+Z"
 		command = "Activate-Held-Object"
 		is-disabled = false
-	elem
+	elem "MACRO-F1"
 		name = "F1"
 		command = "adminhelp"
 		is-disabled = false
-	elem
+	elem "MACRO-CTRL+SHIFT+F1+REP"
 		name = "CTRL+SHIFT+F1+REP"
 		command = ".options"
 		is-disabled = false
-	elem
+	elem "MACRO-F2"
 		name = "F2"
 		command = "ooc"
 		is-disabled = false
-	elem
+	elem "MACRO-F2+REP"
 		name = "F2+REP"
 		command = ".screenshot auto"
 		is-disabled = false
-	elem
+	elem "MACRO-SHIFT+F2+REP"
 		name = "SHIFT+F2+REP"
 		command = ".screenshot"
 		is-disabled = false
-	elem
+	elem "MACRO-F3"
 		name = "F3"
 		command = ".say"
 		is-disabled = false
-	elem
+	elem "MACRO-F4"
 		name = "F4"
 		command = ".me"
 		is-disabled = false
-	elem
+	elem "MACRO-F5"
 		name = "F5"
 		command = "asay"
 		is-disabled = false
-	elem
+	elem "MACRO-F6"
 		name = "F6"
 		command = "Player-Panel-New"
 		is-disabled = false
-	elem
+	elem "MACRO-F7"
 		name = "F7"
 		command = "Admin-PM"
 		is-disabled = false
-	elem
+	elem "MACRO-F8"
 		name = "F8"
 		command = "Invisimin"
 		is-disabled = false
-	elem
+	elem "MACRO-F9"
 		name = "F9"
 		command = "mentorhelp"
 		is-disabled = false
-	elem
+	elem "MACRO-F12"
 		name = "F12"
 		command = "F12"
 		is-disabled = false
 
 macro "hotkeymode"
-	elem
+	elem "HKMODE-TAB"
 		name = "TAB"
 		command = ".winset \"mainwindow.macro=macro hotkey_toggle.is-checked=false input.focus=true\""
 		is-disabled = false
-	elem
+	elem "HKMODE-CENTER+REP"
 		name = "CENTER+REP"
 		command = ".center"
 		is-disabled = false
-	elem
+	elem "HKMODE-NORTHEAST"
 		name = "NORTHEAST"
 		command = ".northeast"
 		is-disabled = false
-	elem
+	elem "HKMODE-SOUTHEAST"
 		name = "SOUTHEAST"
 		command = ".southeast"
 		is-disabled = false
-	elem
+	elem "HKMODE-SOUTHWEST"
 		name = "SOUTHWEST"
 		command = ".southwest"
 		is-disabled = false
-	elem
+	elem "HKMODE-NORTHWEST"
 		name = "NORTHWEST"
 		command = ".northwest"
 		is-disabled = false
-	elem
+	elem "HKMODE-CTRL+WEST"
 		name = "CTRL+WEST"
 		command = "westface"
 		is-disabled = false
-	elem
+	elem "HKMODE-WEST+REP"
 		name = "WEST+REP"
 		command = ".west"
 		is-disabled = false
-	elem
+	elem "HKMODE-CTRL+NORTH"
 		name = "CTRL+NORTH"
 		command = "northface"
 		is-disabled = false
-	elem
+	elem "HKMODE-NORTH+REP"
 		name = "NORTH+REP"
 		command = ".north"
 		is-disabled = false
-	elem
+	elem "HKMODE-CTRL+EAST"
 		name = "CTRL+EAST"
 		command = "eastface"
 		is-disabled = false
-	elem
+	elem "HKMODE-EAST+REP"
 		name = "EAST+REP"
 		command = ".east"
 		is-disabled = false
-	elem
+	elem "HKMODE-CTRL+SOUTH"
 		name = "CTRL+SOUTH"
 		command = "southface"
 		is-disabled = false
-	elem
+	elem "HKMODE-SOUTH+REP"
 		name = "SOUTH+REP"
 		command = ".south"
 		is-disabled = false
-	elem
+	elem "HKMODE-INSERT"
 		name = "INSERT"
 		command = "a-intent right"
 		is-disabled = false
-	elem
+	elem "HKMODE-DELETE"
 		name = "DELETE"
 		command = "delete-key-pressed"
 		is-disabled = false
-	elem
+	elem "HKMODE-1"
 		name = "1"
 		command = "a-intent help"
 		is-disabled = false
-	elem
+	elem "HKMODE-CTRL+1"
 		name = "CTRL+1"
 		command = "a-intent help"
 		is-disabled = false
-	elem
+	elem "HKMODE-2"
 		name = "2"
 		command = "a-intent disarm"
 		is-disabled = false
-	elem
+	elem "HKMODE-CTRL+2"
 		name = "CTRL+2"
 		command = "a-intent disarm"
 		is-disabled = false
-	elem
+	elem "HKMODE-3"
 		name = "3"
 		command = "a-intent grab"
 		is-disabled = false
-	elem
+	elem "HKMODE-CTRL+3"
 		name = "CTRL+3"
 		command = "a-intent grab"
 		is-disabled = false
-	elem
+	elem "HKMODE-4"
 		name = "4"
 		command = "a-intent hurt"
 		is-disabled = false
-	elem
+	elem "HKMODE-CTRL+4"
 		name = "CTRL+4"
 		command = "a-intent hurt"
 		is-disabled = false
-	elem
+	elem "HKMODE-A+REP"
 		name = "A+REP"
 		command = ".west"
 		is-disabled = false
-	elem
+	elem "HKMODE-CTRL+A+REP"
 		name = "CTRL+A+REP"
 		command = ".west"
 		is-disabled = false
-	elem
+	elem "HKMODE-D+REP"
 		name = "D+REP"
 		command = ".east"
 		is-disabled = false
-	elem
+	elem "HKMODE-CTRL+D+REP"
 		name = "CTRL+D+REP"
 		command = ".east"
 		is-disabled = false
-	elem
+	elem "HKMODE-E"
 		name = "E"
 		command = "quick-equip"
 		is-disabled = false
-	elem
+	elem "HKMODE-CTRL+E"
 		name = "CTRL+E"
 		command = "quick-equip"
 		is-disabled = false
-	elem
+	elem "HKMODE-F"
 		name = "F"
 		command = "a-intent left"
 		is-disabled = false
-	elem
+	elem "HKMODE-CTRL+F"
 		name = "CTRL+F"
 		command = "a-intent left"
 		is-disabled = false
-	elem
+	elem "HKMODE-G"
 		name = "G"
 		command = "a-intent right"
 		is-disabled = false
-	elem
+	elem "HKMODE-CTRL+G"
 		name = "CTRL+G"
 		command = "a-intent right"
 		is-disabled = false
-	elem
+	elem "HKMODE-H"
 		name = "H"
 		command = "holster"
 		is-disabled = false
-	elem
+	elem "HKMODE-CTRL+H"
 		name = "CTRL+H"
 		command = "holster"
 		is-disabled = false
-	elem
+	elem "HKMODE-Q"
 		name = "Q"
 		command = ".northwest"
 		is-disabled = false
-	elem
+	elem "HKMODE-CTRL+Q"
 		name = "CTRL+Q"
 		command = ".northwest"
 		is-disabled = false
-	elem
+	elem "HKMODE-R"
 		name = "R"
 		command = ".southwest"
 		is-disabled = false
-	elem
+	elem "HKMODE-CTRL+R"
 		name = "CTRL+R"
 		command = ".southwest"
 		is-disabled = false
@@ -345,11 +345,11 @@ macro "hotkeymode"
 		name = "S+REP"
 		command = ".south"
 		is-disabled = false
-	elem
+	elem "HKMODE-CTRL+S+REP"
 		name = "CTRL+S+REP"
 		command = ".south"
 		is-disabled = false
-	elem
+	elem "HKMODE-T"
 		name = "T"
 		command = ".say"
 		is-disabled = false
@@ -357,90 +357,90 @@ macro "hotkeymode"
 		name = "W+REP"
 		command = ".north"
 		is-disabled = false
-	elem
+	elem "HKMODE-CTRL+W+REP"
 		name = "CTRL+W+REP"
 		command = ".north"
 		is-disabled = false
-	elem
+	elem "HKMODE-X"
 		name = "X"
 		command = ".northeast"
 		is-disabled = false
-	elem
+	elem "HKMODE-CTRL+X"
 		name = "CTRL+X"
 		command = ".northeast"
 		is-disabled = false
-	elem
+	elem "HKMODE-Y"
 		name = "Y"
 		command = "Activate-Held-Object"
 		is-disabled = false
-	elem
+	elem "HKMODE-CTRL+Y"
 		name = "CTRL+Y"
 		command = "Activate-Held-Object"
 		is-disabled = false
-	elem
+	elem "HKMODE-Z"
 		name = "Z"
 		command = "Activate-Held-Object"
 		is-disabled = false
-	elem
+	elem "HKMODE-CTRL+Z"
 		name = "CTRL+Z"
 		command = "Activate-Held-Object"
 		is-disabled = false
-	elem
+	elem "HKMODE-F1"
 		name = "F1"
 		command = "adminhelp"
 		is-disabled = false
-	elem
+	elem "HKMODE-CTRL+SHIFT+F1+REP"
 		name = "CTRL+SHIFT+F1+REP"
 		command = ".options"
 		is-disabled = false
-	elem
+	elem "HKMODE-F2"
 		name = "F2"
 		command = "ooc"
 		is-disabled = false
-	elem
+	elem "HKMODE-F2+REP"
 		name = "F2+REP"
 		command = ".screenshot auto"
 		is-disabled = false
-	elem
+	elem "HKMODE-SHIFT+F2+REP"
 		name = "SHIFT+F2+REP"
 		command = ".screenshot"
 		is-disabled = false
-	elem
+	elem "HKMODE-F3"
 		name = "F3"
 		command = ".say"
 		is-disabled = false
-	elem
+	elem "HKMODE-F4"
 		name = "F4"
 		command = ".me"
 		is-disabled = false
-	elem
+	elem "HKMODE-F5"
 		name = "F5"
 		command = "asay"
 		is-disabled = false
-	elem
+	elem "HKMODE-F6"
 		name = "F6"
 		command = "Player-Panel-New"
 		is-disabled = false
-	elem
+	elem "HKMODE-F7"
 		name = "F7"
 		command = "Admin-PM"
 		is-disabled = false
-	elem
+	elem "HKMODE-F8"
 		name = "F8"
 		command = "Invisimin"
 		is-disabled = false
-	elem
+	elem "HKMODE-F9"
 		name = "F9"
 		command = "mentorhelp"
 		is-disabled = false
-	elem
+	elem "HKMODE-F12"
 		name = "F12"
 		command = "F12"
 		is-disabled = false
 
 
 menu "menu"
-	elem
+	elem 
 		name = "&File"
 		command = ""
 		category = ""
@@ -449,7 +449,7 @@ menu "menu"
 		group = ""
 		is-disabled = false
 		saved-params = "is-checked"
-	elem
+	elem 
 		name = "&Quick screenshot\tF2"
 		command = ".screenshot auto"
 		category = "&File"
@@ -458,7 +458,7 @@ menu "menu"
 		group = ""
 		is-disabled = false
 		saved-params = "is-checked"
-	elem
+	elem 
 		name = "&Save screenshot as...\tShift+F2"
 		command = ".screenshot"
 		category = "&File"
@@ -467,7 +467,7 @@ menu "menu"
 		group = ""
 		is-disabled = false
 		saved-params = "is-checked"
-	elem
+	elem 
 		name = ""
 		command = ""
 		category = "&File"
@@ -476,7 +476,7 @@ menu "menu"
 		group = ""
 		is-disabled = false
 		saved-params = "is-checked"
-	elem
+	elem 
 		name = "&Quit"
 		command = ".quit"
 		category = "&File"
@@ -485,7 +485,7 @@ menu "menu"
 		group = ""
 		is-disabled = false
 		saved-params = "is-checked"
-	elem
+	elem 
 		name = "&Icons"
 		command = ""
 		category = ""
@@ -521,7 +521,7 @@ menu "menu"
 		group = "size"
 		is-disabled = false
 		saved-params = "is-checked"
-	elem
+	elem 
 		name = ""
 		command = ""
 		category = "&Icons"
@@ -539,7 +539,7 @@ menu "menu"
 		group = ""
 		is-disabled = false
 		saved-params = "is-checked"
-	elem
+	elem 
 		name = "&Help"
 		command = ""
 		category = ""
@@ -548,7 +548,7 @@ menu "menu"
 		group = ""
 		is-disabled = false
 		saved-params = "is-checked"
-	elem
+	elem 
 		name = "&Admin help\tF1"
 		command = "adminhelp"
 		category = "&Help"
@@ -557,7 +557,7 @@ menu "menu"
 		group = ""
 		is-disabled = false
 		saved-params = "is-checked"
-	elem
+	elem 
 		name = "&Hotkeys"
 		command = "hotkeys-help"
 		category = "&Help"
@@ -1440,8 +1440,8 @@ window "outputwindow"
 		macro = ""
 		menu = ""
 		on-close = ""
-	elem "output"
-		type = OUTPUT
+	elem "browseroutput"
+		type = BROWSER
 		pos = 0,0
 		size = 640x480
 		anchor1 = 0,0
@@ -1452,20 +1452,20 @@ window "outputwindow"
 		text-color = #000000
 		background-color = #ffffff
 		is-visible = true
-		is-disabled = false
+		is-disabled = true
 		is-transparent = false
-		is-default = true
+		is-default = false
 		border = none
 		drop-zone = false
 		right-click = false
-		saved-params = "max-lines"
+		saved-params = ""
 		on-size = ""
-		link-color = #0000ff
-		visited-color = #ff00ff
-		style = ".system {color:#ff0000;}"
-		enable-http-images = false
-		max-lines = 0
-		image = ""
+		show-history = false
+		show-url = false
+		auto-format = false
+		use-title = false
+		on-show = ""
+		on-hide = ""
 
 window "rpane"
 	elem "rpane"

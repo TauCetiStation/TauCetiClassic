@@ -41,7 +41,7 @@
 				if(do_after(user, 40, target = src))
 					if(!src || !WT.isOn())
 						return
-					user << "<span class='notice'>You welded the glass panel out!</span>"
+					to_chat(user, "<span class='notice'>You welded the glass panel out!</span>")
 					new /obj/item/stack/sheet/rglass(loc)
 					set_glass(FALSE)
 
@@ -50,7 +50,7 @@
 				if(do_after(user, 40, target = src))
 					if(!src || !WT.isOn())
 						return
-					user << "<span class='notice'>You welded the [mineral] plating off!</span>"
+					to_chat(user, "<span class='notice'>You welded the [mineral] plating off!</span>")
 					var/M = text2path("/obj/item/stack/sheet/mineral/[mineral]")
 					new M(loc, 2)
 					change_mineral_airlock_type()
@@ -60,11 +60,11 @@
 				if(do_after(user, 40, target = src))
 					if(!src || !WT.isOn())
 						return
-					user << "<span class='notice'>You dissasembled the airlock assembly!</span>"
+					to_chat(user, "<span class='notice'>You dissasembled the airlock assembly!</span>")
 					new /obj/item/stack/sheet/metal(loc, 4)
 					qdel (src)
 		else
-			user << "<span class='notice'>You need more welding fuel.</span>"
+			to_chat(user, "<span class='notice'>You need more welding fuel.</span>")
 			return
 
 	else if(istype(W, /obj/item/weapon/wrench) && state == ASSEMBLY_SECURED)
@@ -78,7 +78,7 @@
 		if(do_after(user, 40, target = src))
 			if(!src)
 				return
-			user << "<span class='notice'>You [anchored ? "un" : ""]secured the airlock assembly!</span>"
+			to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secured the airlock assembly!</span>")
 			anchored = !anchored
 
 	else if(istype(W, /obj/item/weapon/cable_coil) && state == ASSEMBLY_SECURED && anchored )
@@ -89,7 +89,7 @@
 				return
 			coil.use(1)
 			state = ASSEMBLY_WIRED
-			user << "<span class='notice'>You wire the Airlock!</span>"
+			to_chat(user, "<span class='notice'>You wire the airlock!</span>")
 
 	else if(istype(W, /obj/item/weapon/wirecutters) && state == ASSEMBLY_WIRED)
 		playsound(src, 'sound/items/Wirecutter.ogg', 100, 1)
@@ -98,7 +98,7 @@
 		if(do_after(user, 40, target = src))
 			if(!src)
 				return
-			user << "<span class='notice'>You cut the airlock wires!</span>"
+			to_chat(user, "<span class='notice'>You cut the airlock wires!</span>")
 			new /obj/item/weapon/cable_coil(loc, 1)
 			state = ASSEMBLY_SECURED
 
@@ -113,7 +113,7 @@
 					return
 				user.drop_item()
 				AE.loc = src
-				user << "<span class='notice'>You installed the airlock electronics!</span>"
+				to_chat(user, "<span class='notice'>You installed the airlock electronics!</span>")
 				state = ASSEMBLY_NEAR_FINISHED
 				electronics = AE
 
@@ -124,7 +124,7 @@
 		if(do_after(user, 40, target = src))
 			if(!src)
 				return
-			user << "<span class='notice'>You removed the airlock electronics!</span>"
+			to_chat(user, "<span class='notice'>You removed the airlock electronics!</span>")
 			state = ASSEMBLY_WIRED
 			var/obj/item/weapon/airlock_electronics/AE
 			if (!electronics)
@@ -139,16 +139,16 @@
 		if(S && S.amount >= 1)
 			if(istype(S, /obj/item/stack/sheet/rglass))
 				if(glass_material)
-					user << "<span class='notice'>There is already glass in the [src].</span>"
+					to_chat(user, "<span class='notice'>There is already glass in the [src].</span>")
 				else if(can_insert_glass)
 					playsound(src, 'sound/items/Crowbar.ogg', 100, 1)
 					user.visible_message("[user] adds [S.name] to the [src].", "You start to install [S.name] into the [src].")
 					if(do_after(user, 40, target = src))
-						user << "<span class='notice'>You installed reinforced glass windows into the [src]!</span>"
+						to_chat(user, "<span class='notice'>You installed reinforced glass windows into the [src]!</span>")
 						S.use(1)
 						set_glass(TRUE)
 				else
-					user << "<span class='notice'>You can't insert glass into [src].</span>"
+					to_chat(user, "<span class='notice'>You can't insert glass into [src].</span>")
 
 			else if(istype(S, /obj/item/stack/sheet/mineral) && S.sheettype)
 				if(can_insert_mineral())
@@ -157,22 +157,22 @@
 						playsound(src, 'sound/items/Crowbar.ogg', 100, 1)
 						user.visible_message("[user] adds [S.name] to the airlock assembly.", "You start to install [S.name] into the airlock assembly.")
 						if(do_after(user, 40, target = src))
-							user << "<span class='notice'>You installed [M] plating into the airlock assembly!</span>"
+							to_chat(user, "<span class='notice'>You installed [M] plating into the airlock assembly!</span>")
 							S.use(2)
 							change_mineral_airlock_type(M)
 					else
-						user << "<span class='notice'>There is not enough [S].</span>"
+						to_chat(user, "<span class='notice'>There is not enough [S].</span>")
 				else
-					user << "<span class='notice'>You can't add [S] to the [src].</span>"
+					to_chat(user, "<span class='notice'>You can't add [S] to the [src].</span>")
 
 	else if(istype(W, /obj/item/weapon/screwdriver) && state == ASSEMBLY_NEAR_FINISHED )
 		playsound(src, 'sound/items/Screwdriver.ogg', 100, 1)
-		user << "<span class='notice'>Now finishing the airlock.</span>"
+		to_chat(user, "<span class='notice'>Now finishing the airlock.</span>")
 
 		if(do_after(user, 40, target = src))
 			if(!src)
 				return
-			user << "<span class='notice'>You finish the airlock!</span>"
+			to_chat(user, "<span class='notice'>You finish the airlock!</span>")
 			var/obj/machinery/door/airlock/door = null
 			if(glass_material && !glass_only)
 				door = new glass_type(loc)

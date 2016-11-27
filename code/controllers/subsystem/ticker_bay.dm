@@ -76,8 +76,8 @@ var/datum/subsystem/ticker/ticker
 	switch(current_state)
 		if(GAME_STATE_STARTUP)
 			timeLeft = initial(timeLeft)
-			world << "<b><font color='blue'>Welcome to the pre-game lobby!</font></b>"
-			world << "Please, setup your character and select ready. Game will start in [timeLeft/10] seconds"
+			to_chat(world, "<b><font color='blue'>Welcome to the pre-game lobby!</font></b>")
+			to_chat(world, "Please, setup your character and select ready. Game will start in [timeLeft/10] seconds")
 			current_state = GAME_STATE_PREGAME
 
 		if(GAME_STATE_PREGAME)
@@ -126,21 +126,21 @@ var/datum/subsystem/ticker/ticker
 					if (mode.station_was_nuked)
 						feedback_set_details("end_proper","nuke")
 						if(!delay_end)
-							world << "\blue <B>Rebooting due to destruction of station in [restart_timeout/10] seconds</B>"
+							to_chat(world, "\blue <B>Rebooting due to destruction of station in [restart_timeout/10] seconds</B>")
 					else
 						feedback_set_details("end_proper","proper completion")
 						if(!delay_end)
-							world << "\blue <B>Restarting in [restart_timeout/10] seconds</B>"
+							to_chat(world, "\blue <B>Restarting in [restart_timeout/10] seconds</B>")
 
 					if(!delay_end)
 						sleep(restart_timeout)
 						if(!delay_end)
 							world.Reboot() //Can be upgraded to remove unneded sleep here.
 						else
-							world << "\blue <B>An admin has delayed the round end</B>"
+							to_chat(world, "\blue <B>An admin has delayed the round end</B>")
 							send2slack_service("An admin has delayed the round end")
 					else
-						world << "\blue <B>An admin has delayed the round end</B>"
+						to_chat(world, "\blue <B>An admin has delayed the round end</B>")
 						send2slack_service("An admin has delayed the round end")
 
 /datum/subsystem/ticker/proc/setup()
@@ -154,7 +154,7 @@ var/datum/subsystem/ticker/ticker
 
 		if (runnable_modes.len==0)
 			current_state = GAME_STATE_PREGAME
-			world << "<B>Unable to choose playable game mode.</B> Reverting to pre-game lobby."
+			to_chat(world, "<B>Unable to choose playable game mode.</B> Reverting to pre-game lobby.")
 			return 0
 
 		if(secret_force_mode != "secret")
@@ -175,7 +175,7 @@ var/datum/subsystem/ticker/ticker
 		runnable_modes = config.get_custom_modes(master_mode)
 		if (runnable_modes.len==0)
 			current_state = GAME_STATE_PREGAME
-			world << "<B>Unable to choose playable game mode.</B> Reverting to pre-game lobby."
+			to_chat(world, "<B>Unable to choose playable game mode.</B> Reverting to pre-game lobby.")
 			return 0
 		SSjob.ResetOccupations()
 		if(!src.mode)
@@ -188,7 +188,7 @@ var/datum/subsystem/ticker/ticker
 		src.mode = config.pick_mode(master_mode)
 
 	if (!src.mode.can_start())
-		world << "<B>Unable to start [mode.name].</B> Not enough players, [mode.required_players] players needed. Reverting to pre-game lobby."
+		to_chat(world, "<B>Unable to start [mode.name].</B> Not enough players, [mode.required_players] players needed. Reverting to pre-game lobby.")
 		qdel(mode)
 		mode = null
 		current_state = GAME_STATE_PREGAME
@@ -202,7 +202,7 @@ var/datum/subsystem/ticker/ticker
 		qdel(mode)
 		mode = null
 		current_state = GAME_STATE_PREGAME
-		world << "<B>Error setting up [master_mode].</B> Reverting to pre-game lobby."
+		to_chat(world, "<B>Error setting up [master_mode].</B> Reverting to pre-game lobby.")
 		SSjob.ResetOccupations()
 		return 0
 
@@ -225,7 +225,7 @@ var/datum/subsystem/ticker/ticker
 
 	slack_roundstart()
 
-	world << "<FONT color='blue'><B>Enjoy the game!</B></FONT>"
+	to_chat(world, "<FONT color='blue'><B>Enjoy the game!</B></FONT>")
 	world << sound('sound/AI/welcome.ogg')
 
 	//Holiday Round-start stuff	~Carn
@@ -370,7 +370,7 @@ var/datum/subsystem/ticker/ticker
 	if(captainless)
 		for(var/mob/M in player_list)
 			if(!isnewplayer(M))
-				M << "Captainship not forced on anyone."
+				to_chat(M, "Captainship not forced on anyone.")
 
 
 /datum/subsystem/ticker/proc/declare_completion()
@@ -380,7 +380,7 @@ var/datum/subsystem/ticker/ticker
 	var/num_survivors = 0
 	var/num_escapees = 0
 
-	world << "<BR><BR><BR><FONT size=3><B>The round has ended.</B></FONT>"
+	to_chat(world, "<BR><BR><BR><FONT size=3><B>The round has ended.</B></FONT>")
 
 	//Player status report
 	for(var/mob/Player in mob_list)
@@ -390,28 +390,28 @@ var/datum/subsystem/ticker/ticker
 				if(station_evacuated) //If the shuttle has already left the station
 					var/turf/playerTurf = get_turf(Player)
 					if(playerTurf.z != ZLEVEL_CENTCOMM)
-						Player << "<font color='blue'><b>You managed to survive, but were marooned on [station_name()]...</b></FONT>"
+						to_chat(Player, "<font color='blue'><b>You managed to survive, but were marooned on [station_name()]...</b></FONT>")
 					else
 						num_escapees++
-						Player << "<font color='green'><b>You managed to survive the events on [station_name()] as [Player.real_name].</b></FONT>"
+						to_chat(Player, "<font color='green'><b>You managed to survive the events on [station_name()] as [Player.real_name].</b></FONT>")
 				else
-					Player << "<font color='green'><b>You managed to survive the events on [station_name()] as [Player.real_name].</b></FONT>"
+					to_chat(Player, "<font color='green'><b>You managed to survive the events on [station_name()] as [Player.real_name].</b></FONT>")
 			else
-				Player << "<font color='red'><b>You did not survive the events on [station_name()]...</b></FONT>"
+				to_chat(Player, "<font color='red'><b>You did not survive the events on [station_name()]...</b></FONT>")
 
 	//Round statistics report
 	var/datum/station_state/end_state = new /datum/station_state()
 	end_state.count()
 	var/station_integrity = min(round( 100 * start_state.score(end_state), 0.1), 100)
 
-	world << "<BR>[TAB]Shift Duration: <B>[round(world.time / 36000)]:[add_zero("[world.time / 600 % 60]", 2)]:[add_zero("[world.time / 10 % 60]", 2)]</B>"
-	world << "<BR>[TAB]Station Integrity: <B>[mode.station_was_nuked ? "<font color='red'>Destroyed</font>" : "[station_integrity]%"]</B>"
+	to_chat(world, "<BR>[TAB]Shift Duration: <B>[round(world.time / 36000)]:[add_zero("[world.time / 600 % 60]", 2)]:[add_zero("[world.time / 10 % 60]", 2)]</B>")
+	to_chat(world, "<BR>[TAB]Station Integrity: <B>[mode.station_was_nuked ? "<font color='red'>Destroyed</font>" : "[station_integrity]%"]</B>")
 	if(joined_player_list.len)
-		world << "<BR>[TAB]Total Population: <B>[joined_player_list.len]</B>"
+		to_chat(world, "<BR>[TAB]Total Population: <B>[joined_player_list.len]</B>")
 		if(station_evacuated)
-			world << "<BR>[TAB]Evacuation Rate: <B>[num_escapees] ([round((num_escapees/joined_player_list.len)*100, 0.1)]%)</B>"
-		world << "<BR>[TAB]Survival Rate: <B>[num_survivors] ([round((num_survivors/joined_player_list.len)*100, 0.1)]%)</B>"
-	world << "<BR>"
+			to_chat(world, "<BR>[TAB]Evacuation Rate: <B>[num_escapees] ([round((num_escapees/joined_player_list.len)*100, 0.1)]%)</B>")
+		to_chat(world, "<BR>[TAB]Survival Rate: <B>[num_survivors] ([round((num_survivors/joined_player_list.len)*100, 0.1)]%)</B>")
+	to_chat(world, "<BR>")
 
 	//Silicon laws report
 	var/ai_completions = "<h1>Round End Information</h1><HR>"
@@ -463,7 +463,7 @@ var/datum/subsystem/ticker/ticker
 			ai_completions += "<BR>[robo.write_laws()]"
 
 		if(dronecount)
-			ai_completions << "<B>There [dronecount>1 ? "were" : "was"] [dronecount] industrious maintenance [dronecount>1 ? "drones" : "drone"] this round.</B>"
+			to_chat(ai_completions, "<B>There [dronecount>1 ? "were" : "was"] [dronecount] industrious maintenance [dronecount>1 ? "drones" : "drone"] this round.</B>")
 
 		ai_completions += "<HR>"
 

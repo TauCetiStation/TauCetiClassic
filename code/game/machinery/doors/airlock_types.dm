@@ -361,7 +361,7 @@
 
 /obj/machinery/door/airlock/multi_tile/attackby(C, mob/user)
 	if(istype(C, /obj/item/weapon/airlock_painter))
-		user << "<span class='red'>This airlock cannot be painted.</span>"
+		to_chat(user, "<span class='red'>This airlock cannot be painted.</span>")
 	else
 		..()
 

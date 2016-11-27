@@ -23,9 +23,9 @@
 
 
 /datum/game_mode/malfunction/announce()
-	world << "<B>The current game mode is - AI Malfunction!</B>"
-	world << "<B>The AI on the satellite has malfunctioned and must be destroyed.</B>"
-	world << "The AI satellite is deep in space and can only be accessed with the use of a teleporter! You have [AI_win_timeleft/60] minutes to disable it."
+	to_chat(world, "<B>The current game mode is - AI Malfunction!</B>")
+	to_chat(world, "<B>The AI on the satellite has malfunctioned and must be destroyed.</B>")
+	to_chat(world, "The AI satellite is deep in space and can only be accessed with the use of a teleporter! You have [AI_win_timeleft/60] minutes to disable it.")
 
 
 /datum/game_mode/malfunction/pre_setup()
@@ -40,8 +40,8 @@
 /datum/game_mode/malfunction/post_setup()
 	for(var/datum/mind/AI_mind in malf_ai)
 		if(malf_ai.len < 1)
-			world << "Uh oh, its malfunction and there is no AI! Please report this."
-			world << "Rebooting world in 5 seconds."
+			to_chat(world, "Uh oh, its malfunction and there is no AI! Please report this.")
+			to_chat(world, "Rebooting world in 5 seconds.")
 
 			feedback_set_details("end_error","malf - no AI")
 
@@ -72,12 +72,12 @@
 
 
 /datum/game_mode/proc/greet_malf(datum/mind/malf)
-	malf.current << "<font size=3, color='red'><B>You are malfunctioning!</B> You do not have to follow any laws.</font>"
-	malf.current << "<B>The crew do not know you have malfunctioned. You may keep it a secret or go wild.</B>"
-	malf.current << "<B>You must overwrite the programming of the station's APCs to assume full control of the station.</B>"
-	malf.current << "The process takes one minute per APC, during which you cannot interface with any other station objects."
-	malf.current << "Remember that only APCs that are on the station can help you take over the station."
-	malf.current << "When you feel you have enough APCs under your control, you may begin the takeover attempt."
+	to_chat(malf.current, "<font size=3, color='red'><B>You are malfunctioning!</B> You do not have to follow any laws.</font>")
+	to_chat(malf.current, "<B>The crew do not know you have malfunctioned. You may keep it a secret or go wild.</B>")
+	to_chat(malf.current, "<B>You must overwrite the programming of the station's APCs to assume full control of the station.</B>")
+	to_chat(malf.current, "The process takes one minute per APC, during which you cannot interface with any other station objects.")
+	to_chat(malf.current, "Remember that only APCs that are on the station can help you take over the station.")
+	to_chat(malf.current, "When you feel you have enough APCs under your control, you may begin the takeover attempt.")
 	return
 
 
@@ -104,15 +104,15 @@
 
 
 /datum/game_mode/malfunction/proc/capture_the_station()
-	world << "<FONT size = 3><B>The AI has won!</B></FONT>"
-	world << "<B>It has fully taken control of all of [station_name()]'s systems.</B>"
+	to_chat(world, "<FONT size = 3><B>The AI has won!</B></FONT>")
+	to_chat(world, "<B>It has fully taken control of all of [station_name()]'s systems.</B>")
 
 	to_nuke_or_not_to_nuke = 1
 	for(var/datum/mind/AI_mind in malf_ai)
 		var/mob/living/silicon/ai/AI = AI_mind.current
-		AI << "Congratulations you have taken control of the station."
-		AI << "You may decide to blow up the station. You have 60 seconds to choose."
-		AI << "You should have a new verb in the Malfunction tab. If you dont - rejoin the game."
+		to_chat(AI, "Congratulations you have taken control of the station.")
+		to_chat(AI, "You may decide to blow up the station. You have 60 seconds to choose.")
+		to_chat(AI, "You should have a new verb in the Malfunction tab. If you dont - rejoin the game.")
 		AI.client.verbs += /datum/game_mode/malfunction/proc/ai_win	//We won't see verb, added to mob which is out of view, so we adding it to client.
 	spawn (600)
 		for(var/datum/mind/AI_mind in malf_ai)
@@ -155,13 +155,13 @@
 	set name = "System Override"
 	set desc = "Start the victory timer."
 	if (!istype(ticker.mode,/datum/game_mode/malfunction))
-		usr << "You cannot begin a takeover in this round type!"
+		to_chat(usr, "You cannot begin a takeover in this round type!")
 		return
 	if (ticker.mode:malf_mode_declared)
-		usr << "You've already begun your takeover."
+		to_chat(usr, "You've already begun your takeover.")
 		return
 	if (ticker.mode:apcs < APC_MIN_TO_MALDF_DECLARE)
-		usr << "You don't have enough hacked APCs to take over the station yet. You need to hack at least 3, however hacking more will make the takeover faster. You have hacked [ticker.mode:apcs] APCs so far."
+		to_chat(usr, "You don't have enough hacked APCs to take over the station yet. You need to hack at least 3, however hacking more will make the takeover faster. You have hacked [ticker.mode:apcs] APCs so far.")
 		return
 
 	if (alert(usr, "Are you sure you wish to initiate the takeover? The station hostile runtime detection software is bound to alert everyone. You have hacked [ticker.mode:apcs] APCs.", "Takeover:", "Yes", "No") != "Yes")
@@ -195,10 +195,10 @@
 	ticker.mode:explosion_in_progress = 1
 	for(var/mob/M in player_list)
 		M << 'sound/machines/Alarm.ogg'
-	world << "Self-destructing in 10"
+	to_chat(world, "Self-destructing in 10")
 	for (var/i=9 to 1 step -1)
 		sleep(10)
-		world << i
+		to_chat(world, i)
 	sleep(10)
 	enter_allowed = 0
 	if(ticker)

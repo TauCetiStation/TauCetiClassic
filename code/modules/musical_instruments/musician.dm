@@ -390,12 +390,12 @@
 					tempo = 600 / text2num(copytext(lines[1],6))
 					lines.Cut(1,2)
 				if(lines.len > 50)
-					usr << "Too many lines!"
+					to_chat(usr, "Too many lines!")
 					lines.Cut(51)
 				var/linenum = 1
 				for(var/l in lines)
 					if(lentext(l) > 50)
-						usr << "Line [linenum] too long!"
+						to_chat(usr, "Line [linenum] too long!")
 						lines.Remove(l)
 					else
 						linenum++
@@ -412,7 +412,7 @@
 	if (istype(O, /obj/item/weapon/wrench))
 		if (anchored)
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-			user << "\blue You begin to loosen \the [src]'s casters..."
+			to_chat(user, "\blue You begin to loosen \the [src]'s casters...")
 			if (do_after(user, 40, target = src))
 				user.visible_message( \
 					"[user] loosens \the [src]'s casters.", \
@@ -421,7 +421,7 @@
 				src.anchored = 0
 		else
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-			user << "\blue You begin to tighten \the [src] to the floor..."
+			to_chat(user, "\blue You begin to tighten \the [src] to the floor...")
 			if (do_after(user, 20, target = src))
 				user.visible_message( \
 					"[user] tightens \the [src]'s casters.", \

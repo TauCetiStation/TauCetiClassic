@@ -34,9 +34,9 @@
 		left_part = temp
 	else if(src.stat == DEAD)						// Show some flavor text if the pAI is dead
 		if(config.rus_language)
-			left_part = "<b><font color=red>ÈRrÖR Ða†Ä ÇÖRrÚþ†Ìoñ</font></b>"	//This file has to be saved as ANSI or this will not display correctly
+			left_part = "<b><font color=red>ï¿½Rrï¿½R ï¿½aï¿½ï¿½ ï¿½ï¿½Rrï¿½ï¿½ï¿½ï¿½oï¿½</font></b>"	//This file has to be saved as ANSI or this will not display correctly
 		else
-			left_part = "<b><font color=red>3Rr0R Äa†A C0RrU?†ion</font></b>"
+			left_part = "<b><font color=red>3Rr0R ï¿½aï¿½A C0RrU?ï¿½ion</font></b>"
 		right_part = "<pre>Program index hash not found</pre>"
 
 	else
@@ -188,7 +188,7 @@
 
 				sradio.send_signal("ACTIVATE")
 				for(var/mob/O in hearers(1, src.loc))
-					O.show_message(text("\icon[] *beep* *beep*", src), 3, "*beep* *beep*", 2)
+					O.show_message("[bicon(src)] *beep* *beep*", 3, "*beep* *beep*", 2)
 
 			if(href_list["freq"])
 
@@ -215,7 +215,7 @@
 					M = M.loc
 					count++
 					if(count >= 6)
-						src << "You are not being carried by anyone!"
+						to_chat(src, "You are not being carried by anyone!")
 						return 0
 				spawn CheckDNA(M, src)
 
@@ -303,7 +303,7 @@
 	dat += "<b>Basic</b> <br>"
 	for(var/s in src.software)
 		if(s == "digital messenger")
-			dat += "<a href='byond://?src=\ref[src];software=pdamessage;sub=0'>Digital Messenger</a> [(pda.toff) ? "<font color=#FF5555>•</font>" : "<font color=#55FF55>•</font>"] <br>"
+			dat += "<a href='byond://?src=\ref[src];software=pdamessage;sub=0'>Digital Messenger</a> [(pda.toff) ? "<font color=#FF5555>ï¿½</font>" : "<font color=#55FF55>ï¿½</font>"] <br>"
 		if(s == "crew manifest")
 			dat += "<a href='byond://?src=\ref[src];software=manifest;sub=0'>Crew Manifest</a> <br>"
 		if(s == "medical records")
@@ -324,11 +324,11 @@
 		if(s == "heartbeat sensor")
 			dat += "<a href='byond://?src=\ref[src];software=[s]'>Heartbeat Sensor</a> <br>"
 		if(s == "security HUD")	//This file has to be saved as ANSI or this will not display correctly
-			dat += "<a href='byond://?src=\ref[src];software=securityhud;sub=0'>Facial Recognition Suite</a> [(src.secHUD) ? "<font color=#55FF55>•</font>" : "<font color=#FF5555>•</font>"] <br>"
+			dat += "<a href='byond://?src=\ref[src];software=securityhud;sub=0'>Facial Recognition Suite</a> [(src.secHUD) ? "<font color=#55FF55>ï¿½</font>" : "<font color=#FF5555>ï¿½</font>"] <br>"
 		if(s == "medical HUD")	//This file has to be saved as ANSI or this will not display correctly
-			dat += "<a href='byond://?src=\ref[src];software=medicalhud;sub=0'>Medical Analysis Suite</a> [(src.medHUD) ? "<font color=#55FF55>•</font>" : "<font color=#FF5555>•</font>"] <br>"
+			dat += "<a href='byond://?src=\ref[src];software=medicalhud;sub=0'>Medical Analysis Suite</a> [(src.medHUD) ? "<font color=#55FF55>ï¿½</font>" : "<font color=#FF5555>ï¿½</font>"] <br>"
 		if(s == "universal translator")	//This file has to be saved as ANSI or this will not display correctly
-			dat += "<a href='byond://?src=\ref[src];software=translator;sub=0'>Universal Translator</a> [(src.translator_on) ? "<font color=#55FF55>•</font>" : "<font color=#FF5555>•</font>"] <br>"
+			dat += "<a href='byond://?src=\ref[src];software=translator;sub=0'>Universal Translator</a> [(src.translator_on) ? "<font color=#55FF55>ï¿½</font>" : "<font color=#FF5555>ï¿½</font>"] <br>"
 		if(s == "projection array")
 			dat += "<a href='byond://?src=\ref[src];software=projectionarray;sub=0'>Projection Array</a> <br>"
 		if(s == "camera jack")
@@ -390,13 +390,13 @@
 		for (var/mob/v in viewers(T))
 			v.show_message("\blue [M] presses \his thumb against [P].", 3, "\blue [P] makes a sharp clicking sound as it extracts DNA material from [M].", 2)
 		var/datum/dna/dna = M.dna
-		P << "<font color = red><h3>[M]'s UE string : [dna.unique_enzymes]</h3></font>"
+		to_chat(P, "<font color = red><h3>[M]'s UE string : [dna.unique_enzymes]</h3></font>")
 		if(dna.unique_enzymes == P.master_dna)
-			P << "<b>DNA is a match to stored Master DNA.</b>"
+			to_chat(P, "<b>DNA is a match to stored Master DNA.</b>")
 		else
-			P << "<b>DNA does not match stored Master DNA.</b>"
+			to_chat(P, "<b>DNA does not match stored Master DNA.</b>")
 	else
-		P << "[M] does not seem like \he is going to provide a DNA sample willingly."
+		to_chat(P, "[M] does not seem like \he is going to provide a DNA sample willingly.")
 
 // -=-=-=-= Software =-=-=-=- //
 
@@ -607,7 +607,7 @@
 	dat += "<font color=#55FF55>Connected</font> <br>"
 
 	if(!istype(machine, /obj/machinery/camera))
-		src << "DERP"
+		to_chat(src, "DERP")
 	return dat
 
 // Door Jack
@@ -643,9 +643,9 @@
 	var/turf/T = get_turf_or_move(src.loc)
 	for(var/mob/living/silicon/ai/AI in player_list)
 		if(T.loc)
-			AI << "<font color = red><b>Network Alert: Brute-force encryption crack in progress in [T.loc].</b></font>"
+			to_chat(AI, "<font color = red><b>Network Alert: Brute-force encryption crack in progress in [T.loc].</b></font>")
 		else
-			AI << "<font color = red><b>Network Alert: Brute-force encryption crack in progress. Unable to pinpoint location.</b></font>"
+			to_chat(AI, "<font color = red><b>Network Alert: Brute-force encryption crack in progress. Unable to pinpoint location.</b></font>")
 	while(src.hackprogress < 100)
 		if(src.cable && src.cable.machine && istype(src.cable.machine, /obj/machinery/door) && src.cable.machine == src.hackdoor && get_dist(src, src.hackdoor) <= 1)
 			hackprogress += rand(1, 10)
@@ -702,7 +702,7 @@
 		remove_language("Siik'tajr")
 		remove_language("Skrellian")
 
-		src << "\blue Translator Module toggled OFF."
+		to_chat(src, "\blue Translator Module toggled OFF.")
 
 	else
 		translator_on = 1
@@ -712,4 +712,4 @@
 		add_language("Siik'tajr", 0)
 		add_language("Skrellian")
 
-		src << "\blue Translator Module toggled ON."
+		to_chat(src, "\blue Translator Module toggled ON.")

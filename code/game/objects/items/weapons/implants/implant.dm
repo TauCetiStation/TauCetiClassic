@@ -33,7 +33,7 @@
 	return 0
 
 /obj/item/weapon/implant/proc/meltdown()	//breaks it down, making implant unrecongizible
-	imp_in << "\red You feel something melting inside [part ? "your [part.display_name]" : "you"]!"
+	to_chat(imp_in, "\red You feel something melting inside [part ? "your [part.display_name]" : "you"]!")
 	if (part)
 		part.take_damage(burn = 15, used_weapon = "Electronics meltdown")
 	else
@@ -206,7 +206,7 @@ Implant Specifics:<BR>"}
 	var/list/replacechars = list("'" = "","\"" = "",">" = "","<" = "","(" = "",")" = "")
 	phrase = sanitize_simple(phrase, replacechars)
 	usr.mind.store_memory("Explosive implant in [source] can be activated by saying something containing the phrase ''[src.phrase]'', <B>say [src.phrase]</B> to attempt to activate.", 0, 0)
-	usr << "The implanted explosive implant in [source] can be activated by saying something containing the phrase ''[src.phrase]'', <B>say [src.phrase]</B> to attempt to activate."
+	to_chat(usr, "The implanted explosive implant in [source] can be activated by saying something containing the phrase ''[src.phrase]'', <B>say [src.phrase]</B> to attempt to activate.")
 	return 1
 
 /obj/item/weapon/implant/explosive/emp_act(severity)
@@ -290,9 +290,9 @@ the implant may become unstable and either pre-maturely inject the subject or si
 	if((!cause) || (!src.imp_in))	return 0
 	var/mob/living/carbon/R = src.imp_in
 	src.reagents.trans_to(R, cause)
-	R << "You hear a faint *beep*."
+	to_chat(R, "You hear a faint *beep*.")
 	if(!src.reagents.total_volume)
-		R << "You hear a faint click from your chest."
+		to_chat(R, "You hear a faint click from your chest.")
 		spawn(0)
 			qdel(src)
 	return
@@ -347,9 +347,9 @@ the implant may become unstable and either pre-maturely inject the subject or si
 		return 0
 
 	if(H.mind in ticker.mode.cult)
-		H << "<span class='userdanger'>You feel the corporate tendrils of Nanotrasen try to invade your mind!</span>"
+		to_chat(H, "<span class='userdanger'>You feel the corporate tendrils of Nanotrasen try to invade your mind!</span>")
 	else
-		H << "<span class='userdanger'>You have been implanted. You feel a surge of loyalty towards Nanotrasen.</span>"
+		to_chat(H, "<span class='userdanger'>You have been implanted. You feel a surge of loyalty towards Nanotrasen.</span>")
 
 	if(prob(50))
 		H.visible_message("[H] suddenly goes very red and starts writhing. There is a strange smell in the air...", \
@@ -378,10 +378,14 @@ the implant may become unstable and either pre-maturely inject the subject or si
 
 	if(prob(1) && prob(25))//1/400
 		switch(rand(1, 4))
-			if(1)	M << "\italic You [pick("are sure", "think")] that NanoTrasen - is the best corporation in the whole Universe!"
-			if(2)	M << "\italic You [pick("are sure", "think")] that Captain is the greatest man who ever lived!"
-			if(3)	M << "\italic You want to give your life away in the name of NanoTrasen!"
-			if(4)	M << "\italic You are confident that all what Heads of station do - is for a greater good!"
+			if(1)
+				to_chat(M, "\italic You [pick("are sure", "think")] that NanoTrasen - is the best corporation in the whole Universe!")
+			if(2)
+				to_chat(M, "\italic You [pick("are sure", "think")] that Captain is the greatest man who ever lived!")
+			if(3)
+				to_chat(M, "\italic You want to give your life away in the name of NanoTrasen!")
+			if(4)
+				to_chat(M, "\italic You are confident that all what Heads of station do - is for a greater good!")
 
 /obj/item/weapon/implant/adrenalin
 	name = "adrenalin"
@@ -406,7 +410,7 @@ the implant may become unstable and either pre-maturely inject the subject or si
 	if (src.uses < 1)	return 0
 	if (emote == "pale")
 		src.uses--
-		source << "\blue You feel a sudden surge of energy!"
+		to_chat(source, "\blue You feel a sudden surge of energy!")
 		source.SetStunned(0)
 		source.SetWeakened(0)
 		source.SetParalysis(0)
@@ -416,7 +420,7 @@ the implant may become unstable and either pre-maturely inject the subject or si
 
 /obj/item/weapon/implant/adrenalin/implanted(mob/source)
 	source.mind.store_memory("A implant can be activated by using the pale emote, <B>say *pale</B> to attempt to activate.", 0, 0)
-	source << "The implanted freedom implant can be activated by using the pale emote, <B>say *pale</B> to attempt to activate."
+	to_chat(source, "The implanted freedom implant can be activated by using the pale emote, <B>say *pale</B> to attempt to activate.")
 	return 1
 
 
@@ -517,7 +521,7 @@ the implant may become unstable and either pre-maturely inject the subject or si
 		return 0
 
 	if (emote == src.activation_emote)
-		source << "The air glows as \the [src.scanned.name] uncompresses."
+		to_chat(source, "The air glows as \the [src.scanned.name] uncompresses.")
 		activate()
 
 /obj/item/weapon/implant/compressed/activate()
@@ -532,7 +536,7 @@ the implant may become unstable and either pre-maturely inject the subject or si
 	src.activation_emote = input("Choose activation emote:") in list("blink", "blink_r", "eyebrow", "chuckle", "twitch_s", "frown", "nod", "blush", "giggle", "grin", "groan", "shrug", "smile", "pale", "sniff", "whimper", "wink")
 	if (source.mind)
 		source.mind.store_memory("Compressed matter implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate.", 0, 0)
-	source << "The implanted compressed matter implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate."
+	to_chat(source, "The implanted compressed matter implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate.")
 	return 1
 
 /obj/item/weapon/implant/compressed/islegal()

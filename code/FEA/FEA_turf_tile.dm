@@ -55,7 +55,7 @@ turf
 
 	proc/high_pressure_movements()
 		if(reporting_pressure_difference)
-			world << "pressure_difference = [pressure_difference]; pressure_direction = [pressure_direction]"
+			to_chat(world, "pressure_difference = [pressure_difference]; pressure_direction = [pressure_direction]")
 		for(var/atom/movable/in_tile in src)
 			in_tile.experience_pressure_difference(pressure_difference, pressure_direction)
 

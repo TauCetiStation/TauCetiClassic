@@ -44,7 +44,7 @@ datum/admins/proc/notes_gethtml(ckey)
 	if(!notesfile)	return
 	notesfile.cd = "/[ckey]"
 	notesfile.eof = 1		//move to the end of the buffer
-	notesfile << "[time2text(world.realtime,"DD-MMM-YYYY")] | [note][(usr && usr.ckey)?" ~[usr.ckey]":""]"
+	to_chat(notesfile, "[time2text(world.realtime,"DD-MMM-YYYY")] | [note][(usr && usr.ckey)?" ~[usr.ckey]":""]")
 	return
 
 //handles removing entries from the buffer, or removing the entire directory if no start_index is given
@@ -73,7 +73,7 @@ datum/admins/proc/notes_gethtml(ckey)
 		notesfile.eof = -2		//Move to the start of the buffer and then erase.
 
 		for( var/note in noteslist )
-			notesfile << note
+			to_chat(notesfile, note)
 	else
 		notesfile.cd = "/"
 		if(alert(usr,"Are you sure you want to remove all their notes?","Confirmation","No","Yes - Remove all notes") == "Yes - Remove all notes")
@@ -136,7 +136,7 @@ datum/admins/proc/notes_gethtml(ckey)
 	note_list >> note_keys
 	if(!note_keys) note_keys = list()
 	if(!note_keys.Find(key)) note_keys += key
-	note_list << note_keys
+	to_chat(note_list, note_keys)
 	del(note_list)	// savefile, so NOT qdel
 
 

@@ -6,6 +6,8 @@
 	var/name = "an unknown language" // Fluff name of language if any.
 	var/desc = "A language."         // Short description for 'Check Languages'.
 	var/speech_verb = "says"         // 'says', 'hisses', 'farts'.
+	var/ask_verb = "asks"            // Used when sentence ends in a ?
+	var/exclaim_verb = "exclaims" // Used when sentence ends in a !
 	var/signlang_verb = list()       // list of emotes that might be displayed if this language has NONVERBAL or SIGNLANG flags
 	var/colour = "body"         // CSS style to use for strings in this language.
 	var/key = "x"                    // Character used to speak in language eg. :o for Unathi.
@@ -47,14 +49,25 @@
 	var/ending = copytext(scrambled_text, length(scrambled_text))
 	if(ending == ".")
 		scrambled_text = copytext(scrambled_text,1,length(scrambled_text)-1)
-		scrambled_text += copytext(input, length(input))
+	var/input_ending = copytext(input, input_size)
+	if(input_ending in list("!","?","."))
+		scrambled_text += input_ending
 	return scrambled_text
 
+/datum/language/proc/get_spoken_verb(msg_end)
+	switch(msg_end)
+		if("!")
+			return exclaim_verb
+		if("?")
+			return ask_verb
+	return speech_verb
 
 /datum/language/unathi
 	name = "Sinta'unathi"
 	desc = "The common language of Moghes, composed of sibilant hisses and rattles. Spoken natively by Unathi."
 	speech_verb = "hisses"
+	ask_verb = "hisses"
+	exclaim_verb = "roars"
 	colour = "soghun"
 	key = "o"
 	flags = WHITELISTED
@@ -64,6 +77,8 @@
 	name = "Siik'maas"
 	desc = "The traditionally employed tongue of Ahdomai, composed of expressive yowls and chirps. Native to the Tajaran."
 	speech_verb = "mrowls"
+	ask_verb = "mrowls"
+	exclaim_verb = "yowls"
 	colour = "tajaran"
 	key = "j"
 	flags = WHITELISTED
@@ -76,6 +91,8 @@
 	name = "Siik'tajr"
 	desc = "An expressive language that combines yowls and chirps with posture, tail and ears. Spoken by many Tajaran."
 	speech_verb = "mrowls"
+	ask_verb = "mrowls"
+	exclaim_verb = "yowls"
 	colour = "tajaran_signlang"
 	key = "y"		//only "dfpqxyz" left.
 	//need to find a way to resolve possesive macros
@@ -86,6 +103,8 @@
 	name = "Skrellian"
 	desc = "A melodic and complex language spoken by the Skrell of Qerrbalak. Some of the notes are inaudible to humans."
 	speech_verb = "warbles"
+	ask_verb = "warbles"
+	exclaim_verb = "warbles"
 	colour = "skrell"
 	key = "k"
 	flags = WHITELISTED
@@ -95,6 +114,8 @@
 	name = "Vox-pidgin"
 	desc = "The common tongue of the various Vox ships making up the Shoal. It sounds like chaotic shrieking to everyone else."
 	speech_verb = "shrieks"
+	ask_verb = "creels"
+	exclaim_verb = "SHRIEKS"
 	colour = "vox"
 	key = "v"
 	flags = RESTRICTED
@@ -105,6 +126,8 @@
 	name = "Rootspeak"
 	desc = "A creaking, subvocal language spoken instinctively by the Dionaea. Due to the unique makeup of the average Diona, a phrase of Rootspeak can be a combination of anywhere from one to twelve individual voices and notes."
 	speech_verb = "creaks and rustles"
+	ask_verb = "creaks"
+	exclaim_verb = "rustles"
 	colour = "soghun"
 	key = "q"
 	flags = RESTRICTED

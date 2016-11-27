@@ -115,7 +115,7 @@ var/global/loopModeNames=list(
 
 /obj/machinery/media/jukebox/attack_hand(mob/user)
 	if(stat & NOPOWER)
-		usr << "\red You don't see anything to mess with."
+		to_chat(usr, "\red You don't see anything to mess with.")
 		return
 	if(stat & BROKEN && playlist!=null)
 		user.visible_message("\red <b>[user.name] smacks the side of \the [src.name].</b>","\red You hammer the side of \the [src.name].")
@@ -183,7 +183,7 @@ var/global/loopModeNames=list(
 		return
 
 	if(emagged)
-		usr << "\red You touch the bluescreened menu. Nothing happens. You feel dumber."
+		to_chat(usr, "\red You touch the bluescreened menu. Nothing happens. You feel dumber.")
 		return FALSE
 
 	if (href_list["power"])
@@ -193,7 +193,7 @@ var/global/loopModeNames=list(
 
 	if (href_list["playlist"])
 		if(!check_reload())
-			usr << "\red You must wait 60 seconds between playlist reloads."
+			to_chat(usr, "\red You must wait 60 seconds between playlist reloads.")
 			return FALSE
 		playlist_id = href_list["playlist"]
 		last_reload = world.time
@@ -221,7 +221,7 @@ var/global/loopModeNames=list(
 		if(response)
 			var/json = file2text(response["CONTENT"])
 			if("/>" in json)
-				visible_message("<span class='warning'>\icon[src] \The [src] buzzes, unable to update its playlist.</span>","<em>You hear a buzz.</em>")
+				visible_message("<span class='warning'>[bicon(src)] \The [src] buzzes, unable to update its playlist.</span>","<em>You hear a buzz.</em>")
 				stat &= BROKEN
 				update_icon()
 				return
@@ -232,11 +232,11 @@ var/global/loopModeNames=list(
 			for(var/list/record in songdata)
 				playlist += new /datum/song_info(record)
 			if(playlist.len==0)
-				visible_message("<span class='warning'>\icon[src] \The [src] buzzes, unable to update its playlist.</span>","<em>You hear a buzz.</em>")
+				visible_message("<span class='warning'>[bicon(src)] \The [src] buzzes, unable to update its playlist.</span>","<em>You hear a buzz.</em>")
 				stat &= BROKEN
 				update_icon()
 				return
-			visible_message("<span class='notice'>\icon[src] \The [src] beeps, and the menu on its front fills with [playlist.len] items.</span>","<em>You hear a beep.</em>")
+			visible_message("<span class='notice'>[bicon(src)] \The [src] beeps, and the menu on its front fills with [playlist.len] items.</span>","<em>You hear a beep.</em>")
 			if(autoplay)
 				playing=1
 				autoplay=0
@@ -267,8 +267,8 @@ var/global/loopModeNames=list(
 		var/datum/song_info/song = playlist[current_song]
 		media_url = song.url
 		media_start_time = world.time
-		visible_message("<span class='notice'>\icon[src] \The [src] begins to play [song.display()].</span>","<em>You hear music.</em>")
-		//visible_message("<span class='notice'>\icon[src] \The [src] warbles: [song.length/10]s @ [song.url]</notice>")
+		visible_message("<span class='notice'>[bicon(src)] \The [src] begins to play [song.display()].</span>","<em>You hear music.</em>")
+		//visible_message("<span class='notice'>[bicon(src)] \The [src] warbles: [song.length/10]s @ [song.url]</notice>")
 	else
 		media_url=""
 		media_start_time = 0

@@ -71,12 +71,12 @@
 				if(can_use())
 					cameranet.addCamera(src)
 			for(var/mob/O in mob_list)
-				if (istype(O.machine, /obj/machinery/computer/security))
+				if(istype(O.machine, /obj/machinery/computer/security))
 					var/obj/machinery/computer/security/S = O.machine
 					if (S.current == src)
 						O.unset_machine()
 						O.reset_view(null)
-						O << "The screen bursts into static."
+						to_chat(O, "The screen bursts into static.")
 			..()
 
 
@@ -136,24 +136,24 @@
 		if(!isXRay())
 			upgradeXRay()
 			qdel(W)
-			user << "[msg]"
+			to_chat(user, "[msg]")
 		else
-			user << "[msg2]"
+			to_chat(user, "[msg2]")
 
 	else if(istype(W, /obj/item/stack/sheet/mineral/phoron) && panel_open)
 		if(!isEmpProof())
 			upgradeEmpProof()
-			user << "[msg]"
+			to_chat(user, "[msg]")
 			qdel(W)
 		else
-			user << "[msg2]"
+			to_chat(user, "[msg2]")
 	else if(istype(W, /obj/item/device/assembly/prox_sensor) && panel_open)
 		if(!isMotion())
 			upgradeMotion()
-			user << "[msg]"
+			to_chat(user, "[msg]")
 			qdel(W)
 		else
-			user << "[msg2]"
+			to_chat(user, "[msg2]")
 
 	// OTHER
 	else if ((istype(W, /obj/item/weapon/paper) && !(W:crumpled==1) || istype(W, /obj/item/device/pda)) && isliving(user))
@@ -171,27 +171,30 @@
 			P = W
 			itemname = P.name
 			info = P.notehtml
-		U << "You hold \a [itemname] up to the camera ..."
+		to_chat(U, "You hold \a [itemname] up to the camera ...")
 		for(var/mob/living/silicon/ai/O in living_mob_list)
-			if(!O.client) continue
-			if(U.name == "Unknown") O << "<b>[U]</b> holds \a [itemname] up to one of your cameras ..."
-			else O << "<b><a href='byond://?src=\ref[O];track2=\ref[O];track=\ref[U]'>[U]</a></b> holds \a [itemname] up to one of your cameras ..."
+			if(!O.client)
+				continue
+			if(U.name == "Unknown")
+				to_chat(O, "<b>[U]</b> holds \a [itemname] up to one of your cameras ...")
+			else
+				to_chat(O, "<b><a href='byond://?src=\ref[O];track2=\ref[O];track=\ref[U]'>[U]</a></b> holds \a [itemname] up to one of your cameras ...")
 			O << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", itemname, info), text("window=[]", itemname))
 		for(var/mob/O in player_list)
-			if (istype(O.machine, /obj/machinery/computer/security))
+			if(istype(O.machine, /obj/machinery/computer/security))
 				var/obj/machinery/computer/security/S = O.machine
-				if (S.current == src)
-					O << "[U] holds \a [itemname] up to one of the cameras ..."
+				if(S.current == src)
+					to_chat(O, "[U] holds \a [itemname] up to one of the cameras ...")
 					O << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", itemname, info), text("window=[]", itemname))
 	else if (istype(W, /obj/item/weapon/camera_bug))
-		if (!src.can_use())
-			user << "\blue Camera non-functional"
+		if(!src.can_use())
+			to_chat(user, "\blue Camera non-functional")
 			return
-		if (src.bugged)
-			user << "\blue Camera bug removed."
+		if(src.bugged)
+			to_chat(user, "\blue Camera bug removed.")
 			src.bugged = 0
 		else
-			user << "\blue Camera bugged."
+			to_chat(user, "\blue Camera bugged.")
 			src.bugged = 1
 	else if(istype(W, /obj/item/weapon/melee/energy))//Putting it here last since it's a special case. I wonder if there is a better way to do these than type casting.
 		if(W:force > 3)
@@ -215,9 +218,9 @@
 	return
 
 /obj/machinery/camera/proc/deactivate(user, choice = 1)
-	if(choice==1)
-		status = !( src.status )
-		if (!(src.status))
+	if(choice == 1)
+		status = !src.status
+		if(!src.status)
 			visible_message("\red [user] has deactivated [src]!")
 			playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
 			icon_state = "[initial(icon_state)]1"
@@ -231,12 +234,12 @@
 	//Apparently, this will disconnect anyone even if the camera was re-activated.
 	//I guess that doesn't matter since they can't use it anyway?
 	for(var/mob/O in player_list)
-		if (istype(O.machine, /obj/machinery/computer/security))
+		if(istype(O.machine, /obj/machinery/computer/security))
 			var/obj/machinery/computer/security/S = O.machine
-			if (S.current == src)
+			if(S.current == src)
 				O.unset_machine()
 				O.reset_view(null)
-				O << "The screen bursts into static."
+				to_chat(O, "The screen bursts into static.")
 
 /obj/machinery/camera/proc/triggerCameraAlarm()
 	alarm_on = 1
@@ -309,7 +312,7 @@
 		return 0
 
 	// Do after stuff here
-	user << "<span class='notice'>You start to weld the [src]..</span>"
+	to_chat(user, "<span class='notice'>You start to weld the [src]..</span>")
 	playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
 	WT.eyecheck(user)
 	busy = 1
