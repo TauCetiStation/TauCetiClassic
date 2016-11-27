@@ -43,7 +43,7 @@ var/list/ai_verbs_default = list(
 	var/viewalerts = 0
 	var/lawcheck[1]
 	var/hcarp = 0
-	var/active_module
+	var/active_module = null
 	var/emag_recharge = 0
 	var/ioncheck[1]
 	var/lawchannel = "Common" // Default channel on which to state laws
@@ -76,7 +76,7 @@ var/list/ai_verbs_default = list(
 
 /mob/living/silicon/ai/proc/add_ai_verbs()
 	src.verbs |= ai_verbs_default
-	
+
 /mob/living/silicon/ai/proc/hcattack_ai(var/atom/A)
 	if(isliving(A))
 		//var/mob/living/silicon/ai/I = src

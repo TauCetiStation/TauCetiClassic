@@ -98,7 +98,9 @@
 	A.AICtrlClick(src)
 /mob/living/silicon/ai/AltClickOn(atom/A)
 	A.AIAltClick(src)
-	actModule_ai(A)
+	if(ismachinery(A) && active_module)
+		module_handler(A)
+
 
 /mob/living/silicon/ai/proc/actModule_ai(atom/A)
 	//var/mob/living/silicon/ai/U = usr

@@ -63,15 +63,15 @@ rcd light flash thingy on matter drain
 	set category = "Malfunction"
 	set name = "Disable RCDs"
 	var/mob/living/silicon/ai/A = usr
-	for(var/datum/AI_Module/large/disable_rcd/rcdmod in A.current_modules)
-		if(rcdmod.uses > 0)
-			rcdmod.uses --
-			for(var/obj/item/weapon/rcd/rcd in world)
-				rcd.disabled = 1
-			for(var/obj/item/mecha_parts/mecha_equipment/tool/rcd/rcd in world)
-				rcd.disabled = 1
-			usr << "RCD-disabling pulse emitted."
-		else usr << "Out of uses."
+	var/datum/AI_Module/large/disable_rcd/rcdmod = A.current_modules["rcdmod"]
+	if(rcdmod.uses > 0)
+		rcdmod.uses --
+		for(var/obj/item/weapon/rcd/rcd in world)
+			rcd.disabled = 1
+		for(var/obj/item/mecha_parts/mecha_equipment/tool/rcd/rcd in world)
+			rcd.disabled = 1
+		usr << "RCD-disabling pulse emitted."
+	else usr << "Out of uses."
 
 /datum/AI_Module/small/overload_machine
 	module_name = "Machine overload"
@@ -87,24 +87,32 @@ rcd light flash thingy on matter drain
 	set name = "Overload Machine"
 	set category = "Malfunction"
 	var/mob/living/silicon/ai/A = usr
-	for(var/datum/AI_Module/small/overload_machine/overload in A.current_modules)
-		if(overload.uses > 0)
+	var/datum/AI_Module/small/overload_machine/overload = A.current_modules["overload_machine"]
+	if(overload.uses > 0)
+		if(A.active_module != "overload")
 			A.active_module = "overload"
 			usr << "Power hack module active. Alt+click to choose a machine to overload."
 		else
-			usr << "Module activation failed. Out of uses."
+			A.active_module = null
+			usr << "Power hack module deactivated."
+	else
+		usr << "Module activation failed. Out of uses."
 
 
 /client/proc/nanject()
 	set name = "Add nanobot injector"
 	set category = "Malfunction"
 	var/mob/living/silicon/ai/A = usr
-	for(var/datum/AI_Module/small/nanject/nanjector in A.current_modules)
-		if(nanjector.uses > 0)
+	var/datum/AI_Module/small/nanject/nanjector = A.current_modules["nanject"]
+	if(nanjector.uses > 0)
+		if(A.active_module != "overload")
 			A.active_module = "nanject"
 			usr << "Upgrade module active. Alt+click to choose machine to install nanobot injector."
 		else
-			usr << "Module activation failed. Out of uses."
+			A.active_module = null
+			usr << "Upgrade module deactivated."
+	else
+		usr << "Module activation failed. Out of uses."
 
 /datum/AI_Module/small/blackout
 	module_name = "Blackout"
@@ -115,14 +123,14 @@ rcd light flash thingy on matter drain
 	set category = "Malfunction"
 	set name = "Blackout"
 	var/mob/living/silicon/ai/A = usr
-	for(var/datum/AI_Module/small/blackout/blackout in A.current_modules)
-		if(blackout.uses > 0)
-			blackout.uses --
-			for(var/obj/machinery/power/apc/apc in machines)
-				if(prob(30*apc.overload))
-					apc.overload_lighting()
-				else apc.overload++
-		else usr << "Out of uses."
+	var/datum/AI_Module/small/blackout/blackout = A.current_modules["blackout"]
+	if(blackout.uses > 0)
+		blackout.uses --
+		for(var/obj/machinery/power/apc/apc in machines)
+			if(prob(30*apc.overload))
+				apc.overload_lighting()
+			else apc.overload++
+	else usr << "Out of uses."
 
 /datum/AI_Module/small/interhack
 	module_name = "Hack intercept"
@@ -155,17 +163,17 @@ rcd light flash thingy on matter drain
 	var/mob/living/silicon/ai/A = usr
 	var/obj/machinery/camera/C = input(usr, "Reactivate Camera","Choose Object") as obj in view(1,A.eyeobj)
 	if (istype (C, /obj/machinery/camera))
-		for(var/datum/AI_Module/small/reactivate_camera/camera in A.current_modules)
-			if(camera.uses > 0)
-				if(!C.status)
-					C.status = !C.status
-					camera.uses --
-					for(var/mob/V in viewers(src, null))
-						V.show_message(text("\blue You hear a quiet click."))
-				else
-					usr << "This camera is either active, or not repairable."
+		var/datum/AI_Module/small/reactivate_camera/camera = A.current_modules["reactivate_camera"]
+		if(camera.uses > 0)
+			if(!C.status)
+				C.status = !C.status
+				camera.uses --
+				for(var/mob/V in viewers(src, null))
+					V.show_message(text("\blue You hear a quiet click."))
 			else
-				usr << "Out of uses."
+				usr << "This camera is either active, or not repairable."
+		else
+			usr << "Out of uses."
 	else
 		usr << "That's not a camera."
 
@@ -180,7 +188,7 @@ rcd light flash thingy on matter drain
 	var/mob/living/silicon/ai/A = usr
 	var/obj/machinery/camera/C = input(usr, "Upgrade Camera","Choose Object") as obj in view(1,A.eyeobj)
 	if(istype(C))
-		var/datum/AI_Module/small/upgrade_camera/UC = locate(/datum/AI_Module/small/upgrade_camera) in A.current_modules
+		var/datum/AI_Module/small/upgrade_camera/UC = A.current_modules["upgrade_camera"]
 		if(UC)
 			if(UC.uses > 0)
 				if(C.assembly)
@@ -215,19 +223,16 @@ rcd light flash thingy on matter drain
 /datum/AI_Module/module_picker
 	var/temp = null
 	var/processing_time = 100
-	var/list/possible_modules = list()
-
-/datum/AI_Module/module_picker/New()
-	src.possible_modules += new /datum/AI_Module/large/fireproof_core
-	src.possible_modules += new /datum/AI_Module/large/upgrade_turrets
-	src.possible_modules += new /datum/AI_Module/large/disable_rcd
-	src.possible_modules += new /datum/AI_Module/small/overload_machine
-	src.possible_modules += new /datum/AI_Module/small/nanject
-	src.possible_modules += new /datum/AI_Module/small/interhack
-	src.possible_modules += new /datum/AI_Module/large/holohack
-	src.possible_modules += new /datum/AI_Module/small/blackout
-	src.possible_modules += new /datum/AI_Module/small/reactivate_camera
-	src.possible_modules += new /datum/AI_Module/small/upgrade_camera
+	var/list/possible_modules = list(/datum/AI_Module/large/fireproof_core,
+                                 /datum/AI_Module/large/upgrade_turrets,
+                                 /datum/AI_Module/large/disable_rcd,
+                                 /datum/AI_Module/small/overload_machine,
+								 /datum/AI_Module/small/nanject,
+                                 /datum/AI_Module/small/interhack,
+								 /datum/AI_Module/large/holohack,
+                                 /datum/AI_Module/small/blackout,
+                                 /datum/AI_Module/small/reactivate_camera,
+                                 /datum/AI_Module/small/upgrade_camera)
 
 /datum/AI_Module/module_picker/proc/use(user)
 	var/dat
@@ -260,7 +265,7 @@ rcd light flash thingy on matter drain
 				already = 1
 		if (!already)
 			usr.verbs += /client/proc/fireproof_core
-			usr:current_modules += new /datum/AI_Module/large/fireproof_core
+			A.current_modules["fireproof_core"] = new /datum/AI_Module/large/fireproof_core
 			src.temp = "An upgrade to improve core resistance, making it immune to fire and heat. This effect is permanent."
 			src.processing_time -= 50
 		else
@@ -273,7 +278,7 @@ rcd light flash thingy on matter drain
 				already = 1
 		if (!already)
 			usr.verbs += /client/proc/upgrade_turrets
-			usr:current_modules += new /datum/AI_Module/large/upgrade_turrets
+			A.current_modules["upgrade_turrets"] = new /datum/AI_Module/large/upgrade_turrets
 			src.temp = "Improves the firing speed and health of all AI turrets. This effect is permanent."
 			src.processing_time -= 50
 		else
@@ -286,7 +291,7 @@ rcd light flash thingy on matter drain
 				mod:uses += 1
 				already = 1
 		if (!already)
-			usr:current_modules += new /datum/AI_Module/large/disable_rcd
+			A.current_modules["disable_rcd"] = new /datum/AI_Module/large/disable_rcd
 			usr.verbs += /client/proc/disable_rcd
 			src.temp = 	"Send a specialised pulse to break all RCD devices on the station."
 		else
@@ -301,7 +306,7 @@ rcd light flash thingy on matter drain
 				already = 1
 		if (!already)
 			usr.verbs += /client/proc/overload_machine
-			usr:current_modules += new /datum/AI_Module/small/overload_machine
+			A.current_modules["overload_machine"] = new /datum/AI_Module/small/overload_machine
 			src.temp = "Overloads an electrical machine, causing a small explosion. 2 uses."
 		else
 			src.temp = "Two additional uses added to Overload module."
@@ -315,10 +320,10 @@ rcd light flash thingy on matter drain
 				already = 1
 		if (!already)
 			usr.verbs += /client/proc/nanject
-			usr:current_modules += new /datum/AI_Module/small/nanject
+			A.current_modules["nanject"] = new /datum/AI_Module/small/nanject
 			src.temp = "Upgrades an electrical machine with nanobot injector. 1 use."
 		else
-			src.temp = "Additional use added to Overload module."
+			src.temp = "Additional use added to Nanobot injector module."
 		src.processing_time -= 15
 
 	else if (href_list["blackout"])
@@ -330,7 +335,7 @@ rcd light flash thingy on matter drain
 		if (!already)
 			usr.verbs += /client/proc/blackout
 			src.temp = "Attempts to overload the lighting circuits on the station, destroying some bulbs. 3 uses."
-			usr:current_modules += new /datum/AI_Module/small/blackout
+			A.current_modules["blackout"] = new /datum/AI_Module/small/blackout
 		else
 			src.temp = "Three additional uses added to Blackout module."
 		src.processing_time -= 15
@@ -343,7 +348,7 @@ rcd light flash thingy on matter drain
 		if (!already)
 			usr.verbs += /client/proc/interhack
 			src.temp = "Hacks the status upgrade from Cent. Com, removing any information about malfunctioning electrical systems."
-			usr:current_modules += new /datum/AI_Module/small/interhack
+			A.current_modules["interhack"] = new /datum/AI_Module/small/interhack
 			src.processing_time -= 15
 		else
 			src.temp = "This module is only needed once."
@@ -356,7 +361,7 @@ rcd light flash thingy on matter drain
 		if (!already)
 			usr.verbs += /client/proc/holohack
 			src.temp = "Hacks holopads to project much more useful hologram."
-			usr:current_modules += new /datum/AI_Module/large/holohack
+			A.current_modules["holohack"] = new /datum/AI_Module/large/holohack
 			src.processing_time -= 50
 		else
 			src.temp = "This module is only needed once."
@@ -370,7 +375,7 @@ rcd light flash thingy on matter drain
 		if (!already)
 			usr.verbs += /client/proc/reactivate_camera
 			src.temp = "Reactivates a currently disabled camera. 10 uses."
-			usr:current_modules += new /datum/AI_Module/small/reactivate_camera
+			A.current_modules["reactivate_camera"] = new /datum/AI_Module/small/reactivate_camera
 		else
 			src.temp = "Ten additional uses added to ReCam module."
 		src.processing_time -= 15
@@ -384,7 +389,7 @@ rcd light flash thingy on matter drain
 		if (!already)
 			usr.verbs += /client/proc/upgrade_camera
 			src.temp = "Upgrades a camera to have X-Ray vision, Motion and be EMP-Proof. 10 uses."
-			usr:current_modules += new /datum/AI_Module/small/upgrade_camera
+			A.current_modules["upgrade_camera"] = new /datum/AI_Module/small/upgrade_camera
 		else
 			src.temp = "Ten additional uses added to ReCam module."
 		src.processing_time -= 15
@@ -394,3 +399,55 @@ rcd light flash thingy on matter drain
 			src.temp = null
 	src.use(usr)
 	return
+
+/mob/living/silicon/ai/proc/module_handler(atom/A)
+	if(!active_module)
+		return
+
+	var/obj/machinery/M = A
+
+	switch(active_module)
+		if("nanject")
+			nanject_action(M)
+		if("overload")
+			overload_action(M)
+		if("emag")
+			emag_action(M)
+
+/mob/living/silicon/ai/proc/nanject_action(obj/machinery/M)
+	var/datum/AI_Module/small/nanject/nanjector = current_modules["nanject"]
+
+	if(!M.nanjector)
+		nanjector.uses--
+		M.nanjector = TRUE
+		src << "Nanobot injector installed."
+		active_module = null
+		for(var/mob/V in hearers(M, null))
+			V.show_message("<span class='notice'>You hear a quiet click.</span>", 2)
+	else
+		src << "This machine already upgraded."
+
+/mob/living/silicon/ai/proc/overload_action(obj/machinery/M)
+	var/datum/AI_Module/small/overload_machine/overload = current_modules["overload"]
+
+	overload.uses--
+	for(var/mob/V in hearers(M, null))
+		V.show_message("<span class='notice'>You hear a loud electrical buzzing sound!</span>", 2)
+	src << "Machine overloaded."
+	active_module = null
+	sleep(50)
+	if(M)
+		explosion(get_turf(M), 0,1,2,3)
+		qdel(M)
+
+/mob/living/silicon/ai/proc/emag_action(obj/machinery/M)
+	if(emag_recharge == 0)
+		if(!M.emagged)
+			emag_recharge = 1200
+			src << "You sequenced electromagnetic pulse to cripple [M.name] circuits."
+			M.emagged = TRUE
+		else
+			src << "[M.name] circuits already affected."
+	else
+		src << "Electromagnetic sequencer still recharging."
+

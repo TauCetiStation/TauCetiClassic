@@ -58,6 +58,8 @@
 
 #define isorgan(A) (istype(A, /datum/organ/external))
 
+#define ismachinery(A) (istype(A, /obj/machinery))
+
 
 // ASSEMBLY HELPERS
 
