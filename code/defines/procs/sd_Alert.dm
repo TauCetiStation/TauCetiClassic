@@ -106,10 +106,15 @@ Version 1 changes (from version 0):
 	response = params["clk"]
 
 /sd_alert/proc/Display(message,title,list/buttons,default,unfocus,size,table,style,select,flags)
-	if(unfocus) spawn() target << browse(null,null)
-	if(istext(buttons)) buttons = list(buttons)
-	if(!default) default = buttons[1]
-	if(!(flags & SD_ALERT_NOVALIDATE)) validation = buttons.Copy()
+	if(unfocus)
+		spawn()
+			target << browse(null,null)
+	if(istext(buttons))
+		buttons = list(buttons)
+	if(!default)
+		default = buttons[1]
+	if(!(flags & SD_ALERT_NOVALIDATE))
+		validation = buttons.Copy()
 
 	var/html = {"<head><title>[title]</title>[style]<script>\
 	function c(x) {document.location.href='BYOND://?src=\ref[src];'+x;}\

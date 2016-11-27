@@ -74,13 +74,13 @@
 /obj/machinery/door/firedoor/examine(mob/user)
 	..()
 	if(pdiff >= FIREDOOR_MAX_PRESSURE_DIFF)
-		user << "<span class='warning'>WARNING: Current pressure differential is [pdiff]kPa! Opening door may result in injury!</span>"
+		to_chat(user, "<span class='warning'>WARNING: Current pressure differential is [pdiff]kPa! Opening door may result in injury!</span>")
 	if(islist(users_to_open) && users_to_open.len)
 		var/users_to_open_string = users_to_open[1]
 		if(users_to_open.len >= 2)
 			for(var/i = 2 to users_to_open.len)
 				users_to_open_string += ", [users_to_open[i]]"
-		user << "These people have opened \the [src] during an alert: [users_to_open_string]."
+		to_chat(user, "These people have opened \the [src] during an alert: [users_to_open_string].")
 
 
 /obj/machinery/door/firedoor/Bumped(atom/AM)
@@ -108,12 +108,12 @@
 /obj/machinery/door/firedoor/attack_paw(mob/user)
 	if(istype(user, /mob/living/carbon/alien/humanoid))
 		if(blocked)
-			user << "\red The door is sealed, it cannot be pried open."
+			to_chat(user, "\red The door is sealed, it cannot be pried open.")
 			return
 		else if(!density)
 			return
 		else
-			user << "\red You force your claws between the doors and begin to pry them open..."
+			to_chat(user, "\red You force your claws between the doors and begin to pry them open...")
 			playsound(src.loc, 'sound/effects/metal_creaking.ogg', 50, 0)
 			if (do_after(user,40,target = src))
 				if(!src) return
@@ -140,7 +140,7 @@
 		else if(!density)
 			return
 		else
-			user << "\red You force your fingers between the doors and begin to pry them open..."
+			to_chat(user, "\red You force your fingers between the doors and begin to pry them open...")
 			playsound(src.loc, 'sound/effects/metal_creaking.ogg', 30, 1, -4)
 			if (do_after(user,40,target = src))
 				if(!src) return
@@ -153,12 +153,12 @@
 		return//Already doing something.
 
 	if(blocked)
-		user << "<span class='warning'>\The [src] is welded solid!</span>"
+		to_chat(user, "<span class='warning'>\The [src] is welded solid!</span>")
 		return
 
 	if(!allowed(user))
 		if(pdiff >= FIREDOOR_MAX_PRESSURE_DIFF)
-			user << "<span class='warning'>Access denied.</span>"
+			to_chat(user, "<span class='warning'>Access denied.</span>")
 			return
 
 	var/alarmed = 0
@@ -172,7 +172,7 @@
 	if(answer == "No")
 		return
 	if(user.stat || user.stunned || user.weakened || user.paralysis || (!user.canmove && !isAI(user)) || (get_dist(src, user) > 1  && !isAI(user)))
-		user << "Sorry, you must remain able bodied and close to \the [src] in order to use it."
+		to_chat(user, "Sorry, you must remain able bodied and close to \the [src] in order to use it.")
 		return
 
 	var/needs_to_close = 0
@@ -219,7 +219,7 @@
 
 	if(blocked && istype(C, /obj/item/weapon/crowbar))
 		if(!hatch_open)
-			user << "<span class='danger'>You must open the maintenance hatch first!</span>"
+			to_chat(user, "<span class='danger'>You must open the maintenance hatch first!</span>")
 		else
 			user.visible_message("<span class='danger'>[user] is removing the electronics from \the [src].</span>",
 									"You start to remove the electronics from [src].")
@@ -240,7 +240,7 @@
 		return
 
 	if(blocked)
-		user << "\red \The [src] is welded solid!"
+		to_chat(user, "\red \The [src] is welded solid!")
 		return
 
 	if( istype(C, /obj/item/weapon/crowbar) || ( istype(C,/obj/item/weapon/twohanded/fireaxe) && C:wielded == 1 ) )

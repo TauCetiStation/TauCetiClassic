@@ -179,12 +179,12 @@ var/world_topic_spam_protect_time = world.timeofday
 		C.irc_admin = input["sender"]
 
 		C << 'sound/effects/adminhelp.ogg'
-		C << message
+		to_chat(C, message)
 
 
 		for(var/client/A in admins)
 			if(A != C)
-				A << amessage
+				to_chat(A, amessage)
 
 		return "Message Successful"
 
@@ -237,7 +237,7 @@ var/world_topic_spam_protect_time = world.timeofday
 				if(C.is_afk(INACTIVITY_KICK))
 					if(!istype(C.mob, /mob/dead))
 						log_access("AFK: [key_name(C)]")
-						C << "\red You have been inactive for more than 10 minutes and have been disconnected."
+						to_chat(C, "\red You have been inactive for more than 10 minutes and have been disconnected.")
 						qdel(C)
 #undef INACTIVITY_KICK
 
@@ -257,7 +257,7 @@ var/world_topic_spam_protect_time = world.timeofday
 /world/proc/save_mode(the_mode)
 	var/F = file("data/mode.txt")
 	fdel(F)
-	F << the_mode
+	to_chat(F, the_mode)
 
 /world/proc/load_last_mode()
 	var/list/Lines = file2list("data/last_mode.txt")
@@ -269,7 +269,7 @@ var/world_topic_spam_protect_time = world.timeofday
 /world/proc/save_last_mode(the_last_mode)
 	var/F = file("data/last_mode.txt")
 	fdel(F)
-	F << the_last_mode
+	to_chat(F, the_last_mode)
 
 
 /world/proc/load_motd()

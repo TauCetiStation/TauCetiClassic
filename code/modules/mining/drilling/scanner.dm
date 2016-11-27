@@ -13,7 +13,7 @@
 
 /obj/item/weapon/mining_scanner/attack_self(mob/user)
 
-	user << "You begin sweeping \the [src] about, scanning for metal deposits."
+	to_chat(user, "You begin sweeping \the [src] about, scanning for metal deposits.")
 
 	if(!do_after(user,speed,target = user)) return
 
@@ -43,7 +43,7 @@
 
 			if(ore_type) metals[ore_type] += T.resources[metal]
 
-	user << "\icon[src] \blue The scanner beeps and displays a readout."
+	to_chat(user, "[bicon(src)] \blue The scanner beeps and displays a readout.")
 
 	for(var/ore_type in metals)
 
@@ -54,7 +54,7 @@
 			if(51 to 150) result = "significant amounts"
 			if(151 to INFINITY) result = "huge quantities"
 
-		user << "- [result] of [ore_type]."
+		to_chat(user, "- [result] of [ore_type].")
 
 /obj/item/weapon/mining_scanner/improved
 	name = "Improved ore detector"
@@ -75,11 +75,11 @@
 	if(usr.stat) return
 
 	if(get_dist(usr, src) > 1)
-		usr << "You have moved too far away."
+		to_chat(usr, "You have moved too far away.")
 		return
 	var/switchMode = input("Select a sensor mode:", "Scaner Sensor Mode", range) in modes
 	range =  modes[switchMode]
-	user << "You set [switchMode] range mode"
+	to_chat(user, "You set [switchMode] range mode")
 
 
 /obj/item/weapon/mining_scanner/improved/adv

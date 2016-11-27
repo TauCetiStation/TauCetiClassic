@@ -53,25 +53,25 @@
 			if(prob(1))
 				affected_mob.emote("cough")
 			if(prob(1))
-				affected_mob << "\red Your throat feels sore."
+				to_chat(affected_mob, "\red Your throat feels sore.")
 			if(prob(1))
-				affected_mob << "\red Mucous runs down the back of your throat."
+				to_chat(affected_mob, "\red Mucous runs down the back of your throat.")
 		if(4)
 			if(prob(1))
 				affected_mob.emote("sneeze")
 			if(prob(1))
 				affected_mob.emote("cough")
 			if(prob(2))
-				affected_mob << "\red Your muscles ache."
+				to_chat(affected_mob, "\red Your muscles ache.")
 				if(prob(20))
 					affected_mob.take_organ_damage(1)
 			if(prob(2))
-				affected_mob << "\red Your stomach hurts."
+				to_chat(affected_mob, "\red Your stomach hurts.")
 				if(prob(20))
 					affected_mob.adjustToxLoss(1)
 					affected_mob.updatehealth()
 		if(5)
-			affected_mob << "\red You feel something tearing its way out of your stomach..."
+			to_chat(affected_mob, "\red You feel something tearing its way out of your stomach...")
 			affected_mob.adjustToxLoss(10)
 			affected_mob.updatehealth()
 			if(prob(50))

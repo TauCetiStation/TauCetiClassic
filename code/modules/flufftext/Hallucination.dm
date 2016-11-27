@@ -112,22 +112,32 @@ Gunshots/explosions/opening doors/less rare audio (done)
 				//Strange audio
 				//src << "Strange Audio"
 				switch(rand(1,12))
-					if(1) src << 'sound/machines/airlock.ogg'
+					if(1)
+						src << 'sound/machines/airlock.ogg'
 					if(2)
-						if(prob(50))src << 'sound/effects/Explosion1.ogg'
-						else src << 'sound/effects/Explosion2.ogg'
-					if(3) src << 'sound/effects/explosionfar.ogg'
-					if(4) src << 'sound/effects/Glassbr1.ogg'
-					if(5) src << 'sound/effects/Glassbr2.ogg'
-					if(6) src << 'sound/effects/Glassbr3.ogg'
-					if(7) src << 'sound/machines/twobeep.ogg'
-					if(8) src << 'sound/machines/windowdoor.ogg'
+						if(prob(50))
+							src << 'sound/effects/Explosion1.ogg'
+						else
+							src << 'sound/effects/Explosion2.ogg'
+					if(3)
+						src << 'sound/effects/explosionfar.ogg'
+					if(4)
+						src << 'sound/effects/Glassbr1.ogg'
+					if(5)
+						src << 'sound/effects/Glassbr2.ogg'
+					if(6)
+						src << 'sound/effects/Glassbr3.ogg'
+					if(7)
+						src << 'sound/machines/twobeep.ogg'
+					if(8)
+						src << 'sound/machines/windowdoor.ogg'
 					if(9)
 						//To make it more realistic, I added two gunshots (enough to kill)
 						src << 'sound/weapons/Gunshot.ogg'
 						spawn(rand(10,30))
 							src << 'sound/weapons/Gunshot.ogg'
-					if(10) src << 'sound/weapons/smash.ogg'
+					if(10)
+						src << 'sound/weapons/smash.ogg'
 					if(11)
 						//Same as above, but with tasers.
 						src << 'sound/weapons/Taser.ogg'
@@ -205,7 +215,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	user.do_attack_animation(src)
 	step_away(src,my_target,2)
 	for(var/mob/M in oviewers(world.view,my_target))
-		M << "\red <B>[my_target] flails around wildly.</B>"
+		to_chat(M, "\red <B>[my_target] flails around wildly.</B>")
 	my_target.show_message("\red <B>[src] has been attacked by [my_target] </B>", 1) //Lazy.
 
 	src.health -= P.force
@@ -218,7 +228,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 		step_away(src,my_target,2)
 		if(prob(30))
 			for(var/mob/O in oviewers(world.view , my_target))
-				O << "\red <B>[my_target] stumbles around.</B>"
+				to_chat(O, "\red <B>[my_target] stumbles around.</B>")
 
 /obj/effect/fake_attacker/New()
 	..()
@@ -289,7 +299,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	var/obj/effect/overlay/O = new/obj/effect/overlay(target.loc)
 	O.name = "blood"
 	var/image/I = image('icons/effects/blood.dmi',O,"floor[rand(1,7)]",O.dir,1)
-	target << I
+	to_chat(target, I)
 	spawn(300)
 		qdel(O)
 	return

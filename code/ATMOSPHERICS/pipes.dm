@@ -73,16 +73,16 @@
 		return ..()
 	var/turf/T = src.loc
 	if (level==1 && isturf(T) && T.intact)
-		user << "\red You must remove the plating first."
+		to_chat(user, "\red You must remove the plating first.")
 		return 1
 	var/datum/gas_mixture/int_air = return_air()
 	var/datum/gas_mixture/env_air = loc.return_air()
 	if ((int_air.return_pressure()-env_air.return_pressure()) > 2*ONE_ATMOSPHERE)
-		user << "<span class='warning'>You cannot unwrench [src], it is too exerted due to internal pressure.</span>"
+		to_chat(user, "<span class='warning'>You cannot unwrench [src], it is too exerted due to internal pressure.</span>")
 		add_fingerprint(user)
 		return 1
 	playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-	user << "<span class='notice'> You begin to unfasten \the [src]...</span>"
+	to_chat(user, "<span class='notice'> You begin to unfasten \the [src]...</span>")
 	if (do_after(user, 40, target = src))
 		user.visible_message( \
 			"[user] unfastens \the [src].", \
@@ -950,12 +950,12 @@ obj/machinery/atmospherics/pipe/cap/update_icon()
 /obj/machinery/atmospherics/pipe/tank/attackby(obj/item/weapon/W, mob/user)
 	if (istype(W, /obj/item/device/analyzer) && get_dist(user, src) <= 1)
 		for (var/mob/O in viewers(user, null))
-			O << "\red [user] has used the analyzer on \icon[icon]"
+			to_chat(O, "\red [user] has used the analyzer on [bicon(icon)]")
 
 		var/pressure = parent.air.return_pressure()
 		var/total_moles = parent.air.total_moles()
 
-		user << "\blue Results of analysis of \icon[icon]"
+		to_chat(user, "\blue Results of analysis of [bicon(icon)]")
 		if (total_moles>0)
 			var/o2_concentration = parent.air.oxygen/total_moles
 			var/n2_concentration = parent.air.nitrogen/total_moles
@@ -964,16 +964,16 @@ obj/machinery/atmospherics/pipe/cap/update_icon()
 
 			var/unknown_concentration =  1-(o2_concentration+n2_concentration+co2_concentration+phoron_concentration)
 
-			user << "\blue Pressure: [round(pressure,0.1)] kPa"
-			user << "\blue Nitrogen: [round(n2_concentration*100)]%"
-			user << "\blue Oxygen: [round(o2_concentration*100)]%"
-			user << "\blue CO2: [round(co2_concentration*100)]%"
-			user << "\blue Phoron: [round(phoron_concentration*100)]%"
+			to_chat(user, "\blue Pressure: [round(pressure,0.1)] kPa")
+			to_chat(user, "\blue Nitrogen: [round(n2_concentration*100)]%")
+			to_chat(user, "\blue Oxygen: [round(o2_concentration*100)]%")
+			to_chat(user, "\blue CO2: [round(co2_concentration*100)]%")
+			to_chat(user, "\blue Phoron: [round(phoron_concentration*100)]%")
 			if(unknown_concentration>0.01)
-				user << "\red Unknown: [round(unknown_concentration*100)]%"
-			user << "\blue Temperature: [round(parent.air.temperature-T0C)]&deg;C"
+				to_chat(user, "\red Unknown: [round(unknown_concentration*100)]%")
+			to_chat(user, "\blue Temperature: [round(parent.air.temperature-T0C)]&deg;C")
 		else
-			user << "\blue Tank is empty!"
+			to_chat(user, "\blue Tank is empty!")
 
 
 
