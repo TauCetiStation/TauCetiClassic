@@ -118,7 +118,7 @@ client/proc/display_admin_reports()
 	usr << browse(output, "window=news;size=600x400")
 
 
-client/proc/Report(mob/M in world)
+client/proc/Report(mob/M as mob in world)
 	set category = "Admin"
 	if(!src.holder)
 		return
@@ -149,16 +149,17 @@ client/proc/mark_report_done(ID)
 	for(var/datum/admin_report/N in reports)
 		if(N.ID == ID)
 			found = N
-	if(!found) src << "<b>* An error occured, sorry.</b>"
+	if(!found)
+		to_chat(src, "<b>* An error occured, sorry.</b>")
 
 	found.done = 1
 
 	Reports["reports"]   << reports
 
 
-client/proc/edit_report(ID)
+client/proc/edit_report(ID as num)
 	if(!src.holder || src.holder.level < 0)
-		src << "<b>You tried to modify the news, but you're not an admin!"
+		to_chat(src, "<b>You tried to modify the news, but you're not an admin!")
 		return
 
 	var/savefile/Reports = new("data/reports.sav")
@@ -170,7 +171,8 @@ client/proc/edit_report(ID)
 	for(var/datum/admin_report/N in reports)
 		if(N.ID == ID)
 			found = N
-	if(!found) src << "<b>* An error occured, sorry.</b>"
+	if(!found)
+		to_chat(src, "<b>* An error occured, sorry.</b>")
 
 	var/body = input(src.mob, "Enter a body for the news", "Body") as null|message
 	if(!body) return

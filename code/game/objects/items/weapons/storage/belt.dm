@@ -69,8 +69,9 @@
 		"/obj/item/device/flashlight/pen",
 		"/obj/item/clothing/mask/surgical",
 		"/obj/item/clothing/gloves/latex",
-	        "/obj/item/weapon/reagent_containers/hypospray"
-	)
+	    "/obj/item/weapon/reagent_containers/hypospray",
+	    "/obj/item/device/sensor_device"
+	    )
 /obj/item/weapon/storage/belt/medical/surg
 	name = "Surgery belt"
 	desc = "Can hold various medical equipment."
@@ -133,7 +134,6 @@
 		"/obj/item/weapon/reagent_containers/food/snacks/donut/normal",
 		"/obj/item/weapon/reagent_containers/food/snacks/donut/jelly",
 		"/obj/item/weapon/melee/baton",
-		"/obj/item/weapon/gun/energy/taser",
 		"/obj/item/weapon/lighter/zippo",
 		"/obj/item/weapon/cigpacket",
 		"/obj/item/clothing/glasses/hud/security",
@@ -207,6 +207,7 @@
 		"/obj/item/clothing/glasses/hud/security",
 		"/obj/item/device/flashlight",
 		"/obj/item/device/pda",
+		"/obj/item/taperoll/police",
 		"/obj/item/device/radio/headset",
 		"/obj/item/weapon/melee"
 		)
@@ -320,17 +321,17 @@
 
 /obj/item/weapon/storage/belt/security/improved/proc/holster(obj/item/I, mob/user)
 	if(holstered)
-		user << "\red There is already a [holstered] holstered here!"
+		to_chat(user, "\red There is already a [holstered] holstered here!")
 		return
 
 	if (!istype(I, /obj/item/weapon/gun) && !istype(I, /obj/item/weapon/melee/baton))
-		user << "\red Only handguns and stun batons can be holstered!"
+		to_chat(user, "\red Only handguns and stun batons can be holstered!")
 		return
 
 	if(istype(I, /obj/item/weapon/gun))
 		var/obj/item/weapon/gun/W = I
 		if (!W.isHandgun())
-			user << "\red This [W] won't fit in the [src]!"
+			to_chat(user, "\red This [W] won't fit in the [src]!")
 			return
 
 	holstered = I
@@ -348,7 +349,7 @@
 		return
 
 	if(istype(user.get_active_hand(),/obj)) // && istype(user.get_inactive_hand(),/obj))
-		user << "\red You need an empty hand to draw the [holstered]!"
+		to_chat(user, "\red You need an empty hand to draw the [holstered]!")
 	else
 		if(user.a_intent == "hurt")
 			usr.visible_message("\red [user] draws the [holstered], ready to shoot!", \

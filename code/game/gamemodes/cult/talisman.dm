@@ -4,12 +4,6 @@
 	var/uses = 0
 
 
-	examine()
-		set src in view(2)
-		..()
-		return
-
-
 	attack_self(mob/living/user)
 		if(iscultist(user))
 			var/delete = 1
@@ -34,7 +28,7 @@
 				if("blind")
 					call(/obj/effect/rune/proc/blind)()
 				if("runestun")
-					user << "\red To use this talisman, attack your target directly."
+					to_chat(user, "\red To use this talisman, attack your target directly.")
 					return
 				if("supply")
 					supply()
@@ -44,9 +38,7 @@
 					qdel(src)
 			return
 		else
-			examine()
-			//user << "You see strange symbols on the paper. Are they supposed to mean something?"
-			return
+			user.examinate(src)
 
 
 	attack(mob/living/carbon/T, mob/living/user)

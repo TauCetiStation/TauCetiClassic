@@ -83,34 +83,17 @@ var/const/FALLOFF_SOUNDS = 0.5
 
 		if (S.volume <= 0)
 			return	//no volume means no sound
-		var/dx
-		var/dz
 
-		switch(client.dir)
-			if(NORTH)
-				dx = turf_source.x - T.x // Hearing from the right/left
-				dz = turf_source.y - T.y // Hearing from infront/behind
-			if(SOUTH)
-				dx = T.x - turf_source.x
-				dz = T.y - turf_source.y
-			if(EAST)
-				dx = T.y - turf_source.y
-				dz = T.x - turf_source.x
-			if(WEST)
-				dx = turf_source.y - T.y
-				dz = turf_source.x - T.x
-			else //incase something go wrong
-				dx = turf_source.x - T.x
-				dz = turf_source.y - T.y
-
+		var/dx = turf_source.x - T.x // Hearing from the right/left
 		S.x = dx
+		var/dz = turf_source.y - T.y // Hearing from infront/behind
 		S.z = dz
 		// The y value is for above your head, but there is no ceiling in 2d spessmens.
 		S.y = 1
 		S.falloff = (falloff ? falloff : FALLOFF_SOUNDS)
 	if(!is_global)
 		S.environment = 2
-	src << S
+	to_chat(src, S)
 
 /client/proc/playtitlemusic()
 	if(!ticker || !ticker.login_music)	return

@@ -114,7 +114,7 @@
 /mob/living/carbon/human/adjustCloneLoss(amount)
 	..()
 
-	if(species.flags & IS_SYNTHETIC)
+	if(species.flags[IS_SYNTHETIC])
 		return
 
 	var/heal_prob = max(0, 80 - getCloneLoss())
@@ -128,21 +128,21 @@
 			if (candidates.len)
 				var/datum/organ/external/O = pick(candidates)
 				O.mutate()
-				src << "<span class = 'notice'>Something is not right with your [O.display_name]...</span>"
+				to_chat(src, "<span class = 'notice'>Something is not right with your [O.display_name]...</span>")
 				return
 	else
 		if (prob(heal_prob))
 			for (var/datum/organ/external/O in organs)
 				if (O.status & ORGAN_MUTATED)
 					O.unmutate()
-					src << "<span class = 'notice'>Your [O.display_name] is shaped normally again.</span>"
+					to_chat(src, "<span class = 'notice'>Your [O.display_name] is shaped normally again.</span>")
 					return
 
 	if (getCloneLoss() < 1)
 		for (var/datum/organ/external/O in organs)
 			if (O.status & ORGAN_MUTATED)
 				O.unmutate()
-				src << "<span class = 'notice'>Your [O.display_name] is shaped normally again.</span>"
+				to_chat(src, "<span class = 'notice'>Your [O.display_name] is shaped normally again.</span>")
 	hud_updateflag |= 1 << HEALTH_HUD
 
 ////////////////////////////////////////////
@@ -225,7 +225,7 @@
 This function restores the subjects blood to max.
 */
 /mob/living/carbon/human/proc/restore_blood()
-	if(!species.flags & NO_BLOOD)
+	if(!species.flags[NO_BLOOD])
 		var/blood_volume = vessel.get_reagent_amount("blood")
 		vessel.add_reagent("blood",560.0-blood_volume)
 

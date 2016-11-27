@@ -13,7 +13,6 @@
 	master = src //moved outside the spawn(1) to avoid runtimes in lighting.dm when it references loc.loc.master ~Carn
 	uid = ++global_uid
 	related = list(src)
-	active_areas += src
 	all_areas += src
 
 	if(!requires_power)
@@ -374,7 +373,7 @@
 		var/mob/living/carbon/human/H = mob
 		if((istype(H.shoes, /obj/item/clothing/shoes/magboots) && (H.shoes.flags & NOSLIP)))
 			return
-		if((istype(H.wear_suit, /obj/item/clothing/suit/space/rig) && (H.wear_suit.flags & NOSLIP))) //Люди в скафандре с включенными магбутами
+		if((istype(H.wear_suit, /obj/item/clothing/suit/space/rig) && (H.wear_suit.flags & NOSLIP))) //Humans in rig with turn on magboots
 			return
 
 		if(H.m_intent == "run")
@@ -383,7 +382,7 @@
 		else
 			H.AdjustStunned(1)
 			H.AdjustWeakened(1)
-		mob << "<span class='notice'>The sudden appearance of gravity makes you fall to the floor!</span>"
+		to_chat(mob, "<span class='notice'>The sudden appearance of gravity makes you fall to the floor!</span>")
 
 /proc/has_gravity(atom/AT, turf/T)
 	if(!T)

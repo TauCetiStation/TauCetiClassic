@@ -3,13 +3,13 @@
 	set desc = "Area to jump to."
 	set category = "Admin"
 	if(!src.holder)
-		src << "Only administrators may use this command."
+		to_chat(src, "Only administrators may use this command.")
 		return
 
 	if(config.allow_admin_jump)
 		usr.forceMove(pick(get_area_turfs(A)))
 		log_admin("[key_name(usr)] jumped to [A]")
-		message_admins("[key_name_admin(usr)] jumped to [A]", 1)
+		message_admins("[key_name_admin(usr)] jumped to [A]")
 		feedback_add_details("admin_verb","JA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	else
 		alert("Admin jumping disabled")
@@ -18,12 +18,12 @@
 	set name = "Jump to Turf"
 	set category = "Admin"
 	if(!src.holder)
-		src << "Only administrators may use this command."
+		to_chat(src, "Only administrators may use this command.")
 		return
 	if(config.allow_admin_jump)
 		usr.forceMove(T)
 		log_admin("[key_name(usr)] jumped to [T.x],[T.y],[T.z] in [T.loc]")
-		message_admins("[key_name_admin(usr)] jumped to [T.x],[T.y],[T.z] in [T.loc]", 1)
+		message_admins("[key_name_admin(usr)] jumped to [T.x],[T.y],[T.z] in [T.loc]")
 		feedback_add_details("admin_verb","JT") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	else
 		alert("Admin jumping disabled")
@@ -34,7 +34,7 @@
 	set name = "Jump to Mob"
 
 	if(!src.holder)
-		src << "Only administrators may use this command."
+		to_chat(src, "Only administrators may use this command.")
 		return
 
 	if(config.allow_admin_jump)
@@ -45,19 +45,19 @@
 			if(T && isturf(T))
 				A.forceMove(T)
 				log_admin("[key_name(usr)] jumped to [key_name(M)]")
-				message_admins("[key_name_admin(usr)] jumped to [key_name_admin(M)]", 1)
+				message_admins("[key_name_admin(usr)] jumped to [key_name_admin(M)]")
 				feedback_add_details("admin_verb","JM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 			else
-				A << "This mob is not located in the game world."
+				to_chat(A, "This mob is not located in the game world.")
 	else
 		alert("Admin jumping disabled")
 
-/client/proc/jumptocoord(tx, ty, tz)
+/client/proc/jumptocoord(tx as num, ty as num, tz as num)
 	set category = "Admin"
 	set name = "Jump to Coordinate"
 
 	if (!holder)
-		src << "Only administrators may use this command."
+		to_chat(src, "Only administrators may use this command.")
 		return
 
 	if (config.allow_admin_jump)
@@ -75,7 +75,7 @@
 	set name = "Jump to Key"
 
 	if(!src.holder)
-		src << "Only administrators may use this command."
+		to_chat(src, "Only administrators may use this command.")
 		return
 
 	if(config.allow_admin_jump)
@@ -84,12 +84,12 @@
 			keys += M.client
 		var/selection = input("Please, select a player!", "Admin Jumping", null, null) as null|anything in sortKey(keys)
 		if(!selection)
-			src << "No keys found."
+			to_chat(src, "No keys found.")
 			return
 		var/mob/M = selection:mob
 		usr.forceMove(M.loc)
 		log_admin("[key_name(usr)] jumped to [key_name(M)]")
-		message_admins("[key_name_admin(usr)] jumped to [key_name_admin(M)]", 1)
+		message_admins("[key_name_admin(usr)] jumped to [key_name_admin(M)]")
 		feedback_add_details("admin_verb","JK") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	else
 		alert("Admin jumping disabled")
@@ -99,12 +99,12 @@
 	set name = "Get Mob"
 	set desc = "Mob to teleport."
 	if(!src.holder)
-		src << "Only administrators may use this command."
+		to_chat(src, "Only administrators may use this command.")
 		return
 	if(config.allow_admin_jump)
 		M.forceMove(get_turf(usr))
 		log_admin("[key_name(usr)] teleported [key_name(M)]")
-		message_admins("[key_name_admin(usr)] teleported [key_name_admin(M)]", 1)
+		message_admins("[key_name_admin(usr)] teleported [key_name_admin(M)]")
 		feedback_add_details("admin_verb","GM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	else
 		alert("Admin jumping disabled")
@@ -115,7 +115,7 @@
 	set desc = "Key to teleport."
 
 	if(!src.holder)
-		src << "Only administrators may use this command."
+		to_chat(src, "Only administrators may use this command.")
 		return
 
 	if(config.allow_admin_jump)
@@ -133,7 +133,7 @@
 		if(M)
 			M.forceMove(get_turf(usr))
 			log_admin("[key_name(usr)] teleported [key_name(M)]")
-			message_admins("[key_name_admin(usr)] teleported [key_name(M)]", 1)
+			message_admins("[key_name_admin(usr)] teleported [key_name(M)]")
 			feedback_add_details("admin_verb","GK") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	else
 		alert("Admin jumping disabled")
@@ -142,14 +142,14 @@
 	set category = "Admin"
 	set name = "Send Mob"
 	if(!src.holder)
-		src << "Only administrators may use this command."
+		to_chat(src, "Only administrators may use this command.")
 		return
 	var/area/A = input(usr, "Pick an area.", "Pick an area") in return_sorted_areas()
 	if(A)
 		if(config.allow_admin_jump)
 			M.forceMove(pick(get_area_turfs(A)))
 			log_admin("[key_name(usr)] teleported [key_name(M)] to [A]")
-			message_admins("[key_name_admin(usr)] teleported [key_name_admin(M)] to [A]", 1)
+			message_admins("[key_name_admin(usr)] teleported [key_name_admin(M)] to [A]")
 			feedback_add_details("admin_verb","SMOB") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 		else
 			alert("Admin jumping disabled")

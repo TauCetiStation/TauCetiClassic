@@ -49,9 +49,10 @@
 		last_regen = world.time
 		update_icon()
 
-/obj/item/weapon/spikethrower/examine()
+/obj/item/weapon/spikethrower/examine(mob/user)
 	..()
-	usr << "It has [spikes] [spikes == 1 ? "spike" : "spikes"] remaining."
+	if(src in view(1, user))
+		to_chat(user, "It has [spikes] [spikes == 1 ? "spike" : "spikes"] remaining.")
 
 /obj/item/weapon/spikethrower/update_icon()
 	icon_state = "spikethrower[spikes]"
@@ -93,14 +94,14 @@
 	if(istype(user,/mob/living/carbon/human))
 		var/mob/living/carbon/human/H = user
 		if(H.species && H.species.name != "Vox")
-			user << "\red The weapon does not respond to you!"
+			to_chat(user, "\red The weapon does not respond to you!")
 			return
 	else
-		user << "\red The weapon does not respond to you!"
+		to_chat(user, "\red The weapon does not respond to you!")
 		return
 
 	if(spikes <= 0)
-		user << "\red The weapon has nothing to fire!"
+		to_chat(user, "\red The weapon has nothing to fire!")
 		return
 
 	if(!spike)
@@ -140,7 +141,7 @@
 			if(H.species.name == "Vox Armalis")
 				..()
 				return
-		user << "\red \The [src] is far too large for you to pick up."
+		to_chat(user, "\red \The [src] is far too large for you to pick up.")
 		return
 /*
 /obj/item/weapon/gun/energy/noisecannon/load_into_chamber() //Does not have ammo.

@@ -104,7 +104,7 @@
 	last_warning = world.time
 	var/count = locate(/obj/machinery/containment_field) in orange(30, src)
 	if(!count)
-		message_admins("A singulo has been created without containment fields active ([x],[y],[z])",1)
+		message_admins("A singulo has been created without containment fields active ([x],[y],[z]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[src.x];Y=[src.y];Z=[src.z]'>JMP</a>)")
 	investigate_log("was created. [count?"":"<font color='red'>No containment fields were active</font>"]","singulo")
 
 /obj/singularity/proc/dissipate()
@@ -331,9 +331,9 @@
 			if (ishuman(M))
 				var/mob/living/carbon/human/H = M
 				if(istype(H.glasses,/obj/item/clothing/glasses/meson))
-					H << "<span class='notice'>You look directly into The [src.name], good thing you had your protective eyewear on!</span>"
+					to_chat(H, "<span class='notice'>You look directly into The [src.name], good thing you had your protective eyewear on!</span>")
 					return
-		M << "<span class='red'>You look directly into The [src.name] and feel weak.</span>"
+		to_chat(M, "<span class='red'>You look directly into The [src.name] and feel weak.</span>")
 		M.apply_effect(3, STUN)
 		for(var/mob/O in viewers(M, null))
 			O.show_message(text("<span class='danger'>[] stares blankly at The []!</span>", M, src), 1)

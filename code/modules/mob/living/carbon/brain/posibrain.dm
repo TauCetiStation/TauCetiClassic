@@ -19,7 +19,7 @@
 	attack_self(mob/user)
 		if(brainmob && !brainmob.key && searching == 0)
 			//Start the process of searching for a new user.
-			user << "\blue You carefully locate the manual activation switch and start the positronic brain's boot process."
+			to_chat(user, "\blue You carefully locate the manual activation switch and start the positronic brain's boot process.")
 			icon_state = "posibrain-searching"
 			src.searching = 1
 			src.request_player()
@@ -41,7 +41,7 @@
 	proc/question(client/C)
 		spawn(0)
 			if(!C)	return
-			var/response = alert(C, "Someone is requesting a personality for a positronic brain. Would you like to play as one?", "Positronic brain request", "Yes", "No", "Never for this round")
+			var/response = alert(C, "Someone is requesting a personality for a positronic brain. Would you like to play as one?", "Positronic brain request", "No", "Yes", "Never for this round")
 			if(!C || brainmob.key || 0 == searching)	return		//handle logouts that happen whilst the alert is waiting for a response, and responses issued after a brain has been located.
 			if(response == "Yes")
 				transfer_personality(C.mob)
@@ -60,7 +60,7 @@
 			brainmob.mind.assigned_role = "Positronic Brain"
 		if(H.mind)
 			H.mind.transfer_to(brainmob)
-		brainmob << "\blue You feel slightly disoriented. That's normal when you're just a metal cube."
+		to_chat(brainmob, "\blue You feel slightly disoriented. That's normal when you're just a metal cube.")
 		icon_state = "posibrain-occupied"
 		return
 
@@ -72,10 +72,10 @@
 		src.brainmob.ckey = candidate.ckey
 		src.name = "positronic brain ([src.brainmob.name])"
 
-		src.brainmob << "<b>You are a positronic brain, brought into existence on [station_name()].</b>"
-		src.brainmob << "<b>As a synthetic intelligence, you answer to all crewmembers, as well as the AI.</b>"
-		src.brainmob << "<b>Remember, the purpose of your existence is to serve the crew and the station. Above all else, do no harm.</b>"
-		src.brainmob << "<b>Use say :b to speak to other artificial intelligences.</b>"
+		to_chat(src.brainmob, "<b>You are a positronic brain, brought into existence on [station_name()].</b>")
+		to_chat(src.brainmob, "<b>As a synthetic intelligence, you answer to all crewmembers, as well as the AI.</b>")
+		to_chat(src.brainmob, "<b>Remember, the purpose of your existence is to serve the crew and the station. Above all else, do no harm.</b>")
+		to_chat(src.brainmob, "<b>Use say :b to speak to other artificial intelligences.</b>")
 		src.brainmob.mind.assigned_role = "Positronic Brain"
 
 		var/turf/T = get_turf_or_move(src.loc)
@@ -94,29 +94,23 @@
 		for (var/mob/M in viewers(T))
 			M.show_message("\blue The positronic brain buzzes quietly, and the golden lights fade away. Perhaps you could try again?")
 
-/obj/item/device/mmi/posibrain/examine()
-
-	set src in oview()
-
-	if(!usr || !src)	return
-	if( (usr.sdisabilities & BLIND || usr.blinded || usr.stat) && !istype(usr,/mob/dead/observer) )
-		usr << "<span class='notice'>Something is there but you can't see it.</span>"
-		return
-
-	var/msg = "<span class='info'>*---------*\nThis is \icon[src] \a <EM>[src]</EM>!\n[desc]\n"
+/obj/item/device/mmi/posibrain/examine(mob/user)
+	var/msg = "<span class='info'>*---------*\nThis is [bicon(src)] \a <EM>[src]</EM>!\n[desc]\n"
 	msg += "<span class='warning'>"
 
 	if(src.brainmob && src.brainmob.key)
 		switch(src.brainmob.stat)
 			if(CONSCIOUS)
-				if(!src.brainmob.client)	msg += "It appears to be in stand-by mode.\n" //afk
-			if(UNCONSCIOUS)		msg += "<span class='warning'>It doesn't seem to be responsive.</span>\n"
-			if(DEAD)			msg += "<span class='deadsay'>It appears to be completely inactive.</span>\n"
+				if(!src.brainmob.client)
+					msg += "It appears to be in stand-by mode.\n" //afk
+			if(UNCONSCIOUS)
+				msg += "<span class='warning'>It doesn't seem to be responsive.</span>\n"
+			if(DEAD)
+				msg += "<span class='deadsay'>It appears to be completely inactive.</span>\n"
 	else
 		msg += "<span class='deadsay'>It appears to be completely inactive.</span>\n"
 	msg += "<span class='info'>*---------*</span>"
-	usr << msg
-	return
+	to_chat(user, msg)
 
 /obj/item/device/mmi/posibrain/emp_act(severity)
 	if(!src.brainmob)

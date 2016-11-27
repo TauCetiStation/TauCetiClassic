@@ -1,7 +1,7 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
 /proc/invalidateCameraCache()
-	for(var/obj/machinery/computer/security/s in world)
+	for(var/obj/machinery/computer/security/s in machines)
 		s.camera_cache = null
 	for(var/datum/alarm/A in world)
 		A.cameras = null
@@ -102,7 +102,7 @@
 
 /obj/machinery/computer/security/attack_hand(mob/user)
 	if (src.z > ZLEVEL_EMPTY)
-		user << "\red <b>Unable to establish a connection</b>: \black You're too far away from the station!"
+		to_chat(user, "\red <b>Unable to establish a connection</b>: \black You're too far away from the station!")
 		return
 	if (!network)
 		world.log << "A computer lacks a network at [x],[y],[z]."
@@ -221,6 +221,7 @@
 	icon_state = initial(icon_state)
 	if(stat & BROKEN)
 		icon_state += "b"
+		playsound(src.loc, 'sound/effects/Glassbr3.ogg', 100, 1)
 	return
 
 /obj/machinery/computer/security/telescreen/entertainment
@@ -267,7 +268,7 @@
 
 /obj/machinery/computer/security/abductor_ag/attack_hand(mob/user)
 	if(network.len < 1)
-		user << "<span class='notice'>Monitor network doesn't established. Activate helmet at first.</span>"
+		to_chat(user, "<span class='notice'>Monitor network doesn't established. Activate helmet at first.</span>")
 		return
 	else
 		..()

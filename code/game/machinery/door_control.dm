@@ -35,7 +35,7 @@
 	if(wires & 2)
 		return src.attack_hand(user)
 	else
-		user << "Error, no route to host."
+		to_chat(user, "Error, no route to host.")
 
 /obj/machinery/door_control/attack_paw(mob/user)
 	return src.attack_hand(user)
@@ -70,7 +70,7 @@
 		return
 
 	if(!allowed(user) && (wires & 1))
-		user << "\red Access Denied"
+		to_chat(user, "\red Access Denied")
 		flick("doorctrl-denied",src)
 		return
 
@@ -113,7 +113,7 @@
 						D.safe = 1
 
 	else
-		for(var/obj/machinery/door/poddoor/M in world)
+		for(var/obj/machinery/door/poddoor/M in machines)
 			if (M.id == src.id)
 				if (M.density)
 					spawn( 0 )
@@ -162,7 +162,7 @@
 	active = 1
 	icon_state = "launcheract"
 
-	for(var/obj/machinery/door/poddoor/M in world)
+	for(var/obj/machinery/door/poddoor/M in machines)
 		if (M.id == src.id)
 			spawn( 0 )
 				M.open()
@@ -170,13 +170,13 @@
 
 	sleep(20)
 
-	for(var/obj/machinery/mass_driver/M in world)
+	for(var/obj/machinery/mass_driver/M in machines)
 		if(M.id == src.id)
 			M.drive()
 
 	sleep(50)
 
-	for(var/obj/machinery/door/poddoor/M in world)
+	for(var/obj/machinery/door/poddoor/M in machines)
 		if (M.id == src.id)
 			spawn( 0 )
 				M.close()

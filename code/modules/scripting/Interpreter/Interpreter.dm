@@ -108,7 +108,7 @@
 								var/message = "Potential crash-inducing NTSL script detected at telecommunications server [Compiler.Holder] ([Holder.x], [Holder.y], [Holder.z])."
 
 								alertadmins = 1
-								message_admins(message, 1)
+								message_admins(message)
 						break
 
 					if(istype(S, /node/statement/VariableAssignment))
@@ -311,4 +311,3 @@
 			else if(!istype(value) && isobject(value))			value = new/node/expression/value/reference(value)
 			//TODO: check for invalid name
 			S.variables["[name]"] = value
-

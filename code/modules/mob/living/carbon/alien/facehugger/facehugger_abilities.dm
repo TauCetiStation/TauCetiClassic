@@ -21,7 +21,7 @@ This is modified grab mechanic for facehugger
 	switch(FH.a_intent)
 		if("grab")
 			if(istype(src, /mob/living/carbon/human/machine))
-				FH << "You can't impregnate that!"
+				to_chat(FH, "You can't impregnate that!")
 				return
 			if(src.stat != DEAD)
 				if(FH == src)
@@ -37,7 +37,7 @@ This is modified grab mechanic for facehugger
 
 				visible_message(text("\red [] atempts to leap at [] face!", FH, src))
 			else
-				FH << "\red looks dead."
+				to_chat(FH, "\red looks dead.")
 
 /mob/living/carbon/monkey/attack_facehugger(mob/living/carbon/alien/facehugger/FH)
 	switch(FH.a_intent)
@@ -56,7 +56,7 @@ This is modified grab mechanic for facehugger
 
 				visible_message(text("\red [] atempts to leap at [] face!", FH, src))
 			else
-				FH << "\red looks dead."
+				to_chat(FH, "\red looks dead.")
 
 /mob/living/simple_animal/corgi/attack_facehugger(mob/living/carbon/alien/facehugger/FH)
 	switch(FH.a_intent)
@@ -75,7 +75,7 @@ This is modified grab mechanic for facehugger
 
 				visible_message(text("\red [] atempts to leap at [] face!", FH, src))
 			else
-				FH << "\red looks dead."
+				to_chat(FH, "\red looks dead.")
 
 /*----------------------------------------
 This is called when facehugger has grabbed(left click) and then
@@ -312,7 +312,7 @@ This is emryo growth procs
 		return
 	if(stage < 5)
 		if(affected_mob.stat == DEAD)
-			baby << "\red Your host died, so and you."
+			to_chat(baby, "\red Your host died, so and you.")
 			baby.death()
 			if(baby.key)
 				baby.ghostize(can_reenter_corpse = FALSE, bancheck = TRUE)
@@ -331,20 +331,20 @@ This is emryo growth procs
 			if(prob(1))
 				affected_mob.emote("cough")
 			if(prob(1))
-				affected_mob << "\red Your throat feels sore."
+				to_chat(affected_mob, "\red Your throat feels sore.")
 			if(prob(1))
-				affected_mob << "\red Mucous runs down the back of your throat."
+				to_chat(affected_mob, "\red Mucous runs down the back of your throat.")
 		if(4)
 			if(prob(1))
 				affected_mob.emote("sneeze")
 			if(prob(1))
 				affected_mob.emote("cough")
 			if(prob(2))
-				affected_mob << "\red Your muscles ache."
+				to_chat(affected_mob, "\red Your muscles ache.")
 				if(prob(20))
 					affected_mob.take_organ_damage(1)
 			if(prob(2))
-				affected_mob << "\red Your stomach hurts."
+				to_chat(affected_mob, "\red Your stomach hurts.")
 				if(prob(20))
 					affected_mob.adjustToxLoss(1)
 					affected_mob.updatehealth()
@@ -416,18 +416,17 @@ This is facehugger Attach procs
 		var/mob/living/carbon/alien/facehugger/FH = current_hugger
 		FH.show_message(message,m_type)
 
-/obj/item/clothing/mask/facehugger/examine()
+/obj/item/clothing/mask/facehugger/examine(mob/user)
 	..()
 	if(!real)//So that giant red text about probisci doesn't show up.
 		return
 	switch(stat)
 		if(DEAD,UNCONSCIOUS)
-			usr << "\red \b [src] is not moving."
+			to_chat(user, "<span class='danger'>[src] is not moving.</span>")
 		if(CONSCIOUS)
-			usr << "\red \b [src] seems to be active."
+			to_chat(user, "<span class='danger'>[src] seems to be active.</span>")
 	if (sterile)
-		usr << "\red \b It looks like the proboscis has been removed."
-	return
+		to_chat(user, "<span class='danger'>It looks like the proboscis has been removed.</span>")
 
 /obj/item/clothing/mask/facehugger/attackby()
 	Die()
@@ -616,7 +615,7 @@ When we finish, facehugger's player will be transfered inside embryo.
 		state = GRAB_PASSIVE
 
 	if(get_dist(assailant, affecting) > 1)
-		assailant << "Too far."
+		to_chat(assailant, "Too far.")
 		qdel(src)
 		return
 
@@ -624,7 +623,7 @@ When we finish, facehugger's player will be transfered inside embryo.
 		var/obj/item/clothing/mask/facehugger/hugger = affecting.wear_mask
 		if(hugger)
 			if(hugger.current_hugger != assailant)
-				assailant << "There is already facehugger on the face"
+				to_chat(assailant, "There is already facehugger on the face")
 				qdel(src)
 				return
 	else if(iscorgi(affecting))
@@ -633,17 +632,17 @@ When we finish, facehugger's player will be transfered inside embryo.
 		var/obj/item/clothing/mask/facehugger/hugger = C.wear_mask
 		if(hugger)
 			if(hugger.current_hugger != assailant)
-				assailant << "There is already facehugger on the face"
+				to_chat(assailant, "There is already facehugger on the face")
 				qdel(src)
 				return
 
 	for(var/obj/item/alien_embryo/AE in affecting.contents)
-		assailant << "\red [affecting] already impregnated."
+		to_chat(assailant, "\red [affecting] already impregnated.")
 		qdel(src)
 		return
 
 	for(var/mob/living/carbon/alien/larva/baby in affecting.contents)
-		assailant << "\red [affecting] already impregnated."
+		to_chat(assailant, "\red [affecting] already impregnated.")
 		qdel(src)
 		return
 
@@ -695,7 +694,7 @@ When we finish, facehugger's player will be transfered inside embryo.
 		state = GRAB_IMPREGNATE
 		hud.icon_state = "grab/impreg"
 		hud.name = "ready to impregnate"
-		assailant << "You are now ready to inject embryo inside your victim"
+		to_chat(assailant, "You are now ready to inject embryo inside your victim")
 	else if(state == GRAB_IMPREGNATE)
 		state = GRAB_DONE
 		hud.icon_state = "grab/do_impreg"

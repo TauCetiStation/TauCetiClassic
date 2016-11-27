@@ -48,7 +48,7 @@
 		for(var/datum/playingcard/P in H.cards)
 			cards += P
 		qdel(O)
-		user << "You place your cards on the bottom of the deck."
+		to_chat(user, "You place your cards on the bottom of the deck.")
 		return
 	..()
 
@@ -67,7 +67,7 @@
 	var/mob/living/carbon/user = usr
 
 	if(!cards.len)
-		usr << "There are no cards in the deck."
+		to_chat(usr, "There are no cards in the deck.")
 		return
 
 	var/obj/item/weapon/hand/H
@@ -86,7 +86,7 @@
 	cards -= P
 	H.update_icon()
 	user.visible_message("\The [user] draws a card.")
-	user << "It's the [P]."
+	to_chat(user, "It's the [P].")
 
 /obj/item/weapon/deck/verb/deal_card()
 
@@ -97,7 +97,7 @@
 	if(usr.stat || !Adjacent(usr)) return
 
 	if(!cards.len)
-		usr << "There are no cards in the deck."
+		to_chat(usr, "There are no cards in the deck.")
 		return
 
 	var/list/players = list()
@@ -181,12 +181,12 @@
 	update_icon()
 	user.visible_message("\The [user] [concealed ? "conceals" : "reveals"] their hand.")
 
-/obj/item/weapon/hand/examine()
+/obj/item/weapon/hand/examine(mob/user)
 	..()
-	if((!concealed || src.loc == usr) && cards.len)
-		usr << "It contains: "
-		for(var/datum/playingcard/P in cards)
-			usr << "The [P.name]."
+	if((src in user || concealed) && cards.len)
+		to_chat(user, "It contains: ")
+			for(var/datum/playingcard/P in cards)
+				to_chat(user, "The [P.name].")
 
 /obj/item/weapon/hand/update_icon()
 

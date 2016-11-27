@@ -25,19 +25,15 @@
 	src.icon_state = "[src.icon_type]box[total_contents]"
 	return
 
-/obj/item/weapon/storage/fancy/examine()
-	set src in oview(1)
-
+/obj/item/weapon/storage/fancy/examine(mob/user)
 	..()
-	if(contents.len <= 0)
-		usr << "There are no [src.icon_type]s left in the box."
-	else if(contents.len == 1)
-		usr << "There is one [src.icon_type] left in the box."
-	else
-		usr << "There are [src.contents.len] [src.icon_type]s in the box."
-
-	return
-
+	if(src in view(1, user))
+		if(contents.len <= 0)
+			to_chat(user, "There are no [src.icon_type]s left in the box.")
+		else if(contents.len == 1)
+			to_chat(user, "There is one [src.icon_type] left in the box.")
+		else
+			to_chat(user, "There are [src.contents.len] [src.icon_type]s in the box.")
 
 
 /*
@@ -69,6 +65,7 @@
 	icon_type = "egg"
 	name = "egg box"
 	storage_slots = 12
+	max_combined_w_class = 24
 	can_hold = list("/obj/item/weapon/reagent_containers/food/snacks/egg")
 
 /obj/item/weapon/storage/fancy/egg_box/New()
@@ -136,10 +133,10 @@
 	if(istype(W,/obj/item/toy/crayon))
 		switch(W:colourName)
 			if("mime")
-				usr << "This crayon is too sad to be contained in this box."
+				to_chat(usr, "This crayon is too sad to be contained in this box.")
 				return
 			if("rainbow")
-				usr << "This crayon is too powerful to be contained in this box."
+				to_chat(usr, "This crayon is too powerful to be contained in this box.")
 				return
 	..()
 
@@ -220,11 +217,11 @@
 				has_cigarette = 1
 				contents.Remove(C)
 				user.equip_to_slot_if_possible(C, slot_wear_mask)
-				user << "<span class='notice'>You take a cigarette out of the pack.</span>"
+				to_chat(user, "<span class='notice'>You take a cigarette out of the pack.</span>")
 				update_icon()
 				break
 		if(!has_cigarette)
-			user << "<span class='notice'>You tried to get any cigarette, but they ran out.</span>"
+			to_chat(user, "<span class='notice'>You tried to get any cigarette, but they ran out.</span>")
 	else
 		..()
 

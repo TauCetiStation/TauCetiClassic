@@ -118,19 +118,33 @@
 			found += A.search_contents_for(path,filter_path)
 	return found
 
-//All atoms
-/atom/verb/examine()
-	set name = "Examine"
-	set category = "IC"
-	set src in view(usr.client) //If it can be seen, it can be examined.
+/atom/proc/examine(mob/user)
+	//This reformat names to get a/an properly working on item descriptions when they are bloody
+	var/f_name = "\a [src]."
+	if(src.blood_DNA)
+		if(gender == PLURAL)
+			f_name = "some "
+		else
+			f_name = "a "
+		if(src.blood_color == "#030303")	//TODO: Define blood colors or make oil != blood
+			f_name += "<span class='warning'>oil-stained</span> [name]!"
+		else
+			f_name += "<span class='danger'>blood-stained</span> [name]!"
 
-	if (!( usr ))
-		return
-	usr << "That's \a [src]." //changed to "That's" from "This is" because "This is some metal sheets" sounds dumb compared to "That's some metal sheets" ~Carn
-	usr << desc
+	to_chat(user, "[bicon(src)] That's [f_name]")
+
+	if(desc)
+		to_chat(user, desc)
 	// *****RM
-	//usr << "[name]: Dn:[density] dir:[dir] cont:[contents] icon:[icon] is:[icon_state] loc:[loc]"
-	return
+	//user << "[name]: Dn:[density] dir:[dir] cont:[contents] icon:[icon] is:[icon_state] loc:[loc]"
+
+	if(reagents && is_open_container()) //is_open_container() isn't really the right proc for this, but w/e
+		to_chat(user, "It contains:")
+		if(reagents.reagent_list.len)
+			for(var/datum/reagent/R in reagents.reagent_list)
+				to_chat(user, "[R.volume] units of [R.name]")
+		else
+			to_chat(user, "Nothing.")
 
 //called to set the atom's dir and used to add behaviour to dir-changes
 /atom/proc/set_dir(new_dir)

@@ -39,7 +39,7 @@ rcd light flash thingy on matter drain
 	for(var/mob/living/silicon/ai/ai in player_list)
 		ai.fire_res_on_core = 1
 	usr.verbs -= /client/proc/fireproof_core
-	usr << "\red Core fireproofed."
+	to_chat(usr, "\red Core fireproofed.")
 
 /datum/AI_Module/large/upgrade_turrets
 	module_name = "AI Turret upgrade"
@@ -67,15 +67,16 @@ rcd light flash thingy on matter drain
 				rcd.disabled = 1
 			for(var/obj/item/mecha_parts/mecha_equipment/tool/rcd/rcd in world)
 				rcd.disabled = 1
-			usr << "RCD-disabling pulse emitted."
-		else usr << "Out of uses."
+			to_chat(usr, "RCD-disabling pulse emitted.")
+		else
+			to_chat(usr, "Out of uses.")
 
 /datum/AI_Module/small/overload_machine
 	module_name = "Machine overload"
 	mod_pick_name = "overload"
 	uses = 2
 
-/client/proc/overload_machine(obj/machinery/M in world)
+/client/proc/overload_machine(obj/machinery/M as obj in machines)
 	set name = "Overload Machine"
 	set category = "Malfunction"
 	if (istype(M, /obj/machinery))
@@ -87,8 +88,10 @@ rcd light flash thingy on matter drain
 				spawn(50)
 					explosion(get_turf(M), 0,1,2,3)
 					qdel(M)
-			else usr << "Out of uses."
-	else usr << "That's not a machine."
+			else
+				to_chat(usr, "Out of uses.")
+	else
+		to_chat(usr, "That's not a machine.")
 
 /datum/AI_Module/small/blackout
 	module_name = "Blackout"
@@ -101,11 +104,12 @@ rcd light flash thingy on matter drain
 	for(var/datum/AI_Module/small/blackout/blackout in usr:current_modules)
 		if(blackout.uses > 0)
 			blackout.uses --
-			for(var/obj/machinery/power/apc/apc in world)
+			for(var/obj/machinery/power/apc/apc in machines)
 				if(prob(30*apc.overload))
 					apc.overload_lighting()
 				else apc.overload++
-		else usr << "Out of uses."
+		else
+			to_chat(usr, "Out of uses.")
 
 /datum/AI_Module/small/interhack
 	module_name = "Hack intercept"
@@ -122,7 +126,7 @@ rcd light flash thingy on matter drain
 	mod_pick_name = "recam"
 	uses = 10
 
-/client/proc/reactivate_camera(obj/machinery/camera/C in cameranet.cameras)
+/client/proc/reactivate_camera(obj/machinery/camera/C as obj in cameranet.cameras)
 	set name = "Reactivate Camera"
 	set category = "Malfunction"
 	if (istype (C, /obj/machinery/camera))
@@ -134,16 +138,18 @@ rcd light flash thingy on matter drain
 					for(var/mob/V in viewers(src, null))
 						V.show_message(text("\blue You hear a quiet click."))
 				else
-					usr << "This camera is either active, or not repairable."
-			else usr << "Out of uses."
-	else usr << "That's not a camera."
+					to_chat(usr, "This camera is either active, or not repairable.")
+			else
+				to_chat(usr, "Out of uses.")
+	else
+		to_chat(usr, "That's not a camera.")
 
 /datum/AI_Module/small/upgrade_camera
 	module_name = "Upgrade Camera"
 	mod_pick_name = "upgradecam"
 	uses = 10
 
-/client/proc/upgrade_camera(obj/machinery/camera/C in cameranet.cameras)
+/client/proc/upgrade_camera(obj/machinery/camera/C as obj in cameranet.cameras)
 	set name = "Upgrade Camera"
 	set category = "Malfunction"
 	if(istype(C))
@@ -171,12 +177,12 @@ rcd light flash thingy on matter drain
 
 					if(upgraded)
 						UC.uses --
-						C.visible_message("<span class='notice'>\icon[C] *beep*</span>")
-						usr << "Camera successully upgraded!"
+						C.visible_message("<span class='notice'>[bicon(C)] *beep*</span>")
+						to_chat(usr, "Camera successully upgraded!")
 					else
-						usr << "This camera is already upgraded!"
+						to_chat(usr, "This camera is already upgraded!")
 			else
-				usr << "Out of uses."
+				to_chat(usr, "Out of uses.")
 
 
 /datum/AI_Module/module_picker

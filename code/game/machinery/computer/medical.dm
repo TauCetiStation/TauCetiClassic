@@ -22,7 +22,7 @@
 		usr.drop_item()
 		O.loc = src
 		scan = O
-		user << "You insert [O]."
+		to_chat(user, "You insert [O].")
 	..()
 
 /obj/machinery/computer/med_data/attack_hand(mob/user)
@@ -105,7 +105,7 @@
 					dat += "<a href='?src=\ref[src];screen=1'>Back</a>"
 					dat += "<br><b>Medical Robots:</b>"
 					var/bdat = null
-					for(var/obj/machinery/bot/medbot/M in world)
+					for(var/obj/machinery/bot/medbot/M in machines)
 
 						if(M.z != src.z)	continue	//only find medibots on the same z-level as the computer
 						var/turf/bl = get_turf(M)

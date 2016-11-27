@@ -71,19 +71,19 @@
 /obj/item/weapon/reagent_containers/borghypo/attack(mob/living/M, mob/user)
 	var/datum/reagents/R = reagent_list[mode]
 	if(!R.total_volume)
-		user << "\red The injector is empty."
+		to_chat(user, "\red The injector is empty.")
 		return
 	if (!(istype(M)))
 		return
 
 	if (R.total_volume && M.can_inject(user,1))
-		user << "\blue You inject [M] with the injector."
-		M << "\red You feel a tiny prick!"
+		to_chat(user, "\blue You inject [M] with the injector.")
+		to_chat(M, "\red You feel a tiny prick!")
 
 		R.reaction(M, INGEST)
 		if(M.reagents)
 			var/trans = R.trans_to(M, amount_per_transfer_from_this)
-			user << "\blue [trans] units injected. [R.total_volume] units remaining."
+			to_chat(user, "\blue [trans] units injected. [R.total_volume] units remaining.")
 	return
 
 /obj/item/weapon/reagent_containers/borghypo/attack_self(mob/user)
@@ -94,21 +94,18 @@
 
 	charge_tick = 0 //Prevents wasted chems/cell charge if you're cycling through modes.
 	var/datum/reagent/R = chemical_reagents_list[reagent_ids[mode]]
-	user << "\blue Synthesizer is now producing '[R.name]'."
+	to_chat(user, "\blue Synthesizer is now producing '[R.name]'.")
 	return
 
-/obj/item/weapon/reagent_containers/borghypo/examine()
-	set src in view()
+/obj/item/weapon/reagent_containers/borghypo/examine(mob/user)
 	..()
-	if (!(usr in view(2)) && usr!=src.loc) return
+	if(src in view(2, user))
+		var/empty = 1
 
-	var/empty = 1
-
-	for(var/datum/reagents/RS in reagent_list)
-		var/datum/reagent/R = locate() in RS.reagent_list
-		if(R)
-			usr << "\blue It currently has [R.volume] units of [R.name] stored."
-			empty = 0
-
-	if(empty)
-		usr << "\blue It is currently empty. Allow some time for the internal syntheszier to produce more."
+		for(var/datum/reagents/RS in reagent_list)
+			var/datum/reagent/R = locate() in RS.reagent_list
+			if(R)
+				to_chat(user, "<span class='notice'>It currently has [R.volume] units of [R.name] stored.</span>")
+				empty = 0
+		if(empty)
+			to_chat(user, "<span class='notice'>It is currently empty. Allow some time for the internal syntheszier to produce more.</span>")

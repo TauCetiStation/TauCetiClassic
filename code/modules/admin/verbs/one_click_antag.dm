@@ -299,7 +299,7 @@ client/proc/one_click_antag()
 							var/I = image('icons/mob/mob.dmi', loc = synd_mind_1.current, icon_state = "synd")
 							synd_mind.current.client.images += I
 
-		for (var/obj/machinery/nuclearbomb/bomb in world)
+		for (var/obj/machinery/nuclearbomb/bomb in machines)
 			bomb.r_code = nuke_code						// All the nukes are set to this code.
 
 	return 1
@@ -371,7 +371,7 @@ client/proc/one_click_antag()
 				//So they don't forget their code or mission.
 
 
-				new_syndicate_commando << "\blue You are an Elite Syndicate. [!syndicate_leader_selected?"commando":"<B>LEADER</B>"] in the service of the Syndicate. \nYour current mission is: \red<B> [input]</B>"
+				to_chat(new_syndicate_commando, "\blue You are an Elite Syndicate. [!syndicate_leader_selected?"commando":"<B>LEADER</B>"] in the service of the Syndicate. \nYour current mission is: \red<B> [input]</B>")
 
 				numagents--
 		if(numagents >= 6)
@@ -511,8 +511,8 @@ client/proc/one_click_antag()
 					break
 
 				new_vox.key = theghost.key
-				new_vox << "\blue You are a Vox Primalis, fresh out of the Shoal. Your ship has arrived at the Tau Ceti system hosting the NSV Exodus... or was it the Luna? NSS? Utopia? Nobody is really sure, but everyong is raring to start pillaging! Your current goal is: \red<B> [input]</B>"
-				new_vox << "\red Don't forget to turn on your nitrogen internals!"
+				to_chat(new_vox, "\blue You are a Vox Primalis, fresh out of the Shoal. Your ship has arrived at the Tau Ceti system hosting the NSV Exodus... or was it the Luna? NSS? Utopia? Nobody is really sure, but everyong is raring to start pillaging! Your current goal is: \red<B> [input]</B>")
+				to_chat(new_vox, "\red Don't forget to turn on your nitrogen internals!")
 
 				raiders--
 			if(raiders > max_raiders)

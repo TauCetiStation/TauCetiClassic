@@ -16,7 +16,7 @@
 	var/mob/living/carbon/C = M
 	if (istype(C,/mob/living/carbon/human/))
 		var/mob/living/carbon/human/H = C
-		if(H.species && H.species.flags & NO_BLOOD)
+		if(H.species && H.species.flags[NO_BLOOD])
 			report("Scan aborted: The target does not have blood.", user)
 			return
 
@@ -31,7 +31,7 @@
 		report("Antibodies detected: [antigens2string(C.antibodies)]", user)
 
 /obj/item/device/antibody_scanner/proc/report(text, mob/user)
-	user << "\blue \icon[src] \The [src] beeps, \"[text]\""
+	to_chat(user, "\blue [bicon(src)] \The [src] beeps, \"[text]\"")
 
 ///////////////VIRUS DISH///////////////
 
@@ -58,8 +58,8 @@
 		return
 	..()
 	if(prob(50))
-		user << "\The [src] shatters!"
-		message_admins("Virus dish shattered by [key_name(user, user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[src.x];Y=[src.y];Z=[src.z]'>[src.x],[src.y],[src.z]</a>)",0,1)
+		to_chat(user, "\The [src] shatters!")
+		message_admins("Virus dish shattered by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[src.x];Y=[src.y];Z=[src.z]'>[src.x],[src.y],[src.z]</a>)")
 		log_game("Virus dish shattered by [user.ckey]([user]) in ([src.x],[src.y],[src.z])")
 		if(virus2.infectionchance > 0)
 			for(var/mob/living/carbon/target in view(1, get_turf(src)))
@@ -68,11 +68,11 @@
 						infect_virus2(target,src.virus2)
 		qdel(src)
 
-/obj/item/weapon/virusdish/examine()
-	usr << "This is a virus containment dish."
-	if(src.info)
-		usr << "It has the following information about its contents:"
-		usr << src.info
+/obj/item/weapon/virusdish/examine(mob/user)
+	..()
+	if(info)
+		to_chat(user, "It has the following information about its contents:")
+		to_chat(user, info)
 
 /obj/item/weapon/ruinedvirusdish
 	name = "ruined virus sample"
@@ -85,7 +85,7 @@
 		return ..()
 
 	if(prob(50))
-		user << "\The [src] shatters!"
+		to_chat(user, "\The [src] shatters!")
 		qdel(src)
 
 ///////////////GNA DISK///////////////

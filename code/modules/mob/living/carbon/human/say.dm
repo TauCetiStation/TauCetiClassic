@@ -6,12 +6,12 @@
 
 	if(client)
 		if(client.prefs.muted & MUTE_IC)
-			src << "\red You cannot speak in IC (Muted)."
+			to_chat(src, "\red You cannot speak in IC (Muted).")
 			return
 
 	//Meme stuff
 	if((!speech_allowed && usr == src) || (src.miming))
-		usr << "\red You can't speak."
+		to_chat(usr, "\red You can't speak.")
 		return
 
 	message =  trim(sanitize_plus(copytext(message, 1, MAX_MESSAGE_LEN)))
@@ -42,8 +42,7 @@
 	//parse the language code and consume it
 	var/datum/language/speaking = parse_language(message)
 	if (speaking)
-		verb = speaking.speech_verb
-		message = copytext(message,3)
+		message = copytext(message,2+length(speaking.key))
 	else
 		switch(species.name)
 			if("Tajaran")
@@ -62,15 +61,25 @@
 						if(user.team != H.team)
 							continue
 						else
-							H << text("<span class='abductor_team[]'><b>[user.real_name]:</b> [sanitize(message)]</span>", user.team)
+							to_chat(H, text("<span class='abductor_team[]'><b>[user.real_name]:</b> [sanitize(message)]</span>", user.team))
 							//return - technically you can add more aliens to a team
 				for(var/mob/M in dead_mob_list)
-					M << text("<span class='abductor_team[]'><b>[user.real_name]:</b> [sanitize(message)]</span>", user.team)
+					to_chat(M, text("<span class='abductor_team[]'><b>[user.real_name]:</b> [sanitize(message)]</span>", user.team))
 					if(!isobserver(M) && (M.stat != DEAD))
-						M << "<hr><span class='warning'>≈сли вы видите это сообщение, значит что-то сломалось. ѕожалуйста, свяжитесь со мной <b>SpaiR</b> на форуме (http://tauceti.ru/forums/index.php?action=profile;u=1929) или попросите кого-нибудь меня позвать. ѕожалуйста, <u>запомните</u> что произошло в раунде, эта информация очень <b>важна</b>. „тобы сообщение исчезло попросите админа достать вас из тела и поместить обратно или сами уйдите в обсерверы.</span><hr>"
+						to_chat(M, "<hr><span class='warning'>≈сли вы видите это сообщение, значит что-то сломалось. ѕожалуйста, свяжитесь со мной <b>SpaiR</b> на форуме (http://tauceti.ru/forums/index.php?action=profile;u=1929) или попросите кого-нибудь меня позвать. ѕожалуйста, <u>запомните</u> что произошло в раунде, эта информация очень <b>важна</b>. „тобы сообщение исчезло попросите админа достать вас из тела и поместить обратно или сами уйдите в обсерверы.</span><hr>")
 				return ""
 
 	message = capitalize(trim(message))
+
+	var/ending = copytext(message, length(message))
+	if (speaking)
+		//If we've gotten this far, keep going!
+		verb = speaking.get_spoken_verb(ending)
+	else
+		if(ending=="!")
+			verb=pick("exclaims","shouts","yells")
+		if(ending=="?")
+			verb="asks"
 
 	if(speech_problem_flag)
 		var/list/handle_r = handle_speech_problems(message, message_mode)
@@ -81,13 +90,6 @@
 
 	if(!message || stat)
 		return
-
-	if (!speaking)
-		var/ending = copytext(message, length(message))
-		if(ending=="!")
-			verb=pick("exclaims","shouts","yells")
-		if(ending=="?")
-			verb="asks"
 
 	var/list/obj/item/used_radios = new
 
@@ -144,7 +146,7 @@
 			if(mind && mind.changeling)
 				for(var/mob/Changeling in mob_list)
 					if((Changeling.mind && Changeling.mind.changeling) || istype(Changeling, /mob/dead/observer))
-						Changeling << "<span class='changeling'><b>[mind.changeling.changelingID]:</b> [sanitize_plus_chat(message)]</span>"
+						to_chat(Changeling, "<span class='changeling'><b>[mind.changeling.changelingID]:</b> [sanitize_plus_chat(message)]</span>")
 			return
 		else
 			if(message_mode)
@@ -227,10 +229,14 @@
 /mob/living/carbon/human/say_quote(message, datum/language/speaking = null)
 	var/verb = "says"
 	var/ending = copytext(message, length(message))
-	if(ending=="!")
-		verb=pick("exclaims","shouts","yells")
-	else if(ending=="?")
-		verb="asks"
+
+	if(speaking)
+		verb = speaking.get_spoken_verb(ending)
+	else
+		if(ending == "!")
+			verb=pick("exclaims","shouts","yells")
+		else if(ending == "?")
+			verb="asks"
 
 	return verb
 

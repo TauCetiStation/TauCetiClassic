@@ -13,7 +13,7 @@
 
 	var/turf/T = P.loc
 	if (P.level < 2 && T.level==1 && isturf(T) && T.intact)
-		user << "\red You must remove the plating first."
+		to_chat(user, "\red You must remove the plating first.")
 		return
 
 	P.pipe_color = mode
@@ -23,6 +23,6 @@
 /obj/item/device/pipe_painter/attack_self(mob/user)
 	mode = input("Which colour do you want to use?","Pipe painter") in modes
 
-/obj/item/device/pipe_painter/examine()
+/obj/item/device/pipe_painter/examine(mob/user)
 	..()
-	usr << "It is in [mode] mode."
+	to_chat(user, "It is in [mode] mode.")

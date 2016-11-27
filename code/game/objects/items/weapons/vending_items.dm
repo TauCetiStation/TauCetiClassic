@@ -18,13 +18,13 @@
 	..()
 	name = "\improper [machine_name] restocking unit"
 
-/obj/item/weapon/vending_refill/examine()
-	set src in usr
+/obj/item/weapon/vending_refill/examine(mob/user)
 	..()
-	if(charges)
-		usr << "It can restock [charges] item(s)."
-	else
-		usr << "It's empty!"
+	if(src in view(1, user))
+		if(charges)
+			to_chat(user, "It can restock [charges] item\s.")
+		else
+			to_chat(user, "It's empty!")
 
 //NOTE I decided to go for about 1/3 of a machine's capacity
 

@@ -25,7 +25,6 @@
 	density = 0
 	//copypaste sorry
 	var/obj/machinery/power/dynamo/Generator = null
-	var/callme = "Pedal Generator"	//how do people refer to it?
 	var/pedaled = 0
 
 /obj/structure/stool/bed/chair/pedalgen/initialize()
@@ -38,13 +37,13 @@
 	handle_rotation()
 	Generator = new /obj/machinery/power/dynamo(src)
 
-/obj/structure/stool/bed/chair/pedalgen/examine()
-	set src in usr
-	usr << "\icon[src] This [callme] generates power from raw human force!"
-	if(Generator.raw_power>0)
-		usr << "It has [Generator.raw_power] raw power stored and it generates [(Generator.raw_power>10)?"20k":"10k"] energy!"
+/obj/structure/stool/bed/chair/pedalgen/examine(mob/user)
+	..()
+	to_chat(user, "This [src] generates power from raw human force!")
+	if(Generator.raw_power > 0)
+		to_chat(user, "It has [Generator.raw_power] raw power stored and it generates [Generator.raw_power > 10 ? "20k" : "10k" ] energy!")
 	else
-		usr << "Generator stands still. Someone need to pedal that thing."
+		to_chat(user, "Generator stands still. Someone need to pedal that thing.")
 
 
 /obj/structure/stool/bed/chair/pedalgen/attackby(obj/item/W, mob/user)
@@ -79,13 +78,13 @@
 				pedaler.nutrition -= 0.5
 				pedaler.apply_effect(1,AGONY,0)
 				if(pedaler.halloss > 80)
-					user << "You pushed yourself too hard."
+					to_chat(user, "You pushed yourself too hard.")
 					pedaler.apply_effect(24,AGONY,0)
 					unbuckle_mob()
 				sleep(5)
 				pedaled = 0
 			else
-				user << "You are too exausted to pedal that thing."
+				to_chat(user, "You are too exausted to pedal that thing.")
 		return 1
 
 /obj/structure/stool/bed/chair/pedalgen/relaymove(mob/user, direction)
@@ -153,7 +152,7 @@
 	if(buckled_mob)
 		if(prob(85))
 			return buckled_mob.bullet_act(Proj)
-	visible_message("<span class='warning'>[Proj] ricochets off the [callme]!</span>")
+	visible_message("<span class='warning'>[Proj] ricochets off the [src]!</span>")
 
 /obj/structure/stool/bed/chair/pedalgen/Destroy()
 	qdel(Generator)
@@ -165,7 +164,7 @@
 	set src in view(0)
 
 	if(usr.restrained())
-		usr << "You can't do it until you restrained"
+		to_chat(usr, "You can't do it until you restrained")
 		return
 
 	unbuckle_mob()

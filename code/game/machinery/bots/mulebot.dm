@@ -92,7 +92,7 @@
 			radio_controller.add_object(src, beacon_freq, filter = RADIO_NAVBEACONS)
 
 		var/count = 0
-		for(var/obj/machinery/bot/mulebot/other in world)
+		for(var/obj/machinery/bot/mulebot/other in machines)
 			count++
 		if(!suffix)
 			suffix = "#[count]"
@@ -132,7 +132,7 @@
 /obj/machinery/bot/mulebot/attackby(obj/item/I, mob/user)
 	if(istype(I,/obj/item/weapon/card/emag))
 		locked = !locked
-		user << "\blue You [locked ? "lock" : "unlock"] the mulebot's controls!"
+		to_chat(user, "\blue You [locked ? "lock" : "unlock"] the mulebot's controls!")
 		flick("mulebot-emagged", src)
 		playsound(src.loc, 'sound/effects/sparks1.ogg', 100, 0)
 	else if(istype(I,/obj/item/weapon/stock_parts/cell) && open && !cell)
@@ -143,7 +143,7 @@
 		updateDialog()
 	else if(istype(I,/obj/item/weapon/screwdriver))
 		if(locked)
-			user << "\blue The maintenance hatch cannot be opened or closed while the controls are locked."
+			to_chat(user, "\blue The maintenance hatch cannot be opened or closed while the controls are locked.")
 			return
 
 		open = !open
@@ -164,13 +164,13 @@
 				"\blue You repair [src]!"
 			)
 		else
-			user << "\blue [src] does not need a repair!"
+			to_chat(user, "\blue [src] does not need a repair!")
 	else if(load && ismob(load))  // chance to knock off rider
 		if(prob(1+I.force * 2))
 			unload(0)
 			user.visible_message("\red [user] knocks [load] off [src] with \the [I]!", "\red You knock [load] off [src] with \the [I]!")
 		else
-			user << "You hit [src] with \the [I] but to no effect."
+			to_chat(user, "You hit [src] with \the [I] but to no effect.")
 	else
 		..()
 	return
@@ -301,14 +301,14 @@
 			if(src.allowed(usr))
 				locked = !locked
 			else
-				usr << "\red Access denied."
+				to_chat(usr, "\red Access denied.")
 				return FALSE
 		if("power")
 			if (src.on)
 				turn_off()
 			else if (cell && !open)
 				if (!turn_on())
-					usr << "\red You can't switch on [src]."
+					to_chat(usr, "\red You can't switch on [src].")
 					return FALSE
 			else
 				return FALSE
@@ -394,29 +394,29 @@
 				var/wirebit = text2num(href_list["wire"])
 				wires &= ~wirebit
 			else
-				usr << "\blue You need wirecutters!"
+				to_chat(usr, "\blue You need wirecutters!")
 		if("wiremend")
 			if(istype(usr.get_active_hand(), /obj/item/weapon/wirecutters))
 				var/wirebit = text2num(href_list["wire"])
 				wires |= wirebit
 			else
-				usr << "\blue You need wirecutters!"
+				to_chat(usr, "\blue You need wirecutters!")
 
 		if("wirepulse")
 			if(istype(usr.get_active_hand(), /obj/item/device/multitool))
 				switch(href_list["wire"])
 					if("1","2")
-						usr << "\blue \icon[src] The charge light flickers."
+						to_chat(usr, "\blue [bicon(src)] The charge light flickers.")
 					if("4")
-						usr << "\blue \icon[src] The external warning lights flash briefly."
+						to_chat(usr, "\blue [bicon(src)] The external warning lights flash briefly.")
 					if("8")
-						usr << "\blue \icon[src] The load platform clunks."
+						to_chat(usr, "\blue [bicon(src)] The load platform clunks.")
 					if("16", "32")
-						usr << "\blue \icon[src] The drive motor whines briefly."
+						to_chat(usr, "\blue [bicon(src)] The drive motor whines briefly.")
 					else
-						usr << "\blue \icon[src] You hear a radio crackle."
+						to_chat(usr, "\blue [bicon(src)] You hear a radio crackle.")
 			else
-				usr << "\blue You need a multitool!"
+				to_chat(usr, "\blue You need a multitool!")
 	updateDialog()
 
 // returns true if the bot has power
@@ -803,9 +803,9 @@
 		return
 
 	/*
-	world << "rec signal: [signal.source]"
+	to_chat(world, "rec signal: [signal.source]")
 	for(var/x in signal.data)
-		world << "* [x] = [signal.data[x]]"
+		to_chat(world, "* [x] = [signal.data[x]]")
 	*/
 	var/recv = signal.data["command"]
 	// process all-bot input

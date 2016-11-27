@@ -115,7 +115,7 @@ var/global/Holiday = null
 				Holiday = "Friday the 13th"
 
 //Allows GA and GM to set the Holiday variable
-/client/proc/Set_Holiday(T)
+/client/proc/Set_Holiday(T as text)
 	set name = ".Set Holiday"
 	set category = "Fun"
 	set desc = "Force-set the Holiday variable to make the game think it's a certain day."
@@ -136,8 +136,8 @@ var/global/Holiday = null
 //Run at the  start of a round
 /proc/Holiday_Game_Start()
 	if(Holiday)
-		world << "<font color='blue'>and...</font>"
-		world << "<h4>Happy [Holiday] Everybody!</h4>"
+		to_chat(world, "<font color='blue'>and...</font>")
+		to_chat(world, "<h4>Happy [Holiday] Everybody!</h4>")
 		switch(Holiday)			//special holidays
 			if("Easter")
 				//do easter stuff

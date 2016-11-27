@@ -66,13 +66,13 @@
 /obj/machinery/iv_drip/attackby(obj/item/weapon/W, mob/user)
 	if (istype(W, /obj/item/weapon/reagent_containers))
 		if(!isnull(src.beaker))
-			user << "There is already a reagent container loaded!"
+			to_chat(user, "There is already a reagent container loaded!")
 			return
 
 		user.drop_item()
 		W.loc = src
 		src.beaker = W
-		user << "You attach \the [W] to \the [src]."
+		to_chat(user, "You attach \the [W] to \the [src].")
 		src.update_icon()
 		return
 	else
@@ -119,7 +119,7 @@
 			if(NOCLONE in T.mutations)
 				return
 
-			if(T.species && T.species.flags & NO_BLOOD)
+			if(T.species && T.species.flags[NO_BLOOD])
 				return
 
 			// If the human is losing too much blood, beep.
@@ -150,21 +150,19 @@
 
 	if(isliving(usr) && usr.stat != DEAD)
 		mode = !mode
-		usr << "The IV drip is now [mode ? "injecting" : "taking blood"]."
+		to_chat(usr, "The IV drip is now [mode ? "injecting" : "taking blood"].")
 
-/obj/machinery/iv_drip/examine()
-	set src in view()
+/obj/machinery/iv_drip/examine(mob/user)
 	..()
-	if (!(usr in view(2)) && usr!=src.loc) return
+	if(src in oview(2, user))
+		to_chat(user, "The IV drip is [mode ? "injecting" : "taking blood"].")
 
-	usr << "The IV drip is [mode ? "injecting" : "taking blood"]."
-
-	if(beaker)
-		if(beaker.reagents && beaker.reagents.reagent_list.len)
-			usr << "\blue Attached is \a [beaker] with [beaker.reagents.total_volume] units of liquid."
+		if(beaker)
+			if(beaker.reagents && beaker.reagents.reagent_list.len)
+				to_chat(user, "<span class='notice'>Attached is \a [beaker] with [beaker.reagents.total_volume] units of liquid.</span>")
+			else
+				to_chat(user, "<span class='notice'>Attached is an empty [beaker].</span>")
 		else
-			usr << "\blue Attached is an empty [beaker]."
-	else
-		usr << "\blue No chemicals are attached."
+			to_chat(user, "<span class='notice'>No chemicals are attached.</span>")
 
-	usr << "\blue [attached ? attached : "No one"] is attached."
+		to_chat(user, "<span class='notice'>[attached ? attached : "No one"] is attached.</span>")

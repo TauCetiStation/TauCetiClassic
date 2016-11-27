@@ -42,12 +42,13 @@
 		return
 	var/obj/item/weapon/holder/H = new holder_type(loc)
 	src.loc = H
-	H.name = loc.name
+	H.name = src.name
 	H.attack_hand(grabber)
 
-	grabber << "You scoop up [src]."
-	src << "[grabber] scoops you up."
+	to_chat(grabber, "You scoop up [src].")
+	to_chat(src, "[grabber] scoops you up.")
 	grabber.status_flags |= PASSEMOTES
+	LAssailant = grabber
 	return
 
 //Mob specific holders.

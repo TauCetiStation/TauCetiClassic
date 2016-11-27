@@ -167,23 +167,21 @@
 /mob/living/simple_animal/special/scp173/ex_act(severity)
 	return
 
-/mob/living/simple_animal/special/scp173/examine()
-	set src in oview()
-
+/mob/living/simple_animal/special/scp173/examine(mob/user)
+	..()
 	var/turf/T = get_turf(src)
 
 	var/light_amount = 0
 	light_amount = round(T.get_lumcount()*10)
 
-	if(isliving(usr))
-		var/mob/living/L = usr
+	if(isliving(user))
+		var/mob/living/L = user
 		if(light_amount <= 3)
 			var/msg = "<span cass='info'>It's too dark in there...</span>"
-			usr << msg
+			to_chat(L, msg)
 			return
 		else
 			L.scp_mark = 0
-	..()
 
 /mob/living/simple_animal/special/scp173/attack_animal(mob/living/simple_animal/M)
 	M.emote("[M.friendly] \the <EM>[src]</EM>")
@@ -198,7 +196,7 @@
 	return 1 //copypasta from carp code
 
 /mob/living/simple_animal/special/scp173/attackby(obj/item/O, mob/user)
-	usr << "<span class='warning'>This weapon is ineffective, it does no damage.</span>"
+	to_chat(usr, "<span class='warning'>This weapon is ineffective, it does no damage.</span>")
 	for(var/mob/M in viewers(src, null))
 		if ((M.client && !( M.blinded )))
 			M.show_message("<span class='warning'>[user] gently taps [src] with [O].</span>")

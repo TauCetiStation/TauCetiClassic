@@ -32,13 +32,13 @@ proc/check_if_a_new_player(key)
 
 	establish_db_connection()
 	if(!dbcon.IsConnected())
-		usr << "\red Failed to establish database connection"
+		to_chat(usr, "\red Failed to establish database connection")
 		return
 
 	var/ckey = ckey(copytext(input(usr, "", "Player ckey") as text, 1, MAX_MESSAGE_LEN))
 
 	if(check_if_a_new_player(ckey))
-		src << "\red Player already in whitelist"
+		to_chat(src, "\red Player already in whitelist")
 		return
 
 	var/DBQuery/query_insert = dbcon.NewQuery("INSERT INTO erro_player (ckey, firstseen) VALUES ('[ckey], Now()')")
@@ -47,5 +47,5 @@ proc/check_if_a_new_player(key)
 		log_game("SQL ERROR, WHITELIST. Error : \[[err]\]\n")
 		return
 
-	message_admins("[key_name_admin(src)] add [ckey] to server whitelist", 1)
-	log_admin("[key_name_admin(src)] add [ckey] to server whitelist", 1)
+	message_admins("[key_name_admin(src)] add [ckey] to server whitelist")
+	log_admin("[key_name_admin(src)] add [ckey] to server whitelist")

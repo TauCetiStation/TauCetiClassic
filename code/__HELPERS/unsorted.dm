@@ -317,7 +317,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 					break
 			if(newname)
 				break	//That's a suitable name!
-			src << "Sorry, that [role]-name wasn't appropriate, please try another. It's possibly too long/short, has bad characters or is already taken."
+			to_chat(src, "Sorry, that [role]-name wasn't appropriate, please try another. It's possibly too long/short, has bad characters or is already taken.")
 
 		if(!newname)	//we'll stick with the oldname then
 			return
@@ -462,10 +462,6 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		moblist.Add(M)
 	for(var/mob/camera/M in sortmob)
 		moblist.Add(M)
-//	for(var/mob/living/silicon/hivebot/M in world)
-//		mob_list.Add(M)
-//	for(var/mob/living/silicon/hive_mainframe/M in world)
-//		mob_list.Add(M)
 	return moblist
 
 //E = MC^2
@@ -712,16 +708,9 @@ proc/anim(turf/location,target,a_icon,a_icon_state,flick_anim,sleeptime = 0,dire
 	if(A.vars.Find(lowertext(varname))) return 1
 	else return 0
 
-//Returns: all the areas in the world
-/proc/return_areas()
-	var/list/area/areas = list()
-	for(var/area/A in world)
-		areas += A
-	return areas
-
 //Returns: all the areas in the world, sorted.
 /proc/return_sorted_areas()
-	return sortAtom(return_areas())
+	return sortAtom(all_areas)
 
 //Takes: Area type as text string or as typepath OR an instance of the area.
 //Returns: A list of all areas of that type in the world.
@@ -733,8 +722,9 @@ proc/anim(turf/location,target,a_icon,a_icon_state,flick_anim,sleeptime = 0,dire
 		areatype = areatemp.type
 
 	var/list/areas = new/list()
-	for(var/area/N in world)
-		if(istype(N, areatype)) areas += N
+	for(var/area/N in all_areas)
+		if(istype(N, areatype))
+			areas += N
 	return areas
 
 //Takes: Area type as text string or as typepath OR an instance of the area.
@@ -747,7 +737,7 @@ proc/anim(turf/location,target,a_icon,a_icon_state,flick_anim,sleeptime = 0,dire
 		areatype = areatemp.type
 
 	var/list/turfs = new/list()
-	for(var/area/N in world)
+	for(var/area/N in all_areas)
 		if(istype(N, areatype))
 			for(var/turf/T in N) turfs += T
 	return turfs
@@ -762,7 +752,7 @@ proc/anim(turf/location,target,a_icon,a_icon_state,flick_anim,sleeptime = 0,dire
 		areatype = areatemp.type
 
 	var/list/atoms = new/list()
-	for(var/area/N in world)
+	for(var/area/N in all_areas)
 		if(istype(N, areatype))
 			for(var/atom/A in N)
 				atoms += A
@@ -1529,7 +1519,7 @@ var/mob/dview/dview_mob = new
 
 				count += 1
 				var/pct = round(100 * count / total)
-				world << "[pct]%"
+				to_chat(world, "[pct]%")
 				sleep(world.tick_lag)
 
 		world << ftp(master, "damage_overlays.dmi")

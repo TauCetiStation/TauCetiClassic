@@ -48,7 +48,7 @@
 	var/burn_mod = null     // Burn damage reduction/malus.
 	var/speed_mod = 0		//How fast or slow specific specie.
 
-	var/flags = 0       // Various specific features.
+	var/list/flags = list()       // Various specific features.
 
 	var/list/abilities = list()	// For species-derived or admin-given powers
 
@@ -59,8 +59,6 @@
 	//Used in icon caching.
 	var/race_key = 0
 	var/icon/icon_template
-
-	var/biohazzard_immunity = FALSE //immunity against bioactive gases (phoron)
 
 	/* Species-specific sprites, concept stolen from Paradise//vg/.
 	ex:
@@ -114,7 +112,7 @@
 	for(var/datum/organ/external/O in H.organs)
 		O.owner = H
 
-	if(flags & IS_SYNTHETIC)
+	if(flags[IS_SYNTHETIC])
 		for(var/datum/organ/external/E in H.organs)
 			if(E.status & ORGAN_CUT_AWAY || E.status & ORGAN_DESTROYED) continue
 			E.status |= ORGAN_ROBOT
@@ -125,7 +123,7 @@
 	return
 
 /datum/species/proc/handle_death(mob/living/carbon/human/H) //Handles any species-specific death events (such nymph spawns).
-	if(flags & IS_SYNTHETIC)
+	if(flags[IS_SYNTHETIC])
  //H.make_jittery(200) //S-s-s-s-sytem f-f-ai-i-i-i-i-lure-ure-ure-ure
 		H.h_style = ""
 		spawn(100)
@@ -140,7 +138,12 @@
 	primitive = /mob/living/carbon/monkey
 	unarmed_type = /datum/unarmed_attack/punch
 
-	flags = HAS_SKIN_TONE | HAS_LIPS | HAS_UNDERWEAR
+	flags = list(
+	 HAS_SKIN_TONE = TRUE
+	,HAS_LIPS = TRUE
+	,HAS_UNDERWEAR = TRUE
+	,HAS_HAIR = TRUE
+	)
 
 	//If you wanted to add a species-level ability:
 	/*abilities = list(/client/proc/test_ability)*/
@@ -167,7 +170,13 @@
 	burn_mod = 0.90
 	speed_mod = 0.7
 
-	flags = IS_WHITELISTED | HAS_LIPS | HAS_UNDERWEAR | HAS_TAIL | HAS_SKIN_COLOR
+	flags = list(
+	 IS_WHITELISTED = TRUE
+	,HAS_LIPS = TRUE
+	,HAS_UNDERWEAR = TRUE
+	,HAS_TAIL = TRUE
+	,HAS_SKIN_COLOR = TRUE
+	)
 
 	flesh_color = "#34AF10"
 
@@ -199,7 +208,14 @@
 	burn_mod = 1.20
 	speed_mod = -0.7
 
-	flags = IS_WHITELISTED | HAS_LIPS | HAS_UNDERWEAR | HAS_TAIL | HAS_SKIN_COLOR
+	flags = list(
+	 IS_WHITELISTED = TRUE
+	,HAS_LIPS = TRUE
+	,HAS_UNDERWEAR = TRUE
+	,HAS_TAIL = TRUE
+	,HAS_SKIN_COLOR = TRUE
+	,HAS_HAIR = TRUE
+	)
 
 	flesh_color = "#AFA59E"
 	base_color = "#333333"
@@ -212,7 +228,13 @@
 	primitive = /mob/living/carbon/monkey/skrell
 	unarmed_type = /datum/unarmed_attack/punch
 
-	flags = IS_WHITELISTED | HAS_LIPS | HAS_UNDERWEAR | HAS_SKIN_COLOR
+	flags = list(
+	 IS_WHITELISTED = TRUE
+	,HAS_LIPS = TRUE
+	,HAS_UNDERWEAR = TRUE
+	,HAS_SKIN_COLOR = TRUE
+	)
+
 	eyes = "skrell_eyes_s"
 
 	flesh_color = "#8CD7A3"
@@ -238,7 +260,10 @@
 	breath_type = "nitrogen"
 	poison_type = "oxygen"
 
-	flags = NO_SCAN | NO_BLOOD
+	flags = list(
+	 NO_SCAN = TRUE
+	,NO_BLOOD = TRUE
+	)
 
 	blood_color = "#2299FC"
 	flesh_color = "#808D11"
@@ -288,7 +313,12 @@
 	breath_type = "nitrogen"
 	poison_type = "oxygen"
 
-	flags = NO_SCAN | NO_BLOOD | HAS_TAIL | NO_PAIN
+	flags = list(
+	 NO_SCAN = TRUE
+	,NO_BLOOD = TRUE
+	,HAS_TAIL = TRUE
+	,NO_PAIN = TRUE
+	)
 
 	blood_color = "#2299FC"
 	flesh_color = "#808D11"
@@ -327,7 +357,16 @@
 
 	body_temperature = T0C + 15		//make the plant people have a bit lower body temperature, why not
 
-	flags = IS_WHITELISTED | NO_BREATHE | REQUIRE_LIGHT | NO_SCAN | IS_PLANT | RAD_ABSORB | NO_BLOOD | NO_PAIN
+	flags = list(
+	 IS_WHITELISTED = TRUE
+	,NO_BREATHE = TRUE
+	,REQUIRE_LIGHT = TRUE
+	,NO_SCAN = TRUE
+	,IS_PLANT = TRUE
+	,RAD_ABSORB = TRUE
+	,NO_BLOOD = TRUE
+	,NO_PAIN = TRUE
+	)
 
 	blood_color = "#004400"
 	flesh_color = "#907E4A"
@@ -379,9 +418,16 @@
 	brute_mod = 1.5
 	burn_mod = 1
 
-	biohazzard_immunity = TRUE
-
-	flags = IS_WHITELISTED | NO_BREATHE | NO_SCAN | NO_BLOOD | NO_PAIN | IS_SYNTHETIC | VIRUS_IMMUNE
+	flags = list(
+	 IS_WHITELISTED = TRUE
+	,NO_BREATHE = TRUE
+	,NO_SCAN = TRUE
+	,NO_BLOOD = TRUE
+	,NO_PAIN = TRUE
+	,IS_SYNTHETIC = TRUE
+	,VIRUS_IMMUNE = TRUE
+	,BIOHAZZARD_IMMUNE = TRUE
+	)
 
 	blood_color = "#1F181F"
 	flesh_color = "#575757"
@@ -393,7 +439,12 @@
 	icobase = 'icons/mob/human_races/r_abductor.dmi'
 	deform = 'icons/mob/human_races/r_abductor.dmi'
 
-	flags = NO_BREATHE | NO_BLOOD | NO_SCAN | VIRUS_IMMUNE
+	flags = list(
+	 NO_BREATHE = TRUE
+	,NO_BLOOD = TRUE
+	,NO_SCAN = TRUE
+	,VIRUS_IMMUNE = TRUE
+	)
 
 	blood_color = "#BCBCBC"
 
@@ -409,7 +460,12 @@
 	deform = 'icons/mob/human_races/r_skeleton.dmi'
 	damage_mask = FALSE
 
-	flags = NO_BREATHE | NO_BLOOD | NO_SCAN | VIRUS_IMMUNE
+	flags = list(
+	 NO_BREATHE = TRUE
+	,NO_BLOOD = TRUE
+	,NO_SCAN = TRUE
+	,VIRUS_IMMUNE = TRUE
+	)
 
 /datum/species/skeleton/handle_post_spawn(mob/living/carbon/human/H)
 	H.gender = NEUTER

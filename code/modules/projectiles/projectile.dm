@@ -148,18 +148,18 @@
 			forcedodge = -1
 		else
 			if(silenced)
-				M << "<span class = 'red'>You've been shot in the [parse_zone(def_zone)] by the [src.name]!</span>"
+				to_chat(M, "<span class = 'red'>You've been shot in the [parse_zone(def_zone)] by the [src.name]!</span>")
 			else
 				visible_message("<span class = 'red'>[A.name] is hit by the [src.name] in the [parse_zone(def_zone)]!</span>")//X has fired Y is now given by the guns so you cant tell who shot you if you could not see the shooter
 			if(istype(firer, /mob))
 				M.attack_log += "\[[time_stamp()]\] <b>[firer]/[firer.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>[src.type]</b>"
 				firer.attack_log += "\[[time_stamp()]\] <b>[firer]/[firer.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>[src.type]</b>"
 				if(!fake)
-					msg_admin_attack("[firer] ([firer.ckey]) shot [M] ([M.ckey]) with a [src] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[firer.x];Y=[firer.y];Z=[firer.z]'>JMP</a>)") //BS12 EDIT ALG
+					msg_admin_attack("[firer.name] ([firer.ckey]) shot [M.name] ([M.ckey]) with a [src] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[firer.x];Y=[firer.y];Z=[firer.z]'>JMP</a>)") //BS12 EDIT ALG
 			else
 				M.attack_log += "\[[time_stamp()]\] <b>UNKNOWN SUBJECT (No longer exists)</b> shot <b>[M]/[M.ckey]</b> with a <b>[src]</b>"
 				if(!fake)
-					msg_admin_attack("UNKNOWN shot [M] ([M.ckey]) with a [src] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[firer.x];Y=[firer.y];Z=[firer.z]'>JMP</a>)") //BS12 EDIT ALG
+					msg_admin_attack("UNKNOWN shot [M.name] ([M.ckey]) with a [src] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[firer.x];Y=[firer.y];Z=[firer.z]'>JMP</a>)") //BS12 EDIT ALG
 
 //	if(istype(src, /obj/item/projectile/beam))
 

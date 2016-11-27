@@ -134,14 +134,14 @@
 	edge = 1
 
 	suicide_act(mob/user)
-		viewers(user) << pick("\red <b>[user] is slitting \his wrists with the [src.name]! It looks like \he's trying to commit suicide.</b>", \
+		to_chat(viewers(user), pick("\red <b>[user] is slitting \his wrists with the [src.name]! It looks like \he's trying to commit suicide.</b>", \
 							"\red <b>[user] is slitting \his throat with the [src.name]! It looks like \he's trying to commit suicide.</b>", \
-							"\red <b>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</b>")
+							"\red <b>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</b>"))
 		return (BRUTELOSS)
 
 /obj/item/weapon/kitchen/utensil/knife/attack(target, mob/living/user)
 	if ((CLUMSY in user.mutations) && prob(50))
-		user << "\red You accidentally cut yourself with the [src]."
+		to_chat(user, "\red You accidentally cut yourself with the [src].")
 		user.take_organ_damage(20)
 		return
 	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
@@ -157,7 +157,7 @@
 
 /obj/item/weapon/kitchen/utensil/pknife/attack(target, mob/living/user)
 	if ((CLUMSY in user.mutations) && prob(50))
-		user << "\red You somehow managed to cut yourself with the [src]."
+		to_chat(user, "\red You somehow managed to cut yourself with the [src].")
 		user.take_organ_damage(20)
 		return
 	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
@@ -184,9 +184,9 @@
 	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
 	suicide_act(mob/user)
-		viewers(user) << pick("\red <b>[user] is slitting \his wrists with the [src.name]! It looks like \he's trying to commit suicide.</b>", \
+		to_chat(viewers(user), pick("\red <b>[user] is slitting \his wrists with the [src.name]! It looks like \he's trying to commit suicide.</b>", \
 							"\red <b>[user] is slitting \his throat with the [src.name]! It looks like \he's trying to commit suicide.</b>", \
-							"\red <b>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</b>")
+							"\red <b>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</b>"))
 		return (BRUTELOSS)
 
 /obj/item/weapon/kitchenknife/ritual
@@ -236,7 +236,7 @@
 
 /obj/item/weapon/kitchen/rollingpin/attack(mob/living/M, mob/living/user)
 	if ((CLUMSY in user.mutations) && prob(50))
-		user << "\red The [src] slips out of your hand and hits your head."
+		to_chat(user, "\red The [src] slips out of your hand and hits your head.")
 		user.take_organ_damage(10)
 		user.Paralyse(2)
 		return
@@ -252,7 +252,7 @@
 			if (H.stat < 2 && H.health < 50 && prob(90))
 				// ******* Check
 				if (istype(H, /obj/item/clothing/head) && H.flags & 8 && prob(80))
-					H << "\red The helmet protects you from being hit hard in the head!"
+					to_chat(H, "\red The helmet protects you from being hit hard in the head!")
 					return
 				var/time = rand(2, 6)
 				if (prob(75))
@@ -316,7 +316,7 @@
 
 
 	if((CLUMSY in user.mutations) && prob(50))              //What if he's a clown?
-		M << "\red You accidentally slam yourself with the [src]!"
+		to_chat(M, "\red You accidentally slam yourself with the [src]!")
 		M.Weaken(1)
 		user.take_organ_damage(2)
 		if(prob(50))
@@ -360,7 +360,7 @@
 
 
 	if(istype(M, /mob/living/carbon/human) && ((H.head && H.head.flags & HEADCOVERSEYES) || (H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) || (H.glasses && H.glasses.flags & GLASSESCOVERSEYES)))
-		M << "\red You get slammed in the face with the tray, against your mask!"
+		to_chat(M, "\red You get slammed in the face with the tray, against your mask!")
 		if(prob(33))
 			src.add_blood(H)
 			if (H.wear_mask)
@@ -390,7 +390,7 @@
 			return
 
 	else //No eye or head protection, tough luck!
-		M << "\red You get slammed in the face with the tray!"
+		to_chat(M, "\red You get slammed in the face with the tray!")
 		if(prob(33))
 			src.add_blood(M)
 			var/turf/location = H.loc
@@ -506,11 +506,11 @@
 /*/obj/item/weapon/tray/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W,/obj/item/weapon/kitchen/utensil/fork))
 		if (W.icon_state == "forkloaded")
-			user << "\red You already have omelette on your fork."
+			to_chat(user, "\red You already have omelette on your fork.")
 			return
 		W.icon = 'icons/obj/kitchen.dmi'
 		W.icon_state = "forkloaded"
-		viewers(3,user) << "[user] takes a piece of omelette with his fork!"
+		to_chat(viewers(3,user), "[user] takes a piece of omelette with his fork!")
 		reagents.remove_reagent("nutriment", 1)
 		if (reagents.total_volume <= 0)
 			qdel(src)*/

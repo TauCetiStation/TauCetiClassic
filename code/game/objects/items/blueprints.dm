@@ -21,7 +21,7 @@
 
 /obj/item/blueprints/attack_self(mob/M)
 	if (!istype(M,/mob/living/carbon/human))
-		M << "This stack of blue paper means nothing to you." //monkeys cannot into projecting
+		to_chat(M, "This stack of blue paper means nothing to you.")//monkeys cannot into projecting
 		return
 	interact()
 	return
@@ -105,20 +105,20 @@ move an amendment</a> to the drawing.</p>
 	if(!istype(res,/list))
 		switch(res)
 			if(ROOM_ERR_SPACE)
-				usr << "\red The new area must be completely airtight!"
+				to_chat(usr, "\red The new area must be completely airtight!")
 				return
 			if(ROOM_ERR_TOOLARGE)
-				usr << "\red The new area too large!"
+				to_chat(usr, "\red The new area too large!")
 				return
 			else
-				usr << "\red Error! Please notify administration!"
+				to_chat(usr, "\red Error! Please notify administration!")
 				return
 	var/list/turf/turfs = res
 	var/str = trim(stripped_input(usr,"New area name:","Blueprint Editing", "", MAX_NAME_LEN))
 	if(!str || !length(str)) //cancel
 		return
 	if(length(str) > 50)
-		usr << "\red Name too long."
+		to_chat(usr, "\red Name too long.")
 		return
 	var/area/A = new
 	A.name = str
@@ -156,12 +156,12 @@ move an amendment</a> to the drawing.</p>
 	if(!str || !length(str) || str==prevname) //cancel
 		return
 	if(length(str) > 50)
-		usr << "\red Text too long."
+		to_chat(usr, "\red Text too long.")
 		return
 	set_area_machinery_title(A,str,prevname)
 	for(var/area/RA in A.related)
 		RA.name = str
-	usr << "\blue You set the area '[prevname]' title to '[str]'."
+	to_chat(usr, "\blue You set the area '[prevname]' title to '[str]'.")
 	interact()
 	return
 

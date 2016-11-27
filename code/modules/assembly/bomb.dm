@@ -11,9 +11,9 @@
 	var/obj/item/device/assembly_holder/bombassembly = null   //The first part of the bomb is an assembly holder, holding an igniter+some device
 	var/obj/item/weapon/tank/bombtank = null //the second part of the bomb is a phoron tank
 
-/obj/item/device/onetankbomb/examine()
+/obj/item/device/onetankbomb/examine(mob/user)
 	..()
-	bombtank.examine()
+	user.examinate(bombtank)
 
 /obj/item/device/onetankbomb/update_icon()
 	if(bombtank)
@@ -29,7 +29,7 @@
 		return
 	if(istype(W, /obj/item/weapon/wrench) && !status)	//This is basically bomb assembly code inverted. apparently it works.
 
-		user << "<span class='notice'>You disassemble [src].</span>"
+		to_chat(user, "<span class='notice'>You disassemble [src].</span>")
 
 		bombassembly.loc = user.loc
 		bombassembly.master = null
@@ -45,12 +45,12 @@
 		if(!status)
 			status = 1
 			bombers += "[key_name(user)] welded a single tank bomb. Temp: [bombtank.air_contents.temperature-T0C]"
-			message_admins("[key_name_admin(user)] welded a single tank bomb. Temp: [bombtank.air_contents.temperature-T0C]")
-			user << "<span class='notice'>A pressure hole has been bored to [bombtank] valve. \The [bombtank] can now be ignited.</span>"
+			message_admins("[key_name_admin(user)] welded a single tank bomb. Temp: [bombtank.air_contents.temperature-T0C] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+			to_chat(user, "<span class='notice'>A pressure hole has been bored to [bombtank] valve. \The [bombtank] can now be ignited.</span>")
 		else
 			status = 0
 			bombers += "[key_name(user)] unwelded a single tank bomb. Temp: [bombtank.air_contents.temperature-T0C]"
-			user << "<span class='notice'>The hole has been closed.</span>"
+			to_chat(user, "<span class='notice'>The hole has been closed.</span>")
 	add_fingerprint(user)
 	..()
 
@@ -60,7 +60,7 @@
 	return
 
 /obj/item/device/onetankbomb/receive_signal()	//This is mainly called by the sensor through sense() to the holder, and from the holder to here.
-	visible_message("\icon[src] *beep* *beep*", "*beep* *beep*")
+	visible_message("[bicon(src)] *beep* *beep*", "*beep* *beep*")
 	sleep(10)
 	if(!src)
 		return

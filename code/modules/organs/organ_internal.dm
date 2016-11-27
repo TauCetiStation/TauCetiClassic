@@ -34,7 +34,7 @@
 /datum/organ/internal/process()
 	//Process infections
 
-	if (robotic >= 2 || (owner.species && owner.species.flags & IS_PLANT))	//TODO make robotic internal and external organs separate types of organ instead of a flag
+	if (robotic >= 2 || (owner.species && owner.species.flags[IS_PLANT]))	//TODO make robotic internal and external organs separate types of organ instead of a flag
 		germ_level = 0
 		return
 
@@ -143,7 +143,7 @@
 	..()
 	if (germ_level > INFECTION_LEVEL_ONE)
 		if(prob(1))
-			owner << "\red Your skin itches."
+			to_chat(owner, "\red Your skin itches.")
 	if (germ_level > INFECTION_LEVEL_TWO)
 		if(prob(1))
 			spawn owner.vomit()

@@ -126,6 +126,7 @@ obj/item/weapon/gun/energy/laser/retro
 	name = "xray laser gun"
 	desc = "A high-power laser gun capable of expelling concentrated xray blasts."
 	icon_state = "xray"
+	item_state = null
 	origin_tech = "combat=5;materials=3;magnets=2;syndicate=2"
 	ammo_type = list(/obj/item/ammo_casing/energy/xray)
 
@@ -144,7 +145,7 @@ obj/item/weapon/gun/energy/laser/retro
 	if(ishuman(M))
 		if(istype(M.wear_suit, /obj/item/clothing/suit/bluetag))
 			return 1
-		M << "\red You need to be wearing your laser tag vest!"
+		to_chat(M, "\red You need to be wearing your laser tag vest!")
 	return 0
 
 /obj/item/weapon/gun/energy/laser/bluetag/New()
@@ -179,7 +180,7 @@ obj/item/weapon/gun/energy/laser/retro
 	if(ishuman(M))
 		if(istype(M.wear_suit, /obj/item/clothing/suit/redtag))
 			return 1
-		M << "\red You need to be wearing your laser tag vest!"
+		to_chat(M, "\red You need to be wearing your laser tag vest!")
 	return 0
 
 /obj/item/weapon/gun/energy/laser/redtag/New()

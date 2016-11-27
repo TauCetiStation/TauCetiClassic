@@ -177,7 +177,7 @@
 				if(!killobjectives.len)
 					continue
 				var/datum/objective/assassinate/objective = pickweight(killobjectives)
-				world << objective
+				to_chat(world, objective)
 				for(1 to 10)
 					if(objective.points + total_weight <= 100 || !killobjectives.len)
 						break
@@ -1064,11 +1064,11 @@ datum
 							for(var/mob/living/silicon/ai/M in C)
 								if(istype(M, /mob/living/silicon/ai) && M.stat != DEAD)
 									return 1
-						for(var/mob/living/silicon/ai/M in world)
+						for(var/mob/living/silicon/ai/M in living_mob_list)
 							if(istype(M.loc, /turf))
 								if(istype(get_area(M), /area/shuttle/escape))
 									return 1
-						for(var/obj/structure/AIcore/M in world)
+						for(var/obj/structure/AIcore/M in living_mob_list)
 							if(istype(M.loc, /turf) && M.state == 4)
 								if(istype(get_area(M), /area/shuttle/escape))
 									return 1
@@ -1230,7 +1230,7 @@ datum
 					return 0
 				var/area/shuttle = locate(/area/shuttle/escape/centcom)
 				var/protected_mobs[] = list(/mob/living/silicon/ai, /mob/living/silicon/pai, /mob/living/silicon/robot)
-				for(var/mob/living/player in world)
+				for(var/mob/living/player in living_mob_list)
 					if(player.type in protected_mobs)	continue
 					if (player.mind)
 						if (player.stat != DEAD)
@@ -1280,11 +1280,11 @@ datum
 				if (ticker)
 					var/n_p = 1 //autowin
 					if (ticker.current_state == GAME_STATE_SETTING_UP)
-						for(var/mob/new_player/P in world)
+						for(var/mob/new_player/P in mob_list)
 							if(P.client && P.ready && P.mind!=owner)
 								n_p ++
 					else if (ticker.current_state == GAME_STATE_PLAYING)
-						for(var/mob/living/carbon/human/P in world)
+						for(var/mob/living/carbon/human/P in living_mob_list)
 							if(P.client && !(P.mind in ticker.mode.changelings) && P.mind!=owner)
 								n_p ++
 					target_amount = min(target_amount, n_p)
@@ -1456,7 +1456,7 @@ datum/objective/silence
 		var/area/pod3 =    locate(/area/shuttle/escape_pod3/centcom)
 		var/area/pod4 =    locate(/area/shuttle/escape_pod5/centcom)
 
-		for(var/mob/living/player in world)
+		for(var/mob/living/player in living_mob_list)
 			if (player == owner.current)
 				continue
 			if (player.mind)

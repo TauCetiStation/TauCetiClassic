@@ -25,13 +25,13 @@
 
 /obj/item/weapon/reagent_containers/hypospray/attack(mob/M, mob/user)
 	if(!reagents.total_volume)
-		user << "\red [src] is empty."
+		to_chat(user, "\red [src] is empty.")
 		return
 	if (!( istype(M, /mob) ))
 		return
 	if (reagents.total_volume)
-		user << "\blue You inject [M] with [src]."
-		M << "\red You feel a tiny prick!"
+		to_chat(user, "\blue You inject [M] with [src].")
+		to_chat(M, "\red You feel a tiny prick!")
 
 		src.reagents.reaction(M, INGEST)
 		if(M.reagents)
@@ -45,7 +45,7 @@
 			msg_admin_attack("[user.name] ([user.ckey]) injected [M.name] ([M.key]) with [src.name]. Reagents: [contained] (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 
 			var/trans = reagents.trans_to(M, amount_per_transfer_from_this)
-			user << "\blue [trans] units injected. [reagents.total_volume] units remaining in [src]."
+			to_chat(user, "\blue [trans] units injected. [reagents.total_volume] units remaining in [src].")
 
 	return
 
@@ -90,10 +90,3 @@
 		icon_state = "[initial(icon_state)]1"
 	else
 		icon_state = "[initial(icon_state)]0"
-
-/obj/item/weapon/reagent_containers/hypospray/autoinjector/examine()
-	..()
-	if(reagents && reagents.reagent_list.len)
-		usr << "\blue It is currently loaded."
-	else
-		usr << "\blue It is spent."

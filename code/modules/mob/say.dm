@@ -10,7 +10,7 @@
 	set name = "Say"
 	set category = "IC"
 	if(say_disabled)	//This is here to try to identify lag problems
-		usr << "\red Speech is currently admin-disabled."
+		to_chat(usr, "\red Speech is currently admin-disabled.")
 		return
 
 	usr.say(message)
@@ -20,7 +20,7 @@
 	set category = "IC"
 
 	if(say_disabled)	//This is here to try to identify lag problems
-		usr << "\red Speech is currently admin-disabled."
+		to_chat(usr, "\red Speech is currently admin-disabled.")
 		return
 
 	message = trim(sanitize_plus(copytext(message, 1, MAX_MESSAGE_LEN)))
@@ -35,16 +35,16 @@
 	var/alt_name = ""
 
 	if(say_disabled)	//This is here to try to identify lag problems
-		usr << "\red Speech is currently admin-disabled."
+		to_chat(usr, "\red Speech is currently admin-disabled.")
 		return
 
 	if(!src.client.holder)
 		if(!dsay_allowed)
-			src << "\red Deadchat is globally muted"
+			to_chat(src, "\red Deadchat is globally muted")
 			return
 
 	if(client && !(client.prefs.chat_toggles & CHAT_DEAD))
-		usr << "\red You have deadchat muted."
+		to_chat(usr, "\red You have deadchat muted.")
 		return
 
 	if(mind && mind.name)
@@ -62,11 +62,11 @@
 		if(M.client && M.stat == DEAD && (M.client.prefs.chat_toggles & CHAT_DEAD))
 			if(M.fake_death) //Our changeling with fake_death status must not hear dead chat!!
 				continue
-			M << rendered
+			to_chat(M, rendered)
 			continue
 
 		if(M.client && M.client.holder && (M.client.prefs.chat_toggles & CHAT_DEAD) ) // Show the message to admins with deadchat toggled on
-			M << rendered	//Admins can hear deadchat, if they choose to, no matter if they're blind/deaf or not.
+			to_chat(M, rendered)//Admins can hear deadchat, if they choose to, no matter if they're blind/deaf or not.
 
 
 	return
@@ -88,14 +88,14 @@
 			return 1
 		if(isAI(src) && ispAI(other))
 			return 1
-		if (istype(other, src.type) || istype(src, other.type))
+		if(istype(other, src.type) || istype(src, other.type))
 			return 1
 		if(src.alien_talk_understand && other.alien_talk_understand)
 			return 1
 		return 0
 
 	//Language check.
-	for(var/datum/language/L in src.languages)
+	for(var/datum/language/L in languages)
 		if(speaking.name == L.name)
 			return 1
 

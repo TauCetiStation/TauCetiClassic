@@ -227,8 +227,7 @@
 	return
 /atom/proc/ShiftClick(mob/user)
 	if(user.client && user.client.eye == user)
-		examine()
-		user.face_atom(src)
+		user.examinate(src)
 	return
 
 /*
@@ -310,7 +309,7 @@
 		nutrition = max(nutrition - rand(1,10),0)
 		handle_regular_hud_updates()
 	else
-		src << "\red You're out of energy!  You need food!"
+		to_chat(src, "\red You're out of energy!  You need food!")
 
 // Simple helper to face what you clicked on, in case it should be needed in more than one place
 /mob/proc/face_atom(atom/A)

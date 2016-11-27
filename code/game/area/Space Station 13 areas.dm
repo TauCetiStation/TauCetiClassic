@@ -62,7 +62,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 var/list/teleportlocs = list()
 
 /proc/process_teleport_locs()
-	for(var/area/AR in world)
+	for(var/area/AR in all_areas)
 		if(istype(AR, /area/shuttle) || istype(AR, /area/syndicate_station) || istype(AR, /area/wizard_station) || istype(AR, /area/engine/singularity)) continue
 		if(teleportlocs.Find(AR.name)) continue
 		var/turf/picked = pick(get_area_turfs(AR.type))
@@ -77,7 +77,7 @@ var/list/teleportlocs = list()
 var/list/ghostteleportlocs = list()
 
 /proc/process_ghost_teleport_locs()
-	for(var/area/AR in world)
+	for(var/area/AR in all_areas)
 		if(ghostteleportlocs.Find(AR.name)) continue
 		if(istype(AR, /area/turret_protected/aisat) || istype(AR, /area/derelict) || istype(AR, /area/tdome))
 			ghostteleportlocs += AR.name
@@ -853,9 +853,9 @@ var/list/ghostteleportlocs = list()
 	name = "\improper Cafeteria"
 	icon_state = "cafeteria"
 
-/area/crew_quarters/oldcafeteria
-	name = "\improper Old Cafeteria"
-	icon_state = "cafeteria"
+/area/crew_quarters/gym
+	name = "\improper Gym"
+	icon_state = "fitness"
 
 /area/crew_quarters/kitchen
 	name = "\improper Kitchen"

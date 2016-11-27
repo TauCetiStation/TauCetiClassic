@@ -7,7 +7,7 @@ var/global/sent_syndicate_strike_team = 0
 	set name = "Spawn Syndicate Strike Team"
 	set desc = "Spawns a squad of commandos in the Syndicate Mothership if you want to run an admin event."
 	if(!src.holder)
-		src << "Only administrators may use this command."
+		to_chat(src, "Only administrators may use this command.")
 		return
 	if(!ticker)
 		alert("The game hasn't started yet!")
@@ -30,7 +30,7 @@ var/global/sent_syndicate_strike_team = 0
 				return
 
 	if(sent_syndicate_strike_team)
-		src << "Looks like someone beat you to it."
+		to_chat(src, "Looks like someone beat you to it.")
 		return
 
 	sent_syndicate_strike_team = 1
@@ -81,7 +81,7 @@ var/global/sent_syndicate_strike_team = 0
 				new_syndicate_commando.mind.store_memory("<B>Nuke Code:</B> \red [nuke_code].")
 			new_syndicate_commando.mind.store_memory("<B>Mission:</B> \red [input].")
 
-			new_syndicate_commando << "\blue You are an Elite Syndicate. [!syndicate_leader_selected?"commando":"<B>LEADER</B>"] in the service of the Syndicate. \nYour current mission is: \red<B>[input]</B>"
+			to_chat(new_syndicate_commando, "\blue You are an Elite Syndicate. [!syndicate_leader_selected?"commando":"<B>LEADER</B>"] in the service of the Syndicate. \nYour current mission is: \red<B>[input]</B>")
 
 			syndicate_commando_number--
 
@@ -98,7 +98,7 @@ var/global/sent_syndicate_strike_team = 0
 			new /obj/effect/spawner/newbomb/timer/syndicate(L.loc)
 			qdel(L)
 
-	message_admins("\blue [key_name_admin(usr)] has spawned a Syndicate strike squad.", 1)
+	message_admins("\blue [key_name_admin(usr)] has spawned a Syndicate strike squad.")
 	log_admin("[key_name(usr)] used Spawn Syndicate Squad.")
 	feedback_add_details("admin_verb","SDTHS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 

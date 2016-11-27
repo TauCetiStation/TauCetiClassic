@@ -6,9 +6,9 @@
 	if(!client) return
 	client.inquisitive_ghost = !client.inquisitive_ghost
 	if(client.inquisitive_ghost)
-		src << "\blue You will now examine everything you click on."
+		to_chat(src, "\blue You will now examine everything you click on.")
 	else
-		src << "\blue You will no longer examine things you click on."
+		to_chat(src, "\blue You will no longer examine things you click on.")
 
 /mob/dead/observer/DblClickOn(atom/A, params)
 	if(client.buildmode)
@@ -40,7 +40,7 @@
 // Oh by the way this didn't work with old click code which is why clicking shit didn't spam you
 /atom/proc/attack_ghost(mob/dead/observer/user)
 	if(user.client && user.client.inquisitive_ghost)
-		examine()
+		user.examinate(src)
 	return
 
 // ---------------------------------------
@@ -61,13 +61,13 @@
 	if(awaygate)
 		user.loc = awaygate.loc
 	else
-		user << "[src] has no destination."
+		to_chat(user, "[src] has no destination.")
 
 /obj/machinery/gateway/centeraway/attack_ghost(mob/user)
 	if(stationgate)
 		user.loc = stationgate.loc
 	else
-		user << "[src] has no destination."
+		to_chat(user, "[src] has no destination.")
 
 // -------------------------------------------
 // This was supposed to be used by adminghosts
