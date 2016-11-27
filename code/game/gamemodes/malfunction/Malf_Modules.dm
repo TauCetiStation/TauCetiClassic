@@ -213,7 +213,7 @@ rcd light flash thingy on matter drain
 
 					if(upgraded)
 						UC.uses --
-						C.visible_message("<span class='notice'>\icon[C] *beep*</span>")
+						C.visible_message("<span class='notice'>[bicon(C)] *beep*</span>")
 						to_chat(usr, "Camera successully upgraded!")
 					else
 						to_chat(usr, "This camera is already upgraded!")
