@@ -63,16 +63,9 @@
 		S.name = sname
 		S.short_name = generateDesignation(S.name)
 		S.current_value = rand(10, 125)
-		var/dv = rand(10, 40) / 10
-		S.fluctuational_coefficient = prob(50) ? (1 / dv) : dv
-		S.average_optimism = rand(-10, 10) / 100
-		S.optimism = S.average_optimism + (rand(-40, 40) / 100)
-		S.current_trend = rand(-200, 200) / 10
-		S.last_trend = S.current_trend
+		S.setOptimism(rand(-40, 40) * 0.01)
 		S.disp_value_change = rand(-1, 1)
-		S.speculation = rand(-20, 20)
-		S.average_shares = round(rand(500, 10000) / 10)
-		S.outside_shareholders = rand(1000, 30000)
+		S.performance = rand(10, 15) * 0.1
 		S.available_shares = rand(200000, 800000)
 		S.fluctuation_rate = rand(6, 20)
 		S.generateIndustry()
