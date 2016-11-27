@@ -50,7 +50,6 @@
 	name             = "maintenance airlock assembly"
 	icon             = 'icons/obj/doors/airlocks/station/maintenance.dmi'
 	airlock_type     = /obj/machinery/door/airlock/maintenance
-	can_insert_glass = FALSE
 
 /obj/structure/door_assembly/door_assembly_ext
 	name             = "external airlock assembly"

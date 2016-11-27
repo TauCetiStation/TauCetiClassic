@@ -239,9 +239,9 @@
 /obj/structure/door_assembly/proc/update_state()
 	update_icon()
 	var/general_state_text
-	switch (state)
-		if(ASSEMBLY_SECURED && anchored)
-			general_state_text = "secured "
+	switch(state)
+		if(ASSEMBLY_SECURED)
+			general_state_text = "[anchored ? "secured " : ""]"
 		if(ASSEMBLY_WIRED)
 			general_state_text = "wired "
 		if(ASSEMBLY_NEAR_FINISHED)
