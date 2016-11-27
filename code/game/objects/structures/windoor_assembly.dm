@@ -179,7 +179,7 @@ obj/structure/windoor_assembly/Destroy()
 						if(!src || src.electronics)
 							AE.loc = src.loc
 							return
-						to_chat(user, "<span class='notice'>You've installed the airlock electronics!</span>"
+						to_chat(user, "<span class='notice'>You've installed the airlock electronics!</span>")
 						src.name = "Near finished Windoor Assembly"
 						src.electronics = AE
 					else

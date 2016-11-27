@@ -1103,7 +1103,7 @@ About the new airlock wires panel:
 					if(src.emergency)
 						emergency = 0
 					else
-						to_chat(user, text("Emergency access is already disabled!"))
+						to_chat(usr, text("Emergency access is already disabled!"))
 
 		else if(href_list["aiEnable"])
 			var/code = text2num(href_list["aiEnable"])
@@ -1206,7 +1206,7 @@ About the new airlock wires panel:
 					if(!src.emergency)
 						emergency = 1
 					else
-						to_chat(user, text("Emergency access is already disabled!"))
+						to_chat(usr, text("Emergency access is already disabled!"))
 	update_icon()
 	if(!no_window)
 		updateUsrDialog()
