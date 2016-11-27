@@ -150,7 +150,7 @@
 		var/obj/item/stack/nanopaste/N = W
 		if(src.is_open_container() && src.reagents) //Something like a glass. Player probably wants to transfer TO it.
 			if(src.reagents.total_volume >= src.reagents.maximum_volume)
-				user << "<span class = 'rose'>[src] is full.</span>"
+				to_chat(user, "<span class = 'rose'>[src] is full.</span>")
 				return
 
 			src.reagents.add_reagent("nanites2", 1)
