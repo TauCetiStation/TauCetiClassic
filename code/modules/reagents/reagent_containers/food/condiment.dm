@@ -19,9 +19,9 @@
 	attack_self(mob/user)
 		return
 	attack(mob/M, mob/user, def_zone)
-		
+
 		if(!CanEat(user, M, src, "swallow")) return
-		
+
 		var/datum/reagents/R = src.reagents
 
 		if(!R || !R.total_volume)
@@ -120,6 +120,10 @@
 					name = "Corn Oil"
 					desc = "A delicious oil used in cooking. Made from corn."
 					icon_state = "oliveoil"
+				if("flour")
+					name = "Flour"
+					desc = "A small bag filled with some flour."
+					icon_state = "flour"
 				if("sugar")
 					name = "Sugar"
 					desc = "Tastey space sugar!"
@@ -143,6 +147,14 @@
 	New()
 		..()
 		reagents.add_reagent("enzyme", 50)
+
+/obj/item/weapon/reagent_containers/food/condiment/flour
+	name = "Flour"
+	desc = "A small bag filled with some flour."
+	icon_state = "flour"
+	New()
+		..()
+		reagents.add_reagent("flour", 30)
 
 /obj/item/weapon/reagent_containers/food/condiment/sugar
 	New()

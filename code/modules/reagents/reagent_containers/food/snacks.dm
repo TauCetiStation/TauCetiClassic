@@ -9,6 +9,7 @@
 	var/trash = null
 	var/slice_path
 	var/slices_num
+	var/deepfried = 0
 
 	//Placeholder for effect that trigger on eating that aren't tied to reagents.
 /obj/item/weapon/reagent_containers/food/snacks/proc/On_Consume(mob/M)
@@ -272,7 +273,6 @@
 	name = "candy"
 	desc = "Nougat, love it or hate it."
 	icon_state = "candy"
-	trash = /obj/item/trash/candy
 	filling_color = "#7D5F46"
 
 	New()
@@ -548,14 +548,6 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 2)
-
-/obj/item/weapon/reagent_containers/food/snacks/flour
-	name = "flour"
-	desc = "A small bag filled with some flour."
-	icon_state = "flour"
-	New()
-		..()
-		reagents.add_reagent("nutriment", 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/appendix
 //yes, this is the same as meat. I might do something different in future
@@ -2807,21 +2799,13 @@
 // new old food stuff from bs12
 ///////////////////////////////////////////
 
-// Flour + egg = dough
-/obj/item/weapon/reagent_containers/food/snacks/flour/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W,/obj/item/weapon/reagent_containers/food/snacks/egg))
-		new /obj/item/weapon/reagent_containers/food/snacks/dough(src)
-		to_chat(user, "<span class='notice'>You make some dough.</span>")
-		qdel(W)
-		qdel(src)
-
-// Egg + flour = dough
+/* Egg + flour = dough
 /obj/item/weapon/reagent_containers/food/snacks/egg/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W,/obj/item/weapon/reagent_containers/food/snacks/flour))
 		new /obj/item/weapon/reagent_containers/food/snacks/dough(src)
 		to_chat(user, "<span class='notice'>You make some dough.</span>")
 		qdel(W)
-		qdel(src)
+		qdel(src) */
 
 /obj/item/weapon/reagent_containers/food/snacks/dough
 	name = "dough"
@@ -2945,6 +2929,32 @@
 		..()
 		reagents.add_reagent("nutriment", 2)
 
+/obj/item/weapon/reagent_containers/food/snacks/rawcutlet/attackby(obj/item/weapon/W, mob/user)
+	if(istype(W,/obj/item/weapon/kitchenknife))
+		new /obj/item/weapon/reagent_containers/food/snacks/raw_bacon(src)
+		to_chat(user, "<span class='notice'>You make a bacon.</span>")
+		qdel(src)
+
+/obj/item/weapon/reagent_containers/food/snacks/cutlet
+	name = "cutlet"
+	desc = "A tasty meat slice."
+	icon = 'icons/obj/food_ingredients.dmi'
+	icon_state = "cutlet"
+	bitesize = 2
+	New()
+		..()
+		reagents.add_reagent("nutriment", 2)
+
+/obj/item/weapon/reagent_containers/food/snacks/deepfryholder
+	name = "Deep Fried Foods Holder Obj"
+	desc = "If you can see this description the code for the deep fryer fucked up."
+	icon_state = "deepfried_holder_icon"
+	filling_color = "#FFAD33"
+	bitesize = 2
+	New()
+		..()
+		reagents.add_reagent("nutriment", 3)
+
 /obj/item/weapon/reagent_containers/food/snacks/rawmeatball
 	name = "raw meatball"
 	desc = "A raw meatball."
@@ -2992,3 +3002,898 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 3)
+
+////////////////////////////////FOOD ADDITIONS////////////////////////////////////////////
+
+/obj/item/weapon/reagent_containers/food/snacks/beans
+	name = "tin of beans"
+	desc = "Musical fruit in a slightly less musical container."
+	icon_state = "beans"
+	bitesize = 2
+	New()
+		..()
+		reagents.add_reagent("nutriment", 10)
+
+/obj/item/weapon/reagent_containers/food/snacks/wrap
+	name = "egg wrap"
+	desc = "The precursor to Pigs in a Blanket."
+	icon_state = "wrap"
+	bitesize = 2
+	New()
+		..()
+		reagents.add_reagent("nutriment", 5)
+
+/obj/item/weapon/reagent_containers/food/snacks/benedict
+	name = "eggs benedict"
+	desc = "There is only one egg on this, how rude."
+	icon_state = "benedict"
+	bitesize = 3
+	New()
+		..()
+		reagents.add_reagent("nutriment", 6)
+
+/obj/item/weapon/reagent_containers/food/snacks/meatbun
+	name = "meat bun"
+	desc = "Has the potential to not be Dog."
+	icon_state = "meatbun"
+	bitesize = 2
+	New()
+		..()
+		reagents.add_reagent("nutriment", 6)
+
+/obj/item/weapon/reagent_containers/food/snacks/icecreamsandwich
+	name = "icecream sandwich"
+	desc = "Portable Ice-cream in it's own packaging."
+	icon_state = "icecreamsanwich"
+	bitesize = 1
+	New()
+		..()
+		reagents.add_reagent("nutriment", 2)
+		reagents.add_reagent("ice", 2)
+
+/obj/item/weapon/reagent_containers/food/snacks/notasandwich
+	name = "not-a-sandwich"
+	desc = "Something seems to be wrong with this, you can't quite figure what. Maybe it's his moustache."
+	icon_state = "notasandwich"
+	bitesize = 2
+	New()
+		..()
+		reagents.add_reagent("nutriment", 6)
+
+/obj/item/weapon/reagent_containers/food/snacks/sugarcookie
+	name = "sugar cookie"
+	desc = "Just like your little sister used to make."
+	icon_state = "sugarcookie"
+	bitesize = 2
+	New()
+		..()
+		reagents.add_reagent("nutriment", 2)
+		reagents.add_reagent("sugar", 5)
+
+/obj/item/weapon/reagent_containers/food/snacks/friedbanana
+	name = "Fried Banana"
+	desc = "Goreng Pisang, also known as fried bananas."
+	icon_state = "friedbanana"
+	bitesize = 4
+	New()
+		..()
+		reagents.add_reagent("sugar", 5)
+		reagents.add_reagent("nutriment", 8)
+		reagents.add_reagent("cornoil", 4)
+
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/turkey
+	name = "Turkey"
+	desc = "A traditional turkey served with stuffing."
+	icon_state = "turkey"
+	slice_path = /obj/item/weapon/reagent_containers/food/snacks/turkeyslice
+	slices_num = 6
+	bitesize = 3
+	New()
+		..()
+		reagents.add_reagent("nutriment", 42)
+
+/obj/item/weapon/reagent_containers/food/snacks/turkeyslice
+	name = "turkey serving"
+	desc = "A serving of some tender and delicious turkey."
+	icon_state = "turkeyslice"
+	trash = /obj/item/trash/plate
+	filling_color = "#B97A57"
+	bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/herbsalad
+	name = "herb salad"
+	desc = "A tasty salad with apples on top."
+	icon_state = "herbsalad"
+	trash = /obj/item/trash/snack_bowl
+	filling_color = "#76B87F"
+	bitesize = 3
+	New()
+		..()
+		reagents.add_reagent("nutriment", 8)
+
+/obj/item/weapon/reagent_containers/food/snacks/burrito
+	name = "Burrito"
+	desc = "Meat, beans, cheese, and rice wrapped up as an easy-to-hold meal."
+	icon_state = "burrito"
+	trash = /obj/item/trash/plate
+	filling_color = "#A36A1F"
+	bitesize = 1
+	New()
+		..()
+		reagents.add_reagent("nutriment", 5)
+
+/obj/item/weapon/reagent_containers/food/snacks/raw_bacon
+	name = "raw bacon"
+	desc = "It's fleshy and pink!"
+	icon_state = "raw_bacon"
+	bitesize = 3
+	New()
+		..()
+		reagents.add_reagent("nutriment", 10)
+
+/obj/item/weapon/reagent_containers/food/snacks/bacon
+	name = "bacon"
+	desc = "It looks juicy and tastes amazing!"
+	icon_state = "bacon"
+	bitesize = 3
+	New()
+		..()
+		reagents.add_reagent("nutriment", 15)
+
+/obj/item/weapon/reagent_containers/food/snacks/telebacon
+	name = "Tele Bacon"
+	desc = "It tastes a little odd but it is still delicious."
+	icon_state = "bacon_tele"
+	bitesize = 1
+	New()
+		..()
+		reagents.add_reagent("nutriment", 6)
+
+/obj/item/weapon/reagent_containers/food/snacks/salmonsteak
+	name = "Salmon steak"
+	desc = "A piece of freshly-grilled salmon meat."
+	icon_state = "salmonsteak"
+	trash = /obj/item/trash/plate
+	filling_color = "#7A3D11"
+	bitesize = 4
+	New()
+		..()
+		reagents.add_reagent("nutriment", 4)
+		reagents.add_reagent("sodiumchloride", 1)
+		reagents.add_reagent("blackpepper", 1)
+		reagents.add_reagent("anti_toxin", 5)
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/fudge
+	name = "Fudge"
+	desc = "Chocolate fudge, a timeless classic treat."
+	icon_state = "fudge"
+	filling_color = "#7D5F46"
+	bitesize = 3
+	New()
+		..()
+		reagents.add_reagent("cream", 2)
+		reagents.add_reagent("nutriment",4)
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/fudge/cherry
+	name = "Chocolate Cherry Fudge"
+	desc = "Chocolate fudge surrounding sweet cherries. Good for tricking kids into eating some fruit."
+	icon_state = "fudge_cherry"
+	filling_color = "#7D5F46"
+	bitesize = 3
+	New()
+		..()
+		reagents.add_reagent("cream", 3)
+		reagents.add_reagent("nutriment", 6)
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/fudge/cookies_n_cream
+	name = "Cookies 'n' Cream Fudge"
+	desc = "An extra creamy fudge with bits of real chocolate cookie mixed in. Crunchy!"
+	icon_state = "fudge_cookies_n_cream"
+	filling_color = "#7D5F46"
+	bitesize = 3
+	New()
+		..()
+		reagents.add_reagent("cream", 5)
+		reagents.add_reagent("nutriment", 4)
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/fudge/turtle
+	name = "Turtle Fudge"
+	desc = "Chocolate fudge with caramel and nuts. It doesn't contain real turtles, thankfully."
+	icon_state = "fudge_turtle"
+	filling_color = "#7D5F46"
+	bitesize = 3
+	New()
+		..()
+		reagents.add_reagent("cream", 2)
+		reagents.add_reagent("nutriment", 6)
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/toffee
+	name = "Toffee"
+	desc = "A hard, brittle candy with a distinctive taste."
+	icon_state = "toffee"
+	filling_color = "#7D5F46"
+	bitesize = 2
+	New()
+		..()
+		reagents.add_reagent("nutriment", 3)
+		reagents.add_reagent("sugar", 3)
+		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/caramel
+	name = "Caramel"
+	desc = "Chewy and dense, yet it practically melts in your mouth!"
+	icon_state = "caramel"
+	filling_color = "#DB944D"
+	bitesize = 2
+	New()
+		..()
+		reagents.add_reagent("cream", 2)
+		reagents.add_reagent("sugar", 2)
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/candycane
+	name = "candy cane"
+	desc = "A festive mint candy cane."
+	icon_state = "candycane"
+	filling_color = "#F2F2F2"
+	bitesize = 2
+	New()
+		..()
+		reagents.add_reagent("sugar", 5)
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/taffy
+	name = "Saltwater Taffy"
+	desc = "Old fashioned saltwater taffy. Chewy!"
+	icon_state = "candy1"
+	filling_color = "#7D5F46"
+	bitesize = 4
+	New()
+		..()
+		icon_state = pick("candy1", "candy2", "candy3", "candy4", "candy5")
+		reagents.add_reagent("nutriment", 2)
+		reagents.add_reagent("sugar", 2)
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/nougat
+	name = "Nougat"
+	desc = "A soft, chewy candy commonly found in candybars."
+	icon_state = "nougat"
+	filling_color = "#7D5F46"
+	bitesize = 2
+	New()
+		..()
+		reagents.add_reagent("nutriment", 3)
+		reagents.add_reagent("sugar", 3)
+
+///////////////////////////////////////////
+// COTTONS :3
+///////////////////////////////////////////
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/cotton
+	name = "cotton candy"
+	desc = "Light and fluffy, it's like eating a cloud made from sugar!"
+	icon_state = "cottoncandy_plain"
+	filling_color = "#FFFFFF"
+	trash = /obj/item/weapon/c_tube
+	bitesize = 3
+	New()
+		..()
+		reagents.add_reagent("sugar", 15)
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/cotton/red
+	name = "cotton candy"
+	desc = "Light and fluffy, it's like eating a cloud made from sugar!"
+	icon_state = "cottoncandy_red"
+	filling_color = "#801E28"
+	trash = /obj/item/weapon/c_tube
+	bitesize = 4
+	New()
+		..()
+		reagents.add_reagent("cherryjelly", 10)
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/cotton/blue
+	name = "cotton candy"
+	desc = "Light and fluffy, it's like eating a cloud made from sugar!"
+	icon_state = "cottoncandy_blue"
+	filling_color = "#863333"
+	trash = /obj/item/weapon/c_tube
+	bitesize = 4
+	New()
+		..()
+		reagents.add_reagent("berryjuice", 10)
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/cotton/green
+	name = "cotton candy"
+	desc = "Light and fluffy, it's like eating a cloud made from sugar!"
+	icon_state = "cottoncandy_green"
+	filling_color = "#365E30"
+	trash = /obj/item/weapon/c_tube
+	bitesize = 4
+	New()
+		..()
+		reagents.add_reagent("limejuice", 5)
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/cotton/yellow
+	name = "cotton candy"
+	desc = "Light and fluffy, it's like eating a cloud made from sugar!"
+	icon_state = "cottoncandy_yellow"
+	filling_color = "#863333"
+	trash = /obj/item/weapon/c_tube
+	bitesize = 4
+	New()
+		..()
+		reagents.add_reagent("lemonjuice", 5)
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/cotton/orange
+	name = "cotton candy"
+	desc = "Light and fluffy, it's like eating a cloud made from sugar!"
+	icon_state = "cottoncandy_orange"
+	filling_color = "#E78108"
+	trash = /obj/item/weapon/c_tube
+	bitesize = 4
+	New()
+		..()
+		reagents.add_reagent("orangejuice", 5)
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/cotton/purple
+	name = "cotton candy"
+	desc = "Light and fluffy, it's like eating a cloud made from sugar!"
+	icon_state = "cottoncandy_purple"
+	filling_color = "#993399"
+	trash = /obj/item/weapon/c_tube
+	bitesize = 4
+	New()
+		..()
+		reagents.add_reagent("grapejuice", 5)
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/cotton/pink
+	name = "cotton candy"
+	desc = "Light and fluffy, it's like eating a cloud made from sugar!"
+	icon_state = "cottoncandy_pink"
+	filling_color = "#863333"
+	trash = /obj/item/weapon/c_tube
+	bitesize = 4
+	New()
+		..()
+		reagents.add_reagent("watermelonjuice", 5)
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/cotton/rainbow
+	name = "cotton candy"
+	desc = "Light and fluffy, it's like eating a cloud made from sugar!"
+	icon_state = "cottoncandy_rainbow"
+	filling_color = "#C8A5DC"
+	trash = /obj/item/weapon/c_tube
+	bitesize = 4
+	New()
+		..()
+		reagents.add_reagent("nutriment", 20)
+		reagents.add_reagent("psilocybin", 1)
+
+///////////////////////////////////////////
+// GUM and SUCKERS :D :>
+///////////////////////////////////////////
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/gummybear
+	name = "gummy bear"
+	desc = "A small edible bear. It's squishy and chewy!"
+	icon_state = "gbear"
+	filling_color = "#FFFFFF"
+	bitesize = 3
+	New()
+		..()
+		reagents.add_reagent("sugar", 10)
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/gummyworm
+	name = "gummy worm"
+	desc = "An edible worm, made from gelatin."
+	icon_state = "gworm"
+	filling_color = "#FFFFFF"
+	bitesize = 3
+	New()
+		..()
+		reagents.add_reagent("sugar", 10)
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/jellybean
+	name = "jelly bean"
+	desc = "A candy bean, guarenteed to not give you gas."
+	icon_state = "jbean"
+	filling_color = "#FFFFFF"
+	bitesize = 3
+	New()
+		..()
+		reagents.add_reagent("sugar", 10)
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/jawbreaker
+	name = "jawbreaker"
+	desc = "An unbelievably hard candy. The name is fitting."
+	icon_state = "jawbreaker"
+	filling_color = "#ED0758"
+	bitesize = 0.1	//this is gonna take a while, you'll be working at this all shift.
+	New()
+		..()
+		reagents.add_reagent("sugar", 10)
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/cash
+	name = "candy cash"
+	desc = "Not legal tender. Tasty though."
+	icon_state = "candy_cash"
+	filling_color = "#302000"
+	bitesize = 2
+	New()
+		..()
+		reagents.add_reagent("nutriment", 2)
+		reagents.add_reagent("hot_coco", 4)
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/coin
+	name = "chocolate coin"
+	desc = "Probably won't work in the vending machines."
+	icon_state = "choc_coin"
+	filling_color = "#302000"
+	bitesize = 3
+	New()
+		..()
+		reagents.add_reagent("nutriment", 2)
+		reagents.add_reagent("hot_coco",4)
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/gum
+	name = "bubblegum"
+	desc = "Chewy!"
+	icon_state = "bubblegum"
+	filling_color = "#FF7495"
+	bitesize = 0.2
+	New()
+		..()
+		reagents.add_reagent("sugar", 5)
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/sucker
+	name = "sucker"
+	desc = "For being such a good sport!"
+	icon_state = "sucker"
+	filling_color = "#FFFFFF"
+	bitesize = 1
+	New()
+		..()
+		reagents.add_reagent("sugar", 10)
+
+///////////////////////////////////////////
+// BEAR GYMS :3
+///////////////////////////////////////////
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/gummybear/red
+	name = "gummy bear"
+	desc = "A small edible bear. It's red!"
+	icon_state = "gbear_red"
+	filling_color = "#801E28"
+	bitesize = 3
+	New()
+		..()
+		reagents.add_reagent("cherryjelly", 2)
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/gummybear/blue
+	name = "gummy bear"
+	desc = "A small edible bear. It's blue!"
+	icon_state = "gbear_blue"
+	filling_color = "#863333"
+	bitesize = 3
+	New()
+		..()
+		reagents.add_reagent("berryjuice", 2)
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/gummybear/green
+	name = "gummy bear"
+	desc = "A small edible bear. It's green!"
+	icon_state = "gbear_green"
+	filling_color = "#365E30"
+	bitesize = 3
+	New()
+		..()
+		reagents.add_reagent("limejuice", 2)
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/gummybear/yellow
+	name = "gummy bear"
+	desc = "A small edible bear. It's yellow!"
+	icon_state = "gbear_yellow"
+	filling_color = "#863333"
+	bitesize = 3
+	New()
+		..()
+		reagents.add_reagent("lemonjuice", 2)
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/gummybear/orange
+	name = "gummy bear"
+	desc = "A small edible bear. It's orange!"
+	icon_state = "gbear_orange"
+	filling_color = "#E78108"
+	bitesize = 3
+	New()
+		..()
+		reagents.add_reagent("orangejuice", 2)
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/gummybear/purple
+	name = "gummy bear"
+	desc = "A small edible bear. It's purple!"
+	icon_state = "gbear_purple"
+	filling_color = "#993399"
+	bitesize = 3
+	New()
+		..()
+		reagents.add_reagent("grapejuice", 2)
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/gummybear/wtf
+	name = "gummy bear"
+	desc = "A small bear. Wait... what?"
+	icon_state = "gbear_wtf"
+	filling_color = "#60A584"
+	bitesize = 3
+	New()
+		..()
+		reagents.add_reagent("space_drugs", 2)
+
+///////////////////////////////////////////
+// WORM GYMS :3
+///////////////////////////////////////////
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/gummyworm/red
+	name = "gummy worm"
+	desc = "An edible worm, made from gelatin. It's red!"
+	icon_state = "gworm_red"
+	filling_color = "#801E28"
+	bitesize = 3
+	New()
+		..()
+		reagents.add_reagent("cherryjelly", 2)
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/gummyworm/blue
+	name = "gummy worm"
+	desc = "An edible worm, made from gelatin. It's blue!"
+	icon_state = "gworm_blue"
+	filling_color = "#863333"
+	bitesize = 3
+	New()
+		..()
+		reagents.add_reagent("berryjuice", 2)
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/gummyworm/green
+	name = "gummy worm"
+	desc = "An edible worm, made from gelatin. It's green!"
+	icon_state = "gworm_green"
+	filling_color = "#365E30"
+	bitesize = 3
+	New()
+		..()
+		reagents.add_reagent("limejuice", 10)
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/gummyworm/yellow
+	name = "gummy worm"
+	desc = "An edible worm, made from gelatin. It's yellow!"
+	icon_state = "gworm_yellow"
+	filling_color = "#863333"
+	bitesize = 3
+	New()
+		..()
+		reagents.add_reagent("lemonjuice", 2)
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/gummyworm/orange
+	name = "gummy worm"
+	desc = "An edible worm, made from gelatin. It's orange!"
+	icon_state = "gworm_orange"
+	filling_color = "#E78108"
+	bitesize = 3
+	New()
+		..()
+		reagents.add_reagent("orangejuice", 2)
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/gummyworm/purple
+	name = "gummy worm"
+	desc = "An edible worm, made from gelatin. It's purple!"
+	icon_state = "gworm_purple"
+	filling_color = "#993399"
+	bitesize = 3
+	New()
+		..()
+		reagents.add_reagent("grapejuice", 2)
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/gummyworm/wtf
+	name = "gummy worm"
+	desc = "An edible worm. Did it just move?"
+	icon_state = "gworm_wtf"
+	filling_color = "#60A584"
+	bitesize = 3
+	New()
+		..()
+		reagents.add_reagent("space_drugs", 2)
+
+///////////////////////////////////////////
+// JELLY BEANS :3
+///////////////////////////////////////////
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/jellybean/red
+	name = "jelly bean"
+	desc = "A candy bean, guarenteed to not give you gas. It's red!"
+	icon_state = "jbean_red"
+	filling_color = "#801E28"
+	bitesize = 3
+	New()
+		..()
+		reagents.add_reagent("cherryjelly", 2)
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/jellybean/blue
+	name = "jelly bean"
+	desc = "A candy bean, guarenteed to not give you gas. It's blue!"
+	icon_state = "jbean_blue"
+	filling_color = "#863333"
+	bitesize = 3
+	New()
+		..()
+		reagents.add_reagent("berryjuice", 2)
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/jellybean/green
+	name = "jelly bean"
+	desc = "A candy bean, guarenteed to not give you gas. It's green!"
+	icon_state = "jbean_green"
+	filling_color = "#365E30"
+	bitesize = 3
+	New()
+		..()
+		reagents.add_reagent("limejuice", 2)
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/jellybean/yellow
+	name = "jelly bean"
+	desc = "A candy bean, guarenteed to not give you gas. It's yellow!"
+	icon_state = "jbean_yellow"
+	filling_color = "#863333"
+	bitesize = 3
+	New()
+		..()
+		reagents.add_reagent("lemonjuice", 2)
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/jellybean/orange
+	name = "jelly bean"
+	desc = "A candy bean, guarenteed to not give you gas. It's orange!"
+	icon_state = "jbean_orange"
+	filling_color = "#E78108"
+	bitesize = 3
+	New()
+		..()
+		reagents.add_reagent("orangejuice", 2)
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/jellybean/purple
+	name = "jelly bean"
+	desc = "A candy bean, guarenteed to not give you gas. It's purple!"
+	icon_state = "jbean_purple"
+	filling_color = "#993399"
+	bitesize = 3
+	New()
+		..()
+		reagents.add_reagent("grapejuice", 2)
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/jellybean/chocolate
+	name = "jelly bean"
+	desc = "A candy bean, guarenteed to not give you gas. It's chocolate!"
+	icon_state = "jbean_choc"
+	filling_color = "#302000"
+	bitesize = 3
+	New()
+		..()
+		reagents.add_reagent("hot_coco",2)
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/jellybean/popcorn
+	name = "jelly bean"
+	desc = "A candy bean, guarenteed to not give you gas. It's popcorn flavored!"
+	icon_state = "jbean_popcorn"
+	filling_color = "#664330"
+	bitesize = 3
+	New()
+		..()
+		reagents.add_reagent("nutriment", 2)
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/jellybean/cola
+	name = "jelly bean"
+	desc = "A candy bean, guarenteed to not give you gas. It's Cola flavored!"
+	icon_state = "jbean_cola"
+	filling_color = "#102000"
+	bitesize = 3
+	New()
+		..()
+		reagents.add_reagent("cola", 2)
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/jellybean/drgibb
+	name = "jelly bean"
+	desc = "A candy bean, guarenteed to not give you gas. It's Dr. Gibb flavored!"
+	icon_state = "jbean_cola"
+	filling_color = "#102000"
+	bitesize = 3
+	New()
+		..()
+		reagents.add_reagent("dr_gibb", 2)
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/jellybean/coffee
+	name = "jelly bean"
+	desc = "A candy bean, guarenteed to not give you gas. It's Coffee flavored!"
+	icon_state = "jbean_choc"
+	filling_color = "#482000"
+	bitesize = 3
+	New()
+		..()
+		reagents.add_reagent("coffee", 2)
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/jellybean/wtf
+	name = "jelly bean"
+	desc = "A candy bean, guarenteed to not give you gas. You aren't sure what color it is."
+	icon_state = "jbean_wtf"
+	filling_color = "#60A584"
+	bitesize = 3
+	New()
+		..()
+		reagents.add_reagent("space_drugs", 2)
+
+///////////////////////////////////////////
+// CANDYBARS! :3
+///////////////////////////////////////////
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/candybar/rice
+	name = "Asteroid Crunch Bar"
+	desc = "Crunchy rice deposits in delicious chocolate! A favorite of miners galaxy-wide."
+	icon_state = "asteroidcrunch"
+	trash = /obj/item/trash/candy
+	filling_color = "#7D5F46"
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/candybar/toffee
+	name = "Yum-baton Bar"
+	desc = "Chocolate and toffee in the shape of a baton. Security sure knows how to pound these down!"
+	icon_state = "yumbaton"
+	filling_color = "#7D5F46"
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/candybar/caramel
+	name = "Malper Bar"
+	desc = "A chocolate syringe filled with a caramel injection. Just what the doctor ordered!"
+	icon_state = "malper"
+	filling_color = "#7D5F46"
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/candybar/caramel_nougat
+	name = "Toxins Test Bar"
+	desc = "An explosive combination of chocolate, caramel, and nougat. Research has never been so tasty!"
+	icon_state = "toxinstest"
+	filling_color = "#7D5F46"
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/candybar/nougat
+	name = "Tool-erone Bar"
+	desc = "Chocolate-covered nougat, shaped like a wrench. Great for an engineer on the go!"
+	icon_state = "toolerone"
+	filling_color = "#7D5F46"
+
+///////////////////////////////////////////
+// SUCKERS! :3
+///////////////////////////////////////////
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/sucker/red
+	name = "sucker"
+	desc = "For being such a good sport! It's red!"
+	icon_state = "sucker_red"
+	filling_color = "#801E28"
+	bitesize = 3
+	New()
+		..()
+		reagents.add_reagent("cherryjelly", 2)
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/sucker/blue
+	name = "sucker"
+	desc = "For being such a good sport! It's blue!"
+	icon_state = "sucker_blue"
+	filling_color = "#863333"
+	bitesize = 3
+	New()
+		..()
+		reagents.add_reagent("berryjuice", 2)
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/sucker/green
+	name = "sucker"
+	desc = "For being such a good sport! It's green!"
+	icon_state = "sucker_green"
+	filling_color = "#365E30"
+	bitesize = 3
+	New()
+		..()
+		reagents.add_reagent("limejuice", 2)
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/sucker/yellow
+	name = "sucker"
+	desc = "For being such a good sport! It's yellow!"
+	icon_state = "sucker_yellow"
+	filling_color = "#863333"
+	bitesize = 3
+	New()
+		..()
+		reagents.add_reagent("lemonjuice", 2)
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/sucker/orange
+	name = "sucker"
+	desc = "For being such a good sport! It's orange!"
+	icon_state = "sucker_orange"
+	filling_color = "#E78108"
+	bitesize = 3
+	New()
+		..()
+		reagents.add_reagent("orangejuice", 2)
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/sucker/purple
+	name = "sucker"
+	desc = "For being such a good sport! It's purple!"
+	icon_state = "sucker_purple"
+	filling_color = "#993399"
+	bitesize = 3
+	New()
+		..()
+		reagents.add_reagent("grapejuice", 2)
+
+///////////////////////////////////////////
+// WORM GYMS :3
+///////////////////////////////////////////
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/gummyworm/red
+	name = "gummy worm"
+	desc = "An edible worm, made from gelatin. It's red!"
+	icon_state = "gworm_red"
+	filling_color = "#801E28"
+	bitesize = 3
+	New()
+		..()
+		reagents.add_reagent("cherryjelly", 2)
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/gummyworm/blue
+	name = "gummy worm"
+	desc = "An edible worm, made from gelatin. It's blue!"
+	icon_state = "gworm_blue"
+	filling_color = "#863333"
+	bitesize = 3
+	New()
+		..()
+		reagents.add_reagent("berryjuice", 2)
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/gummyworm/green
+	name = "gummy worm"
+	desc = "An edible worm, made from gelatin. It's green!"
+	icon_state = "gworm_green"
+	filling_color = "#365E30"
+	bitesize = 3
+	New()
+		..()
+		reagents.add_reagent("limejuice", 10)
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/gummyworm/yellow
+	name = "gummy worm"
+	desc = "An edible worm, made from gelatin. It's yellow!"
+	icon_state = "gworm_yellow"
+	filling_color = "#863333"
+	bitesize = 3
+	New()
+		..()
+		reagents.add_reagent("lemonjuice", 2)
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/gummyworm/orange
+	name = "gummy worm"
+	desc = "An edible worm, made from gelatin. It's orange!"
+	icon_state = "gworm_orange"
+	filling_color = "#E78108"
+	bitesize = 3
+	New()
+		..()
+		reagents.add_reagent("orangejuice", 2)
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/gummyworm/purple
+	name = "gummy worm"
+	desc = "An edible worm, made from gelatin. It's purple!"
+	icon_state = "gworm_purple"
+	filling_color = "#993399"
+	bitesize = 3
+	New()
+		..()
+		reagents.add_reagent("grapejuice", 2)
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/gummyworm/wtf
+	name = "gummy worm"
+	desc = "An edible worm. Did it just move?"
+	icon_state = "gworm_wtf"
+	filling_color = "#60A584"
+	bitesize = 3
+	New()
+		..()
+		reagents.add_reagent("space_drugs", 2)

@@ -1503,7 +1503,7 @@ datum
 			name = "Soy Sauce"
 			id = "soysauce"
 			result = "soysauce"
-			required_reagents = list("soymilk" = 4, "sacid" = 1)
+			required_reagents = list("soymilk" = 5, "sodiumchloride" = 5, "water" = 40)
 			result_amount = 5
 
 		cheesewheel
