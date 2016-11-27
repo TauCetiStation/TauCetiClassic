@@ -47,7 +47,7 @@
 			positive_locations.Add(D)
 
 			for(var/mob/L in range(src, 1))
-				L << "\blue \icon[src] [src] pings."
+				to_chat(L, "\blue [bicon(src)] [src] pings.")
 
 	else if(istype(A,/obj/structure/boulder))
 		var/obj/structure/boulder/B = A
@@ -66,7 +66,7 @@
 			positive_locations.Add(D)
 
 			for(var/mob/L in range(src, 1))
-				L << "\blue \icon[src] [src] pings [pick("madly","wildly","excitedly","crazily")]!."
+				to_chat(L, "\blue [bicon(src)] [src] pings [pick("madly","wildly","excitedly","crazily")]!.")
 
 /obj/item/device/depth_scanner/attack_self(mob/user)
 	return src.interact(user)

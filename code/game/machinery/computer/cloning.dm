@@ -77,7 +77,7 @@
 			user.drop_item()
 			W.loc = src
 			src.diskette = W
-			user << "You insert [W]."
+			to_chat(user, "You insert [W].")
 			src.updateUsrDialog()
 			return
 	else

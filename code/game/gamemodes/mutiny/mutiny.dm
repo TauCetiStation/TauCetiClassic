@@ -116,9 +116,9 @@ datum/game_mode/mutiny
 		if (!pda.message_silent)
 			playsound(pda.loc, 'sound/machines/twobeep.ogg', 50, 1)
 			for (var/mob/O in hearers(3, pda.loc))
-				O.show_message(text("\icon[pda] *[pda.ttone]*"))
+				O.show_message(text("[bicon(pda)] *[pda.ttone]*"))
 
-		head_mutineer.current << fluff.get_pda_body()
+		to_chat(head_mutineer.current, fluff.get_pda_body())
 		return 1
 
 	proc/get_equipment_slots()
@@ -137,7 +137,7 @@ datum/game_mode/mutiny
 
 	proc/equip_head(datum/mind/head, faction, proc/recruitment_verb)
 		var/mob/living/carbon/human/H = head.current
-		H << "You are the Head [capitalize(faction)]!"
+		to_chat(H, "You are the Head [capitalize(faction)]!")
 		head.special_role = "head_[faction]"
 
 		var/slots = get_equipment_slots()
@@ -162,8 +162,8 @@ datum/game_mode/mutiny
 
 	proc/add_faction(datum/mind/M, faction, list/faction_list)
 		if(!can_be_recruited(M, faction))
-			M.current << "\red Recruitment canceled; your role has already changed."
-			head_mutineer.current << "\red Could not recruit [M]. Their role has changed."
+			to_chat(M.current, "\red Recruitment canceled; your role has already changed.")
+			to_chat(head_mutineer.current, "\red Could not recruit [M]. Their role has changed.")
 			return
 
 		if(M in loyalists)
@@ -176,11 +176,11 @@ datum/game_mode/mutiny
 		faction_list.Add(M)
 
 		if(faction == "mutineer")
-			M.current << fluff.mutineer_tag("You have joined the mutineers!")
-			head_mutineer.current << fluff.mutineer_tag("[M] has joined the mutineers!")
+			to_chat(M.current, fluff.mutineer_tag("You have joined the mutineers!"))
+			to_chat(head_mutineer.current, fluff.mutineer_tag("[M] has joined the mutineers!"))
 		else
-			M.current << fluff.loyalist_tag("You have joined the loyalists!")
-			head_loyalist.current << fluff.loyalist_tag("[M] has joined the loyalists!")
+			to_chat(M.current, fluff.loyalist_tag("You have joined the loyalists!"))
+			to_chat(head_loyalist.current, fluff.loyalist_tag("[M] has joined the loyalists!"))
 
 		update_icon(M)
 
@@ -301,21 +301,21 @@ datum/game_mode/mutiny
 			D.infected.Remove(deceased)
 
 	proc/round_outcome()
-		world << "<center><h4>Breaking News</h4></center><br><hr>"
+		to_chat(world, "<center><h4>Breaking News</h4></center><br><hr>")
 		if (was_bloodbath())
-			world << fluff.no_victory()
+			to_chat(world, fluff.no_victory())
 			return
 
 		var/directives_completed = current_directive.directives_complete()
 		var/ead_activated = ead.activated
 		if (directives_completed && ead_activated)
-			world << fluff.loyalist_major_victory()
+			to_chat(world, fluff.loyalist_major_victory())
 		else if (directives_completed && !ead_activated)
-			world << fluff.loyalist_minor_victory()
+			to_chat(world, fluff.loyalist_minor_victory())
 		else if (!directives_completed && ead_activated)
-			world << fluff.mutineer_minor_victory()
+			to_chat(world, fluff.mutineer_minor_victory())
 		else if (!directives_completed && !ead_activated)
-			world << fluff.mutineer_major_victory()
+			to_chat(world, fluff.mutineer_major_victory())
 
 		world << sound('sound/machines/twobeep.ogg')
 
@@ -356,17 +356,17 @@ datum/game_mode/mutiny
 /datum/game_mode/mutiny/pre_setup()
 	var/list/loyalist_candidates = get_head_loyalist_candidates()
 	if(!loyalist_candidates || loyalist_candidates.len == 0)
-		world << "\red Mutiny mode aborted: no valid candidates for head loyalist."
+		to_chat(world, "\red Mutiny mode aborted: no valid candidates for head loyalist.")
 		return 0
 
 	var/list/mutineer_candidates = get_head_mutineer_candidates()
 	if(!mutineer_candidates || mutineer_candidates.len == 0)
-		world << "\red Mutiny mode aborted: no valid candidates for head mutineer."
+		to_chat(world, "\red Mutiny mode aborted: no valid candidates for head mutineer.")
 		return 0
 
 	var/list/directive_candidates = get_directive_candidates()
 	if(!directive_candidates || directive_candidates.len == 0)
-		world << "\red Mutiny mode aborted: no valid candidates for Directive X."
+		to_chat(world, "\red Mutiny mode aborted: no valid candidates for Directive X.")
 		return 0
 
 	head_loyalist = pick(loyalist_candidates)
@@ -406,11 +406,11 @@ datum/game_mode/mutiny
 			candidates += P
 
 	if(!candidates.len)
-		src << "\red You aren't close enough to anybody that can be recruited."
+		to_chat(src, "\red You aren't close enough to anybody that can be recruited.")
 		return
 
 	if(world.time < mode.recruit_loyalist_cooldown)
-		src << "\red Wait [MUTINY_RECRUITMENT_COOLDOWN] seconds before recruiting again."
+		to_chat(src, "\red Wait [MUTINY_RECRUITMENT_COOLDOWN] seconds before recruiting again.")
 		return
 
 	mode.recruit_loyalist_cooldown = world.time + (MUTINY_RECRUITMENT_COOLDOWN SECONDS)
@@ -418,7 +418,7 @@ datum/game_mode/mutiny
 	var/mob/living/carbon/human/M = input("Select a person to recruit", "Loyalist recruitment", null) as mob in candidates
 
 	if (M)
-		src << "Attempting to recruit [M]..."
+		to_chat(src, "Attempting to recruit [M]...")
 		log_admin("[src]([src.ckey]) attempted to recruit [M] as a loyalist.")
 		message_admins("\red [src]([src.ckey]) attempted to recruit [M] as a loyalist.")
 
@@ -426,8 +426,8 @@ datum/game_mode/mutiny
 		if(choice == "Yes")
 			mode.add_loyalist(M.mind)
 		else if(choice == "No")
-			M << "\red You declined to join the loyalists."
-			mode.head_loyalist.current << "\red <b>[M] declined to support the loyalists.</b>"
+			to_chat(M, "\red You declined to join the loyalists.")
+			to_chat(mode.head_loyalist.current, "\red <b>[M] declined to support the loyalists.</b>")
 
 /mob/living/carbon/human/proc/recruit_mutineer()
 	set name = "Recruit Mutineer"
@@ -443,11 +443,11 @@ datum/game_mode/mutiny
 			candidates += P
 
 	if(!candidates.len)
-		src << "\red You aren't close enough to anybody that can be recruited."
+		to_chat(src, "\red You aren't close enough to anybody that can be recruited.")
 		return
 
 	if(world.time < mode.recruit_mutineer_cooldown)
-		src << "\red Wait [MUTINY_RECRUITMENT_COOLDOWN] seconds before recruiting again."
+		to_chat(src, "\red Wait [MUTINY_RECRUITMENT_COOLDOWN] seconds before recruiting again.")
 		return
 
 	mode.recruit_mutineer_cooldown = world.time + (MUTINY_RECRUITMENT_COOLDOWN SECONDS)
@@ -455,7 +455,7 @@ datum/game_mode/mutiny
 	var/mob/living/carbon/human/M = input("Select a person to recruit", "Mutineer recruitment", null) as mob in candidates
 
 	if (M)
-		src << "Attempting to recruit [M]..."
+		to_chat(src, "Attempting to recruit [M]...")
 		log_admin("[src]([src.ckey]) attempted to recruit [M] as a mutineer.")
 		message_admins("\red [src]([src.ckey]) attempted to recruit [M] as a mutineer.")
 
@@ -463,8 +463,8 @@ datum/game_mode/mutiny
 		if(choice == "Yes")
 			mode.add_mutineer(M.mind)
 		else if(choice == "No")
-			M << "\red You declined to join the mutineers."
-			mode.head_mutineer.current << "\red <b>[M] declined to support the mutineers.</b>"
+			to_chat(M, "\red You declined to join the mutineers.")
+			to_chat(mode.head_mutineer.current, "\red <b>[M] declined to support the mutineers.</b>")
 
 /proc/get_mutiny_mode()
 	if(!ticker || !istype(ticker.mode, /datum/game_mode/mutiny))

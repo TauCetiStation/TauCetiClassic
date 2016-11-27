@@ -120,7 +120,7 @@
 			var/obj/item/conveyor_construct/C = new/obj/item/conveyor_construct(src.loc)
 			C.id = id
 			transfer_fingerprints_to(C)
-		user << "<span class='notice'>You remove the conveyor belt.</span>"
+		to_chat(user, "<span class='notice'>You remove the conveyor belt.</span>")
 		qdel(src)
 		return
 	if(istype(I, /obj/item/weapon/wrench))
@@ -128,12 +128,12 @@
 			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 			dir = turn(dir,-45)
 			update_move_direction()
-			user << "<span class='notice'>You rotate [src].</span>"
+			to_chat(user, "<span class='notice'>You rotate [src].</span>")
 			return
 	if(isrobot(user))
 		return //Carn: fix for borgs dropping their modules on conveyor belts
 	if(!user.drop_item())
-		user << "<span class='warning'>\The [I] is stuck to your hand, you cannot place it on the conveyor!</span>"
+		to_chat(user, "<span class='warning'>\The [I] is stuck to your hand, you cannot place it on the conveyor!</span>")
 		return
 	if(I && I.loc)
 		I.loc = src.loc
@@ -244,7 +244,7 @@
 	add_fingerprint(user)
 
 	if(!allowed(user))
-		user << "<span class='warning'>Access denied.</span>"
+		to_chat(user, "<span class='warning'>Access denied.</span>")
 		return
 
 	if(position == 0)
@@ -275,7 +275,7 @@
 		var/obj/item/conveyor_switch_construct/C = new/obj/item/conveyor_switch_construct(src.loc)
 		C.id = id
 		transfer_fingerprints_to(C)
-		user << "<span class='notice'>You deattach the conveyor switch.</span>"
+		to_chat(user, "<span class='notice'>You deattach the conveyor switch.</span>")
 		qdel(src)
 
 /obj/machinery/conveyor_switch/oneway
@@ -297,7 +297,7 @@
 /obj/item/conveyor_construct/attackby(obj/item/I, mob/user)
 	..()
 	if(istype(I, /obj/item/conveyor_switch_construct))
-		user << "<span class='notice'>You link the switch to the conveyor belt assembly.</span>"
+		to_chat(user, "<span class='notice'>You link the switch to the conveyor belt assembly.</span>")
 		var/obj/item/conveyor_switch_construct/C = I
 		id = C.id
 
@@ -306,7 +306,7 @@
 		return
 	var/cdir = get_dir(A, user)
 	if(A == user.loc)
-		user << "<span class='notice'>You cannot place a conveyor belt under yourself.</span>"
+		to_chat(user, "<span class='notice'>You cannot place a conveyor belt under yourself.</span>")
 		return
 	var/obj/machinery/conveyor/C = new/obj/machinery/conveyor(A,cdir)
 	C.id = id
@@ -334,7 +334,7 @@
 			found = 1
 			break
 	if(!found)
-		user << "\icon[src]<span class=notice>The conveyor switch did not detect any linked conveyor belts in range.</span>"
+		to_chat(user, "[bicon(src)]<span class=notice>The conveyor switch did not detect any linked conveyor belts in range.</span>")
 		return
 	var/obj/machinery/conveyor_switch/NC = new/obj/machinery/conveyor_switch(A, id)
 	transfer_fingerprints_to(NC)

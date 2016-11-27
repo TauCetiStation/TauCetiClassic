@@ -143,14 +143,14 @@ Put (mob/proc)s here that are in dire need of a code cleanup.
 					Cl = H.shoes
 					passed = prob((Cl.permeability_coefficient*100) - 1)
 			else
-				src << "Something strange's going on, something's wrong."
+				to_chat(src, "Something strange's going on, something's wrong.")
 
 			/*if("feet")
 				if(H.shoes && istype(H.shoes, /obj/item/clothing/))
 					Cl = H.shoes
 					passed = prob(Cl.permeability_coefficient*100)
 					//
-					world << "Shoes pass [passed]"
+					to_chat(world, "Shoes pass [passed]")
 			*/		//
 	else if(istype(src, /mob/living/carbon/monkey))
 		var/mob/living/carbon/monkey/M = src

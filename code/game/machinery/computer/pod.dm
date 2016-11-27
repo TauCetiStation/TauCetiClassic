@@ -28,8 +28,8 @@
 	if(stat & (NOPOWER|BROKEN))
 		return
 
-	if(!( connected ))
-		viewers(null, null) << "Cannot locate mass driver connector. Cancelling firing sequence!"
+	if(!connected)
+		to_chat(viewers(), "Cannot locate mass driver connector. Cancelling firing sequence!")
 		return
 
 	for(var/obj/machinery/door/poddoor/M in machines)
@@ -145,7 +145,7 @@
 
 /obj/machinery/computer/pod/old/syndicate/attack_hand(mob/user)
 	if(!allowed(user))
-		user << "\red Access Denied"
+		to_chat(user, "\red Access Denied")
 		return
 	else
 		..()
