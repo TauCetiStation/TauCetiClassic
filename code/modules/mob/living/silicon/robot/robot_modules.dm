@@ -39,6 +39,13 @@
 
 
 /obj/item/weapon/robot_module/proc/respawn_consumable(mob/living/silicon/robot/R)
+	var/obj/item/device/flash/F = locate() in src.modules
+	if(F.broken)
+		F.broken = 0
+		F.times_used = 0
+		F.icon_state = "flash"
+	else if(F.times_used)
+		F.times_used--
 
 	if(!stacktypes || !stacktypes.len) return
 
@@ -80,6 +87,7 @@
 		return
 
 /obj/item/weapon/robot_module/standard/respawn_consumable(mob/living/silicon/robot/R)
+	..()
 	var/obj/item/weapon/melee/baton/B = locate() in src.modules
 	if(B.charges < 10)
 		B.charges += 1
@@ -239,13 +247,7 @@
 		return
 
 /obj/item/weapon/robot_module/security/respawn_consumable(mob/living/silicon/robot/R)
-	var/obj/item/device/flash/F = locate() in src.modules
-	if(F.broken)
-		F.broken = 0
-		F.times_used = 0
-		F.icon_state = "flash"
-	else if(F.times_used)
-		F.times_used--
+	..()
 	var/obj/item/weapon/gun/energy/taser/cyborg/T = locate() in src.modules
 	if(T.power_supply.charge < T.power_supply.maxcharge)
 		var/obj/item/ammo_casing/energy/S = T.ammo_type[T.select]
@@ -273,6 +275,7 @@
 		return
 
 /obj/item/weapon/robot_module/janitor/respawn_consumable(mob/living/silicon/robot/R)
+	..()
 	var/obj/item/device/lightreplacer/LR = locate() in src.modules
 	LR.Charge(R)
 	if(src.emag)
@@ -342,6 +345,7 @@
 		R.add_language("Gutter", 1)
 
 /obj/item/weapon/robot_module/butler/respawn_consumable(mob/living/silicon/robot/R)
+	..()
 	var/obj/item/weapon/reagent_containers/food/condiment/enzyme/E = locate() in src.modules
 	E.reagents.add_reagent("enzyme", 2)
 	if(src.emag)
