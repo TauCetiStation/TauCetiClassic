@@ -202,6 +202,9 @@ var/list/chatResources = list(
 	return "<img [class] src='data:image/png;base64,[bicon_cache[key]]'>"
 
 /proc/to_chat(target, message)
+	if(!target) //shitty fix, but it's works
+		return
+
 	if(istype(message, /image) || istype(message, /sound) || istype(target, /savefile) || !(ismob(target) || islist(target) || isclient(target) || target == world))
 		target << message
 		if (!isatom(target)) // Really easy to mix these up, and not having to make sure things are mobs makes the code cleaner.

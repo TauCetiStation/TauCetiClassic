@@ -10,7 +10,7 @@
 	if(holder && (R_ADMIN & holder.rights))
 		for(var/client/C in clients)
 			if(C.ckey in stealth_keys) continue
-			var/entry = "\t[C.key]"
+			var/entry = "&emsp;[C.key]"
 			if(C.holder && C.holder.fakekey)
 				entry += " <i>(as [C.holder.fakekey])</i>"
 			entry += " - Playing as [C.mob.real_name]"
@@ -85,7 +85,7 @@
 				continue
 			if(C.holder.fakekey && (!R_ADMIN & holder.rights))
 				continue
-			msg += "\t[C] is a [C.holder.rank]"
+			msg += "&emsp;[C] is a [C.holder.rank]"
 			if(C.holder.fakekey)
 				msg += " <i>(as [C.holder.fakekey])</i>"
 			if(isobserver(C.mob))
@@ -99,7 +99,7 @@
 			msg += "\n"
 			num_admins_online++
 		for(var/client/C in mentors)
-			mentmsg += "\t[C] is a Mentor"
+			mentmsg += "&emsp;[C] is a Mentor"
 			if(isobserver(C.mob))
 				mentmsg += " - Observing"
 			else if(istype(C.mob,/mob/new_player))
@@ -115,10 +115,9 @@
 			if(C.ckey in stealth_keys)
 				continue
 			if(!C.holder.fakekey)
-				msg += "\t[C] is a [C.holder.rank]\n"
+				msg += "&emsp;[C] is a [C.holder.rank]\n"
 				num_admins_online++
 		for(var/client/C in mentors)
-			mentmsg += "\t[C] is a Mentor\n"
+			mentmsg += "&emsp;[C] is a Mentor\n"
 			num_mentors_online++
-	msg = "<b>Current Admins ([num_admins_online]):</b>\n" + msg + "\n<b>Current Mentors ([num_mentors_online]):</b>\n" + mentmsg
-	to_chat(src, msg)
+	to_chat(src, "<b>Current Admins ([num_admins_online]):</b>\n" + msg + "\n<b>Current Mentors ([num_mentors_online]):</b>\n" + mentmsg)

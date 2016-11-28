@@ -136,15 +136,15 @@ proc/dmp2swapmap(filename)
 	//	world << "Code \"[code]\":\n[codes[code]]"
 	fdel("map_[mapname].txt")
 	var/F = file("map_[mapname].txt")
-	to_chat(F, ". = object(\".0\")\n.0\n\ttype = /swapmap\n\tid = \"[mapname]\"\n\tz = [Z]\n\ty = [Y]\n\tx = [X]")
+	to_chat(F, ". = object(\".0\")\n.0\n&emsp;type = /swapmap\n&emsp;id = \"[mapname]\"\n&emsp;z = [Z]\n&emsp;y = [Y]\n&emsp;x = [X]")
 	if(areas)
 		txt=""
 		for(i=0,i<areas.len,++i)
 			txt+="[i?", ":""]object(\".[i]\")"
-		to_chat(F, "\tareas = list([txt])")
+		to_chat(F, "&emsp;areas = list([txt])")
 		for(i=0,i<areas.len,++i)
-			to_chat(F, "\t\t.[i]")
-			txt=d2sm_ConvertType(areas[i+1],"\t\t\t")
+			to_chat(F, "&emsp;&emsp;.[i]")
+			txt=d2sm_ConvertType(areas[i+1],"&emsp;&emsp;&emsp;")
 			to_chat(F, copytext(txt,1,length(txt)))
 
 	// 2nd pass
@@ -168,23 +168,23 @@ proc/dmp2swapmap(filename)
 			_x=max(_x,(j-i-1)/codelen)
 			i=j
 		// print out this z-level now
-		to_chat(F, "\t[coords[3]]")
+		to_chat(F, "&emsp;[coords[3]]")
 		i=1
 		for(var/y=_y,y>0,--y)	// map is top-down
 			++i
-			to_chat(F, "\t\t[y]")
+			to_chat(F, "&emsp;&emsp;[y]")
 			for(var/x in 1 to _x)
-				to_chat(F, "\t\t\t[x]")
+				to_chat(F, "&emsp;&emsp;&emsp;[x]")
 				j=i+codelen
 				to_chat(F, codes[copytext(mtxt,i,j)])
 				i=j
 		txt=copytext(txt,k+1)
 	/* for(z in 1 to Z)
-		to_chat(F, "\t[z]")
+		to_chat(F, "&emsp;[z]")
 		for(var/y in 1 to Y)
-			to_chat(F, "\t\t[y]")
+			to_chat(F, "&emsp;&emsp;[y]")
 			for(var/x in 1 to X)
-				to_chat(F, "\t\t\t[x]")
+				to_chat(F, "&emsp;&emsp;&emsp;[x]")
 				to_chat(F, codes[pick(codes)])*/
 
 proc/d2sm_ParseCommaList(txt)
