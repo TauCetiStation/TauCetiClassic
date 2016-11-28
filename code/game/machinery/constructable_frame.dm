@@ -412,6 +412,39 @@ obj/item/weapon/circuitboard/biogenerator
 							/obj/item/weapon/cable_coil = 2,
 							/obj/item/weapon/stock_parts/console_screen = 1)
 
+/obj/item/weapon/circuitboard/oven
+	name = "circuit board (Oven)"
+	build_path = /obj/machinery/kitchen_machine/oven
+	board_type = "machine"
+	origin_tech = "programming=1"
+	req_components = list(
+							/obj/item/weapon/stock_parts/micro_laser = 1,
+							/obj/item/weapon/stock_parts/matter_bin = 1,
+							/obj/item/weapon/cable_coil = 2,
+							/obj/item/weapon/stock_parts/console_screen = 1)
+
+/obj/item/weapon/circuitboard/grill
+	name = "circuit board (Grill)"
+	build_path = /obj/machinery/kitchen_machine/grill
+	board_type = "machine"
+	origin_tech = "programming=1"
+	req_components = list(
+							/obj/item/weapon/stock_parts/micro_laser = 1,
+							/obj/item/weapon/stock_parts/matter_bin = 1,
+							/obj/item/weapon/cable_coil = 2,
+							/obj/item/weapon/stock_parts/console_screen = 1)
+
+/obj/item/weapon/circuitboard/candymaker
+	name = "circuit board (Candy)"
+	build_path = /obj/machinery/kitchen_machine/candymaker
+	board_type = "machine"
+	origin_tech = "programming=1"
+	req_components = list(
+							/obj/item/weapon/stock_parts/micro_laser = 1,
+							/obj/item/weapon/stock_parts/matter_bin = 1,
+							/obj/item/weapon/cable_coil = 2,
+							/obj/item/weapon/stock_parts/console_screen = 1)
+
 /obj/item/weapon/circuitboard/gibber
 	name = "circuit board (Gibber)"
 	build_path = /obj/machinery/gibber
