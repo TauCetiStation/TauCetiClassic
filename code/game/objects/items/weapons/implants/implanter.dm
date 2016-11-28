@@ -110,7 +110,7 @@
 	var/obj/item/weapon/implant/compressed/c = imp
 	if (!c)	return
 	if (c.scanned == null)
-		user << "Please scan an object with the implanter first."
+		to_chat(user, "Please scan an object with the implanter first.")
 		return
 	..()
 
@@ -118,7 +118,7 @@
 	if(istype(A,/obj/item) && imp)
 		var/obj/item/weapon/implant/compressed/c = imp
 		if (c.scanned)
-			user << "\red Something is already scanned inside the implant!"
+			to_chat(user, "\red Something is already scanned inside the implant!")
 			return
 		c.scanned = A
 		if(istype(A.loc,/mob/living/carbon/human))

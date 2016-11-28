@@ -57,9 +57,9 @@
 //		var/obj/item/device/pda/P = src.loc
 
 	/*
-	world << "recvd:[P] : [signal.source]"
+	to_chat(world, "recvd:[P] : [signal.source]")
 	for(var/d in signal.data)
-		world << "- [d] = [signal.data[d]]"
+		to_chat(world, "- [d] = [signal.data[d]]")
 	*/
 	if (signal.data["type"] == "secbot")
 		if(!botlist)
@@ -138,9 +138,9 @@
 //		var/obj/item/device/pda/P = src.loc
 
 	/*
-	world << "recvd:[P] : [signal.source]"
+	to_chat(world, "recvd:[P] : [signal.source]")
 	for(var/d in signal.data)
-		world << "- [d] = [signal.data[d]]"
+		to_chat(world, "- [d] = [signal.data[d]]")
 	*/
 	if(signal.data["type"] == "mulebot")
 		if(!botlist)

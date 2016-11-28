@@ -81,7 +81,7 @@ proc/move_research_shuttle()
 		return
 
 	if(!src.allowed(usr) && !emagged)
-		usr << "\red You do not have the required access level"
+		to_chat(usr, "\red You do not have the required access level")
 		return FALSE
 
 	if(href_list["move"])
@@ -91,10 +91,10 @@ proc/move_research_shuttle()
 		//		return
 
 		if (!research_shuttle_moving)
-			usr << "\blue Shuttle recieved message and will be sent shortly."
+			to_chat(usr, "\blue Shuttle recieved message and will be sent shortly.")
 			move_research_shuttle()
 		else
-			usr << "\blue Shuttle is already moving."
+			to_chat(usr, "\blue Shuttle is already moving.")
 
 	updateUsrDialog()
 
@@ -108,7 +108,7 @@ proc/move_research_shuttle()
 			return
 		src.req_access = list()
 		hacked = 1
-		usr << "You fried the consoles ID checking system. It's now available to everyone!"
+		to_chat(usr, "You fried the consoles ID checking system. It's now available to everyone!")
 
 	else
 		..()

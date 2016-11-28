@@ -10,10 +10,10 @@
 	var/mob/living/carbon/human/gymnast = user
 
 	if(in_use)
-		user << "It's already in use - wait a bit."
+		to_chat(user, "It's already in use - wait a bit.")
 		return
 	if(gymnast.halloss > 80 || gymnast.shock_stage > 80)
-		user << "You are too exausted."
+		to_chat(user, "You are too exausted.")
 		return
 	else
 		in_use = 1
@@ -41,7 +41,7 @@
 		gymnast.apply_effect(15,AGONY,0)
 		var/finishmessage = pick("You feel stronger!","You feel like you can take on the world!","You feel robust!","You feel indestructible!")
 		icon_state = "fitnesslifter"
-		user << finishmessage
+		to_chat(user, "[finishmessage]")
 
 /obj/structure/weightlifter
 	name = "Weight Machine"
@@ -55,10 +55,10 @@
 	var/mob/living/carbon/human/gymnast = user
 
 	if(in_use)
-		user << "It's already in use - wait a bit."
+		to_chat(user, "It's already in use - wait a bit.")
 		return
 	if(gymnast.halloss > 80 || gymnast.shock_stage > 80)
-		user << "You are too exausted."
+		to_chat(user, "You are too exausted.")
 		return
 	else
 		in_use = 1
@@ -96,4 +96,4 @@
 		icon_state = "fitnessweight"
 		overlays -= W
 
-		user << "[finishmessage]"
+		to_chat(user, "[finishmessage]")

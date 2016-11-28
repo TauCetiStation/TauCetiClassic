@@ -274,7 +274,7 @@ datum
 					return
 				if(ishuman(M))
 					if((M.mind in ticker.mode.cult) && prob(10))
-						M << "<span class='notice'>A cooling sensation from inside you brings you an untold calmness.</span>"
+						to_chat(M, "<span class='notice'>A cooling sensation from inside you brings you an untold calmness.</span>")
 						ticker.mode.remove_cultist(M.mind)
 						M.visible_message("<span class='notice'>[M]'s eyes blink and become clearer.</span>")
 
@@ -328,7 +328,7 @@ datum
 				if(ishuman(M))
 					var/mob/living/carbon/human/H = M
 					if(H.dna && !H.dna.mutantrace)
-						M << "<span class='warning'>Your flesh rapidly mutates!</span>"
+						to_chat(M, "<span class='warning'>Your flesh rapidly mutates!</span>")
 						H.dna.mutantrace = "slime"
 						H.update_mutantrace()
 
@@ -344,7 +344,7 @@ datum
 				if(!..())
 					return
 				if(istype(M, /mob/living/carbon) && M.stat != DEAD)
-					M << "<span class='warning'>Your flesh rapidly mutates!</span>"
+					to_chat(M, "<span class='warning'>Your flesh rapidly mutates!</span>")
 					if(M.monkeyizing)
 						return
 					M.monkeyizing = 1
@@ -862,7 +862,7 @@ datum
 						if(M.health >= -100 && M.health <= 0)
 							M.crit_op_stage = 0.0
 				if (method==INGEST)
-					usr << "Well, that was stupid."
+					to_chat(usr, "Well, that was stupid.")
 					M.adjustToxLoss(3)
 				return
 			on_mob_life(var/mob/living/M as mob)
@@ -1643,7 +1643,7 @@ datum
 				if(!..())
 					return
 				if(prob(10))
-					M << "\red Your insides are burning!"
+					to_chat(M, "\red Your insides are burning!")
 					M.adjustToxLoss(rand(20,60) * REM)
 				else if(prob(40))
 					M.heal_organ_damage(5 * REM, 0)
@@ -1921,27 +1921,27 @@ datum
 
 						if(H.head)
 							if(prob(meltprob) && !H.head.unacidable)
-								H << "<span class='danger'>Your headgear melts away but protects you from the acid!</span>"
+								to_chat(H, "<span class='danger'>Your headgear melts away but protects you from the acid!</span>")
 								qdel(H.head)
 								H.update_inv_head()
 								H.update_hair()
 							else
-								H << "<span class='warning'>Your headgear protects you from the acid.</span>"
+								to_chat(H, "<span class='warning'>Your headgear protects you from the acid.</span>")
 							return
 
 						if(H.wear_mask)
 							if(prob(meltprob) && !H.wear_mask.unacidable)
-								H << "<span class='danger'>Your mask melts away but protects you from the acid!</span>"
+								to_chat(H, "<span class='danger'>Your mask melts away but protects you from the acid!</span>")
 								qdel(H.wear_mask)
 								H.update_inv_wear_mask()
 								H.update_hair()
 							else
-								H << "<span class='warning'>Your mask protects you from the acid.</span>"
+								to_chat(H, "<span class='warning'>Your mask protects you from the acid.</span>")
 							return
 
 						if(H.glasses) //Doesn't protect you from the acid but can melt anyways!
 							if(prob(meltprob) && !H.glasses.unacidable)
-								H << "<span class='danger'>Your glasses melts away!</span>"
+								to_chat(H, "<span class='danger'>Your glasses melts away!</span>")
 								qdel(H.glasses)
 								H.update_inv_glasses()
 
@@ -1949,11 +1949,11 @@ datum
 						var/mob/living/carbon/monkey/MK = M
 						if(MK.wear_mask)
 							if(!MK.wear_mask.unacidable)
-								MK << "<span class='danger'>Your mask melts away but protects you from the acid!</span>"
+								to_chat(MK, "<span class='danger'>Your mask melts away but protects you from the acid!</span>")
 								qdel(MK.wear_mask)
 								MK.update_inv_wear_mask()
 							else
-								MK << "<span class='warning'>Your mask protects you from the acid.</span>"
+								to_chat(MK, "<span class='warning'>Your mask protects you from the acid.</span>")
 							return
 
 					if(!M.unacidable)
@@ -1977,7 +1977,7 @@ datum
 						var/obj/effect/decal/cleanable/molten_item/I = new/obj/effect/decal/cleanable/molten_item(O.loc)
 						I.desc = "Looks like this was \an [O] some time ago."
 						for(var/mob/M in viewers(5, O))
-							M << "\red \the [O] melts."
+							to_chat(M, "\red \the [O] melts.")
 						qdel(O)
 
 		toxin/acid/polyacid
@@ -2118,10 +2118,10 @@ datum
 							if ( !safe_thing )
 								safe_thing = victim.glasses
 						if ( eyes_covered && mouth_covered )
-							victim << "\red Your [safe_thing] protects you from the pepperspray!"
+							to_chat(victim, "\red Your [safe_thing] protects you from the pepperspray!")
 							return
 						else if ( mouth_covered )	// Reduced effects if partially protected
-							victim << "\red Your [safe_thing] protect you from most of the pepperspray!"
+							to_chat(victim, "\red Your [safe_thing] protect you from most of the pepperspray!")
 							victim.eye_blurry = max(M.eye_blurry, 15)
 							victim.eye_blind = max(M.eye_blind, 5)
 							victim.Stun(5)
@@ -2130,13 +2130,13 @@ datum
 							//victim.drop_item()
 							return
 						else if ( eyes_covered ) // Eye cover is better than mouth cover
-							victim << "\red Your [safe_thing] protects your eyes from the pepperspray!"
+							to_chat(victim, "\red Your [safe_thing] protects your eyes from the pepperspray!")
 							victim.emote("scream",,, 1)
 							victim.eye_blurry = max(M.eye_blurry, 5)
 							return
 						else // Oh dear :D
 							victim.emote("scream",,, 1)
-							victim << "\red You're sprayed directly in the eyes with pepperspray!"
+							to_chat(victim, "\red You're sprayed directly in the eyes with pepperspray!")
 							victim.eye_blurry = max(M.eye_blurry, 25)
 							victim.eye_blind = max(M.eye_blind, 10)
 							victim.Stun(5)
@@ -3069,17 +3069,17 @@ datum
 				if(istype(O,/obj/item/weapon/paper))
 					var/obj/item/weapon/paper/paperaffected = O
 					paperaffected.clearpaper()
-					usr << "The solution dissolves the ink on the paper."
+					to_chat(usr, "The solution dissolves the ink on the paper.")
 				if(istype(O,/obj/item/weapon/book))
 					if(istype(O,/obj/item/weapon/book/tome))
-						usr << "The solution does nothing. Whatever this is, it isn't normal ink."
+						to_chat(usr, "The solution does nothing. Whatever this is, it isn't normal ink.")
 						return
 					if(volume >= 5)
 						var/obj/item/weapon/book/affectedbook = O
 						affectedbook.dat = null
-						usr << "The solution dissolves the ink on the book."
+						to_chat(usr, "The solution dissolves the ink on the book.")
 					else
-						usr << "It wasn't enough..."
+						to_chat(usr, "It wasn't enough...")
 				return
 			reaction_mob(mob/living/M, method=TOUCH, volume)//Splashing people with ethanol isn't quite as good as fuel.
 				if(!istype(M, /mob/living))
@@ -3826,7 +3826,158 @@ datum
 				if(ishuman(M))
 					var/mob/living/carbon/human/H = M
 					H.vomit()
-					H.apply_effect(1, IRRADIATE, 0)
+					H.apply_effect(1,IRRADIATE,0)
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////// Nanobots /////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+/datum/reagent/nanites2
+	name = "Friendly Nanites"
+	id = "nanites2"
+	description = "Friendly microscopic construction robots."
+	reagent_state = LIQUID
+	color = "#535E66" //rgb: 83, 94, 102
+
+/datum/reagent/nanobots
+	name = "Nanobots"
+	id = "nanobots"
+	description = "Microscopic robots intended for use in humans. Must be loaded with further chemicals to be useful."
+	reagent_state = LIQUID
+	color = "#3E3959" //rgb: 62, 57, 89
+
+//Great healing powers. Metabolizes extremely slowly, but gets used up when it heals damage.
+//Dangerous in amounts over 5 units, healing that occurs while over 5 units adds to a counter. That counter affects gib chance. Guaranteed gib over 20 units.
+/datum/reagent/mednanobots
+	name = "Medical Nanobots"
+	id = "mednanobots"
+	description = "Microscopic robots intended for use in humans. Configured for rapid healing upon infiltration into the body."
+	reagent_state = LIQUID
+	color = "#593948" //rgb: 89, 57, 72
+	custom_metabolism = 0.005
+	var/spawning_horror = 0
+	var/percent_machine = 0
+
+/datum/reagent/mednanobots/on_mob_life(var/mob/living/M)
+	if(!..())
+		return
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(H.species.name != "Dionae")
+			switch(volume)
+				if(1 to 5)
+					var/datum/organ/external/affecting = H.get_organ()
+					for(var/datum/wound/W in affecting.wounds)
+						affecting.wounds -= W
+						H.visible_message("<span class='warning'>[H]'s wounds close up in the blink of an eye!</span>")
+					if(H.getOxyLoss() > 0 && prob(90))
+						if(holder.has_reagent("mednanobots"))
+							H.adjustOxyLoss(-4)
+							holder.remove_reagent("mednanobots", 0.1)  //The number/40 means that every time it heals, it uses up number/40ths of a unit, meaning each unit heals 40 damage
+
+					if(H.getBruteLoss() > 0 && prob(90))
+						if(holder.has_reagent("mednanobots"))
+							H.heal_organ_damage(5, 0)
+							holder.remove_reagent("mednanobots", 0.125)
+
+					if(H.getFireLoss() > 0 && prob(90))
+						if(holder.has_reagent("mednanobots"))
+							H.heal_organ_damage(0, 5)
+							holder.remove_reagent("mednanobots", 0.125)
+
+					if(H.getToxLoss() > 0 && prob(50))
+						if(holder.has_reagent("mednanobots"))
+							H.adjustToxLoss(-2)
+							holder.remove_reagent("mednanobots", 0.05)
+
+					if(H.getCloneLoss() > 0 && prob(60))
+						if(holder.has_reagent("mednanobots"))
+							H.adjustCloneLoss(-2)
+							holder.remove_reagent("mednanobots", 0.05)
+
+					if(percent_machine > 5)
+						if(holder.has_reagent("mednanobots"))
+							percent_machine -= 1
+							if(prob(20))
+								to_chat(M, pick("You feel more like yourself again."))
+					if(H.dizziness != 0)
+						H.dizziness = max(0, H.dizziness - 15)
+					if(H.confused != 0)
+						H.confused = max(0, H.confused - 5)
+					for(var/datum/disease/D in M.viruses)
+						D.spread = "Remissive"
+						D.stage--
+						if(D.stage < 1)
+							D.cure()
+				if(5 to 20)		//Danger zone healing. Adds to a human mob's "percent machine" var, which is directly translated into the chance that it will turn horror each tick that the reagent is above 5u.
+					var/datum/organ/external/affecting = H.get_organ()
+					for(var/datum/wound/W in affecting.wounds)
+						affecting.wounds -= W
+						H.visible_message("<span class='warning'>[H]'s wounds close up in the blink of an eye!</span>")
+					if(H.getOxyLoss() > 0 && prob(90))
+						if(holder.has_reagent("mednanobots"))
+							H.adjustOxyLoss(-4)
+							holder.remove_reagent("mednanobots", 0.1)  //The number/40 means that every time it heals, it uses up number/40ths of a unit, meaning each unit heals 40 damage
+							percent_machine += 0.5
+							if(prob(20))
+								to_chat(M, pick("<span class='warning'>Something shifts inside you...</span>", "<span class='warning'>You feel different, somehow...</span>"))
+
+					if(H.getBruteLoss() > 0 && prob(90))
+						if(holder.has_reagent("mednanobots"))
+							H.heal_organ_damage(5, 0)
+							holder.remove_reagent("mednanobots", 0.125)
+							percent_machine += 0.5
+							if(prob(20))
+								to_chat(M, pick("<span class='warning'> Something shifts inside you...</span>", "<span class='warning'>You feel different, somehow...</span>"))
+
+					if(H.getFireLoss() > 0 && prob(90))
+						if(holder.has_reagent("mednanobots"))
+							H.heal_organ_damage(0, 5)
+							holder.remove_reagent("mednanobots", 0.125)
+							percent_machine += 0.5
+							if(prob(20))
+								to_chat(M, pick("<span class='warning'>Something shifts inside you...</span>", "<span class='warning'>You feel different, somehow...</span>"))
+
+					if(H.getToxLoss() > 0 && prob(50))
+						if(holder.has_reagent("mednanobots"))
+							H.adjustToxLoss(-2)
+							holder.remove_reagent("mednanobots", 0.05)
+							percent_machine += 0.5
+							if(prob(20))
+								to_chat(M, pick("<span class='warning'>Something shifts inside you...</span>", "<span class='warning'>You feel different, somehow...</span>"))
+
+					if(H.getCloneLoss() > 0 && prob(60))
+						if(holder.has_reagent("mednanobots"))
+							H.adjustCloneLoss(-2)
+							holder.remove_reagent("mednanobots", 0.05)
+							percent_machine += 0.5
+							if(prob(20))
+								to_chat(M, pick("<span class='warning'>Something shifts inside you...</span>", "<span class='warning'>You feel different, somehow...</span>"))
+
+					if(H.dizziness != 0)
+						H.dizziness = max(0, H.dizziness - 15)
+					if(H.confused != 0)
+						H.confused = max(0, H.confused - 5)
+					for(var/datum/disease/D in M.viruses)
+						D.spread = "Remissive"
+						D.stage--
+						if(D.stage < 1)
+							D.cure()
+					if(prob(percent_machine))
+						holder.add_reagent("mednanobots", 20)
+						to_chat(M, pick("<b><span class='warning'>Your body lurches!</b></span>"))
+				if(20 to INFINITY)
+					spawning_horror = 1
+					to_chat(M, pick("<b><span class='warning'>Something doesn't feel right...</span></b>", "<b><span class='warning'>Something is growing inside you!</span></b>", "<b><span class='warning'>You feel your insides rearrange!</span></b>"))
+					spawn(60)
+						if(spawning_horror)
+							to_chat(M, pick( "<b><span class='warning'>Something bursts out from inside you!</span></b>"))
+							message_admins("[key_name(H)] has gibbed and spawned a new cyber horror due to nanobots. (<A HREF='?_src_=holder;adminmoreinfo=\ref[H]'>?</A>)")
+							log_game("[key_name(H)] has gibbed and spawned a new cyber horror due to nanobots")
+							new /mob/living/simple_animal/hostile/cyber_horror(H.loc)
+							spawning_horror = 0
+							H.gib()
+	else
+		holder.del_reagent("mednanobots")
 
 /datum/reagent/Destroy() // This should only be called by the holder, so it's already handled clearing its references
 	. = ..()

@@ -44,14 +44,14 @@
 			flags_inv |= (HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE)
 			body_parts_covered |= EYES
 			icon_state = initial(icon_state)
-			usr << "You adjust \the [src] down to protect your eyes."
+			to_chat(usr, "You adjust \the [src] down to protect your eyes.")
 		else
 			src.up = !src.up
 			src.flags &= ~(HEADCOVERSEYES | HEADCOVERSMOUTH)
 			flags_inv &= ~(HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE)
 			body_parts_covered &= ~EYES
 			icon_state = "[initial(icon_state)]up"
-			usr << "You push \the [src] up out of your face."
+			to_chat(usr, "You push \the [src] up out of your face.")
 
 		usr.update_inv_wear_mask()
 
@@ -77,19 +77,19 @@
 	if(istype(W, /obj/item/weapon/screwdriver))
 		switch(aggressiveness)
 			if(1)
-				user << "\blue You set the restrictor to the middle position."
+				to_chat(user, "\blue You set the restrictor to the middle position.")
 				aggressiveness = 2
 			if(2)
-				user << "\blue You set the restrictor to the last position."
+				to_chat(user, "\blue You set the restrictor to the last position.")
 				aggressiveness = 3
 			if(3)
-				user << "\blue You set the restrictor to the first position."
+				to_chat(user, "\blue You set the restrictor to the first position.")
 				aggressiveness = 1
 			if(4)
-				user << "\red You adjust the restrictor but nothing happens, probably because its broken."
+				to_chat(user, "\red You adjust the restrictor but nothing happens, probably because its broken.")
 	else if(istype(W, /obj/item/weapon/wirecutters))
 		if(aggressiveness != 4)
-			user << "\red You broke it!"
+			to_chat(user, "\red You broke it!")
 			aggressiveness = 4
 	else
 		..()
@@ -204,6 +204,7 @@
 
 /obj/item/clothing/mask/gas/voice
 	name = "gas mask"
+	icon_state = "gas_mask_orange"
 	//desc = "A face-covering mask that can be connected to an air supply. It seems to house some odd electronics."
 	var/mode = 0// 0==Scouter | 1==Night Vision | 2==Thermal | 3==Meson
 	var/voice = "Unknown"
@@ -276,3 +277,15 @@
 	icon_state = "hailer"
 	icon_custom = null
 	flags = FPRINT | TABLEPASS | MASKCOVERSMOUTH | BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
+
+/obj/item/clothing/mask/gas/coloured
+	icon_state = "gas_mask_orange"
+
+/obj/item/clothing/mask/gas/coloured/examine(mob/user)
+	..()
+	if(src in user)
+		to_chat(user, "The small label on the back side tells: \"Designed by W&J Company\".")
+
+/obj/item/clothing/mask/gas/coloured/New()
+	var/color = pick("orange", "blue")
+	icon_state = "gas_mask_[color]"

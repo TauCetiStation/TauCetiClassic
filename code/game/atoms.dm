@@ -131,23 +131,23 @@
 		else
 			f_name += "<span class='danger'>blood-stained</span> [name]!"
 
-	user << "\icon[src] That's [f_name]"
+	to_chat(user, "[bicon(src)] That's [f_name]")
 
 	if(desc)
-		user << desc
+		to_chat(user, desc)
 	// *****RM
 	//user << "[name]: Dn:[density] dir:[dir] cont:[contents] icon:[icon] is:[icon_state] loc:[loc]"
 
 	if(reagents && is_open_container()) //is_open_container() isn't really the right proc for this, but w/e
-		user << "It contains:"
+		to_chat(user, "It contains:")
 		if(reagents.reagent_list.len)
 			if(istype(src, /obj/structure/reagent_dispensers)) //watertanks, fueltanks
 				for(var/datum/reagent/R in reagents.reagent_list)
-					user << "[R.volume] units of [R.name]"
+					to_chat(user, "<span class='info'>[R.volume] units of [R.name]</span>")
 			else
-				user << "<span class='info'>[reagents.total_volume] units of liquid.</span>"
+				to_chat(user, "<span class='info'>[reagents.total_volume] units of liquid.</span>")
 		else
-			user << "Nothing."
+			to_chat(user, "Nothing.")
 
 //called to set the atom's dir and used to add behaviour to dir-changes
 /atom/proc/set_dir(new_dir)

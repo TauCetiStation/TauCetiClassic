@@ -46,10 +46,10 @@
 	if (usr.stat != CONSCIOUS)
 		return
 	if (src.occupant)
-		usr << "\blue <B>The scanner is already occupied!</B>"
+		to_chat(usr, "\blue <B>The scanner is already occupied!</B>")
 		return
 	if (usr.abiotic())
-		usr << "\blue <B>Subject cannot have abiotic items on.</B>"
+		to_chat(usr, "\blue <B>Subject cannot have abiotic items on.</B>")
 		return
 	usr.pulling = null
 	usr.client.perspective = EYE_PERSPECTIVE
@@ -82,10 +82,10 @@
 	if ((!( istype(G, /obj/item/weapon/grab) ) || !( ismob(G.affecting) )))
 		return
 	if (src.occupant)
-		user << "\blue <B>The scanner is already occupied!</B>"
+		to_chat(user, "\blue <B>The scanner is already occupied!</B>")
 		return
 	if (G.affecting.abiotic())
-		user << "\blue <B>Subject cannot have abiotic items on.</B>"
+		to_chat(user, "\blue <B>Subject cannot have abiotic items on.</B>")
 		return
 	var/mob/M = G.affecting
 	if (M.client)
@@ -224,7 +224,7 @@
 	if(..())
 		return
 	if(!ishuman(connected.occupant))
-		user << "\red This device can only scan compatible lifeforms."
+		to_chat(user, "\red This device can only scan compatible lifeforms.")
 		return
 	var/dat
 	if (src.delete && src.temphtml) //Window in buffer but its just simple message, so nothing
@@ -332,17 +332,17 @@
 						if(e.open)
 							open = "Open:"
 						switch (e.germ_level)
-							if (INFECTION_LEVEL_ONE to INFECTION_LEVEL_ONE + 200)
+							if (INFECTION_LEVEL_ONE to INFECTION_LEVEL_ONE_PLUS)
 								infected = "Mild Infection:"
-							if (INFECTION_LEVEL_ONE + 200 to INFECTION_LEVEL_ONE + 300)
+							if (INFECTION_LEVEL_ONE_PLUS to INFECTION_LEVEL_ONE_PLUS_PLUS)
 								infected = "Mild Infection+:"
-							if (INFECTION_LEVEL_ONE + 300 to INFECTION_LEVEL_ONE + 400)
+							if (INFECTION_LEVEL_ONE_PLUS_PLUS to INFECTION_LEVEL_TWO)
 								infected = "Mild Infection++:"
-							if (INFECTION_LEVEL_TWO to INFECTION_LEVEL_TWO + 200)
+							if (INFECTION_LEVEL_TWO to INFECTION_LEVEL_TWO_PLUS)
 								infected = "Acute Infection:"
-							if (INFECTION_LEVEL_TWO + 200 to INFECTION_LEVEL_TWO + 300)
+							if (INFECTION_LEVEL_TWO_PLUS to INFECTION_LEVEL_TWO_PLUS_PLUS)
 								infected = "Acute Infection+:"
-							if (INFECTION_LEVEL_TWO + 300 to INFECTION_LEVEL_TWO + 400)
+							if (INFECTION_LEVEL_TWO_PLUS_PLUS to INFECTION_LEVEL_THREE)
 								infected = "Acute Infection++:"
 							if (INFECTION_LEVEL_THREE to INFINITY)
 								infected = "Septic:"
@@ -375,10 +375,20 @@
 
 						var/infection = "None"
 						switch (i.germ_level)
-							if (1 to INFECTION_LEVEL_TWO)
+							if (INFECTION_LEVEL_ONE to INFECTION_LEVEL_ONE_PLUS)
 								infection = "Mild Infection:"
-							if (INFECTION_LEVEL_TWO to INFINITY)
+							if (INFECTION_LEVEL_ONE_PLUS to INFECTION_LEVEL_ONE_PLUS_PLUS)
+								infection = "Mild Infection+:"
+							if (INFECTION_LEVEL_ONE_PLUS_PLUS to INFECTION_LEVEL_TWO)
+								infection = "Mild Infection++:"
+							if (INFECTION_LEVEL_TWO to INFECTION_LEVEL_TWO_PLUS)
 								infection = "Acute Infection:"
+							if (INFECTION_LEVEL_TWO_PLUS to INFECTION_LEVEL_TWO_PLUS_PLUS)
+								infection = "Acute Infection+:"
+							if (INFECTION_LEVEL_TWO_PLUS_PLUS to INFECTION_LEVEL_THREE)
+								infection = "Acute Infection++:"
+							if (INFECTION_LEVEL_THREE to INFINITY)
+								infection = "Necrotic:"
 
 						dat += "<tr>"
 						dat += "<td>[i.name]</td><td>N/A</td><td>[i.damage]</td><td>[infection]:[mech]</td><td></td>"
@@ -409,7 +419,7 @@
 	if (href_list["print"])
 		if (!src.printing)
 			src.printing = 1
-			usr << "\red Printing... Please wait."
+			to_chat(usr, "\red Printing... Please wait.")
 			spawn(50)
 				src.printing = 0
 				var/obj/item/weapon/paper/P = new(loc)

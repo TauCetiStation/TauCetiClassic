@@ -159,8 +159,9 @@ a.updated {
 
 		dat += "</table>"
 
+	dat += "<A href='?src=\ref[user];mach_close=stock_comp'>Close</A> <A href='?src=\ref[src];refresh=1'>Refresh</A>"
 	dat += "</body></html>"
-	var/datum/browser/popup = new(user, "computer", "Stock Exchange", 600, 600)
+	var/datum/browser/popup = new(user, "stock_comp", "Stock Exchange", 600, 700)
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
@@ -171,12 +172,12 @@ a.updated {
 		return
 	var/li = logged_in
 	if(!li)
-		user << "<span class='danger'>No active account on the console!</span>"
+		to_chat(user, "<span class='danger'>No active account on the console!</span>")
 		return
 	var/b = SSshuttle.points
 	var/avail = S.shareholders[logged_in]
 	if(!avail)
-		user << "<span class='danger'>This account does not own any shares of [S.name]!</span>"
+		to_chat(user, "<span class='danger'>This account does not own any shares of [S.name]!</span>")
 		return
 	var/price = S.current_value
 	var/amt = round(input(user, "How many shares? \n(Have: [avail], unit price: [price])", "Sell shares in [S.name]", 0) as num|null)
@@ -190,14 +191,14 @@ a.updated {
 		return
 	b = SSshuttle.points
 	if(!isnum(b))
-		user << "<span class='danger'>No active account on the console!</span>"
+		to_chat(user, "<span class='danger'>No active account on the console!</span>")
 		return
 
 	var/total = amt * S.current_value
 	if (!S.sellShares(logged_in, amt))
-		user << "<span class='danger'>Could not complete transaction.</span>"
+		to_chat(user, "<span class='danger'>Could not complete transaction.</span>")
 		return
-	user << "<span class='notice'>Sold [amt] shares of [S.name] at [S.current_value] a share for [total] credits.</span>"
+	to_chat(user, "<span class='notice'>Sold [amt] shares of [S.name] at [S.current_value] a share for [total] credits.</span>")
 	stockExchange.add_log(/datum/stock_log/sell, user.name, S.name, amt, S.current_value, total)
 
 /obj/machinery/computer/stockexchange/proc/buy_some_shares(datum/stock/S, mob/user)
@@ -205,11 +206,11 @@ a.updated {
 		return
 	var/li = logged_in
 	if(!li)
-		user << "<span class='danger'>No active account on the console!</span>"
+		to_chat(user, "<span class='danger'>No active account on the console!</span>")
 		return
 	var/b = balance()
 	if(!isnum(b))
-		user << "<span class='danger'>No active account on the console!</span>"
+		to_chat(user, "<span class='danger'>No active account on the console!</span>")
 		return
 	var/avail = S.available_shares
 	var/price = S.current_value
@@ -221,18 +222,18 @@ a.updated {
 		return
 	b = balance()
 	if(!isnum(b))
-		user << "<span class='danger'>No active account on the console!</span>"
+		to_chat(user, "<span class='danger'>No active account on the console!</span>")
 		return
 
 	amt = min(amt, S.available_shares, round(b / S.current_value))
 	if(!amt)
 		return
 	if(!S.buyShares(logged_in, amt))
-		user << "<<span class='danger'>Could not complete transaction.</span>"
+		to_chat(user, "<<span class='danger'>Could not complete transaction.</span>")
 		return
 
 	var/total = amt * S.current_value
-	user << "<span class='notice'>Bought [amt] shares of [S.name] at [S.current_value] a share for [total] credits.</span>"
+	to_chat(user, "<span class='notice'>Bought [amt] shares of [S.name] at [S.current_value] a share for [total] credits.</span>")
 	stockExchange.add_log(/datum/stock_log/buy, user.name, S.name, amt, S.current_value,  total)
 
 /obj/machinery/computer/stockexchange/Topic(href, href_list)
