@@ -334,6 +334,34 @@
 			new /obj/item/ammo_box/magazine/m9mm_2(src.loc)
 	qdel(src)
 
+/obj/effect/landmark/sec_equip/ammo/pistolNL
+	name = "security ammo spawn"
+
+/obj/effect/landmark/sec_equip/ammo/pistolNL/gimme_it_now()
+	switch(ticker.sec_equip_preset)
+		if("classic")
+			new /obj/item/ammo_box/magazine/at7_45(src.loc)
+			new /obj/item/ammo_box/magazine/at7_45(src.loc)
+			new /obj/item/ammo_box/magazine/at7_45(src.loc)
+			new /obj/item/ammo_box/magazine/at7_45(src.loc)
+			new /obj/item/ammo_box/magazine/at7_45(src.loc)
+			new /obj/item/ammo_box/magazine/at7_45(src.loc)
+		if("tactifool")
+			new /obj/item/ammo_box/magazine/acm38_38(src.loc)
+			new /obj/item/ammo_box/magazine/acm38_38(src.loc)
+			new /obj/item/ammo_box/magazine/acm38_38(src.loc)
+			new /obj/item/ammo_box/magazine/acm38_38(src.loc)
+			new /obj/item/ammo_box/magazine/acm38_38(src.loc)
+			new /obj/item/ammo_box/magazine/acm38_38(src.loc)
+		if("milizei")
+			new /obj/item/ammo_box/magazine/m9mmr_2(src.loc)
+			new /obj/item/ammo_box/magazine/m9mmr_2(src.loc)
+			new /obj/item/ammo_box/magazine/m9mmr_2(src.loc)
+			new /obj/item/ammo_box/magazine/m9mmr_2(src.loc)
+			new /obj/item/ammo_box/magazine/m9mmr_2(src.loc)
+			new /obj/item/ammo_box/magazine/m9mmr_2(src.loc)
+	qdel(src)
+
 /obj/effect/landmark/sec_equip/mask
 	name = "security mask spawn"
 
