@@ -185,8 +185,8 @@
 	..()
 	if((src in user || concealed) && cards.len)
 		to_chat(user, "It contains: ")
-			for(var/datum/playingcard/P in cards)
-				to_chat(user, "The [P.name].")
+		for(var/datum/playingcard/P in cards)
+			to_chat(user, "The [P.name].")
 
 /obj/item/weapon/hand/update_icon()
 
