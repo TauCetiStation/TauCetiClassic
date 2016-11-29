@@ -24,10 +24,10 @@
 	// Yay, you're no longer growing 3 arms
 	var/deactivation_message=""
 
-/datum/dna/gene/disability/can_activate(var/mob/M,var/flags)
+/datum/dna/gene/disability/can_activate(mob/M,flags)
 	return 1 // Always set!
 
-/datum/dna/gene/disability/activate(var/mob/M, var/connected, var/flags)
+/datum/dna/gene/disability/activate(mob/M, connected, flags)
 	if(mutation && !(mutation in M.mutations))
 		M.mutations.Add(mutation)
 	if(disability)
@@ -35,11 +35,11 @@
 	if(mutation)
 		M.sdisabilities|=sdisability
 	if(activation_message)
-		M << "\red [activation_message]"
+		to_chat(M, "\red [activation_message]")
 	//else
 		//testing("[name] has no activation message.")
 
-/datum/dna/gene/disability/deactivate(var/mob/M, var/connected, var/flags)
+/datum/dna/gene/disability/deactivate(mob/M, connected, flags)
 	if(mutation && (mutation in M.mutations))
 		M.mutations.Remove(mutation)
 	if(disability)
@@ -47,7 +47,7 @@
 	if(mutation)
 		M.sdisabilities-=sdisability
 	if(deactivation_message)
-		M << "\red [deactivation_message]"
+		to_chat(M, "\red [deactivation_message]")
 	//else
 		//testing("[name] has no deactivation message.")
 
@@ -60,11 +60,11 @@
 	New()
 		block=HALLUCINATIONBLOCK
 
-	OnMobLife(var/mob/living/carbon/human/M) //#Z2
+	OnMobLife(mob/living/carbon/human/M) //#Z2
 		if(!istype(M)) return
 		M.hallucination = 200
 
-	deactivate(var/mob/living/carbon/human/M, var/connected, var/flags)
+	deactivate(mob/living/carbon/human/M, connected, flags)
 		..(M,connected,flags)
 		M.hallucination = 0 //##Z2
 
@@ -116,12 +116,12 @@
 	New()
 		block=BLINDBLOCK
 
-	OnMobLife(var/mob/living/carbon/human/M) //#Z2
+	OnMobLife(mob/living/carbon/human/M) //#Z2
 		if(!istype(M)) return
 		M.eye_blurry = 200
 		M.eye_blind = 200
 
-	deactivate(var/mob/living/carbon/human/M, var/connected, var/flags)
+	deactivate(mob/living/carbon/human/M, connected, flags)
 		..(M,connected,flags)
 		M.eye_blurry = 0
 		M.eye_blind = 0 //##Z2
@@ -134,11 +134,11 @@
 	New()
 		block=DEAFBLOCK
 
-	OnMobLife(var/mob/living/carbon/human/M) //#Z2
+	OnMobLife(mob/living/carbon/human/M) //#Z2
 		if(!istype(M)) return
 		M.ear_deaf = 200
 
-	deactivate(var/mob/living/carbon/human/M, var/connected, var/flags)
+	deactivate(mob/living/carbon/human/M, connected, flags)
 		..(M,connected,flags)
 		M.ear_deaf = 0 //##Z2
 

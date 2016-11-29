@@ -6,7 +6,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/temp, /obj/item/ammo_casing/energy/temp/hot)
 	cell_type = "/obj/item/weapon/stock_parts/cell/high"
 
-/obj/item/weapon/gun/energy/temperature/attack_self(mob/living/user as mob)
+/obj/item/weapon/gun/energy/temperature/attack_self(mob/living/user)
 	select_fire(user)
 	update_icon()
 	return

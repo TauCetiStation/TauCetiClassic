@@ -24,7 +24,7 @@
 	var/dissonance_spread = 1
 	var/material = "unknown"
 
-/obj/item/device/depth_scanner/proc/scan_atom(var/mob/user, var/atom/A)
+/obj/item/device/depth_scanner/proc/scan_atom(mob/user, atom/A)
 	user.visible_message("\blue [user] scans [A], the air around them humming gently.")
 	if(istype(A,/turf/simulated/mineral))
 		var/turf/simulated/mineral/M = A
@@ -47,7 +47,7 @@
 			positive_locations.Add(D)
 
 			for(var/mob/L in range(src, 1))
-				L << "\blue \icon[src] [src] pings."
+				to_chat(L, "\blue [bicon(src)] [src] pings.")
 
 	else if(istype(A,/obj/structure/boulder))
 		var/obj/structure/boulder/B = A
@@ -66,12 +66,12 @@
 			positive_locations.Add(D)
 
 			for(var/mob/L in range(src, 1))
-				L << "\blue \icon[src] [src] pings [pick("madly","wildly","excitedly","crazily")]!."
+				to_chat(L, "\blue [bicon(src)] [src] pings [pick("madly","wildly","excitedly","crazily")]!.")
 
-/obj/item/device/depth_scanner/attack_self(var/mob/user as mob)
+/obj/item/device/depth_scanner/attack_self(mob/user)
 	return src.interact(user)
 
-/obj/item/device/depth_scanner/interact(var/mob/user as mob)
+/obj/item/device/depth_scanner/interact(mob/user)
 	var/dat = "<b>Co-ordinates with positive matches</b><br>"
 	dat += "<A href='?src=\ref[src];clear=0'>== Clear all ==</a><br>"
 	if(current)

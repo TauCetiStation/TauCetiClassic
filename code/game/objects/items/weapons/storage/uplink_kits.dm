@@ -9,7 +9,6 @@
 				new /obj/item/weapon/card/id/syndicate(src)
 				new /obj/item/clothing/shoes/syndigaloshes(src)
 
-			if ("stealth")
 			if("stealth")
 				new /obj/item/weapon/gun/energy/crossbow(src)
 				new /obj/item/weapon/pen/paralysis(src)

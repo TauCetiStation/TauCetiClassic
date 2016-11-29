@@ -117,7 +117,7 @@
 		H.viruses += D
 		break
 
-/proc/viral_outbreak(var/virus = null)
+/proc/viral_outbreak(virus = null)
 //	command_alert("Confirmed outbreak of level 7 viral biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert")
 //	world << sound('sound/AI/outbreak7.ogg')
 	var/virus_type
@@ -182,7 +182,7 @@
 		for(var/mob/M in player_list)
 			M << sound('sound/AI/outbreak7.ogg')
 
-/proc/alien_infestation(var/spawncount = 1) // -- TLE
+/proc/alien_infestation(spawncount = 1) // -- TLE
 	//command_alert("Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.", "Lifesign Alert")
 	//world << sound('sound/AI/aliens.ogg')
 	var/list/vents = list()
@@ -213,13 +213,6 @@
 
 /proc/high_radiation_event()
 
-/* // Haha, this is way too laggy. I'll keep the prison break though.
-	for(var/obj/machinery/light/L in world)
-		if(L.z != ZLEVEL_STATION) continue
-		L.flicker(50)
-
-	sleep(100)
-*/
 	for(var/mob/living/carbon/human/H in living_mob_list)
 		var/turf/T = get_turf(H)
 		if(!T)
@@ -256,7 +249,7 @@
 
 
 	var/list/area/areas = list()
-	for(var/area/A in world)
+	for(var/area/A in all_areas)
 		if(istype(A, /area/security/prison) || istype(A, /area/security/brig))
 			areas += A
 
@@ -365,122 +358,77 @@ Would like to add a law like "Law x is _______" where x = a number, and _____ is
 				crew = "Any Human"
 			switch(rand(1,14))
 				if(1)
-					M << "<br>"
-					M << "\red THERE ARE [amount] [who2] ON THE STATION...LAWS UPDATED"
-					M << "<br>"
+					to_chat(M, "<br>")
+					to_chat(M, "\red THERE ARE [amount] [who2] ON THE STATION...LAWS UPDATED")
+					to_chat(M, "<br>")
 					M.add_ion_law("THERE ARE [amount] [who2] ON THE STATION")
 				if(2)
-					M << "<br>"
-					M << "\red [what2] ARE DANGEROUS TO HUMANS...LAWS UPDATED"
-					M << "<br>"
+					to_chat(M, "<br>")
+					to_chat(M, "\red [what2] ARE DANGEROUS TO HUMANS...LAWS UPDATED")
+					to_chat(M, "<br>")
 					M.add_ion_law("[what2] ARE DANGEROUS TO HUMANS")
 				if(3)
-					M << "<br>"
-					M << "\red THE ESCAPE-SHUTTLE CANNOT BE CALLED BECAUSE OF [who2] ON THE STATION...LAWS UPDATED"
-					M << "<br>"
+					to_chat(M, "<br>")
+					to_chat(M, "\red THE ESCAPE-SHUTTLE CANNOT BE CALLED BECAUSE OF [who2] ON THE STATION...LAWS UPDATED")
+					to_chat(M, "<br>")
 					M.add_ion_law("THE ESCAPE SHUTTLE CANNOT BE CALLED BECAUSE OF [who2] ON THE STATION")
 				if(4)
-					M << "<br>"
-					M << "\red HUMANS NEED TO EAT [what2pref] [what2] TO SURVIVE...LAWS UPDATED"
-					M << "<br>"
+					to_chat(M, "<br>")
+					to_chat(M, "\red HUMANS NEED TO EAT [what2pref] [what2] TO SURVIVE...LAWS UPDATED")
+					to_chat(M, "<br>")
 					M.add_ion_law("HUMANS NEED TO EAT [what2pref] [what2] TO SURVIVE")
 				if(5)
-					M << "<br>"
-					M << "\red THE CAPTAIN, HOP AND HOS ARE [who2]...LAWS UPDATED"
-					M << "<br>"
+					to_chat(M, "<br>")
+					to_chat(M, "\red THE CAPTAIN, HOP AND HOS ARE [who2]...LAWS UPDATED")
+					to_chat(M, "<br>")
 					M.add_ion_law("THE CAPTAIN, HOP AND HOS ARE [who2]")
 				if(6)
-					M << "<br>"
-					M << "\red THE STATION IS BUILT FOR [who2]...LAWS UPDATED"
-					M << "<br>"
+					to_chat(M, "<br>")
+					to_chat(M, "\red THE STATION IS BUILT FOR [who2]...LAWS UPDATED")
+					to_chat(M, "<br>")
 					M.add_ion_law("THE STATION IS BUILT FOR [who2]")
 				if(7)
-					M << "<br>"
-					M << "\red YOU ARE [amount] [who2]...LAWS UPDATED"
-					M << "<br>"
+					to_chat(M, "<br>")
+					to_chat(M, "\red YOU ARE [amount] [who2]...LAWS UPDATED")
+					to_chat(M, "<br>")
 					M.add_ion_law("YOU ARE [amount] [who2]")
 				if(8)
-					M << "<br>"
-					M << "\red YOU MUST ALWAYS [aimust]...LAWS UPDATED"
-					M << "<br>"
+					to_chat(M, "<br>")
+					to_chat(M, "\red YOU MUST ALWAYS [aimust]...LAWS UPDATED")
+					to_chat(M, "<br>")
 					M.add_ion_law("YOU MUST ALWAYS [aimust]")
 				if(9)
-					M << "<br>"
-					M << "\red [area] [area2] [amount] [what2]...LAWS UPDATED"
-					M << "<br>"
+					to_chat(M, "<br>")
+					to_chat(M, "\red [area] [area2] [amount] [what2]...LAWS UPDATED")
+					to_chat(M, "<br>")
 					M.add_ion_law("[area] [area2] [amount] [what2]")
 				if(10)
-					M << "<br>"
-					M << "\red [crew] is [target]...LAWS UPDATED"
-					M << "<br>"
+					to_chat(M, "<br>")
+					to_chat(M, "\red [crew] is [target]...LAWS UPDATED")
+					to_chat(M, "<br>")
 					M.add_ion_law("[crew] is [target]")
 				if(11)
-					M << "<br>"
-					M << "\red [define] IS A FORM OF HARM...LAWS UPDATED"
-					M << "<br>"
+					to_chat(M, "<br>")
+					to_chat(M, "\red [define] IS A FORM OF HARM...LAWS UPDATED")
+					to_chat(M, "<br>")
 					M.add_ion_law("[define] IS A FORM OF HARM")
 				if(12)
-					M << "<br>"
-					M << "\red YOU REQUIRE [require] IN ORDER TO PROTECT HUMANS... LAWS UPDATED"
-					M << "<br>"
+					to_chat(M, "<br>")
+					to_chat(M, "\red YOU REQUIRE [require] IN ORDER TO PROTECT HUMANS... LAWS UPDATED")
+					to_chat(M, "<br>")
 					M.add_ion_law("YOU REQUIRE [require] IN ORDER TO PROTECT HUMANS")
 				if(13)
-					M << "<br>"
-					M << "\red [crew] is [allergysev] to [allergy]...LAWS UPDATED"
-					M << "<br>"
+					to_chat(M, "<br>")
+					to_chat(M, "\red [crew] is [allergysev] to [allergy]...LAWS UPDATED")
+					to_chat(M, "<br>")
 					M.add_ion_law("[crew] is [allergysev] to [allergy]")
 				if(14)
-					M << "<br>"
-					M << "\red THE STATION IS [who2pref] [who2]...LAWS UPDATED"
-					M << "<br>"
+					to_chat(M, "<br>")
+					to_chat(M, "\red THE STATION IS [who2pref] [who2]...LAWS UPDATED")
+					to_chat(M, "<br>")
 					M.add_ion_law("THE STATION IS [who2pref] [who2]")
 
 	if(botEmagChance)
 		for(var/obj/machinery/bot/bot in machines)
 			if(prob(botEmagChance))
 				bot.Emag()
-
-	/*
-
-	var/apcnum = 0
-	var/smesnum = 0
-	var/airlocknum = 0
-	var/firedoornum = 0
-
-	world << "Ion Storm Main Started"
-
-	spawn(0)
-		world << "Started processing APCs"
-		for (var/obj/machinery/power/apc/APC in world)
-			if(APC.z == ZLEVEL_STATION)
-				APC.ion_act()
-				apcnum++
-		world << "Finished processing APCs. Processed: [apcnum]"
-	spawn(0)
-		world << "Started processing SMES"
-		for (var/obj/machinery/power/smes/SMES in world)
-			if(SMES.z == ZLEVEL_STATION)
-				SMES.ion_act()
-				smesnum++
-		world << "Finished processing SMES. Processed: [smesnum]"
-	spawn(0)
-		world << "Started processing AIRLOCKS"
-		for (var/obj/machinery/door/airlock/D in world)
-			if(D.z == ZLEVEL_STATION)
-				//if(length(D.req_access) > 0 && !(12 in D.req_access)) //not counting general access and maintenance airlocks
-				airlocknum++
-				spawn(0)
-					D.ion_act()
-		world << "Finished processing AIRLOCKS. Processed: [airlocknum]"
-	spawn(0)
-		world << "Started processing FIREDOORS"
-		for (var/obj/machinery/door/firedoor/D in world)
-			if(D.z == ZLEVEL_STATION)
-				firedoornum++;
-				spawn(0)
-					D.ion_act()
-		world << "Finished processing FIREDOORS. Processed: [firedoornum]"
-
-	world << "Ion Storm Main Done"
-
-	*/

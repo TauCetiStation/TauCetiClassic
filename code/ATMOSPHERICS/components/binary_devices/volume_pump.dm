@@ -97,7 +97,7 @@ Thus, the two variables affect pump operation are set in New():
 
 	return 1
 
-/obj/machinery/atmospherics/binary/volume_pump/interact(mob/user as mob)
+/obj/machinery/atmospherics/binary/volume_pump/interact(mob/user)
 	var/dat = {"<b>Power: </b><a href='?src=\ref[src];power=1'>[on?"On":"Off"]</a><br>
 				<b>Desirable output flow: </b>
 				[round(transfer_rate,1)]l/s | <a href='?src=\ref[src];set_transfer_rate=1'>Change</a>
@@ -138,28 +138,28 @@ Thus, the two variables affect pump operation are set in New():
 	update_icon()
 
 
-/obj/machinery/atmospherics/binary/volume_pump/attack_hand(user as mob)
+/obj/machinery/atmospherics/binary/volume_pump/attack_hand(user)
 	if(..())
 		return
 	src.add_fingerprint(usr)
 	if(!src.allowed(user))
-		user << "<span class='warning'>Access denied.</span>"
+		to_chat(user, "<span class='warning'>Access denied.</span>")
 		return
 	usr.set_machine(src)
 	interact(user)
 	return
 
 /obj/machinery/atmospherics/binary/volume_pump/Topic(href,href_list)
-	if(..()) return
+	. = ..()
+	if(!.)
+		return
 	if(href_list["power"])
 		on = !on
-	if(href_list["set_transfer_rate"])
+	else if(href_list["set_transfer_rate"])
 		var/new_transfer_rate = input(usr,"Enter new output volume (0-200l/s)","Flow control",src.transfer_rate) as num
 		src.transfer_rate = max(0, min(200, new_transfer_rate))
-	usr.set_machine(src)
 	src.update_icon()
 	src.updateUsrDialog()
-	return
 
 /obj/machinery/atmospherics/binary/volume_pump/power_change()
 	..()
@@ -167,24 +167,24 @@ Thus, the two variables affect pump operation are set in New():
 
 
 
-/obj/machinery/atmospherics/binary/volume_pump/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+/obj/machinery/atmospherics/binary/volume_pump/attackby(obj/item/weapon/W, mob/user)
 	if (!istype(W, /obj/item/weapon/wrench))
 		return ..()
 	if (!(stat & NOPOWER) && on)
-		user << "<span class='warning'>You cannot unwrench this [src], turn it off first.</span>"
+		to_chat(user, "<span class='warning'>You cannot unwrench this [src], turn it off first.</span>")
 		return 1
 	var/turf/T = src.loc
 	if (level==1 && isturf(T) && T.intact)
-		user << "<span class='warning'>You must remove the plating first.</span>"
+		to_chat(user, "<span class='warning'>You must remove the plating first.</span>")
 		return 1
 	var/datum/gas_mixture/int_air = return_air()
 	var/datum/gas_mixture/env_air = loc.return_air()
 	if ((int_air.return_pressure()-env_air.return_pressure()) > 2*ONE_ATMOSPHERE)
-		user << "<span class='warning'>You cannot unwrench this [src], it too exerted due to internal pressure.</span>"
+		to_chat(user, "<span class='warning'>You cannot unwrench this [src], it too exerted due to internal pressure.</span>")
 		add_fingerprint(user)
 		return 1
 	playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-	user << "<span class='notice'>You begin to unfasten \the [src]...</span>"
+	to_chat(user, "<span class='notice'>You begin to unfasten \the [src]...</span>")
 	if (do_after(user, 40, target = src))
 		user.visible_message( \
 			"[user] unfastens \the [src].", \

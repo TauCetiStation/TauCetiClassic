@@ -57,7 +57,7 @@
 		S.race_key = rkey //Used in mob icon caching.
 		all_species[S.name] = S
 
-		if(S.flags & IS_WHITELISTED)
+		if(S.flags[IS_WHITELISTED])
 			whitelisted_species += S.name
 
 /* // Uncomment to debug chemical reaction list.
@@ -69,7 +69,7 @@
 			var/list/L = chemical_reactions_list[reaction]
 			for(var/t in L)
 				. += "    has: [t]\n"
-	world << .
+	to_chat(world, .)
 */
 
 //creates every subtype of prototype (excluding prototype) and adds it to list L.

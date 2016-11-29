@@ -14,6 +14,8 @@
 			M2.rabid = 1
 			M1.regenerate_icons()
 			M2.regenerate_icons()
+			M1.Friends = Friends.Copy()
+			M2.Friends = Friends.Copy()
 			if(src)
 				qdel(src)
 		else

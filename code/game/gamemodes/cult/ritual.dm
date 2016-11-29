@@ -11,7 +11,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 	if(!cultwords["travel"])
 		runerandom()
 	for (var/word in engwords)
-		usr << "[cultwords[word]] is [word]"
+		to_chat(usr, "[cultwords[word]] is [word]")
 
 /proc/runerandom() //randomizes word meaning
 	var/list/runewords=list("ire","ego","nahlizet","certum","veri","jatkaa","mgar","balaq", "karazet", "geeri") ///"orkan" and "allaq" removed.
@@ -68,46 +68,32 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 		for(var/mob/living/silicon/ai/AI in player_list)
 			AI.client.images += blood
 
-	examine()
-		set src in view(2)
-
-		if(!iscultist(usr))
-			usr << "A strange collection of symbols drawn in blood."
-			return
-			/* Explosions... really?
-			if(desc && !usr.stat)
-				usr << "It reads: <i>[desc]</i>."
-				sleep(30)
-				explosion(src.loc, 0, 2, 5, 5)
-				if(src)
-					qdel(src)
-			*/
-		if(!desc)
-			usr << "A spell circle drawn in blood. It reads: <i>[word1] [word2] [word3]</i>."
+	examine(mob/user)
+		..()
+		if(iscultist(user))
+			to_chat(user, "A spell circle drawn in blood. It reads: <i>[word1] [word2] [word3]</i>.")
 		else
-			usr << "Explosive Runes inscription in blood. It reads: <i>[desc]</i>."
-
-		return
+			to_chat(user, "A strange collection of symbols drawn in blood.")
 
 
-	attackby(I as obj, user as mob)
+	attackby(I, user)
 		if(istype(I, /obj/item/weapon/book/tome) && iscultist(user))
-			user << "You retrace your steps, carefully undoing the lines of the rune."
+			to_chat(user, "You retrace your steps, carefully undoing the lines of the rune.")
 			qdel(src)
 			return
 		else if(istype(I, /obj/item/weapon/nullrod))
-			user << "\blue You disrupt the vile magic with the deadening field of the null rod!"
+			to_chat(user, "\blue You disrupt the vile magic with the deadening field of the null rod!")
 			qdel(src)
 			return
 		return
 
 
-	attack_hand(mob/living/user as mob)
+	attack_hand(mob/living/user)
 		if(!iscultist(user))
-			user << "You can't mouth the arcane scratchings without fumbling over them."
+			to_chat(user, "You can't mouth the arcane scratchings without fumbling over them.")
 			return
 		if(istype(user.wear_mask, /obj/item/clothing/mask/muzzle))
-			user << "You are unable to speak the words of the rune."
+			to_chat(user, "You are unable to speak the words of the rune.")
 			return
 		if(!word1 || !word2 || !word3 || prob(user.getBrainLoss()))
 			return fizzle()
@@ -345,7 +331,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 //		usr << "whatev"
 //		usr << browse(null, "window=tank")
 
-	attack(mob/living/M as mob, mob/living/user as mob)
+	attack(mob/living/M, mob/living/user)
 
 		M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has had the [name] used on him by [user.name] ([user.ckey])</font>")
 		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used [name] on [M.name] ([M.ckey])</font>")
@@ -367,10 +353,10 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 		M.take_organ_damage(0,rand(5,20)) //really lucky - 5 hits for a crit
 		for(var/mob/O in viewers(M, null))
 			O.show_message(text("\red <B>[] beats [] with the arcane tome!</B>", user, M), 1)
-		M << "\red You feel searing heat inside!"
+		to_chat(M, "\red You feel searing heat inside!")
 
 
-	attack_self(mob/living/user as mob)
+	attack_self(mob/living/user)
 		usr = user
 		if(!usr.canmove || usr.stat || usr.restrained())
 			return
@@ -382,7 +368,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 			for(var/obj/effect/rune/N in world)
 				C++
 			if (!istype(user.loc,/turf))
-				user << "\red You do not have enough space to write a proper rune."
+				to_chat(user, "\red You do not have enough space to write a proper rune.")
 				return
 
 
@@ -449,14 +435,14 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 
 			for (var/mob/V in viewers(src))
 				V.show_message("\red [user] slices open a finger and begins to chant and paint symbols on the floor.", 3, "\red You hear chanting.", 2)
-			user << "\red You slice open one of your fingers and begin drawing a rune on the floor whilst chanting the ritual that binds your life essence with the dark arcane energies flowing through the surrounding world."
+			to_chat(user, "\red You slice open one of your fingers and begin drawing a rune on the floor whilst chanting the ritual that binds your life essence with the dark arcane energies flowing through the surrounding world.")
 			user.take_overall_damage((rand(9)+1)/10) // 0.1 to 1.0 damage
 			if(do_after(user, 50, target = user))
 				if(usr.get_active_hand() != src)
 					return
 				var/mob/living/carbon/human/H = user
 				var/obj/effect/rune/R = new /obj/effect/rune(user.loc)
-				user << "\red You finish drawing the arcane markings of the Geometer."
+				to_chat(user, "\red You finish drawing the arcane markings of the Geometer.")
 				R.word1 = w1
 				R.word2 = w2
 				R.word3 = w3
@@ -466,10 +452,10 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 			return
 		else
 			//user << "The book seems full of illegible scribbles. Is this a joke?"
-			user << "This book is completely blank!"
+			to_chat(user, "This book is completely blank!")
 			return
 
-	attackby(obj/item/weapon/book/tome/T as obj, mob/living/user as mob)
+	attackby(obj/item/weapon/book/tome/T, mob/living/user)
 		if(istype(T, /obj/item/weapon/book/tome)) // sanity check to prevent a runtime error
 			switch(alert("Copy the runes from your tome?",,"Copy", "Cancel"))
 				if("cancel")
@@ -481,26 +467,18 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 	//			if(M == user)
 			for(var/w in words)
 				words[w] = T.words[w]
-			user << "You copy the translation notes from your tome."
+			to_chat(user, "You copy the translation notes from your tome.")
 
 
-	examine()
-		set src in usr
-		if (icon_state == "tome")
-			if(!iscultist(usr))
-				usr << "An old, dusty tome with frayed edges and a sinister looking cover."
-			else
-				usr << "The scriptures of Nar-Sie, The One Who Sees, The Geometer of Blood. Contains the details of every ritual his followers could think of. Most of these are useless, though."
-		else
-			if(!iscultist(usr))
-				..()
-			else
-				usr << "The scriptures of Nar-Sie, The One Who Sees, The Geometer of Blood. Contains the details of every ritual his followers could think of. Most of these are useless, though."
+	examine(mob/user)
+		..()
+		if(iscultist(user))
+			to_chat(user, "The scriptures of Nar-Sie, The One Who Sees, The Geometer of Blood. Contains the details of every ritual his followers could think of. Most of these are useless, though.")
 
 /obj/item/weapon/book/tome/imbued //admin tome, spawns working runes without waiting
 	w_class = 2.0
 	var/cultistsonly = 1
-	attack_self(mob/user as mob)
+	attack_self(mob/user)
 		if(src.cultistsonly && !iscultist(usr))
 			return
 		if(!cultwords["travel"])
@@ -508,7 +486,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 		if(user)
 			var/r
 			if (!istype(user.loc,/turf))
-				user << "\red You do not have enough space to write a proper rune."
+				to_chat(user, "\red You do not have enough space to write a proper rune.")
 			var/list/runes = list("teleport", "itemport", "tome", "armor", "convert", "tear in reality", "emp", "drain", "seer", "raise", "obscure", "reveal", "astral journey", "manifest", "imbue talisman", "sacrifice", "wall", "freedom", "cultsummon", "deafen", "blind", "bloodboil", "communicate", "stun", "brainswap")
 			r = input("Choose a rune to scribe", "Rune Scribing") in runes //not cancellable.
 			var/obj/effect/rune/R = new /obj/effect/rune
@@ -678,5 +656,6 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 
 /obj/item/weapon/book/tome/old
 	name = "arcane tome"
+	desc = "An old, dusty tome with frayed edges and a sinister looking cover."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state ="tome"

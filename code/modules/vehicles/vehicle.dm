@@ -26,6 +26,7 @@
 	var/brute_dam_coeff = 1.0
 	var/stat = 0
 	var/move_delay = 1	//set this to limit the speed of the vehicle
+	var/slow_cooef = 0
 
 	var/atom/movable/load		//all vehicles can take a load, since they should all be a least drivable
 	var/load_item_visible = 1	//set if the loaded item should be overlayed on the vehicle sprite
@@ -71,7 +72,7 @@
 		return 0
 	return 1
 
-/obj/vehicle/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/vehicle/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/hand_labeler))
 		return
 	else if(istype(W, /obj/item/weapon/screwdriver))
@@ -80,21 +81,22 @@
 		if(on && open)
 			turn_off()
 		update_icon()
-		user << "<span class='notice'>Maintenance panel is now [open ? "opened" : "closed"].</span>"
+		to_chat(user, "<span class='notice'>Maintenance panel is now [open ? "opened" : "closed"].</span>")
 	else if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/T = W
 		if(T.welding)
 			if(health < maxhealth)
 				if(open)
-					health = min(maxhealth, health+10)
+					health = min(maxhealth, health + 20)
 					playsound(src.loc, 'sound/items/welder.ogg', 50, 1)
 					user.visible_message("<span class='red'>[user] repairs \the [src]!</span>","<span class='notice'>You repair \the [src]!</span>")
+					check_move_delay()
 				else
-					user << "<span class='notice'>Unable to repair \the [src] with the maintenance panel closed.</span>"
+					to_chat(user, "<span class='notice'>Unable to repair \the [src] with the maintenance panel closed.</span>")
 			else
-				user << "<span class='notice'>[src] does not need a repair.</span>"
+				to_chat(user, "<span class='notice'>[src] does not need a repair.</span>")
 		else
-			user << "<span class='notice'>Unable to repair while [src] is off.</span>"
+			to_chat(user, "<span class='notice'>Unable to repair while [src] is off.</span>")
 	else if(hasvar(W,"force") && hasvar(W,"damtype"))
 		switch(W.damtype)
 			if("fire")
@@ -106,7 +108,7 @@
 	else
 		..()
 
-/obj/vehicle/bullet_act(var/obj/item/projectile/Proj)
+/obj/vehicle/bullet_act(obj/item/projectile/Proj)
 	health -= Proj.damage
 	..()
 	healthcheck()
@@ -138,7 +140,7 @@
 				return
 	return
 
-/obj/vehicle/attack_ai(mob/user as mob)
+/obj/vehicle/attack_ai(mob/user)
 	return
 
 /obj/vehicle/Process_Spacemove(direction)
@@ -189,10 +191,11 @@
 	qdel(src)
 
 /obj/vehicle/proc/healthcheck()
+	check_move_delay()
 	if(health <= 0)
 		explode()
 
-/obj/vehicle/proc/RunOver(var/mob/living/carbon/human/H)
+/obj/vehicle/proc/RunOver(mob/living/carbon/human/H)
 	return		//write specifics for different vehicles
 
 //-------------------------------------------
@@ -202,7 +205,7 @@
 // the vehicle load() definition before
 // calling this parent proc.
 //-------------------------------------------
-/obj/vehicle/proc/load(var/atom/movable/C)
+/obj/vehicle/proc/load(atom/movable/C)
 	//This loads objects onto the vehicle so they can still be interacted with.
 	//Define allowed items for loading in specific vehicle definitions.
 	if(!isturf(C.loc)) //To prevent loading things from someone's inventory, which wouldn't get handled properly.
@@ -235,7 +238,7 @@
 	return 1
 
 
-/obj/vehicle/proc/unload(var/mob/user, var/direction)
+/obj/vehicle/proc/unload(mob/user, direction)
 	if(!load)
 		return
 
@@ -279,6 +282,17 @@
 
 	return 1
 
+/obj/vehicle/proc/check_move_delay()
+	var/health_procent = (health / maxhealth) * 100
+	if(health_procent >= 66)
+		slow_cooef = 0
+		return
+	if(health_procent >= 33)
+		slow_cooef = 1
+		return
+	slow_cooef = 2
+	return
+
 
 //-------------------------------------------------------
 // Stat update procs
@@ -286,7 +300,7 @@
 /obj/vehicle/proc/update_stats()
 	return
 
-/obj/vehicle/attack_hand(var/mob/user, var/damage, var/attack_message)
+/obj/vehicle/attack_hand(mob/user, damage, attack_message)
 	if(!damage)
 		return
 	visible_message("<span class='danger'>[user] [attack_message] the [src]!</span>")

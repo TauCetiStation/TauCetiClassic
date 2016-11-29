@@ -62,7 +62,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 var/list/teleportlocs = list()
 
 /proc/process_teleport_locs()
-	for(var/area/AR in world)
+	for(var/area/AR in all_areas)
 		if(istype(AR, /area/shuttle) || istype(AR, /area/syndicate_station) || istype(AR, /area/wizard_station) || istype(AR, /area/engine/singularity)) continue
 		if(teleportlocs.Find(AR.name)) continue
 		var/turf/picked = pick(get_area_turfs(AR.type))
@@ -77,7 +77,7 @@ var/list/teleportlocs = list()
 var/list/ghostteleportlocs = list()
 
 /proc/process_ghost_teleport_locs()
-	for(var/area/AR in world)
+	for(var/area/AR in all_areas)
 		if(ghostteleportlocs.Find(AR.name)) continue
 		if(istype(AR, /area/turret_protected/aisat) || istype(AR, /area/derelict) || istype(AR, /area/tdome))
 			ghostteleportlocs += AR.name
@@ -634,7 +634,7 @@ var/list/ghostteleportlocs = list()
 	icon_state = "fsmaint"
 
 /area/maintenance/fsmaint2
-	name = "\improper Bar Maintenance"
+	name = "\improper Chapel Maintenance"
 	icon_state = "fsmaint"
 
 /area/maintenance/asmaint
@@ -662,7 +662,7 @@ var/list/ghostteleportlocs = list()
 	icon_state = "smaint"
 
 /area/maintenance/port
-	name = "\improper Locker Room Maintenance"
+	name = "\improper Cargo Maintenance"
 	icon_state = "pmaint"
 
 /area/maintenance/aft
@@ -718,6 +718,10 @@ var/list/ghostteleportlocs = list()
 /area/hallway/secondary/entry
 	name = "\improper Arrival Shuttle Hallway"
 	icon_state = "entry"
+
+/area/hallway/secondary/Podbay
+	name = "\improper Pod bay"
+	icon_state = "escape"
 
 //Command
 
@@ -848,6 +852,10 @@ var/list/ghostteleportlocs = list()
 /area/crew_quarters/cafeteria
 	name = "\improper Cafeteria"
 	icon_state = "cafeteria"
+
+/area/crew_quarters/gym
+	name = "\improper Gym"
+	icon_state = "fitness"
 
 /area/crew_quarters/kitchen
 	name = "\improper Kitchen"
@@ -1455,7 +1463,7 @@ var/list/ghostteleportlocs = list()
 /area/toxins/server
 	name = "\improper Server Room"
 	icon_state = "server"
-	music = 'tauceti/sounds/ambience/server.ogg'
+	music = 'sound/ambience/server.ogg'
 
 //Storage
 
@@ -1847,10 +1855,64 @@ var/list/ghostteleportlocs = list()
 /area/awaymission/spacebattle/secret
 	name = "\improper Hidden Chamber"
 
+/area/awaymission/labs/gateway
+	name = "\improper Labs Gateway"
+
+/area/awaymission/labs/militarydivision
+	name = "\improper Military Division"
+
+/area/awaymission/labs/researchdivision
+	name = "\improper Labs RnD"
+
+/area/awaymission/labs/cave
+	name = "\improper Labs cave"
+
+/area/awaymission/labs/solars
+	name = "\improper Labs solars"
+
+/area/awaymission/labs/command
+	name = "\improper labs command"
+
+/area/awaymission/labs/cargo
+	name = "\improper Labs cargo"
+
+/area/awaymission/labs/civilian
+	name = "\improper Labs civilian"
+
+/area/awaymission/labs/security
+	name = "\improper Labs security"
+
+/area/awaymission/labs/medical
+	name = "\improper Labs medical"
+
+
 /area/awaymission/listeningpost
 	name = "\improper Listening Post"
 	icon_state = "away"
 	requires_power = 0
+
+//tc areas
+
+/area/mine/dwarf
+	name = "Dwarf"
+	icon_state = "dwarf"
+
+/area/toxins/brainstorm_center
+	name = "\improper Brainstorm Center"
+	icon_state = "bs"
+
+//Z7 areas
+/area/z7/derelict_mine_eva
+	name = "Derelict Mining Station EVA"
+	icon_state = "dms-eva"
+
+/area/z7/derelict_mine_solar
+	name = "Derelict Mining Station Engineering"
+	icon_state = "dms-sol"
+
+/area/z7/derelict_mine_common
+	name = "Derelict Mining Common Area"
+	icon_state = "dms-com"
 
 /area/awaymission/beach
 	name = "Beach"

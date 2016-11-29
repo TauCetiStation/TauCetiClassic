@@ -5,7 +5,7 @@
 	origin_tech = "magnets=3;biotech=2"
 	var/list/icon/current = list() //the current hud icons
 
-/obj/item/clothing/glasses/hud/proc/process_hud(var/mob/M)
+/obj/item/clothing/glasses/hud/proc/process_hud(mob/M)
 	return
 
 
@@ -17,7 +17,7 @@
 	body_parts_covered = 0
 
 
-/obj/item/clothing/glasses/hud/health/process_hud(var/mob/M)
+/obj/item/clothing/glasses/hud/health/process_hud(mob/M)
 	process_med_hud(M, 1)
 
 /obj/item/clothing/glasses/hud/security
@@ -35,5 +35,5 @@
 	vision_flags = SEE_MOBS
 	invisa_view = 3
 
-/obj/item/clothing/glasses/hud/security/process_hud(var/mob/M)
+/obj/item/clothing/glasses/hud/security/process_hud(mob/M)
 	process_sec_hud(M, 1)

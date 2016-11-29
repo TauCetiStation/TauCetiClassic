@@ -105,7 +105,7 @@ var/datum/subsystem/vote/SSvote
 	else
 		text += "<b>Vote Result: Inconclusive - No Votes!</b>"
 	log_vote(text)
-	world << "\n<font color='purple'>[text]</font>"
+	to_chat(world, "\n<font color='purple'>[text]</font>")
 	return .
 
 /datum/subsystem/vote/proc/result()
@@ -136,7 +136,7 @@ var/datum/subsystem/vote/SSvote
 		if(!active_admins)
 			world.Reboot("Restart vote successful.", "end_error", "restart vote")
 		else
-			world << "<span style='boldannounce'>Notice:Restart vote will not restart the server automatically because there are active admins on.</span>"
+			to_chat(world, "<span style='boldannounce'>Notice:Restart vote will not restart the server automatically because there are active admins on.</span>")
 			message_admins("A restart vote has passed, but there are active admins on with +server, so it has been canceled. If you wish, you may restart the server.")
 	if(crewtransfer)
 		if(!SSshuttle.online && SSshuttle.location == 0)
@@ -176,7 +176,7 @@ var/datum/subsystem/vote/SSvote
 				if(!is_admin)
 					var/num_admins_online = 0
 					for(var/client/C in admins)
-						if(R_ADMIN & C.holder.rights || !(R_MOD & C.holder.rights))
+						if(C.holder.rights & R_ADMIN)
 							if(!C.holder.fakekey && !C.is_afk())
 								num_admins_online++
 					if(num_admins_online)
@@ -210,7 +210,7 @@ var/datum/subsystem/vote/SSvote
 			started_time = world.time
 		log_vote(text)
 		world << sound('sound/misc/notice1.ogg')
-		world << "\n<font color='purple'><b>[text]</b>\nType <b>vote</b> or click <a href='?src=\ref[src]'>here</a> to place your votes.\nYou have [config.vote_period/10] seconds to vote.</font>"
+		to_chat(world, "\n<font color='purple'><b>[text]</b>\nType <b>vote</b> or click <a href='?src=\ref[src]'>here</a> to place your votes.\nYou have [config.vote_period/10] seconds to vote.</font>")
 		time_remaining = round(config.vote_period/10)
 
 		if(vote_type == "crew_transfer")
@@ -226,11 +226,8 @@ var/datum/subsystem/vote/SSvote
 	if(!C)
 		return
 	var/admin = 0
-	var/trialmin = 0
-	if(C.holder)
+	if(C.holder && (C.holder.rights & R_ADMIN))
 		admin = 1
-		if(R_ADMIN & C.holder.rights)
-			trialmin = 1
 	voting |= C
 
 	if(mode)
@@ -250,32 +247,32 @@ var/datum/subsystem/vote/SSvote
 	else
 		. += "<h2>Start a vote:</h2><hr><ul><li>"
 		//restart
-		if(trialmin || config.allow_vote_restart)
+		if(admin || config.allow_vote_restart)
 			. += "<a href='?src=\ref[src];vote=restart'>Restart</a>"
 		else
 			. += "<font color='grey'>Restart (Disallowed)</font>"
-		if(trialmin)
-			. += "\t(<a href='?src=\ref[src];vote=toggle_restart'>[config.allow_vote_restart?"Allowed":"Disallowed"]</a>)"
+		if(admin)
+			. += "&emsp;(<a href='?src=\ref[src];vote=toggle_restart'>[config.allow_vote_restart?"Allowed":"Disallowed"]</a>)"
 		. += "</li><li>"
 		//crew transfer
-		if(trialmin || config.allow_vote_mode)
+		if(admin || config.allow_vote_mode)
 			. += "<a href='?src=\ref[src];vote=crew_transfer'>Crew Transfer</a>"
 		else
 			. += "<font color='grey'>Crew Transfer (Disallowed)</font>"
-		if(trialmin)
+		if(admin)
 			. += "\t(<a href='?src=\ref[src];vote=toggle_crew'>[config.allow_vote_mode?"Allowed":"Disallowed"]</a>)"
 		. += "</li><li>"
 		//gamemode
-		if(trialmin || config.allow_vote_mode)
+		if(admin || config.allow_vote_mode)
 			. += "<a href='?src=\ref[src];vote=gamemode'>GameMode</a>"
 		else
 			. += "<font color='grey'>GameMode (Disallowed)</font>"
-		if(trialmin)
+		if(admin)
 			. += "\t(<a href='?src=\ref[src];vote=toggle_gamemode'>[config.allow_vote_mode?"Allowed":"Disallowed"]</a>)"
 
 		. += "</li>"
 		//custom
-		if(trialmin)
+		if(admin)
 			. += "<li><a href='?src=\ref[src];vote=custom'>Custom</a></li>"
 		. += "</ul><hr>"
 	. += "<a href='?src=\ref[src];vote=close' style='position:absolute;right:50px'>Close</a>"

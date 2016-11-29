@@ -4,11 +4,11 @@
 /*
 #define NOTESFILE "data/player_notes.sav"	//where the player notes are saved
 
-datum/admins/proc/notes_show(var/ckey)
+datum/admins/proc/notes_show(ckey)
 	usr << browse("<head><title>Player Notes</title></head><body>[notes_gethtml(ckey)]</body>","window=player_notes;size=700x400")
 
 
-datum/admins/proc/notes_gethtml(var/ckey)
+datum/admins/proc/notes_gethtml(ckey)
 	var/savefile/notesfile = new(NOTESFILE)
 	if(!notesfile)	return "<font color='red'>Error: Cannot access [NOTESFILE]</font>"
 	if(ckey)
@@ -31,7 +31,7 @@ datum/admins/proc/notes_gethtml(var/ckey)
 //handles adding notes to the end of a ckey's buffer
 //originally had seperate entries such as var/by to record who left the note and when
 //but the current bansystem is a heap of dung.
-/proc/notes_add(var/ckey, var/note)
+/proc/notes_add(ckey, note)
 	if(!ckey)
 		ckey = ckey(input(usr,"Who would you like to add notes for?","Enter a ckey",null) as text|null)
 		if(!ckey)	return
@@ -44,11 +44,11 @@ datum/admins/proc/notes_gethtml(var/ckey)
 	if(!notesfile)	return
 	notesfile.cd = "/[ckey]"
 	notesfile.eof = 1		//move to the end of the buffer
-	notesfile << "[time2text(world.realtime,"DD-MMM-YYYY")] | [note][(usr && usr.ckey)?" ~[usr.ckey]":""]"
+	to_chat(notesfile, "[time2text(world.realtime,"DD-MMM-YYYY")] | [note][(usr && usr.ckey)?" ~[usr.ckey]":""]")
 	return
 
 //handles removing entries from the buffer, or removing the entire directory if no start_index is given
-/proc/notes_remove(var/ckey, var/start_index, var/end_index)
+/proc/notes_remove(ckey, start_index, end_index)
 	var/savefile/notesfile = new(NOTESFILE)
 	if(!notesfile)	return
 
@@ -73,7 +73,7 @@ datum/admins/proc/notes_gethtml(var/ckey)
 		notesfile.eof = -2		//Move to the start of the buffer and then erase.
 
 		for( var/note in noteslist )
-			notesfile << note
+			to_chat(notesfile, note)
 	else
 		notesfile.cd = "/"
 		if(alert(usr,"Are you sure you want to remove all their notes?","Confirmation","No","Yes - Remove all notes") == "Yes - Remove all notes")
@@ -85,7 +85,7 @@ datum/admins/proc/notes_gethtml(var/ckey)
 
 //Hijacking this file for BS12 playernotes functions. I like this ^ one systemm alright, but converting sounds too bothersome~ Chinsky.
 
-/proc/notes_add(var/key, var/note, var/mob/usr)
+/proc/notes_add(key, note, mob/usr)
 	if (!key || !note)
 		return
 
@@ -136,11 +136,11 @@ datum/admins/proc/notes_gethtml(var/ckey)
 	note_list >> note_keys
 	if(!note_keys) note_keys = list()
 	if(!note_keys.Find(key)) note_keys += key
-	note_list << note_keys
+	to_chat(note_list, note_keys)
 	del(note_list)	// savefile, so NOT qdel
 
 
-/proc/notes_del(var/key, var/index)
+/proc/notes_del(key, index)
 	var/savefile/info = new("data/player_saves/[copytext(key, 1, 2)]/[key]/info.sav")
 	var/list/infos
 	info >> infos
@@ -155,7 +155,7 @@ datum/admins/proc/notes_gethtml(var/ckey)
 
 	del(info)	// savefile, so NOT qdel
 
-/proc/show_player_info_irc(var/key as text)
+/proc/show_player_info_irc(key)
 	var/dat = "          Info on [key]%0D%0A"
 	var/savefile/info = new("data/player_saves/[copytext(key, 1, 2)]/[key]/info.sav")
 	var/list/infos

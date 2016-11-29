@@ -348,7 +348,7 @@ proc/ShareSpace(datum/gas_mixture/A, list/unsimulated_tiles, dbg_output)
 		tileslen = avg_unsim.group_multiplier
 
 		if(dbg_output)
-			world << "O2: [unsim_oxygen] N2: [unsim_nitrogen] Size: [share_size] Tiles: [tileslen]"
+			to_chat(world, "O2: [unsim_oxygen] N2: [unsim_nitrogen] Size: [share_size] Tiles: [tileslen]")
 
 	else if(istype(unsimulated_tiles, /list))
 		if(!unsimulated_tiles.len)
@@ -407,8 +407,8 @@ proc/ShareSpace(datum/gas_mixture/A, list/unsimulated_tiles, dbg_output)
 		ratio = sharing_lookup_table[tileslen]
 
 	if(dbg_output)
-		world << "Ratio: [ratio]"
-		world << "Avg O2: [oxy_avg] N2: [nit_avg]"
+		to_chat(world, "Ratio: [ratio]")
+		to_chat(world, "Avg O2: [oxy_avg] N2: [nit_avg]")
 
 	A.oxygen = max(0, (A.oxygen - oxy_avg) * (1 - ratio) + oxy_avg )
 	A.nitrogen = max(0, (A.nitrogen - nit_avg) * (1 - ratio) + nit_avg )
@@ -424,7 +424,7 @@ proc/ShareSpace(datum/gas_mixture/A, list/unsimulated_tiles, dbg_output)
 	A.update_values()
 
 	if(dbg_output)
-		world << "Result: [abs(old_pressure - A.return_pressure())] kPa"
+		to_chat(world, "Result: [abs(old_pressure - A.return_pressure())] kPa")
 
 	return abs(old_pressure - A.return_pressure())
 

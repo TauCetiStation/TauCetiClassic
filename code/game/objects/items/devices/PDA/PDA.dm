@@ -56,8 +56,9 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	var/obj/item/device/paicard/pai = null	// A slot for a personal AI device
 
 /obj/item/device/pda/examine(mob/user)
-	if(..(user, 1))
-		user << "The time [worldtime2text()] is displayed in the corner of the screen."
+	..()
+	if(src in user)
+		to_chat(user, "The time [worldtime2text()] is displayed in the corner of the screen.")
 
 /obj/item/device/pda/medical
 	default_cartridge = /obj/item/weapon/cartridge/medical
@@ -185,7 +186,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 /obj/item/device/pda/forensic
 	default_cartridge = /obj/item/weapon/cartridge/detective
-	icon = 'tauceti/icons/obj/devices.dmi'
+	icon = 'icons/obj/pda.dmi'
 	icon_state = "pda-forensic"
 
 /obj/item/device/pda/clear
@@ -219,7 +220,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	detonate = 0
 
 
-/obj/item/device/pda/ai/proc/set_name_and_job(newname as text, newjob as text, newrank as null|text)
+/obj/item/device/pda/ai/proc/set_name_and_job(newname, newjob, newrank)
 	owner = newname
 	ownjob = newjob
 	if(newrank)
@@ -236,7 +237,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	set src in usr
 	set hidden = 1
 	if(usr.stat == DEAD)
-		usr << "You can't send PDA messages because you are dead!"
+		to_chat(usr, "You can't send PDA messages because you are dead!")
 		return
 	var/list/plist = available_pdas()
 	if (plist)
@@ -252,10 +253,10 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	set name = "Toggle Sender/Receiver"
 	set src in usr
 	if(usr.stat == DEAD)
-		usr << "You can't do that because you are dead!"
+		to_chat(usr, "You can't do that because you are dead!")
 		return
 	toff = !toff
-	usr << "<span class='notice'>PDA sender/receiver toggled [(toff ? "Off" : "On")]!</span>"
+	to_chat(usr, "<span class='notice'>PDA sender/receiver toggled [(toff ? "Off" : "On")]!</span>")
 
 
 /obj/item/device/pda/ai/verb/cmd_toggle_pda_silent()
@@ -263,10 +264,10 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	set name = "Toggle Ringer"
 	set src in usr
 	if(usr.stat == DEAD)
-		usr << "You can't do that because you are dead!"
+		to_chat(usr, "You can't do that because you are dead!")
 		return
 	message_silent=!message_silent
-	usr << "<span class='notice'>PDA ringer toggled [(message_silent ? "Off" : "On")]!</span>"
+	to_chat(usr, "<span class='notice'>PDA ringer toggled [(message_silent ? "Off" : "On")]!</span>")
 
 
 /obj/item/device/pda/ai/verb/cmd_show_message_log()
@@ -275,7 +276,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	set src in usr
 	set hidden = 1
 	if(usr.stat == DEAD)
-		usr << "You can't do that because you are dead!"
+		to_chat(usr, "You can't do that because you are dead!")
 		return
 	var/HTML = "<html><head><title>AI PDA Message Log</title></head><body>"
 	for(var/index in tnote)
@@ -291,7 +292,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	return 1
 
 
-/obj/item/device/pda/ai/attack_self(mob/user as mob)
+/obj/item/device/pda/ai/attack_self(mob/user)
 	if ((honkamt > 0) && (prob(60)))//For clown virus.
 		honkamt--
 		playsound(loc, 'sound/items/bikehorn.ogg', 30, 1)
@@ -361,7 +362,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	return
 
 
-/obj/item/device/pda/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null, var/force_open = 1)
+/obj/item/device/pda/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1)
 	ui_tick++
 	var/datum/nanoui/old_ui = nanomanager.get_open_ui(user, src, "main")
 	var/auto_update = 1
@@ -516,7 +517,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	ui.set_auto_update(auto_update)
 
 //NOTE: graphic resources are loaded on client login
-/obj/item/device/pda/attack_self(mob/user as mob)
+/obj/item/device/pda/attack_self(mob/user)
 
 	user.set_machine(src)
 
@@ -681,7 +682,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			if (in_range(src, U) && loc == U)
 				if (t)
 					if(src.hidden_uplink && hidden_uplink.check_trigger(U, lowertext(t), lowertext(lock_code)))
-						U << "The PDA softly beeps."
+						to_chat(U, "The PDA softly beeps.")
 						ui.close()
 					else
 						t = sanitize_alt(copytext(t, 1, 20))
@@ -713,7 +714,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 						U.show_message("\blue Virus sent!", 1)
 						P.honkamt = (rand(15,20))
 				else
-					U << "PDA not found."
+					to_chat(U, "PDA not found.")
 			else
 				ui.close()
 				return 0
@@ -727,7 +728,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 						P.message_silent = 1
 						P.ttone = "silence"
 				else
-					U << "PDA not found."
+					to_chat(U, "PDA not found.")
 			else
 				ui.close()
 				return 0
@@ -795,16 +796,16 @@ var/global/list/obj/item/device/pda/PDAs = list()
 							ui.close()
 							detonate_act(src)
 							log_admin("[key_name(U)] just attempted to blow up [P] with the Detomatix cartridge but failed, blowing themselves up")
-							message_admins("[key_name_admin(U)] just attempted to blow up [P] with the Detomatix cartridge but failed.", 1)
+							message_admins("[key_name_admin(U)] just attempted to blow up [P] with the Detomatix cartridge but failed. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[U.x];Y=[U.y];Z=[U.z]'>JMP</a>)")
 						else
 							U.show_message("\blue Success!", 1)
 							log_admin("[key_name(U)] just attempted to blow up [P] with the Detomatix cartridge and succeeded")
-							message_admins("[key_name_admin(U)] just attempted to blow up [P] with the Detomatix cartridge and succeeded.", 1)
+							message_admins("[key_name_admin(U)] just attempted to blow up [P] with the Detomatix cartridge and succeeded. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[U.x];Y=[U.y];Z=[U.z]'>JMP</a>)")
 							detonate_act(P)
 					else
-						U << "No charges left."
+						to_chat(U, "No charges left.")
 				else
-					U << "PDA not found."
+					to_chat(U, "PDA not found.")
 			else
 				U.unset_machine()
 				ui.close()
@@ -849,7 +850,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	if(newmessage)
 		overlays += image('icons/obj/pda.dmi', "pda-r")
 
-/obj/item/device/pda/proc/detonate_act(var/obj/item/device/pda/P)
+/obj/item/device/pda/proc/detonate_act(obj/item/device/pda/P)
 	//TODO: sometimes these attacks show up on the message server
 	var/i = rand(1,100)
 	var/j = rand(0,1) //Possibility of losing the PDA after the detonation
@@ -918,12 +919,12 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		if (ismob(loc))
 			var/mob/M = loc
 			M.put_in_hands(id)
-			usr << "<span class='notice'>You remove the ID from the [name].</span>"
+			to_chat(usr, "<span class='notice'>You remove the ID from the [name].</span>")
 		else
 			id.loc = get_turf(src)
 		id = null
 
-/obj/item/device/pda/proc/create_message(var/mob/living/U = usr, var/obj/item/device/pda/P, var/tap = 1)
+/obj/item/device/pda/proc/create_message(mob/living/U = usr, obj/item/device/pda/P, tap = 1)
 	if(tap)
 		U.visible_message("<span class='notice'>[U] taps on \his PDA's screen.</span>")
 	U.last_target_click = world.time
@@ -970,7 +971,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 	if(useMS && useTC) // only send the message if it's stable
 		if(useTC != 2) // Does our recipient have a broadcaster on their level?
-			U << "ERROR: Cannot reach recipient."
+			to_chat(U, "ERROR: Cannot reach recipient.")
 			return
 
 		useMS.send_pda_message("[P.owner]","[owner]","[t]")
@@ -1001,7 +1002,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		if (!P.message_silent)
 			playsound(P.loc, 'sound/machines/twobeep.ogg', 50, 1)
 		for (var/mob/O in hearers(3, P.loc))
-			if(!P.message_silent) O.show_message(text("\icon[P] *[sanitize_chat(P.ttone)]*"))
+			if(!P.message_silent) O.show_message(text("[bicon(P)] *[sanitize_chat(P.ttone)]*"))
 		//Search for holder of the PDA.
 		var/mob/living/L = null
 		if(P.loc && isliving(P.loc))
@@ -1012,7 +1013,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 
 		if(L)
-			L << "\icon[P] <b>Message from [src.owner] ([ownjob]), </b>\"[sanitize_chat(t)]\" (<a href='byond://?src=\ref[P];choice=Message;notap=[istype(loc, /mob/living/silicon)];skiprefresh=1;target=\ref[src]'>Reply</a>)"
+			to_chat(L, "[bicon(P)] <b>Message from [src.owner] ([ownjob]), </b>\"[sanitize_chat(t)]\" (<a href='byond://?src=\ref[P];choice=Message;notap=[istype(loc, /mob/living/silicon)];skiprefresh=1;target=\ref[src]'>Reply</a>)")
 			nanomanager.update_user_uis(L, P) // Update the receiving user's PDA UI so that they can see the new message
 
 		nanomanager.update_user_uis(U, P) // Update the sending user's PDA UI so that they can see the new message
@@ -1022,7 +1023,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		P.overlays += image('icons/obj/pda.dmi', "pda-r")
 		P.newmessage = 1
 	else
-		U << "<span class='notice'>ERROR: Messaging server is not responding.</span>"
+		to_chat(U, "<span class='notice'>ERROR: Messaging server is not responding.</span>")
 
 /obj/item/device/pda/verb/verb_reset_pda()
 	set category = "Object"
@@ -1035,9 +1036,9 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	if(can_use(usr))
 		mode = 0
 		nanomanager.update_uis(src)
-		usr << "<span class='notice'>You press the reset button on \the [src].</span>"
+		to_chat(usr, "<span class='notice'>You press the reset button on \the [src].</span>")
 	else
-		usr << "<span class='notice'>You cannot do this while restrained.</span>"
+		to_chat(usr, "<span class='notice'>You cannot do this while restrained.</span>")
 
 /obj/item/device/pda/verb/verb_remove_id()
 	set category = "Object"
@@ -1051,9 +1052,9 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		if(id)
 			remove_id()
 		else
-			usr << "<span class='notice'>This PDA does not have an ID in it.</span>"
+			to_chat(usr, "<span class='notice'>This PDA does not have an ID in it.</span>")
 	else
-		usr << "<span class='notice'>You cannot do this while restrained.</span>"
+		to_chat(usr, "<span class='notice'>You cannot do this while restrained.</span>")
 
 
 /obj/item/device/pda/verb/verb_remove_pen()
@@ -1071,17 +1072,17 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				var/mob/M = loc
 				if(M.get_active_hand() == null)
 					M.put_in_hands(O)
-					usr << "<span class='notice'>You remove \the [O] from \the [src].</span>"
-					playsound(src, 'tauceti/sounds/items/penclick.ogg', 20, 1, 1)
+					to_chat(usr, "<span class='notice'>You remove \the [O] from \the [src].</span>")
+					playsound(src, 'sound/items/penclick.ogg', 20, 1, 1)
 					return
 			O.loc = get_turf(src)
 		else
-			usr << "<span class='notice'>This PDA does not have a pen in it.</span>"
+			to_chat(usr, "<span class='notice'>This PDA does not have a pen in it.</span>")
 	else
-		usr << "<span class='notice'>You cannot do this while restrained.</span>"
+		to_chat(usr, "<span class='notice'>You cannot do this while restrained.</span>")
 
 
-/obj/item/device/pda/proc/id_check(mob/user as mob, choice as num)//To check for IDs; 1 for in-pda use, 2 for out of pda use.
+/obj/item/device/pda/proc/id_check(mob/user, choice)//To check for IDs; 1 for in-pda use, 2 for out of pda use.
 	if(choice == 1)
 		if (id)
 			remove_id()
@@ -1102,13 +1103,13 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	return
 
 // access to status display signals
-/obj/item/device/pda/attackby(obj/item/C as obj, mob/user as mob)
+/obj/item/device/pda/attackby(obj/item/C, mob/user)
 	..()
 	if(istype(C, /obj/item/weapon/cartridge) && !cartridge)
 		cartridge = C
 		user.drop_item()
 		cartridge.loc = src
-		user << "<span class='notice'>You insert [cartridge] into [src].</span>"
+		to_chat(user, "<span class='notice'>You insert [cartridge] into [src].</span>")
 		nanomanager.update_uis(src) // update all UIs attached to src
 		if(cartridge.radio)
 			cartridge.radio.hostpda = src
@@ -1116,19 +1117,19 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	else if(istype(C, /obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/idcard = C
 		if(!idcard.registered_name)
-			user << "<span class='notice'>\The [src] rejects the ID.</span>"
+			to_chat(user, "<span class='notice'>\The [src] rejects the ID.</span>")
 			return
 		if(!owner)
 			owner = idcard.registered_name
 			ownjob = idcard.assignment
 			ownrank = idcard.rank
 			name = "PDA-[owner] ([ownjob])"
-			user << "<span class='notice'>Card scanned.</span>"
+			to_chat(user, "<span class='notice'>Card scanned.</span>")
 		else
 			//Basic safety check. If either both objects are held by user or PDA is on ground and card is in hand.
 			if(((src in user.contents) && (C in user.contents)) || (istype(loc, /turf) && in_range(src, user) && (C in user.contents)) )
 				id_check(user, 2)
-				user << "<span class='notice'>You put the ID into \the [src]'s slot.</span>"
+				to_chat(user, "<span class='notice'>You put the ID into \the [src]'s slot.</span>")
 				updateSelfDialog()//Update self dialog on success.
 			return	//Return in case of failed check or when successful.
 		updateSelfDialog()//For the non-input related code.
@@ -1136,19 +1137,19 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		user.drop_item()
 		C.loc = src
 		pai = C
-		user << "<span class='notice'>You slot \the [C] into [src].</span>"
+		to_chat(user, "<span class='notice'>You slot \the [C] into [src].</span>")
 		nanomanager.update_uis(src) // update all UIs attached to src
 	else if(istype(C, /obj/item/weapon/pen))
 		var/obj/item/weapon/pen/O = locate() in src
 		if(O)
-			user << "<span class='notice'>There is already a pen in \the [src].</span>"
+			to_chat(user, "<span class='notice'>There is already a pen in \the [src].</span>")
 		else
 			user.drop_item()
 			C.loc = src
-			user << "<span class='notice'>You slide \the [C] into \the [src].</span>"
+			to_chat(user, "<span class='notice'>You slide \the [C] into \the [src].</span>")
 	return
 
-/obj/item/device/pda/attack(mob/living/C as mob, mob/living/user as mob)
+/obj/item/device/pda/attack(mob/living/C, mob/living/user)
 	if (istype(C, /mob/living/carbon))
 		switch(scanmode)
 			if(1)
@@ -1157,21 +1158,21 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					O.show_message("\red [user] has analyzed [C]'s vitals!", 1)
 
 				user.show_message("\blue Analyzing Results for [C]:")
-				user.show_message("\blue \t Overall Status: [C.stat > 1 ? "dead" : "[C.health - C.halloss]% healthy"]", 1)
-				user.show_message("\blue \t Damage Specifics: [C.getOxyLoss() > 50 ? "\red" : "\blue"][C.getOxyLoss()]-[C.getToxLoss() > 50 ? "\red" : "\blue"][C.getToxLoss()]-[C.getFireLoss() > 50 ? "\red" : "\blue"][C.getFireLoss()]-[C.getBruteLoss() > 50 ? "\red" : "\blue"][C.getBruteLoss()]", 1)
-				user.show_message("\blue \t Key: Suffocation/Toxin/Burns/Brute", 1)
-				user.show_message("\blue \t Body Temperature: [C.bodytemperature-T0C]&deg;C ([C.bodytemperature*1.8-459.67]&deg;F)", 1)
+				user.show_message("\blue &emsp; Overall Status: [C.stat > 1 ? "dead" : "[C.health - C.halloss]% healthy"]", 1)
+				user.show_message("\blue &emsp; Damage Specifics: [C.getOxyLoss() > 50 ? "\red" : "\blue"][C.getOxyLoss()]-[C.getToxLoss() > 50 ? "\red" : "\blue"][C.getToxLoss()]-[C.getFireLoss() > 50 ? "\red" : "\blue"][C.getFireLoss()]-[C.getBruteLoss() > 50 ? "\red" : "\blue"][C.getBruteLoss()]", 1)
+				user.show_message("\blue &emsp; Key: Suffocation/Toxin/Burns/Brute", 1)
+				user.show_message("\blue &emsp; Body Temperature: [C.bodytemperature-T0C]&deg;C ([C.bodytemperature*1.8-459.67]&deg;F)", 1)
 				if(C.tod && (C.stat == DEAD || (C.status_flags & FAKEDEATH)))
-					user.show_message("\blue \t Time of Death: [C.tod]")
+					user.show_message("\blue &emsp; Time of Death: [C.tod]")
 				if(istype(C, /mob/living/carbon/human))
 					var/mob/living/carbon/human/H = C
 					var/list/damaged = H.get_damaged_organs(1,1)
 					user.show_message("\blue Localized Damage, Brute/Burn:",1)
 					if(length(damaged)>0)
 						for(var/datum/organ/external/org in damaged)
-							user.show_message(text("\blue \t []: []\blue-[]",capitalize(org.display_name),(org.brute_dam > 0)?"\red [org.brute_dam]":0,(org.burn_dam > 0)?"\red [org.burn_dam]":0),1)
+							user.show_message(text("\blue &emsp; []: []\blue-[]",capitalize(org.display_name),(org.brute_dam > 0)?"\red [org.brute_dam]":0,(org.burn_dam > 0)?"\red [org.burn_dam]":0),1)
 					else
-						user.show_message("\blue \t Limbs are OK.",1)
+						user.show_message("\blue &emsp; Limbs are OK.",1)
 
 				for(var/datum/disease/D in C.viruses)
 					if(!D.hidden[SCANNER])
@@ -1179,21 +1180,21 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 			if(2)
 				if (!istype(C:dna, /datum/dna))
-					user << "\blue No fingerprints found on [C]"
+					to_chat(user, "\blue No fingerprints found on [C]")
 				else if(!istype(C, /mob/living/carbon/monkey))
 					if(!isnull(C:gloves))
-						user << "\blue No fingerprints found on [C]"
+						to_chat(user, "\blue No fingerprints found on [C]")
 				else
-					user << text("\blue [C]'s Fingerprints: [md5(C:dna.uni_identity)]")
+					to_chat(user, text("\blue [C]'s Fingerprints: [md5(C:dna.uni_identity)]"))
 				if ( !(C:blood_DNA) )
-					user << "\blue No blood found on [C]"
+					to_chat(user, "\blue No blood found on [C]")
 					if(C:blood_DNA)
 						C:blood_DNA = null
 				else
-					user << "\blue Blood found on [C]. Analysing..."
+					to_chat(user, "\blue Blood found on [C]. Analysing...")
 					spawn(15)
 						for(var/blood in C:blood_DNA)
-							user << "\blue Blood type: [C:blood_DNA[blood]]\nDNA: [blood]"
+							to_chat(user, "\blue Blood type: [C:blood_DNA[blood]]\nDNA: [blood]")
 
 			if(4)
 				for (var/mob/O in viewers(C, null))
@@ -1205,7 +1206,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				else
 					user.show_message("\blue No radiation detected.")
 
-/obj/item/device/pda/afterattack(atom/A as mob|obj|turf|area, mob/user as mob, proximity)
+/obj/item/device/pda/afterattack(atom/A, mob/user, proximity)
 	if(!proximity) return
 	switch(scanmode)
 
@@ -1215,24 +1216,24 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			if(!isnull(A.reagents))
 				if(A.reagents.reagent_list.len > 0)
 					var/reagents_length = A.reagents.reagent_list.len
-					user << "\blue [reagents_length] chemical agent[reagents_length > 1 ? "s" : ""] found."
+					to_chat(user, "\blue [reagents_length] chemical agent[reagents_length > 1 ? "s" : ""] found.")
 					for (var/re in A.reagents.reagent_list)
-						user << "\blue \t [re]"
+						to_chat(user, "\blue &emsp; [re]")
 				else
-					user << "\blue No active chemical agents found in [A]."
+					to_chat(user, "\blue No active chemical agents found in [A].")
 			else
-				user << "\blue No significant chemical agents found in [A]."
+				to_chat(user, "\blue No significant chemical agents found in [A].")
 
 		if(5)
 			if((istype(A, /obj/item/weapon/tank)) || (istype(A, /obj/machinery/portable_atmospherics)))
 				var/obj/icon = A
 				for (var/mob/O in viewers(user, null))
-					O << "\red [user] has used [src] on \icon[icon] [A]"
+					to_chat(O, "\red [user] has used [src] on [bicon(icon)] [A]")
 				var/pressure = A:air_contents.return_pressure()
 
 				var/total_moles = A:air_contents.total_moles()
 
-				user << "\blue Results of analysis of \icon[icon]"
+				to_chat(user, "\blue Results of analysis of [bicon(icon)]")
 				if (total_moles>0)
 					var/o2_concentration = A:air_contents.oxygen/total_moles
 					var/n2_concentration = A:air_contents.nitrogen/total_moles
@@ -1241,27 +1242,27 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 					var/unknown_concentration =  1-(o2_concentration+n2_concentration+co2_concentration+phoron_concentration)
 
-					user << "\blue Pressure: [round(pressure,0.1)] kPa"
-					user << "\blue Nitrogen: [round(n2_concentration*100)]%"
-					user << "\blue Oxygen: [round(o2_concentration*100)]%"
-					user << "\blue CO2: [round(co2_concentration*100)]%"
-					user << "\blue Phoron: [round(phoron_concentration*100)]%"
+					to_chat(user, "\blue Pressure: [round(pressure,0.1)] kPa")
+					to_chat(user, "\blue Nitrogen: [round(n2_concentration*100)]%")
+					to_chat(user, "\blue Oxygen: [round(o2_concentration*100)]%")
+					to_chat(user, "\blue CO2: [round(co2_concentration*100)]%")
+					to_chat(user, "\blue Phoron: [round(phoron_concentration*100)]%")
 					if(unknown_concentration>0.01)
-						user << "\red Unknown: [round(unknown_concentration*100)]%"
-					user << "\blue Temperature: [round(A:air_contents.temperature-T0C)]&deg;C"
+						to_chat(user, "\red Unknown: [round(unknown_concentration*100)]%")
+					to_chat(user, "\blue Temperature: [round(A:air_contents.temperature-T0C)]&deg;C")
 				else
-					user << "\blue Tank is empty!"
+					to_chat(user, "\blue Tank is empty!")
 
 			if (istype(A, /obj/machinery/atmospherics/pipe/tank))
 				var/obj/icon = A
 				for (var/mob/O in viewers(user, null))
-					O << "\red [user] has used [src] on \icon[icon] [A]"
+					to_chat(O, "\red [user] has used [src] on [bicon(icon)] [A]")
 
 				var/obj/machinery/atmospherics/pipe/tank/T = A
 				var/pressure = T.parent.air.return_pressure()
 				var/total_moles = T.parent.air.total_moles()
 
-				user << "\blue Results of analysis of \icon[icon]"
+				to_chat(user, "\blue Results of analysis of [bicon(icon)]")
 				if (total_moles>0)
 					var/o2_concentration = T.parent.air.oxygen/total_moles
 					var/n2_concentration = T.parent.air.nitrogen/total_moles
@@ -1270,20 +1271,20 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 					var/unknown_concentration =  1-(o2_concentration+n2_concentration+co2_concentration+phoron_concentration)
 
-					user << "\blue Pressure: [round(pressure,0.1)] kPa"
-					user << "\blue Nitrogen: [round(n2_concentration*100)]%"
-					user << "\blue Oxygen: [round(o2_concentration*100)]%"
-					user << "\blue CO2: [round(co2_concentration*100)]%"
-					user << "\blue Phoron: [round(phoron_concentration*100)]%"
+					to_chat(user, "\blue Pressure: [round(pressure,0.1)] kPa")
+					to_chat(user, "\blue Nitrogen: [round(n2_concentration*100)]%")
+					to_chat(user, "\blue Oxygen: [round(o2_concentration*100)]%")
+					to_chat(user, "\blue CO2: [round(co2_concentration*100)]%")
+					to_chat(user, "\blue Phoron: [round(phoron_concentration*100)]%")
 					if(unknown_concentration>0.01)
-						user << "\red Unknown: [round(unknown_concentration*100)]%"
-					user << "\blue Temperature: [round(T.parent.air.temperature-T0C)]&deg;C"
+						to_chat(user, "\red Unknown: [round(unknown_concentration*100)]%")
+					to_chat(user, "\blue Temperature: [round(T.parent.air.temperature-T0C)]&deg;C")
 				else
-					user << "\blue Tank is empty!"
+					to_chat(user, "\blue Tank is empty!")
 
 	if (!scanmode && istype(A, /obj/item/weapon/paper) && owner)
 		note = A:info
-		user << "\blue Paper scanned." //concept of scanning paper copyright brainoblivion 2009
+		to_chat(user, "\blue Paper scanned.")//concept of scanning paper copyright brainoblivion 2009
 
 
 /obj/item/device/pda/proc/explode() //This needs tuning. //Sure did.
@@ -1311,7 +1312,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				src.cartridge.charges++
 
 		M.stop_pulling()
-		M << "\blue You slipped on the PDA!"
+		to_chat(M, "\blue You slipped on the PDA!")
 		playsound(src.loc, 'sound/misc/slip.ogg', 50, 1, -3)
 		M.Stun(8)
 		M.Weaken(5)
@@ -1322,7 +1323,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	var/list/namecounts = list()
 
 	if (toff)
-		usr << "Turn on your receiver in order to send messages."
+		to_chat(usr, "Turn on your receiver in order to send messages.")
 		return
 
 	for (var/obj/item/device/pda/P in PDAs)

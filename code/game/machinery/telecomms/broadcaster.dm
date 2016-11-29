@@ -115,7 +115,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 	// In case message_delay is left on 1, otherwise it won't reset the list and people can't say the same thing twice anymore.
 	if(message_delay)
 		message_delay = 0
-	..()
+	return ..()
 
 
 /*
@@ -384,7 +384,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 		var/part_b_extra = ""
 		if(data == 3) // intercepted radio message
 			part_b_extra = " <i>(Intercepted)</i>"
-		var/part_b = "</span><b> \icon[radio]\[[freq_text]\][part_b_extra]</b> <span class='message'>" // Tweaked for security headsets -- TLE
+		var/part_b = "</span><b> [bicon(radio)]\[[freq_text]\][part_b_extra]</b> <span class='message'>" // Tweaked for security headsets -- TLE
 		var/part_c = "</span></span>"
 
 		// syndies!
@@ -499,7 +499,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 				R.hear_radio(message, verbage, speaking, part_a, part_b, M, 1)
 
 
-/proc/Broadcast_SimpleMessage(var/source, var/frequency, var/text, var/data, var/mob/M, var/compression, var/level)
+/proc/Broadcast_SimpleMessage(source, frequency, text, data, mob/M, compression, level)
 
   /* ###### Prepare the radio connection ###### */
 
@@ -633,7 +633,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 		// Create a radio headset for the sole purpose of using its icon
 		var/obj/item/device/radio/headset/radio = new
 
-		var/part_b = "</span><b> \icon[radio]\[[freq_text]\][part_b_extra]</b> <span class='message'>" // Tweaked for security headsets -- TLE
+		var/part_b = "</span><b> [bicon(radio)]\[[freq_text]\][part_b_extra]</b> <span class='message'>" // Tweaked for security headsets -- TLE
 		var/part_c = "</span></span>"
 
 		if (display_freq==SYND_FREQ)
@@ -741,4 +741,3 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 	//world.log << "Level: [signal.data["level"]] - Done: [signal.data["done"]]"
 
 	return signal
-

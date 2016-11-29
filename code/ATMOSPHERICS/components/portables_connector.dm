@@ -32,7 +32,7 @@
 
 	return
 
-/obj/machinery/atmospherics/portables_connector/hide(var/i) //to make the little pipe section invisible, the icon changes.
+/obj/machinery/atmospherics/portables_connector/hide(i) //to make the little pipe section invisible, the icon changes.
 	if(node)
 		icon_state = "[i == 1 && istype(loc, /turf/simulated) ? "h" : "" ]intact"
 		dir = get_dir(src, node)
@@ -72,7 +72,7 @@
 
 	node = null
 
-	..()
+	return ..()
 
 /obj/machinery/atmospherics/portables_connector/initialize()
 	if(node) return
@@ -126,26 +126,26 @@
 	return null
 
 
-/obj/machinery/atmospherics/portables_connector/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+/obj/machinery/atmospherics/portables_connector/attackby(obj/item/weapon/W, mob/user)
 	if (!istype(W, /obj/item/weapon/wrench))
 		return ..()
 	if (connected_device)
-		user << "<span class='warning'>You cannot unwrench this [src], dettach [connected_device] first.</span>"
+		to_chat(user, "<span class='warning'>You cannot unwrench this [src], dettach [connected_device] first.</span>")
 		return 1
 	if (locate(/obj/machinery/portable_atmospherics, src.loc))
 		return 1
 	var/turf/T = src.loc
 	if (level==1 && isturf(T) && T.intact)
-		user << "<span class='warning'>You must remove the plating first.</span>"
+		to_chat(user, "<span class='warning'>You must remove the plating first.</span>")
 		return 1
 	var/datum/gas_mixture/int_air = return_air()
 	var/datum/gas_mixture/env_air = loc.return_air()
 	if ((int_air.return_pressure()-env_air.return_pressure()) > 2*ONE_ATMOSPHERE)
-		user << "<span class='warning'>You cannot unwrench this [src], it too exerted due to internal pressure.</span>"
+		to_chat(user, "<span class='warning'>You cannot unwrench this [src], it too exerted due to internal pressure.</span>")
 		add_fingerprint(user)
 		return 1
 	playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-	user << "<span class='notice'>You begin to unfasten \the [src]...</span>"
+	to_chat(user, "<span class='notice'>You begin to unfasten \the [src]...</span>")
 	if (do_after(user, 40, target = src))
 		user.visible_message( \
 			"[user] unfastens \the [src].", \

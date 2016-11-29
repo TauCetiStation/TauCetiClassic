@@ -24,13 +24,13 @@ Bonus
 	transmittable = -2
 	level = 4
 
-/datum/symptom/weight_gain/Activate(var/datum/disease/advance/A)
+/datum/symptom/weight_gain/Activate(datum/disease/advance/A)
 	..()
 	if(prob(SYMPTOM_ACTIVATION_PROB))
 		var/mob/living/M = A.affected_mob
 		switch(A.stage)
 			if(1, 2, 3, 4)
-				M << "<span class='notice'>[pick("You feel blubbery.", "You feel full.")]</span>"
+				to_chat(M, "<span class='notice'>[pick("You feel blubbery.", "You feel full.")]</span>")
 			else
 				M.overeatduration = min(M.overeatduration + 100, 600)
 				M.nutrition = min(M.nutrition + 100, 500)
@@ -65,15 +65,15 @@ Bonus
 	transmittable = -2
 	level = 3
 
-/datum/symptom/weight_loss/Activate(var/datum/disease/advance/A)
+/datum/symptom/weight_loss/Activate(datum/disease/advance/A)
 	..()
 	if(prob(SYMPTOM_ACTIVATION_PROB))
 		var/mob/living/M = A.affected_mob
 		switch(A.stage)
 			if(1, 2, 3, 4)
-				M << "<span class='notice'>[pick("You feel hungry.", "You crave for food.")]</span>"
+				to_chat(M, "<span class='notice'>[pick("You feel hungry.", "You crave for food.")]</span>")
 			else
-				M << "<span class='notice'>Your stomach rumbles.</span>"
+				to_chat(M, "<span class='notice'>Your stomach rumbles.</span>")
 				M.overeatduration = max(M.overeatduration - 100, 0)
 				M.nutrition = max(M.nutrition - 100, 0)
 
@@ -107,7 +107,7 @@ Bonus
 	transmittable = -2
 	level = 4
 
-/datum/symptom/weight_loss/Activate(var/datum/disease/advance/A)
+/datum/symptom/weight_loss/Activate(datum/disease/advance/A)
 	..()
 	if(prob(SYMPTOM_ACTIVATION_PROB))
 		var/mob/living/M = A.affected_mob

@@ -11,7 +11,7 @@
 	idle_power_usage = 20
 	active_power_usage = 5000
 
-/obj/machinery/robotic_fabricator/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/obj/machinery/robotic_fabricator/attackby(obj/item/O, mob/user)
 	if (istype(O, /obj/item/stack/sheet/metal))
 		if (src.metal_amount < 150000.0)
 			var/count = 0
@@ -28,11 +28,11 @@
 					if (O:amount < 1)
 						qdel(O)
 
-					user << "You insert [count] metal sheet\s into the fabricator."
+					to_chat(user, "You insert [count] metal sheet\s into the fabricator.")
 					src.overlays -= "fab-load-metal"
 					updateDialog()
 		else
-			user << "The robot part maker is full. Please remove metal from the robot part maker in order to insert more."
+			to_chat(user, "The robot part maker is full. Please remove metal from the robot part maker in order to insert more.")
 
 /obj/machinery/robotic_fabricator/power_change()
 	if (powered())
@@ -40,10 +40,10 @@
 	else
 		stat |= NOPOWER
 
-/obj/machinery/robotic_fabricator/attack_paw(user as mob)
+/obj/machinery/robotic_fabricator/attack_paw(user)
 	return src.attack_hand(user)
 
-/obj/machinery/robotic_fabricator/attack_hand(user as mob)
+/obj/machinery/robotic_fabricator/attack_hand(user)
 	var/dat
 	if (..())
 		return
@@ -72,11 +72,9 @@ Please wait until completion...</TT><BR>
 	return
 
 /obj/machinery/robotic_fabricator/Topic(href, href_list)
-	if (..())
+	. = ..()
+	if(!.)
 		return
-
-	usr.set_machine(src)
-	src.add_fingerprint(usr)
 
 	if (href_list["make"])
 		if (!src.operating)
@@ -133,7 +131,6 @@ Please wait until completion...</TT><BR>
 					src.being_built = new building(src)
 
 					src.overlays += "fab-active"
-					src.updateUsrDialog()
 
 					spawn (build_time)
 						if (!isnull(src.being_built))
@@ -142,8 +139,5 @@ Please wait until completion...</TT><BR>
 						src.use_power = 1
 						src.operating = 0
 						src.overlays -= "fab-active"
-		return
 
-	for (var/mob/M in viewers(1, src))
-		if (M.client && M.machine == src)
-			src.attack_hand(M)
+	updateUsrDialog()

@@ -51,7 +51,7 @@
 	else
 		icon_state = "[src.base_state]open"
 
-/obj/machinery/door/window/proc/shatter(var/display_message = 1)
+/obj/machinery/door/window/proc/shatter(display_message = 1)
 	if(!(flags&NODECONSTRUCT))
 		new /obj/item/weapon/shard(src.loc)
 		new /obj/item/weapon/shard(src.loc)
@@ -81,7 +81,7 @@
 	qdel(src)
 
 //painter
-/obj/machinery/door/window/proc/change_paintjob(obj/item/C as obj, mob/user as mob)
+/obj/machinery/door/window/proc/change_paintjob(obj/item/C, mob/user)
 	var/obj/item/weapon/airlock_painter/W
 	if(istype(C, /obj/item/weapon/airlock_painter))
 		W = C
@@ -99,7 +99,7 @@
 	else
 		color = new_color
 
-/obj/machinery/door/window/Bumped(atom/movable/AM as mob|obj)
+/obj/machinery/door/window/Bumped(atom/movable/AM)
 	if( operating || !src.density )
 		return
 	if (!( ismob(AM) ))
@@ -123,7 +123,7 @@
 		bumpopen(M)
 	return
 
-/obj/machinery/door/window/bumpopen(mob/user as mob)
+/obj/machinery/door/window/bumpopen(mob/user)
 	if( operating || !src.density )
 		return
 	src.add_fingerprint(user)
@@ -153,7 +153,7 @@
 	else
 		return 1
 
-/obj/machinery/door/window/open(var/forced=0)
+/obj/machinery/door/window/open(forced=0)
 	if (src.operating == 1) //doors can still open when emag-disabled
 		return 0
 	if (!ticker)
@@ -180,7 +180,7 @@
 		src.operating = 0
 	return 1
 
-/obj/machinery/door/window/close(var/forced=0)
+/obj/machinery/door/window/close(forced=0)
 	if (src.operating)
 		return 0
 	if(!forced)
@@ -204,19 +204,19 @@
 	src.operating = 0
 	return 1
 
-/obj/machinery/door/window/proc/take_damage(var/damage)
+/obj/machinery/door/window/proc/take_damage(damage)
 	src.health = max(0, src.health - damage)
 	if(src.health <= 0)
 		shatter()
 		return
 
-/obj/machinery/door/window/bullet_act(var/obj/item/projectile/Proj)
+/obj/machinery/door/window/bullet_act(obj/item/projectile/Proj)
 	if(Proj.damage)
 		take_damage(round(Proj.damage / 2))
 	..()
 
 //When an object is thrown at the window
-/obj/machinery/door/window/hitby(AM as mob|obj)
+/obj/machinery/door/window/hitby(AM)
 
 	..()
 	visible_message("\red <B>The glass door was hit by [AM].</B>", 1)
@@ -231,10 +231,10 @@
 	return
 
 
-/obj/machinery/door/window/attack_ai(mob/user as mob)
+/obj/machinery/door/window/attack_ai(mob/user)
 	return src.attack_hand(user)
 
-/obj/machinery/door/window/proc/attack_generic(mob/user as mob, damage = 0)
+/obj/machinery/door/window/proc/attack_generic(mob/user, damage = 0)
 	if(src.operating)
 		return
 	user.do_attack_animation(src)
@@ -243,12 +243,12 @@
 						"<span class='userdanger'>[user] smashes against the [src.name].</span>")
 	take_damage(damage)
 
-/obj/machinery/door/window/attack_alien(mob/user as mob)
+/obj/machinery/door/window/attack_alien(mob/user)
 	if(islarva(user))
 		return
 	attack_generic(user, 25)
 
-/obj/machinery/door/window/attack_animal(mob/user as mob)
+/obj/machinery/door/window/attack_animal(mob/user)
 	if(!isanimal(user))
 		return
 	var/mob/living/simple_animal/M = user
@@ -257,19 +257,19 @@
 	attack_generic(M, M.melee_damage_upper)
 
 
-/obj/machinery/door/window/attack_slime(mob/living/carbon/slime/user as mob)
+/obj/machinery/door/window/attack_slime(mob/living/carbon/slime/user)
 	if(!istype(user, /mob/living/carbon/slime/adult))
 		return
 	attack_generic(user, 25)
 
-/obj/machinery/door/window/attack_paw(mob/user as mob)
+/obj/machinery/door/window/attack_paw(mob/user)
 	return src.attack_hand(user)
 
 
-/obj/machinery/door/window/attack_hand(mob/user as mob)
+/obj/machinery/door/window/attack_hand(mob/user)
 	return src.attackby(user, user)
 
-/obj/machinery/door/window/attackby(obj/item/weapon/I as obj, mob/user as mob)
+/obj/machinery/door/window/attackby(obj/item/weapon/I, mob/user)
 
 	//If it's in the process of opening/closing, ignore the click
 	if (src.operating == 1)
@@ -301,11 +301,11 @@
 	if(!(flags&NODECONSTRUCT))
 		if(istype(I, /obj/item/weapon/screwdriver))
 			if(src.density || src.operating)
-				user << "<span class='warning'>You need to open the [src.name] to access the maintenance panel.</span>"
+				to_chat(user, "<span class='warning'>You need to open the [src.name] to access the maintenance panel.</span>")
 				return
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 			src.p_open = !( src.p_open )
-			user << "<span class='notice'>You [p_open ? "open":"close"] the maintenance panel of the [src.name].</span>"
+			to_chat(user, "<span class='notice'>You [p_open ? "open":"close"] the maintenance panel of the [src.name].</span>")
 			return
 
 		if(istype(I, /obj/item/weapon/crowbar))
@@ -335,11 +335,11 @@
 						WA.created_name = src.name
 
 						if(emagged)
-							user << "<span class='warning'>You discard the damaged electronics.</span>"
+							to_chat(user, "<span class='warning'>You discard the damaged electronics.</span>")
 							qdel(src)
 							return
 
-						user << "<span class='notice'>You removed the airlock electronics!</span>"
+						to_chat(user, "<span class='notice'>You removed the airlock electronics!</span>")
 
 						var/obj/item/weapon/airlock_electronics/ae
 						if(!electronics)

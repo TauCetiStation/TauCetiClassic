@@ -22,7 +22,7 @@
 	return 100.0*charge/maxcharge
 
 // use power from a cell
-/obj/item/weapon/stock_parts/cell/proc/use(var/amount)
+/obj/item/weapon/stock_parts/cell/proc/use(amount)
 	if(rigged && amount > 0)
 		explode()
 		return 0
@@ -32,7 +32,7 @@
 	return 1
 
 // recharge the cell
-/obj/item/weapon/stock_parts/cell/proc/give(var/amount)
+/obj/item/weapon/stock_parts/cell/proc/give(amount)
 	if(rigged && amount > 0)
 		explode()
 		return 0
@@ -49,17 +49,17 @@
 	return power_used
 
 
-/obj/item/weapon/stock_parts/cell/examine()
-	set src in view(1)
-	if(usr /*&& !usr.stat*/)
+/obj/item/weapon/stock_parts/cell/examine(mob/user)
+	..()
+	if(src in view(1, user))
 		if(maxcharge <= 2500)
-			usr << "[desc]\nThe manufacturer's label states this cell has a power rating of [maxcharge], and that you should not swallow it.\nThe charge meter reads [round(src.percent() )]%."
+			to_chat(user, "[desc]\nThe manufacturer's label states this cell has a power rating of [maxcharge], and that you should not swallow it.\nThe charge meter reads [round(src.percent() )]%.")
 		else
-			usr << "This power cell has an exciting chrome finish, as it is an uber-capacity cell type! It has a power rating of [maxcharge]!\nThe charge meter reads [round(src.percent() )]%."
-	if(crit_fail)
-		usr << "\red This power cell seems to be faulty."
+			to_chat(user, "This power cell has an exciting chrome finish, as it is an uber-capacity cell type! It has a power rating of [maxcharge]!\nThe charge meter reads [round(src.percent() )]%.")
+		if(crit_fail)
+			to_chat(user, "<span class='red'>This power cell seems to be faulty.</span>")
 
-/obj/item/weapon/stock_parts/cell/attack_self(mob/user as mob)
+/obj/item/weapon/stock_parts/cell/attack_self(mob/user)
 	src.add_fingerprint(user)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
@@ -74,14 +74,14 @@
 	if(istype(W, /obj/item/weapon/reagent_containers/syringe))
 		var/obj/item/weapon/reagent_containers/syringe/S = W
 
-		user << "You inject the solution into the power cell."
+		to_chat(user, "You inject the solution into the power cell.")
 
 		if(S.reagents.has_reagent("phoron", 5))
 
 			rigged = 1
 
 			log_admin("LOG: [user.name] ([user.ckey]) injected a power cell with phoron, rigging it to explode.")
-			message_admins("LOG: [user.name] ([user.ckey]) injected a power cell with phoron, rigging it to explode.")
+			message_admins("LOG: [user.name] ([user.ckey]) injected a power cell with phoron, rigging it to explode. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 
 		S.reagents.clear_reagents()
 

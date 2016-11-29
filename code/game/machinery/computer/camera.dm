@@ -1,7 +1,7 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
 /proc/invalidateCameraCache()
-	for(var/obj/machinery/computer/security/s in world)
+	for(var/obj/machinery/computer/security/s in machines)
 		s.camera_cache = null
 	for(var/datum/alarm/A in world)
 		A.cameras = null
@@ -19,155 +19,159 @@
 
 	var/camera_cache = null
 
-	check_eye(var/mob/user as mob)
-		if (user.stat || ((get_dist(user, src) > 1 || !( user.canmove ) || user.blinded) && !istype(user, /mob/living/silicon))) //user can't see - not sure why canmove is here.
-			return null
-		if ( !current || !current.can_use() ) //camera doesn't work
-			reset_current()
-		var/list/viewing = viewers(src)
-		if((istype(user,/mob/living/silicon/robot)) && (!(viewing.Find(user))))
-			return null
-		user.reset_view(current)
-		attack_hand(user)
+/obj/machinery/computer/security/check_eye(mob/user)
+	if (user.stat || ((get_dist(user, src) > 1 || !( user.canmove ) || user.blinded) && !istype(user, /mob/living/silicon))) //user can't see - not sure why canmove is here.
+		return null
+	if ( !current || !current.can_use() ) //camera doesn't work
+		reset_current()
+	var/list/viewing = viewers(src)
+	if((istype(user,/mob/living/silicon/robot)) && (!(viewing.Find(user))))
+		return null
+	user.reset_view(current)
+	return 1
+
+/obj/machinery/computer/security/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1)
+	if(src.z > ZLEVEL_EMPTY) return
+	if(stat & (NOPOWER|BROKEN)) return
+	if(user.stat) return
+
+	var/data[0]
+
+	data["current"] = null
+
+	if(isnull(camera_cache))
+		cameranet.process_sort()
+
+		var/cameras[0]
+		for(var/obj/machinery/camera/C in cameranet.cameras)
+			if(!can_access_camera(C))
+				continue
+
+			var/cam = C.nano_structure()
+			cameras[++cameras.len] = cam
+
+			if(C == current)
+				data["current"] = cam
+
+		var/list/camera_list = list("cameras" = cameras)
+		camera_cache=list2json(camera_list)
+	else
+		if(current)
+			data["current"] = current.nano_structure()
+
+
+	if(ui)
+		ui.load_cached_data(camera_cache)
+
+	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data, force_open)
+	if (!ui)
+		ui = new(user, src, ui_key, "sec_camera.tmpl", "Camera Console", 900, 600)
+
+		// adding a template with the key "mapContent" enables the map ui functionality
+		ui.add_template("mapContent", "sec_camera_map_content.tmpl")
+		// adding a template with the key "mapHeader" replaces the map header content
+		ui.add_template("mapHeader", "sec_camera_map_header.tmpl")
+
+		ui.load_cached_data(camera_cache)
+		ui.set_initial_data(data)
+		ui.open()
+		ui.set_auto_update(1)
+
+/obj/machinery/computer/security/Topic(href, href_list)
+	. = ..()
+	if(!.)
+		return
+
+	if(href_list["switchTo"])
+		if(src.z > 6)
+			return FALSE
+		if(usr.blinded)
+			return FALSE
+		var/obj/machinery/camera/C = locate(href_list["switchTo"]) in cameranet.cameras
+		if(!C)
+			return FALSE
+		switch_to_camera(usr, C)
+	else if(href_list["reset"])
+		if(src.z > 6)
+			return FALSE
+		if(usr.blinded)
+			return FALSE
+		reset_current()
+		usr.check_eye(current)
+
+
+/obj/machinery/computer/security/attack_hand(mob/user)
+	if (src.z > ZLEVEL_EMPTY)
+		to_chat(user, "\red <b>Unable to establish a connection</b>: \black You're too far away from the station!")
+		return
+	if (!network)
+		world.log << "A computer lacks a network at [x],[y],[z]."
+		return
+	if (!(istype(network,/list)))
+		world.log << "The computer at [x],[y],[z] has a network that is not a list!"
+		return
+
+	if(..())
+		return
+
+	ui_interact(user)
+
+/obj/machinery/computer/security/proc/can_access_camera(obj/machinery/camera/C)
+	var/list/shared_networks = src.network & C.network
+	if(shared_networks.len)
 		return 1
+	return 0
 
-	ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1)
-		if(src.z > ZLEVEL_DERELICT) return
-		if(stat & (NOPOWER|BROKEN)) return
-		if(user.stat) return
-
-		var/data[0]
-
-		data["current"] = null
-
-		if(isnull(camera_cache))
-			cameranet.process_sort()
-
-			var/cameras[0]
-			for(var/obj/machinery/camera/C in cameranet.cameras)
-				if(!can_access_camera(C))
-					continue
-
-				var/cam = C.nano_structure()
-				cameras[++cameras.len] = cam
-
-				if(C == current)
-					data["current"] = cam
-
-			var/list/camera_list = list("cameras" = cameras)
-			camera_cache=list2json(camera_list)
-		else
-			if(current)
-				data["current"] = current.nano_structure()
-
-
-		if(ui)
-			ui.load_cached_data(camera_cache)
-
-		ui = nanomanager.try_update_ui(user, src, ui_key, ui, data, force_open)
-		if (!ui)
-			ui = new(user, src, ui_key, "sec_camera.tmpl", "Camera Console", 900, 600)
-
-			// adding a template with the key "mapContent" enables the map ui functionality
-			ui.add_template("mapContent", "sec_camera_map_content.tmpl")
-			// adding a template with the key "mapHeader" replaces the map header content
-			ui.add_template("mapHeader", "sec_camera_map_header.tmpl")
-
-			ui.load_cached_data(camera_cache)
-			ui.set_initial_data(data)
-			ui.open()
-			ui.set_auto_update(1)
-
-	Topic(href, href_list)
-		if(href_list["switchTo"])
-			if(src.z>6 || stat&(NOPOWER|BROKEN)) return
-			if(usr.stat || ((get_dist(usr, src) > 1 || !( usr.canmove ) || usr.blinded) && !istype(usr, /mob/living/silicon))) return
-			var/obj/machinery/camera/C = locate(href_list["switchTo"]) in cameranet.cameras
-			if(!C) return
-
-			switch_to_camera(usr, C)
-			return 1
-		else if(href_list["reset"])
-			if(src.z>6 || stat&(NOPOWER|BROKEN)) return
-			if(usr.stat || ((get_dist(usr, src) > 1 || !( usr.canmove ) || usr.blinded) && !istype(usr, /mob/living/silicon))) return
-			reset_current()
-			usr.check_eye(current)
-			return 1
-		else
-			. = ..()
-
-	attack_hand(var/mob/user as mob)
-		if (src.z > ZLEVEL_EMPTY)
-			user << "\red <b>Unable to establish a connection</b>: \black You're too far away from the station!"
-			return
-		if (!network)
-			world.log << "A computer lacks a network at [x],[y],[z]."
-			return
-		if (!(istype(network,/list)))
-			world.log << "The computer at [x],[y],[z] has a network that is not a list!"
-			return
-
-		if(..())
-			return
-
-		ui_interact(user)
-
-	proc/can_access_camera(var/obj/machinery/camera/C)
-		var/list/shared_networks = src.network & C.network
-		if(shared_networks.len)
-			return 1
-		return 0
-
-	proc/switch_to_camera(var/mob/user, var/obj/machinery/camera/C)
-		//don't need to check if the camera works for AI because the AI jumps to the camera location and doesn't actually look through cameras.
-		if(isAI(user))
-			var/mob/living/silicon/ai/A = user
-			// Only allow non-carded AIs to view because the interaction with the eye gets all wonky otherwise.
-			if(!A.is_in_chassis())
-				return 0
-
-			A.eyeobj.setLoc(get_turf(C))
-			A.client.eye = A.eyeobj
-			return 1
-
-		if (!C.can_use() || user.stat || (get_dist(user, src) > 1 || user.machine != src || user.blinded || !( user.canmove ) && !istype(user, /mob/living/silicon)))
+/obj/machinery/computer/security/proc/switch_to_camera(mob/user, obj/machinery/camera/C)
+	//don't need to check if the camera works for AI because the AI jumps to the camera location and doesn't actually look through cameras.
+	if(isAI(user))
+		var/mob/living/silicon/ai/A = user
+		// Only allow non-carded AIs to view because the interaction with the eye gets all wonky otherwise.
+		if(!A.is_in_chassis())
 			return 0
-		set_current(C)
-		check_eye(user)
-		use_power(50)
+
+		A.eyeobj.setLoc(get_turf(C))
+		A.client.eye = A.eyeobj
 		return 1
+
+	if (!C.can_use() || user.stat || (get_dist(user, src) > 1 || user.machine != src || user.blinded || !( user.canmove ) && !istype(user, /mob/living/silicon)))
+		return 0
+	set_current(C)
+	check_eye(user)
+	use_power(50)
+	return 1
 
 //Camera control: moving.
-	proc/jump_on_click(var/mob/user,var/A)
-		if(user.machine != src)
-			return
-		var/obj/machinery/camera/jump_to
-		if(istype(A,/obj/machinery/camera))
-			jump_to = A
-		else if(ismob(A))
-			if(ishuman(A))
-				jump_to = locate() in A:head
-			else if(isrobot(A))
-				jump_to = A:camera
-		else if(isobj(A))
-			jump_to = locate() in A
-		else if(isturf(A))
-			var/best_dist = INFINITY
-			for(var/obj/machinery/camera/camera in get_area(A))
-				if(!camera.can_use())
-					continue
-				if(!can_access_camera(camera))
-					continue
-				var/dist = get_dist(camera,A)
-				if(dist < best_dist)
-					best_dist = dist
-					jump_to = camera
-		if(isnull(jump_to))
-			return
-		if(can_access_camera(jump_to))
-			switch_to_camera(user,jump_to)
+/obj/machinery/computer/security/proc/jump_on_click(mob/user,A)
+	if(user.machine != src)
+		return
+	var/obj/machinery/camera/jump_to
+	if(istype(A,/obj/machinery/camera))
+		jump_to = A
+	else if(ismob(A))
+		if(ishuman(A))
+			jump_to = locate() in A:head
+		else if(isrobot(A))
+			jump_to = A:camera
+	else if(isobj(A))
+		jump_to = locate() in A
+	else if(isturf(A))
+		var/best_dist = INFINITY
+		for(var/obj/machinery/camera/camera in get_area(A))
+			if(!camera.can_use())
+				continue
+			if(!can_access_camera(camera))
+				continue
+			var/dist = get_dist(camera,A)
+			if(dist < best_dist)
+				best_dist = dist
+				jump_to = camera
+	if(isnull(jump_to))
+		return
+	if(can_access_camera(jump_to))
+		switch_to_camera(user,jump_to)
 
-/obj/machinery/computer/security/proc/set_current(var/obj/machinery/camera/C)
+/obj/machinery/computer/security/proc/set_current(obj/machinery/camera/C)
 	if(current == C)
 		return
 
@@ -207,7 +211,7 @@
 /obj/machinery/computer/security/telescreen
 	name = "Telescreen"
 	desc = "Used for watching an empty arena."
-	icon = 'tauceti/icons/obj/objects.dmi'
+	icon = 'icons/obj/objects.dmi'
 	icon_state = "telescreen"
 	light_color = "#ffffbb"
 	network = list("thunder")
@@ -217,6 +221,7 @@
 	icon_state = initial(icon_state)
 	if(stat & BROKEN)
 		icon_state += "b"
+		playsound(src.loc, 'sound/effects/Glassbr3.ogg', 100, 1)
 	return
 
 /obj/machinery/computer/security/telescreen/entertainment
@@ -261,9 +266,9 @@
 	network = list()
 	var/team
 
-/obj/machinery/computer/security/abductor_ag/attack_hand(mob/user as mob)
+/obj/machinery/computer/security/abductor_ag/attack_hand(mob/user)
 	if(network.len < 1)
-		user << "<span class='notice'>Monitor network doesn't established. Activate helmet at first.</span>"
+		to_chat(user, "<span class='notice'>Monitor network doesn't established. Activate helmet at first.</span>")
 		return
 	else
 		..()

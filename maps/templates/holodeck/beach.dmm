@@ -1,0 +1,29 @@
+"a" = (/turf/simulated/floor/beach/sand{tag = "icon-desert"; icon_state = "desert"},/area/holodeck/source_beach)
+"b" = (/turf/simulated/floor/beach/sand{tag = "icon-desert1"; icon_state = "desert1"},/area/holodeck/source_beach)
+"c" = (/turf/simulated/floor/beach/sand{tag = "icon-desert4"; icon_state = "desert4"},/area/holodeck/source_beach)
+"d" = (/turf/simulated/floor/beach/sand{tag = "icon-desert0"; icon_state = "desert0"},/area/holodeck/source_beach)
+"e" = (/turf/simulated/floor/beach/sand{tag = "icon-desert3"; icon_state = "desert3"},/area/holodeck/source_beach)
+"f" = (/obj/effect/overlay/palmtree_r,/turf/simulated/floor/beach/sand{tag = "icon-desert"; icon_state = "desert"},/area/holodeck/source_beach)
+"g" = (/obj/item/clothing/glasses/sunglasses,/turf/simulated/floor/beach/sand{tag = "icon-desert0"; icon_state = "desert0"},/area/holodeck/source_beach)
+"h" = (/obj/effect/overlay/palmtree_l,/obj/effect/overlay/coconut,/turf/simulated/floor/beach/sand{tag = "icon-desert0"; icon_state = "desert0"},/area/holodeck/source_beach)
+"i" = (/obj/item/weapon/beach_ball,/turf/simulated/floor/beach/sand{tag = "icon-desert"; icon_state = "desert"},/area/holodeck/source_beach)
+"j" = (/obj/item/weapon/inflatable_duck,/turf/simulated/floor/beach/sand{tag = "icon-desert1"; icon_state = "desert1"},/area/holodeck/source_beach)
+"k" = (/turf/simulated/floor/beach/sand{tag = "icon-beachcorner"; icon_state = "beachcorner"; dir = 2},/area/holodeck/source_beach)
+"l" = (/turf/simulated/floor/beach/sand{tag = "icon-beach"; icon_state = "beach"},/area/holodeck/source_beach)
+"m" = (/turf/simulated/floor/beach/sand{tag = "icon-beachcorner (NORTH)"; icon_state = "beachcorner"; dir = 1},/area/holodeck/source_beach)
+"n" = (/turf/simulated/floor/beach/sand{dir = 6; icon_state = "beach"; tag = "icon-beach (SOUTHEAST)"},/area/holodeck/source_beach)
+"o" = (/turf/simulated/floor/beach/sand{icon_state = "seashallow"; tag = "icon-seashallow"},/area/holodeck/source_beach)
+"p" = (/turf/simulated/floor/beach/sand{dir = 10; icon_state = "beach"; tag = "icon-beach (SOUTHWEST)"},/area/holodeck/source_beach)
+
+(1,1,1) = {"
+abcadabcad
+defdadaeea
+adabaaghba
+badeibaded
+acabcacjek
+dkllmcklln
+knooplnooo
+nooooooooo
+oooooooooo
+oooooooooo
+"}

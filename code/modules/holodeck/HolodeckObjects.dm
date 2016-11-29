@@ -18,6 +18,12 @@
 					var/turf/simulated/floor/FF = get_step(src,direction)
 					FF.update_icon() //so siding get updated properly
 
+turf/simulated/floor/holofloor/update_icon()
+	if(icon_state in icons_to_ignore_at_floor_init)
+		return
+	else
+		..()
+
 /turf/simulated/floor/holofloor/space
 	icon = 'icons/turf/space.dmi'
 	name = "\proper space"
@@ -36,27 +42,27 @@
 	if(prob(10))
 		overlays += "asteroid[rand(0,9)]"
 
-/turf/simulated/floor/holofloor/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/turf/simulated/floor/holofloor/attackby(obj/item/weapon/W, mob/user)
 	return
 	// HOLOFLOOR DOES NOT GIVE A FUCK
 
 /obj/structure/table/holotable
 	name = "table"
 	desc = "A square piece of metal standing on four metal legs. It can not move."
-	icon = 'icons/obj/structures.dmi'
+	icon = 'icons/obj/tables.dmi'
 	icon_state = "table"
 	density = 1
 	anchored = 1.0
 	layer = 2.8
 	throwpass = 1	//You can throw objects over this, despite it's density.
 
-/obj/structure/table/holotable/attack_hand(mob/user as mob)
+/obj/structure/table/holotable/attack_hand(mob/user)
 	return // HOLOTABLE DOES NOT GIVE A FUCK
 
 
-/obj/structure/table/holotable/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/structure/table/holotable/attackby(obj/item/weapon/W, mob/user)
 	if (istype(W, /obj/item/weapon/wrench))
-		user << "It's a holotable!  There are no bolts!"
+		to_chat(user, "It's a holotable!  There are no bolts!")
 		return
 
 	if(isrobot(user))
@@ -67,7 +73,7 @@
 /obj/structure/table/woodentable/holotable
 	name = "table"
 	desc = "A square piece of wood standing on four wooden legs. It can not move."
-	icon = 'icons/obj/structures.dmi'
+	icon = 'icons/obj/tables.dmi'
 	icon_state = "woodtable"
 
 /obj/structure/holostool
@@ -85,10 +91,7 @@
 	icon_state = "boxing"
 	item_state = "boxing"
 
-/obj/structure/window/reinforced/holowindow/Destroy()
-	..()
-
-/obj/structure/window/reinforced/holowindow/attackby(obj/item/W as obj, mob/user as mob)
+/obj/structure/window/reinforced/holowindow/attackby(obj/item/W, mob/user)
 	if(!istype(W)) return//I really wish I did not need this
 	if (istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
 		var/obj/item/weapon/grab/G = W
@@ -117,11 +120,11 @@
 	if(W.flags & NOBLUDGEON) return
 
 	if(istype(W, /obj/item/weapon/screwdriver))
-		user << ("<span class='notice'>It's a holowindow, you can't unfasten it!</span>")
+		to_chat(user, ("<span class='notice'>It's a holowindow, you can't unfasten it!</span>"))
 	else if(istype(W, /obj/item/weapon/crowbar) && reinf && state <= 1)
-		user << ("<span class='notice'>It's a holowindow, you can't pry it!</span>")
+		to_chat(user, ("<span class='notice'>It's a holowindow, you can't pry it!</span>"))
 	else if(istype(W, /obj/item/weapon/wrench) && !anchored && (!state || !reinf))
-		user << ("<span class='notice'>It's a holowindow, you can't dismantle it!</span>")
+		to_chat(user, ("<span class='notice'>It's a holowindow, you can't dismantle it!</span>"))
 	else
 		if(W.damtype == BRUTE || W.damtype == BURN)
 			take_damage(W.force)
@@ -134,20 +137,16 @@
 		..()
 	return
 
-/obj/structure/window/reinforced/holowindow/shatter(var/display_message = 1)
+/obj/structure/window/reinforced/holowindow/shatter(display_message = 1)
 	playsound(src, "shatter", 70, 1)
 	if(display_message)
 		visible_message("[src] fades away as it shatters!")
 	qdel(src)
 	return
 
-/obj/structure/window/reinforced/holowindow/disappearing/Destroy()
-	..()
+/obj/structure/window/reinforced/holowindow/disappearing
 
-/obj/machinery/door/window/holowindoor/Destroy()
-	..()
-
-/obj/machinery/door/window/holowindoor/attackby(obj/item/weapon/I as obj, mob/user as mob)
+/obj/machinery/door/window/holowindoor/attackby(obj/item/weapon/I, mob/user)
 
 	if (src.operating == 1)
 		return
@@ -175,7 +174,7 @@
 
 	return
 
-/obj/machinery/door/window/holowindoor/shatter(var/display_message = 1)
+/obj/machinery/door/window/holowindoor/shatter(display_message = 1)
 	src.density = 0
 	playsound(src, "shatter", 70, 1)
 	if(display_message)
@@ -185,12 +184,9 @@
 obj/structure/stool/bed/chair/holochair
 	icon_state = "chair_g"
 
-/obj/structure/stool/bed/chair/holochair/Destroy()
-	..()
-
-/obj/structure/stool/bed/chair/holochair/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/structure/stool/bed/chair/holochair/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/wrench))
-		user << ("<span class='notice'>It's a holochair, you can't dismantle it!</span>")
+		to_chat(user, ("<span class='notice'>It's a holochair, you can't dismantle it!</span>"))
 	return
 
 /obj/item/weapon/holo
@@ -220,26 +216,26 @@ obj/structure/stool/bed/chair/holochair
 		return 1
 	return 0
 
-/obj/item/weapon/holo/esword/attack(target as mob, mob/user as mob)
+/obj/item/weapon/holo/esword/attack(target, mob/user)
 	..()
 
 /obj/item/weapon/holo/esword/New()
 	item_color = pick("red","blue","green","purple")
 
-/obj/item/weapon/holo/esword/attack_self(mob/living/user as mob)
+/obj/item/weapon/holo/esword/attack_self(mob/living/user)
 	active = !active
 	if (active)
 		force = 30
 		icon_state = "sword[item_color]"
 		w_class = 4
 		playsound(user, 'sound/weapons/saberon.ogg', 50, 1)
-		user << "<span class='notice'>[src] is now active.</span>"
+		to_chat(user, "<span class='notice'>[src] is now active.</span>")
 	else
 		force = 3
 		icon_state = "sword0"
 		w_class = 2
 		playsound(user, 'sound/weapons/saberoff.ogg', 50, 1)
-		user << "<span class='notice'>[src] can now be concealed.</span>"
+		to_chat(user, "<span class='notice'>[src] can now be concealed.</span>")
 
 	if(istype(user,/mob/living/carbon/human))
 		var/mob/living/carbon/human/H = user
@@ -268,11 +264,11 @@ obj/structure/stool/bed/chair/holochair
 	density = 1
 	throwpass = 1
 
-/obj/structure/holohoop/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/structure/holohoop/attackby(obj/item/weapon/W, mob/user)
 	if (istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
 		var/obj/item/weapon/grab/G = W
 		if(G.state<2)
-			user << "<span class='warning'>You need a better grip to do that!</span>"
+			to_chat(user, "<span class='warning'>You need a better grip to do that!</span>")
 			return
 		G.affecting.loc = src.loc
 		G.affecting.Weaken(5)
@@ -280,7 +276,7 @@ obj/structure/stool/bed/chair/holochair
 		qdel(W)
 		return
 	else if (istype(W, /obj/item) && get_dist(src,user)<2)
-		user.drop_item(src)
+		user.drop_item(src.loc)
 		visible_message("<span class='notice'>[user] dunks [W] into the [src]!</span>", 3)
 		return
 
@@ -314,21 +310,21 @@ obj/structure/stool/bed/chair/holochair
 	active_power_usage = 6
 	power_channel = ENVIRON
 
-/obj/machinery/readybutton/attack_ai(mob/user as mob)
-	user << "The station AI is not to interact with these devices!"
+/obj/machinery/readybutton/attack_ai(mob/user)
+	to_chat(user, "The station AI is not to interact with these devices!")
 	return
 
 /obj/machinery/readybutton/New()
 	..()
 
 
-/obj/machinery/readybutton/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	user << "The device is a solid button, there's nothing you can do with it!"
+/obj/machinery/readybutton/attackby(obj/item/weapon/W, mob/user)
+	to_chat(user, "The device is a solid button, there's nothing you can do with it!")
 
-/obj/machinery/readybutton/attack_hand(mob/user as mob)
+/obj/machinery/readybutton/attack_hand(mob/user)
 
 	if(user.stat || stat & (NOPOWER|BROKEN))
-		user << "This device is not powered."
+		to_chat(user, "This device is not powered.")
 		return
 
 	if(!user.IsAdvancedToolUser())
@@ -339,7 +335,7 @@ obj/structure/stool/bed/chair/holochair
 		qdel(src)
 
 	if(eventstarted)
-		usr << "The event has already begun!"
+		to_chat(usr, "The event has already begun!")
 		return
 
 	ready = !ready
@@ -370,22 +366,21 @@ obj/structure/stool/bed/chair/holochair
 		qdel(W)
 
 	for(var/mob/M in currentarea)
-		M << "FIGHT!"
+		to_chat(M, "FIGHT!")
 
 //Holorack
-
-/obj/structure/table/rack/holorack
+/obj/structure/rack/holorack
 	name = "rack"
 	desc = "Different from the Middle Ages version."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "rack"
 
-/obj/structure/table/rack/holorack/attack_hand(mob/user as mob)
+/obj/structure/rack/holorack/attack_hand(mob/user)
 	return
 
-/obj/structure/table/rack/holorack/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/structure/rack/holorack/attackby(obj/item/weapon/W, mob/user)
 	if (istype(W, /obj/item/weapon/wrench))
-		user << "It's a holorack!  You can't unwrench it!"
+		to_chat(user, "It's a holorack!  You can't unwrench it!")
 		return
 
 //Holocarp
@@ -404,7 +399,7 @@ obj/structure/stool/bed/chair/holochair
 	..()
 	set_light(2) //hologram lighting
 
-/mob/living/simple_animal/hostile/carp/holodeck/proc/set_safety(var/safe)
+/mob/living/simple_animal/hostile/carp/holodeck/proc/set_safety(safe)
 	if (safe)
 		faction = "neutral"
 		melee_damage_lower = 0

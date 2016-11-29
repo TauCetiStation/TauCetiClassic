@@ -6,7 +6,7 @@
 /datum/surgery_step/glue_bone
 	allowed_tools = list(
 	/obj/item/weapon/bonegel = 100,	\
-	/obj/item/weapon/screwdriver = 75
+	/obj/item/stack/rods = 50
 	)
 	can_infect = 1
 	blood_level = 1
@@ -118,7 +118,7 @@
 /datum/surgery_step/finish_bone
 	allowed_tools = list(
 	/obj/item/weapon/bonegel = 100,	\
-	/obj/item/weapon/screwdriver = 75
+	/obj/item/stack/rods = 50
 	)
 	can_infect = 1
 	blood_level = 1

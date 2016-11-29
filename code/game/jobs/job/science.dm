@@ -20,7 +20,7 @@
 	minimal_player_age = 7
 	minimal_player_ingame_minutes = 2400
 
-/datum/job/rd/equip(var/mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/job/rd/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/brown(H), slot_shoes)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/research_director(H), slot_w_uniform)
@@ -55,7 +55,7 @@
 	alt_titles = list("Xenoarcheologist", "Anomalist", "Phoron Researcher")
 	minimal_player_ingame_minutes = 1560
 
-/datum/job/scientist/equip(var/mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/job/scientist/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/scientist(H), slot_w_uniform)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/white(H), slot_shoes)
@@ -99,7 +99,7 @@
 	minimal_access = list(access_research, access_xenobiology)
 	minimal_player_ingame_minutes = 1560
 
-/datum/job/xenobiologist/equip(var/mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/job/xenobiologist/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H) return 0
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/scientist(H), slot_w_uniform)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/white(H), slot_shoes)
@@ -134,7 +134,7 @@
 	alt_titles = list("Biomechanical Engineer","Mechatronic Engineer")
 	minimal_player_ingame_minutes = 1560
 
-/datum/job/roboticist/equip(var/mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/job/roboticist/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
 	if(H.backbag == 2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(H), slot_back)
 	if(H.backbag == 3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel_norm(H), slot_back)

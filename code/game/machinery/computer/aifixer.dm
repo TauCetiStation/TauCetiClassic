@@ -13,18 +13,18 @@
 	src.overlays += image('icons/obj/computer.dmi', "ai-fixer-empty")
 	..()
 
-/obj/machinery/computer/aifixer/attackby(I as obj, user as mob)
+/obj/machinery/computer/aifixer/attackby(I, user)
 	if(istype(I, /obj/item/device/aicard))
 		var/obj/item/device/aicard/AIcard = I
 		if(stat & (NOPOWER|BROKEN))
-			user << "This terminal isn't functioning right now, get it working!"
+			to_chat(user, "This terminal isn't functioning right now, get it working!")
 			return
 		AIcard.transfer_ai("AIFIXER","AICARD",src,user)
 	else
 		..()
 	return
 
-/obj/machinery/computer/aifixer/attack_hand(var/mob/user as mob)
+/obj/machinery/computer/aifixer/attack_hand(mob/user)
 	if(..())
 		return
 
@@ -73,8 +73,10 @@
 		return
 
 /obj/machinery/computer/aifixer/Topic(href, href_list)
-	if(..())
+	. = ..()
+	if(!.)
 		return
+
 	if (href_list["fix"])
 		src.active = 1
 		src.overlays += image('icons/obj/computer.dmi', "ai-fixer-on")
@@ -97,10 +99,7 @@
 		src.active = 0
 		src.overlays -= image('icons/obj/computer.dmi', "ai-fixer-on")
 
-
-		src.add_fingerprint(usr)
 	src.updateUsrDialog()
-	return
 
 
 /obj/machinery/computer/aifixer/update_icon()

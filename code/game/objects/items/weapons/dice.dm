@@ -53,14 +53,14 @@
 	icon_state = "d20"
 	sides = 20
 
-/obj/item/weapon/dice/attack_self(mob/user as mob)
+/obj/item/weapon/dice/attack_self(mob/user)
 	diceroll(user)
 
-/obj/item/weapon/dice/throw_at(atom/target, range, speed, mob/user as mob)
+/obj/item/weapon/dice/throw_at(atom/target, range, speed, mob/user)
 	..()
 	diceroll(user)
 
-/obj/item/weapon/dice/proc/diceroll(mob/user as mob)
+/obj/item/weapon/dice/proc/diceroll(mob/user)
 	var/result = rand(1, sides)
 	var/comment = ""
 	if(sides == 20 && result == 20)
@@ -79,7 +79,7 @@
 
 /obj/item/weapon/dice/d4/Crossed(var/mob/living/carbon/human/H)
 	if(istype(H) && !H.shoes)
-		H << "<span class='userdanger'>You step on the D4!</span>"
+		to_chat(H, "<span class='userdanger'>You step on the D4!</span>")
 		H.apply_damage(4,BRUTE,(pick("l_leg", "r_leg")))
 		H.Weaken(3)
 

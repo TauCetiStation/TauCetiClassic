@@ -75,7 +75,7 @@ var/const/tk_maxrange = 15
 	var/mob/living/host = null
 
 
-/obj/item/tk_grab/dropped(mob/user as mob)
+/obj/item/tk_grab/dropped(mob/user)
 	if(focus && user && loc != user && loc != user.loc) // drop_item() gets called when you tk-attack a table/closet with an item
 		if(focus.Adjacent(loc))
 			focus.loc = loc
@@ -85,17 +85,17 @@ var/const/tk_maxrange = 15
 
 
 	//stops TK grabs being equipped anywhere but into hands
-/obj/item/tk_grab/equipped(var/mob/user, var/slot)
+/obj/item/tk_grab/equipped(mob/user, slot)
 	if( (slot == slot_l_hand) || (slot== slot_r_hand) )	return
 	qdel(src)
 	return
 
 
-/obj/item/tk_grab/attack_self(mob/user as mob)
+/obj/item/tk_grab/attack_self(mob/user)
 	if(focus)
 		focus.attack_self_tk(user)
 
-/obj/item/tk_grab/afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, proximity, params)//TODO: go over this
+/obj/item/tk_grab/afterattack(atom/target, mob/living/user, proximity, params)//TODO: go over this
 	if(!target || !user)	return
 	if(last_throw+3 > world.time)	return
 	if(!host || host != user)
@@ -120,7 +120,7 @@ var/const/tk_maxrange = 15
 		if(8 to tk_maxrange)
 			user.next_move += 10
 		else
-			user << "\blue Your mind won't reach that far."
+			to_chat(user, "\blue Your mind won't reach that far.")
 			return
 
 	if(!focus)
@@ -145,11 +145,11 @@ var/const/tk_maxrange = 15
 		last_throw = world.time
 	return
 
-/obj/item/tk_grab/attack(mob/living/M as mob, mob/living/user as mob, def_zone)
+/obj/item/tk_grab/attack(mob/living/M, mob/living/user, def_zone)
 	return
 
 
-/obj/item/tk_grab/proc/focus_object(var/obj/target, var/mob/living/user)
+/obj/item/tk_grab/proc/focus_object(obj/target, mob/living/user)
 	if(!istype(target,/obj))	return//Cant throw non objects atm might let it do mobs later
 	if(target.anchored || !isturf(target.loc))
 		qdel(src)

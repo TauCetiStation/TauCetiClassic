@@ -23,10 +23,10 @@
 	Destroy()
 		if(Beacon)
 			qdel(Beacon)
-		..()
+		return ..()
 
 	// update the invisibility and icon
-	hide(var/intact)
+	hide(intact)
 		invisibility = intact ? 101 : 0
 		updateicon()
 
@@ -51,5 +51,3 @@
 				Beacon.loc = loc
 
 		updateicon()
-
-

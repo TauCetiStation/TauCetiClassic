@@ -38,7 +38,14 @@
 	return ..()
 
 
-/obj/item/weapon/robot_module/proc/respawn_consumable(var/mob/living/silicon/robot/R)
+/obj/item/weapon/robot_module/proc/respawn_consumable(mob/living/silicon/robot/R)
+	var/obj/item/device/flash/F = locate() in src.modules
+	if(F.broken)
+		F.broken = 0
+		F.times_used = 0
+		F.icon_state = "flash"
+	else if(F.times_used)
+		F.times_used--
 
 	if(!stacktypes || !stacktypes.len) return
 
@@ -62,7 +69,7 @@
 		if(O)
 			modules += O
 
-/obj/item/weapon/robot_module/proc/add_languages(var/mob/living/silicon/robot/R)
+/obj/item/weapon/robot_module/proc/add_languages(mob/living/silicon/robot/R)
 	R.add_language("Tradeband", 1)
 	R.add_language("Sol Common", 1)
 
@@ -79,7 +86,8 @@
 		src.emag = new /obj/item/weapon/melee/energy/sword(src)
 		return
 
-/obj/item/weapon/robot_module/standard/respawn_consumable(var/mob/living/silicon/robot/R)
+/obj/item/weapon/robot_module/standard/respawn_consumable(mob/living/silicon/robot/R)
+	..()
 	var/obj/item/weapon/melee/baton/B = locate() in src.modules
 	if(B.charges < 10)
 		B.charges += 1
@@ -115,7 +123,7 @@
 		src.emag.name = "Polyacid spray"
 		return
 
-/obj/item/weapon/robot_module/surgeon/respawn_consumable(var/mob/living/silicon/robot/R)
+/obj/item/weapon/robot_module/surgeon/respawn_consumable(mob/living/silicon/robot/R)
 	if(src.emag)
 		var/obj/item/weapon/reagent_containers/spray/PS = src.emag
 		PS.reagents.add_reagent("pacid", 2)
@@ -149,7 +157,7 @@
 		src.emag.name = "Polyacid spray"
 		return
 
-/obj/item/weapon/robot_module/crisis/respawn_consumable(var/mob/living/silicon/robot/R)
+/obj/item/weapon/robot_module/crisis/respawn_consumable(mob/living/silicon/robot/R)
 
 	var/obj/item/weapon/reagent_containers/syringe/S = locate() in src.modules
 	if(S.mode == 2)
@@ -238,14 +246,8 @@
 		src.emag = new /obj/item/weapon/gun/energy/laser/cyborg(src)
 		return
 
-/obj/item/weapon/robot_module/security/respawn_consumable(var/mob/living/silicon/robot/R)
-	var/obj/item/device/flash/F = locate() in src.modules
-	if(F.broken)
-		F.broken = 0
-		F.times_used = 0
-		F.icon_state = "flash"
-	else if(F.times_used)
-		F.times_used--
+/obj/item/weapon/robot_module/security/respawn_consumable(mob/living/silicon/robot/R)
+	..()
 	var/obj/item/weapon/gun/energy/taser/cyborg/T = locate() in src.modules
 	if(T.power_supply.charge < T.power_supply.maxcharge)
 		var/obj/item/ammo_casing/energy/S = T.ammo_type[T.select]
@@ -272,7 +274,8 @@
 		src.emag.name = "Lube spray"
 		return
 
-/obj/item/weapon/robot_module/janitor/respawn_consumable(var/mob/living/silicon/robot/R)
+/obj/item/weapon/robot_module/janitor/respawn_consumable(mob/living/silicon/robot/R)
+	..()
 	var/obj/item/device/lightreplacer/LR = locate() in src.modules
 	LR.Charge(R)
 	if(src.emag)
@@ -309,7 +312,7 @@
 		src.emag.name = "Mickey Finn's Special Brew"
 		return
 
-	add_languages(var/mob/living/silicon/robot/R)
+	add_languages(mob/living/silicon/robot/R)
 		//full set of languages
 		R.add_language("Sol Common", 1)
 		R.add_language("Sinta'unathi", 1)
@@ -331,7 +334,7 @@
 
 		src.emag = new /obj/item/weapon/stamp/denied(src)
 
-	add_languages(var/mob/living/silicon/robot/R)
+	add_languages(mob/living/silicon/robot/R)
 		R.add_language("Sol Common", 1)
 		R.add_language("Sinta'unathi", 1)
 		R.add_language("Siik'maas", 1)
@@ -341,7 +344,8 @@
 		R.add_language("Tradeband", 1)
 		R.add_language("Gutter", 1)
 
-/obj/item/weapon/robot_module/butler/respawn_consumable(var/mob/living/silicon/robot/R)
+/obj/item/weapon/robot_module/butler/respawn_consumable(mob/living/silicon/robot/R)
+	..()
 	var/obj/item/weapon/reagent_containers/food/condiment/enzyme/E = locate() in src.modules
 	E.reagents.add_reagent("enzyme", 2)
 	if(src.emag)
@@ -370,6 +374,7 @@
 
 	New()
 		src.modules += new /obj/item/device/flash(src)
+		src.modules += new /obj/item/borg/sight/night(src)
 		src.modules += new /obj/item/weapon/melee/energy/sword/cyborg(src)
 		src.modules += new /obj/item/weapon/gun/energy/crossbow/cyborg(src)
 		src.modules += new /obj/item/weapon/card/emag(src)
@@ -417,7 +422,7 @@
 		src.modules += new /obj/item/weapon/scalpel(src)
 		src.modules += new /obj/item/weapon/extinguisher/mini(src) //To unfuck xenobiology up
 
-		src.modules += new /obj/item/weapon/crowbar/red
+		src.modules += new /obj/item/weapon/crowbar/red(src)
 		src.modules += new /obj/item/weapon/wrench(src)
 		src.modules += new /obj/item/weapon/screwdriver(src)
 		src.modules += new /obj/item/weapon/wirecutters(src)
@@ -458,16 +463,21 @@
 		src.emag.name = "Plasma Cutter"
 
 		for(var/T in stacktypes)
-			var/obj/item/stack/sheet/W = new T(src)
-			W.amount = stacktypes[T]
-			src.modules += W
+			if(!iscoil(T))
+				var/obj/item/stack/W = new T(src)
+				W.amount = stacktypes[T]
+				src.modules += W
+			else
+				var/obj/item/weapon/cable_coil/C = new T(src)
+				C.amount = stacktypes[T]
+				src.modules += C
 
 		return
 
-	add_languages(var/mob/living/silicon/robot/R)
+	add_languages(mob/living/silicon/robot/R)
 		return	//not much ROM to spare in that tiny microprocessor!
 
-/obj/item/weapon/robot_module/drone/respawn_consumable(var/mob/living/silicon/robot/R)
+/obj/item/weapon/robot_module/drone/respawn_consumable(mob/living/silicon/robot/R)
 	var/obj/item/weapon/reagent_containers/spray/cleaner/C = locate() in src.modules
 	C.reagents.add_reagent("cleaner", 3)
 

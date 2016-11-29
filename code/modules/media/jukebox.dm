@@ -84,7 +84,7 @@ var/global/loopModeNames=list(
 	var/state_base = "jukebox2"
 
 
-/obj/machinery/media/jukebox/attack_ai(var/mob/user)
+/obj/machinery/media/jukebox/attack_ai(mob/user)
 	attack_hand(user)
 
 
@@ -113,9 +113,9 @@ var/global/loopModeNames=list(
 /obj/machinery/media/jukebox/proc/check_reload()
 	return world.time > last_reload + JUKEBOX_RELOAD_COOLDOWN
 
-/obj/machinery/media/jukebox/attack_hand(var/mob/user)
+/obj/machinery/media/jukebox/attack_hand(mob/user)
 	if(stat & NOPOWER)
-		usr << "\red You don't see anything to mess with."
+		to_chat(usr, "\red You don't see anything to mess with.")
 		return
 	if(stat & BROKEN && playlist!=null)
 		user.visible_message("\red <b>[user.name] smacks the side of \the [src.name].</b>","\red You hammer the side of \the [src.name].")
@@ -178,40 +178,39 @@ var/global/loopModeNames=list(
 			update_icon()
 
 /obj/machinery/media/jukebox/Topic(href, href_list)
-	..()
-	if(stat & (NOPOWER|BROKEN)) return
-	if(usr.stat || usr.restrained()) return
-	if(!in_range(src, usr)) return
-
-	if(emagged)
-		usr << "\red You touch the bluescreened menu. Nothing happens. You feel dumber."
+	. = ..()
+	if(!.)
 		return
 
+	if(emagged)
+		to_chat(usr, "\red You touch the bluescreened menu. Nothing happens. You feel dumber.")
+		return FALSE
+
 	if (href_list["power"])
-		playing=!playing
+		playing = !playing
 		update_music()
 		update_icon()
 
 	if (href_list["playlist"])
 		if(!check_reload())
-			usr << "\red You must wait 60 seconds between playlist reloads."
-			return
-		playlist_id=href_list["playlist"]
-		last_reload=world.time
-		playlist=null
-		current_song=0
+			to_chat(usr, "\red You must wait 60 seconds between playlist reloads.")
+			return FALSE
+		playlist_id = href_list["playlist"]
+		last_reload = world.time
+		playlist = null
+		current_song = 0
 		update_music()
 		update_icon()
 
 	if (href_list["song"])
-		current_song=Clamp(text2num(href_list["song"]),1,playlist.len)
+		current_song=Clamp(text2num(href_list["song"]), 1, playlist.len)
 		update_music()
 		update_icon()
 
 	if (href_list["mode"])
 		loop_mode = (loop_mode % JUKEMODE_COUNT) + 1
 
-	return attack_hand(usr)
+	updateUsrDialog()
 
 /obj/machinery/media/jukebox/process()
 	if(!playlist)
@@ -222,7 +221,7 @@ var/global/loopModeNames=list(
 		if(response)
 			var/json = file2text(response["CONTENT"])
 			if("/>" in json)
-				visible_message("<span class='warning'>\icon[src] \The [src] buzzes, unable to update its playlist.</span>","<em>You hear a buzz.</em>")
+				visible_message("<span class='warning'>[bicon(src)] \The [src] buzzes, unable to update its playlist.</span>","<em>You hear a buzz.</em>")
 				stat &= BROKEN
 				update_icon()
 				return
@@ -233,11 +232,11 @@ var/global/loopModeNames=list(
 			for(var/list/record in songdata)
 				playlist += new /datum/song_info(record)
 			if(playlist.len==0)
-				visible_message("<span class='warning'>\icon[src] \The [src] buzzes, unable to update its playlist.</span>","<em>You hear a buzz.</em>")
+				visible_message("<span class='warning'>[bicon(src)] \The [src] buzzes, unable to update its playlist.</span>","<em>You hear a buzz.</em>")
 				stat &= BROKEN
 				update_icon()
 				return
-			visible_message("<span class='notice'>\icon[src] \The [src] beeps, and the menu on its front fills with [playlist.len] items.</span>","<em>You hear a beep.</em>")
+			visible_message("<span class='notice'>[bicon(src)] \The [src] beeps, and the menu on its front fills with [playlist.len] items.</span>","<em>You hear a beep.</em>")
 			if(autoplay)
 				playing=1
 				autoplay=0
@@ -248,7 +247,7 @@ var/global/loopModeNames=list(
 			return
 	if(playing)
 		var/datum/song_info/song
-		if(current_song && current_song < playlist.len)
+		if(current_song && current_song <= playlist.len)
 			song = playlist[current_song]
 		if(!current_song || (song && world.time >= media_start_time + song.length))
 			current_song=1
@@ -264,12 +263,12 @@ var/global/loopModeNames=list(
 			update_music()
 
 /obj/machinery/media/jukebox/update_music()
-	if(current_song && current_song < playlist.len && playing )
+	if(current_song && current_song <= playlist.len && playing )
 		var/datum/song_info/song = playlist[current_song]
 		media_url = song.url
 		media_start_time = world.time
-		visible_message("<span class='notice'>\icon[src] \The [src] begins to play [song.display()].</span>","<em>You hear music.</em>")
-		//visible_message("<span class='notice'>\icon[src] \The [src] warbles: [song.length/10]s @ [song.url]</notice>")
+		visible_message("<span class='notice'>[bicon(src)] \The [src] begins to play [song.display()].</span>","<em>You hear music.</em>")
+		//visible_message("<span class='notice'>[bicon(src)] \The [src] warbles: [song.length/10]s @ [song.url]</notice>")
 	else
 		media_url=""
 		media_start_time = 0
@@ -286,11 +285,14 @@ var/global/loopModeNames=list(
 	// Must be defined on your server.
 	playlists=list(
 		"bar"  = "Bar Mix",
+		"mogesfm84"  = "Moges FM-84",
 		"moges" = "Moges Club Music",
 		"club" = "Club Mix",
 		"customs" = "Customs Music",
 		"japan" = "Banzai Radio",
+		"govnar" = "Soviet Radio",
 		"classic" = "Classical Music",
+		"ussr_disco" = "Disco USSR-89s",
 	)
 
 // Relaxing elevator music~
@@ -304,11 +306,14 @@ var/global/loopModeNames=list(
 	// Must be defined on your server.
 	playlists=list(
 		"bar"  = "Bar Mix",
+		"mogesfm84"  = "Moges FM-84",
 		"moges" = "Moges Club Music",
 		"club" = "Club Mix",
 		"customs" = "Customs Music",
 		"japan" = "Banzai Radio",
+		"govnar" = "Soviet Radio",
 		"classic" = "Classical Music",
+		"ussr_disco" = "Disco USSR-89s",
 	)
 
 /obj/machinery/media/jukebox/techno

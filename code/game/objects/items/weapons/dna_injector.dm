@@ -28,37 +28,37 @@
 		SetValue(src.value)
 		//testing("[name]: DNA2 SE blocks after SetValue: [english_list(buf.dna.SE)]")
 
-/obj/item/weapon/dnainjector/attack_paw(mob/user as mob)
+/obj/item/weapon/dnainjector/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/item/weapon/dnainjector/proc/GetRealBlock(var/selblock)
+/obj/item/weapon/dnainjector/proc/GetRealBlock(selblock)
 	if(selblock==0)
 		return block
 	else
 		return selblock
 
-/obj/item/weapon/dnainjector/proc/GetState(var/selblock=0)
+/obj/item/weapon/dnainjector/proc/GetState(selblock=0)
 	var/real_block=GetRealBlock(selblock)
 	if(buf.types&DNA2_BUF_SE)
 		return buf.dna.GetSEState(real_block)
 	else
 		return buf.dna.GetUIState(real_block)
 
-/obj/item/weapon/dnainjector/proc/SetState(var/on, var/selblock=0)
+/obj/item/weapon/dnainjector/proc/SetState(on, selblock=0)
 	var/real_block=GetRealBlock(selblock)
 	if(buf.types&DNA2_BUF_SE)
 		return buf.dna.SetSEState(real_block,on)
 	else
 		return buf.dna.SetUIState(real_block,on)
 
-/obj/item/weapon/dnainjector/proc/GetValue(var/selblock=0)
+/obj/item/weapon/dnainjector/proc/GetValue(selblock=0)
 	var/real_block=GetRealBlock(selblock)
 	if(buf.types&DNA2_BUF_SE)
 		return buf.dna.GetSEValue(real_block)
 	else
 		return buf.dna.GetUIValue(real_block)
 
-/obj/item/weapon/dnainjector/proc/SetValue(var/val,var/selblock=0)
+/obj/item/weapon/dnainjector/proc/SetValue(val,selblock=0)
 	var/real_block=GetRealBlock(selblock)
 	if(buf.types&DNA2_BUF_SE)
 		return buf.dna.SetSEValue(real_block,val)
@@ -101,17 +101,17 @@
 		qdel(src)
 	return uses
 
-/obj/item/weapon/dnainjector/attack(mob/M as mob, mob/user as mob)
+/obj/item/weapon/dnainjector/attack(mob/M, mob/user)
 	if (!istype(M, /mob))
 		return
 	if (!(istype(user, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey") //#Z2
-		user << "\red You don't have the dexterity to do this!"
+		to_chat(user, "\red You don't have the dexterity to do this!")
 		return
 	if (!(istype(user, /mob/living/carbon/human/))) //#Z2 If our monkey/whatever not with name monkey.
-		user << "\red You don't have the dexterity to do this!"
+		to_chat(user, "\red You don't have the dexterity to do this!")
 		return
 	if (HULK in user.mutations) //#Z2
-		user << "\red You don't have the dexterity to do this!"
+		to_chat(user, "\red You don't have the dexterity to do this!")
 		return
 
 	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been injected with [name] by [user.name] ([user.ckey])</font>")
@@ -137,7 +137,7 @@
 					if(block)// Isolated injector
 						//testing("Isolated block [block] injector with contents: [GetValue()]")
 						if (GetState() && block == MONKEYBLOCK && istype(M, /mob/living/carbon/human)  )
-							message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the Isolated [name] \red(MONKEY)")
+							message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the Isolated [name] \red(MONKEY) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 							log_attack("[key_name(user)] injected [key_name(M)] with the Isolated [name] (MONKEY)")
 							log_game("[key_name_admin(user)] injected [key_name_admin(M)] with the Isolated [name] \red(MONKEY)")
 						else
@@ -145,7 +145,7 @@
 					else
 						//testing("DNA injector with contents: [english_list(buf.dna.SE)]")
 						if (GetState(MONKEYBLOCK) && istype(M, /mob/living/carbon/human) )
-							message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name] \red(MONKEY)")
+							message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name] \red(MONKEY) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 							log_attack("[key_name(user)] injected [key_name(M)] with the [name] (MONKEY)")
 							log_game("[key_name_admin(user)] injected [key_name_admin(M)] with the [name] \red(MONKEY)")
 						else
@@ -165,14 +165,14 @@
 					O.show_message(text("\red [] has been injected with [] by [].", M, src, user), 1)
 					//Foreach goto(192)
 				if (!(istype(M, /mob/living/carbon/human) || istype(M, /mob/living/carbon/monkey)))
-					user << "\red Apparently it didn't work."
+					to_chat(user, "\red Apparently it didn't work.")
 					return
 
 				if (buf.types & DNA2_BUF_SE)
 					if(block)// Isolated injector
 						//testing("Isolated block [block] injector with contents: [GetValue()]")
 						if (GetState() && block == MONKEYBLOCK && istype(M, /mob/living/carbon/human)  )
-							message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the Isolated [name] \red(MONKEY)")
+							message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the Isolated [name] \red(MONKEY) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 							log_attack("[key_name(user)] injected [key_name(M)] with the Isolated [name] (MONKEY)")
 							log_game("[key_name_admin(user)] injected [key_name_admin(M)] with the Isolated [name] \red(MONKEY)")
 						else
@@ -180,7 +180,7 @@
 					else
 						//testing("DNA injector with contents: [english_list(buf.dna.SE)]")
 						if (GetState(MONKEYBLOCK) && istype(M, /mob/living/carbon/human))
-							message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name] \red(MONKEY)")
+							message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name] \red(MONKEY) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 							log_game("[key_name(user)] injected [key_name(M)] with the [name] (MONKEY)")
 						else
 	//						message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name]")

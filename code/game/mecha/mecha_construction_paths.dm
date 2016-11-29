@@ -21,7 +21,7 @@
 	else if(istype(used_atom, /obj/item/weapon/cable_coil))
 		var/obj/item/weapon/cable_coil/C = used_atom
 		if(C.amount<4)
-			user << ("There's not enough cable to finish the task.")
+			to_chat(user, ("There's not enough cable to finish the task."))
 			return 0
 		else
 			C.use(4)
@@ -29,13 +29,13 @@
 	else if(istype(used_atom, /obj/item/stack))
 		var/obj/item/stack/S = used_atom
 		if(S.amount < 5)
-			user << ("There's not enough material in this stack.")
+			to_chat(user, ("There's not enough material in this stack."))
 			return 0
 		else
 			S.use(5)
 	return 1
 
-/datum/construction/reversible/mecha/custom_action(index as num, diff as num, atom/used_atom, mob/user as mob)
+/datum/construction/reversible/mecha/custom_action(index, diff, atom/used_atom, mob/user)
 	if(istype(used_atom, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/W = used_atom
 		if (W.remove_fuel(0, user))
@@ -54,7 +54,7 @@
 	else if(istype(used_atom, /obj/item/weapon/cable_coil))
 		var/obj/item/weapon/cable_coil/C = used_atom
 		if(C.amount<4)
-			user << ("There's not enough cable to finish the task.")
+			to_chat(user, ("There's not enough cable to finish the task."))
 			return 0
 		else
 			C.use(4)
@@ -62,7 +62,7 @@
 	else if(istype(used_atom, /obj/item/stack))
 		var/obj/item/stack/S = used_atom
 		if(S.amount < 5)
-			user << ("There's not enough material in this stack.")
+			to_chat(user, ("There's not enough material in this stack."))
 			return 0
 		else
 			S.use(5)
@@ -83,7 +83,7 @@
 		qdel(used_atom)
 		return 1
 
-	action(atom/used_atom,mob/user as mob)
+	action(atom/used_atom,mob/user)
 		return check_all_steps(used_atom,user)
 
 	spawn_result()
@@ -158,7 +158,7 @@
 					 		"desc"="The hydraulic systems are disconnected.")
 					)
 
-	action(atom/used_atom,mob/user as mob)
+	action(atom/used_atom,mob/user)
 		return check_step(used_atom,user)
 
 	custom_action(index, diff, atom/used_atom, mob/user)
@@ -294,7 +294,7 @@
 		qdel(used_atom)
 		return 1
 
-	action(atom/used_atom,mob/user as mob)
+	action(atom/used_atom,mob/user)
 		return check_all_steps(used_atom,user)
 
 	spawn_result()
@@ -392,7 +392,7 @@
 					 		"desc"="The hydraulic systems are disconnected.")
 					)
 
-	action(atom/used_atom,mob/user as mob)
+	action(atom/used_atom,mob/user)
 		return check_step(used_atom,user)
 
 	custom_action(index, diff, atom/used_atom, mob/user)
@@ -575,7 +575,7 @@
 		qdel(used_atom)
 		return 1
 
-	action(atom/used_atom,mob/user as mob)
+	action(atom/used_atom,mob/user)
 		return check_all_steps(used_atom,user)
 
 	spawn_result()
@@ -654,7 +654,7 @@
 					 		"desc"="The hydraulic systems are disconnected.")
 					)
 
-	action(atom/used_atom,mob/user as mob)
+	action(atom/used_atom,mob/user)
 		return check_step(used_atom,user)
 
 	custom_action(index, diff, atom/used_atom, mob/user)
@@ -794,7 +794,7 @@
 					 list("key"=/obj/item/mecha_parts/part/honker_head)
 					)
 
-	action(atom/used_atom,mob/user as mob)
+	action(atom/used_atom,mob/user)
 		return check_all_steps(used_atom,user)
 
 	custom_action(step, atom/used_atom, mob/user)
@@ -827,7 +827,7 @@
 					 list("key"=/obj/item/weapon/bikehorn),//11
 					 )
 
-	action(atom/used_atom,mob/user as mob)
+	action(atom/used_atom,mob/user)
 		return check_step(used_atom,user)
 
 	custom_action(step, atom/used_atom, mob/user)
@@ -877,7 +877,7 @@
 		qdel(used_atom)
 		return 1
 
-	action(atom/used_atom,mob/user as mob)
+	action(atom/used_atom,mob/user)
 		return check_all_steps(used_atom,user)
 
 	spawn_result()
@@ -975,7 +975,7 @@
 					)
 
 
-	action(atom/used_atom,mob/user as mob)
+	action(atom/used_atom,mob/user)
 		return check_step(used_atom,user)
 
 	custom_action(index, diff, atom/used_atom, mob/user)
@@ -1159,7 +1159,7 @@
 		qdel(used_atom)
 		return 1
 
-	action(atom/used_atom,mob/user as mob)
+	action(atom/used_atom,mob/user)
 		return check_all_steps(used_atom,user)
 
 
@@ -1180,7 +1180,7 @@
 		qdel(used_atom)
 		return 1
 
-	action(atom/used_atom,mob/user as mob)
+	action(atom/used_atom,mob/user)
 		return check_all_steps(used_atom,user)
 
 	spawn_result()
@@ -1254,7 +1254,7 @@
 					 		"desc"="The hydraulic systems are disconnected.")
 					)
 
-	action(atom/used_atom,mob/user as mob)
+	action(atom/used_atom,mob/user)
 		return check_step(used_atom,user)
 
 	custom_action(index, diff, atom/used_atom, mob/user)
@@ -1390,7 +1390,7 @@
 		qdel(used_atom)
 		return 1
 
-	action(atom/used_atom,mob/user as mob)
+	action(atom/used_atom,mob/user)
 		return check_all_steps(used_atom,user)
 
 	spawn_result()
@@ -1488,7 +1488,7 @@
 					)
 
 
-	action(atom/used_atom,mob/user as mob)
+	action(atom/used_atom,mob/user)
 		return check_step(used_atom,user)
 
 	custom_action(index, diff, atom/used_atom, mob/user)
@@ -1670,7 +1670,7 @@
 		qdel(used_atom)
 		return 1
 
-	action(atom/used_atom,mob/user as mob)
+	action(atom/used_atom,mob/user)
 		return check_all_steps(used_atom,user)
 
 	spawn_result()
@@ -1768,7 +1768,7 @@
 					 		"desc"="The hydraulic systems are disconnected.")
 					)
 
-	action(atom/used_atom,mob/user as mob)
+	action(atom/used_atom,mob/user)
 		return check_step(used_atom,user)
 
 	custom_action(index, diff, atom/used_atom, mob/user)

@@ -58,6 +58,12 @@
 
 #define isorgan(A) (istype(A, /datum/organ/external))
 
+// GOONCHAT PORT
+
+#define isatom(A) istype(A, /atom)
+
+#define isclient(A) istype(A, /client)
+
 
 // ASSEMBLY HELPERS
 

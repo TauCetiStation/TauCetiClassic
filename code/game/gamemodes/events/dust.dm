@@ -7,7 +7,7 @@ No command report on the common version of this event.
 The "dust" will damage the hull of the station causin minor hull breaches.
 */
 
-/proc/dust_swarm(var/strength = "weak")
+/proc/dust_swarm(strength = "weak")
 	var/numbers = 1
 	switch(strength)
 		if("weak")

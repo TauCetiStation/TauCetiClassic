@@ -25,22 +25,22 @@
 		flagIndex+=1
 	return Borgwires
 
-/mob/living/silicon/robot/proc/isWireColorCut(var/wireColor)
+/mob/living/silicon/robot/proc/isWireColorCut(wireColor)
 	var/wireFlag = BorgWireColorToFlag[wireColor]
 	return ((src.borgwires & wireFlag) == 0)
 
-/mob/living/silicon/robot/proc/isWireCut(var/wireIndex)
+/mob/living/silicon/robot/proc/isWireCut(wireIndex)
 	var/wireFlag = BorgIndexToFlag[wireIndex]
 	return ((src.borgwires & wireFlag) == 0)
 
-/mob/living/silicon/robot/proc/cut(var/wireColor)
+/mob/living/silicon/robot/proc/cut(wireColor)
 	var/wireFlag = BorgWireColorToFlag[wireColor]
 	var/wireIndex = BorgWireColorToIndex[wireColor]
 	borgwires &= ~wireFlag
 	switch(wireIndex)
 		if(BORG_WIRE_LAWCHECK) //Cut the law wire, and the borg will no longer receive law updates from its AI
 			if (src.lawupdate == 1)
-				src << "LawSync protocol engaged."
+				to_chat(src, "LawSync protocol engaged.")
 				src.show_laws()
 		if (BORG_WIRE_AI_CONTROL) //Cut the AI wire to reset AI control
 			if (src.connected_ai)
@@ -52,7 +52,7 @@
 
 	src.interact(usr)
 
-/mob/living/silicon/robot/proc/mend(var/wireColor)
+/mob/living/silicon/robot/proc/mend(wireColor)
 	var/wireFlag = BorgWireColorToFlag[wireColor]
 	var/wireIndex = BorgWireColorToIndex[wireColor]
 	borgwires |= wireFlag
@@ -68,7 +68,7 @@
 	src.interact(usr)
 
 
-/mob/living/silicon/robot/proc/pulse(var/wireColor)
+/mob/living/silicon/robot/proc/pulse(wireColor)
 	var/wireIndex = BorgWireColorToIndex[wireColor]
 	switch(wireIndex)
 		if(BORG_WIRE_LAWCHECK)	//Forces a law update if the borg is set to receive them. Since an update would happen when the borg checks its laws anyway, not much use, but eh
@@ -83,8 +83,8 @@
 		if (BORG_WIRE_CAMERA)
 			if(!isnull(src.camera) && src.camera.status && !scrambledcodes)
 				src.camera.deactivate(usr, 0) // Kick anyone watching the Cyborg's camera, doesn't display you disconnecting the camera.
-				usr << "[src]'s camera lens focuses loudly."
-				src << "Your camera lens focuses loudly."
+				to_chat(usr, "[src]'s camera lens focuses loudly.")
+				to_chat(src, "Your camera lens focuses loudly.")
 
 	src.interact(usr)
 
@@ -121,7 +121,7 @@
 		if (href_list["borgwires"])
 			var/t1 = text2num(href_list["borgwires"])
 			if (!( istype(usr.get_active_hand(), /obj/item/weapon/wirecutters) ))
-				usr << "You need wirecutters!"
+				to_chat(usr, "You need wirecutters!")
 				return
 			if (src.isWireColorCut(t1))
 				src.mend(t1)
@@ -130,10 +130,10 @@
 		else if (href_list["pulse"])
 			var/t1 = text2num(href_list["pulse"])
 			if (!istype(usr.get_active_hand(), /obj/item/device/multitool))
-				usr << "You need a multitool!"
+				to_chat(usr, "You need a multitool!")
 				return
 			if (src.isWireColorCut(t1))
-				usr << "You can't pulse a cut wire."
+				to_chat(usr, "You can't pulse a cut wire.")
 				return
 			else
 				src.pulse(t1)

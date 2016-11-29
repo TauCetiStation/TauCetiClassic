@@ -91,7 +91,7 @@
 	else
 		return ..()
 
-/mob/living/simple_animal/mouse/get_scooped(var/mob/living/carbon/grabber)
+/mob/living/simple_animal/mouse/get_scooped(mob/living/carbon/grabber)
 	if (stat >= DEAD)
 		return
 	..()
@@ -104,19 +104,19 @@
 
 	if (layer != TURF_LAYER+0.2)
 		layer = TURF_LAYER+0.2
-		src << text("\blue You are now hiding.")
+		to_chat(src, text("\blue You are now hiding."))
 		/*
 		for(var/mob/O in oviewers(src, null))
 			if ((O.client && !( O.blinded )))
-				O << text("<B>[] scurries to the ground!</B>", src)
+				to_chat(O, text("<B>[] scurries to the ground!</B>", src))
 		*/
 	else
 		layer = MOB_LAYER
-		src << text("\blue You have stopped hiding.")
+		to_chat(src, text("\blue You have stopped hiding."))
 		/*
 		for(var/mob/O in oviewers(src, null))
 			if ((O.client && !( O.blinded )))
-				O << text("[] slowly peaks up from the ground...", src)
+				to_chat(O, text("[] slowly peaks up from the ground...", src))
 		*/
 
 //make mice fit under tables etc? this was hacky, and not working
@@ -142,15 +142,15 @@
 ///mob/living/simple_animal/mouse/restrained() //Hotfix to stop mice from doing things with MouseDrop
 //	return 1
 
-/mob/living/simple_animal/mouse/start_pulling(var/atom/movable/AM)//Prevents mouse from pulling things
-	src << "<span class='warning'>You are too small to pull anything.</span>"
+/mob/living/simple_animal/mouse/start_pulling(atom/movable/AM)//Prevents mouse from pulling things
+	to_chat(src, "<span class='warning'>You are too small to pull anything.</span>")
 	return
 
 /mob/living/simple_animal/mouse/Crossed(AM as mob|obj)
 	if( ishuman(AM) )
 		if(!stat)
 			var/mob/M = AM
-			M << "\blue \icon[src] Squeek!"
+			to_chat(M, "\blue [bicon(src)] Squeek!")
 			M << 'sound/effects/mousesqueek.ogg'
 	..()
 

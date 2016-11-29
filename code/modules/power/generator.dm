@@ -113,10 +113,10 @@
 	if(stat & (BROKEN|NOPOWER)) return
 	interact(user)
 
-/obj/machinery/power/generator/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/machinery/power/generator/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/wrench))
 		anchored = !anchored
-		user << "\blue You [anchored ? "secure" : "unsecure"] the bolts holding [src] to the floor."
+		to_chat(user, "\blue You [anchored ? "secure" : "unsecure"] the bolts holding [src] to the floor.")
 		use_power = anchored
 		reconnect()
 	else
@@ -130,7 +130,7 @@
 
 /obj/machinery/power/generator/interact(mob/user)
 	if ( (get_dist(src, user) > 1 ) && (!istype(user, /mob/living/silicon/ai)))
-		user.unset_machine()
+		user.unset_machine(src)
 		user << browse(null, "window=teg")
 		return
 
@@ -167,14 +167,16 @@
 
 
 /obj/machinery/power/generator/Topic(href, href_list)
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	if( href_list["close"] )
 		usr << browse(null, "window=teg")
 		usr.unset_machine()
-		return 0
+		return FALSE
 
 	updateDialog()
-	return 1
 
 
 /obj/machinery/power/generator/power_change()

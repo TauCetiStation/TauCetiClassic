@@ -79,7 +79,7 @@ Implants;
 /obj/item/toy/syndicateballoon:10:For showing that You Are The BOSS (Useless Balloon);"}
 
 /datum/game_mode/proc/announce() //to be calles when round starts
-	world << "<B>Notice</B>: [src] did not define announce()"
+	to_chat(world, "<B>Notice</B>: [src] did not define announce()")
 
 
 ///can_start()
@@ -255,10 +255,10 @@ Implants;
 				var/extra = 4
 				suplink.uses += extra
 				if(man.mind) man.mind.total_TC += extra
-				man << "\red We have received notice that enemy intelligence suspects you to be linked with us. We have thus invested significant resources to increase your uplink's capacity."
+				to_chat(man, "\red We have received notice that enemy intelligence suspects you to be linked with us. We have thus invested significant resources to increase your uplink's capacity.")
 			else
 				// Give them a warning!
-				man << "\red They are on to you!"
+				to_chat(man, "\red They are on to you!")
 
 		// Some poor people who were just in the wrong place at the wrong time..
 		else if(prob(10))
@@ -288,7 +288,7 @@ Implants;
 		set_security_level(SEC_LEVEL_BLUE)*/
 
 
-/datum/game_mode/proc/get_players_for_role(var/role)
+/datum/game_mode/proc/get_players_for_role(role)
 	var/list/players = list()
 	var/list/candidates = list()
 
@@ -321,10 +321,10 @@ Implants;
 							//			Less if there are not enough valid players in the game entirely to make recommended_enemies.
 
 
-/datum/game_mode/proc/latespawn(var/mob)
+/datum/game_mode/proc/latespawn(mob)
 
 /*
-/datum/game_mode/proc/check_player_role_pref(var/role, var/mob/new_player/player)
+/datum/game_mode/proc/check_player_role_pref(role, mob/new_player/player)
 	if(player.preferences.be_role & role)
 		return 1
 	return 0
@@ -418,7 +418,7 @@ proc/display_roundstart_logout_report()
 
 	for(var/mob/M in mob_list)
 		if(M.client && M.client.holder)
-			M << msg
+			to_chat(M, msg)
 
 
 proc/get_nt_opposed()
@@ -436,7 +436,7 @@ proc/get_nt_opposed()
 //Misc stuff and TG ports//
 ///////////////////////////
 
-/datum/game_mode/proc/printplayer(var/datum/mind/ply)
+/datum/game_mode/proc/printplayer(datum/mind/ply)
 	var/role = "[ply.special_role]"
 	var/text = "<br><b>[ply.name]</b>(<b>[ply.key]</b>) as \a <b>[role]</b> ("
 	if(ply.current)

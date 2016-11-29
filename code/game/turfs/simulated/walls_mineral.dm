@@ -70,15 +70,15 @@
 			return
 	return
 
-/turf/simulated/wall/mineral/uranium/attack_hand(mob/user as mob)
+/turf/simulated/wall/mineral/uranium/attack_hand(mob/user)
 	radiate()
 	..()
 
-/turf/simulated/wall/mineral/uranium/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/turf/simulated/wall/mineral/uranium/attackby(obj/item/weapon/W, mob/user)
 	radiate()
 	..()
 
-/turf/simulated/wall/mineral/uranium/Bumped(AM as mob|obj)
+/turf/simulated/wall/mineral/uranium/Bumped(AM)
 	radiate()
 	..()
 
@@ -90,7 +90,7 @@
 	mineral = "phoron"
 	sheet_type = /obj/item/stack/sheet/mineral/phoron
 
-/turf/simulated/wall/mineral/phoron/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/turf/simulated/wall/mineral/phoron/attackby(obj/item/weapon/W, mob/user)
 	if(is_hot(W) > 300)//If the temperature of the object is over 300, then ignite
 		ignite(is_hot(W))
 		return
@@ -126,7 +126,7 @@
 	if(exposed_temperature > 300)
 		PhoronBurn(exposed_temperature)
 
-/turf/simulated/wall/mineral/phoron/bullet_act(var/obj/item/projectile/Proj)
+/turf/simulated/wall/mineral/phoron/bullet_act(obj/item/projectile/Proj)
 	if(istype(Proj,/obj/item/projectile/beam))
 		PhoronBurn(2500)
 	else if(istype(Proj,/obj/item/projectile/ion))
@@ -143,7 +143,7 @@
 	else
 		return 0
 
-/turf/simulated/wall/mineral/proc/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/turf/simulated/wall/mineral/proc/attackby(obj/item/weapon/W, mob/user)
 	if((mineral == "gold") || (mineral == "silver"))
 		if(shocked)
 			shock()

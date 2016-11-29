@@ -71,7 +71,7 @@
 *   Item Adding
 ********************/
 
-/obj/machinery/microwave/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/obj/machinery/microwave/attackby(obj/item/O, mob/user)
 	if(operating)
 		return
 	if(!broken && dirty<100)
@@ -112,7 +112,7 @@
 				src.flags = OPENCONTAINER
 				return 0 //to use some fuel
 		else
-			user << "\red It's broken!"
+			to_chat(user, "\red It's broken!")
 			return 1
 	else if(istype(O, /obj/item/weapon/reagent_containers/spray/))
 		var/obj/item/weapon/reagent_containers/spray/clean_spray = O
@@ -130,7 +130,7 @@
 			src.updateUsrDialog()
 			return 1 // Disables the after-attack so we don't spray the floor/user.
 		else
-			user << "\red You need more space cleaner!"
+			to_chat(user, "\red You need more space cleaner!")
 			return 1
 
 	else if(istype(O, /obj/item/weapon/soap/)) // If they're trying to clean it then let them
@@ -148,11 +148,11 @@
 			src.icon_state = "mw"
 			src.flags = OPENCONTAINER
 	else if(src.dirty==100) // The microwave is all dirty so can't be used!
-		user << "\red It's dirty!"
+		to_chat(user, "\red It's dirty!")
 		return 1
 	else if(is_type_in_list(O,acceptable_items))
 		if (contents.len>=max_n_of_items)
-			user << "\red This [src] is full of ingredients, you cannot put more."
+			to_chat(user, "\red This [src] is full of ingredients, you cannot put more.")
 			return 1
 		if (istype(O,/obj/item/stack) && O:amount>1)
 			new O.type (src)
@@ -175,25 +175,25 @@
 			return 1
 		for (var/datum/reagent/R in O.reagents.reagent_list)
 			if (!(R.id in acceptable_reagents))
-				user << "\red Your [O] contains components unsuitable for cookery."
+				to_chat(user, "\red Your [O] contains components unsuitable for cookery.")
 				return 1
 		//G.reagents.trans_to(src,G.amount_per_transfer_from_this)
 	else if(istype(O,/obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = O
-		user << "\red This is ridiculous. You can not fit \the [G.affecting] in this [src]."
+		to_chat(user, "\red This is ridiculous. You can not fit \the [G.affecting] in this [src].")
 		return 1
 	else
-		user << "\red You have no idea what you can cook with this [O]."
+		to_chat(user, "\red You have no idea what you can cook with this [O].")
 		return 1
 	src.updateUsrDialog()
 
-/obj/machinery/microwave/attack_paw(mob/user as mob)
+/obj/machinery/microwave/attack_paw(mob/user)
 	return src.attack_hand(user)
 
-/obj/machinery/microwave/attack_ai(mob/user as mob)
+/obj/machinery/microwave/attack_ai(mob/user)
 	return 0
 
-/obj/machinery/microwave/attack_hand(mob/user as mob)
+/obj/machinery/microwave/attack_hand(mob/user)
 	user.set_machine(src)
 	interact(user)
 
@@ -201,7 +201,7 @@
 *   Microwave Menu
 ********************/
 
-/obj/machinery/microwave/interact(mob/user as mob) // The microwave Menu
+/obj/machinery/microwave/interact(mob/user) // The microwave Menu
 	if(panel_open)
 		return
 	var/dat = "<div class='statusDisplay'>"
@@ -328,7 +328,7 @@
 		score["meals"]++
 		return
 
-/obj/machinery/microwave/proc/wzhzhzh(var/seconds as num)
+/obj/machinery/microwave/proc/wzhzhzh(seconds)
 	for (var/i=1 to seconds)
 		if (stat & (NOPOWER|BROKEN))
 			return 0
@@ -368,7 +368,7 @@
 	if (src.reagents.total_volume)
 		src.dirty++
 	src.reagents.clear_reagents()
-	usr << "\blue You dispose of the microwave contents."
+	to_chat(usr, "\blue You dispose of the microwave contents.")
 	src.updateUsrDialog()
 
 /obj/machinery/microwave/proc/muck_start()
@@ -411,10 +411,10 @@
 	return ffuu
 
 /obj/machinery/microwave/Topic(href, href_list)
-	if(..() || panel_open)
-		return
+	. = ..()
+	if(!. || panel_open)
+		return FALSE
 
-	usr.set_machine(src)
 	if(src.operating)
 		updateUsrDialog()
 		return
@@ -426,4 +426,3 @@
 		if ("dispose")
 			dispose()
 	updateUsrDialog()
-	return

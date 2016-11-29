@@ -7,7 +7,7 @@
 		var/obj/item/I = H.get_active_hand()
 		var/obj/item/weapon/storage/S = H.get_inactive_hand()
 		if(!I)
-			H << "<span class='notice'>You are not holding anything to equip.</span>"
+			to_chat(H, "<span class='notice'>You are not holding anything to equip.</span>")
 			return
 
 	//	if(istype(I, /obj/item/clothing/head/helmet/space/rig)) // If the item to be equipped is a rigid suit helmet
@@ -16,7 +16,7 @@
 
 		if(istype(I, /obj/item/clothing/suit/space)) // If the item to be equipped is a space suit
 			if(H.wear_suit)
-				H << "<span class='warning'>You need to take off [H.wear_suit.name] first.</span>"
+				to_chat(H, "<span class='warning'>You need to take off [H.wear_suit.name] first.</span>")
 				return
 			else
 				var/obj/item/clothing/suit/space/rig/J = I
@@ -44,7 +44,7 @@
 				if(istype(S, /obj/item/weapon/storage) && S.can_be_inserted(I,1))
 					S.handle_item_insertion(I)
 				else
-					H << "<span class='warning'>You are unable to equip that.</span>"
+					to_chat(H, "<span class='warning'>You are unable to equip that.</span>")
 
 
 
@@ -106,13 +106,24 @@
 		if(slot_in_backpack)
 			return 1
 
-/mob/living/carbon/human/u_equip(obj/W as obj)
+/mob/living/carbon/human/u_equip(obj/W)
 	if(!W)	return 0
 
 	if (W == wear_suit)
 		if(s_store)
 			drop_from_inventory(s_store)
 		wear_suit = null
+		var/update_hair = 0
+		if((W.flags & BLOCKHAIR) || (W.flags & BLOCKHEADHAIR))
+			update_hair = 1
+		else if(istype(W, /obj/item))
+			var/obj/item/I = W
+			if(I.flags_inv & HIDEMASK)
+				update_hair = 1
+		if(update_hair)
+			update_hair()
+			update_inv_ears()
+			update_inv_wear_mask()
 		update_inv_wear_suit()
 	else if (W == w_uniform)
 		if (r_store)
@@ -200,16 +211,13 @@
 	else
 		return 0
 
-	if(lying)
-		drop_from_inventory(W)
-
 	return 1
 
 
 
 //This is an UNSAFE proc. Use mob_can_equip() before calling this one! Or rather use equip_to_slot_if_possible() or advanced_equip_to_slot_if_possible()
 //set redraw_mob to 0 if you don't wish the hud to be updated - if you're doing it manually in your own proc.
-/mob/living/carbon/human/equip_to_slot(obj/item/W as obj, slot, redraw_mob = 1)
+/mob/living/carbon/human/equip_to_slot(obj/item/W, slot, redraw_mob = 1)
 	if(!slot) return
 	if(!istype(W)) return
 	if(!has_organ_for_slot(slot)) return
@@ -288,7 +296,7 @@
 			update_inv_gloves()
 		if(slot_head)
 			src.head = W
-			if((head.flags & BLOCKHAIR) || (head.flags & BLOCKHEADHAIR))
+			if((W.flags & BLOCKHAIR) || (W.flags & BLOCKHEADHAIR))
 				update_hair()	//rebuild hair
 			if(istype(W,/obj/item/clothing/head/kitty))
 				W.update_icon(src)
@@ -300,6 +308,8 @@
 			update_inv_shoes()
 		if(slot_wear_suit)
 			src.wear_suit = W
+			if((W.flags & BLOCKHAIR) || (W.flags & BLOCKHEADHAIR))
+				update_hair()	//rebuild hair
 			W.equipped(src, slot)
 			update_inv_wear_suit()
 		if(slot_w_uniform)
@@ -323,7 +333,7 @@
 				src.remove_from_mob(W)
 			W.loc = src.back
 		else
-			src << "<span class='warning'>You are trying to eqip this item to an unsupported inventory slot. How the heck did you manage that? Stop it...</span>"
+			to_chat(src, "<span class='warning'>You are trying to eqip this item to an unsupported inventory slot. How the heck did you manage that? Stop it...</span>")
 			return
 
 	W.layer = 20
@@ -604,7 +614,7 @@
 				source.attack_log += text("\[[time_stamp()]\] <font color='red'>Attempted to toggle [target.name]'s ([target.ckey]) sensors</font>")
 				var/obj/item/clothing/under/suit = target.w_uniform
 				if (suit.has_sensor >= 2)
-					source << "The controls are locked."
+					to_chat(source, "The controls are locked.")
 					return
 				message = "<span class='danger'>[source] is trying to set [target]'s suit sensors!</span>"
 
@@ -727,7 +737,7 @@ It can still be worn/put on as normal.
 						grabbing = 1
 				if (!grabbing)
 					slot_to_process = null
-					source << "<span class='warning'>Your grasp was broken before you could restrain [target]!</span>"
+					to_chat(source, "<span class='warning'>Your grasp was broken before you could restrain [target]!</span>")
 
 		if("legcuff")
 			slot_to_process = slot_legcuffed
@@ -751,8 +761,8 @@ It can still be worn/put on as normal.
 				target.updatehealth()
 				for(var/mob/O in viewers(source, null))
 					O.show_message("<span class='warning'>[source] performs CPR on [target]!</span>", 1)
-				target << "<span class='notice'>You feel a breath of fresh air enter your lungs. It feels good.</span>"
-				source << "<span class='warning'>Repeat at least every 7 seconds.</span>"
+				to_chat(target, "<span class='notice'>You feel a breath of fresh air enter your lungs. It feels good.</span>")
+				to_chat(source, "<span class='warning'>Repeat at least every 7 seconds.</span>")
 		if("dnainjector")
 			var/obj/item/weapon/dnainjector/S = item
 			if(S)
@@ -780,7 +790,7 @@ It can still be worn/put on as normal.
 			var/obj/item/clothing/under/suit = target.w_uniform
 			if (suit)
 				if(suit.has_sensor >= 2)
-					source << "<span class='notice'>The controls are locked.</span>"
+					to_chat(source, "<span class='notice'>The controls are locked.</span>")
 				else
 					suit.set_sensors(source)
 		if("internal")

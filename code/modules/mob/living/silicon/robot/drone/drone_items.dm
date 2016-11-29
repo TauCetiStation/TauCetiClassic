@@ -41,7 +41,7 @@
 		/obj/item/weapon/card/id
 		)
 
-/obj/item/weapon/gripper/attack_self(mob/user as mob)
+/obj/item/weapon/gripper/attack_self(mob/user)
 	if(wrapped)
 		wrapped.attack_self(user)
 
@@ -61,15 +61,15 @@
 		wrapped = null
 		return
 
-	src.loc << "\red You drop \the [wrapped]."
+	to_chat(src.loc, "\red You drop \the [wrapped].")
 	wrapped.loc = get_turf(src)
 	wrapped = null
 	//update_icon()
 
-/obj/item/weapon/gripper/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+/obj/item/weapon/gripper/attack(mob/living/carbon/M, mob/living/carbon/user)
 	return
 
-/obj/item/weapon/gripper/afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, flag, params)
+/obj/item/weapon/gripper/afterattack(atom/target, mob/living/user, flag, params)
 
 	if(!target || !flag) //Target is invalid or we are not adjacent.
 		return
@@ -115,12 +115,12 @@
 
 		//We can grab the item, finally.
 		if(grab)
-			user << "You collect \the [I]."
+			to_chat(user, "You collect \the [I].")
 			I.loc = src
 			wrapped = I
 			return
 		else
-			user << "\red Your gripper cannot hold \the [target]."
+			to_chat(user, "\red Your gripper cannot hold \the [target].")
 
 	else if(istype(target,/obj/machinery/power/apc))
 		var/obj/machinery/power/apc/A = target
@@ -155,10 +155,10 @@
 		"plastic" = 0
 		)
 
-/obj/item/weapon/matter_decompiler/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+/obj/item/weapon/matter_decompiler/attack(mob/living/carbon/M, mob/living/carbon/user)
 	return
 
-/obj/item/weapon/matter_decompiler/afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, flag, params)
+/obj/item/weapon/matter_decompiler/afterattack(atom/target, mob/living/user, flag, params)
 
 	if(!flag) return //Not adjacent.
 
@@ -188,15 +188,15 @@
 			if(!istype(D))
 				return
 
-			D << "\red You begin decompiling the other drone."
+			to_chat(D, "\red You begin decompiling the other drone.")
 
 			if(!do_after(D,50,target = M))
-				D << "\red You need to remain still while decompiling such a large object."
+				to_chat(D, "\red You need to remain still while decompiling such a large object.")
 				return
 
 			if(!M || !D) return
 
-			D << "\red You carefully and thoroughly decompile your downed fellow, storing as much of its resources as you can within yourself."
+			to_chat(D, "\red You carefully and thoroughly decompile your downed fellow, storing as much of its resources as you can within yourself.")
 
 			qdel(M)
 			new/obj/effect/decal/cleanable/blood/oil(get_turf(src))
@@ -264,16 +264,16 @@
 		grabbed_something = 1
 
 	if(grabbed_something)
-		user << "\blue You deploy your decompiler and clear out the contents of \the [T]."
+		to_chat(user, "\blue You deploy your decompiler and clear out the contents of \the [T].")
 	else
-		user << "\red Nothing on \the [T] is useful to you."
+		to_chat(user, "\red Nothing on \the [T] is useful to you.")
 	return
 
 //PRETTIER TOOL LIST.
 /mob/living/silicon/robot/drone/installed_modules()
 
 	if(weapon_lock)
-		src << "\red Weapon lock active, unable to use modules! Count:[weaponlock_time]"
+		to_chat(src, "\red Weapon lock active, unable to use modules! Count:[weaponlock_time]")
 		return
 
 	if(!module)

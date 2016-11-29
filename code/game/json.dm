@@ -38,7 +38,7 @@ proc/makejson()
 				players += "[C.fakekey];"
 		else
 			players += "[C.key];"
-	F << "{\"mode\":\"[mode]\",\"players\" : \"[players]\",\"playercount\" : \"[playerscount]\",\"admin\" : \"[admins]\",\"time\" : \"[time2text(world.realtime,"MM/DD - hh:mm")]\"}"
+	to_chat(F, "{\"mode\":\"[mode]\",\"players\" : \"[players]\",\"playercount\" : \"[playerscount]\",\"admin\" : \"[admins]\",\"time\" : \"[time2text(world.realtime,"MM/DD - hh:mm")]\"}")
 	fcopy("info.json","[jsonpath]/info.json")
 
 /proc/switchmap(newmap,newpath)
@@ -73,10 +73,10 @@ proc/makejson()
 		if(findtext(A,path,1,0))
 			lineloc = lines.Find(A,1,0)
 			lines[lineloc] = xpath
-			world << "FOUND"*/
+			to_chat(world, "FOUND")*/
 	fdel(dmepath)
 	var/file = file(dmepath)
-	file << text
+	to_chat(file, text)
 	message_admins("Compiling...")
 	shell("./recompile")
 	message_admins("Done")
@@ -91,10 +91,10 @@ proc/GetMapInfo()
 //	Just removing these to try and fix the occasional JSON -> WORLD issue.
 //	world << M.name
 //	world << M.mapname
-client/proc/ChangeMap(var/X as text)
+client/proc/ChangeMap(X as text)
 	set name = "Change Map"
 	set category  = "Admin"
 	switchmap(X,X)
 proc/send2adminirc(channel,msg)
-	world << channel << " "<< msg
+	to_chat(world, channel << " " << msg)
 	shell("python nudge.py '[channel]' [msg]")

@@ -6,7 +6,7 @@
 	if(..()) return
 	var/turf/T = get_turf(src)
 	if (!T || !(T.z in config.player_levels))
-		usr << "<span class='warning'>Unable to establish a connection<span>: You're too far away from the station!"
+		to_chat(usr, "<span class='warning'>Unable to establish a connection<span>: You're too far away from the station!")
 		return 0
 	if(href_list["close"] )
 		var/mob/user = usr
@@ -18,7 +18,7 @@
 		src.updateDialog()
 		return 1
 
-/obj/nano_module/crew_monitor/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null, var/force_open = 1)
+/obj/nano_module/crew_monitor/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1)
 	user.set_machine(src)
 	src.scan()
 

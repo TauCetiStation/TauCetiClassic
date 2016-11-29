@@ -164,19 +164,19 @@ obj/structure/sign/poster/New(var/serial, var/rolled_official)
 		desc += legitposters[serial_number][POSTERDESC]
 	..()
 
-obj/structure/sign/poster/attackby(obj/item/weapon/W as obj, mob/user as mob)
+obj/structure/sign/poster/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/wirecutters))
 		playsound(loc, 'sound/items/Wirecutter.ogg', 100, 1)
 		if(ruined)
-			user << "<span class='notice'>You remove the remnants of the poster.</span>"
+			to_chat(user, "<span class='notice'>You remove the remnants of the poster.</span>")
 			qdel(src)
 		else
-			user << "<span class='notice'>You carefully remove the poster from the wall.</span>"
+			to_chat(user, "<span class='notice'>You carefully remove the poster from the wall.</span>")
 			roll_and_drop(user.loc, official)
 		return
 
 
-/obj/structure/sign/poster/attack_hand(mob/user as mob)
+/obj/structure/sign/poster/attack_hand(mob/user)
 	if(ruined)
 		return
 	var/temp_loc = user.loc
@@ -207,24 +207,24 @@ obj/structure/sign/poster/attackby(obj/item/weapon/W as obj, mob/user as mob)
 		src.loc = P
 
 //separated to reduce code duplication. Moved here for ease of reference and to unclutter r_wall/attackby()
-/turf/simulated/wall/proc/place_poster(var/obj/item/weapon/poster/P, var/mob/user)
+/turf/simulated/wall/proc/place_poster(obj/item/weapon/poster/P, mob/user)
 	if(!P.resulting_poster)	return
 
 	if(!istype(src,/turf/simulated/wall))
-		user << "<span class='red'> You can't place this here!</span>"
+		to_chat(user, "<span class='red'> You can't place this here!</span>")
 		return
 
 	var/stuff_on_wall = 0
 	for(var/obj/O in contents) //Let's see if it already has a poster on it or too much stuff
 		if(istype(O,/obj/structure/sign/poster))
-			user << "<span class='notice'>The wall is far too cluttered to place a poster!</span>"
+			to_chat(user, "<span class='notice'>The wall is far too cluttered to place a poster!</span>")
 			return
 		stuff_on_wall++
 		if(stuff_on_wall == 3)
-			user << "<span class='notice'>The wall is far too cluttered to place a poster!</span>"
+			to_chat(user, "<span class='notice'>The wall is far too cluttered to place a poster!</span>")
 			return
 
-	user << "<span class='notice'>You start placing the poster on the wall...</span>" //Looks like it's uncluttered enough. Place the poster.
+	to_chat(user, "<span class='notice'>You start placing the poster on the wall...</span>")//Looks like it's uncluttered enough. Place the poster.
 
 	//declaring D because otherwise if P gets 'deconstructed' we lose our reference to P.resulting_poster
 //	var/obj/structure/sign/poster/D = new(P.serial_number)
@@ -242,7 +242,7 @@ obj/structure/sign/poster/attackby(obj/item/weapon/W as obj, mob/user as mob)
 		if(!D)	return
 
 		if(istype(src,/turf/simulated/wall) && user && user.loc == temp_loc)//Let's check if everything is still there
-			user << "<span class='notice'>You place the poster!</span>"
+			to_chat(user, "<span class='notice'>You place the poster!</span>")
 		else
 			D.roll_and_drop(temp_loc,D.official)
 		return

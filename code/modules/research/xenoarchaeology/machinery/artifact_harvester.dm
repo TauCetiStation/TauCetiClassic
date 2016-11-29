@@ -21,25 +21,25 @@
 	if(!owned_scanner)
 		owned_scanner = locate(/obj/machinery/artifact_scanpad) in orange(1, src)
 
-/obj/machinery/artifact_harvester/attackby(var/obj/I as obj, var/mob/user as mob)
+/obj/machinery/artifact_harvester/attackby(obj/I, mob/user)
 	if(istype(I,/obj/item/weapon/anobattery))
 		if(!inserted_battery)
-			user << "\blue You insert [I] into [src]."
+			to_chat(user, "\blue You insert [I] into [src].")
 			user.drop_item()
 			I.loc = src
 			src.inserted_battery = I
 			updateDialog()
 		else
-			user << "\red There is already a battery in [src]."
+			to_chat(user, "\red There is already a battery in [src].")
 	else
 		return..()
 
 
-/obj/machinery/artifact_harvester/attack_hand(var/mob/user as mob)
+/obj/machinery/artifact_harvester/attack_hand(mob/user)
 	src.add_fingerprint(user)
 	interact(user)
 
-/obj/machinery/artifact_harvester/interact(var/mob/user as mob)
+/obj/machinery/artifact_harvester/interact(mob/user)
 	if(stat & (NOPOWER|BROKEN))
 		return
 	user.set_machine(src)
@@ -118,6 +118,14 @@
 			icon_state = "incubator"
 
 /obj/machinery/artifact_harvester/Topic(href, href_list)
+	if(href_list["close"])
+		usr.unset_machine(src)
+		usr << browse(null, "window=artharvester")
+		return FALSE
+
+	. = ..()
+	if(!.)
+		return
 
 	if (href_list["harvest"])
 		if(!inserted_battery)
@@ -251,9 +259,5 @@
 		else
 			var/message = "<b>[src]</b> states, \"Cannot dump energy. No battery inserted.\""
 			src.visible_message(message)
-
-	if(href_list["close"])
-		usr.unset_machine(src)
-		usr << browse(null, "window=artharvester")
 
 	updateDialog()

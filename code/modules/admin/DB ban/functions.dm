@@ -1,8 +1,9 @@
 
 //Either pass the mob you wish to ban in the 'banned_mob' attribute, or the banckey, banip and bancid variables. If both are passed, the mob takes priority! If a mob is not passed, banckey is the minimum that needs to be passed! banip and bancid are optional.
-/datum/admins/proc/DB_ban_record(var/bantype, var/mob/banned_mob, var/duration = -1, var/reason, var/job = "", var/rounds = 0, var/banckey = null, var/banip = null, var/bancid = null)
+/datum/admins/proc/DB_ban_record(bantype, mob/banned_mob, duration = -1, reason, job = "", rounds = 0, banckey = null, banip = null, bancid = null)
 
-	if(!check_rights(R_MOD,0) && !check_rights(R_BAN))	return
+	if(!check_rights(R_BAN))
+		return
 
 	establish_db_connection()
 	if(!dbcon.IsConnected())
@@ -51,7 +52,7 @@
 		validckey = 1
 	if(!validckey)
 		if(!banned_mob || (banned_mob && !IsGuestKey(banned_mob.key)))
-			message_admins("<font color='red'>[key_name_admin(usr)] attempted to ban [ckey], but [ckey] has not been seen yet. Please only ban actual players.</font>",1)
+			message_admins("<font color='red'>[key_name_admin(usr)] attempted to ban [ckey], but [ckey] has not been seen yet. Please only ban actual players.</font>")
 			return
 
 	var/a_ckey
@@ -82,13 +83,13 @@
 	var/sql = "INSERT INTO erro_ban (`id`,`bantime`,`serverip`,`bantype`,`reason`,`job`,`duration`,`rounds`,`expiration_time`,`ckey`,`computerid`,`ip`,`a_ckey`,`a_computerid`,`a_ip`,`who`,`adminwho`,`edits`,`unbanned`,`unbanned_datetime`,`unbanned_ckey`,`unbanned_computerid`,`unbanned_ip`) VALUES (null, Now(), '[serverip]', '[bantype_str]', '[reason]', '[job]', [(duration)?"[duration]":"0"], [(rounds)?"[rounds]":"0"], Now() + INTERVAL [(duration>0) ? duration : 0] MINUTE, '[ckey]', '[computerid]', '[ip]', '[a_ckey]', '[a_computerid]', '[a_ip]', '[who]', '[adminwho]', '', null, null, null, null, null)"
 	var/DBQuery/query_insert = dbcon.NewQuery(sql)
 	query_insert.Execute()
-	usr << "\blue Ban saved to database."
-	message_admins("[key_name_admin(usr)] has added a [bantype_str] for [ckey] [(job)?"([job])":""] [(duration > 0)?"([duration] minutes)":""] with the reason: \"[reason]\" to the ban database.",1)
-	send2slack_logs(key_name(usr), "has added a [bantype_str] for [ckey] [(job)?"([job])":""] [(duration > 0)?"([duration] minutes)":""] with the reason: \"[reason]\" to the ban database.", "(BAN)")
+	to_chat(usr, "\blue Ban saved to database.")
+	message_admins("[key_name_admin(usr)] has added a [bantype_str] for [ckey] [(job)?"([job])":""] [(duration > 0)?"([duration] minutes)":""] with the reason: \"[reason]\" to the ban database.")
+	send2slack_logs(key_name(usr), text("has added a [] for [] [] [] with the reason: [] to the ban database.", bantype_str, ckey, (job ? "([job])" : ""), (duration > 0 ? "([duration] minutes)" : ""), text("[reason]")), "(BAN)")
 
 
 
-/datum/admins/proc/DB_ban_unban(var/ckey, var/bantype, var/job = "")
+/datum/admins/proc/DB_ban_unban(ckey, bantype, job = "")
 
 	if(!check_rights(R_BAN))	return
 
@@ -142,27 +143,27 @@
 		ban_number++;
 
 	if(ban_number == 0)
-		usr << "\red Database update failed due to no bans fitting the search criteria. If this is not a legacy ban you should contact the database admin."
+		to_chat(usr, "\red Database update failed due to no bans fitting the search criteria. If this is not a legacy ban you should contact the database admin.")
 		return
 
 	if(ban_number > 1)
-		usr << "\red Database update failed due to multiple bans fitting the search criteria. Note down the ckey, job and current time and contact the database admin."
+		to_chat(usr, "\red Database update failed due to multiple bans fitting the search criteria. Note down the ckey, job and current time and contact the database admin.")
 		return
 
 	if(istext(ban_id))
 		ban_id = text2num(ban_id)
 	if(!isnum(ban_id))
-		usr << "\red Database update failed due to a ban ID mismatch. Contact the database admin."
+		to_chat(usr, "\red Database update failed due to a ban ID mismatch. Contact the database admin.")
 		return
 
 	DB_ban_unban_by_id(ban_id)
 
-/datum/admins/proc/DB_ban_edit(var/banid = null, var/param = null)
+/datum/admins/proc/DB_ban_edit(banid = null, param = null)
 
 	if(!check_rights(R_BAN))	return
 
 	if(!isnum(banid) || !istext(param))
-		usr << "Cancelled"
+		to_chat(usr, "Cancelled")
 		return
 
 	var/DBQuery/query = dbcon.NewQuery("SELECT ckey, duration, reason FROM erro_ban WHERE id = [banid]")
@@ -178,7 +179,7 @@
 		duration = query.item[2]
 		reason = query.item[3]
 	else
-		usr << "Invalid ban id. Contact the database admin"
+		to_chat(usr, "Invalid ban id. Contact the database admin")
 		return
 
 	reason = sql_sanitize_text(reason)
@@ -190,22 +191,22 @@
 				value = input("Insert the new reason for [pckey]'s ban", "New Reason", "[reason]", null) as null|text
 				value = sql_sanitize_text(value)
 				if(!value)
-					usr << "Cancelled"
+					to_chat(usr, "Cancelled")
 					return
 
 			var/DBQuery/update_query = dbcon.NewQuery("UPDATE erro_ban SET reason = '[value]', edits = CONCAT(edits,'- [eckey] changed ban reason from <cite><b>\\\"[reason]\\\"</b></cite> to <cite><b>\\\"[value]\\\"</b></cite><BR>') WHERE id = [banid]")
 			update_query.Execute()
-			message_admins("[key_name_admin(usr)] has edited a ban for [pckey]'s reason from [reason] to [value]",1)
+			message_admins("[key_name_admin(usr)] has edited a ban for [pckey]'s reason from [reason] to [value]")
 			send2slack_logs(key_name(usr), "has edited a ban for [pckey]'s reason from [reason] to [value]", "(BANEDIT)")
 		if("duration")
 			if(!value)
 				value = input("Insert the new duration (in minutes) for [pckey]'s ban", "New Duration", "[duration]", null) as null|num
 				if(!isnum(value) || !value)
-					usr << "Cancelled"
+					to_chat(usr, "Cancelled")
 					return
 
 			var/DBQuery/update_query = dbcon.NewQuery("UPDATE erro_ban SET duration = [value], edits = CONCAT(edits,'- [eckey] changed ban duration from [duration] to [value]<br>'), expiration_time = DATE_ADD(bantime, INTERVAL [value] MINUTE) WHERE id = [banid]")
-			message_admins("[key_name_admin(usr)] has edited a ban for [pckey]'s duration from [duration] to [value]",1)
+			message_admins("[key_name_admin(usr)] has edited a ban for [pckey]'s duration from [duration] to [value]")
 			send2slack_logs(key_name(usr), "has edited a ban for [pckey]'s duration from [duration] to [value]", "(BANEDIT)")
 			update_query.Execute()
 		if("unban")
@@ -213,13 +214,13 @@
 				DB_ban_unban_by_id(banid)
 				return
 			else
-				usr << "Cancelled"
+				to_chat(usr, "Cancelled")
 				return
 		else
-			usr << "Cancelled"
+			to_chat(usr, "Cancelled")
 			return
 
-/datum/admins/proc/DB_ban_unban_by_id(var/id)
+/datum/admins/proc/DB_ban_unban_by_id(id)
 
 	if(!check_rights(R_BAN))	return
 
@@ -239,11 +240,11 @@
 		ban_number++;
 
 	if(ban_number == 0)
-		usr << "\red Database update failed due to a ban id not being present in the database."
+		to_chat(usr, "\red Database update failed due to a ban id not being present in the database.")
 		return
 
 	if(ban_number > 1)
-		usr << "\red Database update failed due to multiple bans having the same ID. Contact the database admin."
+		to_chat(usr, "\red Database update failed due to multiple bans having the same ID. Contact the database admin.")
 		return
 
 	if(!src.owner || !istype(src.owner, /client))
@@ -254,7 +255,7 @@
 	var/unban_ip = src.owner:address
 
 	var/sql_update = "UPDATE erro_ban SET unbanned = 1, unbanned_datetime = Now(), unbanned_ckey = '[unban_ckey]', unbanned_computerid = '[unban_computerid]', unbanned_ip = '[unban_ip]' WHERE id = [id]"
-	message_admins("[key_name_admin(usr)] has lifted [pckey]'s ban.",1)
+	message_admins("[key_name_admin(usr)] has lifted [pckey]'s ban.")
 	send2slack_logs(key_name(usr), "has lifted [pckey]'s ban.", "(UNBAN)")
 
 	var/DBQuery/query_update = dbcon.NewQuery(sql_update)
@@ -272,7 +273,7 @@
 	holder.DB_ban_panel()
 
 
-/datum/admins/proc/DB_ban_panel(var/playerckey = null, var/adminckey = null, var/playerip = null, var/playercid = null, var/dbbantype = null, var/match = null)
+/datum/admins/proc/DB_ban_panel(playerckey = null, adminckey = null, playerip = null, playercid = null, dbbantype = null, match = null)
 	if(!usr.client)
 		return
 
@@ -280,7 +281,7 @@
 
 	establish_db_connection()
 	if(!dbcon.IsConnected())
-		usr << "\red Failed to establish database connection"
+		to_chat(usr, "\red Failed to establish database connection")
 		return
 
 	var/output = "<div align='center'><table width='90%'><tr>"
@@ -448,7 +449,7 @@
 				output += "</tr>"
 				output += "<tr bgcolor='[dcolor]'>"
 				output += "<td align='center' colspan='2' bgcolor=''><b>IP:</b> [ip]</td>"
-				output += "<td align='center' colspan='3' bgcolor=''><b>CIP:</b> [cid]</td>"
+				output += "<td align='center' colspan='3' bgcolor=''><b>CID:</b> [cid]</td>"
 				output += "</tr>"
 				output += "<tr bgcolor='[lcolor]'>"
 				output += "<td align='center' colspan='5'><b>Reason: [(unbanned) ? "" : "(<a href=\"byond://?src=\ref[src];dbbanedit=reason;dbbanid=[banid]\">Edit</a>)"]</b> <cite>\"[reason]\"</cite></td>"
@@ -473,7 +474,7 @@
 	usr << browse(output,"window=lookupbans;size=900x700")
 
 //Version of DB_ban_record that can be used without holder.
-/proc/DB_ban_record_2(var/bantype, var/mob/banned_mob, var/duration = -1, var/reason, var/job = "", var/rounds = 0, var/banckey = null, var/banip = null, var/bancid = null)
+/proc/DB_ban_record_2(bantype, mob/banned_mob, duration = -1, reason, job = "", rounds = 0, banckey = null, banip = null, bancid = null)
 	establish_db_connection()
 	if(!dbcon.IsConnected())
 		return
@@ -521,7 +522,7 @@
 		validckey = 1
 	if(!validckey)
 		if(!banned_mob || (banned_mob && !IsGuestKey(banned_mob.key)))
-			message_admins("<font color='red'>Tau Kitty attempted to ban [ckey], but [ckey] has not been seen yet. Please only ban actual players.</font>",1)
+			message_admins("<font color='red'>Tau Kitty attempted to ban [ckey], but [ckey] has not been seen yet. Please only ban actual players.</font>")
 			return
 
 	var/a_ckey = "taukitty"
@@ -547,5 +548,5 @@
 	var/sql = "INSERT INTO erro_ban (`id`,`bantime`,`serverip`,`bantype`,`reason`,`job`,`duration`,`rounds`,`expiration_time`,`ckey`,`computerid`,`ip`,`a_ckey`,`a_computerid`,`a_ip`,`who`,`adminwho`,`edits`,`unbanned`,`unbanned_datetime`,`unbanned_ckey`,`unbanned_computerid`,`unbanned_ip`) VALUES (null, Now(), '[serverip]', '[bantype_str]', '[reason]', '[job]', [(duration)?"[duration]":"0"], [(rounds)?"[rounds]":"0"], Now() + INTERVAL [(duration>0) ? duration : 0] MINUTE, '[ckey]', '[computerid]', '[ip]', '[a_ckey]', '[a_computerid]', '[a_ip]', '[who]', '[adminwho]', '', null, null, null, null, null)"
 	var/DBQuery/query_insert = dbcon.NewQuery(sql)
 	query_insert.Execute()
-	message_admins("Tau Kitty has added a [bantype_str] for [ckey] [(job)?"([job])":""] [(duration > 0)?"([duration] minutes)":""] with the reason: \"[reason]\" to the ban database.",1)
+	message_admins("Tau Kitty has added a [bantype_str] for [ckey] [(job)?"([job])":""] [(duration > 0)?"([duration] minutes)":""] with the reason: \"[reason]\" to the ban database.")
 	send2slack_logs("Tau Kitty", "has added a [bantype_str] for [ckey] [(job)?"([job])":""] [(duration > 0)?"([duration] minutes)":""] with the reason: \"[reason]\" to the ban database.", "(BOTBAN)")

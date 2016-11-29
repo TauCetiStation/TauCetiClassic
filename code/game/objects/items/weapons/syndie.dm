@@ -60,18 +60,18 @@
 	var/obj/item/weapon/syndie/c4explosive/bomb
 	var/pr_open = 0  /*Is the "What do you want to do?" prompt open?*/
 
-/obj/item/weapon/syndie/c4detonator/attack_self(mob/user as mob)
+/obj/item/weapon/syndie/c4detonator/attack_self(mob/user)
 	switch(src.icon_state)
 		if("c-4detonator_0")
 			src.icon_state = "c-4detonator_1"
-			user << "You flick open the lighter."
+			to_chat(user, "You flick open the lighter.")
 
 		if("c-4detonator_1")
 			if(!pr_open)
 				pr_open = 1
 				switch(alert(user, "What would you like to do?", "Lighter", "Press the button.", "Close the lighter."))
 					if("Press the button.")
-						user << "\red You press the button."
+						to_chat(user, "\red You press the button.")
 						flick("c-4detonator_click", src)
 						if(src.bomb)
 							src.bomb.detonate()
@@ -80,5 +80,5 @@
 
 					if("Close the lighter.")
 						src.icon_state = "c-4detonator_0"
-						user << "You close the lighter."
+						to_chat(user, "You close the lighter.")
 				pr_open = 0

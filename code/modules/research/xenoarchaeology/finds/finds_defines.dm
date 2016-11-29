@@ -50,7 +50,7 @@
 #define DIGSITE_TEMPLE 5
 #define DIGSITE_WAR 6
 
-/proc/get_responsive_reagent(var/find_type)
+/proc/get_responsive_reagent(find_type)
 	switch(find_type)
 		if(ARCHAEO_BOWL)
 			return "mercury"
@@ -128,7 +128,7 @@
 /proc/get_random_digsite_type()
 	return pick(100;DIGSITE_GARDEN,95;DIGSITE_ANIMAL,90;DIGSITE_HOUSE,85;DIGSITE_TECHNICAL,80;DIGSITE_TEMPLE,75;DIGSITE_WAR)
 
-/proc/get_random_find_type(var/digsite)
+/proc/get_random_find_type(digsite)
 
 	var/find_type = 0
 	switch(digsite)

@@ -11,12 +11,12 @@ var/list/doppler_arrays = list()
 
 /obj/machinery/doppler_array/Destroy()
 	doppler_arrays -= src
-	..()
+	return ..()
 
 /obj/machinery/doppler_array/process()
 	return PROCESS_KILL
 
-/obj/machinery/doppler_array/proc/sense_explosion(var/x0,var/y0,var/z0,var/devastation_range,var/heavy_impact_range,var/light_impact_range,var/took)
+/obj/machinery/doppler_array/proc/sense_explosion(x0,y0,z0,devastation_range,heavy_impact_range,light_impact_range,took)
 	if(stat & NOPOWER)	return
 	if(z != z0)			return
 

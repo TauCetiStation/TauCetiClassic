@@ -22,7 +22,7 @@
 	icon_num = 12
 	set_light(4)
 
-/obj/machinery/artifact/bluespace_crystal/tesla_act(var/power)
+/obj/machinery/artifact/bluespace_crystal/tesla_act(power)
 	tesla_zap(src, 1, power/2)
 	return
 
@@ -37,7 +37,7 @@
 		if("gravitational anomaly")
 			anom.origin_tech = "magnets=8;powerstorage=4"
 		if("flux wave anomaly")
-			anom.origin_tech = "powerstorage=8;programming=4;plasmatech=4"
+			anom.origin_tech = "powerstorage=8;programming=4;phorontech=4"
 		if("bluespace anomaly")
 			anom.origin_tech = "bluespace=8;magnets=5;powerstorage=3"
 		if("pyroclastic anomaly")
@@ -46,9 +46,9 @@
 			anom.origin_tech = "materials=8;combat=4;engineering=4"
 
 	tesla_zap(src,7,2500000)
-	..()
+	return ..()
 
-/obj/machinery/artifact/bluespace_crystal/proc/get_damage(var/damage)
+/obj/machinery/artifact/bluespace_crystal/proc/get_damage(damage)
 	if(damage < 0)
 		damage =0
 	health = health - damage
@@ -56,12 +56,12 @@
 	if(health < 0)
 		Destroy()
 
-/obj/machinery/artifact/bluespace_crystal/bullet_act(var/obj/item/projectile/Proj)
+/obj/machinery/artifact/bluespace_crystal/bullet_act(obj/item/projectile/Proj)
 	if(prob(Proj.damage))
 		get_damage(Proj.damage)
 	..()
 
-/obj/machinery/artifact/bluespace_crystal/attackby(var/obj/item/weapon/W, var/mob/user)
+/obj/machinery/artifact/bluespace_crystal/attackby(obj/item/weapon/W, mob/user)
 
 	get_damage(W.force)
 	..()

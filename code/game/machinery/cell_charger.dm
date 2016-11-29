@@ -28,12 +28,11 @@
 					chargelevel = newlevel
 			else
 				overlays.Cut()
-	examine()
-		set src in oview(5)
+	examine(mob/user)
 		..()
-		usr << "There's [charging ? "a" : "no"] cell in the charger."
+		to_chat(user, "There's [charging ? "a" : "no"] cell in the charger.")
 		if(charging)
-			usr << "Current charge: [charging.charge]"
+			to_chat(user, "Current charge: [charging.charge]")
 
 	attackby(obj/item/weapon/W, mob/user)
 		if(stat & BROKEN)
@@ -41,14 +40,14 @@
 
 		if(istype(W, /obj/item/weapon/stock_parts/cell) && anchored)
 			if(charging)
-				user << "\red There is already a cell in the charger."
+				to_chat(user, "\red There is already a cell in the charger.")
 				return
 			else
 				var/area/a = loc.loc // Gets our locations location, like a dream within a dream
 				if(!isarea(a))
 					return
 				if(a.power_equip == 0) // There's no APC in this area, don't try to cheat power!
-					user << "\red The [name] blinks red as you try to insert the cell!"
+					to_chat(user, "\red The [name] blinks red as you try to insert the cell!")
 					return
 
 				user.drop_item()
@@ -59,11 +58,11 @@
 			updateicon()
 		else if(istype(W, /obj/item/weapon/wrench))
 			if(charging)
-				user << "\red Remove the cell first!"
+				to_chat(user, "\red Remove the cell first!")
 				return
 
 			anchored = !anchored
-			user << "You [anchored ? "attach" : "detach"] the cell charger [anchored ? "to" : "from"] the ground"
+			to_chat(user, "You [anchored ? "attach" : "detach"] the cell charger [anchored ? "to" : "from"] the ground")
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 
 	attack_hand(mob/user)
@@ -92,10 +91,10 @@
 		//world << "ccpt [charging] [stat]"
 		if(!charging || (stat & (BROKEN|NOPOWER)) || !anchored)
 			return
-		
+
 		var/power_used = 100000	//for 200 units of charge. Yes, thats right, 100 kW. Is something wrong with CELLRATE?
-		
+
 		power_used = charging.give(power_used*CELLRATE*efficiency)
 		use_power(power_used)
-		
+
 		updateicon()

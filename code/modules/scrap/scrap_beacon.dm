@@ -13,9 +13,9 @@
 	var/last_summon = -300
 	var/active = 0
 
-/obj/structure/scrap_beacon/attack_hand(mob/user as mob)
+/obj/structure/scrap_beacon/attack_hand(mob/user)
 	if((last_summon + summon_cooldown) >= world.time)
-		user << "<span class='notice'>[src.name] not charged yet.</span>"
+		to_chat(user, "<span class='notice'>[src.name] not charged yet.</span>")
 		return
 	last_summon = world.time
 	if(!active)

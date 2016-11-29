@@ -173,15 +173,17 @@ var/const/MAX_SAVE_SLOTS = 10
 	user << browse(dat, "window=preferences;size=618x778;can_close=0;can_minimize=0;can_maximize=0;can_resize=0")
 
 /datum/preferences/proc/process_link(mob/user, list/href_list)
-	if(!user)	return
+	if(!user)
+		return
 
-	if(!istype(user, /mob/new_player))	return
+	if(href_list["preference"] == "close")
+		user << browse(null, "window=preferences")
+		return
+
+	if(!istype(user, /mob/new_player))
+		return
 
 	switch(href_list["preference"])
-		if("close")
-			user << browse(null, "window=preferences")
-			return
-
 		if("save")
 			save_preferences()
 			save_character()

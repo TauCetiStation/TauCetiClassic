@@ -40,17 +40,16 @@
 	colour = "#FFFFFF"
 	shadeColour = "#000000"
 	colourName = "mime"
-	uses = 0
 
-/obj/item/toy/crayon/mime/attack_self(mob/living/user as mob) //inversion
+/obj/item/toy/crayon/mime/attack_self(mob/living/user) //inversion
 	if(colour != "#FFFFFF" && shadeColour != "#000000")
 		colour = "#FFFFFF"
 		shadeColour = "#000000"
-		user << "You will now draw in white and black with this crayon."
+		to_chat(user, "You will now draw in white and black with this crayon.")
 	else
 		colour = "#000000"
 		shadeColour = "#FFFFFF"
-		user << "You will now draw in black and white with this crayon."
+		to_chat(user, "You will now draw in black and white with this crayon.")
 	return
 
 /obj/item/toy/crayon/rainbow
@@ -58,17 +57,16 @@
 	colour = "#FFF000"
 	shadeColour = "#000FFF"
 	colourName = "rainbow"
-	uses = 0
 
-/obj/item/toy/crayon/rainbow/attack_self(mob/living/user as mob)
+/obj/item/toy/crayon/rainbow/attack_self(mob/living/user)
 	colour = input(user, "Please select the main colour.", "Crayon colour") as color
 	shadeColour = input(user, "Please select the shade colour.", "Crayon colour") as color
 	return
 
-/obj/item/toy/crayon/afterattack(atom/target, mob/user as mob, proximity)
+/obj/item/toy/crayon/afterattack(atom/target, mob/user, proximity)
 	if(!proximity) return
 	if(!uses)
-		user << "<span class='warning'>There is no more of [src.name] left!</span>"
+		to_chat(user, "<span class='warning'>There is no more of [src.name] left!</span>")
 		if(!instant)
 			qdel(src)
 		return
@@ -80,11 +78,11 @@
 		switch(drawtype)
 			if("letter")
 				drawtype = input("Choose the letter.", "Crayon scribbles") in list("a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z")
-				user << "You start drawing a letter on the [target.name]."
+				to_chat(user, "You start drawing a letter on the [target.name].")
 			if("graffiti")
-				user << "You start drawing graffiti on the [target.name]."
+				to_chat(user, "You start drawing graffiti on the [target.name].")
 			if("rune")
-				user << "You start drawing a rune on the [target.name]."
+				to_chat(user, "You start drawing a rune on the [target.name].")
 
 		////////////////////////// GANG FUNCTIONS
 		var/area/territory
@@ -110,19 +108,19 @@
 					//Prevent people spraying from outside of the territory (ie. Maint walls)
 					var/area/user_area = get_area(user.loc)
 					if(istype(user_area) && (user_area.type != territory.type))
-						user << "<span class='warning'>You cannot tag [territory] from the outside.</span>"
+						to_chat(user, "<span class='warning'>You cannot tag [territory] from the outside.</span>")
 						return
 					*/
 					if(locate(/obj/machinery/power/apc) in (user.loc.contents | target.contents))
-						user << "<span class='warning'>You cannot tag here.</span>"
+						to_chat(user, "<span class='warning'>You cannot tag here.</span>")
 						return
 				else
-					user << "<span class='warning'>[territory] is unsuitable for tagging.</span>"
+					to_chat(user, "<span class='warning'>[territory] is unsuitable for tagging.</span>")
 					return
 		/////////////////////////////////////////
 
 
-		user << "You start [instant ? "spraying" : "drawing"] a [temp] on the [target.name]."
+		to_chat(user, "You start [instant ? "spraying" : "drawing"] a [temp] on the [target.name].")
 		if(instant)
 			playsound(user.loc, 'sound/effects/spray.ogg', 5, 1, 5)
 		if((instant>0) || do_after(user, 50, target = target))
@@ -136,40 +134,40 @@
 				for(var/obj/effect/decal/cleanable/crayon/old_marking in target)
 					qdel(old_marking)
 				new /obj/effect/decal/cleanable/crayon/gang(target,gangID,"graffiti")
-				user << "<span class='notice'>You tagged [territory] for your gang!</span>"
+				to_chat(user, "<span class='notice'>You tagged [territory] for your gang!</span>")
 
 			else
 				new /obj/effect/decal/cleanable/crayon(target,colour,shadeColour,drawtype)
 
-			user << "You finish [instant ? "spraying" : "drawing"] [temp]."
+			to_chat(user, "You finish [instant ? "spraying" : "drawing"] [temp].")
 			if(instant<0)
 				playsound(user.loc, 'sound/effects/spray.ogg', 5, 1, 5)
 			uses = max(0,uses-1)
 			if(!uses)
-				user << "<span class='warning'>There is no more of [src.name] left!</span>"
+				to_chat(user, "<span class='warning'>There is no more of [src.name] left!</span>")
 				if(!instant)
 					qdel(src)
 	return
 
-/obj/item/toy/crayon/attack(mob/M as mob, mob/user as mob)
+/obj/item/toy/crayon/attack(mob/M, mob/user)
 	if(edible && (M == user))
-		user << "You take a bite of the [src.name]. Delicious!"
+		to_chat(user, "You take a bite of the [src.name]. Delicious!")
 		user.nutrition += 5
 		uses = max(0,uses-5)
 		if(!uses)
-			user << "<span class='warning'>There is no more of [src.name] left!</span>"
+			to_chat(user, "<span class='warning'>There is no more of [src.name] left!</span>")
 			qdel(src)
 	else
 		..()
 
-/obj/item/toy/crayon/proc/territory_claimed(var/area/territory,mob/user)
+/obj/item/toy/crayon/proc/territory_claimed(area/territory,mob/user)
 	var/occupying_gang
 	if(territory.type in (ticker.mode.A_territory | ticker.mode.A_territory_new))
 		occupying_gang = gang_name("A")
 	if(territory.type in (ticker.mode.B_territory | ticker.mode.B_territory_new))
 		occupying_gang = gang_name("B")
 	if(occupying_gang)
-		user << "<span class='danger'>[territory] has already been tagged by the [occupying_gang] gang! You must get rid of or spray over the old tag first!</span>"
+		to_chat(user, "<span class='danger'>[territory] has already been tagged by the [occupying_gang] gang! You must get rid of or spray over the old tag first!</span>")
 		return 1
 	return 0
 
@@ -192,15 +190,15 @@
 /obj/item/toy/crayon/spraycan/examine(mob/user)
 	..()
 	if(uses)
-		user << "It has [uses] uses left."
+		to_chat(user, "It has [uses] uses left.")
 	else
-		user << "It is empty."
+		to_chat(user, "It is empty.")
 
-/obj/item/toy/crayon/spraycan/attack_self(mob/living/user as mob)
+/obj/item/toy/crayon/spraycan/attack_self(mob/living/user)
 	var/choice = input(user,"Spraycan options") as null|anything in list("Toggle Cap","Change Drawing","Change Color")
 	switch(choice)
 		if("Toggle Cap")
-			user << "<span class='notice'>You [capped ? "Remove" : "Replace"] the cap of the [src]</span>"
+			to_chat(user, "<span class='notice'>You [capped ? "Remove" : "Replace"] the cap of the [src]</span>")
 			capped = capped ? 0 : 1
 			icon_state = "spraycan[capped ? "_cap" : ""]"
 			update_icon()
@@ -210,11 +208,11 @@
 			colour = input(user,"Choose Color") as color
 			update_icon()
 
-/obj/item/toy/crayon/spraycan/afterattack(atom/target, mob/user as mob, proximity)
+/obj/item/toy/crayon/spraycan/afterattack(atom/target, mob/user, proximity)
 	if(!proximity)
 		return
 	if(capped)
-		user << "<span class='warning'>Take the cap off first!</span>"
+		to_chat(user, "<span class='warning'>Take the cap off first!</span>")
 		return
 	else
 		if(iscarbon(target))

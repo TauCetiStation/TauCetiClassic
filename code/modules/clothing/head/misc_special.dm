@@ -42,13 +42,13 @@
 			src.flags |= (HEADCOVERSEYES | HEADCOVERSMOUTH)
 			flags_inv |= (HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE)
 			icon_state = initial(icon_state)
-			usr << "You flip the [src] down to protect your eyes."
+			to_chat(usr, "You flip the [src] down to protect your eyes.")
 		else
 			src.up = !src.up
 			src.flags &= ~(HEADCOVERSEYES | HEADCOVERSMOUTH)
 			flags_inv &= ~(HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE)
 			icon_state = "[initial(icon_state)]up"
-			usr << "You push the [src] up out of your face."
+			to_chat(usr, "You push the [src] up out of your face.")
 		usr.update_inv_head()	//so our mob-overlays update
 
 
@@ -80,7 +80,7 @@
 	if (istype(location, /turf))
 		location.hotspot_expose(700, 1)
 
-/obj/item/clothing/head/cakehat/attack_self(mob/user as mob)
+/obj/item/clothing/head/cakehat/attack_self(mob/user)
 	if(status > 1)	return
 	src.onfire = !( src.onfire )
 	if (src.onfire)
@@ -105,15 +105,15 @@
 	item_state = "ushankadown"
 	flags_inv = HIDEEARS
 
-/obj/item/clothing/head/ushanka/attack_self(mob/user as mob)
+/obj/item/clothing/head/ushanka/attack_self(mob/user)
 	if(src.icon_state == "ushankadown")
 		src.icon_state = "ushankaup"
 		src.item_state = "ushankaup"
-		user << "You raise the ear flaps on the ushanka."
+		to_chat(user, "You raise the ear flaps on the ushanka.")
 	else
 		src.icon_state = "ushankadown"
 		src.item_state = "ushankadown"
-		user << "You lower the ear flaps on the ushanka."
+		to_chat(user, "You lower the ear flaps on the ushanka.")
 
 /*
  * Pumpkin head
@@ -133,7 +133,7 @@
 
 	attack_self(mob/user)
 		if(!isturf(user.loc))
-			user << "You cannot turn the light on while in this [user.loc]" //To prevent some lighting anomalities.
+			to_chat(user, "You cannot turn the light on while in this [user.loc]")//To prevent some lighting anomalities.
 			return
 		on = !on
 		icon_state = "hardhat[on]_[item_color]"
@@ -155,7 +155,7 @@
 	var/icon/mob2
 	siemens_coefficient = 1.5
 
-	update_icon(var/mob/living/carbon/human/user)
+	update_icon(mob/living/carbon/human/user)
 		if(!istype(user)) return
 		mob = new/icon("icon" = 'icons/mob/head.dmi', "icon_state" = "kitty")
 		mob2 = new/icon("icon" = 'icons/mob/head.dmi', "icon_state" = "kitty2")

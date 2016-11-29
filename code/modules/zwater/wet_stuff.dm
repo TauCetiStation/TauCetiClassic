@@ -1,7 +1,7 @@
 //NextGen mechanic to make items wet
 /obj/item/var/dry_inprocess = 0
 
-/obj/item/proc/make_wet(var/shower = 0)
+/obj/item/proc/make_wet(shower = 0)
 	if(!src) return
 	if(src.flags & THICKMATERIAL) return
 

@@ -29,11 +29,11 @@
 	return
 
 
-/obj/item/weapon/veilrender/attack_self(mob/user as mob)
+/obj/item/weapon/veilrender/attack_self(mob/user)
 	if(charged == 1)
 		new /obj/effect/rend(get_turf(usr))
 		charged = 0
 		visible_message("\red <B>[src] hums with power as [usr] deals a blow to reality itself!</B>")
 	else
-		user << "\red The unearthly energies that powered the blade are now dormant"
+		to_chat(user, "\red The unearthly energies that powered the blade are now dormant")
 

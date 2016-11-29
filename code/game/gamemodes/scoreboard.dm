@@ -1,4 +1,4 @@
-/datum/subsystem/ticker/proc/scoreboard(var/completions)
+/datum/subsystem/ticker/proc/scoreboard(completions)
 	if(achievements.len)
 		completions += "<br>[achievement_declare_completion()]"
 
@@ -219,15 +219,15 @@
 	score["crewscore"] -= plaguepoints
 
 	// Show the score - might add "ranks" later
-	world << "<b>The crew's final score is:</b>"
-	world << "<b><font size='4'>[score["crewscore"]]</font></b>"
+	to_chat(world, "<b>The crew's final score is:</b>")
+	to_chat(world, "<b><font size='4'>[score["crewscore"]]</font></b>")
 	for(var/mob/E in player_list)
 		if(E.client) E.scorestats(completions)
 	return
 
 
 
-/mob/proc/scorestats(var/completions)
+/mob/proc/scorestats(completions)
 	var/dat = completions
 	dat += {"<BR><h2>Round Statistics and Score</h2>"}
 	if (ticker.mode.name == "nuclear emergency")

@@ -37,8 +37,7 @@
 /datum/surgery_step/cavity/make_space
 	allowed_tools = list(
 	/obj/item/weapon/surgicaldrill = 100,	\
-	/obj/item/weapon/pen = 75,	\
-	/obj/item/stack/rods = 50
+	/obj/item/weapon/pen = 75
 	)
 
 	min_duration = 60
@@ -74,7 +73,7 @@
 	/obj/item/weapon/cautery = 100,			\
 	/obj/item/clothing/mask/cigarette = 75,	\
 	/obj/item/weapon/lighter = 50,			\
-	/obj/item/weapon/weldingtool = 25
+	/obj/item/weapon/weldingtool = 50
 	)
 
 	min_duration = 60
@@ -129,7 +128,7 @@
 		user.visible_message("\blue [user] puts \the [tool] inside [target]'s [get_cavity(affected)] cavity.", \
 		"\blue You put \the [tool] inside [target]'s [get_cavity(affected)] cavity." )
 		if (tool.w_class > get_max_wclass(affected)/2 && prob(50))
-			user << "\red You tear some blood vessels trying to fit such a big object in this cavity."
+			to_chat(user, "\red You tear some blood vessels trying to fit such a big object in this cavity.")
 			var/datum/wound/internal_bleeding/I = new (15)
 			affected.wounds += I
 			affected.owner.custom_pain("You feel something rip in your [affected.display_name]!", 1)
@@ -161,7 +160,7 @@
 	allowed_tools = list(
 	/obj/item/weapon/hemostat = 100,	\
 	/obj/item/weapon/wirecutters = 75,	\
-	/obj/item/weapon/kitchen/utensil/fork = 20
+	/obj/item/weapon/kitchen/utensil/fork = 50
 	)
 
 	min_duration = 80

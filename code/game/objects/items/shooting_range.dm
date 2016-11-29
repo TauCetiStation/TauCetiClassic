@@ -16,7 +16,7 @@
 			T.pinned_target = null
 			T.density = 1
 			break
-	..() // delete target
+	return ..() // delete target
 
 /obj/item/target/Move()
 	..()
@@ -32,16 +32,16 @@
 
 
 
-/obj/item/target/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/target/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.remove_fuel(0, user))
 			overlays.Cut()
-			usr << "<span class='notice'>You slice off [src]'s uneven chunks of aluminum and scorch marks.</span>"
+			to_chat(usr, "<span class='notice'>You slice off [src]'s uneven chunks of aluminum and scorch marks.</span>")
 			return
 
 
-/obj/item/target/attack_hand(mob/user as mob)
+/obj/item/target/attack_hand(mob/user)
 	// taking pinned targets off!
 	var/obj/structure/target_stake/stake
 	for(var/obj/structure/target_stake/T in view(3,src))
@@ -59,10 +59,10 @@
 			if(ishuman(user))
 				if(!user.get_active_hand())
 					user.put_in_hands(src)
-					user << "<span class='notice'>You take the target out of the stake.</span>"
+					to_chat(user, "<span class='notice'>You take the target out of the stake.</span>")
 			else
 				src.loc = get_turf_loc(user)
-				user << "<span class='notice'>You take the target out of the stake.</span>"
+				to_chat(user, "<span class='notice'>You take the target out of the stake.</span>")
 
 			stake.pinned_target = null
 			return
@@ -80,7 +80,7 @@
 	desc = "A shooting target with a threatening silhouette."
 	hp = 2350 // alium onest too kinda
 
-/obj/item/target/bullet_act(var/obj/item/projectile/Proj)
+/obj/item/target/bullet_act(obj/item/projectile/Proj)
 	var/p_x = Proj.p_x + pick(0,0,0,0,0,-1,1) // really ugly way of coding "sometimes offset Proj.p_x!"
 	var/p_y = Proj.p_y + pick(0,0,0,0,0,-1,1)
 	var/decaltype = 1 // 1 - scorch, 2 - bullet
@@ -97,7 +97,7 @@
 		if(hp <= 0)
 			for(var/mob/O in oviewers())
 				if ((O.client && !( O.blinded )))
-					O << "<span class='rose'>[src] breaks into tiny pieces and collapses!</span>"
+					to_chat(O, "<span class='rose'>[src] breaks into tiny pieces and collapses!</span>")
 			qdel(src)
 
 		// Create a temporary object to represent the damage

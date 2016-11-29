@@ -17,7 +17,7 @@
 
 	/* -- Compile a raw block of text -- */
 
-	proc/Compile(code as message)
+	proc/Compile(code)
 		var/n_scriptOptions/nS_Options/options = new()
 		var/n_Scanner/nS_Scanner/scanner       = new(code, options)
 		var/list/tokens                        = scanner.Scan()
@@ -40,7 +40,7 @@
 
 	/* -- Execute the compiled code -- */
 
-	proc/Run(var/datum/signal/signal)
+	proc/Run(datum/signal/signal)
 
 		if(!ready)
 			return
@@ -208,7 +208,7 @@
 
 datum/signal
 
-	proc/mem(var/address, var/value)
+	proc/mem(address, value)
 
 		if(istext(address))
 			var/obj/machinery/telecomms/server/S = data["server"]
@@ -220,7 +220,7 @@ datum/signal
 				S.memory[address] = value
 
 
-	proc/tcombroadcast(var/message, var/freq, var/source, var/job)
+	proc/tcombroadcast(message, freq, source, job)
 
 		var/datum/signal/newsign = new
 		var/obj/machinery/telecomms/server/S = data["server"]

@@ -11,14 +11,14 @@
 	var/splicing = 0
 	var/scanning = 0
 
-/obj/machinery/computer/diseasesplicer/attackby(var/obj/I as obj, var/mob/user as mob)
+/obj/machinery/computer/diseasesplicer/attackby(obj/I, mob/user)
 	if(istype(I, /obj/item/weapon/screwdriver))
 		return ..(I,user)
 
 	if(istype(I,/obj/item/weapon/virusdish))
 		var/mob/living/carbon/c = user
 		if (dish)
-			user << "\The [src] is already loaded."
+			to_chat(user, "\The [src] is already loaded.")
 			return
 
 		dish = I
@@ -26,24 +26,24 @@
 		I.loc = src
 
 	if(istype(I,/obj/item/weapon/diseasedisk))
-		user << "You upload the contents of the disk onto the buffer."
+		to_chat(user, "You upload the contents of the disk onto the buffer.")
 		memorybank = I:effect
 		species_buffer = I:species
 		analysed = I:analysed
 
 	src.attack_hand(user)
 
-/obj/machinery/computer/diseasesplicer/attack_ai(var/mob/user as mob)
+/obj/machinery/computer/diseasesplicer/attack_ai(mob/user)
 	return src.attack_hand(user)
 
-/obj/machinery/computer/diseasesplicer/attack_paw(var/mob/user as mob)
+/obj/machinery/computer/diseasesplicer/attack_paw(mob/user)
 	return src.attack_hand(user)
 
-/obj/machinery/computer/diseasesplicer/attack_hand(var/mob/user as mob)
+/obj/machinery/computer/diseasesplicer/attack_hand(mob/user)
 	if(..()) return
 	ui_interact(user)
 
-/obj/machinery/computer/diseasesplicer/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
+/obj/machinery/computer/diseasesplicer/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
 	user.set_machine(src)
 
 	var/data[0]
@@ -125,17 +125,17 @@
 			nanomanager.update_uis(src)
 
 /obj/machinery/computer/diseasesplicer/Topic(href, href_list)
-	if(..()) return 0
-
 	var/mob/user = usr
 	var/datum/nanoui/ui = nanomanager.get_open_ui(user, src, "main")
 
-	src.add_fingerprint(user)
-
 	if (href_list["close"])
-		user.unset_machine()
+		user.unset_machine(src)
 		ui.close()
-		return 0
+		return FALSE
+
+	. = ..()
+	if(!.)
+		return
 
 	if (href_list["grab"])
 		if (dish)
@@ -144,7 +144,7 @@
 			analysed = dish.analysed
 			dish = null
 			scanning = 10
-		return 1
+		return TRUE
 
 	if (href_list["affected_species"])
 		if (dish)
@@ -153,16 +153,16 @@
 			analysed = dish.analysed
 			dish = null
 			scanning = 10
-		return 1
+		return TRUE
 
-	if(href_list["eject"])
+	if (href_list["eject"])
 		if (dish)
 			dish.loc = src.loc
 			dish = null
-		return 1
+		return TRUE
 
-	if(href_list["splice"])
-		if(dish)
+	if (href_list["splice"])
+		if (dish)
 			if (memorybank)
 				for(var/datum/disease2/effectholder/e in dish.virus2.effects)
 					if(e.stage == memorybank.stage)
@@ -173,10 +173,10 @@
 
 			splicing = 10
 			dish.virus2.uniqueID = rand(0,10000)
-		return 1
+		return TRUE
 
-	if(href_list["disk"])
+	if (href_list["disk"])
 		burning = 10
-		return 1
+		return TRUE
 
-	return 0
+	return FALSE

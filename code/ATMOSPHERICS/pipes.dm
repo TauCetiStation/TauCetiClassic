@@ -58,9 +58,9 @@
 	if(air_temporary)
 		loc.assume_air(air_temporary)
 		qdel(air_temporary)
-	..()
+	return ..()
 
-/obj/machinery/atmospherics/pipe/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+/obj/machinery/atmospherics/pipe/attackby(obj/item/weapon/W, mob/user)
 	if (istype(src, /obj/machinery/atmospherics/pipe/tank))
 		return ..()
 	if (istype(src, /obj/machinery/atmospherics/pipe/vent))
@@ -73,16 +73,16 @@
 		return ..()
 	var/turf/T = src.loc
 	if (level==1 && isturf(T) && T.intact)
-		user << "\red You must remove the plating first."
+		to_chat(user, "\red You must remove the plating first.")
 		return 1
 	var/datum/gas_mixture/int_air = return_air()
 	var/datum/gas_mixture/env_air = loc.return_air()
 	if ((int_air.return_pressure()-env_air.return_pressure()) > 2*ONE_ATMOSPHERE)
-		user << "<span class='warning'>You cannot unwrench [src], it is too exerted due to internal pressure.</span>"
+		to_chat(user, "<span class='warning'>You cannot unwrench [src], it is too exerted due to internal pressure.</span>")
 		add_fingerprint(user)
 		return 1
 	playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-	user << "<span class='notice'> You begin to unfasten \the [src]...</span>"
+	to_chat(user, "<span class='notice'> You begin to unfasten \the [src]...</span>")
 	if (do_after(user, 40, target = src))
 		user.visible_message( \
 			"[user] unfastens \the [src].", \
@@ -140,7 +140,7 @@
 			initialize_directions = SOUTH|WEST
 
 
-/obj/machinery/atmospherics/pipe/simple/hide(var/i)
+/obj/machinery/atmospherics/pipe/simple/hide(i)
 	if(level == 1 && istype(loc, /turf/simulated))
 		invisibility = i ? 101 : 0
 	update_icon()
@@ -186,7 +186,7 @@
 	if(node2)
 		node2.disconnect(src)
 
-	..()
+	return ..()
 
 /obj/machinery/atmospherics/pipe/simple/pipeline_expansion()
 	return list(node1, node2)
@@ -354,7 +354,7 @@
 
 	..()
 
-/obj/machinery/atmospherics/pipe/manifold/hide(var/i)
+/obj/machinery/atmospherics/pipe/manifold/hide(i)
 	if(level == 1 && istype(loc, /turf/simulated))
 		invisibility = i ? 101 : 0
 	update_icon()
@@ -376,7 +376,7 @@
 	if(node3)
 		node3.disconnect(src)
 
-	..()
+	return ..()
 
 /obj/machinery/atmospherics/pipe/manifold/disconnect(obj/machinery/atmospherics/reference)
 	if(reference == node1)
@@ -544,7 +544,7 @@ obj/machinery/atmospherics/pipe/manifold4w/New()
 	..()
 	alpha = 255
 
-/obj/machinery/atmospherics/pipe/manifold4w/hide(var/i)
+/obj/machinery/atmospherics/pipe/manifold4w/hide(i)
 	if(level == 1 && istype(loc, /turf/simulated))
 		invisibility = i ? 101 : 0
 	update_icon()
@@ -568,7 +568,7 @@ obj/machinery/atmospherics/pipe/manifold4w/New()
 	if(node4)
 		node4.disconnect(src)
 
-	..()
+	return ..()
 
 /obj/machinery/atmospherics/pipe/manifold4w/disconnect(obj/machinery/atmospherics/reference)
 	if(reference == node1)
@@ -729,7 +729,7 @@ obj/machinery/atmospherics/pipe/manifold4w/New()
 		if(EAST)
 		 initialize_directions = WEST
 
-/obj/machinery/atmospherics/pipe/cap/hide(var/i)
+/obj/machinery/atmospherics/pipe/cap/hide(i)
 	if(level == 1 && istype(loc, /turf/simulated))
 		invisibility = i ? 101 : 0
 	update_icon()
@@ -746,7 +746,7 @@ obj/machinery/atmospherics/pipe/manifold4w/New()
 	if(node)
 		node.disconnect(src)
 
-	..()
+	return ..()
 
 /obj/machinery/atmospherics/pipe/cap/disconnect(obj/machinery/atmospherics/reference)
 	if(reference == node)
@@ -912,7 +912,7 @@ obj/machinery/atmospherics/pipe/cap/update_icon()
 	if(node1)
 		node1.disconnect(src)
 
-	..()
+	return ..()
 
 /obj/machinery/atmospherics/pipe/tank/pipeline_expansion()
 	return list(node1)
@@ -947,15 +947,15 @@ obj/machinery/atmospherics/pipe/cap/update_icon()
 
 	return null
 
-/obj/machinery/atmospherics/pipe/tank/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+/obj/machinery/atmospherics/pipe/tank/attackby(obj/item/weapon/W, mob/user)
 	if (istype(W, /obj/item/device/analyzer) && get_dist(user, src) <= 1)
 		for (var/mob/O in viewers(user, null))
-			O << "\red [user] has used the analyzer on \icon[icon]"
+			to_chat(O, "\red [user] has used the analyzer on [bicon(icon)]")
 
 		var/pressure = parent.air.return_pressure()
 		var/total_moles = parent.air.total_moles()
 
-		user << "\blue Results of analysis of \icon[icon]"
+		to_chat(user, "\blue Results of analysis of [bicon(icon)]")
 		if (total_moles>0)
 			var/o2_concentration = parent.air.oxygen/total_moles
 			var/n2_concentration = parent.air.nitrogen/total_moles
@@ -964,16 +964,16 @@ obj/machinery/atmospherics/pipe/cap/update_icon()
 
 			var/unknown_concentration =  1-(o2_concentration+n2_concentration+co2_concentration+phoron_concentration)
 
-			user << "\blue Pressure: [round(pressure,0.1)] kPa"
-			user << "\blue Nitrogen: [round(n2_concentration*100)]%"
-			user << "\blue Oxygen: [round(o2_concentration*100)]%"
-			user << "\blue CO2: [round(co2_concentration*100)]%"
-			user << "\blue Phoron: [round(phoron_concentration*100)]%"
+			to_chat(user, "\blue Pressure: [round(pressure,0.1)] kPa")
+			to_chat(user, "\blue Nitrogen: [round(n2_concentration*100)]%")
+			to_chat(user, "\blue Oxygen: [round(o2_concentration*100)]%")
+			to_chat(user, "\blue CO2: [round(co2_concentration*100)]%")
+			to_chat(user, "\blue Phoron: [round(phoron_concentration*100)]%")
 			if(unknown_concentration>0.01)
-				user << "\red Unknown: [round(unknown_concentration*100)]%"
-			user << "\blue Temperature: [round(parent.air.temperature-T0C)]&deg;C"
+				to_chat(user, "\red Unknown: [round(unknown_concentration*100)]%")
+			to_chat(user, "\blue Temperature: [round(parent.air.temperature-T0C)]&deg;C")
 		else
-			user << "\blue Tank is empty!"
+			to_chat(user, "\blue Tank is empty!")
 
 
 
@@ -1019,7 +1019,7 @@ obj/machinery/atmospherics/pipe/cap/update_icon()
 	if(node1)
 		node1.disconnect(src)
 
-	..()
+	return ..()
 
 /obj/machinery/atmospherics/pipe/vent/pipeline_expansion()
 	return list(node1)
@@ -1053,7 +1053,7 @@ obj/machinery/atmospherics/pipe/cap/update_icon()
 
 	return null
 
-/obj/machinery/atmospherics/pipe/vent/hide(var/i) //to make the little pipe section invisible, the icon changes.
+/obj/machinery/atmospherics/pipe/vent/hide(i) //to make the little pipe section invisible, the icon changes.
 	if(node1)
 		icon_state = "[i == 1 && istype(loc, /turf/simulated) ? "h" : "" ]intact"
 		dir = get_dir(src, node1)

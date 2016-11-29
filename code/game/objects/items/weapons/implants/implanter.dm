@@ -19,7 +19,7 @@
 	return
 
 
-/obj/item/weapon/implanter/attack(mob/M as mob, mob/user as mob)
+/obj/item/weapon/implanter/attack(mob/M, mob/user)
 	if (!istype(M, /mob/living/carbon))
 		return
 	if (user && src.imp)
@@ -106,19 +106,19 @@
 		icon_state = "cimplanter0"
 	return
 
-/obj/item/weapon/implanter/compressed/attack(mob/M as mob, mob/user as mob)
+/obj/item/weapon/implanter/compressed/attack(mob/M, mob/user)
 	var/obj/item/weapon/implant/compressed/c = imp
 	if (!c)	return
 	if (c.scanned == null)
-		user << "Please scan an object with the implanter first."
+		to_chat(user, "Please scan an object with the implanter first.")
 		return
 	..()
 
-/obj/item/weapon/implanter/compressed/afterattack(atom/A, mob/user as mob)
+/obj/item/weapon/implanter/compressed/afterattack(atom/A, mob/user)
 	if(istype(A,/obj/item) && imp)
 		var/obj/item/weapon/implant/compressed/c = imp
 		if (c.scanned)
-			user << "\red Something is already scanned inside the implant!"
+			to_chat(user, "\red Something is already scanned inside the implant!")
 			return
 		c.scanned = A
 		if(istype(A.loc,/mob/living/carbon/human))

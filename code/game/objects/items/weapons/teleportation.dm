@@ -24,7 +24,7 @@
 	m_amt = 400
 	origin_tech = "magnets=1"
 
-/obj/item/weapon/locator/attack_self(mob/user as mob)
+/obj/item/weapon/locator/attack_self(mob/user)
 	user.set_machine(src)
 	var/dat
 	if (src.temp)
@@ -49,7 +49,7 @@ Frequency:
 		return
 	var/turf/current_location = get_turf(usr)//What turf is the user on?
 	if(!current_location||current_location.z==2)//If turf was not found or they're on z level 2.
-		usr << "The [src] is malfunctioning."
+		to_chat(usr, "The [src] is malfunctioning.")
 		return
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))))
 		usr.set_machine(src)
@@ -135,13 +135,13 @@ Frequency:
 	m_amt = 10000
 	origin_tech = "magnets=1;bluespace=3"
 
-/obj/item/weapon/hand_tele/attack_self(mob/user as mob)
+/obj/item/weapon/hand_tele/attack_self(mob/user)
 	var/turf/current_location = get_turf(user)//What turf is the user on?
 	if(!current_location||current_location.z==2||current_location.z>=7)//If turf was not found or they're on z level 2 or >7 which does not currently exist.
-		user << "<span class='notice'>\The [src] is malfunctioning.</span>"
+		to_chat(user, "<span class='notice'>\The [src] is malfunctioning.</span>")
 		return
 	var/list/L = list(  )
-	for(var/obj/machinery/computer/teleporter/com in world)
+	for(var/obj/machinery/computer/teleporter/com in machines)
 		if(com.target)
 			if(com.power_station && com.power_station.teleporter_hub && com.power_station.engaged)
 				L["[com.id] (Active)"] = com.target

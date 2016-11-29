@@ -23,7 +23,7 @@ obj/machinery/recharger
 	for(var/obj/item/weapon/stock_parts/capacitor/C in component_parts)
 		recharge_coeff = C.rating
 
-obj/machinery/recharger/attackby(obj/item/weapon/G as obj, mob/user as mob)
+obj/machinery/recharger/attackby(obj/item/weapon/G, mob/user)
 	if(istype(user,/mob/living/silicon))
 		return
 	if(istype(G, /obj/item/weapon/gun/energy) || istype(G, /obj/item/weapon/melee/baton) || istype(G, /obj/item/weapon/defibrillator) || istype(G, /obj/item/ammo_box/magazine/l10mag))
@@ -33,14 +33,14 @@ obj/machinery/recharger/attackby(obj/item/weapon/G as obj, mob/user as mob)
 		// Checks to make sure he's not in space doing it, and that the area got proper power.
 		var/area/a = get_area(src)
 		if(!isarea(a))
-			user << "\red The [name] blinks red as you try to insert the item!"
+			to_chat(user, "\red The [name] blinks red as you try to insert the item!")
 			return
 		if(!a.power_equip && a.requires_power)
-			user << "\red The [name] blinks red as you try to insert the item!"
+			to_chat(user, "\red The [name] blinks red as you try to insert the item!")
 			return
 
 		if (istype(G, /obj/item/weapon/gun/energy/gun/nuclear) || istype(G, /obj/item/weapon/gun/energy/crossbow))
-			user << "<span class='notice'>Your gun's recharge port was removed to make room for a miniaturized reactor.</span>"
+			to_chat(user, "<span class='notice'>Your gun's recharge port was removed to make room for a miniaturized reactor.</span>")
 			return
 		if (istype(G, /obj/item/weapon/gun/magic))
 			return
@@ -51,10 +51,10 @@ obj/machinery/recharger/attackby(obj/item/weapon/G as obj, mob/user as mob)
 		update_icon()
 	else if(istype(G, /obj/item/weapon/wrench))
 		if(charging)
-			user << "\red Remove the weapon first!"
+			to_chat(user, "\red Remove the weapon first!")
 			return
 		anchored = !anchored
-		user << "You [anchored ? "attached" : "detached"] the recharger."
+		to_chat(user, "You [anchored ? "attached" : "detached"] the recharger.")
 		playsound(loc, 'sound/items/Ratchet.ogg', 75, 1)
 	if (anchored && !charging)
 		if(default_deconstruction_screwdriver(user, istype(src, /obj/machinery/recharger/wallcharger) ? "wrechargeropen" : "rechargeropen", istype(src, /obj/machinery/recharger/wallcharger) ? "wrecharger0" : "recharger0", G))
@@ -64,7 +64,7 @@ obj/machinery/recharger/attackby(obj/item/weapon/G as obj, mob/user as mob)
 			default_deconstruction_crowbar(G)
 			return
 
-obj/machinery/recharger/attack_hand(mob/user as mob)
+obj/machinery/recharger/attack_hand(mob/user)
 	add_fingerprint(user)
 
 	if(charging)
@@ -74,7 +74,7 @@ obj/machinery/recharger/attack_hand(mob/user as mob)
 		use_power = 1
 		update_icon()
 
-obj/machinery/recharger/attack_paw(mob/user as mob)
+obj/machinery/recharger/attack_paw(mob/user)
 	return attack_hand(user)
 
 obj/machinery/recharger/process()

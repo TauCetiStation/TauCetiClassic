@@ -7,7 +7,7 @@ var/list/ul_FastRoot = list(0, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4, 4
 							5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7,
 							7, 7)
 
-/atom/proc/ul_FalloffAmount(var/atom/ref)
+/atom/proc/ul_FalloffAmount(atom/ref)
 	if (ul_FalloffStyle == UL_I_FALLOFF_ROUND)
 		var/delta_x = (ref.x - src.x)
 		var/delta_y = (ref.y - src.y)

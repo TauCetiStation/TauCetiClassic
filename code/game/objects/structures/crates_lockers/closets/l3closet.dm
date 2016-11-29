@@ -12,8 +12,8 @@
 
 /obj/structure/closet/l3closet/general/New()
 	..()
-	new /obj/item/clothing/suit/bio_suit/general(src)
-	new /obj/item/clothing/head/bio_hood/general(src)
+	new /obj/item/clothing/suit/bio_suit/new_hazmat/general(src)
+	new /obj/item/clothing/head/bio_hood/new_hazmat/general(src)
 
 
 /obj/structure/closet/l3closet/virology
@@ -23,8 +23,8 @@
 
 /obj/structure/closet/l3closet/virology/New()
 	..()
-	new /obj/item/clothing/suit/bio_suit/virology(src)
-	new /obj/item/clothing/head/bio_hood/virology(src)
+	new /obj/item/clothing/suit/bio_suit/new_hazmat/virology(src)
+	new /obj/item/clothing/head/bio_hood/new_hazmat/virology(src)
 	new /obj/item/clothing/mask/breath(src)
 	new /obj/item/weapon/tank/oxygen(src)
 
@@ -36,8 +36,8 @@
 
 /obj/structure/closet/l3closet/security/New()
 	..()
-	new /obj/item/clothing/suit/bio_suit/security(src)
-	new /obj/item/clothing/head/bio_hood/security(src)
+	new /obj/item/clothing/suit/bio_suit/new_hazmat/security(src)
+	new /obj/item/clothing/head/bio_hood/new_hazmat/security(src)
 
 
 /obj/structure/closet/l3closet/janitor
@@ -47,8 +47,8 @@
 
 /obj/structure/closet/l3closet/janitor/New()
 	..()
-	new /obj/item/clothing/suit/bio_suit/janitor(src)
-	new /obj/item/clothing/head/bio_hood/janitor(src)
+	new /obj/item/clothing/suit/bio_suit/new_hazmat/janitor(src)
+	new /obj/item/clothing/head/bio_hood/new_hazmat/janitor(src)
 
 
 /obj/structure/closet/l3closet/scientist
@@ -58,5 +58,5 @@
 
 /obj/structure/closet/l3closet/scientist/New()
 	..()
-	new /obj/item/clothing/suit/bio_suit/scientist(src)
-	new /obj/item/clothing/head/bio_hood/scientist(src)
+	new /obj/item/clothing/suit/bio_suit/new_hazmat/scientist(src)
+	new /obj/item/clothing/head/bio_hood/new_hazmat/scientist(src)

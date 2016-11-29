@@ -63,7 +63,7 @@
 		sleep(spreadDelay)
 		Spread()
 
-/obj/effect/biomass/proc/Spread(var/direction = dir)
+/obj/effect/biomass/proc/Spread(direction = dir)
 	//set background = 1
 	var/possibleDirsInt = 0
 

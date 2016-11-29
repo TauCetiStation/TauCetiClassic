@@ -320,7 +320,6 @@
 	desc = "A small bottle of Chef's Special. How fragrantly!"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle3"
-
 	New()
 		..()
 		reagents.add_reagent("chefspecial", 5)
@@ -330,7 +329,6 @@
 	desc = "A small bottle of alpha-amanitin. Did you like mushrooms?"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle12"
-
 	New()
 		..()
 		reagents.add_reagent("alphaamanitin", 30)
@@ -340,7 +338,6 @@
 	desc = "A small bottle of carpotoxin. Upon receipt of substance no carp was not injured."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle12"
-
 	New()
 		..()
 		reagents.add_reagent("carpotoxin", 30)
@@ -350,7 +347,6 @@
 	desc = "A small bottle of zombiepowder. We are not responsible for the uprising of dead."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle16"
-
 	New()
 		..()
 		reagents.add_reagent("zombiepowder", 30)

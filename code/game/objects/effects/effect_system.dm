@@ -222,7 +222,7 @@ steam.start() -- spawns the effect
 	if(istype(M))
 		affect(M)
 
-/obj/effect/effect/smoke/proc/affect(var/mob/living/carbon/M)
+/obj/effect/effect/smoke/proc/affect(mob/living/carbon/M)
 	if (istype(M))
 		return 0
 	if (M.internal != null && M.wear_mask && (M.wear_mask.flags & MASKINTERNALS))
@@ -241,7 +241,7 @@ steam.start() -- spawns the effect
 	for(var/mob/living/carbon/M in get_turf(src))
 		affect(M)
 
-/obj/effect/effect/smoke/bad/affect(var/mob/living/carbon/M)
+/obj/effect/effect/smoke/bad/affect(mob/living/carbon/M)
 	if (!..())
 		return 0
 	M.drop_item()
@@ -269,7 +269,7 @@ steam.start() -- spawns the effect
 	for(var/mob/living/carbon/M in get_turf(src))
 		affect(M)
 
-/obj/effect/effect/smoke/sleepy/affect(mob/living/carbon/M as mob )
+/obj/effect/effect/smoke/sleepy/affect(mob/living/carbon/M )
 	if (!..())
 		return 0
 
@@ -294,7 +294,7 @@ steam.start() -- spawns the effect
 	for(var/mob/living/carbon/human/R in get_turf(src))
 		affect(R)
 
-/obj/effect/effect/smoke/mustard/affect(var/mob/living/carbon/human/R)
+/obj/effect/effect/smoke/mustard/affect(mob/living/carbon/human/R)
 	if (!..())
 		return 0
 	if (R.wear_suit != null)
@@ -557,7 +557,7 @@ steam.start() -- spawns the effect
 			return
 
 		M.stop_pulling()
-		M << "\blue You slipped on the foam!"
+		to_chat(M, "\blue You slipped on the foam!")
 		playsound(src.loc, 'sound/misc/slip.ogg', 50, 1, -3)
 		M.Stun(5)
 		M.Weaken(2)
@@ -571,7 +571,7 @@ steam.start() -- spawns the effect
 
 
 
-	set_up(amt=5, loca, var/datum/reagents/carry = null, var/metalfoam = 0)
+	set_up(amt=5, loca, datum/reagents/carry = null, metalfoam = 0)
 		amount = round(sqrt(amt / 3), 1)
 		if(istype(loca, /turf/))
 			location = loca
@@ -651,43 +651,43 @@ steam.start() -- spawns the effect
 		if(metal==1 || prob(50))
 			qdel(src)
 
-	attack_paw(var/mob/user)
+	attack_paw(mob/user)
 		attack_hand(user)
 		return
 
-	attack_hand(var/mob/user)
+	attack_hand(mob/user)
 		if ((HULK in user.mutations) || (prob(75 - metal*25)))
-			user << "\blue You smash through the metal foam wall."
+			to_chat(user, "\blue You smash through the metal foam wall.")
 			for(var/mob/O in oviewers(user))
 				if ((O.client && !( O.blinded )))
-					O << "\red [user] smashes through the foamed metal."
+					to_chat(O, "\red [user] smashes through the foamed metal.")
 
 			qdel(src)
 		else
-			user << "\blue You hit the metal foam but bounce off it."
+			to_chat(user, "\blue You hit the metal foam but bounce off it.")
 		return
 
 
-	attackby(var/obj/item/I, var/mob/user)
+	attackby(obj/item/I, mob/user)
 
 		if (istype(I, /obj/item/weapon/grab))
 			var/obj/item/weapon/grab/G = I
 			G.affecting.loc = src.loc
 			for(var/mob/O in viewers(src))
 				if (O.client)
-					O << "\red [G.assailant] smashes [G.affecting] through the foamed metal wall."
+					to_chat(O, "\red [G.assailant] smashes [G.affecting] through the foamed metal wall.")
 			qdel(I)
 			qdel(src)
 			return
 
 		if(prob(I.force*20 - metal*25))
-			user << "\blue You smash through the foamed metal with \the [I]."
+			to_chat(user, "\blue You smash through the foamed metal with \the [I].")
 			for(var/mob/O in oviewers(user))
 				if ((O.client && !( O.blinded )))
-					O << "\red [user] smashes through the foamed metal."
+					to_chat(O, "\red [user] smashes through the foamed metal.")
 			qdel(src)
 		else
-			user << "\blue You hit the metal foam to no effect."
+			to_chat(user, "\blue You hit the metal foam to no effect.")
 
 	CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
 		if(air_group) return 0
@@ -726,10 +726,10 @@ steam.start() -- spawns the effect
 			s.start()
 
 			for(var/mob/M in viewers(5, location))
-				M << "\red The solution violently explodes."
+				to_chat(M, "\red The solution violently explodes.")
 			for(var/mob/M in viewers(1, location))
 				if (prob (50 * amount))
-					M << "\red The explosion knocks you down."
+					to_chat(M, "\red The explosion knocks you down.")
 					M.Weaken(rand(1,5))
 			return
 		else
@@ -752,11 +752,11 @@ steam.start() -- spawns the effect
 				flash += (round(amount/4) * flashing_factor)
 
 			for(var/mob/M in viewers(8, location))
-				M << "\red The solution violently explodes."
+				to_chat(M, "\red The solution violently explodes.")
 
 			explosion(location, devastation, heavy, light, flash)
 
-	proc/holder_damage(var/atom/holder)
+	proc/holder_damage(atom/holder)
 		if(holder)
 			var/dmglevel = 4
 
