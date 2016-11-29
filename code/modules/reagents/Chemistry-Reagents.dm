@@ -3857,7 +3857,7 @@ datum
 	var/spawning_horror = 0
 	var/percent_machine = 0
 
-/datum/reagent/mednanobots/on_mob_life(var/mob/living/M)
+/datum/reagent/mednanobots/on_mob_life(mob/living/M)
 	if(!..())
 		return
 	if(ishuman(M))
@@ -3990,7 +3990,7 @@ datum
 	color = "#792300" //rgb: 121, 35, 0
 	custom_metabolism = 0.5
 
-/datum/reagent/alphaamanitin/on_mob_life(var/mob/living/M)
+/datum/reagent/alphaamanitin/on_mob_life(mob/living/M, alien)
 	if(!..() || (alien && alien == IS_DIONA))
 		return
 
@@ -4006,7 +4006,7 @@ datum
 	color = "#792300" //rgb: 59, 8, 5
 	custom_metabolism = 0.05
 
-/datum/reagent/aflatoxin/on_mob_life(var/mob/living/M)
+/datum/reagent/aflatoxin/on_mob_life(mob/living/M, alien)
 	if(!..() || (alien && alien == IS_DIONA))
 		return
 
@@ -4027,7 +4027,7 @@ datum
 	custom_metabolism = 0.01
 	data = 1 //Used as a tally
 
-/datum/reagent/chefspecial/on_mob_life(var/mob/living/M)
+/datum/reagent/chefspecial/on_mob_life(mob/living/M, alien)
 	if(!..() || (alien && alien == IS_DIONA))
 		return
 
@@ -4047,7 +4047,7 @@ datum
 	color = "#792300" //rgb: 207, 54, 0
 	custom_metabolism = 0 //No metabolism
 
-/datum/reagent/dioxin/on_mob_life(var/mob/living/M)
+/datum/reagent/dioxin/on_mob_life(mob/living/M, alien)
 	if(!..() || (alien && alien == IS_DIONA))
 		return
 
