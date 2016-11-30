@@ -22,6 +22,12 @@
 /obj/structure/door_assembly/New()
 	update_state()
 
+/obj/structure/door_assembly/Destroy()
+	if(electronics)
+		qdel(electronics)
+		electronics = null
+	return ..()
+
 /obj/structure/door_assembly/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/weapon/pen))
 		var/t = copytext(stripped_input(user, "Enter the name for the door.", name, created_name), 1, MAX_NAME_LEN)
@@ -175,9 +181,9 @@
 			to_chat(user, "<span class='notice'>You finish the airlock!</span>")
 			var/obj/machinery/door/airlock/door = null
 			if(glass_material && !glass_only)
-				door = new glass_type(loc)
+				door = new glass_type(loc, dir)
 			else
-				door = new airlock_type(loc)
+				door = new airlock_type(loc, dir)
 			door.assembly_type = type
 			door.electronics = electronics
 			if(electronics.one_access)
@@ -188,7 +194,6 @@
 			if(created_name)
 				door.name = created_name
 			electronics.loc = door
-			door.dir = dir
 			qdel(src)
 	else
 		..()

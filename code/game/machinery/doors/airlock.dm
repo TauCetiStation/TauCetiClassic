@@ -130,7 +130,7 @@ var/list/airlock_overlays = list()
 	var/boltDown   = 'sound/machines/airlock/airlockBoltsDown.ogg'
 	var/doorForced = 'sound/machines/airlock/airlockForced.ogg'
 
-/obj/machinery/door/airlock/New()
+/obj/machinery/door/airlock/New(loc, dir = null)
 	..()
 	if(src.closeOtherId != null)
 		spawn (5)
@@ -140,8 +140,16 @@ var/list/airlock_overlays = list()
 					break
 	if(glass && !inner_material)
 		inner_material = "glass"
+	if(dir)
+		src.dir = dir
 	update_icon()
 
+/obj/machinery/door/airlock/Destroy()
+	if(electronics)
+		qdel(electronics)
+		electronics = null
+	closeOther = null
+	return ..()
 
 /*
 About the new airlock wires panel:
