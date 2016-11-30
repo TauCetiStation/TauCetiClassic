@@ -118,6 +118,6 @@
 		returnable.tod = null
 		returnable.timeofdeath = 0
 		dead_mob_list -= returnable
-		update_health_hud()
+		returnable.update_health_hud()
 
 		return
