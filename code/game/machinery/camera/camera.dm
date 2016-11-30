@@ -54,9 +54,10 @@
 	..()
 
 /obj/machinery/camera/Destroy()
-	if(istype(bug))
-		bug.bugged_cameras -= src.c_tag
-	..()
+	if(bug)
+		bug.bugged_cameras -= c_tag
+		bug = null
+	return ..()
 
 /obj/machinery/camera/emp_act(severity)
 	if(!isEmpProof())
