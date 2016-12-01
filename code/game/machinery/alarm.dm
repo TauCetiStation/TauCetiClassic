@@ -1483,8 +1483,9 @@ FIRE ALARM
 	if (!( istype(A, /area) ))
 		return
 	A.firereset()
-	detecting = 1
-	update_icon()
+	for(var/obj/machinery/firealarm/L in A)
+		L.detecting = 1
+		L.update_icon()
 	return
 
 /obj/machinery/firealarm/proc/alarm()
@@ -1495,8 +1496,9 @@ FIRE ALARM
 	if (!( istype(A, /area) ))
 		return
 	A.firealert()
-	detecting = 0
-	update_icon()
+	for(var/obj/machinery/firealarm/L in A)
+		L.detecting = 0
+		L.update_icon()
 	//playsound(src.loc, 'sound/ambience/signal.ogg', 75, 0)
 	return
 
