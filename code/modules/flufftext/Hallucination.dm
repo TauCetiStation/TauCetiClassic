@@ -113,7 +113,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 				//src << "Strange Audio"
 				switch(rand(1,12))
 					if(1)
-						src << 'sound/machines/airlock.ogg'
+						src << 'sound/machines/airlock/airlockOpen.ogg'
 					if(2)
 						if(prob(50))
 							src << 'sound/effects/Explosion1.ogg'

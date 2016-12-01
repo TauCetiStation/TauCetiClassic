@@ -167,32 +167,32 @@
 	if(config.ert_admin_call_only) return 1
 	return ticker.mode && ticker.mode.ert_disabled
 
-var/global/maint_all_access_priority = FALSE	// Set only by keycard auth. If true, maint
-																							// access  can be revoked only by calling revoke_maint_all_access(TRUE) (this doing keycard auth)
-var/global/maint_all_access = FALSE
+var/global/maint_all_access_priority = FALSE    // Set only by keycard auth. If true, maint
+                                                // access  can be revoked only by calling revoke_maint_all_access(TRUE) (this doing keycard auth)
 var/global/timer_maint_revoke_id = 0
 
 /proc/make_maint_all_access(var/priority = FALSE)
 	if(priority)
 		maint_all_access_priority = TRUE
-	if(maint_all_access)
-		return
-	maint_all_access = TRUE
+
+	change_maintenance_access(TRUE)
+
 	to_chat(world, "<font size=4 color='red'>Attention!</font>")
 	to_chat(world, "<font color='red'>The maintenance access requirement has been revoked on all airlocks.</font>")
 
 /proc/revoke_maint_all_access(var/priority = FALSE)
 	if(priority)
 		maint_all_access_priority = FALSE
-	if(!maint_all_access) // For communication console
-		return
 	if(maint_all_access_priority)	// We must use keycard auth
 		return
-	maint_all_access = FALSE
+
+	change_maintenance_access(FALSE)
+
 	to_chat(world, "<font size=4 color='red'>Attention!</font>")
 	to_chat(world, "<font color='red'>The maintenance access requirement has been readded on all maintenance airlocks.</font>")
 
-/obj/machinery/door/airlock/allowed(mob/M)
-	if(maint_all_access && src.check_access_list(list(access_maint_tunnels)))
-		return 1
-	return ..(M)
+/proc/change_maintenance_access(allow_state)
+	for(var/area/maintenance/M in all_areas)
+		for(var/obj/machinery/door/airlock/A in M)
+			A.emergency = allow_state
+			A.update_icon()

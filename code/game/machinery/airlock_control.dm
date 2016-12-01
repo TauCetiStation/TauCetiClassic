@@ -22,30 +22,26 @@ obj/machinery/door/airlock/receive_signal(datum/signal/signal)
 			close(1)
 
 		if("unlock")
-			locked = 0
-			update_icon()
+			unbolt()
 
 		if("lock")
-			locked = 1
-			update_icon()
+			bolt()
 
 		if("secure_open")
-			locked = 0
-			update_icon()
+			unbolt()
 
 			sleep(2)
 			open(1)
 
-			locked = 1
-			update_icon()
+			bolt()
 
 		if("secure_close")
-			locked = 0
+			unbolt()
+
+			sleep(2)
 			close(1)
 
-			locked = 1
-			sleep(2)
-			update_icon()
+			bolt()
 
 	send_status()
 

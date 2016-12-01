@@ -88,6 +88,6 @@
 /obj/item/weapon/tracker_electronics
 
 	name = "tracker electronics"
-	icon = 'icons/obj/doors/door_assembly.dmi'
+	icon = 'icons/obj/doors/door_electronics.dmi'
 	icon_state = "door_electronics"
 	w_class = 2.0
