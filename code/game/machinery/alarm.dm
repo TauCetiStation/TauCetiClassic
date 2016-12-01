@@ -1476,31 +1476,22 @@ FIRE ALARM
 	src.updateUsrDialog()
 
 /obj/machinery/firealarm/proc/reset()
-	if (!( src.working ))
+	if (!working)
 		return
-	var/area/A = src.loc
-	A = A.loc
-	if (!( istype(A, /area) ))
-		return
+	var/area/A = get_area(src)
 	A.firereset()
-	for(var/obj/machinery/firealarm/L in A)
-		L.detecting = 1
-		L.update_icon()
-	return
+	for(var/obj/machinery/firealarm/FA in A)
+		FA.detecting = TRUE
+		FA.update_icon()
 
 /obj/machinery/firealarm/proc/alarm()
-	if (!( src.working ))
+	if (!working)
 		return
-	var/area/A = src.loc
-	A = A.loc
-	if (!( istype(A, /area) ))
-		return
+	var/area/A = get_area(src)
 	A.firealert()
-	for(var/obj/machinery/firealarm/L in A)
-		L.detecting = 0
-		L.update_icon()
-	//playsound(src.loc, 'sound/ambience/signal.ogg', 75, 0)
-	return
+	for(var/obj/machinery/firealarm/FA in A)
+		FA.detecting = FALSE
+		FA.update_icon()
 
 /obj/machinery/firealarm/New(loc, dir, building)
 	..()
