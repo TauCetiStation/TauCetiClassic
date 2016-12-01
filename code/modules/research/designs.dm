@@ -383,6 +383,15 @@ datum/design/aifixer
 	build_path = /obj/item/weapon/circuitboard/libraryconsole
 	//category = list("Computer Boards")
 
+/datum/design/deepfryer
+	name = "Machine Design (Deep Fryer Board)"
+	desc = "The circuit board for a deep fryer."
+	id = "gibber"
+	req_tech = list("programming" = 1)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/deep_fryer
+
 ///////////////////////////////////
 //////////AI Module Disks//////////
 ///////////////////////////////////

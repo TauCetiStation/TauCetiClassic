@@ -2945,6 +2945,16 @@
 		..()
 		reagents.add_reagent("nutriment", 2)
 
+/obj/item/weapon/reagent_containers/food/snacks/deepfryholder
+	name = "Deep Fried Foods Holder Obj"
+	desc = "If you can see this description the code for the deep fryer fucked up."
+	icon_state = "deepfried_holder_icon"
+	filling_color = "#FFAD33"
+	bitesize = 2
+	New()
+		..()
+		reagents.add_reagent("nutriment", 3)
+
 /obj/item/weapon/reagent_containers/food/snacks/rawmeatball
 	name = "raw meatball"
 	desc = "A raw meatball."
@@ -2992,3 +3002,4 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 3)
+
