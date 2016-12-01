@@ -960,7 +960,7 @@ ________________________________________________________________________________
 				to_chat(user, "There are <B>[s_bombs]</B> smoke bomb\s remaining.")
 				to_chat(user, "There are <B>[a_boost]</B> adrenaline booster\s remaining.")
 			else
-				to_chat(user, "ï¿½rrï¿½R ï¿½aï¿½ï¿½aï¿½ï¿½ No-ï¿½-ï¿½ fï¿½ï¿½Nï¿½ 3RRï¿½r")
+				to_chat(user, "�rr�R �a��a�� No-�-� f��N� 3RR�r")
 
 /*
 ===================================================================================

@@ -1,7 +1,7 @@
 /obj/machinery/door/airlock/alarmlock
-
-	name = "Glass Alarm Airlock"
-	icon = 'icons/obj/doors/Doorglass.dmi'
+	name = "glass alarm airlock"
+	icon = 'icons/obj/doors/airlocks/station2/glass.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/station2/overlays.dmi'
 	opacity = 0
 	glass = 1
 

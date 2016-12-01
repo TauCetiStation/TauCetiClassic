@@ -66,7 +66,7 @@
 	if (src.operating)
 		return
 	src.operating = 1
-	layer = 4.1		//Above everything except firedoors
+	layer = 2.8
 	flick("pdoorc1", src)
 	src.icon_state = "pdoor1"
 	src.density = 1

@@ -174,3 +174,8 @@
 //get_turf(): Returns the turf that contains the atom.
 //Example: A fork inside a box inside a locker will return the turf the locker is standing on.
 #define get_turf(A) (get_step(A, 0))
+
+// Door assembly states
+#define ASSEMBLY_SECURED       0
+#define ASSEMBLY_WIRED         1
+#define ASSEMBLY_NEAR_FINISHED 2

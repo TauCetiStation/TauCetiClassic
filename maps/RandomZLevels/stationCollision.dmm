@@ -419,7 +419,7 @@
 "ic" = (/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_x = 0; tag = ""},/turf/simulated/floor,/area/awaymission/arrivalblock)
 "id" = (/obj/structure/stool/bed/chair{dir = 1},/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_x = 0; tag = ""},/turf/simulated/floor,/area/awaymission/arrivalblock)
 "ie" = (/obj/effect/decal/remains/human,/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_x = 0; tag = ""},/turf/simulated/floor{icon_state = "red"; dir = 4},/area/awaymission/arrivalblock)
-"if" = (/obj/machinery/door/airlock/glass_security{name = "Glass Airlock"; req_access_txt = "0"},/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_x = 0; tag = ""},/turf/simulated/floor,/area/awaymission/arrivalblock)
+"if" = (/obj/machinery/door/airlock/security/glass{name = "Glass Airlock"; req_access_txt = "0"},/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_x = 0; tag = ""},/turf/simulated/floor,/area/awaymission/arrivalblock)
 "ig" = (/obj/structure/closet/secure_closet/engineering_personal,/turf/simulated/floor,/area/awaymission/northblock)
 "ih" = (/obj/structure/closet/secure_closet/engineering_personal,/turf/simulated/floor{icon_state = "damaged2"},/area/awaymission/northblock)
 "ii" = (/obj/machinery/microwave{pixel_x = -2; pixel_y = 7},/obj/structure/table,/turf/simulated/floor,/area/awaymission/midblock)
@@ -475,10 +475,10 @@
 "jg" = (/obj/structure/stool,/obj/machinery/light/small,/turf/simulated/floor{icon_state = "red"},/area/awaymission/arrivalblock)
 "jh" = (/obj/machinery/atmospherics/pipe/simple{dir = 9; icon_state = "intact"; level = 2},/turf/simulated/floor{icon_state = "damaged2"},/area/awaymission/northblock)
 "ji" = (/obj/structure/window/reinforced{dir = 1},/obj/structure/sign/securearea{pixel_x = 32},/obj/item/clothing/under/rank/security,/obj/item/clothing/suit/armor/riot,/obj/item/clothing/head/helmet/swat,/obj/effect/decal/remains/human,/obj/item/weapon/gun/energy/laser/practice,/turf/simulated/floor{icon_state = "showroomfloor"},/area/awaymission/research)
+"jj" = (/obj/machinery/door/airlock/medical/glass{id_tag = null; name = "Glass Airlock"; req_access_txt = "0"},/turf/simulated/floor,/area/awaymission/southblock)
 "jt" = (/obj/structure/girder,/turf/simulated/floor,/area/awaymission/arrivalblock)
 "ju" = (/obj/machinery/door/airlock/glass,/turf/simulated/floor,/area/awaymission/arrivalblock)
 "jv" = (/obj/machinery/door/airlock/maintenance{name = "Airlock"},/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; tag = ""},/turf/simulated/floor,/area/awaymission/southblock)
-"jw" = (/obj/machinery/door/airlock/glass_medical{id_tag = null; name = "Glass Airlock"; req_access_txt = "0"},/turf/simulated/floor,/area/awaymission/southblock)
 "jx" = (/obj/machinery/door/airlock/glass,/turf/simulated/floor,/area/awaymission/southblock)
 "jy" = (/obj/machinery/door/airlock/glass,/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; tag = ""},/turf/simulated/floor,/area/awaymission/southblock)
 "jz" = (/turf/simulated/wall,/area/awaymission/gateroom)
@@ -681,10 +681,10 @@ aagcgegegegegegchZipiqgCirisisisisitgCglhHfXiuhOhghPhPfXiviwixiygliziAeziCeBiEiF
 aagzgfgfgegfgfgziGiHhygCgCiIiJiKgCiLgCglhHfXfXfXhjfXfXfXfXfXfXfXfXfXfXfXiMiNfXfXfXfXglglfXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aagTgegegegegeiOiPhuiQgCiRiSiSiSfufvgClVjJjPjPfGfwjPjPjPjPjPfIjPjPjPjPjPjJjPjPjPjPjPjPfJjcaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aahrgfgfgegfgfhrjdhyipgCjejfjfjgfKgifWgjlWlXlXlXgIhelXhzlXlXlXlXlXlXlXhDhCjPhVjPjPjPjPjPjcaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aagcgegegegegegchIiHipgCgCgCgCgCgCjtgCgCgCjujujcjcjvjcjcjcjcjwjcjcjcjxjyjzjzjzjzjzjzjzjxjcjcjcjAjBjCaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aagcgegegegegegchIiHipgCgCgCgCgCgCjtgCgCgCjujujcjcjvjcjcjcjcjjjcjcjcjxjyjzjzjzjzjzjzjzjxjcjcjcjAjBjCaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aagcgfgfgegfgfgchZhyhujDjEjFipjGhyjHhyhyhyhyhyjcjIjJjKjcjLjMjMjNjOjcjPjJjzjQjRjSjTjUjzjVjVjWjWjXjYjZaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aagcgegegegegegckakbiHhuiahykcjDhykdhyhyhyhyhyjckekfkgjckhkikjkkkljcjPkmjzjQknkokpjUjzjVjVjVjVjVkqjZaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aagckrkrkrkrkrgcgCksktkuksktgCgCgCgCgCjugCgCgCjcjcjcjcjcjcjckvjcjwjcjPjJjzkwkxkykzkAjzkBjVkCjVjVkDjZaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aagckrkrkrkrkrgcgCksktkuksktgCgCgCgCgCjugCgCgCjcjcjcjcjcjcjckvjcjjjcjPjJjzkwkxkykzkAjzkBjVkCjVjVkDjZaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aagdkEkFkFkFkGgdaafOkHgUkIkJaagCkKkLkMhykNjEkOjckPjMkljckQjMjMkRkljcjPjJjzkSkTkUkTkVjzjVkqkDkWjVjYjZaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaagckXkYkZgcaagChyhyjEhyhyjEkOjclajPlbjclcjPjPjPldjcjPjJjzlelflglflhjzjVjVjXjVjVkqjZaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaagckXgekZgcaagChyjEhyjEhyhykOjckPkjklkvlcjPliljlkjcjPjJjzlllflglflmjzkqjYjVlnkCjYjZaaaaaaaaaaaaaaaaaaaaaaaaaaaa

@@ -1,7 +1,7 @@
 /var/const/OPEN = 1
 /var/const/CLOSED = 2
 
-#define FIREDOOR_CLOSED_MOD	1.6	//Above everything
+#define FIREDOOR_CLOSED_MOD	0.1
 #define FIREDOOR_MAX_PRESSURE_DIFF 25 // kPa
 #define FIREDOOR_MAX_TEMP 50 // °C
 #define FIREDOOR_MIN_TEMP 0
@@ -17,8 +17,8 @@
 	req_one_access = list(access_atmospherics, access_engine_equip)
 	opacity = 0
 	density = 0
-	layer = DOOR_LAYER - 0.1
-	base_layer = DOOR_LAYER - 0.1
+	layer = DOOR_LAYER - 0.2
+	base_layer = DOOR_LAYER - 0.2
 	glass = 0
 
 	//These are frequenly used with windows, so make sure zones can pass.
@@ -378,9 +378,4 @@
 		if(changed)
 			update_icon()
 
-
 /obj/machinery/door/firedoor/border_only
-
-/obj/machinery/door/firedoor/multi_tile
-	icon = 'icons/obj/doors/DoorHazard2x1.dmi'
-	width = 2

@@ -252,7 +252,7 @@ var/datum/subsystem/vote/SSvote
 		else
 			. += "<font color='grey'>Restart (Disallowed)</font>"
 		if(admin)
-			. += "\t(<a href='?src=\ref[src];vote=toggle_restart'>[config.allow_vote_restart?"Allowed":"Disallowed"]</a>)"
+			. += "&emsp;(<a href='?src=\ref[src];vote=toggle_restart'>[config.allow_vote_restart?"Allowed":"Disallowed"]</a>)"
 		. += "</li><li>"
 		//crew transfer
 		if(admin || config.allow_vote_mode)
