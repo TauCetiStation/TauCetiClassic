@@ -1273,6 +1273,12 @@ FIRE ALARM
 	var/last_process = 0
 	var/wiresexposed = 0
 	var/buildstage = 2 // 2 = complete, 1 = no wires,  0 = circuit gone
+	var/area/area
+
+/obj/machinery/firealarm/New()
+	..()
+	spawn(5)
+		src.area = src.loc.loc
 
 /obj/machinery/firealarm/update_icon()
 
@@ -1299,20 +1305,24 @@ FIRE ALARM
 /obj/machinery/firealarm/fire_act(datum/gas_mixture/air, temperature, volume)
 	if(src.detecting)
 		if(temperature > T0C+200)
-			src.alarm()			// added check of detector status here
+			for(var/obj/machinery/firealarm/L in src.area)
+				L.alarm()			// added check of detector status here
 	return
 
 /obj/machinery/firealarm/attack_ai(mob/user)
 	return src.attack_hand(user)
 
 /obj/machinery/firealarm/bullet_act(BLAH)
-	return src.alarm()
-
+	for(var/obj/machinery/firealarm/L in src.area)
+		L.alarm()
+	return
 /obj/machinery/firealarm/attack_paw(mob/user)
 	return src.attack_hand(user)
 
 /obj/machinery/firealarm/emp_act(severity)
-	if(prob(50/severity)) alarm()
+	if(prob(50/severity))
+		for(var/obj/machinery/firealarm/L in src.area)
+			L.alarm()
 	..()
 
 /obj/machinery/firealarm/attackby(obj/item/W, mob/user)
@@ -1376,7 +1386,8 @@ FIRE ALARM
 					qdel(src)
 		return
 
-	src.alarm()
+	for(var/obj/machinery/firealarm/L in src.area)
+		L.alarm()
 	return
 
 /obj/machinery/firealarm/process()//Note: this processing was mostly phased out due to other code, and only runs when needed
@@ -1395,8 +1406,8 @@ FIRE ALARM
 	last_process = world.timeofday
 
 	if(locate(/obj/fire) in loc)
-		alarm()
-
+		for(var/obj/machinery/firealarm/L in src.area)
+			L.alarm()
 	return
 
 /obj/machinery/firealarm/power_change()
@@ -1461,9 +1472,11 @@ FIRE ALARM
 		return FALSE
 
 	if (href_list["reset"])
-		src.reset()
+		for(var/obj/machinery/firealarm/L in src.area)
+			L.reset()
 	else if (href_list["alarm"])
-		src.alarm()
+		for(var/obj/machinery/firealarm/L in src.area)
+			L.alarm()
 	else if (href_list["time"])
 		src.timing = text2num(href_list["time"])
 		last_process = world.timeofday
