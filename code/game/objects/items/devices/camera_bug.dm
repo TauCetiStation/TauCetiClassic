@@ -7,7 +7,7 @@
 	desc = "For illicit snooping through the camera network."
 	icon = 'icons/obj/device.dmi'
 	icon_state	= "camera_bug"
-	w_class		= 1.0
+	w_class		= 1
 	item_state	= "camera_bug"
 	throw_speed	= 4
 	throw_range	= 20
@@ -37,9 +37,10 @@
 		var/obj/machinery/camera/camera = bugged_cameras[cam_tag]
 		if(camera.bug == src)
 			camera.bug = null
-	bugged_cameras = list()
+	bugged_cameras.Cut()
 	if(tracking)
 		tracking = null
+	SSobj.processing -= src
 	return ..()
 
 
