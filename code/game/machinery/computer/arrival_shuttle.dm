@@ -161,8 +161,7 @@ var/lastMove = 0
 			D.close()
 			spawn(10) //incase someone messing with door.
 				if(D && D.density)
-					D.locked = 1
-					D.update_icon()
+					D.bolt()
 
 	var/area/station = locate(/area/hallway/secondary/entry)
 	for(var/obj/machinery/door/airlock/external/D in station)
@@ -170,8 +169,7 @@ var/lastMove = 0
 			D.close()
 			spawn(10)
 				if(D && D.density)
-					D.locked = 1
-					D.update_icon()
+					D.bolt()
 
 	for(var/obj/machinery/door/unpowered/shuttle/wagon/D in A)
 		spawn(0)
@@ -184,8 +182,7 @@ var/lastMove = 0
 			var/area/station = locate(/area/hallway/secondary/entry)
 			for(var/obj/machinery/door/airlock/external/D in station)
 				if(D.tag == "arrival_1")
-					D.locked = 0
-					D.update_icon()
+					D.unbolt()
 
 			for(var/obj/machinery/door/unpowered/shuttle/wagon/D in A)
 				spawn(0)
@@ -195,8 +192,7 @@ var/lastMove = 0
 			var/area/velocity = locate(/area/centcom/arrival)
 			for(var/obj/machinery/door/airlock/external/D in velocity)
 				if(D.tag == "velocity_1")
-					D.locked = 0
-					D.update_icon()
+					D.unbolt()
 
 			for(var/obj/machinery/door/unpowered/shuttle/wagon/D in A)
 				spawn(0)

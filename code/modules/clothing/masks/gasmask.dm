@@ -198,6 +198,7 @@
 
 /obj/item/clothing/mask/gas/voice
 	name = "gas mask"
+	icon_state = "gas_mask_orange"
 	//desc = "A face-covering mask that can be connected to an air supply. It seems to house some odd electronics."
 	var/mode = 0// 0==Scouter | 1==Night Vision | 2==Thermal | 3==Meson
 	var/voice = "Unknown"
@@ -258,3 +259,15 @@
 	name = "owl mask"
 	desc = "Twoooo!"
 	icon_state = "owl"
+
+/obj/item/clothing/mask/gas/coloured
+	icon_state = "gas_mask_orange"
+
+/obj/item/clothing/mask/gas/coloured/examine(mob/user)
+	..()
+	if(src in user)
+		to_chat(user, "The small label on the back side tells: \"Designed by W&J Company\".")
+
+/obj/item/clothing/mask/gas/coloured/New()
+	var/color = pick("orange", "blue")
+	icon_state = "gas_mask_[color]"

@@ -68,6 +68,11 @@
 #define INFECTION_LEVEL_TWO		500
 #define INFECTION_LEVEL_THREE	1000
 
+#define INFECTION_LEVEL_ONE_PLUS	INFECTION_LEVEL_ONE + ( (INFECTION_LEVEL_TWO - INFECTION_LEVEL_ONE) * 1/3 )
+#define INFECTION_LEVEL_ONE_PLUS_PLUS	INFECTION_LEVEL_ONE + ( (INFECTION_LEVEL_TWO - INFECTION_LEVEL_ONE) * 2/3 )
+#define INFECTION_LEVEL_TWO_PLUS	INFECTION_LEVEL_TWO + ( (INFECTION_LEVEL_THREE - INFECTION_LEVEL_TWO) * 1/3 )
+#define INFECTION_LEVEL_TWO_PLUS_PLUS	INFECTION_LEVEL_TWO + ( (INFECTION_LEVEL_THREE - INFECTION_LEVEL_TWO) * 2/3 )
+
 //metal, glass, rod stacks
 #define MAX_STACK_AMOUNT_METAL	50
 #define MAX_STACK_AMOUNT_GLASS	50
@@ -169,3 +174,8 @@
 //get_turf(): Returns the turf that contains the atom.
 //Example: A fork inside a box inside a locker will return the turf the locker is standing on.
 #define get_turf(A) (get_step(A, 0))
+
+// Door assembly states
+#define ASSEMBLY_SECURED       0
+#define ASSEMBLY_WIRED         1
+#define ASSEMBLY_NEAR_FINISHED 2

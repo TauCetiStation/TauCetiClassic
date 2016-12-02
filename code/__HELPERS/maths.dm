@@ -1,8 +1,8 @@
 // Credits to Nickr5 for the useful procs I've taken from his library resource.
+#define ACCURACY 10000 //accuracy for normal distribution
 
 var/const/E		= 2.71828183
 var/const/Sqrt2	= 1.41421356
-
 
 /proc/Atan2(x, y)
 	if(!x && !y) return 0
@@ -70,6 +70,17 @@ var/const/Sqrt2	= 1.41421356
 		sum += val
 	return sum / values
 
+var/normal_next
+/proc/NormalDistr(mean = 0, stddev = 1) //because gaussian() looks... strange. This is Box–Muller transform
+	if(normal_next != null)
+		. = mean + normal_next * stddev
+		normal_next = null
+	else
+		var/R1 = sqrt(-2.0 * log(rand(0, ACCURACY) / ACCURACY))
+		var/R2 = 360 * (rand(0, ACCURACY) / ACCURACY) //because BYOND's cos() and sin() accepts degrees
+		. = mean + (R1 * cos(R2)) * stddev
+		normal_next = R1 * sin(R2)
+	return .
 
 // Returns the nth root of x.
 /proc/Root(n, x)
@@ -118,7 +129,6 @@ var/const/Sqrt2	= 1.41421356
 //95% chance that the number is within 2stddev
 //98% chance that the number is within 3stddev...etc
 var/gaussian_next
-#define ACCURACY 10000
 /proc/gaussian(mean, stddev)
 	var/R1;var/R2;var/working
 	if(gaussian_next != null)
@@ -134,4 +144,5 @@ var/gaussian_next
 		R1 *= working
 		gaussian_next = R2 * working
 	return (mean + stddev * R1)
+
 #undef ACCURACY

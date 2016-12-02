@@ -22,7 +22,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 /mob/living/carbon/proc/handle_hallucinations()
 	if(handling_hal) return
 	handling_hal = 1
-	while(hallucination > 20)
+	while(client && hallucination > 20)
 		sleep(rand(200,500)/(hallucination/25))
 		var/halpick = rand(1,100)
 		switch(halpick)
@@ -113,7 +113,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 				//src << "Strange Audio"
 				switch(rand(1,12))
 					if(1)
-						src << 'sound/machines/airlock.ogg'
+						src << 'sound/machines/airlock/airlockOpen.ogg'
 					if(2)
 						if(prob(50))
 							src << 'sound/effects/Explosion1.ogg'

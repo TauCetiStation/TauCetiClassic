@@ -332,17 +332,17 @@
 						if(e.open)
 							open = "Open:"
 						switch (e.germ_level)
-							if (INFECTION_LEVEL_ONE to INFECTION_LEVEL_ONE + 200)
+							if (INFECTION_LEVEL_ONE to INFECTION_LEVEL_ONE_PLUS)
 								infected = "Mild Infection:"
-							if (INFECTION_LEVEL_ONE + 200 to INFECTION_LEVEL_ONE + 300)
+							if (INFECTION_LEVEL_ONE_PLUS to INFECTION_LEVEL_ONE_PLUS_PLUS)
 								infected = "Mild Infection+:"
-							if (INFECTION_LEVEL_ONE + 300 to INFECTION_LEVEL_ONE + 400)
+							if (INFECTION_LEVEL_ONE_PLUS_PLUS to INFECTION_LEVEL_TWO)
 								infected = "Mild Infection++:"
-							if (INFECTION_LEVEL_TWO to INFECTION_LEVEL_TWO + 200)
+							if (INFECTION_LEVEL_TWO to INFECTION_LEVEL_TWO_PLUS)
 								infected = "Acute Infection:"
-							if (INFECTION_LEVEL_TWO + 200 to INFECTION_LEVEL_TWO + 300)
+							if (INFECTION_LEVEL_TWO_PLUS to INFECTION_LEVEL_TWO_PLUS_PLUS)
 								infected = "Acute Infection+:"
-							if (INFECTION_LEVEL_TWO + 300 to INFECTION_LEVEL_TWO + 400)
+							if (INFECTION_LEVEL_TWO_PLUS_PLUS to INFECTION_LEVEL_THREE)
 								infected = "Acute Infection++:"
 							if (INFECTION_LEVEL_THREE to INFINITY)
 								infected = "Septic:"
@@ -375,10 +375,20 @@
 
 						var/infection = "None"
 						switch (i.germ_level)
-							if (1 to INFECTION_LEVEL_TWO)
+							if (INFECTION_LEVEL_ONE to INFECTION_LEVEL_ONE_PLUS)
 								infection = "Mild Infection:"
-							if (INFECTION_LEVEL_TWO to INFINITY)
+							if (INFECTION_LEVEL_ONE_PLUS to INFECTION_LEVEL_ONE_PLUS_PLUS)
+								infection = "Mild Infection+:"
+							if (INFECTION_LEVEL_ONE_PLUS_PLUS to INFECTION_LEVEL_TWO)
+								infection = "Mild Infection++:"
+							if (INFECTION_LEVEL_TWO to INFECTION_LEVEL_TWO_PLUS)
 								infection = "Acute Infection:"
+							if (INFECTION_LEVEL_TWO_PLUS to INFECTION_LEVEL_TWO_PLUS_PLUS)
+								infection = "Acute Infection+:"
+							if (INFECTION_LEVEL_TWO_PLUS_PLUS to INFECTION_LEVEL_THREE)
+								infection = "Acute Infection++:"
+							if (INFECTION_LEVEL_THREE to INFINITY)
+								infection = "Necrotic:"
 
 						dat += "<tr>"
 						dat += "<td>[i.name]</td><td>N/A</td><td>[i.damage]</td><td>[infection]:[mech]</td><td></td>"

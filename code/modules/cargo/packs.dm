@@ -382,9 +382,9 @@ datum/supply_pack/New()
 
 /datum/supply_pack/internals
 	name = "Internals crate"
-	contains = list(/obj/item/clothing/mask/gas,
-					/obj/item/clothing/mask/gas,
-					/obj/item/clothing/mask/gas,
+	contains = list(/obj/item/clothing/mask/gas/coloured,
+					/obj/item/clothing/mask/gas/coloured,
+					/obj/item/clothing/mask/gas/coloured,
 					/obj/item/weapon/tank/air,
 					/obj/item/weapon/tank/air,
 					/obj/item/weapon/tank/air)
@@ -436,11 +436,11 @@ datum/supply_pack/New()
 					/obj/item/weapon/tank/emergency_oxygen,
 					/obj/item/weapon/tank/emergency_oxygen,
 					/obj/item/weapon/tank/emergency_oxygen,
-					/obj/item/clothing/mask/gas,
-					/obj/item/clothing/mask/gas,
-					/obj/item/clothing/mask/gas,
-					/obj/item/clothing/mask/gas,
-					/obj/item/clothing/mask/gas)
+					/obj/item/clothing/mask/gas/coloured,
+					/obj/item/clothing/mask/gas/coloured,
+					/obj/item/clothing/mask/gas/coloured,
+					/obj/item/clothing/mask/gas/coloured,
+					/obj/item/clothing/mask/gas/coloured)
 	cost = 3500
 	crate_type = /obj/structure/closet/crate/internals
 	crate_name = "Emergency crate"
@@ -939,7 +939,7 @@ datum/supply_pack/New()
 /datum/supply_pack/weedcontrol
 	name = "Weed control crate"
 	contains = list(/obj/item/weapon/scythe,
-					/obj/item/clothing/mask/gas,
+					/obj/item/clothing/mask/gas/coloured,
 					/obj/item/weapon/grenade/chem_grenade/antiweed,
 					/obj/item/weapon/grenade/chem_grenade/antiweed)
 	cost = 2000

@@ -164,11 +164,18 @@
 			if("rank")
 				edit_rank(target_ckey)
 			if("permissions")
-				change_permissions(target_ckey)
+				var/new_rights = text2num(href_list["new_rights"])
+				change_permissions(target_ckey, new_rights)
+				usr << browse(null,"window=change_permissions;")
+			if("get_new_rights")
+				get_new_rights(target_ckey)
+				return
 		edit_admin_permissions()
 
+
 	else if(href_list["call_shuttle"])
-		if(!check_rights(R_ADMIN))	return
+		if(!check_rights(R_ADMIN))
+			return
 
 		if( ticker.mode.name == "blob" )
 			alert("You can't call the shuttle during blob!")

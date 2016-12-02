@@ -35,7 +35,6 @@
 	icon_state = "shutter0"
 	sleep(10)
 	density = 0
-	layer = initial(layer)
 	set_opacity(0)
 	update_nearby_tiles()
 
@@ -53,7 +52,6 @@
 	flick("shutterc1", src)
 	icon_state = "shutter1"
 	density = 1
-	layer = 4.1
 	if(visible)
 		set_opacity(1)
 	update_nearby_tiles()

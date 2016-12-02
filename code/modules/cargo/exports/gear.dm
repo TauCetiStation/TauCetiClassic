@@ -64,7 +64,7 @@
 /datum/export/gear/mask/gas
 	cost = 10
 	unit_name = "gas mask"
-	export_types = list(/obj/item/clothing/mask/gas)
+	export_types = list(/obj/item/clothing/mask/gas/coloured)
 	include_subtypes = FALSE
 
 
