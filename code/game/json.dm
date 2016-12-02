@@ -1,6 +1,6 @@
 
 var/jsonpath = "/home/bay12/public_html"
-var/dmepath = "/home/bay12/git/baystation12.dme"
+var/dmepath = "/home/bay12/git/taucetistation.dme"
 var/makejson = 1 //temp
 proc/makejson()
 
