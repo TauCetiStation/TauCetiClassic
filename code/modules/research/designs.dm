@@ -1311,15 +1311,6 @@ datum/design/hydroponics
 	build_path = /obj/item/weapon/circuitboard/holopad
 	//category = list("Misc. Machinery")
 
-/datum/design/microwave
-	name = "Microwave Board"
-	desc = "The circuit board for a microwave."
-	id = "microwave"
-	req_tech = list("programming" = 1)
-	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
-	build_path = /obj/item/weapon/circuitboard/microwave
-
 /datum/design/deepfryer
 	name = "Deep Fryer Board"
 	desc = "The circuit board for a deep fryer."
@@ -1328,6 +1319,15 @@ datum/design/hydroponics
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/deepfryer
+
+/datum/design/microwave
+	name = "Microwave Board"
+	desc = "The circuit board for a microwave."
+	id = "microwave"
+	req_tech = list("programming" = 1)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/microwave
 
 /datum/design/oven
 	name = "Oven Board"
