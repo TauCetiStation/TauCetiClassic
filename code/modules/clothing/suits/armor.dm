@@ -17,38 +17,48 @@
 	item_state = "armor"
 	blood_overlay_type = "armor"
 	flags = FPRINT | TABLEPASS | THICKMATERIAL
-	armor = list(melee = 50, bullet = 45, laser = 23, energy = 25, bomb = 35, bio = 0, rad = 0)
+	armor = list(melee = 50, bullet = 55, laser = 25, energy = 20, bomb = 35, bio = 0, rad = 0)
 
-/obj/item/clothing/suit/armor/vest/security
+/obj/item/clothing/suit/armor/vest/security // более не актуален
 	name = "security armor"
 	desc = "An armored vest that protects against some damage. This one has NanoTrasen corporate badge."
 	icon_state = "armorsec"
 	item_state = "armor"
 
-/obj/item/clothing/suit/armor/vest/tactifool
+/obj/item/clothing/suit/storage/flak //вот замена для бронежилета охраны
 	name = "security armor"
-	icon_state = "armor_tg"
+	desc = "An armored vest that protects against some damage. This one has four pockets for storage."
+	icon_state = "armorsec"
 	item_state = "armor"
+	blood_overlay_type = "armor"
+	allowed = list(/obj/item/weapon/gun/energy,/obj/item/weapon/reagent_containers/spray/pepper,/obj/item/weapon/gun/projectile,/obj/item/ammo_box/magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs)
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO
+	flags = FPRINT | TABLEPASS | THICKMATERIAL
+	cold_protection = UPPER_TORSO|LOWER_TORSO
+	min_cold_protection_temperature = ARMOR_MIN_COLD_PROTECTION_TEMPERATURE
+	heat_protection = UPPER_TORSO|LOWER_TORSO
+	max_heat_protection_temperature = ARMOR_MAX_HEAT_PROTECTION_TEMPERATURE
+	siemens_coefficient = 0.4
+	armor = list(melee = 50, bullet = 55, laser = 25, energy = 20, bomb = 35, bio = 0, rad = 0)
 
-/obj/item/clothing/suit/armor/vest/wj
-	name = "security armor"
-	icon_state = "armor_wj"
-	item_state = "armor"
+/obj/item/clothing/suit/storage/flak/New()
+	..()
+	pockets = new/obj/item/weapon/storage/internal(src)
+	pockets.storage_slots = 4
 
 /obj/item/clothing/suit/armor/vest/warden
 	name = "Warden's jacket"
-	desc = "An armoured jacket with silver rank pips and livery."
+	desc = "An armoured jacket with gold rank pips and livery."
 	icon_state = "warden_jacket"
 	item_state = "armor"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
 
-/obj/item/clothing/suit/armor/vest/warden/tactifool
-	icon_state = "warden_tf"
+/obj/item/clothing/suit/storage/flak/warden
+	name = "Warden's jacket"
+	desc = "An armoured jacket with gold rank pips and livery."
+	icon_state = "warden_jacket"
 	item_state = "armor"
-
-/obj/item/clothing/suit/armor/vest/warden/wj
-	icon_state = "warden_wj"
-	item_state = "armor"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
 
 /obj/item/clothing/suit/armor/vest/leather
 	name = "security overcoat"
@@ -69,17 +79,6 @@
 	flags_inv = HIDEJUMPSUIT
 	siemens_coefficient = 0.6
 
-/obj/item/clothing/suit/armor/hos/coat
-	name = "armored coat"
-	desc = "A coat enchanced with a special lightweight kevlar. The epitome of tactical plainclothes."
-	icon_state = "hos_coat"
-	item_state = "jensencoat"
-
-/obj/item/clothing/suit/armor/hos/wj
-	name = "armored coat"
-	icon_state = "hos_wj"
-	item_state = "jensencoat"
-
 /obj/item/clothing/suit/armor/riot
 	name = "riot suit"
 	desc = "A suit of armor with heavy padding to protect against melee attacks. Looks like it might impair movement."
@@ -90,12 +89,6 @@
 	armor = list(melee = 70, bullet = 10, laser = 5, energy = 10, bomb = 0, bio = 0, rad = 0)
 	flags_inv = HIDEJUMPSUIT
 
-/obj/item/clothing/suit/armor/riot/tactifool
-	icon_state = "riottg"
-
-/obj/item/clothing/suit/armor/riot/wj
-	icon_state = "riot_wj"
-
 /obj/item/clothing/suit/armor/bulletproof
 	name = "Bulletproof Vest"
 	desc = "A vest that excels in protecting the wearer against high-velocity solid projectiles."
@@ -104,11 +97,18 @@
 	blood_overlay_type = "armor"
 	armor = list(melee = 10, bullet = 80, laser = 25, energy = 20, bomb = 35, bio = 0, rad = 0)
 
-/obj/item/clothing/suit/armor/bulletproof/wj
-	icon_state = "bulletproof_wj"
+/obj/item/clothing/suit/storage/flak/bulletproof
+	name = "Bulletproof Vest"
+	desc = "A vest that excels in protecting the wearer against high-velocity solid projectiles."
+	icon_state = "bulletproof"
+	item_state = "armor"
+	blood_overlay_type = "armor"
+	armor = list(melee = 10, bullet = 80, laser = 25, energy = 20, bomb = 35, bio = 0, rad = 0)
 
-/obj/item/clothing/suit/armor/bulletproof/tactifool
-	icon_state = "bulletproof_tg"
+/obj/item/clothing/suit/storage/flak/bulletproof/New()
+	..()
+	pockets = new/obj/item/weapon/storage/internal(src)
+	pockets.storage_slots = 5
 
 /obj/item/clothing/suit/armor/laserproof
 	name = "Ablative Armor Vest"

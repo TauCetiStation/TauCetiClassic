@@ -111,107 +111,9 @@
 		new /obj/item/clothing/head/helmet/HoS(src)
 		new /obj/item/clothing/head/helmet/HoS/dermal(src)
 		new /obj/item/clothing/suit/armor/hos(src)
-		new /obj/item/clothing/under/rank/head_of_security/corp(src)
 		new /obj/item/clothing/under/rank/head_of_security(src)
-		new /obj/item/clothing/under/rank/head_of_security_fem(src)
 		new /obj/item/weapon/storage/belt/security(src)
-		new /obj/item/clothing/mask/gas/sechailer/hos(src)
-		new /obj/item/weapon/cartridge/hos(src)
-		new /obj/item/device/radio/headset/heads/hos(src)
-		new /obj/item/taperoll/police(src)
-		new /obj/item/clothing/under/rank/head_of_security/jensen(src)
-		new /obj/item/clothing/suit/armor/hos/jensen(src)
-		new /obj/item/clothing/gloves/black/hos(src)
-		new /obj/item/clothing/glasses/thermal/hos_thermals(src)
-		new /obj/item/weapon/shield/riot/tele(src)
-		new /obj/item/weapon/storage/lockbox/loyalty(src)
-		new /obj/item/weapon/storage/box/flashbangs(src)
-		new /obj/item/device/flash(src)
-		new /obj/item/weapon/reagent_containers/spray/pepper(src)
-		new /obj/item/weapon/melee/baton(src)
-		new /obj/item/clothing/tie/holster/waist(src)
-		new /obj/item/weapon/melee/telebaton(src)
-		new /obj/item/weapon/gun/energy/gun(src)
-		new /obj/item/device/flashlight/flare(src)
-		/*/New year part
-		new /obj/item/clothing/suit/wintercoat/security(src)
-		new /obj/item/clothing/shoes/winterboots(src)
-		new /obj/item/clothing/head/santa(src)
-		*/
-		return
-
-/obj/structure/closet/secure_closet/hos_tactifool
-	name = "Head of Security's Locker"
-	req_access = list(access_hos)
-	icon_state = "hossecure1"
-	icon_closed = "hossecure"
-	icon_locked = "hossecure1"
-	icon_opened = "hossecureopen"
-	icon_broken = "hossecurebroken"
-	icon_off = "hossecureoff"
-
-	New()
-		..()
-		if(prob(50))
-			new /obj/item/weapon/storage/backpack/security/tactifool(src)
-		else
-			new /obj/item/weapon/storage/backpack/satchel_sec/tactifool(src)
-		new /obj/item/clothing/shoes/jackboots/secshoes(src)
-		new /obj/item/clothing/head/helmet/HoS/tactifool(src)
-		new /obj/item/clothing/head/helmet/HoS/dermal(src)
-		new /obj/item/clothing/suit/armor/hos/coat(src)
-		new /obj/item/clothing/under/rank/head_of_security/tactifool/fancy(src)
-		new /obj/item/clothing/under/rank/head_of_security/tactifool(src)
-		new /obj/item/weapon/storage/belt/security/improved(src)
-		new /obj/item/clothing/mask/gas/sechailer/tactifool(src)
-		new /obj/item/weapon/cartridge/hos(src)
-		new /obj/item/device/radio/headset/heads/hos(src)
-		new /obj/item/taperoll/police(src)
-		new /obj/item/clothing/under/rank/head_of_security/jensen(src)
-		new /obj/item/clothing/suit/armor/hos/jensen(src)
-		new /obj/item/clothing/gloves/black/hos(src)
-		new /obj/item/clothing/glasses/thermal/hos_thermals(src)
-		new /obj/item/weapon/shield/riot/tele(src)
-		new /obj/item/weapon/storage/lockbox/loyalty(src)
-		new /obj/item/weapon/storage/box/flashbangs(src)
-		new /obj/item/device/flash(src)
-		new /obj/item/weapon/reagent_containers/spray/pepper(src)
-		new /obj/item/weapon/melee/baton(src)
-		new /obj/item/clothing/tie/holster/waist(src)
-		new /obj/item/weapon/melee/telebaton(src)
-		new /obj/item/weapon/gun/energy/gun(src)
-		new /obj/item/device/flashlight/flare(src)
-		/*/New year part
-		new /obj/item/clothing/suit/wintercoat/security(src)
-		new /obj/item/clothing/shoes/winterboots(src)
-		new /obj/item/clothing/head/santa(src)
-		*/
-		return
-
-/obj/structure/closet/secure_closet/hos_wj
-	name = "Head of Security's Locker"
-	req_access = list(access_hos)
-	icon_state = "hossecure1"
-	icon_closed = "hossecure"
-	icon_locked = "hossecure1"
-	icon_opened = "hossecureopen"
-	icon_broken = "hossecurebroken"
-	icon_off = "hossecureoff"
-
-	New()
-		..()
-		if(prob(50))
-			new /obj/item/weapon/storage/backpack/security/wj(src)
-		else
-			new /obj/item/weapon/storage/backpack/satchel_sec/wj(src)
-		new /obj/item/clothing/head/helmet/HoS/wj(src)
-		new /obj/item/clothing/head/helmet/wj/hos(src)
-		new /obj/item/clothing/head/helmet/HoS/dermal(src)
-		new /obj/item/clothing/suit/armor/hos/wj(src)
-		new /obj/item/clothing/under/rank/head_of_security/wj(src)
-		new /obj/item/weapon/storage/belt/security/wj(src)
-		new /obj/item/clothing/mask/gas/sechailer/wj(src)
-		new /obj/item/clothing/shoes/jackboots/wj(src)
+		new /obj/item/clothing/mask/gas/sechailer(src)
 		new /obj/item/weapon/cartridge/hos(src)
 		new /obj/item/device/radio/headset/heads/hos(src)
 		new /obj/item/taperoll/police(src)
@@ -254,98 +156,13 @@
 		else
 			new /obj/item/weapon/storage/backpack/satchel_sec(src)
 		new /obj/item/clothing/head/helmet/warden(src)
+		new /obj/item/clothing/head/beret/sec/warden(src)
 		new /obj/item/clothing/under/rank/warden(src)
-		new /obj/item/clothing/under/rank/warden_fem(src)
-		new /obj/item/clothing/under/rank/warden/corp(src)
-		new /obj/item/clothing/suit/armor/vest/security(src)
-		new /obj/item/clothing/suit/armor/vest/warden(src)
+		new /obj/item/clothing/suit/storage/flak(src)
+		new /obj/item/clothing/suit/storage/flak/warden(src)
 		new /obj/item/weapon/gun/energy/taser(src)
 		new /obj/item/weapon/storage/belt/security(src)
-		new /obj/item/clothing/mask/gas/sechailer/warden(src)
-		new /obj/item/clothing/head/helmet/warden/blue(src)
-		new /obj/item/device/radio/headset/headset_sec(src)
-		new /obj/item/clothing/glasses/sunglasses/sechud(src)
-		new /obj/item/taperoll/police(src)
-		new /obj/item/weapon/storage/box/flashbangs(src)
-		new /obj/item/device/flash(src)
-		new /obj/item/weapon/reagent_containers/spray/pepper(src)
-		new /obj/item/weapon/melee/baton(src)
-		new /obj/item/weapon/storage/box/holobadge(src)
-		/*/New year part
-		new /obj/item/clothing/suit/wintercoat/security(src)
-		new /obj/item/clothing/shoes/winterboots(src)
-		new /obj/item/clothing/head/santa(src)
-		*/
-		return
-
-/obj/structure/closet/secure_closet/warden_tactifool
-	name = "Warden's Locker"
-	req_access = list(access_armory)
-	icon_state = "wardensecure1"
-	icon_closed = "wardensecure"
-	icon_locked = "wardensecure1"
-	icon_opened = "wardensecureopen"
-	icon_broken = "wardensecurebroken"
-	icon_off = "wardensecureoff"
-
-
-	New()
-		..()
-		if(prob(50))
-			new /obj/item/weapon/storage/backpack/security/tactifool(src)
-		else
-			new /obj/item/weapon/storage/backpack/satchel_sec/tactifool(src)
-		new /obj/item/clothing/shoes/jackboots/secshoes(src)
-		new /obj/item/clothing/head/helmet/warden/tactifool(src)
-		new /obj/item/clothing/under/rank/warden/tactifool(src)
-		new /obj/item/clothing/suit/armor/vest/tactifool(src)
-		new /obj/item/clothing/suit/armor/vest/warden/tactifool(src)
-		new /obj/item/weapon/gun/energy/taser/tactifool(src)
-		new /obj/item/weapon/storage/belt/security/improved(src)
-		new /obj/item/clothing/mask/gas/sechailer/tactifool(src)
-		new /obj/item/clothing/head/helmet/warden/blue(src)
-		new /obj/item/device/radio/headset/headset_sec(src)
-		new /obj/item/clothing/glasses/sunglasses/sechud(src)
-		new /obj/item/taperoll/police(src)
-		new /obj/item/weapon/storage/box/flashbangs(src)
-		new /obj/item/device/flash(src)
-		new /obj/item/weapon/reagent_containers/spray/pepper(src)
-		new /obj/item/weapon/melee/baton(src)
-		new /obj/item/weapon/storage/box/holobadge(src)
-		/*/New year part
-		new /obj/item/clothing/suit/wintercoat/security(src)
-		new /obj/item/clothing/shoes/winterboots(src)
-		new /obj/item/clothing/head/santa(src)
-		*/
-		return
-
-/obj/structure/closet/secure_closet/warden_wj
-	name = "Warden's Locker"
-	req_access = list(access_armory)
-	icon_state = "wardensecure1"
-	icon_closed = "wardensecure"
-	icon_locked = "wardensecure1"
-	icon_opened = "wardensecureopen"
-	icon_broken = "wardensecurebroken"
-	icon_off = "wardensecureoff"
-
-
-	New()
-		..()
-		if(prob(50))
-			new /obj/item/weapon/storage/backpack/security/wj(src)
-		else
-			new /obj/item/weapon/storage/backpack/satchel_sec/wj(src)
-		new /obj/item/clothing/shoes/jackboots/wj(src)
-		new /obj/item/clothing/head/helmet/warden/wj(src)
-		new /obj/item/clothing/head/helmet/wj/warden(src)
-		new /obj/item/clothing/under/rank/warden/wj(src)
-		new /obj/item/clothing/suit/armor/vest/wj(src)
-		new /obj/item/clothing/suit/armor/vest/warden/wj(src)
-		new /obj/item/weapon/gun/energy/taser/wj(src)
-		new /obj/item/weapon/storage/belt/security/wj(src)
-		new /obj/item/clothing/mask/gas/sechailer/wj(src)
-		new /obj/item/clothing/head/helmet/warden/blue(src)
+		new /obj/item/clothing/mask/gas/sechailer(src)
 		new /obj/item/device/radio/headset/headset_sec(src)
 		new /obj/item/clothing/glasses/sunglasses/sechud(src)
 		new /obj/item/taperoll/police(src)
@@ -382,9 +199,6 @@
 		new /obj/item/clothing/head/helmet(src)
 		new /obj/item/weapon/storage/belt/security(src)
 		new /obj/item/weapon/gun/energy/taser(src)
-		new /obj/item/clothing/head/soft/sec/corp(src)
-		new /obj/item/clothing/under/rank/security/corp(src)
-		new /obj/item/clothing/tie/storage/black_vest(src)
 		new /obj/item/device/radio/headset/headset_sec(src)
 		new /obj/item/device/flash(src)
 		new /obj/item/weapon/reagent_containers/spray/pepper(src)
@@ -400,87 +214,6 @@
 		new /obj/item/clothing/head/ushanka(src)
 		*/
 		return
-
-/obj/structure/closet/secure_closet/security_tactifool
-	name = "Security Officer's Locker"
-	req_access = list(access_brig)
-	icon_state = "sec1"
-	icon_closed = "sec"
-	icon_locked = "sec1"
-	icon_opened = "secopen"
-	icon_broken = "secbroken"
-	icon_off = "secoff"
-
-	New()
-		..()
-		if(prob(50))
-			new /obj/item/weapon/storage/backpack/security/tactifool(src)
-		else
-			new /obj/item/weapon/storage/backpack/satchel_sec/tactifool(src)
-		new /obj/item/clothing/shoes/jackboots/secshoes(src)
-		new /obj/item/clothing/gloves/security/fight(src)
-		new /obj/item/clothing/suit/armor/vest/tactifool(src)
-		new /obj/item/clothing/head/helmet/tactifool(src)
-		new /obj/item/weapon/storage/belt/security/improved(src)
-		new /obj/item/weapon/gun/energy/taser/tactifool(src)
-		new /obj/item/clothing/head/soft/sec/tactifool(src)
-		new /obj/item/clothing/under/rank/security/tactifool(src)
-		new /obj/item/device/radio/headset/headset_sec(src)
-		new /obj/item/device/flash(src)
-		new /obj/item/weapon/reagent_containers/spray/pepper(src)
-		new /obj/item/weapon/grenade/flashbang(src)
-		new /obj/item/weapon/melee/baton(src)
-		new /obj/item/clothing/glasses/sunglasses/sechud(src)
-		new /obj/item/taperoll/police(src)
-		new /obj/item/device/hailer(src)
-		new /obj/item/device/flashlight/flare(src)
-		/*/New year part
-		new /obj/item/clothing/suit/wintercoat/security(src)
-		new /obj/item/clothing/shoes/winterboots(src)
-		new /obj/item/clothing/head/ushanka(src)
-		*/
-		return
-
-/obj/structure/closet/secure_closet/security_wj
-	name = "Security Officer's Locker"
-	req_access = list(access_brig)
-	icon_state = "sec1"
-	icon_closed = "sec"
-	icon_locked = "sec1"
-	icon_opened = "secopen"
-	icon_broken = "secbroken"
-	icon_off = "secoff"
-
-	New()
-		..()
-		if(prob(50))
-			new /obj/item/weapon/storage/backpack/security/wj(src)
-		else
-			new /obj/item/weapon/storage/backpack/satchel_sec/wj(src)
-		new /obj/item/clothing/shoes/jackboots/wj(src)
-		new /obj/item/clothing/gloves/security/wj(src)
-		new /obj/item/clothing/suit/armor/vest/wj(src)
-		new /obj/item/clothing/head/helmet/wj(src)
-		new /obj/item/weapon/storage/belt/security/wj(src)
-		new /obj/item/weapon/gun/energy/taser/wj(src)
-		new /obj/item/clothing/head/soft/sec/wj(src)
-		new /obj/item/clothing/under/rank/security/wj(src)
-		new /obj/item/device/radio/headset/headset_sec(src)
-		new /obj/item/device/flash(src)
-		new /obj/item/weapon/reagent_containers/spray/pepper(src)
-		new /obj/item/weapon/grenade/flashbang(src)
-		new /obj/item/weapon/melee/baton(src)
-		new /obj/item/clothing/glasses/sunglasses/sechud(src)
-		new /obj/item/taperoll/police(src)
-		new /obj/item/device/hailer(src)
-		new /obj/item/device/flashlight/flare(src)
-		/*/New year part
-		new /obj/item/clothing/suit/wintercoat/security(src)
-		new /obj/item/clothing/shoes/winterboots(src)
-		new /obj/item/clothing/head/ushanka(src)
-		*/
-		return
-
 
 /obj/structure/closet/secure_closet/security/cargo
 

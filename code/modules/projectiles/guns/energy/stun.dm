@@ -9,19 +9,6 @@
 /obj/item/weapon/gun/energy/taser/attack_self(mob/living/user)
 	select_fire(user)
 
-/obj/item/weapon/gun/energy/taser/tactifool
-	name = "taser gun"
-	desc = "A small, low capacity gun used for non-lethal takedowns. This model have a faster firerate."
-	icon_state = "tgtaser"
-	fire_delay = 2
-
-/obj/item/weapon/gun/energy/taser/wj
-	name = "taser gun"
-	desc = "X26 taser - this model have a more efficient power consumption."
-	icon_state = "wjtaser"
-	cell_type = "/obj/item/weapon/stock_parts/cell/secborg"
-	ammo_type = list(/obj/item/ammo_casing/energy/electrode/cheap, /obj/item/ammo_casing/energy/stun/cheap)
-
 /obj/item/weapon/gun/energy/taser/cyborg
 	name = "taser gun"
 	desc = "A small, low capacity gun used for non-lethal takedowns."
