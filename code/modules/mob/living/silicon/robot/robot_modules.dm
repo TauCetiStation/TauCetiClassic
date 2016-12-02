@@ -185,6 +185,7 @@
 		src.modules += new /obj/item/weapon/crowbar(src)
 		src.modules += new /obj/item/weapon/wirecutters(src)
 		src.modules += new /obj/item/device/multitool(src)
+		src.modules += new /obj/item/weapon/rcd/borg(src)
 		src.modules += new /obj/item/device/t_scanner(src)
 		src.modules += new /obj/item/device/analyzer(src)
 		src.modules += new /obj/item/taperoll/engineering(src)
