@@ -126,12 +126,6 @@
 	if (prob(hit_reflect_chance))
 		return 1
 
-/obj/item/clothing/suit/armor/laserproof/wj
-	icon_state = "laserproof_wj"
-
-/obj/item/clothing/suit/armor/laserproof/tactifool
-	icon_state = "laserproof_tf"
-
 /obj/item/clothing/suit/armor/swat
 	name = "swat suit"
 	desc = "A heavily armored suit that protects against moderate damage. Used in special operations."
