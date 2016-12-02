@@ -195,7 +195,7 @@
 		else
 			new /obj/item/weapon/storage/backpack/satchel_sec(src)
 		new /obj/item/clothing/gloves/security(src)
-		new /obj/item/clothing/suit/armor/vest/security(src)
+		new /obj/item/clothing/suit/storage/flak(src)
 		new /obj/item/clothing/head/helmet(src)
 		new /obj/item/weapon/storage/belt/security(src)
 		new /obj/item/weapon/gun/energy/taser(src)
