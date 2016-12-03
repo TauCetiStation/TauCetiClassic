@@ -31,6 +31,7 @@
 ********************/
 
 /obj/machinery/kitchen_machine/New()
+	..()
 	reagents = new/datum/reagents(100)
 	reagents.my_atom = src
 	if(!available_recipes)
@@ -69,24 +70,24 @@
 	if(src.broken > 0)
 		if(src.broken == 2 && istype(O, /obj/item/weapon/wirecutters)) // If it's broken and they're using a wirecutters.
 			user.visible_message( \
-				"\blue [user] starts to fix part of the [src].", \
-				"\blue You start to fix part of the [src]." \
+				"<span class='notice'>[user] starts to fix part of the [src].</span>", \
+				"<span class='notice'>You start to fix part of the [src].</span>" \
 			)
 			if (do_after(user,20,target = src))
 				user.visible_message( \
-					"\blue [user] fixes part of the [src].", \
-					"\blue You have fixed part of the [src]." \
+					"<span class='notice'>[user] fixes part of the [src].</span>", \
+					"<span class='notice'>You have fixed part of the [src].</span>" \
 				)
 				src.broken = 1 // Fix it a bit
 		else if(src.broken == 1 && istype(O, /obj/item/weapon/weldingtool)) // If it's broken and they're doing the weldingtool.
 			user.visible_message( \
-				"\blue [user] starts to fix part of the [src].", \
-				"\blue You start to fix part of the [src]." \
+				"<span class='notice'>[user] starts to fix part of the [src].</span>", \
+				"<span class='notice'>You start to fix part of the [src].</span>" \
 			)
 			if (do_after(user,20,target = src))
 				user.visible_message( \
-					"\blue [user] fixes the [src].", \
-					"\blue You have fixed the [src]." \
+					"<span class='notice'>[user] fixes the [src].</span>", \
+					"<span class='notice'>You have fixed the [src].</span>" \
 				)
 				src.icon_state = off_icon
 				src.broken = 0 // Fix it!
@@ -94,7 +95,7 @@
 				src.flags = OPENCONTAINER
 				return 0 //to use some fuel
 		else
-			to_chat(user, "\red It's broken!")
+			to_chat(user, "<span class='danger'>It's broken!</span>")
 			return 1
 	else if(istype(O, /obj/item/weapon/reagent_containers/spray/))
 		var/obj/item/weapon/reagent_containers/spray/clean_spray = O
@@ -102,8 +103,8 @@
 			clean_spray.reagents.remove_reagent("cleaner",clean_spray.amount_per_transfer_from_this,1)
 			playsound(loc, 'sound/effects/spray3.ogg', 50, 1, -6)
 			user.visible_message( \
-				"\blue [user] has cleaned [src].", \
-				"\blue You have cleaned [src]." \
+				"<span class='notice'>[user] has cleaned [src].</span>", \
+				"<span class='notice'>You have cleaned [src].</span>" \
 			)
 			src.dirty = 0 // It's clean!
 			src.broken = 0 // just to be sure
@@ -112,18 +113,18 @@
 			src.updateUsrDialog()
 			return 1 // Disables the after-attack so we don't spray the floor/user.
 		else
-			to_chat(user, "\red You need more space cleaner!")
+			to_chat(user, "<span class='danger'>You need more space cleaner!</span>")
 			return 1
 
 	else if(istype(O, /obj/item/weapon/soap/)) // If they're trying to clean it then let them
 		user.visible_message( \
-			"\blue [user] starts to clean [src].", \
-			"\blue You start to clean [src]." \
+			"<span class='notice'>[user] starts to clean [src].</span>", \
+			"<span class='notice'>You start to clean [src].</span>" \
 		)
 		if (do_after(user,20,target=src))
 			user.visible_message( \
-				"\blue [user]  has cleaned [src].", \
-				"\blue You have cleaned [src]." \
+				"<span class='notice'>[user]  has cleaned [src].</span>", \
+				"<span class='notice'>You have cleaned [src].</span>" \
 			)
 			src.dirty = 0 // It's clean!
 			src.broken = 0 // just to be sure
@@ -134,21 +135,19 @@
 		return 1
 	else if(is_type_in_list(O,acceptable_items))
 		if (contents.len>=max_n_of_items)
-			to_chat(user, "\red Tihs [src] is full of ingredients, you cannot put more.")
+			to_chat(user, "<span class='danger'>Tihs [src] is full of ingredients, you cannot put more.</span>")
 			return 1
 		if (istype(O,/obj/item/stack) && O:amount>1)
 			new O.type (src)
 			O:use(1)
 			user.visible_message( \
-				"\blue [user] has added one of [O] to \the [src].", \
-				"\blue You add one of [O] to \the [src].")
+				"<span class='notice'>[user] has added one of [O] to \the [src].</span>", \
+				"<span class='notice'>You add one of [O] to \the [src].</span>")
 		else
-		//	user.remove_from_mob(O)	//This just causes problems so far as I can tell. -Pete
-			user.drop_item()
-			O.loc = src
+			user.drop_item(src)
 			user.visible_message( \
-				"\blue [user] has added \the [O] to \the [src].", \
-				"\blue You add \the [O] to \the [src].")
+				"<span class='notice'>[user] has added \the [O] to \the [src].</span>", \
+				"<span class='notice'>You add \the [O] to \the [src].</span>")
 	else if(istype(O,/obj/item/weapon/reagent_containers/glass) || \
 	        istype(O,/obj/item/weapon/reagent_containers/food/drinks) || \
 	        istype(O,/obj/item/weapon/reagent_containers/food/condiment) \
@@ -162,10 +161,10 @@
 		//G.reagents.trans_to(src,G.amount_per_transfer_from_this)
 	else if(istype(O,/obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = O
-		to_chat(user, "\red You can not fit \the [G.affecting] in this [src].")
+		to_chat(user, "<span class='danger'>You can not fit \the [G.affecting] in this [src].</span>")
 		return 1
 	else
-		to_chat(user, "\red You have no idea what you can cook with this [O].")
+		to_chat(user, "<span class='danger'>You have no idea what you can cook with this [O].</span>")
 		return 1
 	src.updateUsrDialog()
 
