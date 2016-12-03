@@ -255,7 +255,7 @@
 		return
 	start()
 	if (reagents.total_volume==0 && !(locate(/obj) in contents)) //dry run
-		if (!wzhzhzh(10))
+		if (!cook_process(10))
 			abort()
 			return
 		stop()
@@ -267,17 +267,17 @@
 	if (!recipe)
 		dirty += 1
 		if (prob(max(10,dirty*5)))
-			if (!wzhzhzh(4))
+			if (!cook_process(4))
 				abort()
 				return
 			muck_start()
-			wzhzhzh(4)
+			cook_process(4)
 			muck_finish()
 			cooked = fail()
 			cooked.loc = src.loc
 			return
 		else if (has_extra_item())
-			if (!wzhzhzh(4))
+			if (!cook_process(4))
 				abort()
 				return
 			broke()
@@ -285,7 +285,7 @@
 			cooked.loc = src.loc
 			return
 		else
-			if (!wzhzhzh(10))
+			if (!cook_process(10))
 				abort()
 				return
 			stop()
@@ -294,10 +294,10 @@
 			return
 	else
 		var/halftime = round(recipe.time/10/2)
-		if (!wzhzhzh(halftime))
+		if (!cook_process(halftime))
 			abort()
 			return
-		if (!wzhzhzh(halftime))
+		if (!cook_process(halftime))
 			abort()
 			cooked = fail()
 			cooked.loc = src.loc
@@ -314,7 +314,7 @@
 		score["meals"]++
 		return
 
-/obj/machinery/kitchen_machine/proc/wzhzhzh(seconds)
+/obj/machinery/kitchen_machine/proc/cook_process(seconds)
 	for (var/i=1 to seconds)
 		if (stat & (NOPOWER|BROKEN))
 			return 0
