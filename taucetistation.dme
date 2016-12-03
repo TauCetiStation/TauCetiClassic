@@ -613,6 +613,7 @@
 #include "code\game\objects\items\trash.dm"
 #include "code\game\objects\items\devices\ai_detector.dm"
 #include "code\game\objects\items\devices\aicard.dm"
+#include "code\game\objects\items\devices\camera_bug.dm"
 #include "code\game\objects\items\devices\chameleonproj.dm"
 #include "code\game\objects\items\devices\debugger.dm"
 #include "code\game\objects\items\devices\flash.dm"
