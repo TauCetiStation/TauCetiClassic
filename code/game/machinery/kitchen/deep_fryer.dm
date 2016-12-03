@@ -20,19 +20,22 @@
 	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
 	RefreshParts()
 
+/obj/machinery/deepfryer/Destroy()
+	frying = null
+	return ..()
 
-/obj/machinery/deepfryer/examine()
+/obj/machinery/deepfryer/examine(mob/user)
 	..()
 	if(frying)
 		switch(fry_time)
 			if(0 to 15)
-				to_chat(usr, "You can make out lightly-fried [frying] in the oil.")
+				to_chat(user, "You can make out lightly-fried [frying] in the oil.")
 			if(16 to 49)
-				to_chat(usr, "You can make out fried [frying] in the oil.")
+				to_chat(user, "You can make out fried [frying] in the oil.")
 			if(50 to 59)
-				to_chat(usr, "You can make out deep-fried [frying] in the oil.")
+				to_chat(user, "You can make out deep-fried [frying] in the oil.")
 			if(60 to INFINITY)
-				to_chat(usr, "You fucked up, man.")
+				to_chat(user, "You fucked up, man.")
 
 /obj/machinery/deepfryer/attackby(obj/item/I, mob/user)
 	if(on)
@@ -45,7 +48,7 @@
 	else if(istype(I, /obj/item/weapon/grab))
 		to_chat(user, "<span class='notice'>You cannot fry him.</span>")
 		return
-	else if (ishuman(usr))
+	else if (ishuman(user))
 		to_chat(user, "<span class='notice'>You put [I] into [src].</span>")
 		on = TRUE
 		user.drop_item()
@@ -59,7 +62,7 @@
 	if(frying)
 		fry_time++
 		if(fry_time == 30)
-			playsound(src.loc, "sound/machines/ding.ogg", 50, 1)
+			playsound(src, "sound/machines/ding.ogg", 50, 1)
 			visible_message("[src] dings!")
 		else if (fry_time == 60)
 			visible_message("[src] emits an acrid smell!")
@@ -68,10 +71,8 @@
 /obj/machinery/deepfryer/attack_hand(mob/user)
 	if(frying)
 		to_chat(user, "<span class='notice'>You eject [frying] from [src].</span>")
-		var/obj/item/weapon/reagent_containers/food/snacks/deepfryholder/S = new(get_turf(src))
-		S.icon = frying.icon
-		S.overlays = frying.overlays
-		S.icon_state = frying.icon_state
+		var/obj/item/weapon/reagent_containers/food/snacks/deepfryholder/S = new(loc)
+		S.appearance = frying.appearance
 		S.desc = frying.desc
 		switch(fry_time)
 			if(0 to 15)
