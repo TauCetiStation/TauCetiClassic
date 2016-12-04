@@ -334,6 +334,19 @@
 			new /obj/item/ammo_box/magazine/m9mm_2(src.loc)
 	qdel(src)
 
+/obj/effect/landmark/sec_equip/ammo/pistolNL/gimme_it_now()
+	switch(ticker.sec_equip_preset)
+		if("classic")
+			for(var/i = 1 to 6)
+				new /obj/item/ammo_box/magazine/at7_45(loc)
+		if("tactifool")
+			for(var/i = 1 to 6)
+				new /obj/item/ammo_box/magazine/acm38_38(loc)
+		if("milizei")
+			for(var/i = 1 to 6)
+				new /obj/item/ammo_box/magazine/m9mmr_2(loc)
+	qdel(src)
+
 /obj/effect/landmark/sec_equip/mask
 	name = "security mask spawn"
 
