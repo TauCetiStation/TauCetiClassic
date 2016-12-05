@@ -403,7 +403,6 @@
 	cost = 2
 	gamemodes = list(/datum/game_mode/nuclear)
 	uplink_types = list("nuclear")
-
 /*
 /datum/uplink_item/stealthy_weapons/silencer
 	name = "Stetchkin Silencer"

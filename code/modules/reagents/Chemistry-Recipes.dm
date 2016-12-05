@@ -2142,6 +2142,41 @@ datum
 			required_reagents = list("space_up" = 2, "bluecuracao" = 1, "melonliquor" = 1)
 			result_amount = 4
 
+//////////////////////////////////////////////
+//////////////New poisons/////////////////////
+//////////////////////////////////////////////
+
+/datum/chemical_reaction/alphaamanitin
+	name = "Alpha-amanitin"
+	id = "alphaamanitin"
+	result = "alphaamanitin"
+	required_reagents = list("amatoxin" = 1, "toxin" = 1, "mutagen" = 1)
+	required_catalysts = list("phoron" = 5)
+	result_amount = 1
+
+/datum/chemical_reaction/aflatoxin
+	name = "Aflatoxin"
+	id = "aflatoxin"
+	result = "aflatoxin"
+	required_reagents = list("amatoxin" = 1, "mercury" = 3, "ammonia" = 1)
+	result_amount = 1
+
+/*
+/datum/chemical_reaction/chefspecial
+	name = "Chef's Special"
+	id = "chefspecial"
+	result = "chefspecial"
+	required_reagents = list("aflatoxin" = 1, "alphaamanitin" = 1, "enzyme" = 1)
+	result_amount = 1
+*/
+
+/datum/chemical_reaction/dioxin
+	name = "dioxin"
+	id = "dioxin"
+	result = "dioxin"
+	required_reagents = list("silver" = 2, "diethylamine" = 1)
+	result_amount = 3
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////// Nanobots /////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
