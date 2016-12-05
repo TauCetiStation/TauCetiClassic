@@ -440,8 +440,7 @@
 		if (C.legcuffed && !initial(C.legcuffed))
 			C.drop_from_inventory(C.legcuffed)
 		C.legcuffed = initial(C.legcuffed)
-	hud_updateflag |= 1 << HEALTH_HUD
-	hud_updateflag |= 1 << STATUS_HUD
+	update_health_hud()
 
 /mob/living/proc/rejuvenate()
 
@@ -497,10 +496,12 @@
 
 	// make the icons look correct
 	regenerate_icons()
+	update_health_hud()
+	return
 
+/mob/living/proc/update_health_hud()
 	hud_updateflag |= 1 << HEALTH_HUD
 	hud_updateflag |= 1 << STATUS_HUD
-	return
 
 /mob/living/proc/UpdateDamageIcon()
 	return

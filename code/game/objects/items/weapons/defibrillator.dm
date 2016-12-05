@@ -66,15 +66,13 @@
 					if(C.health<=config.health_threshold_crit || prob(10))
 						var/suff = min(C.getOxyLoss(), 20)
 						C.adjustOxyLoss(-suff)
-						C.updatehealth()
-						if(C.stat == DEAD && C.health > config.health_threshold_dead)
-							C.stat = UNCONSCIOUS
 					else
 						C.adjustFireLoss(5)
-						if(C.stat == DEAD && C.health > config.health_threshold_dead)
-							C.stat = CONSCIOUS
-					return_to_body_dialog(C)
-					reanimate_body(C)
+					C.updatehealth()
+					if(C.stat == DEAD && C.health > config.health_threshold_dead)
+						C.stat = UNCONSCIOUS
+						return_to_body_dialog(C)
+						reanimate_body(C)
 
 				if(wet)
 					var/turf/T = get_turf(src)
@@ -120,5 +118,6 @@
 		returnable.tod = null
 		returnable.timeofdeath = 0
 		dead_mob_list -= returnable
+		returnable.update_health_hud()
 
 		return
