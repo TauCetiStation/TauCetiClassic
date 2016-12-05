@@ -31,12 +31,6 @@
 		else
 			..()
 
-/obj/item/weapon/shield/riot/tactifool
-	icon_state = "tactifoolriot"
-
-/obj/item/weapon/shield/riot/wj
-	icon_state = "wjriot"
-
 /obj/item/weapon/shield/energy
 	name = "energy combat shield"
 	desc = "A shield capable of stopping most projectile and melee attacks. It can be retracted, expanded, and stored anywhere."

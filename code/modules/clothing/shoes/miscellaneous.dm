@@ -89,23 +89,10 @@
 /obj/item/clothing/shoes/jackboots
 	name = "jackboots"
 	desc = "Nanotrasen-issue Security combat boots for combat scenarios or combat situations. All combat, all the time."
-	icon_state = "jackboots"
-	item_state = "jackboots"
-	item_color = "hosred"
-	siemens_coefficient = 0.7
-	clipped_status = CLIPPABLE
-
-/obj/item/clothing/shoes/jackboots/secshoes
-	name = "security shoes"
-	desc = "Security shoes for style."
-	icon_state = "secshoes"
-	item_state = "secshoes"
-	clipped_status = CLIPPABLE
-
-/obj/item/clothing/shoes/jackboots/wj
-	name = "security boots"
 	icon_state = "wjboots"
 	item_state = "wjboots"
+	item_color = "hosred"
+	siemens_coefficient = 0.7
 	clipped_status = CLIPPABLE
 
 /obj/item/clothing/shoes/cult

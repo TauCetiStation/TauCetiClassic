@@ -61,18 +61,6 @@
 	permeability_coefficient = 0.9
 	siemens_coefficient = 0.9
 
-/obj/item/clothing/gloves/security/fight
-	icon = 'icons/obj/clothing/gloves.dmi'
-	icon_custom = null
-	icon_state = "secfight"
-	item_state = "secfight"
-
-/obj/item/clothing/gloves/security/wj
-	icon = 'icons/obj/clothing/gloves.dmi'
-	icon_custom = null
-	icon_state = "wjgloves"
-	item_state = "wjgloves"
-
 /obj/item/clothing/gloves/security														//Sec gloves
 	desc = "Heavily padded heavy-duty red security gloves."
 	name = "Security gloves"

@@ -62,16 +62,10 @@
 	name = "security gas mask"
 	desc = "A standard issue Security gas mask with integrated 'Compli-o-nator 3000' device, plays over a dozen pre-recorded compliance phrases designed to get scumbags to stand still whilst you taze them. Do not tamper with the device."
 	action_button_name = "Toggle Mask"
-	icon_state = "officermask"
+	icon_state = "secmask"
 	var/cooldown = 0
 	var/aggressiveness = 2
 	flags = FPRINT | TABLEPASS | MASKCOVERSMOUTH | MASKCOVERSEYES | BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS | BLOCKHAIR
-
-/obj/item/clothing/mask/gas/sechailer/warden
-	icon_state = "wardenmask"
-
-/obj/item/clothing/mask/gas/sechailer/hos
-	icon_state = "hosmask"
 
 /obj/item/clothing/mask/gas/sechailer/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/screwdriver))
@@ -265,18 +259,6 @@
 	name = "owl mask"
 	desc = "Twoooo!"
 	icon_state = "owl"
-
-/obj/item/clothing/mask/gas/sechailer/wj
-	name = "security gas mask"
-	desc = "A standard issue Security gas mask with integrated 'Compli-o-nator 3000' device, plays over a dozen pre-recorded compliance phrases designed to get scumbags to stand still whilst you taze them. Do not tamper with the device."
-	icon_state = "wjsec"
-
-/obj/item/clothing/mask/gas/sechailer/tactifool
-	name = "security gas mask"
-	desc = "A standard issue Security gas mask with integrated 'Compli-o-nator 3000' device, plays over a dozen pre-recorded compliance phrases designed to get scumbags to stand still whilst you taze them. Do not tamper with the device."
-	icon_state = "hailer"
-	icon_custom = null
-	flags = FPRINT | TABLEPASS | MASKCOVERSMOUTH | BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 
 /obj/item/clothing/mask/gas/coloured
 	icon_state = "gas_mask_orange"
