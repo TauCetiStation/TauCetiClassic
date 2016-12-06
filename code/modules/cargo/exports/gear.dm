@@ -7,17 +7,14 @@
 	cost = 100
 	include_subtypes = FALSE
 	unit_name = "helmet"
-	export_types = list(/obj/item/clothing/head/helmet,
-									/obj/item/clothing/head/helmet/wj,
-									/obj/item/clothing/head/helmet/tactifool)
+	export_types = list(/obj/item/clothing/head/helmet)
 
 /datum/export/gear/sec_armor
 	cost = 100
 	include_subtypes = FALSE
 	unit_name = "armor vest"
 	export_types = list(/obj/item/clothing/suit/armor/vest,
-									/obj/item/clothing/suit/armor/vest/wj,
-									/obj/item/clothing/suit/armor/vest/tactifool)
+									/obj/item/clothing/suit/storage/flak)
 	include_subtypes = FALSE
 
 
@@ -39,7 +36,7 @@
 /datum/export/gear/bulletproof_armor
 	cost = 250
 	unit_name = "bulletproof armor vest"
-	export_types = list(/obj/item/clothing/suit/armor/bulletproof)
+	export_types = list(/obj/item/clothing/suit/storage/flak/bulletproof)
 
 /datum/export/gear/reflector_helmet
 	cost = 650

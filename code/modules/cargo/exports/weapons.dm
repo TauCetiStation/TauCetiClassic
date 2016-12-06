@@ -17,21 +17,17 @@
 /datum/export/weapon/taser
 	cost = 250
 	unit_name = "taser"
-	export_types = list(/obj/item/weapon/gun/energy/taser,
-										/obj/item/weapon/gun/energy/taser/wj,
-										/obj/item/weapon/gun/energy/taser/tactifool)
+	export_types = list(/obj/item/weapon/gun/energy/taser)
 
 /datum/export/weapon/laser
 	cost = 250
 	unit_name = "laser gun"
-	export_types = list(/obj/item/weapon/gun/energy/laser,
-										/obj/item/weapon/gun/energy/laser/tactifool)
+	export_types = list(/obj/item/weapon/gun/energy/laser)
 
 /datum/export/weapon/energy_gun
 	cost = 900
 	unit_name = "energy gun"
 	export_types = list(/obj/item/weapon/gun/energy/gun,
-										/obj/item/weapon/gun/energy/gun/carbine,
 										/obj/item/weapon/gun/energy)
 
 

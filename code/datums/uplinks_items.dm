@@ -403,7 +403,6 @@
 	cost = 2
 	gamemodes = list(/datum/game_mode/nuclear)
 	uplink_types = list("nuclear")
-
 /*
 /datum/uplink_item/stealthy_weapons/silencer
 	name = "Stetchkin Silencer"
@@ -456,12 +455,12 @@
 	desc = "Projects an image across a user, disguising them as an object scanned with it, as long as they don't move the projector from their hand. The disguised user cannot run and rojectiles pass over them."
 	item = /obj/item/device/chameleon
 	cost = 4
-/*
+
 /datum/uplink_item/stealthy_tools/camera_bug
 	name = "Camera Bug"
-	desc = "Enables you to bug cameras to view them remotely. Adding particular items to it alters its functions."
+	desc = "Enables you to view all cameras on the network and track a target. Bugging cameras allows you to disable them remotely"
 	item = /obj/item/device/camera_bug
-	cost = 2 */
+	cost = 2
 
 /datum/uplink_item/stealthy_weapons/silencer
 	name = "Syndicate Silencer"
