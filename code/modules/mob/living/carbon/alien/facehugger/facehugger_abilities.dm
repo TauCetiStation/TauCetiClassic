@@ -1,4 +1,3 @@
-#define UPGRADE_COOLDOWN	40
 #define UPGRADE_TAIL_TIMER	100
 
 //Grab levels

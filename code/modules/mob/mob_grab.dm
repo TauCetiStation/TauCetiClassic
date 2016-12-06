@@ -1,6 +1,3 @@
-#define UPGRADE_COOLDOWN	40
-#define UPGRADE_KILL_TIMER	100
-
 /obj/item/weapon/grab
 	name = "grab"
 	icon = 'icons/mob/screen1.dmi'
