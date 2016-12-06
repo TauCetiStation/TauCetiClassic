@@ -51,4 +51,3 @@
 #define HOSTILE_STANCE_TIRED 	 5
 
 #define UPGRADE_COOLDOWN	40
-#define UPGRADE_KILL_TIMER	100 //it's used?

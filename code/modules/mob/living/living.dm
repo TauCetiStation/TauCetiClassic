@@ -724,7 +724,7 @@
 
 	//resisting grabs (as if it helps anyone...)
 	if (!L.stat && !L.restrained())
-		if(L.stunned || (L.weakened && prob(50)))
+		if(L.stunned || (L.weakened && prob(90)))
 			return
 
 		var/resisting = 0
