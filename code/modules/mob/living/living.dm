@@ -723,8 +723,9 @@
 			return
 
 	//resisting grabs (as if it helps anyone...)
-	if ((!( L.stat ) && !( L.restrained() )))
-		if(L.weakened || L.stunned) return
+	if (!L.stat && !L.restrained())
+		if(L.stunned || L.weakened)
+			return
 
 		var/resisting = 0
 		for(var/obj/O in L.requests)
@@ -741,8 +742,7 @@
 						L.visible_message("<span class='danger'>[L] has broken free of [G.assailant]'s grip!</span>")
 						qdel(G)
 				if(GRAB_NECK)
-					//If the you move when grabbing someone then it's easier for them to break free. Same if the affected mob is immune to stun.
-					if (((world.time - G.assailant.l_move_time < 20 || !L.stunned) && prob(15)) || prob(3))
+					if(prob(10))
 						L.visible_message("<span class='danger'>[L] has broken free of [G.assailant]'s headlock!</span>")
 						qdel(G)
 		if(resisting)
