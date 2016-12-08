@@ -1052,10 +1052,10 @@ datum/supply_pack/New()
 
 /datum/supply_pack/food
 	name = "Kitchen supply crate"
-	contains = list(/obj/item/weapon/reagent_containers/food/snacks/flour,
-					/obj/item/weapon/reagent_containers/food/snacks/flour,
-					/obj/item/weapon/reagent_containers/food/snacks/flour,
-					/obj/item/weapon/reagent_containers/food/snacks/flour,
+	contains = list(/obj/item/weapon/reagent_containers/food/condiment/flour,
+					/obj/item/weapon/reagent_containers/food/condiment/flour,
+					/obj/item/weapon/reagent_containers/food/condiment/flour,
+					/obj/item/weapon/reagent_containers/food/condiment/flour,
 					/obj/item/weapon/reagent_containers/food/drinks/milk,
 					/obj/item/weapon/reagent_containers/food/drinks/milk,
 					/obj/item/weapon/storage/fancy/egg_box,

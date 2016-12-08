@@ -1311,7 +1311,16 @@ datum/design/hydroponics
 	build_path = /obj/item/weapon/circuitboard/holopad
 	//category = list("Misc. Machinery")
 
-datum/design/microwave
+/datum/design/deepfryer
+	name = "Deep Fryer Board"
+	desc = "The circuit board for a deep fryer."
+	id = "deepfryer"
+	req_tech = list("programming" = 1)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/deepfryer
+
+/datum/design/microwave
 	name = "Microwave Board"
 	desc = "The circuit board for a microwave."
 	id = "microwave"
@@ -1319,6 +1328,33 @@ datum/design/microwave
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/microwave
+
+/datum/design/oven
+	name = "Oven Board"
+	desc = "The circuit board for a oven."
+	id = "oven"
+	req_tech = list("programming" = 1)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/oven
+
+/datum/design/grill
+	name = "Grill Board"
+	desc = "The circuit board for a grill."
+	id = "grill"
+	req_tech = list("programming" = 1)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/grill
+
+/datum/design/candymaker
+	name = "Candy Machine Board"
+	desc = "The circuit board for a candy machine."
+	id = "candymaker"
+	req_tech = list("programming" = 1)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/candymaker
 
 datum/design/chem_dispenser
 	name = "Portable Chem Dispenser Board"

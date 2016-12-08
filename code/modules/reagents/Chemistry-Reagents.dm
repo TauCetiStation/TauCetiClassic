@@ -2053,6 +2053,14 @@ datum
 			nutriment_factor = 5 * REAGENTS_METABOLISM
 			color = "#731008" // rgb: 115, 16, 8
 
+		flour
+			name = "Flour"
+			id = "flour"
+			description = "This is what you rub all over yourself to pretend to be a ghost."
+			reagent_state = LIQUID
+			nutriment_factor = 2 * REAGENTS_METABOLISM
+			color = "#F5EAEA" // rgb: 245, 234, 234
+
 		capsaicin
 			name = "Capsaicin Oil"
 			id = "capsaicin"
