@@ -458,13 +458,8 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 	attackby(obj/item/weapon/book/tome/T, mob/living/user)
 		if(istype(T, /obj/item/weapon/book/tome)) // sanity check to prevent a runtime error
 			switch(alert("Copy the runes from your tome?",,"Copy", "Cancel"))
-				if("cancel")
+				if("Cancel")
 					return
-	//		var/list/nearby = viewers(1,src) //- Fuck this as well. No clue why this doesnt work. -K0000
-	//			if (T.loc != user)
-	//				return
-	//		for(var/mob/M in nearby)
-	//			if(M == user)
 			for(var/w in words)
 				words[w] = T.words[w]
 			to_chat(user, "You copy the translation notes from your tome.")
