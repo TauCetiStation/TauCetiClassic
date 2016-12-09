@@ -392,7 +392,7 @@
 		msg += "<span class='warning'><b>[src] has blood running from under [t_his] gloves!</b></span>\n"
 
 	for(var/implant in get_visible_implants(1))
-		msg += "<span class='warning'><b>[src] has \a [implant] sticking out of their flesh!</span>\n"
+		msg += "<span class='warning'><b>[src] has \a [implant] sticking out of their flesh!</b></span>\n"
 	if(digitalcamo)
 		msg += "[t_He] [t_is] moving [t_his] body in an unnatural and blatantly inhuman manner.\n"
 	if(mind && mind.changeling && mind.changeling.isabsorbing)

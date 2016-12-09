@@ -180,6 +180,7 @@
 		src.emagged = 1
 		to_chat(user, "You short out the product lock on [src]")
 		return
+
 	else if(istype(W, /obj/item/weapon/screwdriver) && anchored)
 		src.panel_open = !src.panel_open
 		to_chat(user, "You [src.panel_open ? "open" : "close"] the maintenance panel.")
@@ -187,17 +188,20 @@
 		if(src.panel_open)
 			src.overlays += image(src.icon, "[initial(icon_state)]-panel")
 		src.updateUsrDialog()
+
 		return
 	else if(istype(W, /obj/item/device/multitool)||istype(W, /obj/item/weapon/wirecutters))
 		if(src.panel_open)
 			attack_hand(user)
 		return
+
 	else if(istype(W, /obj/item/weapon/coin) && premium.len > 0)
 		user.drop_item()
 		W.loc = src
 		coin = W
 		to_chat(user, "\blue You insert the [W] into the [src]")
 		return
+
 	else if(istype(W, /obj/item/weapon/wrench))	//unwrenching vendomats
 		var/turf/T = user.loc
 		to_chat(user, "<span class='notice'>You begin [anchored ? "unwrenching" : "wrenching"] the [src].</span>")
@@ -215,7 +219,12 @@
 					icon_state = initial(icon_state)
 					stat &= ~NOPOWER
 					set_light(light_range_on, light_power_on)
-	else if(istype(W, /obj/item/weapon/card) && currently_vending)
+
+	else if(currently_vending && istype(W, /obj/item/device/pda) && W.GetID()) //ѕда с картой
+		var/obj/item/weapon/card/I = W.GetID()
+		scan_card(I)
+
+	else if(currently_vending && istype(W, /obj/item/weapon/card))
 		var/obj/item/weapon/card/I = W
 		scan_card(I)
 
@@ -244,7 +253,6 @@
 		to_chat(user, "\blue You insert the [W] into the [src]")
 
 	else if(src.panel_open)
-
 		for(var/datum/data/vending_product/R in product_records)
 			if(istype(W, R.product_path))
 				stock(R, user)
@@ -959,7 +967,21 @@
 	desc = "A kitchen and restaurant equipment vendor."
 	product_ads = "Mm, food stuffs!;Food and food accessories.;Get your plates!;You like forks?;I like forks.;Woo, utensils.;You don't really need these..."
 	icon_state = "dinnerware"
-	products = list(/obj/item/weapon/tray = 8,/obj/item/weapon/kitchen/utensil/fork = 6,/obj/item/weapon/kitchenknife = 3,/obj/item/weapon/reagent_containers/food/drinks/drinkingglass = 8,/obj/item/clothing/suit/chef/classic = 2)
+	products = list(
+		/obj/item/weapon/tray = 8,
+		/obj/item/weapon/kitchen/utensil/fork = 6,
+		/obj/item/weapon/kitchenknife = 3,
+		/obj/item/weapon/reagent_containers/food/drinks/drinkingglass = 8,
+		/obj/item/clothing/suit/chef/classic = 2,
+		/obj/item/weapon/kitchen/mould/bear = 1,
+		/obj/item/weapon/kitchen/mould/worm = 1,
+		/obj/item/weapon/kitchen/mould/bean = 1,
+		/obj/item/weapon/kitchen/mould/ball = 1,
+		/obj/item/weapon/kitchen/mould/cane = 1,
+		/obj/item/weapon/kitchen/mould/cash = 1,
+		/obj/item/weapon/kitchen/mould/coin = 1,
+		/obj/item/weapon/kitchen/mould/loli = 1
+	)
 	contraband = list(/obj/item/weapon/kitchen/utensil/spoon = 2,/obj/item/weapon/kitchen/utensil/knife = 2,/obj/item/weapon/kitchen/rollingpin = 2, /obj/item/weapon/butch = 2)
 
 /obj/machinery/vending/sovietsoda

@@ -62,10 +62,10 @@
 
 /datum/food_processor_process/wheat
 	input = /obj/item/weapon/reagent_containers/food/snacks/grown/wheat
-	output = /obj/item/weapon/reagent_containers/food/snacks/flour
+	output = /obj/item/weapon/reagent_containers/food/condiment/flour
 
 /datum/food_processor_process/spaghetti
-	input = /obj/item/weapon/reagent_containers/food/snacks/flour
+	input = /obj/item/weapon/reagent_containers/food/snacks/dough
 	output = /obj/item/weapon/reagent_containers/food/snacks/spagetti
 
 	/* mobs */

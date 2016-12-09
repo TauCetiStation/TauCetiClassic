@@ -352,7 +352,7 @@
 		if (istype(G.affecting, /mob/living))
 			var/mob/living/M = G.affecting
 			var/mob/living/A = G.assailant
-			if (G.state < 2)
+			if (G.state < GRAB_AGGRESSIVE)
 				if(user.a_intent == "hurt")
 					if (prob(15))	M.Weaken(5)
 					M.apply_damage(8,def_zone = "head")
@@ -365,6 +365,8 @@
 					to_chat(user, "<span class='warning'>You need a better grip to do that!</span>")
 					return
 			else
+				if(world.time < (G.last_action + UPGRADE_COOLDOWN))
+					return
 				G.affecting.loc = src.loc
 				G.affecting.Weaken(5)
 				visible_message("<span class='danger'>[G.assailant] puts [G.affecting] on \the [src].</span>")
