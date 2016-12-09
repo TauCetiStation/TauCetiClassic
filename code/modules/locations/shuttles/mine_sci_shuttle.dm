@@ -28,7 +28,12 @@ var/global/area/mine_sci_curr_location = null
 
 	var/dat
 	if(autopilot)
-		dat = {"Location: [mine_sci_curr_location.name]<br>
+		var/shuttle_location = "NSS Exodus"
+		if(istype(autopilot.mine_sci_curr_location, MINE_DOCK))
+			shuttle_location = "Mining Station"
+		else if(istype(autopilot.mine_sci_curr_location, SCI_DOCK))
+			shuttle_location = "Research Outpost"
+		dat = {"Location: [shuttle_location]<br>
 		Ready to move[max(autopilot.lastMove + MINE_SCI_SHUTTLE_COOLDOWN - world.time, 0) ? " in [max(round((autopilot.lastMove + MINE_SCI_SHUTTLE_COOLDOWN - world.time) * 0.1), 0)] seconds" : ": now"]<br>
 		<a href='?src=\ref[src];mine=1'>Mining Station</a> |
 		<a href='?src=\ref[src];station=1'>NSS Exodus</a> |
