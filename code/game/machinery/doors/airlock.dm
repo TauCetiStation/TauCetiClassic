@@ -1075,8 +1075,6 @@ About the new airlock wires panel:
 					else
 						to_chat(usr, text("Firmware reports safeties already overriden."))
 
-
-
 				if(9)
 					// Door speed control
 					if(src.isWireCut(AIRLOCK_WIRE_SPEED))
@@ -1092,10 +1090,8 @@ About the new airlock wires panel:
 						to_chat(usr, text("The airlock has been welded shut!"))
 					else if(src.locked)
 						to_chat(usr, text("The door bolts are down!"))
-					else if(!src.density)
-						close()
 					else
-						open()
+						close()
 
 				if(10)
 					// Bolt lights
@@ -1103,6 +1099,7 @@ About the new airlock wires panel:
 						to_chat(usr, text("Control to door bolt lights has been severed.</a>"))
 					else if (src.lights)
 						lights = 0
+						update_icon()
 					else
 						to_chat(usr, text("Door bolt lights are already disabled!"))
 
@@ -1110,6 +1107,7 @@ About the new airlock wires panel:
 					// Emergency access
 					if(src.emergency)
 						emergency = 0
+						update_icon()
 					else
 						to_chat(usr, text("Emergency access is already disabled!"))
 
@@ -1194,10 +1192,8 @@ About the new airlock wires panel:
 						to_chat(usr, text("The airlock has been welded shut!"))
 					else if(src.locked)
 						to_chat(usr, text("The door bolts are down!"))
-					else if(src.density)
-						open()
 					else
-						close()
+						open()
 
 				if(10)
 					// Bolt lights
@@ -1206,6 +1202,7 @@ About the new airlock wires panel:
 					else if (!src.lights)
 						lights = 1
 						src.updateUsrDialog()
+						update_icon()
 					else
 						to_chat(usr, text("Door bolt lights are already enabled!"))
 
@@ -1213,9 +1210,10 @@ About the new airlock wires panel:
 					// Emergency access
 					if(!src.emergency)
 						emergency = 1
+						update_icon()
 					else
 						to_chat(usr, text("Emergency access is already disabled!"))
-	update_icon()
+
 	if(!no_window)
 		updateUsrDialog()
 
