@@ -6,7 +6,7 @@ var/static/list/scarySounds = list(
     'sound/voice/hiss5.ogg', 'sound/voice/hiss6.ogg',
     'sound/effects/Glassbr1.ogg', 'sound/effects/Glassbr2.ogg',
     'sound/effects/Glassbr3.ogg', 'sound/items/Welder.ogg',
-    'sound/items/Welder2.ogg','sound/machines/airlock/airlockOpen.ogg',
+    'sound/items/Welder2.ogg','sound/machines/airlock/airlockToggle.ogg',
     'sound/effects/clownstep1.ogg', 'sound/effects/clownstep2.ogg'
 	)
 
