@@ -85,7 +85,7 @@ var/list/airlock_overlays = list()
 	name = "airlock"
 	icon = 'icons/obj/doors/airlocks/station/public.dmi'
 	icon_state = "closed"
-	power_channel = ENVIRON
+	explosion_resistance = 15
 
 	var/aiControlDisabled = 0 //If 1, AI control is disabled until the AI hacks back in and disables the lock. If 2, the AI has bypassed the lock. If -1, the control is enabled but the AI had bypassed it earlier, so if it is disabled again the AI would have no trouble getting back in.
 	var/hackProof = 0 // if 1, this door can't be hacked by the AI
@@ -112,6 +112,7 @@ var/list/airlock_overlays = list()
 	var/obj/item/weapon/airlock_electronics/electronics = null
 	var/hasShocked = 0 //Prevents multiple shocks from happening
 	var/pulseProof = 0 //#Z1 AI hacked this door after previous pulse?
+	var/shockedby = list()
 
 	var/inner_material = null //material of inner filling; if its an airlock with glass, this should be set to "glass"
 	var/overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
@@ -123,12 +124,12 @@ var/list/airlock_overlays = list()
 	var/image/old_weld_overlay
 	var/image/old_sparks_overlay
 
-	var/doorOpen   = 'sound/machines/airlock/airlockToggle.ogg'
-	var/doorClose  = 'sound/machines/airlock/airlockToggle.ogg'
-	var/doorDeni   = 'sound/machines/airlock/airlockDenied.ogg'
-	var/boltUp     = 'sound/machines/airlock/airlockBoltsUp.ogg'
-	var/boltDown   = 'sound/machines/airlock/airlockBoltsDown.ogg'
-	var/doorForced = 'sound/machines/airlock/airlockForced.ogg'
+	door_open_sound          = 'sound/machines/airlock/airlockToggle.ogg'
+	door_close_sound         = 'sound/machines/airlock/airlockToggle.ogg'
+	var/door_deni_sound      = 'sound/machines/airlock/airlockDenied.ogg'
+	var/door_bolt_up_sound   = 'sound/machines/airlock/airlockBoltsUp.ogg'
+	var/door_bolt_down_sound = 'sound/machines/airlock/airlockBoltsDown.ogg'
+	var/door_forced_sound    = 'sound/machines/airlock/airlockForced.ogg'
 
 /obj/machinery/door/airlock/New(loc, dir = null)
 	..()
@@ -452,14 +453,14 @@ About the new airlock wires panel:
 	if(locked)
 		return
 	locked = 1
-	playsound(src, boltDown, 30, 0, 3)
+	playsound(src, door_bolt_down_sound, 30, 0, 3)
 	update_icon()
 
 /obj/machinery/door/airlock/proc/unbolt()
 	if(!locked)
 		return
 	locked = 0
-	playsound(src, boltUp, 30, 0, 3)
+	playsound(src, door_bolt_up_sound, 30, 0, 3)
 	update_icon()
 
 // shock user with probability prb (if all connections & power are working)
@@ -622,7 +623,7 @@ About the new airlock wires panel:
 			update_icon(AIRLOCK_CLOSING)
 		if("deny")
 			update_icon(AIRLOCK_DENY)
-			playsound(src, doorDeni, 50, 0, 3)
+			playsound(src, door_deni_sound, 50, 0, 3)
 			sleep(6)
 			update_icon(AIRLOCK_CLOSED)
 			icon_state = "closed"
@@ -822,7 +823,7 @@ About the new airlock wires panel:
 			return
 		else
 			to_chat(user, "<span class='red'>You force your claws between the doors and begin to pry them open...</span>")
-			playsound(src, doorForced, 30, 1, -4)
+			playsound(src, door_forced_sound, 30, 1, -4)
 			if (do_after(user,40, target = src))
 				if(!src) return
 				open(1)
@@ -884,7 +885,7 @@ About the new airlock wires panel:
 			return
 		else
 			to_chat(user, "<span class='red'>You force your fingers between the doors and begin to pry them open...</span>")
-			playsound(src, doorForced, 30, 1, -4)
+			playsound(src, door_forced_sound, 30, 1, -4)
 			if (do_after(user,40,target = src))
 				if(!src) return
 				open(1)
@@ -1334,62 +1335,79 @@ About the new airlock wires panel:
 		ignite(is_hot(C))
 	..()
 
-/obj/machinery/door/airlock/open(forced=0)
-	if( operating || welded || locked )
-		return 0
-	if(!forced)
-		if( !hasPower() || isWireCut(AIRLOCK_WIRE_OPEN_DOOR) )
-			return 0
-	use_power(50)
-	playsound(src, doorOpen, 100, 1)
-	if(src.closeOther != null && istype(src.closeOther, /obj/machinery/door/airlock/) && !src.closeOther.density)
-		src.closeOther.close()
-	return ..()
 
-/obj/machinery/door/airlock/close(forced=0)
-	if(operating || welded || locked)
-		return
-	if(!forced)
-		if( !hasPower() || isWireCut(AIRLOCK_WIRE_DOOR_BOLTS) )
-			return
-	if(safe)
-		for(var/turf/turf in locs)
-			if(locate(/mob/living) in turf)
-				spawn (60)
-					close()
-				return
+/obj/machinery/door/airlock/open_checks()
+	if(..() && !welded && !locked)
+		return TRUE
+	return FALSE
 
-	for(var/turf/turf in locs)
-		for(var/mob/living/M in turf)
+/obj/machinery/door/airlock/close_checks()
+	if(..() && !welded && !locked)
+		if(safe)
+			for(var/turf/T in locs)
+				if(locate(/mob/living) in T)
+					addtimer(src, "close", 60)
+					return FALSE
+		return TRUE
+	return FALSE
+
+/obj/machinery/door/airlock/normal_open_checks()
+	if(hasPower() && !isWireCut(AIRLOCK_WIRE_OPEN_DOOR))
+		return TRUE
+	return FALSE
+
+/obj/machinery/door/airlock/normal_close_checks()
+	if(hasPower() && !isWireCut(AIRLOCK_WIRE_DOOR_BOLTS))
+		return TRUE
+	return FALSE
+
+/obj/machinery/door/airlock/do_open()
+	send_status_if_allowed()
+	if(closeOther != null && istype(closeOther, /obj/machinery/door/airlock/) && !closeOther.density)
+		closeOther.close()
+	if(hasPower())
+		use_power(50)
+	..()
+	if(autoclose)
+		addtimer(src, "autoclose", normalspeed ? 150 : 5)
+
+/obj/machinery/door/airlock/do_close()
+	send_status_if_allowed()
+	if(hasPower())
+		use_power(50)
+	..()
+
+/obj/machinery/door/airlock/do_afterclose()
+	for(var/turf/T in locs)
+		for(var/mob/living/M in T)
 			if(isrobot(M))
 				M.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
 			else
 				M.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
 				M.SetStunned(5)
 				M.SetWeakened(5)
-				var/obj/effect/stop/S
-				S = new /obj/effect/stop
+				var/obj/effect/stop/S = new()
 				S.victim = M
 				S.loc = M.loc
 				spawn(20)
 					qdel(S)
 				M.emote("scream",,, 1)
-			var/turf/location = src.loc
-			if(istype(location, /turf/simulated))
-				location.add_blood(M)
+			if(istype(T, /turf/simulated))
+				T.add_blood(M)
 
-	use_power(50)
-	playsound(src, doorClose, 100, 1)
-	for(var/turf/turf in locs)
-		var/obj/structure/window/killthis = (locate(/obj/structure/window) in turf)
-		if(killthis)
-			killthis.ex_act(2)//Smashin windows
+		var/obj/structure/window/W = locate(/obj/structure/window) in T
+		if(W)
+			W.ex_act(2)
 	..()
-	return
+
+/obj/machinery/door/airlock/proc/autoclose()
+	if(!density && !operating && !locked && !welded && autoclose)
+		close()
+
 
 /obj/machinery/door/airlock/proc/prison_open()
 	unbolt()
-	src.open()
+	open()
 	bolt()
 	return
 

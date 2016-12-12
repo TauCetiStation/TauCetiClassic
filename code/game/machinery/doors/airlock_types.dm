@@ -181,8 +181,8 @@
 	name = "bananium airlock"
 	icon = 'icons/obj/doors/airlocks/station/bananium.dmi'
 	mineral = "clown"
-	doorOpen = 'sound/items/bikehorn.ogg'
-	doorClose = 'sound/items/bikehorn.ogg'
+	door_open_sound = 'sound/items/bikehorn.ogg'
+	door_close_sound = 'sound/items/bikehorn.ogg'
 
 /obj/machinery/door/airlock/sandstone
 	name = "sandstone airlock"
