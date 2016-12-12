@@ -85,14 +85,14 @@ var/datum/subsystem/vote/SSvote
 	var/text
 	if(winners.len > 0)
 		if(question)
-			text += "<b>[question]</b>"
+			text += "<b>[sanitize_chat(question)]</b>"
 		else
 			text += "<b>[capitalize(mode)] Vote</b>"
 		for(var/i=1,i<=choices.len,i++)
 			var/votes = choices[choices[i]]
 			if(!votes)
 				votes = 0
-			text += "\n<b>[choices[i]]:</b> [votes]"
+			text += "\n<b>[sanitize_chat(choices[i])]:</b> [votes]"
 		if(mode != "custom")
 			if(winners.len > 1)
 				text = "\n<b>Vote Tied Between:</b>"
@@ -190,11 +190,11 @@ var/datum/subsystem/vote/SSvote
 						return 0
 				choices.Add("End Shift","Continue Playing")
 			if("custom")
-				question = stripped_input(usr,"What is the vote for?")
+				question = sanitize_simple(usr,"What is the vote for?")
 				if(!question)
 					return 0
 				for(var/i=1,i<=10,i++)
-					var/option = capitalize(stripped_input(usr,"Please enter an option or hit cancel to finish"))
+					var/option = capitalize(sanitize_simple(usr,"Please enter an option or hit cancel to finish"))
 					if(!option || mode || !usr.client)
 						break
 					choices.Add(option)
@@ -205,12 +205,12 @@ var/datum/subsystem/vote/SSvote
 		voting_started_time = world.time
 		var/text = "[capitalize(mode)] vote started by [initiator]."
 		if(mode == "custom")
-			text += "\n[question]"
+			text += "\n[sanitize_popup(question)]"
 		else
 			started_time = world.time
 		log_vote(text)
 		world << sound('sound/misc/notice1.ogg')
-		to_chat(world, "\n<font color='purple'><b>[text]</b>\nType <b>vote</b> or click <a href='?src=\ref[src]'>here</a> to place your votes.\nYou have [config.vote_period/10] seconds to vote.</font>")
+		to_chat(world, "\n<font color='purple'><b>[sanitize_chat(text)]</b>\nType <b>vote</b> or click <a href='?src=\ref[src]'>here</a> to place your votes.\nYou have [config.vote_period/10] seconds to vote.</font>")
 		time_remaining = round(config.vote_period/10)
 
 		if(vote_type == "crew_transfer")
