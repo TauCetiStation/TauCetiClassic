@@ -136,7 +136,7 @@ datum/admins/proc/notes_gethtml(ckey)
 	note_list >> note_keys
 	if(!note_keys) note_keys = list()
 	if(!note_keys.Find(key)) note_keys += key
-	to_chat(note_list, note_keys)
+	note_list << note_keys
 	del(note_list)	// savefile, so NOT qdel
 
 
