@@ -492,3 +492,5 @@
 
 /obj/machinery/door/morgue
 	icon = 'icons/obj/doors/doormorgue.dmi'
+	door_open_sound  = 'sound/machines/shutter_open.ogg'
+	door_close_sound = 'sound/machines/shutter_close.ogg'
