@@ -140,7 +140,7 @@
 			return
 		if("binary")
 			if(robot_talk_understand || binarycheck())
-				robot_talk(message)
+				robot_talk(sanitize_plus_chat(message))
 			return
 		if("changeling")
 			if(mind && mind.changeling)
