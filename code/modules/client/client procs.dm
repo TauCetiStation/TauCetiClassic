@@ -148,8 +148,11 @@
 	//Admin Authorisation
 	holder = admin_datums[ckey]
 	if(holder)
-		admins += src
 		holder.owner = src
+		admins += src
+		if(holder.deadminned)
+			holder.disassociate()
+			verbs += /client/proc/readmin_self
 
 	if(ckey in mentor_ckeys)
 		mentors += src
