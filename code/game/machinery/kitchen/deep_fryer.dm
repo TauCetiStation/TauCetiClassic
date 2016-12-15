@@ -37,18 +37,33 @@
 			if(60 to INFINITY)
 				to_chat(user, "You fucked up, man.")
 
-/obj/machinery/deepfryer/attackby(obj/item/I, mob/user)
+/obj/machinery/deepfryer/attackby(obj/item/I, mob/user, params)
 	if(on)
-		user << "<span class='notice'>[src] is still active!</span>"
+		to_chat(user, "<span class='danger'>[src] is still active!</span>")
 		return
-
-	if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/deepfryholder))
+	else if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/deepfryholder))
 		to_chat(user, "<span class='notice'>You cannot doublefry.</span>")
 		return
-	else if(istype(I, /obj/item/weapon/grab))
-		to_chat(user, "<span class='notice'>You cannot fry him.</span>")
-		return
-	else if (ishuman(user))
+	else if(istype(I, /obj/item/weapon/grab) && get_dist(src,user)<2)
+		var/obj/item/weapon/grab/G = I
+		if (istype(G.affecting, /mob/living))
+			var/mob/living/M = G.affecting
+			var/mob/living/A = G.assailant
+			if(G.state > GRAB_NECK)
+				user.drop_item()
+				M.Weaken(8)
+				A.Stun(3)
+				M.apply_damage(80,BURN,"head")
+				visible_message("<span class='danger'>[A.name] has dipped [M.name]'s face into the boiling oil!</span>")
+				if(M.stat != DEAD)
+					M.emote("scream",,, 1)
+				M.attack_log += "\[[time_stamp()]\] <font color='orange'>[A.name] has dipped [M.name]'s face into the boiling oil ([A.ckey])</font>"
+				A.attack_log += "\[[time_stamp()]\] <font color='red'>[A.name] has dipped [M.name]'s face into the boiling oil ([A.ckey])</font>"
+				msg_admin_attack("[key_name(A)] has dipped [key_name(M)]'s face into boiling oil")
+			else
+				to_chat(user, "<span class='warning'>You need a better grip to do that!</span>")
+				return
+	else if(ishuman(user))
 		to_chat(user, "<span class='notice'>You put [I] into [src].</span>")
 		on = TRUE
 		user.drop_item()
