@@ -821,7 +821,7 @@
 							msg = job
 						else
 							msg += ", [job]"
-					notes_add(M.ckey, "Banned  from [msg] - [sanitize_plus_popup(reason)]")
+					notes_add(M.ckey, "Banned  from [msg] - [reason]")
 					message_admins("\blue [key_name_admin(usr)] banned [key_name_admin(M)] from [msg] for [mins] minutes")
 					to_chat(M, "\red<BIG><B>You have been jobbanned by [usr.client.ckey] from: [msg].</B></BIG>")
 					to_chat(M, "\red <B>The reason is: [sanitize_plus_chat(reason)]</B>")
@@ -843,7 +843,7 @@
 							feedback_add_details("ban_job","- [job]")
 							if(!msg)	msg = job
 							else		msg += ", [job]"
-						notes_add(M.ckey, "Banned  from [msg] - [sanitize_plus_popup(reason)]")
+						notes_add(M.ckey, "Banned  from [msg] - [reason]")
 						message_admins("\blue [key_name_admin(usr)] banned [key_name_admin(M)] from [msg]")
 						to_chat(M, "\red<BIG><B>You have been jobbanned by [usr.client.ckey] from: [msg].</B></BIG>")
 						to_chat(M, "\red <B>The reason is: [sanitize_plus_chat(reason)]</B>")

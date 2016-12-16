@@ -718,10 +718,11 @@ var/global/floorIsLava = 0
 	set category = "Special Verbs"
 	set name = "Announce"
 	set desc="Announce your desires to the world"
-	if(!check_rights(0))	return
+	if(!check_rights(0))
+		return
 
 	var/message = input("Global message to send:", "Admin Announce", null, null)  as message
-	message = sanitize(message, list("ï¿½"=LETTER_255))
+	message = sanitize(message, list("ÿ"=LETTER_255))
 
 	if(message)
 		if(!check_rights(R_SERVER,0))
