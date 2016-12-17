@@ -229,7 +229,6 @@
 	name = "mime mask"
 	desc = "The traditional mime's mask. It has an eerie facial posture."
 	icon_state = "mime"
-	item_state = "mime"
 
 /obj/item/clothing/mask/gas/monkeymask
 	name = "monkey mask"
@@ -242,7 +241,6 @@
 	name = "sexy mime mask"
 	desc = "A traditional female mime's mask."
 	icon_state = "sexymime"
-	item_state = "sexymime"
 
 /obj/item/clothing/mask/gas/death_commando
 	name = "Death Commando Mask"
