@@ -1,6 +1,6 @@
 obj/item/weapon/gun/magic/staff/
 	slot_flags = SLOT_BACK
-	icon_state = "staffofnothing"
+	icon_state = "staff"
 
 obj/item/weapon/gun/magic/staff/change
 	name = "staff of change"
