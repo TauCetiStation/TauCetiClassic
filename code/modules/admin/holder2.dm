@@ -5,6 +5,7 @@ var/list/admin_datums = list()
 	var/client/owner	= null
 	var/rights = 0
 	var/fakekey			= null
+	var/deadminned = FALSE
 
 	var/datum/marked_datum
 
@@ -36,12 +37,14 @@ var/list/admin_datums = list()
 		owner.remove_admin_verbs()
 		owner.deadmin_holder = owner.holder
 		owner.holder = null
+		deadminned = TRUE
 
 /datum/admins/proc/reassociate()
 	if(owner)
 		admins += owner
 		owner.holder = src
 		owner.deadmin_holder = null
+		deadminned = FALSE
 		owner.add_admin_verbs()
 
 /*
