@@ -1,14 +1,6 @@
 /var/const/OPEN = 1
 /var/const/CLOSED = 2
 
-#define FIREDOOR_CLOSED_MOD	0.1
-#define FIREDOOR_MAX_PRESSURE_DIFF 25 // kPa
-#define FIREDOOR_MAX_TEMP 50 // °C
-#define FIREDOOR_MIN_TEMP 0
-
-// Bitflags
-#define FIREDOOR_ALERT_HOT      1
-#define FIREDOOR_ALERT_COLD     2
 /obj/machinery/door/firedoor
 	name = "\improper Emergency Shutter"
 	desc = "Emergency air-tight shutter, capable of sealing off breached areas."
@@ -17,9 +9,11 @@
 	req_one_access = list(access_atmospherics, access_engine_equip)
 	opacity = 0
 	density = 0
-	layer = DOOR_LAYER - 0.2
-	base_layer = DOOR_LAYER - 0.2
+	layer = FIREDOOR_LAYER
+	base_layer = FIREDOOR_LAYER
 	glass = 0
+	door_open_sound  = 'sound/machines/electric_door_open.ogg'
+	door_close_sound = 'sound/machines/electric_door_open.ogg'
 
 	//These are frequenly used with windows, so make sure zones can pass.
 	//Generally if a firedoor is at a place where there should be a zone boundery then there will be a regular door underneath it.
@@ -275,7 +269,6 @@
 			return
 
 
-
 /obj/machinery/door/firedoor/proc/latetoggle()
 	if(operating || stat & NOPOWER || !nextstate)
 		return
@@ -288,18 +281,18 @@
 			close()
 	return
 
-/obj/machinery/door/firedoor/close()
+/obj/machinery/door/firedoor/do_close()
 	..()
 	layer = base_layer + FIREDOOR_CLOSED_MOD
 	latetoggle()
 
-/obj/machinery/door/firedoor/open()
+/obj/machinery/door/firedoor/do_open()
 	..()
+	layer = base_layer
 	if(hatch_open)
-		hatch_open = 0
+		hatch_open = FALSE
 		visible_message("The maintenance hatch of \the [src] closes.")
 		update_icon()
-	layer = base_layer
 	latetoggle()
 
 /obj/machinery/door/firedoor/do_animate(animation)

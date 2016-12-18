@@ -4,9 +4,8 @@
 obj/machinery/door/airlock
 	var/id_tag
 	var/frequency
-	var/shockedby = list()
 	var/datum/radio_frequency/radio_connection
-	explosion_resistance = 15
+	var/suppres_next_status_send = FALSE
 
 
 obj/machinery/door/airlock/receive_signal(datum/signal/signal)
@@ -16,10 +15,12 @@ obj/machinery/door/airlock/receive_signal(datum/signal/signal)
 
 	switch(signal.data["command"])
 		if("open")
-			open(1)
+			suppres_next_status_send = TRUE
+			open()
 
 		if("close")
-			close(1)
+			suppres_next_status_send = TRUE
+			close()
 
 		if("unlock")
 			unbolt()
@@ -28,10 +29,12 @@ obj/machinery/door/airlock/receive_signal(datum/signal/signal)
 			bolt()
 
 		if("secure_open")
+
 			unbolt()
 
 			sleep(2)
-			open(1)
+			suppres_next_status_send = TRUE
+			open()
 
 			bolt()
 
@@ -39,12 +42,18 @@ obj/machinery/door/airlock/receive_signal(datum/signal/signal)
 			unbolt()
 
 			sleep(2)
-			close(1)
+			suppres_next_status_send = TRUE
+			close()
 
 			bolt()
 
 	send_status()
 
+/obj/machinery/door/airlock/proc/send_status_if_allowed()
+	if(suppres_next_status_send)
+		suppres_next_status_send = FALSE
+	else
+		send_status()
 
 obj/machinery/door/airlock/proc/send_status()
 	if(radio_connection)
@@ -57,17 +66,6 @@ obj/machinery/door/airlock/proc/send_status()
 		signal.data["lock_status"] = locked?("locked"):("unlocked")
 
 		radio_connection.post_signal(src, signal, range = AIRLOCK_CONTROL_RANGE, filter = RADIO_AIRLOCK)
-
-
-obj/machinery/door/airlock/open(surpress_send)
-	. = ..()
-	if(!surpress_send) send_status()
-
-
-obj/machinery/door/airlock/close(surpress_send)
-	. = ..()
-	if(!surpress_send) send_status()
-
 
 obj/machinery/door/airlock/Bumped(atom/AM)
 	if(ishuman(AM) && prob(40) && src.density)

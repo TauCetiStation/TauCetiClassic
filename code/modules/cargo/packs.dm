@@ -613,7 +613,7 @@ datum/supply_pack/New()
 					/obj/item/weapon/circuitboard/mecha/ripley/main, //TEMPORARY due to lack of circuitboard printer
 					/obj/item/weapon/circuitboard/mecha/ripley/peripherals) //TEMPORARY due to lack of circuitboard printer
 	cost = 3000
-	crate_type = /obj/structure/closet/crate/secure/engisec
+	crate_type = /obj/structure/closet/crate/secure/scisecurecrate
 	crate_name = "APLU \"Ripley\" Circuit Crate"
 	access = access_robotics
 	group = "Engineering"
@@ -623,7 +623,7 @@ datum/supply_pack/New()
 	contains = list(/obj/item/weapon/circuitboard/mecha/odysseus/peripherals, //TEMPORARY due to lack of circuitboard printer
 					/obj/item/weapon/circuitboard/mecha/odysseus/main) //TEMPORARY due to lack of circuitboard printer
 	cost = 2500
-	crate_type = /obj/structure/closet/crate/secure/engisec
+	crate_type = /obj/structure/closet/crate/secure/scisecurecrate
 	crate_name = "\"Odysseus\" Circuit Crate"
 	access = access_robotics
 	group = "Engineering"
@@ -641,7 +641,7 @@ datum/supply_pack/New()
 					/obj/item/weapon/stock_parts/cell/high,
 					/obj/item/weapon/stock_parts/cell/high)
 	cost = 1000
-	crate_type = /obj/structure/closet/crate/secure/gear
+	crate_type = /obj/structure/closet/crate/secure/scisecurecrate
 	crate_name = "Robotics assembly"
 	access = access_robotics
 	group = "Engineering"
@@ -677,7 +677,7 @@ datum/supply_pack/New()
 	name = "Supermatter Core"
 	contains = list(/obj/machinery/power/supermatter)
 	cost = 5000
-	crate_type = /obj/structure/closet/crate/secure/phoron
+	crate_type = /obj/structure/closet/crate/secure/woodseccrate
 	crate_name = "Supermatter crate (CAUTION)"
 	group = "Engineering"
 	access = access_ce
@@ -777,7 +777,7 @@ datum/supply_pack/New()
 					/obj/item/device/assembly/timer,
 					/obj/item/device/assembly/timer)
 	cost = 1000
-	crate_type = /obj/structure/closet/crate/secure/phoron
+	crate_type = /obj/structure/closet/crate/secure/scisecurecrate
 	crate_name = "Phoron assembly crate"
 	access = access_tox_storage
 	group = "Medical / Science"

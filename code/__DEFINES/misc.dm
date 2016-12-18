@@ -60,6 +60,25 @@
 // Doors!
 #define DOOR_CRUSH_DAMAGE 10
 
+#define DOOR_LAYER          2.82
+#define DOOR_CLOSED_MOD     0.3 //how much the layer is increased when the door is closed
+
+#define PODDOOR_CLOSED_MOD  0.3
+
+#define SHUTTERS_LAYER      3.1
+
+#define FIREDOOR_LAYER      2.5
+#define FIREDOOR_CLOSED_MOD 0.31
+
+#define FIREDOOR_MAX_PRESSURE_DIFF 25 // kPa
+
+#define FIREDOOR_MAX_TEMP 50 // °C
+#define FIREDOOR_MIN_TEMP 0
+
+#define FIREDOOR_ALERT_HOT  1
+#define FIREDOOR_ALERT_COLD 2
+
+
 //Germs and infection
 #define GERM_LEVEL_AMBIENT		110		//maximum germ level you can reach by standing still
 #define GERM_LEVEL_MOVE_CAP		200		//maximum germ level you can reach by running around

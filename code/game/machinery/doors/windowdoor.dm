@@ -11,7 +11,8 @@
 	var/obj/item/weapon/airlock_electronics/electronics = null
 	explosion_resistance = 5
 	air_properties_vary_with_direction = 1
-
+	door_open_sound  = 'sound/machines/windowdoor.ogg'
+	door_close_sound = 'sound/machines/windowdoor.ogg'
 
 /obj/machinery/door/window/update_nearby_tiles(need_rebuild)
 	if(!SSair)
@@ -52,7 +53,7 @@
 		icon_state = "[src.base_state]open"
 
 /obj/machinery/door/window/proc/shatter(display_message = 1)
-	if(!(flags&NODECONSTRUCT))
+	if(!(flags & NODECONSTRUCT))
 		new /obj/item/weapon/shard(src.loc)
 		new /obj/item/weapon/shard(src.loc)
 		new /obj/item/stack/rods(src.loc, 2)
@@ -109,13 +110,13 @@
 			if(src.check_access(bot.botcard))
 				open_and_close()
 			else
-				flick(text("[]deny", src.base_state), src)
+				do_animate("deny")
 		else if(istype(AM, /obj/mecha))
 			var/obj/mecha/mecha = AM
 			if(mecha.occupant && src.allowed(mecha.occupant))
 				open_and_close()
 			else
-				flick(text("[]deny", src.base_state), src)
+				do_animate("deny")
 		return
 	if (!( ticker ))
 		return
@@ -134,7 +135,7 @@
 	if(allowed(user))
 		open_and_close()
 	else
-		flick(text("[]deny", src.base_state), src)
+		do_animate("deny")
 	return
 
 /obj/machinery/door/window/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
@@ -154,56 +155,49 @@
 	else
 		return 1
 
-/obj/machinery/door/window/open(forced=0)
-	if (src.operating == 1) //doors can still open when emag-disabled
-		return 0
-	if (!ticker)
-		return 0
-	if(!forced)
-		if(!hasPower())
-			return 0
-	if(forced < 2)
-		if(emagged)
-			return 0
-	if(!src.operating) //in case of emag
-		src.operating = 1
-	flick(text("[]opening", src.base_state), src)
-	playsound(src.loc, 'sound/machines/windowdoor.ogg', 100, 1)
-	src.icon_state = text("[]open", src.base_state)
-	sleep(10)
+/obj/machinery/door/window/normal_open_checks()
+	if(hasPower() && !emagged)
+		return TRUE
+	return FALSE
 
+/obj/machinery/door/window/normal_close_checks()
+	if(hasPower() && !emagged)
+		return TRUE
+	return FALSE
+
+/obj/machinery/door/window/do_open()
+	if(hasPower())
+		use_power(15)
+	playsound(src, door_open_sound, 100, 1)
+	do_animate("opening")
+	icon_state = "[base_state]open"
+	sleep(10)
+	density = FALSE
+	block_air_zones = FALSE // We merge zones if door is open.
 	explosion_resistance = 0
-	src.density = 0
-	src.block_air_zones = 0 // We merge zones if door is open.
 	update_nearby_tiles()
 
-	if(operating == 1) //emag again
-		src.operating = 0
-	return 1
-
-/obj/machinery/door/window/close(forced=0)
-	if (src.operating)
-		return 0
-	if(!forced)
-		if(!hasPower())
-			return 0
-	if(forced < 2)
-		if(emagged)
-			return 0
-	src.operating = 1
-	flick(text("[]closing", src.base_state), src)
-	playsound(src.loc, 'sound/machines/windowdoor.ogg', 100, 1)
-	src.icon_state = src.base_state
-
-	src.density = 1
-	src.block_air_zones = 1
+/obj/machinery/door/window/do_close()
+	if(hasPower())
+		use_power(15)
+	playsound(src, door_close_sound, 100, 1)
+	do_animate("closing")
+	icon_state = base_state
+	density = TRUE
+	block_air_zones = TRUE
 	explosion_resistance = initial(explosion_resistance)
 	update_nearby_tiles()
 
-	sleep(10)
+/obj/machinery/door/window/do_animate(animation)
+	switch(animation)
+		if("opening")
+			flick("[base_state]opening", src)
+		if("closing")
+			flick("[base_state]closing", src)
+		if("deny")
+			flick("[base_state]deny", src)
+	return
 
-	src.operating = 0
-	return 1
 
 /obj/machinery/door/window/proc/take_damage(damage)
 	src.health = max(0, src.health - damage)
@@ -281,8 +275,8 @@
 		return
 
 	//Emags and ninja swords? You may pass.
-	if (src.density && (istype(I, /obj/item/weapon/card/emag)||istype(I, /obj/item/weapon/melee/energy/blade)))
-		src.operating = -1
+	if (density && ((istype(I, /obj/item/weapon/card/emag) && hasPower()) || istype(I, /obj/item/weapon/melee/energy/blade)))
+		operating = -1
 		flick("[src.base_state]spark", src)
 		sleep(6)
 		if(istype(I, /obj/item/weapon/melee/energy/blade))
@@ -292,14 +286,14 @@
 			playsound(src.loc, "sparks", 50, 1)
 			playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
 			visible_message("<span class='warning'> The glass door was sliced open by [user]!</span>")
-			open(2)
+			open(1)
 			emagged = 1
 			return 1
 		open()
 		emagged = 1
 		return 1
 
-	if(!(flags&NODECONSTRUCT))
+	if(!(flags & NODECONSTRUCT))
 		if(istype(I, /obj/item/weapon/screwdriver))
 			if(src.density || src.operating)
 				to_chat(user, "<span class='warning'>You need to open the [src.name] to access the maintenance panel.</span>")
@@ -365,10 +359,10 @@
 	//If windoor is unpowered, crowbar, fireaxe and armblade can force it.
 	if(istype(I, /obj/item/weapon/crowbar) || istype(I, /obj/item/weapon/twohanded/fireaxe) || istype(I, /obj/item/weapon/melee/arm_blade) )
 		if(!hasPower())
-			if(src.density)
-				open(2)
+			if(density)
+				open(1)
 			else
-				close(2)
+				close(1)
 			return
 
 	//If it's a weapon, smash windoor. Unless it's an id card, agent card, ect.. then ignore it (Cards really shouldnt damage a door anyway)
@@ -395,7 +389,7 @@
 			close()
 
 	else if (src.density)
-		flick(text("[]deny", src.base_state), src)
+		do_animate("deny")
 
 	return
 
