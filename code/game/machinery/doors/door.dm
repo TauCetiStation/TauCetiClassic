@@ -1,8 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
-
-#define DOOR_LAYER		2.7
-#define DOOR_CLOSED_MOD		0.4 //how much the layer is increased when the door is closed
-
 /obj/machinery/door
 	name = "Door"
 	desc = "It opens and closes."
@@ -12,7 +7,10 @@
 	opacity = 1
 	density = 1
 	layer = DOOR_LAYER
+	power_channel = ENVIRON
 	var/base_layer = DOOR_LAYER
+	var/icon_state_open  = "door0"
+	var/icon_state_close = "door1"
 
 	var/secondsElectrified = 0
 	var/visible = 1
@@ -25,6 +23,9 @@
 	var/air_properties_vary_with_direction = 0
 	var/block_air_zones = 1 //If set, air zones cannot merge across the door even when it is opened.
 	var/emergency = 0 // Emergency access override
+
+	var/door_open_sound  = 'sound/machines/airlock/airlockToggle_2.ogg'
+	var/door_close_sound = 'sound/machines/airlock/airlockToggle_2.ogg'
 
 /obj/machinery/door/New()
 	. = ..()
@@ -302,10 +303,9 @@
 
 /obj/machinery/door/update_icon()
 	if(density)
-		icon_state = "door1"
+		icon_state = icon_state_close
 	else
-		icon_state = "door0"
-	return
+		icon_state = icon_state_open
 
 
 /obj/machinery/door/proc/do_animate(animation)
@@ -325,58 +325,143 @@
 	return
 
 
-/obj/machinery/door/proc/open()
-	if(!density)		return 1
-	if(operating > 0)	return
-	if(!ticker)			return 0
-	if(!operating)		operating = 1
+/**
+ * Call this proc, if you want to open the door.
+ *
+ * Use `forced` param, if you want to open the door with
+ * ignoring of `normal_open_checks()` conditions.
+ *
+ * Same for `close()`.
+ */
 
+/obj/machinery/door/proc/open(forced = FALSE)
+	if(!density)
+		return TRUE
+	if(open_checks(forced))
+		set_operating(TRUE)
+		do_open()
+		set_operating(FALSE)
+		return TRUE
+	return FALSE
+
+/obj/machinery/door/proc/close(forced = FALSE)
+	if(density)
+		return TRUE
+	if(close_checks(forced))
+		set_operating(TRUE)
+		do_close()
+		set_operating(FALSE)
+		return TRUE
+	return FALSE
+
+
+/**
+ * DO NOT CALL THIS PROC DIRECTLY!!!
+ *
+ * Checks for base level conditions for door opening.
+ *
+ * If you want more conditions you can re-implement it in subtypes like that:
+ * > /obj/machinery/door/.../open_checks()
+ * >   if(..() && `more conditions`)
+ * >     return TRUE
+ * >   return FALSE
+ * or in another way, but with TRUE or FALSE returning.
+ *
+ * Same for `close_checks()`.
+ */
+
+/obj/machinery/door/proc/open_checks(forced)
+	if(operating != 1 && ticker)
+		if(!forced)
+			return normal_open_checks()
+		return TRUE
+	return FALSE
+
+/obj/machinery/door/proc/close_checks(forced)
+	if(operating != 1 && ticker)
+		if(!forced)
+			return normal_close_checks()
+		return TRUE
+	return FALSE
+
+
+/**
+ * DO NOT CALL THIS PROC DIRECTLY!!!
+ *
+ * Checks for additional level conditions for door opening.
+ * Proc will be ignored if door was forced.
+ *
+ * If you want more conditions you can re-implement it in subtypes like that:
+ * > /obj/machinery/door/.../normal_open_checks()
+ * >   if(`condition one` && `condition two`)
+ * >     return TRUE
+ * >   return FALSE
+ * or in another way, but with TRUE or FALSE returning.
+ *
+ * Same for `normal_close_checks()`.
+ */
+
+/obj/machinery/door/proc/normal_open_checks()
+	return TRUE
+
+/obj/machinery/door/proc/normal_close_checks()
+	return TRUE
+
+
+/**
+ * DO NOT CALL THIS PROC DIRECTLY!!!
+ *
+ * Actually the process of opening the door.
+ * Re-implement it in subtypes if you want another behavior.
+ *
+ * Same for `do_close()`.
+ */
+
+/obj/machinery/door/proc/do_open()
+	playsound(src, door_open_sound, 100, 1)
 	do_animate("opening")
-	icon_state = "door0"
-	src.set_opacity(0)
 	sleep(3)
-	src.density = 0
+	set_opacity(FALSE)
+	density = FALSE
 	sleep(9)
-	src.layer = base_layer
+	layer = base_layer
 	explosion_resistance = 0
 	update_icon()
-	set_opacity(0)
 	update_nearby_tiles()
 
-	if(operating)	operating = 0
-
-	if(autoclose  && normalspeed)
-		spawn(150)
-			autoclose()
-	if(autoclose && !normalspeed)
-		spawn(5)
-			autoclose()
-
-	return 1
-
-
-/obj/machinery/door/proc/close()
-	if(density)	return 1
-	if(operating > 0)	return
-	operating = 1
-
+/obj/machinery/door/proc/do_close()
+	playsound(src, door_close_sound, 100, 1)
 	do_animate("closing")
 	sleep(3)
-	src.density = 1
-	explosion_resistance = initial(explosion_resistance)
-	src.layer = base_layer + DOOR_CLOSED_MOD
+	density = TRUE
 	sleep(9)
-	update_icon()
 	if(visible && !glass)
-		set_opacity(1)	//caaaaarn!
-	operating = 0
+		set_opacity(TRUE)
+	layer = base_layer + DOOR_CLOSED_MOD
+	explosion_resistance = initial(explosion_resistance)
+	do_afterclose()
+	update_icon()
 	update_nearby_tiles()
 
+
+/**
+ * DO NOT CALL THIS PROC DIRECTLY!!!
+ *
+ * Helps to add additional behavior for closing.
+ */
+
+/obj/machinery/door/proc/do_afterclose()
 	//I shall not add a check every x ticks if a door has closed over some fire.
-	var/obj/fire/fire = locate() in loc
+	var/obj/fire/fire = locate() in locs
 	if(fire)
 		qdel(fire)
-	return
+
+/obj/machinery/door/proc/set_operating(operating)
+	if(operating && !src.operating)
+		src.operating = TRUE
+	else if(!operating && src.operating)
+		src.operating = FALSE
+
 
 /obj/machinery/door/proc/requiresID()
 	return 1
@@ -398,12 +483,6 @@
 		else
 			source.thermal_conductivity = initial(source.thermal_conductivity)
 
-/obj/machinery/door/proc/autoclose()
-	var/obj/machinery/door/airlock/A = src
-	if(!A.density && !A.operating && !A.locked && !A.welded && A.autoclose)
-		close()
-	return
-
 /obj/machinery/door/Move(new_loc, new_dir)
 	..()
 	update_nearby_tiles()
@@ -413,3 +492,5 @@
 
 /obj/machinery/door/morgue
 	icon = 'icons/obj/doors/doormorgue.dmi'
+	door_open_sound  = 'sound/machines/shutter_open.ogg'
+	door_close_sound = 'sound/machines/shutter_close.ogg'
