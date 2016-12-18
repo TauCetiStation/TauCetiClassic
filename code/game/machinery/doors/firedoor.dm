@@ -370,5 +370,3 @@
 			changed = 1
 		if(changed)
 			update_icon()
-
-/obj/machinery/door/firedoor/border_only
