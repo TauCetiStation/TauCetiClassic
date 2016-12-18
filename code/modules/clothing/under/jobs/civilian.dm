@@ -190,8 +190,8 @@
 	name = "mime's outfit"
 	desc = "It's not very colourful."
 	icon_state = "mime"
-	item_state = "mime"
-	item_color = "mime"
+	item_state = "mimesuit"
+	item_color = "mimesuit"
 	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
 
 /obj/item/clothing/under/rank/miner
