@@ -394,12 +394,19 @@
 	icon_opened = "weaponcrateopen"
 	icon_closed = "weaponcrate"
 
-/obj/structure/closet/crate/secure/phoron
-	desc = "A secure phoron crate."
-	name = "Phoron crate"
-	icon_state = "phoroncrate"
-	icon_opened = "phoroncrateopen"
-	icon_closed = "phoroncrate"
+/obj/structure/closet/crate/scicrate
+	desc = "A science crate."
+	name = "Science crate"
+	icon_state = "scicrate"
+	icon_opened = "scicrateopen"
+	icon_closed = "scicrate"
+
+/obj/structure/closet/crate/secure/scisecurecrate
+	desc = "A secure science crate."
+	name = "Science crate"
+	icon_state = "scisecurecrate"
+	icon_opened = "scisecurecrateopen"
+	icon_closed = "scisecurecrate"
 
 /obj/structure/closet/crate/secure/gear
 	desc = "A secure gear crate."
@@ -415,6 +422,13 @@
 	icon_opened = "hydrosecurecrateopen"
 	icon_closed = "hydrosecurecrate"
 
+/obj/structure/closet/crate/secure/woodseccrate
+	desc = "A secure wooden crate."
+	name = "Secure wooden crate"
+	icon_state = "woodseccrate"
+	icon_opened = "woodseccrateopen"
+	icon_closed = "woodseccrate"
+
 /obj/structure/closet/crate/secure/bin
 	desc = "A secure bin."
 	name = "Secure bin"
@@ -425,6 +439,7 @@
 	greenlight = "largebing"
 	sparks = "largebinsparks"
 	emag = "largebinemag"
+
 
 /obj/structure/closet/crate/large
 	name = "large crate"

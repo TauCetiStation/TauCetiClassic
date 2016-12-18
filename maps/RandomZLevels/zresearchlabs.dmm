@@ -619,7 +619,7 @@
 "lU" = (/obj/structure/grille,/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 8},/turf/simulated/floor/plating,/area/awaymission/labs/solars)
 "lV" = (/obj/structure/table,/obj/item/weapon/reagent_containers/spray/cleaner,/turf/simulated/floor/plating,/area/awaymission/labs/solars)
 "lW" = (/obj/structure/table,/obj/item/weapon/cable_coil{pixel_y = -3},/obj/item/weapon/cable_coil{pixel_y = 3},/obj/item/weapon/cable_coil{pixel_y = 0},/turf/simulated/floor/plating,/area/awaymission/labs/solars)
-"lX" = (/obj/structure/closet/crate/secure/phoron,/turf/simulated/floor,/area/awaymission/labs/cargo)
+"lX" = (/obj/structure/closet/crate/secure/woodseccrate,/turf/simulated/floor,/area/awaymission/labs/cargo)
 "lY" = (/obj/effect/decal/cleanable/cobweb2,/obj/effect/decal/cleanable/blood,/mob/living/simple_animal/hostile/alien/sentinel,/turf/simulated/floor,/area/awaymission/labs/cargo)
 "lZ" = (/obj/machinery/atmospherics/unary/vent_pump{dir = 8; external_pressure_bound = 0; frequency = 1441; icon_state = "in"; id_tag = "waste_out"; initialize_directions = 1; internal_pressure_bound = 4000; on = 1; pressure_checks = 2; pump_direction = 0},/obj/effect/alien/weeds/node,/turf/simulated/floor,/area/awaymission/labs/cargo)
 "ma" = (/obj/machinery/deployable/barrier,/turf/simulated/floor,/area/awaymission/labs/command)
@@ -1340,4 +1340,3 @@ abababababababababababababababababababababababababababababababababababababababab
 abababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 abababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 "}
-

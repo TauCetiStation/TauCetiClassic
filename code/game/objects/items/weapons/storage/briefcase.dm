@@ -47,3 +47,7 @@
 		M.eye_blurry += 3
 
 	return
+
+/obj/item/weapon/storage/briefcase/centcomm
+	icon_state = "briefcase-centcomm"
+	item_state = "briefcase-centcomm"
