@@ -353,7 +353,7 @@
 	idle_power_usage = 20
 	var/obj/item/weapon/reagent_containers/glass/beaker = null
 	var/obj/item/weapon/storage/pill_bottle/loaded_pill_bottle = null
-	var/mode = 0
+	var/mode = 1
 	var/condi = 0
 	var/useramount = 30 // Last used amount
 	var/pillamount = 10
