@@ -189,7 +189,7 @@
 /obj/item/clothing/under/mime
 	name = "mime's outfit"
 	desc = "It's not very colourful."
-	icon_state = "mime"
+	icon_state = "mimesuit"
 	item_state = "mimesuit"
 	item_color = "mimesuit"
 	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
