@@ -131,12 +131,7 @@
 
 	if(world.time < move_delay)	return
 
-	if(locate(/obj/effect/stop/, mob.loc))
-		for(var/obj/effect/stop/S in mob.loc)
-			if(S.victim == mob)
-				return
-
-	if(mob.stat==2)	return
+	if(mob.stat==DEAD)	return
 
 /*	// handle possible spirit movement
 	if(istype(mob,/mob/spirit))
