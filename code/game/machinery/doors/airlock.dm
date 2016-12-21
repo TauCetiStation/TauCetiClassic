@@ -113,6 +113,7 @@ var/list/airlock_overlays = list()
 	var/hasShocked = 0 //Prevents multiple shocks from happening
 	var/pulseProof = 0 //#Z1 AI hacked this door after previous pulse?
 	var/shockedby = list()
+	var/close_timer_id = null
 
 	var/inner_material = null //material of inner filling; if its an airlock with glass, this should be set to "glass"
 	var/overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
@@ -1346,7 +1347,7 @@ About the new airlock wires panel:
 		if(safe)
 			for(var/turf/T in locs)
 				if(locate(/mob/living) in T)
-					addtimer(src, "close", 60)
+					autoclose()
 					return FALSE
 		return TRUE
 	return FALSE
@@ -1368,8 +1369,7 @@ About the new airlock wires panel:
 	if(hasPower())
 		use_power(50)
 	..()
-	if(autoclose)
-		addtimer(src, "autoclose", normalspeed ? 150 : 5)
+	autoclose()
 
 /obj/machinery/door/airlock/do_close()
 	send_status_if_allowed()
@@ -1386,24 +1386,22 @@ About the new airlock wires panel:
 				M.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
 				M.SetStunned(5)
 				M.SetWeakened(5)
-				var/obj/effect/stop/S = new()
-				S.victim = M
-				S.loc = M.loc
-				spawn(20)
-					qdel(S)
-				M.emote("scream",,, 1)
-			if(istype(T, /turf/simulated))
-				T.add_blood(M)
+			M.visible_message("<span class='red'>[M] was crushed by the [src] door.</span>",
+			                  "<span class='danger'>[src] door crushed you.</span>")
 
-		var/obj/structure/window/W = locate(/obj/structure/window) in T
-		if(W)
+		for(var/obj/structure/window/W in T)
 			W.ex_act(2)
 	..()
 
 /obj/machinery/door/airlock/proc/autoclose()
-	if(!density && !operating && !locked && !welded && autoclose)
-		close()
+	if(autoclose)
+		if(close_timer_id)
+			deltimer(close_timer_id)
+		close_timer_id = addtimer(src, "do_autoclose", normalspeed ? 150 : 5)
 
+/obj/machinery/door/airlock/proc/do_autoclose()
+	close_timer_id = null
+	close()
 
 /obj/machinery/door/airlock/proc/prison_open()
 	unbolt()
