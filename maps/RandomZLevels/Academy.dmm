@@ -266,7 +266,7 @@
 "ff" = (/obj/structure/table/reinforced,/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_y = 0; tag = ""},/turf/simulated/floor{dir = 8; icon_state = "barber"},/area/awaymission/academy/classrooms)
 "fg" = (/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_y = 0; tag = ""},/turf/simulated/floor{dir = 8; icon_state = "barber"},/area/awaymission/academy/classrooms)
 "fh" = (/obj/structure/cable{d1 = 1; d2 = 8; icon_state = "1-8"; tag = ""},/turf/simulated/floor{dir = 8; icon_state = "barber"},/area/awaymission/academy/classrooms)
-"fi" = (/obj/structure/table,/obj/machinery/microwave,/turf/simulated/floor{dir = 8; icon_state = "barber"},/area/awaymission/academy/classrooms)
+"fi" = (/obj/structure/table,/obj/machinery/kitchen_machine/microwave,/turf/simulated/floor{dir = 8; icon_state = "barber"},/area/awaymission/academy/classrooms)
 "fj" = (/obj/structure/window/reinforced{dir = 4},/turf/simulated/floor{dir = 5; icon_state = "yellow"},/area/awaymission/academy/classrooms)
 "fk" = (/obj/structure/window/reinforced{dir = 8},/turf/simulated/floor{dir = 9; icon_state = "yellow"},/area/awaymission/academy/classrooms)
 "fl" = (/obj/structure/stool/bed/chair{dir = 4},/turf/simulated/floor{icon_state = "escape"; dir = 6},/area/awaymission/academy/classrooms)
