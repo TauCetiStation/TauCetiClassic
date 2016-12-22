@@ -50,6 +50,16 @@
 				qdel(recipe)
 		acceptable_items |= /obj/item/weapon/reagent_containers/food/snacks/grown
 
+/obj/machinery/kitchen_machine/RefreshParts()
+	var/E
+	var/max_items = 10
+	for(var/obj/item/weapon/stock_parts/micro_laser/M in component_parts)
+		E += M.rating
+	for(var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
+		max_items = 10 * M.rating
+	efficiency = E
+	max_n_of_items = max_items
+
 /*******************
 *   Item Adding
 ********************/
