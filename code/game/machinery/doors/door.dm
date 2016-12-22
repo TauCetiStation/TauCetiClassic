@@ -371,14 +371,14 @@
  */
 
 /obj/machinery/door/proc/open_checks(forced)
-	if(operating != 1 && ticker)
+	if(!operating && ticker)
 		if(!forced)
 			return normal_open_checks()
 		return TRUE
 	return FALSE
 
 /obj/machinery/door/proc/close_checks(forced)
-	if(operating != 1 && ticker)
+	if(!operating && ticker)
 		if(!forced)
 			return normal_close_checks()
 		return TRUE
@@ -459,7 +459,7 @@
 /obj/machinery/door/proc/set_operating(operating)
 	if(operating && !src.operating)
 		src.operating = TRUE
-	else if(!operating && src.operating)
+	else if(!operating && src.operating == 1)
 		src.operating = FALSE
 
 
