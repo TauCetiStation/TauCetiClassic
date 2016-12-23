@@ -561,7 +561,7 @@ var/list/sacrificed = list()
 		communicate()
 			. = 1 // Default output is 1. If the rune is deleted it will return 1
 			var/input = input(usr, "Please choose a message to tell to the other acolytes.", "Voice of Blood", "")
-			input = sanitize_plus(copytext(input, 1, MAX_MESSAGE_LEN))
+			input = sanitize(copytext(input, 1, MAX_MESSAGE_LEN))
 			if(!input)
 				if (istype(src))
 					fizzle()
