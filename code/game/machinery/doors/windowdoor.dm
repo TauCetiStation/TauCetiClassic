@@ -276,7 +276,6 @@
 
 	//Emags and ninja swords? You may pass.
 	if (density && ((istype(I, /obj/item/weapon/card/emag) && hasPower()) || istype(I, /obj/item/weapon/melee/energy/blade)))
-		operating = -1
 		flick("[src.base_state]spark", src)
 		sleep(6)
 		if(istype(I, /obj/item/weapon/melee/energy/blade))
@@ -287,15 +286,14 @@
 			playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
 			visible_message("<span class='warning'> The glass door was sliced open by [user]!</span>")
 			open(1)
-			emagged = 1
-			return 1
+			return
 		open()
-		emagged = 1
-		return 1
+		operating = -1
+		return
 
 	if(!(flags & NODECONSTRUCT))
 		if(istype(I, /obj/item/weapon/screwdriver))
-			if(src.density || src.operating)
+			if(src.density || src.operating == 1)
 				to_chat(user, "<span class='warning'>You need to open the [src.name] to access the maintenance panel.</span>")
 				return
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
