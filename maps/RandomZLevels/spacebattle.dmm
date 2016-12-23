@@ -138,7 +138,7 @@
 "cH" = (/obj/structure/table/reinforced,/obj/item/weapon/kitchen/rollingpin,/turf/simulated/floor{icon_state = "cafeteria"; dir = 2},/area/awaymission/spacebattle/cruiser)
 "cI" = (/obj/structure/closet/secure_closet/freezer/kitchen,/turf/simulated/floor{icon_state = "cafeteria"; dir = 2},/area/awaymission/spacebattle/cruiser)
 "cJ" = (/obj/structure/closet/secure_closet/freezer/fridge,/turf/simulated/floor{icon_state = "cafeteria"; dir = 2},/area/awaymission/spacebattle/cruiser)
-"cK" = (/obj/structure/table/reinforced,/obj/machinery/microwave,/turf/simulated/floor{icon_state = "cafeteria"; dir = 2},/area/awaymission/spacebattle/cruiser)
+"cK" = (/obj/structure/table/reinforced,/obj/machinery/kitchen_machine/microwave,/turf/simulated/floor{icon_state = "cafeteria"; dir = 2},/area/awaymission/spacebattle/cruiser)
 "cL" = (/obj/machinery/door/unpowered/shuttle,/turf/simulated/floor/plating,/area/awaymission/spacebattle/cruiser)
 "cM" = (/turf/simulated/floor/plating,/area/awaymission/spacebattle/cruiser)
 "cN" = (/obj/item/ammo_casing/a12mm,/obj/item/ammo_casing/a12mm,/turf/simulated/floor,/area/awaymission/spacebattle/cruiser)
@@ -754,3 +754,4 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 "}
+

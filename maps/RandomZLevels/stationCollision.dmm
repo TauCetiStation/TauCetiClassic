@@ -422,7 +422,7 @@
 "if" = (/obj/machinery/door/airlock/security/glass{name = "Glass Airlock"; req_access_txt = "0"},/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_x = 0; tag = ""},/turf/simulated/floor,/area/awaymission/arrivalblock)
 "ig" = (/obj/structure/closet/secure_closet/engineering_personal,/turf/simulated/floor,/area/awaymission/northblock)
 "ih" = (/obj/structure/closet/secure_closet/engineering_personal,/turf/simulated/floor{icon_state = "damaged2"},/area/awaymission/northblock)
-"ii" = (/obj/machinery/microwave{pixel_x = -2; pixel_y = 7},/obj/structure/table,/turf/simulated/floor,/area/awaymission/midblock)
+"ii" = (/obj/machinery/kitchen_machine/microwave,/obj/structure/table,/turf/simulated/floor,/area/awaymission/midblock)
 "ij" = (/obj/structure/stool,/obj/item/ammo_casing/a12mm,/turf/simulated/floor,/area/awaymission/midblock)
 "ik" = (/obj/item/ammo_casing/a12mm,/obj/item/ammo_casing/a12mm,/obj/effect/decal/cleanable/blood/splatter,/turf/simulated/floor,/area/awaymission/midblock)
 "il" = (/obj/machinery/portable_atmospherics/canister/phoron{destroyed = 1},/turf/simulated/shuttle/plating,/area/awaymission/syndishuttle)
