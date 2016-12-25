@@ -62,6 +62,8 @@
 			if(WEST)
 				dir = NORTHWEST
 			if(NORTHWEST)
+				dir = NORTHEAST
+			if(NORTHEAST)
 				dir = NORTH
 		return 1
 
@@ -240,8 +242,9 @@
 						var/obj/structure/window/reinforced/WIN = new/obj/structure/window/reinforced(get_turf(object))
 						WIN.dir = WEST
 					if(NORTHWEST)
-						var/obj/structure/window/reinforced/WIN = new/obj/structure/window/reinforced(get_turf(object))
-						WIN.dir = NORTHWEST
+						new/obj/structure/window/reinforced/fulltile(get_turf(object))
+					if(NORTHEAST)
+						new/obj/structure/window/fulltile(get_turf(object))
 		if(2)
 			if(pa.Find("left"))
 				if(ispath(holder.buildmode.objholder,/turf))

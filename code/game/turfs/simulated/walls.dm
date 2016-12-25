@@ -1,7 +1,8 @@
 /turf/simulated/wall
 	name = "wall"
 	desc = "A huge chunk of metal used to seperate rooms."
-	icon = 'icons/turf/walls.dmi'
+	icon = 'icons/turf/wall.dmi'
+	icon_state = "map"
 	var/mineral = "metal"
 	var/rotting = 0
 
@@ -20,11 +21,25 @@
 	thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
 	heat_capacity = 312500 //a little over 5 cm thick , 312500 for 1 m by 2.5 m by 0.25 m plasteel wall
 
-	var/walltype = "metal"
 	var/sheet_type = /obj/item/stack/sheet/metal
+
+	canSmoothWith = list(/turf/simulated/wall,
+	                     /obj/structure/falsewall,
+	                     /obj/structure/falserwall,
+	                     /obj/structure/window/fulltile,
+	                     /obj/structure/window/reinforced/fulltile,
+	                     /obj/structure/window/reinforced/tinted/fulltile,
+	                     /obj/machinery/door)
+	smooth = SMOOTH_MORE|SMOOTH_ISOMETRIC
+	canSmoothConnectWith = list(/obj/structure/window/fulltile,
+	                            /obj/structure/window/reinforced/fulltile,
+	                            /obj/structure/window/reinforced/tinted/fulltile,
+	                            /obj/machinery/door)
 
 /turf/simulated/wall/New()
 	..()
+	if(smooth)
+		smooth_icon(src)
 
 /turf/simulated/wall/Destroy()
 	for(var/obj/effect/E in src)
@@ -38,7 +53,7 @@
 		if(E.name == "Wallrot")
 			qdel(E)
 	..(newtype)
-	relativewall_neighbours()
+	//relativewall_neighbours()
 
 //Appearance
 
@@ -63,20 +78,16 @@
 	if(!damage_overlays[1]) //list hasn't been populated
 		generate_overlays()
 
-	if(!damage)
-		overlays.Cut()
-		return
-
-	var/overlay = round(damage / damage_cap * damage_overlays.len) + 1
-	if(overlay > damage_overlays.len)
-		overlay = damage_overlays.len
-
-	if(damage_overlay && overlay == damage_overlay) //No need to update.
-		return
-
 	overlays.Cut()
-	overlays += damage_overlays[overlay]
-	damage_overlay = overlay
+
+	if(damage)
+		var/overlay = round(damage / damage_cap * damage_overlays.len) + 1
+		if(overlay > damage_overlays.len)
+			overlay = damage_overlays.len
+
+		if(!(damage_overlay && overlay == damage_overlay)) //No need to update.
+			overlays += damage_overlays[overlay]
+			damage_overlay = overlay
 
 	return
 

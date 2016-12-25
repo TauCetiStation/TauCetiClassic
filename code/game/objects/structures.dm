@@ -3,6 +3,13 @@
 	var/climbable
 	var/list/climbers = list()
 
+/obj/structure/New()
+	..()
+	if(smooth)
+		queue_smooth(src)
+		queue_smooth_neighbors(src)
+		icon_state = ""
+
 /obj/structure/blob_act()
 	if(prob(50))
 		qdel(src)

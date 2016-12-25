@@ -1,24 +1,25 @@
 /obj/structure/window
 	name = "window"
 	desc = "A window."
-	icon = 'icons/obj/window.dmi'
+	icon = 'icons/obj/windows.dmi'
+	icon_state = "window"
 	density = 1
 	layer = 3.2//Just above doors
 	pressure_resistance = 4*ONE_ATMOSPHERE
 	anchored = 1.0
 	flags = ON_BORDER
-	var/maxhealth = 14.0
+	var/maxhealth = 25
 	var/health
 	var/ini_dir = null
 	var/state = 2
 	var/reinf = 0
-	var/basestate
 	var/can_merge = 1	//Sometimes it's needed
 	var/shardtype = /obj/item/weapon/shard
 	var/image/crack_overlay
 	var/damage_threshold = 5	//This will be deducted from any physical damage source.
 //	var/silicate = 0 // number of units of silicate
 //	var/icon/silicateIcon = null // the silicated icon
+	can_be_unanchored = 1
 
 /obj/structure/window/proc/take_damage(damage = 0, damage_type = BRUTE, sound_effect = 1)
 	var/initialhealth = health
@@ -366,10 +367,9 @@
 
 	health = maxhealth
 
-	color = color_windows()
+	//color = color_windows()
 
 	update_nearby_tiles(need_rebuild=1)
-	update_nearby_icons()
 
 
 /obj/structure/window/Destroy()
@@ -404,38 +404,25 @@
 //This proc is used to update the icons of nearby windows. It should not be confused with update_nearby_tiles(), which is an atmos proc!
 /obj/structure/window/proc/update_nearby_icons()
 	update_icon()
-	for(var/direction in cardinal)
-		for(var/obj/structure/window/W in get_step(src,direction) )
-			W.update_icon()
+	if(smooth)
+		queue_smooth_neighbors(src)
 
-//merges adjacent full-tile windows into one (blatant ripoff from game/smoothwall.dm)
 /obj/structure/window/update_icon()
-	//A little cludge here, since I don't know how it will work with slim windows. Most likely VERY wrong.
-	//this way it will only update full-tile ones
-	//This spawn is here so windows get properly updated when one gets deleted.
-	spawn(2)
-		if(!src)
-			return
+	if(!qdeleted(src))
 		if(!is_fulltile())
-			icon_state = "[basestate]"
 			return
-
-		var/junction = 0 //will be used to determine from which side the window is connected to other windows
-		if(anchored)
-			for(var/obj/structure/window/W in orange(src,1))
-				if(W.anchored && W.density && W.is_fulltile() && W.can_merge) //Only counts anchored, not-destroyed fill-tile windows.
-					if(abs(x-W.x)-abs(y-W.y) ) 		//doesn't count windows, placed diagonally to src
-						junction |= get_dir(src,W)
-		icon_state = "[basestate][junction]"
 
 		var/ratio = health / maxhealth
 		ratio = Ceiling(ratio*4) * 25
 
+		if(smooth)
+			queue_smooth(src)
+
 		overlays -= crack_overlay
 		if(ratio > 75)
 			return
-		crack_overlay = image('icons/obj/window.dmi',"damage[ratio]",-(layer+0.1))
-		overlays += crack_overlay
+		crack_overlay = image(icon,"damage[ratio]",-(layer+0.1))
+		add_overlay(crack_overlay)
 
 /obj/structure/window/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > T0C + 800)
@@ -444,41 +431,33 @@
 
 
 
-/obj/structure/window/basic
-	desc = "It looks thin and flimsy. A few knocks with... anything, really should shatter it."
-	icon_state = "window"
-	basestate = "window"
-
-/obj/structure/window/phoronbasic
+/obj/structure/window/phoron
 	name = "phoron window"
 	desc = "A phoron-glass alloy window. It looks insanely tough to break. It appears it's also insanely tough to burn through."
-	basestate = "phoronwindow"
 	icon_state = "phoronwindow"
 	shardtype = /obj/item/weapon/shard/phoron
 	maxhealth = 120.0
 
-/obj/structure/window/phoronbasic/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+/obj/structure/window/phoron/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > T0C + 32000)
 		take_damage(round(exposed_volume / 1000), BURN, 0)
 	..()
 
-/obj/structure/window/phoronreinforced
+/obj/structure/window/phoron/reinforced
 	name = "reinforced phoron window"
 	desc = "A phoron-glass alloy window, with rods supporting it. It looks hopelessly tough to break. It also looks completely fireproof, considering how basic phoron windows are insanely fireproof."
-	basestate = "phoronrwindow"
 	icon_state = "phoronrwindow"
 	shardtype = /obj/item/weapon/shard/phoron
 	reinf = 1
 	maxhealth = 160.0
 
-/obj/structure/window/phoronreinforced/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+/obj/structure/window/phoron/reinforced/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	return
 
 /obj/structure/window/reinforced
 	name = "reinforced window"
 	desc = "It looks rather strong. Might take a few good hits to shatter it."
 	icon_state = "rwindow"
-	basestate = "rwindow"
 	maxhealth = 100.0
 	reinf = 1
 	damage_threshold = 15
@@ -487,23 +466,65 @@
 	name = "tinted window"
 	desc = "It looks rather strong and opaque. Might take a few good hits to shatter it."
 	icon_state = "twindow"
-	basestate = "twindow"
 	opacity = 1
 
-/obj/structure/window/reinforced/tinted/frosted //Actually, there is no icon for this!!
-	name = "frosted window"
-	desc = "It looks rather strong and frosted over. Looks like it might take a few less hits then a normal reinforced window."
-	icon_state = "fwindow"
-	basestate = "fwindow"
-	maxhealth = 30.0
-	damage_threshold = 0
+/obj/structure/window/fulltile
+	icon = 'icons/obj/window.dmi'
+	icon_state = "map"
+	dir = 5
+	maxhealth = 50
+	smooth = SMOOTH_MORE|SMOOTH_ISOMETRIC
+	damage_threshold = 5
+	canSmoothWith = list(/turf/simulated/wall,
+	                     /obj/structure/falsewall,
+	                     /obj/structure/falserwall,
+	                     /obj/structure/window/fulltile,
+	                     /obj/structure/window/reinforced/fulltile,
+	                     /obj/structure/window/reinforced/tinted/fulltile,
+	                     /obj/machinery/door)
+
+/obj/structure/window/reinforced/fulltile
+	name = "reinforced window"
+	desc = "It looks rather strong. Might take a few good hits to shatter it."
+	icon = 'icons/obj/window_reinforced.dmi'
+	icon_state = "map"
+	dir = 5
+	maxhealth = 100
+	smooth = SMOOTH_MORE|SMOOTH_ISOMETRIC
+	reinf = 1
+	damage_threshold = 15
+	canSmoothWith = list(/turf/simulated/wall,
+	                     /obj/structure/falsewall,
+	                     /obj/structure/falserwall,
+	                     /obj/structure/window/fulltile,
+	                     /obj/structure/window/reinforced/fulltile,
+	                     /obj/structure/window/reinforced/tinted/fulltile,
+	                     /obj/machinery/door)
+
+/obj/structure/window/reinforced/tinted/fulltile
+	name = "tinted window"
+	desc = "It looks rather strong and opaque. Might take a few good hits to shatter it."
+	icon = 'icons/obj/window_reinforced.dmi'
+	icon_state = "no_tinted_fulltile_icon" //will look as normal reinforced window in-game, since names only matter for map editor.
+	dir = 5
+	opacity = 1
+	maxhealth = 100
+	smooth = SMOOTH_MORE|SMOOTH_ISOMETRIC
+	reinf = 1
+	damage_threshold = 15
+	canSmoothWith = list(/turf/simulated/wall,
+	                     /obj/structure/falsewall,
+	                     /obj/structure/falserwall,
+	                     /obj/structure/window/fulltile,
+	                     /obj/structure/window/reinforced/fulltile,
+	                     /obj/structure/window/reinforced/tinted/fulltile,
+	                     /obj/machinery/door)
 
 /obj/structure/window/shuttle
 	name = "shuttle window"
 	desc = "It looks rather strong. Might take a few good hits to shatter it."
 	icon = 'icons/obj/podwindows.dmi'
 	icon_state = "window"
-	basestate = "window"
 	maxhealth = 150.0
 	reinf = 1
 	dir = 5

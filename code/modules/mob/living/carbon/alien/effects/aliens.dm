@@ -68,6 +68,24 @@
 		qdel(src)
 	return
 
+/obj/effect/alien/resin/proc/relativewall()
+
+	var/junction = 0 //will be used to determine from which side the wall is connected to other walls
+
+	for(var/obj/effect/alien/resin/W in orange(src,1))
+		if(abs(src.x-W.x)-abs(src.y-W.y)) //doesn't count diagonal walls
+			junction |= get_dir(src,W)
+	var/obj/effect/alien/resin/resin = src
+	resin.icon_state = "[resin.resintype][junction]"
+
+	return
+
+/obj/effect/alien/resin/proc/relativewall_neighbours()
+	for(var/obj/effect/alien/resin/W in range(src,1))
+		W.relativewall()
+		W.update_icon()
+	return
+
 /obj/effect/alien/resin/bullet_act(obj/item/projectile/Proj)
 	health -= Proj.damage
 	..()

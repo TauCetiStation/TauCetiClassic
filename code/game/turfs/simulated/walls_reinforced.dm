@@ -1,14 +1,13 @@
 /turf/simulated/wall/r_wall
 	name = "reinforced wall"
 	desc = "A huge chunk of reinforced metal used to seperate rooms."
-	icon_state = "r_wall"
+	icon = 'icons/turf/wall_reinforced.dmi'
 	opacity = 1
 	density = 1
 
 	damage_cap = 200
 	max_temperature = 20000
 
-	walltype = "rwall"
 	sheet_type = /obj/item/stack/sheet/plasteel
 
 	var/d_state = 0
@@ -144,7 +143,7 @@
 				var/obj/item/stack/O = W
 				src.d_state = 0
 				src.icon_state = "r_wall"
-				relativewall_neighbours()	//call smoothwall stuff
+				//relativewall_neighbours()	//call smoothwall stuff
 				to_chat(user, "<span class='notice'>You replace the outer grille.</span>")
 				if (O.amount > 1)
 					O.amount--
@@ -299,7 +298,7 @@
 			if(user.loc == T && user.get_active_hand() == MS && d_state)
 				src.d_state = 0
 				src.icon_state = "r_wall"
-				relativewall_neighbours()	//call smoothwall stuff
+				//relativewall_neighbours()	//call smoothwall stuff
 				to_chat(user, "<span class='notice'>You repair the last of the damage.</span>")
 				if (MS.amount > 1)
 					MS.amount--

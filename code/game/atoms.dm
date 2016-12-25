@@ -26,6 +26,9 @@
 	//Detective Work, used for the duplicate data points kept in the scanners
 	var/list/original_atom
 
+	//overlays that should remain on top and not normally be removed, like c4.
+	var/list/priority_overlays
+
 /atom/proc/assume_air(datum/gas_mixture/giver)
 	return null
 

@@ -20,7 +20,7 @@ var/datum/subsystem/objects/SSobj
 /datum/subsystem/objects/Initialize(timeofday, zlevel)
 	setupGenetics()
 	GenerateGasOverlays()
-	color_windows_init()
+	//color_windows_init()
 	global_announcer = new(null) //Doh...
 	for(var/V in world)
 		var/atom/A = V
