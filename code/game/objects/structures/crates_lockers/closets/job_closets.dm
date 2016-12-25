@@ -133,6 +133,7 @@
 		if (11)
 			new /obj/item/clothing/suit/bio_suit/plaguedoctorsuit(src.loc)
 			new /obj/item/clothing/head/plaguedoctorhat(src.loc)
+			new /obj/item/clothing/mask/gas/plaguedoctor(src.loc)
 		if( 12)
 			new /obj/item/clothing/under/owl(src.loc)
 			new /obj/item/clothing/mask/gas/owl_mask(src.loc)
