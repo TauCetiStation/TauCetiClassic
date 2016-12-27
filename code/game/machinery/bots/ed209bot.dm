@@ -789,7 +789,7 @@ Auto Patrol: []"},
 			new /obj/item/clothing/head/helmet(Tsec)
 		else
 			if(!lasercolor)
-				new /obj/item/clothing/suit/armor/vest(Tsec)
+				new /obj/item/clothing/suit/storage/flak(Tsec)
 			if(lasercolor == "b")
 				new /obj/item/clothing/suit/bluetag(Tsec)
 			if(lasercolor == "r")
@@ -922,7 +922,7 @@ Auto Patrol: []"},
 				lasercolor = "r"
 			else if( istype(W, /obj/item/clothing/suit/bluetag) )
 				lasercolor = "b"
-			if( lasercolor || istype(W, /obj/item/clothing/suit/armor/vest) )
+			if( lasercolor || istype(W, /obj/item/clothing/suit/storage/flak) )
 				user.drop_item()
 				qdel(W)
 				build_step++
