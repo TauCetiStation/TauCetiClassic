@@ -24,7 +24,7 @@
 	desc = "A synthetic slab of flesh."
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/human
-	name = "-meat"
+	name = "meat"
 	var/subjectname = ""
 	var/subjectjob = null
 
@@ -33,9 +33,9 @@
 	//same as plain meat
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/corgi
-	name = "Corgi meat"
+	name = "meat"
 	desc = "Tastes like... well you know..."
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/pug
-	name = "Pug meat"
+	name = "meat"
 	desc = "Tastes like... well you know..."
