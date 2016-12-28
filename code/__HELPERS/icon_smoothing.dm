@@ -38,7 +38,7 @@
 #define SMOOTH_MORE       2 //smooths with all subtypes of specified types or just itself (this value can replace SMOOTH_TRUE)
 #define SMOOTH_DIAGONAL   4 //if atom should smooth diagonally, this should be present in 'smooth' var
 #define SMOOTH_BORDER     8 //atom will smooth with the borders of the map
-#define SMOOTH_ISOMETRIC 16
+#define SMOOTH_SPECIAL   16 //special smoothing method, see icons/turf/example_SMOOTH_SPECIAL.dmi and wall.dmi for example.
 
 #define NULLTURF_BORDER 123456789
 
@@ -55,7 +55,7 @@
 /atom/movable/var/can_be_unanchored = 0
 /turf/var/list/fixed_underlay = null
 
-//Isometric
+//connection overlay between objects like windows and walls (see icons/turf/wall_connect.dmi).
 /atom/var/smooth_connection
 /atom/var/smooth_connection_image
 /atom/var/list/canSmoothConnectWith = null
@@ -128,7 +128,7 @@
 			else
 				cardinal_smooth(A, adjacencies)
 
-			//Isometric
+			//connection overlay
 			if(A.canSmoothConnectWith)
 				cardinal_connection_smooth(A, adjacencies)
 
@@ -186,15 +186,13 @@
 				underlays += DEFAULT_UNDERLAY_IMAGE
 
 /proc/cardinal_smooth(atom/A, adjacencies)
-	if(A.smooth & SMOOTH_ISOMETRIC)
+	if(A.smooth & SMOOTH_SPECIAL)
 		A.icon_state = "base"
-		//A.maptext = ""
 
 		if(adjacencies)
 			A.icon_state = "[adjacencies]"
-			//A.maptext = "[adjacencies]"
 	else
-		//See isometric example in the end of file for TG method.
+		//See another example in the end of file for TG method using SMOOTH_SPECIAL.
 
 		//NW CORNER
 		var/nw = "1-i"
@@ -268,7 +266,22 @@
 			A.bottom_left_corner = se
 			A.add_overlay(se)
 
-//Isometric connection borders.
+//connection overlay
+/proc/find_connection_in_direction(atom/source, direction)
+	var/turf/target_turf = get_step(source, direction)
+	if(!target_turf)
+		return null
+
+	if(source.canSmoothConnectWith)
+		var/atom/A
+		for(var/a_type in source.canSmoothConnectWith)
+			if( istype(target_turf, a_type) )
+				return target_turf
+			A = locate(a_type) in target_turf
+			if(A)
+				return A
+	return null
+
 /proc/cardinal_connection_smooth(atom/A, adjacencies)
 	if(!adjacencies && A.smooth_connection)
 		A.overlays -= A.smooth_connection_image
@@ -331,22 +344,6 @@
 			return source.type == target_turf.type ? target_turf : null
 		var/atom/A = locate(source.type) in target_turf
 		return A && A.type == source.type ? A : null
-
-//For isometric walls and windows (adds a little border between connected walls and windows for better look).
-/proc/find_connection_in_direction(atom/source, direction)
-	var/turf/target_turf = get_step(source, direction)
-	if(!target_turf)
-		return null
-
-	if(source.canSmoothConnectWith)
-		var/atom/A
-		for(var/a_type in source.canSmoothConnectWith)
-			if( istype(target_turf, a_type) )
-				return target_turf
-			A = locate(a_type) in target_turf
-			if(A)
-				return A
-	return null
 
 //Icon smoothing helpers
 /proc/smooth_zlevel(var/zlevel, now = FALSE)
@@ -463,7 +460,7 @@
 //	smooth = SMOOTH_TRUE|SMOOTH_DIAGONAL|SMOOTH_BORDER
 //	canSmoothWith = null
 
-/* Isometric example using TG method (i prefer bay style (fulltile icons) with raw numbers in icon_states using fulltile icons,
+/* SMOOTH_SPECIAL example using TG method (i prefer bay style (fulltile icons) with raw numbers in icon_states using fulltile icons,
 while TG splices 1 icon into 4 small and then constructs a complete tile using multiple little overlays for each corner).
 
 Code below replaces same part of code in cardinal_smooth proc.

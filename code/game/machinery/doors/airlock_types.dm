@@ -163,10 +163,10 @@
 		spawn(0)
 			target_tile.hotspot_expose(temperature, 400)
 
-	for(var/obj/structure/falsewall/phoron/F in range(3, src))//Hackish as fuck, but until temperature_expose works, there is nothing I can do -Sieve
+	/*for(var/obj/structure/falsewall/phoron/F in range(3, src))//Hackish as fuck, but until temperature_expose works, there is nothing I can do -Sieve
 		var/turf/T = get_turf(F)
 		T.ChangeTurf(/turf/simulated/wall/mineral/phoron/)
-		qdel(F)
+		qdel(F)*/
 
 	for(var/turf/simulated/wall/mineral/phoron/W in range(3, src))
 		W.ignite((temperature / 4))//Added so that you can't set off a massive chain reaction with a small flame

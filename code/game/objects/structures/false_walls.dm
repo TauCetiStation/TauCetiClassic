@@ -11,7 +11,7 @@
 	icon_state = "map"
 	var/mineral = "metal"
 	var/opening = 0
-	smooth = SMOOTH_MORE|SMOOTH_ISOMETRIC
+	smooth = SMOOTH_MORE|SMOOTH_SPECIAL
 	canSmoothWith = list(/turf/simulated/wall,
 	                     /obj/structure/falsewall,
 	                     /obj/structure/falserwall,
@@ -128,7 +128,7 @@
 	anchored = 1
 	var/mineral = "metal"
 	var/opening = 0
-	smooth = SMOOTH_MORE|SMOOTH_ISOMETRIC
+	smooth = SMOOTH_MORE|SMOOTH_SPECIAL
 	canSmoothWith = list(/turf/simulated/wall,
 	                     /obj/structure/falsewall,
 	                     /obj/structure/falserwall,
@@ -212,7 +212,7 @@
 /*
  * Uranium Falsewalls
  */
-
+/*
 /obj/structure/falsewall/uranium
 	name = "uranium wall"
 	desc = "A wall with uranium plating. This is probably a bad idea."
@@ -241,10 +241,11 @@
 			active = null
 			return
 	return
+*/
 /*
  * Other misc falsewall types
  */
-
+/*
 /obj/structure/falsewall/gold
 	name = "gold wall"
 	desc = "A wall with gold plating. Swag!"
@@ -282,3 +283,4 @@
 	icon_state = ""
 	mineral = "sandstone"
 //------------wtf?------------end
+*/

@@ -30,7 +30,7 @@
 	                     /obj/structure/window/reinforced/fulltile,
 	                     /obj/structure/window/reinforced/tinted/fulltile,
 	                     /obj/machinery/door)
-	smooth = SMOOTH_MORE|SMOOTH_ISOMETRIC
+	smooth = SMOOTH_MORE|SMOOTH_SPECIAL
 	canSmoothConnectWith = list(/obj/structure/window/fulltile,
 	                            /obj/structure/window/reinforced/fulltile,
 	                            /obj/structure/window/reinforced/tinted/fulltile,

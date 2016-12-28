@@ -473,7 +473,7 @@
 	icon_state = "map"
 	dir = 5
 	maxhealth = 50
-	smooth = SMOOTH_MORE|SMOOTH_ISOMETRIC
+	smooth = SMOOTH_MORE|SMOOTH_SPECIAL
 	damage_threshold = 5
 	canSmoothWith = list(/turf/simulated/wall,
 	                     /obj/structure/falsewall,
@@ -490,7 +490,7 @@
 	icon_state = "map"
 	dir = 5
 	maxhealth = 100
-	smooth = SMOOTH_MORE|SMOOTH_ISOMETRIC
+	smooth = SMOOTH_MORE|SMOOTH_SPECIAL
 	reinf = 1
 	damage_threshold = 15
 	canSmoothWith = list(/turf/simulated/wall,
@@ -509,7 +509,7 @@
 	dir = 5
 	opacity = 1
 	maxhealth = 100
-	smooth = SMOOTH_MORE|SMOOTH_ISOMETRIC
+	smooth = SMOOTH_MORE|SMOOTH_SPECIAL
 	reinf = 1
 	damage_threshold = 15
 	canSmoothWith = list(/turf/simulated/wall,
