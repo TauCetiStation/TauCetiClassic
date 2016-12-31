@@ -214,7 +214,7 @@
 
 /datum/game_mode/abduction/proc/get_team_console(team)
 	var/obj/machinery/abductor/console/console
-	for(var/obj/machinery/abductor/console/c in world)
+	for(var/obj/machinery/abductor/console/c in machines)
 		if(c.team == team)
 			console = c
 			break
@@ -364,7 +364,7 @@
 /datum/objective/experiment/check_completion()
 	. = 0
 	var/ab_team = team
-	for(var/obj/machinery/abductor/experiment/E in world)
+	for(var/obj/machinery/abductor/experiment/E in machines)
 		if(E.team == ab_team)
 			if(E.points >= target_amount)
 				return 1

@@ -358,7 +358,7 @@
 		helm_cam.c_tag = "[user.real_name] Cam"
 		helm_cam.replace_networks(list("Abductor[team]"))
 
-		for(var/obj/machinery/computer/security/abductor_ag/C in world)
+		for(var/obj/machinery/computer/security/abductor_ag/C in machines)
 			if(C.team == team)
 				if(C.network.len < 1)
 					C.network = helm_cam.network
