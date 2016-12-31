@@ -210,7 +210,6 @@
 			playsound(loc, 'sound/weapons/blade1.ogg', 50, 1)
 			playsound(loc, "sparks", 50, 1)
 			visible_message("<span class='notice'>The camera has been sliced apart by [user] with [W]!</span>")
-			new /obj/item/weapon/camera_assembly(src.loc)
 			pick(new /obj/item/weapon/cable_coil(src.loc),
 				 new /obj/item/weapon/cable_coil/cut(src.loc))
 			qdel(src)

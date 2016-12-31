@@ -893,7 +893,7 @@ About the new airlock wires panel:
 	return
 
 /obj/machinery/door/airlock/attack_hand(mob/user)
-	if(!istype(usr, /mob/living/silicon))
+	if(!(istype(user, /mob/living/silicon) || IsAdminGhost(user)))
 		if(src.isElectrified())
 			if(src.shock(user, 100))
 				return
@@ -1029,7 +1029,7 @@ About the new airlock wires panel:
 			R.airlock_wire = null
 			signalers[wirenum] = null
 
-	if(issilicon(usr) && canAIControl())
+	if((issilicon(usr) && canAIControl()) || IsAdminGhost(usr))
 		//AI
 		//aiDisable - 1 idscan, 2 disrupt main power, 3 disrupt backup power, 4 drop door bolts, 5 un-electrify door, 7 close door, 8 door safties, 9 door speed, 11 lift access override
 		//aiEnable - 1 idscan, 4 raise door bolts, 5 electrify door for 30 seconds, 6 electrify door indefinitely, 7 open door,  8 door safties, 9 door speed, 11 lift access override
@@ -1226,7 +1226,7 @@ About the new airlock wires panel:
 		updateUsrDialog()
 
 /obj/machinery/door/airlock/attackby(C, mob/user)
-	if(!istype(usr, /mob/living/silicon))
+	if(!(istype(usr, /mob/living/silicon) || IsAdminGhost(user)))
 		if(src.isElectrified())
 			if(src.shock(user, 75))
 				return
