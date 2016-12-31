@@ -462,9 +462,9 @@ proc/isInSight(atom/A, atom/B)
 	if(M.client.holder)
 		return
 	if(M.client.player_age == 0)
-		for(var/client/C in clients)
-			if(C.holder)
-				spawn(10)
+		spawn(10)
+			for(var/client/C in clients)
+				if(C.holder)
 					to_chat(C, "<span class=\"admin\"><span class=\"prefix\">New player notify:</span> <span class=\"message\">[M.ckey] join to the game as [M.mind.name] [M.mind.assigned_role ? "([M.mind.assigned_role])" : ""] - <a href='http://www.byond.com/members/[M.ckey]'>Byond Profile</a> [ADMIN_JMP(M)] [ADMIN_FLW(M)]</span></span>")
 
 					if(R_ADMIN & C.holder.rights)
