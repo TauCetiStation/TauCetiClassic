@@ -912,6 +912,8 @@
 				src.updateDialog()
 
 /obj/machinery/power/apc/proc/can_use(mob/user, loud = 0) //used by attack_hand() and Topic()
+	if (IsAdminGhost(user))
+		return 1
 	if(!user.client)
 		return 0
 	autoflag = 5

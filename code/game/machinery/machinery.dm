@@ -286,7 +286,7 @@ Class Procs:
 /obj/machinery/attack_hand(mob/user)
 	if(stat & (NOPOWER|BROKEN|MAINT))
 		return 1
-	if(user.lying || user.stat)
+	if((user.lying || user.stat) && !IsAdminGhost(user))
 		return 1
 	if ( ! (istype(usr, /mob/living/carbon/human) || \
 			istype(usr, /mob/living/silicon) || \
