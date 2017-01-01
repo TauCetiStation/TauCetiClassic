@@ -630,9 +630,10 @@ var/list/robot_verbs_default = list(
 			to_chat(user, "Nothing to fix here!")
 			return
 		var/obj/item/weapon/cable_coil/coil = W
+		if(!coil.use(1))
+			return
 		adjustFireLoss(-30)
 		updatehealth()
-		coil.use(1)
 		for(var/mob/O in viewers(user, null))
 			O.show_message(text("\red [user] has fixed some of the burnt wires on [src]!"), 1)
 

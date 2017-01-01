@@ -153,8 +153,10 @@
 				to_chat(user, "<span class = 'rose'>[src] is full.</span>")
 				return
 
+			if(!N.use(1))
+				return
+
 			src.reagents.add_reagent("nanites2", 1)
-			N.use(1)
 
 /obj/item/weapon/reagent_containers/glass/proc/update_name_label()
 	if(src.label_text == "")

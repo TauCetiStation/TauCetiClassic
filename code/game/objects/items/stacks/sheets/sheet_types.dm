@@ -100,7 +100,7 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	icon_state = "sheet-metal"
 	m_amt = 0
 	throwforce = 14.0
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = CONDUCT
 
 /obj/item/stack/sheet/metal/New(var/loc, var/amount=null)
 	recipes = metal_recipes

@@ -44,20 +44,22 @@
 				qdel(L)
 				return
 
+		if(!R.use(1))
+			return
 		to_chat(user, "\blue Constructing support lattice ...")
 		playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
 		ReplaceWithLattice()
-		R.use(1)
 		return
 
 	if (istype(C, /obj/item/stack/tile/plasteel))
 		var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
 		if(L)
 			var/obj/item/stack/tile/plasteel/S = C
+			if(!S.use(1))
+				return
 			qdel(L)
 			playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
 			S.build(src)
-			S.use(1)
 			return
 		else
 			to_chat(user, "\red The plating is going to need some support.")
