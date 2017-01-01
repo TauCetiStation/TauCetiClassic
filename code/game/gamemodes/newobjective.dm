@@ -774,7 +774,7 @@ datum
 
 
 			voidsuit
-				steal_target = /obj/item/clothing/suit/space/nasavoid
+				steal_target = /obj/item/clothing/suit/space/sk
 				explanation_text = "Steal a voidsuit."
 				weight = 20
 

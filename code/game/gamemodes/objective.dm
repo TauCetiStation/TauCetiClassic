@@ -488,7 +488,7 @@ datum/objective/steal
 		"a functional AI" = /obj/item/device/aicard,
 		"a pair of magboots" = /obj/item/clothing/shoes/magboots,
 		"the station blueprints" = /obj/item/blueprints,
-		"a nasa voidsuit" = /obj/item/clothing/suit/space/nasavoid,
+		"a skafandr kosmicheskiy" = /obj/item/clothing/suit/space/sk,
 		"28 moles of phoron (full tank)" = /obj/item/weapon/tank,
 		"a sample of slime extract" = /obj/item/slime_extract,
 		"a piece of corgi meat" = /obj/item/weapon/reagent_containers/food/snacks/meat/corgi,
