@@ -110,8 +110,6 @@
 		list_recipes(usr, text2num(href_list["sublist"]))
 
 	if (href_list["make"])
-		if (src.amount < 1) qdel(src) //Never should happen
-
 		var/list/recipes_list = recipes
 		if (href_list["sublist"])
 			var/datum/stack_recipe_list/srl = recipes_list[text2num(href_list["sublist"])]
@@ -119,7 +117,7 @@
 		var/datum/stack_recipe/R = recipes_list[text2num(href_list["make"])]
 		var/multiplier = text2num(href_list["multiplier"])
 		if (!multiplier) multiplier = 1
-		if (src.amount < R.req_amount*multiplier)
+		if(src.amount < (R.req_amount*multiplier))
 			if (R.req_amount*multiplier>1)
 				to_chat(usr, "\red You haven't got enough [src] to build \the [R.req_amount*multiplier] [R.title]\s!")
 			else
@@ -135,22 +133,13 @@
 			to_chat(usr, "\blue Building [R.title] ...")
 			if (!do_after(usr, R.time, target = usr))
 				return
-		if (src.amount < R.req_amount*multiplier)
+		if(!src.use(R.req_amount*multiplier))
 			return
 		var/atom/O = new R.result_type( usr.loc )
 		O.dir = usr.dir
 		if (R.max_res_amount>1)
 			var/obj/item/stack/new_item = O
 			new_item.amount = R.res_amount*multiplier
-			//new_item.add_to_stacks(usr)
-		src.amount-=R.req_amount*multiplier
-		if (src.amount<=0)
-			var/oldsrc = src
-			src = null //dont kill proc after del()
-			usr.remove_from_mob(oldsrc)
-			qdel(oldsrc)
-			if (istype(O,/obj/item) && istype(usr,/mob/living/carbon))
-				usr.put_in_hands(O)
 		O.add_fingerprint(usr)
 		//BubbleWrap - so newly formed boxes are empty
 		if ( istype(O, /obj/item/weapon/storage) )
@@ -163,15 +152,15 @@
 			return
 	return
 
-/obj/item/stack/proc/use(amount)
-	src.amount-=amount
-	if (src.amount<=0)
-		var/oldsrc = src
-		src = null //dont kill proc after del()
-		if(usr)
-			usr.remove_from_mob(oldsrc)
-		qdel(oldsrc)
-	return
+/obj/item/stack/proc/use(used)
+	if(src.amount < used)
+		return 0
+	else
+		amount -= used
+		if ((src.amount <= 0) && !istype(loc,/obj/item/weapon/robot_module) && !istype(loc,/mob/living/silicon))
+			qdel(src)
+		return 1
+
 
 /obj/item/stack/proc/add_to_stacks(mob/usr)
 	var/obj/item/stack/oldsrc = src
@@ -190,12 +179,13 @@
 
 /obj/item/stack/attack_hand(mob/user)
 	if (user.get_inactive_hand() == src)
+		if(!use(1))
+			return
 		var/obj/item/stack/F = new src.type( user, 1)
 		F.copy_evidences(src)
 		user.put_in_hands(F)
 		src.add_fingerprint(user)
 		F.add_fingerprint(user)
-		use(1)
 		if (src && usr.machine==src)
 			spawn(0) src.interact(usr)
 	else
@@ -213,10 +203,10 @@
 			to_transfer = 1
 		else
 			to_transfer = min(src.amount, S.max_amount-S.amount)
-		S.amount+=to_transfer
+		if(src.use(to_transfer))
+			S.amount+=to_transfer
 		if (S && usr.machine==S)
 			spawn(0) S.interact(usr)
-		src.use(to_transfer)
 		if (src && usr.machine==src)
 			spawn(0) src.interact(usr)
 	else return ..()

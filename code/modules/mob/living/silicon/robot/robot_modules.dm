@@ -40,12 +40,13 @@
 
 /obj/item/weapon/robot_module/proc/respawn_consumable(mob/living/silicon/robot/R)
 	var/obj/item/device/flash/F = locate() in src.modules
-	if(F.broken)
-		F.broken = 0
-		F.times_used = 0
-		F.icon_state = "flash"
-	else if(F.times_used)
-		F.times_used--
+	if(F)
+		if(F.broken)
+			F.broken = 0
+			F.times_used = 0
+			F.icon_state = "flash"
+		else if(F.times_used)
+			F.times_used--
 
 	if(!stacktypes || !stacktypes.len) return
 
@@ -176,9 +177,10 @@
 	name = "engineering robot module"
 
 	stacktypes = list(
-		/obj/item/stack/sheet/metal = 50,
-		/obj/item/stack/sheet/rglass = 50,
-		/obj/item/weapon/cable_coil = 50,
+		/obj/item/stack/sheet/metal/cyborg = 50,
+		/obj/item/stack/sheet/glass/cyborg = 50,
+		/obj/item/stack/sheet/rglass/cyborg = 50,
+		/obj/item/weapon/cable_coil/cyborg = 50,
 		/obj/item/stack/rods = 15,
 		/obj/item/stack/tile/plasteel = 15
 		)
@@ -203,25 +205,15 @@
 
 		src.emag = new /obj/item/borg/stun(src)
 
-		var/obj/item/stack/sheet/metal/cyborg/M = new /obj/item/stack/sheet/metal/cyborg(src)
-		M.amount = 50
-		src.modules += M
-
-		var/obj/item/stack/sheet/rglass/cyborg/G = new /obj/item/stack/sheet/rglass/cyborg(src)
-		G.amount = 50
-		src.modules += G
-
-		var/obj/item/weapon/cable_coil/W = new /obj/item/weapon/cable_coil(src)
-		W.amount = 50
-		src.modules += W
-
-		var/obj/item/stack/rods/Q = new /obj/item/stack/rods(src)
-		Q.amount = 15
-		src.modules += Q
-
-		var/obj/item/stack/tile/plasteel/F = new /obj/item/stack/tile/plasteel(src)
-		F.amount = 15
-		src.modules += F
+		for(var/T in stacktypes)
+			if(!iscoil(T))
+				var/obj/item/stack/W = new T(src)
+				W.amount = stacktypes[T]
+				src.modules += W
+			else
+				var/obj/item/weapon/cable_coil/cyborg/C = new T(src)
+				C.amount = stacktypes[T]
+				src.modules += C
 
 		return
 
@@ -416,7 +408,7 @@
 		/obj/item/stack/tile/plasteel = 15,
 		/obj/item/stack/sheet/metal/cyborg = 20,
 		/obj/item/stack/sheet/glass/cyborg = 20,
-		/obj/item/weapon/cable_coil = 30
+		/obj/item/weapon/cable_coil/cyborg = 30
 		)
 
 	New()
@@ -440,7 +432,7 @@
 				W.amount = stacktypes[T]
 				src.modules += W
 			else
-				var/obj/item/weapon/cable_coil/C = new T(src)
+				var/obj/item/weapon/cable_coil/cyborg/C = new T(src)
 				C.amount = stacktypes[T]
 				src.modules += C
 
