@@ -15,7 +15,7 @@ var/global/list/frozen_items = list()
 /obj/machinery/computer/cryopod
 	name = "cryogenic oversight console"
 	desc = "An interface between crew and the cryogenic storage oversight systems."
-	icon = 'tauceti/icons/obj/Cryogenic3.dmi'
+	icon = 'icons/obj/Cryogenic3.dmi'
 	icon_state = "cellconsole"
 	circuit = "/obj/item/weapon/circuitboard/cryopodcontrol"
 	var/mode = null
@@ -67,13 +67,13 @@ obj/machinery/computer/cryopod/Topic(href, href_list)
 	else if(href_list["item"])
 
 		if(frozen_items.len == 0)
-			user << "\blue There is nothing to recover from storage."
+			to_chat(user, "\blue There is nothing to recover from storage.")
 			return
 
 		var/obj/item/I = input(usr, "Please choose which object to retrieve.","Object recovery",null) as obj in frozen_items
 
 		if(!I || frozen_items.len == 0)
-			user << "\blue There is nothing to recover from storage."
+			to_chat(user, "\blue There is nothing to recover from storage.")
 			return
 
 		visible_message("\blue The console beeps happily as it disgorges \the [I].", 3)
@@ -84,7 +84,7 @@ obj/machinery/computer/cryopod/Topic(href, href_list)
 	else if(href_list["allitems"])
 
 		if(frozen_items.len == 0)
-			user << "\blue There is nothing to recover from storage."
+			to_chat(user, "\blue There is nothing to recover from storage.")
 			return
 
 		visible_message("\blue The console beeps happily as it disgorges the desired objects.", 3)
@@ -94,7 +94,7 @@ obj/machinery/computer/cryopod/Topic(href, href_list)
 			frozen_items -= I
 
 	else if(href_list["crew"])
-		user << "\red Functionality unavailable at this time."
+		to_chat(user, "\red Functionality unavailable at this time.")
 
 	src.updateUsrDialog()
 
@@ -108,7 +108,7 @@ obj/machinery/computer/cryopod/Topic(href, href_list)
 
 	name = "\improper cryogenic feed"
 	desc = "A bewildering tangle of machinery and pipes."
-	icon = 'tauceti/icons/obj/Cryogenic3.dmi'
+	icon = 'icons/obj/Cryogenic3.dmi'
 	icon_state = "cryo_rear"
 	anchored = 1
 	density = 1
@@ -131,7 +131,7 @@ obj/machinery/computer/cryopod/Topic(href, href_list)
 /obj/machinery/cryopod
 	name = "\improper cryogenic freezer"
 	desc = "A man-sized pod for entering suspended animation."
-	icon = 'tauceti/icons/obj/Cryogenic3.dmi'
+	icon = 'icons/obj/Cryogenic3.dmi'
 	icon_state = "cryosleeper_left"
 	density = 1
 	anchored = 1
@@ -217,7 +217,7 @@ obj/machinery/computer/cryopod/Topic(href, href_list)
 				else if(O.target && istype(O.target,/datum/mind))
 					if(O.target == occupant.mind)
 						if(O.owner && O.owner.current)
-							O.owner.current << "\red You get the feeling your target is no longer within your reach. Time for Plan [pick(list("A","B","C","D","X","Y","Z"))]..."
+							to_chat(O.owner.current, "\red You get the feeling your target is no longer within your reach. Time for Plan [pick(list("A","B","C","D","X","Y","Z"))]...")
 						O.target = null
 						spawn(1) //This should ideally fire after the occupant is deleted.
 							if(!O) return
@@ -283,12 +283,12 @@ obj/machinery/computer/cryopod/Topic(href, href_list)
 	return
 
 
-/obj/machinery/cryopod/attackby(var/obj/item/weapon/G as obj, var/mob/user as mob)
+/obj/machinery/cryopod/attackby(obj/item/weapon/G, mob/user)
 
 	if(istype(G, /obj/item/weapon/grab))
 
 		if(occupant)
-			user << "\blue The cryo pod is in use."
+			to_chat(user, "\blue The cryo pod is in use.")
 			return
 
 		if(!ismob(G:affecting))
@@ -322,8 +322,8 @@ obj/machinery/computer/cryopod/Topic(href, href_list)
 				else
 					icon_state = "cryosleeper_left_cl"
 
-				M << "\blue You feel cool air surround you. You go numb as your senses turn inward."
-				M << "\blue <b>If you ghost, log out or close your client now, your character will shortly be permanently removed from the round.</b>"
+				to_chat(M, "\blue You feel cool air surround you. You go numb as your senses turn inward.")
+				to_chat(M, "\blue <b>If you ghost, log out or close your client now, your character will shortly be permanently removed from the round.</b>")
 				occupant = M
 				time_entered = world.time
 
@@ -359,12 +359,12 @@ obj/machinery/computer/cryopod/Topic(href, href_list)
 		return
 
 	if(src.occupant)
-		usr << "\blue <B>The cryo pod is in use.</B>"
+		to_chat(usr, "\blue <B>The cryo pod is in use.</B>")
 		return
 
 	for(var/mob/living/carbon/slime/M in range(1,usr))
 		if(M.Victim == usr)
-			usr << "You're too busy getting your life sucked out of you."
+			to_chat(usr, "You're too busy getting your life sucked out of you.")
 			return
 
 	visible_message("[usr] starts climbing into the cryo pod.", 3)
@@ -375,7 +375,7 @@ obj/machinery/computer/cryopod/Topic(href, href_list)
 			return
 
 		if(src.occupant)
-			usr << "\blue <B>The cryo pod is in use.</B>"
+			to_chat(usr, "\blue <B>The cryo pod is in use.</B>")
 			return
 
 		usr.stop_pulling()
@@ -389,8 +389,8 @@ obj/machinery/computer/cryopod/Topic(href, href_list)
 		else
 			icon_state = "cryosleeper_left_cl"
 
-		usr << "\blue You feel cool air surround you. You go numb as your senses turn inward."
-		usr << "\blue <b>If you ghost, log out or close your client now, your character will shortly be permanently removed from the round.</b>"
+		to_chat(usr, "\blue You feel cool air surround you. You go numb as your senses turn inward.")
+		to_chat(usr, "\blue <b>If you ghost, log out or close your client now, your character will shortly be permanently removed from the round.</b>")
 		occupant = usr
 		time_entered = world.time
 

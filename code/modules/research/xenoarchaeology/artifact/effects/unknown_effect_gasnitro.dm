@@ -10,7 +10,7 @@
 	effect_type = pick(6,7)
 	max_pressure = rand(115,1000)
 
-/datum/artifact_effect/gasnitro/DoEffectTouch(var/mob/user)
+/datum/artifact_effect/gasnitro/DoEffectTouch(mob/user)
 	if(holder)
 		var/datum/gas_mixture/env = holder.loc.return_air()
 		if(env)

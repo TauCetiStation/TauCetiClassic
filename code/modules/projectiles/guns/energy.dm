@@ -31,7 +31,7 @@
 	update_icon()
 	return
 
-/obj/item/weapon/gun/energy/Fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, params, reflex = 0)
+/obj/item/weapon/gun/energy/Fire(atom/target, mob/living/user, params, reflex = 0)
 	newshot()
 	..()
 
@@ -52,14 +52,14 @@
 	if(chambered && chambered.BB)
 		return 1
 
-/obj/item/weapon/gun/energy/proc/select_fire(mob/living/user as mob)
+/obj/item/weapon/gun/energy/proc/select_fire(mob/living/user)
 	select++
 	if (select > ammo_type.len)
 		select = 1
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 	fire_sound = shot.fire_sound
 	if (shot.select_name)
-		user << "\red [src] is now set to [shot.select_name]."
+		to_chat(user, "\red [src] is now set to [shot.select_name].")
 	update_icon()
 	return
 

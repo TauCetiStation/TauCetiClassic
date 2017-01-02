@@ -1,14 +1,20 @@
 /obj/item/weapon/gun/energy/laser
 	name = "laser rifle"
 	desc = "a basic weapon designed kill with concentrated energy bolts."
-	icon = 'tauceti/icons/obj/guns.dmi'
-	tc_custom = 'tauceti/icons/obj/guns.dmi'
+	icon = 'icons/obj/gun.dmi'
 	icon_state = "laser"
 	item_state = null	//so the human update icon uses the icon_state instead.
 	w_class = 3.0
 	m_amt = 2000
 	origin_tech = "combat=3;magnets=2"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser)
+
+/obj/item/weapon/gun/energy/laser/New()
+	..()
+	if(power_supply)
+		power_supply.maxcharge = 1500
+		power_supply.charge = 1500
+
 
 /obj/item/weapon/gun/energy/laser/isHandgun()
 	return 0
@@ -22,17 +28,15 @@
 /obj/item/weapon/gun/energy/laser/classic
 	name = "laser carbine"
 	desc = "J10 carbine, pretty old model of corporate security laser weaponry with constant cooling issues. Faster firerate but reduced damage."
-	icon = 'icons/obj/gun.dmi'
 	icon_state = "oldlaser"
-	tc_custom = null
+	icon_custom = null
 	fire_delay = 5
 
 /obj/item/weapon/gun/energy/laser/tactifool
 	name = "laser rifle"
 	desc = "T6 impulse laser rifle"
-	icon = 'icons/obj/gun.dmi'
 	icon_state = "lasor"
-	tc_custom = null
+	icon_custom = null
 	fire_delay = 0
 	ammo_type = list(/obj/item/ammo_casing/energy/laser_pulse)
 
@@ -49,13 +53,11 @@
 
 obj/item/weapon/gun/energy/laser/retro
 	name ="retro laser"
-	icon = 'icons/obj/gun.dmi'
 	icon_state = "retro"
 	desc = "An older model of the basic lasergun, no longer used by Nanotrasen's security or military forces. Nevertheless, it is still quite deadly and easy to maintain, making it a favorite amongst pirates and other outlaws."
 
 
 /obj/item/weapon/gun/energy/laser/captain
-	icon = 'icons/obj/gun.dmi'
 	icon_state = "caplaser"
 	desc = "This is an antique laser gun. All craftsmanship is of the highest quality. It is decorated with assistant leather and chrome. The object menaces with spikes of energy. On the item is an image of Space Station 13. The station is exploding."
 	force = 10
@@ -97,12 +99,11 @@ obj/item/weapon/gun/energy/laser/retro
 
 /obj/item/weapon/gun/energy/laser/scatter
 	name = "scatter laser gun"
-	icon = 'icons/obj/gun.dmi'
 	icon_state = "oldlaser"
 	desc = "A laser gun equipped with a refraction kit that spreads bolts."
 	ammo_type = list(/obj/item/ammo_casing/energy/laser, /obj/item/ammo_casing/energy/laser/scatter)
 
-	attack_self(mob/living/user as mob)
+	attack_self(mob/living/user)
 		select_fire(user)
 		update_icon()
 
@@ -131,8 +132,8 @@ obj/item/weapon/gun/energy/laser/retro
 /obj/item/weapon/gun/energy/xray
 	name = "xray laser gun"
 	desc = "A high-power laser gun capable of expelling concentrated xray blasts."
-	icon = 'icons/obj/gun.dmi'
 	icon_state = "xray"
+	item_state = null
 	origin_tech = "combat=5;materials=3;magnets=2;syndicate=2"
 	ammo_type = list(/obj/item/ammo_casing/energy/xray)
 
@@ -140,7 +141,6 @@ obj/item/weapon/gun/energy/laser/retro
 
 /obj/item/weapon/gun/energy/laser/bluetag
 	name = "laser tag gun"
-	icon = 'icons/obj/gun.dmi'
 	icon_state = "bluetag"
 	desc = "Standard issue weapon of the Imperial Guard."
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/bluetag)
@@ -148,11 +148,11 @@ obj/item/weapon/gun/energy/laser/retro
 	clumsy_check = 0
 	var/charge_tick = 0
 
-/obj/item/weapon/gun/energy/laser/bluetag/special_check(var/mob/living/carbon/human/M)
+/obj/item/weapon/gun/energy/laser/bluetag/special_check(mob/living/carbon/human/M)
 	if(ishuman(M))
 		if(istype(M.wear_suit, /obj/item/clothing/suit/bluetag))
 			return 1
-		M << "\red You need to be wearing your laser tag vest!"
+		to_chat(M, "\red You need to be wearing your laser tag vest!")
 	return 0
 
 /obj/item/weapon/gun/energy/laser/bluetag/New()
@@ -176,7 +176,6 @@ obj/item/weapon/gun/energy/laser/retro
 
 /obj/item/weapon/gun/energy/laser/redtag
 	name = "laser tag gun"
-	icon = 'icons/obj/gun.dmi'
 	icon_state = "redtag"
 	desc = "Standard issue weapon of the Imperial Guard."
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/redtag)
@@ -184,11 +183,11 @@ obj/item/weapon/gun/energy/laser/retro
 	clumsy_check = 0
 	var/charge_tick = 0
 
-/obj/item/weapon/gun/energy/laser/redtag/special_check(var/mob/living/carbon/human/M)
+/obj/item/weapon/gun/energy/laser/redtag/special_check(mob/living/carbon/human/M)
 	if(ishuman(M))
 		if(istype(M.wear_suit, /obj/item/clothing/suit/redtag))
 			return 1
-		M << "\red You need to be wearing your laser tag vest!"
+		to_chat(M, "\red You need to be wearing your laser tag vest!")
 	return 0
 
 /obj/item/weapon/gun/energy/laser/redtag/New()

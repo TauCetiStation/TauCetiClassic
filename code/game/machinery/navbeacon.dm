@@ -58,7 +58,7 @@
 
 	// called when turf state changes
 	// hide the object if turf is intact
-/obj/machinery/navbeacon/hide(var/intact)
+/obj/machinery/navbeacon/hide(intact)
 	invisibility = intact ? 101 : 0
 	updateicon()
 
@@ -103,7 +103,7 @@
 	frequency.post_signal(src, signal, filter = RADIO_NAVBEACONS)
 
 
-/obj/machinery/navbeacon/attackby(var/obj/item/I, var/mob/user)
+/obj/machinery/navbeacon/attackby(obj/item/I, mob/user)
 	var/turf/T = loc
 	if(T.intact)
 		return		// prevent intraction when T-scanner revealed
@@ -119,30 +119,30 @@
 		if(open)
 			if (src.allowed(user))
 				src.locked = !src.locked
-				user << "Controls are now [src.locked ? "locked." : "unlocked."]"
+				to_chat(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
 			else
-				user << "\red Access denied."
+				to_chat(user, "\red Access denied.")
 			updateDialog()
 		else
-			user << "You must open the cover first!"
+			to_chat(user, "You must open the cover first!")
 	return
 
-/obj/machinery/navbeacon/attack_ai(var/mob/user)
+/obj/machinery/navbeacon/attack_ai(mob/user)
 	interact(user, 1)
 
 /obj/machinery/navbeacon/attack_paw()
 	return
 
-/obj/machinery/navbeacon/attack_hand(var/mob/user)
+/obj/machinery/navbeacon/attack_hand(mob/user)
 	interact(user, 0)
 
-/obj/machinery/navbeacon/interact(var/mob/user, var/ai = 0)
+/obj/machinery/navbeacon/interact(mob/user, ai = 0)
 	var/turf/T = loc
 	if(T.intact)
 		return		// prevent intraction when T-scanner revealed
 
 	if(!open && !ai)	// can't alter controls if not open, unless you're an AI
-		user << "The beacon's control cover is closed."
+		to_chat(user, "The beacon's control cover is closed.")
 		return
 
 

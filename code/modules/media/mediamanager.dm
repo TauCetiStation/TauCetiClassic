@@ -109,7 +109,7 @@ function SetVolume(volume) {
 		//volume = targetVolume
 		send_update()
 
-/datum/media_manager/proc/update_volume(var/value)
+/datum/media_manager/proc/update_volume(value)
 	volume = value
 	owner << output(list2params(list(volume)), "[window]:SetVolume")
 	//send_update()
@@ -119,7 +119,7 @@ function SetVolume(volume) {
 	set category = "Preferences"
 	set desc = "Set jukebox volume"
 	if(!media || !istype(media))
-		usr << "You have no media datum to change, if you're not in the lobby tell an admin."
+		to_chat(usr, "You have no media datum to change, if you're not in the lobby tell an admin.")
 		return
 	var/value = input("Choose your Jukebox volume.", "Jukebox volume", media.volume)
 	value = round(max(0, min(100, value)))

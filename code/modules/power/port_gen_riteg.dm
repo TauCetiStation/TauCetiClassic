@@ -20,26 +20,26 @@
 
 			if(!anchored && !isinspace())
 				connect_to_network()
-				user << "<span class='notice'>You secure the generator to the floor.</span>"
+				to_chat(user, "<span class='notice'>You secure the generator to the floor.</span>")
 				anchored = 1
 			else if(anchored)
 				disconnect_from_network()
-				user << "<span class='notice'>You unsecure the generator from the floor.</span>"
+				to_chat(user, "<span class='notice'>You unsecure the generator from the floor.</span>")
 				anchored = 0
 
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 
-/obj/machinery/power/port_gen/riteg/attack_hand(mob/user as mob)
+/obj/machinery/power/port_gen/riteg/attack_hand(mob/user)
 	..()
 	if (!anchored)
 		return
 
 	interact(user)
 
-/obj/machinery/power/port_gen/riteg/attack_ai(mob/user as mob)
+/obj/machinery/power/port_gen/riteg/attack_ai(mob/user)
 	interact(user)
 
-/obj/machinery/power/port_gen/riteg/attack_paw(mob/user as mob)
+/obj/machinery/power/port_gen/riteg/attack_paw(mob/user)
 	interact(user)
 
 /obj/machinery/power/port_gen/riteg/interact(mob/user)

@@ -37,13 +37,13 @@ var/list/alldepartments = list("Central Command")
 /obj/machinery/faxmachine/process()
 	return 0
 
-/obj/machinery/faxmachine/attack_ai(mob/user as mob)
+/obj/machinery/faxmachine/attack_ai(mob/user)
 	return attack_hand(user)
 
-/obj/machinery/faxmachine/attack_paw(mob/user as mob)
+/obj/machinery/faxmachine/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/machinery/faxmachine/attack_hand(mob/user as mob)
+/obj/machinery/faxmachine/attack_hand(mob/user)
 	user.set_machine(src)
 
 	var/dat
@@ -107,14 +107,14 @@ var/list/alldepartments = list("Central Command")
 		if(tofax)
 
 			if(dpt == "Central Command")
-				Centcomm_fax(tofax.info, tofax.name, usr)
 				sendcooldown = 1800
+				Centcomm_fax(tofax.info, tofax.name, usr)
 
 			else
-				SendFax(tofax.info, tofax.name, usr, dpt)
 				sendcooldown = 600
+				SendFax(tofax.info, tofax.name, usr, dpt)
 
-			usr << "Message transmitted successfully."
+			to_chat(usr, "Message transmitted successfully.")
 
 			spawn(sendcooldown) // cooldown time
 				sendcooldown = 0
@@ -122,11 +122,11 @@ var/list/alldepartments = list("Central Command")
 	if(href_list["remove"])
 		if(tofax)
 			if(!ishuman(usr))
-				usr << "<span class='warning'>You can't do it.</span>"
+				to_chat(usr, "<span class='warning'>You can't do it.</span>")
 			else
 				tofax.loc = usr.loc
 				usr.put_in_hands(tofax)
-				usr << "<span class='notice'>You take the paper out of \the [src].</span>"
+				to_chat(usr, "<span class='notice'>You take the paper out of \the [src].</span>")
 				tofax = null
 
 	if(href_list["scan"])
@@ -162,18 +162,18 @@ var/list/alldepartments = list("Central Command")
 
 	updateUsrDialog()
 
-/obj/machinery/faxmachine/attackby(obj/item/O as obj, mob/user as mob)
+/obj/machinery/faxmachine/attackby(obj/item/O, mob/user)
 
 	if(istype(O, /obj/item/weapon/paper))
 		if(!tofax)
 			user.drop_item()
 			tofax = O
 			O.loc = src
-			user << "<span class='notice'>You insert the paper into \the [src].</span>"
+			to_chat(user, "<span class='notice'>You insert the paper into \the [src].</span>")
 			flick("faxsend", src)
 			updateUsrDialog()
 		else
-			user << "<span class='notice'>There is already something in \the [src].</span>"
+			to_chat(user, "<span class='notice'>There is already something in \the [src].</span>")
 
 	else if(istype(O, /obj/item/weapon/card/id))
 
@@ -186,19 +186,19 @@ var/list/alldepartments = list("Central Command")
 	else if(istype(O, /obj/item/weapon/wrench))
 		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 		anchored = !anchored
-		user << "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>"
+		to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>")
 	return
 
-/proc/Centcomm_fax(var/sent, var/sentname, var/mob/Sender)
+/proc/Centcomm_fax(sent, sentname, mob/Sender)
 
 	var/msg = "\blue <b><font color='orange'>CENTCOMM FAX: </font>[key_name(Sender, 1)] (<A HREF='?_src_=holder;adminplayeropts=\ref[Sender]'>PP</A>) (<A HREF='?_src_=vars;Vars=\ref[Sender]'>VV</A>) (<A HREF='?_src_=holder;subtlemessage=\ref[Sender]'>SM</A>) (<A HREF='?_src_=holder;adminplayerobservejump=\ref[Sender]'>JMP</A>) (<A HREF='?_src_=holder;secretsadmin=check_antagonist'>CA</A>) (<a href='?_src_=holder;CentcommFaxReply=\ref[Sender]'>RPLY</a>)</b>: Receiving '[sentname]' via secure connection ... <a href='?_src_=holder;CentcommFaxView=\ref[sent]'>view message</a>"
 	log_fax("[Sender] sending [sentname] : [sent]")
 	for(var/client/C in admins)
-		C << msg
-	send2slack_custommsg("[key_name(Sender)] sent fax to Cetcomm", sent, ":fax:")
+		to_chat(C, msg)
+	send2slack_custommsg("[key_name(Sender)] sent fax to Centcomm", sent, ":fax:")
 
 
-proc/SendFax(var/sent, var/sentname, var/mob/Sender, var/dpt, var/stamp, var/stamps)
+proc/SendFax(sent, sentname, mob/Sender, dpt, stamp, stamps)
 
 	log_fax("[Sender] sending [sentname] to [dpt] : [sent]")
 
@@ -230,7 +230,7 @@ proc/SendFax(var/sent, var/sentname, var/mob/Sender, var/dpt, var/stamp, var/sta
 							P.stamps += "<HR><i>[stamps]</i>"
 						P.overlays += stampoverlay
 					if (stamp == "Syndicate")
-						var/image/stampoverlay = image('tauceti/icons/obj/bureaucracy.dmi')
+						var/image/stampoverlay = image('icons/obj/bureaucracy.dmi')
 						stampoverlay.icon_state = "paper_stamp-syndicate"
 						if(!stamps)
 							P.stamps += "<HR><i>This paper has been stamped by the Syndicate Command Interception Relay.</i>"
@@ -238,7 +238,7 @@ proc/SendFax(var/sent, var/sentname, var/mob/Sender, var/dpt, var/stamp, var/sta
 							P.stamps += "<HR><i>[stamps]</i>"
 						P.overlays += stampoverlay
 					if (stamp == "FakeCentCom")
-						var/image/stampoverlay = image('tauceti/icons/obj/bureaucracy.dmi')
+						var/image/stampoverlay = image('icons/obj/bureaucracy.dmi')
 						stampoverlay.icon_state = "paper_stamp-fakecentcom"
 						if(!stamps)
 							P.stamps += "<HR><i>This paper has been stamped by the Central Compound Quantum Relay.</i>"
@@ -275,7 +275,7 @@ proc/SendFax(var/sent, var/sentname, var/mob/Sender, var/dpt, var/stamp, var/sta
 							P.stamps += "<HR><i>[stamps]</i>"
 						P.overlays += stampoverlay
 					if (stamp == "Syndicate")
-						var/image/stampoverlay = image('tauceti/icons/obj/bureaucracy.dmi')
+						var/image/stampoverlay = image('icons/obj/bureaucracy.dmi')
 						stampoverlay.icon_state = "paper_stamp-syndicate"
 						if(!stamps)
 							P.stamps += "<HR><i>This paper has been stamped by the Syndicate Command Interception Relay.</i>"
@@ -283,7 +283,7 @@ proc/SendFax(var/sent, var/sentname, var/mob/Sender, var/dpt, var/stamp, var/sta
 							P.stamps += "<HR><i>[stamps]</i>"
 						P.overlays += stampoverlay
 					if (stamp == "FakeCentCom")
-						var/image/stampoverlay = image('tauceti/icons/obj/bureaucracy.dmi')
+						var/image/stampoverlay = image('icons/obj/bureaucracy.dmi')
 						stampoverlay.icon_state = "paper_stamp-fakecentcom"
 						if(!stamps)
 							P.stamps += "<HR><i>This paper has been stamped by the Central Compound Quantum Relay.</i>"

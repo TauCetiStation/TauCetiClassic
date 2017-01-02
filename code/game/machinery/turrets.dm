@@ -128,7 +128,7 @@
 				stat |= NOPOWER
 
 
-/obj/machinery/turret/proc/setState(var/enabled, var/lethal, var/silicon)
+/obj/machinery/turret/proc/setState(enabled, lethal, silicon)
 	src.enabled = enabled
 	src.lasers = lethal
 	src.silic_targets = silicon
@@ -144,7 +144,7 @@
 	return
 
 
-/obj/machinery/turret/proc/check_target(var/atom/movable/T as mob|obj)
+/obj/machinery/turret/proc/check_target(atom/movable/T)
 	if(T && (T in protected_area.turretTargets))
 		var/area/area_T = get_area(T)
 		if(!area_T || (area_T.type != protected_area.type))
@@ -238,7 +238,7 @@
 		sleep(shot_delay)
 	return
 
-/obj/machinery/turret/proc/shootAt(var/atom/movable/target)
+/obj/machinery/turret/proc/shootAt(atom/movable/target)
 	var/turf/T = get_turf(src)
 	var/turf/U = get_turf(target)
 	if(!T || !U)
@@ -299,7 +299,7 @@
 				invisibility = INVISIBILITY_LEVEL_TWO
 				popping = 0
 
-/obj/machinery/turret/bullet_act(var/obj/item/projectile/Proj)
+/obj/machinery/turret/bullet_act(obj/item/projectile/Proj)
 	src.health -= Proj.damage
 	..()
 	if(prob(45) && (Proj.damage > 0))
@@ -366,7 +366,7 @@
 		else
 			control_area = CA
 	else if(istext(control_area))
-		for(var/area/A in world)
+		for(var/area/A in all_areas)
 			if(A.name && A.name==control_area)
 				control_area = A
 				break
@@ -380,7 +380,7 @@
 		return src.attack_hand(user)
 
 	if (istype(W, /obj/item/weapon/card/emag) && !emagged)
-		user << "\red You short out the turret controls' access analysis module."
+		to_chat(user, "\red You short out the turret controls' access analysis module.")
 		emagged = 1
 		locked = 0
 		if(user.machine == src)
@@ -390,11 +390,11 @@
 	else if(get_dist(src, user) == 0)		// trying to unlock the interface
 		if(src.allowed(usr))
 			if(emagged)
-				user << "<span class='notice'>The turret control is unresponsive.</span>"
+				to_chat(user, "<span class='notice'>The turret control is unresponsive.</span>")
 				return
 
 			locked = !locked
-			user << "<span class='notice'>You [ locked ? "lock" : "unlock"] the panel.</span>"
+			to_chat(user, "<span class='notice'>You [ locked ? "lock" : "unlock"] the panel.</span>")
 			if(locked)
 				if(user.machine == src)
 					user.unset_machine()
@@ -403,18 +403,18 @@
 				if(user.machine==src)
 					src.attack_hand(user)
 		else
-			user << "<span class='warning'>Access denied.</span>"
+			to_chat(user, "<span class='warning'>Access denied.</span>")
 
-/obj/machinery/turretid/attack_ai(mob/user as mob)
+/obj/machinery/turretid/attack_ai(mob/user)
 	if(!ailock)
 		return attack_hand(user)
 	else
-		user << "<span class='notice'>There seems to be a firewall preventing you from accessing this device.</span>"
+		to_chat(user, "<span class='notice'>There seems to be a firewall preventing you from accessing this device.</span>")
 
-/obj/machinery/turretid/attack_hand(mob/user as mob)
+/obj/machinery/turretid/attack_hand(mob/user)
 	if(get_dist(src, user) > 0)
 		if(!isAI(user))
-			user << "<span class='notice'>You are too far away.</span>"
+			to_chat(user, "<span class='notice'>You are too far away.</span>")
 			user.unset_machine()
 			user << browse(null, "window=turretid")
 			return
@@ -424,7 +424,7 @@
 	if(istype(loc, /turf))
 		loc = loc:loc
 	if(!istype(loc, /area))
-		user << text("Turret badly positioned - loc.loc is [].", loc)
+		to_chat(user, text("Turret badly positioned - loc.loc is [].", loc))
 		return
 	var/area/area = loc
 	var/t = "<TT><B>Turret Control Panel</B> ([area.name])<HR>"
@@ -441,7 +441,7 @@
 	onclose(user, "turretid")
 
 
-/obj/machinery/turret/attack_animal(mob/living/simple_animal/M as mob)
+/obj/machinery/turret/attack_animal(mob/living/simple_animal/M)
 	M.do_attack_animation(src)
 	if(M.melee_damage_upper == 0)
 		return
@@ -453,11 +453,11 @@
 		if(src.health <= 0)
 			src.die()
 	else
-		M << "\red That object is useless to you."
+		to_chat(M, "\red That object is useless to you.")
 	return
 
 
-/obj/machinery/turret/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
+/obj/machinery/turret/attack_alien(mob/living/carbon/alien/humanoid/M)
 	M.do_attack_animation(src)
 	if(!(stat & BROKEN))
 		playsound(src.loc, 'sound/weapons/slash.ogg', 25, 1, -1)
@@ -466,7 +466,7 @@
 		if(src.health <= 0)
 			src.die()
 	else
-		M << "\green That object is useless to you."
+		to_chat(M, "\green That object is useless to you.")
 	return
 
 /obj/machinery/turretid/is_operational_topic()
@@ -478,7 +478,7 @@
 		return
 
 	if (src.locked && !src.issilicon_allowed(usr))
-		usr << "Control panel is locked!"
+		to_chat(usr, "Control panel is locked!")
 		return
 	if ((get_dist(src, usr) == 0) || isAI(usr))
 		if (href_list["toggleOn"])
@@ -508,15 +508,6 @@
 			icon_state = "motion3"
 	else
 		icon_state = "motion0"
-																				//CODE FIXED BUT REMOVED
-//	if(control_area)															//USE: updates other controls in the area
-//		for (var/obj/machinery/turretid/Turret_Control in world)				//I'm not sure if this is what it was
-//			if( Turret_Control.control_area != src.control_area )	continue	//supposed to do. Or whether the person
-//			Turret_Control.icon_state = icon_state								//who coded it originally was just tired
-//			Turret_Control.enabled = enabled									//or something. I don't see  any situation
-//			Turret_Control.lethal = lethal										//in which this would be used on the current map.
-																				//If he wants it back he can uncomment it
-
 
 /obj/structure/turret/gun_turret
 	name = "Gun Turret"
@@ -560,13 +551,13 @@
 		return
 
 
-	bullet_act(var/obj/item/projectile/Proj)
+	bullet_act(obj/item/projectile/Proj)
 		src.take_damage(Proj.damage)
 		..()
 		return
 
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		user.set_machine(src)
 		var/dat = {"<html>
 						<head><title>[src] Control</title></head>
@@ -584,11 +575,11 @@
 		onclose(user, "turret")
 		return
 
-	attack_ai(mob/user as mob)
+	attack_ai(mob/user)
 		return attack_hand(user)
 
 
-	attack_alien(mob/user as mob)
+	attack_alien(mob/user)
 		user.do_attack_animation(src)
 		user.visible_message("[user] slashes at [src]", "You slash at [src]")
 		src.take_damage(15)

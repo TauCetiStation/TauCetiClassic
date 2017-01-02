@@ -10,7 +10,7 @@
 	set name = "Say"
 	set category = "IC"
 	if(say_disabled)	//This is here to try to identify lag problems
-		usr << "\red Speech is currently admin-disabled."
+		to_chat(usr, "\red Speech is currently admin-disabled.")
 		return
 
 	usr.say(message)
@@ -20,7 +20,7 @@
 	set category = "IC"
 
 	if(say_disabled)	//This is here to try to identify lag problems
-		usr << "\red Speech is currently admin-disabled."
+		to_chat(usr, "\red Speech is currently admin-disabled.")
 		return
 
 	message = trim(sanitize_plus(copytext(message, 1, MAX_MESSAGE_LEN)))
@@ -30,21 +30,21 @@
 	else
 		usr.emote(message)
 
-/mob/proc/say_dead(var/message)
+/mob/proc/say_dead(message)
 	var/name = src.real_name
 	var/alt_name = ""
 
 	if(say_disabled)	//This is here to try to identify lag problems
-		usr << "\red Speech is currently admin-disabled."
+		to_chat(usr, "\red Speech is currently admin-disabled.")
 		return
 
 	if(!src.client.holder)
 		if(!dsay_allowed)
-			src << "\red Deadchat is globally muted"
+			to_chat(src, "\red Deadchat is globally muted")
 			return
 
 	if(client && !(client.prefs.chat_toggles & CHAT_DEAD))
-		usr << "\red You have deadchat muted."
+		to_chat(usr, "\red You have deadchat muted.")
 		return
 
 	if(mind && mind.name)
@@ -62,16 +62,16 @@
 		if(M.client && M.stat == DEAD && (M.client.prefs.chat_toggles & CHAT_DEAD))
 			if(M.fake_death) //Our changeling with fake_death status must not hear dead chat!!
 				continue
-			M << rendered
+			to_chat(M, rendered)
 			continue
 
 		if(M.client && M.client.holder && (M.client.prefs.chat_toggles & CHAT_DEAD) ) // Show the message to admins with deadchat toggled on
-			M << rendered	//Admins can hear deadchat, if they choose to, no matter if they're blind/deaf or not.
+			to_chat(M, rendered)//Admins can hear deadchat, if they choose to, no matter if they're blind/deaf or not.
 
 
 	return
 
-/mob/proc/say_understands(var/mob/other,var/datum/language/speaking = null)
+/mob/proc/say_understands(mob/other,datum/language/speaking = null)
 
 	if (src.stat == DEAD)		//Dead
 		return 1
@@ -88,14 +88,14 @@
 			return 1
 		if(isAI(src) && ispAI(other))
 			return 1
-		if (istype(other, src.type) || istype(src, other.type))
+		if(istype(other, src.type) || istype(src, other.type))
 			return 1
 		if(src.alien_talk_understand && other.alien_talk_understand)
 			return 1
 		return 0
 
 	//Language check.
-	for(var/datum/language/L in src.languages)
+	for(var/datum/language/L in languages)
 		if(speaking.name == L.name)
 			return 1
 
@@ -110,7 +110,7 @@
    for it but just ignore it.
 */
 
-/mob/proc/say_quote(var/message, var/datum/language/speaking = null)
+/mob/proc/say_quote(message, datum/language/speaking = null)
         var/verb = "says"
         var/ending = copytext(message, length(message))
         if(ending=="!")
@@ -121,7 +121,7 @@
         return verb
 
 
-/mob/proc/emote(var/act, var/type, var/message, var/auto)
+/mob/proc/emote(act, type, message, auto)
 	if(act == "me")
 		return custom_emote(type, message)
 
@@ -133,7 +133,7 @@
 
 	return get_turf(src)
 
-/proc/say_test(var/text)
+/proc/say_test(text)
 	var/ending = copytext(text, length(text))
 	if (ending == "?")
 		return "1"
@@ -144,7 +144,7 @@
 //parses the message mode code (e.g. :h, :w) from text, such as that supplied to say.
 //returns the message mode string or null for no message mode.
 //standard mode is the mode returned for the special ';' radio code.
-/mob/proc/parse_message_mode(var/message, var/standard_mode="headset")
+/mob/proc/parse_message_mode(message, standard_mode="headset")
 	if(length(message) >= 1 && copytext(message,1,2) == ";")
 		return standard_mode
 
@@ -156,9 +156,9 @@
 
 //parses the language code (e.g. :j) from text, such as that supplied to say.
 //returns the language object only if the code corresponds to a language that src can speak, otherwise null.
-/mob/proc/parse_language(var/message)
+/mob/proc/parse_language(message)
 	if(length(message) >= 2)
-		var/language_prefix = lowertext(copytext(message, 1 ,3))
+		var/language_prefix = lowertext_plus(copytext(message, 1 ,3))
 		var/datum/language/L = language_keys[language_prefix]
 		if (can_speak(L))
 			return L

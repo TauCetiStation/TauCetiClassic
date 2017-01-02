@@ -1,14 +1,6 @@
 /var/const/OPEN = 1
 /var/const/CLOSED = 2
 
-#define FIREDOOR_CLOSED_MOD	1.6	//Above everything
-#define FIREDOOR_MAX_PRESSURE_DIFF 25 // kPa
-#define FIREDOOR_MAX_TEMP 50 // °C
-#define FIREDOOR_MIN_TEMP 0
-
-// Bitflags
-#define FIREDOOR_ALERT_HOT      1
-#define FIREDOOR_ALERT_COLD     2
 /obj/machinery/door/firedoor
 	name = "\improper Emergency Shutter"
 	desc = "Emergency air-tight shutter, capable of sealing off breached areas."
@@ -17,9 +9,11 @@
 	req_one_access = list(access_atmospherics, access_engine_equip)
 	opacity = 0
 	density = 0
-	layer = DOOR_LAYER - 0.1
-	base_layer = DOOR_LAYER - 0.1
+	layer = FIREDOOR_LAYER
+	base_layer = FIREDOOR_LAYER
 	glass = 0
+	door_open_sound  = 'sound/machines/electric_door_open.ogg'
+	door_close_sound = 'sound/machines/electric_door_open.ogg'
 
 	//These are frequenly used with windows, so make sure zones can pass.
 	//Generally if a firedoor is at a place where there should be a zone boundery then there will be a regular door underneath it.
@@ -71,17 +65,16 @@
 	return ..()
 
 
-/obj/machinery/door/firedoor/examine()
-	set src in view()
-	. = ..()
+/obj/machinery/door/firedoor/examine(mob/user)
+	..()
 	if(pdiff >= FIREDOOR_MAX_PRESSURE_DIFF)
-		usr << "<span class='warning'>WARNING: Current pressure differential is [pdiff]kPa! Opening door may result in injury!</span>"
-	if( islist(users_to_open) && users_to_open.len)
+		to_chat(user, "<span class='warning'>WARNING: Current pressure differential is [pdiff]kPa! Opening door may result in injury!</span>")
+	if(islist(users_to_open) && users_to_open.len)
 		var/users_to_open_string = users_to_open[1]
 		if(users_to_open.len >= 2)
 			for(var/i = 2 to users_to_open.len)
 				users_to_open_string += ", [users_to_open[i]]"
-		usr << "These people have opened \the [src] during an alert: [users_to_open_string]."
+		to_chat(user, "These people have opened \the [src] during an alert: [users_to_open_string].")
 
 
 /obj/machinery/door/firedoor/Bumped(atom/AM)
@@ -106,22 +99,22 @@
 		stat |= NOPOWER
 	return
 
-/obj/machinery/door/firedoor/attack_paw(mob/user as mob)
+/obj/machinery/door/firedoor/attack_paw(mob/user)
 	if(istype(user, /mob/living/carbon/alien/humanoid))
 		if(blocked)
-			user << "\red The door is sealed, it cannot be pried open."
+			to_chat(user, "\red The door is sealed, it cannot be pried open.")
 			return
 		else if(!density)
 			return
 		else
-			user << "\red You force your claws between the doors and begin to pry them open..."
+			to_chat(user, "\red You force your claws between the doors and begin to pry them open...")
 			playsound(src.loc, 'sound/effects/metal_creaking.ogg', 50, 0)
 			if (do_after(user,40,target = src))
 				if(!src) return
 				open(1)
 	return
 
-/obj/machinery/door/firedoor/attack_animal(mob/user as mob)
+/obj/machinery/door/firedoor/attack_animal(mob/user)
 	if(istype(user, /mob/living/simple_animal/hulk))
 		if(blocked)
 			if(prob(75))
@@ -141,25 +134,25 @@
 		else if(!density)
 			return
 		else
-			user << "\red You force your fingers between the doors and begin to pry them open..."
+			to_chat(user, "\red You force your fingers between the doors and begin to pry them open...")
 			playsound(src.loc, 'sound/effects/metal_creaking.ogg', 30, 1, -4)
 			if (do_after(user,40,target = src))
 				if(!src) return
 				open(1)
 	return
 
-/obj/machinery/door/firedoor/attack_hand(mob/user as mob)
+/obj/machinery/door/firedoor/attack_hand(mob/user)
 	add_fingerprint(user)
 	if(operating)
 		return//Already doing something.
 
 	if(blocked)
-		user << "<span class='warning'>\The [src] is welded solid!</span>"
+		to_chat(user, "<span class='warning'>\The [src] is welded solid!</span>")
 		return
 
 	if(!allowed(user))
 		if(pdiff >= FIREDOOR_MAX_PRESSURE_DIFF)
-			user << "<span class='warning'>Access denied.</span>"
+			to_chat(user, "<span class='warning'>Access denied.</span>")
 			return
 
 	var/alarmed = 0
@@ -173,7 +166,7 @@
 	if(answer == "No")
 		return
 	if(user.stat || user.stunned || user.weakened || user.paralysis || (!user.canmove && !isAI(user)) || (get_dist(src, user) > 1  && !isAI(user)))
-		user << "Sorry, you must remain able bodied and close to \the [src] in order to use it."
+		to_chat(user, "Sorry, you must remain able bodied and close to \the [src] in order to use it.")
 		return
 
 	var/needs_to_close = 0
@@ -196,7 +189,7 @@
 				nextstate = CLOSED
 				close()
 
-/obj/machinery/door/firedoor/attackby(obj/item/weapon/C as obj, mob/user as mob)
+/obj/machinery/door/firedoor/attackby(obj/item/weapon/C, mob/user)
 	add_fingerprint(user)
 	if(operating)
 		return//Already doing something.
@@ -220,7 +213,7 @@
 
 	if(blocked && istype(C, /obj/item/weapon/crowbar))
 		if(!hatch_open)
-			user << "<span class='danger'>You must open the maintenance hatch first!</span>"
+			to_chat(user, "<span class='danger'>You must open the maintenance hatch first!</span>")
 		else
 			user.visible_message("<span class='danger'>[user] is removing the electronics from \the [src].</span>",
 									"You start to remove the electronics from [src].")
@@ -241,7 +234,7 @@
 		return
 
 	if(blocked)
-		user << "\red \The [src] is welded solid!"
+		to_chat(user, "\red \The [src] is welded solid!")
 		return
 
 	if( istype(C, /obj/item/weapon/crowbar) || ( istype(C,/obj/item/weapon/twohanded/fireaxe) && C:wielded == 1 ) )
@@ -276,7 +269,6 @@
 			return
 
 
-
 /obj/machinery/door/firedoor/proc/latetoggle()
 	if(operating || stat & NOPOWER || !nextstate)
 		return
@@ -289,18 +281,18 @@
 			close()
 	return
 
-/obj/machinery/door/firedoor/close()
+/obj/machinery/door/firedoor/do_close()
 	..()
 	layer = base_layer + FIREDOOR_CLOSED_MOD
 	latetoggle()
 
-/obj/machinery/door/firedoor/open()
+/obj/machinery/door/firedoor/do_open()
 	..()
+	layer = base_layer
 	if(hatch_open)
-		hatch_open = 0
+		hatch_open = FALSE
 		visible_message("The maintenance hatch of \the [src] closes.")
 		update_icon()
-	layer = base_layer
 	latetoggle()
 
 /obj/machinery/door/firedoor/do_animate(animation)
@@ -378,10 +370,3 @@
 			changed = 1
 		if(changed)
 			update_icon()
-
-
-/obj/machinery/door/firedoor/border_only
-
-/obj/machinery/door/firedoor/multi_tile
-	icon = 'icons/obj/doors/DoorHazard2x1.dmi'
-	width = 2

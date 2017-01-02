@@ -37,7 +37,7 @@
 
 	return pick(apcs)
 
-/datum/event/apc_damage/proc/is_valid_apc(var/obj/machinery/power/apc/apc)
+/datum/event/apc_damage/proc/is_valid_apc(obj/machinery/power/apc/apc)
 	// Type must be exactly a basic APC.
 	// This generally prevents affecting APCs in critical areas (AI core, engine room, etc.) as they often use higher capacity subtypes.
 	if(apc.type != /obj/machinery/power/apc)

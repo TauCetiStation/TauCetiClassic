@@ -107,7 +107,7 @@ AngleToHue(hue)
     Converts an angle to a hue in the valid range.
 RotateHue(hsv, angle)
     Takes an HSV or HSVA value and rotates the hue forward through red, green, and blue by an angle from 0 to 360.
-    (Rotating red by 60° produces yellow.) The result is another HSV or HSVA color with the same saturation and value
+    (Rotating red by 60ï¿½ produces yellow.) The result is another HSV or HSVA color with the same saturation and value
     as the original, but a different hue.
 GrayScale(rgb)
     Takes an RGB or RGBA color and converts it to grayscale. Returns an RGB or RGBA string.
@@ -167,7 +167,7 @@ mob
 
 		Output_Icon()
 			set name = "2. Output Icon"
-			src<<"Icon is: \icon[getFlatIcon(src)]"
+			to_chat(src, "Icon is: [bicon(getFlatIcon(src))]")
 
 		Label_Icon()
 			set name = "3. Label Icon"
@@ -814,7 +814,7 @@ The _flatIcons list is a cache for generated icon files.
 		composite.Blend(icon(I.icon, I.icon_state, I.dir, 1), ICON_OVERLAY)
 	return composite
 
-proc/adjust_brightness(var/color, var/value)
+proc/adjust_brightness(color, value)
 	if (!color) return "#FFFFFF"
 	if (!value) return color
 
@@ -824,7 +824,7 @@ proc/adjust_brightness(var/color, var/value)
 	RGB[3] = Clamp(RGB[3]+value,0,255)
 	return rgb(RGB[1],RGB[2],RGB[3])
 
-proc/sort_atoms_by_layer(var/list/atoms)
+proc/sort_atoms_by_layer(list/atoms)
 	// Comb sort icons based on levels
 	var/list/result = atoms.Copy()
 	var/gap = result.len
@@ -845,7 +845,7 @@ proc/sort_atoms_by_layer(var/list/atoms)
 
 var/global/list/humanoid_icon_cache = list()
 //For creating consistent icons for human looking simple animals
-/proc/get_flat_human_icon(var/icon_id,var/datum/job/J,var/datum/preferences/prefs)
+/proc/get_flat_human_icon(icon_id,datum/job/J,datum/preferences/prefs)
 	if(!icon_id || !humanoid_icon_cache[icon_id])
 		var/mob/living/carbon/human/dummy/body = new(new_species = prefs.species)
 

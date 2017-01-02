@@ -17,7 +17,7 @@
 	var/datum/construction/construct
 	flags = FPRINT | CONDUCT
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(!construct || !construct.action(W, user))
 			..()
 		return

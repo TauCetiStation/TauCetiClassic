@@ -44,18 +44,18 @@
 	idle_power_usage = 2
 	active_power_usage = 4
 
-/obj/machinery/holosign_switch/attack_ai(mob/user as mob)
+/obj/machinery/holosign_switch/attack_ai(mob/user)
 	return src.attack_hand(user)
 /
-obj/machinery/holosign_switch/attack_paw(mob/user as mob)
+obj/machinery/holosign_switch/attack_paw(mob/user)
 	return src.attack_hand(user)
 
-/obj/machinery/holosign_switch/attackby(obj/item/weapon/W, mob/user as mob)
+/obj/machinery/holosign_switch/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/device/detective_scanner))
 		return
 	return src.attack_hand(user)
 
-/obj/machinery/holosign_switch/attack_hand(mob/user as mob)
+/obj/machinery/holosign_switch/attack_hand(mob/user)
 	src.add_fingerprint(usr)
 	if(stat & (NOPOWER|BROKEN))
 		return
@@ -69,7 +69,7 @@ obj/machinery/holosign_switch/attack_paw(mob/user as mob)
 	else
 		icon_state = "light0"
 
-	for(var/obj/machinery/holosign/M in world)
+	for(var/obj/machinery/holosign/M in machines)
 		if (M.id == src.id)
 			spawn( 0 )
 				M.toggle()

@@ -11,7 +11,7 @@
 	var/allow_reagents = 0
 	var/malfunction = 0
 
-/obj/item/weapon/implant/proc/trigger(emote, source as mob)
+/obj/item/weapon/implant/proc/trigger(emote, source)
 	return
 
 /obj/item/weapon/implant/proc/activate()
@@ -20,20 +20,20 @@
 // What does the implant do upon injection?
 // return 0 if the implant fails (ex. Revhead and loyalty implant.)
 // return 1 if the implant succeeds (ex. Nonrevhead and loyalty implant.)
-/obj/item/weapon/implant/proc/implanted(var/mob/source)
+/obj/item/weapon/implant/proc/implanted(mob/source)
 	return 1
 
 /obj/item/weapon/implant/proc/get_data()
 	return "No information available"
 
-/obj/item/weapon/implant/proc/hear(message, source as mob)
+/obj/item/weapon/implant/proc/hear(message, source)
 	return
 
 /obj/item/weapon/implant/proc/islegal()
 	return 0
 
 /obj/item/weapon/implant/proc/meltdown()	//breaks it down, making implant unrecongizible
-	imp_in << "\red You feel something melting inside [part ? "your [part.display_name]" : "you"]!"
+	to_chat(imp_in, "\red You feel something melting inside [part ? "your [part.display_name]" : "you"]!")
 	if (part)
 		part.take_damage(burn = 15, used_weapon = "Electronics meltdown")
 	else
@@ -108,13 +108,13 @@ Implant Specifics:<BR>"}
 	return dat
 
 
-/obj/item/weapon/implant/dexplosive/trigger(emote, source as mob)
+/obj/item/weapon/implant/dexplosive/trigger(emote, source)
 	if(emote == "deathgasp")
 		src.activate("death")
 	return
 
 
-/obj/item/weapon/implant/dexplosive/activate(var/cause)
+/obj/item/weapon/implant/dexplosive/activate(cause)
 	if((!cause) || (!src.imp_in))	return 0
 	explosion(src, -1, 0, 2, 3, 0)//This might be a bit much, dono will have to see.
 	if(src.imp_in)
@@ -144,11 +144,11 @@ Implant Specifics:<BR>"}
 <b>Integrity:</b> Implant will occasionally be degraded by the body's immune system and thus will occasionally malfunction."}
 	return dat
 
-/obj/item/weapon/implant/explosive/hear_talk(mob/M as mob, msg)
+/obj/item/weapon/implant/explosive/hear_talk(mob/M, msg)
 	hear(msg)
 	return
 
-/obj/item/weapon/implant/explosive/hear(var/msg)
+/obj/item/weapon/implant/explosive/hear(msg)
 	var/list/replacechars = list("'" = "","\"" = "",">" = "","<" = "","(" = "",")" = "")
 	msg = sanitize_simple(msg, replacechars)
 	if(findtext(msg,phrase))
@@ -200,13 +200,13 @@ Implant Specifics:<BR>"}
 	if(t)
 		t.hotspot_expose(3500,125)
 
-/obj/item/weapon/implant/explosive/implanted(mob/source as mob)
+/obj/item/weapon/implant/explosive/implanted(mob/source)
 	elevel = alert("What sort of explosion would you prefer?", "Implant Intent", "Localized Limb", "Destroy Body", "Full Explosion")
 	phrase = input("Choose activation phrase:") as text
 	var/list/replacechars = list("'" = "","\"" = "",">" = "","<" = "","(" = "",")" = "")
 	phrase = sanitize_simple(phrase, replacechars)
 	usr.mind.store_memory("Explosive implant in [source] can be activated by saying something containing the phrase ''[src.phrase]'', <B>say [src.phrase]</B> to attempt to activate.", 0, 0)
-	usr << "The implanted explosive implant in [source] can be activated by saying something containing the phrase ''[src.phrase]'', <B>say [src.phrase]</B> to attempt to activate."
+	to_chat(usr, "The implanted explosive implant in [source] can be activated by saying something containing the phrase ''[src.phrase]'', <B>say [src.phrase]</B> to attempt to activate.")
 	return 1
 
 /obj/item/weapon/implant/explosive/emp_act(severity)
@@ -280,19 +280,19 @@ the implant may become unstable and either pre-maturely inject the subject or si
 	R.my_atom = src
 
 
-/obj/item/weapon/implant/chem/trigger(emote, source as mob)
+/obj/item/weapon/implant/chem/trigger(emote, source)
 	if(emote == "deathgasp")
 		src.activate(src.reagents.total_volume)
 	return
 
 
-/obj/item/weapon/implant/chem/activate(var/cause)
+/obj/item/weapon/implant/chem/activate(cause)
 	if((!cause) || (!src.imp_in))	return 0
 	var/mob/living/carbon/R = src.imp_in
 	src.reagents.trans_to(R, cause)
-	R << "You hear a faint *beep*."
+	to_chat(R, "You hear a faint *beep*.")
 	if(!src.reagents.total_volume)
-		R << "You hear a faint click from your chest."
+		to_chat(R, "You hear a faint click from your chest.")
 		spawn(0)
 			qdel(src)
 	return
@@ -335,7 +335,7 @@ the implant may become unstable and either pre-maturely inject the subject or si
 	if(!istype(M, /mob/living/carbon/human))	return 0
 	var/mob/living/carbon/human/H = M
 	if((H.mind in (ticker.mode.head_revolutionaries | ticker.mode.A_bosses | ticker.mode.B_bosses)) || is_shadow_or_thrall(H))
-		H.visible_message("[H] seems to resist the implant!", "You feel the corporate tendrils of Nanotrasen try to invade your mind!")
+		H.visible_message("<span class='warning'>[H] seems to resist the implant!</span>", "<span class='userdanger'>You feel the corporate tendrils of Nanotrasen try to invade your mind!</span>")
 		return 0
 
 	if(H.mind in ticker.mode.revolutionaries)
@@ -343,13 +343,13 @@ the implant may become unstable and either pre-maturely inject the subject or si
 
 	if(H.mind in (ticker.mode.A_gang | ticker.mode.B_gang))
 		ticker.mode.remove_gangster(H.mind, exclude_bosses=1)
-		H.visible_message("<span class='warning'>[src] was destroyed in the process!</span>", "<span class='notice'>You feel a surge of loyalty towards Nanotrasen.</span>")
+		H.visible_message("<span class='warning'>[src] was destroyed in the process!</span>", "<span class='userdanger'>You feel a surge of loyalty towards Nanotrasen.</span>")
 		return 0
 
 	if(H.mind in ticker.mode.cult)
-		H << "<span class='warning'>You feel the corporate tendrils of Nanotrasen try to invade your mind!</span>"
+		to_chat(H, "<span class='userdanger'>You feel the corporate tendrils of Nanotrasen try to invade your mind!</span>")
 	else
-		H << "<span class='notice'>You feel a surge of loyalty towards Nanotrasen.</span>"
+		to_chat(H, "<span class='userdanger'>You have been implanted. You feel a surge of loyalty towards Nanotrasen.</span>")
 
 	if(prob(50))
 		H.visible_message("[H] suddenly goes very red and starts writhing. There is a strange smell in the air...", \
@@ -378,10 +378,14 @@ the implant may become unstable and either pre-maturely inject the subject or si
 
 	if(prob(1) && prob(25))//1/400
 		switch(rand(1, 4))
-			if(1)	M << "\italic You [pick("are sure", "think")] that NanoTrasen - is the best corporation in the whole Universe!"
-			if(2)	M << "\italic You [pick("are sure", "think")] that Captain is the greatest man who ever lived!"
-			if(3)	M << "\italic You want to give your life away in the name of NanoTrasen!"
-			if(4)	M << "\italic You are confident that all what Heads of station do - is for a greater good!"
+			if(1)
+				to_chat(M, "\italic You [pick("are sure", "think")] that NanoTrasen - is the best corporation in the whole Universe!")
+			if(2)
+				to_chat(M, "\italic You [pick("are sure", "think")] that Captain is the greatest man who ever lived!")
+			if(3)
+				to_chat(M, "\italic You want to give your life away in the name of NanoTrasen!")
+			if(4)
+				to_chat(M, "\italic You are confident that all what Heads of station do - is for a greater good!")
 
 /obj/item/weapon/implant/adrenalin
 	name = "adrenalin"
@@ -402,11 +406,11 @@ the implant may become unstable and either pre-maturely inject the subject or si
 	return dat
 
 
-/obj/item/weapon/implant/adrenalin/trigger(emote, mob/source as mob)
+/obj/item/weapon/implant/adrenalin/trigger(emote, mob/source)
 	if (src.uses < 1)	return 0
 	if (emote == "pale")
 		src.uses--
-		source << "\blue You feel a sudden surge of energy!"
+		to_chat(source, "\blue You feel a sudden surge of energy!")
 		source.SetStunned(0)
 		source.SetWeakened(0)
 		source.SetParalysis(0)
@@ -416,7 +420,7 @@ the implant may become unstable and either pre-maturely inject the subject or si
 
 /obj/item/weapon/implant/adrenalin/implanted(mob/source)
 	source.mind.store_memory("A implant can be activated by using the pale emote, <B>say *pale</B> to attempt to activate.", 0, 0)
-	source << "The implanted freedom implant can be activated by using the pale emote, <B>say *pale</B> to attempt to activate."
+	to_chat(source, "The implanted freedom implant can be activated by using the pale emote, <B>say *pale</B> to attempt to activate.")
 	return 1
 
 
@@ -447,7 +451,7 @@ the implant may become unstable and either pre-maturely inject the subject or si
 	else if(M.stat == DEAD)
 		activate("death")
 
-/obj/item/weapon/implant/death_alarm/activate(var/cause)
+/obj/item/weapon/implant/death_alarm/activate(cause)
 	var/mob/M = imp_in
 	var/area/t = get_area(M)
 	switch (cause)
@@ -487,7 +491,7 @@ the implant may become unstable and either pre-maturely inject the subject or si
 	spawn(20)
 		malfunction--
 
-/obj/item/weapon/implant/death_alarm/implanted(mob/source as mob)
+/obj/item/weapon/implant/death_alarm/implanted(mob/source)
 	mobname = source.real_name
 	SSobj.processing |= src
 	return 1
@@ -512,12 +516,12 @@ the implant may become unstable and either pre-maturely inject the subject or si
 <b>Integrity:</b> Implant will occasionally be degraded by the body's immune system and thus will occasionally malfunction."}
 	return dat
 
-/obj/item/weapon/implant/compressed/trigger(emote, mob/source as mob)
+/obj/item/weapon/implant/compressed/trigger(emote, mob/source)
 	if (src.scanned == null)
 		return 0
 
 	if (emote == src.activation_emote)
-		source << "The air glows as \the [src.scanned.name] uncompresses."
+		to_chat(source, "The air glows as \the [src.scanned.name] uncompresses.")
 		activate()
 
 /obj/item/weapon/implant/compressed/activate()
@@ -528,11 +532,11 @@ the implant may become unstable and either pre-maturely inject the subject or si
 		scanned.loc = t
 	qdel(src)
 
-/obj/item/weapon/implant/compressed/implanted(mob/source as mob)
+/obj/item/weapon/implant/compressed/implanted(mob/source)
 	src.activation_emote = input("Choose activation emote:") in list("blink", "blink_r", "eyebrow", "chuckle", "twitch_s", "frown", "nod", "blush", "giggle", "grin", "groan", "shrug", "smile", "pale", "sniff", "whimper", "wink")
 	if (source.mind)
 		source.mind.store_memory("Compressed matter implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate.", 0, 0)
-	source << "The implanted compressed matter implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate."
+	to_chat(source, "The implanted compressed matter implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate.")
 	return 1
 
 /obj/item/weapon/implant/compressed/islegal()

@@ -131,12 +131,11 @@
 					line1 = ""
 			update_display(line1, line2)
 
-/obj/machinery/status_display/examine()
-	set src in view()
-	. = ..()
+/obj/machinery/status_display/examine(mob/user)
+	..()
 	switch(mode)
 		if(1,2,4)
-			usr << "The display says:<br>\t<xmp>[message1]</xmp><br>\t<xmp>[message2]</xmp>"
+			to_chat(user, "The display says:<br>&emsp;<xmp>[message1]</xmp><br>&emsp;<xmp>[message2]</xmp>")
 
 
 /obj/machinery/status_display/proc/set_message(m1, m2)
@@ -205,7 +204,7 @@
 		if("supply")
 			if(supply_display)
 				mode = 4
-				
+
 	update()
 
 
@@ -281,7 +280,7 @@
 		return
 
 
-/obj/machinery/ai_status_display/proc/set_picture(var/state)
+/obj/machinery/ai_status_display/proc/set_picture(state)
 	picture_state = state
 	if(overlays.len)
 		overlays.Cut()

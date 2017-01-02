@@ -75,12 +75,12 @@
 /obj/structure/stool/bed/chair/schair
 	name = "shuttle chair"
 	desc = "You sit in this. Either by will or force."
-	icon = 'tauceti/icons/obj/objects.dmi'
+	icon = 'icons/obj/objects.dmi'
 	icon_state = "schair"
 	var/sarmrest = null
 
 /obj/structure/stool/bed/chair/schair/New()
-	sarmrest = image("tauceti/icons/obj/objects.dmi", "schair_armrest", layer = FLY_LAYER)
+	sarmrest = image("icons/obj/objects.dmi", "schair_armrest", layer = FLY_LAYER)
 	return ..()
 
 /obj/structure/stool/bed/chair/schair/post_buckle_mob(mob/living/M)
@@ -91,21 +91,16 @@
 
 /obj/structure/stool/bed/chair/New()
 	..()
-	chairs_list += src
 	spawn(3)	//sorry. i don't think there's a better way to do this.
 		handle_rotation()
 	return
 
-/obj/structure/stool/bed/chair/Destroy()
-	chairs_list -= src
-	return ..()
-
-/obj/structure/stool/bed/chair/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/structure/stool/bed/chair/attackby(obj/item/weapon/W, mob/user)
 	..()
 	if(istype(W, /obj/item/assembly/shock_kit))
 		var/obj/item/assembly/shock_kit/SK = W
 		if(!SK.status)
-			user << "<span class='notice'>[SK] is not ready to be attached!</span>"
+			to_chat(user, "<span class='notice'>[SK] is not ready to be attached!</span>")
 			return
 		user.drop_item()
 		var/obj/structure/stool/bed/chair/e_chair/E = new /obj/structure/stool/bed/chair/e_chair(src.loc)
@@ -137,13 +132,13 @@
 
 /obj/structure/stool/bed/chair/user_buckle_mob(mob/living/M, mob/user)
 	if(flipped)
-		usr << "<span class='notice'>You can't do it, while \the [src] is flipped.</span>"
+		to_chat(usr, "<span class='notice'>You can't do it, while \the [src] is flipped.</span>")
 		if(usr != M)
-			M << "<span class='warning'>Tried buckle you to \the [src].</span>"
+			to_chat(M, "<span class='warning'>Tried buckle you to \the [src].</span>")
 	else
 		..()
 
-/obj/structure/stool/bed/chair/attack_tk(mob/user as mob)
+/obj/structure/stool/bed/chair/attack_tk(mob/user)
 	if(buckled_mob)
 		..()
 	else
@@ -151,16 +146,10 @@
 	return
 
 /obj/structure/stool/bed/chair/handle_rotation()	//making this into a seperate proc so office chairs can call it on Move()
-	if(ticker.random_dir_mode in cardinal)
-		if(src.dir == ticker.random_dir_mode)
-			src.layer = FLY_LAYER
-		else
-			src.layer = OBJ_LAYER
+	if(src.dir == NORTH)
+		src.layer = FLY_LAYER
 	else
-		if(src.dir == NORTH)
-			src.layer = FLY_LAYER
-		else
-			src.layer = OBJ_LAYER
+		src.layer = OBJ_LAYER
 
 	if(buckled_mob)
 		buckled_mob.dir = dir
@@ -231,7 +220,7 @@
 	name = "wooden chair"
 	desc = "Old is never too old to not be in fashion."
 
-/obj/structure/stool/bed/chair/wood/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/structure/stool/bed/chair/wood/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/wrench))
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		new /obj/item/stack/sheet/wood(src.loc)

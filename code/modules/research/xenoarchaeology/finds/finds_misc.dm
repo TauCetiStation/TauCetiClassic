@@ -24,7 +24,7 @@
 		else
 	return
 
-/obj/item/weapon/shard/phoron/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/weapon/shard/phoron/attackby(obj/item/weapon/W, mob/user)
 	..()
 	if ( istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
@@ -36,7 +36,7 @@
 				if(G.amount>=G.max_amount)
 					continue
 				G.attackby(NG, user)
-				usr << "You add the newly-formed phoron glass to the stack. It now contains [NG.amount] sheets."
+				to_chat(usr, "You add the newly-formed phoron glass to the stack. It now contains [NG.amount] sheets.")
 			//SN src = null
 			qdel(src)
 			return

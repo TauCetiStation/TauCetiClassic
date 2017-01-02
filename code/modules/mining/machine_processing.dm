@@ -47,7 +47,7 @@
 		return
 
 	if(!allowed(user))
-		user << "\red Access denied."
+		to_chat(user, "\red Access denied.")
 		return
 
 	user.set_machine(src)
@@ -138,7 +138,8 @@
 				return FALSE
 			I.loc = src
 			inserted_id = I
-		else usr << "<span class='warning'>No valid ID.</span>"
+		else
+			to_chat(usr, "<span class='warning'>No valid ID.</span>")
 	if(href_list["show_values"])
 		show_value_list = !show_value_list
 
@@ -152,7 +153,7 @@
 	dat += "</table>"
 	return dat
 
-/obj/machinery/mineral/processing_unit_console/attackby(var/obj/item/weapon/W, var/mob/user, params)
+/obj/machinery/mineral/processing_unit_console/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W,/obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/I = usr.get_active_hand()
 		if(istype(I) && !istype(inserted_id))

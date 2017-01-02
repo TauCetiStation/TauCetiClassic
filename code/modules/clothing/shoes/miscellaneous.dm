@@ -14,6 +14,7 @@
 	name = "mime shoes"
 	icon_state = "mime"
 	item_color = "mime"
+	clipped_status = CLIPPABLE
 
 /obj/item/clothing/shoes/swat
 	name = "\improper SWAT shoes"
@@ -22,6 +23,7 @@
 	armor = list(melee = 80, bullet = 5, laser = 5,energy = 25, bomb = 50, bio = 10, rad = 0)
 	flags = NOSLIP
 	siemens_coefficient = 0.6
+	clipped_status = CLIPPABLE
 
 /obj/item/clothing/shoes/combat //Basically SWAT shoes combined with galoshes.
 	name = "combat boots"
@@ -30,6 +32,7 @@
 	armor = list(melee = 80, bullet = 10, laser = 10,energy = 25, bomb = 50, bio = 10, rad = 0)
 	flags = NOSLIP
 	siemens_coefficient = 0.6
+	clipped_status = CLIPPABLE
 
 	cold_protection = FEET
 	min_cold_protection_temperature = SHOE_MIN_COLD_PROTECTION_TEMPERATURE
@@ -86,21 +89,11 @@
 /obj/item/clothing/shoes/jackboots
 	name = "jackboots"
 	desc = "Nanotrasen-issue Security combat boots for combat scenarios or combat situations. All combat, all the time."
-	icon_state = "jackboots"
-	item_state = "jackboots"
-	item_color = "hosred"
-	siemens_coefficient = 0.7
-
-/obj/item/clothing/shoes/jackboots/secshoes
-	name = "security shoes"
-	desc = "Security shoes for style."
-	icon_state = "secshoes"
-	item_state = "secshoes"
-
-/obj/item/clothing/shoes/jackboots/wj
-	name = "security boots"
 	icon_state = "wjboots"
 	item_state = "wjboots"
+	item_color = "hosred"
+	siemens_coefficient = 0.7
+	clipped_status = CLIPPABLE
 
 /obj/item/clothing/shoes/cult
 	name = "boots"
@@ -140,6 +133,7 @@
 	name = "laceup shoes"
 	desc = "The height of fashion, and they're pre-polished!"
 	icon_state = "laceups"
+	clipped_status = CLIPPABLE
 
 /obj/item/clothing/shoes/swimmingfins
 	desc = "Help you swim good."
@@ -153,3 +147,28 @@
 	name = "dress shoes"
 	desc = "They appear impeccably polished."
 	icon_state = "laceups"
+	clipped_status = CLIPPABLE
+
+/obj/item/clothing/shoes/rosas_shoes
+	name = "white shoes"
+	icon_state = "rosas_shoes"
+	item_color = "rosas_shoes"
+	permeability_coefficient = 0.01
+
+/obj/item/clothing/shoes/western
+	name = "western boots"
+	icon_state = "western_boots"
+	item_color = "western_boots"
+
+/obj/item/clothing/shoes/magboots/syndie
+	desc = "Light-weighted magnetic boots that have a custom syndicate paintjob for use in combat."
+	name = "gorlex magboots"
+	icon_state = "syndiemag0"
+	magboot_state = "syndiemag"
+	slowdown_off = 1
+
+/obj/item/clothing/shoes/workboots
+	name = "work boots"
+	icon_state = "workboots"
+	item_color = "workboots"
+	clipped_status = CLIPPABLE

@@ -10,11 +10,11 @@
 
 	var/obj/item/weapon/virusdish/dish = null
 
-/obj/machinery/disease2/diseaseanalyser/attackby(var/obj/O as obj, var/mob/user as mob)
+/obj/machinery/disease2/diseaseanalyser/attackby(obj/O, mob/user)
 	if(!istype(O,/obj/item/weapon/virusdish)) return
 
 	if(dish)
-		user << "\The [src] is already loaded."
+		to_chat(user, "\The [src] is already loaded.")
 		return
 
 	dish = O

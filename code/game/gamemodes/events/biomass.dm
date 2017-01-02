@@ -20,7 +20,7 @@
 			master.growth_queue -= src
 		return ..()
 
-/obj/effect/biomass/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/effect/biomass/attackby(obj/item/weapon/W, mob/user)
 	if (!W || !user || !W.type) return
 	switch(W.type)
 		if(/obj/item/weapon/circular_saw) qdel(src)
@@ -64,7 +64,7 @@
 		SSobj.processing.Remove(src)
 		return ..()
 
-	proc/spawn_biomass_piece(var/turf/location)
+	proc/spawn_biomass_piece(turf/location)
 		var/obj/effect/biomass/BM = new(location)
 		growth_queue += BM
 		vines += BM

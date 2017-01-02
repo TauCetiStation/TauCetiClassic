@@ -145,7 +145,10 @@
 	icon_living = "Syndicat"
 	icon_dead = "Syndicat_dead"
 	//gender = FEMALE
-	flags = IS_SYNTHETIC|NO_BREATHE
+	flags = list(
+	 IS_SYNTHETIC = TRUE
+	,NO_BREATHE = TRUE
+	)
 	faction = list("syndicate")
 	//var/turns_since_scan = 0
 	//var/mob/living/simple_animal/mouse/movement_target

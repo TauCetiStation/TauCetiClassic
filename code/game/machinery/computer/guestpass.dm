@@ -17,23 +17,23 @@
 	else
 		return temp_access
 
-/obj/item/weapon/card/id/guest/examine()
+/obj/item/weapon/card/id/guest/examine(mob/user)
 	..()
 	if (world.time < expiration_time)
-		usr << "<span class='notice'>This pass expires at [worldtime2text(expiration_time)].</span>"
+		to_chat(user, "<span class='notice'>This pass expires at [worldtime2text(expiration_time)].</span>")
 	else
-		usr << "<span class='warning'>It expired at [worldtime2text(expiration_time)].</span>"
+		to_chat(user, "<span class='warning'>It expired at [worldtime2text(expiration_time)].</span>")
 
 /obj/item/weapon/card/id/guest/read()
 	if (world.time > expiration_time)
-		usr << "<span class='notice'>This pass expired at [worldtime2text(expiration_time)].</span>"
+		to_chat(usr, "<span class='notice'>This pass expired at [worldtime2text(expiration_time)].</span>")
 	else
-		usr << "<span class='notice'>This pass expires at [worldtime2text(expiration_time)].</span>"
+		to_chat(usr, "<span class='notice'>This pass expires at [worldtime2text(expiration_time)].</span>")
 
-	usr << "<span class='notice'>It grants access to following areas:</span>"
+	to_chat(usr, "<span class='notice'>It grants access to following areas:</span>")
 	for (var/A in temp_access)
-		usr << "<span class='notice'>[get_access_desc(A)].</span>"
-	usr << "<span class='notice'>Issuing reason: [reason].</span>"
+		to_chat(usr, "<span class='notice'>[get_access_desc(A)].</span>")
+	to_chat(usr, "<span class='notice'>Issuing reason: [reason].</span>")
 	return
 
 /////////////////////////////////////////////
@@ -67,15 +67,15 @@
 			giver = O
 			updateUsrDialog()
 		else
-			user << "<span class='warning'>There is already ID card inside.</span>"
+			to_chat(user, "<span class='warning'>There is already ID card inside.</span>")
 
-/obj/machinery/computer/guestpass/attack_ai(var/mob/user as mob)
+/obj/machinery/computer/guestpass/attack_ai(mob/user)
 	return attack_hand(user)
 
-/obj/machinery/computer/guestpass/attack_paw(var/mob/user as mob)
+/obj/machinery/computer/guestpass/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/machinery/computer/guestpass/attack_hand(var/mob/user as mob)
+/obj/machinery/computer/guestpass/attack_hand(mob/user)
 	if(..())
 		return
 
@@ -127,12 +127,12 @@
 				if(reas)
 					reason = reas
 			if ("duration")
-				var/dur = input("Duration (in minutes) during which pass is valid (up to 10 minutes).", "Duration") as num|null
+				var/dur = input("Duration (in minutes) during which pass is valid (up to 30 minutes).", "Duration") as num|null
 				if (dur)
-					if (dur > 0 && dur <= 10)
+					if (dur > 0 && dur <= 30)
 						duration = dur
 					else
-						usr << "<span class='warning'>Invalid duration.</span>"
+						to_chat(usr, "<span class='warning'>Invalid duration.</span>")
 			if ("access")
 				var/A = text2num(href_list["access"])
 				if (A in accesses)
@@ -189,6 +189,6 @@
 					pass.reason = reason
 					pass.name = "guest pass #[number]"
 				else
-					usr << "\red Cannot issue pass without issuing ID."
+					to_chat(usr, "\red Cannot issue pass without issuing ID.")
 
 	updateUsrDialog()

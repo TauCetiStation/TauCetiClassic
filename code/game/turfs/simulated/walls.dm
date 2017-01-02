@@ -33,7 +33,7 @@
 	dismantle_wall()
 	return ..()
 
-/turf/simulated/wall/ChangeTurf(var/newtype)
+/turf/simulated/wall/ChangeTurf(newtype)
 	for(var/obj/effect/E in src)
 		if(E.name == "Wallrot")
 			qdel(E)
@@ -42,22 +42,22 @@
 
 //Appearance
 
-/turf/simulated/wall/examine()
-	. = ..()
+/turf/simulated/wall/examine(mob/user)
+	..()
 
 	if(!damage)
-		usr << "<span class='info'>It looks fully intact.</span>"
+		to_chat(user, "<span class='info'>It looks fully intact.</span>")
 	else
 		var/dam = damage / damage_cap
 		if(dam <= 0.3)
-			usr << "<span class='warning'>It looks slightly damaged.</span>"
+			to_chat(user, "<span class='warning'>It looks slightly damaged.</span>")
 		else if(dam <= 0.6)
-			usr << "<span class='warning'>It looks moderately damaged.</span>"
+			to_chat(user, "<span class='warning'>It looks moderately damaged.</span>")
 		else
-			usr << "<span class='danger'>It looks heavily damaged.</span>"
+			to_chat(user, "<span class='danger'>It looks heavily damaged.</span>")
 
 	if(rotting)
-		usr << "<span class='warning'>There is fungus growing on [src].</span>"
+		to_chat(user, "<span class='warning'>There is fungus growing on [src].</span>")
 
 /turf/simulated/wall/proc/update_icon()
 	if(!damage_overlays[1]) //list hasn't been populated
@@ -186,7 +186,7 @@
 			O.layer = 5
 			O.mouse_opacity = 0
 
-/turf/simulated/wall/proc/thermitemelt(mob/user as mob)
+/turf/simulated/wall/proc/thermitemelt(mob/user)
 	if(mineral == "diamond")
 		return
 	var/obj/effect/overlay/O = new/obj/effect/overlay(src)
@@ -203,14 +203,14 @@
 	var/turf/simulated/floor/F = src
 	F.burn_tile()
 	F.icon_state = "wall_thermite"
-	user << "<span class='warning'>The thermite starts melting through the wall.</span>"
+	to_chat(user, "<span class='warning'>The thermite starts melting through the wall.</span>")
 
 	spawn(100)
 		if(O)	qdel(O)
 //	F.sd_LumReset()		//TODO: ~Carn
 	return
 
-/turf/simulated/wall/meteorhit(obj/M as obj)
+/turf/simulated/wall/meteorhit(obj/M)
 	if (prob(15) && !rotting)
 		dismantle_wall()
 	else if(prob(70) && !rotting)
@@ -221,28 +221,28 @@
 
 //Interactions
 
-/turf/simulated/wall/attack_paw(mob/user as mob)
+/turf/simulated/wall/attack_paw(mob/user)
 	return src.attack_hand(user) //#Z2
 
 /*
-/turf/simulated/wall/attack_animal(mob/living/simple_animal/M as mob)
+/turf/simulated/wall/attack_animal(mob/living/simple_animal/M)
 	if(M.wall_smash)
 		if (istype(src, /turf/simulated/wall/r_wall) && !rotting)
-			M << text("\blue This wall is far too strong for you to destroy.")
+			to_chat(M, text("\blue This wall is far too strong for you to destroy."))
 			return
 		else
 			if (prob(40) || rotting)
-				M << text("\blue You smash through the wall.")
+				to_chat(M, text("\blue You smash through the wall."))
 				dismantle_wall(1)
 				return
 			else
-				M << text("\blue You smash against the wall.")
+				to_chat(M, text("\blue You smash against the wall."))
 				return
 
-	M << "\blue You push the wall but nothing happens!"
+	to_chat(M, "\blue You push the wall but nothing happens!")
 	return */
 
-/turf/simulated/wall/attack_animal(var/mob/living/simple_animal/M)
+/turf/simulated/wall/attack_animal(mob/living/simple_animal/M)
 	M.do_attack_animation(src)
 	if(M.environment_smash >= 2)
 		if(istype(M, /mob/living/simple_animal/hulk))
@@ -253,44 +253,44 @@
 		if(istype(src, /turf/simulated/wall/r_wall))
 			if(M.environment_smash == 3)
 				take_damage(rand(25, 75))
-				M << "<span class='info'>You smash against the wall.</span>"
+				to_chat(M, "<span class='info'>You smash against the wall.</span>")
 			else
-				M << "<span class='info'>This wall is far too strong for you to destroy.</span>"
+				to_chat(M, "<span class='info'>This wall is far too strong for you to destroy.</span>")
 		else
 			if (prob(40) || rotting)
-				M << text("\blue You smash through the wall.")
+				to_chat(M, text("\blue You smash through the wall."))
 				dismantle_wall(1)
 			else
 				take_damage(rand(25, 75))
-				M << "<span class='info'>You smash against the wall.</span>"
+				to_chat(M, "<span class='info'>You smash against the wall.</span>")
 				return
 			return
 
-/turf/simulated/wall/attack_hand(mob/user as mob)
+/turf/simulated/wall/attack_hand(mob/user)
 	if(HULK in user.mutations) //#Z2 No more chances, just randomized damage and hurt intent
 		if(user.a_intent == "hurt")
 			playsound(user.loc, 'sound/effects/grillehit.ogg', 50, 1)
-			user << text("\blue You punch the wall.")
+			to_chat(user, text("\blue You punch the wall."))
 			take_damage(rand(15, 50))
 			if(prob(25))
 				user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 			return //##Z2
 
 	if(rotting)
-		user << "\blue The wall crumbles under your touch."
+		to_chat(user, "\blue The wall crumbles under your touch.")
 		dismantle_wall()
 		return
 
-	user << "\blue You push the wall but nothing happens!"
+	to_chat(user, "\blue You push the wall but nothing happens!")
 	playsound(src, 'sound/weapons/Genhit.ogg', 25, 1)
 	src.add_fingerprint(user)
 	..()
 	return
 
-/turf/simulated/wall/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/turf/simulated/wall/attackby(obj/item/weapon/W, mob/user)
 
 	if (!(istype(user, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
-		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
+		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 
 	//get the user's location
@@ -301,14 +301,14 @@
 		if(istype(W, /obj/item/weapon/weldingtool))
 			var/obj/item/weapon/weldingtool/WT = W
 			if(WT.remove_fuel(0,user))
-				user << "<span class='notice'>You burn away the fungi with \the [WT].</span>"
+				to_chat(user, "<span class='notice'>You burn away the fungi with \the [WT].</span>")
 				playsound(src, 'sound/items/Welder.ogg', 10, 1)
 				for(var/obj/effect/E in src) if(E.name == "Wallrot")
 					qdel(E)
 				rotting = 0
 				return
 		else if(!is_sharp(W) && W.force >= 10 || W.force >= 20)
-			user << "<span class='notice'>\The [src] crumbles away under the force of your [W.name].</span>"
+			to_chat(user, "<span class='notice'>\The [src] crumbles away under the force of your [W.name].</span>")
 			src.dismantle_wall(1)
 			return
 
@@ -328,7 +328,7 @@
 			var/obj/item/weapon/melee/energy/blade/EB = W
 
 			EB.spark_system.start()
-			user << "<span class='notice'>You slash \the [src] with \the [EB]; the thermite ignites!</span>"
+			to_chat(user, "<span class='notice'>You slash \the [src] with \the [EB]; the thermite ignites!</span>")
 			playsound(src, "sparks", 50, 1)
 			playsound(src, 'sound/weapons/blade1.ogg', 50, 1)
 
@@ -348,14 +348,14 @@
 
 		if(WT.remove_fuel(0,user))
 			if(response == "Repair")
-				user << "<span class='notice'>You start repairing the damage to [src].</span>"
+				to_chat(user, "<span class='notice'>You start repairing the damage to [src].</span>")
 				playsound(src, 'sound/items/Welder.ogg', 100, 1)
 				if(do_after(user, max(5, damage / 5), target = src) && WT && WT.isOn())
-					user << "<span class='notice'>You finish repairing the damage to [src].</span>"
+					to_chat(user, "<span class='notice'>You finish repairing the damage to [src].</span>")
 					take_damage(-damage)
 
 			else if(response == "Dismantle")
-				user << "<span class='notice'>You begin slicing through the outer plating.</span>"
+				to_chat(user, "<span class='notice'>You begin slicing through the outer plating.</span>")
 				playsound(src, 'sound/items/Welder.ogg', 100, 1)
 
 				if(do_after(user,100, target = src))
@@ -363,16 +363,16 @@
 						return
 
 					if(user.loc == T && user.get_active_hand() == WT)
-						user << "<span class='notice'>You remove the outer plating.</span>"
+						to_chat(user, "<span class='notice'>You remove the outer plating.</span>")
 						dismantle_wall()
 			return
 		else
-			user << "<span class='notice'>You need more welding fuel to complete this task.</span>"
+			to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
 			return
 
 	else if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
 
-		user << "<span class='notice'>You begin slicing through the outer plating.</span>"
+		to_chat(user, "<span class='notice'>You begin slicing through the outer plating.</span>")
 		playsound(src, 'sound/items/Welder.ogg', 100, 1)
 
 		if(do_after(user,60,target = src))
@@ -382,7 +382,7 @@
 				return
 
 			if(user.loc == T && user.get_active_hand() == W)
-				user << "<span class='notice'>You remove the outer plating.</span>"
+				to_chat(user, "<span class='notice'>You remove the outer plating.</span>")
 				dismantle_wall()
 				for(var/mob/O in viewers(user, 5))
 					O.show_message("<span class='warning'>The wall was sliced apart by [user]!</span>", 1, "<span class='warning'>You hear metal being sliced apart.</span>", 2)
@@ -391,7 +391,7 @@
 	//DRILLING
 	else if (istype(W, /obj/item/weapon/pickaxe/drill/diamond_drill))
 
-		user << "<span class='notice'>You begin to drill though the wall.</span>"
+		to_chat(user, "<span class='notice'>You begin to drill though the wall.</span>")
 
 		if(do_after(user,60,target = src))
 			if(mineral == "diamond")
@@ -400,7 +400,7 @@
 				return
 
 			if(user.loc == T && user.get_active_hand() == W)
-				user << "<span class='notice'>Your drill tears though the last of the reinforced plating.</span>"
+				to_chat(user, "<span class='notice'>Your drill tears though the last of the reinforced plating.</span>")
 				dismantle_wall()
 				for(var/mob/O in viewers(user, 5))
 					O.show_message("<span class='warning'>The wall was drilled through by [user]!</span>", 1, "<span class='warning'>You hear the grinding of metal.</span>", 2)
@@ -410,7 +410,7 @@
 		var/obj/item/weapon/melee/energy/blade/EB = W
 
 		EB.spark_system.start()
-		user << "<span class='notice'>You stab \the [EB] into the wall and begin to slice it apart.</span>"
+		to_chat(user, "<span class='notice'>You stab \the [EB] into the wall and begin to slice it apart.</span>")
 		playsound(src, "sparks", 50, 1)
 
 		if(do_after(user,70,target = src))

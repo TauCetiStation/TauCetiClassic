@@ -18,7 +18,6 @@ var/list/robot_verbs_default = list(
 	var/custom_name = ""
 	var/custom_sprite = 0 //Due to all the sprites involved, a var for our custom borgs may be best
 	var/crisis //Admin-settable for combat module use.
-	var/tc_borg = 0 //for Tau Ceti custom borgs
 
 //Hud stuff
 
@@ -180,9 +179,9 @@ var/list/robot_verbs_default = list(
 /mob/living/silicon/robot/proc/pick_module()
 	if(module)
 		return
-	var/list/modules = list("Standard", "Engineering", "Construction", "Surgeon", "Crisis", "Miner", "Janitor", "Service", "Clerical", "Security", "Science")
+	var/list/modules = list("Standard", "Engineering", "Surgeon", "Crisis", "Miner", "Janitor", "Service", "Security", "Science")
 	if(crisis && security_level == SEC_LEVEL_RED) //Leaving this in until it's balanced appropriately.
-		src << "\red Crisis mode active. Combat module available."
+		to_chat(src, "\red Crisis mode active. Combat module available.")
 		modules+="Combat"
 	modtype = input("Please, select a module!", "Robot", null, null) in modules
 
@@ -193,16 +192,16 @@ var/list/robot_verbs_default = list(
 
 	switch(modtype)
 		if("Standard")
-			tc_borg = 0
 			module = new /obj/item/weapon/robot_module/standard(src)
 			module_sprites["Basic"] = "robot_old"
 			module_sprites["Android"] = "droid"
 			module_sprites["Default"] = "robot"
 			module_sprites["Drone"] = "drone-standard"
 			module_sprites["Acheron"] = "mechoid-Standard"
+			module_sprites["Spider"] = "spider-standard"
+			module_sprites["Kodiak"] = "kodiak-standard"
 
 		if("Service")
-			tc_borg = 0
 			module = new /obj/item/weapon/robot_module/butler(src)
 			module_sprites["Waitress"] = "Service"
 			module_sprites["Kent"] = "toiletbot"
@@ -211,19 +210,9 @@ var/list/robot_verbs_default = list(
 			module_sprites["Default"] = "Service2"
 			module_sprites["Drone"] = "drone-service" // How does this even work...? Oh well.
 			module_sprites["Acheron"] = "mechoid-Service"
-
-		if("Clerical")
-			module = new /obj/item/weapon/robot_module/clerical(src)
-			module_sprites["Waitress"] = "Service"
-			module_sprites["Kent"] = "toiletbot"
-			module_sprites["Bro"] = "Brobot"
-			module_sprites["Rich"] = "maximillion"
-			module_sprites["Default"] = "Service2"
-			module_sprites["Drone"] = "drone-service"
-			module_sprites["Acheron"] = "mechoid-Service"
+			module_sprites["Kodiak"] = "kodiak-service"
 
 		if("Science")
-			tc_borg = 1
 			module = new /obj/item/weapon/robot_module/science(src)
 			module.channels = list("Science" = 1)
 			if(camera && "Robots" in camera.network)
@@ -233,7 +222,6 @@ var/list/robot_verbs_default = list(
 			module_sprites["Acheron"] = "mechoid-Science"
 
 		if("Miner")
-			tc_borg = 0
 			module = new /obj/item/weapon/robot_module/miner(src)
 			module.channels = list("Supply" = 1)
 			if(camera && "Robots" in camera.network)
@@ -243,9 +231,9 @@ var/list/robot_verbs_default = list(
 			module_sprites["Treadhead"] = "Miner"
 			module_sprites["Drone"] = "drone-miner"
 			module_sprites["Acheron"] = "mechoid-Miner"
+			module_sprites["Kodiak"] = "kodiak-miner"
 
 		if("Crisis")
-			tc_borg = 0
 			module = new /obj/item/weapon/robot_module/crisis(src)
 			module.channels = list("Medical" = 1)
 			if(camera && "Robots" in camera.network)
@@ -270,7 +258,6 @@ var/list/robot_verbs_default = list(
 			module_sprites["Acheron"] = "mechoid-Medical"
 
 		if("Security")
-			tc_borg = 0
 			module = new /obj/item/weapon/robot_module/security(src)
 			module.channels = list("Security" = 1)
 			module_sprites["Basic"] = "secborg"
@@ -280,9 +267,9 @@ var/list/robot_verbs_default = list(
 			module_sprites["Bloodhound - Treaded"] = "secborg+tread"
 			module_sprites["Drone"] = "drone-sec"
 			module_sprites["Acheron"] = "mechoid-Security"
+			module_sprites["Kodiak"] = "kodiak-sec"
 
 		if("Engineering")
-			tc_borg = 0
 			module = new /obj/item/weapon/robot_module/engineering(src)
 			module.channels = list("Engineering" = 1)
 			if(camera && "Robots" in camera.network)
@@ -294,22 +281,9 @@ var/list/robot_verbs_default = list(
 			module_sprites["Landmate - Treaded"] = "engiborg+tread"
 			module_sprites["Drone"] = "drone-engineer"
 			module_sprites["Acheron"] = "mechoid-Engineering"
-
-		if("Construction")
-			module = new /obj/item/weapon/robot_module/construction(src)
-			module.channels = list("Engineering" = 1)
-			if(camera && "Robots" in camera.network)
-				camera.add_network("Engineering")
-			module_sprites["Basic"] = "Engineering"
-			module_sprites["Antique"] = "engineerrobot"
-			module_sprites["Custom"] = "custom_astra_t3"
-			module_sprites["Landmate"] = "landmate"
-			module_sprites["Landmate - Treaded"] = "engiborg+tread"
-			module_sprites["Drone"] = "drone-engineer"
-			module_sprites["Acheron"] = "mechoid-Engineering"
+			module_sprites["Kodiak"] = "kodiak-eng"
 
 		if("Janitor")
-			tc_borg = 0
 			module = new /obj/item/weapon/robot_module/janitor(src)
 			module_sprites["Basic"] = "JanBot2"
 			module_sprites["Mopbot"]  = "janitorrobot"
@@ -318,18 +292,11 @@ var/list/robot_verbs_default = list(
 			module_sprites["Acheron"] = "mechoid-Janitor"
 
 		if("Combat")
-			tc_borg = 0
 			module = new /obj/item/weapon/robot_module/combat(src)
 			module_sprites["Combat Android"] = "droid-combat"
 			module_sprites["Acheron"] = "mechoid-Combat"
+			module_sprites["Kodiak"] = "kodiak-combat"
 			module.channels = list("Security" = 1)
-
-
-
-	if(tc_borg)
-		icon = 'tauceti/icons/mob/robot.dmi'
-	else
-		icon = 'icons/mob/robots.dmi'
 
 	//languages
 	module.add_languages(src)
@@ -348,7 +315,7 @@ var/list/robot_verbs_default = list(
 	choose_icon(6,module_sprites)
 	radio.config(module.channels)
 
-/mob/living/silicon/robot/proc/updatename(var/prefix as text)
+/mob/living/silicon/robot/proc/updatename(prefix)
 	if(prefix)
 		modtype = prefix
 	if(mmi)
@@ -456,7 +423,7 @@ var/list/robot_verbs_default = list(
 	set name = "Toggle Lights"
 
 	lights_on = !lights_on
-	usr << "You [lights_on ? "enable" : "disable"] your integrated light."
+	to_chat(usr, "You [lights_on ? "enable" : "disable"] your integrated light.")
 	if(lights_on)
 		set_light(5)
 	else
@@ -467,11 +434,11 @@ var/list/robot_verbs_default = list(
 	set name = "Self Diagnosis"
 
 	if(!is_component_functioning("diagnosis unit"))
-		src << "\red Your self-diagnosis component isn't functioning."
+		to_chat(src, "\red Your self-diagnosis component isn't functioning.")
 
 	var/datum/robot_component/CO = get_component("diagnosis unit")
 	if (!cell_use_power(CO.active_usage))
-		src << "\red Low Power."
+		to_chat(src, "\red Low Power.")
 	var/dat = self_diagnosis()
 	src << browse(dat, "window=robotdiagnosis")
 
@@ -495,10 +462,10 @@ var/list/robot_verbs_default = list(
 	var/datum/robot_component/C = components[toggle]
 	if(C.toggled)
 		C.toggled = 0
-		src << "\red You disable [C.name]."
+		to_chat(src, "\red You disable [C.name].")
 	else
 		C.toggled = 1
-		src << "\red You enable [C.name]."
+		to_chat(src, "\red You enable [C.name].")
 
 /mob/living/silicon/robot/blob_act()
 	if (stat != DEAD)
@@ -582,7 +549,7 @@ var/list/robot_verbs_default = list(
 	updatehealth()
 
 
-/mob/living/silicon/robot/meteorhit(obj/O as obj)
+/mob/living/silicon/robot/meteorhit(obj/O)
 	for(var/mob/M in viewers(src, null))
 		M.show_message(text("\red [src] has been hit by [O]"), 1)
 		//Foreach goto(19)
@@ -594,20 +561,20 @@ var/list/robot_verbs_default = list(
 	return
 
 
-/mob/living/silicon/robot/bullet_act(var/obj/item/projectile/Proj)
+/mob/living/silicon/robot/bullet_act(obj/item/projectile/Proj)
 	..(Proj)
 	updatehealth()
 	if(prob(75) && Proj.damage > 0) spark_system.start()
 	return 2
 
-/mob/living/silicon/robot/triggerAlarm(var/class, area/A, list/cameralist, var/source)
+/mob/living/silicon/robot/triggerAlarm(class, area/A, list/cameralist, source)
 	if (stat == DEAD)
 		return 1
 	..()
 	queueAlarm(text("--- [class] alarm detected in [A.name]!"), class)
 
 
-/mob/living/silicon/robot/cancelAlarm(var/class, area/A as area, obj/origin)
+/mob/living/silicon/robot/cancelAlarm(class, area/A, obj/origin)
 	var/has_alarm = ..()
 
 	if (!has_alarm)
@@ -616,7 +583,7 @@ var/list/robot_verbs_default = list(
 	return has_alarm
 
 
-/mob/living/silicon/robot/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/mob/living/silicon/robot/attackby(obj/item/weapon/W, mob/user)
 	if (istype(W, /obj/item/weapon/handcuffs)) // fuck i don't even know why isrobot() in handcuff code isn't working so this will have to do
 		return
 
@@ -635,17 +602,17 @@ var/list/robot_verbs_default = list(
 					C.brute_damage = WC.brute
 					C.electronics_damage = WC.burn
 
-				usr << "\blue You install the [W.name]."
+				to_chat(usr, "\blue You install the [W.name].")
 
 				return
 
 	if (istype(W, /obj/item/weapon/weldingtool))
 		if (src == user)
-			user << "<span class='warning'>You lack the reach to be able to repair yourself.</span>"
+			to_chat(user, "<span class='warning'>You lack the reach to be able to repair yourself.</span>")
 			return
 
 		if (!getBruteLoss())
-			user << "Nothing to fix here!"
+			to_chat(user, "Nothing to fix here!")
 			return
 		var/obj/item/weapon/weldingtool/WT = W
 		if (WT.remove_fuel(0))
@@ -655,12 +622,12 @@ var/list/robot_verbs_default = list(
 			for(var/mob/O in viewers(user, null))
 				O.show_message(text("\red [user] has fixed some of the dents on [src]!"), 1)
 		else
-			user << "Need more welding fuel!"
+			to_chat(user, "Need more welding fuel!")
 			return
 
 	else if(istype(W, /obj/item/weapon/cable_coil) && (wiresexposed || istype(src,/mob/living/silicon/robot/drone)))
 		if (!getFireLoss())
-			user << "Nothing to fix here!"
+			to_chat(user, "Nothing to fix here!")
 			return
 		var/obj/item/weapon/cable_coil/coil = W
 		adjustFireLoss(-30)
@@ -672,7 +639,7 @@ var/list/robot_verbs_default = list(
 	else if (istype(W, /obj/item/weapon/crowbar))	// crowbar means open or close the cover
 		if(opened)
 			if(cell)
-				user << "You close the cover."
+				to_chat(user, "You close the cover.")
 				opened = 0
 				updateicon()
 			else if(wiresexposed && isWireCut(1) && isWireCut(2) && isWireCut(3) && isWireCut(4) && isWireCut(5))
@@ -680,12 +647,12 @@ var/list/robot_verbs_default = list(
 				if(istype(src, /mob/living/silicon/robot/syndicate))
 					return
 				if(!mmi)
-					user << "\The [src] has no brain to remove."
+					to_chat(user, "\The [src] has no brain to remove.")
 					return
 
-				user << "You jam the crowbar into the robot and begin levering [mmi]."
+				to_chat(user, "You jam the crowbar into the robot and begin levering [mmi].")
 				sleep(30)
-				user << "You damage some parts of the chassis, but eventually manage to rip out [mmi]!"
+				to_chat(user, "You damage some parts of the chassis, but eventually manage to rip out [mmi]!")
 				var/obj/item/robot_parts/robot_suit/C = new/obj/item/robot_parts/robot_suit(loc)
 				C.l_leg = new/obj/item/robot_parts/l_leg(C)
 				C.r_leg = new/obj/item/robot_parts/r_leg(C)
@@ -708,7 +675,7 @@ var/list/robot_verbs_default = list(
 					return
 				var/datum/robot_component/C = components[remove]
 				var/obj/item/robot_parts/robot_component/I = C.wrapped
-				user << "You remove \the [I]."
+				to_chat(user, "You remove \the [I].")
 				if(istype(I))
 					I.brute = C.brute_damage
 					I.burn = C.electronics_damage
@@ -721,23 +688,23 @@ var/list/robot_verbs_default = list(
 
 		else
 			if(locked)
-				user << "The cover is locked and cannot be opened."
+				to_chat(user, "The cover is locked and cannot be opened.")
 			else
-				user << "You open the cover."
+				to_chat(user, "You open the cover.")
 				opened = 1
 				updateicon()
 
 	else if (istype(W, /obj/item/weapon/stock_parts/cell) && opened)	// trying to put a cell inside
 		var/datum/robot_component/C = components["power cell"]
 		if(wiresexposed)
-			user << "Close the panel first."
+			to_chat(user, "Close the panel first.")
 		else if(cell)
-			user << "There is a power cell already installed."
+			to_chat(user, "There is a power cell already installed.")
 		else
 			user.drop_item()
 			W.loc = src
 			cell = W
-			user << "You insert the power cell."
+			to_chat(user, "You insert the power cell.")
 
 			C.installed = 1
 			C.wrapped = W
@@ -750,38 +717,38 @@ var/list/robot_verbs_default = list(
 		if (wiresexposed)
 			interact(user)
 		else
-			user << "You can't reach the wiring."
+			to_chat(user, "You can't reach the wiring.")
 
 	else if(istype(W, /obj/item/weapon/screwdriver) && opened && !cell)	// haxing
 		wiresexposed = !wiresexposed
-		user << "The wires have been [wiresexposed ? "exposed" : "unexposed"]"
+		to_chat(user, "The wires have been [wiresexposed ? "exposed" : "unexposed"]")
 		updateicon()
 
 	else if(istype(W, /obj/item/weapon/screwdriver) && opened && cell)	// radio
 		if(radio)
 			radio.attackby(W,user)//Push it to the radio to let it handle everything
 		else
-			user << "Unable to locate a radio."
+			to_chat(user, "Unable to locate a radio.")
 		updateicon()
 
 	else if(istype(W, /obj/item/device/encryptionkey/) && opened)
 		if(radio)//sanityyyyyy
 			radio.attackby(W,user)//GTFO, you have your own procs
 		else
-			user << "Unable to locate a radio."
+			to_chat(user, "Unable to locate a radio.")
 
 	else if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))			// trying to unlock the interface with an ID card
 		if(emagged)//still allow them to open the cover
-			user << "The interface seems slightly damaged"
+			to_chat(user, "The interface seems slightly damaged")
 		if(opened)
-			user << "You must close the cover to swipe an ID card."
+			to_chat(user, "You must close the cover to swipe an ID card.")
 		else
 			if(allowed(usr))
 				locked = !locked
-				user << "You [ locked ? "lock" : "unlock"] [src]'s interface."
+				to_chat(user, "You [ locked ? "lock" : "unlock"] [src]'s interface.")
 				updateicon()
 			else
-				user << "\red Access denied."
+				to_chat(user, "\red Access denied.")
 
 	else if(istype(W, /obj/item/weapon/card/emag))		// trying to unlock with an emag card
 		if(!opened)//Cover is closed
@@ -789,19 +756,19 @@ var/list/robot_verbs_default = list(
 				if(prob(90))
 					var/obj/item/weapon/card/emag/emag = W
 					emag.uses--
-					user << "You emag the cover lock."
+					to_chat(user, "You emag the cover lock.")
 					locked = 0
 				else
-					user << "You fail to emag the cover lock."
-					src << "Hack attempt detected."
+					to_chat(user, "You fail to emag the cover lock.")
+					to_chat(src, "Hack attempt detected.")
 			else
-				user << "The cover is already unlocked."
+				to_chat(user, "The cover is already unlocked.")
 			return
 
 		if(opened)//Cover is open
 			if(emagged)	return//Prevents the X has hit Y with Z message also you cant emag them twice
 			if(wiresexposed)
-				user << "You must close the panel first"
+				to_chat(user, "You must close the panel first")
 				return
 			else
 				sleep(6)
@@ -810,7 +777,7 @@ var/list/robot_verbs_default = list(
 					emagged = 1
 					lawupdate = 0
 					connected_ai = null
-					user << "You emag [src]'s interface."
+					to_chat(user, "You emag [src]'s interface.")
 					message_admins("[key_name_admin(user)] emagged cyborg [key_name_admin(src)].  Laws overridden.")
 					log_game("[key_name(user)] emagged cyborg [key_name(src)].  Laws overridden.")
 					clear_supplied_laws()
@@ -819,22 +786,22 @@ var/list/robot_verbs_default = list(
 					var/time = time2text(world.realtime,"hh:mm:ss")
 					lawchanges.Add("[time] <B>:</B> [user.name]([user.key]) emagged [name]([key])")
 					set_zeroth_law("Only [user.real_name] and people he designates as being such are Syndicate Agents.")
-					src << "\red ALERT: Foreign software detected."
+					to_chat(src, "\red ALERT: Foreign software detected.")
 					sleep(5)
-					src << "\red Initiating diagnostics..."
+					to_chat(src, "\red Initiating diagnostics...")
 					sleep(20)
-					src << "\red SynBorg v1.7.1 loaded."
+					to_chat(src, "\red SynBorg v1.7.1 loaded.")
 					sleep(5)
-					src << "\red LAW SYNCHRONISATION ERROR"
+					to_chat(src, "\red LAW SYNCHRONISATION ERROR")
 					sleep(5)
-					src << "\red Would you like to send a report to NanoTraSoft? Y/N"
+					to_chat(src, "\red Would you like to send a report to NanoTraSoft? Y/N")
 					sleep(10)
-					src << "\red > N"
+					to_chat(src, "\red > N")
 					sleep(20)
-					src << "\red ERRORERRORERROR"
-					src << "<b>Obey these laws:</b>"
+					to_chat(src, "\red ERRORERRORERROR")
+					to_chat(src, "<b>Obey these laws:</b>")
 					laws.show_laws(src)
-					src << "\red \b ALERT: [user.real_name] is your new master. Obey your new laws and his commands."
+					to_chat(src, "\red \b ALERT: [user.real_name] is your new master. Obey your new laws and his commands.")
 					if(src.module && istype(src.module, /obj/item/weapon/robot_module/miner))
 						for(var/obj/item/weapon/pickaxe/drill/borgdrill/D in src.module.modules)
 							qdel(D)
@@ -842,25 +809,25 @@ var/list/robot_verbs_default = list(
 						src.module.rebuild()
 					updateicon()
 				else
-					user << "You fail to hack [src]'s interface."
-					src << "Hack attempt detected."
+					to_chat(user, "You fail to hack [src]'s interface.")
+					to_chat(src, "Hack attempt detected.")
 			return
 
 	else if(istype(W, /obj/item/borg/upgrade/))
 		var/obj/item/borg/upgrade/U = W
 		if(!opened)
-			usr << "You must access the borgs internals!"
+			to_chat(usr, "You must access the borgs internals!")
 		else if(!src.module && U.require_module)
-			usr << "The borg must choose a module before he can be upgraded!"
+			to_chat(usr, "The borg must choose a module before he can be upgraded!")
 		else if(U.locked)
-			usr << "The upgrade is locked and cannot be used yet!"
+			to_chat(usr, "The upgrade is locked and cannot be used yet!")
 		else
 			if(U.action(src))
-				usr << "You apply the upgrade to [src]!"
+				to_chat(usr, "You apply the upgrade to [src]!")
 				usr.drop_item()
 				U.loc = src
 			else
-				usr << "Upgrade error!"
+				to_chat(usr, "Upgrade error!")
 
 
 	else
@@ -868,13 +835,13 @@ var/list/robot_verbs_default = list(
 			spark_system.start()
 		return ..()
 
-/mob/living/silicon/robot/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
+/mob/living/silicon/robot/attack_alien(mob/living/carbon/alien/humanoid/M)
 	if (!ticker)
-		M << "You cannot attack people before the game has started."
+		to_chat(M, "You cannot attack people before the game has started.")
 		return
 
 	if (istype(loc, /turf) && istype(loc.loc, /area/start))
-		M << "No attacking people at spawn, you jackass."
+		to_chat(M, "No attacking people at spawn, you jackass.")
 		return
 
 	switch(M.a_intent)
@@ -936,9 +903,9 @@ var/list/robot_verbs_default = list(
 
 
 
-/mob/living/silicon/robot/attack_slime(mob/living/carbon/slime/M as mob)
+/mob/living/silicon/robot/attack_slime(mob/living/carbon/slime/M)
 	if (!ticker)
-		M << "You cannot attack people before the game has started."
+		to_chat(M, "You cannot attack people before the game has started.")
 		return
 
 	if(M.Victim) return // can't attack while eating!
@@ -994,7 +961,7 @@ var/list/robot_verbs_default = list(
 
 	return
 
-/mob/living/silicon/robot/attack_animal(mob/living/simple_animal/M as mob)
+/mob/living/silicon/robot/attack_animal(mob/living/simple_animal/M)
 	if(M.melee_damage_upper == 0)
 		M.emote("[M.friendly] [src]")
 	else
@@ -1019,7 +986,7 @@ var/list/robot_verbs_default = list(
 			cell.updateicon()
 			cell.add_fingerprint(user)
 			user.put_in_active_hand(cell)
-			user << "You remove \the [cell]."
+			to_chat(user, "You remove \the [cell].")
 			cell = null
 			cell_component.wrapped = null
 			cell_component.installed = 0
@@ -1027,7 +994,7 @@ var/list/robot_verbs_default = list(
 		else if(cell_component.installed == -1)
 			cell_component.installed = 0
 			var/obj/item/broken_device = cell_component.wrapped
-			user << "You remove \the [broken_device]."
+			to_chat(user, "You remove \the [broken_device].")
 			user.put_in_active_hand(broken_device)
 
 /mob/living/silicon/robot/proc/allowed(mob/M)
@@ -1132,7 +1099,7 @@ var/list/robot_verbs_default = list(
 
 /mob/living/silicon/robot/proc/installed_modules()
 	if(weapon_lock)
-		src << "\red Weapon lock active, unable to use modules! Count:[weaponlock_time]"
+		to_chat(src, "\red Weapon lock active, unable to use modules! Count:[weaponlock_time]")
 		return
 
 	if(!module)
@@ -1194,7 +1161,7 @@ var/list/robot_verbs_default = list(
 			return
 
 		if(activated(O))
-			src << "Already activated"
+			to_chat(src, "Already activated")
 			return
 		if(!module_state_1)
 			module_state_1 = O
@@ -1215,7 +1182,7 @@ var/list/robot_verbs_default = list(
 			if(istype(module_state_3,/obj/item/borg/sight))
 				sight_mode |= module_state_3:sight_mode
 		else
-			src << "You need to disable a module first!"
+			to_chat(src, "You need to disable a module first!")
 		installed_modules()
 
 	if (href_list["deact"])
@@ -1231,9 +1198,9 @@ var/list/robot_verbs_default = list(
 				module_state_3 = null
 				contents -= O
 			else
-				src << "Module isn't activated."
+				to_chat(src, "Module isn't activated.")
 		else
-			src << "Module isn't activated"
+			to_chat(src, "Module isn't activated")
 		installed_modules()
 
 	if (href_list["lawc"]) // Toggling whether or not a law gets stated by the State Laws verb --NeoFite
@@ -1295,7 +1262,7 @@ var/list/robot_verbs_default = list(
 								cleaned_human.shoes.clean_blood()
 								cleaned_human.update_inv_shoes()
 							cleaned_human.clean_blood(1)
-							cleaned_human << "\red [src] cleans your face!"
+							to_chat(cleaned_human, "\red [src] cleans your face!")
 		return
 
 /mob/living/silicon/robot/proc/self_destruct()
@@ -1324,7 +1291,7 @@ var/list/robot_verbs_default = list(
 
 	if(R)
 		R.UnlinkSelf()
-		R << "Buffers flushed and reset. Camera system shutdown.  All systems operational."
+		to_chat(R, "Buffers flushed and reset. Camera system shutdown.  All systems operational.")
 		src.verbs -= /mob/living/silicon/robot/proc/ResetSecurityCodes
 
 /mob/living/silicon/robot/mode()
@@ -1352,7 +1319,7 @@ var/list/robot_verbs_default = list(
 
 	flavor_text =  copytext(sanitize(input(usr, "Please enter your new flavour text.", "Flavour text", null)  as text), 1)
 
-/mob/living/silicon/robot/proc/choose_icon(var/triesleft, var/list/module_sprites)
+/mob/living/silicon/robot/proc/choose_icon(triesleft, list/module_sprites)
 
 	if(triesleft<1 || !module_sprites.len)
 		return
@@ -1370,14 +1337,9 @@ var/list/robot_verbs_default = list(
 	if(icontype)
 		icon_state = module_sprites[icontype]
 	else
-		src << "Something is badly wrong with the sprite selection. Harass a coder."
+		to_chat(src, "Something is badly wrong with the sprite selection. Harass a coder.")
 		icon_state = module_sprites[1]
 		return
-
-	if(icontype == "Custom" || tc_borg)
-		icon = 'tauceti/icons/mob/robot.dmi'
-	else
-		icon = 'icons/mob/robots.dmi'
 
 	overlays -= "eyes"
 	updateicon()
@@ -1390,7 +1352,7 @@ var/list/robot_verbs_default = list(
 			triesleft = 0
 			return
 	else
-		src << "Your icon has been set. You now require a module reset to change it."
+		to_chat(src, "Your icon has been set. You now require a module reset to change it.")
 
 /mob/living/silicon/robot/proc/sensor_mode() //Medical/Security HUD controller for borgs
 	set name = "Set Sensor Augmentation"
@@ -1407,7 +1369,7 @@ var/list/robot_verbs_default = list(
 
 // Uses power from cyborg's cell. Returns 1 on success or 0 on failure.
 // Properly converts using CELLRATE now! Amount is in Joules.
-/mob/living/silicon/robot/proc/cell_use_power(var/amount = 0)
+/mob/living/silicon/robot/proc/cell_use_power(amount = 0)
 	// No cell inserted
 	if(!cell)
 		return 0

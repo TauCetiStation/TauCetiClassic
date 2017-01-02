@@ -1,12 +1,13 @@
 /obj/machinery/pdapainter
 	name = "PDA painter"
 	desc = "A PDA painting machine. To use, simply insert your PDA and choose the desired preset paint scheme."
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/machines/pdapainter.dmi'
 	icon_state = "pdapainter"
 	density = 1
 	anchored = 1
 	var/obj/item/device/pda/storedpda = null
 	var/list/colorlist = list()
+	var/list/tc_pda_list = list(/obj/item/device/pda/forensic)
 
 
 /obj/machinery/pdapainter/update_icon()
@@ -28,8 +29,8 @@
 
 /obj/machinery/pdapainter/New()
 	..()
-	var/blocked = list(/obj/item/device/pda/ai/pai, /obj/item/device/pda/ai, /obj/item/device/pda/heads,
-						/obj/item/device/pda/clear, /obj/item/device/pda/syndicate)
+	var/blocked = list(/obj/item/device/pda/ai/pai, /obj/item/device/pda/ai, /obj/item/device/pda/ai/robot,
+						/obj/item/device/pda/heads, /obj/item/device/pda/clear, /obj/item/device/pda/syndicate)
 
 	for(var/P in typesof(/obj/item/device/pda)-blocked)
 		var/obj/item/device/pda/D = new P
@@ -40,10 +41,10 @@
 		src.colorlist += D
 
 
-/obj/machinery/pdapainter/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/obj/machinery/pdapainter/attackby(obj/item/O, mob/user)
 	if(istype(O, /obj/item/device/pda))
 		if(storedpda)
-			user << "There is already a PDA inside."
+			to_chat(user, "There is already a PDA inside.")
 			return
 		else
 			var/obj/item/device/pda/P = usr.get_active_hand()
@@ -57,10 +58,10 @@
 		if(istype(O, /obj/item/weapon/wrench))
 			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 			anchored = !anchored
-			user << "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>"
+			to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>")
 
 
-/obj/machinery/pdapainter/attack_hand(mob/user as mob)
+/obj/machinery/pdapainter/attack_hand(mob/user)
 	..()
 
 	src.add_fingerprint(user)
@@ -73,11 +74,12 @@
 		if(!in_range(src, user))
 			return
 
+		storedpda.icon = 'icons/obj/pda.dmi'
 		storedpda.icon_state = P.icon_state
 		storedpda.desc = P.desc
 
 	else
-		user << "<span class='notice'>The [src] is empty.</span>"
+		to_chat(user, "<span class='notice'>The [src] is empty.</span>")
 
 
 /obj/machinery/pdapainter/verb/ejectpda()
@@ -90,7 +92,7 @@
 		storedpda = null
 		update_icon()
 	else
-		usr << "<span class='notice'>The [src] is empty.</span>"
+		to_chat(usr, "<span class='notice'>The [src] is empty.</span>")
 
 
 /obj/machinery/pdapainter/power_change()

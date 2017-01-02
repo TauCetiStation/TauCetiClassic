@@ -27,12 +27,12 @@
 	else
 		icon_state = "isolator"
 
-/obj/machinery/disease2/isolator/attackby(var/obj/O as obj, var/mob/user)
+/obj/machinery/disease2/isolator/attackby(obj/O, mob/user)
 	if(!istype(O,/obj/item/weapon/reagent_containers/syringe)) return
 	var/obj/item/weapon/reagent_containers/syringe/S = O
 
 	if(sample)
-		user << "\The [src] is already loaded."
+		to_chat(user, "\The [src] is already loaded.")
 		return
 
 	sample = S
@@ -45,11 +45,11 @@
 
 	src.attack_hand(user)
 
-/obj/machinery/disease2/isolator/attack_hand(mob/user as mob)
+/obj/machinery/disease2/isolator/attack_hand(mob/user)
 	if(stat & (NOPOWER|BROKEN)) return
 	ui_interact(user)
 
-/obj/machinery/disease2/isolator/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
+/obj/machinery/disease2/isolator/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
 	user.set_machine(src)
 
 	var/data[0]
@@ -168,7 +168,7 @@
 		update_icon()
 		return TRUE
 
-/obj/machinery/disease2/isolator/proc/print(var/mob/user)
+/obj/machinery/disease2/isolator/proc/print(mob/user)
 	var/obj/item/weapon/paper/P = new /obj/item/weapon/paper(loc)
 
 	switch (state)

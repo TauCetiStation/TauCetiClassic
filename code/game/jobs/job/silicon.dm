@@ -11,7 +11,7 @@
 	minimal_player_age = 7
 	minimal_player_ingame_minutes = 2400
 
-/datum/job/ai/equip(var/mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/job/ai/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
 
 	if(visualsOnly)
@@ -36,7 +36,7 @@
 	alt_titles = list("Android", "Robot")
 	minimal_player_ingame_minutes = 1800
 
-/datum/job/cyborg/equip(var/mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/job/cyborg/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
 
 	if(visualsOnly)

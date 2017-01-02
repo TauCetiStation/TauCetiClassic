@@ -33,6 +33,6 @@
 			mentor_ckeys += ckey
 			mentors += directory[ckey]
 
-/proc/message_mentors(var/msg)
+/proc/message_mentors(msg)
 	for(var/client/C in mentors)
-		C << msg
+		to_chat(C, msg)

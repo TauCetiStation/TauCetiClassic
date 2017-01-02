@@ -31,14 +31,14 @@
 	update_icon()
 	src.updateDialog()
 
-/obj/machinery/embedded_controller/attack_ai(mob/user as mob)
+/obj/machinery/embedded_controller/attack_ai(mob/user)
 	src.ui_interact(user)
 
-/obj/machinery/embedded_controller/attack_paw(mob/user as mob)
-	user << "You do not have the dexterity to use this."
+/obj/machinery/embedded_controller/attack_paw(mob/user)
+	to_chat(user, "You do not have the dexterity to use this.")
 	return
 
-/obj/machinery/embedded_controller/attack_hand(mob/user as mob)
+/obj/machinery/embedded_controller/attack_hand(mob/user)
 	src.ui_interact(user)
 
 /obj/machinery/embedded_controller/ui_interact()

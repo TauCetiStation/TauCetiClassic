@@ -45,10 +45,10 @@
 
 	switch(milled_item.type)
 		if(/obj/item/weapon/reagent_containers/food/snacks/grown/wheat)	//Wheat becomes flour
-			var/obj/item/weapon/reagent_containers/food/snacks/flour/F = new(src)
+			var/obj/item/weapon/reagent_containers/food/condiment/flour/F = new(src)
 			output += F
-		if(/obj/item/weapon/reagent_containers/food/snacks/flour)	//Flour is still flour
-			var/obj/item/weapon/reagent_containers/food/snacks/flour/F = new(src)
+		if(/obj/item/weapon/reagent_containers/food/condiment/flour)	//Flour is still flour
+			var/obj/item/weapon/reagent_containers/food/condiment/flour/F = new(src)
 			output += F
 		else
 			error = 1
@@ -56,7 +56,7 @@
 	qdel(milled_item)
 	busy = 0
 
-/obj/machinery/mill/attackby(var/obj/item/weapon/W as obj, mob/user as mob)
+/obj/machinery/mill/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W,/obj/item/weapon/reagent_containers/food))
 		user.u_equip(W)
 		W.loc = src
@@ -64,7 +64,7 @@
 	else
 		..()
 
-/obj/machinery/mill/attack_hand(var/mob/user as mob)
+/obj/machinery/mill/attack_hand(mob/user)
 	for(var/obj/item/weapon/reagent_containers/food/F in output)
 		F.loc = src.loc
 		output -= F
@@ -117,7 +117,7 @@
 		return	//Not done yet.
 
 	switch(fermenting_item.type)
-		if(/obj/item/weapon/reagent_containers/food/snacks/flour)	//Flour is still flour
+		if(/obj/item/weapon/reagent_containers/food/condiment/flour)	//Flour is still flour
 			var/obj/item/weapon/reagent_containers/food/drinks/cans/beer/B = new(src)
 			output += B
 		else
@@ -126,7 +126,7 @@
 	qdel(fermenting_item)
 	busy = 0
 
-/obj/machinery/fermenter/attackby(var/obj/item/weapon/W as obj, mob/user as mob)
+/obj/machinery/fermenter/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W,/obj/item/weapon/reagent_containers/food))
 		user.u_equip(W)
 		W.loc = src
@@ -134,7 +134,7 @@
 	else
 		..()
 
-/obj/machinery/fermenter/attack_hand(var/mob/user as mob)
+/obj/machinery/fermenter/attack_hand(mob/user)
 	for(var/obj/item/weapon/reagent_containers/food/F in output)
 		F.loc = src.loc
 		output -= F
@@ -187,7 +187,7 @@
 	qdel(destilling_item)
 	busy = 0
 
-/obj/machinery/still/attackby(var/obj/item/weapon/W as obj, mob/user as mob)
+/obj/machinery/still/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W,/obj/item/weapon/reagent_containers/food))
 		user.u_equip(W)
 		W.loc = src
@@ -195,7 +195,7 @@
 	else
 		..()
 
-/obj/machinery/still/attack_hand(var/mob/user as mob)
+/obj/machinery/still/attack_hand(mob/user)
 	for(var/obj/item/weapon/reagent_containers/food/F in output)
 		F.loc = src.loc
 		output -= F
@@ -272,7 +272,7 @@
 	output += spinning_item
 	busy = 0
 
-/obj/machinery/centrifuge/attackby(var/obj/item/weapon/W as obj, mob/user as mob)
+/obj/machinery/centrifuge/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W,/obj/item/weapon/reagent_containers/food))
 		user.u_equip(W)
 		W.loc = src
@@ -280,7 +280,7 @@
 	else
 		..()
 
-/obj/machinery/centrifuge/attack_hand(var/mob/user as mob)
+/obj/machinery/centrifuge/attack_hand(mob/user)
 	for(var/obj/item/weapon/reagent_containers/food/F in output)
 		F.loc = src.loc
 		output -= F

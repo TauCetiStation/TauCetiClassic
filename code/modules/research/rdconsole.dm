@@ -51,7 +51,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	req_access = list(access_research)	//Data and setting manipulation requires scientist access.
 
 
-/obj/machinery/computer/rdconsole/proc/CallTechName(var/ID) //A simple helper proc to find the name of a tech with a given ID.
+/obj/machinery/computer/rdconsole/proc/CallTechName(ID) //A simple helper proc to find the name of a tech with a given ID.
 	var/datum/tech/check_tech
 	var/return_name = null
 	for(var/T in typesof(/datum/tech) - /datum/tech)
@@ -65,7 +65,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 	return return_name
 
-/obj/machinery/computer/rdconsole/proc/CallMaterialName(var/ID)
+/obj/machinery/computer/rdconsole/proc/CallMaterialName(ID)
 	var/datum/reagent/temp_reagent
 	var/return_name = null
 	if (copytext(ID, 1, 2) == "$")
@@ -142,11 +142,11 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	griefProtection()
 */
 
-/obj/machinery/computer/rdconsole/attackby(var/obj/item/weapon/D as obj, var/mob/user as mob)
+/obj/machinery/computer/rdconsole/attackby(obj/item/weapon/D, mob/user)
 	//Loading a disk into it.
 	if(istype(D, /obj/item/weapon/disk))
 		if(t_disk || d_disk)
-			user << "A disk is already loaded into the machine."
+			to_chat(user, "A disk is already loaded into the machine.")
 			return
 
 		if(istype(D, /obj/item/weapon/disk/tech_disk))
@@ -155,15 +155,15 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			if (istype(D, /obj/item/weapon/disk/design_disk))
 				d_disk = D
 			else
-				user << "\red Machine cannot accept disks in that format."
+				to_chat(user, "\red Machine cannot accept disks in that format.")
 				return
 		user.drop_item()
 		D.loc = src
-		user << "\blue You add the disk to the machine!"
+		to_chat(user, "\blue You add the disk to the machine!")
 	else if(istype(D, /obj/item/weapon/card/emag) && !emagged)
 		playsound(src.loc, 'sound/effects/sparks4.ogg', 75, 1)
 		emagged = 1
-		user << "\blue You you disable the security protocols"
+		to_chat(user, "\blue You you disable the security protocols")
 	else
 		//The construction/deconstruction of the console code.
 		..()
@@ -180,7 +180,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		if(temp_screen <= 1.1 || (3 <= temp_screen && 4.9 >= temp_screen) || src.allowed(usr) || emagged) //Unless you are making something, you need access.
 			screen = temp_screen
 		else
-			usr << "Unauthorized Access."
+			to_chat(usr, "Unauthorized Access.")
 
 	else if(href_list["updt_tech"]) //Update the research holder with information from the technology disk.
 		screen = 0.0
@@ -231,7 +231,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	else if(href_list["eject_item"]) //Eject the item inside the destructive analyzer.
 		if(linked_destroy)
 			if(linked_destroy.busy)
-				usr << "\red The destructive analyzer is busy at the moment."
+				to_chat(usr, "\red The destructive analyzer is busy at the moment.")
 
 			else if(linked_destroy.loaded_item)
 				linked_destroy.loaded_item.loc = linked_destroy.loc
@@ -242,7 +242,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	else if(href_list["deconstruct"]) //Deconstruct the item in the destructive analyzer and update the research holder.
 		if(linked_destroy)
 			if(linked_destroy.busy)
-				usr << "\red The destructive analyzer is busy at the moment."
+				to_chat(usr, "\red The destructive analyzer is busy at the moment.")
 			else
 				var/choice = input("Proceeding will destroy loaded item.") in list("Proceed", "Cancel")
 				if(choice == "Cancel" || !linked_destroy) return
@@ -255,7 +255,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 						linked_destroy.busy = 0
 						if(!linked_destroy.hacked)
 							if(!linked_destroy.loaded_item)
-								usr <<"\red The destructive analyzer appears to be empty."
+								to_chat(usr, "\red The destructive analyzer appears to be empty.")
 								screen = 1.0
 								return
 							if((linked_destroy.loaded_item.reliability >= 99 - (linked_destroy.decon_mod * 3)) || linked_destroy.loaded_item.crit_fail)
@@ -295,12 +295,12 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		if(src.allowed(usr))
 			screen = text2num(href_list["lock"])
 		else
-			usr << "Unauthorized Access."
+			to_chat(usr, "Unauthorized Access.")
 
 	else if(href_list["sync"]) //Sync the research holder with all the R&D consoles in the game that aren't sync protected.
 		screen = 0.0
 		if(!sync)
-			usr << "\red You must connect to the network first!"
+			to_chat(usr, "\red You must connect to the network first!")
 		else
 			griefProtection() //Putting this here because I dont trust the sync process
 			spawn(30)
@@ -559,7 +559,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				updateUsrDialog()
 	updateUsrDialog()
 
-/obj/machinery/computer/rdconsole/attack_hand(mob/user as mob)
+/obj/machinery/computer/rdconsole/attack_hand(mob/user)
 	if(..())
 		return
 	interact(user)

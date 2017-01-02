@@ -61,14 +61,22 @@
 	permeability_coefficient = 0.9
 	siemens_coefficient = 0.9
 
-/obj/item/clothing/gloves/security/fight
-	icon = 'icons/obj/clothing/gloves.dmi'
-	tc_custom = null
-	icon_state = "secfight"
-	item_state = "secfight"
+/obj/item/clothing/gloves/security														//Sec gloves
+	desc = "Heavily padded heavy-duty red security gloves."
+	name = "Security gloves"
+	icon_state = "security_red"
+	item_state = "security_red"
+	siemens_coefficient = 0.5
+	permeability_coefficient = 0.04
+	cold_protection = HANDS
+	min_cold_protection_temperature = GLOVES_MIN_COLD_PROTECTION_TEMPERATURE
+	heat_protection = HANDS
+	max_heat_protection_temperature = GLOVES_MAX_HEAT_PROTECTION_TEMPERATURE
 
-/obj/item/clothing/gloves/security/wj
-	icon = 'icons/obj/clothing/gloves.dmi'
-	tc_custom = null
-	icon_state = "wjgloves"
-	item_state = "wjgloves"
+/obj/item/clothing/gloves/fingerless
+	desc = "A pair of gloves. They don't seem to have fingers."
+	name = "black fingerless gloves"
+	icon_state = "fingerless_black"
+	item_state = "fingerless_black"
+	clipped = 1
+	species_restricted = list("exclude","stunglove")

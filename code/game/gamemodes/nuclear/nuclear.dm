@@ -25,9 +25,9 @@
 
 
 /datum/game_mode/nuclear/announce()
-	world << "<B>The current game mode is - Nuclear Emergency!</B>"
-	world << "<B>Gorlex Maradeurs are approaching NSS Exodus!</B>"
-	world << "A nuclear explosive was being transported by Nanotrasen to a military base. The transport ship mysteriously lost contact with Space Traffic Control (STC). About that time a strange disk was discovered around [station_name()]. It was identified by Nanotrasen as a nuclear auth. disk and now Syndicate Operatives have arrived to retake the disk and detonate SS13! Also, most likely Syndicate star ships are in the vicinity so take care not to lose the disk!\n<B>Syndicate</B>: Reclaim the disk and detonate the nuclear bomb anywhere on SS13.\n<B>Personnel</B>: Hold the disk and <B>escape with the disk</B> on the shuttle!"
+	to_chat(world, "<B>The current game mode is - Nuclear Emergency!</B>")
+	to_chat(world, "<B>Gorlex Maradeurs are approaching NSS Exodus!</B>")
+	to_chat(world, "A nuclear explosive was being transported by Nanotrasen to a military base. The transport ship mysteriously lost contact with Space Traffic Control (STC). About that time a strange disk was discovered around [station_name()]. It was identified by Nanotrasen as a nuclear auth. disk and now Syndicate Operatives have arrived to retake the disk and detonate SS13! Also, most likely Syndicate star ships are in the vicinity so take care not to lose the disk!\n<B>Syndicate</B>: Reclaim the disk and detonate the nuclear bomb anywhere on SS13.\n<B>Personnel</B>: Hold the disk and <B>escape with the disk</B> on the shuttle!")
 
 /datum/game_mode/nuclear/can_start()//This could be better, will likely have to recode it later
 	if(!..())
@@ -190,10 +190,10 @@
 	return ..()
 
 
-/datum/game_mode/proc/prepare_syndicate_leader(var/datum/mind/synd_mind, var/nuke_code)
+/datum/game_mode/proc/prepare_syndicate_leader(datum/mind/synd_mind, nuke_code)
 	if (nuke_code)
 		synd_mind.store_memory("<B>Syndicate Nuclear Bomb Code</B>: [nuke_code]", 0, 0)
-		synd_mind.current << "The nuclear authorization code is: <B>[nuke_code]</B>"
+		to_chat(synd_mind.current, "The nuclear authorization code is: <B>[nuke_code]</B>")
 		var/obj/item/weapon/paper/P = new
 		P.info = "The nuclear authorization code is: <b>[nuke_code]</b>"
 		P.name = "nuclear bomb code"
@@ -210,7 +210,7 @@
 	return
 
 
-/datum/game_mode/proc/forge_syndicate_objectives(var/datum/mind/syndicate)
+/datum/game_mode/proc/forge_syndicate_objectives(datum/mind/syndicate)
 	if (config.objectives_disabled)
 		return
 	var/datum/objective/nuclear/syndobj = new
@@ -218,19 +218,19 @@
 	syndicate.objectives += syndobj
 
 
-/datum/game_mode/proc/greet_syndicate(var/datum/mind/syndicate, var/you_are=1, var/boss=0)
+/datum/game_mode/proc/greet_syndicate(datum/mind/syndicate, you_are=1, boss=0)
 	if (you_are)
-		syndicate.current << "<span class = 'info'>You are a <font color='red'>Gorlex Maradeurs agent</font>!</span>"
+		to_chat(syndicate.current, "<span class = 'info'>You are a <font color='red'>Gorlex Maradeurs agent</font>!</span>")
 	if(boss)
-		syndicate.current << "<span class = 'info'>You are a <font color='red'>Gorlex Maradeurs Commander</font>!</span>"
+		to_chat(syndicate.current, "<span class = 'info'>You are a <font color='red'>Gorlex Maradeurs Commander</font>!</span>")
 	var/obj_count = 1
 
 	if(!config.objectives_disabled)
 		for(var/datum/objective/objective in syndicate.objectives)
-			syndicate.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
+			to_chat(syndicate.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 			obj_count++
 	else
-		syndicate.current << "<font color=blue>Within the rules,</font> try to act as an opposing force to the crew. Further RP and try to make sure other players have </i>fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>"
+		to_chat(syndicate.current, "<font color=blue>Within the rules,</font> try to act as an opposing force to the crew. Further RP and try to make sure other players have </i>fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>")
 	return
 
 
@@ -238,7 +238,7 @@
 	return 1337 // WHY??? -- Doohl
 
 
-/datum/game_mode/proc/equip_syndicate(mob/living/carbon/human/synd_mob, var/boss)
+/datum/game_mode/proc/equip_syndicate(mob/living/carbon/human/synd_mob, boss)
 	var/radio_freq = SYND_FREQ
 
 	var/obj/item/device/radio/R = new /obj/item/device/radio/headset/syndicate(synd_mob)
@@ -385,7 +385,7 @@
 	return text
 
 
-/*/proc/nukelastname(var/mob/M as mob) //--All praise goes to NEO|Phyte, all blame goes to DH, and it was Cindi-Kate's idea. Also praise Urist for copypasta ho.
+/*/proc/nukelastname(mob/M) //--All praise goes to NEO|Phyte, all blame goes to DH, and it was Cindi-Kate's idea. Also praise Urist for copypasta ho.
 	var/randomname = pick(last_names)
 	var/newname = copytext(sanitize(input(M,"You are the nuke operative [pick("Czar", "Boss", "Commander", "Chief", "Kingpin", "Director", "Overlord")]. Please choose a last name for your family.", "Name change",randomname)),1,MAX_NAME_LEN)
 
@@ -394,12 +394,12 @@
 
 	else
 		if (newname == "Unknown" || newname == "floor" || newname == "wall" || newname == "rwall" || newname == "_")
-			M << "That name is reserved."
+			to_chat(M, "That name is reserved.")
 			return nukelastname(M)
 
 	return newname
 */
-/proc/NukeNameAssign(var/datum/mind/synd_mind)
+/proc/NukeNameAssign(datum/mind/synd_mind)
 	var/choose_name = input(synd_mind.current, "You are a Gorlex Maradeurs agent! What is your name?", "Choose a name") as text
 
 	if(!choose_name)
@@ -409,14 +409,3 @@
 		synd_mind.current.name = choose_name
 		synd_mind.current.real_name = choose_name
 		return
-
-/obj/item/weapon/card/id/syndicate/commander
-	name = "syndicate commander ID card"
-	assignment = "Syndicate Commander"
-	icon = 'tauceti/icons/obj/objects.dmi'
-	icon_state = "syndicate-command"
-	access = list(access_maint_tunnels, access_syndicate, access_syndicate_commander, access_external_airlocks)
-
-/obj/item/weapon/card/id/syndicate/nuker
-	icon = 'tauceti/icons/obj/objects.dmi'
-	icon_state = "syndicate"

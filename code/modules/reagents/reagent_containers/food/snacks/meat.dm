@@ -9,12 +9,12 @@
 		reagents.add_reagent("nutriment", 3)
 		src.bitesize = 3
 
-/obj/item/weapon/reagent_containers/food/snacks/meat/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/weapon/reagent_containers/food/snacks/meat/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W,/obj/item/weapon/kitchenknife))
 		new /obj/item/weapon/reagent_containers/food/snacks/rawcutlet(src)
 		new /obj/item/weapon/reagent_containers/food/snacks/rawcutlet(src)
 		new /obj/item/weapon/reagent_containers/food/snacks/rawcutlet(src)
-		user << "You cut the meat in thin strips."
+		to_chat(user, "You cut the meat in thin strips.")
 		qdel(src)
 	else
 		..()
@@ -24,7 +24,7 @@
 	desc = "A synthetic slab of flesh."
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/human
-	name = "-meat"
+	name = "meat"
 	var/subjectname = ""
 	var/subjectjob = null
 
@@ -33,9 +33,9 @@
 	//same as plain meat
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/corgi
-	name = "Corgi meat"
+	name = "meat"
 	desc = "Tastes like... well you know..."
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/pug
-	name = "Pug meat"
+	name = "meat"
 	desc = "Tastes like... well you know..."

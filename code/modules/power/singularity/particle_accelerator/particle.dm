@@ -58,7 +58,7 @@
 
 
 
-/obj/effect/accelerated_particle/proc/toxmob(var/mob/living/M)
+/obj/effect/accelerated_particle/proc/toxmob(mob/living/M)
 	var/radiation = (energy*2)
 /*			if(istype(M,/mob/living/carbon/human))
 		if(M:wear_suit) //TODO: check for radiation protection
@@ -72,7 +72,7 @@
 	return
 
 
-/obj/effect/accelerated_particle/proc/move(var/lag)
+/obj/effect/accelerated_particle/proc/move(lag)
 	if(target)
 		if(movetotarget)
 			if(!step_towards(src,target))

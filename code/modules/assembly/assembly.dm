@@ -28,16 +28,16 @@
 /obj/item/device/assembly/proc/activate()			//What the device does when turned on
 	return
 
-/obj/item/device/assembly/proc/pulsed(var/radio = 0)	//Called when another assembly acts on this one, var/radio will determine where it came from for wire calcs
+/obj/item/device/assembly/proc/pulsed(radio = 0)	//Called when another assembly acts on this one, var/radio will determine where it came from for wire calcs
 	return
 
-/obj/item/device/assembly/proc/pulse(var/radio = 0)	//Called when this device attempts to act on another device, var/radio determines if it was sent via radio or direct
+/obj/item/device/assembly/proc/pulse(radio = 0)	//Called when this device attempts to act on another device, var/radio determines if it was sent via radio or direct
 	return
 
 /obj/item/device/assembly/proc/toggle_secure()	//Code that has to happen when the assembly is un\secured goes here
 	return
 
-/obj/item/device/assembly/proc/attach_assembly(var/obj/A, var/mob/user)	//Called when an assembly is attacked by another
+/obj/item/device/assembly/proc/attach_assembly(obj/A, mob/user)	//Called when an assembly is attacked by another
 	return
 
 /obj/item/device/assembly/proc/process_cooldown()	//Called via spawn(10) to have it count down the cooldown var
@@ -46,12 +46,15 @@
 /obj/item/device/assembly/proc/holder_movement()	//Called when the holder is moved
 	return
 
-/obj/item/device/assembly/interact(mob/user as mob)	//Called when attack_self is called
+/obj/item/device/assembly/interact(mob/user)	//Called when attack_self is called
+	return
+
+/obj/item/device/assembly/hear_talk(mob/living/M, msg) //Called when someone speak
 	return
 
 /obj/item/device/assembly/proc/is_secured(mob/user)
 	if(!secured)
-		user << "<span class='warning'>The [name] is unsecured!</span>"
+		to_chat(user, "<span class='warning'>The [name] is unsecured!</span>")
 		return 0
 	return 1
 
@@ -63,7 +66,7 @@
 	return 1
 
 
-/obj/item/device/assembly/pulsed(var/radio = 0)
+/obj/item/device/assembly/pulsed(radio = 0)
 	if(holder && (wires & WIRE_RECEIVE))
 		activate()
 	if(radio && (wires & WIRE_RADIO_RECEIVE))
@@ -71,7 +74,7 @@
 	return 1
 
 
-/obj/item/device/assembly/pulse(var/radio = 0)
+/obj/item/device/assembly/pulse(radio = 0)
 	if(holder && (wires & WIRE_PULSE))
 		holder.process_activation(src, 1, 0)
 	if(holder && (wires & WIRE_PULSE_SPECIAL))
@@ -94,15 +97,15 @@
 	return secured
 
 
-/obj/item/device/assembly/attach_assembly(var/obj/item/device/assembly/A, var/mob/user)
+/obj/item/device/assembly/attach_assembly(obj/item/device/assembly/A, mob/user)
 	holder = new/obj/item/device/assembly_holder(get_turf(src))
 	if(holder.attach(A,src,user))
-		user << "\blue You attach \the [A] to \the [src]!"
+		to_chat(user, "\blue You attach \the [A] to \the [src]!")
 		return 1
 	return 0
 
 
-/obj/item/device/assembly/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/device/assembly/attackby(obj/item/weapon/W, mob/user)
 	if(isassembly(W))
 		var/obj/item/device/assembly/A = W
 		if((!A.secured) && (!secured))
@@ -110,9 +113,9 @@
 			return
 	if(isscrewdriver(W))
 		if(toggle_secure())
-			user << "\blue \The [src] is ready!"
+			to_chat(user, "\blue \The [src] is ready!")
 		else
-			user << "\blue \The [src] can now be attached!"
+			to_chat(user, "\blue \The [src] can now be attached!")
 		return
 	..()
 	return
@@ -123,23 +126,21 @@
 	return
 
 
-/obj/item/device/assembly/examine()
-	set src in view()
+/obj/item/device/assembly/examine(mob/user)
 	..()
-	if((in_range(src, usr) || loc == usr))
+	if(src in view(1, user))
 		if(secured)
-			usr << "\The [src] is ready!"
+			to_chat(user, "\The [src] is ready!")
 		else
-			usr << "\The [src] can be attached!"
-	return
+			to_chat(user, "\The [src] can be attached!")
 
 
-/obj/item/device/assembly/attack_self(mob/user as mob)
+/obj/item/device/assembly/attack_self(mob/user)
 	if(!user)	return 0
 	user.set_machine(src)
 	interact(user)
 	return 1
 
 
-/obj/item/device/assembly/interact(mob/user as mob)
+/obj/item/device/assembly/interact(mob/user)
 	return //HTML MENU FOR WIRES GOES HERE

@@ -23,7 +23,7 @@
 
 
 /datum/event/prison_break/start()
-	for(var/area/A in world)
+	for(var/area/A in all_areas)
 		if(istype(A, /area/security/prison) || istype(A, /area/security/brig))
 			prisonAreas += A
 
@@ -46,7 +46,7 @@
 				for(var/obj/machinery/door/airlock/security/temp_airlock in A)
 					temp_airlock.prison_open()
 
-				for(var/obj/machinery/door/airlock/glass_security/temp_glassairlock in A)
+				for(var/obj/machinery/door/airlock/security/glass/temp_glassairlock in A)
 					temp_glassairlock.prison_open()
 
 				for(var/obj/machinery/door_timer/temp_timer in A)

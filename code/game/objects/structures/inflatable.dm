@@ -7,7 +7,7 @@
 
 	attack_self(mob/user)
 		playsound(loc, 'sound/items/zip.ogg', 75, 1)
-		user << "\blue You inflate [src]."
+		to_chat(user, "\blue You inflate [src].")
 		var/obj/structure/inflatable/R = new /obj/structure/inflatable(user.loc)
 		src.transfer_fingerprints_to(R)
 		R.add_fingerprint(user)
@@ -45,7 +45,7 @@
 	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 		return 0
 
-	bullet_act(var/obj/item/projectile/Proj)
+	bullet_act(obj/item/projectile/Proj)
 		health -= Proj.damage
 		..()
 		if(health <= 0)
@@ -75,15 +75,15 @@
 	//world << "glass at [x],[y],[z] Mhit"
 		deflate(1)
 
-	attack_paw(mob/user as mob)
+	attack_paw(mob/user)
 		return attack_generic(user, 15)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		add_fingerprint(user)
 		return
 
 
-	proc/attack_generic(mob/user as mob, damage = 0)	//used by attack_alien, attack_animal, and attack_slime
+	proc/attack_generic(mob/user, damage = 0)	//used by attack_alien, attack_animal, and attack_slime
 		health -= damage
 		if(health <= 0)
 			user.visible_message("<span class='danger'>[user] tears open [src]!</span>")
@@ -91,23 +91,23 @@
 		else	//for nicer text~
 			user.visible_message("<span class='danger'>[user] tears at [src]!</span>")
 
-	attack_alien(mob/user as mob)
+	attack_alien(mob/user)
 		if(islarva(user) || isfacehugger(user)) return
 		attack_generic(user, 15)
 
-	attack_animal(mob/user as mob)
+	attack_animal(mob/user)
 		if(!isanimal(user)) return
 		var/mob/living/simple_animal/M = user
 		if(M.melee_damage_upper <= 0) return
 		attack_generic(M, M.melee_damage_upper)
 
 
-	attack_slime(mob/user as mob)
+	attack_slime(mob/user)
 		if(!isslimeadult(user)) return
 		attack_generic(user, rand(10, 15))
 
 
-	attackby(obj/item/weapon/W as obj, mob/user as mob)
+	attackby(obj/item/weapon/W, mob/user)
 		if(!istype(W)) return
 
 		if (can_puncture(W))
@@ -118,7 +118,7 @@
 			..()
 		return
 
-	proc/hit(var/damage, var/sound_effect = 1)
+	proc/hit(damage, sound_effect = 1)
 		health = max(0, health - damage)
 		if(sound_effect)
 			playsound(loc, 'sound/effects/Glasshit.ogg', 75, 1)
@@ -126,7 +126,7 @@
 			deflate(1)
 
 
-	proc/deflate(var/violent=0)
+	proc/deflate(violent=0)
 		playsound(loc, 'sound/machines/hiss.ogg', 75, 1)
 		if(violent)
 			visible_message("[src] rapidly deflates!")
@@ -159,7 +159,7 @@
 
 	attack_self(mob/user)
 		playsound(loc, 'sound/items/zip.ogg', 75, 1)
-		user << "\blue You inflate [src]."
+		to_chat(user, "\blue You inflate [src].")
 		var/obj/structure/inflatable/door/R = new /obj/structure/inflatable/door(user.loc)
 		src.transfer_fingerprints_to(R)
 		R.add_fingerprint(user)
@@ -187,17 +187,17 @@
 	//		return TryToSwitchState(user)
 	//	return
 
-	attack_ai(mob/user as mob) //those aren't machinery, they're just big fucking slabs of a mineral
+	attack_ai(mob/user) //those aren't machinery, they're just big fucking slabs of a mineral
 		if(isAI(user)) //so the AI can't open it
 			return
 		else if(isrobot(user)) //but cyborgs can
 			if(get_dist(user,src) <= 1) //not remotely though
 				return TryToSwitchState(user)
 
-	attack_paw(mob/user as mob)
+	attack_paw(mob/user)
 		return TryToSwitchState(user)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		return TryToSwitchState(user)
 
 	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
@@ -257,7 +257,7 @@
 		else
 			icon_state = closed_state
 
-	deflate(var/violent=0)
+	deflate(violent=0)
 		playsound(loc, 'sound/machines/hiss.ogg', 75, 1)
 		if(violent)
 			visible_message("[src] rapidly deflates!")
@@ -280,7 +280,7 @@
 	icon_state = "folded_wall_torn"
 
 	attack_self(mob/user)
-		user << "\blue The inflatable wall is too torn to be inflated!"
+		to_chat(user, "\blue The inflatable wall is too torn to be inflated!")
 		add_fingerprint(user)
 
 /obj/item/inflatable/door/torn
@@ -290,7 +290,7 @@
 	icon_state = "folded_door_torn"
 
 	attack_self(mob/user)
-		user << "\blue The inflatable door is too torn to be inflated!"
+		to_chat(user, "\blue The inflatable door is too torn to be inflated!")
 		add_fingerprint(user)
 
 /obj/item/weapon/storage/briefcase/inflatable

@@ -95,7 +95,7 @@
 			for(var/obj/effect/proc_holder/P in proc_holder_list)
 				statpanel("[P.panel]","",P)
 
-/mob/living/silicon/pai/check_eye(var/mob/user as mob)
+/mob/living/silicon/pai/check_eye(mob/user)
 	if (!src.current)
 		return null
 	user.reset_view(src.current)
@@ -119,7 +119,7 @@
 		// 33% chance of no additional effect
 
 	src.silence_time = world.timeofday + 120 * 10		// Silence for 2 minutes
-	src << "<font color=green><b>Communication circuit overload. Shutting down and reloading communication circuits - speech and messaging functionality will be unavailable until the reboot is complete.</b></font>"
+	to_chat(src, "<font color=green><b>Communication circuit overload. Shutting down and reloading communication circuits - speech and messaging functionality will be unavailable until the reboot is complete.</b></font>")
 	if(prob(20))
 		var/turf/T = get_turf_or_move(src.loc)
 		for (var/mob/M in viewers(T))
@@ -130,7 +130,7 @@
 		if(1)
 			src.master = null
 			src.master_dna = null
-			src << "<font color=green>You feel unbound.</font>"
+			to_chat(src, "<font color=green>You feel unbound.</font>")
 		if(2)
 			var/command
 			if(severity  == 1)
@@ -138,9 +138,9 @@
 			else
 				command = pick("Serve", "Kill", "Love", "Hate", "Disobey", "Devour", "Fool", "Enrage", "Entice", "Observe", "Judge", "Respect", "Disrespect", "Consume", "Educate", "Destroy", "Disgrace", "Amuse", "Entertain", "Ignite", "Glorify", "Memorialize", "Analyze")
 			src.pai_law0 = "[command] your master."
-			src << "<font color=green>Pr1m3 d1r3c71v3 uPd473D.</font>"
+			to_chat(src, "<font color=green>Pr1m3 d1r3c71v3 uPd473D.</font>")
 		if(3)
-			src << "<font color=green>You feel an electric surge run through your circuitry and become acutely aware at how lucky you are that you can still feel at all.</font>"
+			to_chat(src, "<font color=green>You feel an electric surge run through your circuitry and become acutely aware at how lucky you are that you can still feel at all.</font>")
 
 /mob/living/silicon/pai/ex_act(severity)
 	if(!blinded)
@@ -164,7 +164,7 @@
 
 // See software.dm for Topic()
 
-/mob/living/silicon/pai/meteorhit(obj/O as obj)
+/mob/living/silicon/pai/meteorhit(obj/O)
 	for(var/mob/M in viewers(src, null))
 		M.show_message(text("\red [] has been hit by []", src, O), 1)
 	if (src.health > 0)
@@ -174,15 +174,15 @@
 		src.updatehealth()
 	return
 
-//mob/living/silicon/pai/bullet_act(var/obj/item/projectile/Proj)
+//mob/living/silicon/pai/bullet_act(obj/item/projectile/Proj)
 
-/mob/living/silicon/pai/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
+/mob/living/silicon/pai/attack_alien(mob/living/carbon/alien/humanoid/M)
 	if (!ticker)
-		M << "You cannot attack people before the game has started."
+		to_chat(M, "You cannot attack people before the game has started.")
 		return
 
 	if (istype(src.loc, /turf) && istype(src.loc.loc, /area/start))
-		M << "You cannot attack someone in the spawn area."
+		to_chat(M, "You cannot attack someone in the spawn area.")
 		return
 
 	switch(M.a_intent)
@@ -210,9 +210,9 @@
 						O.show_message(text("\red <B>[] took a swipe at []!</B>", M, src), 1)
 	return
 
-///mob/living/silicon/pai/attack_hand(mob/living/carbon/M as mob)
+///mob/living/silicon/pai/attack_hand(mob/living/carbon/M)
 
-/mob/living/silicon/pai/proc/switchCamera(var/obj/machinery/camera/C)
+/mob/living/silicon/pai/proc/switchCamera(obj/machinery/camera/C)
 	if(istype(usr, /mob/living))
 		var/mob/living/U = usr
 		U.cameraFollow = null
@@ -248,7 +248,7 @@
 	var/cameralist[0]
 
 	if(usr.stat == DEAD)
-		usr << "You can't change your camera network because you are dead!"
+		to_chat(usr, "You can't change your camera network because you are dead!")
 		return
 
 	for (var/obj/machinery/camera/C in Cameras)
@@ -259,7 +259,7 @@
 				cameralist[C.network] = C.network
 
 	src.network = input(usr, "Which network would you like to view?") as null|anything in cameralist
-	src << "\blue Switched to [src.network] camera network."
+	to_chat(src, "\blue Switched to [src.network] camera network.")
 //End of code by Mord_Sith
 */
 

@@ -45,7 +45,7 @@
 			chargelevelmax = rand(20, 120)
 			effectrange = rand(20, 200)
 
-/datum/artifact_effect/proc/ToggleActivate(var/reveal_toggle = 1)
+/datum/artifact_effect/proc/ToggleActivate(reveal_toggle = 1)
 	//so that other stuff happens first
 	spawn(0)
 		if(activated)
@@ -64,11 +64,11 @@
 			var/atom/toplevelholder = holder
 			while(!istype(toplevelholder.loc, /turf))
 				toplevelholder = toplevelholder.loc
-			toplevelholder.visible_message("\red \icon[toplevelholder] [toplevelholder] [display_msg]")
+			toplevelholder.visible_message("\red [bicon(toplevelholder)] [toplevelholder] [display_msg]")
 
-/datum/artifact_effect/proc/DoEffectTouch(var/mob/user)
-/datum/artifact_effect/proc/DoEffectAura(var/atom/holder)
-/datum/artifact_effect/proc/DoEffectPulse(var/atom/holder)
+/datum/artifact_effect/proc/DoEffectTouch(mob/user)
+/datum/artifact_effect/proc/DoEffectAura(atom/holder)
+/datum/artifact_effect/proc/DoEffectPulse(atom/holder)
 /datum/artifact_effect/proc/UpdateMove()
 
 /datum/artifact_effect/process()
@@ -83,7 +83,7 @@
 			DoEffectPulse()
 
 //returns 0..1, with 1 being no protection and 0 being fully protected
-proc/GetAnomalySusceptibility(var/mob/living/carbon/human/H)
+proc/GetAnomalySusceptibility(mob/living/carbon/human/H)
 	if(!H || !istype(H))
 		return 1
 

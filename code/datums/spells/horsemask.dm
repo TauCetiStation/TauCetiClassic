@@ -16,17 +16,17 @@
 
 /obj/effect/proc_holder/spell/targeted/horsemask/cast(list/targets, mob/user = usr)
 	if(!targets.len)
-		user << "<span class='notice'>No target found in range.</span>"
+		to_chat(user, "<span class='notice'>No target found in range.</span>")
 		return
 
 	var/mob/living/carbon/target = targets[1]
 
 	if(!(target.type in compatible_mobs))
-		user << "<span class='notice'>It'd be stupid to curse [target] with a horse's head!</span>"
+		to_chat(user, "<span class='notice'>It'd be stupid to curse [target] with a horse's head!</span>")
 		return
 
 	if(!(target in oview(range)))//If they are not  in overview after selection.
-		user << "<span class='notice'>They are too far away!</span>"
+		to_chat(user, "<span class='notice'>They are too far away!</span>")
 		return
 
 	var/obj/item/clothing/mask/horsehead/magic/magichead = new /obj/item/clothing/mask/horsehead/magic
@@ -42,11 +42,11 @@
 	//flags_inv = null	//so you can still see their face... no. How can you recognize someone when their face is completely different?
 	voicechange = 1		//NEEEEIIGHH
 
-	dropped(mob/user as mob)
+	dropped(mob/user)
 		canremove = 1
 		..()
 
-	equipped(var/mob/user, var/slot)
+	equipped(mob/user, slot)
 		if (slot == slot_wear_mask)
 			canremove = 0		//curses!
 		..()

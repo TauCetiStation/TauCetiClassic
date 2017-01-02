@@ -31,7 +31,7 @@
 	else
 		. = null
 
-/proc/initTemplateBounds(var/list/bounds)
+/proc/initTemplateBounds(list/bounds)
 	var/list/obj/machinery/atmospherics/atmos_machines = list()
 	var/list/obj/structure/cable/cables = list()
 	var/list/atom/atoms = list()

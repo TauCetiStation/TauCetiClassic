@@ -52,10 +52,10 @@ var/global/list/breach_burn_descriptors = list(
 		descriptor = breach_brute_descriptors[class]
 
 //Repair a certain amount of brute or burn damage to the suit.
-/obj/item/clothing/suit/space/proc/repair_breaches(var/damtype, var/amount, var/mob/user)
+/obj/item/clothing/suit/space/proc/repair_breaches(damtype, amount, mob/user)
 
 	if(!can_breach || !breaches || !breaches.len || !damage)
-		user << "There are no breaches to repair on \the [src]."
+		to_chat(user, "There are no breaches to repair on \the [src].")
 		return
 
 	var/list/valid_breaches = list()
@@ -65,7 +65,7 @@ var/global/list/breach_burn_descriptors = list(
 			valid_breaches += B
 
 	if(!valid_breaches.len)
-		user << "There are no breaches to repair on \the [src]."
+		to_chat(user, "There are no breaches to repair on \the [src].")
 		return
 
 	var/amount_left = amount
@@ -84,7 +84,7 @@ var/global/list/breach_burn_descriptors = list(
 	user.visible_message("<b>[user]</b> patches some of the damage on \the [src].")
 	calc_breach_damage()
 
-/obj/item/clothing/suit/space/proc/create_breaches(var/damtype, var/amount)
+/obj/item/clothing/suit/space/proc/create_breaches(damtype, amount)
 
 	if(!can_breach || !amount)
 		return
@@ -174,15 +174,15 @@ var/global/list/breach_burn_descriptors = list(
 
 //Handles repairs (and also upgrades).
 
-/obj/item/clothing/suit/space/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/clothing/suit/space/attackby(obj/item/W, mob/user)
 	if(istype(W,/obj/item/stack/sheet/mineral/plastic) || istype(W,/obj/item/stack/sheet/metal))
 
 		if(istype(src.loc,/mob/living))
-			user << "\red How do you intend to patch a hardsuit while someone is wearing it?"
+			to_chat(user, "\red How do you intend to patch a hardsuit while someone is wearing it?")
 			return
 
 		if(!damage || !burn_damage)
-			user << "There is no surface damage on \the [src] to repair."
+			to_chat(user, "There is no surface damage on \the [src] to repair.")
 			return
 
 		var/obj/item/stack/sheet/P = W
@@ -197,16 +197,16 @@ var/global/list/breach_burn_descriptors = list(
 	else if(istype(W, /obj/item/weapon/weldingtool))
 
 		if(istype(src.loc,/mob/living))
-			user << "\red How do you intend to patch a hardsuit while someone is wearing it?"
+			to_chat(user, "\red How do you intend to patch a hardsuit while someone is wearing it?")
 			return
 
 		if (!damage || ! brute_damage)
-			user << "There is no structural damage on \the [src] to repair."
+			to_chat(user, "There is no structural damage on \the [src] to repair.")
 			return
 
 		var/obj/item/weapon/weldingtool/WT = W
 		if(!WT.remove_fuel(5))
-			user << "\red You need more welding fuel to repair this suit."
+			to_chat(user, "\red You need more welding fuel to repair this suit.")
 			return
 
 		repair_breaches(BRUTE, 3, user)
@@ -214,8 +214,8 @@ var/global/list/breach_burn_descriptors = list(
 
 	..()
 
-/obj/item/clothing/suit/space/examine()
+/obj/item/clothing/suit/space/examine(mob/user)
 	..()
 	if(can_breach && breaches && breaches.len)
 		for(var/datum/breach/B in breaches)
-			usr << "\red <B>It has \a [B.descriptor].</B>"
+			to_chat(user, "<span class='danger'>It has \a [B.descriptor].</span>")

@@ -71,7 +71,7 @@
 		if(L.reagents)
 			L.reagents.add_reagent("toxin", poison_per_bite)
 			if(prob(poison_per_bite))
-				L << "\red You feel a tiny prick."
+				to_chat(L, "\red You feel a tiny prick.")
 				L.reagents.add_reagent(poison_type, 5)
 
 /mob/living/simple_animal/hostile/giant_spider/Life()
@@ -89,7 +89,7 @@
 					stop_automated_movement = 0
 					walk(src,0)
 
-/mob/living/simple_animal/hostile/giant_spider/nurse/proc/GiveUp(var/C)
+/mob/living/simple_animal/hostile/giant_spider/nurse/proc/GiveUp(C)
 	spawn(100)
 		if(busy == MOVING_TO_TARGET)
 			if(cocoon_target == C && get_dist(src,cocoon_target) > 1)

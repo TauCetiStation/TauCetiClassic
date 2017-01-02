@@ -1,19 +1,23 @@
 /obj/machinery/door/poddoor
 	name = "Podlock"
 	desc = "Why it no open!!!"
-	icon = 'tauceti/icons/obj/blast_door.dmi'
+	icon = 'icons/obj/doors/blast_door.dmi'
 	icon_state = "pdoor1"
+	icon_state_open  = "pdoor0"
+	icon_state_close = "pdoor1"
 	var/id = 1.0
 	explosion_resistance = 25
 	block_air_zones = 0
+	door_open_sound  = 'sound/machines/blast_door.ogg'
+	door_close_sound = 'sound/machines/blast_door.ogg'
+
+/obj/machinery/door/poddoor/cargo
+	icon = 'code/modules/locations/shuttles/cargo.dmi'
 
 /obj/machinery/door/poddoor/New()
-	. = ..()
+	..()
 	if(density)
-		layer = 3.3
-	else
-		layer = initial(layer)
-	return
+		layer = base_layer + PODDOOR_CLOSED_MOD
 
 /obj/machinery/door/poddoor/Bumped(atom/AM)
 	if(!density)
@@ -21,367 +25,53 @@
 	else
 		return 0
 
-/obj/machinery/door/poddoor/attackby(obj/item/weapon/C as obj, mob/user as mob)
-	src.add_fingerprint(user)
-	if (!( istype(C, /obj/item/weapon/crowbar) || (istype(C, /obj/item/weapon/twohanded/fireaxe) && C:wielded == 1) ))
-		return
-	if ((src.density && (stat & NOPOWER) && !( src.operating )))
-		spawn( 0 )
-			src.operating = 1
+/obj/machinery/door/poddoor/attackby(obj/item/weapon/C, mob/user)
+	add_fingerprint(user)
+	if(istype(C, /obj/item/weapon/crowbar) || (istype(C, /obj/item/weapon/twohanded/fireaxe) && C:wielded))
+		if(!hasPower())
+			open(TRUE)
+
+/obj/machinery/door/poddoor/normal_open_checks()
+	if(hasPower())
+		return TRUE
+	return FALSE
+
+/obj/machinery/door/poddoor/normal_close_checks()
+	if(hasPower())
+		return TRUE
+	return FALSE
+
+/obj/machinery/door/poddoor/do_open()
+	if(hasPower())
+		use_power(20)
+	playsound(src, door_open_sound, 100, 1)
+	do_animate("opening")
+	icon_state = icon_state_open
+	sleep(3)
+	explosion_resistance = 0
+	layer = base_layer
+	density = FALSE
+	set_opacity(FALSE)
+	update_nearby_tiles()
+
+/obj/machinery/door/poddoor/do_close()
+	if(hasPower())
+		use_power(20)
+	playsound(src, door_close_sound, 100, 1)
+	do_animate("closing")
+	icon_state = icon_state_close
+	sleep(3)
+	explosion_resistance = initial(explosion_resistance)
+	layer = base_layer + PODDOOR_CLOSED_MOD
+	density = TRUE
+	set_opacity(TRUE)
+	do_afterclose()
+	update_nearby_tiles()
+
+/obj/machinery/door/poddoor/do_animate(animation)
+	switch(animation)
+		if("opening")
 			flick("pdoorc0", src)
-			src.icon_state = "pdoor0"
-			src.set_opacity(0)
-			sleep(15)
-			src.density = 0
-			src.operating = 0
-			return
+		if("closing")
+			flick("pdoorc1", src)
 	return
-
-/obj/machinery/door/poddoor/open()
-	if (src.operating == 1) //doors can still open when emag-disabled
-		return
-	if (!ticker)
-		return 0
-	if(!src.operating) //in case of emag
-		src.operating = 1
-	flick("pdoorc0", src)
-	src.icon_state = "pdoor0"
-	src.set_opacity(0)
-	sleep(10)
-	layer = initial(layer)
-	src.density = 0
-	update_nearby_tiles()
-
-	if(operating == 1) //emag again
-		src.operating = 0
-	if(autoclose)
-		spawn(150)
-			autoclose()
-	return 1
-
-/obj/machinery/door/poddoor/close()
-	if (src.operating)
-		return
-	src.operating = 1
-	layer = 4.1		//Above everything except firedoors
-	flick("pdoorc1", src)
-	src.icon_state = "pdoor1"
-	src.density = 1
-	src.set_opacity(initial(opacity))
-	update_nearby_tiles()
-
-	sleep(10)
-	src.operating = 0
-	return
-
-/*
-/obj/machinery/door/poddoor/two_tile_hor/open()
-	if (src.operating == 1) //doors can still open when emag-disabled
-		return
-	if (!ticker)
-		return 0
-	if(!src.operating) //in case of emag
-		src.operating = 1
-	flick("pdoorc0", src)
-	src.icon_state = "pdoor0"
-	src.set_opacity(0)
-	f1.set_opacity(0)
-	f2.set_opacity(0)
-
-	sleep(10)
-	src.density = 0
-	f1.density = 0
-	f2.density = 0
-
-	update_nearby_tiles()
-
-	if(operating == 1) //emag again
-		src.operating = 0
-	if(autoclose)
-		spawn(150)
-			autoclose()
-	return 1
-
-/obj/machinery/door/poddoor/two_tile_hor/close()
-	if (src.operating)
-		return
-	src.operating = 1
-	flick("pdoorc1", src)
-	src.icon_state = "pdoor1"
-
-	src.density = 1
-	f1.density = 1
-	f2.density = 1
-
-	sleep(10)
-	src.set_opacity(initial(opacity))
-	f1.set_opacity(initial(opacity))
-	f2.set_opacity(initial(opacity))
-
-	update_nearby_tiles()
-
-	src.operating = 0
-	return
-
-/obj/machinery/door/poddoor/four_tile_hor/open()
-	if (src.operating == 1) //doors can still open when emag-disabled
-		return
-	if (!ticker)
-		return 0
-	if(!src.operating) //in case of emag
-		src.operating = 1
-	flick("pdoorc0", src)
-	src.icon_state = "pdoor0"
-	sleep(10)
-	src.density = 0
-	src.sd_set_opacity(0)
-
-	f1.density = 0
-	f1.sd_set_opacity(0)
-	f2.density = 0
-	f2.sd_set_opacity(0)
-	f3.density = 0
-	f3.sd_set_opacity(0)
-	f4.density = 0
-	f4.sd_set_opacity(0)
-
-	update_nearby_tiles()
-
-	if(operating == 1) //emag again
-		src.operating = 0
-	if(autoclose)
-		spawn(150)
-			autoclose()
-	return 1
-
-/obj/machinery/door/poddoor/four_tile_hor/close()
-	if (src.operating)
-		return
-	src.operating = 1
-	flick("pdoorc1", src)
-	src.icon_state = "pdoor1"
-	src.density = 1
-
-	f1.density = 1
-	f1.sd_set_opacity(1)
-	f2.density = 1
-	f2.sd_set_opacity(1)
-	f3.density = 1
-	f3.sd_set_opacity(1)
-	f4.density = 1
-	f4.sd_set_opacity(1)
-
-	if (src.visible)
-		src.sd_set_opacity(1)
-	update_nearby_tiles()
-
-	sleep(10)
-	src.operating = 0
-	return
-
-/obj/machinery/door/poddoor/two_tile_ver/open()
-	if (src.operating == 1) //doors can still open when emag-disabled
-		return
-	if (!ticker)
-		return 0
-	if(!src.operating) //in case of emag
-		src.operating = 1
-	flick("pdoorc0", src)
-	src.icon_state = "pdoor0"
-	sleep(10)
-	src.density = 0
-	src.sd_set_opacity(0)
-
-	f1.density = 0
-	f1.sd_set_opacity(0)
-	f2.density = 0
-	f2.sd_set_opacity(0)
-
-	update_nearby_tiles()
-
-	if(operating == 1) //emag again
-		src.operating = 0
-	if(autoclose)
-		spawn(150)
-			autoclose()
-	return 1
-
-/obj/machinery/door/poddoor/two_tile_ver/close()
-	if (src.operating)
-		return
-	src.operating = 1
-	flick("pdoorc1", src)
-	src.icon_state = "pdoor1"
-	src.density = 1
-
-	f1.density = 1
-	f1.sd_set_opacity(1)
-	f2.density = 1
-	f2.sd_set_opacity(1)
-
-	if (src.visible)
-		src.sd_set_opacity(1)
-	update_nearby_tiles()
-
-	sleep(10)
-	src.operating = 0
-	return
-
-/obj/machinery/door/poddoor/four_tile_ver/open()
-	if (src.operating == 1) //doors can still open when emag-disabled
-		return
-	if (!ticker)
-		return 0
-	if(!src.operating) //in case of emag
-		src.operating = 1
-	flick("pdoorc0", src)
-	src.icon_state = "pdoor0"
-	sleep(10)
-	src.density = 0
-	src.sd_set_opacity(0)
-
-	f1.density = 0
-	f1.sd_set_opacity(0)
-	f2.density = 0
-	f2.sd_set_opacity(0)
-	f3.density = 0
-	f3.sd_set_opacity(0)
-	f4.density = 0
-	f4.sd_set_opacity(0)
-
-	update_nearby_tiles()
-
-	if(operating == 1) //emag again
-		src.operating = 0
-	if(autoclose)
-		spawn(150)
-			autoclose()
-	return 1
-
-/obj/machinery/door/poddoor/four_tile_ver/close()
-	if (src.operating)
-		return
-	src.operating = 1
-	flick("pdoorc1", src)
-	src.icon_state = "pdoor1"
-	src.density = 1
-
-	f1.density = 1
-	f1.sd_set_opacity(1)
-	f2.density = 1
-	f2.sd_set_opacity(1)
-	f3.density = 1
-	f3.sd_set_opacity(1)
-	f4.density = 1
-	f4.sd_set_opacity(1)
-
-	if (src.visible)
-		src.sd_set_opacity(1)
-	update_nearby_tiles()
-
-	sleep(10)
-	src.operating = 0
-	return
-
-
-
-
-/obj/machinery/door/poddoor/two_tile_hor
-	var/obj/machinery/door/poddoor/filler_object/f1
-	var/obj/machinery/door/poddoor/filler_object/f2
-	icon = 'icons/obj/doors/1x2blast_hor.dmi'
-
-	New()
-		..()
-		f1 = new/obj/machinery/door/poddoor/filler_object (src.loc)
-		f2 = new/obj/machinery/door/poddoor/filler_object (get_step(src,EAST))
-		f1.density = density
-		f2.density = density
-		f1.sd_set_opacity(opacity)
-		f2.sd_set_opacity(opacity)
-
-	Destroy()
-		del f1
-		del f2
-		..()
-
-/obj/machinery/door/poddoor/two_tile_ver
-	var/obj/machinery/door/poddoor/filler_object/f1
-	var/obj/machinery/door/poddoor/filler_object/f2
-	icon = 'icons/obj/doors/1x2blast_vert.dmi'
-
-	New()
-		..()
-		f1 = new/obj/machinery/door/poddoor/filler_object (src.loc)
-		f2 = new/obj/machinery/door/poddoor/filler_object (get_step(src,NORTH))
-		f1.density = density
-		f2.density = density
-		f1.sd_set_opacity(opacity)
-		f2.sd_set_opacity(opacity)
-
-	Destroy()
-		del f1
-		del f2
-		..()
-
-/obj/machinery/door/poddoor/four_tile_hor
-	var/obj/machinery/door/poddoor/filler_object/f1
-	var/obj/machinery/door/poddoor/filler_object/f2
-	var/obj/machinery/door/poddoor/filler_object/f3
-	var/obj/machinery/door/poddoor/filler_object/f4
-	icon = 'icons/obj/doors/1x4blast_hor.dmi'
-
-	New()
-		..()
-		f1 = new/obj/machinery/door/poddoor/filler_object (src.loc)
-		f2 = new/obj/machinery/door/poddoor/filler_object (get_step(f1,EAST))
-		f3 = new/obj/machinery/door/poddoor/filler_object (get_step(f2,EAST))
-		f4 = new/obj/machinery/door/poddoor/filler_object (get_step(f3,EAST))
-		f1.density = density
-		f2.density = density
-		f3.density = density
-		f4.density = density
-		f1.sd_set_opacity(opacity)
-		f2.sd_set_opacity(opacity)
-		f4.sd_set_opacity(opacity)
-		f3.sd_set_opacity(opacity)
-
-	Destroy()
-		del f1
-		del f2
-		del f3
-		del f4
-		..()
-
-/obj/machinery/door/poddoor/four_tile_ver
-	var/obj/machinery/door/poddoor/filler_object/f1
-	var/obj/machinery/door/poddoor/filler_object/f2
-	var/obj/machinery/door/poddoor/filler_object/f3
-	var/obj/machinery/door/poddoor/filler_object/f4
-	icon = 'icons/obj/doors/1x4blast_vert.dmi'
-
-	New()
-		..()
-		f1 = new/obj/machinery/door/poddoor/filler_object (src.loc)
-		f2 = new/obj/machinery/door/poddoor/filler_object (get_step(f1,NORTH))
-		f3 = new/obj/machinery/door/poddoor/filler_object (get_step(f2,NORTH))
-		f4 = new/obj/machinery/door/poddoor/filler_object (get_step(f3,NORTH))
-		f1.density = density
-		f2.density = density
-		f3.density = density
-		f4.density = density
-		f1.sd_set_opacity(opacity)
-		f2.sd_set_opacity(opacity)
-		f4.sd_set_opacity(opacity)
-		f3.sd_set_opacity(opacity)
-
-	Destroy()
-		del f1
-		del f2
-		del f3
-		del f4
-		..()
-*/
-/obj/machinery/door/poddoor/filler_object
-	name = ""
-	icon_state = ""

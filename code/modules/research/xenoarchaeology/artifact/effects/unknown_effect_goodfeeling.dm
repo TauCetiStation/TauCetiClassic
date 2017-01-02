@@ -24,15 +24,15 @@
 		"You're so happy suddenly, you almost want to dance and sing.",\
 		"You feel like the world is out to help you.")
 
-/datum/artifact_effect/goodfeeling/DoEffectTouch(var/mob/user)
+/datum/artifact_effect/goodfeeling/DoEffectTouch(mob/user)
 	if(user)
 		if (istype(user, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = user
 			if(prob(50))
 				if(prob(75))
-					H << "<b><font color='blue' size='[num2text(rand(1,5))]'><b>[pick(drastic_messages)]</b></font>"
+					to_chat(H, "<b><font color='blue' size='[num2text(rand(1,5))]'><b>[pick(drastic_messages)]</b></font>")
 				else
-					H << "<font color='blue'>[pick(messages)]</font>"
+					to_chat(H, "<font color='blue'>[pick(messages)]</font>")
 
 			if(prob(50))
 				H.dizziness += rand(3,5)
@@ -43,9 +43,9 @@
 		for (var/mob/living/carbon/human/H in range(src.effectrange,T))
 			if(prob(5))
 				if(prob(75))
-					H << "<font color='blue'>[pick(messages)]</font>"
+					to_chat(H, "<font color='blue'>[pick(messages)]</font>")
 				else
-					H << "<font color='blue' size='[num2text(rand(1,5))]'><b>[pick(drastic_messages)]</b></font>"
+					to_chat(H, "<font color='blue' size='[num2text(rand(1,5))]'><b>[pick(drastic_messages)]</b></font>")
 
 			if(prob(5))
 				H.dizziness += rand(3,5)
@@ -57,9 +57,9 @@
 		for (var/mob/living/carbon/human/H in range(src.effectrange,T))
 			if(prob(50))
 				if(prob(95))
-					H << "<font color='blue' size='[num2text(rand(1,5))]'><b>[pick(drastic_messages)]</b></font>"
+					to_chat(H, "<font color='blue' size='[num2text(rand(1,5))]'><b>[pick(drastic_messages)]</b></font>")
 				else
-					H << "<font color='blue'>[pick(messages)]</font>"
+					to_chat(H, "<font color='blue'>[pick(messages)]</font>")
 
 			if(prob(50))
 				H.dizziness += rand(3,5)

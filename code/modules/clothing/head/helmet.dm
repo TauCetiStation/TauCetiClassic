@@ -13,32 +13,10 @@
 	siemens_coefficient = 0.3
 	w_class = 3
 
-/obj/item/clothing/head/helmet/tactifool
-	icon_state = "helmettg"
-
-/obj/item/clothing/head/helmet/wj
-	icon_state = "helmetwj"
-
-/obj/item/clothing/head/helmet/wj/warden
-	icon_state = "helmet_warden"
-
-/obj/item/clothing/head/helmet/wj/hos
-	icon_state = "helmet_hos"
-
 /obj/item/clothing/head/helmet/warden
 	name = "warden's hat"
-	desc = "It's a special helmet issued to the Warden of a securiy force. Protects the head from impacts."
-	icon_state = "policehelm"
-	flags_inv = 0
-	body_parts_covered = 0
-
-/obj/item/clothing/head/helmet/warden/tactifool
-	icon_state = "warden_tf"
-
-/obj/item/clothing/head/helmet/warden/wj
-	name = "warden's beret"
-	desc = "It's a special beret issued to the Warden of a securiy force. Protects the head from impacts."
-	icon_state = "warden_wj"
+	desc = "It's a special helmet issued to the Warden of a security force. Protects the head from impacts."
+	icon_state = "helmet_warden"
 
 /obj/item/clothing/head/helmet/HoS
 	name = "Head of Security Hat"
@@ -57,12 +35,6 @@
 	item_state = "dermal"
 	siemens_coefficient = 0.6
 	body_parts_covered = 1
-
-/obj/item/clothing/head/helmet/HoS/tactifool
-	icon_state = "hos_fancy"
-
-/obj/item/clothing/head/helmet/HoS/wj
-	icon_state = "hos_wj"
 
 /obj/item/clothing/head/helmet/riot
 	name = "riot helmet"
@@ -89,30 +61,18 @@
 			src.up = !src.up
 			src.flags |= (HEADCOVERSEYES | HEADCOVERSMOUTH)
 			icon_state = initial(icon_state)
-			usr << "You pull the visor down on"
+			to_chat(usr, "You pull the visor down on")
 		else
 			src.up = !src.up
 			src.flags &= ~(HEADCOVERSEYES | HEADCOVERSMOUTH)
 			icon_state = "[initial(icon_state)]up"
-			usr << "You push the visor up on"
+			to_chat(usr, "You push the visor up on")
 		usr.update_inv_head()	//so our mob-overlays update
-
-/obj/item/clothing/head/helmet/riot/tactifool
-	icon_state = "riottg"
-
-/obj/item/clothing/head/helmet/riot/wj
-	icon_state = "riotwj"
 
 /obj/item/clothing/head/helmet/bulletproof
 	name = "bulletproof helmet"
 	desc = "A bulletproof security helmet that excels in protecting the wearer against traditional projectile weaponry and explosives to a minor extent."
 	icon_state = "bulletproof"
-
-/obj/item/clothing/head/helmet/bulletproof/wj
-	icon_state = "bulletproof_wj"
-
-/obj/item/clothing/head/helmet/bulletproof/tactifool
-	icon_state = "bulletproof_tg"
 
 /obj/item/clothing/head/helmet/laserproof
 	name = "ablative helmet"
@@ -126,12 +86,6 @@
 /obj/item/clothing/head/helmet/laserproof/IsReflect(def_zone)
 	if(prob(hit_reflect_chance))
 		return TRUE
-
-/obj/item/clothing/head/helmet/laserproof/wj
-	icon_state = "laserproof_wj"
-
-/obj/item/clothing/head/helmet/laserproof/tactifool
-	icon_state = "laserproof_tg"
 
 /obj/item/clothing/head/helmet/swat
 	name = "\improper SWAT helmet"
@@ -175,3 +129,22 @@
 	armor = list(melee = 62, bullet = 60, laser = 50,energy = 35, bomb = 10, bio = 2, rad = 0)
 	flags_inv = HIDEEARS
 	siemens_coefficient = 0.7
+
+/obj/item/clothing/head/helmet/helmet_of_justice
+	name = "helmet of justice"
+	desc = "Prepare for Justice!"
+	icon_state = "shitcuritron_0"
+	item_state = "helmet"
+	var/on = 0
+	action_button_name = "Toggle Helmet"
+
+/obj/item/clothing/head/helmet/helmet_of_justice/attack_self(mob/user)
+	on = !on
+	icon_state = "shitcuritron_[on]"
+	user.update_inv_head()
+
+/obj/item/clothing/head/helmet/warden/blue
+	name = "warden's hat"
+	desc = "It's a special helmet issued to the Warden of a securiy force. Protects the head from impacts."
+	icon_state = "oldwardenhelm"
+	item_state = "helmet"

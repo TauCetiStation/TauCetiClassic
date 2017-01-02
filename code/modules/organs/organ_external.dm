@@ -86,7 +86,7 @@
 
 		if(istype(owner,/mob/living/carbon/human))
 			var/mob/living/carbon/human/H = owner
-			if(H.species && H.species.flags & IS_SYNTHETIC)
+			if(H.species && H.species.flags[IS_SYNTHETIC])
 				brmod = H.species.brute_mod
 				bumod = H.species.burn_mod
 
@@ -229,7 +229,7 @@ This function completely restores a damaged organ to perfect condition.
 	owner.updatehealth()
 
 
-/datum/organ/external/proc/createwound(var/type = CUT, var/damage)
+/datum/organ/external/proc/createwound(type = CUT, damage)
 	if(damage == 0) return
 
 	//moved this before the open_wound check so that having many small wounds for example doesn't somehow protect you from taking internal damage
@@ -347,7 +347,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 */
 /datum/organ/external/proc/update_germs()
 
-	if(status & (ORGAN_ROBOT|ORGAN_DESTROYED) || (owner.species && owner.species.flags & IS_PLANT)) //Robotic limbs shouldn't be infected, nor should nonexistant limbs.
+	if(status & (ORGAN_ROBOT|ORGAN_DESTROYED) || (owner.species && owner.species.flags[IS_PLANT])) //Robotic limbs shouldn't be infected, nor should nonexistant limbs.
 		germ_level = 0
 		return
 
@@ -429,7 +429,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	if(germ_level >= INFECTION_LEVEL_THREE && antibiotics < 30)	//overdosing is necessary to stop severe infections
 		if (!(status & ORGAN_DEAD))
 			status |= ORGAN_DEAD
-			owner << "<span class='notice'>You can't feel your [display_name] anymore...</span>"
+			to_chat(owner, "<span class='notice'>You can't feel your [display_name] anymore...</span>")
 			owner.update_body()
 
 		germ_level++
@@ -562,7 +562,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 		O.setAmputatedTree()
 
 //Handles dismemberment
-/datum/organ/external/proc/droplimb(var/override = 0,var/no_explode = 0)
+/datum/organ/external/proc/droplimb(override = 0,no_explode = 0)
 	if(destspawn) return
 	if(override)
 		status |= ORGAN_DESTROYED
@@ -588,7 +588,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 		var/obj/organ	//Dropped limb object
 		switch(body_part)
 			if(HEAD)
-				if(owner.species.flags & IS_SYNTHETIC)
+				if(owner.species.flags[IS_SYNTHETIC])
 					organ= new /obj/item/weapon/organ/head/posi(owner.loc, owner)
 				else
 					organ= new /obj/item/weapon/organ/head(owner.loc, owner)
@@ -764,7 +764,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 		"\red <b>Something feels like it shattered in your [display_name]!</b>",\
 		"You hear a sickening crack.")
 
-	if(owner.species && !(owner.species.flags & NO_PAIN))
+	if(owner.species && !owner.species.flags[NO_PAIN])
 		owner.emote("scream",,, 1)
 
 	status |= ORGAN_BROKEN
@@ -789,7 +789,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 			if(isnull(suit.supporting_limbs))
 				return
 
-			owner << "You feel \the [suit] constrict about your [display_name], supporting it."
+			to_chat(owner, "You feel \the [suit] constrict about your [display_name], supporting it.")
 			status |= ORGAN_SPLINTED
 			suit.supporting_limbs |= src
 	return
@@ -824,8 +824,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 			return 1
 	return 0
 
-/datum/organ/external/get_icon(var/icon/race_icon, var/icon/deform_icon,gender="",fat="")
-	if (status & ORGAN_ROBOT && !(owner.species && owner.species.flags & IS_SYNTHETIC))
+/datum/organ/external/get_icon(icon/race_icon, icon/deform_icon,gender="",fat="")
+	if (status & ORGAN_ROBOT && !(owner.species && owner.species.flags[IS_SYNTHETIC]))
 		return new /icon('icons/mob/human_races/robotic.dmi', "[icon_name][gender ? "_[gender]" : ""]")
 
 	if (status & ORGAN_MUTATED)
@@ -844,14 +844,14 @@ Note that amputating the affected organ does in fact remove the infection from t
 	return ((status & ORGAN_ROBOT) && prob(brute_dam + burn_dam))
 
 //for arms and hands
-/datum/organ/external/proc/process_grasp(var/obj/item/c_hand, var/hand_name)
+/datum/organ/external/proc/process_grasp(obj/item/c_hand, hand_name)
 	if (!c_hand)
 		return
 
 	if(is_broken())
 		owner.drop_from_inventory(c_hand)
 		var/emote_scream = pick("screams in pain and", "lets out a sharp cry and", "cries out and")
-		owner.emote("me", 1, "[(owner.species && owner.species.flags & NO_PAIN) ? "" : emote_scream ] drops what they were holding in their [hand_name]!")
+		owner.emote("me", 1, "[(owner.species && owner.species.flags[NO_PAIN]) ? "" : emote_scream ] drops what they were holding in their [hand_name]!")
 	if(is_malfunctioning())
 		owner.drop_from_inventory(c_hand)
 		owner.emote("me", 1, "drops what they were holding, their [hand_name] malfunctioning!")
@@ -862,7 +862,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 		spawn(10)
 			qdel(spark_system)
 
-/datum/organ/external/proc/embed(var/obj/item/weapon/W, var/silent = 0)
+/datum/organ/external/proc/embed(obj/item/weapon/W, silent = 0)
 	if(!silent)
 		owner.visible_message("<span class='danger'>\The [W] sticks in the wound!</span>")
 	owner.throw_alert("embeddedobject")
@@ -1002,7 +1002,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	var/disfigured = 0
 	vital = 1
 
-/datum/organ/external/head/get_icon(var/icon/race_icon, var/icon/deform_icon)
+/datum/organ/external/head/get_icon(icon/race_icon, icon/deform_icon)
 	if (!owner)
 		return ..()
 	var/g = "m"
@@ -1022,7 +1022,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 		if(burn_dam > 40)
 			disfigure("burn")
 
-/datum/organ/external/head/proc/disfigure(var/type = "brute")
+/datum/organ/external/head/proc/disfigure(type = "brute")
 	if (disfigured)
 		return
 	if(type == "brute")
@@ -1062,7 +1062,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 	if(base)
 		//Changing limb's skin tone to match owner
-		if(!H.species || H.species.flags & HAS_SKIN_TONE)
+		if(!H.species || H.species.flags[HAS_SKIN_TONE])
 			if (H.s_tone >= 0)
 				base.Blend(rgb(H.s_tone, H.s_tone, H.s_tone), ICON_ADD)
 			else
@@ -1070,7 +1070,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 	if(base)
 		//Changing limb's skin color to match owner
-		if(!H.species || H.species.flags & HAS_SKIN_COLOR)
+		if(!H.species || H.species.flags[HAS_SKIN_COLOR])
 			base.Blend(rgb(H.r_skin, H.g_skin, H.b_skin), ICON_ADD)
 
 	icon = base
@@ -1154,7 +1154,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	brainmob.stat = DEAD
 	brainmob.death()
 
-/obj/item/weapon/organ/head/proc/transfer_identity(var/mob/living/carbon/human/H)//Same deal as the regular brain proc. Used for human-->head
+/obj/item/weapon/organ/head/proc/transfer_identity(mob/living/carbon/human/H)//Same deal as the regular brain proc. Used for human-->head
 	brainmob = new(src)
 	brainmob.name = H.real_name
 	brainmob.real_name = H.real_name
@@ -1163,22 +1163,22 @@ Note that amputating the affected organ does in fact remove the infection from t
 		H.mind.transfer_to(brainmob)
 	brainmob.container = src
 
-/obj/item/weapon/organ/head/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/weapon/organ/head/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W,/obj/item/weapon/scalpel))
 		switch(brain_op_stage)
 			if(0)
 				for(var/mob/O in (oviewers(brainmob) - user))
 					O.show_message("\red [brainmob] is beginning to have \his head cut open with [W] by [user].", 1)
-				brainmob << "\red [user] begins to cut open your head with [W]!"
-				user << "\red You cut [brainmob]'s head open with [W]!"
+				to_chat(brainmob, "\red [user] begins to cut open your head with [W]!")
+				to_chat(user, "\red You cut [brainmob]'s head open with [W]!")
 
 				brain_op_stage = 1
 
 			if(2)
 				for(var/mob/O in (oviewers(brainmob) - user))
 					O.show_message("\red [brainmob] is having \his connections to the brain delicately severed with [W] by [user].", 1)
-				brainmob << "\red [user] begins to cut open your head with [W]!"
-				user << "\red You cut [brainmob]'s head open with [W]!"
+				to_chat(brainmob, "\red [user] begins to cut open your head with [W]!")
+				to_chat(user, "\red You cut [brainmob]'s head open with [W]!")
 
 				brain_op_stage = 3.0
 			else
@@ -1188,19 +1188,19 @@ Note that amputating the affected organ does in fact remove the infection from t
 			if(1)
 				for(var/mob/O in (oviewers(brainmob) - user))
 					O.show_message("\red [brainmob] has \his head sawed open with [W] by [user].", 1)
-				brainmob << "\red [user] begins to saw open your head with [W]!"
-				user << "\red You saw [brainmob]'s head open with [W]!"
+				to_chat(brainmob, "\red [user] begins to saw open your head with [W]!")
+				to_chat(user, "\red You saw [brainmob]'s head open with [W]!")
 
 				brain_op_stage = 2
 			if(3)
 				for(var/mob/O in (oviewers(brainmob) - user))
 					O.show_message("\red [brainmob] has \his spine's connection to the brain severed with [W] by [user].", 1)
-				brainmob << "\red [user] severs your brain's connection to the spine with [W]!"
-				user << "\red You sever [brainmob]'s brain's connection to the spine with [W]!"
+				to_chat(brainmob, "\red [user] severs your brain's connection to the spine with [W]!")
+				to_chat(user, "\red You sever [brainmob]'s brain's connection to the spine with [W]!")
 
 				user.attack_log += "\[[time_stamp()]\]<font color='red'> Debrained [brainmob.name] ([brainmob.ckey]) with [W.name] (INTENT: [uppertext(user.a_intent)])</font>"
 				brainmob.attack_log += "\[[time_stamp()]\]<font color='orange'> Debrained by [user.name] ([user.ckey]) with [W.name] (INTENT: [uppertext(user.a_intent)])</font>"
-				msg_admin_attack("[user] ([user.ckey]) debrained [brainmob] ([brainmob.ckey]) (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+				msg_admin_attack("[user.name] ([user.ckey]) debrained [brainmob.name] ([brainmob.ckey]) (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 
 				if(istype(src,/obj/item/weapon/organ/head/posi))
 					var/obj/item/device/mmi/posibrain/B = new(loc)

@@ -30,7 +30,7 @@ turf
 
 		return GM
 
-	remove_air(amount as num)
+	remove_air(amount)
 		var/datum/gas_mixture/GM = new
 
 		var/sum = oxygen + carbon_dioxide + nitrogen + toxins
@@ -55,7 +55,7 @@ turf
 
 	proc/high_pressure_movements()
 		if(reporting_pressure_difference)
-			world << "pressure_difference = [pressure_difference]; pressure_direction = [pressure_direction]"
+			to_chat(world, "pressure_difference = [pressure_difference]; pressure_direction = [pressure_direction]")
 		for(var/atom/movable/in_tile in src)
 			in_tile.experience_pressure_difference(pressure_difference, pressure_direction)
 
@@ -208,7 +208,7 @@ turf/simulated
 		else
 			return ..()
 
-	remove_air(amount as num)
+	remove_air(amount)
 		if(air)
 			var/datum/gas_mixture/removed = null
 

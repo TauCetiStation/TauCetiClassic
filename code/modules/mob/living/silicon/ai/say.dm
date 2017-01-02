@@ -46,7 +46,7 @@ var/const/VOX_PATH = "sound/vox/"
 	set category = "AI Commands"
 
 	if(announcing_vox > world.time)
-		src << "<span class='notice'>Please wait [round((announcing_vox - world.time) / 10)] seconds.</span>"
+		to_chat(src, "<span class='notice'>Please wait [round((announcing_vox - world.time) / 10)] seconds.</span>")
 		return
 
 	var/message = input(src, "WARNING: Misuse of this verb can result in you being job banned. More help is available in 'Announcement Help'", "Announcement", src.last_announcement) as text
@@ -72,7 +72,7 @@ var/const/VOX_PATH = "sound/vox/"
 			incorrect_words += word
 
 	if(incorrect_words.len)
-		src << "<span class='notice'>These words are not available on the announcement system: [english_list(incorrect_words)].</span>"
+		to_chat(src, "<span class='notice'>These words are not available on the announcement system: [english_list(incorrect_words)].</span>")
 		return
 
 	announcing_vox = world.time + VOX_DELAY
@@ -83,7 +83,7 @@ var/const/VOX_PATH = "sound/vox/"
 		play_vox_word(word, src.z, null)
 
 
-/proc/play_vox_word(var/word, var/z_level, var/mob/only_listener)
+/proc/play_vox_word(word, z_level, mob/only_listener)
 
 	word = lowertext(word)
 
@@ -100,17 +100,17 @@ var/const/VOX_PATH = "sound/vox/"
 				if(M.client)
 					var/turf/T = get_turf(M)
 					if(T.z == z_level)
-						M << voice
+						to_chat(M, voice)
 		else
-			only_listener << voice
+			to_chat(only_listener, voice)
 		return 1
 	return 0
 
 
-/proc/vox_word_exists(var/word)
+/proc/vox_word_exists(word)
 	return fexists("[VOX_PATH][word].wav")
 
-/proc/get_vox_file(var/word)
+/proc/get_vox_file(word)
 	if(vox_word_exists(word))
 		return file("[VOX_PATH][word].wav")
 

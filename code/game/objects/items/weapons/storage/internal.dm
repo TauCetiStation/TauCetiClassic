@@ -29,7 +29,7 @@
 //items that use internal storage have the option of calling this to emulate default storage MouseDrop behaviour.
 //returns 1 if the master item's parent's MouseDrop() should be called, 0 otherwise. It's strange, but no other way of
 //doing it without the ability to call another proc's parent, really.
-/obj/item/weapon/storage/internal/proc/handle_mousedrop(mob/user as mob, obj/over_object as obj)
+/obj/item/weapon/storage/internal/proc/handle_mousedrop(mob/user, obj/over_object)
 	if (ishuman(user) || ismonkey(user)) //so monkeys can take off their backpacks -- Urist
 		var/mob/M = usr
 
@@ -65,7 +65,7 @@
 //items that use internal storage have the option of calling this to emulate default storage attack_hand behaviour.
 //returns 1 if the master item's parent's attack_hand() should be called, 0 otherwise.
 //It's strange, but no other way of doing it without the ability to call another proc's parent, really.
-/obj/item/weapon/storage/internal/proc/handle_attack_hand(mob/user as mob)
+/obj/item/weapon/storage/internal/proc/handle_attack_hand(mob/user)
 
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
@@ -88,5 +88,5 @@
 			src.close(M)
 	return 1
 
-/obj/item/weapon/storage/internal/Adjacent(var/atom/neighbor)
+/obj/item/weapon/storage/internal/Adjacent(atom/neighbor)
 	return master_item.Adjacent(neighbor)

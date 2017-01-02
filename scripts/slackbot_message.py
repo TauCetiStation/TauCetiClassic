@@ -48,7 +48,7 @@ def main(options):
 	slack.chat.post_message(options.channel, options.text, attachments=options.attachment_message, username=options.name, icon_emoji=options.icon, as_user=send_as_user, unfurl_links=False, unfurl_media=False, link_names=True)
 	
 def prepare_text(text):
-	return text.decode("cp1251").replace("¶", "я")
+	return text.decode("cp1251").replace("¶", "я").replace("&#255;", "я")
 
 if __name__ == "__main__":
 	options = read_arguments()

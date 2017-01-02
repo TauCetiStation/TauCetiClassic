@@ -14,7 +14,7 @@
 	..()
 	new /obj/machinery/conveyor(loc, WEST, 1)
 
-/obj/machinery/transformer/Bumped(var/atom/movable/AM)
+/obj/machinery/transformer/Bumped(atom/movable/AM)
 	if(ishuman(AM))
 		// Only humans can enter from the west side, while lying down.
 		var/move_dir = get_dir(loc, AM.loc)
@@ -23,7 +23,7 @@
 			AM.loc = src.loc
 			transform(AM)
 
-/obj/machinery/transformer/proc/transform(var/mob/living/carbon/human/H)
+/obj/machinery/transformer/proc/transform(mob/living/carbon/human/H)
 	if(stat & (BROKEN|NOPOWER))
 		return
 	if(!transform_dead && H.stat == DEAD)

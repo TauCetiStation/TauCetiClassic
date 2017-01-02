@@ -10,15 +10,15 @@
 	density = 1
 	layer = 3.1		//to go over ores
 
-/obj/machinery/giga_drill/attack_hand(mob/user as mob)
+/obj/machinery/giga_drill/attack_hand(mob/user)
 	if(active)
 		active = 0
 		icon_state = "gigadrill"
-		user << "\blue You press a button and [src] slowly spins down."
+		to_chat(user, "\blue You press a button and [src] slowly spins down.")
 	else
 		active = 1
 		icon_state = "gigadrill_mov"
-		user << "\blue You press a button and [src] shudders to life."
+		to_chat(user, "\blue You press a button and [src] shudders to life.")
 
 /obj/machinery/giga_drill/Bump(atom/A)
 	if(active && !drilling_turf)

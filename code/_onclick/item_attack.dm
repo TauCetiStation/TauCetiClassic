@@ -22,13 +22,22 @@
 					if(V.stealth_active)
 						V.DeactivateStealth()
 
+		if(butcher_results && stat == DEAD)
+			if(buckled && istype(buckled, /obj/structure/kitchenspike))
+				var/sharpness = is_sharp(I)
+				if(sharpness)
+					to_chat(user, "<span class='notice'>You begin to butcher [src]...</span>")
+					playsound(loc, 'sound/weapons/slice.ogg', 50, 1, -1)
+					if(do_mob(user, src, 80/sharpness))
+						harvest(user)
+
 // Proximity_flag is 1 if this afterattack was called on something adjacent, in your square, or on your person.
 // Click parameters is the params string from byond Click() code, see that documentation.
 /obj/item/proc/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	return
 
 
-/obj/item/proc/attack(mob/living/M as mob, mob/living/user as mob, def_zone)
+/obj/item/proc/attack(mob/living/M, mob/living/user, def_zone)
 
 	if (!istype(M)) // not sure if this is the right thing...
 		return 0
@@ -52,7 +61,7 @@
 					M.apply_damage(20, BRUTE, "head", 0, sharp=sharp, edge=edge)
 					M.apply_damage(20, BRUTE, "head", 0, sharp=sharp, edge=edge)
 					M.adjustOxyLoss(60) // Brain lacks oxygen immediately, pass out
-					playsound(loc, 'tauceti/sounds/effects/throat_cutting.ogg', 50, 1, 1)
+					playsound(loc, 'sound/effects/throat_cutting.ogg', 50, 1, 1)
 					flick(G.hud.icon_state, G.hud)
 					G.last_action = world.time
 					user.visible_message("<span class='danger'>[user] slit [M]'s throat open with \the [name]!</span>")
@@ -74,9 +83,6 @@
 	M.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [user.name] ([user.ckey]) with [name] (INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(damtype)])</font>"
 	msg_admin_attack("[key_name(user)] attacked [key_name(M)] with [name] (INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(damtype)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)" )
 
-	for(var/mob/living/simple_animal/smart_animal/SA in view(7))
-		SA.fight(user, M)
-
 	//spawn(1800)            // this wont work right
 	//	M.lastattacker = null
 	/////////////////////////
@@ -89,7 +95,7 @@
 		if(istype(M, /mob/living/carbon/slime))
 			var/mob/living/carbon/slime/slime = M
 			if(prob(25))
-				user << "\red [src] passes right through [M]!"
+				to_chat(user, "\red [src] passes right through [M]!")
 				return
 
 			if(power > 0)
@@ -171,7 +177,7 @@
 
 		if(!showname && user)
 			if(user.client)
-				user << "\red <B>You attack [M] with [src]. </B>"
+				to_chat(user, "\red <B>You attack [M] with [src]. </B>")
 
 
 
@@ -193,7 +199,7 @@
 			if("fire")
 				if (!(COLD_RESISTANCE in M.mutations))
 					M.take_organ_damage(0, power)
-					M << "Aargh it burns!"
+					to_chat(M, "Aargh it burns!")
 		M.updatehealth()
 	add_fingerprint(user)
 	return 1

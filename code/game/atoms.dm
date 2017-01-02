@@ -38,7 +38,7 @@
 	else
 		return null
 
-/atom/proc/check_eye(user as mob)
+/atom/proc/check_eye(user)
 	if (istype(user, /mob/living/silicon/ai)) // WHYYYY
 		return 1
 	return
@@ -46,7 +46,7 @@
 /atom/proc/on_reagent_change()
 	return
 
-/atom/proc/Bumped(AM as mob|obj)
+/atom/proc/Bumped(AM)
 	return
 
 // Convenience proc to see if a container is open for chemistry handling
@@ -65,7 +65,7 @@
 */
 
 
-/atom/proc/meteorhit(obj/meteor as obj)
+/atom/proc/meteorhit(obj/meteor)
 	return
 
 /atom/proc/allow_drop()
@@ -74,10 +74,10 @@
 /atom/proc/CheckExit()
 	return 1
 
-/atom/proc/HasProximity(atom/movable/AM as mob|obj)
+/atom/proc/HasProximity(atom/movable/AM)
 	return
 
-/atom/proc/emp_act(var/severity)
+/atom/proc/emp_act(severity)
 	return
 
 
@@ -118,19 +118,36 @@
 			found += A.search_contents_for(path,filter_path)
 	return found
 
-//All atoms
-/atom/verb/examine()
-	set name = "Examine"
-	set category = "IC"
-	set src in view(usr.client) //If it can be seen, it can be examined.
+/atom/proc/examine(mob/user)
+	//This reformat names to get a/an properly working on item descriptions when they are bloody
+	var/f_name = "\a [src]."
+	if(src.blood_DNA)
+		if(gender == PLURAL)
+			f_name = "some "
+		else
+			f_name = "a "
+		if(src.blood_color == "#030303")	//TODO: Define blood colors or make oil != blood
+			f_name += "<span class='warning'>oil-stained</span> [name]!"
+		else
+			f_name += "<span class='danger'>blood-stained</span> [name]!"
 
-	if (!( usr ))
-		return
-	usr << "That's \a [src]." //changed to "That's" from "This is" because "This is some metal sheets" sounds dumb compared to "That's some metal sheets" ~Carn
-	usr << desc
+	to_chat(user, "[bicon(src)] That's [f_name]")
+
+	if(desc)
+		to_chat(user, desc)
 	// *****RM
-	//usr << "[name]: Dn:[density] dir:[dir] cont:[contents] icon:[icon] is:[icon_state] loc:[loc]"
-	return
+	//user << "[name]: Dn:[density] dir:[dir] cont:[contents] icon:[icon] is:[icon_state] loc:[loc]"
+
+	if(reagents && is_open_container()) //is_open_container() isn't really the right proc for this, but w/e
+		to_chat(user, "It contains:")
+		if(reagents.reagent_list.len)
+			if(istype(src, /obj/structure/reagent_dispensers)) //watertanks, fueltanks
+				for(var/datum/reagent/R in reagents.reagent_list)
+					to_chat(user, "<span class='info'>[R.volume] units of [R.name]</span>")
+			else
+				to_chat(user, "<span class='info'>[reagents.total_volume] units of liquid.</span>")
+		else
+			to_chat(user, "Nothing.")
 
 //called to set the atom's dir and used to add behaviour to dir-changes
 /atom/proc/set_dir(new_dir)
@@ -155,13 +172,13 @@
 /atom/proc/singularity_pull()
 	return
 
-/atom/proc/hitby(atom/movable/AM as mob|obj)
+/atom/proc/hitby(atom/movable/AM)
 	if(density)
 		AM.throwing = 0
 		AM.fly_speed = 0
 	return
 
-/atom/proc/add_hiddenprint(mob/living/M as mob)
+/atom/proc/add_hiddenprint(mob/living/M)
 	if(isnull(M)) return
 	if(isnull(M.key)) return
 	if (!( src.flags ) & FPRINT)
@@ -186,7 +203,7 @@
 			src.fingerprintslast = M.key
 	return
 
-/atom/proc/add_fingerprint(mob/living/M as mob, ignoregloves = 0)
+/atom/proc/add_fingerprint(mob/living/M, ignoregloves = 0)
 	if(isnull(M)) return
 	if(isAI(M)) return
 	if(isnull(M.key)) return
@@ -293,7 +310,7 @@
 	return
 
 
-/atom/proc/transfer_fingerprints_to(var/atom/A)
+/atom/proc/transfer_fingerprints_to(atom/A)
 
 	if(!istype(A.fingerprints,/list))
 		A.fingerprints = list()
@@ -314,7 +331,7 @@
 
 
 //returns 1 if made bloody, returns 0 otherwise
-/atom/proc/add_blood(mob/living/carbon/human/M as mob)
+/atom/proc/add_blood(mob/living/carbon/human/M)
 	if(flags & NOBLOODY) return 0
 	.=1
 	if (!( istype(M, /mob/living/carbon/human) ))
@@ -332,7 +349,7 @@
 		blood_color = M.species.blood_color
 	return
 
-/atom/proc/add_vomit_floor(mob/living/carbon/M as mob, var/toxvomit = 0)
+/atom/proc/add_vomit_floor(mob/living/carbon/M, toxvomit = 0)
 	if( istype(src, /turf/simulated) )
 		var/obj/effect/decal/cleanable/vomit/this = new /obj/effect/decal/cleanable/vomit(src)
 

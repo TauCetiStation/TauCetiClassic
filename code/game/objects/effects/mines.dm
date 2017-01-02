@@ -15,13 +15,13 @@
 /obj/effect/mine/Crossed(AM as mob|obj)
 	Bumped(AM)
 
-/obj/effect/mine/Bumped(mob/M as mob|obj)
+/obj/effect/mine/Bumped(mob/M)
 
 	if(triggered) return
 
 	if(istype(M, /mob/living/carbon/human) || istype(M, /mob/living/carbon/monkey))
 		for(var/mob/O in viewers(world.view, src.loc))
-			O << "<font color='red'>[M] triggered the \icon[src] [src]</font>"
+			to_chat(O, "<font color='red'>[M] triggered the [bicon(src)] [src]</font>")
 		triggered = 1
 		call(src,triggerproc)(M)
 

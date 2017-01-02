@@ -1,7 +1,7 @@
 //This is a list of words which are ignored by the parser when comparing message contents for names. MUST BE IN LOWER CASE!
 var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","alien","as")
 
-client/proc/staffhelp(msg as text, var/help_type = null)
+client/proc/staffhelp(msg, help_type = null)
 	if(!help_type)
 		return
 
@@ -91,7 +91,7 @@ client/proc/staffhelp(msg as text, var/help_type = null)
 				admin_number_afk++
 			if(X.prefs.toggles & SOUND_ADMINHELP)
 				X << 'sound/effects/adminhelp.ogg'
-			X << msg
+			to_chat(X, msg)
 
 	var/mentor_number_afk = 0
 	if(help_type == "MH")
@@ -102,12 +102,12 @@ client/proc/staffhelp(msg as text, var/help_type = null)
 			if(isobserver(X.mob))
 				jump = "(<A HREF='?src=\ref[X.mob];ghostplayerobservejump=[ref_mob]'>JMP</A>) "
 			X << 'sound/effects/adminhelp.ogg'
-			X << "<font color=blue><b><font color=[colour]>[prefix]: </font>[key_name(src, 1, 0, 0, TRUE)][jump]:</b> [original_msg]</font>"
+			to_chat(X, "<font color=blue><b><font color=[colour]>[prefix]: </font>[key_name(src, 1, 0, 0, TRUE)][jump]:</b> [original_msg]</font>")
 
 	adminhelped = 1 //Determines if they get the message to reply by clicking the name.
 
 	//show it to the person adminhelping too
-	src << "<font color='blue'>PM to-<b>[target_group]</b>: [original_msg]</font>"
+	to_chat(src, "<font color='blue'>PM to-<b>[target_group]</b>: [original_msg]</font>")
 
 	var/mentor_number_present = mentors.len - mentor_number_afk
 	var/admin_number_present = admins.len - admin_number_afk
@@ -115,6 +115,7 @@ client/proc/staffhelp(msg as text, var/help_type = null)
 	switch(help_type)
 		if("MH")
 			log_msg = "[prefix]: [key_name(src)]: [original_msg] - heard by [mentor_number_present] non-AFK mentors and [admin_number_present] non-AFK admins."
+			send2slack_logs(key_name(src), original_msg, "(MHELP)")
 		if("AH")
 			log_msg = "[prefix]: [key_name(src)]: [original_msg] - heard by [admin_number_present] non-AFK admins."
 			//clean the input msg

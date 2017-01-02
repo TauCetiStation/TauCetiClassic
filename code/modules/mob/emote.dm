@@ -1,8 +1,8 @@
 // All mobs should have custom emote, really..
-/mob/proc/custom_emote(var/m_type=1,var/message = null)
+/mob/proc/custom_emote(m_type=1,message = null)
 
 	if(stat || !use_me && usr == src)
-		usr << "You are unable to emote."
+		to_chat(usr, "You are unable to emote.")
 		return
 
 	var/muzzled = istype(src.wear_mask, /obj/item/clothing/mask/muzzle)
@@ -65,19 +65,19 @@
 
 				O.show_message(message, m_type)
 
-/mob/proc/emote_dead(var/message)
+/mob/proc/emote_dead(message)
 
 	if(client.prefs.muted & MUTE_DEADCHAT)
-		src << "\red You cannot send deadchat emotes (muted)."
+		to_chat(src, "\red You cannot send deadchat emotes (muted).")
 		return
 
 	if(!(client.prefs.chat_toggles & CHAT_DEAD))
-		src << "\red You have deadchat muted."
+		to_chat(src, "\red You have deadchat muted.")
 		return
 
 	if(!src.client.holder)
 		if(!dsay_allowed)
-			src << "\red Deadchat is globally muted"
+			to_chat(src, "\red Deadchat is globally muted")
 			return
 
 
@@ -101,7 +101,7 @@
 				continue
 
 			if(M.client && M.client.holder && (M.client.holder.rights & R_ADMIN) && (M.client.prefs.chat_toggles & CHAT_DEAD)) // Show the emote to admins
-				M << message
+				to_chat(M, message)
 
 			else if(M.stat == DEAD && (M.client.prefs.chat_toggles & CHAT_DEAD)) // Show the emote to regular ghosts with deadchat toggled on
 				M.show_message(message, 2)

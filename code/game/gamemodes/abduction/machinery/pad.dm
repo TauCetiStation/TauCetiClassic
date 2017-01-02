@@ -9,7 +9,7 @@
 	var/area/teleport_target
 	var/target_name
 
-/obj/machinery/abductor/proc/TeleportToArea(var/mob/living/target, var/area/thearea)
+/obj/machinery/abductor/proc/TeleportToArea(mob/living/target, area/thearea)
 	var/list/L = list()
 	if(!thearea)
 		return
@@ -42,7 +42,7 @@
 	if(!success)
 		target.loc = pick(L)
 
-/obj/machinery/abductor/pad/proc/Warp(var/mob/living/target)
+/obj/machinery/abductor/pad/proc/Warp(mob/living/target)
 	if(target)
 
 		//prevent from teleporting victim though the grab on neck
@@ -70,7 +70,7 @@
 		spawn(0)
 			anim(target.loc,target,'icons/mob/mob.dmi',,"uncloak",,target.dir)
 
-/obj/machinery/abductor/pad/proc/Retrieve(var/mob/living/target)
+/obj/machinery/abductor/pad/proc/Retrieve(mob/living/target)
 	if(!target)
 		return
 	flick("alien-pad", src)

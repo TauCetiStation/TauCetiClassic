@@ -103,14 +103,14 @@
 	src.icon_state = "secbot[src.on]"
 	src.updateUsrDialog()
 
-/obj/machinery/bot/secbot/attack_hand(mob/user as mob)
+/obj/machinery/bot/secbot/attack_hand(mob/user)
 	. = ..()
 	if(.)
 		return
 	usr.set_machine(src)
 	interact(user)
 
-/obj/machinery/bot/secbot/interact(mob/user as mob)
+/obj/machinery/bot/secbot/interact(mob/user)
 	var/dat
 
 	dat += text({"
@@ -167,33 +167,35 @@ Auto Patrol: []"},
 
 	src.updateUsrDialog()
 
-/obj/machinery/bot/secbot/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/machinery/bot/secbot/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if(src.allowed(user) && !open && !emagged)
 			src.locked = !src.locked
-			user << "Controls are now [src.locked ? "locked." : "unlocked."]"
+			to_chat(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
 		else
 			if(emagged)
-				user << "<span class='warning'>ERROR</span>"
+				to_chat(user, "<span class='warning'>ERROR</span>")
 			if(open)
-				user << "\red Please close the access panel before locking it."
+				to_chat(user, "\red Please close the access panel before locking it.")
 			else
-				user << "\red Access denied."
+				to_chat(user, "\red Access denied.")
 	else
 		..()
 		if(!istype(W, /obj/item/weapon/screwdriver) && (W.force) && (!src.target))
 			src.target = user
 			src.mode = SECBOT_HUNT
 
-/obj/machinery/bot/secbot/Emag(mob/user as mob)
+/obj/machinery/bot/secbot/Emag(mob/user)
 	..()
 	if(open && !locked)
-		if(user) user << "\red You short out [src]'s target assessment circuits."
+		if(user)
+			to_chat(user, "\red You short out [src]'s target assessment circuits.")
 		spawn(0)
 			for(var/mob/O in hearers(src, null))
 				O.show_message("\red <B>[src] buzzes oddly!</B>", 1)
 		src.target = null
-		if(user) src.oldtarget_name = user.name
+		if(user)
+			src.oldtarget_name = user.name
 		src.last_found = world.time
 		src.anchored = 0
 		src.emagged = 2
@@ -483,7 +485,7 @@ Auto Patrol: []"},
 // sets the current destination
 // signals all beacons matching the patrol code
 // beacons will return a signal giving their locations
-/obj/machinery/bot/secbot/proc/set_destination(var/new_dest)
+/obj/machinery/bot/secbot/proc/set_destination(new_dest)
 	new_destination = new_dest
 	post_signal(beacon_freq, "findbeacon", "patrol")
 	awaiting_beacon = 1
@@ -498,9 +500,9 @@ Auto Patrol: []"},
 		return
 
 	/*
-	world << "rec signal: [signal.source]"
+	to_chat(world, "rec signal: [signal.source]")
 	for(var/x in signal.data)
-		world << "* [x] = [signal.data[x]]"
+		to_chat(world, "* [x] = [signal.data[x]]")
 	*/
 
 	var/recv = signal.data["command"]
@@ -567,11 +569,11 @@ Auto Patrol: []"},
 
 
 // send a radio signal with a single data key/value pair
-/obj/machinery/bot/secbot/proc/post_signal(var/freq, var/key, var/value)
+/obj/machinery/bot/secbot/proc/post_signal(freq, key, value)
 	post_signal_multiple(freq, list("[key]" = value) )
 
 // send a radio signal with multiple data key/values
-/obj/machinery/bot/secbot/proc/post_signal_multiple(var/freq, var/list/keyval)
+/obj/machinery/bot/secbot/proc/post_signal_multiple(freq, list/keyval)
 
 	var/datum/radio_frequency/frequency = radio_controller.return_frequency(freq)
 
@@ -606,7 +608,7 @@ Auto Patrol: []"},
 
 // calculates a path to the current destination
 // given an optional turf to avoid
-/obj/machinery/bot/secbot/proc/calc_path(var/turf/avoid = null)
+/obj/machinery/bot/secbot/proc/calc_path(turf/avoid = null)
 	src.path = AStar(src.loc, patrol_target, /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance, 0, 120, id=botcard, exclude=avoid)
 	if (!path) path = list()
 
@@ -651,7 +653,7 @@ Auto Patrol: []"},
 
 //If the security records say to arrest them, arrest them
 //Or if they have weapons and aren't security, arrest them.
-/obj/machinery/bot/secbot/proc/assess_perp(mob/living/carbon/human/perp as mob)
+/obj/machinery/bot/secbot/proc/assess_perp(mob/living/carbon/human/perp)
 	var/threatcount = 0
 
 	if(src.emagged == 2) return 10 //Everyone is a criminal!
@@ -714,14 +716,14 @@ Auto Patrol: []"},
 	return
 
 /* terrible
-/obj/machinery/bot/secbot/Bumped(atom/movable/M as mob|obj)
+/obj/machinery/bot/secbot/Bumped(atom/movable/M)
 	spawn(0)
 		if(M)
 			var/turf/T = get_turf(src)
 			M:loc = T
 */
 
-/obj/machinery/bot/secbot/proc/speak(var/message)
+/obj/machinery/bot/secbot/proc/speak(message)
 	for(var/mob/O in hearers(src, null))
 		O.show_message("<span class='game say'><span class='name'>[src]</span> beeps, \"[message]\"",2)
 	return
@@ -752,7 +754,7 @@ Auto Patrol: []"},
 	new /obj/effect/decal/cleanable/blood/oil(src.loc)
 	qdel(src)
 
-/obj/machinery/bot/secbot/attack_alien(var/mob/living/carbon/alien/user as mob)
+/obj/machinery/bot/secbot/attack_alien(mob/living/carbon/alien/user)
 	..()
 	if(!isalien(target))
 		src.target = user
@@ -760,7 +762,7 @@ Auto Patrol: []"},
 
 //Secbot Construction
 
-/obj/item/clothing/head/helmet/attackby(var/obj/item/device/assembly/signaler/S, mob/user as mob)
+/obj/item/clothing/head/helmet/attackby(obj/item/device/assembly/signaler/S, mob/user)
 	..()
 	if(!issignaler(S))
 		..()
@@ -773,25 +775,25 @@ Auto Patrol: []"},
 		qdel(S)
 		var/obj/item/weapon/secbot_assembly/A = new /obj/item/weapon/secbot_assembly
 		user.put_in_hands(A)
-		user << "You add the signaler to the helmet."
+		to_chat(user, "You add the signaler to the helmet.")
 		user.drop_from_inventory(src)
 		qdel(src)
 	else
 		return
 
-/obj/item/weapon/secbot_assembly/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/weapon/secbot_assembly/attackby(obj/item/weapon/W, mob/user)
 	..()
 	if((istype(W, /obj/item/weapon/weldingtool)) && (!src.build_step))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.remove_fuel(0,user))
 			src.build_step++
 			src.overlays += image('icons/obj/aibots.dmi', "hs_hole")
-			user << "You weld a hole in [src]!"
+			to_chat(user, "You weld a hole in [src]!")
 
 	else if(isprox(W) && (src.build_step == 1))
 		user.drop_item()
 		src.build_step++
-		user << "You add the prox sensor to [src]!"
+		to_chat(user, "You add the prox sensor to [src]!")
 		src.overlays += image('icons/obj/aibots.dmi', "hs_eye")
 		src.name = "helmet/signaler/prox sensor assembly"
 		qdel(W)
@@ -799,7 +801,7 @@ Auto Patrol: []"},
 	else if(((istype(W, /obj/item/robot_parts/l_arm)) || (istype(W, /obj/item/robot_parts/r_arm))) && (src.build_step == 2))
 		user.drop_item()
 		src.build_step++
-		user << "You add the robot arm to [src]!"
+		to_chat(user, "You add the robot arm to [src]!")
 		src.name = "helmet/signaler/prox sensor/robot arm assembly"
 		src.overlays += image('icons/obj/aibots.dmi', "hs_arm")
 		qdel(W)
@@ -807,7 +809,7 @@ Auto Patrol: []"},
 	else if((istype(W, /obj/item/weapon/melee/baton)) && (src.build_step >= 3))
 		user.drop_item()
 		src.build_step++
-		user << "You complete the Securitron! Beep boop."
+		to_chat(user, "You complete the Securitron! Beep boop.")
 		var/obj/machinery/bot/secbot/S = new /obj/machinery/bot/secbot
 		S.loc = get_turf(src)
 		S.name = src.created_name

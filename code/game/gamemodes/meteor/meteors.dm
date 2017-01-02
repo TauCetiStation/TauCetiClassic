@@ -4,7 +4,7 @@
 /var/const/meteors_in_wave = 50
 /var/const/meteors_in_small_wave = 10
 
-/proc/meteor_wave(var/number = meteors_in_wave)
+/proc/meteor_wave(number = meteors_in_wave)
 	if(!ticker || wavesecret)
 		return
 
@@ -15,7 +15,7 @@
 	spawn(meteor_wave_delay)
 		wavesecret = 0
 
-/proc/spawn_meteors(var/number = meteors_in_small_wave)
+/proc/spawn_meteors(number = meteors_in_small_wave)
 	for(var/i = 0; i < number; i++)
 		spawn(0)
 			spawn_meteor()
@@ -150,7 +150,7 @@
 				qdel(src)
 		return
 
-/obj/effect/meteor/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/effect/meteor/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/pickaxe))
 		qdel(src)
 		return

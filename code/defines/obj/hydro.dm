@@ -7,7 +7,7 @@
 	icon_state = "hydro"
 	item_state = "analyzer"
 
-	attack_self(mob/user as mob)
+	attack_self(mob/user)
 		return 0
 
 // ********************************************************
@@ -35,16 +35,16 @@
 	var/plant_type = 0 // 0 = 'normal plant'; 1 = weed; 2 = shroom
 	var/list/mutatelist = list()
 
-/obj/item/seeds/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/obj/item/seeds/attackby(obj/item/O, mob/user)
 	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
-		user << "*** <B>[plantname]</B> ***"
-		user << "-Plant Endurance: \blue [endurance]"
-		user << "-Plant Lifespan: \blue [lifespan]"
+		to_chat(user, "*** <B>[plantname]</B> ***")
+		to_chat(user, "-Plant Endurance: \blue [endurance]")
+		to_chat(user, "-Plant Lifespan: \blue [lifespan]")
 		if(yield != -1)
-			user << "-Plant Yield: \blue [yield]"
-		user << "-Plant Production: \blue [production]"
+			to_chat(user, "-Plant Yield: \blue [yield]")
+		to_chat(user, "-Plant Production: \blue [production]")
 		if(potency != -1)
-			user << "-Plant Potency: \blue [potency]"
+			to_chat(user, "-Plant Potency: \blue [potency]")
 		return
 	..() // Fallthrough to item/attackby() so that bags can pick seeds up
 
@@ -1086,11 +1086,11 @@
 	growthstages = 4
 	plant_type = 1
 
-/obj/item/seeds/kudzuseed/attack_self(mob/user as mob)
+/obj/item/seeds/kudzuseed/attack_self(mob/user)
 	if(istype(user.loc,/turf/space) || istype(user.loc,/turf/simulated/shuttle))
-		user << "<span class='notice'>You cannot plant kudzu on a moving shuttle or space.</span>"
+		to_chat(user, "<span class='notice'>You cannot plant kudzu on a moving shuttle or space.</span>")
 		return
-	user << "<span class='notice'>You plant the kudzu. You monster.</span>"
+	to_chat(user, "<span class='notice'>You plant the kudzu. You monster.</span>")
 	new /obj/effect/spacevine_controller(user.loc)
 	qdel(src)
 
@@ -1182,7 +1182,7 @@
 	seed = "/obj/item/seeds/towermycelium"
 	attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
 
-/obj/item/weapon/grown/log/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/weapon/grown/log/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/circular_saw) || istype(W, /obj/item/weapon/hatchet) || (istype(W, /obj/item/weapon/twohanded/fireaxe) && W:wielded) || istype(W, /obj/item/weapon/melee/energy))
 		user.show_message("<span class='notice'>You make planks out of \the [src]!</span>", 1)
 		for(var/i=0,i<2,i++)
@@ -1193,7 +1193,7 @@
 				if(G.amount>=G.max_amount)
 					continue
 				G.attackby(NG, user)
-				usr << "You add the newly-formed wood to the stack. It now contains [NG.amount] planks."
+				to_chat(usr, "You add the newly-formed wood to the stack. It now contains [NG.amount] planks.")
 		qdel(src)
 		return
 
@@ -1285,7 +1285,7 @@
 		force = round((5+potency/2.5), 1)
 
 /obj/item/weapon/grown/deathnettle/suicide_act(mob/user)
-	viewers(user) << "\red <b>[user] is eating some of the [src.name]! It looks like \he's trying to commit suicide.</b>"
+	to_chat(viewers(user), "\red <b>[user] is eating some of the [src.name]! It looks like \he's trying to commit suicide.</b>")
 	return (BRUTELOSS|TOXLOSS)
 
 // *************************************
@@ -1360,7 +1360,7 @@
 	var/WeedKillStr = 2
 
 /obj/item/weapon/weedspray/suicide_act(mob/user)
-	viewers(user) << "\red <b>[user] is huffing the [src.name]! It looks like \he's trying to commit suicide.</b>"
+	to_chat(viewers(user), "\red <b>[user] is huffing the [src.name]! It looks like \he's trying to commit suicide.</b>")
 	return (TOXLOSS)
 
 /obj/item/weapon/pestspray // -- Skie
@@ -1379,7 +1379,7 @@
 	var/PestKillStr = 2
 
 /obj/item/weapon/pestspray/suicide_act(mob/user)
-	viewers(user) << "\red <b>[user] is huffing the [src.name]! It looks like \he's trying to commit suicide.</b>"
+	to_chat(viewers(user), "\red <b>[user] is huffing the [src.name]! It looks like \he's trying to commit suicide.</b>")
 	return (TOXLOSS)
 
 /obj/item/weapon/minihoe // -- Numbers

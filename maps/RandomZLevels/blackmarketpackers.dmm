@@ -141,7 +141,7 @@
 "cK" = (/turf/simulated/shuttle/wall{tag = "icon-swall3"; icon_state = "swall3"},/area/awaymission/BMPship2)
 "cL" = (/obj/structure/table,/obj/item/weapon/butch,/obj/item/weapon/reagent_containers/food/snacks/meat,/turf/simulated/floor{tag = "icon-barber"; icon_state = "barber"},/area/awaymission/BMPship2)
 "cM" = (/obj/structure/table,/obj/item/weapon/storage/box/donkpockets,/turf/simulated/floor{tag = "icon-barber"; icon_state = "barber"},/area/awaymission/BMPship2)
-"cN" = (/obj/structure/table,/obj/machinery/microwave,/turf/simulated/floor{tag = "icon-barber"; icon_state = "barber"},/area/awaymission/BMPship2)
+"cN" = (/obj/structure/table,/obj/machinery/kitchen_machine/microwave,/turf/simulated/floor{tag = "icon-barber"; icon_state = "barber"},/area/awaymission/BMPship2)
 "cO" = (/obj/machinery/processor,/obj/machinery/light{dir = 1},/obj/structure/window/reinforced{dir = 4},/turf/simulated/floor{tag = "icon-barber"; icon_state = "barber"},/area/awaymission/BMPship2)
 "cP" = (/obj/structure/table,/turf/simulated/floor{icon_state = "bar"},/area/awaymission/BMPship2)
 "cQ" = (/obj/structure/table,/obj/item/weapon/kitchenknife,/turf/simulated/floor{icon_state = "bar"},/area/awaymission/BMPship2)
@@ -443,7 +443,7 @@
 "iA" = (/turf/simulated/shuttle/wall{tag = "icon-swall4"; icon_state = "swall4"},/area/awaymission)
 "iB" = (/turf/simulated/shuttle/wall{tag = "icon-swall12"; icon_state = "swall12"},/area/awaymission)
 "iC" = (/obj/item/weapon/storage/box/matches,/obj/item/weapon/storage/fancy/cigarettes/dromedaryco,/turf/simulated/floor/plating,/area/awaymission/BMPship3)
-"iD" = (/obj/item/weapon/contraband/poster,/turf/simulated/floor/plating,/area/awaymission/BMPship3)
+"iD" = (/obj/item/weapon/poster/contraband,/turf/simulated/floor/plating,/area/awaymission/BMPship3)
 "iE" = (/turf/simulated/shuttle/wall{tag = "icon-swall_s9"; icon_state = "swall_s9"; dir = 2},/area/awaymission/BMPship3)
 "iF" = (/turf/simulated/floor/plating,/turf/simulated/shuttle/wall{tag = "icon-swall_f6"; icon_state = "swall_f6"; dir = 2},/area/awaymission/BMPship3)
 "iG" = (/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced,/obj/structure/grille,/turf/simulated/floor/engine,/area/awaymission/BMPship3)
@@ -579,3 +579,4 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 "}
+

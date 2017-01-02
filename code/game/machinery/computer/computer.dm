@@ -29,7 +29,7 @@
 		return 0
 	return 1
 
-/obj/machinery/computer/meteorhit(var/obj/O as obj)
+/obj/machinery/computer/meteorhit(obj/O)
 	for(var/x in verbs)
 		verbs -= x
 	set_broken()
@@ -65,7 +65,7 @@
 		else
 	return
 
-/obj/machinery/computer/bullet_act(var/obj/item/projectile/Proj)
+/obj/machinery/computer/bullet_act(obj/item/projectile/Proj)
 	if(prob(Proj.damage))
 		set_broken()
 	..()
@@ -112,7 +112,7 @@
 	text = replacetext(text, "\n", "<BR>")
 	return text
 
-/obj/machinery/computer/attackby(I as obj, user as mob)
+/obj/machinery/computer/attackby(I, user)
 	if(istype(I, /obj/item/weapon/screwdriver) && circuit && !(flags&NODECONSTRUCT))
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		if(do_after(user, 20, target = src))
@@ -123,12 +123,12 @@
 			for (var/obj/C in src)
 				C.loc = src.loc
 			if (src.stat & BROKEN)
-				user << "\blue The broken glass falls out."
+				to_chat(user, "\blue The broken glass falls out.")
 				new /obj/item/weapon/shard( src.loc )
 				A.state = 3
 				A.icon_state = "3"
 			else
-				user << "\blue You disconnect the monitor."
+				to_chat(user, "\blue You disconnect the monitor.")
 				set_light(0)
 				A.state = 4
 				A.icon_state = "4"

@@ -88,7 +88,7 @@
 
 	if(href_list["ready"])
 		if(ready && ticker.timeLeft <= 50)
-			src << "<span class='warning'>Locked! The round is about to start.</span>"
+			to_chat(src, "<span class='warning'>Locked! The round is about to start.</span>")
 			return 0
 		if(ticker && ticker.current_state <= GAME_STATE_PREGAME)
 			ready = !ready
@@ -99,7 +99,7 @@
 
 	if(href_list["observe"])
 		if(!(ckey in admin_datums) && jobban_isbanned(src, "Observer"))
-			src << "<span class='red'>You have been banned from observing. Declare yourself.</span>"
+			to_chat(src, "<span class='red'>You have been banned from observing. Declare yourself.</span>")
 			return 0
 		if(alert(src,"Are you sure you wish to observe? You will have to wait 30 minutes before being able to respawn!","Player Setup","Yes","No") == "Yes")
 			if(!client)
@@ -113,7 +113,7 @@
 			observer.started_as_observer = 1
 			close_spawn_windows()
 			var/obj/O = locate("landmark*Observer-Start")
-			src << "\blue Now teleporting."
+			to_chat(src, "\blue Now teleporting.")
 			observer.loc = O.loc
 			observer.timeofdeath = world.time // Set the time of death so that the respawn timer works correctly.
 
@@ -139,12 +139,12 @@
 
 	if(href_list["late_join"])
 		if(!ticker || ticker.current_state != GAME_STATE_PLAYING)
-			usr << "\red The round is either not ready, or has already finished..."
+			to_chat(usr, "\red The round is either not ready, or has already finished...")
 			return
 
 		if(client.prefs.species != "Human")
 			if(!is_alien_whitelisted(src, client.prefs.species) && config.usealienwhitelist)
-				src << alert("You are currently not whitelisted to play [client.prefs.species].")
+				to_chat(src, alert("You are currently not whitelisted to play [client.prefs.species]."))
 				return 0
 
 		LateChoices()
@@ -155,12 +155,12 @@
 	if(href_list["SelectedJob"])
 
 		if(!enter_allowed)
-			usr << "\blue There is an administrative lock on entering the game!"
+			to_chat(usr, "\blue There is an administrative lock on entering the game!")
 			return
 
 		if(client.prefs.species != "Human")
 			if(!is_alien_whitelisted(src, client.prefs.species) && config.usealienwhitelist)
-				src << alert("You are currently not whitelisted to play [client.prefs.species].")
+				to_chat(src, alert("You are currently not whitelisted to play [client.prefs.species]."))
 				return 0
 
 		AttemptLateSpawn(href_list["SelectedJob"])
@@ -201,10 +201,10 @@
 			var/sql = "INSERT INTO erro_privacy VALUES (null, Now(), '[src.ckey]', '[option]')"
 			var/DBQuery/query_insert = dbcon.NewQuery(sql)
 			query_insert.Execute()
-			usr << "<b>Thank you for your vote!</b>"
+			to_chat(usr, "<b>Thank you for your vote!</b>")
 			usr << browse(null,"window=privacypoll")
 
-	if(!ready && href_list["preference"])
+	if(href_list["preference"] && (!ready || (href_list["preference"] == "close")))
 		if(client)
 			client.prefs.process_link(src, href_list)
 	else if(!href_list["late_join"])
@@ -239,7 +239,7 @@
 				var/id_max = text2num(href_list["maxid"])
 
 				if( (id_max - id_min) > 100 )	//Basic exploit prevention
-					usr << "The option ID difference is too big. Please contact administration or the database admin."
+					to_chat(usr, "The option ID difference is too big. Please contact administration or the database admin.")
 					return
 
 				for(var/optionid = id_min; optionid <= id_max; optionid++)
@@ -258,7 +258,7 @@
 				var/id_max = text2num(href_list["maxoptionid"])
 
 				if( (id_max - id_min) > 100 )	//Basic exploit prevention
-					usr << "The option ID difference is too big. Please contact administration or the database admin."
+					to_chat(usr, "The option ID difference is too big. Please contact administration or the database admin.")
 					return
 
 				for(var/optionid = id_min; optionid <= id_max; optionid++)
@@ -278,13 +278,13 @@
 	if (src != usr)
 		return 0
 	if(!ticker || ticker.current_state != GAME_STATE_PLAYING)
-		usr << "\red The round is either not ready, or has already finished..."
+		to_chat(usr, "\red The round is either not ready, or has already finished...")
 		return 0
 	if(!enter_allowed)
-		usr << "\blue There is an administrative lock on entering the game!"
+		to_chat(usr, "\blue There is an administrative lock on entering the game!")
 		return 0
 	if(!IsJobAvailable(rank))
-		src << alert("[rank] is not available. Please try another.")
+		to_chat(src, alert("[rank] is not available. Please try another."))
 		return 0
 
 	spawning = 1
@@ -337,7 +337,7 @@
 
 	qdel(src)
 
-/mob/new_player/proc/AnnounceArrival(var/mob/living/carbon/human/character, var/rank)
+/mob/new_player/proc/AnnounceArrival(mob/living/carbon/human/character, rank)
 	if (ticker.current_state == GAME_STATE_PLAYING)
 		var/obj/item/device/radio/intercom/a = new /obj/item/device/radio/intercom(null)// BS12 EDIT Arrivals Announcement Computer, rather than the AI.
 		if(character.mind.role_alt_title)
@@ -472,8 +472,9 @@
 	return client.holder.rights & R_ADMIN
 
 /mob/new_player/proc/is_species_whitelisted(datum/species/S)
-	if(!S) return 1
-	return is_alien_whitelisted(src, S.name) || !config.usealienwhitelist || !(S.flags & IS_WHITELISTED)
+	if(!S)
+		return 1
+	return is_alien_whitelisted(src, S.name) || !config.usealienwhitelist || !S.flags[IS_WHITELISTED]
 
 /mob/new_player/get_species()
 	var/datum/species/chosen_species
@@ -495,8 +496,8 @@
 /mob/new_player/is_ready()
 	return ready && ..()
 
-/mob/new_player/hear_say(var/message, var/verb = "says", var/datum/language/language = null, var/alt_name = "",var/italics = 0, var/mob/speaker = null)
+/mob/new_player/hear_say(message, verb = "says", datum/language/language = null, alt_name = "",italics = 0, mob/speaker = null)
 	return
 
-/mob/new_player/hear_radio(var/message, var/verb="says", var/datum/language/language=null, var/part_a, var/part_b, var/mob/speaker = null, var/hard_to_hear = 0)
+/mob/new_player/hear_radio(message, verb="says", datum/language/language=null, part_a, part_b, mob/speaker = null, hard_to_hear = 0)
 	return

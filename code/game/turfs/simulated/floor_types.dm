@@ -33,6 +33,10 @@
 	icon_state = "wood"
 	floor_type = /obj/item/stack/tile/wood
 
+/turf/unsimulated/desert
+	name = "sand"
+	icon_state = "asteroid"
+
 /turf/simulated/floor/vault
 	icon_state = "rockvault"
 
@@ -53,13 +57,13 @@
 	thermal_conductivity = 0.025
 	heat_capacity = 325000
 
-/turf/simulated/floor/engine/attackby(obj/item/weapon/C as obj, mob/user as mob)
+/turf/simulated/floor/engine/attackby(obj/item/weapon/C, mob/user)
 	if(!C)
 		return
 	if(!user)
 		return
 	if(istype(C, /obj/item/weapon/wrench))
-		user << "\blue Removing rods..."
+		to_chat(user, "\blue Removing rods...")
 		playsound(src, 'sound/items/Ratchet.ogg', 80, 1)
 		if(do_after(user, 30, target = src))
 			PoolOrNew(/obj/item/stack/rods, list(src, 2))
@@ -251,7 +255,7 @@
 		update_icon(1)
 		set_light(1.5)
 
-	update_icon(var/propogate=1)
+	update_icon(propogate=1)
 		underlays.Cut()
 		underlays += new /icon('icons/turf/space.dmi',"[((x + y) ^ ~(x * y) + z) % 25]")
 
@@ -266,7 +270,7 @@
 		icon_state="catwalk[dirs]"
 
 
-	attackby(obj/item/C as obj, mob/user as mob)
+	attackby(obj/item/C, mob/user)
 		if(!C || !user)
 			return 0
 		if(istype(C, /obj/item/weapon/screwdriver))
@@ -280,3 +284,5 @@
 
 	is_catwalk()
 		return 1
+
+/turf/simulated/floor/exodus

@@ -15,10 +15,10 @@
 	req_access = list(access_ce)
 
 
-/obj/machinery/computer/atmoscontrol/attack_ai(var/mob/user as mob)
+/obj/machinery/computer/atmoscontrol/attack_ai(mob/user)
 	return interact(user)
 
-/obj/machinery/computer/atmoscontrol/attack_paw(var/mob/user as mob)
+/obj/machinery/computer/atmoscontrol/attack_paw(mob/user)
 	return interact(user)
 
 /obj/machinery/computer/atmoscontrol/attack_hand(mob/user)
@@ -37,6 +37,8 @@
 		dat += specific()
 	else
 		for(var/obj/machinery/alarm/alarm in machines)
+			if(alarm.hidden_from_console)
+				continue
 			dat += "<a href='?src=\ref[src]&alarm=\ref[alarm]'>"
 			switch(max(alarm.danger_level, alarm.alarm_area.atmosalm))
 				if (0)
@@ -48,7 +50,7 @@
 			dat += "[alarm]</font></a><br/>"
 	user << browse(dat, "window=atmoscontrol")
 
-/obj/machinery/computer/atmoscontrol/attackby(var/obj/item/I as obj, var/mob/user as mob)
+/obj/machinery/computer/atmoscontrol/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/card/emag) && !emagged)
 		user.visible_message("\red \The [user] swipes \a [I] through \the [src], causing the screen to flash!",\
 			"\red You swipe your [I] through \the [src], the screen flashing as you gain full control.",\

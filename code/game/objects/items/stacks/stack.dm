@@ -25,18 +25,19 @@
 /obj/item/stack/Destroy()
 	if (src && usr && usr.machine==src)
 		usr << browse(null, "window=stack")
+	if(recipes)
+		recipes = null
 	return ..()
 
-/obj/item/stack/examine()
-	set src in view(1)
+/obj/item/stack/examine(mob/user)
 	..()
-	usr << "There are [src.amount] [src.singular_name]\s in the stack."
-	return
+	if(src in view(1, user))
+		to_chat(user, "There are [amount] [singular_name]\s in the stack.")
 
-/obj/item/stack/attack_self(mob/user as mob)
+/obj/item/stack/attack_self(mob/user)
 	list_recipes(user)
 
-/obj/item/stack/proc/list_recipes(mob/user as mob, recipes_sublist)
+/obj/item/stack/proc/list_recipes(mob/user, recipes_sublist)
 	if (!recipes)
 		return
 	if (!src || amount<=0)
@@ -102,7 +103,7 @@
 
 /obj/item/stack/Topic(href, href_list)
 	..()
-	if ((usr.restrained() || usr.stat || usr.get_active_hand() != src))
+	if (usr.restrained() || usr.stat || (usr.get_active_hand() != src && usr.get_inactive_hand() != src))
 		return
 
 	if (href_list["sublist"] && !href_list["make"])
@@ -120,18 +121,18 @@
 		if (!multiplier) multiplier = 1
 		if (src.amount < R.req_amount*multiplier)
 			if (R.req_amount*multiplier>1)
-				usr << "\red You haven't got enough [src] to build \the [R.req_amount*multiplier] [R.title]\s!"
+				to_chat(usr, "\red You haven't got enough [src] to build \the [R.req_amount*multiplier] [R.title]\s!")
 			else
-				usr << "\red You haven't got enough [src] to build \the [R.title]!"
+				to_chat(usr, "\red You haven't got enough [src] to build \the [R.title]!")
 			return
 		if (R.one_per_turf && (locate(R.result_type) in usr.loc))
-			usr << "\red There is another [R.title] here!"
+			to_chat(usr, "\red There is another [R.title] here!")
 			return
 		if (R.on_floor && !istype(usr.loc, /turf/simulated/floor))
-			usr << "\red \The [R.title] must be constructed on the floor!"
+			to_chat(usr, "\red \The [R.title] must be constructed on the floor!")
 			return
 		if (R.time)
-			usr << "\blue Building [R.title] ..."
+			to_chat(usr, "\blue Building [R.title] ...")
 			if (!do_after(usr, R.time, target = usr))
 				return
 		if (src.amount < R.req_amount*multiplier)
@@ -162,7 +163,7 @@
 			return
 	return
 
-/obj/item/stack/proc/use(var/amount)
+/obj/item/stack/proc/use(amount)
 	src.amount-=amount
 	if (src.amount<=0)
 		var/oldsrc = src
@@ -172,7 +173,7 @@
 		qdel(oldsrc)
 	return
 
-/obj/item/stack/proc/add_to_stacks(mob/usr as mob)
+/obj/item/stack/proc/add_to_stacks(mob/usr)
 	var/obj/item/stack/oldsrc = src
 	src = null
 	for (var/obj/item/stack/item in usr.loc)
@@ -183,11 +184,11 @@
 		if (item.amount>=item.max_amount)
 			continue
 		oldsrc.attackby(item, usr)
-		usr << "You add new [item.singular_name] to the stack. It now contains [item.amount] [item.singular_name]\s."
+		to_chat(usr, "You add new [item.singular_name] to the stack. It now contains [item.amount] [item.singular_name]\s.")
 		if(!oldsrc)
 			break
 
-/obj/item/stack/attack_hand(mob/user as mob)
+/obj/item/stack/attack_hand(mob/user)
 	if (user.get_inactive_hand() == src)
 		var/obj/item/stack/F = new src.type( user, 1)
 		F.copy_evidences(src)
@@ -201,7 +202,7 @@
 		..()
 	return
 
-/obj/item/stack/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/stack/attackby(obj/item/W, mob/user)
 	..()
 	if (istype(W, src.type))
 		var/obj/item/stack/S = W
@@ -220,7 +221,7 @@
 			spawn(0) src.interact(usr)
 	else return ..()
 
-/obj/item/stack/proc/copy_evidences(obj/item/stack/from as obj)
+/obj/item/stack/proc/copy_evidences(obj/item/stack/from)
 	src.blood_DNA = from.blood_DNA
 	src.fingerprints  = from.fingerprints
 	src.fingerprintshidden  = from.fingerprintshidden

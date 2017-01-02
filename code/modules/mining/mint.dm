@@ -65,7 +65,7 @@
 				qdel(O) //Commented out for now. -Durandan
 
 
-/obj/machinery/mineral/mint/attack_hand(user as mob)
+/obj/machinery/mineral/mint/attack_hand(user)
 
 	var/dat = "<b>Coin Press</b><br>"
 
@@ -137,7 +137,7 @@
 		return
 
 	if(processing == 1)
-		usr << "\blue The machine is processing."
+		to_chat(usr, "\blue The machine is processing.")
 		return FALSE
 	if(href_list["choose"])
 		chosen = href_list["choose"]

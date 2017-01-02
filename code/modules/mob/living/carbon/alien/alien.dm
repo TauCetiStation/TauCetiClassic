@@ -59,7 +59,7 @@
 		//toxloss isn't used for aliens, its actually used as alien powers!!
 		health = maxHealth - getOxyLoss() - getFireLoss() - getBruteLoss() - getCloneLoss()
 
-/mob/living/carbon/alien/proc/handle_environment(var/datum/gas_mixture/environment)
+/mob/living/carbon/alien/proc/handle_environment(datum/gas_mixture/environment)
 
 	//If there are alien weeds on the ground then heal if needed or give some plasma
 	if(locate(/obj/effect/alien/weeds) in loc)
@@ -262,7 +262,7 @@ Hit Procs
 	updatehealth()
 	return
 
-/mob/living/carbon/alien/meteorhit(O as obj)
+/mob/living/carbon/alien/meteorhit(O)
 	for(var/mob/M in viewers(src, null))
 		if ((M.client && !( M.blinded )))
 			M.show_message(text("\red [] has been hit by []", src, O), 1)
@@ -282,7 +282,7 @@ Hit Procs
 /mob/living/carbon/alien/restrained()
 	return 0
 
-/mob/living/carbon/alien/show_inv(mob/user as mob)
+/mob/living/carbon/alien/show_inv(mob/user)
 
 	user.set_machine(src)
 	var/dat = {"
@@ -327,7 +327,7 @@ Des: Removes all infected images from the alien.
 	if(item_in_hand) //this segment checks if the item in your hand is twohanded.
 		if(istype(item_in_hand,/obj/item/weapon/twohanded))
 			if(item_in_hand:wielded == 1)
-				usr << "<span class='warning'>Your other hand is too busy holding the [item_in_hand.name]</span>"
+				to_chat(usr, "<span class='warning'>Your other hand is too busy holding the [item_in_hand.name]</span>")
 				return
 	src.hand = !( src.hand )
 	if(hud_used.l_hand_hud_object && hud_used.r_hand_hud_object)

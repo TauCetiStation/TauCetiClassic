@@ -20,16 +20,13 @@
 	minimal_player_age = 14
 	minimal_player_ingame_minutes = 2400
 
-/datum/job/hos/equip(var/mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/job/hos/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
 	switch(H.backbag)
 		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/security(H), slot_back)
 		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel_sec(H), slot_back)
 		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), slot_back)
-	if(H.gender == FEMALE)
-		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/head_of_security_fem(H), slot_w_uniform)
-	else
-		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/head_of_security(H), slot_w_uniform)
+	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/head_of_security(H), slot_w_uniform)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/jackboots(H), slot_shoes)
 	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/black(H), slot_gloves)
 	H.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses/sechud(H), slot_glasses)
@@ -69,16 +66,13 @@
 	minimal_player_age = 5
 	minimal_player_ingame_minutes = 1800
 
-/datum/job/warden/equip(var/mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/job/warden/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
 	switch(H.backbag)
 		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/security(H), slot_back)
 		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel_sec(H), slot_back)
 		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), slot_back)
-	if(H.gender == FEMALE)
-		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/warden_fem(H), slot_w_uniform)
-	else
-		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/warden(H), slot_w_uniform)
+	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/warden(H), slot_w_uniform)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/jackboots(H), slot_shoes)
 	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/black(H), slot_gloves)
 	H.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses/sechud(H), slot_glasses)
@@ -113,7 +107,7 @@
 	minimal_player_age = 3
 	minimal_player_ingame_minutes = 1560
 
-/datum/job/detective/equip(var/mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/job/detective/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
 	switch(H.backbag)
 		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(H), slot_back)
@@ -157,7 +151,7 @@
 	minimal_player_age = 3
 	minimal_player_ingame_minutes = 1560
 
-/datum/job/officer/equip(var/mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/job/officer/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
 	switch(H.backbag)
 		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/security(H), slot_back)
@@ -196,7 +190,7 @@
 	minimal_player_age = 3
 	minimal_player_ingame_minutes = 1560
 
-/datum/job/forensic/equip(var/mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/job/forensic/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
 	switch(H.backbag)
 		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(H), slot_back)

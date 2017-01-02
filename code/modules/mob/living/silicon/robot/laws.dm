@@ -3,7 +3,7 @@
 	set name = "Show Laws"
 	show_laws()
 
-/mob/living/silicon/robot/show_laws(var/everyone = 0)
+/mob/living/silicon/robot/show_laws(everyone = 0)
 	laws_sanity_check()
 	var/who
 
@@ -14,28 +14,28 @@
 	if(lawupdate)
 		if (connected_ai)
 			if(connected_ai.stat || connected_ai.control_disabled)
-				src << "<b>AI signal lost, unable to sync laws.</b>"
+				to_chat(src, "<b>AI signal lost, unable to sync laws.</b>")
 
 			else
 				lawsync()
 				photosync()
-				src << "<b>Laws synced with AI, be sure to note any changes.</b>"
+				to_chat(src, "<b>Laws synced with AI, be sure to note any changes.</b>")
 				if(mind && mind.special_role == "traitor" && mind.original == src)
-					src << "<b>Remember, your AI does NOT share or know about your law 0."
+					to_chat(src, "<b>Remember, your AI does NOT share or know about your law 0.")
 		else
-			src << "<b>No AI selected to sync laws with, disabling lawsync protocol.</b>"
+			to_chat(src, "<b>No AI selected to sync laws with, disabling lawsync protocol.</b>")
 			lawupdate = 0
 
-	who << "<b>Obey these laws:</b>"
+	to_chat(who, "<b>Obey these laws:</b>")
 	laws.show_laws(who)
 	if (mind && (mind.special_role == "traitor" && mind.original == src) && connected_ai)
-		who << "<b>Remember, [connected_ai.name] is technically your master, but your objective comes first.</b>"
+		to_chat(who, "<b>Remember, [connected_ai.name] is technically your master, but your objective comes first.</b>")
 	else if (connected_ai)
-		who << "<b>Remember, [connected_ai.name] is your master, other AIs can be ignored.</b>"
+		to_chat(who, "<b>Remember, [connected_ai.name] is your master, other AIs can be ignored.</b>")
 	else if (emagged)
-		who << "<b>Remember, you are not required to listen to the AI.</b>"
+		to_chat(who, "<b>Remember, you are not required to listen to the AI.</b>")
 	else
-		who << "<b>Remember, you are not bound to any AI, you are not required to listen to them.</b>"
+		to_chat(who, "<b>Remember, you are not bound to any AI, you are not required to listen to them.</b>")
 
 
 /mob/living/silicon/robot/proc/lawsync()
@@ -76,17 +76,17 @@
 /mob/living/silicon/proc/has_zeroth_law()
 	return laws.zeroth
 
-/mob/living/silicon/robot/proc/set_zeroth_law(var/law)
+/mob/living/silicon/robot/proc/set_zeroth_law(law)
 	throw_alert("newlaw")
 	laws_sanity_check()
 	laws.set_zeroth_law(law)
 
-/mob/living/silicon/robot/set_zeroth_law(var/law, var/law_borg)
+/mob/living/silicon/robot/set_zeroth_law(law, law_borg)
 	..()
 	if(tracking_entities)
-		src << "<span class='warning'>Internal camera is currently being accessed.</span>"
+		to_chat(src, "<span class='warning'>Internal camera is currently being accessed.</span>")
 
-/mob/living/silicon/robot/proc/add_inherent_law(var/law)
+/mob/living/silicon/robot/proc/add_inherent_law(law)
 	throw_alert("newlaw")
 	laws_sanity_check()
 	laws.add_inherent_law(law)
@@ -96,7 +96,7 @@
 	laws_sanity_check()
 	laws.clear_inherent_laws()
 
-/mob/living/silicon/robot/proc/add_supplied_law(var/number, var/law)
+/mob/living/silicon/robot/proc/add_supplied_law(number, law)
 	throw_alert("newlaw")
 	laws_sanity_check()
 	laws.add_supplied_law(number, law)
@@ -106,7 +106,7 @@
 	laws_sanity_check()
 	laws.clear_supplied_laws()
 
-/mob/living/silicon/robot/proc/add_ion_law(var/law)
+/mob/living/silicon/robot/proc/add_ion_law(law)
 	throw_alert("newlaw")
 	laws_sanity_check()
 	laws.add_ion_law(law)

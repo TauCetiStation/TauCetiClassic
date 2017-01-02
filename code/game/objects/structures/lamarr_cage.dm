@@ -26,7 +26,7 @@
 				src.healthcheck()
 
 
-/obj/structure/lamarr/bullet_act(var/obj/item/projectile/Proj)
+/obj/structure/lamarr/bullet_act(obj/item/projectile/Proj)
 	health -= Proj.damage
 	..()
 	src.healthcheck()
@@ -40,7 +40,7 @@
 		qdel(src)
 
 
-/obj/structure/lamarr/meteorhit(obj/O as obj)
+/obj/structure/lamarr/meteorhit(obj/O)
 		new /obj/item/weapon/shard( src.loc )
 		Break()
 		qdel(src)
@@ -66,23 +66,23 @@
 	return
 
 
-/obj/structure/lamarr/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/structure/lamarr/attackby(obj/item/weapon/W, mob/user)
 	src.health -= W.force
 	src.healthcheck()
 	..()
 	return
 
-/obj/structure/lamarr/attack_paw(mob/user as mob)
+/obj/structure/lamarr/attack_paw(mob/user)
 	return src.attack_hand(user)
 
-/obj/structure/lamarr/attack_hand(mob/user as mob)
+/obj/structure/lamarr/attack_hand(mob/user)
 	if (src.destroyed)
 		return
 	else
-		usr << text("\blue You kick the lab cage.")
+		to_chat(usr, text("\blue You kick the lab cage."))
 		for(var/mob/O in oviewers())
 			if ((O.client && !( O.blinded )))
-				O << text("\red [] kicks the lab cage.", usr)
+				to_chat(O, text("\red [] kicks the lab cage.", usr))
 		src.health -= 2
 		healthcheck()
 		return

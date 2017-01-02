@@ -19,7 +19,7 @@ var/list/sting_paths
 	usr << browse(dat, "window=powers;size=600x700")//900x480
 
 
-/obj/effect/proc_holder/changeling/evolution_menu/proc/create_menu(var/datum/changeling/changeling)
+/obj/effect/proc_holder/changeling/evolution_menu/proc/create_menu(datum/changeling/changeling)
 	var/dat
 	dat +="<html><head><title>Changling Evolution Menu</title></head>"
 
@@ -303,7 +303,7 @@ var/list/sting_paths
 	var/dat = create_menu(usr.mind.changeling)
 	usr << browse(dat, "window=powers;size=600x700") */
 
-/datum/changeling/proc/purchasePower(var/mob/living/carbon/user, var/sting_name)
+/datum/changeling/proc/purchasePower(mob/living/carbon/user, sting_name)
 
 	var/obj/effect/proc_holder/changeling/thepower = null
 
@@ -315,19 +315,19 @@ var/list/sting_paths
 			thepower = S
 
 	if(thepower == null)
-		user << "This is awkward. Changeling power purchase failed, please report this bug to a coder!"
+		to_chat(user, "This is awkward. Changeling power purchase failed, please report this bug to a coder!")
 		return
 
 	if(has_sting(thepower))
-		user << "We have already evolved this ability!"
+		to_chat(user, "We have already evolved this ability!")
 		return
 
 	if(geneticpoints < thepower.genomecost)
-		user << "We cannot evolve this... yet.  We must acquire more DNA."
+		to_chat(user, "We cannot evolve this... yet.  We must acquire more DNA.")
 		return
 
 	if(user.status_flags & FAKEDEATH)//To avoid potential exploits by buying new powers while in stasis, which clears your verblist.
-		user << "We lack the energy to evolve new abilities right now."
+		to_chat(user, "We lack the energy to evolve new abilities right now.")
 		return
 
 	geneticpoints -= thepower.genomecost
@@ -392,7 +392,7 @@ var/list/sting_paths
 	return 1
 
 //Used to dump the languages from the changeling datum into the actual mob.
-/mob/proc/changeling_update_languages(var/updated_languages)
+/mob/proc/changeling_update_languages(updated_languages)
 
 	languages = list()
 	for(var/language in updated_languages)
@@ -409,7 +409,7 @@ var/list/sting_paths
 	chem_charges = min(chem_charges, chem_storage)
 	mimicing = ""
 
-/mob/proc/remove_changeling_powers(var/keep_free_powers=0)
+/mob/proc/remove_changeling_powers(keep_free_powers=0)
 	if(ishuman(src) || ismonkey(src))
 		if(mind && mind.changeling)
 			digitalcamo = 0

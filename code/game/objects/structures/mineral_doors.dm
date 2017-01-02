@@ -33,17 +33,17 @@
 		return TryToSwitchState(user)
 	return
 
-/obj/structure/mineral_door/attack_ai(mob/user as mob) //those aren't machinery, they're just big fucking slabs of a mineral
+/obj/structure/mineral_door/attack_ai(mob/user) //those aren't machinery, they're just big fucking slabs of a mineral
 	if(isAI(user)) //so the AI can't open it
 		return
 	else if(isrobot(user)) //but cyborgs can
 		if(get_dist(user,src) <= 1) //not remotely though
 			return TryToSwitchState(user)
 
-/obj/structure/mineral_door/attack_paw(mob/user as mob)
+/obj/structure/mineral_door/attack_paw(mob/user)
 	return TryToSwitchState(user)
 
-/obj/structure/mineral_door/attack_hand(mob/user as mob)
+/obj/structure/mineral_door/attack_hand(mob/user)
 	return TryToSwitchState(user)
 
 /obj/structure/mineral_door/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
@@ -103,12 +103,12 @@
 	else
 		icon_state = mineralType
 
-/obj/structure/mineral_door/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/structure/mineral_door/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W,/obj/item/weapon/pickaxe))
 		var/obj/item/weapon/pickaxe/digTool = W
-		user << "You start digging the [name]."
+		to_chat(user, "You start digging the [name].")
 		if(do_after(user,digTool.digspeed, target = src) && src)
-			user << "You finished digging."
+			to_chat(user, "You finished digging.")
 			Dismantle()
 	else if(istype(W, /obj/item/weapon))
 		if (istype(W, /obj/item/weapon/weldingtool))
@@ -123,12 +123,12 @@
 				playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
 				user.visible_message("[user] dissassembles [src].", "You start to dissassemble [src].")
 				if(do_after(user, 60, target = src))
-					user << "\blue You dissasembled [src]!"
+					to_chat(user, "\blue You dissasembled [src]!")
 					Dismantle()
 				else
 					return
 			else
-				user << "\blue You need more welding fuel."
+				to_chat(user, "\blue You need more welding fuel.")
 				return
 		else if (istype(W, /obj/item/weapon/wrench))
 			if(!istype(src, /obj/structure/mineral_door/wood))
@@ -138,7 +138,7 @@
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
 			user.visible_message("[user] dissassembles [src].", "You start to dissassemble [src].")
 			if(do_after(user, 40, target = src))
-				user << "\blue You dissasembled [src]!"
+				to_chat(user, "\blue You dissasembled [src]!")
 				Dismantle()
 			else
 				return
@@ -225,7 +225,7 @@
 /obj/structure/mineral_door/transparent/phoron
 	mineralType = "phoron"
 
-/obj/structure/mineral_door/transparent/phoron/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/structure/mineral_door/transparent/phoron/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W,/obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.remove_fuel(0, user))
@@ -288,7 +288,7 @@
 	qdel(src)
 
 /obj/structure/mineral_door/resin
-	icon = 'tauceti/icons/mob/alien.dmi'
+	icon = 'icons/mob/alien.dmi'
 	mineralType = "resin"
 	health = 150
 	var/close_delay = 100

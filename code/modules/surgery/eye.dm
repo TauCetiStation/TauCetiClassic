@@ -50,8 +50,9 @@
 
 /datum/surgery_step/eye/lift_eyes
 	allowed_tools = list(
-	/obj/item/weapon/retractor = 100,	\
-	/obj/item/weapon/kitchen/utensil/fork = 50
+	/obj/item/weapon/retractor = 100,	        \
+	/obj/item/weapon/kitchen/utensil/fork = 75,	\
+	/obj/item/weapon/screwdriver = 50
 	)
 
 	min_duration = 30
@@ -81,8 +82,10 @@
 
 /datum/surgery_step/eye/mend_eyes
 	allowed_tools = list(
-	/obj/item/weapon/hemostat = 100, 	\
-	/obj/item/weapon/cable_coil = 75, 	\
+	/obj/item/weapon/hemostat = 100,             \
+	/obj/item/weapon/cable_coil = 75,            \
+	/obj/item/weapon/wirecutters = 75,           \
+	/obj/item/weapon/kitchen/utensil/fork = 50,  \
 	/obj/item/device/assembly/mousetrap = 10	//I don't know. Don't ask me. But I'm leaving it because hilarity.
 	)
 
@@ -116,7 +119,7 @@
 	/obj/item/weapon/cautery = 100,			\
 	/obj/item/clothing/mask/cigarette = 75,	\
 	/obj/item/weapon/lighter = 50,			\
-	/obj/item/weapon/weldingtool = 25
+	/obj/item/weapon/weldingtool = 50
 	)
 
 	min_duration = 70

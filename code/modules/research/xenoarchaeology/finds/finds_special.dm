@@ -29,7 +29,7 @@
 		var/mob/living/M = src.loc
 		M.say(pick(heard_talk))
 
-/obj/item/clothing/mask/gas/poltergeist/hear_talk(mob/M as mob, text)
+/obj/item/clothing/mask/gas/poltergeist/hear_talk(mob/M, text)
 	..()
 	if(heard_talk.len > max_stored_messages)
 		heard_talk.Remove(pick(heard_talk))
@@ -99,7 +99,7 @@
 
 	if(charges >= 0.1)
 		if(prob(5))
-			src.visible_message("\red \icon[src] [src]'s eyes glow ruby red for a moment!")
+			src.visible_message("\red [bicon(src)] [src]'s eyes glow ruby red for a moment!")
 			charges -= 0.1
 
 	//check on our shadow wights
@@ -116,12 +116,12 @@
 		else if(get_dist(W, src) > 10)
 			shadow_wights.Remove(wight_check_index)
 
-/obj/item/weapon/vampiric/hear_talk(mob/M as mob, text)
+/obj/item/weapon/vampiric/hear_talk(mob/M, text)
 	..()
 	if(world.time - last_bloodcall >= bloodcall_interval && M in view(7, src))
 		bloodcall(M)
 
-/obj/item/weapon/vampiric/proc/bloodcall(var/mob/living/carbon/human/M)
+/obj/item/weapon/vampiric/proc/bloodcall(mob/living/carbon/human/M)
 	last_bloodcall = world.time
 	if(istype(M))
 		playsound(src.loc, pick('sound/hallucinations/wail.ogg','sound/hallucinations/veryfar_noise.ogg','sound/hallucinations/far_noise.ogg'), 50, 1, -3)
@@ -129,7 +129,7 @@
 
 		var/target = pick("chest","groin","head","l_arm","r_arm","r_leg","l_leg","l_hand","r_hand","l_foot","r_foot")
 		M.apply_damage(rand(5, 10), BRUTE, target)
-		M << "\red The skin on your [parse_zone(target)] feels like it's ripping apart, and a stream of blood flies out."
+		to_chat(M, "\red The skin on your [parse_zone(target)] feels like it's ripping apart, and a stream of blood flies out.")
 		var/obj/effect/decal/cleanable/blood/splatter/animated/B = new(M.loc)
 		B.target_turf = pick(range(1, src))
 		B.blood_DNA = list()
@@ -200,4 +200,4 @@
 		SSobj.processing.Remove(src)
 
 /obj/effect/shadow_wight/Bump(var/atom/obstacle)
-	obstacle << "\red You feel a chill run down your spine!"
+	to_chat(obstacle, "\red You feel a chill run down your spine!")

@@ -25,7 +25,7 @@
 /obj/machinery/dominator/examine(mob/user)
 	..()
 	if(operating == -1)
-		user << "<span class='danger'>It looks completely busted.</span>"
+		to_chat(user, "<span class='danger'>It looks completely busted.</span>")
 		return
 
 	var/datum/game_mode/gang/mode = ticker.mode
@@ -38,12 +38,12 @@
 			time = max(mode.B_timer, 0)
 	if(isnum(time))
 		if(time > 0)
-			user << "<span class='notice'>Hostile Takeover in progress. Estimated [time] seconds remain.</span>"
+			to_chat(user, "<span class='notice'>Hostile Takeover in progress. Estimated [time] seconds remain.</span>")
 		else
-			user << "<span class='notice'>Hostile Takeover of [station_name()] successful. Have a great day.</span>"
+			to_chat(user, "<span class='notice'>Hostile Takeover of [station_name()] successful. Have a great day.</span>")
 	else
-		user << "<span class='notice'>System on standby.</span>"
-	user << "<span class='danger'>System Integrity: [round((health/maxhealth)*100,1)]%</span>"
+		to_chat(user, "<span class='notice'>System on standby.</span>")
+	to_chat(user, "<span class='danger'>System Integrity: [round((health/maxhealth)*100,1)]%</span>")
 
 /obj/machinery/dominator/process()
 	..()
@@ -54,7 +54,7 @@
 	else
 		SSmachine.processing -= src
 
-/obj/machinery/dominator/proc/healthcheck(var/damage)
+/obj/machinery/dominator/proc/healthcheck(damage)
 	var/iconname = "dominator"
 	if(gang)
 		iconname += "-[gang]"
@@ -138,7 +138,7 @@
 			healthcheck(30)
 	return
 
-/obj/machinery/dominator/bullet_act(var/obj/item/projectile/Proj)
+/obj/machinery/dominator/bullet_act(obj/item/projectile/Proj)
 	if(Proj.damage)
 		if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
 			var/damage = Proj.damage
@@ -152,13 +152,13 @@
 /obj/machinery/dominator/blob_act()
 	healthcheck(110)
 
-/obj/machinery/dominator/attackby(I as obj, user as mob, params)
+/obj/machinery/dominator/attackby(I, user, params)
 
 	return
 
 /obj/machinery/dominator/attack_hand(mob/user)
 	if(operating)
-		examine(user)
+		user.examinate(src)
 		return
 
 	var/datum/game_mode/gang/mode = ticker.mode
@@ -176,15 +176,15 @@
 		timer = mode.B_timer
 
 	if(!tempgang)
-		examine(user)
+		user.examinate(src)
 		return
 
 	if(isnum(timer))
-		user << "<span class='warning'>Error: Hostile Takeover is already in progress.</span>"
+		to_chat(user, "<span class='warning'>Error: Hostile Takeover is already in progress.</span>")
 		return
 
 	if(tempgang == "A" ? !mode.A_dominations : !mode.B_dominations)
-		user << "<span class='warning'>Error: Unable to breach station network. Firewall has logged our signature and is blocking all further attempts.</span>"
+		to_chat(user, "<span class='warning'>Error: Unable to breach station network. Firewall has logged our signature and is blocking all further attempts.</span>")
 		return
 
 	var/time = max(300,900 - ((round((gang_territory/start_state.num_territories)*200, 1) - 60) * 15))
@@ -211,7 +211,7 @@
 	"<span class='italics'>You hear metal scraping.</span>")
 	healthcheck(15)
 
-/obj/machinery/dominator/attack_animal(mob/living/user as mob)
+/obj/machinery/dominator/attack_animal(mob/living/user)
 	if(!isanimal(user))
 		return
 	var/mob/living/simple_animal/M = user
@@ -234,7 +234,7 @@
 //	"<span class='italics'>You hear metal being slammed.</span>")
 //	healthcheck(5)
 
-/obj/machinery/dominator/attackby(obj/item/weapon/I as obj, mob/living/user as mob, params)
+/obj/machinery/dominator/attackby(obj/item/weapon/I, mob/living/user, params)
 	if(istype(I, /obj/item/weapon))
 		add_fingerprint(user)
 		//user.changeNext_move(CLICK_CD_MELEE)

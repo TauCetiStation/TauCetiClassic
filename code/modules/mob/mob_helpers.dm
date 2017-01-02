@@ -154,8 +154,8 @@ proc/slur(phrase)
 			if(lletter=="s")	newletter="ch"
 			if(lletter=="a")	newletter="ah"
 			if(lletter=="c")	newletter="k"
-			if(lletter=="ч")	newletter="щ" //246->249
-			if(lletter=="е")	newletter="и" //229->232
+			if(lletter=="пїЅ")	newletter="пїЅ" //246->249
+			if(lletter=="пїЅ")	newletter="пїЅ" //229->232
 		switch(rand(1,15))
 			if(1 to 4)
 				newletter = "[lowertext_plus(newletter)]"
@@ -165,7 +165,7 @@ proc/slur(phrase)
 		newphrase+="[newletter]";counter-=1
 	return newphrase
 
-// TODO:CYRILLIC использовать lowertext_plus
+// TODO:CYRILLIC пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ lowertext_plus
 /proc/stutter(text)
 	text = html_decode(text)
 	var/t = ""
@@ -325,17 +325,17 @@ var/list/intents = list("help","disarm","grab","hurt")
 				hud_used.action_intent.icon_state = "help"
 
 
-/proc/broadcast_security_hud_message(var/message, var/broadcast_source)
+/proc/broadcast_security_hud_message(message, broadcast_source)
 	broadcast_hud_message(message, broadcast_source, sec_hud_users, /obj/item/clothing/glasses/hud/security)
 
-/proc/broadcast_medical_hud_message(var/message, var/broadcast_source)
+/proc/broadcast_medical_hud_message(message, broadcast_source)
 	broadcast_hud_message(message, broadcast_source, med_hud_users, /obj/item/clothing/glasses/hud/health)
 
-/proc/broadcast_hud_message(var/message, var/broadcast_source, var/list/targets, var/icon)
+/proc/broadcast_hud_message(message, broadcast_source, list/targets, icon)
 	var/turf/sourceturf = get_turf(broadcast_source)
 	for(var/mob/M in targets)
 		var/turf/targetturf = get_turf(M)
 		if((targetturf.z == sourceturf.z))
-			M.show_message("<span class='info'>\icon[icon] [message]</span>", 1)
+			M.show_message("<span class='info'>[bicon(icon)] [message]</span>", 1)
 	for(var/mob/dead/observer/G in player_list) //Ghosts? Why not.
-		G.show_message("<span class='info'>\icon[icon] [message]</span>", 1)
+		G.show_message("<span class='info'>[bicon(icon)] [message]</span>", 1)

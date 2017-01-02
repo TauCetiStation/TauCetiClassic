@@ -88,7 +88,7 @@
 					else
 						break
 
-/obj/machinery/mineral/ore_redemption/attackby(var/obj/item/weapon/W, var/mob/user, params)
+/obj/machinery/mineral/ore_redemption/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W,/obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/I = usr.get_active_hand()
 		if(istype(I) && !istype(inserted_id))
@@ -116,7 +116,7 @@
 		return 1
 	..()
 
-/obj/machinery/mineral/ore_redemption/proc/SmeltMineral(var/obj/item/weapon/ore/O)
+/obj/machinery/mineral/ore_redemption/proc/SmeltMineral(obj/item/weapon/ore/O)
 	if(O.refined_type)
 		var/obj/item/stack/sheet/mineral/M = O.refined_type
 		points += O.points * point_upgrade
@@ -124,7 +124,7 @@
 	qdel(O)//No refined type? Purge it.
 	return
 
-/obj/machinery/mineral/ore_redemption/attack_hand(user as mob)
+/obj/machinery/mineral/ore_redemption/attack_hand(user)
 	if(..())
 		return
 	interact(user)
@@ -180,7 +180,7 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 					inserted_id.mining_points += points
 					points = 0
 				else
-					usr << "<span class='warning'>Required access not found.</span>"
+					to_chat(usr, "<span class='warning'>Required access not found.</span>")
 		else if(href_list["choice"] == "insert")
 			var/obj/item/weapon/card/id/I = usr.get_active_hand()
 			if(istype(I))
@@ -188,7 +188,8 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 					return
 				I.loc = src
 				inserted_id = I
-			else usr << "<span class='warning'>No valid ID.</span>"
+			else
+				to_chat(usr, "<span class='warning'>No valid ID.</span>")
 
 	if(href_list["release"])
 		if(check_access(inserted_id) || allowed(usr)) //Check the ID inside, otherwise check the user.
@@ -203,7 +204,7 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 			if(inp.amount < 1)
 				stack_list -= text2path(href_list["release"])
 		else
-			usr << "<span class='warning'>Required access not found.</span>"
+			to_chat(usr, "<span class='warning'>Required access not found.</span>")
 
 	src.updateUsrDialog()
 
@@ -298,7 +299,7 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 		icon_state = "[initial(icon_state)]-off"
 	return
 
-/obj/machinery/mineral/equipment_locker/attack_hand(user as mob)
+/obj/machinery/mineral/equipment_locker/attack_hand(user)
 	if(..())
 		return
 	interact(user)
@@ -339,7 +340,8 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 					return
 				I.loc = src
 				inserted_id = I
-			else usr << "<span class='danger'>No valid ID.</span>"
+			else
+				to_chat(usr, "<span class='danger'>No valid ID.</span>")
 	if(href_list["purchase"])
 		if(istype(inserted_id))
 			var/datum/data/mining_equipment/prize = locate(href_list["purchase"])
@@ -352,7 +354,7 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 
 	src.updateUsrDialog()
 
-/obj/machinery/mineral/equipment_locker/attackby(obj/item/I as obj, mob/user as mob)
+/obj/machinery/mineral/equipment_locker/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/mining_voucher))
 		RedeemVoucher(I, user)
 		return
@@ -425,20 +427,20 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 	icon_state = "data"
 	var/points = 500
 
-/obj/item/weapon/card/mining_point_card/attackby(obj/item/I as obj, mob/user as mob)
+/obj/item/weapon/card/mining_point_card/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/card/id))
 		if(points)
 			var/obj/item/weapon/card/id/C = I
 			C.mining_points += points
-			user << "<span class='info'>You transfer [points] points to [C].</span>"
+			to_chat(user, "<span class='info'>You transfer [points] points to [C].</span>")
 			points = 0
 		else
-			user << "<span class='info'>There's no points left on [src].</span>"
+			to_chat(user, "<span class='info'>There's no points left on [src].</span>")
 	..()
 
-/obj/item/weapon/card/mining_point_card/examine()
+/obj/item/weapon/card/mining_point_card/examine(mob/user)
 	..()
-	usr << "There's [points] points on the card."
+	to_chat(user, "There's [points] points on the card.")
 
 
 /**********************Jaunter**********************/
@@ -457,10 +459,10 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 
 	var/chosen_beacon = null	//Let's do some targeting
 
-/obj/item/device/wormhole_jaunter/attack_self(mob/user as mob)
+/obj/item/device/wormhole_jaunter/attack_self(mob/user)
 	var/turf/device_turf = get_turf(user)
 	if(!device_turf||device_turf.z==2||device_turf.z>=7)
-		user << "<span class='notice'>You're having difficulties getting the [src.name] to work.</span>"
+		to_chat(user, "<span class='notice'>You're having difficulties getting the [src.name] to work.</span>")
 		return
 	else
 		user.visible_message("<span class='notice'>[user.name] activates the [src.name]!</span>")
@@ -470,7 +472,7 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 			if(T.z == ZLEVEL_STATION)
 				L += B
 		if(!L.len)
-			user << "<span class='notice'>The [src.name] failed to create a wormhole.</span>"
+			to_chat(user, "<span class='notice'>The [src.name] failed to create a wormhole.</span>")
 			return
 		if(!chosen_beacon)
 			chosen_beacon = pick(L)
@@ -481,7 +483,7 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 		playsound(src,'sound/effects/sparks4.ogg',50,1)
 		qdel(src)
 
-/obj/item/device/wormhole_jaunter/attackby(obj/item/B as obj)
+/obj/item/device/wormhole_jaunter/attackby(obj/item/B)
 	if(istype(B, /obj/item/device/radio/beacon))
 		usr.visible_message("<span class='notice'>[usr.name] spent [B.name] above [src.name], scanning the serial code.</span>",
 							"<span class='notice'>You scanned serial code of [B.name], now [src.name] is locked.</span>")
@@ -529,7 +531,7 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 	throwforce = 10
 	var/cooldown = 0
 
-/obj/item/weapon/resonator/proc/CreateResonance(var/target, var/creator)
+/obj/item/weapon/resonator/proc/CreateResonance(target, creator)
 	if(cooldown <= 0)
 		playsound(src,'sound/effects/stealthoff.ogg',50,1)
 		var/obj/effect/resonance/R = new /obj/effect/resonance(get_turf(target))
@@ -538,7 +540,7 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 		spawn(20)
 			cooldown = 0
 
-/obj/item/weapon/resonator/attack_self(mob/user as mob)
+/obj/item/weapon/resonator/attack_self(mob/user)
 	CreateResonance(src, user)
 	..()
 
@@ -579,11 +581,11 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 			if(creator)
 				for(var/mob/living/L in src.loc)
 					usr.attack_log += text("\[[time_stamp()]\] used a resonator field on [L.name] ([L.ckey])")
-					L << "<span class='danger'>The [src.name] ruptured with you in it!</span>"
+					to_chat(L, "<span class='danger'>The [src.name] ruptured with you in it!</span>")
 					L.adjustBruteLoss(resonance_damage)
 			else
 				for(var/mob/living/L in src.loc)
-					L << "<span class='danger'>The [src.name] ruptured with you in it!</span>"
+					to_chat(L, "<span class='danger'>The [src.name] ruptured with you in it!</span>")
 					L.adjustBruteLoss(resonance_damage)
 			qdel(src)
 
@@ -595,10 +597,6 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 	throwforce = 0
 	real = 0
 	sterile = 1
-
-/obj/item/clothing/mask/facehugger/toy/examine()//So that giant red text about probisci doesn't show up.
-	if(desc)
-		usr << desc
 
 /obj/item/clothing/mask/facehugger/toy/Die()
 	return
@@ -643,7 +641,7 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 	ranged_message = "shoots"
 	ranged_cooldown_cap = 3
 	projectiletype = /obj/item/projectile/kinetic
-	projectilesound = 'tauceti/sounds/weapon/Gunshot4.ogg'
+	projectilesound = 'sound/weapons/Gunshot4.ogg'
 	wanted_objects = list(/obj/item/weapon/ore/diamond,
 						  /obj/item/weapon/ore/glass,
 						  /obj/item/weapon/ore/gold,
@@ -656,18 +654,18 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 						  /obj/item/weapon/ore/hydrogen,
 						  /obj/item/weapon/ore/clown)
 
-/mob/living/simple_animal/hostile/mining_drone/attackby(obj/item/I as obj, mob/user as mob)
+/mob/living/simple_animal/hostile/mining_drone/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/W = I
 		if(W.welding && !stat)
 			if(stance != HOSTILE_STANCE_IDLE)
-				user << "<span class='info'>[src] is moving around too much to repair!</span>"
+				to_chat(user, "<span class='info'>[src] is moving around too much to repair!</span>")
 				return
 			if(maxHealth == health)
-				user << "<span class='info'>[src] is at full integrity.</span>"
+				to_chat(user, "<span class='info'>[src] is at full integrity.</span>")
 			else
 				health += 10
-				user << "<span class='info'>You repair some of the armor on [src].</span>"
+				to_chat(user, "<span class='info'>You repair some of the armor on [src].</span>")
 			return
 	..()
 
@@ -688,10 +686,10 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 		switch(search_objects)
 			if(0)
 				SetCollectBehavior()
-				M << "<span class='info'>[src] has been set to search and store loose ore.</span>"
+				to_chat(M, "<span class='info'>[src] has been set to search and store loose ore.</span>")
 			if(2)
 				SetOffenseBehavior()
-				M << "<span class='info'>[src] has been set to attack hostile wildlife.</span>"
+				to_chat(M, "<span class='info'>[src] has been set to attack hostile wildlife.</span>")
 		return
 	..()
 
@@ -749,7 +747,7 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 	set category = "Object"
 	set src in oview(1)
 
-	usr << "<span class='info'>You instruct [src] to drop any collected ore.</span>"
+	to_chat(usr, "<span class='info'>You instruct [src] to drop any collected ore.</span>")
 	DropOre()
 
 /**********************Lazarus Injector**********************/
@@ -785,33 +783,32 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 				icon_state = "lazarus_empty"
 				return
 			else
-				user << "<span class='info'>[src] is only effective on the dead.</span>"
+				to_chat(user, "<span class='info'>[src] is only effective on the dead.</span>")
 				return
 		else
-			user << "<span class='info'>[src] is only effective on lesser beings.</span>"
+			to_chat(user, "<span class='info'>[src] is only effective on lesser beings.</span>")
 			return
 
-/obj/item/weapon/lazarus_injector/examine()
+/obj/item/weapon/lazarus_injector/examine(mob/user)
 	..()
 	if(!loaded)
-		usr << "<span class='info'>[src] is empty.</span>"
+		to_chat(user, "<span class='info'>[src] is empty.</span>")
 
 /**********************Patcher**********************/
 
 /obj/item/weapon/patcher
 	name = "suit patcher"
 	desc = "Suit patcher will recover your space rig from breaches. It is for one use only."
-	icon = 'tauceti/icons/obj/patcher.dmi'
+	icon = 'icons/obj/weapons.dmi'
 	icon_state = "patcher"
 	item_state = "patcher"
-	tc_custom = 'tauceti/icons/obj/patcher.dmi'
 	throwforce = 0
 	w_class = 2.0
 	throw_speed = 3
 	throw_range = 5
 	var/loaded = 1
 
-/obj/item/weapon/patcher/afterattack(var/obj/O as obj, mob/user)
+/obj/item/weapon/patcher/afterattack(obj/O, mob/user)
 	if(!loaded)
 		return
 	if(istype(O, /obj/item/clothing/suit/space))
@@ -828,15 +825,15 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 			icon_state = "patcher_empty"
 			return
 		else
-			user << "<span class='info'>[O] absolutely intact.</span>"
+			to_chat(user, "<span class='info'>[O] absolutely intact.</span>")
 			return
 	else
 		..()
 
-/obj/item/weapon/patcher/examine()
+/obj/item/weapon/patcher/examine(mob/user)
 	..()
 	if(!loaded)
-		usr << "<span class='info'>[src] is already used.</span>"
+		to_chat(user, "<span class='info'>[src] is already used.</span>")
 
 /**********************Xeno Warning Sign**********************/
 

@@ -9,7 +9,7 @@
 	max_genetic_damage = 100
 
 //Fake our own death and fully heal. You will appear to be dead but regenerate fully after a short delay.
-/obj/effect/proc_holder/changeling/fakedeath/sting_action(var/mob/living/user)
+/obj/effect/proc_holder/changeling/fakedeath/sting_action(mob/living/user)
 
 	if(user.fake_death)
 		var/fake_pick = pick("oxy", "tox", "fire", "clone")
@@ -35,38 +35,38 @@
 		//	user.tod = worldtime2text()
 
 	if(NOCLONE in user.mutations)
-		user << "<span class='notice'>We could not begin our stasis, something damaged all our DNA.</span>"
+		to_chat(user, "<span class='notice'>We could not begin our stasis, something damaged all our DNA.</span>")
 		user.mind.changeling.instatis = 0
 		user.fake_death = 0
 		return
 	else
-		user << "<span class='notice'>We begin our stasis, preparing energy to arise once more.</span>"
+		to_chat(user, "<span class='notice'>We begin our stasis, preparing energy to arise once more.</span>")
 
 	spawn(rand(800,2000))
 		if(user && user.mind && user.mind.changeling && user.mind.changeling.purchasedpowers)
 			user.mind.changeling.instatis = 0
 			user.fake_death = 0
 			if(user.stat != DEAD) //Player was resurrected before stasis completion
-				user << "<span class='notice'>Our stasis was interrupted.</span>"
+				to_chat(user, "<span class='notice'>Our stasis was interrupted.</span>")
 				return
 			else
 				if(NOCLONE in user.mutations)
-					user << "<span class='notice'>We could not regenerate. something wrong with our DNA.</span>"
+					to_chat(user, "<span class='notice'>We could not regenerate. something wrong with our DNA.</span>")
 				else
-					user << "<span class='notice'>We are ready to regenerate.</span>"
+					to_chat(user, "<span class='notice'>We are ready to regenerate.</span>")
 					user.mind.changeling.purchasedpowers += new /obj/effect/proc_holder/changeling/revive(null)
 
 	feedback_add_details("changeling_powers","FD")
 	return 1
 
-/obj/effect/proc_holder/changeling/fakedeath/can_sting(var/mob/user)
+/obj/effect/proc_holder/changeling/fakedeath/can_sting(mob/user)
 	//if(user.status_flags & FAKEDEATH)
 	if(user.mind.changeling.instatis) //We already regenerating, no need to start second time in a row.
 		return
 
 	for(var/obj/effect/proc_holder/changeling/revive/ability_to_check in user.mind.changeling.purchasedpowers)
 		if(istype(ability_to_check, /obj/effect/proc_holder/changeling/revive))
-			user << "<span class='notice'>We already prepared our ability.</span>"
+			to_chat(user, "<span class='notice'>We already prepared our ability.</span>")
 			return
 
 	if(user.fake_death == 1)

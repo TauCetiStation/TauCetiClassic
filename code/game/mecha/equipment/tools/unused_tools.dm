@@ -18,7 +18,7 @@
 	var/datum/effect/effect/system/ion_trail_follow/ion_trail
 
 
-	can_attach(obj/mecha/M as obj)
+	can_attach(obj/mecha/M)
 		if(!(locate(src.type) in M.equipment) && !M.proc_res["dyndomove"])
 			return ..()
 
@@ -27,7 +27,7 @@
 		chassis.proc_res["dyndomove"] = null
 		return
 
-	attach(obj/mecha/M as obj)
+	attach(obj/mecha/M)
 		..()
 		if(!ion_trail)
 			ion_trail = new
@@ -117,19 +117,19 @@
 	var/shock_damage = 15
 	var/active
 
-	can_attach(obj/mecha/M as obj)
+	can_attach(obj/mecha/M)
 		if(..())
 			if(!istype(M, /obj/mecha/combat/honker))
 				if(!M.proc_res["dynattackby"] && !M.proc_res["dynattackhand"] && !M.proc_res["dynattackalien"])
 					return 1
 		return 0
 
-	attach(obj/mecha/M as obj)
+	attach(obj/mecha/M)
 		..()
 		chassis.proc_res["dynattackby"] = src
 		return
 
-	proc/dynattackby(obj/item/weapon/W as obj, mob/user as mob)
+	proc/dynattackby(obj/item/weapon/W, mob/user)
 		if(!action_checks(user) || !active)
 			return
 		user.electrocute_act(shock_damage, src)
@@ -139,7 +139,7 @@
 /*
 /obj/item/mecha_parts/mecha_equipment/book_stocker
 
-	action(var/mob/target)
+	action(mob/target)
 		if(!istype(target))
 			return
 		if(target.search_contents_for(/obj/item/book/WGW))

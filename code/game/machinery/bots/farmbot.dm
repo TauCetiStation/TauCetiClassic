@@ -85,7 +85,7 @@
 	src.icon_state = "farmbot[src.on]"
 	src.updateUsrDialog()
 
-/obj/machinery/bot/farmbot/attack_paw(mob/user as mob)
+/obj/machinery/bot/farmbot/attack_paw(mob/user)
 	return attack_hand(user)
 
 
@@ -95,7 +95,7 @@
 		total_fert++
 	return total_fert
 
-/obj/machinery/bot/farmbot/attack_hand(mob/user as mob)
+/obj/machinery/bot/farmbot/attack_hand(mob/user)
 	. = ..()
 	if (.)
 		return
@@ -157,22 +157,22 @@
 
 	src.updateUsrDialog()
 
-/obj/machinery/bot/farmbot/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/machinery/bot/farmbot/attackby(obj/item/weapon/W, mob/user)
 	if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if (src.allowed(user))
 			src.locked = !src.locked
-			user << "Controls are now [src.locked ? "locked." : "unlocked."]"
+			to_chat(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
 			src.updateUsrDialog()
 		else
-			user << "\red Access denied."
+			to_chat(user, "\red Access denied.")
 
 	else if (istype(W, /obj/item/nutrient))
 		if ( get_total_ferts() >= Max_Fertilizers )
-			user << "The fertilizer storage is full!"
+			to_chat(user, "The fertilizer storage is full!")
 			return
 		user.drop_item()
 		W.loc = src
-		user << "You insert [W]."
+		to_chat(user, "You insert [W].")
 		flick("farmbot_hatch",src)
 		src.updateUsrDialog()
 		return
@@ -180,9 +180,10 @@
 	else
 		..()
 
-/obj/machinery/bot/farmbot/Emag(mob/user as mob)
+/obj/machinery/bot/farmbot/Emag(mob/user)
 	..()
-	if(user) user << "\red You short out [src]'s plant identifier circuits."
+	if(user)
+		to_chat(user, "\red You short out [src]'s plant identifier circuits.")
 	spawn(0)
 		for(var/mob/O in hearers(src, null))
 			O.show_message("\red <B>[src] buzzes oddly!</B>", 1)
@@ -527,7 +528,7 @@
 				new /obj/structure/reagent_dispensers/watertank(src)
 
 
-/obj/structure/reagent_dispensers/watertank/attackby(var/obj/item/robot_parts/S, mob/user as mob)
+/obj/structure/reagent_dispensers/watertank/attackby(obj/item/robot_parts/S, mob/user)
 
 	if ((!istype(S, /obj/item/robot_parts/l_arm)) && (!istype(S, /obj/item/robot_parts/r_arm)))
 		..()
@@ -538,37 +539,37 @@
 	var/obj/item/weapon/farmbot_arm_assembly/A = new /obj/item/weapon/farmbot_arm_assembly
 
 	A.loc = src.loc
-	user << "You add the robot arm to the [src]"
+	to_chat(user, "You add the robot arm to the [src]")
 	src.loc = A //Place the water tank into the assembly, it will be needed for the finished bot
 	user.remove_from_mob(S)
 	qdel(S)
 
-/obj/item/weapon/farmbot_arm_assembly/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/weapon/farmbot_arm_assembly/attackby(obj/item/weapon/W, mob/user)
 	..()
 	if((istype(W, /obj/item/device/analyzer/plant_analyzer)) && (!src.build_step))
 		src.build_step++
-		user << "You add the plant analyzer to [src]!"
+		to_chat(user, "You add the plant analyzer to [src]!")
 		src.name = "farmbot assembly"
 		user.remove_from_mob(W)
 		qdel(W)
 
 	else if(( istype(W, /obj/item/weapon/reagent_containers/glass/bucket)) && (src.build_step == 1))
 		src.build_step++
-		user << "You add a bucket to [src]!"
+		to_chat(user, "You add a bucket to [src]!")
 		src.name = "farmbot assembly with bucket"
 		user.remove_from_mob(W)
 		qdel(W)
 
 	else if(( istype(W, /obj/item/weapon/minihoe)) && (src.build_step == 2))
 		src.build_step++
-		user << "You add a minihoe to [src]!"
+		to_chat(user, "You add a minihoe to [src]!")
 		src.name = "farmbot assembly with bucket and minihoe"
 		user.remove_from_mob(W)
 		qdel(W)
 
 	else if((isprox(W)) && (src.build_step == 3))
 		src.build_step++
-		user << "You complete the Farmbot! Beep boop."
+		to_chat(user, "You complete the Farmbot! Beep boop.")
 		var/obj/machinery/bot/farmbot/S = new /obj/machinery/bot/farmbot
 		for ( var/obj/structure/reagent_dispensers/watertank/wTank in src.contents )
 			wTank.loc = S
@@ -589,5 +590,5 @@
 
 		src.created_name = t
 
-/obj/item/weapon/farmbot_arm_assembly/attack_hand(mob/user as mob)
+/obj/item/weapon/farmbot_arm_assembly/attack_hand(mob/user)
 	return //it's a converted watertank, no you cannot pick it up and put it in your backpack

@@ -1,8 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
-
-#define DOOR_LAYER		2.7
-#define DOOR_CLOSED_MOD		0.4 //how much the layer is increased when the door is closed
-
 /obj/machinery/door
 	name = "Door"
 	desc = "It opens and closes."
@@ -12,7 +7,10 @@
 	opacity = 1
 	density = 1
 	layer = DOOR_LAYER
+	power_channel = ENVIRON
 	var/base_layer = DOOR_LAYER
+	var/icon_state_open  = "door0"
+	var/icon_state_close = "door1"
 
 	var/secondsElectrified = 0
 	var/visible = 1
@@ -24,8 +22,10 @@
 	var/heat_proof = 0 // For glass airlocks/opacity firedoors
 	var/air_properties_vary_with_direction = 0
 	var/block_air_zones = 1 //If set, air zones cannot merge across the door even when it is opened.
+	var/emergency = 0 // Emergency access override
 
-	var/width = 1
+	var/door_open_sound  = 'sound/machines/airlock/airlockToggle_2.ogg'
+	var/door_close_sound = 'sound/machines/airlock/airlockToggle_2.ogg'
 
 /obj/machinery/door/New()
 	. = ..()
@@ -36,15 +36,6 @@
 	else
 		layer = base_layer //Under all objects if opened. 2.7 due to tables being at 2.6
 		explosion_resistance = 0
-
-
-	if(width > 1)
-		if(dir in list(EAST, WEST))
-			bound_width = width * world.icon_size
-			bound_height = world.icon_size
-		else
-			bound_width = world.icon_size
-			bound_height = width * world.icon_size
 
 	update_nearby_tiles(need_rebuild=1)
 	return
@@ -70,7 +61,7 @@
 
 	if(istype(AM, /obj/machinery/bot))
 		var/obj/machinery/bot/bot = AM
-		if(src.check_access(bot.botcard))
+		if(src.check_access(bot.botcard) || emergency)
 			if(density)
 				open()
 		return
@@ -78,18 +69,19 @@
 	if(istype(AM, /obj/mecha))
 		var/obj/mecha/mecha = AM
 		if(density)
-			if(mecha.occupant && (src.allowed(mecha.occupant) || src.check_access_list(mecha.operation_req_access)))
+			if(mecha.occupant && (src.allowed(mecha.occupant) || src.check_access_list(mecha.operation_req_access)) || emergency)
 				open()
 			else
-				flick("door_deny", src)
+				do_animate("deny")
 		return
+
 	if(istype(AM, /obj/structure/stool/bed/chair/wheelchair))
 		var/obj/structure/stool/bed/chair/wheelchair/wheel = AM
 		if(density)
-			if(wheel.pulling && (src.allowed(wheel.pulling)))
+			if((wheel.pulling && src.allowed(wheel.pulling)) || emergency)
 				open()
 			else
-				flick("door_deny", src)
+				do_animate("deny")
 		return
 	return
 
@@ -101,7 +93,7 @@
 	return !density
 
 
-/obj/machinery/door/proc/bumpopen(mob/user as mob)
+/obj/machinery/door/proc/bumpopen(mob/user)
 	if(operating)	return
 	if(user.last_airflow > world.time - vsc.airflow_delay) //Fakkit
 		return
@@ -110,32 +102,34 @@
 		user = null
 
 	if(density)
-		if(allowed(user))	open()
-		else				flick("door_deny", src)
+		if(allowed(user) || emergency)
+			open()
+		else
+			do_animate("deny")
 	return
 
-/obj/machinery/door/meteorhit(obj/M as obj)
+/obj/machinery/door/meteorhit(obj/M)
 	src.open()
 	return
 
 
-/obj/machinery/door/attack_ai(mob/user as mob)
+/obj/machinery/door/attack_ai(mob/user)
 	return src.attack_hand(user)
 
 
-/obj/machinery/door/attack_paw(mob/user as mob)
+/obj/machinery/door/attack_paw(mob/user)
 	return src.attack_hand(user)
 
 
-/obj/machinery/door/attack_hand(mob/user as mob)
+/obj/machinery/door/attack_hand(mob/user)
 	return src.attackby(user, user)
 
-/obj/machinery/door/attack_tk(mob/user as mob)
+/obj/machinery/door/attack_tk(mob/user)
 	if(requiresID() && !allowed(null))
 		return
 	..()
 
-/obj/machinery/door/attackby(obj/item/I as obj, mob/user as mob)
+/obj/machinery/door/attackby(obj/item/I, mob/user)
 	if(HULK in user.mutations) //#Z2 Hulk can open any door with his power and break any door with harm intent.
 		if(!src.density) return
 		var/cur_loc = user.loc
@@ -151,7 +145,7 @@
 				break
 		if(!found) return
 		if(I != user)
-			user << "\red You can't force open door with [I] in hand!"
+			to_chat(user, "\red You can't force open door with [I] in hand!")
 			return
 		var/obj/machinery/door/airlock/A = src
 		if(istype(A,/obj/machinery/door/airlock/))
@@ -181,11 +175,10 @@
 						da.throw_at(target, 200, 100)
 
 						if(A.mineral)
-							da.glass = A.mineral
-						else if(A.glass && !da.glass)
-							da.glass = 1
-						da.state = 2
-						da.name = "Near finished Airlock Assembly"
+							da.change_mineral_airlock_type(A.mineral)
+						if(A.glass && da.can_insert_glass)
+							da.set_glass(TRUE)
+						da.state = ASSEMBLY_WIRED
 						da.created_name = src.name
 						da.update_state()
 
@@ -204,7 +197,7 @@
 						qdel(A)
 					return
 			else if(A.locked && user.a_intent != "hurt")
-				user << "\red The door is bolted and you need more aggressive force to get thru!"
+				to_chat(user, "\red The door is bolted and you need more aggressive force to get thru!")
 				return
 		user.visible_message("\red \The [user] starts to force \the [src] open with a bare hands!",\
 				"You start forcing \the [src] open with a bare hands!",\
@@ -258,10 +251,11 @@
 		user = null
 	if(!src.requiresID())
 		user = null
-	if(src.density && (istype(I, /obj/item/weapon/card/emag)||istype(I, /obj/item/weapon/melee/energy/blade)))
-		flick("door_spark", src)
+	if(src.density && hasPower() && (istype(I, /obj/item/weapon/card/emag)||istype(I, /obj/item/weapon/melee/energy/blade)))
+		update_icon(AIRLOCK_EMAG)
 		sleep(6)
-		open()
+		if(!open())
+			update_icon(AIRLOCK_CLOSED)
 		operating = -1
 		return 1
 	if(src.allowed(user))
@@ -271,7 +265,7 @@
 			close()
 		return
 	if(src.density)
-		flick("door_deny", src)
+		do_animate("deny")
 	return
 
 
@@ -309,10 +303,9 @@
 
 /obj/machinery/door/update_icon()
 	if(density)
-		icon_state = "door1"
+		icon_state = icon_state_close
 	else
-		icon_state = "door0"
-	return
+		icon_state = icon_state_open
 
 
 /obj/machinery/door/proc/do_animate(animation)
@@ -332,58 +325,143 @@
 	return
 
 
-/obj/machinery/door/proc/open()
-	if(!density)		return 1
-	if(operating > 0)	return
-	if(!ticker)			return 0
-	if(!operating)		operating = 1
+/**
+ * Call this proc, if you want to open the door.
+ *
+ * Use `forced` param, if you want to open the door with
+ * ignoring of `normal_open_checks()` conditions.
+ *
+ * Same for `close()`.
+ */
 
+/obj/machinery/door/proc/open(forced = FALSE)
+	if(!density)
+		return TRUE
+	if(open_checks(forced))
+		set_operating(TRUE)
+		do_open()
+		set_operating(FALSE)
+		return TRUE
+	return FALSE
+
+/obj/machinery/door/proc/close(forced = FALSE)
+	if(density)
+		return TRUE
+	if(close_checks(forced))
+		set_operating(TRUE)
+		do_close()
+		set_operating(FALSE)
+		return TRUE
+	return FALSE
+
+
+/**
+ * DO NOT CALL THIS PROC DIRECTLY!!!
+ *
+ * Checks for base level conditions for door opening.
+ *
+ * If you want more conditions you can re-implement it in subtypes like that:
+ * > /obj/machinery/door/.../open_checks()
+ * >   if(..() && `more conditions`)
+ * >     return TRUE
+ * >   return FALSE
+ * or in another way, but with TRUE or FALSE returning.
+ *
+ * Same for `close_checks()`.
+ */
+
+/obj/machinery/door/proc/open_checks(forced)
+	if(!operating && ticker)
+		if(!forced)
+			return normal_open_checks()
+		return TRUE
+	return FALSE
+
+/obj/machinery/door/proc/close_checks(forced)
+	if(!operating && ticker)
+		if(!forced)
+			return normal_close_checks()
+		return TRUE
+	return FALSE
+
+
+/**
+ * DO NOT CALL THIS PROC DIRECTLY!!!
+ *
+ * Checks for additional level conditions for door opening.
+ * Proc will be ignored if door was forced.
+ *
+ * If you want more conditions you can re-implement it in subtypes like that:
+ * > /obj/machinery/door/.../normal_open_checks()
+ * >   if(`condition one` && `condition two`)
+ * >     return TRUE
+ * >   return FALSE
+ * or in another way, but with TRUE or FALSE returning.
+ *
+ * Same for `normal_close_checks()`.
+ */
+
+/obj/machinery/door/proc/normal_open_checks()
+	return TRUE
+
+/obj/machinery/door/proc/normal_close_checks()
+	return TRUE
+
+
+/**
+ * DO NOT CALL THIS PROC DIRECTLY!!!
+ *
+ * Actually the process of opening the door.
+ * Re-implement it in subtypes if you want another behavior.
+ *
+ * Same for `do_close()`.
+ */
+
+/obj/machinery/door/proc/do_open()
+	playsound(src, door_open_sound, 100, 1)
 	do_animate("opening")
-	icon_state = "door0"
-	src.set_opacity(0)
 	sleep(3)
-	src.density = 0
-	sleep(7)
-	src.layer = base_layer
+	set_opacity(FALSE)
+	density = FALSE
+	sleep(9)
+	layer = base_layer
 	explosion_resistance = 0
 	update_icon()
-	set_opacity(0)
 	update_nearby_tiles()
 
-	if(operating)	operating = 0
-
-	if(autoclose  && normalspeed)
-		spawn(150)
-			autoclose()
-	if(autoclose && !normalspeed)
-		spawn(5)
-			autoclose()
-
-	return 1
-
-
-/obj/machinery/door/proc/close()
-	if(density)	return 1
-	if(operating > 0)	return
-	operating = 1
-
+/obj/machinery/door/proc/do_close()
+	playsound(src, door_close_sound, 100, 1)
 	do_animate("closing")
 	sleep(3)
-	src.density = 1
-	explosion_resistance = initial(explosion_resistance)
-	src.layer = base_layer + DOOR_CLOSED_MOD
-	sleep(7)
-	update_icon()
+	density = TRUE
+	sleep(9)
 	if(visible && !glass)
-		set_opacity(1)	//caaaaarn!
-	operating = 0
+		set_opacity(TRUE)
+	layer = base_layer + DOOR_CLOSED_MOD
+	explosion_resistance = initial(explosion_resistance)
+	do_afterclose()
+	update_icon()
 	update_nearby_tiles()
 
+
+/**
+ * DO NOT CALL THIS PROC DIRECTLY!!!
+ *
+ * Helps to add additional behavior for closing.
+ */
+
+/obj/machinery/door/proc/do_afterclose()
 	//I shall not add a check every x ticks if a door has closed over some fire.
-	var/obj/fire/fire = locate() in loc
+	var/obj/fire/fire = locate() in locs
 	if(fire)
 		qdel(fire)
-	return
+
+/obj/machinery/door/proc/set_operating(operating)
+	if(operating && !src.operating)
+		src.operating = TRUE
+	else if(!operating && src.operating == 1)
+		src.operating = FALSE
+
 
 /obj/machinery/door/proc/requiresID()
 	return 1
@@ -398,30 +476,15 @@
 
 	return 1
 
-/obj/machinery/door/proc/update_heat_protection(var/turf/simulated/source)
+/obj/machinery/door/proc/update_heat_protection(turf/simulated/source)
 	if(istype(source))
 		if(src.density && (src.opacity || src.heat_proof))
 			source.thermal_conductivity = DOOR_HEAT_TRANSFER_COEFFICIENT
 		else
 			source.thermal_conductivity = initial(source.thermal_conductivity)
 
-/obj/machinery/door/proc/autoclose()
-	var/obj/machinery/door/airlock/A = src
-	if(!A.density && !A.operating && !A.locked && !A.welded && A.autoclose)
-		close()
-	return
-
 /obj/machinery/door/Move(new_loc, new_dir)
-	update_nearby_tiles()
-	. = ..()
-	if(width > 1)
-		if(dir in list(EAST, WEST))
-			bound_width = width * world.icon_size
-			bound_height = world.icon_size
-		else
-			bound_width = world.icon_size
-			bound_height = width * world.icon_size
-
+	..()
 	update_nearby_tiles()
 
 /obj/machinery/door/proc/hasPower()
@@ -429,3 +492,5 @@
 
 /obj/machinery/door/morgue
 	icon = 'icons/obj/doors/doormorgue.dmi'
+	door_open_sound  = 'sound/machines/shutter_open.ogg'
+	door_close_sound = 'sound/machines/shutter_close.ogg'
