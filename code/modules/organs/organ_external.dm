@@ -449,16 +449,15 @@ Note that amputating the affected organ does in fact remove the infection from t
 			// let the GC handle the deletion of the wound
 
 		// Internal wounds get worse over time. Low temperatures (cryo) stop them.
-		if(W.internal && !W.can_autoheal() && owner.bodytemperature >= 170)
+		if(W.internal && owner.bodytemperature >= 170)
 			var/bicardose = owner.reagents.get_reagent_amount("bicaridine")
 			var/inaprovaline = owner.reagents.get_reagent_amount("inaprovaline")
-			if(!bicardose || !inaprovaline)	//bicaridine and inaprovaline stop internal wounds from growing bigger with time, and also stop bleeding
+			if(!(W.can_autoheal() || (bicardose && inaprovaline)))	//bicaridine and inaprovaline stop internal wounds from growing bigger with time
 				W.open_wound(0.1 * wound_update_accuracy)
-				owner.vessel.remove_reagent("blood",0.05 * W.damage * wound_update_accuracy)
 			if(bicardose >= 30)	//overdose of bicaridine begins healing IB
-				W.damage = max(0, W.damage - 0.2)
+				W.damage = max(0, W.damage - 0.2) // Bug: doesn't update W.current_stage
 
-			owner.vessel.remove_reagent("blood",0.02 * W.damage * wound_update_accuracy)
+			owner.vessel.remove_reagent("blood",0.05 * W.damage * wound_update_accuracy)
 			if(prob(1 * wound_update_accuracy))
 				owner.custom_pain("You feel a stabbing pain in your [display_name]!",1)
 
@@ -497,10 +496,11 @@ Note that amputating the affected organ does in fact remove the infection from t
 	status &= ~ORGAN_BLEEDING
 	var/clamped = 0
 	for(var/datum/wound/W in wounds)
-		if(W.damage_type == CUT || W.damage_type == BRUISE)
-			brute_dam += W.damage
-		else if(W.damage_type == BURN)
-			burn_dam += W.damage
+		if (!W.internal)
+			if(W.damage_type == CUT || W.damage_type == BRUISE)
+				brute_dam += W.damage
+			else if(W.damage_type == BURN)
+				burn_dam += W.damage
 
 		if(!(status & ORGAN_ROBOT) && W.bleeding())
 			W.bleed_timer--
