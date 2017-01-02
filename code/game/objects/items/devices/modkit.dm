@@ -14,11 +14,6 @@
 		/obj/item/clothing/suit/space/rig
 		)
 
-	var/list/forbidden_type = list(
-		/obj/item/clothing/head/helmet/space/rig/engineering/chief,
-		/obj/item/clothing/suit/space/rig/engineering/chief
-	)
-
 /obj/item/device/modkit/afterattack(obj/O, mob/user)
 	if(get_dist(src,O)>1)
 		return
@@ -33,7 +28,7 @@
 
 	var/allowed = 0
 	for (var/permitted_type in permitted_types)
-		if(istype(O, permitted_type) && !(O.type in forbidden_type))
+		if(istype(O, permitted_type))
 			allowed = 1
 
 	var/obj/item/clothing/I = O
@@ -199,6 +194,14 @@
 	permitted_types = list(
 		/obj/item/clothing/head/helmet/space/rig/medical,
 		/obj/item/clothing/suit/space/rig/medical
+		)
+/obj/item/device/modkit/skrell/white
+	name = "skrellian white hardsuit modification kit"
+	desc = "A kit containing all the needed tools and parts to modify a hardsuit for another user. This one looks like it's meant for Skrell"
+	target_species = "Skrell"
+	permitted_types = list(
+		/obj/item/clothing/head/helmet/space/rig/engineering/chief,
+		/obj/item/clothing/suit/space/rig/engineering/chief
 		)
 
 /obj/item/device/modkit/skrell/sec
