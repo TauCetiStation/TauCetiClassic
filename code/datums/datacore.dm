@@ -161,3 +161,19 @@ proc/get_id_photo(mob/living/carbon/human/H)
 	var/datum/job/J = SSjob.GetJob(H.mind.assigned_role)
 	var/datum/preferences/P = H.client.prefs
 	return get_flat_human_icon(null,J,P)
+
+
+
+/proc/find_general_record(field, value)
+	return find_record(field, value, data_core.general)
+
+/proc/find_medical_record(field, value)
+	return find_record(field, value, data_core.medical)
+
+/proc/find_security_record(field, value)
+	return find_record(field, value, data_core.security)
+
+/proc/find_record(field, value, list/L)
+	for(var/datum/data/record/R in L)
+		if(R.fields[field] == value)
+			return R

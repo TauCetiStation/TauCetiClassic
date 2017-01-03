@@ -94,6 +94,22 @@
 	qdel(in_chamber) //No need for it anymore
 	return output //Send it back to the gun!
 
+/proc/check_trajectory(atom/target, atom/firer, pass_flags = PASSTABLE|PASSGLASS|PASSGRILLE, flags = null) //Spherical test in vacuum
+	if(!istype(target) || !istype(firer))
+		return 0
+
+	var/obj/item/projectile/test/trace = new /obj/item/projectile/test(get_turf(firer)) //Making the test....
+
+	//Set the flags and pass flags to that of the real projectile...
+	if(!isnull(flags))
+		trace.flags = flags
+	trace.target = target
+	trace.pass_flags = pass_flags
+
+	var/output = trace.process() //Test it!
+	qdel(trace) //No need for it anymore
+	return output //Send it back to the gun!
+
 //Used to change the direction of the projectile in flight.
 /obj/item/projectile/proc/redirect(new_x, new_y, atom/starting_loc, mob/new_firer=null)
 	original = locate(new_x, new_y, src.z)
@@ -212,7 +228,7 @@
 //				invisibility = 101
 //				qdel(src)
 //				return 0
-//		return 1	//с ТГ, работает лучше
+//		return 1	//пїЅ пїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 
 
 
@@ -332,6 +348,10 @@
 		return
 	if(istype(A, /mob/living))
 		result = 2 //We hit someone, return 1!
+		return
+	if(checkpass(PASSGLASS) && istype(A, /obj/structure/window))
+		return
+	if(checkpass(PASSGRILLE) && istype(A, /obj/structure/grille))
 		return
 	result = 1
 	return
