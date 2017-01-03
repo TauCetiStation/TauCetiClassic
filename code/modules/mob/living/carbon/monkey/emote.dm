@@ -120,10 +120,10 @@
 			m_type = 1
 		if("cough")
 			if(istype(src,/mob/living/carbon/monkey/diona))
-				message = "The [src.name] shrinks and twitches slightly"
+				message = "<B>The [src.name]</B> shrinks and twitches slightly"
 				m_type = 1
 			else
-				message = "The [src.name] coughs!"
+				message = "<B>The [src.name]</B> coughs!"
 				m_type = 2
 		if("help")
 			var/text = "choke, "
