@@ -1,4 +1,4 @@
-#define ALLOWED_ID_OVELAYS list("id","gold","silver","centcom","ert","ert-leader","syndicate","syndicate-command")//List of overlays in pda.dmi
+#define ALLOWED_ID_OVERLAYS list("id","gold","silver","centcom","ert","ert-leader","syndicate","syndicate-command")//List of overlays in pda.dmi
 //The advanced pea-green monochrome lcd of tomorrow.
 
 var/global/list/obj/item/device/pda/PDAs = list()
@@ -858,7 +858,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 /obj/item/device/pda/proc/get_id_overlay(var/obj/item/weapon/card/id/I)
 	if(!I)
 		return
-	if(I.icon_state in ALLOWED_ID_OVELAYS)
+	if(I.icon_state in ALLOWED_ID_OVERLAYS)
 		return I.icon_state
 	return "id"
 
