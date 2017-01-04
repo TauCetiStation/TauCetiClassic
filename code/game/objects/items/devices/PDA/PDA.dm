@@ -855,7 +855,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		if(id_overlay)
 			overlays += image('icons/obj/pda.dmi', id_overlay)
 
-/obj/item/device/pda/proc/get_id_overlay(var/obj/item/weapon/card/id/I)
+/obj/item/device/pda/proc/get_id_overlay(obj/item/weapon/card/id/I)
 	if(!I)
 		return
 	if(I.icon_state in ALLOWED_ID_OVERLAYS)
