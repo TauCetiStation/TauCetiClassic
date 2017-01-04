@@ -92,6 +92,7 @@
 			spawn(900)
 				network = previous_network
 				stat &= ~EMPED
+				cancelCameraAlarm()
 				toggle_cam(TRUE)
 			..()
 
