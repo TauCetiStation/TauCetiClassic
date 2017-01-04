@@ -47,7 +47,6 @@
 /obj/item/weapon/gun/proc/PreFire(atom/A, mob/living/user, params)
 	//Lets not spam it.
 	if(lock_time > world.time - 2) return
-	.
 	if(ismob(A) && isliving(A) && !(A in target))
 		Aim(A) 	//Clicked a mob, aim at them
 	else  		//Didn't click someone, check if there is anyone along that guntrace
@@ -278,10 +277,6 @@
 	screen -= usr.gun_move_icon
 	if (target_can_move)
 		screen -= usr.gun_run_icon
-	qdel(usr.gun_move_icon)
-	qdel(usr.item_use_icon)
-	qdel(usr.gun_run_icon)
-
 
 /client/verb/ToggleGunMode()
 	set hidden = 1
@@ -310,7 +305,7 @@
 	else
 		to_chat(usr, "Target may no longer move.")
 		target_can_run = 0
-		qdel(usr.gun_run_icon)	//no need for icon for running permission
+		screen -= usr.gun_run_icon //no need for icon for running permission
 
 	//Updating walking permission button
 	if(usr.gun_move_icon)
