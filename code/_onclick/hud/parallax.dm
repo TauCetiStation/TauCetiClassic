@@ -13,7 +13,6 @@
 	var/parallax_animate_timer
 
 /datum/hud/proc/create_parallax()
-	world << "Creating parallax"
 	var/client/C = mymob.client
 	if (!apply_parallax_pref())
 		return
