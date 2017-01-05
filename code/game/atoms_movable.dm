@@ -14,6 +14,7 @@
 	var/moved_recently = 0
 	var/mob/pulledby = null
 	var/inertia_dir = 0
+	var/list/client_mobs_in_contents
 
 /atom/movable/New()
 	. = ..()
@@ -67,6 +68,14 @@
 
 	if(. && buckled_mob && !handle_buckled_mob_movement(loc,direct)) //movement failed due to buckled mob
 		. = 0
+
+	if(.)
+		Moved(oldloc, direct)
+
+/atom/movable/proc/Moved(atom/OldLoc, Dir)
+	if(length(client_mobs_in_contents))
+		update_parallax_contents()
+	return 1
 
 /atom/movable/proc/setLoc(T, teleported=0)
 	loc = T

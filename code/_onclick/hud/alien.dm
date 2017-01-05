@@ -39,7 +39,8 @@
 	using.icon = 'icons/mob/screen1_xeno.dmi'
 	using.icon_state = (mymob.a_intent == "hurt" ? "harm" : mymob.a_intent)
 	using.screen_loc = ui_acti
-	using.layer = 20
+	using.layer = ABOVE_HUD_LAYER
+	using.plane = ABOVE_HUD_PLANE
 	src.adding += using
 	action_intent = using
 
@@ -53,7 +54,8 @@
 	using.name = "help"
 	using.icon = ico
 	using.screen_loc = ui_acti
-	using.layer = 21
+	using.layer = ABOVE_HUD_LAYER
+	using.plane = ABOVE_HUD_PLANE
 	src.adding += using
 	help_intent = using
 
@@ -64,7 +66,8 @@
 	using.name = "disarm"
 	using.icon = ico
 	using.screen_loc = ui_acti
-	using.layer = 21
+	using.layer = ABOVE_HUD_LAYER
+	using.plane = ABOVE_HUD_PLANE
 	src.adding += using
 	disarm_intent = using
 
@@ -75,7 +78,8 @@
 	using.name = "grab"
 	using.icon = ico
 	using.screen_loc = ui_acti
-	using.layer = 21
+	using.layer = ABOVE_HUD_LAYER
+	using.plane = ABOVE_HUD_PLANE
 	src.adding += using
 	grab_intent = using
 
@@ -86,7 +90,8 @@
 	using.name = "harm"
 	using.icon = ico
 	using.screen_loc = ui_acti
-	using.layer = 21
+	using.layer = ABOVE_HUD_LAYER
+	using.plane = ABOVE_HUD_PLANE
 	src.adding += using
 	hurt_intent = using
 
@@ -98,7 +103,8 @@
 	using.icon = 'icons/mob/screen1_xeno.dmi'
 	using.icon_state = (mymob.m_intent == "run" ? "running" : "walking")
 	using.screen_loc = ui_movi
-	using.layer = 20
+	using.layer = ABOVE_HUD_LAYER
+	using.plane = ABOVE_HUD_PLANE
 	src.adding += using
 	move_intent = using
 
@@ -107,7 +113,8 @@
 	using.icon = 'icons/mob/screen1_xeno.dmi'
 	using.icon_state = "act_drop"
 	using.screen_loc = ui_drop_throw
-	using.layer = 19
+	using.layer = HUD_LAYER
+	using.plane = HUD_PLANE
 	src.adding += using
 
 	inv_box = new /obj/screen/inventory()
@@ -118,7 +125,8 @@
 	if(mymob && !mymob.hand)	//This being 0 or null means the right hand is in use
 		inv_box.icon_state = "hand_r_active"
 	inv_box.screen_loc = ui_rhand
-	inv_box.layer = 19
+	inv_box.layer = HUD_LAYER
+	inv_box.plane = HUD_PLANE
 	inv_box.slot_id = slot_r_hand
 	src.r_hand_hud_object = inv_box
 	src.adding += inv_box
@@ -131,7 +139,8 @@
 	if(mymob && mymob.hand)	//This being 1 means the left hand is in use
 		inv_box.icon_state = "hand_l_active"
 	inv_box.screen_loc = ui_lhand
-	inv_box.layer = 19
+	inv_box.layer = HUD_LAYER
+	inv_box.plane = HUD_PLANE
 	inv_box.slot_id = slot_l_hand
 	src.l_hand_hud_object = inv_box
 	src.adding += inv_box
@@ -142,7 +151,8 @@
 	using.icon = 'icons/mob/screen1_xeno.dmi'
 	using.icon_state = "swap_1"
 	using.screen_loc = ui_swaphand1
-	using.layer = 19
+	using.layer = HUD_LAYER
+	using.plane = HUD_PLANE
 	src.adding += using
 
 	using = new /obj/screen/inventory()
@@ -151,7 +161,8 @@
 	using.icon = 'icons/mob/screen1_xeno.dmi'
 	using.icon_state = "swap_2"
 	using.screen_loc = ui_swaphand2
-	using.layer = 19
+	using.layer = HUD_LAYER
+	using.plane = HUD_PLANE
 	src.adding += using
 
 	mymob.nightvisionicon = new /obj/screen/alien/nightvision()
@@ -163,7 +174,8 @@
 	using.icon = 'icons/mob/screen1_xeno.dmi'
 	using.icon_state = "act_resist"
 	using.screen_loc = ui_pull_resist
-	using.layer = 19
+	using.layer = HUD_LAYER
+	using.plane = HUD_PLANE
 	src.adding += using
 
 	if(istype(mymob, /mob/living/carbon/alien/humanoid/hunter))

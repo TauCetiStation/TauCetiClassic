@@ -10,6 +10,7 @@ var/const/MAX_SAVE_SLOTS = 10
 #define RETURN_TO_LOBBY 2
 
 /datum/preferences
+	var/client/parent
 	//doohickeys for savefiles
 	var/path
 	var/default_slot = 1				//Holder so it doesn't default to slot 1, rather the last one used
@@ -115,8 +116,10 @@ var/const/MAX_SAVE_SLOTS = 10
 	var/randomslot = 0
 	// jukebox volume
 	var/volume = 100
+	var/parallax = PARALLAX_HIGH
 
 /datum/preferences/New(client/C)
+	parent = C
 	b_type = pick(4;"O-", 36;"O+", 3;"A-", 28;"A+", 1;"B-", 20;"B+", 1;"AB-", 5;"AB+")
 	if(istype(C))
 		if(!IsGuestKey(C.key))
@@ -156,7 +159,19 @@ var/const/MAX_SAVE_SLOTS = 10
 		dat += "Please create an account to save your preferences."
 
 	dat += "</center><hr width='535'>"
-
+	dat += "<b>Parallax (Fancy Space):</b> <a href='?_src_=prefs;preference=parallaxdown' oncontextmenu='window.location.href=\"?_src_=prefs;preference=parallaxup\";return false;'>"
+	switch (parallax)
+		if (PARALLAX_LOW)
+			dat += "Low"
+		if (PARALLAX_MED)
+			dat += "Medium"
+		if (PARALLAX_INSANE)
+			dat += "Insane"
+		if (PARALLAX_DISABLE)
+			dat += "Disabled"
+		else
+			dat += "High"
+	dat += "</a><br>"
 	switch(menu_type)
 		if("general")
 			dat += ShowGeneral(user)

@@ -222,6 +222,9 @@
 	directory -= ckey
 	mentors -= src
 	clients -= src
+	if(movingmob != null)
+		movingmob.client_mobs_in_contents -= mob
+		UNSETEMPTY(movingmob.client_mobs_in_contents)
 	return ..()
 
 

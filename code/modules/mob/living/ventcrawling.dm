@@ -86,7 +86,8 @@ var/list/ventcrawl_machinery = list(/obj/machinery/atmospherics/unary/vent_pump,
 	var/list/totalMembers = starting_machine.node:parent.members + starting_machine.network.normal_members
 	//var/list/totalMembers = temp1 + starting_machine.network.normal_members
 	for(var/atom/A in totalMembers)
-		var/image/new_image = image(A, A.loc, dir = A.dir, layer = 20)
+		var/image/new_image = image(A, A.loc, dir = A.dir, layer = ABOVE_HUD_PLANE)
+		new_image.plane = ABOVE_HUD_PLANE
 		pipes_shown += new_image
 		if(client)
 			client.images += new_image

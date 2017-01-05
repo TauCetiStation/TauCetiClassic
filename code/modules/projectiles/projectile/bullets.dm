@@ -179,7 +179,8 @@
 	name ="projectile"
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "l10"
-	layer = 20
+	layer = ABOVE_HUD_LAYER
+	plane = ABOVE_HUD_PLANE
 	light_color = "#2be4b8"
 	light_power = 2
 	light_range = 2

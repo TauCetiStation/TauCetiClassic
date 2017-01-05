@@ -272,7 +272,8 @@
 				var/obj/item/clothing/ears/offear/O = new(W)
 				O.loc = src
 				src.r_ear = O
-				O.layer = 20
+				O.layer = ABOVE_HUD_LAYER
+				O.plane = ABOVE_HUD_LAYER
 				O.appearance_flags = APPEARANCE_UI
 			W.equipped(src, slot)
 			update_inv_ears()
@@ -282,7 +283,8 @@
 				var/obj/item/clothing/ears/offear/O = new(W)
 				O.loc = src
 				src.l_ear = O
-				O.layer = 20
+				O.layer = ABOVE_HUD_LAYER
+				O.plane = ABOVE_HUD_LAYER
 				O.appearance_flags = APPEARANCE_UI
 			W.equipped(src, slot)
 			update_inv_ears()
@@ -336,7 +338,8 @@
 			to_chat(src, "<span class='warning'>You are trying to eqip this item to an unsupported inventory slot. How the heck did you manage that? Stop it...</span>")
 			return
 
-	W.layer = 20
+	W.layer = ABOVE_HUD_LAYER
+	W.plane = ABOVE_HUD_PLANE
 	W.appearance_flags = APPEARANCE_UI
 
 	return

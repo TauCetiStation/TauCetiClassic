@@ -128,6 +128,15 @@
 				user << sound(ticker.login_music, repeat = 0, wait = 0, volume = 85, channel = 1)
 			else
 				user << sound(null, repeat = 0, wait = 0, volume = 85, channel = 1)
+		if("parallaxup")
+			parallax = Wrap(parallax + 1, PARALLAX_INSANE, PARALLAX_DISABLE + 1)
+			if (parent && parent.mob && parent.mob.hud_used)
+				parent.mob.hud_used.update_parallax_pref()
+
+		if("parallaxdown")
+			parallax = Wrap(parallax - 1, PARALLAX_INSANE, PARALLAX_DISABLE + 1)
+			if (parent && parent.mob && parent.mob.hud_used)
+				parent.mob.hud_used.update_parallax_pref()
 
 		if("hear_ambience")
 			toggles ^= SOUND_AMBIENCE
