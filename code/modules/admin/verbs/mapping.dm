@@ -132,7 +132,7 @@ var/list/debug_verbs = list (
         ,/client/proc/count_objects_all
         ,/client/proc/cmd_assume_direct_control
         ,/client/proc/startSinglo
-        ,/client/proc/fps	//allows you to set the ticklag.
+        ,/client/proc/set_fps	//allows you to set the ticklag.
         ,/client/proc/cmd_admin_grantfullaccess
 //        ,/client/proc/splash
         ,/client/proc/cmd_admin_areatest
