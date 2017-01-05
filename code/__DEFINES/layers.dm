@@ -8,7 +8,6 @@
 
 #define GAME_PLANE 0
 
-
 #define LIGHTING_PLANE 15
 #define LIGHTING_LAYER 15
 
