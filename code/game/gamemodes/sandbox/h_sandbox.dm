@@ -72,6 +72,7 @@ datum/hSB
 					if(P.head)
 						P.head.loc = P.loc
 						P.head.layer = initial(P.head.layer)
+						P.head.plane = initial(P.head.plane)
 						P.head = null
 					P.head = new/obj/item/clothing/head/helmet/space(P)
 					P.head.layer = ABOVE_HUD_LAYER
@@ -86,6 +87,7 @@ datum/hSB
 					if(P.back)
 						P.back.loc = P.loc
 						P.back.layer = initial(P.back.layer)
+						P.back.plane = initial(P.back.plane)
 						P.back = null
 					P.back = new/obj/item/weapon/tank/jetpack(P)
 					P.back.layer = ABOVE_HUD_LAYER

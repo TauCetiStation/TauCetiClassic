@@ -226,6 +226,16 @@ var/const/MAX_SAVE_SLOTS = 10
 			if(!IsGuestKey(user.key))
 				menu_type = "load_slot"
 
+		if("parallaxup")
+			parallax = Wrap(parallax + 1, PARALLAX_INSANE, PARALLAX_DISABLE + 1)
+			if (parent && parent.mob && parent.mob.hud_used)
+				parent.mob.hud_used.update_parallax_pref()
+
+		if("parallaxdown")
+			parallax = Wrap(parallax - 1, PARALLAX_INSANE, PARALLAX_DISABLE + 1)
+			if (parent && parent.mob && parent.mob.hud_used)
+				parent.mob.hud_used.update_parallax_pref()
+
 	switch(menu_type)
 		if("general")
 			process_link_general(user, href_list)

@@ -865,9 +865,12 @@ proc/anim(turf/location,target,a_icon,a_icon_state,flick_anim,sleeptime = 0,dire
 							continue
 						if(!istype(O,/obj)) continue
 						O.loc = X
+						if (length(O.client_mobs_in_contents))
+							O.update_parallax_contents()
 					for(var/mob/M in T)
 						if(!istype(M,/mob) || istype(M, /mob/aiEye) || istype(M, /mob/camera)) continue // If we need to check for more mobs, I'll add a variable
 						M.loc = X
+						M.update_parallax_contents()
 
 //					var/area/AR = X.loc
 

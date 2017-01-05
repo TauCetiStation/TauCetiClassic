@@ -80,7 +80,18 @@ var/datum/subsystem/shuttle/SSshuttle
 		if(0)
 			/* --- Shuttle is in transit to Central Command from SS13 --- */
 			if(direction == 2)
-				if(timeleft>0)
+				if(timeleft < PARALLAX_LOOP_TIME / 10)
+					var/area/stop_parallax = locate(/area/shuttle/escape/transit)
+					stop_parallax.parallax_slowdown()
+					stop_parallax = locate(/area/shuttle/escape_pod1/transit)
+					stop_parallax.parallax_slowdown()
+					stop_parallax = locate(/area/shuttle/escape_pod2/transit)
+					stop_parallax.parallax_slowdown()
+					stop_parallax = locate(/area/shuttle/escape_pod3/transit)
+					stop_parallax.parallax_slowdown()
+					stop_parallax = locate(/area/shuttle/escape_pod5/transit)
+					stop_parallax.parallax_slowdown()
+				if(timeleft > 0)
 					return 0
 
 				/* --- Shuttle has arrived at Centrcal Command --- */
@@ -296,7 +307,7 @@ var/datum/subsystem/shuttle/SSshuttle
 				//main shuttle
 				var/area/start_location = locate(/area/shuttle/escape/station)
 				var/area/end_location = locate(/area/shuttle/escape/transit)
-
+				end_location.parallax_movedir = NORTH
 				settimeleft(SHUTTLETRANSITTIME)
 				start_location.move_contents_to(end_location, null, NORTH)
 
@@ -323,6 +334,7 @@ var/datum/subsystem/shuttle/SSshuttle
 
 					start_location = locate(/area/shuttle/escape_pod1/station)
 					end_location = locate(/area/shuttle/escape_pod1/transit)
+					end_location.parallax_movedir = EAST
 					start_location.move_contents_to(end_location, null, NORTH)
 					for(var/obj/machinery/door/D in end_location)
 						D.close()
@@ -341,6 +353,7 @@ var/datum/subsystem/shuttle/SSshuttle
 
 					start_location = locate(/area/shuttle/escape_pod2/station)
 					end_location = locate(/area/shuttle/escape_pod2/transit)
+					end_location.parallax_movedir = EAST
 					start_location.move_contents_to(end_location, null, NORTH)
 					for(var/obj/machinery/door/D in end_location)
 						D.close()
@@ -359,6 +372,7 @@ var/datum/subsystem/shuttle/SSshuttle
 
 					start_location = locate(/area/shuttle/escape_pod3/station)
 					end_location = locate(/area/shuttle/escape_pod3/transit)
+					end_location.parallax_movedir = EAST
 					start_location.move_contents_to(end_location, null, NORTH)
 					for(var/obj/machinery/door/D in end_location)
 						D.close()

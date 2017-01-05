@@ -143,6 +143,7 @@ var/list/ghostteleportlocs = list()
 
 /area/shuttle/arrival/transit
 	icon_state = "shuttle"
+	parallax_movedir = EAST
 
 /area/shuttle/arrival/station
 	name = "NSS Exodus"
@@ -163,6 +164,7 @@ var/list/ghostteleportlocs = list()
 /area/shuttle/escape/transit // the area to pass through for 3 minute transit
 	name = "\improper Emergency Shuttle Transit"
 	icon_state = "shuttle"
+	parallax_movedir = NORTH
 
 /area/shuttle/escape_pod1
 	name = "\improper Escape Pod One"
@@ -176,6 +178,7 @@ var/list/ghostteleportlocs = list()
 
 /area/shuttle/escape_pod1/transit
 	icon_state = "shuttle"
+	parallax_movedir = WEST
 
 /area/shuttle/escape_pod2
 	name = "\improper Escape Pod Two"
@@ -189,6 +192,7 @@ var/list/ghostteleportlocs = list()
 
 /area/shuttle/escape_pod2/transit
 	icon_state = "shuttle"
+	parallax_movedir = WEST
 
 /area/shuttle/escape_pod3
 	name = "\improper Escape Pod Three"
@@ -202,6 +206,7 @@ var/list/ghostteleportlocs = list()
 
 /area/shuttle/escape_pod3/transit
 	icon_state = "shuttle"
+	parallax_movedir = WEST
 
 /area/shuttle/escape_pod5 //Pod 4 was lost to meteors
 	name = "\improper Escape Pod Five"
@@ -215,6 +220,7 @@ var/list/ghostteleportlocs = list()
 
 /area/shuttle/escape_pod5/transit
 	icon_state = "shuttle"
+	parallax_movedir = EAST
 
 /area/shuttle/mining
 	name = "\improper Mining Shuttle"
@@ -483,6 +489,7 @@ var/list/ghostteleportlocs = list()
 /area/syndicate_station/transit
 	name = "\improper hyperspace"
 	icon_state = "shuttle"
+	parallax_movedir = NORTH
 
 /area/abductor_ship
 	name = "\improper Abductor Ship"
@@ -498,6 +505,7 @@ var/list/ghostteleportlocs = list()
 	name = "\improper hyperspace"
 	icon_state = "shuttle"
 	requires_power = 0
+	parallax_movedir = NORTH
 
 /area/vox_station/southwest_solars
 	name = "\improper Aft port solars"

@@ -1,4 +1,4 @@
-#define VOX_SHUTTLE_MOVE_TIME 400
+#define VOX_SHUTTLE_MOVE_TIME 375
 #define VOX_SHUTTLE_COOLDOWN 1200
 
 //Copied from Syndicate shuttle.
@@ -67,6 +67,8 @@ var/global/announce_vox_departure = 0 //Stealth systems - give an announcement o
 		curr_location.move_contents_to(transit_location)
 		curr_location = transit_location
 		sleep(VOX_SHUTTLE_MOVE_TIME)
+		curr_location.parallax_slowdown()
+		sleep(PARALLAX_LOOP_TIME)
 
 	curr_location.move_contents_to(dest_location)
 	curr_location = dest_location
