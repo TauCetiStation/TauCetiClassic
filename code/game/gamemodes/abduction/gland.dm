@@ -203,7 +203,7 @@ obj/item/gland/slime/activate()
 /obj/item/gland/spiderman/activate()
 	to_chat(host, "<span class='warning'>You feel something crawling in your skin.</span>")
 	if(uses == initial(uses))
-		host.faction += "spiders"
+		host.faction = "spiders"
 	new /obj/effect/spider/spiderling(host.loc)
 
 
