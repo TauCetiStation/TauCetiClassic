@@ -339,3 +339,9 @@ var/list/intents = list("help","disarm","grab","hurt")
 			M.show_message("<span class='info'>[bicon(icon)] [message]</span>", 1)
 	for(var/mob/dead/observer/G in player_list) //Ghosts? Why not.
 		G.show_message("<span class='info'>[bicon(icon)] [message]</span>", 1)
+
+/proc/IsAdminGhost(var/mob/user)
+	if(check_rights(R_ADMIN, 0) && istype(user, /mob/dead/observer))
+		return 1
+	else
+		return 0

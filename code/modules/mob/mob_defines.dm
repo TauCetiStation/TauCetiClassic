@@ -215,6 +215,8 @@
 	var/robot_talk_understand = 0
 	var/alien_talk_understand = 0
 
+	var/has_unlimited_silicon_privilege = 0 // Can they interact with station electronics
+
 	var/has_limbs = 1 //Whether this mob have any limbs he can move with
 	var/can_stand = 1 //Whether this mob have ability to stand
 
