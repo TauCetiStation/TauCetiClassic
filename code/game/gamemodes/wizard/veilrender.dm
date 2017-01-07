@@ -4,7 +4,6 @@
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "render"
 	item_state = "render"
-	flags = FPRINT | TABLEPASS
 	force = 15
 	throwforce = 10
 	w_class = 3

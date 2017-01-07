@@ -3,7 +3,6 @@
 	icon_custom = 'code/game/objects/WalterJ_Items_Pack/MISC PANTS/WJ_MISC_PANTS.dmi'
 
 	gender = PLURAL
-	flags = FPRINT | TABLEPASS
 	body_parts_covered = LOWER_TORSO
 
 	name = "Classic Jeans"

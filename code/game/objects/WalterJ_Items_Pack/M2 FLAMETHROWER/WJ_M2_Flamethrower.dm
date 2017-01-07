@@ -70,7 +70,7 @@
 	item_state = "M2_Flamethrower"
 
 
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = CONDUCT
 	force = 3.0
 	throwforce = 10.0
 	throw_speed = 1

@@ -1,6 +1,6 @@
 /obj/item/weapon/melee/energy
 	var/active = 0
-	flags = FPRINT | TABLEPASS | NOBLOODY
+	flags = NOBLOODY
 	can_embed = 0
 
 	suicide_act(mob/user)
@@ -17,7 +17,7 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = 3.0
-	flags = FPRINT | CONDUCT | NOSHIELD | TABLEPASS | NOBLOODY
+	flags = CONDUCT | NOSHIELD | NOBLOODY
 	origin_tech = "combat=3"
 	attack_verb = list("attacked", "chopped", "cleaved", "torn", "cut")
 	sharp = 1
@@ -37,7 +37,7 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = 2.0
-	flags = FPRINT | TABLEPASS | NOSHIELD | NOBLOODY
+	flags = NOSHIELD | NOBLOODY
 	origin_tech = "magnets=3;syndicate=4"
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	sharp = 1
@@ -59,6 +59,6 @@
 	throw_speed = 1
 	throw_range = 1
 	w_class = 4.0//So you can't hide it in your pocket or some such.
-	flags = FPRINT | TABLEPASS | NOSHIELD | NOBLOODY
+	flags = NOSHIELD | NOBLOODY
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	var/datum/effect/effect/system/spark_spread/spark_system

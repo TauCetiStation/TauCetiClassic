@@ -43,7 +43,6 @@ Buildable meters
 	icon = 'icons/obj/pipe-item.dmi'
 	icon_state = "simple"
 	item_state = "buildpipe"
-	flags = TABLEPASS|FPRINT
 	w_class = 3
 	level = 2
 
@@ -775,7 +774,6 @@ Buildable meters
 	icon = 'icons/obj/pipe-item.dmi'
 	icon_state = "meter"
 	item_state = "buildpipe"
-	flags = TABLEPASS|FPRINT
 	w_class = 4
 
 /obj/item/pipe_meter/attackby(obj/item/weapon/W, mob/user)

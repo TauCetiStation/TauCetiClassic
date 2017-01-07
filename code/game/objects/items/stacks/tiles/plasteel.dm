@@ -9,7 +9,7 @@
 	throwforce = 5.0
 	throw_speed = 5
 	throw_range = 3
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = CONDUCT
 	max_amount = 60
 
 /obj/item/stack/tile/plasteel/New(var/loc, var/amount=null)

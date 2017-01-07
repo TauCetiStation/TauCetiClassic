@@ -4,7 +4,7 @@
 	icon_state = "capspace"
 	item_state = "capspacehelmet"
 	desc = "A special helmet designed for work in a hazardous, low-pressure environment. Only for the most fashionable of military figureheads."
-	flags = FPRINT | TABLEPASS | HEADCOVERSEYES | BLOCKHAIR
+	flags = HEADCOVERSEYES | BLOCKHAIR
 	flags_pressure = STOPS_LOWPRESSUREDMAGE
 	flags_inv = HIDEFACE
 	permeability_coefficient = 0.01
@@ -20,7 +20,6 @@
 	w_class = 4
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.02
-	flags = FPRINT | TABLEPASS
 	flags_pressure = STOPS_LOWPRESSUREDMAGE
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS
 	allowed = list(/obj/item/weapon/tank/emergency_oxygen, /obj/item/device/flashlight,/obj/item/weapon/gun/energy, /obj/item/weapon/gun/projectile, /obj/item/ammo_box/magazine, /obj/item/ammo_casing, /obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs)
