@@ -7,8 +7,8 @@
 
 	Announce()
 		if(!virus)
-			for(var/mob/living/carbon/human/H in world)
-				if((H.virus2.len) || (H.stat == DEAD) || prob(30))
+			for(var/mob/living/carbon/human/H in living_mob_list)
+				if((H.virus2.len) || prob(30))
 					continue
 				if(prob(100))	// no lethal diseases outside virus mode!
 					infect_mob_random_lesser(H)
@@ -45,12 +45,12 @@
 //						virus_type = /datum/disease/t_virus
 					if("pierrot's throat")
 						virus_type = /datum/disease/pierrot_throat
-			for(var/mob/living/carbon/human/H in world)
+			for(var/mob/living/carbon/human/H in living_mob_list)
 
 				var/foundAlready = 0 // don't infect someone that already has the virus
 				for(var/datum/disease/D in H.viruses)
 					foundAlready = 1
-				if(H.stat == DEAD || foundAlready)
+				if(foundAlready)
 					continue
 
 				if(virus_type == /datum/disease/dnaspread) //Dnaspread needs strain_data set to work.
@@ -77,4 +77,3 @@
 				world << sound('sound/AI/outbreak7.ogg')
 	Tick()
 		ActiveFor = Lifetime //killme
-
