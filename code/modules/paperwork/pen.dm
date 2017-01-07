@@ -41,18 +41,6 @@
 	icon_state = "pen"
 	colour = "white"
 
-
-/obj/item/weapon/pen/attack(mob/M, mob/user)
-	if(!ismob(M))
-		return
-	to_chat(user, "<span class='warning'>You stab [M] with the pen.</span>")
-//	M << "\red You feel a tiny prick!" //That's a whole lot of meta!
-	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been stabbed with [name]  by [user.name] ([user.ckey])</font>")
-	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [name] to stab [M.name] ([M.ckey])</font>")
-	msg_admin_attack("[user.name] ([user.ckey]) Used the [name] to stab [M.name] ([M.ckey]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
-	return
-
-
 /*
  * Sleepy Pens
  */
@@ -75,7 +63,7 @@
 /obj/item/weapon/pen/sleepypen/attack(mob/M, mob/user)
 	if(!(istype(M,/mob)))
 		return
-	..()
+
 	if(reagents.total_volume)
 		if(M.reagents) reagents.trans_to(M, 50) //used to be 150
 	return
@@ -95,9 +83,6 @@
 	if(!(istype(M,/mob)))
 		return
 
-	..()
-
-
 	if(M.can_inject(user,1))
 		if(reagents.total_volume)
 			if(M.reagents) reagents.trans_to(M, 50)
@@ -112,3 +97,38 @@
 	R.add_reagent("cryptobiolin", 15)
 	..()
 	return
+
+/obj/item/weapon/pen/edagger
+	origin_tech = "combat=3;syndicate=1"
+	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut") //these wont show up if the pen is off
+	var/on = 0
+
+/obj/item/weapon/pen/edagger/attack_self(mob/living/user)
+	if(on)
+		on = 0
+		force = initial(force)
+		w_class = initial(w_class)
+		name = initial(name)
+		hitsound = initial(hitsound)
+		throwforce = initial(throwforce)
+		playsound(user, 'sound/weapons/saberoff.ogg', 5, 1)
+		to_chat(user, "<span class='warning'>[src] can now be concealed.</span>")
+	else
+		on = 1
+		force = 18
+		w_class = 3
+		name = "energy dagger"
+		hitsound = 'sound/weapons/blade1.ogg'
+		throwforce = 35
+		playsound(user, 'sound/weapons/saberon.ogg', 5, 1)
+		to_chat(user, "<span class='warning'>[src] is now active.</span>")
+	update_icon()
+
+/obj/item/weapon/pen/edagger/update_icon()
+	if(on)
+		icon_state = "edagger"
+		item_state = "edagger"
+	else
+		icon_state = initial(icon_state) //looks like a normal pen when off.
+		item_state = initial(item_state)
+

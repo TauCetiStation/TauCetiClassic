@@ -119,6 +119,13 @@
 	desc = "The syndicate revolver is a traditional handgun that fires .357 Magnum cartridges and has 7 chambers."
 	item = /obj/item/weapon/gun/projectile/revolver
 	cost = 6
+
+/datum/uplink_item/dangerous/pistol
+	name = "Stechkin Pistol"
+	desc = "A small, easily concealable handgun that uses 10mm auto rounds in 8-round magazines and is compatible \
+			with suppressors."
+	item = /obj/item/weapon/gun/projectile/automatic/pistol
+	cost = 3
 /*
 /datum/uplink_item/dangerous/smg
 	name = "C-20r Submachine Gun"
@@ -187,6 +194,15 @@
 	item = /obj/item/weapon/flamethrower/full/tank
 	cost = 6
 	gamemodes = list(/datum/game_mode/nuclear) */
+
+/datum/uplink_item/dangerous/powerfist
+	name = "Power Fist"
+	desc = "The power-fist is a metal gauntlet with a built-in piston-ram powered by an external gas supply.\
+		 Upon hitting a target, the piston-ram will extend foward to make contact for some serious damage. \
+		 Using a wrench on the piston valve will allow you to tweak the amount of gas used per punch to \
+		 deal extra damage and hit targets further. Use a screwdriver to take out any attached tanks."
+	item = /obj/item/weapon/melee/powerfist
+	cost = 4
 
 /datum/uplink_item/dangerous/sword
 	name = "Energy Sword"
@@ -269,6 +285,13 @@
 	desc = "A 40-round .45 magazine for use in Robot submachine gun."
 	item = /obj/item/ammo_box/magazine/borg45
 	cost = 2
+
+/datum/uplink_item/ammo/pistol
+	name = "9mm Handgun Magazine"
+	desc = "An additional 8-round 10mm magazine; compatible with the Stechkin Pistol. These subsonic rounds \
+			are dirt cheap but are half as effective as .357 rounds."
+	item = /obj/item/ammo_box/magazine/m9mm
+	cost = 1
 
 /datum/uplink_item/ammo/revolver
 	name = "Ammo-357"
@@ -374,6 +397,20 @@
 /datum/uplink_item/stealthy_weapons
 	category = "Stealthy and Inconspicuous Weapons"
 
+/datum/uplink_item/stealthy_weapons/dart_pistol
+	name = "Dart Pistol"
+	desc = "A miniaturized version of a normal syringe gun. It is very quiet when fired and can fit into any \
+			space a small item can."
+	item = /obj/item/weapon/gun/syringe/syndicate
+	cost = 1
+
+/datum/uplink_item/stealthy_tools/cutouts
+	name = "Adaptive Cardboard Cutouts"
+	desc = "These cardboard cutouts are coated with a thin material that prevents discoloration and makes the images on them appear more lifelike. This pack contains three as well as a \
+	crayon for changing their appearances."
+	item = /obj/item/weapon/storage/box/syndie_kit/cutouts
+	cost = 1
+
 /datum/uplink_item/stealthy_weapons/para_pen
 	name = "Paralysis Pen"
 	desc = "A syringe disguised as a functional pen, filled with a neuromuscular-blocking drug that renders a target immobile on injection and makes them seem dead to observers. \
@@ -430,6 +467,14 @@
 	item = /obj/item/weapon/stamp/chameleon
 	cost = 1 */
 
+/datum/uplink_item/stealthy_tools/smugglersatchel
+	name = "Smuggler's Satchel"
+	desc = "This satchel is thin enough to be hidden in the gap between plating and tiling; great for stashing \
+			your stolen goods. Comes with a crowbar and a floor tile inside. Properly hidden satchels have been \
+			known to survive intact even beyond the current shift. "
+	item = /obj/item/weapon/storage/backpack/satchel/flat
+	cost = 1
+
 /datum/uplink_item/stealthy_tools/syndigolashes
 	name = "No-Slip Brown Shoes"
 	desc = "These allow you to run on wet floors. They do not work on lubricated surfaces."
@@ -468,11 +513,38 @@
 	item = /obj/item/weapon/silencer
 	cost = 2
 
+/datum/uplink_item/stealthy_weapons/throwingweapons
+	name = "Box of Throwing Weapons"
+	desc = "A box of shurikens and reinforced bolas from ancient Earth martial arts. They are highly effective \
+			 throwing weapons. The bolas can knock a target down and the shurikens will embed into limbs."
+	item = /obj/item/weapon/storage/box/syndie_kit/throwing_weapon
+	cost = 3
+
+/datum/uplink_item/stealthy_weapons/edagger
+	name = "Energy Dagger"
+	desc = "A dagger made of energy that looks and functions as a pen when off."
+	item = /obj/item/weapon/pen/edagger
+	cost = 2
+
+/datum/uplink_item/stealthy_weapons/soap_clusterbang
+	name = "Slipocalypse Clusterbang"
+	desc = "A traditional clusterbang grenade with a payload consisting entirely of Syndicate soap. Useful in any scenario!"
+	item = /obj/item/weapon/grenade/clusterbuster/soap
+	cost = 3
 
 // DEVICE AND TOOLS
 
 /datum/uplink_item/device_tools
 	category = "Devices and Tools"
+
+/datum/uplink_item/device_tools/rad_laser
+	name = "Radioactive Microlaser"
+	desc = "A radioactive microlaser disguised as a standard Nanotrasen health analyzer. When used, it emits a \
+			powerful burst of radiation, which, after a short delay, can incapitate all but the most protected \
+			of humanoids. It has two settings: intensity, which controls the power of the radiation, \
+			and wavelength, which controls how long the radiation delay is."
+	item = /obj/item/device/healthanalyzer/rad_laser
+	cost = 3
 
 /datum/uplink_item/device_tools/emag
 	name = "Cryptographic Sequencer"
@@ -486,20 +558,44 @@
 	item = /obj/item/weapon/storage/toolbox/syndicate
 	cost = 1
 
+/datum/uplink_item/device_tools/surgerybag
+	name = "Syndicate Surgery Dufflebag"
+	desc = "The Syndicate surgery dufflebag is a toolkit containing all surgery tools, surgical drapes, \
+			a MMI, a straitjacket, and a muzzle."
+	item = /obj/item/weapon/storage/backpack/dufflebag/surgery
+	cost = 2
+
+/datum/uplink_item/device_tools/c4bag
+	name = "Bag of C-4 explosives"
+	desc = "Because sometimes quantity is quality. Contains 10 C-4 plastic explosives."
+	item = /obj/item/weapon/storage/backpack/dufflebag/c4
+	cost = 9 //60% discount!
+
+/datum/uplink_item/device_tools/military_belt
+	name = "Military Belt"
+	desc = "A robust seven-slot red belt that is capable of holding all manner of tatical equipment."
+	item = /obj/item/weapon/storage/belt/military
+	cost = 1
+
 /datum/uplink_item/device_tools/medkit
 	name = "Syndicate Medical Supply Kit"
 	desc = "The syndicate medkit is a suspicious black and red. Included is a combat stimulant injector for rapid healing, a medical hud for quick identification of injured comrades, \
 	and other medical supplies helpful for a medical field operative.."
 	item = /obj/item/weapon/storage/firstaid/tactical
 	cost = 5
-	gamemodes = list(/datum/game_mode/nuclear)
-	uplink_types = list("nuclear")
 
 /datum/uplink_item/device_tools/medkit_small
 	name = "Syndicate Medical Small Kit"
 	desc = "The syndicate medkit. Included is a combat stimulant injector for rapid healing."
 	item = /obj/item/weapon/storage/firstaid/small_firstaid_kit/combat
 	cost = 2
+
+/datum/uplink_item/stealthy_tools/mulligan
+	name = "Mulligan"
+	desc = "Screwed up and have security on your tail? This handy syringe will give you a completely new identity \
+			and appearance."
+	item = /obj/item/weapon/reagent_containers/syringe/mulligan
+	cost = 3
 
 /datum/uplink_item/device_tools/space_suit
 	name = "Syndicate Space Suit"
@@ -515,11 +611,25 @@
 	item = /obj/item/clothing/glasses/thermal/syndi
 	cost = 3
 
+/datum/uplink_item/stealthy_tools/emplight
+	name = "EMP Flashlight"
+	desc = "A small, self-charging, short-ranged EMP device disguised as a flashlight. \
+		Useful for disrupting headsets, cameras, and borgs during stealth operations."
+	item = /obj/item/device/flashlight/emp
+	cost = 3
+
 /datum/uplink_item/device_tools/binary
 	name = "Binary Translator Key"
 	desc = "A key, that when inserted into a radio headset, allows you to listen to and talk with artificial intelligences and cybernetic organisms in binary. "
 	item = /obj/item/device/encryptionkey/binary
 	cost = 3
+
+/datum/uplink_item/device_tools/encryptionkey
+	name = "Syndicate Encryption Key"
+	desc = "A key that, when inserted into a radio headset, allows you to listen to all station department channels \
+			as well as talk on an encrypted Syndicate channel with other agents that have the same key."
+	item = /obj/item/device/encryptionkey/syndicate
+	cost = 1
 
 /datum/uplink_item/device_tools/ai_detector
 	name = "Artificial Intelligence Detector" // changed name in case newfriends thought it detected disguised ai's
@@ -538,7 +648,7 @@
 	desc = "C-4 is plastic explosive of the common variety Composition C. You can use it to breach walls, attach it to organisms to destroy them, or connect a signaler to its wiring to make it remotely detonable. \
 	It has a modifiable timer with a minimum setting of 10 seconds."
 	item = /obj/item/weapon/plastique
-	cost = 2
+	cost = 1
 
 /datum/uplink_item/device_tools/powersink
 	name = "Power sink"
@@ -608,6 +718,13 @@
 	The ability for an agent to open an uplink after their posessions have been stripped from them makes this implant excellent for escaping confinement."
 	item = /obj/item/weapon/storage/box/syndie_kit/imp_uplink
 	cost = 10
+
+/datum/uplink_item/implants/storage
+	name = "Compressed Implant"
+	desc = "An implant, that can compress items and later activated at the user's will."
+	item = /obj/item/weapon/storage/box/syndie_kit/imp_compress
+	cost = 4
+
 /*
 /datum/uplink_item/implants/adrenal
 	name = "Adrenal Implant"
@@ -632,6 +749,12 @@
 	desc = "A useless red balloon with the syndicate logo on it, which can blow the deepest of covers."
 	item = /obj/item/toy/syndicateballoon
 	cost = 10
+
+/datum/uplink_item/badass/syndiecigs
+	name = "Syndicate Smokes"
+	desc = "Strong flavor, dense smoke, infused with tricordazine."
+	item = /obj/item/weapon/storage/fancy/cigarettes/cigpack_syndicate
+	cost = 2
 
 /datum/uplink_item/badass/syndiecash
 	name = "Syndicate Briefcase Full of Cash"

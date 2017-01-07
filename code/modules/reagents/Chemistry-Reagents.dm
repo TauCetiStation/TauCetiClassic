@@ -4088,9 +4088,30 @@ datum
 						L.take_damage(10, 0)
 	data++
 
-/datum/reagent/Destroy() // This should only be called by the holder, so it's already handled clearing its references
-	. = ..()
-	holder = null
+
+/datum/reagent/mulligan
+	name = "Mulligan Toxin"
+	id = "mulligan"
+	description = "This toxin will rapidly change the DNA of human beings. Commonly used by Syndicate spies and assassins in need of an emergency ID change."
+	reagent_state = LIQUID
+	color = "#5EFF3B" //RGB: 94, 255, 59
+	custom_metabolism = 1000
+
+/datum/reagent/mulligan/on_mob_life(mob/living/carbon/human/H)
+	H << "<span class='warning'><b>You grit your teeth in pain as your body rapidly mutates!</b></span>"
+	H.visible_message("<b>[H]</b> suddenly transforms!")
+	H.gender = pick(MALE, FEMALE)
+	if(H.gender == MALE)
+		H.gender = MALE
+		H.name = pick(first_names_male)
+	else
+		H.gender = FEMALE
+		H.name = pick(first_names_female)
+	H.name += " [pick(last_names)]"
+	H.real_name = H.name
+	var/datum/preferences/A = new()	//Randomize appearance for the human
+	A.randomize_appearance_for(H)
+	..()
 
 // Undefine the alias for REAGENTS_EFFECT_MULTIPLER
 #undef REM

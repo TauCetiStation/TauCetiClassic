@@ -136,3 +136,12 @@
 	var/datum/reagents/R = new/datum/reagents(15)
 	reagents = R
 	R.my_atom = src
+
+/obj/item/weapon/gun/syringe/syndicate
+	name = "dart pistol"
+	desc = "A small spring-loaded sidearm that functions identically to a syringe gun."
+	icon_state = "syringe_pistol"
+	item_state = "gun"
+	w_class = 2
+	origin_tech = "combat=2;syndicate=2;biotech=3"
+	force = 2
