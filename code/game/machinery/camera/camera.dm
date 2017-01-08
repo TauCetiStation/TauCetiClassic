@@ -35,6 +35,11 @@
 	var/busy = 0
 
 /obj/machinery/camera/New()
+	..()
+	cameranet.cameras += src //Camera must be added to global list of all cameras no matter what...
+	var/list/open_networks = difflist(network,RESTRICTED_CAMERA_NETWORKS) //...but if all of camera's networks are restricted, it only works for specific camera consoles.
+	if(open_networks.len) //If there is at least one open network, chunk is available for AI usage.
+		cameranet.addCamera(src)
 	WireColorToFlag = randomCameraWires()
 	assembly = new(src)
 	assembly.state = 4
@@ -51,36 +56,44 @@
 			error("[src.name] in [get_area(src)]has errored. [src.network?"Empty network list":"Null network list"]")
 		ASSERT(src.network)
 		ASSERT(src.network.len > 0)
-	..()
 
 /obj/machinery/camera/Destroy()
+	disconnect_viewers()
+	if(assembly)
+		qdel(assembly)
+		assembly = null
 	if(bug)
 		bug.bugged_cameras -= c_tag
+		if(bug.current == src)
+			bug.current = null
 		bug = null
+	cameranet.cameras -= src
+	var/list/open_networks = difflist(network, RESTRICTED_CAMERA_NETWORKS)
+	if(open_networks.len)
+		cameranet.removeCamera(src)
 	return ..()
 
+/obj/machinery/camera/update_icon()
+	if(!status)
+		icon_state = "[initial(icon_state)]1"
+	else if(stat & EMPED)
+		icon_state = "[initial(icon_state)]emp"
+	else
+		icon_state = "[initial(icon_state)]"
+
 /obj/machinery/camera/emp_act(severity)
-	if(!isEmpProof())
+	if(!isEmpProof() && status)
 		if(prob(100/severity))
-			icon_state = "[initial(icon_state)]emp"
 			var/list/previous_network = network
 			network = list()
-			cameranet.removeCamera(src)
 			stat |= EMPED
-			set_light(0)
+			toggle_cam(TRUE)
 			triggerCameraAlarm()
 			spawn(900)
 				network = previous_network
-				icon_state = initial(icon_state)
 				stat &= ~EMPED
 				cancelCameraAlarm()
-				if(can_use())
-					cameranet.addCamera(src)
-			for(var/mob/O in mob_list)
-				if (O.client && O.client.eye == src)
-					O.unset_machine()
-					O.reset_view(null)
-					to_chat(O, "The screen bursts into static.")
+				toggle_cam(TRUE)
 			..()
 
 
@@ -106,13 +119,11 @@
 /obj/machinery/camera/attack_paw(mob/living/carbon/alien/humanoid/user)
 	if(!istype(user))
 		return
-	user.do_attack_animation(src)
-	status = 0
-	visible_message("<span class='warning'>\The [user] slashes at [src]!</span>")
-	playsound(src.loc, 'sound/weapons/slash.ogg', 100, 1)
-	icon_state = "[initial(icon_state)]1"
-	add_hiddenprint(user)
-	deactivate(user,0)
+	if(status)
+		user.do_attack_animation(src)
+		visible_message("<span class='warning'>\The [user] slashes at [src]!</span>")
+		playsound(src, 'sound/weapons/slash.ogg', 100, 1)
+		toggle_cam(FALSE, user)
 
 /obj/machinery/camera/attackby(W, mob/living/user)
 	var/msg = "<span class='notice'>You attach [W] into the assembly inner circuits.</span>"
@@ -203,42 +214,55 @@
 	else if(istype(W, /obj/item/weapon/melee/energy))//Putting it here last since it's a special case. I wonder if there is a better way to do these than type casting.
 		if(W:force > 3)
 			user.do_attack_animation(src)
-			deactivate(user,2)//Here so that you can disconnect anyone viewing the camera, regardless if it's on or off.
-			var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
+			disconnect_viewers()
+			var/datum/effect/effect/system/spark_spread/spark_system = new()
 			spark_system.set_up(5, 0, loc)
 			spark_system.start()
 			playsound(loc, 'sound/weapons/blade1.ogg', 50, 1)
 			playsound(loc, "sparks", 50, 1)
 			visible_message("<span class='notice'>The camera has been sliced apart by [user] with [W]!</span>")
-			new /obj/item/weapon/camera_assembly(src.loc)
-			pick(new /obj/item/weapon/cable_coil(src.loc),
-				 new /obj/item/weapon/cable_coil/cut(src.loc))
+			drop_assembly()
+			pick(new /obj/item/weapon/cable_coil(loc),
+                 new /obj/item/weapon/cable_coil/cut(loc))
 			qdel(src)
-		else
-			..()
-
 	else
 		..()
 	return
 
-/obj/machinery/camera/proc/deactivate(user, choice = 1)
-	if(choice == 1)
-		status = !src.status
-		if(!src.status)
-			visible_message("<span class='danger'>[user] has deactivated [src]!</span>")
-			playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
-			icon_state = "[initial(icon_state)]1"
-			add_hiddenprint(user)
+/obj/machinery/camera/proc/drop_assembly(state = 0)
+	if(assembly)
+		assembly.state = state
+		assembly.loc = loc
+		assembly = null
+
+/obj/machinery/camera/proc/toggle_cam(show_message, mob/living/user = null)
+	status = !status
+
+	if(can_use())
+		cameranet.addCamera(src)
+	else
+		set_light(0)
+		cameranet.removeCamera(src)
+
+	if(user)
+		add_hiddenprint(user)
+
+	if(show_message)
+		var/status_message = (status ? "reactivates" : "deactivates")
+		if(user)
+			visible_message("<span class='danger'>[user] [status_message] [src]!</span>")
 		else
-			visible_message("<span class='danger'>[user] has reactivated [src]!</span>")
-			playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
-			icon_state = initial(icon_state)
-			add_hiddenprint(user)
-	// now disconnect anyone using the camera
-	//Apparently, this will disconnect anyone even if the camera was re-activated.
-	//I guess that doesn't matter since they can't use it anyway?
+			visible_message("<span class='danger'>\The [src] [status_message]!</span>")
+		playsound(src, 'sound/items/Wirecutter.ogg', 100, 1)
+
+	update_icon()
+
+	if(!status)
+		disconnect_viewers()
+
+/obj/machinery/camera/proc/disconnect_viewers()
 	for(var/mob/O in player_list)
-		if (O.client && O.client.eye == src)
+		if(O.client && O.client.eye == src)
 			O.unset_machine()
 			O.reset_view(null)
 			to_chat(O, "The screen bursts into static.")

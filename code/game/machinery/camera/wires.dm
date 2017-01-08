@@ -49,8 +49,7 @@
 			setViewRange(short_range)
 
 		if(CAMERA_WIRE_POWER)
-			deactivate(usr, 1)
-			//shock(usr)
+			toggle_cam(TRUE, usr)
 
 		if(CAMERA_WIRE_LIGHT)
 			light_disabled = 1
@@ -69,7 +68,7 @@
 			setViewRange(initial(view_range))
 
 		if(CAMERA_WIRE_POWER)
-			deactivate(usr, 1)
+			toggle_cam(TRUE, usr)
 
 		if(CAMERA_WIRE_LIGHT)
 			light_disabled = 0
@@ -88,7 +87,7 @@
 			setViewRange(new_range)
 
 		if(CAMERA_WIRE_POWER)
-			deactivate(usr, 0) // Kicks anyone watching the camera
+			disconnect_viewers()
 
 		if(CAMERA_WIRE_LIGHT)
 			light_disabled = !light_disabled
