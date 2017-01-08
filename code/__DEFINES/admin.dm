@@ -41,3 +41,7 @@
 #define R_MAXPERMISSION 4096 //This holds the maximum value for a permission. It is used in iteration, so keep it updated.
 
 #define R_HOST			65535
+
+#define ADMIN_QUE(user) "(<a href='?_src_=holder;adminmoreinfo=\ref[user]'>?</a>)"
+#define ADMIN_FLW(target) "(<a href='?_src_=holder;adminplayerobservefollow=\ref[target]'>FLW</a>)"
+#define ADMIN_JMP(target) "(<a href='?_src_=holder;adminplayerobservecoodjump=1;X=[target.x];Y=[target.y];Z=[target.z]'>JMP</a>)"

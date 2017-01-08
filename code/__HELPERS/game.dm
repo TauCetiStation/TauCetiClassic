@@ -462,12 +462,10 @@ proc/isInSight(atom/A, atom/B)
 	if(M.client.holder)
 		return
 	if(M.client.player_age == 0)
-		for(var/client/C in clients)
-			if(C.holder)
-				to_chat(C, "<span class=\"admin\"><span class=\"prefix\">New player notify:</span> <span class=\"message\">[M.ckey] join to the game as [M.mind.name] [M.mind.assigned_role ? "([M.mind.assigned_role])" : ""] - <a href='http://www.byond.com/members/[M.ckey]'>Byond Profile</a> (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[M.x];Y=[M.y];Z=[M.z]'>JMP</a>)</span></span>")
+		var/player_assigned_role = (M.mind.assigned_role ? " ([M.mind.assigned_role])" : "")
+		var/player_byond_profile = "http://www.byond.com/members/[M.ckey]"
 
-				if(R_ADMIN & C.holder.rights)
-					to_chat(C, "<span class=\"admin\"><span class=\"prefix\">New player notify:</span> <span class=\"message\">[M.ckey] ip: [M.lastKnownIP]</span></span>")
+		message_admins("<b>New player notify:</b> [M.ckey] join to the game as [M.mind.name][player_assigned_role] - <a href='[player_byond_profile]'>Byond Profile</a>, [M.ckey] ip: [M.lastKnownIP] [ADMIN_FLW(M)]")
 
 //============VG PORTS============
 /proc/recursive_type_check(atom/O, type = /atom)
