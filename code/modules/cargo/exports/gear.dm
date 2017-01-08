@@ -84,15 +84,15 @@
 	export_types = list(/obj/item/clothing/suit/space/globose)
 
 
-/datum/export/gear/space/voidhelmet
+/datum/export/gear/space/skhelmet
 	cost = 550
-	unit_name = "void helmet"
-	export_types = list(/obj/item/clothing/head/helmet/space/nasavoid)
+	unit_name = "Skafandr Kosmicheskiy Helmet"
+	export_types = list(/obj/item/clothing/head/helmet/space/sk)
 
-/datum/export/gear/space/voidsuit
+/datum/export/gear/space/sk
 	cost = 650
-	unit_name = "void suit"
-	export_types = list(/obj/item/clothing/suit/space/nasavoid)
+	unit_name = "Skafandr Kosmicheskiy"
+	export_types = list(/obj/item/clothing/suit/space/sk)
 
 
 /datum/export/gear/space/syndiehelmet
