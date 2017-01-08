@@ -159,7 +159,6 @@ var/const/MAX_SAVE_SLOTS = 10
 		dat += "Please create an account to save your preferences."
 
 	dat += "</center><hr width='535'>"
-	dat += "</a><br>"
 	switch(menu_type)
 		if("general")
 			dat += ShowGeneral(user)
