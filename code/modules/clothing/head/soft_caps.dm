@@ -99,3 +99,9 @@
 	desc = "It's baseball hat."
 	icon_state = "trashsoft"
 	item_color = "trash"
+
+/obj/item/clothing/head/soft/janitor
+	name = "janitor cap"
+	desc = "It's janitor hat."
+	icon_state = "janitorsoft"
+	item_color = "janitor"
