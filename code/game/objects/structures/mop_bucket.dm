@@ -27,3 +27,11 @@
 			reagents.trans_to(I, 5)
 			to_chat(user, "<span class='notice'>You wet [I] in [src].</span>")
 			playsound(loc, 'sound/effects/slosh.ogg', 25, 1)
+
+/obj/structure/mopbucket/on_reagent_change()
+	update_icon()
+
+/obj/structure/mopbucket/update_icon()
+	overlays.Cut()
+	if(reagents.total_volume > 1)
+		overlays += "mopbucket_water"
