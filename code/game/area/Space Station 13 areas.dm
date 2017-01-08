@@ -164,7 +164,7 @@ var/list/ghostteleportlocs = list()
 /area/shuttle/escape/transit // the area to pass through for 3 minute transit
 	name = "\improper Emergency Shuttle Transit"
 	icon_state = "shuttle"
-	parallax_movedir = NORTH
+	parallax_movedir = WEST
 
 /area/shuttle/escape_pod1
 	name = "\improper Escape Pod One"

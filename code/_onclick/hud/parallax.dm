@@ -199,10 +199,11 @@
 				M.hud_used.update_parallax()
 
 /area/proc/parallax_slowdown()
-	parallax_movedir = FALSE
-	for(var/atom/movable/AM in src)
-		if(length(AM.client_mobs_in_contents))
-			AM.update_parallax_contents()
+	if(parallax_movedir)
+		parallax_movedir = FALSE
+		for(var/atom/movable/AM in src)
+			if(length(AM.client_mobs_in_contents))
+				AM.update_parallax_contents()
 
 /obj/screen/parallax_layer
 	icon = 'icons/effects/parallax.dmi'

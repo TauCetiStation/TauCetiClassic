@@ -159,18 +159,6 @@ var/const/MAX_SAVE_SLOTS = 10
 		dat += "Please create an account to save your preferences."
 
 	dat += "</center><hr width='535'>"
-	dat += "<b>Parallax (Fancy Space):</b> <a href='?_src_=prefs;preference=parallaxdown' oncontextmenu='window.location.href=\"?_src_=prefs;preference=parallaxup\";return false;'>"
-	switch (parallax)
-		if (PARALLAX_LOW)
-			dat += "Low"
-		if (PARALLAX_MED)
-			dat += "Medium"
-		if (PARALLAX_INSANE)
-			dat += "Insane"
-		if (PARALLAX_DISABLE)
-			dat += "Disabled"
-		else
-			dat += "High"
 	dat += "</a><br>"
 	switch(menu_type)
 		if("general")
@@ -225,17 +213,6 @@ var/const/MAX_SAVE_SLOTS = 10
 		if("load_slot")
 			if(!IsGuestKey(user.key))
 				menu_type = "load_slot"
-
-		if("parallaxup")
-			parallax = Wrap(parallax + 1, PARALLAX_INSANE, PARALLAX_DISABLE + 1)
-			if (parent && parent.mob && parent.mob.hud_used)
-				parent.mob.hud_used.update_parallax_pref()
-
-		if("parallaxdown")
-			parallax = Wrap(parallax - 1, PARALLAX_INSANE, PARALLAX_DISABLE + 1)
-			if (parent && parent.mob && parent.mob.hud_used)
-				parent.mob.hud_used.update_parallax_pref()
-
 	switch(menu_type)
 		if("general")
 			process_link_general(user, href_list)
