@@ -47,7 +47,6 @@
 /obj/item/weapon/gun/proc/PreFire(atom/A, mob/living/user, params)
 	//Lets not spam it.
 	if(lock_time > world.time - 2) return
-	.
 	if(ismob(A) && isliving(A) && !(A in target))
 		Aim(A) 	//Clicked a mob, aim at them
 	else  		//Didn't click someone, check if there is anyone along that guntrace
@@ -75,10 +74,9 @@
 //HE MOVED, SHOOT HIM!
 /obj/item/weapon/gun/proc/TargetActed(mob/living/T)
 	var/mob/living/M = loc
-	if(M == T) return
-	if(!istype(M)) return
-	if(src != M.remove_from_mob())
-		stop_aim()
+	if(M == T)
+		return
+	if(!istype(M))
 		return
 	M.last_move_intent = world.time
 	if( can_fire() )
@@ -143,7 +141,6 @@
 //Targeting management procs
 /mob/var
 	list/targeted_by
-	target_time = -100
 	last_move_intent = -100
 	last_target_click = -5
 	target_locked = null
@@ -197,7 +194,7 @@
 
 		//Processing the aiming. Should be probably in separate object with process() but lasy.
 		while(targeted_by && T.client)
-			if(last_move_intent > I.lock_time + 10 && !T.client.target_can_move) //If target moved when not allowed to
+			if(last_move_intent > I.lock_time + 10 && !T.client.target_can_move)//If target moved when not allowed to
 				I.TargetActed(src)
 				if(I.last_moved_mob == src) //If they were the last ones to move, give them more of a grace period, so that an automatic weapon can hold down a room better.
 					I.lock_time = world.time + 5
@@ -280,9 +277,6 @@
 	screen -= usr.gun_move_icon
 	if (target_can_move)
 		screen -= usr.gun_run_icon
-	qdel(usr.gun_move_icon)
-	qdel(usr.item_use_icon)
-	qdel(usr.gun_run_icon)
 
 /client/verb/ToggleGunMode()
 	set hidden = 1
@@ -311,7 +305,7 @@
 	else
 		to_chat(usr, "Target may no longer move.")
 		target_can_run = 0
-		qdel(usr.gun_run_icon)	//no need for icon for running permission
+		screen -= usr.gun_run_icon //no need for icon for running permission
 
 	//Updating walking permission button
 	if(usr.gun_move_icon)
