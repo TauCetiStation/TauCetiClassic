@@ -3,6 +3,7 @@
  *		Pens
  *		Sleepy Pens
  *		Parapens
+ *		Penlight
  */
 
 
@@ -112,3 +113,92 @@
 	R.add_reagent("cryptobiolin", 15)
 	..()
 	return
+
+
+/*
+* Penlight
+*/
+//Procs copypasted from /obj/item/device/flashlight 
+//It's a better way get result. You can do it better? Do it!
+/obj/item/weapon/pen/light
+	name = "penlight"
+	desc = "A pen-sized light, used by medical staff."
+	icon = 'icons/obj/lighting.dmi'
+	icon_state = "penlight"
+	flags = FPRINT | TABLEPASS | CONDUCT
+	var/on = 0
+	var/brightness_on = 3
+	w_class = 1
+
+/obj/item/weapon/pen/light/initialize()
+	..()
+	if(on)
+		icon_state = "[initial(icon_state)]-on"
+		set_light(brightness_on)
+	else
+		icon_state = initial(icon_state)
+		set_light(0)
+
+/obj/item/weapon/pen/light/Destroy()
+	if(on)
+		set_light(0)
+	return ..()
+
+/obj/item/weapon/pen/light/attack_self(mob/user)
+	if(!isturf(user.loc))
+		to_chat(user, "You cannot turn the light on while in this [user.loc].")//To prevent some lighting anomalities.
+		return 0
+	on = !on
+	update_brightness(user)
+	action_button_name = null
+	return 1
+
+/obj/item/weapon/pen/light/proc/update_brightness(mob/user = null)
+	if(on)
+		icon_state = "[initial(icon_state)]-on"
+		set_light(brightness_on)
+	else
+		icon_state = initial(icon_state)
+		set_light(0)
+
+/obj/item/weapon/pen/light/attack(mob/living/M, mob/living/user)
+	add_fingerprint(user)
+	if(on && user.zone_sel.selecting == "eyes")
+
+		if(((CLUMSY in user.mutations) || user.getBrainLoss() >= 60) && prob(50))	//too dumb to use flashlight properly
+			return ..()	//just hit them in the head
+
+		if(!(istype(user, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")	//don't have dexterity
+			to_chat(user, "<span class='notice'>You don't have the dexterity to do this!</span>")
+			return
+
+		var/mob/living/carbon/human/H = M	//mob has protective eyewear
+		if(istype(M, /mob/living/carbon/human) && ((H.head && H.head.flags & HEADCOVERSEYES) || (H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) || (H.glasses && H.glasses.flags & GLASSESCOVERSEYES)))
+			to_chat(user, "<span class='notice'>You're going to need to remove that [(H.head && H.head.flags & HEADCOVERSEYES) ? "helmet" : (H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) ? "mask": "glasses"] first.</span>")
+			return
+
+		if(M == user)	//they're using it on themselves
+			if(!M.blinded)
+				M.flash_eyes()
+				M.visible_message("<span class='notice'>[M] directs [src] to \his eyes.</span>", \
+									 "<span class='notice'>You wave the light in front of your eyes! Trippy!</span>")
+			else
+				M.visible_message("<span class='notice'>[M] directs [src] to \his eyes.</span>", \
+									 "<span class='notice'>You wave the light in front of your eyes.</span>")
+			return
+
+		user.visible_message("<span class='notice'>[user] directs [src] to [M]'s eyes.</span>", \
+							 "<span class='notice'>You direct [src] to [M]'s eyes.</span>")
+
+		if(istype(M, /mob/living/carbon/human) || istype(M, /mob/living/carbon/monkey))	//robots and aliens are unaffected
+			if(M.stat == DEAD || M.sdisabilities & BLIND)	//mob is dead or fully blind
+				to_chat(user, "<span class='notice'>[M] pupils does not react to the light!</span>")
+			else if(XRAY in M.mutations)	//mob has X-RAY vision
+				M.flash_eyes() //Yes, you can still get flashed wit X-Ray.
+				to_chat(user, "<span class='notice'>[M] pupils give an eerie glow!</span>")
+			else	//they're okay!
+				if(!M.blinded)
+					M.flash_eyes()	//flash the affected mob
+					to_chat(user, "<span class='notice'>[M]'s pupils narrow.</span>")
+	else
+		return ..()

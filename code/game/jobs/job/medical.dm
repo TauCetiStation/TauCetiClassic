@@ -29,7 +29,7 @@
 	H.equip_to_slot_or_del(new /obj/item/device/pda/heads/cmo(H), slot_belt)
 	H.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/labcoat/cmo(H), slot_wear_suit)
 	H.equip_to_slot_or_del(new /obj/item/weapon/storage/firstaid/adv(H), slot_l_hand)
-	H.equip_to_slot_or_del(new /obj/item/device/flashlight/pen(H), slot_s_store)
+	H.equip_to_slot_or_del(new /obj/item/weapon/pen/light(H), slot_r_ear)
 
 	if(visualsOnly)
 		return
@@ -65,7 +65,7 @@
 		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), slot_back)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/white(H), slot_shoes)
 	H.equip_to_slot_or_del(new /obj/item/weapon/storage/firstaid/adv(H), slot_l_hand)
-	H.equip_to_slot_or_del(new /obj/item/device/flashlight/pen(H), slot_s_store)
+	H.equip_to_slot_or_del(new /obj/item/weapon/pen/light(H), slot_r_ear)
 
 	if(visualsOnly)
 		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/medical(H), slot_w_uniform)
@@ -169,7 +169,7 @@
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/geneticist(H), slot_w_uniform)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/white(H), slot_shoes)
 	H.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/labcoat/genetics(H), slot_wear_suit)
-	H.equip_to_slot_or_del(new /obj/item/device/flashlight/pen(H), slot_s_store)
+	H.equip_to_slot_or_del(new /obj/item/weapon/pen/light(H), slot_r_ear)
 
 	if(visualsOnly)
 		return
@@ -206,7 +206,7 @@
 	H.equip_to_slot_or_del(new /obj/item/clothing/mask/surgical(H), slot_wear_mask)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/white(H), slot_shoes)
 	H.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/labcoat/virologist(H), slot_wear_suit)
-	H.equip_to_slot_or_del(new /obj/item/device/flashlight/pen(H), slot_s_store)
+	H.equip_to_slot_or_del(new /obj/item/weapon/pen/light(H), slot_r_ear)
 
 	if(visualsOnly)
 		return

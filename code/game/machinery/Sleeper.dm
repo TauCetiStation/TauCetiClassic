@@ -312,8 +312,8 @@
 
 /obj/machinery/sleeper/proc/inject_chem(mob/user, chem)
 	if(occupant && occupant.reagents)
-		if(occupant.reagents.get_reagent_amount(chem) + 5 <= 20 * efficiency)
-			occupant.reagents.add_reagent(chem, 5)
+		if(occupant.reagents.get_reagent_amount(chem) + 10 <= 20 * efficiency)
+			occupant.reagents.add_reagent(chem, 10)
 		var/units = round(occupant.reagents.get_reagent_amount(chem))
 		to_chat(user, "<span class='notice'>Occupant now has [units] unit\s of [chem] in their bloodstream.</span>")
 

@@ -19,10 +19,10 @@ the HUD updates properly! */
 					continue
 			else
 				continue
-
-		P.Client.images += patient.hud_list[HEALTH_HUD]
 		if(local_scanner)
 			P.Client.images += patient.hud_list[STATUS_HUD]
+		P.Client.images += patient.hud_list[HEALTH_HUD]
+
 
 //Security HUDs. Pass a value for the second argument to enable implant viewing or other special features.
 /proc/process_sec_hud(mob/M, advanced_mode, mob/Alt)

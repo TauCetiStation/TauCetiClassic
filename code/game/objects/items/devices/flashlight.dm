@@ -87,14 +87,6 @@
 	else
 		return ..()
 
-/obj/item/device/flashlight/pen
-	name = "penlight"
-	desc = "A pen-sized light, used by medical staff."
-	icon_state = "penlight"
-	item_state = ""
-	flags = FPRINT | TABLEPASS | CONDUCT
-	brightness_on = 2
-	w_class = 1
 
 /obj/item/device/flashlight/drone
 	name = "low-power flashlight"
