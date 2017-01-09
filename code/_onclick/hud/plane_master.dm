@@ -13,7 +13,7 @@
 		backdrop.blend_mode = BLEND_OVERLAY
 		overlays += backdrop
 	..()
-
+/*
 /obj/screen/plane_master/game_world
 	name = "game world plane master"
 	plane = GAME_PLANE
@@ -22,7 +22,7 @@
 /obj/screen/plane_master/lighting
 	name = "lighting plane master"
 	plane = LIGHTING_PLANE
-	blend_mode = BLEND_OVERLAY
-//	blend_mode = BLEND_MULTIPLY
+	blend_mode = BLEND_MULTIPLY
 //	color = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,0, 0.1,0.1,0.1,0)
 	mouse_opacity = 0
+*/

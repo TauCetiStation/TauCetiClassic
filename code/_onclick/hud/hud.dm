@@ -42,10 +42,10 @@
 
 /datum/hud/New(mob/owner)
 	mymob = owner
-	instantiate()
 	for(var/mytype in subtypesof(/obj/screen/plane_master))
 		var/obj/screen/plane_master/instance = new mytype()
 		plane_masters["[instance.plane]"] = instance
+	instantiate()
 	..()
 
 /datum/hud/Destroy()
