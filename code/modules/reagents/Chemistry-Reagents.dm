@@ -3162,7 +3162,7 @@ datum
 			name = "Vodka"
 			id = "vodka"
 			description = "Number one drink AND fueling choice for Russians worldwide."
-			color = "#0064C8" // rgb: 0, 100, 200
+			color = "#619494" // rgb: 97, 148, 148
 			boozepwr = 2
 
 			on_mob_life(mob/living/M)
