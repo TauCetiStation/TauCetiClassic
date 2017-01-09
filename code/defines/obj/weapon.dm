@@ -209,7 +209,7 @@
 		src.loc = C
 		C.update_inv_legcuffed()
 		feedback_add_details("handcuffs","B")
-		C << "<span class='userdanger'>\The [src] ensnares you!</span>"
+		to_chat(C,"<span class='userdanger'>\The [src] ensnares you!</span>")
 		C.Weaken(weaken)
 
 /obj/item/weapon/legcuffs/bola/tactical//traitor variant

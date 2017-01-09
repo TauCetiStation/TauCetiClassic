@@ -58,7 +58,7 @@
 		tank = null
 	if(!removing)
 		if(tank)
-			user << "<span class='warning'>\The [src] already has a tank.</span>"
+			to_chat(user,"<span class='warning'>\The [src] already has a tank.</span>")
 			return
 		if(!user.unEquip(thetank))
 			return

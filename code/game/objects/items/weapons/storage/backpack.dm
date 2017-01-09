@@ -269,6 +269,7 @@
 	name = "smuggler's satchel"
 	desc = "A very slim satchel that can easily fit into tight spaces."
 	icon_state = "satchel-flat"
+	item_state = "satchel-flat"
 	w_class = 3 //Can fit in backpacks itself.
 	max_combined_w_class = 15
 	level = 1

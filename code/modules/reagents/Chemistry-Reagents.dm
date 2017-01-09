@@ -4088,6 +4088,10 @@ datum
 						L.take_damage(10, 0)
 	data++
 
+/datum/reagent/Destroy() // This should only be called by the holder, so it's already handled clearing its references
+	. = ..()
+	holder = null
+
 
 /datum/reagent/mulligan
 	name = "Mulligan Toxin"
@@ -4098,7 +4102,7 @@ datum
 	custom_metabolism = 1000
 
 /datum/reagent/mulligan/on_mob_life(mob/living/carbon/human/H)
-	H << "<span class='warning'><b>You grit your teeth in pain as your body rapidly mutates!</b></span>"
+	to_chat(H,"<span class='warning'><b>You grit your teeth in pain as your body rapidly mutates!</b></span>")
 	H.visible_message("<b>[H]</b> suddenly transforms!")
 	H.gender = pick(MALE, FEMALE)
 	if(H.gender == MALE)
