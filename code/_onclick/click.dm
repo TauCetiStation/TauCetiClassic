@@ -45,6 +45,20 @@
 		return
 
 	var/list/modifiers = params2list(params)
+
+	if(client.cob.in_building_mode)
+		var/client/C = client
+		if(C.cob.busy)
+			//do nothing
+		else if(modifiers["left"])
+			if(modifiers["alt"])
+				C.cob.rotate_object()
+			else
+				C.cob.try_to_build(src)
+		else if(modifiers["right"])
+			C.cob.remove_build_overlay(client)
+		return
+
 	if(modifiers["shift"] && modifiers["ctrl"])
 		CtrlShiftClickOn(A)
 		return
