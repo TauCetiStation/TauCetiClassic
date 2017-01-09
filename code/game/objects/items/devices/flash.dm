@@ -7,7 +7,7 @@
 	w_class = 2.0
 	throw_speed = 4
 	throw_range = 10
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = CONDUCT
 	origin_tech = "magnets=2;combat=1"
 
 	action_button_name = "Toggle Flash"

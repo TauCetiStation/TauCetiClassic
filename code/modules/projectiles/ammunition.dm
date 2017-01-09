@@ -4,7 +4,7 @@
 	desc = "A bullet casing."
 	icon = 'icons/obj/ammo.dmi'
 	icon_state = "s-casing"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	throwforce = 1
 	w_class = 1.0
@@ -59,7 +59,7 @@
 	desc = "A box of ammo"
 	icon_state = "357"
 	icon = 'icons/obj/ammo.dmi'
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	item_state = "syringe_kit"
 	m_amt = 50000

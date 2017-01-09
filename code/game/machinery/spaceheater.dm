@@ -21,8 +21,6 @@
 	var/settableTemperatureMedian = 30 + T0C
 	var/settableTemperatureRange = 30
 
-	flags = FPRINT
-
 
 /obj/machinery/space_heater/New()
 	..()

@@ -15,7 +15,7 @@
 	item_state = "r_suit"
 	item_color = "warden"
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
-	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
+	flags = ONESIZEFITSALL
 	siemens_coefficient = 0.9
 
 /obj/item/clothing/under/rank/security
@@ -25,7 +25,7 @@
 	item_state = "r_suit"
 	item_color = "secred"
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
-	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
+	flags = ONESIZEFITSALL
 	siemens_coefficient = 0.9
 
 /obj/item/clothing/under/rank/dispatch
@@ -35,7 +35,6 @@
 	item_state = "dispatch"
 	item_color = "dispatch"
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
-	flags = FPRINT | TABLEPASS
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS
 	siemens_coefficient = 0.9
 
@@ -46,20 +45,20 @@
 	item_state = "r_suit"
 	item_color = "redshirt2"
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
-	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
+	flags = ONESIZEFITSALL
 	siemens_coefficient = 0.9
 
 /obj/item/clothing/under/rank/security/corp
 	icon_state = "sec_corporate"
 	item_state = "sec_corporate"
 	item_color = "sec_corporate"
-	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
+	flags = ONESIZEFITSALL
 
 /obj/item/clothing/under/rank/warden/corp
 	icon_state = "warden_corporate"
 	item_state = "warden_corporate"
 	item_color = "warden_corporate"
-	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
+	flags = ONESIZEFITSALL
 
 /obj/item/clothing/under/tactical
 	name = "tactical jumpsuit"
@@ -68,7 +67,6 @@
 	item_state = "swatunder"
 	item_color = "swatunder"
 	armor = list(melee = 10, bullet = 5, laser = 5,energy = 0, bomb = 0, bio = 0, rad = 0)
-	flags = FPRINT | TABLEPASS
 	siemens_coefficient = 0.9
 
 /*
@@ -81,18 +79,18 @@
 	item_state = "det"
 	item_color = "detective"
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
-	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
+	flags = ONESIZEFITSALL
 	siemens_coefficient = 0.9
 
 /obj/item/clothing/under/det/black
 	icon_state = "detective2"
 	item_color = "detective2"
-	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
+	flags = ONESIZEFITSALL
 
 /obj/item/clothing/under/det/slob
 	icon_state = "polsuit"
 	item_color = "polsuit"
-	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
+	flags = ONESIZEFITSALL
 
 /obj/item/clothing/under/det/slob/verb/rollup()
 	set name = "Roll suit sleeves"
@@ -126,14 +124,14 @@
 	item_state = "r_suit"
 	item_color = "hosred"
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
-	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
+	flags = ONESIZEFITSALL
 	siemens_coefficient = 0.8
 
 /obj/item/clothing/under/rank/head_of_security/corp
 	icon_state = "hos_corporate"
 	item_state = "hos_corporate"
 	item_color = "hos_corporate"
-	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
+	flags = ONESIZEFITSALL
 
 //Jensen cosplay gear
 /obj/item/clothing/under/rank/head_of_security/jensen

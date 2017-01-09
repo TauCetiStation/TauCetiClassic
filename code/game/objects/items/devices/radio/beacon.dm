@@ -64,7 +64,7 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "medicon"
 	item_state = "signaler"
-	flags = FPRINT | TABLEPASS | NOBLUDGEON
+	flags = NOBLUDGEON
 	origin_tech = "bluespace=1"
 	var/timer = 10
 	var/atom/target = null

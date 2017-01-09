@@ -269,7 +269,6 @@ BLIND     // can't see anything
 	icon = 'icons/obj/clothing/suits.dmi'
 	name = "suit"
 	var/fire_resist = T0C+100
-	flags = FPRINT | TABLEPASS
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	allowed = list(/obj/item/weapon/tank/emergency_oxygen)
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
@@ -286,7 +285,7 @@ BLIND     // can't see anything
 	name = "space helmet"
 	icon_state = "space"
 	desc = "A special helmet designed for work in a hazardous, low-pressure environment."
-	flags = FPRINT | TABLEPASS | HEADCOVERSEYES | BLOCKHAIR | HEADCOVERSMOUTH | THICKMATERIAL | PHORONGUARD
+	flags = HEADCOVERSEYES | BLOCKHAIR | HEADCOVERSMOUTH | THICKMATERIAL | PHORONGUARD
 	flags_pressure = STOPS_PRESSUREDMAGE
 	item_state = "space"
 	permeability_coefficient = 0.01
@@ -307,7 +306,7 @@ BLIND     // can't see anything
 	w_class = 4//bulky item
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.02
-	flags = FPRINT | TABLEPASS | THICKMATERIAL | PHORONGUARD
+	flags = THICKMATERIAL | PHORONGUARD
 	flags_pressure = STOPS_PRESSUREDMAGE
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen,/obj/item/device/suit_cooling_unit)
@@ -357,7 +356,6 @@ BLIND     // can't see anything
 	name = "under"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	permeability_coefficient = 0.90
-	flags = FPRINT | TABLEPASS
 	slot_flags = SLOT_ICLOTHING
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	w_class = 3

@@ -1,7 +1,7 @@
 /atom
 	layer = 2
 	var/level = 2
-	var/flags = FPRINT
+	var/flags = 0
 	var/list/fingerprints
 	var/list/fingerprintshidden
 	var/fingerprintslast = null
@@ -181,8 +181,6 @@
 /atom/proc/add_hiddenprint(mob/living/M)
 	if(isnull(M)) return
 	if(isnull(M.key)) return
-	if (!( src.flags ) & FPRINT)
-		return
 	if (ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if (!istype(H.dna, /datum/dna))
@@ -207,8 +205,6 @@
 	if(isnull(M)) return
 	if(isAI(M)) return
 	if(isnull(M.key)) return
-	if (!( src.flags ) & FPRINT)
-		return
 	if (ishuman(M))
 		//Add the list if it does not exist.
 		if(!fingerprintshidden)
@@ -340,8 +336,6 @@
 		M.dna = new /datum/dna(null)
 		M.dna.real_name = M.real_name
 	M.check_dna()
-	if (!( src.flags ) & FPRINT)
-		return 0
 	if(!blood_DNA || !istype(blood_DNA, /list))	//if our list of DNA doesn't exist yet (or isn't a list) initialise it.
 		blood_DNA = list()
 	blood_color = "#A10808"

@@ -374,7 +374,7 @@ This is facehugger Attach procs
 	icon_state = "facehugger"
 	item_state = "facehugger"
 	w_class = 1 //note: can be picked up by aliens unlike most other items of w_class below 4
-	flags = FPRINT | TABLEPASS | MASKCOVERSMOUTH | MASKCOVERSEYES | MASKINTERNALS
+	flags = MASKCOVERSMOUTH | MASKCOVERSEYES | MASKINTERNALS
 	body_parts_covered = FACE|EYES
 	throw_range = 5
 	var/stat = CONSCIOUS //UNCONSCIOUS is the idle state in this case

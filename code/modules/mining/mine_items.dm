@@ -176,7 +176,7 @@ proc/move_mining_shuttle()
 	name = "pickaxe"
 	icon = 'icons/obj/items.dmi'
 	icon_state = "pickaxe"
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = CONDUCT
 //	slot_flags = SLOT_BELT
 	force = 15.0
 	throwforce = 4.0
@@ -239,7 +239,7 @@ proc/move_mining_shuttle()
 	desc = "A large tool for digging and moving dirt."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "shovel"
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	force = 8.0
 	throwforce = 4.0
@@ -279,7 +279,7 @@ proc/move_mining_shuttle()
 	icon_state = "hand_drill"
 	item_state = "drill"
 	origin_tech = "materials=2;powerstorage=3;engineering=2"
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = CONDUCT
 	slot_flags = null
 	force = 15.0
 	throwforce = 4.0
@@ -404,7 +404,7 @@ proc/move_mining_shuttle()
 	icon = 'icons/obj/mining/explosives.dmi'
 	icon_state = "charge_basic"
 	item_state = "flashbang"
-	flags = FPRINT | TABLEPASS | NOBLUDGEON
+	flags = NOBLUDGEON
 	w_class = 2.0
 	var/timer = 10
 	var/atom/target = null

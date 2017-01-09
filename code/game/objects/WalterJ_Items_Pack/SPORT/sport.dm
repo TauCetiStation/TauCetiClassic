@@ -5,7 +5,6 @@
 	icon_custom = 'code/game/objects/WalterJ_Items_Pack/SPORT/sport.dmi'
 	icon_state = "DDR_sport"
 	item_color = "DDR_sport"
-	flags = FPRINT | TABLEPASS
 
 /obj/item/clothing/under/pants/ddr_sport
 	name = "Black sport pants"
