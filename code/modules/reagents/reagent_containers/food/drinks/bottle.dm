@@ -9,7 +9,8 @@
 	volume = 100
 	item_state = "broken_beer" //Generic held-item sprite until unique ones are made.
 	var/const/duration = 13 //Directly relates to the 'weaken' duration. Lowered by armor (i.e. helmets)
-	var/isGlass = 1 //Whether the 'bottle' is made of glass or not so that milk cartons dont shatter when someone gets hit by it
+	var/is_glass = 1 //Whether the 'bottle' is made of glass or not so that milk cartons dont shatter when someone gets hit by it
+	var/is_transparent = 1 //Determines whether an overlay of liquid should be added to bottle when it fills
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/proc/smash(mob/living/target, mob/living/user)
 
@@ -32,12 +33,33 @@
 
 	qdel(src)
 
+/obj/item/weapon/reagent_containers/food/drinks/bottle/on_reagent_change()
+	if(is_glass && is_transparent)
+		update_icon()
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/update_icon()
+	if(reagents.total_volume == 0)
+		return
+		underlays.Cut()
+
+	var/icon/filler = new('icons/obj/reagentfillings.dmi',src.icon_state)
+	var/icon/cut = new('icons/obj/reagentfillings.dmi', "cut")
+	filler += mix_color_from_reagents(reagents.reagent_list)
+
+	var/offset = round((reagents.total_volume / volume) * 24) + 2
+	filler.Blend(cut, ICON_OVERLAY,1,offset)
+	filler.SwapColor(rgb(255, 0, 220, 255), rgb(0, 0, 0, 0))
+
+	underlays.Cut()
+	underlays += filler
+
+
 /obj/item/weapon/reagent_containers/food/drinks/bottle/attack(mob/living/target, mob/living/user)
 
 	if(!target)
 		return
 
-	if(user.a_intent != "hurt" || !isGlass)
+	if(user.a_intent != "hurt" || !is_glass)
 		return ..()
 
 
@@ -210,6 +232,7 @@
 	name = "Robert Robust's Coffee Liqueur"
 	desc = "A widely known, Mexican coffee-flavoured liqueur. In production since 1936, HONK"
 	icon_state = "kahluabottle"
+	is_transparent = 0
 	New()
 		..()
 		reagents.add_reagent("kahlua", 100)
@@ -234,6 +257,7 @@
 	name = "Doublebeard Bearded Special Wine"
 	desc = "A faint aura of unease and asspainery surrounds the bottle."
 	icon_state = "winebottle"
+	is_transparent = 0
 	New()
 		..()
 		reagents.add_reagent("wine", 100)
@@ -274,6 +298,7 @@
 	name = "Warlock's Velvet"
 	desc = "What a delightful packaging for a surely high quality wine! The vintage must be amazing!"
 	icon_state = "pwinebottle"
+	is_transparent = 0
 	New()
 		..()
 		reagents.add_reagent("pwine", 100)
@@ -285,7 +310,7 @@
 	desc = "Full of vitamins and deliciousness!"
 	icon_state = "orangejuice"
 	item_state = "carton"
-	isGlass = 0
+	is_glass = 0
 	New()
 		..()
 		reagents.add_reagent("orangejuice", 100)
@@ -295,7 +320,7 @@
 	desc = "It's cream. Made from milk. What else did you think you'd find in there?"
 	icon_state = "cream"
 	item_state = "carton"
-	isGlass = 0
+	is_glass = 0
 	New()
 		..()
 		reagents.add_reagent("cream", 100)
@@ -305,7 +330,7 @@
 	desc = "Well, at least it LOOKS like tomato juice. You can't tell with all that redness."
 	icon_state = "tomatojuice"
 	item_state = "carton"
-	isGlass = 0
+	is_glass = 0
 	New()
 		..()
 		reagents.add_reagent("tomatojuice", 100)
@@ -315,7 +340,27 @@
 	desc = "Sweet-sour goodness."
 	icon_state = "limejuice"
 	item_state = "carton"
-	isGlass = 0
+	is_glass = 0
 	New()
 		..()
 		reagents.add_reagent("limejuice", 100)
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/ale
+	name = "Magm-Ale"
+	desc = "A true dorf's drink of choice."
+	icon_state = "alebottle"
+	New()
+		..()
+		reagents.add_reagent("ale", 100)
+		src.pixel_x = rand(-10.0, 10)
+		src.pixel_y = rand(-10.0, 10)
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/beer
+	name = "Space Beer"
+	desc = "Contains only water, malt and hops."
+	icon_state = "beer"
+	New()
+		..()
+		reagents.add_reagent("beer", 100)
+		src.pixel_x = rand(-10.0, 10)
+		src.pixel_y = rand(-10.0, 10)
