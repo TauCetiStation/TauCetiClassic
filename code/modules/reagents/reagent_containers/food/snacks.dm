@@ -271,9 +271,16 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/candy
 	name = "candy"
+	desc = "Candies"
+	icon_state = "candy"
+	filling_color = "#7D5F46"
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/candy
+	name = "candy"
 	desc = "Nougat, love it or hate it."
 	icon_state = "candy"
 	filling_color = "#7D5F46"
+	trash = /obj/item/trash/candy
 
 	New()
 		..()
