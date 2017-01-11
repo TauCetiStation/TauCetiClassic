@@ -420,6 +420,12 @@
 	excludefrom = list(/datum/game_mode/nuclear)
 	excludefrom_uplinks = list("nuclear")
 
+/datum/uplink_item/stealthy_weapons/strip_gloves
+	name = "Strip gloves"
+	desc = "A pair of black gloves which allow to stealthy strip off items from the victim."
+	item = /obj/item/clothing/gloves/black/strip
+	cost = 3
+
 /datum/uplink_item/stealthy_weapons/soap
 	name = "Syndicate Soap"
 	desc = "A sinister-looking surfactant used to clean blood stains to hide murders and prevent DNA analysis. You can also drop it underfoot to slip people."

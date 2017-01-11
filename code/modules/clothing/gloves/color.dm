@@ -33,6 +33,8 @@
 	heat_protection = HANDS
 	max_heat_protection_temperature = GLOVES_MAX_HEAT_PROTECTION_TEMPERATURE
 
+/obj/item/clothing/gloves/black/strip // gloves for stripping items
+
 
 /obj/item/clothing/gloves/black/hos
 	name = "head of security's gloves"
