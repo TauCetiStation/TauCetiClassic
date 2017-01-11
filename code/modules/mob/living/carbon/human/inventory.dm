@@ -622,10 +622,9 @@
 			var/mob/living/carbon/human/Striper = source
 			Strip = Striper.gloves
 		if(istype(Strip, /obj/item/clothing/gloves/black/strip))
-			source.show_message(message, 1)
+			to_chat(source, message)
 		else
-			for(var/mob/M in viewers(target, null))
-				M.show_message(message, 1)
+			source.visible_message(message)
 	spawn( HUMAN_STRIP_DELAY )
 		done()
 		return
