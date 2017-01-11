@@ -752,6 +752,34 @@ datum/design/ultra_targ
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/mecha/ultra/targeting
 
+datum/design/phazon_main
+	name = "Circuit Design (\"Phazon\" Central Control module)"
+	desc = "Allows for the construction of a \"Phazon\" Central Control module."
+	id = "phazon_main"
+	req_tech = list("programming" = 5)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 2000, "sacid" = 20, )
+	build_path = /obj/item/weapon/circuitboard/mecha/phazon/main
+
+datum/design/phazon_peri
+	name = "Circuit Design (\"Phazon\" Peripherals Control module)"
+	desc = "Allows for the construction of a \"Phazon\" Peripheral Control module."
+	id = "Phazon_peri"
+	req_tech = list("programming" = 5, "magnets" = 5)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 2000, "sacid" = 20, MAT_GOLD = 500)
+	build_path = /obj/item/weapon/circuitboard/mecha/phazon/peripherals
+
+datum/design/phazon_coordination
+	name = "Circuit Design (\"Phazon\" Bluespace relay controller)"
+	desc = "Allows for the construction of a \"Phazon\" Bluespace relay controller."
+	id = "phazon_targ"
+	req_tech = list("programming" = 5, "combat" = 5, "bluespace" = 4)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 2000, "sacid" = 20, MAT_DIAMOND = 500)
+	build_path = /obj/item/weapon/circuitboard/mecha/phazon/targeting
+
+
 ////////////////////////////////////////
 //////////Disk Construction Disks///////
 ////////////////////////////////////////

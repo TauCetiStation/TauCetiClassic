@@ -530,6 +530,88 @@
 	construction_time = 660
 	category = list("Vindicator")
 
+//Phazon
+
+/datum/design/phazon_chassis
+	name = "Exosuit Chassis (\"Phazon\")"
+	id = "phazon_chassis"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/chassis/phazon
+	materials = list(MAT_METAL=28000, MAT_GOLD=8000)
+	req_tech = list("materials" = 6)
+	construction_time = 150
+	category = list("Phazon")
+
+/datum/design/phazon_torso
+	name = "Exosuit Torso (\"Phazon\")"
+	id = "phazon_torso"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/part/phazon_torso
+	materials = list(MAT_METAL=60000, MAT_GLASS=23000, MAT_SILVER=10000, MAT_DIAMOND=10000, MAT_GOLD=15000)
+	req_tech = list("materials" = 5, "bluespace" = 5)
+	construction_time = 330
+	category = list("Phazon")
+
+/datum/design/phazon_head
+	name = "Exosuit Head (\"Phazon\")"
+	id = "phazon_head"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/part/phazon_head
+	materials = list(MAT_METAL=30000, MAT_GLASS=13000, MAT_SILVER=5000, MAT_DIAMOND=5000, MAT_GOLD=7000)
+	req_tech = list("materials" = 5, "magnets" = 5)
+	construction_time = 220
+	category = list("Phazon")
+
+/datum/design/phazon_left_arm
+	name = "Exosuit Left Arm (\"Phazon\")"
+	id = "phazon_left_arm"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/part/phazon_left_arm
+	materials = list(MAT_METAL=40000, MAT_SILVER=3000, MAT_GOLD=3000, MAT_DIAMOND=3000)
+	req_tech = list("materials" = 5, "combat" = 5)
+	construction_time = 220
+	category = list("Phazon")
+
+/datum/design/phazon_right_arm
+	name = "Exosuit Right Arm (\"Phazon\")"
+	id = "phazon_right_arm"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/part/phazon_right_arm
+	materials = list(MAT_METAL=40000, MAT_SILVER=3000, MAT_GOLD=3000, MAT_DIAMOND=4500)
+	req_tech = list("materials" = 5, "combat" = 5)
+	construction_time = 220
+	category = list("Phazon")
+
+/datum/design/phazon_left_leg
+	name = "Exosuit Left Leg (\"Phazon\")"
+	id = "phazon_left_leg"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/part/phazon_left_leg
+	materials = list(MAT_METAL=50000, MAT_SILVER=3000, MAT_GOLD=3000, MAT_DIAMOND=4500)
+	req_tech = list("materials" = 5, "engineering" = 5)
+	construction_time = 220
+	category = list("Phazon")
+
+/datum/design/phazon_right_leg
+	name = "Exosuit Right Leg (\"Phazon\")"
+	id = "phazon_right_leg"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/part/phazon_right_leg
+	materials = list(MAT_METAL=50000, MAT_SILVER=3000, MAT_GOLD=3000, MAT_DIAMOND=4500)
+	req_tech = list("materials" = 5, "engineering" = 5)
+	construction_time = 220
+	category = list("Phazon")
+
+/datum/design/phazon_armour
+	name = "Exosuit Armour (\"Phazon\")"
+	id = "phazon_armour"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/part/phazon_armour
+	materials = list(MAT_METAL=60000, MAT_GOLD=10000, MAT_DIAMOND=10000, MAT_SILVER=10000)
+	req_tech = list("materials" = 5, "engineering" = 5, "bluespace" = 5, "powerstorage" = 5)
+	construction_time = 660
+	category = list("Phazon")
+
 
 //Exosuit Equipment
 /datum/design/firefighter_chassis
