@@ -5,8 +5,7 @@
 	icon_state = "cutout_basic"
 	w_class = 4
 	var/list/possible_appearances = list("Assistant", "Clown", "Mime",
-		"Traitor", "Nuke Op", "Cultist","Revolutionary", "Wizard", "Shadowling", "Xenomorph", "Swarmer",
-		"Ash Walker", "Deathsquad Officer", "Ian")
+		"Traitor", "Nuke Op", "Cultist","Revolutionary", "Wizard", "Shadowling", "Xenomorph", "Deathsquad Officer", "Ian")
 	var/pushed_over = FALSE //If the cutout is pushed over and has to be righted
 
 	var/lastattacker = null
@@ -117,14 +116,6 @@
 			icon_state = "cutout_fukken_xeno"
 			if(prob(25))
 				alpha = 75 //Spooky sneaking!
-		if("Swarmer")
-			name = "Swarmer ([rand(1, 999)])"
-			desc = "A cardboard cutout of a swarmer."
-			icon_state = "cutout_swarmer"
-		if("Ash Walker")
-			name = "[pick(first_names_male)] [pick(last_names)]"
-			desc = "A cardboard cutout of an ash walker."
-			icon_state = "cutout_free_antag"
 		if("Deathsquad Officer")
 			name = pick(commando_names)
 			desc = "A cardboard cutout of a death commando."

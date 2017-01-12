@@ -254,12 +254,13 @@
 
 		if(ismob(A))
 			var/mob/M = A
-			msg_admin_attack("[user] ([user.ckey]) attacked [M.name] ([M.ckey]) with Emp-light <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[M.x];Y=[M.y];Z=[M.z]'>JMP</a>)</span></span>")
-			M.visible_message("<span class='danger'>[user] blinks \the [src] at \the [A].", \
-								"<span class='userdanger'>[user] blinks \the [src] at you.")
+			msg_admin_attack("[user] ([user.ckey]) attacked [M.name] ([M.ckey]) with Emp-light <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[M.x];Y=[M.y];Z=[M.z]'>JMP</a>)")
+			M.attack_log += text("\[[time_stamp()]\]<font color='orange'> Has been attacked with Emp-light by [user.name] ([user.ckey])</font>")
+			user.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked with Emp-light [M.name]'s ([M.ckey])</font>")
+			M.visible_message("<span class='danger'>[user] blinks \the [src] at the [A]</span>")
 		else
-			A.visible_message("<span class='danger'>[user] blinks \the [src] at \the [A].")
-		to_chat(user, "\The [src] now has [emp_cur_charges] charge\s.")
+			A.visible_message("<span class='danger'>[user] blinks \the [src] at \the [A].</span>")
+		to_chat(user, "\The [src] now has [emp_cur_charges] charge\s.</span>")
 		A.emp_act(1)
 	else
 		to_chat(user, "<span class='warning'>\The [src] needs time to recharge!</span>")

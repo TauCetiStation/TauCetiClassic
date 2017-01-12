@@ -4106,10 +4106,8 @@ datum
 	H.visible_message("<b>[H]</b> suddenly transforms!")
 	H.gender = pick(MALE, FEMALE)
 	if(H.gender == MALE)
-		H.gender = MALE
 		H.name = pick(first_names_male)
 	else
-		H.gender = FEMALE
 		H.name = pick(first_names_female)
 	H.name += " [pick(last_names)]"
 	H.real_name = H.name

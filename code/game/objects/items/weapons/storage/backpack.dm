@@ -287,11 +287,8 @@
 
 /obj/item/weapon/storage/backpack/satchel/flat/New()
 	..()
-	PoolOrNew(/obj/item/stack/tile/plasteel, src)
+	new /obj/item/stack/tile/plasteel(src)
 	new /obj/item/weapon/crowbar(src)
-
-/obj/item/weapon/storage/backpack/satchel/flat/Destroy()
-	return ..()
 
 /obj/item/weapon/storage/backpack/dufflebag
 	name = "suspicious looking dufflebag"
@@ -303,7 +300,6 @@
 
 /obj/item/weapon/storage/backpack/dufflebag/c4/New()
 	..()
-	contents = list()
 	for(var/i = 1 to 10)
 		new /obj/item/weapon/plastique(src)
 	return
@@ -323,7 +319,6 @@
 
 /obj/item/weapon/storage/backpack/dufflebag/surgery/New()
 	..()
-	contents = list()
 	new /obj/item/weapon/scalpel(src)
 	new /obj/item/weapon/hemostat(src)
 	new /obj/item/weapon/retractor(src)

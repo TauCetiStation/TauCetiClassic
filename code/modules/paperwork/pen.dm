@@ -61,6 +61,7 @@
 
 
 /obj/item/weapon/pen/sleepypen/attack(mob/M, mob/user)
+	..()
 	if(!(istype(M,/mob)))
 		return
 
@@ -79,7 +80,7 @@
 
 
 /obj/item/weapon/pen/paralysis/attack(mob/living/M, mob/user)
-
+	..()
 	if(!(istype(M,/mob)))
 		return
 

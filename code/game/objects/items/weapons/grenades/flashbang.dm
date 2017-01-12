@@ -123,9 +123,9 @@
 			again++
 			numspawned--
 
-	for(var/loop = again ,loop > 0, loop--)
+	while(again)
 		new /obj/item/weapon/grenade/clusterbuster/segment(loc, payload)//Creates 'segments' that launches a few more payloads
-
+		again--
 	new /obj/effect/payload_spawner(loc, payload, numspawned)//Launches payload
 
 	playsound(loc, 'sound/weapons/armbomb.ogg', 75, 1, -3)
@@ -168,10 +168,8 @@
 		P.active = 1
 		walk_away(P,loc,rand(1,4))
 
-		spawn(rand(15,60))
-			if(P && !qdeleted(P))
-				P.prime()
-			qdel(src)
+		addtimer(P, "prime", rand(15,60))
+	qdel(src)
 
 /obj/item/weapon/grenade/flashbang/cluster
 	icon_state = "flashbang_active"

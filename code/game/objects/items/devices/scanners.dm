@@ -221,12 +221,16 @@ REAGENT SCANNER
 	if(!irradiate)
 		return
 	if(!used)
-		msg_admin_attack("[user] ([user.ckey]) irradiated [M.name] ([M.ckey]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[M.x];Y=[M.y];Z=[M.z]'>JMP</a>)</span></span>")
+		msg_admin_attack("<span = 'danger'>[user] ([user.ckey]) irradiated [M.name] ([M.ckey]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[M.x];Y=[M.y];Z=[M.z]'>JMP</a>)</span>")
 		var/cooldown = round(max(10, (intensity*5 - wavelength/4))) * 10
 		used = 1
 		icon_state = "health1"
-		handle_cooldown(cooldown) // splits off to handle the cooldown while handling wavelength
+		spawn(cooldown) // splits off to handle the cooldown while handling wavelength
+			used = 0
+			icon_state = "health"
 		to_chat(user,"<span class='warning'>Successfully irradiated [M].</span>")
+		M.attack_log += text("\[[time_stamp()]\]<font color='orange'> Has been irradiated by [user.name] ([user.ckey])</font>")
+		user.attack_log += text("\[[time_stamp()]\] <font color='red'>irradiated [M.name]'s ([M.ckey])</font>")
 		spawn((wavelength+(intensity*4))*5)
 			if(M)
 				if(intensity >= 5)
@@ -234,11 +238,6 @@ REAGENT SCANNER
 				M.apply_effect(intensity * 10,IRRADIATE, 0)
 	else
 		to_chat(user,"<span class='warning'>The radioactive microlaser is still recharging.</span>")
-
-/obj/item/device/healthanalyzer/rad_laser/proc/handle_cooldown(cooldown)
-	spawn(cooldown)
-		used = 0
-		icon_state = "health"
 
 /obj/item/device/healthanalyzer/rad_laser/attack_self(mob/user)
 	interact(user)

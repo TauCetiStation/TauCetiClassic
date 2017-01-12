@@ -32,6 +32,8 @@
 				to_chat(user,"<span class='warning'>\The [IT] is too small for \the [src].</span>")
 				return
 			updateTank(W, 0, user)
+		else
+			updateTank(W, 1, user)
 	else if(istype(W, /obj/item/weapon/wrench))
 		switch(fisto_setting)
 			if(1)
@@ -43,8 +45,7 @@
 		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 		to_chat(user,"<span class='notice'>You tweak \the [src]'s piston valve to [fisto_setting].</span>")
 	else if(istype(W, /obj/item/weapon/screwdriver))
-		if(tank)
-			updateTank(tank, 1, user)
+		updateTank(tank, 1, user)
 
 
 /obj/item/weapon/melee/powerfist/proc/updateTank(obj/item/weapon/tank/thetank, removing = 0, mob/living/carbon/human/user)
@@ -56,7 +57,7 @@
 		tank.forceMove(get_turf(user))
 		user.put_in_hands(tank)
 		tank = null
-	if(!removing)
+	else
 		if(tank)
 			to_chat(user,"<span class='warning'>\The [src] already has a tank.</span>")
 			return
@@ -71,7 +72,7 @@
 	if(!tank)
 		to_chat(user,"<span class='warning'>\The [src] can't operate without a source of gas!</span>")
 		return
-	if(tank && !tank.air_contents.remove(gasperfist * fisto_setting))
+	else if(!tank.air_contents.remove(gasperfist * fisto_setting))
 		to_chat(user,"<span class='warning'>\The [src]'s piston-ram lets out a weak hiss, it needs more gas!</span>")
 		playsound(loc, 'sound/effects/refill.ogg', 50, 1)
 		return
@@ -86,5 +87,7 @@
 	spawn(1)
 		target.throw_at(throw_target, 5 * fisto_setting, 0.2)
 
+	target.attack_log += text("\[[time_stamp()]\]<font color='orange'> Has been powerfisted by [user.name] ([user.ckey])</font>")
+	user.attack_log += text("\[[time_stamp()]\] <font color='red'>powerfisted [target.name]'s ([target.ckey])</font>")
 	msg_admin_attack("[user] ([user.ckey]) powerfisted [target.name] ([target.ckey]) <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[target.x];Y=[target.y];Z=[target.z]'>JMP</a>)</span></span>")
 	return
