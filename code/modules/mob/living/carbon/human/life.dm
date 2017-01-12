@@ -271,8 +271,8 @@
 				heal_organ_damage(0,1)*/
 //##Z2
 
-		// DNA2 - Gene processing.
-		// The HULK stuff that was here is now in the hulk gene.
+	// DNA2 - Gene processing.
+	// The HULK stuff that was here is now in the hulk gene.
 	for(var/datum/dna/gene/gene in dna_genes)
 		if(!gene.block)
 			continue
@@ -311,50 +311,41 @@
 				return
 
 			var/damage = 0
-			switch(radiation)
-				if(1 to 49)
-					radiation--
-					if(prob(25))
-						adjustToxLoss(1)
-						damage = 1
-						updatehealth()
+			radiation--
+			if(prob(25))
+				adjustToxLoss(1)
+				damage = 1
 
-				if(50 to 74)
-					radiation -= 2
-					damage = 1
-					adjustToxLoss(1)
-					if(prob(2) && h_style != "Skinhead" && f_style != "Shaved")
-						h_style = "Skinhead"
-						f_style = "Shaved"
-						update_hair()
-						to_chat(src, "<span class='notice'>Suddenly you lost your hair!</span>")
-					if(prob(5))
-						radiation -= 5
-						Weaken(3)
-						if(!lying)
-							to_chat(src, "\red You feel weak.")
-							emote("collapse")
-					updatehealth()
+			if(radiation > 50)
+				radiation -= 2
+				damage = 1
+				adjustToxLoss(1)
+				if(prob(5) && prob(radiation) && (h_style != "Bald" || f_style != "Shaved"))
+					h_style = "Bald"
+					f_style = "Shaved"
+					update_hair()
+					to_chat(src, "<span class='notice'>Suddenly you lost your hair!</span>")
+				if(prob(5))
+					radiation -= 5
+					Weaken(3)
+					if(!lying)
+						to_chat(src, "\red You feel weak.")
+						emote("collapse")
+			if(radiation > 75)
+				radiation -= 1
+				adjustToxLoss(2)
+				if(prob(1))
+					to_chat(src, "\red You mutate!")
+					randmutb(src)
+					domutcheck(src,null)
+					emote("gasp")
 
-				if(75 to 100)
-					radiation -= 3
-					adjustToxLoss(3)
-					damage = 1
-					if(prob(5) && h_style != "Skinhead" && f_style != "Shaved")
-						h_style = "Skinhead"
-						f_style = "Shaved"
-						update_hair()
-						to_chat(src, "<span class='notice'>Suddenly you lost your hair!</span>")
-					if(prob(1))
-						to_chat(src, "\red You mutate!")
-						randmutb(src)
-						domutcheck(src,null)
-						emote("gasp")
-						updatehealth()
-
-			if(damage && organs.len)
-				var/datum/organ/external/O = pick(organs)
-				if(istype(O)) O.add_autopsy_data("Radiation Poisoning", damage)
+			if(damage)
+				updatehealth()
+				if (organs.len)
+					var/datum/organ/external/O = pick(organs)
+					if(istype(O))
+						O.add_autopsy_data("Radiation Poisoning", damage)
 
 /mob/living/carbon/human/proc/breathe()
 	if(NO_BREATH in src.mutations)
