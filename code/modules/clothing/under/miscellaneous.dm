@@ -42,6 +42,14 @@
 	item_color = "waiter"
 	flags = ONESIZEFITSALL
 
+/obj/item/clothing/under/tourist
+	name = "hawaiian shirt"
+	desc = "How gauche."
+	icon_state = "tourist"
+	item_state = "tourist"
+	item_color = "tourist"
+	flags = ONESIZEFITSALL
+
 /obj/item/clothing/under/rank/mailman
 	name = "mailman's jumpsuit"
 	desc = "<i>'Special delivery!'</i>"

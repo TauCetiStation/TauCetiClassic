@@ -212,7 +212,7 @@ datum/objective/anti_revolution/demote
 
 			if(!istype(I)) return 1
 
-			if(I.assignment == "Assistant")
+			if(I.assignment == "Test Subject")
 				return 1
 			else
 				return 0
