@@ -119,6 +119,10 @@
 			AM.Crossed(src)
 		return 1
 	return 0
+/mob/living/forceMove(atom/destination)
+	if(buckled)
+		buckled.unbuckle_mob()
+	..()
 
 /atom/movable/proc/forceMoveOld(atom/destination)
 	if(destination)

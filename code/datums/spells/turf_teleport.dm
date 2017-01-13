@@ -32,3 +32,5 @@
 			return
 
 		target.loc = picked
+		if(target.buckled)
+			target.buckled.unbuckle_mob()
