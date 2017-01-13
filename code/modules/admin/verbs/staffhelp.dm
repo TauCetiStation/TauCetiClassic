@@ -89,7 +89,7 @@ client/proc/staffhelp(msg, help_type = null)
 		if(R_ADMIN & X.holder.rights)
 			if(X.is_afk())
 				admin_number_afk++
-			if(X.prefs.toggles & SOUND_ADMINHELP)
+			if((X.prefs.toggles & SOUND_ADMINHELP) && help_type == "AH")
 				X << 'sound/effects/adminhelp.ogg'
 			to_chat(X, msg)
 
