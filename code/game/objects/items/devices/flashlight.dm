@@ -226,8 +226,8 @@
 
 
 /obj/item/device/flashlight/emp/New()
-		..()
-		SSobj.processing |= src
+	..()
+	SSobj.processing |= src
 
 /obj/item/device/flashlight/emp/Destroy()
 		SSobj.processing.Remove(src)
