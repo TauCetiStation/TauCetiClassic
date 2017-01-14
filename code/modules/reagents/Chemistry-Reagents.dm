@@ -1865,7 +1865,7 @@ datum
 			id = "beer2"
 			description = "An alcoholic beverage made from malted grains, hops, yeast, and water. The fermentation appears to be incomplete." //If the players manage to analyze this, they deserve to know something is wrong.
 			reagent_state = LIQUID
-			color = "#664300" // rgb: 102, 67, 0
+			color = "#FBBF0D" // rgb: 251, 191, 13
 			custom_metabolism = 0.15 // Sleep toxins should always be consumed pretty fast
 			overdose = REAGENTS_OVERDOSE * 0.5
 
@@ -3101,7 +3101,7 @@ datum
 			name = "Beer"
 			id = "beer"
 			description = "An alcoholic beverage made from malted grains, hops, yeast, and water."
-			color = "#664300" // rgb: 102, 67, 0
+			color = "#FBBF0D" // rgb: 251, 191, 13
 			boozepwr = 1
 			nutriment_factor = 1 * FOOD_METABOLISM
 
@@ -3129,7 +3129,7 @@ datum
 			name = "Whiskey"
 			id = "whiskey"
 			description = "A superb and well-aged single-malt whiskey. Damn."
-			color = "#664300" // rgb: 102, 67, 0
+			color = "#EE7732" // rgb: 238, 119, 50
 			boozepwr = 2
 			dizzy_adj = 4
 
@@ -3162,7 +3162,7 @@ datum
 			name = "Vodka"
 			id = "vodka"
 			description = "Number one drink AND fueling choice for Russians worldwide."
-			color = "#0064C8" // rgb: 0, 100, 200
+			color = "#619494" // rgb: 97, 148, 148
 			boozepwr = 2
 
 			on_mob_life(mob/living/M)
@@ -3194,7 +3194,7 @@ datum
 			name = "Gin"
 			id = "gin"
 			description = "It's gin. In space. I say, good sir."
-			color = "#664300" // rgb: 102, 67, 0
+			color = "#CDD1DA" // rgb: 205, 209, 218
 			boozepwr = 1
 			dizzy_adj = 3
 
@@ -3339,7 +3339,7 @@ datum
 			name = "Deadrum"
 			id = "rum"
 			description = "Popular with the sailors. Not very popular with everyone else."
-			color = "#664300" // rgb: 102, 67, 0
+			color = "#F09F42" // rgb: 240, 159, 66
 			boozepwr = 1
 
 			on_mob_life(mob/living/M)
