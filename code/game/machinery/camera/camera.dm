@@ -143,9 +143,7 @@
 
 	else if(iswelder(W) && canDeconstruct())
 		if(weld(W, user))
-			if(assembly)
-				assembly.loc = src.loc
-				assembly.state = 1
+			drop_assembly(1)
 			qdel(src)
 	else if(istype(W, /obj/item/device/analyzer) && panel_open) //XRay
 		if(!isXRay())
