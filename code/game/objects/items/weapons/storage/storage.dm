@@ -341,6 +341,9 @@
 	if(!can_be_inserted(W))
 		return
 
+	if(istype(W, /obj/item/weapon/implanter/compressed))
+		return
+
 	if(istype(W, /obj/item/weapon/tray))
 		var/obj/item/weapon/tray/T = W
 		if(T.calc_carry() > 0)
