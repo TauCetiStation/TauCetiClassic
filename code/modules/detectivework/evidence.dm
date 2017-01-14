@@ -8,7 +8,7 @@
 	item_state = ""
 	w_class = 2
 
-/obj/item/weapon/evidencebag/afterattack(obj/item/I, mob/user as mob, proximity)
+/obj/item/weapon/evidencebag/afterattack(obj/item/I, mob/user, proximity)
 	if(!proximity) return
 	if(!in_range(I, user))
 		return
@@ -17,18 +17,21 @@
 		return ..()
 
 	if(istype(I, /obj/item/weapon/evidencebag))
-		user << "<span class='notice'>You find putting an evidence bag in another evidence bag to be slightly absurd.</span>"
+		to_chat(user, "<span class='notice'>You find putting an evidence bag in another evidence bag to be slightly absurd.</span>")
 		return
 
 	if(istype(I, /obj/item/weapon/storage/box/evidence))
 		return
 
+	if(istype(I, /obj/item/device/core_sampler)) //core sampler interacts with evidence bags in another way
+		return
+
 	if(I.w_class > 3)
-		user << "<span class='notice'>[I] won't fit in [src].</span>"
+		to_chat(user, "<span class='notice'>[I] won't fit in [src].</span>")
 		return
 
 	if(contents.len)
-		user << "<span class='notice'>[src] already has something inside it.</span>"
+		to_chat(user, "<span class='notice'>[src] already has something inside it.</span>")
 		return ..()
 
 	if(!isturf(I.loc)) //If it isn't on the floor. Do some checks to see if it's in our hands or a box. Otherwise give up.
@@ -64,7 +67,7 @@
 	return
 
 
-/obj/item/weapon/evidencebag/attack_self(mob/user as mob)
+/obj/item/weapon/evidencebag/attack_self(mob/user)
 	if(contents.len)
 		var/obj/item/I = contents[1]
 		user.visible_message("[user] takes [I] out of [src]", "You take [I] out of [src].",\
@@ -76,7 +79,7 @@
 		desc = "An empty evidence bag."
 
 	else
-		user << "[src] is empty."
+		to_chat(user, "[src] is empty.")
 		icon_state = "evidenceobj"
 	return
 

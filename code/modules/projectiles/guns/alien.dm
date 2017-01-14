@@ -49,14 +49,15 @@
 		last_regen = world.time
 		update_icon()
 
-/obj/item/weapon/spikethrower/examine()
+/obj/item/weapon/spikethrower/examine(mob/user)
 	..()
-	usr << "It has [spikes] [spikes == 1 ? "spike" : "spikes"] remaining."
+	if(src in view(1, user))
+		to_chat(user, "It has [spikes] [spikes == 1 ? "spike" : "spikes"] remaining.")
 
 /obj/item/weapon/spikethrower/update_icon()
 	icon_state = "spikethrower[spikes]"
 
-/obj/item/weapon/spikethrower/afterattack(atom/A as mob|obj|turf|area, mob/living/user as mob|obj, flag, params)
+/obj/item/weapon/spikethrower/afterattack(atom/A, mob/living/user, flag, params)
 	if(flag) return
 	if(user && user.client && user.client.gun_mode && !(A in target))
 		//TODO: Make this compatible with targetting (prolly have to actually make it a gun subtype, ugh.)
@@ -64,7 +65,7 @@
 	else
 		Fire(A,user,params)
 
-/obj/item/weapon/spikethrower/attack(mob/living/M as mob, mob/living/user as mob, def_zone)
+/obj/item/weapon/spikethrower/attack(mob/living/M, mob/living/user, def_zone)
 
 	if (M == user && user.zone_sel.selecting == "mouth")
 		M.visible_message("\red [user] attempts without success to fit [src] into their mouth.")
@@ -81,7 +82,7 @@
 	else
 		return ..()
 
-/obj/item/weapon/spikethrower/proc/Fire(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, params, reflex = 0)
+/obj/item/weapon/spikethrower/proc/Fire(atom/target, mob/living/user, params, reflex = 0)
 
 	add_fingerprint(user)
 
@@ -93,14 +94,14 @@
 	if(istype(user,/mob/living/carbon/human))
 		var/mob/living/carbon/human/H = user
 		if(H.species && H.species.name != "Vox")
-			user << "\red The weapon does not respond to you!"
+			to_chat(user, "\red The weapon does not respond to you!")
 			return
 	else
-		user << "\red The weapon does not respond to you!"
+		to_chat(user, "\red The weapon does not respond to you!")
 		return
 
 	if(spikes <= 0)
-		user << "\red The weapon has nothing to fire!"
+		to_chat(user, "\red The weapon has nothing to fire!")
 		return
 
 	if(!spike)
@@ -133,14 +134,14 @@
 
 	var/mode = 1
 
-/obj/item/weapon/gun/energy/noisecannon/attack_hand(mob/user as mob)
+/obj/item/weapon/gun/energy/noisecannon/attack_hand(mob/user)
 	if(loc != user)
 		var/mob/living/carbon/human/H = user
 		if(istype(H))
 			if(H.species.name == "Vox Armalis")
 				..()
 				return
-		user << "\red \The [src] is far too large for you to pick up."
+		to_chat(user, "\red \The [src] is far too large for you to pick up.")
 		return
 /*
 /obj/item/weapon/gun/energy/noisecannon/load_into_chamber() //Does not have ammo.

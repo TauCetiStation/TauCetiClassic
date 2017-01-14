@@ -19,7 +19,6 @@
 	var/safety_mode = 0 // Temporality stops the machine if it detects a mob
 	var/icon_name = "grinder-b"
 	var/blood = 0
-	var/cooldown = 5
 	var/rating = 1
 	var/last_ripped = 0
 
@@ -33,47 +32,46 @@
 	update_icon()
 
 /obj/machinery/pile_ripper/process()
-	if((last_ripped + cooldown) >= world.time)
+	if(last_ripped >= world.time)
 		return
+	last_ripped = world.time
 	if(safety_mode)
 		playsound(src.loc, 'sound/machines/ping.ogg', 50, 0)
 		safety_mode = 0
 		update_icon()
 	var/turf/ripped_turf = get_turf(get_step(src, 8))
-	last_ripped = world.time + cooldown
 	for(var/mob/living/poor_soul in ripped_turf)
-		if(emagged || prob(30))
+		if(emagged || prob(25))
 			eat(poor_soul)
 		else
 			stop(poor_soul)
 	var/count = 0
 	for(var/obj/ripped_item in ripped_turf)
-		if (count >= rating)
+		if(count >= rating)
 			break
 		if(istype(ripped_item, /obj/structure/scrap))
 			var/obj/structure/scrap/pile = ripped_item
-			pile.dig_out_lump(loc)
+			while(pile.dig_out_lump(loc))
+				if(prob(20))
+					break
 			count++
 		else if(istype(ripped_item, /obj/item))
 			ripped_item.forceMove(src.loc)
 			if(prob(20))
 				qdel(ripped_item)
-			count++
 		else if(istype(ripped_item, /obj/structure/scrap_cube))
 			var/obj/structure/scrap_cube/cube = ripped_item
 			cube.make_pile()
-			count++
 
 /obj/machinery/pile_ripper/RefreshParts()
 	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
-		cooldown = 5 / M.rating
 		rating = M.rating
 
 /obj/machinery/pile_ripper/examine(mob/user)
 	..()
-	user << "The power light is [(stat & NOPOWER) ? "off" : "on"]."
-	user << "The safety-mode light is [safety_mode ? "on" : "off"]."
-	user << "The safety-sensors status light is [emagged ? "off" : "on"]."
+	to_chat(user, "The power light is [(stat & NOPOWER) ? "off" : "on"].")
+	to_chat(user, "The safety-mode light is [safety_mode ? "on" : "off"].")
+	to_chat(user, "The safety-sensors status light is [emagged ? "off" : "on"].")
 
 /obj/machinery/pile_ripper/power_change()
 	..()
@@ -115,7 +113,7 @@
 			safety_mode = 0
 			update_icon()
 		playsound(src.loc, "sparks", 75, 1, -1)
-		user << "<span class='notice'>You use the cryptographic sequencer on the [src.name].</span>"
+		to_chat(user, "<span class='notice'>You use the cryptographic sequencer on the [src.name].</span>")
 
 /obj/machinery/pile_ripper/update_icon()
 	..()

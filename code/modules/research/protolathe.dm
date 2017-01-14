@@ -53,29 +53,33 @@ Note: Must be placed west/left of and R&D console to function.
 		T += (M.rating/3)
 	efficiency_coeff = max(T, 1)
 
-/obj/machinery/r_n_d/protolathe/proc/check_mat(datum/design/being_built, var/M)
+/obj/machinery/r_n_d/protolathe/proc/check_mat(datum/design/being_built, M)
+	var/A = 0
 	switch(M)
 		if(MAT_METAL)
-			return (m_amount - (being_built.materials[M]/efficiency_coeff) >= 0) ? 1 : 0
+			A = m_amount
 		if(MAT_GLASS)
-			return (g_amount - (being_built.materials[M]/efficiency_coeff) >= 0) ? 1 : 0
+			A = g_amount
 		if(MAT_GOLD)
-			return (gold_amount - (being_built.materials[M]/efficiency_coeff) >= 0) ? 1 : 0
+			A = gold_amount
 		if(MAT_SILVER)
-			return (silver_amount - (being_built.materials[M]/efficiency_coeff) >= 0) ? 1 : 0
+			A = silver_amount
 		if(MAT_PHORON)
-			return (phoron_amount - (being_built.materials[M]/efficiency_coeff) >= 0) ? 1 : 0
+			A = phoron_amount
 		if(MAT_URANIUM)
-			return (uranium_amount - (being_built.materials[M]/efficiency_coeff) >= 0) ? 1 : 0
+			A = uranium_amount
 		if(MAT_DIAMOND)
-			return (diamond_amount - (being_built.materials[M]/efficiency_coeff) >= 0) ? 1 : 0
+			A = diamond_amount
 		if("$clown")
-			return (clown_amount - (being_built.materials[M]/efficiency_coeff) >= 0) ? 1 : 0
+			A = clown_amount
 		else
-			return (reagents.has_reagent(M, (being_built.materials[M]/efficiency_coeff)) != 0) ? 1 : 0
+			A = reagents.has_reagent(M, (being_built.materials[M]/efficiency_coeff))
+			//return reagents.has_reagent(M, (being_built.materials[M]/efficiency_coeff))
+	A = A / max(1 , (being_built.materials[M]/efficiency_coeff))
+	return A
 
 
-/obj/machinery/r_n_d/protolathe/attackby(var/obj/item/I as obj, var/mob/user as mob)
+/obj/machinery/r_n_d/protolathe/attackby(obj/item/I, mob/user)
 	if (shocked)
 		shock(user,50)
 	if (I.is_open_container())
@@ -120,25 +124,25 @@ Note: Must be placed west/left of and R&D console to function.
 			default_deconstruction_crowbar(I)
 			return 1
 		else
-			user << "\red You can't load the [src.name] while it's opened."
+			to_chat(user, "\red You can't load the [src.name] while it's opened.")
 			return 1
 	if (disabled)
 		return
 	if (!linked_console)
-		user << "\The protolathe must be linked to an R&D console first!"
+		to_chat(user, "\The protolathe must be linked to an R&D console first!")
 		return 1
 	if (busy)
-		user << "\red The protolathe is busy. Please wait for completion of previous operation."
+		to_chat(user, "\red The protolathe is busy. Please wait for completion of previous operation.")
 		return 1
 	if (!istype(I, /obj/item/stack/sheet))
-		user << "\red You cannot insert this item into the protolathe!"
+		to_chat(user, "\red You cannot insert this item into the protolathe!")
 		return 1
 	if (stat)
 		return 1
 	if(istype(I,/obj/item/stack/sheet))
 		var/obj/item/stack/sheet/S = I
 		if (TotalMaterials() + S.perunit > max_material_storage)
-			user << "\red The protolathe's material bin is full. Please remove material before adding more."
+			to_chat(user, "\red The protolathe's material bin is full. Please remove material before adding more.")
 			return 1
 
 	var/obj/item/stack/sheet/stack = I
@@ -164,7 +168,7 @@ Note: Must be placed west/left of and R&D console to function.
 	var/stacktype = stack.type
 	stack.use(amount)
 	if (do_after(user, 16, target = src))
-		user << "\blue You add [amount] sheets to the [src.name]."
+		to_chat(user, "\blue You add [amount] sheets to the [src.name].")
 		icon_state = "protolathe"
 		switch(stacktype)
 			if(/obj/item/stack/sheet/metal)

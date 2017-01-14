@@ -1,4 +1,4 @@
-proc/admin_call_cooldown(var/value1)
+proc/admin_call_cooldown(value1)
 	ac_nameholder.Add(value1)
 	spawn(3000)
 		ac_nameholder.Remove(value1)
@@ -8,22 +8,21 @@ proc/admin_call_cooldown(var/value1)
 	set name = "Admin Call"
 
 	if(say_disabled)	//This is here to try to identify lag problems
-		usr << "\red Speech is currently admin-disabled."
+		to_chat(usr, "\red Speech is currently admin-disabled.")
 		return
 
 	//handle muting and automuting
 	if(prefs.muted & MUTE_ADMINHELP)
-		src << "<font color='red'>Error: AdminCall: You cannot send admincalls (Muted).</font>"
+		to_chat(src, "<font color='red'>Error: AdminCall: You cannot send admincalls (Muted).</font>")
 		return
 
 	if(key_name(src) in ac_nameholder)
-		src << "<font color='blue'>Можно использовать не чаще 1-го раза в 5 минут.</font>"
+		to_chat(src, "<font color='blue'>Можно использовать не чаще 1-го раза в 5 минут.</font>")
 		return
 
 	admin_call_cooldown(key_name(src))
 
 	var/output_text = {"<font color='red'>============ADMINCALL============</font><BR>
-<font color='red' size='6'>[sanitize_alt("0) Сообщение писать на !!!translite!!!, поддержки кириллицы пока нет.")]</font><BR>
 <font color='red'>[sanitize_alt("1) Сообщение длинной не более 140 символов.")]</font><BR>
 <font color='red'>[sanitize_alt("2) Описать коротко и внятно причину по которой нужен админ.")]</font><BR>
 <font color='red'>[sanitize_alt("3) Ожидать.")]</font><BR>
@@ -42,11 +41,12 @@ proc/admin_call_cooldown(var/value1)
 	//clean the input msg
 	if(!msg)	return
 
-	var/check_answer = alert(src, sanitize("Send?"),,"Yes","No")
+	var/check_answer = alert(src, "Are you sure?",,"Yes","No")
 	if(check_answer == "No")
 		return
 
 	msg = sanitize(copytext(msg,1,140))
+
 	if(!msg)	return
 	var/original_msg = msg
 
@@ -66,19 +66,19 @@ proc/admin_call_cooldown(var/value1)
 					admin_number_afk++
 			if(X.prefs.toggles & SOUND_ADMINHELP)
 				X << 'sound/effects/adminhelp.ogg'
-			X << msg
+			to_chat(X, msg)
 
 	//show it to the person admincalling too
-	src << "<font color='blue'><b>AdminCall message</b>: [original_msg]</font>"
+	to_chat(src, "<font color='blue'><b>AdminCall message</b>: [original_msg]</font>")
 
 	//var/admin_number_present = admins.len - admin_number_afk
 	var/admin_number_present = admin_number - admin_number_afk
 	log_admin("ADMINCALL: [key_name(src)]: [original_msg] - heard by [admin_number_present] non-AFK admins.")
 	if(admin_number_present <= 0)
 		if(!admin_number_afk)
-			send2slack_admincall("ADMINCALL from [key_name(src)]: [original_msg] - !!No admins online!!")
+			send2slack_admincall("@here ADMINCALL from *[key_name(src)]*, !!No admins online!!", original_msg)
 		else
-			send2slack_admincall("ADMINCALL from [key_name(src)]: [original_msg] - !!All admins AFK ([admin_number_afk])!!")
+			send2slack_admincall("@here ADMINCALL from *[key_name(src)]*, !!All admins AFK ([admin_number_afk])!!", original_msg)
 	//else
 	//	send2slack_admincall("ADMINCALL from [key_name(src)]: [original_msg]")
 	feedback_add_details("admin_verb","ASC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

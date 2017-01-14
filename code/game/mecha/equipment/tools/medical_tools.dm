@@ -1,7 +1,7 @@
 /obj/item/mecha_parts/mecha_equipment/tool/sleeper
 	name = "Mounted Sleeper"
 	desc = "Mounted Sleeper. (Can be attached to: Medical Exosuits)"
-	icon = 'icons/obj/Cryogenic2.dmi'
+	icon = 'icons/obj/Cryogenic3.dmi'
 	icon_state = "sleeper_0"
 	origin_tech = "programming=2;biotech=3"
 	energy_drain = 20
@@ -10,7 +10,7 @@
 	equip_cooldown = 20
 	var/mob/living/carbon/occupant = null
 	var/datum/global_iterator/pr_mech_sleeper
-	var/inject_amount = 10
+	var/inject_amount = 5
 	salvageable = 0
 
 /obj/item/mecha_parts/mecha_equipment/tool/sleeper/can_attach(obj/mecha/medical/M)
@@ -36,7 +36,7 @@
 /obj/item/mecha_parts/mecha_equipment/tool/sleeper/Exit(atom/movable/O)
 	return 0
 
-/obj/item/mecha_parts/mecha_equipment/tool/sleeper/action(var/mob/living/carbon/target)
+/obj/item/mecha_parts/mecha_equipment/tool/sleeper/action(mob/living/carbon/target)
 	if(!action_checks(target))
 		return
 	if(!istype(target))
@@ -187,11 +187,11 @@
 	return output
 
 
-/obj/item/mecha_parts/mecha_equipment/tool/sleeper/proc/inject_reagent(var/datum/reagent/R,var/obj/item/mecha_parts/mecha_equipment/tool/syringe_gun/SG)
+/obj/item/mecha_parts/mecha_equipment/tool/sleeper/proc/inject_reagent(datum/reagent/R,obj/item/mecha_parts/mecha_equipment/tool/syringe_gun/SG)
 	if(!R || !occupant || !SG || !(SG in chassis.equipment))
 		return 0
 	var/to_inject = min(R.volume, inject_amount)
-	if(to_inject && occupant.reagents.get_reagent_amount(R.id) + to_inject <= inject_amount*2)
+	if(to_inject && occupant.reagents.get_reagent_amount(R.id) + to_inject <= inject_amount*4)
 		occupant_message("Injecting [occupant] with [to_inject] units of [R.name].")
 		log_message("Injecting [occupant] with [to_inject] units of [R.name].")
 		SG.reagents.trans_id_to(occupant,R.id,to_inject)
@@ -216,7 +216,7 @@
 	if(!S.chassis.has_charge(S.energy_drain))
 		S.set_ready_state(1)
 		S.log_message("Deactivated.")
-		S.occupant_message("[src] deactivated - no power.")
+		S.occupant_message("[S] deactivated - no power.")
 		return stop()
 	var/mob/living/carbon/M = S.occupant
 	if(!M)
@@ -270,7 +270,7 @@
 	chassis.events.clearEvent("onMove",event)
 	return ..()
 
-/obj/item/mecha_parts/mecha_equipment/tool/cable_layer/action(var/obj/item/weapon/cable_coil/target)
+/obj/item/mecha_parts/mecha_equipment/tool/cable_layer/action(obj/item/weapon/cable_coil/target)
 	if(!action_checks(target))
 		return
 	var/result = load_cable(target)
@@ -310,7 +310,7 @@
 		return "[output] \[Cable: [cable ? cable.amount : 0] m\][(cable && cable.amount) ? "- <a href='?src=\ref[src];toggle=1'>[!equip_ready?"Dea":"A"]ctivate</a>|<a href='?src=\ref[src];cut=1'>Cut</a>" : null]"
 	return
 
-/obj/item/mecha_parts/mecha_equipment/tool/cable_layer/proc/load_cable(var/obj/item/weapon/cable_coil/CC)
+/obj/item/mecha_parts/mecha_equipment/tool/cable_layer/proc/load_cable(obj/item/weapon/cable_coil/CC)
 	if(istype(CC) && CC.amount)
 		var/cur_amount = cable? cable.amount : 0
 		var/to_load = max(max_cable - cur_amount,0)
@@ -342,7 +342,7 @@
 /obj/item/mecha_parts/mecha_equipment/tool/cable_layer/proc/reset()
 	last_piece = null
 
-/obj/item/mecha_parts/mecha_equipment/tool/cable_layer/proc/dismantleFloor(var/turf/new_turf)
+/obj/item/mecha_parts/mecha_equipment/tool/cable_layer/proc/dismantleFloor(turf/new_turf)
 	if(istype(new_turf, /turf/simulated/floor))
 		var/turf/simulated/floor/T = new_turf
 		if(!T.is_plating())
@@ -351,7 +351,7 @@
 			T.make_plating()
 	return !new_turf.intact
 
-/obj/item/mecha_parts/mecha_equipment/tool/cable_layer/proc/layCable(var/turf/new_turf)
+/obj/item/mecha_parts/mecha_equipment/tool/cable_layer/proc/layCable(turf/new_turf)
 	if(equip_ready || !istype(new_turf) || !dismantleFloor(new_turf))
 		return reset()
 	var/fdirn = turn(chassis.dir,180)
@@ -390,6 +390,7 @@
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "syringegun"
 	var/list/syringes
+	var/list/accessible_reagents
 	var/list/known_reagents
 	var/list/processed_reagents
 	var/max_syringes = 10
@@ -406,6 +407,10 @@
 	..()
 	flags |= NOREACT
 	syringes = new
+	accessible_reagents = list("inaprovaline","anti_toxin", "alkysine", "arithrazine", "bicaridine", "citalopram", "dermaline",
+	"dexalin", "dexalinp", "ethylredoxrazine", "hyperzine", "hyronalin", "imidazoline", "kelotane", "leporazine", "methylphenidate",
+	"oxycodone", "paracetamol", "paroxetine", "peridaxon", "rezadone", "ryetalyn", "spaceacillin", "sterilizine", "synaptizine",
+	"tramadol", "tricordrazine", "doctorsdelight")
 	known_reagents = list("inaprovaline"="Inaprovaline","anti_toxin"="Anti-Toxin (Dylovene)")
 	processed_reagents = new
 	create_reagents(max_volume)
@@ -620,7 +625,7 @@
 		return 0
 	occupant_message("Analyzing reagents...")
 	for(var/datum/reagent/R in A.reagents.reagent_list)
-		if(R.reagent_state == 2 && add_known_reagent(R.id,R.name))
+		if(accessible_reagents.Find(R.id) != 0 && add_known_reagent(R.id,R.name))
 			occupant_message("Reagent analyzed, identified as [R.name] and added to database.")
 			send_byjax(chassis.occupant,"msyringegun.browser","reagents_form",get_reagents_form())
 	occupant_message("Analyzis complete.")

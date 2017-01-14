@@ -19,7 +19,7 @@
 	req_access = list(access_tcomsat)
 	circuit = /obj/item/weapon/circuitboard/comm_server
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		return
 /*		if(..())
 			return
@@ -142,12 +142,9 @@
 
 
 	Topic(href, href_list)
-		if(..())
+		. = ..()
+		if(!.)
 			return
-
-
-		add_fingerprint(usr)
-		usr.set_machine(src)
 
 		if(href_list["viewserver"])
 			screen = 1
@@ -185,7 +182,7 @@
 		if(href_list["delete"])
 
 			if(!src.allowed(usr) && !emagged)
-				usr << "\red ACCESS DENIED."
+				to_chat(usr, "\red ACCESS DENIED.")
 				return
 
 			if(SelectedServer)
@@ -218,11 +215,11 @@
 		updateUsrDialog()
 		return*/
 
-	attackby(var/obj/item/weapon/D as obj, var/mob/user as mob)
+	attackby(obj/item/weapon/D, mob/user)
 		if(istype(D, /obj/item/weapon/card/emag) && !emagged)
 			playsound(src.loc, 'sound/effects/sparks4.ogg', 75, 1)
 			emagged = 1
-			user << "\blue You you disable the security protocols"
+			to_chat(user, "\blue You you disable the security protocols")
 		else
 			..()
 		src.updateUsrDialog()

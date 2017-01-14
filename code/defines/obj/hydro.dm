@@ -7,7 +7,7 @@
 	icon_state = "hydro"
 	item_state = "analyzer"
 
-	attack_self(mob/user as mob)
+	attack_self(mob/user)
 		return 0
 
 // ********************************************************
@@ -18,7 +18,6 @@
 	name = "pack of seeds"
 	icon = 'icons/obj/seeds.dmi'
 	icon_state = "seed" // unknown plant seed - these shouldn't exist in-game
-	flags = FPRINT | TABLEPASS
 	w_class = 2.0 // Makes them pocketable
 	var/mypath = "/obj/item/seeds"
 	var/plantname = "Plants"
@@ -35,16 +34,16 @@
 	var/plant_type = 0 // 0 = 'normal plant'; 1 = weed; 2 = shroom
 	var/list/mutatelist = list()
 
-/obj/item/seeds/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/obj/item/seeds/attackby(obj/item/O, mob/user)
 	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
-		user << "*** <B>[plantname]</B> ***"
-		user << "-Plant Endurance: \blue [endurance]"
-		user << "-Plant Lifespan: \blue [lifespan]"
+		to_chat(user, "*** <B>[plantname]</B> ***")
+		to_chat(user, "-Plant Endurance: \blue [endurance]")
+		to_chat(user, "-Plant Lifespan: \blue [lifespan]")
 		if(yield != -1)
-			user << "-Plant Yield: \blue [yield]"
-		user << "-Plant Production: \blue [production]"
+			to_chat(user, "-Plant Yield: \blue [yield]")
+		to_chat(user, "-Plant Production: \blue [production]")
 		if(potency != -1)
-			user << "-Plant Potency: \blue [potency]"
+			to_chat(user, "-Plant Potency: \blue [potency]")
 		return
 	..() // Fallthrough to item/attackby() so that bags can pick seeds up
 
@@ -1086,11 +1085,11 @@
 	growthstages = 4
 	plant_type = 1
 
-/obj/item/seeds/kudzuseed/attack_self(mob/user as mob)
+/obj/item/seeds/kudzuseed/attack_self(mob/user)
 	if(istype(user.loc,/turf/space) || istype(user.loc,/turf/simulated/shuttle))
-		user << "<span class='notice'>You cannot plant kudzu on a moving shuttle or space.</span>"
+		to_chat(user, "<span class='notice'>You cannot plant kudzu on a moving shuttle or space.</span>")
 		return
-	user << "<span class='notice'>You plant the kudzu. You monster.</span>"
+	to_chat(user, "<span class='notice'>You plant the kudzu. You monster.</span>")
 	new /obj/effect/spacevine_controller(user.loc)
 	qdel(src)
 
@@ -1172,7 +1171,6 @@
 	icon = 'icons/obj/harvest.dmi'
 	icon_state = "logs"
 	force = 5
-	flags = TABLEPASS
 	throwforce = 5
 	w_class = 3.0
 	throw_speed = 3
@@ -1182,7 +1180,7 @@
 	seed = "/obj/item/seeds/towermycelium"
 	attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
 
-/obj/item/weapon/grown/log/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/weapon/grown/log/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/circular_saw) || istype(W, /obj/item/weapon/hatchet) || (istype(W, /obj/item/weapon/twohanded/fireaxe) && W:wielded) || istype(W, /obj/item/weapon/melee/energy))
 		user.show_message("<span class='notice'>You make planks out of \the [src]!</span>", 1)
 		for(var/i=0,i<2,i++)
@@ -1193,7 +1191,7 @@
 				if(G.amount>=G.max_amount)
 					continue
 				G.attackby(NG, user)
-				usr << "You add the newly-formed wood to the stack. It now contains [NG.amount] planks."
+				to_chat(usr, "You add the newly-formed wood to the stack. It now contains [NG.amount] planks.")
 		qdel(src)
 		return
 
@@ -1205,7 +1203,6 @@
 	icon_state = "sunflower"
 	damtype = "fire"
 	force = 0
-	flags = TABLEPASS
 	throwforce = 1
 	w_class = 1.0
 	throw_speed = 1
@@ -1220,7 +1217,6 @@
 	icon_state = "gibtomato"
 	damtype = "fire"
 	force = 0
-	flags = TABLEPASS
 	throwforce = 1
 	w_class = 2.0
 	throw_speed = 1
@@ -1244,7 +1240,6 @@
 	icon_state = "nettle"
 	damtype = "fire"
 	force = 15
-	flags = TABLEPASS
 	throwforce = 1
 	w_class = 2.0
 	throw_speed = 1
@@ -1267,7 +1262,6 @@
 	icon_state = "deathnettle"
 	damtype = "fire"
 	force = 30
-	flags = TABLEPASS
 	throwforce = 1
 	w_class = 2.0
 	throw_speed = 1
@@ -1285,7 +1279,7 @@
 		force = round((5+potency/2.5), 1)
 
 /obj/item/weapon/grown/deathnettle/suicide_act(mob/user)
-	viewers(user) << "\red <b>[user] is eating some of the [src.name]! It looks like \he's trying to commit suicide.</b>"
+	to_chat(viewers(user), "\red <b>[user] is eating some of the [src.name]! It looks like \he's trying to commit suicide.</b>")
 	return (BRUTELOSS|TOXLOSS)
 
 // *************************************
@@ -1296,7 +1290,6 @@
 	name = "bottle of pestkiller"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle16"
-	flags = FPRINT |  TABLEPASS
 	var/toxicity = 0
 	var/PestKillStr = 0
 
@@ -1308,7 +1301,6 @@
 	name = "bottle of carbaryl"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle16"
-	flags = FPRINT |  TABLEPASS
 	toxicity = 4
 	PestKillStr = 2
 
@@ -1320,7 +1312,6 @@
 	name = "bottle of lindane"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle18"
-	flags = FPRINT |  TABLEPASS
 	toxicity = 6
 	PestKillStr = 4
 
@@ -1332,7 +1323,6 @@
 	name = "bottle of phosmet"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle15"
-	flags = FPRINT |  TABLEPASS
 	toxicity = 8
 	PestKillStr = 7
 
@@ -1350,7 +1340,7 @@
 	name = "weed-spray"
 	icon_state = "weedspray"
 	item_state = "spray"
-	flags = TABLEPASS | OPENCONTAINER | FPRINT | NOBLUDGEON
+	flags = OPENCONTAINER | NOBLUDGEON
 	slot_flags = SLOT_BELT
 	throwforce = 4
 	w_class = 2.0
@@ -1360,7 +1350,7 @@
 	var/WeedKillStr = 2
 
 /obj/item/weapon/weedspray/suicide_act(mob/user)
-	viewers(user) << "\red <b>[user] is huffing the [src.name]! It looks like \he's trying to commit suicide.</b>"
+	to_chat(viewers(user), "\red <b>[user] is huffing the [src.name]! It looks like \he's trying to commit suicide.</b>")
 	return (TOXLOSS)
 
 /obj/item/weapon/pestspray // -- Skie
@@ -1369,7 +1359,7 @@
 	name = "pest-spray"
 	icon_state = "pestspray"
 	item_state = "spraycan"
-	flags = TABLEPASS | OPENCONTAINER | FPRINT | NOBLUDGEON
+	flags = OPENCONTAINER | NOBLUDGEON
 	slot_flags = SLOT_BELT
 	throwforce = 4
 	w_class = 2.0
@@ -1379,7 +1369,7 @@
 	var/PestKillStr = 2
 
 /obj/item/weapon/pestspray/suicide_act(mob/user)
-	viewers(user) << "\red <b>[user] is huffing the [src.name]! It looks like \he's trying to commit suicide.</b>"
+	to_chat(viewers(user), "\red <b>[user] is huffing the [src.name]! It looks like \he's trying to commit suicide.</b>")
 	return (TOXLOSS)
 
 /obj/item/weapon/minihoe // -- Numbers
@@ -1388,7 +1378,7 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "hoe"
 	item_state = "hoe"
-	flags = FPRINT | TABLEPASS | CONDUCT | NOBLUDGEON
+	flags = CONDUCT | NOBLUDGEON
 	force = 5.0
 	throwforce = 7.0
 	w_class = 2.0
@@ -1403,7 +1393,6 @@
 	name = "bottle of weedkiller"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle16"
-	flags = FPRINT |  TABLEPASS
 	var/toxicity = 0
 	var/WeedKillStr = 0
 
@@ -1411,7 +1400,6 @@
 	name = "bottle of glyphosate"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle16"
-	flags = FPRINT |  TABLEPASS
 	toxicity = 4
 	WeedKillStr = 2
 
@@ -1419,7 +1407,6 @@
 	name = "bottle of triclopyr"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle18"
-	flags = FPRINT |  TABLEPASS
 	toxicity = 6
 	WeedKillStr = 4
 
@@ -1427,7 +1414,6 @@
 	name = "bottle of 2,4-D"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle15"
-	flags = FPRINT |  TABLEPASS
 	toxicity = 8
 	WeedKillStr = 7
 
@@ -1439,7 +1425,6 @@
 	name = "bottle of nutrient"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle16"
-	flags = FPRINT |  TABLEPASS
 	w_class = 2.0
 	var/mutmod = 0
 	var/yieldmod = 0
@@ -1452,7 +1437,6 @@
 	name = "bottle of E-Z-Nutrient"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle16"
-	flags = FPRINT |  TABLEPASS
 	mutmod = 1
 	yieldmod = 1
 
@@ -1464,7 +1448,6 @@
 	name = "bottle of Left 4 Zed"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle18"
-	flags = FPRINT |  TABLEPASS
 	mutmod = 2
 	yieldmod = 0
 
@@ -1476,7 +1459,6 @@
 	name = "bottle of Robust Harvest"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle15"
-	flags = FPRINT |  TABLEPASS
 	mutmod = 0
 	yieldmod = 2
 

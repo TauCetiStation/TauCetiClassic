@@ -7,16 +7,16 @@
 	var/active = 0 //Whether or not vision is enhanced
 	req_stat = UNCONSCIOUS
 
-/obj/effect/proc_holder/changeling/augmented_eyesight/sting_action(var/mob/living/user)
+/obj/effect/proc_holder/changeling/augmented_eyesight/sting_action(mob/living/user)
 	active = !active
 	user.changeling_aug = !user.changeling_aug
 	if(active)
-		user << "<span class='notice'>We feel a minute twitch in our eyes, and darkness creeps away.</span>"
+		to_chat(user, "<span class='notice'>We feel a minute twitch in our eyes, and darkness creeps away.</span>")
 		user.sight |= SEE_MOBS
 		user.see_in_dark = 8
 		user.see_invisible = SEE_INVISIBLE_MINIMUM
 	else
-		user << "<span class='notice'>Our vision dulls. Shadows gather.</span>"
+		to_chat(user, "<span class='notice'>Our vision dulls. Shadows gather.</span>")
 		user.sight -= SEE_MOBS
 		user.see_in_dark = 0
 		user.see_invisible = SEE_INVISIBLE_LIVING

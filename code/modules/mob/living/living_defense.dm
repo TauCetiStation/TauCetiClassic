@@ -1,23 +1,23 @@
-/mob/living/proc/run_armor_check(var/def_zone = null, var/attack_flag = "melee", var/absorb_text = null, var/soften_text = null)
+/mob/living/proc/run_armor_check(def_zone = null, attack_flag = "melee", absorb_text = null, soften_text = null)
 	var/armor = getarmor(def_zone, attack_flag)
 	if(armor >= 100)
 		if(absorb_text)
-			src << "<span class='userdanger'>[absorb_text]</span>"
+			to_chat(src, "<span class='userdanger'>[absorb_text]</span>")
 		else
-			src << "<span class='userdanger'>Your armor absorbs the blow!</span>"
+			to_chat(src, "<span class='userdanger'>Your armor absorbs the blow!</span>")
 	else if(armor > 0)
 		if(soften_text)
-			src << "<span class='userdanger'>[soften_text]</span>"
+			to_chat(src, "<span class='userdanger'>[soften_text]</span>")
 		else
-			src << "<span class='userdanger'>Your armor softens the blow!</span>"
+			to_chat(src, "<span class='userdanger'>Your armor softens the blow!</span>")
 	return armor
 
 //if null is passed for def_zone, then this should return something appropriate for all zones (e.g. area effect damage)
-/mob/living/proc/getarmor(var/def_zone, var/type)
+/mob/living/proc/getarmor(def_zone, type)
 	return 0
 
 
-/mob/living/bullet_act(var/obj/item/projectile/P, var/def_zone)
+/mob/living/bullet_act(obj/item/projectile/P, def_zone)
 	flash_weak_pain()
 
 	//Being hit while using a deadman switch
@@ -40,14 +40,14 @@
 	return absorb
 
 //this proc handles being hit by a thrown atom
-/mob/living/hitby(atom/movable/AM as mob|obj,var/speed = 5)//Standardization and logging -Sieve
+/mob/living/hitby(atom/movable/AM)//Standardization and logging -Sieve
 	if(istype(AM,/obj/))
 		var/obj/O = AM
 		var/dtype = BRUTE
 		if(istype(O,/obj/item/weapon))
 			var/obj/item/weapon/W = O
 			dtype = W.damtype
-		var/throw_damage = O.throwforce*(speed/5)
+		var/throw_damage = O.throwforce*(AM.fly_speed/5)
 
 		var/miss_chance = 15
 		if (O.throw_source)
@@ -75,9 +75,9 @@
 					msg_admin_attack("[src.name] ([src.ckey]) was hit by a [O], thrown by [M.name] ([assailant.ckey]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[src.x];Y=[src.y];Z=[src.z]'>JMP</a>)")
 
 		// Begin BS12 momentum-transfer code.
-		if(O.throw_source && speed >= 15)
+		if(O.throw_source && AM.fly_speed >= 15)
 			var/obj/item/weapon/W = O
-			var/momentum = speed/2
+			var/momentum = AM.fly_speed/2
 			var/dir = get_dir(O.throw_source, src)
 
 			visible_message("\red [src] staggers under the impact!","\red You stagger under the impact!")
@@ -97,12 +97,14 @@
 					visible_message("<span class='warning'>[src] is pinned to the wall by [O]!</span>","<span class='warning'>You are pinned to the wall by [O]!</span>")
 					src.anchored = 1
 					src.pinned += O
+					src.verbs += /mob/proc/yank_out_object
+		AM.fly_speed = 0
 
 //This is called when the mob is thrown into a dense turf
-/mob/living/proc/turf_collision(var/turf/T, var/speed)
+/mob/living/proc/turf_collision(turf/T, speed)
 	src.take_organ_damage(speed*5)
 
-/mob/living/proc/near_wall(var/direction,var/distance=1)
+/mob/living/proc/near_wall(direction,distance=1)
 	var/turf/T = get_step(get_turf(src),direction)
 	var/turf/last_turf = src.loc
 	var/i = 1

@@ -11,7 +11,6 @@ var/obj/screen/robot_inventory
 //Radio
 	using = new /obj/screen()
 	using.name = "radio"
-	using.dir = SOUTHWEST
 	using.icon = 'icons/mob/screen1_robot.dmi'
 	using.icon_state = "radio"
 	using.screen_loc = ui_movi
@@ -22,7 +21,6 @@ var/obj/screen/robot_inventory
 
 	using = new /obj/screen()
 	using.name = "module1"
-	using.dir = SOUTHWEST
 	using.icon = 'icons/mob/screen1_robot.dmi'
 	using.icon_state = "inv1"
 	using.screen_loc = ui_inv1
@@ -32,7 +30,6 @@ var/obj/screen/robot_inventory
 
 	using = new /obj/screen()
 	using.name = "module2"
-	using.dir = SOUTHWEST
 	using.icon = 'icons/mob/screen1_robot.dmi'
 	using.icon_state = "inv2"
 	using.screen_loc = ui_inv2
@@ -42,7 +39,6 @@ var/obj/screen/robot_inventory
 
 	using = new /obj/screen()
 	using.name = "module3"
-	using.dir = SOUTHWEST
 	using.icon = 'icons/mob/screen1_robot.dmi'
 	using.icon_state = "inv3"
 	using.screen_loc = ui_inv3
@@ -55,7 +51,6 @@ var/obj/screen/robot_inventory
 //Intent
 	using = new /obj/screen()
 	using.name = "act_intent"
-	using.dir = SOUTHWEST
 	using.icon = 'icons/mob/screen1_robot.dmi'
 	using.icon_state = (mymob.a_intent == "hurt" ? "harm" : mymob.a_intent)
 	using.screen_loc = ui_acti
@@ -114,19 +109,19 @@ var/obj/screen/robot_inventory
 	mymob.gun_setting_icon = new /obj/screen/gun/mode(null)
 	if (mymob.client)
 		if (mymob.client.gun_mode) // If in aim mode, correct the sprite
-			mymob.gun_setting_icon.dir = 2
+			mymob.gun_setting_icon.icon_state = "gun1"
 	for(var/obj/item/weapon/gun/G in mymob) // If targeting someone, display other buttons
 		if (G.target)
 			mymob.item_use_icon = new /obj/screen/gun/item(null)
 			if (mymob.client.target_can_click)
-				mymob.item_use_icon.dir = 1
+				mymob.item_use_icon.icon_state = "gun0"
 			src.adding += mymob.item_use_icon
 			mymob.gun_move_icon = new /obj/screen/gun/move(null)
 			if (mymob.client.target_can_move)
-				mymob.gun_move_icon.dir = 1
+				mymob.gun_move_icon.icon_state = "gun0"
 				mymob.gun_run_icon = new /obj/screen/gun/run(null)
 				if (mymob.client.target_can_run)
-					mymob.gun_run_icon.dir = 1
+					mymob.gun_run_icon.icon_state = "gun0"
 				src.adding += mymob.gun_run_icon
 			src.adding += mymob.gun_move_icon
 
@@ -160,11 +155,11 @@ var/obj/screen/robot_inventory
 		//r.client.screen += robot_inventory	//"store" icon
 
 		if(!r.module)
-			usr << "<span class='danger'>No module selected</span>"
+			to_chat(usr, "<span class='danger'>No module selected</span>")
 			return
 
 		if(!r.module.modules)
-			usr << "<span class='danger'>Selected module has no modules to select</span>"
+			to_chat(usr, "<span class='danger'>Selected module has no modules to select</span>")
 			return
 
 		if(!r.robot_modules_background)

@@ -44,7 +44,7 @@ var/const/CHAPLAIN			=(1<<10)
 var/const/CLOWN				=(1<<11)
 var/const/MIME				=(1<<12)
 var/const/ASSISTANT			=(1<<13)
-
+var/const/RECYCLER			=(1<<14)
 
 var/list/assistant_occupations = list(
 )
@@ -96,6 +96,7 @@ var/list/civilian_positions = list(
 	"Quartermaster",
 	"Cargo Technician",
 	"Shaft Miner",
+	"Recycler",
 	"Lawyer",
 	"Chaplain",
 	"Assistant",
@@ -119,7 +120,7 @@ var/list/nonhuman_positions = list(
 )
 
 
-/proc/guest_jobbans(var/job)
+/proc/guest_jobbans(job)
 	return job in command_positions
 
 /proc/get_job_datums()
@@ -133,7 +134,7 @@ var/list/nonhuman_positions = list(
 
 	return occupations
 
-/proc/get_alternate_titles(var/job)
+/proc/get_alternate_titles(job)
 	var/list/jobs = get_job_datums()
 	var/list/titles = list()
 

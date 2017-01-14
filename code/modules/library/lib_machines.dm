@@ -32,7 +32,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 	var/author
 	var/SQLquery
 
-/obj/machinery/computer/libraryconsole/attack_hand(var/mob/user as mob)
+/obj/machinery/computer/libraryconsole/attack_hand(mob/user)
 	if(..())
 		return
 	interact(user)
@@ -75,9 +75,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 
 /obj/machinery/computer/libraryconsole/Topic(href, href_list)
 	. = ..()
-	if(..())
-		usr << browse(null, "window=publiclibrary")
-		onclose(usr, "publiclibrary")
+	if(!.)
 		return
 
 	if(href_list["settitle"])
@@ -112,10 +110,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 	if(href_list["back"])
 		screenstate = 0
 
-	src.add_fingerprint(usr)
 	src.updateUsrDialog()
-	return
-
 
 /*
  * Library Computer
@@ -157,7 +152,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 				dat += "<A href='?src=\ref[src];switchscreen=7'>7. Access the Forbidden Lore Vault</A><BR>"
 			if(src.arcanecheckout)
 				new /obj/item/weapon/book/tome/old(src.loc)
-				user << "<span class='warning'>Your sanity barely endures the seconds spent in the vault's browsing window. The only thing to remind you of this when you stop browsing is a dusty old tome sitting on the desk. You don't really remember printing it.</span>"
+				to_chat(user, "<span class='warning'>Your sanity barely endures the seconds spent in the vault's browsing window. The only thing to remind you of this when you stop browsing is a dusty old tome sitting on the desk. You don't really remember printing it.</span>")
 				user.visible_message("[user] stares at the blank screen for a few moments, his expression frozen in fear. When he finally awakens from it, he looks a lot older.", 2)
 				src.arcanecheckout = 0
 		if(1)
@@ -247,22 +242,21 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
 
-/obj/machinery/computer/libraryconsole/bookmanagement/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/machinery/computer/libraryconsole/bookmanagement/attackby(obj/item/weapon/W, mob/user)
 	if (src.density && istype(W, /obj/item/weapon/card/emag))
 		src.emagged = 1
 	if(istype(W, /obj/item/weapon/barcodescanner))
 		var/obj/item/weapon/barcodescanner/scanner = W
 		scanner.computer = src
-		user << "[scanner]'s associated machine has been set to [src]."
+		to_chat(user, "[scanner]'s associated machine has been set to [src].")
 		for (var/mob/V in hearers(src))
 			V.show_message("[src] lets out a low, short blip.", 2)
 	else
 		..()
 
 /obj/machinery/computer/libraryconsole/bookmanagement/Topic(href, href_list)
-	if(..())
-		usr << browse(null, "window=library")
-		onclose(usr, "library")
+	. = ..()
+	if(!.)
 		return
 
 	if(href_list["switchscreen"])
@@ -358,7 +352,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 							var/sqlcategory = sanitizeSQL(upload_category)
 							var/DBQuery/query = dbcon_old.NewQuery("INSERT INTO library (author, title, content, category) VALUES ('[sqlauthor]', '[sqltitle]', '[sqlcontent]', '[sqlcategory]')")
 							if(!query.Execute())
-								usr << query.ErrorMsg()
+								to_chat(usr, query.ErrorMsg())
 							else
 								log_game("[usr.name]/[usr.key] has uploaded the book titled [scanner.cache.name], [length(scanner.cache.dat)] signs")
 								alert("Upload Complete.")
@@ -396,9 +390,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 			if(isnum(orderid))
 				var/nhref = "src=\ref[src];targetid=[orderid]"
 				spawn() src.Topic(nhref, params2list(nhref), src)
-	src.add_fingerprint(usr)
 	src.updateUsrDialog()
-	return
 
 /*
  * Library Scanner
@@ -411,12 +403,12 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 	density = 1
 	var/obj/item/weapon/book/cache		// Last scanned book
 
-/obj/machinery/libraryscanner/attackby(var/obj/O as obj, var/mob/user as mob)
+/obj/machinery/libraryscanner/attackby(obj/O, mob/user)
 	if(istype(O, /obj/item/weapon/book))
 		user.drop_item()
 		O.loc = src
 
-/obj/machinery/libraryscanner/attack_hand(var/mob/user as mob)
+/obj/machinery/libraryscanner/attack_hand(mob/user)
 	usr.set_machine(src)
 	var/dat = "<HEAD><TITLE>Scanner Control Interface</TITLE></HEAD><BODY>\n" // <META HTTP-EQUIV='Refresh' CONTENT='10'>
 	if(cache)
@@ -432,9 +424,8 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 	onclose(user, "scanner")
 
 /obj/machinery/libraryscanner/Topic(href, href_list)
-	if(..())
-		usr << browse(null, "window=scanner")
-		onclose(usr, "scanner")
+	. = ..()
+	if(!.)
 		return
 
 	if(href_list["scan"])
@@ -446,10 +437,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 	if(href_list["eject"])
 		for(var/obj/item/weapon/book/B in contents)
 			B.loc = src.loc
-	src.add_fingerprint(usr)
 	src.updateUsrDialog()
-	return
-
 
 /*
  * Book binder
@@ -461,7 +449,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 	anchored = 1
 	density = 1
 
-/obj/machinery/bookbinder/attackby(var/obj/O as obj, var/mob/user as mob)
+/obj/machinery/bookbinder/attackby(obj/O, mob/user)
 	if(istype(O, /obj/item/weapon/paper))
 		user.drop_item()
 		O.loc = src

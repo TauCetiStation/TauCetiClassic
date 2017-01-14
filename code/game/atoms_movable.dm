@@ -3,6 +3,7 @@
 	var/last_move = null
 	var/anchored = 0
 	// var/elevation = 2    - not used anywhere
+	var/fly_speed = 0 //Because hitby called from Bump() and they not provide object speed
 	var/move_speed = 10
 	var/l_move_time = 1
 	var/throwing = 0
@@ -67,11 +68,19 @@
 	if(. && buckled_mob && !handle_buckled_mob_movement(loc,direct)) //movement failed due to buckled mob
 		. = 0
 
-/atom/movable/proc/setLoc(var/T, var/teleported=0)
+/atom/movable/proc/setLoc(T, teleported=0)
 	loc = T
 
 /atom/movable/Destroy()
-	. = ..()
+	//If we have opacity, make sure to tell (potentially) affected light sources.
+	var/turf/T = loc
+	if(opacity && istype(T))
+		opacity = 0
+		T.recalc_atom_opacity()
+		T.reconsider_lights()
+
+	unbuckle_mob()
+
 	if(loc)
 		loc.handle_atom_del(src)
 	if(reagents)
@@ -84,10 +93,11 @@
 		if (pulledby.pulling == src)
 			pulledby.pulling = null
 		pulledby = null
+	return ..()
 
-/atom/movable/Bump(var/atom/A as mob|obj|turf|area, yes)
+/atom/movable/Bump(var/atom/A as mob|obj|turf|area, yes, var/speed = 5)
 	if(src.throwing)
-		src.throw_impact(A)
+		src.throw_impact(A, speed)
 
 	spawn( 0 )
 		if ((A && yes))
@@ -120,16 +130,16 @@
 	return 0
 
 //called when src is thrown into hit_atom
-/atom/movable/proc/throw_impact(atom/hit_atom, var/speed)
+/atom/movable/proc/throw_impact(atom/hit_atom)
 	if(istype(hit_atom,/mob/living))
 		var/mob/living/M = hit_atom
-		M.hitby(src,speed)
+		M.hitby(src)
 
 	else if(isobj(hit_atom))
 		var/obj/O = hit_atom
 		if(!O.anchored)
 			step(O, src.dir)
-		O.hitby(src,speed)
+		O.hitby(src)
 
 	else if(isturf(hit_atom))
 		src.throwing = 0
@@ -139,14 +149,15 @@
 				step(src, turn(src.dir, 180))
 			if(istype(src,/mob/living))
 				var/mob/living/M = src
-				M.turf_collision(T, speed)
+				M.turf_collision(T, src.fly_speed)
+	src.fly_speed = 0
 
 //Called whenever an object moves and by mobs when they attempt to move themselves through space
 //And when an object or action applies a force on src, see newtonian_move() below
 //Return 0 to have src start/keep drifting in a no-grav area and 1 to stop/not start drifting
 //Mobs should return 1 if they should be able to move of their own volition, see client/Move() in mob_movement.dm
 //movement_dir == 0 when stopping or any dir when trying to move
-/atom/movable/proc/Process_Spacemove(var/movement_dir = 0)
+/atom/movable/proc/Process_Spacemove(movement_dir = 0)
 	if(has_gravity(src))
 		return 1
 
@@ -173,16 +184,16 @@
 	dir = old_dir
 
 //decided whether a movable atom being thrown can pass through the turf it is in.
-/atom/movable/proc/hit_check(var/speed)
+/atom/movable/proc/hit_check()
 	if(src.throwing)
 		for(var/atom/A in get_turf(src))
 			if(A == src) continue
 			if(istype(A,/mob/living))
 				if(A:lying) continue
-				src.throw_impact(A,speed)
+				src.throw_impact(A)
 			if(isobj(A))
 				if(A.density && !A.throwpass)	// **TODO: Better behaviour for windows which are dense, but shouldn't always stop movement
-					src.throw_impact(A,speed)
+					src.throw_impact(A)
 
 /atom/movable/proc/throw_at(atom/target, range, speed, thrower)
 	if(!target || !src)	return 0
@@ -191,6 +202,7 @@
 	src.throwing = 1
 	src.thrower = thrower
 	src.throw_source = get_turf(src)	//store the origin turf
+	src.fly_speed = speed
 
 	if(usr)
 		if(HULK in usr.mutations)
@@ -225,7 +237,7 @@
 				if(!step) // going off the edge of the map makes get_step return null, don't let things go off the edge
 					break
 				src.Move(step, get_dir(loc, step))
-				hit_check(speed)
+				hit_check()
 				error += dist_x
 				dist_travelled++
 				dist_since_sleep++
@@ -237,7 +249,7 @@
 				if(!step) // going off the edge of the map makes get_step return null, don't let things go off the edge
 					break
 				src.Move(step)
-				hit_check(speed)
+				hit_check()
 				error -= dist_y
 				dist_travelled++
 				dist_since_sleep++
@@ -254,7 +266,7 @@
 				if(!step) // going off the edge of the map makes get_step return null, don't let things go off the edge
 					break
 				src.Move(step)
-				hit_check(speed)
+				hit_check()
 				error += dist_y
 				dist_travelled++
 				dist_since_sleep++
@@ -266,7 +278,7 @@
 				if(!step) // going off the edge of the map makes get_step return null, don't let things go off the edge
 					break
 				src.Move(step)
-				hit_check(speed)
+				hit_check()
 				error -= dist_x
 				dist_travelled++
 				dist_since_sleep++
@@ -277,7 +289,7 @@
 			a = get_area(src.loc)
 
 	//done throwing, either because it hit something or it finished moving
-	if(isobj(src)) src.throw_impact(get_turf(src),speed)
+	if(isobj(src)) src.throw_impact(get_turf(src))
 	src.throwing = 0
 	src.thrower = null
 	src.throw_source = null

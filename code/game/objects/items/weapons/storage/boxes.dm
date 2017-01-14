@@ -25,6 +25,7 @@
  *		 -Mixed replacement lights -Body bags
  *		 -Holobadge -Evidence bag
  *		 -Solution tray -Spare PDAs
+ *		 -Shotgun ammo
  *
  *		For syndicate call-ins see uplink_kits.dm
  */
@@ -409,7 +410,6 @@
 	item_state = "zippo"
 	storage_slots = 10
 	w_class = 1
-	flags = TABLEPASS
 	slot_flags = SLOT_BELT
 	can_hold = list("/obj/item/weapon/match")
 
@@ -418,12 +418,12 @@
 	for(var/i in 1 to storage_slots)
 		new /obj/item/weapon/match(src)
 
-/obj/item/weapon/storage/box/matches/attackby(obj/item/weapon/match/W as obj, mob/user as mob)
+/obj/item/weapon/storage/box/matches/attackby(obj/item/weapon/match/W, mob/user)
 	if(istype(W) && !W.lit && !W.burnt)
 		if (prob (20))
-			playsound(src, 'tauceti/sounds/items/matchstick_hit.ogg', 20, 1, 1)
+			playsound(src, 'sound/items/matchstick_hit.ogg', 20, 1, 1)
 			return
-		playsound(src, 'tauceti/sounds/items/matchstick_light.ogg', 20, 1, 1)
+		playsound(src, 'sound/items/matchstick_light.ogg', 20, 1, 1)
 		W.lit = 1
 		W.damtype = "burn"
 		W.icon_state = "match_lit"
@@ -543,3 +543,64 @@
 	new /obj/item/weapon/cartridge/head(src)
 	for(var/i in 1 to 4)
 		new /obj/item/device/pda(src)
+
+//Shotgun ammo
+
+/obj/item/weapon/storage/box/shotgun
+	name = "box of shotgun shell"
+	icon = 'icons/obj/storage.dmi'
+	icon_state = "shotgun_ammo_slug"
+	foldable = /obj/item/stack/sheet/cardboard
+	storage_slots = 16
+	can_hold = list("/obj/item/ammo_casing/shotgun")
+	max_combined_w_class = 16
+
+
+/obj/item/weapon/storage/box/shotgun/slug
+	name = "box of shotgun shell (slug)"
+	icon_state = "shotgun_ammo_slug"
+
+/obj/item/weapon/storage/box/shotgun/slug/New()
+	..()
+	for(var/i in 1 to 16)
+		new /obj/item/ammo_casing/shotgun(src)
+
+
+/obj/item/weapon/storage/box/shotgun/buckshot
+	name = "box of shotgun shell (buckshot)"
+	icon_state = "shotgun_ammo_buckshot"
+
+/obj/item/weapon/storage/box/shotgun/buckshot/New()
+	..()
+	for(var/i in 1 to 16)
+		new /obj/item/ammo_casing/shotgun/buckshot(src)
+
+
+/obj/item/weapon/storage/box/shotgun/beanbag
+	name = "box of shotgun shell (beanbag)"
+	icon_state = "shotgun_ammo_beanbag"
+
+/obj/item/weapon/storage/box/shotgun/beanbag/New()
+	..()
+	for(var/i in 1 to 16)
+		new /obj/item/ammo_casing/shotgun/beanbag(src)
+
+// Don't know where is original box itself, so just put it here.
+/obj/item/weapon/storage/box/contraband
+	name = "box"
+	desc = "Strange box."
+	icon_state = "box_of_doom"
+
+/obj/item/weapon/storage/box/contraband/New()
+	..()
+	if(prob(30))
+		new /obj/item/weapon/storage/box/matches(src)
+		new /obj/item/clothing/mask/cigarette/cigar/cohiba(src)
+	else if(prob(10))
+		new /obj/item/device/guitar(src)
+		new /obj/item/clothing/head/sombrero(src)
+		new /obj/item/weapon/reagent_containers/food/drinks/bottle/tequilla(src)
+	else
+		new /obj/item/weapon/reagent_containers/food/drinks/bottle/vodka(src)
+		new /obj/item/weapon/storage/fancy/cigarettes(src)
+		new /obj/item/weapon/lighter/random(src)

@@ -40,8 +40,8 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	var/changeling_amount = 4
 
 /datum/game_mode/changeling/announce()
-	world << "<B>The current game mode is - Changeling!</B>"
-	world << "<B>There are alien changelings on the station. Do not let the changelings succeed!</B>"
+	to_chat(world, "<B>The current game mode is - Changeling!</B>")
+	to_chat(world, "<B>There are alien changelings on the station. Do not let the changelings succeed!</B>")
 
 /datum/game_mode/changeling/pre_setup()
 
@@ -76,7 +76,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	return ..()
 
 
-/datum/game_mode/proc/forge_changeling_objectives(var/datum/mind/changeling)
+/datum/game_mode/proc/forge_changeling_objectives(datum/mind/changeling)
 	//OBJECTIVES - Always absorb 5 genomes, plus random traitor objectives.
 	//If they have two objectives as well as absorb, they must survive rather than escape
 	//No escape alone because changelings aren't suited for it and it'd probably just lead to rampant robusting
@@ -114,26 +114,26 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 				changeling.objectives += survive_objective
 	return
 
-/datum/game_mode/proc/greet_changeling(var/datum/mind/changeling, var/you_are=1)
+/datum/game_mode/proc/greet_changeling(datum/mind/changeling, you_are=1)
 	if (you_are)
-		changeling.current << "<B>\red You are a changeling!</B>"
-	changeling.current << "<b>\red Use say \":g message\" to communicate with your fellow changelings. Remember: you get all of their absorbed DNA if you absorb them.</b>"
+		to_chat(changeling.current, "<B>\red You are a changeling!</B>")
+	to_chat(changeling.current, "<b>\red Use say \":g message\" to communicate with your fellow changelings. Remember: you get all of their absorbed DNA if you absorb them.</b>")
 
 	if(config.objectives_disabled)
-		changeling.current << "<font color=blue>Within the rules,</font> try to act as an opposing force to the crew. Further RP and try to make sure other players have </i>fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>"
+		to_chat(changeling.current, "<font color=blue>Within the rules,</font> try to act as an opposing force to the crew. Further RP and try to make sure other players have </i>fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>")
 
 	if (!config.objectives_disabled)
-		changeling.current << "<B>You must complete the following tasks:</B>"
+		to_chat(changeling.current, "<B>You must complete the following tasks:</B>")
 
 	if (changeling.current.mind)
 		if (changeling.current.mind.assigned_role == "Clown")
-			changeling.current << "You have evolved beyond your clownish nature, allowing you to wield weapons without harming yourself."
+			to_chat(changeling.current, "You have evolved beyond your clownish nature, allowing you to wield weapons without harming yourself.")
 			changeling.current.mutations.Remove(CLUMSY)
 
 	if (!config.objectives_disabled)
 		var/obj_count = 1
 		for(var/datum/objective/objective in changeling.objectives)
-			changeling.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
+			to_chat(changeling.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 			obj_count++
 		return
 
@@ -298,7 +298,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	geneticdamage = max(0, geneticdamage-1)
 
 
-/datum/changeling/proc/GetDNA(var/dna_owner)
+/datum/changeling/proc/GetDNA(dna_owner)
 	var/datum/dna/chosen_dna
 	for(var/datum/dna/DNA in absorbed_dna)
 		if(dna_owner == DNA.real_name)
@@ -310,15 +310,15 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 /datum/changeling/proc/can_absorb_dna(mob/living/carbon/T, mob/living/carbon/U)
 	if(T)
 		if(NOCLONE in T.mutations || HUSK in T.mutations)
-			U << "<span class='warning'>DNA of [T] is ruined beyond usability!</span>"
+			to_chat(U, "<span class='warning'>DNA of [T] is ruined beyond usability!</span>")
 			return 0
 
-		if(T:species.flags & IS_SYNTHETIC || T:species.flags & IS_PLANT)
-			U << "<span class='warning'>[T] is not compatible with our biology.</span>"
+		if(T:species.flags[IS_SYNTHETIC] || T:species.flags[IS_PLANT])
+			to_chat(U, "<span class='warning'>[T] is not compatible with our biology.</span>")
 			return 0
 
-		if(T:species.flags & NO_SCAN)
-			src << "<span class='warning'>We do not know how to parse this creature's DNA!</span>"
+		if(T:species.flags[NO_SCAN])
+			to_chat(src, "<span class='warning'>We do not know how to parse this creature's DNA!</span>")
 			return 0
 
 		for(var/datum/dna/D in absorbed_dna)
@@ -326,6 +326,6 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 				if(T.dna.struc_enzymes == D.struc_enzymes)
 					if(T.dna.real_name == D.real_name)
 						if(T.dna.mutantrace == D.mutantrace)
-							U << "<span class='warning'>We already have that DNA in storage.</span>"
+							to_chat(U, "<span class='warning'>We already have that DNA in storage.</span>")
 							return 0
 	return 1 */

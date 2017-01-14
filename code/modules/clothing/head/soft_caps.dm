@@ -2,7 +2,7 @@
 	name = "cargo cap"
 	desc = "It's a baseball hat in a tasteless yellow color."
 	icon_state = "cargosoft"
-	flags = FPRINT|TABLEPASS|HEADCOVERSEYES
+	flags = HEADCOVERSEYES
 	item_state = "helmet"
 	item_color = "cargo"
 	var/flipped = 0
@@ -22,10 +22,10 @@
 		src.flipped = !src.flipped
 		if(src.flipped)
 			icon_state = "[item_color]soft_flipped"
-			usr << "You flip the hat backwards."
+			to_chat(usr, "You flip the hat backwards.")
 		else
 			icon_state = "[item_color]soft"
-			usr << "You flip the hat back in normal position."
+			to_chat(usr, "You flip the hat back in normal position.")
 		usr.update_inv_head()	//so our mob-overlays update
 
 /obj/item/clothing/head/soft/red
@@ -93,3 +93,15 @@
 	desc = "It's baseball hat in corporate colors."
 	icon_state = "corpsoft"
 	item_color = "corp"
+
+/obj/item/clothing/head/soft/trash
+	name = "trash cap"
+	desc = "It's baseball hat."
+	icon_state = "trashsoft"
+	item_color = "trash"
+
+/obj/item/clothing/head/soft/janitor
+	name = "janitor cap"
+	desc = "It's janitor hat."
+	icon_state = "janitorsoft"
+	item_color = "janitor"

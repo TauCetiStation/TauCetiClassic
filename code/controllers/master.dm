@@ -72,7 +72,7 @@ var/global/datum/controller/master/Master = new()
 			SS.Initialize(world.timeofday, zlevel)
 			CHECK_TICK
 		return
-	world.log << "<span class='boldannounce'>Initializing subsystems...</span>"
+	world.log << "Initializing subsystems..."
 
 	//preloadTemplates()
 	// Pick a random away mission.
@@ -80,6 +80,11 @@ var/global/datum/controller/master/Master = new()
 	SetupXenoarch()
 	// Generate mining.
 	make_mining_asteroid_secrets()
+	var/datum/ore_distribution/distro = new()
+	distro.populate_distribution_map()
+
+	//load templates
+	preloadTemplates()
 
 	// Set up Z-level transistions.
 	//setup_map_transitions()

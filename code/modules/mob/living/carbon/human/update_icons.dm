@@ -236,7 +236,7 @@ Please contact me on #coderbus IRC. ~Carn x
 		//Icon is cached, use existing icon.
 		base_icon = human_icon_cache[icon_key]
 
-	//	log_debug("Retrieved cached mob icon ([icon_key] \icon[human_icon_cache[icon_key]]) for [src].")
+	//	log_debug("Retrieved cached mob icon ([icon_key] [bicon(human_icon_cache[icon_key])] for [src].")
 
 	else
 
@@ -315,7 +315,7 @@ Please contact me on #coderbus IRC. ~Carn x
 
 		//Skin tone.
 		if(!husk && !hulk)
-			if(species.flags & HAS_SKIN_TONE)
+			if(species.flags[HAS_SKIN_TONE])
 				if(s_tone >= 0)
 					base_icon.Blend(rgb(s_tone, s_tone, s_tone), ICON_ADD)
 				else
@@ -323,22 +323,22 @@ Please contact me on #coderbus IRC. ~Carn x
 
 		human_icon_cache[icon_key] = base_icon
 
-		//log_debug("Generated new cached mob icon ([icon_key] \icon[human_icon_cache[icon_key]]) for [src]. [human_icon_cache.len] cached mob icons.")
+		//log_debug("Generated new cached mob icon ([icon_key] [bicon(human_icon_cache[icon_key])] for [src]. [human_icon_cache.len] cached mob icons.")
 
 	//END CACHED ICON GENERATION.
 
 	stand_icon.Blend(base_icon,ICON_OVERLAY)
 
 	//Skin colour. Not in cache because highly variable (and relatively benign).
-	if (species.flags & HAS_SKIN_COLOR)
+	if (species.flags[HAS_SKIN_COLOR])
 		stand_icon.Blend(rgb(r_skin, g_skin, b_skin), ICON_ADD)
 
 	//Underwear
-	if(underwear >0 && underwear < 12 && species.flags & HAS_UNDERWEAR)
+	if((underwear > 0) && (underwear < 12) && species.flags[HAS_UNDERWEAR])
 		if(!fat)
 			stand_icon.Blend(new /icon('icons/mob/human.dmi', "underwear[underwear]_[g]_s"), ICON_OVERLAY)
 
-	if(undershirt>0 && undershirt < undershirt_t.len && species.flags & HAS_UNDERWEAR)
+	if((undershirt > 0) && (undershirt < undershirt_t.len) && species.flags[HAS_UNDERWEAR])
 		if(!fat)
 			stand_icon.Blend(new /icon('icons/mob/human_undershirt.dmi', "undershirt[undershirt]_s"), ICON_OVERLAY)
 
@@ -351,7 +351,7 @@ Please contact me on #coderbus IRC. ~Carn x
 		standing	+= img_eyes_s
 
 		//Mouth	(lipstick!)
-		if(lip_style && (species && species.flags & HAS_LIPS))	//skeletons are allowed to wear lipstick no matter what you think, agouri.
+		if(lip_style && (species && species.flags[HAS_LIPS]))	//skeletons are allowed to wear lipstick no matter what you think, agouri.
 			var/image/lips = image("icon"='icons/mob/human_face.dmi', "icon_state"="lips_[lip_style]_s", "layer"=-BODY_LAYER)
 			lips.color = lip_color
 			standing	+= lips
@@ -372,7 +372,7 @@ Please contact me on #coderbus IRC. ~Carn x
 		return
 
 	//masks and helmets can obscure our hair.
-	if((HUSK in mutations) || (head && (head.flags & BLOCKHAIR)) || (wear_mask && (wear_mask.flags & BLOCKHAIR)))
+	if((HUSK in mutations) || (head && (head.flags & BLOCKHAIR)) || (wear_mask && (wear_mask.flags & BLOCKHAIR)) || (wear_suit && (wear_suit.flags & BLOCKHAIR)))
 		return
 
 	//base icons
@@ -452,8 +452,8 @@ Please contact me on #coderbus IRC. ~Carn x
 			if("golem","shadow","adamantine")
 				standing	+= image("icon"='icons/effects/genetics.dmi', "icon_state"="[dna.mutantrace][fat]_[gender]_s", "layer"=-MUTANTRACE_LAYER)
 			if("shadowling")
-				standing	+= image("icon"='tauceti/icons/mob/shadow_ling.dmi', "icon_state"="[dna.mutantrace]_s", "layer"=-MUTANTRACE_LAYER)
-				standing	+= image("icon"='tauceti/icons/mob/shadow_ling.dmi', "icon_state"="[dna.mutantrace]_ms_s", "layer"=GLASSES_LAYER)
+				standing	+= image("icon"='icons/mob/shadowling.dmi', "icon_state"="[dna.mutantrace]_s", "layer"=-MUTANTRACE_LAYER)
+				standing	+= image("icon"='icons/mob/shadowling.dmi', "icon_state"="[dna.mutantrace]_ms_s", "layer"=GLASSES_LAYER)
 
 	if(!dna || !(dna.mutantrace == "golem"))
 		update_body()
@@ -538,10 +538,10 @@ Please contact me on #coderbus IRC. ~Carn x
 		var/t_color = U.item_color
 		if(!t_color)		t_color = icon_state
 		var/image/standing = image("icon_state"="[t_color]_s", "layer"=-UNIFORM_LAYER)
-		if(!U.tc_custom || U.icon_override || species.sprite_sheets["uniform"])
+		if(!U.icon_custom || U.icon_override || species.sprite_sheets["uniform"])
 			standing.icon	= (U.icon_override ? U.icon_override : (species.sprite_sheets["uniform"] ? species.sprite_sheets["uniform"] : 'icons/mob/uniform.dmi'))
 		else
-			standing = image("icon"=U.tc_custom, "icon_state"="[t_color]_mob", "layer"=-UNIFORM_LAYER)
+			standing = image("icon"=U.icon_custom, "icon_state"="[t_color]_mob", "layer"=-UNIFORM_LAYER)
 		overlays_standing[UNIFORM_LAYER]	= standing
 
 		if(U.blood_DNA)
@@ -553,8 +553,8 @@ Please contact me on #coderbus IRC. ~Carn x
 			var/tie_color = U.hastie.item_color
 			if(!tie_color) tie_color = U.hastie.icon_state
 
-			if(U.hastie.tc_custom)
-				standing.overlays	+= image("icon"=U.hastie.tc_custom, "icon_state"="[tie_color]_mob", "layer"=-UNIFORM_LAYER)
+			if(U.hastie.icon_custom)
+				standing.overlays	+= image("icon"=U.hastie.icon_custom, "icon_state"="[tie_color]_mob", "layer"=-UNIFORM_LAYER)
 			else
 				standing.overlays	+= image("icon"='icons/mob/ties.dmi', "icon_state"="[tie_color]", "layer"=-UNIFORM_LAYER)
 
@@ -562,7 +562,7 @@ Please contact me on #coderbus IRC. ~Carn x
 			if(U.flags & ONESIZEFITSALL)
 				standing.icon	= 'icons/mob/uniform_fat.dmi'
 			else
-				src << "\red You burst out of \the [U]!"
+				to_chat(src, "\red You burst out of \the [U]!")
 				drop_from_inventory(U)
 				return
 
@@ -600,10 +600,10 @@ Please contact me on #coderbus IRC. ~Carn x
 		var/t_state = gloves.item_state
 		if(!t_state)	t_state = gloves.icon_state
 		var/image/standing
-		if(!gloves:tc_custom || gloves.icon_override || species.sprite_sheets["gloves"])
+		if(!gloves:icon_custom || gloves.icon_override || species.sprite_sheets["gloves"])
 			standing = image("icon"=((gloves.icon_override) ? gloves.icon_override : (species.sprite_sheets["gloves"] ? species.sprite_sheets["gloves"] : 'icons/mob/hands.dmi')), "icon_state"="[t_state]", "layer"=-GLOVES_LAYER)
 		else
-			standing = image("icon"=gloves:tc_custom, "icon_state"="[t_state]_mob", "layer"=-GLOVES_LAYER)
+			standing = image("icon"=gloves:icon_custom, "icon_state"="[t_state]_mob", "layer"=-GLOVES_LAYER)
 		overlays_standing[GLOVES_LAYER]	= standing
 
 		if(gloves.blood_DNA)
@@ -628,10 +628,10 @@ Please contact me on #coderbus IRC. ~Carn x
 				glasses.screen_loc = ui_glasses		//...draw the item in the inventory screen
 			client.screen += glasses				//Either way, add the item to the HUD
 
-		if(!glasses:tc_custom || glasses.icon_override || species.sprite_sheets["eyes"])
+		if(!glasses:icon_custom || glasses.icon_override || species.sprite_sheets["eyes"])
 			overlays_standing[GLASSES_LAYER] = image("icon"=((glasses.icon_override) ? glasses.icon_override : (species.sprite_sheets["eyes"] ? species.sprite_sheets["eyes"] : 'icons/mob/eyes.dmi')), "icon_state"="[glasses.icon_state]", "layer"=-GLASSES_LAYER)
 		else
-			overlays_standing[GLASSES_LAYER] = image("icon"=glasses:tc_custom, "icon_state"="[glasses.icon_state]_mob", "layer"=-GLASSES_LAYER)
+			overlays_standing[GLASSES_LAYER] = image("icon"=glasses:icon_custom, "icon_state"="[glasses.icon_state]_mob", "layer"=-GLASSES_LAYER)
 
 	apply_overlay(GLASSES_LAYER)
 
@@ -646,10 +646,10 @@ Please contact me on #coderbus IRC. ~Carn x
 					l_ear.screen_loc = ui_l_ear			//...draw the item in the inventory screen
 				client.screen += l_ear					//Either way, add the item to the HUD
 
-			if(!l_ear:tc_custom || l_ear.icon_override || species.sprite_sheets["ears"])
+			if(!l_ear:icon_custom || l_ear.icon_override || species.sprite_sheets["ears"])
 				overlays_standing[EARS_LAYER] = image("icon"=((l_ear.icon_override) ? l_ear.icon_override : (species.sprite_sheets["ears"] ? species.sprite_sheets["ears"] : 'icons/mob/ears.dmi')), "icon_state"="[l_ear.icon_state]", "layer"=-EARS_LAYER)
 			else
-				overlays_standing[EARS_LAYER] = image("icon"=l_ear:tc_custom, "icon_state"="[l_ear.icon_state]_mob", "layer"=-EARS_LAYER)
+				overlays_standing[EARS_LAYER] = image("icon"=l_ear:icon_custom, "icon_state"="[l_ear.icon_state]_mob", "layer"=-EARS_LAYER)
 
 		if(r_ear)
 			if(client && hud_used && hud_used.hud_shown)
@@ -657,10 +657,10 @@ Please contact me on #coderbus IRC. ~Carn x
 					r_ear.screen_loc = ui_r_ear		//...draw the item in the inventory screen
 				client.screen += r_ear				//Either way, add the item to the HUD
 
-			if(!r_ear:tc_custom || r_ear.icon_override || species.sprite_sheets["ears"])
+			if(!r_ear:icon_custom || r_ear.icon_override || species.sprite_sheets["ears"])
 				overlays_standing[EARS_LAYER] = image("icon"=((r_ear.icon_override) ? r_ear.icon_override : (species.sprite_sheets["ears"] ? species.sprite_sheets["ears"] : 'icons/mob/ears.dmi')), "icon_state"="[r_ear.icon_state]", "layer"=-EARS_LAYER)
 			else
-				overlays_standing[EARS_LAYER] = image("icon"=r_ear:tc_custom, "icon_state"="[r_ear.icon_state]_mob", "layer"=-EARS_LAYER)
+				overlays_standing[EARS_LAYER] = image("icon"=r_ear:icon_custom, "icon_state"="[r_ear.icon_state]_mob", "layer"=-EARS_LAYER)
 
 	apply_overlay(EARS_LAYER)
 
@@ -675,10 +675,10 @@ Please contact me on #coderbus IRC. ~Carn x
 			client.screen += shoes					//Either way, add the item to the HUD
 
 		var/image/standing
-		if(!shoes:tc_custom || shoes.icon_override || species.sprite_sheets["feet"])
+		if(!shoes:icon_custom || shoes.icon_override || species.sprite_sheets["feet"])
 			standing = image("icon"=((shoes.icon_override) ? shoes.icon_override : (species.sprite_sheets["feet"] ? species.sprite_sheets["feet"] : 'icons/mob/feet.dmi')), "icon_state"="[shoes.icon_state]", "layer"=-SHOES_LAYER)
 		else
-			standing = image("icon"=shoes:tc_custom, "icon_state"="[shoes.icon_state]_mob", "layer"=-SHOES_LAYER)
+			standing = image("icon"=shoes:icon_custom, "icon_state"="[shoes.icon_state]_mob", "layer"=-SHOES_LAYER)
 		overlays_standing[SHOES_LAYER] = standing
 
 		if(shoes.blood_DNA)
@@ -723,10 +723,10 @@ Please contact me on #coderbus IRC. ~Carn x
 			var/obj/item/clothing/head/kitty/K = head
 			standing	= image("icon"=K.mob, "layer"=-HEAD_LAYER)
 		else
-			if(!head:tc_custom || head.icon_override || species.sprite_sheets["head"])
+			if(!head:icon_custom || head.icon_override || species.sprite_sheets["head"])
 				standing = image("icon"=((head.icon_override) ? head.icon_override : (species.sprite_sheets["head"] ? species.sprite_sheets["head"] : 'icons/mob/head.dmi')), "icon_state"="[head.icon_state]", "layer"=-HEAD_LAYER)
 			else
-				standing = image("icon"=head:tc_custom, "icon_state"="[head.icon_state]_mob", "layer"=-HEAD_LAYER)
+				standing = image("icon"=head:icon_custom, "icon_state"="[head.icon_state]_mob", "layer"=-HEAD_LAYER)
 		overlays_standing[HEAD_LAYER]	= standing
 
 		if(head.blood_DNA)
@@ -748,10 +748,10 @@ Please contact me on #coderbus IRC. ~Carn x
 		var/t_state = belt.item_state
 		if(!t_state)	t_state = belt.icon_state
 
-		if(!belt:tc_custom || belt.icon_override || species.sprite_sheets["belt"])
+		if(!belt:icon_custom || belt.icon_override || species.sprite_sheets["belt"])
 			overlays_standing[BELT_LAYER] = image("icon"=((belt.icon_override) ? belt.icon_override : (species.sprite_sheets["belt"] ? species.sprite_sheets["belt"] : 'icons/mob/belt.dmi')), "icon_state"="[t_state]", "layer"=-BELT_LAYER)
 		else
-			overlays_standing[BELT_LAYER] = image("icon"=belt:tc_custom, "icon_state"="[belt.icon_state]_mob", "layer"=-BELT_LAYER)
+			overlays_standing[BELT_LAYER] = image("icon"=belt:icon_custom, "icon_state"="[belt.icon_state]_mob", "layer"=-BELT_LAYER)
 
 	apply_overlay(BELT_LAYER)
 
@@ -766,10 +766,10 @@ Please contact me on #coderbus IRC. ~Carn x
 			client.screen += wear_suit				//Either way, add the item to the HUD
 
 		var/image/standing
-		if(!wear_suit:tc_custom || wear_suit.icon_override || species.sprite_sheets["suit"])
+		if(!wear_suit:icon_custom || wear_suit.icon_override || species.sprite_sheets["suit"])
 			standing = image("icon"=((wear_suit.icon_override) ? wear_suit.icon_override : (species.sprite_sheets["suit"] ? species.sprite_sheets["suit"] : 'icons/mob/suit.dmi')), "icon_state"="[wear_suit.icon_state]", "layer"=-SUIT_LAYER)
 		else
-			standing = image("icon"=wear_suit:tc_custom, "icon_state"="[wear_suit.icon_state]_mob", "layer"=-SUIT_LAYER)
+			standing = image("icon"=wear_suit:icon_custom, "icon_state"="[wear_suit.icon_state]_mob", "layer"=-SUIT_LAYER)
 		overlays_standing[SUIT_LAYER]	= standing
 
 		if(istype(wear_suit, /obj/item/clothing/suit/straight_jacket))
@@ -785,7 +785,7 @@ Please contact me on #coderbus IRC. ~Carn x
 
 		if(FAT in mutations)
 			if(!(wear_suit.flags & ONESIZEFITSALL))
-				src << "\red You burst out of \the [wear_suit]!"
+				to_chat(src, "\red You burst out of \the [wear_suit]!")
 				drop_from_inventory(wear_suit)
 				return
 
@@ -824,10 +824,10 @@ Please contact me on #coderbus IRC. ~Carn x
 			client.screen += wear_mask				//Either way, add the item to the HUD
 
 		var/image/standing
-		if(!wear_mask:tc_custom || wear_mask.icon_override || species.sprite_sheets["mask"])
+		if(!wear_mask:icon_custom || wear_mask.icon_override || species.sprite_sheets["mask"])
 			standing = image("icon"=((wear_mask.icon_override) ? wear_mask.icon_override : (species.sprite_sheets["mask"] ? species.sprite_sheets["mask"] : 'icons/mob/mask.dmi')), "icon_state"="[wear_mask.icon_state]", "layer"=-FACEMASK_LAYER)
 		else
-			standing = image("icon"=wear_mask:tc_custom, "icon_state"="[wear_mask.icon_state]_mob", "layer"=-FACEMASK_LAYER)
+			standing = image("icon"=wear_mask:icon_custom, "icon_state"="[wear_mask.icon_state]_mob", "layer"=-FACEMASK_LAYER)
 		overlays_standing[FACEMASK_LAYER]	= standing
 
 		if(wear_mask.blood_DNA && !istype(wear_mask, /obj/item/clothing/mask/cigarette))
@@ -846,10 +846,10 @@ Please contact me on #coderbus IRC. ~Carn x
 		if(client && hud_used && hud_used.hud_shown)
 			client.screen += back
 
-		if(!back:tc_custom || back.icon_override || species.sprite_sheets["back"])
+		if(!back:icon_custom || back.icon_override || species.sprite_sheets["back"])
 			overlays_standing[BACK_LAYER]	= image("icon"=((back.icon_override) ? back.icon_override : (species.sprite_sheets["back"] ? species.sprite_sheets["back"] : 'icons/mob/back.dmi')), "icon_state"="[back.icon_state]", "layer"=-BACK_LAYER)
 		else
-			overlays_standing[BACK_LAYER]	= image("icon"=back:tc_custom, "icon_state"="[back.icon_state]_mob", "layer"=-BACK_LAYER)
+			overlays_standing[BACK_LAYER]	= image("icon"=back:icon_custom, "icon_state"="[back.icon_state]_mob", "layer"=-BACK_LAYER)
 
 	apply_overlay(BACK_LAYER)
 
@@ -899,11 +899,11 @@ Please contact me on #coderbus IRC. ~Carn x
 		if(!t_state)
 			t_state = r_hand.icon_state
 
-		if(!r_hand:tc_custom || r_hand.icon_override || species.sprite_sheets["held"])
+		if(!r_hand:icon_custom || r_hand.icon_override || species.sprite_sheets["held"])
 			if(r_hand.icon_override || species.sprite_sheets["held"]) t_state = "[t_state]_r"
 			overlays_standing[R_HAND_LAYER] = image("icon"=((r_hand.icon_override) ? r_hand.icon_override : (species.sprite_sheets["held"] ? species.sprite_sheets["held"] : r_hand.righthand_file)), "icon_state"="[t_state]", "layer"=-R_HAND_LAYER)
 		else
-			overlays_standing[R_HAND_LAYER] = image("icon"=r_hand:tc_custom, "icon_state"="[t_state]_r", "layer"=-R_HAND_LAYER)
+			overlays_standing[R_HAND_LAYER] = image("icon"=r_hand:icon_custom, "icon_state"="[t_state]_r", "layer"=-R_HAND_LAYER)
 
 		if(handcuffed)
 			drop_r_hand()
@@ -923,11 +923,11 @@ Please contact me on #coderbus IRC. ~Carn x
 		if(!t_state)
 			t_state = l_hand.icon_state
 
-		if(!l_hand:tc_custom || l_hand.icon_override || species.sprite_sheets["held"])
+		if(!l_hand:icon_custom || l_hand.icon_override || species.sprite_sheets["held"])
 			if(l_hand.icon_override || species.sprite_sheets["held"]) t_state = "[t_state]_l"
 			overlays_standing[L_HAND_LAYER] = image("icon"=((l_hand.icon_override) ? l_hand.icon_override : (species.sprite_sheets["held"] ? species.sprite_sheets["held"] : l_hand.lefthand_file)), "icon_state"="[t_state]", "layer"=-L_HAND_LAYER)
 		else
-			overlays_standing[L_HAND_LAYER] = image("icon"=l_hand:tc_custom, "icon_state"="[t_state]_l", "layer"=-L_HAND_LAYER)
+			overlays_standing[L_HAND_LAYER] = image("icon"=l_hand:icon_custom, "icon_state"="[t_state]_l", "layer"=-L_HAND_LAYER)
 
 		if(handcuffed)
 			drop_l_hand()
@@ -938,7 +938,7 @@ Please contact me on #coderbus IRC. ~Carn x
 /mob/living/carbon/human/proc/update_tail_showing()
 	remove_overlay(TAIL_LAYER)
 
-	if(species.tail && species.flags & HAS_TAIL)
+	if(species.tail && species.flags[HAS_TAIL])
 		if(!wear_suit || !(wear_suit.flags_inv & HIDETAIL) && !istype(wear_suit, /obj/item/clothing/suit/space))
 			var/icon/tail_s = new/icon("icon"='icons/effects/species.dmi', "icon_state"="[species.tail]_s")
 			tail_s.Blend(rgb(r_skin, g_skin, b_skin), ICON_ADD)

@@ -8,7 +8,7 @@
 
 	var/obj/item/weapon/reagent_containers/container = null
 
-/obj/machinery/computer/curer/attackby(var/obj/I as obj, var/mob/user as mob)
+/obj/machinery/computer/curer/attackby(obj/I, mob/user)
 	if(istype(I,/obj/item/weapon/reagent_containers))
 		var/mob/living/carbon/C = user
 		if(!container)
@@ -18,7 +18,7 @@
 		return
 	if(istype(I,/obj/item/weapon/virusdish))
 		if(virusing)
-			user << "<b>The pathogen materializer is still recharging.."
+			to_chat(user, "<b>The pathogen materializer is still recharging..")
 			return
 		var/obj/item/weapon/reagent_containers/glass/beaker/product = new(src.loc)
 
@@ -34,15 +34,15 @@
 	..()
 	return 
 
-/obj/machinery/computer/curer/attack_ai(var/mob/user as mob)
+/obj/machinery/computer/curer/attack_ai(mob/user)
 	return src.attack_hand(user)
 
-/obj/machinery/computer/curer/attack_paw(var/mob/user as mob)
+/obj/machinery/computer/curer/attack_paw(mob/user)
 
 	return src.attack_hand(user)
 	return
 
-/obj/machinery/computer/curer/attack_hand(var/mob/user as mob)
+/obj/machinery/computer/curer/attack_hand(mob/user)
 	if(..())
 		return
 	user.machine = src
@@ -86,9 +86,9 @@
 	return
 
 /obj/machinery/computer/curer/Topic(href, href_list)
-	if(..())
+	. = ..()
+	if(!.)
 		return
-	usr.machine = src
 
 	if (href_list["antibody"])
 		curing = 10
@@ -96,12 +96,10 @@
 		container.loc = src.loc
 		container = null
 
-	src.add_fingerprint(usr)
 	src.updateUsrDialog()
-	return
 
 
-/obj/machinery/computer/curer/proc/createcure(var/obj/item/weapon/reagent_containers/container)
+/obj/machinery/computer/curer/proc/createcure(obj/item/weapon/reagent_containers/container)
 	var/obj/item/weapon/reagent_containers/glass/beaker/product = new(src.loc)
 
 	var/datum/reagent/blood/B = locate() in container.reagents.reagent_list

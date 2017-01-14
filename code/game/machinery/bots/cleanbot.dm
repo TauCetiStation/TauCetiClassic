@@ -9,7 +9,6 @@
 	throw_speed = 2
 	throw_range = 5
 	w_class = 3.0
-	flags = TABLEPASS
 	var/created_name = "Cleanbot"
 
 
@@ -81,14 +80,14 @@
 	src.path = new()
 	src.updateUsrDialog()
 
-/obj/machinery/bot/cleanbot/attack_hand(mob/user as mob)
+/obj/machinery/bot/cleanbot/attack_hand(mob/user)
 	. = ..()
 	if (.)
 		return
 	usr.set_machine(src)
 	interact(user)
 
-/obj/machinery/bot/cleanbot/interact(mob/user as mob)
+/obj/machinery/bot/cleanbot/interact(mob/user)
 	var/dat
 	dat += text({"
 <TT><B>Automatic Station Cleaner v1.0</B></TT><BR><BR>
@@ -112,10 +111,10 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 	return
 
 /obj/machinery/bot/cleanbot/Topic(href, href_list)
-	if(..())
+	. = ..()
+	if(!.)
 		return
-	usr.set_machine(src)
-	src.add_fingerprint(usr)
+
 	switch(href_list["operation"])
 		if("start")
 			if (src.on)
@@ -125,44 +124,41 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 		if("blood")
 			src.blood =!src.blood
 			src.get_targets()
-			src.updateUsrDialog()
 		if("patrol")
 			src.should_patrol =!src.should_patrol
 			src.patrol_path = null
-			src.updateUsrDialog()
 		if("freq")
 			var/freq = text2num(input("Select frequency for  navigation beacons", "Frequnecy", num2text(beacon_freq / 10))) * 10
 			if (freq > 0)
 				src.beacon_freq = freq
-			src.updateUsrDialog()
 		if("screw")
 			src.screwloose = !src.screwloose
-			usr << "<span class='notice>You twiddle the screw.</span>"
-			src.updateUsrDialog()
+			to_chat(usr, "<span class='notice>You twiddle the screw.</span>")
 		if("oddbutton")
 			src.oddbutton = !src.oddbutton
-			usr << "<span class='notice'>You press the weird button.</span>"
-			src.updateUsrDialog()
+			to_chat(usr, "<span class='notice'>You press the weird button.</span>")
+	src.updateUsrDialog()
 
-/obj/machinery/bot/cleanbot/attackby(obj/item/weapon/W, mob/user as mob)
+/obj/machinery/bot/cleanbot/attackby(obj/item/weapon/W, mob/user)
 	if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if(src.allowed(usr) && !open && !emagged)
 			src.locked = !src.locked
-			user << "<span class='notice'>You [ src.locked ? "lock" : "unlock"] the [src] behaviour controls.</span>"
+			to_chat(user, "<span class='notice'>You [ src.locked ? "lock" : "unlock"] the [src] behaviour controls.</span>")
 		else
 			if(emagged)
-				user << "<span class='warning'>ERROR</span>"
+				to_chat(user, "<span class='warning'>ERROR</span>")
 			if(open)
-				user << "<span class='warning'>Please close the access panel before locking it.</span>"
+				to_chat(user, "<span class='warning'>Please close the access panel before locking it.</span>")
 			else
-				user << "<span class='notice'>This [src] doesn't seem to respect your authority.</span>"
+				to_chat(user, "<span class='notice'>This [src] doesn't seem to respect your authority.</span>")
 	else
 		return ..()
 
-/obj/machinery/bot/cleanbot/Emag(mob/user as mob)
+/obj/machinery/bot/cleanbot/Emag(mob/user)
 	..()
 	if(open && !locked)
-		if(user) user << "<span class='notice'>The [src] buzzes and beeps.</span>"
+		if(user)
+			to_chat(user, "<span class='notice'>The [src] buzzes and beeps.</span>")
 		src.oddbutton = 1
 		src.screwloose = 1
 
@@ -324,7 +320,7 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 		target_types += /obj/effect/decal/cleanable/blood/tracks
 		target_types += /obj/effect/decal/cleanable/blood/tracks/footprints
 
-/obj/machinery/bot/cleanbot/proc/clean(var/obj/effect/decal/cleanable/target)
+/obj/machinery/bot/cleanbot/proc/clean(obj/effect/decal/cleanable/target)
 	anchored = 1
 	icon_state = "cleanbot-c"
 	visible_message("\red [src] begins to clean up the [target]")
@@ -360,7 +356,7 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 	qdel(src)
 	return
 
-/obj/item/weapon/bucket_sensor/attackby(var/obj/item/W, mob/user as mob)
+/obj/item/weapon/bucket_sensor/attackby(obj/item/W, mob/user)
 	..()
 	if(istype(W, /obj/item/robot_parts/l_arm) || istype(W, /obj/item/robot_parts/r_arm))
 		user.drop_item()
@@ -368,7 +364,7 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 		var/turf/T = get_turf(src.loc)
 		var/obj/machinery/bot/cleanbot/A = new /obj/machinery/bot/cleanbot(T)
 		A.name = src.created_name
-		user << "<span class='notice'>You add the robot arm to the bucket and sensor assembly. Beep boop!</span>"
+		to_chat(user, "<span class='notice'>You add the robot arm to the bucket and sensor assembly. Beep boop!</span>")
 		user.drop_from_inventory(src)
 		qdel(src)
 

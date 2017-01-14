@@ -52,16 +52,16 @@
 						scan_ticks = 0
 						var/turf/T = get_turf(src)
 						if(target_radio)
-							T.visible_message("\icon[src] [src] [pick("chirps","chirrups","cheeps")] happily.")
+							T.visible_message("[bicon(src)] [src] [pick("chirps","chirrups","cheeps")] happily.")
 						else
-							T.visible_message("\icon[src] [src] [pick("chirps","chirrups","cheeps")] sadly.")
+							T.visible_message("[bicon(src)] [src] [pick("chirps","chirrups","cheeps")] sadly.")
 		else
 			icon_state = "pinoff"
 
-/obj/item/device/beacon_locator/attack_self(var/mob/user as mob)
+/obj/item/device/beacon_locator/attack_self(mob/user)
 	return src.interact(user)
 
-/obj/item/device/beacon_locator/interact(var/mob/user as mob)
+/obj/item/device/beacon_locator/interact(mob/user)
 	var/dat = "<b>Radio frequency tracker</b><br>"
 	dat += {"
 				<A href='byond://?src=\ref[src];reset_tracking=1'>Reset tracker</A><BR>

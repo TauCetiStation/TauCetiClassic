@@ -14,10 +14,12 @@
 	G.fields["citizenship"]	= "Unknown"
 	G.fields["faction"]		= "Unknown"
 	G.fields["religion"]	= "Unknown"
+	G.fields["photo_f"] = new /icon()
+	G.fields["photo_s"] = new /icon()
 	data_core.general += G
 	return G
 
-/proc/CreateSecurityRecord(var/name as text, var/id as text)
+/proc/CreateSecurityRecord(name, id)
 	var/datum/data/record/R = new /datum/data/record()
 	R.fields["name"] = name
 	R.fields["id"] = id

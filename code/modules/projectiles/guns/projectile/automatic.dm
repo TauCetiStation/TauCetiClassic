@@ -1,7 +1,6 @@
 /obj/item/weapon/gun/projectile/automatic //Hopefully someone will find a way to make these fire in bursts or something. --Superxpdude
 	name = "submachine gun"
 	desc = "A lightweight, fast firing gun. Uses 9mm rounds."
-	icon = 'tauceti/icons/obj/guns.dmi'
 	icon_state = "saber"	//ugly
 	w_class = 3.0
 	origin_tech = "combat=4;materials=2"
@@ -16,7 +15,7 @@
 	icon_state = "[initial(icon_state)][magazine ? "-[magazine.max_ammo]" : ""][chambered ? "" : "-e"]"
 	return
 
-/obj/item/weapon/gun/projectile/automatic/attackby(var/obj/item/A as obj, mob/user as mob)
+/obj/item/weapon/gun/projectile/automatic/attackby(obj/item/A, mob/user)
 	if(..() && chambered)
 		alarmed = 0
 
@@ -32,7 +31,6 @@
 /obj/item/weapon/gun/projectile/automatic/c20r
 	name = "C-20r SMG"
 	desc = "A lightweight, compact bullpup SMG. Uses .45 ACP rounds in medium-capacity magazines and has a threaded barrel for silencers. Has a 'Scarborough Arms - Per falcis, per pravitas' buttstamp."
-	icon = 'tauceti/items/weapons/syndicate/syndicate_guns.dmi'
 	icon_state = "c20r"
 	item_state = "c20r"
 	w_class = 3.0
@@ -46,7 +44,7 @@
 	update_icon()
 	return
 
-/obj/item/weapon/gun/projectile/automatic/c20r/afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, flag)
+/obj/item/weapon/gun/projectile/automatic/c20r/afterattack(atom/target, mob/living/user, flag)
 	..()
 	if(!chambered && !get_ammo() && !alarmed)
 		playsound(user, 'sound/weapons/smg_empty_alarm.ogg', 40, 1)
@@ -54,7 +52,7 @@
 		alarmed = 1
 	return
 
-/obj/item/weapon/gun/projectile/automatic/c20r/attack_self(mob/user as mob)
+/obj/item/weapon/gun/projectile/automatic/c20r/attack_self(mob/user)
 	if(silenced)
 		switch(alert("Would you like to unscrew silencer, or extract magazine?","Choose.","Silencer","Magazine"))
 			if("Silencer")
@@ -66,7 +64,7 @@
 	else
 		..()
 
-/obj/item/weapon/gun/projectile/automatic/c20r/attackby(obj/item/I as obj, mob/user as mob)
+/obj/item/weapon/gun/projectile/automatic/c20r/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/silencer))
 		return silencer_attackby(I,user)
 	return ..()
@@ -79,14 +77,13 @@
 /obj/item/weapon/gun/projectile/automatic/l6_saw
 	name = "\improper L6 SAW"
 	desc = "A heavily modified light machine gun with a tactical plasteel frame resting on a rather traditionally-made ballistic weapon. Has 'Aussec Armoury - 2531' engraved on the reciever, as well as '7.62x51mm'."
-	icon = 'tauceti/items/weapons/syndicate/syndicate_guns.dmi'
 	icon_state = "l6closed100"
 	item_state = "l6closedmag"
 	w_class = 5
 	slot_flags = 0
 	origin_tech = "combat=5;materials=1;syndicate=2"
 	mag_type = /obj/item/ammo_box/magazine/m762
-	fire_sound = 'tauceti/sounds/weapon/gunshot3.wav'
+	fire_sound = 'sound/weapons/gunshot3.wav'
 	var/cover_open = 0
 	var/wielded = 0
 
@@ -98,15 +95,15 @@
 	wielded = 1
 	update_icon()
 
-/obj/item/weapon/gun/projectile/automatic/l6_saw/mob_can_equip(M as mob, slot)
+/obj/item/weapon/gun/projectile/automatic/l6_saw/mob_can_equip(M, slot)
 	//Cannot equip wielded items.
 	if(wielded)
-		M << "<span class='warning'>Unwield the [initial(name)] first!</span>"
+		to_chat(M, "<span class='warning'>Unwield the [initial(name)] first!</span>")
 		return 0
 
 	return ..()
 
-/obj/item/weapon/gun/projectile/automatic/l6_saw/dropped(mob/user as mob)
+/obj/item/weapon/gun/projectile/automatic/l6_saw/dropped(mob/user)
 	//handles unwielding a twohanded weapon when dropped as well as clearing up the offhand
 	if(user)
 		var/obj/item/weapon/gun/projectile/automatic/l6_saw/O = user.get_inactive_hand()
@@ -118,21 +115,21 @@
 	unwield()
 
 
-/obj/item/weapon/gun/projectile/automatic/l6_saw/attack_self(mob/user as mob)
+/obj/item/weapon/gun/projectile/automatic/l6_saw/attack_self(mob/user)
 	switch(alert("Would you like to [cover_open ? "open" : "close"], or change grip?","Choose.","Toggle cover","Change grip"))
 		if("Toggle cover")
 			if(wielded)
-				user << "<span class='notice'>You need your other hand to be empty.</span>"
+				to_chat(user, "<span class='notice'>You need your other hand to be empty.</span>")
 				return
 			else
 				cover_open = !cover_open
-				user << "<span class='notice'>You [cover_open ? "open" : "close"] [src]'s cover.</span>"
+				to_chat(user, "<span class='notice'>You [cover_open ? "open" : "close"] [src]'s cover.</span>")
 				update_icon()
 				return
 		if("Change grip")
 			if(wielded) //Trying to unwield it
 				unwield()
-				user << "<span class='notice'>You are now carrying the [name] with one hand.</span>"
+				to_chat(user, "<span class='notice'>You are now carrying the [name] with one hand.</span>")
 				if(user.hand)
 					user.update_inv_l_hand()
 				else
@@ -145,10 +142,10 @@
 
 			else //Trying to wield it
 				if(user.get_inactive_hand())
-					user << "<span class='warning'>You need your other hand to be empty</span>"
+					to_chat(user, "<span class='warning'>You need your other hand to be empty</span>")
 					return
 				wield()
-				user << "<span class='notice'>You grab the [initial(name)] with both hands.</span>"
+				to_chat(user, "<span class='notice'>You grab the [initial(name)] with both hands.</span>")
 
 				if(user.hand)
 					user.update_inv_l_hand()
@@ -165,17 +162,17 @@
 /obj/item/weapon/gun/projectile/automatic/l6_saw/update_icon()
 	icon_state = "l6[cover_open ? "open" : "closed"][magazine ? Ceiling(get_ammo(0)/12.5)*25 : "-empty"]"
 
-/obj/item/weapon/gun/projectile/automatic/l6_saw/afterattack(atom/target as mob|obj|turf, mob/living/user as mob|obj, flag, params) //what I tried to do here is just add a check to see if the cover is open or not and add an icon_state change because I can't figure out how c-20rs do it with overlays
+/obj/item/weapon/gun/projectile/automatic/l6_saw/afterattack(atom/target, mob/living/user, flag, params) //what I tried to do here is just add a check to see if the cover is open or not and add an icon_state change because I can't figure out how c-20rs do it with overlays
 	if(!wielded)
-		user << "<span class='notice'>You need wield [src] in both hands before firing!</span>"
+		to_chat(user, "<span class='notice'>You need wield [src] in both hands before firing!</span>")
 		return
 	if(cover_open)
-		user << "<span class='notice'>[src]'s cover is open! Close it before firing!</span>"
+		to_chat(user, "<span class='notice'>[src]'s cover is open! Close it before firing!</span>")
 	else
 		..()
 		update_icon()
 
-/obj/item/weapon/gun/projectile/automatic/l6_saw/attack_hand(mob/user as mob)
+/obj/item/weapon/gun/projectile/automatic/l6_saw/attack_hand(mob/user)
 	if(loc != user)
 		..()
 		return	//let them pick it up
@@ -188,12 +185,12 @@
 		user.put_in_hands(magazine)
 		magazine = null
 		update_icon()
-		user << "<span class='notice'>You remove the magazine from [src].</span>"
+		to_chat(user, "<span class='notice'>You remove the magazine from [src].</span>")
 
 
-/obj/item/weapon/gun/projectile/automatic/l6_saw/attackby(var/obj/item/A as obj, mob/user as mob)
+/obj/item/weapon/gun/projectile/automatic/l6_saw/attackby(obj/item/A, mob/user)
 	if(!cover_open)
-		user << "<span class='notice'>[src]'s cover is closed! You can't insert a new mag!</span>"
+		to_chat(user, "<span class='notice'>[src]'s cover is closed! You can't insert a new mag!</span>")
 		return
 	..()
 
@@ -221,10 +218,10 @@
 /* Where Ausops failed, I have not. -SirBayer */
 
 //=================NEW GUNS=================\\
+
 /obj/item/weapon/gun/projectile/automatic/l10c
 	name = "L10-c"
 	desc = "A basic energy-based carbine with fast rate of fire."
-	icon = 'icons/obj/gun.dmi'
 	icon_state = "l10-car"
 	item_state = "l10-car"
 	w_class = 4.0
@@ -242,12 +239,12 @@
 /obj/item/weapon/gun/projectile/automatic/l10c/process_chamber()
 	return ..(0, 1, 1)
 
-/obj/item/weapon/gun/projectile/automatic/l10c/afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, flag)
+/obj/item/weapon/gun/projectile/automatic/l10c/afterattack(atom/target, mob/living/user, flag)
 	..()
 	update_icon(user)
 	return
 
-/obj/item/weapon/gun/projectile/automatic/l10c/attack_self(mob/user as mob)
+/obj/item/weapon/gun/projectile/automatic/l10c/attack_self(mob/user)
 	if(magazine && magazine.ammo_count())
 		playsound(user, 'sound/weapons/guns/l10c-unload.ogg', 70, 1)
 	if(chambered)
@@ -260,20 +257,20 @@
 		user.put_in_hands(magazine)
 		magazine.update_icon()
 		magazine = null
-		user << "<span class='notice'>You pull the magazine out of \the [src]!</span>"
+		to_chat(user, "<span class='notice'>You pull the magazine out of \the [src]!</span>")
 	else
-		user << "<span class='notice'>There's no magazine in \the [src].</span>"
+		to_chat(user, "<span class='notice'>There's no magazine in \the [src].</span>")
 	update_icon(user)
 	return
 
-/obj/item/weapon/gun/projectile/automatic/l10c/attackby(var/obj/item/A as obj, mob/user as mob)
+/obj/item/weapon/gun/projectile/automatic/l10c/attackby(obj/item/A, mob/user)
 	if (istype(A, /obj/item/ammo_box/magazine))
 		var/obj/item/ammo_box/magazine/AM = A
 		if (!magazine && istype(AM, mag_type))
 			user.remove_from_mob(AM)
 			magazine = AM
 			magazine.loc = src
-			user << "<span class='notice'>You load a new magazine into \the [src].</span>"
+			to_chat(user, "<span class='notice'>You load a new magazine into \the [src].</span>")
 			if(AM.ammo_count())
 				playsound(user, 'sound/weapons/guns/l10c-load.ogg', 70, 1)
 			chamber_round()
@@ -281,10 +278,10 @@
 			update_icon(user)
 			return 1
 		else if (magazine)
-			user << "<span class='notice'>There's already a magazine in \the [src].</span>"
+			to_chat(user, "<span class='notice'>There's already a magazine in \the [src].</span>")
 	return 0
 
-/obj/item/weapon/gun/projectile/automatic/l10c/update_icon(var/mob/M)
+/obj/item/weapon/gun/projectile/automatic/l10c/update_icon(mob/M)
 	if(!magazine)
 		icon_state = "[initial(icon_state)]-e"
 		item_state = "[initial(item_state)]-e"
@@ -302,4 +299,169 @@
 		H.update_inv_l_hand()
 		H.update_inv_r_hand()
 		H.update_inv_belt()
+	return
+
+
+/obj/item/weapon/gun/projectile/automatic/c5
+	name = "security submachine gun"
+	desc = "C-5 submachine gun - cheap and light. Uses 9mm ammo."
+	icon_state = "c5"
+	item_state = "c5"
+	w_class = 3.0
+	origin_tech = "combat=4;materials=2"
+	mag_type = /obj/item/ammo_box/magazine/c5_9mm
+	fire_sound = 'sound/weapons/guns/c5_shot.wav'
+
+/obj/item/weapon/gun/projectile/automatic/c5/update_icon(mob/M)
+	icon_state = "c5[magazine ? "" : "-e"]"
+	item_state = "c5[magazine ? "" : "-e"]"
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		H.update_inv_l_hand()
+		H.update_inv_r_hand()
+		H.update_inv_belt()
+	return
+
+/obj/item/weapon/gun/projectile/automatic/l13
+	name = "security submachine gun"
+	desc = "L13 personal defense weapon - for combat security operations. Uses .38 ammo."
+	icon_state = "l13"
+	item_state = "l13"
+	w_class = 3.0
+	origin_tech = "combat=4;materials=2"
+	mag_type = /obj/item/ammo_box/magazine/l13_38
+	fire_sound = 'sound/weapons/guns/l13_shot.ogg'
+
+/obj/item/weapon/gun/projectile/automatic/l13/update_icon(mob/M)
+	icon_state = "l13[magazine ? "" : "-e"]"
+	item_state = "l13[magazine ? "" : "-e"]"
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		H.update_inv_l_hand()
+		H.update_inv_r_hand()
+		H.update_inv_belt()
+	return
+
+/obj/item/weapon/gun/projectile/automatic/tommygun
+	name = "tommy gun"
+	desc = "A genuine Chicago Typewriter."
+	icon_state = "tommygun"
+	item_state = "tommygun"
+	slot_flags = 0
+	origin_tech = "combat=5;materials=1;syndicate=2"
+	mag_type = /obj/item/ammo_box/magazine/tommygunm45
+	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
+
+/obj/item/weapon/gun/projectile/automatic/tommygun/isHandgun()
+	return 0
+
+/obj/item/weapon/gun/projectile/automatic/bar
+	name = "Browning M1918"
+	desc = "Browning Automatic Rifle."
+	icon_state = "bar"
+	item_state = "bar"
+	w_class = 5.0
+	origin_tech = "combat=5;materials=2"
+	mag_type = /obj/item/ammo_box/magazine/m3006
+	fire_sound = 'sound/weapons/gunshot3.wav'
+
+/obj/item/weapon/gun/projectile/automatic/luger
+	name = "Luger P08"
+	desc = "A small, easily concealable gun. Uses 9mm rounds."
+	icon_state = "p08"
+	w_class = 2
+	origin_tech = "combat=2;materials=2;syndicate=2"
+	mag_type = /obj/item/ammo_box/magazine/m9pmm
+
+/obj/item/weapon/gun/projectile/automatic/luger/update_icon()
+	..()
+	icon_state = "[initial(icon_state)][magazine ? "" : "-e"]"
+
+/obj/item/weapon/gun/projectile/automatic/luger/isHandgun()
+	return 1
+
+/obj/item/weapon/gun/projectile/automatic/colt1911/dungeon
+	desc = "A single-action, semi-automatic, magazine-fed, recoil-operated pistol chambered for the .45 ACP cartridge."
+	name = "\improper Colt M1911"
+	mag_type = /obj/item/ammo_box/magazine/c45m
+	mag_type2 = /obj/item/ammo_box/magazine/c45r
+
+/obj/item/weapon/gun/projectile/automatic/borg
+	name = "Robot SMG"
+	icon_state = "borg_smg"
+	mag_type = /obj/item/ammo_box/magazine/borg45
+
+/obj/item/weapon/gun/projectile/automatic/borg/update_icon()
+	return
+
+/obj/item/weapon/gun/projectile/automatic/borg/attack_self(mob/user)
+	if (magazine)
+		magazine.loc = get_turf(src.loc)
+		magazine.update_icon()
+		magazine = null
+		to_chat(user, "<span class='notice'>You pull the magazine out of \the [src]!</span>")
+	else
+		to_chat(user, "<span class='notice'>There's no magazine in \the [src].</span>")
+	return
+
+/obj/item/weapon/gun/projectile/automatic/bulldog
+	name = "V15 Bulldog shotgun"
+	desc = "A compact, mag-fed semi-automatic shotgun for combat in narrow corridors. Compatible only with specialized magazines."
+	icon_state = "bulldog"
+	item_state = "bulldog"
+	w_class = 3.0
+	origin_tech = "combat=5;materials=4;syndicate=6"
+	mag_type = /obj/item/ammo_box/magazine/m12g
+	fire_sound = 'sound/weapons/Gunshot.ogg'
+
+/obj/item/weapon/gun/projectile/automatic/bulldog/New()
+	..()
+	update_icon()
+	return
+
+/obj/item/weapon/gun/projectile/automatic/bulldog/proc/update_magazine()
+	if(magazine)
+		src.overlays = 0
+		overlays += "[magazine.icon_state]_o"
+		return
+
+/obj/item/weapon/gun/projectile/automatic/bulldog/update_icon()
+	src.overlays = 0
+	update_magazine()
+	icon_state = "bulldog[chambered ? "" : "-e"]"
+	return
+
+/obj/item/weapon/gun/projectile/automatic/bulldog/afterattack(atom/target, mob/living/user, flag)
+	..()
+	if(!chambered && !get_ammo() && !alarmed)
+		playsound(user, 'sound/weapons/smg_empty_alarm.ogg', 40, 1)
+		update_icon()
+		alarmed = 1
+	return
+
+/obj/item/weapon/gun/projectile/automatic/a28
+	name = "A28 assault rifle"
+	desc = ""
+	icon_state = "a28"
+	item_state = "a28"
+	w_class = 3.0
+	origin_tech = "combat=5;materials=4;syndicate=6"
+	mag_type = /obj/item/ammo_box/magazine/m556
+	fire_sound = 'sound/weapons/Gunshot.ogg'
+
+/obj/item/weapon/gun/projectile/automatic/a28/New()
+	..()
+	update_icon()
+	return
+
+/obj/item/weapon/gun/projectile/automatic/a28/proc/update_magazine()
+	if(magazine)
+		src.overlays = 0
+		overlays += "[magazine.icon_state]-o"
+		return
+
+/obj/item/weapon/gun/projectile/automatic/a28/update_icon()
+	src.overlays = 0
+	update_magazine()
+	icon_state = "a28[chambered ? "" : "-e"]"
 	return

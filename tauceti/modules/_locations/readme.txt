@@ -1,1 +1,0 @@
-centcomm, shuttles - всё за авторством Лешего

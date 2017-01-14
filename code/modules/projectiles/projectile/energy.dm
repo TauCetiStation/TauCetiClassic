@@ -60,7 +60,6 @@
 
 /obj/item/projectile/energy/neurotoxin
 	name = "neuro"
-	icon = 'tauceti/icons/obj/projectiles.dmi'
 	icon_state = "neurotoxin"
 	damage = 5
 	damage_type = TOX
@@ -75,3 +74,13 @@
 	damage = 20
 	damage_type = TOX
 	irradiate = 20
+
+/obj/item/projectile/energy/laser
+	name = "laser"
+	icon_state = "laser"
+	light_color = "red"
+	light_power = 2
+	light_range = 2
+	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
+	damage = 40
+	damage_type = BURN

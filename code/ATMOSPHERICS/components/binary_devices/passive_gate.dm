@@ -87,7 +87,7 @@
 
 	return 1
 
-/obj/machinery/atmospherics/binary/passive_gate/interact(mob/user as mob)
+/obj/machinery/atmospherics/binary/passive_gate/interact(mob/user)
 	var/dat = {"<b>Power: </b><a href='?src=\ref[src];power=1'>[on?"On":"Off"]</a><br>
 				<b>Desirable output pressure: </b>
 				[round(target_pressure,0.1)]kPa | <a href='?src=\ref[src];set_press=1'>Change</a>
@@ -130,51 +130,51 @@
 
 
 
-/obj/machinery/atmospherics/binary/passive_gate/attack_hand(user as mob)
+/obj/machinery/atmospherics/binary/passive_gate/attack_hand(user)
 	if(..())
 		return
 	src.add_fingerprint(usr)
 	if(!src.allowed(user))
-		user << "\red Access denied."
+		to_chat(user, "\red Access denied.")
 		return
 	usr.set_machine(src)
 	interact(user)
 	return
 
 /obj/machinery/atmospherics/binary/passive_gate/Topic(href,href_list)
-	if(..()) return
+	. = ..()
+	if(!.)
+		return
 	if(href_list["power"])
 		on = !on
-	if(href_list["set_press"])
+	else if(href_list["set_press"])
 		var/new_pressure = input(usr,"Enter new output pressure (0-4500kPa)","Pressure control",src.target_pressure) as num
 		src.target_pressure = max(0, min(4500, new_pressure))
-	usr.set_machine(src)
 	src.update_icon()
 	src.updateUsrDialog()
-	return
 
 /obj/machinery/atmospherics/binary/passive_gate/power_change()
 	..()
 	update_icon()
 
-/obj/machinery/atmospherics/binary/passive_gate/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+/obj/machinery/atmospherics/binary/passive_gate/attackby(obj/item/weapon/W, mob/user)
 	if (!istype(W, /obj/item/weapon/wrench))
 		return ..()
 	if (on)
-		user << "<span class='warning'>You cannot unwrench this [src], turn it off first.</span>"
+		to_chat(user, "<span class='warning'>You cannot unwrench this [src], turn it off first.</span>")
 		return 1
 	var/turf/T = src.loc
 	if (level==1 && isturf(T) && T.intact)
-		user << "<span class='warning'>You must remove the plating first.</span>"
+		to_chat(user, "<span class='warning'>You must remove the plating first.</span>")
 		return 1
 	var/datum/gas_mixture/int_air = return_air()
 	var/datum/gas_mixture/env_air = loc.return_air()
 	if ((int_air.return_pressure()-env_air.return_pressure()) > 2*ONE_ATMOSPHERE)
-		user << "<span class='warning'>You cannot unwrench this [src], it too exerted due to internal pressure.</span>"
+		to_chat(user, "<span class='warning'>You cannot unwrench this [src], it too exerted due to internal pressure.</span>")
 		add_fingerprint(user)
 		return 1
 	playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-	user << "<span class='notice'>You begin to unfasten \the [src]...</span>"
+	to_chat(user, "<span class='notice'>You begin to unfasten \the [src]...</span>")
 	if (do_after(user, 40, target = src))
 		user.visible_message( \
 			"[user] unfastens \the [src].", \

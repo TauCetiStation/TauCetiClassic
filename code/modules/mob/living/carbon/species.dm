@@ -46,8 +46,9 @@
 
 	var/brute_mod = null    // Physical damage reduction/malus.
 	var/burn_mod = null     // Burn damage reduction/malus.
+	var/speed_mod = 0		//How fast or slow specific specie.
 
-	var/flags = 0       // Various specific features.
+	var/list/flags = list()       // Various specific features.
 
 	var/list/abilities = list()	// For species-derived or admin-given powers
 
@@ -82,7 +83,7 @@
 /datum/species/New()
 	unarmed = new unarmed_type()
 
-/datum/species/proc/create_organs(var/mob/living/carbon/human/H) //Handles creation of mob organs.
+/datum/species/proc/create_organs(mob/living/carbon/human/H) //Handles creation of mob organs.
 	//This is a basic humanoid limb setup.
 	H.organs = list()
 	H.organs_by_name["chest"] = new/datum/organ/external/chest()
@@ -111,18 +112,18 @@
 	for(var/datum/organ/external/O in H.organs)
 		O.owner = H
 
-	if(flags & IS_SYNTHETIC)
+	if(flags[IS_SYNTHETIC])
 		for(var/datum/organ/external/E in H.organs)
 			if(E.status & ORGAN_CUT_AWAY || E.status & ORGAN_DESTROYED) continue
 			E.status |= ORGAN_ROBOT
 		for(var/datum/organ/internal/I in H.internal_organs)
 			I.mechanize()
 
-/datum/species/proc/handle_post_spawn(var/mob/living/carbon/human/H) //Handles anything not already covered by basic species assignment.
+/datum/species/proc/handle_post_spawn(mob/living/carbon/human/H) //Handles anything not already covered by basic species assignment.
 	return
 
-/datum/species/proc/handle_death(var/mob/living/carbon/human/H) //Handles any species-specific death events (such as dionaea nymph spawns).
-	if(flags & IS_SYNTHETIC)
+/datum/species/proc/handle_death(mob/living/carbon/human/H) //Handles any species-specific death events (such nymph spawns).
+	if(flags[IS_SYNTHETIC])
  //H.make_jittery(200) //S-s-s-s-sytem f-f-ai-i-i-i-i-lure-ure-ure-ure
 		H.h_style = ""
 		spawn(100)
@@ -137,7 +138,12 @@
 	primitive = /mob/living/carbon/monkey
 	unarmed_type = /datum/unarmed_attack/punch
 
-	flags = HAS_SKIN_TONE | HAS_LIPS | HAS_UNDERWEAR
+	flags = list(
+	 HAS_SKIN_TONE = TRUE
+	,HAS_LIPS = TRUE
+	,HAS_UNDERWEAR = TRUE
+	,HAS_HAIR = TRUE
+	)
 
 	//If you wanted to add a species-level ability:
 	/*abilities = list(/client/proc/test_ability)*/
@@ -160,7 +166,17 @@
 	heat_level_2 = 480 //Default 400
 	heat_level_3 = 1100 //Default 1000
 
-	flags = IS_WHITELISTED | HAS_LIPS | HAS_UNDERWEAR | HAS_TAIL | HAS_SKIN_COLOR
+	brute_mod = 0.80
+	burn_mod = 0.90
+	speed_mod = 0.7
+
+	flags = list(
+	 IS_WHITELISTED = TRUE
+	,HAS_LIPS = TRUE
+	,HAS_UNDERWEAR = TRUE
+	,HAS_TAIL = TRUE
+	,HAS_SKIN_COLOR = TRUE
+	)
 
 	flesh_color = "#34AF10"
 
@@ -188,7 +204,18 @@
 
 	primitive = /mob/living/carbon/monkey/tajara
 
-	flags = IS_WHITELISTED | HAS_LIPS | HAS_UNDERWEAR | HAS_TAIL | HAS_SKIN_COLOR
+	brute_mod = 1.20
+	burn_mod = 1.20
+	speed_mod = -0.7
+
+	flags = list(
+	 IS_WHITELISTED = TRUE
+	,HAS_LIPS = TRUE
+	,HAS_UNDERWEAR = TRUE
+	,HAS_TAIL = TRUE
+	,HAS_SKIN_COLOR = TRUE
+	,HAS_HAIR = TRUE
+	)
 
 	flesh_color = "#AFA59E"
 	base_color = "#333333"
@@ -201,7 +228,13 @@
 	primitive = /mob/living/carbon/monkey/skrell
 	unarmed_type = /datum/unarmed_attack/punch
 
-	flags = IS_WHITELISTED | HAS_LIPS | HAS_UNDERWEAR | HAS_SKIN_COLOR
+	flags = list(
+	 IS_WHITELISTED = TRUE
+	,HAS_LIPS = TRUE
+	,HAS_UNDERWEAR = TRUE
+	,HAS_SKIN_COLOR = TRUE
+	)
+
 	eyes = "skrell_eyes_s"
 
 	flesh_color = "#8CD7A3"
@@ -227,7 +260,10 @@
 	breath_type = "nitrogen"
 	poison_type = "oxygen"
 
-	flags = NO_SCAN | NO_BLOOD
+	flags = list(
+	 NO_SCAN = TRUE
+	,NO_BLOOD = TRUE
+	)
 
 	blood_color = "#2299FC"
 	flesh_color = "#808D11"
@@ -241,12 +277,12 @@
 		"gloves" = 'icons/mob/species/vox/gloves.dmi'
 		)
 
-/datum/species/vox/handle_post_spawn(var/mob/living/carbon/human/H)
+/datum/species/vox/handle_post_spawn(mob/living/carbon/human/H)
 
 	H.verbs += /mob/living/carbon/human/proc/leap
 	..()
 
-/datum/species/vox/armalis/handle_post_spawn(var/mob/living/carbon/human/H)
+/datum/species/vox/armalis/handle_post_spawn(mob/living/carbon/human/H)
 
 	H.verbs += /mob/living/carbon/human/proc/gut
 	..()
@@ -277,7 +313,12 @@
 	breath_type = "nitrogen"
 	poison_type = "oxygen"
 
-	flags = NO_SCAN | NO_BLOOD | HAS_TAIL | NO_PAIN
+	flags = list(
+	 NO_SCAN = TRUE
+	,NO_BLOOD = TRUE
+	,HAS_TAIL = TRUE
+	,NO_PAIN = TRUE
+	)
 
 	blood_color = "#2299FC"
 	flesh_color = "#808D11"
@@ -312,21 +353,32 @@
 	heat_level_2 = 3000
 	heat_level_3 = 4000
 
+	speed_mod = 7
+
 	body_temperature = T0C + 15		//make the plant people have a bit lower body temperature, why not
 
-	flags = IS_WHITELISTED | NO_BREATHE | REQUIRE_LIGHT | NO_SCAN | IS_PLANT | RAD_ABSORB | NO_BLOOD | NO_PAIN
+	flags = list(
+	 IS_WHITELISTED = TRUE
+	,NO_BREATHE = TRUE
+	,REQUIRE_LIGHT = TRUE
+	,NO_SCAN = TRUE
+	,IS_PLANT = TRUE
+	,RAD_ABSORB = TRUE
+	,NO_BLOOD = TRUE
+	,NO_PAIN = TRUE
+	)
 
 	blood_color = "#004400"
 	flesh_color = "#907E4A"
 
 	reagent_tag = IS_DIONA
 
-/datum/species/diona/handle_post_spawn(var/mob/living/carbon/human/H)
+/datum/species/diona/handle_post_spawn(mob/living/carbon/human/H)
 	H.gender = NEUTER
 
 	return ..()
 
-/datum/species/diona/handle_death(var/mob/living/carbon/human/H)
+/datum/species/diona/handle_death(mob/living/carbon/human/H)
 
 	var/mob/living/carbon/monkey/diona/S = new(get_turf(H))
 
@@ -349,8 +401,6 @@
 	unarmed_type = /datum/unarmed_attack/punch
 
 	eyes = "blank_eyes"
-	brute_mod = 0.5
-	burn_mod = 1
 
 	warning_low_pressure = 50
 	hazard_low_pressure = 0
@@ -365,7 +415,19 @@
 
 	synth_temp_gain = 10 //this should cause IPCs to stabilize at ~80 C in a 20 C environment.
 
-	flags = IS_WHITELISTED | NO_BREATHE | NO_SCAN | NO_BLOOD | NO_PAIN | IS_SYNTHETIC | VIRUS_IMMUNE
+	brute_mod = 1.5
+	burn_mod = 1
+
+	flags = list(
+	 IS_WHITELISTED = TRUE
+	,NO_BREATHE = TRUE
+	,NO_SCAN = TRUE
+	,NO_BLOOD = TRUE
+	,NO_PAIN = TRUE
+	,IS_SYNTHETIC = TRUE
+	,VIRUS_IMMUNE = TRUE
+	,BIOHAZZARD_IMMUNE = TRUE
+	)
 
 	blood_color = "#1F181F"
 	flesh_color = "#575757"
@@ -377,11 +439,16 @@
 	icobase = 'icons/mob/human_races/r_abductor.dmi'
 	deform = 'icons/mob/human_races/r_abductor.dmi'
 
-	flags = NO_BREATHE | NO_BLOOD | NO_SCAN | VIRUS_IMMUNE
+	flags = list(
+	 NO_BREATHE = TRUE
+	,NO_BLOOD = TRUE
+	,NO_SCAN = TRUE
+	,VIRUS_IMMUNE = TRUE
+	)
 
 	blood_color = "#BCBCBC"
 
-/datum/species/abductor/handle_post_spawn(var/mob/living/carbon/human/H)
+/datum/species/abductor/handle_post_spawn(mob/living/carbon/human/H)
 	H.gender = NEUTER
 
 	return ..()
@@ -393,9 +460,14 @@
 	deform = 'icons/mob/human_races/r_skeleton.dmi'
 	damage_mask = FALSE
 
-	flags = NO_BREATHE | NO_BLOOD | NO_SCAN | VIRUS_IMMUNE
+	flags = list(
+	 NO_BREATHE = TRUE
+	,NO_BLOOD = TRUE
+	,NO_SCAN = TRUE
+	,VIRUS_IMMUNE = TRUE
+	)
 
-/datum/species/skeleton/handle_post_spawn(var/mob/living/carbon/human/H)
+/datum/species/skeleton/handle_post_spawn(mob/living/carbon/human/H)
 	H.gender = NEUTER
 
 	return ..()

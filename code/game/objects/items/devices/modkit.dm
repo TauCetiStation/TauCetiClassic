@@ -14,35 +14,40 @@
 		/obj/item/clothing/suit/space/rig
 		)
 
-/obj/item/device/modkit/afterattack(obj/O, mob/user as mob)
+	var/list/forbidden_type = list(
+		/obj/item/clothing/head/helmet/space/rig/engineering/chief,
+		/obj/item/clothing/suit/space/rig/engineering/chief
+	)
+
+/obj/item/device/modkit/afterattack(obj/O, mob/user)
 	if(get_dist(src,O)>1)
 		return
 	if (!target_species)
 		return	//it shouldn't be null, okay?
 
 	if(!parts)
-		user << "<span class='warning'>This kit has no parts for this modification left.</span>"
+		to_chat(user, "<span class='warning'>This kit has no parts for this modification left.</span>")
 		user.drop_from_inventory(src)
 		qdel(src)
 		return
 
 	var/allowed = 0
 	for (var/permitted_type in permitted_types)
-		if(istype(O, permitted_type))
+		if(istype(O, permitted_type) && !(O.type in forbidden_type))
 			allowed = 1
 
 	var/obj/item/clothing/I = O
 	if (!istype(I) || !allowed)
-		user << "<span class='notice'>[src] is unable to modify that.</span>"
+		to_chat(user, "<span class='notice'>[src] is unable to modify that.</span>")
 		return
 
 	var/excluding = ("exclude" in I.species_restricted)
 	var/in_list = (target_species in I.species_restricted)
 	if (excluding ^ in_list)
-		user << "<span class='notice'>[I] is already modified.</span>"
+		to_chat(user, "<span class='notice'>[I] is already modified.</span>")
 
 	if(!isturf(O.loc))
-		user << "<span class='warning'>[O] must be safely placed on the ground for modification.</span>"
+		to_chat(user, "<span class='warning'>[O] must be safely placed on the ground for modification.</span>")
 		return
 
 	playsound(user.loc, 'sound/items/Screwdriver.ogg', 100, 1)
@@ -60,9 +65,9 @@
 		user.drop_from_inventory(src)
 		qdel(src)
 
-/obj/item/device/modkit/examine()
+/obj/item/device/modkit/examine(mob/user)
 	..()
-	usr << "It looks as though it modifies hardsuits to fit [target_species] users."
+	to_chat(user, "It looks as though it modifies hardsuits to fit [target_species] users.")
 
 /obj/item/device/modkit/tajaran
 	name = "tajaran hardsuit modification kit"
@@ -218,3 +223,29 @@
 	name = "human hardsuit modification kit"
 	desc = "A kit containing all the needed tools and parts to modify a hardsuit for another user. This one looks like it's meant for Human."
 	target_species = "Human"
+
+/obj/item/device/modkit/syndie_tajaran
+	name = "tajara hardsuit modification kit"
+	desc = "A kit containing all the needed tools and parts to modify a hardsuit for another user. This one looks like it's meant for Tajara."
+	target_species = "Tajaran"
+	permitted_types = list(
+		/obj/item/clothing/head/helmet/space/rig/syndi,
+		/obj/item/clothing/suit/space/rig/syndi
+		)
+
+/obj/item/device/modkit/syndie_skrell
+	name = "skrell hardsuit modification kit"
+	desc = "A kit containing all the needed tools and parts to modify a hardsuit for another user. This one looks like it's meant for Skrell."
+	target_species = "Skrell"
+	permitted_types = list(
+		/obj/item/clothing/head/helmet/space/rig/syndi,
+		/obj/item/clothing/suit/space/rig/syndi
+		)
+/obj/item/device/modkit/syndie_unathi
+	name = "unathi hardsuit modification kit"
+	desc = "A kit containing all the needed tools and parts to modify a hardsuit for another user. This one looks like it's meant for Unathi."
+	target_species = "Unathi"
+	permitted_types = list(
+		/obj/item/clothing/head/helmet/space/rig/syndi,
+		/obj/item/clothing/suit/space/rig/syndi
+		)

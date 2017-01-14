@@ -7,7 +7,7 @@
 	desc = "Extracts information on wounds."
 	icon = 'icons/obj/autopsy_scanner.dmi'
 	icon_state = ""
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = CONDUCT
 	w_class = 2.0
 	origin_tech = "materials=1;biotech=1"
 	var/list/datum/autopsy_data_scanner/wdata = list()
@@ -37,7 +37,7 @@
 	W.time_inflicted = time_inflicted
 	return W
 
-/obj/item/weapon/autopsy_scanner/proc/add_data(var/datum/organ/external/O)
+/obj/item/weapon/autopsy_scanner/proc/add_data(datum/organ/external/O)
 	if(!O.autopsy_data.len && !O.trace_chemicals.len) return
 
 	for(var/V in O.autopsy_data)
@@ -80,7 +80,7 @@
 	set src in view(usr, 1)
 	set name = "Print Data"
 	if(usr.stat || !(istype(usr,/mob/living/carbon/human)))
-		usr << "No."
+		to_chat(usr, "No.")
 		return
 
 	var/scan_data = ""
@@ -174,7 +174,7 @@
 		usr:update_inv_l_hand()
 		usr:update_inv_r_hand()
 
-/obj/item/weapon/autopsy_scanner/attack(mob/living/carbon/human/M as mob, mob/living/carbon/user as mob)
+/obj/item/weapon/autopsy_scanner/attack(mob/living/carbon/human/M, mob/living/carbon/user)
 	if(!istype(M))
 		return
 
@@ -186,16 +186,16 @@
 		src.wdata = list()
 		src.chemtraces = list()
 		src.timeofdeath = null
-		user << "\red A new patient has been registered.. Purging data for previous patient."
+		to_chat(user, "\red A new patient has been registered.. Purging data for previous patient.")
 
 	src.timeofdeath = M.timeofdeath
 
 	var/datum/organ/external/S = M.get_organ(user.zone_sel.selecting)
 	if(!S)
-		usr << "<b>You can't scan this body part.</b>"
+		to_chat(usr, "<b>You can't scan this body part.</b>")
 		return
 	if(!S.open)
-		usr << "<b>You have to cut the limb open first!</b>"
+		to_chat(usr, "<b>You have to cut the limb open first!</b>")
 		return
 	for(var/mob/O in viewers(M))
 		O.show_message("\red [user.name] scans the wounds on [M.name]'s [S.display_name] with \the [src.name]", 1)

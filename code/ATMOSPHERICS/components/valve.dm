@@ -72,7 +72,7 @@
 	node1 = null
 	node2 = null
 
-	..()
+	return ..()
 
 /obj/machinery/atmospherics/valve/proc/open()
 
@@ -115,13 +115,13 @@
 	else if(dir==12)
 		dir = 4
 
-/obj/machinery/atmospherics/valve/attack_ai(mob/user as mob)
+/obj/machinery/atmospherics/valve/attack_ai(mob/user)
 	return
 
-/obj/machinery/atmospherics/valve/attack_paw(mob/user as mob)
+/obj/machinery/atmospherics/valve/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/machinery/atmospherics/valve/attack_hand(mob/user as mob)
+/obj/machinery/atmospherics/valve/attack_hand(mob/user)
 	src.add_fingerprint(usr)
 	update_icon(1)
 	sleep(10)
@@ -130,24 +130,24 @@
 	else
 		src.open()
 
-/obj/machinery/atmospherics/valve/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+/obj/machinery/atmospherics/valve/attackby(obj/item/weapon/W, mob/user)
 	if (!istype(W, /obj/item/weapon/wrench))
 		return ..()
 	if (istype(src, /obj/machinery/atmospherics/valve/digital))
-		user << "<span class='warning'>You cannot unwrench this [src], it's too complicated.</span>"
+		to_chat(user, "<span class='warning'>You cannot unwrench this [src], it's too complicated.</span>")
 		return 1
 	var/turf/T = src.loc
 	if (level==1 && isturf(T) && T.intact)
-		user << "<span class='warning'>You must remove the plating first.</span>"
+		to_chat(user, "<span class='warning'>You must remove the plating first.</span>")
 		return 1
 	var/datum/gas_mixture/int_air = return_air()
 	var/datum/gas_mixture/env_air = loc.return_air()
 	if ((int_air.return_pressure()-env_air.return_pressure()) > 2*ONE_ATMOSPHERE)
-		user << "<span class='warning'>You cannot unwrench this [src], it too exerted due to internal pressure.</span>"
+		to_chat(user, "<span class='warning'>You cannot unwrench this [src], it too exerted due to internal pressure.</span>")
 		add_fingerprint(user)
 		return 1
 	playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-	user << "<span class='notice'>You begin to unfasten \the [src]...</span>"
+	to_chat(user, "<span class='notice'>You begin to unfasten \the [src]...</span>")
 	if (do_after(user, 40, target = src))
 		user.visible_message( \
 			"[user] unfastens \the [src].", \
@@ -245,12 +245,12 @@
 	var/id = null
 	var/datum/radio_frequency/radio_connection
 
-/obj/machinery/atmospherics/valve/digital/attack_ai(mob/user as mob)
+/obj/machinery/atmospherics/valve/digital/attack_ai(mob/user)
 	return src.attack_hand(user)
 
-/obj/machinery/atmospherics/valve/digital/attack_hand(mob/user as mob)
+/obj/machinery/atmospherics/valve/digital/attack_hand(mob/user)
 	if(!src.allowed(user))
-		user << "<span class='warning'>Access denied.</span>"
+		to_chat(user, "<span class='warning'>Access denied.</span>")
 		return
 	..()
 

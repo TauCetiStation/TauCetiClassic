@@ -149,12 +149,12 @@
 	switch(icon_state)
 		if("ia_jacket_open")
 			src.icon_state = "ia_jacket"
-			usr << "You button up the jacket."
+			to_chat(usr, "You button up the jacket.")
 		if("ia_jacket")
 			src.icon_state = "ia_jacket_open"
-			usr << "You unbutton the jacket."
+			to_chat(usr, "You unbutton the jacket.")
 		else
-			usr << "You attempt to button-up the velcro on your [src], before promptly realising how retarded you are."
+			to_chat(usr, "You attempt to button-up the velcro on your [src], before promptly realising how retarded you are.")
 			return
 	usr.update_inv_wear_suit()	//so our overlays update
 
@@ -180,10 +180,10 @@
 	switch(icon_state)
 		if("fr_jacket_open")
 			src.icon_state = "fr_jacket"
-			usr << "You button up the jacket."
+			to_chat(usr, "You button up the jacket.")
 		if("fr_jacket")
 			src.icon_state = "fr_jacket_open"
-			usr << "You unbutton the jacket."
+			to_chat(usr, "You unbutton the jacket.")
 	usr.update_inv_wear_suit()	//so our overlays update
 
 //Mime
@@ -194,3 +194,30 @@
 	icon_state = "suspenders"
 	blood_overlay_type = "armor" //it's the less thing that I can put here
 	body_parts_covered = 0
+
+//Recycler
+/obj/item/clothing/suit/recyclervest
+    name = "Recycler vest"
+    desc = "This is Recycler vest."
+    icon = 'icons/obj/clothing/suits.dmi'
+    icon_state = "recycler_vest_open"
+    item_state = "recycler_vest"
+    blood_overlay_type = "coat" //it's the less thing that I can put here
+    body_parts_covered = 0
+    action_button_name = "Toggle vest buttons"
+
+/obj/item/clothing/suit/recyclervest/ui_action_click()
+    toggle()
+
+/obj/item/clothing/suit/recyclervest/proc/toggle()
+    switch(icon_state)
+        if("recycler_vest_open")
+            src.icon_state = "recycler_vest"
+            to_chat(usr, "You button up the vest.")
+        if("recycler_vest")
+            src.icon_state = "recycler_vest_open"
+            to_chat(usr, "You unbutton the jacket.")
+        else
+            to_chat(usr, "You attempt to button-up the velcro on your [src], before promptly realising how retarded you are.")
+            return
+    usr.update_inv_wear_suit()    //so our overlays update

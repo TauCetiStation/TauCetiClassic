@@ -24,13 +24,13 @@ Bonus
 	transmittable = -1
 	level = 5
 
-/datum/symptom/hallucigen/Activate(var/datum/disease/advance/A)
+/datum/symptom/hallucigen/Activate(datum/disease/advance/A)
 	..()
 	if(prob(SYMPTOM_ACTIVATION_PROB))
 		var/mob/living/carbon/M = A.affected_mob
 		switch(A.stage)
 			if(1, 2, 3, 4)
-				M << "<span class='notice'>[pick("You notice someone in the corner of your eye.", "Is that footsteps?.")]</span>"
+				to_chat(M, "<span class='notice'>[pick("You notice someone in the corner of your eye.", "Is that footsteps?.")]</span>")
 			else
 				M.hallucination += 5
 

@@ -118,7 +118,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 			req_console_information -= department
 	return ..()
 
-/obj/machinery/requests_console/attack_hand(user as mob)
+/obj/machinery/requests_console/attack_hand(user)
 	if(..(user))
 		return
 	var/dat
@@ -222,9 +222,9 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 	return
 
 /obj/machinery/requests_console/Topic(href, href_list)
-	if(..())	return
-	usr.set_machine(src)
-	add_fingerprint(usr)
+	. = ..()
+	if(!.)
+		return
 
 	if(reject_bad_text(href_list["write"]))
 		dpt = ckey(href_list["write"]) //write contains the string of the receiving department's name
@@ -234,8 +234,10 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 			message = new_message
 			screen = 9
 			switch(href_list["priority"])
-				if("2")	priority = 2
-				else	priority = -1
+				if("2")
+					priority = 2
+				else
+					priority = -1
 		else
 			dpt = "";
 			msgVerified = ""
@@ -248,18 +250,21 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 		if(new_message)
 			message = new_message
 			switch(href_list["priority"])
-				if("2")	priority = 2
-				else	priority = -1
+				if("2")
+					priority = 2
+				else
+					priority = -1
 		else
 			message = ""
 			announceAuth = 0
 			screen = 0
 
 	if(href_list["sendAnnouncement"])
-		if(!announcementConsole)	return
+		if(!announcementConsole)
+			return FALSE
 		for(var/mob/M in player_list)
-			if(!istype(M,/mob/new_player))
-				M << "<b><font size = 3><font color = red>[department] announcement:</font color> [message]</font size></b>"
+			if(!istype(M, /mob/new_player))
+				to_chat(M, "<b><font size = 3><font color = red>[department] announcement:</font color> [message]</font size></b>")
 		announceAuth = 0
 		message = ""
 		screen = 0
@@ -277,8 +282,9 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 		screen = 7 //if it's successful, this will get overrwritten (7 = unsufccessfull, 6 = successfull)
 		if (sending)
 			var/pass = 0
-			for (var/obj/machinery/message_server/MS in world)
-				if(!MS.active) continue
+			for (var/obj/machinery/message_server/MS in machines)
+				if(!MS.active)
+					continue
 				MS.send_rc_message(href_list["department"],department,log_msg,msgStamped,msgVerified,priority)
 				pass = 1
 
@@ -295,7 +301,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 								if(!Console.silent)
 									playsound(Console.loc, 'sound/machines/twobeep.ogg', 50, 1)
 									for (var/mob/O in hearers(5, Console.loc))
-										O.show_message(text("\icon[Console] *The Requests Console beeps: 'PRIORITY Alert in [department]'"))
+										O.show_message(text("[bicon(Console)] *The Requests Console beeps: 'PRIORITY Alert in [department]'"))
 								Console.messages += "<B><FONT color='red'>High Priority message from <A href='?src=\ref[Console];write=[ckey(department)]'>[department]</A></FONT></B><BR>[sending]"
 
 		//					if("3")		//Not implemanted, but will be 		//Removed as it doesn't look like anybody intends on implimenting it ~Carn
@@ -305,7 +311,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 		//						if(!Console.silent)
 		//							playsound(Console.loc, 'sound/machines/twobeep.ogg', 50, 1)
 		//							for (var/mob/O in hearers(7, Console.loc))
-		//								O.show_message(text("\icon[Console] *The Requests Console yells: 'EXTREME PRIORITY alert in [department]'"))
+		//								O.show_message(text("[bicon(Console)] *The Requests Console yells: 'EXTREME PRIORITY alert in [department]'"))
 		//						Console.messages += "<B><FONT color='red'>Extreme Priority message from [ckey(department)]</FONT></B><BR>[message]"
 
 							else		// Normal priority
@@ -315,7 +321,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 								if(!Console.silent)
 									playsound(Console.loc, 'sound/machines/twobeep.ogg', 50, 1)
 									for (var/mob/O in hearers(4, Console.loc))
-										O.show_message(text("\icon[Console] *The Requests Console beeps: 'Message from [department]'"))
+										O.show_message(text("[bicon(Console)] *The Requests Console beeps: 'Message from [department]'"))
 								Console.messages += "<B>Message from <A href='?src=\ref[Console];write=[ckey(department)]'>[department]</A></FONT></B><BR>[message]"
 
 						screen = 6
@@ -323,7 +329,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 				messages += "<B>Message sent to [dpt]</B><BR>[message]"
 			else
 				for (var/mob/O in hearers(4, src.loc))
-					O.show_message(text("\icon[src] *The Requests Console beeps: 'NOTICE: No server detected!'"))
+					O.show_message(text("[bicon(src)] *The Requests Console beeps: 'NOTICE: No server detected!'"))
 
 
 	//Handle screen switching
@@ -348,7 +354,8 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 		if(9)		//authentication
 			screen = 9
 		if(10)		//send announcement
-			if(!announcementConsole)	return
+			if(!announcementConsole)
+				return FALSE
 			screen = 10
 		else		//main menu
 			dpt = ""
@@ -361,14 +368,15 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 	//Handle silencing the console
 	switch( href_list["setSilent"] )
 		if(null)	//skip
-		if("1")	silent = 1
-		else	silent = 0
+		if("1")
+			silent = 1
+		else
+			silent = 0
 
 	updateUsrDialog()
-	return
 
 					//err... hacking code, which has no reason for existing... but anyway... it's supposed to unlock priority 3 messanging on that console (EXTREME priority...) the code for that actually exists.
-/obj/machinery/requests_console/attackby(var/obj/item/weapon/O as obj, var/mob/user as mob)
+/obj/machinery/requests_console/attackby(obj/item/weapon/O, mob/user)
 	/*
 	if (istype(O, /obj/item/weapon/crowbar))
 		if(open)
@@ -389,7 +397,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 				hackState = 0
 				icon_state="req_comp_open"
 		else
-			user << "You can't do much with that."*/
+			to_chat(user, "You can't do much with that.")*/
 
 	if (istype(O, /obj/item/weapon/card/id))
 		if(screen == 9)
@@ -402,7 +410,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 				announceAuth = 1
 			else
 				announceAuth = 0
-				user << "\red You are not authorized to send announcements."
+				to_chat(user, "\red You are not authorized to send announcements.")
 			updateUsrDialog()
 	if (istype(O, /obj/item/weapon/stamp))
 		if(screen == 9)

@@ -67,33 +67,33 @@
 	src.opened = 0
 	return 1
 
-/obj/structure/closet/crate/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/structure/closet/crate/attackby(obj/item/weapon/W, mob/user)
 	if(opened)
 		if(isrobot(user))
 			return
 		user.drop_item()
 		if(W)
 			W.forceMove(src.loc)
-	else if(istype(W, /obj/item/weapon/packageWrap))
+	else if(istype(W, /obj/item/weapon/packageWrap) || istype(W, /obj/item/weapon/extraction_pack))	//OOP? Doesn't heard.
 		return
 	else if(istype(W, /obj/item/weapon/cable_coil))
 		if(rigged)
-			user << "<span class='notice'>[src] is already rigged!</span>"
+			to_chat(user, "<span class='notice'>[src] is already rigged!</span>")
 			return
-		user  << "<span class='notice'>You rig [src].</span>"
+		to_chat(user, "<span class='notice'>You rig [src].</span>")
 		user.drop_item()
 		qdel(W)
 		rigged = 1
 		return
 	else if(istype(W, /obj/item/device/radio/electropack))
 		if(rigged)
-			user  << "<span class='notice'>You attach [W] to [src].</span>"
+			to_chat(user, "<span class='notice'>You attach [W] to [src].</span>")
 			user.drop_item()
 			W.forceMove(src)
 			return
 	else if(istype(W, /obj/item/weapon/wirecutters))
 		if(rigged)
-			user  << "<span class='notice'>You cut away the wiring.</span>"
+			to_chat(user, "<span class='notice'>You cut away the wiring.</span>")
 			playsound(loc, 'sound/items/Wirecutter.ogg', 100, 1)
 			rigged = 0
 			return
@@ -144,22 +144,22 @@
 /obj/structure/closet/crate/secure/can_open()
 	return !locked
 
-/obj/structure/closet/crate/secure/proc/togglelock(mob/user as mob)
+/obj/structure/closet/crate/secure/proc/togglelock(mob/user)
 	if(src.opened)
-		user << "<span class='notice'>Close the crate first.</span>"
+		to_chat(user, "<span class='notice'>Close the crate first.</span>")
 		return
 	if(src.broken)
-		user << "<span class='warning'>The crate appears to be broken.</span>"
+		to_chat(user, "<span class='warning'>The crate appears to be broken.</span>")
 		return
 	if(src.allowed(user))
 		src.locked = !src.locked
 		for(var/mob/O in viewers(user, 3))
 			if((O.client && !( O.blinded )))
-				O << "<span class='notice'>The crate has been [locked ? null : "un"]locked by [user].</span>"
+				to_chat(O, "<span class='notice'>The crate has been [locked ? null : "un"]locked by [user].</span>")
 		overlays.Cut()
 		overlays += locked ? redlight : greenlight
 	else
-		user << "<span class='notice'>Access Denied</span>"
+		to_chat(user, "<span class='notice'>Access Denied</span>")
 
 /obj/structure/closet/crate/secure/verb/verb_togglelock()
 	set src in oview(1) // One square distance
@@ -173,16 +173,16 @@
 		src.add_fingerprint(usr)
 		src.togglelock(usr)
 	else
-		usr << "<span class='warning'>This mob type can't use this verb.</span>"
+		to_chat(usr, "<span class='warning'>This mob type can't use this verb.</span>")
 
-/obj/structure/closet/crate/secure/attack_hand(mob/user as mob)
+/obj/structure/closet/crate/secure/attack_hand(mob/user)
 	src.add_fingerprint(user)
 	if(locked)
 		src.togglelock(user)
 	else
 		src.toggle(user)
 
-/obj/structure/closet/crate/secure/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/structure/closet/crate/secure/attackby(obj/item/weapon/W, mob/user)
 	if(is_type_in_list(W, list(/obj/item/weapon/packageWrap, /obj/item/weapon/cable_coil, /obj/item/device/radio/electropack, /obj/item/weapon/wirecutters)))
 		return ..()
 	if(locked && (istype(W, /obj/item/weapon/card/emag)||istype(W, /obj/item/weapon/melee/energy/blade)))
@@ -193,7 +193,7 @@
 		playsound(src.loc, "sparks", 60, 1)
 		src.locked = 0
 		src.broken = 1
-		user << "<span class='notice'>You unlock \the [src].</span>"
+		to_chat(user, "<span class='notice'>You unlock \the [src].</span>")
 		return
 	if(!opened)
 		src.togglelock(user)
@@ -259,6 +259,20 @@
 	icon_opened = "crateopen"
 	icon_closed = "crate"
 */
+
+/obj/structure/closet/crate/engi
+	desc = "A engineer crate."
+	name = "Engineer crate"
+	icon_state = "engicrate"
+	icon_opened = "engicrateopen"
+	icon_closed = "engicrate"
+
+/obj/structure/closet/crate/secure/engisec
+	desc = "A crate with a lock on it."
+	name = "Secured engineer crate"
+	icon_state = "engicrateopensec"
+	icon_opened = "engiseccrateopensec"
+	icon_closed = "engicrateopensec"
 
 /obj/structure/closet/crate/medical
 	desc = "A medical crate."
@@ -380,12 +394,19 @@
 	icon_opened = "weaponcrateopen"
 	icon_closed = "weaponcrate"
 
-/obj/structure/closet/crate/secure/phoron
-	desc = "A secure phoron crate."
-	name = "Phoron crate"
-	icon_state = "phoroncrate"
-	icon_opened = "phoroncrateopen"
-	icon_closed = "phoroncrate"
+/obj/structure/closet/crate/scicrate
+	desc = "A science crate."
+	name = "Science crate"
+	icon_state = "scicrate"
+	icon_opened = "scicrateopen"
+	icon_closed = "scicrate"
+
+/obj/structure/closet/crate/secure/scisecurecrate
+	desc = "A secure science crate."
+	name = "Science crate"
+	icon_state = "scisecurecrate"
+	icon_opened = "scisecurecrateopen"
+	icon_closed = "scisecurecrate"
 
 /obj/structure/closet/crate/secure/gear
 	desc = "A secure gear crate."
@@ -401,6 +422,13 @@
 	icon_opened = "hydrosecurecrateopen"
 	icon_closed = "hydrosecurecrate"
 
+/obj/structure/closet/crate/secure/woodseccrate
+	desc = "A secure wooden crate."
+	name = "Secure wooden crate"
+	icon_state = "woodseccrate"
+	icon_opened = "woodseccrateopen"
+	icon_closed = "woodseccrate"
+
 /obj/structure/closet/crate/secure/bin
 	desc = "A secure bin."
 	name = "Secure bin"
@@ -411,6 +439,7 @@
 	greenlight = "largebing"
 	sparks = "largebinsparks"
 	emag = "largebinemag"
+
 
 /obj/structure/closet/crate/large
 	name = "large crate"

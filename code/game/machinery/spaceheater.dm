@@ -21,8 +21,6 @@
 	var/settableTemperatureMedian = 30 + T0C
 	var/settableTemperatureRange = 30
 
-	flags = FPRINT
-
 
 /obj/machinery/space_heater/New()
 	..()
@@ -58,18 +56,13 @@
 	if(panel_open)
 		overlays += "sheater-open"
 
-/obj/machinery/space_heater/examine()
-	set src in oview(12)
-	if (!( usr ))
-		return
-	usr << "This is \icon[src] \an [src.name]."
-	usr << src.desc
-
-	usr << "\The [src] is [on ? "on" : "off"], and the hatch is [panel_open ? "open" : "closed"]."
+/obj/machinery/space_heater/examine(mob/user)
+	..()
+	to_chat(user, "\The [src] is [on ? "on" : "off"], and the hatch is [panel_open ? "open" : "closed"].")
 	if(cell)
-		usr << "The charge meter reads [cell ? round(cell.percent(), 1) : 0]%."
+		to_chat(user, "The charge meter reads [cell ? round(cell.percent(), 1) : 0]%.")
 	else
-		usr << "There is no power cell installed."
+		to_chat(user, "There is no power cell installed.")
 
 /obj/machinery/space_heater/RefreshParts()
 	var/laser = 0
@@ -101,7 +94,7 @@
 	if(istype(I, /obj/item/weapon/stock_parts/cell))
 		if(panel_open)
 			if(cell)
-				user << "There is already a power cell inside."
+				to_chat(user, "There is already a power cell inside.")
 				return
 			else
 				// insert cell
@@ -113,7 +106,7 @@
 					C.add_fingerprint(usr)
 					user.visible_message("\The [user] inserts a power cell into \the [src].", "<span class='notice'>You insert the power cell into \the [src].</span>")
 		else
-			user << "The hatch must be open to insert a power cell."
+			to_chat(user, "The hatch must be open to insert a power cell.")
 			return
 	else if(istype(I, /obj/item/weapon/screwdriver))
 		panel_open = !panel_open
@@ -126,13 +119,13 @@
 	else
 		..()
 
-/obj/machinery/space_heater/attack_hand(mob/user as mob)
+/obj/machinery/space_heater/attack_hand(mob/user)
 	interact(user)
 
 /obj/machinery/space_heater/attack_paw(mob/user)
 	interact(user)
 
-/obj/machinery/space_heater/interact(mob/user as mob)
+/obj/machinery/space_heater/interact(mob/user)
 	ui_interact(user)
 
 /obj/machinery/space_heater/ui_interact(mob/user, ui_key = "main")
@@ -177,11 +170,13 @@
 		ui.push_data(data)
 		return
 
-/obj/machinery/space_heater/Topic(href, href_list)
-	if((stat & BROKEN) || ..())
-		return
+/obj/machinery/space_heater/is_operational_topic()
+	return !(stat & BROKEN)
 
-	add_fingerprint(usr)
+/obj/machinery/space_heater/Topic(href, href_list)
+	. = ..()
+	if(!.)
+		return
 
 	if(href_list["power"])
 		on = !!text2num(href_list["power"])
@@ -209,7 +204,7 @@
 	else if(href_list["cellremove"] && panel_open)
 		if(cell)
 			if(usr.get_active_hand())
-				usr << "<span class='warning'>You need an empty hand to remove \the [cell]!</span>"
+				to_chat(usr, "<span class='warning'>You need an empty hand to remove \the [cell]!</span>")
 				return
 			cell.updateicon()
 			usr.put_in_hands(cell)
@@ -276,7 +271,7 @@
 			cell.use(requiredPower / efficiency)
 
 		env.merge(removed)
-		
+
 	else
 		on = FALSE
 		update_icon()

@@ -11,14 +11,14 @@
 	req_admin_notify = 1
 	access = list(access_medical, access_morgue, access_genetics, access_heads,
 			access_chemistry, access_virology, access_cmo, access_surgery, access_RC_announce,
-			access_keycard_auth, access_sec_doors, access_psychiatrist)
+			access_keycard_auth, access_sec_doors, access_psychiatrist, access_maint_tunnels)
 	minimal_access = list(access_medical, access_morgue, access_genetics, access_heads,
 			access_chemistry, access_virology, access_cmo, access_surgery, access_RC_announce,
-			access_keycard_auth, access_sec_doors, access_psychiatrist)
+			access_keycard_auth, access_sec_doors, access_psychiatrist, access_maint_tunnels)
 	minimal_player_age = 10
 	minimal_player_ingame_minutes = 2400
 
-/datum/job/cmo/equip(var/mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/job/cmo/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
 	switch(H.backbag)
 		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/medic(H), slot_back)
@@ -57,7 +57,7 @@
 	alt_titles = list("Surgeon","Emergency Physician","Nurse")
 	minimal_player_ingame_minutes = 960
 
-/datum/job/doctor/equip(var/mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/job/doctor/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
 	switch(H.backbag)
 		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/medic(H), slot_back)
@@ -73,29 +73,24 @@
 		return
 
 	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_med(H), slot_l_ear)
-	H.equip_to_slot_or_del(new /obj/item/device/pda/medical(H), slot_belt)
 	if (H.mind.role_alt_title)
 		switch(H.mind.role_alt_title)
 			if("Emergency Physician")
 				H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/medical(H), slot_w_uniform)
 				H.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/fr_jacket(H), slot_wear_suit)
+				minimal_access = list(access_medical, access_morgue, access_maint_tunnels)
+
 			if("Surgeon")
 				H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/medical/blue(H), slot_w_uniform)
 				H.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/labcoat(H), slot_wear_suit)
 				H.equip_to_slot_or_del(new /obj/item/clothing/head/surgery/blue(H), slot_head)
-			if("Virologist")
-				H.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/labcoat/virologist(H), slot_wear_suit)
-				H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/virologist(H), slot_w_uniform)
-				H.equip_to_slot_or_del(new /obj/item/clothing/mask/surgical(H), slot_wear_mask)
-				switch(H.backbag)
-					if(1) H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H), slot_r_hand)
-					if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(H), slot_back)
-					if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel_tox(H), slot_back)
-					if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), slot_back)
-				H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
+				minimal_access = list(access_medical, access_morgue, access_surgery)
+
 			if("Medical Doctor")
 				H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/medical(H), slot_w_uniform)
 				H.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/labcoat(H), slot_wear_suit)
+				minimal_access = list(access_medical, access_morgue, access_surgery)
+
 			if("Nurse")
 				if(H.gender == FEMALE)
 					if(prob(50))
@@ -105,9 +100,13 @@
 					H.equip_to_slot_or_del(new /obj/item/clothing/head/nursehat(H), slot_head)
 				else
 					H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/medical/purple(H), slot_w_uniform)
+				minimal_access = list(access_medical, access_morgue, access_surgery)
+
 	else
 		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/medical(H), slot_w_uniform)
 		H.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/labcoat(H), slot_wear_suit)
+
+	H.equip_to_slot_or_del(new /obj/item/device/pda/medical(H), slot_belt)
 	if(H.backbag == 1)
 		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H), slot_r_hand)
 	else
@@ -131,7 +130,7 @@
 	alt_titles = list("Pharmacist")
 	minimal_player_ingame_minutes = 960
 
-/datum/job/chemist/equip(var/mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/job/chemist/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/chemist(H), slot_w_uniform)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/white(H), slot_shoes)
@@ -165,7 +164,7 @@
 	minimal_access = list(access_medical, access_morgue, access_genetics, access_research)
 	minimal_player_ingame_minutes = 960
 
-/datum/job/geneticist/equip(var/mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/job/geneticist/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/geneticist(H), slot_w_uniform)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/white(H), slot_shoes)
@@ -201,7 +200,7 @@
 	alt_titles = list("Pathologist","Microbiologist")
 	minimal_player_ingame_minutes = 960
 
-/datum/job/virologist/equip(var/mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/job/virologist/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/virologist(H), slot_w_uniform)
 	H.equip_to_slot_or_del(new /obj/item/clothing/mask/surgical(H), slot_wear_mask)
@@ -240,7 +239,7 @@
 	alt_titles = list("Psychologist")
 	minimal_player_ingame_minutes = 960
 
-/datum/job/psychiatrist/equip(var/mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/job/psychiatrist/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
 	switch(H.backbag)
 		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(H), slot_back)
@@ -254,7 +253,6 @@
 		return
 
 	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_med(H), slot_l_ear)
-	H.equip_to_slot_or_del(new /obj/item/device/pda/medical(H), slot_belt)
 	if (H.mind.role_alt_title)
 		switch(H.mind.role_alt_title)
 			if("Psychiatrist")
@@ -263,6 +261,7 @@
 				H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/psych/turtleneck(H), slot_w_uniform)
 	else
 		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/medical(H), slot_w_uniform)
+	H.equip_to_slot_or_del(new /obj/item/device/pda/medical(H), slot_belt)
 	if(H.backbag == 1)
 		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H), slot_r_hand)
 	else

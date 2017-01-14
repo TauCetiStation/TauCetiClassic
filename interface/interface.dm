@@ -8,7 +8,7 @@
 			return
 		src << link(config.wikiurl)
 	else
-		src << "\red The wiki URL is not set in the server configuration."
+		to_chat(src, "<span class='danger'>The wiki URL is not set in the server configuration.</span>")
 	return
 
 /client/verb/forum()
@@ -20,7 +20,7 @@
 			return
 		src << link(config.forumurl)
 	else
-		src << "\red The forum URL is not set in the server configuration."
+		to_chat(src, "<span class='danger'>The forum URL is not set in the server configuration.</span>")
 	return
 
 /client/verb/rules()
@@ -85,10 +85,10 @@ Admin:
 \tF6 = player-panel-new
 \tF7 = admin-pm
 \tF8 = Invisimin
-\tF9 = Msay
+\tF9 = Mentorhelp
 </font>"}
 
-	src << hotkey_mode
-	src << other
+	to_chat(src, hotkey_mode)
+	to_chat(src, other)
 	if(holder)
-		src << admin
+		to_chat(src, admin)

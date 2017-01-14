@@ -52,7 +52,7 @@ return_location()
 	var/offset_x = 0	// distance to increment each step
 	var/offset_y = 0
 
-/datum/plot_vector/proc/setup(var/turf/S, var/turf/T, var/xo = 0, var/yo = 0, var/angle_offset=0)
+/datum/plot_vector/proc/setup(turf/S, turf/T, xo = 0, yo = 0, angle_offset=0)
 	source = S
 	target = T
 	
@@ -115,7 +115,7 @@ return_location()
 /datum/plot_vector/proc/return_hypotenuse()
 	return sqrt(((offset_x / 32) ** 2) + ((offset_y / 32) ** 2))
 
-/datum/plot_vector/proc/return_location(var/datum/vector_loc/data)
+/datum/plot_vector/proc/return_location(datum/vector_loc/data)
 	if(!data)
 		data = new()
 	data.loc = locate(round(loc_x / world.icon_size, 1), round(loc_y / world.icon_size, 1), loc_z)

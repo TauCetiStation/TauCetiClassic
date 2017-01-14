@@ -5,7 +5,6 @@ var/list/GPS_list = list()
 	icon = 'icons/obj/telescience.dmi'
 	icon_state = "gps-c"
 	w_class = 2.0
-	flags = FPRINT | TABLEPASS
 	slot_flags = SLOT_BELT
 	origin_tech = "programming=2;engineering=2"
 	var/gpstag = "COM0"
@@ -17,9 +16,11 @@ var/list/GPS_list = list()
 	GPS_list.Add(src)
 	name = "global positioning system ([gpstag])"
 	overlays += "working"
+
 /obj/item/device/gps/Destroy()
 	GPS_list.Remove(src)
-	..()
+	return ..()
+
 /obj/item/device/gps/emp_act(severity)
 	emped = 1
 	overlays -= "working"
@@ -29,7 +30,7 @@ var/list/GPS_list = list()
 		overlays -= "emp"
 		overlays += "working"
 
-/obj/item/device/gps/attack_self(mob/user as mob)
+/obj/item/device/gps/attack_self(mob/user)
 
 	var/obj/item/device/gps/t = ""
 	if(emped)

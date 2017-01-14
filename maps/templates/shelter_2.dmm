@@ -1,0 +1,22 @@
+"a" = (/obj/structure/inflatable/survival,/turf/simulated/floor/pod,/area/template_noop)
+"b" = (/obj/structure/sign/mining/survival{tag = "icon-survival (NORTH)"; icon_state = "survival"; dir = 1},/obj/structure/inflatable/survival,/turf/simulated/floor/pod,/area/template_noop)
+"c" = (/obj/structure/fans,/turf/simulated/floor/pod,/area/template_noop)
+"d" = (/obj/machinery/smartfridge/survival_pod,/turf/simulated/floor/pod,/area/template_noop)
+"e" = (/obj/item/device/gps/computer,/turf/simulated/floor/pod,/area/template_noop)
+"f" = (/obj/structure/sign/mining/survival{dir = 8},/obj/structure/inflatable/survival,/turf/simulated/floor/pod,/area/template_noop)
+"g" = (/obj/structure/stool/bed/pod,/obj/item/weapon/bedsheet,/turf/simulated/floor/pod,/area/template_noop)
+"h" = (/turf/simulated/floor/pod,/area/template_noop)
+"i" = (/obj/structure/sign/mining/survival{tag = "icon-survival (EAST)"; icon_state = "survival"; dir = 4},/obj/structure/inflatable/survival,/turf/simulated/floor/pod,/area/template_noop)
+"j" = (/obj/structure/table,/obj/item/weapon/wrench,/obj/item/weapon/storage/firstaid/small_firstaid_kit/civilian,/turf/simulated/floor/pod,/area/template_noop)
+"k" = (/obj/structure/stool/bed/chair/comfy/beige{dir = 8},/turf/simulated/floor/pod,/area/template_noop)
+"l" = (/obj/structure/sign/mining/survival,/obj/structure/inflatable/survival,/turf/simulated/floor/pod,/area/template_noop)
+"m" = (/obj/structure/fans/tiny,/obj/structure/inflatable/door/survival_pod,/turf/simulated/floor/pod,/area/template_noop)
+"n" = (/obj/structure/sign/mining,/obj/structure/inflatable/survival,/turf/simulated/floor/pod,/area/template_noop)
+
+(1,1,1) = {"
+aabaa
+acdea
+fghgi
+ajhka
+almna
+"}

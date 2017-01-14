@@ -20,24 +20,20 @@
 	name = "donut box"
 	var/icon_type = "donut"
 
-/obj/item/weapon/storage/fancy/update_icon(var/itemremoved = 0)
+/obj/item/weapon/storage/fancy/update_icon(itemremoved = 0)
 	var/total_contents = src.contents.len - itemremoved
 	src.icon_state = "[src.icon_type]box[total_contents]"
 	return
 
-/obj/item/weapon/storage/fancy/examine()
-	set src in oview(1)
-
+/obj/item/weapon/storage/fancy/examine(mob/user)
 	..()
-	if(contents.len <= 0)
-		usr << "There are no [src.icon_type]s left in the box."
-	else if(contents.len == 1)
-		usr << "There is one [src.icon_type] left in the box."
-	else
-		usr << "There are [src.contents.len] [src.icon_type]s in the box."
-
-	return
-
+	if(src in view(1, user))
+		if(contents.len <= 0)
+			to_chat(user, "There are no [src.icon_type]s left in the box.")
+		else if(contents.len == 1)
+			to_chat(user, "There is one [src.icon_type] left in the box.")
+		else
+			to_chat(user, "There are [src.contents.len] [src.icon_type]s in the box.")
 
 
 /*
@@ -69,6 +65,7 @@
 	icon_type = "egg"
 	name = "egg box"
 	storage_slots = 12
+	max_combined_w_class = 24
 	can_hold = list("/obj/item/weapon/reagent_containers/food/snacks/egg")
 
 /obj/item/weapon/storage/fancy/egg_box/New()
@@ -90,7 +87,6 @@
 	item_state = "candlebox5"
 	storage_slots = 5
 	throwforce = 2
-	flags = TABLEPASS
 	slot_flags = SLOT_BELT
 
 
@@ -132,14 +128,14 @@
 	for(var/obj/item/toy/crayon/crayon in contents)
 		overlays += image('icons/obj/crayons.dmi',crayon.colourName)
 
-/obj/item/weapon/storage/fancy/crayons/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/weapon/storage/fancy/crayons/attackby(obj/item/W, mob/user)
 	if(istype(W,/obj/item/toy/crayon))
 		switch(W:colourName)
 			if("mime")
-				usr << "This crayon is too sad to be contained in this box."
+				to_chat(usr, "This crayon is too sad to be contained in this box.")
 				return
 			if("rainbow")
-				usr << "This crayon is too powerful to be contained in this box."
+				to_chat(usr, "This crayon is too powerful to be contained in this box.")
 				return
 	..()
 
@@ -185,7 +181,6 @@
 	item_state = "cigpacket"
 	w_class = 1
 	throwforce = 2
-	flags = TABLEPASS
 	slot_flags = SLOT_BELT
 	storage_slots = 6
 	can_hold = list("/obj/item/clothing/mask/cigarette","/obj/item/weapon/lighter")
@@ -202,13 +197,13 @@
 	icon_state = "[initial(icon_state)][contents.len]"
 	return
 
-/obj/item/weapon/storage/fancy/cigarettes/remove_from_storage(obj/item/W as obj, atom/new_location)
+/obj/item/weapon/storage/fancy/cigarettes/remove_from_storage(obj/item/W, atom/new_location)
 	if(istype(W, /obj/item/clothing/mask/cigarette))
 		if(reagents)
 			reagents.trans_to(W, (reagents.total_volume/contents.len))
 	..()
 
-/obj/item/weapon/storage/fancy/cigarettes/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+/obj/item/weapon/storage/fancy/cigarettes/attack(mob/living/carbon/M, mob/living/carbon/user)
 	if(!istype(M, /mob))
 		return
 
@@ -220,11 +215,11 @@
 				has_cigarette = 1
 				contents.Remove(C)
 				user.equip_to_slot_if_possible(C, slot_wear_mask)
-				user << "<span class='notice'>You take a cigarette out of the pack.</span>"
+				to_chat(user, "<span class='notice'>You take a cigarette out of the pack.</span>")
 				update_icon()
 				break
 		if(!has_cigarette)
-			user << "<span class='notice'>You tried to get any cigarette, but they ran out.</span>"
+			to_chat(user, "<span class='notice'>You tried to get any cigarette, but they ran out.</span>")
 	else
 		..()
 
@@ -270,7 +265,7 @@
 	..()
 	update_icon()
 
-/obj/item/weapon/storage/lockbox/vials/update_icon(var/itemremoved = 0)
+/obj/item/weapon/storage/lockbox/vials/update_icon(itemremoved = 0)
 	var/total_contents = src.contents.len - itemremoved
 	src.icon_state = "vialbox[total_contents]"
 	src.overlays.Cut()
@@ -282,6 +277,6 @@
 		overlays += image(icon, src, "ledb")
 	return
 
-/obj/item/weapon/storage/lockbox/vials/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/weapon/storage/lockbox/vials/attackby(obj/item/weapon/W, mob/user)
 	..()
 	update_icon()

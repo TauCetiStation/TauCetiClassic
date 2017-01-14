@@ -65,7 +65,7 @@
 				qdel(O) //Commented out for now. -Durandan
 
 
-/obj/machinery/mineral/mint/attack_hand(user as mob)
+/obj/machinery/mineral/mint/attack_hand(user)
 
 	var/dat = "<b>Coin Press</b><br>"
 
@@ -132,13 +132,13 @@
 	user << browse("[dat]", "window=mint")
 
 /obj/machinery/mineral/mint/Topic(href, href_list)
-	if(..())
+	. = ..()
+	if(!.)
 		return
-	usr.set_machine(src)
-	src.add_fingerprint(usr)
-	if(processing==1)
-		usr << "\blue The machine is processing."
-		return
+
+	if(processing == 1)
+		to_chat(usr, "\blue The machine is processing.")
+		return FALSE
 	if(href_list["choose"])
 		chosen = href_list["choose"]
 	if(href_list["chooseAmt"])
@@ -146,14 +146,14 @@
 	if(href_list["makeCoins"])
 		var/temp_coins = coinsToProduce
 		if (src.output)
-			processing = 1;
+			processing = 1
 			icon_state = "coinpress1"
 			var/obj/item/weapon/moneybag/M
 			switch(chosen)
 				if("metal")
 					while(amt_iron > 0 && coinsToProduce > 0)
-						if (locate(/obj/item/weapon/moneybag,output.loc))
-							M = locate(/obj/item/weapon/moneybag,output.loc)
+						if (locate(/obj/item/weapon/moneybag, output.loc))
+							M = locate(/obj/item/weapon/moneybag, output.loc)
 						else
 							M = new/obj/item/weapon/moneybag(output.loc)
 						new/obj/item/weapon/coin/iron(M)
@@ -161,11 +161,11 @@
 						coinsToProduce--
 						newCoins++
 						src.updateUsrDialog()
-						sleep(5);
+						sleep(5)
 				if("gold")
 					while(amt_gold > 0 && coinsToProduce > 0)
-						if (locate(/obj/item/weapon/moneybag,output.loc))
-							M = locate(/obj/item/weapon/moneybag,output.loc)
+						if (locate(/obj/item/weapon/moneybag, output.loc))
+							M = locate(/obj/item/weapon/moneybag, output.loc)
 						else
 							M = new/obj/item/weapon/moneybag(output.loc)
 						new /obj/item/weapon/coin/gold(M)
@@ -173,11 +173,11 @@
 						coinsToProduce--
 						newCoins++
 						src.updateUsrDialog()
-						sleep(5);
+						sleep(5)
 				if("silver")
 					while(amt_silver > 0 && coinsToProduce > 0)
-						if (locate(/obj/item/weapon/moneybag,output.loc))
-							M = locate(/obj/item/weapon/moneybag,output.loc)
+						if (locate(/obj/item/weapon/moneybag, output.loc))
+							M = locate(/obj/item/weapon/moneybag, output.loc)
 						else
 							M = new/obj/item/weapon/moneybag(output.loc)
 						new /obj/item/weapon/coin/silver(M)
@@ -185,11 +185,11 @@
 						coinsToProduce--
 						newCoins++
 						src.updateUsrDialog()
-						sleep(5);
+						sleep(5)
 				if("diamond")
 					while(amt_diamond > 0 && coinsToProduce > 0)
-						if (locate(/obj/item/weapon/moneybag,output.loc))
-							M = locate(/obj/item/weapon/moneybag,output.loc)
+						if (locate(/obj/item/weapon/moneybag, output.loc))
+							M = locate(/obj/item/weapon/moneybag, output.loc)
 						else
 							M = new/obj/item/weapon/moneybag(output.loc)
 						new /obj/item/weapon/coin/diamond(M)
@@ -197,11 +197,11 @@
 						coinsToProduce--
 						newCoins++
 						src.updateUsrDialog()
-						sleep(5);
+						sleep(5)
 				if("phoron")
 					while(amt_phoron > 0 && coinsToProduce > 0)
-						if (locate(/obj/item/weapon/moneybag,output.loc))
-							M = locate(/obj/item/weapon/moneybag,output.loc)
+						if (locate(/obj/item/weapon/moneybag, output.loc))
+							M = locate(/obj/item/weapon/moneybag, output.loc)
 						else
 							M = new/obj/item/weapon/moneybag(output.loc)
 						new /obj/item/weapon/coin/phoron(M)
@@ -209,11 +209,11 @@
 						coinsToProduce--
 						newCoins++
 						src.updateUsrDialog()
-						sleep(5);
+						sleep(5)
 				if("uranium")
 					while(amt_uranium > 0 && coinsToProduce > 0)
-						if (locate(/obj/item/weapon/moneybag,output.loc))
-							M = locate(/obj/item/weapon/moneybag,output.loc)
+						if (locate(/obj/item/weapon/moneybag, output.loc))
+							M = locate(/obj/item/weapon/moneybag, output.loc)
 						else
 							M = new/obj/item/weapon/moneybag(output.loc)
 						new /obj/item/weapon/coin/uranium(M)
@@ -224,8 +224,8 @@
 						sleep(5)
 				if("clown")
 					while(amt_clown > 0 && coinsToProduce > 0)
-						if (locate(/obj/item/weapon/moneybag,output.loc))
-							M = locate(/obj/item/weapon/moneybag,output.loc)
+						if (locate(/obj/item/weapon/moneybag, output.loc))
+							M = locate(/obj/item/weapon/moneybag, output.loc)
 						else
 							M = new/obj/item/weapon/moneybag(output.loc)
 						new /obj/item/weapon/coin/clown(M)
@@ -233,11 +233,11 @@
 						coinsToProduce--
 						newCoins++
 						src.updateUsrDialog()
-						sleep(5);
+						sleep(5)
 				if("platinum")
 					while(amt_clown > 0 && coinsToProduce > 0)
-						if (locate(/obj/item/weapon/moneybag,output.loc))
-							M = locate(/obj/item/weapon/moneybag,output.loc)
+						if (locate(/obj/item/weapon/moneybag, output.loc))
+							M = locate(/obj/item/weapon/moneybag, output.loc)
 						else
 							M = new/obj/item/weapon/moneybag(output.loc)
 						new /obj/item/weapon/coin/platinum(M)
@@ -245,9 +245,9 @@
 						coinsToProduce--
 						newCoins++
 						src.updateUsrDialog()
-						sleep(5);
+						sleep(5)
 			icon_state = "coinpress0"
-			processing = 0;
+			processing = 0
 			coinsToProduce = temp_coins
+
 	src.updateUsrDialog()
-	return

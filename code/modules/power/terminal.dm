@@ -26,7 +26,7 @@
 		master.disconnect_terminal()
 	return ..()
 
-/obj/machinery/power/terminal/hide(var/i)
+/obj/machinery/power/terminal/hide(i)
 	if(i)
 		invisibility = 101
 		icon_state = "term-f"
@@ -49,27 +49,27 @@
 		. = 1
 
 
-/obj/machinery/power/terminal/proc/dismantle(var/mob/living/user)
+/obj/machinery/power/terminal/proc/dismantle(mob/living/user)
 	if(istype(loc, /turf/simulated))
 		var/turf/simulated/T = loc
 		if(T.intact)
-			user << "<span class='alert'>You must first expose the power terminal!</span>"
+			to_chat(user, "<span class='alert'>You must first expose the power terminal!</span>")
 			return
 
-		if(master && master.can_terminal_dismantle())
-			user.visible_message("<span class='warning'>[user.name] dismantles the power terminal from [master].</span>", \
+		if((master && master.can_terminal_dismantle()) || !master)
+			user.visible_message("<span class='warning'>[user.name] dismantles the power terminal[master ? " from [master]" : ""].</span>", \
 								"You begin to cut the cables...")
 
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			if(do_after(user, 50 , target = src))
-				if(master && master.can_terminal_dismantle())
+				if((master && master.can_terminal_dismantle()) || !master)
 					if(prob(50) && electrocute_mob(user, powernet, src))
 						var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 						s.set_up(5, 1, master)
 						s.start()
 						return
 					new /obj/item/weapon/cable_coil(loc, 10)
-					user << "<span class='notice'>You cut the cables and dismantle the power terminal.</span>"
+					to_chat(user, "<span class='notice'>You cut the cables and dismantle the power terminal.</span>")
 					qdel(src)
 
 

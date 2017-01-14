@@ -16,85 +16,99 @@
 /datum/genetics/side_effect/genetic_burn
 	name = "Genetic Burn"
 	symptom = "Subject's skin turns unusualy red."
-	treatment = "Inject small dose of dexalin."
+	treatment = "None."
 	effect = "Subject's skin burns."
 	duration = 10*30
 
-	start(mob/living/carbon/human/H)
-		H.emote("me", 1, "starts turning very red..")
+/datum/genetics/side_effect/genetic_burn/start(mob/living/carbon/human/H)
+	H.emote("me", 1, "starts turning very red..")
 
-	finish(mob/living/carbon/human/H)
-		if(!H.reagents.has_reagent("dexalin"))
-			for(var/organ_name in list("chest","l_arm","r_arm","r_leg","l_leg","head","groin"))
-				var/datum/organ/external/E = H.get_organ(organ_name)
-				if(prob(85))//#Z2 - now 15% chance even for more burn
-					E.take_damage(0, 5, 0)
-				else
-					E.take_damage(0, 20, 0)
+/datum/genetics/side_effect/genetic_burn/finish(mob/living/carbon/human/H)
+	for(var/organ_name in list("chest","l_arm","r_arm","r_leg","l_leg","head","groin"))
+		var/datum/organ/external/E = H.get_organ(organ_name)
+		if(prob(85))//#Z2 - now 15% chance even for more burn
+			E.take_damage(0, 5, 0)
+		else
+			E.take_damage(0, 20, 0)
 
 /datum/genetics/side_effect/bone_snap
 	name = "Bone Snap"
 	symptom = "Subject's limbs tremble notably."
-	treatment = "Inject small dose of bicaridine."
+	treatment = "None."
 	effect = "Subject's bone breaks."
 	duration = 10*60
 
-	start(mob/living/carbon/human/H)
-		H.emote("me", 1, "'s limbs start shivering uncontrollably.")
+/datum/genetics/side_effect/bone_snap/start(mob/living/carbon/human/H)
+	H.emote("me", 1, "'s limbs start shivering uncontrollably.")
 
-	finish(mob/living/carbon/human/H)
-		if(!H.reagents.has_reagent("bicaridine"))
-			if(prob(85))//#Z2 - now 15% chance for heavy brute damage
-				var/organ_name = pick("chest","l_arm","r_arm","r_leg","l_leg","head","groin")
-				var/datum/organ/external/E = H.get_organ(organ_name)
-				E.take_damage(20, 0, 0)
-				E.fracture()
-			else
-				var/organ_name = pick("chest","l_arm","r_arm","r_leg","l_leg","head","groin")
-				var/datum/organ/external/E = H.get_organ(organ_name)
-				E.take_damage(70, 0, 0)
-				//E.fracture()
+/datum/genetics/side_effect/bone_snap/finish(mob/living/carbon/human/H)
+	if(prob(85))//#Z2 - now 15% chance for heavy brute damage
+		var/organ_name = pick("chest","l_arm","r_arm","r_leg","l_leg","head","groin")
+		var/datum/organ/external/E = H.get_organ(organ_name)
+		E.take_damage(20, 0, 0)
+		E.fracture()
+	else
+		var/organ_name = pick("chest","l_arm","r_arm","r_leg","l_leg","head","groin")
+		var/datum/organ/external/E = H.get_organ(organ_name)
+		E.take_damage(70, 0, 0)
+		//E.fracture()
 
 /datum/genetics/side_effect/monkey //#Z2 Random monkey transform is back
 	name = "Monkey"
 	symptom = "Subject starts drooling uncontrollably."
-	treatment = "Inject small dose of ryetalyn."
+	treatment = "None."
 	effect = "Subject turns into monkey."
 	duration = 10*120
 
-	start(mob/living/carbon/human/H)
-		H.emote("me", 1, "has drool running down from his mouth and hair starts to cover whole body.")
+/datum/genetics/side_effect/monkey/start(mob/living/carbon/human/H)
+	H.emote("me", 1, "has drool running down from his mouth and hair starts to cover whole body.")
 
-	finish(mob/living/carbon/human/H)
-		if(!H.reagents.has_reagent("ryetalyn"))
-			H.monkeyize()
+/datum/genetics/side_effect/monkey/finish(mob/living/carbon/human/H)
+	H.monkeyize()
 
 /datum/genetics/side_effect/confuse
 	name = "Confuse"
 	symptom = "Subject starts drooling uncontrollably."
-	treatment = "Inject small dose of dylovene."
+	treatment = "None."
 	effect = "Subject becomes confused."
 	duration = 10*30
 
-	start(mob/living/carbon/human/H)
-		H.emote("me", 1, "has drool running down from his mouth.")
+/datum/genetics/side_effect/confuse/start(mob/living/carbon/human/H)
+	H.emote("me", 1, "has drool running down from his mouth.")
 
-	finish(mob/living/carbon/human/H)
-		if(!H.reagents.has_reagent("anti_toxin"))
-			H.confused += 100
+/datum/genetics/side_effect/confuse/finish(mob/living/carbon/human/H)
+	H.confused += 100
+
+/datum/genetics/side_effect/bald_madness
+	name = "Bald madness"
+	symptom = "Subject becomes bald.."
+	treatment = "None."
+	effect = "Subject's head turns bald."
+	duration = 10*5
+
+/datum/genetics/side_effect/bald_madness/start(mob/living/carbon/human/H)
+	H.emote("me", 1, "starts loosing his hair..")
+
+/datum/genetics/side_effect/bald_madness/finish(mob/living/carbon/human/H)
+	H.f_style = "Shaved"
+	H.h_style = "Skinhead"
+	H.update_hair()
 
 proc/trigger_side_effect(mob/living/carbon/human/H)
-	spawn
-		if(!istype(H)) return
-		var/tp = pick(typesof(/datum/genetics/side_effect) - /datum/genetics/side_effect)
-		var/datum/genetics/side_effect/S = new tp
+	set waitfor = 0
+	if(!H || !istype(H))
+		return
+	var/tp = pick(typesof(/datum/genetics/side_effect) - /datum/genetics/side_effect)
+	var/datum/genetics/side_effect/S = new tp
+	S.start(H)
 
-		S.start(H)
-		spawn(20)
-			if(!istype(H)) return
-			H.Weaken(rand(0, S.duration / 50))
-		sleep(S.duration)
+	sleep(20)
+	if(!H || !istype(H))
+		return
+	H.Weaken(rand(0, S.duration / 50))
 
-		if(!istype(H)) return
-		H.SetWeakened(0)
-		S.finish(H)
+	sleep(S.duration)
+	if(!H || !istype(H))
+		return
+	H.SetWeakened(0)
+	S.finish(H)

@@ -10,7 +10,7 @@
 	..()
 	events = new
 
-/datum/events/proc/addEventType(event_type as text)
+/datum/events/proc/addEventType(event_type)
 	if(!(event_type in events) || !islist(events[event_type]))
 		events[event_type] = list()
 		return 1
@@ -19,7 +19,7 @@
 
 //	Arguments: event_type as text, proc_holder as datum, proc_name as text
 //	Returns: New event, null on error.
-/datum/events/proc/addEvent(event_type as text, proc_holder, proc_name as text)
+/datum/events/proc/addEvent(event_type, proc_holder, proc_name)
 	if(!event_type || !proc_holder || !proc_name)
 		return
 	addEventType(event_type)
@@ -42,7 +42,7 @@
 
 // Arguments: event_type as text, E as /datum/event
 // Returns: 1 if event cleared, null on error
-/datum/events/proc/clearEvent(event_type as text, datum/event/E)
+/datum/events/proc/clearEvent(event_type, datum/event/E)
 	if(!event_type || !E)
 		return
 	var/list/event = listgetindex(events,event_type)

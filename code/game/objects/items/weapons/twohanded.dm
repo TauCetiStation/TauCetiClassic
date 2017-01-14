@@ -35,15 +35,15 @@
 	name = "[initial(name)] (Wielded)"
 	update_icon()
 
-/obj/item/weapon/twohanded/mob_can_equip(M as mob, slot)
+/obj/item/weapon/twohanded/mob_can_equip(M, slot)
 	//Cannot equip wielded items.
 	if(wielded)
-		M << "<span class='warning'>Unwield the [initial(name)] first!</span>"
+		to_chat(M, "<span class='warning'>Unwield the [initial(name)] first!</span>")
 		return 0
 
 	return ..()
 
-/obj/item/weapon/twohanded/dropped(mob/user as mob)
+/obj/item/weapon/twohanded/dropped(mob/user)
 	//handles unwielding a twohanded weapon when dropped as well as clearing up the offhand
 	if(user)
 		var/obj/item/weapon/twohanded/O = user.get_inactive_hand()
@@ -57,15 +57,15 @@
 /obj/item/weapon/twohanded/pickup(mob/user)
 	unwield()
 
-/obj/item/weapon/twohanded/attack_self(mob/user as mob)
+/obj/item/weapon/twohanded/attack_self(mob/user)
 	if( istype(user,/mob/living/carbon/monkey) )
-		user << "<span class='warning'>It's too heavy for you to wield fully.</span>"
+		to_chat(user, "<span class='warning'>It's too heavy for you to wield fully.</span>")
 		return
 
 	..()
 	if(wielded) //Trying to unwield it
 		unwield()
-		user << "<span class='notice'>You are now carrying the [name] with one hand.</span>"
+		to_chat(user, "<span class='notice'>You are now carrying the [name] with one hand.</span>")
 		if(user.hand)
 			user.update_inv_l_hand()
 		else
@@ -81,10 +81,10 @@
 
 	else //Trying to wield it
 		if(user.get_inactive_hand())
-			user << "<span class='warning'>You need your other hand to be empty</span>"
+			to_chat(user, "<span class='warning'>You need your other hand to be empty</span>")
 			return
 		wield()
-		user << "<span class='notice'>You grab the [initial(name)] with both hands.</span>"
+		to_chat(user, "<span class='notice'>You grab the [initial(name)] with both hands.</span>")
 		if (src.wieldsound)
 			playsound(src.loc, wieldsound, 50, 1)
 
@@ -131,7 +131,7 @@
 	icon_state = "fireaxe[wielded]"
 	return
 
-/obj/item/weapon/twohanded/fireaxe/afterattack(atom/A as mob|obj|turf|area, mob/user as mob, proximity)
+/obj/item/weapon/twohanded/fireaxe/afterattack(atom/A, mob/user, proximity)
 	if(!proximity) return
 	..()
 	if(A && wielded && (istype(A,/obj/structure/window) || istype(A,/obj/structure/grille))) //destroys windows and grilles in one hit
@@ -144,6 +144,9 @@
 			if (W.dir == SOUTHWEST)
 				new /obj/item/weapon/shard( W.loc )
 				if(W.reinf) new /obj/item/stack/rods( W.loc)
+		else if(istype(A,/obj/structure/grille))
+			var/obj/structure/grille/G = A
+			new /obj/item/stack/rods(G.loc)
 		qdel(A)
 
 
@@ -151,6 +154,7 @@
  * Double-Bladed Energy Swords - Cheridan
  */
 /obj/item/weapon/twohanded/dualsaber
+	var/reflect_chance = 0
 	icon_state = "dualsaber0"
 	name = "double-bladed energy sword"
 	desc = "Handle with care."
@@ -163,7 +167,7 @@
 	force_wielded = 30
 	wieldsound = 'sound/weapons/saberon.ogg'
 	unwieldsound = 'sound/weapons/saberoff.ogg'
-	flags = FPRINT | TABLEPASS | NOSHIELD
+	flags = NOSHIELD
 	origin_tech = "magnets=3;syndicate=4"
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	sharp = 1
@@ -173,10 +177,10 @@
 	icon_state = "dualsaber[wielded]"
 	return
 
-/obj/item/weapon/twohanded/dualsaber/attack(target as mob, mob/living/user as mob)
+/obj/item/weapon/twohanded/dualsaber/attack(target, mob/living/user)
 	..()
 	if((CLUMSY in user.mutations) && (wielded) &&prob(40))
-		user << "\red You twirl around a bit before losing your balance and impaling yourself on the [src]."
+		to_chat(user, "\red You twirl around a bit before losing your balance and impaling yourself on the [src].")
 		user.take_organ_damage(20,25)
 		return
 	if((wielded) && prob(50))
@@ -190,3 +194,15 @@
 		return 1
 	else
 		return 0
+
+/obj/item/weapon/twohanded/dualsaber/IsReflect(def_zone, hol_dir, hit_dir)
+	if(wielded && prob(reflect_chance))
+		if(hol_dir == NORTH && (hit_dir in list(SOUTH, SOUTHEAST, SOUTHWEST)))
+			return TRUE
+		else if(hol_dir == SOUTH && (hit_dir in list(NORTH, NORTHEAST, NORTHWEST)))
+			return TRUE
+		else if(hol_dir == EAST && (hit_dir in list(WEST, NORTHWEST, SOUTHWEST)))
+			return TRUE
+		else if(hol_dir == WEST && (hit_dir in list(EAST, NORTHEAST, SOUTHEAST)))
+			return TRUE
+	return FALSE

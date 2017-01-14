@@ -42,6 +42,7 @@
 	shuffle_loot()
 	update_icon(1)
 	..()
+
 /obj/structure/scrap/Destroy()
 	diggers.Cut()
 	for (var/obj/item in loot)
@@ -55,13 +56,13 @@
 		playsound(src.loc, 'sound/effects/glass_step.ogg', 50, 1)
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
-			if(H.species.flags & IS_SYNTHETIC)
+			if(H.species.flags[IS_SYNTHETIC])
 				return
 			if( !H.shoes && ( !H.wear_suit || !(H.wear_suit.body_parts_covered & FEET) ) )
 				var/datum/organ/external/affecting = H.get_organ(pick("l_foot", "r_foot"))
 				if(affecting.status & ORGAN_ROBOT)
 					return
-				M << "<span class='danger'>You step on the sharp debris!</span>"
+				to_chat(M, "<span class='danger'>You step on the sharp debris!</span>")
 				H.Weaken(3)
 				affecting.take_damage(5, 0)
 				H.reagents.add_reagent("toxin", pick(prob(50);0,prob(50);5,prob(10);10,prob(1);25))
@@ -84,7 +85,7 @@
 			num--
 	update_icon()
 
-/obj/structure/scrap/proc/randomize_image(var/image/I)
+/obj/structure/scrap/proc/randomize_image(image/I)
 	I.pixel_x = rand(-base_spread,base_spread)
 	I.pixel_y = rand(-base_spread,base_spread)
 	var/matrix/M = matrix()
@@ -92,7 +93,7 @@
 	I.transform = M
 	return I
 
-/obj/structure/scrap/update_icon(var/rebuild_base=0)
+/obj/structure/scrap/update_icon(rebuild_base=0)
 	if(rebuild_base)
 		overlays.Cut()
 		var/num = rand(base_min,base_max)
@@ -112,7 +113,7 @@
 		if(!ishuman(user))
 			return 0
 		var/mob/living/carbon/human/victim = user
-		if(victim.species.flags & IS_SYNTHETIC)
+		if(victim.species.flags[IS_SYNTHETIC])
 			return 0
 		if(victim.gloves)
 			return 0
@@ -122,7 +123,7 @@
 			return 0
 		if(affected_organ.status & ORGAN_ROBOT)
 			return 0
-		user << "<span class='danger'>Ouch! You cut yourself while picking through \the [src].</span>"
+		to_chat(user, "<span class='danger'>Ouch! You cut yourself while picking through \the [src].</span>")
 		affected_organ.take_damage(5, 0, 1, 1, used_weapon = "Sharp debris")
 		victim.reagents.add_reagent("toxin", pick(prob(50);0,prob(50);5,prob(10);10,prob(1);25))
 		return 1
@@ -146,8 +147,10 @@
 	if(src.dig_amount <= 0)
 		visible_message("<span class='notice'>\The [src] is cleared out!</span>")
 		qdel(src)
+		return 0
 	else
 		new /obj/item/weapon/scrap_lump(newloc)
+		return 1
 
 /obj/structure/scrap/attackby(obj/item/W, mob/user)
 	if(istype(W,/obj/item/weapon/shovel) && !(user in diggers))
@@ -326,4 +329,5 @@
 	base_spread = 16
 
 /obj/item/weapon/storage/internal/updating/update_icon()
-	master_item.update_icon()
+	if(master_item)
+		master_item.update_icon()

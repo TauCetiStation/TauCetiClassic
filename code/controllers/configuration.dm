@@ -160,7 +160,6 @@
 
 	var/use_slack_bot = 0
 	var/slack_team = 0
-	var/slack_bot_token = 0
 	var/antigrief_alarm_level = 1
 
 	// The object used for the clickable stat() button.
@@ -550,9 +549,6 @@
 				if("slack_team")
 					config.slack_team = value
 
-				if("slack_bot_token")
-					config.slack_bot_token = value
-
 				if("antigrief_alarm_level")
 					config.antigrief_alarm_level = value
 
@@ -729,7 +725,7 @@
 			//world << "DEBUG: runnable_mode\[[runnable_modes.len]\] = [M.config_tag]"
 	return runnable_modes
 
-/datum/configuration/proc/get_custom_modes(var/type_of_selection)
+/datum/configuration/proc/get_custom_modes(type_of_selection)
 	var/list/datum/game_mode/runnable_modes = new
 	for (var/T in (typesof(/datum/game_mode) - /datum/game_mode))
 		var/datum/game_mode/M = new T()

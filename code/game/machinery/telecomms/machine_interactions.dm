@@ -15,7 +15,7 @@
 	var/construct_op = 0
 
 
-/obj/machinery/telecomms/attackby(obj/item/P as obj, mob/user as mob)
+/obj/machinery/telecomms/attackby(obj/item/P, mob/user)
 
 	// Using a multitool lets you access the receiver's interface
 	if(istype(P, /obj/item/device/multitool))
@@ -24,26 +24,26 @@
 	switch(construct_op)
 		if(0)
 			if(istype(P, /obj/item/weapon/screwdriver))
-				user << "<span class='notice'>You unfasten the bolts.</span>"
+				to_chat(user, "<span class='notice'>You unfasten the bolts.</span>")
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				construct_op ++
 		if(1)
 			if(istype(P, /obj/item/weapon/screwdriver))
-				user << "<span class='notice'>You fasten the bolts.</span>"
+				to_chat(user, "<span class='notice'>You fasten the bolts.</span>")
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				construct_op --
 			if(istype(P, /obj/item/weapon/wrench))
-				user << "<span class='notice'>You dislodge the external plating.</span>"
+				to_chat(user, "<span class='notice'>You dislodge the external plating.</span>")
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 				construct_op ++
 		if(2)
 			if(istype(P, /obj/item/weapon/wrench))
-				user << "<span class='notice'>You secure the external plating.</span>"
+				to_chat(user, "<span class='notice'>You secure the external plating.</span>")
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 				construct_op --
 			if(istype(P, /obj/item/weapon/wirecutters))
 				playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
-				user << "<span class='notice'>You remove the cables.</span>"
+				to_chat(user, "<span class='notice'>You remove the cables.</span>")
 				construct_op ++
 				var/obj/item/weapon/cable_coil/A = new /obj/item/weapon/cable_coil( user.loc )
 				A.amount = 5
@@ -52,16 +52,16 @@
 			if(istype(P, /obj/item/weapon/cable_coil))
 				var/obj/item/weapon/cable_coil/A = P
 				if(A.use(5))
-					user << "<span class='notice'>You insert the cables.</span>"
+					to_chat(user, "<span class='notice'>You insert the cables.</span>")
 					construct_op --
 					stat &= ~BROKEN // the machine's not borked anymore!
 				else
-					user << "<span class='danger'>You need more cable to do that.</span>"
+					to_chat(user, "<span class='danger'>You need more cable to do that.</span>")
 			if(istype(P, /obj/item/weapon/crowbar))
-				user << "<span class='notice'>You begin prying out the circuit board and components...</span>"
+				to_chat(user, "<span class='notice'>You begin prying out the circuit board and components...</span>")
 				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 				if(do_after(user,60,target = src))
-					user << "<span class='notice'>You finish prying out the components.</span>"
+					to_chat(user, "<span class='notice'>You finish prying out the components.</span>")
 
 					// Drop all the component stuff
 					if(component_parts)
@@ -95,10 +95,10 @@
 					qdel(src)
 
 
-/obj/machinery/telecomms/attack_ai(var/mob/user as mob)
+/obj/machinery/telecomms/attack_ai(mob/user)
 	attack_hand(user)
 
-/obj/machinery/telecomms/attack_hand(var/mob/user as mob)
+/obj/machinery/telecomms/attack_hand(mob/user)
 
 	// You need a multitool to use this, or be silicon
 	if(!issilicon(user))
@@ -187,7 +187,7 @@
 
 // Returns a multitool from a user depending on their mobtype.
 
-/obj/machinery/telecomms/proc/get_multitool(mob/user as mob)
+/obj/machinery/telecomms/proc/get_multitool(mob/user)
 
 	var/obj/item/device/multitool/P = null
 	// Let's double check
@@ -277,12 +277,12 @@
 
 
 /obj/machinery/telecomms/Topic(href, href_list)
-
 	if(!issilicon(usr))
 		if(!istype(usr.get_active_hand(), /obj/item/device/multitool))
-			return
+			return FALSE
 
-	if(stat & (BROKEN|NOPOWER))
+	. = ..()
+	if(!.)
 		return
 
 	var/obj/item/device/multitool/P = get_multitool(usr)
@@ -382,11 +382,10 @@
 	src.Options_Topic(href, href_list)
 
 	usr.set_machine(src)
-	src.add_fingerprint(usr)
 
 	updateUsrDialog()
 
-/obj/machinery/telecomms/proc/canAccess(var/mob/user)
+/obj/machinery/telecomms/proc/canAccess(mob/user)
 	if(issilicon(user) || in_range(user, src))
 		return 1
 	return 0

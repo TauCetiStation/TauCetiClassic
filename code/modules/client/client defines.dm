@@ -58,3 +58,10 @@
 	var/datum/media_manager/media = null
 
 	var/datum/geoip_data/geoip = null
+
+	var/datum/tooltip/tooltips
+
+
+	// Their chat window, sort of important.
+	// See /goon/code/datums/browserOutput.dm
+	var/datum/chatOutput/chatOutput

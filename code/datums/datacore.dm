@@ -21,7 +21,7 @@
 	name = "text"
 	var/data = null
 
-/obj/effect/datacore/proc/manifest(var/nosleep = 0)
+/obj/effect/datacore/proc/manifest(nosleep = 0)
 	spawn()
 		if(!nosleep)
 			sleep(40)
@@ -29,7 +29,7 @@
 			manifest_inject(H)
 		return
 
-/obj/effect/datacore/proc/manifest_modify(var/name, var/assignment)
+/obj/effect/datacore/proc/manifest_modify(name, assignment)
 	if(PDA_Manifest.len)
 		PDA_Manifest.Cut()
 	var/datum/data/record/foundrecord
@@ -54,7 +54,7 @@
 		foundrecord.fields["rank"] = assignment
 		foundrecord.fields["real_rank"] = real_title
 
-/obj/effect/datacore/proc/manifest_inject(var/mob/living/carbon/human/H)
+/obj/effect/datacore/proc/manifest_inject(mob/living/carbon/human/H)
 	if(PDA_Manifest.len)
 		PDA_Manifest.Cut()
 
@@ -72,6 +72,11 @@
 		var/id = add_zero(num2hex(rand(1, 1.6777215E7)), 6)	//this was the best they could come up with? A large random number? *sigh*
 
 		//General Record
+		//Creating photo
+		var/icon/ticon = get_id_photo(H)
+		var/icon/photo_front = new(ticon, dir = SOUTH)
+		var/icon/photo_side = new(ticon, dir = WEST)
+		qdel(ticon)
 		var/datum/data/record/G = new()
 		G.fields["id"]			= id
 		G.fields["name"]		= H.real_name
@@ -87,7 +92,8 @@
 		G.fields["citizenship"]	= H.citizenship
 		G.fields["faction"]		= H.personal_faction
 		G.fields["religion"]	= H.religion
-		G.fields["photo"]		= get_id_photo(H)
+		G.fields["photo_f"]		= photo_front
+		G.fields["photo_s"]		= photo_side
 		if(H.gen_record && !jobban_isbanned(H, "Records"))
 			G.fields["notes"] = H.gen_record
 		else

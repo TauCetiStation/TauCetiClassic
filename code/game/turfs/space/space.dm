@@ -23,28 +23,28 @@
 		return
 	set_light(0)
 
-/turf/space/attack_paw(mob/user as mob)
+/turf/space/attack_paw(mob/user)
 	return src.attack_hand(user)
 
-/turf/space/attackby(obj/item/C as obj, mob/user as mob)
+/turf/space/attackby(obj/item/C, mob/user)
 
 	if (istype(C, /obj/item/stack/rods))
 		var/obj/item/stack/rods/R = C
 		var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
 		if(L)
 			if(R.amount < 2)
-				user << "\red You don't have enough rods to do that."
+				to_chat(user, "\red You don't have enough rods to do that.")
 				return
-			user << "\blue You begin to build a catwalk."
+			to_chat(user, "\blue You begin to build a catwalk.")
 			if(do_after(user,30,target = src))
 				playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
-				user << "\blue You build a catwalk!"
+				to_chat(user, "\blue You build a catwalk!")
 				R.use(2)
 				ChangeTurf(/turf/simulated/floor/plating/airless/catwalk)
 				qdel(L)
 				return
 
-		user << "\blue Constructing support lattice ..."
+		to_chat(user, "\blue Constructing support lattice ...")
 		playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
 		ReplaceWithLattice()
 		R.use(1)
@@ -60,7 +60,7 @@
 			S.use(1)
 			return
 		else
-			user << "\red The plating is going to need some support."
+			to_chat(user, "\red The plating is going to need some support.")
 	return
 
 
@@ -68,7 +68,7 @@
 
 /turf/space/Entered(atom/movable/A as mob|obj)
 	if(movement_disabled)
-		usr << "\red Movement is admin-disabled." //This is to identify lag problems
+		to_chat(usr, "\red Movement is admin-disabled.")//This is to identify lag problems
 		return
 	..()
 	if ((!(A) || src != A.loc))	return
@@ -92,7 +92,7 @@
 				if(istype(A, /mob/living))
 					var/mob/living/MM = A
 					if(MM.client && !MM.stat)
-						MM << "\red Something you are carrying is preventing you from leaving. Don't play stupid; you know exactly what it is."
+						to_chat(MM, "\red Something you are carrying is preventing you from leaving. Don't play stupid; you know exactly what it is.")
 						if(MM.x <= TRANSITIONEDGE)
 							MM.inertia_dir = 4
 						else if(MM.x >= world.maxx -TRANSITIONEDGE)
@@ -144,7 +144,7 @@
 			sleep(0)//Let a diagonal move finish, if necessary
 			A.newtonian_move(A.inertia_dir)
 
-/turf/space/proc/Sandbox_Spacemove(atom/movable/A as mob|obj)
+/turf/space/proc/Sandbox_Spacemove(atom/movable/A)
 	var/cur_x
 	var/cur_y
 	var/next_x
@@ -166,9 +166,9 @@
 		target_z = y_arr[cur_y]
 /*
 		//debug
-		world << "Src.z = [src.z] in global map X = [cur_x], Y = [cur_y]"
-		world << "Target Z = [target_z]"
-		world << "Next X = [next_x]"
+		to_chat(world, "Src.z = [src.z] in global map X = [cur_x], Y = [cur_y]")
+		to_chat(world, "Target Z = [target_z]")
+		to_chat(world, "Next X = [next_x]")
 		//debug
 */
 		if(target_z)
@@ -191,9 +191,9 @@
 		target_z = y_arr[cur_y]
 /*
 		//debug
-		world << "Src.z = [src.z] in global map X = [cur_x], Y = [cur_y]"
-		world << "Target Z = [target_z]"
-		world << "Next X = [next_x]"
+		to_chat(world, "Src.z = [src.z] in global map X = [cur_x], Y = [cur_y]")
+		to_chat(world, "Target Z = [target_z]")
+		to_chat(world, "Next X = [next_x]")
 		//debug
 */
 		if(target_z)
@@ -215,9 +215,9 @@
 		target_z = y_arr[next_y]
 /*
 		//debug
-		world << "Src.z = [src.z] in global map X = [cur_x], Y = [cur_y]"
-		world << "Next Y = [next_y]"
-		world << "Target Z = [target_z]"
+		to_chat(world, "Src.z = [src.z] in global map X = [cur_x], Y = [cur_y]")
+		to_chat(world, "Next Y = [next_y]")
+		to_chat(world, "Target Z = [target_z]")
 		//debug
 */
 		if(target_z)
@@ -240,9 +240,9 @@
 		target_z = y_arr[next_y]
 /*
 		//debug
-		world << "Src.z = [src.z] in global map X = [cur_x], Y = [cur_y]"
-		world << "Next Y = [next_y]"
-		world << "Target Z = [target_z]"
+		to_chat(world, "Src.z = [src.z] in global map X = [cur_x], Y = [cur_y]")
+		to_chat(world, "Next Y = [next_y]")
+		to_chat(world, "Target Z = [target_z]")
 		//debug
 */
 		if(target_z)
@@ -253,7 +253,7 @@
 					A.loc.Entered(A)
 	return
 
-/turf/space/ChangeTurf(var/turf/N, var/force_lighting_update = 0)
+/turf/space/ChangeTurf(turf/N, force_lighting_update = 0)
 	return ..(N, 1)
 
 /turf/space/singularity_act()

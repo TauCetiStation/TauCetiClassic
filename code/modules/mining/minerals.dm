@@ -87,6 +87,7 @@ var/list/name_to_mineral
 	result_amount = 5
 	spread_chance = 25
 	ore = /obj/item/weapon/ore/coal
+	ore_type = "coal"
 
 /mineral/platinum
 	name = "Platinum"

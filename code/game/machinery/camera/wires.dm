@@ -26,11 +26,11 @@
 		flagIndex+=1
 	return wires
 
-/obj/machinery/camera/proc/isWireColorCut(var/wireColor)
+/obj/machinery/camera/proc/isWireColorCut(wireColor)
 	var/wireFlag = WireColorToFlag[wireColor]
 	return ((src.wires & wireFlag) == 0)
 
-/obj/machinery/camera/proc/isWireCut(var/wireIndex)
+/obj/machinery/camera/proc/isWireCut(wireIndex)
 	var/wireFlag = IndexToFlag[wireIndex]
 	return ((src.wires & wireFlag) == 0)
 
@@ -40,7 +40,7 @@
 	else
 		return 0
 
-/obj/machinery/camera/proc/cut(var/wireColor)
+/obj/machinery/camera/proc/cut(wireColor)
 	var/wireFlag = WireColorToFlag[wireColor]
 	var/wireIndex = WireColorToIndex[wireColor]
 	wires &= ~wireFlag
@@ -49,8 +49,7 @@
 			setViewRange(short_range)
 
 		if(CAMERA_WIRE_POWER)
-			deactivate(usr, 1)
-			//shock(usr)
+			toggle_cam(TRUE, usr)
 
 		if(CAMERA_WIRE_LIGHT)
 			light_disabled = 1
@@ -60,7 +59,7 @@
 
 	src.interact(usr)
 
-/obj/machinery/camera/proc/mend(var/wireColor)
+/obj/machinery/camera/proc/mend(wireColor)
 	var/wireFlag = WireColorToFlag[wireColor]
 	var/wireIndex = WireColorToIndex[wireColor]
 	wires |= wireFlag
@@ -69,7 +68,7 @@
 			setViewRange(initial(view_range))
 
 		if(CAMERA_WIRE_POWER)
-			deactivate(usr, 1)
+			toggle_cam(TRUE, usr)
 
 		if(CAMERA_WIRE_LIGHT)
 			light_disabled = 0
@@ -80,7 +79,7 @@
 	src.interact(usr)
 
 
-/obj/machinery/camera/proc/pulse(var/wireColor)
+/obj/machinery/camera/proc/pulse(wireColor)
 	var/wireIndex = WireColorToIndex[wireColor]
 	switch(wireIndex)
 		if(CAMERA_WIRE_FOCUS)
@@ -88,17 +87,17 @@
 			setViewRange(new_range)
 
 		if(CAMERA_WIRE_POWER)
-			deactivate(usr, 0) // Kicks anyone watching the camera
+			disconnect_viewers()
 
 		if(CAMERA_WIRE_LIGHT)
 			light_disabled = !light_disabled
 
 		if(CAMERA_WIRE_ALARM)
-			src.visible_message("\icon[src] *beep*", "\icon[src] *beep*")
+			src.visible_message("[bicon(src)] *beep*", "[bicon(src)] *beep*")
 
 	src.interact(usr)
 
-/obj/machinery/camera/interact(mob/living/user as mob)
+/obj/machinery/camera/interact(mob/living/user)
 	if(!panel_open)
 		return
 
@@ -134,32 +133,35 @@
 
 
 /obj/machinery/camera/Topic(href, href_list)
-	..()
-	if (in_range(src, usr) && istype(src.loc, /turf))
-		usr.set_machine(src)
-		if (href_list["wires"])
-			var/t1 = text2num(href_list["wires"])
-			if (!( istype(usr.get_active_hand(), /obj/item/weapon/wirecutters) ))
-				usr << "You need wirecutters!"
-				return
-			if (src.isWireColorCut(t1))
-				src.mend(t1)
-			else
-				src.cut(t1)
-		else if (href_list["pulse"])
-			var/t1 = text2num(href_list["pulse"])
-			if (!istype(usr.get_active_hand(), /obj/item/device/multitool))
-				usr << "You need a multitool!"
-				return
-			if (src.isWireColorCut(t1))
-				usr << "You can't pulse a cut wire."
-				return
-			else
-				src.pulse(t1)
-		else if (href_list["close2"])
-			usr << browse(null, "window=wires")
-			usr.unset_machine()
-			return
+	. = ..()
+	if(!.)
+		return
+
+	if (href_list["wires"])
+		var/t1 = text2num(href_list["wires"])
+		if (!( istype(usr.get_active_hand(), /obj/item/weapon/wirecutters) ))
+			to_chat(usr, "You need wirecutters!")
+			return FALSE
+		if (src.isWireColorCut(t1))
+			src.mend(t1)
+		else
+			src.cut(t1)
+	else if (href_list["pulse"])
+		var/t1 = text2num(href_list["pulse"])
+		if (!istype(usr.get_active_hand(), /obj/item/device/multitool))
+			to_chat(usr, "You need a multitool!")
+			return FALSE
+		if (src.isWireColorCut(t1))
+			to_chat(usr, "You can't pulse a cut wire.")
+			return FALSE
+		else
+			src.pulse(t1)
+	else if (href_list["close2"])
+		usr << browse(null, "window=wires")
+		usr.unset_machine(src)
+		return FALSE
+
+	updateUsrDialog()
 
 
 #undef CAMERA_WIRE_FOCUS

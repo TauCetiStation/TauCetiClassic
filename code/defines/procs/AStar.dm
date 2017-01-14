@@ -120,7 +120,7 @@ PathNode
 /proc/PathWeightCompare(PathNode/a, PathNode/b)
 	return a.f - b.f
 
-/proc/AStar(start,end,adjacent,dist,maxnodes,maxnodedepth = 30,mintargetdist,minnodedist,id=null, var/turf/exclude=null)
+/proc/AStar(start,end,adjacent,dist,maxnodes,maxnodedepth = 30,mintargetdist,minnodedist,id=null, turf/exclude=null)
 
 //	world << "A*: [start] [end] [adjacent] [dist] [maxnodes] [maxnodedepth] [mintargetdist], [minnodedist] [id]"
 	var/PriorityQueue/open = new /PriorityQueue(/proc/PathWeightCompare)

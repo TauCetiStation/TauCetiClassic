@@ -103,6 +103,7 @@
 	caliber = "14.5mm"
 	projectile_type = /obj/item/projectile/bullet/heavy/a145
 
+
 /obj/item/ammo_casing/r4046
 	name = "A 40x46mm grenade"
 	desc = "A 40x46mm grenade (rubber)."
@@ -110,10 +111,23 @@
 	caliber = "40x46"
 	projectile_type = /obj/item/projectile/bullet/grenade/r4046
 
+/obj/item/ammo_casing/r4046/chem/teargas
+	desc = "A 40x46mm grenade (teargas)."
+	projectile_type = /obj/item/projectile/bullet/chem/teargas
+
+/obj/item/ammo_casing/r4046/chem/EMP
+	desc = "A 40x46mm grenade (EMP)."
+	projectile_type = /obj/item/projectile/bullet/chem/EMP
+
+/obj/item/ammo_casing/r4046/chem/Exp
+	desc = "A 40x46mm grenade (Exp)."
+	projectile_type = /obj/item/projectile/bullet/chem/Exp
+
+
 /obj/item/ammo_casing/caseless
 	desc = "A caseless bullet casing."
 
-/obj/item/ammo_casing/caseless/fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, params, var/distro, var/quiet)
+/obj/item/ammo_casing/caseless/fire(atom/target, mob/living/user, params, distro, quiet)
 	if (..())
 		loc = null
 		return 1
@@ -128,7 +142,6 @@
 /obj/item/ammo_casing/caseless/rocket
 	name = "HE rocket shell"
 	desc = "A high explosive designed to be fired from a launcher."
-	icon = 'tauceti/items/weapons/syndicate/syndicate_guns.dmi'
 	icon_state = "rocket-he"
 	projectile_type = "/obj/item/projectile/missile"
 	caliber = "rocket"
@@ -137,7 +150,6 @@
 	name = "EMP rocket shell"
 	desc = "A EMP rocket designed to be fired from a launcher."
 	icon_state = "rocket-emp"
-	icon = 'tauceti/items/weapons/syndicate/syndicate_guns.dmi'
 	projectile_type = "/obj/item/projectile/missile/emp"
 	caliber = "rocket"
 
@@ -147,7 +159,39 @@
 	projectile_type = "/obj/item/projectile/bullet/chameleon"
 	caliber = ".45"
 
-//=================NEW PROJECTILE HOLDERS=================\\
+/obj/item/ammo_casing/a3006
+	desc = "A .30-06 bullet casing."
+	caliber = "a3006"
+	projectile_type = "/obj/item/projectile/bullet/midbullet3"
+
 /obj/item/ammo_casing/l10
 	caliber = "energy"
 	projectile_type = "/obj/item/projectile/l10"
+
+/obj/item/ammo_casing/flare
+	desc = "A flare for flare gun."
+	caliber = "flare"
+	icon_state = "flare"
+	projectile_type = "/obj/item/projectile/bullet/flare"
+
+/obj/item/ammo_casing/c38m
+	desc = "A .38 bullet casing."
+	caliber = "38"
+	projectile_type = /obj/item/projectile/bullet/midbullet2
+
+/obj/item/ammo_box/c38m
+	name = "speed loader (.38)"
+	icon_state = "38"
+	ammo_type = /obj/item/ammo_casing/c38m
+	max_ammo = 6
+	multiple_sprites = 1
+
+/obj/item/ammo_casing/a556
+	desc = "A 5.56mm bullet casing."
+	caliber = "5.56mm"
+	projectile_type = /obj/item/projectile/bullet/rifle2
+
+/obj/item/ammo_casing/a556i
+	desc = "A 5.56mm incendiary bullet casing."
+	caliber = "5.56mm"
+	projectile_type = /obj/item/projectile/bullet/incendiary

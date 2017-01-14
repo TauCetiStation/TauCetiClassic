@@ -15,7 +15,7 @@
 	w_class = 3
 	var/caught_bees = 0
 
-/obj/item/weapon/bee_net/attack_self(mob/user as mob)
+/obj/item/weapon/bee_net/attack_self(mob/user)
 	var/turf/T = get_step(get_turf(user), user.dir)
 	for(var/mob/living/simple_animal/bee/B in T)
 		if(B.feral < 0)
@@ -65,7 +65,6 @@
 	name = "bottle of BeezEez"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle17"
-	flags = FPRINT |  TABLEPASS
 	New()
 		src.pixel_x = rand(-5.0, 5)
 		src.pixel_y = rand(-5.0, 5)

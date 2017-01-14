@@ -171,7 +171,7 @@
 						H.dna.features["mcolor"] = sanitize_hexcolor(new_mutantcolor)
 
 					else
-						H << "<span class='notice'>Invalid color. Your color is not bright enough.</span>"
+						to_chat(H, "<span class='notice'>Invalid color. Your color is not bright enough.</span>")
 
 			H.update_body()
 			H.update_hair()
@@ -186,14 +186,14 @@
 			if(H.gender == "male")
 				if(alert(H, "Become a Witch?", "Confirmation", "Yes", "No") == "Yes")
 					H.gender = "female"
-					H << "<span class='notice'>Man, you feel like a woman!</span>"
+					to_chat(H, "<span class='notice'>Man, you feel like a woman!</span>")
 				else
 					return
 
 			else
 				if(alert(H, "Become a Warlock?", "Confirmation", "Yes", "No") == "Yes")
 					H.gender = "male"
-					H << "<span class='notice'>Whoa man, you feel like a man!</span>"
+					to_chat(H, "<span class='notice'>Whoa man, you feel like a man!</span>")
 				else
 					return
 			H.update_hair()
@@ -204,7 +204,39 @@
 			var/hairchoice = alert(H, "Hair style or hair color?", "Change Hair", "Style", "Color")
 
 			if(hairchoice == "Style") //So you just want to use a mirror then?
-				..()
+				var/userloc = H.loc
+				//see code/modules/mob/new_player/preferences.dm at approx line 545 for comments!
+				//this is largely copypasted from there.
+				//handle facial hair (if necessary)
+				if(H.gender == MALE)
+					var/list/species_facial_hair = list()
+					if(H.species)
+						for(var/i in facial_hair_styles_list)
+							var/datum/sprite_accessory/facial_hair/tmp_facial = facial_hair_styles_list[i]
+							if(H.species.name in tmp_facial.species_allowed)
+								species_facial_hair += i
+					else
+						species_facial_hair = facial_hair_styles_list
+					var/new_style = input(user, "Select a facial hair style", "Grooming")  as null|anything in species_facial_hair
+					if(userloc != H.loc)
+						return	//no tele-grooming
+					if(new_style)
+						H.f_style = new_style
+				//handle normal hair
+				var/list/species_hair = list()
+				if(H.species)
+					for(var/i in hair_styles_list)
+						var/datum/sprite_accessory/hair/tmp_hair = hair_styles_list[i]
+						if(H.species.name in tmp_hair.species_allowed)
+							species_hair += i
+				else
+					species_hair = hair_styles_list
+				var/new_style = input(user, "Select a hair style", "Grooming")  as null|anything in species_hair
+				if(userloc != H.loc)
+					return	//no tele-grooming
+				if(new_style)
+					H.h_style = new_style
+				H.update_hair()
 			else
 				var/new_hair = input(H, "Choose your hair color", "Hair Color") as null|color
 				if(new_hair)

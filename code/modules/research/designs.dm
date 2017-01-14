@@ -45,7 +45,7 @@ datum/design						//Datum for object designs, used in construction
 
 //A proc to calculate the reliability of a design based on tech levels and innate modifiers.
 //Input: A list of /datum/tech; Output: The new reliabilty.
-datum/design/proc/CalcReliability(var/list/temp_techs)
+datum/design/proc/CalcReliability(list/temp_techs)
 	var/new_reliability
 	for(var/datum/tech/T in temp_techs)
 		if(T.id in req_tech)
@@ -65,6 +65,15 @@ datum/design/seccamera
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/security
+
+datum/design/telepad_concole
+	name = " Circuit Design (Telescience Console) "
+	desc = "Allows for the construction of circuit boards used to build telescience computers."
+	id = "telepad_concole"
+	req_tech = list("programming" = 4, "bluespace" = 3, "engineering" = 3)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/telesci_console
 
 datum/design/aicore
 	name = "Circuit Design (AI Core)"
@@ -283,6 +292,15 @@ datum/design/mechacontrol
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/mecha_control
 
+datum/design/mechrecharger
+	name = "circuit board (Mechbay Recharger)"
+	desc = "Allows for the construction of circuit boards used to build a mechbay recharger."
+	id = "mechrecharger"
+	req_tech = list("programming" = 4, "powerstorage" = 4, "engineering" = 3)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/mech_recharger
+
 datum/design/mechapower
 	name = "Circuit Design (Mech Bay Power Control Console)"
 	desc = "Allows for the construction of circuit boards used to build a mech bay power control console."
@@ -308,7 +326,7 @@ datum/design/ordercomp
 	req_tech = list("programming" = 2)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
-	build_path = /obj/item/weapon/circuitboard/ordercomp
+	build_path = /obj/item/weapon/circuitboard/computer/cargo/request
 
 datum/design/supplycomp
 	name = "Circuit Design (Supply shuttle console)"
@@ -317,7 +335,7 @@ datum/design/supplycomp
 	req_tech = list("programming" = 3)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
-	build_path = /obj/item/weapon/circuitboard/supplycomp
+	build_path = /obj/item/weapon/circuitboard/computer/cargo
 
 datum/design/comm_monitor
 	name = "Circuit Design (Telecommunications Monitoring Console)"
@@ -831,18 +849,20 @@ datum/design/adv_capacitor
 	desc = "A stock part used in the construction of various devices."
 	id = "adv_capacitor"
 	req_tech = list("powerstorage" = 3)
-	build_type = PROTOLATHE
+	build_type = PROTOLATHE | MECHFAB
 	materials = list(MAT_METAL = 400, MAT_GLASS = 400, MAT_SILVER = 250)
 	build_path = /obj/item/weapon/stock_parts/capacitor/adv
+	category = list("Misc")
 
 datum/design/adv_sensor
 	name = "Advanced Sensor Module"
 	desc = "A stock part used in the construction of various devices."
 	id = "adv_sensor"
 	req_tech = list("magnets" = 3)
-	build_type = PROTOLATHE
+	build_type = PROTOLATHE | MECHFAB
 	materials = list(MAT_METAL = 400, MAT_GLASS = 160, MAT_SILVER = 250)
 	build_path = /obj/item/weapon/stock_parts/scanning_module/adv
+	category = list("Misc")
 
 datum/design/nano_mani
 	name = "Nano Manipulator"
@@ -877,20 +897,22 @@ datum/design/super_capacitor
 	desc = "A stock part used in the construction of various devices."
 	id = "super_capacitor"
 	req_tech = list("powerstorage" = 5, "materials" = 4)
-	build_type = PROTOLATHE
+	build_type = PROTOLATHE  |MECHFAB
 	reliability = 71
 	materials = list(MAT_METAL = 400, MAT_GLASS = 400, MAT_GOLD = 250)
 	build_path = /obj/item/weapon/stock_parts/capacitor/super
+	category = list("Misc")
 
 datum/design/phasic_sensor
 	name = "Phasic Sensor Module"
 	desc = "A stock part used in the construction of various devices."
 	id = "phasic_sensor"
 	req_tech = list("magnets" = 5, "materials" = 3)
-	build_type = PROTOLATHE
+	build_type = PROTOLATHE | MECHFAB
 	materials = list(MAT_METAL = 400, MAT_GLASS = 160, MAT_SILVER = 80, MAT_GOLD = 250)
 	reliability = 72
 	build_path = /obj/item/weapon/stock_parts/scanning_module/phasic
+	category = list("Misc")
 
 datum/design/pico_mani
 	name = "Pico Manipulator"
@@ -1289,7 +1311,16 @@ datum/design/hydroponics
 	build_path = /obj/item/weapon/circuitboard/holopad
 	//category = list("Misc. Machinery")
 
-datum/design/microwave
+/datum/design/deepfryer
+	name = "Deep Fryer Board"
+	desc = "The circuit board for a deep fryer."
+	id = "deepfryer"
+	req_tech = list("programming" = 1)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/deepfryer
+
+/datum/design/microwave
 	name = "Microwave Board"
 	desc = "The circuit board for a microwave."
 	id = "microwave"
@@ -1297,6 +1328,33 @@ datum/design/microwave
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/microwave
+
+/datum/design/oven
+	name = "Oven Board"
+	desc = "The circuit board for a oven."
+	id = "oven"
+	req_tech = list("programming" = 1)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/oven
+
+/datum/design/grill
+	name = "Grill Board"
+	desc = "The circuit board for a grill."
+	id = "grill"
+	req_tech = list("programming" = 1)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/grill
+
+/datum/design/candymaker
+	name = "Candy Machine Board"
+	desc = "The circuit board for a candy machine."
+	id = "candymaker"
+	req_tech = list("programming" = 1)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/candymaker
 
 datum/design/chem_dispenser
 	name = "Portable Chem Dispenser Board"
@@ -1561,6 +1619,15 @@ datum/design/synthetic_flash
 	build_path = /obj/item/device/flash/synthetic
 	category = list("Misc")
 
+datum/design/cyborg_analyzer
+	name = "Cyborg Analyzer"
+	desc = "A hand-held scanner able to diagnose robotic injuries."
+	id = "cyborg_analyzer"
+	req_tech = list("materials" = 4, "engineering" = 5, "biotech" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 7000, MAT_GLASS = 7000, MAT_SILVER = 1500, MAT_DIAMOND = 1000)
+	build_path = /obj/item/device/robotanalyzer
+
 datum/design/nanopaste
 	name = "nanopaste"
 	desc = "A tube of paste containing swarms of repair nanites. Very effective in repairing robotic machinery."
@@ -1587,6 +1654,15 @@ datum/design/implant_chem
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 1000, MAT_GLASS = 1000, MAT_SILVER = 100, MAT_GOLD = 100)
 	build_path = /obj/item/weapon/implantcase/chem
+
+datum/design/implant_death
+	name = "Glass Case- 'Death Alarm'"
+	desc = "A case containing a death alarm implant."
+	id = "implant_death"
+	req_tech = list("materials" = 2, "biotech" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 1000, MAT_GLASS = 1000, MAT_SILVER = 100, MAT_GOLD = 100)
+	build_path = /obj/item/weapon/implantcase/death_alarm
 
 datum/design/implant_free
 	name = "boxed freedom implant (with injector)"
@@ -1628,6 +1704,26 @@ datum/design/noreactbeaker
 	reliability = 76
 	build_path = /obj/item/weapon/reagent_containers/glass/beaker/noreact
 	category = list("Misc")
+
+datum/design/defibrillators
+	name = "Defibrillators"
+	desc = "Defibrillators to revive people."
+	id = "defibrillators"
+	req_tech = list("combat" = 2,"biotech" = 2)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 2000, MAT_GLASS = 50)
+	reliability = 76
+	build_path = /obj/item/weapon/defibrillator
+
+/datum/design/sensor_device
+	name = "Handheld Crew Monitor"
+	desc = "A device for tracking crew members on the station."
+	id = "sensor_device"
+	req_tech = list("biotech" = 4, "magnets" = 4)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 7000, MAT_GLASS = 7000)
+	reliability = 76
+	build_path = /obj/item/device/sensor_device
 
 datum/design/scalpel_laser1
 	name = "Basic Laser Scalpel"
@@ -1743,6 +1839,15 @@ datum/design/temp_gun
 	materials = list(MAT_METAL = 5000, MAT_GLASS = 500, MAT_SILVER = 3000)
 	build_path = /obj/item/weapon/gun/energy/temperature
 
+datum/design/tesla_gun
+	name = "Tesla Cannon"
+	desc = "A gun which uses electrical discharges to hit multiple targets"
+	id = "tesla_gun"
+	req_tech = list("combat" = 4, "materials" = 4, "powerstorage" = 5, "magnets" = 4, "engineering" = 4)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 10000, MAT_GOLD = 1000, MAT_SILVER = 4000)
+	build_path = /obj/item/weapon/gun/tesla
+
 datum/design/flora_gun
 	name = "Floral Somatoray"
 	desc = "A tool that discharges controlled radiation which induces mutation in plant cells. Harmless to other organic life."
@@ -1806,28 +1911,37 @@ datum/design/jackhammer
 	desc = "Cracks rocks with sonic blasts, perfect for killing cave lizards."
 	id = "jackhammer"
 	req_tech = list("materials" = 3, "powerstorage" = 2, "engineering" = 2)
-	build_type = PROTOLATHE
+	build_type = PROTOLATHE | MINEFAB
 	materials = list(MAT_METAL = 2000, MAT_GLASS = 500, MAT_SILVER = 500)
 	build_path = /obj/item/weapon/pickaxe/drill/jackhammer
+	construction_time=100
+	category = list("Tools")
+
 
 datum/design/drill
 	name = "Mining Drill"
 	desc = "Yours is the drill that will pierce through the rock walls."
 	id = "drill"
 	req_tech = list("materials" = 2, "powerstorage" = 3, "engineering" = 2)
-	build_type = PROTOLATHE
+	build_type = PROTOLATHE | MINEFAB
 	materials = list(MAT_METAL = 6000, MAT_GLASS = 1000) //expensive, but no need for miners.
 	build_path = /obj/item/weapon/pickaxe/drill
+	construction_time=100
+	category = list("Tools")
+
 
 datum/design/plasmacutter
 	name = "Plasma Cutter"
 	desc = "You could use it to cut limbs off of xenos! Or, you know, mine stuff."
 	id = "plasmacutter"
 	req_tech = list("materials" = 4, "phorontech" = 3, "engineering" = 3)
-	build_type = PROTOLATHE
+	build_type = PROTOLATHE | MINEFAB
 	materials = list(MAT_METAL = 1500, MAT_GLASS = 500, MAT_GOLD = 500, MAT_PHORON = 500)
 	reliability = 79
 	build_path = /obj/item/weapon/pickaxe/plasmacutter
+	construction_time=300
+	category = list("Tools")
+
 
 datum/design/pick_diamond
 	name = "Diamond Pickaxe"
@@ -1843,19 +1957,46 @@ datum/design/drill_diamond
 	desc = "Yours is the drill that will pierce the heavens!"
 	id = "drill_diamond"
 	req_tech = list("materials" = 6, "powerstorage" = 4, "engineering" = 4)
-	build_type = PROTOLATHE
+	build_type = PROTOLATHE | MINEFAB
 	materials = list(MAT_METAL = 3000, MAT_GLASS = 1000, MAT_DIAMOND = 3750) //Yes, a whole diamond is needed.
 	reliability = 79
 	build_path = /obj/item/weapon/pickaxe/drill/diamond_drill
+	construction_time=100
+	category = list("Tools")
+
 
 datum/design/mesons
 	name = "Optical Meson Scanners"
 	desc = "Used for seeing walls, floors, and stuff through anything."
 	id = "mesons"
 	req_tech = list("magnets" = 2, "engineering" = 2)
-	build_type = PROTOLATHE
+	build_type = PROTOLATHE | MINEFAB
 	materials = list(MAT_METAL = 50, MAT_GLASS = 50)
 	build_path = /obj/item/clothing/glasses/meson
+	construction_time=100
+	category = list("Tools")
+
+datum/design/scaner_imp
+	name = "Improved ore scaner"
+	desc = "A complex device used to locate ore deep underground."
+	id = "scaner_imp"
+	req_tech = list("magnets" = 2, "engineering" = 3)
+	build_type = PROTOLATHE | MINEFAB
+	materials = list(MAT_METAL = 500, MAT_GLASS = 2000)
+	build_path = /obj/item/weapon/mining_scanner/improved
+	construction_time=300
+	category = list("Tools")
+
+datum/design/scaner_adv
+	name = "Advanced ore scaner"
+	desc = "A complex device used to locate ore deep underground."
+	id = "scaner_adv"
+	req_tech = list("magnets" = 4, "engineering" = 5)
+	build_type = PROTOLATHE | MINEFAB
+	materials = list(MAT_METAL = 8000, MAT_SILVER = 200, MAT_DIAMOND = 100)
+	build_path = /obj/item/weapon/mining_scanner/improved/adv
+	construction_time=450
+	category = list("Tools")
 
 /////////////////////////////////////////
 //////////////Blue Space/////////////////
@@ -1912,6 +2053,15 @@ datum/design/security_hud
 	materials = list(MAT_METAL = 50, MAT_GLASS = 50)
 	build_path = /obj/item/clothing/glasses/hud/security
 
+datum/design/mining_hud
+	name = "Geological Optical Scanner"
+	desc = "A heads-up display that scans the rocks in view and provides some data about their composition."
+	id = "mining_hud"
+	req_tech = list("materials" = 4, "magnets" = 4)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 50, MAT_GLASS = 50)
+	build_path = /obj/item/clothing/glasses/hud/mining
+
 /////////////////////////////////////////
 //////////////////Test///////////////////
 /////////////////////////////////////////
@@ -1962,13 +2112,22 @@ datum/design/borg_syndicate_module
 /////////////////////////////////////////
 /////////////PDA and Radio stuff/////////
 /////////////////////////////////////////
+datum/design/standart_encrypt
+	name = "Standard Encryption Key"
+	desc = "An encyption key for a radio headset.  Contains cypherkeys."
+	id = "standart_encrypt"
+	req_tech = list("materials" = 2, "engineering" = 2)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 300, MAT_GLASS = 600)
+	build_path = /obj/item/device/encryptionkey
+
 datum/design/binaryencrypt
 	name = "Binary Encrpytion Key"
 	desc = "An encyption key for a radio headset.  Contains cypherkeys."
 	id = "binaryencrypt"
 	req_tech = list("syndicate" = 2)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 300, MAT_GLASS = 300)
+	materials = list(MAT_METAL = 300, MAT_GLASS = 600)
 	build_path = /obj/item/device/encryptionkey/binary
 
 datum/design/pda
@@ -2152,9 +2311,11 @@ datum/design/body_warp
 	desc = "A device used for teleporting injured or dead people."
 	id = "body_warp"
 	req_tech = list("materials" = 2)
-	build_type = PROTOLATHE
+	build_type = PROTOLATHE | MINEFAB
 	materials = list(MAT_METAL = 3500, MAT_GLASS = 3500)
 	build_path = /obj/item/weapon/medical/teleporter
+	construction_time=100
+	category = list("Support")
 
 datum/design/spraycan
 	name = "Spraycan"

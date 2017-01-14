@@ -5,7 +5,7 @@
 	item_state = "ionrifle"
 	origin_tech = "combat=2;magnets=4"
 	w_class = 4.0
-	flags =  FPRINT | TABLEPASS | CONDUCT
+	flags =  CONDUCT
 	slot_flags = SLOT_BACK
 	ammo_type = list(/obj/item/ammo_casing/energy/ion)
 
@@ -31,6 +31,17 @@
 		update_icon()
 	else
 		return
+
+/obj/item/weapon/gun/energy/ionrifle/classic
+	name = "ion rifle"
+	desc = "A man portable anti-armor weapon designed to disable mechanical threats."
+	icon_state = "oldion"
+	item_state = "oldion"
+	slot_flags = null
+
+/obj/item/weapon/gun/energy/ionrifle/tactifool
+	icon_state = "tfionrifle"
+	item_state = "tfionrifle"
 
 /obj/item/weapon/gun/energy/decloner
 	name = "biological demolecularisor"
@@ -68,7 +79,7 @@
 		update_icon()
 		return 1
 
-	attack_self(mob/living/user as mob)
+	attack_self(mob/living/user)
 		select_fire(user)
 		update_icon()
 		return
@@ -128,14 +139,14 @@ obj/item/weapon/gun/energy/staff/focus
 	item_state = "focus"
 	projectile_type = "/obj/item/projectile/forcebolt"
 
-	attack_self(mob/living/user as mob)
+	attack_self(mob/living/user)
 		if(projectile_type == "/obj/item/projectile/forcebolt")
 			charge_cost = 200
-			user << "\red The [src.name] will now strike a small area."
+			to_chat(user, "\red The [src.name] will now strike a small area.")
 			projectile_type = "/obj/item/projectile/forcebolt/strong"
 		else
 			charge_cost = 100
-			user << "\red The [src.name] will now strike only a single person."
+			to_chat(user, "\red The [src.name] will now strike only a single person.")
 			projectile_type = "/obj/item/projectile/forcebolt"
 	*/
 
@@ -199,25 +210,130 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 	set name = "Use Sniper Scope"
 	set popup_menu = 0
 	if(usr.stat || !(istype(usr,/mob/living/carbon/human)))
-		usr << "You are unable to focus down the scope of the rifle."
+		to_chat(usr, "You are unable to focus down the scope of the rifle.")
 		return
 	//if(!zoom && global_hud.darkMask[1] in usr.client.screen)
 	//	usr << "Your welding equipment gets in the way of you looking down the scope"
 	//	return
 	if(!zoom && usr.get_active_hand() != src)
-		usr << "You are too distracted to look down the scope, perhaps if it was in your active hand this might work better"
+		to_chat(usr, "You are too distracted to look down the scope, perhaps if it was in your active hand this might work better")
 		return
 
 	if(usr.client.view == world.view)
-		if(!usr.hud_used.hud_shown)
-			usr.button_pressed_F12(1)	// If the user has already limited their HUD this avoids them having a HUD when they zoom in
-		usr.button_pressed_F12(1)
+		if(usr.hud_used)
+			usr.hud_used.show_hud(HUD_STYLE_REDUCED)
 		usr.client.view = 12
 		zoom = 1
 	else
 		usr.client.view = world.view
-		if(!usr.hud_used.hud_shown)
-			usr.button_pressed_F12(1)
+		if(usr.hud_used)
+			usr.hud_used.show_hud(HUD_STYLE_STANDARD)
 		zoom = 0
-	usr << "<font color='[zoom?"blue":"red"]'>Zoom mode [zoom?"en":"dis"]abled.</font>"
+	to_chat(usr, "<font color='[zoom?"blue":"red"]'>Zoom mode [zoom?"en":"dis"]abled.</font>")
 	return
+
+//Tesla Cannon
+/obj/item/weapon/gun/tesla
+	name = "Tesla Cannon"
+	desc = "Cannon which uses electrical charge to damage multiple targets. Spin the generator handle to charge it up"
+	icon = 'icons/obj/gun.dmi'
+	icon_state = "tesla"
+	item_state = "tesla"
+	w_class = 4.0
+	origin_tech = "combat=5;materials=5;powerstorage=5;magnets=5;engineering=5"
+	var/charge = 0
+	var/charging = FALSE
+	var/cooldown = FALSE
+
+/obj/item/weapon/gun/tesla/New()
+	..()
+	update_icon()
+
+/obj/item/weapon/gun/tesla/proc/charge(mob/living/user)
+	set waitfor = FALSE
+	if(do_after(user, 40, target = src))
+		if(charging && charge < 3)
+			charge++
+			playsound(loc, "sparks", 75, 1, -1)
+			if(charge < 3)
+				charge(user)
+			else
+				charging = FALSE
+		else
+			charging = FALSE
+	else
+		to_chat(user, "<span class='danger'>Generator is too difficult to spin while moving! Charging aborted.</span>")
+		charging = FALSE
+	update_icon()
+
+/obj/item/weapon/gun/tesla/attack_self(mob/living/user)
+	if(charging)
+		charging = FALSE
+		user.visible_message("<span class='danger'>[user] stops spinning generator on Tesla Cannon!</span>",\
+		                     "<span class='red'>You stop charging Tesla Cannon...</span>")
+		cooldown = TRUE
+		spawn(50)
+			cooldown = FALSE
+		return
+	if(cooldown || charge == 3)
+		return
+	user.visible_message("<span class='danger'>[user] starts spinning generator on Tesla Cannon!</span>",\
+	                     "<span class='red'>You start charging Tesla Cannon...</span>")
+	charging = TRUE
+	charge(user)
+
+/obj/item/weapon/gun/tesla/special_check(mob/user, atom/target)
+	if(!charge)
+		to_chat(user, "<span class='red'>Tesla Cannon is not charged!</span>")
+	else if(!istype(target, /mob/living))
+		to_chat(user, "<span class='red'>Tesla Cannon needs to be aimed directly at living target.</span>")
+	else if(charging)
+		to_chat(user, "<span class='red'>You can't shoot while charging!</span>")
+	else if(!los_check(user, target))
+		to_chat(user, "<span class='red'>Something is blocking our line of shot!</span>")
+	else
+		Bolt(user, target, user, charge)
+		charge = 0
+
+	update_icon()
+
+	/*if(user.hand) with custom inhand sprites - yes, without - no.
+		user.update_inv_l_hand()
+	else
+		user.update_inv_r_hand()*/
+
+	return 0
+
+/obj/item/weapon/gun/tesla/proc/los_check(mob/A, mob/B)
+	for(var/X in getline(A,B))
+		var/turf/T = X
+		if(T.density)
+			return 0
+	return 1
+
+/obj/item/weapon/gun/tesla/proc/Bolt(mob/origin, mob/living/target, mob/user, jumps)
+	origin.Beam(target, "lightning[rand(1,12)]", 'icons/effects/effects.dmi', time = 5)
+	target.electrocute_act(15 * (jumps + 1), src, , , 1)
+	playsound(target, 'sound/machines/defib_zap.ogg', 50, 1, -1)
+	var/list/possible_targets = new
+	for(var/mob/living/M in range(2, target))
+		if(user == M || !los_check(target, M) || origin == M || target == M)
+			continue
+		possible_targets += M
+	if(!possible_targets.len)
+		return
+	var/mob/living/next = pick(possible_targets)
+	msg_admin_attack("[origin.name] ([origin.ckey]) shot [target.name] ([target.ckey]) with a tesla bolt [ADMIN_JMP(origin)] [ADMIN_FLW(origin)]")
+	if(next && jumps > 0)
+		Bolt(target, next, user, --jumps)
+
+/obj/item/weapon/gun/tesla/update_icon()
+	icon_state = "[initial(icon_state)][charge]"
+
+/obj/item/weapon/gun/tesla/emp_act(severity)
+	if(charge)
+		if(istype(loc, /mob/living/carbon))
+			var/mob/living/carbon/M = loc
+			M.electrocute_act(5 * (4 - severity) * charge, src, , , 1)
+		charge = 0
+		update_icon()

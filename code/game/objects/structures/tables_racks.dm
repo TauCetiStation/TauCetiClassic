@@ -13,7 +13,7 @@
 /obj/structure/table
 	name = "table"
 	desc = "A square piece of metal standing on four metal legs. It can not move."
-	icon = 'icons/obj/structures.dmi'
+	icon = 'icons/obj/tables.dmi'
 	icon_state = "table"
 	density = 1
 	anchored = 1.0
@@ -320,7 +320,7 @@
 				return 1
 	return 1
 
-/obj/structure/table/CheckExit(atom/movable/O as mob|obj, target as turf)
+/obj/structure/table/CheckExit(atom/movable/O, target)
 	if(istype(O) && O.checkpass(PASSTABLE))
 		return 1
 	if(istype(O) && O.checkpass(PASSCRAWL))
@@ -352,7 +352,7 @@
 		if (istype(G.affecting, /mob/living))
 			var/mob/living/M = G.affecting
 			var/mob/living/A = G.assailant
-			if (G.state < 2)
+			if (G.state < GRAB_AGGRESSIVE)
 				if(user.a_intent == "hurt")
 					if (prob(15))	M.Weaken(5)
 					M.apply_damage(8,def_zone = "head")
@@ -362,9 +362,11 @@
 					A.attack_log += "\[[time_stamp()]\] <font color='red'>Slams face of [M.name] against \the [src]([M.ckey])</font>"
 					msg_admin_attack("[key_name(A)] slams [key_name(M)] face against \the [src]")
 				else
-					user << "<span class='warning'>You need a better grip to do that!</span>"
+					to_chat(user, "<span class='warning'>You need a better grip to do that!</span>")
 					return
 			else
+				if(world.time < (G.last_action + UPGRADE_COOLDOWN))
+					return
 				G.affecting.loc = src.loc
 				G.affecting.Weaken(5)
 				visible_message("<span class='danger'>[G.assailant] puts [G.affecting] on \the [src].</span>")
@@ -374,7 +376,7 @@
 			return
 
 	if (istype(W, /obj/item/weapon/wrench))
-		user << "\blue Now disassembling table"
+		to_chat(user, "\blue Now disassembling table")
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		if(do_after(user,50, target = src))
 			destroy()
@@ -385,9 +387,9 @@
 
 	if(istype(W, /obj/item/weapon/melee/energy))
 		if(istype(W, /obj/item/weapon/melee/energy/blade) || (W:active && user.a_intent == "hurt"))
-			if(istype(src, /obj/structure/table/reinforced) && W:active)	//У обычных энергомечей нету 70 force как у ниндзи, поэтому не стоит
+			if(istype(src, /obj/structure/table/reinforced) && W:active)
 				..()
-				user << "<span class='notice'>You tried to slice through [src] but [W] is too weak.</span>"
+				to_chat(user, "<span class='notice'>You tried to slice through [src] but [W] is too weak.</span>")
 				return
 			user.do_attack_animation(src)
 			var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
@@ -400,7 +402,7 @@
 			destroy()
 			return
 
-	if(!(W.flags & ABSTRACT)) //Чтобы не класли на столы всякие тентакли и прочие абстрактные объекты
+	if(!(W.flags & ABSTRACT))
 		if(user.drop_item())
 			W.Move(loc)
 			var/list/click_params = params2list(params)
@@ -436,7 +438,7 @@
 		return
 
 	if(!flip(get_cardinal_dir(usr,src)))
-		usr << "<span class='notice'>It won't budge.</span>"
+		to_chat(usr, "<span class='notice'>It won't budge.</span>")
 		return
 
 	usr.visible_message("<span class='warning'>[usr] flips \the [src]!</span>")
@@ -446,7 +448,7 @@
 
 	return
 
-/obj/structure/table/proc/unflipping_check(var/direction)
+/obj/structure/table/proc/unflipping_check(direction)
 	for(var/mob/M in oview(src,0))
 		return 0
 
@@ -474,11 +476,11 @@
 		return
 
 	if (!unflipping_check())
-		usr << "<span class='notice'>It won't budge.</span>"
+		to_chat(usr, "<span class='notice'>It won't budge.</span>")
 		return
 	unflip()
 
-/obj/structure/table/proc/flip(var/direction)
+/obj/structure/table/proc/flip(direction)
 	if( !straight_table_check(turn(direction,90)) || !straight_table_check(turn(direction,-90)) )
 		return 0
 
@@ -563,29 +565,29 @@
 			return 1
 	return 0
 
-/obj/structure/table/reinforced/flip(var/direction)
+/obj/structure/table/reinforced/flip(direction)
 	if (status == 2)
 		return 0
 	else
 		return ..()
 
-/obj/structure/table/reinforced/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/structure/table/reinforced/attackby(obj/item/weapon/W, mob/user, params)
 	if (istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.remove_fuel(0, user))
 			if(src.status == 2)
-				user << "\blue Now weakening the reinforced table"
+				to_chat(user, "\blue Now weakening the reinforced table")
 				playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
 				if (do_after(user, 50, target = src))
 					if(!src || !WT.isOn()) return
-					user << "\blue Table weakened"
+					to_chat(user, "\blue Table weakened")
 					src.status = 1
 			else
-				user << "\blue Now strengthening the reinforced table"
+				to_chat(user, "\blue Now strengthening the reinforced table")
 				playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
 				if (do_after(user, 50, target = src))
 					if(!src || !WT.isOn()) return
-					user << "\blue Table strengthened"
+					to_chat(user, "\blue Table strengthened")
 					src.status = 2
 			return
 		return
@@ -605,7 +607,6 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "rack"
 	density = 1
-	flags = FPRINT
 	anchored = 1.0
 	throwpass = 1	//You can throw objects over this, despite it's density.
 	var/parts = /obj/item/weapon/rack_parts
@@ -641,7 +642,7 @@
 	else
 		return 0
 
-/obj/structure/rack/MouseDrop_T(obj/O as obj, mob/user as mob)
+/obj/structure/rack/MouseDrop_T(obj/O, mob/user)
 	if ((!( istype(O, /obj/item/weapon) ) || user.get_active_hand() != O))
 		return
 	if(isrobot(user))
@@ -651,7 +652,7 @@
 		step(O, get_dir(O, src))
 	return
 
-/obj/structure/rack/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/structure/rack/attackby(obj/item/weapon/W, mob/user)
 	if (istype(W, /obj/item/weapon/wrench))
 		new /obj/item/weapon/rack_parts( src.loc )
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
@@ -675,7 +676,7 @@
 	if(W && W.loc)	W.loc = src.loc
 	return
 
-/obj/structure/rack/meteorhit(obj/O as obj)
+/obj/structure/rack/meteorhit(obj/O)
 	qdel(src)
 
 

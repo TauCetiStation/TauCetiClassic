@@ -16,7 +16,7 @@
 	p = min(p, 100)
 	icon_state = "anobattery[round(p,25)]"
 
-/obj/item/weapon/anobattery/proc/use_power(var/amount)
+/obj/item/weapon/anobattery/proc/use_power(amount)
 	stored_charge = max(0, stored_charge - amount)
 
 /obj/item/weapon/anodevice
@@ -25,7 +25,9 @@
 	icon_state = "anodev"
 	var/activated = 0
 	var/duration = 0
+	var/duration_max = 300 //30 sec max duration
 	var/interval = 0
+	var/interval_max = 100 //10 sec max interval
 	var/time_end = 0
 	var/last_activation = 0
 	var/last_process = 0
@@ -37,10 +39,10 @@
 	..()
 	SSobj.processing |= src
 
-/obj/item/weapon/anodevice/attackby(var/obj/I as obj, var/mob/user as mob)
+/obj/item/weapon/anodevice/attackby(obj/I, mob/user)
 	if(istype(I, /obj/item/weapon/anobattery))
 		if(!inserted_battery)
-			user << "\blue You insert the battery."
+			to_chat(user, "\blue You insert the battery.")
 			user.drop_item()
 			I.loc = src
 			inserted_battery = I
@@ -48,17 +50,17 @@
 	else
 		return ..()
 
-/obj/item/weapon/anodevice/attack_self(var/mob/user as mob)
+/obj/item/weapon/anodevice/attack_self(mob/user)
 	return src.interact(user)
 
-/obj/item/weapon/anodevice/interact(var/mob/user)
+/obj/item/weapon/anodevice/interact(mob/user)
 	var/dat = "<b>Anomalous Materials Energy Utiliser</b><br>"
 	if(inserted_battery)
 		if(activated)
 			dat += "Device active.<br>"
 
-		dat += "[inserted_battery] inserted, anomaly ID: [inserted_battery.battery_effect.artifact_id ? inserted_battery.battery_effect.artifact_id : "NA"]<BR>"
-		dat += "<b>Charge:</b> [inserted_battery.stored_charge] / [inserted_battery.capacity]<BR>"
+		dat += "[inserted_battery] inserted, anomaly ID: [inserted_battery.battery_effect ? (inserted_battery.battery_effect.artifact_id == "" ? "???" : "[inserted_battery.battery_effect.artifact_id]") : "NA"]<BR>"
+		dat += "<b>Charge:</b> [round(inserted_battery.stored_charge,1)] / [inserted_battery.capacity]<BR>"
 		dat += "<b>Time left activated:</b> [round(max((time_end - last_process) / 10, 0))]<BR>"
 		if(activated)
 			dat += "<a href='?src=\ref[src];shutdown=1'>Shutdown</a><br>"
@@ -76,8 +78,9 @@
 	dat += "<hr>"
 	dat += "<a href='?src=\ref[src];refresh=1'>Refresh</a> <a href='?src=\ref[src];close=1'>Close</a>"
 
-	user << browse(dat, "window=anodevice;size=400x500")
-	onclose(user, "anodevice")
+	var/datum/browser/popup = new(user, "anodevice", name, 450, 500)
+	popup.set_content(dat)
+	popup.open()
 
 /obj/item/weapon/anodevice/process()
 	if(activated)
@@ -103,9 +106,9 @@
 					if(interval > 0)
 						//apply the touch effect to the holder
 						if(holder)
-							holder << "the \icon[src] [src] held by [holder] shudders in your grasp."
+							to_chat(holder, "the [bicon(src)] [src] held by [holder] shudders in your grasp.")
 						else
-							src.loc.visible_message("the \icon[src] [src] shudders.")
+							src.loc.visible_message("the [bicon(src)] [src] shudders.")
 						inserted_battery.battery_effect.DoEffectTouch(holder)
 
 						//consume power
@@ -131,13 +134,13 @@
 
 			//work out if we need to shutdown
 			if(inserted_battery.stored_charge <= 0)
-				src.loc.visible_message("\blue \icon[src] [src] buzzes.", "\blue \icon[src] You hear something buzz.")
+				src.loc.visible_message("\blue [bicon(src)] [src] buzzes.", "\blue [bicon(src)] You hear something buzz.")
 				shutdown_emission()
 			else if(world.time > time_end)
-				src.loc.visible_message("\blue \icon[src] [src] chimes.", "\blue \icon[src] You hear something chime.")
+				src.loc.visible_message("\blue [bicon(src)] [src] chimes.", "\blue [bicon(src)] You hear something chime.")
 				shutdown_emission()
 		else
-			src.visible_message("\blue \icon[src] [src] buzzes.", "\blue \icon[src] You hear something buzz.")
+			src.visible_message("\blue [bicon(src)] [src] buzzes.", "\blue [bicon(src)] You hear something buzz.")
 			shutdown_emission()
 		last_process = world.time
 
@@ -154,17 +157,17 @@
 		if(href_list["duration"])
 			duration += timedif
 			//max 30 sec duration
-			duration = min(max(duration, 0), 300)
+			duration = min(max(duration, 0), duration_max)
 			if(activated)
 				time_end += timedif
 		else if(href_list["interval"])
 			interval += timedif
 			//max 10 sec interval
-			interval = min(max(interval, 0), 100)
+			interval = min(max(interval, 0), interval_max)
 	if(href_list["startup"])
 		if(inserted_battery && inserted_battery.battery_effect && (inserted_battery.stored_charge > 0) )
 			activated = 1
-			src.visible_message("\blue \icon[src] [src] whirrs.", "\icon[src]\blue You hear something whirr.")
+			src.visible_message("\blue [bicon(src)] [src] whirrs.", "[bicon(src)]\blue You hear something whirr.")
 			if(!inserted_battery.battery_effect.activated)
 				inserted_battery.battery_effect.ToggleActivate(1)
 			time_end = world.time + duration
@@ -194,7 +197,7 @@
 	SSobj.processing.Remove(src)
 	return ..()
 
-/obj/item/weapon/anodevice/attack(mob/living/M as mob, mob/living/user as mob, def_zone)
+/obj/item/weapon/anodevice/attack(mob/living/M, mob/living/user, def_zone)
 	if (!istype(M))
 		return
 

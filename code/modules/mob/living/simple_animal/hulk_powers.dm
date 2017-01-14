@@ -2,7 +2,7 @@
 	name = "Leap"
 	desc = ""
 	panel = "Hulk"
-	charge_max = 150
+	charge_max = 130
 	clothes_req = 0
 	range = 5
 
@@ -10,7 +10,7 @@
 	//for(var/turf/T in targets)
 	var/failure = 0
 	if (istype(usr.loc,/mob/) || usr.lying || usr.stunned || usr.buckled || usr.stat)
-		usr << "\red You can't jump right now!"
+		to_chat(usr, "\red You can't jump right now!")
 		return
 
 	if (istype(usr.loc,/turf/) && !(istype(usr.loc,/turf/space)))
@@ -97,12 +97,12 @@
 		usr.canmove = 1
 		usr.layer = prevLayer
 	else
-		usr << "\red You need a ground to do this!"
+		to_chat(usr, "\red You need a ground to do this!")
 		return
 
 	if (istype(usr.loc,/obj/))
 		var/obj/container = usr.loc
-		usr << "\red You leap and slam your head against the inside of [container]! Ouch!"
+		to_chat(usr, "\red You leap and slam your head against the inside of [container]! Ouch!")
 		usr.paralysis += 3
 		usr.weakened += 5
 		container.visible_message("\red <b>[usr.loc]</b> emits a loud thump and rattles a bit.")
@@ -122,23 +122,23 @@
 	name = "Dash"
 	desc = ""
 	panel = "Hulk"
-	charge_max = 150
+	charge_max = 130
 	clothes_req = 0
 	range = 5
 
 /obj/effect/proc_holder/spell/aoe_turf/hulk_dash/cast(list/targets)
 	var/turf/T = get_turf(get_step(usr,usr.dir))
 	for(var/mob/living/M in T.contents)
-		usr << "\red Something right in front of you!"
+		to_chat(usr, "\red Something right in front of you!")
 		return
 	T = get_turf(get_step(T,usr.dir))
 	for(var/mob/living/M in T.contents)
-		usr << "\red Something right in front of you!"
+		to_chat(usr, "\red Something right in front of you!")
 		return
 
 	var/failure = 0
 	if (istype(usr.loc,/mob/) || usr.lying || usr.stunned || usr.buckled || usr.stat)
-		usr << "\red You can't dash right now!"
+		to_chat(usr, "\red You can't dash right now!")
 		return
 
 	if (istype(usr.loc,/turf/) && !(istype(usr.loc,/turf/space)))
@@ -272,12 +272,12 @@
 		usr.canmove = 1
 		usr.layer = prevLayer
 	else
-		usr << "\red You need a ground to do this!"
+		to_chat(usr, "\red You need a ground to do this!")
 		return
 
 	if (istype(usr.loc,/obj/))
 		var/obj/container = usr.loc
-		usr << "\red You dash and slam your head against the inside of [container]! Ouch!"
+		to_chat(usr, "\red You dash and slam your head against the inside of [container]! Ouch!")
 		usr.paralysis += 3
 		usr.weakened += 5
 		container.visible_message("\red <b>[usr.loc]</b> emits a loud thump and rattles a bit.")
@@ -297,13 +297,13 @@
 	name = "Smash"
 	desc = ""
 	panel = "Hulk"
-	charge_max = 150
+	charge_max = 130
 	clothes_req = 0
 	range = 5
 
 /obj/effect/proc_holder/spell/aoe_turf/hulk_smash/cast(list/targets)
 	if (usr.lying || usr.stunned || usr.stat)
-		usr << "\red You can't smash right now!"
+		to_chat(usr, "\red You can't smash right now!")
 		return
 
 	if (istype(usr.loc,/turf/))
@@ -324,7 +324,7 @@
 		if(istype(tile))
 			tile.break_tile()
 		if(istype(W,/turf/simulated/wall/r_wall))
-			usr << "\red <B>Ouch!</B> This wall is too strong."
+			to_chat(usr, "\red <B>Ouch!</B> This wall is too strong.")
 			var/mob/living/carbon/human/H = usr
 			H.take_overall_damage(25, used_weapon = "reinforced wall")
 		else if(istype(W,/turf/simulated/wall))
@@ -389,7 +389,7 @@
 
 	if (istype(usr.loc,/obj/))
 		var/obj/container = usr.loc
-		usr << "\red You smash [container]!"
+		to_chat(usr, "\red You smash [container]!")
 		container.visible_message("\red <b>[usr.loc]</b> emits a loud thump and rattles a bit.")
 		playsound(usr.loc, 'sound/effects/bang.ogg', 50, 1)
 		var/wiggle = 6
@@ -411,16 +411,16 @@
 
 	return
 
-/obj/structure/girder/attack_animal(mob/user as mob)
+/obj/structure/girder/attack_animal(mob/user)
 	if(istype(user, /mob/living/simple_animal/hulk))
 		playsound(user.loc, 'sound/effects/grillehit.ogg', 50, 1)
 		if (prob(75))
-			user << text("\blue You destroy that girder!")
+			to_chat(user, text("\blue You destroy that girder!"))
 			user.say(pick("RAAAAAAAARGH!", "HNNNNNNNNNGGGGGGH!", "GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", "AAAAAAARRRGH!" ))
 			new /obj/item/stack/sheet/metal(get_turf(src))
 			qdel(src)
 		else
-			user << text("\blue You punch the girder.")
+			to_chat(user, text("\blue You punch the girder."))
 	return
 
 ///////////////////////////////////////////////////////
@@ -436,13 +436,13 @@
 
 /obj/effect/proc_holder/spell/aoe_turf/hulk_mill/cast(list/targets)
 	if (usr.lying || usr.stunned || usr.stat)
-		usr << "\red You can't right now!"
+		to_chat(usr, "\red You can't right now!")
 		return
 
 	usr.attack_log += "\[[time_stamp()]\]<font color='red'> Uses hulk_mill</font>"
 	msg_admin_attack("[key_name(usr)] uses hulk_mill")
 
-	for(var/i=0, i<30, i++)
+	for(var/i in 1 to 45)
 		if(usr.dir == 1)
 			usr.dir = 2
 		else if(usr.dir == 2)
@@ -452,32 +452,30 @@
 		else if(usr.dir == 8)
 			usr.dir = 1
 
-		for(var/mob/living/M in range(2, usr))
-			if(M != usr)
+		for(var/mob/living/M in view(2, usr) - usr - usr.contents)
+			if(istype(M, /mob/living/carbon/human))
 				var/mob/living/carbon/human/H = M
-				if(istype(H,/mob/living/carbon/human/))
-					playsound(H.loc, 'sound/weapons/tablehit1.ogg', 50, 1)
-					var/organ_name = pick("chest","l_arm","r_arm","r_leg","l_leg","head","groin")
-					var/datum/organ/external/E = H.get_organ(organ_name)
-					E.take_damage(2, 0, 0, 0, "Tail")
-				else
-					playsound(M.loc, 'sound/weapons/tablehit1.ogg', 50, 1)
-					M.take_overall_damage(2, used_weapon = "Tail")
-				if(prob(3))
-					M.Weaken(2)
+				var/organ_name = pick("chest","l_arm","r_arm","r_leg","l_leg","head","groin")
+				var/datum/organ/external/E = H.get_organ(organ_name)
+				E.take_damage(1.5, 0, 0, 0, "Tail")
+			else
+				M.take_overall_damage(1.5, used_weapon = "Tail")
+			playsound(M.loc, 'sound/weapons/tablehit1.ogg', 50, 1)
+			if(prob(3))
+				M.Weaken(2)
 		sleep(1)
 
 /obj/effect/proc_holder/spell/aoe_turf/hulk_gas
 	name = "Gas"
 	desc = ""
 	panel = "Hulk"
-	charge_max = 450
+	charge_max = 400
 	clothes_req = 0
 	range = 2
 
 /obj/effect/proc_holder/spell/aoe_turf/hulk_gas/cast(list/targets)
 	if (usr.lying || usr.stunned || usr.stat)
-		usr << "\red You can't right now!"
+		to_chat(usr, "\red You can't right now!")
 		return
 
 	//Some weird magic
@@ -489,12 +487,12 @@
 
 /obj/item/projectile/energy/hulkspit
 	name = "spit"
-	icon = 'tauceti/icons/obj/projectiles.dmi'
+	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "neurotoxin"
 	damage = 5
 	damage_type = TOX
 
-/obj/item/projectile/energy/hulkspit/on_hit(var/atom/target, var/blocked = 0)
+/obj/item/projectile/energy/hulkspit/on_hit(atom/target, blocked = 0)
 	if(istype(target, /mob/living/carbon))
 		var/mob/living/carbon/M = target
 		M.Weaken(2)
@@ -511,7 +509,7 @@
 
 /obj/effect/proc_holder/spell/aoe_turf/hulk_spit/cast(list/targets)
 	if (usr.lying || usr.stunned || usr.stat)
-		usr << "\red You can't right now!"
+		to_chat(usr, "\red You can't right now!")
 		return
 
 	//user.visible_message("<span class='danger'>[user] spits!", "<span class='alertalien'>You spit.</span>")
@@ -537,28 +535,28 @@
 	name = "Tear or Swallow"
 	desc = ""
 	panel = "Hulk"
-	charge_max = 120
+	charge_max = 100
 	clothes_req = 0
 	range = 2
 
 /obj/effect/proc_holder/spell/aoe_turf/hulk_eat/cast_check()
-	usr << "\blue Target someone, then alt+click."
+	to_chat(usr, "\blue Target someone, then alt+click.")
 	return 0
 
-/mob/living/simple_animal/hulk/unathi/AltClickOn(var/atom/A)
+/mob/living/simple_animal/hulk/unathi/AltClickOn(atom/A)
 	if(!src.stat && src.mind && (src.health > 0) && (istype(A, /mob/living)) && (A != src))
 		src.try_to_eat(A)
 		next_click = world.time + 5
 	else
 		..()
 
-/mob/living/simple_animal/hulk/unathi/proc/try_to_eat(var/mob/living/target)
+/mob/living/simple_animal/hulk/unathi/proc/try_to_eat(mob/living/target)
 	var/obj/effect/proc_holder/spell/aoe_turf/hulk_eat/HE = locate(/obj/effect/proc_holder/spell/aoe_turf/hulk_eat) in spell_list
 	if(istype(HE))
 		if(HE.charge_counter >= HE.charge_max)
 			HE.charge_counter = 0
 		else
-			usr << "Tear or Swallow is still recharging."
+			to_chat(usr, "Tear or Swallow is still recharging.")
 			return
 
 	var/mob/living/simple_animal/SA = usr
@@ -607,13 +605,13 @@
 	name = "LazorZ"
 	desc = ""
 	panel = "Hulk"
-	charge_max = 350
+	charge_max = 250
 	clothes_req = 0
 	range = 2
 
 /obj/effect/proc_holder/spell/aoe_turf/hulk_lazor/cast(list/targets)
 	if (usr.lying || usr.stunned || usr.stat)
-		usr << "\red You can't right now!"
+		to_chat(usr, "\red You can't right now!")
 		return
 
 	var/turf/T = usr.loc
@@ -634,10 +632,10 @@
 	usr.attack_log += "\[[time_stamp()]\]<font color='red'> Uses hulk_lazor</font>"
 	msg_admin_attack("[key_name(usr)] uses hulk_lazor")
 
-/obj/item/weapon/organ/attack_animal(mob/user as mob)
+/obj/item/weapon/organ/attack_animal(mob/user)
 	if(istype(user, /mob/living/simple_animal/hulk))
 		if(istype(src, /obj/item/weapon/organ/head))
-			usr << "\blue Head? Ewww.."
+			to_chat(usr, "\blue Head? Ewww..")
 			return
 		var/mob/living/simple_animal/hulk/Hulk = user
 		playsound(user.loc, 'sound/weapons/zilla_eat.ogg', 50, 2)

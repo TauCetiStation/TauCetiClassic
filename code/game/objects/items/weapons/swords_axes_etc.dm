@@ -11,9 +11,9 @@
 /*
  * Banhammer
  */
-/obj/item/weapon/banhammer/attack(mob/M as mob, mob/user as mob)
-	M << "<font color='red'><b> You have been banned FOR NO REISIN by [user]<b></font>"
-	user << "<font color='red'> You have <b>BANNED</b> [M]</font>"
+/obj/item/weapon/banhammer/attack(mob/M, mob/user)
+	to_chat(M, "<font color='red'><b> You have been banned FOR NO REISIN by [user]<b></font>")
+	to_chat(user, "<font color='red'> You have <b>BANNED</b> [M]</font>")
 
 /*
  * Sword
@@ -26,9 +26,9 @@
 /obj/item/weapon/melee/energy/sword/New()
 	item_color = pick("red","blue","green","purple")
 
-/obj/item/weapon/melee/energy/sword/attack_self(mob/living/user as mob)
+/obj/item/weapon/melee/energy/sword/attack_self(mob/living/user)
 	if ((CLUMSY in user.mutations) && prob(50))
-		user << "\red You accidentally cut yourself with [src]."
+		to_chat(user, "\red You accidentally cut yourself with [src].")
 		user.take_organ_damage(5,5)
 	active = !active
 	if (active)
@@ -39,7 +39,7 @@
 			icon_state = "sword[item_color]"
 		w_class = 4
 		playsound(user, 'sound/weapons/saberon.ogg', 50, 1)
-		user << "\blue [src] is now active."
+		to_chat(user, "\blue [src] is now active.")
 
 	else
 		force = 3
@@ -49,7 +49,7 @@
 			icon_state = "sword0"
 		w_class = 2
 		playsound(user, 'sound/weapons/saberoff.ogg', 50, 1)
-		user << "\blue [src] can now be concealed."
+		to_chat(user, "\blue [src] can now be concealed.")
 
 	if(istype(user,/mob/living/carbon/human))
 		var/mob/living/carbon/human/H = user
@@ -68,13 +68,12 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "baton"
 	item_state = "classic_baton"
-	flags = FPRINT | TABLEPASS
 	slot_flags = SLOT_BELT
 	force = 10
 
-/obj/item/weapon/melee/classic_baton/attack(mob/M as mob, mob/living/user as mob)
+/obj/item/weapon/melee/classic_baton/attack(mob/M, mob/living/user)
 	if ((CLUMSY in user.mutations) && prob(50))
-		user << "\red You club yourself over the head."
+		to_chat(user, "\red You club yourself over the head.")
 		user.Weaken(3 * force)
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
@@ -116,22 +115,21 @@
 	desc = "A compact yet rebalanced personal defense weapon. Can be concealed when folded."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "telebaton_0"
-	item_state = "telebaton_0"
-	flags = FPRINT | TABLEPASS
+	item_state = null
 	slot_flags = SLOT_BELT
 	w_class = 2
 	force = 3
 	var/on = 0
 
 
-/obj/item/weapon/melee/telebaton/attack_self(mob/user as mob)
+/obj/item/weapon/melee/telebaton/attack_self(mob/user)
 	on = !on
 	if(on)
 		user.visible_message("\red With a flick of their wrist, [user] extends their telescopic baton.",\
 		"\red You extend the baton.",\
 		"You hear an ominous click.")
 		icon_state = "telebaton_1"
-		item_state = "telebaton_1"
+		item_state = "nullrod"
 		w_class = 3
 		force = 15//quite robust
 		attack_verb = list("smacked", "struck", "slapped")
@@ -140,7 +138,7 @@
 		"\blue You collapse the baton.",\
 		"You hear a click.")
 		icon_state = "telebaton_0"
-		item_state = "telebaton_0"
+		item_state = null
 		w_class = 2
 		force = 3//not so robust now
 		attack_verb = list("hit", "punched")
@@ -165,10 +163,10 @@
 
 	return
 
-/obj/item/weapon/melee/telebaton/attack(mob/target as mob, mob/living/user as mob)
+/obj/item/weapon/melee/telebaton/attack(mob/target, mob/living/user)
 	if(on)
 		if ((CLUMSY in user.mutations) && prob(50))
-			user << "\red You club yourself over the head."
+			to_chat(user, "\red You club yourself over the head.")
 			user.Weaken(3 * force)
 			if(ishuman(user))
 				var/mob/living/carbon/human/H = user
@@ -214,15 +212,15 @@
  * Energy Axe
  */
 
-/obj/item/weapon/melee/energy/axe/attack_self(mob/user as mob)
+/obj/item/weapon/melee/energy/axe/attack_self(mob/user)
 	src.active = !( src.active )
 	if (src.active)
-		user << "\blue The axe is now energised."
+		to_chat(user, "\blue The axe is now energised.")
 		src.force = 150
 		src.icon_state = "axe1"
 		src.w_class = 5
 	else
-		user << "\blue The axe can now be concealed."
+		to_chat(user, "\blue The axe can now be concealed.")
 		src.force = 40
 		src.icon_state = "axe0"
 		src.w_class = 5
@@ -239,9 +237,9 @@
 	else
 		return 0
 
-/obj/item/weapon/shield/energy/attack_self(mob/living/user as mob)
+/obj/item/weapon/shield/energy/attack_self(mob/living/user)
 	if ((CLUMSY in user.mutations) && prob(50))
-		user << "\red You beat yourself in the head with [src]."
+		to_chat(user, "\red You beat yourself in the head with [src].")
 		user.take_organ_damage(5)
 	active = !active
 	if (active)
@@ -249,14 +247,14 @@
 		icon_state = "eshield[active]"
 		w_class = 4
 		playsound(user, 'sound/weapons/saberon.ogg', 50, 1)
-		user << "\blue [src] is now active."
+		to_chat(user, "\blue [src] is now active.")
 
 	else
 		force = 3
 		icon_state = "eshield[active]"
 		w_class = 1
 		playsound(user, 'sound/weapons/saberoff.ogg', 50, 1)
-		user << "\blue [src] can now be concealed."
+		to_chat(user, "\blue [src] can now be concealed.")
 
 	if(istype(user,/mob/living/carbon/human))
 		var/mob/living/carbon/human/H = user

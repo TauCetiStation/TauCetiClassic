@@ -40,9 +40,9 @@
 	desc = "A label on it reads: <i>Activate to have a singularity beacon teleported to your location</i>."
 	origin_tech = "bluespace=1;syndicate=7"
 
-/obj/item/device/radio/beacon/syndicate/attack_self(mob/user as mob)
+/obj/item/device/radio/beacon/syndicate/attack_self(mob/user)
 	if(user)
-		user << "\blue Locked In"
+		to_chat(user, "\blue Locked In")
 		new /obj/machinery/singularity_beacon/syndicate( user.loc )
 		playsound(src, 'sound/effects/pop.ogg', 100, 1, 1)
 		qdel(src)
@@ -64,16 +64,16 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "medicon"
 	item_state = "signaler"
-	flags = FPRINT | TABLEPASS | NOBLUDGEON
+	flags = NOBLUDGEON
 	origin_tech = "bluespace=1"
 	var/timer = 10
 	var/atom/target = null
 
-/obj/item/weapon/medical/teleporter/afterattack(atom/target as obj|turf, mob/user as mob, flag)
+/obj/item/weapon/medical/teleporter/afterattack(atom/target, mob/user, flag)
 	if (!flag)
 		return
 	if (!ishuman(target))
-		user << "\blue Can only be planted on human."
+		to_chat(user, "\blue Can only be planted on human.")
 		return
 	var/found = 0
 	var/target_beacon
@@ -86,14 +86,14 @@
 					found = 1
 					break
 	if(!found)
-		user << "\red No beacon located in medical treatment centre."
+		to_chat(user, "\red No beacon located in medical treatment centre.")
 		return
 
 	var/mob/living/carbon/human/H = target
 	if(H.health >= config.health_threshold_crit)
-		user << "\blue [H.name] is in good condition."
+		to_chat(user, "\blue [H.name] is in good condition.")
 		return
-	user << "Planting..."
+	to_chat(user, "Planting...")
 
 	user.visible_message("\red [user.name] is trying to plant some kind of device on [target.name]!")
 
@@ -103,11 +103,11 @@
 		loc = null
 		//var/location
 		H.attack_log += "\[[time_stamp()]\]<font color='blue'> Had the [name] planted on them by [user.real_name] ([user.ckey])</font>"
-		playsound(H.loc, 'tauceti/sounds/items/timer.ogg', 5, 0)
+		playsound(H.loc, 'sound/items/timer.ogg', 5, 0)
 		user.visible_message("\red [user.name] finished planting an [name] on [H.name]!")
 
 		H.overlays += image('icons/obj/device.dmi', "medicon")
-		user << "Device has been planted. Timer counting down from [timer]."
+		to_chat(user, "Device has been planted. Timer counting down from [timer].")
 		spawn(timer*10)
 			if(H)
 				if(target_beacon)
@@ -121,5 +121,5 @@
 				if (src)
 					qdel(src)
 
-/obj/item/weapon/medical/teleporter/attack(mob/M as mob, mob/user as mob, def_zone)
+/obj/item/weapon/medical/teleporter/attack(mob/M, mob/user, def_zone)
 	return

@@ -6,7 +6,6 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = 2.0
-	flags = FPRINT | TABLEPASS
 	var/uses = 5
 	var/temp = null
 	var/max_uses = 5
@@ -15,7 +14,7 @@
 	action_button_name = "Use Spell Book"
 
 
-/obj/item/weapon/spellbook/attack_self(mob/user as mob)
+/obj/item/weapon/spellbook/attack_self(mob/user)
 	user.set_machine(src)
 	var/dat
 	if(temp)
@@ -78,10 +77,16 @@
 			if(href_list["spell_choice"] == "rememorize")
 				var/area/wizard_station/A = locate()
 				if(usr in A.contents)
-					uses = max_uses
 					for(var/obj/effect/proc_holder/spell/S in H.spell_list)
 						if(S.name == "Artificer")
-							uses++
+							var/obj/item/weapon/storage/belt/soulstone/full/B = locate() in H.contents
+							if(B && B.contents.len == 6)
+								qdel(B)
+							else
+								temp = "To get points back for artificer spell, you must carry soulstone belt with 6 soulstones inside."
+								attack_self(H)
+								return
+					uses = max_uses
 					H.spellremove(usr)
 					temp = "All spells have been removed. You may now memorize a new set of spells."
 					feedback_add_details("wizard_spell_learned","UM") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
@@ -179,7 +184,6 @@
 							new /obj/item/weapon/storage/belt/soulstone/full(get_turf(H))
 							H.AddSpell (new /obj/effect/proc_holder/spell/aoe_turf/conjure/construct(H))
 							temp = "Soul Stone Shards are ancient tools capable of capturing and harnessing the spirits of the dead and dying. The spell Artificer allows you to create arcane machines for the captured souls to pilot."
-							max_uses--
 						if("armor")
 							feedback_add_details("wizard_spell_learned","HS") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
 							new /obj/item/clothing/shoes/sandal(get_turf(H)) //In case they've lost them.

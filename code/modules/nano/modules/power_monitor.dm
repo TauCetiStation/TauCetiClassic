@@ -7,7 +7,7 @@
 	..()
 	refresh_sensors()
 
-/obj/nano_module/power_monitor/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null, var/force_open = 1)
+/obj/nano_module/power_monitor/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1)
 	var/list/data = list()
 	var/list/sensors = list()
 	// Focus: If it remains null if no sensor is selected and UI will display sensor list, otherwise it will display sensor reading.

@@ -79,3 +79,14 @@
 	desc = "A pair of woodland camouflage pants. Probably not the best choice for a space station."
 	icon_state = "camopants"
 	item_color = "camopants"
+
+/obj/item/clothing/under/pants/gar
+	name = "Gar Pants"
+	icon_state = "garpants"
+	item_state = "garpants"
+	item_color = "garpants"
+
+/obj/item/clothing/under/pants/gar/bandages
+	icon_state = "garpantsband"
+	item_state = "garpantsband"
+	item_color = "garpantsband"

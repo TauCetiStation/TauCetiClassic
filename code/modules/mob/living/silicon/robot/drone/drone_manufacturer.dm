@@ -45,19 +45,19 @@
 	if(drone_progress >= 100)
 		visible_message("\The [src] voices a strident beep, indicating a drone chassis is prepared.")
 
-/obj/machinery/drone_fabricator/examine()
+/obj/machinery/drone_fabricator/examine(mob/user)
 	..()
-	if(produce_drones && drone_progress >= 100 && istype(usr,/mob/dead) && config.allow_drone_spawn && count_drones() < config.max_maint_drones)
-		usr << "<BR><B>A drone is prepared. Select 'Join As Drone' from the Ghost tab to spawn as a maintenance drone.</B>"
+	if(produce_drones && drone_progress >= 100 && istype(user,/mob/dead) && config.allow_drone_spawn && count_drones() < config.max_maint_drones)
+		to_chat(user, "<BR><B>A drone is prepared. Select 'Join As Drone' from the Ghost tab to spawn as a maintenance drone.</B>")
 
 /obj/machinery/drone_fabricator/proc/count_drones()
 	var/drones = 0
-	for(var/mob/living/silicon/robot/drone/D in world)
+	for(var/mob/living/silicon/robot/drone/D in mob_list)
 		if(D.key && D.client)
 			drones++
 	return drones
 
-/obj/machinery/drone_fabricator/proc/create_drone(var/client/player)
+/obj/machinery/drone_fabricator/proc/create_drone(client/player)
 
 	if(stat & NOPOWER)
 		return
@@ -65,7 +65,7 @@
 	if(!produce_drones || !config.allow_drone_spawn || count_drones() >= config.max_maint_drones)
 		return
 
-	if(!player || !istype(player.mob,/mob/dead))
+	if(!player) //|| !istype(player.mob,/mob/dead))
 		return
 
 	visible_message("\The [src] churns and grinds as it lurches into motion, disgorging a shiny new drone after a few moments.")
@@ -78,42 +78,40 @@
 	drone_progress = 0
 
 
-
 /mob/dead/verb/join_as_drone()
 
 	set category = "Ghost"
 	set name = "Join As Drone"
 	set desc = "If there is a powered, enabled fabricator in the game world with a prepared chassis, join as a maintenance drone."
 
-
 	if(ticker.current_state < GAME_STATE_PLAYING)
-		src << "\red The game hasn't started yet!"
-		return
-
-	if(!(config.allow_drone_spawn))
-		src << "\red That verb is not currently permitted."
-		return
-
-	if (!src.stat)
+		to_chat(src, "\red The game hasn't started yet!")
 		return
 
 	if (usr != src)
 		return 0 //something is terribly wrong
 
+	if (!src.stat)
+		return
+
+	if(!(config.allow_drone_spawn))
+		to_chat(src, "\red That verb is not currently permitted.")
+		return
+
 	if(jobban_isbanned(src, ROLE_DRONE))
-		usr << "\red You are banned from playing synthetics and cannot spawn as a drone."
+		to_chat(usr, "\red You are banned from playing synthetics and cannot spawn as a drone.")
 		return
 
 	var/available_in_minutes = role_available_in_minutes(src, ROLE_DRONE)
 	if(available_in_minutes)
-		usr << "<span class='notice'>This role will be unlocked in [available_in_minutes] minutes (e.g.: you gain minutes while playing).</span>"
+		to_chat(usr, "<span class='notice'>This role will be unlocked in [available_in_minutes] minutes (e.g.: you gain minutes while playing).</span>")
 		return
 
 	var/deathtime = world.time - src.timeofdeath
 	if(istype(src,/mob/dead/observer))
 		var/mob/dead/observer/G = src
 		if(G.has_enabled_antagHUD == 1 && config.antag_hud_restricted)
-			usr << "\blue <B>Upon using the antagHUD you forfeighted the ability to join the round.</B>"
+			to_chat(usr, "\blue <B>Upon using the antagHUD you forfeighted the ability to join the round.</B>")
 			return
 
 	var/deathtimeminutes = round(deathtime / 600)
@@ -127,23 +125,28 @@
 	var/deathtimeseconds = round((deathtime - deathtimeminutes * 600) / 10,1)
 
 	if (deathtime < 6000)
-		usr << "You have been dead for[pluralcheck] [deathtimeseconds] seconds."
-		usr << "You must wait 10 minutes to respawn as a drone!"
+		to_chat(usr, "You have been dead for[pluralcheck] [deathtimeseconds] seconds.")
+		to_chat(usr, "You must wait 10 minutes to respawn as a drone!")
 		return
 
 	var/response = alert(src, "Are you -sure- you want to become a maintenance drone?","Are you sure you want to beep?","Beep!","Nope!")
-	if(response != "Beep!") return  //Hit the wrong key...again.
+	if(response != "Beep!")
+		return  //Hit the wrong key...again.
 
-	for(var/obj/machinery/drone_fabricator/DF in world)
+	dronize()
+
+/mob/proc/dronize()
+
+	for(var/obj/machinery/drone_fabricator/DF in machines)
 		if(DF.stat & NOPOWER || !DF.produce_drones)
 			continue
 
 		if(DF.count_drones() >= config.max_maint_drones)
-			src << "\red There are too many active drones in the world for you to spawn."
+			to_chat(src, "\red There are too many active drones in the world for you to spawn.")
 			return
 
 		if(DF.drone_progress >= 100)
 			DF.create_drone(src.client)
 			return
 
-	src << "\red There are no available drone spawn points, sorry."
+	to_chat(src, "\red There are no available drone spawn points, sorry.")

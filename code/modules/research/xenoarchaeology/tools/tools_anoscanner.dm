@@ -6,7 +6,6 @@
 	icon_state = "flashgun"
 	item_state = "lampgreen"
 	w_class = 2.0
-	flags = FPRINT | TABLEPASS
 	slot_flags = SLOT_BELT
 	var/nearest_artifact_id = "unknown"
 	var/nearest_artifact_distance = -1
@@ -16,10 +15,10 @@
 /obj/item/device/ano_scanner/initialize()
 	scan()
 
-/obj/item/device/ano_scanner/attack_self(var/mob/user as mob)
+/obj/item/device/ano_scanner/attack_self(mob/user)
 	return src.interact(user)
 
-/obj/item/device/ano_scanner/interact(var/mob/user as mob)
+/obj/item/device/ano_scanner/interact(mob/user)
 	var/message = "Background radiation levels detected."
 	if(world.time - last_scan_time >= scan_delay)
 		spawn(0)
@@ -29,7 +28,7 @@
 	else
 		message = "Scanning array is recharging."
 
-	user << "<span class='info'>[message]</span>"
+	to_chat(user, "<span class='info'>[message]</span>")
 
 /obj/item/device/ano_scanner/proc/scan()
 	//set background = 1

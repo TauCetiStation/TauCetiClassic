@@ -12,20 +12,20 @@
 	//Used to enable or disable drone fabrication.
 	var/obj/machinery/drone_fabricator/dronefab
 
-/obj/machinery/computer/drone_control/attack_ai(var/mob/user as mob)
+/obj/machinery/computer/drone_control/attack_ai(mob/user)
 	return src.attack_hand(user)
 
-/obj/machinery/computer/drone_control/attack_paw(var/mob/user as mob)
+/obj/machinery/computer/drone_control/attack_paw(mob/user)
 
 	return src.attack_hand(user)
 	return
 
-/obj/machinery/computer/drone_control/attack_hand(var/mob/user as mob)
+/obj/machinery/computer/drone_control/attack_hand(mob/user)
 	if(..())
 		return
 
 	if(!allowed(user) || istype(user, /mob/living/silicon/robot/drone))
-		user << "\red Access denied."
+		to_chat(user, "\red Access denied.")
 		return
 
 	user.set_machine(src)
@@ -48,15 +48,13 @@
 
 
 /obj/machinery/computer/drone_control/Topic(href, href_list)
-	if(..())
+	. = ..()
+	if(!.)
 		return
 
 	if(!allowed(usr))
-		usr << "\red Access denied."
-		return
-
-	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon)))
-		usr.set_machine(src)
+		to_chat(usr, "\red Access denied.")
+		return FALSE
 
 	if (href_list["setarea"])
 
@@ -64,24 +62,24 @@
 		var/t_area = input("Select the area to ping.", "Set Target Area", null) as null|anything in tagger_locations
 
 		if(!t_area)
-			return
+			return FALSE
 
 		drone_call_area = t_area
-		usr << "\blue You set the area selector to [drone_call_area]."
+		to_chat(usr, "\blue You set the area selector to [drone_call_area].")
 
 	else if (href_list["ping"])
 
-		usr << "\blue You issue a maintenance request for all active drones, highlighting [drone_call_area]."
+		to_chat(usr, "\blue You issue a maintenance request for all active drones, highlighting [drone_call_area].")
 		for(var/mob/living/silicon/robot/drone/D in world)
 			if(D.client && D.stat == CONSCIOUS)
-				D << "-- Maintenance drone presence requested in: [drone_call_area]."
+				to_chat(D, "-- Maintenance drone presence requested in: [drone_call_area].")
 
 	else if (href_list["resync"])
 
 		var/mob/living/silicon/robot/drone/D = locate(href_list["resync"])
 
 		if(D.stat != DEAD)
-			usr << "\red You issue a law synchronization directive for the drone."
+			to_chat(usr, "\red You issue a law synchronization directive for the drone.")
 			D.law_resync()
 
 	else if (href_list["shutdown"])
@@ -89,7 +87,7 @@
 		var/mob/living/silicon/robot/drone/D = locate(href_list["shutdown"])
 
 		if(D.stat != DEAD)
-			usr << "\red You issue a kill command for the unfortunate drone."
+			to_chat(usr, "\red You issue a kill command for the unfortunate drone.")
 			message_admins("[key_name_admin(usr)] issued kill order for drone [key_name_admin(D)] from control console.")
 			log_game("[key_name(usr)] issued kill order for [key_name(src)] from control console.")
 			D.shut_down()
@@ -104,22 +102,22 @@
 				continue
 
 			dronefab = fab
-			usr << "\blue Drone fabricator located."
+			to_chat(usr, "\blue Drone fabricator located.")
 			return
 
-		usr << "\red Unable to locate drone fabricator."
+		to_chat(usr, "\red Unable to locate drone fabricator.")
 
 	else if (href_list["toggle_fab"])
 
 		if(!dronefab)
-			return
+			return FALSE
 
 		if(get_dist(src,dronefab) > 3)
 			dronefab = null
-			usr << "\red Unable to locate drone fabricator."
+			to_chat(usr, "\red Unable to locate drone fabricator.")
 			return
 
 		dronefab.produce_drones = !dronefab.produce_drones
-		usr << "\blue You [dronefab.produce_drones ? "enable" : "disable"] drone production in the nearby fabricator."
+		to_chat(usr, "\blue You [dronefab.produce_drones ? "enable" : "disable"] drone production in the nearby fabricator.")
 
 	src.updateUsrDialog()

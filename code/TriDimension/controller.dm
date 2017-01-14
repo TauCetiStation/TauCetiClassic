@@ -46,7 +46,7 @@
 		slow_time = world.time + 3000 */
 	return
 
-/obj/effect/landmark/zcontroller/proc/add(var/list/L, var/I, var/transfer)
+/obj/effect/landmark/zcontroller/proc/add(list/L, I, transfer)
 	while (L.len)
 		var/turf/T = pick(L)
 
@@ -112,7 +112,7 @@ atom/movable/Move() //Hackish
 			temp += locate(src.x, src.y, src.z)
 			controller.add(temp,3,1)
 
-/obj/effect/landmark/zcontroller/proc/calc(var/list/L)
+/obj/effect/landmark/zcontroller/proc/calc(list/L)
 	var/list/slowholder = list()
 	var/list/normalholder = list()
 	var/list/fastholder = list()

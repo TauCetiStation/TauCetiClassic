@@ -21,24 +21,25 @@
 	if(!owned_scanner)
 		owned_scanner = locate(/obj/machinery/artifact_scanpad) in orange(1, src)
 
-/obj/machinery/artifact_harvester/attackby(var/obj/I as obj, var/mob/user as mob)
+/obj/machinery/artifact_harvester/attackby(obj/I, mob/user)
 	if(istype(I,/obj/item/weapon/anobattery))
 		if(!inserted_battery)
-			user << "\blue You insert [I] into [src]."
+			to_chat(user, "\blue You insert [I] into [src].")
 			user.drop_item()
 			I.loc = src
 			src.inserted_battery = I
 			updateDialog()
 		else
-			user << "\red There is already a battery in [src]."
+			to_chat(user, "\red There is already a battery in [src].")
 	else
 		return..()
 
-/obj/machinery/artifact_harvester/attack_hand(var/mob/user as mob)
+
+/obj/machinery/artifact_harvester/attack_hand(mob/user)
 	src.add_fingerprint(user)
 	interact(user)
 
-/obj/machinery/artifact_harvester/interact(var/mob/user as mob)
+/obj/machinery/artifact_harvester/interact(mob/user)
 	if(stat & (NOPOWER|BROKEN))
 		return
 	user.set_machine(src)
@@ -54,7 +55,7 @@
 			dat += "<A href='?src=\ref[src];stopharvest=1'>Halt early</A><BR>"
 		else
 			if(inserted_battery)
-				dat += "<b>[inserted_battery.name]</b> inserted, charge level: [inserted_battery.stored_charge]/[inserted_battery.capacity] ([(inserted_battery.stored_charge/inserted_battery.capacity)*100]%)<BR>"
+				dat += "<b>[inserted_battery.name]</b> inserted, charge level: [round(inserted_battery.stored_charge,1)]/[inserted_battery.capacity] ([round((inserted_battery.stored_charge/inserted_battery.capacity)*100)]%)<BR>"
 				dat += "<b>Energy signature ID:</b>[inserted_battery.battery_effect ? (inserted_battery.battery_effect.artifact_id == "" ? "???" : "[inserted_battery.battery_effect.artifact_id]") : "NA"]<BR>"
 				dat += "<A href='?src=\ref[src];ejectbattery=1'>Eject battery</a><BR>"
 				dat += "<A href='?src=\ref[src];drainbattery=1'>Drain battery of all charge</a><BR>"
@@ -67,8 +68,10 @@
 	//
 	dat += "<HR>"
 	dat += "<A href='?src=\ref[src];refresh=1'>Refresh</A> <A href='?src=\ref[src];close=1'>Close<BR>"
-	user << browse(dat, "window=artharvester;size=450x500")
-	onclose(user, "artharvester")
+
+	var/datum/browser/popup = new(user, "artharvester", name, 450, 500)
+	popup.set_content(dat)
+	popup.open()
 
 /obj/machinery/artifact_harvester/process()
 	if(stat & (NOPOWER|BROKEN))
@@ -115,6 +118,14 @@
 			icon_state = "incubator"
 
 /obj/machinery/artifact_harvester/Topic(href, href_list)
+	if(href_list["close"])
+		usr.unset_machine(src)
+		usr << browse(null, "window=artharvester")
+		return FALSE
+
+	. = ..()
+	if(!.)
+		return
 
 	if (href_list["harvest"])
 		if(!inserted_battery)
@@ -124,7 +135,6 @@
 			src.visible_message("<b>[src]</b> states, \"Cannot harvest. battery is full.\"")
 
 		else
-
 			//locate artifact on analysis pad
 			cur_artifact = null
 			var/articount = 0
@@ -143,12 +153,13 @@
 			else
 				if(articount > 1)
 					state("Cannot harvest. Too many artifacts on the pad.")
+
 				else if(analysed)
 					cur_artifact = analysed
-
 					//if both effects are active, we can't harvest either
 					if(cur_artifact.my_effect && cur_artifact.my_effect.activated && cur_artifact.secondary_effect.activated)
 						src.visible_message("<b>[src]</b> states, \"Cannot harvest. Source is emitting conflicting energy signatures.\"")
+
 					else if(!cur_artifact.my_effect.activated && !cur_artifact.secondary_effect.activated)
 						src.visible_message("<b>[src]</b> states, \"Cannot harvest. No energy emitting from source.\"")
 
@@ -156,7 +167,9 @@
 						//see if we can clear out an old effect
 						//delete it when the ids match to account for duplicate ids having different effects
 						if(inserted_battery.battery_effect && inserted_battery.stored_charge <= 0)
-							qdel(inserted_battery.battery_effect)
+							var/datum/artifact_effect/TD = inserted_battery.battery_effect
+							inserted_battery.battery_effect = null
+							qdel(TD)	//Because this effect must be deleted NOW!
 
 						//
 						var/datum/artifact_effect/source_effect
@@ -246,9 +259,5 @@
 		else
 			var/message = "<b>[src]</b> states, \"Cannot dump energy. No battery inserted.\""
 			src.visible_message(message)
-
-	if(href_list["close"])
-		usr << browse(null, "window=artharvester")
-		usr.unset_machine(src)
 
 	updateDialog()

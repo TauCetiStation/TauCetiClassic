@@ -10,19 +10,6 @@
 	var/active = 0
 	var/mob/living/carbon/human/host
 
-/obj/item/gland/examine()
-	if(!ishuman(usr))
-		..()
-	else
-		var/mob/living/carbon/human/H = usr
-		if(H.species)
-			if(H.species.name == "Abductor")
-				..()
-			else
-				H << "You can't understand what is it, but EWW, it's disgusting."
-				return
-		else	..()
-
 /obj/item/gland/proc/HostCheck()
 	if(ishuman(host) && host == src.loc)
 		if(host.stat != DEAD)
@@ -34,7 +21,7 @@
 	next_activation  = world.time + rand(cooldown_low,cooldown_high)
 	SSobj.processing |= src
 
-/obj/item/gland/proc/Inject(var/mob/living/carbon/human/target)
+/obj/item/gland/proc/Inject(mob/living/carbon/human/target)
 	host = target
 	target.internal_organs += src
 	src.loc = target
@@ -67,7 +54,7 @@
 	icon_state = "health"
 
 obj/item/gland/heals/activate()
-	host << "<span class='notice'>You feel curiously revitalized.</span>"
+	to_chat(host, "<span class='notice'>You feel curiously revitalized.</span>")
 	host.adjustBruteLoss(-25)
 	host.adjustOxyLoss(-25)
 	host.adjustFireLoss(-25)
@@ -82,7 +69,7 @@ obj/item/gland/heals/activate()
 	icon_state = "slime"
 
 obj/item/gland/slime/activate()
-	host << "<span class='warning'>You feel nauseous!</span>"
+	to_chat(host, "<span class='warning'>You feel nauseous!</span>")
 
 	host.visible_message("<span class='danger'>[host] vomits on the floor!</span>", \
 					"<span class='userdanger'>You throw up on the floor!</span>")
@@ -105,9 +92,9 @@ obj/item/gland/slime/activate()
 	uses = 1
 
 /obj/item/gland/slime_boom/activate()
-	host << "<span class='warning'>You feel bloated.</span>"
+	to_chat(host, "<span class='warning'>You feel bloated.</span>")
 	sleep(150)
-	host << "<span class='userdanger'>A massive stomachache overcomes you.</span>"
+	to_chat(host, "<span class='userdanger'>A massive stomachache overcomes you.</span>")
 	sleep(50)
 	host.visible_message("<span class='danger'>[host] explodes into slimes!</span>")
 	var/turf/pos = get_turf(host)
@@ -129,13 +116,13 @@ obj/item/gland/slime/activate()
 	icon_state = "mindshock"
 
 /obj/item/gland/mindshock/activate()
-	host << "<span class='notice'>You get a headache.</span>"
+	to_chat(host, "<span class='notice'>You get a headache.</span>")
 
 	var/turf/T = get_turf(host)
 	for(var/mob/living/carbon/human/H in orange(4,T))
 		if(H == host)
 			continue
-		H << "<span class='alien'> You hear a buzz in your head </span>"
+		to_chat(H, "<span class='alien'> You hear a buzz in your head </span>")
 		H.confused += 20
 
 
@@ -148,7 +135,7 @@ obj/item/gland/slime/activate()
 	icon_state = "species"
 
 /obj/item/gland/pop/activate()
-	host << "<span class='notice'>You feel unlike yourself.</span>"
+	to_chat(host, "<span class='notice'>You feel unlike yourself.</span>")
 	var/species = pick(list(/datum/species/vox,/datum/species/diona,/datum/species/tajaran,/datum/species/unathi,/datum/species/human))
 	host.species = new species()
 	host.regenerate_icons()
@@ -164,7 +151,7 @@ obj/item/gland/slime/activate()
 	icon_state = "vent"
 
 /obj/item/gland/ventcrawling/activate()
-	host << "<span class='notice'>You feel very stretchy.</span>"
+	to_chat(host, "<span class='notice'>You feel very stretchy.</span>")
 	host.ventcrawler = 2
 	return
 
@@ -178,7 +165,7 @@ obj/item/gland/slime/activate()
 	icon_state = "viral"
 
 /obj/item/gland/viral/activate()
-	host << "<span class='warning'>You feel sick.</span>"
+	to_chat(host, "<span class='warning'>You feel sick.</span>")
 
 	var/datum/disease2/disease/D = new /datum/disease2/disease()
 	D.makerandom()
@@ -201,7 +188,7 @@ obj/item/gland/slime/activate()
 	icon_state = "emp"
 
 /obj/item/gland/emp/activate()
-	host << "<span class='warning'>You feel a spike of pain in your head.</span>"
+	to_chat(host, "<span class='warning'>You feel a spike of pain in your head.</span>")
 	empulse(get_turf(host), 2, 5, 1)
 
 
@@ -214,9 +201,9 @@ obj/item/gland/slime/activate()
 	icon_state = "spider"
 
 /obj/item/gland/spiderman/activate()
-	host << "<span class='warning'>You feel something crawling in your skin.</span>"
+	to_chat(host, "<span class='warning'>You feel something crawling in your skin.</span>")
 	if(uses == initial(uses))
-		host.faction += "spiders"
+		host.faction = "spiders"
 	new /obj/effect/spider/spiderling(host.loc)
 
 
@@ -229,7 +216,7 @@ obj/item/gland/slime/activate()
 	icon_state = "egg"
 
 /obj/item/gland/egg/activate()
-	host << "<span class='boldannounce'>You lay an egg!</span>"
+	to_chat(host, "<span class='boldannounce'>You lay an egg!</span>")
 	var/obj/item/weapon/reagent_containers/food/snacks/egg/egg = new(host.loc)
 	egg.reagents.add_reagent("sacid",20)
 	egg.desc += " It smells bad."
@@ -268,7 +255,7 @@ obj/item/gland/slime/activate()
 	uses = 1
 
 /obj/item/gland/bodysnatch/activate()
-	host << "<span class='warning'>You feel something moving around inside you...</span>"
+	to_chat(host, "<span class='warning'>You feel something moving around inside you...</span>")
 
 	var/obj/effect/cocoon/abductor/C = new (get_turf(host))
 

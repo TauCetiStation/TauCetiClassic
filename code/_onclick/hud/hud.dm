@@ -151,7 +151,7 @@
 		show_hud(HUD_STYLE_REDUCED)
 
 //Version denotes which style should be displayed. blank or 0 means "next version"
-/datum/hud/proc/show_hud(var/version = 0)
+/datum/hud/proc/show_hud(version = 0)
 	if(!ismob(mymob))
 		return 0
 	if(!mymob.client)
@@ -241,8 +241,8 @@
 	if(hud_used && client)
 		if(ishuman(src))
 			hud_used.show_hud() //Shows the next hud preset
-			usr << "<span class ='info'>Switched HUD mode. Press F12 to toggle.</span>"
+			to_chat(usr, "<span class ='info'>Switched HUD mode. Press F12 to toggle.</span>")
 		else
-			usr << "<span class ='warning'>Inventory hiding is currently only supported for human mobs, sorry.</span>"
+			to_chat(usr, "<span class ='warning'>Inventory hiding is currently only supported for human mobs, sorry.</span>")
 	else
-		usr << "<span class ='warning'>This mob type does not use a HUD.</span>"
+		to_chat(usr, "<span class ='warning'>This mob type does not use a HUD.</span>")

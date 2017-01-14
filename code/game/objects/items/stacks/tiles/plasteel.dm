@@ -1,15 +1,15 @@
 /obj/item/stack/tile/plasteel
 	name = "floor tile"
 	singular_name = "floor tile"
-	desc = "Those could work as a pretty decent throwing weapon."
+	desc = "Those could not work as a pretty decent throwing weapon."
 	icon_state = "tile"
 	w_class = 3.0
 	force = 6.0
 	m_amt = 937.5
-	throwforce = 15.0
+	throwforce = 5.0
 	throw_speed = 5
-	throw_range = 20
-	flags = FPRINT | TABLEPASS | CONDUCT
+	throw_range = 3
+	flags = CONDUCT
 	max_amount = 60
 
 /obj/item/stack/tile/plasteel/New(var/loc, var/amount=null)
@@ -19,15 +19,15 @@
 	return
 
 /*
-/obj/item/stack/tile/plasteel/attack_self(mob/user as mob)
+/obj/item/stack/tile/plasteel/attack_self(mob/user)
 	if (usr.stat)
 		return
 	var/T = user.loc
 	if (!( istype(T, /turf) ))
-		user << "\red You must be on the ground!"
+		to_chat(user, "\red You must be on the ground!")
 		return
 	if (!( istype(T, /turf/space) ))
-		user << "\red You cannot build on or repair this turf!"
+		to_chat(user, "\red You cannot build on or repair this turf!")
 		return
 	src.build(T)
 	src.add_fingerprint(user)
@@ -35,7 +35,7 @@
 	return
 */
 
-/obj/item/stack/tile/plasteel/proc/build(turf/S as turf)
+/obj/item/stack/tile/plasteel/proc/build(turf/S)
 	if (istype(S,/turf/space))
 		S.ChangeTurf(/turf/simulated/floor/plating/airless)
 	else

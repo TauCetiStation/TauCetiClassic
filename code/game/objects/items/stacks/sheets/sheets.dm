@@ -1,6 +1,5 @@
 /obj/item/stack/sheet
 	name = "sheet"
-	flags = FPRINT | TABLEPASS
 	w_class = 3.0
 	force = 5
 	throwforce = 5
@@ -15,7 +14,7 @@
 // Since the sheetsnatcher was consolidated into weapon/storage/bag we now use
 // item/attackby() properly, making this unnecessary
 
-/*/obj/item/stack/sheet/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/*/obj/item/stack/sheet/attackby(obj/item/weapon/W, mob/user)
 	if (istype(W, /obj/item/weapon/storage/bag/sheetsnatcher))
 		var/obj/item/weapon/storage/bag/sheetsnatcher/S = W
 		if(!S.mode)

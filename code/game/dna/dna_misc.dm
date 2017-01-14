@@ -131,7 +131,7 @@
 
 	return output
 
-/proc/isblockon(hnumber, bnumber , var/UI = 0)
+/proc/isblockon(hnumber, bnumber , UI = 0)
 
 	var/temp2
 	temp2 = hex2num(hnumber)
@@ -159,10 +159,10 @@
 	else
 		return 0
 
-/proc/ismuton(var/block,var/mob/M)
+/proc/ismuton(block,mob/M)
 	return isblockon(getblock(M.dna.struc_enzymes, block,3),block)
 
-/proc/randmutb(mob/M as mob)
+/proc/randmutb(mob/M)
 	if(!M)	return
 	var/num
 	var/newdna
@@ -172,7 +172,7 @@
 	M.dna.struc_enzymes = newdna
 	return
 
-/proc/randmutg(mob/M as mob)
+/proc/randmutg(mob/M)
 	if(!M)	return
 	var/num
 	var/newdna
@@ -182,7 +182,7 @@
 	M.dna.struc_enzymes = newdna
 	return
 
-/proc/scramble(var/type, mob/M as mob, var/p)
+/proc/scramble(type, mob/M, p)
 	if(!M)	return
 	M.dna.check_integrity()
 	if(type)
@@ -198,7 +198,7 @@
 		domutcheck(M, null)
 	return
 
-/proc/randmuti(mob/M as mob)
+/proc/randmuti(mob/M)
 	if(!M)	return
 	var/num
 	var/newdna
@@ -221,7 +221,7 @@
 /////////////////////////// DNA HELPER-PROCS
 
 /////////////////////////// DNA MISC-PROCS
-/proc/updateappearance(mob/M as mob , structure)
+/proc/updateappearance(mob/M , structure)
 	if(istype(M, /mob/living/carbon/human))
 		M.dna.check_integrity()
 		var/mob/living/carbon/human/H = M
@@ -260,10 +260,10 @@
 	else
 		return 0
 
-/proc/probinj(var/pr, var/inj)
+/proc/probinj(pr, inj)
 	return prob(pr+inj*pr)
 
-/proc/domutcheck(mob/living/M as mob, connected, inj)
+/proc/domutcheck(mob/living/M, connected, inj)
 	if (!M) return
 
 	M.dna.check_integrity()
@@ -287,60 +287,60 @@
 
 	if(ismuton(NOBREATHBLOCK,M))
 		if(probinj(45,inj) || (NO_BREATH in old_mutations))
-			M << "\blue You feel no need to breathe."
+			to_chat(M, "\blue You feel no need to breathe.")
 			M.mutations.Add(NO_BREATH)
 	if(ismuton(REMOTEVIEWBLOCK,M))
 		if(probinj(45,inj) || (REMOTE_VIEW in old_mutations))
-			M << "\blue Your mind expands"
+			to_chat(M, "\blue Your mind expands")
 			M.mutations.Add(REMOTE_VIEW)
 	if(ismuton(REGENERATEBLOCK,M))
 		if(probinj(45,inj) || (REGEN in old_mutations))
-			M << "\blue You feel strange"
+			to_chat(M, "\blue You feel strange")
 			M.mutations.Add(REGEN)
 	if(ismuton(INCREASERUNBLOCK,M))
 		if(probinj(45,inj) || (RUN in old_mutations))
-			M << "\blue You feel quick"
+			to_chat(M, "\blue You feel quick")
 			M.mutations.Add(RUN)
 	if(ismuton(REMOTETALKBLOCK,M))
 		if(probinj(45,inj) || (REMOTE_TALK in old_mutations))
-			M << "\blue You expand your mind outwards"
+			to_chat(M, "\blue You expand your mind outwards")
 			M.mutations.Add(REMOTE_TALK)
 	if(ismuton(MORPHBLOCK,M))
 		if(probinj(45,inj) || (MORPH in old_mutations))
 			M.mutations.Add(MORPH)
-			M << "\blue Your skin feels strange"
+			to_chat(M, "\blue Your skin feels strange")
 	if(ismuton(BLENDBLOCK,M))
 		if(probinj(45,inj) || (BLEND in old_mutations))
 			M.mutations.Add(BLEND)
-			M << "\blue You feel alone"
+			to_chat(M, "\blue You feel alone")
 	if(ismuton(HALLUCINATIONBLOCK,M))
 		if(probinj(45,inj) || (HALLUCINATE in old_mutations))
 			M.mutations.Add(HALLUCINATE)
-			M << "\blue Your mind says 'Hello'"
+			to_chat(M, "\blue Your mind says 'Hello'")
 	if(ismuton(NOPRINTSBLOCK,M))
 		if(probinj(45,inj) || (FINGERPRINTS in old_mutations))
 			M.mutations.Add(FINGERPRINTS)
-			M << "\blue Your fingers feel numb"
+			to_chat(M, "\blue Your fingers feel numb")
 	if(ismuton(SHOCKIMMUNITYBLOCK,M))
 		if(probinj(45,inj) || (NO_SHOCK in old_mutations))
 			M.mutations.Add(NO_SHOCK)
-			M << "\blue You feel strange"
+			to_chat(M, "\blue You feel strange")
 	if(ismuton(SMALLSIZEBLOCK,M))
 		if(probinj(45,inj) || (SMALLSIZE in old_mutations))
-			M << "\blue Your skin feels rubbery"
+			to_chat(M, "\blue Your skin feels rubbery")
 			M.mutations.Add(SMALLSIZE)
 
 
 
 	if (isblockon(getblock(M.dna.struc_enzymes, HULKBLOCK,3),HULKBLOCK))
 		if(probinj(5,inj) || (HULK in old_mutations))
-			M << "\blue Your muscles hurt."
+			to_chat(M, "\blue Your muscles hurt.")
 			M.mutations.Add(HULK)
 	if (isblockon(getblock(M.dna.struc_enzymes, HEADACHEBLOCK,3),HEADACHEBLOCK))
 		M.disabilities |= EPILEPSY
-		M << "\red You get a headache."
+		to_chat(M, "\red You get a headache.")
 	if (isblockon(getblock(M.dna.struc_enzymes, FAKEBLOCK,3),FAKEBLOCK))
-		M << "\red You feel strange."
+		to_chat(M, "\red You feel strange.")
 		if (prob(95))
 			if(prob(50))
 				randmutb(M)
@@ -350,41 +350,41 @@
 			randmutg(M)
 	if (isblockon(getblock(M.dna.struc_enzymes, COUGHBLOCK,3),COUGHBLOCK))
 		M.disabilities |= COUGHING
-		M << "\red You start coughing."
+		to_chat(M, "\red You start coughing.")
 	if (isblockon(getblock(M.dna.struc_enzymes, CLUMSYBLOCK,3),CLUMSYBLOCK))
-		M << "\red You feel lightheaded."
+		to_chat(M, "\red You feel lightheaded.")
 		M.mutations.Add(CLUMSY)
 	if (isblockon(getblock(M.dna.struc_enzymes, TWITCHBLOCK,3),TWITCHBLOCK))
 		M.disabilities |= TOURETTES
-		M << "\red You twitch."
+		to_chat(M, "\red You twitch.")
 	if (isblockon(getblock(M.dna.struc_enzymes, XRAYBLOCK,3),XRAYBLOCK))
 		if(probinj(30,inj) || (XRAY in old_mutations))
-			M << "\blue The walls suddenly disappear."
+			to_chat(M, "\blue The walls suddenly disappear.")
 //			M.sight |= (SEE_MOBS|SEE_OBJS|SEE_TURFS)
 //			M.see_in_dark = 8
 //			M.see_invisible = 2
 			M.mutations.Add(XRAY)
 	if (isblockon(getblock(M.dna.struc_enzymes, NERVOUSBLOCK,3),NERVOUSBLOCK))
 		M.disabilities |= NERVOUS
-		M << "\red You feel nervous."
+		to_chat(M, "\red You feel nervous.")
 	if (isblockon(getblock(M.dna.struc_enzymes, FIREBLOCK,3),FIREBLOCK))
 		if(probinj(30,inj) || (COLD_RESISTANCE in old_mutations))
-			M << "\blue Your body feels warm."
+			to_chat(M, "\blue Your body feels warm.")
 			M.mutations.Add(COLD_RESISTANCE)
 	if (isblockon(getblock(M.dna.struc_enzymes, BLINDBLOCK,3),BLINDBLOCK))
 		M.sdisabilities |= BLIND
-		M << "\red You can't seem to see anything."
+		to_chat(M, "\red You can't seem to see anything.")
 	if (isblockon(getblock(M.dna.struc_enzymes, TELEBLOCK,3),TELEBLOCK))
 		if(probinj(15,inj) || (TK in old_mutations))
-			M << "\blue You feel smarter."
+			to_chat(M, "\blue You feel smarter.")
 			M.mutations.Add(TK)
 	if (isblockon(getblock(M.dna.struc_enzymes, DEAFBLOCK,3),DEAFBLOCK))
 		M.sdisabilities |= DEAF
 		M.ear_deaf = 1
-		M << "\red Its kinda quiet.."
+		to_chat(M, "\red Its kinda quiet..")
 	if (isblockon(getblock(M.dna.struc_enzymes, GLASSESBLOCK,3),GLASSESBLOCK))
 		M.disabilities |= NEARSIGHTED
-		M << "Your eyes feel weird..."
+		to_chat(M, "Your eyes feel weird...")
 
 	/* If you want the new mutations to work, UNCOMMENT THIS.
 	if(istype(M, /mob/living/carbon))

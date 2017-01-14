@@ -27,12 +27,12 @@
 	return
 
 /obj/machinery/computer/am_engine/Topic(href, href_list)
-	if(..())
+	. = ..()
+	if(!.)
 		return
-	usr.machine = src
 
 	if(!href_list["operation"])
-		return
+		return FALSE
 	switch(href_list["operation"])
 		// main interface
 		if("activate")
@@ -56,13 +56,13 @@
 
 	src.updateUsrDialog()
 
-/obj/machinery/computer/am_engine/attack_ai(var/mob/user as mob)
+/obj/machinery/computer/am_engine/attack_ai(mob/user)
 	return src.attack_hand(user)
 
-/obj/machinery/computer/am_engine/attack_paw(var/mob/user as mob)
+/obj/machinery/computer/am_engine/attack_paw(mob/user)
 	return src.attack_hand(user)
 
-/obj/machinery/computer/am_engine/attack_hand(var/mob/user as mob)
+/obj/machinery/computer/am_engine/attack_hand(mob/user)
 	if(..())
 		return
 	user.machine = src

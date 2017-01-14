@@ -17,6 +17,7 @@
 	var/update_muts = 1                        // Monkey gene must be set at start.
 	var/alien = 0				   //Used for reagent metabolism.
 	holder_type = /obj/item/weapon/holder/monkey
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/monkey = 5)
 
 /mob/living/carbon/monkey/tajara
 	name = "farwa"
@@ -112,12 +113,12 @@
 	greaterform = "Diona"
 	add_language("Rootspeak")
 
-/mob/living/carbon/monkey/movement_delay()
-	var/tally = 0
-	if(reagents)
-		if(reagents.has_reagent("hyperzine")) return -1
+/mob/living/carbon/monkey/diona/movement_delay()
+	return ..(tally = 3.5)
 
-		if(reagents.has_reagent("nuka_cola")) return -1
+/mob/living/carbon/monkey/movement_delay(tally = 0)
+	if(reagents && reagents.has_reagent("hyperzine") || reagents.has_reagent("nuka_cola"))
+		return -1
 
 	var/health_deficiency = (100 - health)
 	if(health_deficiency >= 45) tally += (health_deficiency / 25)
@@ -150,7 +151,7 @@
 	..()
 	return
 
-/mob/living/carbon/monkey/meteorhit(obj/O as obj)
+/mob/living/carbon/monkey/meteorhit(obj/O)
 	for(var/mob/M in viewers(src, null))
 		M.show_message(text("\red [] has been hit by []", src, O), 1)
 	if (health > 0)
@@ -161,10 +162,10 @@
 		health = 100 - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss()
 	return
 
-//mob/living/carbon/monkey/bullet_act(var/obj/item/projectile/Proj)taken care of in living
+//mob/living/carbon/monkey/bullet_act(obj/item/projectile/Proj)taken care of in living
 
 
-/mob/living/carbon/monkey/attack_paw(mob/M as mob)
+/mob/living/carbon/monkey/attack_paw(mob/M)
 	..()
 
 	if (M.a_intent == "help")
@@ -187,13 +188,13 @@
 					O.show_message("\red <B>[M.name] has attempted to bite [name]!</B>", 1)
 	return
 
-/mob/living/carbon/monkey/attack_hand(mob/living/carbon/human/M as mob)
+/mob/living/carbon/monkey/attack_hand(mob/living/carbon/human/M)
 	if (!ticker)
-		M << "You cannot attack people before the game has started."
+		to_chat(M, "You cannot attack people before the game has started.")
 		return
 
 	if (istype(loc, /turf) && istype(loc.loc, /area/start))
-		M << "No attacking people at spawn, you jackass."
+		to_chat(M, "No attacking people at spawn, you jackass.")
 		return
 
 	if(M.gloves && istype(M.gloves,/obj/item/clothing/gloves))
@@ -214,7 +215,7 @@
 							O.show_message("\red <B>[src] has been touched with the stun gloves by [M]!</B>", 1, "\red You hear someone fall", 2)
 					return
 				else
-					M << "\red Not enough charge! "
+					to_chat(M, "\red Not enough charge! ")
 					return
 
 	if (M.a_intent == "help")
@@ -279,13 +280,13 @@
 								O.show_message(text("\red <B>[] has disarmed [name]!</B>", M), 1)
 	return
 
-/mob/living/carbon/monkey/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
+/mob/living/carbon/monkey/attack_alien(mob/living/carbon/alien/humanoid/M)
 	if (!ticker)
-		M << "You cannot attack people before the game has started."
+		to_chat(M, "You cannot attack people before the game has started.")
 		return
 
 	if (istype(loc, /turf) && istype(loc.loc, /area/start))
-		M << "No attacking people at spawn, you jackass."
+		to_chat(M, "No attacking people at spawn, you jackass.")
 		return
 
 	switch(M.a_intent)
@@ -350,7 +351,7 @@
 			updatehealth()
 	return
 
-/mob/living/carbon/monkey/attack_animal(mob/living/simple_animal/M as mob)
+/mob/living/carbon/monkey/attack_animal(mob/living/simple_animal/M)
 	if(M.melee_damage_upper == 0)
 		M.emote("[M.friendly] [src]")
 	else
@@ -365,9 +366,9 @@
 		updatehealth()
 
 
-/mob/living/carbon/monkey/attack_slime(mob/living/carbon/slime/M as mob)
+/mob/living/carbon/monkey/attack_slime(mob/living/carbon/slime/M)
 	if (!ticker)
-		M << "You cannot attack people before the game has started."
+		to_chat(M, "You cannot attack people before the game has started.")
 		return
 
 	if(M.Victim) return // can't attack while eating!

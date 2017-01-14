@@ -10,7 +10,7 @@
 /obj/machinery/computer/lasercon
 	New()
 		spawn(1)
-			for(var/obj/machinery/zero_point_emitter/las in world)
+			for(var/obj/machinery/zero_point_emitter/las in machines)
 				if(las.id == src.id)
 					lasers += las
 
@@ -68,13 +68,16 @@
 */
 
 /obj/machinery/computer/lasercon/Topic(href, href_list)
-	..()
-	if( href_list["close"] )
+	if(href_list["close"])
 		usr << browse(null, "window=laser_control")
-		usr.machine = null
+		usr.unset_machine(src)
+		return FALSE
+
+	. = ..()
+	if(!.)
 		return
 
-	else if( href_list["input"] )
+	if(href_list["input"])
 		var/i = text2num(href_list["input"])
 		var/d = i
 		for(var/obj/machinery/zero_point_emitter/laser in lasers)
@@ -82,21 +85,18 @@
 			new_power = max(new_power,0.0001)	//lowest possible value
 			new_power = min(new_power,0.01)		//highest possible value
 			laser.energy = new_power
-			//
-			src.updateDialog()
-	else if( href_list["online"] )
+	else if(href_list["online"])
 		var/obj/machinery/zero_point_emitter/laser = href_list["online"]
 		laser.active = !laser.active
-		src.updateDialog()
-	else if( href_list["freq"] )
+	else if(href_list["freq"])
 		var/amt = text2num(href_list["freq"])
 		for(var/obj/machinery/zero_point_emitter/laser in lasers)
 			var/new_freq = laser.frequency + amt
 			new_freq = max(new_freq,1)		//lowest possible value
 			new_freq = min(new_freq,20000)	//highest possible value
 			laser.frequency = new_freq
-			//
-			src.updateDialog()
+
+	src.updateDialog()
 
 /*
 /obj/machinery/computer/lasercon/process()

@@ -54,7 +54,7 @@
 		src.has_power = 1
 	else
 		if (src.has_power)
-			src << "\red You are now running on emergency backup power."
+			to_chat(src, "\red You are now running on emergency backup power.")
 		src.has_power = 0
 		if(lights_on) // Light is on but there is no power!
 			lights_on = 0
@@ -156,25 +156,27 @@
 		return 0
 
 	if (src.stat == DEAD || XRAY in mutations || src.sight_mode & BORGXRAY)
+		set_EyesVision()
 		src.sight |= SEE_TURFS
 		src.sight |= SEE_MOBS
 		src.sight |= SEE_OBJS
 		src.see_in_dark = 8
 		src.see_invisible = SEE_INVISIBLE_MINIMUM
-	else if (src.sight_mode & BORGMESON && src.sight_mode & BORGTHERM)
-		src.sight |= SEE_TURFS
-		src.sight |= SEE_MOBS
-		src.see_in_dark = 8
-		see_invisible = SEE_INVISIBLE_MINIMUM
 	else if (src.sight_mode & BORGMESON)
+		set_EyesVision("meson")
 		src.sight |= SEE_TURFS
 		src.see_in_dark = 8
 		see_invisible = SEE_INVISIBLE_MINIMUM
+	else if (src.sight_mode & BORGNIGHT)
+		set_EyesVision("nvg")
+		src.see_in_dark = 8
 	else if (src.sight_mode & BORGTHERM)
+		set_EyesVision("thermal")
 		src.sight |= SEE_MOBS
 		src.see_in_dark = 8
 		src.see_invisible = SEE_INVISIBLE_LEVEL_TWO
 	else if (src.stat != DEAD)
+		set_EyesVision()
 		src.sight &= ~SEE_MOBS
 		src.sight &= ~SEE_TURFS
 		src.sight &= ~SEE_OBJS
@@ -289,7 +291,7 @@
 		killswitch_time --
 		if(killswitch_time <= 0)
 			if(src.client)
-				src << "\red <B>Killswitch Activated"
+				to_chat(src, "\red <B>Killswitch Activated")
 			killswitch = 0
 			spawn(5)
 				gib()
@@ -300,7 +302,7 @@
 		weaponlock_time --
 		if(weaponlock_time <= 0)
 			if(src.client)
-				src << "\red <B>Weapon Lock Timed Out!"
+				to_chat(src, "\red <B>Weapon Lock Timed Out!")
 			weapon_lock = 0
 			weaponlock_time = 120
 

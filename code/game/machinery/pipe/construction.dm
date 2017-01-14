@@ -43,7 +43,6 @@ Buildable meters
 	icon = 'icons/obj/pipe-item.dmi'
 	icon_state = "simple"
 	item_state = "buildpipe"
-	flags = TABLEPASS|FPRINT
 	w_class = 3
 	level = 2
 
@@ -299,10 +298,10 @@ Buildable meters
 		else
 			return 0
 
-/obj/item/pipe/attack_self(mob/user as mob)
+/obj/item/pipe/attack_self(mob/user)
 	return rotate()
 
-/obj/item/pipe/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+/obj/item/pipe/attackby(obj/item/weapon/W, mob/user)
 	..()
 	//*
 	if (!istype(W, /obj/item/weapon/wrench))
@@ -320,7 +319,7 @@ Buildable meters
 
 	for(var/obj/machinery/atmospherics/M in src.loc)
 		if(M.initialize_directions & pipe_dir)	// matches at least one direction on either type of pipe
-			user << "<span class='red'>There is already a pipe at that location.</span>"
+			to_chat(user, "<span class='red'>There is already a pipe at that location.</span>")
 			return 1
 	// no conflicts found
 
@@ -336,7 +335,7 @@ Buildable meters
 			P.level = T.intact ? 2 : 1
 			P.initialize()
 			if (qdeleted(P))
-				usr << pipefailtext
+				to_chat(usr, pipefailtext)
 				return 1
 			P.build_network()
 			if (P.node1)
@@ -355,7 +354,7 @@ Buildable meters
 			//P.level = T.intact ? 2 : 1
 			P.initialize()
 			if (qdeleted(P))
-				usr << pipefailtext
+				to_chat(usr, pipefailtext)
 				return 1
 			P.build_network()
 			if (P.node1)
@@ -390,7 +389,7 @@ Buildable meters
 			M.level = T.intact ? 2 : 1
 			M.initialize()
 			if (qdeleted(M))
-				usr << pipefailtext
+				to_chat(usr, pipefailtext)
 				return 1
 			M.build_network()
 			if (M.node1)
@@ -413,7 +412,7 @@ Buildable meters
 			M.level = T.intact ? 2 : 1
 			M.initialize()
 			if (qdeleted(M))
-				usr << pipefailtext
+				to_chat(usr, pipefailtext)
 				return 1
 			M.build_network()
 			if (M.node1)
@@ -438,7 +437,7 @@ Buildable meters
 			//P.level = T.intact ? 2 : 1
 			P.initialize()
 			if (qdeleted(P))
-				usr << pipefailtext
+				to_chat(usr, pipefailtext)
 				return 1
 			P.build_network()
 			if (P.node1)
@@ -621,7 +620,7 @@ Buildable meters
 			P.level = T.intact ? 2 : 1
 			P.initialize()
 			if (qdeleted(P))
-				usr << pipefailtext
+				to_chat(usr, pipefailtext)
 				return 1
 			P.build_network()
 			if (P.node1)
@@ -775,20 +774,19 @@ Buildable meters
 	icon = 'icons/obj/pipe-item.dmi'
 	icon_state = "meter"
 	item_state = "buildpipe"
-	flags = TABLEPASS|FPRINT
 	w_class = 4
 
-/obj/item/pipe_meter/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+/obj/item/pipe_meter/attackby(obj/item/weapon/W, mob/user)
 	..()
 
 	if (!istype(W, /obj/item/weapon/wrench))
 		return ..()
 	if(!locate(/obj/machinery/atmospherics/pipe, src.loc))
-		user << "<span class='red'>You need to fasten it to a pipe.</span>"
+		to_chat(user, "<span class='red'>You need to fasten it to a pipe.</span>")
 		return 1
 	new/obj/machinery/meter( src.loc )
 	playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-	user << "<span class='notice'>You have fastened the meter to the pipe.</span>"
+	to_chat(user, "<span class='notice'>You have fastened the meter to the pipe.</span>")
 	qdel(src)
 //not sure why these are necessary
 #undef PIPE_SIMPLE_STRAIGHT

@@ -4,7 +4,6 @@
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "stamp-qm"
 	item_state = "stamp"
-	flags = FPRINT | TABLEPASS
 	throwforce = 0
 	w_class = 1.0
 	throw_speed = 7
@@ -65,5 +64,5 @@
 	item_color = "centcomm"
 
 
-/obj/item/weapon/stamp/attack_paw(mob/user as mob)
+/obj/item/weapon/stamp/attack_paw(mob/user)
 	return attack_hand(user)

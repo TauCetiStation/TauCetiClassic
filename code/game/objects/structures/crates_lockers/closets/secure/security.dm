@@ -108,40 +108,36 @@
 			new /obj/item/weapon/storage/backpack/security(src)
 		else
 			new /obj/item/weapon/storage/backpack/satchel_sec(src)
-		new /obj/item/clothing/gloves/black/hos(src)
 		new /obj/item/clothing/head/helmet/HoS(src)
-		new /obj/item/clothing/suit/armor/vest(src)
-		new /obj/item/clothing/under/rank/head_of_security/jensen(src)
-		new /obj/item/clothing/under/rank/head_of_security/corp(src)
-		new /obj/item/clothing/under/rank/head_of_security_fem(src)
-		new /obj/item/clothing/suit/armor/hos/jensen(src)
-		new /obj/item/clothing/suit/armor/hos(src)
 		new /obj/item/clothing/head/helmet/HoS/dermal(src)
+		new /obj/item/clothing/under/rank/head_of_security_fem(src)
+		new /obj/item/clothing/suit/armor/hos(src)
+		new /obj/item/clothing/under/rank/head_of_security(src)
+		new /obj/item/weapon/storage/belt/security(src)
+		new /obj/item/clothing/mask/gas/sechailer(src)
 		new /obj/item/weapon/cartridge/hos(src)
 		new /obj/item/device/radio/headset/heads/hos(src)
-		new /obj/item/clothing/suit/armor/vest/leather(src)
-//		new /obj/item/clothing/glasses/sunglasses/sechud(src)
-		new /obj/item/clothing/glasses/thermal/hos_thermals(src)
 		new /obj/item/taperoll/police(src)
-		new /obj/item/weapon/shield/riot(src)
+		new /obj/item/clothing/under/rank/head_of_security/jensen(src)
+		new /obj/item/clothing/suit/armor/hos/jensen(src)
+		new /obj/item/clothing/gloves/black/hos(src)
+		new /obj/item/clothing/glasses/thermal/hos_thermals(src)
+		new /obj/item/weapon/shield/riot/tele(src)
 		new /obj/item/weapon/storage/lockbox/loyalty(src)
 		new /obj/item/weapon/storage/box/flashbangs(src)
-		new /obj/item/weapon/storage/belt/security(src)
 		new /obj/item/device/flash(src)
 		new /obj/item/weapon/reagent_containers/spray/pepper(src)
 		new /obj/item/weapon/melee/baton(src)
-		new /obj/item/weapon/gun/energy/gun(src)
 		new /obj/item/clothing/tie/holster/waist(src)
 		new /obj/item/weapon/melee/telebaton(src)
-		new /obj/item/clothing/mask/gas/sechailer/hos(src)
+		new /obj/item/weapon/gun/energy/gun(src)
+		new /obj/item/device/flashlight/flare(src)
 		/*/New year part
 		new /obj/item/clothing/suit/wintercoat/security(src)
 		new /obj/item/clothing/shoes/winterboots(src)
 		new /obj/item/clothing/head/santa(src)
 		*/
 		return
-
-
 
 /obj/structure/closet/secure_closet/warden
 	name = "Warden's Locker"
@@ -160,33 +156,29 @@
 			new /obj/item/weapon/storage/backpack/security(src)
 		else
 			new /obj/item/weapon/storage/backpack/satchel_sec(src)
-		new /obj/item/clothing/suit/armor/vest/security(src)
+		new /obj/item/clothing/head/helmet/warden(src)
+		new /obj/item/clothing/head/beret/sec/warden(src)
 		new /obj/item/clothing/under/rank/warden(src)
 		new /obj/item/clothing/under/rank/warden_fem(src)
-		new /obj/item/clothing/under/rank/warden/corp(src)
-		new /obj/item/clothing/suit/armor/vest/warden(src)
-		new /obj/item/clothing/head/helmet/warden(src)
-		new /obj/item/clothing/head/helmet/warden/blue(src)
-//		new /obj/item/weapon/cartridge/security(src)
+		new /obj/item/clothing/suit/storage/flak(src)
+		new /obj/item/clothing/suit/storage/flak/warden(src)
+		new /obj/item/weapon/gun/energy/taser(src)
+		new /obj/item/weapon/storage/belt/security(src)
+		new /obj/item/clothing/mask/gas/sechailer(src)
 		new /obj/item/device/radio/headset/headset_sec(src)
 		new /obj/item/clothing/glasses/sunglasses/sechud(src)
 		new /obj/item/taperoll/police(src)
 		new /obj/item/weapon/storage/box/flashbangs(src)
-		new /obj/item/weapon/storage/belt/security(src)
 		new /obj/item/device/flash(src)
 		new /obj/item/weapon/reagent_containers/spray/pepper(src)
 		new /obj/item/weapon/melee/baton(src)
-		new /obj/item/weapon/gun/energy/taser(src)
 		new /obj/item/weapon/storage/box/holobadge(src)
-		new /obj/item/clothing/mask/gas/sechailer/warden(src)
 		/*/New year part
 		new /obj/item/clothing/suit/wintercoat/security(src)
 		new /obj/item/clothing/shoes/winterboots(src)
 		new /obj/item/clothing/head/santa(src)
 		*/
 		return
-
-
 
 /obj/structure/closet/secure_closet/security
 	name = "Security Officer's Locker"
@@ -204,30 +196,26 @@
 			new /obj/item/weapon/storage/backpack/security(src)
 		else
 			new /obj/item/weapon/storage/backpack/satchel_sec(src)
-		new /obj/item/clothing/suit/armor/vest/security(src)
+		new /obj/item/clothing/gloves/security(src)
+		new /obj/item/clothing/suit/storage/flak(src)
 		new /obj/item/clothing/head/helmet(src)
-//		new /obj/item/weapon/cartridge/security(src)
-		new /obj/item/device/radio/headset/headset_sec(src)
 		new /obj/item/weapon/storage/belt/security(src)
+		new /obj/item/weapon/gun/energy/taser(src)
+		new /obj/item/device/radio/headset/headset_sec(src)
 		new /obj/item/device/flash(src)
 		new /obj/item/weapon/reagent_containers/spray/pepper(src)
 		new /obj/item/weapon/grenade/flashbang(src)
 		new /obj/item/weapon/melee/baton(src)
-		new /obj/item/weapon/gun/energy/taser(src)
 		new /obj/item/clothing/glasses/sunglasses/sechud(src)
 		new /obj/item/taperoll/police(src)
 		new /obj/item/device/hailer(src)
-		new /obj/item/clothing/tie/storage/black_vest(src)
-		new /obj/item/clothing/head/soft/sec/corp(src)
-		new /obj/item/clothing/under/rank/security/corp(src)
-		new /obj/item/clothing/gloves/security(src)
+		new /obj/item/device/flashlight/flare(src)
 		/*/New year part
 		new /obj/item/clothing/suit/wintercoat/security(src)
 		new /obj/item/clothing/shoes/winterboots(src)
 		new /obj/item/clothing/head/ushanka(src)
 		*/
 		return
-
 
 /obj/structure/closet/secure_closet/security/cargo
 
@@ -264,7 +252,7 @@
 
 /obj/structure/closet/secure_closet/detective
 	name = "Detective's Cabinet"
-	req_access = list(access_forensics_lockers)
+	req_access = list(access_detective)
 	icon_state = "cabinetdetective_locked"
 	icon_closed = "cabinetdetective"
 	icon_locked = "cabinetdetective_locked"
@@ -376,3 +364,28 @@
 				icon_state = icon_closed
 		else
 			icon_state = icon_opened
+
+/obj/structure/closet/secure_closet/forensics
+	name = "Forensics's Cabinet"
+	req_access = list(access_forensics_lockers)
+	icon_state = "cabinetdetective_locked"
+	icon_closed = "cabinetdetective"
+	icon_locked = "cabinetdetective_locked"
+	icon_opened = "cabinetdetective_open"
+	icon_broken = "cabinetdetective_broken"
+	icon_off = "cabinetdetective_broken"
+
+	New()
+		..()
+		sleep(2)
+		new /obj/item/clothing/under/rank/forensic_technician(src)
+		new /obj/item/clothing/suit/storage/labcoat(src)
+		new /obj/item/clothing/suit/storage/forensics/blue(src)
+		new /obj/item/clothing/suit/storage/forensics/red(src)
+		new /obj/item/clothing/gloves/black(src)
+		new /obj/item/clothing/shoes/red(src)
+		new /obj/item/weapon/storage/box/evidence(src)
+		new /obj/item/device/radio/headset/headset_sec(src)
+		new /obj/item/device/detective_scanner(src)
+		new /obj/item/taperoll/police(src)
+		return

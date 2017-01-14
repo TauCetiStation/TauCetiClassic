@@ -50,7 +50,7 @@
 	return to_return
 
 
-/obj/machinery/power/solar/proc/Make(var/obj/item/solar_assembly/S)
+/obj/machinery/power/solar/proc/Make(obj/item/solar_assembly/S)
 	if(!S)
 		S = new /obj/item/solar_assembly(src)
 		S.glass_type = /obj/item/stack/sheet/glass
@@ -202,7 +202,7 @@
 	var/tracker = 0
 	var/glass_type = null
 
-/obj/item/solar_assembly/attack_hand(var/mob/user)
+/obj/item/solar_assembly/attack_hand(mob/user)
 	if(!anchored && isturf(loc)) // You can't pick it up
 		..()
 
@@ -214,7 +214,7 @@
 		glass_type = null
 
 
-/obj/item/solar_assembly/attackby(var/obj/item/weapon/W, var/mob/user)
+/obj/item/solar_assembly/attackby(obj/item/weapon/W, mob/user)
 
 	if(!anchored && isturf(loc))
 		if(iswrench(W))
@@ -337,12 +337,12 @@
 	interact(user)
 
 
-/obj/machinery/power/solar_control/attackby(I as obj, user as mob)
+/obj/machinery/power/solar_control/attackby(I, user)
 	if(istype(I, /obj/item/weapon/screwdriver))
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		if(do_after(user, 20, target = src))
 			if (src.stat & BROKEN)
-				user << "\blue The broken glass falls out."
+				to_chat(user, "\blue The broken glass falls out.")
 				var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
 				new /obj/item/weapon/shard( src.loc )
 				var/obj/item/weapon/circuitboard/solar_control/M = new /obj/item/weapon/circuitboard/solar_control( A )
@@ -354,7 +354,7 @@
 				A.anchored = 1
 				qdel(src)
 			else
-				user << "\blue You disconnect the monitor."
+				to_chat(user, "\blue You disconnect the monitor.")
 				var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
 				var/obj/item/weapon/circuitboard/solar_control/M = new /obj/item/weapon/circuitboard/solar_control( A )
 				for (var/obj/C in src)
@@ -389,7 +389,7 @@
 
 
 // called by solar tracker when sun position changes
-/obj/machinery/power/solar_control/proc/tracker_update(var/angle)
+/obj/machinery/power/solar_control/proc/tracker_update(angle)
 	if(track != 2 || stat & (NOPOWER | BROKEN))
 		return
 	cdir = angle
@@ -439,13 +439,13 @@
 
 
 /obj/machinery/power/solar_control/Topic(href, href_list)
-	if(..())
+	if(href_list["close"])
 		usr << browse(null, "window=solcon")
-		usr.unset_machine()
-		return
-	if(href_list["close"] )
-		usr << browse(null, "window=solcon")
-		usr.unset_machine()
+		usr.unset_machine(src)
+		return FALSE
+
+	. = ..()
+	if(!.)
 		return
 
 	if(href_list["dir"])
@@ -453,18 +453,20 @@
 		set_panels(cdir)
 		update_icon()
 
-	if(href_list["rate control"])
+	else if(href_list["rate control"])
 		if(href_list["cdir"])
-			src.cdir = dd_range(0,359,(360+src.cdir+text2num(href_list["cdir"]))%360)
+			src.cdir = dd_range(0, 359, (360 + src.cdir + text2num(href_list["cdir"])) % 360)
 			spawn(1)
 				set_panels(cdir)
 				update_icon()
 		if(href_list["tdir"])
-			src.trackrate = dd_range(0,360,src.trackrate+text2num(href_list["tdir"]))
-			if(src.trackrate) nexttime = world.time + 6000/trackrate
+			src.trackrate = dd_range(0, 360, src.trackrate + text2num(href_list["tdir"]))
+			if(src.trackrate)
+				nexttime = world.time + 6000 / trackrate
 
-	if(href_list["track"])
-		if(src.trackrate) nexttime = world.time + 6000/trackrate
+	else if(href_list["track"])
+		if(src.trackrate) 
+			nexttime = world.time + 6000 / trackrate
 		track = text2num(href_list["track"])
 		if(powernet && (track == 2))
 			if(!SSsun.solars.Find(src,1,0))
@@ -474,16 +476,15 @@
 					cdir = T.sun_angle
 					break
 
-	if(href_list["trackdir"])
+	else if(href_list["trackdir"])
 		trackdir = text2num(href_list["trackdir"])
 
 	set_panels(cdir)
 	update_icon()
 	src.updateUsrDialog()
-	return
 
 
-/obj/machinery/power/solar_control/proc/set_panels(var/cdir)
+/obj/machinery/power/solar_control/proc/set_panels(cdir)
 	if(!powernet) return
 	for(var/obj/machinery/power/solar/S in get_solars_powernet())
 		if(powernet.nodes[S])

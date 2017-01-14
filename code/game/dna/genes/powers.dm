@@ -22,11 +22,11 @@
 	New()
 		block=REMOTEVIEWBLOCK
 
-	activate(var/mob/M, var/connected, var/flags)
+	activate(mob/M, connected, flags)
 		..(M,connected,flags)
 		M.verbs += /mob/living/carbon/human/proc/remoteobserve
 
-	deactivate(var/mob/M, var/connected, var/flags)
+	deactivate(mob/M, connected, flags)
 		..(M,connected,flags)
 		M.verbs -= /mob/living/carbon/human/proc/remoteobserve
 
@@ -39,12 +39,12 @@
 	New()
 		block=REGENERATEBLOCK
 
-	can_activate(var/mob/M,var/flags)
+	can_activate(mob/M,flags)
 		if((SMALLSIZE in M.mutations))
 			return 0
 		return ..(M,flags)
 
-	OnMobLife(var/mob/living/carbon/human/M)
+	OnMobLife(mob/living/carbon/human/M)
 		if(!istype(M)) return
 		var/datum/organ/external/head/H = M.organs_by_name["head"]
 
@@ -89,11 +89,11 @@
 	New()
 		block=REMOTETALKBLOCK
 
-	activate(var/mob/M, var/connected, var/flags)
+	activate(mob/M, connected, flags)
 		..(M,connected,flags)
 		M.verbs += /mob/living/carbon/human/proc/remotesay
 
-	deactivate(var/mob/M, var/connected, var/flags)
+	deactivate(mob/M, connected, flags)
 		..(M,connected,flags)
 		M.verbs -= /mob/living/carbon/human/proc/remotesay
 
@@ -106,11 +106,11 @@
 	New()
 		block=MORPHBLOCK
 
-	activate(var/mob/M)
+	activate(mob/M)
 		..(M)
 		M.verbs += /mob/living/carbon/human/proc/morph
 
-	deactivate(var/mob/M)
+	deactivate(mob/M)
 		..(M)
 		M.verbs -= /mob/living/carbon/human/proc/morph
 
@@ -123,12 +123,12 @@
 	New()
 		block=COLDBLOCK
 
-	can_activate(var/mob/M,var/flags)
+	can_activate(mob/M,flags)
 		if(COLD_RESISTANCE in M.mutations)
 			return 0
 		return ..(M,flags)
 
-	OnDrawUnderlays(var/mob/M,var/g,var/fat)
+	OnDrawUnderlays(mob/M,g,fat)
 		return "fire[fat]_s"
 
 /datum/dna/gene/basic/cold_resist
@@ -140,12 +140,12 @@
 	New()
 		block=FIREBLOCK
 
-	can_activate(var/mob/M,var/flags)
+	can_activate(mob/M,flags)
 		if(RESIST_HEAT in M.mutations)
 			return 0
 		return ..(M,flags)
 
-	OnDrawUnderlays(var/mob/M,var/g,var/fat)
+	OnDrawUnderlays(mob/M,g,fat)
 		return "fire[fat]_s"
 
 /datum/dna/gene/basic/noprints
@@ -175,26 +175,26 @@
 	New()
 		block=SMALLSIZEBLOCK
 
-	can_activate(var/mob/M,var/flags)
+	can_activate(mob/M,flags)
 		// Can't be big, small and regenerate.
 		if( (REGEN in M.mutations)) //#Z2
 			return 0
 		return ..(M,flags)
 
-	activate(var/mob/M, var/connected, var/flags)
+	activate(mob/M, connected, flags)
 		..(M,connected,flags)
 		M.pass_flags |= 1
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			H.ventcrawler = 1
-			H << "\blue \b Ventcrawling allowed"
+			to_chat(H, "\blue \b Ventcrawling allowed")
 
 		var/matrix/Mx = matrix()
 		Mx.Scale(0.8) //Makes our hulk to be bigger than any normal human.
 		Mx.Translate(0,-2)
 		M.transform = Mx
 
-	deactivate(var/mob/M, var/connected, var/flags)
+	deactivate(mob/M, connected, flags)
 		..(M,connected,flags)
 		M.pass_flags &= ~1
 		if(ishuman(M))
@@ -207,57 +207,66 @@
 		M.transform = Mx
 
 /datum/dna/gene/basic/hulk
-	name="Hulk"
-	activation_messages=list("Your muscles hurt.")
-	mutation=HULK
-	activation_prob=15
+	name                = "Hulk"
+	activation_messages = list("Your muscles hurt.")
+	mutation            = HULK
+	activation_prob     = 15
 
-	New()
-		block=HULKBLOCK
+/datum/dna/gene/basic/hulk/New()
+	block=HULKBLOCK
 
-	/*can_activate(var/mob/M,var/flags)
+	/*can_activate(mob/M,flags)
 		// Can't be big, small and regenerate.
 		if( (SMALLSIZE in M.mutations) || (REGEN in M.mutations)) //#Z2
 			return 0
 		return ..(M,flags)*/
 
-	activate(var/mob/M, var/connected, var/flags)
-		if(M.mind)
-			if(M.mind.hulkizing) return
-			M.mind.hulkizing = 1
-		else
-			return
-		..(M,connected,flags)
+/datum/dna/gene/basic/hulk/activate(mob/M, connected, flags)
+	if(!M.mind)
+		return
+	if(M.mind.hulkizing)
+		return
+	M.mind.hulkizing = 1
 
-		if(M.client)
-			message_admins("[M.name] ([M.ckey]) is a <span class='warning'>Monster</span>")
-		if(istype(M.loc, /obj/machinery/dna_scannernew))
-			var/obj/machinery/dna_scannernew/DSN = M.loc
-			DSN.occupant = null
-			DSN.icon_state = "scanner_0"
+	..(M,connected,flags)
 
-		var/mob/living/simple_animal/hulk/Monster
-		if(istype(M, /mob/living/carbon/human/unathi))
+	addtimer(src, "mutate_user", rand(600, 900), TRUE, M)
+
+/datum/dna/gene/basic/hulk/proc/mutate_user(mob/M)
+	if(!M)
+		return
+	if(!(HULK in M.mutations)) //If user cleans hulk mutation before timer runs out, then there is no mutation.
+		M.mind.hulkizing = 0   //We don't want to waste user's try, so user can mutate once later.
+		return
+
+	message_admins("[M.name] ([M.ckey]) is a <span class='warning'>Monster</span> (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[M.x];Y=[M.y];Z=[M.z]'>JMP</a>)")
+	if(istype(M.loc, /obj/machinery/dna_scannernew))
+		var/obj/machinery/dna_scannernew/DSN = M.loc
+		DSN.occupant = null
+		DSN.icon_state = "scanner_0"
+
+	var/mob/living/simple_animal/hulk/Monster
+	if(istype(M, /mob/living/carbon/human/unathi))
+		Monster = new /mob/living/simple_animal/hulk/unathi(get_turf(M))
+	else
+		if(prob(19))
 			Monster = new /mob/living/simple_animal/hulk/unathi(get_turf(M))
 		else
-			if(prob(19))
-				Monster = new /mob/living/simple_animal/hulk/unathi(get_turf(M))
-			else
-				Monster = new /mob/living/simple_animal/hulk/human(get_turf(M))
+			Monster = new /mob/living/simple_animal/hulk/human(get_turf(M))
 
-		var/datum/effect/effect/system/smoke_spread/bad/smoke = new /datum/effect/effect/system/smoke_spread/bad()
-		smoke.set_up(10, 0, M.loc)
-		smoke.start()
-		playsound(M.loc, 'sound/effects/bamf.ogg', 50, 2)
+	var/datum/effect/effect/system/smoke_spread/bad/smoke = new /datum/effect/effect/system/smoke_spread/bad()
+	smoke.set_up(10, 0, M.loc)
+	smoke.start()
+	playsound(M.loc, 'sound/effects/bamf.ogg', 50, 2)
 
-		Monster.original_body = M
-		M.loc = Monster
-		M.mind.transfer_to(Monster)
+	Monster.original_body = M
+	M.forceMove(Monster)
+	M.mind.transfer_to(Monster)
 
-		Monster.attack_log = M.attack_log
-		Monster.attack_log += "\[[time_stamp()]\]<font color='blue'> ======MONSTER LIFE======</font>"
-		Monster.say(pick("RAAAAAAAARGH!", "HNNNNNNNNNGGGGGGH!", "GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", "AAAAAAARRRGH!" ))
-		return
+	Monster.attack_log = M.attack_log
+	Monster.attack_log += "\[[time_stamp()]\]<font color='blue'> ======MONSTER LIFE======</font>"
+	Monster.say(pick("RAAAAAAAARGH!", "HNNNNNNNNNGGGGGGH!", "GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", "AAAAAAARRRGH!" ))
+	return
 
 /datum/dna/gene/basic/xray
 	name="X-Ray Vision"
@@ -277,5 +286,5 @@
 	New()
 		block=TELEBLOCK
 
-	OnDrawUnderlays(var/mob/M,var/g,var/fat)
+	OnDrawUnderlays(mob/M,g,fat)
 		return "telekinesishead[fat]_s"

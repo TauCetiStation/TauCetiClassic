@@ -37,13 +37,13 @@
 	..()
 	return QDEL_HINT_HARDDEL_NOW
 
-/turf/attack_hand(mob/user as mob)
+/turf/attack_hand(mob/user)
 	user.Move_Pulled(src)
 
 /turf/ex_act(severity)
 	return 0
 
-/turf/bullet_act(var/obj/item/projectile/Proj)
+/turf/bullet_act(obj/item/projectile/Proj)
 	if(istype(Proj ,/obj/item/projectile/beam/pulse))
 		src.ex_act(2)
 	else if(istype(Proj ,/obj/item/projectile/bullet/gyro))
@@ -53,7 +53,7 @@
 
 /turf/Enter(atom/movable/mover as mob|obj, atom/forget as mob|obj|turf|area)
 	if(movement_disabled && usr.ckey != movement_disabled_exception)
-		usr << "\red Movement is admin-disabled." //This is to identify lag problems
+		to_chat(usr, "\red Movement is admin-disabled.")//This is to identify lag problems
 		return
 	if (!mover || !isturf(mover.loc))
 		return 1
@@ -156,7 +156,7 @@
 		qdel(L)
 
 //Creates a new turf
-/turf/proc/ChangeTurf(var/turf/N, var/force_lighting_update = 0)
+/turf/proc/ChangeTurf(turf/N, force_lighting_update = 0)
 	if (!N)
 		return
 

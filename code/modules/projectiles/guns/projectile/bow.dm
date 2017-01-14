@@ -5,7 +5,6 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "bolt"
 	item_state = "bolt"
-	flags =  FPRINT | TABLEPASS
 	throwforce = 8
 	w_class = 3.0
 	sharp = 1
@@ -31,7 +30,7 @@
 
 /obj/item/weapon/arrow/rod/removed(mob/user)
 	if(throwforce == 15) // The rod has been superheated - we don't want it to be useable when removed from the bow.
-		user  << "[src] shatters into a scattering of overstressed metal shards as it leaves the crossbow."
+		to_chat(user, "[src] shatters into a scattering of overstressed metal shards as it leaves the crossbow.")
 		var/obj/item/weapon/shard/shrapnel/S = new()
 		S.loc = get_turf(src)
 		qdel(src)
@@ -44,7 +43,7 @@
 	icon_state = "crossbow"
 	item_state = "crossbow-solid"
 	w_class = 5.0
-	flags =  FPRINT | TABLEPASS | CONDUCT
+	flags =  CONDUCT
 	slot_flags = SLOT_BELT | SLOT_BACK
 
 	w_class = 3.0
@@ -56,7 +55,7 @@
 	var/obj/item/weapon/arrow = null      // Nocked arrow.
 	var/obj/item/weapon/stock_parts/cell/cell = null  // Used for firing special projectiles like rods.
 
-/obj/item/weapon/crossbow/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/weapon/crossbow/attackby(obj/item/W, mob/user)
 	if(!arrow)
 		if (istype(W,/obj/item/weapon/arrow))
 			user.drop_item()
@@ -75,7 +74,7 @@
 			user.visible_message("[user] haphazardly jams [arrow] into [src].","You jam [arrow] into [src].")
 			if(cell)
 				if(cell.charge >= 500)
-					user << "<span class='notice'>[arrow] plinks and crackles as it begins to glow red-hot.</span>"
+					to_chat(user, "<span class='notice'>[arrow] plinks and crackles as it begins to glow red-hot.</span>")
 					arrow.throwforce = 15
 					arrow.icon_state = "metal-rod-superheated"
 					cell.use(500)
@@ -86,29 +85,29 @@
 			user.drop_item()
 			W.loc = src
 			cell = W
-			user << "<span class='notice'>You jam [cell] into [src] and wire it to the firing coil.</span>"
+			to_chat(user, "<span class='notice'>You jam [cell] into [src] and wire it to the firing coil.</span>")
 			if(arrow)
 				if(istype(arrow,/obj/item/weapon/arrow/rod) && arrow.throwforce < 15 && cell.charge >= 500)
-					user << "<span class='notice'>[arrow] plinks and crackles as it begins to glow red-hot.</span>"
+					to_chat(user, "<span class='notice'>[arrow] plinks and crackles as it begins to glow red-hot.</span>")
 					arrow.throwforce = 15
 					arrow.icon_state = "metal-rod-superheated"
 					cell.use(500)
 		else
-			user << "<span class='notice'>[src] already has a cell installed.</span>"
+			to_chat(user, "<span class='notice'>[src] already has a cell installed.</span>")
 
 	else if(istype(W, /obj/item/weapon/screwdriver))
 		if(cell)
 			var/obj/item/C = cell
 			C.loc = get_turf(user)
 			cell = null
-			user << "<span class='notice'>You jimmy [cell] out of [src] with [W].</span>"
+			to_chat(user, "<span class='notice'>You jimmy [cell] out of [src] with [W].</span>")
 		else
-			user << "<span class='notice'>[src] doesn't have a cell installed.</span>"
+			to_chat(user, "<span class='notice'>[src] doesn't have a cell installed.</span>")
 
 	else
 		..()
 
-/obj/item/weapon/crossbow/attack_self(mob/living/user as mob)
+/obj/item/weapon/crossbow/attack_self(mob/living/user)
 	if(tension)
 		if(arrow)
 			user.visible_message("[user] relaxes the tension on [src]'s string and removes [arrow].","You relax the tension on [src]'s string and remove [arrow].")
@@ -123,10 +122,10 @@
 	else
 		draw(user)
 
-/obj/item/weapon/crossbow/proc/draw(var/mob/user as mob)
+/obj/item/weapon/crossbow/proc/draw(mob/user)
 
 	if(!arrow)
-		user << "You don't have anything nocked to [src]."
+		to_chat(user, "You don't have anything nocked to [src].")
 		return
 
 	if(user.restrained())
@@ -138,7 +137,7 @@
 	tension = 1
 	spawn(25) increase_tension(user)
 
-/obj/item/weapon/crossbow/proc/increase_tension(var/mob/user as mob)
+/obj/item/weapon/crossbow/proc/increase_tension(mob/user)
 
 	if(!arrow || !tension || current_user != user) //Arrow has been fired, bow has been relaxed or user has changed.
 		return
@@ -148,12 +147,12 @@
 
 	if(tension>=max_tension)
 		tension = max_tension
-		usr << "[src] clunks as you draw the string to its maximum tension!"
+		to_chat(usr, "[src] clunks as you draw the string to its maximum tension!")
 	else
 		user.visible_message("[usr] draws back the string of [src]!","You continue drawing back the string of [src]!")
 		spawn(25) increase_tension(user)
 
-/obj/item/weapon/crossbow/afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, flag, params)
+/obj/item/weapon/crossbow/afterattack(atom/target, mob/living/user, flag, params)
 
 	if (istype(target, /obj/item/weapon/storage/backpack ))
 		src.dropped()
@@ -169,16 +168,16 @@
 		return
 
 	if(!tension)
-		user << "You haven't drawn back the bolt!"
+		to_chat(user, "You haven't drawn back the bolt!")
 		return 0
 
 	if (!arrow)
-		user << "You have no arrow nocked to [src]!"
+		to_chat(user, "You have no arrow nocked to [src]!")
 		return 0
 	else
 		spawn(0) Fire(target,user,params)
 
-/obj/item/weapon/crossbow/proc/Fire(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, params, reflex = 0)
+/obj/item/weapon/crossbow/proc/Fire(atom/target, mob/living/user, params, reflex = 0)
 
 	add_fingerprint(user)
 
@@ -191,7 +190,7 @@
 
 	var/obj/item/weapon/arrow/A = arrow
 	A.loc = get_turf(user)
-	A.throw_at(target,10,tension*release_speed,user)
+	A.throw_at(target,26,tension*release_speed,user) //26 because speed must be < than distance
 	arrow = null
 	tension = 0
 	icon_state = "crossbow"
@@ -218,27 +217,32 @@
 /obj/item/weapon/crossbowframe/update_icon()
 	icon_state = "crossbowframe[buildstate]"
 
-/obj/item/weapon/crossbowframe/examine()
+/obj/item/weapon/crossbowframe/examine(mob/user)
 	..()
 	switch(buildstate)
-		if(1) usr << "It has a loose rod frame in place."
-		if(2) usr << "It has a steel backbone welded in place."
-		if(3) usr << "It has a steel backbone and a cell mount installed."
-		if(4) usr << "It has a steel backbone, plastic lath and a cell mount installed."
-		if(5) usr << "It has a steel cable loosely strung across the lath."
+		if(1)
+			to_chat(user, "It has a loose rod frame in place.")
+		if(2)
+			to_chat(user, "It has a steel backbone welded in place.")
+		if(3)
+			to_chat(user, "It has a steel backbone and a cell mount installed.")
+		if(4)
+			to_chat(user, "It has a steel backbone, plastic lath and a cell mount installed.")
+		if(5)
+			to_chat(user, "It has a steel cable loosely strung across the lath.")
 
-/obj/item/weapon/crossbowframe/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/weapon/crossbowframe/attackby(obj/item/W, mob/user)
 	if(istype(user, /mob/living/silicon/robot)) return
 	if(istype(W,/obj/item/stack/rods))
 		if(buildstate == 0)
 			var/obj/item/stack/rods/R = W
 			if(R.amount >= 3)
 				R.use(3)
-				user << "\blue You assemble a backbone of rods around the wooden stock."
+				to_chat(user, "\blue You assemble a backbone of rods around the wooden stock.")
 				buildstate++
 				update_icon()
 			else
-				user << "\blue You need at least three rods to complete this task."
+				to_chat(user, "\blue You need at least three rods to complete this task.")
 			return
 	else if(istype(W,/obj/item/weapon/weldingtool))
 		if(buildstate == 1)
@@ -246,7 +250,7 @@
 			if(T.remove_fuel(0,user))
 				if(!src || !T.isOn()) return
 				playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
-				user << "\blue You weld the rods into place."
+				to_chat(user, "\blue You weld the rods into place.")
 			buildstate++
 			update_icon()
 		return
@@ -255,35 +259,35 @@
 		if(buildstate == 2)
 			if(C.amount >= 5)
 				C.use(5)
-				user << "\blue You wire a crude cell mount into the top of the crossbow."
+				to_chat(user, "\blue You wire a crude cell mount into the top of the crossbow.")
 				buildstate++
 				update_icon()
 			else
-				user << "\blue You need at least five segments of cable coil to complete this task."
+				to_chat(user, "\blue You need at least five segments of cable coil to complete this task.")
 			return
 		else if(buildstate == 4)
 			if(C.amount >= 5)
 				C.use(5)
-				user << "\blue You string a steel cable across the crossbow's lath."
+				to_chat(user, "\blue You string a steel cable across the crossbow's lath.")
 				buildstate++
 				update_icon()
 			else
-				user << "\blue You need at least five segments of cable coil to complete this task."
+				to_chat(user, "\blue You need at least five segments of cable coil to complete this task.")
 			return
 	else if(istype(W,/obj/item/stack/sheet/mineral/plastic))
 		if(buildstate == 3)
 			var/obj/item/stack/sheet/mineral/plastic/P = W
 			if(P.amount >= 3)
 				P.use(3)
-				user << "\blue You assemble and install a heavy plastic lath onto the crossbow."
+				to_chat(user, "\blue You assemble and install a heavy plastic lath onto the crossbow.")
 				buildstate++
 				update_icon()
 			else
-				user << "\blue You need at least three plastic sheets to complete this task."
+				to_chat(user, "\blue You need at least three plastic sheets to complete this task.")
 			return
 	else if(istype(W,/obj/item/weapon/screwdriver))
 		if(buildstate == 5)
-			user << "\blue You secure the crossbow's various parts."
+			to_chat(user, "\blue You secure the crossbow's various parts.")
 			new /obj/item/weapon/crossbow(get_turf(src))
 			qdel(src)
 		return

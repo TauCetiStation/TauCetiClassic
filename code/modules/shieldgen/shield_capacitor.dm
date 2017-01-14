@@ -37,14 +37,14 @@
 		var/obj/item/weapon/card/id/C = W
 		if(access_captain in C.access || access_security in C.access || access_engine in C.access)
 			src.locked = !src.locked
-			user << "Controls are now [src.locked ? "locked." : "unlocked."]"
+			to_chat(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
 			updateDialog()
 		else
-			user << "\red Access denied."
+			to_chat(user, "\red Access denied.")
 	else if(istype(W, /obj/item/weapon/card/emag))
 		if(prob(75))
 			src.locked = !src.locked
-			user << "Controls are now [src.locked ? "locked." : "unlocked."]"
+			to_chat(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
 			updateDialog()
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 		s.set_up(5, 1, src)
@@ -52,7 +52,7 @@
 
 	else if(istype(W, /obj/item/weapon/wrench))
 		src.anchored = !src.anchored
-		src.visible_message("\blue \icon[src] [src] has been [anchored ? "bolted to the floor" : "unbolted from the floor"] by [user].")
+		src.visible_message("\blue [bicon(src)] [src] has been [anchored ? "bolted to the floor" : "unbolted from the floor"] by [user].")
 
 		if(anchored)
 			spawn(0)
@@ -68,10 +68,10 @@
 	else
 		..()
 
-/obj/machinery/shield_capacitor/attack_paw(user as mob)
+/obj/machinery/shield_capacitor/attack_paw(user)
 	return src.attack_hand(user)
 
-/obj/machinery/shield_capacitor/attack_ai(user as mob)
+/obj/machinery/shield_capacitor/attack_ai(user)
 	return src.attack_hand(user)
 
 /obj/machinery/shield_capacitor/attack_hand(mob/user)
@@ -125,11 +125,15 @@
 		time_since_fail = 0
 
 /obj/machinery/shield_capacitor/Topic(href, href_list[])
-	..()
-	if( href_list["close"] )
+	if(href_list["close"])
 		usr << browse(null, "window=shield_capacitor")
-		usr.unset_machine()
+		usr.unset_machine(src)
+		return FALSE
+
+	. = ..()
+	if(!.)
 		return
+
 	if( href_list["toggle"] )
 		active = !active
 		if(active)
@@ -142,7 +146,7 @@
 			charge_rate = charge_limit
 		else if(charge_rate < 0)
 			charge_rate = 0
-	//
+
 	updateDialog()
 
 /obj/machinery/shield_capacitor/power_change()
@@ -166,7 +170,7 @@
 	set src in oview(1)
 
 	if (src.anchored)
-		usr << "It is fastened to the floor!"
+		to_chat(usr, "It is fastened to the floor!")
 		return
 	src.dir = turn(src.dir, 270)
 	return

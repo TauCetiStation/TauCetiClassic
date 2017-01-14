@@ -6,7 +6,7 @@
 	desc = "A shield adept at blocking blunt objects from connecting with the torso of the shield wielder."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "riot"
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = CONDUCT
 	slot_flags = SLOT_BACK
 	force = 5.0
 	throwforce = 5.0
@@ -22,7 +22,7 @@
 	IsShield()
 		return 1
 
-	attackby(obj/item/weapon/W as obj, mob/user as mob)
+	attackby(obj/item/weapon/W, mob/user)
 		if(istype(W, /obj/item/weapon/melee/baton))
 			if(cooldown < world.time - 25)
 				user.visible_message("<span class='warning'>[user] bashes [src] with [W]!</span>")
@@ -36,7 +36,7 @@
 	desc = "A shield capable of stopping most projectile and melee attacks. It can be retracted, expanded, and stored anywhere."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "eshield0" // eshield1 for expanded
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = CONDUCT
 	force = 3.0
 	throwforce = 5.0
 	throw_speed = 1
@@ -46,8 +46,58 @@
 	attack_verb = list("shoved", "bashed")
 	var/active = 0
 
-/obj/item/weapon/shield/energy/IsReflect()
-	return (active)
+/obj/item/weapon/shield/energy/IsReflect(def_zone, hol_dir, hit_dir)
+	if(active)
+		if(hol_dir == NORTH && (hit_dir in list(SOUTH, SOUTHEAST, SOUTHWEST)))
+			return TRUE
+		else if(hol_dir == SOUTH && (hit_dir in list(NORTH, NORTHEAST, NORTHWEST)))
+			return TRUE
+		else if(hol_dir == EAST && (hit_dir in list(WEST, NORTHWEST, SOUTHWEST)))
+			return TRUE
+		else if(hol_dir == WEST && (hit_dir in list(EAST, NORTHEAST, SOUTHEAST)))
+			return TRUE
+	return FALSE
+
+
+/obj/item/weapon/shield/riot/tele
+	name = "telescopic shield"
+	desc = "An advanced riot shield made of lightweight materials that collapses for easy storage."
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "teleriot0"
+	origin_tech = "materials=3;combat=4;engineering=4"
+	slot_flags = null
+	force = 3
+	throwforce = 3
+	throw_speed = 3
+	throw_range = 4
+	w_class = 3
+	var/active = 0
+
+/obj/item/weapon/shield/riot/tele/IsShield()
+	if(active)
+		return 1
+	return 0
+
+/obj/item/weapon/shield/riot/tele/attack_self(mob/living/user)
+	active = !active
+	icon_state = "teleriot[active]"
+	playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, 1)
+
+	if(active)
+		force = 8
+		throwforce = 5
+		throw_speed = 2
+		w_class = 4
+		slot_flags = SLOT_BACK
+		to_chat(user, "<span class='notice'>You extend \the [src].</span>")
+	else
+		force = 3
+		throwforce = 3
+		throw_speed = 3
+		w_class = 3
+		slot_flags = null
+		to_chat(user, "<span class='notice'>[src] can now be concealed.</span>")
+	add_fingerprint(user)
 
 /*
 /obj/item/weapon/cloaking_device
@@ -56,7 +106,7 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "shield0"
 	var/active = 0.0
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = CONDUCT
 	item_state = "electronic"
 	throwforce = 10.0
 	throw_speed = 2
@@ -64,13 +114,13 @@
 	w_class = 2.0
 	origin_tech = "magnets=3;syndicate=4"
 
-/obj/item/weapon/cloaking_device/attack_self(mob/user as mob)
+/obj/item/weapon/cloaking_device/attack_self(mob/user)
 	src.active = !( src.active )
 	if (src.active)
-		user << "\blue The cloaking device is now active."
+		to_chat(user, "\blue The cloaking device is now active.")
 		src.icon_state = "shield1"
 	else
-		user << "\blue The cloaking device is now inactive."
+		to_chat(user, "\blue The cloaking device is now inactive.")
 		src.icon_state = "shield0"
 	src.add_fingerprint(user)
 	return

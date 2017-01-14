@@ -1,9 +1,8 @@
 /obj/item/brain
 	name = "brain"
 	desc = "A piece of juicy meat found in a persons head."
-	icon = 'tauceti/icons/obj/surgery.dmi'
+	icon = 'icons/obj/surgery.dmi'
 	icon_state = "brain2"
-	flags = TABLEPASS
 	force = 1.0
 	w_class = 2.0
 	throwforce = 1.0
@@ -23,7 +22,7 @@
 				brainmob.client.screen.len = null //clear the hud
 
 	proc
-		transfer_identity(var/mob/living/carbon/H)
+		transfer_identity(mob/living/carbon/H)
 			name = "[H]'s brain"
 			brainmob = new(src)
 			brainmob.name = H.real_name
@@ -33,23 +32,19 @@
 			if(H.mind)
 				H.mind.transfer_to(brainmob)
 
-			brainmob << "\blue You feel slightly disoriented. That's normal when you're just a brain."
+			to_chat(brainmob, "\blue You feel slightly disoriented. That's normal when you're just a brain.")
 			var/datum/game_mode/mutiny/mode = get_mutiny_mode()
 			if(mode)
 				mode.debrain_directive(src)
 
-/obj/item/brain/examine() // -- TLE
-	set src in oview(12)
-	if (!( usr ))
-		return
-	usr << "This is \icon[src] \an [name]."
-
+/obj/item/brain/examine(mob/user) // -- TLE
+	..()
 	if(brainmob && brainmob.client)//if thar be a brain inside... the brain.
-		usr << "You can feel the small spark of life still left in this one."
+		to_chat(user, "You can feel the small spark of life still left in this one.")
 	else
-		usr << "This one seems particularly lifeless. Perhaps it will regain some of its luster later.."
+		to_chat(user, "This one seems particularly lifeless. Perhaps it will regain some of its luster later..")
 
-/obj/item/brain/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+/obj/item/brain/attack(mob/living/carbon/M, mob/living/carbon/user)
 	if(!istype(M, /mob))
 		return
 
@@ -64,7 +59,7 @@
 	var/mob/living/carbon/human/H = M
 	if(istype(M, /mob/living/carbon/human) && ((H.head && H.head.flags & HEADCOVERSEYES) || (H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) || (H.glasses && H.glasses.flags & GLASSESCOVERSEYES)))
 		// you can't stab someone in the eyes wearing a mask!
-		user << "\blue You're going to need to remove their head cover first."
+		to_chat(user, "\blue You're going to need to remove their head cover first.")
 		return
 
 //since these people will be dead M != usr
@@ -79,10 +74,10 @@
 				O.show_message(text("\red [M] has [src] inserted into his head by [user]."), 1)
 
 		if(M != user)
-			M << "\red [user] inserts [src] into your head!"
-			user << "\red You insert [src] into [M]'s head!"
+			to_chat(M, "\red [user] inserts [src] into your head!")
+			to_chat(user, "\red You insert [src] into [M]'s head!")
 		else
-			user << "\red You insert [src] into your head!"
+			to_chat(user, "\red You insert [src] into your head!")
 
 		//this might actually be outdated since barring badminnery, a debrain'd body will have any client sucked out to the brain's internal mob. Leaving it anyway to be safe. --NEO
 		if(M.key)//Revised. /N

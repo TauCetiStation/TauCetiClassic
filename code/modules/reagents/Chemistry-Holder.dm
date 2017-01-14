@@ -47,7 +47,7 @@ var/const/INGEST = 2
 				chemical_reactions_list[id] += D
 				break // Don't bother adding ourselves to other reagent ids, it is redundant.
 
-/datum/reagents/proc/remove_any(var/amount=1)
+/datum/reagents/proc/remove_any(amount=1)
 	var/total_transfered = 0
 	var/current_list_element = 1
 
@@ -89,7 +89,7 @@ var/const/INGEST = 2
 
 	return the_id
 
-/datum/reagents/proc/trans_to(var/obj/target, var/amount=1, var/multiplier=1, var/preserve_data=1)//if preserve_data=0, the reagents data will be lost. Usefull if you use data for some strange stuff and don't want it to be transferred.
+/datum/reagents/proc/trans_to(obj/target, amount=1, multiplier=1, preserve_data=1)//if preserve_data=0, the reagents data will be lost. Usefull if you use data for some strange stuff and don't want it to be transferred.
 	if (!target )
 		return
 	if(amount < 0) return
@@ -124,7 +124,7 @@ var/const/INGEST = 2
 	src.handle_reactions()
 	return amount
 
-/datum/reagents/proc/trans_to_ingest(var/obj/target, var/amount=1, var/multiplier=1, var/preserve_data=1)//For items ingested. A delay is added between ingestion and addition of the reagents
+/datum/reagents/proc/trans_to_ingest(obj/target, amount=1, multiplier=1, preserve_data=1)//For items ingested. A delay is added between ingestion and addition of the reagents
 	if (!target )
 		return
 	if (!target.reagents || src.total_volume<=0)
@@ -152,7 +152,7 @@ var/const/INGEST = 2
 
 	return amount
 
-/datum/reagents/proc/copy_to(var/obj/target, var/amount=1, var/multiplier=1, var/preserve_data=1, var/safety = 0)
+/datum/reagents/proc/copy_to(obj/target, amount=1, multiplier=1, preserve_data=1, safety = 0)
 	if(!target)
 		return
 	if(!target.reagents || src.total_volume<=0)
@@ -176,7 +176,7 @@ var/const/INGEST = 2
 		src.handle_reactions()
 	return amount
 
-/datum/reagents/proc/trans_id_to(var/obj/target, var/reagent, var/amount=1, var/preserve_data=1)//Not sure why this proc didn't exist before. It does now! /N
+/datum/reagents/proc/trans_id_to(obj/target, reagent, amount=1, preserve_data=1)//Not sure why this proc didn't exist before. It does now! /N
 	if (!target)
 		return
 	if (!target.reagents || src.total_volume<=0 || !src.get_reagent_amount(reagent))
@@ -203,20 +203,20 @@ var/const/INGEST = 2
 	//src.handle_reactions() Don't need to handle reactions on the source since you're (presumably isolating and) transferring a specific reagent.
 	return amount
 
-/datum/reagents/proc/metabolize(var/mob/M,var/alien)
-
+/datum/reagents/proc/metabolize(mob/M, alien)
 	for(var/A in reagent_list)
 		var/datum/reagent/R = A
 		if(M && R)
-			R.on_mob_life(M,alien)
+			R.on_mob_life(M, alien)
+			remove_reagent(R.id, R.custom_metabolism)
 	update_total()
 
-/datum/reagents/proc/conditional_update_move(var/atom/A, var/Running = 0)
+/datum/reagents/proc/conditional_update_move(atom/A, Running = 0)
 	for(var/datum/reagent/R in reagent_list)
 		R.on_move (A, Running)
 	update_total()
 
-/datum/reagents/proc/conditional_update(var/atom/A, )
+/datum/reagents/proc/conditional_update(atom/A, )
 	for(var/datum/reagent/R in reagent_list)
 		R.on_update (A)
 	update_total()
@@ -305,21 +305,21 @@ var/const/INGEST = 2
 
 					var/list/seen = viewers(4, get_turf(my_atom))
 					for(var/mob/M in seen)
-						M << "\blue \icon[my_atom] The solution begins to bubble."
+						to_chat(M, "\blue [bicon(my_atom)] The solution begins to bubble.")
 
 				/*	if(istype(my_atom, /obj/item/slime_core))
 						var/obj/item/slime_core/ME = my_atom
 						ME.Uses--
 						if(ME.Uses <= 0) // give the notification that the slime core is dead
 							for(var/mob/M in viewers(4, get_turf(my_atom)) )
-								M << "\blue \icon[my_atom] The innards begin to boil!"
+								to_chat(M, "\blue [bicon(my_atom)] The innards begin to boil!")
 					*/
 					if(istype(my_atom, /obj/item/slime_extract))
 						var/obj/item/slime_extract/ME2 = my_atom
 						ME2.Uses--
 						if(ME2.Uses <= 0) // give the notification that the slime core is dead
 							for(var/mob/M in seen)
-								M << "\blue \icon[my_atom] The [my_atom]'s power is consumed in the reaction."
+								to_chat(M, "\blue [bicon(my_atom)] The [my_atom]'s power is consumed in the reaction.")
 								ME2.name = "used slime extract"
 								ME2.desc = "This extract has been used up."
 
@@ -333,14 +333,14 @@ var/const/INGEST = 2
 	update_total()
 	return 0
 
-/datum/reagents/proc/isolate_reagent(var/reagent)
+/datum/reagents/proc/isolate_reagent(reagent)
 	for(var/A in reagent_list)
 		var/datum/reagent/R = A
 		if (R.id != reagent)
 			del_reagent(R.id)
 			update_total()
 
-/datum/reagents/proc/del_reagent(var/reagent)
+/datum/reagents/proc/del_reagent(reagent)
 	for(var/A in reagent_list)
 		var/datum/reagent/R = A
 		if (R.id == reagent)
@@ -366,7 +366,7 @@ var/const/INGEST = 2
 		del_reagent(R.id)
 	return 0
 
-/datum/reagents/proc/reaction(var/atom/A, var/method=TOUCH, var/volume_modifier=0)
+/datum/reagents/proc/reaction(atom/A, method=TOUCH, volume_modifier=0)
 
 	switch(method)
 		if(TOUCH)
@@ -399,7 +399,7 @@ var/const/INGEST = 2
 						else R.reaction_obj(A, R.volume+volume_modifier)
 	return
 
-/datum/reagents/proc/add_reagent(var/reagent, var/amount, var/list/data=null, var/safety = 0)
+/datum/reagents/proc/add_reagent(reagent, amount, list/data=null, safety = 0)
 	if(!isnum(amount)) return 1
 	if(amount < 0) return 0
 	if(amount > 2000) return
@@ -470,7 +470,7 @@ var/const/INGEST = 2
 
 	return 1
 
-/datum/reagents/proc/remove_reagent(var/reagent, var/amount, var/safety = 0)//Added a safety check for the trans_id_to
+/datum/reagents/proc/remove_reagent(reagent, amount, safety = 0)//Added a safety check for the trans_id_to
 	if(!isnum(amount)) return 1
 	if(amount < 0) return 0
 	if(amount > 2000) return
@@ -487,7 +487,7 @@ var/const/INGEST = 2
 
 	return 1
 
-/datum/reagents/proc/has_reagent(var/reagent, var/amount = -1)
+/datum/reagents/proc/has_reagent(reagent, amount = -1)
 
 	for(var/A in reagent_list)
 		var/datum/reagent/R = A
@@ -499,7 +499,7 @@ var/const/INGEST = 2
 
 	return 0
 
-/datum/reagents/proc/get_reagent_amount(var/reagent)
+/datum/reagents/proc/get_reagent_amount(reagent)
 	for(var/A in reagent_list)
 		var/datum/reagent/R = A
 		if (R.id == reagent)
@@ -515,7 +515,7 @@ var/const/INGEST = 2
 
 	return res
 
-/datum/reagents/proc/remove_all_type(var/reagent_type, var/amount, var/strict = 0, var/safety = 1) // Removes all reagent of X type. @strict set to 1 determines whether the childs of the type are included.
+/datum/reagents/proc/remove_all_type(reagent_type, amount, strict = 0, safety = 1) // Removes all reagent of X type. @strict set to 1 determines whether the childs of the type are included.
 	if(!isnum(amount)) return 1
 	if(amount < 0) return 0
 	if(amount > 2000) return
@@ -539,13 +539,13 @@ var/const/INGEST = 2
 	return has_removed_reagent
 
 //two helper functions to preserve data across reactions (needed for xenoarch)
-/datum/reagents/proc/get_data(var/reagent_id)
+/datum/reagents/proc/get_data(reagent_id)
 	for(var/datum/reagent/D in reagent_list)
 		if(D.id == reagent_id)
 			//world << "proffering a data-carrying reagent ([reagent_id])"
 			return D.data
 
-/datum/reagents/proc/set_data(var/reagent_id, var/new_data)
+/datum/reagents/proc/set_data(reagent_id, new_data)
 	for(var/datum/reagent/D in reagent_list)
 		if(D.id == reagent_id)
 			//world << "reagent data set ([reagent_id])"
@@ -557,7 +557,7 @@ var/const/INGEST = 2
 	if(my_atom)
 		my_atom.reagents = null
 
-/datum/reagents/proc/copy_data(var/datum/reagent/current_reagent)
+/datum/reagents/proc/copy_data(datum/reagent/current_reagent)
 	if (!current_reagent || !current_reagent.data) return null
 	if (!istype(current_reagent.data, /list)) return current_reagent.data
 
@@ -576,7 +576,7 @@ var/const/INGEST = 2
 
 	return trans_data
 
-datum/reagents/Destroy()
+/datum/reagents/Destroy()
 	. = ..()
 	for(var/datum/reagent/R in reagent_list)
 		qdel(R)
@@ -590,14 +590,14 @@ datum/reagents/Destroy()
 
 // Convenience proc to create a reagents holder for an atom
 // Max vol is maximum volume of holder
-atom/proc/create_reagents(var/max_vol)
+/atom/proc/create_reagents(max_vol)
 	reagents = new/datum/reagents(max_vol)
 	reagents.my_atom = src
 
 // Временное (а может и постоянное) решение бага с проком, который симулирует поедание еды/таблеток и передает с задержкой реагенты из временного контейнера...
 //... по какой-то причине, кудел прерывает spawn который был вызван объектом(еда/таблетка)...
 //... быстрое решение нашел только такое - отвязать проблемный блок в проке от регов. ~Zve
-proc/digest_delay(var/datum/reagents/BR, var/obj/target, var/obj/item/weapon/reagent_containers/glass/beaker/noreact/B)
+/proc/digest_delay(datum/reagents/BR, obj/target, obj/item/weapon/reagent_containers/glass/beaker/noreact/B)
 	spawn(95)
 		BR.reaction(target, INGEST)
 		spawn(5)

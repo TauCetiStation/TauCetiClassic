@@ -29,7 +29,7 @@
 	..()
 	icon_state = icon_living
 
-/mob/living/simple_animal/hostile/asteroid/bullet_act(var/obj/item/projectile/P)//Reduces damage from most projectiles to curb off-screen kills
+/mob/living/simple_animal/hostile/asteroid/bullet_act(obj/item/projectile/P)//Reduces damage from most projectiles to curb off-screen kills
 	if(!stat)
 		Aggro()
 	if(P.damage < 30)
@@ -54,7 +54,7 @@
 /mob/living/simple_animal/hostile/asteroid/basilisk
 	name = "basilisk"
 	desc = "A territorial beast, covered in a thick shell that absorbs energy. Its stare causes victims to freeze from the inside."
-	icon = 'tauceti/modules/_mining/monsters.dmi'
+	icon = 'icons/mob/monsters.dmi'
 	icon_state = "Basilisk"
 	icon_living = "Basilisk"
 	icon_aggro = "Basilisk_alert"
@@ -90,7 +90,7 @@
 	flag = "energy"
 	temperature = 50
 
-/mob/living/simple_animal/hostile/asteroid/basilisk/GiveTarget(var/new_target)
+/mob/living/simple_animal/hostile/asteroid/basilisk/GiveTarget(new_target)
 	target = new_target
 	if(target != null)
 		Aggro()
@@ -119,12 +119,25 @@
 	..(gibbed)
 
 
+////////////Drone(miniBoss)/////////////
+
+/mob/living/simple_animal/hostile/retaliate/malf_drone/mining
+	health = 500
+	maxHealth = 500
+	faction = "mining"
+	projectiletype = /obj/item/projectile/beam/drone/mining
+
+
+
+/obj/item/projectile/beam/drone/mining
+	damage = 20
+
 ////////////////Goldgrub////////////////
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub
 	name = "goldgrub"
 	desc = "A worm that grows fat from eating everything in its sight. Seems to enjoy precious metals and other shiny things, hence the name."
-	icon = 'tauceti/modules/_mining/monsters.dmi'
+	icon = 'icons/mob/monsters.dmi'
 	icon_state = "Goldgrub"
 	icon_living = "Goldgrub"
 	icon_aggro = "Goldgrub_alert"
@@ -153,7 +166,7 @@
 	var/ore_eaten = 1
 	var/chase_time = 100
 
-/mob/living/simple_animal/hostile/asteroid/goldgrub/GiveTarget(var/new_target)
+/mob/living/simple_animal/hostile/asteroid/goldgrub/GiveTarget(new_target)
 	target = new_target
 	if(target != null)
 		if(istype(target, /obj/item/weapon/ore))
@@ -176,7 +189,7 @@
 		return
 	..()
 
-/mob/living/simple_animal/hostile/asteroid/goldgrub/proc/EatOre(var/atom/targeted_ore)
+/mob/living/simple_animal/hostile/asteroid/goldgrub/proc/EatOre(atom/targeted_ore)
 	for(var/obj/item/weapon/ore/O in targeted_ore.loc)
 		ore_eaten++
 		if(!(O.type in ore_types_eaten))
@@ -205,7 +218,7 @@
 	ore_types_eaten.Cut()
 	ore_eaten = 0
 
-/mob/living/simple_animal/hostile/asteroid/goldgrub/bullet_act(var/obj/item/projectile/P)
+/mob/living/simple_animal/hostile/asteroid/goldgrub/bullet_act(obj/item/projectile/P)
 	visible_message("<span class='danger'>The [P.name] was repelled by [src.name]'s girth!</span>")
 	return
 
@@ -220,7 +233,7 @@
 /mob/living/simple_animal/hostile/asteroid/hivelord
 	name = "hivelord"
 	desc = "A truly alien creature, it is a mass of unknown organic material, constantly fluctuating. When attacking, pieces of it split off and attack in tandem with the original."
-	icon = 'tauceti/modules/_mining/monsters.dmi'
+	icon = 'icons/mob/monsters.dmi'
 	icon_state = "Hivelord"
 	icon_living = "Hivelord"
 	icon_aggro = "Hivelord_alert"
@@ -247,7 +260,7 @@
 	minimum_distance = 3
 	pass_flags = PASSTABLE
 
-/mob/living/simple_animal/hostile/asteroid/hivelord/OpenFire(var/the_target)
+/mob/living/simple_animal/hostile/asteroid/hivelord/OpenFire(the_target)
 	var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/A = new /mob/living/simple_animal/hostile/asteroid/hivelordbrood(src.loc)
 	A.GiveTarget(target)
 	A.friends = friends
@@ -274,20 +287,20 @@
 		inert = 1
 		desc = "The remains of a hivelord that have become useless, having been left alone too long after being harvested."
 
-/obj/item/asteroid/hivelord_core/attack(mob/living/M as mob, mob/living/user as mob)
+/obj/item/asteroid/hivelord_core/attack(mob/living/M, mob/living/user)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(inert)
-			user << "<span class='notice'>[src] have become inert, its healing properties are no more.</span>"
+			to_chat(user, "<span class='notice'>[src] have become inert, its healing properties are no more.</span>")
 			return
 		else
 			if(H.stat == DEAD)
-				user << "<span class='notice'>[src] are useless on the dead.</span>"
+				to_chat(user, "<span class='notice'>[src] are useless on the dead.</span>")
 				return
 			if(H != user)
 				H.visible_message("[user] forces [H] to apply [src]... they quickly regenerate all injuries!")
 			else
-				user << "<span class='notice'>You start to smear [src] on yourself. It feels and smells disgusting, but you feel amazingly refreshed in mere moments.</span>"
+				to_chat(user, "<span class='notice'>You start to smear [src] on yourself. It feels and smells disgusting, but you feel amazingly refreshed in mere moments.</span>")
 			H.revive()
 			qdel(src)
 	..()
@@ -298,7 +311,7 @@
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood
 	name = "hivelord brood"
 	desc = "A fragment of the original Hivelord, rallying behind its original. One isn't much of a threat, but..."
-	icon = 'tauceti/modules/_mining/monsters.dmi'
+	icon = 'icons/mob/monsters.dmi'
 	icon_state = "Hivelordbrood"
 	icon_living = "Hivelordbrood"
 	icon_aggro = "Hivelordbrood"
@@ -333,7 +346,7 @@
 /mob/living/simple_animal/hostile/asteroid/goliath
 	name = "goliath"
 	desc = "A massive beast that uses long tentacles to ensare its prey, threatening them is not advised under any conditions."
-	icon = 'tauceti/modules/_mining/monsters.dmi'
+	icon = 'icons/mob/monsters.dmi'
 	icon_state = "Goliath"
 	icon_living = "Goliath"
 	icon_aggro = "Goliath_alert"
@@ -380,7 +393,7 @@
 		pre_attack = 0
 	return
 
-/mob/living/simple_animal/hostile/asteroid/goliath/adjustBruteLoss(var/damage)
+/mob/living/simple_animal/hostile/asteroid/goliath/adjustBruteLoss(damage)
 	ranged_cooldown--
 	handle_preattack()
 	..()
@@ -394,7 +407,7 @@
 
 /obj/effect/goliath_tentacle/
 	name = "Goliath tentacle"
-	icon = 'tauceti/modules/_mining/monsters.dmi'
+	icon = 'icons/mob/monsters.dmi'
 	icon_state = "Goliath_tentacle"
 
 /obj/effect/goliath_tentacle/New()
@@ -451,10 +464,10 @@
 			if(current_armor.["melee"] < 80)
 				current_armor.["melee"] = min(current_armor.["melee"] + 10, 80)
 				C.breach_threshold = min(C.breach_threshold + 2, 24)
-				user << "<span class='info'>You strengthen [target], improving its resistance against melee attacks.</span>"
+				to_chat(user, "<span class='info'>You strengthen [target], improving its resistance against melee attacks.</span>")
 				qdel(src)
 			else
-				user << "<span class='warning'>You can't improve [C] any further!</span>"
+				to_chat(user, "<span class='warning'>You can't improve [C] any further!</span>")
 				return
 		if(istype(target, /obj/mecha/working/ripley))
 			var/obj/mecha/working/ripley/D = target
@@ -465,7 +478,7 @@
 				damage_absorption["bullet"] = damage_absorption["bullet"] - 0.05
 				damage_absorption["fire"] = damage_absorption["fire"] - 0.05
 				damage_absorption["laser"] = damage_absorption["laser"] - 0.025
-				user << "<span class='info'>You strengthen [target], improving its resistance against melee attacks.</span>"
+				to_chat(user, "<span class='info'>You strengthen [target], improving its resistance against melee attacks.</span>")
 				D.update_icon()
 				if(D.hides == 3)
 					D.desc = "Autonomous Power Loader Unit. It's wearing a fearsome carapace entirely composed of goliath hide plates - its pilot must be an experienced monster hunter."
@@ -473,5 +486,5 @@
 					D.desc = "Autonomous Power Loader Unit. Its armour is enhanced with some goliath hide plates."
 				qdel(src)
 			else
-				user << "<span class='warning'>You can't improve [D] any further!</span>"
+				to_chat(user, "<span class='warning'>You can't improve [D] any further!</span>")
 				return

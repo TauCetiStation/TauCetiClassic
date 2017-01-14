@@ -1,8 +1,6 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
-
 /obj/item/weapon/airlock_electronics
 	name = "airlock electronics"
-	icon = 'icons/obj/doors/door_assembly.dmi'
+	icon = 'icons/obj/doors/door_electronics.dmi'
 	icon_state = "door_electronics"
 	w_class = 2.0 //It should be tiny! -Agouri
 	m_amt = 50
@@ -14,8 +12,9 @@
 	var/one_access = 0 //if set to 1, door would receive req_one_access instead of req_access
 	var/last_configurator = null
 	var/locked = 1
+	var/broken = FALSE
 
-	attack_self(mob/user as mob)
+	attack_self(mob/user)
 		if (!ishuman(user) && !istype(user,/mob/living/silicon/robot/drone))
 			return ..(user)
 
@@ -93,7 +92,7 @@
 		attack_self(usr)
 
 	proc
-		toggle_access(var/acc)
+		toggle_access(acc)
 			if (acc == "all")
 				conf_access = null
 			else

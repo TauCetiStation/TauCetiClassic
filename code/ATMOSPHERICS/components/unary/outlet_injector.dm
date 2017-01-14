@@ -134,7 +134,7 @@
 		broadcast_status()
 	update_icon()
 
-/obj/machinery/atmospherics/unary/outlet_injector/hide(var/i) //to make the little pipe section invisible, the icon changes.
+/obj/machinery/atmospherics/unary/outlet_injector/hide(i) //to make the little pipe section invisible, the icon changes.
 	if(node)
 		if(on)
 			icon_state = "[i == 1 && istype(loc, /turf/simulated) ? "h" : "" ]on"

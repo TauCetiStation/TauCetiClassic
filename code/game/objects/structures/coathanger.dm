@@ -7,7 +7,7 @@
 	var/obj/item/clothing/head/det_hat/hat
 	var/list/allowed = list(/obj/item/clothing/suit/storage/labcoat, /obj/item/clothing/suit/storage/det_suit, /obj/item/clothing/head/det_hat)
 
-/obj/structure/coatrack/attack_hand(mob/user as mob)
+/obj/structure/coatrack/attack_hand(mob/user)
 	if(coat)
 		user.visible_message("[user] takes [coat] off \the [src].", "You take [coat] off the \the [src]")
 		if(!user.put_in_active_hand(coat))
@@ -24,7 +24,7 @@
 		return
 	
 
-/obj/structure/coatrack/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/structure/coatrack/attackby(obj/item/weapon/W, mob/user)
 	var/can_hang = 0
 	for (var/T in allowed)
 		if(istype(W,T))
@@ -43,7 +43,7 @@
 			hat.loc = src
 			update_icon()
 		else
-			user << "<span class='notice'>You cannot hang [W] on [src]</span>"
+			to_chat(user, "<span class='notice'>You cannot hang [W] on [src]</span>")
 	return ..()
 
 /obj/structure/coatrack/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)

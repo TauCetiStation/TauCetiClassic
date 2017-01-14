@@ -38,7 +38,7 @@
 /obj/machinery/power/am_control_unit/Destroy()//Perhaps damage and run stability checks rather than just del on the others
 	for(var/obj/machinery/am_shielding/AMS in linked_shielding)
 		qdel(AMS)
-	..()
+	return ..()
 
 
 /obj/machinery/power/am_control_unit/process()
@@ -126,7 +126,7 @@
 	return
 
 
-/obj/machinery/power/am_control_unit/bullet_act(var/obj/item/projectile/Proj)
+/obj/machinery/power/am_control_unit/bullet_act(obj/item/projectile/Proj)
 	if(Proj.flag != "bullet")
 		stability -= Proj.force
 	return 0
@@ -163,12 +163,12 @@
 			src.anchored = 0
 			disconnect_from_network()
 		else
-			user << "\red Once bolted and linked to a shielding unit it the [src.name] is unable to be moved!"
+			to_chat(user, "\red Once bolted and linked to a shielding unit it the [src.name] is unable to be moved!")
 		return
 
 	if(istype(W, /obj/item/weapon/am_containment))
 		if(fueljar)
-			user << "\red There is already a [fueljar] inside!"
+			to_chat(user, "\red There is already a [fueljar] inside!")
 			return
 		fueljar = W
 		user.remove_from_mob(W)
@@ -185,13 +185,13 @@
 	return
 
 
-/obj/machinery/power/am_control_unit/attack_hand(mob/user as mob)
+/obj/machinery/power/am_control_unit/attack_hand(mob/user)
 	if(anchored)
 		interact(user)
 	return
 
 
-/obj/machinery/power/am_control_unit/proc/add_shielding(var/obj/machinery/am_shielding/AMS, var/AMS_linking = 0)
+/obj/machinery/power/am_control_unit/proc/add_shielding(obj/machinery/am_shielding/AMS, AMS_linking = 0)
 	if(!istype(AMS)) return 0
 	if(!anchored) return 0
 	if(!AMS_linking && !AMS.link_control(src)) return 0
@@ -200,7 +200,7 @@
 	return 1
 
 
-/obj/machinery/power/am_control_unit/proc/remove_shielding(var/obj/machinery/am_shielding/AMS)
+/obj/machinery/power/am_control_unit/proc/remove_shielding(obj/machinery/am_shielding/AMS)
 	if(!istype(AMS)) return 0
 	linked_shielding.Remove(AMS)
 	update_shield_icons = 2
@@ -297,40 +297,36 @@
 
 
 /obj/machinery/power/am_control_unit/Topic(href, href_list)
-	..()
-	//Ignore input if we are broken or guy is not touching us, AI can control from a ways away
-	if(stat & (BROKEN|NOPOWER) || (get_dist(src, usr) > 1 && !istype(usr, /mob/living/silicon/ai)))
-		usr.unset_machine()
-		usr << browse(null, "window=AMcontrol")
-		return
-
 	if(href_list["close"])
+		usr.unset_machine(src)
 		usr << browse(null, "window=AMcontrol")
-		usr.unset_machine()
+		return FALSE
+
+	. = ..()
+	if(!.)
 		return
 
 	if(href_list["togglestatus"])
 		toggle_power()
 
-	if(href_list["refreshicons"])
+	else if(href_list["refreshicons"])
 		update_shield_icons = 1
 
-	if(href_list["ejectjar"])
+	else if(href_list["ejectjar"])
 		if(fueljar)
 			fueljar.loc = src.loc
 			fueljar = null
 			//fueljar.control_unit = null currently it does not care where it is
 			//update_icon() when we have the icon for it
 
-	if(href_list["strengthup"])
+	else if(href_list["strengthup"])
 		fuel_injection++
 
-	if(href_list["strengthdown"])
+	else if(href_list["strengthdown"])
 		fuel_injection--
 		if(fuel_injection < 0) fuel_injection = 0
 
-	if(href_list["refreshstability"])
+	else if(href_list["refreshstability"])
 		check_core_stability()
 
 	updateDialog()
-	return

@@ -83,7 +83,7 @@
 	var/lying = 0
 	var/lying_prev = 0
 	var/lying_current = 0
-	var/crawling = 0 //Для ползанья
+	var/crawling = 0 //For crawling
 	var/canmove = 1
 	var/lastpuke = 0
 	var/unacidable = 0
@@ -110,6 +110,7 @@
 	var/jitteriness = 0//Carbon
 	var/charges = 0.0
 	var/nutrition = 400.0//Carbon
+	var/dna_inject_count = 0
 
 	var/overeatduration = 0		// How long this guy is overeating //Carbon
 	var/paralysis = 0.0

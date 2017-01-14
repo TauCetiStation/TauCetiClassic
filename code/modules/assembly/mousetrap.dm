@@ -7,10 +7,10 @@
 	origin_tech = "combat=1"
 	var/armed = 0
 
-/obj/item/device/assembly/mousetrap/examine()
+/obj/item/device/assembly/mousetrap/examine(mob/user)
 	..()
 	if(armed)
-		usr << "It looks like it's armed."
+		to_chat(user, "It looks like it's armed.")
 
 /obj/item/device/assembly/mousetrap/update_icon()
 	if(armed)
@@ -20,7 +20,7 @@
 	if(holder)
 		holder.update_icon()
 
-/obj/item/device/assembly/mousetrap/proc/triggered(mob/target as mob, var/type = "feet")
+/obj/item/device/assembly/mousetrap/proc/triggered(mob/target, type = "feet")
 	if(!armed)
 		return
 	var/datum/organ/external/affecting = null
@@ -48,9 +48,9 @@
 	update_icon()
 	pulse(0)
 
-/obj/item/device/assembly/mousetrap/attack_self(mob/living/user as mob)
+/obj/item/device/assembly/mousetrap/attack_self(mob/living/user)
 	if(!armed)
-		user << "<span class='notice'>You arm [src].</span>"
+		to_chat(user, "<span class='notice'>You arm [src].</span>")
 	else
 		if(((user.getBrainLoss() >= 60 || (CLUMSY in user.mutations)) && prob(50)))
 			var/which_hand = "l_hand"
@@ -60,12 +60,12 @@
 			user.visible_message("<span class='warning'>[user] accidentally sets off [src], breaking their fingers.</span>", \
 								 "<span class='warning'>You accidentally trigger [src]!</span>")
 			return
-		user << "<span class='notice'>You disarm [src].</span>"
+		to_chat(user, "<span class='notice'>You disarm [src].</span>")
 	armed = !armed
 	update_icon()
 	playsound(user.loc, 'sound/weapons/handcuffs.ogg', 30, 1, -3)
 
-/obj/item/device/assembly/mousetrap/attack_hand(mob/living/user as mob)
+/obj/item/device/assembly/mousetrap/attack_hand(mob/living/user)
 	if(armed)
 		if(((user.getBrainLoss() >= 60 || CLUMSY in user.mutations)) && prob(50))
 			var/which_hand = "l_hand"
@@ -89,7 +89,7 @@
 			triggered(AM)
 	..()
 
-/obj/item/device/assembly/mousetrap/on_found(mob/finder as mob)
+/obj/item/device/assembly/mousetrap/on_found(mob/finder)
 	if(armed)
 		finder.visible_message("<span class='warning'>[finder] accidentally sets off [src], breaking their fingers.</span>", \
 							   "<span class='warning'>You accidentally trigger [src]!</span>")
@@ -97,7 +97,7 @@
 		return 1	//end the search!
 	return 0
 
-/obj/item/device/assembly/mousetrap/hitby(A as mob|obj)
+/obj/item/device/assembly/mousetrap/hitby(A)
 	if(!armed)
 		return ..()
 	visible_message("<span class='warning'>[src] is triggered by [A].</span>")
@@ -116,4 +116,4 @@
 		return
 
 	layer = TURF_LAYER+0.2
-	usr << "<span class='notice'>You hide [src].</span>"
+	to_chat(usr, "<span class='notice'>You hide [src].</span>")

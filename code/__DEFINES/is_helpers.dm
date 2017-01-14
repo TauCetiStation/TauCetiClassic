@@ -4,6 +4,8 @@
 
 #define ishuman(A) (istype(A, /mob/living/carbon/human))
 
+#define isabductor(A) (istype(A, /mob/living/carbon/human/abductor))
+
 #define ismonkey(A) (istype(A, /mob/living/carbon/monkey))
 
 #define isbrain(A) (istype(A, /mob/living/carbon/brain))
@@ -55,6 +57,12 @@
 #define isovermind(A) (istype(A, /mob/camera/blob))
 
 #define isorgan(A) (istype(A, /datum/organ/external))
+
+// GOONCHAT PORT
+
+#define isatom(A) istype(A, /atom)
+
+#define isclient(A) istype(A, /client)
 
 
 // ASSEMBLY HELPERS

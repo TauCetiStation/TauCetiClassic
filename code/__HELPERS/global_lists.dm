@@ -48,7 +48,8 @@
 
 	for(var/language_name in all_languages)
 		var/datum/language/L = all_languages[language_name]
-		language_keys[":[lowertext(L.key)]"] = L
+		for(var/key in L.key)
+			language_keys[":[lowertext(key)]"] = L
 
 	var/rkey = 0
 	for(var/T in subtypesof(/datum/species))
@@ -57,7 +58,7 @@
 		S.race_key = rkey //Used in mob icon caching.
 		all_species[S.name] = S
 
-		if(S.flags & IS_WHITELISTED)
+		if(S.flags[IS_WHITELISTED])
 			whitelisted_species += S.name
 
 /* // Uncomment to debug chemical reaction list.
@@ -69,7 +70,7 @@
 			var/list/L = chemical_reactions_list[reaction]
 			for(var/t in L)
 				. += "    has: [t]\n"
-	world << .
+	to_chat(world, .)
 */
 
 //creates every subtype of prototype (excluding prototype) and adds it to list L.

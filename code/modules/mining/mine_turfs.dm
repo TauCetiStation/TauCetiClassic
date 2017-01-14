@@ -130,13 +130,14 @@
 		for(var/trydir in cardinal)
 			var/turf/simulated/mineral/random/target_turf = get_step(src, trydir)
 			if(istype(target_turf, /turf/simulated/mineral/random/caves))
-				if(prob(2))	new/turf/simulated/floor/plating/airless/asteroid/cave(src)
+				if(prob(2))
+					new/turf/simulated/floor/plating/airless/asteroid/cave(src)
 
 //Not even going to touch this pile of spaghetti
-/turf/simulated/mineral/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/turf/simulated/mineral/attackby(obj/item/weapon/W, mob/user)
 
 	if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
-		usr << "<span class='danger'>You don't have the dexterity to do this!</span>"
+		to_chat(usr, "<span class='danger'>You don't have the dexterity to do this!</span>")
 		return
 
 	if (istype(W, /obj/item/device/core_sampler))
@@ -154,7 +155,7 @@
 		var/obj/item/device/measuring_tape/P = W
 		user.visible_message("<span class='notice'>[user] extends [P] towards [src].</span>","<span class='notice'>You extend [P] towards [src].</span>")
 		if(do_after(user,25, target = src))
-			user << "<span class='notice'>\icon[P] [src] has been excavated to a depth of [2*excavation_level]cm.</span>"
+			to_chat(user, "<span class='notice'>[bicon(P)] [src] has been excavated to a depth of [2*excavation_level]cm.</span>")
 		return
 
 	if (istype(W, /obj/item/weapon/pickaxe))
@@ -171,10 +172,10 @@
 			var/obj/item/weapon/pickaxe/drill/D = P
 			if(!(istype(D, /obj/item/weapon/pickaxe/drill/borgdrill) || istype(D, /obj/item/weapon/pickaxe/drill/jackhammer)))	//borgdrill & jackhammer can't lose energy and crit fail
 				if(D.state)
-					user << "<span class='danger'>[D] is not ready!</span>"
+					to_chat(user, "<span class='danger'>[D] is not ready!</span>")
 					return
 				if(!D.power_supply || !D.power_supply.use(D.drill_cost))
-					user << "<span class='danger'>No power!</span>"
+					to_chat(user, "<span class='danger'>No power!</span>")
 					return
 				if(D.mode)
 					if(mineral)
@@ -191,7 +192,7 @@
 				//Chance to destroy / extract any finds here
 				fail_message = ", <b>[pick("there is a crunching noise","[W] collides with some different rock","part of the rock face crumbles away","something breaks under [W]")]</b>"
 
-		user << "<span class='warning'>You start [P.drill_verb][fail_message ? fail_message : ""].</span>"
+		to_chat(user, "<span class='warning'>You start [P.drill_verb][fail_message ? fail_message : ""].</span>")
 
 		if(fail_message && prob(90))
 			if(prob(25))
@@ -202,7 +203,7 @@
 					artifact_debris()
 
 		if(do_after(user,P.digspeed, target = src))
-			user << "<span class='notice'>You finish [P.drill_verb] the rock.</span>"
+			to_chat(user, "<span class='notice'>You finish [P.drill_verb] the rock.</span>")
 
 			if(istype(P,/obj/item/weapon/pickaxe/drill/jackhammer))	//Jackhammer will just dig 3 tiles in dir of user
 				for(var/turf/simulated/mineral/M in range(user,1))
@@ -302,7 +303,7 @@
 	return O
 
 
-/turf/simulated/mineral/proc/GetDrilled(var/artifact_fail = 0)
+/turf/simulated/mineral/proc/GetDrilled(artifact_fail = 0)
 	//var/destroyed = 0 //used for breaking strange rocks
 	if (mineral && ore_amount)
 
@@ -317,7 +318,7 @@
 		if(prob(50))
 			pain = 1
 		for(var/mob/living/M in range(src, 200))
-			M << "<span class='danger'>[pick("A high pitched [pick("keening","wailing","whistle")]","A rumbling noise like [pick("thunder","heavy machinery")]")] somehow penetrates your mind before fading away!</span>"
+			to_chat(M, "<span class='danger'>[pick("A high pitched [pick("keening","wailing","whistle")]","A rumbling noise like [pick("thunder","heavy machinery")]")] somehow penetrates your mind before fading away!</span>")
 			if(pain)
 				flick("pain",M.pain)
 				if(prob(50))
@@ -335,7 +336,7 @@
 		visible_message("<span class='notice'>An old dusty crate was buried within!</span>")
 		new /obj/structure/closet/crate/secure/loot(src)
 
-/turf/simulated/mineral/proc/excavate_find(var/prob_clean = 0, var/datum/find/F)
+/turf/simulated/mineral/proc/excavate_find(prob_clean = 0, datum/find/F)
 	//with skill and luck, players can cleanly extract finds
 	//otherwise, they come out inside a chunk of rock
 	var/obj/item/weapon/W
@@ -365,7 +366,7 @@
 	finds.Remove(F)
 
 
-/turf/simulated/mineral/proc/artifact_debris(var/severity = 0)
+/turf/simulated/mineral/proc/artifact_debris(severity = 0)
 	//cael's patented random limited drop componentized loot system!
 	//sky's patented not-fucking-retarded overhaul!
 
@@ -455,7 +456,7 @@
 	icon_state = "rock"
 	..()
 
-/turf/simulated/mineral/attack_animal(mob/living/simple_animal/user as mob)
+/turf/simulated/mineral/attack_animal(mob/living/simple_animal/user)
 	if(user.environment_smash >= 2)
 		GetDrilled()
 	..()
@@ -465,7 +466,7 @@
 
 /turf/simulated/floor/plating/airless/asteroid/cave
 	var/length = 20
-	var/mob_spawn_list = list("Goldgrub" = 2, "Goliath" = 5, "Basilisk" = 4, "Hivelord" = 3)
+	var/mob_spawn_list = list("Goldgrub" = 4, "Goliath" = 10, "Basilisk" = 8, "Hivelord" = 6, "Drone" = 2)
 	var/sanity = 1
 
 /turf/simulated/floor/plating/airless/asteroid/cave/New(loc, var/length, var/go_backwards = 1, var/exclude_dir = -1)
@@ -489,7 +490,7 @@
 	SpawnFloor(src)
 	..()
 
-/turf/simulated/floor/plating/airless/asteroid/cave/proc/make_tunnel(var/dir)
+/turf/simulated/floor/plating/airless/asteroid/cave/proc/make_tunnel(dir)
 
 	var/turf/simulated/mineral/tunnel = src
 	var/next_angle = pick(45, -45)
@@ -527,7 +528,7 @@
 			dir = angle2dir(dir2angle(dir) + next_angle)
 
 
-/turf/simulated/floor/plating/airless/asteroid/cave/proc/SpawnFloor(var/turf/T)
+/turf/simulated/floor/plating/airless/asteroid/cave/proc/SpawnFloor(turf/T)
 	for(var/turf/S in range(2,T))
 		if(istype(S, /turf/space) || istype(S.loc, /area/mine/explored))
 			sanity = 0
@@ -540,7 +541,7 @@
 	spawn(2)
 		t.fullUpdateMineralOverlays()
 
-/turf/simulated/floor/plating/airless/asteroid/cave/proc/SpawnMonster(var/turf/T)
+/turf/simulated/floor/plating/airless/asteroid/cave/proc/SpawnMonster(turf/T)
 	if(prob(30))
 		if(istype(loc, /area/mine/explored))
 			return
@@ -557,6 +558,10 @@
 				new /mob/living/simple_animal/hostile/asteroid/basilisk(T)
 			if("Hivelord")
 				new /mob/living/simple_animal/hostile/asteroid/hivelord(T)
+			if("Drone")
+				new /mob/living/simple_animal/hostile/retaliate/malf_drone/mining(T)
+		if(prob(20))
+		 new /obj/machinery/artifact/bluespace_crystal(T)
 	return
 
 /**********************Asteroid**************************/
@@ -596,7 +601,7 @@
 			gets_dug()
 	return
 
-/turf/simulated/floor/plating/airless/asteroid/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/turf/simulated/floor/plating/airless/asteroid/attackby(obj/item/weapon/W, mob/user)
 
 	if(!W || !user)
 		return 0
@@ -607,15 +612,15 @@
 			return
 
 		if (dug)
-			user << "<span class='danger'>This area has already been dug.</span>"
+			to_chat(user, "<span class='danger'>This area has already been dug.</span>")
 			return
 
-		user << "<span class='warning'>You start digging.</span>"
-		playsound(user.loc, 'tauceti/sounds/effects/digging.ogg', 50, 1)
+		to_chat(user, "<span class='warning'>You start digging.</span>")
+		playsound(user.loc, 'sound/effects/digging.ogg', 50, 1)
 
 		if(do_after(user,40,target = src))
 			if((user.loc == T && user.get_active_hand() == W))
-				user << "<span class='notice'>You dug a hole.</span>"
+				to_chat(user, "<span class='notice'>You dug a hole.</span>")
 				gets_dug()
 
 	if(istype(W,/obj/item/weapon/storage/bag/ore))

@@ -11,7 +11,7 @@
 
 	src.drawmap(usr)
 
-/obj/machinery/computer/security/proc/drawmap(var/mob/user as mob)
+/obj/machinery/computer/security/proc/drawmap(mob/user)
 
 	var/icx = round(world.maxx/16) + 1
 	var/icy = round(world.maxy/16) + 1
@@ -151,7 +151,7 @@
 			var/icon/I2 = imap[2+(ix + icx*iy)*2]
 
 
-			//world << "icon: \icon[I]"
+			//world << "icon: [bicon(i)]"
 
 			I.DrawBox(colour, rx, ry, rx+1, ry+1)
 
@@ -168,7 +168,7 @@
 
 		H.screen_loc = "[5 + i%icx],[6+ round(i/icx)]"
 
-		//world<<"\icon[I] at [H.screen_loc]"
+		//world<<"[bicon(i)] at [H.screen_loc]"
 
 		H.name = (i==0)?"maprefresh":"map"
 
@@ -284,7 +284,7 @@
 			var/icon/I = imap[1+(ix + icx*iy)]
 
 
-			//world << "icon: \icon[I]"
+			//world << "icon: [bicon(i)]"
 
 			I.DrawBox(colour, rx, ry, rx, ry)
 
@@ -299,7 +299,7 @@
 
 		H.screen_loc = "[5 + i%icx],[6+ round(i/icx)]"
 
-		//world<<"\icon[I] at [H.screen_loc]"
+		//world<<"[bicon(i)] at [H.screen_loc]"
 
 		H.name = (i==0)?"maprefresh":"map"
 

@@ -14,11 +14,11 @@
 /obj/item/weapon/retractor
 	name = "retractor"
 	desc = "Retracts stuff."
-	icon = 'tauceti/icons/obj/surgery.dmi'
+	icon = 'icons/obj/surgery.dmi'
 	icon_state = "retractor"
 	m_amt = 10000
 	g_amt = 5000
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = CONDUCT
 	w_class = 2.0
 	origin_tech = "materials=1;biotech=1"
 
@@ -28,11 +28,11 @@
 /obj/item/weapon/hemostat
 	name = "hemostat"
 	desc = "You think you have seen this before."
-	icon = 'tauceti/icons/obj/surgery.dmi'
+	icon = 'icons/obj/surgery.dmi'
 	icon_state = "hemostat"
 	m_amt = 5000
 	g_amt = 2500
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = CONDUCT
 	w_class = 2.0
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("attacked", "pinched")
@@ -43,11 +43,11 @@
 /obj/item/weapon/cautery
 	name = "cautery"
 	desc = "This stops bleeding."
-	icon = 'tauceti/icons/obj/surgery.dmi'
+	icon = 'icons/obj/surgery.dmi'
 	icon_state = "cautery"
 	m_amt = 5000
 	g_amt = 2500
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = CONDUCT
 	w_class = 2.0
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("burnt")
@@ -63,15 +63,15 @@
 	hitsound = 'sound/weapons/circsawhit.ogg'
 	m_amt = 15000
 	g_amt = 10000
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = CONDUCT
 	force = 15.0
 	w_class = 2.0
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("drilled")
 
 	suicide_act(mob/user)
-		viewers(user) << pick("\red <b>[user] is pressing the [src.name] to \his temple and activating it! It looks like \he's trying to commit suicide.</b>", \
-							"\red <b>[user] is pressing [src.name] to \his chest and activating it! It looks like \he's trying to commit suicide.</b>")
+		to_chat(viewers(user), pick("\red <b>[user] is pressing the [src.name] to \his temple and activating it! It looks like \he's trying to commit suicide.</b>", \
+							"\red <b>[user] is pressing [src.name] to \his chest and activating it! It looks like \he's trying to commit suicide.</b>"))
 		return (BRUTELOSS)
 
 /*
@@ -82,7 +82,7 @@
 	desc = "Cut, cut, and once more cut."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "scalpel"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = CONDUCT
 	force = 10.0
 	sharp = 1
 	edge = 1
@@ -96,9 +96,9 @@
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
 	suicide_act(mob/user)
-		viewers(user) << pick("\red <b>[user] is slitting \his wrists with the [src.name]! It looks like \he's trying to commit suicide.</b>", \
+		to_chat(viewers(user), pick("\red <b>[user] is slitting \his wrists with the [src.name]! It looks like \he's trying to commit suicide.</b>", \
 							"\red <b>[user] is slitting \his throat with the [src.name]! It looks like \he's trying to commit suicide.</b>", \
-							"\red <b>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</b>")
+							"\red <b>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</b>"))
 		return (BRUTELOSS)
 
 /*
@@ -139,7 +139,7 @@
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "saw3"
 	hitsound = 'sound/weapons/circsawhit.ogg'
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = CONDUCT
 	force = 15.0
 	w_class = 2.0
 	throwforce = 9.0

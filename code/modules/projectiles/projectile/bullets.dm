@@ -1,5 +1,4 @@
 /obj/item/projectile/bullet
-	icon = 'tauceti/icons/obj/projectiles.dmi'
 	name = "bullet"
 	icon_state = "bullet"
 	damage = 60
@@ -12,7 +11,7 @@
 
 	muzzle_type = /obj/effect/projectile/bullet/muzzle
 
-	on_hit(var/atom/target, var/blocked = 0)
+	on_hit(atom/target, blocked = 0)
 		if (..(target, blocked))
 			var/mob/living/L = target
 			shake_camera(L, 3, 2)
@@ -70,6 +69,64 @@
 	embed = 0
 	sharp = 0
 
+/obj/item/projectile/bullet/chem
+	damage = 5
+	stun = 2
+	var/list/beakers					// for grenade
+
+/obj/item/projectile/bullet/chem/on_hit(atom/target, blocked = 0)
+	if(beakers != null)
+		var/obj/item/weapon/reagent_containers/glass/beaker/bluespace/Big = new /obj/item/weapon/reagent_containers/glass/beaker/bluespace(src)
+		for(var/obj/item/weapon/reagent_containers/glass/G in beakers)
+			G.reagents.trans_to(Big, G.reagents.total_volume)
+	return 1
+
+/obj/item/projectile/bullet/chem/teargas
+
+/obj/item/projectile/bullet/chem/teargas/New()
+	..()
+	var/obj/item/weapon/reagent_containers/glass/beaker/B1 = new(src)
+	var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
+	B1.reagents.add_reagent("condensedcapsaicin", 15)
+	B1.reagents.add_reagent("potassium", 15)
+	B2.reagents.add_reagent("phosphorus", 15)
+	B2.reagents.add_reagent("sugar", 15)
+
+	beakers = list()
+	beakers += B1
+	beakers += B2
+
+
+/obj/item/projectile/bullet/chem/EMP
+
+/obj/item/projectile/bullet/chem/EMP/New()
+	..()
+	var/obj/item/weapon/reagent_containers/glass/beaker/B1 = new(src)
+	var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
+	B1.reagents.add_reagent("uranium", 15)
+	B2.reagents.add_reagent("iron", 15)
+
+	beakers = list()
+	beakers += B1
+	beakers += B2
+
+/obj/item/projectile/bullet/chem/Exp
+	damage = 20
+	stun = 5
+
+/obj/item/projectile/bullet/chem/Exp/New()
+	..()
+	var/obj/item/weapon/reagent_containers/glass/beaker/B1 = new(src)
+	var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
+	B1.reagents.add_reagent("glycerol", 15)
+	B1.reagents.add_reagent("pacid", 15)
+	B2.reagents.add_reagent("sacid", 15)
+
+	beakers = list()
+	beakers += B1
+	beakers += B2
+
+
 /obj/item/projectile/bullet/suffocationbullet//How does this even work?
 	name = "co bullet"
 	damage = 20
@@ -107,7 +164,7 @@
 	name = "incendiary bullet"
 	damage = 20
 
-/obj/item/projectile/bullet/incendiary/on_hit(var/atom/target, var/blocked = 0)
+/obj/item/projectile/bullet/incendiary/on_hit(atom/target, blocked = 0)
 	if(istype(target, /mob/living/carbon))
 		var/mob/living/carbon/M = target
 		M.adjust_fire_stacks(10)
@@ -118,7 +175,6 @@
 	embed = 0 // nope
 	fake = 1
 
-//=================NEW PROJECTILES=================\\
 /obj/item/projectile/l10
 	name ="projectile"
 	icon = 'icons/obj/projectiles.dmi'
@@ -135,3 +191,18 @@
 	edge = 0
 
 	muzzle_type = /obj/effect/projectile/energy/muzzle
+
+/obj/item/projectile/bullet/midbullet3
+	damage = 35
+
+/obj/item/projectile/bullet/flare
+	name = "flare"
+	icon_state= "bolter"
+	damage = 5
+	luminosity = 8
+
+/obj/item/projectile/bullet/flare/on_hit(atom/target, blocked = 0)
+	if(istype(target, /mob/living/carbon))
+		var/mob/living/carbon/M = target
+		M.adjust_fire_stacks(1)
+		M.IgniteMob()

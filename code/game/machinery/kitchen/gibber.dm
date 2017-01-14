@@ -9,7 +9,7 @@
 	var/operating = 0 //Is it on?
 	var/dirty = 0 // Does it need cleaning?
 
-	var/gibtime = 40 // Time from starting until meat appears
+	var/gibtime = 80 // Time from starting until meat appears
 	var/gib_throw_dir // Direction to spit meat and gibs in.
 	var/meat_produced = 0
 	var/ignore_clothing = 0
@@ -36,14 +36,13 @@
 			log_misc("a [src] didn't find an input plate.")
 			return
 
-/obj/machinery/gibber/autogibber/Bumped(var/atom/A)
+/obj/machinery/gibber/autogibber/Bumped(atom/A)
 	if(!input_plate) return
 
 	if(ismob(A))
 		var/mob/M = A
 
-		if(M.loc == input_plate
-		)
+		if(M.loc == input_plate)
 			M.loc = src
 			M.gib()
 
@@ -58,7 +57,7 @@
 	RefreshParts()
 
 /obj/machinery/gibber/RefreshParts()
-	var/gib_time = 40
+	var/gib_time = initial(gibtime)
 	for(var/obj/item/weapon/stock_parts/matter_bin/B in component_parts)
 		meat_produced += 3 * B.rating
 	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
@@ -80,37 +79,29 @@
 	else
 		src.overlays += image('icons/obj/kitchen.dmi', "gridle")
 
-/obj/machinery/gibber/attack_paw(mob/user as mob)
+/obj/machinery/gibber/attack_paw(mob/user)
 	return src.attack_hand(user)
 
 /obj/machinery/gibber/container_resist()
 	go_out()
 	return
 
-/obj/machinery/gibber/attack_hand(mob/user as mob)
+/obj/machinery/gibber/attack_hand(mob/user)
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if(operating)
-		user << "<span class='danger'>The gibber is locked and running, wait for it to finish.</span>"
+		to_chat(user, "<span class='danger'>The gibber is locked and running, wait for it to finish.</span>")
 		return
 	else
 		src.startgibbing(user)
 
-/obj/machinery/gibber/attackby(var/obj/item/W, var/mob/user)
-
-	if(istype(W,/obj/item/weapon/card/emag))
-		if(emagged)
-			user << "The gibber safety guard is already disabled."
-			return
-		user << "<span class='danger'>You disable the gibber safety guard.</span>"
-		emagged = 1
-		return
+/obj/machinery/gibber/attackby(obj/item/W, mob/user)
 
 	if (istype(W, /obj/item/weapon/grab))
 		src.add_fingerprint(user)
 		var/obj/item/weapon/grab/G = W
-		move_into_gibber(user,G)
-		update_icon()
+		move_into_gibber(user, G.affecting)
+		qdel(G)
 
 	if(default_deconstruction_screwdriver(user, "grinder_open", "grinder", W))
 		return
@@ -130,26 +121,22 @@
 		return
 	move_into_gibber(user,target)
 
-/obj/machinery/gibber/proc/move_into_gibber(var/mob/user,var/mob/living/victim)
+/obj/machinery/gibber/proc/move_into_gibber(mob/user,mob/living/victim)
 
 	if(src.occupant)
-		user << "<span class='danger'>The gibber is full, empty it first!</span>"
+		to_chat(user, "<span class='danger'>The gibber is full, empty it first!</span>")
 		return
 
 	if(operating)
-		user << "<span class='danger'>The gibber is locked and running, wait for it to finish.</span>"
+		to_chat(user, "<span class='danger'>The gibber is locked and running, wait for it to finish.</span>")
 		return
 
-	if(!(istype(victim, /mob/living/carbon)) && !(istype(victim, /mob/living/simple_animal)) )
-		user << "<span class='danger'>This is not suitable for the gibber!</span>"
-		return
-
-	if(istype(victim,/mob/living/carbon/human) && !emagged)
-		user << "<span class='danger'>The gibber safety guard is engaged!</span>"
+	if(!(iscarbon(victim)) && !(istype(victim, /mob/living/simple_animal)) )
+		to_chat(user, "<span class='danger'>This is not suitable for the gibber!</span>")
 		return
 
 	if(victim.abiotic(1) && !ignore_clothing)
-		user << "<span class='danger'>Subject may not have abiotic items on.</span>"
+		to_chat(user, "<span class='danger'>Subject may not have abiotic items on.</span>")
 		return
 
 	user.visible_message("\red [user] starts to put [victim] into the gibber!")
@@ -188,7 +175,7 @@
 	return
 
 
-/obj/machinery/gibber/proc/startgibbing(mob/user as mob)
+/obj/machinery/gibber/proc/startgibbing(mob/user)
 	if(src.operating)
 		return
 	if(!src.occupant)
@@ -199,7 +186,8 @@
 	src.operating = 1
 	update_icon()
 	var/offset = prob(50) ? -2 : 2
-	animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = 200) //start shaking
+	animate(src, pixel_x = pixel_x + offset, time = gibtime / 100, loop = gibtime) //start shaking
+	playsound(src.loc, 'sound/effects/gibber.ogg', 100, 1)
 
 	var/slab_name = occupant.name
 	var/slab_count = 3
@@ -237,7 +225,7 @@
 		user.attack_log += "\[[time_stamp()]\] Gibbed <b>[src.occupant]/[src.occupant.ckey]</b>"
 		msg_admin_attack("[user.name] ([user.ckey]) gibbed [src.occupant] ([src.occupant.ckey]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 
-		src.occupant.ghostize()
+		src.occupant.ghostize(bancheck = TRUE)
 
 		src.operating = 0
 		src.occupant.gib()

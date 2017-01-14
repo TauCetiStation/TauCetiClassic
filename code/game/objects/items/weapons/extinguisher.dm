@@ -5,7 +5,7 @@
 	icon_state = "fire_extinguisher0"
 	item_state = "fire_extinguisher"
 	hitsound = 'sound/weapons/smash.ogg'
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = CONDUCT
 	throwforce = 10
 	w_class = 3.0
 	throw_speed = 2
@@ -26,7 +26,6 @@
 	icon_state = "miniFE0"
 	item_state = "miniFE"
 	hitsound = null	//it is much lighter, after all.
-	flags = FPRINT | TABLEPASS
 	throwforce = 2
 	w_class = 2.0
 	force = 3.0
@@ -40,18 +39,16 @@
 	R.my_atom = src
 	R.add_reagent("water", max_water)
 
-/obj/item/weapon/extinguisher/examine()
-	set src in usr
-
-	usr << text("\icon[] [] contains [] units of water left!", src, src.name, src.reagents.total_volume)
+/obj/item/weapon/extinguisher/examine(mob/user)
 	..()
-	return
+	if(src in user)
+		to_chat(user, "[reagents.total_volume] units of water left!")
 
-/obj/item/weapon/extinguisher/attack_self(mob/user as mob)
+/obj/item/weapon/extinguisher/attack_self(mob/user)
 	safety = !safety
 	src.icon_state = "[sprite_name][!safety]"
 	src.desc = "The safety is [safety ? "on" : "off"]."
-	user << "<span class='notice'>The safety is [safety ? "on" : "off"].</span>"
+	to_chat(user, "<span class='notice'>The safety is [safety ? "on" : "off"].</span>")
 	return
 
 /obj/item/weapon/extinguisher/afterattack(atom/target, mob/user , flag)
@@ -60,13 +57,13 @@
 	if( istype(target, /obj/structure/reagent_dispensers/watertank) && get_dist(src,target) <= 1)
 		var/obj/O = target
 		O.reagents.trans_to(src, 50)
-		user << "<span class='notice'>[src] is now refilled.</span>"
+		to_chat(user, "<span class='notice'>[src] is now refilled.</span>")
 		playsound(src.loc, 'sound/effects/refill.ogg', 50, 1, -6)
 		return
 
 	if (!safety)
 		if (src.reagents.total_volume < 1)
-			usr << "<span class='rose'>[src] is empty.</span>"
+			to_chat(usr, "<span class='rose'>[src] is empty.</span>")
 			return
 
 		if (world.time < src.last_use + 20)

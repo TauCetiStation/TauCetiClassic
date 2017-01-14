@@ -9,10 +9,10 @@
 	supervisors = "the head of personnel"
 	selection_color = "#d7b088"
 	access = list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mint, access_mining, access_mining_station)
-	minimal_access = list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mint, access_mining, access_mining_station)
+	minimal_access = list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mint, access_mining, access_mining_station, access_recycler)
 	minimal_player_ingame_minutes = 1200
 
-/datum/job/qm/equip(var/mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/job/qm/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
 	if(H.gender == FEMALE)
 		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/cargo_fem(H), slot_w_uniform)
@@ -48,7 +48,7 @@
 	minimal_player_ingame_minutes = 960
 
 
-/datum/job/cargo_tech/equip(var/mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/job/cargo_tech/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/cargotech(H), slot_w_uniform)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), slot_shoes)
@@ -71,15 +71,15 @@
 	flag = MINER
 	department_flag = CIVILIAN
 	faction = "Station"
-	total_positions = 4
-	spawn_positions = 4
+	total_positions = 3
+	spawn_positions = 3
 	supervisors = "the quartermaster and the head of personnel"
 	selection_color = "#d7b088"
 	access = list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mint, access_mining, access_mining_station)
 	minimal_access = list(access_mining, access_mint, access_mining_station, access_mailsorting)
 	minimal_player_ingame_minutes = 960
 
-/datum/job/mining/equip(var/mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/job/mining/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
 	switch(H.backbag)
 		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/industrial(H), slot_back)
@@ -94,10 +94,43 @@
 	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_cargo (H), slot_l_ear)
 	H.equip_to_slot_or_del(new /obj/item/device/pda/shaftminer(H), slot_belt)
 	H.equip_to_slot_or_del(new /obj/item/weapon/mining_voucher(H), slot_in_backpack)
+	H.equip_to_slot_or_del(new /obj/item/weapon/survivalcapsule(H), slot_in_backpack)
 	if(H.backbag == 1)
 		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/engineer(H), slot_r_hand)
 	else
 		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/engineer(H.back), slot_in_backpack)
+
+	return 1
+
+
+/datum/job/recycler
+	title = "Recycler"
+	flag = RECYCLER
+	department_flag = CIVILIAN
+	faction = "Station"
+	total_positions = 2
+	spawn_positions = 2
+	supervisors = "the quartermaster and the head of personnel"
+	selection_color = "#d7b088"
+	access = list(access_maint_tunnels, access_mailsorting, access_cargo, access_recycler)
+	minimal_access = list(access_mining, access_mint, access_mailsorting, access_recycler)
+	minimal_player_ingame_minutes = 960
+
+/datum/job/recycler/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	if(!H)	return 0
+	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/recycler(H), slot_w_uniform)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), slot_shoes)
+	H.equip_to_slot_or_del(new /obj/item/clothing/suit/recyclervest/(H), slot_wear_suit)
+
+	if(visualsOnly)
+		return
+
+	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_cargo(H), slot_l_ear)
+	H.equip_to_slot_or_del(new /obj/item/device/pda/cargo(H), slot_belt)
+	if(H.backbag == 1)
+		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H), slot_r_hand)
+	else
+		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
 
 	return 1
 
@@ -115,7 +148,7 @@
 	minimal_access = list(access_bar)
 	minimal_player_ingame_minutes = 480
 
-/datum/job/bartender/equip(var/mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/job/bartender/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
 	switch(H.backbag)
 		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(H), slot_back)
@@ -162,7 +195,7 @@
 	alt_titles = list("Cook")
 	minimal_player_ingame_minutes = 480
 
-/datum/job/chef/equip(var/mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/job/chef/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/chef(H), slot_w_uniform)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), slot_shoes)
@@ -193,7 +226,7 @@
 	alt_titles = list("Hydroponicist")
 	minimal_player_ingame_minutes = 480
 
-/datum/job/hydro/equip(var/mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/job/hydro/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), slot_shoes)
 	switch(H.backbag)
@@ -228,7 +261,7 @@
 	minimal_access = list(access_janitor, access_maint_tunnels)
 	minimal_player_ingame_minutes = 480
 
-/datum/job/janitor/equip(var/mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/job/janitor/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/janitor(H), slot_w_uniform)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), slot_shoes)
@@ -260,7 +293,7 @@
 	alt_titles = list("Journalist")
 	minimal_player_ingame_minutes = 480
 
-/datum/job/librarian/equip(var/mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/job/librarian/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/suit_jacket/red(H), slot_w_uniform)
 	H.equip_to_slot_or_del(new /obj/item/device/pda/librarian(H), slot_belt)
@@ -292,7 +325,7 @@
 	minimal_access = list(access_lawyer, access_court, access_sec_doors)
 	minimal_player_ingame_minutes = 1560
 
-/datum/job/lawyer/equip(var/mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/job/lawyer/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
 	switch(H.backbag)
 		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(H), slot_back)
@@ -300,9 +333,9 @@
 		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), slot_back)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/internalaffairs(H), slot_w_uniform)
 	H.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/internalaffairs(H), slot_wear_suit)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/brown(H), slot_shoes)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), slot_shoes)
 	H.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses/big(H), slot_glasses)
-	H.equip_to_slot_or_del(new /obj/item/weapon/storage/briefcase(H), slot_l_hand)
+	H.equip_to_slot_or_del(new /obj/item/weapon/storage/briefcase/centcomm(H), slot_l_hand)
 
 	if(visualsOnly)
 		return
@@ -335,7 +368,7 @@
 	minimal_access = list(access_clown, access_theatre)
 	minimal_player_ingame_minutes = 480
 
-/datum/job/clown/equip(var/mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/job/clown/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
 	H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/clown(H), slot_back)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/clown(H), slot_w_uniform)
@@ -369,7 +402,7 @@
 	access = list(access_mime, access_theatre, access_maint_tunnels)
 	minimal_access = list(access_mime, access_theatre)
 
-/datum/job/mime/equip(var/mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/job/mime/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
 	switch(H.backbag)
 		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/mime(H), slot_back)

@@ -131,9 +131,9 @@
 	desc = "NanoTrasen Security Department detective's badge, made from gold. Badge number is 564."
 	icon_state = "victor_kaminsky_1"
 
-/obj/item/fluff/victor_kaminsky_1/attack_self(mob/user as mob)
+/obj/item/fluff/victor_kaminsky_1/attack_self(mob/user)
 	for(var/mob/O in viewers(user, null))
-		O.show_message(text("[] shows you: \icon[] [].", user, src, src.name), 1)
+		O.show_message("[user] shows you: [bicon(src)] [src.name].", 1)
 	src.add_fingerprint(user)
 
 /obj/item/fluff/ana_issek_2 //suethecake: Ana Issek
@@ -143,7 +143,7 @@
 	item_state = "ana_badge"
 	item_color = "ana_badge"
 
-/obj/item/fluff/ana_issek_2/attack_self(mob/user as mob)
+/obj/item/fluff/ana_issek_2/attack_self(mob/user)
 	if(isliving(user))
 		user.visible_message("\red [user] flashes their golden security badge.\nIt reads: Ana Issek, NT Security.","\red You display the faded bage.\nIt reads: Ana Issek, NT Security.")
 
@@ -354,7 +354,6 @@
 	item_state = "ciglit"
 	w_class = 1
 	body_parts_covered = null
-	flags = FPRINT|TABLEPASS
 
 //Strange penlight, Nerezza: Asher Spock
 
@@ -373,15 +372,15 @@
 	update_icon()
 	return
 
-/obj/item/weapon/reagent_containers/hypospray/fluff/asher_spock_1/attack_self(mob/user as mob)
-	user << "\blue You click \the [src] but get no reaction. Must be dead."
+/obj/item/weapon/reagent_containers/hypospray/fluff/asher_spock_1/attack_self(mob/user)
+	to_chat(user, "\blue You click \the [src] but get no reaction. Must be dead.")
 
-/obj/item/weapon/reagent_containers/hypospray/fluff/asher_spock_1/attack(mob/M as mob, mob/user as mob)
+/obj/item/weapon/reagent_containers/hypospray/fluff/asher_spock_1/attack(mob/M, mob/user)
 	if (user.ckey != "nerezza") //Because this can end up in the wrong hands, let's make it useless for them!
-		user << "\blue You click \the [src] but get no reaction. Must be dead."
+		to_chat(user, "\blue You click \the [src] but get no reaction. Must be dead.")
 		return
 	if(!reagents.total_volume)
-		user << "\red \The [src] is empty."
+		to_chat(user, "\red \The [src] is empty.")
 		return
 	if (!( istype(M, /mob) ))
 		return
@@ -392,22 +391,23 @@
 				"\blue You press the disguised autoinjector against your skin and click the button. There's a sharp pain at the injection site that rapidly fades.", \
 				"You hear a rustle as someone moves nearby, then a sharp click.")
 		if (M != user && user.ckey == "nerezza") //Woah now, you better be careful partner
-			user << "\blue You don't want to contaminate the autoinjector."
+			to_chat(user, "\blue You don't want to contaminate the autoinjector.")
 			return
 		src.reagents.reaction(M, INGEST)
 		if(M.reagents)
 			var/trans = reagents.trans_to(M, amount_per_transfer_from_this)
-			user << "\blue [trans] units injected. [reagents.total_volume] units remaining in \the [src]."
+			to_chat(user, "\blue [trans] units injected. [reagents.total_volume] units remaining in \the [src].")
 	return
 
-/obj/item/weapon/reagent_containers/hypospray/fluff/asher_spock_1/examine(mob/user as mob)
+/obj/item/weapon/reagent_containers/hypospray/fluff/asher_spock_1/examine(mob/user)
 	..()
-	if(user.ckey != "nerezza") return //Only the owner knows how to examine the contents.
+	if(user.ckey != "nerezza")
+		return //Only the owner knows how to examine the contents.
 	if(reagents && reagents.reagent_list.len)
 		for(var/datum/reagent/R in reagents.reagent_list)
-			usr << "\blue You examine the penlight closely and see that it has [R.volume] units of [R.name] stored."
+			to_chat(user, "<span class='notice'>You examine the penlight closely and see that it has [R.volume] units of [R.name] stored.</span>")
 	else
-		usr << "\blue You examine the penlight closely and see that it is currently empty."
+		to_chat(user, "<span class='notice'>You examine the penlight closely and see that it is currently empty.</span>")
 
 //End strange penlight
 
@@ -526,8 +526,6 @@
 /obj/item/clothing/head/secsoft/fluff/swatcap //deusdactyl: James Girard
 	name = "\improper SWAT hat"
 	desc = "A black hat.  The inside has the words, \"Lieutenant James Girard, LPD SWAT Team Four.\""
-	icon = 'tauceti/items/clothing/hats/hats.dmi'
-	tc_custom = 'tauceti/items/clothing/hats/hats.dmi'
 	icon_state = "swatcap"
 	body_parts_covered = 0
 
@@ -588,7 +586,6 @@
 	name = "colonial marine beret"
 	desc = "A well-worn navy blue beret. The insignia of the Martian Colonial Marine Corps is affixed to the front."
 	icon_state = "officerberet"
-	flags = FPRINT | TABLEPASS
 
 //////////// Suits ////////////
 
@@ -723,6 +720,50 @@
 	item_state = "solara_dress"
 	item_color = "solara_dress"
 
+/obj/item/clothing/under/fluff/terezi_suit
+	name = "legislacerator suit"
+	desc = "A very classy coat. Perhaps the only non-crappy attire of this person."
+	icon_state = "terezi"
+	item_state = "terezi"
+	item_color = "terezi"
+
+/obj/item/clothing/under/fluff/indiana
+	name = "leather suit"
+	icon_state = "indiana"
+	item_state = "indiana"
+	item_color = "indiana"
+
+/obj/item/clothing/under/fluff/cowboy
+	name = "western suit"
+	desc = "Revolver is your best friend."
+	icon_state = "cowboy"
+	item_state = "cowboy"
+	item_color = "cowboy"
+
+/obj/item/clothing/under/fluff/cowboy/brown
+	icon_state = "cowboy_brown"
+	item_state = "cowboy_brown"
+	item_color = "cowboy_brown"
+
+/obj/item/clothing/under/fluff/cowboy/grey
+	icon_state = "cowboy_grey"
+	item_state = "cowboy_grey"
+	item_color = "cowboy_grey"
+
+/obj/item/clothing/under/fluff/maid_suit
+	name = "maid suit"
+	desc = "For your dirty ERP needs."
+	icon_state = "maid"
+	item_state = "maid"
+	item_color = "maid"
+
+/obj/item/clothing/under/rank/medical/fluff/rosa
+	name = "short sleeve medical dress"
+	desc = "Made of a special fiber that gives special protection against biohazards. Has a cross on the chest denoting that the wearer is trained medical personnel and short sleeves."
+	icon_state = "rosa"
+	item_state = "rosa"
+	item_color = "rosa"
+
 /////// NT-SID Suit //Zuhayr: Jane Doe
 
 /obj/item/clothing/under/fluff/jane_sidsuit
@@ -735,7 +776,7 @@
 	item_color = "jane_sid_suit"
 	has_sensor = 2
 	sensor_mode = 3
-	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
+	flags = ONESIZEFITSALL
 
 //Suit roll-down toggle.
 /obj/item/clothing/under/fluff/jane_sidsuit/verb/toggle_zipper()
@@ -748,10 +789,10 @@
 
 	if(src.icon_state == "jane_sid_suit_down")
 		src.item_color = "jane_sid_suit"
-		usr << "You zip up the [src]."
+		to_chat(usr, "You zip up the [src].")
 	else
 		src.item_color = "jane_sid_suit_down"
-		usr << "You unzip and roll down the [src]."
+		to_chat(usr, "You unzip and roll down the [src].")
 
 	src.icon_state = "[item_color]"
 	src.item_state = "[item_color]"
@@ -786,7 +827,7 @@
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "flagmask"
 	item_state = "flagmask"
-	flags = FPRINT|TABLEPASS|MASKCOVERSMOUTH
+	flags = MASKCOVERSMOUTH
 	w_class = 2
 	gas_transfer_coefficient = 0.90
 */
@@ -796,7 +837,6 @@
 	desc = "A silver and emerald shamrock pendant. It has the initials \"M.K.\" engraved on the back."
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "mara_kilpatrick_1"
-	flags = FPRINT|TABLEPASS
 	w_class = 2
 
 ////// Small locket - Altair An-Nasaqan - Serithi
@@ -809,7 +849,6 @@
 	item_state = "altair_locket"
 	item_color = "altair_locket"
 	slot_flags = 0
-	flags = FPRINT|TABLEPASS
 	w_class = 2
 	slot_flags = SLOT_MASK
 
@@ -823,23 +862,22 @@
 	item_state = "konaahirano"
 	item_color = "konaahirano"
 	slot_flags = 0
-	flags = FPRINT|TABLEPASS
 	w_class = 2
 	slot_flags = SLOT_MASK
 	var/obj/item/held //Item inside locket.
 
-/obj/item/clothing/tie/fluff/konaa_hirano/attack_self(mob/user as mob)
+/obj/item/clothing/tie/fluff/konaa_hirano/attack_self(mob/user)
 	if(held)
-		user << "You open [src] and [held] falls out."
+		to_chat(user, "You open [src] and [held] falls out.")
 		held.loc = get_turf(user)
 		src.held = null
 
-/obj/item/clothing/tie/fluff/konaa_hirano/attackby(var/obj/item/O as obj, mob/user as mob)
+/obj/item/clothing/tie/fluff/konaa_hirano/attackby(obj/item/O, mob/user)
 	if(istype(O,/obj/item/weapon/paper))
 		if(held)
-			usr << "[src] already has something inside it."
+			to_chat(usr, "[src] already has something inside it.")
 		else
-			usr << "You slip [O] into [src]."
+			to_chat(usr, "You slip [O] into [src].")
 			user.drop_item()
 			O.loc = src
 			src.held = O
@@ -853,7 +891,6 @@
 	desc = "This silvered medallion bears the symbol of the Hadii Clan of the Tajaran."
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "nasir_khayyam_1"
-	flags = FPRINT|TABLEPASS
 	w_class = 2
 	slot_flags = SLOT_MASK
 
@@ -864,7 +901,6 @@
 	desc = "A brass necklace with a green emerald placed at the end. It has a small inscription on the top of the chain, saying \'Foster\'"
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "ty_foster"
-	flags = FPRINT|TABLEPASS
 	w_class = 2
 
 ////// Apollon Pendant - Michael Guess - Dragor23
@@ -873,7 +909,6 @@
 	desc = "A pendant with the form of a sacrificial tripod, used in acient greece. It's a symbol of the Olympian Apollon, a god associated with oracles, poetry, the sun and healing."
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "michael_guess_1"
-	flags = FPRINT|TABLEPASS
 	w_class = 2
 	slot_flags = SLOT_MASK
 	body_parts_covered = 0
@@ -917,8 +952,6 @@
 /obj/item/clothing/suit/storage/det_suit/fluff/retpolcoat
 	name = "retired colony patrolman's coat"
 	desc = "A clean, black nylon windbreaker with the words \"OUTER LIGHT POLICE\" embroidered in gold-dyed thread on the back. \"RETIRED\" is tastefully embroidered below in a smaller font."
-	icon = 'tauceti/items/clothing/suits/suits.dmi'
-	tc_custom = 'tauceti/items/clothing/suits/suits.dmi'
 	icon_state = "retpolcoat"
 	item_state = "retpolcoat"
 	item_color = "retpolcoat"
@@ -926,8 +959,6 @@
 /obj/item/clothing/head/det_hat/fluff/retpolcap
 	name = "retired colony patrolman's cap"
 	desc = "A clean and properly creased colony police cap. The badge is shined and polished, the word \"RETIRED\" engraved professionally under the words \"OUTER LIGHT POLICE.\""
-	icon = 'tauceti/items/clothing/hats/hats.dmi'
-	tc_custom = 'tauceti/items/clothing/hats/hats.dmi'
 	icon_state = "retpolcap"
 
 /obj/item/clothing/under/det/fluff/retpoluniform
@@ -960,7 +991,7 @@
 	else
 		icon_state = "leamas-empty"
 
-/obj/item/weapon/gun/projectile/attackby(var/obj/item/A as obj, mob/user as mob)
+/obj/item/weapon/gun/projectile/attackby(obj/item/A, mob/user)
 
 	if(istype(A, /obj/item/ammo_magazine))
 		flick("leamas-reloading",src)
@@ -987,7 +1018,6 @@
 
 /obj/item/weapon/reagent_containers/glass/bottle/fluff/nashi_bottle
 	icon = 'icons/obj/chemical.dmi'
-	flags = FPRINT | TABLEPASS //Starting them with lids on them.  Safety first!
 	New(loc, var/color, var/labeled)
 		..()
 		name = "[labeled] bottle"
@@ -1038,6 +1068,6 @@
 	item_state = "farwaplush"
 	icon_state = "farwaplush"
 
-/obj/item/weapon/fluff/farwadoll/attack_self(mob/user as mob)
+/obj/item/weapon/fluff/farwadoll/attack_self(mob/user)
 	user.visible_message("<span class='notice'>[user] hugs [src]! How cute! </span>", \
 						 "<span class='notice'>You hug [src]. Dawwww... </span>")

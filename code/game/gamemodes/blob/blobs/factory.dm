@@ -1,6 +1,6 @@
 /obj/effect/blob/factory
 	name = "factory blob"
-	icon = 'tauceti/icons/mob/blob.dmi'
+	icon = 'icons/mob/blob.dmi'
 	icon_state = "blob_factory"
 	health = 100
 	fire_resist = 2
@@ -16,7 +16,7 @@
 	for(var/mob/living/simple_animal/hostile/blobspore/spore in spores)
 		if(spore.factory == src)
 			spore.factory = null
-	..()
+	return ..()
 
 /obj/effect/blob/factory/PulseAnimation(var/activate = 0)
 	if(activate)
@@ -37,7 +37,7 @@
 /mob/living/simple_animal/hostile/blobspore
 	name = "blob"
 	desc = "Some blob thing."
-	icon = 'tauceti/icons/mob/blob.dmi'
+	icon = 'icons/mob/blob.dmi'
 	icon_state = "blobpod"
 	icon_living = "blobpod"
 	pass_flags = PASSBLOB
@@ -88,7 +88,7 @@
 				break
 	..()
 
-/mob/living/simple_animal/hostile/blobspore/proc/Zombify(var/mob/living/carbon/human/H)
+/mob/living/simple_animal/hostile/blobspore/proc/Zombify(mob/living/carbon/human/H)
 	if(H.wear_suit)
 		var/obj/item/clothing/suit/armor/A = H.wear_suit
 		if(A.armor && A.armor["melee"])
@@ -104,7 +104,7 @@
 	H.h_style = null
 	H.update_hair()
 	overlays = H.overlays
-	overlays += image('tauceti/icons/mob/blob.dmi', icon_state = "blob_head")
+	overlays += image('icons/mob/blob.dmi', icon_state = "blob_head")
 	H.loc = src
 	is_zombie = 1
 	loc.visible_message("<span class='warning'> The corpse of [H.name] suddenly rises!</span>")
@@ -131,7 +131,7 @@
 	if(contents)
 		for(var/mob/M in contents)
 			M.loc = src.loc
-	..()
+	return ..()
 
 /datum/reagent/toxin/spore
 	name = "Spore Toxin"

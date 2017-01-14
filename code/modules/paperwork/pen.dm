@@ -15,7 +15,6 @@
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "pen"
 	item_state = "pen"
-	flags = FPRINT | TABLEPASS
 	slot_flags = SLOT_BELT | SLOT_EARS
 	throwforce = 0
 	w_class = 1.0
@@ -42,10 +41,10 @@
 	colour = "white"
 
 
-/obj/item/weapon/pen/attack(mob/M as mob, mob/user as mob)
+/obj/item/weapon/pen/attack(mob/M, mob/user)
 	if(!ismob(M))
 		return
-	user << "<span class='warning'>You stab [M] with the pen.</span>"
+	to_chat(user, "<span class='warning'>You stab [M] with the pen.</span>")
 //	M << "\red You feel a tiny prick!" //That's a whole lot of meta!
 	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been stabbed with [name]  by [user.name] ([user.ckey])</font>")
 	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [name] to stab [M.name] ([M.ckey])</font>")
@@ -58,7 +57,7 @@
  */
 /obj/item/weapon/pen/sleepypen
 	desc = "It's a black ink pen with a sharp point and a carefully engraved \"Waffle Co.\""
-	flags = FPRINT | TABLEPASS | OPENCONTAINER
+	flags = OPENCONTAINER
 	slot_flags = SLOT_BELT
 	origin_tech = "materials=2;syndicate=5"
 
@@ -72,7 +71,7 @@
 	return
 
 
-/obj/item/weapon/pen/sleepypen/attack(mob/M as mob, mob/user as mob)
+/obj/item/weapon/pen/sleepypen/attack(mob/M, mob/user)
 	if(!(istype(M,/mob)))
 		return
 	..()
@@ -85,12 +84,12 @@
  * Parapens
  */
  /obj/item/weapon/pen/paralysis
-	flags = FPRINT | TABLEPASS | OPENCONTAINER
+	flags = OPENCONTAINER
 	slot_flags = SLOT_BELT
 	origin_tech = "materials=2;syndicate=5"
 
 
-/obj/item/weapon/pen/paralysis/attack(mob/living/M as mob, mob/user as mob)
+/obj/item/weapon/pen/paralysis/attack(mob/living/M, mob/user)
 
 	if(!(istype(M,/mob)))
 		return
