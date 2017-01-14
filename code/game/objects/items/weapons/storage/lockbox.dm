@@ -85,4 +85,4 @@
 
 	New()
 		..()
-		new /obj/item/weapon/grenade/flashbang/clusterbang(src)
+		new /obj/item/weapon/grenade/clusterbuster(src)
