@@ -2383,17 +2383,21 @@
 							if(N.virus2.len)
 								N.virus2.Cut()
 			if("restore_air")
-				var/turf/simulated/T = usr.loc
+				var/turf/simulated/T = get_turf_loc(usr)
 				if(istype(T, /turf/simulated/floor) || istype(T, /turf/simulated/shuttle/floor))
 					var/zone/Z = T.zone
 					var/datum/gas_mixture/V = Z.air
 					V.carbon_dioxide = 0
 					V.phoron = 0
+					if(V.trace_gases.len>0)
+						for(var/datum/gas/trace_gas in V.trace_gases)
+							if(istype(trace_gas, /datum/gas/sleeping_agent))
+								V.trace_gases -= trace_gas
 					V.temperature = 293
 					V.nitrogen = 80
 					V.oxygen = 21
 					V.total_moles = 101
-					V.trace_gases = null
+					message_admins("[key_name_admin(usr)] has restored air in [T.x] [T.y] [T.z].")
 				else
 					to_chat(usr, "<span class='userdanger'>You are staying on incorrect turf.</span>")
 			if("list_bombers")
