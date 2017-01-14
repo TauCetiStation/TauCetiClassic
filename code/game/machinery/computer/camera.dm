@@ -133,10 +133,9 @@
 		A.eyeobj.setLoc(get_turf(C))
 		A.client.eye = A.eyeobj
 		return 1
-
-	if (!C.can_use() || (get_dist(user, src) > 1 || (user.incapacitated()) || user.blinded) && !istype(user, /mob/living/silicon))
-		return 0
 	set_current(C)
+	if(!check_eye(user))
+		return 0
 	use_power(50)
 	return 1
 
