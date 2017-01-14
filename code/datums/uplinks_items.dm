@@ -575,7 +575,7 @@
 	name = "Bag of C-4 explosives"
 	desc = "Because sometimes quantity is quality. Contains 10 C-4 plastic explosives."
 	item = /obj/item/weapon/storage/backpack/dufflebag/c4
-	cost = 9 //60% discount!
+	cost = 4 //10% discount!
 
 /datum/uplink_item/device_tools/military_belt
 	name = "Military Belt"

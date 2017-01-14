@@ -299,7 +299,7 @@
 
 /obj/item/weapon/storage/backpack/dufflebag/c4/New()
 	..()
-	for(var/i = 1 to 10)
+	for(var/i = 1 to 5)
 		new /obj/item/weapon/plastique(src)
 	return
 
