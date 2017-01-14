@@ -2383,7 +2383,7 @@
 							if(N.virus2.len)
 								N.virus2.Cut()
 			if("restore_air")
-				var/turf/simulated/T = get_turf_loc(usr)
+				var/turf/simulated/T = get_turf(usr)
 				if(istype(T, /turf/simulated/floor) || istype(T, /turf/simulated/shuttle/floor))
 					var/zone/Z = T.zone
 					var/datum/gas_mixture/V = Z.air
