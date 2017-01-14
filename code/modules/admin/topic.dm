@@ -2382,7 +2382,20 @@
 							var/obj/effect/decal/cleanable/mucus/N = O
 							if(N.virus2.len)
 								N.virus2.Cut()
-
+			if("restore_air")
+				var/turf/simulated/T = usr.loc
+				if(istype(T, /turf/simulated/floor) || istype(T, /turf/simulated/shuttle/floor))
+					var/zone/Z = T.zone
+					var/datum/gas_mixture/V = Z.air
+					V.carbon_dioxide = 0
+					V.phoron = 0
+					V.temperature = 293
+					V.nitrogen = 80
+					V.oxygen = 21
+					V.total_moles = 101
+					V.trace_gases = null
+				else
+					to_chat(usr, "<span class='userdanger'>You are staying on incorrect turf.</span>")
 			if("list_bombers")
 				var/dat = "<B>Bombing List<HR>"
 				for(var/l in bombers)
