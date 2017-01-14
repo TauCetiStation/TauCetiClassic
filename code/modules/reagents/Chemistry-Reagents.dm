@@ -4102,6 +4102,8 @@ datum
 	custom_metabolism = 1000
 
 /datum/reagent/mulligan/on_mob_life(mob/living/carbon/human/H)
+	if(!..())
+		return
 	to_chat(H,"<span class='warning'><b>You grit your teeth in pain as your body rapidly mutates!</b></span>")
 	H.visible_message("<b>[H]</b> suddenly transforms!")
 	H.gender = pick(MALE, FEMALE)
@@ -4113,7 +4115,6 @@ datum
 	H.real_name = H.name
 	var/datum/preferences/A = new()	//Randomize appearance for the human
 	A.randomize_appearance_for(H)
-	..()
 
 // Undefine the alias for REAGENTS_EFFECT_MULTIPLER
 #undef REM

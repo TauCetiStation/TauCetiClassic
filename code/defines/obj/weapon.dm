@@ -193,14 +193,14 @@
 	origin_tech = "engineering=3;combat=1"
 	var/weaken = 2
 
-/obj/item/weapon/legcuffs/bola/throw_at(atom/target, range, speed, mob/thrower)
+/obj/item/weapon/legcuffs/bola/throw_at(atom/target, mob/thrower)
 	if(!..())
 		return
 	playsound(src.loc,'sound/weapons/bolathrow.ogg', 75, 1)
 
 /obj/item/weapon/legcuffs/bola/throw_impact(atom/hit_atom)
-	if(..() || !iscarbon(hit_atom))//if it gets caught or the target can't be cuffed,
-		return//abort
+	if(!iscarbon(hit_atom))//if it gets caught or the target can't be cuffed,
+		return
 	var/mob/living/carbon/C = hit_atom
 	if(!C.legcuffed)
 		visible_message("<span class='danger'>\The [src] ensnares [C]!</span>")
