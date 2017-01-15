@@ -230,15 +230,16 @@
 	SSobj.processing |= src
 
 /obj/item/device/flashlight/emp/Destroy()
-		SSobj.processing.Remove(src)
-		return ..()
+	SSobj.processing.Remove(src)
+	return ..()
 
 /obj/item/device/flashlight/emp/process()
-		charge_tick++
-		if(charge_tick < 10) return 0
-		charge_tick = 0
-		emp_cur_charges = min(emp_cur_charges+1, emp_max_charges)
-		return 1
+	charge_tick++
+	if(charge_tick < 10)
+		return 0
+	charge_tick = 0
+	emp_cur_charges = min(emp_cur_charges+1, emp_max_charges)
+	return 1
 
 /obj/item/device/flashlight/emp/attack(mob/living/M, mob/living/user)
 	if(on && user.zone_sel.selecting == "eyes") // call original attack proc only if aiming at the eyes
