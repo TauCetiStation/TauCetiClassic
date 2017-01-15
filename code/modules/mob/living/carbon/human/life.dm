@@ -313,13 +313,11 @@
 			var/damage = 0
 			radiation--
 			if(prob(25))
-				adjustToxLoss(1)
 				damage = 1
 
 			if(radiation > 50)
-				radiation -= 2
+				radiation--
 				damage = 1
-				adjustToxLoss(1)
 				if(prob(5) && prob(radiation) && (h_style != "Bald" || f_style != "Shaved"))
 					h_style = "Bald"
 					f_style = "Shaved"
@@ -332,8 +330,8 @@
 						to_chat(src, "\red You feel weak.")
 						emote("collapse")
 			if(radiation > 75)
-				radiation -= 1
-				adjustToxLoss(2)
+				radiation--
+				damage = 3
 				if(prob(1))
 					to_chat(src, "\red You mutate!")
 					randmutb(src)
@@ -341,6 +339,7 @@
 					emote("gasp")
 
 			if(damage)
+				adjustToxLoss(damage)
 				updatehealth()
 				if (organs.len)
 					var/datum/organ/external/O = pick(organs)
