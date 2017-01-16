@@ -280,7 +280,7 @@
 		return 0
 	if(!Process_Spacemove(direction))
 		return 0
-	if(!has_charge(step_energy_drain))
+	if(cell.charge - step_energy_drain <= 0)
 		return 0
 	var/move_result = 0
 	if(hasInternalDamage(MECHA_INT_CONTROL_LOST))
