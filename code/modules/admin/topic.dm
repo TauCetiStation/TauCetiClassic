@@ -2385,19 +2385,17 @@
 			if("restore_air")
 				var/turf/simulated/T = get_turf(usr)
 				if(istype(T, /turf/simulated/floor) || istype(T, /turf/simulated/shuttle/floor))
-					var/zone/Z = T.zone
-					var/datum/gas_mixture/V = Z.air
-					V.carbon_dioxide = 0
-					V.phoron = 0
-					if(V.trace_gases.len>0)
-						for(var/datum/gas/trace_gas in V.trace_gases)
+					T.zone.air.carbon_dioxide = 0
+					T.zone.air.phoron = 0
+					if(T.zone.air.trace_gases.len>0)
+						for(var/datum/gas/trace_gas in T.zone.air.trace_gases)
 							if(istype(trace_gas, /datum/gas/sleeping_agent))
-								V.trace_gases -= trace_gas
-					V.temperature = 293
-					V.nitrogen = 80
-					V.oxygen = 21
-					V.total_moles = 101
-					message_admins("[key_name_admin(usr)] has restored air in [T.x] [T.y] [T.z].")
+								T.zone.air.trace_gases -= trace_gas
+					T.zone.air.temperature = 293
+					T.zone.air.nitrogen = 80
+					T.zone.air.oxygen = 21
+					T.zone.air.total_moles = 101
+					message_admins("[key_name_admin(usr)] has restored air in [T.x] [T.y] [T.z] <a href='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>.")
 				else
 					to_chat(usr, "<span class='userdanger'>You are staying on incorrect turf.</span>")
 			if("list_bombers")
