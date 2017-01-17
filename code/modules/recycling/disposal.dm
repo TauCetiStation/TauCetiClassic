@@ -532,7 +532,7 @@
 	var/destinationTag = "" // changes if contains a delivery container
 	var/tomail = 0 //changes if contains wrapped package
 	var/hasmob = 0 //If it contains a mob
-	var/obj/structure/closet/body_bag/bodybag = null
+	var/has_bodybag = 0 // if it contains a bodybag
 
 	var/partialTag = "" //set by a partial tagger the first time round, then put in destinationTag if it goes through again.
 
@@ -570,7 +570,7 @@
 			var/mob/living/silicon/robot/drone/drone = AM
 			src.destinationTag = drone.mail_destination
 		if(istype(AM, /obj/structure/closet/body_bag))
-			bodybag = AM
+			has_bodybag = 1
 
 
 // start the movement process
@@ -600,10 +600,11 @@
 				if(!istype(H,/mob/living/silicon/robot/drone)) //Drones use the mailing code to move through the disposal system,
 					H.take_overall_damage(20, 0, "Blunt Trauma")//horribly maim any living creature jumping down disposals.  c'est la vie
 
-		if(bodybag && prob(3))
-			for(var/mob/living/H in bodybag.contents)
-				if(!istype(H,/mob/living/silicon/robot/drone))
-					H.take_overall_damage(20, 0, "Blunt Trauma")
+		if(has_bodybag && prob(3))
+			for(var/obj/structure/closet/body_bag/B in src)
+				for(var/mob/living/H in B)
+					if(!istype(H,/mob/living/silicon/robot/drone))
+						H.take_overall_damage(20, 0, "Blunt Trauma")
 
 		if(has_fat_guy && prob(2)) // chance of becoming stuck per segment if contains a fat guy
 			active = 0
