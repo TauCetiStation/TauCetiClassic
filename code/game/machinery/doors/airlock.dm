@@ -635,7 +635,7 @@ About the new airlock wires panel:
 		to_chat(user, "Airlock AI control wire is cut. Please call the engineer or engiborg to fix this problem.")
 		return
 //##Z1
-	if(!src.canAIControl())
+	if(!(src.canAIControl()) || IsAdminGhost(usr))
 		if(src.canAIHack())
 			src.hack(user)
 			return
