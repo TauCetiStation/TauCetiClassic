@@ -443,6 +443,8 @@
 	update_health_hud()
 
 /mob/living/proc/rejuvenate()
+	if(reagents)
+		reagents.clear_reagents()
 
 	// shut down various types of badness
 	setToxLoss(0)
@@ -453,6 +455,9 @@
 	SetParalysis(0)
 	SetStunned(0)
 	SetWeakened(0)
+	if(iscarbon(src))
+		var/mob/living/carbon/C = src
+		C.shock_stage=0
 
 	// shut down ongoing problems
 	radiation = 0
@@ -495,6 +500,8 @@
 	stat = CONSCIOUS
 
 	// make the icons look correct
+	if(HUSK in mutations)
+		mutations.Remove(HUSK)
 	regenerate_icons()
 	update_health_hud()
 	return
