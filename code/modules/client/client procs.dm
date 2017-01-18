@@ -211,11 +211,16 @@
 	if(!tooltips)
 		tooltips = new /datum/tooltip(src)
 
+	if(!cob)
+		cob = new()
+
 	//////////////
 	//DISCONNECT//
 	//////////////
 /client/Del()
 	log_client_ingame_age_to_db()
+	if(cob && cob.in_building_mode)
+		cob.remove_build_overlay(src)
 	if(holder)
 		holder.owner = null
 		admins -= src
