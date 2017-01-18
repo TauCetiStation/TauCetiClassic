@@ -312,6 +312,10 @@ var/const/MAX_SAVE_SLOTS = 10
 		character.disabilities|=TOURETTES
 	if(disabilities & DISABILITY_NERVOUS)
 		character.disabilities|=NERVOUS
+	if(disabilities & DISABILITY_FATNESS)
+		character.mutations += FAT
+		character.nutrition = 1000
+		character.overeatduration = 2000
 
 	// Wheelchair necessary?
 	var/datum/organ/external/l_foot = character.get_organ("l_foot")
