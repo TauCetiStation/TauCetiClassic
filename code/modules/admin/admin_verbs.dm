@@ -81,8 +81,7 @@ var/list/admin_verbs_admin = list(
 	/client/proc/aooc,
 	/client/proc/change_security_level,
 	/client/proc/empty_ai_core_toggle_latejoin,
-	/client/proc/send_fax_message,
-	/client/proc/toggle_AI_interact /*toggle admin ability to interact with machines as an AI*/
+	/client/proc/send_fax_message
 	)
 var/list/admin_verbs_ban = list(
 	/client/proc/unban_panel
@@ -113,7 +112,8 @@ var/list/admin_verbs_fun = list(
 	/client/proc/epileptic_anomaly,
 //	/client/proc/Noir_anomaly,
 	/client/proc/epileptic_anomaly_cancel,
-	/client/proc/achievement
+	/client/proc/achievement,
+	/client/proc/toggle_AI_interact /*toggle admin ability to interact with machines as an AI*/
 	)
 var/list/admin_verbs_spawn = list(
 	/datum/admins/proc/spawn_atom,		/*allows us to spawn instances*/
@@ -972,7 +972,7 @@ var/list/admin_verbs_hideable = list(
 
 /client/proc/toggle_AI_interact()
 	set name = "Toggle Admin AI Interact"
-	set category = "Admin"
+	set category = "Fun"
 	set desc = "Allows you to interact with most machines as an AI would as a ghost"
 
 	AI_Interact = !AI_Interact
