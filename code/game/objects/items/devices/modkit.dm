@@ -105,6 +105,21 @@
 	target_species = "Skrell"
 
 
+/obj/item/device/modkit/engineering/chief
+	name = "Chief-engineers hardsuit modification kit"
+	permitted_types = list(
+		/obj/item/clothing/head/helmet/space/rig/engineering,
+		/obj/item/clothing/suit/space/rig/engineering,
+		/obj/item/clothing/head/helmet/space/rig/atmos,
+		/obj/item/clothing/suit/space/rig/atmos
+		)
+	forbidden_type = list()
+
+/obj/item/device/modkit/engineering/chief/skrell
+	name = "Skrellian chief-engineers hardsuit modification kit"
+	target_species = "Skrell"
+
+
 /obj/item/device/modkit/atmos
 	name = "Atmospherics hardsuit modification kit"
 	permitted_types = list(

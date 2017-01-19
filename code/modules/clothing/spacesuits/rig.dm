@@ -274,24 +274,24 @@
 /obj/item/clothing/head/helmet/space/rig/engineering/chief
 	name = "advanced hardsuit helmet"
 	desc = "An advanced helmet designed for work in a hazardous, low pressure environment. Shines with a high polish."
-	icon_state = "rig0-white"
+	icon_state = "rig0-chief"
 	item_state = "ce_helm"
-	item_color = "white"
+	item_color = "chief"
 	max_heat_protection_temperature = FIRE_HELMET_MAX_HEAT_PROTECTION_TEMPERATURE
 	sprite_sheets = null
-	sprite_sheets_refit = null
-	sprite_sheets_obj = null
+	sprite_sheets_refit = list("Skrell" = 'icons/mob/species/skrell/helmet.dmi')
+	sprite_sheets_obj = list("Skrell" = 'icons/obj/clothing/species/skrell/hats.dmi')
 
 /obj/item/clothing/suit/space/rig/engineering/chief
-	icon_state = "rig-white"
+	icon_state = "rig-chief"
 	name = "advanced hardsuit"
 	desc = "An advanced suit that protects against hazardous, low pressure environments. Shines with a high polish."
 	item_state = "ce_hardsuit"
 	slowdown = 1
 	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 	sprite_sheets = null
-	sprite_sheets_refit = null
-	sprite_sheets_obj = null
+	sprite_sheets_refit = list("Skrell" = 'icons/mob/species/skrell/suit.dmi')
+	sprite_sheets_obj = list("Skrell" = 'icons/obj/clothing/species/skrell/suits.dmi')
 
 //Mining rig
 /obj/item/clothing/head/helmet/space/rig/mining
