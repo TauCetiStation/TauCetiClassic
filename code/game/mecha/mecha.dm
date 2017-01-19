@@ -941,6 +941,7 @@
 	set src = usr.loc
 	set popup_menu = 0
 	if(usr!=occupant)	return
+	if(!get_charge(lights_power))	return
 	lights = !lights
 	if(lights)	set_light(light_range + lights_power)
 	else		set_light(light_range - lights_power)
@@ -1792,9 +1793,9 @@
 /datum/global_iterator/mecha_light
 
 	process(var/obj/mecha/mecha)
-		if(mecha.lights)
-			mecha.cell.charge -= 15
-		if(!mecha.get_charge())
+		if(mecha.get_charge(mecha.lights_power) && mecha.lights)
+			mecha.cell.charge -= mecha.lights_power
+		if(mecha.lights && !mecha.get_charge(mecha.lights_power))
 			mecha.lights = 0
 			mecha.set_light(mecha.light_range - mecha.lights_power)
 		return
