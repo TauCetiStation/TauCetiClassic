@@ -29,7 +29,8 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	set category = "Debug"
 	set name = "Advanced ProcCall"
 
-	if(!check_rights(R_PERMISSIONS)) return
+	if(!check_rights(R_PERMISSIONS))
+		return
 
 	if(1) return	//TODO: config option
 
@@ -622,6 +623,8 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		"librarian",
 		"agent",
 		"assistant",
+		"test subject",
+		"tourist",
 		"mime",
 		"clown"
 		)
@@ -741,9 +744,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(new /obj/item/weapon/bikehorn(M), slot_r_store)
 
 			var/obj/item/weapon/card/id/W = new(M)
-			W.name = "[M.real_name]'s ID Card"
-			W.access = get_all_accesses()
 			W.assignment = "Tunnel Clown!"
+			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.access = get_all_accesses()
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
 
@@ -797,9 +800,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(pda, slot_belt)
 
 			var/obj/item/weapon/card/id/syndicate/W = new(M)
-			W.name = "[M.real_name]'s ID Card"
-			W.access = get_all_accesses()
 			W.assignment = "Reaper"
+			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.access = get_all_accesses()
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
 		if("preparation")
@@ -811,9 +814,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(new /obj/item/device/flashlight(M), slot_l_store)
 			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/black(M), slot_gloves)
 			var/obj/item/weapon/card/id/syndicate/W = new(M)
-			W.name = "[M.real_name]'s ID Card"
-			W.access = get_all_accesses()
 			W.assignment = "Unknown"
+			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.access = get_all_accesses()
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
 
@@ -839,12 +842,12 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(new /obj/item/weapon/clipboard(M), slot_belt)
 
 			var/obj/item/weapon/card/id/W = new(M)
-			W.name = "[M.real_name]'s ID Card"
+			W.assignment = "NanoTrasen Navy Representative"
+			W.name = "[M.real_name]'s ID Card ([W.assignment])"
 			W.icon_state = "centcom"
 			W.item_state = "id_inv"
 			W.access = get_all_accesses()
 			W.access += list("VIP Guest","Custodian","Thunderdome Overseer","Intel Officer","Medical Officer","Death Commando","Research Officer")
-			W.assignment = "NanoTrasen Navy Representative"
 			W.rank = "NanoTrasen Representative"
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
@@ -866,10 +869,10 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(new /obj/item/weapon/gun/energy(M), slot_belt)
 
 			var/obj/item/weapon/card/id/centcom/W = new(M)
-			W.name = "[M.real_name]'s ID Card"
+			W.assignment = "NanoTrasen Navy Officer"
+			W.name = "[M.real_name]'s ID Card ([W.assignment])"
 			W.access = get_all_accesses()
 			W.access += get_all_centcom_access()
-			W.assignment = "NanoTrasen Navy Officer"
 			W.rank = "NanoTrasen Representative"
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
@@ -892,10 +895,10 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(new /obj/item/weapon/gun/energy(M), slot_belt)
 
 			var/obj/item/weapon/card/id/centcom/W = new(M)
-			W.name = "[M.real_name]'s ID Card"
+			W.assignment = "NanoTrasen Navy Captain"
+			W.name = "[M.real_name]'s ID Card ([W.assignment])"
 			W.access = get_all_accesses()
 			W.access += get_all_centcom_access()
-			W.assignment = "NanoTrasen Navy Captain"
 			W.rank = "NanoTrasen Representative"
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
@@ -910,11 +913,11 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(M), slot_back)
 
 			var/obj/item/weapon/card/id/W = new(M)
-			W.name = "[M.real_name]'s ID Card"
+			W.assignment = "Emergency Response Team"
+			W.name = "[M.real_name]'s ID Card ([W.assignment])"
 			W.icon_state = "centcom"
 			W.access = get_all_accesses()
 			W.access += get_all_centcom_access()
-			W.assignment = "Emergency Response Team"
 			W.rank = "Emergency Response Team"
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
@@ -933,11 +936,11 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(M), slot_back)
 
 			var/obj/item/weapon/card/id/W = new(M)
-			W.name = "[M.real_name]'s ID Card"
+			W.assignment = "Special Operations Officer"
+			W.name = "[M.real_name]'s ID Card ([W.assignment])"
 			W.icon_state = "centcom"
 			W.access = get_all_accesses()
 			W.access += get_all_centcom_access()
-			W.assignment = "Special Operations Officer"
 			W.rank = "NanoTrasen Representative"
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
@@ -988,10 +991,10 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(new /obj/item/weapon/gun/projectile/revolver/mateba(M), slot_belt)
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/soviet(M), slot_w_uniform)
 			var/obj/item/weapon/card/id/W = new(M)
-			W.name = "[M.real_name]'s ID Card"
+			W.assignment = "Admiral"
+			W.name = "[M.real_name]'s ID Card ([W.assignment])"
 			W.access = get_all_accesses()
 			W.access += get_all_centcom_access()
-			W.assignment = "Admiral"
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
 		if("captain")
@@ -1008,9 +1011,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(pda, slot_belt)
 
 			var/obj/item/weapon/card/id/gold/W = new(M)
-			W.name = "[M.real_name]'s ID Card"
-			W.access = get_all_accesses()
 			W.assignment = "Captain"
+			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.access = get_all_accesses()
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
 
@@ -1032,14 +1035,14 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(pda, slot_belt)
 
 			var/obj/item/weapon/card/id/silver/W = new(M)
-			W.name = "[M.real_name]'s ID Card"
+			W.assignment = "Head of Personnel"
+			W.name = "[M.real_name]'s ID Card ([W.assignment])"
 			W.access = list(access_security, access_sec_doors, access_brig, access_court, access_forensics_lockers,
 			            access_medical, access_engine, access_change_ids, access_ai_upload, access_eva, access_heads,
 			            access_all_personal_lockers, access_maint_tunnels, access_bar, access_janitor, access_construction, access_morgue,
 			            access_crematorium, access_kitchen, access_cargo, access_cargo_bot, access_mailsorting, access_qm, access_hydroponics, access_lawyer,
 			            access_theatre, access_chapel_office, access_library, access_research, access_mining, access_heads_vault, access_mining_station,
 			            access_clown, access_mime, access_hop, access_RC_announce, access_keycard_auth, access_gateway)
-			W.assignment = "Head of Personnel"
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
 		if("hos")
@@ -1057,12 +1060,12 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(pda, slot_belt)
 
 			var/obj/item/weapon/card/id/silver/W = new(M)
-			W.name = "[M.real_name]'s ID Card"
+			W.assignment = "Head of Security"
+			W.name = "[M.real_name]'s ID Card ([W.assignment])"
 			W.access = list(access_security, access_sec_doors, access_brig, access_armory, access_court,
 			            access_forensics_lockers, access_morgue, access_maint_tunnels, access_all_personal_lockers,
 			            access_research, access_engine, access_mining, access_medical, access_construction, access_mailsorting,
 			            access_heads, access_hos, access_RC_announce, access_keycard_auth, access_gateway, access_detective)
-			W.assignment = "Head of Security"
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
 
@@ -1085,11 +1088,11 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(pda, slot_belt)
 
 			var/obj/item/weapon/card/id/silver/W = new(M)
-			W.name = "[M.real_name]'s ID Card"
+			W.assignment = "Chief Medical Officer"
+			W.name = "[M.real_name]'s ID Card ([W.assignment])"
 			W.access = list(access_medical, access_morgue, access_genetics, access_heads,
 			access_chemistry, access_virology, access_cmo, access_surgery, access_RC_announce,
 			access_keycard_auth, access_sec_doors, access_psychiatrist)
-			W.assignment = "Chief Medical Officer"
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
 		if("rd")
@@ -1105,12 +1108,12 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(pda, slot_belt)
 
 			var/obj/item/weapon/card/id/silver/W = new(M)
-			W.name = "[M.real_name]'s ID Card"
+			W.assignment = "Research Director"
+			W.name = "[M.real_name]'s ID Card ([W.assignment])"
 			W.access = list(access_rd, access_heads, access_tox, access_genetics, access_morgue,
 			            access_tox_storage, access_teleporter, access_sec_doors, access_minisat,
 			            access_research, access_robotics, access_xenobiology, access_ai_upload,
 			            access_RC_announce, access_keycard_auth, access_tcomsat, access_gateway, access_xenoarch)
-			W.assignment = "Research Director"
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
 		if("ce")
@@ -1127,12 +1130,12 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(pda, slot_l_store)
 
 			var/obj/item/weapon/card/id/silver/W = new(M)
-			W.name = "[M.real_name]'s ID Card"
+			W.assignment = "Chief Engineer"
+			W.name = "[M.real_name]'s ID Card ([W.assignment])"
 			W.access = list(access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels,
 			            access_teleporter, access_external_airlocks, access_atmospherics, access_emergency_storage, access_eva,
 			            access_heads, access_construction, access_sec_doors, access_minisat,
 			            access_ce, access_RC_announce, access_keycard_auth, access_tcomsat, access_ai_upload)
-			W.assignment = "Chief Engineer"
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
 		if("warden")
@@ -1149,9 +1152,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(pda, slot_l_store)
 
 			var/obj/item/weapon/card/id/W = new(M)
-			W.name = "[M.real_name]'s ID Card"
-			W.access = list(access_security, access_sec_doors, access_brig, access_armory, access_court, access_maint_tunnels)
 			W.assignment = "Warden"
+			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.access = list(access_security, access_sec_doors, access_brig, access_armory, access_court, access_maint_tunnels)
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
 		if("security officer")
@@ -1168,9 +1171,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(pda, slot_l_store)
 
 			var/obj/item/weapon/card/id/W = new(M)
-			W.name = "[M.real_name]'s ID Card"
-			W.access = list(access_security, access_sec_doors, access_brig, access_court, access_maint_tunnels)
 			W.assignment = "Security Officer"
+			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.access = list(access_security, access_sec_doors, access_brig, access_court, access_maint_tunnels)
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
 		if("detective")
@@ -1189,9 +1192,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(pda, slot_belt)
 
 			var/obj/item/weapon/card/id/W = new(M)
-			W.name = "[M.real_name]'s ID Card"
-			W.access = list(access_security, access_sec_doors, access_detective, access_maint_tunnels, access_court)
 			W.assignment = "Detective"
+			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.access = list(access_security, access_sec_doors, access_detective, access_maint_tunnels, access_court)
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
 		if("doctor")
@@ -1207,9 +1210,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(pda, slot_belt)
 
 			var/obj/item/weapon/card/id/W = new(M)
-			W.name = "[M.real_name]'s ID Card"
-			W.access = list(access_medical, access_morgue, access_surgery)
 			W.assignment = "Medical Doctor"
+			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.access = list(access_medical, access_morgue, access_surgery)
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
 		if("chemist")
@@ -1225,9 +1228,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(pda, slot_belt)
 
 			var/obj/item/weapon/card/id/W = new(M)
-			W.name = "[M.real_name]'s ID Card"
-			W.access = list(access_medical, access_chemistry)
 			W.assignment = "Chemist"
+			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.access = list(access_medical, access_chemistry)
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
 		if("virologist")
@@ -1244,9 +1247,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(pda, slot_belt)
 
 			var/obj/item/weapon/card/id/W = new(M)
-			W.name = "[M.real_name]'s ID Card"
-			W.access = list(access_medical, access_virology)
 			W.assignment = "Virologist"
+			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.access = list(access_medical, access_virology)
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
 		if("psychiatrist")
@@ -1262,9 +1265,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(pda, slot_belt)
 
 			var/obj/item/weapon/card/id/W = new(M)
-			W.name = "[M.real_name]'s ID Card"
-			W.access = list(access_medical, access_psychiatrist)
 			W.assignment = "Psychiatrist"
+			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.access = list(access_medical, access_psychiatrist)
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
 		if("engineer")
@@ -1281,9 +1284,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(pda, slot_l_store)
 
 			var/obj/item/weapon/card/id/W = new(M)
-			W.name = "[M.real_name]'s ID Card"
-			W.access = list(access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels, access_external_airlocks, access_construction)
 			W.assignment = "Station Engineer"
+			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.access = list(access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels, access_external_airlocks, access_construction)
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
 		if("atmos-tech")
@@ -1299,9 +1302,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(pda, slot_l_store)
 
 			var/obj/item/weapon/card/id/W = new(M)
-			W.name = "[M.real_name]'s ID Card"
-			W.access = list(access_atmospherics, access_maint_tunnels, access_emergency_storage, access_construction)
 			W.assignment = "Atmospheric Technician"
+			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.access = list(access_atmospherics, access_maint_tunnels, access_emergency_storage, access_construction)
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
 		if("scientist")
@@ -1317,9 +1320,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(pda, slot_belt)
 
 			var/obj/item/weapon/card/id/W = new(M)
-			W.name = "[M.real_name]'s ID Card"
-			W.access = list(access_tox, access_tox_storage, access_research, access_xenoarch)
 			W.assignment = "Scientist"
+			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.access = list(access_tox, access_tox_storage, access_research, access_xenoarch)
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
 		if("xenobiologist")
@@ -1335,9 +1338,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(pda, slot_belt)
 
 			var/obj/item/weapon/card/id/W = new(M)
-			W.name = "[M.real_name]'s ID Card"
-			W.access = list(access_research, access_xenobiology)
 			W.assignment = "Xenobiologist"
+			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.access = list(access_research, access_xenobiology)
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
 		if("roboticist")
@@ -1353,9 +1356,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(pda, slot_belt)
 
 			var/obj/item/weapon/card/id/W = new(M)
-			W.name = "[M.real_name]'s ID Card"
-			W.access = list(access_robotics, access_tech_storage, access_morgue, access_research)
 			W.assignment = "Roboticist"
+			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.access = list(access_robotics, access_tech_storage, access_morgue, access_research)
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
 		if("geneticist")
@@ -1371,9 +1374,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(pda, slot_belt)
 
 			var/obj/item/weapon/card/id/W = new(M)
-			W.name = "[M.real_name]'s ID Card"
-			W.access = list(access_medical, access_morgue, access_genetics, access_research)
 			W.assignment = "Geneticist"
+			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.access = list(access_medical, access_morgue, access_genetics, access_research)
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
 		if("janitor")
@@ -1388,9 +1391,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(pda, slot_belt)
 
 			var/obj/item/weapon/card/id/W = new(M)
-			W.name = "[M.real_name]'s ID Card"
-			W.access = list(access_janitor, access_maint_tunnels)
 			W.assignment = "Janitor"
+			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.access = list(access_janitor, access_maint_tunnels)
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
 		if("chef")
@@ -1407,9 +1410,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(pda, slot_belt)
 
 			var/obj/item/weapon/card/id/W = new(M)
-			W.name = "[M.real_name]'s ID Card"
-			W.access = list(access_kitchen)
 			W.assignment = "Chef"
+			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.access = list(access_kitchen)
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
 		if("bartender")
@@ -1425,9 +1428,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(pda, slot_belt)
 
 			var/obj/item/weapon/card/id/W = new(M)
-			W.name = "[M.real_name]'s ID Card"
-			W.access = list(access_bar)
 			W.assignment = "Bartender"
+			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.access = list(access_bar)
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
 		if("botanist")
@@ -1445,9 +1448,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(pda, slot_belt)
 
 			var/obj/item/weapon/card/id/W = new(M)
-			W.name = "[M.real_name]'s ID Card"
-			W.access = list(access_hydroponics, access_morgue)
 			W.assignment = "Botanist"
+			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.access = list(access_hydroponics, access_morgue)
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
 		if("qm")
@@ -1463,9 +1466,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(pda, slot_belt)
 
 			var/obj/item/weapon/card/id/W = new(M)
-			W.name = "[M.real_name]'s ID Card"
-			W.access = list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mint, access_mining, access_mining_station)
 			W.assignment = "Quartermaster"
+			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.access = list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mint, access_mining, access_mining_station)
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
 		if("cargo")
@@ -1480,9 +1483,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(pda, slot_belt)
 
 			var/obj/item/weapon/card/id/W = new(M)
-			W.name = "[M.real_name]'s ID Card"
-			W.access = list(access_maint_tunnels, access_cargo, access_cargo_bot, access_mailsorting)
 			W.assignment = "Cargo Technician"
+			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.access = list(access_maint_tunnels, access_cargo, access_cargo_bot, access_mailsorting)
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
 		if("miner")
@@ -1497,9 +1500,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(pda, slot_belt)
 
 			var/obj/item/weapon/card/id/W = new(M)
-			W.name = "[M.real_name]'s ID Card"
-			W.access = list(access_mining, access_mint, access_mining_station, access_mailsorting)
 			W.assignment = "Shaft Miner"
+			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.access = list(access_mining, access_mint, access_mining_station, access_mailsorting)
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
 		if("librarian")
@@ -1514,9 +1517,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(pda, slot_belt)
 
 			var/obj/item/weapon/card/id/W = new(M)
-			W.name = "[M.real_name]'s ID Card"
-			W.access = list(access_library)
 			W.assignment = "Librarian"
+			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.access = list(access_library)
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
 		if("agent")
@@ -1533,9 +1536,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(pda, slot_belt)
 
 			var/obj/item/weapon/card/id/silver/W = new(M)
-			W.name = "[M.real_name]'s ID Card"
-			W.access = list(access_lawyer, access_court, access_sec_doors)
 			W.assignment = "Internal Affairs Agent"
+			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.access = list(access_lawyer, access_court, access_sec_doors)
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
 
@@ -1557,11 +1560,36 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(pda, slot_belt)
 
 			var/obj/item/weapon/card/id/W = new(M)
-			W.name = "[M.real_name]'s ID Card"
-			W.access = list(access_library)
 			W.assignment = "Assistant"
+			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.access = list(access_library)
+			if(config.assistant_maint)
+				W.access += access_maint_tunnels
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
+		if("test subject")
+			M.equip_to_slot_or_del(new /obj/item/clothing/under/fluff/jane_sidsuit(M), slot_w_uniform)
+			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(M), slot_shoes)
+			M.equip_to_slot_or_del(new /obj/item/device/radio/headset(M), slot_l_ear)
+
+			var/obj/item/device/pda/pda = new(M)
+			pda.owner = M.real_name
+			pda.ownjob = "Test Subject"
+			pda.name = "PDA-[M.real_name] ([pda.ownjob])"
+			M.equip_to_slot_or_del(pda, slot_belt)
+
+			var/obj/item/weapon/card/id/W = new(M)
+			W.assignment = "Test Subject"
+			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.access = list(access_library)
+			if(config.assistant_maint)
+				W.access += access_maint_tunnels
+			W.registered_name = M.real_name
+			M.equip_to_slot_or_del(W, slot_wear_id)
+		if("tourist")
+			M.equip_to_slot_or_del(new /obj/item/clothing/under/tourist(M), slot_w_uniform)
+			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/tourist(M), slot_shoes)
+			M.equip_to_slot_or_del(new /obj/item/device/radio/headset(M), slot_l_ear)
 		if("mime")
 			M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(M), slot_back)
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/mime(M), slot_w_uniform)
@@ -1582,9 +1610,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(pda, slot_belt)
 
 			var/obj/item/weapon/card/id/W = new(M)
-			W.name = "[M.real_name]'s ID Card"
-			W.access = list(access_library, access_clown, access_theatre)
 			W.assignment = "Mime"
+			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.access = list(access_library, access_clown, access_theatre)
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
 
@@ -1609,9 +1637,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(pda, slot_belt)
 
 			var/obj/item/weapon/card/id/W = new(M)
-			W.name = "[M.real_name]'s ID Card"
-			W.access = list(access_library, access_clown, access_theatre)
 			W.assignment = "Clown"
+			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.access = list(access_library, access_clown, access_theatre)
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
 
