@@ -217,3 +217,52 @@
 
 /obj/item/device/flashlight/slime/attack_self(mob/user)
 	return //Bio-luminescence does not toggle.
+
+/obj/item/device/flashlight/emp
+	origin_tech = "magnets=3;syndicate=´1"
+	var/emp_max_charges = 4
+	var/emp_cur_charges = 4
+	var/charge_tick = 0
+
+
+/obj/item/device/flashlight/emp/New()
+	..()
+	SSobj.processing |= src
+
+/obj/item/device/flashlight/emp/Destroy()
+	SSobj.processing.Remove(src)
+	return ..()
+
+/obj/item/device/flashlight/emp/process()
+	charge_tick++
+	if(charge_tick < 10)
+		return 0
+	charge_tick = 0
+	emp_cur_charges = min(emp_cur_charges+1, emp_max_charges)
+	return 1
+
+/obj/item/device/flashlight/emp/attack(mob/living/M, mob/living/user)
+	if(on && user.zone_sel.selecting == "eyes") // call original attack proc only if aiming at the eyes
+		..()
+	return
+
+/obj/item/device/flashlight/emp/afterattack(atom/movable/A, mob/user, proximity)
+	if(!proximity)
+		return
+
+	if(emp_cur_charges)
+		emp_cur_charges -= 1
+
+		if(ismob(A))
+			var/mob/M = A
+			msg_admin_attack("[user] ([user.ckey]) attacked [M.name] ([M.ckey]) with Emp-light <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[M.x];Y=[M.y];Z=[M.z]'>JMP</a>)")
+			M.attack_log += text("\[[time_stamp()]\]<font color='orange'> Has been attacked with Emp-light by [user.name] ([user.ckey])</font>")
+			user.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked with Emp-light [M.name]'s ([M.ckey])</font>")
+			M.visible_message("<span class='danger'>[user] blinks \the [src] at the [A]</span>")
+		else
+			A.visible_message("<span class='danger'>[user] blinks \the [src] at \the [A].</span>")
+		to_chat(user, "\The [src] now has [emp_cur_charges] charge\s.</span>")
+		A.emp_act(1)
+	else
+		to_chat(user, "<span class='warning'>\The [src] needs time to recharge!</span>")
+	return

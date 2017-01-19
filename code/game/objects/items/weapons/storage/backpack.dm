@@ -263,3 +263,71 @@
 	desc = "A silent backpack made for those silent workers. Silence Co."
 	icon_state = "mimepack"
 	item_state = "mimepack"
+
+/obj/item/weapon/storage/backpack/satchel/flat
+	name = "smuggler's satchel"
+	desc = "A very slim satchel that can easily fit into tight spaces."
+	icon_state = "satchel-flat"
+	item_state = "satchel-flat"
+	w_class = 3 //Can fit in backpacks itself.
+	max_combined_w_class = 15
+	level = 1
+	cant_hold = list(/obj/item/weapon/storage/backpack/satchel/flat) //muh recursive backpacks
+
+/obj/item/weapon/storage/backpack/satchel/flat/hide(var/intact)
+	if(intact)
+		invisibility = 101
+		anchored = 1 //otherwise you can start pulling, cover it, and drag around an invisible backpack.
+		icon_state = "[initial(icon_state)]2"
+	else
+		invisibility = initial(invisibility)
+		anchored = 0
+		icon_state = initial(icon_state)
+
+/obj/item/weapon/storage/backpack/satchel/flat/New()
+	..()
+	new /obj/item/stack/tile/plasteel(src)
+	new /obj/item/weapon/crowbar(src)
+
+/obj/item/weapon/storage/backpack/dufflebag
+	name = "suspicious looking dufflebag"
+	desc = "A large dufflebag for holding extra tactical supplies."
+	icon_state = "duffle-syndie"
+	item_state = "duffle-syndie"
+	origin_tech = "syndicate=1"
+	max_combined_w_class = 30
+
+/obj/item/weapon/storage/backpack/dufflebag/c4/New()
+	..()
+	for(var/i = 1 to 5)
+		new /obj/item/weapon/plastique(src)
+	return
+
+/obj/item/weapon/storage/backpack/dufflebag/med
+	name = "medical dufflebag"
+	desc = "A large dufflebag for holding extra tactical medical supplies."
+	icon_state = "duffle-syndiemed"
+	item_state = "duffle-syndiemed"
+
+/obj/item/weapon/storage/backpack/dufflebag/surgery
+	name = "surgery dufflebag"
+	desc = "A suspicious looking dufflebag for holding surgery tools."
+	icon_state = "duffle-syndiemed"
+	item_state = "duffle-syndiemed"
+	max_combined_w_class = 40
+
+/obj/item/weapon/storage/backpack/dufflebag/surgery/New()
+	..()
+	new /obj/item/weapon/scalpel(src)
+	new /obj/item/weapon/hemostat(src)
+	new /obj/item/weapon/retractor(src)
+	new /obj/item/weapon/circular_saw(src)
+	new /obj/item/weapon/surgicaldrill(src)
+	new /obj/item/weapon/cautery(src)
+	new /obj/item/weapon/bonesetter(src)
+	new /obj/item/weapon/bonegel(src)
+	new /obj/item/weapon/FixOVein(src)
+	new /obj/item/clothing/suit/straight_jacket(src)
+	new /obj/item/clothing/mask/muzzle(src)
+	new /obj/item/device/mmi(src)
+	return
