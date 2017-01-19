@@ -280,7 +280,7 @@
 		return 0
 	if(!Process_Spacemove(direction))
 		return 0
-	if(cell.charge - step_energy_drain <= 0)
+	if(!has_charge(step_energy_drain))
 		return 0
 	var/move_result = 0
 	if(hasInternalDamage(MECHA_INT_CONTROL_LOST))
@@ -298,7 +298,7 @@
 
 /obj/mecha/proc/mechturn(direction)
 	dir = direction
-	cell.charge -= step_energy_drain
+	use_power(step_energy_drain)
 	playsound(src,'sound/mecha/mechturn.ogg',40,1)
 	return 1
 
@@ -306,7 +306,7 @@
 	var/result = step(src,direction)
 	if(result)
 		playsound(src,'sound/mecha/mechstep.ogg',40,1)
-		cell.charge -= step_energy_drain
+		use_power(step_energy_drain)
 	return result
 
 
@@ -314,7 +314,7 @@
 	var/result = step_rand(src)
 	if(result)
 		playsound(src,'sound/mecha/mechstep.ogg',40,1)
-		cell.charge -= step_energy_drain
+		use_power(step_energy_drain)
 	return result
 
 /obj/mecha/Bump(var/atom/obstacle, yes)
@@ -940,8 +940,10 @@
 	set category = "Exosuit Interface"
 	set src = usr.loc
 	set popup_menu = 0
-	if(usr!=occupant)	return
-	if(!get_charge(lights_power))	return
+	if(usr!=occupant)
+		return
+	if(!has_charge(lights_power))
+		return
 	lights = !lights
 	if(lights)	set_light(light_range + lights_power)
 	else		set_light(light_range - lights_power)
@@ -1793,9 +1795,11 @@
 /datum/global_iterator/mecha_light
 
 	process(var/obj/mecha/mecha)
-		if(mecha.get_charge(mecha.lights_power) && mecha.lights)
-			mecha.cell.charge -= mecha.lights_power
-		if(mecha.lights && !mecha.get_charge(mecha.lights_power))
+		if(!mecha.lights)
+			return
+		if(mecha.has_charge(mecha.lights_power))
+			mecha.use_power(mecha.lights_power)
+		else
 			mecha.lights = 0
 			mecha.set_light(mecha.light_range - mecha.lights_power)
 		return
