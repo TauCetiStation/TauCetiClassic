@@ -249,3 +249,27 @@
 		/obj/item/clothing/head/helmet/space/rig/syndi,
 		/obj/item/clothing/suit/space/rig/syndi
 		)
+/obj/item/device/modkit/wizard_skrell
+	name = "skrellian magical hardsuit modification kit"
+	desc = "A kit containing all the needed parts and spells to modify a hardsuit for another user. This one looks like it's meant for Skrell."
+	target_species = "Skrell"
+	permitted_types = list(
+		/obj/item/clothing/head/helmet/space/rig/wizard,
+		/obj/item/clothing/suit/space/rig/wizard
+		)
+/obj/item/device/modkit/wizard_unathi
+	name = "unathi magical hardsuit modification kit"
+	desc = "A kit containing all the needed parts and spells to modify a hardsuit for another user. This one looks like it's meant for Unathi."
+	target_species = "Unathi"
+	permitted_types = list(
+		/obj/item/clothing/head/helmet/space/rig/wizard,
+		/obj/item/clothing/suit/space/rig/wizard
+		)
+/obj/item/device/modkit/wizard_tajaran
+	name = "tajaran magical hardsuit modification kit"
+	desc = "A kit containing all the needed parts and spells to modify a hardsuit for another user. This one looks like it's meant for Tajaran."
+	target_species = "Tajaran"
+	permitted_types = list(
+		/obj/item/clothing/head/helmet/space/rig/wizard,
+		/obj/item/clothing/suit/space/rig/wizard
+		)

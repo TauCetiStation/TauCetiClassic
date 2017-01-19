@@ -357,8 +357,6 @@
 	item_color = "wiz"
 	unacidable = 1 //No longer shall our kind be foiled by lone chemists with spray bottles!
 	armor = list(melee = 40, bullet = 33, laser = 33,energy = 33, bomb = 33, bio = 100, rad = 66)
-	sprite_sheets_refit = null
-	sprite_sheets_obj = null
 
 /obj/item/clothing/suit/space/rig/wizard
 	icon_state = "rig-wiz"
@@ -368,8 +366,6 @@
 	slowdown = 1
 	unacidable = 1
 	armor = list(melee = 40, bullet = 33, laser = 33,energy = 33, bomb = 33, bio = 100, rad = 66)
-	sprite_sheets_refit = null
-	sprite_sheets_obj = null
 
 //Medical Rig
 /obj/item/clothing/head/helmet/space/rig/medical
