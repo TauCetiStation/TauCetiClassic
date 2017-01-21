@@ -851,6 +851,7 @@ proc/anim(turf/location,target,a_icon,a_icon_state,flick_anim,sleeptime = 0,dire
 
 						// Take on the icon of a neighboring scrolling space icon
 						X.icon = nextturf.icon
+						X.plane = nextturf.plane
 						X.icon_state = nextturf.icon_state
 
 
@@ -859,6 +860,7 @@ proc/anim(turf/location,target,a_icon,a_icon_state,flick_anim,sleeptime = 0,dire
 						// Reset the shuttle corners
 						if(O.tag == "delete me")
 							X.icon = 'icons/turf/shuttle.dmi'
+							X.plane = initial(X.plane)
 							X.icon_state = replacetext(O.icon_state, "_f", "_s") // revert the turf to the old icon_state
 							X.name = "wall"
 							qdel(O) // prevents multiple shuttle corners from stacking

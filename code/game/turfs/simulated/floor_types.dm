@@ -257,7 +257,9 @@
 
 	update_icon(propogate=1)
 		underlays.Cut()
-		underlays += new /icon('icons/turf/space.dmi',"[((x + y) ^ ~(x * y) + z) % 25]")
+		var/image/I = image('icons/turf/space.dmi', SPACE_ICON_STATE, layer=TURF_LAYER)
+		I.plane = PLANE_SPACE
+		underlays += I
 
 		var/dirs = 0
 		for(var/direction in cardinal)
