@@ -184,7 +184,7 @@
 	desc = "A short bow mounted across a tiller in miniature. Small enough to fit into a pocket or slip into a bag unnoticed. It fires bolts tipped with toxin, a poison collected from an organism. \
 	Its bolts stun enemies for short periods, and replenish automatically."
 	item = /obj/item/weapon/gun/energy/crossbow
-	cost = 5
+	cost = 4
 	excludefrom = list(/datum/game_mode/nuclear)
 	excludefrom_uplinks = list("nuclear")
 /*
@@ -437,7 +437,7 @@
 	desc = "When inserted into a personal digital assistant, this cartridge gives you five opportunities to detonate PDAs of crewmembers who have their message feature enabled. \
 	The concussive effect from the explosion will knock the recipient out for a short period, and deafen them for longer. It has a chance to detonate your PDA."
 	item = /obj/item/weapon/cartridge/syndicate
-	cost = 3
+	cost = 2
 
 /datum/uplink_item/stealthy_weapons/dehy_carp
 	name = "Dehydrated Space Carp"
@@ -463,7 +463,7 @@
 	name = "Chameleon Kit"
 	desc = "A set of clothes used to imitate the uniforms of Nanotrasen crewmembers."
 	item = /obj/item/weapon/storage/box/syndie_kit/chameleon
-	cost = 4
+	cost = 2
 //	excludefrom = list(/datum/game_mode/nuclear)
 /*
 /datum/uplink_item/stealthy_tools/chameleon_stamp
@@ -485,7 +485,7 @@
 	name = "No-Slip Brown Shoes"
 	desc = "These allow you to run on wet floors. They do not work on lubricated surfaces."
 	item = /obj/item/clothing/shoes/syndigaloshes
-	cost = 2
+	cost = 1
 	excludefrom = list(/datum/game_mode/nuclear)
 	excludefrom_uplinks = list("nuclear")
 
@@ -499,13 +499,13 @@
 	name = "Voice Changer"
 	item = /obj/item/clothing/mask/gas/voice
 	desc = "A conspicuous gas mask that mimics the voice named on your identification card. When no identification is worn, the mask will render your voice unrecognizable."
-	cost = 4
+	cost = 2
 
 /datum/uplink_item/stealthy_tools/chameleon_proj
 	name = "Chameleon-Projector"
 	desc = "Projects an image across a user, disguising them as an object scanned with it, as long as they don't move the projector from their hand. The disguised user cannot run and rojectiles pass over them."
 	item = /obj/item/device/chameleon
-	cost = 4
+	cost = 3
 
 /datum/uplink_item/stealthy_tools/camera_bug
 	name = "Camera Bug"
@@ -517,7 +517,7 @@
 	name = "Syndicate Silencer"
 	desc = "A universal small-arms silencer favored by stealth operatives, this will make shots quieter when equipped onto any low-caliber weapon."
 	item = /obj/item/weapon/silencer
-	cost = 2
+	cost = 1
 
 /datum/uplink_item/stealthy_weapons/throwingweapons
 	name = "Box of Throwing Weapons"
@@ -573,7 +573,7 @@
 
 /datum/uplink_item/device_tools/c4bag
 	name = "Bag of C-4 explosives"
-	desc = "Because sometimes quantity is quality. Contains 10 C-4 plastic explosives."
+	desc = "Because sometimes quantity is quality. Contains 5 C-4 plastic explosives."
 	item = /obj/item/weapon/storage/backpack/dufflebag/c4
 	cost = 4 //10% discount!
 
@@ -628,7 +628,7 @@
 	name = "Binary Translator Key"
 	desc = "A key, that when inserted into a radio headset, allows you to listen to and talk with artificial intelligences and cybernetic organisms in binary. "
 	item = /obj/item/device/encryptionkey/binary
-	cost = 3
+	cost = 2
 
 /datum/uplink_item/device_tools/encryptionkey
 	name = "Syndicate Encryption Key"
@@ -647,7 +647,7 @@
 	name = "Hacked AI Law Upload Module"
 	desc = "When used with an upload console, this module allows you to upload priority laws to an artificial intelligence. Be careful with their wording, as artificial intelligences may look for loopholes to exploit."
 	item = /obj/item/weapon/aiModule/syndicate
-	cost = 7
+	cost = 6
 
 /datum/uplink_item/device_tools/plastic_explosives
 	name = "Composition C-4"

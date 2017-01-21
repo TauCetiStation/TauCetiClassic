@@ -385,8 +385,8 @@
 	if(isrobot(user))
 		return
 
-	if(istype(W, /obj/item/weapon/melee/energy))
-		if(istype(W, /obj/item/weapon/melee/energy/blade) || (W:active && user.a_intent == "hurt"))
+	if(istype(W, /obj/item/weapon/melee/energy) || istype(W, /obj/item/weapon/pen/edagger) || istype(W,/obj/item/weapon/twohanded/dualsaber))
+		if(istype(W, /obj/item/weapon/melee/energy/blade) || (W.force > 3 && user.a_intent == "hurt"))
 			if(istype(src, /obj/structure/table/reinforced) && W:active)
 				..()
 				to_chat(user, "<span class='notice'>You tried to slice through [src] but [W] is too weak.</span>")

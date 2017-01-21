@@ -24,7 +24,7 @@
 		to_chat(user,"<span class='notice'>\icon [tank] It has \the [tank] mounted onto it.</span>")
 
 
-/obj/item/weapon/melee/powerfist/attackby(obj/item/weapon/W, mob/user, params)
+/obj/item/weapon/melee/powerfist/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/tank))
 		if(!tank)
 			var/obj/item/weapon/tank/IT = W
