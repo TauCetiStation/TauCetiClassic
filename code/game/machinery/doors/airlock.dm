@@ -1468,3 +1468,15 @@ About the new airlock wires panel:
 			icon          = 'icons/obj/doors/airlocks/highsec/highsec.dmi'
 			overlays_file = 'icons/obj/doors/airlocks/highsec/overlays.dmi'
 	update_icon()
+
+/obj/structure/door_scrap
+	name = "Door Scrap"
+	desc = "Just a bunch of garbage."
+	var/icon/door = icon('icons/effects/effects.dmi',"Sliced")
+	attackby(obj/O, mob/user)
+		if(istype(O,/obj/item/weapon/wrench))
+			playsound(user.loc, 'sound/items/Ratchet.ogg', 50)
+			user.visible_message("[user] has disassemble these scrap...")
+			new /obj/item/stack/sheet/metal(src.loc)
+			new /obj/item/stack/sheet/metal(src.loc)
+			qdel(src)

@@ -231,33 +231,30 @@
 		return ..()
 
 /obj/item/weapon/twohanded/dualsaber/afterattack(obj/O, mob/user, proximity)
-	if(!istype(O,/obj/machinery/door/airlock) && !istype(O,/obj/structure/door_assembly))
+	if(!istype(O,/obj/machinery/door/airlock))
 		return
 	if(O.density && src.wielded && proximity)
 		user.visible_message("<span class='danger'>[user] start slicing the [O] </span>")
 		playsound(user.loc, 'sound/items/Welder2.ogg', 100, 1, -1)
 		O.set_light(4)
 		src.slicing = 1
-		var/image/I = image('icons/effects/effects.dmi',icon_state =  istype(O,/obj/machinery/door/airlock) ? "Slice" : "Slice2", layer=9)
+		var/image/I = new('icons/effects/effects.dmi',icon_state = "Slice", layer=9)
 		O.overlays += I
-		if(istype(O,/obj/machinery/door/airlock))
-			var/obj/machinery/door/airlock/D = O
-			if(do_after(user, 450, target = D) && D.density && !(D.operating == -1))
-				flick("door_spark", D)
-				sleep(6)
-				D.welded = 0
-				D.do_open()
-				D.operating = -1
-		else
-			var/obj/structure/door_assembly/A = O
-			if(do_after(user, 150, target = A) && A.anchored)
-				A.anchored = 0
-				A.state = 0
-				qdel(A.electronics)
-				A.update_state()
+		var/obj/machinery/door/airlock/D = O
+		if(do_after(user, 450, target = D) && D.density && !(D.operating == -1))
+			sleep(6)
+			var/obj/structure/door_scrap/S = new /obj/structure/door_scrap(D.loc)
+			var/iconpath = D.icon
+			var/icon/IC = new(iconpath, "closed")
+			IC.Blend(S.door, ICON_OVERLAY, 1, 1)
+			IC.SwapColor(rgb(255, 0, 220, 255), rgb(0, 0, 0, 0))
+			S.icon = IC
+			qdel(D)
+			qdel(IC)
+			playsound(user.loc, 'sound/weapons/blade1.ogg', 100, 1, -1)
+		O.overlays -= I
 		src.slicing = 0
 		O.set_light(0)
-		O.overlays -= I
 		qdel(I)
 
 
