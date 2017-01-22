@@ -90,6 +90,8 @@
 	if(!can_build(M, over_this, get_turf(M)))
 		return
 
+	M.face_atom(over_this)
+
 	var/turf/over_this_saved = over_this
 	if(from_recipe.time)
 		busy = TRUE

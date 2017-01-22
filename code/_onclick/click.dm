@@ -47,16 +47,7 @@
 	var/list/modifiers = params2list(params)
 
 	if(client.cob.in_building_mode)
-		var/client/C = client
-		if(C.cob.busy)
-			//do nothing
-		else if(modifiers["left"])
-			if(modifiers["alt"])
-				C.cob.rotate_object()
-			else
-				C.cob.try_to_build(src)
-		else if(modifiers["right"])
-			C.cob.remove_build_overlay(client)
+		cob_click(client, modifiers)
 		return
 
 	if(modifiers["shift"] && modifiers["ctrl"])
@@ -295,6 +286,7 @@
 
 	Laser Eyes: as the name implies, handles this since nothing else does currently
 	face_atom: turns the mob towards what you clicked on
+	cob_click: handles hotkeys for "craft or build"
 */
 /mob/proc/LaserEyes(atom/A)
 	return
@@ -339,6 +331,17 @@
 		if(dx > 0)	usr.dir = EAST
 		else		usr.dir = WEST
 
+// Craft or Build helper (main file can be found here: code/datums/cob_highlight.dm)
+/mob/proc/cob_click(client/C, list/modifiers)
+	if(C.cob.busy)
+		//do nothing
+	else if(modifiers["left"])
+		if(modifiers["alt"])
+			C.cob.rotate_object()
+		else
+			C.cob.try_to_build(src)
+	else if(modifiers["right"])
+		C.cob.remove_build_overlay(C)
 
 /obj/screen/click_catcher
 	icon = 'icons/mob/screen1_full.dmi'

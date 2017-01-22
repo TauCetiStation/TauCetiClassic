@@ -16,6 +16,11 @@
 		return
 
 	var/list/modifiers = params2list(params)
+
+	if(client.cob.in_building_mode)
+		cob_click(client, modifiers)
+		return
+
 	if(modifiers["shift"] && modifiers["ctrl"])
 		CtrlShiftClickOn(A)
 		return
