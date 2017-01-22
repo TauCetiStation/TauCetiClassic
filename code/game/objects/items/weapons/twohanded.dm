@@ -236,11 +236,9 @@
 	if(O.density && src.wielded && proximity)
 		user.visible_message("<span class='danger'>[user] start slicing the [O] </span>")
 		playsound(user.loc, 'sound/items/Welder2.ogg', 100, 1, -1)
-		O.set_light(4)
 		src.slicing = 1
-		var/image/I = new('icons/effects/effects.dmi',icon_state = "Slice", layer=9)
-		O.overlays += I
 		var/obj/machinery/door/airlock/D = O
+		var/obj/effect/I = new /obj/effect/overlay/slice(D.loc)
 		if(do_after(user, 450, target = D) && D.density && !(D.operating == -1))
 			sleep(6)
 			var/obj/structure/door_scrap/S = new /obj/structure/door_scrap(D.loc)
@@ -252,9 +250,7 @@
 			qdel(D)
 			qdel(IC)
 			playsound(user.loc, 'sound/weapons/blade1.ogg', 100, 1, -1)
-		O.overlays -= I
 		src.slicing = 0
-		O.set_light(0)
 		qdel(I)
 
 

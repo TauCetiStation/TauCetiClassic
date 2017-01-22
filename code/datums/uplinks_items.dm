@@ -184,7 +184,7 @@
 	desc = "A short bow mounted across a tiller in miniature. Small enough to fit into a pocket or slip into a bag unnoticed. It fires bolts tipped with toxin, a poison collected from an organism. \
 	Its bolts stun enemies for short periods, and replenish automatically."
 	item = /obj/item/weapon/gun/energy/crossbow
-	cost = 8
+	cost = 7
 	excludefrom = list(/datum/game_mode/nuclear)
 	excludefrom_uplinks = list("nuclear")
 /*
@@ -416,7 +416,7 @@
 	desc = "A syringe disguised as a functional pen, filled with a neuromuscular-blocking drug that renders a target immobile on injection and makes them seem dead to observers. \
 	Side effects of the drug include noticeable drooling. The pen holds one dose of paralyzing agent, and cannot be refilled."
 	item = /obj/item/weapon/pen/paralysis
-	cost = 6
+	cost = 4
 	excludefrom = list(/datum/game_mode/nuclear)
 	excludefrom_uplinks = list("nuclear")
 
@@ -530,7 +530,7 @@
 	name = "Energy Dagger"
 	desc = "A dagger made of energy that looks and functions as a pen when off."
 	item = /obj/item/weapon/pen/edagger
-	cost = 4
+	cost = 5
 
 /datum/uplink_item/stealthy_weapons/soap_clusterbang
 	name = "Slipocalypse Clusterbang"
@@ -550,7 +550,7 @@
 			of humanoids. It has two settings: intensity, which controls the power of the radiation, \
 			and wavelength, which controls how long the radiation delay is."
 	item = /obj/item/device/healthanalyzer/rad_laser
-	cost = 5
+	cost = 7
 
 /datum/uplink_item/device_tools/emag
 	name = "Cryptographic Sequencer"
@@ -594,7 +594,7 @@
 	name = "Syndicate Medical Small Kit"
 	desc = "The syndicate medkit. Included is a combat stimulant injector for rapid healing."
 	item = /obj/item/weapon/storage/firstaid/small_firstaid_kit/combat
-	cost = 4
+	cost = 5
 
 /datum/uplink_item/stealthy_tools/mulligan
 	name = "Mulligan"
@@ -628,7 +628,7 @@
 	name = "Binary Translator Key"
 	desc = "A key, that when inserted into a radio headset, allows you to listen to and talk with artificial intelligences and cybernetic organisms in binary. "
 	item = /obj/item/device/encryptionkey/binary
-	cost = 4
+	cost = 3
 
 /datum/uplink_item/device_tools/encryptionkey
 	name = "Syndicate Encryption Key"
@@ -669,7 +669,7 @@
 	Does not work when the singularity is still in containment. A singularity beacon can cause catastrophic damage to a space station, \
 	leading to an emergency evacuation. Because of its size, it cannot be carried. Ordering this sends you a small beacon that will teleport the larger beacon to your location on activation."
 	item = /obj/item/device/radio/beacon/syndicate
-	cost = 7
+	cost = 14
 	uplink_types = list("nuclear")
 
 /datum/uplink_item/device_tools/syndicate_bomb
@@ -716,7 +716,7 @@
 	name = "Freedom Implant"
 	desc = "An implant injected into the body and later activated using a bodily gesture to attempt to slip restraints."
 	item = /obj/item/weapon/storage/box/syndie_kit/imp_freedom
-	cost = 6
+	cost = 5
 
 /datum/uplink_item/implants/uplink
 	name = "Uplink Implant"
