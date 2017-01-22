@@ -8,7 +8,7 @@
 	votable = 0
 
 	uplink_welcome = "EVIL METEOR Uplink Console:"
-	uplink_uses = 10
+	uplink_uses = 20
 
 
 /datum/game_mode/meteor/announce()

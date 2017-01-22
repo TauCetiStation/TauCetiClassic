@@ -15,7 +15,7 @@
 	votable = 0
 
 	uplink_welcome = "Corporate Backed Uplink Console:"
-	uplink_uses = 10
+	uplink_uses = 20
 
 	var/const/agents_possible = 5 //If we ever need more syndicate agents.
 

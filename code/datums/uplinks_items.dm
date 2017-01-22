@@ -118,14 +118,14 @@
 	name = "TR-7 Revolver"
 	desc = "The syndicate revolver is a traditional handgun that fires .357 Magnum cartridges and has 7 chambers."
 	item = /obj/item/weapon/gun/projectile/revolver
-	cost = 6
+	cost = 8
 
 /datum/uplink_item/dangerous/pistol
 	name = "Stechkin Pistol"
 	desc = "A small, easily concealable handgun that uses 10mm auto rounds in 8-round magazines and is compatible \
 			with suppressors."
 	item = /obj/item/weapon/gun/projectile/automatic/pistol
-	cost = 3
+	cost = 6
 /*
 /datum/uplink_item/dangerous/smg
 	name = "C-20r Submachine Gun"
@@ -138,7 +138,7 @@
 	name = "V15 Bulldog shotgun"
 	desc = "A compact, mag-fed semi-automatic shotgun for combat in narrow corridors. Uses various 12g magazines."
 	item = /obj/item/weapon/gun/projectile/automatic/bulldog
-	cost = 8
+	cost = 16
 	gamemodes = list(/datum/game_mode/nuclear)
 	uplink_types = list("nuclear")
 	excludefrom_uplinks = list("traitor")
@@ -147,7 +147,7 @@
 	name = "L6 Squad Automatic Weapon"
 	desc = "A traditionally constructed machine gun made by AA-2531. This deadly weapon has a massive 50-round magazine of 7.62x51mm ammunition."
 	item = /obj/item/weapon/gun/projectile/automatic/l6_saw
-	cost = 25
+	cost = 50
 	gamemodes = list(/datum/game_mode/nuclear)
 	uplink_types = list("nuclear")
 	excludefrom_uplinks = list("traitor")
@@ -156,7 +156,7 @@
 	name = "PTR-7 heavy rifle"
 	desc = "A portable anti-armour bolt-action rifle. Originally designed to used against armoured exosuits. Fires armor piercing 14.5mm shells."
 	item = /obj/item/weapon/gun/projectile/heavyrifle
-	cost = 10
+	cost = 20
 	gamemodes = list(/datum/game_mode/nuclear)
 	uplink_types = list("nuclear")
 	excludefrom_uplinks = list("traitor")
@@ -165,7 +165,7 @@
 	name = "Goliath missile launcher"
 	desc = "The Goliath is a single-shot shoulder-fired multipurpose missile launcher."
 	item = /obj/item/weapon/gun/projectile/revolver/rocketlauncher
-	cost = 20
+	cost = 35
 	gamemodes = list(/datum/game_mode/nuclear)
 	uplink_types = list("nuclear")
 	excludefrom_uplinks = list("traitor")
@@ -174,7 +174,7 @@
 	name = "A28 Assault Rifle"
 	desc = "A bullpup automatic assault rifle. Great for range combat and fire suppresion. Uses 30-round magazine of 5.56mm ammunition."
 	item = /obj/item/weapon/gun/projectile/automatic/a28
-	cost = 12
+	cost = 24
 	gamemodes = list(/datum/game_mode/nuclear)
 	uplink_types = list("nuclear")
 	excludefrom_uplinks = list("traitor")
@@ -184,7 +184,7 @@
 	desc = "A short bow mounted across a tiller in miniature. Small enough to fit into a pocket or slip into a bag unnoticed. It fires bolts tipped with toxin, a poison collected from an organism. \
 	Its bolts stun enemies for short periods, and replenish automatically."
 	item = /obj/item/weapon/gun/energy/crossbow
-	cost = 4
+	cost = 8
 	excludefrom = list(/datum/game_mode/nuclear)
 	excludefrom_uplinks = list("nuclear")
 /*
@@ -202,25 +202,25 @@
 		 Using a wrench on the piston valve will allow you to tweak the amount of gas used per punch to \
 		 deal extra damage and hit targets further. Use a screwdriver to take out any attached tanks."
 	item = /obj/item/weapon/melee/powerfist
-	cost = 4
+	cost = 8
 
 /datum/uplink_item/dangerous/sword
 	name = "Energy Sword"
 	desc = "The energy sword is an edged weapon with a blade of pure energy. The sword is small enough to be pocketed when inactive. Activating it produces a loud, distinctive noise."
 	item = /obj/item/weapon/melee/energy/sword
-	cost = 4
+	cost = 8
 
 /datum/uplink_item/dangerous/emp
 	name = "EMP Grenades"
 	desc = "A box that contains an EMP grenades. Useful to disrupt communication and silicon lifeforms."
 	item = /obj/item/weapon/storage/box/emps
-	cost = 3
+	cost = 5
 
 /datum/uplink_item/dangerous/syndicate_minibomb
 	name = "Syndicate Minibomb"
 	desc = "The Minibomb is a grenade with a five-second fuse."
 	item = /obj/item/weapon/grenade/syndieminibomb
-	cost = 3
+	cost = 6
 	gamemodes = list(/datum/game_mode/nuclear)
 	uplink_types = list("nuclear")
 	excludefrom_uplinks = list("traitor")
@@ -229,7 +229,7 @@
 	name = "Viscerator Delivery Grenade"
 	desc = "A unique grenade that deploys a swarm of viscerators upon activation, which will chase down and shred any non-operatives in the area."
 	item = /obj/item/weapon/grenade/spawnergrenade/manhacks
-	cost = 4
+	cost = 7
 	gamemodes = list(/datum/game_mode/nuclear)
 	uplink_types = list("nuclear")
 	excludefrom_uplinks = list("traitor")
@@ -247,7 +247,7 @@
 	desc = "A lightweight exosuit, painted in a dark scheme. Its speed and equipment selection make it excellent for hit-and-run style attacks. \
 	This model lacks a method of space propulsion, and therefore it is advised to repair the mothership's teleporter if you wish to make use of it."
 	item = /obj/mecha/combat/gygax/dark
-	cost = 45
+	cost = 90
 	gamemodes = list(/datum/game_mode/nuclear)
 	uplink_types = list("nuclear")
 	excludefrom_uplinks = list("traitor")
@@ -256,7 +256,7 @@
 	name = "Mauler Exosuit"
 	desc = "A massive and incredibly deadly Syndicate exosuit. Features long-range targetting, thrust vectoring, and deployable smoke."
 	item = /obj/mecha/combat/marauder/mauler
-	cost = 70
+	cost = 140
 	gamemodes = list(/datum/game_mode/nuclear)
 	uplink_types = list("nuclear")
 	excludefrom_uplinks = list("traitor")
@@ -265,7 +265,7 @@
 	name = "Syndicate Robot"
 	desc = "A robot designed for extermination and slaved to syndicate agents. Delivered through a single-use bluespace hand teleporter and comes pre-equipped with various weapons and equipment."
 	item = /obj/item/weapon/antag_spawner/borg_tele
-	cost = 18
+	cost = 36
 	gamemodes = list(/datum/game_mode/nuclear)
 
 //for refunding the syndieborg teleporter
@@ -284,26 +284,26 @@
 	name = "Robot Ammo Box"
 	desc = "A 40-round .45 magazine for use in Robot submachine gun."
 	item = /obj/item/ammo_box/magazine/borg45
-	cost = 2
+	cost = 3
 
 /datum/uplink_item/ammo/pistol
 	name = "9mm Handgun Magazine"
 	desc = "An additional 8-round 10mm magazine; compatible with the Stechkin Pistol. These subsonic rounds \
 			are dirt cheap but are half as effective as .357 rounds."
 	item = /obj/item/ammo_box/magazine/m9mm
-	cost = 1
+	cost = 2
 
 /datum/uplink_item/ammo/revolver
 	name = "Ammo-357"
 	desc = "A box that contains seven additional rounds for the revolver, made using an automatic lathe."
 	item = /obj/item/ammo_box/a357
-	cost = 2
+	cost = 3
 
 /datum/uplink_item/ammo/smg
 	name = "Ammo-.45 ACP"
 	desc = "A 20-round .45 ACP magazine for use in the C-20r submachine gun. These rounds have a short stunning effect and medium impact damage."
 	item = /obj/item/ammo_box/magazine/m12mm
-	cost = 1
+	cost = 2
 	gamemodes = list(/datum/game_mode/nuclear)
 	uplink_types = list("nuclear")
 	excludefrom_uplinks = list("traitor")
@@ -312,7 +312,7 @@
 	name = "Ammo-5.56mm"
 	desc = "A 30-round 5.56 magazine for use in the A28 assault rifle."
 	item = /obj/item/ammo_box/magazine/m556
-	cost = 5
+	cost = 7
 	gamemodes = list(/datum/game_mode/nuclear)
 	uplink_types = list("nuclear")
 	excludefrom_uplinks = list("traitor")
@@ -321,7 +321,7 @@
 	name = "Ammo-5.56mm Incendiary"
 	desc = "A 30-round 5.56 Incendiary magazine for use in the A28 assault rifle."
 	item = /obj/item/ammo_box/magazine/m556/incendiary
-	cost = 6
+	cost = 8
 	gamemodes = list(/datum/game_mode/nuclear)
 	uplink_types = list("nuclear")
 	excludefrom_uplinks = list("traitor")
@@ -330,7 +330,7 @@
 	name = "Ammo-12g Buckshot"
 	desc = "An additional  8-round buckshot magazine for use in the Bulldog shotgun."
 	item = /obj/item/ammo_box/magazine/m12g
-	cost = 2
+	cost = 4
 	gamemodes = list(/datum/game_mode/nuclear)
 	uplink_types = list("nuclear")
 	excludefrom_uplinks = list("traitor")
@@ -339,7 +339,7 @@
 	name = "Ammo-12g Stun Slug"
 	desc = "An alternative 8-round stun slug magazine for use in the Bulldog shotgun. Accurate, reliable, powerful."
 	item = /obj/item/ammo_box/magazine/m12g/stun
-	cost = 2
+	cost = 4
 	gamemodes = list(/datum/game_mode/nuclear)
 	uplink_types = list("nuclear")
 	excludefrom_uplinks = list("traitor")
@@ -348,7 +348,7 @@
 	name = "Ammo-12g Incendiary"
 	desc = "An alternative 8-round incendiary magazine for use in the Bulldog shotgun."
 	item = /obj/item/ammo_box/magazine/m12g/incendiary
-	cost = 3
+	cost = 5
 	gamemodes = list(/datum/game_mode/nuclear)
 	uplink_types = list("nuclear")
 	excludefrom_uplinks = list("traitor")
@@ -364,7 +364,7 @@
 	name = "Ammo-7.62x51mm"
 	desc = "A 50-round magazine of 7.62x51mm ammunition for use in the L6 SAW machinegun. By the time you need to use this, you'll already be on a pile of corpses."
 	item = /obj/item/ammo_box/magazine/m762
-	cost = 7
+	cost = 14
 	gamemodes = list(/datum/game_mode/nuclear)
 	uplink_types = list("nuclear")
 
@@ -372,7 +372,7 @@
 	name = "A 14.5mm shell."
 	desc = "A 14.5mm shell for use with PTR-7 heavy rifle. One shot, one kill, no luck, just skill."
 	item = /obj/item/ammo_casing/a145
-	cost = 1
+	cost = 2
 	gamemodes = list(/datum/game_mode/nuclear)
 	uplink_types = list("nuclear")
 
@@ -380,7 +380,7 @@
 	name = "HE missile"
 	desc = "A high explosive missile for Goliath launcher."
 	item = /obj/item/ammo_casing/caseless/rocket
-	cost = 5
+	cost = 10
 	gamemodes = list(/datum/game_mode/nuclear)
 	uplink_types = list("nuclear")
 
@@ -388,7 +388,7 @@
 	name = "EMP missile"
 	desc = "A EMP missile for Goliath launcher."
 	item = /obj/item/ammo_casing/caseless/rocket/emp
-	cost = 6
+	cost = 10
 	gamemodes = list(/datum/game_mode/nuclear)
 	uplink_types = list("nuclear")
 
@@ -402,7 +402,7 @@
 	desc = "A miniaturized version of a normal syringe gun. It is very quiet when fired and can fit into any \
 			space a small item can."
 	item = /obj/item/weapon/gun/syringe/syndicate
-	cost = 1
+	cost = 2
 
 /datum/uplink_item/stealthy_tools/cutouts
 	name = "Adaptive Cardboard Cutouts"
@@ -416,7 +416,7 @@
 	desc = "A syringe disguised as a functional pen, filled with a neuromuscular-blocking drug that renders a target immobile on injection and makes them seem dead to observers. \
 	Side effects of the drug include noticeable drooling. The pen holds one dose of paralyzing agent, and cannot be refilled."
 	item = /obj/item/weapon/pen/paralysis
-	cost = 3
+	cost = 6
 	excludefrom = list(/datum/game_mode/nuclear)
 	excludefrom_uplinks = list("nuclear")
 
@@ -424,7 +424,7 @@
 	name = "Strip gloves"
 	desc = "A pair of black gloves which allow to stealthy strip off items from the victim."
 	item = /obj/item/clothing/gloves/black/strip
-	cost = 3
+	cost = 5
 
 /datum/uplink_item/stealthy_weapons/soap
 	name = "Syndicate Soap"
@@ -493,19 +493,19 @@
 	name = "Agent Identification card"
 	desc = "Agent cards prevent artificial intelligences from tracking the wearer, and can copy access from other identification cards. The access is cumulative, so scanning one card does not erase the access gained from another."
 	item = /obj/item/weapon/card/id/syndicate
-	cost = 2
+	cost = 4
 
 /datum/uplink_item/stealthy_tools/voice_changer
 	name = "Voice Changer"
 	item = /obj/item/clothing/mask/gas/voice
 	desc = "A conspicuous gas mask that mimics the voice named on your identification card. When no identification is worn, the mask will render your voice unrecognizable."
-	cost = 2
+	cost = 3
 
 /datum/uplink_item/stealthy_tools/chameleon_proj
 	name = "Chameleon-Projector"
 	desc = "Projects an image across a user, disguising them as an object scanned with it, as long as they don't move the projector from their hand. The disguised user cannot run and rojectiles pass over them."
 	item = /obj/item/device/chameleon
-	cost = 3
+	cost = 5
 
 /datum/uplink_item/stealthy_tools/camera_bug
 	name = "Camera Bug"
@@ -517,26 +517,26 @@
 	name = "Syndicate Silencer"
 	desc = "A universal small-arms silencer favored by stealth operatives, this will make shots quieter when equipped onto any low-caliber weapon."
 	item = /obj/item/weapon/silencer
-	cost = 1
+	cost = 2
 
 /datum/uplink_item/stealthy_weapons/throwingweapons
 	name = "Box of Throwing Weapons"
 	desc = "A box of shurikens and reinforced bolas from ancient Earth martial arts. They are highly effective \
 			 throwing weapons. The bolas can knock a target down and the shurikens will embed into limbs."
 	item = /obj/item/weapon/storage/box/syndie_kit/throwing_weapon
-	cost = 3
+	cost = 5
 
 /datum/uplink_item/stealthy_weapons/edagger
 	name = "Energy Dagger"
 	desc = "A dagger made of energy that looks and functions as a pen when off."
 	item = /obj/item/weapon/pen/edagger
-	cost = 2
+	cost = 4
 
 /datum/uplink_item/stealthy_weapons/soap_clusterbang
 	name = "Slipocalypse Clusterbang"
 	desc = "A traditional clusterbang grenade with a payload consisting entirely of Syndicate soap. Useful in any scenario!"
 	item = /obj/item/weapon/grenade/clusterbuster/soap
-	cost = 3
+	cost = 5
 
 // DEVICE AND TOOLS
 
@@ -550,13 +550,13 @@
 			of humanoids. It has two settings: intensity, which controls the power of the radiation, \
 			and wavelength, which controls how long the radiation delay is."
 	item = /obj/item/device/healthanalyzer/rad_laser
-	cost = 3
+	cost = 5
 
 /datum/uplink_item/device_tools/emag
 	name = "Cryptographic Sequencer"
 	desc = "The emag is a small card that unlocks hidden functions in electronic devices, subverts intended functions and characteristically breaks security mechanisms."
 	item = /obj/item/weapon/card/emag
-	cost = 3
+	cost = 6
 
 /datum/uplink_item/device_tools/toolbox
 	name = "Full Syndicate Toolbox"
@@ -569,7 +569,7 @@
 	desc = "The Syndicate surgery dufflebag is a toolkit containing all surgery tools, surgical drapes, \
 			a MMI, a straitjacket, and a muzzle."
 	item = /obj/item/weapon/storage/backpack/dufflebag/surgery
-	cost = 2
+	cost = 4
 
 /datum/uplink_item/device_tools/c4bag
 	name = "Bag of C-4 explosives"
@@ -588,26 +588,26 @@
 	desc = "The syndicate medkit is a suspicious black and red. Included is a combat stimulant injector for rapid healing, a medical hud for quick identification of injured comrades, \
 	and other medical supplies helpful for a medical field operative.."
 	item = /obj/item/weapon/storage/firstaid/tactical
-	cost = 5
+	cost = 10
 
 /datum/uplink_item/device_tools/medkit_small
 	name = "Syndicate Medical Small Kit"
 	desc = "The syndicate medkit. Included is a combat stimulant injector for rapid healing."
 	item = /obj/item/weapon/storage/firstaid/small_firstaid_kit/combat
-	cost = 2
+	cost = 4
 
 /datum/uplink_item/stealthy_tools/mulligan
 	name = "Mulligan"
 	desc = "Screwed up and have security on your tail? This handy syringe will give you a completely new identity \
 			and appearance."
 	item = /obj/item/weapon/reagent_containers/syringe/mulligan
-	cost = 3
+	cost = 5
 
 /datum/uplink_item/device_tools/space_suit
 	name = "Syndicate Space Suit"
 	desc = "The red syndicate space suit is less encumbering than Nanotrasen variants, fits inside bags, and has a weapon slot. Nanotrasen crewmembers are trained to report red space suit sightings."
 	item = /obj/item/weapon/storage/box/syndie_kit/space
-	cost = 3
+	cost = 5
 
 /datum/uplink_item/device_tools/thermal
 	name = "Thermal Imaging Glasses"
@@ -615,39 +615,39 @@
 	They allow you to see organisms through walls by capturing the upper portion of the infrared light spectrum, emitted as heat and light by objects. \
 	Hotter objects, such as warm bodies, cybernetic organisms and artificial intelligence cores emit more of this light than cooler objects like walls and airlocks."
 	item = /obj/item/clothing/glasses/thermal/syndi
-	cost = 3
+	cost = 5
 
 /datum/uplink_item/stealthy_tools/emplight
 	name = "EMP Flashlight"
 	desc = "A small, self-charging, short-ranged EMP device disguised as a flashlight. \
 		Useful for disrupting headsets, cameras, and borgs during stealth operations."
 	item = /obj/item/device/flashlight/emp
-	cost = 3
+	cost = 4
 
 /datum/uplink_item/device_tools/binary
 	name = "Binary Translator Key"
 	desc = "A key, that when inserted into a radio headset, allows you to listen to and talk with artificial intelligences and cybernetic organisms in binary. "
 	item = /obj/item/device/encryptionkey/binary
-	cost = 2
+	cost = 4
 
 /datum/uplink_item/device_tools/encryptionkey
 	name = "Syndicate Encryption Key"
 	desc = "A key that, when inserted into a radio headset, allows you to listen to all station department channels \
 			as well as talk on an encrypted Syndicate channel with other agents that have the same key."
 	item = /obj/item/device/encryptionkey/syndicate
-	cost = 1
+	cost = 2
 
 /datum/uplink_item/device_tools/ai_detector
 	name = "Artificial Intelligence Detector" // changed name in case newfriends thought it detected disguised ai's
 	desc = "A functional multitool that turns red when it detects an artificial intelligence watching it or its holder. Knowing when an artificial intelligence is watching you is useful for knowing when to maintain cover."
 	item = /obj/item/device/multitool/ai_detect
-	cost = 1
+	cost = 2
 
 /datum/uplink_item/device_tools/hacked_module
 	name = "Hacked AI Law Upload Module"
 	desc = "When used with an upload console, this module allows you to upload priority laws to an artificial intelligence. Be careful with their wording, as artificial intelligences may look for loopholes to exploit."
 	item = /obj/item/weapon/aiModule/syndicate
-	cost = 6
+	cost = 12
 
 /datum/uplink_item/device_tools/plastic_explosives
 	name = "Composition C-4"
@@ -661,7 +661,7 @@
 	desc = "When screwed to wiring attached to an electric grid, then activated, this large device places excessive load on the grid, causing a stationwide blackout. The sink cannot be carried because of its excessive size. \
 	Ordering this sends you a small beacon that will teleport the power sink to your location on activation."
 	item = /obj/item/device/powersink
-	cost = 5
+	cost = 12
 
 /datum/uplink_item/device_tools/singularity_beacon
 	name = "Singularity Beacon"
@@ -677,7 +677,7 @@
 	desc = "The Syndicate Bomb has an adjustable timer with a minimum setting of 60 seconds. Ordering the bomb sends you a small beacon, which will teleport the explosive to your location when you activate it. \
 	You can wrench the bomb down to prevent removal. The crew may attempt to defuse the bomb."
 	item = /obj/item/device/radio/beacon/syndicate_bomb
-	cost = 6
+	cost = 12
 	gamemodes = list(/datum/game_mode/nuclear)
 	uplink_types = list("nuclear")
 
@@ -686,7 +686,7 @@
 	desc = "The Syndicate Detonator is a companion device to the Syndicate Bomb. Simply press the included button and an encrypted radio frequency will instruct all live syndicate bombs to detonate. \
 	Useful for when speed matters or you wish to synchronize multiple bomb blasts. Be sure to stand clear of the blast radius before using the detonator."
 	item = /obj/item/device/syndicatedetonator
-	cost = 1
+	cost = 2
 	gamemodes = list(/datum/game_mode/nuclear)
 	uplink_types = list("nuclear")
 
@@ -694,7 +694,7 @@
 	name = "Teleporter Circuit Board"
 	desc = "A printed circuit board that completes the teleporter onboard the mothership. Advise you test fire the teleporter before entering it, as malfunctions can occur."
 	item = /obj/item/weapon/circuitboard/teleporter
-	cost = 20
+	cost = 40
 	gamemodes = list(/datum/game_mode/nuclear)
 	uplink_types = list("nuclear")
 
@@ -702,7 +702,7 @@
 	name = "Energy Shield"
 	desc = "An incredibly useful personal shield projector, capable of reflecting energy projectiles and defending against other attacks."
 	item = /obj/item/weapon/shield/energy
-	cost = 8
+	cost = 16
 	gamemodes = list(/datum/game_mode/nuclear)
 	uplink_types = list("nuclear")
 
@@ -716,20 +716,20 @@
 	name = "Freedom Implant"
 	desc = "An implant injected into the body and later activated using a bodily gesture to attempt to slip restraints."
 	item = /obj/item/weapon/storage/box/syndie_kit/imp_freedom
-	cost = 3
+	cost = 6
 
 /datum/uplink_item/implants/uplink
 	name = "Uplink Implant"
 	desc = "An implant injected into the body, and later activated using a bodily gesture to open an uplink with 5 telecrystals. \
 	The ability for an agent to open an uplink after their posessions have been stripped from them makes this implant excellent for escaping confinement."
 	item = /obj/item/weapon/storage/box/syndie_kit/imp_uplink
-	cost = 10
+	cost = 20
 
 /datum/uplink_item/implants/storage
 	name = "Compressed Implant"
 	desc = "An implant, that can compress items and later activated at the user's will."
 	item = /obj/item/weapon/storage/box/syndie_kit/imp_compress
-	cost = 4
+	cost = 6
 
 /*
 /datum/uplink_item/implants/adrenal
@@ -747,14 +747,14 @@
 	name = "Syndicate Bundle"
 	desc = "Syndicate Bundles are specialised groups of items that arrive in a plain box. These items are collectively worth more than 10 telecrystals, but you do not know which specialisation you will receive."
 	item = /obj/item/weapon/storage/box/syndicate
-	cost = 10
+	cost = 20
 	excludefrom = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/badass/balloon
 	name = "For showing that you are The Boss"
 	desc = "A useless red balloon with the syndicate logo on it, which can blow the deepest of covers."
 	item = /obj/item/toy/syndicateballoon
-	cost = 10
+	cost = 20
 
 /datum/uplink_item/badass/syndiecigs
 	name = "Syndicate Smokes"

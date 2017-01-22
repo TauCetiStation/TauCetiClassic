@@ -6,7 +6,7 @@
 	votable = 1
 
 	uplink_welcome = "Syndicate Uplink Console:"
-	uplink_uses = 10
+	uplink_uses = 20
 
 /datum/game_mode/announce()
 	to_chat(world, "<B>The current game mode is - Extended Role-Playing!</B>")
