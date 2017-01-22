@@ -141,7 +141,8 @@
 	src.boxes.screen_loc = "[tx]:,[ty] to [mx],[my]"
 	for(var/obj/O in src.contents)
 		O.screen_loc = "[cx],[cy]"
-		O.layer = 20
+		O.layer = ABOVE_HUD_LAYER
+		O.plane = ABOVE_HUD_PLANE
 		cx++
 		if (cx > mx)
 			cx = tx
@@ -158,7 +159,8 @@
 		for(var/datum/numbered_display/ND in display_contents)
 			ND.sample_object.screen_loc = "[cx]:16,[cy]:16"
 			ND.sample_object.maptext = "<font color='white'>[(ND.number > 1)? "[ND.number]" : ""]</font>"
-			ND.sample_object.layer = 20
+			ND.sample_object.layer = ABOVE_HUD_LAYER
+			ND.sample_object.plane = ABOVE_HUD_PLANE
 			cx++
 			if (cx > (4+cols))
 				cx = 4
@@ -167,7 +169,8 @@
 		for(var/obj/O in contents)
 			O.screen_loc = "[cx]:16,[cy]:16"
 			O.maptext = ""
-			O.layer = 20
+			O.layer = ABOVE_HUD_LAYER
+			O.plane = ABOVE_HUD_PLANE
 			cx++
 			if (cx > (4+cols))
 				cx = 4
@@ -313,9 +316,11 @@
 			var/mob/M = loc
 			W.dropped(M)
 		if(ismob(new_location))
-			W.layer = 20
+			W.layer = ABOVE_HUD_LAYER
+			W.plane = ABOVE_HUD_PLANE
 		else
 			W.layer = initial(W.layer)
+			W.plane = initial(W.plane)
 		W.loc = new_location
 	else
 		W.loc = get_turf(src)
@@ -429,11 +434,13 @@
 	src.boxes.master = src
 	src.boxes.icon_state = "block"
 	src.boxes.screen_loc = "7,7 to 10,8"
-	src.boxes.layer = 19
+	src.boxes.layer = HUD_LAYER
+	src.boxes.plane = HUD_PLANE
 	src.closer = new /obj/screen/close()
 	src.closer.master = src
 	src.closer.icon_state = "x"
-	src.closer.layer = 20
+	src.closer.layer = ABOVE_HUD_LAYER
+	src.closer.plane = ABOVE_HUD_PLANE
 	orient2hud()
 
 /obj/item/weapon/storage/emp_act(severity)

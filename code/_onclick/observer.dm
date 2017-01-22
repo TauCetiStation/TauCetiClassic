@@ -26,6 +26,7 @@
 	// Otherwise jump
 	else
 		loc = get_turf(A)
+		update_parallax_contents()
 
 /mob/dead/observer/ClickOn(atom/A, params)
 	if(client.buildmode)

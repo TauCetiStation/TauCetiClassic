@@ -2,8 +2,6 @@
 #define LIGHTING_LAMBERTIAN     0    // Use lambertian shading for light sources.
 #define LIGHTING_HEIGHT         1    // Height off the ground of light sources on the pseudo-z-axis, you should probably leave this alone.
 
-#define LIGHTING_LAYER          10   // Drawing layer for lighting overlays.
-
 #define INVISIBILITY_LIGHTING   20
 
 #define LIGHTING_SOFT_THRESHOLD 0.05 // If the max of the lighting lumcounts of each spectrum drops below this, disable luminosity on the lighting overlays.

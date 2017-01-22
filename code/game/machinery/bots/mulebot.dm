@@ -517,6 +517,7 @@
 	else //post unbuckling
 		load = null
 		M.layer = initial(M.layer)
+		M.plane = initial(M.plane)
 		M.pixel_y = initial(M.pixel_y)
 
 // called to unload the bot
@@ -537,6 +538,7 @@
 	load.loc = loc
 	load.pixel_y = initial(load.pixel_y)
 	load.layer = initial(load.layer)
+	load.plane = initial(load.plane)
 	if(dirn)
 		var/turf/T = loc
 		var/turf/newT = get_step(T,dirn)

@@ -10,6 +10,7 @@ var/const/MAX_SAVE_SLOTS = 10
 #define RETURN_TO_LOBBY 2
 
 /datum/preferences
+	var/client/parent
 	//doohickeys for savefiles
 	var/path
 	var/default_slot = 1				//Holder so it doesn't default to slot 1, rather the last one used
@@ -115,8 +116,10 @@ var/const/MAX_SAVE_SLOTS = 10
 	var/randomslot = 0
 	// jukebox volume
 	var/volume = 100
+	var/parallax = PARALLAX_HIGH
 
 /datum/preferences/New(client/C)
+	parent = C
 	b_type = pick(4;"O-", 36;"O+", 3;"A-", 28;"A+", 1;"B-", 20;"B+", 1;"AB-", 5;"AB+")
 	if(istype(C))
 		if(!IsGuestKey(C.key))
@@ -156,7 +159,6 @@ var/const/MAX_SAVE_SLOTS = 10
 		dat += "Please create an account to save your preferences."
 
 	dat += "</center><hr width='535'>"
-
 	switch(menu_type)
 		if("general")
 			dat += ShowGeneral(user)
@@ -210,7 +212,6 @@ var/const/MAX_SAVE_SLOTS = 10
 		if("load_slot")
 			if(!IsGuestKey(user.key))
 				menu_type = "load_slot"
-
 	switch(menu_type)
 		if("general")
 			process_link_general(user, href_list)
