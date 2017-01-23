@@ -106,7 +106,8 @@
 		playsound(H.loc, 'sound/items/timer.ogg', 5, 0)
 		user.visible_message("\red [user.name] finished planting an [name] on [H.name]!")
 
-		H.overlays += image('icons/obj/device.dmi', "medicon")
+		var/icon/I = image('icons/obj/device.dmi', "medicon")
+		H.overlays += I
 		to_chat(user, "Device has been planted. Timer counting down from [timer].")
 		spawn(timer*10)
 			if(H)
@@ -120,6 +121,8 @@
 					H.loc = get_turf(target_beacon)
 				if (src)
 					qdel(src)
+			H.overlays -= I
+			qdel(I)
 
 /obj/item/weapon/medical/teleporter/attack(mob/M, mob/user, def_zone)
 	return
